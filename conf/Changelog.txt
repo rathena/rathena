@@ -1,6 +1,7 @@
 Date	Added
 
 2011/12/24
+	* Rev. 15042 Merged log settings for SQL tables and TXT flat files (log_*_db, meaning depends on sql_logs setting). [Ai4rei]
 	* Rev. 15040 Updates to log_athena.conf [Ai4rei]
 	- Setting 'enable_logs' is now a pure bitmask and no longer affects misc-logs (branch, zeny etc). Meaning of most bits changed, revise your log configuration before starting the server.
 	- Where applicable, settings support hexadecimal and boolean values instead of only integers.

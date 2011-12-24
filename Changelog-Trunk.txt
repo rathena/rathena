@@ -2,6 +2,10 @@ Date (YYYY-MM-DD)
 	Added
 
 2011-12-24
+	* Merged log settings for SQL tables and TXT flat files (meaning depends on sql_logs setting). [Ai4rei]
+	- Added a warning when attempting to use SQL logs on TXT.
+	- Information about enabled logs is now displayed after all log config is read instead of per-hit.
+	- Removed unused member 'drop' from Log_Config (follow up to r6510).
 	* Added constants for log item filter constants. [Ai4rei]
 	- Removed argument in should_log_item, which always took log_config.filter as value.
 	- Fixed missed update in struct Log_Config, enum log_what -> e_log_pick_type (since r15040).

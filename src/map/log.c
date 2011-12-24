@@ -132,7 +132,7 @@ void log_branch(struct map_session_data *sd)
 	{
 		SqlStmt* stmt;
 		stmt = SqlStmt_Malloc(logmysql_handle);
-		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, LOG_QUERY " INTO `%s` (`branch_date`, `account_id`, `char_id`, `char_name`, `map`) VALUES (NOW(), '%d', '%d', ?, '%s')", log_config.log_branch_db, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex) )
+		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, LOG_QUERY " INTO `%s` (`branch_date`, `account_id`, `char_id`, `char_name`, `map`) VALUES (NOW(), '%d', '%d', ?, '%s')", log_config.log_branch, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex) )
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_STRING, sd->status.name, strnlen(sd->status.name, NAME_LENGTH))
 		||  SQL_SUCCESS != SqlStmt_Execute(stmt) )
 		{
@@ -176,14 +176,14 @@ void log_pick_pc(struct map_session_data *sd, e_log_pick_type type, int nameid, 
 	{
 		if( itm == NULL ) { //We log common item
 			if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `map`) VALUES (NOW(), '%d', '%c', '%d', '%d', '%s')",
-				log_config.log_pick_db, sd->status.char_id, log_picktype2char(type), nameid, amount, mapindex_id2name(sd->mapindex)) )
+				log_config.log_pick, sd->status.char_id, log_picktype2char(type), nameid, amount, mapindex_id2name(sd->mapindex)) )
 			{
 				Sql_ShowDebug(logmysql_handle);
 				return;
 			}
 		} else { //We log Extended item
 			if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`) VALUES (NOW(), '%d', '%c', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s')",
-				log_config.log_pick_db, sd->status.char_id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapindex_id2name(sd->mapindex)) )
+				log_config.log_pick, sd->status.char_id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapindex_id2name(sd->mapindex)) )
 			{
 				Sql_ShowDebug(logmysql_handle);
 				return;
@@ -237,14 +237,14 @@ void log_pick_mob(struct mob_data *md, e_log_pick_type type, int nameid, int amo
 	{
 		if( itm == NULL ) { //We log common item
 			if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `map`) VALUES (NOW(), '%d', '%c', '%d', '%d', '%s')",
-				log_config.log_pick_db, md->class_, log_picktype2char(type), nameid, amount, mapname) )
+				log_config.log_pick, md->class_, log_picktype2char(type), nameid, amount, mapname) )
 			{
 				Sql_ShowDebug(logmysql_handle);
 				return;
 			}
 		} else { //We log Extended item
 			if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`) VALUES (NOW(), '%d', '%c', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s')",
-				log_config.log_pick_db, md->class_, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname) )
+				log_config.log_pick, md->class_, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname) )
 			{
 				Sql_ShowDebug(logmysql_handle);
 				return;
@@ -300,7 +300,7 @@ void log_zeny(struct map_session_data *sd, e_log_pick_type type, struct map_sess
 	if( log_config.sql_logs )
 	{
 		if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `src_id`, `type`, `amount`, `map`) VALUES (NOW(), '%d', '%d', '%c', '%d', '%s')",
-			 log_config.log_zeny_db, sd->status.char_id, src_sd->status.char_id, log_picktype2char(type), amount, mapindex_id2name(sd->mapindex)) )
+			 log_config.log_zeny, sd->status.char_id, src_sd->status.char_id, log_picktype2char(type), amount, mapindex_id2name(sd->mapindex)) )
 		{
 			Sql_ShowDebug(logmysql_handle);
 			return;
@@ -334,7 +334,7 @@ void log_mvpdrop(struct map_session_data *sd, int monster_id, int *log_mvp)
 	if( log_config.sql_logs )
 	{
 		if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`mvp_date`, `kill_char_id`, `monster_id`, `prize`, `mvpexp`, `map`) VALUES (NOW(), '%d', '%d', '%d', '%d', '%s') ",
-			log_config.log_mvpdrop_db, sd->status.char_id, monster_id, log_mvp[0], log_mvp[1], mapindex_id2name(sd->mapindex)) )
+			log_config.log_mvpdrop, sd->status.char_id, monster_id, log_mvp[0], log_mvp[1], mapindex_id2name(sd->mapindex)) )
 		{
 			Sql_ShowDebug(logmysql_handle);
 			return;
@@ -370,7 +370,7 @@ void log_atcommand(struct map_session_data* sd, int cmdlvl, const char* message)
 		SqlStmt* stmt;
 
 		stmt = SqlStmt_Malloc(logmysql_handle);
-		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, LOG_QUERY " INTO `%s` (`atcommand_date`, `account_id`, `char_id`, `char_name`, `map`, `command`) VALUES (NOW(), '%d', '%d', ?, '%s', ?)", log_config.log_gm_db, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex) )
+		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, LOG_QUERY " INTO `%s` (`atcommand_date`, `account_id`, `char_id`, `char_name`, `map`, `command`) VALUES (NOW(), '%d', '%d', ?, '%s', ?)", log_config.log_gm, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex) )
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_STRING, sd->status.name, strnlen(sd->status.name, NAME_LENGTH))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 1, SQLDT_STRING, (char*)message, safestrnlen(message, 255))
 		||  SQL_SUCCESS != SqlStmt_Execute(stmt) )
@@ -410,7 +410,7 @@ void log_npc(struct map_session_data* sd, const char* message)
 	{
 		SqlStmt* stmt;
 		stmt = SqlStmt_Malloc(logmysql_handle);
-		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, LOG_QUERY " INTO `%s` (`npc_date`, `account_id`, `char_id`, `char_name`, `map`, `mes`) VALUES (NOW(), '%d', '%d', ?, '%s', ?)", log_config.log_npc_db, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex) )
+		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, LOG_QUERY " INTO `%s` (`npc_date`, `account_id`, `char_id`, `char_name`, `map`, `mes`) VALUES (NOW(), '%d', '%d', ?, '%s', ?)", log_config.log_npc, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex) )
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_STRING, sd->status.name, strnlen(sd->status.name, NAME_LENGTH))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 1, SQLDT_STRING, (char*)message, safestrnlen(message, 255))
 		||  SQL_SUCCESS != SqlStmt_Execute(stmt) )
@@ -456,7 +456,7 @@ void log_chat(e_log_chat_type type, int type_id, int src_charid, int src_accid, 
 		SqlStmt* stmt;
 
 		stmt = SqlStmt_Malloc(logmysql_handle);
-		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, LOG_QUERY " INTO `%s` (`time`, `type`, `type_id`, `src_charid`, `src_accountid`, `src_map`, `src_map_x`, `src_map_y`, `dst_charname`, `message`) VALUES (NOW(), '%c', '%d', '%d', '%d', '%s', '%d', '%d', ?, ?)", log_config.log_chat_db, log_chattype2char(type), type_id, src_charid, src_accid, map, x, y)
+		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, LOG_QUERY " INTO `%s` (`time`, `type`, `type_id`, `src_charid`, `src_accountid`, `src_map`, `src_map_x`, `src_map_y`, `dst_charname`, `message`) VALUES (NOW(), '%c', '%d', '%d', '%d', '%s', '%d', '%d', ?, ?)", log_config.log_chat, log_chattype2char(type), type_id, src_charid, src_accid, map, x, y)
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_STRING, (char*)dst_charname, safestrnlen(dst_charname, NAME_LENGTH))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 1, SQLDT_STRING, (char*)message, safestrnlen(message, CHAT_SIZE_MAX))
 		||  SQL_SUCCESS != SqlStmt_Execute(stmt) )
@@ -522,6 +522,13 @@ int log_config_read(char *cfgName)
 				log_config.enable_logs = (e_log_pick_type)config_switch(w2);
 			} else if(strcmpi(w1,"sql_logs") == 0) {
 				log_config.sql_logs = (bool)config_switch(w2);
+#ifdef TXT_ONLY
+				if( log_config.sql_logs )
+				{
+					ShowWarning("log_config_read: SQL logging is not supported on this server.\n");
+					log_config.sql_logs = false;
+				}
+#endif
 //start of common filter settings
 			} else if(strcmpi(w1,"rare_items_log") == 0) {
 				log_config.rare_items_log = (atoi(w2));
@@ -548,68 +555,20 @@ int log_config_read(char *cfgName)
 				log_config.mvpdrop = config_switch(w2);
 			} else if(strcmpi(w1,"log_chat_woe_disable") == 0) {
 				log_config.log_chat_woe_disable = (bool)config_switch(w2);
-			}
-
-#ifndef TXT_ONLY
-			else if(strcmpi(w1, "log_branch_db") == 0) {
-				strcpy(log_config.log_branch_db, w2);
-				if(log_config.branch == 1)
-					ShowNotice("Logging Dead Branch Usage to table `%s`\n", w2);
+			} else if(strcmpi(w1, "log_branch_db") == 0) {
+				safestrncpy(log_config.log_branch, w2, sizeof(log_config.log_branch));
 			} else if(strcmpi(w1, "log_pick_db") == 0) {
-				strcpy(log_config.log_pick_db, w2);
-				if(log_config.filter)
-					ShowNotice("Logging Item Picks to table `%s`\n", w2);
+				safestrncpy(log_config.log_pick, w2, sizeof(log_config.log_pick));
 			} else if(strcmpi(w1, "log_zeny_db") == 0) {
-				strcpy(log_config.log_zeny_db, w2);
-				if(log_config.zeny == 1)
-					ShowNotice("Logging Zeny to table `%s`\n", w2);
+				safestrncpy(log_config.log_zeny, w2, sizeof(log_config.log_zeny));
 			} else if(strcmpi(w1, "log_mvpdrop_db") == 0) {
-				strcpy(log_config.log_mvpdrop_db, w2);
-				if(log_config.mvpdrop == 1)
-					ShowNotice("Logging MVP Drops to table `%s`\n", w2);
+				safestrncpy(log_config.log_mvpdrop, w2, sizeof(log_config.log_mvpdrop));
 			} else if(strcmpi(w1, "log_gm_db") == 0) {
-				strcpy(log_config.log_gm_db, w2);
-				if(log_config.gm > 0)
-					ShowNotice("Logging GM Level %d Commands to table `%s`\n", log_config.gm, w2);
+				safestrncpy(log_config.log_gm, w2, sizeof(log_config.log_gm));
 			} else if(strcmpi(w1, "log_npc_db") == 0) {
-				strcpy(log_config.log_npc_db, w2);
-				if(log_config.npc > 0)
-					ShowNotice("Logging NPC 'logmes' to table `%s`\n", w2);
+				safestrncpy(log_config.log_npc, w2, sizeof(log_config.log_npc));
 			} else if(strcmpi(w1, "log_chat_db") == 0) {
-				strcpy(log_config.log_chat_db, w2);
-				if(log_config.chat > 0)
-					ShowNotice("Logging CHAT to table `%s`\n", w2);
-			}
-#endif
-
-			else if(strcmpi(w1, "log_branch_file") == 0) {
-				strcpy(log_config.log_branch, w2);
-				if(log_config.branch > 0 && !log_config.sql_logs)
-					ShowNotice("Logging Dead Branch Usage to file `%s`\n", w2);
-			} else if(strcmpi(w1, "log_pick_file") == 0) {
-				strcpy(log_config.log_pick, w2);
-				if(log_config.filter > 0 && !log_config.sql_logs)
-					ShowNotice("Logging Item Picks to file `%s`\n", w2);
-			} else if(strcmpi(w1, "log_zeny_file") == 0) {
-				strcpy(log_config.log_zeny, w2);
-				if(log_config.zeny > 0 && !log_config.sql_logs)
-					ShowNotice("Logging Zeny to file `%s`\n", w2);
-			} else if(strcmpi(w1, "log_mvpdrop_file") == 0) {
-				strcpy(log_config.log_mvpdrop, w2);
-				if(log_config.mvpdrop > 0 && !log_config.sql_logs)
-					ShowNotice("Logging MVP Drops to file `%s`\n", w2);
-			} else if(strcmpi(w1, "log_gm_file") == 0) {
-				strcpy(log_config.log_gm, w2);
-				if(log_config.gm > 0 && !log_config.sql_logs)
-					ShowNotice("Logging GM Level %d Commands to file `%s`\n", log_config.gm, w2);
-			} else if(strcmpi(w1, "log_npc_file") == 0) {
-				strcpy(log_config.log_npc, w2);
-				if(log_config.npc > 0 && !log_config.sql_logs)
-					ShowNotice("Logging NPC 'logmes' to file `%s`\n", w2);
-			} else if(strcmpi(w1, "log_chat_file") == 0) {
-				strcpy(log_config.log_chat, w2);
-				if(log_config.chat > 0 && !log_config.sql_logs)
-					ShowNotice("Logging CHAT to file `%s`\n", w2);
+				safestrncpy(log_config.log_chat, w2, sizeof(log_config.log_chat));
 			//support the import command, just like any other config
 			} else if(strcmpi(w1,"import") == 0) {
 				log_config_read(w2);
@@ -618,5 +577,40 @@ int log_config_read(char *cfgName)
 	}
 
 	fclose(fp);
+
+	if( --count == 0 )
+	{// report final logging state
+		const char* target = log_config.sql_logs ? "table" : "file";
+
+		if( log_config.enable_logs && log_config.filter )
+		{
+			ShowInfo("Logging item transactions to %s '%s'.\n", target, log_config.log_pick);
+		}
+		if( log_config.branch )
+		{
+			ShowInfo("Logging monster summon item usage to %s '%s'.\n", target, log_config.log_pick);
+		}
+		if( log_config.chat )
+		{
+			ShowInfo("Logging chat to %s '%s'.\n", target, log_config.log_chat);
+		}
+		if( log_config.gm )
+		{
+			ShowInfo("Logging gm commands to %s '%s'.\n", target, log_config.log_gm);
+		}
+		if( log_config.mvpdrop )
+		{
+			ShowInfo("Logging MVP monster rewards to %s '%s'.\n", target, log_config.log_mvpdrop);
+		}
+		if( log_config.npc )
+		{
+			ShowInfo("Logging 'logmes' messages to %s '%s'.\n", target, log_config.log_npc);
+		}
+		if( log_config.zeny )
+		{
+			ShowInfo("Logging Zeny transactions to %s '%s'.\n", target, log_config.log_zeny);
+		}
+	}
+
 	return 0;
 }
