@@ -68,7 +68,7 @@ int log_config_read(char *cfgName);
 
 extern struct Log_Config
 {
-	enum e_log_pick_type enable_logs;
+	e_log_pick_type enable_logs;
 	int filter;
 	bool sql_logs;
 	bool log_chat_woe_disable;

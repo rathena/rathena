@@ -17,6 +17,26 @@
 #include <string.h>
 
 
+typedef enum e_log_filter
+{
+	LOG_FILTER_NONE     = 0x000,
+	LOG_FILTER_ALL      = 0x001,
+	// bits
+	LOG_FILTER_HEALING  = 0x002,  // Healing items (0)
+	LOG_FILTER_ETC_AMMO = 0x004,  // Etc Items(3) + Arrows (10)
+	LOG_FILTER_USABLE   = 0x008,  // Usable Items(2) + Scrolls, Lures(11) + Usable Cash Items(18)
+	LOG_FILTER_WEAPON   = 0x010,  // Weapons(4)
+	LOG_FILTER_ARMOR    = 0x020,  // Shields, Armors, Headgears, Accessories, Garments and Shoes(5)
+	LOG_FILTER_CARD     = 0x040,  // Cards(6)
+	LOG_FILTER_PETITEM  = 0x080,  // Pet Accessories(8) + Eggs(7) (well, monsters don't drop 'em but we'll use the same system for ALL logs)
+	LOG_FILTER_PRICE    = 0x100,  // Log expensive items ( >= price_log )
+	LOG_FILTER_AMOUNT   = 0x200,  // Log large amount of items ( >= amount_log )
+	LOG_FILTER_REFINE   = 0x400,  // Log refined items ( refine >= refine_log ) [not implemented]
+	LOG_FILTER_CHANCE   = 0x800,  // Log rare items and Emperium ( drop chance <= rare_log )
+}
+e_log_filter;
+
+
 struct Log_Config log_config;
 
 
@@ -77,38 +97,23 @@ static char log_chattype2char(e_log_chat_type type)
 }
 
 
-//FILTER OPTIONS
-//0 = Don't log
-//1 = Log any item
-//Bits: ||
-//2 - Healing items (0)
-//3 - Etc Items(3) + Arrows (10)
-//4 - Usable Items(2) + Scrolls,Lures(11) + Usable Cash Items(18)
-//5 - Weapon(4)
-//6 - Shields,Armor,Headgears,Accessories,etc(5)
-//7 - Cards(6)
-//8 - Pet Accessories(8) + Eggs(7) (well, monsters don't drop 'em but we'll use the same system for ALL logs)
-//9 - Log expensive items ( >= price_log)
-//10 - Log big amount of items ( >= amount_log)
-//11 - Log refined items (if their refine >= refine_log )
-//12 - Log rare items (if their drop chance <= rare_log )
-
 //check if this item should be logged according the settings
-bool should_log_item(int filter, int nameid, int amount)
+static bool should_log_item(int nameid, int amount)
 {
+	int filter = log_config.filter;
 	struct item_data *item_data;
 	if ((item_data= itemdb_exists(nameid)) == NULL) return false;
-	if ((filter&1) || // Filter = 1, we log any item
-		(filter&2 && item_data->type == IT_HEALING ) ||
-		(filter&4 && (item_data->type == IT_ETC || item_data->type == IT_AMMO) ) ||
-		(filter&8 && (item_data->type == IT_USABLE || item_data->type == IT_CASH) ) ||
-		(filter&16 && item_data->type == IT_WEAPON ) ||
-		(filter&32 && item_data->type == IT_ARMOR ) ||
-		(filter&64 && item_data->type == IT_CARD ) ||
-		(filter&128 && (item_data->type == IT_PETEGG || item_data->type == IT_PETARMOR) ) ||
-		(filter&256 && item_data->value_buy >= log_config.price_items_log ) ||		//expensive items
-		(filter&512 && abs(amount) >= log_config.amount_items_log ) ||			//big amount of items
-		(filter&2048 && ((item_data->maxchance != -1 && item_data->maxchance <= log_config.rare_items_log) || item_data->nameid == 714) ) //Rare items or Emperium
+	if ((filter&LOG_FILTER_ALL) ||
+		(filter&LOG_FILTER_HEALING && item_data->type == IT_HEALING ) ||
+		(filter&LOG_FILTER_ETC_AMMO && (item_data->type == IT_ETC || item_data->type == IT_AMMO) ) ||
+		(filter&LOG_FILTER_USABLE && (item_data->type == IT_USABLE || item_data->type == IT_CASH) ) ||
+		(filter&LOG_FILTER_WEAPON && item_data->type == IT_WEAPON ) ||
+		(filter&LOG_FILTER_ARMOR && item_data->type == IT_ARMOR ) ||
+		(filter&LOG_FILTER_CARD && item_data->type == IT_CARD ) ||
+		(filter&LOG_FILTER_PETITEM && (item_data->type == IT_PETEGG || item_data->type == IT_PETARMOR) ) ||
+		(filter&LOG_FILTER_PRICE && item_data->value_buy >= log_config.price_items_log ) ||
+		(filter&LOG_FILTER_AMOUNT && abs(amount) >= log_config.amount_items_log ) ||
+		(filter&LOG_FILTER_CHANCE && ((item_data->maxchance != -1 && item_data->maxchance <= log_config.rare_items_log) || item_data->nameid == ITEMID_EMPERIUM) )
 	) return true;
 
 	return false;
@@ -163,7 +168,7 @@ void log_pick_pc(struct map_session_data *sd, e_log_pick_type type, int nameid, 
 		return;
 	}
 
-	if (!should_log_item(log_config.filter, nameid, amount))
+	if (!should_log_item(nameid, amount))
 		return; //we skip logging this item set - it doesn't meet our logging conditions [Lupus]
 
 #ifndef TXT_ONLY
@@ -219,7 +224,7 @@ void log_pick_mob(struct mob_data *md, e_log_pick_type type, int nameid, int amo
 		return;
 	}
 
-	if (!should_log_item(log_config.filter, nameid, amount))
+	if (!should_log_item(nameid, amount))
 		return; //we skip logging this item set - it doesn't meet our logging conditions [Lupus]
 
 	//either PLAYER or MOB (here we get map name and objects ID)

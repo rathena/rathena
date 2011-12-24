@@ -2,6 +2,9 @@ Date (YYYY-MM-DD)
 	Added
 
 2011-12-24
+	* Added constants for log item filter constants. [Ai4rei]
+	- Removed argument in should_log_item, which always took log_config.filter as value.
+	- Fixed missed update in struct Log_Config, enum log_what -> e_log_pick_type (since r15040).
 	* Updates to map-server's log system. [Ai4rei]
 	- Moved all logs configuration checks from caller functions into respective log functions, and replaced string log types with an enumeration.
 2011-12-22
