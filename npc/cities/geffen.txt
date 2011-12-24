@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Geffen Town
 //===== By: ================================================== 
 //= Everybody mentioned in the comments
 //===== Current Version: ===================================== 
 //= 1.9
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Geffen Town NPCs

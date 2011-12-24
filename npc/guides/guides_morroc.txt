@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Morroc Guides
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
 //= 1.0
 //===== Compatible With: ===================================== 
-//= eAthena  SVN
+//= rAthena  SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Guides for the city of Morroc, and Morroc Ruins

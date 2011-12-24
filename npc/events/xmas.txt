@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= X-mas Event
 //===== By: ==================================================
-//= eAthena Dev Team
+//= rAthena Dev Team
 //===== Current Version: =====================================
 //= 1.4
 //===== Compatible With: =====================================
-//= Any version of eAthena
+//= Any version of rAthena
 //===== Description: =========================================
 //= Beat up Antonios and grab his socks.  Get at least 3 and
 //= give them to Santa Claus Claus in exchange for a present.

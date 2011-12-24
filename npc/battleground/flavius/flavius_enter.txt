@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 // BattleGround System - Flavius Entrance NPCs
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
 //= 1.0
 //===== Compatible With: ===================================== 
-//= eAthena 1.0
+//= rAthena 1.0
 //===== Description: ========================================= 
 //= [AEGIS Conversion]
 //= Flavius Battleground Entrance NPCs

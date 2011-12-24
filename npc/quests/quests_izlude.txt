@@ -1,12 +1,12 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Quest NPCs related to Izlude
 //===== By: ================================================== 
-//= Evera and The eAthena Dev Team
+//= Evera and The rAthena Dev Team
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
 //= 1.1
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= Edgar's Offer:
 //= - [Aegis conversion]

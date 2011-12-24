@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Kafra Express - Uncarder Module
 //===== By: ================================================== 
 //= Skotlex 
 //===== Current Version: ===================================== 
 //= 1.6
 //===== Compatible With: ===================================== 
-//= eAthena SVN R3424+
+//= rAthena SVN R3424+
 //===== Description: ========================================= 
 //= Part of the Kafra Express Script Package.
 //= Offers uncarding services.

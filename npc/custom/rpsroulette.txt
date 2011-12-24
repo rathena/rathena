@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Rock Scissors Roulette Script
 //===== By: ==================================================
 //= acky (1.1)
 //===== Current Version: =====================================
 //= 1.2
 //===== Compatible With: =====================================
-//= Any eAthena Version
+//= Any rAthena Version
 //===== Description: =========================================
 //= Plays a hybrid Russian Roulette Rock Scissors Paper game.
 //===== Additional Comments: =================================

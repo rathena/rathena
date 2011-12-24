@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Hunter Skills Quests
 //===== By: ================================================== 
 //= Lupus, Reddozen, Kisuka
 //===== Current Version: ===================================== 
 //= 1.4
 //===== Compatible With: ===================================== 
-//= eAthena Revision 3800+
+//= rAthena Revision 3800+
 //===== Description: ========================================= 
 //= Temp quests for new skills for 2nd classes
 //===== Additional Comments: ================================= 

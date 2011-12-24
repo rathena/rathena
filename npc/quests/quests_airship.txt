@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Airship Related Quests
 //===== By: ================================================== 
 // Samuray22
 //===== Current Version: ===================================== 
 //= 1.8
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= Quest from the airplane to einbroch and einbech.
 //= Reward: -Free Ticket for Flyship.

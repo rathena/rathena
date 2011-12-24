@@ -25,7 +25,7 @@
 #   CMP0017: Prefer files from the CMake module directory when including from there.
 set( CMAKE_LEGACY_CYGWIN_WIN32 0 )
 cmake_minimum_required( VERSION 2.8.3 )
-project( eAthena C )
+project( rAthena C )
 if( CYGWIN )
 	unset( WIN32 )
 endif()
@@ -121,9 +121,9 @@ if( SVNVERSION_EXECUTABLE )
 endif()
 if( Subversion_FOUND AND SVNVERSION )
 	message( STATUS "Getting svn branch" )
-	Subversion_WC_INFO( ${PROJECT_SOURCE_DIR} eAthena )
-	if( eAthena_WC_URL )
-		string( REGEX MATCH "[^/]+$" BRANCH ${eAthena_WC_URL} )
+	Subversion_WC_INFO( ${PROJECT_SOURCE_DIR} rAthena )
+	if( rAthena_WC_URL )
+		string( REGEX MATCH "[^/]+$" BRANCH ${rAthena_WC_URL} )
 		set( SVNVERSION "${BRANCH}-${SVNVERSION}" )
 		message( STATUS "Found branch: ${BRANCH}" )
 	endif()
@@ -371,7 +371,7 @@ endif()
 #####################################################################
 # package stuff
 #
-set( CPACK_PACKAGE_NAME "eAthena" )
+set( CPACK_PACKAGE_NAME "rAthena" )
 set( CPACK_PACKAGE_DESCRIPTION_SUMMARY "MMORPG server package" )
 set( CPACK_PACKAGE_VERSION ${SVNVERSION} )
 set( CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE )
@@ -437,11 +437,11 @@ set( DEVELOPMENT_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.txt"
 	"${CMAKE_CURRENT_SOURCE_DIR}/configure"
 	"${CMAKE_CURRENT_SOURCE_DIR}/configure.in"
-	"${CMAKE_CURRENT_SOURCE_DIR}/eAthena-6.dsw"
-	"${CMAKE_CURRENT_SOURCE_DIR}/eAthena-7.1.sln"
-	"${CMAKE_CURRENT_SOURCE_DIR}/eAthena-8.sln"
-	"${CMAKE_CURRENT_SOURCE_DIR}/eAthena-9.sln"
-	"${CMAKE_CURRENT_SOURCE_DIR}/eAthena-10.sln"
+	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-6.dsw"
+	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-7.1.sln"
+	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-8.sln"
+	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-9.sln"
+	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-10.sln"
 	)
 set( DEVELOPMENT_DIRECTORIES
 	"3rdparty"

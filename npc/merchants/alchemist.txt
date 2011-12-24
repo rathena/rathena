@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Alchemist Shop
 //===== By: ================================================== 
-//= eAthena Team
+//= rAthena Team
 //===== Current Version: ===================================== 
 //= 1.6
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= Selling Alchemist Materials and Manuals
 //===== Additional Comments: ================================= 

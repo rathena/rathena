@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Reset NPC for Athena by Script & DB Team
 //===== By: ================================================== 
-//= eAthena Team
+//= rAthena Team
 //===== Current Version: ===================================== 
 //= 1.1
 //===== Compatible With: ===================================== 
-//= Any eAthena Version
+//= Any rAthena Version
 //===== Description: ========================================= 
 //= Resets skills, stats, or both.
 //===== Additional Comments: ================================= 

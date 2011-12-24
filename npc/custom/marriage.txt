@@ -2,14 +2,14 @@
 //             Marriage Script                          //
 //////////////////////////////////////////////////////////
 // 
-//=====eAthena Script====================================
+//=====rAthena Script====================================
 // Wedding Script
 //=====By================================================
 // AppleGirl and Evera(version 1.0)
 //=====Current Version===================================
 // 2.9
 //=====Compatible With:==================================
-// eAthena Version SVN-R8637 and up; RO Episode 6+
+// rAthena Version SVN-R8637 and up; RO Episode 6+
 //=====Description=======================================
 // Fully working wedding script for all kind of weddings
 //=====Additional Comments:==============================

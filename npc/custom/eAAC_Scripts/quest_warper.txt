@@ -1,4 +1,4 @@
-//===== eAthena Script ============================================
+//===== rAthena Script ============================================
 //= Quest Warper Script
 //===== By: =======================================================
 //= Old Warper 2 by Darkchild - Remade with quest format by DZeroX
@@ -6,7 +6,7 @@
 //===== Current Version: ==========================================
 //= 2.2
 //===== Compatible With: ==========================================
-//= Any eAthena Version
+//= Any rAthena Version
 //===== Description: ==============================================
 //= Warper that works only after locations are unlocked
 //===== Additional Comments: ======================================

@@ -1,4 +1,4 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Rachel City NPCs
 //===== By: ==================================================
 //= First Version: Tsuyuki and Harp
@@ -6,7 +6,7 @@
 //===== Current Version: =====================================
 //= 0.9
 //===== Compatible With: =====================================
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: =========================================
 //= [Partial Aegis Conversion]
 //= Arunafeltz NPCs

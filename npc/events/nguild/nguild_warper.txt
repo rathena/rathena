@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Novice's Guild Castles War of Emperium Usher NPC
 //===== By: ==================================================
 //= Lupus
 //===== Current Version: =====================================
 //= 1.7
 //===== Compatible With: =====================================
-//= eAthena 1+ with eaclass(); RO Episode 4+
+//= rAthena 1+ with eaclass(); RO Episode 4+
 //===== Description: =========================================
 //=
 //===== Additional Comments: =================================

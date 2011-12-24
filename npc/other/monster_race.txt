@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Hugel Monster Races
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
 //= 1.6
 //===== Compatible With: =====================================
-//= eAthena SVN (Trunk, r12752+)
+//= rAthena SVN (Trunk, r12752+)
 //===== Description: =========================================
 //= [Aegis Conversion]
 //= - Hugel Monster Races (Single and Double)

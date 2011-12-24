@@ -1,4 +1,4 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Divorcing Deviruchi
 //===== By: ================================================== 
 //= Perkka, Scriptor, LightFighter
@@ -6,7 +6,7 @@
 //===== Current Version: ===================================== 
 //= 1.5
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis COnversion]
 //= Official Divorce script.

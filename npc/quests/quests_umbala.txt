@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Quest NPCs related to Umbala
 //===== By: ================================================== 
-//= sabernet09 & eAthena Team
+//= sabernet09 & rAthena Team
 //===== Current Version: ===================================== 
 //= 2.2a
 //===== Compatible With: ===================================== 
-//= eAthena 7.15 +
+//= rAthena 7.15 +
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Umbalian Language Quest, Umbala Skeletal Gate Quest,

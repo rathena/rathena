@@ -1,8 +1,8 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Map flags that disable certain items/skills configured in
 //= item_noequip.txt and skill_nocast_db.txt
 //===== By: ==================================================
-//= eAthena Dev Team
+//= rAthena Dev Team
 //= 1.0 [Komurka]
 //= 1.1 Added WoE:SE Map restrictions. [L0ne_W0lf]
 //= 1.2 Added Endless Tower Restrictions. (bugreport:4707) [L0ne_W0lf]

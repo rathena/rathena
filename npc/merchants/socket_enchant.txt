@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Episode 11.1 Socket Enchant NPC
 //===== By: ==================================================
-//= eAthena dev team
+//= rAthena dev team
 //===== Current Version: =====================================
 //= 2.0
 //===== Compatible With: =====================================
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: =========================================
 //= [Aegis Conversion]
 //= Adds slots to selected weapons and armor.

@@ -1,4 +1,4 @@
-﻿//===== Athena Doc ========================================
+//===== Athena Doc ========================================
 //= rAthena Script Commands
 //===== Description =======================================
 //= A reference manual for the rAthena scripting language.
@@ -6685,7 +6685,7 @@ The first letter is position 0.
 
 	Example:
 	
-	charisupper("eAthena", 1); //returns 1
+	charisupper("rAthena", 1); //returns 1
 	
 ---------------------------------------
 

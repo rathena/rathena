@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Custom Quest For New Headgears
 //===== By: ==================================================
 //= RedxSwordxHero, Lupus
 //===== Current Version: =====================================
 //= 1.4b
 //===== Compatible With: =====================================
-//= eAthena 1.0
+//= rAthena 1.0
 //===== Description: =========================================
 //= 4 brothers give you quests to get 6 new hats (missing
 //= 	from official quests)

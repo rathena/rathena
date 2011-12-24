@@ -1,11 +1,11 @@
-//===== eAthena Script ============
+//===== rAthena Script ============
 //= Alberta Kafras
 //===== By: =========================
-//= eAthena Dev Team
+//= rAthena Dev Team
 //===== Current Version: ===================
 //= 2.4
 //===== Compatible With: =====================
-//= eAthena 1.0
+//= rAthena 1.0
 //===== Description: ============================================
 //= Description of argument settings for callfunc "F_Kafra".
 //=  arg(0): When set at 0 the default Kafra message is displayed.

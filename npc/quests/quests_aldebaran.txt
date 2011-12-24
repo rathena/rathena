@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Quest NPCs related to Aldebaran 
 //===== By: ================================================== 
-//= eAthena Dev Team
+//= rAthena Dev Team
 //===== Current Version: ===================================== 
 //= 1.3
 //===== Compatible With: ===================================== 
-//= eAthena 7.15 +
+//= rAthena 7.15 +
 //===== Description: ========================================= 
 //= 'Doctor Band', 'Feather Bonnet', 'Opera Masque', 'Sakkat Hat' Quests.
 //===== Additional Comments: ================================= 

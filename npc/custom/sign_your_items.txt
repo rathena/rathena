@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= * Sign Your Items *
 //===== By: ================================================== 
 //= Lupus
 //===== Current Version: ===================================== 
 //= 1.0
 //===== Compatible With: ===================================== 
-//= eAthena 1
+//= rAthena 1
 //===== Description: ========================================= 
 //= Write you name on your rare equipment or weapon ^_-
 //= Original X-Mas mini-quest(could be used as a permanent one)

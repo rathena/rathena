@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Sphinx Mask Quest (custom)
 //===== By: ================================================== 
-//= sabernet09 & eAthena Team
+//= sabernet09 & rAthena Team
 //===== Current Version: ===================================== 
 //= 1.2
 //===== Compatible With: ===================================== 
-//= eAthena 7.15 +
+//= rAthena 7.15 +
 //===== Description: ========================================= 
 //= this quest is related to Umbalian Chief
 //= 1.1 Removed it from official Umbala quests [Lupus]

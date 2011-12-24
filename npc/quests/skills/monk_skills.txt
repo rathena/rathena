@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Monk Skills Quests
 //===== By: ================================================== 
 //= Lupus, Reddozen, Samuray22
 //===== Current Version: ===================================== 
 //= 1.5
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Quests for skills: Spiritual Bestowment, Excruciating Palm

@@ -1,4 +1,4 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Dev edition NPCs!
 //===== By: ================================================== 
 //= Most NPCs by Aria
@@ -9,7 +9,7 @@
 //===== Current Version: ===================================== 
 //= 0.5
 //===== Compatible With: ===================================== 
-//= eAthena 1.0 Final +
+//= rAthena 1.0 Final +
 //===== Description: ========================================= 
 //= NPCs of the devs!
 //===== Additional Comments: ================================= 
@@ -58,7 +58,7 @@ Lquote3:
 	setnpctimer 0;
 	end;
 Lquote4:
-	npctalk "I am the dark angel of eAthena.. withen weeks of my arrival, almost everybody was gone or dead..  fear me...";
+	npctalk "I am the dark angel of rAthena.. withen weeks of my arrival, almost everybody was gone or dead..  fear me...";
 	setnpctimer 0;
 	end;
 OnInit:
@@ -113,7 +113,7 @@ Lquote2:
 	setnpctimer 0;
 	end;
 Lquote3:
-	npctalk "¿Donde estoy? *wonders* (<-- Means, where am I?)";
+	npctalk "ï¿½Donde estoy? *wonders* (<-- Means, where am I?)";
 	setnpctimer 0;
 	end;
 Lquote4:
@@ -182,7 +182,7 @@ Lquote2:
 	setnpctimer 0;
 	end;
 Lquote3:
-	npctalk "¿Donde estoy? *wonders* (<-- Means, where am I?)";
+	npctalk "ï¿½Donde estoy? *wonders* (<-- Means, where am I?)";
 	setnpctimer 0;
 	end;
 Lquote4:
@@ -208,7 +208,7 @@ prontera,156,179,4	script	Aria	805,{
 	mes "Okay, I'm Evera's brother, Aria";
 	mes "^FF00FFAge^000000: 13 years";
 	mes "^FF00FFWhat I do^000000: Graphics and NPCs";
-	mes "^FF00FFWhy I'm here^000000: Cuz eAthena ROX";
+	mes "^FF00FFWhy I'm here^000000: Cuz rAthena ROX";
 	close;
 OnTimer15000:
 	npcwalkto 150+rand(17),169+rand(16);

@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Kafra Express - Broadcasting Module
 //===== By: ================================================== 
 //= Skotlex 
 //===== Current Version: ===================================== 
 //= 3.1
 //===== Compatible With: ===================================== 
-//= eAthena SVN8637+
+//= rAthena SVN8637+
 //===== Description: ========================================= 
 //= Part of the Kafra Express Script Package.
 //= Offers broadcasting for party requests, pvp, general

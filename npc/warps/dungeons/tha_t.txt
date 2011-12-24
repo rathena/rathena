@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Thanatos Tower Warps
 //===== By: ==================================================
 //= [Ishizu-chan]
 //===== Current Version: =====================================
 //= 1.1 Beta
 //===== Compatible With: =====================================
-//= Any eAthena Version i guess?
+//= Any rAthena Version i guess?
 //===== Description: =========================================
 //= It's the Thanatos Tower Warps...
 //===== Additional Comments: =================================

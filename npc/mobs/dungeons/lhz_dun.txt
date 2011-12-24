@@ -1,7 +1,7 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Lighthalzen Dungeon(Biolabs) Monster Spawn Script
 //===== By: ==================================================
-// The Prometheus Project, eAthena dev team
+// The Prometheus Project, rAthena dev team
 //===== Current Version: =====================================
 //= 1.8
 //===== Compatible With: =====================================

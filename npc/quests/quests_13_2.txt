@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Collection of episode 13.2 quests.
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
 //= 2.2
 //===== Compatible With: =====================================
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: =========================================
 //= [Aegis Conversion]
 //= Cat Hand Addition. (Leads to 13.2 areas)
@@ -3540,7 +3540,7 @@ manuk,278,177,5	script	Villager#ep13_11	454,{
 		mes "[Villager]";
 		mes "Das?";
 		mes "idh sd!";
-		mes "Dh apa sd¡­is Das idh.";
+		mes "Dh apa sdï¿½ï¿½is Das idh.";
 		close;
 	}
 }
@@ -5087,7 +5087,7 @@ man_in01,378,276,3	script	Manuk Engineer#ep13_2	453,{
 					mes "[Manuk Engineer]";
 					mes "To prevent our bodies from becoming numb, we need Bradium.";
 					mes "From the Bradium we can extract a special element that we need to survive.";
-					//mes "Ìá?ÌØÊâµ???¬²¢¾­³£'Óá£";
+					//mes "ï¿½ï¿½?ï¿½ï¿½ï¿½ï¿½???ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'ï¿½ï¿½";
 					next;
 					mes "[Manuk Engineer]";
 					mes "The mining industry is primary here since our lives depend on it.";

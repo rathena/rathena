@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
-//= eAthena Jobchanger AKA Job Master
+//===== rAthena Script =======================================
+//= rAthena Jobchanger AKA Job Master
 //===== By: ==================================================
-//= eAthena Dev Team [Ori:LunatikBunnie] [Cur:Lance]
+//= rAthena Dev Team [Ori:LunatikBunnie] [Cur:Lance]
 //===== Current Version: =====================================
 //= 1.5a
 //===== Compatible With: =====================================
-//= eAthena SVN Trunk 6674
+//= rAthena SVN Trunk 6674
 //===== Description: =========================================
 //= Changes your job without asking too much
 //= For other info, please contact me at Lunatikbunnie@gmail.com 

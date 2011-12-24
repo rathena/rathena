@@ -1,4 +1,4 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Crusader Quest
 //===== By: ================================================== 
 //= Made by: Black Dragon
@@ -6,7 +6,7 @@
 //===== Current Version: ===================================== 
 //= 3.3
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Job quest for Crusader classes

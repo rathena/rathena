@@ -1,4 +1,4 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Official scripts for beginners from iRO
 //===== By: ==================================================
 //= MasterOfMuppets

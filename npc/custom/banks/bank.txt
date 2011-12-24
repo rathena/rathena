@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Banker Script 
 //===== By: ================================================== 
 //= Syrus22 (1.0)
 //===== Current Version: ===================================== 
 //= 1.0
 //===== Compatible With: ===================================== 
-//= Any eAthena version with Account variables.
+//= Any rAthena version with Account variables.
 //===== Description: ========================================= 
 //= An account wide Banker to store Zeny
 //===== Additional Comments: ================================= 

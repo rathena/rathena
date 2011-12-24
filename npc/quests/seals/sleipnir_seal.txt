@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Sleipnir seal unlocking NPCs.
 //===== By: ================================================== 
 //= MasterOfMuppets
 //===== Current Version: ===================================== 
 //= 1.3
 //===== Compatible With: ===================================== 
-//= eAthena
+//= rAthena
 //===== Description: ========================================= 
 //= Quest for breaking the seal of Sleipnir.
 //===== Additional Comments: =================================

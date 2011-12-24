@@ -1,4 +1,4 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Niflheim Script 
 //===== By: ================================================== 
 //= Fyrien, Dizzy, PKGINGO
@@ -7,7 +7,7 @@
 //= 1.5
 //===== Compatible With: ===================================== 
 //= [Aegis Conversion]
-//= eAthena SVN; Niflheim Required
+//= rAthena SVN; Niflheim Required
 //===== Description: ========================================= 
 //= Official NPC's for Niflheim
 //= 1.01 Splitted file(guides, shops). Fixed rand() bugs,

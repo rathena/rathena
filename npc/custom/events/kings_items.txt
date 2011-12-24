@@ -1,14 +1,14 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Event King Items
 //===== By: ================================================== 
 //= $ephiroth
 //===== Current Version: ===================================== 
 //= 1.0
 //===== Compatible With: ===================================== 
-//= eAthena Version
+//= rAthena Version
 //===== Description: ========================================= 
 //= Grand Circlet Quest combined with Excalibur Quest.
-//= Converted to eAthena format from Fusion.
+//= Converted to rAthena format from Fusion.
 //= 2006/09/27: 1.0 Release and fully working. [$ephiroth]
 //============================================================
 

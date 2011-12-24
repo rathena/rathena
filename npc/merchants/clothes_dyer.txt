@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Clothes Dyer
 //===== By: ================================================== 
 //= Usnul
 //===== Current Version: ===================================== 
 //= 2.4
 //===== Compatible With: ===================================== 
-//= eAthena 1.0+
+//= rAthena 1.0+
 //===== Description: ========================================= 
 //= Clothes dyer with standard palletes
 //===== Additional Comments: ================================= 
@@ -13,7 +13,7 @@
 //= 2.1 Shortened some labels to make this script loading,
 //= Added Black+White Colors desc [Lupus]
 //= 2.1a - added adv classes + abby class support [Lupus]
-//= 2.2 – Spell checked. [Nexon]
+//= 2.2 ï¿½ Spell checked. [Nexon]
 //= 2.3 - Fixed dis $hit! [Poki#3]
 //= 2.4 - Disabled cloth dyeing since it's not implemented
 //	  on official servers and cause your client to crash
@@ -26,7 +26,7 @@
 // Dyer Ginedin Rephere ---------------------------------------------------
 prt_in,284,168,2	script	Dyer Ginedin Rephere	55,{
 	mes "[Dyer Ginedin Rephere]";
-	mes "11... 12... Mmm... good. I think I'll be able to finish before tonight’s party. Oh! I didn't notice that you were here. Anyway how may I assist you?";
+	mes "11... 12... Mmm... good. I think I'll be able to finish before tonightï¿½s party. Oh! I didn't notice that you were here. Anyway how may I assist you?";
 M_Menu:
 	next;
 	menu "-Talk",L_Talk,"-Dye Clothing",L_Busy,"-Price list",L_PriceList,"-Cancel",L_End;

@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Arrow Quiver Event
 //===== By: ==================================================
 //= Muad_Dib (Prometheus Project); L0ne_W0lf
 //===== Current Version: =====================================
 //= 1.2
 //===== Compatible With: =====================================
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: =========================================
 //= [Aegis COnversion]
 //= Turns arrows into Arrow Quivers.
@@ -16,7 +16,7 @@
 // arg(3): The quiver given by the NPC. (item ID)
 //===== Additional Comments: =================================
 //= 07/06/05 : Added 1st Version. [Muad_Dib]
-//= Converted to eAthena format by Dr.Evil
+//= Converted to rAthena format by Dr.Evil
 //= added prize to quest - 500 Zeny
 //= Fixed a few spelling errors. [Nexon]
 //= 1.1 Added Holy Arrow Quivers [Playtester]

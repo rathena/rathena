@@ -1,4 +1,4 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= White Day Event Script
 //===== By: ==================================================
 //= 1.0a Muad_Dib (Prometheus Project)
@@ -10,7 +10,7 @@
 //= Sells candy, candy cane and well baked cookie.
 //===== Additional Comments: =================================
 //= 07/06/05 : Added 1st Version. [Muad_Dib]
-//= Converted to eAthena format by Dr.Evil
+//= Converted to rAthena format by Dr.Evil
 //============================================================
 
 

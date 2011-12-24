@@ -2501,7 +2501,7 @@
 	- Fixed some bugs and typos in the new cards effects. Probably there are more [Lupus]
 	  Note: ON finishing adjusting STEAL skill, we'd start adding cards into MOBs drops.
 2006/04/28
-	* Fixed the "stun" typo that has been in eAthena for ages [Playtester]
+	* Fixed the "stun" typo that has been in rAthena for ages [Playtester]
 	- SC_STAN --> SC_STUN
 	- Eff_Stan --> Eff_Stun
 	* Storm Kick's range increased to 2. [Skotlex]

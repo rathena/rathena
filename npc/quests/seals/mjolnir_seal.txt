@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Mjolnir seal unlocking NPCs.
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
 //= 1.8
 //===== Compatible With: ===================================== 
-//= eAthena
+//= rAthena
 //===== Description: ========================================= 
 //= Quest for breaking the seal of Mjolnir.
 //===== Additional Comments: =================================

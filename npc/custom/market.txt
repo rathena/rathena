@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Market Place
 //===== By ===================================================
 //= Lupus
 //===== Version ==============================================
 //= 1.1
 //===== Compatible With ======================================
-//= eAthena 5760+
+//= rAthena 5760+
 //===== Description ==========================================
 //= This script should move vending crowds from Prontera
 //= streets to a suitable market place. Save your traffic 8)

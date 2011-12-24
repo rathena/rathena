@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Kafra Express - Stylist Module
 //===== By: ==================================================
 //= Skotlex
 //===== Current Version: =====================================
 //= 2.0
 //===== Compatible With: =====================================
-//= eAthena SVN8637+
+//= rAthena SVN8637+
 //===== Description: =========================================
 //= Part of the Kafra Express Script Package.
 //= Offers dying of hair, clothes and hair-style adjusts

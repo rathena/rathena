@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Berzebub Card Quest Script
 //===== By: ==================================================
 //= jabs
 //===== Current Version: =====================================
 //= 1.1
 //===== Compatible With: =====================================
-//= Any eAthena Version; RO Episode XX
+//= Any rAthena Version; RO Episode XX
 //===== Description: =========================================
 //= Quest to get the Berzebub Card
 //===== Additional Comments: =================================

@@ -1,4 +1,4 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Quests: Bird Nest, Lion Mask, Skeleton Manteau,
 //= 		Fashion Hip Sack & Sales Banner
 //===== By: ==================================================
@@ -6,7 +6,7 @@
 //===== Current Version: =====================================
 //= 1.01
 //===== Compatible With: =====================================
-//= eAthena 1.0
+//= rAthena 1.0
 //===== Description: =========================================
 //= Custom quest for some RO mobile game bonus items 
 //===== Additional Comments: =================================

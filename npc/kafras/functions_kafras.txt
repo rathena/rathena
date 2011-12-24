@@ -1,13 +1,13 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Kafra Functions
 //===== By: ================================================== 
-//= eAthena Dev Team
+//= rAthena Dev Team
 //= Darlskies, Darkchild, Syrus22, Lupus, kobra_k88 (2.0)
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
 //= 6.3
 //===== Compatible With: ===================================== 
-//= eAthena 1.0
+//= rAthena 1.0
 //===== Description: =========================================
 //= These functions handle save, storage, cart rental, teleport,
 //= and Free Teleport/Warp/Rent Cart options for all Kafra NPCs.

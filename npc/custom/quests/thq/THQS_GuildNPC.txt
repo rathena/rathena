@@ -1,4 +1,4 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Treasure Hunter Script
 //===== Converted By =========================================
 //= Fredzilla
@@ -12,7 +12,7 @@
 //===== Version ==============================================
 //= 1.0 - Straight conversion of Aegis NPC file
 //===== Compatible With ======================================
-//= eAthena 1.0
+//= rAthena 1.0
 //===== Description ==========================================
 //= Start for Treasure hunter quests
 //===== Comments =============================================

@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Kafra Express - Portable Shop Module
 //===== By: ==================================================
 //= Skotlex
 //===== Current Version: =====================================
 //= 0.1
 //===== Compatible With: =====================================
-//= eAthena SVN R5195+
+//= rAthena SVN R5195+
 //===== Description: =========================================
 //= Part of the Kafra Express Script Package.
 //= Offers buying/selling shop.

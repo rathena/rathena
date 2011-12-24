@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Kafra Express - Config Module
 //===== By: ================================================== 
 //= Skotlex 
 //===== Current Version: ===================================== 
 //= 2.4
 //===== Compatible With: ===================================== 
-//= Any eAthena Version with function support
+//= Any rAthena Version with function support
 //===== Description: ========================================= 
 //= Part of the Kafra Express Script Package.
 //= This module contains the configuration of all modules. 

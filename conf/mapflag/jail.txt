@@ -1,7 +1,7 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Map Flags for Jails ( ATCommand @jail <player> )
 //===== By: ==================================================
-//= eAthena Dev Team
+//= rAthena Dev Team
 //===== Current Version: =====================================
 //= 1.0
 //===== Compatible With: =====================================

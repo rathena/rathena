@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Mechanic Jobchange Quest
 //===== By: ================================================== 
 //= Masao
 //===== Current Version: ===================================== 
 //= 1.0
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Jobchange Quest from Blacksmith / Whitesmith -> Mechanic.

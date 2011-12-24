@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Custom Free Breeder aka Universal Renter (not reccomended)
 //===== By: ================================================== 
-//= eAthena Team
+//= rAthena Team
 //===== Current Version: ===================================== 
 //= 1.3a
 //===== Compatible With: ===================================== 
-//= eAthena 1.0 Final +
+//= rAthena 1.0 Final +
 //===== Description: ========================================= 
 //= A Free PecoPeco and Falcon Breeder
 //===== Additional Comments: ================================= 

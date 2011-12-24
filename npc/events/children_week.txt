@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Children Week Event
 //===== By: ==================================================
 //= Samuray22
 //===== Current Version: =====================================
 //= 1.1
 //===== Compatible With: =====================================
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: =========================================
 //= [Aegis Conversion]
 //= Indian Ro: Children Week Event

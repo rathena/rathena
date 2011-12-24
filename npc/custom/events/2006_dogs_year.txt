@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Eastern New Year 2006 The Year Of The Fire Dog
 //===== By: ==================================================
 //= Lupus (1.0)
 //===== Current Version: =====================================
 //= 1.1
 //===== Compatible With: =====================================
-//= eAthena Version; 5xxx+ (with 'disguise' command)
+//= rAthena Version; 5xxx+ (with 'disguise' command)
 //===== Description: =========================================
 //= Custom event: For 28-29 January
 //===== Additional Comments: =================================

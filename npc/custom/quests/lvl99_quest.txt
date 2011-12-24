@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Quest for 99 Base Level Players
 //===== By: ==================================================
 //= Lupus
 //===== Current Version: =====================================
 //= 1.0
 //===== Compatible With: =====================================
-//= Any eAthena Version
+//= Any rAthena Version
 //===== Description: =========================================
 //= It makes players stay longer at 99th level and get a
 //= Jewel Case as a reward

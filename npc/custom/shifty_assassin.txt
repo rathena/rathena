@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Shifty Assassin
 //===== By: ==================================================
 //= acky - god@acky.com
 //===== Current Version: =====================================
 //= 1.1.2
 //===== Compatible With: =====================================
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: =========================================
 //= Players buy ninjas to assassinate other players
 //===== Additional Comments: =================================

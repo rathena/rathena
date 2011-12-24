@@ -543,7 +543,7 @@ Date (YYYY-MM-DD)
 	- Control panel developers are encouraged to enable players to modify this value, as it is required for new character deletion (2010-08-03aRagexeRE and later, not yet implemented).
 	* Removed unconditional redundant status change checks before status_change_end calls (follow up to r12890). [Ai4rei]
 	* Replaced remaining occurences of '-1' with 'INVALID_TIMER', where appropriate (follow up to r12998). [Ai4rei]
-	* Removed 'gui' plug-in (support plug-in for 3rd party eAthena GUI front-ends) (topic:262934). [Ai4rei]
+	* Removed 'gui' plug-in (support plug-in for 3rd party rAthena GUI front-ends) (topic:262934). [Ai4rei]
 2011/01/13
 	* Fixed mapflags 'restricted', 'nocommand', 'bexp' and 'jexp' still not getting completely initialized upon @reloadscript (bugreport:4710, follow up to r14548). [Ai4rei]
 	* Removed ladmin (remote administration tool), all related support code and the checkversion.pl tool with it's support code, which was shared with ladmin (topic:262934, related bugreport:1147, bugreport:1889, r9408 and r9610). [Ai4rei]
@@ -2335,7 +2335,7 @@ Date (YYYY-MM-DD)
 	* merged the charserver acc modification code cleanup to TXT (r11324)
 	* changed trunk's default server->client PACKETVER to 9
 2008/03/26
-	* Adjusted eAthena code to compile cleanly in C++ mode.
+	* Adjusted rAthena code to compile cleanly in C++ mode.
 2008/03/25
 	* Added proper checks to adoption processing (followup to r12428).
 	* Cleaned up some code / fixed some typos. [ultramage]
@@ -3757,7 +3757,7 @@ Date (YYYY-MM-DD)
 	- using 0.7 instead of 0.66 as modifier (so aspd will be lower now)
 	- see topic:151132 for details
 2007/08/16
-	* Fixed eAthena's wrong interpretation of the respawn times [Playtester]
+	* Fixed rAthena's wrong interpretation of the respawn times [Playtester]
 	* Added icons for NPC_CRITICALWOUND and NPC_SLOWCAST [Playtester]
 	* Fixed npc chatrooms not being deleted on npc unload/reload (crash)
 	* Modified chat code a bit for more clarity [ultramage]
@@ -7504,7 +7504,7 @@ Date (YYYY-MM-DD)
 	  [Skotlex]
 	* Added config setting "party_hp_mode" (battle/party.conf) which determines
 	  method to use to update party-mate hp bars. Aegis style is to update HP
-	  bars whenever HP changes, while eAthena style is to update it together with
+	  bars whenever HP changes, while rAthena style is to update it together with
 	  the map party dots. Defaults to aegis style. [Skotlex]
 	* Fixed packet 0x22a having the manner and opt3 packets in inverted
 	  offsets. [Skotlex]

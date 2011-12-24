@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 // BattleGround System - KvM 1-59
 //===== By: ================================================== 
 //= ???, L0ne_W0lf
 //===== Current Version: ===================================== 
 //= 1.3
 //===== Compatible With: ===================================== 
-//= eAthena 1.0
+//= rAthena 1.0
 //===== Description: ========================================= 
 //= [AEGIS Conversion]
 //= Kreiger Von Midgard Battleground for levels 1 to 59

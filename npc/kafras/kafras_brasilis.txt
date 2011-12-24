@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Brasilis Kafra
 //===== By: =========================
 //= L0ne_W0lf
 //===== Current Version: ===================
 //= 1.1
 //===== Compatible With: =====================
-//= eAthena 1.0
+//= rAthena 1.0
 //===== Description: ============================================
 //= Description of argument settings for callfunc "F_Kafra".
 //=  arg(0): When set at 0 the default Kafra message is displayed.

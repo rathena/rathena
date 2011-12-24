@@ -1,7 +1,7 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Map flags that disable warp
 //===== By: ==================================================
-//= eAthena Dev Team
+//= rAthena Dev Team
 //= v 1.2
 //= 1.3 Added WoE SE maps
 //===== Current Version: =====================================

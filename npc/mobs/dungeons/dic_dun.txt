@@ -1,11 +1,11 @@
-//===== eAthena Script ========================================
+//===== rAthena Script ========================================
 //= El Dicastes Dungeon Monster Spawn Script
 //===== By: ==================================================
 //= Kisuka
 //===== Current Version: =====================================
 //= 1.0
 //===== Compatible With: =====================================
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: =========================================
 //= Official monster spawns in El Dicastes Dungeon.
 //===== Additional Comments: =================================

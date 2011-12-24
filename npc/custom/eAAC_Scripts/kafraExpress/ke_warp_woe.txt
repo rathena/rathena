@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Kafra Express - WoE Warping Module
 //===== By: ================================================== 
 //= Skotlex 
 //===== Current Version: ===================================== 
 //= 1.8
 //===== Compatible With: ===================================== 
-//= eAthena SVN R3424+, RO Episode 4.1+ (War of Emperium)
+//= rAthena SVN R3424+, RO Episode 4.1+ (War of Emperium)
 //===== Description: ========================================= 
 //= Part of the Kafra Express Script Package.
 //= Offers warping to the War of Emperium grounds.

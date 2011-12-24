@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Gunslinger Job Quest
 //===== By: ================================================== 
 //= erKURITA, RockmanEXE, Kisuka
 //===== Current Version: ===================================== 
 //= 2.2
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= Gunslinger Job Change Quest
 //===== Additional Comments: ================================= 

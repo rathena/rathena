@@ -1,7 +1,7 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Map flags that disable icewall skill
 //===== By: ==================================================
-//= eAthena Dev Team
+//= rAthena Dev Team
 //=============================================================
 //= noicewall: Disables Icewall skill.
 //= To disable Icewall on a specific map add the mapname here.

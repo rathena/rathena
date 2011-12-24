@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Quest NPCs related to Lutie
 //===== By: ================================================== 
 //= TonyMan & Samuray22
 //===== Current Version: ===================================== 
 //= 1.3b
 //===== Compatible With: ===================================== 
-//= eAthena 1.0
+//= rAthena 1.0
 //===== Description: ========================================= 
 //= Blush, Cake Hat, Candle, Chef Hat, Raccoon Hat, Rainbow Eggshell,
 //= Spore Hat, Wonder Nutshell Quests

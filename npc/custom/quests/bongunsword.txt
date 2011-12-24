@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Munak and Bongun accessory / Taming items Quest
 //===== By: ================================================== 
-//= eAthena Team
+//= rAthena Team
 //===== Current Version: ===================================== 
 //= 1.2
 //===== Compatible With: ===================================== 
-//= eAthena 1.0
+//= rAthena 1.0
 //===== Description: ========================================= 
 //= Quest itms:Sword o'Chinese Exorcist,No Recipient,Her Heart
 //===== Additional Comments: ================================= 

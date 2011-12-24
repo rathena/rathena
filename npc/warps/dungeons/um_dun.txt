@@ -1,4 +1,4 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Umbala Dungeon (Yggdrasil Cave) Warp Script
 //===== By: ==================================================
 //= Darkchild (1.0vA); Athena (1.0vB)

@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Quest NPCs related to Morroc
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
 //= 2.9
 //===== Compatible With: ===================================== 
-//= eAthena 7.15 +
+//= rAthena 7.15 +
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= - Stop Post
@@ -2032,7 +2032,7 @@ moc_ruins,137,70,3	script	Book-Touching Man#garas	48,{
 		if (barmunt_crow == 0) {
 			mes "^660000Morroc, the City of the Desert, has been completely devastated by Satan Morroc.^000000";
 			next;
-			mes "^660000The people of Morroc were resilient enough to endure the region’s harsh weather, but their toughness to the weather could not prepare them enough as they witnessed the destruction brought down upon the city by Satan Morroc.^000000";
+			mes "^660000The people of Morroc were resilient enough to endure the regionï¿½s harsh weather, but their toughness to the weather could not prepare them enough as they witnessed the destruction brought down upon the city by Satan Morroc.^000000";
 			next;
 			mes "^660000This man, who looks as dry and thin as a fish dried up under the sun, still has a smile that reminds you of a benevolent god, and is touching a book in his hand.^000000";
 			next;
@@ -2997,7 +2997,7 @@ yuno_in04,117,102,3	script	Old News Scrapbook	844,{
 				mes "- Culture Page -";
 				mes "- Please Save My Water -";
 				mes " ";
-				mes "¡¡A recently acclaimed young author,";
+				mes "ï¿½ï¿½A recently acclaimed young author,";
 				mes "Jean Cadoc's new series";
 				mes "'Please Save My Water' has been ranked at the top";
 				mes "for the most checked-out book in libraries.";

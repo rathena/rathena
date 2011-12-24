@@ -1,4 +1,4 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Counteragent and Mixture Quest(Morgenstein)
 //===== By: ================================================== 
 //= kobra_k88
@@ -6,7 +6,7 @@
 //===== Current Version: ===================================== 
 //= 2.2b
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis COnversion]
 //= Counteragent and Mixtures for making dyes & Alchemist Job Quest

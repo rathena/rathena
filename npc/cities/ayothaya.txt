@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Ayotaya Town
 //===== By: ================================================== 
 //= MasterOfMuppets
 //===== Current Version: =====================================
 //= 1.7
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Ayotaya Town Script

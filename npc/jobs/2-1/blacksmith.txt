@@ -1,4 +1,4 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Blacksmith Quest
 //===== By: ==================================================
 //= EREMES THE CANIVALIZER(Aegis)
@@ -9,7 +9,7 @@
 //===== Current Version: =====================================
 //= 2.8
 //===== Compatible With: =====================================
-//= eAthena  SVN
+//= rAthena  SVN
 //===== Description: =========================================
 //= [Aegis Conversion]
 //= Job Change quest for Blacksmith class.

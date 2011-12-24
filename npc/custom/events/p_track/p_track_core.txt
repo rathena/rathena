@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Poring Track Main NPCs
 //===== By: ==================================================
 //= erKURITA
 //===== Current Version: =====================================
 //= 0.0000000000000002
 //===== Compatible With: =====================================
-//= eAthena 1.0
+//= rAthena 1.0
 //===== Description: =========================================
 //= NPCs that has nothing to do with the race itself, but
 //= has important functions on the race itself.

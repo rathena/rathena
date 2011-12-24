@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Rogue Skills Quests
 //===== By: ================================================== 
 //= Lupus, Reddozen
 //===== Current Version: ===================================== 
 //= 1.7
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Quests for skills: CLose Confine

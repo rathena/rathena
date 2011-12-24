@@ -1,4 +1,4 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Wizard Job Quest
 //===== By: ================================================== 
 //= (Aegis) Translated by yoshiki, converted by kobra_k88
@@ -6,7 +6,7 @@
 //===== Current Version: ===================================== 
 //= 3.1
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Job Change quest for Wizard class.

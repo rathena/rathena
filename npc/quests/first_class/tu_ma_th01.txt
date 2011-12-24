@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Theif Mage Quest Story Mode
 //===== By: ================================================== 
 //= Fix up by Jukka
 //===== Current Version: ===================================== 
 //= 1.3
 //===== Compatible With: ===================================== 
-//= eAthena SVN (Testet in Trunk 88xx)
+//= rAthena SVN (Testet in Trunk 88xx)
 //===== Description: ========================================= 
 //=
 //===== Additional Comments: ================================= 

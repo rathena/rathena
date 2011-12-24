@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Brisingamen seal unlocking NPCs.
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
 //= 1.5
 //===== Compatible With: ===================================== 
-//= eAthena
+//= rAthena
 //===== Description: ========================================= 
 //= Quest for breaking the seal of Brisingamen.
 //===== Additional Comments: =================================

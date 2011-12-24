@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Comodo Gambling
 //===== By: ==================================================
 //= Reddozen, Cypress, Zefris
 //===== Current Version: =====================================
 //= 1.2
 //===== Compatible With: =====================================
-//= eAthena SVN 6769+ (temporary npc variables)
+//= rAthena SVN 6769+ (temporary npc variables)
 //===== Description: =========================================
 //= Random items from 3carat diamonds in Comodo
 //===== Additional Comments: =================================

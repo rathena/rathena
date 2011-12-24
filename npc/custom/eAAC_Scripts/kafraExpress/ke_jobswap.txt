@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Kafra Express - Job Swapping Module
 //===== By: ==================================================
 //= Skotlex
 //===== Current Version: =====================================
 //= 3.8
 //===== Compatible With: =====================================
-//= eAthena SVN8840+
+//= rAthena SVN8840+
 //===== Description: =========================================
 //= Part of the Kafra Express Script Package.
 //= Enables job changing among classes of the same 'type'

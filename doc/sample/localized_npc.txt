@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Sample localized NPC
 //===== By: ================================================== 
-//= eAthena Dev Team
+//= rAthena Dev Team
 //===== Current Version: ===================================== 
 //= v1.0
 //===== Compatible With: ===================================== 
-//= eAthena with setd, getd
+//= rAthena with setd, getd
 //===== Description: ========================================= 
 //= Example of a localized NPC.
 //= 
@@ -146,6 +146,6 @@ OnInterIfInitOnce:
 	callfunc "setmes2", "LNPC_lang", 0, "EN";
 	callfunc "setmes2", "LNPC_lang", 1, "PT";
 	callfunc "setmes2", "LNPC_text", 0, "Something in english";
-	callfunc "setmes2", "LNPC_text", 1, "Algo em português";
+	callfunc "setmes2", "LNPC_text", 1, "Algo em portuguï¿½s";
 	end;
 }

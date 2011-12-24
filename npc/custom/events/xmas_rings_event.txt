@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Karachun Event (Xmas Rings Quest)
 //===== By: ==================================================
 //= Lupus (1.0)
 //===== Current Version: =====================================
 //= 1.2
 //===== Compatible With: =====================================
-//= eAthena Version; 4880+ (with 'setItemScript' command)
+//= rAthena Version; 4880+ (with 'setItemScript' command)
 //===== Description: =========================================
 //= Custom event: Karachun (from 8 Dec till 8 Jan), X-Mas, HNY
 //===== Additional Comments: =================================

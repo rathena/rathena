@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Quest NPCs related to Einbroch and Einbech
 //===== By: ================================================== 
-//= Evera and The eAthena Dev Team
+//= Evera and The rAthena Dev Team
 //===== Current Version: ===================================== 
 //= 2.5
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis conversion]
 //= Oridecon/Mineral Quest

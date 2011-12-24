@@ -464,7 +464,7 @@ Date		Added
 	- Added item checks to Ice Necklace quest.
 	- Uncommented a warp in morroc_fild.
 2008/12/26
-	Rev. 13415 Happy boxing day, eAthena! Here have a massive update. [L0ne_W0lf]
+	Rev. 13415 Happy boxing day, rAthena! Here have a massive update. [L0ne_W0lf]
 	* Implemented the first round of episode 12.1 change which include:
 	- Many Morroc NPCs have been moved to Morroc Ruins.
 	- The addition of new of NPCs to the ruins of Morroc.

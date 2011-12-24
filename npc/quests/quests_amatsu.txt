@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Quest NPCs related to Amatsu
 //===== By: ================================================== 
-//= eAthena team & others? & MasterOfMuppets
+//= rAthena team & others? & MasterOfMuppets
 //===== Current Version: ===================================== 
 //= 1.4a
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Momotaro Event

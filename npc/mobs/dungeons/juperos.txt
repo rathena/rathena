@@ -1,7 +1,7 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Juperos Dungeon Monster Spawn Script
 //===== By: ==================================================
-// The Prometheus Project, eAthena dev team
+// The Prometheus Project, rAthena dev team
 //===== Current Version: =====================================
 //= 1.4
 //===== Compatible With: =====================================

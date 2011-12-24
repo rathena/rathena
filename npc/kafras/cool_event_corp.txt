@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Cool Event Corp. Staff
 //===== By: ================================================== 
 //= Gepard
 //===== Current Version: ===================================== 
 //= 1.5
 //===== Compatible With: ===================================== 
-//= eAthena
+//= rAthena
 //===== Description: ========================================= 
 //= Cool Event Corp. Staff (Save, Storage & Pushcart Service)
 //= in Arunafeltz Region.

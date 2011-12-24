@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Veins Quests
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
 //= 2.0
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Collection of Veins Quests 
@@ -2027,7 +2027,7 @@ ein_in01,166,282,4	script	Employee#sch	904,{
 	close;
 }
 
-ein_in01,176,285,0	script	°ÍµÂ ÌØÀæ¸ê#sch	-1,1,1,{
+ein_in01,176,285,0	script	ï¿½Íµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½#sch	-1,1,1,{
 OnTouch:
 	if (que_sch == 15) {
 		disablenpc "Corporate Figure#sch";

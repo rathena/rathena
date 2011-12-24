@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Custom Thanatos Tower Quest
 //===== By: ==================================================
 //= Bibilol & Moryagorn
 //===== Current Version: =====================================
 //= 1.1
 //===== Compatible With: =====================================
-//= Any eAthena Version;
+//= Any rAthena Version;
 //===== Description: =========================================
 //= Custom Thanatos Tower Quest
 //===== Additional Comments: =================================

@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Penal Servitude Script
 //===== By ===================================================
 //= Lupus
 //===== Version ==============================================
 //= 1.2
 //===== Compatible With ======================================
-//= eAthena Final (SVN)
+//= rAthena Final (SVN)
 //===== Description ==========================================
 //= A simple Penal Servitude Script.
 //= It could cheer up your prisoners a bit.
@@ -80,7 +80,7 @@ L_RELEASE:
 	close;
 
 M_Q1:
-//ÅEÂÒÅE1
+//ÔøΩEÔøΩÔøΩE1
 	mes "[Saddeus]";
 	mes "Our stocks are short of toadstools.  Remember your morning's skilly?  What about some work at our sponsored mushroom farm?";
 	next;

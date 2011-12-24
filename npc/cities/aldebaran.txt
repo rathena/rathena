@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Al De Baran Town
 //===== By: ================================================== 
-//= eAthena dev team; L0ne_W0lf
+//= rAthena dev team; L0ne_W0lf
 //===== Current Version: ===================================== 
 //= 2.3
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Al De Baran Town NPCs

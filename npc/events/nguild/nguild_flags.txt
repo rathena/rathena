@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= War of Emperium N Guild Flags
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
 //= 1.3
 //===== Compatible With: =====================================
-//= eAthena 0.1+; RO Episode 4+
+//= rAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
 //= WoE flag scripts.  Display guild emblems on flags.
 //===== Additional Comments: =================================

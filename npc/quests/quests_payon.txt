@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Quest NPCs related to Payon
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
 //= 1.7
 //===== Compatible With: ===================================== 
-//= eAthena 7.15 +
+//= rAthena 7.15 +
 //===== Description: ========================================= 
 //= Pretend Murder, Ear Muffs, Oxygen, Derivuchi Cap, Helm of Angel Quests.
 //===== Additional Comments: ================================= 

@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Valhallen items Quests NPC
 //===== By: ================================================== 
 //= Avaji
 //===== Current Version: ===================================== 
 //= 1.0
 //===== Compatible With: ===================================== 
-//= eAthena 7.15 +
+//= rAthena 7.15 +
 //===== Description: ========================================= 
 //= All-in-one: Mjollnir,Sleipnir,Brisingammen,Gleipnir,Megingjard
 //===== Additional Comments: ================================= 

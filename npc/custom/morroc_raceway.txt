@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Morroc Raceway Script
 //===== By: ==================================================
 //= acky (god@acky.com)
 //===== Current Version: =====================================
 //= 1.3
 //===== Compatible With: =====================================
-//= Any eAthena Version
+//= Any rAthena Version
 //===== Description: =========================================
 //= Lets players race around Morroc (pvp_y_1-5)
 //===== Additional Comments: =================================

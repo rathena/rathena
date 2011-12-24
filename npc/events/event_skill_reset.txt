@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Official Skill Resetter Event in Yuno (kRO & idRO)
 //===== By: ================================================== 
 //= $ephiroth
 //===== Current Version: ===================================== 
 //= 1.02
 //===== Compatible With: ===================================== 
-//= eAthena 1.0
+//= rAthena 1.0
 //===== Description: ========================================= 
 //= 2006 - Edition Skill Reset NPC
 //= 2006/11/16: 1.0 Release and fully working. [$ephiroth]

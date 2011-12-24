@@ -1,4 +1,4 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Juno Monster Museum
 //===== By: ================================================== 
 //= Muad_Dib (The Prometheus Project)
@@ -6,14 +6,14 @@
 //===== Current Version: ===================================== 
 //= 1.4
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Juno Monster Museum - Non Player Character Locations
 //= - Information about various monsters
 //===== Additional Comments: ================================= 
 // 07/06/05 : Added 1st Version. [Muad_Dib]
-//= Adapted to eAthena Scripting Language by [Lance] 
+//= Adapted to rAthena Scripting Language by [Lance] 
 //= 1.1a Fixed typos [Haplo]
 //= 1.2 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 1.3 Added a Missing "case 1:". [Samuray22]

@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Thief Skills Quests
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
 //= 1.6
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Quests for skills: Sand Attack, Back Slide, Find Stone, 

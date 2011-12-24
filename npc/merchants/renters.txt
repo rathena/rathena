@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Renters
 //===== By: ================================================== 
 //= kobra_k88, mod by Lupus
 //===== Current Version: ===================================== 
 //= 1.7
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= Knight and Crusader Peco Peco Breeders, Falcon Breeder scripts
 //===== Additional Comments: ================================= 

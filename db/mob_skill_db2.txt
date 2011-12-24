@@ -56,7 +56,7 @@
 //	hiding		condition of being in hidden state
 //	sight		condition of being in unhidden state
 
-// eAthena Dev Team
+// rAthena Dev Team
 //1900,Valaris@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,,
 //1900,Valaris@AL_TELEPORT,walk,26,1,500,0,5000,yes,self,rudeattacked,,,,,,,,
 //1900,Valaris@KN_BRANDISHSPEAR,attack,57,10,2000,500,5000,no,target,always,0,,,,,,29,

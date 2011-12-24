@@ -1,12 +1,12 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Stylist Script
 //===== By: ================================================== 
-//= eAthena Dev team
+//= rAthena Dev team
 //= Revised by Nekosume [pyRO v3.0] 
 //===== Current Version: ===================================== 
 //= 4.2
 //===== Compatible With: ===================================== 
-//= Any eAthena Version 
+//= Any rAthena Version 
 //===== Description: ========================================= 
 //= Revised dye NPC
 //===== Additional Comments: =================================

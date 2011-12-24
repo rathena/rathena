@@ -1,4 +1,4 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Official Gonryun Power Arena
 //===== By: ==================================================
 //= KarLaeda (Aegis script cnversion)

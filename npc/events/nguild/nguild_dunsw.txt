@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= War of Emperium Dungeon Switch for NGuild Castles
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
 //= 1.1
 //===== Compatible With: =====================================
-//= eAthena 0.1+; RO Episode 4+
+//= rAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
 //= Switch that warps guild members to the guild dungeon
 //===== Additional Comments: =================================

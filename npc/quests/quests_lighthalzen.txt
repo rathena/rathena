@@ -1,4 +1,4 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Quest NPCs located in Lighthalzen
 //===== By: ================================================== 
 //= Persian, Vicious_Pucca, aoa00, Evera, MasterOfMupppets,
@@ -6,7 +6,7 @@
 //===== Current Version: ===================================== 
 //= 4.7
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= Quests related to Lighthalzen City.
 //===== Additional Comments: ================================= 

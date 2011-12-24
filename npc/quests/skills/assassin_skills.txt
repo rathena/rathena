@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Assassin Skills Quests
 //===== By: ================================================== 
 //= Lupus, Reddozen
 //===== Current Version: ===================================== 
 //= 1.5
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Quests for skills: Venom Knife, Sonic Acceleration
@@ -952,7 +952,7 @@ OnTouch:
 	}
 }
 
-moc_pryd04,85,96,0	script	¡¡#crypt	-1,3,3,{
+moc_pryd04,85,96,0	script	ï¿½ï¿½#crypt	-1,3,3,{
 OnTouch:
 	if (ASSN_SK == 4) {
 		specialeffect EF_CONE;

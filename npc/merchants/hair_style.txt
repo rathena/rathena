@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Hair Dresser
 //===== By: ==================================================
 //= Muad_Dib, Samuray22, Kisuka
 //===== Current Version: =====================================
 //= 1.4
 //===== Compatible With: =====================================
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: =========================================
 //= [Aegis Conversion]
 //= Allows you to change your hairstyle.
@@ -1298,6 +1298,6 @@ lhz_in02,91,155,5	script	Assistant Beautician#li	862,{
 
 //===== Old Changelog: =================================
 //= 07/06/05 : Added 1st Version. [Muad_Dib]
-//= Converted to eAthena format by Dr.Evil Fixed typos [Nexon]
+//= Converted to rAthena format by Dr.Evil Fixed typos [Nexon]
 //= 1.1 Removed Duplicates [Silent]
 //============================================================

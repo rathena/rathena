@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Kafra Expres - Stat/Skill Market Module
 //===== By: ==================================================
 //= Skotlex
 //===== Current Version: =====================================
 //= 2.0
 //===== Compatible With: =====================================
-//= eAthena SVN R3579+
+//= rAthena SVN R3579+
 //===== Description: =========================================
 //= Part of the Kafra Express Script Package.
 //= Lets players buy/sell skill points/stat points 

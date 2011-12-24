@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Lighthalzen Airport Staff
 //===== By: ================================================== 
 //= L0ne_W0lf, Muad_Dib
 //===== Current Version: ===================================== 
 //= 1.3
 //===== Compatible With: ===================================== 
-//= eAthena Revision 3000+
+//= rAthena Revision 3000+
 //===== Description: ========================================= 
 //= Lighthalzen Airport Staff
 //===== Additional Comments: ================================= 

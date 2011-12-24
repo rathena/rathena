@@ -1,4 +1,4 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Jawaii (The Lovers' Paradise) Town script
 //===== By: ==================================================
 //= jAthena (1.0)
@@ -7,7 +7,7 @@
 //===== Current Version: =====================================
 //= 3.6
 //===== Compatible With: =====================================
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: =========================================
 //= [Aegis OCnversion]
 //= Jawaii Town Npcs
@@ -20,7 +20,7 @@
 //= 1.5 Fixed Script, and spelling errors, some thanks to Sparkles [DNett123]
 //= 1.6 Final corrections (not complete), thanks to the public, and DNett123!
 //= 1.6c added missing monsters. Still 1 type is missing [Lupus]
-//= 1.7 Fixed a lot of typo’s [Nexon]
+//= 1.7 Fixed a lot of typoï¿½s [Nexon]
 //= 1.8 Removed monster spawns, added aegis ep 8.5 spawns to npc/mobs/fields/jawaii.txt [MasterOfMuppets]
 //= 2.0 Updated the npcs according to iRO [MasterOfMuppets]
 //= 2.01 fixed missing @ at randomdrink, thanks to theultramage [Lupus]

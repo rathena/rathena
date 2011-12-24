@@ -3130,7 +3130,7 @@ Date	Added
 	* Fixed typo in msg_athena.conf and 'users with autoloot turned on will not have their rare drops announced.'. Thanks to Kaseki.
 	* Mob should stop walking when hit if not enduring. Thanks to Playtester. [Lance]
 	* Included pcre.dll and libmysql.dll from joshuali. [Lance]
-	* Eliminated Level 3 warnings. Setting compile warnings to Level 3. (Level 4 just kills eAthena XD) [Lance]
+	* Eliminated Level 3 warnings. Setting compile warnings to Level 3. (Level 4 just kills rAthena XD) [Lance]
 2005/11/27
 	* Fixed an overflow pointer bug in the gvg eliminate timer. [Skotlex]
 	* Updated the damage code if Spiral Pierce, Shield Chain and Shield
@@ -6348,7 +6348,7 @@ Date	Added
 	* Removed battle option "enemy_critical" [Skotlex]
 	  Use enemy_critical_rate=0 instead.
 	* Changed the default of enemy_critical_rate to 0 [Skotlex]
-	* Ported oA's imalive and flushtimer system to eAthena plugin 'gui' [celest]
+	* Ported oA's imalive and flushtimer system to rAthena plugin 'gui' [celest]
 	  - You will only need the plugin if you are using a gui program like wxOAGUI
 	    to run Athena
 	  - To configure it check addons/gui.conf
@@ -6799,7 +6799,7 @@ Date	Added
 	  TXT users with custom items can update their custom db using gawk (*nix
 	  or under Cygwin) this way (thanks to Sasuke):
 	  gawk -F, '{ for (i=1; i<= NF; i++) { if (i==16) { printf $i; printf ",";printf ","; } else if ( i==NF ) { print $i; } else { printf $i; printf ","; } } }' db/item_db2.txt > item_db2.new.txt
-	  Run it from within the root eAthena directory, and you'll get an updated
+	  Run it from within the root rAthena directory, and you'll get an updated
 	  item_db2.txt in your root directory. However, all custom items are not
 	  refineable by default this way, you still have to set to 1 the refineable
 	  column where it applies on your custom item_db.
@@ -6888,9 +6888,9 @@ Date	Added
 
 05/24
 	* Added 'make addons' -- plugins will not be compiled by default now [celest]
-	* Ported uptime logging function to eAthena plugin [celest]
-	* Ported pid file creation function to eAthena plugin [celest]
-	* Ported stackdump creation function to eAthena plugin [celest]
+	* Ported uptime logging function to rAthena plugin [celest]
+	* Ported pid file creation function to rAthena plugin [celest]
+	* Ported stackdump creation function to rAthena plugin [celest]
 	* Added capability to export to plugins [celest]
 	* Fixed ensemble skills, thanks to Komurka
 	* Fixed Dissonance damage, thanks to shadow
@@ -6968,7 +6968,7 @@ Date	Added
 		- Might fix a few character names if you have no restrictions [Codemaster]
 	* Fixed 'rudeattacked' skill condition, thanks to Komurka
 	* Replaced zlib_win32.h and zconf_win32.h with the v1.2.2 files in /zlib [celest]
-	* Ported zlib.dll loading to eAthena plugin form [celest]
+	* Ported zlib.dll loading to rAthena plugin form [celest]
 	* Fixed some NPC skills acquirable by @allskill [celest]
 	* Merged sigpipe's handler with sig_proc [celest]
 	* Optimised timer.c a bit (partially from Shinomori's changes) [celest]
@@ -7655,7 +7655,7 @@ Date	Added
         * sql native vc7 projects now build/link [1351: MouseJstr]
         * Began sql projects for VC7 [1349: MouseJstr]
         * text char-server and login-server now build using VC7.  You
-          can use the eAthena.sln solution to build all three.  These
+          can use the rAthena.sln solution to build all three.  These
           are currently just the text versions of the servers.  I have
           not added projects yet to build the sql versions.  
           [SVN: 1347 MouseJstr]
@@ -7924,7 +7924,7 @@ Date	Added
         * Some changes in sig_dump to allow Cygwin produce stackdumps upon crash again,
           thanks to Ser [celest]
         * Changed the default stackdump creation folder from /save to /log [celest]
-        * Fixed a typo in TXT login server logging, thanks to Skyer / eAthenaC [celest]
+        * Fixed a typo in TXT login server logging, thanks to Skyer / rAthenaC [celest]
         * Added HP and SP rate underflow checking [celest]
         * Added stop auto attacking if no arrows were equipped [celest]
 	* Added new script command: 'cardscnt'. It returns N of inserted cards in the same weapon. [Lupus]
@@ -8113,7 +8113,7 @@ Date	Added
 
 02/18
         * Fixed a bug with statpoint.txt reading and giving too much stat points,
-          thanks to Benz / eAthenaC [celest]
+          thanks to Benz / rAthenaC [celest]
         * Fixed client errors when pecopeco Lord Knights/Paladins log in with a weapon
           equipped [celest]
         * Added bAddRace2 -- check item_bonus.txt [celest]
@@ -10814,7 +10814,7 @@ Date	Added
 	  - less memory usage
 	  - less tests and loops (more speed)
 	  - more efficient (use directly char_dat position instead of search it)
-	* Added Official Assassin Job Quest. Now eAthena contains all 2-1 Job Quests! [kobra_k88]
+	* Added Official Assassin Job Quest. Now rAthena contains all 2-1 Job Quests! [kobra_k88]
 	* Fixed scripts: 32hats, warper2, platinum_skills, added/changed some mapflags and other misc script changes [Lupus]
 	* Added @disguise command (enter a mob_id or name, and you will appear to others as that mob/npc!)
 	* Fixed code for mob disguises, should not crash clients now.
@@ -10852,7 +10852,7 @@ Date	Added
 	* Added translated Gonryun town. Fixed map names of Louyang shops. Added missing Blacksmith,
 	  added extra Rapairmen into refine.txt. In Inns added 4 different prices based on Base Lvl.[kobra_k88]
 
----------eAthena 1.0.0 RC3 TXT---------
+---------rAthena 1.0.0 RC3 TXT---------
 08/04
 	* Set battle_athena.conf to more accurate settings. [Valaris]
 	* Decreased default damage delay (stun after being hit) by 75%. [Valaris]
@@ -10981,7 +10981,7 @@ Date	Added
 	  - modification of makefile
 	* Added a note in TODO 14: encrypted password - problem with client versions [Yor]
 
----------eAthena 1.0.0 RC2 TXT---------
+---------rAthena 1.0.0 RC2 TXT---------
 07/28
 	* Added metaller to equipped mobs. [Valaris]
 	* Added a note in TODO 19 [Yor]
@@ -11074,7 +11074,7 @@ Date	Added
 	* Fixed bugs in npc headers caused by someone using spaces and not tabs. (kafra.txt, guide.txt, yuno.txt) [Valaris]
 	* Fixed a vending bug. [Valaris]
 
----------eAthena 1.0.0 RC1 TXT---------
+---------rAthena 1.0.0 RC1 TXT---------
 07/22
 	* Fixed numerous startup errors in aldebaron castles and one geffen castle. [Valaris]
 	* Full Guild Wars Script Complete!!! [Akaru]

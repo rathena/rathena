@@ -1,4 +1,4 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Valkyrie Realm
 //===== By: ==================================================
 //= Nana, fixes by Poki
@@ -7,7 +7,7 @@
 //===== Current Version: ===================================== 
 //= 3.0
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Quest to become a Tranceded Class. (Advanced/Rebirthed)

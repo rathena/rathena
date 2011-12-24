@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Dungeon Teleport Service
 //===== By: ================================================== 
 //= Evera
 //===== Current Version: ===================================== 
 //= 2.8
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: =========================================
 //= [Aegis Conversion]
 //= Cool Event Corp NPCs vs. Kafra Dungeon Teleport Service and voting system.

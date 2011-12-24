@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Grade A and Grade S weapon quests
 //===== By: ================================================== 
 //= Vicious_Pucca, Reddozen & MasterOfMuppets
 //===== Current Version: ===================================== 
 //= 1.6
 //===== Compatible With: ===================================== 
-//= eAthena SVN 3422+(Requires jA Script System)
+//= rAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Grade A and Grade S weapon quests

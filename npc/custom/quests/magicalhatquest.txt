@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Wizard Hat Custom Quest
 //===== By: ==================================================
 //= Who
 //===== Current Version: =====================================
 //= 1.1
 //===== Compatible With: =====================================
-//= eAthena
+//= rAthena
 //===== Description: =========================================
 //= Wizard Hat quest. Harmless, doesn't screw game balance.
 //===== Additional Comments: =================================

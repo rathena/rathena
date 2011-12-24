@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Monk Job Quest
 //===== By: ==================================================
 //= Dino9021, Edited / Translated by Celest
 //===== Current Version: ===================================== 
 //= 2.5
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Job quest for Monk classes

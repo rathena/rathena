@@ -1,4 +1,4 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Knight Job Quest
 //===== By: ================================================== 
 //= PGRO TEAM (Aegis).
@@ -7,7 +7,7 @@
 //===== Current Version: ===================================== 
 //= 3.0
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Job Change quest for Knight class.

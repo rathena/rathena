@@ -1,12 +1,12 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= elRO Airship
 //===== By: ==================================================
-//= Edited And removed irrelevent comments by eAthena Dev Team
+//= Edited And removed irrelevent comments by rAthena Dev Team
 //= Draike\Bluto\Hephaestus
 //===== Current Version: =====================================
 //= 2.2a
 //===== Compatible With: =====================================
-//= eAthena SVN 02/05/2005 +
+//= rAthena SVN 02/05/2005 +
 //===== Description: =========================================
 //= It's the elRO airship. XD
 //===== Additional Comments: =================================

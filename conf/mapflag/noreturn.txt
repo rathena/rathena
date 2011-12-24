@@ -1,7 +1,7 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Map flags that disable use of Butterfly wings
 //===== By: ==================================================
-//= eAthena Dev Team
+//= rAthena Dev Team
 //= 1.4a [Lupus]
 //===== Notes: ===============================================
 //= For disabling Fly wings use noteleport

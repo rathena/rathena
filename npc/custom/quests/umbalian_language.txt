@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Custom Umbalian Language Quest
 //===== By: ================================================== 
-//= sabernet09 & eAthena Team
+//= sabernet09 & rAthena Team
 //===== Current Version: ===================================== 
 //= 1.0
 //===== Compatible With: ===================================== 
-//= eAthena 7.15 +
+//= rAthena 7.15 +
 //===== Description: ========================================= 
 //= 1.0 Removed it from offical Umbala Quests [Lupus]
 //============================================================ 

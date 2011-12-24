@@ -1,7 +1,7 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Geffenia Dungeon Monster Spawn Script
 //===== By: ==================================================
-//= Muad_Dib, eAthena dev team
+//= Muad_Dib, rAthena dev team
 //===== Current Version: =====================================
 //= 1.1
 //===== Compatible With: =====================================

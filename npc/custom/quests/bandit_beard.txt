@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Bandit Beard Quest
 //===== By: ================================================== 
 //= Mega Man Expert & Lupus
 //===== Current Version: ===================================== 
 //= 1.3
 //===== Compatible With: ===================================== 
-//= eAthena 0.5.2 +
+//= rAthena 0.5.2 +
 //===== Description: ========================================= 
 //= A harmless quest for a simply item w/o any bonuses "Bandit Beard"
 //===== Additional Comments: ================================= 

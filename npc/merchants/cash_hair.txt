@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Cash Hair Stylist
 //===== By: ================================================== 
 //= Kisuka
 //===== Current Version: ===================================== 
 //= 1.0
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= Exchange cash item, New_Style_Coupon, for new hair styles.
 //===== Additional Comments: ================================= 

@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Kafra Express - Dungeon Warps Module
 //===== By: ================================================== 
 //= Skotlex 
 //===== Current Version: ===================================== 
 //= 4.2
 //===== Compatible With: ===================================== 
-//= eAthena SVN R3424+, RO Episode 8+ (Hugel)
+//= rAthena SVN R3424+, RO Episode 8+ (Hugel)
 //===== Description: ========================================= 
 //= Part of the Kafra Express Script Package.
 //= Offers warping to dungeons.

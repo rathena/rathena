@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= War of Emperium SE - Auto-Start
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
 //= 1.0
 //===== Compatible With: =====================================
-//= eAthena SVN; RO Episode 11.3
+//= rAthena SVN; RO Episode 11.3
 //===== Description: =========================================
 //= Auto Start for War of Emperium
 //= To know how to set up WoE times, go to doc\woe_time_explanation.txt

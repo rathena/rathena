@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Thanatos Tower Quest
 //===== By: ==================================================
 //= [Ishizu-chan]
 //===== Current Version: =====================================
 //= 2.1
 //===== Compatible With: =====================================
-//= Any eAthena Version i guess?
+//= Any rAthena Version i guess?
 //===== Description: =========================================
 //= It's the Thanatos Tower Quest...
 //===== Additional Comments: =================================

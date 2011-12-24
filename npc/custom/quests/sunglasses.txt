@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Quest For Slotted Sunglasses
 //===== By: ==================================================
 //= Aegis - amichan
 //===== Current Version: =====================================
 //= 1.7
 //===== Compatible With: =====================================
-//= Any eAthena Version;
+//= Any rAthena Version;
 //===== Description: =========================================
 //= Quest to get Slotted Sunglasses
 //===== Additional Comments: =================================

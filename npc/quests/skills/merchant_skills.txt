@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Merchant Skills Quests
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
 //= 1.5
 //===== Compatible With: =====================================
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: =========================================
 //= [Aegis Conversion]
 //= Quests for skills: Crazy Uproar, Change Cart, Cart

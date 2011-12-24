@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= New Novice Training Grounds
 //===== By: ==================================================
 //= Kisuka
 //===== Current Version: =====================================
 //= 1.1
 //===== Compatible With: =====================================
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: =========================================
 //= New Novice Training Grounds
 //= [Hand Scripted (No Programs or AEGIS Scripts)]

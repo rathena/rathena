@@ -1,5 +1,5 @@
 //===== Athena Doc ========================================
-//= eAthena Monster Modes Reference
+//= rAthena Monster Modes Reference
 //===== By ================================================
 //= Developers
 //===== Version ===========================================

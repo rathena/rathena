@@ -1,4 +1,4 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Dancer Job Quest
 //===== By: ==================================================
 //= Kalen - Original jAthena
@@ -6,7 +6,7 @@
 //===== Current Version: ===================================== 
 //= 3.7
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Job quest for Dancer classes

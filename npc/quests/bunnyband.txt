@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Bunny Band Quest
 //===== By: ================================================== 
-//= eAthena Dev Team
+//= rAthena Dev Team
 //===== Current Version: ===================================== 
 //= v1.5
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Quest to obtain a Bunny Band headgear.

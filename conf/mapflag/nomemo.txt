@@ -1,7 +1,7 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Map flags that disable warp portal memory
 //===== By: ==================================================
-//= eAthena Dev Team
+//= rAthena Dev Team
 //= 1.6a added up to Hugel maps. [Lupus]
 //= 1.6b Added job_knt map. [Samuray22]
 //= 1.7 Added all novice maps. [L0ne_W0lf]

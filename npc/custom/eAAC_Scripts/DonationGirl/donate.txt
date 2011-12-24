@@ -21,7 +21,7 @@
 //=	   with decimals.
 //= 3.1  - Added quotes to some queries, fixed a variable and
 //=	   removed a comment.
-//= 3.2  - Fixed a problem where eAthena would crash if a
+//= 3.2  - Fixed a problem where rAthena would crash if a
 //=	   query returned NULL.
 //= 3.3  - Optimized query speeds by combining a few select 
 //=	   queries into one. Requires Trunk 7975.
@@ -36,7 +36,7 @@
 //= 3.6  - Removed name column in donate_item_db. Added
 //=	   support for item_db2 table.
 //= 3.7  - Added Zeny support. $rate must be set for it to be
-//=	   used. Removed truncate() in a query since eAthena
+//=	   used. Removed truncate() in a query since rAthena
 //=	   automatically truncates floats to ints.
 //= 3.8  - Fixed problem with menus and null values.
 //= 3.9  - Explicit reset of @aid.
@@ -46,7 +46,7 @@
 //= 3.11 - Explicit reset of another variable. Fixed typo
 //=	 - with $rate. Added logmes for GM operations.
 //===== Compatible With =====================================
-//= eAthena SQL - any version with the new query_sql command
+//= rAthena SQL - any version with the new query_sql command
 //=		  (Trunk 7975 and up).
 //= MySQL - 5.0.8 and up highly recommended but not required.
 //===== Description =========================================
@@ -57,7 +57,7 @@
 //= amount donated by users and the items claimable.
 //===== Installation ========================================
 //= You must import donate.sql and donate_item_db.sql (and
-//= item_db.sql and item_db2.sql, which comes with eAthena)
+//= item_db.sql and item_db2.sql, which comes with rAthena)
 //= before using this script.
 //===========================================================
 //= Thanks to Vich for helping me with the SQL syntax.

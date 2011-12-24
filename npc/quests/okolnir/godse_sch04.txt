@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Falicious Okolnir - Nidhoggr 4
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
 //= 1.3
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= God Item SE Creation scipt (Brynhild)
@@ -3144,7 +3144,7 @@ que_qsch04,252,340,3	script	Wish Maiden#sch04_gift	403,{
 		else {
 			cutin "wish_maiden12",1;
 			mes "[Wish Maiden]";
-			mes "¸ All of you worked together as a team...";
+			mes "ï¿½ All of you worked together as a team...";
 			mes "Humans are strong when they are united, but are easily swayed by lust.";
 			next;
 			mes "[Wish Maiden]";

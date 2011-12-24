@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Kafra Express - NPC definitions
 //===== By: ================================================== 
 //= Skotlex 
 //===== Current Version: ===================================== 
 //= 2.7
 //===== Compatible With: ===================================== 
-//= Any eAthena Version with function support; RO Episode 8+ (LightHalzen)
+//= Any rAthena Version with function support; RO Episode 8+ (LightHalzen)
 //===== Description: ========================================= 
 //= Part of the Kafra Express Script Package.
 //= Here is where the npcs are defined.

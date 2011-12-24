@@ -1,4 +1,4 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Valentine Event Script
 //===== By: ==================================================
 //= Muad_Dib(Prometheus Project)
@@ -11,7 +11,7 @@
 //===== Additional Comments: =================================
 //= 07/06/05 : Added 1st Version. [Muad_Dib]
 //= 08/28/05 : Ver. 1.01 Added a missing close; [Muad_Dib]
-//= Converted to eAthena format by Dr.Evil
+//= Converted to rAthena format by Dr.Evil
 //============================================================
 
 

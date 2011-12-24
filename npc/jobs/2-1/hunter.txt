@@ -1,4 +1,4 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Hunter Job Quest
 //===== By: ================================================== 
 //= EREMES THE CANIVALIZER (Aegis)Translated by yoshiki (Aegis)
@@ -7,14 +7,14 @@
 //===== Current Version: ===================================== 
 //= 3.6
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Job Change quest for Hunter class.
 //===== Additional Comments: ================================= 
 //= 0.5 Fully working.
 //= 0.6 Changed global variable names to unique ones.
-//= 0.7 - 0.8 Updates for eAthena +Knight2,Crusader2 fix
+//= 0.7 - 0.8 Updates for rAthena +Knight2,Crusader2 fix
 //= 0.9 Fixed items quest fork bug [Lupus]
 //= 1.0 Fixed items quest bug: added extra condition [Lupus]
 //= 1.1 Fixed skillpoints check bug [Lupus]
@@ -34,7 +34,7 @@
 //= 2.3a 7 official sets of Demon Hunter,thx to Dr.Evil [Lupus]
 //= 2.4a Added missing next;, missing NPC names [Lupus]
 //= 2.5 "strcharinfo" -> "strcharinfo(0)" [FlavioJS]
-//= 2.6 Fixed 3º Test. [Samuray22]
+//= 2.6 Fixed 3ï¿½ Test. [Samuray22]
 //	-Changed Timers from 3 to 1 minute.
 //	-Changed "Job Change Monsters".
 //	-Thanks to ultradamage.

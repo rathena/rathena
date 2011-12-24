@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Juperos Dungeon Warp Script
 //===== By: ==================================================
 //= Muad-Dib (1.0)
 //===== Current Version: =====================================
 //= 1.7
 //===== Compatible With: =====================================
-//= eAthena with independant npctimer support; RO Episode 8+
+//= rAthena with independant npctimer support; RO Episode 8+
 //===== Description: =========================================
 //= Warp Points for Juperos Dungeon
 //===== Additional Comments: =================================

@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Dead Branch (+Bloody Branch) Quest
 //===== By: ================================================== 
 //= GM-Yevon
 //===== Current Version: ===================================== 
 //= 1.1
 //===== Compatible With: ===================================== 
-//= eAthena 0.5.2 +
+//= rAthena 0.5.2 +
 //===== Description: ========================================= 
 // Simple item trade-in quest, a person can get a Dead Branch
 // by simply providing the items: Log x3 (7201), Wooden Heart x1 (7189), 

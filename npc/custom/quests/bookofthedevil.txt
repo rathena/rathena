@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Baphomet Jr. taming item quest.
 //===== By: ================================================== 
-//= eAthena Dev Team
+//= rAthena Dev Team
 //===== Current Version: ===================================== 
 //= 1.2
 //===== Compatible With: ===================================== 
-//= eAthena 1.0
+//= rAthena 1.0
 //===== Description: ========================================= 
 //= Book of Devil		(MISC_QUEST | 256)
 //===== Additional Comments: ================================= 

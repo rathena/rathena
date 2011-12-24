@@ -1,4 +1,4 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Priest Quest
 //===== By: ================================================== 
 //= Translated By: Pgro Team (OwNaGe)(Aegis)
@@ -7,7 +7,7 @@
 //===== Current Version: ===================================== 
 //= 2.6
 //===== Compatible With: ===================================== 
-//= eAthena  SVN
+//= rAthena  SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Job Change quest for Priest class.
@@ -1391,7 +1391,7 @@ OnTouch:
 		mes "[Deviruchi]";
 		mes "But how about this...? Now, isn't this an attractive sight? A nice, shiny new card. Mint condition. Not too many people have this you know. But I happen to have soooo many, my pockets hurt.";
 		next;
-		cutin "¹Ì½ºÆ®·¹½ºÄ«µå.bmp",4;
+		cutin "ï¿½Ì½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½.bmp",4;
 		mes "[Deviruchi]";
 		mes "Isn't it everyone's dream to have one of these? Think about it, being a Priest can only bring you suffering...";
 		next;
@@ -1401,7 +1401,7 @@ OnTouch:
 			mes "This card can";
 			mes "can be yours...";
 			next;
-			cutin "¹Ì½ºÆ®·¹½ºÄ«µå.bmp",255;
+			cutin "ï¿½Ì½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½.bmp",255;
 			mes "[Deviruchi]";
 			mes "Theoretically!";
 			mes "BWAHAHAHAHAHAHAHA!";
@@ -1410,7 +1410,7 @@ OnTouch:
 			warp "mjolnir_05",200,200;
 			end;
 		}
-		cutin "¹Ì½ºÆ®·¹½ºÄ«µå.bmp",255;
+		cutin "ï¿½Ì½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½.bmp",255;
 		mes "[Deviruchi]";
 		mes "Did...";
 		mes "Did you just tell";

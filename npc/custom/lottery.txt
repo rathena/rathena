@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Lottery Script
 //===== By: ==================================================
 //= acky - god@acky.com
 //===== Current Version: =====================================
 //= 1.2.1a
 //===== Compatible With: =====================================
-//= Any eAthena Version
+//= Any rAthena Version
 //===== Description: =========================================
 //= Daily lottery draw.
 //===== Additional Comments: =================================

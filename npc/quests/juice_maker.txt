@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Juice Maker Quest
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
 //= 2.1
 //===== Compatible With: =====================================
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: =========================================
 //= [Aegis COnversion]
 //= Learn where to turn apples, bananas, carrots, and grapes

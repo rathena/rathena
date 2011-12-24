@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Bard Job Quest
 //===== By: ==================================================
 //= Muad_Dib(The Prometheus Project), Lupus, Samuray22
 //===== Current Version: ===================================== 
 //= 2.6
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Job quest for Bard class
@@ -940,7 +940,7 @@ S_ChangeJob:
 // Old changelog
 //============================================================ 
 //= 07/06/05 : Added 1st Version. [Muad_Dib]
-//= Converted to eAthena format by Dr.Evil
+//= Converted to rAthena format by Dr.Evil
 //= Info about gifts and other info --> http://www.ragnainfo.net/forums/viewtopic.php?t=51467&start=0 
 //= 1.1 Optimized, changed some stuff, fixed some bugs [Lupus]
 //= 1.1a minor song test fix [Lupus]

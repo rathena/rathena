@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Lighthalzen City
 //===== By: ================================================== 
 //=  erKURITA, Au{R}oN (Translated by Alan), $ephiroth
 //===== Current Version: ===================================== 
 //= 2.2
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= Lighthalzen NPCs (Temporal names for now) [erKURITA]
 //===== Additional Comments: ==================================

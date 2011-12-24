@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Quest NPCs related to Niflheim
 //===== By: ================================================== 
-//= The eAthena Dev Team
+//= The rAthena Dev Team
 //===== Current Version: ===================================== 
 //= 1.5
 //===== Compatible With: ===================================== 
-//= eAthena 7.15 +
+//= rAthena 7.15 +
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Piano Key Ouest

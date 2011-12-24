@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Guild dungeon event, Arunafeltz.
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
 //= 1.1
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= Guild dungeon event, Arunafeltz. Retrieve Morestone's
 //= pickaxe from Kublin.
@@ -985,8 +985,8 @@ arug_que01,100,81,3	script	Pierrot Pier#aru_gd	715,{
 		}
 		else {
 			mes "[Pierrot Pier]";
-			mes "Você encontrou o tesouro?";
-			mes "Mostre-me o que você tem nas mãos agora.";
+			mes "Vocï¿½ encontrou o tesouro?";
+			mes "Mostre-me o que vocï¿½ tem nas mï¿½os agora.";
 			next;
 			mes "[Pierrot Pier]";
 			mes "Deixe-me ver...";

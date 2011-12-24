@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Uneasy Prontera Cemetery Quest (original script!)
 //===== By: ================================================== 
 //= Lupus
 //===== Current Version: ===================================== 
 //= 1.2a (Tested and fully working!)
 //===== Compatible With: ===================================== 
-//= eAthena Version 1.0
+//= rAthena Version 1.0
 //===== Description: ========================================= 
 //= A periodical quest of the Uneasy Cemetery (Kill undead / Prevent their appearance)
 //= Every day, at the midnight Prontera receive a wave of Undeads.

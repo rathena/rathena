@@ -1,7 +1,7 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Map flags that disable parties in pvp maps 
 //===== By: ==================================================
-//= eAthena Dev Team
+//= rAthena Dev Team
 //= v 1.2
 //===== Current Version: =====================================
 

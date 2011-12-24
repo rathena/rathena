@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Taekwon Job Quest
 //===== By: ================================================== 
 //= Tsuyuki & Samuray22
 //===== Current Version: ===================================== 
 //= 1.4
 //===== Compatible With: ===================================== 
-//= eAthena/Freya
+//= rAthena/Freya
 //===== Description: ========================================= 
 //= Official iRO TaeKwon Job Change Quest
 //===== Additional Comments: ================================= 

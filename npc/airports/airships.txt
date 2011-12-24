@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= The Airship System Script
 //===== By: ================================================== 
-//= eAthena Dev Team
+//= rAthena Dev Team
 //===== Current Version: ===================================== 
 //= 1.2
 //===== Compatible With: ===================================== 
-//= eAthena SVN 3422+(Requires jA Script System)
+//= rAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
 //= The Airship System used in the official servers, however this
 //= one is still about 25% custom and is missing some npcs.

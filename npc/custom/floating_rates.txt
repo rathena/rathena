@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================================================
+//===== rAthena Script ======================================================================
 //= Floating Server Rates
 //===== Original By =========================================================================
 //= Lupus
 //===== Current Version: ====================================================================
 //= 1.0
 //===== Compatible With: ====================================================================
-//= Any eAthena, that has 'setbattleflag' function
+//= Any rAthena, that has 'setbattleflag' function
 //===== Description: ========================================================================
 //= It's a simply example of setbattleflag
 //= This script will change your server rates from 1x to 1.5x every 6 hours

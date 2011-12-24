@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Moscovia Quests
 //===== By: ================================================== 
 //= Kisuka
 //===== Current Version: ===================================== 
 //= 1.9
 //===== Compatible With: ===================================== 
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= Quests for Moscovia.
 //= The Moving Island, Help Mikhail, Acorn Exchange,
@@ -15898,7 +15898,7 @@ mosk_dun02,57,220,0	script	House Ghost Jar#rus43	111,{
 				mes "One! Two! Three!!";
 				next;
 				if (.@rucard_game01 == 1) {
-					cutin "Æ÷¸µÄ«µå",4;
+					cutin "ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½",4;
 					emotion 0;
 					emotion 5,1;
 					next;
@@ -15911,13 +15911,13 @@ mosk_dun02,57,220,0	script	House Ghost Jar#rus43	111,{
 					next;
 				}else{
 					if (.@rucard_game01 == 1) {
-						cutin "Æ÷¸µÄ«µå",4;
+						cutin "ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½",4;
 					}
 					else if (.@rucard_game01 == 2) {
-						cutin "¿£Á©¸µÄ«µå",4;
+						cutin "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½",4;
 					}
 					else if (.@rucard_game01 == 3) {
-						cutin "°í½ºÆ®¸µÄ«µå",4;
+						cutin "ï¿½ï¿½ï¿½Æ®ï¿½ï¿½Ä«ï¿½ï¿½",4;
 					}
 					emotion 0;
 					emotion 23,1;
@@ -15939,7 +15939,7 @@ mosk_dun02,57,220,0	script	House Ghost Jar#rus43	111,{
 				mes "One! Two! Three!!";
 				next;
 				if (.@rucard_game01 == 2) {
-					cutin "¿£Á©¸µÄ«µå",4;
+					cutin "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½",4;
 					emotion 0;
 					emotion 5,1;
 					next;
@@ -15952,13 +15952,13 @@ mosk_dun02,57,220,0	script	House Ghost Jar#rus43	111,{
 					next;
 				}else{
 					if (.@rucard_game01 == 1) {
-						cutin "Æ÷¸µÄ«µå",4;
+						cutin "ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½",4;
 					}
 					else if (.@rucard_game01 == 2) {
-						cutin "¿£Á©¸µÄ«µå",4;
+						cutin "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½",4;
 					}
 					else if (.@rucard_game01 == 3) {
-						cutin "°í½ºÆ®¸µÄ«µå",4;
+						cutin "ï¿½ï¿½ï¿½Æ®ï¿½ï¿½Ä«ï¿½ï¿½",4;
 					}
 					emotion 0;
 					emotion 23,1;
@@ -15980,7 +15980,7 @@ mosk_dun02,57,220,0	script	House Ghost Jar#rus43	111,{
 				mes "One! Two! Three!!";
 				next;
 				if (.@rucard_game01 == 3) {
-					cutin "°í½ºÆ®¸µÄ«µå",4;
+					cutin "ï¿½ï¿½ï¿½Æ®ï¿½ï¿½Ä«ï¿½ï¿½",4;
 					emotion 0;
 					emotion 5,1;
 					next;
@@ -15993,13 +15993,13 @@ mosk_dun02,57,220,0	script	House Ghost Jar#rus43	111,{
 					next;
 				}else{
 					if (.@rucard_game01 == 1) {
-						cutin "Æ÷¸µÄ«µå",4;
+						cutin "ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½",4;
 					}
 					else if (.@rucard_game01 == 2) {
-						cutin "¿£Á©¸µÄ«µå",4;
+						cutin "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½",4;
 					}
 					else if (.@rucard_game01 == 3) {
-						cutin "°í½ºÆ®¸µÄ«µå",4;
+						cutin "ï¿½ï¿½ï¿½Æ®ï¿½ï¿½Ä«ï¿½ï¿½",4;
 					}
 					emotion 0;
 					emotion 23,1;

@@ -1,4 +1,4 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Jawaii the honeymoon Island Monster Spawn Script
 //===== By: ==================================================
 //= MasterOfMuppets (1.0)

@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= iRO 2008 Christmas Event
 //===== By: ==================================================
 //= Kisuka
 //===== Current Version: =====================================
 //= 1.1
 //===== Compatible With: =====================================
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: =========================================
 //= iRO Christmas Event. (2008)
 //= Create Music Box and Cake.
@@ -583,13 +583,13 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 			mes "Let's see!!";
 			mes "One! Two! Three!";
 			if (.@SantaCardNpc == 1) {
-				cutin "Æ÷¸µÄ«µå",4;
+				cutin "ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½",4;
 			}
 			else if (.@SantaCardNpc == 2) {
-				cutin "¿£Á©¸µÄ«µå",4;
+				cutin "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½",4;
 			}
 			else if (.@SantaCardNpc == 3) {
-				cutin "°í½ºÆ®¸µÄ«µå",4;
+				cutin "ï¿½ï¿½ï¿½Æ®ï¿½ï¿½Ä«ï¿½ï¿½",4;
 			}		
 			next;
 			set .@SantaCardTurn,.@SantaCardTurn+1;

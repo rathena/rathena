@@ -1,11 +1,11 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Mr. Smile Quest
 //===== By: ================================================== 
 //= kobra_k88, Akaru
 //===== Current Version: ===================================== 
 //= 1.4a
 //===== Compatible With: ===================================== 
-//= eAthena 7.15 +
+//= rAthena 7.15 +
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Trade Clover, Fluff and Jellopy for a Mr. Smile mask.

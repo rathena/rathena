@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= Turbo Track - Expert - 4 Person
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
 //= 1.4
 //===== Compatible With: =====================================
-//= eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Turbo Track Course: Expert (PVP) - 4 Person
@@ -678,7 +678,7 @@ OnEnable:
 	end;
 }
 
-// ÇåÆÃÄÚ½º
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½
 turbo_e_4,90,46,0	script	hunting#e4	111,{
 Onreset:
 	killmonsterall "turbo_e_4";
