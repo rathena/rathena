@@ -672,7 +672,7 @@ static bool grfio_parse_restable_row(const char* row)
 	char local[256];
 	FILELIST* entry;
 
-	if( sscanf(row, "%[^#]#%[^#]#", w1, w2) != 2 )
+	if( sscanf(row, "%[^#\r\n]#%[^#\r\n]#", w1, w2) != 2 )
 		return false;
 
 	if( strstr(w2, ".gat") == NULL && strstr(w2, ".rsw") == NULL )

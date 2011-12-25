@@ -725,11 +725,10 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
 				}
 			}
 		}
-		else
-		{// could not knockback
-			count = 0;
-		}
+
+		count = distance(dx, dy);
 	}
+
 	return count;  // return amount of knocked back cells
 }
 
