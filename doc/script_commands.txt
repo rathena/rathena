@@ -1,4 +1,4 @@
-//===== Athena Doc ========================================
+﻿//===== Athena Doc ========================================
 //= rAthena Script Commands
 //===== Description =======================================
 //= A reference manual for the rAthena scripting language.
@@ -5918,7 +5918,7 @@ kick the reconnecting players off to the alternate map given to the coordinates
 
 ---------------------------------------
 
-*setmapflag "<map name>",<flag>;
+*setmapflag "<map name>",<flag>{,<zone>};
 
 This command marks a specified map with a map flag given. Map flags alter the 
 behavior of the map, you can see the list of the available ones in 
@@ -5933,12 +5933,16 @@ skills or open up trade deals (mf_notrade, mf_novending, mf_noskill, mf_noicewal
 current weather effects (mf_snow, mf_fog, mf_sakura, mf_leaves, mf_rain, mf_clouds, 
 mf_fireworks) and whether night will be in effect on this map (mf_nightenabled).
 
+The zone optional parameter is used to set the zone for restricted mapflags.
+
 ---------------------------------------
 
-*removemapflag "<map name>",<flag>;
+*removemapflag "<map name>",<flag>{,<zone>};
 
 This command removes a mapflag from a specified map. 
 See 'setmapflag' for a list of mapflags.
+
+The zone optional parameter is used to remove the zone from restricted mapflags.
 
 ---------------------------------------
 
