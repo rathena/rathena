@@ -1,17 +1,17 @@
-//===== eAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 // Eden Group Quests - Service NPCs
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
 //= 1.0
 //===== Compatible With: ===================================== 
-//= eAthena 1.0
+//= Any rAthena SVN
 //===== Description: ========================================= 
 //= [AEGIS Conversion]
-//= Paradise Group storage access. 
+//= Paradise Group storage access.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
-//= 1.1 Replaced 2nd NPC with duplicate function.
+//= 1.1 Replaced 2nd NPC with duplicate function. [Masao]
 //============================================================
 
 moc_para01,173,120,0	script	Goods Cabinet#01::goodsc	111,{

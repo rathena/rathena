@@ -2929,15 +2929,15 @@ OnTouch:
 					mes "As you kids say,";
 					mes "^990000Let's get eXtreme!^000000";
 					next;
-					set user_score,0;
-					set pc_score,0;
+					set @user_score,0;
+					set @pc_score,0;
 					mes "[Mr. Jun]";
 					mes "Rock!";
 					mes "Paper!";
 					mes "Scissors!";
 					next;
 					while(1) {
-						if (.@pc_score == 5 || .@user_score == 3) {
+						if (@pc_score == 5 || @user_score == 3) {
 							break;
 						}
 						else {
@@ -2958,7 +2958,7 @@ OnTouch:
 								else if (.@jun_mark == 2) {
 									emotion e_rock;
 									emotion e_scissors,1;
-									set .@pc_score,.@pc_score + 1;
+									set @pc_score,@pc_score + 1;
 									mes "[Mr. Jun]";
 									mes "Yes...!";
 									mes "Oh my God, yes!";
@@ -2967,8 +2967,8 @@ OnTouch:
 								else {
 									emotion e_paper;
 									emotion e_scissors,1;
-									set .@pc_score,.@pc_score + 1;
-									set .@user_score,.@user_score + 1;
+									set @pc_score,@pc_score + 1;
+									set @user_score,@user_score + 1;
 									mes "[Mr. Jun]";
 									mes "What...?";
 									mes "I don't believe it!";
@@ -2980,8 +2980,8 @@ OnTouch:
 								if (.@jun_mark == 1) {
 									emotion e_scissors;
 									emotion e_rock,1;
-									set .@pc_score,.@pc_score + 1;
-									set .@user_score,.@user_score + 1;
+									set @pc_score,@pc_score + 1;
+									set @user_score,@user_score + 1;
 									mes "[Mr. Jun]";
 									mes "No...!";
 									mes "Sacrilege!";
@@ -3001,7 +3001,7 @@ OnTouch:
 								else {
 									emotion e_paper;
 									emotion e_rock,1;
-									set .@pc_score,.@pc_score + 1;
+									set @pc_score,@pc_score + 1;
 									mes "[Mr. Jun]";
 									mes "Bwahahaha!";
 									mes "You lose, kid!";
@@ -3012,7 +3012,7 @@ OnTouch:
 								if (.@jun_mark == 1) {
 									emotion e_scissors;
 									emotion e_paper,1;
-									set .@pc_score,.@pc_score + 1;
+									set @pc_score,@pc_score + 1;
 									mes "[Mr. Jun]";
 									mes "Heh heh~";
 									mes "Young fool!";
@@ -3021,8 +3021,8 @@ OnTouch:
 								else if (.@jun_mark == 2) {
 									emotion e_rock;
 									emotion e_paper,1;
-									set .@user_score,.@user_score + 1;
-									set .@pc_score,.@pc_score + 1;
+									set @user_score,@user_score + 1;
+									set @pc_score,@pc_score + 1;
 									mes "[Mr. Jun]";
 									mes "Noooo...!";
 									mes "This cannot be!";
@@ -3043,7 +3043,7 @@ OnTouch:
 							}
 						}
 					}
-					if (.@user_score == 3) {
+					if (@user_score == 3) {
 						emotion e_pif;
 						mes "[Mr. Jun]";
 						mes "You... won.";
