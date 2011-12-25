@@ -2163,6 +2163,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		+ sizeof(sd->magic_sp_gain_value)
 		+ sizeof(sd->sp_vanish_rate)
 		+ sizeof(sd->sp_vanish_per)
+		+ sizeof(sd->sp_weapon_matk)
 		+ sizeof(sd->unbreakable)
 		+ sizeof(sd->unbreakable_equip)
 		+ sizeof(sd->unstripable_equip)
@@ -2279,6 +2280,14 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	memset(sd->param_bonus, 0, sizeof(sd->param_bonus));
 
 	status->def += (refinedef+50)/100;
+	
+	#if REMODE
+		/**
+		 * in RE matk_max is used as the weapon's matk.
+		 * sp_weapon_matk is 'bonus bWeaponMatk,<boost>'
+		 **/
+		status->matk_max += sd->sp_weapon_matk;
+	#endif
 
 	//Parse Cards
 	for(i=0;i<EQI_MAX-1;i++) {

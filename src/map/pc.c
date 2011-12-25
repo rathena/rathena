@@ -2346,7 +2346,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		break;
 	case SP_ADD_HEAL_RATE:
 		if(sd->state.lr_flag != 2)
-			sd->add_heal_rate += val;
+			sd->sp_weapon_matk += val;
 		break;
 	case SP_ADD_HEAL2_RATE:
 		if(sd->state.lr_flag != 2)
@@ -2355,6 +2355,10 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 	case SP_ADD_ITEM_HEAL_RATE:
 		if(sd->state.lr_flag != 2)
 			sd->itemhealrate2 += val;
+		break;
+	case SP_WEAPON_MATK:
+		if(sd->state.lr_flag != 2)
+			sd->sp_weapon_matk += val;
 		break;
 	default:
 		ShowWarning("pc_bonus: unknown type %d %d !\n",type,val);
