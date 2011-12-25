@@ -51,7 +51,9 @@ bonus bAtk,n;				ATK + n
 bonus bAtk2,n;				ATK2 + n
 bonus bAtkRate,n;			Attack power + n%
 bonus bBaseAtk,n;			Basic attack power + n
+bonus bMatk,n;				Magical attack power + n
 bonus bMatkRate,n;			Magical attack power + n%
+bonus bWeaponMatk,n;		Weapon magical attack power + n
 bonus bDef,n;				Equipment DEF + n
 bonus bDef2,n;				VIT based DEF + n
 bonus bDefRate,n;			Equipment DEF + n%

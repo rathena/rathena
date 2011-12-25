@@ -652,7 +652,7 @@ REPLACE INTO `item_db` VALUES (1269,'Inverse_Scale','Inverse Scale',4,20,NULL,15
 REPLACE INTO `item_db` VALUES (1270,'Drill_Katar','Drill Katar',4,20,NULL,1400,110,NULL,1,1,0x00001000,2,2,34,4,55,1,16,'bonus bHit,30; bonus3 bAutoSpell,\"ST_FULLSTRIP\",1,150;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1271,'Blood_Tears','Blood Tears',4,20,NULL,1700,120,NULL,1,2,0x00001000,2,2,34,4,55,1,16,'if(getrefine() >= 9){ bonus3 bAutoSpell,\"NPC_WIDEBLEEDING\",2,30; } else bonus3 bAutoSpell,\"NPC_WIDEBLEEDING\",1,30;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1272,'Scratcher','Scratcher',4,20,NULL,0,120,NULL,1,0,0x00001000,7,2,34,1,0,0,16,'bonus2 bAddRace,RC_Boss,50; bonus2 bAddRace,RC_NonBoss,50;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (1273,'Bloody_Roar_C','Refined Bloody Roar',4,1,NULL,0,148,NULL,1,0,0x00001000,7,2,34,4,0,0,16,'bonus bIgnoreDefRace,RC_DemiHuman; bonus bFlee,-160; bonus bFlee2,-160;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (1273,'Bloody_Roar_C','Refined Bloody Roar',4,1,NULL,0,148,NULL,1,0,0x00001000,7,2,34,4,0,0,16,'bonus bIgnoreDefRace, RC_DemiHuman; bonus2 bHPRegenRate, 3, 5000;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1274,'Unholy_Touch_C','Refined Unholy Touch',4,1,NULL,0,179,NULL,1,0,0x00001000,7,2,34,4,0,0,16,'bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Curse,500; bonus bCritical,-1; bonus bUnbreakableWeapon,0;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1275,'Katar_Of_Cold_Icicle_','Katar of Frozen Icicle',4,45000,NULL,1200,105,NULL,1,3,0x00001000,7,2,34,3,55,1,16,'bonus bAtkEle,Ele_Water; bonus2 bAddEff,Eff_Freeze,500;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1276,'Katar_Of_Thornbush_','Katar of Quaking',4,45000,NULL,1200,105,NULL,1,3,0x00001000,7,2,34,3,55,1,16,'bonus bAtkEle,Ele_Earth; bonus2 bAddEff,Eff_Blind,500;',NULL,NULL);
@@ -2246,7 +2246,7 @@ REPLACE INTO `item_db` VALUES (4447,'Centipede_Card','Centipede Card',6,20,NULL,
 REPLACE INTO `item_db` VALUES (4448,'Cornus_Card','Cornus Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,NULL,NULL,'bonus2 bSubEle,Ele_Holy,20; bonus2 bAddEle,Ele_Holy,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4449,'Dark_Shadow_Card','Dark Shadow Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,NULL,NULL,'bonus2 bSubEle,Ele_Dark,20; bonus2 bAddEle,Ele_Dark,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4450,'Banshee_Master_Card','Banshee Master Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,'bonus bInt,1; /* bonus bMAtk,10; */',NULL,NULL);
-REPLACE INTO `item_db` VALUES (4451,'Entweihen_Card','Entweihen Crothen Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db` VALUES (4451,'Entweihen_Card','Entweihen Crothen Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,'bonus bMatk, 100;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4452,'Centipede_Larva_Card','Centipede Larva Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus bInt,1; /* bonus bMAtk,3; */',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4453,'Hilsrion_Card','Hillsrion Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus bAtk,25;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4454,'Light_Up_Card1','Light Up Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
@@ -2492,7 +2492,7 @@ REPLACE INTO `item_db` VALUES (5128,'Goibne\'s_Helmet','Goibne\'s Helm',5,30000,
 REPLACE INTO `item_db` VALUES (5129,'Bird_Nest','Bird Nest',5,20,NULL,400,NULL,1,NULL,0,0xFFFFFFFF,7,2,256,NULL,50,0,201,'bonus bAgi,2; bonus2 bSubRace,RC_Brute,10;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5130,'Lion_Mask','Lion Mask',5,20,NULL,700,NULL,0,NULL,0,0x00CFDF80,7,2,768,NULL,75,1,202,'bonus2 bAddEffWhenHit,Eff_Silence,500; bonus bMdef,1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5131,'Close_Helmet','Close Helmet',5,20,NULL,1200,NULL,8,NULL,0,0x00004082,7,2,769,NULL,75,1,203,'bonus bVit,3; bonus bMaxHPrate,3;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (5132,'Angeling_Hat','Angeling Hat',5,20,NULL,700,NULL,2,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,0,204,'bonus2 bSubRace,RC_DemiHuman,10;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (5132,'Angeling_Hat','Angeling Hat',5,20,NULL,700,NULL,5,NULL,0,0xFFFFFFFF,7,2,256,NULL,38,0,204,'bonus2 bSubRace,RC_DemiHuman,10;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5133,'Sheep_Hat','Sheep Hat',5,20,NULL,150,NULL,1,NULL,0,0x00008110,7,2,256,NULL,0,0,205,'bonus bShortWeaponDamageReturn,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5134,'Pumpkin_Hat','Pumpkin-Head',5,20,NULL,200,NULL,2,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,1,206,'bonus2 bSubRace,RC_Demon,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5135,'Cyclops_Visor','Cyclop\'s Eye',5,0,NULL,200,NULL,0,NULL,0,0xFFFFFFFE,7,2,512,NULL,75,0,207,'bonus bMaxSP,50;',NULL,NULL);
