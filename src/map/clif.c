@@ -2587,6 +2587,8 @@ int clif_updatestatus(struct map_session_data *sd,int type)
 		break;
 	case SP_CRITICAL:
 		WFIFOL(fd,4)=sd->battle_status.cri/10;
+		if(sd->status.weapon == W_KATAR)
+			WFIFOL(fd,4) <<=1;
 		break;
 	case SP_MATK1:
 		WFIFOL(fd,4)=sd->battle_status.matk_max;
