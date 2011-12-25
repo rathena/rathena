@@ -43,7 +43,6 @@
 1768,Gloom Under Night,1000000
 1779,Ktullanux,1000000
 1785,Atros,1000000
-1785,Atros,1000000
 1832,Ifrit,1000000
 1871,Fallen Bishop Hibram,1000000
 1873,Beelzebub,1000000
