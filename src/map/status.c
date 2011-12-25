@@ -2530,13 +2530,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	//Equipment modifiers for misc settings
 	if(sd->matk_rate < 0)
 		sd->matk_rate = 0;
-#if REMODE
-	/**
-	 * in RE matk_min is used as character's base matk
-	 * sp_base_matk is 'bonus bMatk,<boost>'
-	 **/
-	status->matk_min += sd->sp_base_matk;
-#endif
+
 	if(sd->matk_rate != 100){
 		status->matk_max = status->matk_max * sd->matk_rate/100;
 		status->matk_min = status->matk_min * sd->matk_rate/100;
@@ -3345,6 +3339,12 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 		//New matk
 	#if REMODE
 		status->matk_min = status_base_matk_min(status,status_get_lv(bl));
+		/**
+		 * in RE matk_min is used as character's base matk
+		 * sp_base_matk is 'bonus bMatk,<boost>'
+		 **/
+		if( sd )
+			status->matk_min += sd->sp_base_matk;
 	#else
 		status->matk_min = status_base_matk_min(status);
 	#endif
