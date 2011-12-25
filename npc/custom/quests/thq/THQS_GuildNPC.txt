@@ -1,25 +1,17 @@
 //===== rAthena Script =======================================
-//= Treasure Hunter Script
-//===== Converted By =========================================
+//= Treasure Hunter Quests
+//===== By: ==================================================
 //= Fredzilla
-//= Original
-//////////////////////////////////////////////////////////////
-//                  Treasure Hunter Quests                  //
-//                       By: Ezekial                        //
-//             for the use on nRO run by Newbe5             //
-//                    revised By Warlock                    //
-//////////////////////////////////////////////////////////////
-//===== Version ==============================================
-//= 1.0 - Straight conversion of Aegis NPC file
-//===== Compatible With ======================================
-//= rAthena 1.0
-//===== Description ==========================================
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
 //= Start for Treasure hunter quests
-//===== Comments =============================================
+//===== Additional Comments: =================================
 //= Event_THQS - Used to check if you have already registered
 //= #Treasure_Token - used to keep track of tokens
 //============================================================
-
 
 yuno_in01,124,164,6	script	Guild Leader	108,{
 	mes "[Keegan]";
@@ -91,5 +83,4 @@ N_NVM:
 	mes "[Keegan]";
 	mes "Alright come back when you have the free time to spare.";
 	close;
-
 }

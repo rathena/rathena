@@ -1,26 +1,19 @@
 //===== rAthena Script =======================================
-//= Treasure Hunter Script
-//===== Converted By =========================================
+//= Treasure Hunter Quests
+//===== By: ==================================================
 //= Fredzilla
-//= Original
-//////////////////////////////////////////////////////////////
-//                  Treasure Hunter Quests                  //
-//                       By: Ezekial                        //
-//             for the use on nRO run by Newbe5             //
-//                    revised By Warlock                    //
-//////////////////////////////////////////////////////////////
-//===== Version ==============================================
+//===== Current Version: =====================================
 //= 1.1
-//===== Compatible With ======================================
-//= rAthena 1.0
-//===== Description ==========================================
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
 //= Start for Treasure hunter quests
-//===== Comments =============================================
+//===== Additional Comments: =================================
 //= Event_THQS - Used to check if you have already registered
 //= #Treasure_Token - used to keep track of tokens
-//= v1.0 - Straight conversion of Aegis NPC file
-//= v1.1 - balanced some prices, fixed 1 missing label
-//= 	removed Executioner&Mysteltain swords [Lupus]
+//= 1.0 - Straight conversion of Aegis NPC file
+//= 1.1 - balanced some prices, fixed 1 missing label
+//=       removed Executioner&Mysteltain swords [Lupus]
 //============================================================
 
 prt_in,159,172,0	warp	thqwrp	3,3,yuno_in01,123,155

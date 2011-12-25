@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.0
 //===== Compatible With: =====================================
-//= Any Athena Version I think
+//= rAthena SVN
 //===== Description: =========================================
 //= Event similar to iRO's Christmas event when searching for Antonios.
 //===== Additional Comments: =================================
@@ -20,13 +20,13 @@ in_sphinx1,0,0,0,0	monster	Hyegun	1512,3,180000,30000,0
 
 //Munak Quest
 pay_dun01,53,269,6	script	Munak	1026,{
-if(event_hyegun==3) goto Lfinished;
-mes "[^FF0000Munak^000000]";
-mes "Hello, kinda strange talking to a Munak huh?";
-mes "I'm a friendly Munak that wants to tell you something.";
-menu "Listen to her story",Lok,"Leave",Lno;
+	if(event_hyegun==3) goto Lfinished;
+	mes "[^FF0000Munak^000000]";
+	mes "Hello, kinda strange talking to a Munak huh?";
+	mes "I'm a friendly Munak that wants to tell you something.";
+	menu "Listen to her story",Lok,"Leave",Lno;
 
-	Lok:
+Lok:
 	mes "[^FF0000Munak^000000]";
 	mes "Well see our father ^666600HyeGun^000000 has been terrible to us Munaks.";
 	mes "We would like you to get revenge for what he has done to us.";
@@ -37,7 +37,7 @@ menu "Listen to her story",Lok,"Leave",Lno;
 	mes "Remember, you may only do this quest ^FF00003 times.";
 	menu "Info about HyeGun",Lhyeinfo,"Give her the items",Litem,"Leave",Lno;
 
-	Lhyeinfo:
+Lhyeinfo:
 	mes "[^FF0000Munak^000000]";
 	mes "- HyeGun looks like us but he's a tanish color type with long hair.";
 	mes "- He's been last seen in the first level of the 4 most popular dungeons.";
@@ -45,7 +45,7 @@ menu "Listen to her story",Lok,"Leave",Lno;
 	mes "Anything else?";
 	menu "Info about HyeGun",Lhyeinfo,"Give her the items",Litem,"Leave",Lno;
 
-	Litem:
+Litem:
 	mes "[^FF0000Munak^000000]";
 	mes "Ahh so you've completed the task so soon?";
 	mes "Good job";
@@ -59,17 +59,17 @@ menu "Listen to her story",Lok,"Leave",Lno;
 	set event_hyegun,event_hyegun+1;
 	close;
 
-	Lfinished:
+Lfinished:
 	mes "[^FF0000Munak^000000]";
 	mes "I'm sorry, you've already completed my task 3 times.";
 	close;
 
-	Lno:
+Lno:
 	mes "[^FF0000Munak^000000]";
 	mes "Okay then, when you feel brave enough, come on back.";
 	close;
 
-	Lnoitem:
+Lnoitem:
 	mes "[^FF0000Munak^000000]";
 	mes "Hey, you don't have the Yggdrasil Dew.";
 	mes "Come back when you've gotten 3 of them.";

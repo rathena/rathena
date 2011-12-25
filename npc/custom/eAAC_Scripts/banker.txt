@@ -1,40 +1,40 @@
 //| ~~~~~~~~~~~ Information ~~~~~~~~~~~~~
-//| | This is a simple banking npc,	|
-//| | instead of using those global	|
-//| | variables :P			|
-//| |					|
-//| | It's fully customizable, you	|
-//| | can exchange the coin ID used	|
-//| | at will, it won't affect the	|
-//| | script whatsoever =3		|
-//| |					|
-//| | The prices can also be set, the	|
-//| | way you like the most, as they	|
-//| | won't affect the script either	|
-//| |					|
-//| | No db/client files modification	|
-//| | needed, just "Plug&Play" ;P	|
+//| | This is a simple banking npc,     |
+//| | instead of using those global     |
+//| | variables :P                      |
+//| |                                   |
+//| | It's fully customizable, you      |
+//| | can exchange the coin ID used     |
+//| | at will, it won't affect the      |
+//| | script whatsoever =3              |
+//| |                                   |
+//| | The prices can also be set, the   |
+//| | way you like the most, as they    |
+//| | won't affect the script either    |
+//| |                                   |
+//| | No db/client files modification   |
+//| | needed, just "Plug&Play" ;P       |
 //| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+//|
 //| Revision:
 //| v.1.0: Released script. No problems or bugs found, at least :P
-//| 	It's your duty to find them now if there are.
-//|	@minvalue must contain the coin price of the lowest coin value
-//|	in order for the script to work correctly. By default it's set
-//|	to the bronze coin
-
+//|        It's your duty to find them now if there are.
+//|        @minvalue must contain the coin price of the lowest coin value
+//|        in order for the script to work correctly. By default it's set
+//|        to the bronze coin
+//|
 //| Revision:
 //| v.2.0: Added a Mix option in the Zeny to Coin function,
-//| 	where it allows you to split your desired Zeny into
-//| 	the coins you wish to obtain, without having to go 
-//| 	through the other functions to obtain them all. That way
-//|	you can get them all at once ;3
+//|        where it allows you to split your desired Zeny into
+//|        the coins you wish to obtain, without having to go 
+//|        through the other functions to obtain them all. That way
+//|     you can get them all at once ;3
 //|
-//|	It also displays the total zeny being exchanged,
-//|	the total coins obtained and the difference between
-//|	the amount of zeny you've inputted and the sum of
-//| 	the coin's values.
-
+//|     It also displays the total zeny being exchanged,
+//|     the total coins obtained and the difference between
+//|     the amount of zeny you've inputted and the sum of
+//|      the coin's values.
+//|
 //| Revision:
 //| v.2.5: Replaced all the coin names with a variable that has
 //|   getitemname(<coin_id), for more customization of the script.
@@ -49,33 +49,33 @@
 
 //| Revision:
 //| v.2.6: Added another Weight check to prevent coins from dropping
-//| 	to the ground because A) Too many coins (more than 30,000 ea)
-//| 	B) Your current weight + total coins weight were greater than
-//| 	your max weight, causing them to drop due to "over-weight".
-//|		Thanks to Niktout for spotting it.
+//|        to the ground because A) Too many coins (more than 30,000 ea)
+//|        B) Your current weight + total coins weight were greater than
+//|        your max weight, causing them to drop due to "over-weight".
+//|        Thanks to Niktout for spotting it.
 
 //| Revision:
 //| v.2.7: Added a check to the Zeny -> Coin Mix label. It seems you
-//|		can trade with negative zeny (meh...). This should prevent it.
-//|		Thanks to Niktout.
+//|        can trade with negative zeny (meh...). This should prevent it.
+//|        Thanks to Niktout.
 
 //| Revision:
 //| v.2.8: Added a n00b check for the Zeny -> Coin function. Should
-//| 	prevent zeny overflow. Also added a variable cleaning section
-//| 	at the beginning of the Mix function, to prevent old values
-//| 	to be used as a payout.
+//|        prevent zeny overflow. Also added a variable cleaning section
+//|        at the beginning of the Mix function, to prevent old values
+//|        to be used as a payout.
 
 //| Revision:
 //| v.2.8.1 Removed the 'conflicting' switch with variables as case options,
-//|	and moved the color names to the function, so now it executes once.
-//|	Did other optimizations and cleanups all around the code. Meh.
+//|         and moved the color names to the function, so now it executes once.
+//|         Did other optimizations and cleanups all around the code. Meh.
 
 //| Upcomming possible updates:
 //| v.3.0: Adding a refining system, so you can gather ore and the likes
-//| 	to make your own coins. They will have a failure chance
-//| 	of course. You will need, for now: 10 ores of the type of 
-//| 	coin you wish, a mini furnace, an anvil depending on what
-//|	You're crafting, and a hammer according to it.
+//|        to make your own coins. They will have a failure chance
+//|        of course. You will need, for now: 10 ores of the type of 
+//|        coin you wish, a mini furnace, an anvil depending on what
+//|        You're crafting, and a hammer according to it.
 
 //| Copyright © 2006-2007 erKURITA. All Rights Reserved
 

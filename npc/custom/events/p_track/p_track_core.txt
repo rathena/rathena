@@ -3,20 +3,21 @@
 //===== By: ==================================================
 //= erKURITA
 //===== Current Version: =====================================
-//= 0.0000000000000002
+//= 1.2
 //===== Compatible With: =====================================
-//= rAthena 1.0
+//= rAthena SVN
 //===== Description: =========================================
 //= NPCs that has nothing to do with the race itself, but
 //= has important functions on the race itself.
 //===== Additional Comments: =================================
-//= 0.0000000000000002 Removed Duplicates [Silent]
+//= 1.2 Removed Duplicates [Silent]
 //============================================================
+
 p_track01,41,57,5	script	Lady#track1::P_track	845,{
 end;
 }
 
-p_track01,67,34,6	script	Erudite::P_Spectator1		107,{
+p_track01,67,34,6	script	Erudite::P_Spectator1	107,{
 end;
 }
 

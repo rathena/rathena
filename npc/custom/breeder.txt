@@ -1,53 +1,53 @@
-//===== rAthena Script ======================================= 
-//= Custom Free Breeder aka Universal Renter (not reccomended)
-//===== By: ================================================== 
-//= rAthena Team
-//===== Current Version: ===================================== 
+//===== rAthena Script =======================================
+//= Universal Rental NPC
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
 //= 1.3a
-//===== Compatible With: ===================================== 
-//= rAthena 1.0 Final +
-//===== Description: ========================================= 
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
 //= A Free PecoPeco and Falcon Breeder
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.1 FIXED checkriding/cart/falcon funcs [Lupus]
 //= 1.2 Added Rebirth/Advanced Class support [Mass Zero]
 //= 1.3 Simplified the checks of job [Silentdragon]
 //= 1.3a Fixed a Typo Error. [Samuray22]
-//	-Thanks to ~AnnieRuru~.
+//=      Thanks to ~AnnieRuru~.
 //= 1.4 Optimized Script. No need for 50 million Labels. [Spre]
-//============================================================ 
- 
+//============================================================
+
 prontera,124,201,1	script	Universal Rental Npc	726,{
 	mes "[Universal Rental Npc]";
 	mes "Hi, here you can rent Carts, Falcons or Pecopecos.";
 	next;
 	switch(select("Cart:Falcon:Peco")) {
-		case 1:
-			if((BaseClass == Job_Merchant || BaseJob == Job_SuperNovice) && checkcart() == 0 && getskilllv("MC_PUSHCART")>0) {
-				setcart;
-				close;
-			}else{
-				mes "[Universal Rental Npc]";
-				mes "Sorry " + strcharinfo(0) + ", Please make sure you are the required job and have the required skill.";
-				close;
-			}
-		case 2:
-			if(BaseJob != Job_Archer && BaseClass == Job_Archer && checkfalcon() == 0 && getskilllv("HT_FALCON")>0) {
-				setfalcon;
-				close;
-			}else{
-				mes "[Universal Rental Npc]";
-				mes "Sorry " + strcharinfo(0) + ", Please make sure you are the required job and have the required skill.";
-				close;
-			}					
-		case 3:
-			if (BaseJob != Job_Swordman && BaseClass == Job_Swordman && checkriding() == 0 && getskilllv("KN_RIDING")>0) {
-				setriding;
-				close;
-			}else{
-				mes "[Universal Rental Npc]";
-				mes "Sorry " + strcharinfo(0) + ", Please make sure you are the required job and have the required skill.";
-				close;
-			}
+	case 1:
+		if((BaseClass == Job_Merchant || BaseJob == Job_SuperNovice) && checkcart() == 0 && getskilllv("MC_PUSHCART")>0) {
+			setcart;
+			close;
+		} else {
+			mes "[Universal Rental Npc]";
+			mes "Sorry " + strcharinfo(0) + ", Please make sure you are the required job and have the required skill.";
+			close;
+		}
+	case 2:
+		if(BaseJob != Job_Archer && BaseClass == Job_Archer && checkfalcon() == 0 && getskilllv("HT_FALCON")>0) {
+			setfalcon;
+			close;
+		} else {
+			mes "[Universal Rental Npc]";
+			mes "Sorry " + strcharinfo(0) + ", Please make sure you are the required job and have the required skill.";
+			close;
+		}
+	case 3:
+		if (BaseJob != Job_Swordman && BaseClass == Job_Swordman && checkriding() == 0 && getskilllv("KN_RIDING")>0) {
+			setriding;
+			close;
+		} else {
+			mes "[Universal Rental Npc]";
+			mes "Sorry " + strcharinfo(0) + ", Please make sure you are the required job and have the required skill.";
+			close;
+		}
 	}
 }

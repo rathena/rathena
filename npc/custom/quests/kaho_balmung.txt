@@ -1,6 +1,16 @@
-// $Id: kaho_balmung.txt,v 1.1.1.1 2004/09/10 17:26:46 MagicalTux Exp $
-//-------------------- 'Balmung & Lord Kaho's Horns' Quest --------------------
-// Warning! Don't use this quest 8)
+//===== rAthena Script =======================================
+//= Balmung & Lord Kaho's Horns Quest
+//===== By: ==================================================
+//= MagicalTux
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= 
+//===== Additional Comments: =================================
+//= Warning! Don't use this quest 8)
+//============================================================
 
 prontera,158,356,4	script	Royal Messenger	105,{
 	mes "[Royal Messenger]";

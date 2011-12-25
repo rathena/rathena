@@ -5,13 +5,12 @@
 //===== Current Version: ===================================== 
 //= 1.1
 //===== Compatible With: ===================================== 
-//= rAthena 0.5.2 +
+//= rAthena SVN
 //===== Description: ========================================= 
 // Simple item trade-in quest, a person can get a Dead Branch
 // by simply providing the items: Log x3 (7201), Wooden Heart x1 (7189), 
 // Trunk x5 (1019), and Wooden Gnarl x1 (7222).
 //===== Additional Comments: ================================= 
-//= Fully working.
 //= 1.1 Optimized, added Bloody Branch with 0.01% chance [Lupus]
 //============================================================
 

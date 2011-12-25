@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.2
 //===== Compatible With: =====================================
-//= rAthena Version; 4880+ (with 'setItemScript' command)
+//= rAthena SVN; 4880+ (with 'setItemScript' command)
 //===== Description: =========================================
 //= Custom event: Karachun (from 8 Dec till 8 Jan), X-Mas, HNY
 //===== Additional Comments: =================================
@@ -13,7 +13,6 @@
 //= 1.1 Readded Mdef +1 and  Luk +1 to Santa's Hat [Lupus]
 //= 1.2 Fixed double quotes not being escaped [brianluau]
 //============================================================
-
 
 prontera,156,174,4	script	Snower	713,{
 	mes "[Snower]";

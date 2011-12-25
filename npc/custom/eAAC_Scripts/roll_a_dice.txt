@@ -1,23 +1,26 @@
-//==========================================================
-//Roll a Dice  NPC
-//==========================================================
-//Made by birkiczd
-//==========================================================
-//This game lets you and the Dicer throw 3 dices.
-//Whoever get's a higher number (the player or dealer) wins.
-//==========================================================
-//Version:1.0 - made script public
-//        1.1 - fixed a few bugs,added dice emos =)
-//        1.2 - made variables for the amount of zenys for 
-//	          each bet so it is easy for people to costumize 
-//              the script
-//	    1.3 - added more emoticons,made an Info menu 
-//		    option which contains explanations and rules,
-//		    added the amount of lost/won zeny on the end 
-//		    of each game,added more colors
-//	    1.4 - some small code optimization thanks to Myzter             
-//==========================================================
-
+//===== rAthena Script =======================================
+//= Roll a Dice
+//===== By: ==================================================
+//= birkiczd
+//===== Current Version: =====================================
+//= 1.4
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= This game lets you and the Dicer throw 3 dices.
+//= Whoever get's a higher number (the player or dealer) wins.
+//===== Additional Comments: =================================
+// 1.0 - made script public
+// 1.1 - fixed a few bugs,added dice emos =)
+// 1.2 - made variables for the amount of zenys for 
+//       each bet so it is easy for people to costumize 
+//       the script
+// 1.3 - added more emoticons,made an Info menu 
+//       option which contains explanations and rules, 
+//       added the amount of lost/won zeny on the end 
+//       of each game,added more colors
+// 1.4 - some small code optimization thanks to Myzter
+//============================================================
 
 cmd_in02,181,98,2	script	Dicer	57,{
 
@@ -239,6 +242,4 @@ L_againa:
 	mes "Would you like to play again?";
 	next;
 	menu "Yes",L_play,"No",L_go;
-
- 
 }

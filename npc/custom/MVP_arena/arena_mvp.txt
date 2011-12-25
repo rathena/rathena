@@ -1,26 +1,35 @@
-// ---- MVP ARENA!!!!!! By Darkchild with 16 diff MVP's inside
-// -- Optimised The MVP arena!!!! By massdriller
-// - NPC in prontera
-// - Removed Duplicates [Silent]
+//===== rAthena Script =======================================
+//= MVP Arena
+//===== By: ==================================================
+//= Darkchild
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= 16 diff MVP's inside
+//===== Additional Comments: =================================
+//= 1.0 first version of script
+//= 1.1 Optimised The MVP arena [massdriller]
+//= 1.2 - NPC in prontera [Silent]
+//=     - Removed Duplicates
+//============================================================
 
 prontera,154,197,3	script	MVP Warper	768,{
-
 	mes "[ ^0065DFMVP Warper^000000 ]";
 	mes "Would you like to go to the MVP Arena ?...";
 
 	if (select("Yes!","No thanks.") == 2)
-		close;
+	close;
 
 	close2;
 	warp "quiz_00",50,24;
 	end;
 }
 
-
 // --- Inside the Arena
-// --- NPC's That explains thigns
+// --- NPC's That explains things
 quiz_00,49,31,4	script	MVP Arena Guide	778,{
-
 	switch(select("Intro","I want to go back","Heal me please","Cancel"))
 	{
 	case 1:
@@ -37,19 +46,19 @@ quiz_00,49,31,4	script	MVP Arena Guide	778,{
 		next;
 		mes "Good luck, Live long and Prosper!.";
 		close;
-	break;
+		break;
 	case 2:
 		close2;
 		warp "prontera",156,179;
 		end;
-	break;
+		break;
 	case 3:
 		percentheal 100,100;
 		close;
-	break;
+		break;
 	case 4:
 		close;
-	break;
+		break;
 	}
 	close;
 }
@@ -59,7 +68,7 @@ quiz_00,56,31,4	script	Alpha MVP	770,{
 	mes "[ ^0065DFAlpha MVP^000000 ]";
 	mes "I am the first Keeper, are you ready?.";
 	if (select("Yes!","Urrr No.") == 2)
-		close;
+	close;
 
 	mes "[ ^0065DFAlpha MVP^000000 ]";
 	mes "Which Arena you want to go to??";
@@ -82,43 +91,36 @@ Larena1:
 	callfunc "Ramvp_1";
 	warp "pvp_n_1-2",102,102;
 	close;
-
 Larena2:
 	if (getmapusers("pvp_n_2-2") > 49) goto Lsorry;
 	callfunc "Ramvp_1";
 	warp "pvp_n_2-2",102,102;
 	close;
-
 Larena3:
 	if (getmapusers("pvp_n_3-2") > 14) goto Lsorry;
 	callfunc "Ramvp_1";
 	warp "pvp_n_3-2",102,102;
 	close;
-
 Larena4:
 	if (getmapusers("pvp_n_4-2") > 14) goto Lsorry;
 	callfunc "Ramvp_1";
 	warp "pvp_n_4-2",102,102;
 	close; 
-
 Larena5:
 	if (getmapusers("pvp_n_5-2") > 14) goto Lsorry;
 	callfunc "Ramvp_1";
 	warp "pvp_n_5-2",102,102;
 	close;
-
 Larena6:
 	if (getmapusers("pvp_n_6-2") > 14) goto Lsorry;
 	callfunc "Ramvp_1";
 	warp "pvp_n_6-2",102,102;
 	close;
-
 Larena7:
 	if (getmapusers("pvp_n_7-2") > 14) goto Lsorry;
 	callfunc "Ramvp_1";
 	warp "pvp_n_7-2",102,102;
 	close;
-
 Larena8:
 	if (getmapusers("pvp_n_8-2") > 14) goto Lsorry;
 	callfunc "Ramvp_1";
@@ -160,43 +162,36 @@ Larena1:
 	callfunc "Ramvp_2";
 	warp "pvp_n_1-3",102,102;
 	close;
-
 Larena2:
 	if (getmapusers("pvp_n_2-3") > 14) goto Lsorry;
 	callfunc "Ramvp_2";
 	warp "pvp_n_2-3",102,102;
 	close;
-
 Larena3:
 	if (getmapusers("pvp_n_3-3") > 14) goto Lsorry;
 	callfunc "Ramvp_2";
 	warp "pvp_n_3-3",102,102;
 	close;
-
 Larena4:
 	if (getmapusers("pvp_n_4-3") > 14) goto Lsorry;
 	callfunc "Ramvp_2";
 	warp "pvp_n_4-3",102,102;
 	close;
-
 Larena5:
 	if (getmapusers("pvp_n_5-3") > 14) goto Lsorry;
 	callfunc "Ramvp_2";
 	warp "pvp_n_5-3",102,102;
 	close;
-
 Larena6:
 	if (getmapusers("pvp_n_6-3") > 14) goto Lsorry;
 	callfunc "Ramvp_2";
 	warp "pvp_n_6-3",102,102;
 	close;
-
 Larena7:
 	if (getmapusers("pvp_n_7-3") > 14) goto Lsorry;
 	callfunc "Ramvp_2";
 	warp "pvp_n_7-3",102,102;
 	close;
-
 Larena8:
 	if (getmapusers("pvp_n_8-3") > 14) goto Lsorry;
 	callfunc "Ramvp_2";
@@ -238,44 +233,37 @@ Larena1:
 	callfunc "Ramvp_3";
 	warp "pvp_n_1-4",102,102;
 	close;
-
 Larena2:
 	if (getmapusers("pvp_n_2-4") > 14) goto Lsorry;
 	callfunc "Ramvp_3";
 	warp "pvp_n_2-4",102,102;
 	close;
-
 Larena3:
 	if (getmapusers("pvp_n_3-4") > 14) goto Lsorry;
 	callfunc "Ramvp_3";
 	warp "pvp_n_3-4",102,102;
 	close;
-
 Larena4:
 	if (getmapusers("pvp_n_4-4") > 14) goto Lsorry;
 	mes "[ ^0065DFTheta MVP^000000 ]";
 	mes "Here you go!";
 	warp "pvp_n_4-4",102,102;
 	close;
-
 Larena5:
 	if (getmapusers("pvp_n_5-4") > 14) goto Lsorry;
 	callfunc "Ramvp_3";
 	warp "pvp_n_5-4",102,102;
 	close;
-
 Larena6:
 	if (getmapusers("pvp_n_6-4") > 14) goto Lsorry;
 	callfunc "Ramvp_3";
 	warp "pvp_n_6-4",102,102;
 	close;
-
 Larena7:
 	if (getmapusers("pvp_n_7-4") > 14) goto Lsorry;
 	callfunc "Ramvp_3";
 	warp "pvp_n_7-4",102,102;
 	close;
-
 Larena8:
 	if (getmapusers("pvp_n_8-4") > 14) goto Lsorry;
 	callfunc "Ramvp_3";
@@ -317,43 +305,36 @@ Larena1:
 	callfunc "Ramvp_4";
 	warp "pvp_n_1-5",102,102;
 	close;
-
 Larena2:
 	if (getmapusers("pvp_n_2-5") > 14) goto Lsorry;
 	callfunc "Ramvp_4";
 	warp "pvp_n_2-5",102,102;
 	close;
-
 Larena3:
 	if (getmapusers("pvp_n_3-5") > 14) goto Lsorry;
 	callfunc "Ramvp_4";
 	warp "pvp_n_3-5",102,102;
 	close;
-
 Larena4:
 	if (getmapusers("pvp_n_4-5") > 14) goto Lsorry;
 	callfunc "Ramvp_4";
 	warp "pvp_n_4-5",102,102;
 	close;
-
 Larena5:
 	if (getmapusers("pvp_n_5-5") > 14) goto Lsorry;
 	callfunc "Ramvp_4";
 	warp "pvp_n_5-5",102,102;
 	close;
-
 Larena6:
 	if (getmapusers("pvp_n_6-5") > 14) goto Lsorry;
 	callfunc "Ramvp_4";
 	warp "pvp_n_6-5",102,102;
 	close;
-
 Larena7:
 	if (getmapusers("pvp_n_7-5") > 14) goto Lsorry;
 	callfunc "Ramvp_4";
 	warp "pvp_n_7-5",102,102;
 	close;
-
 Larena8:
 	if (getmapusers("pvp_n_8-5") > 14) goto Lsorry;
 	callfunc "Ramvp_4";
@@ -372,7 +353,6 @@ Lsorry:
 pvp_n_1-2,100,100,4	script	MVP-Protector#01	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_2-2",102,102;
 	close;
@@ -382,7 +362,6 @@ L_Next:
 pvp_n_2-2,100,100,4	script	MVP-Protector#02	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_3-2",102,102;
 	close;
@@ -392,7 +371,6 @@ L_Next:
 pvp_n_3-2,100,100,4	script	MVP-Protector#03	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_4-2",102,102;
 	close;
@@ -402,7 +380,6 @@ L_Next:
 pvp_n_4-2,100,100,4	script	MVP-Protector#04	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_5-2",102,102;
 	close;
@@ -412,7 +389,6 @@ L_Next:
 pvp_n_5-2,100,100,4	script	MVP-Protector#05	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_6-2",102,102;
 	close;
@@ -422,7 +398,6 @@ L_Next:
 pvp_n_6-2,100,100,4	script	MVP-Protector#06	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_7-2",102,102;
 	close;
@@ -432,7 +407,6 @@ L_Next:
 pvp_n_7-2,100,100,4	script	MVP-Protector#07	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_8-2",102,102;
 	close;
@@ -447,7 +421,6 @@ pvp_n_8-2,100,100,4	script	MVP-Protector#08	727,{
 pvp_n_1-3,100,100,4	script	MVP-Protector#09	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_2-3",102,102;
 	close;
@@ -456,7 +429,6 @@ L_Next:
 pvp_n_2-3,100,100,4	script	MVP-Protector#10	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_3-3",102,102;
 	close;
@@ -465,7 +437,6 @@ L_Next:
 pvp_n_3-3,100,100,4	script	MVP-Protector#11	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_4-3",102,102;
 	close;
@@ -474,7 +445,6 @@ L_Next:
 pvp_n_4-3,100,100,4	script	MVP-Protector#12	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_5-3",102,102;
 	close;
@@ -483,7 +453,6 @@ L_Next:
 pvp_n_5-3,100,100,4	script	MVP-Protector#13	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_6-3",102,102;
 	close;
@@ -492,7 +461,6 @@ L_Next:
 pvp_n_6-3,100,100,4	script	MVP-Protector#14	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_7-3",102,102;
 	close;
@@ -501,7 +469,6 @@ L_Next:
 pvp_n_7-3,100,100,4	script	MVP-Protector#15	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_8-3",102,102;
 	close;
@@ -516,7 +483,6 @@ pvp_n_8-3,100,100,4	script	MVP-Protector#16	727,{
 pvp_n_1-4,100,100,4	script	MVP-Protector#17	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_2-4",102,102;
 	close;
@@ -526,7 +492,6 @@ L_Next:
 pvp_n_2-4,100,100,4	script	MVP-Protector#18	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_3-4",102,102;
 	close;
@@ -535,7 +500,6 @@ L_Next:
 pvp_n_3-4,100,100,4	script	MVP-Protector#19	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_4-4",102,102;
 	close;
@@ -544,7 +508,6 @@ L_Next:
 pvp_n_4-4,100,100,4	script	MVP-Protector#20	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_5-4",102,102;
 	close;
@@ -553,7 +516,6 @@ L_Next:
 pvp_n_5-4,100,100,4	script	MVP-Protector#21	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_6-4",102,102;
 	close;
@@ -562,7 +524,6 @@ L_Next:
 pvp_n_6-4,100,100,4	script	MVP-Protector#22	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_7-4",102,102;
 	close;
@@ -571,7 +532,6 @@ L_Next:
 pvp_n_7-4,100,100,4	script	MVP-Protector#23	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_8-4",102,102;
 	close;
@@ -586,7 +546,6 @@ pvp_n_8-4,100,100,4	script	MVP-Protector#24	727,{
 pvp_n_1-5,100,100,4	script	MVP-Protector#25	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_2-5",102,102;
 	close;
@@ -596,7 +555,6 @@ L_Next:
 pvp_n_2-5,100,100,4	script	MVP-Protector#26	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_3-5",102,102;
 	close;
@@ -605,7 +563,6 @@ L_Next:
 pvp_n_3-5,100,100,4	script	MVP-Protector#27	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_4-5",102,102;
 	close;
@@ -614,7 +571,6 @@ L_Next:
 pvp_n_4-5,100,100,4	script	MVP-Protector#28	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_5-5",102,102;
 	close;
@@ -623,7 +579,6 @@ L_Next:
 pvp_n_5-5,100,100,4	script	MVP-Protector#29	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_6-5",102,102;
 	close;
@@ -632,7 +587,6 @@ L_Next:
 pvp_n_6-5,100,100,4	script	MVP-Protector#30	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_7-5",102,102;
 	close;
@@ -641,7 +595,6 @@ L_Next:
 pvp_n_7-5,100,100,4	script	MVP-Protector#31	727,{
 	mes "[ ^0065DFMVP-Protector^000000 ]";
 	callfunc "Ramvp_M";
-
 L_Next:
 	warp "pvp_n_8-5",102,102;
 	close;

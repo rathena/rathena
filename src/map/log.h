@@ -5,8 +5,8 @@
 #define _LOG_H_
 
 //#include "map.h"
-struct map_session_data;
 struct block_list;
+struct map_session_data;
 struct mob_data;
 struct item;
 

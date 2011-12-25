@@ -1,14 +1,12 @@
-//===== eAthena Script ======================================
+//===== rAthena Script =======================================
 //= Hall of Fame
-//===========================================================
-//===== By ==================================================
-//= [Lance]
-//= Idea from emilylee78
-//===== Version =============================================
+//===== By: ==================================================
+//= Lance (idea from emilylee78)
+//===== Current Version: =====================================
 //= 2.4 FINAL
-//===== Compatible With =====================================
-//= eAthena SVN and Freya SVN
-//===== Description =========================================
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
 //= A Hall of Fame framework. Will update the list on every
 //= login and logout in a safe manner.
 //=
@@ -17,7 +15,7 @@
 //= 0 - Display the current rankings.
 //= 1 - Display last week's rankings.
 //= Note : Remember to put a close; after calling it.
-//===== Comments ============================================
+//===== Additional Comments: =================================
 //= 1.0 - Initial beta release                      [Lance]
 //= 1.1 - Fixed typos. Optimized a teeny bit.       [Lance]
 //= 1.2 - Bug fixes.                                [Lance]
@@ -32,7 +30,7 @@
 //= 2.2 - Minor updates and added Jury              [Lance]
 //= 2.3 - Utilizing eAthena's new scripting engine  [Lance]
 //= 2.4 - Minor bug fix with event script label (bugport:722) [Samura22]
-//===========================================================
+//============================================================
 
 prontera,0,0,0	script	OnPCLoginEvent	-1,{
 OnPCLoginEvent:
@@ -298,5 +296,4 @@ L_QUIT:
 	mes "[Jury]";
 	mes "Have a nice day then.";
 	close;
-	
 }

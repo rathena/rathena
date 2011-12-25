@@ -1,4 +1,16 @@
-//This quest is custom. Don't use it.
+//===== rAthena Script =======================================
+//= Lord Kaho's Horns Quest
+//===== By: ==================================================
+//= 
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= 
+//===== Additional Comments: =================================
+//= This quest is custom. Don't use it.
+//============================================================
 
 geffen,115,107,5	script	Lord Kaho's Servant	61,{
 	mes "[Lord Kaho's Servant]";
@@ -39,46 +51,46 @@ geffen,115,107,5	script	Lord Kaho's Servant	61,{
 	next;
 	menu "Sure am!",-,"These requirements are unfathomable!",LUnfathomable;
 
-		mes "[Lord Kaho's Servant]";
-		if(countitem(754) < 1 || countitem(753) < 1 || countitem(752) < 1 || countitem(751) < 1 || countitem(750) < 1
-			|| countitem(743) < 1 || countitem(742) < 1 || countitem(741) < 1 || countitem(2613) < 1
-			|| countitem(5053) < 1 || countitem(7020) < 1 || countitem(7036) < 1 || countitem(2268) < 1
-			|| countitem(734) < 1 || countitem(923) < 1 || countitem(968) < 1 || countitem(7005) < 1
-			|| countitem(714) < 3 || Zeny < 5000000) goto LNotEnough;
-		delitem 754,1;
-		delitem 753,1;
-		delitem 752,1;
-		delitem 751,1;
-		delitem 750,1;
-		delitem 743,1;
-		delitem 742,1;
-		delitem 741,1;
-		delitem 2613,1;
-		delitem 5053,1;
-		delitem 7020,1;
-		delitem 7036,1;
-		delitem 2268,1;
-		delitem 734,1;
-		delitem 923,1;
-		delitem 968,1;
-		delitem 7005,1;
-		delitem 714,3;
-		set Zeny,Zeny-5000000;
-		mes "Wow!  You are brave indeed!";
-		getitem 5013,1;
-		mes ". . . . .";
-		mes "Enjoy being God of Rune Midgard!";
-		close;
+	mes "[Lord Kaho's Servant]";
+	if(countitem(754) < 1 || countitem(753) < 1 || countitem(752) < 1 || countitem(751) < 1 || countitem(750) < 1
+		|| countitem(743) < 1 || countitem(742) < 1 || countitem(741) < 1 || countitem(2613) < 1
+		|| countitem(5053) < 1 || countitem(7020) < 1 || countitem(7036) < 1 || countitem(2268) < 1
+		|| countitem(734) < 1 || countitem(923) < 1 || countitem(968) < 1 || countitem(7005) < 1
+		|| countitem(714) < 3 || Zeny < 5000000) goto LNotEnough;
+	delitem 754,1;
+	delitem 753,1;
+	delitem 752,1;
+	delitem 751,1;
+	delitem 750,1;
+	delitem 743,1;
+	delitem 742,1;
+	delitem 741,1;
+	delitem 2613,1;
+	delitem 5053,1;
+	delitem 7020,1;
+	delitem 7036,1;
+	delitem 2268,1;
+	delitem 734,1;
+	delitem 923,1;
+	delitem 968,1;
+	delitem 7005,1;
+	delitem 714,3;
+	set Zeny,Zeny-5000000;
+	mes "Wow!  You are brave indeed!";
+	getitem 5013,1;
+	mes ". . . . .";
+	mes "Enjoy being God of Rune Midgard!";
+	close;
 
-		LNotEnough:
-			mes ". . . . .";
-			mes ". . .I'm sorry .. You don't have enough money and items ..";
-			mes "I can't afford to make this if you don't bring all materials needed.  Please understand this is to benefit heroes such as yourself!";
-			close;
+LNotEnough:
+	mes ". . . . .";
+	mes ". . .I'm sorry .. You don't have enough money and items ..";
+	mes "I can't afford to make this if you don't bring all materials needed.  Please understand this is to benefit heroes such as yourself!";
+	close;
 
-	LUnfathomable:
-		mes ". . . . .";
-		mes "What I had to go through was more unfathomable..";
-		mes "If you succeed in getting these items, you will have incredible strength!";
-		close;
+LUnfathomable:
+	mes ". . . . .";
+	mes "What I had to go through was more unfathomable..";
+	mes "If you succeed in getting these items, you will have incredible strength!";
+	close;
 }

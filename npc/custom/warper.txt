@@ -1,19 +1,19 @@
 //===== rAthena Script =======================================
-//= Warper Script
+//= Warper
 //===== By: ==================================================
 //= Darkchild
 //===== Current Version: =====================================
 //= 2.1
 //===== Compatible With: =====================================
-//= Any rAthena Version;
+//= rAthena SVN
 //===== Description: =========================================
 //= Generic warper...
 //===== Additional Comments: =================================
 //= 1.0 by Darkchild
 //= 1.1 by jabs
 //= 1.2 by Lupus (placement fixed in Amatsu)
-//= 1.3 fixed Louyang label typo, added warp and WARPRA into
-//= Nifleheim. Also sorted all names in alphabet order [Lupus]
+//= 1.3 fixed Louyang label typo, added warp and WARPRA into 
+//=     Nifleheim. Also sorted all names in alphabet order. [Lupus]
 //= 1.4 fixed morroc warp npc overlaying kafra [Aria]
 //= 1.4a Added Ayothaya and Einbroch to list, and town Warpra's [Fredzilla]
 //= 1.4b fixed Izlude warp npc overlaying BBS [Justin84]
@@ -26,13 +26,12 @@
 //= 2.0 Fixed warp for AntHell and Yuno. [Kisuka]
 //= 2.1 Moved AntHell warp agent to the new anthell entrance. [brianluau]
 //============================================================
-//============================================================
 //= To allow selecting the Level of the Dungeon you want to
 //= Warp to set the @lvlselect variable to 1 (Not implemented yet!)
 //============================================================
 
 -	script	Warp Agent#01::warpra	859,{
-//	set @lvlselect,0;
+	//	set @lvlselect,0;
 
 	callfunc "F_ClearGarbage"; //Clear outdated, unused variables
 
@@ -42,142 +41,142 @@
 	mes "Where do you want to go?";
 	next;
 	switch(select("To a Town:To a Dungeon")) {
+	case 1:
+		mes "[Warp Agent]";
+		mes "Please select which town you would like to be teleported to.";
+		next;
+		switch(select("Alberta:Aldebaran:Amatsu:Ayothaya:Comodo:Einbroch:Einbech:Geffen:Gonryun:Hugel:Izlude:Lighthalzen:Louyang:Lutie:Morroc:Payon:Prontera:Umbala:Yuno")) {
 		case 1:
-			mes "[Warp Agent]";
-			mes "Please select which town you would like to be teleported to.";
-			next;
-			switch(select("Alberta:Aldebaran:Amatsu:Ayothaya:Comodo:Einbroch:Einbech:Geffen:Gonryun:Hugel:Izlude:Lighthalzen:Louyang:Lutie:Morroc:Payon:Prontera:Umbala:Yuno")) {
-				case 1:
-					warp "alberta",27,236;
-					break;
-				case 2:
-					warp "aldebaran",145,120;
-					break;
-				case 3:
-					warp "amatsu",197,86;
-					break;
-				case 4:
-					warp "ayothaya",149,118;
-					break;
-				case 5:
-					warp "comodo",188,161;
-					break;
-				case 6:
-					warp "einbroch",64,200;
-					break;
-				case 7:
-					warp "einbech",70,95;
-					break;
-				case 8:
-					warp "geffen",119,66;
-					break;
-				case 9:
-					warp "gonryun",150,130;
-					break;
-				case 10:
-					warp "hugel",96,145;
-					break;
-				case 11:
-					warp "izlude",128,111;
-					break;
-				case 12:
-					warp "lighthalzen",158,92;
-					break;
-				case 13:
-					warp "louyang",210,108;
-					break;
-				case 14:
-					warp "xmas",150,133;
-					break;
-				case 15:
-					warp "morocc",159,93;
-					break;
-				case 16:
-					warp "payon",152,75;
-					break;
-				case 17:
-					warp "prontera",156,187;
-					break;
-				case 18:
-					warp "umbala",130,130;
-					break;
-				case 19:
-					warp "yuno",160,168;
-					break;
-			}
+			warp "alberta",27,236;
 			break;
 		case 2:
-			mes "[Warp Agent]";
-			mes "Please select which dungeon you would like to be teleported to.";
-			next;
-			switch(select("Abyss Lake:Amatsu Dungeon:Anthell:Ayothaya Dungeon:Bibilan Dungeon:Coal Mine (Dead Pit):Culvert:Einbech Dungeon:Glast Heim:Gonryun Dungeon:Juperos:Lighthalzen Bio Lab:Magma Dungeon:Niflheim:Odin Temple:Orc Dungeon:Payon Dungeon:Pyramids:Sphinx:Sunken Ship:Thanatos Tower:Turtle Dungeon")) {
-				case 1:
-					warp "hu_fild05",189,207;
-					break;
-				case 2:
-					warp "ama_dun01",229,12;
-					break;
-				case 3:
-					warp "moc_fild20",164,145;
-					break;
-				case 4:
-					warp "ayo_fild02",280,149;
-					break;
-				case 5:
-					warp "izlu2dun",106,88;
-					break;
-				case 6:
-					warp "mjolnir_02",81,359;
-					break;
-				case 7:
-					warp "prt_sewb1",126,248;
-					break;
-				case 8:
-					warp "einbech",135,249;
-					break;
-				case 9:
-					warp "glast_01",368,303;
-					break;
-				case 10:
-					warp "gonryun",160,195;
-					break;
-				case 11:
-					warp "yuno_fild07",218,176;
-					break;
-				case 12:
-					warp "lighthalzen",158,285;
-					break;
-				case 13:
-					warp "yuno_fild03",39,140;
-					break;
-				case 14:
-					warp "niflheim",35,161;
-					break;
-				case 15:
-					warp "odin_tem01",98,144;
-					break;
-				case 16:
-					warp "gef_fild10",70,332;
-					break;
-				case 17:
-					warp "pay_arche",43,132;
-					break;
-				case 18:
-					warp "moc_ruins",62,162;
-					break;
-				case 19:
-					warp "moc_fild19",107,100;
-					break;
-				case 20:
-					warp "alb2trea",75,98;
-					break;
-				case 21:
-					warp "tha_scene01",131,223;
-					break;
-				case 22:
-					warp "tur_dun01",149,238;
-			}
+			warp "aldebaran",145,120;
 			break;
+		case 3:
+			warp "amatsu",197,86;
+			break;
+		case 4:
+			warp "ayothaya",149,118;
+			break;
+		case 5:
+			warp "comodo",188,161;
+			break;
+		case 6:
+			warp "einbroch",64,200;
+			break;
+		case 7:
+			warp "einbech",70,95;
+			break;
+		case 8:
+			warp "geffen",119,66;
+			break;
+		case 9:
+			warp "gonryun",150,130;
+			break;
+		case 10:
+			warp "hugel",96,145;
+			break;
+		case 11:
+			warp "izlude",128,111;
+			break;
+		case 12:
+			warp "lighthalzen",158,92;
+			break;
+		case 13:
+			warp "louyang",210,108;
+			break;
+		case 14:
+			warp "xmas",150,133;
+			break;
+		case 15:
+			warp "morocc",159,93;
+			break;
+		case 16:
+			warp "payon",152,75;
+			break;
+		case 17:
+			warp "prontera",156,187;
+			break;
+		case 18:
+			warp "umbala",130,130;
+			break;
+		case 19:
+			warp "yuno",160,168;
+			break;
+		}
+		break;
+	case 2:
+		mes "[Warp Agent]";
+		mes "Please select which dungeon you would like to be teleported to.";
+		next;
+		switch(select("Abyss Lake:Amatsu Dungeon:Anthell:Ayothaya Dungeon:Bibilan Dungeon:Coal Mine (Dead Pit):Culvert:Einbech Dungeon:Glast Heim:Gonryun Dungeon:Juperos:Lighthalzen Bio Lab:Magma Dungeon:Niflheim:Odin Temple:Orc Dungeon:Payon Dungeon:Pyramids:Sphinx:Sunken Ship:Thanatos Tower:Turtle Dungeon")) {
+		case 1:
+			warp "hu_fild05",189,207;
+			break;
+		case 2:
+			warp "ama_dun01",229,12;
+			break;
+		case 3:
+			warp "moc_fild20",164,145;
+			break;
+		case 4:
+			warp "ayo_fild02",280,149;
+			break;
+		case 5:
+			warp "izlu2dun",106,88;
+			break;
+		case 6:
+			warp "mjolnir_02",81,359;
+			break;
+		case 7:
+			warp "prt_sewb1",126,248;
+			break;
+		case 8:
+			warp "einbech",135,249;
+			break;
+		case 9:
+			warp "glast_01",368,303;
+			break;
+		case 10:
+			warp "gonryun",160,195;
+			break;
+		case 11:
+			warp "yuno_fild07",218,176;
+			break;
+		case 12:
+			warp "lighthalzen",158,285;
+			break;
+		case 13:
+			warp "yuno_fild03",39,140;
+			break;
+		case 14:
+			warp "niflheim",35,161;
+			break;
+		case 15:
+			warp "odin_tem01",98,144;
+			break;
+		case 16:
+			warp "gef_fild10",70,332;
+			break;
+		case 17:
+			warp "pay_arche",43,132;
+			break;
+		case 18:
+			warp "moc_ruins",62,162;
+			break;
+		case 19:
+			warp "moc_fild19",107,100;
+			break;
+		case 20:
+			warp "alb2trea",75,98;
+			break;
+		case 21:
+			warp "tha_scene01",131,223;
+			break;
+		case 22:
+			warp "tur_dun01",149,238;
+		}
+		break;
 	}
 	end;
 }

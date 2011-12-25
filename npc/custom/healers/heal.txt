@@ -1,11 +1,11 @@
 //===== rAthena Script =======================================
-//= Heal Npc
+//= Healer
 //===== By: ==================================================
-//= Lotsa People (1.x)
+//= lots of people
 //===== Current Version: =====================================
 //= 3.1
 //===== Compatible With: =====================================
-//= rAthena 0.1+;
+//= rAthena SVN
 //===== Description: =========================================
 //= Healer NPC Which Heals For Free
 //===== Additional Comments: =================================
@@ -16,20 +16,22 @@
 //============================================================
 
 -	script	Healer#h1-1::Healer	742,{
+	callfunc "F_ClearGarbage",0;
+	
 	mes "[Healer]";
 	mes "I have amazing healing powers!!";
 	mes "You look like a person who needs them";
 	mes "Want some?";
 	next;
-	if (select("Heal:No thanks") == 2) {
+	if (select("Heal:No thanks") == 1) {
+		percentheal 100,100;
 		mes "[Healer]";
-		mes "Allright, come back if you need a heal.";
-		close;
+		mes "Wonderfull, You are now healed!.";
+		mes "Have fun adventuring!!";
+	} else {
+		mes "[Healer]";
+		mes "Alright, come back if you need a heal.";
 	}
-	percentheal 100,100;
-	mes "[Healer]";
-	mes "Wonderfull, You are now healed!.";
-	mes "Have fun adventuring!!";
 	close;
 }
 

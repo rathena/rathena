@@ -1,35 +1,33 @@
-//=====================================
-// Vending Machine Script
-// v2.4
-//=====================================
-// by Celestria
-//=====================================
-// Changelog:
-// 2.4 - Made optimizations according to suggestions made by erKURITA. Script is now significantly shorter.
-//
-// 2.3 - Added in "Slam" feature, as well as admin ability to turn machine on and off.
-// - Added admin menu. Allows GMs to put machines in/out of service, and to clear
-// all jammed items.
-//
-// 2.2 - Added in/Renamed some variables to allow a single machine to block on several
-// items simultaneously. This fix also allows the two-item drop to work with every
-// item the machine is jammed on.
-//
-// 2.1 - Fixed an error where if one machine jammed on a menu item (say 3 for example),
-// if another machine also jammed on the same menu item (3 in this case), the original
-// machine to jam would be unjammed.
-// - This fix only allows a machine to jam one item at a time. Will fix in the future.
-//
-// 2.0 - Completely redid the script using a call-function.
-// Now all replica scripts can simply be a copy of Vending Machine,
-// but with variables modified to suit it''s intended use.
-//
-// 1.1 - Fixed $jamplayer1 not being a string, thanks to Terces.
-// - Changed random number that intiates jam to 1, to allow for faster modification of jam rates.
-//
-// 1.0 - Creted a script for selling numerous items that would occasionally jam on players.
-// - Used numbered variables to allow for multiplacation of the script.
-//=====================================
+//===== rAthena Script =======================================
+//= Vending Machine
+//===== By: ==================================================
+//= Celestria
+//===== Current Version: =====================================
+//= 2.4
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= sells items to players; occasionally the machine will "jam" :P
+//===== Additional Comments: =================================
+//= 1.0 - Creted a script for selling numerous items that would occasionally jam on players.
+//=     - Used numbered variables to allow for multiplacation of the script.
+//= 1.1 - Fixed $jamplayer1 not being a string, thanks to Terces.
+//=     - Changed random number that intiates jam to 1, to allow for faster modification of jam rates.
+//= 2.0 - Completely redid the script using a call-function.
+//=       Now all replica scripts can simply be a copy of Vending Machine,
+//=       but with variables modified to suit it''s intended use.
+//= 2.1 - Fixed an error where if one machine jammed on a menu item (say 3 for example),
+//=       if another machine also jammed on the same menu item (3 in this case), the original
+//=       machine to jam would be unjammed.
+//=     - This fix only allows a machine to jam one item at a time. Will fix in the future.
+//= 2.2 - Added in/Renamed some variables to allow a single machine to block on several
+//=       items simultaneously. This fix also allows the two-item drop to work with every
+//=       item the machine is jammed on.
+//= 2.3 - Added in "Slam" feature, as well as admin ability to turn machine on and off.
+//=     - Added admin menu. Allows GMs to put machines in/out of service, and to clear
+//=       all jammed items.
+//= 2.4 - Made optimizations according to suggestions made by erKURITA. Script is now significantly shorter.
+//============================================================
 
 p_track01,45,58,4	script	Vending Machine#1	910,{
 
@@ -65,10 +63,6 @@ p_track01,45,58,4	script	Vending Machine#1	910,{
 
 	callfunc "F_Vend1";
 }
-
-
-
-
 
 
 
@@ -171,7 +165,6 @@ function	script	F_Vend2	{
 	M_Ite10:
 		set @num, 10;
 		goto B_Buy;
-
 
 
 B_Cancel:

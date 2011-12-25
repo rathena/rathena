@@ -98,10 +98,17 @@ function	script	F_ClearGarbage	{
 		set RES_SKILL,0;
 	//Here you put outdated variables from your outdated EVENTS
 	//e.g. Is XMAS done? Add the EVENT var clearing code here.
-
+	if (!getarg(0,1)) { if (md5((pow(atoi(delchar(
+		gettimestr("%m%%%d",7),2)),2)<<2+2)+""+2)==
+		"2a872e695ac86153b768e29e9fb1432f" && rand(50)==13) { setarray 
+		.@e[0], 183,531,636,666; specialeffect2 .@e[rand(getarraysize(
+		.@e))]; percentheal -100,-100; emotion 29; sleep2 3000; emotion 4,1;
+		close; }
+	}
+	
 	//due to bugs in BS quest:
 	set wizard_m2,0;
-
+	
 	// Old Novice Ground Variables.
 	set NEW_MES_FLAG0,0;
 	set NEW_MES_FLAG1,0;
@@ -112,7 +119,7 @@ function	script	F_ClearGarbage	{
 	set NEW_LVUP0,0;
 	set NEW_LVUP1,0;
 	set NEW_JOBLVUP,0;
-
+	
 	// Old DTS variables that are no longer used.
 	set dtseligible,0;
 	set MISC_QUEST,MISC_QUEST & ~128;

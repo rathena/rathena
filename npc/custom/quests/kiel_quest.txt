@@ -5,9 +5,9 @@
 //===== Current Version: =====================================
 //= 1.0
 //===== Compatible With: =====================================
-//= rAthena 1.0
+//= rAthena SVN
 //===== Description: =========================================
-//= I't custom 8) But you have to pay every time u enter
+//= I't custom 8) But you have to pay every time you enter
 //===== Additional Comments: =================================
 //= 
 //============================================================

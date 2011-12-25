@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 1.2
 //===== Compatible With: ===================================== 
-//= rAthena 1.0
+//= rAthena SVN
 //===== Description: ========================================= 
 //= Quest itms:Sword o'Chinese Exorcist,No Recipient,Her Heart
 //===== Additional Comments: ================================= 
@@ -13,7 +13,6 @@
 //= 1.1	Added missing next;'s [Evera]
 //= 1.2 Added another missing next; [Evera]
 //============================================================ 
-
 
 comodo,135,227,5	script	Sherri	93,{
 	mes "[Sherri]";
@@ -107,14 +106,12 @@ ExCreate:
 	mes " ";
 	mes "Here is lover's lost letter as promised! Again - Thank you!";
 	close;
-
 L_NoItem:
 	mes "[Evan]";
 	mes "Waahhhh, stop playing with my feelings!";
 	mes " ";
 	mes "Go away!";
 	close;
-
 ExEnd:
 	mes "[Evan]";
 	mes "*sighs*";
@@ -148,7 +145,6 @@ L_NoItem:
 	mes "[Old Smith]";
 	mes "Hmm, you seem to be missing something... probably that 'Oridecon'.";
 	close;
-
 L_NoItemS:
 ExEnd:
 	mes "[Old Smith]";

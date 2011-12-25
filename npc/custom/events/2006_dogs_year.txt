@@ -5,17 +5,16 @@
 //===== Current Version: =====================================
 //= 1.1
 //===== Compatible With: =====================================
-//= rAthena Version; 5xxx+ (with 'disguise' command)
+//= rAthena SVN; 5000+ (with 'disguise' command)
 //===== Description: =========================================
 //= Custom event: For 28-29 January
 //===== Additional Comments: =================================
 //= 1.0 Tested, fully working.[Lupus]
-//=		Add some national info in English if you can.
-//=	(Mine was in Russian, and it's damn hard to translate 8)
+//=     Add some national info in English if you can.
+//=    (Mine was in Russian, and it's damn hard to translate 8)
 //= 1.1 Commented out monster spawn as it is a custom mob and [L0ne_W0lf]
-//	not in the mob database.
+//=     not in the mob database.
 //============================================================
-
 
 prontera,149,167,6	script	Maria	81,{
 	mes "[Maria]";

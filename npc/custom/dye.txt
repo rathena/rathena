@@ -1,27 +1,24 @@
-//===== rAthena Script ======================================= 
-//= Stylist Script
-//===== By: ================================================== 
-//= rAthena Dev team
-//= Revised by Nekosume [pyRO v3.0] 
-//===== Current Version: ===================================== 
+//===== rAthena Script =======================================
+//= Stylist
+//===== By: ==================================================
+//= Nekosume
+//===== Current Version: =====================================
 //= 4.2
-//===== Compatible With: ===================================== 
-//= Any rAthena Version 
-//===== Description: ========================================= 
-//= Revised dye NPC
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= Changes your hair style, hair color, and cloth color.
 //===== Additional Comments: =================================
-//= v4.2 - Renamed to avoid conflict [Paradox924X]
-//= v4.1 - New hairstyles added [Mass Zero]
-//= v4.0 - Refined and Combined [Darkchild]
-//= v3.0 - Added the 'Browse' options
-//= v2.5 - Added more hair colors
-//= v2.0 - Changed palette and hair style select
-//= v1.5 - Revised script / different dialog
-//= v1.0 - Split into two NPCs
-//============================================================ 
+//= 1.0 - Split into two NPCs
+//= 1.5 - Revised script / different dialog
+//= 2.0 - Changed palette and hair style select
+//= 2.5 - Added more hair colors
+//= 3.0 - Added the 'Browse' options
+//= 4.0 - Refined and Combined [Darkchild]
+//= 4.1 - New hairstyles added [Mass Zero]
+//= 4.2 - Renamed to avoid conflict [Paradox924X]
+//============================================================
 
-
-//Stylist------------------------------------------------------------------------------------------------------------
 prontera,170,180,1	script	Stylist#custom_stylist	122,{
 	mes "[^FF8000Stylist^000000]";
 	mes "I'm the greatest stylist in all of Rune-Midgard~~!";
@@ -30,147 +27,147 @@ prontera,170,180,1	script	Stylist#custom_stylist	122,{
 	next;
 	menu "Hair style",Lstyle,"Hair color",Lcolor,"Cloth Color",Lcloth,"Nothing",LCancel;
 
-	Lstyle:
-		mes "[^FF8000Stylist^000000]";
-		mes "Do you want to browse through the choices, or do you know what you want?";
-		next;
-		menu "Browse",Lbrowsesty,"I know what I want",Lwantsty;
+Lstyle:
+	mes "[^FF8000Stylist^000000]";
+	mes "Do you want to browse through the choices, or do you know what you want?";
+	next;
+	menu "Browse",Lbrowsesty,"I know what I want",Lwantsty;
 
-	Lwantsty:
-		mes "[^FF8000Stylist^000000]";
-		mes "Great!  Now just pick a style and I'll get started!";
- 		next;
-		mes "[^FF8000Stylist^000000]";
-		mes "Please pick a style number ^0000FFbetween 0 and 23^000000.";
-		mes "Number 0, by the way, is the default style for your character.";
- 		next;
-		input @sty;
-		if (@sty>23) close;
-		if (@sty<0) close;
-		setlook 1,@sty;
-		next;
-		mes "[^FF8000Stylist^000000]";
-		mes "Is this good, or do you want a different style?";
-		next;
-		menu "This is good",-,"Different style, please",Lwantsty;
-		next;
-		mes "[^FF8000Stylist^000000]";
-		mes "You look great~!  Come back again, okay?";
-		close;
+Lwantsty:
+	mes "[^FF8000Stylist^000000]";
+	mes "Great!  Now just pick a style and I'll get started!";
+	next;
+	mes "[^FF8000Stylist^000000]";
+	mes "Please pick a style number ^0000FFbetween 0 and 23^000000.";
+	mes "Number 0, by the way, is the default style for your character.";
+	next;
+	input @sty;
+	if (@sty>23) close;
+	if (@sty<0) close;
+	setlook 1,@sty;
+	next;
+	mes "[^FF8000Stylist^000000]";
+	mes "Is this good, or do you want a different style?";
+	next;
+	menu "This is good",-,"Different style, please",Lwantsty;
+	next;
+	mes "[^FF8000Stylist^000000]";
+	mes "You look great~!  Come back again, okay?";
+	close;
 
-	Lbrowsesty:
-		set @look, -1;
-		mes "[^FF8000Stylist^000000]";
-		mes "Okay, here we go~!  Just stop me when you see something you like, okay?";
-		next;
+Lbrowsesty:
+	set @look, -1;
+	mes "[^FF8000Stylist^000000]";
+	mes "Okay, here we go~!  Just stop me when you see something you like, okay?";
+	next;
 
-	Lbrowserep:
-		set @look,@look+1;
-		setlook 1,@look;
-		mes "This is Pallete Number^FF9009 "+@look+" ^000000!"; 
-		if(@look == 23) menu "Back To The Begin",Lbrowsesty,"I like this one",Lstop;
-		if(@look != 23)	menu "Keep going",Lbrowserep,"I like this one",Lstop;
-		
-	Lcolor:
-		mes "[^FF8000Stylist^000000]";
-		mes "Do you want to browse through the choices, or do you know what you want?";
-		next;
-		menu "Browse",Lbrowsecolor,"I know what I want",Lwantcolor;
+Lbrowserep:
+	set @look,@look+1;
+	setlook 1,@look;
+	mes "This is Pallete Number^FF9009 "+@look+" ^000000!"; 
+	if(@look == 23) menu "Back To The Begin",Lbrowsesty,"I like this one",Lstop;
+	if(@look != 23)	menu "Keep going",Lbrowserep,"I like this one",Lstop;
+	
+Lcolor:
+	mes "[^FF8000Stylist^000000]";
+	mes "Do you want to browse through the choices, or do you know what you want?";
+	next;
+	menu "Browse",Lbrowsecolor,"I know what I want",Lwantcolor;
 
-	Lwantcolor:
-		mes "[^FF8000Stylist^000000]";
-		mes "Just pick a color and we can get started.";
-		next;
-		mes "[^FF8000Stylist^000000]";
-		mes "Please pick a style number ^0000FFbetween 0 and 20^000000.";
-		mes "Number 0, by the way, is the default color for your character.";
- 		next;
-		mes "[^FF8000Stylist^000000]";
-		mes "0 is default...";
-		mes "1 is blonde...";
-		mes "2 is lavender...";
-		mes "3 is brown...";
-		mes "4 is green...";
-		mes "5 is blue...";
-		mes "6 is white...";
-		mes "7 is black...";
-		mes "8 is red...";
-		mes "and 9-20 are new colors.";
-		input @color;
-		if (@color>20) close;
-		if (@color<0) close;
-		setlook 6,@color;
-		next;
-		mes "[^FF8000Stylist^000000]";
-		mes "Is this good, or do you want a different color?";
-		next;
-		menu "This is good",-,"Different color, please",Lwantcolor;
-		next;
-		mes "[^FF8000Stylist^000000]";
-		mes "You look great~!  Come back again, okay?";
-		close;
+Lwantcolor:
+	mes "[^FF8000Stylist^000000]";
+	mes "Just pick a color and we can get started.";
+	next;
+	mes "[^FF8000Stylist^000000]";
+	mes "Please pick a style number ^0000FFbetween 0 and 20^000000.";
+	mes "Number 0, by the way, is the default color for your character.";
+	next;
+	mes "[^FF8000Stylist^000000]";
+	mes "0 is default...";
+	mes "1 is blonde...";
+	mes "2 is lavender...";
+	mes "3 is brown...";
+	mes "4 is green...";
+	mes "5 is blue...";
+	mes "6 is white...";
+	mes "7 is black...";
+	mes "8 is red...";
+	mes "and 9-20 are new colors.";
+	input @color;
+	if (@color>20) close;
+	if (@color<0) close;
+	setlook 6,@color;
+	next;
+	mes "[^FF8000Stylist^000000]";
+	mes "Is this good, or do you want a different color?";
+	next;
+	menu "This is good",-,"Different color, please",Lwantcolor;
+	next;
+	mes "[^FF8000Stylist^000000]";
+	mes "You look great~!  Come back again, okay?";
+	close;
 
-	Lbrowsecolor:
-		set @look, -1;
-		mes "[^FF8000Stylist^000000]";
-		mes "Okay, here we go~!  Just stop me when you see something you like, okay?";
-		next;
+Lbrowsecolor:
+	set @look, -1;
+	mes "[^FF8000Stylist^000000]";
+	mes "Okay, here we go~!  Just stop me when you see something you like, okay?";
+	next;
 
-	Lbrowsecolorrep:
-		set @look,@look+1;
-		setlook 6,@look;
-		mes "This is Pallete Number^FF9009 "+@look+" ^000000!"; 
-		if(@look == 20) menu "Back To The Begin",Lbrowsecolor,"I like this one",Lstop;
-		if(@look != 20)	menu "Keep going",Lbrowsecolorrep,"I like this one",Lstop;
+Lbrowsecolorrep:
+	set @look,@look+1;
+	setlook 6,@look;
+	mes "This is Pallete Number^FF9009 "+@look+" ^000000!"; 
+	if(@look == 20) menu "Back To The Begin",Lbrowsecolor,"I like this one",Lstop;
+	if(@look != 20)	menu "Keep going",Lbrowsecolorrep,"I like this one",Lstop;
 
-		Lstop:
-			mes "[^FF8000Stylist^000000]";
-			mes "You look great~!  I love it~! ^_^";
-			close;
+Lstop:
+	mes "[^FF8000Stylist^000000]";
+	mes "You look great~!  I love it~! ^_^";
+	close;
 
-	LCancel:
-		mes "[^FF8000Stylist^000000]";
-		mes "Well come again.";
-		close;
+LCancel:
+	mes "[^FF8000Stylist^000000]";
+	mes "Well come again.";
+	close;
 
-	Lcloth:
-		mes "[^FF8000Stylist^000000]";
-		mes "Do you want to browse through the choices, or do you know what you want?";
-		next;
-		menu "Browse",Lbrowsecloth,"I know what I want",Lwantcloth;
+Lcloth:
+	mes "[^FF8000Stylist^000000]";
+	mes "Do you want to browse through the choices, or do you know what you want?";
+	next;
+	menu "Browse",Lbrowsecloth,"I know what I want",Lwantcloth;
 
-	Lwantcloth:
-		mes "[^FF8000Stylist^000000]";
-		mes "Great!  Now just pick a pallete and I'll get started!";
- 		next;
-		mes "[^FF8000Stylist^000000]";
-		mes "Please pick a style number ^0000FFbetween 0 and 77^000000.";
-		mes "Number 0, by the way, is the default style for your character.";
- 		next;
-		input @pal;
-		if (@pal>77) close;
-		if (@pal<0) close;
-		setlook 7,@pal;
-		next;
-		mes "[^FF8000Stylist^000000]";
-		mes "Is this good, or do you want a different pallet";
-		next;
-		menu "This is good",-,"Different pallet, please",Lwantcloth;
-		next;
-		mes "[^FF8000Stylist^000000]";
-		mes "You look great~!  Come back again, okay?";
-		close;
+Lwantcloth:
+	mes "[^FF8000Stylist^000000]";
+	mes "Great!  Now just pick a pallete and I'll get started!";
+	next;
+	mes "[^FF8000Stylist^000000]";
+	mes "Please pick a style number ^0000FFbetween 0 and 77^000000.";
+	mes "Number 0, by the way, is the default style for your character.";
+	next;
+	input @pal;
+	if (@pal>77) close;
+	if (@pal<0) close;
+	setlook 7,@pal;
+	next;
+	mes "[^FF8000Stylist^000000]";
+	mes "Is this good, or do you want a different pallet";
+	next;
+	menu "This is good",-,"Different pallet, please",Lwantcloth;
+	next;
+	mes "[^FF8000Stylist^000000]";
+	mes "You look great~!  Come back again, okay?";
+	close;
 
-	Lbrowsecloth:
-		set @look, -1;
-		mes "[^FF8000Stylist^000000]";
-		mes "Okay, here we go~!  Just stop me when you see something you like, okay?";
-		next;
+Lbrowsecloth:
+	set @look, -1;
+	mes "[^FF8000Stylist^000000]";
+	mes "Okay, here we go~!  Just stop me when you see something you like, okay?";
+	next;
 
-	Lbrowseclothrep:
-		set @look,@look+1;
-		setlook 7,@look;
-		mes "This is Pallete Number^FF9009 "+@look+" ^000000!"; 
-		if(@look == 77) menu "Back To The Begin",Lbrowsecloth,"I like this one",Lstop;
-		if(@look != 77)	menu "Keep going",Lbrowseclothrep,"I like this one",Lstop;
+Lbrowseclothrep:
+	set @look,@look+1;
+	setlook 7,@look;
+	mes "This is Pallete Number^FF9009 "+@look+" ^000000!"; 
+	if(@look == 77) menu "Back To The Begin",Lbrowsecloth,"I like this one",Lstop;
+	if(@look != 77)	menu "Keep going",Lbrowseclothrep,"I like this one",Lstop;
 }

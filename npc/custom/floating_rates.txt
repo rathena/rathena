@@ -1,25 +1,22 @@
-//===== rAthena Script ======================================================================
+//===== rAthena Script =======================================
 //= Floating Server Rates
-//===== Original By =========================================================================
+//===== By: ==================================================
 //= Lupus
-//===== Current Version: ====================================================================
+//===== Current Version: =====================================
 //= 1.0
-//===== Compatible With: ====================================================================
-//= Any rAthena, that has 'setbattleflag' function
-//===== Description: ========================================================================
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
 //= It's a simply example of setbattleflag
 //= This script will change your server rates from 1x to 1.5x every 6 hours
 //= Note: It doesn't affect Card granted drops, MVP & Treasure Chests drops ^_-
-//=	It also doesn't affect CARD drops, because they are just 0.01%
-//===== Comments and Credits ================================================================
+//=       It also doesn't affect CARD drops, because they are just 0.01%
+//===== Additional Comments: =================================
 //= You can make incredible scripts with 'setbattleflag'!
-//===========================================================================================
+//============================================================
 
-
-prontera,3,4,5	script	FloatingRates	-1,{
-	end;
+-	script	FloatingRates	-1,{
 OnInit:
-
 //add any other HOURS
 OnHour00:
 OnHour06:
@@ -40,7 +37,7 @@ OnHour18:
 	setbattleflag("item_rate_equip",$@drate);
 	//we don't change card drops rate, because these values won't change them anyway
 	atcommand "@reloadmobdb";
-
+	
 	announce "Current Rune-Midgard rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
 	end;
 }

@@ -1,22 +1,18 @@
-//////////////////////////////////////////////////////////
-//             Marriage Script                          //
-//////////////////////////////////////////////////////////
-// 
-//=====rAthena Script====================================
-// Wedding Script
-//=====By================================================
-// AppleGirl and Evera(version 1.0)
-//=====Current Version===================================
-// 2.9
-//=====Compatible With:==================================
-// rAthena Version SVN-R8637 and up; RO Episode 6+
-//=====Description=======================================
-// Fully working wedding script for all kind of weddings
-//=====Additional Comments:==============================
-// Lesbian and Gay Weddings by ShadowLady (version 1.1)
-// Complete Rewrite by Skotlex (version 2.0->2.8)
-// 2.9 : Somewhat iRO-official NPC names [DracoRPG]
-//=======================================================
+//===== rAthena Script =======================================
+//= Wedding Script
+//===== By: ==================================================
+//= AppleGirl, Evera
+//===== Current Version: =====================================
+//= 2.9
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= Fully working wedding script for all kind of weddings
+//===== Additional Comments: =================================
+// 1.1 Lesbian and Gay Weddings [ShadowLady]
+// 2.0 Complete Rewrite [Skotlex]
+// 2.9 Somewhat iRO-official NPC names [DracoRPG]
+//============================================================
 
 // Configuration Variables: 
 -	script	marriage_init	-1,{

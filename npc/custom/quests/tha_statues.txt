@@ -1,23 +1,21 @@
 //===== rAthena Script =======================================
 //= Custom Thanatos Tower Quest
 //===== By: ==================================================
-//= Bibilol & Moryagorn
+//= Bibilol, Moryagorn
 //===== Current Version: =====================================
 //= 1.1
 //===== Compatible With: =====================================
-//= Any rAthena Version;
+//= rAthena SVN
 //===== Description: =========================================
 //= Custom Thanatos Tower Quest
 //===== Additional Comments: =================================
 //= 1.1 Fixed wrong NPC names in their dialogues, added
-//= 	Justin84's gems check in Sox NPC [Lupus]
+//=     Justin84's gems check in Sox NPC [Lupus]
 //============================================================
-
 
 //Statue (NPC)(U: UP, D: DOWN, R: RIGHT, L: LEFT) :
 // Explain Npc
 tha_t08,69,106,4	script	Statue	111,{
-
 	mes "You can read on the back of the statue:";
 	mes "'By the spirit of olds, the walls are closed";
 	mes "Upper floors or foreign taboo";
@@ -33,22 +31,19 @@ tha_t08,69,106,4	script	Statue	111,{
 //Script:
 
 tha_t09,17,158,4	script	Thalos	111,{
-
 	if(TSQ_CHK == 1) goto done;
 	mes "[Thalos]";
 	mes "You must find the 2nd Statue now.";
 	set TSQ_CHK,1;
 	close;
-
 done:
 	mes "[Thalos]";
 	mes "Go search the 2nd Statue!";
 	close;
-           
+	
 }
 
 tha_t09,84,99,4	script	Mediane	111,{
-
 	if(TSQ_CHK != 1) goto nook;
 	mes "[Mediane]";
 	mes "Okay, i am warping you to the next floor now.";
@@ -69,7 +64,6 @@ nook:
 //Script:
 
 tha_t10,130,159,4	script	Melkor	111,{
-
 	if(TSQ_CHK == 1) goto done;
 	mes "[Melkor]";
 	mes "You must find the other Spirits now.";
@@ -83,7 +77,6 @@ done:
 }
 
 tha_t10,160,98,4	script	Zebrus	111,{
-
 	if(TSQ_CHK != 1) goto nook;
 	mes "[Zebrus]";
 	mes "Keep on this way, There is one Spirit left";
@@ -98,7 +91,6 @@ nook:
 }
 
 tha_t10,99,97,4	script	Veriaelle	111,{
-
 	if(TSQ_CHK != 2) goto nook;
 	mes "[Veriaelle]";
 	mes "Okay, i am warping you to the next floor.";
@@ -150,7 +142,7 @@ nook:
 }
 
 tha_t11,16,16,4	script	Mihane	111,{
-      if(TSQ_CHK != 2) goto nook;
+	if(TSQ_CHK != 2) goto nook;
 	mes "[Mihane]";
 	mes "Keep on this way, Only 1 Left.";
 	set TSQ_CHK,3;
@@ -214,7 +206,7 @@ nook:
 	close;
 }
 
-tha_t12,96,57,4	script	Hox	111,{	
+tha_t12,96,57,4	script	Hox	111,{
 	if(TSQ_CHK != 2 ) goto nook;
 	mes "[Hox]";
 	mes "You are on the good way, 2 Spirits remaining !";

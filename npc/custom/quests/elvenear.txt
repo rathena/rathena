@@ -1,11 +1,11 @@
 //===== rAthena Script =======================================
 //= Daily Job Quest For Elven Ears
 //===== By: ==================================================
-//= Someone
+//= someone
 //===== Current Version: =====================================
 //= 1.2
 //===== Compatible With: =====================================
-//= rAthena 1.0
+//= rAthena SVN
 //===== Description: =========================================
 //= Elven Ears (require 75+ Base Level)
 //===== Additional Comments: =================================

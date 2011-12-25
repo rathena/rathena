@@ -5,14 +5,13 @@
 //===== Current Version: =====================================
 //= 1.2
 //===== Compatible With: =====================================
-//= Latest Svn
+//= rAthena SVN
 //===== Description: =========================================
 //= Halloween Event Script
 //===== Additional Comments: =================================
-//= Version 1.1 - Added trick to script
+//= 1.1 - Added trick to script
 //= 1.2 fixed bugs, optimized. Now uses 1 var instead of 3 [Lupus]
 //============================================================
-
 
 prontera,151,190,5	script	Hallows' Eve Event	807,{
 	mes "[Hallows' Eve Event]";

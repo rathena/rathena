@@ -1,11 +1,11 @@
 //===== rAthena Script =======================================
-//= The 2nd Bank of Prontera ( with daily 0.01% income! )
+//= The 2nd Bank of Prontera (with daily 0.01% income!)
 //===== By: ==================================================
 //= Lupus (1.0)
 //===== Current Version: =====================================
 //= 1.2a
 //===== Compatible With: =====================================
-//= rAthena 1.x
+//= rAthena SVN
 //===== Description: =========================================
 //= A bank which has an interest %
 //===== Additional Comments: =================================

@@ -1,22 +1,19 @@
 //===== rAthena Script ======================================= 
-//= Baphomet Jr. taming item quest.
+//= Quest for Book of Devil (Baphomet Jr. taming item)
 //===== By: ================================================== 
 //= rAthena Dev Team
 //===== Current Version: ===================================== 
 //= 1.2
 //===== Compatible With: ===================================== 
-//= rAthena 1.0
+//= rAthena SVN
 //===== Description: ========================================= 
-//= Book of Devil		(MISC_QUEST | 256)
+//= Book of Devil       (MISC_QUEST | 256)
 //===== Additional Comments: ================================= 
 //= 1.0 ????
 //= 1.1 Optimized Book of Devil quest. used bit-wise var. [Lupus]
 //= 1.2 Fixed name collision with 'Little Boy' in cities/lutie.txt [Ai4rei]
-//============================================================ 
+//============================================================
 
-//=============================================================
-//Quest for Book of Devil
-//=============================================================
 niflheim,184,199,5	script	Little Girl#02	793,{
 	mes "[Sairin]";
 	if(MISC_QUEST & 256){
@@ -85,7 +82,7 @@ L_PART2:
 		mes "I am a little slow, and its very important that she knows.";
 		next;
 		menu "Yes",L_DONE, "No",-;
-		close;	
+		close;
 	}
 	mes "[Marius]";
 	mes "Sairin... where are you?";

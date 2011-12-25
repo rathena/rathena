@@ -1,17 +1,18 @@
 //===== rAthena Script =======================================
-//= Reset NPC for Athena by Script & DB Team
-//===== By: ================================================== 
-//= rAthena Team
-//===== Current Version: ===================================== 
+//= Reset NPC
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
 //= 1.1
-//===== Compatible With: ===================================== 
-//= Any rAthena Version
-//===== Description: ========================================= 
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
 //= Resets skills, stats, or both.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First Version
 //= 1.1 Optimized for the greater good. [Kisuka]
-//============================================================ 
+//============================================================
+
 prontera,150,193,4	script	Reset Girl	124,{
 	mes "[Reset Girl]";
 	mes "I am a Reset Girl.";
@@ -21,38 +22,38 @@ prontera,150,193,4	script	Reset Girl	124,{
 	mes "Please select the service you want:";
 	next;
 	switch(select("^FF3355Reset Skills:Reset Stats:Reset Both^000000:Quit")) {
-		case 1:
-			mes "[Reset Girl]";
-			if (Zeny < 5000) {
-				mes "Sorry, you don't have enough Zeny.";
-				close;
-			}
-			mes "Alright, here we go now.. Remember, changes won't take effect until you log back on!";
-			set Zeny,zeny-5000;
-			ResetSkill;
+	case 1:
+		mes "[Reset Girl]";
+		if (Zeny < 5000) {
+			mes "Sorry, you don't have enough Zeny.";
 			close;
-		case 2:
-			mes "[Reset Girl]";
-			if (Zeny < 5000) {
-				mes "Sorry, you don't have enough Zeny.";
-				close;
-			}
-			mes "Alright, here we go now.. Remember, changes won't take effect until you log back on!";
-			set Zeny,zeny-5000;
-			ResetStatus;
+		}
+		mes "Alright, here we go now.. Remember, changes won't take effect until you log back on!";
+		set Zeny,zeny-5000;
+		ResetSkill;
+		close;
+	case 2:
+		mes "[Reset Girl]";
+		if (Zeny < 5000) {
+			mes "Sorry, you don't have enough Zeny.";
 			close;
-		case 3:
-			mes "[Reset Girl]";
-			if (Zeny < 9000) {
-				mes "Sorry, you don't have enough Zeny.";
-				close;
-			}
-			mes "Alright, here we go now.. Remember, changes won't take effect until you log back on!";
-			set Zeny,zeny-9000;
-			ResetSkill;
-			ResetStatus;
+		}
+		mes "Alright, here we go now.. Remember, changes won't take effect until you log back on!";
+		set Zeny,zeny-5000;
+		ResetStatus;
+		close;
+	case 3:
+		mes "[Reset Girl]";
+		if (Zeny < 9000) {
+			mes "Sorry, you don't have enough Zeny.";
 			close;
-		case 4:
-			close;
+		}
+		mes "Alright, here we go now.. Remember, changes won't take effect until you log back on!";
+		set Zeny,zeny-9000;
+		ResetSkill;
+		ResetStatus;
+		close;
+	case 4:
+		close;
 	}
 }

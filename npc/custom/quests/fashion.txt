@@ -1,11 +1,11 @@
 //===== rAthena Script =======================================
 //= Quest for Fashion Glasses (Daily Job Quest)
 //===== By: ==================================================
-//= 1.1 None
+//= 
 //===== Current Version: =====================================
-//= Any
+//= 1.1
 //===== Compatible With: =====================================
-//= rAthena
+//= rAthena SVN
 //===== Description: =========================================
 //= Quest for Fashion Glasses
 //===== Additional Comments: =================================

@@ -1,69 +1,62 @@
-// ---- MVP ARENA!!!!!! By Darkchild with 16 diff MVP's inside
-// -- Optimised The MVP arena!!!! By massdriller
-// - NPC in prontera
-
-// --- Optimising Functions
+//===== rAthena Script =======================================
+//= MVP Arena functions
+//===== By: ==================================================
+//= Darkchild
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= 16 diff MVP's inside
+//===== Additional Comments: =================================
+//= 1.0 first version of script
+//= 1.1 Optimised The MVP arena [massdriller]
+//============================================================
 
 function	script	Ramvp_1	{
-
 	mes "[ ^0065DFAlpha MVP^000000 ]";
-		mes "Here you go!";
-			return;
+	mes "Here you go!";
+	return;
 }
 
 function	script	Ramvp_2	{
-
 	mes "[ ^0065DFBeta MVP^000000 ]";
-		mes "Here you go!";
-			return;
+	mes "Here you go!";
+	return;
 }
 
 function	script	Ramvp_3	{
-
 	mes "[ ^0065DFTheta MVP^000000 ]";
-		mes "Here you go!";
-			return;
-
+	mes "Here you go!";
+	return;
 }
 
-
 function	script	Ramvp_4	{
-
 	mes "[ ^0065DFEpsilon MVP^000000 ]";
-		mes "Here you go!";
-			return;
-
+	mes "Here you go!";
+	return;
 }
 
 function	script	Ramvp_M	{
-
 	mes "How do you need help?.";
 	menu "Harder Monsters",L_Next,"Heal Please",L_Heal,"Leave",L_Leave;
-
-	L_Next:
-		return;
-
-	L_Heal:
-		percentheal 100,100;
-		close;
-
-	L_Leave:
-		warp "prontera",156,179;
-		close;
-
+L_Next:
+	return;
+L_Heal:
+	percentheal 100,100;
+	close;
+L_Leave:
+	warp "prontera",156,179;
+	close;
 }
 
 function	script	Ramvp_M2	{
-
 	mes "How do you need help?.";
 	menu "Heal Please",L_Heal,"Leave",L_Leave;
-
-	L_Heal:
-		percentheal 100,100;
-		close;
-
-	L_Leave:
-		warp "prontera",156,179;
-		close;
-
+L_Heal:
+	percentheal 100,100;
+	close;
+L_Leave:
+	warp "prontera",156,179;
+	close;
 }

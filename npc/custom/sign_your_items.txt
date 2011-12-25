@@ -1,16 +1,16 @@
-//===== rAthena Script ======================================= 
-//= * Sign Your Items *
-//===== By: ================================================== 
+//===== rAthena Script =======================================
+//= Sign Your Items
+//===== By: ==================================================
 //= Lupus
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.0
-//===== Compatible With: ===================================== 
-//= rAthena 1
-//===== Description: ========================================= 
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
 //= Write you name on your rare equipment or weapon ^_-
 //= Original X-Mas mini-quest(could be used as a permanent one)
-//===== Additional Comments: ================================= 
-//= 1.0 First release
+//===== Additional Comments: =================================
+//= 
 //============================================================
 
 prt_in,24,61,7	script	Perchik	47,{
@@ -52,85 +52,85 @@ M_DO:
 M_MENU:
 	next;
 	menu getequipname(1),M_PART1,getequipname(9),M_PART9,getequipname(10),M_PART10,getequipname(2),M_PART2,getequipname(4),M_PART4,
-	     getequipname(3),M_PART3,getequipname(5),M_PART5,getequipname(6),M_PART6,getequipname(7),M_PART7,getequipname(8),M_PART8;
+	getequipname(3),M_PART3,getequipname(5),M_PART5,getequipname(6),M_PART6,getequipname(7),M_PART7,getequipname(8),M_PART8;
 
 	//Head Gear
-	M_PART1:
-		set @part,1;
-		if (getequipisequiped(1)) goto L_CHECK1;
-		mes "[Perchik]";
-		mes "A bald head under a cheap wig... There's nothing worthy to sign.";
-		emotion 6;
-		goto M_MENU;
-	M_PART9:
-		set @part,9;
-		if (getequipisequiped(9)) goto L_CHECK1;
-		mes "[Perchik]";
-		mes "Glasses... I can't see any glasses...";
-		emotion 20;
-		goto M_MENU;
-	M_PART10:
-		set @part,10;
-		if (getequipisequiped(10)) goto L_CHECK1;
-		mes "[Perchik]";
-		mes "I don't see any mask here.";
-		emotion 20;
-		goto M_MENU;
+M_PART1:
+	set @part,1;
+	if (getequipisequiped(1)) goto L_CHECK1;
+	mes "[Perchik]";
+	mes "A bald head under a cheap wig... There's nothing worthy to sign.";
+	emotion 6;
+	goto M_MENU;
+M_PART9:
+	set @part,9;
+	if (getequipisequiped(9)) goto L_CHECK1;
+	mes "[Perchik]";
+	mes "Glasses... I can't see any glasses...";
+	emotion 20;
+	goto M_MENU;
+M_PART10:
+	set @part,10;
+	if (getequipisequiped(10)) goto L_CHECK1;
+	mes "[Perchik]";
+	mes "I don't see any mask here.";
+	emotion 20;
+	goto M_MENU;
 	//Armor
-	M_PART2:
-		set @part,2;
-		if (getequipisequiped(2)) goto L_CHECK1;
-		mes "[Perchik]";
-		mes "Your belly...? Yes, it's rather fat.";
-		emotion 6;
-		goto M_MENU;
+M_PART2:
+	set @part,2;
+	if (getequipisequiped(2)) goto L_CHECK1;
+	mes "[Perchik]";
+	mes "Your belly...? Yes, it's rather fat.";
+	emotion 6;
+	goto M_MENU;
 	//Left Hand
-	M_PART3:
-		set @part,3;
-		if (getequipisequiped(3)) goto L_CHECK1;
-		mes "[Perchik]";
-		mes "Sign your left hand? I'm not a celebrity, you know...";
-		emotion 4;
-		goto M_MENU;
+M_PART3:
+	set @part,3;
+	if (getequipisequiped(3)) goto L_CHECK1;
+	mes "[Perchik]";
+	mes "Sign your left hand? I'm not a celebrity, you know...";
+	emotion 4;
+	goto M_MENU;
 	//Right Hand
-	M_PART4:
-		set @part,4;
-		if (getequipisequiped(4)) goto L_CHECK1;
-		mes "[Perchik]";
-		mes "It isn't an armor... It's a mud!!! Wash your hands more often.";
-		emotion 4;
-		goto M_MENU;
+M_PART4:
+	set @part,4;
+	if (getequipisequiped(4)) goto L_CHECK1;
+	mes "[Perchik]";
+	mes "It isn't an armor... It's a mud!!! Wash your hands more often.";
+	emotion 4;
+	goto M_MENU;
 	//Garment
-	M_PART5:
-		set @part,5;
-		if (getequipisequiped(5)) goto L_CHECK1;
-		mes "[Perchik]";
-		mes "Look... It's empty...";
-		goto M_MENU;
+M_PART5:
+	set @part,5;
+	if (getequipisequiped(5)) goto L_CHECK1;
+	mes "[Perchik]";
+	mes "Look... It's empty...";
+	goto M_MENU;
 	//Foot Gear
-	M_PART6:
-		set @part,6;
-		if (getequipisequiped(6)) goto L_CHECK1;
-		mes "[Perchik]";
-		mes "Aw!! I don't like stinky feet.";
-		emotion 16;
-		goto M_MENU;
+M_PART6:
+	set @part,6;
+	if (getequipisequiped(6)) goto L_CHECK1;
+	mes "[Perchik]";
+	mes "Aw!! I don't like stinky feet.";
+	emotion 16;
+	goto M_MENU;
 	//Accessory1
-	M_PART7:
-		set @part,7;
-		if (getequipisequiped(7)) goto L_CHECK1;
-		mes "[Perchik]";
-		mes "Yep... a pocket with a huge hole...";
-		emotion 20;
-		goto M_MENU;
+M_PART7:
+	set @part,7;
+	if (getequipisequiped(7)) goto L_CHECK1;
+	mes "[Perchik]";
+	mes "Yep... a pocket with a huge hole...";
+	emotion 20;
+	goto M_MENU;
 	//Accessory2
-	M_PART8:
-		set @part,8;
-		if (getequipisequiped(8)) goto L_CHECK1;
-		mes "[Perchik]";
-		mes "I see your fat belly...";
-		emotion 20;
-		goto M_MENU;
+M_PART8:
+	set @part,8;
+	if (getequipisequiped(8)) goto L_CHECK1;
+	mes "[Perchik]";
+	mes "I see your fat belly...";
+	emotion 20;
+	goto M_MENU;
 
 L_CHECK1:
 	set @ref,0;

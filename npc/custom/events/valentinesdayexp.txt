@@ -5,11 +5,10 @@
 //===== Current Version: =====================================
 //= 1.1
 //===== Compatible With: =====================================
-//= Any Athena Version 45xx+
+//= rAthena SVN; 4500+
 //===== Description: =========================================
 // Close to other official stValentine event (added white chocolate)
 // Custom: Handmade choco gives some EXP bonuses to married people
-//
 //===== Additional Comments: =================================
 //= WARNING!! To use this event, dicable original valentinesday.txt
 //= You can use this event from 12 till 16 February 8) [Lupus]

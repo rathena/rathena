@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 1.0
 //===== Compatible With: ===================================== 
-//= rAthena 7.15 +
+//= rAthena SVN
 //===== Description: ========================================= 
 //= All-in-one: Mjollnir,Sleipnir,Brisingammen,Gleipnir,Megingjard
 //===== Additional Comments: ================================= 

@@ -1,8 +1,8 @@
 CREATE TABLE `donate_item_db` (
-  `id` smallint(5) unsigned NOT NULL default '0',
-  `price` float(9,2) unsigned NOT NULL,
+  `id` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
+  `price` FLOAT(9,2) UNSIGNED NOT NULL,
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM;
+) TYPE=MYISAM;
 
 #(ID,Price);
 REPLACE INTO `donate_item_db` VALUES (601,0.06); #Wing_Of_Fly

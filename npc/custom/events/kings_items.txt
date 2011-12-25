@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 1.0
 //===== Compatible With: ===================================== 
-//= rAthena Version
+//= rAthena SVN
 //===== Description: ========================================= 
 //= Grand Circlet Quest combined with Excalibur Quest.
 //= Converted to rAthena format from Fusion.

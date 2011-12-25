@@ -1,15 +1,15 @@
 //===== rAthena Script =======================================
-//= Penal Servitude Script
-//===== By ===================================================
+//= Penal Servitude 
+//===== By: ==================================================
 //= Lupus
-//===== Version ==============================================
+//===== Current Version: =====================================
 //= 1.2
-//===== Compatible With ======================================
-//= rAthena Final (SVN)
-//===== Description ==========================================
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
 //= A simple Penal Servitude Script.
 //= It could cheer up your prisoners a bit.
-//===== Comments =============================================
+//===== Additional Comments: =================================
 // This script uses CHEQUES of the 2nd KAFRA_BANK.TXT
 // var PRISON - it counts number of your imprisonments.
 // 1.1 English translation
@@ -80,7 +80,6 @@ L_RELEASE:
 	close;
 
 M_Q1:
-//�E��E1
 	mes "[Saddeus]";
 	mes "Our stocks are short of toadstools.  Remember your morning's skilly?  What about some work at our sponsored mushroom farm?";
 	next;

@@ -1,15 +1,15 @@
 //===== rAthena Script =======================================
-//= Rock Scissors Roulette Script
+//= Rock Scissors Roulette
 //===== By: ==================================================
-//= acky (1.1)
+//= acky
 //===== Current Version: =====================================
 //= 1.2
 //===== Compatible With: =====================================
-//= Any rAthena Version
+//= rAthena SVN
 //===== Description: =========================================
 //= Plays a hybrid Russian Roulette Rock Scissors Paper game.
 //===== Additional Comments: =================================
-//= Prizes customisable, Added emotions.
+//= Prizes customizable, Added emotions.
 //= 1.2 Fixes by Blackthunder and me [Poki#3]
 //============================================================
 

@@ -1,19 +1,17 @@
 //===== rAthena Script ======================================= 
 //= Sphinx Mask Quest (custom)
 //===== By: ================================================== 
-//= sabernet09 & rAthena Team
+//= sabernet09
 //===== Current Version: ===================================== 
 //= 1.2
 //===== Compatible With: ===================================== 
-//= rAthena 7.15 +
+//= rAthena SVN
 //===== Description: ========================================= 
 //= this quest is related to Umbalian Chief
 //= 1.1 Removed it from official Umbala quests [Lupus]
 //= 1.2 Added a missing variable (sphmask_q) [erKURITA]
 //============================================================ 
 
-
-//===========================================================================
 morocc,140,156,5	script	Turban Thief	58,{
 	if(event_umbala < 2) goto AWAY;
 	if(sphmask_q) goto NoBus;
@@ -25,56 +23,56 @@ morocc,140,156,5	script	Turban Thief	58,{
 	next;
 	menu "Pay 1,000,000z",-,"No deal",NoGo;
 
-		if(Zeny < 1000000) goto NotEnough;
-		set Zeny,Zeny-1000000;
-		mes "[Turban Thief]";
-		mes "O ho ho, its a deal then!";
-		getitem 7114,1;//Items: Sphinx Mask,
-		set sphmask_q,1;
-		close;
+	if(Zeny < 1000000) goto NotEnough;
+	set Zeny,Zeny-1000000;
+	mes "[Turban Thief]";
+	mes "O ho ho, its a deal then!";
+	getitem 7114,1;//Items: Sphinx Mask,
+	set sphmask_q,1;
+	close;
 
-	NoGo:
-		mes "[Turban Thief]";
-		mes "Ahh a business man are you no?  Fine, how about...";
-		next;
-		menu "Pay 750,000",-,"Nope lower",NoGoB;
+NoGo:
+	mes "[Turban Thief]";
+	mes "Ahh a business man are you no?  Fine, how about...";
+	next;
+	menu "Pay 750,000",-,"Nope lower",NoGoB;
 
-			if(Zeny < 750000) goto NotEnough;
-			set Zeny,Zeny-750000;
-			mes "[Turban Thief]";
-			mes "It is a done deal, no refunds!";
-			getitem 7114,1;//Items: Sphinx Mask,
-			set sphmask_q,1;
-			close;
-		NoGoB:
-			mes "[Turban Thief]";
-			mes "Hmmm... you drive a hard bargain, ok... my final offer...";
-			next;
-			menu "Pay 500,000",-,"It can go lower than that.",NoGoC;
+	if(Zeny < 750000) goto NotEnough;
+	set Zeny,Zeny-750000;
+	mes "[Turban Thief]";
+	mes "It is a done deal, no refunds!";
+	getitem 7114,1;//Items: Sphinx Mask,
+	set sphmask_q,1;
+	close;
+NoGoB:
+	mes "[Turban Thief]";
+	mes "Hmmm... you drive a hard bargain, ok... my final offer...";
+	next;
+	menu "Pay 500,000",-,"It can go lower than that.",NoGoC;
 
-				if(Zeny < 500000) goto NotEnough;
-				set Zeny,Zeny-500000;
-				mes "[Turban Thief]";
-				mes "Alright, here you go then...";
-				getitem 7114,1;//Items: Sphinx Mask,
-				set sphmask_q,1;
-				close;
-			NoGoC:
-				next;
-				mes "[Turban Thief]";
-				mes "Ack!  Forgez it!  I can do bettaz en elsez where!";
-				set sphmask_q,1;
-				close;
-	NoBus:
-		mes "[Turban Thief]";
-		mes "You have no more business with me, go away!";
-		close;
-	AWAY:
-		mes "[Turban Thief]";
-		mes "What do you wan te withz me?  Be gone!";
-		close;
-	NotEnough:
-		mes "[Turban Thief]";
-		mes "Are youz playin wit me?  You don't have ze money!";
-		close;
+	if(Zeny < 500000) goto NotEnough;
+	set Zeny,Zeny-500000;
+	mes "[Turban Thief]";
+	mes "Alright, here you go then...";
+	getitem 7114,1;//Items: Sphinx Mask,
+	set sphmask_q,1;
+	close;
+NoGoC:
+	next;
+	mes "[Turban Thief]";
+	mes "Ack!  Forgez it!  I can do bettaz en elsez where!";
+	set sphmask_q,1;
+	close;
+NoBus:
+	mes "[Turban Thief]";
+	mes "You have no more business with me, go away!";
+	close;
+AWAY:
+	mes "[Turban Thief]";
+	mes "What do you wan te withz me?  Be gone!";
+	close;
+NotEnough:
+	mes "[Turban Thief]";
+	mes "Are youz playin wit me?  You don't have ze money!";
+	close;
 }

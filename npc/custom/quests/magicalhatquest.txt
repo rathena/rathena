@@ -5,12 +5,12 @@
 //===== Current Version: =====================================
 //= 1.1
 //===== Compatible With: =====================================
-//= rAthena
+//= rAthena SVN
 //===== Description: =========================================
 //= Wizard Hat quest. Harmless, doesn't screw game balance.
 //===== Additional Comments: =================================
 //= 1.1 Reversed ingreadients and the quest result due to
-//= 	treasue boxes drops fix [Lupus] 
+//=     treasue boxes drops fix [Lupus] 
 //============================================================
 
 geffen,126,107,5	script	Wizard Hat Dude	51,{

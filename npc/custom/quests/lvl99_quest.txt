@@ -5,14 +5,13 @@
 //===== Current Version: =====================================
 //= 1.0
 //===== Compatible With: =====================================
-//= Any rAthena Version
+//= rAthena SVN
 //===== Description: =========================================
 //= It makes players stay longer at 99th level and get a
 //= Jewel Case as a reward
 //===== Additional Comments: =================================
 //= 
 //============================================================
-
 
 lighthalzen,108,229,2	script	La Fenn	766,{
 	mes "[La Fenn]";

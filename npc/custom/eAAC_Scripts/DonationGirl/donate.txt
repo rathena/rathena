@@ -1,300 +1,250 @@
-//===== Athena Script =======================================
+//===== rAthena Script =======================================
 //= Donation NPC
-//===== By ==================================================
+//===== By: ==================================================
 //= Josh
-//===== Version =============================================
-//= 1.0	 - First release. Probably contains bugs/security
-//=	   risks.
-//= 1.1  - Added a check for whether the account exists when
-//=	   adding a donator. Need to improve ordering when
-//=	   viewing all donations.
-//= 1.2  - Modified for public use. Added checkweight feature.
-//= 2.0  - Many changes, especially ones I had always wanted
-//=	   to add to this script. Includes reading items from
-//=	   a separate SQL table and more database manipulation
-//=	   options for GMs.
-//= 2.1  - Made few changes including the add/remove items
-//=	   feature.
-//= 3.0  - All strings inputted by a user and user/char names
-//=	   in SQL queries are now escaped. Each item has a
-//=	   price rather than a quantity. This script can work
-//=	   with decimals.
-//= 3.1  - Added quotes to some queries, fixed a variable and
-//=	   removed a comment.
-//= 3.2  - Fixed a problem where rAthena would crash if a
-//=	   query returned NULL.
-//= 3.3  - Optimized query speeds by combining a few select 
-//=	   queries into one. Requires Trunk 7975.
-//= 3.4  - Added MySQL version check. If version < 5.0.8, all
-//=	   queries with CAST are omitted. Use 5.0.8 and up
-//=	   when possible. SQL errors may consequent if GM's
-//=	   input is incorrect. Added logging of claims.
-//=	   "log_npc" in log_athena.conf must be enabled. Logs
-//=	   will appear in the "npclog" table. Claim menu now
-//=	   only shows items that can be afforded.
-//= 3.5  - Minor change to table.
-//= 3.6  - Removed name column in donate_item_db. Added
-//=	   support for item_db2 table.
-//= 3.7  - Added Zeny support. $rate must be set for it to be
-//=	   used. Removed truncate() in a query since rAthena
-//=	   automatically truncates floats to ints.
-//= 3.8  - Fixed problem with menus and null values.
-//= 3.9  - Explicit reset of @aid.
-//= 3.10 - Applied previous fix to other variables and forced
-//=	   dialogue box closure every time database is
-//=	   modified.
-//= 3.11 - Explicit reset of another variable. Fixed typo
-//=	 - with $rate. Added logmes for GM operations.
-//===== Compatible With =====================================
-//= rAthena SQL - any version with the new query_sql command
-//=		  (Trunk 7975 and up).
-//= MySQL - 5.0.8 and up highly recommended but not required.
-//===== Description =========================================
+//===== Current Version: =====================================
+//= 3.11 (changelog at end of file)
+//===== Compatible With: =====================================
+//= rAthena SVN; SQL only, revision 7975+
+//===== Description: =========================================
 //= A script that lets a player claim an item for donating.
 //= Allows a GM to input each donation.
-//===== Comments ============================================
+//===== Comments =============================================
 //= This script uses SQL tables to store variables for the
 //= amount donated by users and the items claimable.
-//===== Installation ========================================
+//===== Installation =========================================
 //= You must import donate.sql and donate_item_db.sql (and
 //= item_db.sql and item_db2.sql, which comes with rAthena)
 //= before using this script.
-//===========================================================
-//= Thanks to Vich for helping me with the SQL syntax.
-//= Thanks to Lance for helping me with the the arrays and 
-//= for implementing query_sql.
-//= Thanks to Skotlex for implementing escape_sql.
-//= Thanks to Toms for implementing the new multi-column 
-//= query_sql command.
-//===========================================================
+//============================================================
 
 prontera,145,179,5	script	Donation Girl	714,{
 
-if (getgmlevel() >= 80) goto L_GM;
+	if (getgmlevel() >= 80) goto L_GM;
 
 L_START:
-mes "[Donation Girl]";
-mes "Hello! I'm the Donation Girl!";
-mes "If you have made a donation,";
-mes "you are entitled to a reward!";
-next;
-menu "More info",-,"Make a claim",L_CHECK,"Statistics",L_STATS;
+	mes "[Donation Girl]";
+	mes "Hello! I'm the Donation Girl!";
+	mes "If you have made a donation,";
+	mes "you are entitled to a reward!";
+	next;
+	menu "More info",-,"Make a claim",L_CHECK,"Statistics",L_STATS;
 L_INFO:
-mes "[Donation Girl]";
-mes "Each month, a lot of money is paid to keep this server running.";
-next;
-mes "[Donation Girl]";
-mes "You can support us by donating any amount of money.";
-next;
-mes "[Donation Girl]";
-mes "To show our appreciation, we will gladly give you a reward.";
-next;
-menu "Continue",L_START,"Cancel",-;
+	mes "[Donation Girl]";
+	mes "Each month, a lot of money is paid to keep this server running.";
+	next;
+	mes "[Donation Girl]";
+	mes "You can support us by donating any amount of money.";
+	next;
+	mes "[Donation Girl]";
+	mes "To show our appreciation, we will gladly give you a reward.";
+	next;
+	menu "Continue",L_START,"Cancel",-;
 
 L_CHECK:
-query_sql "SELECT `amount`,`claimed` FROM `donate` WHERE `account_id` = "+getcharid(3), @amount$, @claimed$;
-query_sql "SELECT "+@amount$+" - "+@claimed$, @value$;
-query_sql "SELECT '"+@value$+"' > 0", @enough;
-if(!@enough) {
-	mes "[Donation Girl]";
-	mes "Sorry, you do not have enough to make a claim.";
-	mes "If you have donated but have not made a claim,";
-	mes "Please give us time to process your donation.";
-	close;
+	query_sql "SELECT `amount`,`claimed` FROM `donate` WHERE `account_id` = "+getcharid(3), @amount$, @claimed$;
+	query_sql "SELECT "+@amount$+" - "+@claimed$, @value$;
+	query_sql "SELECT '"+@value$+"' > 0", @enough;
+	if(!@enough) {
+		mes "[Donation Girl]";
+		mes "Sorry, you do not have enough to make a claim.";
+		mes "If you have donated but have not made a claim,";
+		mes "Please give us time to process your donation.";
+		close;
 	}
 
 L_CLAIM:
-mes "[Donation Girl]";
-mes "Thankyou for donating!";
-mes "You have $"+@value$+" worth of credit!";
-mes "What would you like to claim?";
-next;
-menu "Items",L_CLAIMITEM,"Zeny",L_ZENY;
+	mes "[Donation Girl]";
+	mes "Thankyou for donating!";
+	mes "You have $"+@value$+" worth of credit!";
+	mes "What would you like to claim?";
+	next;
+	menu "Items",L_CLAIMITEM,"Zeny",L_ZENY;
 
 L_CLAIMITEM:
-mes "[Donation Girl]";
-mes "Very well. Which item would you like?";
-next;
-query_sql "SELECT `id` FROM `donate_item_db` WHERE `price` <= "+@value$+" ORDER BY `id`",@name;
-set @menu$, getitemname(@name[0]);
+	mes "[Donation Girl]";
+	mes "Very well. Which item would you like?";
+	next;
+	query_sql "SELECT `id` FROM `donate_item_db` WHERE `price` <= "+@value$+" ORDER BY `id`",@name;
+	set @menu$, getitemname(@name[0]);
 	for(set @i, 1; @i < getarraysize(@name); set @i, @i + 1){
 		set @menu$, @menu$ + ":" + getitemname(@name[@i]);
 	}
 
-set @m, select(@menu$)-1;
+	set @m, select(@menu$)-1;
 
-query_sql "SELECT `price` FROM `donate_item_db` WHERE `id` = "+@name[@m], @price$;
-query_sql "SELECT "+@value$+" / "+@price$, @max;
+	query_sql "SELECT `price` FROM `donate_item_db` WHERE `id` = "+@name[@m], @price$;
+	query_sql "SELECT "+@value$+" / "+@price$, @max;
 
-mes "[Donation Girl]";
-mes getitemname(@name[@m])+"s cost $"+@price$+" each.";
-mes "How many "+getitemname(@name[@m])+"s would you like to claim?";
-mes "Maximum: "+@max+".";
-input @quantity;
-mes "[Donation Girl]";
-if(@quantity>@max) {
-	mes "Sorry, but you do not have enough to claim "+@quantity+" "+getitemname(@name[@m])+"s.";
-	next;
-	goto L_CLAIM;
+	mes "[Donation Girl]";
+	mes getitemname(@name[@m])+"s cost $"+@price$+" each.";
+	mes "How many "+getitemname(@name[@m])+"s would you like to claim?";
+	mes "Maximum: "+@max+".";
+	input @quantity;
+	mes "[Donation Girl]";
+	if(@quantity>@max) {
+		mes "Sorry, but you do not have enough to claim "+@quantity+" "+getitemname(@name[@m])+"s.";
+		next;
+		goto L_CLAIM;
 	}
-if(!@quantity) {
-	mes "You can't have 0 as an amount!";
-	next;
-	goto L_CLAIM;
+	if(!@quantity) {
+		mes "You can't have 0 as an amount!";
+		next;
+		goto L_CLAIM;
 	}
-if(!checkweight(@name[@m],@quantity)) {
-	mes "I'm sorry, but you cannot carry "+@quantity+" "+getitemname(@name[@m])+"s.";
-	next;
-	goto L_CLAIM;
+	if(!checkweight(@name[@m],@quantity)) {
+		mes "I'm sorry, but you cannot carry "+@quantity+" "+getitemname(@name[@m])+"s.";
+		next;
+		goto L_CLAIM;
 	}
-query_sql "SELECT "+@quantity+" * "+@price$, @total$;
-mes "Are you sure you want to claim "+@quantity+" "+getitemname(@name[@m])+"s for $"+@total$+"?";
-next;
-menu "No",L_CLAIM,"Yes",-;
-query_sql "UPDATE `donate` SET `claimed` = `claimed` + "+@total$+" WHERE `account_id` = "+getcharid(3);
-logmes "Claimed "+@quantity+" "+getitemname(@name[@m])+"s";
-getitem @name[@m],@quantity;
-mes "[Donation Girl]";
-mes "Thankyou for donating! We hope you enjoy your gift!";
-close;
+	query_sql "SELECT "+@quantity+" * "+@price$, @total$;
+	mes "Are you sure you want to claim "+@quantity+" "+getitemname(@name[@m])+"s for $"+@total$+"?";
+	next;
+	menu "No",L_CLAIM,"Yes",-;
+	query_sql "UPDATE `donate` SET `claimed` = `claimed` + "+@total$+" WHERE `account_id` = "+getcharid(3);
+	logmes "Claimed "+@quantity+" "+getitemname(@name[@m])+"s";
+	getitem @name[@m],@quantity;
+	mes "[Donation Girl]";
+	mes "Thankyou for donating! We hope you enjoy your gift!";
+	close;
 
 L_ZENY:
-mes "[Donation Girl]";
-if(!$rate) {
-	mes "Sorry, we currently do not allow claiming Zeny.";
-	mes "Please go back and claim an item instead.";
-	next;
-	goto L_CLAIM;
+	mes "[Donation Girl]";
+	if(!$rate) {
+		mes "Sorry, we currently do not allow claiming Zeny.";
+		mes "Please go back and claim an item instead.";
+		next;
+		goto L_CLAIM;
 	}
-query_sql "SELECT "+@value$+" * "+$rate, @maxzeny;
-mes "Very well. You can claim as much as "+@maxzeny+"Z.";
-mes "How much Zeny would you like to claim?";
-input @zeny;
-mes "[Donation Girl]";
-if(@zeny>@maxzeny) {
-	mes "Sorry, but you do not have enough to claim "+@zeny+"Z.";
-	next;
-	goto L_CLAIM;
+	query_sql "SELECT "+@value$+" * "+$rate, @maxzeny;
+	mes "Very well. You can claim as much as "+@maxzeny+"Z.";
+	mes "How much Zeny would you like to claim?";
+	input @zeny;
+	mes "[Donation Girl]";
+	if(@zeny>@maxzeny) {
+		mes "Sorry, but you do not have enough to claim "+@zeny+"Z.";
+		next;
+		goto L_CLAIM;
 	}
-if(!@zeny) {
-	mes "You can't have 0 as an amount!";
-	next;
-	goto L_CLAIM;
+	if(!@zeny) {
+		mes "You can't have 0 as an amount!";
+		next;
+		goto L_CLAIM;
 	}
-set @total, @zeny * $rate;
-mes "Are you sure you want to claim "+@zeny+"Z for $"+@total+"?";
-next;
-menu "No",L_CLAIM,"Yes",-;
-query_sql "UPDATE `donate` SET `claimed` = `claimed` + "+@total+" WHERE `account_id` = "+getcharid(3);
-logmes "Claimed "+@zeny+" zenies";
-set Zeny, Zeny + @zeny;
-mes "[Donation Girl]";
-mes "Thankyou for donating! We hope you enjoy your gift!";
-close;
+	set @total, @zeny * $rate;
+	mes "Are you sure you want to claim "+@zeny+"Z for $"+@total+"?";
+	next;
+	menu "No",L_CLAIM,"Yes",-;
+	query_sql "UPDATE `donate` SET `claimed` = `claimed` + "+@total+" WHERE `account_id` = "+getcharid(3);
+	logmes "Claimed "+@zeny+" zenies";
+	set Zeny, Zeny + @zeny;
+	mes "[Donation Girl]";
+	mes "Thankyou for donating! We hope you enjoy your gift!";
+	close;
 
 L_STATS:
-mes "[Donation Girl]";
-query_sql "SELECT IFNULL((SELECT SUM(amount) FROM `donate`),0)", @total$; 
-mes "Our fund is at a total of $"+@total$;
-next;
-menu "More info",L_INFO,"Make a claim",L_CHECK,"Statistics",L_STATS;
+	mes "[Donation Girl]";
+	query_sql "SELECT IFNULL((SELECT SUM(amount) FROM `donate`),0)", @total$; 
+	mes "Our fund is at a total of $"+@total$;
+	next;
+	menu "More info",L_INFO,"Make a claim",L_CHECK,"Statistics",L_STATS;
 
 L_GM:
-mes "[GM Menu]";
-mes "Hello GM!";
-mes "What would you like to do?";
-next;
-query_sql "SHOW VARIABLES LIKE 'version'", @version, @valule$;
-query_sql "SELECT '"+@valule$+"' >= '5.0.8'", @version;
-menu "Add/Remove Donation",L_GM2,"Add/Remove Items",L_ITEM,"(Re)Set Exchange Rate",L_RATE,"Test Script",L_START;
+	mes "[GM Menu]";
+	mes "Hello GM!";
+	mes "What would you like to do?";
+	next;
+	query_sql "SHOW VARIABLES LIKE 'version'", @version, @valule$;
+	query_sql "SELECT '"+@valule$+"' >= '5.0.8'", @version;
+	menu "Add/Remove Donation",L_GM2,"Add/Remove Items",L_ITEM,"(Re)Set Exchange Rate",L_RATE,"Test Script",L_START;
 
 L_GM2:
-menu "Add a donation",L_DONATE,"Remove a donation",L_REMOVE,"View all donations",L_VIEWALL,"Return to main menu",L_GM;
+	menu "Add a donation",L_DONATE,"Remove a donation",L_REMOVE,"View all donations",L_VIEWALL,"Return to main menu",L_GM;
 
 L_ITEM:
-menu "Add an item",L_NEWITEM,"Remove an item",L_DELITEM,"View all items",L_ALLITEMS,"Return to main menu",L_GM;
+	menu "Add an item",L_NEWITEM,"Remove an item",L_DELITEM,"View all items",L_ALLITEMS,"Return to main menu",L_GM;
 
 L_NEWITEM:
-mes "[GM Menu]";
-mes "Please enter the item name:";
-input @itemname$;
-set @iid, 0;
-query_sql "SELECT `id` FROM `item_db` WHERE `name_english` = '"+escape_sql(@itemname$)+"' || `name_japanese` = '"+escape_sql(@itemname$)+"' UNION SELECT `id` FROM `item_db2` WHERE `name_english` = '"+escape_sql(@itemname$)+"' || `name_japanese` = '"+escape_sql(@itemname$)+"'", @iid;
-if(!@iid) goto L_INONE;
-query_sql "SELECT 1 FROM `donate_item_db` WHERE `id` = "+@iid, @check;
-mes "[GM Menu]";
-mes "Please enter the cost of each "+@itemname$+":";
-input @cost$;
-if(@version) query_sql "SELECT CAST('"+escape_sql(@cost$)+"' AS DECIMAL)", @cost$;
-query_sql "SELECT '"+escape_sql(@cost$)+"' > 0", @valid;
-if(!@valid) goto L_ZERO;
-mes "[GM Menu]";
-mes "You have specified that donators can claim "+@itemname$+"s for $"+@cost$+" each.";
-mes "Would you like to continue?";
-next;
-menu "No",L_ITEM,"Yes",-;
-mes "[GM Menu]";
-if(!@check){
-	query_sql "INSERT INTO `donate_item_db` VALUES ("+@iid+",'"+@cost$+"')";
-	logmes "Added "+@itemname$+"s to list of claimable items";
-	mes "Item added successfully!";
-	} else {
-	mes "Item "+@itemname$+" already exists in the database.";
-	mes "Would you like to replace it?";
+	mes "[GM Menu]";
+	mes "Please enter the item name:";
+	input @itemname$;
+	set @iid, 0;
+	query_sql "SELECT `id` FROM `item_db` WHERE `name_english` = '"+escape_sql(@itemname$)+"' || `name_japanese` = '"+escape_sql(@itemname$)+"' UNION SELECT `id` FROM `item_db2` WHERE `name_english` = '"+escape_sql(@itemname$)+"' || `name_japanese` = '"+escape_sql(@itemname$)+"'", @iid;
+	if(!@iid) goto L_INONE;
+	query_sql "SELECT 1 FROM `donate_item_db` WHERE `id` = "+@iid, @check;
+	mes "[GM Menu]";
+	mes "Please enter the cost of each "+@itemname$+":";
+	input @cost$;
+	if(@version) query_sql "SELECT CAST('"+escape_sql(@cost$)+"' AS DECIMAL)", @cost$;
+	query_sql "SELECT '"+escape_sql(@cost$)+"' > 0", @valid;
+	if(!@valid) goto L_ZERO;
+	mes "[GM Menu]";
+	mes "You have specified that donators can claim "+@itemname$+"s for $"+@cost$+" each.";
+	mes "Would you like to continue?";
 	next;
 	menu "No",L_ITEM,"Yes",-;
-	query_sql "REPLACE INTO `donate_item_db` VALUES ("+@iid+",'"+@cost$+"')";
-	logmes "Changed the price of "+@itemname$+"s";
 	mes "[GM Menu]";
-	mes "Item replaced successfully!";
+	if(!@check){
+		query_sql "INSERT INTO `donate_item_db` VALUES ("+@iid+",'"+@cost$+"')";
+		logmes "Added "+@itemname$+"s to list of claimable items";
+		mes "Item added successfully!";
+	} else {
+		mes "Item "+@itemname$+" already exists in the database.";
+		mes "Would you like to replace it?";
+		next;
+		menu "No",L_ITEM,"Yes",-;
+		query_sql "REPLACE INTO `donate_item_db` VALUES ("+@iid+",'"+@cost$+"')";
+		logmes "Changed the price of "+@itemname$+"s";
+		mes "[GM Menu]";
+		mes "Item replaced successfully!";
 	}
-close;
+	close;
 
 L_INONE:
-mes "[GM Menu]";
-mes "Item "+@itemname$+" does not exist.";
-next;
-goto L_ITEM;
+	mes "[GM Menu]";
+	mes "Item "+@itemname$+" does not exist.";
+	next;
+	goto L_ITEM;
 
 L_DELITEM:
-mes "[GM Menu]";
-mes "Please enter the item name:";
-input @itemname$;
-set @iid, 0;
-query_sql "SELECT `donate_item_db`.`id` FROM `donate_item_db` LEFT JOIN `item_db` ON `donate_item_db`.`id` = `item_db`.`id` LEFT JOIN `item_db2` ON `donate_item_db`.`id` = `item_db2`.`id` WHERE `item_db`.`name_english` = '"+escape_sql(@itemname$)+"' || `item_db`.`name_japanese` = '"+escape_sql(@itemname$)+"' || `item_db2`.`name_english` = '"+escape_sql(@itemname$)+"' || `item_db2`.`name_japanese` = '"+escape_sql(@itemname$)+"'", @iid;
-if(!@iid) goto L_INONE;
-next;
-mes "[GM Menu]";
-mes "You have specified to delete "+@itemname$+" from the database.";
-mes "Would you like to continue?";
-next;
-menu "No",L_ITEM,"Yes",-;
-query_sql "DELETE FROM `donate_item_db` WHERE `id` = "+@iid;
-logmes "Deleted "+@itemname$+"s from list of claimable items";
-mes "[GM Menu]";
-mes "Item deleted successfully!";
-close;
+	mes "[GM Menu]";
+	mes "Please enter the item name:";
+	input @itemname$;
+	set @iid, 0;
+	query_sql "SELECT `donate_item_db`.`id` FROM `donate_item_db` LEFT JOIN `item_db` ON `donate_item_db`.`id` = `item_db`.`id` LEFT JOIN `item_db2` ON `donate_item_db`.`id` = `item_db2`.`id` WHERE `item_db`.`name_english` = '"+escape_sql(@itemname$)+"' || `item_db`.`name_japanese` = '"+escape_sql(@itemname$)+"' || `item_db2`.`name_english` = '"+escape_sql(@itemname$)+"' || `item_db2`.`name_japanese` = '"+escape_sql(@itemname$)+"'", @iid;
+	if(!@iid) goto L_INONE;
+	next;
+	mes "[GM Menu]";
+	mes "You have specified to delete "+@itemname$+" from the database.";
+	mes "Would you like to continue?";
+	next;
+	menu "No",L_ITEM,"Yes",-;
+	query_sql "DELETE FROM `donate_item_db` WHERE `id` = "+@iid;
+	logmes "Deleted "+@itemname$+"s from list of claimable items";
+	mes "[GM Menu]";
+	mes "Item deleted successfully!";
+	close;
 
 L_ALLITEMS:
-mes "[GM Menu]";
-query_sql "SELECT `id`,`price` FROM `donate_item_db` ORDER BY `id`", @items, @itemamount$;
-for(set @i, 0; @i < getarraysize(@items); set @i, @i + 1){
+	mes "[GM Menu]";
+	query_sql "SELECT `id`,`price` FROM `donate_item_db` ORDER BY `id`", @items, @itemamount$;
+	for(set @i, 0; @i < getarraysize(@items); set @i, @i + 1){
 		mes getitemname(@items[@i])+" - $"+@itemamount$[@i];
 	}
-next;
-goto L_GM;
+	next;
+	goto L_GM;
 
 L_DONATE:
-mes "[GM Menu]";
-mes "Please enter the donator's username:";
-input @donator$;
-set @aid, 0;
-query_sql "SELECT `account_id` FROM `login` WHERE `userid` = '"+escape_sql(@donator$)+"'", @aid;
-if(!@aid) goto L_NONE;
-set @donated$, "";
-query_sql "SELECT `amount` FROM `donate` WHERE `account_id` = "+@aid, @donated$;
-query_sql "SELECT '"+@donated$+"' > 0", @donated;
-switch(@donated) {
+	mes "[GM Menu]";
+	mes "Please enter the donator's username:";
+	input @donator$;
+	set @aid, 0;
+	query_sql "SELECT `account_id` FROM `login` WHERE `userid` = '"+escape_sql(@donator$)+"'", @aid;
+	if(!@aid) goto L_NONE;
+	set @donated$, "";
+	query_sql "SELECT `amount` FROM `donate` WHERE `account_id` = "+@aid, @donated$;
+	query_sql "SELECT '"+@donated$+"' > 0", @donated;
+	switch(@donated) {
 	case 0:
 		mes @donator$+" has not donated before.";
 		break;
@@ -302,19 +252,19 @@ switch(@donated) {
 		mes @donator$+" has donated $"+@donated$+".";
 		break;
 	}
-next;
-mes "[GM Menu]";
-mes "Please enter the amount donated by "+@donator$;
-input @donating$;
-if(@version) query_sql "SELECT CAST('"+escape_sql(@donating$)+"' AS DECIMAL)", @donating$;
-query_sql "SELECT '"+escape_sql(@donating$)+"' > 0", @valid;
-if(!@valid) goto L_ZERO;
-mes "[GM Menu]";
-mes "You have specified that "+@donator$+" has donated $"+@donating$+".";
-mes "Would you like to continue?";
-next;
-menu "No",L_GM,"Yes",-;
-switch(@donated) {
+	next;
+	mes "[GM Menu]";
+	mes "Please enter the amount donated by "+@donator$;
+	input @donating$;
+	if(@version) query_sql "SELECT CAST('"+escape_sql(@donating$)+"' AS DECIMAL)", @donating$;
+	query_sql "SELECT '"+escape_sql(@donating$)+"' > 0", @valid;
+	if(!@valid) goto L_ZERO;
+	mes "[GM Menu]";
+	mes "You have specified that "+@donator$+" has donated $"+@donating$+".";
+	mes "Would you like to continue?";
+	next;
+	menu "No",L_GM,"Yes",-;
+	switch(@donated) {
 	case 0:
 		query_sql "INSERT INTO `donate` VALUES ("+@aid+", '"+@donating$+"', 0)";
 		break;
@@ -322,44 +272,44 @@ switch(@donated) {
 		query_sql "UPDATE `donate` SET `amount` = `amount` + "+@donating$+" WHERE `account_id` = "+@aid;
 		break;
 	}
-logmes "Credited "+@donator$+" with $"+@donating$;
-query_sql "SELECT `amount` FROM `donate` WHERE `account_id` = "+@aid, @newdonated$;
-mes "[GM Menu]";
-mes "Donation added successfully!";
-mes @donator$+" has donated a total of $"+@newdonated$;
-close;
+	logmes "Credited "+@donator$+" with $"+@donating$;
+	query_sql "SELECT `amount` FROM `donate` WHERE `account_id` = "+@aid, @newdonated$;
+	mes "[GM Menu]";
+	mes "Donation added successfully!";
+	mes @donator$+" has donated a total of $"+@newdonated$;
+	close;
 
 L_ZERO:
-mes "[GM Menu]";
-mes "You can't have 0 as an amount!";
-next;
-goto L_GM;
+	mes "[GM Menu]";
+	mes "You can't have 0 as an amount!";
+	next;
+	goto L_GM;
 
 L_NONE:
-mes "[GM Menu]";
-mes "Account name "+@donator$+" does not exist.";
-next;
-goto L_GM;
+	mes "[GM Menu]";
+	mes "Account name "+@donator$+" does not exist.";
+	next;
+	goto L_GM;
 
 L_REMOVE:
-mes "[GM Menu]";
-mes "Please enter the donator's username:";
-input @donator$;
-set @aid, 0;
-query_sql "SELECT `account_id` FROM `login` WHERE `userid` = '"+escape_sql(@donator$)+"'", @aid;
-if(!@aid) goto L_NONE;
-query_sql "SELECT `amount` FROM `donate` WHERE `account_id` = "+@aid, @donated$;
-query_sql "SELECT '"+@donated$+"' > 0", @donated;
-mes "[GM Menu]";
-if(!@donated) {
-	query_sql "DELETE FROM `donate` WHERE `account_id` = "+@aid;
-	logmes "Deleted "+@donator$+" from donation database";
-	mes @donator$+" is not a donator and has been deleted from the donation database.";
+	mes "[GM Menu]";
+	mes "Please enter the donator's username:";
+	input @donator$;
+	set @aid, 0;
+	query_sql "SELECT `account_id` FROM `login` WHERE `userid` = '"+escape_sql(@donator$)+"'", @aid;
+	if(!@aid) goto L_NONE;
+	query_sql "SELECT `amount` FROM `donate` WHERE `account_id` = "+@aid, @donated$;
+	query_sql "SELECT '"+@donated$+"' > 0", @donated;
+	mes "[GM Menu]";
+	if(!@donated) {
+		query_sql "DELETE FROM `donate` WHERE `account_id` = "+@aid;
+		logmes "Deleted "+@donator$+" from donation database";
+		mes @donator$+" is not a donator and has been deleted from the donation database.";
 	} else {
-	mes @donator$+" has donated $"+@donated$+".";
-	next;
-	switch(select("Deduct an amount from "+@donator$,"Remove "+@donator$+" from the donation database")){
-		mes "[GM Menu]";
+		mes @donator$+" has donated $"+@donated$+".";
+		next;
+		switch(select("Deduct an amount from "+@donator$,"Remove "+@donator$+" from the donation database")){
+			mes "[GM Menu]";
 		case 1:
 			mes "Please enter the amount "+@donator$+" is to be deducted by:";
 			input @deduct$;
@@ -390,27 +340,76 @@ if(!@donated) {
 			break;
 		}
 	}
-close;
+	close;
 
 L_VIEWALL:
-mes "[GM Menu]";
-query_sql "SELECT `account_id`,`amount` FROM `donate` ORDER BY `amount` DESC", @donatoraid, @donatedamount$;
-for(set @i, 0; @i < getarraysize(@donatoraid); set @i, @i + 1){
-	query_sql "SELECT `userid` FROM `login` WHERE `account_id` = "+@donatoraid[@i], @donateruserid$;
-	for(set @j, 0; @j < getarraysize(@donateruserid$); set @j, @j + 1){
-		mes @donateruserid$[@j]+" - "+@donatedamount$[@i];
+	mes "[GM Menu]";
+	query_sql "SELECT `account_id`,`amount` FROM `donate` ORDER BY `amount` DESC", @donatoraid, @donatedamount$;
+	for(set @i, 0; @i < getarraysize(@donatoraid); set @i, @i + 1){
+		query_sql "SELECT `userid` FROM `login` WHERE `account_id` = "+@donatoraid[@i], @donateruserid$;
+		for(set @j, 0; @j < getarraysize(@donateruserid$); set @j, @j + 1){
+			mes @donateruserid$[@j]+" - "+@donatedamount$[@i];
+		}
 	}
-}
-next;
-goto L_GM;
+	next;
+	goto L_GM;
 
 L_RATE:
-mes "[GM Menu]";
-if($rate) mes "$1 is currently worth "+$rate+"Z.";
-mes "How much Zeny is $1 worth?";
-input $rate;
-mes "[GM Menu]";
-mes "The value of $1 successfully changed to "+$rate+"Z.";
-next;
-goto L_GM;
+	mes "[GM Menu]";
+	if($rate) mes "$1 is currently worth "+$rate+"Z.";
+	mes "How much Zeny is $1 worth?";
+	input $rate;
+	mes "[GM Menu]";
+	mes "The value of $1 successfully changed to "+$rate+"Z.";
+	next;
+	goto L_GM;
 }
+
+//===== Additional Comments: =================================
+//= 1.0  - First release. Probably contains bugs/security risks.
+//= 1.1  - Added a check for whether the account exists when
+//=        adding a donator. Need to improve ordering when
+//=        viewing all donations.
+//= 1.2  - Modified for public use. Added checkweight feature.
+//= 2.0  - Many changes, especially ones I had always wanted
+//=        to add to this script. Includes reading items from
+//=        a separate SQL table and more database manipulation
+//=        options for GMs.
+//= 2.1  - Made few changes including the add/remove items feature.
+//= 3.0  - All strings inputted by a user and user/char names
+//=        in SQL queries are now escaped. Each item has a
+//=        price rather than a quantity. This script can work
+//=        with decimals.
+//= 3.1  - Added quotes to some queries, fixed a variable and
+//=        removed a comment.
+//= 3.2  - Fixed a problem where rAthena would crash if a
+//=        query returned NULL.
+//= 3.3  - Optimized query speeds by combining a few select 
+//=        queries into one. Requires Trunk 7975.
+//= 3.4  - Added MySQL version check. If version < 5.0.8, all
+//=        queries with CAST are omitted. Use 5.0.8 and up
+//=        when possible. SQL errors may consequent if GM's
+//=        input is incorrect. Added logging of claims.
+//=        "log_npc" in log_athena.conf must be enabled. Logs
+//=        will appear in the "npclog" table. Claim menu now
+//=        only shows items that can be afforded.
+//= 3.5  - Minor change to table.
+//= 3.6  - Removed name column in donate_item_db. Added
+//=        support for item_db2 table.
+//= 3.7  - Added Zeny support. $rate must be set for it to be
+//=        used. Removed truncate() in a query since rAthena
+//=        automatically truncates floats to ints.
+//= 3.8  - Fixed problem with menus and null values.
+//= 3.9  - Explicit reset of @aid.
+//= 3.10 - Applied previous fix to other variables and forced
+//=        dialogue box closure every time database is modified.
+//= 3.11 - Explicit reset of another variable. Fixed typo
+//=      - with $rate. Added logmes for GM operations.
+//============================================================
+//= Thanks to Vich for helping me with the SQL syntax.
+//= Thanks to Lance for helping me with the the arrays and 
+//= for implementing query_sql.
+//= Thanks to Skotlex for implementing escape_sql.
+//= Thanks to Toms for implementing the new multi-column 
+//= query_sql command.
+//============================================================

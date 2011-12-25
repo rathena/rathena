@@ -1,11 +1,11 @@
 //===== rAthena Script ======================================= 
-//= Uneasy Prontera Cemetery Quest (original script!)
+//= Uneasy Prontera Cemetery Quest
 //===== By: ================================================== 
 //= Lupus
 //===== Current Version: ===================================== 
 //= 1.2a (Tested and fully working!)
 //===== Compatible With: ===================================== 
-//= rAthena Version 1.0
+//= rAthena SVN
 //===== Description: ========================================= 
 //= A periodical quest of the Uneasy Cemetery (Kill undead / Prevent their appearance)
 //= Every day, at the midnight Prontera receive a wave of Undeads.
@@ -18,7 +18,6 @@
 //= 1.2 Added coords to the script to make label OmMobDead working
 //= 1.2a Changed item names to item IDs. [Samuray22]
 //============================================================ 
-
 
 prontera,3,3,3	script	Uneasy_Check	-1,{
 	end;

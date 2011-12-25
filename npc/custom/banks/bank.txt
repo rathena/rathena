@@ -13,6 +13,7 @@
 //= the script. To use it simply change the first set command
 //= to set the cost variable to whatever you want the fee to be.
 //============================================================ 
+
 prontera,132,217,5	script	Banker	109,{
 set @cost,500;
 mes "[Banker]";

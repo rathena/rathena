@@ -1,21 +1,14 @@
 //===== rAthena Script =======================================
-//= Treasure Hunter Script
-//===== Converted By =========================================
+//= Treasure Hunter Quests
+//===== By: ==================================================
 //= Fredzilla
-//= Original
-//////////////////////////////////////////////////////////////
-//                  Treasure Hunter Quests                  //
-//                       By: Ezekial                        //
-//             for the use on nRO run by Newbe5             //
-//                    revised By Warlock                    //
-//////////////////////////////////////////////////////////////
-//===== Version ==============================================
+//===== Current Version: =====================================
 //= 1.5
-//===== Compatible With ======================================
-//= rAthena 1.0
-//===== Description ==========================================
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
 //= Start for Treasure hunter quests
-//===== Comments =============================================
+//===== Additional Comments: =================================
 //= Event_THQS - Used to check if you have already registered
 //= #Treasure_Token - used to keep track of tokens
 //= 1.0 - Straight conversionof Aegis NPC file
@@ -24,7 +17,6 @@
 //= 1.4 Further removed duplicates. [L0ne_W0lf]
 //= 1.5 Fixed name collision with 'Little Girl' in cities/lutie.txt [Ai4rei]
 //============================================================
-
 
 ///////Job list 1///////
 //1-1
