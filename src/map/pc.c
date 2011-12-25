@@ -6672,7 +6672,7 @@ int pc_setoption(struct map_session_data *sd,int type)
 			status_calc_pc(sd,0); //Remove speed penalty.
 	}
 
-	if (type&OPTION_MOUNTING && !(p_type&OPTION_MOUNTING)) {
+	if (type&OPTION_MOUNTING && !(p_type&OPTION_MOUNTING) && ( sd->class_&MAPID_THIRDMASK ) != MAPID_RANGER ) {
 		clif_status_load_notick(&sd->bl,SI_ALL_RIDING,2,1,0,0);
 		status_calc_pc(sd,0); 
 	} else if (!(type&OPTION_MOUNTING) && p_type&OPTION_MOUNTING) {
