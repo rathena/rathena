@@ -3705,6 +3705,11 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		if (sc->data[SC_SACRIFICE])
 		{
 			int skilllv = sc->data[SC_SACRIFICE]->val1;
+			/**
+			* We need to calculate the DMG before the hp reduction, because it can kill the source.
+			* For futher information: bugreport:4950
+			**/
+			damage_lv ret_val = (damage_lv)skill_attack(BF_WEAPON,src,src,target,PA_SACRIFICE,skilllv,tick,0);
 
 			if( --sc->data[SC_SACRIFICE]->val2 <= 0 )
 				status_change_end(src, SC_SACRIFICE, INVALID_TIMER);
@@ -3712,7 +3717,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			status_zap(src, sstatus->max_hp*9/100, 0);//Damage to self is always 9%
 
 			//FIXME: invalid return type!
-			return (damage_lv)skill_attack(BF_WEAPON,src,src,target,PA_SACRIFICE,skilllv,tick,0);
+			return ret_val;
 		}
 		if (sc->data[SC_MAGICALATTACK])
 			//FIXME: invalid return type!
