@@ -3926,7 +3926,8 @@ static signed short status_calc_critical(struct block_list *bl, struct status_ch
 		critical += critical;
 	if(sc->data[SC_CAMOUFLAGE])
 		critical += 100;
-
+	if( bl->type == BL_PC && ((TBL_PC*)bl)->status.weapon == W_KATAR )
+		critical <<= 1;
 	return (short)cap_value(critical,10,SHRT_MAX);
 }
 

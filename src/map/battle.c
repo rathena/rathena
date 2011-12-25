@@ -1240,8 +1240,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			cri+= sd->critaddrace[tstatus->race];
 			if(flag.arrow)
 				cri += sd->arrow_cri;
-			if(sd->status.weapon == W_KATAR)
-				cri <<=1;
 		}
 		//The official equation is *2, but that only applies when sd's do critical.
 		//Therefore, we use the old value 3 on cases when an sd gets attacked by a mob

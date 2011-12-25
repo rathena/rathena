@@ -7354,8 +7354,6 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 			sd->weapontype1 = 0;
 		pc_calcweapontype(sd);
 		clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
-		if( sd->status.weapon == W_KATAR )
-			clif_updatestatus(sd,SP_CRITICAL);
 	}
 	if(pos & EQP_HAND_L) {
 		if(id) {
@@ -7497,12 +7495,9 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 		clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
 	}
 	if(sd->status.inventory[n].equip & EQP_HAND_L) {
-		bool kt_flag = ( sd->status.weapon == W_KATAR );
 		sd->status.shield = sd->weapontype2 = 0;
 		pc_calcweapontype(sd);
 		clif_changelook(&sd->bl,LOOK_SHIELD,sd->status.shield);
-		if( kt_flag )
-			clif_updatestatus(sd,SP_CRITICAL);
 	}
 	if(sd->status.inventory[n].equip & EQP_HEAD_LOW && pc_checkequip(sd,EQP_COSTUME_HEAD_LOW) == -1 ) {
 		sd->status.head_bottom = 0;
