@@ -24,7 +24,7 @@ yuno,129,156,3	script	Chainheart	923,{
 		next;
 		mes "[Chainheart]";
 		mes "Truth or technology?";
-		mes "Perhaps you children should next;";
+		mes "Perhaps you children should wait";
 		mes "till you are a little older.";
 		close;
 	}
@@ -183,7 +183,7 @@ yuno,129,156,3	script	Chainheart	923,{
 			mes "[Chainheart]";
 			mes "Find out the knowledge";
 			mes "for yourself like we did.";
-			mes "Don't just next; around for someone to teach it to you. Show the passion that you claim to have.";
+			mes "Don't just wait around for someone to teach it to you. Show the passion that you claim to have.";
 			next;
 			set job_mechanic,3;
 			changequest 10091,10092;
@@ -773,7 +773,7 @@ OnDoorClose:
 
 OnDoorOpen:
 	enablenpc "Door";
-	specialeffect EF_MAPPILLAR,AREA,"Door";
+	specialeffect EF_MAPPILLAR;
 	initnpctimer;
 	end;
 
@@ -839,7 +839,7 @@ OnTouch:
 		next;
 		set job_mechanic,10;
 		changequest 10099,10100;
-		specialeffect EF_POTION_CON,AREA,"Acquiring Knowledge";
+		specialeffect EF_POTION_CON;
 		mes "-This amount of-";
 		mes "-knowledge is enough-";
 		mes "-and find a way out.-";
@@ -866,7 +866,7 @@ OnTouch:
 		next;
 		set job_mechanic,10;
 		changequest 10099,10100;
-		specialeffect EF_POTION_CON,AREA,"Acquiring Knowledge#2";
+		specialeffect EF_POTION_CON;
 		mes "-This amount of-";
 		mes "-knowledge is enough-";
 		mes "-and find a way out.-";

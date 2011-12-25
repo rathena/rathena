@@ -40,6 +40,7 @@
 //=     line. [Gepard]
 //= 2.1 Fixed Myterious Rock 31, and Cart Hand Agents.
 //= 2.2 Added a missing close. (bugreport:4520) [L0ne_W0lf]
+//= 2.3 Fixed EF_Wind not showing. (bugreport:5149) [Masao]
 //============================================================ 
 
 // Cat Hand Addition.
@@ -11542,12 +11543,13 @@ nyd_dun02,143,272,0	script	ep13_warp_s1	139,1,1,{
 
 OnEnable:
 	enablenpc "ep13_warp_s1";
+	specialeffect EF_WIND;
+	initnpctimer;
 	end;
 
 OnDisable:
-	disablenpc "ep13_warp_s1";
-	initnpctimer;
 	specialeffect EF_WIND;
+	disablenpc "ep13_warp_s1";
 	end;
 
 OnTouch:
@@ -11571,7 +11573,7 @@ OnTimer8000:
 	end;
 
 OnTimer10000:
-	enablenpc "ep13_warp_s1";
+	disablenpc "ep13_warp_s1";
 	end;
 }
 
@@ -11585,12 +11587,13 @@ nyd_dun02,143,266,0	script	ep13_warp_s3	139,1,1,{
 
 OnEnable:
 	enablenpc "ep13_warp_s3";
+	specialeffect EF_WIND;
+	initnpctimer;
 	end;
 
 OnDisable:
-	disablenpc "ep13_warp_s3";
-	initnpctimer;
 	specialeffect EF_WIND;
+	disablenpc "ep13_warp_s3";
 	end;
 
 OnTouch:
@@ -11614,7 +11617,7 @@ OnTimer8000:
 	end;
 
 OnTimer10000:
-	enablenpc "ep13_warp_s3";
+	disablenpc "ep13_warp_s3";
 	end;
 }
 
@@ -11628,12 +11631,13 @@ nyd_dun02,146,272,0	script	ep13_warp_11	139,1,1,{
 
 OnEnable:
 	enablenpc "ep13_warp_11";
+	specialeffect EF_WIND;
+	initnpctimer;
 	end;
 
 OnDisable:
-	disablenpc "ep13_warp_11";
-	initnpctimer;
 	specialeffect EF_WIND;
+	disablenpc "ep13_warp_11";
 	end;
 
 OnTouch:
@@ -11657,7 +11661,7 @@ OnTimer8000:
 	end;
 
 OnTimer10000:
-	enablenpc "ep13_warp_11";
+	disablenpc "ep13_warp_11";
 	end;
 }
 
@@ -11671,12 +11675,13 @@ nyd_dun02,146,266,0	script	ep13_warp_13	139,1,1,{
 
 OnEnable:
 	enablenpc "ep13_warp_13";
+	specialeffect EF_WIND;
+	initnpctimer;
 	end;
 
 OnDisable:
-	disablenpc "ep13_warp_13";
-	initnpctimer;
 	specialeffect EF_WIND;
+	disablenpc "ep13_warp_13";
 	end;
 
 OnTouch:
@@ -11700,7 +11705,7 @@ OnTimer8000:
 	end;
 
 OnTimer10000:
-	enablenpc "ep13_warp_13";
+	disablenpc "ep13_warp_13";
 	end;
 }
 
@@ -11708,12 +11713,13 @@ nyd_dun02,146,263,0	script	ep13_warp_14	139,1,1,{
 
 OnEnable:
 	enablenpc "ep13_warp_14";
+	specialeffect EF_WIND;
+	initnpctimer;
 	end;
 
 OnDisable:
-	disablenpc "ep13_warp_14";
-	initnpctimer;
 	specialeffect EF_WIND;
+	disablenpc "ep13_warp_14";
 	end;
 
 OnTouch:
@@ -11741,7 +11747,7 @@ OnTimer10000:
 	end;
 
 OnTimer12000:
-	enablenpc "ep13_warp_14";
+	disablenpc "ep13_warp_14";
 	end;
 }
 
@@ -11755,12 +11761,13 @@ nyd_dun02,149,272,0	script	ep13_warp_21	139,1,1,{
 
 OnEnable:
 	enablenpc "ep13_warp_21";
+	specialeffect EF_WIND;
+	initnpctimer;
 	end;
 
 OnDisable:
-	disablenpc "ep13_warp_21";
-	initnpctimer;
 	specialeffect EF_WIND;
+	disablenpc "ep13_warp_21";
 	end;
 
 OnTouch:
@@ -11788,7 +11795,7 @@ OnTimer10000:
 	end;
 
 OnTimer12000:
-	enablenpc "ep13_warp_21";
+	disablenpc "ep13_warp_21";
 	end;
 }
 
@@ -11796,12 +11803,13 @@ nyd_dun02,149,269,0	script	ep13_warp_22	139,1,1,{
 
 OnEnable:
 	enablenpc "ep13_warp_22";
+	specialeffect EF_WIND;
+	initnpctimer;
 	end;
 
 OnDisable:
-	disablenpc "ep13_warp_22";
-	initnpctimer;
 	specialeffect EF_WIND;
+	disablenpc "ep13_warp_22";
 	end;
 
 OnTouch:
@@ -11833,7 +11841,7 @@ OnTimer12000:
 	end;
 
 OnTimer15000:
-	enablenpc "ep13_warp_22";
+	disablenpc "ep13_warp_22";
 	end;
 }
 
@@ -11871,12 +11879,13 @@ nyd_dun02,149,263,0	script	ep13_warp_24	139,1,1,{
 
 OnEnable:
 	enablenpc "ep13_warp_24";
+	specialeffect EF_WIND;
+	initnpctimer;
 	end;
 
 OnDisable:
-	disablenpc "ep13_warp_24";
-	initnpctimer;
 	specialeffect EF_WIND;
+	disablenpc "ep13_warp_24";
 	end;
 
 OnTouch:
@@ -11908,7 +11917,7 @@ OnTimer12000:
 	end;
 
 OnTimer15000:
-	enablenpc "ep13_warp_24";
+	disablenpc "ep13_warp_24";
 	end;
 }
 
