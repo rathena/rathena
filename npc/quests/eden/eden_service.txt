@@ -1,19 +1,20 @@
-//===== rAthena Script ======================================= 
-// Eden Group - Goods Cabinet
+//===== eAthena Script ======================================= 
+// Eden Group Quests - Service NPCs
 //===== By: ================================================== 
-//= Masao
+//= L0ne_W0lf
 //===== Current Version: ===================================== 
 //= 1.0
 //===== Compatible With: ===================================== 
-//= Any rAthena SVN
+//= eAthena 1.0
 //===== Description: ========================================= 
 //= [AEGIS Conversion]
-//= Paradise Group storage access.
+//= Paradise Group storage access. 
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
+//= 1.1 Replaced 2nd NPC with duplicate function.
 //============================================================
 
-moc_para01,173,120,0	script	Goods Cabinet#01::goodsc	139,{
+moc_para01,173,120,0	script	Goods Cabinet#01::goodsc	111,{
 
 	mes "It is a Goods Storage Cabinet.";
 	mes "A message is written on a piece of paper.";
@@ -65,4 +66,4 @@ moc_para01,173,120,0	script	Goods Cabinet#01::goodsc	139,{
 	close;
 }
 
-moc_para01,170,120,0	duplicate(goodsc)	Goods Cabinet#02	139
+moc_para01,170,120,0	duplicate(goodsc)	Goods Cabinet#02	111
