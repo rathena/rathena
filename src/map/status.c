@@ -2164,6 +2164,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		+ sizeof(sd->sp_vanish_rate)
 		+ sizeof(sd->sp_vanish_per)
 		+ sizeof(sd->sp_weapon_matk)
+		+ sizeof(sd->sp_base_matk)
 		+ sizeof(sd->unbreakable)
 		+ sizeof(sd->unbreakable_equip)
 		+ sizeof(sd->unstripable_equip)
@@ -2529,6 +2530,13 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	//Equipment modifiers for misc settings
 	if(sd->matk_rate < 0)
 		sd->matk_rate = 0;
+#if REMODE
+	/**
+	 * in RE matk_min is used as character's base matk
+	 * sp_base_matk is 'bonus bMatk,<boost>'
+	 **/
+	status->matk_min += sd->sp_base_matk;
+#endif
 	if(sd->matk_rate != 100){
 		status->matk_max = status->matk_max * sd->matk_rate/100;
 		status->matk_min = status->matk_min * sd->matk_rate/100;

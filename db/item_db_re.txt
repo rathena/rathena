@@ -15,7 +15,7 @@
 
 // Matk updates. Work in progress. 
 // Daggers
-13010,Asura,Asura,4,3000,,600,50:50,,1,2,0x02000000,7,2,2,1,12,1,1,{ bonus bWeaponMatk,15; },{},{}
+13010,Asura,Asura,4,3000,,600,50:50,,1,2,0x02000000,7,2,2,1,12,1,1,{},{},{}
 13011,Asura_,Asura,4,3000,,600,50:50,,1,3,0x02000000,7,2,2,1,12,1,1,{},{},{}
 1231,Bazerald,Bazerald,4,20,,500,70:105,,1,0,0x028F5EEE,7,2,2,4,36,1,1,{ bonus bAtkEle,Ele_Fire; bonus bInt,5; },{},{}
 
