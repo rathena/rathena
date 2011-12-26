@@ -3875,10 +3875,12 @@ ACMD_FUNC(lostskill)
  *------------------------------------------*/
 ACMD_FUNC(spiritball)
 {
-	int max_spiritballs = min(ARRAYLENGTH(sd->spirit_timer), 0x7FFF);
+	int max_spiritballs;
 	int number;
 	nullpo_retr(-1, sd);
-
+	
+	max_spiritballs = min(ARRAYLENGTH(sd->spirit_timer), 0x7FFF);
+	
 	if( !message || !*message || (number = atoi(message)) < 0 || number > max_spiritballs )
 	{
 		char msg[CHAT_SIZE_MAX];
