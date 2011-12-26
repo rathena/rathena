@@ -17,6 +17,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
 //= 1.1 Updated several NPCs to Official.
+//= 1.2 Updated Repairman NPC
 //============================================================
 
 // Generals
@@ -315,7 +316,7 @@ bat_room,148,147,4	script	Kafra Staff::kaf_bat	861,{
 
 // Repairman
 //============================================================
-bat_room,138,144,5	script	Repairman#bg	86,{
+bat_room,138,144,4	script	Repairman#bg	86,{
 	callfunc "repairmain","Repairman";
 	end;
 }

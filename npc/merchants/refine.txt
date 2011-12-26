@@ -55,6 +55,8 @@
 //=     Updated dated features comment to reflect new usage.
 //= 2.8a Small bugfix. (bugreport:2418) [Paradox924X]
 //= 2.9 MOved Morroc repairman to Morroc Ruins. [L0ne_W0lf]
+//= 3.0 Updated several NPC names and locations. [Xantara]
+//		Added WoE map Refiners.
 //============================================================
 
 
@@ -565,27 +567,27 @@ ein_in01,38,29,0	script	Paul Spanner	63,{
 //=====================================================================================
 // Weapon/Armor Refiners
 //=====================================================================================
-prt_in,63,60,4	script	Hollengrhen	85,{
-	callfunc "refinemain","Hollengrhen",0;
+prt_in,63,60,0	script	Hollgrehenn	85,{
+	callfunc "refinemain","Hollgrehenn",0;
 	end;
 }
-morocc_in,73,38,4	script	Aragham	99,{
+morocc_in,73,38,6	script	Aragham	99,{
 	callfunc "refinemain","Aragham",0;
 	end;
 }
-payon,144,173,4	script	Antonio	88,{
+payon,144,173,5	script	Antonio	88,{
 	callfunc "refinemain","Antonio",0;
 	end;
 }
-alberta_in,28,58,4	script	Fredrik	85,{
+alberta_in,28,58,0	script	Fredrik	85,{
 	callfunc "refinemain","Fredrik",0;
 	end;
 }
-yuno_in01,164,26,6	script	Disturb	88,{
-	callfunc "refinemain","Disturb",0;
+yuno_in01,171,21,4	script	Lambert	88,{
+	callfunc "refinemain","Lambert",0;
 	end;
 }
-ein_in01,24,87,6	script	Manthasman	826,{
+ein_in01,24,87,5	script	Manthasman	826,{
 	callfunc "refinemain","Manthasman Pruhag",0;
 	end;
 }
@@ -902,27 +904,27 @@ function	script	refinemain	{
 //==============================================================================
 // Material Salesmen
 //==============================================================================
-prt_in,56,69,4	script	Vurewell	86,{
+prt_in,56,68,5	script	Vurewell	86,{
 	callfunc "phramain","Vurewell";
 	end;
 }
-payon,145,178,4	script	Begnahd	88,{
+payon,145,178,3	script	Begnahd	88,{
 	callfunc "phramain","Begnahd";
 	end;
 }
-morocc_in,65,37,4	script	Sade	99,{
+morocc_in,63,32,6	script	Sade	99,{
 	callfunc "phramain","Sade";
 	end;
 }
-alberta_in,18,59,5	script	Kahlamanlith	86,{
+alberta_in,13,71,3	script	Kahlamanlith	86,{
 	callfunc "phramain","Kahlamanlith";
 	end;
 }
-yuno_in01,171,26,6	script	Dillemat	88,{
-	callfunc "phramain","Dillemat";
+yuno_in01,171,27,4	script	Dilemma	88,{
+	callfunc "phramain","Dilemma";
 	end;
 }
-ein_in01,15,87,7	script	Tirehaus	86,{
+ein_in01,15,87,3	script	Tirehaus	86,{
 	callfunc "phramain","Tirehaus";
 	end;
 }
@@ -1019,24 +1021,24 @@ function	script	phramain	{
 //==============================================================================
 // Ori/Elu Refiners
 //==============================================================================
-prt_in,63,69,4	script	Dietrich	84,{
+prt_in,63,69,3	script	Dietrich	84,{
 	callfunc "orimain","Dietrich";
 	end;
 }
-payon,137,178,4	script	Hakhim	88,{
+payon,137,178,5	script	Hakhim	88,{
 	callfunc "orimain","Hakhim";
 	end;
 }
-morocc_in,72,32,4	script	Abdul	99,{
-	callfunc "orimain","Abdul";
+morocc_in,72,32,6	script	Abdula	99,{
+	callfunc "orimain","Abdula";
 	end;
 }
 alberta_in,21,63,5	script	Xenophon	84,{
-	callfunc "orimain","Xenophon";
+	callfunc "orimain","Xenophon Zolotas";
 	end;
 }
-yuno_in01,171,22,6	script	Delayt	88,{
-	callfunc "orimain","Delayt";
+yuno_in01,164,27,4	script	Delight	88,{
+	callfunc "orimain","Delight";
 	end;
 }
 ein_in01,18,82,6	script	Matestein	84,{
@@ -1128,7 +1130,7 @@ alberta_in,31,65,4	script	Repairman#alb	86,{
 	end;
 }
 
-moc_ruins,107,94,5	script	Repairman#moc	99,{
+moc_ruins,107,94,4	script	Repairman#moc	99,{
 	callfunc "repairmain","Repairman";
 	end;
 }
@@ -1159,6 +1161,36 @@ aldeba_in,38,60,3	script	Repairman#alde	86,{
 }
 
 lhz_in02,284,14,3	script	Repairman#lhz	86,{
+	callfunc "repairmain","Repairman";
+	end;
+}
+
+prt_gld,139,117,4	script	Repairman#prt_gld	86,{
+	callfunc "repairmain","Repairman";
+	end;
+}
+
+gef_fild13,263,117,4	script	Repairman#gef_fild	86,{
+	callfunc "repairmain","Repairman";
+	end;
+}
+
+pay_gld,295,183,4	script	Repairman#pay_gld	86,{
+	callfunc "repairmain","Repairman";
+	end;
+}
+
+alde_gld,220,152,4	script	Repairman#alde_gld	86,{
+	callfunc "repairmain","Repairman";
+	end;
+}
+
+aru_gld,189,336,4	script	Repairman#aru_gld	86,{
+	callfunc "repairmain","Repairman";
+	end;
+}
+
+sch_gld,340,80,7	script	Repairman#sch_gld	86,{
 	callfunc "repairmain","Repairman";
 	end;
 }
