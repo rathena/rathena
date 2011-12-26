@@ -7100,7 +7100,16 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			clif_skill_nodamage(src, bl, skillid, skilllv, 1);
 		}
 		break;
-
+	case ALL_RIDING:
+		if( sd ) {
+			if( !(sd->sc.option&OPTION_MOUNTING) ) {
+				pc_setoption(sd, sd->sc.option|OPTION_MOUNTING);
+			} else {
+				pc_setoption(sd, sd->sc.option&~OPTION_MOUNTING);
+			}
+			clif_skill_nodamage(src, src, skillid, skilllv, 1);
+		}
+		break;
 	default:
 		ShowWarning("skill_castend_nodamage_id: Unknown skill used:%d\n",skillid);
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
