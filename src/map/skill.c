@@ -14296,6 +14296,12 @@ static void skill_readdb(void)
 	sv_readdb(db_path, "skill_castnodex_db.txt", ',',   2,  3, MAX_SKILL_DB, skill_parse_row_castnodexdb);
 	sv_readdb(db_path, "skill_nocast_db.txt"   , ',',   2,  2, MAX_SKILL_DB, skill_parse_row_nocastdb);
 	sv_readdb(db_path, "skill_unit_db.txt"     , ',',   8,  8, MAX_SKILL_DB, skill_parse_row_unitdb);
+#if REMODE
+	sv_readdb(db_path, "skill_db_re.txt"          , ',',  17, 17, MAX_SKILL_DB, skill_parse_row_skilldb);
+	sv_readdb(db_path, "skill_require_db_re.txt"  , ',',  32, 32, MAX_SKILL_DB, skill_parse_row_requiredb);
+	sv_readdb(db_path, "skill_cast_db_re.txt"     , ',',   7,  7, MAX_SKILL_DB, skill_parse_row_castdb);
+	sv_readdb(db_path, "skill_unit_db_re.txt"     , ',',   8,  8, MAX_SKILL_DB, skill_parse_row_unitdb);
+#endif
 	skill_init_unit_layout();
 	sv_readdb(db_path, "produce_db.txt"        , ',',   4,  4+2*MAX_PRODUCE_RESOURCE, MAX_SKILL_PRODUCE_DB, skill_parse_row_producedb);
 	sv_readdb(db_path, "create_arrow_db.txt"   , ',', 1+2,  1+2*MAX_ARROW_RESOURCE, MAX_SKILL_ARROW_DB, skill_parse_row_createarrowdb);

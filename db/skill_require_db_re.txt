@@ -1,0 +1,24 @@
+//=====================================================================================================
+//-- skil_require_db_re.txt: entries in this file override skill_require_db.txt -- file only used in Ragnarok Renewal Mode
+//=====================================================================================================
+// Skill Requirements Database
+//
+// Structure of Database:
+// SkillID,HPCost,MaxHPTrigger,SPCost,HPRateCost,SPRateCost,ZenyCost,RequiredWeapons,RequiredAmmoTypes,RequiredAmmoAmount,RequiredState,SpiritSphereCost,RequiredItemID1,RequiredItemAmount1,RequiredItemID2,RequiredItemAmount2,RequiredItemID3,RequiredItemAmount3,RequiredItemID4,RequiredItemAmount4,RequiredItemID5,RequiredItemAmount5,RequiredItemID6,RequiredItemAmount6,RequiredItemID7,RequiredItemAmount7,RequiredItemID8,RequiredItemAmount8,RequiredItemID9,RequiredItemAmount9,RequiredItemID10,RequiredItemAmount10
+//
+// If HP/SPratecost is positive, it is a percent of your current life, otherwise it is a percent of your max life.
+//
+// Legend for 'RequiredState' field:
+//  none = Nothing special
+//  move_enable = Requires to be able to move
+//  recover_weight_rate = Requires to be less than 50% weight
+//  water = Requires to be standing on a water cell
+//  cart = Requires a Pushcart
+//  riding = Requires to ride a Peco
+//  falcon = Requires a Falcon
+//  sight = Requires Sight skill activated
+//  hiding = Requires Hiding skill activated
+//  cloaking = Requires Cloaking skill activated
+//  explosionspirits = Requires Fury skill activated
+//  cartboost = Requires a Pushcart and Cart Boost skill activated
+//  shield = Requires a 0,shield equipped
