@@ -250,33 +250,25 @@ OnMyMobDead:
 
 bat_b01,1,4,3	script	cell#bat_b01_a	844,{
 Onred:
-	setwall "bat_b01",60,149,2,6,0,"Guillaume_wall1-1";
-	setwall "bat_b01",62,149,2,0,0,"Guillaume_wall1-2";
-	setwall "bat_b01",62,151,2,2,0,"Guillaume_wall1-3";
-	setwall "bat_b01",60,151,2,4,0,"Guillaume_wall1-4";
+	setcell "bat_b01",62,149,60,151,cell_basilica,1;
+	setcell "bat_b01",62,149,60,151,cell_walkable,0;
 	end;
 
 Ongreen:
-	delwall "Guillaume_wall1-1";
-	delwall "Guillaume_wall1-2";
-	delwall "Guillaume_wall1-3";
-	delwall "Guillaume_wall1-4";
+	setcell "bat_b01",62,149,60,151,cell_basilica,0;
+	setcell "bat_b01",62,149,60,151,cell_walkable,1;
 	end;
 }
 
 bat_b01,1,5,3	script	cell#bat_b01_b	844,{
 Onred:
-	setwall "bat_b01",327,149,2,6,0,"Croix_wall1-1";
-	setwall "bat_b01",329,149,2,0,0,"Croix_wall1-2";
-	setwall "bat_b01",329,151,2,2,0,"Croix_wall1-3";
-	setwall "bat_b01",327,151,2,4,0,"Croix_wall1-4";
+	setcell "bat_b01",327,151,329,149,cell_basilica,1;
+	setcell "bat_b01",327,151,329,149,cell_walkable,0;
 	end;
 
 Ongreen:
-	delwall "Croix_wall1-1";
-	delwall "Croix_wall1-2";
-	delwall "Croix_wall1-3";
-	delwall "Croix_wall1-4";
+	setcell "bat_b01",327,151,329,149,cell_basilica,0;
+	setcell "bat_b01",327,151,329,149,cell_walkable,1;
 	end;
 }
 
