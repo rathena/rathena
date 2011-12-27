@@ -1217,7 +1217,13 @@ int clif_spawn(struct block_list *bl)
 	vd = status_get_viewdata(bl);
 	if( !vd || vd->class_ == INVISIBLE_CLASS )
 		return 0;
-
+		
+	/**
+	* Hide NPC from maya puprle card.
+	**/
+	if(bl->type == BL_NPC && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
+		return 0;
+		
 	len = clif_set_unit_idle(bl, buf,true);
 	clif_send(buf, len, bl, AREA_WOS);
 	if (disguised(bl))
@@ -1472,6 +1478,12 @@ void clif_move(struct unit_data *ud)
 	vd = status_get_viewdata(bl);
 	if (!vd || vd->class_ == INVISIBLE_CLASS)
 		return; //This performance check is needed to keep GM-hidden objects from being notified to bots.
+		
+	/**
+	* Hide NPC from maya puprle card.
+	**/
+	if(bl->type == BL_NPC && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
+		return;
 	
 	if (ud->state.speed_changed) {
 		// Since we don't know how to update the speed of other objects,
@@ -3800,6 +3812,12 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 	vd = status_get_viewdata(bl);
 	if (!vd || vd->class_ == INVISIBLE_CLASS)
 		return;
+		
+	/**
+	* Hide NPC from maya puprle card.
+	**/
+	if(bl->type == BL_NPC && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
+		return;
 
 	ud = unit_bl2ud(bl);
 	len = ( ud && ud->walktimer != INVALID_TIMER ) ? clif_set_unit_walking(bl,ud,buf) : clif_set_unit_idle(bl,buf,false);
@@ -4233,6 +4251,10 @@ int clif_outsight(struct block_list *bl,va_list ap)
 		case BL_SKILL:
 			clif_clearchar_skillunit((struct skill_unit *)bl,tsd->fd);
 			break;
+		case BL_NPC:
+			if( !(((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE) )
+				clif_clearunit_single(bl->id,CLR_OUTSIGHT,tsd->fd);
+			break;
 		default:
 			if ((vd=status_get_viewdata(bl)) && vd->class_ != INVISIBLE_CLASS)
 				clif_clearunit_single(bl->id,CLR_OUTSIGHT,tsd->fd);
@@ -4241,7 +4263,8 @@ int clif_outsight(struct block_list *bl,va_list ap)
 	}
 	if (sd && sd->fd)
 	{	//sd is watching tbl go out of view.
-		if ((vd=status_get_viewdata(tbl)) && vd->class_ != INVISIBLE_CLASS)
+		if (((vd=status_get_viewdata(tbl)) && vd->class_ != INVISIBLE_CLASS) &&
+			!(bl->type == BL_NPC && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE)))
 			clif_clearunit_single(tbl->id,CLR_OUTSIGHT,sd->fd);
 	}
 	return 0;
