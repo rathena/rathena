@@ -1072,7 +1072,7 @@ prontera,223,82,0	script	#prt_key-1	111,{
 	close;
 }
 
-prontera,45,67,0	script	 #prt_key-1-1	139,1,1,{
+prontera,45,67,0	script	 #prt_key-1-1	111,1,1,{
 OnTouch:
 	if (HELLIONQ == 40 || HELLIONQ == 41) {
 		mes "[" + strcharinfo(0) + "]";
