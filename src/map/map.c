@@ -3644,36 +3644,59 @@ int do_init(int argc, char *argv[])
 			arg++;
 
 			if( strcmp(arg, "help") == 0 )
+			{
 				map_helpscreen(true);
+			}
 			else if( strcmp(arg, "version") == 0 )
+			{
 				map_versionscreen(true);
-			else if( strcmp(arg, "map-config") == 0 ) {
+			}
+			else if( strcmp(arg, "map-config") == 0 )
+			{
 				if( map_arg_next_value(arg, i, argc) )
 					MAP_CONF_NAME = argv[++i];
-			} else if( strcmp(arg, "battle-config") == 0 ) {
+			}
+			else if( strcmp(arg, "battle-config") == 0 )
+			{
 				if( map_arg_next_value(arg, i, argc) )
 					BATTLE_CONF_FILENAME = argv[++i];
-			} else if( strcmp(arg, "atcommand-config") == 0 ) {
+			}
+			else if( strcmp(arg, "atcommand-config") == 0 )
+			{
 				if( map_arg_next_value(arg, i, argc) )
 					ATCOMMAND_CONF_FILENAME = argv[++i];
-			} else if( strcmp(arg, "script-config") == 0 ) {
+			}
+			else if( strcmp(arg, "script-config") == 0 )
+			{
 				if( map_arg_next_value(arg, i, argc) )
 					SCRIPT_CONF_NAME = argv[++i];
-			} else if( strcmp(arg, "msg-config") == 0 ) {
+			}
+			else if( strcmp(arg, "msg-config") == 0 )
+			{
 				if( map_arg_next_value(arg, i, argc) )
 					MSG_CONF_NAME = argv[++i];
-			} else if( strcmp(arg, "grf-path-file") == 0 ) {
+			}
+			else if( strcmp(arg, "grf-path-file") == 0 )
+			{
 				if( map_arg_next_value(arg, i, argc) )
 					GRF_PATH_FILENAME = argv[++i];
-			} else if( strcmp(arg, "inter-config") == 0 ) {
+			}
+			else if( strcmp(arg, "inter-config") == 0 )
+			{
 				if( map_arg_next_value(arg, i, argc) )
 					INTER_CONF_NAME = argv[++i];
-			} else if( strcmp(arg, "log-config") == 0 ) {
+			}
+			else if( strcmp(arg, "log-config") == 0 )
+			{
 				if( map_arg_next_value(arg, i, argc) )
 					LOG_CONF_NAME = argv[++i];
-			} else if( strcmp(arg, "run-once") == 0 ) // close the map-server as soon as its done.. for testing [Celest]
+			}
+			else if( strcmp(arg, "run-once") == 0 ) // close the map-server as soon as its done.. for testing [Celest]
+			{
 				runflag = CORE_ST_STOP;
-			else {
+			}
+			else
+			{
 				ShowError("Unknown option '%s'.\n", argv[i]);
 				exit(EXIT_FAILURE);
 			}
