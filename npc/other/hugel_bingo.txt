@@ -57,6 +57,11 @@ OnInit:
 	end;
 
 OnTouch:
+    if ( zeny < 1000 ) {
+        mapannounce "que_bingo","Eukran: Oh it looks like "+strcharinfo(0)+" doesn't have enough money. I'm sorry but I must cancel the game~",1,0xFFAB54;
+        setnpctimer 201999,"start#bingo"; // manual reset
+        end;
+    }
 	set Zeny,Zeny -1000;
 	set @bingo_a1$,0;
 	set @bingo_a2$,0;
