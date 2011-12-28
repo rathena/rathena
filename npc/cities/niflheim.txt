@@ -245,7 +245,7 @@ niflheim,350,258,1	script	Cursed Spirit#nif	802,{
 			switch(rand(1,5)) {
 			case 1:
 				if (morison_meat < 15) {
-					set MISC_QUEST,MISC_QUEST | 1;
+					set morrison_meat,15;
 					mes "[Ashe Bruce]";
 					mes "You... You broke the curse!";
 					mes "How did you know that spell?!";

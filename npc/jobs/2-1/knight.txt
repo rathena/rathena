@@ -1223,14 +1223,18 @@ prt_in,79,94,4	script	Sir Windsor#knt	733,{
 			mes ".....What?";
 			next;
 		}
-		else 
+		else {
 			set .@mes$,"I want to try again!:...";
+			next;
+		}
 		if (select(.@mes$) == 1) {
 			mes "[Sir Windsor]";
 			mes "...";
 			next;
 			set KNIGHT_Q,7;
-			changequest 9004,9005;
+			if (checkquest(9004) != -1) {
+				changequest 9004,9005;
+			}
 			mes "[Sir Windsor]";
 			mes "...";
 			mes "......";
