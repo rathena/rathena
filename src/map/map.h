@@ -27,17 +27,6 @@ enum E_MAPSERVER_ST
 	MAPSERVER_ST_LAST
 };
 
-//Uncomment to enable the Cell Stack Limit mod.
-//It's only config is the battle_config cell_stack_limit.
-//Only chars affected are those defined in BL_CHAR (mobs and players currently)
-//#define CELL_NOSTACK
-
-//Uncomment to enable circular area checks.
-//By default, all range checks in Aegis are of Square shapes, so a weapon range
-//  of 10 allows you to attack from anywhere within a 21x21 area.
-//Enabling this changes such checks to circular checks, which is more realistic,
-//  but is not the official behaviour.
-//#define CIRCULAR_AREA
 
 #define MAX_NPC_PER_MAP 512
 #define BLOCK_SIZE 8

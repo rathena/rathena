@@ -11,8 +11,6 @@ struct homun_data;
 struct mercenary_data;
 struct status_change;
 
-//Use this to refer the max refinery level [Skotlex]
-#define MAX_REFINE 20
 #define MAX_REFINE_BONUS 5
 
 extern unsigned long StatusChangeFlagTable[];

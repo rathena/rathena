@@ -3766,18 +3766,13 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 	struct block_list *d_bl;
 	int i;
 
-	if(dstsd->chatID)
-	{
-		struct chat_data *cd;
-		cd=(struct chat_data*)map_id2bl(dstsd->chatID);
-		if(cd && cd->usersd[0]==dstsd)
+	if( dstsd->chatID ) {
+		struct chat_data *cd = NULL;
+		if( (cd = (struct chat_data*)map_id2bl(dstsd->chatID)) && cd->usersd[0]==dstsd)
 			clif_dispchat(cd,sd->fd);
-	}
-
-	if( dstsd->state.vending )
+	} else if( dstsd->state.vending )
 		clif_showvendingboard(&dstsd->bl,dstsd->message,sd->fd);
-
-	if( dstsd->state.buyingstore )
+	else if( dstsd->state.buyingstore )
 		clif_buyingstore_entry_single(sd, dstsd);
 
 	if(dstsd->spiritball > 0)
