@@ -2877,7 +2877,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 {
 	struct map_session_data *sd = NULL;
 	struct status_data *tstatus;
-	struct status_change *sc, *tsc;
+	struct status_change *sc;
 
 	if (skillid > 0 && skilllv <= 0) return 0;
 
@@ -3526,10 +3526,13 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	 * Rune Knight
 	 **/
 	case RK_DRAGONBREATH:
-		if( tsc && (tsc->data[SC_HIDING] )) {
-			clif_skill_nodamage(src,src,skillid,skilllv,1);
-		} else 
-			skill_attack(BF_MISC,src,src,bl,skillid,skilllv,tick,flag);
+		{
+			struct status_change *tsc = NULL;
+			if( (tsc = status_get_sc(bl)) && (tsc->data[SC_HIDING] )) {
+				clif_skill_nodamage(src,src,skillid,skilllv,1);
+			} else 
+				skill_attack(BF_MISC,src,src,bl,skillid,skilllv,tick,flag);
+		}
 		break;
 
 	case HVAN_EXPLOSION:
