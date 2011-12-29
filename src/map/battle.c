@@ -197,18 +197,28 @@ int battle_delay_damage_sub(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct delay_damage *dat = (struct delay_damage *)data;
 	struct block_list *target = map_id2bl(dat->target);
-	if (target && dat && map_id2bl(id) == dat->src && target->prev != NULL && !status_isdead(target) &&
-		target->m == dat->src->m &&
-		(target->type != BL_PC || ((TBL_PC*)target)->invincible_timer == INVALID_TIMER) &&
-		check_distance_bl(dat->src, target, dat->distance)) //Check to see if you haven't teleported. [Skotlex]
-	{
-		map_freeblock_lock();
-		status_fix_damage(dat->src, target, dat->damage, dat->delay);
-		if( dat->attack_type && !status_isdead(target) )
-			skill_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type,dat->dmg_lv,tick);
-		if( dat->dmg_lv > ATK_BLOCK && dat->attack_type )
-			skill_counter_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type,tick);
-		map_freeblock_unlock();
+
+	if ( target && dat && target->prev != NULL && !status_isdead(target) ) {
+		if( id == dat->src->id &&
+			target->m == dat->src->m &&
+			(target->type != BL_PC || ((TBL_PC*)target)->invincible_timer == INVALID_TIMER) &&
+			check_distance_bl(dat->src, target, dat->distance) ) //Check to see if you haven't teleported. [Skotlex]
+		{
+			map_freeblock_lock();
+			status_fix_damage(dat->src, target, dat->damage, dat->delay);
+			if( dat->attack_type && !status_isdead(target) )
+				skill_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type,dat->dmg_lv,tick);
+			if( dat->dmg_lv > ATK_BLOCK && dat->attack_type )
+				skill_counter_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type,tick);
+			map_freeblock_unlock();
+		} else if( dat->skill_id == CR_REFLECTSHIELD && !map_id2bl(id) ) {
+			/**
+			 * it was monster reflected damage, and the monster died, we pass the damage to the character as expected
+			 **/
+			map_freeblock_lock();
+			status_fix_damage(target, target, dat->damage, dat->delay);
+			map_freeblock_unlock();
+		}
 	}
 	ers_free(delay_damage_ers, dat);
 	return 0;
