@@ -7543,6 +7543,9 @@ int status_change_clear(struct block_list* bl, int type)
 		if(type == 0)
 		switch (i)
 		{	//Type 0: PC killed -> Place here statuses that do not dispel on death.
+		case SC_ELEMENTALCHANGE://Only when its Holy or Dark that it doesn't dispell on death
+			if( sc->data[i]->val2 != ELE_HOLY && sc->data[i]->val2 != ELE_DARK )
+				break;
 		case SC_WEIGHT50:
 		case SC_WEIGHT90:
 		case SC_EDP:
@@ -7570,6 +7573,7 @@ int status_change_clear(struct block_list* bl, int type)
 		case SC_FOOD_INT_CASH:
 		case SC_FOOD_LUK_CASH:
 			continue;
+
 		}
 
 		status_change_end(bl, (sc_type)i, INVALID_TIMER);
