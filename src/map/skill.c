@@ -4640,7 +4640,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				clif_skill_fail(sd,skillid,0,0);
 				break;
 			}
-			id = mob_get_random_id(0,0xE, sd->status.base_level);
+			id = mob_get_random_id(0,0xF, sd->status.base_level);
 			if (!id) {
 				clif_skill_fail(sd,skillid,0,0);
 				break;
