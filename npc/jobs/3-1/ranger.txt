@@ -603,7 +603,7 @@ tur_dun01,91,169,3	script	Test Instructor#jr02	732,{
 				mes "Come back when you are ready.";
 				close;
 			case 2:
-				if (getmercinfo(0) > 0)
+				if (getmercinfo(1) > 0)
 				{
 					mes "[Test Instructor, Teardrop]";
 					mes "Stop!";
@@ -2350,7 +2350,7 @@ job3_rang02,251,49,3	script	Test Supervisor#jr_13	732,{
 		}
 		else if (checkquest(8261) == 1)
 		{
-			if (getmercinfo(0) == 2034)
+			if (getmercinfo(1) == 2034)
 			{
 				erasequest 8261;
 				mes "[Test Supervisor, Freeze]";
@@ -2361,7 +2361,7 @@ job3_rang02,251,49,3	script	Test Supervisor#jr_13	732,{
 				next;
 				mes "[Test Supervisor, Freeze]";
 				mes "Then, Good luck!";
-				sc_start SC_STONE,120,10;
+				sc_start SC_STONE,120000,10;
 				close2;
 				donpcevent "Test Supervisor#jr_13::OnDisable";
 				donpcevent "Third Test Timer#jr_12::OnEnable";
