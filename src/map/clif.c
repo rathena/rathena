@@ -9716,8 +9716,8 @@ void clif_parse_UnequipItem(int fd,struct map_session_data *sd)
 		return;
 	}
 
-	if (sd->state.storage_flag)
-		; //You can equip/unequip stuff while storage is open.
+	if (sd->state.storage_flag || sd->sc.opt1)
+		; //You can equip/unequip stuff while storage is open/under status changes
 	else if (pc_cant_act(sd))
 		return;
 
