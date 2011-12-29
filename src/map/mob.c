@@ -3676,7 +3676,11 @@ static bool mob_readdb_sub(char* fields[], int columns, int current)
 
 static void mob_readdb(void)
 {
+#if REMODE
 	const char* filename[] = { "mob_db.txt", "mob_db_re.txt" , "mob_db2.txt" };
+#else
+	const char* filename[] = { "mob_db.txt" , "mob_db2.txt" };
+#endif
 	int fi;
 	
 	for( fi = 0; fi < ARRAYLENGTH(filename); ++fi )
