@@ -6211,6 +6211,7 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 	case SP_ZENY:
 		if( val < 0 )
 			return 0;// can't set negative zeny
+		log_zeny(sd, LOG_TYPE_NPC, sd, -(sd->status.zeny - cap_value(val, 0, MAX_ZENY)));
 		sd->status.zeny = cap_value(val, 0, MAX_ZENY);
 		break;
 	case SP_BASEEXP:
