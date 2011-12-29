@@ -8966,7 +8966,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 	nullpo_ret(src);
 	nullpo_ret(bl);
 
-	if (bl->prev==NULL || !src->alive || status_isdead(bl))
+	if (bl->prev==NULL || !src->alive)
 		return 0;
 
 	nullpo_ret(sg=src->group);
