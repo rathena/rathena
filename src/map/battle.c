@@ -428,7 +428,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 			return 0;
 		}
 		
-		if(sc->data[SC_DODGE] && !sc->opt1 &&
+		if(sc->data[SC_DODGE] && ( !sc->opt1 || sc->opt1 == OPT1_BURNING ) &&
 			(flag&BF_LONG || sc->data[SC_SPURT])
 			&& rand()%100 < 20) {
 			if (sd && pc_issit(sd)) pc_setstand(sd); //Stand it to dodge.
@@ -1302,7 +1302,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 						flag.hit = 1;
 					break;
 			}
-		if (tsc && !flag.hit && tsc->opt1 && tsc->opt1 != OPT1_STONEWAIT)
+		if (tsc && !flag.hit && tsc->opt1 && tsc->opt1 != OPT1_STONEWAIT && tsc->opt1 != OPT1_BURNING)
 			flag.hit = 1;
 	}
 
@@ -3366,7 +3366,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	{
 		struct status_change *sc = status_get_sc(target);
 		i = 0; //Temp for "hit or no hit"
-		if(sc && sc->opt1 && sc->opt1 != OPT1_STONEWAIT)
+		if(sc && sc->opt1 && sc->opt1 != OPT1_STONEWAIT && sc->opt1 != OPT1_BURNING)
 			i = 1;
 		else {
 			short

@@ -8249,7 +8249,7 @@ int skill_castend_map (struct map_session_data *sd, short skill_num, const char 
 		return 0;
 	}
 
-	if(sd->sc.opt1 || sd->sc.option&OPTION_HIDE ) {
+	if( ( sd->sc.opt1 && sd->sc.opt1 != OPT1_BURNING ) || sd->sc.option&OPTION_HIDE ) {
 		skill_failed(sd);
 		return 0;
 	}
@@ -9809,7 +9809,7 @@ static int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 	if(pc_isdead(tsd))
 		return 0;
 
-	if (tsd->sc.data[SC_SILENCE] || tsd->sc.opt1)
+	if (tsd->sc.data[SC_SILENCE] || ( tsd->sc.opt1 && tsd->sc.opt1 != OPT1_BURNING ))
 		return 0;
 
 	switch(skillid)

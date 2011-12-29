@@ -4042,7 +4042,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 
 	md = (TBL_MOB *)bl;
 
-	if(md->state.steal_flag == UCHAR_MAX || md->sc.opt1) //already stolen from / status change check
+	if(md->state.steal_flag == UCHAR_MAX || ( md->sc.opt1 && md->sc.opt1 != OPT1_BURNING ) ) //already stolen from / status change check
 		return 0;
 	
 	sd_status= status_get_status_data(&sd->bl);

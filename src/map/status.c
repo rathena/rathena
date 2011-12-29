@@ -1328,7 +1328,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 
 	if(sc && sc->count)
 	{
-		if(sc->opt1 >0)
+		if(sc->opt1 >0 && sc->opt1 != OPT1_BURNING)
 		{	//Stuned/Frozen/etc
 			if (flag != 1) //Can't cast, casted stuff can't damage. 
 				return 0;
@@ -7645,6 +7645,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			case SC_FREEZE:
 			case SC_STUN:
 			case SC_SLEEP:
+			case SC_BURNING:
 			if (sce->val1) {
 			  	//Removing the 'level' shouldn't affect anything in the code
 				//since these SC are not affected by it, and it lets us know
@@ -8051,6 +8052,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	case SC_FREEZE:
 	case SC_STUN:
 	case SC_SLEEP:
+	case SC_BURNING:
 		sc->opt1 = 0;
 		break;
 
