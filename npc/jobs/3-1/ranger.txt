@@ -684,7 +684,7 @@ tur_dun01,91,169,3	script	Test Instructor#jr02	732,{
 				mes "Come when you are ready.";
 				close;
 			case 2:
-				if (getmercinfo(0) > 0)
+				if (getmercinfo(1) > 0)
 				{
 					mes "[Test Instructor, Teardrop]";
 					mes "Stop!";
