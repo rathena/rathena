@@ -5579,9 +5579,14 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 {
 	int i, lv, inf2, skill_point=0;
 	nullpo_ret(sd);
+	if( !(flag&2) ) { //Remove stuff lost when resetting skills.
+		
+		/**
+		 * It has been confirmed on official server that when you reset skills with a ranked tweakwon your skills are not reset (because you have all of them anyway)
+		 **/
+		if( (sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_famerank(sd->status.char_id, MAPID_TAEKWON) )
+			return 0;
 
-	if( !(flag&2) )
-	{ //Remove stuff lost when resetting skills.
 		if( pc_checkskill(sd, SG_DEVIL) &&  !pc_nextjobexp(sd) )
 			clif_status_load(&sd->bl, SI_DEVIL, 0); //Remove perma blindness due to skill-reset. [Skotlex]
 		i = sd->sc.option;
