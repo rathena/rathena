@@ -13032,6 +13032,9 @@ void clif_parse_Mail_getattach(int fd, struct map_session_data *sd)
 	if( sd->mail.inbox.msg[i].zeny < 1 && (sd->mail.inbox.msg[i].item.nameid < 1 || sd->mail.inbox.msg[i].item.amount < 1) )
 		return;
 
+	if( ( sd->mail.inbox.msg[i].zeny + sd->mail.inbox.msg[i].zeny ) > MAX_ZENY )
+		return;
+	
 	if( sd->mail.inbox.msg[i].item.nameid > 0 )
 	{
 		struct item_data *data;

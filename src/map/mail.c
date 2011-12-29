@@ -52,7 +52,8 @@ int mail_removeitem(struct map_session_data *sd, short flag)
 int mail_removezeny(struct map_session_data *sd, short flag)
 {
 	nullpo_ret(sd);
-
+	if( ( sd->status.zeny + sd->mail.zeny ) > MAX_ZENY )
+		return 1;
 	if (flag && sd->mail.zeny > 0)
 	{  //Zeny send
 		log_zeny(sd, LOG_TYPE_MAIL, sd, -sd->mail.zeny);
