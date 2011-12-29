@@ -88,6 +88,8 @@ int icewall_unit_pos;
 int earthstrain_unit_pos;
 //early declaration
 int skill_stasis_check(struct block_list *bl, int src_id, int skillid);
+static int skill_check_unit_range (struct block_list *bl, int x, int y, int skillid, int skilllv);
+static int skill_check_unit_range2 (struct block_list *bl, int x, int y, int skillid, int skilllv);
 //Since only mob-casted splash skills can hit ice-walls
 static inline int splash_target(struct block_list* bl)
 {
@@ -1200,7 +1202,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	{
 		struct block_list *tbl;
 		struct unit_data *ud;
-		int i, skilllv;
+		int i, skilllv, type;
 
 		for (i = 0; i < ARRAYLENGTH(sd->autospell) && sd->autospell[i].id; i++) {
 
@@ -1224,6 +1226,33 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 			tbl = (sd->autospell[i].id < 0) ? src : bl;
 
+			if( (type = skill_get_casttype(skill)) == CAST_GROUND ) {
+				int maxcount = 0;
+				if( !(BL_PC&battle_config.skill_reiteration) &&
+					skill_get_unit_flag(skill)&UF_NOREITERATION &&
+					skill_check_unit_range(src,tbl->x,tbl->y,skill,skilllv)
+				  ) {
+					continue;
+				}
+				if( BL_PC&battle_config.skill_nofootset &&
+					skill_get_unit_flag(skill)&UF_NOFOOTSET &&
+					skill_check_unit_range2(src,tbl->x,tbl->y,skill,skilllv)
+				  ) {
+					continue;
+				}
+				if( BL_PC&battle_config.land_skill_limit &&
+					(maxcount = skill_get_maxcount(skill, skilllv)) > 0
+				  ) {
+					int v;
+					for(v=0;v<MAX_SKILLUNITGROUP && sd->ud.skillunit[v] && maxcount;i++) {
+						if(sd->ud.skillunit[v]->skill_id == skill)
+							maxcount--;
+					}
+					if( maxcount == 0 ) {
+						continue;
+					}
+				}
+			}
 			if( battle_config.autospell_check_range &&
 				!battle_check_range(src, tbl, skill_get_range2(src, skill,skilllv) + (skill == RG_CLOSECONFINE?0:1)) )
 				continue;
@@ -1233,7 +1262,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 			sd->state.autocast = 1;
 			skill_consume_requirement(sd,skill,skilllv,1);
-			switch (skill_get_casttype(skill)) {
+			switch (type) {
 				case CAST_GROUND:
 					skill_castend_pos2(src, tbl->x, tbl->y, skill, skilllv, tick, 0);
 					break;
@@ -1303,7 +1332,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int skillid, unsigned int tick)
 {
-	int skill, skilllv, i;
+	int skill, skilllv, i, type;
 	struct block_list *tbl;
 
 	if( sd == NULL || skillid <= 0 )
@@ -1330,6 +1359,33 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 			continue;
 		tbl = (sd->autospell3[i].id < 0) ? &sd->bl : bl;
 
+		if( (type = skill_get_casttype(skill)) == CAST_GROUND ) {
+			int maxcount = 0;
+			if( !(BL_PC&battle_config.skill_reiteration) &&
+				skill_get_unit_flag(skill)&UF_NOREITERATION &&
+				skill_check_unit_range(&sd->bl,tbl->x,tbl->y,skill,skilllv)
+			  ) {
+				continue;
+			}
+			if( BL_PC&battle_config.skill_nofootset &&
+				skill_get_unit_flag(skill)&UF_NOFOOTSET &&
+				skill_check_unit_range2(&sd->bl,tbl->x,tbl->y,skill,skilllv)
+			  ) {
+				continue;
+			}
+			if( BL_PC&battle_config.land_skill_limit &&
+				(maxcount = skill_get_maxcount(skill, skilllv)) > 0
+			  ) {
+				int v;
+				for(v=0;v<MAX_SKILLUNITGROUP && sd->ud.skillunit[v] && maxcount;i++) {
+					if(sd->ud.skillunit[v]->skill_id == skill)
+						maxcount--;
+				}
+				if( maxcount == 0 ) {
+					continue;
+				}
+			}
+		}
 		if( battle_config.autospell_check_range &&
 			!battle_check_range(&sd->bl, tbl, skill_get_range2(&sd->bl, skill,skilllv) + (skill == RG_CLOSECONFINE?0:1)) )
 			continue;
@@ -1337,7 +1393,7 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 		sd->state.autocast = 1;
 		sd->autospell3[i].lock = true;
 		skill_consume_requirement(sd,skill,skilllv,1);
-		switch( skill_get_casttype(skill) )
+		switch( type )
 		{
 			case CAST_GROUND:   skill_castend_pos2(&sd->bl, tbl->x, tbl->y, skill, skilllv, tick, 0); break;
 			case CAST_NODAMAGE: skill_castend_nodamage_id(&sd->bl, tbl, skill, skilllv, tick, 0); break;
@@ -1482,7 +1538,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	{
 		struct block_list *tbl;
 		struct unit_data *ud;
-		int i, skillid, skilllv, rate;
+		int i, skillid, skilllv, rate, type;
 
 		for (i = 0; i < ARRAYLENGTH(dstsd->autospell2) && dstsd->autospell2[i].id; i++) {
 
@@ -1506,12 +1562,40 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 
 			tbl = (dstsd->autospell2[i].id < 0) ? bl : src;
 
+			if( (type = skill_get_casttype(skillid)) == CAST_GROUND ) {
+				int maxcount = 0;
+				if( !(BL_PC&battle_config.skill_reiteration) &&
+					skill_get_unit_flag(skillid)&UF_NOREITERATION &&
+					skill_check_unit_range(bl,tbl->x,tbl->y,skillid,skilllv)
+				  ) {
+					continue;
+				}
+				if( BL_PC&battle_config.skill_nofootset &&
+					skill_get_unit_flag(skillid)&UF_NOFOOTSET &&
+					skill_check_unit_range2(bl,tbl->x,tbl->y,skillid,skilllv)
+				  ) {
+					continue;
+				}
+				if( BL_PC&battle_config.land_skill_limit &&
+					(maxcount = skill_get_maxcount(skillid, skilllv)) > 0
+				  ) {
+					int v;
+					for(v=0;v<MAX_SKILLUNITGROUP && dstsd->ud.skillunit[v] && maxcount;i++) {
+						if(dstsd->ud.skillunit[v]->skill_id == skillid)
+							maxcount--;
+					}
+					if( maxcount == 0 ) {
+						continue;
+					}
+				}
+			}
+
 			if( !battle_check_range(src, tbl, skill_get_range2(src, skillid,skilllv) + (skillid == RG_CLOSECONFINE?0:1)) && battle_config.autospell_check_range )
 				continue;
 
 			dstsd->state.autocast = 1;
 			skill_consume_requirement(dstsd,skillid,skilllv,1);
-			switch (skill_get_casttype(skillid)) {
+			switch (type) {
 				case CAST_GROUND:
 					skill_castend_pos2(bl, tbl->x, tbl->y, skillid, skilllv, tick, 0);
 					break;
