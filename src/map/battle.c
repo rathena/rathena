@@ -719,6 +719,10 @@ int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int dama
 			switch (skill_num) {
 			case MO_TRIPLEATTACK:
 			case HW_GRAVITATION:
+            case AL_HEAL:
+            case PR_SANCTUARY:
+            case BA_APPLEIDUN:
+            case AB_CHEAL:
 				break;
 			default:
 				return 0;

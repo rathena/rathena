@@ -1824,8 +1824,8 @@ int status_calc_mob_(struct mob_data* md, bool first)
 			ShowError("status_calc_mob: No castle set at map %s\n", map[md->bl.m].name);
 		else
 		if(gc->castle_id < 24 || md->class_ == MOBID_EMPERIUM) {
-			status->max_hp += 1000 * gc->defense;
-			status->max_sp += 200 * gc->defense;
+			status->max_hp += 50 * gc->defense;
+			status->max_sp += 70 * gc->defense;
 			status->hp = status->max_hp;
 			status->sp = status->max_sp;
 			status->def += (gc->defense+2)/3;
