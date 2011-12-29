@@ -2877,7 +2877,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 {
 	struct map_session_data *sd = NULL;
 	struct status_data *tstatus;
-	struct status_change *sc;
+	struct status_change *sc, *tsc;
 
 	if (skillid > 0 && skilllv <= 0) return 0;
 
@@ -3520,11 +3520,16 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case NPC_SMOKING:
 	case GS_FLING:
 	case NJ_ZENYNAGE:
+		skill_attack(BF_MISC,src,src,bl,skillid,skilllv,tick,flag);
+		break;
 	/**
 	 * Rune Knight
 	 **/
 	case RK_DRAGONBREATH:
-		skill_attack(BF_MISC,src,src,bl,skillid,skilllv,tick,flag);
+		if( tsc && (tsc->data[SC_HIDING] )) {
+			clif_skill_nodamage(src,src,skillid,skilllv,1);
+		} else 
+			skill_attack(BF_MISC,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 
 	case HVAN_EXPLOSION:
