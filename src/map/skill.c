@@ -9195,11 +9195,6 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		case UNT_VERDURETRAP:
 		case UNT_FIRINGTRAP:
 		case UNT_ICEBOUNDTRAP:
-			/**
-			 * The owner of these traps (all but ankle snare) cannot be affected by it
-			 **/
-			if (sg->src_id == bl->id)
-				break;
 			map_foreachinrange(skill_trap_splash,&src->bl, skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag, &src->bl,tick);
 			if (sg->unit_id != UNT_FIREPILLAR_ACTIVE)
 				clif_changetraplook(&src->bl, sg->unit_id==UNT_LANDMINE?UNT_FIREPILLAR_ACTIVE:UNT_USED_TRAPS);
