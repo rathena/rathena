@@ -11,6 +11,11 @@
 //= Job change Quest from Hunter / Sniper -> Ranger.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
+//= 1.1 Updated SC_STONE duration from 2 Seconds to 2 Minutes
+//= and fixed Mercenary check.
+//= 1.2 Fixed first Quest so that when a false poring got killed
+//= it decreases the total points by 1 also commented the SC_STONE
+//= part until M_DESERT_WOLF_B Mercenary is fully working.
 //============================================================
 
 tur_dun01,156,36,5	script	Survival Instructor#jr01	59,{
@@ -1562,7 +1567,7 @@ OnReset:
 
 OnMyMobDead:
 	specialeffect2 EF_DEVIL;
-	set $@job_rang_point01,$@job_rang_point01+1;
+	set $@job_rang_point01,$@job_rang_point01-1;
 	mapannounce "job3_rang02","Test Supervisor, Notice : Wrong Target! Pull yourself together!",bc_map;
 	end;
 }
@@ -2361,7 +2366,7 @@ job3_rang02,251,49,3	script	Test Supervisor#jr_13	732,{
 				next;
 				mes "[Test Supervisor, Freeze]";
 				mes "Then, Good luck!";
-				sc_start SC_STONE,120000,10;
+//				sc_start SC_STONE,120000,10; // Commented until the Mercenary M_DESERT_WOLF_B is working correctly.
 				close2;
 				donpcevent "Test Supervisor#jr_13::OnDisable";
 				donpcevent "Third Test Timer#jr_12::OnEnable";
