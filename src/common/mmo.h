@@ -151,7 +151,7 @@
 //Base Homun skill.
 #define HM_SKILLBASE 8001
 #define MAX_HOMUNSKILL 16
-#define MAX_HOMUNCULUS_CLASS	16	//[orn]
+#define MAX_HOMUNCULUS_CLASS	60	//[orn], Increased to 60 from 16 to allow new Homun-S.
 #define HM_CLASS_BASE 6001
 #define HM_CLASS_MAX (HM_CLASS_BASE+MAX_HOMUNCULUS_CLASS-1)
 
