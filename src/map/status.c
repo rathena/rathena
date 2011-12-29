@@ -1298,7 +1298,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 
 	status = src?status_get_status_data(src):&dummy_status;
 
-	if (src && status_isdead(src))
+	if (src && src->type != BL_PC && status_isdead(src))
 		return 0;
 
 	if (!skill_num) { //Normal attack checks.
