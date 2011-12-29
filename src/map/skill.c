@@ -446,7 +446,12 @@ int skillnotok (int skillid, struct map_session_data *sd)
 
 	if (sd->blockskill[i] > 0)
 		return 1;
-
+	/**
+	 * It has been confirmed on a official server (thanks to Yommy) that item-cast skills bypass all the restrictions above
+	 * Also, without this check, an exploit where an item casting + healing (or any other kind buff) isn't deleted after used on a restricted map
+	 **/
+	if( sd->skillitem == skillid )
+		return 0;
 	// Check skill restrictions [Celest]
 	if(!map_flag_vs(m) && skill_get_nocast (skillid) & 1)
 		return 1;
