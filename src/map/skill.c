@@ -2146,7 +2146,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		switch(skillid)
 		{
 			case MG_FIREWALL:  direction = unit_getdir(bl); break; // backwards
-			case WZ_STORMGUST: direction = rand()%8;        break; // randomly
+			case WZ_STORMGUST: direction = unit_getdir(bl); break; // backwards
 			case PR_SANCTUARY: direction = unit_getdir(bl); break; // backwards
 			case WL_CRIMSONROCK: direction = map_calc_dir(bl,skill_area_temp[4],skill_area_temp[5]); break;
 
