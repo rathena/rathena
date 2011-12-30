@@ -1158,7 +1158,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 			if( !battle_check_range(battle_get_master(src), target, skill_get_range2(src, skill_num, skill_lv) + 1) )
 				return 0; // Aegis calc remove trap based on Master position, ignoring mercenary O.O
 		}
-		else if( !battle_check_range(src, target, skill_get_range2(src, skill_num,skill_lv) + (skill_num == RG_CLOSECONFINE?0:1)) )
+		else if( !battle_check_range(src, target, skill_get_range2(src, skill_num,skill_lv) + (skill_num == RG_CLOSECONFINE?0:2)) )
 			return 0; // Arrow-path check failed.
 	}
 
