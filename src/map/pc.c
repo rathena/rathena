@@ -8254,8 +8254,11 @@ int pc_readdb(void)
 		for(j=0;j<ELE_MAX;j++)
 			for(k=0;k<ELE_MAX;k++)
 				attr_fix_table[i][j][k]=100;
-
+#if REMODE
+	sprintf(line, "%s/attr_fix_re.txt", db_path);
+#else
 	sprintf(line, "%s/attr_fix.txt", db_path);
+#endif
 	fp=fopen(line,"r");
 	if(fp==NULL){
 		ShowError("can't read %s\n", line);
