@@ -4563,8 +4563,10 @@ static unsigned short status_calc_dmotion(struct block_list *bl, struct status_c
 {
 	if( !sc || !sc->count || map_flag_gvg(bl->m) || map[bl->m].flag.battleground )
 		return cap_value(dmotion,0,USHRT_MAX);
-		
-	if( sc->data[SC_ENDURE] )
+	/**
+	 * It has been confirmed on official servers that MvP mobs have no dmotion even without endure
+	 **/
+	if( sc->data[SC_ENDURE] || ( bl->type == BL_MOB && (((TBL_MOB*)bl)->status.mode&MD_BOSS) ) )
 		return 0;
 	if( sc->data[SC_CONCENTRATION] )
 		return 0;

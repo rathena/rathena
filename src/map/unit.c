@@ -962,6 +962,12 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 	struct unit_data *ud = unit_bl2ud(bl);
 	if (delay <= 0 || !ud) return 0;
 	
+	/**
+	 * MvP mobs have no walk delay
+	 **/
+	if( bl->type == BL_MOB && (((TBL_MOB*)bl)->status.mode&MD_BOSS) )
+		return 0;
+
 	if (type) {
 		if (DIFF_TICK(ud->canmove_tick, tick+delay) > 0)
 			return 0;
