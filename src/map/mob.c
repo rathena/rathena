@@ -4246,7 +4246,14 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
  *------------------------------------------*/
 static void mob_readskilldb(void)
 {
+	/**
+	 * Due to the way mob_skill_db is made entries cannot be overriden, only stacked, so this is the only case we use a full db file on renewal
+	 **/
+#if REMODE
+	const char* filename[] = { "mob_skill_db_re.txt", "mob_skill_db2.txt" };
+#else
 	const char* filename[] = { "mob_skill_db.txt", "mob_skill_db2.txt" };
+#endif
 	int fi;
 
 	if( battle_config.mob_skill_rate == 0 )
