@@ -1126,7 +1126,7 @@ OnTouch:
 	// Store the Guild ID of castle occupant.
 	set .@GID, GetCastleData(strnpcinfo(2),1);
 
-	if (strcharinfo(0) != getguildmaster(.@GID)) { 
+	if (getcharid(2) != .@GID) {
 		if (compare(strnpcinfo(2),"aldeg")) {
 			warp "aldebaran",132,103;
 		}
