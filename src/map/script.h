@@ -125,6 +125,7 @@ struct script_state {
 	//For backing up purposes
 	struct script_state *bk_st;
 	int bk_npcid;
+	unsigned freeloop : 1;// used by buildin_freeloop
 };
 
 struct script_reg {

@@ -3488,7 +3488,7 @@ void run_script_main(struct script_state *st)
 			run_func(st);
 			if(st->state==GOTO){
 				st->state = RUN;
-				if( gotocount>0 && (--gotocount)<=0 ){
+				if( !st->freeloop && gotocount>0 && (--gotocount)<=0 ){
 					ShowError("run_script: infinity loop !\n");
 					script_reportsrc(st);
 					st->state=END;
@@ -3536,7 +3536,7 @@ void run_script_main(struct script_state *st)
 			st->state=END;
 			break;
 		}
-		if( cmdcount>0 && (--cmdcount)<=0 ){
+		if( !st->freeloop && cmdcount>0 && (--cmdcount)<=0 ){
 			ShowError("run_script: infinity loop !\n");
 			script_reportsrc(st);
 			st->state=END;
@@ -15965,6 +15965,64 @@ BUILDIN_FUNC(setmounting) {
 	}
 	return 0;
 }
+/**
+ * Retrieves quantity of arguments provided to callfunc/callsub.
+ * getargcount() -> amount of arguments received in a function
+ **/
+BUILDIN_FUNC(getargcount) {
+	struct script_retinfo* ri;
+
+	if( st->stack->defsp < 1 || st->stack->stack_data[st->stack->defsp - 1].type != C_RETINFO ) {
+		ShowError("script:getargcount: used out of function or callsub label!\n");
+		st->state = END;
+		return 1;
+	}
+	ri = st->stack->stack_data[st->stack->defsp - 1].u.ri;
+
+	script_pushint(st, ri->nargs);
+
+	return 0;
+}
+/**
+ * is_function(<function name>) -> 1 if function exists, 0 otherwise
+ **/
+BUILDIN_FUNC(is_function) {
+	const char* str = script_getstr(st,2);
+
+	if( ((struct script_code*)strdb_get(userfunc_db, str)) != NULL )
+		script_pushint(st,1);
+	else
+		script_pushint(st,0);
+
+	return 0;
+}
+/**
+ * get_revision() -> retrieves the current svn revision (if available)
+ **/
+BUILDIN_FUNC(get_revision) {
+	const char * revision;
+
+	if ( (revision = get_svn_revision()) != 0 )
+		script_pushstrcopy(st,revision);
+	else
+		script_pushconststr(st,"Unknown");
+
+	return 0;
+}
+/**
+ * freeloop(<toggle>) -> toggles this script instance's looping-check ability
+ **/
+BUILDIN_FUNC(freeloop) {
+
+	if( script_getnum(st,2) )
+		st->freeloop = 1;
+	else
+		st->freeloop = 0;
+
+	script_pushint(st, st->freeloop);
+
+	return 0;
+}
 // declarations that were supposed to be exported from npc_chat.c
 #ifdef PCRE_SUPPORT
 BUILDIN_FUNC(defpattern);
@@ -16386,6 +16444,13 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setdragon,"?"),//[Ind]
 	BUILDIN_DEF(ismounting,""),//[Ind]
 	BUILDIN_DEF(setmounting,""),//[Ind]
+	/**
+	 * rAthena and beyond!
+	 **/
+	BUILDIN_DEF(getargcount,""),
+	BUILDIN_DEF(is_function,"s"),
+	BUILDIN_DEF(get_revision,""),
+	BUILDIN_DEF(freeloop,"i"),
 	//Quest Log System [Inkfish]
 	BUILDIN_DEF(setquest, "i"),
 	BUILDIN_DEF(erasequest, "i"),
