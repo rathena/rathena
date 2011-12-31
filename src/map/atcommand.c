@@ -9197,10 +9197,14 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		//z always has the value of the scan that was successful
 		z = ( x > 1 ) ? x : y;
 		
-		if ( (ssd = map_nick2sd(charname)) == NULL  && ( (ssd = map_nick2sd(charname2)) == NULL ) )
-		{
-			sprintf(output, "%s failed. Player not found.", command);
-			clif_displaymessage(fd, output);
+		if ( (ssd = map_nick2sd(charname)) == NULL  && ( (ssd = map_nick2sd(charname2)) == NULL ) ) {
+			if( pc_isGM(sd) ) {
+				sprintf(output, "%s failed. Player not found.", command);
+				clif_displaymessage(fd, output);
+			} else {
+				sprintf(output, "Charcommand failed. Usage: #<command> <char name> <params>.");
+				clif_displaymessage(fd, output);			
+			}
 			return true;
 		}
 		
