@@ -1344,8 +1344,9 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 		)
 			return 0;
 
-		if (sc->data[SC_WINKCHARM] && target && !flag)
-		{	//Prevents skill usage
+		if (sc->data[SC_WINKCHARM] && target && !flag) { //Prevents skill usage
+			if( unit_bl2ud(src) && (unit_bl2ud(src))->walktimer == INVALID_TIMER )
+				unit_walktobl(src, map_id2bl(sc->data[SC_WINKCHARM]->val2), 3, 1);
 			clif_emotion(src, E_LV);
 			return 0;
 		}

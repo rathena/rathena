@@ -5085,7 +5085,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			if( status_get_lv(src) > status_get_lv(bl)
 			&&  (tstatus->race == RC_DEMON || tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_ANGEL)
 			&&  !(tstatus->mode&MD_BOSS) )
-				clif_skill_nodamage(src,bl,skillid,skilllv, sc_start(bl,type,70,skilllv,skill_get_time(skillid,skilllv)));
+				clif_skill_nodamage(src,bl,skillid,skilllv, sc_start2(bl,type,70,skilllv,src->id,skill_get_time(skillid,skilllv)));
 			else
 			{
 				clif_skill_nodamage(src,bl,skillid,skilllv,0);
