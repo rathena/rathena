@@ -4212,8 +4212,8 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 		mdef += 25*mdef/100;
 	if(sc->data[SC_FREEZE])
 		mdef += 25*mdef/100;
-	if(sc->data[SC_ENDURE] && sc->data[SC_ENDURE]->val4 == 0)
-		mdef += sc->data[SC_ENDURE]->val1;
+	if(sc->data[SC_ENDURE])// It has been confirmed that eddga card grants 1 MDEF, not 0, not 10, but 1.
+		mdef += (sc->data[SC_ENDURE]->val4 == 0) ? sc->data[SC_ENDURE]->val1 : 1;
 	if(sc->data[SC_CONCENTRATION])
 		mdef += 1; //Skill info says it adds a fixed 1 Mdef point.
 	if( sc->data[SC_MARSHOFABYSS] )
