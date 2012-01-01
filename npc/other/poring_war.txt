@@ -10,7 +10,8 @@
 //= [Aegis Conversion]
 //= Poring War
 //===== Additional Comments: ================================= 
-//= 1.0 First version. [Kisuka]
+//= 1.0 First version. [Kisuka][5511]
+//= 1.1 Fixed some typos/bugs. [CalciumKid]
 //============================================================
 
 // Poring War Recruiter
@@ -67,7 +68,7 @@ prt_fild08,159,371,3	script	Poring War Recruiter#wop	909,{
 //============================================================
 poring_w01,100,97,3	script	Poring Vending Machine#w	909,{
 	if (checkweight(714,3) == 0) {
-		mes "- Your are carrying too much items in order to use the Vending Machine. -";
+		mes "- You are carrying too much items in order to use the Vending Machine. -";
 		close;
 	}
 	mes "It's a vending machine. You can use Poring Coints to purchase.";
@@ -498,7 +499,7 @@ OnDisable:
 	disablewaitingroomevent;
 	end;
 
-OnAngelingStart:
+OnDevilingStart:
 	initnpctimer;
 	end;
 
@@ -1448,7 +1449,7 @@ OnTimer68100:
 //============================================================
 poring_w02,99,52,0	script	Angeling Guardian#wop_da	111,{
 	cutin "wop_emb0" + $@wop_doorcount_a,1;
-	if($@wop_doorcount_a < 3) {
+	if($@wop_doorcount_a < 4) {
 		if (wop_team == 2) {
 			mes "There is a device to equip the War Badges.";
 			mes "I can see the empty slots to equip the Badges.";
@@ -1456,7 +1457,7 @@ poring_w02,99,52,0	script	Angeling Guardian#wop_da	111,{
 			switch(select("Equip War Badge.:Cancel.")) {
 			case 1:
 				if(countitem(7773)) {
-					if($@wop_doorcount_a < 3) {
+					if($@wop_doorcount_a < 4) {
 						mes "War Badge equipped.";
 						delitem 7773,1; // War_Badge
 						set $@wop_doorcount_a,$@wop_doorcount_a + 1;
@@ -1545,7 +1546,7 @@ OnTouch:
 
 poring_w02,98,113,0	script	Deviling Guardian#wop_dd	111,{
 	cutin "wop_emb0" + $@wop_doorcount_d,1;
-	if($@wop_doorcount_d < 3) {
+	if($@wop_doorcount_d < 4) {
 		if (wop_team == 1) {
 			mes "There is a device to equip the War Badges.";
 			mes "I can see the empty slots to equip the Badges.";
@@ -1553,7 +1554,7 @@ poring_w02,98,113,0	script	Deviling Guardian#wop_dd	111,{
 			switch(select("Equip War Badge.:Cancel.")) {
 			case 1:
 				if(countitem(7773)) {
-					if($@wop_doorcount_d < 3) {
+					if($@wop_doorcount_d < 4) {
 						mes "War Badge equipped.";
 						delitem 7773,1; // War_Badge
 						set $@wop_doorcount_d,$@wop_doorcount_d + 1;
@@ -1732,13 +1733,13 @@ OnTouch:
 	emotion e_go,0,"Deviling Side Marin#wd4";
 	emotion e_go,0,"Deviling Side Marin#wd5";
 	next;
-	if(wop_team == 1) {
+	if(wop_team == 2) {
 		mes "[Marins]";
 		mes "Ohhhh... Here is the warrior that fought for us!!";
 		mes "Amazing!";
 		mes "This proves that humans recognize us as true monsters!!";
 	}
-	else if(wop_team == 2) {
+	else if(wop_team == 1) {
 		mes "[Marins]";
 		mes "Wait, YOU! Aren't you on the side of the Angelings?!";
 		mes "Get out now! Leave!!";
