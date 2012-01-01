@@ -207,7 +207,7 @@ rachel,152,131,3	script	Sakjul	928,{
 }
 
 //============================ Valkyrie Helm =====================================================
-hugel,147,130,3	script	Ghenirhemin	897,{
+hugel,147,103,3	script	Ghenirhemin	897,{
 	if (moza_valkylie == 5) {
 		set .@val2,rand(1,10);
 		if (.@val2 == 3) {
