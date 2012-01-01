@@ -6827,6 +6827,33 @@ again.
 
 ---------------------------------------
 
+*showdigit <value>{,<type>};
+
+Displays given numeric 'value' in large digital clock font on top of
+the screen. The optional parameter 'type' specifies visual aspects
+of the "clock" and can be one of the following values:
+
+    0 - Displays the value for 5 seconds (default).
+    1 - Incremental counter (1 tick/second).
+    2 - Decremental counter (1 tick/second). Does not stop at zero,
+        but overflows.
+    3 - Decremental counter (1 tick/second). Two digits only, stops
+        at zero.
+
+For type 1 and 2 the start value is set by using negative number of
+the one intended to set (ex. -10 starts the counter at 10 seconds).
+Except for type 3 the value is interpreted as seconds and formatted
+as time in days, hours, minutes and seconds. Note, that the official
+script command does not have the optional parameter.
+
+    // displays 23:59:59 for 5 seconds
+    showdigit 86399;
+
+    // counter that starts at 60 and runs for 60 seconds
+    showdigit 60,3;
+
+---------------------------------------
+
 * The Pet AI commands
 
 These commands will only work if the invoking character has a pet, and are meant 
