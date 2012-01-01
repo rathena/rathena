@@ -39,8 +39,8 @@ alde_alche,31,186,3	script	Craft Book Salesman#alde	883,{
 	mes "I specialize in the sale of these special books and";
 	mes "I ^FF0000don't sell other items^000000.";
 	next;
-	mes "[Craft Book Salesman]"
-	mes "Okay then, here's the list of available craft books."
+	mes "[Craft Book Salesman]";
+	mes "Okay then, here's the list of available craft books.";
 	next;
 	switch(select("[Apple Bomb Craft Book] 100,000 zeny:[Pineapple Bomb Craft Book] 100,000 zeny:[Coconut Bomb Craft Book] 100,000 zeny:[Melon Bomb Craft Book] 100,000 zeny:[Banana Bomb Craft Book] 100,000 zeny:[Plant Gene Cultivation Method] 100,000 zeny:[Superior Potion Craft Manual] 100,000 zeny:[Mix Cooking Book] 100,000 zeny:[Health Improvement Research Book] 100,000 zeny:[Vigor Drink Recipe] 100,000 zeny:Close")){
 	case 1:
@@ -97,10 +97,10 @@ S_SellManual:
 		mes "You cannot purchase more than 100 at a time.";
 		close;
 	}
-	mes "[Craft Book Salesman]"
+	mes "[Craft Book Salesman]";
 	mes "You've entered "+.@amount+"x "+getitemname(getarg(0))+".";
 	mes "That'll be "+getarg(1) * .@amount+" Zeny.";
-	mes "Would you like to continue?"
+	mes "Would you like to continue?";
 	next;
 	if (select("Yes:No") == 1) {
 		if (Zeny < getarg(1) * .@amount) {
@@ -131,7 +131,7 @@ S_SellManual:
 
 alde_alche,24,188,3	script	Guild Dealer	740,{
 	if (checkweight(1201,1) == 0) {
-		mes "- next; a minute! -";
+		mes "- Wait a minute! -";
 		mes "- Currently you are carrying -";
 		mes "- too many items with you. -";
 		mes "- Please come back again -";

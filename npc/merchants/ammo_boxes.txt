@@ -17,7 +17,7 @@
 //= 1.4 Updated to match AEGIS script again. [Masao]
 //============================================================
 
-izlude,171,127,3	script	Magazine Dealer Kenny#iz::mdk	83,{
+izlude,171,127,3	script	Magazine Dealer Kenny::mdk	83,{
 	if(BaseJob == Job_Gunslinger) {
 		mes "[Kenny]";
 		mes "Welcome to my Magazine Shop.";
@@ -135,4 +135,4 @@ function	script	Func_Casing	{
 	}
 }
 
-alberta,118,157,3	duplicate(mdk)	Magazine Dealer Tonny#alb	83
+alberta,118,157,3	duplicate(mdk)	Magazine Dealer Tonny	83
