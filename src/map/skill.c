@@ -7204,7 +7204,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			} else {
 				pc_setoption(sd, sd->sc.option&~OPTION_MOUNTING);
 			}
-			clif_skill_nodamage(src, src, skillid, skilllv, 1);
 		}
 		break;
 	default:
