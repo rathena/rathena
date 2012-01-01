@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= rAthena Team
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -16,11 +16,122 @@
 //= 1.4 Alchemists can now purchase 2000 Medicine Bowls at once. [SinSloth]
 //= 1.5 Updated to Aegis 10.3 Standards. [L0ne_W0lf]
 //= 1.6 Corrected canceling purchase. [L0ne_W0lf]
+//= 1.7 Updated to match AEGIS script. [Masao]
 //============================================================ 
+
+alde_alche,31,186,3	script	Craft Book Salesman#alde	883,{
+
+	mes "[Craft Book Salesman]";
+	mes "Welcome.";
+	mes "I'm here to sell";
+	mes "^0000FFspecial craft books^000000 for Geneticists.";
+	next;
+	mes "[Craft Book Salesman]";
+	mes "Geneticists have some skills";
+	mes "that require craft books to activate.";
+	next;
+	mes "[Craft Book Salesman]";
+	mes "The more craft books you have,";
+	mes "the more skills you can use.";
+	next;
+	mes "[Craft Book Salesman]";
+	mes "Please understand that";
+	mes "I specialize in the sale of these special books and";
+	mes "I ^FF0000don't sell other items^000000.";
+	next;
+	mes "[Craft Book Salesman]"
+	mes "Okay then, here's the list of available craft books."
+	next;
+	switch(select("[Apple Bomb Craft Book] 100,000 zeny:[Pineapple Bomb Craft Book] 100,000 zeny:[Coconut Bomb Craft Book] 100,000 zeny:[Melon Bomb Craft Book] 100,000 zeny:[Banana Bomb Craft Book] 100,000 zeny:[Plant Gene Cultivation Method] 100,000 zeny:[Superior Potion Craft Manual] 100,000 zeny:[Mix Cooking Book] 100,000 zeny:[Health Improvement Research Book] 100,000 zeny:[Vigor Drink Recipe] 100,000 zeny:Close")){
+	case 1:
+		callsub S_SellManual,6279,100000;
+		break;
+	case 2:
+		callsub S_SellManual,6280,100000;
+		break;
+	case 3:
+		callsub S_SellManual,6281,100000;
+		break;
+	case 4:
+		callsub S_SellManual,6282,100000;
+		break;
+	case 5:
+		callsub S_SellManual,6283,100000;
+		break;
+	case 6:
+		callsub S_SellManual,6284,100000;
+		break;
+	case 7:
+		callsub S_SellManual,6285,100000;
+		break;
+	case 8:
+		callsub S_SellManual,11022,100000;
+		break;
+	case 9:
+		callsub S_SellManual,11023,100000;
+		break;
+	case 10:
+		callsub S_SellManual,11024,100000;
+		break;
+	case 11:
+		mes "[Craft Book Salesman]";
+		mes "Thank you for your patronage.";
+		mes "Please come again.";
+		close;
+	}
+
+S_SellManual:
+	mes "[Craft Book Salesman]";
+	mes ""+getitemname(getarg(0))+"?";
+	mes "That'll be "+getarg(1)+" zeny ea.";
+	mes "How many of these books would you like to purchase?";
+	next;
+	input .@amount;
+	if (.@amount == 0) {
+		mes "[Craft Book Salesman]";
+		mes "Would you like to see some different books?";
+		close;
+	}
+	if (.@amount < 1 || .@amount > 99 ){
+		mes "[Craft Book Salesman]";
+		mes "You cannot purchase more than 100 at a time.";
+		close;
+	}
+	mes "[Craft Book Salesman]"
+	mes "You've entered "+.@amount+"x "+getitemname(getarg(0))+".";
+	mes "That'll be "+getarg(1) * .@amount+" Zeny.";
+	mes "Would you like to continue?"
+	next;
+	if (select("Yes:No") == 1) {
+		if (Zeny < getarg(1) * .@amount) {
+			mes "[Craft Book Salesman]";
+			mes "You don't";
+			mes "have enough zeny.";
+			mes "Check how much zeny";
+			mes "you have first.";
+			close;
+		}
+		if (checkweight(getarg(0),.@amount) == 0){
+			mes "[Craft Book Salesman]";
+			mes "It doesn't seem like you can carry everything.";
+			mes "Please check the space in your inventory.";
+			close;
+		}
+		mes "[Craft Book Salesman]";
+		mes "Thank you for your patronage.";
+		set Zeny,Zeny - getarg(1) * .@amount;
+		getitem getarg(0),.@amount;
+		close;
+	}
+	mes "[Craft Book Salesman]";
+	mes "Please take your time";
+	mes "before you make your decision.";
+	close;
+}
 
 alde_alche,24,188,3	script	Guild Dealer	740,{
 	if (checkweight(1201,1) == 0) {
-		mes "- Wait a minute! -";
+		mes "- next; a minute! -";
 		mes "- Currently you are carrying -";
 		mes "- too many items with you. -";
 		mes "- Please come back again -";

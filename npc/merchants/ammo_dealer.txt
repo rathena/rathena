@@ -3,7 +3,7 @@
 //===== By ===================================================
 //= Playtester, Paradox924X
 //===== Version ==============================================
-//= 1.4
+//= 1.5
 //===== Compatible With ======================================
 //= rAthena SVN
 //===== Description ==========================================
@@ -15,9 +15,10 @@
 //= 1.2a Removed .GATs [Lupus]
 //= 1.3 Fixed [Playtester] Optimized. Got rid of @vars [Lupus]
 //= 1.4 Updated to match AEGIS script. [Kisuka]
+//= 1.5 Updated to match AEGIS script again. [Masao]
 //============================================================
 
-que_ng,187,156,3	script	Bullet Dealer Tony	86,{
+alberta,118,160,3	script	Bullet Dealer Tony#alb::bdt	86,{
 	if (BaseJob == Job_Gunslinger) {
 		mes "[Tony]";
 		mes "I'm Tony, the Bullet Dealer.";
@@ -121,3 +122,5 @@ function	script	Bullet_Trade	{
 		close;
 	}
 }
+
+izlude,171,133,3	duplicate(bdt)	Bullet Dealer Tony#iz	86

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena dev team
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -14,9 +14,10 @@
 //= 1.2 Optimized^2, corrected npc's name [ultramage]
 //= 1.2a Optimized. Please, ommit extra NPC names [Lupus]
 //= 1.3 Updated to match AEGIS script. [Kisuka]
+//= 1.4 Updated to match AEGIS script again. [Masao]
 //============================================================
 
-que_ng,187,149,3	script	Magazine Dealer Kenny	83,{
+izlude,171,127,3	script	Magazine Dealer Kenny#iz::mdk	83,{
 	if(BaseJob == Job_Gunslinger) {
 		mes "[Kenny]";
 		mes "Welcome to my Magazine Shop.";
@@ -133,3 +134,5 @@ function	script	Func_Casing	{
 		close;
 	}
 }
+
+alberta,118,157,3	duplicate(mdk)	Magazine Dealer Tonny#alb	83
