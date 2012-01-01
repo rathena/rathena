@@ -9122,7 +9122,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 	 * Fake Name Design by FatalEror (bug report #9)
 	 **/
 	if( ( is_fake = ( sd->fakename[0] ) ) ) {
-		fakename = (char*) malloc(strlen(sd->fakename)+messagelen+3);
+		fakename = (char*) aMalloc(strlen(sd->fakename)+messagelen+3);
 		strcpy(fakename, sd->fakename);
 		strcat(fakename, " : ");
 		strcat(fakename, message);
@@ -9142,6 +9142,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 		WFIFOW(fd,0) = 0x8e;
 		WFIFOW(fd,2) = textlen + 4;
 		safestrncpy((char*)WFIFOP(fd,4), fakename, textlen);
+		aFree(fakename);
 	} else {
 		memcpy(WFIFOP(fd,0), RFIFOP(fd,0), RFIFOW(fd,2));
 		WFIFOW(fd,0) = 0x8e;
