@@ -18,7 +18,7 @@ extern char charcommand_symbol;
 typedef int (*AtCommandFunc)(const int fd, struct map_session_data* sd, const char* command, const char* message);
 
 bool is_atcommand(const int fd, struct map_session_data* sd, const char* message, int type);
-int get_atcommand_level(const AtCommandFunc func);
+int get_atcommand_level(const char* name);
 
 void do_init_atcommand(void);
 void do_final_atcommand(void);

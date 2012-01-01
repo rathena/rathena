@@ -871,7 +871,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	pc_setequipindex(sd);
 
 	status_change_init(&sd->bl);
-	if ((battle_config.atc_gmonly == 0 || pc_isGM(sd)) && (pc_isGM(sd) >= get_atcommand_level(atcommand_hide)))
+	if ((battle_config.atc_gmonly == 0 || pc_isGM(sd)) && (pc_isGM(sd) >= get_atcommand_level("hide")))
 		sd->status.option &= (OPTION_MASK | OPTION_INVISIBLE);
 	else
 		sd->status.option &= OPTION_MASK;

@@ -9169,7 +9169,7 @@ void clif_parse_MapMove(int fd, struct map_session_data *sd)
 
 	if (battle_config.atc_gmonly && !pc_isGM(sd))
 		return;
-	if(pc_isGM(sd) < get_atcommand_level(atcommand_mapmove))
+	if(pc_isGM(sd) < get_atcommand_level("warp"))
 		return;
 
 	map_name = (char*)RFIFOP(fd,2);
@@ -9177,7 +9177,7 @@ void clif_parse_MapMove(int fd, struct map_session_data *sd)
 	sprintf(output, "%s %d %d", map_name, RFIFOW(fd,18), RFIFOW(fd,20));
 	atcommand_mapmove(fd, sd, "@mapmove", output);
 	sprintf(message, "/mm %s", output);
-	log_atcommand(sd, get_atcommand_level(atcommand_mapmove), message);
+	log_atcommand(sd, get_atcommand_level("warp"), message);
 }
 
 /*==========================================
@@ -9534,7 +9534,7 @@ void clif_parse_Broadcast(int fd, struct map_session_data* sd)
 
 	if( battle_config.atc_gmonly && !pc_isGM(sd) )
 		return;
-	if( pc_isGM(sd) < (lv=get_atcommand_level(atcommand_broadcast)) )
+	if( pc_isGM(sd) < (lv=get_atcommand_level("broadcast")) )
 		return;
 
 	// as the length varies depending on the command used, just block unreasonably long strings
@@ -10628,7 +10628,7 @@ void clif_parse_ResetChar(int fd, struct map_session_data *sd)
 	if( battle_config.atc_gmonly && !pc_isGM(sd) )
 		return;
 
-	if( pc_isGM(sd) < get_atcommand_level(atcommand_reset) )
+	if( pc_isGM(sd) < get_atcommand_level("reset") )
 		return;
 
 	if( RFIFOW(fd,2) )
@@ -10636,7 +10636,7 @@ void clif_parse_ResetChar(int fd, struct map_session_data *sd)
 	else
 		pc_resetstate(sd);
 
-	log_atcommand(sd, get_atcommand_level(atcommand_reset), RFIFOW(fd,2) ? "/resetskill" : "/resetstate");
+	log_atcommand(sd, get_atcommand_level("reset"), RFIFOW(fd,2) ? "/resetskill" : "/resetstate");
 }
 
 /*==========================================
@@ -10652,7 +10652,7 @@ void clif_parse_LocalBroadcast(int fd, struct map_session_data* sd)
 	if( battle_config.atc_gmonly && !pc_isGM(sd) )
 		return;
 
-	if( pc_isGM(sd) < (lv=get_atcommand_level(atcommand_localbroadcast)) )
+	if( pc_isGM(sd) < (lv=get_atcommand_level("localbroadcast")) )
 		return;
 
 	// as the length varies depending on the command used, just block unreasonably long strings
@@ -11613,7 +11613,7 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 			return;
 		}
 
-		lv = get_atcommand_level(atcommand_kick);
+		lv = get_atcommand_level("kick");
 		if( pc_isGM(sd) < lv )
 		{
 			clif_GM_kickack(sd, 0);
@@ -11631,7 +11631,7 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 	break;
 	case BL_MOB:
 	{
-		lv = get_atcommand_level(atcommand_killmonster);
+		lv = get_atcommand_level("killmonster");
 		if( pc_isGM(sd) < lv )
 		{
 			clif_GM_kickack(sd, 0);
@@ -11650,7 +11650,7 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 	case BL_NPC:
 	{
 		struct npc_data* nd = (struct npc_data *)target;
-		lv = get_atcommand_level(atcommand_unloadnpc);
+		lv = get_atcommand_level("unloadnpc");
 		if( pc_isGM(sd) < lv )
 		{
 			clif_GM_kickack(sd, 0);
@@ -11693,7 +11693,7 @@ void clif_parse_GMShift(int fd, struct map_session_data *sd)
 
 	if( battle_config.atc_gmonly && !pc_isGM(sd) )
 		return;
-	if( pc_isGM(sd) < (lv=get_atcommand_level(atcommand_jumpto)) )
+	if( pc_isGM(sd) < (lv=get_atcommand_level("goto")) )
 		return;
 
 	player_name = (char*)RFIFOP(fd,2);
@@ -11719,7 +11719,7 @@ void clif_parse_GMRemove2(int fd, struct map_session_data* sd)
 		return;
 	}
 
-	if( pc_isGM(sd) < ( lv = get_atcommand_level(atcommand_jumpto) ) )
+	if( pc_isGM(sd) < ( lv = get_atcommand_level("goto") ) )
 	{
 		return;
 	}
@@ -11752,7 +11752,7 @@ void clif_parse_GMRecall(int fd, struct map_session_data *sd)
 	if( battle_config.atc_gmonly && !pc_isGM(sd) )
 		return;
 
-	if( pc_isGM(sd) < (lv=get_atcommand_level(atcommand_recall)) )
+	if( pc_isGM(sd) < (lv=get_atcommand_level("recall")) )
 		return;
 
 	player_name = (char*)RFIFOP(fd,2);
@@ -11778,7 +11778,7 @@ void clif_parse_GMRecall2(int fd, struct map_session_data* sd)
 		return;
 	}
 
-	if( pc_isGM(sd) < ( lv = get_atcommand_level(atcommand_recall) ) )
+	if( pc_isGM(sd) < ( lv = get_atcommand_level("recall") ) )
 	{
 		return;
 	}
@@ -11816,18 +11816,18 @@ void clif_parse_GM_Monster_Item(int fd, struct map_session_data *sd)
 	monster_item_name[NAME_LENGTH-1] = '\0';
 
 	if( mobdb_searchname(monster_item_name) ) {
-		if( pc_isGM(sd) < (level=get_atcommand_level(atcommand_monster)) )
+		if( pc_isGM(sd) < (level=get_atcommand_level("monster")) )
 			return;
 		atcommand_monster(fd, sd, "@monster", monster_item_name); // as @monster
 		{	//Log action. [Skotlex]
-			snprintf(message, sizeof(message)-1, "@spawn %s", monster_item_name);
+			snprintf(message, sizeof(message)-1, "@monster %s", monster_item_name);
 			log_atcommand(sd, level, message);
 		}
 		return;
 	}
 	if( itemdb_searchname(monster_item_name) == NULL )
 		return;
-	if( pc_isGM(sd) < (level = get_atcommand_level(atcommand_item)) )
+	if( pc_isGM(sd) < (level = get_atcommand_level("item")) )
 		return;
 	atcommand_item(fd, sd, "@item", monster_item_name); // as @item
 	{	//Log action. [Skotlex]
@@ -11844,7 +11844,7 @@ void clif_parse_GMHide(int fd, struct map_session_data *sd)
 	if( battle_config.atc_gmonly && !pc_isGM(sd) )
 		return;
 
-	if( pc_isGM(sd) < get_atcommand_level(atcommand_hide) )
+	if( pc_isGM(sd) < get_atcommand_level("hide") )
 		return;
 
 	if( sd->sc.option & OPTION_INVISIBLE ) {
@@ -11858,7 +11858,7 @@ void clif_parse_GMHide(int fd, struct map_session_data *sd)
 		sd->sc.option |= OPTION_INVISIBLE;
 		sd->vd.class_ = INVISIBLE_CLASS;
 		clif_displaymessage(fd, "Invisible: On.");
-		log_atcommand(sd, get_atcommand_level(atcommand_hide), "/hide");
+		log_atcommand(sd, get_atcommand_level("hide"), "/hide");
 	}
 	clif_changeoption(&sd->bl);
 }
@@ -11891,7 +11891,7 @@ void clif_parse_GMReqNoChat(int fd,struct map_session_data *sd)
 	if( dstsd == NULL )
 		return;
 
-	if( (level = pc_isGM(sd)) > pc_isGM(dstsd) && level >= get_atcommand_level(atcommand_mute) )
+	if( (level = pc_isGM(sd)) > pc_isGM(dstsd) && level >= get_atcommand_level("mute") )
 	{
 		clif_manner_message(sd, 0);
 		clif_manner_message(dstsd, 5);
@@ -11923,7 +11923,7 @@ void clif_parse_GMRc(int fd, struct map_session_data* sd)
 	if( dstsd == NULL )
 		return;
 
-	if( pc_isGM(sd) > pc_isGM(dstsd) && pc_isGM(sd) >= get_atcommand_level(atcommand_mute) )
+	if( pc_isGM(sd) > pc_isGM(dstsd) && pc_isGM(sd) >= get_atcommand_level("mute") )
 	{
 		clif_manner_message(sd, 0);
 		clif_manner_message(dstsd, 3);

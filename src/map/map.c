@@ -3740,7 +3740,6 @@ int do_init(int argc, char *argv[])
 
 	battle_config_read(BATTLE_CONF_FILENAME);
 	msg_config_read(MSG_CONF_NAME);
-	atcommand_config_read(ATCOMMAND_CONF_FILENAME);
 	script_config_read(SCRIPT_CONF_NAME);
 	inter_config_read(INTER_CONF_NAME);
 	log_config_read(LOG_CONF_NAME);

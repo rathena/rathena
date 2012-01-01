@@ -53,6 +53,8 @@ char* msg_table[MAX_MSG]; // Server messages (0-499 reserved for GM commands, 50
 // local declarations
 #define ACMD_FUNC(x) int atcommand_ ## x (const int fd, struct map_session_data* sd, const char* command, const char* message)
 
+DBMap* atcommand_db = NULL;//name -> AtCommandInfo
+
 typedef struct AtCommandInfo
 {
 	const char* command;
@@ -62,7 +64,6 @@ typedef struct AtCommandInfo
 } AtCommandInfo;
 
 static AtCommandInfo* get_atcommandinfo_byname(const char* name);
-static AtCommandInfo* get_atcommandinfo_byfunc(const AtCommandFunc func);
 
 ACMD_FUNC(commands);
 
@@ -4268,9 +4269,9 @@ ACMD_FUNC(reloadskilldb)
 /*==========================================
  * @reloadatcommand - reloads atcommand_athena.conf
  *------------------------------------------*/
-ACMD_FUNC(reloadatcommand)
-{
-	atcommand_config_read(ATCOMMAND_CONF_FILENAME);
+void atcommand_doload();
+ACMD_FUNC(reloadatcommand) {
+	atcommand_doload();
 	clif_displaymessage(fd, msg_txt(254));
 	return 0;
 }
@@ -8800,340 +8801,289 @@ ACMD_FUNC(new_mount) {
 	}
 	return 0;
 }
-/*==========================================
- * atcommand_info[] structure definition
- *------------------------------------------*/
 
-AtCommandInfo atcommand_info[] = {
-	{ "rura",              40,40,     atcommand_mapmove },
-	{ "warp",              40,40,     atcommand_mapmove },
-	{ "mapmove",           40,40,     atcommand_mapmove }, // + /mm
-	{ "where",              1,1,      atcommand_where },
-	{ "jumpto",            20,20,     atcommand_jumpto }, // + /shift
-	{ "warpto",            20,20,     atcommand_jumpto },
-	{ "goto",              20,20,     atcommand_jumpto },
-	{ "jump",              40,40,     atcommand_jump },
-	{ "who",               20,20,     atcommand_who },
-	{ "whois",             20,20,     atcommand_who },
-	{ "who2",              20,20,     atcommand_who2 },
-	{ "who3",              20,20,     atcommand_who3 },
-	{ "whomap",            20,20,     atcommand_whomap },
-	{ "whomap2",           20,20,     atcommand_whomap2 },
-	{ "whomap3",           20,20,     atcommand_whomap3 },
-	{ "whogm",             20,20,     atcommand_whogm },
-	{ "save",              40,40,     atcommand_save },
-	{ "return",            40,40,     atcommand_load },
-	{ "load",              40,40,     atcommand_load },
-	{ "speed",             40,40,     atcommand_speed },
-	{ "storage",            1,1,      atcommand_storage },
-	{ "gstorage",          50,50,     atcommand_guildstorage },
-	{ "option",            40,40,     atcommand_option },
-	{ "hide",              40,40,     atcommand_hide }, // + /hide
-	{ "jobchange",         40,40,     atcommand_jobchange },
-	{ "job",               40,40,     atcommand_jobchange },
-	{ "die",                1,1,      atcommand_die },
-	{ "kill",              60,60,     atcommand_kill },
-	{ "alive",             60,60,     atcommand_alive },
-	{ "kami",              40,40,     atcommand_kami },
-	{ "kamib",             40,40,     atcommand_kami },
-	{ "kamic",             40,40,     atcommand_kami },
-	{ "heal",              40,60,     atcommand_heal },
-	{ "item",              60,60,     atcommand_item },
-	{ "item2",             60,60,     atcommand_item2 },
-	{ "itemreset",         40,40,     atcommand_itemreset },
-	{ "blvl",              60,60,     atcommand_baselevelup },
-	{ "lvup",              60,60,     atcommand_baselevelup },
-	{ "blevel",            60,60,     atcommand_baselevelup },
-	{ "baselvl",           60,60,     atcommand_baselevelup },
-	{ "baselvup",          60,60,     atcommand_baselevelup },
-	{ "baselevel",         60,60,     atcommand_baselevelup },
-	{ "baselvlup",         60,60,     atcommand_baselevelup },
-	{ "jlvl",              60,60,     atcommand_joblevelup },
-	{ "jlevel",            60,60,     atcommand_joblevelup },
-	{ "joblvl",            60,60,     atcommand_joblevelup },
-	{ "joblevel",          60,60,     atcommand_joblevelup },
-	{ "joblvup",           60,60,     atcommand_joblevelup },
-	{ "joblvlup",          60,60,     atcommand_joblevelup },
-	{ "h",                 20,20,     atcommand_help },
-	{ "help",              20,20,     atcommand_help },
-	{ "h2",                20,20,     atcommand_help2 },
-	{ "help2",             20,20,     atcommand_help2 },
-	{ "pvpoff",            40,40,     atcommand_pvpoff },
-	{ "pvpon",             40,40,     atcommand_pvpon },
-	{ "gvgoff",            40,40,     atcommand_gvgoff },
-	{ "gpvpoff",           40,40,     atcommand_gvgoff },
-	{ "gvgon",             40,40,     atcommand_gvgon },
-	{ "gpvpon",            40,40,     atcommand_gvgon },
-	{ "model",             20,20,     atcommand_model },
-	{ "go",                10,10,     atcommand_go },
-	{ "monster",           50,50,     atcommand_monster },
-	{ "spawn",             50,50,     atcommand_monster },
-	{ "monstersmall",      50,50,     atcommand_monstersmall },
-	{ "monsterbig",        50,50,     atcommand_monsterbig },
-	{ "killmonster",       60,60,     atcommand_killmonster },
-	{ "killmonster2",      40,40,     atcommand_killmonster2 },
-	{ "refine",            60,60,     atcommand_refine },
-	{ "produce",           60,60,     atcommand_produce },
-	{ "memo",              40,40,     atcommand_memo },
-	{ "gat",               99,99,     atcommand_gat },
-	{ "displaystatus",     99,99,     atcommand_displaystatus },
-	{ "stpoint",           60,60,     atcommand_statuspoint },
-	{ "skpoint",           60,60,     atcommand_skillpoint },
-	{ "zeny",              60,60,     atcommand_zeny },
-	{ "str",               60,60,     atcommand_param },
-	{ "agi",               60,60,     atcommand_param },
-	{ "vit",               60,60,     atcommand_param },
-	{ "int",               60,60,     atcommand_param },
-	{ "dex",               60,60,     atcommand_param },
-	{ "luk",               60,60,     atcommand_param },
-	{ "glvl",              60,60,     atcommand_guildlevelup },
-	{ "glevel",            60,60,     atcommand_guildlevelup },
-	{ "guildlvl",          60,60,     atcommand_guildlevelup },
-	{ "guildlvup",         60,60,     atcommand_guildlevelup },
-	{ "guildlevel",        60,60,     atcommand_guildlevelup },
-	{ "guildlvlup",        60,60,     atcommand_guildlevelup },
-	{ "makeegg",           60,60,     atcommand_makeegg },
-	{ "hatch",             60,60,     atcommand_hatch },
-	{ "petfriendly",       40,40,     atcommand_petfriendly },
-	{ "pethungry",         40,40,     atcommand_pethungry },
-	{ "petrename",          1,1,      atcommand_petrename },
-	{ "recall",            60,60,     atcommand_recall }, // + /recall
-	{ "night",             80,80,     atcommand_night },
-	{ "day",               80,80,     atcommand_day },
-	{ "doom",              80,80,     atcommand_doom },
-	{ "doommap",           80,80,     atcommand_doommap },
-	{ "raise",             80,80,     atcommand_raise },
-	{ "raisemap",          80,80,     atcommand_raisemap },
-	{ "kick",              20,20,     atcommand_kick }, // + right click menu for GM "(name) force to quit"
-	{ "kickall",           99,99,     atcommand_kickall },
-	{ "allskill",          60,60,     atcommand_allskill },
-	{ "allskills",         60,60,     atcommand_allskill },
-	{ "skillall",          60,60,     atcommand_allskill },
-	{ "skillsall",         60,60,     atcommand_allskill },
-	{ "questskill",        40,40,     atcommand_questskill },
-	{ "lostskill",         40,40,     atcommand_lostskill },
-	{ "spiritball",        40,40,     atcommand_spiritball },
-	{ "party",              1,1,      atcommand_party },
-	{ "guild",             50,50,     atcommand_guild },
-	{ "agitstart",         60,60,     atcommand_agitstart },
-	{ "agitend",           60,60,     atcommand_agitend },
-	{ "mapexit",           99,99,     atcommand_mapexit },
-	{ "idsearch",          60,60,     atcommand_idsearch },
-	{ "broadcast",         40,40,     atcommand_broadcast }, // + /b and /nb
-	{ "localbroadcast",    40,40,     atcommand_localbroadcast }, // + /lb and /nlb
-	{ "recallall",         80,80,     atcommand_recallall },
-	{ "reloaditemdb",      99,99,     atcommand_reloaditemdb },
-	{ "reloadmobdb",       99,99,     atcommand_reloadmobdb },
-	{ "reloadskilldb",     99,99,     atcommand_reloadskilldb },
-	{ "reloadscript",      99,99,     atcommand_reloadscript },
-	{ "reloadatcommand",   99,99,     atcommand_reloadatcommand },
-	{ "reloadbattleconf",  99,99,     atcommand_reloadbattleconf },
-	{ "reloadstatusdb",    99,99,     atcommand_reloadstatusdb },
-	{ "reloadpcdb",        99,99,     atcommand_reloadpcdb },
-	{ "reloadmotd",        99,99,     atcommand_reloadmotd },
-	{ "mapinfo",           99,99,     atcommand_mapinfo },
-	{ "dye",               40,40,     atcommand_dye },
-	{ "ccolor",            40,40,     atcommand_dye },
-	{ "hairstyle",         40,40,     atcommand_hair_style },
-	{ "hstyle",            40,40,     atcommand_hair_style },
-	{ "haircolor",         40,40,     atcommand_hair_color },
-	{ "hcolor",            40,40,     atcommand_hair_color },
-	{ "statall",           60,60,     atcommand_stat_all },
-	{ "statsall",          60,60,     atcommand_stat_all },
-	{ "allstats",          60,60,     atcommand_stat_all },
-	{ "allstat",           60,60,     atcommand_stat_all },
-	{ "block",             60,60,     atcommand_char_block },
-	{ "charblock",         60,60,     atcommand_char_block },
-	{ "ban",               60,60,     atcommand_char_ban },
-	{ "banish",            60,60,     atcommand_char_ban },
-	{ "charban",           60,60,     atcommand_char_ban },
-	{ "charbanish",        60,60,     atcommand_char_ban },
-	{ "unblock",           60,60,     atcommand_char_unblock },
-	{ "charunblock",       60,60,     atcommand_char_unblock },
-	{ "unban",             60,60,     atcommand_char_unban },
-	{ "unbanish",          60,60,     atcommand_char_unban },
-	{ "charunban",         60,60,     atcommand_char_unban },
-	{ "charunbanish",      60,60,     atcommand_char_unban },
-	{ "mount",             20,20,     atcommand_mount_peco },
-	{ "mountpeco",         20,20,     atcommand_mount_peco },
-	{ "guildspy",          60,60,     atcommand_guildspy },
-	{ "partyspy",          60,60,     atcommand_partyspy },
-	{ "repairall",         60,60,     atcommand_repairall },
-	{ "guildrecall",       60,60,     atcommand_guildrecall },
-	{ "partyrecall",       60,60,     atcommand_partyrecall },
-	{ "nuke",              60,60,     atcommand_nuke },
-	{ "shownpc",           80,80,     atcommand_shownpc },
-	{ "hidenpc",           80,80,     atcommand_hidenpc },
-	{ "loadnpc",           80,80,     atcommand_loadnpc },
-	{ "unloadnpc",         80,80,     atcommand_unloadnpc },
-	{ "time",               1,1,      atcommand_servertime },
-	{ "date",               1,1,      atcommand_servertime },
-	{ "serverdate",         1,1,      atcommand_servertime },
-	{ "servertime",         1,1,      atcommand_servertime },
-	{ "jail",              60,60,     atcommand_jail },
-	{ "unjail",            60,60,     atcommand_unjail },
-	{ "discharge",         60,60,     atcommand_unjail },
-	{ "jailfor",           60,60,     atcommand_jailfor },
-	{ "jailtime",           1,1,      atcommand_jailtime },
-	{ "disguise",          20,20,     atcommand_disguise },
-	{ "undisguise",        20,20,     atcommand_undisguise },
-	{ "email",              1,1,      atcommand_email },
-	{ "effect",            40,40,     atcommand_effect },
-	{ "follow",            20,20,     atcommand_follow },
-	{ "addwarp",           60,60,     atcommand_addwarp },
-	{ "skillon",           80,80,     atcommand_skillon },
-	{ "skilloff",          80,80,     atcommand_skilloff },
-	{ "killer",            60,60,     atcommand_killer },
-	{ "npcmove",           80,80,     atcommand_npcmove },
-	{ "killable",          40,40,     atcommand_killable },
-	{ "dropall",           40,40,     atcommand_dropall },
-	{ "storeall",          40,40,     atcommand_storeall },
-	{ "skillid",           40,40,     atcommand_skillid },
-	{ "useskill",          40,40,     atcommand_useskill },
-	{ "displayskill",      99,99,     atcommand_displayskill },
-	{ "snow",              99,99,     atcommand_snow },
-	{ "sakura",            99,99,     atcommand_sakura },
-	{ "clouds",            99,99,     atcommand_clouds },
-	{ "clouds2",           99,99,     atcommand_clouds2 },
-	{ "fog",               99,99,     atcommand_fog },
-	{ "fireworks",         99,99,     atcommand_fireworks },
-	{ "leaves",            99,99,     atcommand_leaves },
-	{ "summon",            60,60,     atcommand_summon },
-	{ "adjgmlvl",          99,99,     atcommand_adjgmlvl },
-	{ "adjcmdlvl",         99,99,     atcommand_adjcmdlvl },
-	{ "trade",             60,60,     atcommand_trade },
-	{ "send",              99,99,     atcommand_send },
-	{ "setbattleflag",     99,99,     atcommand_setbattleflag },
-	{ "unmute",            80,80,     atcommand_unmute },
-	{ "clearweather",      99,99,     atcommand_clearweather },
-	{ "uptime",             1,1,      atcommand_uptime },
-	{ "changesex",         60,60,     atcommand_changesex },
-	{ "mute",              80,80,     atcommand_mute },
-	{ "refresh",            1,1,      atcommand_refresh },
-	{ "identify",          40,40,     atcommand_identify },
-	{ "gmotd",             20,20,     atcommand_gmotd },
-	{ "misceffect",        50,50,     atcommand_misceffect },
-	{ "mobsearch",         10,10,     atcommand_mobsearch },
-	{ "cleanmap",          40,40,     atcommand_cleanmap },
-	{ "npctalk",           20,20,     atcommand_npctalk },
-	{ "npctalkc",          20,20,     atcommand_npctalk },
-	{ "pettalk",           10,10,     atcommand_pettalk },
-	{ "users",             40,40,     atcommand_users },
-	{ "reset",             40,40,     atcommand_reset },
-	{ "skilltree",         40,40,     atcommand_skilltree },
-	{ "marry",             40,40,     atcommand_marry },
-	{ "divorce",           40,40,     atcommand_divorce },
-	{ "sound",             40,40,     atcommand_sound },
-	{ "undisguiseall",     99,99,     atcommand_undisguiseall },
-	{ "disguiseall",       99,99,     atcommand_disguiseall },
-	{ "changelook",        60,60,     atcommand_changelook },
-	{ "autoloot",          10,10,     atcommand_autoloot },
-	{ "alootid",           10,10,     atcommand_autolootitem },
-	{ "mobinfo",            1,1,      atcommand_mobinfo },
-	{ "monsterinfo",        1,1,      atcommand_mobinfo },
-	{ "mi",                 1,1,      atcommand_mobinfo },
-	{ "exp",                1,1,      atcommand_exp },
-	{ "adopt",             40,40,     atcommand_adopt },
-	{ "version",            1,1,      atcommand_version },
-	{ "mutearea",          99,99,     atcommand_mutearea },
-	{ "stfu",              99,99,     atcommand_mutearea },
-	{ "rates",              1,1,      atcommand_rates },
-	{ "iteminfo",           1,1,      atcommand_iteminfo },
-	{ "ii",                 1,1,      atcommand_iteminfo },
-	{ "whodrops",           1,1,      atcommand_whodrops },
-	{ "whereis",           10,10,     atcommand_whereis },
-	{ "mapflag",           99,99,     atcommand_mapflag },
-	{ "me",                20,20,     atcommand_me },
-	{ "monsterignore",     99,99,     atcommand_monsterignore },
-	{ "battleignore",      99,99,     atcommand_monsterignore },
-	{ "fakename",          20,20,     atcommand_fakename },
-	{ "size",              20,20,     atcommand_size },
-	{ "showexp",           10,10,     atcommand_showexp},
-	{ "showzeny",          10,10,     atcommand_showzeny},
-	{ "showdelay",          1,1,      atcommand_showdelay},
-	{ "autotrade",         10,10,     atcommand_autotrade },
-	{ "at",                10,10,     atcommand_autotrade },
-	{ "changegm",          10,10,     atcommand_changegm },
-	{ "changeleader",      10,10,     atcommand_changeleader },
-	{ "partyoption",       10,10,     atcommand_partyoption},
-	{ "invite",             1,1,      atcommand_invite },
-	{ "duel",               1,1,      atcommand_duel },
-	{ "leave",              1,1,      atcommand_leave },
-	{ "accept",             1,1,      atcommand_accept },
-	{ "reject",             1,1,      atcommand_reject },
-	{ "main",               1,1,      atcommand_main },
-	{ "clone",             50,50,     atcommand_clone },
-	{ "slaveclone",        50,50,     atcommand_clone },
-	{ "evilclone",         50,50,     atcommand_clone },
-	{ "tonpc",             40,40,     atcommand_tonpc },
-	{ "commands",           1,1,      atcommand_commands },
-	{ "noask",              1,1,      atcommand_noask },
-	{ "request",           20,20,     atcommand_request },
-	{ "hlvl",              60,60,     atcommand_homlevel },
-	{ "hlevel",            60,60,     atcommand_homlevel },
-	{ "homlvl",            60,60,     atcommand_homlevel },
-	{ "homlvup",           60,60,     atcommand_homlevel },
-	{ "homlevel",          60,60,     atcommand_homlevel },
-	{ "homevolve",         60,60,     atcommand_homevolution },
-	{ "homevolution",      60,60,     atcommand_homevolution },
-	{ "makehomun",         60,60,     atcommand_makehomun },
-	{ "homfriendly",       60,60,     atcommand_homfriendly },
-	{ "homhungry",         60,60,     atcommand_homhungry },
-	{ "homtalk",           10,10,     atcommand_homtalk },
-	{ "hominfo",            1,1,      atcommand_hominfo },
-	{ "homstats",           1,1,      atcommand_homstats },
-	{ "homshuffle",        60,60,     atcommand_homshuffle },
-	{ "showmobs",          10,10,     atcommand_showmobs },
-	{ "feelreset",         10,10,     atcommand_feelreset },
-	{ "auction",            1,1,      atcommand_auction },
-	{ "mail",               1,1,      atcommand_mail },
-	{ "noks",               1,1,      atcommand_ksprotection },
-	{ "allowks",           40,40,     atcommand_allowks },
-	{ "cash",              60,60,     atcommand_cash },
-	{ "points",            60,60,     atcommand_cash },
-	{ "agitstart2",        60,60,     atcommand_agitstart2 },
-	{ "agitend2",          60,60,     atcommand_agitend2 },
-	{ "skreset",           60,60,     atcommand_resetskill },
-	{ "streset",           60,60,     atcommand_resetstat },
-	{ "storagelist",       40,40,     atcommand_itemlist },
-	{ "cartlist",          40,40,     atcommand_itemlist },
-	{ "itemlist",          40,40,     atcommand_itemlist },
-	{ "stats",             40,40,     atcommand_stats },
-	{ "delitem",           60,60,     atcommand_delitem },
-	{ "charcommands",       1,1,      atcommand_commands },
-	{ "font",               1,1,      atcommand_font },
+/**
+ * Fills the reference of available commands in atcommand DBMap
+ **/
+void atcommand_basecommands(void) {
 	/**
-	 * For Testing Purposes, not going to be here after we're done.
+	 * Command reference list, place the base of your commands here
+	 * Dev note: I'd love to get rid of this, if you have a better idea on this please share with the poor mortals
 	 **/
-	{ "newmount",           0,99,     atcommand_new_mount },
-};
+	AtCommandInfo atcommand_base[] = {
+		{ "warp",              40,40,     atcommand_mapmove }, // + /mm
+		{ "where",              1,1,      atcommand_where },
+		{ "goto",              20,20,     atcommand_jumpto }, // + /shift
+		{ "jump",              40,40,     atcommand_jump },
+		{ "who",               20,20,     atcommand_who },
+		{ "who2",              20,20,     atcommand_who2 },
+		{ "who3",              20,20,     atcommand_who3 },
+		{ "whomap",            20,20,     atcommand_whomap },
+		{ "whomap2",           20,20,     atcommand_whomap2 },
+		{ "whomap3",           20,20,     atcommand_whomap3 },
+		{ "whogm",             20,20,     atcommand_whogm },
+		{ "save",              40,40,     atcommand_save },
+		{ "load",              40,40,     atcommand_load },
+		{ "speed",             40,40,     atcommand_speed },
+		{ "storage",            1,1,      atcommand_storage },
+		{ "gstorage",          50,50,     atcommand_guildstorage },
+		{ "option",            40,40,     atcommand_option },
+		{ "hide",              40,40,     atcommand_hide }, // + /hide
+		{ "job",               40,40,     atcommand_jobchange },
+		{ "die",                1,1,      atcommand_die },
+		{ "kill",              60,60,     atcommand_kill },
+		{ "alive",             60,60,     atcommand_alive },
+		{ "kami",              40,40,     atcommand_kami },
+		{ "kamib",             40,40,     atcommand_kami },
+		{ "kamic",             40,40,     atcommand_kami },
+		{ "heal",              40,60,     atcommand_heal },
+		{ "item",              60,60,     atcommand_item },
+		{ "item2",             60,60,     atcommand_item2 },
+		{ "itemreset",         40,40,     atcommand_itemreset },
+		{ "blvl",              60,60,     atcommand_baselevelup },
+		{ "jlvl",              60,60,     atcommand_joblevelup },
+		{ "help",              20,20,     atcommand_help },
+		{ "help2",             20,20,     atcommand_help2 },
+		{ "pvpoff",            40,40,     atcommand_pvpoff },
+		{ "pvpon",             40,40,     atcommand_pvpon },
+		{ "gvgoff",            40,40,     atcommand_gvgoff },
+		{ "gvgon",             40,40,     atcommand_gvgon },
+		{ "model",             20,20,     atcommand_model },
+		{ "go",                10,10,     atcommand_go },
+		{ "monster",           50,50,     atcommand_monster },
+		{ "monstersmall",      50,50,     atcommand_monstersmall },
+		{ "monsterbig",        50,50,     atcommand_monsterbig },
+		{ "killmonster",       60,60,     atcommand_killmonster },
+		{ "killmonster2",      40,40,     atcommand_killmonster2 },
+		{ "refine",            60,60,     atcommand_refine },
+		{ "produce",           60,60,     atcommand_produce },
+		{ "memo",              40,40,     atcommand_memo },
+		{ "gat",               99,99,     atcommand_gat },
+		{ "displaystatus",     99,99,     atcommand_displaystatus },
+		{ "stpoint",           60,60,     atcommand_statuspoint },
+		{ "skpoint",           60,60,     atcommand_skillpoint },
+		{ "zeny",              60,60,     atcommand_zeny },
+		{ "str",               60,60,     atcommand_param },
+		{ "agi",               60,60,     atcommand_param },
+		{ "vit",               60,60,     atcommand_param },
+		{ "int",               60,60,     atcommand_param },
+		{ "dex",               60,60,     atcommand_param },
+		{ "luk",               60,60,     atcommand_param },
+		{ "glvl",              60,60,     atcommand_guildlevelup },
+		{ "makeegg",           60,60,     atcommand_makeegg },
+		{ "hatch",             60,60,     atcommand_hatch },
+		{ "petfriendly",       40,40,     atcommand_petfriendly },
+		{ "pethungry",         40,40,     atcommand_pethungry },
+		{ "petrename",          1,1,      atcommand_petrename },
+		{ "recall",            60,60,     atcommand_recall }, // + /recall
+		{ "night",             80,80,     atcommand_night },
+		{ "day",               80,80,     atcommand_day },
+		{ "doom",              80,80,     atcommand_doom },
+		{ "doommap",           80,80,     atcommand_doommap },
+		{ "raise",             80,80,     atcommand_raise },
+		{ "raisemap",          80,80,     atcommand_raisemap },
+		{ "kick",              20,20,     atcommand_kick }, // + right click menu for GM "(name) force to quit"
+		{ "kickall",           99,99,     atcommand_kickall },
+		{ "allskill",          60,60,     atcommand_allskill },
+		{ "questskill",        40,40,     atcommand_questskill },
+		{ "lostskill",         40,40,     atcommand_lostskill },
+		{ "spiritball",        40,40,     atcommand_spiritball },
+		{ "party",              1,1,      atcommand_party },
+		{ "guild",             50,50,     atcommand_guild },
+		{ "agitstart",         60,60,     atcommand_agitstart },
+		{ "agitend",           60,60,     atcommand_agitend },
+		{ "mapexit",           99,99,     atcommand_mapexit },
+		{ "idsearch",          60,60,     atcommand_idsearch },
+		{ "broadcast",         40,40,     atcommand_broadcast }, // + /b and /nb
+		{ "localbroadcast",    40,40,     atcommand_localbroadcast }, // + /lb and /nlb
+		{ "recallall",         80,80,     atcommand_recallall },
+		{ "reloaditemdb",      99,99,     atcommand_reloaditemdb },
+		{ "reloadmobdb",       99,99,     atcommand_reloadmobdb },
+		{ "reloadskilldb",     99,99,     atcommand_reloadskilldb },
+		{ "reloadscript",      99,99,     atcommand_reloadscript },
+		{ "reloadatcommand",   99,99,     atcommand_reloadatcommand },
+		{ "reloadbattleconf",  99,99,     atcommand_reloadbattleconf },
+		{ "reloadstatusdb",    99,99,     atcommand_reloadstatusdb },
+		{ "reloadpcdb",        99,99,     atcommand_reloadpcdb },
+		{ "reloadmotd",        99,99,     atcommand_reloadmotd },
+		{ "mapinfo",           99,99,     atcommand_mapinfo },
+		{ "dye",               40,40,     atcommand_dye },
+		{ "hairstyle",         40,40,     atcommand_hair_style },
+		{ "haircolor",         40,40,     atcommand_hair_color },
+		{ "allstats",          60,60,     atcommand_stat_all },
+		{ "block",             60,60,     atcommand_char_block },
+		{ "ban",               60,60,     atcommand_char_ban },
+		{ "unblock",           60,60,     atcommand_char_unblock },
+		{ "unban",             60,60,     atcommand_char_unban },
+		{ "mount",             20,20,     atcommand_mount_peco },
+		{ "guildspy",          60,60,     atcommand_guildspy },
+		{ "partyspy",          60,60,     atcommand_partyspy },
+		{ "repairall",         60,60,     atcommand_repairall },
+		{ "guildrecall",       60,60,     atcommand_guildrecall },
+		{ "partyrecall",       60,60,     atcommand_partyrecall },
+		{ "nuke",              60,60,     atcommand_nuke },
+		{ "shownpc",           80,80,     atcommand_shownpc },
+		{ "hidenpc",           80,80,     atcommand_hidenpc },
+		{ "loadnpc",           80,80,     atcommand_loadnpc },
+		{ "unloadnpc",         80,80,     atcommand_unloadnpc },
+		{ "time",               1,1,      atcommand_servertime },
+		{ "jail",              60,60,     atcommand_jail },
+		{ "unjail",            60,60,     atcommand_unjail },
+		{ "jailfor",           60,60,     atcommand_jailfor },
+		{ "jailtime",           1,1,      atcommand_jailtime },
+		{ "disguise",          20,20,     atcommand_disguise },
+		{ "undisguise",        20,20,     atcommand_undisguise },
+		{ "email",              1,1,      atcommand_email },
+		{ "effect",            40,40,     atcommand_effect },
+		{ "follow",            20,20,     atcommand_follow },
+		{ "addwarp",           60,60,     atcommand_addwarp },
+		{ "skillon",           80,80,     atcommand_skillon },
+		{ "skilloff",          80,80,     atcommand_skilloff },
+		{ "killer",            60,60,     atcommand_killer },
+		{ "npcmove",           80,80,     atcommand_npcmove },
+		{ "killable",          40,40,     atcommand_killable },
+		{ "dropall",           40,40,     atcommand_dropall },
+		{ "storeall",          40,40,     atcommand_storeall },
+		{ "skillid",           40,40,     atcommand_skillid },
+		{ "useskill",          40,40,     atcommand_useskill },
+		{ "displayskill",      99,99,     atcommand_displayskill },
+		{ "snow",              99,99,     atcommand_snow },
+		{ "sakura",            99,99,     atcommand_sakura },
+		{ "clouds",            99,99,     atcommand_clouds },
+		{ "clouds2",           99,99,     atcommand_clouds2 },
+		{ "fog",               99,99,     atcommand_fog },
+		{ "fireworks",         99,99,     atcommand_fireworks },
+		{ "leaves",            99,99,     atcommand_leaves },
+		{ "summon",            60,60,     atcommand_summon },
+		{ "adjgmlvl",          99,99,     atcommand_adjgmlvl },
+		{ "adjcmdlvl",         99,99,     atcommand_adjcmdlvl },
+		{ "trade",             60,60,     atcommand_trade },
+		{ "send",              99,99,     atcommand_send },
+		{ "setbattleflag",     99,99,     atcommand_setbattleflag },
+		{ "unmute",            80,80,     atcommand_unmute },
+		{ "clearweather",      99,99,     atcommand_clearweather },
+		{ "uptime",             1,1,      atcommand_uptime },
+		{ "changesex",         60,60,     atcommand_changesex },
+		{ "mute",              80,80,     atcommand_mute },
+		{ "refresh",            1,1,      atcommand_refresh },
+		{ "identify",          40,40,     atcommand_identify },
+		{ "gmotd",             20,20,     atcommand_gmotd },
+		{ "misceffect",        50,50,     atcommand_misceffect },
+		{ "mobsearch",         10,10,     atcommand_mobsearch },
+		{ "cleanmap",          40,40,     atcommand_cleanmap },
+		{ "npctalk",           20,20,     atcommand_npctalk },
+		{ "pettalk",           10,10,     atcommand_pettalk },
+		{ "users",             40,40,     atcommand_users },
+		{ "reset",             40,40,     atcommand_reset },
+		{ "skilltree",         40,40,     atcommand_skilltree },
+		{ "marry",             40,40,     atcommand_marry },
+		{ "divorce",           40,40,     atcommand_divorce },
+		{ "sound",             40,40,     atcommand_sound },
+		{ "undisguiseall",     99,99,     atcommand_undisguiseall },
+		{ "disguiseall",       99,99,     atcommand_disguiseall },
+		{ "changelook",        60,60,     atcommand_changelook },
+		{ "autoloot",          10,10,     atcommand_autoloot },
+		{ "alootid",           10,10,     atcommand_autolootitem },
+		{ "monsterinfo",        1,1,      atcommand_mobinfo },
+		{ "exp",                1,1,      atcommand_exp },
+		{ "adopt",             40,40,     atcommand_adopt },
+		{ "version",            1,1,      atcommand_version },
+		{ "mutearea",          99,99,     atcommand_mutearea },
+		{ "rates",              1,1,      atcommand_rates },
+		{ "iteminfo",           1,1,      atcommand_iteminfo },
+		{ "whodrops",           1,1,      atcommand_whodrops },
+		{ "whereis",           10,10,     atcommand_whereis },
+		{ "mapflag",           99,99,     atcommand_mapflag },
+		{ "me",                20,20,     atcommand_me },
+		{ "battleignore",      99,99,     atcommand_monsterignore },
+		{ "fakename",          20,20,     atcommand_fakename },
+		{ "size",              20,20,     atcommand_size },
+		{ "showexp",           10,10,     atcommand_showexp},
+		{ "showzeny",          10,10,     atcommand_showzeny},
+		{ "showdelay",          1,1,      atcommand_showdelay},
+		{ "autotrade",         10,10,     atcommand_autotrade },
+		{ "changegm",          10,10,     atcommand_changegm },
+		{ "changeleader",      10,10,     atcommand_changeleader },
+		{ "partyoption",       10,10,     atcommand_partyoption},
+		{ "invite",             1,1,      atcommand_invite },
+		{ "duel",               1,1,      atcommand_duel },
+		{ "leave",              1,1,      atcommand_leave },
+		{ "accept",             1,1,      atcommand_accept },
+		{ "reject",             1,1,      atcommand_reject },
+		{ "main",               1,1,      atcommand_main },
+		{ "clone",             50,50,     atcommand_clone },
+		{ "slaveclone",        50,50,     atcommand_clone },
+		{ "evilclone",         50,50,     atcommand_clone },
+		{ "tonpc",             40,40,     atcommand_tonpc },
+		{ "commands",           1,1,      atcommand_commands },
+		{ "noask",              1,1,      atcommand_noask },
+		{ "request",           20,20,     atcommand_request },
+		{ "hlvl",              60,60,     atcommand_homlevel },
+		{ "homevolve",         60,60,     atcommand_homevolution },
+		{ "makehomun",         60,60,     atcommand_makehomun },
+		{ "homfriendly",       60,60,     atcommand_homfriendly },
+		{ "homhungry",         60,60,     atcommand_homhungry },
+		{ "homtalk",           10,10,     atcommand_homtalk },
+		{ "hominfo",            1,1,      atcommand_hominfo },
+		{ "homstats",           1,1,      atcommand_homstats },
+		{ "homshuffle",        60,60,     atcommand_homshuffle },
+		{ "showmobs",          10,10,     atcommand_showmobs },
+		{ "feelreset",         10,10,     atcommand_feelreset },
+		{ "auction",            1,1,      atcommand_auction },
+		{ "mail",               1,1,      atcommand_mail },
+		{ "noks",               1,1,      atcommand_ksprotection },
+		{ "allowks",           40,40,     atcommand_allowks },
+		{ "cash",              60,60,     atcommand_cash },
+		{ "points",            60,60,     atcommand_cash },
+		{ "agitstart2",        60,60,     atcommand_agitstart2 },
+		{ "agitend2",          60,60,     atcommand_agitend2 },
+		{ "skreset",           60,60,     atcommand_resetskill },
+		{ "streset",           60,60,     atcommand_resetstat },
+		{ "storagelist",       40,40,     atcommand_itemlist },
+		{ "cartlist",          40,40,     atcommand_itemlist },
+		{ "itemlist",          40,40,     atcommand_itemlist },
+		{ "stats",             40,40,     atcommand_stats },
+		{ "delitem",           60,60,     atcommand_delitem },
+		{ "charcommands",       1,1,      atcommand_commands },
+		{ "font",               1,1,      atcommand_font },
+		/**
+		 * For Testing Purposes, not going to be here after we're done.
+		 **/
+		{ "newmount",           0,99,     atcommand_new_mount },
+	};
+	AtCommandInfo* atcommand;
+	int i;
 
+	for( i = 0; i < ARRAYLENGTH(atcommand_base); i++ ) {
+
+		CREATE(atcommand, AtCommandInfo, 1);
+
+		atcommand->command = atcommand_base[i].command;
+		atcommand->level = atcommand_base[i].level;
+		atcommand->level2 = atcommand_base[i].level2;
+		atcommand->func = atcommand_base[i].func;
+
+		strdb_put(atcommand_db, atcommand->command, atcommand);
+	}
+	return;
+}
 
 /*==========================================
  * Command lookup functions
  *------------------------------------------*/
-static AtCommandInfo* get_atcommandinfo_byname(const char* name)
-{
-	int i;
+static AtCommandInfo* get_atcommandinfo_byname(const char* name) {
 	if( *name == atcommand_symbol || *name == charcommand_symbol ) name++; // for backwards compatibility
-	ARR_FIND( 0, ARRAYLENGTH(atcommand_info), i, strcmpi(atcommand_info[i].command, name) == 0 );
-	return ( i < ARRAYLENGTH(atcommand_info) ) ? &atcommand_info[i] : NULL;
-}
-
-static AtCommandInfo* get_atcommandinfo_byfunc(const AtCommandFunc func)
-{
-	int i;
-	ARR_FIND( 0, ARRAYLENGTH(atcommand_info), i, atcommand_info[i].func == func );
-	return ( i < ARRAYLENGTH(atcommand_info) ) ? &atcommand_info[i] : NULL;
+	if( strdb_exists(atcommand_db,name) )
+		return (AtCommandInfo*)strdb_get(atcommand_db, name);
+	return NULL;
 }
 
 
 /*==========================================
  * Retrieve the command's required gm level
  *------------------------------------------*/
-int get_atcommand_level(const AtCommandFunc func)
-{
-	AtCommandInfo* info = get_atcommandinfo_byfunc(func);
+int get_atcommand_level(const char* name) {
+	AtCommandInfo* info = (AtCommandInfo*)strdb_get(atcommand_db, name);
 	return ( info != NULL ) ? info->level : 100; // 100: command can not be used
 }
 
@@ -9247,8 +9197,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		params[0] = '\0';
 	
 	//Grab the command information and check for the proper GM level required to use it or if the command exists
-	info = get_atcommandinfo_byname(command);
-	if( info == NULL || info->func == NULL || ( type && ((*atcmd_msg == atcommand_symbol && pc_isGM(sd) < info->level) || (*atcmd_msg == charcommand_symbol && pc_isGM(sd) < info->level2)) ) )
+	if( (info = (AtCommandInfo*)strdb_get(atcommand_db, command+1)) == NULL || info->func == NULL || ( type && ((*atcmd_msg == atcommand_symbol && pc_isGM(sd) < info->level) || (*atcmd_msg == charcommand_symbol && pc_isGM(sd) < info->level2)) ) )
 	{
 		if( pc_isGM(sd) ) {
 			sprintf(output, msg_txt(153), command); // "%s is Unknown Command."
@@ -9260,10 +9209,9 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	
 	//Log atcommands
 	if( *atcmd_msg == atcommand_symbol )
-		log_atcommand(sd, info->level, atcmd_msg);
-		
+		log_atcommand(sd, info->level, atcmd_msg);	
 	//Log Charcommands
-	if( *atcmd_msg == charcommand_symbol && ssd != NULL )
+	else if( *atcmd_msg == charcommand_symbol && ssd != NULL )
 		log_atcommand(sd, info->level2, message);
 	
 	//Attempt to use the command
@@ -9277,61 +9225,97 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	
 	return true;
 }
+/**
+ * Splits and parses command aliases field
+ * Note: I'm not good (at all) with string manipulation, if you think you can improve, please do. I beg you.
+ **/
+void atcommand_parse_aliases(char aliases[1024],AtCommandInfo* base) {
+	char *str[99], *p;
+	int i, max = 0;
 
+	p = aliases;
+	while( ISSPACE(*p) )//trim
+		++p;
 
+	//I assume nobody is getting over 98 alises in the same command lol
+	for( i = 0; i < 99; i++ ) {
+		str[i] = p;
+		p = strchr(p,',');
+		if( p == NULL ) {
+			max = i+1;
+			break;// comma not found
+		}
+		*p = '\0';
+		++p;
+	}
+
+	if( !str[0] )//no aliases at all
+		return;
+
+	for(i = 0; i < max;i++) {
+		AtCommandInfo* atcommand;
+
+		if( strdb_exists(atcommand_db, str[i]) ) {
+			ShowError("atcommand_conf: duplicate alises error: %s (from %s)\n",str[i],base->command);
+			continue;
+		}
+
+		CREATE(atcommand, AtCommandInfo, 1);
+
+		atcommand->command = str[i];
+		atcommand->level = base->level;
+		atcommand->level2 = base->level2;
+		atcommand->func = base->func;
+
+		strdb_put(atcommand_db, atcommand->command, atcommand);
+	}
+
+	return;
+}
 /*==========================================
  *
  *------------------------------------------*/
 int atcommand_config_read(const char* cfgName)
 {
-	char line[1024], w1[1024], w2[1024], w3[1024];
+	char line[1024], w1[1024], w2[1024], w3[1024], w4[1024];
 	AtCommandInfo* p;
 	FILE* fp;
-	
-	if( (fp = fopen(cfgName, "r")) == NULL )
-	{
+
+	if( (fp = fopen(cfgName, "r")) == NULL ) {
 		ShowError("AtCommand configuration file not found: %s\n", cfgName);
 		return 1;
 	}
 	
-	while( fgets(line, sizeof(line), fp) )
-	{
+	while( fgets(line, sizeof(line), fp) ) {
 		if( line[0] == '/' && line[1] == '/' )
 			continue;
-		
-		if( (sscanf(line, "%1023[^:]:%1023[^,],%1023s", w1, w2, w3)) != 3 && ( sscanf(line, "%1023[^:]:%1023s", w1, w2) != 2 
-		&& strcmpi(w1, "import") != 0 ) && strcmpi(w1, "command_symbol") != 0 && strcmpi(w1, "char_symbol") != 0 )
+
+		if( ( sscanf(line,"%1023[^:]:%1023[^,],%1023[^[][%1023[^]]",w1,w2,w3,w4) ) == 4 ) {
+			if( ( p = (AtCommandInfo*)strdb_get(atcommand_db, w1) ) != NULL ) {
+				
+				p->level = atoi(w2);//update @level
+				p->level2 = atoi(w3);//update #level
+				
+				/**
+				 * Parse the alises
+				 **/
+				atcommand_parse_aliases(w4,p);
+
+				continue;//we're done move on
+			}
+		} else if( strcmpi(w1, "import") != 0 && strcmpi(w1, "command_symbol") != 0 && strcmpi(w1, "char_symbol") != 0 )
 			continue;
 
-		p = get_atcommandinfo_byname(w1);
-		if( p != NULL )
-		{
-			p->level = atoi(w2);
-			p->level = cap_value(p->level, 0, 100);
-			if( (sscanf(line, "%1023[^:]:%1023s", w1, w2) == 2) && (sscanf(line, "%1023[^:]:%1023[^,],%1023s", w1, w2, w3)) != 3 )
-			{	
-				ShowWarning("atcommand_conf: setting %s:%d is deprecated! Please see atcommand_athena.conf for the new setting format.\n",w1,atoi(w2));
-				ShowWarning("atcommand_conf: defaulting %s charcommand level to %d.\n",w1,atoi(w2));
-				p->level2 = atoi(w2);
-			}
-			else {
-				p->level2 = atoi(w3);
-			}
-			p->level2 = cap_value(p->level2, 0, 100);
-		}
-		else
 		if( strcmpi(w1, "import") == 0 )
 			atcommand_config_read(w2);
-		else
-		if( strcmpi(w1, "command_symbol") == 0 &&
+		else if( strcmpi(w1, "command_symbol") == 0 &&
 			w2[0] > 31   && // control characters
 			w2[0] != '/' && // symbol of standard ragnarok GM commands
 			w2[0] != '%' && // symbol of party chat speaking
 			w2[0] != '$' && // symbol of guild chat speaking
 			w2[0] != '#' ) // remote symbol
 			atcommand_symbol = w2[0];
-		else 
-		if( strcmpi(w1, "char_symbol") == 0 &&
+		else  if( strcmpi(w1, "char_symbol") == 0 &&
 			w2[0] > 31   &&
 			w2[0] != '/' &&
 			w2[0] != '%' &&
@@ -9346,14 +9330,33 @@ int atcommand_config_read(const char* cfgName)
 	return 0;
 }
 
-void do_init_atcommand()
-{
-	add_timer_func_list(atshowmobs_timer, "atshowmobs_timer");
+void atcommand_doload() {
+
+	if( atcommand_db != NULL )
+		db_destroy(atcommand_db);
+
+	atcommand_db = strdb_alloc(DB_OPT_DUP_KEY, 0);
+	atcommand_basecommands();//fills initial atcommand_db with known commands
+
+	atcommand_config_read(ATCOMMAND_CONF_FILENAME);
+	
 	return;
 }
 
-void do_final_atcommand()
-{
+void do_init_atcommand() {
+	
+	atcommand_doload();
+
+	add_timer_func_list(atshowmobs_timer, "atshowmobs_timer");
+
+	return;
+}
+
+void do_final_atcommand() {
+	
+	db_destroy(atcommand_db);
+
+	return;
 }
 
 
@@ -9365,24 +9368,25 @@ void do_final_atcommand()
 ACMD_FUNC(commands)
 {
 	char line_buff[CHATBOX_SIZE];
-	int i, gm_lvl = pc_isGM(sd), count = 0;
+	int gm_lvl = pc_isGM(sd), count = 0;
 	char* cur = line_buff;
+	AtCommandInfo* cmd;
+	DBIterator* iter = atcommand_db->iterator(atcommand_db);
 
 	memset(line_buff,' ',CHATBOX_SIZE);
 	line_buff[CHATBOX_SIZE-1] = 0;
 
 	clif_displaymessage(fd, msg_txt(273)); // "Commands available:"
 
-	for( i = 0; i < ARRAYLENGTH(atcommand_info); i++ )
-	{
+	for( cmd = (AtCommandInfo*)iter->first(iter,NULL); iter->exists(iter); cmd = (AtCommandInfo*)iter->next(iter,NULL) ) {
 		unsigned int slen;
 
-		if( gm_lvl < atcommand_info[i].level && stristr(command,"commands") )
+		if( gm_lvl < cmd->level && stristr(command,"commands") )
 			continue;
-		if( gm_lvl < atcommand_info[i].level2 && stristr(command,"charcommands") )
+		if( gm_lvl < cmd->level2 && stristr(command,"charcommands") )
 			continue;
 
-		slen = strlen(atcommand_info[i].command);
+		slen = strlen(cmd->command);
 
 		// flush the text buffer if this command won't fit into it
 		if( slen + cur - line_buff >= CHATBOX_SIZE )
@@ -9393,11 +9397,12 @@ ACMD_FUNC(commands)
 			line_buff[CHATBOX_SIZE-1] = 0;
 		}
 
-		memcpy(cur,atcommand_info[i].command,slen);
+		memcpy(cur,cmd->command,slen);
 		cur += slen+(10-slen%10);
 
 		count++;
 	}
+	iter->destroy(iter);
 	clif_displaymessage(fd,line_buff);
 
 	sprintf(atcmd_output, msg_txt(274), count); // "%d commands found."
