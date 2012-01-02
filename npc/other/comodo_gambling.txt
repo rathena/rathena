@@ -391,19 +391,19 @@ comodo,219,158,6	script	Kachua	91,{
 
 comodo,204,148,7	script	Devellin	90,{
 
-	mes "[Devellin]"{
-	mes "It seems some traveller showed"{
-	mes "a huge diamond to Kachua a while ago. Ever since then, all she's been talking about is diamonds and how much she wants them."{
+	mes "[Devellin]";
+	mes "It seems some traveller showed";
+	mes "a huge diamond to Kachua a while ago. Ever since then, all she's been talking about is diamonds and how much she wants them.";
 	next;
-	mes "[Devellin]"{
-	mes "She's been getting pretty obsessive about it, which scares me. It seems she's more than willing to sacrifice anything she owns for a diamond."{
+	mes "[Devellin]";
+	mes "She's been getting pretty obsessive about it, which scares me. It seems she's more than willing to sacrifice anything she owns for a diamond.";
 	next;
-	mes "[Devellin]"{
-	mes "She's the type of person who'll do anything to get what she wants. I'm worried that she might give away something far more valuable than a diamond in exchange..."{
+	mes "[Devellin]";
+	mes "She's the type of person who'll do anything to get what she wants. I'm worried that she might give away something far more valuable than a diamond in exchange...";
 	close;
 }
 
-comodo,210,154,2	script	Suspicious Guy	118,{
+comodo,210,154,2	script	Suspicious Guy#cmd	118,{
 
 	if (BaseClass == Job_Thief){
 		mes "[Cain]";
