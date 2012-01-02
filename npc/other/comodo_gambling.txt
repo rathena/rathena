@@ -3,11 +3,11 @@
 //===== By: ==================================================
 //= Reddozen, Cypress, Zefris
 //===== Current Version: =====================================
-//= 1.2
+//= 1.4
 //===== Compatible With: =====================================
-//= rAthena SVN 6769+ (temporary npc variables)
+//= Any rAthena SVN
 //===== Description: =========================================
-//= Random items from 3carat diamonds in Comodo
+//= Comodo Gambling: Win random Items with 3 Carat Diamonds.
 //===== Additional Comments: =================================
 //= 0.1- so far just a basic setup, and working on the function
 //= 0.2- fixed some spelling errors and set zeny,zeny - (@amount * 55000)[Cypress]
@@ -22,9 +22,10 @@
 //= 1.1- Updated prizes according to 11.1 NPC [Paradox924X]
 //= 1.2 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 1.3 Added missing item. [Kisuka]
+//= 1.4 Updated Script to match AEGIS file. [Masao]
 //============================================================ 
 
-comodo,219,160,3	script	Kachua	91,{
+comodo,219,158,6	script	Kachua	91,{
 
 	cutin "katsua01.bmp",2;
 
@@ -86,7 +87,6 @@ comodo,219,160,3	script	Kachua	91,{
 		cutin "katsua01.bmp",255;					
 		close;
 	}
-		
 	delitem 732,1;
 	
 	mes "[Kachua]";
@@ -250,7 +250,8 @@ comodo,219,160,3	script	Kachua	91,{
 				else if ((.@gamble2 >  7) && (.@gamble2 < 11)) set .@item,2507; // Ancient Cape
 				else if (.@gamble2 == 11) set .@item,2513; // Heavenly Maiden Robe[1]
 				else if (.@gamble2 == 12) set .@item,2514; // Pauldron[1]
-				else if (.@gamble2 > 12 && .@gamble2 < 15) set .@item,2523; // Undershirt[1]
+				else if (.@gamble2 == 13) set .@item,2523; // Undershirt[1]
+				else if (.@gamble2 == 14) set .@item,2530; // Rider Insigna[1]
 				else if (.@gamble2 == 15) set .@item,2509; // Survivor's Manteau
 				else if (.@gamble2 == 16) set .@item,2515; // Eagle Wing[1]
 			}
@@ -388,22 +389,179 @@ comodo,219,160,3	script	Kachua	91,{
 	end;
 }
 
-mjolnir_02,85,364,3	script	Blacksmith Miner	726,{
+comodo,204,148,7	script	Devellin	90,{
 
+	mes "[Devellin]"{
+	mes "It seems some traveller showed"{
+	mes "a huge diamond to Kachua a while ago. Ever since then, all she's been talking about is diamonds and how much she wants them."{
+	next;
+	mes "[Devellin]"{
+	mes "She's been getting pretty obsessive about it, which scares me. It seems she's more than willing to sacrifice anything she owns for a diamond."{
+	next;
+	mes "[Devellin]"{
+	mes "She's the type of person who'll do anything to get what she wants. I'm worried that she might give away something far more valuable than a diamond in exchange..."{
+	close;
+}
+
+comodo,210,154,2	script	Suspicious Guy	118,{
+
+	if (BaseClass == Job_Thief){
+		mes "[Cain]";
+		mes "Heeeey...";
+		mes "It seems we share the same line of work, you and me. Heh heh, lemme give you a hot tip.";
+		next;
+		mes "[Cain]";
+		mes "I've been charging other people for this information, but since, shall we say, we work in the same professional field, I don't have the heart to take your zeny.";
+		next;
+		mes "[Cain]";
+		mes "You see that lady over there?";
+		mes "She's just totally in love with diamonds. And from what my sources tell me, she's loaded. Tons and tons of valuables.";
+		next;
+		mes "[Cain]";
+		mes "I'm talkin' rare items.";
+		mes "I took the liberty of sneaking a peek at what she owns, and saw she's got a helmet with goat horns and even a crown! She's so rich it's ridiculous!";
+		next;
+		mes "[Cain]";
+		mes "The buzz that's been going around is that she's got a cache of rare equipment and weapons too! So whaddya say? Wanna be partners in crime and rob her house?";
+		next;
+		switch(select("No, thanks.:Sweet, I'm in!")){
+		case 1:
+			mes "[Cain]";
+			mes "Wha...?";
+			mes "C'mon! I thought pilfering was something you do! Aw well, I'm gonna do it, but stay hushed on this, got it?";
+			close;
+		case 2:
+			mes "[Cain]";
+			mes "Ha ha ha!";
+			mes "...^660000Dork^000000!";
+			mes "I'm just jivin'";
+			mes "sp fuggedabout it!";
+			next;
+			mes "[Cain]";
+			mes "Ah right. Supposedly, there's a mountain where tons of diamonds are buried. A pal o' mine says there's a mine near the mountain too, so I guess if you went to the mine, you'd find Diamonds.";
+			next;
+			mes "[Cain]";
+			mes "I guess it can't hurt to gather some Diamonds there and try to exchange them for whatever the old lady's got. Take care, pal~";
+			close;
+		}
+	}
+	mes "[Cain]";
+	mes "Hey...";
+	mes "I got a hot tip for you.";
+	mes "It'll just cost you 500 zeny";
+	mes "and trust me, it's worth it.";
+	mes "So whaddya say...?";
+	next;
+	switch(select("Alright.:No, thanks.")){
+	case 1:
+		if (Zeny > 499){
+			mes "[Cain]";
+			mes "You see that lady over there? She's just totally in love with diamonds. And from what my sources tell me, she's loaded. Tons and tons of valuables.";
+			next;
+			mes "[Cain]";
+			mes "I'm talkin' rare items.";
+			mes "I took the liberty of sneaking a peek at what she owns, and saw she's got a helmet with goat horns and even a crown! She's so rich it's ridiculous!";
+			next;
+			mes "[Cain]";
+			mes "There's a chance that rare equipment and weapons might be yours! She'll give anything for a 3 carat diamond. So if you have any of those, you might as well see her.";
+			next;
+			mes "[Cain]";
+			mes "Ah right. Supposedly, there's a mountain where tons of diamonds";
+			mes "are buried. A pal o' mine says there's a mine near the mountain too, so I guess if you went to the mine, you'd find Diamonds.";
+			next;
+			mes "[Cain]";
+			mes "I guess it can't hurt to gather some Diamonds there and try to exchange them for whatever the old lady's got. Take care, pal~";
+			set Zeny,Zeny-500;
+			close;
+		}
+		mes "[Cain]";
+		mes "What the hell?!";
+		mes "Don't you have any money? Didn't I say 500 zeny? Hey man, info like this doesn't come cheap!";
+		close;
+	case 2:
+		mes "[Cain]";
+		mes "Hey hey!";
+		mes "What are you, a cheapskate? You understand that everything has its price and this information is so worth it. C'mon, you can't pass this up, can you?";
+		close;
+	}
+}
+
+mjolnir_02,85,362,3	script	Blacksmith Miner	726,{
+
+	if(checkweight(1201,1) == 0)
+	{
+		mes "[Kachua]";
+		mes "^3355FFWait a second! Right now, you're carrying too many items with you. Please come back after putting some of your things into Kafra Storage.^000000";
+		close;
+	}
 	mes "[Dwayne]";
 	mes "Wahahahaha~";
 	mes "I've dug up a fortune!";
 	next;
-	
 	mes "[Dwayne]";
 	mes "Diamonds! Hundreds and";
 	mes "thousands of Diamonds,";
 	mes "all of them mine!";
 	mes "I'm rich!";
-	emotion e_heh;
+	emotion 18;
 	next;
-	
-	if (select("I want to buy some.", "Congratulations.") == 2) {
+	switch(select("I want to buy some.:Congratulations.")){
+	case 1:
+		mes "[Dwayne]";
+		mes "Ah, you have an";
+		mes "eye for valuables!";
+		mes "Sure, sure why not!";
+		mes "I'll give you a discount, too!";
+		mes "55,000 Zeny for a diamond,";
+		mes "how does that sound?";
+		next;
+		mes "[Dwayne]";
+		mes "How many";
+		mes "diamonds do you need?";
+		mes "If you change your mind,";
+		mes "please enter '0' to cancel.";
+		next;
+		input .@amount;
+		if (.@amount == 0){
+			mes "[Dwayne]";
+			mes "Alright, you've";
+			mes "canceled the trade.";
+			mes "Take care!";
+			close;
+		}else if (.@amount < 1 || .@amount > 500){
+			mes "[Dwayne]";
+			mes "The maximum";
+			mes "amount is 500.";
+			mes "Please enter 500 or less.";
+			close;
+		}
+		set .@cost,.@amount * 55000;
+		set .@weight,.@amount * 100;
+		if (Zeny < .@cost){
+			mes "[Dwayne]";
+			mes "Errr...";
+			mes "I'm sorry, but you";
+			mes "do not have enough money.";
+			mes "I'll be losing money if";
+			mes "I sell them at that price.";
+			close;
+		}
+		if (Weight < .@weight){
+			mes "[Dwayne]";
+			mes "Errr...";
+			mes "You're carrying too many items.";
+			mes "I don't think give you anything if there's no room in your inventory. Why don't you put some of your stuff into Kafra Storage?";
+			close;
+		}
+		set Zeny,Zeny - .@cost;
+		getitem 732,.@amount;
+		mes "[Dwayne]";
+		mes "Thank you for";
+		mes "buying my diamonds!";
+		mes "You're welcome to";
+		mes "come back anytime.";
+		close;
+	case 2:
 		mes "[Dwayne]";
 		mes "Haha, thank you~";
 		mes "If by any chance";
@@ -411,230 +569,6 @@ mjolnir_02,85,364,3	script	Blacksmith Miner	726,{
 		mes "please drop by.";
 		mes "I'll sell them to";
 		mes "you at a cheap price.";
-		close;
-	}
-	
-	mes "[Dwayne]";
-	mes "Ah, you have an";
-	mes "eye for valuables!";
-	mes "Sure, sure why not!";
-	mes "I'll give you a discount, too!";
-	mes "55,000 Zeny for a diamond,";
-	mes "how does that sound?";
-	next;
-	
-	mes "[Dwayne]";
-	mes "How many";
-	mes "diamonds do you need?";
-	mes "If you change your mind";
-	mes "please enter '0' to cancel";
-	next;
-	
-	while(1) {
-		input .@amount;
-		if (.@amount <= 0) {
-			mes "[Dwayne]";
-			mes "Alright, you've";
-			mes "canceled the trade.";
-			mes "Take care!";
-			close;
-		} else if (.@amount > 500) {
-			mes "[Dwayne]";
-			mes "The maximum number you can enter is 500.";
-			mes "Please enter no more than 500.";
-			next;
-		} else {
-			break;
-		}
-	}
-	
-	set .@price, .@amount * 55000;
-	if (Zeny < .@price) {
-		mes "[Dwayne]";
-		mes "Hahahaha~";
-		mes "You can't fool me!";
-		mes "You don't have enough";
-		mes "Zeny for that many!";
-		close;
-	}
-	
-	if (!checkweight(732, .@amount)) {
-		mes "[Dwayne]";
-		mes "Errr... You brought too many things.";
-		mes "You can't receive this item at this time.";
-		mes "You better reorganise your inventory and try again.";
-		close;
-	}
-	
-	set Zeny, Zeny - .@price;
-	getitem 732, .@amount;
-	
-	mes "[Dwayne]";
-	mes "Thank you for";
-	mes "buying my diamonds!";
-	mes "You're welcome to";
-	mes "come back anytime.";
-	close;
-}
-
-comodo,204,148,7	script	Devellin	90,{
-
-	mes "[Devellin]";
-	mes "It seems some traveller showed";
-	mes "a huge diamond to Kachua a while";
-	mes "ago. Ever since then, all she's";
-	mes "been talking about is diamonds and";
-	mes "how much she wants them.";
-	next;
-	mes "[Devellin]";
-	mes "She's been getting pretty obsessive";
-	mes "about it, which scares me. It seems";
-	mes "she's more than willing to";
-	mes "sacrifice anything she owns for a";
-	mes "diamond.";
-	next;
-	mes "[Devellin]";
-	mes "She's the type of person who'll do";
-	mes "anything to get what she wants. I'm";
-	mes "worried that she might give away";
-	mes "something far more valuable than a";
-	mes "diamond in exchange...";
-	close;
-}
-
-comodo,210,154,4	script	Suspicious Guy#cmd	118,{
-
-	if (BaseClass == Job_Thief) {
-	
-		mes "[Cain]";
-		mes "Heeeey...";
-		mes "It seems we share the same line of";
-		mes "work, you and me, Heh heh, lemme";
-		mes "give  you a hot tip.";
-		next;
-		mes "[Cain]";
-		mes "I've been charging other people for";
-		mes "this information, but since, shall";
-		mes "we say, we work in the same";
-		mes "professional field, I don't have";
-		mes "the heart to take your zeny.";
-		next;
-		mes "[Cain]";
-		mes "You see that lady over there?";
-		mes "She's just totally in love with" ;
-		mes "diamonds. And from what my sources";
-		mes "tell me, she's loaded. Tons and";
-		mes "tons of valuables.";
-		next;
-		mes "[Cain]";
-		mes "I'm talking' rare items.";
-		mes "I took the liberty of sneaking a";
-		mes "peek at what she owns, and saw";
-		mes "she's got a helmet with goat horns";
-		mes "and even a crown! She's so rich";
-		mes "it's ridiculous!";
-		next;
-		mes "[Cain]";
-		mes "The buzz that's been going around";
-		mes "is that she's got a cache of rare";
-		mes "equipment and weapons too! So";
-		mes "whaddya say? Wanna be partners in";
-		mes "crime and rob her house?";
-		next;
-		if (select("No, thanks.", "Sweet, I'm in.") == 1) {
-			mes "[Cain]";
-			mes "Wha... ?";
-			mes "C'mon I thought pilfering was";
-			mes "something you do! Aw well, I'm";
-			mes "gonna do it, but stay hushed on";
-			mes "this, got it?";
-			close;
-		}
-		mes "[Cain]";
-		mes "Ha ha ha!";
-		mes "... Dork!";
-		mes "I'm just jivin'";
-		mes "so fuggedabout it!";
-		next;
-		mes "[Cain]";
-		mes "Ah right. Supposedly, there's a";
-		mes "mountain where tons of diamonds are";
-		mes "burried. A pal o'mine says there's";
-		mes "a mine near the mountain too, so I";
-		mes "guess if you went to the mine,";
-		mes "you'd find Diamonds.";
-		next;
-		mes "[Cain]";
-		mes "I guess it can't hurt to gather";
-		mes "some Diamonds there and try to";
-		mes "exchange them for whatever the old";
-		mes "lady's got. Take care, pal~";
-		close;
-		
-	} else {
-	
-		mes "[Cain]";
-		mes "Hey...";
-		mes "I got a hot tip for you.";
-		mes "It'll cost you 500 zeny";
-		mes "and trust me, it's worth it.";
-		mes "So whaddya say... ?";
-		next;
-		if (select("Alright.", "No, thanks.") == 2) {
-			mes "[Cain]";
-			mes "Hey hey!";
-			mes "What are you, a cheapskate? You";
-			mes "understand that everything has its";
-			mes "price and this information is so";
-			mes "worth it. C'mon, you can't pass";
-			mes "this up, can you?";
-			close;
-		}
-		if(Zeny < 500) {
-			mes "[Cain]";
-			mes "What the hell?!";
-			mes "Don't you even have any money? Didn't I";
-			mes "say 500 zeny? Hey man, Info like";
-			mes "this doesn't come cheap!";
-			close;
-		}
-		set Zeny, Zeny - 500;
-		mes "[Cain]";
-		mes "You see that lady over there?";
-		mes "She's just totally in love with" ;
-		mes "diamonds. And from what my sources";
-		mes "tell me, she's loaded. Tons and";
-		mes "tons of valuables.";
-		next;
-		mes "[Cain]";
-		mes "I'm talking' rare items.";
-		mes "I took the liberty of sneaking a";
-		mes "peek at what she owns, and saw";
-		mes "she's got a helmet with goat horns";
-		mes "and even a crown! She's so rich";
-		mes "it's ridiculous!";
-		next;
-		mes "[Cain]";
-		mes "There's a chance that rare";
-		mes "equipment and weapons might be";
-		mes "yours! She'll give anything for a";
-		mes "3carat diamond. So if you have any";
-		mes "of those, you might as well see";
-		mes "her.";
-		next;
-		mes "[Cain]";
-		mes "Ah right. Supposedly, there's a";
-		mes "mountain where tons of diamonds";
-		mes "are burried. A pal o'mine says";
-		mes "there's a mine near the mountain";
-		mes "too, so I guess if you went to the";
-		mes "mine, you'd find Diamonds.";
-		next;
-		mes "[Cain]";
-		mes "I guess it can't hurt to gather";
-		mes "some Diamonds there and try to";
-		mes "exchange them for whatever the old";
-		mes "lady's got. Take care, pal~";
 		close;
 	}
 }

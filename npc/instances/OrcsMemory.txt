@@ -109,6 +109,7 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 						donpcevent instance_npcname("#Boss Control", instance_id())+"::OnInstanceInit";
 						donpcevent instance_npcname("#Warp Outside Orc Dun", instance_id())+"::OnInstanceInit";
 						donpcevent instance_npcname("Kruger#", instance_id())+"::OnInstanceInit";
+						disablenpc instance_npcname("Kruger#2-2", instance_id());
 
 						close;
 					}
@@ -906,6 +907,7 @@ OnTimer23910:
 }
 
 2@orcs,26,164,0	script	Torch#1-1	844,{
+	if(getpartyleader(getcharid(1),2) != getcharid(0)) end;
 	progressbar "ffff00",5;
 	donpcevent instance_npcname("Torch#1-2", instance_id())+"::OnEnable";
 	initnpctimer;
@@ -931,6 +933,7 @@ OnTimer2000:
 }
 
 2@orcs,55,155,0	script	Torch#1-2	844,{
+	if(getpartyleader(getcharid(1),2) != getcharid(0)) end;
 	progressbar "ffff00",5;
 	donpcevent instance_npcname("Torch#1-3", instance_id())+"::OnEnable";
 	initnpctimer;
@@ -956,6 +959,7 @@ OnTimer2000:
 }
 
 2@orcs,108,146,0	script	Torch#1-3	844,{
+	if(getpartyleader(getcharid(1),2) != getcharid(0)) end;
 	progressbar "ffff00",5;
 	donpcevent instance_npcname("Torch#1-4", instance_id())+"::OnEnable";
 	initnpctimer;
@@ -981,6 +985,7 @@ OnTimer2000:
 }
 
 2@orcs,98,171,0	script	Torch#1-4	844,{
+	if(getpartyleader(getcharid(1),2) != getcharid(0)) end;
 	progressbar "ffff00",5;
 	donpcevent instance_npcname("#Warp2-1", instance_id())+"::OnEnable";
 	initnpctimer;
@@ -1031,6 +1036,7 @@ OnTouch:
 }
 
 2@orcs,35,92,0	script	Torch#2-1	844,{
+	if(getpartyleader(getcharid(1),2) != getcharid(0)) end;
 	progressbar "ffff00",5;
 	donpcevent instance_npcname("Torch#2-2", instance_id())+"::OnEnable";
 	initnpctimer;
@@ -1048,6 +1054,7 @@ OnTimer2000:
 }
 
 2@orcs,32,70,0	script	Torch#2-2	844,{
+	if(getpartyleader(getcharid(1),2) != getcharid(0)) end;
 	progressbar "ffff00",5;
 	donpcevent instance_npcname("Torch#2-3", instance_id())+"::OnEnable";
 	initnpctimer;
@@ -1073,6 +1080,7 @@ OnTimer2000:
 }
 
 2@orcs,70,31,0	script	Torch#2-3	844,{
+	if(getpartyleader(getcharid(1),2) != getcharid(0)) end;
 	progressbar "ffff00",5;
 	donpcevent instance_npcname("Torch#2-4", instance_id())+"::OnEnable";
 	initnpctimer;
@@ -1098,6 +1106,7 @@ OnTimer2000:
 }
 
 2@orcs,84,51,0	script	Torch#2-4	844,{
+	if(getpartyleader(getcharid(1),2) != getcharid(0)) end;
 	progressbar "ffff00",5;
 	donpcevent instance_npcname("#Warp2-2", instance_id())+"::OnEnable";
 	initnpctimer;
@@ -1148,6 +1157,7 @@ OnTouch:
 }
 
 2@orcs,142,145,0	script	Torch#3-1	844,{
+	if(getpartyleader(getcharid(1),2) != getcharid(0)) end;
 	progressbar "ffff00",5;
 	donpcevent instance_npcname("Torch#3-2", instance_id())+"::OnEnable";
 	initnpctimer;
@@ -1165,6 +1175,7 @@ OnTimer2000:
 }
 
 2@orcs,162,134,0	script	Torch#3-2	844,{
+	if(getpartyleader(getcharid(1),2) != getcharid(0)) end;
 	progressbar "ffff00",5;
 	donpcevent instance_npcname("Torch#3-3", instance_id())+"::OnEnable";
 	initnpctimer;
@@ -1190,6 +1201,7 @@ OnTimer2000:
 }
 
 2@orcs,144,117,0	script	Torch#3-3	844,{
+	if(getpartyleader(getcharid(1),2) != getcharid(0)) end;
 	progressbar "ffff00",5;
 	donpcevent instance_npcname("Torch#3-4", instance_id())+"::OnEnable";
 	initnpctimer;
@@ -1215,6 +1227,7 @@ OnTimer2000:
 }
 
 2@orcs,136,98,0	script	Torch#3-4	844,{
+	if(getpartyleader(getcharid(1),2) != getcharid(0)) end;
 	progressbar "ffff00",5;
 	donpcevent instance_npcname("#Warp2-3", instance_id())+"::OnEnable";
 	initnpctimer;

@@ -17,7 +17,7 @@
 arena_room,38,88,5	script	lvl 60s Waiting Room	124,{
 
 OnInit:
-	waitingroom "Individual ; lvl 60 or higher",50,"lvl 60s Waiting Room::OnStartArena",1;
+	waitingroom "Individual : lvl 60 or higher",50,"lvl 60s Waiting Room::OnStartArena",1,1000,60;
 	enablewaitingroomevent;
 	end;
 

@@ -1450,8 +1450,8 @@
 2426,Shadow_Walk,Shadow Walk,5,20,,2000,,0,,0,0xFFFFFFFE,2,2,64,,75,1,0,{ bonus bMdef,10; if(getskilllv("AS_CLOAKING") < 3){ bonus5 bAutoSpellWhenHit,"AS_CLOAKING",3,100,BF_MAGIC,0; } else bonus5 bAutoSpellWhenHit,"AS_CLOAKING",getskilllv("AS_CLOAKING"),100,BF_MAGIC,0; },{},{}
 2427,Golden_Shoes,Golden Shoes,5,20,,300,,4,,0,0xFFFFFFFF,7,2,64,,0,0,0,{ bonus bMdef,4; },{},{}
 //2428,Freyja_Boots,Freyja Boots,5,0,,300,,10,,0,0xFFFFFFFE,7,2,64,,0,0,0,{ bonus2 bSubRace,RC_DemiHuman,5; },{},{}
-2429,Iron_Boots01,Iron Boots,5,0,,1500,,5,,0,0x000E5CEA,7,2,64,,0,1,0,{},{},{}
-2430,Iron_Boots02,Iron Boots,5,0,,800,,5,,0,0xFFFFFFFF,7,2,64,,0,1,0,{},{},{}
+2429,Iron_Boots01,Iron Boots,5,0,,1500,,5,,0,0x03146350,7,2,64,,0,1,0,{},{},{}
+2430,Iron_Boots02,Iron Boots,5,0,,800,,5,,0,0x01418315,7,2,64,,0,1,0,{},{},{}
 2431,Valley_Shoes,Valley Shoes,5,20,,0,,10,,0,0xFFFFFFFF,7,2,64,,0,0,0,{ bonus bMaxHPRate,7; bonus bMaxSPRate,7; },{},{}
 2432,Spiky_Heel_,High Heels,5,8500,,600,,2,,1,0xFFFFFFFE,7,2,64,,0,1,0,{ bonus bMdef,5; },{},{}
 2433,Diabolus_Boots,Diabolus Boots,5,20,,250,,4,,1,0x00CFFF80,2,2,64,,0,1,0,{ bonus bMaxHP,(BaseLevel*10); },{},{}
@@ -2796,7 +2796,7 @@
 5222,Fish_On_Head_,Evolved Blue Fish,5,20,,500,,2,,0,0xFFFFFFFF,7,2,256,,50,1,149,{ bonus bAgi,1; bonus bDex,1; },{},{}
 5223,Big_Golden_Bell_,Evolved Big Golden Bell,5,20,,200,,2,,0,0xFFFFFFFE,7,2,768,,35,1,175,{ bonus bAgi,2; },{},{}
 5224,Orc_Hero_Helm_TW,Evolved Orc Hero Helm,5,500000,,900,,5,,0,0xFFFFFFFE,7,2,768,,55,1,178,{ bonus bStr,2; bonus bVit,1; bonus bMaxHPrate,10; },{},{}
-5225,Marcher_Hat,Parade Hat,5,20,,200,,2,,1,0xFFFFFFFF,7,2,256,,10,1,269,{ bonus bMdef,2; bonus bStr,2; bonus3 bAutoSpell,"AL_ANGELUS",5,30; },{},{}
+5225,Marcher_Hat,Parade Hat,5,20,,200,,2,,1,0xFFFFFFFF,7,2,256,,10,1,269,{ bonus2 bResEff,Eff_Stun,1000; bonus3 bAutoSpellWhenHit,"NV_FIRSTAID",1,100; bonus3 bAutoSpellWhenHit,"TF_BACKSLIDING",1,100; /*If(BaseClass == Job_Acolyte) { bonus4 bAutoSpellOnSkill,"PR_LEXAETERNA","AL_HEAL",1,10;*/ }},{},{}
 5226,Mini_Propeller_,Mini Propeller,5,20,,200,,2,,0,0xFFFFFFFF,7,2,256,,0,1,270,{ bonus bAgi,2; bonus bDex,1; bonus bFlee,10; bonus bCastrate,-getrefine(); },{},{}
 5227,Red_Deviruchi_Cap,Red Deviruchi Hat,5,20,,800,,2,,0,0xFFFFFFFE,7,2,256,,64,1,271,{ bonus bStr,1; bonus bInt,1; },{},{}
 5228,White_Deviruchi_Cap,Gray Deviruchi Hat,5,20,,800,,2,,0,0xFFFFFFFE,7,2,256,,64,1,272,{ bonus bStr,1; bonus bInt,1; },{},{}

@@ -93,14 +93,12 @@ aldeg_cas03,69,71,2	duplicate(Nuenberg3)	Nuenberg#a3-9	722
 aldeg_cas03,91,69,2	duplicate(Nuenberg3)	Nuenberg#a3-10	722
 aldeg_cas03,108,60,2	duplicate(Nuenberg3)	Nuenberg#a3-11	722
 aldeg_cas03,121,73,2	duplicate(Nuenberg3)	Nuenberg#a3-12	722
-aldeg_cas03,121,73,2	duplicate(Nuenberg3)	Nuenberg#a3-13	722
-aldeg_cas03,75,102,2	duplicate(Nuenberg3)	Nuenberg#a3-14	722
-aldeg_cas03,199,169,2	duplicate(Nuenberg3)	Nuenberg#a3-15	722
-aldeg_cas03,181,179,2	duplicate(Nuenberg3)	Nuenberg#a3-16	722
-aldeg_cas03,192,44,2	duplicate(Nuenberg3)	Nuenberg#a3-17	722
-aldeg_cas03,208,145,2	duplicate(Nuenberg3)	Nuenberg#a3-18	722
-aldeg_cas03,207,75,2	duplicate(Nuenberg3)	Nuenberg#a3-19	722
-aldeg_cas03,96,62,2	duplicate(Nuenberg3)	Nuenberg#a3-20	722
+aldeg_cas03,75,102,2	duplicate(Nuenberg3)	Nuenberg#a3-13	722
+aldeg_cas03,199,169,2	duplicate(Nuenberg3)	Nuenberg#a3-14	722
+aldeg_cas03,181,179,2	duplicate(Nuenberg3)	Nuenberg#a3-15	722
+aldeg_cas03,192,44,2	duplicate(Nuenberg3)	Nuenberg#a3-16	722
+aldeg_cas03,208,145,2	duplicate(Nuenberg3)	Nuenberg#a3-17	722
+aldeg_cas03,96,62,2	duplicate(Nuenberg3)	Nuenberg#a3-18	722
 
 // AGIT Manager
 //============================================================

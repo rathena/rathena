@@ -10003,7 +10003,7 @@ mid_camp,69,144,0	script	Ferocious Gorurug	421,{
 				close;
 			}
 			else {
-				// custom translation				
+				// custom translation
 				mes "Ferocious Gorurug welcomes you gracefully.";
 				next;
 				mes "[Ferocious Gorurug]";

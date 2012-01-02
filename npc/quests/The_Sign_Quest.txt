@@ -2679,7 +2679,7 @@ aldeba_in,155,101,3	script	Sir Jore#sign	805,7,7,{
 			mes "......";
 			mes "...No!";
 			mes "Look what";
-			mes "made me do!";
+			mes "you made me do!";
 			next;
 			emotion e_sob;
 			mes "[Sir Jore]";
@@ -2754,10 +2754,10 @@ aldeba_in,155,101,3	script	Sir Jore#sign	805,7,7,{
 				next;
 				set sign_q,16;
 				mes "[Sir Jore]";
-				mes "Just bring";
-				mes "10 Empty Test Tube,";
-				mes "10 Green Herb and";
-				mes "2 Yggdrasil Leaf.";
+				mes "Just bring me";
+				mes "10 Empty Test Tubes,";
+				mes "10 Green Herbs and";
+				mes "2 Yggdrasil Leafs.";
 				next;
 				mes "[Sir Jore]";
 				mes "You see, l-lately I've";
@@ -8486,7 +8486,7 @@ um_in,27,23,3	script	Fastidious-Looking Guy	121,{
 		mes "to find some ancient";
 		mes "or really aged paper...";
 		next;
-		if (countitem(1097) > 6) {
+		if (countitem(1097) > 9) {
 			mes "[Cyon]";
 			mes "How did you find these";
 			mes "Worn Out Pages? This is great,";
@@ -8506,7 +8506,7 @@ um_in,27,23,3	script	Fastidious-Looking Guy	121,{
 			mes "Just as I thought!";
 			mes "The Sobbing Starlight is responding to these Worn Out Pages! Excellent! I've finally fulfilled my promise to Metz! Now he can leave";
 			mes "me alone!";
-			delitem 1097,7; //Worn_Out_Page
+			delitem 1097,10; //Worn_Out_Page
 			set sign_q,76;
 			getitem 7275,1; //Ancient_Document
 			close;

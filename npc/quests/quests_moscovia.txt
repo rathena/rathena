@@ -11346,7 +11346,7 @@ moscovia,178,127,0	script	The Blacksmith#rus06	63,{
 			mes "And don't forget to wear these!";
 			delitem 999,25;
 			set rhea_rus_main,8;
-			if (BaseClass == Job_Merchant || BaseClass == Job_Swordman || BaseClass == Job_Thief || BaseClass == Job_Archer) {
+			if (BaseClass == Job_Merchant || BaseClass == Job_Swordman || BaseClass == Job_Thief || BaseClass == Job_Archer || BaseClass == Job_Ninja || BaseClass == Job_Gunslinger) {
 				getitem 2429,1;
 				close;
 			}else {

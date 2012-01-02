@@ -722,8 +722,8 @@ OnTouch:
 	set event_momo,3;
 	warp "amatsu",223,230;
 	disablenpc "Coach#after";
-	donpcevent "Assistant#ama::Onreset";
 	donpcevent "Timer#ama::OnDisable";
+	donpcevent "Assistant#ama::Onreset";
 	end;
 }
 	

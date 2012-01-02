@@ -1264,7 +1264,7 @@
 12056,0,0,0,0,0,0,0,"Job Quest - Assassin"
 12057,0,0,0,0,0,0,0,"Pass to the Lab"
 12058,0,0,0,0,0,0,0,"Admission Restricted to the 102 Tower"
-12059,9600,0,0,0,0,0,0,"Orc's Memory Time Limit"
+12059,7200,0,0,0,0,0,0,"Orc's Memory Time Limit"
 12060,86400,0,0,0,0,0,0,"Today's Fishing Closed"
 12061,0,0,0,0,0,0,0,"Concentration"
 12062,86400,0,0,0,0,0,0,"Today's Mining Closed"

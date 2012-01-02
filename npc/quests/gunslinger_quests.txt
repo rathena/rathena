@@ -252,6 +252,10 @@ que_ng,182,85,3	script	Garrison	109,{
 					callsub SubGarrison;
 				case 2:
 					callsub SubGarrison_;
+				case 3:
+					mes "[Garrison]";
+					mes "I'll see you when I see you~";
+					close;
 			}
 	}
 

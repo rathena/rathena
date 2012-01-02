@@ -17,12 +17,11 @@ arena_room,52,42,7	script	lvl 70s Waiting Room	124,{
 	end;
 
 OnInit:
-	waitingroom "Individual ; lvl 70 or higher",50,"lvl 70s Waiting Room::OnStartArena",1;
+	waitingroom "Individual : lvl 70 or higher",50,"lvl 70s Waiting Room::OnStartArena",1,1000,70;
 	enablewaitingroomevent;
 	end;
 
 OnStartArena:
-	enablenpc "ArenaFee#70";
 	warpwaitingpc "force_3-1",99,12;
 	donpcevent "arena#70::Onstart";
 	disablewaitingroomevent;
@@ -30,18 +29,6 @@ OnStartArena:
 
 Onstart:
 	enablewaitingroomevent;
-	end;
-}
-
-force_3-1,99,12,1	script	ArenaFee#70	139,1,1,{
-
-OnInit:
-	disablenpc "ArenaFee#70";
-	end;
-
-OnTouch:
-	set Zeny,Zeny -1000;
-	disablenpc "ArenaFee#70";
 	end;
 }
 

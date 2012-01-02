@@ -1191,6 +1191,7 @@ kh_school,179,39,0	script	Cute Student#kh	895,{
 			set KielHyreQuest,8;
 			//KHPubMasterEnd no longer needed-- deleting.
 			set KHPubMasterEnd,0;
+			set KHToastGirlEnd,0;
 			emotion e_ho;
 		}
 	}
