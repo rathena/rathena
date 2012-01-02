@@ -1416,8 +1416,8 @@ REPLACE INTO `item_db` VALUES (2425,'Black_Leather_Boots','Black Leather Boots',
 REPLACE INTO `item_db` VALUES (2426,'Shadow_Walk','Shadow Walk',5,20,NULL,2000,NULL,0,NULL,0,0xFFFFFFFE,2,2,64,NULL,75,1,0,'bonus bMdef,10; if(getskilllv(\"AS_CLOAKING\") < 3){ bonus5 bAutoSpellWhenHit,\"AS_CLOAKING\",3,100,BF_MAGIC,0; } else bonus5 bAutoSpellWhenHit,\"AS_CLOAKING\",getskilllv(\"AS_CLOAKING\"),100,BF_MAGIC,0;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2427,'Golden_Shoes','Golden Shoes',5,20,NULL,300,NULL,4,NULL,0,0xFFFFFFFF,7,2,64,NULL,0,0,0,'bonus bMdef,4;',NULL,NULL);
 # REPLACE INTO `item_db` VALUES (2428,'Freyja_Boots','Freyja Boots',5,0,NULL,300,NULL,10,NULL,0,0xFFFFFFFE,7,2,64,NULL,0,0,0,'bonus2 bSubRace,RC_DemiHuman,5;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (2429,'Iron_Boots01','Iron Boots',5,0,NULL,1500,NULL,5,NULL,0,0x000E5CEA,7,2,64,NULL,0,1,0,NULL,NULL,NULL);
-REPLACE INTO `item_db` VALUES (2430,'Iron_Boots02','Iron Boots',5,0,NULL,800,NULL,5,NULL,0,0xFFFFFFFF,7,2,64,NULL,0,1,0,NULL,NULL,NULL);
+REPLACE INTO `item_db` VALUES (2429,'Iron_Boots01','Iron Boots',5,0,NULL,1500,NULL,5,NULL,0,0x03146350,7,2,64,NULL,0,1,0,NULL,NULL,NULL);
+REPLACE INTO `item_db` VALUES (2430,'Iron_Boots02','Iron Boots',5,0,NULL,800,NULL,5,NULL,0,0x01418315,7,2,64,NULL,0,1,0,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (2431,'Valley_Shoes','Valley Shoes',5,20,NULL,0,NULL,10,NULL,0,0xFFFFFFFF,7,2,64,NULL,0,0,0,'bonus bMaxHPRate,7; bonus bMaxSPRate,7;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2432,'Spiky_Heel_','High Heels',5,8500,NULL,600,NULL,2,NULL,1,0xFFFFFFFE,7,2,64,NULL,0,1,0,'bonus bMdef,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2433,'Diabolus_Boots','Diabolus Boots',5,20,NULL,250,NULL,4,NULL,1,0x00CFFF80,2,2,64,NULL,0,1,0,'bonus bMaxHP,(BaseLevel*10);',NULL,NULL);
@@ -2585,7 +2585,7 @@ REPLACE INTO `item_db` VALUES (5221,'Pair_Of_Red_Ribbon_','Evolved Pair of Red R
 REPLACE INTO `item_db` VALUES (5222,'Fish_On_Head_','Evolved Blue Fish',5,20,NULL,500,NULL,2,NULL,0,0xFFFFFFFF,7,2,256,NULL,50,1,149,'bonus bAgi,1; bonus bDex,1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5223,'Big_Golden_Bell_','Evolved Big Golden Bell',5,20,NULL,200,NULL,2,NULL,0,0xFFFFFFFE,7,2,768,NULL,35,1,175,'bonus bAgi,2;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5224,'Orc_Hero_Helm_TW','Evolved Orc Hero Helm',5,500000,NULL,900,NULL,5,NULL,0,0xFFFFFFFE,7,2,768,NULL,55,1,178,'bonus bStr,2; bonus bVit,1; bonus bMaxHPrate,10;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (5225,'Marcher_Hat','Parade Hat',5,20,NULL,200,NULL,2,NULL,1,0xFFFFFFFF,7,2,256,NULL,10,1,269,'bonus4 bAutoSpell, \"AL_ANGELUS\", 5, 10, 0; bonus bMdef, 2; bonus2 bResEff, Eff_Stun, 1000;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (5225,'Marcher_Hat','Parade Hat',5,20,NULL,200,NULL,2,NULL,1,0xFFFFFFFF,7,2,256,NULL,10,1,269,'bonus2 bResEff,Eff_Stun,1000; bonus3 bAutoSpellWhenHit,"NV_FIRSTAID",1,100; bonus3 bAutoSpellWhenHit,"TF_BACKSLIDING",1,100; /*If(BaseClass == Job_Acolyte) { bonus4 bAutoSpellOnSkill,"PR_LEXAETERNA","AL_HEAL",1,10;*/ }',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5226,'Mini_Propeller_','Mini Propeller',5,20,NULL,200,NULL,2,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,1,270,'bonus bAgi,2; bonus bDex,1; bonus bFlee,10; bonus bCastrate,-getrefine();',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5227,'Red_Deviruchi_Cap','Red Deviruchi Hat',5,20,NULL,800,NULL,2,NULL,0,0xFFFFFFFE,7,2,256,NULL,64,1,271,'bonus bStr,1; bonus bInt,1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5228,'White_Deviruchi_Cap','Gray Deviruchi Hat',5,20,NULL,800,NULL,2,NULL,0,0xFFFFFFFE,7,2,256,NULL,64,1,272,'bonus bStr,1; bonus bInt,1;',NULL,NULL);
