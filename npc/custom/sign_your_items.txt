@@ -173,6 +173,14 @@ L_CHECK2:
 		emotion e_sry;
 		goto M_MENU;
 	}
+	getinventorylist;
+	for (set .@i,0; .@i < @inventorylist_count; set .@i,.@i+1){
+		if(@inventorylist_expire[.@i] != 0) {
+			mes "Sorry, I don't sign rental items!";
+			emotion e_hmm;
+			goto M_MENU;
+		}
+	}
 
 	if(@ref)mes "It has been refined "+@ref+" times... Adding ^FF00005000z^000000 per time.";
 	mes "Give me ^0000803 gray Gift Boxes^000000";

@@ -877,6 +877,7 @@ OnTimer5000:
 	disablenpc "end1e#bingo";
 	set $hu_bingoa,0;
 	donpcevent "Bingo Waiting Room::OnStart";
+	areawarp "que_bingo",69,108,30,135,"hugel",59,207;
 	end;
 }
 
