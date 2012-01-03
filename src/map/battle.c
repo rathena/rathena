@@ -1515,10 +1515,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				skillratio += 100;
 		}
 		if( !skill_num )
-		{ // Random chance to deal multiplied damage - Consider it as part of skill-based-damage
-			if( sd && sd->random_attack_increase_add > 0 && sd->random_attack_increase_per && rand()%100 < sd->random_attack_increase_per )
-				skillratio += sd->random_attack_increase_add;
-
+		{
 			ATK_RATE(skillratio);
 		}
 		else

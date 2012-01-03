@@ -397,7 +397,6 @@ bonus2 bAddEff2,x,n;			Adds a n/100% chance to cause status change x on self whe
 					x:	Eff_Blind, Eff_Sleep, Eff_Poison, Eff_Freeze, Eff_Silence,
 						Eff_Stun, Eff_Curse, Eff_Confusion, Eff_Stone, Eff_Bleeding
 bonus bMagicDamageReturn,n;		Adds a n% chance to reflect targetted magic spells back to the enemy that caused it.
-bonus2 bRandomAttackIncrease,x,n;	Adds a n% chance to inflict x% additional damage to the enemy with normal attack.
 bonus bPerfectHide,n;			Hidden/cloaked character is no longer detected by monsters with 'detector' mode (n is meaningless).
 bonus bNoKnockback,n;			Character is no longer knocked back by enemy skills with such effect (n is meaningless).
 bonus bClassChange,n;			Gives a n/100% chance to change the attacked monster's class with normal attack.

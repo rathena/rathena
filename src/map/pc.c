@@ -2625,12 +2625,6 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		sd->weapon_coma_race[type2] += val;
 		sd->special_state.bonus_coma = 1;
 		break;
-	case SP_RANDOM_ATTACK_INCREASE:	// [Valaris]
-		if(sd->state.lr_flag !=2){
-			sd->random_attack_increase_add = type2;
-			sd->random_attack_increase_per += val;
-		}
-		break;
 	case SP_WEAPON_ATK:
 		if(sd->state.lr_flag != 2)
 			sd->weapon_atk[type2]+=val;

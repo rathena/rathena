@@ -293,7 +293,6 @@ struct map_session_data {
 	int double_add_rate;
 	int short_weapon_damage_return,long_weapon_damage_return;
 	int magic_damage_return; // AppleGirl Was Here
-	int random_attack_increase_add,random_attack_increase_per; // [Valaris]
 	int break_weapon_rate,break_armor_rate;
 	int crit_atk_rate;
 	int classchange; // [Valaris]

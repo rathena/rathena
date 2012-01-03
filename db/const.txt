@@ -490,7 +490,6 @@ bBreakWeaponRate	1068
 bBreakArmorRate	1069
 bAddStealRate	1070
 bMagicDamageReturn	1071
-bRandomAttackIncrease	1072
 bAllStats	1073
 bAgiVit		1074
 bAgiDexStr	1075
