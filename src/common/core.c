@@ -12,9 +12,6 @@
 #include "../common/timer.h"
 #include "../common/plugins.h"
 #endif
-#ifndef _WIN32
-#include "svnversion.h"
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -38,9 +35,7 @@ char **arg_v = NULL;
 
 char *SERVER_NAME = NULL;
 char SERVER_TYPE = ATHENA_SERVER_NONE;
-#ifndef SVNVERSION
-	static char rA_svn_version[10] = "";
-#endif
+static char rA_svn_version[10] = "";
 
 #ifndef MINICORE	// minimalist Core
 // Added by Gabuzomeu
@@ -129,14 +124,6 @@ void signals_init (void)
 }
 #endif
 
-#ifdef SVNVERSION
-	#define xstringify(x) stringify(x)
-	#define stringify(x) #x
-	const char *get_svn_revision(void)
-	{
-		return xstringify(SVNVERSION);
-	}
-#else// not SVNVERSION
 const char* get_svn_revision(void)
 {
 	FILE *fp;
@@ -201,7 +188,6 @@ const char* get_svn_revision(void)
 
 	return rA_svn_version;
 }
-#endif
 
 /*======================================
  *	CORE : Display title
