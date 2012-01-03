@@ -146,12 +146,11 @@ const char* get_svn_revision(void)
 				if (sscanf(line," %*[^\"]\"%d%*[^\n]", &rev) == 1) {
 					snprintf(rA_svn_version, sizeof(rA_svn_version), "%d", rev);
 				}
-			}
-			else
-			{
+			} else {
 				// Bin File format
-				(void)fgets(line, sizeof(line), fp); // Get the name
-				(void)fgets(line, sizeof(line), fp); // Get the entries kind
+				bool fgresult;
+				fgresult = ( fgets(line, sizeof(line), fp) != NULL ); // Get the name
+				fgresult = ( fgets(line, sizeof(line), fp) != NULL ); // Get the entries kind
 				if(fgets(line, sizeof(line), fp)) // Get the rev numver
 				{
 					snprintf(rA_svn_version, sizeof(rA_svn_version), "%d", atoi(line));
