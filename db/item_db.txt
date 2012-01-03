@@ -5635,7 +5635,7 @@
 12619,C_Grade_Coin_Bag,C Grade Coin Bag,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12620,D_Grade_Coin_Bag,D Grade Coin Bag,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12621,E_Grade_Coin_Bag,E Grade Coin Bag,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12622,Reins_Of_Mount,Reins Of Mount,11,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "ALL_RIDING",1; },{},{}
+12622,Reins_Of_Mount,Reins Of Mount,11,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ setmounting(); },{},{}
 12623,Advanced_Weapons_Box,Advanced Weapons Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Advanced_Weapons_Box),1; },{},{}
 12624,Delicious_Jelly,Delicious Jelly,0,20,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 3,3; },{},{}
 //
