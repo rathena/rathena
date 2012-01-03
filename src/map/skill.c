@@ -3535,8 +3535,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		}
 		break;
 
+	case NPC_SELFDESTRUCTION: {
+		struct status_change *tsc = NULL;
+		if( (tsc = status_get_sc(bl)) && tsc->data[SC_HIDING] )
+			break;
+		}
 	case HVAN_EXPLOSION:
-	case NPC_SELFDESTRUCTION:
 		if (src != bl)
 			skill_attack(BF_MISC,src,src,bl,skillid,skilllv,tick,flag);
 		break;
