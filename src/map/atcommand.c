@@ -9335,7 +9335,7 @@ void atcommand_doload() {
 	if( atcommand_db != NULL )
 		db_destroy(atcommand_db);
 
-	atcommand_db = strdb_alloc(DB_OPT_DUP_KEY, 0);
+	atcommand_db = stridb_alloc(DB_OPT_DUP_KEY, 0);
 	atcommand_basecommands();//fills initial atcommand_db with known commands
 
 	atcommand_config_read(ATCOMMAND_CONF_FILENAME);
