@@ -150,8 +150,8 @@ const char* get_svn_revision(void)
 			else
 			{
 				// Bin File format
-				fgets(line, sizeof(line), fp); // Get the name
-				fgets(line, sizeof(line), fp); // Get the entries kind
+				(void)fgets(line, sizeof(line), fp); // Get the name
+				(void)fgets(line, sizeof(line), fp); // Get the entries kind
 				if(fgets(line, sizeof(line), fp)) // Get the rev numver
 				{
 					snprintf(rA_svn_version, sizeof(rA_svn_version), "%d", atoi(line));
