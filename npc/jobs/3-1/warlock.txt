@@ -369,7 +369,7 @@ spl_in02,77,107,5	script	Assistant#Warlock	446,{
 		changequest 11106,11107;
 		next;
 		mes "[Yoop]";
-		mes "Bring these stones with you or else you won't be able to end;!";
+		mes "Bring these stones with you or else you won't be able to return!";
 		mes "Be careful!";
 		next;
 		mes "[Yoop]";
@@ -404,7 +404,7 @@ spl_in02,77,107,5	script	Assistant#Warlock	446,{
 		changequest 11106,11107;
 		next;
 		mes "[Yoop]";
-		mes "Bring these stones with you or else you won't be able to end;!";
+		mes "Bring these stones with you or else you won't be able to return!";
 		mes "Be careful!";
 		next;
 		mes "[Yoop]";
@@ -424,7 +424,7 @@ spl_in02,77,107,5	script	Assistant#Warlock	446,{
 			mes "You need to hunt Naga and Bradium Golems while wearing these rings.";
 			next;
 			mes "[Yoop]";
-			mes "Bring these stones with you or else you won't be able to end;!";
+			mes "Bring these stones with you or else you won't be able to return!";
 			mes "Be careful!";
 			next;
 			mes "[Yoop]";
@@ -831,11 +831,14 @@ spl_in02,84,103,3	script	Assistant#Warlock2	445,{
 		next;
 		if (countitem(12384) > 0){
 			delitem 12384,countitem(12384);
-		}else if (countitem(12385) > 0){
+		}
+		if (countitem(12385) > 0){
 			delitem 12385,countitem(12385);
-		}else if (countitem(12386) > 0){
+		}
+		if (countitem(12386) > 0){
 			delitem 12386,countitem(12386);
-		}else if (countitem(12387) > 0){
+		}
+		if (countitem(12387) > 0){
 			delitem 12387,countitem(12387);
 		}
 		getitem 12384,5;
@@ -852,11 +855,14 @@ spl_in02,84,103,3	script	Assistant#Warlock2	445,{
 		mes "I'm sorry that I've doubted you.";
 		if (countitem(12384) > 0){
 			delitem 12384,countitem(12384);
-		}else if (countitem(12385) > 0){
+		}
+		if (countitem(12385) > 0){
 			delitem 12385,countitem(12385);
-		}else if (countitem(12386) > 0){
+		}
+		if (countitem(12386) > 0){
 			delitem 12386,countitem(12386);
-		}else if (countitem(12387) > 0){
+		}
+		if (countitem(12387) > 0){
 			delitem 12387,countitem(12387);
 		}
 		next;
@@ -1510,7 +1516,7 @@ job3_war01,22,22,7	script	Yoop#WRR	439,{
 
 	mes "[Yoop]";
 	mes "If you ask Ebein to be sent to the magical room, he would send you there.";
-	mes "next; in the queue to enter the Chamber of Magic.";
+	mes "wait in the queue to enter the Chamber of Magic.";
 	close;
 }
 
@@ -1518,12 +1524,12 @@ job3_war01,29,25,0	script	Ebein#WRR	437,{
 
 	mes "[Ebein]";
 	mes "Would you like to take a test?";
-	mes "If you stand by in the next;ing room, you'll be able to go into the Chamber of Magic.";
+	mes "If you stand by in the waiting room, you'll be able to go into the Chamber of Magic.";
 	next;
 	mes "[Ebein]";
-	mes "If there're others inside the room, you just need to next; for a while.";
+	mes "If there're others inside the room, you just need to wait for a while.";
 	next;
-	switch(select("Go to the next;ing room.:Go outside.")){
+	switch(select("Go to the waiting room.:Go outside.")){
 	case 1:
 		mes "[Ebein]";
 		mes "Then please enter the room yourself.";
