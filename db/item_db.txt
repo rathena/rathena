@@ -5418,16 +5418,16 @@
 12378,2009_Rice_Cake_Soup,Rice Cake Soup,2,10,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12379,Pope's_Cookie,Pope Cookie,2,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12380,Desert_Wolf_Babe_Scroll,Job Change Flute,2,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ mercenary_create 2034,1800000; },{},{}
-12381,ValkyrieA_Scroll,Ancient Languages Scroll,2,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getmapxy .@map$,.@x,.@y,0; if(.@map$ == "job3_arch02") { mercenary_create 2037,1800000; } },{},{}
-12382,ValkyrieB_Scroll,Ancient Languages Scroll,2,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getmapxy .@map$,.@x,.@y,0; if(.@map$ == "job3_arch02") { mercenary_create 2038,1800000; } },{},{}
+12381,ValkyrieA_Scroll,Ancient Languages Scroll,2,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ if(strcharinfo(3) == "job3_arch02")  { mercenary_create 2037,1800000; } },{},{}
+12382,ValkyrieB_Scroll,Ancient Languages Scroll,2,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ if(strcharinfo(3) == "job3_arch02")  { mercenary_create 2038,1800000; } },{},{}
 12383,Vulcan_Bullet_Magazine,Vulcan Bullet Magazine,2,11000,,500,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12384,Rainbow_Ruby_Water,Rainbow Ruby,11,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ /* getmapxy .@map$,.@x,.@y,0; if(.@map$ == "job3_war02") { itemSkill "WL_FROSTMISTY",5; } */ },{},{}
-12385,Rainbow_Ruby_Fire,Rainbow Ruby,11,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ /* getmapxy .@map$,.@x,.@y,0; if(.@map$ == "job3_war02") { itemskill "WL_CRIMSONROCK",5; } */ },{},{}
-12386,Rainbow_Ruby_Wind,Rainbow Ruby,11,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ /* getmapxy .@map$,.@x,.@y,0; if(.@map$ == "job3_war02") { itemskill "WL_CHAINLIGHTNING",5; } */ },{},{}
-12387,Rainbow_Ruby_Earth,Rainbow Ruby,11,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ /* getmapxy .@map$,.@x,.@y,0; if(.@map$ == "job3_war02") { itemskill "WL_EARTHSTRAIN",5; } */ },{},{}
-12388,Runstone_Crush,Rhydo Runestone For Apprentice,11,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ /* getmapxy .@map$,.@x,.@y,0; if(.@map$ == "job3_rune02") { itemskill "RK_CRUSHSTRIKE",1; } */ },{},{}
-12389,Runstone_Storm,Pertz Runestone For Apprentice,11,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ /* getmapxy .@map$,.@x,.@y,0; if(.@map$ == "job3_rune02") { itemskill "RK_STORMBLAST",1; } */ },{},{}
-12390,Runstone_Millennium,Verkana Runestone For Apprentice,11,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ /* getmapxy .@map$,.@x,.@y,0; if(.@map$ == "job3_rune02") { itemskill "RK_MILLENNIUMSHIELD",1; } */ },{},{}
+12384,Rainbow_Ruby_Water,Rainbow Ruby,11,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ if(strcharinfo(3) == "job3_war02") { itemSkill "WL_FROSTMISTY",5; } },{},{}
+12385,Rainbow_Ruby_Fire,Rainbow Ruby,11,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ if(strcharinfo(3) == "job3_war02") { itemskill "WL_CRIMSONROCK",5; } },{},{}
+12386,Rainbow_Ruby_Wind,Rainbow Ruby,11,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ if(strcharinfo(3) == "job3_war02") { itemskill "WL_CHAINLIGHTNING",5; } },{},{}
+12387,Rainbow_Ruby_Earth,Rainbow Ruby,11,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ if(strcharinfo(3) == "job3_war02") { itemskill "WL_EARTHSTRAIN",5; } },{},{}
+12388,Runstone_Crush,Rhydo Runestone For Apprentice,11,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ if(strcharinfo(3) == "job3_rune02") { itemskill "RK_CRUSHSTRIKE",1; } },{},{}
+12389,Runstone_Storm,Pertz Runestone For Apprentice,11,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ if(strcharinfo(3) == "job3_rune02") { itemskill "RK_STORMBLAST",1; } },{},{}
+12390,Runstone_Millennium,Verkana Runestone For Apprentice,11,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ if(strcharinfo(3) == "job3_rune02") { itemskill "RK_MILLENNIUMSHIELD",1; } },{},{}
 12391,Lucky_Egg_C,Lucky Egg,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12392,Repair_A,Repair A,0,220,,70,,,,,0x00000400,8,2,,,,,,{/* madoheal rand(200,300),0; */},{},{}
 12393,Repair_B,Repair B,0,500,,70,,,,,0x00000400,8,2,,,,,,{/* madoheal rand(300,400),0; */},{},{}
