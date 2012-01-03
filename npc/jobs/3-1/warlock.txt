@@ -2,7 +2,7 @@
 // Warlock Job change Quest
 //===== By: ================================================== 
 //= Masao
-//= Credits: Muad_Dib
+//= Credits: Muad_Dib, Gepard & L0ne_W0lf
 //===== Current Version: ===================================== 
 //= 1.0
 //===== Compatible With: ===================================== 
@@ -829,13 +829,13 @@ spl_in02,84,103,3	script	Assistant#Warlock2	445,{
 		mes "Would you like to try it again?";
 		mes "Let me give you more rubies.";
 		next;
-		if (12384 > 0){
+		if (countitem(12384) > 0){
 			delitem 12384,countitem(12384);
-		}else if (12385 > 0){
+		}else if (countitem(12385) > 0){
 			delitem 12385,countitem(12385);
-		}else if (12386 > 0){
+		}else if (countitem(12386) > 0){
 			delitem 12386,countitem(12386);
-		}else if (12387 > 0){
+		}else if (countitem(12387) > 0){
 			delitem 12387,countitem(12387);
 		}
 		getitem 12384,5;
@@ -850,13 +850,13 @@ spl_in02,84,103,3	script	Assistant#Warlock2	445,{
 		mes "[Assistant]";
 		mes "You have successfully crystallized the Hollow Stone.";
 		mes "I'm sorry that I've doubted you.";
-		if (12384 > 0){
+		if (countitem(12384) > 0){
 			delitem 12384,countitem(12384);
-		}else if (12385 > 0){
+		}else if (countitem(12385) > 0){
 			delitem 12385,countitem(12385);
-		}else if (12386 > 0){
+		}else if (countitem(12386) > 0){
 			delitem 12386,countitem(12386);
-		}else if (12387 > 0){
+		}else if (countitem(12387) > 0){
 			delitem 12387,countitem(12387);
 		}
 		next;
