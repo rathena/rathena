@@ -14481,8 +14481,8 @@ void clif_showdigit(struct map_session_data* sd, unsigned char type, int value)
 {
 	WFIFOHEAD(sd->fd, packet_len(0x1b1));
 	WFIFOW(sd->fd,0) = 0x1b1;
-	WFIFOB(sd->fd,0) = type;
-	WFIFOL(sd->fd,0) = value;
+	WFIFOB(sd->fd,2) = type;
+	WFIFOL(sd->fd,3) = value;
 	WFIFOSET(sd->fd, packet_len(0x1b1));
 }
 
