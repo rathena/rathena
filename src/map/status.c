@@ -7574,6 +7574,14 @@ int status_change_clear(struct block_list* bl, int type)
 		case SC_HELLPOWER:
 		case SC_JEXPBOOST:
 		case SC_AUTOTRADE:
+		case SC_WHISTLE:
+		case SC_ASSNCROS:
+		case SC_POEMBRAGI:
+		case SC_APPLEIDUN:
+		case SC_HUMMING:
+		case SC_DONTFORGETME:
+		case SC_FORTUNE:
+		case SC_SERVICE4U:
 		case SC_FOOD_STR_CASH:
 		case SC_FOOD_AGI_CASH:
 		case SC_FOOD_VIT_CASH:
