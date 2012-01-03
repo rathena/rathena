@@ -23,7 +23,7 @@ OnTouch:
 	}
 
 	if (job_wl > 1){
-		if (BaseJob == Job_Warlock || BaseJob == Job_Warlock_T){
+		if (Class == Job_Warlock || Class == Job_Warlock_T){
 			mes " - There is a strange distortion here - ";
 			close;
 		}
@@ -40,7 +40,7 @@ OnTouch:
 			close;
 		}
 	}
-	if (BaseLevel > 94 && BaseJob == Job_Wizard || BaseJob == Job_High_Wizard){
+	if (BaseLevel > 94 && Class == Job_Wizard || Class == Job_High_Wizard){
 		mes " - There is a strange distortion here - ";
 		next;
 		switch(select( "Search the area.:Ignore it.")){
@@ -115,7 +115,7 @@ OnTouch:
 spl_in02,77,107,5	script	Assistant#Warlock	446,{
 
 	if (job_wl < 1){
-		if (BaseJob == Job_Wizard || BaseJob == Job_High_Wizard){
+		if (Class == Job_Wizard || Class == Job_High_Wizard){
 			mes "[Assistant]";
 			mes "Huh!!! Human!?!";
 			mes "How did you enter here?";
@@ -598,7 +598,7 @@ spl_in02,60,231,5	script	Yoop#Warlock	446,{
 spl_in02,84,103,3	script	Assistant#Warlock2	445,{
 
 	if (job_wl < 1){
-		if (BaseJob == Job_Wizard || BaseJob == Job_High_Wizard){
+		if (Class == Job_Wizard || Class == Job_High_Wizard){
 			mes "[Assistant]";
 			mes "Huh!!! Human!?!";
 			mes "How did you enter here?";
@@ -892,7 +892,7 @@ spl_in02,84,103,3	script	Assistant#Warlock2	445,{
 spl_in02,78,110,5	script	Assistant#Warlock3	443,{
 
 	if (job_wl < 1){
-		if (BaseJob == Job_Wizard || BaseJob == Job_High_Wizard){
+		if (Class == Job_Wizard || Class == Job_High_Wizard){
 			mes "[Assistant]";
 			mes "Huh!!! Human!?!";
 			mes "How did you enter here?";
@@ -1133,7 +1133,7 @@ spl_in02,78,110,5	script	Assistant#Warlock3	443,{
 spl_in02,80,108,5	script	Guild Master#Warlock	465,{
 
 	if (job_wl < 1){
-		if (BaseJob == Job_Wizard || BaseJob == Job_High_Wizard){
+		if (Class == Job_Wizard || Class == Job_High_Wizard){
 			mes "[Assistant]";
 			mes "Huh!!! Human!?!";
 			mes "How did you enter here?";
@@ -1421,7 +1421,7 @@ spl_in02,80,108,5	script	Guild Master#Warlock	465,{
 				mes "Unless you like being your current job, you should use all your skill points.";
 				close;
 			}
-			if (BaseJob == Job_Wizard){
+			if (Class == Job_Wizard){
 				mes "[Master Egnoloria]";
 				mes "Beautiful light...";
 				mes "Don't make me disappointed at you...";
@@ -1439,7 +1439,7 @@ spl_in02,80,108,5	script	Guild Master#Warlock	465,{
 				getitem 2795,1;
 				close;
 			}
-			if(BaseJob == Job_High_Wizard){
+			if(Class == Job_High_Wizard){
 				if ((JobLevel > 49) && (JobLevel < 60)){
 					mes "[Master Egnoloria]";
 					mes "Beautiful light...";
