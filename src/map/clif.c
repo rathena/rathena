@@ -1221,7 +1221,7 @@ int clif_spawn(struct block_list *bl)
 	/**
 	* Hide NPC from maya puprle card.
 	**/
-	if(bl->type == BL_NPC && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
+	if(bl->type == BL_NPC && !((TBL_NPC*)bl)->chat_id && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
 		return 0;
 		
 	len = clif_set_unit_idle(bl, buf,true);
@@ -1482,7 +1482,7 @@ void clif_move(struct unit_data *ud)
 	/**
 	* Hide NPC from maya puprle card.
 	**/
-	if(bl->type == BL_NPC && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
+	if(bl->type == BL_NPC && !((TBL_NPC*)bl)->chat_id && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
 		return;
 	
 	if (ud->state.speed_changed) {
@@ -3811,7 +3811,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 	/**
 	* Hide NPC from maya puprle card.
 	**/
-	if(bl->type == BL_NPC && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
+	if(bl->type == BL_NPC && !((TBL_NPC*)bl)->chat_id && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
 		return;
 
 	ud = unit_bl2ud(bl);
