@@ -4681,7 +4681,7 @@ void battle_adjust_conf()
 #endif
 
 #if PACKETVER < 20100803
-	if( battle_config.feature_buying_store ) {
+	if( battle_config.feature_search_stores ) {
 		ShowWarning("conf/battle/feature.conf search_stores is enabled but it requires PACKETVER 2010-08-03 or newer, disabling...\n");
 		battle_config.feature_search_stores = 0;
 	}
