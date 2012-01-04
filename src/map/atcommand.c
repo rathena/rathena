@@ -9332,10 +9332,25 @@ int atcommand_config_read(const char* cfgName)
 	return 0;
 }
 
+static int atcommand_db_free(DBKey key,void *data,va_list va) {
+
+	aFree((AtCommandInfo*)data);
+	
+	return 1;
+}
+
+void atcommand_db_clear() {
+
+	atcommand_db->foreach(atcommand_db,atcommand_db_free);
+	db_destroy(atcommand_db);
+
+	return;
+}
+
 void atcommand_doload() {
 
 	if( atcommand_db != NULL )
-		db_destroy(atcommand_db);
+		atcommand_db_clear();
 
 	atcommand_db = stridb_alloc(DB_OPT_DUP_KEY, 0);
 	atcommand_basecommands();//fills initial atcommand_db with known commands
@@ -9355,8 +9370,8 @@ void do_init_atcommand() {
 }
 
 void do_final_atcommand() {
-	
-	db_destroy(atcommand_db);
+
+	atcommand_db_clear();
 
 	return;
 }
