@@ -1994,22 +1994,21 @@ int parse_fromlogin(int fd)
 			ARR_FIND( 0, fd_max, i, session[i] && (sd = (struct char_session_data*)session[i]->session_data) && sd->auth && sd->account_id == RFIFOL(fd,2) );
 			if( i < fd_max )
 			{
+				int server_id;
 				memcpy(sd->email, RFIFOP(fd,6), 40);
 				sd->expiration_time = (time_t)RFIFOL(fd,46);
 				sd->gmlevel = RFIFOB(fd,50);
 				safestrncpy(sd->birthdate, (const char*)RFIFOP(fd,51), sizeof(sd->birthdate));
-
+				ARR_FIND( 0, ARRAYLENGTH(server), server_id, server[server_id].fd > 0 && server[server_id].map[0] );
 				// continued from char_auth_ok...
-				if( max_connect_user && count_users() >= max_connect_user && sd->gmlevel < gm_allow_level )
-				{
+				if( server_id == ARRAYLENGTH(server) || //server not online, bugreport:2359
+					( max_connect_user && count_users() >= max_connect_user && sd->gmlevel < gm_allow_level ) ) {
 					// refuse connection (over populated)
 					WFIFOHEAD(i,3);
 					WFIFOW(i,0) = 0x6c;
 					WFIFOW(i,2) = 0;
 					WFIFOSET(i,3);
-				}
-				else
-				{
+				} else {
 					// send characters to player
 					mmo_char_send006b(i, sd);
 #if PACKETVER >=  20110309
