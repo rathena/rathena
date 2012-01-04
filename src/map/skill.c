@@ -7226,7 +7226,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 			if(!mapindex)
 			{ //Given map not found?
-				clif_skill_fail(sd,skillid,0,0,0);
+				clif_skill_fail(sd,skillid,0,0);
 				return 0;
 			}
 			pc_setpos(sd, mapindex, x, y, CLR_TELEPORT);
