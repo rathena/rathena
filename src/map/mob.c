@@ -2185,6 +2185,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	{ // Item Drop
 		struct item_drop_list *dlist = ers_alloc(item_drop_list_ers, struct item_drop_list);
 		struct item_drop *ditem;
+		struct item_data* it = NULL;
 		int drop_rate;
 #if REMODE
 		int drop_modifier = mvp_sd ? party_renewal_drop_mod(mvp_sd->status.base_level - md->level) :
@@ -2203,7 +2204,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		{
 			if (md->db->dropitem[i].nameid <= 0)
 				continue;
-			if (!itemdb_exists(md->db->dropitem[i].nameid))
+			if ( !(it = itemdb_exists(md->db->dropitem[i].nameid)) )
 				continue;
 			drop_rate = md->db->dropitem[i].p;
 			if (drop_rate <= 0) {
@@ -2240,15 +2241,17 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			if (rand() % 10000 >= drop_rate)
 					continue;
 
+			if( mvp_sd && it->type == IT_PETEGG ) {
+				pet_create_egg(mvp_sd, md->db->dropitem[i].nameid);
+				continue;
+			}
+
 			ditem = mob_setdropitem(md->db->dropitem[i].nameid, 1);
 
 			//A Rare Drop Global Announce by Lupus
-			if( mvp_sd && drop_rate <= battle_config.rare_drop_announce )
-			{
-				struct item_data *i_data;
+			if( mvp_sd && drop_rate <= battle_config.rare_drop_announce ) {
 				char message[128];
-				i_data = itemdb_search(ditem->item_data.nameid);
-				sprintf (message, msg_txt(541), mvp_sd->status.name, md->name, i_data->jname, (float)drop_rate/100);
+				sprintf (message, msg_txt(541), mvp_sd->status.name, md->name, it->jname, (float)drop_rate/100);
 				//MSG: "'%s' won %s's %s (chance: %0.02f%%)"
 				intif_broadcast(message,strlen(message)+1,0);
 			}
