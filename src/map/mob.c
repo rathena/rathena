@@ -123,7 +123,7 @@ int mobdb_searchname_array(struct mob_db** data, int size, const char *str)
 	struct mob_db* mob;
 	for(i=0;i<=MAX_MOB_DB;i++){
 		mob = mob_db(i);
-		if (mob == mob_dummy)
+		if (mob == mob_dummy || mob_is_clone(i) ) //keep clones out (or you leak player stats)
 			continue;
 		if (!mobdb_searchname_array_sub(mob, str)) {
 			if (count < size)
