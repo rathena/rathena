@@ -2187,7 +2187,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		struct item_drop *ditem;
 		struct item_data* it = NULL;
 		int drop_rate;
-#if REMODE
+#if RE_DROP_MOD
 		int drop_modifier = mvp_sd ? party_renewal_drop_mod(mvp_sd->status.base_level - md->level) :
 							second_sd ? party_renewal_drop_mod(second_sd->status.base_level - md->level) :
 							third_sd ? party_renewal_drop_mod(third_sd->status.base_level - md->level) : 100;
@@ -2233,7 +2233,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			// Increase drop rate if user has SC_ITEMBOOST
 			if (sd && sd->sc.data[SC_ITEMBOOST]) // now rig the drop rate to never be over 90% unless it is originally >90%.
 				drop_rate = max(drop_rate,cap_value((int)(0.5+drop_rate*(sd->sc.data[SC_ITEMBOOST]->val1)/100.),0,9000));
-#if REMODE
+#if RE_DROP_MOD
 			if( drop_modifier != 100 )
 				drop_rate = drop_rate * drop_modifier / 100;
 #endif

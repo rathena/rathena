@@ -30,6 +30,14 @@
 #define RECASTING 1
 
 /**
+ * Renewal Drop Rate Modifier
+ * @values: 1 (enabled) or 0 (disabled)
+ * - When enabled a modifier based on difference between the player and the monster level is applied,
+ * - based on the http://irowiki.org/wiki/Drop_System#Level_Factor table
+ **/
+#define RE_DROP_MOD 1
+
+/**
  * Renewal Cast Time : Variable-Free
  * - Value required for no variable cast time with stats.
  * - Formula: (casterDex x 2) + (casterInt)

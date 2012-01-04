@@ -94,6 +94,8 @@ bool party_booking_delete(struct map_session_data *sd);
 
 #if REMODE
 void party_renewal_exp_mod(unsigned int *base_exp, unsigned int *job_exp, int lvl, int moblvl);
+#endif
+#if RE_DROP_MOD
 int party_renewal_drop_mod(int diff);
 #endif
 

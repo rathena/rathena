@@ -916,9 +916,9 @@ int party_send_xy_clear(struct party_data *p)
 	}
 	return 0;
 }
-#if REMODE
+#if RE_DROP_MOD
 /**
- * Renewal Drop Earning Modifier
+ * Renewal Drop Modifier
  **/
 int party_renewal_drop_mod(int diff) {
 	if( diff >= -10 && diff <= 5 )
@@ -934,9 +934,11 @@ int party_renewal_drop_mod(int diff) {
 		if( diff <= -10 && diff <= -14 )
 			return 75;//75%
 	}
-	//other chases: 50%
+	//other chances: 50%
 	return 50;
 }
+#endif
+#if REMODE
 /**
  * Renewal Experience Earning Mode
  **/
