@@ -371,7 +371,7 @@
 3,4447,1	// Centipede Card
 3,4448,1	// Cornus Card
 3,4449,1	// Dark Shadow Card
-3,4451,1	// Entweihen Card
+3,4450,1	// Banshee Master Card
 3,4452,2	// Centipede Larva Card
 3,4453,1	// Hillsrion Card
 3,4460,1	// Rhyncho Card

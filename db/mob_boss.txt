@@ -47,3 +47,6 @@
 1871,Fallen Bishop Hibram,1000000
 1873,Beelzebub,1000000
 1885,Gopinich,1000000
+2022,Nidhoggur's Shadow,1000000
+2068,Boitata,1000000
+2087,Queen Scaraba,1000000

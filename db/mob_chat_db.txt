@@ -36,4 +36,9 @@
 32,0xFF0000,Suffer in Hell!
 33,0xFF0000,Mwahahaha! Taste the anger of the earth!!!
 34,0xFF0000,No... I won't accept this as defeat!
-
+35,0xFF0000,Will it ease your loneliness to hit me?  Why don't you stay here with me forever, human?
+36,0xFF0000,You will forgot the meaning of time.  I wonder how long can you last in here...
+37,0xFF0000,Is there anyone waiting for you outside of here?  Throw them all away, you are mine now...
+38,0xFF0000,Discard your life and stay confined here.  You will yearn for freedom in captivity !!
+39,0xFF0000,How much will the outside world change if you stay here in solitude for one thousand years?
+40,0xFF0000,Yes! Yearn for your freedom from this confined place, your captivity here will be permanent !!
