@@ -4672,7 +4672,21 @@ void battle_adjust_conf()
 		battle_config.day_duration = 60000;
 	if (battle_config.night_duration && battle_config.night_duration < 60000) // added by [Yor]
 		battle_config.night_duration = 60000;
-	
+
+#if PACKETVER < 20100427
+	if( battle_config.feature_buying_store ) {
+		ShowWarning("conf/battle/feature.conf buying_store is enabled but it requires PACKETVER 2010-04-27 or newer, disabling...\n");
+		battle_config.feature_buying_store = 0;
+	}
+#endif
+
+#if PACKETVER < 20100803
+	if( battle_config.feature_buying_store ) {
+		ShowWarning("conf/battle/feature.conf search_stores is enabled but it requires PACKETVER 2010-08-03 or newer, disabling...\n");
+		battle_config.feature_search_stores = 0;
+	}
+#endif
+
 #ifndef CELL_NOSTACK
 	if (battle_config.cell_stack_limit != 1)
 		ShowWarning("Battle setting 'cell_stack_limit' takes no effect as this server was compiled without Cell Stack Limit support.\n");
