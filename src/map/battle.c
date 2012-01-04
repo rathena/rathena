@@ -3945,10 +3945,9 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			TBL_SKILL *su = (TBL_SKILL*)target;
 			if( !su->group )
 				return 0;
-			if( skill_get_inf2(su->group->skill_id)&INF2_TRAP )
-			{ //Only a few skills can target traps...
-				switch( battle_getcurrentskill(src) )
-				{
+			if( skill_get_inf2(su->group->skill_id)&INF2_TRAP ) { //Only a few skills can target traps...
+				switch( battle_getcurrentskill(src) ) {
+					case 0://you can hit them without skills
 					case MA_REMOVETRAP:
 					case HT_REMOVETRAP:
 					case AC_SHOWER:

@@ -9750,13 +9750,13 @@ int skill_unit_ondamaged (struct skill_unit *src, struct block_list *bl, int dam
 	nullpo_ret(src);
 	nullpo_ret(sg=src->group);
 
-	switch( sg->unit_id )
-	{
+	switch( sg->unit_id ) {
 	case UNT_SKIDTRAP:
 	case UNT_LANDMINE:
 	case UNT_SHOCKWAVE:
 	case UNT_SANDMAN:
 	case UNT_FLASHER:
+	case UNT_CLAYMORETRAP:
 	case UNT_FREEZINGTRAP:
 	case UNT_TALKIEBOX:
 	case UNT_ANKLESNARE:
@@ -9764,8 +9764,7 @@ int skill_unit_ondamaged (struct skill_unit *src, struct block_list *bl, int dam
 		src->val1-=damage;
 		break;
 	case UNT_BLASTMINE:
-	case UNT_CLAYMORETRAP:
-		skill_blown(bl, &src->bl, 2, -1, 0);
+		skill_blown(bl, &src->bl, 3, -1, 0);
 		break;
 	default:
 		damage = 0;
@@ -12588,6 +12587,7 @@ static int skill_unit_timer_sub (DBKey key, void* data, va_list ap)
 			case UNT_SHOCKWAVE:
 			case UNT_SANDMAN:
 			case UNT_FLASHER:
+			case UNT_CLAYMORETRAP:
 			case UNT_FREEZINGTRAP:
 			case UNT_TALKIEBOX:
 			case UNT_ANKLESNARE:
