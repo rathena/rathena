@@ -1325,12 +1325,16 @@ int check_char_name(char * name, char * esc_name)
 			if( strchr(char_name_letters, name[i]) != NULL )
 				return -2;
 	}
-
-	// check name (already in use?)
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `name` = '%s' LIMIT 1", char_db, esc_name) )
-	{
-		Sql_ShowDebug(sql_handle);
-		return -2;
+	if( name_ignoring_case ) {
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE BINARY `name` = '%s' LIMIT 1", char_db, esc_name) ) {
+			Sql_ShowDebug(sql_handle);
+			return -2;
+		}
+	} else {
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `name` = '%s' LIMIT 1", char_db, esc_name) ) {
+			Sql_ShowDebug(sql_handle);
+			return -2;
+		}
 	}
 	if( Sql_NumRows(sql_handle) > 0 )
 		return -1; // name already exists
