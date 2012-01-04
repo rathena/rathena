@@ -5647,7 +5647,7 @@ BUILDIN_FUNC(getitem)
 		nameid=conv_num(st,data);
 		//Violet Box, Blue Box, etc - random item pick
 		if( nameid < 0 ) {
-			nameid=itemdb_searchrandomid(-nameid);
+			nameid = -nameid;
 			flag = 1;
 		}
 		if( nameid <= 0 || !itemdb_exists(nameid) ){
@@ -5746,7 +5746,7 @@ BUILDIN_FUNC(getitem2)
 	c4=(short)script_getnum(st,10);
 
 	if(nameid<0) { // ƒ‰ƒ“ƒ_ƒ€
-		nameid=itemdb_searchrandomid(-nameid);
+		nameid = -nameid;
 		flag = 1;
 	}
 
@@ -5951,7 +5951,7 @@ BUILDIN_FUNC(grouprandomitem)
 	int group;
 
 	group = script_getnum(st,2);
-	script_pushint(st,itemdb_searchrandomid(group));
+	script_pushint(st,-itemdb_searchrandomid(group));
 	return 0;
 }
 
@@ -5993,7 +5993,7 @@ BUILDIN_FUNC(makeitem)
 		m=map_mapname2mapid(mapname);
 
 	if(nameid<0) { // ƒ‰ƒ“ƒ_ƒ€
-		nameid=itemdb_searchrandomid(-nameid);
+		nameid = -nameid;
 		flag = 1;
 	}
 
