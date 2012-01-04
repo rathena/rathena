@@ -10634,9 +10634,14 @@ void clif_parse_ResetChar(int fd, struct map_session_data *sd)
 
 	if( RFIFOW(fd,2) )
 		pc_resetskill(sd,1);
-	else
+	else {
 		pc_resetstate(sd);
-
+		if( sd->mission_mobid ) { //bugreport:2200
+			sd->mission_mobid = 0;
+			sd->mission_count = 0;
+			pc_setglobalreg(sd,"TK_MISSION_ID", 0);	
+		}
+	}
 	log_atcommand(sd, get_atcommand_level("reset"), RFIFOW(fd,2) ? "/resetskill" : "/resetstate");
 }
 
