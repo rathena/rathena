@@ -743,7 +743,7 @@ sword_1-1,223,243,4	script	Buddy#job_shu reception	483,{
 	switch(select("Go to the living room.:Go outside.")){
 	case 1:
 		mes "[Buddy]";
-		mes "Please next; in the living room at the upper side.";
+		mes "Please wait in the living room at the upper side.";
 		close;
 	case 2:
 		mes "[Buddy]";
@@ -785,11 +785,11 @@ OnMyMobDead:
 	end;
 
 OnTimer3000:
-	mapannounce "sword2-1","The master is now in the middle of training, and you need to next; in the living room around 5 minutes.",bc_map;
+	mapannounce "sword2-1","The master is now in the middle of training, and you need to wait in the living room around 5 minutes.",bc_map;
 	end;
 
 OnTimer4000:
-	mapannounce "sword2-1","Ah! You may have hallucinated in the living room, so please be careful.",bc_map;
+	mapannounce "sword2-1","Ah! You may have hallucinations in the living room, so please be careful.",bc_map;
 	end;
 
 OnTimer5000:
@@ -930,7 +930,7 @@ sword_1-1,222,169,5	script	Bruno#job_shu	484,{
 
 	if (job_shu > 4){
 		mes "[Bruno]";
-		mes "Hey~ "+strcharinfo(0)+", What' up?";
+		mes "Hey~ "+strcharinfo(0)+", What's up?";
 		next;
 		switch(select("Let's have conversation.:Go outside.")){
 		case 1:
@@ -1015,7 +1015,7 @@ sword_1-1,223,167,2	script	Master#job_shu	483,{
 			if(checkweight(1201,1) == 0){
 				mes "[Master]";
 				// Custom Translation
-				mes "Your earthly burden too heavy. You'd better go clean up.";
+				mes "Your earthly burden is to heavy. You'd better go clean up.";
 				close;
 			}
 			if (JobLevel < 50 || BaseLevel < 99){
@@ -1157,7 +1157,7 @@ sword_2-1,1,2,0	script	Sura Job Switch	66,{
 		close;
 	case 5:
 		mes "Activating garajjom";
-		donpcevent "#Sura_garajjom::OnEnable";
+		donpcevent "Sura_garajjom::OnEnable";
 		close;
 	case 6:
 		mes "Deactivating all.";
@@ -1165,7 +1165,7 @@ sword_2-1,1,2,0	script	Sura Job Switch	66,{
 		donpcevent "Buddy#Sura_Salon::OnReset";
 		donpcevent "Buddy#Sura_Salon::OnDisable";
 		donpcevent "Buddy#job_shuaneh::OnDisable";
-		donpcevent "#Sura_garajjom::OnDisable";
+		donpcevent "Sura_garajjom::OnDisable";
 		close;
 	case 7:
 		close;
