@@ -469,6 +469,8 @@ int skillnotok (int skillid, struct map_session_data *sd)
 
 	switch (skillid) {
 		case AL_WARP:
+		case RETURN_TO_ELDICASTES:
+		case ALL_GUARDIAN_RECALL:
 			if(map[m].flag.nowarp) {
 				clif_skill_teleportmessage(sd,0);
 				return 1;
@@ -7201,6 +7203,36 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			clif_skill_nodamage(src, bl, skillid, skilllv, 1);
 		}
 		break;
+
+	case RETURN_TO_ELDICASTES:
+	case ALL_GUARDIAN_RECALL:
+		if( sd )
+		{
+			short x, y; // Destiny position.
+			unsigned short mapindex;
+
+			if( skillid == RETURN_TO_ELDICASTES)
+			{
+				x = 198;
+				y = 187;
+				mapindex  = mapindex_name2id(MAP_DICASTES);
+			}
+			else
+			{
+				x = 44;
+				y = 151;
+				mapindex  = mapindex_name2id(MAP_MORA);
+			}
+
+			if(!mapindex)
+			{ //Given map not found?
+				clif_skill_fail(sd,skillid,0,0,0);
+				return 0;
+			}
+			pc_setpos(sd, mapindex, x, y, CLR_TELEPORT);
+		}
+		break;
+
 	default:
 		ShowWarning("skill_castend_nodamage_id: Unknown skill used:%d\n",skillid);
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);

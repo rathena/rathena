@@ -2300,9 +2300,16 @@ ACMD_FUNC(go)
 		{ MAP_RACHEL,      130, 110 }, // 23=Rachel
 		{ MAP_VEINS,       216, 123 }, // 24=Veins
 		{ MAP_MOSCOVIA,    223, 184 }, // 25=Moscovia
-		{ MAP_BRASILIS,    182, 239 }, // 26=Brasilis
+		{ MAP_MIDCAMP,    180, 240 }, // 26=Midgard Camp
 		{ MAP_MANUK,       282, 138 }, // 27=Manuk
 		{ MAP_SPLENDIDE,   197, 176 }, // 28=Splendide
+		{ MAP_BRASILIS,    182, 239 }, // 29=Brasilis
+		{ MAP_DICASTES,   198, 187 }, // 30=El Dicastes
+		{ MAP_MORA,   44, 151 }, // 31=Mora
+		{ MAP_DEWATA,   200, 180 }, // 32=Dewata
+		{ MAP_MALANGDO,   140, 114 }, // 33=Malangdo Island
+		{ MAP_MALAYA,   242, 211 }, // 34=Malaya Port
+		{ MAP_ECLAGE,   110, 39 }, // 35=Eclage
 	};
  
 	nullpo_retr(-1, sd);
@@ -2330,8 +2337,10 @@ ACMD_FUNC(go)
 		clif_displaymessage(fd, " 15=Novice Grounds  16=Prison      17=Jawaii");
 		clif_displaymessage(fd, " 18=Ayothaya        19=Einbroch    20=Lighthalzen");
 		clif_displaymessage(fd, " 21=Einbech         22=Hugel       23=Rachel");
-		clif_displaymessage(fd, " 24=Veins           25=Moscovia    26=Brasilis");
-		clif_displaymessage(fd, " 27=Manuk           28=Splendide");
+		clif_displaymessage(fd, " 24=Veins        25=Moscovia    26=Midgard Camp");
+		clif_displaymessage(fd, " 27=Manuk        28=Splendide    29=Brasilis");
+		clif_displaymessage(fd, " 30=El Dicastes     31=Mora      32=Dewata");
+		clif_displaymessage(fd, " 33=Malangdo Island  34=Malaya Port  35=Eclage");
 		return -1;
 	}
 
@@ -2405,12 +2414,26 @@ ACMD_FUNC(go)
 		town = 24;
 	} else if (strncmp(map_name, "moscovia", 3) == 0) {
 		town = 25;
-	} else if (strncmp(map_name, "brasilis", 3) == 0) {
+	} else if (strncmp(map_name, "mid_camp", 3) == 0) {
 		town = 26;
 	} else if (strncmp(map_name, "manuk", 3) == 0) {
 		town = 27;
 	} else if (strncmp(map_name, "splendide", 3) == 0) {
 		town = 28;
+	} else if (strncmp(map_name, "brasilis", 3) == 0) {
+		town = 29;
+	} else if (strncmp(map_name, "dicastes01", 3) == 0) {
+		town = 30;
+	} else if (strncmp(map_name, "mora", 3) == 0) {
+		town = 31;
+	} else if (strncmp(map_name, "dewata", 3) == 0) {
+		town = 32;
+	} else if (strncmp(map_name, "malangdo", 3) == 0) {
+		town = 33;
+	} else if (strncmp(map_name, "malaya", 3) == 0) {
+		town = 34;
+	} else if (strncmp(map_name, "eclage", 3) == 0) {
+		town = 35;
 	}
 
 	if (town >= 0 && town < ARRAYLENGTH(data))
