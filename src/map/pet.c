@@ -630,7 +630,10 @@ int pet_change_name_ack(struct map_session_data *sd, char* name, int flag)
 {
 	struct pet_data *pd = sd->pd;
 	if (!pd) return 0;
-	if (!flag) {
+
+	normalize_name(name," ");//bugreport:3032
+
+	if ( !flag || !strlen(name) ) {
 		clif_displaymessage(sd->fd, msg_txt(280)); // You cannot use this name for your pet.
 		clif_send_petstatus(sd); //Send status so client knows oet name change got rejected.
 		return 0;

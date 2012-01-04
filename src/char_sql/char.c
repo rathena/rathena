@@ -937,6 +937,7 @@ int mmo_chars_fromsql(struct char_session_data* sd, uint8* buf)
 	{
 		if( p.delete_date && p.delete_date < time(NULL) ) {
 			delete_char_sql(p.char_id);
+			i--;
 			continue;
 		}
 		p.last_point.map = mapindex_name2id(last_map);
@@ -1644,7 +1645,10 @@ int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 	WBUFW(buf,50) = DEFAULT_WALK_SPEED; // p->speed;
 	WBUFW(buf,52) = p->class_;
 	WBUFW(buf,54) = p->hair;
-	WBUFW(buf,56) = p->option&0x20 ? 0 : p->weapon; //When the weapon is sent and your option is riding, the client crashes on login!?
+	
+	//When the weapon is sent and your option is riding, the client crashes on login!?
+	WBUFW(buf,56) = p->option&(0x20|0x80000|0x100000|0x200000|0x400000|0x800000|0x1000000|0x2000000|0x4000000|0x8000000) ? 0 : p->weapon;
+	
 	WBUFW(buf,58) = p->base_level;
 	WBUFW(buf,60) = min(p->skill_point, INT16_MAX);
 	WBUFW(buf,62) = p->head_bottom;
@@ -1677,14 +1681,17 @@ int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 	WBUFL(buf,128) = p->robe;
 	offset += 4;
 #endif
-#if PACKETVER >= 20110928
-	WBUFL(buf,132) = 0;  // change slot feature (0 = disabled, otherwise enabled)
-	offset += 4;
+#if PACKETVER != 20111116 //2011-11-16 wants 136, ask gravity.
+	#if PACKETVER >= 20110928
+		WBUFL(buf,132) = 0;  // change slot feature (0 = disabled, otherwise enabled)
+		offset += 4;
+	#endif
+	#if PACKETVER >= 20111025
+		WBUFL(buf,136) = 0;  // unknown purpose (0 = disabled, otherwise displays "Add-Ons" sidebar)
+		offset += 4;
+	#endif
 #endif
-#if PACKETVER >= 20111025
-	WBUFL(buf,136) = 0;  // unknown purpose (0 = disabled, otherwise displays "Add-Ons" sidebar)
-	offset += 4;
-#endif
+
 	return 106+offset;
 }
 
