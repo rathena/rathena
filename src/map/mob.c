@@ -3679,11 +3679,13 @@ static bool mob_readdb_sub(char* fields[], int columns, int current)
 
 static void mob_readdb(void)
 {
+	const char* filename[] = {
 #if REMODE
-	const char* filename[] = { "mob_db.txt", "mob_db_re.txt" , "mob_db2.txt" };
+		"re/mob_db.txt",
 #else
-	const char* filename[] = { "mob_db.txt" , "mob_db2.txt" };
+		"pre-re/mob_db.txt",
 #endif
+		"mob_db2.txt" };
 	int fi;
 	
 	for( fi = 0; fi < ARRAYLENGTH(filename); ++fi )
@@ -3812,9 +3814,14 @@ static int mob_read_randommonster(void)
 	int i,j;
 
 	const char* mobfile[] = {
-		"mob_branch.txt",
+#if REMODE
+		"re/mob_branch.txt",
+		"re/mob_boss.txt",
+#else
+		"pre-re/mob_branch.txt",
+		"pre-re/mob_boss.txt",
+#endif
 		"mob_poring.txt",
-		"mob_boss.txt",
 		"mob_pouch.txt"};
 
 	memset(&summon, 0, sizeof(summon));
@@ -4247,16 +4254,14 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 /*==========================================
  * mob_skill_db.txt reading
  *------------------------------------------*/
-static void mob_readskilldb(void)
-{
-	/**
-	 * Due to the way mob_skill_db is made entries cannot be overriden, only stacked, so this is the only case we use a full db file on renewal
-	 **/
+static void mob_readskilldb(void) {
+	const char* filename[] = {
 #if REMODE
-	const char* filename[] = { "mob_skill_db_re.txt", "mob_skill_db2.txt" };
+		"re/mob_skill_db.txt",
 #else
-	const char* filename[] = { "mob_skill_db.txt", "mob_skill_db2.txt" };
+		"pre-re/mob_skill_db.txt",
 #endif
+		"mob_skill_db2.txt" };
 	int fi;
 
 	if( battle_config.mob_skill_rate == 0 )

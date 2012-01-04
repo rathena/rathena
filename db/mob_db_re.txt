@@ -1,8 +1,0 @@
-//=====================================================================================================
-//-- mob_db_re.txt: entries in this file override mob_db.txt and are overidden by mob_db2.txt -- file only used in Ragnarok Renewal Mode
-//=====================================================================================================
-// Monsters Additional Database
-//
-// Structure of Database :
-// ID,Sprite_Name,kROName,iROName,LV,HP,SP,EXP,JEXP,Range1,ATK1,ATK2,DEF,MDEF,STR,AGI,VIT,INT,DEX,LUK,Range2,Range3,Scale,Race,Element,Mode,Speed,aDelay,aMotion,dMotion,MEXP,ExpPer,MVP1id,MVP1per,MVP2id,MVP2per,MVP3id,MVP3per,Drop1id,Drop1per,Drop2id,Drop2per,Drop3id,Drop3per,Drop4id,Drop4per,Drop5id,Drop5per,Drop6id,Drop6per,Drop7id,Drop7per,Drop8id,Drop8per,Drop9id,Drop9per,DropCardid,DropCardper
-1288,EMPELIUM,Emperium,Emperium,90,700,1,0,0,1,60,73,64,50,1,17,80,50,26,20,10,12,0,8,26,0x160,300,1288,288,384,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0

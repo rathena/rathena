@@ -1,0 +1,57 @@
+// <Skill id>,<Cast>,<Delay (optional)>
+//
+// Cast:  0 - everything affects the skill's cast time
+//        1 - skill's cast time is not affected by dex
+//        2 - skill's cast time is not affected by statuses (Suffragium, etc)
+//        4 - skill's cast time is not affected by item bonuses (equip, cards)
+//
+// Delay: 0 - everything affects the skill's delay
+//        1 - skill's delay is not affected by dex
+//        2 - skill's delay is not affected by Magic Strings / Bragi
+//        4 - skill's delay is not affected by item bonuses (equip, cards)
+//
+// Note: Values are bit fields, add them up to combine their effects.
+// Note: Delay setting '1' only makes sense when delay_dependon_dex is enabled.
+// Example: 46,1,1 = Double Strafe's cast time and delay is not affected by dex.
+
+136,0,2	//AS_SONICBLOW
+263,0,2	//MO_TRIPLEATTACK
+272,0,2	//MO_CHAINCOMBO
+273,0,2	//MO_COMBOFINISH
+336,1	//WE_CALLPARTNER
+366,1	//HW_MAGICPOWER
+370,1	//CH_PALMSTRIKE
+371,0,2	//CH_TIGERFIST
+372,0,2	//CH_CHAINCRUSH
+394,0,2	//CG_ARROWVULCAN
+403,3	//PF_MEMORIZE
+408,1	//WE_BABY
+409,1	//WE_CALLPARENT
+410,1	//WE_CALLBABY
+482,1	//PF_DOUBLECASTING
+462,1	//SL_KAIZEL
+496,1	//AM_TWILIGHT1
+497,1	//AM_TWILIGHT2
+498,1	//AM_TWILIGHT3
+512,3	//GS_TRACKING
+1014,1	//PR_REDEMPTIO
+2534,7,7	//RETURN_TO_ELDICASTES
+2536,7,7	//ALL_GUARDIAN_RECALL
+//2537,0,7	//ALL_ODINS_POWER
+10010,3	//GD_BATTLEORDER
+10011,3	//GD_REGENERATION
+10012,6	//GD_RESTORE
+10013,7	//GD_EMERGENCYCALL
+
+// Mercenary Skills
+8214,7	//MA_CHARGEARROW
+8215,7	//MA_SHARPSHOOTING
+8217,7	//ML_BRANDISHSPEAR
+8218,7	//ML_SPIRALPIERCE
+8221,7	//ML_DEVOTION
+8222,7	//MER_MAGNIFICAT
+8225,7	//MER_CRASH
+8234,7	//MER_DECAGI
+8235,7	//MER_SCAPEGOAT
+8238,7	//MER_KYRIE
+8240,7	//MER_INCAGI

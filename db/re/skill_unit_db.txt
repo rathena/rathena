@@ -1,0 +1,123 @@
+// ID,unit ID,unit ID 2,layout,range,interval,target,flag
+//
+// layout = -1:special, 0:1*1, 1:3*3, 2:5*5, up to 5:11*11
+// target = friend (party +guildmates +neutral players) / party /
+//          ally (party +guildmates) / all / enemy
+// flag 0x001(UF_DEFNOTENEMY)		If 'defunit_not_enemy' is set, the target is changed to 'friend'
+//      0x002(UF_NOREITERRATION)	Spell cannot be stacked
+//      0x004(UF_NOFOOTSET)		Spell cannot be cast near/on targets
+//      0x008(UF_NOOVERLAP)		Spell effects do not overlap
+//      0x010(UF_PATHCHECK)	Only cells with a shootable path will be placed
+//      0x020(UF_NOPC)		Spell cannot affect players.
+//      0x040(UF_NOMOB)		Spell cannot affect mobs.
+//      0x080(UF_SKILL)		Spell CAN affect skills.
+//      0x100(UF_DANCE)		Dance skill
+//      0x200(UF_ENSEMBLE)	Ensemble skill
+//      0x400(UF_SONG)		Song skill
+//      0x800(UF_DUALMODE)	Spell has effects both at an interval and when you step in/out
+// 	Example: 0x006 = 0x002+0x004 -> Cannot be stacked nor cast near targets
+//
+// Notes:
+// ------
+//    0x89,0x8a,0x8b without indication
+//
+//    u1   u2 lay  r intr target  flag
+//
+
+ 12,0x7e,    ,  0, 0,  -1,all,   0x003	//MG_SAFETYWALL
+ 18,0x7f,    , -1, 0,  20,enemy, 0x010	//MG_FIREWALL
+ 21,0x86,    ,  0, 2,1000,enemy, 0x018	//MG_THUNDERSTORM
+ 25,0x85,    ,  1, 0,  -1,all,   0x003	//AL_PNEUMA
+ 27,0x81,0x80,  0, 0,  -1,all,   0x00E	//AL_WARP
+ 47,0x86,    ,  0, 2,1000,enemy, 0x080	//AC_SHOWER
+ 70,0x83,    , -1, 1,1000,all,   0x018	//PR_SANCTUARY
+ 79,0x84,    , -1, 1,3000,enemy, 0x018	//PR_MAGNUS
+ 80,0x87,0x88,  0, 1,2000,enemy, 0x006	//WZ_FIREPILLAR
+ 82,0x86,    ,  0, 3,1000,enemy, 0x018	//WZ_FIREIVY
+ 83,0x86,    ,  0, 3,1000,enemy, 0x010	//WZ_METEOR
+ 85,0x86,    ,  0, 6:6:6:6:6:6:6:6:6:6:8,1250,enemy,0x018	//WZ_VERMILION
+ 87,0x8d,    , -1, 0,  -1,all,   0x010	//WZ_ICEWALL
+ 89,0x86,    ,  0, 5, 450,enemy, 0x018	//WZ_STORMGUST
+ 91,0x86,    ,  0, 2,1000,enemy, 0x010	//WZ_HEAVENDRIVE
+ 92,0x8e,    ,  2, 0,  -1,enemy, 0x010	//WZ_QUAGMIRE
+115,0x90,    ,  0, 1,1000,enemy, 0x006	//HT_SKIDTRAP
+116,0x93,    ,  0, 1,1000,enemy, 0x006	//HT_LANDMINE
+117,0x91,    ,  0, 1,1000,enemy, 0x006	//HT_ANKLESNARE
+118,0x94,    ,  0, 1,1000,enemy, 0x006	//HT_SHOCKWAVE
+119,0x95,    ,  0, 1,1000,enemy, 0x006	//HT_SANDMAN
+120,0x96,    ,  0, 1,1000,enemy, 0x006	//HT_FLASHER
+121,0x97,    ,  0, 1,1000,enemy, 0x006	//HT_FREEZINGTRAP
+122,0x8f,    ,  0, 1,1000,enemy, 0x006	//HT_BLASTMINE
+123,0x98,    ,  0, 1,1000,enemy, 0x006	//HT_CLAYMORETRAP
+125,0x99,    ,  0, 1,1000,all,   0x000	//HT_TALKIEBOX
+140,0x92,    , -1, 0,1000,enemy, 0x000	//AS_VENOMDUST
+220,0xb0,    ,  0, 0,  -1,all,   0x002	//RG_GRAFFITI
+229,0xb1,    ,  0, 1,1000,enemy, 0x006	//AM_DEMONSTRATION
+254,0x86,    , -1, 0, 300,enemy, 0x010	//CR_GRANDCROSS
+285,0x9a,    ,  3, 0,  -1,all,   0x010	//SA_VOLCANO
+286,0x9b,    ,  3, 0,  -1,all,   0x010	//SA_DELUGE
+287,0x9c,    ,  3, 0,  -1,all,   0x010	//SA_VIOLENTGALE
+288,0x9d,    ,  3:3:4:4:5,0, -1,all,   0x010	//SA_LANDPROTECTOR
+306,0x9e,    ,  4, 0,6000,enemy,   0x200	//BD_LULLABY
+307,0x9f,    ,  4, 0,  -1,enemy, 0x220	//BD_RICHMANKIM
+308,0xa0,    ,  4, 0,  -1,enemy, 0x200	//BD_ETERNALCHAOS
+309,0xa1,    ,  4, 0,  -1,party, 0x200	//BD_DRUMBATTLEFIELD
+310,0xa2,    ,  4, 0,  -1,party, 0x200	//BD_RINGNIBELUNGEN
+311,0xa3,    ,  4, 0,  -1,all,   0x200	//BD_ROKISWEIL
+312,0xa4,    ,  4, 0,  -1,party, 0x240	//BD_INTOABYSS
+313,0xa5,    ,  4, 0,  -1,party, 0x200	//BD_SIEGFRIED
+317,0xa6,    ,  3, 0,3000,enemy, 0x400	//BA_DISSONANCE
+319,0xa7,    ,  3, 0,  -1,all,   0x440	//BA_WHISTLE
+320,0xa8,    ,  3, 0,  -1,all,   0x440	//BA_ASSASSINCROSS
+321,0xa9,    ,  3, 0,  -1,all,   0x440	//BA_POEMBRAGI
+322,0xaa,    ,  3, 0,6000,all,   0xC40	//BA_APPLEIDUN
+325,0xab,    ,  3, 0,3000,enemy, 0x100	//DC_UGLYDANCE
+327,0xac,    ,  3, 0,  -1,all,   0x140	//DC_HUMMING
+328,0xad,    ,  3, 0,  -1,enemy, 0x100	//DC_DONTFORGETME
+329,0xae,    ,  3, 0,  -1,all,   0x140	//DC_FORTUNEKISS
+330,0xaf,    ,  3, 0,  -1,all,   0x140	//DC_SERVICEFORYOU
+336,0xb2,    ,  0,-1,  -1,noone, 0x000	//WE_CALLPARTNER
+339,0x86,    , -1, 0, 300,enemy, 0x000	//NPC_DARKGRANDCROSS
+362,0xb4,    ,  0, 2, 300,all,   0x000	//HP_BASILICA
+369,0xb3,    , -1, 0,10000,all,  0x008	//PA_GOSPEL
+395,0xb5,    ,  4, 0,  -1,all,   0x200	//CG_MOONLIT
+404,0xb6,    , -1, 0,  -1,all,   0x000	//PF_FOGWALL
+405,0xb7,    ,  0, 0,  -1,enemy, 0x000	//PF_SPIDERWEB
+409,0xb2,    ,  0,-1,  -1,noone, 0x000	//WE_CALLBABY
+410,0xb2,    ,  0,-1,  -1,noone, 0x000	//WE_CALLPARENT
+428,0x86,    ,  0, 1, 100,enemy, 0x000	//SG_SUN_WARM
+429,0x86,    ,  0, 1, 100,enemy, 0x000	//SG_MOON_WARM
+430,0x86,    ,  0, 1, 100,enemy, 0x000	//SG_STAR_WARM
+484,0xb8,    ,  2, 0,1000,enemy, 0x808	//HW_GRAVITATION
+488,0xb9,    ,  3, 0,  -1,all,   0x200	//CG_HERMODE
+516,0x86,    ,  3, 0, 100,enemy, 0x000	//GS_DESPERADO
+521,0xbe,    ,  0, 1,1000,enemy, 0x000	//GS_GROUNDDRIFT
+527,0xbc,    , -1, 0,2000,enemy, 0x018	//NJ_TATAMIGAESHI
+535,0xbd,    , -1, 0,  20,enemy, 0x010	//NJ_KAENSIN
+538,0xbb,    ,  1:1:1:2:2:2:3:3:3:4,0,-1,all,0x010	//NJ_SUITON
+670,0xc7,    ,  1, 4:7:10:13:16:19:22:25:28:31,1000,all,0x008	//NPC_EVILLAND
+
+2044,0xca,    ,  0, 3,1000,all,   0x018	//AB_EPICLESIS
+
+2032,0xe1,    ,  2, 0,1000,enemy, 0x018	//GC_POISONSMOKE
+
+2214,0x86,    ,  0, 5, 100,enemy, 0x080	//WL_CHAINLIGHTNING
+2216,0xcb,    , -1, 2,2000,enemy, 0x018	//WL_EARTHSTRAIN
+
+2238,0xd8,    ,  0, 1,1000,enemy, 0x006	//RA_ELECTRICSHOCKER
+2239,0xd9,    ,  0, 1,1000,enemy, 0x006	//RA_CLUSTERBOMB
+2249,0xd2,    ,  0, 1,1000,enemy, 0x026	//RA_MAGENTATRAP
+2250,0xd3,    ,  0, 1,1000,enemy, 0x026	//RA_COBALTTRAP
+2251,0xd4,    ,  0, 1,1000,enemy, 0x026	//RA_MAIZETRAP
+2252,0xd5,    ,  0, 1,1000,enemy, 0x026	//RA_VERDURETRAP
+2253,0xd6,    ,  0, 1,1000,enemy, 0x006	//RA_FIRINGTRAP
+2254,0xd7,    ,  0, 1,1000,enemy, 0x006	//RA_ICEBOUNDTRAP
+
+2273,0xe2,    ,  1, 0, 500,friend,0x000	//NC_NEUTRALBARRIER
+2274,0xe3,    ,  1, 0, 500,all,   0x000	//NC_STEALTHFIELD
+
+8208,0x86,    ,  0, 2,1000,enemy, 0x080	//MA_SHOWER
+8209,0x90,    ,  0, 1,1000,enemy, 0x006	//MA_SKIDTRAP
+8210,0x93,    ,  0, 0,1000,enemy, 0x006	//MA_LANDMINE
+8211,0x95,    ,  0, 1,1000,enemy, 0x006	//MA_SANDMAN
+8212,0x97,    ,  0, 1,1000,enemy, 0x006	//MA_FREEZINGTRAP

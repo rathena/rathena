@@ -566,8 +566,11 @@ static void itemdb_read_itemgroup_sub(const char* filename)
 static void itemdb_read_itemgroup(void)
 {
 	char path[256];
-	snprintf(path, 255, "%s/item_group_db.txt", db_path);
-
+#if REMODE
+	snprintf(path, 255, "%s/re/item_group_db.txt", db_path);
+#else
+	snprintf(path, 255, "%s/pre-re/item_group_db.txt", db_path);
+#endif
 	memset(&itemgroup_db, 0, sizeof(itemgroup_db));
 	itemdb_read_itemgroup_sub(path);
 	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n", "item_group_db.txt");
@@ -867,14 +870,14 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
  *------------------------------------------*/
 static int itemdb_readdb(void)
 {
-	/**
-	 * ro-resources inheritance: item_db -> item_db_re -> item_db2 (user customs)
-	 **/
+	const char* filename[] = {
 #if REMODE
-	const char* filename[] = { "item_db.txt","item_db_re.txt","item_db2.txt" };
+		"re/item_db.txt",
 #else
-	const char* filename[] = { "item_db.txt","item_db2.txt" };
+		"pre-re/item_db.txt",
 #endif
+		"item_db2.txt" };
+
 	int fi;
 
 	for( fi = 0; fi < ARRAYLENGTH(filename); ++fi )

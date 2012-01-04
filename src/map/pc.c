@@ -8249,9 +8249,9 @@ int pc_readdb(void)
 			for(k=0;k<ELE_MAX;k++)
 				attr_fix_table[i][j][k]=100;
 #if REMODE
-	sprintf(line, "%s/attr_fix_re.txt", db_path);
+	sprintf(line, "%s/re/attr_fix.txt", db_path);
 #else
-	sprintf(line, "%s/attr_fix.txt", db_path);
+	sprintf(line, "%s/pre-re/attr_fix.txt", db_path);
 #endif
 	fp=fopen(line,"r");
 	if(fp==NULL){
@@ -8301,9 +8301,9 @@ int pc_readdb(void)
 	memset(statp,0,sizeof(statp));
 	i=1;
 #if REMODE
-	sprintf(line, "%s/statpoint_renewal.txt", db_path);
+	sprintf(line, "%s/re/statpoint.txt", db_path);
 #else
-	sprintf(line, "%s/statpoint.txt", db_path);
+	sprintf(line, "%s/pre-re/statpoint.txt", db_path);
 #endif
 	fp=fopen(line,"r");
 	if(fp == NULL){
@@ -8323,11 +8323,8 @@ int pc_readdb(void)
 			i++;
 		}
 		fclose(fp);
-	#if REMODE
-		ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","statpoint_renewal.txt");
-	#else
+
 		ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","statpoint.txt");
-	#endif
 	}
 	// generate the remaining parts of the db if necessary
 	k = battle_config.use_statpoint_table; //save setting

@@ -1,0 +1,10 @@
+// Database for upgrading items.
+// Stats per level for safe upgrade, Stats per level after safe limit, Safe level limit, Lv.1 %, Lv 2 %, Lv.3%, ect...
+// Armor defense is done in percentage (ie 70 = .7 def)
+// Weapons are whole numbers (ie 3 = 3 atk)
+
+ 70, 4,4, 100,100,100,100, 60, 40, 40, 20, 20, 10, 50, 30, 30, 20, 20, 10, 10, 10, 10, 10,	// Armor
+  2, 3,7, 100,100,100,100,100,100,100, 60, 40, 20, 70, 70, 50, 50, 30, 30, 20, 20, 10, 10,	// Lv.1 Weapons
+  3, 5,6, 100,100,100,100,100,100, 60, 40, 20, 20, 70, 50, 50, 30, 30, 20, 20, 10, 10, 10,	// Lv.2 Weapons
+  5, 8,5, 100,100,100,100,100, 60, 50, 20, 20, 20, 50, 50, 30, 30, 20, 20, 10, 10, 10, 10,	// Lv.3 Weapons
+  7,13,4, 100,100,100,100, 60, 40, 40, 20, 20, 10, 50, 30, 30, 20, 20, 10, 10, 10, 10, 10,	// Lv.4 Weapons
