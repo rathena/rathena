@@ -4,7 +4,7 @@
 //= Masao
 //= Credits: Muad_Dib, Gepard & L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= Any rAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,8 @@
 //= Job change Quest from Wizard / High Wizard -> Warlock.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
+//= 1.1 Fixed some conversion mistakes, replaced numbers with
+//=     constants, added item names in comments.
 //============================================================
 
 morocc,103,144,0	script	distorted place morroc	139,1,1,{
@@ -310,7 +312,7 @@ spl_in02,77,107,5	script	Assistant#Warlock	446,{
 		case 1:
 			mes "[Yoop]";
 			mes "Leave me alone...!";
-			close;
+			close2;
 			warp "splendide",200,100;
 			end;
 		case 2:
@@ -340,7 +342,7 @@ spl_in02,77,107,5	script	Assistant#Warlock	446,{
 		mes "Would you like to";
 		mes "become a Warlock?";
 		next;
-		if (SkillPoints > 0){
+		if (SkillPoint != 0) {
 			mes "[Yoop]";
 			mes "First, use all of your remaining job skills points before continuing.";
 			set job_wl,3;
@@ -364,8 +366,8 @@ spl_in02,77,107,5	script	Assistant#Warlock	446,{
 		mes "[Yoop]";
 		mes "Show us how strong you are. And don't forget to wear this.";
 		set job_wl,4;
-		getitem 2796,1;
-		getitem 2797,1;
+		getitem 2796,1; //Magical_Stone
+		getitem 2797,1; //Magical_Stone_
 		changequest 11106,11107;
 		next;
 		mes "[Yoop]";
@@ -380,7 +382,7 @@ spl_in02,77,107,5	script	Assistant#Warlock	446,{
 		close;
 	}
 	if (job_wl == 3){
-		if (SkillPoints > 0){
+		if (SkillPoint != 0) {
 			mes "[Yoop]";
 			mes "First, use all of your remaining job skills points before continuing.";
 			close;
@@ -399,8 +401,8 @@ spl_in02,77,107,5	script	Assistant#Warlock	446,{
 		mes "[Yoop]";
 		mes "Show us how strong you are. And don't forget to wear this.";
 		set job_wl,4;
-		getitem 2796,1;
-		getitem 2797,1;
+		getitem 2796,1; //Magical_Stone
+		getitem 2797,1; //Magical_Stone_
 		changequest 11106,11107;
 		next;
 		mes "[Yoop]";
@@ -512,10 +514,10 @@ spl_in02,60,231,5	script	Yoop#Warlock	446,{
 				mes "[Yoop]";
 				mes "While I am concentrating on working on this stone. Can you go back to my master?";
 				mes "I will follow up once it's done.";
-				delitem 2796,countitem(2796);
-				delitem 2797,countitem(2797);
-				delitem 6152,countitem(6152);
-				delitem 6151,countitem(6151);
+				delitem 2796,countitem(2796); //Magical_Stone
+				delitem 2797,countitem(2797); //Magical_Stone_
+				delitem 6152,countitem(6152); //Glittering_Crystal
+				delitem 6151,countitem(6151); //Peice_Of_Great_Bradium
 				set job_wl,5;
 				changequest 11107,11108;
 				close;
@@ -543,9 +545,9 @@ spl_in02,60,231,5	script	Yoop#Warlock	446,{
 								mes "[Yoop]";
 								mes " I will overlook your fault.";
 								mes "Please be careful with it.";
-								delitem 732,2;
-								getitem 2796,1;
-								getitem 2797,1;
+								delitem 732,2; //Crystal_Jewel__
+								getitem 2796,1; //Magical_Stone
+								getitem 2797,1; //Magical_Stone_
 								close;
 							case 2:
 								mes "[Yoop]";
@@ -811,10 +813,10 @@ spl_in02,84,103,3	script	Assistant#Warlock2	445,{
 		mes "I will guide you into the magic room.";
 		set job_wl,7;
 		changequest 11109,11110;
-		getitem 12384,5;
-		getitem 12385,5;
-		getitem 12386,5;
-		getitem 12387,5;
+		getitem 12384,5; //Rainbow_Ruby_Water
+		getitem 12385,5; //Rainbow_Ruby_Fire
+		getitem 12386,5; //Rainbow_Ruby_Wind
+		getitem 12387,5; //Rainbow_Ruby_Earth
 		close2;
 		warp "job3_war01",23,20;
 		end;
@@ -829,22 +831,18 @@ spl_in02,84,103,3	script	Assistant#Warlock2	445,{
 		mes "Would you like to try it again?";
 		mes "Let me give you more rubies.";
 		next;
-		if (countitem(12384) > 0){
-			delitem 12384,countitem(12384);
-		}
-		if (countitem(12385) > 0){
-			delitem 12385,countitem(12385);
-		}
-		if (countitem(12386) > 0){
-			delitem 12386,countitem(12386);
-		}
-		if (countitem(12387) > 0){
-			delitem 12387,countitem(12387);
-		}
-		getitem 12384,5;
-		getitem 12385,5;
-		getitem 12386,5;
-		getitem 12387,5;
+		if (countitem(12384))
+			delitem 12384,countitem(12384); //Rainbow_Ruby_Water
+		if (countitem(12385))
+			delitem 12385,countitem(12385); //Rainbow_Ruby_Fire
+		if (countitem(12386))
+			delitem 12386,countitem(12386); //Rainbow_Ruby_Wind
+		if (countitem(12387))
+			delitem 12387,countitem(12387); //Rainbow_Ruby_Earth
+		getitem 12384,5; //Rainbow_Ruby_Water
+		getitem 12385,5; //Rainbow_Ruby_Fire
+		getitem 12386,5; //Rainbow_Ruby_Wind
+		getitem 12387,5; //Rainbow_Ruby_Earth
 		close2;
 		warp "job3_war01",23,20;
 		end;
@@ -853,18 +851,14 @@ spl_in02,84,103,3	script	Assistant#Warlock2	445,{
 		mes "[Assistant]";
 		mes "You have successfully crystallized the Hollow Stone.";
 		mes "I'm sorry that I've doubted you.";
-		if (countitem(12384) > 0){
-			delitem 12384,countitem(12384);
-		}
-		if (countitem(12385) > 0){
-			delitem 12385,countitem(12385);
-		}
-		if (countitem(12386) > 0){
-			delitem 12386,countitem(12386);
-		}
-		if (countitem(12387) > 0){
-			delitem 12387,countitem(12387);
-		}
+		if (countitem(12384))
+			delitem 12384,countitem(12384); //Rainbow_Ruby_Water
+		if (countitem(12385))
+			delitem 12385,countitem(12385); //Rainbow_Ruby_Fire
+		if (countitem(12386))
+			delitem 12386,countitem(12386); //Rainbow_Ruby_Wind
+		if (countitem(12387))
+			delitem 12387,countitem(12387); //Rainbow_Ruby_Earth
 		next;
 		mes "[Assistant]";
 		mes "All of the tests are done. Now talk to Master Engoloria.";
@@ -1395,7 +1389,7 @@ spl_in02,80,108,5	script	Guild Master#Warlock	465,{
 		mes "[Yoop]";
 		mes "Yup, Master.";
 		mes "Please follow me.";
-		Emotion 44,"Assistant#Warlock2";
+		emotion e_ic,"Assistant#Warlock2";
 		set job_wl,6;
 		changequest 11108,11109;
 		close;
@@ -1415,7 +1409,7 @@ spl_in02,80,108,5	script	Guild Master#Warlock	465,{
 				mes "Please come back after reducing the number of items you have.";
 				close;
 			}
-			if (SkillPoint > 0){
+				if (SkillPoint != 0) {
 				mes "[Master Egnoloria]";
 				//Custom Translation
 				mes "Unless you like being your current job, you should use all your skill points.";
@@ -1433,10 +1427,10 @@ spl_in02,80,108,5	script	Guild Master#Warlock	465,{
 				mes "[Master Egnoloria]";
 				mes "This crystallized magical stone will keep you safe.";
 				set job_wl,10;
-				jobchange 4055;
+				jobchange Job_Warlock;
 				completequest 11112;
-				getitem 5753,1;
-				getitem 2795,1;
+				getitem 5753,1; //Magic_Stone_Hat
+				getitem 2795,1; //Green_Apple_Ring
 				close;
 			}
 			if(Class == Job_High_Wizard){
@@ -1452,10 +1446,10 @@ spl_in02,80,108,5	script	Guild Master#Warlock	465,{
 					mes "[Master Egnoloria]";
 					mes "This crystallized magical stone will keep you safe.";
 					set job_wl,11;
-					jobchange 4061;
+					jobchange Job_Warlock_T;
 					completequest 11112;
-					getitem 5753,1;
-					getitem 2795,1;
+					getitem 5753,1; //Magic_Stone_Hat
+					getitem 2795,1; //Green_Apple_Ring
 					close;
 				}else if ((JobLevel > 59) && (JobLevel < 70)){
 					mes "[Master Egnoloria]";
@@ -1469,10 +1463,10 @@ spl_in02,80,108,5	script	Guild Master#Warlock	465,{
 					mes "[Master Egnoloria]";
 					mes "This crystallized magical stone will keep you safe.";
 					set job_wl,12;
-					jobchange 4061;
+					jobchange Job_Warlock_T;
 					completequest 11112;
-					getitem 5753,1;
-					getitem 2795,1;
+					getitem 5753,1; //Magic_Stone_Hat
+					getitem 2795,1; //Green_Apple_Ring
 					close;
 				}else if (JobLevel == 70){
 					mes "[Master Egnoloria]";
@@ -1486,10 +1480,10 @@ spl_in02,80,108,5	script	Guild Master#Warlock	465,{
 					mes "[Master Egnoloria]";
 					mes "This crystallized magical stone will keep you safe.";
 					set job_wl,13;
-					jobchange 4061;
+					jobchange Job_Warlock_T;
 					completequest 11112;
-					getitem 5753,1;
-					getitem 2795,1;
+					getitem 5753,1; //Magic_Stone_Hat
+					getitem 2795,1; //Green_Apple_Ring
 					close;
 				}
 			}
@@ -1547,6 +1541,7 @@ job3_war01,29,25,0	script	Ebein#WRR	437,{
 }
 
 job3_war01,29,25,5	script	The chamber of magic	437,{
+	end;
 
 OnInit:
 	disablenpc "The chamber of magic";
@@ -1570,6 +1565,7 @@ OnDisable:
 }
 
 job3_war02,1,1,0	script	The chamber of magic#W	66,{
+	end;
 
 OnInit:
 	disablenpc "The chamber of magic#W";
@@ -1667,6 +1663,7 @@ OnTimer305000:
 }
 
 job3_war02,1,2,0	script	The chamber of magic#W2	66,{
+	end;
 
 OnInit:
 	disablenpc "The chamber of magic#W2";
@@ -1760,6 +1757,7 @@ OnTimer305000:
 }
 
 job3_war02,1,3,0	script	The chamber of magic#W3	66,{
+	end;
 
 OnInit:
 	disablenpc "The chamber of magic#W3";
@@ -1841,6 +1839,7 @@ OnTimer65000:
 }
 
 job3_war02,1,4,0	script	Hollow Stone#W	66,{
+	end;
 
 OnInit:
 	disablenpc "Hollow Stone#W";
@@ -1938,6 +1937,7 @@ OnTimer607000:
 }
 
 job3_war01,1,1,0	script	Ebein#E	66,{
+	end;
 
 OnInit:
 	disablenpc "Ebein#E";
@@ -1967,6 +1967,7 @@ OnTimer6000:
 }
 
 job3_war02,1,1,0	script	Ebein#E2	66,{
+	end;
 
 OnInit:
 	disablenpc "Ebein#E2";
@@ -1996,55 +1997,40 @@ OnTimer6000:
 }
 
 /*
-npc "job3_war01" "???" 1_F_01 1 2 0 0 0
-OnClick:
-	switch(select( "?????" "?????" "??????" "??????" "??????" "??????" "??"
-	case 1
-		mes "??????"
-		donpcevent "??? ?" "on"
+job3_war01,1,2,0	script	???	66,{
+	switch(select("?????:?????:??????:??????:??????:??????:??")) {
+	case 1:
+		mes "??????";
+		donpcevent "??? ?::OnEnable";
 		close;
-		end;
-	break
-	case 2
-		mes "??????"
-		donpcevent "??? ?" "off"
+	case 2:
+		mes "??????";
+		donpcevent "??? ?::OnDisable";
 		close;
-		end;
-	break
-	case 3
-		mes "??? ? ???"
-		donpcevent "??? ?#?????" "on"
+	case 3:
+		mes "??? ? ???";
+		donpcevent "??? ?#?????::OnEnable";
 		close;
-		end;
-	break
-	case 4
-		mes "??? ? ???"
-		donpcevent "??? ?#?????" "reset"
-		donpcevent "??? ?#?????" "off"
-		donpcevent "??? ?#?????2" "reset"
-		donpcevent "??? ?#?????2" "off"
-		donpcevent "??? ?#?????3" "reset"
-		donpcevent "??? ?#?????3" "off"
+	case 4:
+		mes "??? ? ???";
+		donpcevent "??? ?#?????::OnReset";
+		donpcevent "??? ?#?????::OnDisable";
+		donpcevent "??? ?#?????2::OnReset";
+		donpcevent "??? ?#?????2::OnDisable";
+		donpcevent "??? ?#?????3::OnReset";
+		donpcevent "??? ?#?????3::OnDisable";
 		close;
-		end;
-	break
-	case 5
-		mes "??? ? ???"
-		donpcevent "??? ?#?????" "on"
+	case 5:
+		mes "??? ? ???";
+		donpcevent "??? ?#?????::OnEnable";
 		close;
-		end;
-	break
-	case 6
-		mes "??? ? ???"
-		donpcevent "??? ?#?????" "reset"
-		donpcevent "??? ?#?????" "off"
+	case 6:
+		mes "??? ? ???";
+		donpcevent "??? ?#?????::OnReset";
+		donpcevent "??? ?#?????::OnDisable";
 		close;
-		end;
-	break
-	case 7
+	case 7:
 		close;
-		end;
-	break
 	}
-end;
+}
 */
