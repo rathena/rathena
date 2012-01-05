@@ -2190,6 +2190,10 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 			continue;
 		if(i == EQI_HEAD_TOP && (sd->equip_index[EQI_HEAD_MID] == index || sd->equip_index[EQI_HEAD_LOW] == index))
 			continue;
+		if(i == EQI_COSTUME_MID && sd->equip_index[EQI_COSTUME_LOW] == index)
+			continue;
+		if(i == EQI_COSTUME_TOP && (sd->equip_index[EQI_COSTUME_MID] == index || sd->equip_index[EQI_COSTUME_LOW] == index))
+			continue;
 		if(!sd->inventory_data[index])
 			continue;
 
