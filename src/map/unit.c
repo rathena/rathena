@@ -1660,7 +1660,8 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	if( src == NULL || src->prev == NULL || target==NULL || target->prev == NULL )
 		return 0;
 
-	if( status_isdead(src) || status_isdead(target) || !status_check_skilluse(src, target, 0, 0) )
+	if( status_isdead(src) || status_isdead(target) ||
+			battle_check_target(src,target,BCT_ENEMY) <= 0 || !status_check_skilluse(src, target, 0, 0) )
 		return 0; // can't attack under these conditions
 
 	if( src->m != target->m )
