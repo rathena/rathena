@@ -2789,7 +2789,7 @@ int parse_frommap(int fd)
 		break;
 
 		case 0x2b07: // Remove RFIFOL(fd,6) (friend_id) from RFIFOL(fd,2) (char_id) friend list [Ind]
-			if (RFIFOREST(fd) < 6)
+			if (RFIFOREST(fd) < 10)
 				return 0;
 			{
 				int char_id, friend_id;

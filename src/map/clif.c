@@ -12387,21 +12387,14 @@ void clif_parse_FriendsListRemove(int fd, struct map_session_data *sd)
 		clif_displaymessage(fd, "Name not found in list.");
 		return;
 	}
-		
-	// move all chars down
-	for(j = i + 1; j < MAX_FRIENDS; j++)
-		memcpy(&sd->status.friends[j-1], &sd->status.friends[j], sizeof(sd->status.friends[0]));
 
-	memset(&sd->status.friends[MAX_FRIENDS-1], 0, sizeof(sd->status.friends[MAX_FRIENDS-1]));
-	clif_displaymessage(fd, "Friend removed");
-	
-	//remove from friends list
-	if( (f_sd = map_id2sd(account_id)) ) {
+	//remove from friend's list first
+	if( (f_sd = map_id2sd(account_id)) && f_sd->status.char_id == char_id) {
 		for (i = 0; i < MAX_FRIENDS &&
 			(f_sd->status.friends[i].char_id != sd->status.char_id || f_sd->status.friends[i].account_id != sd->status.account_id); i++);
 
 		if (i != MAX_FRIENDS) {
-			// move all chars down
+			// move all chars up
 			for(j = i + 1; j < MAX_FRIENDS; j++)
 				memcpy(&f_sd->status.friends[j-1], &f_sd->status.friends[j], sizeof(f_sd->status.friends[0]));
 
@@ -12415,8 +12408,22 @@ void clif_parse_FriendsListRemove(int fd, struct map_session_data *sd)
 		}
 
 	} else { //friend not online -- ask char server to delete from his friendlist
-		chrif_removefriend(char_id,sd->status.char_id);
+		if(chrif_removefriend(char_id,sd->status.char_id)) { // char-server offline, abort
+			clif_displaymessage(fd, "This action can't be performed at the moment. Please try again later.");
+			return;
+		}
 	}
+
+	// We can now delete from original requester
+	for (i = 0; i < MAX_FRIENDS &&
+		(sd->status.friends[i].char_id != char_id || sd->status.friends[i].account_id != account_id); i++);
+	// move all chars up
+	for(j = i + 1; j < MAX_FRIENDS; j++)
+		memcpy(&sd->status.friends[j-1], &sd->status.friends[j], sizeof(sd->status.friends[0]));
+
+	memset(&sd->status.friends[MAX_FRIENDS-1], 0, sizeof(sd->status.friends[MAX_FRIENDS-1]));
+	clif_displaymessage(fd, "Friend removed");	
+
 	WFIFOHEAD(fd,packet_len(0x20a));
 	WFIFOW(fd,0) = 0x20a;
 	WFIFOL(fd,2) = account_id;
