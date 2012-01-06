@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena 1.0
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
 //= 1.1 Updated 'waitingroom' to support required zeny/lvl. [Kisuka]
+//= 1.2 Removed MaxLvl check in waitingrooms.
 //============================================================
 
 // Waiting Room NPCs
@@ -22,7 +23,7 @@ bat_room,114,227,5	script	Lieutenant Rundel	418,{
 	end;
 
 OnInit:
-	waitingroom "Battle Station",10,"start#bat_a02::OnReadyCheck",1,0,80,99;
+	waitingroom "Battle Station",10,"start#bat_a02::OnReadyCheck",1,0,80;
 	end;
 
 OnEnterBG:
@@ -34,7 +35,7 @@ bat_room,114,204,1	script	Lieutenant Guerrit	414,{
 	end;
 
 OnInit:
-	waitingroom "Battle Station",10,"start#bat_a02::OnReadyCheck",1,0,80,99;
+	waitingroom "Battle Station",10,"start#bat_a02::OnReadyCheck",1,0,80;
 	end;
 
 OnEnterBG:

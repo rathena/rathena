@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= rAthena 1.0
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 1.0 First Version.
 //= 1.1 Corrected setwalls for barricades. [L0ne_W0lf]
 //= 1.2 Updated 'waitingroom' to support required zeny/lvl. [Kisuka]
+//= 1.3 Removed MaxLvl check in waitingrooms.
 //============================================================
 
 // Waiting Room NPCs
@@ -23,7 +24,7 @@ bat_room,57,227,5	script	Lieutenant Kalos	418,{
 	end;
 
 OnInit:
-	waitingroom "Battle Station",10,"start#bat_a01::OnReadyCheck",1,0,80,99;
+	waitingroom "Battle Station",10,"start#bat_a01::OnReadyCheck",1,0,80;
 	end;
 
 OnEnterBG:
@@ -35,7 +36,7 @@ bat_room,58,204,1	script	Lieutenant Eyor	414,{
 	end;
 
 OnInit:
-	waitingroom "Battle Station",10,"start#bat_a01::OnReadyCheck",1,0,80,99;
+	waitingroom "Battle Station",10,"start#bat_a01::OnReadyCheck",1,0,80;
 	end;
 
 OnEnterBG:
