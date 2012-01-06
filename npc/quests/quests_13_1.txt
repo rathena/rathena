@@ -2286,6 +2286,66 @@ moc_fild22b,230,197,5	script	Munkenro#2	967,{
 			close;
 		}
 	}
+	if (ep13_ryu == 20) {
+		mes "[Munkenro]";
+		mes "I am the head of the Three Kingdoms Alliance. You've come here for the discovery of the dimensional rift. Am I right?";
+		next;
+		mes "[Munkenro]";
+		mes "Um. You're the one that";
+		mes "did some favors before...";
+		mes "Your name is " + strcharinfo(0) + "?";
+		mes "I remember you.";
+		next;
+		mes "[Munkenro]";
+		mes "Sikaiz retired from his position urgently. I am his replacement.";
+		next;
+		mes "[Munkenro]";
+		mes "You don't need to know in detail all about it now. That's not important to you. Is it?";
+		next;
+		mes "[Munkenro]";
+		mes "You are here for the discovery of the dimensional rift. I can't send you there right away. I know that you've passed your tests, but that's the past. You have not been tested by me. ~";
+		next;
+		mes "[Munkenro]";
+		mes "So you need to be tested again. I don't have too much time to test you now. So let's just do a short test.";
+		next;
+		mes "[Munkenro]";
+		mes "Now the soldiers here will start to attack you... If you survive, I will approve of you. Just do it in good time.";
+		next;
+		mes "[Munkenro]";
+		mes "This can prove that you're strong enough. That's the minimum test I can perform.";
+		next;
+		changequest 10076,10077;
+		set ep13_ryu,21;
+		mes "[Munkenro]";
+		mes "Once you get ready,";
+		mes "just let me know.";
+		close;
+	}
+	if (ep13_ryu == 21) {
+		mes "[Munkenro]";
+		mes "Are you ready??";
+		mes "Let's start!";
+		next;
+		switch(select("Ready!!:Please, wait...")) {
+		case 1:
+			mes "[Munkenro]";
+			mes "Ok, just have a good adventure.";
+			next;
+			mes "[Munkenro]";
+			mes "If you are too late,";
+			mes "it will be considered as a failure, so come back soon.";
+			donpcevent "Head of the Alliance#moo::OnEnable";
+			changequest 10077,10078;
+			set ep13_ryu,22;
+			close;
+		case 2:
+			mes "[Munkenro]";
+			mes "If you hesitate,";
+			mes "it means you fail.";
+			mes "I will give you one more chance. Go ahead.";
+			close;
+		}
+	}
 	if ($@ep13_test == 2) {
 		mes "[Munkenro]";
 		mes "You're quite shrewd...";
@@ -2331,66 +2391,6 @@ moc_fild22b,230,197,5	script	Munkenro#2	967,{
 		mes "[Munkenro]";
 		mes "I will let you go there.";
 		mes "Let me know once you are ready.";
-		close;
-	}
-	if (ep13_ryu == 21) {
-		mes "[Munkenro]";
-		mes "Are you ready??";
-		mes "Let's start!";
-		next;
-		switch(select("Ready!!:Please, wait...")) {
-		case 1:
-			mes "[Munkenro]";
-			mes "Ok, just have a good adventure.";
-			next;
-			mes "[Munkenro]";
-			mes "If you are too late,";
-			mes "it will be considered as a failure, so come back soon.";
-			donpcevent "Head of the Alliance#moo::OnEnable";
-			changequest 10077,10078;
-			set ep13_ryu,22;
-			close;
-		case 2:
-			mes "[Munkenro]";
-			mes "If you hesitate,";
-			mes "it means you fail.";
-			mes "I will give you one more chance. Go ahead.";
-			close;
-		}
-	}
-	if (ep13_ryu == 20) {
-		mes "[Munkenro]";
-		mes "I am the head of the Three Kingdoms Alliance. You've come here for the discovery of the dimensional rift. Am I right?";
-		next;
-		mes "[Munkenro]";
-		mes "Um. You're the one that";
-		mes "did some favors before...";
-		mes "Your name is " + strcharinfo(0) + "?";
-		mes "I remember you.";
-		next;
-		mes "[Munkenro]";
-		mes "Sikaiz retired from his position urgently. I am his replacement.";
-		next;
-		mes "[Munkenro]";
-		mes "You don't need to know in detail all about it now. That's not important to you. Is it?";
-		next;
-		mes "[Munkenro]";
-		mes "You are here for the discovery of the dimensional rift. I can't send you there right away. I know that you've passed your tests, but that's the past. You have not been tested by me. ~";
-		next;
-		mes "[Munkenro]";
-		mes "So you need to be tested again. I don't have too much time to test you now. So let's just do a short test.";
-		next;
-		mes "[Munkenro]";
-		mes "Now the soldiers here will start to attack you... If you survive, I will approve of you. Just do it in good time.";
-		next;
-		mes "[Munkenro]";
-		mes "This can prove that you're strong enough. That's the minimum test I can perform.";
-		next;
-		changequest 10076,10077;
-		set ep13_ryu,21;
-		mes "[Munkenro]";
-		mes "Once you get ready,";
-		mes "just let me know.";
 		close;
 	}
 }

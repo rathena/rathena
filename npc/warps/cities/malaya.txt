@@ -1,0 +1,46 @@
+//===== eAthena Script =======================================
+//= Malaya Port Warp Script
+//===== By: ==================================================
+//= Chilly
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Description: =========================================
+//= Warp Points for Malaya Port
+//===== Additional Comments: =================================
+//= 1.0 First Version.
+//============================================================
+
+// Town Warps
+malaya,309,70,0	warp	malaya_field0001	1,1,ma_in01,108,92
+ma_in01,105,92,0	warp	malaya_field0002	1,1,malaya,310,67
+malaya,300,211,0	warp	malaya_field0003	1,1,ma_in01,36,152
+ma_in01,33,152,0	warp	malaya_field0004	1,1,malaya,297,211
+malaya,178,211,0	warp	malaya_field0005	1,1,ma_in01,24,80
+ma_in01,24,77,0	warp	malaya_field0006	1,1,malaya,178,208
+malaya,112,212,0	warp	malaya_field0007	1,1,ma_in01,83,16
+ma_in01,86,16,0	warp	malaya_field0008	1,1,malaya,115,212
+malaya,299,167,0	warp	malaya_field0009	1,1,ma_in01,12,24
+ma_in01,9,24,0	warp	malaya_field0010	1,1,malaya,296,167
+malaya,261,240,0	warp	malaya_field0011	1,1,ma_in01,126,20
+ma_in01,126,17,0	warp	malaya_field0012	1,1,malaya,261,237
+malaya,370,277,0	warp	malaya_field0013	1,1,ma_fild01,40,272
+ma_fild01,37,272,0	warp	malaya_field0014	1,1,malaya,367,277
+ma_fild01,266,359,0	warp	malaya_field0015	1,1,ma_fild02,248,36
+ma_fild02,248,33,0	warp	malaya_field0016	1,1,ma_fild01,266,356
+ma_fild01,251,190,0	warp	malaya_field0017	1,1,ma_in01,108,160
+ma_in01,105,160,0	warp	malaya_field0018	1,1,ma_fild01,249,192
+ma_fild01,288,52,0	warp	malaya_field0019	1,1,ma_scene01,142,78
+ma_scene01,140,80,0	warp	malaya_field0020	1,1,ma_fild01,288,55
+
+// Car Warps
+ma_zif01,30,22,0	warp	malaya_car0001	1,1,malaya,241,238
+ma_zif02,30,22,0	warp	malaya_car0002	1,1,malaya,71,43
+ma_zif03,30,22,0	warp	malaya_car0003	1,1,malaya,284,129
+ma_zif04,30,22,0	warp	malaya_car0004	1,1,malaya,134,247
+ma_zif05,30,22,0	warp	malaya_car0005	1,1,malaya,341,150
+ma_zif06,30,22,0	warp	malaya_car0006	1,1,malaya,294,293
+ma_zif07,30,22,0	warp	malaya_car0007	1,1,malaya,239,221
+ma_zif08,30,22,0	warp	malaya_car0008	1,1,malaya,59,246
+ma_zif09,30,22,0	warp	malaya_car0009	1,1,malaya,254,68

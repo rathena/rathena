@@ -1,0 +1,25 @@
+//===== eAthena Script =======================================
+//= Paradise Group Warp Script
+//===== By: ==================================================
+//= Chilly
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any Athena Version;
+//===== Description: =========================================
+//= Warp Points for Paradise Group
+//===== Additional Comments: =================================
+//= 1.0 First Release
+//============================================================
+
+moc_para01,57,27,0	warp	parawarp001	1,1,moc_para01,161,26
+moc_para01,158,26,0	warp	parawarp002	1,1,moc_para01,54,27
+moc_para01,48,16,0	warp	parawarp003	1,1,moc_para01,47,164
+moc_para01,47,161,0	warp	parawarp004	1,1,moc_para01,48,19
+moc_para01,41,187,0	warp	parawarp005	1,1,moc_para01,179,93
+moc_para01,179,90,0	warp	parawarp006	1,1,moc_para01,41,184
+moc_para01,100,27,0	warp	parawarp007	1,1,moc_para01,46,86
+moc_para01,49,86,0	warp	parawarp008	1,1,moc_para01,103,27
+moc_para01,113,32,0	warp	parawarp009	1,1,moc_para01,105,92
+moc_para01,102,92,0	warp	parawarp010	1,1,moc_para01,110,32
+moc_para01,107,12,0	warp	parawarp011	1,1,moc_para01,48,36
