@@ -14,46 +14,50 @@
 //============================================================
 
 prontera,150,193,4	script	Reset Girl	124,{
+	set @rskill,5000; // Set value in zeny for skill reset here
+	set @rstat,5000; // Set value in zeny for stat reset here
+	set @rboth,9000; // Set value for "package deal" (i.e.: reseting both) here.
 	mes "[Reset Girl]";
 	mes "I am a Reset Girl.";
-	mes "Reset Stats: 5,000z";
-	mes "Reset Skills: 5,000z";
-	mes "Reset Both: 9,000z";
+	mes "Reset Stats: "+ @rstat +"z";
+	mes "Reset Skills: "+ @rskill +"z";
+	mes "Reset Both: "+ @rboth +"z";
 	mes "Please select the service you want:";
 	next;
 	switch(select("^FF3355Reset Skills:Reset Stats:Reset Both^000000:Quit")) {
 	case 1:
 		mes "[Reset Girl]";
-		if (Zeny < 5000) {
+		if (Zeny < @rskill) {
 			mes "Sorry, you don't have enough Zeny.";
 			close;
 		}
 		mes "Alright, here we go now.. Remember, changes won't take effect until you log back on!";
-		set Zeny,zeny-5000;
+		set Zeny,Zeny-@rskill;
 		ResetSkill;
 		close;
 	case 2:
 		mes "[Reset Girl]";
-		if (Zeny < 5000) {
+		if (Zeny < @rstat) {
 			mes "Sorry, you don't have enough Zeny.";
 			close;
 		}
 		mes "Alright, here we go now.. Remember, changes won't take effect until you log back on!";
-		set Zeny,zeny-5000;
+		set Zeny,Zeny-@rstat;
 		ResetStatus;
 		close;
 	case 3:
 		mes "[Reset Girl]";
-		if (Zeny < 9000) {
+		if (Zeny < @rboth) {
 			mes "Sorry, you don't have enough Zeny.";
 			close;
 		}
 		mes "Alright, here we go now.. Remember, changes won't take effect until you log back on!";
-		set Zeny,zeny-9000;
+		set Zeny,Zeny-@rboth;
 		ResetSkill;
 		ResetStatus;
 		close;
 	case 4:
+		mes "Come again soon!";
 		close;
 	}
 }
