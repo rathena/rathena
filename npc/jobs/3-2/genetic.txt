@@ -32,7 +32,7 @@ alde_alche,35,186,5	script	Alchemist Union Member	805,{
 	}
 
 	if ((BaseLevel == 99) && (JobLevel > 49)){
-		if ((Class == Job_alchemist) | (Class == Job_Creator)){
+		if ((Class == Job_Alchemist) | (Class == Job_Creator)){
 			if (SkillPoint == 0){
 				if (job_gen == 0){
 					mes "[Alchemist Union Member]";
@@ -182,12 +182,12 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 			mes "Because of the temptation, I've bought a large amount, hehehe.";
 			next;
 			mes "- Ke Ke Ke Ke Ke Ke Ke -";
-			specialeffect EF_ENDURE,"Devries#gen";
+			specialeffect EF_ENDURE;
 			next;
-			specialeffect EF_REPAIRWEAPON,"#from1to2gen";
+			specialeffect EF_REPAIRWEAPON;
 			mes "- Ke Ke Ke Ke! Ke Ke Ke Ke Ke Ke!!! -";
 			next;
-			specialeffect EF_CRASHEARTH,"#from1to2gen";
+			specialeffect EF_CRASHEARTH;
 			mes "- Bang! Bang!! Bang!!! Bang!!!! -";
 			next;
 			mes "[Devries]";
@@ -465,8 +465,8 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 			mes "Ah!";
 			next;
 			if (job_gen == 60){
-				specialeffect EF_FLASHER,"Super Cultivator#gen";
-				specialeffect EF_PHARMACY_OK,"Super Cultivator#gen";
+				specialeffect EF_FLASHER;
+				specialeffect EF_PHARMACY_OK;
 				mes "[Devries]";
 				mes "Bubbles, look at this!";
 				mes "What a fascination plant!";
@@ -518,8 +518,8 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 				}
 				close;
 			}
-				specialeffect EF_SPELLBREAKER,"Super Cultivator#gen";
-				specialeffect EF_PHARMACY_FAIL,"Super Cultivator#gen";
+				specialeffect EF_SPELLBREAKER;
+				specialeffect EF_PHARMACY_FAIL;
 				mes "[Devries]";
 				mes "Uh oh! You failed, Bubbles";
 				mes "it did not grow at all, it's withered already.";
@@ -562,7 +562,7 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 			mes "Bubble!";
 			mes "Good news!";
 			next;
-			if (((Class == Job_Alchemist) || (Class == Job_Creator)) && (JobLevel > 49) && (SkillPoint == 0) && (BaseLevel > 98)){
+			if (Class == Job_Alchemist || Class == Job_Creator && ((JobLevel > 49) && (SkillPoint == 0) && (BaseLevel > 98))){
 				if (checkcart() == 0){
 					mes "[Devries]";
 					mes "Put that heavy and dirty cart away. On such a happy moment, that thing will just ruin it.";
