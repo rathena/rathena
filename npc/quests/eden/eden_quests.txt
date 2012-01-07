@@ -1402,7 +1402,7 @@ prt_sewb1,131,262,3	script	Standing Cat#para04	422,{
 			mes "^4d4dffThe cat was suprised by";
 			mes "a thief bug and froze in";
 			mes "place. Remove those";
-			mes "hief bugs around here.^000000";
+			mes "thief bugs around here.^000000";
 			set para_suv01,7;
 			changequest 7133,7134;
 			close;

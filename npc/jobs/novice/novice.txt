@@ -1774,7 +1774,7 @@ new_5-3,113,41,4	duplicate(NvArc)	Archer Guide#nv5	727
 	mes "[Prontera Acolyte]";
 	mes "What can I do for you?";
 	next;
-	switch(select("What is an Acolyte?:Job change to Acolyte.Cancel")) {
+	switch(select("What is an Acolyte?:Job change to Acolyte:Cancel")) {
 	case 1:
 		mes "[Prontera Acolyte]";
 		mes "An Acolyte is someone who worships the goddess Freya sacrificing themselves to help others.";

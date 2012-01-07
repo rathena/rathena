@@ -21,31 +21,31 @@ alde_alche,35,186,5	script	Alchemist Union Member	805,{
 		mes "Our Alchemist Union brings up many junior alchemists with various promotions and investigations.";
 		next;
 		mes "[Alchemist Union Member]";
-		mes "They have spread to all corners of Rune-Midgard and were active in many fields like sciences or special item production methods.";
+		mes "They have spread to all corners of Rune-Midgart and were active in many fields like sciences or special item production methods.";
 		next;
 		mes "[Alchemist Union Member]";
 		mes "We call the members of our new union ^3131FF'Geneticists'^000000.";
 		next;
 		mes "[Alchemist Union Member]";
-		mes "Geneticists are the ones who have reached their peak potential in the world of Alchemy. They are the ones who currently spearhead alchemy throughout all of Rune-Midgard.";
+		mes "Geneticists are the ones who have reached their peak potential in the world of Alchemy. They are the ones who currently spearhead alchemy throughout all of Rune-Midgart.";
 		close;
 	}
 
 	if ((BaseLevel == 99) && (JobLevel > 49)){
-		if ((Class == Job_Alchemist) | (Class == Job_Creator)){
+		if (Class == Job_Alchemist || Class == Job_Creator){
 			if (SkillPoint == 0){
 				if (job_gen == 0){
 					mes "[Alchemist Union Member]";
 					mes "Our Alchemist Union brings up many junior alchemists with various promotions and investigations.";
 					next;
 					mes "[Alchemist Union Member]";
-					mes "They have spread to all corners of Rune-Midgard and were active in many fields like sciences or special item production methods.";
+					mes "They have spread to all corners of Rune-Midgart and were active in many fields like sciences or special item production methods.";
 					next;
 					mes "[Alchemist Union Member]";
 					mes "We call the members of our new union ^3131FF'Geneticists'^000000.";
 					next;
 					mes "[Alchemist Union Member]";
-					mes "Geneticists are the ones who have reached their peak potential in the world of Alchemy. They are the ones who currently spearhead alchemy throughout all of Rune-Midgard.";
+					mes "Geneticists are the ones who have reached their peak potential in the world of Alchemy. They are the ones who currently spearhead alchemy throughout all of Rune-Midgart.";
 					next;
 					mes "[Alchemist Union Member]";
 					mes "I see you have a certain level of experience in this area. Perhaps you would like to meet other geneticists?";
@@ -91,13 +91,13 @@ alde_alche,35,186,5	script	Alchemist Union Member	805,{
 	mes "Our Alchemist Union brings up many junior alchemists with various promotions and investigations.";
 	next;
 	mes "[Alchemist Union Member]";
-	mes "They have spread to all corners of Rune-Midgard and were active in many fields like sciences or special item production methods.";
+	mes "They have spread to all corners of Rune-Midgart and were active in many fields like sciences or special item production methods.";
 	next;
 	mes "[Alchemist Union Member]";
 	mes "We call the members of our new union ^3131FF'Geneticists'^000000.";
 	next;
 	mes "[Alchemist Union Member]";
-	mes "Geneticists are the ones who have reached their peak potential in the world of Alchemy. They are the ones who currently spearhead alchemy throughout all of Rune-Midgard.";
+	mes "Geneticists are the ones who have reached their peak potential in the world of Alchemy. They are the ones who currently spearhead alchemy throughout all of Rune-Midgart.";
 	close;
 }
 
@@ -128,14 +128,14 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 			next;
 			menu "You have a weird accent.",-;
 			mes "[Devries]";
-			mes "I am from Rune-Midgard!";
-			mes "Have you ever been to the Rune-Midgarts Kingdom? Everyone in Rune-Midgard speaks like this.";
+			mes "I am from Rune-Midgart!";
+			mes "Have you ever been to the Rune-Midgarts Kingdom? Everyone in Rune-Midgart speaks like this.";
 			next;
-			switch(select("Really?!:I'm from Rune-Midgard too.")){
+			switch(select("Really?!:I'm from Rune-Midgart too.")){
 			case 1:
 				mes "[Devries]";
 				mes "Really?";
-				mes "Do you come from a Rune-Midgard village?";
+				mes "Do you come from a Rune-Midgart village?";
 				mes "My village is very big, everyone there speaks with this accent.";
 				next;
 				break;
@@ -143,7 +143,7 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 				emotion e_lv;
 				mes "[Devries]";
 				mes "Ah! No wonder you look so familiar.";
-				mes "I am happy to meet a fellow Rune-Midgardian here in the Schwartzvalt Republic!";
+				mes "I am happy to meet a fellow Rune-Midgartian here in the Schwartzvalt Republic!";
 				next;
 				break;
 			}
@@ -255,7 +255,7 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 			mes "But I am terrible with names...... Is it okay if I call you Bubbles?";
 			next;
 			mes "[Devries]";
-			mes "Bubble, have you heard of my research?";
+			mes "Bubbles, have you heard of my research?";
 			mes "You did read my research paper before you came here, right?";
 			next;
 			switch(select("No.:Yes, I did.")){
@@ -287,7 +287,7 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 				mes "[Devries]";
 				mes "Okay then.";
 				mes "Even though your knowledge is not that great as that of geneticists, a fundamental knowledge is also important.";
-				mes "Bubble, come back to me once you've finished your studies.";
+				mes "Bubbles, come back to me once you've finished your studies.";
 				set job_gen,4;
 				close;
 			case 2:
@@ -299,7 +299,7 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 			}
 		}else if (job_gen == 4){
 			mes "[Devries]";
-			mes "Bubble!";
+			mes "Bubbles!";
 			mes "Are you prepared to take the test?";
 			next;
 			switch(select("Not yet.:Yes!")){
@@ -316,7 +316,7 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 			}
 		}else if (job_gen == 5){
 			mes "[Devries]";
-			mes "Bubble, what do you think of plants?";
+			mes "Bubbles, what do you think of plants?";
 			mes "Do you like plants? Which one are you interested in?";
 			next;
 			mes "- Bang Bang Bang Bang -";
@@ -358,7 +358,7 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 			next;
 			emotion e_hmm;
 			mes "[Devries]";
-			mes "Bubble.";
+			mes "Bubbles.";
 			next;
 			emotion e_hmm;
 			mes "[Devries]";
@@ -559,7 +559,7 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 			close;
 		}else if (job_gen == 76){
 			mes "[Devries]";
-			mes "Bubble!";
+			mes "Bubbles!";
 			mes "Good news!";
 			next;
 			if (Class == Job_Alchemist || Class == Job_Creator && ((JobLevel > 49) && (SkillPoint == 0) && (BaseLevel > 98))){
