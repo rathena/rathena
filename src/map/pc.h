@@ -101,7 +101,7 @@ struct map_session_data {
 		unsigned int active : 1; //Marks active player (not active is logging in/out, or changing map servers)
 		unsigned int menu_or_input : 1;// if a script is waiting for feedback from the player
 		unsigned int dead_sit : 2;
-		unsigned int lr_flag : 2;
+		unsigned int lr_flag : 3;//1: left h. weapon; 2: arrow; 3: shield
 		unsigned int connect_new : 1;
 		unsigned int arrow_atk : 1;
 		unsigned int gangsterparadise : 1;
@@ -298,6 +298,7 @@ struct map_session_data {
 	int classchange; // [Valaris]
 	int speed_rate, speed_add_rate, aspd_add;
 	int itemhealrate2; // [Epoque] Increase heal rate of all healing items.
+	int shieldmdef;//royal guard's
 	unsigned int setitem_hash, setitem_hash2; //Split in 2 because shift operations only work on int ranges. [Skotlex]
 	
 	short splash_range, splash_add_range;
@@ -460,6 +461,7 @@ struct map_session_data {
 	// temporary debugging of bug #3504
 	const char* delunit_prevfile;
 	int delunit_prevline;
+
 };
 
 //Update this max as necessary. 55 is the value needed for Super Baby currently
@@ -839,4 +841,8 @@ int pc_disguise(struct map_session_data *sd, int class_);
  * Mechanic (Mado Gear)
  **/
 void pc_overheat(struct map_session_data *sd, int val);
+/**
+ * Royal Guard
+ **/
+int pc_banding(struct map_session_data *sd, short skill_lv);
 #endif /* _PC_H_ */

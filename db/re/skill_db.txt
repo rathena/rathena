@@ -729,6 +729,23 @@
 //****
 // GC Guillotine Cross
 //****
+2021,5,6,1,0,0x1,0,5,1,no,0,0,0,none,0,		GC_VENOMIMPRESS,Venom Impress
+2022,3,8,1,-1,0,0,5,-7,no,0,0,0,weapon,0,	GC_CROSSIMPACT,Cross Impact
+2023,3:4:5:6:7,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,GC_DARKILLUSION,Dark Illusion
+2024,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		GC_RESEARCHNEWPOISON,Research New Poison
+2025,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,		GC_CREATENEWPOISON,Create New Poison
+2026,5,6,16,0,0x1,0,1,1,no,0,0,0,none,0,	GC_ANTIDOTE,Antidote
+2027,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,		GC_POISONINGWEAPON,Poisoning Weapon
+2028,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,		GC_WEAPONBLOCKING,Weapon Blocking
+2029,-2,6,4,-1,0x2,1,5,1,no,0,0,0,weapon,3,	GC_COUNTERSLASH,Counter Slash
+2030,-2,6,4,-1,0x1,0,5,1,no,0,0x200,0,weapon,0,	GC_WEAPONCRUSH,Weapon Crush //CHECK SHould this and the above skill have INF2 0x200?
+2031,1,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,	GC_VENOMPRESSURE,Venom Pressure
+2032,5,6,2,0,0x1,0,5,1,yes,0,0,1,none,0,	GC_POISONSMOKE,Poison Smoke
+2033,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,		GC_CLOAKINGEXCEED,Cloaking Exceed
+2034,0,6,4,-1,0x2,3,1,1,no,0,0,0,weapon,0,	GC_PHANTOMMENACE,Phantom Menace
+2035,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,		GC_HALLUCINATIONWALK,Hallucination Walk
+2036,0,6,4,-1,0x2,1,5,1,no,0,0,0,weapon,0,	GC_ROLLINGCUTTER,Rolling Cutter
+2037,7,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,	GC_CROSSRIPPERSLASHER,Cross Ripper Slasher
 
 //****
 // AB Arch Bishop
@@ -813,6 +830,29 @@
 2281,2,6,2,0,0x1,0,5,1,yes,0,0,2,none,0,	NC_SILVERSNIPER,FAW - Silver Sniper
 2282,2,6,2,0,0x1,0,5,1,yes,0,0,2,none,0,	NC_MAGICDECOY,FAW - Magic Decoy //CHECK FIX ME!!!! Wind and Earth stones spawning opposite decoys.
 2283,2,6,1,0,0x1,0,1,1,no,0,0,0,none,0,		NC_DISJOINT,FAW Removal
+
+//****
+// LG Royal Guard
+2307,11,8,1,-1,0,2,5,1,no,0,0,10,weapon,0,	LG_CANNONSPEAR,Cannon Spear
+2308,7,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,	LG_BANISHINGPOINT,Banishing Point
+2309,0,6,4,0,0x3,2,5,1,no,0,0,0,none,0,		LG_TRAMPLE,Trample
+2310,1,6,1,0,0,0,5,1,no,0,0,0,weapon,0,		LG_SHIELDPRESS,Shield Press
+2311,0,6,4,0,0x3,3,5,1,no,0,0,0,none,0,	LG_REFLECTDAMAGE,Reflect Damage
+2312,5,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,	LG_PINPOINTATTACK,Pinpoint Attack
+2313,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,	LG_FORCEOFVANGUARD,Force of Vanguard
+2314,1,6,1,-1,0,0,1,1,no,0,0,0,weapon,0,	LG_RAGEBURST,Rage Burst
+2315,0,6,4,0,0x2,3,3,1,yes,0,0,0,none,2,	LG_SHIELDSPELL,Shield Spell
+2316,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,	LG_EXEEDBREAK,Exceed Break
+2317,1,6,2,-1,0x2,5,5,1,yes,0,0,0,none,3:4:5:6:7,	LG_OVERBRAND,Over Brand //CHECK I know the splash is needed somehow for the strange AoE it gives.
+2318,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,	LG_PRESTIGE,Prestige
+2319,0,6,4,0,0x1,3,5,1,no,0,0,0,weapon,0,	LG_BANDING,Banding //CHECK Splash isnt needed right? Banding has its own UNIT ID.
+2320,0,6,4,-1,0x2,3,5,1,yes,0,0,0,weapon,0,	LG_MOONSLASHER,Moon Slasher
+2321,1,8,2,6,0x2,5,5,-7,yes,0,0,0,weapon,0,	LG_RAYOFGENESIS,Ray of Genesis
+2322,0,6,16,0,0x3,1,5,1,yes,0,0,0,none,0,	LG_PIETY,Piety
+2323,0,8,4,2,0x2,1:1:2:2:3,5,-5,yes,0,0,0,weapon,0,	LG_EARTHDRIVE,Earth Drive
+2324,3,8,1,-1,0,0,5,3,yes,0,0,0,weapon,0,	LG_HESPERUSLIT,Hesperus Lit
+2325,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,	LG_INSPIRATION,Inspiration
+
 
 //2021,0,0,0,0,0,0,9,0,no,0,0,0,none,0		GC_VENOMIMPRESS,
 //2022,0,0,0,0,0,0,9,0,no,0,0,0,none,0		GC_CROSSIMPACT,

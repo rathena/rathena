@@ -182,7 +182,10 @@ int pc_addspiritball(struct map_session_data *sd,int interval,int max)
 		memmove(sd->spirit_timer+i+1, sd->spirit_timer+i, (sd->spiritball-i)*sizeof(int));
 	sd->spirit_timer[i] = tid;
 	sd->spiritball++;
-	clif_spiritball(sd);
+	if( (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD )
+		clif_millenniumshield(sd,sd->spiritball);
+	else
+		clif_spiritball(sd);
 
 	return 0;
 }
@@ -217,10 +220,110 @@ int pc_delspiritball(struct map_session_data *sd,int count,int type)
 		sd->spirit_timer[i] = INVALID_TIMER;
 	}
 
-	if(!type)
-		clif_spiritball(sd);
+	if(!type) {
+		if( (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD )
+			clif_millenniumshield(sd,sd->spiritball);
+		else
+			clif_spiritball(sd);
+	}
+	return 0;
+}
+static int pc_check_banding( struct block_list *bl, va_list ap ) {
+	int *c, *b_sd;
+	struct block_list *src;
+	struct map_session_data *tsd;
+	struct status_change *sc;
+
+	nullpo_ret(bl);
+	nullpo_ret(tsd = (struct map_session_data*)bl);
+	nullpo_ret(src = va_arg(ap,struct block_list *));
+	c = va_arg(ap,int *);
+	b_sd = va_arg(ap, int *);
+
+	if(pc_isdead(tsd))
+		return 0;
+
+	sc = status_get_sc(bl);
+
+	if( bl == src )
+		return 0;
+
+	if( sc && sc->data[SC_BANDING] )
+	{
+		b_sd[(*c)++] = tsd->bl.id;
+		return 1;
+	}
 
 	return 0;
+}
+int pc_banding(struct map_session_data *sd, short skill_lv) {
+	int c;
+	int b_sd[MAX_PARTY]; // In case of a full Royal Guard party.
+	int i, j, hp, extra_hp = 0, tmp_qty = 0, tmp_hp;
+	struct map_session_data *bsd;
+	struct status_change *sc;
+	int range = skill_get_splash(LG_BANDING,skill_lv);
+
+	nullpo_ret(sd);
+
+	c = 0;
+	memset(b_sd, 0, sizeof(b_sd));
+	i = party_foreachsamemap(pc_check_banding,sd,range,&sd->bl,&c,&b_sd);
+
+	if( c < 1 )
+	{	// No more Royal Guards in Banding found.
+		if( (sc = status_get_sc(&sd->bl)) != NULL  && sc->data[SC_BANDING] )
+		{
+			sc->data[SC_BANDING]->val2 = 0; // Reset the counter
+			status_calc_bl(&sd->bl,StatusChangeFlagTable[SC_BANDING]);
+		}
+		return 0;
+	}
+
+	//Add yourself
+	hp = status_get_hp(&sd->bl);
+	i++;
+
+	// Get total HP of all Royal Guards in party.
+	for( j = 0; j < i; j++ )
+	{
+		bsd = map_id2sd(b_sd[j]);
+		if( bsd != NULL )
+			hp += status_get_hp(&bsd->bl);
+	}
+
+	// Set average HP.
+	hp = hp / i;
+	
+	// If a Royal Guard have full HP, give more HP to others that haven't full HP.
+	for( j = 0; j < i; j++ )
+	{
+		bsd = map_id2sd(b_sd[j]);
+		if( bsd != NULL && (tmp_hp = hp - status_get_max_hp(&bsd->bl)) > 0 )
+		{
+			extra_hp += tmp_hp;
+			tmp_qty++;
+		}
+	}
+
+	if( extra_hp > 0 && tmp_qty > 0 )
+		hp += extra_hp / tmp_qty;
+
+	for( j = 0; j < i; j++ )
+	{
+		bsd = map_id2sd(b_sd[j]);
+		if( bsd != NULL )
+		{
+			status_set_hp(&bsd->bl,hp,0);	// Set hp
+			if( (sc = status_get_sc(&bsd->bl)) != NULL  && sc->data[SC_BANDING] )
+			{
+				sc->data[SC_BANDING]->val2 = c; // Set the counter. It doesn't count your self.
+				status_calc_bl(&bsd->bl,StatusChangeFlagTable[SC_BANDING]);	// Set atk and def.
+			}
+		}
+	}
+
+	return c;
 }
 
 // Increases a player's fame points and displays a notice to him
@@ -1845,7 +1948,11 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 	case SP_DEF1:
 		if(sd->state.lr_flag != 2) {
 			bonus = status->def + val;
+	#if REMODE
+			status->def = cap_value(bonus, SHRT_MIN, SHRT_MAX);
+	#else
 			status->def = cap_value(bonus, CHAR_MIN, CHAR_MAX);
+	#endif
 		}
 		break;
 	case SP_DEF2:
@@ -1857,7 +1964,14 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 	case SP_MDEF1:
 		if(sd->state.lr_flag != 2) {
 			bonus = status->mdef + val;
+	#if REMODE
+			status->mdef = cap_value(bonus, SHRT_MIN, SHRT_MAX);
+	#else
 			status->mdef = cap_value(bonus, CHAR_MIN, CHAR_MAX);
+	#endif
+			if( sd->state.lr_flag == 3 ) {//Shield, used for royal guard
+				sd->shieldmdef += bonus;
+			}
 		}
 		break;
 	case SP_MDEF2:

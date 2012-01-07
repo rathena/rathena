@@ -116,6 +116,8 @@
 2273,0xe2,    ,  1, 0, 500,friend,0x000	//NC_NEUTRALBARRIER
 2274,0xe3,    ,  1, 0, 500,all,   0x000	//NC_STEALTHFIELD
 
+2319,0xec,    ,  0, 3,5000,all,   0x000	//LG_BANDING
+
 8208,0x86,    ,  0, 2,1000,enemy, 0x080	//MA_SHOWER
 8209,0x90,    ,  0, 1,1000,enemy, 0x006	//MA_SKIDTRAP
 8210,0x93,    ,  0, 0,1000,enemy, 0x006	//MA_LANDMINE
