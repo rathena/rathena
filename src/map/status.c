@@ -4288,9 +4288,12 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 	if( sc == NULL )
 		return cap_value(speed,10,USHRT_MAX);
 
-	if( sd && sd->ud.skilltimer != INVALID_TIMER && pc_checkskill(sd,SA_FREECAST) > 0 )
+	if( sd && sd->ud.skilltimer != INVALID_TIMER && (pc_checkskill(sd,SA_FREECAST) > 0 || sd->ud.skillid == LG_EXEEDBREAK) )
 	{
-		speed_rate = 175 - 5 * pc_checkskill(sd,SA_FREECAST);
+		if( sd->ud.skillid == LG_EXEEDBREAK )
+			speed_rate = 100 + 60 - (sd->ud.skilllv * 10);
+		else
+			speed_rate = 175 - 5 * pc_checkskill(sd,SA_FREECAST);
 	}
 	else
 	{
@@ -7124,16 +7127,13 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			break;
 		case SC_EXEEDBREAK:
 			val1 *= 150; // 150 * skill_lv
-			if( sd )
-			{	// Chars.
-				struct item_data *id = sd->inventory_data[sd->equip_index[EQI_HAND_R]];
-				if( id ) val1 += (id->weight/10 * id->wlv * status_get_lv(bl) / 100); // (weapon_weight * weapon_level * base_lvl)/100
-				val1 += 15 * sd->status.job_level; // 15 * job_lvl
+			if( sd && sd->inventory_data[sd->equip_index[EQI_HAND_R]] ) {  // Chars.
+				val1 += (sd->inventory_data[sd->equip_index[EQI_HAND_R]]->weight/10 * sd->inventory_data[sd->equip_index[EQI_HAND_R]]->wlv * status_get_lv(bl) / 100);
+			val1 += 15 * (sd ? sd->status.job_level:50) + 100;
 			}
 			else	// Mobs
 				val1 += (400 * status_get_lv(bl) / 100) + (15 * (status_get_lv(bl) / 2));	// About 1138% at mob_lvl 99. Is an aproximation to a standard weapon. [pakpil] 
 			break;
-			
 		case SC_PRESTIGE:	// Bassed on suggested formula in iRO Wiki and some test, still need more test. [pakpil]
 			val2 = ((status->int_ + status->luk) / 6) + 5;	// Chance to evade magic damage.
 			val1 *= 15; // Defence added
