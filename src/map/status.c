@@ -990,7 +990,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 			if(sc->data[SC_DANCING] && (unsigned int)hp > status->max_hp>>2)
 				status_change_end(target, SC_DANCING, INVALID_TIMER);
 			if(sc->data[SC_CLOAKINGEXCEED] && --(sc->data[SC_CLOAKINGEXCEED]->val2) <= 0)
-				status_change_end(target,SC_CLOAKINGEXCEED,-1);
+				status_change_end(target, SC_CLOAKINGEXCEED, INVALID_TIMER);
 		}
 		unit_skillcastcancel(target, 2);
 	}
@@ -1467,6 +1467,8 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 				return 0;
 			if( tsc->data[SC_CAMOUFLAGE] && !(status->mode&(MD_BOSS|MD_DETECTOR)) && !skill_num )
 				return 0;
+			if ( tsc->data[SC_CLOAKINGEXCEED] && !(status->mode&MD_BOSS) )
+				return 0;
 		}
 		break;
 	case BL_ITEM:	//Allow targetting of items to pick'em up (or in the case of mobs, to loot them).
@@ -1513,6 +1515,7 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 	switch (target->type)
 	{	//Check for chase-walk/hiding/cloaking opponents.
 	case BL_PC:
+		if ( tsc->data[SC_CLOAKINGEXCEED] && !(status->mode&MD_BOSS) )
 		if( (tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) || tsc->data[SC_CAMOUFLAGE]) && !(status->mode&MD_BOSS) &&
 			( ((TBL_PC*)target)->special_state.perfect_hiding || !(status->mode&MD_DETECTOR) ) )
 			return 0;
@@ -4414,6 +4417,8 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 				val = max( val, 10 * sc->data[SC_AVOID]->val1 );
 			if( sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
 				val = max( val, 75 );
+			if( sc->data[SC_CLOAKINGEXCEED] )
+				val = max( val, sc->data[SC_CLOAKINGEXCEED]->val3);
 
 			//FIXME: official items use a single bonus for this [ultramage]
 			if( sc->data[SC_SPEEDUP0] ) // temporary item-based speedup
@@ -6894,7 +6899,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			break;
 		case SC_CLOAKINGEXCEED:
 			val2 = ( val1 + 1 ) / 2; // Hits
-			val3 = ( val1 - 1 ) * 10; // Walk speed
+			val3 = 90 + val1 * 10; // Walk speed
 			val_flag |= 1|2|4;			
 			if (bl->type == BL_PC)
 				val4 |= battle_config.pc_cloak_check_type&7;

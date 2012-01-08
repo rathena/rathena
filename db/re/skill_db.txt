@@ -741,7 +741,7 @@
 2030,-2,6,4,-1,0x1,0,5,1,no,0,0x200,0,weapon,0,	GC_WEAPONCRUSH,Weapon Crush //CHECK SHould this and the above skill have INF2 0x200?
 2031,1,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,	GC_VENOMPRESSURE,Venom Pressure
 2032,5,6,2,0,0x1,0,5,1,yes,0,0,1,none,0,	GC_POISONSMOKE,Poison Smoke
-2033,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,		GC_CLOAKINGEXCEED,Cloaking Exceed
+2033,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,	GC_CLOAKINGEXCEED,Cloaking Exceed
 2034,0,6,4,-1,0x2,3,1,1,no,0,0,0,weapon,0,	GC_PHANTOMMENACE,Phantom Menace
 2035,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,		GC_HALLUCINATIONWALK,Hallucination Walk
 2036,0,6,4,-1,0x2,1,5,1,no,0,0,0,weapon,0,	GC_ROLLINGCUTTER,Rolling Cutter

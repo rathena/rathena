@@ -1282,6 +1282,12 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 		status_change_end(src, SC_CLOAKING, INVALID_TIMER);
 		if (!src->prev) return 0; //Warped away!
 	}
+	
+	if( sc && sc->data[SC_CLOAKINGEXCEED] && !(sc->data[SC_CLOAKINGEXCEED]->val4&4) && skill_num != GC_CLOAKINGEXCEED )
+	{
+		status_change_end(src,SC_CLOAKINGEXCEED, INVALID_TIMER);
+		if (!src->prev) return 0;
+	}
 
 	if( casttime > 0 )
 	{
@@ -1394,6 +1400,12 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 	{
 		status_change_end(src, SC_CLOAKING, INVALID_TIMER);
 		if (!src->prev) return 0; //Warped away!
+	}
+	
+	if (sc && sc->data[SC_CLOAKINGEXCEED] && !(sc->data[SC_CLOAKINGEXCEED]->val4&4))
+	{
+		status_change_end(src, SC_CLOAKINGEXCEED, INVALID_TIMER);
+		if (!src->prev) return 0;
 	}
 
 	if( casttime > 0 )
@@ -1955,6 +1967,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		status_change_end(bl, SC_HIDING, INVALID_TIMER);
 		status_change_end(bl, SC_CLOAKING, INVALID_TIMER);
 		status_change_end(bl, SC_CHASEWALK, INVALID_TIMER);
+		status_change_end(bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
 		if (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)
 			status_change_end(bl, SC_GOSPEL, INVALID_TIMER);
 		status_change_end(bl, SC_CHANGE, INVALID_TIMER);
