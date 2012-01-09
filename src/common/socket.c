@@ -194,6 +194,10 @@ int sSocket(int af, int type, int protocol)
 #endif
 /////////////////////////////////////////////////////////////////////
 
+#ifndef MSG_NOSIGNAL
+	#define MSG_NOSIGNAL 0
+#endif
+
 fd_set readfds;
 int fd_max;
 time_t last_tick;
@@ -340,7 +344,7 @@ int send_from_fifo(int fd)
 	if( session[fd]->wdata_size == 0 )
 		return 0; // nothing to send
 
-	len = sSend(fd, (const char *) session[fd]->wdata, (int)session[fd]->wdata_size, 0);
+	len = sSend(fd, (const char *) session[fd]->wdata, (int)session[fd]->wdata_size, MSG_NOSIGNAL);
 
 	if( len == SOCKET_ERROR )
 	{//An exception has occured
