@@ -789,7 +789,8 @@ int mob_delayspawn(int tid, unsigned int tick, int id, intptr_t data)
  *------------------------------------------*/
 int mob_setdelayspawn(struct mob_data *md)
 {
-	unsigned int spawntime;
+	unsigned int spawntime, mode;
+	struct mob_db *db;
 
 	if (!md->spawn) //Doesn't has respawn data!
 		return unit_free(&md->bl,CLR_DEAD);
@@ -797,6 +798,23 @@ int mob_setdelayspawn(struct mob_data *md)
 	spawntime = md->spawn->delay1; //Base respawn time
 	if (md->spawn->delay2) //random variance
 		spawntime+= rand()%md->spawn->delay2;
+
+	//Apply the spawn delay fix [Skotlex]
+	db = mob_db(md->spawn->class_);
+	mode = db->status.mode;
+	if (mode & MD_BOSS) {	//Bosses
+		if (battle_config.boss_spawn_delay != 100) {
+			// Divide by 100 first to prevent overflows
+			//(precision loss is minimal as duration is in ms already)
+			spawntime = spawntime/100*battle_config.boss_spawn_delay;
+		}
+	} else if (mode&MD_PLANT) {	//Plants
+		if (battle_config.plant_spawn_delay != 100) {
+			spawntime = spawntime/100*battle_config.plant_spawn_delay;
+		}
+	} else if (battle_config.mob_spawn_delay != 100) {	//Normal mobs
+		spawntime = spawntime/100*battle_config.mob_spawn_delay;
+	}
 
 	if (spawntime < 500) //Min respawn time (is it needed?)
 		spawntime = 500;

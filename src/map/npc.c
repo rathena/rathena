@@ -2852,7 +2852,7 @@ void npc_parse_mob2(struct spawn_data* mob)
 
 static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
-	int num, class_, mode, m,x,y,xs,ys, i,j;
+	int num, class_, m,x,y,xs,ys, i,j;
 	char mapname[32];
 	struct spawn_data mob, *data;
 	struct mob_db* db;
@@ -2917,28 +2917,6 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 		mob.xs = mob.ys = -1;
 	}
 
-	db = mob_db(class_);
-	//Apply the spawn delay fix [Skotlex]
-	mode = db->status.mode;
-	if (mode & MD_BOSS) {	//Bosses
-		if (battle_config.boss_spawn_delay != 100)
-		{	// Divide by 100 first to prevent overflows
-			//(precision loss is minimal as duration is in ms already)
-			mob.delay1 = mob.delay1/100*battle_config.boss_spawn_delay;
-			mob.delay2 = mob.delay2/100*battle_config.boss_spawn_delay;
-		}
-	} else if (mode&MD_PLANT) {	//Plants
-		if (battle_config.plant_spawn_delay != 100)
-		{
-			mob.delay1 = mob.delay1/100*battle_config.plant_spawn_delay;
-			mob.delay2 = mob.delay2/100*battle_config.plant_spawn_delay;
-		}
-	} else if (battle_config.mob_spawn_delay != 100)
-	{	//Normal mobs
-		mob.delay1 = mob.delay1/100*battle_config.mob_spawn_delay;
-		mob.delay2 = mob.delay2/100*battle_config.mob_spawn_delay;
-	}
-
 	if(mob.delay1>0xfffffff || mob.delay2>0xfffffff) {
 		ShowError("npc_parse_mob: Invalid spawn delays %u %u (file '%s', line '%d').\n", mob.delay1, mob.delay2, filepath, strline(buffer,start-buffer));
 		return strchr(start,'\n');// skip and continue
@@ -2960,6 +2938,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	}
 
 	//Update mob spawn lookup database
+	db = mob_db(class_);
 	for( i = 0; i < ARRAYLENGTH(db->spawn); ++i )
 	{
 		if (map[mob.m].index == db->spawn[i].mapindex)
