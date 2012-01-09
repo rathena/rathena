@@ -3325,19 +3325,19 @@
 //5745,Capricon_Diadem,Capricon Diadem,5,20,,300,,3,,0,0xFFFFFFFF,7,2,256,,1,1,622,{ bonus bDex,2; bonus bMdef,5; },{},{}
 5746,Rune_Circlet,Rune Circlet,5,20,,100,,12,,1,0x00000080,8,2,256,,100,1,623,{ bonus bStr,1; bonus bInt,1; bonus bMdef,5; if(readparam(bStr)>=120){ bonus bAtk,10; bonus bMatk,5; } },{},{}
 5747,Mitra,Mitra,5,20,,100,,12,,1,0x00000100,8,2,256,,100,1,624,{ bonus bVit,1; bonus bInt,1; bonus bMdef,5; bonus bHealPower,5; if(readparam(bInt)>=120){ bonus bMatk,10; } },{},{}
-5748,Sniper_Goggles,Sniper Goggles,5,20,,100,,12,,1,0x00000800,8,2,768,,100,1,625,{ bonus bAgi,1; bonus bDex,1; bonus bMdef,5; if(readparam(bAgi)>=120){ bonus bLongAtkRate,4; bonus bAspd,1; } },{},{}
-5749,Driver_Band_M,Driver Band,5,20,,100,,12,,1,0x00000400,8,1,256,,100,1,626,{ bonus bStr,1; bonus bDex,1; bonus bMdef,5; if(readparam(bStr)>=120){ bonus bAtk,10; bonus bCritical,3; } },{},{}
-5750,Shadow_Crown,Shadow Crown,5,20,,100,,12,,1,0x00020000,8,2,256,,100,1,627,{ bonus bAgi,1; bonus bInt,1; bonus bMdef,1; if(readparam(bAgi)>=120){ bonus bAtk,10; bonus bFlee,3; } },{},{}
+5748,Sniper_Goggle,Sniper Goggles,5,20,,100,,12,,1,0x00000800,8,2,768,,100,1,625,{ bonus bAgi,1; bonus bDex,1; bonus bMdef,5; if(readparam(bAgi)>=120){ bonus bLongAtkRate,4; bonus bAspd,1; } },{},{}
+5749,Driver_Band,Driver Band,5,20,,100,,12,,1,0x00000400,8,1,256,,100,1,626,{ bonus bStr,1; bonus bDex,1; bonus bMdef,5; if(readparam(bStr)>=120){ bonus bAtk,10; bonus bCritical,3; } },{},{}
+5750,Shadow_Handicraft,Shadow Crown,5,20,,100,,12,,1,0x00020000,8,2,256,,100,1,627,{ bonus bAgi,1; bonus bInt,1; bonus bMdef,1; if(readparam(bAgi)>=120){ bonus bAtk,10; bonus bFlee,3; } },{},{}
 5751,Minstrel_Song_Hat,Minstrel Song Hat,5,20,,100,,12,,1,0x00080000,8,1,256,,100,1,628,{ bonus bInt,1; bonus bLuk,1; bonus bMdef,5; bonus bLongAtkRate,4; bonus bUseSPrate,-10; },{},{}
-5752,Midas_Whispers,Midas Whispers,5,20,,100,,12,,1,0x00040000,8,2,256,,100,1,629,{ bonus bStr,1; bonus bDex,1; bonus bMdef,5; if(readparam(bStr)>=120){ bonus bAtk,5; bonus bAspd,1; } },{},{}
+5752,Midas_Whisper,Midas Whispers,5,20,,100,,12,,1,0x00040000,8,2,256,,100,1,629,{ bonus bStr,1; bonus bDex,1; bonus bMdef,5; if(readparam(bStr)>=120){ bonus bAtk,5; bonus bAspd,1; } },{},{}
 5753,Magic_Stone_Hat,Magic Stone Hat,5,20,,100,,12,,1,0x00000200,8,2,256,,100,1,630,{ bonus bInt,1; bonus bDex,1; bonus bMdef,5; if(readparam(bDex)>=120){ bonus bMatkRate,10; bonus bCastrate,-2; } },{},{}
-5754,Burning_Spirit,Burning Spirit,5,20,,100,,12,,1,0x00008000,8,2,256,,100,1,631,{ bonus bStr,1; bonus bVit,1; bonus bMdef,5; if(readparam(bStr)>=120){ bonus bAtk,10; bonus bHit,3; } },{},{}
-5755,Silent_Enforcer,Silent Enforcer,5,20,,100,,12,,0,0x00001000,8,2,513,,100,1,632,{ bonus bAgi,1; bonus bMdef,5; if(readparam(bAgi)>=120){ bonus bAtk,10; bonus bFlee2,5; } },{},{}
-5756,Wispers_of_Wind,Wispers of Wind,5,20,,100,,12,,1,0x00010000,8,2,256,,100,1,633,{ bonus bInt,1; bonus bDex,1; bonus bMdef,5; if(readparam(bInt)>=120){ bonus bMatkRate,10; bonus bFlee,3; } },{},{}
-5757,Reissue_Schmitz_Helm,Reissue Schmitz Helm,5,20,,100,,12,,1,0x00004000,8,2,768,,100,1,634,{ bonus bVit,2; bonus bInt,1; bonus bMdef,5; if(readparam(bInt)>=120){ bonus bMatkRate,10; bonus bDef,5; } },{},{}
-5758,Resting_Swan,Resting Swan,5,20,,100,,17,,1,0x00080000,8,0,256,,100,1,635,{ bonus bInt,1; bonus bLuk,1; bonus bMdef,5; bonus bAtkRate,5; bonus bUseSPrate,-10; },{},{}
+5754,Blazing_Soul,Burning Spirit,5,20,,100,,12,,1,0x00008000,8,2,256,,100,1,631,{ bonus bStr,1; bonus bVit,1; bonus bMdef,5; if(readparam(bStr)>=120){ bonus bAtk,10; bonus bHit,3; } },{},{}
+5755,Silent_Executer,Silent Enforcer,5,20,,100,,12,,0,0x00001000,8,2,513,,100,1,632,{ bonus bAgi,1; bonus bMdef,5; if(readparam(bAgi)>=120){ bonus bAtk,10; bonus bFlee2,5; } },{},{}
+5756,Wind_Whisper,Wispers of Wind,5,20,,100,,12,,1,0x00010000,8,2,256,,100,1,633,{ bonus bInt,1; bonus bDex,1; bonus bMdef,5; if(readparam(bInt)>=120){ bonus bMatkRate,10; bonus bFlee,3; } },{},{}
+5757,Schmidt_Helm,Reissue Schmitz Helm,5,20,,100,,12,,1,0x00004000,8,2,768,,100,1,634,{ bonus bVit,2; bonus bInt,1; bonus bMdef,5; if(readparam(bInt)>=120){ bonus bMatkRate,10; bonus bDef,5; } },{},{}
+5758,Dying_Swan,Resting Swan,5,20,,100,,17,,1,0x00080000,8,0,256,,100,1,635,{ bonus bInt,1; bonus bLuk,1; bonus bMdef,5; bonus bAtkRate,5; bonus bUseSPrate,-10; },{},{}
 //5759,Noah_Hat,Noah Hat,5,20,,500,,1,,1,0xFFFFFFFF,7,2,256,,1,1,636,{ bonus bMdef,3; },{},{}
-5760,Driver_Band_F,Driver Band,5,20,,100,,12,,1,0x00000400,8,0,256,,100,1,637,{ bonus bStr,1; bonus bDex,1; bonus bMdef,5; if(readparam(bStr)>=120){ bonus bAtk,10; bonus bCritical,3; } },{},{}
+5760,Driver_Band_,Driver Band,5,20,,100,,12,,1,0x00000400,8,0,256,,100,1,637,{ bonus bStr,1; bonus bDex,1; bonus bMdef,5; if(readparam(bStr)>=120){ bonus bAtk,10; bonus bCritical,3; } },{},{}
 //5761,Sloth_Hat,Sloth Hat,5,20,,800,,3,,1,0xFFFFFFFF,7,2,256,,1,1,638,{ bonus bAgi,2; },{},{}
 //5762,Duneyrr_Helm,Duneyrr Helm,5,20,,100,,5,,0,0xFFFFFFFF,7,2,256,,1,1,639,{ bonus bAllStats,1; bonus bMdef,5; },{},{}
 //5763,Red_Bunny_Band,Red Bunny Band,5,0,,200,,4,,0,0xFFFFFFFF,7,2,256,,1,1,640,{ bonus bAgi,2; bonus bMdef,3; },{},{}
