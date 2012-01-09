@@ -445,6 +445,7 @@ int merc_hom_food(struct map_session_data *sd, struct homun_data *hd)
 		clif_hom_food(sd,foodID,0);
 		return 1;
 	}
+	log_pick_pc(sd, LOG_TYPE_CONSUME, sd->status.inventory[i].nameid, -1, &sd->status.inventory[i]);
 	pc_delitem(sd,i,1,0,0);
 
 	if ( hd->homunculus.hunger >= 91 ) {
