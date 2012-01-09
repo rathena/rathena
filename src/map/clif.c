@@ -92,9 +92,78 @@ static inline void WFIFOPOS(int fd, unsigned short pos, short x, short y, unsign
 }
 
 
-inline void WFIFOPOS2(int fd, unsigned short pos, short x0, short y0, short x1, short y1, unsigned char sx0, unsigned char sy0)
+static inline void WFIFOPOS2(int fd, unsigned short pos, short x0, short y0, short x1, short y1, unsigned char sx0, unsigned char sy0)
 {
 	WBUFPOS2(WFIFOP(fd,pos), 0, x0, y0, x1, y1, sx0, sy0);
+}
+
+
+static inline void RBUFPOS(const uint8* p, unsigned short pos, short* x, short* y, unsigned char* dir)
+{
+	p += pos;
+
+	if( x )
+	{
+		x[0] = ( ( p[0] & 0xff ) << 2 ) | ( p[1] >> 6 );
+	}
+
+	if( y )
+	{
+		y[0] = ( ( p[1] & 0x3f ) << 4 ) | ( p[2] >> 4 );
+	}
+
+	if( dir )
+	{
+		dir[0] = ( p[2] & 0x0f );
+	}
+}
+
+
+static inline void RBUFPOS2(const uint8* p, unsigned short pos, short* x0, short* y0, short* x1, short* y1, unsigned char* sx0, unsigned char* sy0)
+{
+	p += pos;
+
+	if( x0 )
+	{
+		x0[0] = ( ( p[0] & 0xff ) << 2 ) | ( p[1] >> 6 );
+	}
+
+	if( y0 )
+	{
+		y0[0] = ( ( p[1] & 0x3f ) << 4 ) | ( p[2] >> 4 );
+	}
+
+	if( x1 )
+	{
+		x1[0] = ( ( p[2] & 0x0f ) << 6 ) | ( p[3] >> 2 );
+	}
+
+	if( y1 )
+	{
+		y1[0] = ( ( p[3] & 0x03 ) << 8 ) | ( p[4] >> 0 );
+	}
+
+	if( sx0 )
+	{
+		sx0[0] = ( p[5] & 0xf0 ) >> 4;
+	}
+
+	if( sy0 )
+	{
+		sy0[0] = ( p[5] & 0x0f ) >> 0;
+	}
+}
+
+
+static inline void RFIFOPOS(int fd, unsigned short pos, short* x, short* y, unsigned char* dir)
+{
+	RBUFPOS(RFIFOP(fd,pos), 0, x, y, dir);
+}
+
+
+static inline void RFIFOPOS2(int fd, unsigned short pos, short* x0, short* y0, short* x1, short* y1, unsigned char* sx0, unsigned char* sy0)
+{
+	RBUFPOS2(WFIFOP(fd,pos), 0, x0, y0, x1, y1, sx0, sy0);
 }
 
 
@@ -9001,7 +9070,6 @@ void clif_parse_progressbar(int fd, struct map_session_data * sd)
 void clif_parse_WalkToXY(int fd, struct map_session_data *sd)
 {
 	short x, y;
-	int cmd;
 
 	if (pc_isdead(sd)) {
 		clif_clearunit_area(&sd->bl, CLR_DEAD);
@@ -9020,11 +9088,8 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd)
 
 	pc_delinvincibletimer(sd);
 
-	cmd = RFIFOW(fd,0);
-	x = RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]) * 4 +
-		(RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0] + 1) >> 6);
-	y = ((RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]+1) & 0x3f) << 4) +
-		(RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0] + 2) >> 4);
+	RFIFOPOS(fd, packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0], &x, &y, NULL);
+
 	//Set last idle time... [Skotlex]
 	sd->idletime = last_tick;
 	
@@ -12662,11 +12727,9 @@ void clif_parse_HomMoveTo(int fd, struct map_session_data *sd)
 {
 	int id = RFIFOL(fd,2); // Mercenary or Homunculus
 	struct block_list *bl = NULL;
-	short x, y, cmd;
+	short x, y;
 
-	cmd = RFIFOW(fd,0);
-	x = RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]) * 4 + (RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0] + 1) >> 6);
-	y = ((RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]+1) & 0x3f) << 4) + (RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0] + 2) >> 4);
+	RFIFOPOS(fd, packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[1], &x, &y, NULL);
 
 	if( sd->md && sd->md->bl.id == id )
 		bl = &sd->md->bl; // Moving Mercenary
