@@ -9305,6 +9305,7 @@ int atcommand_config_read(const char* cfgName)
 	char line[1024], w1[1024], w2[1024], w3[1024], w4[1024];
 	AtCommandInfo* p;
 	FILE* fp;
+	int i;
 
 	if( (fp = fopen(cfgName, "r")) == NULL ) {
 		ShowError("AtCommand configuration file not found: %s\n", cfgName);
@@ -9314,8 +9315,7 @@ int atcommand_config_read(const char* cfgName)
 	while( fgets(line, sizeof(line), fp) ) {
 		if( line[0] == '/' && line[1] == '/' )
 			continue;
-
-		if( ( sscanf(line,"%1023[^:]:%1023[^,],%1023[^[][%1023[^]]",w1,w2,w3,w4) ) == 4 ) {
+		if( ( i = sscanf(line,"%1023[^:]:%1023[^,],%1023[^[][%1023[^]]",w1,w2,w3,w4) ) >= 3 ) {
 			if( ( p = (AtCommandInfo*)strdb_get(atcommand_db, w1) ) != NULL ) {
 				
 				p->level = atoi(w2);//update @level
@@ -9324,13 +9324,17 @@ int atcommand_config_read(const char* cfgName)
 				/**
 				 * Parse the alises
 				 **/
-				atcommand_parse_aliases(w4,p);
+				if( i == 4 )
+					atcommand_parse_aliases(w4,p);
 
 				continue;//we're done move on
 			}
-		} else if( strcmpi(w1, "import") != 0 && strcmpi(w1, "command_symbol") != 0 && strcmpi(w1, "char_symbol") != 0 )
+		} else if( strcmpi(w1, "import") != 0 && strcmpi(w1, "command_symbol") != 0 && strcmpi(w1, "char_symbol") != 0 ) {
+			if( i > 1 )
+				ShowWarning("Unknown setting '%s' in file %s\n", w1, cfgName);
 			continue;
-
+		}
+		normalize_name(w2," ");//trim
 		if( strcmpi(w1, "import") == 0 )
 			atcommand_config_read(w2);
 		else if( strcmpi(w1, "command_symbol") == 0 &&
@@ -9347,8 +9351,6 @@ int atcommand_config_read(const char* cfgName)
 			w2[0] != '$' &&
 			w2[0] != '@' )
 			charcommand_symbol = w2[0];
-		else
-			ShowWarning("Unknown setting '%s' in file %s\n", w1, cfgName);
 	}
 	fclose(fp);
 
