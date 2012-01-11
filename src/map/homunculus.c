@@ -1072,7 +1072,13 @@ void read_homunculus_expdb(void)
 	FILE *fp;
 	char line[1024];
 	int i, j=0;
-	char *filename[]={"exp_homun.txt","exp_homun2.txt"};
+	char *filename[]={
+#if REMODE
+		"re/exp_homun.txt",
+#else
+		"pre-re/exp_homun.txt",
+#endif
+		"exp_homun2.txt"};
 
 	memset(hexptbl,0,sizeof(hexptbl));
 	for(i=0; i<2; i++){

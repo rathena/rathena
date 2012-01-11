@@ -8272,7 +8272,11 @@ int pc_readdb(void)
 	// •K—v??’l?‚Ý?‚Ý
 	memset(exp_table,0,sizeof(exp_table));
 	memset(max_level,0,sizeof(max_level));
-	sprintf(line, "%s/exp.txt", db_path);
+#if REMODE
+	sprintf(line, "%s/re/exp.txt", db_path);
+#else
+	sprintf(line, "%s/pre-re/exp.txt", db_path);
+#endif
 	fp=fopen(line, "r");
 	if(fp==NULL){
 		ShowError("can't read %s\n", line);

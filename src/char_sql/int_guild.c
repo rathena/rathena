@@ -651,8 +651,8 @@ int inter_guild_ReadEXP(void)
 	FILE *fp;
 	char line[1024];
 	for (i=0;i<100;i++) guild_exp[i]=0;
-
-	sprintf(line, "%s/exp_guild.txt", db_path);
+	//this is going to be discussed, temp fix
+	sprintf(line, "%s/pre-re/exp_guild.txt", db_path);
 	fp=fopen(line,"r");
 	if(fp==NULL){
 		ShowError("can't read %s\n", line);
