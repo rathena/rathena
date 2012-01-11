@@ -29,7 +29,7 @@ prontera,165,89,6	script	Rare Diamond Merchant#1	58,{
 	mes "You can give the diamond as a gift to your lover.";
 	mes "The receiver of the ^FF82FF'17 Carat Diamond'^000000 will cherish it";
 	mes "and treasure you in their heart.";
-	emotion  e_loud;		
+	emotion e_loud;		
 	next;	
 	
 	mes .@npc$;
@@ -157,7 +157,7 @@ prontera,165,89,6	script	Rare Diamond Merchant#1	58,{
 							
 						close;
 					} 
-					else {  
+					else {
 						mes .@npc$;
 						mes "Hm?";
 						mes "I'm sorry, but you don't have sufficient funds.";
