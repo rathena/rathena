@@ -15,354 +15,235 @@
 
 prontera,165,89,6	script	Rare Diamond Merchant#1	58,{
 
-	// Store NPC Name for Ease of Use
-		set .@npc$, "[Rare Diamond Merchant]";
-	
-	// Standard Dialog
-		mes .@npc$;
-		mes "Ladies and Gentlemen! ! !";
-		mes "You've heard rumors but you've never once seen with your own eyes";
-		mes "the world's rarest diamond!";
-		mes "The ^FF82FF'17 Carat Diamond'^000000 is currently on sale for a cheap price!!";
-		mes "If valuable diamonds interest you then listen up!";
-		
-	// Display Next Button	
-		next;
-		
-	// Standard Dialog	
-		mes .@npc$;
-		mes "You can give the diamond as a gift to your lover.";
-		mes "The receiver of the ^FF82FF'17 Carat Diamond'^000000 will cherish it";
-		mes "and treasure you in their heart.";
-		
-	// Display Emotion
-		emotion  56;
-		
-	// Display Next Button
-		next;
-	
-	// Standard Dialog
-		mes .@npc$;
-		mes "What? You don't have a lover?";
-		mes "You can still just hang on to it for yourself.";
-		mes "The enchanting aura of the ^FF82FF'17 Carat Diamond'^000000 is likely";
-		mes "to bring love into your life.";
-		
-	// Display Next Button
-		next;
-		
-	// Standard Dialog
-		mes .@npc$;
-		mes "Known as the captivating diamond of diamonds...";
-		mes "It is the ^FF82FF'17 Carat Diamond'^000000!";	
-		
-	// Display Next Button
-		next;
+	set .@npc$, "[Rare Diamond Merchant]";
 
-	// Store Menu Variable String Object
-		set .@menu$, "^FF82FF'17 Carat Diamond'^000000?";
+	mes .@npc$;
+	mes "Ladies and Gentlemen! ! !";
+	mes "You've heard rumors but you've never once seen with your own eyes";
+	mes "the world's rarest diamond!";
+	mes "The ^FF82FF'17 Carat Diamond'^000000 is currently on sale for a cheap price!!";
+	mes "If valuable diamonds interest you then listen up!";
+	next;		
 	
-	// Determine if Item ID 6024 Exists in Inventory
-		if (countitem(6024)) { 			
-			// If Exists (Appends String to Menu)
-				set .@menu$, .@menu$ + ":Exchange my 17 Carat Diamond for zeny..";
-		}
+	mes .@npc$;
+	mes "You can give the diamond as a gift to your lover.";
+	mes "The receiver of the ^FF82FF'17 Carat Diamond'^000000 will cherish it";
+	mes "and treasure you in their heart.";
+	emotion  56;		
+	next;	
+	
+	mes .@npc$;
+	mes "What? You don't have a lover?";
+	mes "You can still just hang on to it for yourself.";
+	mes "The enchanting aura of the ^FF82FF'17 Carat Diamond'^000000 is likely";
+	mes "to bring love into your life.";
+	next;		
+	
+	mes .@npc$;
+	mes "Known as the captivating diamond of diamonds...";
+	mes "It is the ^FF82FF'17 Carat Diamond'^000000!";	
+	next;
 
-	// Displays Menu to Client & uses Switch to Determine Option Selected
+	set .@menu$, "^FF82FF'17 Carat Diamond'^000000?";
+
+	if (countitem(6024)) { 			
+		set .@menu$, .@menu$ + ":Exchange my 17 Carat Diamond for zeny..";
+	}
+
 	switch(select(.@menu$)) {
-		case 1: // Buy Diamond
-			// Standard Dialog
-				mes .@npc$;
-				mes "Yes!";
-				mes "Hehe, the ^FF82FF'17 Carat Diamond'^000000 you see right now";
-				mes "is one of the highest quality 17 carat diamonds.";
-				mes "Comparing it to any pea-sized, colorless rock you may have";
-				mes "dug up from Morroc is unspeakable!";
-
-			// Display Emotion
+		case 1: 
+			mes .@npc$;
+			mes "Yes!";
+			mes "Hehe, the ^FF82FF'17 Carat Diamond'^000000 you see right now";
+			mes "is one of the highest quality 17 carat diamonds.";
+			mes "Comparing it to any pea-sized, colorless rock you may have";
+			mes "dug up from Morroc is unspeakable!";
 			emotion 23;
-			
-			// Display Next Button
-				next;
+			next;
 				
-			// Standard Dialog
-				mes .@npc$;
-				mes "Some claim that this is the very same diamond";
-				mes "that was seen by Kachua in Comodo!";
-				
-			// Display Next Button
+			mes .@npc$;
+			mes "Some claim that this is the very same diamond";
+			mes "that was seen by Kachua in Comodo!";
 			next;
 			
-			// Show Menu to Client and Determine if First Option (1) was Chosen
-				if (select("End Conversation:How much is it?") == 1) {
-					// Standard Dialog
-						mes .@npc$;
-						mes "It's rather inexpensive!";
-						mes "If you're interested, talk to me any time!";
-						
-					// Display Close Button
-						close;
+			if (select("End Conversation:How much is it?") == 1) {
+				mes .@npc$;
+				mes "It's rather inexpensive!";
+				mes "If you're interested, talk to me any time!";						
+				close;
+			}
+			
+			mes .@npc$;
+			mes "Of course! The most important thing is price!";
+			mes "As I've said earlier, the ^FF82FF'17 Carat Diamond'^000000 has been";
+			mes "appraised as a 17 carat diamond.";
+			mes "There aren't many like it in the world.";
+			next;
+			
+			mes .@npc$;
+			mes "The price is a mere 500 million zeny!";
+			mes "There is also a 1,000,000z service fee.";
+			mes "Compared to the quality of the diamond";
+			mes "this is a small price to pay.";
+			next;
+			
+			if (select("^828282It's too expensive.^000000:I'll buy it.") == 1) {
+				mes .@npc$;
+				mes "To say that a diamond such as the";
+				mes "^FF82FF'17 Carat Diamond'^000000 is too expensive, ";
+				mes "you leave me speechless.";
+				close;				
+			}
+			
+			mes .@npc$;
+			mes "OOOH! I knew from the moment I saw you that you were the rightful";
+			mes "owner of this wonderful diamond.";
+			mes "I'm glad I wasn't wrong!";
+			mes "I believe this diamond will suit you quite well.";
+			mes "All I need from you is to complete this contract.";
+			next;
+			
+			while(1) {
+				
+				if (select("^B9062FI will sign the contract.^000000:^828282Nevermind, I changed my mind.^000000") == 2) {
+					mes .@npc$;
+					mes "I see, that's too bad..";
+					close;
 				}
 			
-			// Standard Dialog
-				mes .@npc$;
-				mes "Of course! The most important thing is price!";
-				mes "As I've said earlier, the ^FF82FF'17 Carat Diamond'^000000 has been";
-				mes "appraised as a 17 carat diamond.";
-				mes "There aren't many like it in the world.";
-				
-			// Display Next Button
-				next;
-				
-			// Standard Dialog
-				mes .@npc$;
-				mes "The price is a mere 500 million zeny!";
-				mes "There is also a 1,000,000z service fee.";
-				mes "Compared to the quality of the diamond";
-				mes "this is a small price to pay.";
-				
-			// Display Next Button
-				next;
-			
-			// Show Menu to Client and Determine if First Option (1) was Chosen
-				if (select("^828282It's too expensive.^000000:I'll buy it.") == 1) {
-					// Standard Dialog
-						mes .@npc$;
-						mes "To say that a diamond such as the";
-						mes "^FF82FF'17 Carat Diamond'^000000 is too expensive, ";
-						mes "you leave me speechless.";
-						
-					// Display Close Button
-						close;				
-				}
-			
-			// Standard Dialog
-				mes .@npc$;
-				mes "OOOH! I knew from the moment I saw you that you were the rightful";
-				mes "owner of this wonderful diamond.";
-				mes "I'm glad I wasn't wrong!";
-				mes "I believe this diamond will suit you quite well.";
-				mes "All I need from you is to complete this contract.";
-				
-			// Display Next Button
-				next;
-			
-			// Loop Indefinitely Until Told to Break (1) Always is True
-				while(1) {
-				
-					// Show Menu to Client and Determine if Second Option (2) was Chosen
-						if (select("^B9062FI will sign the contract.^000000:^828282Nevermind, I changed my mind.^000000") == 2) {
-							// Standard Dialog
-								mes .@npc$;
-								mes "I see, that's too bad..";
-								
-							// Display Close Button
-								close;
-						}
-					
-					// Standard Dialog
-						mes .@npc$;
-						mes "What is your name?";
-						next;
-						mes "[" + strcharinfo(0) + "]";
-						mes "My name is " + strcharinfo(0) + ".";
-						
-					// Display Next Button
-						next;
-						
-					// Standard Dialog
-						mes .@npc$;
-						mes "Alright then, please sign here.";
-					
-					// Display Next Button
-					next;
-					
-					// Ask Client to Type Value, Store into Variable 
-						input .@charname$;
-					
-					// Determine if Typed Value equals Character Name
-						if (.@charname$ == strcharinfo(0)) {
-							// Standard Dialog
-								mes .@npc$;
-								mes "Okay, good.";
-								mes "All that is left now is payment.";
-								
-							// Display Next Button
-							next;
-							
-							// Determine if Client Zeny is Greater or Equal to Value (501000000)
-								if (Zeny >= 501000000) {
-									// Standard Dialog
-										mes .@npc$;
-										mes ". . . . . .";
-									
-									// Display Next Button
-										next;
-										
-									// Standard Dialog
-										mes .@npc$;
-										mes "Calculating the price and service fee..";
-										mes "501,000,000 zeny.";
-										mes "Amount has been confirmed.";
-									
-									// Display Emotion
-										emotion 56;
-										
-									// Change Zeny to Itself Minus Value (501000000)
-										set Zeny, Zeny - 501000000;
-										
-									// Give Client One (1) of Item ID 6024
-									getitem 6024, 1;
-									
-									// Display Next Button
-										next;
-										
-									// Standard Dialog
-										mes .@npc$;
-										mes "You may exchange the diamond back for zeny at any time.";
-										mes "However, there will be a 1,000,000z service fee.";
-										mes "Thank you for your business.";
-										
-									// Display Emotion
-										emotion 15;
-										
-									// Display Close Button
-									close;
-								} 
-								else {  // The Zeny Check Failed
-								// Standard Dialog
-									mes .@npc$;
-									mes "Hm?";
-									mes "I'm sorry, but you don't have sufficient funds.";
-									mes "Including the service fee, a total of 501,000,000z is required.";
-									mes "Please check your zeny balance and try again.";
-									
-								// Display Emotion
-									emotion 20;
-									
-								// Display Close Button
-									close;
-							}
-						} 
-						else { // Signature Check (Typed Value Did Not Equal Character Name)
-							// Standard Dialog
-								mes .@npc$;
-								mes "Is this really your signature?";
-								mes "Will sign again to confirm?";
-							
-							// Display Next Button
-								next;
-						}
-				}
-		case 2: // Exchange Diamond (Only Available if Diamond is in Inventory)
-			// Standard Dialog
-				mes .@npc$;
-				mes "AAH. You would like to exchange your ^FF82FF'17 Carat Diamond'^000000 for zeny?";
-				
-			// Display Emotion
-				emotion 0;
-			
-			// Display Next Button
-				next;
-
-			// Show Menu to Client and Determine if Second Option (2) was Chosen
-				if (select("Yes:No") == 2) {
-					// Standard Dialog
-						mes .@npc$;
-						mes "Then, what is it you desire?..";
-						mes ". . . . . ....";
-						
-					// Display Emotion
-						emotion 9;
-					
-					// Display Close Button
-						close;
-				}
-
-			// Standard Dialog
-				mes .@npc$;
-				mes "I see. After I receive your signature, ";
-				mes "You must offer your ^FF82FF'17 Carat Diamond'^000000.";
-				mes "Also don't forget there is a 1,000,000z service fee!";
-			
-			// Display Next Button
-				next;
-				
-			// Standard Dialog
 				mes .@npc$;
 				mes "What is your name?";
-				
-			// Display Next Button
 				next;
 				
-			// Standard Dialog
 				mes "[" + strcharinfo(0) + "]";
 				mes "My name is " + strcharinfo(0) + ".";
-				
-			// Display Next Button
 				next;
-				
-			// Standard Dialog
+
 				mes .@npc$;
 				mes "Alright then, please sign here.";
-			
-			// Display Next Button
 				next;
-				
-			// Loop Indefinitely Until Told to Break (1) Always is True
-				while (1) {
-				
-				// Show Menu to Client and Determine if Second Option (2) was Chosen
-					if (select("Sign:Don't Sign") == 2) {
-						// Standard Dialog
-							mes .@npc$;
-							mes "The trade cannot be completed without your signature.";
 					
-						// Display Close Button
-							close;
-					}
+				input .@charname$;
+					
+				if (.@charname$ == strcharinfo(0)) {
+					mes .@npc$;
+					mes "Okay, good.";
+					mes "All that is left now is payment.";
+					next;
 				
-				// Ask Client to Type Value, Store into Variable 
-					input .@charname$;
-				
-				// Determine if Typed Value equals Character Name
-					if (.@charname$ == strcharinfo(0)) {
-						// Standard Dialog
-							mes .@npc$;
-							mes "Your signature has been received.";
-							mes "I will now take your ^FF82FF'17 Carat Diamond'^000000..";
-							mes "You will receive ^0000FF499,000,000z^000000 afterwards.";
-							
-						// Display Next Button
-							next;
-							
-						// Standard Dialog
-							mes .@npc$;
-							mes "Thank you for your business.";
-							mes "Whenever you need a ^FF82FF'17 Carat Diamond'^000000,";
-							mes "come back anytime with 500 million zeny.";
-							
-						// Display Emotion
-							emotion 15;
-							
-						// Delete One (1) of Item ID 6024 from Client
-							delitem 6024, 1;
-							
-						// Change Zeny to Itself Plus Value (499000000)
-							set Zeny, Zeny + 499000000;
-						
-						// Display Close Button
-							close;
-					} 
-					else { // Signature Check (Typed Value Did Not Equal Character Name)
-						// Standard Dialog
-							mes .@npc$;
-							mes "Is this really your signature?";
-							mes "Will sign again to confirm?";
-							
-						// Display Next Button
+					if (Zeny >= 501000000) {
+						mes .@npc$;
+						mes ". . . . . .";
 						next;
+							
+						mes .@npc$;
+						mes "Calculating the price and service fee..";
+						mes "501,000,000 zeny.";
+						mes "Amount has been confirmed.";
+						
+						emotion 56;
+							
+						set Zeny, Zeny - 501000000;
+							
+						getitem 6024, 1;
+						next;
+
+						mes .@npc$;
+						mes "You may exchange the diamond back for zeny at any time.";
+						mes "However, there will be a 1,000,000z service fee.";
+						mes "Thank you for your business.";
+										
+						emotion 15;
+							
+						close;
+					} 
+					else {  
+						mes .@npc$;
+						mes "Hm?";
+						mes "I'm sorry, but you don't have sufficient funds.";
+						mes "Including the service fee, a total of 501,000,000z is required.";
+						mes "Please check your zeny balance and try again.";
+						
+						emotion 20;
+									
+						close;
 					}
+				} 
+				else { 
+					mes .@npc$;
+					mes "Is this really your signature?";
+					mes "Will sign again to confirm?";			
+					next;
+				}
+			}
+		case 2: 
+			mes .@npc$;
+			mes "AAH. You would like to exchange your ^FF82FF'17 Carat Diamond'^000000 for zeny?";
+
+			emotion 0;
+			next;
+
+			if (select("Yes:No") == 2) {
+				mes .@npc$;
+				mes "Then, what is it you desire?..";
+				mes ". . . . . ....";
+
+				emotion 9;
+				close;
+			}
+
+			mes .@npc$;
+			mes "I see. After I receive your signature, ";
+			mes "You must offer your ^FF82FF'17 Carat Diamond'^000000.";
+			mes "Also don't forget there is a 1,000,000z service fee!";
+			next;
+				
+			mes .@npc$;
+			mes "What is your name?";				
+			next;
+				
+			mes "[" + strcharinfo(0) + "]";
+			mes "My name is " + strcharinfo(0) + ".";			
+			next;
+				
+			mes .@npc$;
+			mes "Alright then, please sign here.";
+			next;
+				
+			while (1) {
+				if (select("Sign:Don't Sign") == 2) {
+					mes .@npc$;
+					mes "The trade cannot be completed without your signature.";
+					close;
+				}
+				
+				input .@charname$;
+				
+				if (.@charname$ == strcharinfo(0)) {
+					mes .@npc$;
+					mes "Your signature has been received.";
+					mes "I will now take your ^FF82FF'17 Carat Diamond'^000000..";
+					mes "You will receive ^0000FF499,000,000z^000000 afterwards.";
+					next;
+							
+					mes .@npc$;
+					mes "Thank you for your business.";
+					mes "Whenever you need a ^FF82FF'17 Carat Diamond'^000000,";
+					mes "come back anytime with 500 million zeny.";
+							
+					emotion 15;
+							
+					delitem 6024, 1;
+							
+					set Zeny, Zeny + 499000000;
+					close;
+				} 
+				else { 
+					mes .@npc$;
+					mes "Is this really your signature?";
+					mes "Will sign again to confirm?";
+					next;
+				}
 			}
 	}
 }
