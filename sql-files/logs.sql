@@ -125,4 +125,3 @@ CREATE TABLE `loginlog` (
   `log` varchar(255) NOT NULL default '',
   INDEX (`ip`)
 ) ENGINE=MyISAM ;
-
