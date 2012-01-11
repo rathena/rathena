@@ -268,7 +268,7 @@ prontera,165,89,6	script	Rare Diamond Merchant#1	58,{
 			// Show Menu to Client and Determine if Second Option (2) was Chosen
 				if (select("Yes:No") == 2) {
 					// Standard Dialog
-						mes .@npc$
+						mes .@npc$;
 						mes "Then, what is it you desire?..";
 						mes ". . . . . ....";
 						
