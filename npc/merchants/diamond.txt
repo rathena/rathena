@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Z3R0
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.5
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -11,6 +11,11 @@
 //= Exchanges 17 Carat Diamond
 //===== Additional Comments: ================================= 
 //= v1.0 First / Optimized Version
+//= v1.1 Adjusted for Missing ; on Line #271 (#15425)
+//= v1.2 Removed Comments per Request (#15426)
+//= v1.3 Changed Emotion # to Const Definition (#15427)
+//= v1.4 Removed Double Space on Line #148 (#15428)
+//= v1.5 Added This Version History (#15429)
 //============================================================ 
 
 prontera,165,89,6	script	Rare Diamond Merchant#1	58,{
@@ -248,9 +253,9 @@ prontera,165,89,6	script	Rare Diamond Merchant#1	58,{
 	}
 }
 
-geffen,106,63,6	duplicate(Rare Diamond Merchant#1)	Rare Diamond Merchant#2	58
-morocc,146,100,6	duplicate(Rare Diamond Merchant#1)	Rare Diamond Merchant#3	58
-alberta,129,60,6	duplicate(Rare Diamond Merchant#1)	Rare Diamond Merchant#4	58
+geffen,106,63,6			duplicate(Rare Diamond Merchant#1)	Rare Diamond Merchant#2	58
+morocc,146,100,6		duplicate(Rare Diamond Merchant#1)	Rare Diamond Merchant#3	58
+alberta,129,60,6			duplicate(Rare Diamond Merchant#1)	Rare Diamond Merchant#4	58
 lighthalzen,163,65,6	duplicate(Rare Diamond Merchant#1)	Rare Diamond Merchant#5	58
-rachel,106,142,6	duplicate(Rare Diamond Merchant#1)	Rare Diamond Merchant#6	58
-payon,180,130,6	duplicate(Rare Diamond Merchant#1)	Rare Diamond Merchant#7	58
+rachel,106,142,6			duplicate(Rare Diamond Merchant#1)	Rare Diamond Merchant#6	58
+payon,180,130,6			duplicate(Rare Diamond Merchant#1)	Rare Diamond Merchant#7	58
