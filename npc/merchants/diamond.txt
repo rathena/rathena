@@ -29,7 +29,7 @@ prontera,165,89,6	script	Rare Diamond Merchant#1	58,{
 	mes "You can give the diamond as a gift to your lover.";
 	mes "The receiver of the ^FF82FF'17 Carat Diamond'^000000 will cherish it";
 	mes "and treasure you in their heart.";
-	emotion  56;		
+	emotion  e_loud;		
 	next;	
 	
 	mes .@npc$;
@@ -58,7 +58,7 @@ prontera,165,89,6	script	Rare Diamond Merchant#1	58,{
 			mes "is one of the highest quality 17 carat diamonds.";
 			mes "Comparing it to any pea-sized, colorless rock you may have";
 			mes "dug up from Morroc is unspeakable!";
-			emotion 23;
+			emotion e_omg;
 			next;
 				
 			mes .@npc$;
@@ -141,7 +141,7 @@ prontera,165,89,6	script	Rare Diamond Merchant#1	58,{
 						mes "501,000,000 zeny.";
 						mes "Amount has been confirmed.";
 						
-						emotion 56;
+						emotion e_loud;
 							
 						set Zeny, Zeny - 501000000;
 							
@@ -153,7 +153,7 @@ prontera,165,89,6	script	Rare Diamond Merchant#1	58,{
 						mes "However, there will be a 1,000,000z service fee.";
 						mes "Thank you for your business.";
 										
-						emotion 15;
+						emotion e_thx;
 							
 						close;
 					} 
@@ -164,7 +164,7 @@ prontera,165,89,6	script	Rare Diamond Merchant#1	58,{
 						mes "Including the service fee, a total of 501,000,000z is required.";
 						mes "Please check your zeny balance and try again.";
 						
-						emotion 20;
+						emotion e_hmm;
 									
 						close;
 					}
@@ -180,7 +180,7 @@ prontera,165,89,6	script	Rare Diamond Merchant#1	58,{
 			mes .@npc$;
 			mes "AAH. You would like to exchange your ^FF82FF'17 Carat Diamond'^000000 for zeny?";
 
-			emotion 0;
+			emotion e_gasp;
 			next;
 
 			if (select("Yes:No") == 2) {
@@ -188,7 +188,7 @@ prontera,165,89,6	script	Rare Diamond Merchant#1	58,{
 				mes "Then, what is it you desire?..";
 				mes ". . . . . ....";
 
-				emotion 9;
+				emotion e_dots;
 				close;
 			}
 
@@ -231,7 +231,7 @@ prontera,165,89,6	script	Rare Diamond Merchant#1	58,{
 					mes "Whenever you need a ^FF82FF'17 Carat Diamond'^000000,";
 					mes "come back anytime with 500 million zeny.";
 							
-					emotion 15;
+					emotion e_thx;
 							
 					delitem 6024, 1;
 							
