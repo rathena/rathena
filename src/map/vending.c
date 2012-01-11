@@ -181,14 +181,10 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 		short idx    = *(uint16*)(data + 4*i + 2);
 		idx -= 2;
 
-		//Logs sold (V)ending items [Lupus]
-		log_pick_pc(vsd, LOG_TYPE_VENDING, vsd->status.cart[idx].nameid, -amount, &vsd->status.cart[idx]);
-		log_pick_pc( sd, LOG_TYPE_VENDING, vsd->status.cart[idx].nameid,  amount, &vsd->status.cart[idx]);
-
 		// vending item
-		pc_additem(sd, &vsd->status.cart[idx], amount);
+		pc_additem(sd, &vsd->status.cart[idx], amount, LOG_TYPE_VENDING);
 		vsd->vending[vend_list[i]].amount -= amount;
-		pc_cart_delitem(vsd, idx, amount, 0);
+		pc_cart_delitem(vsd, idx, amount, 0, LOG_TYPE_VENDING);
 		clif_vendingreport(vsd, idx, amount);
 
 		//print buyer's name

@@ -5689,17 +5689,14 @@ BUILDIN_FUNC(getitem)
 		// if not pet egg
 		if (!pet_create_egg(sd, nameid))
 		{
-			if ((flag = pc_additem(sd, &it, get_count)))
+			if ((flag = pc_additem(sd, &it, get_count, LOG_TYPE_SCRIPT)))
 			{
 				clif_additem(sd, 0, 0, flag);
 				if( pc_candrop(sd,&it) )
 					map_addflooritem(&it,get_count,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 			}
-                }
-        }
-
-	//Logs items, got from (N)PC scripts [Lupus]
-	log_pick_pc(sd, LOG_TYPE_SCRIPT, nameid, amount, NULL);
+		}
+	}
 
 	return 0;
 }
@@ -5790,7 +5787,7 @@ BUILDIN_FUNC(getitem2)
 			// if not pet egg
 			if (!pet_create_egg(sd, nameid))
 			{
-				if ((flag = pc_additem(sd, &item_tmp, get_count)))
+				if ((flag = pc_additem(sd, &item_tmp, get_count, LOG_TYPE_SCRIPT)))
 				{
 					clif_additem(sd, 0, 0, flag);
 					if( pc_candrop(sd,&item_tmp) )
@@ -5798,9 +5795,6 @@ BUILDIN_FUNC(getitem2)
 				}
 			}
 		}
-
-		//Logs items, got from (N)PC scripts [Lupus]
-		log_pick_pc(sd, LOG_TYPE_SCRIPT, nameid, amount, &item_tmp);
 	}
 
 	return 0;
@@ -5856,7 +5850,7 @@ BUILDIN_FUNC(rentitem)
 	it.identify = 1;
 	it.expire_time = (unsigned int)(time(NULL) + seconds);
 
-	if( (flag = pc_additem(sd, &it, 1)) )
+	if( (flag = pc_additem(sd, &it, 1, LOG_TYPE_SCRIPT)) )
 	{
 		clif_additem(sd, 0, 0, flag);
 		return 1;
@@ -5864,8 +5858,6 @@ BUILDIN_FUNC(rentitem)
 
 	clif_rental_time(sd->fd, nameid, seconds);
 	pc_inventory_rental_add(sd, seconds);
-
-	log_pick_pc(sd, LOG_TYPE_SCRIPT, nameid, 1, NULL);
 	
 	return 0;
 }
@@ -5930,13 +5922,10 @@ BUILDIN_FUNC(getnameditem)
 	item_tmp.card[0]=CARD0_CREATE; //we don't use 255! because for example SIGNED WEAPON shouldn't get TOP10 BS Fame bonus [Lupus]
 	item_tmp.card[2]=tsd->status.char_id;
 	item_tmp.card[3]=tsd->status.char_id >> 16;
-	if(pc_additem(sd,&item_tmp,1)) {
+	if(pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT)) {
 		script_pushint(st,0);
 		return 0;	//Failed to add item, we will not drop if they don't fit
 	}
-
-	//Logs items, got from (N)PC scripts [Lupus]
-	log_pick_pc(sd, LOG_TYPE_SCRIPT, item_tmp.nameid, item_tmp.amount, &item_tmp);
 
 	script_pushint(st,1);
 	return 0;
@@ -6028,12 +6017,7 @@ static void buildin_delitem_delete(struct map_session_data* sd, int idx, int* am
 		{// delete associated pet
 			intif_delete_petdata(MakeDWord(inv->card[1], inv->card[2]));
 		}
-
-		//Logs items, got from (N)PC scripts [Lupus]
-		log_pick_pc(sd, LOG_TYPE_SCRIPT, inv->nameid, -delamount, inv);
-		//Logs
-
-		pc_delitem(sd, idx, delamount, 0, 0);
+		pc_delitem(sd, idx, delamount, 0, 0, LOG_TYPE_SCRIPT);
 	}
 
 	amount[0]-= delamount;
@@ -6977,15 +6961,12 @@ BUILDIN_FUNC(failedrefitem)
 	if (num > 0 && num <= ARRAYLENGTH(equip))
 		i=pc_checkequip(sd,equip[num-1]);
 	if(i >= 0) {
-		//Logs items, got from (N)PC scripts [Lupus]
-		log_pick_pc(sd, LOG_TYPE_SCRIPT, sd->status.inventory[i].nameid, -1, &sd->status.inventory[i]);
-
 		sd->status.inventory[i].refine = 0;
 		pc_unequipitem(sd,i,3);
 		// 精錬失敗エフェクトのパケット
 		clif_refine(sd->fd,1,i,sd->status.inventory[i].refine);
 
-		pc_delitem(sd,i,1,0,2);
+		pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
 		// 他の人にも失敗を通知
 		clif_misceffect(&sd->bl,2);
 	}
@@ -10342,10 +10323,7 @@ BUILDIN_FUNC(successremovecards)
 			for (j = 0; j < MAX_SLOTS; j++)
 				item_tmp.card[j]=0;
 
-			//Logs items, got from (N)PC scripts [Lupus]
-			log_pick_pc(sd, LOG_TYPE_SCRIPT, item_tmp.nameid, 1, NULL);
-
-			if((flag=pc_additem(sd,&item_tmp,1))){	// 持てないならドロップ
+			if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){	// 持てないならドロップ
 				clif_additem(sd,0,0,flag);
 				map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 			}
@@ -10364,15 +10342,8 @@ BUILDIN_FUNC(successremovecards)
 		for (j = sd->inventory_data[i]->slot; j < MAX_SLOTS; j++)
 			item_tmp.card[j]=sd->status.inventory[i].card[j];
 
-		//Logs items, got from (N)PC scripts [Lupus]
-		log_pick_pc(sd, LOG_TYPE_SCRIPT, sd->status.inventory[i].nameid, -1, &sd->status.inventory[i]);
-
-		pc_delitem(sd,i,1,0,3);
-
-		//Logs items, got from (N)PC scripts [Lupus]
-		log_pick_pc(sd, LOG_TYPE_SCRIPT, item_tmp.nameid, 1, &item_tmp);
-
-		if((flag=pc_additem(sd,&item_tmp,1))){	// もてないならドロップ
+		pc_delitem(sd,i,1,0,3,LOG_TYPE_SCRIPT);
+		if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){	// もてないならドロップ
 			clif_additem(sd,0,0,flag);
 			map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 		}
@@ -10421,10 +10392,7 @@ BUILDIN_FUNC(failedremovecards)
 				for (j = 0; j < MAX_SLOTS; j++)
 					item_tmp.card[j]=0;
 
-				//Logs items, got from (N)PC scripts [Lupus]
-				log_pick_pc(sd, LOG_TYPE_SCRIPT, item_tmp.nameid, 1, NULL);
-
-				if((flag=pc_additem(sd,&item_tmp,1))){
+				if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){
 					clif_additem(sd,0,0,flag);
 					map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 				}
@@ -10435,10 +10403,7 @@ BUILDIN_FUNC(failedremovecards)
 	if(cardflag == 1)
 	{
 		if(typefail == 0 || typefail == 2){	// 武具損失
-			//Logs items, got from (N)PC scripts [Lupus]
-			log_pick_pc(sd, LOG_TYPE_SCRIPT, sd->status.inventory[i].nameid, -1, &sd->status.inventory[i]);
-
-			pc_delitem(sd,i,1,0,2);
+			pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
 		}
 		if(typefail == 1){	// カードのみ損失（武具を返す）
 			int flag;
@@ -10447,19 +10412,13 @@ BUILDIN_FUNC(failedremovecards)
 			item_tmp.equip=0,item_tmp.identify=1,item_tmp.refine=sd->status.inventory[i].refine;
 			item_tmp.attribute=sd->status.inventory[i].attribute,item_tmp.expire_time=sd->status.inventory[i].expire_time;
 
-			//Logs items, got from (N)PC scripts [Lupus]
-			log_pick_pc(sd, LOG_TYPE_SCRIPT, sd->status.inventory[i].nameid, -1, &sd->status.inventory[i]);
-
 			for (j = 0; j < sd->inventory_data[i]->slot; j++)
 				item_tmp.card[j]=0;
 			for (j = sd->inventory_data[i]->slot; j < MAX_SLOTS; j++)
 				item_tmp.card[j]=sd->status.inventory[i].card[j];
-			pc_delitem(sd,i,1,0,2);
+			pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
 
-			//Logs items, got from (N)PC scripts [Lupus]
-			log_pick_pc(sd, LOG_TYPE_SCRIPT, item_tmp.nameid, 1, &item_tmp);
-
-			if((flag=pc_additem(sd,&item_tmp,1))){
+			if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){
 				clif_additem(sd,0,0,flag);
 				map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 			}
@@ -11124,11 +11083,7 @@ BUILDIN_FUNC(clearitem)
 	if(sd==NULL) return 0;
 	for (i=0; i<MAX_INVENTORY; i++) {
 		if (sd->status.inventory[i].amount) {
-
-			//Logs items, got from (N)PC scripts [Lupus]
-			log_pick_pc(sd, LOG_TYPE_SCRIPT, sd->status.inventory[i].nameid, -sd->status.inventory[i].amount, &sd->status.inventory[i]);
-
-			pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0);
+			pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0, LOG_TYPE_SCRIPT);
 		}
 	}
 	return 0;

@@ -439,7 +439,7 @@ void pc_inventory_rentals(struct map_session_data *sd)
 		if( sd->status.inventory[i].expire_time <= time(NULL) )
 		{
 			clif_rental_expired(sd->fd, i, sd->status.inventory[i].nameid);
-			pc_delitem(sd, i, sd->status.inventory[i].amount, 1, 0);
+			pc_delitem(sd, i, sd->status.inventory[i].amount, 1, 0, LOG_TYPE_OTHER);
 		}
 		else
 		{
@@ -3251,13 +3251,15 @@ int pc_insert_card(struct map_session_data* sd, int idx_card, int idx_equip)
 	// remember the card id to insert
 	nameid = sd->status.inventory[idx_card].nameid;
 
-	if( pc_delitem(sd,idx_card,1,1,0) == 1 )
+	if( pc_delitem(sd,idx_card,1,1,0,LOG_TYPE_OTHER) == 1 )
 	{// failed
 		clif_insert_card(sd,idx_equip,idx_card,1);
 	}
 	else
 	{// success
+		log_pick_pc(sd, LOG_TYPE_OTHER, sd->status.inventory[idx_equip].nameid, -1, &sd->status.inventory[idx_equip]);
 		sd->status.inventory[idx_equip].card[i] = nameid;
+		log_pick_pc(sd, LOG_TYPE_OTHER, sd->status.inventory[idx_equip].nameid, 1, &sd->status.inventory[idx_equip]);
 		clif_insert_card(sd,idx_equip,idx_card,0);
 	}
 
@@ -3501,7 +3503,7 @@ int pc_search_inventory(struct map_session_data *sd,int item_id)
 /*==========================================
  * アイテム追加。個?のみitem構造?の?字を無視
  *------------------------------------------*/
-int pc_additem(struct map_session_data *sd,struct item *item_data,int amount)
+int pc_additem(struct map_session_data *sd,struct item *item_data,int amount,e_log_pick_type log_type)
 {
 	struct item_data *data;
 	int i;
@@ -3560,6 +3562,7 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount)
 		sd->inventory_data[i] = data;
 		clif_additem(sd,i,amount,0);
 	}
+	log_pick_pc(sd, log_type, sd->status.inventory[i].nameid, amount, &sd->status.inventory[i]);
 
 	sd->weight += w;
 	clif_updatestatus(sd,SP_WEIGHT);
@@ -3571,12 +3574,14 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount)
 /*==========================================
  * アイテムを減らす
  *------------------------------------------*/
-int pc_delitem(struct map_session_data *sd,int n,int amount,int type, short reason)
+int pc_delitem(struct map_session_data *sd,int n,int amount,int type, short reason, e_log_pick_type log_type)
 {
 	nullpo_retr(1, sd);
 
 	if(sd->status.inventory[n].nameid==0 || amount <= 0 || sd->status.inventory[n].amount<amount || sd->inventory_data[n] == NULL)
 		return 1;
+
+	log_pick_pc(sd, log_type, sd->status.inventory[n].nameid, -amount, &sd->status.inventory[n]);
 
 	sd->status.inventory[n].amount -= amount;
 	sd->weight -= sd->inventory_data[n]->weight*amount ;
@@ -3627,14 +3632,10 @@ int pc_dropitem(struct map_session_data *sd,int n,int amount)
 		return 0;
 	}
 	
-	//Logs items, dropped by (P)layers [Lupus]
-	log_pick_pc(sd, LOG_TYPE_PICKDROP_PLAYER, sd->status.inventory[n].nameid, -amount, (struct item*)&sd->status.inventory[n]);
-	//Logs
-
 	if (!map_addflooritem(&sd->status.inventory[n], amount, sd->bl.m, sd->bl.x, sd->bl.y, 0, 0, 0, 2))
 		return 0;
 	
-	pc_delitem(sd, n, amount, 0, 7);
+	pc_delitem(sd, n, amount, 0, 7, LOG_TYPE_PICKDROP_PLAYER);
 	return 1;
 }
 
@@ -3938,11 +3939,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 		if( sd->status.inventory[n].expire_time == 0 )
 		{
 			clif_useitemack(sd,n,amount-1,1);
-
-			//Logs (C)onsumable items [Lupus]
-			log_pick_pc(sd, LOG_TYPE_CONSUME, sd->status.inventory[n].nameid, -1, &sd->status.inventory[n]);
-
-			pc_delitem(sd,n,1,1,0); // Rental Usable Items are not deleted until expiration
+			pc_delitem(sd,n,1,1,0,LOG_TYPE_CONSUME); // Rental Usable Items are not deleted until expiration
 		}
 		else
 			clif_useitemack(sd,n,0,0);
@@ -3968,7 +3965,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 /*==========================================
  * カ?トアイテム追加。個?のみitem構造?の?字を無視
  *------------------------------------------*/
-int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amount)
+int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amount,e_log_pick_type log_type)
 {
 	struct item_data *data;
 	int i,w;
@@ -4017,7 +4014,8 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 		sd->cart_num++;
 		clif_cart_additem(sd,i,amount,0);
 	}
-
+	log_pick_pc(sd, log_type, sd->status.cart[i].nameid, amount, &sd->status.cart[i]);
+	
 	sd->cart_weight += w;
 	clif_updatestatus(sd,SP_CARTINFO);
 
@@ -4027,13 +4025,15 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 /*==========================================
  * カ?トアイテムを減らす
  *------------------------------------------*/
-int pc_cart_delitem(struct map_session_data *sd,int n,int amount,int type)
+int pc_cart_delitem(struct map_session_data *sd,int n,int amount,int type,e_log_pick_type log_type)
 {
 	nullpo_retr(1, sd);
 
 	if(sd->status.cart[n].nameid==0 ||
 	   sd->status.cart[n].amount<amount)
 		return 1;
+
+	log_pick_pc(sd, log_type, sd->status.cart[n].nameid, -amount, &sd->status.cart[n]);
 
 	sd->status.cart[n].amount -= amount;
 	sd->cart_weight -= itemdb_weight(sd->status.cart[n].nameid)*amount ;
@@ -4066,8 +4066,8 @@ int pc_putitemtocart(struct map_session_data *sd,int idx,int amount)
 	if( item_data->nameid == 0 || amount < 1 || item_data->amount < amount || sd->state.vending )
 		return 1;
 
-	if( pc_cart_additem(sd,item_data,amount) == 0 )
-		return pc_delitem(sd,idx,amount,0,5);
+	if( pc_cart_additem(sd,item_data,amount,LOG_TYPE_NONE) == 0 )
+		return pc_delitem(sd,idx,amount,0,5,LOG_TYPE_NONE);
 
 	return 1;
 }
@@ -4105,8 +4105,8 @@ int pc_getitemfromcart(struct map_session_data *sd,int idx,int amount)
 
 	if(item_data->nameid==0 || amount < 1 || item_data->amount<amount || sd->state.vending )
 		return 1;
-	if((flag = pc_additem(sd,item_data,amount)) == 0)
-		return pc_cart_delitem(sd,idx,amount,0);
+	if((flag = pc_additem(sd,item_data,amount,LOG_TYPE_NONE)) == 0)
+		return pc_cart_delitem(sd,idx,amount,0,LOG_TYPE_NONE);
 
 	clif_additem(sd,0,0,flag);
 	return 1;
@@ -4187,7 +4187,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 	tmp_item.nameid = itemid;
 	tmp_item.amount = 1;
 	tmp_item.identify = itemdb_isidentified(itemid);
-	flag = pc_additem(sd,&tmp_item,1);
+	flag = pc_additem(sd,&tmp_item,1,LOG_TYPE_PICKDROP_PLAYER);
 
 	//TODO: Should we disable stealing when the item you stole couldn't be added to your inventory? Perhaps players will figure out a way to exploit this behaviour otherwise?
 	md->state.steal_flag = UCHAR_MAX; //you can't steal from this mob any more
@@ -4202,7 +4202,6 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 
 	//Logs items, Stolen from mobs [Lupus]
 	log_pick_mob(md, LOG_TYPE_PICKDROP_MONSTER, itemid, -1, NULL);
-	log_pick_pc(sd, LOG_TYPE_PICKDROP_PLAYER, itemid, 1, NULL);
 		
 	//A Rare Steal Global Announce by Lupus
 	if(md->db->dropitem[i].p<=battle_config.rare_drop_announce) {
@@ -7726,7 +7725,7 @@ int pc_checkitem(struct map_session_data *sd)
 			if( id && !itemdb_available(id) )
 			{
 				ShowWarning("Removed invalid/disabled item id %d from inventory (amount=%d, char_id=%d).\n", id, sd->status.inventory[i].amount, sd->status.char_id);
-				pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0);
+				pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0, LOG_TYPE_OTHER);
 			}
 		}
 
@@ -7737,7 +7736,7 @@ int pc_checkitem(struct map_session_data *sd)
 			if( id && !itemdb_available(id) )
 			{
 				ShowWarning("Removed invalid/disabled item id %d from cart (amount=%d, char_id=%d).\n", id, sd->status.cart[i].amount, sd->status.char_id);
-				pc_cart_delitem(sd, i, sd->status.cart[i].amount, 0);
+				pc_cart_delitem(sd, i, sd->status.cart[i].amount, 0, LOG_TYPE_OTHER);
 			}
 		}
 	}
@@ -7899,9 +7898,9 @@ int pc_divorce(struct map_session_data *sd)
 	for( i = 0; i < MAX_INVENTORY; i++ )
 	{
 		if( sd->status.inventory[i].nameid == WEDDING_RING_M || sd->status.inventory[i].nameid == WEDDING_RING_F )
-			pc_delitem(sd, i, 1, 0, 0);
+			pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_OTHER);
 		if( p_sd->status.inventory[i].nameid == WEDDING_RING_M || p_sd->status.inventory[i].nameid == WEDDING_RING_F )
-			pc_delitem(p_sd, i, 1, 0, 0);
+			pc_delitem(p_sd, i, 1, 0, 0, LOG_TYPE_OTHER);
 	}
 
 	clif_divorced(sd, p_sd->status.name);

@@ -16,6 +16,7 @@
 #include "unit.h" // unit_stop_attack(), unit_stop_walking()
 #include "vending.h" // struct s_vending
 #include "mob.h"
+#include "log.h"
 
 #define MAX_PC_BONUS 10
 #define MAX_PC_SKILL_REQUIRE 5
@@ -644,16 +645,16 @@ int pc_checkadditem(struct map_session_data*,int,int);
 int pc_inventoryblank(struct map_session_data*);
 int pc_search_inventory(struct map_session_data *sd,int item_id);
 int pc_payzeny(struct map_session_data*,int);
-int pc_additem(struct map_session_data*,struct item*,int);
+int pc_additem(struct map_session_data*,struct item*,int,e_log_pick_type);
 int pc_getzeny(struct map_session_data*,int);
-int pc_delitem(struct map_session_data*,int,int,int,short);
+int pc_delitem(struct map_session_data*,int,int,int,short,e_log_pick_type);
 
 // Special Shop System
 void pc_paycash(struct map_session_data *sd, int price, int points);
 void pc_getcash(struct map_session_data *sd, int cash, int points);
 
-int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amount);
-int pc_cart_delitem(struct map_session_data *sd,int n,int amount,int type);
+int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amount,e_log_pick_type log_type);
+int pc_cart_delitem(struct map_session_data *sd,int n,int amount,int type,e_log_pick_type log_type);
 int pc_putitemtocart(struct map_session_data *sd,int idx,int amount);
 int pc_getitemfromcart(struct map_session_data *sd,int idx,int amount);
 int pc_cartitem_amount(struct map_session_data *sd,int idx,int amount);

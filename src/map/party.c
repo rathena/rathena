@@ -1033,7 +1033,7 @@ int party_share_loot(struct party_data* p, struct map_session_data* sd, struct i
 				if( (psd = p->data[i].sd) == NULL || sd->bl.m != psd->bl.m || pc_isdead(psd) || (battle_config.idle_no_share && pc_isidle(psd)) )
 					continue;
 				
-				if (pc_additem(psd,item_data,item_data->amount))
+				if (pc_additem(psd,item_data,item_data->amount,LOG_TYPE_PICKDROP_PLAYER))
 					continue; //Chosen char can't pick up loot.
 
 				//Successful pick.
@@ -1055,7 +1055,7 @@ int party_share_loot(struct party_data* p, struct map_session_data* sd, struct i
 			}
 			while (count > 0) { //Pick a random member.
 				i = rand()%count;
-				if (pc_additem(psd[i],item_data,item_data->amount))
+				if (pc_additem(psd[i],item_data,item_data->amount,LOG_TYPE_PICKDROP_PLAYER))
 				{	//Discard this receiver.
 					psd[i] = psd[count-1];
 					count--;
@@ -1069,13 +1069,10 @@ int party_share_loot(struct party_data* p, struct map_session_data* sd, struct i
 
 	if (!target) { 
 		target = sd; //Give it to the char that picked it up
-		if ((i=pc_additem(sd,item_data,item_data->amount)))
+		if ((i=pc_additem(sd,item_data,item_data->amount,LOG_TYPE_PICKDROP_PLAYER)))
 			return i;
 	}
 
-	//Logs items, taken by (P)layers [Lupus]
-	log_pick_pc(target, LOG_TYPE_PICKDROP_PLAYER, item_data->nameid, item_data->amount, item_data);
-	
 	if( p && battle_config.party_show_share_picker && battle_config.show_picker_item_type&(1<<itemdb_type(item_data->nameid)) )
 		clif_party_show_picker(target, item_data);
 

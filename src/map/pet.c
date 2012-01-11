@@ -301,7 +301,7 @@ static int pet_return_egg(struct map_session_data *sd, struct pet_data *pd)
 	tmp_item.card[1] = GetWord(pd->pet.pet_id,0);
 	tmp_item.card[2] = GetWord(pd->pet.pet_id,1);
 	tmp_item.card[3] = pd->pet.rename_flag;
-	if((flag = pc_additem(sd,&tmp_item,1))) {
+	if((flag = pc_additem(sd,&tmp_item,1,LOG_TYPE_OTHER))) {
 		clif_additem(sd,0,0,flag);
 		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 	}
@@ -445,7 +445,7 @@ int pet_recv_petdata(int account_id,struct s_pet *p,int flag)
 			return 1;
 		}
 		if (!pet_birth_process(sd,p)) //Pet hatched. Delete egg.
-			pc_delitem(sd,i,1,0,0);
+			pc_delitem(sd,i,1,0,0,LOG_TYPE_OTHER);
 	} else {
 		pet_data_init(sd,p);
 		if(sd->pd && sd->bl.prev != NULL) {
@@ -566,7 +566,7 @@ int pet_get_egg(int account_id,int pet_id,int flag)
 	tmp_item.card[1] = GetWord(pet_id,0);
 	tmp_item.card[2] = GetWord(pet_id,1);
 	tmp_item.card[3] = 0; //New pets are not named.
-	if((ret = pc_additem(sd,&tmp_item,1))) {
+	if((ret = pc_additem(sd,&tmp_item,1,LOG_TYPE_PICKDROP_PLAYER))) {
 		clif_additem(sd,0,0,ret);
 		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 	}
@@ -662,7 +662,7 @@ int pet_equipitem(struct map_session_data *sd,int index)
 		return 1;
 	}
 
-	pc_delitem(sd,index,1,0,0);
+	pc_delitem(sd,index,1,0,0,LOG_TYPE_OTHER);
 	pd->pet.equip = nameid;
 	status_set_viewdata(&pd->bl, pd->pet.class_); //Updates view_data.
 	clif_pet_equip_area(pd);
@@ -698,7 +698,7 @@ static int pet_unequipitem(struct map_session_data *sd, struct pet_data *pd)
 	memset(&tmp_item,0,sizeof(tmp_item));
 	tmp_item.nameid = nameid;
 	tmp_item.identify = 1;
-	if((flag = pc_additem(sd,&tmp_item,1))) {
+	if((flag = pc_additem(sd,&tmp_item,1,LOG_TYPE_OTHER))) {
 		clif_additem(sd,0,0,flag);
 		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 	}
@@ -737,7 +737,7 @@ static int pet_food(struct map_session_data *sd, struct pet_data *pd)
 		clif_pet_food(sd,k,0);
 		return 1;
 	}
-	pc_delitem(sd,i,1,0,0);
+	pc_delitem(sd,i,1,0,0,LOG_TYPE_CONSUME);
 
 	if( pd->pet.hungry > 90 )
 		pet_set_intimate(pd, pd->pet.intimate - pd->petDB->r_full);
@@ -1010,14 +1010,13 @@ int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd)
 	for(i=0;i<pd->loot->count;i++) {
 		it = &pd->loot->item[i];
 		if(sd){
-			if((flag = pc_additem(sd,it,it->amount))){
+			if((flag = pc_additem(sd,it,it->amount,LOG_TYPE_PICKDROP_PLAYER))){
 				clif_additem(sd,0,0,flag);
 				ditem = ers_alloc(item_drop_ers, struct item_drop);
 				memcpy(&ditem->item_data, it, sizeof(struct item));
 				ditem->next = dlist->item;
 				dlist->item = ditem;
-			} else
-    			log_pick_pc(sd, LOG_TYPE_PICKDROP_PLAYER, it->nameid, it->amount, it);
+			}
 		}
 		else {
 			ditem = ers_alloc(item_drop_ers, struct item_drop);

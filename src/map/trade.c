@@ -550,14 +550,10 @@ void trade_tradecommit(struct map_session_data *sd)
 		{
 			n = sd->deal.item[trade_i].index;
 
-			flag = pc_additem(tsd, &sd->status.inventory[n], sd->deal.item[trade_i].amount);
+			flag = pc_additem(tsd, &sd->status.inventory[n], sd->deal.item[trade_i].amount,LOG_TYPE_TRADE);
 			if (flag == 0)
-			{
-				//Logs (T)rade [Lupus]
-				log_pick_pc(sd, LOG_TYPE_TRADE, sd->status.inventory[n].nameid, -(sd->deal.item[trade_i].amount), &sd->status.inventory[n]);
-				log_pick_pc(tsd, LOG_TYPE_TRADE, sd->status.inventory[n].nameid, sd->deal.item[trade_i].amount, &sd->status.inventory[n]);
-				pc_delitem(sd, n, sd->deal.item[trade_i].amount, 1, 6);
-			} else
+				pc_delitem(sd, n, sd->deal.item[trade_i].amount, 1, 6, LOG_TYPE_TRADE);
+			else
 				clif_additem(sd, n, sd->deal.item[trade_i].amount, 0);
 			sd->deal.item[trade_i].index = 0;
 			sd->deal.item[trade_i].amount = 0;
@@ -566,14 +562,10 @@ void trade_tradecommit(struct map_session_data *sd)
 		{
 			n = tsd->deal.item[trade_i].index;
 
-			flag = pc_additem(sd, &tsd->status.inventory[n], tsd->deal.item[trade_i].amount);
+			flag = pc_additem(sd, &tsd->status.inventory[n], tsd->deal.item[trade_i].amount,LOG_TYPE_TRADE);
 			if (flag == 0)
-			{
-				//Logs (T)rade [Lupus]
-				log_pick_pc(tsd, LOG_TYPE_TRADE, tsd->status.inventory[n].nameid, -(tsd->deal.item[trade_i].amount), &tsd->status.inventory[n]);
-				log_pick_pc(sd, LOG_TYPE_TRADE, tsd->status.inventory[n].nameid, tsd->deal.item[trade_i].amount, &tsd->status.inventory[n]);
-				pc_delitem(tsd, n, tsd->deal.item[trade_i].amount, 1, 6);
-			} else
+				pc_delitem(tsd, n, tsd->deal.item[trade_i].amount, 1, 6, LOG_TYPE_TRADE);
+			else
 				clif_additem(tsd, n, tsd->deal.item[trade_i].amount, 0);
 			tsd->deal.item[trade_i].index = 0;
 			tsd->deal.item[trade_i].amount = 0;

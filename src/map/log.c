@@ -64,20 +64,21 @@ static char log_picktype2char(e_log_pick_type type)
 		case LOG_TYPE_SCRIPT:           return 'N';  // (N)PC Script
 		//case LOG_TYPE_STEAL:            return 'D';  // Steal/Snatcher
 		case LOG_TYPE_CONSUME:          return 'C';  // (C)onsumed
-		//case LOG_TYPE_PRODUCE:          return 'O';  // Pr(O)duced/Ingredients
+		case LOG_TYPE_PRODUCE:          return 'O';  // Pr(O)duced/Ingredients
 		//case LOG_TYPE_MVP:              return 'U';  // MVP Rewards
 		case LOG_TYPE_COMMAND:          return 'A';  // (A)dmin command
 		case LOG_TYPE_STORAGE:          return 'R';  // Sto(R)age
 		case LOG_TYPE_GSTORAGE:         return 'G';  // (G)uild storage
 		case LOG_TYPE_MAIL:             return 'E';  // (E)mail attachment
-		//case LOG_TYPE_AUCTION:          return 'I';  // Auct(I)on
+		case LOG_TYPE_AUCTION:          return 'I';  // Auct(I)on
 		case LOG_TYPE_BUYING_STORE:     return 'B';  // (B)uying Store
 		case LOG_TYPE_LOOT:             return 'L';  // (L)oot (consumed monster pick/drop)
+		case LOG_TYPE_OTHER:			return 'X';  // Other
 	}
 
 	// should not get here, fallback
 	ShowDebug("log_picktype2char: Unknown pick type %d.\n", type);
-	return 'S';
+	return 'X';
 }
 
 

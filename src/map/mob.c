@@ -2403,15 +2403,13 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				intif_broadcast(message,strlen(message)+1,0);
 			}
 
-			if((temp = pc_additem(mvp_sd,&item,1)) != 0) {
+			if((temp = pc_additem(mvp_sd,&item,1,LOG_TYPE_PICKDROP_PLAYER)) != 0) {
 				clif_additem(mvp_sd,0,0,temp);
 				map_addflooritem(&item,1,mvp_sd->bl.m,mvp_sd->bl.x,mvp_sd->bl.y,mvp_sd->status.char_id,(second_sd?second_sd->status.char_id:0),(third_sd?third_sd->status.char_id:0),1);
 			}
 			
 			//Logs items, MVP prizes [Lupus]
 			log_pick_mob(md, LOG_TYPE_PICKDROP_MONSTER, item.nameid, -1, NULL);
-			if (!temp)
-				log_pick_pc(mvp_sd, LOG_TYPE_PICKDROP_PLAYER, item.nameid, 1, NULL);
 			break;
 		}
 

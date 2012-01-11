@@ -12783,7 +12783,7 @@ void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
 		return;
 	
 	clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,4,1);
-	pc_delitem(sd, item_position, 1, 0, 1);
+	pc_delitem(sd, item_position, 1, 0, 1, LOG_TYPE_CONSUME);
 }
 
 
@@ -13532,7 +13532,7 @@ void clif_parse_Auction_register(int fd, struct map_session_data *sd)
 		clif_Auction_message(fd, 4); // No Char Server? lets say something to the client
 	else
 	{
-		pc_delitem(sd, sd->auction.index, sd->auction.amount, 1, 6);
+		pc_delitem(sd, sd->auction.index, sd->auction.amount, 1, 6, LOG_TYPE_AUCTION);
 		sd->auction.amount = 0;
 		pc_payzeny(sd, auction.hours * battle_config.auction_feeperhour);
 	}

@@ -1772,7 +1772,7 @@ static void intif_parse_Auction_register(int fd)
 	else
 	{
 		clif_Auction_message(sd->fd, 4);
-		pc_additem(sd, &auction.item, auction.item.amount);
+		pc_additem(sd, &auction.item, auction.item.amount, LOG_TYPE_AUCTION);
 		pc_getzeny(sd, auction.hours * battle_config.auction_feeperhour);
 	}
 }

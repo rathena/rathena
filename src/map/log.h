@@ -26,26 +26,28 @@ e_log_chat_type;
 
 typedef enum e_log_pick_type
 {
-	LOG_TYPE_TRADE            = 0x0001,
-	LOG_TYPE_VENDING          = 0x0002,
-	LOG_TYPE_PICKDROP_PLAYER  = 0x0004,
-	LOG_TYPE_PICKDROP_MONSTER = 0x0008,
-	LOG_TYPE_NPC              = 0x0010,
-	LOG_TYPE_SCRIPT           = 0x0020,
-	//LOG_TYPE_STEAL            = 0x0040,
-	LOG_TYPE_CONSUME          = 0x0080,
-	//LOG_TYPE_PRODUCE          = 0x0100,
-	//LOG_TYPE_MVP              = 0x0200,
-	LOG_TYPE_COMMAND          = 0x0400,
-	LOG_TYPE_STORAGE          = 0x0800,
-	LOG_TYPE_GSTORAGE         = 0x1000,
-	LOG_TYPE_MAIL             = 0x2000,
-	//LOG_TYPE_AUCTION          = 0x4000,
-	LOG_TYPE_BUYING_STORE     = 0x8000,
+	LOG_TYPE_NONE             = 0,
+	LOG_TYPE_TRADE            = 0x00001,
+	LOG_TYPE_VENDING          = 0x00002,
+	LOG_TYPE_PICKDROP_PLAYER  = 0x00004,
+	LOG_TYPE_PICKDROP_MONSTER = 0x00008,
+	LOG_TYPE_NPC              = 0x00010,
+	LOG_TYPE_SCRIPT           = 0x00020,
+	//LOG_TYPE_STEAL            = 0x00040,
+	LOG_TYPE_CONSUME          = 0x00080,
+	LOG_TYPE_PRODUCE          = 0x00100,
+	//LOG_TYPE_MVP              = 0x00200,
+	LOG_TYPE_COMMAND          = 0x00400,
+	LOG_TYPE_STORAGE          = 0x00800,
+	LOG_TYPE_GSTORAGE         = 0x01000,
+	LOG_TYPE_MAIL             = 0x02000,
+	LOG_TYPE_AUCTION          = 0x04000,
+	LOG_TYPE_BUYING_STORE     = 0x08000,
+	LOG_TYPE_OTHER            = 0x10000,
 	// combinations
 	LOG_TYPE_LOOT             = LOG_TYPE_PICKDROP_MONSTER|LOG_TYPE_CONSUME,
 	// all
-	LOG_TYPE_ALL              = 0xFFFF,
+	LOG_TYPE_ALL              = 0xFFFFF,
 }
 e_log_pick_type;
 

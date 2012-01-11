@@ -1722,13 +1722,10 @@ ACMD_FUNC(item)
 			item_tmp.nameid = item_id;
 			item_tmp.identify = 1;
 
-			if ((flag = pc_additem(sd, &item_tmp, get_count)))
+			if ((flag = pc_additem(sd, &item_tmp, get_count, LOG_TYPE_COMMAND)))
 				clif_additem(sd, 0, 0, flag);
 		}
 	}
-
-	//Logs (A)dmins items [Lupus]
-	log_pick_pc(sd, LOG_TYPE_COMMAND, item_id, number, NULL);
 
 	clif_displaymessage(fd, msg_txt(18)); // Item created.
 	return 0;
@@ -1797,12 +1794,9 @@ ACMD_FUNC(item2)
 			item_tmp.card[1] = c2;
 			item_tmp.card[2] = c3;
 			item_tmp.card[3] = c4;
-			if ((flag = pc_additem(sd, &item_tmp, get_count)))
+			if ((flag = pc_additem(sd, &item_tmp, get_count, LOG_TYPE_COMMAND)))
 				clif_additem(sd, 0, 0, flag);
 		}
-
-		//Logs (A)dmins items [Lupus]
-		log_pick_pc(sd, LOG_TYPE_COMMAND, item_tmp.nameid, number, &item_tmp);
 
 		clif_displaymessage(fd, msg_txt(18)); // Item created.
 	} else {
@@ -1823,11 +1817,7 @@ ACMD_FUNC(itemreset)
 
 	for (i = 0; i < MAX_INVENTORY; i++) {
 		if (sd->status.inventory[i].amount && sd->status.inventory[i].equip == 0) {
-
-			//Logs (A)dmins items [Lupus]
-			log_pick_pc(sd, LOG_TYPE_COMMAND, sd->status.inventory[i].nameid, -sd->status.inventory[i].amount, &sd->status.inventory[i]);
-
-			pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0);
+			pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0, LOG_TYPE_COMMAND);
 		}
 	}
 	clif_displaymessage(fd, msg_txt(20)); // All of your items have been removed.
@@ -2887,10 +2877,7 @@ ACMD_FUNC(produce)
 		clif_produceeffect(sd, 0, item_id);
 		clif_misceffect(&sd->bl, 3);
 
-		//Logs (A)dmins items [Lupus]
-		log_pick_pc(sd, LOG_TYPE_COMMAND, tmp_item.nameid, 1, &tmp_item);
-
-		if ((flag = pc_additem(sd, &tmp_item, 1)))
+		if ((flag = pc_additem(sd, &tmp_item, 1, LOG_TYPE_COMMAND)))
 			clif_additem(sd, 0, 0, flag);
 	} else {
 		sprintf(atcmd_output, msg_txt(169), item_id, item_data->name); // The item (%d: '%s') is not equipable.
@@ -5970,10 +5957,7 @@ void getring (struct map_session_data* sd)
 	item_tmp.card[2] = sd->status.partner_id;
 	item_tmp.card[3] = sd->status.partner_id >> 16;
 
-	//Logs (A)dmins items [Lupus]
-	log_pick_pc(sd, LOG_TYPE_COMMAND, item_id, 1, &item_tmp);
-
-	if((flag = pc_additem(sd,&item_tmp,1))) {
+	if((flag = pc_additem(sd,&item_tmp,1,LOG_TYPE_COMMAND))) {
 		clif_additem(sd,0,0,flag);
 		map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 	}
@@ -8747,11 +8731,7 @@ ACMD_FUNC(delitem)
 		{// delete pet
 			intif_delete_petdata(MakeDWord(sd->status.inventory[idx].card[1], sd->status.inventory[idx].card[2]));
 		}
-
-		//Logs (A)dmins items [Lupus]
-		log_pick_pc(sd, LOG_TYPE_COMMAND, nameid, -delamount, &sd->status.inventory[idx]);
-
-		pc_delitem(sd, idx, delamount, 0, 0);
+		pc_delitem(sd, idx, delamount, 0, 0, LOG_TYPE_COMMAND);
 
 		amount-= delamount;
 	}

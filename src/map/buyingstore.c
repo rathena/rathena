@@ -367,13 +367,11 @@ void buyingstore_trade(struct map_session_data* sd, int account_id, unsigned int
 		zeny = amount*pl_sd->buyingstore.items[listidx].price;
 
 		// log
-		log_pick_pc(sd, LOG_TYPE_BUYING_STORE, nameid, -((int)amount), &sd->status.inventory[index]);
-		log_pick_pc(pl_sd, LOG_TYPE_BUYING_STORE, nameid, amount, &sd->status.inventory[index]);
 		log_zeny(sd, LOG_TYPE_BUYING_STORE, pl_sd, zeny);
 
 		// move item
-		pc_additem(pl_sd, &sd->status.inventory[index], amount);
-		pc_delitem(sd, index, amount, 1, 0);
+		pc_additem(pl_sd, &sd->status.inventory[index], amount, LOG_TYPE_BUYING_STORE);
+		pc_delitem(sd, index, amount, 1, 0, LOG_TYPE_BUYING_STORE);
 		pl_sd->buyingstore.items[listidx].amount-= amount;
 
 		// pay up

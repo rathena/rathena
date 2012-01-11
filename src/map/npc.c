@@ -1271,10 +1271,8 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
         {
             item_tmp.nameid = nameid;
             item_tmp.identify = 1;
-            pc_additem(sd,&item_tmp,amount);
+            pc_additem(sd,&item_tmp,amount,LOG_TYPE_NPC);
         }
-
-        log_pick_pc(sd, LOG_TYPE_NPC, nameid, amount, NULL);
     }
 
     return 0;
@@ -1378,10 +1376,8 @@ int npc_cashshop_buy(struct map_session_data *sd, int nameid, int amount, int po
 		item_tmp.nameid = nameid;
 		item_tmp.identify = 1;
 
-		pc_additem(sd,&item_tmp, amount);
+		pc_additem(sd,&item_tmp, amount, LOG_TYPE_NPC);
 	}
-
-	log_pick_pc(sd, LOG_TYPE_NPC, nameid, amount, NULL);
 
 	return 0;
 }
@@ -1486,11 +1482,7 @@ int npc_buylist(struct map_session_data* sd, int n, unsigned short* item_list)
 		item_tmp.nameid = nameid;
 		item_tmp.identify = 1;
 
-		pc_additem(sd,&item_tmp,amount);
-
-		//Logs items, Bought in NPC (S)hop [Lupus]
-		log_pick_pc(sd, LOG_TYPE_NPC, item_tmp.nameid, amount, NULL);
-		//Logs
+		pc_additem(sd,&item_tmp,amount,LOG_TYPE_NPC);
 	}
 
 	// custom merchant shop exp bonus
@@ -1631,10 +1623,6 @@ int npc_selllist(struct map_session_data* sd, int n, unsigned short* item_list)
 		amount = item_list[i*2+1];
 		nameid = sd->status.inventory[idx].nameid;
 
-		//Logs items, Sold to NPC (S)hop [Lupus]
-		log_pick_pc(sd, LOG_TYPE_NPC, nameid, -amount, &sd->status.inventory[idx]);
-		//Logs
-
 		if( sd->inventory_data[idx]->type == IT_PETEGG && sd->status.inventory[idx].card[0] == CARD0_PET )
 		{
 			if( search_petDB_index(sd->status.inventory[idx].nameid, PET_EGG) >= 0 )
@@ -1643,7 +1631,7 @@ int npc_selllist(struct map_session_data* sd, int n, unsigned short* item_list)
 			}
 		}
 
-		pc_delitem(sd, idx, amount, 0, 6);
+		pc_delitem(sd, idx, amount, 0, 6, LOG_TYPE_NPC);
 	}
 
 	if( z > MAX_ZENY )
