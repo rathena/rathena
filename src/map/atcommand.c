@@ -9258,10 +9258,11 @@ void atcommand_parse_aliases(char aliases[1024],AtCommandInfo* base) {
 		return;
 
 	for(i = 0; i < max;i++) {
-		AtCommandInfo* atcommand;
+		AtCommandInfo* atcommand = NULL;
 		normalize_name(str[i]," ");//trim over
-		if( strdb_exists(atcommand_db, str[i]) ) {
-			ShowError("atcommand_conf: duplicate alises error: %s (from %s)\n",str[i],base->command);
+		if( (atcommand = strdb_get(atcommand_db, str[i])) ) {
+			atcommand->level = base->level;
+			atcommand->level2 = base->level2;
 			continue;
 		}
 
