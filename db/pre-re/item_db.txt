@@ -1066,7 +1066,7 @@
 2004,Kronos,Kronos,4,20,,1000,30,,1,0,0x00010204,2,2,34,4,50,1,23,{ bonus bMatkRate,20; bonus bInt,3+(getrefine()/2); bonus bMaxHP,300+(50*getrefine()/2); autobonus "{ bonus bMatkRate,12; bonus buseSPRate,20; }",1,5000,BF_MAGIC,"{ specialeffect2 EF_ENHANCE; }"; },{},{}
 2005,Dea_Staff,Dea Staff,4,20,,1000,30,,1,1,0x00008110,2,2,34,3,50,1,23,{ bonus bAtkEle,Ele_Holy; bonus bMatkRate,15+getrefine()/2; bonus bInt,6; bonus bVit,2; autobonus3 "{ }",20,1000,"AL_HEAL","{ specialeffect2 EF_MAGICALATTHIT;  heal 0,200;  }"; },{},{}
 2006,G_Staff_Of_Light,Staff Of Light,4,20,,1900,80,,1,0,0x00810204,7,2,34,4,60,1,23,{ /* bonus bMAtk,150; */ bonus bAtkEle,Ele_Holy; bonus bInt,6; },{},{}
-/ Shields
+// Shields
 //===================================================================
 2101,Guard,Guard,5,500,,300,,3,,0,0xFFFFFFFF,7,2,32,,0,1,1,{},{},{}
 2102,Guard_,Guard,5,500,,300,,3,,1,0xFFFFFFFF,7,2,32,,0,1,1,{},{},{}
