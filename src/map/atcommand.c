@@ -55,9 +55,10 @@ char* msg_table[MAX_MSG]; // Server messages (0-499 reserved for GM commands, 50
 
 DBMap* atcommand_db = NULL;//name -> AtCommandInfo
 
-typedef struct AtCommandInfo
-{
-	const char* command;
+#define ATCOMMAND_LENGTH 50
+
+typedef struct AtCommandInfo {
+	char command[ATCOMMAND_LENGTH];
 	int level;
 	int level2;
 	AtCommandFunc func;
@@ -9063,7 +9064,7 @@ void atcommand_basecommands(void) {
 
 		CREATE(atcommand, AtCommandInfo, 1);
 
-		atcommand->command = atcommand_base[i].command;
+		safestrncpy(atcommand->command,atcommand_base[i].command,sizeof(atcommand->command));
 		atcommand->level = atcommand_base[i].level;
 		atcommand->level2 = atcommand_base[i].level2;
 		atcommand->func = atcommand_base[i].func;
@@ -9268,7 +9269,7 @@ void atcommand_parse_aliases(char aliases[1024],AtCommandInfo* base) {
 
 		CREATE(atcommand, AtCommandInfo, 1);
 
-		atcommand->command = str[i];
+		safestrncpy(atcommand->command,str[i],sizeof(atcommand->command));
 		atcommand->level = base->level;
 		atcommand->level2 = base->level2;
 		atcommand->func = base->func;
