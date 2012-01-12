@@ -3828,16 +3828,16 @@ static int mob_read_randommonster(void)
 	char line[1024];
 	char *str[10],*p;
 	int i,j;
-
 	const char* mobfile[] = {
 #if REMODE
 		"re/mob_branch.txt",
+		"mob_poring.txt",
 		"re/mob_boss.txt",
 #else
 		"pre-re/mob_branch.txt",
+		"mob_poring.txt",
 		"pre-re/mob_boss.txt",
 #endif
-		"mob_poring.txt",
 		"mob_pouch.txt"};
 
 	memset(&summon, 0, sizeof(summon));
