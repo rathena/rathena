@@ -3,12 +3,13 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
 //= 1.1 Official kRO 10.1 spawns for 1-4 [Playtester]
 //= 1.2 More accurate spawns [Playtester]
+//= 1.3 Added Izlude Dungeon F6 spawns [Chilly]
 //============================================================
 
 //==================================================
@@ -107,3 +108,12 @@ iz_dun04,42,129,0,0	monster	Hydra	1068,1,312000,150000,0
 iz_dun04,80,233,0,0	monster	Hydra	1068,1,318000,150000,0
 iz_dun04,69,243,0,0	monster	Hydra	1068,1,321000,150000,0
 iz_dun04,33,115,0,0	monster	Hydra	1068,1,321000,150000,0
+
+//==================================================
+// iz_dun05 - Undersea Tunnel F6
+//==================================================
+iz_dun05,0,0,0,0	monster	King Dramoh	2198,20,0,0,0
+iz_dun05,0,0,0,0	monster	Sropho	2201,50,0,0,0
+iz_dun05,0,0,0,0	monster	Pot Dofle	2203,30,0,0,0
+iz_dun05,0,0,0,0	monster	Sedora	2204,50,0,0,0
+iz_dun05,0,0,0,0	boss_monster	Kraken	2202,1,7200000,600000,1

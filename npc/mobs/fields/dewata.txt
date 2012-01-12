@@ -1,0 +1,20 @@
+//===== eAthena Script ========================================
+//= Dewata Field Monster Spawn Script
+//===== By: ==================================================
+//= Chilly
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Description: =========================================
+//= Official kRO monster spawns
+//===== Additional Comments: =================================
+//= 1.0 First Release
+//============================================================
+
+//==================================================
+// dew_fild01 - Dewata Field Tribal Village
+//==================================================
+dew_fild01,0,0,0,0	monster	Argiope	1099,45,0,0,0
+dew_fild01,0,0,0,0	monster	Alnoldi	2151,60,0,0,0
+dew_fild01,0,0,0,0	monster	Cendrawasih	2153,10,0,0,0
