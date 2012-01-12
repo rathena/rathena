@@ -67,7 +67,7 @@ typedef struct AtCommandInfo {
 static AtCommandInfo* get_atcommandinfo_byname(const char* name);
 
 ACMD_FUNC(commands);
-
+ACMD_FUNC(charcommands);
 
 /*=========================================
  * Generic variables
@@ -9050,7 +9050,7 @@ void atcommand_basecommands(void) {
 		{ "itemlist",          40,40,     atcommand_itemlist },
 		{ "stats",             40,40,     atcommand_stats },
 		{ "delitem",           60,60,     atcommand_delitem },
-		{ "charcommands",       1,1,      atcommand_commands },
+		{ "charcommands",       1,1,      atcommand_charcommands },
 		{ "font",               1,1,      atcommand_font },
 		/**
 		 * For Testing Purposes, not going to be here after we're done.
@@ -9387,10 +9387,9 @@ void do_final_atcommand() {
 // commands that need to go _after_ the commands table
 
 /*==========================================
- * @commands Lists available @ commands to you
+ * type: 1 = commands (@), 2 = charcommands (#)
  *------------------------------------------*/
-ACMD_FUNC(commands)
-{
+static void atcommand_commands_sub(struct map_session_data* sd, const int fd, int type) {
 	char line_buff[CHATBOX_SIZE];
 	int gm_lvl = pc_isGM(sd), count = 0;
 	char* cur = line_buff;
@@ -9405,9 +9404,9 @@ ACMD_FUNC(commands)
 	for( cmd = (AtCommandInfo*)iter->first(iter,NULL); iter->exists(iter); cmd = (AtCommandInfo*)iter->next(iter,NULL) ) {
 		unsigned int slen;
 
-		if( gm_lvl < cmd->level && stristr(command,"commands") )
+		if( type == 1 && gm_lvl < cmd->level )
 			continue;
-		if( gm_lvl < cmd->level2 && stristr(command,"charcommands") )
+		if( type == 2 && gm_lvl < cmd->level2 )
 			continue;
 
 		slen = strlen(cmd->command);
@@ -9432,5 +9431,23 @@ ACMD_FUNC(commands)
 	sprintf(atcmd_output, msg_txt(274), count); // "%d commands found."
 	clif_displaymessage(fd, atcmd_output);
 
+	return;
+}
+
+/*==========================================
+ * @commands Lists available @ commands to you
+ *------------------------------------------*/
+ACMD_FUNC(commands)
+{
+	atcommand_commands_sub(sd, fd, 1);
+	return 0;
+ }
+
+/*==========================================
+ * @charcommands Lists available # commands to you
+ *------------------------------------------*/
+ACMD_FUNC(charcommands)
+{
+	atcommand_commands_sub(sd, fd, 2);
 	return 0;
 }
