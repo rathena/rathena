@@ -12730,8 +12730,10 @@ BUILDIN_FUNC(strtoupper)
 	
 	output = (char*)aMallocA(strlen(str) + 1);
 
-	while(str[i] != '\0')
-		output[i++] = TOUPPER(str[i]);
+	while(str[i] != '\0') {
+		i = i + 1;
+		output[i] = TOUPPER(str[i]);
+	}
 	output[i] = '\0';
 
 	script_pushstr(st, output);
@@ -12749,8 +12751,10 @@ BUILDIN_FUNC(strtolower)
 	
 	output = (char*)aMallocA(strlen(str) + 1);
 
-	while(str[i] != '\0')
-		output[i++] = TOLOWER(str[i]);
+	while(str[i] != '\0') {
+		i = i + 1;
+		output[i] = TOLOWER(str[i]);
+	}
 	output[i] = '\0';
 
 	script_pushstr(st, output);
