@@ -1,11 +1,11 @@
-//===== eAthena Script ========================================
+//===== rAthena Script ========================================
 //= Malaya Port Dungeon Monster Spawn Script
 //===== By: ==================================================
 //= Chilly
 //===== Current Version: =====================================
 //= 1.0
 //===== Compatible With: =====================================
-//= Any Athena Version
+//= rAthena SVN
 //===== Description: =========================================
 //= Official kRO monster spawns
 //===== Additional Comments: =================================
