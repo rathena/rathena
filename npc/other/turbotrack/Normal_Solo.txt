@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.4
+//= 1.6
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -15,6 +15,8 @@
 //= 1.2 Fixed end timer not enabling warp. (bugreport:1682) [L0ne_W0lf]
 //= 1.3 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 1.4 Fixed a little mistake [akrus]
+//= 1.5 Fixed variable typo [Slim]
+//= 1.6 Fixed the "bing#n1" issue. (bugreport:5050) [Slim]
 //============================================================
 
 turbo_room,72,132,3	script	Solo Mode#n1	124,{
@@ -321,6 +323,7 @@ OnTimer927000:
 	// monster reset
 	donpcevent "snake#n1::Onreset";
 	donpcevent "hunting#n1::Onreset";
+	disablenpc "bing2#n1";
 	// NPC
 	disablenpc "Guide#TBT_n_1";
 	enablenpc "cos_n_1_end";
@@ -853,7 +856,7 @@ OnTouch:
 
 turbo_n_1,93,19,0	script	cos_n_1_7	45,1,1,{
 OnTouch:
-	mapannounce "turbo_n_1","" + strcharinfo(0) +" has just passed the Small Cave course! Hurry, you're almost at the finish!",bc_map,"0x70DBDB";
+	mapannounce "turbo_n_1","" + strcharinfo(0) +" has just passed the Small Cave course! Hurry, you're so close to the finish!",bc_map,"0x70DBDB";
 	warp "turbo_n_1",167,55;
 	end;
 }
@@ -1087,10 +1090,12 @@ OnTimer52000:
 	mapannounce "turbo_n_1","Have a good day.",bc_map,"0x33FF66";
 	end;
 
+//--- warp all players to turbo room
 OnTimer56000:
 	mapwarp "turbo_n_1","turbo_room",72,89;
 	end;
-
+	
+//----end game, reset all
 OnTimer60000:
 	disablenpc "Guide#TBT_n_1";
 	enablenpc "cos_n_1_end";
@@ -1105,6 +1110,7 @@ OnTimer60000:
 	donpcevent "snake#n1::Onreset";
 	donpcevent "hunting#n1::Onreset";
 	donpcevent "Solo Mode#n1::OnEnable";
+	disablenpc "bing2#n1";
 	stopnpctimer;
 	end;
 }
@@ -1289,3 +1295,43 @@ turbo_n_1,368,48,0	duplicate(TurboTrap_n1)	trap_n1#F92	139,1,1
 turbo_n_1,368,44,0	duplicate(TurboTrap_n1)	trap_n1#F93	139,1,1
 turbo_n_1,368,40,0	duplicate(TurboTrap_n1)	trap_n1#F94	139,1,1
 turbo_n_1,368,36,0	duplicate(TurboTrap_n1)	trap_n1#F95	139,1,1
+
+turbo_n_1,217,214,0	script	bing#n1	45,3,3,{
+OnTouch:
+	set .@bing1,rand(1,10);
+	if (.@bing1 > 0 && .@bing1 < 4)
+		warp "turbo_n_1",217,232;
+	else if (.@bing1 == 6)
+		warp "turbo_n_1",233,207;
+	else if (.@bing1 == 7)
+		warp "turbo_n_1",208,219;
+	else if (.@bing1 == 8)
+		warp "turbo_n_1",219,202;
+	else if (.@bing1 == 9)
+		warp "turbo_n_1",218,228;
+	disablenpc "bing#n1";
+	enablenpc "bing2#n1";
+	end;
+}
+
+turbo_n_1,217,214,0	script	bing2#n1	45,3,3,{
+OnInit:
+	disablenpc "bing2#n1";
+	end;
+
+OnTouch:
+	set .@bing1,rand(1,10);
+	if (.@bing1 == 1)
+		warp "turbo_n_1",217,232;
+	else if (.@bing1 == 2)
+		warp "turbo_n_1",233,207;
+	else if (.@bing1 == 3)
+		warp "turbo_n_1",208,219;
+	else if (.@bing1 == 4)
+		warp "turbo_n_1",219,202;
+	else if (.@bing1 == 5)
+		warp "turbo_n_1",218,228;
+	else if (.@bing1 == 6)
+		warp "turbo_n_1",220,195;
+	end;	
+}
