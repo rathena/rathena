@@ -1032,6 +1032,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	clif_friendslist_send(sd);
 
 	if( !changing_mapservers ) {
+
 		if (battle_config.display_version == 1){
 			char buf[256];
 			sprintf(buf, "SVN version: %s", get_svn_revision());
@@ -1045,32 +1046,31 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 			else
 				clif_displaymessage(sd->fd, motd_text[i]);
 		}
+
+		// message of the limited time of the account
+		if (expiration_time != 0) { // don't display if it's unlimited or unknow value
+			char tmpstr[1024];
+			strftime(tmpstr, sizeof(tmpstr) - 1, msg_txt(501), localtime(&expiration_time)); // "Your account time limit is: %d-%m-%Y %H:%M:%S."
+			clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
+		}
+
+		//Night message
+		if (night_flag) {
+			char tmpstr[1024];
+			strcpy(tmpstr, msg_txt(500)); // Actually, it's the night...
+			clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
+		}
+
+		/**
+		 * Fixes login-without-aura glitch (the screen won't blink at this point, don't worry :P)
+		 **/
+		clif_changemap(sd,sd->mapindex,sd->bl.x,sd->bl.y);
 	}
 
-	// message of the limited time of the account
-	if (expiration_time != 0) { // don't display if it's unlimited or unknow value
-		char tmpstr[1024];
-		strftime(tmpstr, sizeof(tmpstr) - 1, msg_txt(501), localtime(&expiration_time)); // "Your account time limit is: %d-%m-%Y %H:%M:%S."
-		clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
-	}
-
-	//Night message
-	if (night_flag)
-	{
-		char tmpstr[1024];
-		strcpy(tmpstr, msg_txt(500)); // Actually, it's the night...
-		clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
-	}
 	/**
 	 * Check if player have any cool downs on
 	 **/
 	skill_cooldown_load(sd);
-	
-	/**
-	 * Fixes login-without-aura glitch (the screen won't blink at this point, don't worry :P)
-	 **/
-	if( !changing_mapservers )
-		clif_changemap(sd,sd->mapindex,sd->bl.x,sd->bl.y);
 
 	// Request all registries (auth is considered completed whence they arrive)
 	intif_request_registry(sd,7);
