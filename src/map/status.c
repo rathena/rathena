@@ -5078,9 +5078,9 @@ void status_set_viewdata(struct block_list *bl, int class_)
 				sd->vd.head_top = sd->status.head_top;
 				sd->vd.head_mid = sd->status.head_mid;
 				sd->vd.head_bottom = sd->status.head_bottom;
-				sd->vd.hair_style = sd->status.hair;
-				sd->vd.hair_color = sd->status.hair_color;
-				sd->vd.cloth_color = sd->status.clothes_color;
+				sd->vd.hair_style = cap_value(sd->status.hair,0,battle_config.max_hair_style);
+				sd->vd.hair_color = cap_value(sd->status.hair,0,battle_config.max_hair_color);
+				sd->vd.cloth_color = cap_value(sd->status.clothes_color,0,battle_config.max_cloth_color);
 				sd->vd.sex = sd->status.sex;
 			} else if (vd)
 				memcpy(&sd->vd, vd, sizeof(struct view_data));
