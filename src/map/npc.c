@@ -1155,6 +1155,13 @@ int npc_scriptcont(struct map_session_data* sd, int id)
 	 **/
 	sd->npc_idle_tick = gettick();
 #endif
+
+	/**
+	 * WPE can get to this point with a progressbar; we deny it.
+	 **/
+	if( sd->progressbar.npc_id && DIFF_TICK(sd->progressbar.timeout,gettick()) > 0 )
+		return 1;
+
 	run_script_main(sd->st);
 
 	return 0;
