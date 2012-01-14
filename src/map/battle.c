@@ -236,7 +236,7 @@ int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src,
 	if( sc && sc->data[SC_DEVOTION] && damage > 0 && skill_id != PA_PRESSURE && skill_id != CR_REFLECTSHIELD )
 		damage = 0;
 
-	if (!battle_config.delay_battle_damage) {
+	if ( !battle_config.delay_battle_damage || amotion <= 1 ) {
 		map_freeblock_lock();
 		status_fix_damage(src, target, damage, ddelay); // We have to seperate here between reflect damage and others [icescope]
 		if( attack_type && !status_isdead(target) )
@@ -258,6 +258,7 @@ int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src,
 	dat->distance = distance_bl(src, target)+10; //Attack should connect regardless unless you teleported.
 	if (src->type != BL_PC && amotion > 1000)
 		amotion = 1000; //Aegis places a damage-delay cap of 1 sec to non player attacks. [Skotlex]
+
 	add_timer(tick+amotion, battle_delay_damage_sub, src->id, (intptr_t)dat);
 	
 	return 0;
