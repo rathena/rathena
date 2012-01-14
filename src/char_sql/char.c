@@ -177,6 +177,7 @@ struct auth_node {
 	int sex;
 	time_t expiration_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
 	int gmlevel;
+	unsigned changing_mapservers : 1;
 };
 
 static DBMap* auth_db; // int account_id -> struct auth_node*
@@ -2767,6 +2768,7 @@ int parse_frommap(int fd)
 				node->expiration_time = 0; // FIXME (this thing isn't really supported we could as well purge it instead of fixing)
 				node->ip = ntohl(RFIFOL(fd,31));
 				node->gmlevel = RFIFOL(fd,35);
+				node->changing_mapservers = 1;
 				idb_put(auth_db, RFIFOL(fd,2), node);
 
 				data = (struct online_char_data*)idb_ensure(online_char_db, RFIFOL(fd,2), create_online_char_data);
@@ -3121,13 +3123,14 @@ int parse_frommap(int fd)
 
 				WFIFOHEAD(fd,24 + sizeof(struct mmo_charstatus));
 				WFIFOW(fd,0) = 0x2afd;
-				WFIFOW(fd,2) = 24 + sizeof(struct mmo_charstatus);
+				WFIFOW(fd,2) = 25 + sizeof(struct mmo_charstatus);
 				WFIFOL(fd,4) = account_id;
 				WFIFOL(fd,8) = node->login_id1;
 				WFIFOL(fd,12) = node->login_id2;
 				WFIFOL(fd,16) = (uint32)node->expiration_time; // FIXME: will wrap to negative after "19-Jan-2038, 03:14:07 AM GMT"
 				WFIFOL(fd,20) = node->gmlevel;
-				memcpy(WFIFOP(fd,24), cd, sizeof(struct mmo_charstatus));
+				WFIFOB(fd,24) = node->changing_mapservers;
+				memcpy(WFIFOP(fd,25), cd, sizeof(struct mmo_charstatus));
 				WFIFOSET(fd, WFIFOW(fd,2));
 
 				// only use the auth once and mark user online

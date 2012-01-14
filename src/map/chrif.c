@@ -587,10 +587,11 @@ void chrif_authok(int fd)
 	struct mmo_charstatus* status;
 	int char_id;
 	struct auth_node *node;
+	bool changing_mapservers;
 	TBL_PC* sd;
 
 	//Check if both servers agree on the struct's size
-	if( RFIFOW(fd,2) - 24 != sizeof(struct mmo_charstatus) )
+	if( RFIFOW(fd,2) - 25 != sizeof(struct mmo_charstatus) )
 	{
 		ShowError("chrif_authok: Data size mismatch! %d != %d\n", RFIFOW(fd,2) - 24, sizeof(struct mmo_charstatus));
 		return;
@@ -601,8 +602,8 @@ void chrif_authok(int fd)
 	login_id2 = RFIFOL(fd,12);
 	expiration_time = (time_t)(int32)RFIFOL(fd,16);
 	gmlevel = RFIFOL(fd,20);
-	status = (struct mmo_charstatus*)RFIFOP(fd,24);
-
+	changing_mapservers = (RFIFOB(fd,24));
+	status = (struct mmo_charstatus*)RFIFOP(fd,25);
 	char_id = status->char_id;
 
 	//Check if we don't already have player data in our server
@@ -633,7 +634,7 @@ void chrif_authok(int fd)
 		node->char_id == char_id &&
 		node->login_id1 == login_id1 )
 	{ //Auth Ok
-		if (pc_authok(sd, login_id2, expiration_time, gmlevel, status))
+		if (pc_authok(sd, login_id2, expiration_time, gmlevel, status, changing_mapservers))
 			return;
 	} else { //Auth Failed
 		pc_authfail(sd);

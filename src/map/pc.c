@@ -884,7 +884,7 @@ int pc_isequip(struct map_session_data *sd,int n)
  * session idに問題無し
  * char鯖から送られてきたステ?タスを設定
  *------------------------------------------*/
-bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_time, int gmlevel, struct mmo_charstatus *st)
+bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_time, int gmlevel, struct mmo_charstatus *st, bool changing_mapservers)
 {
 	int i;
 	unsigned long tick = gettick();
@@ -1031,18 +1031,20 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	// Send friends list
 	clif_friendslist_send(sd);
 
-	if (battle_config.display_version == 1){
-		char buf[256];
-		sprintf(buf, "SVN version: %s", get_svn_revision());
-		clif_displaymessage(sd->fd, buf);
-	}
+	if( !changing_mapservers ) {
+		if (battle_config.display_version == 1){
+			char buf[256];
+			sprintf(buf, "SVN version: %s", get_svn_revision());
+			clif_displaymessage(sd->fd, buf);
+		}
 
-	// Message of the Day [Valaris]
-	for(i=0; motd_text[i][0] && i < MOTD_LINE_SIZE; i++) {
-		if (battle_config.motd_type)
-			clif_disp_onlyself(sd,motd_text[i],strlen(motd_text[i]));
-		else
-			clif_displaymessage(sd->fd, motd_text[i]);
+		// Message of the Day [Valaris]
+		for(i=0; motd_text[i][0] && i < MOTD_LINE_SIZE; i++) {
+			if (battle_config.motd_type)
+				clif_disp_onlyself(sd,motd_text[i],strlen(motd_text[i]));
+			else
+				clif_displaymessage(sd->fd, motd_text[i]);
+		}
 	}
 
 	// message of the limited time of the account
@@ -1067,7 +1069,8 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	/**
 	 * Fixes login-without-aura glitch (the screen won't blink at this point, don't worry :P)
 	 **/
-	clif_changemap(sd,sd->mapindex,sd->bl.x,sd->bl.y);
+	if( !changing_mapservers )
+		clif_changemap(sd,sd->mapindex,sd->bl.x,sd->bl.y);
 
 	// Request all registries (auth is considered completed whence they arrive)
 	intif_request_registry(sd,7);
