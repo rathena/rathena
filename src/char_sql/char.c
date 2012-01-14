@@ -2726,7 +2726,7 @@ int parse_frommap(int fd)
 		break;
 
 		case 0x2b05: // request "change map server"
-			if (RFIFOREST(fd) < 35)
+			if (RFIFOREST(fd) < 39)
 				return 0;
 		{
 			int map_id, map_fd = -1;
@@ -2764,8 +2764,9 @@ int parse_frommap(int fd)
 				node->login_id1 = RFIFOL(fd,6);
 				node->login_id2 = RFIFOL(fd,10);
 				node->sex = RFIFOB(fd,30);
-				node->expiration_time = 0; // FIXME
+				node->expiration_time = 0; // FIXME (this thing isn't really supported we could as well purge it instead of fixing)
 				node->ip = ntohl(RFIFOL(fd,31));
+				node->gmlevel = RFIFOL(fd,35);
 				idb_put(auth_db, RFIFOL(fd,2), node);
 
 				data = (struct online_char_data*)idb_ensure(online_char_db, RFIFOL(fd,2), create_online_char_data);
