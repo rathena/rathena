@@ -400,7 +400,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 		if( sc->data[SC_WEAPONBLOCKING] && flag&(BF_SHORT|BF_WEAPON) && rand()%100 < sc->data[SC_WEAPONBLOCKING]->val2 )
 		{
 			clif_skill_nodamage(bl,src,GC_WEAPONBLOCKING,1,1);
-			d->dmg_lv = ATK_NONE;
+			d->dmg_lv = ATK_BLOCK;
 			sc_start2(bl,SC_COMBO,100,GC_WEAPONBLOCKING,src->id,2000);
 			return 0;
 		}
@@ -3794,7 +3794,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			clif_damage(src, target, tick, sstatus->amotion, 1, 0, 1, 0, 0); //Display MISS.
 			status_change_end(target, SC_AUTOCOUNTER, INVALID_TIMER);
 			skill_attack(BF_WEAPON,target,target,src,KN_AUTOCOUNTER,skilllv,tick,0);
-			return ATK_NONE;
+			return ATK_BLOCK;
 		}
 	}
 
@@ -3808,7 +3808,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			clif_damage(src, target, tick, sstatus->amotion, 1, 0, 1, 0, 0); //Display MISS.
 			clif_bladestop(target, src->id, 1);
 			sc_start4(target, SC_BLADESTOP, 100, skilllv, 0, 0, src->id, duration);
-			return ATK_NONE;
+			return ATK_BLOCK;
 		}
 	}
 
