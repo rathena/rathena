@@ -1288,7 +1288,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 					(maxcount = skill_get_maxcount(skill, skilllv)) > 0
 				  ) {
 					int v;
-					for(v=0;v<MAX_SKILLUNITGROUP && sd->ud.skillunit[v] && maxcount;i++) {
+					for(v=0;v<MAX_SKILLUNITGROUP && sd->ud.skillunit[v] && maxcount;v++) {
 						if(sd->ud.skillunit[v]->skill_id == skill)
 							maxcount--;
 					}
@@ -1421,7 +1421,7 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 				(maxcount = skill_get_maxcount(skill, skilllv)) > 0
 			  ) {
 				int v;
-				for(v=0;v<MAX_SKILLUNITGROUP && sd->ud.skillunit[v] && maxcount;i++) {
+				for(v=0;v<MAX_SKILLUNITGROUP && sd->ud.skillunit[v] && maxcount;v++) {
 					if(sd->ud.skillunit[v]->skill_id == skill)
 						maxcount--;
 				}
@@ -1624,7 +1624,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 					(maxcount = skill_get_maxcount(skillid, skilllv)) > 0
 				  ) {
 					int v;
-					for(v=0;v<MAX_SKILLUNITGROUP && dstsd->ud.skillunit[v] && maxcount;i++) {
+					for(v=0;v<MAX_SKILLUNITGROUP && dstsd->ud.skillunit[v] && maxcount;v++) {
 						if(dstsd->ud.skillunit[v]->skill_id == skillid)
 							maxcount--;
 					}
