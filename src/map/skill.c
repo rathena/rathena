@@ -2014,7 +2014,6 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			if(skillid == WZ_WATERBALL && skilllv > 1)
 				sp = sp/((skilllv|1)*(skilllv|1)); //Estimate SP cost of a single water-ball
 			status_heal(bl, 0, sp, 2);
-			clif_skill_nodamage(bl,bl,SA_MAGICROD,sc->data[SC_MAGICROD]->val1,1);
 		}
 	}
 
@@ -5813,7 +5812,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				sp = sp * tsc->data[SC_MAGICROD]->val2 / 100;
 				if(sp < 1) sp = 1;
 				status_heal(bl,0,sp,2);
-				clif_skill_nodamage(bl,bl,SA_MAGICROD,tsc->data[SC_MAGICROD]->val1,1);
 				status_percent_damage(bl, src, 0, -20, false); //20% max SP damage.
 			} else {
 				struct unit_data *ud = unit_bl2ud(bl);
