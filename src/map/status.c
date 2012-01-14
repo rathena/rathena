@@ -1015,6 +1015,11 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		case BL_MER: mercenary_damage((TBL_MER*)target,src,hp,sp); break;
 	}
 
+	if( target->type == BL_PC && ((TBL_PC*)target)->disguise && src )
+	{// stop walking when attacked in disguise to prevent walk-delay bug
+		unit_stop_walking( target, 1 );
+	}
+
 	if( status->hp || (flag&8) )
   	{	//Still lives or has been dead before this damage.
 		if (walkdelay)
