@@ -3402,16 +3402,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			//FIXME: Isn't EarthQuake a ground skill after all?
 			if( skillid == NPC_EARTHQUAKE )
 				skill_addtimerskill(src,tick+250,src->id,0,0,skillid,skilllv,2,flag|BCT_ENEMY|SD_SPLASH|1);
-
-			//FIXME: move this to skill_additional_effect or some such? [ultramage]
-			if( skillid == SM_MAGNUM || skillid == MS_MAGNUM )
-			{ // Initiate 10% of your damage becomes fire element.
-				sc_start4(src,SC_WATK_ELEMENT,100,3,20,0,0,skill_get_time2(skillid, skilllv));
-				if( sd )
-					skill_blockpc_start(sd, skillid, skill_get_time(skillid, skilllv));
-				if( bl->type == BL_MER )
-					skill_blockmerc_start((TBL_MER*)bl, skillid, skill_get_time(skillid, skilllv));
-			}
 		}
 		break;
 
@@ -4585,9 +4575,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		map_foreachinrange(skill_area_sub, src, skill_get_splash(skillid, skilllv), BL_SKILL|BL_CHAR,
 			src,skillid,skilllv,tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
 		clif_skill_nodamage (src,src,skillid,skilllv,1);
-		//Initiate 10% of your damage becomes fire element.
+		// Initiate 10% of your damage becomes fire element.
 		sc_start4(src,SC_WATK_ELEMENT,100,3,20,0,0,skill_get_time2(skillid, skilllv));
-		if (sd) skill_blockpc_start (sd, skillid, skill_get_time(skillid, skilllv));
+		if( sd )
+			skill_blockpc_start(sd, skillid, skill_get_time(skillid, skilllv));
+		else if( bl->type == BL_MER )
+			skill_blockmerc_start((TBL_MER*)bl, skillid, skill_get_time(skillid, skilllv));
 		break;
 	case ASC_EDP:
 		clif_skill_nodamage(src,bl,skillid,skilllv,
