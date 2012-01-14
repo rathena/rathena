@@ -72,7 +72,7 @@ struct npc_data {
 enum actor_classes
 {
 	WARP_CLASS = 45,
-	HIDDEN_WARP_CLASS = 139,  // server-side only, never sent to client
+	HIDDEN_WARP_CLASS = 139,
 	WARP_DEBUG_CLASS = 722,
 	FLAG_CLASS = 722,
 	INVISIBLE_CLASS = 32767,
