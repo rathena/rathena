@@ -3275,6 +3275,12 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			status->cri = status_calc_critical(bl, sc, b_status->cri);
 		else
 			status->cri = status_calc_critical(bl, sc, b_status->cri + 3*(status->luk - b_status->luk));
+		/**
+		 * after status_calc_critical so the bonus is applied despite if you have or not a sc bugreport:5240
+		 **/
+		if( bl->type == BL_PC && ((TBL_PC*)bl)->status.weapon == W_KATAR )
+			status->cri <<= 1;
+
 	}
 
 	if(flag&SCB_FLEE2 && b_status->flee2) {
@@ -3967,8 +3973,8 @@ static unsigned short status_calc_matk(struct block_list *bl, struct status_chan
 	return (unsigned short)cap_value(matk,0,USHRT_MAX);
 }
 
-static signed short status_calc_critical(struct block_list *bl, struct status_change *sc, int critical)
-{
+static signed short status_calc_critical(struct block_list *bl, struct status_change *sc, int critical) {
+
 	if(!sc || !sc->count)
 		return cap_value(critical,10,SHRT_MAX);
 
@@ -3984,8 +3990,7 @@ static signed short status_calc_critical(struct block_list *bl, struct status_ch
 		critical += critical;
 	if(sc->data[SC_CAMOUFLAGE])
 		critical += 100;
-	if( bl->type == BL_PC && ((TBL_PC*)bl)->status.weapon == W_KATAR )
-		critical <<= 1;
+
 	return (short)cap_value(critical,10,SHRT_MAX);
 }
 
