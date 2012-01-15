@@ -465,7 +465,7 @@
 418,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,		TK_READYCOUNTER,Counter Kick Stance
 419,-2,8,4,-1,0x40,0,7,-3,no,0,0x200,0,weapon,0,	TK_COUNTER,Counter Kick
 420,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,		TK_DODGE,Tumbling
-421,9,8,1,-1,0,0,7,-3,no,0,0,0,weapon,0,	TK_JUMPKICK,Flying Kick
+421,9,8,16,-1,0x1,0,7,-3,no,0,0,0,weapon,0,	TK_JUMPKICK,Flying Kick
 422,0,0,0,0,0,1,10,0,no,0,0,0,none,0,		TK_HPTIME,Peaceful Break
 423,0,0,0,0,0,1,10,0,no,0,0,0,none,0,		TK_SPTIME,Happy Break
 424,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,		TK_POWER,Kihop

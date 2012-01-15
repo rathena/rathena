@@ -3185,14 +3185,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		}
 		break;
 
-	case TK_JUMPKICK:
-		if( unit_movepos(src, bl->x, bl->y, 1, 1) )
-		{
-			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-			clif_slide(src,bl->x,bl->y);
-		}
-		break;
-
 	case NC_FLAMELAUNCHER:
 		if (sd) pc_overheat(sd,1);
 	case SN_SHARPSHOOTING:
@@ -4582,6 +4574,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		else if( bl->type == BL_MER )
 			skill_blockmerc_start((TBL_MER*)bl, skillid, skill_get_time(skillid, skilllv));
 		break;
+
+	case TK_JUMPKICK:
+		if( unit_movepos(src, bl->x, bl->y, 1, 1) ) {
+			if( battle_check_target(src, bl, BCT_ENEMY) > 0 )
+				skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
+			clif_slide(src,bl->x,bl->y);
+		}
+		break;
+
 	case ASC_EDP:
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv) + ( sd ? 3000 * pc_checkskill(sd,GC_RESEARCHNEWPOISON) : 0 )));
