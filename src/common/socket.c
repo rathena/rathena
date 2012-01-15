@@ -208,7 +208,7 @@ int naddr_ = 0;   // # of ip addresses
 
 // Maximum packet size in bytes, which the client is able to handle.
 // Larger packets cause a buffer overflow and stack corruption.
-static size_t socket_max_client_packet = 20480;
+static size_t socket_max_client_packet = 24576;
 
 // initial recv buffer size (this will also be the max. size)
 // biggest known packet: S 0153 <len>.w <emblem data>.?B -> 24x24 256 color .bmp (0153 + len.w + 1618/1654/1756 bytes)
@@ -660,19 +660,20 @@ int WFIFOSET(int fd, size_t len)
 		return 0;
 	}
 
-	if( !s->flag.server && len > socket_max_client_packet )
-	{// see declaration of socket_max_client_packet for details
-		ShowError("WFIFOSET: Dropped too large client packet 0x%04x (length=%u, max=%u).\n", WFIFOW(fd,0), len, socket_max_client_packet);
-		return 0;
-	}
+	if( !s->flag.server ) {
 
-	if( !s->flag.server && s->wdata_size+len > WFIFO_MAX )
-	{// reached maximum write fifo size
-		ShowError("WFIFOSET: Maximum write buffer size for client connection %d exceeded, most likely caused by packet 0x%04x (len=%u, ip=%lu.%lu.%lu.%lu).\n", fd, WFIFOW(fd,0), len, CONVIP(s->client_addr));
-		set_eof(fd);
-		return 0;
-	}
+		if( len > socket_max_client_packet ) {// see declaration of socket_max_client_packet for details
+			ShowError("WFIFOSET: Dropped too large client packet 0x%04x (length=%u, max=%u).\n", WFIFOW(fd,0), len, socket_max_client_packet);
+			return 0;
+		}
 
+		if( s->wdata_size+len > WFIFO_MAX ) {// reached maximum write fifo size
+			ShowError("WFIFOSET: Maximum write buffer size for client connection %d exceeded, most likely caused by packet 0x%04x (len=%u, ip=%lu.%lu.%lu.%lu).\n", fd, WFIFOW(fd,0), len, CONVIP(s->client_addr));
+			set_eof(fd);
+			return 0;
+		}
+
+	}
 	s->wdata_size += len;
 	//If the interserver has 200% of its normal size full, flush the data.
 	if( s->flag.server && s->wdata_size >= 2*FIFOSIZE_SERVERLINK )

@@ -1282,10 +1282,31 @@ int pc_calc_skilltree(struct map_session_data *sd)
 		}
 	}
 
-	if( battle_config.gm_allskill > 0 && pc_isGM(sd) >= battle_config.gm_allskill )
-	{
-		for( i = 0; i < MAX_SKILL; i++ )
-		{
+	if( battle_config.gm_allskill > 0 && pc_isGM(sd) >= battle_config.gm_allskill ) {
+		for( i = 0; i < MAX_SKILL; i++ ) {
+			switch(i) {
+				/**
+				 * Dummy skills must be added here otherwise they'll be displayed in the,
+				 * skill tree and since they have no icons they'll give resource errors
+				 **/
+				case AB_DUPLELIGHT_MELEE:
+				case AB_DUPLELIGHT_MAGIC:
+				case WL_CHAINLIGHTNING_ATK:
+				case WL_TETRAVORTEX_FIRE:
+				case WL_TETRAVORTEX_WATER:
+				case WL_TETRAVORTEX_WIND:
+				case WL_TETRAVORTEX_GROUND:
+				case WL_SUMMON_ATK_FIRE:
+				case WL_SUMMON_ATK_WIND:
+				case WL_SUMMON_ATK_WATER:
+				case WL_SUMMON_ATK_GROUND:
+				case LG_OVERBRAND_BRANDISH:
+				case LG_OVERBRAND_PLUSATK:
+				case ALL_BUYING_STORE:
+					continue;
+				default:
+					break;
+			}
 			if( skill_get_inf2(i)&(INF2_NPC_SKILL|INF2_GUILD_SKILL) )
 				continue; //Only skills you can't have are npc/guild ones
 			if( skill_get_max(i) > 0 )
@@ -5509,12 +5530,17 @@ int pc_allskillup(struct map_session_data *sd)
 	{	//Get ALL skills except npc/guild ones. [Skotlex]
 		//and except SG_DEVIL [Komurka] and MO_TRIPLEATTACK and RG_SNATCHER [ultramage]
 		for(i=0;i<MAX_SKILL;i++){
-			if(!(skill_get_inf2(i)&(INF2_NPC_SKILL|INF2_GUILD_SKILL)) && i!=SG_DEVIL && i!=MO_TRIPLEATTACK && i!=RG_SNATCHER)
-				sd->status.skill[i].lv=skill_get_max(i); //Nonexistant skills should return a max of 0 anyway.
+			switch( i ) {
+				case SG_DEVIL:
+				case MO_TRIPLEATTACK:
+				case RG_SNATCHER:
+					continue;
+				default:
+					if( !(skill_get_inf2(i)&(INF2_NPC_SKILL|INF2_GUILD_SKILL)) )
+						sd->status.skill[i].lv=skill_get_max(i);//Nonexistant skills should return a max of 0 anyway.
+			}
 		}
-	}
-	else
-	{
+	} else {
 		int inf2;
 		for(i=0;i < MAX_SKILL_TREE && (id=skill_tree[pc_class2idx(sd->status.class_)][i].id)>0;i++){
 			inf2 = skill_get_inf2(id);
