@@ -4040,7 +4040,8 @@ OnEnable:
 		monster "5@tower",84,85,"Thorn of Pureness",1961,1;
 	end;
 }
-
+// This looks like debug? Disabled.
+/*
 5@tower,71,1,0	script	#Manager Mode5	844,{
 	mes "This NPC manages the crystal on the 100th Floor. Please enter the password.";
 	input .@inputstr$;
@@ -4052,7 +4053,7 @@ OnEnable:
 	else
 		mes "Please enter the correct password.";
 	close;
-}
+} */
 
 // Floor 101
 6@tower,45,89,2	script	Spring of Life#1	844,{
