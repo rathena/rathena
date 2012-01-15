@@ -846,7 +846,7 @@ aldebaran,105,116,3	script	Lizingshetter#para	869,{
 			else {
 				mes "[Lizingshetter]";
 				mes "Uh? Something is weird.";
-				mes "16 Ridewords, right?";
+				mes "15 Ridewords, right?";
 				mes "You better recount how many you've hunted.";
 				close;
 			}
