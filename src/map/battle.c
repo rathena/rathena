@@ -4152,7 +4152,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		case BL_SKILL:
 		{
 			struct skill_unit *su = (struct skill_unit *)src;
-			int inf2;
+			int inf2 = 0;
 			if (!su->group)
 				return 0;
 			if( battle_config.vs_traps_bctall &&
