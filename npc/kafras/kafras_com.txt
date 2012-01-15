@@ -47,7 +47,7 @@ comodo,195,150,4	script	Kafra Employee::kaf_comodo	721,{
 
 	M_Save:
 		savepoint "comodo",204,143;
-		callfunc "F_KafEnd",0,1,"in Pyros Lighthouse";
+		callfunc "F_KafEnd",0,1,"in the town of Comodo";
 }
 
 // Comodo Pharos Lighthouse (Beacon Island) ===================>\\
@@ -69,5 +69,6 @@ cmd_fild07,136,134,4	script	Kafra Employee::kaf_cmd_fild07	721,{
 
 	M_Save:
 		savepoint "cmd_fild07",127,134;
-		callfunc "F_KafEnd",0,1,"in the town of Comodo";
+		callfunc "F_KafEnd",0,1,"in Pyros Lighthouse";
+		
 }
