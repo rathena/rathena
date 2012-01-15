@@ -591,9 +591,8 @@ void chrif_authok(int fd)
 	TBL_PC* sd;
 
 	//Check if both servers agree on the struct's size
-	if( RFIFOW(fd,2) - 25 != sizeof(struct mmo_charstatus) )
-	{
-		ShowError("chrif_authok: Data size mismatch! %d != %d\n", RFIFOW(fd,2) - 24, sizeof(struct mmo_charstatus));
+	if( RFIFOW(fd,2) - 25 != sizeof(struct mmo_charstatus) ) {
+		ShowError("chrif_authok: Data size mismatch! %d != %d\n", RFIFOW(fd,2) - 25, sizeof(struct mmo_charstatus));
 		return;
 	}
 
