@@ -687,7 +687,7 @@ comodo,112,182,0	script	Munak's Grandma	103,{
 				mes "please. I no longer have anything";
 				mes "that belonged to her now...";
 				next;
-				switch(select("No way.:Ok, I'll.")) {
+				switch(select("No way.:Ok, I will.")) {
 				case 1:
 					mes "[Munak's Grandma]";
 					mes "Oh...?";

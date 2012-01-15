@@ -11933,7 +11933,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 	}
 	else if (ep13_1_edq == 61) {
 		mes "[Staff Officer Abidal]";
-		mes "It's as what the commander said. I still remmeber the contents of the report, even though it might not all be accurate without any references.";
+		mes "It's as what the commander said. I still remember the contents of the report, even though it might not all be accurate without any references.";
 		next;
 		mes "[Staff Officer Abidal]";
 		mes "If you bring me the pages of the lost report, I'll fill the missing parts and be able to complete the report again.";
@@ -11948,14 +11948,14 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 		mes "I'm thinking this because the report contains information about the ecology of the otherworldly creatures. It's also made of paper and ink, materials from the mainland that might seem interesting to those creatures.";
 		next;
 		mes "[Staff Officer Abidal]";
-		mes "Anyways, please bring the pages of the report in 0000FFincrements of 10^000000 whenever you find them. I'll try to put them in order.";
+		mes "Anyways, please bring the pages of the report in ^0000FFincrements of 10^000000 whenever you find them. I'll try to put them in order.";
 		set ep13_1_edq,71;
 		changequest 3089,3090;
 		close;
 	}
 	else if (ep13_1_edq == 62) {
 		mes "[Staff Officer Abidal]";
-		mes "It's as what the commander said. I still remmeber the contents of the report, even though it might not all be accurate without any references.";
+		mes "It's as what the commander said. I still remember the contents of the report, even though it might not all be accurate without any references.";
 		next;
 		mes "[Staff Officer Abidal]";
 		mes "If you bring me the pages of the lost report, I'll fill the missing parts and be able to complete the report again.";
