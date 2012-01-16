@@ -1980,7 +1980,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		status_change_end(bl, SC_STOP, INVALID_TIMER);
 	}
 
-	if (bl->type&BL_CHAR) {
+	if (bl->type&(BL_CHAR|BL_PET)) {
 		skill_unit_move(bl,gettick(),4);
 		skill_cleartimerskill(bl);
 	}
