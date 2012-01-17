@@ -1,189 +1,17 @@
-﻿//===== Athena Doc ========================================
+﻿//===== Athena Doc ===========================================
 //= rAthena Script Commands
-//===== Description =======================================
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= $Revision$
+//===== Last Updated: ========================================
+//= $LastChangedDate$
+//===== Description: =========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
-//===== Version ===========================================
-//= 3.45.20110709
-//=========================================================
-//= 1.0 - First release, filled will as much info as I could
-//=       remember or figure out, most likely there are errors,
-//=       and things I have missed out [Fredzilla]
-//= 1.1 - Added better discription for "getmapxy" (by Terminal Vertex & Z3R0)
-//= 1.2b- Added a description for getpartymember (by HappyDenn)
-//=       (+few spelling mistakes corrected)
-//= 2.0 - +79kb extra stuff and numerous corrections by 
-//=       Maeki Rika.
-//= 2.1 - Small but important corrections, more proofreading.
-//=       Some important discoveries in item functions, the 
-//=       secret of making VVS weapons with 'getitem2' and 
-//=       other news. (Rika again) +10kb :) 
-//= 2.2 - added getItemInfo description [Lupus]
-//= 2.3 - added plenty of info for recent (and not so) script commands I added
-//=       [Skotlex]
-//= 2.4 - Explained the upper parameter of jobchange. [Skotlex]
-//= 2.5 - Added pow, sqrt and distance. [Lance]
-//= 2.6 - Added setd and getd. [Lance]
-//= 2.7 - petstat command. [Lance]
-//= 2.7a- delitem2, countitems2 commands [Lupus]
-//= 2.7b- clone command [Skotlex]
-//= 2.7c- disguise / undisguise, query_sql commands [Lupus]
-//= 2.8 - Deleted a copy of the nude command. Added axtoi command (needing a
-//=       clearer explanation of atoi.Gave a better explanation of OnLabels
-//=       and modified monster explanation due that L_Label isn't working with
-//=       monster.
-//= 2.9.20061230 - Updated getitem and guardian. [FlavioJS]
-//= 2.10.20070101 - added sleep,sleep2,awake and updated the variables section.
-//=       [FlavioJS]
-//= 2.11.20070109 - removed the unused flag argument in guildskill, added an 
-//=       optional argument to setcart,setfalcon,setriding and other cleanups 
-//=       [FlavioJS]
-//= 2.12.20070201 - Added npcshopitem, npcshopadditem, npcshopdelitem and
-//=       npcshopattach [Skotlex]
-//= 3.00.20070208
-//=       - Explained Logical Bitwise Operators. 
-//=         Dj-Yhn contributed to AND (&) operator, rest by myself. [erKURITA]
-//=       - Added a resume of allowed variable and arrays scopes. [erKURITA]
-//=       - Re-organized the script commands, and grouped them depending
-//=         on what they do. [erKURITA]
-//=       - Added a packload of commands that were missing, 
-//=         and corrected some of the wrong ones [Dj-Yhn, erKURITA & Trancid]
-//= 3.01.20070209
-//=       Updated 'cutin' (removed lies, removed outdated bmp list) [ultramage]
-//=       Removed 'cutincard' since eA no longer implements it
-//= 3.02.20070209
-//=       Corrected/updated info on Xor/setd/getd/callfunc/callsub/return and 
-//=       updated some examples to use "better" code. [FlavioJS]
-//= 3.03.20070216
-//=       Expanded/clarified information on npc timers, added info about the
-//=       new attach flag for script commands startnpctimer/ stopnpctimer/ 
-//=       initnpctimer [Skotlex]
-//= 3.03.20070226
-//=       Updated makeitem and how to include " in strings [Lupus]
-//= 3.03.20070228
-//=       Added info on OnTimerQuit label to npctimer section. [Skotlex]
-//= 3.04.20070317
-//=       Removed all .gat refferences from the examples [Lupus]
-//= 3.04.20070330
-//=       Adjusted the 'itemskill' description due to recent change [ultramage]
-//= 3.04.20070409
-//=       Fixed the incorrect order of parameters in 'makeitem' [ultramage]
-//= 3.05.20070423
-//=       menu/select/prompt produce consistent results for grouped and empty 
-//=       options [FlavioJS]
-//= 3.05.20070819
-//=       Removed the messy 'unitdeadsit' command reference [ultramage]
-//= 3.05.20070823
-//=       Fixed typo in 'areamonster' description (missing argument) [ultramage]
-//= 3.06 20070909
-//=       Added 'gethominfo' description [Skotlex]
-//= 3.06.20070910
-//=       Added info about the new behavior of 'getexp' [ultramage]
-//= 3.07.20070915
-//=       Fixed 'duplicate' missing the target 'name' parameter! [ultramage]
-//= 3.08.20071018
-//=       Clarified how npc names work. [FlavioJS]
-//= 3.09.20071103
-//=       Added script function 'strnpcinfo' [ultramage]
-//= 3.10.20071122
-//=       Added setnpcdisplay. [FlavioJS]
-//= 3.10.20071211
-//=       Added query_logsql. [Skotlex]
-//= 3.11.20071215
-//=       Updated guardianinfo and get-/setcastledata [ultramage]
-//= 3.12.20071218
-//=       Corrected various mistakes mentioned in bugreport:373 [ultramage]
-//= 3.12.20071227
-//=       Corrected description of scope and npc variables. [FlavioJS]
-//= 3.13.20080104
-//=       Updated 'setcell' desc to match latest code changes [ultramage]
-//= 3.14.20080211
-//=       Updated 'input' (new arguments and return value). [FlavioJS]
-//= 3.15.20080227
-//=       Updated 'checkweight' description slightly. [L0ne_W0lf]
-//= 3.16.20080229
-//=       Updated 'Shop' NPC type description to include cashshop. [L0ne_W0lf]
-//=       Woopth. Fixed spelling. ;P Should be a bit clearer now. [L0ne_W0lf]
-//= 3.17.20080312
-//=       Corrected cashshop description. (#FREEPOINTS->#KAFRAPOINTS) [L0ne_W0lf]
-//= 3.18.20080327
-//=       Added documentation for the 'checkcell' command [ultramage]
-//= 3.19.20080407
-//=       Extended the behaviour of 'guardian'. [FlavioJS]
-//= 3.20.20080425
-//=       Corrected 'getitem', 'getitem2' & 'delitem2' (charid instead of accountid) [Toms]
-//=       Modified 'delitem' (added optional accountid parameter) [Toms]
-//= 3.21.20080612
-//=       Script commands extended to support skill names: [FlavioJS]
-//=       skill, addtoskill, guildskill, getskilllv, getgdskilllv, itemskill, 
-//=       petskillattack, petskillattack2, petskillsupport, skilleffect, npcskilleffect,
-//=       unitskilluseid, unitskillusepos, bonus/bonus2/bonus3/bonus4/bonus5
-//= 3.22.20080622
-//=       Extended 'set' to return the variable reference. [FlavioJS]
-//= 3.22.20080901
-//=       Adjusted the 'getequipname' description to match src [ultramage]
-//= 3.23.20080909
-//=       Added WoE SE related commands. [L0ne_W0lf]
-//= 3.24.20081111
-//=       Changed the error behaviour of delitem/delitem2/Zeny. [FlavioJS]
-//= 3.25.20081220
-//=       Extended the behaviour of duplicates (warps/shops/cashshops). [FlavioJS]
-//= 3.26.20090702
-//=       Replaced 'bonusautoscript' by 'autobonus'. [Inkfish]
-//= 3.27.20090725
-//=       Added Quest Log related commands. [Inkfish]
-//= 3.28.20091119
-//=       Added showevent and searchitem commands [Skotlex]
-//=       Added info on strcharinfo(3) [Skotlex]
-//= 3.29.20101123
-//=       Added 'pushpc' command. [Ai4rei]
-//= 3.30.20101126
-//=       Added 'setfont', 'mercenary_create', 'mercenary_heal',
-//=       'mercenary_sc_start', 'mercenary_get_calls', 'mercenary_set_calls',
-//=       'mercenary_get_faith' and 'mercenary_set_faith' commands. [Ai4rei]
-//= 3.31.20101130
-//=       Added 'progressbar' command. [Ai4rei]
-//= 3.32.20101208
-//=       Updated description for commands 'next', 'return', 'attachrid',
-//=       'detachrid', 'itemskill', 'openstorage', 'skilleffect', 'donpcevent',
-//=       'day', 'night', 'atoi', 'axtoi', 'jump_zero', 'getelementofarray',
-//=       'changebase', 'kickwaitingroomall', 'cutin' and 'charcommand'. [Ai4rei]
-//= 3.33.20101212
-//=       Updated description of 'playBGM' and 'playBGMall' to reflect the actual
-//=       behavior. [Ai4rei]
-//= 3.34.20101217
-//=       Spellcheck. [Ai4rei]
-//= 3.35.20110106
-//=       Removed bug warning from 'deletearray'. [Ai4rei]
-//= 3.36.20110219
-//=       Added 'buyingstore' command. [Ai4rei]
-//= 3.37.20110306
-//=       Added 'searchstores' command. [Ai4rei]
-//= 3.38.20110313
-//=       Added 'cooking' command. [Ai4rei]
-//=       Fixed item levels in 'produce' command.
-//= 3.39.20110322
-//=       Added 'bg_getareausers' and 'bg_get_data' commands. [Ai4rei]
-//=       Updated description of 'waitingroom2bg_single' command.
-//=       Documented optional parameter 'npc name' of 'waitingroom2bg' command.
-//= 3.40.20110404
-//=       Updated description of 'waitingroom' command to include required zeny/lvl. [Kisuka]
-//= 3.41.20110427
-//=       Updated description of 'itemheal' primarily to remove overhead and lies
-//=       about client effects. [Ai4rei]
-//= 3.42.20110508
-//=       Updated description of all instance commands to reflect actual behavior.
-//=       [Ai4rei]
-//= 3.43.20110529
-//=       Updated 'npcshopitem', 'npcshopadditem' and 'npcshopdelitem' to support
-//=       cashshops as well. [Ai4rei]
-//= 3.44.20110530
-//=       Documented special map names recognized by 'warpguild'. [Ai4rei]
-//= 3.45.20110709
-//=       Added 'getmercinfo' command. [Ai4rei]
-//= 3.46.20110810
-//=       Added information on OnTouchNPC and 'unitwarp' special case [Skotlex]
-//=========================================================
+//===== Additional Comments: =================================
+//= 
+//============================================================
 
 This document is a reference manual for all the scripting commands and functions 
 available in current rAthena SVN. It is not a simple tutorial. When people tell 
@@ -2771,7 +2599,7 @@ Valid types are:
 	4 - sex; 5 - equip; 6 - weight; 7 - atk; 8 - def; 9 - range;
 	10 - slot; 11 - look; 12 - elv; 13 - wlv; 14 - view id
 
-Check sample in nps\sample\getiteminfo.txt
+Check sample in doc/sample/getiteminfo.txt
 
 ---------------------------------------
 
@@ -3207,7 +3035,7 @@ Valid types are listed in const.txt:
 	MOB_SIZE	18		MOB_RACE	19
 	MOB_ELEMENT	20		MOB_MODE	21
 
-Check sample in nps\sample\getmonsterinfo.txt
+Check sample in doc/sample/getmonsterinfo.txt
 
 ---------------------------------------
 
@@ -3289,7 +3117,7 @@ Example:
 
 ---------------------------------------
 
-*getscrate(<effect type>,<base rate>{,<target ID number>})
+*getscrate(<effect type>,<base rate>{,<GID>})
 
 This function will return the chance of a status effect affecting the invoking 
 character, in percent, modified by the their current defense against said 
@@ -3300,9 +3128,6 @@ in percent.
   
 You can see the full list of available effect types you can possibly inflict in 
 'db/const.txt' under 'Eff_'.
-
-It is pretty certain that addressing the target by an ID number will not 
-currently work due to a bug.
 
 ---------------------------------------
 
@@ -4693,10 +4518,10 @@ Used in reset NPC's (duh!)
 
 ---------------------------------------
 
-*sc_start 	<effect type>,<ticks>,<extra argument>{,<target ID number>};
-*sc_start2 	<effect type>,<ticks>,<extra argument>,<percent chance>{,<target ID number>};
-*sc_start4	<effect type>,<ticks>,<value 1>,<value 2>,<value 3>,<value 4>{,<target ID number>};
-*sc_end 	<effect type>{,<target ID number>};
+*sc_start 	<effect type>,<ticks>,<extra argument>{,<GID>};
+*sc_start2 	<effect type>,<ticks>,<extra argument>,<percent chance>{,<GID>};
+*sc_start4	<effect type>,<ticks>,<value 1>,<value 2>,<value 3>,<value 4>{,<GID>};
+*sc_end 	<effect type>{,<GID>};
 
 These command bestow a status effect on the invoking character. This command is 
 used a lot in the item scripts.
@@ -4717,7 +4542,7 @@ would have been used to create that effect, for others it might have no meaning
 whatsoever. You can actually bless someone with a 0 bless spell level this way, 
 which is fun, but weird.
 
-The target ID number, if given, will cause the status effect to appear on a 
+The GID, if given, will cause the status effect to appear on a 
 specified character, instead of the one attached to the running script. This has 
 not been properly tested.
 
@@ -6300,8 +6125,8 @@ those that actually work may differ greatly between client versions.
 
 ---------------------------------------
 
-*soundeffect "<effect filename>",<type>
-*soundeffectall "<effect filename>",<type>{,"<map name>"}{,<x0>,<y0>,<x1>,<y1>}
+*soundeffect "<effect filename>",<type>;
+*soundeffectall "<effect filename>",<type>{,"<map name>"}{,<x0>,<y0>,<x1>,<y1>};
 
 These two commands will play a sound effect to either the invoking character 
 only ('soundeffect') or multiple characters ('soundeffectall'). If the running 
@@ -6314,15 +6139,15 @@ Effect filename is the filename in a GRF. It must have the .wav extension.
 
 It's not quite certain what the 'type' actually does, it is sent to the client 
 directly. It probably determines which directory to play the effect from.
-It's certain that giving 0 for the number will play sound files from 'data/wav',
+It's certain that giving 0 for the number will play sound files from '\data\wav\',
 but where the other numbers will read from is unclear.
 
 You can add your own effects this way, naturally.
 
 ---------------------------------------
 
-*playBGM "<BGM filename>"
-*playBGMall "<BGM filename>"{,"<map name>"{,<x0>,<y0>,<x1>,<y1>}}
+*playBGM "<BGM filename>";
+*playBGMall "<BGM filename>"{,"<map name>"{,<x0>,<y0>,<x1>,<y1>}};
 
 These two commands will play a Background Music to either the invoking character 
 only ('playBGM') or multiple characters ('playBGMall').
@@ -6457,7 +6282,7 @@ expression pattern is, see a few web pages:
 http://www.regular-expressions.info/
 http://www.weitz.de/regex-coach/
 
-For an example of this in use, see 'npc\sample\npc_pcre.txt'.
+For an example of this in use, see doc/sample/npc_pcre.txt
 
 With this you could, for example, automatically punish players for asking for 
 Zeny in public places, or alternatively, automatically give them Zeny instead if 

@@ -11254,7 +11254,7 @@ int soundeffect_sub(struct block_list* bl,va_list ap)
 
 	clif_soundeffect((TBL_PC *)bl, bl, name, type);
 
-    return 0;	
+	return 0;
 }
 
 /*==========================================
