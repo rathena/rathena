@@ -3,6 +3,7 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/nullpo.h"
+#include "../common/random.h"
 #include "../common/showmsg.h"
 #include "../common/malloc.h"
 #include "map.h"
@@ -175,7 +176,7 @@ int path_blownpos(int m,int x0,int y0,int dx,int dy,int count)
 			int fy = ( dy != 0 && map_getcellp(md,x0,y0+dy,CELL_CHKPASS) );
 			if( fx && fy )
 			{
-				if(rand()&1)
+				if(rnd()&1)
 					dx=0;
 				else
 					dy=0;

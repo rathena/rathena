@@ -7,6 +7,7 @@
 #include "../common/timer.h"
 #include "../common/nullpo.h"
 #include "../common/mmo.h"
+#include "../common/random.h"
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
 #include "../common/utils.h"
@@ -368,9 +369,9 @@ int mercenary_dead(struct mercenary_data *md, struct block_list *src)
 int mercenary_killbonus(struct mercenary_data *md)
 {
 	const enum sc_type scs[] = { SC_MERC_FLEEUP, SC_MERC_ATKUP, SC_MERC_HPUP, SC_MERC_SPUP, SC_MERC_HITUP };
-	int index = rand() % ARRAYLENGTH(scs);
+	int index = rnd() % ARRAYLENGTH(scs);
 
-	status_change_start(&md->bl, scs[index], 10000, rand()%5, 0, 0, 0, 600000, 0);
+	status_change_start(&md->bl, scs[index], 10000, rnd()%5, 0, 0, 0, 600000, 0);
 	return 0;
 }
 

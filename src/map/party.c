@@ -6,6 +6,7 @@
 #include "../common/socket.h" // last_tick
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
+#include "../common/random.h"
 #include "../common/showmsg.h"
 #include "../common/utils.h"
 #include "../common/strlib.h"
@@ -1054,7 +1055,7 @@ int party_share_loot(struct party_data* p, struct map_session_data* sd, struct i
 				count++;
 			}
 			while (count > 0) { //Pick a random member.
-				i = rand()%count;
+				i = rnd()%count;
 				if (pc_additem(psd[i],item_data,item_data->amount,LOG_TYPE_PICKDROP_PLAYER))
 				{	//Discard this receiver.
 					psd[i] = psd[count-1];

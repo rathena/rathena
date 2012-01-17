@@ -4,6 +4,7 @@
 #include "../common/cbasetypes.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
+#include "../common/random.h"
 #include "../common/showmsg.h"
 #include "../common/malloc.h"
 #include "../common/utils.h"
@@ -5304,7 +5305,7 @@ int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int ti
 		break;
 	default:
 		//Effect that cannot be reduced? Likely a buff.
-		if (!(rand()%10000 < rate))
+		if (!(rnd()%10000 < rate))
 			return 0;
 		return tick?tick:1;
 	}
@@ -5368,7 +5369,7 @@ int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int ti
 				rate -= rate*sd->sc.data[SC_COMMONSC_RESIST]->val1/100;
 		}
 	}
-	if (!(rand()%10000 < rate))
+	if (!(rnd()%10000 < rate))
 		return 0;
 
 	//Why would a status start with no duration? Presume it has 
@@ -6087,10 +6088,10 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			// val1 : Element Lvl (if called by skill lvl 1, takes random value between 1 and 4)
 			// val2 : Element (When no element, random one is picked)
 			// val3 : 0 = called by skill 1 = called by script (fixed level)
-			if( !val2 ) val2 = rand()%ELE_MAX;
+			if( !val2 ) val2 = rnd()%ELE_MAX;
 
 			if( val1 == 1 && val3 == 0 )
-				val1 = 1 + rand()%4;
+				val1 = 1 + rnd()%4;
 			else if( val1 > 4 )
 				val1 = 4; // Max Level
 			val3 = 0; // Not need to keep this info.
@@ -6696,7 +6697,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			break;
 		case SC_SKA:  
 			val2 = tick/1000;  
-			val3 = rand()%100; //Def changes randomly every second...  
+			val3 = rnd()%100; //Def changes randomly every second...  
 			tick_time = 1000; // [GodLesZ] tick time
 			break;  
 		case SC_JAILED:
@@ -6753,7 +6754,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			if (val2 >= ELE_MAX)
 				val2 = val2%ELE_MAX;
 			else if (val2 < 0)
-				val2 = rand()%ELE_MAX;
+				val2 = rnd()%ELE_MAX;
 			break;
 		case SC_CRITICALWOUND:
 			val2 = 20*val1; //Heal effectiveness decrease
@@ -8451,7 +8452,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 
 	case SC_SKA:  
 		if(--(sce->val2)>0){  
-			sce->val3 = rand()%100; //Random defense.  
+			sce->val3 = rnd()%100; //Random defense.  
 			sc_timer_next(1000+tick, status_change_timer,bl->id, data);  
 			return 0;  
 		}  
@@ -8541,7 +8542,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 
 	case SC_BLEEDING:
 		if (--(sce->val4) >= 0) {
-			int hp =  rand()%600 + 200;
+			int hp =  rnd()%600 + 200;
 			map_freeblock_lock();
 			status_fix_damage(NULL, bl, sd||hp<status->hp?hp:status->hp-1, 0);
 			if( sc->data[type] ) {
@@ -8792,7 +8793,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 					unit_skillcastcancel(bl,1);
 					do
 					{
-						i = rand() % MAX_SKILL_MAGICMUSHROOM_DB;
+						i = rnd() % MAX_SKILL_MAGICMUSHROOM_DB;
 						mushroom_skillid = skill_magicmushroom_db[i].skillid;
 					}
 					while( mushroom_skillid == 0 );
@@ -9500,7 +9501,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 						100,rate,skill_get_time(TK_SPTIME, rate));
 				if (
 					(sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR &&
-					rand()%10000 < battle_config.sg_angel_skill_ratio
+					rnd()%10000 < battle_config.sg_angel_skill_ratio
 				) { //Angel of the Sun/Moon/Star
 					clif_feel_hate_reset(sd);
 					pc_resethate(sd);

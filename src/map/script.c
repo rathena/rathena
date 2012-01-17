@@ -12,6 +12,7 @@
 #include "../common/md5calc.h"
 #include "../common/lock.h"
 #include "../common/nullpo.h"
+#include "../common/random.h"
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
 #include "../common/timer.h"
@@ -4448,12 +4449,8 @@ BUILDIN_FUNC(rand)
 	}
 	if( range <= 1 )
 		script_pushint(st, min);
-	else if( range > SHRT_MAX ) {
-		int step1 = rand()%(range&0xffff), step2 = rand()%(range>>16);
-		script_pushint(st, step1 + (step2<<16) + min);
-	}
 	else
-		script_pushint(st, rand()%range + min);
+		script_pushint(st, rnd()%range + min);
 
 	return 0;
 }

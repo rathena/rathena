@@ -5,6 +5,7 @@
 #include "../common/db.h"
 #include "../common/malloc.h"
 #include "../common/md5calc.h"
+#include "../common/random.h"
 #include "../common/showmsg.h"
 #include "../common/socket.h"
 #include "../common/strlib.h"
@@ -1068,8 +1069,8 @@ int mmo_auth(struct login_session_data* sd)
 
 	// update session data
 	sd->account_id = acc.account_id;
-	sd->login_id1 = rand();
-	sd->login_id2 = rand();
+	sd->login_id1 = rnd();
+	sd->login_id2 = rnd();
 	safestrncpy(sd->lastlogin, acc.lastlogin, sizeof(sd->lastlogin));
 	sd->sex = acc.sex;
 	sd->level = acc.level;
@@ -1413,7 +1414,7 @@ int parse_login(int fd)
 			RFIFOSKIP(fd,2);
 		{
 			memset(sd->md5key, '\0', sizeof(sd->md5key));
-			sd->md5keylen = (uint16)(12 + rand() % 4);
+			sd->md5keylen = (uint16)(12 + rnd() % 4);
 			MD5_Salt(sd->md5keylen, sd->md5key);
 
 			WFIFOHEAD(fd,4 + sd->md5keylen);
@@ -1730,7 +1731,7 @@ int do_init(int argc, char** argv)
 	login_config_read((argc > 1) ? argv[1] : LOGIN_CONF_NAME);
 	login_lan_config_read((argc > 2) ? argv[2] : LAN_CONF_NAME);
 
-	srand((unsigned int)time(NULL));
+	rnd_init();
 	
 	for( i = 0; i < ARRAYLENGTH(server); ++i )
 		chrif_server_init(i);

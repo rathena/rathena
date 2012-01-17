@@ -1,6 +1,7 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "../common/showmsg.h"
 #include "../common/timer.h" // gettick
 #include "random.h"
 #if defined(WIN32)
@@ -30,6 +31,7 @@ void rnd_init(void)
 	seed += (uint32)gettid();
 #endif // HAVE_GETTID
 #endif
+	ShowInfo("Initializing random number generator.\n")
 	init_genrand(seed);
 }
 
