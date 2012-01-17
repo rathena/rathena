@@ -735,7 +735,7 @@ packet_ver: 16
 0x022f,5
 0x0231,26,changehomunculusname,0
 0x023a,4
-0x023b,24,storagepassword,0
+0x023b,36,storagepassword,2:4:20
 0x023c,6
 
 //2005-06-22aSakexe

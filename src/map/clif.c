@@ -658,6 +658,24 @@ void clif_authok(struct map_session_data *sd)
 	WFIFOSET(fd,packet_len(cmd));
 }
 
+
+/// Notifies the client, that it's connection attempt was refused (ZC_REFUSE_ENTER).
+/// 0074 <error code>.B
+/// error code:
+///     0 = client type mismatch
+///     1 = ID mismatch
+///     2 = mobile - out of available time
+///     3 = mobile - already logged in
+///     4 = mobile - waiting state
+void clif_authrefuse(int fd, uint8 error_code)
+{
+	WFIFOHEAD(fd,packet_len(0x74));
+	WFIFOW(fd,0) = 0x74;
+	WFIFOB(fd,2) = error_code;
+	WFIFOSET(fd,packet_len(0x74));
+}
+
+
 /*==========================================
  * Authentication failed/disconnect client.
  *------------------------------------------
@@ -3644,6 +3662,21 @@ void clif_tradecompleted(struct map_session_data* sd, int fail)
 	WFIFOSET(fd,packet_len(0xf0));
 }
 
+
+/// Resets the trade window on the send side (ZC_EXCHANGEITEM_UNDO).
+/// 00f1
+/// NOTE: Unknown purpose. Items are not removed until the window is
+///       refreshed (ex. by putting another item in there).
+void clif_tradeundo(struct map_session_data* sd)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0xf1));
+	WFIFOW(fd,0) = 0xf1;
+	WFIFOSET(fd,packet_len(0xf1));
+}
+
+
 /*==========================================
  * Server tells client it's quantity of items in storage changed
  *------------------------------------------*/
@@ -6588,6 +6621,22 @@ void clif_mvp_exp(struct map_session_data *sd, unsigned int exp)
 	WFIFOSET(fd,packet_len(0x10b));
 }
 
+
+/// Dropped MVP item reward message (ZC_THROW_MVPITEM).
+/// 010d
+///
+/// "You are the MVP, but cannot obtain the reward because
+///     you are overweight."
+void clif_mvp_noitem(struct map_session_data* sd)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0x10d));
+	WFIFOW(fd,0) = 0x10d;
+	WFIFOSET(fd,packet_len(0x10d));
+}
+
+
 /*==========================================
  * Guild creation result
  * R 0167 <flag>.B
@@ -7606,6 +7655,32 @@ void clif_specialeffect_single(struct block_list* bl, int type, int fd)
 	WFIFOSET(fd,10);
 }
 
+
+/// Notifies clients of an special/visual effect that accepts an value (ZC_NOTIFY_EFFECT3).
+/// 0284 <id>.L <effect id>.L <num data>.L
+/// effect id:
+///     @see doc/effect_list.txt
+/// num data:
+///     effect-dependent value
+void clif_specialeffect_value(struct block_list* bl, int effect_id, int num, send_target target)
+{
+	uint8 buf[14];
+
+	WBUFW(buf,0) = 0x284;
+	WBUFL(buf,2) = bl->id;
+	WBUFL(buf,6) = effect_id;
+	WBUFL(buf,10) = num;
+
+	clif_send(buf, packet_len(0x284), bl, target);
+
+	if( disguised(bl) )
+	{
+		WBUFL(buf,2) = -bl->id;
+		clif_send(buf, packet_len(0x284), bl, SELF);
+	}
+}
+
+
 /******************************************************
  * W.<packet> W.<LENGTH> L.<ID> L.<COLOR> S.<TEXT>
  * Mob/NPC Color Talk [SnakeDrak]
@@ -8189,6 +8264,38 @@ void clif_msg(struct map_session_data* sd, unsigned short id)
 	WFIFOW(fd, 2) = id;  // zero-based msgstringtable.txt index
 	WFIFOSET(fd, packet_len(0x291));
 }
+
+
+/// Display msgstringtable.txt string and fill in a valid for %d format (ZC_MSG_VALUE).
+/// 0x7e2 <message>.W <value>.L
+void clif_msg_value(struct map_session_data* sd, unsigned short id, int value)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd, packet_len(0x7e2));
+	WFIFOW(fd,0) = 0x7e2;
+	WFIFOW(fd,2) = id;
+	WFIFOL(fd,4) = value;
+	WFIFOSET(fd, packet_len(0x7e2));
+}
+
+
+/// Displays msgstringtable.txt string, prefixed with a skill name. (ZC_MSG_SKILL).
+/// 07e6 <skill id>.W <msg id>.L
+///
+/// NOTE: Message has following format and is printed in color 0xCDCDFF (purple):
+///       "[SkillName] Message"
+void clif_msg_skill(struct map_session_data* sd, unsigned short skill_id, int msg_id)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd, packet_len(0x7e6));
+	WFIFOW(fd,0) = 0x7e6;
+	WFIFOW(fd,2) = skill_id;
+	WFIFOL(fd,4) = msg_id;
+	WFIFOSET(fd, packet_len(0x7e6));
+}
+
 
 /// View player equip request denied
 void clif_viewequip_fail(struct map_session_data* sd)
@@ -10586,12 +10693,54 @@ void clif_parse_CloseKafra(int fd, struct map_session_data *sd)
 		storage_guild_storageclose(sd);
 }
 
+
+/// Displays kafra storage password dialog (ZC_REQ_STORE_PASSWORD).
+/// 023a <info>.W
+/// info:
+///     0 = password has not been set yet
+///     1 = storage is password-protected
+///     8 = too many wrong passwords
+///     ? = ignored
+/// NOTE: This packet is only available on certain non-kRO clients.
+void clif_storagepassword(struct map_session_data* sd, short info)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0x23a));
+	WFIFOW(fd,0) = 0x23a;
+	WFIFOW(fd,2) = info;
+	WFIFOSET(fd,packet_len(0x23a));
+}
+
+
 /*==========================================
  * Kafra storage protection password system
  *------------------------------------------*/
 void clif_parse_StoragePassword(int fd, struct map_session_data *sd)
 {
 	//TODO
+}
+
+
+/// Result of kafra storage password validation (ZC_RESULT_STORE_PASSWORD).
+/// 023c <result>.W <error count>.W
+/// result:
+///     4 = password change success
+///     5 = password change failure
+///     6 = password check success
+///     7 = password check failure
+///     8 = too many wrong passwords
+///     ? = ignored
+/// NOTE: This packet is only available on certain non-kRO clients.
+void clif_storagepassword_result(struct map_session_data* sd, short result, short error_count)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0x23c));
+	WFIFOW(fd,0) = 0x23c;
+	WFIFOW(fd,2) = result;
+	WFIFOW(fd,4) = error_count;
+	WFIFOSET(fd,packet_len(0x23c));
 }
 
 

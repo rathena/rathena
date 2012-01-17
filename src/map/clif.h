@@ -309,6 +309,7 @@ uint32 clif_refresh_ip(void);
 uint16 clif_getport(void);
 
 void clif_authok(struct map_session_data *sd);
+void clif_authrefuse(int fd, uint8 error_code);
 void clif_authfail_fd(int fd, int type);
 void clif_charselectok(int id, uint8 ok);
 void clif_dropflooritem(struct flooritem_data* fitem);
@@ -394,6 +395,7 @@ void clif_tradeitemok(struct map_session_data* sd, int index, int fail);
 void clif_tradedeal_lock(struct map_session_data* sd, int fail);
 void clif_tradecancelled(struct map_session_data* sd);
 void clif_tradecompleted(struct map_session_data* sd, int fail);
+void clif_tradeundo(struct map_session_data* sd);
 
 // storage
 void clif_storagelist(struct map_session_data* sd, struct item* items, int items_length);
@@ -475,6 +477,7 @@ void clif_item_skill(struct map_session_data *sd,int skillid,int skilllv);
 void clif_mvp_effect(struct map_session_data *sd);
 void clif_mvp_item(struct map_session_data *sd,int nameid);
 void clif_mvp_exp(struct map_session_data *sd, unsigned int exp);
+void clif_mvp_noitem(struct map_session_data* sd);
 void clif_changed_dir(struct block_list *bl, enum send_target target);
 
 // vending
@@ -589,6 +592,7 @@ void clif_specialeffect(struct block_list* bl, int type, enum send_target target
 void clif_specialeffect_single(struct block_list* bl, int type, int fd);
 void clif_messagecolor(struct block_list* bl, unsigned long color, const char* msg); // Mob/Npc color talk [SnakeDrak]
 void clif_message(struct block_list* bl, const char* msg); // messages (from mobs/npcs) [Valaris]
+void clif_specialeffect_value(struct block_list* bl, int effect_id, int num, send_target target);
 
 void clif_GM_kickack(struct map_session_data *sd, int id);
 void clif_GM_kick(struct map_session_data *sd,struct map_session_data *tsd);
@@ -621,6 +625,8 @@ void clif_viewequip_fail(struct map_session_data* sd);
 void clif_equipcheckbox(struct map_session_data* sd);
 
 void clif_msg(struct map_session_data* sd, unsigned short id);
+void clif_msg_value(struct map_session_data* sd, unsigned short id, int value);
+void clif_msg_skill(struct map_session_data* sd, unsigned short skill_id, int msg_id);
 
 //quest system [Kevin] [Inkfish]
 void clif_quest_send_list(struct map_session_data * sd);
