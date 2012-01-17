@@ -396,11 +396,10 @@ void clif_tradecompleted(struct map_session_data* sd, int fail);
 
 // storage
 void clif_storagelist(struct map_session_data* sd, struct item* items, int items_length);
-void clif_updatestorageamount(struct map_session_data* sd, int amount);
+void clif_updatestorageamount(struct map_session_data* sd, int amount, int max_amount);
 void clif_storageitemadded(struct map_session_data* sd, struct item* i, int index, int amount);
 void clif_storageitemremoved(struct map_session_data* sd, int index, int amount);
 void clif_storageclose(struct map_session_data* sd);
-void clif_updateguildstorageamount(struct map_session_data* sd, int amount);
 
 int clif_insight(struct block_list *bl,va_list ap);	// map_forallinmovearea callback
 int clif_outsight(struct block_list *bl,va_list ap);	// map_forallinmovearea callback
@@ -536,9 +535,9 @@ void clif_guild_xy_single(int fd, struct map_session_data *sd);
 void clif_guild_xy_remove(struct map_session_data *sd);
 
 // Battleground
-int clif_bg_hp(struct map_session_data *sd);
-int clif_bg_xy(struct map_session_data *sd);
-int clif_bg_xy_remove(struct map_session_data *sd);
+void clif_bg_hp(struct map_session_data *sd);
+void clif_bg_xy(struct map_session_data *sd);
+void clif_bg_xy_remove(struct map_session_data *sd);
 void clif_bg_message(struct battleground_data *bg, int src_id, const char *name, const char *mes, int len);
 void clif_bg_updatescore(int m);
 void clif_bg_updatescore_single(struct map_session_data *sd);

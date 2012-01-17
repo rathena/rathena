@@ -104,7 +104,7 @@ int storage_storageopen(struct map_session_data *sd)
 	sd->state.storage_flag = 1;
 	storage_sortitem(sd->status.storage.items, ARRAYLENGTH(sd->status.storage.items));
 	clif_storagelist(sd, sd->status.storage.items, ARRAYLENGTH(sd->status.storage.items));
-	clif_updatestorageamount(sd,sd->status.storage.storage_amount);
+	clif_updatestorageamount(sd, sd->status.storage.storage_amount, MAX_STORAGE);
 	return 0;
 }
 
@@ -169,7 +169,7 @@ static int storage_additem(struct map_session_data* sd, struct item* item_data, 
 	stor->storage_amount++;
 	stor->items[i].amount = amount;
 	clif_storageitemadded(sd,&stor->items[i],i,amount);
-	clif_updatestorageamount(sd,stor->storage_amount);
+	clif_updatestorageamount(sd, stor->storage_amount, MAX_STORAGE);
 
 	return 0;
 }
@@ -187,7 +187,7 @@ int storage_delitem(struct map_session_data* sd, int n, int amount)
 	{
 		memset(&sd->status.storage.items[n],0,sizeof(sd->status.storage.items[0]));
 		sd->status.storage.storage_amount--;
-		if( sd->state.storage_flag == 1 ) clif_updatestorageamount(sd,sd->status.storage.storage_amount);
+		if( sd->state.storage_flag == 1 ) clif_updatestorageamount(sd, sd->status.storage.storage_amount, MAX_STORAGE);
 	}
 	if( sd->state.storage_flag == 1 ) clif_storageitemremoved(sd,n,amount);
 	return 0;
@@ -373,7 +373,7 @@ int storage_guild_storageopen(struct map_session_data* sd)
 	sd->state.storage_flag = 2;
 	storage_sortitem(gstor->items, ARRAYLENGTH(gstor->items));
 	clif_storagelist(sd, gstor->items, ARRAYLENGTH(gstor->items));
-	clif_updateguildstorageamount(sd,gstor->storage_amount);
+	clif_updatestorageamount(sd, gstor->storage_amount, MAX_GUILD_STORAGE);
 	return 0;
 }
 
@@ -419,7 +419,7 @@ int guild_storage_additem(struct map_session_data* sd, struct guild_storage* sto
 	stor->items[i].amount=amount;
 	stor->storage_amount++;
 	clif_storageitemadded(sd,&stor->items[i],i,amount);
-	clif_updateguildstorageamount(sd,stor->storage_amount);
+	clif_updatestorageamount(sd, stor->storage_amount, MAX_GUILD_STORAGE);
 	stor->dirty = 1;
 	return 0;
 }
@@ -436,7 +436,7 @@ int guild_storage_delitem(struct map_session_data* sd, struct guild_storage* sto
 	if(stor->items[n].amount==0){
 		memset(&stor->items[n],0,sizeof(stor->items[0]));
 		stor->storage_amount--;
-		clif_updateguildstorageamount(sd,stor->storage_amount);
+		clif_updatestorageamount(sd, stor->storage_amount, MAX_GUILD_STORAGE);
 	}
 	clif_storageitemremoved(sd,n,amount);
 	stor->dirty = 1;

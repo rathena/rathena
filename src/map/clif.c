@@ -3631,7 +3631,7 @@ void clif_tradecompleted(struct map_session_data* sd, int fail)
 /*==========================================
  * Server tells client it's quantity of items in storage changed
  *------------------------------------------*/
-void clif_updatestorageamount(struct map_session_data* sd, int amount)
+void clif_updatestorageamount(struct map_session_data* sd, int amount, int max_amount)
 {
 	int fd;
 
@@ -3641,7 +3641,7 @@ void clif_updatestorageamount(struct map_session_data* sd, int amount)
 	WFIFOHEAD(fd,packet_len(0xf2));
 	WFIFOW(fd,0) = 0xf2;  // update storage amount
 	WFIFOW(fd,2) = amount;  //items
-	WFIFOW(fd,4) = MAX_STORAGE; //items max
+	WFIFOW(fd,4) = max_amount; //items max
 	WFIFOSET(fd,packet_len(0xf2));
 }
 
@@ -3681,23 +3681,6 @@ void clif_storageitemadded(struct map_session_data* sd, struct item* i, int inde
 	clif_addcards(WFIFOP(fd,14), i);
 	WFIFOSET(fd,packet_len(0x1c4));
 #endif
-}
-
-/*==========================================
- *
- *------------------------------------------*/
-void clif_updateguildstorageamount(struct map_session_data* sd, int amount)
-{
-	int fd;
-
-	nullpo_retv(sd);
-
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0xf2));
-	WFIFOW(fd,0) = 0xf2;  // update storage amount
-	WFIFOW(fd,2) = amount;  //items
-	WFIFOW(fd,4) = MAX_GUILD_STORAGE; //items max
-	WFIFOSET(fd,packet_len(0xf2));
 }
 
 /*==========================================
@@ -13978,61 +13961,58 @@ void clif_readbook(int fd, int book_id, int page)
 /*------------------------------------------
  * BattleGround Packets
  *------------------------------------------*/
-int clif_bg_hp(struct map_session_data *sd)
+void clif_bg_hp(struct map_session_data *sd)
 {
-	unsigned char buf[16];
-#if PACKETVER < 20100126
-	const int cmd = 0x106;
-#else
-	const int cmd = 0x80e;
-#endif
+	unsigned char buf[34];
+	const int cmd = 0x2e0;
 	nullpo_ret(sd);
 
-	WBUFW(buf,0)=cmd;
+	WBUFW(buf,0) = cmd;
 	WBUFL(buf,2) = sd->status.account_id;
-#if PACKETVER < 20100126
+	memcpy(WBUFP(buf,6), sd->status.name, NAME_LENGTH);
+
 	if( sd->battle_status.max_hp > INT16_MAX )
 	{ // To correctly display the %hp bar. [Skotlex]
-		WBUFW(buf,6) = sd->battle_status.hp/(sd->battle_status.max_hp/100);
-		WBUFW(buf,8) = 100;
+		WBUFW(buf,30) = sd->battle_status.hp/(sd->battle_status.max_hp/100);
+		WBUFW(buf,32) = 100;
 	}
 	else
 	{
-		WBUFW(buf,6) = sd->battle_status.hp;
-		WBUFW(buf,8) = sd->battle_status.max_hp;
+		WBUFW(buf,30) = sd->battle_status.hp;
+		WBUFW(buf,32) = sd->battle_status.max_hp;
 	}
-#else
-		WBUFL(buf,6) = sd->battle_status.hp;
-		WBUFL(buf,10) = sd->battle_status.max_hp;
-#endif
+
 	clif_send(buf, packet_len(cmd), &sd->bl, BG_AREA_WOS);
-	return 0;
 }
 
-int clif_bg_xy(struct map_session_data *sd)
+void clif_bg_xy(struct map_session_data *sd)
 {
-	unsigned char buf[10];
+	unsigned char buf[36];
 	nullpo_ret(sd);
 
-	WBUFW(buf,0)=0x1eb;
+	WBUFW(buf,0)=0x2df;
 	WBUFL(buf,2)=sd->status.account_id;
-	WBUFW(buf,6)=sd->bl.x;
-	WBUFW(buf,8)=sd->bl.y;
-	clif_send(buf, packet_len(0x1eb), &sd->bl, BG_SAMEMAP_WOS);
-	return 0;
+	memcpy(WBUFP(buf,6), sd->status.name, NAME_LENGTH);
+	WBUFW(buf,30)=sd->status.class_;
+	WBUFW(buf,32)=sd->bl.x;
+	WBUFW(buf,34)=sd->bl.y;
+
+	clif_send(buf, packet_len(0x2df), &sd->bl, BG_SAMEMAP_WOS);
 }
 
-int clif_bg_xy_remove(struct map_session_data *sd)
+void clif_bg_xy_remove(struct map_session_data *sd)
 {
-	unsigned char buf[10];
+	unsigned char buf[36];
 	nullpo_ret(sd);
 
-	WBUFW(buf,0)=0x1eb;
+	WBUFW(buf,0)=0x2df;
 	WBUFL(buf,2)=sd->status.account_id;
-	WBUFW(buf,6)=-1;
-	WBUFW(buf,8)=-1;
-	clif_send(buf,packet_len(0x1eb),&sd->bl,BG_SAMEMAP_WOS);
-	return 0;
+	memset(WBUFP(buf,6), 0, NAME_LENGTH);
+	WBUFW(buf,30)=0;
+	WBUFW(buf,32)=-1;
+	WBUFW(buf,34)=-1;
+
+	clif_send(buf, packet_len(0x2df), &sd->bl, BG_SAMEMAP_WOS);
 }
 
 
@@ -15336,8 +15316,8 @@ static int packetdb_readdb(void)
 	   85, -1, -1,107,  6, -1,  7,  7, 22,191,  0,  0,  0,  0,  0,  0,
 	//#0x02C0
 	    0,  0,  0,  0,  0, 30, 30,  0,  0,  3,  0, 65,  4, 71, 10,  0,
-	    0,  0,  0,  0, 29,  0,  6, -1, 10, 10,  3,  0, -1, 32,  6,  0,
-	    0, 33,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 67, 59, 60,  8,
+	    0,  0,  0,  0, 29,  0,  6, -1, 10, 10,  3,  0, -1, 32,  6, 36,
+	   34, 33,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 67, 59, 60,  8,
 	   10,  2,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	//#0x0300
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
