@@ -33,6 +33,7 @@
 #include "party.h"
 #include "guild.h"
 #include "script.h"
+#include "storage.h"
 #include "trade.h"
 #include "unit.h"
 

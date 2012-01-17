@@ -30,6 +30,7 @@
 #include "intif.h"
 #include "chrif.h"
 #include "script.h"
+#include "storage.h"
 
 #include <stdio.h>
 #include <stdlib.h>
