@@ -2726,30 +2726,27 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 	WFIFOSET(fd,len);
 }
 
-void clif_changestatus(struct block_list *bl,int type,int val)
+void clif_changestatus(struct map_session_data* sd,int type,int val)
 {
 	unsigned char buf[12];
-	struct map_session_data *sd = NULL;
 
-	nullpo_retv(bl);
+	nullpo_retv(sd);
 
-	if(bl->type == BL_PC)
-		sd = (struct map_session_data *)bl;
+	WBUFW(buf,0)=0x1ab;
+	WBUFL(buf,2)=sd->bl.id;
+	WBUFW(buf,6)=type;
 
-	if(sd){
-		WBUFW(buf,0)=0x1ab;
-		WBUFL(buf,2)=bl->id;
-		WBUFW(buf,6)=type;
-		switch(type){
+	switch(type)
+	{
 		case SP_MANNER:
 			WBUFL(buf,8)=val;
 			break;
 		default:
 			ShowError("clif_changestatus : unrecognized type %d.\n",type);
 			return;
-		}
-		clif_send(buf,packet_len(0x1ab),bl,AREA_WOS);
 	}
+
+	clif_send(buf,packet_len(0x1ab),&sd->bl,AREA_WOS);
 }
 
 /*==========================================
