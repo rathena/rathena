@@ -215,6 +215,90 @@ enum map_type
 	MAPTYPE_UNUSED               = 29,
 };
 
+enum useskill_fail_cause
+{// clif_skill_fail
+	USESKILL_FAIL_LEVEL = 0,
+	USESKILL_FAIL_SP_INSUFFICIENT = 1,
+	USESKILL_FAIL_HP_INSUFFICIENT = 2,
+	USESKILL_FAIL_STUFF_INSUFFICIENT = 3,
+	USESKILL_FAIL_SKILLINTERVAL = 4,
+	USESKILL_FAIL_MONEY = 5,
+	USESKILL_FAIL_THIS_WEAPON = 6,
+	USESKILL_FAIL_REDJAMSTONE = 7,
+	USESKILL_FAIL_BLUEJAMSTONE = 8,
+	USESKILL_FAIL_WEIGHTOVER = 9,
+	USESKILL_FAIL = 10,
+	USESKILL_FAIL_TOTARGET = 11,
+	USESKILL_FAIL_ANCILLA_NUMOVER = 12,
+	USESKILL_FAIL_HOLYWATER = 13,
+	USESKILL_FAIL_ANCILLA = 14,
+	USESKILL_FAIL_DUPLICATE_RANGEIN = 15,
+	USESKILL_FAIL_NEED_OTHER_SKILL = 16,
+	USESKILL_FAIL_NEED_HELPER = 17,
+	USESKILL_FAIL_INVALID_DIR = 18,
+	USESKILL_FAIL_SUMMON = 19,
+	USESKILL_FAIL_SUMMON_NONE = 20,
+	USESKILL_FAIL_IMITATION_SKILL_NONE = 21,
+	USESKILL_FAIL_DUPLICATE = 22,
+	USESKILL_FAIL_CONDITION = 23,
+	USESKILL_FAIL_PAINTBRUSH = 24,
+	//XXX_USESKILL_FAIL_II_SURFACE_PAINTS = 25,
+	USESKILL_FAIL_POS = 26,
+	USESKILL_FAIL_HELPER_SP_INSUFFICIENT = 27,
+	//XXX_USESKILL_FAIL_II_NECK_CANDY = 28,
+	//XXX_USESKILL_FAIL_II_MISERABLE_TEAR = 29,
+	//XXX_USESKILL_FAIL_II_PROTECT_NECK_CANDY = 30,
+	USESKILL_FAIL_GC_WEAPONBLOCKING = 31,
+	USESKILL_FAIL_GC_POISONINGWEAPON = 32,
+	USESKILL_FAIL_MADOGEAR = 33,
+	//XXX_USESKILL_FAIL_II_VULCANBULLET = 34,
+	//XXX_USESKILL_FAIL_II_FUELGAS = 35,
+	//XXX_USESKILL_FAIL_II_COLDSLOWERBULLET = 36,
+	USESKILL_FAIL_CANONBALL = 37,
+	//XXX_USESKILL_FAIL_II_MADOGEAR_ACCELERATION = 38,
+	//XXX_USESKILL_FAIL_II_MADOGEAR_HOVERING_BOOSTER = 39,
+	USESKILL_FAIL_MADOGEAR_HOVERING = 40,
+	//XXX_USESKILL_FAIL_II_MADOGEAR_SELFDESTRUCTION_DEVICE = 41,
+	//XXX_USESKILL_FAIL_II_MADOGEAR_SHAPESHIFTER = 42,
+	USESKILL_FAIL_GUILLONTINE_POISON = 43,
+	//XXX_USESKILL_FAIL_II_MADOGEAR_COOLING_DEVICE = 44,
+	//XXX_USESKILL_FAIL_II_MADOGEAR_MAGNETICFIELD_GENERATOR = 45,
+	//XXX_USESKILL_FAIL_II_MADOGEAR_BARRIER_GENERATOR = 46,
+	//XXX_USESKILL_FAIL_II_MADOGEAR_OPTICALCAMOUFLAGE_GENERATOR = 47,
+	//XXX_USESKILL_FAIL_II_MADOGEAR_REPAIRKIT = 48,
+	//XXX_USESKILL_FAIL_II_MONKEY_SPANNER = 49,
+	USESKILL_FAIL_MADOGEAR_RIDE = 50,
+	USESKILL_FAIL_SPELLBOOK = 51,
+	USESKILL_FAIL_SPELLBOOK_DIFFICULT_SLEEP = 52,
+	USESKILL_FAIL_SPELLBOOK_PRESERVATION_POINT = 53,
+	USESKILL_FAIL_SPELLBOOK_READING = 54,
+	//XXX_USESKILL_FAIL_II_FACE_PAINTS = 55,
+	//XXX_USESKILL_FAIL_II_MAKEUP_BRUSH = 56,
+	USESKILL_FAIL_CART = 57,
+	//XXX_USESKILL_FAIL_II_THORNS_SEED = 58,
+	//XXX_USESKILL_FAIL_II_BLOOD_SUCKER_SEED = 59,
+	USESKILL_FAIL_NO_MORE_SPELL = 60,
+	//XXX_USESKILL_FAIL_II_BOMB_MUSHROOM_SPORE = 61,
+	//XXX_USESKILL_FAIL_II_GASOLINE_BOOMB = 62,
+	//XXX_USESKILL_FAIL_II_OIL_BOTTLE = 63,
+	//XXX_USESKILL_FAIL_II_EXPLOSION_POWDER = 64,
+	//XXX_USESKILL_FAIL_II_SMOKE_POWDER = 65,
+	//XXX_USESKILL_FAIL_II_TEAR_GAS = 66,
+	//XXX_USESKILL_FAIL_II_HYDROCHLORIC_ACID_BOTTLE = 67,
+	//XXX_USESKILL_FAIL_II_HELLS_PLANT_BOTTLE = 68,
+	//XXX_USESKILL_FAIL_II_MANDRAGORA_FLOWERPOT = 69,
+	USESKILL_FAIL_MANUAL_NOTIFY = 70,
+	USESKILL_FAIL_NEED_ITEM = 71,
+	USESKILL_FAIL_NEED_EQUIPMENT = 72,
+	USESKILL_FAIL_COMBOSKILL = 73,
+	USESKILL_FAIL_SPIRITS = 74,
+	USESKILL_FAIL_EXPLOSIONSPIRITS = 75,
+	USESKILL_FAIL_HP_TOOMANY = 76,
+	USESKILL_FAIL_NEED_ROYAL_GUARD_BANDING = 77,
+	USESKILL_FAIL_NEED_EQUIPPED_WEAPON_CLASS = 78,
+	USESKILL_FAIL_EL_SUMMON = 79,
+};
+
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);
@@ -272,7 +356,7 @@ void clif_unequipitemack(struct map_session_data *sd,int n,int pos,int ok);	// s
 void clif_misceffect(struct block_list* bl,int type);	// area
 void clif_changeoption(struct block_list* bl);	// area
 void clif_changeoption2(struct block_list* bl);	// area
-void clif_useitemack(struct map_session_data *sd,int index,int amount,int ok);	// self
+void clif_useitemack(struct map_session_data *sd,int index,int amount,bool ok);	// self
 void clif_GlobalMessage(struct block_list* bl, const char* message);
 void clif_createchat(struct map_session_data* sd, int flag);	// self
 void clif_dispchat(struct chat_data* cd, int fd);	// area or fd
@@ -327,12 +411,12 @@ void clif_class_change(struct block_list *bl,int class_,int type);
 void clif_skillinfoblock(struct map_session_data *sd);
 void clif_skillup(struct map_session_data *sd,int skill_num);
 void clif_skillinfo(struct map_session_data *sd,int skill, int inf);
-void clif_addskill(struct map_session_data *sd, int skill);
-void clif_deleteskill(struct map_session_data *sd, int skill);
+void clif_addskill(struct map_session_data *sd, int id);
+void clif_deleteskill(struct map_session_data *sd, int id);
 
 void clif_skillcasting(struct block_list* bl, int src_id, int dst_id, int dst_x, int dst_y, int skill_num, int property, int casttime);
 void clif_skillcastcancel(struct block_list* bl);
-void clif_skill_fail(struct map_session_data *sd,int skill_id,int type,int btype);
+void clif_skill_fail(struct map_session_data *sd,int skill_id,enum useskill_fail_cause cause,int btype);
 void clif_skill_cooldown(struct map_session_data *sd, int skillid, unsigned int tick);
 int clif_skill_damage(struct block_list *src,struct block_list *dst,unsigned int tick,int sdelay,int ddelay,int damage,int div,int skill_id,int skill_lv,int type);
 //int clif_skill_damage2(struct block_list *src,struct block_list *dst,unsigned int tick,int sdelay,int ddelay,int damage,int div,int skill_id,int skill_lv,int type);

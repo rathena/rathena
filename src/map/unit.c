@@ -1058,7 +1058,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 				return 0;
 			target = (struct block_list*)map_charid2sd(sd->status.partner_id);
 			if (!target) {
-				clif_skill_fail(sd,skill_num,0,0);
+				clif_skill_fail(sd,skill_num,USESKILL_FAIL_LEVEL,0);
 				return 0;
 			}
 			break;
@@ -1110,7 +1110,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 		case BD_ENCORE:
 			//Prevent using the dance skill if you no longer have the skill in your tree. 
 			if(!sd->skillid_dance || pc_checkskill(sd,sd->skillid_dance)<=0){
-				clif_skill_fail(sd,skill_num,0,0);
+				clif_skill_fail(sd,skill_num,USESKILL_FAIL_LEVEL,0);
 				return 0;
 			}
 			sd->skillid_old = skill_num;
@@ -1126,7 +1126,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 		case CG_MOONLIT:
 			if (skill_check_pc_partner(sd, skill_num, &skill_lv, 1, 0) < 1)
 			{
-				clif_skill_fail(sd,skill_num,0,0);
+				clif_skill_fail(sd,skill_num,USESKILL_FAIL_LEVEL,0);
 				return 0;
 			}
 			break;
@@ -1356,7 +1356,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 
 	if( map_getcell(src->m, skill_x, skill_y, CELL_CHKWALL) )
 	{// can't cast ground targeted spells on wall cells
-		if (sd) clif_skill_fail(sd,skill_num,0,0);
+		if (sd) clif_skill_fail(sd,skill_num,USESKILL_FAIL_LEVEL,0);
 		return 0;
 	}
 
@@ -1691,7 +1691,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	{ // attacking when under cast delay has restrictions:
 		if( tid == INVALID_TIMER )
 		{ //requested attack.
-			if(sd) clif_skill_fail(sd,1,4,0);
+			if(sd) clif_skill_fail(sd,1,USESKILL_FAIL_SKILLINTERVAL,0);
 			return 0;
 		}
 		//Otherwise, we are in a combo-attack, delay this until your canact time is over. [Skotlex]
