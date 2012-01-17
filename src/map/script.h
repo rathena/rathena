@@ -4,6 +4,8 @@
 #ifndef _SCRIPT_H_
 #define _SCRIPT_H_
 
+#define NUM_WHISPER_VAR 10
+
 struct map_session_data;
 
 extern int potion_flag; //For use on Alchemist improved potions/Potion Pitcher. [Skotlex]

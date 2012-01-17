@@ -9794,7 +9794,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 		struct npc_data* npc;
 		if ((npc = npc_name2id(str)))	
 		{
-			char split_data[10][50];
+			char split_data[NUM_WHISPER_VAR][CHAT_SIZE_MAX];
 			char *split;
 			char output[256];
 
@@ -9802,13 +9802,13 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 			// skip codepage indicator, if detected
 			if( str[0] == '|' && strlen(str) >= 4 )
 				str += 3;
-			for( i = 0; i < 10; ++i )
+			for( i = 0; i < NUM_WHISPER_VAR; ++i )
 			{// Splits the message using '#' as separators
 				split = strchr(str,'#');
 				if( split == NULL )
 				{	// use the remaining string
 					safestrncpy(split_data[i], str, ARRAYLENGTH(split_data[i]));
-					for( ++i; i < 10; ++i )
+					for( ++i; i < NUM_WHISPER_VAR; ++i )
 						split_data[i][0] = '\0';
 					break;
 				}
@@ -9817,7 +9817,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 				str = split+1;
 			}
 			
-			for( i = 0; i < 10; ++i )
+			for( i = 0; i < NUM_WHISPER_VAR; ++i )
 			{
 				sprintf(output, "@whispervar%d$", i);
 				set_var(sd,output,(char *) split_data[i]);
