@@ -1060,7 +1060,7 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	WBUFW(buf,53) = sd?sd->user_font:0;
 #endif
 #if PACKETVER >= 20091103
-	strcpy((char*)WBUFP(buf,55), name);
+	memcpy((char*)WBUFP(buf,55), name, NAME_LENGTH);
 	return WBUFW(buffer,2);
 #else
 	return packet_len(WBUFW(buffer,0));
@@ -1167,7 +1167,7 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	WBUFW(buf,60) = sd?sd->user_font:0;
 #endif
 #if PACKETVER >= 20091103
-	strcpy((char*)WBUFP(buf,62), name);
+	memcpy((char*)WBUFP(buf,62), name, NAME_LENGTH);
 	return WBUFW(buffer,2);
 #else
 	return packet_len(WBUFW(buffer,0));
@@ -1766,7 +1766,7 @@ void clif_scriptmes(struct map_session_data *sd, int npcid, const char *mes)
 	WFIFOW(fd,0)=0xb4;
 	WFIFOW(fd,2)=slen;
 	WFIFOL(fd,4)=npcid;
-	strcpy((char*)WFIFOP(fd,8),mes);
+	memcpy((char*)WFIFOP(fd,8), mes, slen-8);
 	WFIFOSET(fd,WFIFOW(fd,2));
 }
 
@@ -1863,7 +1863,7 @@ void clif_sendfakenpc(struct map_session_data *sd, int npcid)
 void clif_scriptmenu(struct map_session_data* sd, int npcid, const char* mes)
 {
 	int fd = sd->fd;
-	int slen = strlen(mes) + 8;
+	int slen = strlen(mes) + 9;
 	struct block_list *bl = NULL;
 
 	if (!sd->state.using_fake_npc && (npcid == fake_nd->bl.id || ((bl = map_id2bl(npcid)) && (bl->m!=sd->bl.m ||
@@ -1875,7 +1875,7 @@ void clif_scriptmenu(struct map_session_data* sd, int npcid, const char* mes)
 	WFIFOW(fd,0)=0xb7;
 	WFIFOW(fd,2)=slen;
 	WFIFOL(fd,4)=npcid;
-	strcpy((char*)WFIFOP(fd,8),mes);
+	memcpy((char*)WFIFOP(fd,8), mes, slen-8);
 	WFIFOSET(fd,WFIFOW(fd,2));
 }
 
@@ -6687,19 +6687,29 @@ void clif_guild_belonginfo(struct map_session_data *sd, struct guild *g)
 void clif_guild_memberlogin_notice(struct guild *g,int idx,int flag)
 {
 	unsigned char buf[64];
+	struct map_session_data* sd;
 
 	nullpo_retv(g);
 
-	WBUFW(buf, 0)=0x16d;
+	WBUFW(buf, 0)=0x1f2;
 	WBUFL(buf, 2)=g->member[idx].account_id;
 	WBUFL(buf, 6)=g->member[idx].char_id;
 	WBUFL(buf,10)=flag;
-	if(g->member[idx].sd==NULL){
-		struct map_session_data *sd=guild_getavailablesd(g);
-		if(sd!=NULL)
-			clif_send(buf,packet_len(0x16d),&sd->bl,GUILD);
-	}else
-		clif_send(buf,packet_len(0x16d),&g->member[idx].sd->bl,GUILD_WOS);
+
+	if( ( sd = g->member[idx].sd ) != NULL )
+	{
+		WBUFW(buf,14) = sd->status.sex;
+		WBUFW(buf,16) = sd->status.hair;
+		WBUFW(buf,18) = sd->status.hair_color;
+		clif_send(buf,packet_len(0x1f2),&sd->bl,GUILD_WOS);
+	}
+	else if( ( sd = guild_getavailablesd(g) ) != NULL )
+	{
+		WBUFW(buf,14) = 0;
+		WBUFW(buf,16) = 0;
+		WBUFW(buf,18) = 0;
+		clif_send(buf,packet_len(0x1f2),&sd->bl,GUILD);
+	}
 }
 
 // Function `clif_guild_memberlogin_notice` sends info about
@@ -7486,7 +7496,7 @@ void clif_GM_kickack(struct map_session_data *sd, int id)
 	fd = sd->fd;
 	WFIFOHEAD(fd,packet_len(0xcd));
 	WFIFOW(fd,0) = 0xcd;
-	WFIFOL(fd,2) = id;
+	WFIFOB(fd,2) = id;  // FIXME: this is not account id
 	WFIFOSET(fd, packet_len(0xcd));
 }
 
@@ -12834,8 +12844,8 @@ void clif_Mail_new(int fd, int mail_id, const char *sender, const char *title)
 	WFIFOHEAD(fd,packet_len(0x24a));
 	WFIFOW(fd,0) = 0x24a;
 	WFIFOL(fd,2) = mail_id;
-	safestrncpy((char*)WFIFOP(fd,6), sender, NAME_LENGTH);
-	safestrncpy((char*)WFIFOP(fd,30), title, MAIL_TITLE_LENGTH);
+	safestrncpy((char*)WFIFOP(fd,6), title, MAIL_TITLE_LENGTH);
+	safestrncpy((char*)WFIFOP(fd,46), sender, NAME_LENGTH);
 	WFIFOSET(fd,packet_len(0x24a));
 }
 
