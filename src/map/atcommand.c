@@ -7174,19 +7174,8 @@ ACMD_FUNC(mobinfo)
 
 /*=========================================
 * @showmobs by KarLaeda
-* => For 5 sec displays the mobs on minimap
+* => For 15 sec displays the mobs on minimap
 *------------------------------------------*/
-int atshowmobs_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
-	struct map_session_data* sd = map_id2sd(id);
-	if( sd == NULL )
-		return 0;
-
-	// remove indicator
-	clif_viewpoint(sd, 1, 2, 0, 0, (int)data, 0xFFFFFF);
-	return 1;
-}
-
 ACMD_FUNC(showmobs)
 {
 	char mob_name[100];
@@ -7240,8 +7229,7 @@ ACMD_FUNC(showmobs)
 			continue; // hide mobs waiting for respawn
 
 		++number;
-		clif_viewpoint(sd, 1, 1, md->bl.x, md->bl.y, number, 0xFFFFFF);
-		add_timer(gettick()+5000, atshowmobs_timer, sd->bl.id, number);
+		clif_viewpoint(sd, 1, 0, md->bl.x, md->bl.y, number, 0xFFFFFF);
 	}
 	mapit_free(it);
 
@@ -9372,9 +9360,6 @@ void do_init_atcommand() {
 	
 	atcommand_doload();
 
-	add_timer_func_list(atshowmobs_timer, "atshowmobs_timer");
-
-	return;
 }
 
 void do_final_atcommand() {

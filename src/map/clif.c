@@ -6218,27 +6218,6 @@ int clif_hpmeter(struct map_session_data *sd)
 }
 
 /*==========================================
- * (?) Server tells 'sd' party members that 'sd' state 'changed'
- *------------------------------------------*/
-void clif_party_move(struct party* p, struct map_session_data* sd, int online)
-{
-	unsigned char buf[128];
-
-	nullpo_retv(sd);
-	nullpo_retv(p);
-
-	WBUFW(buf, 0) = 0x104;
-	WBUFL(buf, 2) = sd->status.account_id;
-	WBUFL(buf, 6) = 0;
-	WBUFW(buf,10) = sd->bl.x;
-	WBUFW(buf,12) = sd->bl.y;
-	WBUFB(buf,14) = !online;
-	memcpy(WBUFP(buf,15),p->name, NAME_LENGTH);
-	memcpy(WBUFP(buf,39),sd->status.name, NAME_LENGTH);
-	mapindex_getmapname_ext(map[sd->bl.m].name, (char*)WBUFP(buf,63));
-	clif_send(buf,packet_len(0x104),&sd->bl,PARTY);
-}
-/*==========================================
  * Server tells client to attack bl, if not in range of attack (rhw.range) it'll move to bl
  * called from unit.c
  *------------------------------------------*/
@@ -13994,7 +13973,7 @@ void clif_bg_hp(struct map_session_data *sd)
 {
 	unsigned char buf[34];
 	const int cmd = 0x2e0;
-	nullpo_ret(sd);
+	nullpo_retv(sd);
 
 	WBUFW(buf,0) = cmd;
 	WBUFL(buf,2) = sd->status.account_id;
@@ -14017,7 +13996,7 @@ void clif_bg_hp(struct map_session_data *sd)
 void clif_bg_xy(struct map_session_data *sd)
 {
 	unsigned char buf[36];
-	nullpo_ret(sd);
+	nullpo_retv(sd);
 
 	WBUFW(buf,0)=0x2df;
 	WBUFL(buf,2)=sd->status.account_id;
@@ -14032,7 +14011,7 @@ void clif_bg_xy(struct map_session_data *sd)
 void clif_bg_xy_remove(struct map_session_data *sd)
 {
 	unsigned char buf[36];
-	nullpo_ret(sd);
+	nullpo_retv(sd);
 
 	WBUFW(buf,0)=0x2df;
 	WBUFL(buf,2)=sd->status.account_id;

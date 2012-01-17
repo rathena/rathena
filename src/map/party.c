@@ -1174,6 +1174,11 @@ void party_booking_register(struct map_session_data *sd, short level, short mapi
 		pb_ad = create_party_booking_data();
 		idb_put(party_booking_db, sd->status.char_id, pb_ad);
 	}
+	else
+	{// already registered
+		clif_PartyBookingRegisterAck(sd, 2);
+		return;
+	}
 	
 	memcpy(pb_ad->charname,sd->status.name,NAME_LENGTH);
 	pb_ad->starttime = (int)time(NULL);

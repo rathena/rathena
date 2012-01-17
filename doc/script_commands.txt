@@ -9,8 +9,6 @@
 //===== Description: =========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
-//===== Additional Comments: =================================
-//= 
 //============================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -6020,7 +6018,8 @@ used to color text in 'mes' output, but are written as hexadecimal numbers in C.
 (They look like 0x<six numbers>.)
 
 Action is what you want to do with a point, 1 will set it, while 2 will clear 
-it. Point number is the number of the point - you can have several. If more than 
+it. 0 will also set it, but automatically removes the point after 15 seconds.
+Point number is the number of the point - you can have several. If more than 
 one point is drawn at the same coordinates, they will cycle, which can be used 
 to create flashing marks.
 
