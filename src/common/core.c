@@ -210,11 +210,11 @@ static void display_title(void)
 	ShowInfo("SVN Revision: '"CL_WHITE"%s"CL_RESET"'.\n", get_svn_revision());
 }
 
-// Warning if logged in as superuser (root)
+// Warning if executed as superuser (root)
 void usercheck(void)
 {
 #ifndef _WIN32
-    if ((getuid() == 0) && (getgid() == 0)) {
+    if (geteuid() == 0) {
 		ShowWarning ("You are running rAthena with root privileges, it is not necessary.\n");
     }
 #endif
