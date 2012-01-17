@@ -24,10 +24,11 @@ struct s_homunculus_db {
 
 extern struct s_homunculus_db homuncumlus_db[MAX_HOMUNCULUS_CLASS];
 enum { HOMUNCULUS_CLASS, HOMUNCULUS_FOOD };
+
 enum {
-	SP_ACK 	= 0x00,
-	SP_INTIMATE 	= 0x100,
-	SP_HUNGRY 		= 0x200
+	SP_ACK      = 0x0,
+	SP_INTIMATE = 0x1,
+	SP_HUNGRY   = 0x2,
 };
 
 struct homun_data {

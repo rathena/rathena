@@ -176,6 +176,7 @@ typedef enum clr_type
 	CLR_DEAD,
 	CLR_RESPAWN,
 	CLR_TELEPORT,
+	CLR_TRICKDEAD,
 } clr_type;
 
 enum map_property
@@ -613,7 +614,7 @@ void clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag);
 int clif_homskillinfoblock(struct map_session_data *sd);
 void clif_homskillup(struct map_session_data *sd, int skill_num);	//[orn]
 int clif_hom_food(struct map_session_data *sd,int foodid,int fail);	//[orn]
-void clif_send_homdata(struct map_session_data *sd, int type, int param);	//[orn]
+void clif_send_homdata(struct map_session_data *sd, int state, int param);	//[orn]
 
 void clif_equiptickack(struct map_session_data* sd, int flag);
 void clif_viewequip_ack(struct map_session_data* sd, struct map_session_data* tsd);

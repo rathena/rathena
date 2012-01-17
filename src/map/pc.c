@@ -5238,9 +5238,9 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 
 #if PACKETVER >= 20091027
 	if(base_exp)
-		clif_displayexp(sd, base_exp, 1, quest);
+		clif_displayexp(sd, base_exp, SP_BASEEXP, quest);
 	if(job_exp)
-		clif_displayexp(sd, job_exp,  2, quest);
+		clif_displayexp(sd, job_exp,  SP_JOBEXP, quest);
 #endif
 	if(sd->state.showexp) {
 		char output[256];

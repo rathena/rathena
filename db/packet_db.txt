@@ -24,7 +24,7 @@
 // them for the current and all higher versions, unless explicitely disabled.
 //
 // Outgoing packets must be specified in order to enable them for the current
-// and all higher versions, unless explocitely disabled. Packets that are not
+// and all higher versions, unless explicitely disabled. Packets that are not
 // enabled for a packet version are silently discarded when sent as multicast.
 //
 // Every packet version inherits packet definitions from the previous (lower)
@@ -196,7 +196,7 @@ packet_ver: 5
 0x00ff,10,replypartyinvite,2:6
 0x0100,2,leaveparty,0
 0x0101,6
-0x0102,6,partychangeoption,2:4
+0x0102,6,partychangeoption,2
 0x0103,30,removepartymember,2:6
 0x0104,79
 0x0105,31
@@ -691,10 +691,10 @@ packet_ver: 15
 0x022c,64
 
 //2005-04-25aSakexe
-0x022d,5,hommenu,4
-0x0232,9,hommoveto,6
-0x0233,11,homattack,0
-0x0234,6,hommovetomaster,0
+0x022d,5,hommenu,2:4
+0x0232,9,hommoveto,2:6
+0x0233,11,homattack,2:6:10
+0x0234,6,hommovetomaster,2
 
 //2005-05-09aSakexe
 packet_ver: 16
@@ -1387,7 +1387,7 @@ packet_ver: 25
 //0x0447,2
 
 //2009-06-03aRagexeRE
-0x07d7,8,partychangeoption,2:6
+0x07d7,8,partychangeoption,2:6:7
 0x07d8,8
 0x07d9,254
 0x07da,6,partychangeleader,2
@@ -1473,7 +1473,7 @@ packet_ver: 25
 //0x07ff,-1
 
 //2009-12-15aRagexeRE
-//0x0800,-1
+0x0800,-1
 //0x0801,-1
 
 //2009-12-22aRagexeRE

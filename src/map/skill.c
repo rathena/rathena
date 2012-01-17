@@ -1533,7 +1533,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			TBL_HOM *hd = (TBL_HOM*)src;
 			hd->homunculus.intimacy = 200;
 			if (hd->master)
-				clif_send_homdata(hd->master,0x100,hd->homunculus.intimacy/100);
+				clif_send_homdata(hd->master,SP_INTIMATE,hd->homunculus.intimacy/100);
 		}
 		break;
 	case CR_GRANDCROSS:
