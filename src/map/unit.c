@@ -1346,7 +1346,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 		 * if we cancel it from nodamage_id, so it has to be here for it to not display the animation.
 		 **/
 		if( skill_num == AL_PNEUMA && map_getcell(src->m, skill_x, skill_y, CELL_CHKLANDPROTECTOR) ) {
-			clif_skill_fail(sd,skill_num,0,0);
+			clif_skill_fail(sd,skill_num,USESKILL_FAIL_LEVEL,0);
 			return 0;
 		}
 	}

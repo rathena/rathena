@@ -14971,7 +14971,7 @@ int clif_magicdecoy_list(struct map_session_data *sd, int skill_lv, short x, sho
 		WFIFOW(fd,2) = c * 2 + 4;
 		WFIFOSET(fd, WFIFOW(fd, 2));
 	} else {
-		clif_skill_fail(sd,NC_MAGICDECOY,0,0);
+		clif_skill_fail(sd,NC_MAGICDECOY,USESKILL_FAIL_LEVEL,0);
 		return 0;
 	}
 
@@ -15005,7 +15005,7 @@ int clif_poison_list(struct map_session_data *sd, int skill_lv) {
 		WFIFOW(fd,2) = c * 2 + 4;
 		WFIFOSET(fd, WFIFOW(fd, 2));
 	} else {
-		clif_skill_fail(sd,GC_POISONINGWEAPON,0x2b,0);
+		clif_skill_fail(sd,GC_POISONINGWEAPON,USESKILL_FAIL_GUILLONTINE_POISON,0);
 		return 0;
 	}
 
