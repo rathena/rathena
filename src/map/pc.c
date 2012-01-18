@@ -8182,6 +8182,17 @@ void pc_overheat(struct map_session_data *sd, int val) {
 
 	return;
 }
+
+/**
+ * Check if player is autolooting given itemID.
+ */
+bool pc_isautolooting(struct map_session_data *sd, int nameid)
+{
+	int i;
+	ARR_FIND(0, AUTOLOOTITEM_SIZE, i, sd->state.autolootid[i] == nameid);
+	return (i != AUTOLOOTITEM_SIZE);
+}
+
 int pc_split_str(char *str,char **val,int num)
 {
 	int i;

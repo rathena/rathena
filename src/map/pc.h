@@ -25,6 +25,9 @@
 //For Warlock
 #define MAX_SPELLBOOK 10
 
+//Max number of items on @autolootid list
+#define AUTOLOOTITEM_SIZE 10
+
 struct weapon_data {
 	int atkmods[3];
 	// all the variables except atkmods get zero'ed in each call of status_calc_pc
@@ -139,7 +142,7 @@ struct map_session_data {
 		unsigned int callshop : 1; // flag to indicate that a script used callshop; on a shop
 		short pmap; // Previous map on Map Change
 		unsigned short autoloot;
-		unsigned short autolootid; // [Zephyrus]
+		unsigned short autolootid[AUTOLOOTITEM_SIZE]; // [Zephyrus]
 		unsigned short autobonus; //flag to indicate if an autobonus is activated. [Inkfish]
 		struct guild *gmaster_flag;
 		unsigned int prevend : 1;//used to flag wheather you've spent 40sp to open the vending or not.
@@ -838,6 +841,7 @@ void pc_inventory_rental_add(struct map_session_data *sd, int seconds);
 
 int pc_read_motd(void); // [Valaris]
 int pc_disguise(struct map_session_data *sd, int class_);
+bool pc_isautolooting(struct map_session_data *sd, int nameid);
 /**
  * Mechanic (Mado Gear)
  **/

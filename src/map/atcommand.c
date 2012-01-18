@@ -6239,32 +6239,87 @@ ACMD_FUNC(autoloot)
 ACMD_FUNC(autolootitem)
 {
 	struct item_data *item_data = NULL;
+	int i;
+	int action = 3; // 1=add, 2=remove, 3=help+list (default), 4=reset
 
-	if (!message || !*message) {
-		if (sd->state.autolootid) {
-			sd->state.autolootid = 0;
-			clif_displaymessage(fd, "Autolootitem has been turned OFF.");
-		} else
-			clif_displaymessage(fd, "Please, enter item name or it's ID (usage: @alootid <item_name_or_ID>).");
-
-		return -1;
+	if (message && *message) {
+		if (message[0] == '+') {
+			message++;
+			action = 1;
+		}
+		else if (message[0] == '-') {
+			message++;
+			action = 2;
+		}
+		else if (!strcmp(message,"reset"))
+			action = 4;
 	}
 
-	if ((item_data = itemdb_exists(atoi(message))) == NULL)
-		item_data = itemdb_searchname(message);
-
-	if (!item_data) {
-		// No items founds in the DB with Id or Name
-		clif_displaymessage(fd, "Item not found.");
-		return -1;
+	if (action < 3) // add or remove
+	{
+		if ((item_data = itemdb_exists(atoi(message))) == NULL)
+			item_data = itemdb_searchname(message);
+		if (!item_data) {
+			// No items founds in the DB with Id or Name
+			clif_displaymessage(fd, "Item not found.");
+			return -1;
+		}
 	}
 
-	sd->state.autolootid = item_data->nameid; // Autoloot Activated
-
-	sprintf(atcmd_output, "Autolooting item: '%s'/'%s' (%d)",
-		item_data->name, item_data->jname, item_data->nameid);
-	clif_displaymessage(fd, atcmd_output);
-
+	switch(action) {
+	case 1:
+		ARR_FIND(0, AUTOLOOTITEM_SIZE, i, sd->state.autolootid[i] == item_data->nameid);
+		if (i != AUTOLOOTITEM_SIZE) {
+			clif_displaymessage(fd, "You're already autolooting this item.");
+			return -1;
+		}
+		ARR_FIND(0, AUTOLOOTITEM_SIZE, i, sd->state.autolootid[i] == 0);
+		if (i == AUTOLOOTITEM_SIZE) {
+			clif_displaymessage(fd, "Your autolootitem list is full. Remove some items first with @autolootid -<item name or ID>.");
+			return -1;
+		}
+		sd->state.autolootid[i] = item_data->nameid; // Autoloot Activated
+		sprintf(atcmd_output, "Autolooting item: '%s'/'%s' {%d}", item_data->name, item_data->jname, item_data->nameid);
+		clif_displaymessage(fd, atcmd_output);
+		break;
+	case 2:
+		ARR_FIND(0, AUTOLOOTITEM_SIZE, i, sd->state.autolootid[i] == item_data->nameid);
+		if (i == AUTOLOOTITEM_SIZE) {
+			clif_displaymessage(fd, "You're currently not autolooting this item.");
+			return -1;
+		}
+		sd->state.autolootid[i] = 0;
+		sprintf(atcmd_output, "Removed item: '%s'/'%s' {%d} from your autolootitem list.", item_data->name, item_data->jname, item_data->nameid);
+		clif_displaymessage(fd, atcmd_output);
+		break;
+	case 3:
+		sprintf(atcmd_output, "You can have %d items on your autolootitem list.", AUTOLOOTITEM_SIZE);
+		clif_displaymessage(fd, atcmd_output);
+		clif_displaymessage(fd, "To add item to the list, use \"@alootid +<item name or ID>\". To remove item use \"@alootid -<item name or ID>\".");
+		clif_displaymessage(fd, "\"@alootid reset\" will clear your autolootitem list.");
+		ARR_FIND(0, AUTOLOOTITEM_SIZE, i, sd->state.autolootid[i] != 0);
+		if (i == AUTOLOOTITEM_SIZE) {
+			clif_displaymessage(fd, "Your autolootitem list is empty.");
+		} else {
+			clif_displaymessage(fd, "Items on your autolootitem list:");
+			for(i = 0; i < AUTOLOOTITEM_SIZE; i++)
+			{
+				if (sd->state.autolootid[i] == 0)
+					continue;
+				if (!(item_data = itemdb_exists(sd->state.autolootid[i]))) {
+					ShowDebug("Non-existant item %d on autolootitem list (account_id: %d, char_id: %d)", sd->state.autolootid[i], sd->status.account_id, sd->status.char_id);
+					continue;
+				}
+				sprintf(atcmd_output, "'%s'/'%s' {%d}", item_data->name, item_data->jname, item_data->nameid);
+				clif_displaymessage(fd, atcmd_output);
+			}
+		}
+		break;
+	case 4:
+		memset(sd->state.autolootid, 0, sizeof(sd->state.autolootid));
+		clif_displaymessage(fd, "Your autolootitem list has been reset.");
+		break;
+	}
 	return 0;
 }
 /**
