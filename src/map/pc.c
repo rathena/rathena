@@ -3282,9 +3282,9 @@ int pc_insert_card(struct map_session_data* sd, int idx_card, int idx_equip)
 	}
 	else
 	{// success
-		log_pick_pc(sd, LOG_TYPE_OTHER, sd->status.inventory[idx_equip].nameid, -1, &sd->status.inventory[idx_equip]);
+		log_pick_pc(sd, LOG_TYPE_OTHER, -1, &sd->status.inventory[idx_equip]);
 		sd->status.inventory[idx_equip].card[i] = nameid;
-		log_pick_pc(sd, LOG_TYPE_OTHER, sd->status.inventory[idx_equip].nameid, 1, &sd->status.inventory[idx_equip]);
+		log_pick_pc(sd, LOG_TYPE_OTHER,  1, &sd->status.inventory[idx_equip]);
 		clif_insert_card(sd,idx_equip,idx_card,0);
 	}
 
@@ -3587,7 +3587,7 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount,e_l
 		sd->inventory_data[i] = data;
 		clif_additem(sd,i,amount,0);
 	}
-	log_pick_pc(sd, log_type, sd->status.inventory[i].nameid, amount, &sd->status.inventory[i]);
+	log_pick_pc(sd, log_type, amount, &sd->status.inventory[i]);
 
 	sd->weight += w;
 	clif_updatestatus(sd,SP_WEIGHT);
@@ -3606,7 +3606,7 @@ int pc_delitem(struct map_session_data *sd,int n,int amount,int type, short reas
 	if(sd->status.inventory[n].nameid==0 || amount <= 0 || sd->status.inventory[n].amount<amount || sd->inventory_data[n] == NULL)
 		return 1;
 
-	log_pick_pc(sd, log_type, sd->status.inventory[n].nameid, -amount, &sd->status.inventory[n]);
+	log_pick_pc(sd, log_type, -amount, &sd->status.inventory[n]);
 
 	sd->status.inventory[n].amount -= amount;
 	sd->weight -= sd->inventory_data[n]->weight*amount ;
@@ -4039,7 +4039,7 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 		sd->cart_num++;
 		clif_cart_additem(sd,i,amount,0);
 	}
-	log_pick_pc(sd, log_type, sd->status.cart[i].nameid, amount, &sd->status.cart[i]);
+	log_pick_pc(sd, log_type, amount, &sd->status.cart[i]);
 	
 	sd->cart_weight += w;
 	clif_updatestatus(sd,SP_CARTINFO);
@@ -4058,7 +4058,7 @@ int pc_cart_delitem(struct map_session_data *sd,int n,int amount,int type,e_log_
 	   sd->status.cart[n].amount<amount)
 		return 1;
 
-	log_pick_pc(sd, log_type, sd->status.cart[n].nameid, -amount, &sd->status.cart[n]);
+	log_pick_pc(sd, log_type, -amount, &sd->status.cart[n]);
 
 	sd->status.cart[n].amount -= amount;
 	sd->cart_weight -= itemdb_weight(sd->status.cart[n].nameid)*amount ;
@@ -4226,7 +4226,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 		party_foreachsamemap(pc_show_steal,sd,AREA_SIZE,sd,tmp_item.nameid);
 
 	//Logs items, Stolen from mobs [Lupus]
-	log_pick_mob(md, LOG_TYPE_PICKDROP_MONSTER, itemid, -1, NULL);
+	log_pick_mob(md, LOG_TYPE_PICKDROP_MONSTER, -1, &tmp_item);
 		
 	//A Rare Steal Global Announce by Lupus
 	if(md->db->dropitem[i].p<=battle_config.rare_drop_announce) {

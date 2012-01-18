@@ -6907,7 +6907,7 @@ BUILDIN_FUNC(successrefitem)
 		ep=sd->status.inventory[i].equip;
 
 		//Logs items, got from (N)PC scripts [Lupus]
-		log_pick_pc(sd, LOG_TYPE_SCRIPT, sd->status.inventory[i].nameid, -1, &sd->status.inventory[i]);
+		log_pick_pc(sd, LOG_TYPE_SCRIPT, -1, &sd->status.inventory[i]);
 
 		sd->status.inventory[i].refine++;
 		pc_unequipitem(sd,i,2); // status calc will happen in pc_equipitem() below
@@ -6916,7 +6916,7 @@ BUILDIN_FUNC(successrefitem)
 		clif_delitem(sd,i,1,3);
 
 		//Logs items, got from (N)PC scripts [Lupus]
-		log_pick_pc(sd, LOG_TYPE_SCRIPT, sd->status.inventory[i].nameid, 1, &sd->status.inventory[i]);
+		log_pick_pc(sd, LOG_TYPE_SCRIPT, 1, &sd->status.inventory[i]);
 
 		clif_additem(sd,i,1,0);
 		pc_equipitem(sd,i,ep);

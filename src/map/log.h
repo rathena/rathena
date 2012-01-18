@@ -53,9 +53,8 @@ e_log_pick_type;
 
 
 /// new logs
-void log_pick_pc(struct map_session_data* sd, e_log_pick_type type, int nameid, int amount, struct item* itm);
-void log_pick_mob(struct mob_data* md, e_log_pick_type type, int nameid, int amount, struct item* itm);
-void log_pick(struct block_list* bl, e_log_pick_type type, int nameid, int amount, struct item* itm);
+void log_pick_pc(struct map_session_data* sd, e_log_pick_type type, int amount, struct item* itm);
+void log_pick_mob(struct mob_data* md, e_log_pick_type type, int amount, struct item* itm);
 void log_zeny(struct map_session_data* sd, e_log_pick_type type, struct map_session_data* src_sd, int amount);
 
 void log_npc(struct map_session_data* sd, const char *message);
