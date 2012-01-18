@@ -4987,6 +4987,56 @@ const char* job_name(int class_)
 	case JOB_SOUL_LINKER:
 		return msg_txt(618);
 
+	case JOB_RUNE_KNIGHT:
+	case JOB_WARLOCK:
+	case JOB_RANGER:
+	case JOB_ARCH_BISHOP:
+	case JOB_MECHANIC:
+	case JOB_GUILLOTINE_CROSS:
+		return msg_txt(625 - JOB_RUNE_KNIGHT + class_);
+	
+	case JOB_RUNE_KNIGHT_T:
+	case JOB_WARLOCK_T:
+	case JOB_RANGER_T:
+	case JOB_ARCH_BISHOP_T:
+	case JOB_MECHANIC_T:
+	case JOB_GUILLOTINE_CROSS_T:
+		return msg_txt(625 - JOB_RUNE_KNIGHT_T + class_);
+
+	case JOB_ROYAL_GUARD:
+	case JOB_SORCERER:
+	case JOB_MINSTREL:
+	case JOB_WANDERER:
+	case JOB_SURA:
+	case JOB_GENETIC:
+	case JOB_SHADOW_CHASER:
+		return msg_txt(631 - JOB_ROYAL_GUARD + class_);
+	
+	case JOB_ROYAL_GUARD_T:
+	case JOB_SORCERER_T:
+	case JOB_MINSTREL_T:
+	case JOB_WANDERER_T:
+	case JOB_SURA_T:
+	case JOB_GENETIC_T:
+	case JOB_SHADOW_CHASER_T:
+		return msg_txt(631 - JOB_ROYAL_GUARD_T + class_);
+	
+	case JOB_RUNE_KNIGHT2:
+	case JOB_RUNE_KNIGHT_T2:
+		return msg_txt(625);
+
+	case JOB_ROYAL_GUARD2:
+	case JOB_ROYAL_GUARD_T2:
+		return msg_txt(631);
+
+	case JOB_RANGER2:
+	case JOB_RANGER_T2:
+		return msg_txt(627);
+
+	case JOB_MECHANIC2:
+	case JOB_MECHANIC_T2:
+		return msg_txt(629);
+
 	default:
 		return msg_txt(651);
 	}
