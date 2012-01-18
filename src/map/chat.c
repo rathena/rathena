@@ -58,7 +58,8 @@ static struct chat_data* chat_createchat(struct block_list* bl, const char* titl
 
 	map_addiddb(&cd->bl);
 
-	cd->kick_list = idb_alloc(DB_OPT_BASE);
+	if( bl->type != BL_NPC )
+		cd->kick_list = idb_alloc(DB_OPT_BASE);
 	
 	return cd;
 }
@@ -144,7 +145,7 @@ int chat_joinchat(struct map_session_data* sd, int chatid, const char* pass)
 		return 0;
 	}
 
-	if( idb_exists(cd->kick_list,sd->status.char_id) ) {
+	if( cd->owner->type != BL_NPC && idb_exists(cd->kick_list,sd->status.char_id) ) {
 		clif_joinchatfail(sd,2);//You have been kicked out of the room.
 		return 0;
 	}
@@ -200,10 +201,9 @@ int chat_leavechat(struct map_session_data* sd, bool kicked)
 		cd->usersd[i] = cd->usersd[i+1];
 
 
-	if( cd->users == 0 && cd->owner->type == BL_PC )
-	{	// Delete empty chatroom
+	if( cd->users == 0 && cd->owner->type == BL_PC ) { // Delete empty chatroom
 		clif_clearchat(cd, 0);
-		cd->kick_list->destroy(cd->kick_list, NULL);
+		db_destroy(cd->kick_list);
 		map_deliddb(&cd->bl);
 		map_delblock(&cd->bl);
 		map_freeblock(&cd->bl);
@@ -331,22 +331,19 @@ int chat_createnpcchat(struct npc_data* nd, const char* title, int limit, bool p
 	struct chat_data* cd;
 	nullpo_ret(nd);
 
-	if( nd->chat_id )
-	{
+	if( nd->chat_id ) {
 		ShowError("chat_createnpcchat: npc '%s' already has a chatroom, cannot create new one!\n", nd->exname);
 		return 0;
 	}
 
-	if( zeny > MAX_ZENY || maxLvl > MAX_LEVEL )
-	{
+	if( zeny > MAX_ZENY || maxLvl > MAX_LEVEL ) {
 		ShowError("chat_createnpcchat: npc '%s' has a required lvl or amount of zeny over the max limit!\n", nd->exname);
 		return 0;
 	}
 
 	cd = chat_createchat(&nd->bl, title, "", limit, pub, trigger, ev, zeny, minLvl, maxLvl);
 
-	if( cd )
-	{
+	if( cd ) {
 		nd->chat_id = cd->bl.id;
 		clif_dispchat(cd,0);
 	}
