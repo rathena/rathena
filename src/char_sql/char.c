@@ -3121,7 +3121,7 @@ int parse_frommap(int fd)
 			{// auth ok
 				cd->sex = sex;
 
-				WFIFOHEAD(fd,24 + sizeof(struct mmo_charstatus));
+				WFIFOHEAD(fd,25 + sizeof(struct mmo_charstatus));
 				WFIFOW(fd,0) = 0x2afd;
 				WFIFOW(fd,2) = 25 + sizeof(struct mmo_charstatus);
 				WFIFOL(fd,4) = account_id;
