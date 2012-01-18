@@ -23,6 +23,7 @@ struct chat_data {
 	struct map_session_data* usersd[20];
 	struct block_list* owner;
 	char npc_event[EVENT_NAME_LENGTH];
+	DBMap* kick_list;				//DBMap of users who were kicked from this chat
 };
 
 
