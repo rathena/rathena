@@ -437,9 +437,6 @@ set( DEVELOPMENT_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.txt"
 	"${CMAKE_CURRENT_SOURCE_DIR}/configure"
 	"${CMAKE_CURRENT_SOURCE_DIR}/configure.in"
-	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-6.dsw"
-	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-7.1.sln"
-	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-8.sln"
 	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-9.sln"
 	"${CMAKE_CURRENT_SOURCE_DIR}/rAthena-10.sln"
 	)
@@ -448,15 +445,11 @@ set( DEVELOPMENT_DIRECTORIES
 	"conf/import-tmpl"
 	"save-tmpl"
 	"src"
-	"vcproj-6"
-	"vcproj-7.1"
-	"vcproj-8"
 	"vcproj-9"
 	"vcproj-10"
 	)
 set( RUNTIME_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/athena-start"
-	"${CMAKE_CURRENT_SOURCE_DIR}/Changelog-Trunk.txt"
 	"${CMAKE_CURRENT_SOURCE_DIR}/char-server.sh"
 	"${CMAKE_CURRENT_SOURCE_DIR}/charserv-sql.bat"
 	"${CMAKE_CURRENT_SOURCE_DIR}/charserv.bat"
