@@ -1,7 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_INIT(eAthena)
+AC_INIT(rAthena)
 AC_REVISION($Revision$)
 AC_PREREQ([2.59])
 AC_CONFIG_SRCDIR([src/common/cbasetypes.h])
@@ -73,6 +73,26 @@ AC_ARG_ENABLE(
 		esac
 	],
 	[enable_debug="no"]
+)
+
+#
+# Buildbot
+#
+AC_ARG_ENABLE(
+	[buildbot],
+	AC_HELP_STRING(
+		[--enable-buildbot@<:@=ARG@:>@],
+		[(available options: yes, no)]
+	),
+	[
+		enable_buildbot="$enableval"
+		case $enableval in
+			"no");;
+			"yes");;
+			*) AC_MSG_ERROR([[invalid argument --enable-buildbot=$enableval... stopping]]);;
+		esac
+	],
+	[enable_buildbot="no"]
 )
 
 #
@@ -511,6 +531,17 @@ case $enable_debug in
 		;;
 esac
 
+#
+# Buildbot
+#
+case $enable_buildbot in
+	"no")
+		# default value
+		;;
+	"yes")
+		CFLAGS="$CFLAGS -DBUILDBOT"
+		;;
+esac
 
 #
 # RDTSC
