@@ -43,10 +43,10 @@ void rnd_seed(uint32 seed)
 }
 
 
-/// Generates a random number in the interval [0, UINT32_MAX]
-uint32 rnd(void)
+/// Generates a random number in the interval [0, SINT32_MAX]
+int32 rnd(void)
 {
-	return (uint32)genrand_int32();
+	return (int32)genrand_int31();
 }
 
 
