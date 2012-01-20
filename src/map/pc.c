@@ -1188,10 +1188,8 @@ int pc_reg_received(struct map_session_data *sd)
 	status_calc_pc(sd,1);
 	chrif_scdata_request(sd->status.account_id, sd->status.char_id);
 
-#ifndef TXT_ONLY
 	intif_Mail_requestinbox(sd->status.char_id, 0); // MAIL SYSTEM - Request Mail Inbox
 	intif_request_questlog(sd);
-#endif
 
 	if (sd->state.connect_new == 0 && sd->fd)
 	{	//Character already loaded map! Gotta trigger LoadEndAck manually.
@@ -1199,9 +1197,8 @@ int pc_reg_received(struct map_session_data *sd)
 		clif_parse_LoadEndAck(sd->fd, sd);
 	}
 
-#ifndef TXT_ONLY
 	pc_inventory_rentals(sd);
-#endif
+
 	return 1;
 }
 
@@ -7962,15 +7959,10 @@ int pc_divorce(struct map_session_data *sd)
 
 	if( (p_sd = map_charid2sd(sd->status.partner_id)) == NULL )
 	{ // Lets char server do the divorce
-#ifndef TXT_ONLY
 		if( chrif_divorce(sd->status.char_id, sd->status.partner_id) )
 			return -1; // No char server connected
 
 		return 0;
-#else
-		ShowError("pc_divorce: p_sd nullpo\n");
-		return -1;
-#endif
 	}
 
 	// Both players online, lets do the divorce manually

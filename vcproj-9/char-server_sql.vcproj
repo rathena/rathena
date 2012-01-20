@@ -357,91 +357,91 @@
 			Name="char_sql"
 			>
 			<File
-				RelativePath="..\src\char_sql\char.c"
+				RelativePath="..\src\char\char.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\char.h"
+				RelativePath="..\src\char\char.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\int_auction.c"
+				RelativePath="..\src\char\int_auction.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\int_auction.h"
+				RelativePath="..\src\char\int_auction.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\int_guild.c"
+				RelativePath="..\src\char\int_guild.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\int_guild.h"
+				RelativePath="..\src\char\int_guild.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\int_homun.c"
+				RelativePath="..\src\char\int_homun.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\int_homun.h"
+				RelativePath="..\src\char\int_homun.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\int_mail.c"
+				RelativePath="..\src\char\int_mail.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\int_mail.h"
+				RelativePath="..\src\char\int_mail.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\int_mercenary.c"
+				RelativePath="..\src\char\int_mercenary.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\int_mercenary.h"
+				RelativePath="..\src\char\int_mercenary.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\int_party.c"
+				RelativePath="..\src\char\int_party.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\int_party.h"
+				RelativePath="..\src\char\int_party.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\int_pet.c"
+				RelativePath="..\src\char\int_pet.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\int_pet.h"
+				RelativePath="..\src\char\int_pet.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\int_quest.c"
+				RelativePath="..\src\char\int_quest.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\int_quest.h"
+				RelativePath="..\src\char\int_quest.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\int_storage.c"
+				RelativePath="..\src\char\int_storage.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\int_storage.h"
+				RelativePath="..\src\char\int_storage.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\inter.c"
+				RelativePath="..\src\char\inter.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\char_sql\inter.h"
+				RelativePath="..\src\char\inter.h"
 				>
 			</File>
 		</Filter>

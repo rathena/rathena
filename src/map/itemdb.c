@@ -984,7 +984,6 @@ static int itemdb_readdb(void)
 	return 0;
 }
 
-#ifndef TXT_ONLY
 /*======================================
  * item_db table reading
  *======================================*/
@@ -1034,18 +1033,15 @@ static int itemdb_read_sqldb(void)
 
 	return 0;
 }
-#endif /* not TXT_ONLY */
 
 /*====================================
  * read all item-related databases
  *------------------------------------*/
 static void itemdb_read(void)
 {
-#ifndef TXT_ONLY
 	if (db_use_sqldbs)
 		itemdb_read_sqldb();
 	else
-#endif
 		itemdb_readdb();
 
 	itemdb_read_itemgroup();

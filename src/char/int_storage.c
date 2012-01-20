@@ -3,414 +3,184 @@
 
 #include "../common/mmo.h"
 #include "../common/malloc.h"
-#include "../common/socket.h"
-#include "../common/db.h"
-#include "../common/lock.h"
 #include "../common/showmsg.h"
-#include "../common/utils.h"
+#include "../common/socket.h"
+#include "../common/strlib.h" // StringBuf
+#include "../common/sql.h"
 #include "char.h"
 #include "inter.h"
-#include "int_storage.h"
-#include "int_pet.h"
-#include "int_guild.h"
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
-// ファイル名のデフォルト
-// inter_config_read()で再設定される
-char storage_txt[1024]="save/storage.txt";
-char guild_storage_txt[1024]="save/g_storage.txt";
 
-static DBMap* storage_db = NULL; // int account_id -> struct storage_data*
-static DBMap* guild_storage_db = NULL; // int guild_id -> struct guild_storage*
+#define STORAGE_MEMINC	16
 
-// 倉庫データを文字列に変換
-bool storage_tostr(char* str, int account_id, struct storage_data* p)
+/// Save storage data to sql
+int storage_tosql(int account_id, struct storage_data* p)
 {
-	int i,j;
-	char *str_p = str;
-	str_p += sprintf(str_p, "%d,%d\t", account_id, p->storage_amount);
-
-	for( i = 0; i < MAX_STORAGE; i++ )
-		if( p->items[i].nameid > 0 && p->items[i].amount > 0 )
-		{
-			str_p += sprintf(str_p, "%d,%d,%d,%d,%d,%d,%d",
-				p->items[i].id,p->items[i].nameid,p->items[i].amount,p->items[i].equip,
-				p->items[i].identify,p->items[i].refine,p->items[i].attribute);
-			for(j=0; j<MAX_SLOTS; j++)
-				str_p += sprintf(str_p,",%d",p->items[i].card[j]);
-			str_p += sprintf(str_p," ");
-		}
-
-	*(str_p++)='\t';
-
-	*str_p='\0';
-
-	return true;
-}
-
-// 文字列を倉庫データに変換
-bool storage_fromstr(char* str, int* account_id, struct storage_data* p)
-{
-	int tmp_int[256];
-	char tmp_str[256];
-	int next,len,i,j;
-
-	if( sscanf(str, "%d,%d%n", &tmp_int[0], &tmp_int[1], &next) != 2 )
-		return false;
-
-	*account_id = tmp_int[0];
-	p->storage_amount = tmp_int[1]; //FIXME: limit to MAX_STORAGE?
-
-	next++;
-	for( i = 0; str[next] && str[next]!='\t' && i < MAX_STORAGE; i++ )
-	{
-		if(sscanf(str + next, "%d,%d,%d,%d,%d,%d,%d%[0-9,-]%n",
-		      &tmp_int[0], &tmp_int[1], &tmp_int[2], &tmp_int[3],
-		      &tmp_int[4], &tmp_int[5], &tmp_int[6], tmp_str, &len) != 8)
-			  return false;
-
-		p->items[i].id = tmp_int[0];
-		p->items[i].nameid = tmp_int[1];
-		p->items[i].amount = tmp_int[2];
-		p->items[i].equip = tmp_int[3];
-		p->items[i].identify = tmp_int[4];
-		p->items[i].refine = tmp_int[5];
-		p->items[i].attribute = tmp_int[6];
-			
-		for(j = 0; j < MAX_SLOTS && tmp_str[0] && sscanf(tmp_str, ",%d%[0-9,-]",&tmp_int[0], tmp_str) > 0; j++)
-			p->items[i].card[j] = tmp_int[0];
-			
-		next += len;
-		if (str[next] == ' ')
-			next++;
-	}
-
-	if( i >= MAX_STORAGE && str[next] && str[next] != '\t' )
-		ShowWarning("storage_fromstr: Found a storage line with more items than MAX_STORAGE (%d), remaining items have been discarded!\n", MAX_STORAGE);
-
-	return true;
-}
-
-int guild_storage_tostr(char *str,struct guild_storage *p)
-{
-	int i,j,f=0;
-	char *str_p = str;
-	str_p+=sprintf(str,"%d,%d\t",p->guild_id,p->storage_amount);
-
-	for(i=0;i<MAX_GUILD_STORAGE;i++)
-		if( (p->items[i].nameid) && (p->items[i].amount) ){
-			str_p += sprintf(str_p,"%d,%d,%d,%d,%d,%d,%d",
-				p->items[i].id,p->items[i].nameid,p->items[i].amount,p->items[i].equip,
-				p->items[i].identify,p->items[i].refine,p->items[i].attribute);
-			for(j=0; j<MAX_SLOTS; j++)
-				str_p += sprintf(str_p,",%d",p->items[i].card[j]);
-			str_p += sprintf(str_p," ");
-			f++;
-		}
-
-	*(str_p++)='\t';
-
-	*str_p='\0';
-	if(!f)
-		str[0]=0;
+	memitemdata_to_sql(p->items, MAX_STORAGE, account_id, TABLE_STORAGE);
 	return 0;
 }
 
-int guild_storage_fromstr(char *str,struct guild_storage *p)
+/// Load storage data to mem
+int storage_fromsql(int account_id, struct storage_data* p)
 {
-	int tmp_int[256];
-	char tmp_str[256];
-	int set,next,len,i,j;
+	StringBuf buf;
+	struct item* item;
+	char* data;
+	int i;
+	int j;
 
-	set=sscanf(str,"%d,%d%n",&tmp_int[0],&tmp_int[1],&next);
-	p->storage_amount=tmp_int[1];
+	memset(p, 0, sizeof(struct storage_data)); //clean up memory
+	p->storage_amount = 0;
 
-	if(set!=2)
-		return 1;
-	if(str[next]=='\n' || str[next]=='\r')
-		return 0;
-	next++;
-	for(i=0;str[next] && str[next]!='\t' && i < MAX_GUILD_STORAGE;i++){
-		if(sscanf(str + next, "%d,%d,%d,%d,%d,%d,%d%[0-9,-]%n",
-			&tmp_int[0], &tmp_int[1], &tmp_int[2], &tmp_int[3],
-			&tmp_int[4], &tmp_int[5], &tmp_int[6], tmp_str, &len) == 8)
+	// storage {`account_id`/`id`/`nameid`/`amount`/`equip`/`identify`/`refine`/`attribute`/`card0`/`card1`/`card2`/`card3`}
+	StringBuf_Init(&buf);
+	StringBuf_AppendStr(&buf, "SELECT `id`,`nameid`,`amount`,`equip`,`identify`,`refine`,`attribute`,`expire_time`");
+	for( j = 0; j < MAX_SLOTS; ++j )
+		StringBuf_Printf(&buf, ",`card%d`", j);
+	StringBuf_Printf(&buf, " FROM `%s` WHERE `account_id`='%d' ORDER BY `nameid`", storage_db, account_id);
+
+	if( SQL_ERROR == Sql_Query(sql_handle, StringBuf_Value(&buf)) )
+		Sql_ShowDebug(sql_handle);
+
+	StringBuf_Destroy(&buf);
+
+	for( i = 0; i < MAX_STORAGE && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
+	{
+		item = &p->items[i];
+		Sql_GetData(sql_handle, 0, &data, NULL); item->id = atoi(data);
+		Sql_GetData(sql_handle, 1, &data, NULL); item->nameid = atoi(data);
+		Sql_GetData(sql_handle, 2, &data, NULL); item->amount = atoi(data);
+		Sql_GetData(sql_handle, 3, &data, NULL); item->equip = atoi(data);
+		Sql_GetData(sql_handle, 4, &data, NULL); item->identify = atoi(data);
+		Sql_GetData(sql_handle, 5, &data, NULL); item->refine = atoi(data);
+		Sql_GetData(sql_handle, 6, &data, NULL); item->attribute = atoi(data);
+		Sql_GetData(sql_handle, 7, &data, NULL); item->expire_time = (unsigned int)atoi(data);
+		for( j = 0; j < MAX_SLOTS; ++j )
 		{
-			p->items[i].id = tmp_int[0];
-			p->items[i].nameid = tmp_int[1];
-			p->items[i].amount = tmp_int[2];
-			p->items[i].equip = tmp_int[3];
-			p->items[i].identify = tmp_int[4];
-			p->items[i].refine = tmp_int[5];
-			p->items[i].attribute = tmp_int[6];
-			for(j = 0; j < MAX_SLOTS && tmp_str[0] && sscanf(tmp_str, ",%d%[0-9,-]",&tmp_int[0], tmp_str) > 0; j++)
-				p->items[i].card[j] = tmp_int[0];
-			next += len;
-			if (str[next] == ' ')
-				next++;
+			Sql_GetData(sql_handle, 8+j, &data, NULL); item->card[j] = atoi(data);
 		}
-		else return 1;
 	}
-	if (i >= MAX_GUILD_STORAGE && str[next] && str[next]!='\t')
-		ShowWarning("guild_storage_fromstr: Found a storage line with more items than MAX_GUILD_STORAGE (%d), remaining items have been discarded!\n", MAX_GUILD_STORAGE);
+	p->storage_amount = i;
+	Sql_FreeResult(sql_handle);
+
+	ShowInfo("storage load complete from DB - id: %d (total: %d)\n", account_id, p->storage_amount);
+	return 1;
+}
+
+/// Save guild_storage data to sql
+int guild_storage_tosql(int guild_id, struct guild_storage* p)
+{
+	memitemdata_to_sql(p->items, MAX_GUILD_STORAGE, guild_id, TABLE_GUILD_STORAGE);
+	ShowInfo ("guild storage save to DB - guild: %d\n", guild_id);
 	return 0;
 }
 
-#ifndef TXT_SQL_CONVERT
-
-static void* create_storage(DBKey key, va_list args)
+/// Load guild_storage data to mem
+int guild_storage_fromsql(int guild_id, struct guild_storage* p)
 {
-	return (struct storage_data *) aCalloc(sizeof(struct storage_data), 1);
-}
+	StringBuf buf;
+	struct item* item;
+	char* data;
+	int i;
+	int j;
 
-static void* create_guildstorage(DBKey key, va_list args)
-{
-	struct guild_storage* gs = NULL;
-	gs = (struct guild_storage *) aCalloc(sizeof(struct guild_storage), 1);
-	gs->guild_id=key.i;
-	return gs;
-}
+	memset(p, 0, sizeof(struct guild_storage)); //clean up memory
+	p->storage_amount = 0;
+	p->guild_id = guild_id;
 
-/// Loads storage data into the provided data structure.
-/// If data doesn't exist, the destination is zeroed and false is returned.
-bool storage_load(int account_id, struct storage_data* storage)
-{
-	struct storage_data* s = (struct storage_data*)idb_get(storage_db, account_id);
+	// storage {`guild_id`/`id`/`nameid`/`amount`/`equip`/`identify`/`refine`/`attribute`/`card0`/`card1`/`card2`/`card3`}
+	StringBuf_Init(&buf);
+	StringBuf_AppendStr(&buf, "SELECT `id`,`nameid`,`amount`,`equip`,`identify`,`refine`,`attribute`");
+	for( j = 0; j < MAX_SLOTS; ++j )
+		StringBuf_Printf(&buf, ",`card%d`", j);
+	StringBuf_Printf(&buf, " FROM `%s` WHERE `guild_id`='%d' ORDER BY `nameid`", guild_storage_db, guild_id);
 
-	if( s != NULL )
-		memcpy(storage, s, sizeof(*storage));
-	else
-		memset(storage, 0x00, sizeof(*storage));
+	if( SQL_ERROR == Sql_Query(sql_handle, StringBuf_Value(&buf)) )
+		Sql_ShowDebug(sql_handle);
 
-	return( s != NULL );
-}
+	StringBuf_Destroy(&buf);
 
-/// Writes provided data into storage cache.
-/// If data contains 0 items, any existing entry in cache is destroyed.
-/// If data contains 1+ items and no cache entry exists, a new one is created.
-bool storage_save(int account_id, struct storage_data* storage)
-{
-	if( storage->storage_amount > 0 )
+	for( i = 0; i < MAX_GUILD_STORAGE && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
 	{
-		struct storage_data* s = (struct storage_data*)idb_ensure(storage_db, account_id, create_storage);
-		memcpy(s, storage, sizeof(*storage));
+		item = &p->items[i];
+		Sql_GetData(sql_handle, 0, &data, NULL); item->id = atoi(data);
+		Sql_GetData(sql_handle, 1, &data, NULL); item->nameid = atoi(data);
+		Sql_GetData(sql_handle, 2, &data, NULL); item->amount = atoi(data);
+		Sql_GetData(sql_handle, 3, &data, NULL); item->equip = atoi(data);
+		Sql_GetData(sql_handle, 4, &data, NULL); item->identify = atoi(data);
+		Sql_GetData(sql_handle, 5, &data, NULL); item->refine = atoi(data);
+		Sql_GetData(sql_handle, 6, &data, NULL); item->attribute = atoi(data);
+		item->expire_time = 0;
+		for( j = 0; j < MAX_SLOTS; ++j )
+		{
+			Sql_GetData(sql_handle, 7+j, &data, NULL); item->card[j] = atoi(data);
+		}
 	}
-	else
-	{
-		idb_remove(storage_db, account_id);
-	}
+	p->storage_amount = i;
+	Sql_FreeResult(sql_handle);
 
-	return true;
+	ShowInfo("guild storage load complete from DB - id: %d (total: %d)\n", guild_id, p->storage_amount);
+	return 0;
 }
 
 //---------------------------------------------------------
-// 倉庫データを読み込む
-int inter_storage_init()
+// storage data initialize
+int inter_storage_sql_init(void)
 {
-	char line[65536];
-	int c = 0;
-	FILE *fp;
-
-	storage_db = idb_alloc(DB_OPT_RELEASE_DATA);
-
-	fp=fopen(storage_txt,"r");
-	if(fp==NULL){
-		ShowError("can't read : %s\n",storage_txt);
-		return 1;
-	}
-	while( fgets(line, sizeof(line), fp) )
-	{
-		int account_id;
-		struct storage_data *s;
-
-		s = (struct storage_data*)aCalloc(sizeof(struct storage_data), 1);
-		if( s == NULL )
-		{
-			ShowFatalError("int_storage: out of memory!\n");
-			exit(EXIT_FAILURE);
-		}
-
-		if( storage_fromstr(line,&account_id,s) )
-		{
-			idb_put(storage_db,account_id,s);
-		}
-		else{
-			ShowError("int_storage: broken data in [%s] line %d\n",storage_txt,c);
-			aFree(s);
-		}
-		c++;
-	}
-	fclose(fp);
-
-	c = 0;
-	guild_storage_db = idb_alloc(DB_OPT_RELEASE_DATA);
-
-	fp=fopen(guild_storage_txt,"r");
-	if(fp==NULL){
-		ShowError("can't read : %s\n",guild_storage_txt);
-		return 1;
-	}
-	while(fgets(line, sizeof(line), fp))
-	{
-		int tmp_int;
-		struct guild_storage *gs;
-
-		sscanf(line,"%d",&tmp_int);
-		gs = (struct guild_storage*)aCalloc(sizeof(struct guild_storage), 1);
-		if(gs==NULL){
-			ShowFatalError("int_storage: out of memory!\n");
-			exit(EXIT_FAILURE);
-		}
-//		memset(gs,0,sizeof(struct guild_storage)); aCalloc...
-		gs->guild_id=tmp_int;
-		if(gs->guild_id > 0 && guild_storage_fromstr(line,gs) == 0) {
-			idb_put(guild_storage_db,gs->guild_id,gs);
-		}
-		else{
-			ShowError("int_storage: broken data [%s] line %d\n",guild_storage_txt,c);
-			aFree(gs);
-		}
-		c++;
-	}
-	fclose(fp);
-
-	return 0;
+	return 1;
 }
-
-void inter_storage_final() {
-	if(storage_db)
-	{
-		storage_db->destroy(storage_db, NULL);
-	}
-	if(guild_storage_db)
-	{
-		guild_storage_db->destroy(guild_storage_db, NULL);
-	}
+// storage data finalize
+void inter_storage_sql_final(void)
+{
 	return;
 }
 
-//---------------------------------------------------------
-// 倉庫データを書き込む
-int inter_storage_save()
-{
-	struct DBIterator* iter;
-	DBKey key;
-	struct storage_data* data;
-	FILE *fp;
-	int lock;
-	if( (fp=lock_fopen(storage_txt,&lock))==NULL ){
-		ShowError("int_storage: can't write [%s] !!! data is lost !!!\n",storage_txt);
-		return 1;
-	}
-
-	iter = storage_db->iterator(storage_db);
-	for( data = (struct storage_data*)iter->first(iter,&key); iter->exists(iter); data = (struct storage_data*)iter->next(iter,&key) )
-	{
-		int account_id = key.i;
-		char line[65536];
-		storage_tostr(line,account_id,data);
-		fprintf(fp,"%s\n",line);
- 	}
-	iter->destroy(iter);
-
-	lock_fclose(fp,storage_txt,&lock);
-	return 0;
-}
-
-//---------------------------------------------------------
-// 倉庫データを書き込む
-int inter_guild_storage_save()
-{
-	struct DBIterator* iter;
-	struct guild_storage* data;
-	FILE *fp;
-	int  lock;
-	if( (fp=lock_fopen(guild_storage_txt,&lock))==NULL ){
-		ShowError("int_storage: can't write [%s] !!! data is lost !!!\n",guild_storage_txt);
-		return 1;
-	}
-
-	iter = guild_storage_db->iterator(guild_storage_db);
-	for( data = (struct guild_storage*)iter->first(iter,NULL); iter->exists(iter); data = (struct guild_storage*)iter->next(iter,NULL) )
-	{
-		char line[65536];
-		if(inter_guild_search(data->guild_id) != NULL)
-		{
-			guild_storage_tostr(line,data);
-			if(*line)
-				fprintf(fp,"%s\n",line);
-		}
-	}
-	iter->destroy(iter);
-
-	lock_fclose(fp,guild_storage_txt,&lock);
-	return 0;
-}
-
-// 倉庫データ削除
+// q?f[^?
 int inter_storage_delete(int account_id)
 {
-	struct storage_data *s = (struct storage_data*)idb_get(storage_db,account_id);
-	if(s) {
-		int i;
-		for(i=0;i<s->storage_amount;i++){
-			if(s->items[i].card[0] == (short)0xff00)
-				inter_pet_delete( MakeDWord(s->items[i].card[1],s->items[i].card[2]) );
-		}
-		idb_remove(storage_db,account_id);
-	}
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id`='%d'", storage_db, account_id) )
+		Sql_ShowDebug(sql_handle);
 	return 0;
 }
-
-// ギルド倉庫データ削除
 int inter_guild_storage_delete(int guild_id)
 {
-	struct guild_storage *gs = (struct guild_storage*)idb_get(guild_storage_db,guild_id);
-	if(gs) {
-		int i;
-		for(i=0;i<gs->storage_amount;i++){
-			if(gs->items[i].card[0] == (short)0xff00)
-				inter_pet_delete( MakeDWord(gs->items[i].card[1],gs->items[i].card[2]) );
-		}
-		idb_remove(guild_storage_db,guild_id);
-	}
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `guild_id`='%d'", guild_storage_db, guild_id) )
+		Sql_ShowDebug(sql_handle);
 	return 0;
-}
-
-struct guild_storage *guild2storage(int guild_id)
-{
-	struct guild_storage* gs = NULL;
-	if(inter_guild_search(guild_id) != NULL)
-		gs = (struct guild_storage*)idb_ensure(guild_storage_db, guild_id, create_guildstorage);
-	return gs;
 }
 
 //---------------------------------------------------------
-// map serverへの通信
+// packet from map server
 
 int mapif_load_guild_storage(int fd,int account_id,int guild_id)
 {
-	struct guild_storage *gs=guild2storage(guild_id);
-	WFIFOHEAD(fd, sizeof(struct guild_storage)+12);
-	WFIFOW(fd,0)=0x3818;
-	if(gs) {
-		WFIFOW(fd,2)=sizeof(struct guild_storage)+12;
-		WFIFOL(fd,4)=account_id;
-		WFIFOL(fd,8)=guild_id;
-		memcpy(WFIFOP(fd,12),gs,sizeof(struct guild_storage));
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `guild_id` FROM `%s` WHERE `guild_id`='%d'", guild_db, guild_id) )
+		Sql_ShowDebug(sql_handle);
+	else if( Sql_NumRows(sql_handle) > 0 )
+	{// guild exists
+		WFIFOHEAD(fd, sizeof(struct guild_storage)+12);
+		WFIFOW(fd,0) = 0x3818;
+		WFIFOW(fd,2) = sizeof(struct guild_storage)+12;
+		WFIFOL(fd,4) = account_id;
+		WFIFOL(fd,8) = guild_id;
+		guild_storage_fromsql(guild_id, (struct guild_storage*)WFIFOP(fd,12));
+		WFIFOSET(fd, WFIFOW(fd,2));
+		return 0;
 	}
-	else {
-		WFIFOW(fd,2)=12;
-		WFIFOL(fd,4)=account_id;
-		WFIFOL(fd,8)=0;
-	}
-	WFIFOSET(fd,WFIFOW(fd,2));
-
+	// guild does not exist
+	Sql_FreeResult(sql_handle);
+	WFIFOHEAD(fd, 12);
+	WFIFOW(fd,0) = 0x3818;
+	WFIFOW(fd,2) = 12;
+	WFIFOL(fd,4) = account_id;
+	WFIFOL(fd,8) = 0;
+	WFIFOSET(fd, 12);
 	return 0;
 }
-
 int mapif_save_guild_storage_ack(int fd,int account_id,int guild_id,int fail)
 {
 	WFIFOHEAD(fd,11);
@@ -423,7 +193,7 @@ int mapif_save_guild_storage_ack(int fd,int account_id,int guild_id,int fail)
 }
 
 //---------------------------------------------------------
-// map serverからの通信
+// packet from map server
 
 int mapif_parse_LoadGuildStorage(int fd)
 {
@@ -434,31 +204,35 @@ int mapif_parse_LoadGuildStorage(int fd)
 
 int mapif_parse_SaveGuildStorage(int fd)
 {
-	struct guild_storage *gs;
-	int guild_id, len;
+	int guild_id;
+	int len;
+
 	RFIFOHEAD(fd);
-	guild_id=RFIFOL(fd,8);
-	len=RFIFOW(fd,2);
-	if(sizeof(struct guild_storage)!=len-12){
-		ShowError("inter storage: data size error %d %d\n",sizeof(struct guild_storage),len-12);
+	guild_id = RFIFOL(fd,8);
+	len = RFIFOW(fd,2);
+
+	if( sizeof(struct guild_storage) != len - 12 )
+	{
+		ShowError("inter storage: data size error %d != %d\n", sizeof(struct guild_storage), len - 12);
 	}
-	else {
-		gs=guild2storage(guild_id);
-		if(gs) {
-			memcpy(gs,RFIFOP(fd,12),sizeof(struct guild_storage));
-			mapif_save_guild_storage_ack(fd,RFIFOL(fd,4),guild_id,0);
+	else
+	{
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `guild_id` FROM `%s` WHERE `guild_id`='%d'", guild_db, guild_id) )
+			Sql_ShowDebug(sql_handle);
+		else if( Sql_NumRows(sql_handle) > 0 )
+		{// guild exists
+			Sql_FreeResult(sql_handle);
+			guild_storage_tosql(guild_id, (struct guild_storage*)RFIFOP(fd,12));
+			mapif_save_guild_storage_ack(fd, RFIFOL(fd,4), guild_id, 0);
+			return 0;
 		}
-		else
-			mapif_save_guild_storage_ack(fd,RFIFOL(fd,4),guild_id,1);
+		Sql_FreeResult(sql_handle);
 	}
+	mapif_save_guild_storage_ack(fd, RFIFOL(fd,4), guild_id, 1);
 	return 0;
 }
 
-// map server からの通信
-// ・１パケットのみ解析すること
-// ・パケット長データはinter.cにセットしておくこと
-// ・パケット長チェックや、RFIFOSKIPは呼び出し元で行われるので行ってはならない
-// ・エラーなら0(false)、そうでないなら1(true)をかえさなければならない
+
 int inter_storage_parse_frommap(int fd)
 {
 	RFIFOHEAD(fd);
@@ -470,4 +244,3 @@ int inter_storage_parse_frommap(int fd)
 	}
 	return 1;
 }
-#endif //TXT_SQL_CONVERT

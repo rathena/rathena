@@ -1,28 +1,22 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _INT_STORAGE_H_
-#define _INT_STORAGE_H_
+#ifndef _INT_STORAGE_SQL_H_
+#define _INT_STORAGE_SQL_H_
 
 struct storage_data;
 struct guild_storage;
 
-int inter_storage_init(void);
-void inter_storage_final(void);
-int inter_storage_save(void);
-int inter_guild_storage_save(void);
+int inter_storage_sql_init(void);
+void inter_storage_sql_final(void);
 int inter_storage_delete(int account_id);
 int inter_guild_storage_delete(int guild_id);
+
 int inter_storage_parse_frommap(int fd);
 
-extern char storage_txt[1024];
-extern char guild_storage_txt[1024];
-
 //Exported for use in the TXT-SQL converter.
-bool storage_fromstr(char* str, int* account_id, struct storage_data* p);
-int guild_storage_fromstr(char *str,struct guild_storage *p);
+int storage_fromsql(int account_id, struct storage_data* p);
+int storage_tosql(int account_id,struct storage_data *p);
+int guild_storage_tosql(int guild_id, struct guild_storage *p);
 
-bool storage_load(int account_id, struct storage_data* storage);
-bool storage_save(int account_id, struct storage_data* storage);
-
-#endif /* _INT_STORAGE_H_ */
+#endif /* _INT_STORAGE_SQL_H_ */

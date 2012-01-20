@@ -3719,7 +3719,6 @@ static void mob_readdb(void)
 	}
 }
 
-#ifndef TXT_ONLY
 /*==========================================
  * mob_db table reading
  *------------------------------------------*/
@@ -3774,7 +3773,6 @@ static int mob_read_sqldb(void)
 	}
 	return 0;
 }
-#endif /* not TXT_ONLY */
 
 /*==========================================
  * MOB display graphic change data reading
@@ -4301,7 +4299,6 @@ static void mob_readskilldb(void) {
 	}
 }
 
-#ifndef TXT_ONLY
 /**
  * mob_skill_db table reading [CalciumKid]
  * not overly sure if this is all correct
@@ -4358,7 +4355,6 @@ static int mob_read_sqlskilldb(void)
 	}
 	return 0;
 }
-#endif /* not TXT_ONLY */
 
 /*==========================================
  * mob_race2_db.txt reading
@@ -4393,14 +4389,12 @@ static bool mob_readdb_race2(char* fields[], int columns, int current)
  */
 static void mob_load(void)
 {
-#ifndef TXT_ONLY
 	if (db_use_sqldbs)
 	{
 		mob_read_sqldb();
 		mob_read_sqlskilldb();
 	}
 	else
-#endif
 	{
 		mob_readdb();
 		mob_readskilldb();

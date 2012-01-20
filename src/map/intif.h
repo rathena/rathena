@@ -83,7 +83,6 @@ int intif_mercenary_request(int merc_id, int char_id);
 int intif_mercenary_delete(int merc_id);
 int intif_mercenary_save(struct s_mercenary *merc);
 
-#ifndef TXT_ONLY
 // MAIL SYSTEM
 int intif_Mail_requestinbox(int char_id, unsigned char flag);
 int intif_Mail_read(int mail_id);
@@ -97,7 +96,6 @@ int intif_Auction_register(struct auction_data *auction);
 int intif_Auction_cancel(int char_id, unsigned int auction_id);
 int intif_Auction_close(int char_id, unsigned int auction_id);
 int intif_Auction_bid(int char_id, const char* name, unsigned int auction_id, int bid);
-#endif
 
 int CheckForCharServer(void);
 

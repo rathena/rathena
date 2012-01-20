@@ -136,8 +136,6 @@ bool mapif_mercenary_delete(int merc_id)
 	return true;
 }
 
-#ifndef TXT_SQL_CONVERT
-
 static void mapif_mercenary_send(int fd, struct s_mercenary *merc, unsigned char flag)
 {
 	int size = sizeof(struct s_mercenary) + 5;
@@ -218,4 +216,3 @@ int inter_mercenary_parse_frommap(int fd)
 	}
 	return 1;
 }
-#endif //TXT_SQL_CONVERT

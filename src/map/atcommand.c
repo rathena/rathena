@@ -30,6 +30,7 @@
 #include "npc.h"
 #include "pet.h"
 #include "homunculus.h"
+#include "mail.h"
 #include "mercenary.h"
 #include "party.h"
 #include "guild.h"
@@ -38,9 +39,6 @@
 #include "trade.h"
 #include "unit.h"
 
-#ifndef TXT_ONLY
-#include "mail.h"
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -4333,9 +4331,7 @@ ACMD_FUNC(reloadbattleconf)
 	)
   	{	// Exp or Drop rates changed.
 		mob_reload(); //Needed as well so rate changes take effect.
-#ifndef TXT_ONLY
 		chrif_ragsrvinfo(battle_config.base_exp_rate, battle_config.job_exp_rate, battle_config.item_rate_common);
-#endif
 	}
 	clif_displaymessage(fd, msg_txt(255));
 	return 0;
@@ -7112,9 +7108,7 @@ ACMD_FUNC(misceffect)
 ACMD_FUNC(mail)
 {
 	nullpo_ret(sd);
-#ifndef TXT_ONLY
 	mail_openmail(sd);
-#endif
 	return 0;
 }
 
@@ -8434,9 +8428,7 @@ ACMD_FUNC(auction)
 {
 	nullpo_ret(sd);
 
-#ifndef TXT_ONLY
 	clif_Auction_openwindow(sd);
-#endif
 
 	return 0;
 }

@@ -12,12 +12,8 @@ typedef struct AccountDBIterator AccountDBIterator;
 
 
 // standard engines
-#ifdef WITH_TXT
-AccountDB* account_db_txt(void);
-#endif
-#ifdef WITH_SQL
 AccountDB* account_db_sql(void);
-#endif
+
 // extra engines (will probably use the other txt functions)
 #define ACCOUNTDB_CONSTRUCTOR_(engine) account_db_##engine
 #define ACCOUNTDB_CONSTRUCTOR(engine) ACCOUNTDB_CONSTRUCTOR_(engine)

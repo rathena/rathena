@@ -3,363 +3,311 @@
 
 #include "../common/mmo.h"
 #include "../common/malloc.h"
-#include "../common/socket.h"
-#include "../common/db.h"
-#include "../common/lock.h"
+#include "../common/strlib.h"
 #include "../common/showmsg.h"
+#include "../common/socket.h"
+#include "../common/utils.h"
+#include "../common/sql.h"
 #include "char.h"
 #include "inter.h"
-#include "int_homun.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-char homun_txt[1024]="save/homun.txt";
 
-static DBMap* homun_db; // int hom_id -> struct s_homunculus*
-static int homun_newid = 100;
-
-int inter_homun_tostr(char *str,struct s_homunculus *p)
+int inter_homunculus_sql_init(void)
 {
-	int i;
-
-	str+=sprintf(str,"%d,%d\t%s\t%d,%d,%d,%d,%d,"
-		"%u,%d,%d,%d,"
-		"%u,%d,%d,"
-		"%d,%d,%d,%d,%d,%d\t",
-		p->hom_id, p->class_, p->name,
-		p->char_id, p->hp, p->max_hp, p->sp, p->max_sp,
-	  	p->intimacy, p->hunger, p->skillpts, p->level,
-		p->exp, p->rename_flag, p->vaporize,
-		p->str, p->agi, p->vit, p->int_, p->dex, p->luk);
-
-	for (i = 0; i < MAX_HOMUNSKILL; i++)
-	{
-		if (p->hskill[i].id && p->hskill[i].flag == SKILL_FLAG_PERMANENT)
-			str+=sprintf(str,"%d,%d,", p->hskill[i].id, p->hskill[i].lv);
-	}
-
 	return 0;
 }
-
-int inter_homun_fromstr(char *str,struct s_homunculus *p)
+void inter_homunculus_sql_final(void)
 {
-	int i, next, len;
-	int tmp_int[25];
-	unsigned int tmp_uint[5];
-	char tmp_str[256];
-
-	memset(p,0,sizeof(struct s_homunculus));
-
-	i=sscanf(str,"%d,%d\t%127[^\t]\t%d,%d,%d,%d,%d,"
-		"%u,%d,%d,%d,"
-		"%u,%d,%d,"
-		"%d,%d,%d,%d,%d,%d\t%n",
-		&tmp_int[0],&tmp_int[1],tmp_str,
-		&tmp_int[2],&tmp_int[3],&tmp_int[4],&tmp_int[5],&tmp_int[6],
-		&tmp_uint[0],&tmp_int[7],&tmp_int[8],&tmp_int[9],
-		&tmp_uint[1],&tmp_int[10],&tmp_int[11],
-		&tmp_int[12],&tmp_int[13],&tmp_int[14],&tmp_int[15],&tmp_int[16],&tmp_int[17],
-		&next);
-
-	if(i!=21)
-		return 1;
-
-	p->hom_id = tmp_int[0];
-	p->class_ = tmp_int[1];
-	memcpy(p->name, tmp_str, NAME_LENGTH);
-
-	p->char_id = tmp_int[2];
-  	p->hp = tmp_int[3];
-	p->max_hp = tmp_int[4];
-	p->sp = tmp_int[5];
-	p->max_sp = tmp_int[6];
-
-	p->intimacy = tmp_uint[0];
-	p->hunger = tmp_int[7];
-	p->skillpts = tmp_int[8];
-	p->level = tmp_int[9];
-
-	p->exp = tmp_uint[1];
-	p->rename_flag = tmp_int[10];
-	p->vaporize = tmp_int[11];
-
-	p->str = tmp_int[12];
-	p->agi = tmp_int[13];
-	p->vit = tmp_int[14];
-	p->int_= tmp_int[15];
-	p->dex = tmp_int[16];
-	p->luk = tmp_int[17];
-
-	//Read skills.
-	while(str[next] && str[next] != '\n' && str[next] != '\r') {
-		if (sscanf(str+next, "%d,%d,%n", &tmp_int[0], &tmp_int[1], &len) != 2)
-			return 2;
-
-		if (tmp_int[0] >= HM_SKILLBASE && tmp_int[0] < HM_SKILLBASE+MAX_HOMUNSKILL)
-		{
-			i = tmp_int[0] - HM_SKILLBASE;
-			p->hskill[i].id = tmp_int[0];
-			p->hskill[i].lv = tmp_int[1];
-		} else
-			ShowError("Read Homun: Unsupported Skill ID %d for homunculus (Homun ID=%d)\n", tmp_int[0], p->hom_id);
-		next += len;
-		if (str[next] == ' ')
-			next++;
-	}
-	return 0;
-}
-
-int inter_homun_init()
-{
-	char line[8192];
-	struct s_homunculus *p;
-	FILE *fp;
-	int c=0;
-
-	homun_db= idb_alloc(DB_OPT_RELEASE_DATA);
-
-	if( (fp=fopen(homun_txt,"r"))==NULL )
-		return 1;
-	while(fgets(line, sizeof(line), fp))
-	{
-		p = (struct s_homunculus*)aCalloc(sizeof(struct s_homunculus), 1);
-		if(p==NULL){
-			ShowFatalError("int_homun: out of memory!\n");
-			exit(EXIT_FAILURE);
-		}
-		if(inter_homun_fromstr(line,p)==0 && p->hom_id>0){
-			if( p->hom_id >= homun_newid)
-				homun_newid=p->hom_id+1;
-			idb_put(homun_db,p->hom_id,p);
-		}else{
-			ShowError("int_homun: broken data [%s] line %d\n",homun_txt,c);
-			aFree(p);
-		}
-		c++;
-	}
-	fclose(fp);
-	return 0;
-}
-
-void inter_homun_final()
-{
-	homun_db->destroy(homun_db, NULL);
 	return;
 }
 
-int inter_homun_save_sub(DBKey key,void *data,va_list ap)
-{
-	char line[8192];
-	FILE *fp;
-	inter_homun_tostr(line,(struct s_homunculus *)data);
-	fp=va_arg(ap,FILE *);
-	fprintf(fp,"%s\n",line);
-	return 0;
-}
-
-int inter_homun_save()
-{
-	FILE *fp;
-	int lock;
-	if( (fp=lock_fopen(homun_txt,&lock))==NULL ){
-		ShowError("int_homun: can't write [%s] !!! data is lost !!!\n",homun_txt);
-		return 1;
-	}
-	homun_db->foreach(homun_db,inter_homun_save_sub,fp);
-	lock_fclose(fp,homun_txt,&lock);
-	return 0;
-}
-
-int inter_homun_delete(int hom_id)
-{
-	struct s_homunculus *p;
-	p = (struct s_homunculus*)idb_get(homun_db,hom_id);
-	if( p == NULL)
-		return 0;
-	idb_remove(homun_db,hom_id);
-	ShowInfo("Deleted homun (hom_id: %d)\n",hom_id);
-	return 1;
-}
-
-int mapif_homun_created(int fd,int account_id, struct s_homunculus *p)
+static void mapif_homunculus_created(int fd, int account_id, struct s_homunculus *sh, unsigned char flag)
 {
 	WFIFOHEAD(fd, sizeof(struct s_homunculus)+9);
-	WFIFOW(fd, 0) =0x3890;
+	WFIFOW(fd,0) = 0x3890;
 	WFIFOW(fd,2) = sizeof(struct s_homunculus)+9;
 	WFIFOL(fd,4) = account_id;
-	WFIFOB(fd,8)= p->hom_id?1:0;
-	memcpy(WFIFOP(fd,9), p, sizeof(struct s_homunculus));
+	WFIFOB(fd,8)= flag;
+	memcpy(WFIFOP(fd,9),sh,sizeof(struct s_homunculus));
 	WFIFOSET(fd, WFIFOW(fd,2));
-	return 0;
 }
 
-int mapif_homun_info(int fd,int account_id,struct s_homunculus *p)
+static void mapif_homunculus_deleted(int fd, int flag)
+{
+	WFIFOHEAD(fd, 3);
+	WFIFOW(fd, 0) = 0x3893;
+	WFIFOB(fd,2) = flag; //Flag 1 = success
+	WFIFOSET(fd, 3);
+}
+
+static void mapif_homunculus_loaded(int fd, int account_id, struct s_homunculus *hd)
 {
 	WFIFOHEAD(fd, sizeof(struct s_homunculus)+9);
 	WFIFOW(fd,0) = 0x3891;
 	WFIFOW(fd,2) = sizeof(struct s_homunculus)+9;
 	WFIFOL(fd,4) = account_id;
-	WFIFOB(fd,8) = 1; // account loaded with success
-
-	memcpy(WFIFOP(fd,9), p, sizeof(struct s_homunculus));
-	WFIFOSET(fd,WFIFOW(fd,2));
-	return 0;
+	if( hd != NULL )
+	{
+		WFIFOB(fd,8) = 1; // success
+		memcpy(WFIFOP(fd,9), hd, sizeof(struct s_homunculus));
+	}
+	else
+	{
+		WFIFOB(fd,8) = 0; // not found.
+		memset(WFIFOP(fd,9), 0, sizeof(struct s_homunculus));
+	}
+	WFIFOSET(fd, sizeof(struct s_homunculus)+9);
 }
 
-int mapif_homun_noinfo(int fd,int account_id)
-{
-	WFIFOHEAD(fd,sizeof(struct s_homunculus) + 9);
-	WFIFOW(fd,0)=0x3891;
-	WFIFOW(fd,2)=sizeof(struct s_homunculus) + 9;
-	WFIFOL(fd,4)=account_id;
-	WFIFOB(fd,8)=0;
-	memset(WFIFOP(fd,9),0,sizeof(struct s_homunculus));
-	WFIFOSET(fd,WFIFOW(fd,2));
-
-	return 0;
-}
-
-int mapif_save_homun_ack(int fd,int account_id,int flag)
+static void mapif_homunculus_saved(int fd, int account_id, bool flag)
 {
 	WFIFOHEAD(fd, 7);
-	WFIFOW(fd,0)=0x3892;
-	WFIFOL(fd,2)=account_id;
-	WFIFOB(fd,6)=flag;
-	WFIFOSET(fd,7);
-	return 0;
+	WFIFOW(fd,0) = 0x3892;
+	WFIFOL(fd,2) = account_id;
+	WFIFOB(fd,6) = flag; // 1:success, 0:failure
+	WFIFOSET(fd, 7);
 }
 
-int mapif_delete_homun_ack(int fd,int flag)
+static void mapif_homunculus_renamed(int fd, int account_id, int char_id, unsigned char flag, char* name)
 {
-	WFIFOHEAD(fd, 3);
-	WFIFOW(fd,0)=0x3893;
-	WFIFOB(fd,2)=flag;
-	WFIFOSET(fd,3);
-	return 0;
-}
-
-int mapif_rename_homun_ack(int fd, int account_id, int char_id, int flag, char *name){
 	WFIFOHEAD(fd, NAME_LENGTH+12);
-	WFIFOW(fd, 0) =0x3894;
-	WFIFOL(fd, 2) =account_id;
-	WFIFOL(fd, 6) =char_id;
-	WFIFOB(fd, 10) =flag;
-	memcpy(WFIFOP(fd, 11), name, NAME_LENGTH);
+	WFIFOW(fd, 0) = 0x3894;
+	WFIFOL(fd, 2) = account_id;
+	WFIFOL(fd, 6) = char_id;
+	WFIFOB(fd,10) = flag;
+	safestrncpy((char*)WFIFOP(fd,11), name, NAME_LENGTH);
 	WFIFOSET(fd, NAME_LENGTH+12);
-
-	return 0;
 }
 
-int mapif_create_homun(int fd)
+bool mapif_homunculus_save(struct s_homunculus* hd)
 {
-	struct s_homunculus *p;
-	p= (struct s_homunculus *) aCalloc(sizeof(struct s_homunculus), 1);
-	if(p==NULL){
-		ShowFatalError("int_homun: out of memory !\n");
-		//Sending the received data will pass hom_id == 0 <- fail.
-		mapif_homun_created(fd,RFIFOL(fd,4),(struct s_homunculus*)RFIFOP(fd,8));
-		return 0;
+	bool flag = true;
+	char esc_name[NAME_LENGTH*2+1];
+
+	Sql_EscapeStringLen(sql_handle, esc_name, hd->name, strnlen(hd->name, NAME_LENGTH));
+
+	if( hd->hom_id == 0 )
+	{// new homunculus
+		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `homunculus` "
+			"(`char_id`, `class`,`name`,`level`,`exp`,`intimacy`,`hunger`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `hp`,`max_hp`,`sp`,`max_sp`,`skill_point`, `rename_flag`, `vaporize`) "
+			"VALUES ('%d', '%d', '%s', '%d', '%u', '%u', '%d', '%d', %d, '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
+			hd->char_id, hd->class_, esc_name, hd->level, hd->exp, hd->intimacy, hd->hunger, hd->str, hd->agi, hd->vit, hd->int_, hd->dex, hd->luk,
+			hd->hp, hd->max_hp, hd->sp, hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize) )
+		{
+			Sql_ShowDebug(sql_handle);
+			flag = false;
+		}
+		else
+		{
+			hd->hom_id = (int)Sql_LastInsertId(sql_handle);
+		}
 	}
-	memcpy(p, RFIFOP(fd,8), sizeof(struct s_homunculus));
-	p->hom_id = homun_newid++; //New ID
-	idb_put(homun_db,p->hom_id,p);
-	mapif_homun_created(fd,RFIFOL(fd,4),p);
-	return 0;
-}
+	else
+	{
+		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `homunculus` SET `char_id`='%d', `class`='%d',`name`='%s',`level`='%d',`exp`='%u',`intimacy`='%u',`hunger`='%d', `str`='%d', `agi`='%d', `vit`='%d', `int`='%d', `dex`='%d', `luk`='%d', `hp`='%d',`max_hp`='%d',`sp`='%d',`max_sp`='%d',`skill_point`='%d', `rename_flag`='%d', `vaporize`='%d' WHERE `homun_id`='%d'",
+			hd->char_id, hd->class_, esc_name, hd->level, hd->exp, hd->intimacy, hd->hunger, hd->str, hd->agi, hd->vit, hd->int_, hd->dex, hd->luk,
+			hd->hp, hd->max_hp, hd->sp, hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize, hd->hom_id) )
+		{
+			Sql_ShowDebug(sql_handle);
+			flag = false;
+		}
+		else
+		{
+			SqlStmt* stmt;
+			int i;
 
-int mapif_load_homun(int fd)
-{
-	struct s_homunculus *p;
-	int account_id;
-	account_id = RFIFOL(fd,2);
-
-	p = (struct s_homunculus*)idb_get(homun_db,RFIFOL(fd,6));
-	if(p==NULL) {
-		mapif_homun_noinfo(fd,account_id);
-		return 0;
+			stmt = SqlStmt_Malloc(sql_handle);
+			if( SQL_ERROR == SqlStmt_Prepare(stmt, "REPLACE INTO `skill_homunculus` (`homun_id`, `id`, `lv`) VALUES (%d, ?, ?)", hd->hom_id) )
+				SqlStmt_ShowDebug(stmt);
+			for( i = 0; i < MAX_HOMUNSKILL; ++i )
+			{
+				if( hd->hskill[i].id > 0 && hd->hskill[i].lv != 0 )
+				{
+					SqlStmt_BindParam(stmt, 0, SQLDT_USHORT, &hd->hskill[i].id, 0);
+					SqlStmt_BindParam(stmt, 1, SQLDT_USHORT, &hd->hskill[i].lv, 0);
+					if( SQL_ERROR == SqlStmt_Execute(stmt) )
+					{
+						SqlStmt_ShowDebug(stmt);
+						SqlStmt_Free(stmt);
+						flag = false;
+						break;
+					}
+				}
+			}
+			SqlStmt_Free(stmt);
+		}
 	}
-	mapif_homun_info(fd,account_id,p);
-	return 0;
+
+	return flag;
 }
 
-static void* create_homun(DBKey key, va_list args) {
-	struct s_homunculus *p;
-	p=(struct s_homunculus *)aCalloc(sizeof(struct s_homunculus),1);
-	p->hom_id = key.i;
-	return p;
-}
-int mapif_save_homun(int fd,int account_id,struct s_homunculus *data)
+
+
+// Load an homunculus
+bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 {
-	struct s_homunculus *p;
-	int hom_id;
-	
-	if (data->hom_id == 0)
-		data->hom_id = homun_newid++;
-	hom_id = data->hom_id;
-	p = (struct s_homunculus*)idb_ensure(homun_db,hom_id,create_homun);
-	memcpy(p,data,sizeof(struct s_homunculus));
-	mapif_save_homun_ack(fd,account_id,1);
-	return 0;
+	int i;
+	char* data;
+	size_t len;
+
+	memset(hd, 0, sizeof(*hd));
+
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `homun_id`,`char_id`,`class`,`name`,`level`,`exp`,`intimacy`,`hunger`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `hp`,`max_hp`,`sp`,`max_sp`,`skill_point`,`rename_flag`, `vaporize` FROM `homunculus` WHERE `homun_id`='%u'", homun_id) )
+	{
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+
+	if( !Sql_NumRows(sql_handle) )
+	{	//No homunculus found.
+		Sql_FreeResult(sql_handle);
+		return false;
+	}
+	if( SQL_SUCCESS != Sql_NextRow(sql_handle) )
+	{
+		Sql_ShowDebug(sql_handle);
+		Sql_FreeResult(sql_handle);
+		return false;
+	}
+
+	hd->hom_id = homun_id;
+	Sql_GetData(sql_handle,  1, &data, NULL); hd->char_id = atoi(data);
+	Sql_GetData(sql_handle,  2, &data, NULL); hd->class_ = atoi(data);
+	Sql_GetData(sql_handle,  3, &data, &len); safestrncpy(hd->name, data, sizeof(hd->name));
+	Sql_GetData(sql_handle,  4, &data, NULL); hd->level = atoi(data);
+	Sql_GetData(sql_handle,  5, &data, NULL); hd->exp = atoi(data);
+	Sql_GetData(sql_handle,  6, &data, NULL); hd->intimacy = (unsigned int)strtoul(data, NULL, 10);
+	Sql_GetData(sql_handle,  7, &data, NULL); hd->hunger = atoi(data);
+	Sql_GetData(sql_handle,  8, &data, NULL); hd->str = atoi(data);
+	Sql_GetData(sql_handle,  9, &data, NULL); hd->agi = atoi(data);
+	Sql_GetData(sql_handle, 10, &data, NULL); hd->vit = atoi(data);
+	Sql_GetData(sql_handle, 11, &data, NULL); hd->int_ = atoi(data);
+	Sql_GetData(sql_handle, 12, &data, NULL); hd->dex = atoi(data);
+	Sql_GetData(sql_handle, 13, &data, NULL); hd->luk = atoi(data);
+	Sql_GetData(sql_handle, 14, &data, NULL); hd->hp = atoi(data);
+	Sql_GetData(sql_handle, 15, &data, NULL); hd->max_hp = atoi(data);
+	Sql_GetData(sql_handle, 16, &data, NULL); hd->sp = atoi(data);
+	Sql_GetData(sql_handle, 17, &data, NULL); hd->max_sp = atoi(data);
+	Sql_GetData(sql_handle, 18, &data, NULL); hd->skillpts = atoi(data);
+	Sql_GetData(sql_handle, 19, &data, NULL); hd->rename_flag = atoi(data);
+	Sql_GetData(sql_handle, 20, &data, NULL); hd->vaporize = atoi(data);
+	Sql_FreeResult(sql_handle);
+
+	hd->intimacy = cap_value(hd->intimacy, 0, 100000);
+	hd->hunger = cap_value(hd->hunger, 0, 100);
+
+	// Load Homunculus Skill
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `id`,`lv` FROM `skill_homunculus` WHERE `homun_id`=%d", homun_id) )
+	{
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	while( SQL_SUCCESS == Sql_NextRow(sql_handle) )
+	{
+		// id
+		Sql_GetData(sql_handle, 0, &data, NULL);
+		i = atoi(data);
+		if( i < HM_SKILLBASE || i >= HM_SKILLBASE + MAX_HOMUNSKILL )
+			continue;// invalid skill id
+		i = i - HM_SKILLBASE;
+		hd->hskill[i].id = (unsigned short)atoi(data);
+
+		// lv
+		Sql_GetData(sql_handle, 1, &data, NULL);
+		hd->hskill[i].lv = (unsigned char)atoi(data);
+	}
+	Sql_FreeResult(sql_handle);
+
+	if( save_log )
+		ShowInfo("Homunculus loaded (%d - %s).\n", hd->hom_id, hd->name);
+
+	return true;
 }
 
-int mapif_delete_homun(int fd,int hom_id)
+bool mapif_homunculus_delete(int homun_id)
 {
-	mapif_delete_homun_ack(fd,inter_homun_delete(hom_id));
-	return 0;
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `homunculus` WHERE `homun_id` = '%u'", homun_id)
+	||	SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `skill_homunculus` WHERE `homun_id` = '%u'", homun_id)
+	) {
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	return true;
 }
 
-int mapif_rename_homun(int fd, int account_id, int char_id, char *name){
+bool mapif_homunculus_rename(char *name)
+{
 	int i;
 
 	// Check Authorised letters/symbols in the name of the homun
-	if (char_name_option == 1) { // only letters/symbols in char_name_letters are authorised
-		for (i = 0; i < NAME_LENGTH && name[i]; i++)
-		if (strchr(char_name_letters, name[i]) == NULL) {
-			mapif_rename_homun_ack(fd, account_id, char_id, 0, name);
-			return 0;
-		}
-	} else if (char_name_option == 2) { // letters/symbols in char_name_letters are forbidden
-		for (i = 0; i < NAME_LENGTH && name[i]; i++)
-		if (strchr(char_name_letters, name[i]) != NULL) {
-			mapif_rename_homun_ack(fd, account_id, char_id, 0, name);
-			return 0;
-		}
+	if( char_name_option == 1 )
+	{// only letters/symbols in char_name_letters are authorised
+		for( i = 0; i < NAME_LENGTH && name[i]; i++ )
+			if( strchr(char_name_letters, name[i]) == NULL )
+				return false;
+	} else
+	if( char_name_option == 2 )
+	{// letters/symbols in char_name_letters are forbidden
+		for( i = 0; i < NAME_LENGTH && name[i]; i++ )
+			if( strchr(char_name_letters, name[i]) != NULL )
+				return false;
 	}
 
-	mapif_rename_homun_ack(fd, account_id, char_id, 1, name);
-	return 0;
+	return true;
 }
 
-int mapif_parse_SaveHomun(int fd)
+
+static void mapif_parse_homunculus_create(int fd, int len, int account_id, struct s_homunculus* phd)
 {
-	mapif_save_homun(fd,RFIFOL(fd,4),(struct s_homunculus *)RFIFOP(fd,8));
-	return 0;
+	bool result = mapif_homunculus_save(phd);
+	mapif_homunculus_created(fd, account_id, phd, result);
 }
 
-int mapif_parse_DeleteHomun(int fd)
+static void mapif_parse_homunculus_delete(int fd, int homun_id)
 {
-	mapif_delete_homun(fd,RFIFOL(fd,2));
-	return 0;
+	bool result = mapif_homunculus_delete(homun_id);
+	mapif_homunculus_deleted(fd, result);
 }
 
-int mapif_parse_RenameHomun(int fd)
+static void mapif_parse_homunculus_load(int fd, int account_id, int homun_id)
 {
-	mapif_rename_homun(fd, RFIFOL(fd, 2), RFIFOL(fd, 6), (char*)RFIFOP(fd, 10));
-	return 0;
+	struct s_homunculus hd;
+	bool result = mapif_homunculus_load(homun_id, &hd);
+	mapif_homunculus_loaded(fd, account_id, ( result ? &hd : NULL ));
 }
 
-int inter_homun_parse_frommap(int fd)
+static void mapif_parse_homunculus_save(int fd, int len, int account_id, struct s_homunculus* phd)
 {
-	switch(RFIFOW(fd,0)){
-	case 0x3090: mapif_create_homun(fd); break;
-	case 0x3091: mapif_load_homun(fd); break;
-	case 0x3092: mapif_parse_SaveHomun(fd); break;
-	case 0x3093: mapif_parse_DeleteHomun(fd); break;
-	case 0x3094: mapif_parse_RenameHomun(fd); break;
-	default:
-		return 0;
+	bool result = mapif_homunculus_save(phd);
+	mapif_homunculus_saved(fd, account_id, result);
+}
+
+static void mapif_parse_homunculus_rename(int fd, int account_id, int char_id, char* name)
+{
+	bool result = mapif_homunculus_rename(name);
+	mapif_homunculus_renamed(fd, account_id, char_id, result, name);
+}
+
+/*==========================================
+ * Inter Packets
+ *------------------------------------------*/
+int inter_homunculus_parse_frommap(int fd)
+{
+	unsigned short cmd = RFIFOW(fd,0);
+
+	switch( cmd )
+	{
+		case 0x3090: mapif_parse_homunculus_create(fd, (int)RFIFOW(fd,2), (int)RFIFOL(fd,4), (struct s_homunculus*)RFIFOP(fd,8)); break;
+		case 0x3091: mapif_parse_homunculus_load  (fd, (int)RFIFOL(fd,2), (int)RFIFOL(fd,6)); break;
+		case 0x3092: mapif_parse_homunculus_save  (fd, (int)RFIFOW(fd,2), (int)RFIFOL(fd,4), (struct s_homunculus*)RFIFOP(fd,8)); break;
+		case 0x3093: mapif_parse_homunculus_delete(fd, (int)RFIFOL(fd,2)); break;
+		case 0x3094: mapif_parse_homunculus_rename(fd, (int)RFIFOL(fd,2), (int)RFIFOL(fd,6), (char*)RFIFOP(fd,10)); break;
+		default:
+			return 0;
 	}
 	return 1;
 }

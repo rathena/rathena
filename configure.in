@@ -8,7 +8,6 @@ AC_CONFIG_SRCDIR([src/common/cbasetypes.h])
 AC_CONFIG_FILES([Makefile src/common/Makefile])
 AC_CONFIG_FILES([3rdparty/mt19937ar/Makefile])
 AC_CONFIG_FILES([src/char/Makefile src/login/Makefile])
-AC_CONFIG_FILES([src/char_sql/Makefile src/txt-converter/Makefile])
 AC_CONFIG_FILES([src/map/Makefile src/plugins/Makefile src/tool/Makefile])
 
 
@@ -166,29 +165,22 @@ AC_ARG_ENABLE(
 
 
 #
-# Enable/disable MySql and optionally specify the path to mysql_config (optional library)
+# Optionally specify the path to mysql_config
 #
 AC_ARG_WITH(
 	[mysql],
 	AC_HELP_STRING(
 		[--with-mysql@<:@=ARG@:>@],
-		[use MySQL client library, optionally specify the path to the mysql_config executable (by default mysql is used if found)]
+		[optionally specify the path to the mysql_config executable]
 	),
 	[
-		if test "$withval" = "no" ; then
-			want_mysql="no"
-		else
-			want_mysql="yes"
-			require_mysql="yes"
-			if test "$withval" != "yes" ; then
-				if test ! -x "$withval" ; then
-					AC_MSG_ERROR([$withval is not an executable file])
-				fi
-				MYSQL_CONFIG_HOME="$withval"
+		if test "$withval" != "no" ; then
+			if test ! -x "$withval" ; then
+				AC_MSG_ERROR([$withval is not an executable file])
 			fi
+			MYSQL_CONFIG_HOME="$withval"
 		fi
-	],
-	[want_mysql="yes" require_mysql="no"]
+	]
 )
 
 
@@ -632,52 +624,38 @@ fi
 
 
 #
-# MySQL library (optional)
+# MySQL library
 #
 
-if test "$want_mysql" = "no" ; then
-	MYSQL_VERSION=""
-	MYSQL_CFLAGS=""
-	MYSQL_LIBS=""
-	AC_MSG_NOTICE([ignoring MySQL (optional)])
+if test -z "$MYSQL_CONFIG_HOME"; then
+	AC_PATH_PROG([MYSQL_CONFIG_HOME], [mysql_config], [no])
+fi
+
+if test "$MYSQL_CONFIG_HOME" != "no" ; then
+	MYSQL_VERSION="`$MYSQL_CONFIG_HOME --version`"
+	if test "$manual_MYSQL_CFLAGS" = "no" ; then
+		MYSQL_CFLAGS="`$MYSQL_CONFIG_HOME --include`"
+	fi
+	if test "$manual_MYSQL_LIBS" = "no" ; then
+		MYSQL_LIBS="`$MYSQL_CONFIG_HOME --libs`"
+	fi
 else
-	if test -z "$MYSQL_CONFIG_HOME"; then
-		AC_PATH_PROG([MYSQL_CONFIG_HOME], [mysql_config], [no])
-	fi
+	MYSQL_VERSION="unknown"
+fi
 
-	if test "$MYSQL_CONFIG_HOME" != "no" ; then
-		MYSQL_VERSION="`$MYSQL_CONFIG_HOME --version`"
-		if test "$manual_MYSQL_CFLAGS" = "no" ; then
-			MYSQL_CFLAGS="`$MYSQL_CONFIG_HOME --include`"
-		fi
-		if test "$manual_MYSQL_LIBS" = "no" ; then
-			MYSQL_LIBS="`$MYSQL_CONFIG_HOME --libs`"
-		fi
-	else
-		MYSQL_VERSION="unknown"
-	fi
+MYSQL_OLD_LDFLAGS="$LDFLAGS" ; LDFLAGS="$LDFLAGS $MYSQL_LIBS"
+MYSQL_OLD_CPPFLAGS="$CPPFLAGS" ; CPPFLAGS="$CPPFLAGS $MYSQL_CFLAGS"
+AC_CHECK_LIB([mysqlclient], [mysql_init], [HAVE_MYSQL="yes"], [])
+AC_CHECK_HEADER([mysql.h], [], [HAVE_MYSQL=""])
+CPPFLAGS="$MYSQL_OLD_CPPFLAGS"
+LDFLAGS="$MYSQL_OLD_LDFLAGS"
 
-	MYSQL_OLD_LDFLAGS="$LDFLAGS" ; LDFLAGS="$LDFLAGS $MYSQL_LIBS"
-	MYSQL_OLD_CPPFLAGS="$CPPFLAGS" ; CPPFLAGS="$CPPFLAGS $MYSQL_CFLAGS"
-	AC_CHECK_LIB([mysqlclient], [mysql_init], [HAVE_MYSQL="yes"], [])
-	AC_CHECK_HEADER([mysql.h], [], [HAVE_MYSQL=""])
-	CPPFLAGS="$MYSQL_OLD_CPPFLAGS"
-	LDFLAGS="$MYSQL_OLD_LDFLAGS"
-
-	AC_MSG_CHECKING([MySQL library (optional)])
-	if test "$HAVE_MYSQL" = "yes" ; then
-		AC_MSG_RESULT([yes ($MYSQL_VERSION)])
-	else
-		AC_MSG_RESULT([no])
-		if test "$require_mysql" = "yes" ; then
-			AC_MSG_ERROR([MySQL not found or incompatible (requested)])
-		else
-			AC_MSG_NOTICE([disabling MySQL (optional)])
-			MYSQL_VERSION=""
-			MYSQL_CFLAGS=""
-			MYSQL_LIBS=""
-		fi
-	fi
+AC_MSG_CHECKING([MySQL library (required)])
+if test "$HAVE_MYSQL" = "yes" ; then
+	AC_MSG_RESULT([yes ($MYSQL_VERSION)])
+else
+	AC_MSG_RESULT([no])
+	AC_MSG_ERROR([MySQL not found or incompatible])
 fi
 
 AC_SUBST([HAVE_MYSQL])

@@ -18,8 +18,6 @@ MT19937AR_H = ../../3rdparty/mt19937ar/mt19937ar.h
 MT19937AR_INCLUDE = -I../../3rdparty/mt19937ar
 
 LOGIN_OBJ = login.o
-LOGIN_TXT_OBJ = $(LOGIN_OBJ:%=obj_txt/%) \
-	obj_txt/account_txt.o obj_txt/ipban_txt.o obj_txt/loginlog_txt.o
 LOGIN_SQL_OBJ = $(LOGIN_OBJ:%=obj_sql/%) \
 	obj_sql/account_sql.o obj_sql/ipban_sql.o obj_sql/loginlog_sql.o
 LOGIN_H = login.h account.h ipban.h loginlog.h
@@ -30,26 +28,22 @@ ifeq ($(HAVE_MYSQL),yes)
 else
 	LOGIN_SERVER_SQL_DEPENDS=needs_mysql
 endif
-LOGIN_SERVER_TXT_DEPENDS=obj_txt $(LOGIN_TXT_OBJ) $(COMMON_OBJ) $(MT19937AR_OBJ)
 
 @SET_MAKE@
 
 #####################################################################
-.PHONY :all txt sql clean help
+.PHONY :all sql clean help
 
-all: txt sql
-
-txt: obj_txt login-server
+all: sql
 
 sql: obj_sql login-server_sql
 
 clean:
-	rm -rf *.o obj_txt obj_sql ../../login-server@EXEEXT@ ../../login-server_sql@EXEEXT@
+	rm -rf *.o obj_sql ../../login-server@EXEEXT@ ../../login-server_sql@EXEEXT@
 
 help:
-	@echo "possible targets are 'sql' 'txt' 'all' 'clean' 'help'"
+	@echo "possible targets are 'sql' 'all' 'clean' 'help'"
 	@echo "'sql'       - login server (SQL version)"
-	@echo "'txt'       - login server (TXT version)"
 	@echo "'all'       - builds all above targets"
 	@echo "'clean'     - cleans builds and objects"
 	@echo "'help'      - outputs this message"
@@ -61,29 +55,23 @@ needs_mysql:
 	@exit 1
 
 # object directories
-obj_txt:
-	test -d obj_txt || mkdir obj_txt
 
 obj_sql:
 	test -d obj_sql || mkdir obj_sql
 
 #executables
-login-server: $(LOGIN_SERVER_TXT_DEPENDS)
-	@CC@ @LDFLAGS@ -o ../../login-server@EXEEXT@ $(LOGIN_TXT_OBJ) $(COMMON_OBJ) $(MT19937AR_OBJ) @LIBS@ 
 
 login-server_sql: $(LOGIN_SERVER_SQL_DEPENDS)
 	@CC@ @LDFLAGS@ -o ../../login-server_sql@EXEEXT@ $(LOGIN_SQL_OBJ) $(COMMON_OBJ) $(COMMON_SQL_OBJ) $(MT19937AR_OBJ) @LIBS@ @MYSQL_LIBS@
 
 # login object files
-obj_txt/%.o: %.c $(LOGIN_H) $(COMMON_H) $(MT19937AR_H)
-	@CC@ @CFLAGS@ $(MT19937AR_INCLUDE) -DWITH_TXT @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 obj_sql/%.o: %.c $(LOGIN_H) $(COMMON_H) $(MT19937AR_H)
 	@CC@ @CFLAGS@ $(MT19937AR_INCLUDE) -DWITH_SQL @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing object files
 ../common/obj_all/%.o:
-	@$(MAKE) -C ../common txt
+	@$(MAKE) -C ../common sql
 
 ../common/obj_sql/%.o:
 	@$(MAKE) -C ../common sql

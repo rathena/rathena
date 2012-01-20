@@ -225,11 +225,7 @@ void chrif_checkdefaultlogin(void)
 {
 	if (strcmp(userid, "s1")==0 && strcmp(passwd, "p1")==0) {
 		ShowError("Using the default user/password s1/p1 is NOT RECOMMENDED.\n");
-#ifdef TXT_ONLY
-		ShowNotice("Please edit your save/account.txt file to create a proper inter-server user/password (gender 'S')\n");
-#else
 		ShowNotice("Please edit your 'login' table to create a proper inter-server user/password (gender 'S')\n");
-#endif
 		ShowNotice("and then edit your user/password in conf/map_athena.conf (or conf/import/map_conf.txt)\n");
 	}
 }
@@ -312,10 +308,8 @@ int chrif_save(struct map_session_data *sd, int flag)
 		merc_save(sd->hd);
 	if( sd->md && mercenary_get_lifetime(sd->md) > 0 )
 		mercenary_save(sd->md);
-#ifndef TXT_ONLY
 	if( sd->save_quest )
 		intif_quest_save(sd);
-#endif
 
 	return 0;
 }
@@ -1536,16 +1530,12 @@ static int check_connect_char_server(int tid, unsigned int tick, int id, intptr_
 
 		chrif_connect(char_fd);
 		chrif_connected = (chrif_state == 2);
-#ifndef TXT_ONLY
 		srvinfo = 0;
-#endif /* not TXT_ONLY */
 	} else {
-#ifndef TXT_ONLY
 		if (srvinfo == 0) {
 			chrif_ragsrvinfo(battle_config.base_exp_rate, battle_config.job_exp_rate, battle_config.item_rate_common);
 			srvinfo = 1;
 		}
-#endif /* not TXT_ONLY */
 	}
 	if (chrif_isconnected()) displayed = 0;
 	return 0;
@@ -1555,7 +1545,7 @@ static int check_connect_char_server(int tid, unsigned int tick, int id, intptr_
  * Asks char server to remove friend_id from the friend list of char_id
  *------------------------------------------*/
 int chrif_removefriend(int char_id, int friend_id) {
-#ifndef TXT_ONLY
+
 	chrif_check(-1);
 
 	WFIFOHEAD(char_fd,10);
@@ -1563,7 +1553,7 @@ int chrif_removefriend(int char_id, int friend_id) {
 	WFIFOL(char_fd,2) = char_id;
 	WFIFOL(char_fd,6) = friend_id;
 	WFIFOSET(char_fd,10);
-#endif
+	
 	return 0;
 }
 

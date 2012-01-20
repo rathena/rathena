@@ -1,8 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef TXT_ONLY
-
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
 
@@ -194,5 +192,3 @@ bool mail_invalid_operation(struct map_session_data *sd)
 
 	return false;
 }
-
-#endif
