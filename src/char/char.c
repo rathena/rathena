@@ -3992,9 +3992,8 @@ int mapif_sendallwos(int sfd, unsigned char *buf, unsigned int len)
 
 int mapif_send(int fd, unsigned char *buf, unsigned int len)
 {
-	int i;
-
 	if (fd >= 0) {
+		int i;
 		ARR_FIND( 0, ARRAYLENGTH(server), i, fd == server[i].fd );
 		if( i < ARRAYLENGTH(server) )
 		{

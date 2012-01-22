@@ -4423,7 +4423,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 	if (sd && sd->fd)
 	{	//sd is watching tbl go out of view.
 		if (((vd=status_get_viewdata(tbl)) && vd->class_ != INVISIBLE_CLASS) &&
-			!(bl->type == BL_NPC && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE)))
+			!(tbl->type == BL_NPC && (((TBL_NPC*)tbl)->sc.option&OPTION_INVISIBLE)))
 			clif_clearunit_single(tbl->id,CLR_OUTSIGHT,sd->fd);
 	}
 	return 0;
@@ -10652,7 +10652,6 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
  *------------------------------------------*/
 static void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, short skilllv, short skillnum, short x, short y, int skillmoreinfo)
 {
-	int lv;
 	unsigned int tick = gettick();
 
 	if( !(skill_get_inf(skillnum)&INF_GROUND_SKILL) )
@@ -10716,6 +10715,7 @@ static void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, sho
 	}
 	else
 	{
+		int lv;
 		sd->skillitem = sd->skillitemlv = 0;
 		if( (lv = pc_checkskill(sd, skillnum)) > 0 )
 		{

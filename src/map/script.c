@@ -3878,7 +3878,6 @@ int script_reload()
 /// mes "<message>";
 BUILDIN_FUNC(mes)
 {
-	int i;
 	TBL_PC* sd = script_rid2sd(st);
 	if( sd == NULL )
 		return 0;
@@ -3889,6 +3888,8 @@ BUILDIN_FUNC(mes)
 	}
 	else
 	{// parse multiple lines as they exist
+		int i;
+
 		for( i = 2; script_hasdata(st, i); i++ )
 		{
 			// send the message to the client
@@ -11817,10 +11818,11 @@ BUILDIN_FUNC(getmercinfo)
 BUILDIN_FUNC(checkequipedcard)
 {
 	TBL_PC *sd=script_rid2sd(st);
-	int n,i,c=0;
-	c=script_getnum(st,2);
 
 	if(sd){
+		int n,i,c=0;
+		c=script_getnum(st,2);
+
 		for(i=0;i<MAX_INVENTORY;i++){
 			if(sd->status.inventory[i].nameid > 0 && sd->status.inventory[i].amount && sd->inventory_data[i]){
 				if (itemdb_isspecial(sd->status.inventory[i].card[0]))

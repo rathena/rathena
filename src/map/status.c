@@ -6380,17 +6380,19 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_DEFENDER:
 			if (!(flag&1))
 			{	
-				struct map_session_data *tsd;
-				int i;
 				val2 = 5 + 15*val1; //Damage reduction
 				val3 = 0; // unused, previously speed adjustment
 				val4 = 250 - 50*val1; //Aspd adjustment 
 
 				if (sd)
-				for (i = 0; i < 5; i++)
-				{	//See if there are devoted characters, and pass the status to them. [Skotlex]
-					if (sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])))
-						status_change_start(&tsd->bl,type,10000,val1,5+val1*5,val3,val4,tick,1);
+				{
+					struct map_session_data *tsd;
+					int i;
+					for (i = 0; i < 5; i++)
+					{	//See if there are devoted characters, and pass the status to them. [Skotlex]
+						if (sd->devotion[i] && (tsd = map_id2sd(sd->devotion[i])))
+							status_change_start(&tsd->bl,type,10000,val1,5+val1*5,val3,val4,tick,1);
+					}
 				}
 			}
 			break;

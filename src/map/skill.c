@@ -8329,7 +8329,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	// Plant Cultivation [Celest]
 	case CR_CULTIVATION:
 		if (sd) {
-			int i;
 			if( map_count_oncell(src->m,x,y,BL_CHAR) > 0 )
 			{
 				clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
@@ -8340,6 +8339,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 				clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
 			} else {
 				TBL_MOB* md = mob_once_spawn_sub(src, src->m, x, y, "--ja--",(skilllv < 2 ? 1084+rnd()%2 : 1078+rnd()%6),"");
+				int i;
 				if (!md) break;
 				if ((i = skill_get_time(skillid, skilllv)) > 0)
 				{
@@ -11096,7 +11096,6 @@ int skill_check_condition_castend(struct map_session_data* sd, short skill, shor
 // type&1: consume the others (before skill was used)
 int skill_consume_requirement( struct map_session_data *sd, short skill, short lv, short type)
 {
-	int n,i;
 	struct skill_condition req;
 
 	nullpo_ret(sd);
@@ -11126,6 +11125,7 @@ int skill_consume_requirement( struct map_session_data *sd, short skill, short l
 	if( type&2 )
 	{
 		struct status_change *sc = &sd->sc;
+		int n,i;
 
 		if( !sc->count )
 			sc = NULL;
@@ -11752,14 +11752,13 @@ void skill_identify (struct map_session_data *sd, int idx)
  *------------------------------------------*/
 void skill_weaponrefine (struct map_session_data *sd, int idx)
 {
-	int i = 0, ep = 0, per;
-	int material[5] = { 0, 1010, 1011, 984, 984 };
-	struct item *item;
-
 	nullpo_retv(sd);
 
 	if (idx >= 0 && idx < MAX_INVENTORY)
 	{
+		int i = 0, ep = 0, per;
+		int material[5] = { 0, 1010, 1011, 984, 984 };
+		struct item *item;
 		struct item_data *ditem = sd->inventory_data[idx];
 		item = &sd->status.inventory[idx];
 
@@ -12384,11 +12383,11 @@ bool skill_check_cloaking(struct block_list *bl, struct status_change_entry *sce
 	static int dx[] = { 0, 1, 0, -1, -1,  1, 1, -1};
 	static int dy[] = {-1, 0, 1,  0, -1, -1, 1,  1};
 	bool wall = true;
-	int i;
 
 	if( (bl->type == BL_PC && battle_config.pc_cloak_check_type&1)
 	||	(bl->type != BL_PC && battle_config.monster_cloak_check_type&1) )
 	{	//Check for walls.
+		int i;
 		ARR_FIND( 0, 8, i, map_getcell(bl->m, bl->x+dx[i], bl->y+dy[i], CELL_CHKNOPASS) != 0 );
 		if( i == 8 )
 			wall = false;
@@ -12424,10 +12423,10 @@ bool skill_check_camouflage(struct block_list *bl, struct status_change_entry *s
 	static int dx[] = { 0, 1, 0, -1, -1,  1, 1, -1};
 	static int dy[] = {-1, 0, 1,  0, -1, -1, 1,  1};
 	bool wall = true;
-	int i;
 
 	if( bl->type == BL_PC )
 	{	//Check for walls.
+		int i;
 		ARR_FIND( 0, 8, i, map_getcell(bl->m, bl->x+dx[i], bl->y+dy[i], CELL_CHKNOPASS) != 0 );
 		if( i == 8 )
 			wall = false;

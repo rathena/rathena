@@ -665,12 +665,12 @@ uint8 unit_getdir(struct block_list *bl)
 //  &1  Do not send position update packets.
 int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
 {
-	int nx, ny, result;
-	struct map_session_data* sd;
-	struct skill_unit* su = NULL;
-
 	if(count)
 	{
+		struct map_session_data* sd;
+		struct skill_unit* su = NULL;
+		int nx, ny, result;
+				
 		sd = BL_CAST(BL_PC, bl);
 		su = BL_CAST(BL_SKILL, bl);
 

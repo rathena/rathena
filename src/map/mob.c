@@ -1113,7 +1113,6 @@ static int mob_warpchase_sub(struct block_list *bl,va_list ap)
 static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 {
 	struct block_list *bl;
-	int old_dist;
 
 	bl=map_id2bl(md->master_id);
 
@@ -1126,7 +1125,8 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 
 	if(status_get_mode(&md->bl)&MD_CANMOVE)
 	{	//If the mob can move, follow around. [Check by Skotlex]
-		
+		int old_dist;
+
 		// Distance with between slave and master is measured.
 		old_dist=md->master_dist;
 		md->master_dist=distance_bl(&md->bl, bl);

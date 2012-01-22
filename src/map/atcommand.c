@@ -183,7 +183,6 @@ ACMD_FUNC(send)
 {
 	int len=0,off,end,type;
 	long num;
-	(void)command; // not used
 
 	// read message type as hex number (without the 0x)
 	if(!message || !*message ||

@@ -101,7 +101,6 @@ int pet_unlocktarget(struct pet_data *pd)
 int pet_attackskill(struct pet_data *pd, int target_id)
 {
 	struct block_list *bl;
-	int inf;
 
 	if (!battle_config.pet_status_support || !pd->a_skill || 
 		(battle_config.pet_equip_required && !pd->pet.equip))
@@ -112,6 +111,8 @@ int pet_attackskill(struct pet_data *pd, int target_id)
 	
 	if (rnd()%100 < (pd->a_skill->rate +pd->pet.intimate*pd->a_skill->bonusrate/1000))
 	{	//Skotlex: Use pet's skill 
+		int inf;
+
 		bl=map_id2bl(target_id);
 		if(bl == NULL || pd->bl.m != bl->m || bl->prev == NULL || status_isdead(bl) ||
 			!check_distance_bl(&pd->bl, bl, pd->db->range3))

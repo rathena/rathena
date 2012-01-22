@@ -560,10 +560,10 @@ int party_member_withdraw(int party_id, int account_id, int char_id)
 {
 	struct map_session_data* sd = map_id2sd(account_id);
 	struct party_data* p = party_search(party_id);
-	int i;
 
 	if( p )
 	{
+		int i;
 		ARR_FIND( 0, MAX_PARTY, i, p->party.member[i].account_id == account_id && p->party.member[i].char_id == char_id );
 		if( i < MAX_PARTY )
 		{

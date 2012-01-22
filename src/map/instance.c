@@ -260,14 +260,13 @@ int instance_del_load(struct map_session_data* sd, va_list args)
  *--------------------------------------*/
 void instance_del_map(int m)
 {
-	int sm, i;
+	int i;
 	if( m <= 0 || !map[m].instance_id )
 	{
 		ShowError("Tried to remove non-existing instance map (%d)\n", m);
 		return;
 	}
 
-	sm = map[m].instance_src_map;
 	map_foreachpc(instance_del_load, m);
 	map_foreachinmap(cleanup_sub, m, BL_ALL);
 

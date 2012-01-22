@@ -8541,9 +8541,6 @@ int pc_readdb(void)
 // Read MOTD on startup. [Valaris]
 int pc_read_motd(void)
 {
-	char* buf, * ptr;
-	unsigned int lines = 0, entries = 0;
-	size_t len;
 	FILE* fp;
 
 	// clear old MOTD
@@ -8552,6 +8549,10 @@ int pc_read_motd(void)
 	// read current MOTD
 	if( ( fp = fopen(motd_txt, "r") ) != NULL )
 	{
+		char* buf, * ptr;
+		unsigned int lines = 0, entries = 0;
+		size_t len;
+
 		while( entries < MOTD_LINE_SIZE && fgets(motd_text[entries], sizeof(motd_text[entries]), fp) )
 		{
 			lines++;
