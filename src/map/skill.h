@@ -345,9 +345,11 @@ int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,int
 int skill_castend_damage_id( struct block_list* src, struct block_list *bl,int skillid,int skilllv,unsigned int tick,int flag );
 int skill_castend_pos2( struct block_list *src, int x,int y,int skillid,int skilllv,unsigned int tick,int flag);
 
-int skill_blockpc_start (struct map_session_data*,int,int);
+int skill_blockpc_start_(struct map_session_data*, int, int, bool);
 int skill_blockhomun_start (struct homun_data*,int,int);
 int skill_blockmerc_start (struct mercenary_data*,int,int);
+
+#define skill_blockpc_start(sd, skillid, tick) skill_blockpc_start_( sd, skillid, tick, false )
 
 // ƒXƒLƒ‹U?ˆêŠ‡?—
 int skill_attack( int attack_type, struct block_list* src, struct block_list *dsrc,struct block_list *bl,int skillid,int skilllv,unsigned int tick,int flag );

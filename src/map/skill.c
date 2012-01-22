@@ -13969,10 +13969,19 @@ int skill_blockpc_end(int tid, unsigned int tick, int id, intptr_t data)
 	return 1;
 }
 
-int skill_blockpc_start(struct map_session_data *sd, int skillid, int tick)
+/**
+ * flags a singular skill as being blocked from persistent usage.
+ * @param   sd        the player the skill delay affects
+ * @param   skillid   the skill which should be delayed
+ * @param   tick      the length of time the delay should last
+ * @param   load      whether this assignment is being loaded upon player login
+ * @return  0 if successful, -1 otherwise
+ */
+int skill_blockpc_start_(struct map_session_data *sd, int skillid, int tick, bool load)
 {
-	struct skill_cd * cd = NULL;
 	int oskillid = skillid;
+	struct skill_cd* cd = NULL;
+
 	nullpo_retr (-1, sd);
 
 	skillid = skill_get_index(skillid);
@@ -13987,14 +13996,20 @@ int skill_blockpc_start(struct map_session_data *sd, int skillid, int tick)
 	if( battle_config.display_status_timers )
 		clif_skill_cooldown(sd, skillid, tick);
 
-	if( !( cd = idb_get(skillcd_db,sd->status.char_id) ) ) {
-		CREATE(cd,struct skill_cd,1);
-		idb_put(skillcd_db, sd->status.char_id, cd);
+	if( !load )
+	{// not being loaded initially so ensure the skill delay is recorded
+		if( !(cd = idb_get(skillcd_db,sd->status.char_id)) )
+		{// create a new skill cooldown object for map storage
+			CREATE( cd, struct skill_cd, 1 );
+			idb_put( skillcd_db, sd->status.char_id, cd );
+		}
+
+		// record the skill duration in the database map
+		cd->duration[cd->cursor] = tick;
+		cd->skidx[cd->cursor] = skillid;
+		cd->nameid[cd->cursor] = oskillid;
+		cd->cursor++;
 	}
-	cd->duration[cd->cursor] = tick;
-	cd->skidx[cd->cursor] = skillid;
-	cd->nameid[cd->cursor] = oskillid;
-	cd->cursor++;
 
 	sd->blockskill[skillid] = 0x1|(0xFE&add_timer(gettick()+tick,skill_blockpc_end,sd->bl.id,skillid));
 	return 0;
@@ -14432,17 +14447,32 @@ int skill_stasis_check(struct block_list *bl, int src_id, int skillid)
 
 	return 0; // Can Cast anything else like Weapon Skills
 }
-void skill_cooldown_load(struct map_session_data * sd) {
-	struct skill_cd * cd = NULL;
+
+/**
+ * reload stored skill cooldowns when a player logs in.
+ * @param   sd     the affected player structure
+ */
+void skill_cooldown_load(struct map_session_data * sd)
+{
 	int i;
-	if( !( cd = idb_get(skillcd_db,sd->status.char_id) ) )
-		return;//nothing for us here
-	
-	for( i = 0; i < cd->cursor; i++ ) {
-		skill_blockpc_start(sd, cd->nameid[i], cd->duration[i]);
+	struct skill_cd* cd = NULL;
+
+	// always check to make sure the session properly exists
+	nullpo_retv(sd);
+
+	if( !(cd = idb_get(skillcd_db, sd->status.char_id)) )
+	{// no skill cooldown is associated with this character
+		return;
 	}
-	return;
+	
+	// process each individual cooldown associated with the character
+	for( i = 0; i < cd->cursor; i++ )
+	{
+		// block the skill from usage but ensure it is not recorded (load = true)
+		skill_blockpc_start_( sd, cd->nameid[i], cd->duration[i], true );
+	}
 }
+
 /*==========================================
  * DB reading.
  * skill_db.txt
