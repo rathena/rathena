@@ -11,7 +11,7 @@
 #include "../common/db.h"
 
 /**
- * [ro-resources.net]
+ * [rAthena.org]
  **/
 #include "./config/Core.h"
 

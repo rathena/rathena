@@ -722,20 +722,19 @@ int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int dama
 
 	if (!damage) //No reductions to make.
 		return 0;
-	
+
 	if(md && md->guardian_data) {
-		if(class_ == MOBID_EMPERIUM && flag&BF_SKILL)
+		if(class_ == MOBID_EMPERIUM && flag&BF_SKILL) {
 		//Skill immunity.
 			switch (skill_num) {
+#if REMODE == 0
 			case MO_TRIPLEATTACK:
+#endif
 			case HW_GRAVITATION:
-            case AL_HEAL:
-            case PR_SANCTUARY:
-            case BA_APPLEIDUN:
-            case AB_CHEAL:
 				break;
 			default:
 				return 0;
+			}
 		}
 		if(src->type != BL_MOB) {
 			struct guild *g=guild_search(status_get_guild_id(src));
@@ -2577,10 +2576,22 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 
 	if( flag.infdef )
 	{ //Plants receive 1 damage when hit
+		short class_ = status_get_class(target);
 		if( flag.hit || wd.damage > 0 )
 			wd.damage = wd.div_; // In some cases, right hand no need to have a weapon to increase damage
 		if( flag.lh && (flag.hit || wd.damage2 > 0) )
 			wd.damage2 = wd.div_;
+		if( flag.hit && class_ == MOBID_EMPERIUM ) {
+			if(wd.damage2 > 0) {
+				wd.damage2 = battle_attr_fix(src,target,wd.damage2,s_ele_,tstatus->def_ele, tstatus->ele_lv);
+				wd.damage2 = battle_calc_gvg_damage(src,target,wd.damage2,wd.div_,skill_num,skill_lv,wd.flag);
+			}
+			else if(wd.damage > 0) {
+				wd.damage = battle_attr_fix(src,target,wd.damage,s_ele_,tstatus->def_ele, tstatus->ele_lv);
+				wd.damage = battle_calc_gvg_damage(src,target,wd.damage,wd.div_,skill_num,skill_lv,wd.flag);
+			}
+			return wd;
+		}
 		if( !(battle_config.skill_min_damage&1) )
 			//Do not return if you are supposed to deal greater damage to plants than 1. [Skotlex]
 			return wd;

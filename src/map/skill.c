@@ -9474,6 +9474,10 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			{
 				int heal = skill_calc_heal(ss,bl,sg->skill_id,sg->skill_lv,true);
 				struct mob_data *md = BL_CAST(BL_MOB, bl);
+#if REMODE
+				if( md && md->class_ == MOBID_EMPERIUM )
+					break;
+#endif
 				if( md && mob_is_battleground(md) )
 					break;
 				if( tstatus->hp >= tstatus->max_hp )
@@ -9663,6 +9667,11 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		case UNT_APPLEIDUN: //Apple of Idun [Skotlex]
 		{
 			int heal;
+			struct mob_data *md = BL_CAST(BL_MOB, bl);
+#if REMODE
+			if( md && md->class_ == MOBID_EMPERIUM )
+				break;
+#endif
 			if( sg->src_id == bl->id && !(tsc && tsc->data[SC_SPIRIT] && tsc->data[SC_SPIRIT]->val2 == SL_BARDDANCER) )
 				break; // affects self only when soullinked
 			heal = skill_calc_heal(ss,bl,sg->skill_id, sg->skill_lv, true);
