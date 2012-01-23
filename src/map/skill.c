@@ -59,8 +59,11 @@ DBMap* skilldb_name2id = NULL;
 
 /**
  * Skill Cool Down Delay Saving
+ * Struct skill_cd is not a member of struct map_session_data
+ * to keep cooldowns in memory between player log-ins.
+ * All cooldowns are reset when server is restarted.
  **/
-DBMap* skillcd_db = NULL;
+DBMap* skillcd_db = NULL; // char_id -> struct skill_cd
 struct skill_cd {
 	int duration[MAX_SKILL_TREE];//milliseconds
 	short skidx[MAX_SKILL_TREE];//the skill index entries belong to
@@ -14890,12 +14893,20 @@ int do_init_skill (void)
 	return 0;
 }
 
+int skillcd_db_final(DBKey key, void *data, va_list args)
+{
+	struct skillcd *s = (struct skillcd*)data;
+	if( s != NULL)
+		aFree(s);
+	return 0;
+}
+
 int do_final_skill(void)
 {
 	db_destroy(skilldb_name2id);
 	db_destroy(group_db);
 	db_destroy(skillunit_db);
-	db_destroy(skillcd_db);
+	skillcd_db->destroy(skillcd_db, skillcd_db_final);
 	ers_destroy(skill_unit_ers);
 	ers_destroy(skill_timer_ers);
 	return 0;
