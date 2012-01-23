@@ -92,10 +92,10 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 
 	if( hd->hom_id == 0 )
 	{// new homunculus
-		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `homunculus` "
+		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` "
 			"(`char_id`, `class`,`name`,`level`,`exp`,`intimacy`,`hunger`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `hp`,`max_hp`,`sp`,`max_sp`,`skill_point`, `rename_flag`, `vaporize`) "
 			"VALUES ('%d', '%d', '%s', '%d', '%u', '%u', '%d', '%d', %d, '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
-			hd->char_id, hd->class_, esc_name, hd->level, hd->exp, hd->intimacy, hd->hunger, hd->str, hd->agi, hd->vit, hd->int_, hd->dex, hd->luk,
+			homunculus_db, hd->char_id, hd->class_, esc_name, hd->level, hd->exp, hd->intimacy, hd->hunger, hd->str, hd->agi, hd->vit, hd->int_, hd->dex, hd->luk,
 			hd->hp, hd->max_hp, hd->sp, hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize) )
 		{
 			Sql_ShowDebug(sql_handle);
@@ -108,8 +108,8 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 	}
 	else
 	{
-		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `homunculus` SET `char_id`='%d', `class`='%d',`name`='%s',`level`='%d',`exp`='%u',`intimacy`='%u',`hunger`='%d', `str`='%d', `agi`='%d', `vit`='%d', `int`='%d', `dex`='%d', `luk`='%d', `hp`='%d',`max_hp`='%d',`sp`='%d',`max_sp`='%d',`skill_point`='%d', `rename_flag`='%d', `vaporize`='%d' WHERE `homun_id`='%d'",
-			hd->char_id, hd->class_, esc_name, hd->level, hd->exp, hd->intimacy, hd->hunger, hd->str, hd->agi, hd->vit, hd->int_, hd->dex, hd->luk,
+		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `char_id`='%d', `class`='%d',`name`='%s',`level`='%d',`exp`='%u',`intimacy`='%u',`hunger`='%d', `str`='%d', `agi`='%d', `vit`='%d', `int`='%d', `dex`='%d', `luk`='%d', `hp`='%d',`max_hp`='%d',`sp`='%d',`max_sp`='%d',`skill_point`='%d', `rename_flag`='%d', `vaporize`='%d' WHERE `homun_id`='%d'",
+			homunculus_db, hd->char_id, hd->class_, esc_name, hd->level, hd->exp, hd->intimacy, hd->hunger, hd->str, hd->agi, hd->vit, hd->int_, hd->dex, hd->luk,
 			hd->hp, hd->max_hp, hd->sp, hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize, hd->hom_id) )
 		{
 			Sql_ShowDebug(sql_handle);
@@ -121,7 +121,7 @@ bool mapif_homunculus_save(struct s_homunculus* hd)
 			int i;
 
 			stmt = SqlStmt_Malloc(sql_handle);
-			if( SQL_ERROR == SqlStmt_Prepare(stmt, "REPLACE INTO `skill_homunculus` (`homun_id`, `id`, `lv`) VALUES (%d, ?, ?)", hd->hom_id) )
+			if( SQL_ERROR == SqlStmt_Prepare(stmt, "REPLACE INTO `%s` (`homun_id`, `id`, `lv`) VALUES (%d, ?, ?)", skill_homunculus_db, hd->hom_id) )
 				SqlStmt_ShowDebug(stmt);
 			for( i = 0; i < MAX_HOMUNSKILL; ++i )
 			{
@@ -156,7 +156,7 @@ bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 
 	memset(hd, 0, sizeof(*hd));
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `homun_id`,`char_id`,`class`,`name`,`level`,`exp`,`intimacy`,`hunger`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `hp`,`max_hp`,`sp`,`max_sp`,`skill_point`,`rename_flag`, `vaporize` FROM `homunculus` WHERE `homun_id`='%u'", homun_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `homun_id`,`char_id`,`class`,`name`,`level`,`exp`,`intimacy`,`hunger`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `hp`,`max_hp`,`sp`,`max_sp`,`skill_point`,`rename_flag`, `vaporize` FROM `%s` WHERE `homun_id`='%u'", homunculus_db, homun_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -201,7 +201,7 @@ bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 	hd->hunger = cap_value(hd->hunger, 0, 100);
 
 	// Load Homunculus Skill
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `id`,`lv` FROM `skill_homunculus` WHERE `homun_id`=%d", homun_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `id`,`lv` FROM `%s` WHERE `homun_id`=%d", skill_homunculus_db, homun_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -230,8 +230,8 @@ bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd)
 
 bool mapif_homunculus_delete(int homun_id)
 {
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `homunculus` WHERE `homun_id` = '%u'", homun_id)
-	||	SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `skill_homunculus` WHERE `homun_id` = '%u'", homun_id)
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `homun_id` = '%u'", homunculus_db, homun_id)
+	||	SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `homun_id` = '%u'", skill_homunculus_db, homun_id)
 	) {
 		Sql_ShowDebug(sql_handle);
 		return false;

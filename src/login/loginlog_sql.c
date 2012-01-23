@@ -23,7 +23,7 @@ static char   log_db_username[32] = "";
 static char   log_db_password[32] = "";
 static char   log_db_database[32] = "";
 static char   log_codepage[32] = "";
-static char   loginlog_table[256] = "loginlog";
+static char   log_login_db[256] = "loginlog";
 
 static Sql* sql_handle = NULL;
 static bool enabled = false;
@@ -38,7 +38,7 @@ unsigned long loginlog_failedattempts(uint32 ip, unsigned int minutes)
 		return 0;
 
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT count(*) FROM `%s` WHERE `ip` = '%s' AND `rcode` = '1' AND `time` > NOW() - INTERVAL %d MINUTE",
-		loginlog_table, ip2str(ip,NULL), minutes) )// how many times failed account? in one ip.
+		log_login_db, ip2str(ip,NULL), minutes) )// how many times failed account? in one ip.
 		Sql_ShowDebug(sql_handle);
 
 	if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
@@ -69,7 +69,7 @@ void login_log(uint32 ip, const char* username, int rcode, const char* message)
 
 	retcode = Sql_Query(sql_handle,
 		"INSERT INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%s', '%s', '%d', '%s')",
-		loginlog_table, ip2str(ip,NULL), esc_username, rcode, message);
+		log_login_db, ip2str(ip,NULL), esc_username, rcode, message);
 
 	if( retcode != SQL_SUCCESS )
 		Sql_ShowDebug(sql_handle);
@@ -175,8 +175,8 @@ bool loginlog_config_read(const char* key, const char* value)
 	if( strcmpi(key, "log_codepage") == 0 )
 		safestrncpy(log_codepage, value, sizeof(log_codepage));
 	else
-	if( strcmpi(key, "loginlog_db") == 0 )
-		safestrncpy(loginlog_table, value, sizeof(loginlog_table));
+	if( strcmpi(key, "log_login_db") == 0 )
+		safestrncpy(log_login_db, value, sizeof(log_login_db));
 	else
 		return false;
 

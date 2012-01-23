@@ -59,6 +59,11 @@ char auction_db[256] = "auction"; // Auctions System
 char friend_db[256] = "friends";
 char hotkey_db[256] = "hotkey";
 char quest_db[256] = "quest";
+char homunculus_db[256] = "homunculus";
+char skill_homunculus_db[256] = "skill_homunculus";
+char mercenary_db[256] = "mercenary";
+char mercenary_owner_db[256] = "mercenary_owner";
+char ragsrvinfo_db[256] = "ragsrvinfo";
 
 // show loading/saving messages
 int save_log = 1;
@@ -2419,7 +2424,7 @@ void mapif_server_reset(int id)
 		WBUFW(buf,2) = j * 4 + 10;
 		mapif_sendallwos(fd, buf, WBUFW(buf,2));
 	}
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `ragsrvinfo` WHERE `index`='%d'", server[id].fd) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `index`='%d'", ragsrvinfo_db, server[id].fd) )
 		Sql_ShowDebug(sql_handle);
 	online_char_db->foreach(online_char_db,char_db_setoffline,id); //Tag relevant chars as 'in disconnected' server.
 	mapif_server_destroy(id);
@@ -2974,8 +2979,8 @@ int parse_frommap(int fd)
 
 			Sql_EscapeString(sql_handle, esc_server_name, server_name);
 
-			if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `ragsrvinfo` SET `index`='%d',`name`='%s',`exp`='%d',`jexp`='%d',`drop`='%d'",
-				fd, esc_server_name, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10)) )
+			if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` SET `index`='%d',`name`='%s',`exp`='%d',`jexp`='%d',`drop`='%d'",
+				ragsrvinfo_db, fd, esc_server_name, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10)) )
 				Sql_ShowDebug(sql_handle);
 			RFIFOSKIP(fd,14);
 		}
@@ -4271,6 +4276,14 @@ void sql_config_read(const char* cfgName)
 			safestrncpy(hotkey_db, w2, sizeof(hotkey_db));
 		else if(!strcmpi(w1,"quest_db"))
 			safestrncpy(quest_db,w2,sizeof(quest_db));
+		else if(!strcmpi(w1,"homunculus_db"))
+			safestrncpy(homunculus_db,w2,sizeof(homunculus_db));
+		else if(!strcmpi(w1,"skill_homunculus_db"))
+			safestrncpy(skill_homunculus_db,w2,sizeof(skill_homunculus_db));
+		else if(!strcmpi(w1,"mercenary_db"))
+			safestrncpy(mercenary_db,w2,sizeof(mercenary_db));
+		else if(!strcmpi(w1,"mercenary_owner_db"))
+			safestrncpy(mercenary_owner_db,w2,sizeof(mercenary_owner_db));
 		//support the import command, just like any other config
 		else if(!strcmpi(w1,"import"))
 			sql_config_read(w2);
@@ -4450,7 +4463,7 @@ void do_final(void)
 	do_final_mapif();
 	do_final_loginif();
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `ragsrvinfo`") )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s`", ragsrvinfo_db) )
 		Sql_ShowDebug(sql_handle);
 
 	char_db_->destroy(char_db_, NULL);
