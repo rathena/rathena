@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= rAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.2a
 //===== Compatible With: ===================================== 
 //= rAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -32,6 +32,7 @@
 //= 1.1a Small fix to comparison check. [Paradox924X]
 //= 1.1b Small fix to zeny check. [Kisuka]
 //= 1.2 Updated some NPCs based on official files. [L0ne_W0lf]
+//= 1.2a Fixed "mobinv" and "mobrand" variables to work with invation. [Slim]
 //============================================================ 
 
 //============================================================ 
@@ -451,8 +452,9 @@ while(1)
 	mapannounce "airplane_01","The Airship is leaving the ground. Our next destination is Izlude.",bc_map,0x00FF00;
 	end;
 OnTimer15000:
-	set .mobinv, .mobinv+1;
-	if(.mobinv >= 9 && rand(1,3) == 3) {
+	set $@mobinv,$@mobinv+1;
+	set $@mobrand,rand(1,3);
+	if($@mobinv >= 9 && $@mobrand == 3) {
 		stopnpctimer;
 		enablenpc "Airship#airplane02";
 		donpcevent "Airship#airplane02::OnInvasion";
@@ -528,7 +530,7 @@ OnTimer195000:
 }
 OnReturn:
 	killmonsterall "airplane_01";
-	set .mobinv, 0;
+	set $@mobinv,0;
 	mapannounce "airplane_01","Monster threat nullfied. The Airship is now returning to normal operation.",bc_map,0x00FF00;
 	startnpctimer;
 	end;
