@@ -1449,7 +1449,7 @@ void clif_send_homdata(struct map_session_data *sd, int state, int param)
 	WFIFOHEAD(fd, packet_len(0x230));
 	WFIFOW(fd,0)=0x230;
 	WFIFOB(fd,2)=0;
-	WFIFOB(fd,2)=state;
+	WFIFOB(fd,3)=state;
 	WFIFOL(fd,4)=sd->hd->bl.id;
 	WFIFOL(fd,8)=param;
 	WFIFOSET(fd,packet_len(0x230));
