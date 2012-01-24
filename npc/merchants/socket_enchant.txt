@@ -229,11 +229,11 @@
 			mes "If you ask me to add a Slot to something, make sure that you don't have multiples of it in your inventory.";
 			next;
 			mes "[Seiyablem]";
-			mes "Heres an example: if you have a +7 Manteau and a normal Manteau in your inventory, then I will randomly pick on of them for my Slot Addition attempt.";
+			mes "Here's an example: if you have a +7 Manteau and a normal Manteau in your inventory, then I will randomly pick one of them for my Slot Addition attempt.";
 			mes "Just remember to be careful.";
 			next;
 			mes "[Seiyablem]";
-			mes "Again, ^FF0000only carry one of the equipment to wich you want me to add a Slot^000000.";
+			mes "Again, ^FF0000only carry one of the equipment to which you want me to add a Slot^000000.";
 			mes "All other equipment with the same name should be placed in your Kafra Storage, got it?";
 			close;
 		case 4:
