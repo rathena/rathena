@@ -5600,7 +5600,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	break;
 	//Strip skills, need to divest something or it fails.
 	case SC_STRIPWEAPON:
-		if (sd) {
+		if (sd && !(flag&4)) { //apply sc anyway if loading saved sc_data
 			int i;
 			opt_flag = 0; //Reuse to check success condition.
 			if(sd->unstripable_equip&EQP_WEAPON)
@@ -5627,7 +5627,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	case SC_STRIPSHIELD:
 		if( val2 == 1 ) val2 = 0; //GX effect. Do not take shield off..		
 		else
-		if (sd) {
+		if (sd && !(flag&4)) {
 			int i;
 			if(sd->unstripable_equip&EQP_SHIELD)
 				return 0;
@@ -5640,7 +5640,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		if (tick == 1) return 1; //Minimal duration: Only strip without causing the SC
 	break;
 	case SC_STRIPARMOR:
-		if (sd) {
+		if (sd && !(flag&4)) {
 			int i;
 			if(sd->unstripable_equip&EQP_ARMOR)
 				return 0;
@@ -5652,7 +5652,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		if (tick == 1) return 1; //Minimal duration: Only strip without causing the SC
 	break;
 	case SC_STRIPHELM:
-		if (sd) {
+		if (sd && !(flag&4)) {
 			int i;
 			if(sd->unstripable_equip&EQP_HELM)
 				return 0;
