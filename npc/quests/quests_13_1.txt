@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.8
+//= 2.0
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -35,7 +35,8 @@
 //= 1.6 Fixed check in cat hand agent.
 //= 1.7 Moved the close in Cat Hand Service Warps. (bugreport:4079) [L0ne_W0lf]
 //= 1.8 Added 13.2 Additions to Report from the New World NPCs
-//=     Upped success rates for Report from the New World drops.
+//= 1.9 Upped success rates for Report from the New World drops.
+//= 2.0 Added Mid Camp Warper, translated from the Official [Slim]
 //============================================================ 
 
 // Onward to the New World
@@ -18063,3 +18064,32 @@ que_dan02,102,42,3	script	Disfigured Corpse#moc2	457,{
 	close;
 }
 
+//Mid Camp Warper (gogoash), Translated from the Official [Slim]
+prontera,161,192,5	script	Ash Vacuum Warper	707,{
+	mes "[Warp Soldier]";
+	mes "For a limited period.";
+	mes "I can send you to Ash-Vacuum without any fee.";
+	next;
+	mes "[Warp Soldier]";
+	mes "Do you want to go to Ash-Vacuum right now?";
+	next;
+	switch(select("Yes, please","Not yet")) {
+
+		case 1:
+			mes "[Warp Soldier]";
+			mes "Ok. I hope you";
+			mes "enjoy your trip.";
+			close2;
+			set ep13_ryu,100;
+			warp "mid_camp",210,291;
+			break;
+		case 2:
+			mes "[Warp Soldier]";
+			mes "No problem. I understand.";
+			mes "Tell me when you change your mind.";
+			mes "See you.";
+			close;
+			break;
+	}
+	end;
+}

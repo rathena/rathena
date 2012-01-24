@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.6
+//= 1.7
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -18,41 +18,39 @@
 //= 1.4 Added a Mapflag to prevent mail operations in other maps [Zephyrus]
 //= 1.5 Moved Morroc Mail boxes to Morroc Ruins. [L0ne_W0lf]
 //= 1.6 Duplicates now spawn from floating NPCs. [L0ne_W0lf]
+//= 1.7 Updated Script from the Official. [Slim]
 //============================================================
 
 // Floating mailbox npc that all NPCs duplicate from.
 //============================================================
 -	script	Mailbox#dummy::MailBox	-1,{
 	mes "[Mailbox]";
-	mes "If you'd like to use";
-	mes "the Mailbox Service,";
-	mes "you must first pay";
-	mes "the 130 zeny service fee.";
-	mes "Would you like to use the";
-	mes "mailbox now?";
+	mes "To use the mailbox service, you are required";
+	mes "to pay 130 zeny.";
+	mes "Would you like to use the service?";
 	next;
-	if (select("Yes.:No.") == 1) {
+	switch(select("Yes.","No.")) {
+	case 1:
 		if (Zeny < 130) {
 			mes "[Mailbox]";
-			mes "I am sorry, but would";
-			mes "you please check your";
-			mes "money again? You don't";
-			mes "have enough zeny to pay";
-			mes "the 130 zeny service fee.";
-			close;
+			mes "I am sorry, but you do not have enough money.";
+			mes "To use the mailbox service, you are required";
+			mes "to pay 130 zeny.";
+			break;
+		} else {
+			mes "[Mailbox]";
+			mes "Thank you, please come again.";
+			set Zeny,(Zeny - 130);
+			openmail;
+			break;
 		}
+		
+	case 2:
 		mes "[Mailbox]";
-		mes "Thank you for your";
-		mes "patronage. Please come";
-		mes "again soon, and use our";
-		mes "convenient Mailbox Service~";
-		set Zeny,Zeny-130;
-		openmail;
-		close;
+		mes "Thank you, please come again.";
+		break;
 	}
-	mes "[Mailbox]";
-	mes "Thank you, please come again.";
-	close;
+close;
 }
 
 // Prontera

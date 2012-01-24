@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Kisuka
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1a
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [Kisuka][5511]
 //= 1.1 Fixed some typos/bugs. [CalciumKid]
+//= 1.1a Fixed Waiting rooms witht he default MAX_LEVEL [Slim]
 //============================================================
 
 // Poring War Recruiter
@@ -357,7 +358,7 @@ poring_w01,91,97,3	script	Poring#wop_door_all	1002,{
 	end;
 	
 OnInit:
-	waitingroom "[Recruiting 10 Battle Participants]",10,"Poring#wop_door_all::OnStartArena",10,500,9,99;
+	waitingroom "[Recruiting 10 Battle Participants]",10,"Poring#wop_door_all::OnStartArena",10,500,9;
 	enablewaitingroomevent;
 	end;
 
@@ -380,7 +381,7 @@ poring_w01,91,68,5	script	Poring#wop_door_a	1002,{
 	end;
 
 OnInit:
-	waitingroom "[Angeling Team Recruiter]",5,"Poring#wop_door_a::OnStartArena",5,0,9,99;
+	waitingroom "[Angeling Team Recruiter]",5,"Poring#wop_door_a::OnStartArena",5,0,9;
 	enablewaitingroomevent;
 	end;
 
@@ -472,7 +473,7 @@ poring_w01,112,68,3	script	Poring#wop_door_d	1002,{
 	end;
 
 OnInit:
-	waitingroom "[Deviling Team Recruiter]",5,"Poring#wop_door_d::OnStartArena",5,0,9,99;
+	waitingroom "[Deviling Team Recruiter]",5,"Poring#wop_door_d::OnStartArena",5,0,9;
 	enablewaitingroomevent;
 	end;
 
