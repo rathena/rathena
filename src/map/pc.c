@@ -4223,7 +4223,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 		party_foreachsamemap(pc_show_steal,sd,AREA_SIZE,sd,tmp_item.nameid);
 
 	//Logs items, Stolen from mobs [Lupus]
-	log_pick_mob(md, LOG_TYPE_PICKDROP_MONSTER, -1, &tmp_item);
+	log_pick_mob(md, LOG_TYPE_STEAL, -1, &tmp_item);
 		
 	//A Rare Steal Global Announce by Lupus
 	if(md->db->dropitem[i].p<=battle_config.rare_drop_announce) {

@@ -2407,7 +2407,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 			
 			//Logs items, MVP prizes [Lupus]
-			log_pick_mob(md, LOG_TYPE_PICKDROP_MONSTER, -1, &item);
+			log_pick_mob(md, LOG_TYPE_MVP, -1, &item);
 			break;
 		}
 
