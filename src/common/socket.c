@@ -145,6 +145,16 @@ int sSocket(int af, int type, int protocol)
 	return sock2newfd(s);
 }
 
+char* sErr(int code)
+{
+	static char sbuf[512];
+	// strerror does not handle socket codes
+	if( FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM|FORMAT_MESSAGE_IGNORE_INSERTS, NULL,
+			code, MAKELANGID(LANG_ENGLISH, SUBLANG_DEFAULT), (LPTSTR)&sbuf, sizeof(sbuf), NULL) == 0 )
+		snprintf(sbuf, sizeof(sbuf), "unknown error");
+	return sbuf;
+}
+
 #define sBind(fd,name,namelen) bind(fd2sock(fd),name,namelen)
 #define sConnect(fd,name,namelen) connect(fd2sock(fd),name,namelen)
 #define sIoctl(fd,cmd,argp) ioctlsocket(fd2sock(fd),cmd,argp)
@@ -175,6 +185,7 @@ int sSocket(int af, int type, int protocol)
 #define sAccept accept
 #define sClose close
 #define sSocket socket
+#define sErr strerror
 
 #define sBind bind
 #define sConnect connect
@@ -235,6 +246,13 @@ static int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseF
 	static int connect_check(uint32 ip);
 #endif
 
+const char* error_msg(void)
+{
+	static char buf[512];
+	int code = sErrno;
+	snprintf(buf, sizeof(buf), "error %d: %s", code, sErr(code));
+	return buf;
+}
 
 /*======================================
  *	CORE : Default processing functions
@@ -259,7 +277,7 @@ void set_nonblocking(int fd, unsigned long yes)
 	// FIONBIO Use with a nonzero argp parameter to enable the nonblocking mode of socket s. 
 	// The argp parameter is zero if nonblocking is to be disabled. 
 	if( sIoctl(fd, FIONBIO, &yes) != 0 )
-		ShowError("set_nonblocking: Failed to set socket #%d to non-blocking mode (code %d) - Please report this!!!\n", fd, sErrno);
+		ShowError("set_nonblocking: Failed to set socket #%d to non-blocking mode (%s) - Please report this!!!\n", fd, error_msg());
 }
 
 void setsocketopts(int fd)
@@ -317,7 +335,7 @@ int recv_to_fifo(int fd)
 	if( len == SOCKET_ERROR )
 	{//An exception has occured
 		if( sErrno != S_EWOULDBLOCK ) {
-			//ShowDebug("recv_to_fifo: code %d, closing connection #%d\n", sErrno, fd);
+			//ShowDebug("recv_to_fifo: %s, closing connection #%d\n", error_msg(), fd);
 			set_eof(fd);
 		}
 		return 0;
@@ -349,7 +367,7 @@ int send_from_fifo(int fd)
 	if( len == SOCKET_ERROR )
 	{//An exception has occured
 		if( sErrno != S_EWOULDBLOCK ) {
-			//ShowDebug("send_from_fifo: error %d, ending connection #%d\n", sErrno, fd);
+			//ShowDebug("send_from_fifo: %s, ending connection #%d\n", error_msg(), fd);
 			session[fd]->wdata_size = 0; //Clear the send queue as we can't send anymore. [Skotlex]
 			set_eof(fd);
 		}
@@ -396,7 +414,7 @@ int connect_client(int listen_fd)
 
 	fd = sAccept(listen_fd, (struct sockaddr*)&client_address, &len);
 	if ( fd == -1 ) {
-		ShowError("connect_client: accept failed (code %d)!\n", sErrno);
+		ShowError("connect_client: accept failed (%s)!\n", error_msg());
 		return -1;
 	}
 	if( fd == 0 )
@@ -441,7 +459,7 @@ int make_listen_bind(uint32 ip, uint16 port)
 
 	if( fd == -1 )
 	{
-		ShowError("make_listen_bind: socket creation failed (code %d)!\n", sErrno);
+		ShowError("make_listen_bind: socket creation failed (%s)!\n", error_msg());
 		exit(EXIT_FAILURE);
 	}
 	if( fd == 0 )
@@ -466,12 +484,12 @@ int make_listen_bind(uint32 ip, uint16 port)
 
 	result = sBind(fd, (struct sockaddr*)&server_address, sizeof(server_address));
 	if( result == SOCKET_ERROR ) {
-		ShowError("make_listen_bind: bind failed (socket #%d, code %d)!\n", fd, sErrno);
+		ShowError("make_listen_bind: bind failed (socket #%d, %s)!\n", fd, error_msg());
 		exit(EXIT_FAILURE);
 	}
 	result = sListen(fd,5);
 	if( result == SOCKET_ERROR ) {
-		ShowError("make_listen_bind: listen failed (socket #%d, code %d)!\n", fd, sErrno);
+		ShowError("make_listen_bind: listen failed (socket #%d, %s)!\n", fd, error_msg());
 		exit(EXIT_FAILURE);
 	}
 
@@ -494,7 +512,7 @@ int make_connection(uint32 ip, uint16 port)
 	fd = sSocket(AF_INET, SOCK_STREAM, 0);
 
 	if (fd == -1) {
-		ShowError("make_connection: socket creation failed (code %d)!\n", sErrno);
+		ShowError("make_connection: socket creation failed (%s)!\n", error_msg());
 		return -1;
 	}
 	if( fd == 0 )
@@ -520,7 +538,7 @@ int make_connection(uint32 ip, uint16 port)
 
 	result = sConnect(fd, (struct sockaddr *)(&remote_address), sizeof(struct sockaddr_in));
 	if( result == SOCKET_ERROR ) {
-		ShowError("make_connection: connect failed (socket #%d, code %d)!\n", fd, sErrno);
+		ShowError("make_connection: connect failed (socket #%d, %s)!\n", fd, error_msg());
 		do_close(fd);
 		return -1;
 	}
@@ -725,7 +743,7 @@ int do_sockets(int next)
 	{
 		if( sErrno != S_EINTR )
 		{
-			ShowFatalError("do_sockets: select() failed, error code %d!\n", sErrno);
+			ShowFatalError("do_sockets: select() failed, %s!\n", error_msg());
 			exit(EXIT_FAILURE);
 		}
 		return 0; // interrupted by a signal, just loop and try again
