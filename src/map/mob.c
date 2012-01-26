@@ -4550,7 +4550,7 @@ int do_final_mob(void)
 			mob_chat_db[i] = NULL;
 		}
 	}
-	for (i = 0; i <= MAX_ITEMDB; i++)
+	for (i = 0; i < MAX_ITEMDB; i++)
 	{
 		if (item_drop_ratio_db[i] != NULL)
 		{
