@@ -7,6 +7,9 @@
 #include "../common/mmo.h" // ITEM_NAME_LENGTH
 #include "map.h" //REMODE
 
+// 32k array entries in array (the rest goes to the db)
+#define MAX_ITEMDB 0x8000
+
 #define MAX_RANDITEM	11000
 
 // The maximum number of item delays

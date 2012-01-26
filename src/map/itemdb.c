@@ -16,11 +16,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// 32k array entries (the rest goes to the db)
-#define MAX_ITEMDB 0x8000
-
-
-
 static struct item_data* itemdb_array[MAX_ITEMDB];
 static DBMap*            itemdb_other;// int nameid -> struct item_data*
 

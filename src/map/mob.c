@@ -64,6 +64,14 @@ struct mob_db *mob_db(int index) { if (index < 0 || index > MAX_MOB_DB || mob_db
 struct mob_chat *mob_chat_db[MAX_MOB_CHAT+1];
 struct mob_chat *mob_chat(short id) { if(id<=0 || id>MAX_MOB_CHAT || mob_chat_db[id]==NULL) return (struct mob_chat*)NULL; return mob_chat_db[id]; }
 
+//Dynamic item drop ratio database for per-item drop ratio modifiers overriding global drop ratios.
+#define MAX_ITEMRATIO_MOBS 10
+struct item_drop_ratio {
+	int drop_ratio;
+	int mob_id[MAX_ITEMRATIO_MOBS];
+};
+static struct item_drop_ratio *item_drop_ratio_db[MAX_ITEMDB];
+
 static struct eri *item_drop_ers; //For loot drops delay structures.
 static struct eri *item_drop_list_ers;
 
@@ -3441,6 +3449,27 @@ static unsigned int mob_drop_adjust(int baserate, int rate_adjust, unsigned shor
 	return (unsigned int)cap_value(rate,rate_min,rate_max);
 }
 
+/**
+ * Check if global item drop rate is overriden for given item
+ * in db/mob_item_ratio.txt
+ * @param nameid ID of the item
+ * @param mob_id ID of the monster
+ * @param rate_adjust pointer to store ratio if found
+ */
+static void item_dropratio_adjust(int nameid, int mob_id, int *rate_adjust)
+{
+	int i;
+	if( item_drop_ratio_db[nameid] ) {
+		if( item_drop_ratio_db[nameid]->mob_id[0] ) { // only for listed mobs
+			ARR_FIND(0, MAX_ITEMRATIO_MOBS, i, item_drop_ratio_db[nameid]->mob_id[i] == mob_id);
+			if(i < MAX_ITEMRATIO_MOBS) // found
+				*rate_adjust = item_drop_ratio_db[nameid]->drop_ratio;
+		}
+		else // for all mobs
+			*rate_adjust = item_drop_ratio_db[nameid]->drop_ratio;
+	}
+}
+
 /*==========================================
  * processes one mobdb entry
  *------------------------------------------*/
@@ -3583,12 +3612,14 @@ static bool mob_parse_dbrow(char** str)
 	// MVP Drops: MVP1id,MVP1per,MVP2id,MVP2per,MVP3id,MVP3per
 	for(i = 0; i < 3; i++) {
 		struct item_data *id;
+		int rate_adjust = battle_config.item_rate_mvp;;
 		db->mvpitem[i].nameid = atoi(str[32+i*2]);
 		if (!db->mvpitem[i].nameid) {
 			db->mvpitem[i].p = 0; //No item....
 			continue;
 		}
-		db->mvpitem[i].p = mob_drop_adjust(atoi(str[33+i*2]), battle_config.item_rate_mvp, battle_config.item_drop_mvp_min, battle_config.item_drop_mvp_max);
+		item_dropratio_adjust(db->mvpitem[i].nameid, class_, &rate_adjust);
+		db->mvpitem[i].p = mob_drop_adjust(atoi(str[33+i*2]), rate_adjust, battle_config.item_drop_mvp_min, battle_config.item_drop_mvp_max);
 		
 		//calculate and store Max available drop chance of the MVP item
 		if (db->mvpitem[i].p) {
@@ -3650,6 +3681,7 @@ static bool mob_parse_dbrow(char** str)
 			ratemax = battle_config.item_drop_common_max;
 			break;
 		}
+		item_dropratio_adjust(id->nameid, class_, &rate_adjust);
 		db->dropitem[i].p = mob_drop_adjust(rate, rate_adjust, ratemin, ratemax);
 		
 		//calculate and store Max available drop chance of the item
@@ -4385,10 +4417,39 @@ static bool mob_readdb_race2(char* fields[], int columns, int current)
 }
 
 /**
+ * Read mob_item_ratio.txt
+ */
+static bool mob_readdb_itemratio(char* str[], int columns, int current)
+{
+	int nameid, ratio, i;
+	struct item_data *id;
+
+	nameid = atoi(str[0]);
+
+	if( ( id = itemdb_exists(nameid) ) == NULL )
+	{
+		ShowWarning("itemdb_read_itemratio: Invalid item id %d.\n", nameid);
+		return false;
+	}
+
+	ratio = atoi(str[1]);
+
+	if(item_drop_ratio_db[nameid] == NULL)
+		item_drop_ratio_db[nameid] = (struct item_drop_ratio*)aCalloc(1, sizeof(struct item_drop_ratio));
+
+	item_drop_ratio_db[nameid]->drop_ratio = ratio;
+	for(i = 0; i < columns-2; i++)
+		item_drop_ratio_db[nameid]->mob_id[i] = atoi(str[i+2]);
+
+	return true;
+}
+
+/**
  * read all mob-related databases
  */
 static void mob_load(void)
 {
+	sv_readdb(db_path, "mob_item_ratio.txt", ',', 2, 2+MAX_ITEMRATIO_MOBS, -1, &mob_readdb_itemratio); // must be read before mobdb
 	if (db_use_sqldbs)
 	{
 		mob_read_sqldb();
@@ -4416,6 +4477,14 @@ void mob_reload(void)
 			memset(&mob_db_data[i]->skill,0,sizeof(mob_db_data[i]->skill));
 			mob_db_data[i]->maxskill=0;
 		}
+
+	// Clear item_drop_ratio_db
+	for (i = 0; i < MAX_ITEMDB; i++) {
+		if (item_drop_ratio_db[i]) {
+			aFree(item_drop_ratio_db[i]);
+			item_drop_ratio_db[i] = NULL;
+		}
+	}
 
 	mob_load();
 }
@@ -4479,6 +4548,14 @@ int do_final_mob(void)
 		{
 			aFree(mob_chat_db[i]);
 			mob_chat_db[i] = NULL;
+		}
+	}
+	for (i = 0; i <= MAX_ITEMDB; i++)
+	{
+		if (item_drop_ratio_db[i] != NULL)
+		{
+			aFree(item_drop_ratio_db[i]);
+			item_drop_ratio_db[i] = NULL;
 		}
 	}
 	ers_destroy(item_drop_ers);
