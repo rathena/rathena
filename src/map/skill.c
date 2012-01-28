@@ -12861,6 +12861,13 @@ int skill_unit_timer_sub_onplace (struct block_list* bl, va_list ap)
 
 	if( !(skill_get_inf2(group->skill_id)&(INF2_SONG_DANCE|INF2_TRAP|INF2_NOLP)) && map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR) )
 		return 0; //AoE skills are ineffective. [Skotlex]
+	if(group->skill_id==WZ_STORMGUST){
+		int i,o;
+		for(i=-1;i<2;i++)
+			for(o=-1;o<2;o++)
+				if(map_getcell(bl->m, bl->x+i, bl->y+o, CELL_CHKLANDPROTECTOR))
+				return 0; // Storm Gust can be hitted around Land Protector. [Protimus]
+	}
 
 	if( battle_check_target(&unit->bl,bl,group->target_flag) <= 0 )
 		return 0;
@@ -14147,7 +14154,7 @@ int skill_split_atoi (char *str, int *val)
  */
 void skill_init_unit_layout (void)
 {
-	int i,j,size,pos = 0;
+	int i,j,z,size,pos = 0;
 
 	memset(skill_unit_layout,0,sizeof(skill_unit_layout));
 
@@ -14163,6 +14170,21 @@ void skill_init_unit_layout (void)
 
 	// afterwards add special ones
 	pos = i;
+	for(z=0;z<=5;z++){
+		pos++;
+		size = 7+z;
+		for (j=0; j<size*size; j++) {
+			skill_unit_layout[pos].dx[j] = j%size - size/2;
+			skill_unit_layout[pos].dy[j] = j/size - size/2 + 1;
+		}
+		skill_unit_layout[pos].count = size*size;
+		skill_db[SA_LANDPROTECTOR].unit_layout_type[z] = pos;
+		skill_db[SA_LANDPROTECTOR].unit_layout_type[++z] = pos;
+	}
+	for (;z<MAX_SKILL_LEVEL;z++)
+			skill_db[SA_LANDPROTECTOR].unit_layout_type[z] = pos;
+
+	pos++;
 	for (i=0;i<MAX_SKILL_DB;i++) {
 		if (!skill_db[i].unit_id[0] || skill_db[i].unit_layout_type[0] != -1)
 			continue;
