@@ -530,7 +530,7 @@ function SF_Register {
 		mes "Come back when you are ready.";
 		close;
 	}
-}	
+}
 	
 function SF_WedProgress {
 	if (strcharinfo(0) == $wed_groom$) {

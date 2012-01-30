@@ -328,7 +328,7 @@ enum {
 	MF_LEAVES,
 	/**
 	 * No longer available, keeping here just in case it's back someday. [Ind]
-	 **/		
+	 **/
 	//MF_RAIN,	//20
 	// 21 free
 	MF_NOGO = 22,
@@ -4591,7 +4591,7 @@ BUILDIN_FUNC(warpchar)
 	else
 	if(strcmp(str, "SavePoint") == 0)
 		pc_setpos(sd, sd->status.save_point.map,sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
-	else	
+	else
 		pc_setpos(sd, mapindex_name2id(str), x, y, CLR_TELEPORT);
 	
 	return 0;
@@ -4883,7 +4883,7 @@ BUILDIN_FUNC(input)
 		st->state = RERUNLINE;
 		if( is_string_variable(name) )
 			clif_scriptinputstr(sd,st->oid);
-		else	
+		else
 			clif_scriptinput(sd,st->oid);
 	}
 	else
@@ -7054,7 +7054,7 @@ BUILDIN_FUNC(bonus)
 	case 1:
 		pc_bonus(sd, type, val1);
 		break;
-	case 2:	
+	case 2:
 		val2 = script_getnum(st,4);
 		pc_bonus2(sd, type, val1, val2);
 		break;
@@ -9675,7 +9675,7 @@ BUILDIN_FUNC(getmapflag)
 			case MF_LEAVES:				script_pushint(st,map[m].flag.leaves); break;
 			/**
 			 * No longer available, keeping here just in case it's back someday. [Ind]
-			 **/				
+			 **/
 			//case MF_RAIN:				script_pushint(st,map[m].flag.rain); break;
 			case MF_NOGO:				script_pushint(st,map[m].flag.nogo); break;
 			case MF_CLOUDS:				script_pushint(st,map[m].flag.clouds); break;
@@ -9750,7 +9750,7 @@ BUILDIN_FUNC(setmapflag)
 			case MF_LEAVES:				map[m].flag.leaves = 1; break;
 			/**
 			 * No longer available, keeping here just in case it's back someday. [Ind]
-			 **/			
+			 **/
 			//case MF_RAIN:				map[m].flag.rain = 1; break;
 			case MF_NOGO:				map[m].flag.nogo = 1; break;
 			case MF_CLOUDS:				map[m].flag.clouds = 1; break;
@@ -9828,7 +9828,7 @@ BUILDIN_FUNC(removemapflag)
 			case MF_LEAVES:				map[m].flag.leaves = 0; break;
 			/**
 			 * No longer available, keeping here just in case it's back someday. [Ind]
-			 **/			
+			 **/
 			//case MF_RAIN:				map[m].flag.rain = 0; break;
 			case MF_NOGO:				map[m].flag.nogo = 0; break;
 			case MF_CLOUDS:				map[m].flag.clouds = 0; break;
@@ -12313,7 +12313,7 @@ BUILDIN_FUNC(isequippedcnt)
 				for(k=0; k<sd->inventory_data[index]->slot; k++) {
 					if (sd->status.inventory[index].card[k] == id) 
 						ret++; //[Lupus]
-				}				
+				}
 			}
 		}
 	}
@@ -12381,7 +12381,7 @@ BUILDIN_FUNC(isequipped)
 
 					hash = 1<<((j<5?j:j-5)*4 + k);
 					// check if card is already used by another set
-					if ((j<5?sd->setitem_hash:sd->setitem_hash2) & hash)	
+					if ((j<5?sd->setitem_hash:sd->setitem_hash2) & hash)
 						continue;
 
 					// We have found a match
@@ -12444,7 +12444,7 @@ BUILDIN_FUNC(cardscnt)
 			for(k=0; k<sd->inventory_data[index]->slot; k++) {
 				if (sd->status.inventory[index].card[k] == id)
 					ret++;
-			}				
+			}
 		}
 	}
 	script_pushint(st,ret);
@@ -15362,14 +15362,14 @@ BUILDIN_FUNC(instance_detachmap)
 	else if( (sd = script_rid2sd(st)) != NULL && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id )
 		instance_id = p->instance_id;
 	else return 0;
- 	
+	
 	if( (m = map_mapname2mapid(str)) < 0 || (m = instance_map2imap(m,instance_id)) < 0 )
- 	{
+	{
 		ShowError("buildin_instance_detachmap: Trying to detach invalid map %s\n", str);
- 		return 0;
- 	}
+		return 0;
+	}
 
- 	instance_del_map(m);
+	instance_del_map(m);
 	return 0;
 }
 

@@ -375,9 +375,9 @@ um_in,44,71,2	script	Utan Shaman	782,{
 		mes "using the Kafra Service";
 		mes "to store some of your items.^000000";
 		close;
-	}	
+	}
 	switch(event_umbala) {
-	default:	
+	default:
 		mes "[??????????]";
 		mes "Umbah umbah umbabah Utan umbah";
 		mes "Umbah mookala umbabah..";
@@ -387,7 +387,7 @@ um_in,44,71,2	script	Utan Shaman	782,{
 		close2;
 		warp "umbala",217,186;
 		end;
-	case 3:	
+	case 3:
 		mes "[Puchuchartan]";
 		mes "I did not expect that even";
 		mes "more of you Rune-Midgardians";

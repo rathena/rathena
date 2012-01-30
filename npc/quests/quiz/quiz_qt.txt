@@ -966,7 +966,7 @@ if (checkweight(1201,3) == 0 ) goto L_OverWeight;
 		next;
 		mes "[Seeil]";
 		mes "So this is the last one. Show me some spirit!";
-		mes "This is a present to encourage you! Take it!";		
+		mes "This is a present to encourage you! Take it!";
 		set quiz_rvl,14;
 		getitem 503,10; //Yellow_Potion
 		close;
@@ -1631,7 +1631,7 @@ if(quiz_rvl == 18) {
 			close;
 }
 M_MaxItem:
-			mes "^800000[Radeng]^000000";		
+			mes "^800000[Radeng]^000000";
 	  		mes "- Wait a minute !! -";
 		 	mes "- You currently have too many items that -";
 	   		mes "- you can't receive an item. -";
@@ -1872,7 +1872,7 @@ if(quiz_rvl == 20) {
 		close;
 }
 M_MaxItem:
-			mes "[Kantryl]";		
+			mes "[Kantryl]";
 	  		mes "- Wait a minute !! -";
 		 	mes "- You currently have too many items that -";
 	   		mes "- you can't receive an item. -";

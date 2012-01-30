@@ -501,7 +501,7 @@ struct map_data {
 		unsigned leaves : 1; // [Valaris]
 		/**
 		 * No longer available, keeping here just in case it's back someday. [Ind]
-		 **/	
+		 **/
 		//unsigned rain : 1; // [Valaris]
 		unsigned nogo : 1; // [Valaris]
 		unsigned nobaseexp	: 1; // [Lorky] added by Lupus

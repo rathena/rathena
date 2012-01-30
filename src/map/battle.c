@@ -1069,7 +1069,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		unsigned idef : 1;	//Ignore defense
 		unsigned idef2 : 1;	//Ignore defense (left weapon)
 		unsigned pdef : 2;	//Pierces defense (Investigate/Ice Pick)
-		unsigned pdef2 : 2;	//1: Use def+def2/100, 2: Use def+def2/50	
+		unsigned pdef2 : 2;	//1: Use def+def2/100, 2: Use def+def2/50
 		unsigned infdef : 1;	//Infinite defense (plants)
 		unsigned arrow : 1;	//Attack is arrow-based
 		unsigned rh : 1;		//Attack considers right hand (wd.damage)
@@ -1326,7 +1326,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 
 		if(battle_config.agi_penalty_type &&
 			battle_config.agi_penalty_target&target->type)
-		{	
+		{
 			unsigned char attacker_count; //256 max targets should be a sane max
 			attacker_count = unit_counttargeted(target,battle_config.agi_penalty_count_lv);
 			if(attacker_count >= battle_config.agi_penalty_count)
@@ -2224,7 +2224,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				if(skill_num == AM_ACIDTERROR) def1 = 0; //Acid Terror ignores only armor defense. [Skotlex]
 				if(def2 < 1) def2 = 1;
 			}
-			//Vitality reduction from rodatazone: http://rodatazone.simgaming.net/mechanics/substats.php#def	
+			//Vitality reduction from rodatazone: http://rodatazone.simgaming.net/mechanics/substats.php#def
 			if (tsd)	//Sd vit-eq
 			{	//[VIT*0.5] + rnd([VIT*0.3], max([VIT*0.3],[VIT^2/150]-1))
 				vit_def = def2*(def2-15)/150;
@@ -2402,7 +2402,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			{ // Melee attack
 				if( !battle_config.left_cardfix_to_right )
 				{
-					cardfix=cardfix*(100+sd->right_weapon.addrace[tstatus->race])/100;					
+					cardfix=cardfix*(100+sd->right_weapon.addrace[tstatus->race])/100;
 					if (!(nk&NK_NO_ELEFIX)) {
 						int ele_fix = sd->right_weapon.addele[tstatus->def_ele];
 						for (i = 0; ARRAYLENGTH(sd->right_weapon.addele2) > i && sd->right_weapon.addele2[i].rate != 0; i++) {
@@ -2423,9 +2423,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 
 					if( flag.lh )
 					{
-						cardfix_=cardfix_*(100+sd->left_weapon.addrace[tstatus->race])/100;						
+						cardfix_=cardfix_*(100+sd->left_weapon.addrace[tstatus->race])/100;
 						if (!(nk&NK_NO_ELEFIX))	{
-							int ele_fix_lh = sd->left_weapon.addele[tstatus->def_ele];							
+							int ele_fix_lh = sd->left_weapon.addele[tstatus->def_ele];
 							for (i = 0; ARRAYLENGTH(sd->left_weapon.addele2) > i && sd->left_weapon.addele2[i].rate != 0; i++) {
 								if (sd->left_weapon.addele2[i].ele != tstatus->def_ele) continue;
 								if(!(sd->left_weapon.addele2[i].flag&wd.flag&BF_WEAPONMASK &&
@@ -3473,7 +3473,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 
 			if(battle_config.agi_penalty_type && 
 				battle_config.agi_penalty_target&target->type)
-			{	
+			{
 				unsigned char attacker_count; //256 max targets should be a sane max
 				attacker_count = unit_counttargeted(target,battle_config.agi_penalty_count_lv);
 				if(attacker_count >= battle_config.agi_penalty_count)
@@ -4121,7 +4121,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		case BL_HOM:
 			break;
 		//All else not specified is an invalid target.
-		default:	
+		default:
 			return 0;
 	}
 

@@ -106,7 +106,7 @@ static char* checkpath(char *path, const char *srcpath)
 }
 
 void findfile(const char *p, const char *pat, void (func)(const char*))
-{	
+{
 	WIN32_FIND_DATAA FindFileData;
 	HANDLE hFind;
 	char tmppath[MAX_PATH+1];
@@ -167,7 +167,7 @@ static char* checkpath(char *path, const char*srcpath)
 }
 
 void findfile(const char *p, const char *pat, void (func)(const char*))
-{	
+{
 	DIR* dir;					// pointer to the scanned directory.
 	struct dirent* entry;		// pointer to one directory entry.
 	struct stat dir_stat;       // used by stat().

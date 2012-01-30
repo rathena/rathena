@@ -63,7 +63,7 @@ yuno,138,187,4	script	Hypnotist Teacher	124,{
 	mes "if you ever want a reset!!"; 
 	close;
 
-L_Info:	
+L_Info:
 	mes @npcname$;
 	mes "This skill reset is not FREE OF CHARGE!!";
 	mes "Expense for the reset of skill is ^D5A50020000 Zeny x BaseLv^000000.";

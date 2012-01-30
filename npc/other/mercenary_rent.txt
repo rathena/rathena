@@ -325,7 +325,7 @@ izlude,47,139,5	script	Mercenary Manager#Sword	734,{
 			set Zeny, Zeny - (.@ZenyCost * 1000);
 			getitem 12162 + .@Grade, 1;
 		}
-		close;		
+		close;
 	case 2:
 		mes "[Mercenary Manager]";
 		mes "Mercenaries are soldiers";
@@ -436,7 +436,7 @@ izlude,47,139,5	script	Mercenary Manager#Sword	734,{
 			mercenary_set_faith SWORD_MERC_GUILD,-400;
 			getitem 12172,1;
 		}
-		close;		
+		close;
 	}
 }
 

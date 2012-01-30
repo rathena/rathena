@@ -1786,7 +1786,7 @@ niflheim,240,193,3	script	Kayron#lv4	794,{
 			if (lv4_weapon == 29) {
 				mes "this... Guillotine!";
 				getitem 1369,1; //Guillotine
-			}		
+			}
 			else {
 				mes "this... Brionac!";
 				getitem 1470,1; //Brionac

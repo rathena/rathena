@@ -156,7 +156,7 @@ OnTouch:
 				mes "Fine. I have no choice but to trick you!";
 				sc_start SC_Stun,5000,0;
 				close;
-			}	
+			}
 		case 3:
 			if(countitem(538) > 0) {
 				mes "[Trick or Treater]";
@@ -177,7 +177,7 @@ OnTouch:
 				mes "Fine. I have no choice but to trick you!";
 				sc_start SC_Stun,5000,0;
 				close;
-			}	
+			}
 		case 4:
 			mes "[Trick or Treater]";
 			mes "At least a Candy, a Candy Cane or a Well-baked Cookie is all I ask for a treat.";

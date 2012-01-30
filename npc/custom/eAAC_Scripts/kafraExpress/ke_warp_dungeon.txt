@@ -504,7 +504,7 @@ function SF_byalan {
 		);
 	}
 	switch (@submenu) {
-	case 2:	
+	case 2:
 		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"izlu2dun",114,84;
 		break;
 	case 3:
@@ -516,7 +516,7 @@ function SF_byalan {
 	case 5:
 		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"iz_dun03",32,63;
 		break;
-	case 6:	
+	case 6:
 		callfunc "F_keWarp",@cost5*100/@discountKP,$@kewd_discount,e_hmm,"iz_dun04",26,27;
 		break;
 	}
@@ -585,7 +585,7 @@ function SF_clockTower {
 		);
 	}
 	switch (@submenu) {
-	case 2:	
+	case 2:
 		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"aldebaran",140,130;
 		break;
 	case 3:
@@ -633,10 +633,10 @@ function SF_coalMine {
 		);
 	}
 	switch (@submenu) {
-	case 2:	
+	case 2:
 		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"mjolnir_02",89,358;
 		break;
-	case 3:	
+	case 3:
 		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"mjo_dun02",376,342;
 		break;
 	case 4:
@@ -668,10 +668,10 @@ function SF_culvert {
 		);
 	}
 	switch (@submenu) {
-	case 2:	
+	case 2:
 		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"prt_fild05",274,208;
 		break;
-	case 3:	
+	case 3:
 		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"prt_sewb2",19,19;
 		break;
 	case 4:
@@ -772,7 +772,7 @@ function SF_gefenia {
 		);
 	}
 	switch (@submenu) {
-	case 2:	
+	case 2:
 		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"gefenia01",60,169;
 		break;
 	case 3:
@@ -847,7 +847,7 @@ function SF_glastHeim {
 			"- Underground Cave Level 2 ("+@cost7+"z)"
 		);
 	}
-	switch (@submenu) {	
+	switch (@submenu) {
 	case 2:
 		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"glast_01",206,136;
 		break;
@@ -947,7 +947,7 @@ function SF_hiddenTemple {
 		);
 	}
 	switch (@submenu) {
-	case 2:	
+	case 2:
 		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"prt_fild01",136,361;
 		break;
 	case 3:
@@ -980,7 +980,7 @@ function SF_juperos {
 		);
 	}
 	switch (@submenu) {
-	case 2:	
+	case 2:
 		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"jupe_cave",55,52;
 		break;
 	case 3:
@@ -1010,7 +1010,7 @@ function SF_kiehl {
 			"- Level 2 ("+@cost2+"z)"
 		);
 	}
-	switch (@submenu) {	
+	switch (@submenu) {
 	case 2:
 		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"yuno_fild08",80,179;
 		break;
@@ -1041,7 +1041,7 @@ function SF_iceCave {
 		);
 	}
 	switch (@submenu) {
-	case 2:	
+	case 2:
 		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"ra_fild01",233,319;
 		break;
 	case 3:
@@ -1073,7 +1073,7 @@ function SF_lightHalzen {
 			"- Level 3 ("+@cost3+"z)"
 		);
 	}
-	switch (@submenu) {	
+	switch (@submenu) {
 	case 2:
 //This is the Rekkenber building entrance, which officially is only a dungeon exit.
 		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"lighthalzen",74,72;
@@ -1109,7 +1109,7 @@ function SF_louYang {
 		);
 	};
 	switch (@submenu) {
-	case 2:	
+	case 2:
 		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"louyang",41,267;
 		break;
 	case 3:
@@ -1169,7 +1169,7 @@ function SF_odin {
 			"- Level 3 ("+@cost3+"z)"
 		);
 	}
-	switch (@submenu) {	
+	switch (@submenu) {
 	case 2:
 		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"odin_tem01",91,145;
 		break;
@@ -1232,7 +1232,7 @@ function SF_payon {
 			"- Level 5 ("+@cost5+"z)"
 		);
 	}
-	switch (@submenu) {	
+	switch (@submenu) {
 	case 2:
 		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"pay_arche",41,133;
 		break;
@@ -1277,7 +1277,7 @@ function SF_pyramid {
 			"- Basement 2 ("+@cost3+"z)"
 		);
 	}
-	switch (@submenu) {	
+	switch (@submenu) {
 	case 2:
 		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"moc_ruins",62,162;
 		break;
@@ -1457,7 +1457,7 @@ function SF_thanatosTower {
 		);
 	}
 	switch (@submenu) {
-	case 2:	
+	case 2:
 		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"tha_scene01",139,201;
 		break;
 	case 3:
@@ -1555,7 +1555,7 @@ function SF_turtleIsland {
 		);
 	}
 	switch (@submenu) {
-	case 2:	
+	case 2:
 		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"tur_dun01",153,47;
 		break;
 	case 3:

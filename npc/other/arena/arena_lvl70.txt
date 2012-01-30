@@ -59,7 +59,7 @@ OnTimer7000:
 	
 OnTimer60000:
 	set $@mapcount70, getmapusers ("force_3-1");
-	if ($@mapcount70 == 0) {	
+	if ($@mapcount70 == 0) {
 		donpcevent "Cadillac#arena::Onfailclearstage";
 	}
 	mapannounce "force_3-1","Remaining Time : 6 minutes ",0;
@@ -67,7 +67,7 @@ OnTimer60000:
 	
 OnTimer120000:
 	 set $@mapcount70, getmapusers ("force_3-1");
-	if ($@mapcount70 == 0) {	
+	if ($@mapcount70 == 0) {
 		donpcevent "Cadillac#arena::Onfailclearstage";
 	}
 	mapannounce "force_3-1","Remaining Time : 5 minutes ",0;
@@ -75,14 +75,14 @@ OnTimer120000:
 	
 OnTimer180000:
 	 set $@mapcount70, getmapusers ("force_3-1");
-	if ($@mapcount70 == 0) {	
+	if ($@mapcount70 == 0) {
 		donpcevent "Cadillac#arena::Onfailclearstage";
 	}
 	mapannounce "force_3-1","Remaining Time : 4 minutes ",0;
 end;
 OnTimer240000:
 	 set $@mapcount70, getmapusers ("force_3-1");
-	if ($@mapcount70 == 0) {	
+	if ($@mapcount70 == 0) {
 		donpcevent "Cadillac#arena::Onfailclearstage";
 	}
 	mapannounce "force_3-1","Remaining Time : 3 minutes ",0;
@@ -90,7 +90,7 @@ OnTimer240000:
 
 OnTimer300000:
 	 set $@mapcount70, getmapusers ("force_3-1");
-	if ($@mapcount70 == 0) {	
+	if ($@mapcount70 == 0) {
 		donpcevent "Cadillac#arena::Onfailclearstage";
 	}
 	mapannounce "force_3-1","Remaining Time : 2 minutes ",0;
@@ -98,7 +98,7 @@ OnTimer300000:
 
 OnTimer360000:
 	 set $@mapcount70, getmapusers ("force_3-1");
-	if ($@mapcount70 == 0) {	
+	if ($@mapcount70 == 0) {
 		donpcevent "Cadillac#arena::Onfailclearstage";
 	}
 	mapannounce "force_3-1","Remaining Time : 1 minute ",0;
@@ -435,7 +435,7 @@ Onreset:
 
 OnMobDeath:
 	set $force_01_70,$force_01_70 -1;
-	if ($force_01_70 < 1) {	
+	if ($force_01_70 < 1) {
 		donpcevent "Cadillac#arena::On01_end";
 		donpcevent "arena#70::Onreset_01";
 	}
@@ -489,7 +489,7 @@ Onon:
 
 OnMobDeath:
 	set $force_02_70,$force_02_70 -1;
-	if ($force_02_70 < 1) {	
+	if ($force_02_70 < 1) {
 		donpcevent "Cadillac#arena::On02_end";
 		donpcevent "arena#70::Onreset_02";
 	}
@@ -535,7 +535,7 @@ Onreset:
 OnMobDeath:
 	set $force_03_70,$force_03_70 -1;
 	donpcevent "force_03ex#70::Onsummonmob_03";
-	if ($force_03_70 < 1) {	
+	if ($force_03_70 < 1) {
 		donpcevent "Cadillac#arena::On03_end";
 		donpcevent "arena#70::Onreset_03";
 	}
@@ -585,7 +585,7 @@ Onreset:
 	
 OnMobDeath:
 	set $force_04_70,$force_04_70 -1;
-	if ($force_04_70 < 1) {	
+	if ($force_04_70 < 1) {
 		donpcevent "Cadillac#arena::On04_end";
 		donpcevent "arena#70::Onreset_04";
 	}
@@ -638,7 +638,7 @@ Onreset:
 
 OnMobDeath:
 	set $force_05_70,$force_05_70 -1;
-	if ($force_05_70 < 1) {	
+	if ($force_05_70 < 1) {
 		donpcevent "Cadillac#arena::On05_end";
 		donpcevent "arena#70::Onreset_05";
 	}
@@ -695,7 +695,7 @@ Onreset:
 
 OnMobDeath:
 	set $force_06_70,$force_06_70 -1;
-	if ($force_06_70 < 1) {	
+	if ($force_06_70 < 1) {
 		donpcevent "Cadillac#arena::On06_end";
 		donpcevent "arena#70::Onreset_06";
 	}
@@ -749,7 +749,7 @@ Onreset:
 
 OnMobDeath:
 	set $force_07_70,$force_07_70 -1;
-	if ($force_07_70 < 1) {	
+	if ($force_07_70 < 1) {
 		donpcevent "Cadillac#arena::On07_end";
 		donpcevent "arena#70::Onreset_07";
 	}
@@ -821,7 +821,7 @@ Onreset:
 	
 OnMobDeath:
 	set $force_09_70,$force_09_70 -1;
-	if ($force_09_70 < 1) {	
+	if ($force_09_70 < 1) {
 		donpcevent "Cadillac#arena::On09_end";
 		donpcevent "arena#70::Onreset_09";
 		donpcevent "arena#70::Onreset_all";
@@ -837,7 +837,7 @@ prt_are_in,129,83,3	script	Staff#70-1	67,{
 	mes "You did a good job.";
 	mes "Even if you have failed to clear a time attack battle, I will reward you with a small amount of arena points.";
 	next;
-	if (arena_point == 30000) {	
+	if (arena_point == 30000) {
 		mes "[Staff]";
 		mes "Uh huh!";
 		mes "You already have enough arena points.";
@@ -901,7 +901,7 @@ prt_are_in,25,84,3	script	Staff#70-2	67,{
 		mes "[Staff]";
 		mes "Although you failed to make a new record, I hope you will succeed next time.";
 		next;
-		if (arena_point > 29980) {	
+		if (arena_point > 29980) {
 			mes "[Staff]";
 			mes "Then let me reward you with some arena points....eh?";
 			mes "Your arena points have exceeded the maximum amount. I cannot give you more points until you spend some points.";
@@ -948,7 +948,7 @@ prt_are_in,25,84,3	script	Staff#70-2	67,{
 		set $arena_70topn$,strcharinfo(0);
 		donpcevent "Vendigos::Onlinerec_70";
 		next;
-		if (arena_point > 29970) {	
+		if (arena_point > 29970) {
 			mes "[Staff]";
 			mes "Then let me reward you with some arena points....eh?";
 			mes "Your arena points have exceeded the maximum amount. I cannot give you more points until you spend some points.";
@@ -984,7 +984,7 @@ prt_are_in,25,84,3	script	Staff#70-2	67,{
 		donpcevent "alloff#70::Onon";
 		donpcevent "lvl 70s Waiting Room::Onstart";
 		end;
-	}	
+	}
 }
 
 prt_are_in,14,195,3	script	#arn_timer_70	139,{
@@ -1080,7 +1080,7 @@ Onon:
 	enablenpc "arena#70";
 	end;
 
-OnInit:	
+OnInit:
 	if(!$top_70min && !$top_70sec) set $top_70min,7;
 	end;
 

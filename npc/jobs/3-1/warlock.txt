@@ -1488,7 +1488,7 @@ spl_in02,80,108,5	script	Guild Master#Warlock	465,{
 				}
 			}
 			mes "[Master Egnoloria]";
-			//Custom Translation			
+			//Custom Translation
 			mes "Ah......?";
 			close;
 		}
@@ -1737,7 +1737,7 @@ OnTimer293000:
 	end;
 
 OnTimer303000:
-	mapannounce "job3_war02","The magic stabilization has failed. The fragment has lost it's power.",bc_map; // custom translation.	
+	mapannounce "job3_war02","The magic stabilization has failed. The fragment has lost it's power.",bc_map; // custom translation.
 	donpcevent "The chamber of magic#W::OnReset";
 	donpcevent "The chamber of magic#W2::OnReset";
 	donpcevent "The chamber of magic#W3::OnReset";

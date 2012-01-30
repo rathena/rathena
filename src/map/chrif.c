@@ -1202,7 +1202,7 @@ int chrif_save_scdata(struct map_session_data *sd)
 
 //Retrieve and load sc_data for a player. [Skotlex]
 int chrif_load_scdata(int fd)
-{	
+{
 #ifdef ENABLE_SC_SAVING
 	struct map_session_data *sd;
 	struct status_change_data *data;

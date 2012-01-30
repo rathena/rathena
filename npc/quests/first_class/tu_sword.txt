@@ -2002,7 +2002,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 		mes "out who he is.";
 		close;
 	}
-	if(tu_swordman == 6){	
+	if(tu_swordman == 6){
 		mes "[Dequ'ee]";
 		mes "Ah...!";
 		mes "Are you the Swordman";
@@ -2293,7 +2293,7 @@ morocc_in,51,101,3	script	Geil	89,{
 	close;
 }
 
-//=================================================Meutro====================================================		
+//=================================================Meutro====================================================
 morocc,82,292,5	script	Muetro	84,{
 	mes "[Muetro]";
 	if(tu_swordman == 15){

@@ -931,7 +931,7 @@ static int mob_can_changetarget(struct mob_data* md, struct block_list* target, 
 {
 	// if the monster was provoked ignore the above rule [celest]
 	if(md->state.provoke_flag)
-	{	
+	{
 		if (md->state.provoke_flag == target->id)
 			return 1;
 		else if (!(battle_config.mob_ai&0x4))
@@ -1112,7 +1112,7 @@ static int mob_warpchase_sub(struct block_list *bl,va_list ap)
 		*target_nd = nd;
 		*min_distance = cur_distance;
 		return 1;
-	}	
+	}
 	return 0;
 }
 /*==========================================
@@ -1161,7 +1161,7 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 			if(map_search_freecell(&md->bl, bl->m, &x, &y, MOB_SLAVEDISTANCE, MOB_SLAVEDISTANCE, 1)
 				&& unit_walktoxy(&md->bl, x, y, 0))
 				return 1;
-		}	
+		}
 	} else if (bl->m != md->bl.m && map_flag_gvg(md->bl.m)) {
 		//Delete the summoned mob if it's in a gvg ground and the master is elsewhere. [Skotlex]
 		status_kill(&md->bl);
@@ -2147,7 +2147,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			job_exp = 0; 
 		else
 			job_exp = (unsigned int)cap_value(md->db->job_exp * per * bonus/100. * map[m].jexp/100., 1, UINT_MAX);
- 		
+		
 		if((temp = tmpsd[i]->status.party_id )>0 && !md->dmglog[i].flag == MDLF_HOMUN) //Homun-done damage (flag 1) is not given to party
 		{
 			int j;
@@ -2954,7 +2954,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 	//Pick a starting position and loop from that.
 	i = battle_config.mob_ai&0x100?rnd()%md->db->maxskill:0;
 	for (n = 0; n < md->db->maxskill; i++, n++) {
-		int c2, flag = 0;		
+		int c2, flag = 0;
 
 		if (i == md->db->maxskill)
 			i = 0;
@@ -3011,7 +3011,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 					flag = ((fbl = mob_getfriendhprate(md, ms[i].cond2, ms[i].val[0])) != NULL); break;
 				case MSC_FRIENDSTATUSON:	// friend status[num] on
 				case MSC_FRIENDSTATUSOFF:	// friend status[num] off
-					flag = ((fmd = mob_getfriendstatus(md, ms[i].cond1, ms[i].cond2)) != NULL); break;					
+					flag = ((fmd = mob_getfriendstatus(md, ms[i].cond1, ms[i].cond2)) != NULL); break;
 				case MSC_SLAVELT:		// slave < num
 					flag = (mob_countslave(&md->bl) < c2 ); break;
 				case MSC_ATTACKPCGT:	// attack pc > num
@@ -3049,7 +3049,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 			clif_messagecolor(&md->bl, mc->color, temp);
 		}
 		
-		//Execute skill	
+		//Execute skill
 		if (skill_get_casttype(ms[i].skill_id) == CAST_GROUND)
 		{	//Ground skill.
 			short x, y;
@@ -3404,7 +3404,7 @@ static int mob_makedummymobdb(int class_)
 		}
 		return 0;
 	}
-	//Initialize dummy data.	
+	//Initialize dummy data.
 	mob_dummy = (struct mob_db*)aCalloc(1, sizeof(struct mob_db)); //Initializing the dummy mob.
 	sprintf(mob_dummy->sprite,"DUMMY");
 	sprintf(mob_dummy->name,"Dummy");

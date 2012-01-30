@@ -2735,7 +2735,7 @@ OnTouch:
 				donpcevent "Valdes#2::OnEnter";
 				donpcevent "Kidd#2::OnEnter";
 				donpcevent "#mao_table::OnEnter";
-			}	
+			}
 			else if(mao_request == 123)
 			{
 				donpcevent "Valdes#2::OnEnter";
@@ -2862,7 +2862,7 @@ OnTouch:
 				donpcevent "Valdes#3::OnEnter";
 				donpcevent "Kidd#3::OnEnter";
 				donpcevent "#Rabsent::OnEnter";
-			}	
+			}
 			else if(mao_request == 122)
 			{
 				donpcevent "#mao_empty::OnEnter";

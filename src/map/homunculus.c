@@ -469,7 +469,7 @@ int merc_hom_food(struct map_session_data *sd, struct homun_data *hd)
 	clif_send_homdata(sd,SP_HUNGRY,hd->homunculus.hunger);
 	clif_send_homdata(sd,SP_INTIMATE,hd->homunculus.intimacy / 100);
 	clif_hom_food(sd,foodID,1);
-       	
+
 	// Too much food :/
 	if(hd->homunculus.intimacy == 0)
 		return merc_hom_delete(sd->hd, E_OMG);

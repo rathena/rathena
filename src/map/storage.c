@@ -339,7 +339,7 @@ struct guild_storage *guild2storage2(int guild_id)
 	return (struct guild_storage*)idb_get(guild_storage_db,guild_id);
 }
 
-int guild_storage_delete(int guild_id)	
+int guild_storage_delete(int guild_id)
 {
 	idb_remove(guild_storage_db,guild_id);
 	return 0;

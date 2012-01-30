@@ -1633,7 +1633,7 @@ int map_quit(struct map_session_data *sd)
 			sd->bl.y = pt->y;
 			sd->mapindex = pt->map;
 		}
-	}	
+	}
 
 	party_booking_delete(sd); // Party Booking [Spiria]
 	pc_makesavestatus(sd);
@@ -1784,7 +1784,7 @@ struct mob_data * map_getmob_boss(int m)
 	{
 		if( md->bl.m == m )
 		{
-			found = true;		
+			found = true;
 			break;
 		}
 	}

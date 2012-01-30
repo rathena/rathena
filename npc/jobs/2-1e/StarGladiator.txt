@@ -106,7 +106,7 @@ payon,215,102,3	script	Moohyun#job_star	828,3,3,{
 							set STGL_Q,1;
 							setquest 7007;
 							close;
-						}					
+						}
 						mes "[Moohyun]";
 						mes "That's fine. Changing your";
 						mes "job is an important decision,";
@@ -178,7 +178,7 @@ payon,215,102,3	script	Moohyun#job_star	828,3,3,{
 				mes "when you really need it. There";
 				mes "is no shame in being unable to";
 				mes "accomplish something alone...";
-				close;		
+				close;
 			}
 			mes "[Moohyun]";
 			mes "Ah, that. Beeryu has";

@@ -385,7 +385,7 @@ xmas,176,236,4	script	Uncle Hairy	712,{
 			mes "[Cantata]";
 			mes "^3355FFThachentze^000000, that lovely pickle maker, knows more about it. So if you're curious, you should go talk to her. Alrighty then, Merry Christmas!";
 			set xmas_npc,5;
-			close;		
+			close;
 		}else{
 			mes "[Cantata]";
 			mes "Oh yeah? Heard about me from Poze, did you? Haw haw haw! Yeah, I know a little bit about Snowysnow. In fact, I may even be his weak point, since...";

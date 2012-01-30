@@ -273,7 +273,7 @@ int quest_check(TBL_PC * sd, int quest_id, quest_check_type type)
 
 	switch( type )
 	{
-	case HAVEQUEST:		
+	case HAVEQUEST:
 		return sd->quest_log[i].state;
 	case PLAYTIME:
 		return (sd->quest_log[i].time < (unsigned int)time(NULL) ? 2 : sd->quest_log[i].state == Q_COMPLETE ? 1 : 0);

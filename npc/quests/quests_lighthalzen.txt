@@ -547,9 +547,9 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 				mes "Lab. However, I do know of";
 				mes "this secret maze that should";
 				mes "get you there. Still, if you're";
-				mes "willing and ready to go...";			
+				mes "willing and ready to go...";
 			}
-			else {	
+			else {
 				mes "Okay...";
 				mes "Are you ready now?";
 				mes "I'm gonna send you";
@@ -8622,7 +8622,7 @@ L_Mission:
 		close2;
 		cutin "",255;
 		end;
-	}		
+	}
 }
 
 yuno_pre,77,68,0	script	Secretary#2	862,{
@@ -11122,7 +11122,7 @@ airplane_01,96,48,3	script	Man#Lyozien	868,{
 		mes "Do you need to take a";
 		mes "break or something?";
 		close;
-	}	
+	}
 	else if(lhz_rekenber == 20)
 	{
 		mes "[Lyozien]";
@@ -11166,7 +11166,7 @@ airplane_01,96,48,3	script	Man#Lyozien	868,{
 		mes "Then, we'll be done once you";
 		mes "contact Mr. Ahman in Izlude.";
 		close;
-	}	
+	}
 	else if(lhz_rekenber == 18)
 	{
 		mes "[Lyozien]";
@@ -11370,7 +11370,7 @@ airplane_01,96,48,3	script	Man#Lyozien	868,{
 		mes "I'll be waiting right here.";
 		set lhz_rekenber,11;
 		close;
-	}	
+	}
 	else if(lhz_rekenber == 9)
 	{
 		mes "[Lyozien]";
@@ -11381,7 +11381,7 @@ airplane_01,96,48,3	script	Man#Lyozien	868,{
 		mes "Let him know his order has";
 		mes "already arrived, okay?";
 		close;
-	}	
+	}
 	else if(lhz_rekenber == 8)
 	{
 		mes "[Lyozien]";

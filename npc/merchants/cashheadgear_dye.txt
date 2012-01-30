@@ -78,7 +78,7 @@ prt_in,253,168,4	script	Alora	862,{
 	mes "Oh I'm so excited aren't you?";
 	mes "And just to be sure, what color is the "+ .@hgn$[.@t] +" you want me to use?";
 	next;
-	mes "[Alora]";			
+	mes "[Alora]";
 	mes "Please understand that I'm going to use the ^FF00001st "+ .@hgn$[.@t] +" of that color in your inventory!^000000";
 	next;
 	mes "[Alora]";

@@ -479,7 +479,7 @@ ein_in01,38,29,0	script	Paul Spanner	63,{
 		case 2:
 			set .@item,1011;
 			set .@item_price,1000;
-			break;		
+			break;
 		case 3:
 			mes "[Paul Spanner]";
 			mes "If you need anything, just let me know.";
@@ -896,7 +896,7 @@ function	script	refinemain	{
 	}
 	mes "[" + getarg(0) + "]";
 	mes "All finished... Come again soon.";
-	close;		
+	close;
 }
 
 

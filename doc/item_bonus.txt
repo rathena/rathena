@@ -325,7 +325,7 @@ bonus2 bAddSkillBlow,x,y;		Pushback the target by y cells when using skill x (su
 bonus bSPDrainValue,n;			When hitting a monster by physical attack, you gain n SP
 					(use negative numbers so the user loses SP)
 bonus2 bSPDrainValue,n,x;		When hitting a monster by physical attack, ...
-					x:					
+					x:
 						0=you gain n SP, 1=you drain n SP from target
 
 bonus2 bIgnoreDefRate,n,x;		Disregard x% of the target's DEF if the target belongs to race n;

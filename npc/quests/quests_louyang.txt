@@ -4805,7 +4805,7 @@ lou_in02,77,37,7	script	Hermit	824,{
 				mes "[Sun Mao]";
 				switch(QL_REVOL)
 				{
-					case 1:	
+					case 1:
 						mes "Please make sure that there is a total of two members in your party so that we can recruit your friend. I believe that will look natural.";
 						close;
 

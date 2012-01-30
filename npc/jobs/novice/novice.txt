@@ -622,7 +622,7 @@ new_1-2,32,172,4	script	Chocolat#nv	96,{
 		mes "Why are you still here?";
 		close2;
 		warp "prontera",156,90;
-		end;		
+		end;
 	}
 }
 
@@ -1149,7 +1149,7 @@ new_5-3,96,30,4	duplicate(NvBrade)	Brade#nv5	733
 			mes "I'll wait for you here.";
 			mes "Wish you a good luck.";
 			close;
-		}		
+		}
 	case 4:
 		mes "[Swordman Guildsman]";
 		mes "If you have any questions about the Swordman class, please ask me.";
@@ -1689,7 +1689,7 @@ new_5-3,109,41,4	duplicate(NvMer)	Merchant Guide#nv5	97
 			next;
 			mes "[Archer Guide]";
 			mes "Do you want to register to test skill experience?";
-			mes "Would you like to test Archer skills?";			
+			mes "Would you like to test Archer skills?";
 			next;
 			if(select("I want to test Archer skills.:I don't want to test it.") == 2) {
 				mes "[Archer Guide]";

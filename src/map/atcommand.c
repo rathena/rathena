@@ -4524,7 +4524,7 @@ ACMD_FUNC(mapinfo)
 		strcat(atcmd_output, "Leaves | ");
 	/**
 	 * No longer available, keeping here just in case it's back someday. [Ind]
-	 **/		
+	 **/
 	//if (map[m_id].flag.rain)
 	//	strcat(atcmd_output, "Rain | ");
 	if (map[m_id].flag.nightenabled)
@@ -6319,7 +6319,7 @@ ACMD_FUNC(autolootitem)
 }
 /**
  * No longer available, keeping here just in case it's back someday. [Ind]
- **/	
+ **/
 /*==========================================
  * It is made to rain.
  *------------------------------------------*/
@@ -6477,7 +6477,7 @@ ACMD_FUNC(clearweather)
 	nullpo_retr(-1, sd);
 	/**
 	 * No longer available, keeping here just in case it's back someday. [Ind]
-	 **/		
+	 **/
 	//map[sd->bl.m].flag.rain=0;
 	map[sd->bl.m].flag.snow=0;
 	map[sd->bl.m].flag.sakura=0;
@@ -9181,7 +9181,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	}
 
 	while (*message == charcommand_symbol)
-	{	
+	{
 		//Checks to see if #command has a name or a name + parameters.
 		x = sscanf(message, "%99s \"%23[^\"]\" %99[^\n]", command, charname, params);
 		y = sscanf(message, "%99s %23s %99[^\n]", command, charname2, params2);
@@ -9195,7 +9195,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 				clif_displaymessage(fd, output);
 			} else {
 				sprintf(output, "Charcommand failed. Usage: #<command> <char name> <params>.");
-				clif_displaymessage(fd, output);			
+				clif_displaymessage(fd, output);
 			}
 			return true;
 		}

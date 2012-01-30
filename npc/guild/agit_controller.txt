@@ -78,7 +78,7 @@ S_DisplayOwners:
 		}
 		else {
 			Announce "The [" + GetCastleName(.@maps$[.@i]) + "] castle is currently unoccupied.",bc_all|bc_woe;
-		}		
+		}
 	}
 	end;
 }

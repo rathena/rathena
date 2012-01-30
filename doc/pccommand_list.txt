@@ -135,7 +135,7 @@ can be getmapxy, something like this:
 -	script	PCDieEvent	-1,{
 if (getmapxy(@mapname$,@mapx,@mapy,0) == -1) goto L_Finish;
 if (@mapname$ == "valkyrie") || (@mapname$ == "amatsu") {
-killmonster "valkyrie","All";	
+killmonster "valkyrie","All";
 announce "Deep Voice: You have failed.... you have another opportunity though...",bc_self,0x660033;
 if (killtest != 0) enablenpc "Outern Voices";
 if (killedonce == 1) end;
@@ -152,7 +152,7 @@ L_Finish:
 OnPCDieEvent: 
 if (getmapxy(@mapname$,@mapx,@mapy,0) == -1) goto L_Finish;
 if (@mapname$ == "valkyrie") || (@mapname$ == "amatsu") {
-killmonster "valkyrie","All";	
+killmonster "valkyrie","All";
 announce "Deep Voice: You have failed.... you have another opportunity though...",bc_self,0x660033;
 if (killtest != 0) enablenpc "Outern Voices";
 if (killedonce == 1) end;

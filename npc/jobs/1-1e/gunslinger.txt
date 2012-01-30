@@ -358,7 +358,7 @@ payon,184,65,3	script	Wise Bull Horn	866,{
 			mes "earth. Would you do this old";
 			mes "Gunslinger a favor a bring me";
 			mes "a cold glass of Milk, please?";
-			close;		
+			close;
 		}
 		delitem 519,1;	// Milk
 		set GUNS_Q,5;

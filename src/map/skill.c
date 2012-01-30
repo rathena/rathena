@@ -1222,7 +1222,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			}
 			if( rate )
 				skill_break_equip(src, EQP_WEAPON, rate, BCT_SELF);
-		}	
+		}
 		if( battle_config.equip_skill_break_rate && skillid != WS_CARTTERMINATION && skillid != ITM_TOMAHAWK )
 		{	// Cart Termination/Tomahawk won't trigger breaking data. Why? No idea, go ask Gravity.
 			// Target weapon breaking
@@ -2377,7 +2377,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			if( ssc && ssc->data[SC_POISONINGWEAPON] && rnd()%100 < 70 + 5*skilllv ) {
 				sc_start(bl,ssc->data[SC_POISONINGWEAPON]->val2,100,ssc->data[SC_POISONINGWEAPON]->val1,skill_get_time2(GC_POISONINGWEAPON,ssc->data[SC_POISONINGWEAPON]->val1));
 				status_change_end(src,SC_POISONINGWEAPON,-1);
-				clif_skill_nodamage(src,bl,skillid,skilllv,1);				
+				clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			}
 		}
 	}
@@ -3953,7 +3953,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		}
 		else
 		{
-			struct skill_unit *su = BL_CAST(BL_SKILL,bl);			
+			struct skill_unit *su = BL_CAST(BL_SKILL,bl);
 			struct skill_unit_group* sg;
 
 			if( su && (sg=su->group) && skill_get_inf2(sg->skill_id)&INF2_TRAP && sg->src_id != src->id &&
@@ -4559,7 +4559,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case PR_KYRIE:
-	case MER_KYRIE:	
+	case MER_KYRIE:
 		clif_skill_nodamage(bl,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		break;
@@ -5138,7 +5138,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			map_freeblock_unlock();
 			return 0;
 		}
-		clif_skill_nodamage(src,bl,skillid,-1,sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));		
+		clif_skill_nodamage(src,bl,skillid,-1,sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		break;
 	case TK_RUN:
 		if (tsce)
@@ -7096,7 +7096,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case WL_JACKFROST:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		map_foreachinshootrange(skill_area_sub,bl,skill_get_splash(skillid,skilllv),BL_CHAR|BL_SKILL,src,skillid,skilllv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
-		break;		
+		break;
 
 	case WL_MARSHOFABYSS:
 		// Should marsh of abyss still apply half reduction to players after the 28/10 patch? [LimitLine]
@@ -7321,7 +7321,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case NC_DISJOINT:
 		{
-			if( bl->type != BL_MOB ) break;				
+			if( bl->type != BL_MOB ) break;
 			md = map_id2md(bl->id);
 			if( md && md->class_ >= 2042 && md->class_ <= 2046 )
 				status_kill(bl);
@@ -8407,7 +8407,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 		i = skill_get_splash(skillid,skilllv);
 		map_foreachinarea(skill_area_sub,src->m,x-i,y-i,x+i,y+i,BL_CHAR,
 			src,skillid,skilllv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
-		break;		
+		break;
 	/**
 	 * Guilotine Cross
 	 **/
@@ -9803,7 +9803,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			break;
 
 		case UNT_GRAVITATION:
-		case UNT_EARTHSTRAIN:		
+		case UNT_EARTHSTRAIN:
 		case UNT_FIREWALK:
 		case UNT_ELECTRICWALK:
 		case UNT_PSYCHIC_WAVE:
@@ -10312,7 +10312,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 	if (lv <= 0 || sd->chatID) return 0;
 
 	if( battle_config.gm_skilluncond && pc_isGM(sd)>= battle_config.gm_skilluncond && sd->skillitem != skill )
-	{	//GMs don't override the skillItem check, otherwise they can use items without them being consumed! [Skotlex]	
+	{	//GMs don't override the skillItem check, otherwise they can use items without them being consumed! [Skotlex]
 		sd->state.arrow_atk = skill_get_ammotype(skill)?1:0; //Need to do arrow state check.
 		sd->spiritball_old = sd->spiritball; //Need to do Spiritball check.
 		return 1;
@@ -10972,7 +10972,7 @@ int skill_check_condition_castend(struct map_session_data* sd, short skill, shor
 		return 0;
 
 	if( battle_config.gm_skilluncond && pc_isGM(sd) >= battle_config.gm_skilluncond && sd->skillitem != skill )
-	{	//GMs don't override the skillItem check, otherwise they can use items without them being consumed! [Skotlex]	
+	{	//GMs don't override the skillItem check, otherwise they can use items without them being consumed! [Skotlex]
 		sd->state.arrow_atk = skill_get_ammotype(skill)?1:0; //Need to do arrow state check.
 		sd->spiritball_old = sd->spiritball; //Need to do Spiritball check.
 		return 1;
@@ -14435,14 +14435,14 @@ int skill_stasis_check(struct block_list *bl, int src_id, int skillid)
 {
 	int inf = 0;
 	if( !bl || skillid < 1 )
-		return 0; // Can do it	
+		return 0; // Can do it
 	inf = skill_get_inf2(skillid);
 	if( inf == INF2_SONG_DANCE || /*skill_get_inf2(skillid) == INF2_CHORUS_SKILL ||*/ inf == INF2_SPIRIT_SKILL )
 		return 1; // Can't do it.
 
 	switch( skillid )
 	{
-		case NV_FIRSTAID:		case TF_HIDING:			case AS_CLOAKING:		case WZ_SIGHTRASHER:	
+		case NV_FIRSTAID:		case TF_HIDING:			case AS_CLOAKING:		case WZ_SIGHTRASHER:
 		case RG_STRIPWEAPON:		case RG_STRIPSHIELD:		case RG_STRIPARMOR:		case WZ_METEOR:
 		case RG_STRIPHELM:		case SC_STRIPACCESSARY:		case ST_FULLSTRIP:		case WZ_SIGHTBLASTER:
 		case ST_CHASEWALK:		case SC_ENERVATION:		case SC_GROOMY:			case WZ_ICEWALL:

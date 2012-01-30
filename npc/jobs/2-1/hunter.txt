@@ -1510,7 +1510,7 @@ job_hunte,55,120,0	duplicate(HntTrap)	23-6	-1,0,0
 job_hunte,66,120,0	duplicate(HntTrap)	24-1	-1,0,0
 job_hunte,66,121,0	duplicate(HntTrap)	24-2	-1,0,0
 job_hunte,67,120,0	duplicate(HntTrap)	24-3	-1,0,0
-job_hunte,67,121,0	duplicate(HntTrap)	24-4	-1,0,0	
+job_hunte,67,121,0	duplicate(HntTrap)	24-4	-1,0,0
 job_hunte,114,118,0	duplicate(HntTrap)	25-1	-1,0,0
 job_hunte,114,119,0	duplicate(HntTrap)	25-2	-1,0,0
 job_hunte,115,118,0	duplicate(HntTrap)	25-3	-1,0,0

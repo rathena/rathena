@@ -829,7 +829,7 @@ int unit_stop_walking(struct block_list *bl,int type)
 	tick = gettick();
 	if( (type&0x02 && !ud->walkpath.path_pos) //Force moving at least one cell.
 	||  (type&0x04 && td && DIFF_TICK(td->tick, tick) <= td->data/2) //Enough time has passed to cover half-cell
-	) {	
+	) {
 		ud->walkpath.path_len = ud->walkpath.path_pos+1;
 		unit_walktoxy_timer(INVALID_TIMER, tick, bl->id, ud->walkpath.path_pos);
 	}
@@ -1176,7 +1176,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 	
 	switch(skill_num){
 	case ALL_RESURRECTION:
-		if(battle_check_undead(tstatus->race,tstatus->def_ele)) {	
+		if(battle_check_undead(tstatus->race,tstatus->def_ele)) {
 			temp = 1;
 		} else if (!status_isdead(target))
 			return 0; //Can't cast on non-dead characters.
@@ -1220,7 +1220,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 			casttime *= 2;
 		break;
 	}
-  	
+	
 	// moved here to prevent Suffragium from ending if skill fails
 	if (!(skill_get_castnodex(skill_num, skill_lv)&2))
 		casttime = skill_castfix_sc(src, casttime, skill_num, skill_lv);

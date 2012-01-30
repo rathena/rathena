@@ -3063,7 +3063,7 @@ hu_in01,256,40,3	script	Herico	897,{
 		end;
 	}
 	else
-	{	
+	{
 		if(countitem(7342))
 		{
 			mes "[Herico]";
@@ -3073,7 +3073,7 @@ hu_in01,256,40,3	script	Herico	897,{
 			close2;
 			cutin "",255;
 			end;
-		}	
+		}
 		else
 		{
 			mes "[Herico]";
@@ -7205,7 +7205,7 @@ OnTouch:
 		mes "game coordinators tend";
 		mes "to be pretty busy...";
 		close;
-	}	
+	}
 }
 
 que_bingo,53,190,7	script	Eukran	778,{
@@ -7325,7 +7325,7 @@ OnInit:
 	disablenpc "Young Man#Hu_Quest";
 	end;
 
-}	
+}
 
 odin_tem01,130,134,4	script	Young Man#Hu_Quest	774,{
 
@@ -9989,7 +9989,7 @@ hu_in01,16,20,4	script	Ashe	95,{
 			mes "Oh, dear, you don't";
 			mes "look very well. Did";
 			mes "something happen?";
-			close;			
+			close;
 		
 		case 16:
 			mes "[Ashe]";

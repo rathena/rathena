@@ -69,7 +69,7 @@ switch(select("I'd like to make a deposit.:I'd like to make a withdrawl.:What's 
 		else if (@withdrawl > #bankstorage) {
 			mes "I show you only have ^00FF00" + #bankstorage +"^000000 zeny in your account!";
 			close;
-		}	
+		}
 		else if ((@cost > Zeny) && ((Zeny + @withdrawl) > @cost)) {
 			mes "[Banker]";
 			mes "You don't have the Zeny for the transaction fee right now. Would you like me to take the fee directly from your withdrawl?";

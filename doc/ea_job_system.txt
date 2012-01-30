@@ -170,7 +170,7 @@ About Novices and Super Novices:
 	EAJ_NOVICE -> Novice
 	EAJ_NOVICE|EAJL_2_1 -> EAJ_SUPER_NOVICE
 	EAJ_NOVICE|EAJL_UPPER -> EAJ_NOVICE_HIGH
-	EAJ_NOVICE|EAJL_BABY	-> EAJ_BABY	
+	EAJ_NOVICE|EAJL_BABY	-> EAJ_BABY
 	EAJ_NOVICE|EAJL_BABY|EAJL_2_1 -> EAJ_SUPER_BABY
 
 	So as you can see, on this job system, the Super Novice is treated as the 2-1 job of a Novice, and the Novice job it's at the same level of the other 1st jobs. Even though that may seem like a hindrance, it makes it very easy to add a check to discard Novice types from a quest:

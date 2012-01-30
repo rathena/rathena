@@ -54,7 +54,7 @@ function	script	F_keShop	{
 				"- Buy items",
 				"- Sell items"
 			);
-			break;		
+			break;
 	}
 	if (@kmenu == 1)
 		return;

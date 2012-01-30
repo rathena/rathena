@@ -737,7 +737,7 @@ que_ng,185,180,3	script	Vanessa	726,{
 			next;
 			switch( select( "Maybe next time.","Okay.") )
 			{
-				case 1:	
+				case 1:
 					mes "[Vanessa]";
 					mes "Mm~ Is that so~";
 					mes "It will be an opportunity for you.";
@@ -746,7 +746,7 @@ que_ng,185,180,3	script	Vanessa	726,{
 					mes "Bye~Bye~";
 					close;
            
-				case 2:	
+				case 2:
 					mes "[Vanessa]";
 					mes "Mm, Okay.";
 					mes "To make a Destroyer,";

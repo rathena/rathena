@@ -378,7 +378,7 @@ function SF_revertJob {
 	if ($@kejs_announce)
 		announce strcharinfo(0)+" has changed from "+jobname(@thisJobId)+" to "+@newjob$+"...",16;
 	return 1;
-}	
+}
 
 //SubFunction: SF_getJobNames(Qty)
 //Fills an array @names$ with the job names taken from the array "classes",

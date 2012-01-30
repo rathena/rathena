@@ -173,7 +173,7 @@ int pet_target_check(struct map_session_data *sd,struct block_list *bl,int type)
  * Pet SC Check [Skotlex]
  *------------------------------------------*/
 int pet_sc_check(struct map_session_data *sd, int type)
-{	
+{
 	struct pet_data *pd;
 
 	nullpo_ret(sd);
@@ -1203,7 +1203,7 @@ int read_petdb()
 	FILE *fp;
 	int nameid,i,j,k; 
 
-	// Remove any previous scripts in case reloaddb was invoked.	
+	// Remove any previous scripts in case reloaddb was invoked.
 	for( j = 0; j < MAX_PET_DB; j++ )
 	{
 		if( pet_db[j].pet_script )
@@ -1238,7 +1238,7 @@ int read_petdb()
 
 		lines = entries = 0;
 		while( fgets(line, sizeof(line), fp) && j < MAX_PET_DB )
-		{			
+		{
 			char *str[22], *p;
 			lines++;
 

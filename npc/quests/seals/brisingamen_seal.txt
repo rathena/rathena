@@ -900,7 +900,7 @@ yuno_in04,47,113,1	script	Studying Scholar#1	749,{
 					if ($God3 == 50) {
 						announce "The 3rd Seal of [Brisingamen] has appeared.",bc_all;
 					}
-					else if ($God3 == 100) {				
+					else if ($God3 == 100) {
 						if ($God1 == 100 && $God2 == 100 && $God3 == 100 && $God4 == 100) {
 							announce "Four seals have been released at the same time with the seal of [Brisingamen].",bc_all;
 						}

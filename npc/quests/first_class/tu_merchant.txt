@@ -818,7 +818,7 @@ prontera,66,111,3	script	Sagle	82,{
 				mes "Zeny, alright?";
 				close;
 			}
-			if(MaxWeight - Weight < 71){			
+			if(MaxWeight - Weight < 71){
 				next;
 				mes "[Sagle]";
 				mes "Whoa, hold on!";
@@ -1041,7 +1041,7 @@ prt_in,169,11,3	script	Aigie	92,{
 			mes "^666666*Sniff Sniff*^000000";
 			close;
 			break;
-		}					
+		}
 	}
 	if(tu_merchant == 7){
 		mes "[Aigie]";
@@ -1088,7 +1088,7 @@ prt_in,169,11,3	script	Aigie	92,{
 			mes "^666666*Sniff Sniff*^000000";
 			close;
 			break;
-		}					
+		}
 	}
 	if(tu_merchant == 6){
 		mes "[Aigie]";

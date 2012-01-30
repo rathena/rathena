@@ -415,17 +415,17 @@ int itemdb_cansell_sub(struct item_data* item, int gmlv, int unused)
 }
 
 int itemdb_cancartstore_sub(struct item_data* item, int gmlv, int unused)
-{	
+{
 	return (item && (!(item->flag.trade_restriction&16) || gmlv >= item->gm_lv_trade_override));
 }
 
 int itemdb_canstore_sub(struct item_data* item, int gmlv, int unused)
-{	
+{
 	return (item && (!(item->flag.trade_restriction&32) || gmlv >= item->gm_lv_trade_override));
 }
 
 int itemdb_canguildstore_sub(struct item_data* item, int gmlv, int unused)
-{	
+{
 	return (item && (!(item->flag.trade_restriction&64) || gmlv >= item->gm_lv_trade_override));
 }
 

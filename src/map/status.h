@@ -741,13 +741,13 @@ enum si_type {
 //	SI_FRIEND = 162,
 //	SI_FRIENDUP = 163,
 //	SI_SG_WARM = 164,
-	SI_WARM			= 165,	
-//	166 | The three show the exact same display: ultra red character (165, 166, 167)	
+	SI_WARM			= 165,
+//	166 | The three show the exact same display: ultra red character (165, 166, 167)
 //	167 | Their names would be SI_SG_SUN_WARM, SI_SG_MOON_WARM, SI_SG_STAR_WARM
 //	SI_EMOTION = 168,
 	SI_SUN_COMFORT		= 169,
-	SI_MOON_COMFORT		= 170,	
-	SI_STAR_COMFORT		= 171,	
+	SI_MOON_COMFORT		= 170,
+	SI_STAR_COMFORT		= 171,
 //	SI_EXPUP = 172,
 //	SI_GDSKILL_BATTLEORDER = 173,
 //	SI_GDSKILL_REGENERATION = 174,

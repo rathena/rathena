@@ -916,7 +916,7 @@ OnSpawnGuardians:
 
 OnGuardianDied:
 	end;
-}	
+}
 
 // Kafra Template
 //============================================================
@@ -974,7 +974,7 @@ OnGuardianDied:
 				end;
 			}
 			cutin "", 255;
-			close;			
+			close;
 		case 3:
 			mes "[Kafra staff]";
 			mes "Please let me know your destination.";
@@ -1028,7 +1028,7 @@ OnGuardianDied:
 				case 2:
 					break;
 				}
-			}		
+			}
 			break;
 		case 5:
 			mes "[Kafra staff]";

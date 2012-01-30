@@ -195,7 +195,7 @@ payon,162,176,4	script	Halloween Magician#iRO08	704,{
 						getitem 617,1;
 						goto Enough;
 					}
-					break;			
+					break;
 				case 5:
 					if(countitem(7941) < 200) {
 						goto NotEnough;

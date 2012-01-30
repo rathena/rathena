@@ -15,7 +15,7 @@ struct auth_node {
 	struct map_session_data *sd;	//Data from logged on char.
 	struct mmo_charstatus *char_dat;	//Data from char server.
 	unsigned int node_created; //timestamp for node timeouts
-	enum sd_state state; //To track whether player was login in/out or changing maps.	
+	enum sd_state state; //To track whether player was login in/out or changing maps.
 };
 
 void chrif_setuserid(char* id);

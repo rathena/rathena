@@ -8750,13 +8750,13 @@ static bool clif_process_message(struct map_session_data* sd, int format, char**
 	if( messagelen != strnlen(message, messagelen)+1 )
 	{	// the declared length must match real length
 		ShowWarning("clif_process_message: Received malformed packet from player '%s' (length is incorrect)!\n", sd->status.name);
-		return false;		
+		return false;
 	}
 	// verify <message> part of the packet
 	if( message[messagelen-1] != '\0' )
 	{	// message must be zero-terminated
 		ShowWarning("clif_process_message: Player '%s' sent an unterminated message string!\n", sd->status.name);
-		return false;		
+		return false;
 	}
 	if( messagelen > CHAT_SIZE_MAX-1 )
 	{	// messages mustn't be too long
@@ -9789,7 +9789,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 	{
 		char* str = target+4; //Skip the NPC: string part.
 		struct npc_data* npc;
-		if ((npc = npc_name2id(str)))	
+		if ((npc = npc_name2id(str)))
 		{
 			char split_data[NUM_WHISPER_VAR][CHAT_SIZE_MAX];
 			char *split;
@@ -11493,7 +11493,7 @@ void clif_PartyBookingRegisterAck(struct map_session_data *sd, int flag)
 /// Request to search for party booking advertisments (CZ_PARTY_BOOKING_REQ_SEARCH).
 /// 0804 <level>.W <map id>.W <job>.W <last index>.L <result count>.W
 void clif_parse_PartyBookingSearchReq(int fd, struct map_session_data* sd)
-{	
+{
 	short level = RFIFOW(fd,2);
 	short mapid = RFIFOW(fd,4);
 	short job = RFIFOW(fd,6);

@@ -549,7 +549,7 @@ moscovia,135,49,5	script	Mr. Ibanoff#npc	964,{
 			warp "mosk_ship",94,110;
 			end;
 		}
-		else if (gettime(3) >= 18 && gettime(3) < 21) {	
+		else if (gettime(3) >= 18 && gettime(3) < 21) {
 			mes "[Mr. Ibanoff]";
 			mes "Hmm. It's not a bad time.";
 			mes "We should hurry up";
@@ -632,7 +632,7 @@ moscovia,135,49,5	script	Mr. Ibanoff#npc	964,{
 			warp "mosk_ship",94,110;
 			end;
 		}
-		else if (gettime(3) >= 18 && gettime(3) < 21) {	
+		else if (gettime(3) >= 18 && gettime(3) < 21) {
 			mes "[Mr. Ibanoff]";
 			mes "Hmm. It's not a bad time.";
 			mes "We should hurry up";
@@ -819,7 +819,7 @@ moscovia,135,49,5	script	Mr. Ibanoff#npc	964,{
 			warp "mosk_ship",94,110;
 			end;
 		}
-		else if (gettime(3) >= 18 && gettime(3) < 21) {	
+		else if (gettime(3) >= 18 && gettime(3) < 21) {
 			mes "[Mr. Ibanoff]";
 			mes "Hmm. It's not a bad time.";
 			mes "We should hurry up";
@@ -898,7 +898,7 @@ moscovia,135,49,5	script	Mr. Ibanoff#npc	964,{
 			warp "mosk_ship",94,110;
 			end;
 		}
-		else if (gettime(3) >= 18 && gettime(3) < 21) {	
+		else if (gettime(3) >= 18 && gettime(3) < 21) {
 			mes "[Mr. Ibanoff]";
 			mes "Hmm. It's not a bad time.";
 			mes "We should hurry up";

@@ -110,7 +110,7 @@ L_Fill:
 		mes "["+@bingo_e1$+"] ["+@bingo_e2$+"] ["+@bingo_e3$+"] ["+@bingo_e4$+"] ["+@bingo_e5$+"]";
 		close;
 
-	}	
+	}
 	goto L_Fill;
 	
 }

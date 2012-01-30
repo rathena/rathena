@@ -161,7 +161,7 @@ L_Super_Novice_M:
 
 //=================================
 // Clothing Dyeing for Females
-//=================================	
+//=================================
 Female_dye:
 	if(BaseJob==Job_Novice || BaseJob==Job_Novice_High || BaseJob==Job_Baby) goto L_Novice_F;
 	if(BaseJob==Job_Swordman || BaseJob==Job_Swordman_High || BaseJob==Job_Baby_Swordman) goto L_Swordman_F;

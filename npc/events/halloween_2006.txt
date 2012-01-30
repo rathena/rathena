@@ -1068,7 +1068,7 @@ prontera,155,285,3	script	Familiar#06_hw01::HWFamiDup	799,{
 		mes "Ok.";
 		mes "Actually, it's useless to have a special ticket to Nifflheim.";
 		close;
-	}		
+	}
 	mes "[Familiar]";
 	mes "Ok.";
 	mes "If you want to ask something, give a piece of pumpkin pie to Loli Ruri.";

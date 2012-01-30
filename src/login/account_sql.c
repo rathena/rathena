@@ -159,7 +159,7 @@ static bool account_db_sql_init(AccountDB* self)
 		Sql_ShowDebug(sql_handle);
 
 	return true;
-}	
+}
 
 /// disconnects from database
 static void account_db_sql_destroy(AccountDB* self)

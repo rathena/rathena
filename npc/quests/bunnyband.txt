@@ -55,7 +55,7 @@ alberta,26,229,0	script	Kafra Employee#bunny	83,{
 				mes "bring at least";
 				mes "1 Pearl.";
 				close;
-			}		
+			}
 			if (countitem(2213) == 0) {
 				mes "Ooh, I'm sorry";
 				mes "but you need to";

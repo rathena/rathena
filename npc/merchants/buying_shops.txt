@@ -234,7 +234,7 @@ alberta_in,58,52,4	script	Purchasing Team#Buying	59,{
 				mes "I've given you 5 Bulk Buyer Shop Licenses for your trial.";
 				mes "Enjoy shopping!";
 				close;
-			}			
+			}
 		}
 	}else{
 		mes "[Mr. Hugh]";

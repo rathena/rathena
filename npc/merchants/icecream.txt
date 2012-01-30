@@ -54,7 +54,7 @@
 			mes "If you eat more than 5 Ice creams,";
 			mes "If you might haveto make a lot of trips";
 			mes "to the bathroom tonight.";
-			next;		
+			next;
 		}
 	}
 	if(Zeny<.@input*100) {

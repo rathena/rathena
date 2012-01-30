@@ -1290,7 +1290,7 @@ pay_arche,84,139,3	script	Seisner	727,{
 		set tu_archer01, 3;
 		if(JobLevel == 1){
 			getexp 0,5;
-		} else if((JobLevel > 1) && (JobLevel < 11)){	
+		} else if((JobLevel > 1) && (JobLevel < 11)){
 			getexp 0,10;
 		} else if((JobLevel > 10) && (JobLevel < 21)){
 			getexp 0,25;
@@ -1485,7 +1485,7 @@ pay_fild08,40,83,5	script	Acolyte#tu	95,{
 			set .@kurae_agi, rand(1,2);
 			if(.@kurae_agi == 1){
 				unitskilluseid getcharid(3),29,10;
-			} else if(.@kurae_agi == 2){	
+			} else if(.@kurae_agi == 2){
 				unitskilluseid getcharid(3),29,5;
 			}
 

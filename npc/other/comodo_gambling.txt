@@ -84,7 +84,7 @@ comodo,219,158,6	script	Kachua	91,{
 	
 	if (countitem(732) == 0) { // anti-hack
 		logmes "Hack: Tried to bypass item check.";
-		cutin "katsua01.bmp",255;					
+		cutin "katsua01.bmp",255;
 		close;
 	}
 	delitem 732,1;

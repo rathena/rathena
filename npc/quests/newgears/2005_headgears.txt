@@ -89,7 +89,7 @@ yuno,222,116,3	script	Kasis#LhzHat	851,{
 				next;
 				switch( select( "You can have these if you want.", "Um, why are you staring?" ) )
 				{
-					case 1:		
+					case 1:
 						mes "[Kasis]";
 						mes "Really? Is it alright";
 						mes "with you for me to have";
@@ -655,7 +655,7 @@ lighthalzen,143,68,0	script	Strange Guy#LhzHat	47,{
 				mes "^0000FF1 Slotted Bucket Hat^000000";
 				mes "and ^0000FF1,887 zeny^000000. Okay?";
 				close;
-			case 2:	
+			case 2:
 				mes "[Morris]";
 				mes "Great!";
 				mes "Now let me just";
@@ -1676,7 +1676,7 @@ gl_prison1,97,104,1	script	Phendark#LhzHat	1202,{
 	else if(ZLMASKQ == 2 || ZLMASKQ == 3)
 	{
 		if(countitem(7315) > 368 && ZLMASKQ == 3)
-		{	
+		{
 			mes "[Phendark]";
 			mes "Y-you again!";
 			mes "Why do you hound me?!";

@@ -78,7 +78,7 @@ gef_fild10,69,340,5	script	Bulletin Board#3	837,{
 	mes "[Orc Dungeon]";
 	mes "If you don't have a Holy Weapon and you're teamed with a Priest, the Priest's Aspersio spell would be of tremendous help.";
 	close;
-}	
+}
 
 izlu2dun,104,92,5	script	Bulletin Board#4	837,{
 	mes "[Byalan Island]";

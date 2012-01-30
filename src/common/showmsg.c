@@ -197,7 +197,7 @@ Escape sequences for Select Character Set
 int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 {
 	/////////////////////////////////////////////////////////////////
-	/* XXX Two streams are being used. Disabled to avoid inconsistency [flaviojs]		
+	/* XXX Two streams are being used. Disabled to avoid inconsistency [flaviojs]
 	static COORD saveposition = {0,0};
 	*/
 
@@ -369,7 +369,7 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 					{	// number of chars from cursor to end
 						origin = info.dwCursorPosition;
 						cnt = info.dwSize.X * (info.dwSize.Y - info.dwCursorPosition.Y) - info.dwCursorPosition.X; 
-					}				
+					}
 					FillConsoleOutputAttribute(handle, info.wAttributes, cnt, origin, &tmp);
 					FillConsoleOutputCharacter(handle, ' ',              cnt, origin, &tmp);
 				}
@@ -384,11 +384,11 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 					SHORT cnt;
 					DWORD tmp;
 					if(num==1)
-					{	
+					{
 						cnt = info.dwCursorPosition.X + 1;
 					}
 					else if(num==2)
-					{	
+					{
 						cnt = info.dwSize.X;
 					}
 					else// 0 and default
@@ -512,7 +512,7 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 }
 
 int	FPRINTF(HANDLE handle, const char *fmt, ...)
-{	
+{
 	int ret;
 	va_list argptr;
 	va_start(argptr, fmt);
@@ -569,7 +569,7 @@ int	VFPRINTF(FILE *file, const char *fmt, va_list argptr)
 			while(1)
 			{
 				if( ISDIGIT(*q) ) 
-				{					
+				{
 					++q;
 					// and next character
 					continue;
@@ -648,7 +648,7 @@ int	VFPRINTF(FILE *file, const char *fmt, va_list argptr)
 	return 0;
 }
 int	FPRINTF(FILE *file, const char *fmt, ...)
-{	
+{
 	int ret;
 	va_list argptr;
 	va_start(argptr, fmt);

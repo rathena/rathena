@@ -183,7 +183,7 @@ For example, the renting module's configuration segment is:
 
 	//-------------------------------------------------------------------------------
 	//Config for the Renting Module
-	//-------------------------------------------------------------------------------	
+	//-------------------------------------------------------------------------------
 OnLoadRent:
 	set $@kert_cartOnly, 0;	//Set to 1 to enable only cart rental, 0 enables all add-ons.
 	set $@kert_cartCost, 2000;	//Cost to rent a Cart.

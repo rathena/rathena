@@ -277,7 +277,7 @@ void input_setstate(char state)
 {
 	if( state == INPUT_READY && input_getstate() == INPUT_READING )
 	{// send data from the worker to the main process
-		write(buf.data_pipe[PIPE_WRITE], &buf.len, sizeof(buf.len));		
+		write(buf.data_pipe[PIPE_WRITE], &buf.len, sizeof(buf.len));
 		write(buf.data_pipe[PIPE_WRITE], &buf.arr, buf.len);
 	} else if( state == INPUT_WAITING ){
 		if( buf.close_unused_flag == 0 )

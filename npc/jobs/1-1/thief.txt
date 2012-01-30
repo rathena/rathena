@@ -79,7 +79,7 @@ moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
 				mes "[Thief Guildsman]";
 				mes "Hey, brother.";
 				mes "Why are you here? Go back to your place~ go back~~";
-				close;			
+				close;
 			}else{
 				mes "[Thief Guildsman]";
 				mes "What the heck...?";
@@ -87,7 +87,7 @@ moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
 				mes "[Thief Guildsman]";
 				mes "Hey, lady.";
 				mes "Why are you here? Go back to your place~ go back~~";
-				close;			
+				close;
 			}
 		}
 	}
@@ -146,7 +146,7 @@ moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
 		mes "I can see your strong will to become a Thief......";
 		mes "But only with your will, you cannot make it in a real fight, can you?";
 		mes "So go and reach at least Basic Skill Level 9.";
-		close;		
+		close;
 	}
 	mes "[Thief Guildsman]";
 	mes "Hmm.... I found your interesting criminal records from the data of the detective agency. Well you seem to have what it takes to be a good thief.";

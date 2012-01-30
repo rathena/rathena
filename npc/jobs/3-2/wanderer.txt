@@ -218,7 +218,7 @@ xmas,132,143,5	script	Performance Manager#w	713,{
 			switch(select("I'm not interested.:What happened?:If you're not saying, why would you tell me that?")) {
 				case 1:
 					mes "[Stage Staff]";
-					mes "Oh! What a ruthless world!";		
+					mes "Oh! What a ruthless world!";
 					close;
 				case 2:
 					mes "[Stage Staff]";
@@ -231,7 +231,7 @@ xmas,132,143,5	script	Performance Manager#w	713,{
 				case 3:
 					emotion e_ag;
 					mes "[Stage Staff]";
-					mes "I am not saying it? I'm too depressed! Well, now you know!";		
+					mes "I am not saying it? I'm too depressed! Well, now you know!";
 					next;
 					break;
 			}
@@ -247,7 +247,7 @@ L_wh1:
 					next;
 					emotion e_wah;
 					mes "[Stage Staff]";
-					mes "People will put a collar on me! Oh, terrible, so terrible!";				
+					mes "People will put a collar on me! Oh, terrible, so terrible!";
 					next;
 					goto L_wh2;
 				case 2:
@@ -256,7 +256,7 @@ L_wh1:
 					mes "It's <Nuoli Ou>!";
 					mes "Do you know?";
 					mes "They are the worst people in the world.";
-					next;				
+					next;
 					break;
 				case 3:
 					mes "[Stage Staff]";
@@ -386,7 +386,7 @@ L_wh3:
 			mes "Thanks to you, the performance went successfully as planned.";
 			mes "They are really talented!";
 			mes "As a reward, I will prepare a stage especially for you.";
-			close;		
+			close;
 		}
 	}
 	mes "[Stage Staff]";
@@ -556,7 +556,7 @@ comodo,140,86,5	script	Cheerless Minstrel#w	479,{
 				else {
 					mes "["+strcharinfo(0)+"]";
 					mes "It doesn't look like a good idea to me.";
-					close;				
+					close;
 				}
 			case 3:
 				set .@scream,getskilllv(329);
@@ -624,7 +624,7 @@ comodo,140,86,5	script	Cheerless Minstrel#w	479,{
 					emotion e_lv,1;
 					next;
 					break;
-				}	
+				}
 		}
 		mes "[Guitar Song]";
 		mes "Ah, oh, well!";
@@ -692,7 +692,7 @@ comodo,140,86,5	script	Cheerless Minstrel#w	479,{
 	else {
 		mes "[inability of the court musicians]";
 		mes "Where is my companion ...";
-		close;   		
+		close;
 	}
 }
 
@@ -753,7 +753,7 @@ hu_in01,305,251,5	script	Vacant Looking Lady#w	879,{
         emotion e_sob;
         mes "[Vacant Looking Lady]";
         mes "Why didn't Guitar Song recognized me, ah? I still have no make-up on my face so he won't recognize me, ah? Ooo-ooo...";
-        next;		
+        next;
 		menu "So you have to solve this problem?",-;
 		emotion e_sob;
         mes "[Vacant Looking Lady]";
@@ -802,11 +802,11 @@ hu_in01,305,251,5	script	Vacant Looking Lady#w	879,{
         mes "[Dancer Kim]";
         mes "I was once a beautiful dove, but now I became a hen.";
         mes "Dancer Kim's is no longer wanderer.";
-        next;		
+        next;
 		if (select("Don't give up.:You'll can handle it yourself.") == 2){
             mes "[Dancer Kim]";
             mes "My life has not came out from the abyss ...";
-            close;			
+            close;
 		}
         mes "[Dancer Kim]";
         mes "I already said that it's all over with Guitar Song.";
@@ -828,8 +828,8 @@ hu_in01,305,251,5	script	Vacant Looking Lady#w	879,{
 		if (select("Then there is nothing else to do.:Lets exercise.") == 1){
             mes "[Dancer Kim]";
             mes "There is no dream, no hope...";
-            close;			
-		}		
+            close;
+		}
         mes "[Dancer Kim]";
         mes "Do you want to exercise with me? Together?";
         mes "Really?";
@@ -841,7 +841,7 @@ hu_in01,305,251,5	script	Vacant Looking Lady#w	879,{
         mes "My heart now feels better!";
         mes "I feel like my body is igniting for some action.";
         mes "And now I'm motivated to take advantage of the time and overcome all difficulties as soon as possible!";
-        next;		
+        next;
 		menu "What are we going to do?",-;
         mes "[Dancer Kim]";
         mes "I have a good idea!";
@@ -856,7 +856,7 @@ hu_in01,305,251,5	script	Vacant Looking Lady#w	879,{
 	else if (job_wan == 6 || job_wan == 7) {
         mes "[Dancer Kim]";
         mes "I will wait for you in the Lake of Abyss.";
-        close;		
+        close;
 	}
 	else if (job_wan == 8) {
         mes "[Dancer Kim]";
@@ -885,8 +885,8 @@ hu_fild05,342,130,5	script	Dancer Kim#fild	879,{
 		if (select("No.:Yes.") == 1){
             mes "[Dancer Kim]";
             mes "Please prepare as fast as you can, before all of this will disappear from my interests!";
-            close;			
-		}	
+            close;
+		}
 		mes "[Dancer Kim]";
 		mes "Good! So, prepare!";
 		mes "Start!";
@@ -928,7 +928,7 @@ hu_fild05,342,130,5	script	Dancer Kim#fild	879,{
 					mes "Ah, do me a favour, please.";
 					mes "Can you bring Guitar Song to Lutie?";
 					mes "Say that his partner is waiting for him.";
-					next;				
+					next;
 					menu "No problem!",-;
 					mes "[Dancer Kim]";
 					mes "You're a good person. I'm really happy that I met you.";
@@ -950,7 +950,7 @@ hu_fild05,342,130,5	script	Dancer Kim#fild	879,{
 			mes "- It looks like Dancer Kim cannot stand the pain and gives up. She sat down on the ground -";
 			set job_wan,6;
 			changequest 2221,2220;
-			close;		
+			close;
 		}
 		mes "[Dancer Kim]";
 		mes "Ah ...?";
@@ -960,7 +960,7 @@ hu_fild05,342,130,5	script	Dancer Kim#fild	879,{
 	else if (job_wan == 8) {
 		mes "[Dancer Kim]";
 		mes "Please tell Guitar Song that I'm waiting for him in Lutie.";
-		close;		
+		close;
 	}
 	mes "[Dancer Kim]";
 	mes "Hunting Yellow Novus really is the best sport.";
@@ -978,11 +978,11 @@ OnTouch:
 		}
 		if (.@bc_rd == 2){
 			mapannounce "hu_fild05","Dancer Kim: Yeah! Novuses are coming, my sister!",bc_map;
-			end;			
+			end;
 		}
 		else {
 			mapannounce "hu_fild05","Dancer Kim: Oh, you're tired so soon? It seems that I'll win this!",bc_map;
-			end;			
+			end;
 		}
 	}
 	end;
@@ -999,11 +999,11 @@ OnTouch:
 		}
 		if (.@bc_rd == 2){
 			mapannounce "hu_fild05","Dancer Kim: Yeah! Novuses are coming, my sister!",bc_map;
-			end;			
+			end;
 		}
 		else {
 			mapannounce "hu_fild05","Dancer Kim: Oh, you're tired so soon? It seems that I'll win this!",bc_map;
-			end;			
+			end;
 		}
 	}
 	end;
@@ -1020,11 +1020,11 @@ OnTouch:
 		}
 		if (.@bc_rd == 2){
 			mapannounce "hu_fild05","Dancer Kim: Yeah! Novuses are coming, my sister!",bc_map;
-			end;			
+			end;
 		}
 		else {
 			mapannounce "hu_fild05","Dancer Kim: Oh, you're tired so soon? It seems that I'll win this!",bc_map;
-			end;			
+			end;
 		}
 	}
 	end;
@@ -1041,11 +1041,11 @@ OnTouch:
 		}
 		if (.@bc_rd == 2){
 			mapannounce "hu_fild05","Dancer Kim: Yeah! Novuses are coming, my sister!",bc_map;
-			end;			
+			end;
 		}
 		else {
 			mapannounce "hu_fild05","Dancer Kim: Oh, you're tired so soon? It seems that I'll win this!",bc_map;
-			end;			
+			end;
 		}
 	}
 	end;
@@ -1062,11 +1062,11 @@ OnTouch:
 		}
 		if (.@bc_rd == 2){
 			mapannounce "hu_fild05","Dancer Kim: Yeah! Novuses are coming, my sister!",bc_map;
-			end;			
+			end;
 		}
 		else {
 			mapannounce "hu_fild05","Dancer Kim: Oh, you're tired so soon? It seems that I'll win this!",bc_map;
-			end;			
+			end;
 		}
 	}
 	end;
@@ -1083,11 +1083,11 @@ OnTouch:
 		}
 		if (.@bc_rd == 2){
 			mapannounce "hu_fild05","Dancer Kim: Ah, my nails are broken! It hurt... Forget about it...",bc_map;
-			end;			
+			end;
 		}
 		else {
 			mapannounce "hu_fild05","Dancer Kim: Oh, you're tired so soon? It seems that I'll win this!",bc_map;
-			end;			
+			end;
 		}
 	
 	}
@@ -1105,11 +1105,11 @@ OnTouch:
 		}
 		if (.@bc_rd == 2){
 			mapannounce "hu_fild05","Dancer Kim: Ah, my nails are broken! It hurt... Forget about it...",bc_map;
-			end;			
+			end;
 		}
 		else {
 			mapannounce "hu_fild05","Dancer Kim: Oh, you're tired so soon? It seems that I'll win this!",bc_map;
-			end;			
+			end;
 		}
 	}
 	end;
@@ -1126,11 +1126,11 @@ OnTouch:
 		}
 		if (.@bc_rd == 2){
 			mapannounce "hu_fild05","Dancer Kim: Ah, my nails are broken! It hurt... Forget about it...",bc_map;
-			end;			
+			end;
 		}
 		else {
 			mapannounce "hu_fild05","Dancer Kim: Oh, you're tired so soon? It seems that I'll win this!",bc_map;
-			end;			
+			end;
 		}
 	}
 	end;
@@ -1147,11 +1147,11 @@ OnTouch:
 		}
 		if (.@bc_rd == 2){
 			mapannounce "hu_fild05","Dancer Kim: Ah, my nails are broken! It hurt... Forget about it...",bc_map;
-			end;			
+			end;
 		}
 		else {
 			mapannounce "hu_fild05","Dancer Kim: Oh, you're tired so soon? It seems that I'll win this!",bc_map;
-			end;			
+			end;
 		}
 	}
 	end;
@@ -1168,11 +1168,11 @@ OnTouch:
 		}
 		if (.@bc_rd == 2){
 			mapannounce "hu_fild05","Dancer Kim: Ah, my nails are broken! It hurt... Forget about it...",bc_map;
-			end;			
+			end;
 		}
 		else {
 			mapannounce "hu_fild05","Dancer Kim: Oh, you're tired so soon? It seems that I'll win this!",bc_map;
-			end;			
+			end;
 		}
 	}
 	end;
@@ -1241,7 +1241,7 @@ if (job_wan == 9){
 		emotion e_lv,"Audience#xmas3";
 		emotion e_lv,"Audience#xmas4";
 		emotion e_lv,"Little Iraki#xm";
-		emotion e_lv,"Mimi#xmas";		
+		emotion e_lv,"Mimi#xmas";
 		mes "[Audience]";
 		mes "Hello !!!!!";
 		next;

@@ -185,7 +185,7 @@ hu_in01,23,311,4	script	Party Supplies Shop	898,{
 			mes "[Shopkeeper]";
 			mes "Thank you, please come again.";
 			close;
-	}	
+	}
 }
 
 hu_in01,18,94,0	script	A Part-Timer#1	49,{

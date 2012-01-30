@@ -197,8 +197,7 @@ function	script	GF_getJobId	{
 	}
 	if (@classId >= Job_Novice_High && @classId <= Job_Paladin2)
 		set @classId, @classId -Job_Novice_High;
-	else 	
-	if (@classId >= Job_Baby && @classId <= Job_Super_Baby)
+	else if (@classId >= Job_Baby && @classId <= Job_Super_Baby)
 		set @classId, @classId -Job_Baby;
 		
 	if (@type == 1)

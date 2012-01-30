@@ -538,7 +538,7 @@ Dhp__PrintTypeName(
 	switch( symtag )
 	{
 	case SymTagEnum:
-		{			
+		{
 			WCHAR* pwszTypeName;
 
 			if( SymGetTypeInfo_(hProcess, modBase, typeIndex, TI_GET_SYMNAME, &pwszTypeName) )

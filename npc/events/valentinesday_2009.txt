@@ -123,7 +123,7 @@ prontera,164,174,4	script	Trader#Val09	58,{
 				next;
 				mes "[Marco Bassinio]";
 				mes "You're not saying that you want an empty chocolate box without any chocolate in it, am I right?";
-				close;				
+				close;
 			}
 			if (!checkweight(12744,1)) {
 				mes "[Marco Bassinio]";
@@ -292,7 +292,7 @@ prontera,147,171,5	script	Packs Trader#Val09	58,{
 					getitem 7948,.@input;
 					next;
 					break;
-				}	
+				}
 			case 4:
 				mes "[Packs Trader]";
 				mes "Goodbye!";
@@ -503,7 +503,7 @@ prontera,157,185,4	script	Valentine Vote Manager#v	113,{
 				mes "[Valentine Vote Manager]";
 				mes "The current record shows... "+$Val09name_F$+" is the female vote leader who's registered the total of "+$Val09votes_F+" rings.";
 				next;
-				break;			
+				break;
 
 			case 3:
 				mes "[Valentine Vote Manager]";

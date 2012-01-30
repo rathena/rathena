@@ -68,7 +68,7 @@
 //= 3.3 Fixed the receiver log out bugs. [L0ne_W0lf]
 //= 3.4 Fixed bug when u can't get a Yellow Keycard if u got the Blue one at first [Lupus]
 //=     Note: There are many condition checks that should be omitted in the future fixed item names in item_db.txt / txt resources according the quest
-//=     for items, should be used bitwise methods in a single variable. So let's fix the rest possible bugs (if they exist) and then optimize ^_-		
+//=     for items, should be used bitwise methods in a single variable. So let's fix the rest possible bugs (if they exist) and then optimize ^_-
 //= 3.5 Changed the way the Black Keycard distibuting NPCs work slighty. [L0ne_W0lf]
 //= 3.6 Keil Hyre removes ALL outstanding quest items when he is talked [L0ne_W0lf]
 //=	to after finishing the quest.
@@ -1506,7 +1506,7 @@ kh_school,179,39,0	script	Cute Student#kh	895,{
 		mes "homework before it's due!";
 		mes "Yeah, I've got to go see";
 		mes "Mrs. Lecollane now.";
-		next;		
+		next;
 		mes "[Elly]";
 		mes "Say, "+strcharinfo(0)+",";
 		mes "if it's okay, would you";
@@ -7031,7 +7031,7 @@ kh_kiehl02,50,52,4	script	Kiehl#Original	902,{
 		delitem 7504,1; //Toy_Motor
 		set KielHyreQuest,104;
 		hideonnpc "Kiehl#Copy";
-		donpcevent "Kiehl_Room_Exit::OnEnable";			
+		donpcevent "Kiehl_Room_Exit::OnEnable";
 		enablenpc "Kiehl_Room_Exit";
 		initnpctimer;
 		cutin "",255;

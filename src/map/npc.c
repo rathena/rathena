@@ -594,7 +594,7 @@ int npc_timerevent_start(struct npc_data* nd, int rid)
 	else if( nd->u.scr.timerid != INVALID_TIMER )
 		return 0;
 
-	// Arrange for the next event		
+	// Arrange for the next event
 	ted = ers_alloc(timer_event_ers, struct timer_event_data);
 	ted->next = j; // Set event index
 	ted->time = nd->u.scr.timer_event[j].timer;
@@ -696,8 +696,8 @@ void npc_timerevent_quit(struct map_session_data* sd)
 			old_tick = nd->u.scr.timertick;
 			old_timer = nd->u.scr.timer;
 
-			nd->u.scr.rid = sd->bl.id;			
-			nd->u.scr.timertick = gettick();			
+			nd->u.scr.rid = sd->bl.id;
+			nd->u.scr.timertick = gettick();
 			nd->u.scr.timer = ted->time;
 		
 			//Execute label
@@ -741,7 +741,7 @@ int npc_settimerevent_tick(struct npc_data* nd, int newtimer)
 
 	nullpo_ret(nd);
 
-	// TODO: Set player attached timer's tick.	
+	// TODO: Set player attached timer's tick.
 
 	old_rid = nd->u.scr.rid;
 	nd->u.scr.rid = 0;
@@ -1738,7 +1738,7 @@ int npc_unload(struct npc_data* nd)
 	if( nd->subtype == SCRIPT )
 	{
 		struct s_mapiterator* iter;
-		struct block_list* bl;		
+		struct block_list* bl;
 
 		ev_db->foreach(ev_db,npc_unload_ev,nd->exname); //Clean up all events related
 
@@ -3186,7 +3186,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		map[m].flag.leaves=state;
 	/**
 	 * No longer available, keeping here just in case it's back someday. [Ind]
-	 **/	
+	 **/
 	//else if (!strcmpi(w3,"rain"))
 	//	map[m].flag.rain=state;
 	else if (!strcmpi(w3,"nightenabled"))

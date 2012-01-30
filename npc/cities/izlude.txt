@@ -458,7 +458,7 @@ izlude,124,178,2	script	Soldier#izlude	105,{
 	close;
 }
 
-// Inside Izlude	
+// Inside Izlude
 //============================================================
 izlude_in,125,164,2	script	Aaron#izlude	65,{
 	mes "[Aaron]";

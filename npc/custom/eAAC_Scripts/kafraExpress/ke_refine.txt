@@ -266,7 +266,7 @@ function SF_purify {
 		set @rough, 990;
 		set @qty, 10;
 		break;
-	case 7: //Ice	
+	case 7: //Ice
 		set @item, 995;
 		set @rough, 991;
 		set @qty, 10;
@@ -276,7 +276,7 @@ function SF_purify {
 		set @rough, 992;
 		set @qty, 10;
 		break;
-	case 9: //Earth	
+	case 9: //Earth
 		set @item, 997;
 		set @rough, 993;
 		set @qty, 10;

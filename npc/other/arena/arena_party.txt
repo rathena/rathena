@@ -1140,7 +1140,7 @@ prt_are_in,181,135,3	script	Staff#party-1	67,{
 	mes "You did a good job.";
 	mes "Even if you have failed to clear a time attack battle, I will reward you with a small amount of arena points.";
 	next;
-	if (arena_point == 30000) {	
+	if (arena_point == 30000) {
 		mes "[Staff]";
 		mes "Uh huh!";
 		mes "You already have enough arena points.";
@@ -1205,7 +1205,7 @@ prt_are_in,77,135,3	script	Staff#party-2	67,{
 		mes "[Staff]";
 		mes "Although you failed to make a new record, I hope you will succeed next time.";
 		next;
-		if (arena_point > 29980) {	
+		if (arena_point > 29980) {
 			mes "[Staff]";
 			mes "Then let me reward you with some arena points....eh?";
 			mes "Your arena points have exceeded the maximum amount. I cannot give you more points until you spend some points.";
@@ -1293,7 +1293,7 @@ prt_are_in,77,135,3	script	Staff#party-2	67,{
 			
 
 		}
-		if (arena_point > 29900) {	
+		if (arena_point > 29900) {
 			mes "[Staff]";
 			mes "Then let me reward you with some arena points....eh?";
 			mes "Your arena points have exceeded the maximum amount. I cannot give you more points until you spend some points.";
@@ -1331,7 +1331,7 @@ prt_are_in,77,135,3	script	Staff#party-2	67,{
 		specialeffect2 EF_HIT5;
 		warp "arena_room",100,75;
 		end;
-	}	
+	}
 
 }
 
@@ -1455,7 +1455,7 @@ Onon:
 	enablenpc "arena_p";
 	end;
 
-OnInit:	
+OnInit:
 	if(!$top_ptmin && !$top_ptsec) set $top_ptmin,10;
 	end;
 

@@ -146,7 +146,7 @@ prontera,153,193,6	script	Job Master	123,{
 				case Job_Thief:
 					set @job_opt[0], Job_Assassin;
 					set @job_opt[1], Job_Rogue;
-					break;						
+					break;
 				default:
 					set @job_opt[0], Job_Star_Gladiator;
 					set @job_opt[1], Job_Soul_Linker;

@@ -590,7 +590,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 			}
 			else if (.@SantaCardNpc == 3) {
 				cutin "���Ʈ��ī��",4;
-			}		
+			}
 			next;
 			set .@SantaCardTurn,.@SantaCardTurn+1;
 			if (.@SantaCardP == .@SantaCardNpc) {
@@ -635,10 +635,10 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 				getitem 595,3;
 			}
 			else if (.@SantaCardPrize == 3) {
-				getitem 593,3;							
+				getitem 593,3;
 			}
 			else if (.@SantaCardPrize == 4) {
-				getitem 12236,3;			
+				getitem 12236,3;
 			}
 			else if (.@SantaCardPrize == 5) {
 				getitem 538,10;
@@ -780,7 +780,7 @@ xmas_in,89,92,4	script	Louise Kim#iROxmas08	714,{
 	mes "[Louise Kim]";
 	mes "If you bring me all that stuff, I can make you a glamorous Santa costume.";
 	next;
-	if (countitem(2301) < 1 || countitem(501) < 3 || countitem(523) < 1 || countitem(7175) < 4 || countitem(7174) < 1) {		
+	if (countitem(2301) < 1 || countitem(501) < 3 || countitem(523) < 1 || countitem(7175) < 4 || countitem(7174) < 1) {
 			mes "[Louise Kim]";
 			mes "If you were to bring me all the stuff, I would make you a wonderful costume, for free...";
 			next;

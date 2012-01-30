@@ -44,7 +44,7 @@ OnTouch:
 	set Zeny,Zeny -1000;
 	disablenpc "ArenaFee#60";
 	end;
-}	
+}
 
 force_2-1,99,20,4	script	Minilover#arena	124,{
 
@@ -72,7 +72,7 @@ OnTimer5000:
 	
 OnTimer60000:
 	set $@mapcount60, getmapusers ("force_2-1");
-	if ($@mapcount60 == 0) {	
+	if ($@mapcount60 == 0) {
 		donpcevent "Minilover#arena::Onfailclearstage";
 	}
 	mapannounce "force_2-1","Remaining Time : 5 minutes ",0;
@@ -80,7 +80,7 @@ OnTimer60000:
 	
 OnTimer120000:
 	set $@mapcount60, getmapusers ("force_2-1");
-	if ($@mapcount60 == 0) {	
+	if ($@mapcount60 == 0) {
 		donpcevent "Minilover#arena::Onfailclearstage";
 	}
 	mapannounce "force_2-1","Remaining Time : 4 minutes ",0;
@@ -88,7 +88,7 @@ OnTimer120000:
 	
 OnTimer180000:
 	set $@mapcount60, getmapusers ("force_2-1");
-	if ($@mapcount60 == 0) {	
+	if ($@mapcount60 == 0) {
 		donpcevent "Minilover#arena::Onfailclearstage";
 	}
 	mapannounce "force_2-1","Remaining Time : 3 minutes ",0;
@@ -96,7 +96,7 @@ OnTimer180000:
 	
 OnTimer240000:
 	set $@mapcount60, getmapusers ("force_2-1");
-	if ($@mapcount60 == 0) {	
+	if ($@mapcount60 == 0) {
 		donpcevent "Minilover#arena::Onfailclearstage";
 	}
 	mapannounce "force_2-1","Remaining Time : 2 minutes ",0;
@@ -104,7 +104,7 @@ OnTimer240000:
 	
 OnTimer300000:
 	set $@mapcount60, getmapusers ("force_2-1");
-	if ($@mapcount60 == 0) {	
+	if ($@mapcount60 == 0) {
 		donpcevent "Minilover#arena::Onfailclearstage";
 	}
 	mapannounce "force_2-1","Remaining Time : 1 minute ",0;
@@ -450,7 +450,7 @@ Onon:
 
 OnMobDeath:
 	set $force_01_60,$force_01_60 -1;
-	if ($force_01_60 < 1) {	
+	if ($force_01_60 < 1) {
 		donpcevent "Minilover#arena::On01_end";
 		donpcevent "arena#60::Onreset_01";
 	}
@@ -553,7 +553,7 @@ Onreset:
 
 OnMobDeath:
 	set $force_03_60,$force_03_60 -1;
-	if ($force_03_60 < 1) {	
+	if ($force_03_60 < 1) {
 		donpcevent "Minilover#arena::On03_end";
 		donpcevent "arena#60::Onreset_03";
 	}
@@ -602,7 +602,7 @@ Onon:
 
 OnMobDeath:
 	set $force_04_60,$force_04_60 -1;
-	if ($force_04_60 < 1) {	
+	if ($force_04_60 < 1) {
 		donpcevent "force_04ex#60::Onreset";
 		donpcevent "Minilover#arena::On04_end";
 		donpcevent "arena#60::Onreset_04";
@@ -660,7 +660,7 @@ Onon:
 
 OnMobDeath:
 	set $force_05_60,$force_05_60 -1;
-	if ($force_05_60 < 1) {	
+	if ($force_05_60 < 1) {
 		donpcevent "Minilover#arena::On05_end";
 		donpcevent "arena#60::Onreset_05";
 	}
@@ -741,7 +741,7 @@ Onon:
 
 OnMobDeath:
 	set $force_06_60,$force_06_60 -1;
-	if ($force_06_60 < 1) {	
+	if ($force_06_60 < 1) {
 		set door, 1;
 		donpcevent "Minilover#arena::On06_end";
 		donpcevent "arena#60::Onreset_06";
@@ -773,7 +773,7 @@ Onon:
 
 OnMobDeath:
 	set $force_07_50,$force_07_50 -1;
-	if ($force_07_50 < 1) {	
+	if ($force_07_50 < 1) {
 		donpcevent "Minilover#arena::On07_end";
 		donpcevent "arena#60::Onreset_07";
 	}
@@ -854,7 +854,7 @@ Onreset:
 
 OnMobDeath:
 	set $force_09_60,$force_09_60 -1;
-	if ($force_09_60 < 1) {	
+	if ($force_09_60 < 1) {
 		donpcevent "Minilover#arena::On09_end";
 		donpcevent "arena#60::Onreset_09";
 		donpcevent "arena#60::Onreset_all";
@@ -870,7 +870,7 @@ prt_are_in,129,135,3	script	Staff#60-1	67,{
 	mes "You did a good job.";
 	mes "Even if you have failed to clear a time attack battle, I will reward you with a small amount of arena points.";
 	next;
-	if (arena_point == 30000) {	
+	if (arena_point == 30000) {
 		mes "[Staff]";
 		mes "Uh huh!";
 		mes "You already have enough arena points.";
@@ -934,7 +934,7 @@ prt_are_in,25,135,3	script	Staff#60-2	67,{
 		mes "[Staff]";
 		mes "Although you failed to make a new record, I hope you will succeed next time.";
 		next;
-		if (arena_point > 29980) {	
+		if (arena_point > 29980) {
 			mes "[Staff]";
 			mes "Then let me reward you with some arena points....eh?";
 			mes "Your arena points have exceeded the maximum amount. I cannot give you more points until you spend some points.";
@@ -981,7 +981,7 @@ prt_are_in,25,135,3	script	Staff#60-2	67,{
 		set $arena_60topn$,strcharinfo(0);
 		donpcevent "Vendigos::Onlinerec_60";
 		next;
-		if (arena_point > 29950) {	
+		if (arena_point > 29950) {
 			mes "[Staff]";
 			mes "Then let me reward you with some arena points....eh?";
 			mes "Your arena points have exceeded the maximum amount. I cannot give you more points until you spend some points.";
@@ -1017,7 +1017,7 @@ prt_are_in,25,135,3	script	Staff#60-2	67,{
 		donpcevent "alloff#60::Onon";
 		donpcevent "lvl 60s Waiting Room::Onstart";
 		end;
-	}	
+	}
 
 }
 
@@ -1115,7 +1115,7 @@ Onon:
 	enablenpc "arena#60";
 	end;
 
-OnInit:	
+OnInit:
 	if(!$top_60min && !$top_60sec) set $top_60min,6;
 	end;
 

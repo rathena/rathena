@@ -149,7 +149,7 @@ einbech,97,167,5	script	Cavitar	847,{
 			mes "Come back";
 			mes "whenever you're ready.";
 			close;
-		}				
+		}
 	}
 	else {
 		if (BaseLevel < 40){
@@ -423,7 +423,7 @@ einbech,97,167,5	script	Cavitar	847,{
 						mes "But please understand";
 						mes "that I'm desperate...";
 						close;
-					}	
+					}
 		 		case 2:
 					mes "[Cavitar]";
 					mes "You're...";
@@ -6022,7 +6022,7 @@ ein_in01,31,138,3	script	Calla#ein	90,{
 			mes "Would you please tell";
 			mes "me your name again?";
 			close;
-		}	
+		}
 	}
 	if (EIN_LOVERQ == 4) {
 		mes "[Calla]";

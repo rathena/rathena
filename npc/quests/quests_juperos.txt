@@ -285,10 +285,10 @@ yuno_in04,190,125,4	script	Scholar	700,{
 					mes "My life is also fairly";
 					mes "uneventful, but somehow,";
 					mes "I'm don't think I'm content.";
-					close;		
+					close;
 			}
 
-		case 4:	
+		case 4:
 			mes "[Fayruz]";
 			mes "Oh hello, "+strcharinfo(0)+".";
 			mes "So what brings you to";
@@ -398,7 +398,7 @@ yuno_in04,190,125,4	script	Scholar	700,{
 			next;
 			switch( select( "Take a look at this.","Oh, I'm sorry...") )
 			{
-				case 1:	
+				case 1:
 					switch(jupe_hist)
 					{
 						case 1:
@@ -1069,7 +1069,7 @@ yuno_in04,186,125,4	script	Bundle of Files	111,{
 						mes "regarding the history";
 						mes "of Juperos have allowed";
 						mes "us to make a few conclusions.^000000";
-						close;			
+						close;
 				
 					case 2:
 						if(yuno_hist < 9)
@@ -1130,7 +1130,7 @@ yuno_in04,186,125,4	script	Bundle of Files	111,{
 							mes "^8B6914...";
 							mes "......";
 							mes "..........^000000";
-							next;				
+							next;
 							mes "["+strcharinfo(0)+"]";
 							mes "Huh. This writer keeps";
 							mes "talking about theories,";
@@ -1254,7 +1254,7 @@ yuno_in04,186,125,4	script	Bundle of Files	111,{
 			}
 		case 2:
 			if(yuno_hist < 5)
-			{		
+			{
 				mes "["+strcharinfo(0)+"]";
 				mes "Nah...";
 				mes "I'm tired of reading.";

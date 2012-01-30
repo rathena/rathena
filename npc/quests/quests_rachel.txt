@@ -402,7 +402,7 @@ ra_in01,384,246,3	script	Vincent#ra_in01	47,{
 		mes "Jenny about Phobe?";
 		mes "Sure, sure, I'll do that.";
 		close;
-	}	
+	}
 
 	else if (lost_boy == 11) {
 		mes "["+strcharinfo(0)+"]";

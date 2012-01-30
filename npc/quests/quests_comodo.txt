@@ -1099,7 +1099,7 @@ cmd_in02,32,140,4	script	Chief#cmd	49,{
 			mes "the tourist attraction~";
 			close;
 		}
-	}	
+	}
 }
 
 comodo,88,97,4	script	Toruna#cmd	109,{

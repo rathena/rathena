@@ -1244,7 +1244,7 @@ int status_percent_change(struct block_list *src,struct block_list *target,signe
 			status_damage(src, target, 0, INT_MAX, 0, (!src||src==target?5:1));
 		else
 		  	status_heal(target, 0, INT_MAX, 0);
-	}	
+	}
 	if (flag)
 		return status_damage(src, target, hp, sp, 0, (!src||src==target?5:1));
 	return status_heal(target, hp, sp, 0);
@@ -1442,7 +1442,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 	tsc = status_get_sc(target);
 	
 	if(tsc && tsc->count)
-	{	
+	{
 		if( tsc->data[SC_INVINCIBLE] )
 			return 0;
 		if(!skill_num && tsc->data[SC_TRICKDEAD])
@@ -1926,7 +1926,7 @@ int status_calc_pet_(struct pet_data *pd, bool first)
 		pd->rate_fix = pd->rate_fix*battle_config.pet_support_rate/100;
 
 	return 1;
-}	
+}
 
 /// Helper function for status_base_pc_maxhp(), used to pre-calculate the hp_sigma_val[] array
 static void status_calc_sigma(void)
@@ -3420,7 +3420,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 		else
 		if( bl->type&BL_HOM )
 		{
-			amotion = (1000 -4*status->agi -status->dex) * ((TBL_HOM*)bl)->homunculusDB->baseASPD/1000;			
+			amotion = (1000 -4*status->agi -status->dex) * ((TBL_HOM*)bl)->homunculusDB->baseASPD/1000;
 			status->aspd_rate = status_calc_aspd_rate(bl, sc, b_status->aspd_rate);
 			
 			if(status->aspd_rate != 1000)
@@ -4698,7 +4698,7 @@ static unsigned char status_calc_element_lv(struct block_list *bl, struct status
 	if(!sc || !sc->count)
 		return lv;
 
-	if(sc->data[SC_FREEZE])	
+	if(sc->data[SC_FREEZE])
 		return 1;
 	if(sc->data[SC_STONE] && sc->opt1 == OPT1_STONE)
 		return 1;
@@ -5625,7 +5625,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		if (tick == 1) return 1; //Minimal duration: Only strip without causing the SC
 	break;
 	case SC_STRIPSHIELD:
-		if( val2 == 1 ) val2 = 0; //GX effect. Do not take shield off..		
+		if( val2 == 1 ) val2 = 0; //GX effect. Do not take shield off..
 		else
 		if (sd && !(flag&4)) {
 			int i;
@@ -6379,7 +6379,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 
 		case SC_DEFENDER:
 			if (!(flag&1))
-			{	
+			{
 				val2 = 5 + 15*val1; //Damage reduction
 				val3 = 0; // unused, previously speed adjustment
 				val4 = 250 - 50*val1; //Aspd adjustment 
@@ -6913,7 +6913,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_CLOAKINGEXCEED:
 			val2 = ( val1 + 1 ) / 2; // Hits
 			val3 = 90 + val1 * 10; // Walk speed
-			val_flag |= 1|2|4;			
+			val_flag |= 1|2|4;
 			if (bl->type == BL_PC)
 				val4 |= battle_config.pc_cloak_check_type&7;
 			else
@@ -7066,7 +7066,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val2 = 6 * val1;
 			val2 += val3; //Adding 1% * Lesson Bonus
 			val2 += (int)(val4*2/10); //Adding 0.2% per JobLevel
-			break;			
+			break;
 		case SC_MOONLITSERENADE:
 			val2 = 10 * val1;
 			break;
@@ -7958,7 +7958,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				clif_updatestatus(sd,SP_MANNER);
 			}
 			break;
-		case SC_SPLASHER:	
+		case SC_SPLASHER:
 			{
 				struct block_list *src=map_id2bl(sce->val3);
 				if(src && tid != INVALID_TIMER)
@@ -8116,7 +8116,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			break;
 		case SC_ADORAMUS:
 			status_change_end(bl, SC_BLIND, -1);
-			break;		
+			break;
 		/*
 		case SC__SHADOWFORM:
 			{
@@ -8214,10 +8214,10 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	case SC_SIGHT:
 		sc->option &= ~OPTION_SIGHT;
 		break;
-	case SC_WEDDING:	
+	case SC_WEDDING:
 		sc->option &= ~OPTION_WEDDING;
 		break;
-	case SC_XMAS:	
+	case SC_XMAS:
 		sc->option &= ~OPTION_XMAS;
 		break;
 	case SC_SUMMER:

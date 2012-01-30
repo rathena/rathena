@@ -257,7 +257,7 @@ que_ng,28,50,3	script	Boshuu	709,{
 			}
 		}
 	}
-	else{	
+	else{
 		set ninbo,0;
 		mes "[Boshuu]";
 		mes "Oh~ You~!";
@@ -356,7 +356,7 @@ que_ng,28,50,3	script	Boshuu	709,{
 				set Zeny,Zeny-10000;
 				set MISC_QUEST,MISC_QUEST | 2048;
 				getitem 2118,1;
-				close;					
+				close;
 			}
 		}
 	}

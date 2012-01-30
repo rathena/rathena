@@ -234,7 +234,7 @@ OnLoadRefine:
 	end;
 	//-------------------------------------------------------------------------------
 	//Config for the Renting Module
-	//-------------------------------------------------------------------------------	
+	//-------------------------------------------------------------------------------
 OnLoadRent:
 	set $@kert_cartOnly, 0;	//Set to 1 to enable only cart rental, 0 enables all add-ons.
 	set $@kert_cartCost, 1000;	//Cost to rent a Cart.
@@ -252,7 +252,7 @@ OnLoadShop:
 	end;
 	//-------------------------------------------------------------------------------
 	//Config for the Stat Market Module
-	//-------------------------------------------------------------------------------	
+	//-------------------------------------------------------------------------------
 OnLoadStatMarket:
 	set $@kesm_stBuyPrice,10000;	//Cost of buying stat points
 	set $@kesm_stSellPrice,0;	//Return cash for selling stat points
