@@ -6330,7 +6330,7 @@ ein_in01,200,101,5	script	Klitzer#ein	854,{
 			mes "time, why don't you talk";
 			mes "to my mother? She always";
 			mes "likes meeting my friends.";
-			close;	
+			close;
 		}
 		else {
 			mes "[Klitzer]";

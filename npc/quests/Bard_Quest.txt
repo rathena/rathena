@@ -630,7 +630,7 @@ geffen,132,38,3	script	Bard#2	51,{
 				mes "in advance~";
 				set gef_bard_q,24;
 			}
-			goto L_End;	
+			goto L_End;
 
 		} else if (@inputstr$ == "Gunther") {
 			mes "[Errende]";
@@ -1719,7 +1719,7 @@ morocc,134,111,3	script	Bard#3	741,{
 			mes "[Kino Kitty]";
 			mes "Hmm...?";
 			mes "I wish everyone in the world were as kind and honest as you. If that were the case, there'd be no selfish fights. Hahahahaha~";
-			close;	
+			close;
 		}
 
 	} else if (gef_bard_q > 12 && gef_bard_q < 16) {
@@ -1799,7 +1799,7 @@ morocc,134,111,3	script	Bard#3	741,{
 			mes "Hmmm...?";
 			mes "There's no reason to be scared.";
 			mes "I mean, I won't bite or anything.";
-			close;	
+			close;
 		}
 
 	} else if (gef_bard_q == 10) {

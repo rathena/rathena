@@ -58,7 +58,7 @@ function	script	F_keBank	{
 		}
 		switch (@kmenu) {
 		case 2:	//Deposit
-			input @amount;	
+			input @amount;
 			if (@amount < $@kebk_minTransact) {
 				callfunc "F_keIntro", -1, "Sorry, the minimum transaction value is "+$@kebk_minTransact+"z.";
 				break;

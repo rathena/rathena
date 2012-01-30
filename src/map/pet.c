@@ -655,7 +655,7 @@ int pet_equipitem(struct map_session_data *sd,int index)
 
 	nullpo_retr(1, sd);
 	pd = sd->pd;
-	if (!pd)  return 1;	
+	if (!pd)  return 1;
 	
 	nameid = sd->status.inventory[index].nameid;
 	
@@ -1156,7 +1156,7 @@ int pet_skill_support_timer(int tid, unsigned int tick, int id, intptr_t data)
 	struct map_session_data *sd=map_id2sd(id);
 	struct pet_data *pd;
 	struct status_data *status;
-	short rate = 100;	
+	short rate = 100;
 	if(sd==NULL || sd->pd == NULL || sd->pd->s_skill == NULL)
 		return 1;
 	
@@ -1355,7 +1355,7 @@ int do_init_pet(void)
 	add_timer_func_list(pet_hungry,"pet_hungry");
 	add_timer_func_list(pet_ai_hard,"pet_ai_hard");
 	add_timer_func_list(pet_skill_bonus_timer,"pet_skill_bonus_timer"); // [Valaris]
-	add_timer_func_list(pet_delay_item_drop,"pet_delay_item_drop");	
+	add_timer_func_list(pet_delay_item_drop,"pet_delay_item_drop");
 	add_timer_func_list(pet_skill_support_timer, "pet_skill_support_timer"); // [Skotlex]
 	add_timer_func_list(pet_recovery_timer,"pet_recovery_timer"); // [Valaris]
 	add_timer_func_list(pet_heal_timer,"pet_heal_timer"); // [Valaris]

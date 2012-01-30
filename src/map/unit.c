@@ -368,7 +368,7 @@ static int unit_walktobl_sub(int tid, unsigned int tick, int id, intptr_t data)
 				set_mobstate(bl, ud->state.attack_continue);
 		}
 	}
-	return 0;	
+	return 0;
 }
 
 // Chases a tbl. If the flag&1, use hard-path seek,
@@ -1019,7 +1019,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 	ud = unit_bl2ud(src);
 
 	if(ud == NULL) return 0;
-	sc = status_get_sc(src);	
+	sc = status_get_sc(src);
 	if (sc && !sc->count)
 		sc = NULL; //Unneeded
 
@@ -1214,7 +1214,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 		if( k > 2 ) k = 2; // ...but hard-limited to 300%.
 		casttime += casttime * k; 
 		}
-	break;	
+	break;
 	case GD_EMERGENCYCALL: //Emergency Call double cast when the user has learned Leap [Daegaladh]
 		if( sd && pc_checkskill(sd,TK_HIGHJUMP) )
 			casttime *= 2;
@@ -1885,7 +1885,7 @@ static int unit_counttargeted_sub(struct block_list* bl, va_list ap)
 	if (ud && ud->target == id && ud->attacktimer != INVALID_TIMER && ud->attacktarget_lv >= target_lv)
 		return 1;
 
-	return 0;	
+	return 0;
 }
 
 /*==========================================

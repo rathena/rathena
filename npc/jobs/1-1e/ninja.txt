@@ -163,7 +163,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 				mes "why we can't help";
 				mes "each other in this";
 				mes "little predicament...";
-				close;	
+				close;
 			}
 			mes "[Cougar]";
 			mes "Great! Now, I wanted to";
@@ -443,7 +443,7 @@ einbroch,184,194,3	script	Suspicious Man#nq	 	881,{
 			mes "soon as you can. Then,";
 			mes "I can help you find";
 			mes "Red Leopard Joe.";
-			close;	
+			close;
 		}
 		mes "[Suspicious Man]";
 		mes "Good, good. You've";

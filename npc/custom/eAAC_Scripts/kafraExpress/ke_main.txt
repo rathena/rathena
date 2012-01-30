@@ -367,7 +367,7 @@ function	script	F_keCost	{
 	if (@kafraPass) {
 		return getarg(0)*(100-getarg(1))/100;
 	}
-	return getarg(0);	
+	return getarg(0);
 }
 
 //F_keCharge(int cost, int discount%, bool appliesKP)

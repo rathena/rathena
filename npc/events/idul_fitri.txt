@@ -19,7 +19,7 @@ prontera,146,92,3	script	Cellerb	58,{
 	if((gettime(6)==10 && (gettime(5)==24 || gettime(5)==25))==0) {
 		mes "Congratulation! Celebrate Feast Day Of Ramadan Idul Fitri 1427 H.";
 		specialeffect EF_SANDMAN;
-		close;	
+		close;
 	}
 	mes "Haii......^FF8800"+strcharinfo(0)+"^000000!!";
 	mes "First day of Idulfitri has arrived.";

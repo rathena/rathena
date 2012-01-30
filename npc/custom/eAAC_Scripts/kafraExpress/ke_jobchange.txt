@@ -144,7 +144,7 @@ function SF_to1stJob {
 
 function SF_to2ndJob {
 	do {
-		set @newjob, -1;	
+		set @newjob, -1;
 		if (@type == EAJL_UPPER && $@kejc_upperPolicy && kej_class2) {
 			set @newjob, eaclass(kej_class2);
 			set @newjob, (@newjob&EAJ_UPPERMASK)|@type;
@@ -202,7 +202,7 @@ function SF_testChangeJob {
 	if (BaseLevel < getarg(1))
 		set @fail, @fail|2;
 	if (JobLevel < getarg(2))
-		set @fail, @fail|4;	
+		set @fail, @fail|4;
 	if (@fail > 0) {
 		if (@fail&1)
 			mes "You need "+getarg(0)+"z for the conversion process.";
@@ -334,10 +334,10 @@ function SF_changeJob {
 			if ($@kejc_announce)
 				announce strcharinfo(0)+" has been promoted to "+@jobStr$+"!",8;
 			set Zeny,Zeny-@cost;
-			emotion e_grat;	
+			emotion e_grat;
 			return 1;
 		default: //Cancel...
-			return 0;	
+			return 0;
 	}
 }
 

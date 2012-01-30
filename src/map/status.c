@@ -3438,7 +3438,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			if(status->aspd_rate != 1000)
 				amotion = amotion*status->aspd_rate/1000;
 			
-			status->amotion = cap_value(amotion, battle_config.monster_max_aspd, 2000);	
+			status->amotion = cap_value(amotion, battle_config.monster_max_aspd, 2000);
 			
 			temp = b_status->adelay*status->aspd_rate/1000;
 			status->adelay = cap_value(temp, battle_config.monster_max_aspd*2, 4000);
@@ -4586,7 +4586,7 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 	if( sc->data[SC_SWINGDANCE] )
 		aspd_rate -= aspd_rate * sc->data[SC_SWINGDANCE]->val2 / 100;
 	if( sc->data[SC_DANCEWITHWUG] )
-		aspd_rate -= aspd_rate * sc->data[SC_DANCEWITHWUG]->val3 / 100;	
+		aspd_rate -= aspd_rate * sc->data[SC_DANCEWITHWUG]->val3 / 100;
 	if( sc->data[SC_GLOOMYDAY] )
 		aspd_rate += aspd_rate * sc->data[SC_GLOOMYDAY]->val3 / 100;
 	if( sc->data[SC_EARTHDRIVE] )
@@ -7332,7 +7332,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			clif_changelook(bl,LOOK_SHIELD,0);
 			clif_changelook(bl,LOOK_BASE,type==SC_WEDDING?JOB_WEDDING:type==SC_XMAS?JOB_XMAS:JOB_SUMMER);
 			clif_changelook(bl,LOOK_CLOTHES_COLOR,val4);
-			break;	
+			break;
 		case SC_KAAHI:
 			val4 = INVALID_TIMER;
 			break;
@@ -8838,7 +8838,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 	case SC_OBLIVIONCURSE:
 		if( --(sce->val4) >= 0 )
 		{
-			clif_emotion(bl,1);	
+			clif_emotion(bl,1);
 			sc_timer_next(3000 + tick, status_change_timer, bl->id, data );
 			return 0;
 		}
@@ -9171,7 +9171,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 	}
 
 	// default for all non-handled control paths is to end the status
-	return status_change_end( bl,type,tid );	
+	return status_change_end( bl,type,tid );
 #undef sc_timer_next
 }
 

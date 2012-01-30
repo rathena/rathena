@@ -1518,7 +1518,7 @@ prt_monk,153,210,3	script	Cleope Verce	95,{
 					break;
 				}
 				next;
-				mes "[Cleope Verce]";	
+				mes "[Cleope Verce]";
 				mes "^333333*Sigh*^000000";
 				mes "Ah, memories~";
 				mes "Of course, if I had";

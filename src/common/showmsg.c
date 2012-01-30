@@ -243,7 +243,7 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 			memset(numbers,0,sizeof(numbers));
 
 			// skip escape and bracket
-			q=q+2;	
+			q=q+2;
 			for(;;)
 			{
 				if( ISDIGIT(*q) ) 
@@ -358,11 +358,11 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 					COORD origin = {0,0};
 					if(num==1)
 					{	// chars from start up to and including cursor
-						cnt = info.dwSize.X * info.dwCursorPosition.Y + info.dwCursorPosition.X + 1;	
+						cnt = info.dwSize.X * info.dwCursorPosition.Y + info.dwCursorPosition.X + 1;
 					}
 					else if(num==2)
 					{	// Number of chars on screen.
-						cnt = info.dwSize.X * info.dwSize.Y;	
+						cnt = info.dwSize.X * info.dwSize.Y;
 						SetConsoleCursorPosition(handle, origin); 
 					}
 					else// 0 and default
@@ -565,7 +565,7 @@ int	VFPRINTF(FILE *file, const char *fmt, va_list argptr)
 			// assuming regular text is starting there
 
 			// skip escape and bracket
-			q=q+2;	
+			q=q+2;
 			while(1)
 			{
 				if( ISDIGIT(*q) ) 

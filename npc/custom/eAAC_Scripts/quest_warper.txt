@@ -744,7 +744,7 @@ function	script	QWS_MMarray	{
 	set @Mmenuref[@Mj],@Mi;
 	set @Mj,@Mj+1;
 	}
-	set @Mi,@Mi+1;	
+	set @Mi,@Mi+1;
 //----------------Town-Warp
 	if ($QW_TW_OFF == 0) set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
 	if ($QW_TW_OFF == 0) set @Mmenuref[@Mj],@Mi;

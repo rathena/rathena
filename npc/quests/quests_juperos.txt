@@ -434,7 +434,7 @@ yuno_in04,190,125,4	script	Scholar	700,{
 			}
 
 		case 6:
-			mes "[Fayruz]";	
+			mes "[Fayruz]";
 			mes "Oh, "+strcharinfo(0)+"!";
 			mes "The Transparent Plate";
 			mes "that you brought for me";

@@ -168,7 +168,7 @@ prontera,182,214,4	script	Lauds#Memorial	58,{
 			mes "[Mad Sago Lauds]";
 			mes "Don't panic!";
 			emotion 0;
-			close;	
+			close;
 		}
 		else if(.@RandomMsg == 2) {
 			mes "[Mad Sago Lauds]";

@@ -717,7 +717,7 @@ function	script	refinemain	{
 			next;
 			mes "["+getarg(0)+"]";
 			mes "I can't make it any clearer.";
-			mes "Once a weapon is destroyed,";	
+			mes "Once a weapon is destroyed,";
 			mes "there's no getting it back.";
 			mes "You really have a chance to";
 			mes "^FF0000lose this weapon^000000 forever.";

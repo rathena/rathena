@@ -100,7 +100,7 @@ alberta,117,135,0	script	Elin	96,{
 						next;
 						mes "[Elin]";
 						if (Sex == 1) {
-							mes "But since a cute boy is giving it to me, I'll happily take it! Hee hee, soft and fluffy Poring doll~";	
+							mes "But since a cute boy is giving it to me, I'll happily take it! Hee hee, soft and fluffy Poring doll~";
 						} else {
 							mes "But since a nice girl is giving it to me, I'll take it! Hee he, soft and fluffy Poring doll~";
 						}

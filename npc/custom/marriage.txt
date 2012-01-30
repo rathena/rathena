@@ -440,7 +440,7 @@ prt_church,106,99,3	script	Happy Marry	67,{
 	if (getpartnerid() > 0) {
 		mes "["+@name$+"]";
 		mes "Isn't marriage beautiful?";
-		close;	
+		close;
 	}
 	
 	function SF_WedProgress;
@@ -512,7 +512,7 @@ function SF_Register {
 		set $wed_progress,1;
 		mes "["+@name$+"]";
 		mes "You are now registered as the groom.";
-		mes "Tell your bride to register as soon as possible.";	
+		mes "Tell your bride to register as soon as possible.";
 		emotion e_hmm;
 		initnpctimer;
 		close;
@@ -523,7 +523,7 @@ function SF_Register {
 		mes "You are now registered as the bride.";
 		mes "Tell your groom to register as soon as possible.";
 		emotion e_hmm;
-		initnpctimer;	
+		initnpctimer;
 		close;
 	default: //Cancel
 		mes "["+@name$+"]";
@@ -633,7 +633,7 @@ function SF_WedProgress {
 		mes "The bride, "+$wed_bride$+", has yet to retrieve the ring.";
 		break;
 	case 4:
-		mes "The bride, "+$wed_bride$+", is waiting for the groom to retrieve the ring.";	
+		mes "The bride, "+$wed_bride$+", is waiting for the groom to retrieve the ring.";
 		break;
 	case 5:
 		mes "We are just waiting for both "+$wed_groom$+" and "+$wed_bride$+" to be together to marry them.";

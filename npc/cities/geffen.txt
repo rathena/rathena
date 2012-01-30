@@ -347,7 +347,7 @@ OnTouch:
 		}
 		set .@Main_gauche_hap,.@input * 9400;
 		if (Zeny < .@Main_gauche_hap) {	
-			mes "[Suspicious Guy]";	
+			mes "[Suspicious Guy]";
 			mes "Short on zeny?";
 			mes "When the greatest deal in your life is right before your eyes?! Tragic, truly tragic...";
 			close;

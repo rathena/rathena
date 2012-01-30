@@ -243,6 +243,6 @@ alberta_in,58,52,4	script	Purchasing Team#Buying	59,{
 		next;
 		mes "[Mr. Hugh]";
 		mes "My time is solely dedicated to our customers in the Merchant industry.";
-		close;	
+		close;
 	}
 }

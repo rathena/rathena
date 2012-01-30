@@ -9177,7 +9177,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		
 		//Displays as a normal message for Non-GMs
 		if( battle_config.atc_gmonly != 0 && pc_isGM(sd) == 0 )
-			return false;	
+			return false;
 	}
 
 	while (*message == charcommand_symbol)
@@ -9251,7 +9251,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	
 	//Log atcommands
 	if( *atcmd_msg == atcommand_symbol )
-		log_atcommand(sd, info->level, atcmd_msg);	
+		log_atcommand(sd, info->level, atcmd_msg);
 	//Log Charcommands
 	else if( *atcmd_msg == charcommand_symbol && ssd != NULL )
 		log_atcommand(sd, info->level2, message);

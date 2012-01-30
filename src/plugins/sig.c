@@ -103,7 +103,7 @@ void sig_dump(int sn)
 	char file[256];
 	int no = 0;
 
-	crash_flag = 1;	
+	crash_flag = 1;
 	// search for a usable filename
 	do {
 		sprintf (file, "log/%s%04d.stackdump", server_name, ++no);
@@ -158,7 +158,7 @@ void sig_dump(int sn)
 int sig_final ()
 {
 	time_t curtime;
-	char curtime2[24];	
+	char curtime2[24];
 	FILE *fp;
 	long seconds = 0, day = 24*60*60, hour = 60*60,
 		minute = 60, days = 0, hours = 0, minutes = 0;

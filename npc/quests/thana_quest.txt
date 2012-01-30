@@ -2356,7 +2356,7 @@ OnTouch:
 	mes "^3355FFThat action had no";
 	mes "effect. You'll have to";
 	mes "try something else.^000000";
-	close;	
+	close;
 }
 
 thana_boss,202,75,0	script	Crest#2	111,3,3,{
@@ -2485,7 +2485,7 @@ OnTouch:
 	mes "^3355FFThat action had no";
 	mes "effect. You'll have to";
 	mes "try something else.^000000";
-	close;	
+	close;
 }
 
 thana_boss,141,218,0	script	Crest#5	111,3,3,{

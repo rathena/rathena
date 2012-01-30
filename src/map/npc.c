@@ -511,7 +511,7 @@ int npc_timerevent(int tid, unsigned int tick, int id, intptr_t data)
 	}
 
 	// These stuffs might need to be restored.
-	old_rid = nd->u.scr.rid;	
+	old_rid = nd->u.scr.rid;
 	old_tick = nd->u.scr.timertick;
 	old_timer = nd->u.scr.timer;
 
@@ -524,7 +524,7 @@ int npc_timerevent(int tid, unsigned int tick, int id, intptr_t data)
 	te = nd->u.scr.timer_event + ted->next;
 
 	// Arrange for the next event
-	ted->next++;	
+	ted->next++;
 	if( nd->u.scr.timeramount > ted->next )
 	{
 		next = nd->u.scr.timer_event[ ted->next ].timer - nd->u.scr.timer_event[ ted->next - 1 ].timer;
@@ -547,7 +547,7 @@ int npc_timerevent(int tid, unsigned int tick, int id, intptr_t data)
 	}
 
 	// Run the script
-	run_script(nd->u.scr.script,te->pos,nd->u.scr.rid,nd->bl.id);	
+	run_script(nd->u.scr.script,te->pos,nd->u.scr.rid,nd->bl.id);
 	
 	nd->u.scr.rid = old_rid; // Attached-rid should be restored anyway.
 	if( sd )

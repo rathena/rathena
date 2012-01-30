@@ -343,7 +343,7 @@ void pc_addfame(struct map_session_data *sd,int count)
 			break;
 		case MAPID_TAEKWON: // Taekwon
 			clif_fame_taekwon(sd,count);
-			break;	
+			break;
 	}
 	chrif_updatefamelist(sd);
 }
@@ -5199,7 +5199,7 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 	struct status_data *status = status_get_status_data(src);
 
 	if (sd->expaddrace[status->race])
-		bonus += sd->expaddrace[status->race];	
+		bonus += sd->expaddrace[status->race];
 	bonus += sd->expaddrace[status->mode&MD_BOSS?RC_BOSS:RC_NONBOSS];
 
 	if (battle_config.pk_mode && 

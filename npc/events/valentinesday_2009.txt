@@ -392,7 +392,7 @@ prontera,154,185,5	script	Event Ring Maker#Val09	721,{
 	mes "[Event Ring Maker]";
 	mes "Of course, you've got to get rings from others, that's the way you can participate in the voting, right?";
 	mes "Challenge yourself to become Valentine's Hottest!";
-	close;	
+	close;
 }
 
 // Valentine Vote Manager (Registers votes)

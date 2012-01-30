@@ -2931,7 +2931,7 @@ void clif_changelook(struct block_list *bl,int type,int val)
 		break;
 		case LOOK_HEAD_TOP:
 			vd->head_top = val;
-		break;	
+		break;
 		case LOOK_HEAD_MID:
 			vd->head_mid = val;
 		break;
@@ -7862,7 +7862,7 @@ void clif_manner_message(struct map_session_data* sd, uint32 type)
 ///     1 = negative (mute)
 void clif_GM_silence(struct map_session_data* sd, struct map_session_data* tsd, uint8 type)
 {
-	int fd;	
+	int fd;
 	nullpo_retv(sd);
 	nullpo_retv(tsd);
 
@@ -8584,7 +8584,7 @@ void clif_viewequip_ack(struct map_session_data* sd, struct map_session_data* ts
 #endif
 	safestrncpy((char*)WBUFP(buf, 4), tsd->status.name, NAME_LENGTH);
 	WBUFW(buf,28) = tsd->status.class_;
-	WBUFW(buf,30) = tsd->vd.hair_style;	
+	WBUFW(buf,30) = tsd->vd.hair_style;
 	WBUFW(buf,32) = tsd->vd.head_bottom;
 	WBUFW(buf,34) = tsd->vd.head_mid;
 	WBUFW(buf,36) = tsd->vd.head_top;
@@ -8609,7 +8609,7 @@ void clif_viewequip_ack(struct map_session_data* sd, struct map_session_data* ts
 		// Add refine, identify flag, element, etc.
 		clif_item_sub(WBUFP(buf,0), n*s+45, &tsd->status.inventory[i], tsd->inventory_data[i], pc_equippoint(tsd, i));
 		// Add cards
-		clif_addcards(WBUFP(buf, n*s+55), &tsd->status.inventory[i]);	
+		clif_addcards(WBUFP(buf, n*s+55), &tsd->status.inventory[i]);
 		// Expiration date stuff, if all of those are set to 0 then the client doesn't show anything related (6 bytes)
 		WBUFL(buf, n*s+63) = tsd->status.inventory[i].expire_time;
 		WBUFW(buf, n*s+67) = 0;
@@ -11072,7 +11072,7 @@ void clif_parse_ResetChar(int fd, struct map_session_data *sd)
 		if( sd->mission_mobid ) { //bugreport:2200
 			sd->mission_mobid = 0;
 			sd->mission_count = 0;
-			pc_setglobalreg(sd,"TK_MISSION_ID", 0);	
+			pc_setglobalreg(sd,"TK_MISSION_ID", 0);
 		}
 	}
 	log_atcommand(sd, get_atcommand_level("reset"), RFIFOW(fd,2) ? "/resetskill" : "/resetstate");
@@ -12713,7 +12713,7 @@ void clif_parse_NoviceDoriDori(int fd, struct map_session_data *sd)
 				break;
 		case MAPID_SUPER_NOVICE:
 			sd->state.doridori=1;
-			break;	
+			break;
 	}
 }
 
@@ -13017,7 +13017,7 @@ void clif_parse_FriendsListRemove(int fd, struct map_session_data *sd)
 		memcpy(&sd->status.friends[j-1], &sd->status.friends[j], sizeof(sd->status.friends[0]));
 
 	memset(&sd->status.friends[MAX_FRIENDS-1], 0, sizeof(sd->status.friends[MAX_FRIENDS-1]));
-	clif_displaymessage(fd, "Friend removed");	
+	clif_displaymessage(fd, "Friend removed");
 
 	WFIFOHEAD(fd,packet_len(0x20a));
 	WFIFOW(fd,0) = 0x20a;

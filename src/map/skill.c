@@ -1161,7 +1161,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	 **/
 	case LG_SHIELDPRESS:
 		sc_start(bl, SC_STUN, 30 + 8 * skilllv, skilllv, skill_get_time(skillid,skilllv));
-		break;	
+		break;
 	case LG_PINPOINTATTACK:
 		rate = 12 + (10 * skilllv + (sstatus->agi / 100) ) * 140 / 100;
 		switch( skilllv ) {

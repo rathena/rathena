@@ -186,7 +186,7 @@ switch (xmas_npc) {
 		mes "and hurry up.";
 		mes "Come back quickly~";
 		set xmas_npc,6;
-		close;	
+		close;
 	case 6:
 		mes "[Thachentze]";
 		mes "Hohohoho~";

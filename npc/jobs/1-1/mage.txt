@@ -58,7 +58,7 @@ geffen_in,164,124,4	script	Mage Guildsman#mage	123,{
 			mes "Hey, haven't you realized? You're already a Mage, silly!";
 			mes "One of these days you'll realize the power inside of you when you can make Fire with your mind!";
 		}else{
-			mes "Hey~ C'mon. Quit playing games. You can't be a Mage because you already have another Job.";	
+			mes "Hey~ C'mon. Quit playing games. You can't be a Mage because you already have another Job.";
 		}
 		close;
 	}else{

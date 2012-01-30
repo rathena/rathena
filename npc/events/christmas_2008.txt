@@ -44,7 +44,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 			if (Sex) {
 				mes "Hey, boy! What comes to mind when";
 			}else{
-				mes "Hey, girl! What comes to mind when";	
+				mes "Hey, girl! What comes to mind when";
 			}
 			mes "you think about Christmas?";
 			next;
@@ -457,7 +457,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 		if (Sex) {
 			mes "Ho ho ho! What a good boy!";
 		}else{
-			mes "Ho ho ho! What a good girl!";	
+			mes "Ho ho ho! What a good girl!";
 		}
 		next;
 		mes "[Santa Claus]";
@@ -690,7 +690,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 		if (Sex) {
 			mes "Oh! Poor boy...";
 		}else{
-			mes "Oh! Poor girl...";	
+			mes "Oh! Poor girl...";
 		}
 		next;
 		mes "[Santa Claus]";
@@ -698,7 +698,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 		if (Sex) {
 			mes "Oh! Poor boy...";
 		}else{
-			mes "Oh! Poor girl...";	
+			mes "Oh! Poor girl...";
 		}
 		mes "...";
 		next;

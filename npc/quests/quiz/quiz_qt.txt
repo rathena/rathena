@@ -1600,7 +1600,7 @@ if(quiz_rvl == 18) {
 								mes "For those of who ";
 								mes "got all right need no assignment";
 								mes " ";
-								next;	
+								next;
 								mes "^800000[Radeng]^000000";
 								mes "" + strcharinfo(0)+ "";
 								mes "Have passed all tests.";

@@ -63,7 +63,7 @@ moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
 		mes "[Thief Guildsman]";
 		mes "Well, I'm not in charge of making you a Thief. I just accept applications, get it?";
 		mes "If you want to become a Thief, ask the sharp-eyed guy next to me.";
-		close;	
+		close;
 	}
 	if(Class != Job_Novice) {
 		if(Class == Job_Thief) {

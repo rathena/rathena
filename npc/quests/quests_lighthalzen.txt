@@ -6529,7 +6529,7 @@ lighthalzen,179,170,4	script	Ordinary Man	98,{
 				mes "......";
 				mes "..........";
 				mes "...............";
-				next;	
+				next;
 				mes "[Ghalstein]";
 				mes "Alright. Yes, it's";
 				mes "true that I did meet";

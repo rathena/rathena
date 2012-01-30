@@ -95,7 +95,7 @@ OnTimer45000:
 	enablenpc "#AirshipWarp-1";
 	enablenpc "#AirshipWarp-2";
 	donpcevent "#AirshipWarp-1::OnUnhide";
-	donpcevent "#AirshipWarp-2::OnUnhide";	
+	donpcevent "#AirshipWarp-2::OnUnhide";
 	mapannounce "airplane","Welcome to Hugel. Have a safe trip.",bc_map,0xBA55D3;
 	end;
 OnTimer55000:
@@ -469,7 +469,7 @@ OnTimer45000:
 	enablenpc "#AirshipWarp-3";
 	enablenpc "#AirshipWarp-4";
 	donpcevent "#AirshipWarp-3::OnUnhide";
-	donpcevent "#AirshipWarp-4::OnUnhide";	
+	donpcevent "#AirshipWarp-4::OnUnhide";
 	mapannounce "airplane_01","Welcome to Izlude. Have a safe trip.",bc_map,0x00FF00;
 	end;
 OnTimer55000:

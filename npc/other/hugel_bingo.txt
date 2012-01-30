@@ -450,7 +450,7 @@ OnInit:
 	disablenpc "12a#bingo";
 	disablenpc "13a#bingo";
 	disablenpc "14a#bingo";
-	disablenpc "15a#bingo";	
+	disablenpc "15a#bingo";
 	disablenpc "16a#bingo";
 	disablenpc "17a#bingo";
 	disablenpc "18a#bingo";
@@ -475,7 +475,7 @@ OnInit:
 	disablenpc "12b#bingo";
 	disablenpc "13b#bingo";
 	disablenpc "14b#bingo";
-	disablenpc "15b#bingo";	
+	disablenpc "15b#bingo";
 	disablenpc "16b#bingo";
 	disablenpc "17b#bingo";
 	disablenpc "18b#bingo";
@@ -500,7 +500,7 @@ OnInit:
 	disablenpc "12c#bingo";
 	disablenpc "13c#bingo";
 	disablenpc "14c#bingo";
-	disablenpc "15c#bingo";	
+	disablenpc "15c#bingo";
 	disablenpc "16c#bingo";
 	disablenpc "17c#bingo";
 	disablenpc "18c#bingo";
@@ -525,7 +525,7 @@ OnInit:
 	disablenpc "12d#bingo";
 	disablenpc "13d#bingo";
 	disablenpc "14d#bingo";
-	disablenpc "15d#bingo";	
+	disablenpc "15d#bingo";
 	disablenpc "16d#bingo";
 	disablenpc "17d#bingo";
 	disablenpc "18d#bingo";
@@ -550,7 +550,7 @@ OnInit:
 	disablenpc "12e#bingo";
 	disablenpc "13e#bingo";
 	disablenpc "14e#bingo";
-	disablenpc "15e#bingo";	
+	disablenpc "15e#bingo";
 	disablenpc "16e#bingo";
 	disablenpc "17e#bingo";
 	disablenpc "18e#bingo";
@@ -991,7 +991,7 @@ function	script	Func_Bingo	{
 		if(@bingoplate[17] < 10) set @bingo_d2$,"0"+@bingoplate[17]+""; else set @bingo_d2$,@bingoplate[17];
 		if(@bingoplate[18] < 10) set @bingo_d3$,"0"+@bingoplate[18]+""; else set @bingo_d3$,@bingoplate[18];
 		if(@bingoplate[19] < 10) set @bingo_d4$,"0"+@bingoplate[19]+""; else set @bingo_d4$,@bingoplate[19];
-		if(@bingoplate[20] < 10) set @bingo_d5$,"0"+@bingoplate[20]+""; else set @bingo_d5$,@bingoplate[20];	
+		if(@bingoplate[20] < 10) set @bingo_d5$,"0"+@bingoplate[20]+""; else set @bingo_d5$,@bingoplate[20];
 		if(.@i > 20) mes "["+@bingo_d1$+"] ["+@bingo_d2$+"] ["+@bingo_d3$+"] ["+@bingo_d4$+"] ["+@bingo_d5$+"]";
 		else if(.@i < 16) mes "[   ] [   ] [   ] [   ] [   ]";
 		else
@@ -1057,7 +1057,7 @@ que_bingo,49,31,4	script	Arcade Helper#1	47,{
 	mes "If you'd like to play";
 	mes "a game of bingo, then";
 	mes "please proceed this way.";
-	close;	
+	close;
 }
 
 que_bingo,42,31,4	script	Arcade Helper#2	66,{

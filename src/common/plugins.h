@@ -47,7 +47,7 @@ typedef struct _Plugin {
 	char state;
 	char* filename;
 	struct _Plugin_Info* info;
-	struct _Plugin* next;	
+	struct _Plugin* next;
 } Plugin;
 
 /////////////////////////////////////////////

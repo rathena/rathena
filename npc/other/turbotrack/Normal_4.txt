@@ -1402,5 +1402,5 @@ OnTouch:
 		warp "turbo_n_4",218,228;
 	else if (.@bing1 == 6)
 		warp "turbo_n_4",220,195;
-	end;	
+	end;
 }

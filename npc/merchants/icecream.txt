@@ -61,7 +61,7 @@
 		mes "[Ice Cream Maker]";
 		mes "Dear customer, your wallet seems to be light.";
 		mes "Price is ^3355FF100 Zeny^000000 per ice cream.";
-		close;	
+		close;
 	}
 	if(checkweight(536,.@input) == 0) {
 		mes "[Ice Cream Maker]";

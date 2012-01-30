@@ -324,7 +324,7 @@ function SF_swapJob {
 	sc_end -1;
 	callfunc "F_keCharge",getarg(1),$@kejs_swapDiscount,1;
 	
-	emotion e_ok;	
+	emotion e_ok;
 	return 1;
 }
 

@@ -368,7 +368,7 @@ prontera,155,188,3	script	Zacariath Madhat	872,{
 		mes "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯";
 		if (@totalzeny > @zenyamount || @totalzeny < 0) {
 			mes "TOTAL Zeny:   "+@totalcoins+"   - ^CC0000"+@totalzeny+"^000000";
-			mes "Zeny Left:  "+(@zenyamount-@totalzeny);	
+			mes "Zeny Left:  "+(@zenyamount-@totalzeny);
 			goto L_Overzeny;
 		}
 		mes "TOTAL:   "+@totalcoins+"     ^00CC00"+@totalzeny+"^000000";

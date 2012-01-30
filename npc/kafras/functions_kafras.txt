@@ -619,7 +619,7 @@ M_SET:
 	mes "You've protected your storage with a secret password.";
 	mes "Thank you for using "+getarg(1)+".";
 	emotion e_thx;
-	goto M_END;	
+	goto M_END;
 
 M_CLEAR:
 	mes getarg(0);
@@ -645,7 +645,7 @@ M_CLEAR:
 		mes "Please, next time enter correct password.";
 		emotion e_sry;
 	}
-	goto M_END;	
+	goto M_END;
 
 L_ZENY:
 	mes "You don't have enough zeny.";

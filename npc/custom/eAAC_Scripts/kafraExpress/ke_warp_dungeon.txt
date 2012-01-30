@@ -937,7 +937,7 @@ function SF_hiddenTemple {
 			"- Entrance ("+@cost+"z/"+getmapusers("prt_maze01")+" "+$@ked_users$+")",
 			"- Level 2 ("+@cost2+"z/"+getmapusers("prt_maze02")+" "+$@ked_users$+")",
 			"- Level 3 ("+@cost3+"z/"+getmapusers("prt_maze03")+" "+$@ked_users$+")"
-		);	
+		);
 	} else {
 		set @submenu, select(
 			"- Cancel warp to the Laberynth Forest",
@@ -970,7 +970,7 @@ function SF_juperos {
 			"- Entrance ("+@cost+"z/"+getmapusers("juperos_01")+" "+$@ked_users$+")",
 			"- Level 2 ("+@cost2+"z/"+getmapusers("juperos_02")+" "+$@ked_users$+")",
 			"- Core ("+@cost3+"z/"+getmapusers("jupe_core")+" "+$@ked_users$+")"
-		);	
+		);
 	} else {
 		set @submenu, select(
 			"- Cancel warp to Juperos",
@@ -1031,7 +1031,7 @@ function SF_iceCave {
 			"- Entrance ("+@cost+"z/"+getmapusers("ice_dun01")+" "+$@ked_users$+")",
 			"- Level 2 ("+@cost2+"z/"+getmapusers("ice_dun02")+" "+$@ked_users$+")",
 			"- Level 3 ("+@cost3+"z/"+getmapusers("ice_dun03")+" "+$@ked_users$+")"
-		);	
+		);
 	} else {
 		set @submenu, select(
 			"- Cancel warp to the Ice Cave",

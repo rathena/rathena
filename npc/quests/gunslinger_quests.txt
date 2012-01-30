@@ -381,7 +381,7 @@ SubGarrison_:
 		case 3:
 			mes "[Garrison]";
 			mes "I'll see you when I see you~";
-			close;	
+			close;
 	}
 }
 

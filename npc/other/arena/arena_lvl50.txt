@@ -36,7 +36,7 @@ force_1-1,99,20,4	script	Heel and Toe#arena	124,{
 	end;
 	
 OnInit:
-	set $@mapcount50, 0;	
+	set $@mapcount50, 0;
 	end;
 	
 Onstart:
@@ -58,7 +58,7 @@ OnTimer5000:
 	end;
 	
 OnTimer60000:
-	set $@mapcount50, getmapusers ("force_1-1");	
+	set $@mapcount50, getmapusers ("force_1-1");
 	if ($@mapcount50 == 0) {	
 		donpcevent "Heel and Toe#arena::Onfailclearstage";
 	}
@@ -66,7 +66,7 @@ OnTimer60000:
 	end;
 	
 OnTimer120000:
-	 set $@mapcount50, getmapusers ("force_1-1");	
+	 set $@mapcount50, getmapusers ("force_1-1");
 	if ($@mapcount50 == 0) {	
 		donpcevent "Heel and Toe#arena::Onfailclearstage";
 	}
@@ -74,14 +74,14 @@ OnTimer120000:
 	end;
 	
 OnTimer180000:
-	 set $@mapcount50, getmapusers ("force_1-1");	
+	 set $@mapcount50, getmapusers ("force_1-1");
 	if ($@mapcount50 == 0) {	
 		donpcevent "Heel and Toe#arena::Onfailclearstage";
 	}
 	mapannounce "force_1-1","Remaining Time : 2 minutes ",0;
 end;
 OnTimer240000:
-	 set $@mapcount50, getmapusers ("force_1-1");	
+	 set $@mapcount50, getmapusers ("force_1-1");
 	if ($@mapcount50 == 0) {	
 		donpcevent "Heel and Toe#arena::Onfailclearstage";
 	}
@@ -619,7 +619,7 @@ Onreset:
 	end;
 	
 Onsummonmob_05:
-	set $@randmonster50,rand(1,2);	
+	set $@randmonster50,rand(1,2);
 	switch($@randmonster50) {
 	case 1:
 		monster "force_1-1",174,174,"Desert Wolf",1432,1,"force_05ex#50::OnMobEx";
@@ -856,20 +856,20 @@ OnMobDeath:
 
 prt_are_in,129,188,3	script	Staff#50-1	67,{
 
-	mes "[Staff]";	
-	mes "You did a good job.";	
-	mes "Even if you have failed to clear a time attack battle, I will reward you with a small amount of arena points.";	
+	mes "[Staff]";
+	mes "You did a good job.";
+	mes "Even if you have failed to clear a time attack battle, I will reward you with a small amount of arena points.";
 	next;
 	if (arena_point == 30000) {	
-		mes "[Staff]";	
-		mes "Uh huh!";	
-		mes "You already have enough arena points.";	
-		mes "Please spend some arena points later. When I see you next time, I will make sure to give you some reward.";	
+		mes "[Staff]";
+		mes "Uh huh!";
+		mes "You already have enough arena points.";
+		mes "Please spend some arena points later. When I see you next time, I will make sure to give you some reward.";
 		next;
 	}
 	else set arena_point, arena_point + 1;
-	mes "[Staff]";	
-	mes "Let me guide you outside. I hope you had a good time.";	
+	mes "[Staff]";
+	mes "Let me guide you outside. I hope you had a good time.";
 	close2;
 	specialeffect2 EF_EXIT;
 	warp "arena_room",100,75;
@@ -905,48 +905,48 @@ prt_are_in,25,188,3	script	Staff#50-2	67,{
 		}
 	}
 	set @gap50,(60 * $top_50min + $top_50sec) - (60 * @record_min50 + @record_sec50);
-	mes "[Staff]";	
-	mes "Wow, you did a good job~ ";	
-	mes "Your name is...^3131FF" + strcharinfo(0) +"^000000, isn't it?";	
-	mes "^3131FF"+ strcharinfo(0) +"^000000, total time you spent to pass the battle..";	
+	mes "[Staff]";
+	mes "Wow, you did a good job~ ";
+	mes "Your name is...^3131FF" + strcharinfo(0) +"^000000, isn't it?";
+	mes "^3131FF"+ strcharinfo(0) +"^000000, total time you spent to pass the battle..";
 	next;
-	mes "[Staff]";	
-	mes "is "+@record_min50+"minutes "+@record_sec50+"seconds.";	
-	mes "Congratulations!";	
+	mes "[Staff]";
+	mes "is "+@record_min50+"minutes "+@record_sec50+"seconds.";
+	mes "Congratulations!";
 	next;
-	mes "[Staff]";	
-	mes "The fastest player among people who cleared lvl 50s arena time force battle is ^3131FF"+$arena_50topn$+"^000000.";	
+	mes "[Staff]";
+	mes "The fastest player among people who cleared lvl 50s arena time force battle is ^3131FF"+$arena_50topn$+"^000000.";
 	next;
-	mes "[Staff]";	
-	mes "^3131FF"+$arena_50topn$+"^000000's running time was ^3131FF"+$top_50min+"^000000minutes ^3131FF"+$top_50sec+"^000000seconds.";	
+	mes "[Staff]";
+	mes "^3131FF"+$arena_50topn$+"^000000's running time was ^3131FF"+$top_50min+"^000000minutes ^3131FF"+$top_50sec+"^000000seconds.";
 	next;
 	if (@gap50 < 0) {
-		mes "[Staff]";	
-		mes "Although you failed to make a new record, I hope you will succeed next time.";	
+		mes "[Staff]";
+		mes "Although you failed to make a new record, I hope you will succeed next time.";
 		next;
 		if (arena_point > 29980) {	
-			mes "[Staff]";	
-			mes "Then let me reward you with some arena points....eh?";	
-			mes "Your arena points have exceeded the maximum amount. I cannot give you more points until you spend some points.";	
+			mes "[Staff]";
+			mes "Then let me reward you with some arena points....eh?";
+			mes "Your arena points have exceeded the maximum amount. I cannot give you more points until you spend some points.";
 			next;
-			mes "[Staff]";	
-			mes "You can check the amount of arena points you have in the arena waiting room.";	
+			mes "[Staff]";
+			mes "You can check the amount of arena points you have in the arena waiting room.";
 			next;
-			mes "[Staff]";	
-			mes "I hope you had a good time and let me guide you to the entrance of arena.";	
-			mes "Thank you.";	
+			mes "[Staff]";
+			mes "I hope you had a good time and let me guide you to the entrance of arena.";
+			mes "Thank you.";
 			close2;
 		}
 		else
 		{
 			set arena_point, arena_point + 20;
-			mes "[Staff]";	
-			mes "Let me reward you some arena points.";	
-			mes "If you wish to check the amount of arena points you have, please go talk to ^3131FFVendigos^000000 at the arena entrance.";	
+			mes "[Staff]";
+			mes "Let me reward you some arena points.";
+			mes "If you wish to check the amount of arena points you have, please go talk to ^3131FFVendigos^000000 at the arena entrance.";
 			next;
-			mes "[Staff]";	
-			mes "Let me guide you to the entrance of arena.";	
-			mes "See you later~";	
+			mes "[Staff]";
+			mes "Let me guide you to the entrance of arena.";
+			mes "See you later~";
 			close2;
 		}
 		specialeffect2 EF_EXIT;
@@ -960,44 +960,44 @@ prt_are_in,25,188,3	script	Staff#50-2	67,{
 	else
 	{
 		emotion e_omg;
-		mes "[Staff]";	
-		mes "Wow! You have renewed the record!";	
-		mes "What a great job!";	
+		mes "[Staff]";
+		mes "Wow! You have renewed the record!";
+		mes "What a great job!";
 		next;
-		mes "[Staff]";	
-		mes "You have been recorded as the fastest player among people who cleared ^FF0000Arena Time Force Battle lvl 50s^000000, ^3131FF"+strcharinfo(0)+"^000000.";	
+		mes "[Staff]";
+		mes "You have been recorded as the fastest player among people who cleared ^FF0000Arena Time Force Battle lvl 50s^000000, ^3131FF"+strcharinfo(0)+"^000000.";
 		set $top_50min, @record_min50;
 		set $top_50sec, @record_sec50;
-		set $arena_50topn$,strcharinfo(0);	
+		set $arena_50topn$,strcharinfo(0);
 		donpcevent "Vendigos::Onlinerec_50";
 		next;
 		if (arena_point > 29950) {	
-			mes "[Staff]";	
-			mes "Then let me reward you with some arena points....eh?";	
-			mes "Your arena points have exceeded the maximum amount. I cannot give you more points until you spend some points.";	
+			mes "[Staff]";
+			mes "Then let me reward you with some arena points....eh?";
+			mes "Your arena points have exceeded the maximum amount. I cannot give you more points until you spend some points.";
 			next;
-			mes "[Staff]";	
-			mes "You can check the amount of arena points you have in the arena waiting room.";	
+			mes "[Staff]";
+			mes "You can check the amount of arena points you have in the arena waiting room.";
 			next;
-			mes "[Staff]";	
-			mes "I hope you had a good time and let me guide you to the entrance of arena.";	
-			mes "Thank you.";	
+			mes "[Staff]";
+			mes "I hope you had a good time and let me guide you to the entrance of arena.";
+			mes "Thank you.";
 			close2;
 		}
 		else
 		{
 			mes "[Staff]";
-			mes "Let me reward you with some arena points.";	
-			mes "At the same time, since you have renewed the record you will receive an extra amount of the points this time.";	
+			mes "Let me reward you with some arena points.";
+			mes "At the same time, since you have renewed the record you will receive an extra amount of the points this time.";
 			next;
 			set arena_point, arena_point + 50;
-			mes "[Staff]";	
-			mes "Let me reward you some arena points.";	
-			mes "If you wish to check the amount of arena points you have, please go talk to ^3131FFVendigos^000000 at the arena entrance.";	
+			mes "[Staff]";
+			mes "Let me reward you some arena points.";
+			mes "If you wish to check the amount of arena points you have, please go talk to ^3131FFVendigos^000000 at the arena entrance.";
 			next;
-			mes "[Staff]";	
-			mes "Let me guide you to the entrance of arena.";	
-			mes "See you later~";	
+			mes "[Staff]";
+			mes "Let me guide you to the entrance of arena.";
+			mes "See you later~";
 			close2;
 		}
 		specialeffect2 EF_HIT5;

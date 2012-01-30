@@ -9356,7 +9356,7 @@ BUILDIN_FUNC(globalmes)
 /// waitingroom "<title>",<limit>{,"<event>"{,<trigger>{,<zeny>{,<minlvl>{,<maxlvl>}}}}};
 BUILDIN_FUNC(waitingroom)
 {
-	struct npc_data* nd;	
+	struct npc_data* nd;
 	int pub = 1;
 	const char* title = script_getstr(st, 2);
 	int limit = script_getnum(st, 3);
@@ -9630,7 +9630,7 @@ BUILDIN_FUNC(setmapflagnosave)
 	x=script_getnum(st,4);
 	y=script_getnum(st,5);
 	m = map_mapname2mapid(str);
-	mapindex = mapindex_name2id(str2);	
+	mapindex = mapindex_name2id(str2);
 	
 	if(m >= 0 && mapindex) {
 		map[m].flag.nosave=1;
@@ -14147,7 +14147,7 @@ int axtoi(const char *hexStg)
 BUILDIN_FUNC(axtoi)
 {
 	const char *hex = script_getstr(st,2);
-	script_pushint(st,axtoi(hex));	
+	script_pushint(st,axtoi(hex));
 	return 0;
 }
 
@@ -14786,7 +14786,7 @@ BUILDIN_FUNC(mercenary_heal)
 	hp = script_getnum(st,2);
 	sp = script_getnum(st,3);
 
-	status_heal(&sd->md->bl, hp, sp, 0);	
+	status_heal(&sd->md->bl, hp, sp, 0);
 	return 0;
 }
 

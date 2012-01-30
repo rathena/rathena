@@ -386,7 +386,7 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 		//Block not in map, just update coordinates, but do naught else.
 		bl->x = x1;
 		bl->y = y1;
-		return 0;	
+		return 0;
 	}
 
 	//TODO: Perhaps some outs of bounds checking should be placed here?
@@ -2960,7 +2960,7 @@ int map_readallmaps (void)
 			ShowWarning("Map %s already loaded!"CL_CLL"\n", map[i].name);
 			if (map[i].cell) {
 				aFree(map[i].cell);
-				map[i].cell = NULL;	
+				map[i].cell = NULL;
 			}
 			map_delmapid(i);
 			maps_removed++;

@@ -125,7 +125,7 @@ L_Reset:
 	deletearray $sday[0],200;
 	deletearray $eday[0],200;
 	deletearray $woetime[0],200;
-	deletearray $woetime2[0],200;	
+	deletearray $woetime2[0],200;
 	mes "[Woe Setter]";
 	mes "They are all gone now, please remember to set new ones";
 	close;

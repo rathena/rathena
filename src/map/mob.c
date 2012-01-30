@@ -137,7 +137,7 @@ int mobdb_searchname_array(struct mob_db** data, int size, const char *str)
 		if (!mobdb_searchname_array_sub(mob, str)) {
 			if (count < size)
 				data[count] = mob;
-			count++;	
+			count++;
 		}
 	}
 	return count;
@@ -1995,7 +1995,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 	if( src )
 	{ // Use Dead skill only if not killed by Script or Command
-		md->state.skillstate = MSS_DEAD;	
+		md->state.skillstate = MSS_DEAD;
 		mobskill_use(md,tick,-1);
 	}
 
@@ -2561,7 +2561,7 @@ int mob_guardian_guildchange(struct block_list *bl,va_list ap)
 	md->guardian_data->guardup_lv = guild_checkskill(g,GD_GUARDUP);
 	memcpy(md->guardian_data->guild_name, g->name, NAME_LENGTH);
 
-	return 1;	
+	return 1;
 }
 	
 /*==========================================

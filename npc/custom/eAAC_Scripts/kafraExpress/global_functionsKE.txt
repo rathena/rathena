@@ -193,7 +193,7 @@ function	script	GF_getJobId	{
 	}
 	if (@classId >= Job_Taekwon && @classId <= Job_Soul_Linker) {
 		//Currently has no alternates.
-		return @classId;	
+		return @classId;
 	}
 	if (@classId >= Job_Novice_High && @classId <= Job_Paladin2)
 		set @classId, @classId -Job_Novice_High;

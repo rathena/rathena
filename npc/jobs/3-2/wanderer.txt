@@ -213,7 +213,7 @@ xmas,132,143,5	script	Performance Manager#w	713,{
 		mes "May I talk with you?";
 		mes "In fact, I usually don't say these things to thers.";
 		mes "But I'm very depressed. Really, really depressed.";
-		next;	
+		next;
 		while(1){
 			switch(select("I'm not interested.:What happened?:If you're not saying, why would you tell me that?")) {
 				case 1:
@@ -271,7 +271,7 @@ L_wh2:
 					mes "[Stage Staff]";
 					mes "If we switch places, would you not be afraid?";
 					mes "I am the person in charge of performances! You know how many performances there will be, how many money there will be? Or how many people we will expect to face! Don't you think that I have a multiple burden?";
-					next;	
+					next;
 					break;
 				case 2:
 					mes "[Stage Staff]";
@@ -283,7 +283,7 @@ L_wh2:
 					next;
 					mes "[Stage Staff]";
 					mes "Do you know how many people will complain? This will be terrible...";
-					next;	
+					next;
 					goto L_wh3;
 				case 3:
 					mes "[Stage Staff]";
@@ -321,7 +321,7 @@ L_wh3:
 		next;
 		mes "[Stage Staff]";
 		mes "Hey! Find the minstrel Guitar Song!";
-		next;	
+		next;
 		switch(select("Okay.:How can I find him!:Happy!")) {
 			case 1:
 				break;
@@ -330,7 +330,7 @@ L_wh3:
 				mes "How do I know!?";
 				mes "Ah, no, no.";
 				mes "Since you're a dancer, you must be interested in it, right?";
-				mes "Don't you want to see the performance?";	
+				mes "Don't you want to see the performance?";
 				next;
 				break;
 			case 3:
@@ -378,7 +378,7 @@ L_wh3:
 			next;
 			mes "[Stage Staff]";
 			mes "Good! please take this headgear.";
-			mes "This item is not easy to get, so be careful and not lose it!";	
+			mes "This item is not easy to get, so be careful and not lose it!";
 			close;
 		}
 		else {
@@ -401,7 +401,7 @@ comodo,140,86,5	script	Cheerless Minstrel#w	479,{
 		mes "You can dance ~ ~";
 		mes "You can work ~ ~";
 		mes "You are the dancing queen ~ ~";
-		mes "Feel the beat from the tambourine ~ ~";	
+		mes "Feel the beat from the tambourine ~ ~";
 		next;
 		mes "[Cheerless Minstrel]";
 		mes "Thank you ...";
@@ -412,8 +412,8 @@ comodo,140,86,5	script	Cheerless Minstrel#w	479,{
 		mes "You can dance ~ ~";
 		mes "You can work ~ ~";
 		mes "You are the dancing queen ~ ~";
-		mes "Feel the King of the tambourines ~ ~";	
-		next;	
+		mes "Feel the King of the tambourines ~ ~";
+		next;
 		mes "- that guy seems to be Guitar Song -";
 		next;
 		if (select("Thats one Guitar Song's strange song.:Leave him alone.") == 2){
@@ -459,7 +459,7 @@ comodo,140,86,5	script	Cheerless Minstrel#w	479,{
 			mes "Hey, didn't I said to not mention that?";
 			mes "I don't want to think about it. When I think about it, it makes me sad.";
 			next;
-			mes "- Guitar Song refused to talk it. He is the only one who knows about <Nuoli Ou>. What should I do? -";	
+			mes "- Guitar Song refused to talk it. He is the only one who knows about <Nuoli Ou>. What should I do? -";
 			set job_wan,3;
 			close;
 		case 2:
@@ -497,7 +497,7 @@ comodo,140,86,5	script	Cheerless Minstrel#w	479,{
 					mes "It should be very clear that people like how you sing, right?";
 					mes "Many people are looking forward for your support.";
 					mes "Don't you feel the shame to let people down without a good reason?";
-					next;	
+					next;
 					break;
 				}
 				else {
@@ -667,7 +667,7 @@ comodo,140,86,5	script	Cheerless Minstrel#w	479,{
 	else if (job_wan > 3 && job_wan < 8) {
 		mes "[Guitar Song]";
 		mes "Dancer Kim should be in town where monster race is held, right?";
-		mes "If you like monster race, you should know the location ...";	
+		mes "If you like monster race, you should know the location ...";
 		close;
 	}
 	else if (job_wan == 8){
@@ -680,14 +680,14 @@ comodo,140,86,5	script	Cheerless Minstrel#w	479,{
 		mes "I will truly take care of you ~ ~";
 		next;
 		mes "[Guitar Song]";
-		mes "Immediately, go to Lutie. We will gather as fast as we can.";	
+		mes "Immediately, go to Lutie. We will gather as fast as we can.";
 		set job_wan,9;
 		close;
 	}
 	else if (job_wan == 9){
 		mes "[Guitar Song]";
 		mes "I'll go to Lutie as promised.";
-		close;	
+		close;
 	}
 	else {
 		mes "[inability of the court musicians]";
@@ -737,7 +737,7 @@ hu_in01,305,251,5	script	Vacant Looking Lady#w	879,{
         next;
         mes "[Vacant Looking Lady]";
         mes "But...";
-        next;	
+        next;
 		menu "What happened in the end... ?",-;
         mes "[Vacant Looking Lady]";
         mes "The next morning I get up to brush teeth and wash my face, but I realized that I had no make-up.";
@@ -862,7 +862,7 @@ hu_in01,305,251,5	script	Vacant Looking Lady#w	879,{
         mes "[Dancer Kim]";
         mes "Come to the Lutie with Guitar Song!";
         mes "I'll start immediately!";
-        close;	
+        close;
 	}
 	mes "[Vacant Looking Lady]";
 	mes "Where is my partner...";
@@ -881,7 +881,7 @@ hu_fild05,342,130,5	script	Dancer Kim#fild	879,{
 		mes "[Dancer Kim]";
 		mes "The goal is 50 Yellow Novuses.";
 		mes "Are you Ready?";
-		next;	
+		next;
 		if (select("No.:Yes.") == 1){
             mes "[Dancer Kim]";
             mes "Please prepare as fast as you can, before all of this will disappear from my interests!";
@@ -914,7 +914,7 @@ hu_fild05,342,130,5	script	Dancer Kim#fild	879,{
 					mes "I feel that my body is full of power.";
 					mes "I suddenly wanted to see my good partner Guitar Song.";
 					mes "I want to start dancing again.";
-					next;	
+					next;
 					menu "How about dancing in Lutie?",-;
 					emotion e_gasp;
 					mes "[Dancer Kim]";
@@ -1253,7 +1253,7 @@ if (job_wan == 9){
 		emotion e_lv,"Audience#xmas3";
 		emotion e_lv,"Audience#xmas4";
 		emotion e_lv,"Little Iraki#xm";
-		emotion e_lv,"Mimi#xmas";	
+		emotion e_lv,"Mimi#xmas";
 		mes "[Audience]";
 		mes "Ah ah ah ah ah ~ ~ !!";
 		next;

@@ -1162,7 +1162,7 @@ um_in,156,77,5	script	Tabezthan#lv4	788,{
 			if ((countitem(7290) > 29) && (countitem(7289) > 29) && (countitem(7293) > 29)) {
 				mes "[Tabezthan]";
 				mes "Ah, you've brought all three. However, we can only use one kind of ore at a time, so please choose just one.";
-				next;	
+				next;
 				switch(select("Phlogopite:Peridot:Rose Quartz")) {
 				case 1:
 					set .@itemreq,7290; //Phlogopite

@@ -76,7 +76,7 @@ static int battle_gettargeted_sub(struct block_list *bl, va_list ap)
 		bl_list[(*c)++] = bl;
 		return 1;
 	}
-	return 0;	
+	return 0;
 }
 
 struct block_list* battle_gettargeted(struct block_list *target)
@@ -127,7 +127,7 @@ static int battle_getenemy_sub(struct block_list *bl, va_list ap)
 		bl_list[(*c)++] = bl;
 		return 1;
 	}
-	return 0;	
+	return 0;
 }
 
 // Picks a random enemy of the given type (BL_PC, BL_CHAR, etc) within the range given. [Skotlex]
@@ -164,7 +164,7 @@ static int battle_getenemyarea_sub(struct block_list *bl, va_list ap)
 		bl_list[(*c)++] = bl;
 		return 1;
 	}
-	return 0;	
+	return 0;
 }
 
 // Pick a random enemy
@@ -1075,7 +1075,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		unsigned rh : 1;		//Attack considers right hand (wd.damage)
 		unsigned lh : 1;		//Attack considers left hand (wd.damage2)
 		unsigned weapon : 1; //It's a weapon attack (consider VVS, and all that)
-	}	flag;	
+	}	flag;
 
 	memset(&wd,0,sizeof(wd));
 	memset(&flag,0,sizeof(flag));
@@ -3865,7 +3865,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	if(tsc && tsc->data[SC_KAAHI] && tsc->data[SC_KAAHI]->val4 == INVALID_TIMER && tstatus->hp < tstatus->max_hp)
 		tsc->data[SC_KAAHI]->val4 = add_timer(tick + skill_get_time2(SL_KAAHI,tsc->data[SC_KAAHI]->val1), kaahi_heal_timer, target->id, SC_KAAHI); //Activate heal.
 
-	wd = battle_calc_attack(BF_WEAPON, src, target, 0, 0, flag);	
+	wd = battle_calc_attack(BF_WEAPON, src, target, 0, 0, flag);
 	
 	if(sc && sc->data[SC_EXEEDBREAK])
 	{
@@ -4801,7 +4801,7 @@ void battle_adjust_conf()
 {
 	battle_config.monster_max_aspd = 2000 - battle_config.monster_max_aspd*10;
 	battle_config.max_aspd = 2000 - battle_config.max_aspd*10;
-	battle_config.max_walk_speed = 100*DEFAULT_WALK_SPEED/battle_config.max_walk_speed;	
+	battle_config.max_walk_speed = 100*DEFAULT_WALK_SPEED/battle_config.max_walk_speed;
 	battle_config.max_cart_weight *= 10;
 	
 	if(battle_config.max_def > 100 && !battle_config.weapon_defense_type)	 // added by [Skotlex]

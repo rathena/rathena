@@ -988,7 +988,7 @@ int party_exp_share(struct party_data* p, struct block_list* src, unsigned int b
 	if (c < 1)
 		return 0;
 
-	base_exp/=c;	
+	base_exp/=c;
 	job_exp/=c;
 	zeny/=c;
 

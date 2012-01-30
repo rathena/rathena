@@ -121,7 +121,7 @@ extern struct Battle_Config
 	int use_weapon_skill_range; //[Skotlex]
 	int pc_damage_delay_rate;
 	int defnotenemy;
-	int vs_traps_bctall;	
+	int vs_traps_bctall;
 	int traps_setting;
 	int summon_flora; //[Skotlex]	
 	int clear_unit_ondeath; //[Skotlex]
