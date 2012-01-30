@@ -2764,17 +2764,17 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 						skl->x+range,skl->y+range,BL_CHAR,src,skl->skill_id,skl->skill_lv,tick);
 					break;
 				case NPC_EARTHQUAKE:
+					if( skl->type > 1 )
+						skill_addtimerskill(src,tick+250,src->id,0,0,skl->skill_id,skl->skill_lv,skl->type-1,skl->flag);
 					skill_area_temp[0] = map_foreachinrange(skill_area_sub, src, skill_get_splash(skl->skill_id, skl->skill_lv), BL_CHAR, src, skl->skill_id, skl->skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
 					skill_area_temp[1] = src->id;
 					skill_area_temp[2] = 0;
 					map_foreachinrange(skill_area_sub, src, skill_get_splash(skl->skill_id, skl->skill_lv), splash_target(src), src, skl->skill_id, skl->skill_lv, tick, skl->flag, skill_castend_damage_id);
-					if( skl->type > 1 )
-						skill_addtimerskill(src,tick+250,src->id,0,0,skl->skill_id,skl->skill_lv,skl->type-1,skl->flag);
 					break;
 				case WZ_WATERBALL:
 					if (!status_isdead(target))
 						skill_attack(BF_MAGIC,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
-					if (skl->type>1 && !status_isdead(target)) {
+					if (skl->type>1 && !status_isdead(target) && !status_isdead(src)) {
 						skill_addtimerskill(src,tick+125,target->id,0,0,skl->skill_id,skl->skill_lv,skl->type-1,skl->flag);
 					} else {
 						struct status_change *sc = status_get_sc(src);
@@ -3378,7 +3378,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 				clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			else if( skillid == LG_MOONSLASHER )
 				clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skillid, skilllv, 6);
-
+			//FIXME: Isn't EarthQuake a ground skill after all?
+			else if( skillid == NPC_EARTHQUAKE )
+				skill_addtimerskill(src,tick+250,src->id,0,0,skillid,skilllv,2,flag|BCT_ENEMY|SD_SPLASH|1);
+			
 			skill_area_temp[0] = 0;
 			skill_area_temp[1] = bl->id;
 			skill_area_temp[2] = 0;
@@ -3394,10 +3397,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 
 			// recursive invocation of skill_castend_damage_id() with flag|1
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), (skillid == WL_CRIMSONROCK)?BL_CHAR|BL_SKILL:splash_target(src), src, skillid, skilllv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
-
-			//FIXME: Isn't EarthQuake a ground skill after all?
-			if( skillid == NPC_EARTHQUAKE )
-				skill_addtimerskill(src,tick+250,src->id,0,0,skillid,skilllv,2,flag|BCT_ENEMY|SD_SPLASH|1);
 		}
 		break;
 
@@ -3538,7 +3537,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		}
 		break;
 	case WZ_WATERBALL:
-		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
 		{
 			int range = skilllv / 2;
 			int maxlv = skill_get_max(skillid); // learnable level
@@ -3572,6 +3570,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			if( count > 1 ) // queue the remaining count - 1 timerskill Waterballs
 				skill_addtimerskill(src,tick+150,bl->id,0,0,skillid,skilllv,count-1,flag);
 		}
+		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 
 	case PR_BENEDICTIO:
