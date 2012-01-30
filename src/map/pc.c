@@ -4543,10 +4543,17 @@ int pc_memo(struct map_session_data* sd, int pos)
 int pc_checkskill(struct map_session_data *sd,int skill_id)
 {
 	if(sd == NULL) return 0;
-	if( skill_id>=GD_SKILLBASE){
+	if( skill_id >= GD_SKILLBASE && skill_id < GD_MAX )
+	{
 		struct guild *g;
+
 		if( sd->status.guild_id>0 && (g=guild_search(sd->status.guild_id))!=NULL)
 			return guild_checkskill(g,skill_id);
+		return 0;
+	}
+	else if( skill_id < 0 || skill_id >= ARRAYLENGTH(sd->status.skill) )
+	{
+		ShowError("pc_checkskill: Invalid skill id %d (char_id=%d).\n", skill_id, sd->status.char_id);
 		return 0;
 	}
 
