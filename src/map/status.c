@@ -1786,7 +1786,7 @@ int status_calc_mob_(struct mob_data* md, bool first)
 		status->max_sp += diff*status->int_;
 		status->hp = status->max_hp;
 		status->sp = status->max_sp;
-		status->speed -= diff;
+		status->speed -= cap_value(diff, 0, status->speed - 10);
 	}
 
 
