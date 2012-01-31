@@ -3469,6 +3469,8 @@ void do_final(void)
 		if(map[i].block) aFree(map[i].block);
 		if(map[i].block_mob) aFree(map[i].block_mob);
 		if(battle_config.dynamic_mobs) { //Dynamic mobs flag by [random]
+			if(map[i].mob_delete_timer != INVALID_TIMER)
+				delete_timer(map[i].mob_delete_timer, map_removemobs_timer);
 			for (j=0; j<MAX_MOB_LIST_PER_MAP; j++)
 				if (map[i].moblist[j]) aFree(map[i].moblist[j]);
 		}
