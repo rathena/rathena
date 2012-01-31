@@ -1947,10 +1947,10 @@ struct npc_data* npc_add_warp(short from_mapid, short from_x, short from_y, shor
 	nd->bl.m = from_mapid;
 	nd->bl.x = from_x;
 	nd->bl.y = from_y;
-	safestrncpy(nd->name, "", ARRAYLENGTH(nd->name));// empty display name
 	snprintf(nd->exname, ARRAYLENGTH(nd->exname), "warp_%d_%d_%d", from_mapid, from_x, from_y);
 	for( i = 0; npc_name2id(nd->exname) != NULL; ++i )
 		snprintf(nd->exname, ARRAYLENGTH(nd->exname), "warp%d_%d_%d_%d", i, from_mapid, from_x, from_y);
+	safestrncpy(nd->name, nd->exname, ARRAYLENGTH(nd->name));
 
 	if( battle_config.warp_point_debug )
 		nd->class_ = WARP_DEBUG_CLASS;

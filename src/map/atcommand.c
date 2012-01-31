@@ -4601,8 +4601,12 @@ ACMD_FUNC(mapinfo)
 			case 9:  strcpy(direction, "North"); break;
 			default: strcpy(direction, "Unknown"); break;
 			}
-			sprintf(atcmd_output, "NPC %d: %s | Direction: %s | Sprite: %d | Location: %d %d",
-			        ++i, nd->name, direction, nd->class_, nd->bl.x, nd->bl.y);
+			if(strcmp(nd->name,nd->exname) == 0)
+				sprintf(atcmd_output, "NPC %d: %s | Direction: %s | Sprite: %d | Location: %d %d",
+				    ++i, nd->name, direction, nd->class_, nd->bl.x, nd->bl.y);
+			else
+				sprintf(atcmd_output, "NPC %d: %s::%s | Direction: %s | Sprite: %d | Location: %d %d",
+			        ++i, nd->name, nd->exname, direction, nd->class_, nd->bl.x, nd->bl.y);
 			clif_displaymessage(fd, atcmd_output);
 		}
 		break;
