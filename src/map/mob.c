@@ -2355,7 +2355,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	if(mvp_sd && md->db->mexp > 0 && !md->special_state.ai)
 	{
 		int log_mvp[2] = {0};
-		int j;
 		unsigned int mexp;
 		struct item item;
 		double exp;
@@ -2378,10 +2377,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		if(map[m].flag.nomvploot || type&1)
 			; //No drops.
 		else
-		for(j=0;j<3;j++)
+		for(i = 0; i < MAX_MVP_DROP; i++)
 		{
-			i = rnd() % 3;
-			
 			if(md->db->mvpitem[i].nameid <= 0)
 				continue;
 			if(!itemdb_exists(md->db->mvpitem[i].nameid))
@@ -3586,12 +3583,10 @@ static bool mob_parse_dbrow(char** str)
 	memcpy(&data.status, status, sizeof(struct status_data));
 	status_calc_misc(&data.bl, status, db->lv);
 	
-	// MVP EXP Bonus, Chance: MEXP,ExpPer
+	// MVP EXP Bonus: MEXP
 	// Some new MVP's MEXP multipled by high exp-rate cause overflow. [LuzZza]
 	exp = (double)atoi(str[30]) * (double)battle_config.mvp_exp_rate / 100.;
 	db->mexp = (unsigned int)cap_value(exp, 0, UINT_MAX);
-
-	db->mexpper = atoi(str[31]);
 	
 	//Now that we know if it is an mvp or not, apply battle_config modifiers [Skotlex]
 	maxhp = (double)status->max_hp;
@@ -3610,16 +3605,16 @@ static bool mob_parse_dbrow(char** str)
 	status->sp = status->max_sp;
 	
 	// MVP Drops: MVP1id,MVP1per,MVP2id,MVP2per,MVP3id,MVP3per
-	for(i = 0; i < 3; i++) {
+	for(i = 0; i < MAX_MVP_DROP; i++) {
 		struct item_data *id;
 		int rate_adjust = battle_config.item_rate_mvp;;
-		db->mvpitem[i].nameid = atoi(str[32+i*2]);
+		db->mvpitem[i].nameid = atoi(str[31+i*2]);
 		if (!db->mvpitem[i].nameid) {
 			db->mvpitem[i].p = 0; //No item....
 			continue;
 		}
 		item_dropratio_adjust(db->mvpitem[i].nameid, class_, &rate_adjust);
-		db->mvpitem[i].p = mob_drop_adjust(atoi(str[33+i*2]), rate_adjust, battle_config.item_drop_mvp_min, battle_config.item_drop_mvp_max);
+		db->mvpitem[i].p = mob_drop_adjust(atoi(str[32+i*2]), rate_adjust, battle_config.item_drop_mvp_min, battle_config.item_drop_mvp_max);
 		
 		//calculate and store Max available drop chance of the MVP item
 		if (db->mvpitem[i].p) {
@@ -3635,7 +3630,7 @@ static bool mob_parse_dbrow(char** str)
 		int rate = 0, rate_adjust, type;
 		unsigned short ratemin, ratemax;
 		struct item_data *id;
-		k = 38+i*2;
+		k = 31 + MAX_MVP_DROP*2 + i*2;
 		db->dropitem[i].nameid = atoi(str[k]);
 		if (!db->dropitem[i].nameid) {
 			db->dropitem[i].p = 0; //No drop.
@@ -3747,7 +3742,7 @@ static void mob_readdb(void)
 			}
 		}
 
-		sv_readdb(db_path, filename[fi], ',', 38+2*MAX_MOB_DROP, 38+2*MAX_MOB_DROP, -1, &mob_readdb_sub);
+		sv_readdb(db_path, filename[fi], ',', 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, 38+2*MAX_MVP_DROP+2*MAX_MOB_DROP, -1, &mob_readdb_sub);
 	}
 }
 
@@ -3775,12 +3770,12 @@ static int mob_read_sqldb(void)
 		{
 			// wrap the result into a TXT-compatible format
 			char line[1024];
-			char* str[38+2*MAX_MOB_DROP];
+			char* str[31+2*MAX_MVP_DROP+2*MAX_MOB_DROP];
 			char* p;
 			int i;
 			
 			lines++;
-			for(i = 0, p = line; i < 38 + 2*MAX_MOB_DROP; i++)
+			for(i = 0, p = line; i < 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP; i++)
 			{
 				char* data;
 				size_t len;

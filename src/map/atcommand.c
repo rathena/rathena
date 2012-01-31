@@ -7196,11 +7196,11 @@ ACMD_FUNC(mobinfo)
 			clif_displaymessage(fd, atcmd_output);
 		// mvp
 		if (mob->mexp) {
-			sprintf(atcmd_output, " MVP Bonus EXP:%u  %02.02f%%", mob->mexp, (float)mob->mexpper / 100);
+			sprintf(atcmd_output, " MVP Bonus EXP:%u", mob->mexp);
 			clif_displaymessage(fd, atcmd_output);
 			strcpy(atcmd_output, " MVP Items:");
 			j = 0;
-			for (i = 0; i < 3; i++) {
+			for (i = 0; i < MAX_MVP_DROP; i++) {
 				if (mob->mvpitem[i].nameid <= 0 || (item_data = itemdb_exists(mob->mvpitem[i].nameid)) == NULL)
 					continue;
 				if (mob->mvpitem[i].p > 0) {

@@ -20,6 +20,7 @@
 
 //The number of drops all mobs have and the max drop-slot that the steal skill will attempt to steal from.
 #define MAX_MOB_DROP 10
+#define MAX_MVP_DROP 3
 #define MAX_STEAL_DROP 7
 
 //Min time between AI executions
@@ -89,12 +90,12 @@ struct spawn_info {
 struct mob_db {
 	char sprite[NAME_LENGTH],name[NAME_LENGTH],jname[NAME_LENGTH];
 	unsigned int base_exp,job_exp;
-	unsigned int mexp,mexpper;
+	unsigned int mexp;
 	short range2,range3;
 	short race2;	// celest
 	unsigned short lv;
 	struct { int nameid,p; } dropitem[MAX_MOB_DROP];
-	struct { int nameid,p; } mvpitem[3];
+	struct { int nameid,p; } mvpitem[MAX_MVP_DROP];
 	struct status_data status;
 	struct view_data vd;
 	short option;
