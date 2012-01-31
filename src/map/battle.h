@@ -410,7 +410,6 @@ extern struct Battle_Config
 	int show_hp_sp_drain, show_hp_sp_gain;	//[Skotlex]
 
 	int mob_npc_event_type; //Determines on who the npc_event is executed. [Skotlex]
-	int mob_clear_delay; // [Valaris]
 
 	int character_size; // if riders have size=2, and baby class riders size=1 [Lupus]
 	int mob_max_skilllvl; // Max possible skill level [Lupus]
