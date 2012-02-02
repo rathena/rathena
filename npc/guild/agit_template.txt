@@ -143,7 +143,7 @@ OnAgitBreak:
 	sleep 500; // Slow down script execution slightly.
 	if( agitcheck() )
 		donpcevent "Agit#"+strnpcinfo(2)+"::OnStartArena";
-	sleep getbattleflag("gvg_eliminate_time");
+	sleep 7000;
 	announce "The [" + getcastlename(strnpcinfo(2)) + "] castle has been conquered by the [" + getguildName(.@GID) + "] guild.",bc_all|bc_woe;
 	end;
 
@@ -165,7 +165,7 @@ OnGuildBreak:
 	disablenpc "Kafra Staff#"+strnpcinfo(2);
 	SetCastleData strnpcinfo(2),0,0;
 	// Wait before refreshing guild information.
-	sleep getbattleflag("gvg_eliminate_time");
+	sleep 7000;
 	Announce "Guild Base [" + GetCastleName(strnpcinfo(2)) + "] has been abandoned.",0;
 	GetCastleData strnpcinfo(2),0,strnpcinfo(0)+"::OnRecvCastle";
 	end;

@@ -267,7 +267,6 @@ extern struct Battle_Config
 	int gvg_magic_damage_rate;
 	int gvg_misc_damage_rate;
 	int gvg_flee_penalty;
-	int gvg_eliminate_time;
 	int pk_short_damage_rate;
 	int pk_long_damage_rate;
 	int pk_weapon_damage_rate;
