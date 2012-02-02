@@ -276,7 +276,6 @@ extern struct Battle_Config
 	int mob_changetarget_byskill;
 	int attack_direction_change;
 	int land_skill_limit;
-	int party_skill_penalty;
 	int monster_class_change_recover;
 	int produce_item_name_input;
 	int display_skill_fail;
