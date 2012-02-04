@@ -252,7 +252,7 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 			clif_move(ud);
 	} else if(ud->state.running) {
 		//Keep trying to run.
-		if (!unit_run(bl))
+		if ( !(unit_run(bl) || unit_wugdash(bl,sd)) )
 			ud->state.running = 0;
 	}
 	else if (ud->target) {
@@ -845,8 +845,10 @@ int unit_stop_walking(struct block_list *bl,int type)
 		ud->canmove_tick = gettick() + (type>>8);
 
 	//Readded, the check in unit_set_walkdelay means dmg during running won't fall through to this place in code [Kevin]
-	if (ud->state.running)
+	if (ud->state.running) {
 		status_change_end(bl, SC_RUN, INVALID_TIMER);
+		status_change_end(bl, SC_WUGDASH, INVALID_TIMER);
+	}
 	return 1;
 }
 
@@ -944,7 +946,11 @@ int unit_resume_running(int tid, unsigned int tick, int id, intptr_t data)
 	struct unit_data *ud = (struct unit_data *)data;
 	TBL_PC * sd = map_id2sd(id);
 
-	clif_skill_nodamage(ud->bl,ud->bl,TK_RUN,ud->skilllv,
+	if(sd && pc_isridingwug(sd))
+		clif_skill_nodamage(ud->bl,ud->bl,RA_WUGDASH,ud->skilllv,
+			sc_start4(ud->bl,status_skill2sc(RA_WUGDASH),100,ud->skilllv,unit_getdir(ud->bl),0,0,1));
+	else
+		clif_skill_nodamage(ud->bl,ud->bl,TK_RUN,ud->skilllv,
 			sc_start4(ud->bl,status_skill2sc(TK_RUN),100,ud->skilllv,unit_getdir(ud->bl),0,0,0));
 
 	if (sd) clif_walkok(sd);
@@ -1219,6 +1225,9 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 		if( sd && pc_checkskill(sd,TK_HIGHJUMP) )
 			casttime *= 2;
 		break;
+	case RA_WUGDASH:
+		if (sc && sc->data[SC_WUGDASH])
+			casttime = 0;
 	}
 	
 	// moved here to prevent Suffragium from ending if skill fails
@@ -1980,6 +1989,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			status_change_end(bl, SC_GOSPEL, INVALID_TIMER);
 		status_change_end(bl, SC_CHANGE, INVALID_TIMER);
 		status_change_end(bl, SC_STOP, INVALID_TIMER);
+		status_change_end(bl, SC_WUGDASH, INVALID_TIMER);
 	}
 
 	if (bl->type&(BL_CHAR|BL_PET)) {

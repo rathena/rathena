@@ -7231,9 +7231,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case RA_WUGMASTERY:
 		if( sd )
 		{
-			if( pc_isridingwug(sd) )
-				clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
-			else if( !pc_iswug(sd) )
+			if( !pc_iswug(sd) )
 				pc_setoption(sd,sd->sc.option|OPTION_WUG);
 			else
 				pc_setoption(sd,sd->sc.option&~OPTION_WUG);
@@ -7249,8 +7247,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			} else if( pc_isridingwug(sd) ) {
 				pc_setoption(sd,sd->sc.option&~OPTION_WUGRIDER);
 				pc_setoption(sd,sd->sc.option|OPTION_WUG);
-			} else if( sd ) {
-				clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
 			}
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		}
@@ -10390,7 +10386,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 	case BS_MAXIMIZE:		case NV_TRICKDEAD:	case TF_HIDING:			case AS_CLOAKING:		case CR_AUTOGUARD:
 	case ML_AUTOGUARD:		case CR_DEFENDER:	case ML_DEFENDER:		case ST_CHASEWALK:		case PA_GOSPEL:
 	case CR_SHRINK:			case TK_RUN:		case GS_GATLINGFEVER:	case TK_READYCOUNTER:	case TK_READYDOWN:
-	case TK_READYSTORM:		case TK_READYTURN:	case SG_FUSION:
+	case TK_READYSTORM:		case TK_READYTURN:	case SG_FUSION:			case RA_WUGDASH:
 		if( sc && sc->data[status_skill2sc(skill)] )
 			return 1;
 	}
@@ -10774,6 +10770,24 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 	case RA_SENSITIVEKEEN:
 		if(!pc_iswug(sd)) {
 			clif_skill_fail(sd,skill,USESKILL_FAIL_CONDITION,0);
+			return 0;
+		}
+		break;
+	case RA_WUGMASTERY:
+		if( pc_isfalcon(sd) || pc_isridingwug(sd) ) {
+			clif_skill_fail(sd,skill,USESKILL_FAIL_LEVEL,0);
+			return 0;
+		}
+		break;
+	case RA_WUGRIDER:
+		if( !pc_isridingwug(sd) && !pc_iswug(sd) ) {
+			clif_skill_fail(sd,skill,USESKILL_FAIL_LEVEL,0);
+			return 0;
+		}
+		break;
+	case RA_WUGDASH:
+		if(!pc_isridingwug(sd)) {
+			clif_skill_fail(sd,skill,USESKILL_FAIL_LEVEL,0);
 			return 0;
 		}
 		break;
