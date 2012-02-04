@@ -378,7 +378,7 @@ typedef enum mail_status {
 } mail_status;
 
 struct mail_message {
-	unsigned int id;
+	int id;
 	int send_id;
 	char send_name[NAME_LENGTH];
 	int dest_id;
