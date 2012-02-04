@@ -391,6 +391,8 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, int skill
 	{
 		if( sc->data[SC_CRITICALWOUND] && heal ) // Critical Wound has no effect on offensive heal. [Inkfish]
 			hp -= hp * sc->data[SC_CRITICALWOUND]->val2/100;
+		if( sc->data[SC_DEATHHURT] && heal )
+			hp -= hp * 20/100;
 		if( sc->data[SC_INCHEALRATE] && skill_id != NPC_EVILLAND && skill_id != BA_APPLEIDUN )
 			hp += hp * sc->data[SC_INCHEALRATE]->val1/100; // Only affects Heal, Sanctuary and PotionPitcher.(like bHealPower) [Inkfish]
 	}
@@ -5633,6 +5635,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				hp -= hp * tsc->data[SC_CRITICALWOUND]->val2 / 100;
 				sp -= sp * tsc->data[SC_CRITICALWOUND]->val2 / 100;
 			}
+			if( tsc && tsc->data[SC_DEATHHURT] )
+			{
+				hp -= hp * 20 / 100;
+				sp -= sp * 20 / 100;
+			}
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			if( hp > 0 || (skillid == AM_POTIONPITCHER && sp <= 0) )
 				clif_skill_nodamage(NULL,bl,AL_HEAL,hp,1);
@@ -6295,6 +6302,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			{
 				hp -= hp * tsc->data[SC_CRITICALWOUND]->val2 / 100;
 				sp -= sp * tsc->data[SC_CRITICALWOUND]->val2 / 100;
+			}
+			if (tsc && tsc->data[SC_DEATHHURT])
+			{
+				hp -= hp * 20 / 100;
+				sp -= sp * 20 / 100;
 			}
 			if(hp > 0)
 				clif_skill_nodamage(NULL,bl,AL_HEAL,hp,1);
@@ -8597,7 +8609,11 @@ int skill_castend_map (struct map_session_data *sd, short skill_num, const char 
 		 * Warlock
 		 **/
 		sd->sc.data[SC_WHITEIMPRISON] ||
-		(sd->sc.data[SC_STASIS] && skill_stasis_check(&sd->bl, sd->sc.data[SC_STASIS]->val2, skill_num))
+		(sd->sc.data[SC_STASIS] && skill_stasis_check(&sd->bl, sd->sc.data[SC_STASIS]->val2, skill_num)) ||
+		/**
+		 * Guillotine Cross
+		 **/
+		sd->sc.data[SC_OBLIVIONCURSE]
 	 )) {
 		skill_failed(sd);
 		return 0;

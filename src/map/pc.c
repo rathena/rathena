@@ -6570,6 +6570,12 @@ int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
 		hp -= hp * sd->sc.data[SC_CRITICALWOUND]->val2 / 100;
 		sp -= sp * sd->sc.data[SC_CRITICALWOUND]->val2 / 100;
 	}
+	
+	if (sd->sc.data[SC_DEATHHURT])
+	{
+		hp -= hp * 20 / 100;
+		sp -= sp * 20 / 100;
+	}
 
 	return status_heal(&sd->bl, hp, sp, 1);
 }
