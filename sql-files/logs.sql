@@ -4,7 +4,7 @@
 # (E)mail attachment,(B)uying Store, Pr(O)duced Items/Ingredients, Auct(I)oned Items,
 # (X) Other, (D) Stolen from mobs, (U) MVP Prizes
 
-#Database: log
+#Database: ragnarok
 #Table: picklog
 CREATE TABLE `picklog` (
   `id` int(11) NOT NULL auto_increment,
@@ -24,7 +24,7 @@ CREATE TABLE `picklog` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 #ZenyLog types (M)onsters,(T)rade,(V)ending Sell/Buy,(S)hop Sell/Buy,(N)PC Change amount,(A)dministrators,(E)Mail,(B)uying Store
-#Database: log
+#Database: ragnarok
 #Table: zenylog
 CREATE TABLE `zenylog` (
   `id` int(11) NOT NULL auto_increment,
@@ -38,7 +38,7 @@ CREATE TABLE `zenylog` (
   INDEX (`type`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
-#Database: log
+#Database: ragnarok
 #Table: branchlog
 CREATE TABLE `branchlog` (
   `branch_id` mediumint(9) unsigned NOT NULL auto_increment,
@@ -52,7 +52,7 @@ CREATE TABLE `branchlog` (
   INDEX (`char_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
-#Database: log
+#Database: ragnarok
 #Table: mvplog
 CREATE TABLE `mvplog` (
   `mvp_id` mediumint(9) unsigned NOT NULL auto_increment,
@@ -65,7 +65,7 @@ CREATE TABLE `mvplog` (
   PRIMARY KEY  (`mvp_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
-#Database: log
+#Database: ragnarok
 #Table: atcommandlog
 CREATE TABLE `atcommandlog` (
   `atcommand_id` mediumint(9) unsigned NOT NULL auto_increment,
@@ -80,7 +80,7 @@ CREATE TABLE `atcommandlog` (
   INDEX (`char_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
-#Database: log
+#Database: ragnarok
 #Table: npclog
 CREATE TABLE `npclog` (
   `npc_id` mediumint(9) unsigned NOT NULL auto_increment,
@@ -96,7 +96,7 @@ CREATE TABLE `npclog` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 #ChatLog types Gl(O)bal,(W)hisper,(P)arty,(G)uild,(M)ain chat
-#Database: log
+#Database: ragnarok
 #Table: chatlog
 CREATE TABLE `chatlog` (
   `id` bigint(20) NOT NULL auto_increment,
@@ -115,7 +115,7 @@ CREATE TABLE `chatlog` (
   INDEX (`src_charid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
-#Database: log
+#Database: ragnarok
 #Table: loginlog
 CREATE TABLE `loginlog` (
   `time` datetime NOT NULL default '0000-00-00 00:00:00',
