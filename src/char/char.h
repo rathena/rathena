@@ -79,8 +79,4 @@ extern int db_use_sqldbs; // added for sql item_db read for char server [Valaris
 extern int guild_exp_rate;
 extern int log_inter;
 
-//Exported for use in the TXT-SQL converter.
-int mmo_char_tosql(int char_id, struct mmo_charstatus *p);
-void sql_config_read(const char *cfgName);
-
 #endif /* _CHAR_SQL_H_ */
