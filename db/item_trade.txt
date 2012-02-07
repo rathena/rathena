@@ -1276,24 +1276,6 @@
 //14488,73,100	// Blue_Pajamas_Hat_
 //14489,73,100	// Blue_Pajamas_Hat_
 
-// Episode 13.1
-6027,123,100	// Crystal_Of_Feardoom
-6028,123,100	// Seal_Scroll
-6029,123,100	// Morocc_Tracing_Log
-6035,123,100	// Decaying_Stem
-6036,123,100	// Invite_To_Meeting
-6037,123,100	// Rough_File
-6038,123,100	// Neat_Report
-6039,91,100	// Piece_Of_Fish
-6040,123,100	// Some_Of_Report
-6041,91,100	// Strong_Bine
-6042,91,100	// Ordinary_Branch
-6043,123,100	// Letter_From_Lugen
-6044,123,100	// Letter_From_Otto
-6045,123,100	// Supply_Box
-6048,91,100	// Unidentified_Mineral
-6051,115,100	// Gray_Hollow
-
 // Battleground Rewards (Krieger Von Midgard)
 13416,83,100	// Krieger_Onehand_Sword1
 13417,83,100	// Krieger_Onehand_Sword2

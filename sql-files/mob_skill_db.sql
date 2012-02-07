@@ -1112,8 +1112,9 @@ REPLACE INTO mob_skill_db VALUES(1251, "Stormy Knight@NPC_CALLSLAVE", "attack", 
 REPLACE INTO mob_skill_db VALUES(1251, "Stormy Knight@NPC_CALLSLAVE", "idle", 352, 1, 10000, 0, 30000, "yes", "self", "always", 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1251, "Stormy Knight@CR_SHIELDCHARGE", "attack", 250, 5, 2000, 0, 20000, "no", "target", "always", 0, NULL, NULL, NULL, NULL, NULL, 21, NULL);
 REPLACE INTO mob_skill_db VALUES(1251, "Stormy Knight@NPC_HALLUCINATION", "chase", 207, 1, 500, 0, 5000, "no", "target", "always", 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-REPLACE INTO mob_skill_db VALUES(1251, "Stormy Knight@NPC_SUMMONSLAVE", "attack", 196, 6, 10000, 700, 10000, "no", "self", "slavele", 3, 1607, NULL, NULL, NULL, NULL, 27, NULL);
-REPLACE INTO mob_skill_db VALUES(1251, "Stormy Knight@NPC_SUMMONSLAVE", "idle", 196, 6, 10000, 700, 10000, "no", "self", "slavele", 3, 1607, NULL, NULL, NULL, NULL, 27, NULL);
+REPLACE INTO mob_skill_db VALUES(1251, "Stormy Knight@NPC_SUMMONSLAVE", "attack", 196, 6, 10000, 700, 10000, "no", "self", "slavele", 3, 1607, NULL, NULL, NULL, NULL,27, NULL);
+REPLACE INTO mob_skill_db VALUES(1251, "Stormy Knight@NPC_SUMMONSLAVE", "idle", 196, 6, 10000, 700, 10000, "no", "self", "slavele", 3, 1607, NULL, NULL, NULL, NULL,27, NULL);
+REPLACE INTO mob_skill_db VALUES(1251, "Stormy Knight@NPC_SUMMONSLAVE", "idle", 196, 2, 10000, 0, 0, "no", "self", "onspawn", 0, 1515, NULL, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1251, "Stormy Knight@WZ_STORMGUST", "attack", 89, 10, 2000, 500, 5000, "no", "target", "always", 0, NULL, NULL, NULL, NULL, NULL, 21, NULL);
 REPLACE INTO mob_skill_db VALUES(1251, "Stormy Knight@WZ_STORMGUST", "chase", 89, 10, 2000, 500, 5000, "no", "target", "always", 0, NULL, NULL, NULL, NULL, NULL, 21, NULL);
 REPLACE INTO mob_skill_db VALUES(1251, "Stormy Knight@WZ_STORMGUST", "chase", 89, 10, 10000, 500, 5000, "no", "target", "skillused", 18, NULL, NULL, NULL, NULL, NULL, 21, NULL);
@@ -5154,8 +5155,9 @@ REPLACE INTO mob_skill_db VALUES(1956, "Naght Sieger@NPC_WIDESILENCE", "attack",
 REPLACE INTO mob_skill_db VALUES(1956, "Naght Sieger@WZ_STORMGUST", "chase", 89, 10, 2000, 500, 5000, "no", "target", "always", 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1956, "Naght Sieger@NPC_CALLSLAVE", "attack", 352, 1, 10000, 0, 30000, "yes", "self", "always", 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1956, "Naght Sieger@NPC_CALLSLAVE", "idle", 352, 1, 10000, 0, 30000, "yes", "self", "always", 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-REPLACE INTO mob_skill_db VALUES(1956, "Naght Sieger@NPC_SUMMONSLAVE", "attack", 196, 1, 10000, 700, 10000, "no", "self", "slavele", 3, 1605, NULL, NULL, NULL, NULL, NULL, NULL);
-REPLACE INTO mob_skill_db VALUES(1956, "Naght Sieger@NPC_SUMMONSLAVE", "idle", 196, 1, 10000, 700, 10000, "no", "self", "slavele", 3, 1605, NULL, NULL, NULL, NULL, NULL, NULL);
+REPLACE INTO mob_skill_db VALUES(1956, "Naght Sieger@NPC_SUMMONSLAVE", "attack", 196, 4, 10000, 700, 10000, "no", "self", "slavele", 3, 1605, NULL, NULL, NULL, NULL, NULL, NULL);
+REPLACE INTO mob_skill_db VALUES(1956, "Naght Sieger@NPC_SUMMONSLAVE", "idle", 196, 4, 10000, 700, 10000, "no", "self", "slavele", 3, 1605, NULL, NULL, NULL, NULL, NULL, NULL);
+REPLACE INTO mob_skill_db VALUES(1956, "Naght Sieger@NPC_SUMMONSLAVE", "idle", 196, 4, 10000, 0, 30000, "yes", "self", "onspawn", 0, 1605, NULL, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1956, "Naght Sieger@NPC_ALLHEAL", "idle", 687, 1, 3000, 10000, 10000, "no", "self", "rudeattacked", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1956, "Naght Sieger@NPC_ALLHEAL", "walk", 687, 1, 3000, 10000, 10000, "no", "self", "rudeattacked", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1957, "Entweihen Crothen@NPC_ALLHEAL", "idle", 687, 1, 3000, 10000, 10000, "no", "self", "rudeattacked", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -5215,7 +5217,7 @@ REPLACE INTO mob_skill_db VALUES(1974, "Banshee Master@NPC_DARKNESSATTACK", "att
 REPLACE INTO mob_skill_db VALUES(1974, "Banshee Master@NPC_EVILLAND", "attack", 670, 1, 500, 0, 5000, "yes", "target", "always", 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1974, "Banshee Master@NPC_EMOTION", "chase", 197, 1, 1000, 0, 5000, "yes", "self", "always", 0, 7, 0x81, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1974, "Banshee Master@NPC_EMOTION", "idle", 197, 1, 2000, 0, 5000, "yes", "self", "always", 0, NULL, 0x3795, NULL, NULL, NULL, NULL, NULL);
-REPLACE INTO mob_skill_db VALUES(1974, "Banshee Master@NPC_SUMMONSLAVE", "idle", 196, 2, 10000, 2000, 60000, "no", "self", "slavele", 0, 1867, NULL, NULL, NULL, NULL, NULL, NULL);
+REPLACE INTO mob_skill_db VALUES(1974, "Banshee Master@NPC_SUMMONSLAVE", "idle", 196, 2, 10000, 0, 0, "no", "self", "onspawn", 0, 1868, NULL, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1975, "Beholder Master@AL_TELEPORT", "idle", 26, 1, 10000, 0, 0, "yes", "self", "rudeattacked", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1975, "Beholder Master@MO_BODYRELOCATION", "chase", 264, 1, 2000, 500, 5000, "no", "target", "always", 0, NULL, NULL, NULL, NULL, NULL, 52, NULL);
 REPLACE INTO mob_skill_db VALUES(1975, "Beholder Master@WZ_JUPITEL", "chase", 84, 4, 2000, 0, 5000, "yes", "target", "always", 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -5224,7 +5226,7 @@ REPLACE INTO mob_skill_db VALUES(1975, "Beholder Master@NPC_MENTALBREAKER", "cha
 REPLACE INTO mob_skill_db VALUES(1975, "Beholder Master@NPC_PETRIFYATTACK", "attack", 180, 3, 200, 500, 10000, "no", "target", "always", 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1975, "Beholder Master@NPC_PETRIFYATTACK", "chase", 180, 3, 200, 500, 10000, "no", "target", "always", 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1975, "Beholder Master@SA_DISPELL", "attack", 289, 1, 100, 1000, 100000, "yes", "target", "myhpltmaxrate", 50, NULL, NULL, NULL, NULL, NULL, 18, NULL);
-REPLACE INTO mob_skill_db VALUES(1975, "Beholder Master@NPC_SUMMONSLAVE", "idle", 196, 2, 10000, 2000, 60000, "no", "self", "slavele", 0, 1633, NULL, NULL, NULL, NULL, NULL, NULL);
+REPLACE INTO mob_skill_db VALUES(1975, "Beholder Master@NPC_SUMMONSLAVE", "idle", 196, 2, 10000, 0, 0, "no", "self", "onspawn", 0, 1774, NULL, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1976, "Cobalt Mineral@AL_TELEPORT", "idle", 26, 1, 10000, 0, 0, "yes", "self", "rudeattacked", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1976, "Cobalt Mineral@CR_REFLECTSHIELD", "attack", 252, 2, 1000, 1000, 5000, "no", "self", "always", 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1976, "Cobalt Mineral@NPC_RANDOMATTACK", "attack", 183, 2, 500, 500, 5000, "yes", "target", "always", 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -5246,14 +5248,14 @@ REPLACE INTO mob_skill_db VALUES(1978, "Hell Apocalips@NPC_CRITICALSLASH", "atta
 REPLACE INTO mob_skill_db VALUES(1978, "Hell Apocalips@NPC_SELFDESTRUCTION", "attack", 173, 1, 1000, 2000, 5000, "no", "self", "myhpltmaxrate", 10, NULL, NULL, NULL, NULL, NULL, 9, NULL);
 REPLACE INTO mob_skill_db VALUES(1978, "Hell Apocalips@CR_AUTOGUARD", "chase", 249, 5, 2000, 0, 300000, "yes", "self", "longrangeattacked", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1978, "Hell Apocalips@CR_AUTOGUARD", "attack", 249, 5, 500, 0, 300000, "yes", "self", "always", 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-REPLACE INTO mob_skill_db VALUES(1978, "Hell Apocalips@NPC_SUMMONSLAVE", "idle", 196, 3, 10000, 2000, 60000, "no", "self", "slavele", 0, 1365, NULL, NULL, NULL, NULL, NULL, NULL);
+REPLACE INTO mob_skill_db VALUES(1978, "Hell Apocalips@NPC_SUMMONSLAVE", "idle", 196, 2, 10000, 0, 0, "no", "self", "onspawn", 0, 1365, NULL, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1979, "Zukadam@AL_TELEPORT", "idle", 26, 1, 10000, 0, 0, "yes", "self", "rudeattacked", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1979, "Zukadam@NPC_PIERCINGATT", "attack", 158, 5, 1000, 0, 5000, "yes", "target", "always", 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1979, "Zukadam@NPC_GUIDEDATTACK", "attack", 172, 2, 500, 1000, 20000, "no", "target", "always", 0, NULL, NULL, NULL, NULL, NULL, 29, NULL);
 REPLACE INTO mob_skill_db VALUES(1979, "Zukadam@KN_SPEARSTAB", "attack", 58, 5, 500, 800, 5000, "no", "target", "always", 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1979, "Zukadam@AL_TELEPORT", "idle", 26, 1, 10000, 0, 0, "yes", "self", "rudeattacked", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1979, "Zukadam@NPC_RANDOMATTACK", "attack", 183, 5, 1000, 500, 5000, "no", "target", "always", 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-REPLACE INTO mob_skill_db VALUES(1979, "Zukadam@NPC_SUMMONSLAVE", "idle", 196, 2, 10000, 2000, 60000, "no", "self", "slavele", 0, 1668, NULL, NULL, NULL, NULL, NULL, NULL);
+REPLACE INTO mob_skill_db VALUES(1979, "Zukadam@NPC_SUMMONSLAVE", "idle", 196, 2, 10000, 0, 0, "no", "self", "onspawn", 0, 1668, NULL, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1981, "Safeguard Chief@SM_BASH", "attack", 5, 10, 500, 1000, 5000, "no", "target", "always", 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1981, "Safeguard Chief@SM_BASH", "chase", 5, 10, 500, 1000, 5000, "no", "target", "always", 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 REPLACE INTO mob_skill_db VALUES(1981, "Safeguard Chief@NPC_DARKNESSATTACK", "attack", 190, 3, 500, 500, 5000, "no", "target", "always", 0, NULL, NULL, NULL, NULL, NULL, 6, NULL);

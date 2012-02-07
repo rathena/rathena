@@ -4889,6 +4889,12 @@ and upon the monster being killed, it will execute the script inside of the
 specified NPC object starting from the label given. The RID of the player 
 attached at this execution will be the RID of the killing character.
 
+The Event field can be used alternatively to specify other mob properties. Use
+2 to specify that the mob should be small, 4 for big monsters, and 8 for
+special ai mobs (which by default attack other monsters instead of players).
+You can add these, so using 10 will spawn small monsters that attack other
+mobs (if you specify both 2 and 4, the small version takes priority).
+
     monster "place",60,100,"Poring",1002,1,"NPCNAME::OnLabel";
 
 The coordinates of 0,0 will spawn the monster on a random place on the map.
