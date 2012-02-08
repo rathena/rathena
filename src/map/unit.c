@@ -194,7 +194,7 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 			if ((skill = guild_checkskill(g, GD_LEADERSHIP)) > 0) strvit |= (skill&0xFFFF)<<16;
 			if ((skill = guild_checkskill(g, GD_GLORYWOUNDS)) > 0) strvit |= (skill&0xFFFF);
 			if ((skill = guild_checkskill(g, GD_SOULCOLD)) > 0) agidex |= (skill&0xFFFF)<<16;
-			if ((skill = guild_checkskill(g, GD_HAWKEYES)) > 0) agidex |= skill&0xFFFF;
+			if ((skill = guild_checkskill(g, GD_HAWKEYES)) > 0) agidex |= (skill&0xFFFF);
 			if (strvit || agidex)
 			{// replaced redundant foreachinrange call with smaller and much more efficient iteration
 				for( i = 0; i < g->max_member; i++ )
