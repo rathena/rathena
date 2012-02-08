@@ -8455,7 +8455,11 @@ int pc_readdb(void)
 
 	// スキルツリ?
 	memset(skill_tree,0,sizeof(skill_tree));
-	sv_readdb(db_path, "skill_tree.txt", ',', 3+MAX_PC_SKILL_REQUIRE*2, 4+MAX_PC_SKILL_REQUIRE*2, -1, &pc_readdb_skilltree);
+#if REMODE
+	sv_readdb(db_path, "re/skill_tree.txt", ',', 3+MAX_PC_SKILL_REQUIRE*2, 4+MAX_PC_SKILL_REQUIRE*2, -1, &pc_readdb_skilltree);
+#else
+	sv_readdb(db_path, "pre-re/skill_tree.txt", ',', 3+MAX_PC_SKILL_REQUIRE*2, 4+MAX_PC_SKILL_REQUIRE*2, -1, &pc_readdb_skilltree);
+#endif
 
 	// ?性修正テ?ブル
 	for(i=0;i<4;i++)
