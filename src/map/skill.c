@@ -1483,17 +1483,12 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	int rate;
 	struct map_session_data *sd=NULL;
 	struct map_session_data *dstsd=NULL;
-	struct status_change *tsc;
 
 	nullpo_ret(src);
 	nullpo_ret(bl);
 
 	if(skillid < 0) return 0;
 	if(skillid > 0 && skilllv <= 0) return 0;	// don't forget auto attacks! - celest
-
-	tsc = status_get_sc(bl);
-	if (tsc && !tsc->count)
-		tsc = NULL;
 
 	sd = BL_CAST(BL_PC, src);
 	dstsd = BL_CAST(BL_PC, bl);
@@ -1571,10 +1566,19 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			sp += sd->sp_gain_race[is_boss(bl)?RC_BOSS:RC_NONBOSS];
 			hp += sd->hp_gain_value;
 		}
-		if( attack_type&BF_MAGIC )
-		{
+		if( attack_type&BF_MAGIC ) {
 			sp += sd->magic_sp_gain_value;
 			hp += sd->magic_hp_gain_value;
+			if( skillid == WZ_WATERBALL ) {//(bugreport:5303)
+				struct status_change *sc = NULL;
+				if( ( sc = status_get_sc(src) ) ) {
+					status_change_end(src, SC_MAGICPOWER, INVALID_TIMER);
+					if(sc->data[SC_SPIRIT] &&
+								sc->data[SC_SPIRIT]->val2 == SL_WIZARD &&
+								sc->data[SC_SPIRIT]->val3 == WZ_WATERBALL)
+								sc->data[SC_SPIRIT]->val3 = 0; //Clear bounced spell check.
+				}
+			}
 		}
 		if( hp || sp )
 		{// updated to force healing to allow healing through berserk
