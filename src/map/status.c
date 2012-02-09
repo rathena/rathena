@@ -2635,7 +2635,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		status->def = cap_value(i, CHAR_MIN, CHAR_MAX);
 #endif
 	}
-#if REMODE == 0
+#if isOFF(REMODE)
 	/**
 	 * The following setting does not affect Renewal Mode
 	 **/
@@ -2658,7 +2658,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		status->mdef = cap_value(i, CHAR_MIN, CHAR_MAX);
 #endif
 	}
-#if REMODE == 0
+#if isOFF(REMODE)
 	/**
 	 * The following setting does not affect Renewal Mode
 	 **/
@@ -3387,14 +3387,14 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 		if( bl->type&BL_PC && sd->matk_rate != 100 )
 		{
 			//Bonuses from previous matk
-		#if REMODE == 0 //Only changed in non-re [RRInd]
+		#if isOFF(REMODE) //Only changed in non-re [RRInd]
 			status->matk_max = status->matk_max * sd->matk_rate/100;
 		#endif
 			status->matk_min = status->matk_min * sd->matk_rate/100;
 		}
 			
 		status->matk_min = status_calc_matk(bl, sc, status->matk_min);
-		#if REMODE == 0 //Only changed in non-re [RRInd]
+		#if isOFF(REMODE) //Only changed in non-re [RRInd]
 			status->matk_max = status_calc_matk(bl, sc, status->matk_max);
 		#endif
 
@@ -4136,8 +4136,13 @@ static signed short status_calc_flee2(struct block_list *bl, struct status_chang
 		return 100;
 	if(sc->data[SC_KEEPING])
 		return 90;
+/**
+ * In renewal it no longer provides 90 def
+ **/
+#if isOFF(REMODE)
 	if(sc->data[SC_STEELBODY])
 		return 90;
+#endif
 	if(sc->data[SC_ARMORCHANGE])
 		def += sc->data[SC_ARMORCHANGE]->val2;
 	if(sc->data[SC_DRUMBATTLE])
@@ -4252,8 +4257,13 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 		return 0;
 	if(sc->data[SC_BARRIER])
 		return 100;
+/**
+ * In renewal it no longer provides 90 mdef
+ **/
+#if isOFF(REMODE)
 	if(sc->data[SC_STEELBODY])
 		return 90;
+#endif
 	if(sc->data[SC_ARMORCHANGE])
 		mdef += sc->data[SC_ARMORCHANGE]->val3;
 	if(sc->data[SC_STONE] && sc->opt1 == OPT1_STONE)
@@ -4472,7 +4482,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 /// Note that the scale of aspd_rate is 1000 = 100%.
 static short status_calc_aspd_rate(struct block_list *bl, struct status_change *sc, int aspd_rate)
 {
-#if REMODE == 0
+#if isOFF(REMODE)
 	/**
 	 * this variable is not used unless in non-RE
 	 **/
@@ -4546,7 +4556,7 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		else if(sc->data[SC_MADNESSCANCEL])
 			aspd_rate -= 200;
 	}
-#if REMODE == 0
+#if isOFF(REMODE)
 	/**
 	 * in RE they give a fixed boost -- we do so along SERVICE4U in status_base_amotion_pc
 	 **/
@@ -6205,7 +6215,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_EXPLOSIONSPIRITS:
 			val2 = 75 + 25*val1; //Cri bonus
 			break;
-#if REMODE == 0
+#if isOFF(REMODE)
 		/**
 		 * Only in non-RE it's var is changed
 		 **/

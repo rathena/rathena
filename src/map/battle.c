@@ -544,7 +544,14 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 			//Reduction: 6% + 6% every 20%
 			damage -= damage * 6 * (1+per) / 100;
 		}
-
+/**
+ * In renewal steel body reduces all incoming damage by 1/10
+ **/
+#if REMODE
+		if( sc->data[SC_STEELBODY] ) {
+			damage = damage > 10 ? damage / 10 : 1;
+		}
+#endif
 		// FIXME:
 		// So Reject Sword calculates the redirected damage before calculating WoE/BG reduction? This is weird. [Inkfish]
 		if((sce=sc->data[SC_REJECTSWORD]) && flag&BF_WEAPON &&
@@ -727,7 +734,7 @@ int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int dama
 		if(class_ == MOBID_EMPERIUM && flag&BF_SKILL) {
 		//Skill immunity.
 			switch (skill_num) {
-#if REMODE == 0
+#if isOFF(REMODE)
 			case MO_TRIPLEATTACK:
 #endif
 			case HW_GRAVITATION:
@@ -2862,9 +2869,14 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case MG_FIREWALL:
 						skillratio -= 50;
 						break;
+				/**
+				 * in Renewal Thunder Storm boost is 100% (in pre-re, 80%)
+				 **/
+				#if isOFF(REMODE)
 					case MG_THUNDERSTORM:
 						skillratio -= 20;
 						break;
+				#endif
 					case MG_FROSTDIVER:
 						skillratio += 10*skill_lv;
 						break;

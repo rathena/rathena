@@ -26,6 +26,7 @@
 	#define CONST_CASTRATE_CALC (status_get_dex(bl))
 #endif
 
+#define isOFF(def) (def == 0)
 
 /**
  * "Sane Checks" to save you from compiling with cool bugs 
