@@ -3504,6 +3504,8 @@ ACMD_FUNC(char_ban)
 {
 	char * modif_p;
 	int year, month, day, hour, minute, second, value;
+	time_t timestamp;
+	struct tm *tmtime;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
@@ -3523,13 +3525,8 @@ ACMD_FUNC(char_ban)
 		if (value == 0)
 			modif_p++;
 		else {
-			if (modif_p[0] == '-' || modif_p[0] == '+') {
-				if( modif_p[0] == '-' && get_atcommand_level("unban") > pc_isGM(sd) ) {
-					clif_displaymessage(fd,"You are not allowed to reduce the length of a ban");
-					return -1;
-				}
+			if (modif_p[0] == '-' || modif_p[0] == '+')
 				modif_p++;
-			}
 			while (modif_p[0] >= '0' && modif_p[0] <= '9')
 				modif_p++;
 			if (modif_p[0] == 's') {
@@ -3560,6 +3557,22 @@ ACMD_FUNC(char_ban)
 	}
 	if (year == 0 && month == 0 && day == 0 && hour == 0 && minute == 0 && second == 0) {
 		clif_displaymessage(fd, msg_txt(85)); // Invalid time for ban command.
+		return -1;
+	}
+	/**
+	 * We now check if you can adjust the ban to negative (and if this is the case)
+	 **/
+	timestamp = time(NULL);
+	tmtime = localtime(&timestamp);
+	tmtime->tm_year = tmtime->tm_year + year;
+	tmtime->tm_mon  = tmtime->tm_mon + month;
+	tmtime->tm_mday = tmtime->tm_mday + day;
+	tmtime->tm_hour = tmtime->tm_hour + hour;
+	tmtime->tm_min  = tmtime->tm_min + minute;
+	tmtime->tm_sec  = tmtime->tm_sec + second;
+	timestamp = mktime(tmtime);
+	if( timestamp <= time(NULL) && get_atcommand_level("unban") > pc_isGM(sd) ) {
+		clif_displaymessage(fd,"You are not allowed to reduce the length of a ban");
 		return -1;
 	}
 
