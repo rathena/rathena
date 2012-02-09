@@ -3373,7 +3373,7 @@ int pc_inventoryblank(struct map_session_data *sd)
 }
 
 /*==========================================
- * ‚¨‹à‚ğ?‚¤
+ * attempts to remove zeny from player (sd)
  *------------------------------------------*/
 int pc_payzeny(struct map_session_data *sd,int zeny)
 {
@@ -3390,6 +3390,12 @@ int pc_payzeny(struct map_session_data *sd,int zeny)
 
 	sd->status.zeny -= zeny;
 	clif_updatestatus(sd,SP_ZENY);
+
+	if( zeny > 0 && sd->state.showzeny ) {
+		char output[255];
+		sprintf(output, "Removed %dz.", zeny);
+		clif_disp_onlyself(sd,output,strlen(output));
+	}
 
 	return 0;
 }
@@ -3482,7 +3488,7 @@ void pc_getcash(struct map_session_data *sd, int cash, int points)
 }
 
 /*==========================================
- * ‚¨‹à‚ğ“¾‚é
+ * Attempts to give zeny to player (sd)
  *------------------------------------------*/
 int pc_getzeny(struct map_session_data *sd,int zeny)
 {
@@ -3500,8 +3506,7 @@ int pc_getzeny(struct map_session_data *sd,int zeny)
 	sd->status.zeny += zeny;
 	clif_updatestatus(sd,SP_ZENY);
 
-	if( zeny > 0 && sd->state.showzeny )
-	{
+	if( zeny > 0 && sd->state.showzeny ) {
 		char output[255];
 		sprintf(output, "Gained %dz.", zeny);
 		clif_disp_onlyself(sd,output,strlen(output));

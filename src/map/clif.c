@@ -14150,8 +14150,7 @@ void clif_parse_Auction_bid(int fd, struct map_session_data *sd)
 	unsigned int auction_id = RFIFOL(fd,2);
 	int bid = RFIFOL(fd,6);
 
-	if( !pc_can_give_items(pc_isGM(sd)) )
-	{ //They aren't supposed to give zeny [Inkfish]
+	if( !pc_can_give_items(pc_isGM(sd)) ) { //They aren't supposed to give zeny [Inkfish]
 		clif_displaymessage(sd->fd, msg_txt(246));
 		return;
 	}
@@ -14160,8 +14159,9 @@ void clif_parse_Auction_bid(int fd, struct map_session_data *sd)
 		clif_Auction_message(fd, 0); // You have failed to bid into the auction
 	else if( bid > sd->status.zeny )
 		clif_Auction_message(fd, 8); // You do not have enough zeny
-	else
-	{
+	else if ( CheckForCharServer() ) // char server is down (bugreport:1138)
+		clif_Auction_message(fd, 0); // You have failed to bid into the auction
+	else {
 		pc_payzeny(sd, bid);
 		intif_Auction_bid(sd->status.char_id, sd->status.name, auction_id, bid);
 	}
