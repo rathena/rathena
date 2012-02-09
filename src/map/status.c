@@ -8265,7 +8265,10 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	case SC_MAXOVERTHRUST:
 	case SC_SWOO:
 		sc->opt3 &= ~OPT3_OVERTHRUST;
-		opt_flag = 0;
+		if( type == SC_SWOO )
+			opt_flag = 8;
+		else
+			opt_flag = 0;
 		break;
 	case SC_ENERGYCOAT:
 	case SC_SKE:
@@ -8358,7 +8361,9 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	else if (sd)
 		clif_status_load(bl,StatusIconChangeTable[type],0);
 
-	if(opt_flag)
+	if( opt_flag&8 ) //bugreport:681
+		clif_changeoption2(bl);
+	else if(opt_flag)
 		clif_changeoption(bl);
 
 	if (calc_flag)
