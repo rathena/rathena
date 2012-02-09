@@ -6280,6 +6280,7 @@ ACMD_FUNC(autolootitem)
 		sd->state.autolootid[i] = item_data->nameid; // Autoloot Activated
 		sprintf(atcmd_output, "Autolooting item: '%s'/'%s' {%d}", item_data->name, item_data->jname, item_data->nameid);
 		clif_displaymessage(fd, atcmd_output);
+		sd->state.autolooting = 1;
 		break;
 	case 2:
 		ARR_FIND(0, AUTOLOOTITEM_SIZE, i, sd->state.autolootid[i] == item_data->nameid);
@@ -6290,6 +6291,10 @@ ACMD_FUNC(autolootitem)
 		sd->state.autolootid[i] = 0;
 		sprintf(atcmd_output, "Removed item: '%s'/'%s' {%d} from your autolootitem list.", item_data->name, item_data->jname, item_data->nameid);
 		clif_displaymessage(fd, atcmd_output);
+		ARR_FIND(0, AUTOLOOTITEM_SIZE, i, sd->state.autolootid[i] != 0);
+		if (i == AUTOLOOTITEM_SIZE) {
+			sd->state.autolooting = 0;
+		}
 		break;
 	case 3:
 		sprintf(atcmd_output, "You can have %d items on your autolootitem list.", AUTOLOOTITEM_SIZE);
@@ -6317,6 +6322,7 @@ ACMD_FUNC(autolootitem)
 	case 4:
 		memset(sd->state.autolootid, 0, sizeof(sd->state.autolootid));
 		clif_displaymessage(fd, "Your autolootitem list has been reset.");
+		sd->state.autolooting = 0;
 		break;
 	}
 	return 0;
