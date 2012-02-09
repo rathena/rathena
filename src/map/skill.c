@@ -10529,16 +10529,14 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 		if(!(sc && sc->data[SC_COMBO]))
 			return 0; //Combo needs to be ready
 
-		if (sc->data[SC_COMBO]->val3)
-		{	//Kick chain
+		if (sc->data[SC_COMBO]->val3) {	//Kick chain
 			//Do not repeat a kick.
 			if (sc->data[SC_COMBO]->val3 != skill)
 				break;
 			status_change_end(&sd->bl, SC_COMBO, INVALID_TIMER);
 			return 0;
 		}
-		if(sc->data[SC_COMBO]->val1 != skill)
-		{	//Cancel combo wait.
+		if(sc->data[SC_COMBO]->val1 != skill && !( sd && sd->status.base_level >= 90 && pc_famerank(sd->status.char_id, MAPID_TAEKWON) )) {	//Cancel combo wait.
 			unit_cancel_combo(&sd->bl);
 			return 0;
 		}
