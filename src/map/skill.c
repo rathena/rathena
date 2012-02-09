@@ -8850,10 +8850,16 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 	status = status_get_status_data(src);
 	sc = status_get_sc(src);	// for traps, firewall and fogwall - celest
 
-	switch( skillid )
-	{
+	switch( skillid ) {
 	case MG_SAFETYWALL:
-		val2=skilllv+1;
+	#if REMODE
+		/**
+		 * According to data provided in RE, SW life is equal to 3 times caster's health
+		 **/
+		val2 = status_get_max_hp(src) * 3;
+	#else
+		val2 = skilllv+1;
+	#endif
 		break;
 	case MG_FIREWALL:
 		if(sc && sc->data[SC_VIOLENTGALE])

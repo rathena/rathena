@@ -386,10 +386,23 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 		{
 			struct skill_unit_group* group = skill_id2group(sc->data[SC_SAFETYWALL]->val3);
 			if (group) {
+				/**
+				 * in RE, SW possesses a lifetime equal to 3 times the caster's health
+				 **/
+			#if REMODE
+				if ( ( group->val2 - damage) > 0 ) {
+					group->val2 -= damage;
+					d->dmg_lv = ATK_BLOCK;
+					return 0;
+				} else
+					damage -= group->val2;
+				skill_delunitgroup(group);
+			#else
 				if (--group->val2<=0)
 					skill_delunitgroup(group);
 				d->dmg_lv = ATK_BLOCK;
 				return 0;
+			#endif
 			}
 			status_change_end(bl, SC_SAFETYWALL, INVALID_TIMER);
 		}
