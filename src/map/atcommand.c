@@ -3523,8 +3523,13 @@ ACMD_FUNC(char_ban)
 		if (value == 0)
 			modif_p++;
 		else {
-			if (modif_p[0] == '-' || modif_p[0] == '+')
+			if (modif_p[0] == '-' || modif_p[0] == '+') {
+				if( modif_p[0] == '-' && get_atcommand_level("unban") > pc_isGM(sd) ) {
+					clif_displaymessage(fd,"You are not allowed to reduce the length of a ban");
+					return -1;
+				}
 				modif_p++;
+			}
 			while (modif_p[0] >= '0' && modif_p[0] <= '9')
 				modif_p++;
 			if (modif_p[0] == 's') {
