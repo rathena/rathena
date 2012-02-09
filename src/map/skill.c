@@ -6224,7 +6224,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case AS_SPLASHER:
-		if(tstatus->mode&MD_BOSS || tstatus-> hp > tstatus->max_hp*3/4) {
+		if(tstatus->mode&MD_BOSS
+	/**
+	 * Renewal dropped the 3/4 hp requirement
+	 **/
+	#if isOFF(REMODE)
+			|| tstatus-> hp > tstatus->max_hp*3/4
+	#endif
+				) {
 			if (sd) clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
 			map_freeblock_unlock();
 			return 1;
