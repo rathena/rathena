@@ -25,9 +25,6 @@
 //For Warlock
 #define MAX_SPELLBOOK 10
 
-//Max number of items on @autolootid list
-#define AUTOLOOTITEM_SIZE 10
-
 struct weapon_data {
 	int atkmods[3];
 	// all the variables except atkmods get zero'ed in each call of status_calc_pc

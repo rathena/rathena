@@ -12,8 +12,20 @@
 /**
  * "Constants"
  **/
-#define CONST_CASTRATE_SCALE ( RECASTING ? RECASTING_VMIN : battle_config.castrate_dex_scale )
-#define CONST_CASTRATE_CALC ( RECASTING ? ((status_get_dex(bl)*2)+status_get_int(bl)) : status_get_dex(bl) )
+#if RECASTING
+	#define CONST_CASTRATE_SCALE RECASTING_VMIN
+	/**
+	 * Cast Rate Formula: (DEX x 2)+INT
+	 **/
+	#define CONST_CASTRATE_CALC ((status_get_dex(bl)*2)+status_get_int(bl))
+#else
+	#define CONST_CASTRATE_SCALE battle_config.castrate_dex_scale
+	/**
+	 * Cast Rate Formula: (DEX)
+	 **/
+	#define CONST_CASTRATE_CALC (status_get_dex(bl))
+#endif
+
 
 /**
  * "Sane Checks" to save you from compiling with cool bugs 

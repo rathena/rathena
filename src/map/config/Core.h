@@ -11,6 +11,11 @@
  **/
 #define MAX_REFINE 20
 
+/**
+ * Max number of items on @autolootid list
+ **/
+#define AUTOLOOTITEM_SIZE 10
+
 //Uncomment to enable the Cell Stack Limit mod.
 //It's only config is the battle_config cell_stack_limit.
 //Only chars affected are those defined in BL_CHAR (mobs and players currently)
