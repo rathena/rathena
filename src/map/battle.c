@@ -4192,7 +4192,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			int inf2 = 0;
 			if (!su->group)
 				return 0;
-			if( battle_config.vs_traps_bctall &&
+			if( battle_config.vs_traps_bctall && (target->type&battle_config.vs_traps_bctall) &&
 				(inf2 = skill_get_inf2(su->group->skill_id))&INF2_TRAP &&
 					map_flag_vs(src->m) )
 				return 1;//traps may target everyone
