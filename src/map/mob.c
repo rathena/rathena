@@ -3197,7 +3197,7 @@ int mob_is_clone(int class_)
 int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char *event, int master_id, int mode, int flag, unsigned int duration)
 {
 	int class_;
-	int i,j,inf,skill_id;
+	int i,j,inf,skill_id, fd;
 	struct mob_data *md;
 	struct mob_skill *ms;
 	struct mob_db* db;
@@ -3237,6 +3237,13 @@ int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char
 
 	//Skill copy [Skotlex]
 	ms = &db->skill[0];
+
+	/**
+	 * We temporarily disable sd's fd so it doesn't receive the messages from skill_check_condition_castbegin
+	 **/
+	fd = sd->fd;
+	sd->fd = 0;
+	
 	//Go Backwards to give better priority to advanced skills.
 	for (i=0,j = MAX_SKILL_TREE-1;j>=0 && i< MAX_MOBSKILL ;j--) {
 		skill_id = skill_tree[pc_class2idx(sd->status.class_)][j].id;
@@ -3252,7 +3259,12 @@ int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char
 			skill_get_unit_id(skill_id, 0) &&
 			skill_get_unit_flag(skill_id)&(UF_NOMOB|UF_NOPC))
 			continue;
-
+		/**
+		 * The clone should be able to cast the skill (e.g. have the required weapon) bugreport:5299)
+		 **/
+		if( !skill_check_condition_castbegin(sd,skill_id,sd->status.skill[skill_id].lv) )
+			continue;
+		
 		memset (&ms[i], 0, sizeof(struct mob_skill));
 		ms[i].skill_id = skill_id;
 		ms[i].skill_lv = sd->status.skill[skill_id].lv;
@@ -3345,6 +3357,12 @@ int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char
 		
 		db->maxskill = ++i;
 	}
+	
+	/**
+	 * We grant the session it's fd value back.
+	 **/
+	sd->fd = fd;
+
 	//Finally, spawn it.
 	md = mob_once_spawn_sub(&sd->bl, m, x, y, "--en--",class_,event);
 	if (!md) return 0; //Failed?
