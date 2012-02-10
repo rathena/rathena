@@ -10804,8 +10804,15 @@ void clif_parse_RequestMemo(int fd,struct map_session_data *sd)
 /// 018e <name id>.W { <material id>.W }*3
 void clif_parse_ProduceMix(int fd,struct map_session_data *sd)
 {
-	if( sd->menuskill_id != -1 && sd->menuskill_id != AM_PHARMACY && sd->menuskill_id != RK_RUNEMASTERY )
-		return;
+	switch( sd->menuskill_id ) {
+		case -1:
+		case AM_PHARMACY:
+		case RK_RUNEMASTERY:
+		case GC_CREATENEWPOISON:
+			break;
+		default:
+			return;
+	}
 	if (pc_istrading(sd)) {
 		//Make it fail to avoid shop exploits where you sell something different than you see.
 		clif_skill_fail(sd,sd->ud.skillid,USESKILL_FAIL_LEVEL,0);
