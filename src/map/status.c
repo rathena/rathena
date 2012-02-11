@@ -5568,6 +5568,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	break;
 	case SC_MAGNIFICAT:
 		if( sc->option&OPTION_MADOGEAR ) //Mado is immune to magnificat
+			return 0;
 		break;
 	case SC_ONEHAND:
 	case SC_MERC_QUICKEN:
