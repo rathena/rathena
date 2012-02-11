@@ -9709,8 +9709,8 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		case UNT_APPLEIDUN: //Apple of Idun [Skotlex]
 		{
 			int heal;
-			struct mob_data *md = BL_CAST(BL_MOB, bl);
 #if REMODE
+			struct mob_data *md = BL_CAST(BL_MOB, bl);
 			if( md && md->class_ == MOBID_EMPERIUM )
 				break;
 #endif
