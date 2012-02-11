@@ -14003,8 +14003,9 @@ void clif_parse_Auction_setitem(int fd, struct map_session_data *sd)
 		return;
 	}
 	
-	if( !pc_candrop(sd, &sd->status.inventory[idx]) || !sd->status.inventory[idx].identify )
-	{ // Quest Item or something else
+	if( !pc_candrop(sd, &sd->status.inventory[idx]) ||
+			!sd->status.inventory[idx].identify ||
+				!itemdb_canauction(&sd->status.inventory[idx],pc_isGM(sd)) ) { // Quest Item or something else
 		clif_Auction_setitem(sd->fd, idx, true);
 		return;
 	}

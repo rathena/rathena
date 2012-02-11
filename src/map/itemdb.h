@@ -92,7 +92,7 @@ struct item_data {
 		short no_equip;
 		unsigned no_refine : 1;	// [celest]
 		unsigned delay_consume : 1;	// Signifies items that are not consumed immediately upon double-click [Skotlex]
-		unsigned trade_restriction : 7;	//Item restrictions mask [Skotlex]
+		unsigned trade_restriction : 9;	//Item restrictions mask [Skotlex]
 		unsigned autoequip: 1;
 		unsigned buyingstore : 1;
 	} flag;
@@ -141,6 +141,8 @@ int itemdb_cansell_sub(struct item_data*,int, int);
 int itemdb_cancartstore_sub(struct item_data*, int, int);
 int itemdb_canstore_sub(struct item_data*, int, int);
 int itemdb_canguildstore_sub(struct item_data*, int, int);
+int itemdb_canmail_sub(struct item_data*, int, int);
+int itemdb_canauction_sub(struct item_data*, int, int);
 int itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, int (*func)(struct item_data*, int, int));
 #define itemdb_isdropable(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_isdropable_sub)
 #define itemdb_cantrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_cantrade_sub)
@@ -149,6 +151,8 @@ int itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, int (*func)(stru
 #define itemdb_cancartstore(item, gmlv)  itemdb_isrestricted(item, gmlv, 0, itemdb_cancartstore_sub)
 #define itemdb_canstore(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_canstore_sub) 
 #define itemdb_canguildstore(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canguildstore_sub) 
+#define itemdb_canmail(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canmail_sub)
+#define itemdb_canauction(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canauction_sub)
 
 int itemdb_isequip(int);
 int itemdb_isequip2(struct item_data *);
