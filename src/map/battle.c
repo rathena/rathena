@@ -3733,6 +3733,8 @@ int battle_damage_area( struct block_list *bl, va_list ap) {
 		return 0;
 	if( bl != src && battle_check_target(src,bl,BCT_ENEMY) > 0 ) {
 		map_freeblock_lock();
+		if( src->type == BL_PC )
+			battle_drain((TBL_PC*)src, bl, damage, damage, status_get_race(bl), is_boss(bl));
 		if( amotion )
 			battle_delay_damage(tick, amotion,src,bl,0,CR_REFLECTSHIELD,0,damage,ATK_DEF,0);
 		else
