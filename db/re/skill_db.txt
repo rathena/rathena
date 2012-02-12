@@ -125,8 +125,6 @@
 79,9,8,2,6,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,magic,0,	PR_MAGNUS,Magnus Exorcismus
 80,9,8,2,3,0x20,1:1:1:1:1:2:2:2:2:2:2,10,3:4:5:6:7:8:9:10:11:12:12,yes,0,0x80,5,magic,0,	WZ_FIREPILLAR,Fire Pillar
 81,0,6,4,3,0,3,10,1,yes,0,0,0,magic,5,		WZ_SIGHTRASHER,Sightrasher
-82,9,8,2,4,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,magic,0,	WZ_FIREIVY,Fire Ivy
-//82,9,6,2,3,0,0,10,1,yes,0,0x200,1,magic,0,		WZ_FIREIVY,Fire Ivy
 83,9,8,2,3,0,3:3:3:3:3:3:3:3:3:3:14,10,1:1:2:2:3:3:4:4:5:5:15,yes,0,0,0,magic,0,	WZ_METEOR,Meteor Storm
 84,9,8,1,4,0,0,10,3:4:5:6:7:8:9:10:11:12,yes,0,0,0,magic,2:3:3:4:4:5:5:6:6:7,	WZ_JUPITEL,Jupitel Thunder
 85,9,8,2,4,0,0,10,-10,yes,0,0,0,magic,0,		WZ_VERMILION,Lord of Vermilion

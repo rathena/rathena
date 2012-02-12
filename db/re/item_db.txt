@@ -5464,10 +5464,6 @@
 12418,Full_SwingK,Full SwingK,2,100,,50,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12419,Mana_Plus,Mana Plus,2,100,,50,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12420,Stamina_Up_M,Stamina Up M,2,100,,50,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12417,Boost_500,Boost 500,2,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_BOOST500,500000,20; },{},{}
-12418,Full_Swing_K,Full Swing K,3,10,,10,,,,,,,,,,,,,{},{},{}
-12419,Manaplus,Manaplus,3,10,,10,,,,,,,,,,,,,{},{},{}
-12420,Muramura_M,Muramura M,3,10,,10,,,,,,,,,,,,,{},{},{}
 12421,Falmons_F,Falmons F,3,10,,10,,,,,,,,,,,,,{},{},{}
 12422,HP_Increase_Potion_(Small),HP Increase Potion (Small),0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCMHPRATE,500000,1; percentheal 2,0; },{},{}
 12423,HP_Increase_Potion_(Medium),HP Increase Potion (Medium),0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCMHPRATE,500000,2; percentheal 3,0; },{},{}

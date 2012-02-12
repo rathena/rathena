@@ -33,7 +33,6 @@
  70,0x83,    , -1, 1,1000,all,   0x018	//PR_SANCTUARY
  79,0x84,    , -1, 1,3000,enemy, 0x018	//PR_MAGNUS
  80,0x87,0x88,  0, 1,2000,enemy, 0x006	//WZ_FIREPILLAR
- 82,0x86,    ,  0, 3,1000,enemy, 0x018	//WZ_FIREIVY
  83,0x86,    ,  0, 3,1000,enemy, 0x010	//WZ_METEOR
  85,0x86,    ,  0, 6:6:6:6:6:6:6:6:6:6:8,1250,enemy,0x018	//WZ_VERMILION
  87,0x8d,    , -1, 0,  -1,all,   0x010	//WZ_ICEWALL
