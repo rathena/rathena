@@ -401,7 +401,7 @@ CREATE TABLE IF NOT EXISTS `login` (
   `user_pass` varchar(32) NOT NULL default '',
   `sex` enum('M','F','S') NOT NULL default 'M',
   `email` varchar(39) NOT NULL default '',
-  `level` tinyint(3) NOT NULL default '0',
+  `group_id` tinyint(3) NOT NULL default '0',
   `state` int(11) unsigned NOT NULL default '0',
   `unban_time` int(11) unsigned NOT NULL default '0',
   `expiration_time` int(11) unsigned NOT NULL default '0',
