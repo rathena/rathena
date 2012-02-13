@@ -6,7 +6,7 @@ AC_REVISION($Revision$)
 AC_PREREQ([2.59])
 AC_CONFIG_SRCDIR([src/common/cbasetypes.h])
 AC_CONFIG_FILES([Makefile src/common/Makefile])
-AC_CONFIG_FILES([3rdparty/mt19937ar/Makefile])
+AC_CONFIG_FILES([3rdparty/mt19937ar/Makefile 3rdparty/libconfig/Makefile])
 AC_CONFIG_FILES([src/char/Makefile src/login/Makefile])
 AC_CONFIG_FILES([src/map/Makefile src/plugins/Makefile src/tool/Makefile])
 
@@ -468,6 +468,10 @@ AC_CHECK_FUNC([setrlimit],[CFLAGS="$CFLAGS -DHAVE_SETRLIMIT"])
 #
 AC_CHECK_FUNC([strnlen],[CFLAGS="$CFLAGS -DHAVE_STRNLEN"])
 
+# libconfig
+AC_CHECK_FUNC([uselocale],[CFLAGS="$CFLAGS -DHAVE_USELOCALE"])
+AC_CHECK_FUNC([newlocale],[CFLAGS="$CFLAGS -DHAVE_NEWLOCALE"])
+AC_CHECK_FUNC([freelocale],[CFLAGS="$CFLAGS -DHAVE_FREELOCALE"])
 
 #
 # Memory manager

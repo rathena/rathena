@@ -151,16 +151,9 @@ extern struct Battle_Config
 	int monster_max_aspd;
 	int view_range_rate;
 	int chase_range_rate;
-	int lowest_gm_level;
-	int atc_gmonly;
 	int atc_spawn_quantity_limit;
 	int atc_slave_clone_limit;
 	int partial_name_scan;
-	int gm_allskill;
-	int gm_allequip;
-	int gm_skilluncond;
-	int gm_join_chat;
-	int gm_kick_chat;
 	int skillfree;
 	int skillup_limit;
 	int wp_rate;
@@ -327,7 +320,6 @@ extern struct Battle_Config
 	int gx_disptype;
 	int devotion_level_difference;
 	int player_skill_partner_check;
-	int hide_GM_session;
 	int invite_request_check;
 	int skill_removetrap_type;
 	int disp_experience;
@@ -336,21 +328,14 @@ extern struct Battle_Config
 	int backstab_bow_penalty;
 	int hp_rate;
 	int sp_rate;
-	int gm_cant_drop_min_lv;
-	int gm_cant_drop_max_lv;
-	int disp_hpmeter;
 	int bone_drop;
 	int buyer_name;
-	int gm_cant_party_min_lv;
-	int gm_can_party; // [SketchyPhoenix]
 
 // eAthena additions
 	int night_at_start; // added by [Yor]
 	int day_duration; // added by [Yor]
 	int night_duration; // added by [Yor]
 	int ban_hack_trade; // added by [Yor]
-	int hack_info_GM_level; // added by [Yor]
-	int any_warp_GM_min_level; // added by [Yor]
 	int packet_ver_flag; // added by [Yor]
 	
 	int min_hair_style; // added by [MouseJstr]
@@ -387,7 +372,6 @@ extern struct Battle_Config
 	int delay_battle_damage;
 	int hide_woe_damage;
 	int display_version;
-	int who_display_aid;
 
 	int display_hallucination;	// [Skotlex]
 	int use_statpoint_table;	// [Skotlex]
@@ -415,15 +399,6 @@ extern struct Battle_Config
 
 	int retaliate_to_master;	//Whether when a mob is attacked by another mob, it will retaliate versus the mob or the mob's master. [Skotlex]
 
-	int title_lvl1; // Players titles [Lupus]
-	int title_lvl2; // Players titles [Lupus]
-	int title_lvl3; // Players titles [Lupus]
-	int title_lvl4; // Players titles [Lupus]
-	int title_lvl5; // Players titles [Lupus]
-	int title_lvl6; // Players titles [Lupus]
-	int title_lvl7; // Players titles [Lupus]
-	int title_lvl8; // Players titles [Lupus]
-	
 	int duel_allow_pvp; // [LuzZza]
 	int duel_allow_gvg; // [LuzZza]
 	int duel_allow_teleport; // [LuzZza]
@@ -466,7 +441,6 @@ extern struct Battle_Config
 	int ksprotection;
 	int auction_feeperhour;
 	int auction_maximumprice;
-	int gm_viewequip_min_lv;
 	int homunculus_auto_vapor;	//Keep Homunculus from Vaporizing when master dies. [L0ne_W0lf]
 	int display_status_timers;	//Show or hide skill buff/delay timers in recent clients [Sara]
 	int skill_add_heal_rate;	//skills that bHealPower has effect on [Inkfish]
@@ -476,7 +450,6 @@ extern struct Battle_Config
 	int autospell_check_range;	//Enable range check for autospell bonus. [L0ne_W0lf]
 	int client_reshuffle_dice;  // Reshuffle /dice
 	int client_sort_storage;
-	int gm_check_minlevel;  // min GM level for /check
 	int feature_buying_store;
 	int feature_search_stores;
 	int searchstore_querydelay;

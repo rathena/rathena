@@ -13,6 +13,8 @@
 #include <time.h>
 #include <stdlib.h> // atexit
 
+#include <libconfig.h>
+
 #ifdef WIN32
 	#define WIN32_LEAN_AND_MEAN
 	#include <windows.h>
@@ -870,6 +872,20 @@ int ShowWarning(const char *string, ...) {
 	va_start(ap, string);
 	ret = _vShowMessage(MSG_WARNING, string, ap);
 	va_end(ap);
+	return ret;
+}
+int ShowConfigWarning(config_setting_t *config, const char *string, ...)
+{
+	StringBuf buf;
+	int ret;
+	va_list ap;
+	StringBuf_Init(&buf);
+	StringBuf_AppendStr(&buf, string);
+	StringBuf_Printf(&buf, " (%s:%d)\n", config_setting_source_file(config), config_setting_source_line(config));
+	va_start(ap, string);
+	ret = _vShowMessage(MSG_WARNING, StringBuf_Value(&buf), ap);
+	va_end(ap);
+	StringBuf_Destroy(&buf);
 	return ret;
 }
 int ShowDebug(const char *string, ...) {

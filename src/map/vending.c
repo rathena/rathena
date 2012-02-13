@@ -54,7 +54,7 @@ void vending_vendinglistreq(struct map_session_data* sd, int id)
 	if( !vsd->state.vending )
 		return; // not vending
 
-	if ( !pc_can_give_items(pc_isGM(sd)) || !pc_can_give_items(pc_isGM(vsd)) ) //check if both GMs are allowed to trade
+	if (!pc_can_give_items(sd) || !pc_can_give_items(vsd)) //check if both GMs are allowed to trade
 	{	// GM is not allowed to trade
 		clif_displaymessage(sd->fd, msg_txt(246));
 		return;
@@ -281,7 +281,7 @@ void vending_openvending(struct map_session_data* sd, const char* message, bool 
 		||  !sd->status.cart[index].identify // unidentified item
 		||  sd->status.cart[index].attribute == 1 // broken item
 		||  sd->status.cart[index].expire_time // It should not be in the cart but just in case
-		||  !itemdb_cantrade(&sd->status.cart[index], pc_isGM(sd), pc_isGM(sd)) ) // untradeable item
+		||  !itemdb_cantrade(&sd->status.cart[index], pc_get_group_level(sd), pc_get_group_level(sd)) ) // untradeable item
 			continue;
 
 		sd->vending[i].index = index;

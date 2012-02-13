@@ -548,7 +548,7 @@ int parse_fromchar(int fd)
 			struct mmo_account acc;
 			time_t expiration_time = 0;
 			char email[40] = "";
-			int gmlevel = 0;
+			int group_id = 0;
 			char birthdate[10+1] = "";
 
 			int account_id = RFIFOL(fd,2);
@@ -560,7 +560,7 @@ int parse_fromchar(int fd)
 			{
 				safestrncpy(email, acc.email, sizeof(email));
 				expiration_time = acc.expiration_time;
-				gmlevel = acc.level;
+				group_id = acc.group_id;
 				safestrncpy(birthdate, acc.birthdate, sizeof(birthdate));
 			}
 
@@ -569,7 +569,7 @@ int parse_fromchar(int fd)
 			WFIFOL(fd,2) = account_id;
 			safestrncpy((char*)WFIFOP(fd,6), email, 40);
 			WFIFOL(fd,46) = (uint32)expiration_time;
-			WFIFOB(fd,50) = gmlevel;
+			WFIFOB(fd,50) = group_id;
 			safestrncpy((char*)WFIFOP(fd,51), birthdate, 10+1);
 			WFIFOSET(fd,62);
 		}
@@ -1068,7 +1068,7 @@ int mmo_auth(struct login_session_data* sd)
 	sd->login_id2 = rnd();
 	safestrncpy(sd->lastlogin, acc.lastlogin, sizeof(sd->lastlogin));
 	sd->sex = acc.sex;
-	sd->level = acc.level;
+	sd->group_id = acc.group_id;
 
 	// update account data
 	timestamp2string(acc.lastlogin, sizeof(acc.lastlogin), time(NULL), "%Y-%m-%d %H:%M:%S");
@@ -1104,9 +1104,9 @@ void login_auth_ok(struct login_session_data* sd)
 		return;
 	}
 
-	if( sd->level < login_config.min_level_to_connect )
+	if( login_config.group_id_to_connect >= 0 && sd->group_id != login_config.group_id_to_connect )
 	{
-		ShowStatus("Connection refused: the minimum GM level for connection is %d (account: %s, GM level: %d).\n", login_config.min_level_to_connect, sd->userid, sd->level);
+		ShowStatus("Connection refused: the required group id for connection is %d (account: %s, group: %d).\n", login_config.group_id_to_connect, sd->userid, sd->group_id);
 		WFIFOHEAD(fd,3);
 		WFIFOW(fd,0) = 0x81;
 		WFIFOB(fd,2) = 1; // 01 = Server closed
@@ -1161,11 +1161,7 @@ void login_auth_ok(struct login_session_data* sd)
 	}
 
 	login_log(ip, sd->userid, 100, "login ok");
-
-	if( sd->level > 0 )
-		ShowStatus("Connection of the GM (level:%d) account '%s' accepted.\n", sd->level, sd->userid);
-	else
-		ShowStatus("Connection of the account '%s' accepted.\n", sd->userid);
+	ShowStatus("Connection of the account '%s' accepted.\n", sd->userid);
 
 	WFIFOHEAD(fd,47+32*server_num);
 	WFIFOW(fd,0) = 0x69;
@@ -1508,7 +1504,7 @@ void login_set_defaults()
 	login_config.new_account_flag = true;
 	login_config.new_acc_length_limit = true;
 	login_config.use_md5_passwds = false;
-	login_config.min_level_to_connect = 0;
+	login_config.group_id_to_connect = -1;
 	login_config.check_client_version = false;
 	login_config.client_version_to_connect = 20;
 
@@ -1575,8 +1571,8 @@ int login_config_read(const char* cfgName)
 			login_config.client_version_to_connect = strtoul(w2, NULL, 10);
 		else if(!strcmpi(w1, "use_MD5_passwords"))
 			login_config.use_md5_passwds = (bool)config_switch(w2);
-		else if(!strcmpi(w1, "min_level_to_connect"))
-			login_config.min_level_to_connect = atoi(w2);
+		else if(!strcmpi(w1, "group_id_to_connect"))
+			login_config.group_id_to_connect = atoi(w2);
 		else if(!strcmpi(w1, "date_format"))
 			safestrncpy(login_config.date_format, w2, sizeof(login_config.date_format));
 		else if(!strcmpi(w1, "console"))

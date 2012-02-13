@@ -4,6 +4,8 @@
 #ifndef _SHOWMSG_H_
 #define _SHOWMSG_H_
 
+#include <libconfig.h>
+
 // for help with the console colors look here:
 // http://www.edoceo.com/liberum/?doc=printf-with-color
 // some code explanation (used here):
@@ -92,5 +94,6 @@ extern int ShowWarning(const char *, ...);
 extern int ShowDebug(const char *, ...);
 extern int ShowError(const char *, ...);
 extern int ShowFatalError(const char *, ...);
+extern int ShowConfigWarning(config_setting_t *config, const char *string, ...);
 
 #endif /* _SHOWMSG_H_ */

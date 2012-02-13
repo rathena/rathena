@@ -63,7 +63,7 @@ unsigned char mail_setitem(struct map_session_data *sd, int idx, int amount)
 {
 	if( idx == 0 )
 	{ // Zeny Transfer
-		if( amount < 0 || !pc_can_give_items(pc_isGM(sd)) )
+		if( amount < 0 || !pc_can_give_items(sd) )
 			return 1;
 
 		if( amount > sd->status.zeny )
@@ -82,8 +82,8 @@ unsigned char mail_setitem(struct map_session_data *sd, int idx, int amount)
 			return 1;
 		if( amount < 0 || amount > sd->status.inventory[idx].amount )
 			return 1;
-		if( !pc_can_give_items(pc_isGM(sd)) || sd->status.inventory[idx].expire_time ||
-				!itemdb_canmail(&sd->status.inventory[idx],pc_isGM(sd)) )
+		if( !pc_can_give_items(sd) || sd->status.inventory[idx].expire_time ||
+				!itemdb_canmail(&sd->status.inventory[idx],pc_get_group_level(sd)) )
 			return 1;
 
 		sd->mail.index = idx;
@@ -184,7 +184,7 @@ void mail_deliveryfail(struct map_session_data *sd, struct mail_message *msg)
 // This function only check if the mail operations are valid
 bool mail_invalid_operation(struct map_session_data *sd)
 {
-	if( !map[sd->bl.m].flag.town && pc_isGM(sd) < get_atcommand_level("mail") )
+	if( !map[sd->bl.m].flag.town && !pc_can_use_command(sd, "mail", COMMAND_ATCOMMAND) )
 	{
 		ShowWarning("clif_parse_Mail: char '%s' trying to do invalid mail operations.\n", sd->status.name);
 		return true;

@@ -126,7 +126,7 @@ struct char_session_data {
 	int found_char[MAX_CHARS]; // ids of chars on this account
 	char email[40]; // e-mail (default: a@a.com) by [Yor]
 	time_t expiration_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
-	int gmlevel;
+	int group_id;
 	uint32 version;
 	uint8 clienttype;
 	char new_name[NAME_LENGTH];
@@ -134,7 +134,7 @@ struct char_session_data {
 };
 
 int max_connect_user = 0;
-int gm_allow_level = 99;
+int gm_allow_group = -1;
 int autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
 int start_zeny = 0;
 int start_weapon = 1201;
@@ -174,7 +174,7 @@ struct auth_node {
 	uint32 ip;
 	int sex;
 	time_t expiration_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
-	int gmlevel;
+	int group_id;
 	unsigned changing_mapservers : 1;
 };
 
@@ -1972,12 +1972,12 @@ int parse_fromlogin(int fd)
 				int server_id;
 				memcpy(sd->email, RFIFOP(fd,6), 40);
 				sd->expiration_time = (time_t)RFIFOL(fd,46);
-				sd->gmlevel = RFIFOB(fd,50);
+				sd->group_id = RFIFOB(fd,50);
 				safestrncpy(sd->birthdate, (const char*)RFIFOP(fd,51), sizeof(sd->birthdate));
 				ARR_FIND( 0, ARRAYLENGTH(server), server_id, server[server_id].fd > 0 && server[server_id].map[0] );
 				// continued from char_auth_ok...
 				if( server_id == ARRAYLENGTH(server) || //server not online, bugreport:2359
-					( max_connect_user && count_users() >= max_connect_user && sd->gmlevel < gm_allow_level ) ) {
+					( max_connect_user && count_users() >= max_connect_user && sd->group_id != gm_allow_group ) ) {
 					// refuse connection (over populated)
 					WFIFOHEAD(i,3);
 					WFIFOW(i,0) = 0x6c;
@@ -2741,7 +2741,7 @@ int parse_frommap(int fd)
 				node->sex = RFIFOB(fd,30);
 				node->expiration_time = 0; // FIXME (this thing isn't really supported we could as well purge it instead of fixing)
 				node->ip = ntohl(RFIFOL(fd,31));
-				node->gmlevel = RFIFOL(fd,35);
+				node->group_id = RFIFOL(fd,35);
 				node->changing_mapservers = 1;
 				idb_put(auth_db, RFIFOL(fd,2), node);
 
@@ -3102,7 +3102,7 @@ int parse_frommap(int fd)
 				WFIFOL(fd,8) = node->login_id1;
 				WFIFOL(fd,12) = node->login_id2;
 				WFIFOL(fd,16) = (uint32)node->expiration_time; // FIXME: will wrap to negative after "19-Jan-2038, 03:14:07 AM GMT"
-				WFIFOL(fd,20) = node->gmlevel;
+				WFIFOL(fd,20) = node->group_id;
 				WFIFOB(fd,24) = node->changing_mapservers;
 				memcpy(WFIFOP(fd,25), cd, sizeof(struct mmo_charstatus));
 				WFIFOSET(fd, WFIFOW(fd,2));
@@ -3664,7 +3664,7 @@ int parse_char(int fd)
 			node->login_id2 = sd->login_id2;
 			node->sex = sd->sex;
 			node->expiration_time = sd->expiration_time;
-			node->gmlevel = sd->gmlevel;
+			node->group_id = sd->group_id;
 			node->ip = ipl;
 			idb_put(auth_db, sd->account_id, node);
 
@@ -4366,10 +4366,8 @@ int char_config_read(const char* cfgName)
 			max_connect_user = atoi(w2);
 			if (max_connect_user < 0)
 				max_connect_user = 0; // unlimited online players
-		} else if(strcmpi(w1, "gm_allow_level") == 0) {
-			gm_allow_level = atoi(w2);
-			if(gm_allow_level < 0)
-				gm_allow_level = 99;
+		} else if(strcmpi(w1, "gm_allow_group") == 0) {
+			gm_allow_group = atoi(w2);
 		} else if (strcmpi(w1, "autosave_time") == 0) {
 			autosave_interval = atoi(w2)*1000;
 			if (autosave_interval <= 0)

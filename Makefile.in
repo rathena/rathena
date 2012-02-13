@@ -4,10 +4,10 @@ HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
 	ALL_DEPENDS=common_sql login_sql char_sql map_sql tools import
 	SQL_DEPENDS=common_sql login_sql char_sql map_sql import
-	COMMON_SQL_DEPENDS=mt19937ar
-	LOGIN_SQL_DEPENDS=mt19937ar common_sql
-	CHAR_SQL_DEPENDS=mt19937ar common_sql
-	MAP_SQL_DEPENDS=mt19937ar common_sql
+	COMMON_SQL_DEPENDS=mt19937ar libconfig
+	LOGIN_SQL_DEPENDS=mt19937ar libconfig common_sql
+	CHAR_SQL_DEPENDS=mt19937ar libconfig common_sql
+	MAP_SQL_DEPENDS=mt19937ar libconfig common_sql
 	CONVERTERS_DEPENDS=common_sql
 else
 	ALL_DEPENDS=needs_mysql
@@ -47,6 +47,9 @@ common_sql: $(COMMON_SQL_DEPENDS)
 mt19937ar:
 	@$(MAKE) -C 3rdparty/mt19937ar
 
+libconfig:
+	@$(MAKE) -C 3rdparty/libconfig
+
 login_sql: $(LOGIN_SQL_DEPENDS)
 	@$(MAKE) -C src/login sql
 
@@ -74,6 +77,7 @@ import:
 clean:
 	@$(MAKE) -C src/common $@
 	@$(MAKE) -C 3rdparty/mt19937ar $@
+	@$(MAKE) -C 3rdparty/libconfig $@
 	@$(MAKE) -C src/login $@
 	@$(MAKE) -C src/char $@
 	@$(MAKE) -C src/map $@
@@ -85,6 +89,7 @@ help:
 	@echo "possible targets are:"
 	@echo "'common_sql'  - builds object files used in SQL servers"
 	@echo "'mt19937ar'   - builds object file of Mersenne Twister MT19937"
+	@echo "'libconfig'   - builds object files of libconfig
 	@echo "'login_sql'   - builds login server (SQL version)"
 	@echo "'char_sql'    - builds char server (SQL version)"
 	@echo "'map_sql'     - builds map server (SQL version)"

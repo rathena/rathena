@@ -125,7 +125,7 @@ int chat_joinchat(struct map_session_data* sd, int chatid, const char* pass)
 		return 0;
 	}
 
-	if( !cd->pub && strncmp(pass, cd->pass, sizeof(cd->pass)) != 0 && !(battle_config.gm_join_chat && pc_isGM(sd) >= battle_config.gm_join_chat) )
+	if( !cd->pub && strncmp(pass, cd->pass, sizeof(cd->pass)) != 0 && !pc_has_permission(sd, PC_PERM_JOIN_ALL_CHAT) )
 	{
 		clif_joinchatfail(sd,1);
 		return 0;
@@ -316,7 +316,7 @@ int chat_kickchat(struct map_session_data* sd, const char* kickusername)
 	if( i == cd->users )
 		return -1;
 
-	if( battle_config.gm_kick_chat && pc_isGM(cd->usersd[i]) >= battle_config.gm_kick_chat )
+	if (pc_has_permission(cd->usersd[i], PC_PERM_NO_CHAT_KICK))
 		return 0; //gm kick protection [Valaris]
 	
 	idb_put(cd->kick_list,cd->usersd[i]->status.char_id,(void*)1);

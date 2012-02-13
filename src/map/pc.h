@@ -6,6 +6,7 @@
 
 #include "../common/mmo.h" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
 #include "../common/timer.h" // INVALID_TIMER
+#include "atcommand.h" // AtCommandType
 #include "battle.h" // battle_config
 #include "buyingstore.h"  // struct s_buyingstore
 #include "itemdb.h" // MAX_ITEMGROUP
@@ -159,7 +160,7 @@ struct map_session_data {
 	} special_state;
 	int login_id1, login_id2;
 	unsigned short class_;	//This is the internal job ID used by the map server to simplify comparisons/queries/etc. [Skotlex]
-	int gmlevel;
+	int group_id;
 
 	int packet_ver;  // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 ... 18
 	struct mmo_charstatus status;
@@ -568,6 +569,27 @@ enum equip_index {
 	EQI_MAX
 };
 
+enum e_pc_permission {
+	PC_PERM_NONE                = 0,
+	PC_PERM_TRADE               = 0x00001,
+	PC_PERM_PARTY               = 0x00002,
+	PC_PERM_ALL_SKILL           = 0x00004,
+	PC_PERM_USE_ALL_EQUIPMENT   = 0x00008,
+	PC_PERM_SKILL_UNCONDITIONAL = 0x00010,
+	PC_PERM_JOIN_ALL_CHAT       = 0x00020,
+	PC_PERM_NO_CHAT_KICK        = 0x00040,
+	PC_PERM_HIDE_SESSION        = 0x00080,
+	PC_PERM_WHO_DISPLAY_AID     = 0x00100,
+	PC_PERM_RECEIVE_HACK_INFO   = 0x00200,
+	PC_PERM_WARP_ANYWHERE       = 0x00400,
+	PC_PERM_VIEW_HPMETER        = 0x00800,
+	PC_PERM_VIEW_EQUIPMENT      = 0x01000,
+	PC_PERM_USE_CHECK           = 0x02000,
+	PC_PERM_USE_CHANGEMAPTYPE   = 0x04000,
+	PC_PERM_USE_ALL_COMMANDS    = 0x08000,
+	PC_PERM_RECEIVE_REQUESTS    = 0x10000,
+};
+
 #define pc_setdead(sd)        ( (sd)->state.dead_sit = (sd)->vd.dead_sit = 1 )
 #define pc_setsit(sd)         ( (sd)->state.dead_sit = (sd)->vd.dead_sit = 2 )
 #define pc_isdead(sd)         ( (sd)->state.dead_sit == 1 )
@@ -608,15 +630,20 @@ enum equip_index {
 )
 
 int pc_class2idx(int class_);
-int pc_isGM(struct map_session_data *sd);
+int pc_get_group_level(struct map_session_data *sd);
+int pc_get_group_id(struct map_session_data *sd);
 int pc_getrefinebonus(int lv,int type);
-bool pc_can_give_items(int level);
+bool pc_can_give_items(struct map_session_data *sd);
+
+bool pc_can_use_command(struct map_session_data *sd, const char *command, AtCommandType type);
+bool pc_has_permission(struct map_session_data *sd, int permission);
+bool pc_should_log_commands(struct map_session_data *sd);
 
 int pc_setrestartvalue(struct map_session_data *sd,int type);
 int pc_makesavestatus(struct map_session_data *);
 void pc_respawn(struct map_session_data* sd, clr_type clrtype);
 int pc_setnewpc(struct map_session_data*,int,int,int,unsigned int,int,int);
-bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_time, int gmlevel, struct mmo_charstatus *st, bool changing_mapservers);
+bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_time, int group_id, struct mmo_charstatus *st, bool changing_mapservers);
 void pc_authfail(struct map_session_data *);
 int pc_reg_received(struct map_session_data *sd);
 
@@ -638,8 +665,6 @@ int pc_clean_skilltree(struct map_session_data *sd);
 int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y, clr_type clrtype);
 int pc_setsavepoint(struct map_session_data*,short,int,int);
 int pc_randomwarp(struct map_session_data *sd,clr_type type);
-int pc_warpto(struct map_session_data* sd, struct map_session_data* pl_sd);
-int pc_recall(struct map_session_data* sd, struct map_session_data* pl_sd);
 int pc_memo(struct map_session_data* sd, int pos);
 
 int pc_checkadditem(struct map_session_data*,int,int);

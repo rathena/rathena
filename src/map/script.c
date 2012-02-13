@@ -7345,7 +7345,7 @@ BUILDIN_FUNC(getgmlevel)
 	if( sd == NULL )
 		return 0;// no player attached, report source
 
-	script_pushint(st, pc_isGM(sd));
+	script_pushint(st, pc_get_group_level(sd));
 
 	return 0;
 }
@@ -8704,17 +8704,18 @@ BUILDIN_FUNC(getusers)
 BUILDIN_FUNC(getusersname)
 {
 	TBL_PC *sd, *pl_sd;
-	int disp_num=1;
+	int disp_num=1, group_level = 0;
 	struct s_mapiterator* iter;
 
 	sd = script_rid2sd(st);
 	if (!sd) return 0;
 
+	group_level = pc_get_group_level(sd);
 	iter = mapit_getallusers();
 	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
 	{
-		if( battle_config.hide_GM_session && pc_isGM(pl_sd) )
-			continue; // skip hidden GMs
+		if (pc_has_permission(pl_sd, PC_PERM_HIDE_SESSION) && pc_get_group_level(pl_sd) > group_level)
+			continue; // skip hidden sessions
 
 		if((disp_num++)%10==0)
 			clif_scriptnext(sd,st->oid);
@@ -11586,9 +11587,6 @@ BUILDIN_FUNC(nude)
 
 /*==========================================
  * gmcommand [MouseJstr]
- *
- * suggested on the forums...
- * splitted into atcommand & charcommand by [Skotlex]
  *------------------------------------------*/
 BUILDIN_FUNC(atcommand)
 {
@@ -11616,51 +11614,12 @@ BUILDIN_FUNC(atcommand)
 		}
 	}
 
-	// compatibility with previous implementation (deprecated!)
-	if(cmd[0] != atcommand_symbol)
-	{
-		cmd += strlen(sd->status.name);
-		while(*cmd != atcommand_symbol && *cmd != 0)
-			cmd++;
-	}
-
-	is_atcommand(fd, sd, cmd, 0);
-	return 0;
-}
-
-BUILDIN_FUNC(charcommand)
-{
-	TBL_PC dummy_sd;
-	TBL_PC* sd;
-	int fd;
-	const char* cmd;
-
-	cmd = script_getstr(st,2);
-
-	if (st->rid) {
-		sd = script_rid2sd(st);
-		fd = sd->fd;
-	} else { //Use a dummy character.
-		sd = &dummy_sd;
-		fd = 0;
-
-		memset(&dummy_sd, 0, sizeof(TBL_PC));
-		if (st->oid)
-		{
-			struct block_list* bl = map_id2bl(st->oid);
-			memcpy(&dummy_sd.bl, bl, sizeof(struct block_list));
-			if (bl->type == BL_NPC)
-				safestrncpy(dummy_sd.status.name, ((TBL_NPC*)bl)->name, NAME_LENGTH);
-		}
-	}
-
-	if (*cmd != charcommand_symbol) {
-		ShowWarning("script: buildin_charcommand: No '#' symbol!\n");
+	if (!is_atcommand(fd, sd, cmd, 0)) {
+		ShowWarning("script: buildin_atcommand: failed to execute command '%s'\n", cmd);
 		script_reportsrc(st);
 		return 1;
 	}
-	
-	is_atcommand(fd, sd, cmd, 0);
+
 	return 0;
 }
 
@@ -16170,7 +16129,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(nude,""), // nude command [Valaris]
 	BUILDIN_DEF(mapwarp,"ssii??"),		// Added by RoVeRT
 	BUILDIN_DEF(atcommand,"s"), // [MouseJstr]
-	BUILDIN_DEF(charcommand,"s"), // [MouseJstr]
+	BUILDIN_DEF2(atcommand,"charcommand","s"), // [MouseJstr]
 	BUILDIN_DEF(movenpc,"sii?"), // [MouseJstr]
 	BUILDIN_DEF(message,"ss"), // [MouseJstr]
 	BUILDIN_DEF(npctalk,"s"), // [Valaris]

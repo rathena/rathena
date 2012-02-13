@@ -237,22 +237,22 @@ int intif_wis_replay(int id, int flag)
 }
 
 // The transmission of GM only Wisp/Page from server to inter-server
-int intif_wis_message_to_gm(char *Wisp_name, int min_gm_level, char *mes)
+int intif_wis_message_to_gm(char *wisp_name, int permission, char *mes)
 {
 	int mes_len;
 	if (CheckForCharServer())
 		return 0;
 	mes_len = strlen(mes) + 1; // + null
-	WFIFOHEAD(inter_fd, mes_len + 30);
+	WFIFOHEAD(inter_fd, mes_len + 32);
 	WFIFOW(inter_fd,0) = 0x3003;
-	WFIFOW(inter_fd,2) = mes_len + 30;
-	memcpy(WFIFOP(inter_fd,4), Wisp_name, NAME_LENGTH);
-	WFIFOW(inter_fd,4+NAME_LENGTH) = (short)min_gm_level;
-	memcpy(WFIFOP(inter_fd,6+NAME_LENGTH), mes, mes_len);
+	WFIFOW(inter_fd,2) = mes_len + 32;
+	memcpy(WFIFOP(inter_fd,4), wisp_name, NAME_LENGTH);
+	WFIFOL(inter_fd,4+NAME_LENGTH) = permission;
+	memcpy(WFIFOP(inter_fd,8+NAME_LENGTH), mes, mes_len);
 	WFIFOSET(inter_fd, WFIFOW(inter_fd,2));
 
 	if (battle_config.etc_log)
-		ShowNotice("intif_wis_message_to_gm: from: '%s', min level: %d, message: '%s'.\n", Wisp_name, min_gm_level, mes);
+		ShowNotice("intif_wis_message_to_gm: from: '%s', required permission: %d, message: '%s'.\n", wisp_name, permission, mes);
 
 	return 0;
 }
@@ -860,11 +860,13 @@ int intif_parse_WisEnd(int fd)
 
 static int mapif_parse_WisToGM_sub(struct map_session_data* sd,va_list va)
 {
-	int min_gm_level = va_arg(va, int);
+	int permission = va_arg(va, int);
 	char *wisp_name;
 	char *message;
 	int len;
-	if (pc_isGM(sd) < min_gm_level) return 0;
+	
+	if (!pc_has_permission(sd, permission))
+		return 0;
 	wisp_name = va_arg(va, char*);
 	message = va_arg(va, char*);
 	len = va_arg(va, int);
@@ -873,22 +875,22 @@ static int mapif_parse_WisToGM_sub(struct map_session_data* sd,va_list va)
 }
 
 // Received wisp message from map-server via char-server for ALL gm
-// 0x3003/0x3803 <packet_len>.w <wispname>.24B <min_gm_level>.w <message>.?B
+// 0x3003/0x3803 <packet_len>.w <wispname>.24B <permission>.l <message>.?B
 int mapif_parse_WisToGM(int fd)
 {
-	int min_gm_level, mes_len;
+	int permission, mes_len;
 	char Wisp_name[NAME_LENGTH];
 	char mbuf[255];
 	char *message;
 
-	mes_len =  RFIFOW(fd,2) - 30;
+	mes_len =  RFIFOW(fd,2) - 32;
 	message = (char *) (mes_len >= 255 ? (char *) aMallocA(mes_len) : mbuf);
 
-	min_gm_level = (int)RFIFOW(fd,28);
+	permission = RFIFOL(fd,28);
 	safestrncpy(Wisp_name, (char*)RFIFOP(fd,4), NAME_LENGTH);
-	safestrncpy(message, (char*)RFIFOP(fd,30), mes_len);
-	// information is sended to all online GM
-	map_foreachpc(mapif_parse_WisToGM_sub, min_gm_level, Wisp_name, message, mes_len);
+	safestrncpy(message, (char*)RFIFOP(fd,32), mes_len);
+	// information is sent to all online GM
+	map_foreachpc(mapif_parse_WisToGM_sub, permission, Wisp_name, message, mes_len);
 
 	if (message != mbuf)
 		aFree(message);

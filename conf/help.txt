@@ -1,172 +1,230 @@
-// put at first, the minimum level to display the line
-  1:To use one command, type it inside the message window where you usually type to chat.
- 20:@h/@help - display this help guide.
- 20:@h2/@help2 - displays the second help guide.
-  1: 
-  1:--- MESSAGE CMD ---
-  1:@main [on|off|message] - Turns on or off global chat (@main must be on to see global chat messages)
-  1:@noask - Auto rejects Deals/Invites
- 20:@gmotd - Broadcasts the Message of The Day file to all players.
- 20:@me <message> - Displays normal text as a message in this format: *name message* (like /me in mIRC)
- 20:@fakename [Name] - Changes your name to your choice temporarly.
- 20:@npctalk [NPC Name],[Message] - Forces a NPC to display a message in normal chat.
- 40:/b/@broadcast <message> - Broadcasts a GM message with name of the GM (in yellow)
- 40:/nb <message>/@kami <message> - Broadcasts a GM message without name of the GM (in yellow)
- 40:@kamib <message> - Broadcasts a GM message without name of the GM (in blue)
- 40:/lb/@localbroadcast <message> - Broadcasts a GM message with name of the GM (in yellow) ONLY on your map
- 40:/nlb <message> - Broadcasts a GM message without name of the GM (in yellow) ONLY on your map
-  1: 
-  1:--- INFORMATION CMD ---
-  1:@commands - Displays a list of commands that you can use.
-  1:@rates - Displays the server's current rates.
-  1:@uptime - Displays how long the server has been online.
-  1:@showdelay - Shows/Hides the "there is a delay after this skill" message.
-  1:@exp - Displays current levels and % progress
-  1:@mobinfo/@monsterinfo/@mi [Mob ID|Part of monster name] - Shows Monster Info (rates, stats, drops, MVP stuff)
-  1:@iteminfo/@ii [Item ID|Part of item name] - Shows Item info (type, price, etc)
-  1:@whodrops [Item ID|Part of item name] - Shows who drops an item (mobs with highest drop rates)
-  1:@version - Displays SVN version of the server
-  1:@email <actual@email> <new@email> - to change your e-mail (characters protection)
-  1:@where [char name] - Tells you the location of a character
-  1:@time/@date/@server_date/@serverdate/@server_time/@servertime - Display the date/time of the server
- 10:@showexp - Displays/Hides Experience gained.
- 10:@showzeny - Displays/Hides Zeny gained.
- 10:@mobsearch [Mob ID|Monster Name] - Shows the location of a certain mob on the current map.
- 20:@who/@whois/@w [match_text] - Display a listing of who is online and their party/guild.
- 20:@who2 [match_text] - Display a listing of who is online and their job.
- 20:@who3 [match_text] - Display a listing of who is online and where.
- 20:@whomap/@whomap2/@whomap3 [map] - like @who/@who2/@who3 but only for specifical map.
- 20:@whogm [match_text] - Like @who+@who2+who3, but only for GM.
- 40:@charcartlist <char name> - Displays all items of a player's cart.
- 60: 
- 60:@guildspy <guild_name/id> - You will receive all messages of the guild channel (Chat logging must be enabled)
- 60:@partyspy <party_name/id> - You will receive all messages of the party channel (Chat logging must be enabled)
- 99:@mapinfo [<0-3> [map]] - Give information about a map (general info +: 0: no more, 1: players, 2: NPC, 3: shops/chat).
-  1: 
-  1:--- CHANGE GM STATE CMD ---
-  1:@die - Kills yourself
- 10:@go <number/city_name> - Warps you to a city.
- 10:  -3: (Memo point 2)  1: morocc   5: izlude         9: yuno     13: niflheim
- 10:  -2: (Memo point 1)  2: geffen   6: aldebaran     10: amatsu   14: louyang
- 10:  -1: (Memo point 0)  3: payon    7: xmas (lutie)  11: gonryun  15: start point
- 10:   0: prontera        4: alberta  8: comodo        12: umbala   16: prison/jail
- 10: 
- 20:/shift/@jumpto/@warpto/@goto <char name> - Warps you to selected character
- 20:@follow <char_name> - follow a player
- 20:@mountpeco - Give/remove you a peco (Class is required, but not skill)
- 20:@disguise <monster_name_or_monster_ID> - Change your appearence to other players to a mob.
- 20:@undisguise - Restore your normal appearance.
- 20:@model <hair ID: 0-17> <hair color: 0-8> <clothes color: 0-4> - Changes your characters appearence.
- 20:@size <1-3> Changes your size (1-Smallest 2-Biggest 3-Normal)
- 40:/hide/@hide - Makes you character invisible (GM invisibility). Type /hide or@hide again become visible.
- 40:@save - Sets respawn point to current spot
- 40:@load/@return - Warps you to your save point
- 40:/mm//mapmove/@warp/@rura/@mapmove <mapname> <x> <y> - Warps you to the selected position
- 40:@jump [x [y]]- Randomly warps you like a flywing.
- 40:@job/@jobchange <job ID> - Changes your job
- 40:   0: Novice           18: Alchemist      4015: Paladin
- 40:   1: Swordman         19: Bard           4016: Champion
- 40:   2: Mage             20: Dancer         4017: Professor
- 40:   3: Archer           23: Super Novice   4018: Stalker
- 40:   4: Acolyte        4001: High Novice    4019: Creator
- 40:   5: Merchant       4002: High Swordman  4020: Clown
- 40:   6: Thief          4003: High Mage      4021: Gypsy
- 40:   7: Knight         4004: High Archer    4046: Taekwon
- 40:   8: Priest         4005: High Acolyte   4047: Star Gladiator
- 40:   9: Wizard         4006: High Merchant  4049: Soul Linker
- 40:  10: Blacksmith     4007: High Thief     24: Gunslinger
- 40:  11: Hunter         4008: Lord Knight    25: Ninja
- 40:  12: Assassin       4009: High Priest
- 40:  14: Crusader       4010: High Wizard
- 40:  15: Monk           4011: Whitesmith
- 40:  16: Sage           4012: Sniper
- 40:  17: Rogue          4013: Assassin Cross
- 40: ---- Baby Classes ----
- 40: 4023: Baby          4024: Baby Swordman   4025: Baby Mage
- 40: 4026: Baby Archer   4027: Baby Acolyte    4028: Baby Merchant
- 40: 4029: Baby Thief    4030: Baby Knight     4031: Baby Priest
- 40: 4032: Baby Wizard   4033: Baby Blacksmith 4034: Baby Hunter
- 40: 4035: Baby Assassin 4037: Baby Crusader   4038: Baby Monk
- 40: 4039: Baby Sage     4040: Baby Rogue      4041: Baby Alchemist
- 40: 4042: Baby Bard     4043: Baby Dancer     4045: Super Baby
- 40: 
- 40:	<param1>      <param2>      <p3>(stackable)   <param3>               <param3>
- 40:	1 Petrified   (stackable)   01 Sight           32 Peco Peco riding   2048 Orc Head
- 40:	2 Frozen      01 Poison     02 Hide            64 GM Perfect Hide    4096 Wedding Sprites
- 40:	3 Stunned     02 Cursed     04 Cloak          128 Level 2 Cart       8192 Ruwach
- 40:	4 Sleeping    04 Silenced   08 Level 1 Cart   256 Level 3 Cart
- 40:	6 darkness    08 ???        16 Falcon         512 Level 4 Cart
- 40:	              16 darkness                    1024 Level 5 Cart
- 40: 
- 40:@heal [<HP> <SP>] - Heals the desired amount of HP and SP. No value specified will do a full heal.
- 40:@option <param1> <param2> <param3> - Adds different visual effects on or around your character
- 40:@dye/@ccolor <clothes color: 0-4> - Changes your characters appearence (only clothes color).
- 40:@hairstyle/@hstyle <hair ID: 0-17> - Changes your characters appearence (only hair style).
- 40:@haircolor/@hcolor <hair color: 0-8> - Changes your characters appearence (only hair color).
- 40:@speed <1-1000> - Changes you walking speed. 1 being the fastest and 1000 the slowest. Default 150.
- 40:@effect <effect_id> [flag] - Give an efect to your character.
- 40:@dropall - throws all your possession on the ground
- 40:@storeall - puts all your possessions in storage
- 40:@killable - make your character killable
- 40:@memo [memo_position] - set/change a memo location (no position: display memo points).
- 40:@spiritball <number: 1-1000> - Gives you "spirit spheres" like from the skill "Call Spirits"
- 40:	(If the number you use is > 1000, your server may become instable or crash)
- 40:@questskill <#> - Gives you the specified quest skill
- 40:@lostskill <#> - Takes away the specified quest skill from you
- 40:@skillid <name> - look up a skill by name
- 40:@useskill <skillid> <skillv> <target> - use a skill on target
- 40:  Novice                 Swordsman                  Thief                Merchant
- 40:  142 = Emergency Care   144 = Moving HP Recovery   149 = Throw Sand     153 = Cart Revolution
- 40:  143 = Act dead         145 = Attack Weak Point    150 = Back Sliding   154 = Change Cart
- 40:  Archer                 146 = Auto Berserk         151 = Take Stone     155 = Crazy Uproar/Loud Voice
- 40:  147 = Arrow Creation   Acolyte                    152 = Stone Throw    Magician
- 40:  148 = Charge Arrows    156 = Holy Light                                157 = Energy Coat
- 40: @skilltree <
- 40: @marry <player1>,<player2> - marry two players
- 40: @divorce <player>  - divorces the two players (you need just one name of them)
- 60:@alive - Revives yourself from death
- 60:@lvup/@blevel/@baselvlup <number of levels> - Raises your base level the desired number of levels. The max is 255 (User Defined).
- 60:@joblvup/@jlevel/@joblvlup <number of levels> -Raises your job level the desired number of levels. The max is 50 For Basic Classes. For Super Novice and Advanced Classes it is 70.
- 60:@allskill/@allskills/@skillall/@skillsall - Give you all skills.
- 60:@stpoint <number of points> - Gives you the desired number of stat points.
- 60:@skpoint <number of points> - Gives you the desired number of skill points.
- 60:@zeny <amount> - Gives you desired amount of Zeny.
- 60:@cash <amount> - Gives you the specified amount of cash points.
- 60:@points <amount> - Gives you the specified amount of Kafra Points.
- 60:@str,@agi,@vit,@int,@dex,@luk <amount> - Adds desired amount to any stat. For example "@str 10" raises your str by 10
- 60:@statall/@statsall/@allstats/@allstat [value] - Adds value in all stats (maximum if no value).
- 60: @addwarp <map name> <x coord> <y coord>
- 40: 
- 40:--- MONSTERS CMD ---
- 40:@killmonster2 - kill all monsters of your map (without drops)
- 50:/monster <monster_name> - Spawns 1 of the desired monster.
- 50:@spawn/@monster/@summon <monster_name_or_monster_ID> [<number to spawn> [<desired_monster_name> [<x coord> [<y coord>]]]]
- 50:@monster2 <desired_monster_name> <monster_name_or_monster_ID> [<number to spawn> [<x coord> [<y coord>]]]
- 50:@spawn/@monster/@summon/@monster2 "desired monster name" <monster_name_or_monster_ID> [<number to spawn> [<x coord> [<y coord>]]]
- 50:@spawn/@monster/@summon/@monster2 <monster_name_or_monster_ID> "desired monster name" [<number to spawn> [<x coord> [<y coord>]]]
- 50:	Spawns the desired monster with any desired name.
- 50:@monstersmall [Mob ID|Mob Name] - Spawns a smaller version of a monster.
- 50:@monsterbig [Mob ID|Mob Name] - Spawns a larger version of a monster.
- 60:@killmonster [map] - kill all monsters of the map (they drop)
- 40: 
- 10:--- MISC CMD ---
- 10:@autoloot [on|off|#] - Makes items go straight into your inventory.
- 10:@autotrade/@at - Allows you to vend while you are offline.
- 10:@changegm [Player Name] - Changes the leader of your guild (You must be guild leader)
- 10:@changeleader [Player Name] - Changes the leader of your party (You must be party leader)
- 20:@request [Message] - Sends a message to all connected GMs (via the gm whisper system)
- 40:@sound [Path way to file in Data or GRF file] - Plays a sound from the data or grf file located on the client.
- 50:@clone [Player Name] - Spawns a supportive clone of the given player.
- 50:@slaveclone [Player Name] - Spawns a supportive clone of the given player that follows the creator around.
- 50:@evilclone [Player Name] - Spawns an agressive clone of the given player.
- 60:@changesex - Changes your gender.
- 10: 
-  1:--- DUEL CMD ---
-  1:@duel - Starts a duel.
-  1:@invite - Invites a player to a duel.
-  1:@accept - Accepts an invitation to a duel.
-  1:@reject - Rejects an invitation to a duel.
-  1:@leave - Leaves a duel.
-  1: 
-  1:--- MAIL SYSTEM --- (SQL Only)
-  1:@mail - Open mail box.
+// This is help file that contains help messages for atcommands/charcommands.
+
+// Format:
+// <command>: "<help message>"
+
+// This file uses libconfig syntax.
+
+help: "Params: <command>\n" "Shows help for specified command."
+main: "Params: [on|off|<message>]\n" "Turns on or off main (server-wide) chat. Sends message to main chat."
+noask: "Auto rejects deals/invites."
+gmotd: "Broadcasts the Message of The Day to all players."
+me: "Params: <message>\n" "Displays normal text as a message in this format: *name message* (like /me in mIRC)."
+fakename: "Params: <name>\n" "Changes your name to your choice temporarily."
+npctalk: "Params: <NPC name> <message>\n" "Forces a NPC to display a message in normal chat."
+broadcast: "Params: <message>\n" "Broadcasts a message with your name (in yellow)."
+kami: "Params: <message>\n" "Broadcasts a message without your name (in yellow)."
+kamib: "Params: <message>\n" "Broadcasts a message without your name (in blue)."
+localbroadcast: "Params: <message>\n" "Broadcasts a message with your name (in yellow) only on your map."
+commands: "Displays a list of commands that you can use."
+rates: "Displays the server's current rates."
+uptime: "Displays how long the server has been online."
+showdelay: "Shows/hides the \"There is a delay after this skill\" message."
+exp: "Displays current levels and % progress."
+mobinfo: "Params: <monster ID>|<monster name>\n" "Shows monster info (stats, exp, drops etc)."
+iteminfo: "Params: <item ID>|<item name>\n" "Shows item info (type, price etc)."
+whodrops: "Params: <item ID>|<item name>\n" "Shows who drops an item (monster with highest drop rates)."
+version: "Displays SVN version of the server."
+email: "Params: <current email> <new email>\n" "Changes your account e-mail address."
+where: "Params: <char name>\n" "Tells you the location of a character."
+time: "Shows the date and time of the server."
+showexp: "Displays/hides experience gained."
+showzeny: "Displays/hides Zeny gained."
+mobsearch: "Params: <monster ID>|<monster name>\n" "Shows the location of a certain mob on the current map."
+who: "Params: [<name>]\n" "Shows a list of online players and their party and guild."
+who2: "Params: [<name>]\n" "Shows a list of online players and their job."
+who3: "Params: [<name>]\n" "Shows a list of online players and their location."
+whomap: "@whomap/@whomap2/@whomap3 [map] - like @who/@who2/@who3 but only for specifical map."
+whogm: "Params: [match_text] - Like @who+@who2+who3, but only for GM."
+guildspy: "Params: <guild_name/id> - You will receive all messages of the guild channel (Chat logging must be enabled)"
+partyspy: "@partyspy <party_name/id> - You will receive all messages of the party channel (Chat logging must be enabled)"
+mapinfo: "Params: [<0-3> [map]] - Give information about a map (general info +: 0: no more, 1: players, 2: NPC, 3: shops/chat)."
+die: "Kills yourself."
+go: "Params: <number/city_name>\n" "Warps you to a city.\n"
+	"  -3: (Memo point 2)  1: morocc   5: izlude         9: yuno     13: niflheim \n"
+	"  -2: (Memo point 1)  2: geffen   6: aldebaran     10: amatsu   14: louyang\n"
+	"  -1: (Memo point 0)  3: payon    7: xmas (lutie)  11: gonryun  15: start point\n"
+	"   0: prontera        4: alberta  8: comodo        12: umbala   16: prison/jail\n"
+jumpto: "Params: <char name>\n" "Warps you to selected character."
+follow: "Params: <char_name>\n" "Follow a player."
+mount: "Give/remove you a peco (Class is required, but not skill)"
+disguise: "Params: <monster_name_or_monster_ID>\n" "Change your appearence to other players to a mob."
+undisguise: "Restore your normal appearance."
+model: "Params:  <hair ID: 0-17> <hair color: 0-8> <clothes color: 0-4> - Changes your characters appearence."
+size: "Params:  <1-3> Changes your size (1-Smallest 2-Biggest 3-Normal)"
+hide: "Makes you character invisible (GM invisibility). Type again to become visible."
+save: "Sets respawn point to current spot."
+load: "Warps you to your save point."
+warp: "Params: <mapname> [<x> <y>]\n" "Warps you to the selected map and position."
+jump: "Params: [<x> [<y>]]\n" "Randomly warps you like a flywing."
+jobchange: "Params: <job ID>\n" "Changes your job.\n"
+"   0: Novice           18: Alchemist      4015: Paladin\n"
+"   1: Swordman         19: Bard           4016: Champion\n"
+"   2: Mage             20: Dancer         4017: Professor\n"
+"   3: Archer           23: Super Novice   4018: Stalker\n"
+"   4: Acolyte        4001: High Novice    4019: Creator\n"
+"   5: Merchant       4002: High Swordman  4020: Clown\n"
+"   6: Thief          4003: High Mage      4021: Gypsy\n"
+"   7: Knight         4004: High Archer    4046: Taekwon\n"
+"   8: Priest         4005: High Acolyte   4047: Star Gladiator\n"
+"   9: Wizard         4006: High Merchant  4049: Soul Linker\n"
+"  10: Blacksmith     4007: High Thief     24: Gunslinger\n"
+"  11: Hunter         4008: Lord Knight    25: Ninja\n"
+"  12: Assassin       4009: High Priest\n"
+"  14: Crusader       4010: High Wizard\n"
+"  15: Monk           4011: Whitesmith\n"
+"  16: Sage           4012: Sniper\n"
+"  17: Rogue          4013: Assassin Cross\n"
+" ---- Baby Classes ----\n"
+" 4023: Baby          4024: Baby Swordman   4025: Baby Mage\n"
+" 4026: Baby Archer   4027: Baby Acolyte    4028: Baby Merchant\n"
+" 4029: Baby Thief    4030: Baby Knight     4031: Baby Priest\n"
+" 4032: Baby Wizard   4033: Baby Blacksmith 4034: Baby Hunter\n"
+" 4035: Baby Assassin 4037: Baby Crusader   4038: Baby Monk\n"
+" 4039: Baby Sage     4040: Baby Rogue      4041: Baby Alchemist\n"
+" 4042: Baby Bard     4043: Baby Dancer     4045: Super Baby\n"
+option: "Params: <param1> <param2> <param3>\n" "Adds different visual effects on or around your character.\n"
+"<param1>      <param2>      <p3>(stackable)   <param3>               <param3>\n"
+"1 Petrified   (stackable)   01 Sight           32 Peco Peco riding   2048 Orc Head\n"
+"2 Frozen      01 Poison     02 Hide            64 GM Perfect Hide    4096 Wedding Sprites\n"
+"3 Stunned     02 Cursed     04 Cloak          128 Level 2 Cart       8192 Ruwach\n"
+"4 Sleeping    04 Silenced   08 Level 1 Cart   256 Level 3 Cart\n"
+"6 darkness    08 ???        16 Falcon         512 Level 4 Cart\n"
+"              16 darkness                    1024 Level 5 Cart\n"
+heal: "Params: [<HP> <SP>]\n" "Heals the desired amount of HP and SP. No value specified will do a full heal."
+dye: "Params: <clothes palette no.>\n" "Changes your characters clothes color."
+hairstyle: "Params: <hairstyle no.>\n" "Changes your hair style."
+haircolor: "Params <hair palette no.>\n" "Changes your hair color."
+speed: "Params: <1-1000>\n" "Changes you walking speed. 1 being the fastest and 1000 the slowest. Default is 150."
+effect: "Params: <effect id> [<flag>]\n" "Give an effect to your character."
+dropall: "Throws all your possession on the ground."
+storeall: "Puts all your possessions in storage."
+killable: "Make your character killable."
+memo: "Params: [memo position]\n" "Set/change a memo location (no position: display memo points)."
+spiritball: "Params: <1-100>\n" "Gives you \"spirit spheres\" like from the skill \"Call Spirits\".\n"
+questskill: "Params: <#>\n" "Gives you the specified quest skill"
+lostskill: "Params: <#>\n" "Takes away the specified quest skill from you\n"
+"   Novice                 Swordsman                  Thief                Merchant\n"
+"   142 = Emergency Care   144 = Moving HP Recovery   149 = Throw Sand     153 = Cart Revolution\n"
+"   143 = Act dead         145 = Attack Weak Point    150 = Back Sliding   154 = Change Cart\n"
+"   Archer                 146 = Auto Berserk         151 = Take Stone     155 = Crazy Uproar/Loud Voice\n"
+"   147 = Arrow Creation   Acolyte                    152 = Stone Throw    Magician\n"
+"   148 = Charge Arrows    156 = Holy Light                                157 = Energy Coat\n"
+skillid: "Params: <name>\n" "Look up a skill by name"
+useskill: "Params: <skillid> <skillv> <target>\n" "Use a skill on target"
+skilltree: "Params: <"
+marry: "Params: <player1>,<player2>\n" "Marry two players."
+divorce: "Params: <player>\n" "Divorces the two players (you need just one name of them)"
+alive: "Revives yourself from death."
+blvl: "Params: <number of levels>\n" "Raises your base level the desired number of levels."
+jlvl: "Params: <number of levels>\n" "Raises your job level the desired number of levels."
+allskill: "Give you all skills."
+stpoint: "Params: <number of points> - Gives you the desired number of stat points."
+skpoint: "Params: <number of points> - Gives you the desired number of skill points."
+zeny: "Params: <amount> - Gives you desired amount of Zeny."
+cash: "Params: <amount> - Gives you the specified amount of cash points."
+points: "Params: <amount> - Gives you the specified amount of Kafra Points."
+str: "Params: <amount>\n" "Raises STR by given amount."
+agi: "Params: <amount>\n" "Raises AGI by given amount."
+dex: "Params: <amount>\n" "Raises DEX by given amount."
+vit: "Params: <amount>\n" "Raises VIT by given amount."
+int: "Params: <amount>\n" "Raises INT by given amount."
+luk: "Params: <amount>\n" "Raises LUK by given amount."
+allstats: "Params: <value>\n" "Adds value in all stats (maximum if no value)."
+addwarp: "Params: <map name> <x coord> <y coord>\n"
+killmonster2: "Kills all monsters of your map (without drops)."
+monster: "Params: <monster_name_or_monster_ID> [<number to spawn> [<desired_monster_name> [<x coord> [<y coord>]]]]\n"
+ "@monster2 <desired_monster_name> <monster_name_or_monster_ID> [<number to spawn> [<x coord> [<y coord>]]]\n"
+"@spawn/@monster/@summon/@monster2 \"desired monster name\" <monster_name_or_monster_ID> [<number to spawn> [<x coord> [<y coord>]]]\n"
+"@spawn/@monster/@summon/@monster2 <monster_name_or_monster_ID> \"desired monster name\" [<number to spawn> [<x coord> [<y coord>]]]\n"
+"	Spawns the desired monster with any desired name."
+monstersmall: "Params: [Mob ID|Mob Name]\n" "Spawns a smaller version of a monster."
+monsterbig: "Params: [Mob ID|Mob Name]\n" "Spawns a larger version of a monster."
+killmonster: "Params: [map]\n" "Kill all monsters of the map (they drop)"
+autoloot: "Params: [on|off|#]\n" "Makes items go straight into your inventory."
+autotrade: "Allows you to vend while you are offline."
+changegm: "Params: [Player Name]\n" "Changes the leader of your guild (You must be guild leader)"
+changeleader: "Params: [Player Name]\n" "Changes the leader of your party (You must be party leader)"
+request: "Params: [Message]\n" "Sends a message to all connected GMs (via the gm whisper system)"
+sound: "Params: [Path way to file in Data or GRF file]\n" "Plays a sound from the data or grf file located on the client."
+clone: "Params: [Player Name]\n" "Spawns a supportive clone of the given player."
+slaveclone: "Params: [Player Name]\n" "Spawns a supportive clone of the given player that follows the creator around."
+evilclone: "Params: [Player Name]\n" "Spawns an agressive clone of the given player."
+changesex: "Changes your gender."
+duel: "Starts a duel."
+invite: "Invites a player to a duel."
+accept: "Accepts an invitation to a duel."
+reject: "Rejects an invitation to a duel."
+leave: "Leaves a duel."
+mail: "Open mail box."
+storage: "Opens storage."
+itemreset: "Remove all your items."
+guildstorage: "Opens guild storage."
+idsearch: "Params: <part_of_item_name>\n" "Search all items that name have part_of_item_name"
+refine: "Params: <equip position> <+/- amount>"
+produce: "Params: <equip name or equip ID> <element> <# of very's>\n"
+"	Element: 0=None 1=Ice 2=Earth 3=Fire 4=Wind\n"
+"	You can add up to 3 Star Crumbs and 1 element\n"
+repairall: "Repair all items of your inventory"
+item: "Params: <item name or ID> <quantity>\n" "Gives you the desired item."
+item2: "Params: <item name or ID> <quantity> <identified_flag> <refine> <broken_flag> <Card1> <Card2> <Card3> <Card4>\n" "Gives you the desired item."
+pvpon: "Turns pvp on on the current map"
+pvpoff: "Turns pvp off on the current map"
+gvgon: "Turns gvg on on the current map"
+gvgoff: "Turns gvg off on the current map"
+agitstart: "Starts War of Emperium"
+agitend: "End War of Emperium"
+party: "Params: <party_name>\n" "Create a party."
+guild: "Params: <guild_name>\n" "Create a guild."
+glvl: "Params: <# of levels>\n" "Raise Guild by desired number of levels"
+guildrecall: "Params: <guild_name/id>\n" "Warps all online characters of a guild to you."
+partyrecall: "Params: <party_name/id>\n" "Warps all online characters of a party to you."
+petrename: "Re-enable pet rename"
+pettalk: "Params: [Message]\n" "Makes your pet say a message."
+petfriendly: "Params: <#>\n" "Set pet friendly amount (0-1000) 1000 = Max"
+pethungry: "Params: <#>\n" "Set pet hungry amount (0-100) 100 = Max"
+hatch: "Create a pet from your inventory eggs list."
+makeegg: "Params: <pet_id>\n" "Gives pet egg for monster number in pet DB"
+kick: "Params: <char name>\n" "Kicks specified character off the server"
+unjail: "Params: <char name>\n" "Discharges specified character/prisoner"
+kill: "Params: <char name>\n" "Kills specified character."
+recall: "Params: <char name>\n" "Warps target character to you."
+raise: "Params: <char name>\n" "Revives target character."
+block: "Params: <char name>\n" "Blocks definitively a account"
+unblock: "Params: <char name>\n" "Unblocks a account"
+ban: "Params: <time> <name>\n" "Ban temporarily a account\n"
+ "	time usage: adjustment (+/- value) and element (y/a, m, d/j, h, mn, s)\n"
+ "	Example: @ban +1m-2mn1s-6y testplayer\n"
+unban: "Params: <name> - Unban a account"
+jail: "Params: <char name> - Sends specified character in jails"
+trade: "Params: <char name> - Open a trade window with a another player"
+recallall: "Warps every character online to you."
+doom: "Kills all NON GM chars on the server."
+doommap: "Kills all non GM characters on the map."
+raisemap: "Resurrects all characters on the map."
+night: "Uses @option 00 16 00 on all characters. All characters are in darkness."
+day: "Uses @option 00 00 00 on all characters."
+skillon: "turn skills on for a map"
+skilloff: "turn skills on for a map"
+snow: "Makes all maps to have the snow weather effect."
+clouds: "Makes all maps to have the cloudy weather effect."
+clouds2: "Makes all maps to have another cloudy weather effect."
+fog: "Makes all maps to have the fog weather effect."
+fireworks: "Makes all maps to have the fireworks weather effect."
+sakura: "Makes all maps to have the sakura weather effect."
+leaves: "Makes all maps to have the leaves weather effect."
+shownpc: "Params: <NPC name>\n" "Enable a NPC"
+hidenpc: "Params: <NPC name>\n" "Disable a NPC"
+loadnpc: "Params: <path to script>\n" "Load script"
+unloadnpc: "Params: <NPC name>\n" "Unload script"
+adjgroup: "Params: <level> <char name> - Do a temporary adjustment of the GM level of a player"
+kickall: "Kick all characters off the server"
+mapexit: "Kick all players and shut down map-server."
+reloaditemdb: "Reload item database."
+reloadmobdb: "Reload monster database."
+reloadskilldb: "Reload skills definition database."
+reloadscript: "Reload all scripts."
+gat: "For debugging (you inspect around gat)"
+send: "For debugging (packet variety)"
+nuke: "Params: <char name>\n"
+

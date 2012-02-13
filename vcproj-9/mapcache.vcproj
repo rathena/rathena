@@ -42,8 +42,8 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/MP"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\3rdparty\zlib\include;..\3rdparty\msinttypes\include"
-				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG;MINICORE"
+				AdditionalIncludeDirectories="..\3rdparty\libconfig;..\3rdparty\zlib\include;..\3rdparty\msinttypes\include"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG;MINICORE;LIBCONFIG_STATIC;YY_USE_CONST"
 				GeneratePreprocessedFile="0"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
@@ -135,8 +135,8 @@
 				OmitFramePointers="true"
 				EnableFiberSafeOptimizations="true"
 				WholeProgramOptimization="true"
-				AdditionalIncludeDirectories="..\3rdparty\zlib\include;..\3rdparty\msinttypes\include"
-				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;NDEBUG;MINICORE"
+				AdditionalIncludeDirectories="..\3rdparty\libconfig;..\3rdparty\zlib\include;..\3rdparty\msinttypes\include"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;NDEBUG;MINICORE;LIBCONFIG_STATIC;YY_USE_CONST"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="false"
@@ -211,11 +211,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\common\des.h"
+				RelativePath="..\src\common\des.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\common\des.c"
+				RelativePath="..\src\common\des.h"
 				>
 			</File>
 			<File

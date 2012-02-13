@@ -4,13 +4,13 @@ COMMON_OBJ = ../common/obj_all/core.o ../common/obj_all/socket.o ../common/obj_a
 	../common/obj_all/nullpo.o ../common/obj_all/malloc.o ../common/obj_all/showmsg.o \
 	../common/obj_all/utils.o ../common/obj_all/strlib.o ../common/obj_all/grfio.o \
 	../common/obj_all/mapindex.o ../common/obj_all/ers.o ../common/obj_all/md5calc.o \
-	../common/obj_all/random.o ../common/obj_all/des.o
+	../common/obj_all/random.o ../common/obj_all/des.o ../common/obj_all/conf.o
 COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h \
 	../common/db.h ../common/plugins.h ../common/lock.h \
 	../common/nullpo.h ../common/malloc.h ../common/showmsg.h \
 	../common/utils.h ../common/strlib.h ../common/grfio.h \
 	../common/mapindex.h ../common/ers.h ../common/md5calc.h \
-	../common/random.h ../common/des.h
+	../common/random.h ../common/des.h ../common/conf.h
 
 COMMON_SQL_OBJ = ../common/obj_sql/sql.o
 COMMON_SQL_H = ../common/sql.h
@@ -19,12 +19,19 @@ MT19937AR_OBJ = ../../3rdparty/mt19937ar/mt19937ar.o
 MT19937AR_H = ../../3rdparty/mt19937ar/mt19937ar.h
 MT19937AR_INCLUDE = -I../../3rdparty/mt19937ar
 
+LIBCONFIG_OBJ = ../../3rdparty/libconfig/libconfig.o ../../3rdparty/libconfig/grammar.o \
+	../../3rdparty/libconfig/scanctx.o ../../3rdparty/libconfig/scanner.o ../../3rdparty/libconfig/strbuf.o
+LIBCONFIG_H = ../../3rdparty/libconfig/libconfig.h ../../3rdparty/libconfig/grammar.h \
+	../../3rdparty/libconfig/parsectx.h ../../3rdparty/libconfig/scanctx.h ../../3rdparty/libconfig/scanner.h \
+	../../3rdparty/libconfig/strbuf.h ../../3rdparty/libconfig/wincompat.h
+LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
+
 MAP_OBJ = map.o chrif.o clif.o pc.o status.o npc.o \
 	npc_chat.o chat.o path.o itemdb.o mob.o script.o \
 	storage.o skill.o atcommand.o battle.o battleground.o \
 	intif.o trade.o party.o vending.o guild.o pet.o \
 	log.o mail.o date.o unit.o homunculus.o mercenary.o quest.o instance.o \
-	buyingstore.o searchstore.o duel.o
+	buyingstore.o searchstore.o duel.o pc_groups.o
 MAP_SQL_OBJ = $(MAP_OBJ:%=obj_sql/%) \
 	obj_sql/mapreg_sql.o
 MAP_H = map.h chrif.h clif.h pc.h status.h npc.h \
@@ -32,7 +39,7 @@ MAP_H = map.h chrif.h clif.h pc.h status.h npc.h \
 	storage.h skill.h atcommand.h battle.h battleground.h \
 	intif.h trade.h party.h vending.h guild.h pet.h \
 	log.h mail.h date.h unit.h homunculus.h mercenary.h quest.h instance.h mapreg.h \
-	buyingstore.h searchstore.h duel.h \
+	buyingstore.h searchstore.h duel.h pc_groups.h \
 	config/Core.h config/Renewal.h config/Secure.h config/Data/Const.h \
 	config/Skills/General.h config/Skills/Mage_Classes.h config/Skills/Swordsman_Classes.h
 
@@ -95,12 +102,12 @@ obj_sql:
 # executables
 
 map-server_sql: obj_sql $(MAP_SQL_OBJ) $(COMMON_OBJ) $(COMMON_SQL_OBJ)
-	@CC@ @LDFLAGS@ -o ../../map-server_sql@EXEEXT@ $(MAP_SQL_OBJ) $(COMMON_OBJ) $(COMMON_SQL_OBJ) $(MT19937AR_OBJ) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
+	@CC@ @LDFLAGS@ -o ../../map-server_sql@EXEEXT@ $(MAP_SQL_OBJ) $(COMMON_OBJ) $(COMMON_SQL_OBJ) $(MT19937AR_OBJ) $(LIBCONFIG_OBJ) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
 
 # map object files
 
-obj_sql/%.o: %.c $(MAP_H) $(COMMON_H) $(COMMON_SQL_H) $(MT19937AR_H)
-	@CC@ @CFLAGS@ $(MT19937AR_INCLUDE) $(PCRE_CFLAGS) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+obj_sql/%.o: %.c $(MAP_H) $(COMMON_H) $(COMMON_SQL_H) $(MT19937AR_H) $(LIBCONFIG_H)
+	@CC@ @CFLAGS@ $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing object files
 ../common/obj_all/%.o:
@@ -111,3 +118,6 @@ obj_sql/%.o: %.c $(MAP_H) $(COMMON_H) $(COMMON_SQL_H) $(MT19937AR_H)
 
 MT19937AR_OBJ:
 	@$(MAKE) -C ../../3rdparty/mt19937ar
+
+LIBCONFIG_OBJ:
+	@$(MAKE) -C ../../3rdparty/libconfig

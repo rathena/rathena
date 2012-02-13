@@ -282,12 +282,13 @@ void log_mvpdrop(struct map_session_data* sd, int monster_id, int* log_mvp)
 }
 
 
-/// logs used GM commands
-void log_atcommand(struct map_session_data* sd, int cmdlvl, const char* message)
+/// logs used atcommands
+void log_atcommand(struct map_session_data* sd, const char* message)
 {
 	nullpo_retv(sd);
 
-	if( cmdlvl < log_config.gm )
+	if( !log_config.commands ||
+	    !pc_should_log_commands(sd) )
 		return;
 
 	if( log_config.sql_logs )
@@ -460,8 +461,8 @@ int log_config_read(const char* cfgName)
 				log_config.filter = config_switch(w2);
 			else if( strcmpi(w1, "log_zeny") == 0 )
 				log_config.zeny = config_switch(w2);
-			else if( strcmpi(w1, "log_gm") == 0 )
-				log_config.gm = config_switch(w2);
+			else if( strcmpi(w1, "log_commands") == 0 )
+				log_config.commands = config_switch(w2);
 			else if( strcmpi(w1, "log_npc") == 0 )
 				log_config.npc = config_switch(w2);
 			else if( strcmpi(w1, "log_chat") == 0 )
@@ -508,9 +509,9 @@ int log_config_read(const char* cfgName)
 		{
 			ShowInfo("Logging chat to %s '%s'.\n", target, log_config.log_chat);
 		}
-		if( log_config.gm )
+		if( log_config.commands )
 		{
-			ShowInfo("Logging gm commands to %s '%s'.\n", target, log_config.log_gm);
+			ShowInfo("Logging commands to %s '%s'.\n", target, log_config.log_gm);
 		}
 		if( log_config.mvpdrop )
 		{

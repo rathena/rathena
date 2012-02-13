@@ -42,8 +42,8 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/MP"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\3rdparty\mysql\include;..\3rdparty\zlib\include;..\3rdparty\pcre\include;..\3rdparty\msinttypes\include;..\3rdparty\mt19937ar"
-				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG;PCRE_SUPPORT;FD_SETSIZE=4096"
+				AdditionalIncludeDirectories="..\3rdparty\libconfig;..\3rdparty\mysql\include;..\3rdparty\zlib\include;..\3rdparty\pcre\include;..\3rdparty\msinttypes\include;..\3rdparty\mt19937ar"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG;PCRE_SUPPORT;FD_SETSIZE=4096;LIBCONFIG_STATIC;YY_USE_CONST"
 				GeneratePreprocessedFile="0"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
@@ -136,8 +136,8 @@
 				OmitFramePointers="true"
 				EnableFiberSafeOptimizations="true"
 				WholeProgramOptimization="true"
-				AdditionalIncludeDirectories="..\3rdparty\mysql\include;..\3rdparty\zlib\include;..\3rdparty\pcre\include;..\3rdparty\msinttypes\include;..\3rdparty\mt19937ar"
-				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;NDEBUG;PCRE_SUPPORT;FD_SETSIZE=4096"
+				AdditionalIncludeDirectories="..\3rdparty\libconfig;..\3rdparty\mysql\include;..\3rdparty\zlib\include;..\3rdparty\pcre\include;..\3rdparty\msinttypes\include;..\3rdparty\mt19937ar"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;NDEBUG;PCRE_SUPPORT;FD_SETSIZE=4096;LIBCONFIG_STATIC;YY_USE_CONST"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				DefaultCharIsUnsigned="false"
@@ -203,20 +203,84 @@
 		<Filter
 			Name="3rdparty"
 			>
-			<File
-				RelativePath="..\3rdparty\mt19937ar\mt19937ar.c"
+			<Filter
+				Name="mt19937ar"
 				>
-			</File>
-			<File
-				RelativePath="..\3rdparty\mt19937ar\mt19937ar.h"
+				<File
+					RelativePath="..\3rdparty\mt19937ar\mt19937ar.c"
+					>
+				</File>
+				<File
+					RelativePath="..\3rdparty\mt19937ar\mt19937ar.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="libconfig"
 				>
-			</File>
+				<File
+					RelativePath="..\3rdparty\libconfig\grammar.c"
+					>
+				</File>
+				<File
+					RelativePath="..\3rdparty\libconfig\grammar.h"
+					>
+				</File>
+				<File
+					RelativePath="..\3rdparty\libconfig\libconfig.c"
+					>
+				</File>
+				<File
+					RelativePath="..\3rdparty\libconfig\libconfig.h"
+					>
+				</File>
+				<File
+					RelativePath="..\3rdparty\libconfig\parsectx.h"
+					>
+				</File>
+				<File
+					RelativePath="..\3rdparty\libconfig\scanctx.c"
+					>
+				</File>
+				<File
+					RelativePath="..\3rdparty\libconfig\scanctx.h"
+					>
+				</File>
+				<File
+					RelativePath="..\3rdparty\libconfig\scanner.c"
+					>
+				</File>
+				<File
+					RelativePath="..\3rdparty\libconfig\scanner.h"
+					>
+				</File>
+				<File
+					RelativePath="..\3rdparty\libconfig\strbuf.c"
+					>
+				</File>
+				<File
+					RelativePath="..\3rdparty\libconfig\strbuf.h"
+					>
+				</File>
+				<File
+					RelativePath="..\3rdparty\libconfig\wincompat.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="common"
 			>
 			<File
 				RelativePath="..\src\common\cbasetypes.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\conf.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\conf.h"
 				>
 			</File>
 			<File
@@ -436,6 +500,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\map\config\Data\Const.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\config\Core.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\date.c"
 				>
 			</File>
@@ -449,6 +521,10 @@
 			</File>
 			<File
 				RelativePath="..\src\map\duel.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\config\Skills\General.h"
 				>
 			</File>
 			<File
@@ -497,6 +573,10 @@
 			</File>
 			<File
 				RelativePath="..\src\map\log.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\config\Skills\Mage_Classes.h"
 				>
 			</File>
 			<File
@@ -576,6 +656,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\map\pc_groups.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\pc_groups.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\pet.c"
 				>
 			</File>
@@ -592,31 +680,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\map\config\Core.h"
-				>
-			</File>
-			<File
 				RelativePath="..\src\map\config\Renewal.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\config\Secure.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\config\Data\Const.h"
-				>
-			</File>
-    			<File
-				RelativePath="..\src\map\config\Skills\General.h"
-				>
-			</File>
-    			<File
-				RelativePath="..\src\map\config\Skills\Mage_Classes.h"
-				>
-			</File>
-    			<File
-				RelativePath="..\src\map\config\Skills\Swordsman_Classes.h"
 				>
 			</File>
 			<File
@@ -633,6 +697,10 @@
 			</File>
 			<File
 				RelativePath="..\src\map\searchstore.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\config\Secure.h"
 				>
 			</File>
 			<File
@@ -657,6 +725,10 @@
 			</File>
 			<File
 				RelativePath="..\src\map\storage.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\config\Skills\Swordsman_Classes.h"
 				>
 			</File>
 			<File

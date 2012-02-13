@@ -6,6 +6,13 @@ COMMON_H = ../common/core.h ../common/mmo.h ../common/version.h \
 	../common/malloc.h ../common/showmsg.h ../common/strlib.h \
 	../common/utils.h ../common/cbasetypes.h ../common/des.h ../common/grfio.h
 
+LIBCONFIG_OBJ = ../../3rdparty/libconfig/libconfig.o ../../3rdparty/libconfig/grammar.o \
+	../../3rdparty/libconfig/scanctx.o ../../3rdparty/libconfig/scanner.o ../../3rdparty/libconfig/strbuf.o
+LIBCONFIG_H = ../../3rdparty/libconfig/libconfig.h ../../3rdparty/libconfig/grammar.h \
+	../../3rdparty/libconfig/parsectx.h ../../3rdparty/libconfig/scanctx.h ../../3rdparty/libconfig/scanner.h \
+	../../3rdparty/libconfig/strbuf.h ../../3rdparty/libconfig/wincompat.h
+LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
+
 MAPCACHE_OBJ = obj_all/mapcache.o
 
 @SET_MAKE@
@@ -15,8 +22,8 @@ MAPCACHE_OBJ = obj_all/mapcache.o
 
 all: mapcache
 
-mapcache: obj_all $(MAPCACHE_OBJ) $(COMMON_OBJ)
-	@CC@ @LDFLAGS@ -o ../../mapcache@EXEEXT@ $(MAPCACHE_OBJ) $(COMMON_OBJ) @LIBS@
+mapcache: obj_all $(MAPCACHE_OBJ) $(COMMON_OBJ) $(LIBCONFIG_OBJ)
+	@CC@ @LDFLAGS@ $(LIBCONFIG_INCLUDE) -o ../../mapcache@EXEEXT@ $(MAPCACHE_OBJ) $(COMMON_OBJ) $(LIBCONFIG_OBJ) @LIBS@
 
 clean:
 	rm -rf obj_all/*.o ../../mapcache@EXEEXT@
@@ -42,3 +49,6 @@ obj_all/%.o: %.c $(COMMON_H)
 
 ../common/obj_all/mini%.o:
 	@$(MAKE) -C ../common txt
+
+LIBCONFIG_OBJ:
+	@$(MAKE) -C ../../3rdparty/libconfig

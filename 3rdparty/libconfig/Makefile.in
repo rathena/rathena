@@ -1,0 +1,24 @@
+
+LIBCONFIG_OBJ = libconfig.o grammar.o scanctx.o scanner.o strbuf.o
+LIBCONFIG_H = libconfig.h grammar.h parsectx.h scanctx.h scanner.h strbuf.h wincompat.h
+
+@SET_MAKE@
+
+#####################################################################
+.PHONY : all clean help
+
+all: $(LIBCONFIG_OBJ)
+
+clean:
+	rm -rf *.o
+
+help:
+	@echo "possible targets are 'all' 'clean' 'help'"
+	@echo "'all'    - builds $(LIBCONFIG_OBJ)"
+	@echo "'clean'  - deletes $(LIBCONFIG_OBJ)"
+	@echo "'help'   - outputs this message"
+
+#####################################################################
+
+%.o: %.c $(LIBCONFIG_H)
+	@CC@ @CFLAGS@ @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<

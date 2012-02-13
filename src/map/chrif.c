@@ -412,7 +412,7 @@ int chrif_changemapserver(struct map_session_data* sd, uint32 ip, uint16 port)
 	WFIFOW(char_fd,28) = htons(port);
 	WFIFOB(char_fd,30) = sd->status.sex;
 	WFIFOL(char_fd,31) = htonl(session[sd->fd]->client_addr);
-	WFIFOL(char_fd,35) = sd->gmlevel;
+	WFIFOL(char_fd,35) = sd->group_id;
 	WFIFOSET(char_fd,39);
 	return 0;
 }
@@ -578,7 +578,7 @@ void chrif_authok(int fd)
 	uint32 login_id1;
 	uint32 login_id2;
 	time_t expiration_time;
-	int gmlevel;
+	int group_id;
 	struct mmo_charstatus* status;
 	int char_id;
 	struct auth_node *node;
@@ -595,7 +595,7 @@ void chrif_authok(int fd)
 	login_id1 = RFIFOL(fd,8);
 	login_id2 = RFIFOL(fd,12);
 	expiration_time = (time_t)(int32)RFIFOL(fd,16);
-	gmlevel = RFIFOL(fd,20);
+	group_id = RFIFOL(fd,20);
 	changing_mapservers = (RFIFOB(fd,24));
 	status = (struct mmo_charstatus*)RFIFOP(fd,25);
 	char_id = status->char_id;
@@ -628,7 +628,7 @@ void chrif_authok(int fd)
 		node->char_id == char_id &&
 		node->login_id1 == login_id1 )
 	{ //Auth Ok
-		if (pc_authok(sd, login_id2, expiration_time, gmlevel, status, changing_mapservers))
+		if (pc_authok(sd, login_id2, expiration_time, group_id, status, changing_mapservers))
 			return;
 	} else { //Auth Failed
 		pc_authfail(sd);

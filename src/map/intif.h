@@ -20,7 +20,7 @@ int intif_broadcast(const char* mes, int len, int type);
 int intif_broadcast2(const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY);
 
 int intif_wis_message(struct map_session_data *sd,char *nick,char *mes,int mes_len);
-int intif_wis_message_to_gm(char *Wisp_name, int min_gm_level, char *mes);
+int intif_wis_message_to_gm(char *Wisp_name, int permission, char *mes);
 
 int intif_saveregistry(struct map_session_data *sd, int type);
 int intif_request_registry(struct map_session_data *sd, int flag);
