@@ -1280,12 +1280,10 @@ void socket_init(void)
 			rlp.rlim_cur = FD_SETSIZE;
 			if( 0 != setrlimit(RLIMIT_NOFILE, &rlp) )
 			{// failed, try setting the maximum too (permission to change system limits is required)
-				int err;
 				rlp.rlim_max = FD_SETSIZE;
-				err = setrlimit(RLIMIT_NOFILE, &rlp);
-				if( err != 0 )
+				if( 0 != setrlimit(RLIMIT_NOFILE, &rlp) )
 				{// failed
-					const char* errmsg = "unknown";
+					const char *errmsg = error_msg();
 					int rlim_ori;
 					// set to maximum allowed
 					getrlimit(RLIMIT_NOFILE, &rlp);
@@ -1294,10 +1292,8 @@ void socket_init(void)
 					setrlimit(RLIMIT_NOFILE, &rlp);
 					// report limit
 					getrlimit(RLIMIT_NOFILE, &rlp);
-					if( err == EPERM )
-						errmsg = "permission denied";
-					ShowWarning("socket_init: failed to set socket limit to %d, setting to maximum allowed (original limit=%d, current limit=%d, maximum allowed=%d, error=%s).\n", FD_SETSIZE, rlim_ori, (int)rlp.rlim_cur, (int)rlp.rlim_max, errmsg);
 					rlim_cur = rlp.rlim_cur;
+					ShowWarning("socket_init: failed to set socket limit to %d, setting to maximum allowed (original limit=%d, current limit=%d, maximum allowed=%d, %s).\n", FD_SETSIZE, rlim_ori, (int)rlp.rlim_cur, (int)rlp.rlim_max, errmsg);
 				}
 			}
 		}
