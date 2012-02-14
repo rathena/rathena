@@ -2914,6 +2914,8 @@ int skill_addtimerskill (struct block_list *src, unsigned int tick, int target, 
 	int i;
 	struct unit_data *ud;
 	nullpo_retr(1, src);
+	if (src->prev == NULL)
+		return 0;
 	ud = unit_bl2ud(src);
 	nullpo_retr(1, ud);
 
