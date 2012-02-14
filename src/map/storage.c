@@ -322,7 +322,7 @@ void storage_storage_quit(struct map_session_data* sd, int flag)
 static void* create_guildstorage(DBKey key, va_list args)
 {
 	struct guild_storage *gs = NULL;
-	gs = (struct guild_storage *) aCallocA(sizeof(struct guild_storage), 1);
+	gs = (struct guild_storage *) aCalloc(sizeof(struct guild_storage), 1);
 	gs->guild_id=key.i;
 	return gs;
 }

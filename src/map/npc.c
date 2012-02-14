@@ -458,7 +458,7 @@ int npc_timerevent_import(char* lname, void* data, va_list ap)
 		int j, i = nd->u.scr.timeramount;
 
 		if( te == NULL )
-			te = (struct npc_timerevent_list*)aMallocA( sizeof(struct npc_timerevent_list) );
+			te = (struct npc_timerevent_list*)aMalloc( sizeof(struct npc_timerevent_list) );
 		else
 			te = (struct npc_timerevent_list*)aRealloc( te, sizeof(struct npc_timerevent_list) * (i+1) );
 
@@ -2180,7 +2180,7 @@ int npc_convertlabel_db(DBKey key, void* data, va_list ap)
 
 	if( *label_list == NULL )
 	{
-		*label_list = (struct npc_label_list *) aCallocA (1, sizeof(struct npc_label_list));
+		*label_list = (struct npc_label_list *) aCalloc (1, sizeof(struct npc_label_list));
 		*label_list_num = 0;
 	} else
 		*label_list = (struct npc_label_list *) aRealloc (*label_list, sizeof(struct npc_label_list)*(*label_list_num+1));
@@ -2391,7 +2391,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 			struct npc_timerevent_list *te = nd->u.scr.timer_event;
 			int j, k = nd->u.scr.timeramount;
 			if (te == NULL)
-				te = (struct npc_timerevent_list *)aMallocA(sizeof(struct npc_timerevent_list));
+				te = (struct npc_timerevent_list *)aMalloc(sizeof(struct npc_timerevent_list));
 			else
 				te = (struct npc_timerevent_list *)aRealloc( te, sizeof(struct npc_timerevent_list) * (k+1) );
 			for (j = 0; j < k; j++){
@@ -2579,7 +2579,7 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 			struct npc_timerevent_list *te = nd->u.scr.timer_event;
 			int j, k = nd->u.scr.timeramount;
 			if (te == NULL)
-				te = (struct npc_timerevent_list *)aMallocA(sizeof(struct npc_timerevent_list));
+				te = (struct npc_timerevent_list *)aMalloc(sizeof(struct npc_timerevent_list));
 			else
 				te = (struct npc_timerevent_list *)aRealloc( te, sizeof(struct npc_timerevent_list) * (k+1) );
 			for (j = 0; j < k; j++){

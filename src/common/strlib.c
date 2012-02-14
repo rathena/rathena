@@ -1051,7 +1051,7 @@ StringBuf* StringBuf_Malloc()
 void StringBuf_Init(StringBuf* self)
 {
 	self->max_ = 1024;
-	self->ptr_ = self->buf_ = (char*)aMallocA(self->max_ + 1);
+	self->ptr_ = self->buf_ = (char*)aMalloc(self->max_ + 1);
 }
 
 /// Appends the result of printf to the StringBuf

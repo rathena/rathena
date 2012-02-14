@@ -2286,8 +2286,8 @@ void clif_inventorylist(struct map_session_data *sd)
 	const int se = 28;
 #endif
 
-	buf = (unsigned char*)aMallocA(MAX_INVENTORY * s + 4);
-	bufe = (unsigned char*)aMallocA(MAX_INVENTORY * se + 4);
+	buf = (unsigned char*)aMalloc(MAX_INVENTORY * s + 4);
+	bufe = (unsigned char*)aMalloc(MAX_INVENTORY * se + 4);
 	
 	for( i = 0, n = 0, ne = 0; i < MAX_INVENTORY; i++ )
 	{
@@ -2426,8 +2426,8 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 	const int cmd = 28;
 #endif
 
-	buf = (unsigned char*)aMallocA(items_length * s + 4);
-	bufe = (unsigned char*)aMallocA(items_length * cmd + 4);
+	buf = (unsigned char*)aMalloc(items_length * s + 4);
+	bufe = (unsigned char*)aMalloc(items_length * cmd + 4);
 
 	for( i = 0, n = 0, ne = 0; i < items_length; i++ )
 	{
@@ -2506,8 +2506,8 @@ void clif_cartlist(struct map_session_data *sd)
 	const int cmd = 28;
 #endif
 
-	buf = (unsigned char*)aMallocA(MAX_CART * s + 4);
-	bufe = (unsigned char*)aMallocA(MAX_CART * cmd + 4);
+	buf = (unsigned char*)aMalloc(MAX_CART * s + 4);
+	bufe = (unsigned char*)aMalloc(MAX_CART * cmd + 4);
 	
 	for( i = 0, n = 0, ne = 0; i < MAX_CART; i++ )
 	{
@@ -5317,7 +5317,7 @@ void clif_displaymessage(const int fd, const char* mes)
 void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, enum send_target target)
 {
 	int lp = type ? 4 : 0;
-	unsigned char *buf = (unsigned char*)aMallocA((4 + lp + len)*sizeof(unsigned char));
+	unsigned char *buf = (unsigned char*)aMalloc((4 + lp + len)*sizeof(unsigned char));
 
 	WBUFW(buf,0) = 0x9a;
 	WBUFW(buf,2) = 4 + lp + len;
@@ -5390,7 +5390,7 @@ void clif_MainChatMessage(const char* message)
 /// 01c3 <packet len>.W <fontColor>.L <fontType>.W <fontSize>.W <fontAlign>.W <fontY>.W <message>.?B
 void clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target)
 {
-	unsigned char *buf = (unsigned char*)aMallocA((16 + len)*sizeof(unsigned char));
+	unsigned char *buf = (unsigned char*)aMalloc((16 + len)*sizeof(unsigned char));
 
 	WBUFW(buf,0)  = 0x1c3;
 	WBUFW(buf,2)  = len + 16;
@@ -14742,7 +14742,7 @@ void clif_bg_message(struct battleground_data *bg, int src_id, const char *name,
 	if( (sd = bg_getavailablesd(bg)) == NULL )
 		return;
 
-	buf = (unsigned char*)aMallocA((len + NAME_LENGTH + 8)*sizeof(unsigned char));
+	buf = (unsigned char*)aMalloc((len + NAME_LENGTH + 8)*sizeof(unsigned char));
 
 	WBUFW(buf,0) = 0x2dc;
 	WBUFW(buf,2) = len + NAME_LENGTH + 8;

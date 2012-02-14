@@ -2935,7 +2935,7 @@ void op_2str(struct script_state* st, int op, const char* s1, const char* s2)
 	case C_LE: a = (strcmp(s1,s2) <= 0); break;
 	case C_ADD:
 		{
-			char* buf = (char *)aMallocA((strlen(s1)+strlen(s2)+1)*sizeof(char));
+			char* buf = (char *)aMalloc((strlen(s1)+strlen(s2)+1)*sizeof(char));
 			strcpy(buf, s1);
 			strcat(buf, s2);
 			script_pushstr(st, buf);
@@ -7709,7 +7709,7 @@ BUILDIN_FUNC(gettimestr)
 	fmtstr=script_getstr(st,2);
 	maxlen=script_getnum(st,3);
 
-	tmpstr=(char *)aMallocA((maxlen+1)*sizeof(char));
+	tmpstr=(char *)aMalloc((maxlen+1)*sizeof(char));
 	strftime(tmpstr,maxlen,fmtstr,localtime(&now));
 	tmpstr[maxlen]='\0';
 
@@ -10830,7 +10830,7 @@ BUILDIN_FUNC(getitemname)
 		script_pushconststr(st,"null");
 		return 0;
 	}
-	item_name=(char *)aMallocA(ITEM_NAME_LENGTH*sizeof(char));
+	item_name=(char *)aMalloc(ITEM_NAME_LENGTH*sizeof(char));
 
 	memcpy(item_name, i_data->jname, ITEM_NAME_LENGTH);
 	script_pushstr(st,item_name);
@@ -12563,7 +12563,7 @@ BUILDIN_FUNC(charat)
 	int pos = script_getnum(st,3);
 	char *output;
 
-	output = (char*)aMallocA(2*sizeof(char));
+	output = (char*)aMalloc(2*sizeof(char));
 	output[0] = '\0';
 
 	if(str && pos >= 0 && (unsigned int)pos < strlen(str))
@@ -12606,7 +12606,7 @@ BUILDIN_FUNC(insertchar)
 	else if(index > len)
 		index = len;
 
-	output = (char*)aMallocA(len + 2);
+	output = (char*)aMalloc(len + 2);
 
 	memcpy(output, str, index);
 	output[index] = c[0];
@@ -12634,7 +12634,7 @@ BUILDIN_FUNC(delchar)
 		return 0;
 	}
 
-	output = (char*)aMallocA(len);
+	output = (char*)aMalloc(len);
 
 	memcpy(output, str, index);
 	memcpy(&output[index], &str[index+1], len - index);
@@ -12693,10 +12693,10 @@ BUILDIN_FUNC(substr)
 
 	if(start >= 0 && end < strlen(str) && start <= end) {
 		len = end - start + 1;
-		output = (char*)aMallocA(len + 1);
+		output = (char*)aMalloc(len + 1);
 		memcpy(output, &str[start], len);
 	} else 
-		output = (char*)aMallocA(1);
+		output = (char*)aMalloc(1);
 
 	output[len] = '\0';
 
@@ -12724,7 +12724,7 @@ BUILDIN_FUNC(explode)
 
 	TBL_PC* sd = NULL;
 
-	temp = (char*)aMallocA(len + 1);
+	temp = (char*)aMalloc(len + 1);
 
 	if( !data_isreference(data) )
 	{
@@ -12835,7 +12835,7 @@ BUILDIN_FUNC(implode)
 	if(array_size == -1) //empty array check (AmsTaff)
     {
         ShowWarning("script:implode: array length = 0\n");
-        output = (char*)aMallocA(sizeof(char)*5);
+        output = (char*)aMalloc(sizeof(char)*5);
         sprintf(output,"%s","NULL");
 	} else {
 		for(i = 0; i <= array_size; ++i) {
@@ -12850,7 +12850,7 @@ BUILDIN_FUNC(implode)
 			glue_len = strlen(glue);
 			len += glue_len * (array_size);
 		}
-		output = (char*)aMallocA(len + 1);
+		output = (char*)aMalloc(len + 1);
 
 		//build output
 		for(i = 0; i < array_size; ++i) {
@@ -13426,7 +13426,7 @@ BUILDIN_FUNC(md5)
 	char *md5str;
 
 	tmpstr = script_getstr(st,2);
-	md5str = (char *)aMallocA((32+1)*sizeof(char));
+	md5str = (char *)aMalloc((32+1)*sizeof(char));
 	MD5_String(tmpstr, md5str);
 	script_pushstr(st, md5str);
 	return 0;
@@ -13590,7 +13590,7 @@ BUILDIN_FUNC(escape_sql)
 
 	str = script_getstr(st,2);
 	len = strlen(str);
-	esc_str = (char*)aMallocA(len*2+1);
+	esc_str = (char*)aMalloc(len*2+1);
 	Sql_EscapeStringLen(mmysql_handle, esc_str, str, len);
 	script_pushstr(st, esc_str);
 	return 0;
