@@ -5460,37 +5460,28 @@ void getring (struct map_session_data* sd)
  *------------------------------------------*/
 ACMD_FUNC(marry)
 {
-  struct map_session_data *pl_sd1 = NULL;
-  struct map_session_data *pl_sd2 = NULL;
-  char player1[128], player2[128]; //Length used for return error msgs
+	struct map_session_data *pl_sd = NULL;
+	char player_name[NAME_LENGTH] = "";
+	
+	nullpo_retr(-1, sd);
+	
+	if (!message || !*message || sscanf(message, "%23s", player_name) != 1) {
+		clif_displaymessage(fd, "Usage: @marry <player name>");
+		return -1;
+	}
 
-  nullpo_retr(-1, sd);
+	if ((pl_sd = map_nick2sd(player_name)) == NULL) {
+		clif_displaymessage(fd, msg_txt(3));
+		return -1;
+	}
 
-  if (!message || !*message || sscanf(message, "%23[^,], %23[^\r\n]", player1, player2) != 2) {
-	clif_displaymessage(fd, "Usage: @marry <player1>,<player2>");
-	return -1;
-  }
-
-  if((pl_sd1=map_nick2sd((char *) player1)) == NULL) {
-	sprintf(player2, "Cannot find player '%s' online", player1);
-	clif_displaymessage(fd, player2);
-	return -1;
-  }
-
-  if((pl_sd2=map_nick2sd((char *) player2)) == NULL) {
-	sprintf(player1, "Cannot find player '%s' online", player2);
-	clif_displaymessage(fd, player1);
-	return -1;
-  }
-
-  if (pc_marriage(pl_sd1, pl_sd2) == 0) {
-	clif_displaymessage(fd, "They are married.. wish them well");
-	clif_wedding_effect(&sd->bl);	//wedding effect and music [Lupus]
-	// Auto-give named rings (Aru)
-	getring (pl_sd1);
-	getring (pl_sd2);
-	return 0;
-  }
+	if (pc_marriage(sd, pl_sd) == 0) {
+		clif_displaymessage(fd, "They are married.. wish them well.");
+		clif_wedding_effect(&pl_sd->bl); //wedding effect and music [Lupus]
+		getring(sd); // Auto-give named rings (Aru)
+		getring(pl_sd);
+		return 0;
+	}
 
 	clif_displaymessage(fd, "The two cannot wed because one of them is either a baby or is already married.");
 	return -1;
@@ -5502,28 +5493,15 @@ ACMD_FUNC(marry)
  *------------------------------------------*/
 ACMD_FUNC(divorce)
 {
-  struct map_session_data *pl_sd = NULL;
+	nullpo_retr(-1, sd);
 
-  nullpo_retr(-1, sd);
-
-  if (!message || !*message || sscanf(message, "%23[^\r\n]", atcmd_player_name) != 1) {
-	clif_displaymessage(fd, "Usage: @divorce <player>.");
-	return -1;
-  }
-
-	if ( (pl_sd = map_nick2sd(atcmd_player_name)) == NULL )
-	{
-		clif_displaymessage(fd, msg_txt(3)); // Character not found.
-		return -1;
-	}
-
-	if (pc_divorce(pl_sd) != 0) {
-		sprintf(atcmd_output, "The divorce has failed.. Cannot find player '%s' or his(her) partner online.", atcmd_player_name);
+	if (pc_divorce(sd) != 0) {
+		sprintf(atcmd_output, "'%s' is not married.", sd->status.name);
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}
 	
-	sprintf(atcmd_output, "'%s' and his(her) partner are now divorced.", atcmd_player_name);
+	sprintf(atcmd_output, "'%s' and his(her) partner are now divorced.", sd->status.name);
 	clif_displaymessage(fd, atcmd_output);
 	return 0;
 }
