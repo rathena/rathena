@@ -12581,15 +12581,10 @@ BUILDIN_FUNC(setchar)
 	const char *str = script_getstr(st,2);
 	const char *c = script_getstr(st,3);
 	int index = script_getnum(st,4);
-	char *output;
-	size_t len = strlen(str);
+	char *output = aStrdup(str);
 
-	output = (char*)aMallocA(len + 1);
-	memcpy(output, str, len);
-	output[len] = '\0';
-
-	if(index >= 0 && index < len)
-		output[index] = c[0];
+	if(index >= 0 && index < strlen(output))
+		output[index] = *c;
 
 	script_pushstr(st, output);
 	return 0;
@@ -12634,9 +12629,7 @@ BUILDIN_FUNC(delchar)
 
 	if(index < 0 || index > len) {
 		//return original
-		++len;
-		output = (char*)aMallocA(len);
-		memcpy(output, str, len);
+		output = aStrdup(str);
 		script_pushstr(st, output);
 		return 0;
 	}
@@ -12656,16 +12649,13 @@ BUILDIN_FUNC(delchar)
 BUILDIN_FUNC(strtoupper)
 {
 	const char *str = script_getstr(st,2);
-	char *output;
-	int i = 0;
-	
-	output = (char*)aMallocA(strlen(str) + 1);
+	char *output = aStrdup(str);
+	char *cursor = output;
 
-	while(str[i] != '\0') {
-		i = i + 1;
-		output[i] = TOUPPER(str[i]);
+	while (*cursor != '\0') {
+		*cursor = TOUPPER(*cursor);
+		cursor++;
 	}
-	output[i] = '\0';
 
 	script_pushstr(st, output);
 	return 0;
@@ -12677,16 +12667,13 @@ BUILDIN_FUNC(strtoupper)
 BUILDIN_FUNC(strtolower)
 {
 	const char *str = script_getstr(st,2);
-	char *output;
-	int i = 0;
-	
-	output = (char*)aMallocA(strlen(str) + 1);
+	char *output = aStrdup(str);
+	char *cursor = output;
 
-	while(str[i] != '\0') {
-		i = i + 1;
-		output[i] = TOLOWER(str[i]);
+	while (*cursor != '\0') {
+		*cursor = TOLOWER(*cursor);
+		cursor++;
 	}
-	output[i] = '\0';
 
 	script_pushstr(st, output);
 	return 0;
