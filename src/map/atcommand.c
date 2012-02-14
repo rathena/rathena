@@ -1182,48 +1182,13 @@ ACMD_FUNC(jobchange)
 /*==========================================
  *
  *------------------------------------------*/
-ACMD_FUNC(die)
-{
-	nullpo_retr(-1, sd);
-	clif_specialeffect(&sd->bl,450,SELF);
-	status_kill(&sd->bl);
-	clif_displaymessage(fd, msg_txt(13)); // A pity! You've died.
-
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------*/
 ACMD_FUNC(kill)
 {
-	struct map_session_data *pl_sd;
 	nullpo_retr(-1, sd);
-
-	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
-
-	if (!message || !*message) {
-		clif_displaymessage(fd, "Please, enter a player name (usage: @kill <player name/id>).");
-		return -1;
-	}
-
-	if((pl_sd=map_nick2sd((char *)message)) == NULL && (pl_sd=map_charid2sd(atoi(message))) == NULL)
-	{
-		clif_displaymessage(fd, msg_txt(3)); // Character not found.
-		return -1;
-	}
-	
-	if (pc_get_group_level(sd) < pc_get_group_level(pl_sd))
-	{ // you can kill only lower or same level
-		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
-		return -1;
-	}
-	
-	status_kill(&pl_sd->bl);
-	clif_displaymessage(pl_sd->fd, msg_txt(13)); // A pity! You've died.
-	if (fd != pl_sd->fd)
+	status_kill(&sd->bl);
+	clif_displaymessage(sd->fd, msg_txt(13)); // A pity! You've died.
+	if (fd != sd->fd)
 		clif_displaymessage(fd, msg_txt(14)); // Character killed.
-
 	return 0;
 }
 
@@ -8426,7 +8391,6 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(option),
 		ACMD_DEF(hide), // + /hide
 		ACMD_DEF(jobchange),
-		ACMD_DEF(die),
 		ACMD_DEF(kill),
 		ACMD_DEF(alive),
 		ACMD_DEF(kami),

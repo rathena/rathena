@@ -14,7 +14,6 @@ whodrops: Show who drops an item (mobs with highest drop rate).
 refresh: Syncs the player's position on the client with the one stored on the server.
 time: Give server time.
 version: Displays SVN version of the server.
-die: Suicide your character.
 petrename: Enables you to rename your pet.
 party: Organize a new party, with you as the party leader.
 storage: Opens your Kafra storage wherever you are.
@@ -136,7 +135,7 @@ idsearch: Find an itemID based on item name
 item: Creates an item of your choosing, either Item ID or Name
 item2: Creates a complete item (card, etc...) of your choosing, either Item ID or Name.
 delitem: Deletes an item of your choosing, either Item ID or Name.
-kill: Kill another character without hitting them.
+kill: Kills player.
 killmonster: Kill all monsters in map (with drops)
 makeegg: Creates yourself a pet egg.
 hatch: Hatches an egg.
