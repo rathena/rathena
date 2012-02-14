@@ -561,6 +561,8 @@ ACMD_FUNC(who)
 {
 	struct map_session_data *pl_sd = NULL;
 	struct s_mapiterator *iter = NULL;
+	char map_name[MAP_NAME_LENGTH_EXT] = "";
+	char player_name[NAME_LENGTH] = "";
 	int count = 0;
 	int level = 0;
 	StringBuf buf;
@@ -570,8 +572,16 @@ ACMD_FUNC(who)
 	 * 3 = @who3 : [CID/AID] Player name [Title], Map, X, Y
 	 */
 	int display_type = 1;
+	int map_id = -1;
 
 	nullpo_retr(-1, sd);
+
+	if (strstr(command, "map") != NULL) {
+		if (sscanf(message, "%15s %23s", map_name, player_name) < 1 || (map_id = map_mapname2mapid(map_name)) < 0)
+			map_id = sd->bl.m;
+	} else {
+		sscanf(message, "%23s", player_name);
+	}
 
 	if (strstr(command, "2") != NULL)
 		display_type = 2;
@@ -584,244 +594,65 @@ ACMD_FUNC(who)
 	iter = mapit_getallusers();
 	for (pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter))	{
 		if (!((pc_has_permission(pl_sd, PC_PERM_HIDE_SESSION) || (pl_sd->sc.option & OPTION_INVISIBLE)) && pc_get_group_level(pl_sd) > level)) { // you can look only lower or same level
-			if (stristr(pl_sd->status.name, message) != NULL) { // search with no case sensitive
-				switch (display_type) {
-					case 2: {
-						StringBuf_Printf(&buf, msg_txt(343), pl_sd->status.name); // "Name: %s "
-						if (pc_get_group_id(pl_sd) > 0) // Player title, if exists
-							StringBuf_Printf(&buf, msg_txt(344), pc_group_id2name(pc_get_group_id(pl_sd))); // "(%s) "
-						StringBuf_Printf(&buf, msg_txt(347), pl_sd->status.base_level, pl_sd->status.job_level,
-							job_name(pl_sd->status.class_)); // "| Lv:%d/%d | Job: %s"
-						break;
-					}
-					case 3: {
-						if (pc_has_permission(sd, PC_PERM_WHO_DISPLAY_AID))
-							StringBuf_Printf(&buf, "(CID:%d/AID:%d) ", pl_sd->status.char_id, pl_sd->status.account_id);
-						StringBuf_Printf(&buf, msg_txt(343), pl_sd->status.name); // "Name: %s "
-						if (pc_get_group_id(pl_sd) > 0) // Player title, if exists
-							StringBuf_Printf(&buf, msg_txt(344), pc_group_id2name(pc_get_group_id(pl_sd))); // "(%s) "
-						StringBuf_Printf(&buf, msg_txt(348), mapindex_id2name(pl_sd->mapindex), pl_sd->bl.x, pl_sd->bl.y); // "| Location: %s %d %d"
-						break;
-					}
-					default: {
-						struct party_data *p = party_search(pl_sd->status.party_id);
-						struct guild *g = guild_search(pl_sd->status.guild_id);
-
-						StringBuf_Printf(&buf, msg_txt(343), pl_sd->status.name); // "Name: %s "
-						if (pc_get_group_id(pl_sd) > 0) // Player title, if exists
-							StringBuf_Printf(&buf, msg_txt(344), pc_group_id2name(pc_get_group_id(pl_sd))); // "(%s) "
-						if (p != NULL)
-							StringBuf_Printf(&buf, msg_txt(345), p->party.name); // " | Party: '%s'"
-						if (g != NULL)
-							StringBuf_Printf(&buf, msg_txt(346), g->name); // " | Guild: '%s'"
-						break;
-					}
+			if (stristr(pl_sd->status.name, player_name) == NULL // search with no case sensitive
+				|| map_id >= 0 && pl_sd->bl.m != map_id)
+				continue;
+			switch (display_type) {
+				case 2: {
+					StringBuf_Printf(&buf, msg_txt(343), pl_sd->status.name); // "Name: %s "
+					if (pc_get_group_id(pl_sd) > 0) // Player title, if exists
+						StringBuf_Printf(&buf, msg_txt(344), pc_group_id2name(pc_get_group_id(pl_sd))); // "(%s) "
+					StringBuf_Printf(&buf, msg_txt(347), pl_sd->status.base_level, pl_sd->status.job_level,
+						job_name(pl_sd->status.class_)); // "| Lv:%d/%d | Job: %s"
+					break;
 				}
-				clif_displaymessage(fd, StringBuf_Value(&buf));
-				StringBuf_Clear(&buf);
-				count++;
+				case 3: {
+					if (pc_has_permission(sd, PC_PERM_WHO_DISPLAY_AID))
+						StringBuf_Printf(&buf, "(CID:%d/AID:%d) ", pl_sd->status.char_id, pl_sd->status.account_id);
+					StringBuf_Printf(&buf, msg_txt(343), pl_sd->status.name); // "Name: %s "
+					if (pc_get_group_id(pl_sd) > 0) // Player title, if exists
+						StringBuf_Printf(&buf, msg_txt(344), pc_group_id2name(pc_get_group_id(pl_sd))); // "(%s) "
+					StringBuf_Printf(&buf, msg_txt(348), mapindex_id2name(pl_sd->mapindex), pl_sd->bl.x, pl_sd->bl.y); // "| Location: %s %d %d"
+					break;
+				}
+				default: {
+					struct party_data *p = party_search(pl_sd->status.party_id);
+					struct guild *g = guild_search(pl_sd->status.guild_id);
+
+					StringBuf_Printf(&buf, msg_txt(343), pl_sd->status.name); // "Name: %s "
+					if (pc_get_group_id(pl_sd) > 0) // Player title, if exists
+						StringBuf_Printf(&buf, msg_txt(344), pc_group_id2name(pc_get_group_id(pl_sd))); // "(%s) "
+					if (p != NULL)
+						StringBuf_Printf(&buf, msg_txt(345), p->party.name); // " | Party: '%s'"
+					if (g != NULL)
+						StringBuf_Printf(&buf, msg_txt(346), g->name); // " | Guild: '%s'"
+					break;
+				}
 			}
+			clif_displaymessage(fd, StringBuf_Value(&buf));
+			StringBuf_Clear(&buf);
+			count++;
 		}
 	}
 	mapit_free(iter);
 
-	if (count == 0) {
-		clif_displaymessage(fd, msg_txt(28)); // No player found.
-	} else if (count == 1) {
-		clif_displaymessage(fd, msg_txt(29)); // 1 player found.
+	if (map_id < 0) {
+		if (count == 0)
+			StringBuf_Printf(&buf, msg_txt(28)); // No player found.
+		else if (count == 1)
+			StringBuf_Printf(&buf, msg_txt(29)); // 1 player found.
+		else
+			StringBuf_Printf(&buf, msg_txt(30), count); // %d players found.
 	} else {
-		StringBuf_Printf(&buf, msg_txt(30), count); // %d players found.
-		clif_displaymessage(fd, StringBuf_Value(&buf));
+		if (count == 0)
+			StringBuf_Printf(&buf, msg_txt(54), map[map_id].name); // No player found in map '%s'.
+		else if (count == 1)
+			StringBuf_Printf(&buf, msg_txt(55), map[map_id].name); // 1 player found in map '%s'.
+		else
+			StringBuf_Printf(&buf, msg_txt(56), count, map[map_id].name); // %d players found in map '%s'.
 	}
+	clif_displaymessage(fd, StringBuf_Value(&buf));
 	StringBuf_Destroy(&buf);
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------*/
-ACMD_FUNC(whomap3)
-{
-	struct map_session_data *pl_sd;
-	struct s_mapiterator* iter;
-	int count;
-	int pl_level, level;
-	int map_id;
-	char map_name[MAP_NAME_LENGTH_EXT];
-
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	memset(map_name, '\0', sizeof(map_name));
-
-	if (!message || !*message)
-		map_id = sd->bl.m;
-	else {
-		sscanf(message, "%15s", map_name);
-		if ((map_id = map_mapname2mapid(map_name)) < 0)
-			map_id = sd->bl.m;
-	}
-
-	count = 0;
-	level = pc_get_group_level(sd);
-
-	iter = mapit_getallusers();
-	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
-	{
-		pl_level = pc_get_group_level(pl_sd);
-		if( pl_sd->bl.m != map_id )
-			continue;
-		if ((pc_has_permission(pl_sd, PC_PERM_HIDE_SESSION) || (pl_sd->sc.option & OPTION_INVISIBLE)) && pl_level > level)
-			continue;
-
-		if (pl_level > 0)
-			sprintf(atcmd_output, "Name: %s (GM:%d) | Location: %s %d %d", pl_sd->status.name, pl_level, mapindex_id2name(pl_sd->mapindex), pl_sd->bl.x, pl_sd->bl.y);
-		else
-			sprintf(atcmd_output, "Name: %s | Location: %s %d %d", pl_sd->status.name, mapindex_id2name(pl_sd->mapindex), pl_sd->bl.x, pl_sd->bl.y);
-		clif_displaymessage(fd, atcmd_output);
-		count++;
-	}
-	mapit_free(iter);
-
-	if (count == 0)
-		sprintf(atcmd_output, msg_txt(54), map[map_id].name); // No player found in map '%s'.
-	else if (count == 1)
-		sprintf(atcmd_output, msg_txt(55), map[map_id].name); // 1 player found in map '%s'.
-	else {
-		sprintf(atcmd_output, msg_txt(56), count, map[map_id].name); // %d players found in map '%s'.
-	}
-	clif_displaymessage(fd, atcmd_output);
-
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------*/
-ACMD_FUNC(whomap2)
-{
-	struct map_session_data *pl_sd;
-	struct s_mapiterator* iter;
-	int count;
-	int pl_level, level;
-	int map_id = 0;
-	char map_name[MAP_NAME_LENGTH_EXT];
-
-	nullpo_retr(-1, sd);
-
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	memset(map_name, '\0', sizeof(map_name));
-
-	if (!message || !*message)
-		map_id = sd->bl.m;
-	else {
-		sscanf(message, "%15s", map_name);
-		if ((map_id = map_mapname2mapid(map_name)) < 0)
-			map_id = sd->bl.m;
-	}
-
-	count = 0;
-	level = pc_get_group_level(sd);
-
-	iter = mapit_getallusers();
-	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
-	{
-		pl_level = pc_get_group_level(pl_sd);
-		if( pl_sd->bl.m != map_id )
-			continue;
-		if ((pc_has_permission(pl_sd, PC_PERM_HIDE_SESSION) || (pl_sd->sc.option & OPTION_INVISIBLE)) && pl_level > level)
-			continue;
-
-		if (pl_level > 0)
-			sprintf(atcmd_output, "Name: %s (GM:%d) | BLvl: %d | Job: %s (Lvl: %d)", pl_sd->status.name, pl_level, pl_sd->status.base_level, job_name(pl_sd->status.class_), pl_sd->status.job_level);
-		else
-			sprintf(atcmd_output, "Name: %s | BLvl: %d | Job: %s (Lvl: %d)", pl_sd->status.name, pl_sd->status.base_level, job_name(pl_sd->status.class_), pl_sd->status.job_level);
-		clif_displaymessage(fd, atcmd_output);
-		count++;
-	}
-	mapit_free(iter);
-
-	if (count == 0)
-		sprintf(atcmd_output, msg_txt(54), map[map_id].name); // No player found in map '%s'.
-	else if (count == 1)
-		sprintf(atcmd_output, msg_txt(55), map[map_id].name); // 1 player found in map '%s'.
-	else {
-		sprintf(atcmd_output, msg_txt(56), count, map[map_id].name); // %d players found in map '%s'.
-	}
-	clif_displaymessage(fd, atcmd_output);
-
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------*/
-ACMD_FUNC(whomap)
-{
-	char temp0[100];
-	char temp1[100];
-	struct map_session_data *pl_sd;
-	struct s_mapiterator* iter;
-	int count;
-	int pl_level, level;
-	int map_id = 0;
-	char map_name[MAP_NAME_LENGTH_EXT];
-	struct guild *g;
-	struct party_data *p;
-
-	nullpo_retr(-1, sd);
-
-	memset(temp0, '\0', sizeof(temp0));
-	memset(temp1, '\0', sizeof(temp1));
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	memset(map_name, '\0', sizeof(map_name));
-
-	if (!message || !*message)
-		map_id = sd->bl.m;
-	else {
-		sscanf(message, "%15s", map_name);
-		if ((map_id = map_mapname2mapid(map_name)) < 0)
-			map_id = sd->bl.m;
-	}
-
-	count = 0;
-	level = pc_get_group_level(sd);
-
-	iter = mapit_getallusers();
-	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
-	{
-		pl_level = pc_get_group_level(pl_sd);
-		if( pl_sd->bl.m != map_id )
-			continue;
-		if ((pc_has_permission(pl_sd, PC_PERM_HIDE_SESSION) || (pl_sd->sc.option & OPTION_INVISIBLE)) && pl_level > level)
-			continue;
-
-		g = guild_search(pl_sd->status.guild_id);
-		if (g == NULL)
-			sprintf(temp1, "None");
-		else
-			sprintf(temp1, "%s", g->name);
-		p = party_search(pl_sd->status.party_id);
-		if (p == NULL)
-			sprintf(temp0, "None");
-		else
-			sprintf(temp0, "%s", p->party.name);
-		if (pl_level > 0)
-			sprintf(atcmd_output, "Name: %s (GM:%d) | Party: '%s' | Guild: '%s'", pl_sd->status.name, pl_level, temp0, temp1);
-		else
-			sprintf(atcmd_output, "Name: %s | Party: '%s' | Guild: '%s'", pl_sd->status.name, temp0, temp1);
-		clif_displaymessage(fd, atcmd_output);
-		count++;
-	}
-	mapit_free(iter);
-
-	if (count == 0)
-		sprintf(atcmd_output, msg_txt(54), map[map_id].name); // No player found in map '%s'.
-	else if (count == 1)
-		sprintf(atcmd_output, msg_txt(55), map[map_id].name); // 1 player found in map '%s'.
-	else {
-		sprintf(atcmd_output, msg_txt(56), count, map[map_id].name); // %d players found in map '%s'.
-	}
-	clif_displaymessage(fd, atcmd_output);
-
 	return 0;
 }
 
@@ -8583,9 +8414,9 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(who),
 		ACMD_DEF2("who2", who),
 		ACMD_DEF2("who3", who),
-		ACMD_DEF(whomap),
-		ACMD_DEF(whomap2),
-		ACMD_DEF(whomap3),
+		ACMD_DEF2("whomap", who),
+		ACMD_DEF2("whomap2", who),
+		ACMD_DEF2("whomap3", who),
 		ACMD_DEF(whogm),
 		ACMD_DEF(save),
 		ACMD_DEF(load),
