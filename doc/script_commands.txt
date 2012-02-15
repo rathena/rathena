@@ -2671,15 +2671,22 @@ Notice that NPC objects disabled with 'disablenpc' will still be located.
 
 *getgmlevel()
 
-This function will return the GM level of the account to which the invoking 
-character belongs. If this is somehow executed from a console command, 99 will 
-be returned, and 0 will be returned if the account has no GM level.
+This function will return the (GM) level of player group the account to which the 
+invoking character belongs. If this is somehow executed from a console command,
+99 will be returned, and 0 will be returned if the account has no GM level.
 
 This allows you to make NPC's only accessible for certain GM levels, or behave 
 specially when talked to by GMs.
 
    if (getgmlevel()) mes "What is your command, your godhood?";
    if (getgmlevel()) goto Wherever;
+
+---------------------------------------
+
+*getgroupid()
+
+This function will return the id of player group the account to which the 
+invoking player belongs.
 
 ---------------------------------------
 

@@ -7350,6 +7350,21 @@ BUILDIN_FUNC(getgmlevel)
 	return 0;
 }
 
+/// Returns the group ID of the player.
+///
+/// getgroupid() -> <int>
+BUILDIN_FUNC(getgroupid)
+{
+	TBL_PC* sd;
+
+	sd = script_rid2sd(st);
+	if (sd == NULL)
+		return 1; // no player attached, report source
+	script_pushint(st, pc_get_group_id(sd));
+
+	return 0;
+}
+
 /// Terminates the execution of this script instance.
 ///
 /// end
@@ -15978,6 +15993,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getgdskilllv,"iv"),
 	BUILDIN_DEF(basicskillcheck,""),
 	BUILDIN_DEF(getgmlevel,""),
+	BUILDIN_DEF(getgroupid,""),
 	BUILDIN_DEF(end,""),
 	BUILDIN_DEF(checkoption,"i"),
 	BUILDIN_DEF(setoption,"i?"),
