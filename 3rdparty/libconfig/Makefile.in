@@ -21,4 +21,4 @@ help:
 #####################################################################
 
 %.o: %.c $(LIBCONFIG_H)
-	@CC@ @CFLAGS@ @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@CC@ @CFLAGS@ @DEFS@ @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<

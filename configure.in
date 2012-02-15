@@ -10,6 +10,7 @@ AC_CONFIG_FILES([3rdparty/mt19937ar/Makefile 3rdparty/libconfig/Makefile])
 AC_CONFIG_FILES([src/char/Makefile src/login/Makefile])
 AC_CONFIG_FILES([src/map/Makefile src/plugins/Makefile src/tool/Makefile])
 
+AC_GNU_SOURCE
 
 #
 # Memory managers
@@ -469,10 +470,10 @@ AC_CHECK_FUNC([setrlimit],[CFLAGS="$CFLAGS -DHAVE_SETRLIMIT"])
 AC_CHECK_FUNC([strnlen],[CFLAGS="$CFLAGS -DHAVE_STRNLEN"])
 
 # libconfig
-AC_CHECK_FUNC([uselocale],[CFLAGS="$CFLAGS -DHAVE_USELOCALE"])
-AC_CHECK_FUNC([newlocale],[CFLAGS="$CFLAGS -DHAVE_NEWLOCALE"])
-AC_CHECK_FUNC([freelocale],[CFLAGS="$CFLAGS -DHAVE_FREELOCALE"])
-AC_CHECK_HEADERS([xlocale.h],[CFLAGS="$CFLAGS -DHAVE_XLOCALE_H"])
+AC_CHECK_FUNCS([uselocale])
+AC_CHECK_FUNCS([newlocale])
+AC_CHECK_FUNCS([freelocale])
+AC_CHECK_HEADERS([xlocale.h])
 
 #
 # Memory manager
