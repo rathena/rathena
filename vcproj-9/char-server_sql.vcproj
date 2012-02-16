@@ -412,10 +412,6 @@
 				RelativePath="..\src\common\utils.h"
 				>
 			</File>
-			<File
-				RelativePath="..\src\common\version.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="char_sql"

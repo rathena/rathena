@@ -5,7 +5,6 @@
 #include "../common/strlib.h" // StringBuf
 #include "showmsg.h"
 #include "core.h" //[Ind] - For SERVER_TYPE
-#include "version.h" //[Ind] - For SERVER_TYPE values
 
 #include <stdio.h>
 #include <string.h>

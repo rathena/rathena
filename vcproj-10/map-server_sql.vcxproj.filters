@@ -285,9 +285,6 @@
     <ClInclude Include="..\src\map\vending.h">
       <Filter>map_sql</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\common\version.h">
-      <Filter>common</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\common\cbasetypes.h">
       <Filter>common</Filter>
     </ClInclude>

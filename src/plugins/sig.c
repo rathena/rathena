@@ -7,7 +7,6 @@
 #include <string.h>
 #include <time.h>
 #include "../common/plugin.h"
-#include "../common/version.h"
 #include "../common/showmsg.h"
 
 PLUGIN_INFO = {
@@ -121,8 +120,6 @@ void sig_dump(int sn)
 		ShowNotice ("Dumping stack to '"CL_WHITE"%s"CL_RESET"'...\n", file);
 		if ((revision = getrevision()) != NULL)
 			fprintf(fp, "Version: svn%s \n", revision);
-		else
-			fprintf(fp, "Version: %2d.%02d.%02d mod%02d \n", ATHENA_MAJOR_VERSION, ATHENA_MINOR_VERSION, ATHENA_REVISION, ATHENA_MOD_VERSION);
 		fprintf(fp, "Exception: %s \n", strsignal(sn));
 		fflush (fp);
 

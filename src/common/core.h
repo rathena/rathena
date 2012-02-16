@@ -14,6 +14,12 @@ extern char **arg_v;
 /// @see E_CORE_ST
 extern int runflag;
 extern char *SERVER_NAME;
+
+#define ATHENA_SERVER_NONE	0	// not defined
+#define ATHENA_SERVER_LOGIN	1	// login server
+#define ATHENA_SERVER_CHAR	2	// char server
+#define ATHENA_SERVER_INTER	4	// inter server
+#define ATHENA_SERVER_MAP	8	// map server
 extern char SERVER_TYPE;
 
 extern int parse_console(const char* buf);

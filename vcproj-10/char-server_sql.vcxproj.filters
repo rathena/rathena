@@ -147,9 +147,6 @@
     <ClInclude Include="..\src\common\utils.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\common\version.h">
-      <Filter>common</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\char\inter.h">
       <Filter>char_sql</Filter>
     </ClInclude>

@@ -29,7 +29,6 @@ enum E_MAPSERVER_ST
 
 
 #define MAX_NPC_PER_MAP 512
-#define BLOCK_SIZE 8
 #define AREA_SIZE battle_config.area_size
 #define DAMAGELOG_SIZE 30
 #define LOOTITEM_SIZE 10

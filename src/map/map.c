@@ -8,7 +8,6 @@
 #include "../common/malloc.h"
 #include "../common/socket.h" // WFIFO*()
 #include "../common/showmsg.h"
-#include "../common/version.h"
 #include "../common/nullpo.h"
 #include "../common/random.h"
 #include "../common/strlib.h"
@@ -105,6 +104,7 @@ static DBMap* regen_db=NULL; // int id -> struct block_list* (status_natural_hea
 
 static int map_users=0;
 
+#define BLOCK_SIZE 8
 #define block_free_max 1048576
 struct block_list *block_free[block_free_max];
 static int block_free_count = 0, block_free_lock = 0;
@@ -3553,12 +3553,10 @@ static void map_helpscreen(bool do_exit)
  *------------------------------------------------------*/
 static void map_versionscreen(bool do_exit)
 {
-	ShowInfo(CL_WHITE"RAthena version %d.%02d.%02d, Athena Mod version %d" CL_RESET"\n", ATHENA_MAJOR_VERSION, ATHENA_MINOR_VERSION, ATHENA_REVISION, ATHENA_MOD_VERSION);
+	ShowInfo(CL_WHITE"rAthena SVN version: %s" CL_RESET"\n", get_svn_revision());
 	ShowInfo(CL_GREEN"Website/Forum:"CL_RESET"\thttp://rathena.org/\n");
-	ShowInfo(CL_GREEN"IRC Channel:"CL_RESET"\tirc://irc.rizon.net/#rthena\n");
+	ShowInfo(CL_GREEN"IRC Channel:"CL_RESET"\tirc://irc.rathena.net/#rathena\n");
 	ShowInfo("Open "CL_WHITE"readme.html"CL_RESET" for more information.\n");
-	if(ATHENA_RELEASE_FLAG)
-		ShowNotice("This version is not for release.\n");
 	if( do_exit )
 		exit(EXIT_SUCCESS);
 }

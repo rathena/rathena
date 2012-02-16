@@ -7,7 +7,6 @@
 #include "../common/utils.h" // findfile()
 #include "../common/socket.h"
 #include "../common/malloc.h"
-#include "../common/version.h"
 #include "../common/showmsg.h"
 #include "plugins.h"
 

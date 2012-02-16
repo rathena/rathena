@@ -142,7 +142,6 @@
     <ClInclude Include="..\src\common\showmsg.h" />
     <ClInclude Include="..\src\common\strlib.h" />
     <ClInclude Include="..\src\common\utils.h" />
-    <ClInclude Include="..\src\common\version.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

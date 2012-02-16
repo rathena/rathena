@@ -4,7 +4,7 @@ COMMON_OBJ = obj_all/core.o obj_all/socket.o obj_all/timer.o obj_all/db.o obj_al
 	obj_all/grfio.o obj_all/mapindex.o obj_all/ers.o obj_all/md5calc.o \
 	obj_all/minicore.o obj_all/minisocket.o obj_all/minimalloc.o obj_all/random.o obj_all/des.o \
 	obj_all/conf.o
-COMMON_H = mmo.h plugin.h version.h \
+COMMON_H = mmo.h plugin.h \
 	core.h socket.h timer.h db.h plugins.h lock.h \
 	nullpo.h malloc.h showmsg.h  strlib.h utils.h \
 	grfio.h mapindex.h ers.h md5calc.h random.h des.h \
