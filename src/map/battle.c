@@ -3674,8 +3674,7 @@ struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct bl
 }
 
 //Calculates BF_WEAPON returned damage.
-int battle_calc_return_damage(struct block_list* bl, struct block_list *src, int *dmg, int flag)
-{
+int battle_calc_return_damage(struct block_list* bl, struct block_list *src, int *dmg, int flag, int skillid){
 	struct map_session_data* sd = NULL;
 	int rdamage = 0, damage = *dmg;
 	struct status_change* sc;
@@ -3688,17 +3687,16 @@ int battle_calc_return_damage(struct block_list* bl, struct block_list *src, int
 		rdamage = (*dmg) * sc->data[SC_REFLECTDAMAGE]->val2 / 100;
 		if( rdamage > max_damage ) rdamage = max_damage;
 	} else if (flag & BF_SHORT) {//Bounces back part of the damage.
-		if (sd && sd->short_weapon_damage_return)
-		{
+		if (sd && sd->short_weapon_damage_return){
 			rdamage += damage * sd->short_weapon_damage_return / 100;
 			if(rdamage < 1) rdamage = 1;
 		}
 		if( sc && sc->count ) {
-			if (sc->data[SC_REFLECTSHIELD]) {
+			if ( sc->data[SC_REFLECTSHIELD] && skillid != WS_CARTTERMINATION ) {
 				rdamage += damage * sc->data[SC_REFLECTSHIELD]->val2 / 100;
 				if (rdamage < 1) rdamage = 1;
 			}
-			if(sc->data[SC_DEATHBOUND] && !(src->type == BL_MOB && is_boss(src)) ) {
+			if(sc->data[SC_DEATHBOUND] && skillid != WS_CARTTERMINATION && !(src->type == BL_MOB && is_boss(src)) ) {
 				int dir = map_calc_dir(bl,src->x,src->y),
 					t_dir = unit_getdir(bl), rd1 = 0;
 
@@ -3713,8 +3711,7 @@ int battle_calc_return_damage(struct block_list* bl, struct block_list *src, int
 			}
 		}
 	} else {
-		if (sd && sd->long_weapon_damage_return)
-		{
+		if (sd && sd->long_weapon_damage_return) {
 			rdamage += damage * sd->long_weapon_damage_return / 100;
 			if (rdamage < 1) rdamage = 1;
 		}
@@ -3966,7 +3963,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			skill_attack(skill_get_type(skillid), src, src, target, skillid, sc->data[SC_DUPLELIGHT]->val1, tick, SD_LEVEL);
 		}
 
-		rdamage = battle_calc_return_damage(target,src, &damage, wd.flag);
+		rdamage = battle_calc_return_damage(target,src, &damage, wd.flag, 0);
 		if( rdamage > 0 ) {
 			if( tsc && tsc->data[SC_REFLECTDAMAGE] ) {
 				if( src != target )// Don't reflect your own damage (Grand Cross)

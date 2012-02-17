@@ -35,7 +35,7 @@ struct block_list;
 
 struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct block_list *target,int skill_num,int skill_lv,int count);
 
-int battle_calc_return_damage(struct block_list *bl, struct block_list *src, int *, int flag);
+int battle_calc_return_damage(struct block_list *bl, struct block_list *src, int *, int flag, int skillid);
 
 void battle_drain(struct map_session_data *sd, struct block_list *tbl, int rdamage, int ldamage, int race, int boss);
 

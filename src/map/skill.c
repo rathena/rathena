@@ -2054,9 +2054,9 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		skillid == MER_INCAGI || skillid == MER_BLESSING) && tsd->sc.data[SC_CHANGEUNDEAD] )
 		damage = 1;
 
-	if( damage > 0 && (( dmg.flag&BF_WEAPON && src != bl && ( src == dsrc || ( dsrc->type == BL_SKILL && ( skillid == SG_SUN_WARM || skillid == SG_MOON_WARM || skillid == SG_STAR_WARM ) ) )
-		&& skillid != WS_CARTTERMINATION) || (sc && sc->data[SC_REFLECTDAMAGE])) )
-		rdamage = battle_calc_return_damage(bl,src, &damage, dmg.flag);
+	if( damage > 0 && (( dmg.flag&BF_WEAPON && src != bl && ( src == dsrc || ( dsrc->type == BL_SKILL && ( skillid == SG_SUN_WARM || skillid == SG_MOON_WARM || skillid == SG_STAR_WARM ) ) ))
+			|| (sc && sc->data[SC_REFLECTDAMAGE])) )
+		rdamage = battle_calc_return_damage(bl,src, &damage, dmg.flag, skillid);
 
 	//Skill hit type
 	type=(skillid==0)?5:skill_get_hit(skillid);
