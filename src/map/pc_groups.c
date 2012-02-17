@@ -285,8 +285,11 @@ static void read_config(void)
 			for (i = 0; i < count; ++i) {
 				config_setting_t *perm = config_setting_get_elem(permissions, i);
 				const char *name = config_setting_name(perm);
+				int val = config_setting_get_bool(perm);
 				int j;
 
+				if (val == 0) // does not have this permission
+					continue;
 				ARR_FIND(0, ARRAYLENGTH(permission_name), j, strcmp(permission_name[j].name, name) == 0);
 				group_settings->e_permissions |= permission_name[j].permission;
 			}
