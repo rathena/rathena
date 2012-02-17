@@ -275,8 +275,7 @@ int chrif_save(struct map_session_data *sd, int flag)
 			ShowError("chrif_save: Failed to set up player %d:%d for proper quitting!\n", sd->status.account_id, sd->status.char_id);
 	}
 
-	if(!chrif_isconnected())
-		return -1; //Character is saved on reconnect.
+	chrif_check(-1); //Character is saved on reconnect.
 
 	//For data sync
 	if (sd->state.storage_flag == 2)
@@ -552,8 +551,7 @@ void chrif_authreq(struct map_session_data *sd)
 {
 	struct auth_node *node= chrif_search(sd->bl.id);
 
-	if( node != NULL )
-	{
+	if( node != NULL || !chrif_isconnected() ) {
 		set_eof(sd->fd);
 		return;
 	}
@@ -692,9 +690,8 @@ int auth_db_cleanup_sub(DBKey key,void *data,va_list ap)
 	return 0;
 }
 
-int auth_db_cleanup(int tid, unsigned int tick, int id, intptr_t data)
-{
-	if(!chrif_isconnected()) return 0;
+int auth_db_cleanup(int tid, unsigned int tick, int id, intptr_t data) {
+	chrif_check(0);
 	auth_db->foreach(auth_db, auth_db_cleanup_sub);
 	return 0;
 }
