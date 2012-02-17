@@ -777,6 +777,7 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_INCFLEE] |= SCB_FLEE;
 	StatusChangeFlagTable[SC_INCFLEERATE] |= SCB_FLEE;
 	StatusChangeFlagTable[SC_INCCRI] |= SCB_CRI;
+	StatusChangeFlagTable[SC_INCASPDRATE] |= SCB_ASPD;
 	StatusChangeFlagTable[SC_INCFLEE2] |= SCB_FLEE2;
 	StatusChangeFlagTable[SC_INCMHPRATE] |= SCB_MAXHP;
 	StatusChangeFlagTable[SC_INCMSPRATE] |= SCB_MAXSP;
@@ -4656,8 +4657,10 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		aspd_rate += aspd_rate * sc->data[SC_MELON_BOMB]->val1 / 100;
 	if( sc->data[SC_BOOST500] )
 		aspd_rate -= aspd_rate * sc->data[SC_BOOST500]->val1/100;
-	if(sc->data[SC_EXTRACT_SALAMINE_JUICE])
+	if( sc->data[SC_EXTRACT_SALAMINE_JUICE] )
 		aspd_rate -= aspd_rate * sc->data[SC_EXTRACT_SALAMINE_JUICE]->val1/100;
+	if( sc->data[SC_INCASPDRATE] )
+		aspd_rate -= aspd_rate * sc->data[SC_INCASPDRATE]->val1 / 100;
 
 	return (short)cap_value(aspd_rate,0,SHRT_MAX);
 }
