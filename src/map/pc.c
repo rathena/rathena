@@ -1514,7 +1514,8 @@ int pc_calc_skilltree_normalize_job(struct map_session_data *sd)
 		c |= JOBL_UPPER;
 	else if (sd->class_&JOBL_BABY) //Convert to Baby
 		c |= JOBL_BABY;
-
+	if( sd->class_&JOBL_THIRD && skill_point < 107 )//bugreport:5329, require to spend all 2.x points in your 2.x
+		c &= MAPID_UPPERMASK;	
 	return c;
 }
 
