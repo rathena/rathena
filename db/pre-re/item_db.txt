@@ -1337,7 +1337,7 @@
 2423,Variant_Shoes,Variant Shoes,5,20,,500,,3,,0,0xFFFFFFFE,2,2,64,,85,1,0,{ bonus bMaxHPRate,20-getrefine(); bonus bMaxSPRate,20-getrefine(); bonus bDef,getrefine()/2; },{},{}
 2424,Tidal_Shoes,Tidal Shoes,5,20,,300,,3,,1,0xFFFFFFFE,2,2,64,,55,1,0,{ bonus2 bSubEle,Ele_Water,5; if (isequipped(2528)) { bonus bHPrecovRate,5; bonus bMaxHPrate,10; } },{},{}
 2425,Black_Leather_Boots,Black Leather Boots,5,20,,500,,4,,0,0xFFFFFFFE,2,2,64,,55,1,0,{ bonus bAgi,1; if(getrefine() >= 9) bonus bAgi,2; },{},{}
-2426,Shadow_Walk,Shadow Walk,5,20,,2000,,0,,0,0xFFFFFFFE,2,2,64,,75,1,0,{ bonus bMdef,10; if(getskilllv("AS_CLOAKING") < 3){ bonus5 bAutoSpellWhenHit,"AS_CLOAKING",3,100,BF_MAGIC,0; } else bonus5 bAutoSpellWhenHit,"AS_CLOAKING",getskilllv("AS_CLOAKING"),100,BF_MAGIC,0; },{},{}
+2426,Shadow_Walk,Shadow Walk,5,20,,2000,,0,,0,0xFFFFFFFE,2,2,64,,75,1,0,{ bonus bMdef,10; if(getskilllv("AS_CLOAKING") < 2){ bonus5 bAutoSpellWhenHit,"AS_CLOAKING",2,100,BF_MAGIC,0; } else bonus5 bAutoSpellWhenHit,"AS_CLOAKING",getskilllv("AS_CLOAKING"),100,BF_MAGIC,0; },{},{}
 2427,Golden_Shoes,Golden Shoes,5,20,,300,,4,,0,0xFFFFFFFF,7,2,64,,0,0,0,{ bonus bMdef,4; },{},{}
 //2428,Freyja_Boots,Freyja Boots,5,0,,300,,10,,0,0xFFFFFFFE,7,2,64,,0,0,0,{ bonus2 bSubRace,RC_DemiHuman,5; },{},{}
 2429,Iron_Boots01,Iron Boots,5,0,,1500,,5,,0,0x000E5CEA,7,2,64,,0,1,0,{},{},{}
@@ -5359,7 +5359,7 @@
 13106,Gold_Lux,Gold Lux,4,100000,,500,20,,7,0,0x01000000,7,2,34,3,12,1,17,{ bonus bHit,-10; if(getskilllv("GS_GLITTERING")>0) bonus3 bAutoSpell,"GS_GLITTERING",getskilllv("GS_GLITTERING"),100; },{},{}
 13107,Wasteland_Outlaw,Wasteland's Outlaw,4,20,,580,68,,7,2,0x01000000,7,2,34,3,70,1,17,{ bonus bHit,readparam(bAgi)/10; bonus bAspdRate,readparam(bAgi)/14; },{},{}
 13108,BF_Pistol1,Soldier Revolver,4,0,,0,70,,7,0,0x01000000,7,2,34,3,80,1,17,{ bonus bDex,2; bonus bHit,-10; bonus2 bAddRace,RC_DemiHuman,55; bonus2 bIgnoreDefRate,RC_DemiHuman,20; autobonus "{ bonus bAspdRate,100; }",10,3000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }"; bonus bUnbreakableWeapon,0; },{},{}
-//13109,Wasteland_Outlaw_C
+13109,Wasteland_Outlaw_C,Wasteland Outlaw,4,20,,0,100,,7,0,0x01000000,7,2,34,3,0,0,17,{ bonus bHit,readparam(bAgi)/10; bonus bAspdRate,readparam(bAgi)/14; bonus2 bAddRace,RC_NonBoss,10; bonus2 bAddRace,RC_Boss,10; bonus bMatkRate,10; },{},{}
 13110,Krieger_Pistol1,Glorious Pistol,4,0,,0,80,,7,0,0x01000000,7,2,34,4,80,1,17,{ bonus2 bAddRace,RC_DemiHuman,55; bonus2 bIgnoreDefRate,RC_DemiHuman,20; bonus bUnbreakableWeapon,0; if(getrefine() > 5) bonus2 bIgnoreDefRate,RC_DemiHuman,5; if(getrefine() > 8) { bonus4 bAutoSpellOnSkill,"GS_RAPIDSHOWER","GS_GLITTERING",1,1000; bonus2 bSkillAtk,"GS_RAPIDSHOWER",getrefine()*2; } },{},{}
 //13111,Sharpshooter_Revolver
 13112,P_Revolver1,Eden Revlover I,4,0,,0,4,,7,0,0x01000000,7,2,34,1,26,0,17,{ bonus bHit,-5; },{},{}
@@ -5933,7 +5933,7 @@
 13948,BRO_AR_Package,Brazil Archer package,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 2317,1; getitem 1716,1; getitem 2406,1; getitem 2504,1; getitem 4064,1; getitem 4102,1; getitem 2607,2; getitem 2285,1; },{},{}
 13949,BRO_MC_Package,Brazil Merchant Package,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 2315,1; getitem 2104,1; getitem 2406,1; getitem 2506,1; getitem 4003,1; getitem 4133,1; getitem 2607,2; getitem 5021,1; },{},{}
 13950,BRO_TF_Package,Brazil Thief Package,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 2336,1; getitem 2104,1; getitem 2406,1; getitem 2506,1; getitem 4097,1; getitem 4102,1; getitem 2607,2; getitem 2274,1; },{},{}
-13951,Wasteland_Outlaw_Box,Western Outlaw Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 13107,604800; },{},{}
+13951,Wasteland_Outlaw_Box,Western Outlaw Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 13109,604800; },{},{}
 13952,Lever_Action_Rifle_Box,Lever Action Rifle Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 13170,604800; },{},{}
 13953,All_In_One_Ring_Box,All In One Ring Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 2741,604800; },{},{}
 13954,Spiritual_Tunic_Box,Spiritual Tunic Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 2384,604800; },{},{}
