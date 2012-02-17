@@ -595,7 +595,7 @@ ACMD_FUNC(who)
 	for (pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter))	{
 		if (!((pc_has_permission(pl_sd, PC_PERM_HIDE_SESSION) || (pl_sd->sc.option & OPTION_INVISIBLE)) && pc_get_group_level(pl_sd) > level)) { // you can look only lower or same level
 			if (stristr(pl_sd->status.name, player_name) == NULL // search with no case sensitive
-				|| map_id >= 0 && pl_sd->bl.m != map_id)
+				|| (map_id >= 0 && pl_sd->bl.m != map_id))
 				continue;
 			switch (display_type) {
 				case 2: {
@@ -8633,7 +8633,6 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	char charname2[NAME_LENGTH], params2[100];
 	char command[100];
 	char output[CHAT_SIZE_MAX];
-	int lv = 0;
 	
 	//Reconstructed message
 	char atcmd_msg[CHAT_SIZE_MAX];
