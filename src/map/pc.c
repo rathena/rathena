@@ -1295,6 +1295,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 				 * Dummy skills must be added here otherwise they'll be displayed in the,
 				 * skill tree and since they have no icons they'll give resource errors
 				 **/
+				case SM_SELFPROVOKE:
 				case AB_DUPLELIGHT_MELEE:
 				case AB_DUPLELIGHT_MAGIC:
 				case WL_CHAINLIGHTNING_ATK:
