@@ -4950,7 +4950,7 @@
 12411,HE_Battle_Manual,HE Battle Manual,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,900000,200; },{},{}
 12412,HE_Bubble_Gum,HE Bubble Gum,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ITEMBOOST,900000,300; },{},{}
 12413,PCBang_Coupon_Box2,PCBang Coupon Box2,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12414,Guarana_Candy,Guarana Candy,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12414,Guarana_Candy,Guarana Candy,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{sc_start SC_INCASPDRATE,1800000,10; sc_start SC_INCREASEAGI,140000,5; skilleffect "AL_INCAGI",0;},{},{}
 12415,Siege_Teleport_Scroll2,Siege Teleport Scroll2,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12416,LUcky_Egg_C3,LUcky Egg C3,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12417,Boost500,Boost500,2,100,,50,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
