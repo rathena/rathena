@@ -427,7 +427,6 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, int 
 	}
 	return 0;
 }
-#undef set_mobstate
 
 int unit_run(struct block_list *bl)
 {
