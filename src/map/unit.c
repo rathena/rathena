@@ -930,6 +930,12 @@ int unit_can_move(struct block_list *bl)
 				sc->data[SC_CLOAKING]->val1 < 3 && !(sc->data[SC_CLOAKING]->val4&1))
 			|| sc->data[SC_MADNESSCANCEL]
 			|| (sc->data[SC_GRAVITATION] && sc->data[SC_GRAVITATION]->val3 == BCT_SELF)
+			|| sc->data[SC_WHITEIMPRISON]
+			|| sc->data[SC_ELECTRICSHOCKER]
+			|| sc->data[SC_BITE]
+			|| sc->data[SC_MAGNETICFIELD]
+			|| sc->data[SC__MANHOLE]
+			|| (sc->data[SC_FEAR] && sc->data[SC_FEAR]->val2 > 0)
 		))
 			return 0;
 	}
@@ -1990,6 +1996,9 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		status_change_end(bl, SC_CHANGE, INVALID_TIMER);
 		status_change_end(bl, SC_STOP, INVALID_TIMER);
 		status_change_end(bl, SC_WUGDASH, INVALID_TIMER);
+		status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
+		status_change_end(bl, SC__MANHOLE, INVALID_TIMER);
+
 	}
 
 	if (bl->type&(BL_CHAR|BL_PET)) {

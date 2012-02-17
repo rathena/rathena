@@ -735,6 +735,10 @@ int clif_magicdecoy_list(struct map_session_data *sd, int skill_lv, short x, sho
  **/
 int clif_poison_list(struct map_session_data *sd, int skill_lv);
 /**
+ * Shadow Chaser
+ **/
+int clif_autoshadowspell_list(struct map_session_data *sd);
+/**
  * [RRInd] for the new mounts
  **/
 int clif_status_load_notick(struct block_list *bl,int type,int flag,int val1, int val2, int val3);

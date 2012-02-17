@@ -1575,6 +1575,7 @@ enum wl_spheres {
 	WLS_STONE,
 };
 int skill_spellbook (struct map_session_data *sd, int nameid);
+int skill_stasis_check(struct block_list *bl, int src_id, int skillid);
 /**
  * Guilottine Cross
  **/

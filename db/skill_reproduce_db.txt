@@ -1,0 +1,204 @@
+// Reproduce Copy Skills List
+//
+// ##TODO## screw this file and make it a new skill_info2 flag
+//
+// Structure of Database:
+// SkillID
+//=================================
+
+//Swordsman
+5	//Bash
+7	//Magnum Break
+
+//Mage
+11	// Napalm Beat
+13	// Soul Strike
+14	// Cold Bolt
+15	// Frost Diver
+17	// Fire Ball
+18	// Fire Wall
+19	// Fire Bolt
+20	// Lightning Bolt
+21	// Thunderstorm
+
+//Acolyte
+24	// Ruwach
+28	// Heal
+
+//Merchant
+42	// Mammonite
+
+//Archer
+46	// Double Strafe
+47	// Arrow Shower
+
+//Thief
+52	// Envenom
+
+// Resurrection
+54	// Resurrection
+
+// Knight
+62	// Bowling Bash
+
+// Priest
+68	// Asperio
+69	// B.S Sacramenti
+70	// Sanctuary
+77	// Turn Undead
+79	// Magnus Exorcismus
+
+// Wizard
+80	// Fire Pillar
+81	// Sightrasher
+83	// Meteor Storm
+84	// Jupitel Thunder
+85	// Lord of Vermillion
+86	// Water Ball
+88	// Frost Nova
+89	// Storm Gust
+90	// Earth Spike
+91	// Heaven's Drive
+
+// Hunter
+116	// Land Mine
+121	// Freezing Trap
+122	// Blast Mine
+123	// Claymore Trap
+
+// Assassin
+141	// Venom Splasher
+
+// 1st Job Quest Skills
+148	// Arrow Repel
+152	// Stone Fling
+156	// Holy Light
+
+// Rogue
+212	// Backstab
+
+// Alchemist
+229	// Bomb
+230	// Acid Terror
+
+// Crusader
+250	// Smite
+251	// Shield Boomerang
+253	// Holy Cross
+254	// Grand Cross
+
+// Monk
+263	// Raging Trifecta Blow
+266	// Occult Impaction
+267	// Throw Spirit Sphere
+271	// Guillotine Fist
+272	// Raging Quadruple Blow
+
+// Item Skill
+337	// Tomahawk Throwing
+
+// TaeKwon Kid
+421	// Flying Kick
+
+// Ninja
+526	// Throw Coins
+527	// Flip Tatami
+528	// Haze Slasher
+529	// Shadow Slash
+531	// Blaze Shield
+534	// Flaming Petals
+536	// Exploding Dragon
+537	// Freezing Spear
+539	// Snow Flake Draft
+540	// Wind Blade
+541	// Lightning Jolt
+542	// First Wind
+
+// 2nd Job Quest Skills
+1001	// Charge Attack
+1004	// Venom Knife
+1006	// Sight Blaster
+1009	// Phantasmic Arrow
+1015	// Excruciating Palm
+
+// Rune Knight
+2002	// Sonic Wave
+2005	// Ignition Break
+2006	// Wind Cutter
+
+// Guillotine Cross
+2022	// Cross Impact
+2023	// Dark Illusion
+2034	// Phantom Menace
+
+// Arch Bishop
+2038	// Judex
+2040	// Adoramus
+2051	// Highness Heal
+2054	// Duple Light
+
+// Warlock
+2202	// Soul Expansion
+2203	// Frosty Misty
+2204	// Jack Frost
+2210	// Drain Life
+2211	// Crimson Rock
+2212	// Hell Inferno
+2213	// Comet
+2214	// Chain Lightning
+2216	// Earth Strain
+
+// Ranger
+2233	// Arrow Storm
+2236	// Aimed Bolt
+2239	// Cluster Bomb
+2253	// Icebound Trap
+2254	// Firing Trap
+
+// Shadow Chaser
+2284	// Fatal Menace
+2288	// Triangle Shot
+2304	// Feint Bomb
+
+// Royal Guard
+2310	// Shield Press
+2315	// Shield Spell
+2316	// Exceed Break
+2320	// Moon Slasher
+2323	// Earth Drive
+
+// Sura
+2326	// Dragon Combo
+2327	// Sky Net Blow
+2328	// Earth Shaker
+2330	// Tiger Cannon
+2332	// Rampage Blaster
+2336	// Knuckle Arrow
+2337	// Windmill
+2343	// Gate of Hell
+2344	// Gentle Touch - Quiet
+2517	// Howling of Lion
+2518	// Riding Lightning
+
+// Minstrel/Wanderer
+2413	// Metallic Sound
+2414	// Reverberation
+2418	// Severe Rainstorm
+
+// Sorcerer
+2443	// Fire Walk
+2444	// Electric Walk
+2446	// Earth Grave
+2447	// Diamond Dust
+2448	// Poison Buster
+2449	// Psychic Wave
+2450	// Cloud Kill
+2454	// Varetyr Spear
+
+// Genetic
+2479	// Thorn Trap
+2480	// Blood Sucker
+2481	// Spore Explosion
+2482	// Wall of Thorns
+2483	// Crazy Weed
+2490	// Hell's Plant

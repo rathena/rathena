@@ -400,6 +400,8 @@ typedef enum {
 	CELL_LANDPROTECTOR,
 	CELL_NOVENDING,
 	CELL_NOCHAT,
+	CELL_MAELSTROM,
+
 } cell_t;
 
 // used by map_getcell()
@@ -421,6 +423,8 @@ typedef enum {
 	CELL_CHKLANDPROTECTOR,
 	CELL_CHKNOVENDING,
 	CELL_CHKNOCHAT,
+	CELL_CHKMAELSTROM,
+
 } cell_chk;
 
 struct mapcell
@@ -437,7 +441,8 @@ struct mapcell
 		basilica : 1,
 		landprotector : 1,
 		novending : 1,
-		nochat : 1;
+		nochat : 1,
+		maelstrom : 1;
 
 #ifdef CELL_NOSTACK
 	unsigned char cell_bl; //Holds amount of bls in this cell.

@@ -203,7 +203,7 @@ struct map_session_data {
 	short skillid_dance,skilllv_dance;
 	short cook_mastery; // range: [0,1999] [Inkfish]
 	unsigned char blockskill[MAX_SKILL];
-	int cloneskill_id;
+	int cloneskill_id, reproduceskill_id;
 	int menuskill_id, menuskill_val;
 
 	int invincible_timer;
@@ -460,6 +460,8 @@ struct map_session_data {
 	 * Guarantees your friend request is legit (for bugreport:4629)
 	 **/
 	int friend_req;
+
+	int shadowform_id;
 
 	// temporary debugging of bug #3504
 	const char* delunit_prevfile;

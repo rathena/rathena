@@ -407,8 +407,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 			status_change_end(bl, SC_SAFETYWALL, INVALID_TIMER);
 		}
 
-		if( sc->data[SC_PNEUMA] && (flag&(BF_MAGIC|BF_LONG)) == BF_LONG )
-		{
+		if( ( sc->data[SC_PNEUMA] && (flag&(BF_MAGIC|BF_LONG)) == BF_LONG ) || sc->data[SC__MANHOLE] ) {
 			d->dmg_lv = ATK_BLOCK;
 			return 0;
 		}
@@ -614,6 +613,9 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 
 		if( sd && (sce = sc->data[SC_FORCEOFVANGUARD]) && flag&BF_WEAPON && rnd()%100 < sce->val2 )
 			pc_addspiritball(sd,skill_get_time(LG_FORCEOFVANGUARD,sce->val1),sce->val3);
+		
+		if( sc->data[SC__DEADLYINFECT] && damage > 0 && rand()%100 < 65 + 5 * sc->data[SC__DEADLYINFECT]->val1 )
+			status_change_spread(bl, src); // Deadly infect attacked side
 
 	}
 
@@ -648,6 +650,8 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 		}
 		if( sc->data[SC_POISONINGWEAPON] && skill_num != GC_VENOMPRESSURE && (flag&BF_WEAPON) && damage > 0 && rnd()%100 < sc->data[SC_POISONINGWEAPON]->val3 )
 			sc_start(bl,sc->data[SC_POISONINGWEAPON]->val2,100,sc->data[SC_POISONINGWEAPON]->val1,skill_get_time2(GC_POISONINGWEAPON,sc->data[SC_POISONINGWEAPON]->val1));
+		if( sc->data[SC__DEADLYINFECT] && damage > 0 && rand()%100 < 65 + 5 * sc->data[SC__DEADLYINFECT]->val1 )
+			status_change_spread(src, bl);
 	}
 
 	if (battle_config.pk_mode && sd && bl->type == BL_PC && damage && map[bl->m].flag.pvp)
@@ -683,7 +687,44 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 	  if (skill_num)
 			mobskill_event((TBL_MOB*)bl,src,gettick(),MSC_SKILLUSED|(skill_num<<16));
 	}
-
+	if( sd ) {
+		if( (sd->sc.option&OPTION_MADOGEAR) && rand()%100 < 50 ) {
+			short element = skill_get_ele(skill_num, skill_lv);
+			if( !skill_num || element == -1 ) { //Take weapon's element
+				struct status_data *sstatus = NULL;
+				if( src->type == BL_PC && ((TBL_PC*)src)->arrow_ele )
+					element = ((TBL_PC*)src)->arrow_ele;
+				else if( (sstatus = status_get_status_data(src)) ) {
+					element = sstatus->rhw.ele;
+				}
+			}
+			else if( element == -2 ) //Use enchantment's element
+				element = status_get_attack_sc_element(src,status_get_sc(src));
+			else if( element == -3 ) //Use random element
+				element = rnd()%ELE_MAX;
+			if( element == ELE_FIRE || element == ELE_WATER )
+				pc_overheat(sd,element == ELE_FIRE ? 1 : -1);
+		}
+	}
+	if( sc && sc->data[SC__SHADOWFORM] ) {
+		struct block_list *s_bl = map_id2bl(sc->data[SC__SHADOWFORM]->val2);
+		if( !s_bl ) { // If the shadow form target is not present remove the sc.
+			status_change_end(bl, SC__SHADOWFORM, -1);
+		} else if( status_isdead(s_bl) || !battle_check_target(src,s_bl,BCT_ENEMY)) { // If the shadow form target is dead or not your enemy remove the sc in both.
+			status_change_end(bl, SC__SHADOWFORM, -1);
+			if( s_bl->type == BL_PC )
+				((TBL_PC*)s_bl)->shadowform_id = 0;
+		} else {
+			if( (--sc->data[SC__SHADOWFORM]->val3) < 0 ) { // If you have exceded max hits supported, remove the sc in both.
+				status_change_end(bl, SC__SHADOWFORM, -1);
+				if( s_bl->type == BL_PC )
+					((TBL_PC*)s_bl)->shadowform_id = 0;
+			} else {
+				status_damage(src, s_bl, damage, 0, clif_damage(s_bl, s_bl, gettick(), 500, 500, damage, -1, 0, 0), 0);
+				return ATK_NONE;
+			}
+		}
+	}
 	return damage;
 }
 
@@ -2004,6 +2045,15 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				case NC_AXETORNADO:
 					skillratio += 100 + 100 * skill_lv + sstatus->vit;
 					if( status_get_lv(src) > 100 ) skillratio += skillratio * (status_get_lv(src) - 100) / 200;	// Base level bonus.
+					break;
+				case SC_FATALMENACE:
+					skillratio += 100 * skill_lv;
+					break;
+				case SC_TRIANGLESHOT:
+					skillratio += 270 + 30 * skill_lv;
+					break;
+				case SC_FEINTBOMB:
+					skillratio += 100 + 100 * skill_lv;
 					break;
 				case LG_CANNONSPEAR:// Stimated formula. Still need confirm it.
 					skillratio += -100 + (50  + sstatus->str) * skill_lv;
@@ -3982,6 +4032,31 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		}
 	}
 	if (sd) {
+		if( wd.flag&BF_SHORT && sc && sc->data[SC__AUTOSHADOWSPELL] && rand()%100 < sc->data[SC__AUTOSHADOWSPELL]->val3 &&
+			sd->status.skill[sc->data[SC__AUTOSHADOWSPELL]->val1].id != 0 && sd->status.skill[sc->data[SC__AUTOSHADOWSPELL]->val1].flag == 13 )
+		{
+			int r_skill = sd->status.skill[sc->data[SC__AUTOSHADOWSPELL]->val1].id,
+				r_lv = sc->data[SC__AUTOSHADOWSPELL]->val2;
+
+			if (r_skill != AL_HOLYLIGHT && r_skill != PR_MAGNUS) {
+				skill_consume_requirement(sd,r_skill,r_lv,3);
+				switch( skill_get_casttype(r_skill) ) {
+				case CAST_GROUND:
+					skill_castend_pos2(src, target->x, target->y, r_skill, r_lv, tick, flag);
+					break;
+				case CAST_NODAMAGE:
+					skill_castend_nodamage_id(src, target, r_skill, r_lv, tick, flag);
+					break;
+				case CAST_DAMAGE:
+					skill_castend_damage_id(src, target, r_skill, r_lv, tick, flag);
+					break;
+				}
+
+				sd->ud.canact_tick = tick + skill_delayfix(src, r_skill, r_lv);
+				clif_status_change(src, SI_ACTIONDELAY, 1, skill_delayfix(src, r_skill, r_lv), 0, 0, 1);
+			}
+		}
+
 		if (wd.flag & BF_WEAPON && src != target && damage > 0) {
 			if (battle_config.left_cardfix_to_right)
 				battle_drain(sd, target, wd.damage, wd.damage, tstatus->race, is_boss(target));
@@ -4099,7 +4174,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 	switch( target->type )
 	{ // Checks on actual target
 		case BL_PC:
-			if (((TBL_PC*)target)->invincible_timer != INVALID_TIMER || pc_isinvisible((TBL_PC*)target))
+			if (((TBL_PC*)target)->invincible_timer != INVALID_TIMER || pc_isinvisible((TBL_PC*)target) || ((TBL_PC*)target)->sc.data[SC__MANHOLE])
 				return -1; //Cannot be targeted yet.
 			break;
 		case BL_MOB:

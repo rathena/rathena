@@ -1584,6 +1584,8 @@ int status_getrefinebonus(int lv,int type);
 int status_check_skilluse(struct block_list *src, struct block_list *target, int skill_num, int flag); // [Skotlex]
 int status_check_visibility(struct block_list *src, struct block_list *target); //[Skotlex]
 
+int status_change_spread( struct block_list *src, struct block_list *bl );
+
 int status_readdb(void);
 int do_init_status(void);
 void do_final_status(void);

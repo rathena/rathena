@@ -15722,6 +15722,38 @@ int clif_poison_list(struct map_session_data *sd, int skill_lv) {
 
 	return 1;
 }
+int clif_autoshadowspell_list(struct map_session_data *sd) {
+	int fd, i, c;
+	nullpo_ret(sd);
+	fd = sd->fd;
+	if( !fd ) return 0;
+
+	if( sd->menuskill_id == SC_AUTOSHADOWSPELL )
+		return 0;
+
+	WFIFOHEAD(fd, 2 * 6 + 4);
+	WFIFOW(fd,0) = 0x442;
+	for( i = 0, c = 0; i < MAX_SKILL; i++ )
+		if( sd->status.skill[i].flag == 13 && sd->status.skill[i].id > 0 &&
+				sd->status.skill[i].id < GS_GLITTERING && skill_get_type(sd->status.skill[i].id) == BF_MAGIC )
+		{ // Can't auto cast both Extended class and 3rd class skills.
+			WFIFOW(fd,8+c*2) = sd->status.skill[i].id;
+			c++;
+		}
+
+	if( c > 0 ) {
+		WFIFOW(fd,2) = 8 + c * 2;
+		WFIFOL(fd,4) = c;
+		WFIFOSET(fd,WFIFOW(fd,2));
+		sd->menuskill_id = SC_AUTOSHADOWSPELL;
+		sd->menuskill_val = c;
+	} else {
+		status_change_end(&sd->bl,SC_STOP,-1);
+		clif_skill_fail(sd,SC_AUTOSHADOWSPELL,0x15,0);
+	}
+
+	return 1;
+}
 /**
  * Sends a new status without a tick (currently used by the new mounts)
  **/
