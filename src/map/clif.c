@@ -4534,6 +4534,10 @@ void clif_skillinfoblock(struct map_session_data *sd)
 	{
 		if( (id = sd->status.skill[i].id) != 0 )
 		{
+			// workaround for bugreport:5348
+			if (len + 37 > socket_max_client_packet)
+				break;
+
 			WFIFOW(fd,len)   = id;
 			WFIFOL(fd,len+2) = skill_get_inf(id);
 			WFIFOW(fd,len+6) = sd->status.skill[i].lv;
@@ -4549,6 +4553,16 @@ void clif_skillinfoblock(struct map_session_data *sd)
 	}
 	WFIFOW(fd,2)=len;
 	WFIFOSET(fd,len);
+
+	// workaround for bugreport:5348; send the remaining skills one by one to bypass packet size limit
+	for ( ; i < MAX_SKILL; i++)
+	{
+		if( (id = sd->status.skill[i].id) != 0 )
+		{
+			clif_addskill(sd, id);
+			clif_skillinfo(sd, id, 0); 
+		}
+	}
 }
 /**
  * Server tells client 'sd' to add skill of id 'id' to it's skill tree (e.g. with Ice Falcion item)
