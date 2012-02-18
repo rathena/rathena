@@ -2713,8 +2713,7 @@ int parse_frommap(int fd)
 				map_fd = server[map_id].fd;
 			//Char should just had been saved before this packet, so this should be safe. [Skotlex]
 			char_data = (struct mmo_charstatus*)uidb_get(char_db_,RFIFOL(fd,14));
-			if (char_data == NULL) 
-			{	//Really shouldn't happen.
+			if (char_data == NULL) {	//Really shouldn't happen.
 				mmo_char_fromsql(RFIFOL(fd,14), &char_dat, true);
 				char_data = (struct mmo_charstatus*)uidb_get(char_db_,RFIFOL(fd,14));
 			}
@@ -2760,7 +2759,7 @@ int parse_frommap(int fd)
 				WFIFOL(fd,6) = 0; //Set login1 to 0.
 				WFIFOSET(fd,30);
 			}
-			RFIFOSKIP(fd,35);
+			RFIFOSKIP(fd,39);
 		}
 		break;
 
