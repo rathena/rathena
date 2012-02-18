@@ -555,18 +555,18 @@ void initChangeTables(void)
 	set_sc( SC_MANHOLE           , SC__MANHOLE        , SI_MANHOLE         , SCB_NONE );
 	add_sc( SC_CHAOSPANIC        , SC_CHAOS );
 	set_sc( SC_BLOODYLUST        , SC__BLOODYLUST     , SI_BLOODYLUST      , SCB_DEF|SCB_DEF2|SCB_BATK|SCB_WATK );
-	///**
-	// * Sura
-	// **/
-	//add_sc( SR_DRAGONCOMBO           , SC_STUN            );
-	//add_sc( SR_EARTHSHAKER           , SC_STUN            );
-	//set_sc( SR_CRESCENTELBOW         , SC_CRESCENTELBOW      , SI_CRESCENTELBOW         , SCB_NONE );
-	//set_sc( SR_CURSEDCIRCLE          , SC_CURSEDCIRCLE_TARGET, SI_CURSEDCIRCLE_TARGET   , SCB_NONE );
-	//set_sc( SR_LIGHTNINGWALK         , SC_LIGHTNINGWALK      , SI_LIGHTNINGWALK         , SCB_NONE );
-	//set_sc( SR_RAISINGDRAGON         , SC_RAISINGDRAGON      , SI_RAISINGDRAGON         , SCB_REGEN|SCB_MAXHP|SCB_MAXSP/*|SCB_ASPD*/ );
-	//set_sc( SR_GENTLETOUCH_ENERGYGAIN, SC_GT_ENERGYGAIN      , SI_GENTLETOUCH_ENERGYGAIN, SCB_NONE );
-	//set_sc( SR_GENTLETOUCH_CHANGE    , SC_GT_CHANGE          , SI_GENTLETOUCH_CHANGE    , SCB_BATK|SCB_ASPD|SCB_DEF|SCB_MDEF );
-	//set_sc( SR_GENTLETOUCH_REVITALIZE, SC_GT_REVITALIZE      , SI_GENTLETOUCH_REVITALIZE, SCB_MAXHP|SCB_DEF2|SCB_REGEN|SCB_ASPD|SCB_SPEED );
+	/**
+	 * Sura
+	 **/
+	add_sc( SR_DRAGONCOMBO           , SC_STUN            );
+	add_sc( SR_EARTHSHAKER           , SC_STUN            );
+	set_sc( SR_CRESCENTELBOW         , SC_CRESCENTELBOW      , SI_CRESCENTELBOW         , SCB_NONE );
+	set_sc( SR_CURSEDCIRCLE          , SC_CURSEDCIRCLE_TARGET, SI_CURSEDCIRCLE_TARGET   , SCB_NONE );
+	set_sc( SR_LIGHTNINGWALK         , SC_LIGHTNINGWALK      , SI_LIGHTNINGWALK         , SCB_NONE );
+	set_sc( SR_RAISINGDRAGON         , SC_RAISINGDRAGON      , SI_RAISINGDRAGON         , SCB_REGEN|SCB_MAXHP|SCB_MAXSP/*|SCB_ASPD*/ );
+	set_sc( SR_GENTLETOUCH_ENERGYGAIN, SC_GT_ENERGYGAIN      , SI_GENTLETOUCH_ENERGYGAIN, SCB_NONE );
+	set_sc( SR_GENTLETOUCH_CHANGE    , SC_GT_CHANGE          , SI_GENTLETOUCH_CHANGE    , SCB_BATK|SCB_ASPD|SCB_DEF|SCB_MDEF );
+	set_sc( SR_GENTLETOUCH_REVITALIZE, SC_GT_REVITALIZE      , SI_GENTLETOUCH_REVITALIZE, SCB_MAXHP|SCB_DEF2|SCB_REGEN|SCB_ASPD|SCB_SPEED );
 	///**
 	// * Wanderer / Mistrel
 	// **/
@@ -1013,6 +1013,8 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 			sc_start4(target,SC_PROVOKE,100,10,1,0,0,0);
 		if (sc->data[SC_BERSERK] && status->hp <= 100)
 			status_change_end(target, SC_BERSERK, INVALID_TIMER);
+		if( sc->data[SC_RAISINGDRAGON] && status->hp <= 1000 )
+			status_change_end(target, SC_RAISINGDRAGON, -1);
 	}
 
 	switch (target->type)
@@ -1411,7 +1413,8 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 				sc->data[SC_WHITEIMPRISON] ||
 				(sc->data[SC_STASIS] && skill_stasis_check(src, sc->data[SC_STASIS]->val2, skill_num)) ||
 				sc->data[SC__INVISIBILITY] ||
-				sc->data[SC__IGNORANCE]
+				sc->data[SC__IGNORANCE] ||
+				sc->data[SC_CURSEDCIRCLE_TARGET]
 			))
 				return 0;
 
@@ -3093,6 +3096,8 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 		|| sc->data[SC_BERSERK]
 		|| sc->data[SC_TRICKDEAD]
 		|| sc->data[SC_BLEEDING]
+		|| sc->data[SC_MAGICMUSHROOM]
+		|| sc->data[SC_RAISINGDRAGON]
 	)	//No regen
 		regen->flag = 0;
 
@@ -3918,6 +3923,8 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 		batk -= batk * sc->data[SC__ENERVATION]->val2 / 100;
 	if(sc->data[SC__BLOODYLUST])
 		batk += batk * 32 / 100;
+	if(sc->data[SC_GT_CHANGE])
+		batk += batk * sc->data[SC_GT_CHANGE]->val3 / 100;
 #if RE_EDP
 	/**
 	 * in RE EDP increases your base atk by atk x Skill Level.
@@ -4483,7 +4490,8 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 				val = max( val, 75 );
 			if( sc->data[SC_CLOAKINGEXCEED] )
 				val = max( val, sc->data[SC_CLOAKINGEXCEED]->val3);
-
+			if( sc->data[SC_GT_REVITALIZE] )
+				val = max( val, sc->data[SC_GT_REVITALIZE]->val2 );
 			//FIXME: official items use a single bonus for this [ultramage]
 			if( sc->data[SC_SPEEDUP0] ) // temporary item-based speedup
 				val = max( val, 25 );
@@ -4709,6 +4717,12 @@ static unsigned int status_calc_maxhp(struct block_list *bl, struct status_chang
 		maxhp -= maxhp * sc->data[SC__WEAKNESS]->val2 / 100;
 	if(sc->data[SC_FORCEOFVANGUARD])
 		maxhp += maxhp * 3 * sc->data[SC_FORCEOFVANGUARD]->val1 / 100;
+	if(sc->data[SC_RAISINGDRAGON])
+		maxhp += maxhp * (2 + sc->data[SC_RAISINGDRAGON]->val1) / 100;
+	if(sc->data[SC_GT_CHANGE])
+		maxhp -= maxhp * (2 * sc->data[SC_GT_CHANGE]->val1) / 100;
+	if(sc->data[SC_GT_REVITALIZE])
+		maxhp += maxhp * (3 * sc->data[SC_GT_REVITALIZE]->val1) / 100;
 	if(sc->data[SC_INSPIRATION]) //Custom value.
 		maxhp += maxhp * 3 * sc->data[SC_INSPIRATION]->val1 / 100;
 
@@ -4727,6 +4741,8 @@ static unsigned int status_calc_maxsp(struct block_list *bl, struct status_chang
 		maxsp += maxsp * sc->data[SC_SERVICE4U]->val2/100;
 	if(sc->data[SC_MERC_SPUP])
 		maxsp += maxsp * sc->data[SC_MERC_SPUP]->val2/100;
+	if(sc->data[SC_RAISINGDRAGON])
+		maxsp += maxsp * (2 + sc->data[SC_RAISINGDRAGON]->val1) / 100;
 
 	return cap_value(maxsp,1,UINT_MAX);
 }
@@ -6002,6 +6018,16 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			status_change_end(bl, SC_SHIELDSPELL_MDEF, INVALID_TIMER);
 		if( type != SC_SHIELDSPELL_REF )
 			status_change_end(bl, SC_SHIELDSPELL_REF, INVALID_TIMER);
+		break;
+	case SC_GT_ENERGYGAIN:
+	case SC_GT_CHANGE:
+	case SC_GT_REVITALIZE:
+		if( type != SC_GT_REVITALIZE )
+			status_change_end(bl, SC_GT_REVITALIZE, INVALID_TIMER);
+		if( type != SC_GT_ENERGYGAIN )
+			status_change_end(bl, SC_GT_ENERGYGAIN, INVALID_TIMER);
+		if( type != SC_GT_CHANGE )
+			status_change_end(bl, SC_GT_CHANGE, INVALID_TIMER);
 		break;
 	}
 
@@ -7461,6 +7487,8 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_BITE:
 		case SC__MANHOLE:
 		case SC_CHAOS:
+		case SC_CURSEDCIRCLE_ATKER:
+		case SC_CURSEDCIRCLE_TARGET:
 			unit_stop_walking(bl,1);
 		break;
 		case SC_HIDING:
@@ -7742,6 +7770,9 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 						clif_skillinfo(sd,TK_JUMPKICK, INF_SELF_SKILL);
 					break;
 			}
+		case SC_RAISINGDRAGON:
+			sce->val2 = status->max_hp / 100;// Officially tested its 1%hp drain. [Jobbie]
+			break;
 	}
 
 	if( opt_flag&2 && sd && sd->touching_id )
@@ -8258,7 +8289,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				}
 			}
 			break;
-		/*
 		case SC_CURSEDCIRCLE_ATKER:
 			if( sce->val3 )
 				map_foreachinrange(status_change_timer_sub, bl, skill_get_splash(SR_CURSEDCIRCLE, sce->val1),BL_CHAR, bl, sce, SC_CURSEDCIRCLE_TARGET, gettick());
@@ -8276,7 +8306,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 					--i;
 				}
 			}
-			break;*/
+			break;
 		}
 
 	opt_flag = 1;
@@ -9341,6 +9371,12 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 			status_change_end(bl, SC_CLOSECONFINE2, INVALID_TIMER);
 		}
 		break;
+	case SC_CURSEDCIRCLE_TARGET:
+		if( tsc && tsc->data[SC_CURSEDCIRCLE_TARGET] && tsc->data[SC_CURSEDCIRCLE_TARGET]->val2 == src->id ) {
+			status_change_end(bl, type, -1);			
+			clif_bladestop(src, bl->id, 0);
+		}
+		break;
 	}
 	return 0;
 }
@@ -9415,6 +9451,8 @@ int status_change_clear_buffs (struct block_list* bl, int type)
 			case SC_VITALITYACTIVATION:
 			case SC_FIGHTINGSPIRIT:
 			case SC_ABUNDANCE:
+			case SC_CURSEDCIRCLE_ATKER:
+			case SC_CURSEDCIRCLE_TARGET:
 				continue;
 				
 			//Debuffs that can be removed.

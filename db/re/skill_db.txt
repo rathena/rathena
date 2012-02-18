@@ -875,6 +875,35 @@
 2324,3,8,1,-1,0,0,5,3,yes,0,0,0,weapon,0,	LG_HESPERUSLIT,Hesperus Lit
 2325,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,	LG_INSPIRATION,Inspiration
 
+//****
+// SR Sura
+2326,-2,8,1,-1,0,0,10,2,no,0,0,0,weapon,0,	SR_DRAGONCOMBO,Dragon Combo //CHECK Is this 2 regular hits or sub hits? Yes its 2 sub hits.
+2327,0,8,4,-1,0x2,2,5,-3,no,0,0,0,weapon,3,	SR_SKYNETBLOW,Sky Net Blow //CHECK Video shows 3 hits. Its sub hits right? Data check shows no sub, one source shows 3 hits, another shows 5.
+2328,0,6,4,-1,0x2,1:2:3:4:5,5,1,no,0,0,0,weapon,0,	SR_EARTHSHAKER,Earth Shaker //CHECK Must add a check in battle.c to triple damage if hitting a hidden target.
+2329,-2,8,4,-1,0,0,5,-2,no,0,0x200,0,weapon,0,	SR_FALLENEMPIRE,Fallen Empire //CHECK Video shows 2 hits. Is it sub hits? Yes its divided between 2 hits.
+2330,-2,6,1,-1,0x42,1:1:1:1:1:2:2:2:2:2,10,1,yes,0,0,0,weapon,0,	SR_TIGERCANNON,Tiger Cannon //CHECK Need to fix to be enemy targeted and also combo after Fallen Empire.
+2331,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		SR_HELLGATE,Hell Gate
+2332,5,6,4,-1,0x2,3,5,1,no,0,0,0,weapon,0,	SR_RAMPAGEBLASTER,Rampage Blaster
+2333,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,		SR_CRESCENTELBOW,Crescent Elbow //CHECK Check the autospell ID.
+2334,0,6,4,0,0x3,1:1:2:2:3,5,1,no,0,0,0,none,0,	SR_CURSEDCIRCLE,Cursed Circle //CHECK Code shows it takes up to 5% of your HP upon use?
+2335,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,		SR_LIGHTNINGWALK,Lightning Walk
+2336,7:8:9:10:11,6,1,-1,0,0,5,1,no,0,0,0,weapon,2:3:4:5:6,	SR_KNUCKLEARROW,Knuckle Arrow
+2337,0,6,4,-1,0x2,2,1,1,yes,0,0,0,weapon,0,	SR_WINDMILL,Windmill
+2338,0,6,4,0,0x1,0,10,1,no,0,0,0,none,0,	SR_RAISINGDRAGON,Raising Dragon
+2339,0,0,0,0,0,0,5,1,no,0,0,0,none,0,		SR_GENTLETOUCH,Gentle Touch
+2340,0,6,4,0,0x3,2,1,1,no,0,0,0,none,0,	SR_ASSIMILATEPOWER,Assimilate Power
+2341,3,6,16,0,0x1,0,1,1,yes,0,0x200,0,none,0,	SR_POWERVELOCITY,Power Velocity
+2342,1,6,1,-1,0x20,0,5,1,no,0,0,0,weapon,3,	SR_CRESCENTELBOW_AUTOSPELL,Crescent Elbow Autospell //CHECK Does this ignore defense?
+2343,1:2:3:3:4:4:5:5:6:7,8,1,0,0,0,10,-7,yes,0,0,0,weapon,0,	SR_GATEOFHELL,Gate of Hell //CHECK Need to fix to be enemy targeted and also combo after Fallen Empire
+2344,2,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,	SR_GENTLETOUCH_QUIET,Gentle Touch - Quiet
+2345,2,6,16,0,0x1,0,5,1,no,0,0,0,magic,0,	SR_GENTLETOUCH_CURE,Gentle Touch - Cure //CHECK Its a healing skill. Guessing it has to be magic type? Healing isnt working.
+2346,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,	SR_GENTLETOUCH_ENERGYGAIN,Gentle Touch - Energy Gain
+2347,2,6,16,0,0x1,0,5,1,yes,0,0,0,none,0,	SR_GENTLETOUCH_CHANGE,Gentle Touch - Change
+2348,2,6,16,0,0x1,0,5,1,yes,0,0,0,none,0,	SR_GENTLETOUCH_REVITALIZE,Gentle Touch - Revitalize
+//More from Sura but not following ID order
+2517,0,6,4,-1,0x2,3:4:5:6:7,5,1,no,0,0,0,weapon,0,	SR_HOWLINGOFLION,Howling of Lion
+2518,11,6,2,-1,0x2,2:2:3:3:4,5,1,no,0,0,0,weapon,0,	SR_RIDEINLIGHTNING,Ride In Lightening
+
 
 //2021,0,0,0,0,0,0,9,0,no,0,0,0,none,0		GC_VENOMIMPRESS,
 //2022,0,0,0,0,0,0,9,0,no,0,0,0,none,0		GC_CROSSIMPACT,

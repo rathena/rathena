@@ -2119,6 +2119,52 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				case LG_HESPERUSLIT:
 					skillratio += 120 * skill_lv - 100;
 					break;
+				case SR_DRAGONCOMBO:
+					skillratio += 40 * skill_lv;
+					break;
+				case SR_SKYNETBLOW:
+					skillratio += 80 * skill_lv - 100 + ( sstatus->agi * 4 );
+					break;
+				case SR_EARTHSHAKER:
+					skillratio += 50 * skill_lv - 50;// Need to code a check to make the ratio 3x when hitting a hidden player. [Rytech]
+					break;
+				case SR_FALLENEMPIRE:
+					skillratio += 150 * skill_lv; // Need official on how much enemy players weight affects damage. [Rytech]
+					//if( tsd && tsd->weight )
+					//	skillratio = (100 + 150 * skill_lv) * tsd->weight / 10000;
+					//else
+					//	skillratio = (100 + 150 * skill_lv) * 600 / 100;
+					break;
+				case SR_TIGERCANNON:
+						skillratio = 2000 + ( sstatus->hp * ( 10 + 2 * skill_lv ) / 100 );
+					break;
+				case SR_RAMPAGEBLASTER:
+					if( sc && sc->data[SC_EXPLOSIONSPIRITS] )
+						skillratio += 40 * skill_lv * (sd?sd->spiritball_old:5) - 100;
+					else
+						skillratio += 20 * skill_lv * (sd?sd->spiritball_old:5) - 100;
+					break;
+				case SR_KNUCKLEARROW:
+					if( wflag&4 )
+						skillratio = 150 * skill_lv; //+Knockback Damage (Must check and test. [Rytech])
+					else
+						skillratio += 400 + (100 * skill_lv);
+					break;
+				case SR_WINDMILL:
+					skillratio += 150;
+					break;
+				case SR_GATEOFHELL:
+					skillratio += 500 * skill_lv -100;
+					break;
+				case SR_GENTLETOUCH_QUIET:
+					skillratio += 100 * skill_lv - 100 + sstatus->dex;
+					break;
+				case SR_HOWLINGOFLION:
+					skillratio += 300 * skill_lv - 100;
+					break;
+				case SR_RIDEINLIGHTNING:
+					skillratio += 200 * skill_lv -100;
+					break;
 			}
 
 			ATK_RATE(skillratio);
@@ -2147,23 +2193,20 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				case NJ_SYURIKEN:
 					ATK_ADD(4*skill_lv);
 					break;
-				/**
-				 * Ranger
-				 **/
 				case RA_WUGDASH:
 				case RA_WUGSTRIKE:
 				case RA_WUGBITE:
 					if(sd)
 						ATK_ADD(30*pc_checkskill(sd, RA_TOOTHOFWUG));
 					break;
-				/**
-				 * Royal Guard
-				 **/
 				case LG_RAYOFGENESIS:
 					if( sc && sc->data[SC_BANDING] ) {// Increase only if the RG is under Banding.
 						short lv = (short)skill_lv;
 						ATK_ADDRATE( 190 * ((sd) ? skill_check_pc_partner(sd,(short)skill_num,&lv,skill_get_splash(skill_num,skill_lv),0) : 1));
 					}
+					break;
+				case SR_GATEOFHELL:
+					ATK_ADD (sstatus->max_hp - status_get_hp(src));//Will have to add the consumed SP part to the formula in the future. [Rytech]
 					break;
 			}
 		}
@@ -2204,6 +2247,14 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			case NC_AXETORNADO:
 				if( (sstatus->rhw.ele) == ELE_WIND || (sstatus->lhw.ele) == ELE_WIND )
 					ATK_ADDRATE(50);
+				break;
+			case SR_EARTHSHAKER:
+				if( tsc && (tsc->data[SC_HIDING] || tsc->data[SC_CLOAKING] || tsc->data[SC_CHASEWALK] || tsc->data[SC_CLOAKINGEXCEED]) )
+					ATK_ADDRATE(150+150*skill_lv);
+				break;
+			case SR_RIDEINLIGHTNING:
+				if( (sstatus->rhw.ele) == ELE_WIND || (sstatus->lhw.ele) == ELE_WIND )
+					ATK_ADDRATE(skill_lv*5);
 				break;
 		}
 		
@@ -3969,6 +4020,13 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				if( src != target )// Don't reflect your own damage (Grand Cross)
 					map_foreachinshootrange(battle_damage_area,target,skill_get_splash(LG_REFLECTDAMAGE,1),BL_CHAR,tick,target,wd.amotion,wd.dmotion,rdamage,tstatus->race,0);
 			} else {
+				if( tsc && tsc->data[SC_CRESCENTELBOW] ) {	// Deal rdamage to src and 10% damage back to target.
+					clif_skill_nodamage(target,target,SR_CRESCENTELBOW_AUTOSPELL,tsc->data[SC_CRESCENTELBOW]->val1,1);
+					skill_blown(target,src,skill_get_blewcount(SR_CRESCENTELBOW_AUTOSPELL,tsc->data[SC_CRESCENTELBOW]->val1),unit_getdir(src),0);
+					status_damage(NULL,target,rdamage/10,0,0,1);
+					clif_damage(target, target, tick, wd.amotion, wd.dmotion, rdamage/10, wd.div_ , wd.type, wd.damage2);
+					status_change_end(target, SC_CRESCENTELBOW, INVALID_TIMER);
+				}
 				rdelay = clif_damage(src, src, tick, wd.amotion, sstatus->dmotion, rdamage, 1, 4, 0);
 				//Use Reflect Shield to signal this kind of skill trigger. [Skotlex]
 				skill_additional_effect(target,src,CR_REFLECTSHIELD,1,BF_WEAPON|BF_SHORT|BF_NORMAL,ATK_DEF,tick);

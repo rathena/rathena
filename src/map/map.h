@@ -591,6 +591,7 @@ int map_moveblock(struct block_list *, int, int, unsigned int);
 int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int range, int type, ...);
 int map_foreachinshootrange(int (*func)(struct block_list*,va_list), struct block_list* center, int range, int type, ...);
 int map_foreachinarea(int (*func)(struct block_list*,va_list), int m, int x0, int y0, int x1, int y1, int type, ...);
+int map_forcountinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int range, int count, int type, ...);
 int map_forcountinarea(int (*func)(struct block_list*,va_list), int m, int x0, int y0, int x1, int y1, int count, int type, ...);
 int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_list* center, int range, int dx, int dy, int type, ...);
 int map_foreachincell(int (*func)(struct block_list*,va_list), int m, int x, int y, int type, ...);

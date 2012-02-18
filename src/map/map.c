@@ -692,7 +692,74 @@ int map_foreachinarea(int (*func)(struct block_list*,va_list), int m, int x0, in
 	bl_list_count = blockcount;
 	return returnCount;	//[Skotlex]
 }
+/*==========================================
+ * Adapted from forcountinarea for an easier invocation. [pakpil]
+ *------------------------------------------*/
+int map_forcountinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int range, int count, int type, ...)
+{
+	int bx,by,m;
+	int returnCount =0;	//total sum of returned values of func() [Skotlex]
+	struct block_list *bl;
+	int blockcount=bl_list_count,i;
+	int x0,x1,y0,y1;
 
+	m = center->m;
+	x0 = max(center->x-range, 0);
+	y0 = max(center->y-range, 0);
+	x1 = min(center->x+range, map[m].xs-1);
+	y1 = min(center->y+range, map[m].ys-1);
+	
+	if (type&~BL_MOB)
+		for (by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++) {
+			for(bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++) {
+				for( bl = map[m].block[bx+by*map[m].bxs] ; bl != NULL ; bl = bl->next )
+				{
+					if( bl->type&type
+						&& bl->x>=x0 && bl->x<=x1 && bl->y>=y0 && bl->y<=y1
+#ifdef CIRCULAR_AREA
+						&& check_distance_bl(center, bl, range)
+#endif
+					  	&& bl_list_count<BL_LIST_MAX)
+						bl_list[bl_list_count++]=bl;
+				}
+			}
+		}
+	if(type&BL_MOB)
+		for(by=y0/BLOCK_SIZE;by<=y1/BLOCK_SIZE;by++){
+			for(bx=x0/BLOCK_SIZE;bx<=x1/BLOCK_SIZE;bx++){
+				for( bl = map[m].block_mob[bx+by*map[m].bxs] ; bl != NULL ; bl = bl->next )
+				{
+					if( bl->x>=x0 && bl->x<=x1 && bl->y>=y0 && bl->y<=y1
+#ifdef CIRCULAR_AREA
+						&& check_distance_bl(center, bl, range)
+#endif
+						&& bl_list_count<BL_LIST_MAX)
+						bl_list[bl_list_count++]=bl;
+				}
+			}
+		}
+
+	if(bl_list_count>=BL_LIST_MAX)
+		ShowWarning("map_forcountinrange: block count too many!\n");
+
+	map_freeblock_lock();	// メモリからの解放を禁止する
+
+	for(i=blockcount;i<bl_list_count;i++)
+		if(bl_list[i]->prev)	// 有?かどうかチェック
+		{
+			va_list ap;
+			va_start(ap, type);
+			returnCount += func(bl_list[i], ap);
+			va_end(ap);
+			if( count && returnCount >= count )
+				break;
+		}
+
+	map_freeblock_unlock();	// 解放を許可する
+
+	bl_list_count = blockcount;
+	return returnCount;	//[Skotlex]
+}
 int map_forcountinarea(int (*func)(struct block_list*,va_list), int m, int x0, int y0, int x1, int y1, int count, int type, ...)
 {
 	int bx,by;
