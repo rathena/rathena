@@ -94,7 +94,7 @@ struct socket_data
 	void* session_data; // stores application-specific data related to the session
 };
 
-static size_t socket_max_client_packet;
+extern size_t socket_max_client_packet;
 
 // Data prototype declaration
 
