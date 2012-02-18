@@ -3792,7 +3792,7 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int rdamage, int ldamage, 
 		sp = wd->sp_drain[type].value;
 		if (wd->sp_drain[type].rate)
 			sp += battle_calc_drain(*damage, wd->sp_drain[type].rate, wd->sp_drain[type].per);
-
+		
 		if (hp) {
 			if (wd->hp_drain[type].type)
 				rhp += hp;
@@ -3807,6 +3807,12 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int rdamage, int ldamage, 
 
 	if (sd->sp_vanish_rate && rnd()%1000 < sd->sp_vanish_rate)
 		status_percent_damage(&sd->bl, tbl, 0, (unsigned char)sd->sp_vanish_per, false);
+
+	if( sd->sp_gain_race_attack[race] )
+		tsp += sd->sp_gain_race_attack[race];
+	if( sd->hp_gain_race_attack[race] )
+		thp += sd->hp_gain_race_attack[race];
+
 	if (!thp && !tsp) return;
 
 	status_heal(&sd->bl, thp, tsp, battle_config.show_hp_sp_drain?3:1);

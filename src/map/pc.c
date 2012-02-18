@@ -2971,7 +2971,14 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag != 2)
 			sd->ignore_def[type2] += val;
 		break;
-
+	case SP_SP_GAIN_RACE_ATTACK:
+		if(sd->state.lr_flag != 2)
+			sd->sp_gain_race_attack[type2] = cap_value(sd->sp_gain_race_attack[type2] + val, 0, INT16_MAX);
+		break;
+	case SP_HP_GAIN_RACE_ATTACK:
+		if(sd->state.lr_flag != 2)
+			sd->hp_gain_race_attack[type2] = cap_value(sd->hp_gain_race_attack[type2] + val, 0, INT16_MAX);
+		break;
 	default:
 		ShowWarning("pc_bonus2: unknown type %d %d %d!\n",type,type2,val);
 		break;

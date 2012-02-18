@@ -559,6 +559,8 @@ bMagicHPGainValue	2044
 bAddClassDropItem	2045
 bWeaponMatk	2046
 bMatk	2047
+bSPGainRaceAttack	2048
+bHPGainRaceAttack	2049
 
 EQI_HEAD_TOP	1
 EQI_ARMOR	2

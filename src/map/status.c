@@ -2103,6 +2103,8 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		+ sizeof(sd->ignore_def)
 		+ sizeof(sd->itemgrouphealrate)
 		+ sizeof(sd->sp_gain_race)
+		+ sizeof(sd->sp_gain_race_attack)
+		+ sizeof(sd->hp_gain_race_attack)
 		);
 
 	memset (&sd->right_weapon.overrefine, 0, sizeof(sd->right_weapon) - sizeof(sd->right_weapon.atkmods));
