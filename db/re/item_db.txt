@@ -686,7 +686,7 @@
 1366,Right_Epsilon,Light Epsilon,4,20,,2300,180,,1,0,0x000444A2,7,2,34,4,44,1,7,{ bonus bAtkEle,Ele_Holy; skill "AL_HEAL",3; bonus2 bAddRace,RC_Demon,3; },{},{}
 1367,Slaughter,Slaughter,4,20,,2500,120,,1,0,0x000444A2,7,2,34,4,44,1,7,{ bonus bAtkEle,Ele_Earth; bonus bIgnoreDefRace,RC_Brute; bonus2 bWeaponComaRace,RC_Brute,40; },{},{}
 1368,Tomahawk,Tomahawk,4,20,,2500,165,,1,0,0x000444A2,7,2,34,4,44,1,7,{ bonus bAtkEle,Ele_Wind; skill "ITM_TOMAHAWK",1; },{},{}
-1369,Guillotine,Guillotine,4,20,,3000,215,,1,0,0x000444A2,7,2,34,4,44,1,7,{ bonus2 bWeaponComaRace,RC_DemiHuman,30; bonus bSPDrainValue,2; bonus bSPGainValue,20; },{},{}
+1369,Guillotine,Guillotine,4,20,,3000,215,,1,0,0x000444A2,7,2,34,4,44,1,7,{ bonus2 bWeaponComaRace,RC_DemiHuman,30; bonus2 bSPGainRaceAttack,RC_DemiHuman,2; bonus2 bSPGainRace,RC_DemiHuman,20; },{},{}
 1370,Doom_Slayer,Doom Slayer,4,20,,6000,10,,1,0,0x000444A2,7,2,34,4,80,1,7,{ bonus bAspdRate,-40; bonus bUseSPrate,100; if(readparam(bStr)>=95){ bonus bBaseAtk,340; bonus2 bAddEff,Eff_Stun,3000; bonus bBreakArmorRate,500; } },{},{}
 1371,Doom_Slayer_,Doom Slayer,4,20,,6000,10,,1,1,0x000444A2,7,2,34,4,80,1,7,{ bonus bAspdRate,-40; bonus bUseSPrate,100; if(readparam(bStr)>=95){ bonus bBaseAtk,340; bonus2 bAddEff,Eff_Stun,3000; bonus bBreakArmorRate,500; } },{},{}
 1372,Right_Epsilon_C,Light Epsilon,4,1,,0,229,,1,0,0x000444A2,7,2,34,4,1,0,7,{ bonus bAtkEle,Ele_Holy; skill "AL_HEAL",3; bonus2 bAddRace,RC_Demon,3; bonus bStr,10; bonus bSpeedRate,25; },{},{}
@@ -2937,7 +2937,7 @@
 5357,Wings_Of_Victory,Wings Of Victory,5,20,,200,,10,,0,0xFFFFFFFF,7,2,768,,0,0,365,{ bonus bMdef,10; bonus bUnbreakableHelm,0; },{},{}
 //5358,Pecopeco_Wing_Ears,Peco Ears,5,20,,100,,1,,0,0xFFFFFFFF,7,2,512,,70,0,366,{ bonus bAgi,1; bonus bMdef,2; },{},{}
 5359,J_Captain_Hat,Ship Captain Hat,5,20,,300,,3,,1,0xFFFFFFFF,7,2,256,,60,1,367,{ bonus bDex,1; bonus bLongAtkRate,7; bonus bMaxHP,100; },{},{}
-5360,Whikebain_Ears,Hyuke's Black Cat Ears,5,20,,200,,2,,0,0xFFFFFFFF,7,2,256,,45,1,368,{ bonus bFlee,10; bonus bCritical,3; bonus2 bCriticalAddRace,RC_Boss,10; bonus2 bCriticalAddRace,RC_NonBoss,10; bonus bDefRate,-50; bonus bDef2Rate,-50; },{},{}
+5360,Whikebain_Ears,Hyuke's Black Cat Ears,5,20,,200,,2,,0,0xFFFFFFFF,7,2,256,,45,1,368,{ bonus bFlee,10; bonus bCritical,3; bonus bCritAtkRate,10; bonus bDefRate,-50; bonus bDef2Rate,-50; },{},{}
 5361,Gang_Scarf,Gangster Scarf,5,20,,100,,0,,0,0xFFFFFFFF,7,2,1,,60,0,369,{ bonus bBaseAtk,5; if(BaseJob == Job_Rogue) skill "RG_GANGSTER",1; },{},{}
 5362,Ninja_Scroll,Ninja Scroll,5,20,,200,,0,,0,0xFFFFFFFF,7,2,1,,60,0,370,{ bonus bMatkRate,1; },{},{}
 5363,Helm_Of_Abyss,Helm Of Abyss,5,20,,1000,,2,,1,0x000654E2,7,2,256,,70,1,371,{ bonus2 bSubRace,RC_DemiHuman,-10; bonus2 bSubRace,RC_Boss,10; },{},{}
