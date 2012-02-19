@@ -2804,15 +2804,13 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		}
 	}
 
-	if(skill_num==ASC_BREAKER)
-	{	//Breaker's int-based damage (a misc attack?)
+	if(skill_num == ASC_BREAKER) {	//Breaker's int-based damage (a misc attack?)
 		struct Damage md = battle_calc_misc_attack(src, target, skill_num, skill_lv, wflag);
 		wd.damage += md.damage;
 	}
 	if( sc ) {
 		//SG_FUSION hp penalty [Komurka]
-		if (sc->data[SC_FUSION])
-		{
+		if (sc->data[SC_FUSION]) {
 			int hp= sstatus->max_hp;
 			if (sd && tsd) {
 				hp = 8*hp/100;
@@ -2830,9 +2828,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			 * RK Enchant Blade
 			 **/
 			if( sc->data[SC_ENCHANTBLADE] && sd && ( (flag.rh && sd->weapontype1) || (flag.lh && sd->weapontype2) ) ) {
-				struct Damage md = battle_calc_magic_attack(src, target, RK_ENCHANTBLADE, pc_checkskill(sd,RK_ENCHANTBLADE), wflag);
-				wd.damage += md.damage;
-				wd.flag |= md.flag;
+				//[( ( Skill Lv x 20 ) + 100 ) x ( casterBaseLevel / 150 )] + casterInt
+				wd.damage += ( ( ( sc->data[SC_ENCHANTBLADE]->val1 * 20 ) + 100 ) * ( status_get_lv(src) / 150 ) ) + status_get_int(src);
 			}
 		}
 	}
