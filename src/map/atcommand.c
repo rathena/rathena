@@ -1215,17 +1215,17 @@ ACMD_FUNC(kami)
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if(*(command + 5) != 'c' && *(command + 5) != 'C') {
-
 		if (!message || !*message) {
 			clif_displaymessage(fd, "Please, enter a message (usage: @kami <message>).");
 			return -1;
 		}
 
 		sscanf(message, "%199[^\n]", atcmd_output);
-		intif_broadcast(atcmd_output, strlen(atcmd_output) + 1, (*(command + 5) == 'b' || *(command + 5) == 'B') ? 0x10 : 0);
-	
+		if (strstr(command, "l") != NULL)
+			clif_broadcast(&sd->bl, atcmd_output, strlen(atcmd_output) + 1, 0, ALL_SAMEMAP);
+		else
+			intif_broadcast(atcmd_output, strlen(atcmd_output) + 1, (*(command + 5) == 'b' || *(command + 5) == 'B') ? 0x10 : 0);
 	} else {
-	
 		if(!message || !*message || (sscanf(message, "%lx %199[^\n]", &color, atcmd_output) < 2)) {
 			clif_displaymessage(fd, "Please, enter color and message (usage: @kamic <color> <message>).");
 			return -1;
@@ -1235,7 +1235,6 @@ ACMD_FUNC(kami)
 			clif_displaymessage(fd, "Invalid color.");
 			return -1;
 		}
-	
 		intif_broadcast2(atcmd_output, strlen(atcmd_output) + 1, color, 0x190, 12, 0, 0);
 	}
 	return 0;
@@ -8370,6 +8369,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(kami),
 		ACMD_DEF2("kamib", kami),
 		ACMD_DEF2("kamic", kami),
+		ACMD_DEF2("lkami", kami),
 		ACMD_DEF(heal),
 		ACMD_DEF(item),
 		ACMD_DEF(item2),

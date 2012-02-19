@@ -11078,7 +11078,7 @@ void clif_parse_LocalBroadcast(int fd, struct map_session_data* sd)
 	// as the length varies depending on the command used, just block unreasonably long strings
 	len = mes_len_check(msg, len, CHAT_SIZE_MAX);
 
-	sprintf(command, "@localbroadcast %s", msg);
+	sprintf(command, "@lkami %s", msg);
 	is_atcommand(fd, sd, command, 1);
 }
 
