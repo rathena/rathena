@@ -4535,7 +4535,7 @@ void clif_skillinfoblock(struct map_session_data *sd)
 		if( (id = sd->status.skill[i].id) != 0 )
 		{
 			// workaround for bugreport:5348
-			if (len + 37 > socket_max_client_packet)
+			if (len + 37 > 8192)
 				break;
 
 			WFIFOW(fd,len)   = id;
