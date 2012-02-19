@@ -2165,6 +2165,22 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				case SR_RIDEINLIGHTNING:
 					skillratio += 200 * skill_lv -100;
 					break;
+				case WM_REVERBERATION_MELEE:
+					skillratio += 200 + 100 * pc_checkskill(sd, WM_REVERBERATION);
+					break;
+				case WM_SEVERE_RAINSTORM_MELEE:
+					skillratio = 50 + 50 * skill_lv;
+					break;
+				case WM_GREAT_ECHO:
+					skillratio += 800 + 100 * skill_lv;
+					if( sd ) {	// Still need official value [pakpil]
+						short lv = (short)skill_lv;
+						skillratio += 100 * skill_check_pc_partner(sd,skill_num,&lv,skill_get_splash(skill_num,skill_lv),0);
+					}
+					break;
+				case WM_SOUND_OF_DESTRUCTION:
+					skillratio += 400;
+					break;
 			}
 
 			ATK_RATE(skillratio);
@@ -4265,14 +4281,16 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 					case MS_MAGNUM:
 					case RA_DETONATOR:
 					case RA_SENSITIVEKEEN:
+					case GN_CRAZYWEED:
 						state |= BCT_ENEMY;
 						strip_enemy = 0;
 						break;
 					default:
 						return 0;
 				}
-			} else if (su->group->skill_id==WZ_ICEWALL)
-			{
+			} else if (su->group->skill_id==WZ_ICEWALL ||
+					   su->group->skill_id == GN_WALLOFTHORN ||
+					   su->group->skill_id == WM_REVERBERATION) {
 				state |= BCT_ENEMY;
 				strip_enemy = 0;
 			} else	//Excepting traps and icewall, you should not be able to target skills.

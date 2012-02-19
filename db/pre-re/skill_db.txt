@@ -37,6 +37,7 @@
 //    0x0800- usable only on guild-mates (and enemies if skill is offensive)
 //    0x1000- disable usage on enemies (for non-offensive skills).
 //    0x2000- skill ignores land protector (e.g. arrow shower)
+//    0x4000- chorus skill
 // 13 maxcount: max amount of skill instances to place on the ground when
 //    player_land_skill_limit/monster_land_skill_limit is enabled. For skills
 //    that attack using a path, this is the path length to be used.
@@ -902,6 +903,44 @@
 //More from Sura but not following ID order
 2517,0,6,4,-1,0x2,3:4:5:6:7,5,1,no,0,0,0,weapon,0,	SR_HOWLINGOFLION,Howling of Lion
 2518,11,6,2,-1,0x2,2:2:3:3:4,5,1,no,0,0,0,weapon,0,	SR_RIDEINLIGHTNING,Ride In Lightening
+
+//****
+// WA Wanderer
+2350,0,6,4,0,0x3,7:8:9:10:11,5,1,yes,0,0,0,none,0,	WA_SWING_DANCE,Swing Dance
+2351,0,6,4,0,0x3,7:8:9:10:11,5,1,yes,0,0,0,none,0,	WA_SYMPHONY_OF_LOVER,Symphony of Lovers
+2352,0,6,4,0,0x3,7:8:9:10:11,5,1,yes,0,0,0,none,0,	WA_MOONLIT_SERENADE,Moonlit Serenade
+
+//****
+// MI Minstrel
+2381,0,6,4,0,0x3,7:8:9:10:11,5,1,yes,0,0,0,none,0,	MI_RUSH_WINDMILL,Windmill Rush Attack
+2382,0,6,4,0,0x3,7:8:9:10:11,5,1,yes,0,0,0,none,0,	MI_ECHOSONG,Echo Song
+2383,9,6,16,0,0x1,0,5,1,yes,0,0,0,none,0,	MI_HARMONIZE,Harmonize
+
+//****
+// WM Wanderer/Minstrel
+2412,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		WM_LESSON,Lesson
+2413,9,8,1,-1,0,0,5,-2:-2:-3:-3:-4,yes,0,0,0,magic,0,	WM_METALICSOUND,Metallic Sound
+2414,9,6,2,-1,0x3,1,5,1,yes,0,0x80,3,none,0,	WM_REVERBERATION,Reverberation //CHECK May need to recode. Testing needed.
+2415,0,6,1,-1,0x2,1,5,1,no,0,0,0,weapon,0,	WM_REVERBERATION_MELEE,Reverberation Melee
+2416,0,6,1,-1,0x2,1,5,1,no,0,0,0,magic,0,	WM_REVERBERATION_MAGIC,Reverberation Magic
+2417,11,6,2,0,0x3,5,1,1,no,0,0,0,none,0,	WM_DOMINION_IMPULSE,Dominion Impulse
+2418,9,6,2,-1,0x1,0,5,1,yes,0,0,0,none,0,	WM_SEVERE_RAINSTORM,Severe Rainstorm
+2419,9,6,2,0,0x3,1,5,1,yes,0,0x80,5,none,0,	WM_POEMOFNETHERWORLD,Poem of The Netherworld //CHECK May need to recode too.
+2420,0,6,4,0,0x2,2:3:4:5:6,5,1,yes,0,0,0,none,0,	WM_VOICEOFSIREN,Voice of Siren
+2421,7,6,16,0,0x1,0,5,1,yes,0,0,0,none,0,	WM_DEADHILLHERE,Valley of Death
+2422,7,6,2,0,0x3,5:6:7:8:9,5,1,yes,0,0,0,none,0,	WM_LULLABY_DEEPSLEEP,Deep Sleep Lullaby
+2423,0,6,4,0,0x3,3:4:5:6:7,5,1,yes,0,0,0,none,0,	WM_SIRCLEOFNATURE,Circle of Nature's Sound
+2424,9,6,4,0,0x1,0,5,1,yes,0,0,0,magic,0,	WM_RANDOMIZESPELL,Improvised Song
+2425,9,6,16,0,0x1,0,5,1,yes,0,0,0,none,0,	WM_GLOOMYDAY,Gloomy Day
+2426,9,6,2,0,0x2,2:3:3:4:4,5,1,yes,0,0x4000,0,weapon,0,	WM_GREAT_ECHO,Great Echo
+2427,0,6,4,0,0x3,5:6:7:8:9,5,1,yes,0,0x4000,0,none,0,	WM_SONG_OF_MANA,Song of Mana
+2428,0,6,4,0,0x3,5:6:7:8:9,5,1,yes,0,0x4000,0,none,0,	WM_DANCE_WITH_WUG,Dance With A Warg
+2429,9,6,1,0,0x2,2:2:3:3:4,5,1,yes,0,0x4000,0,weapon,0,	WM_SOUND_OF_DESTRUCTION,Sound of Destruction //CHECK Source shows its magic attack. Need to confirm before changing.
+2430,0,6,4,0,0x3,3:4:5:6:7,5,1,yes,0,0x4000,0,none,0,	WM_SATURDAY_NIGHT_FEVER,Saturday Night Fever
+2431,0,6,4,0,0x3,5,5,1,yes,0,0x4000,0,magic,0,	WM_LERADS_DEW,Lerad's Dew
+2432,0,6,4,0,0x3,5,5,1,yes,0,0x4000,0,none,0,	WM_MELODYOFSINK,Melody of Sink
+2433,0,6,4,0,0x3,5,5,1,yes,0,0x4000,0,none,0,	WM_BEYOND_OF_WARCRY,Warcry of Beyond
+2434,0,6,4,0,0x3,5,5,1,yes,0,0x4000,0,none,0,	WM_UNLIMITED_HUMMING_VOICE,Unlimited Humming Voice
 
 //2021,0,0,0,0,0,0,9,0,no,0,0,0,none,0		GC_VENOMIMPRESS,
 //2022,0,0,0,0,0,0,9,0,no,0,0,0,none,0		GC_CROSSIMPACT,

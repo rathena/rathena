@@ -18,6 +18,7 @@ struct status_change_entry;
 #define MAX_SKILL_ARROW_DB		150
 #define MAX_ARROW_RESOURCE		5
 #define MAX_SKILL_ABRA_DB		350
+#define MAX_SKILL_IMPROVISE_DB 50
 
 #define MAX_SKILL_LEVEL 100
 
@@ -64,7 +65,8 @@ enum e_skill_inf2
 	INF2_PARTY_ONLY     = 0x0400,
 	INF2_GUILD_ONLY     = 0x0800,
 	INF2_NO_ENEMY       = 0x1000,
-	INF2_NOLP           = 0x2000,  // Spells that can ignore Land Protector
+	INF2_NOLP           = 0x2000, // Spells that can ignore Land Protector
+	INF2_CHORUS_SKILL	= 0x4000, // Chorus skill 
 };
 
 //Walk intervals at which chase-skills are attempted to be triggered.
@@ -1534,7 +1536,7 @@ enum {
 	UNT_SEVERE_RAINSTORM, //TODO
 	UNT_FIREWALK, //TODO
 	UNT_ELECTRICWALK, //TODO
-	UNT_POEMOFNETHERWORLD, //TODO
+	UNT_NETHERWORLD, //TODO
 	UNT_PSYCHIC_WAVE, //TODO
 	UNT_CLOUD_KILL, //TODO
 	UNT_POISONSMOKE, //TODO

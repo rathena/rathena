@@ -124,6 +124,10 @@
 
 2319,0xec,    ,  0, 3,5000,all,   0x000	//LG_BANDING
 
+2414,0xda,    ,  0, 1,1000,enemy, 0x008	//WM_REVERBERATION
+2418,0xdb,    ,  0, 5, 300,enemy, 0x800	//WM_SEVERE_RAINSTORM
+2419,0xde,    ,  0, 1,1000,enemy, 0x010  //WM_POEMOFNETHERWORLD
+
 8208,0x86,    ,  0, 2,1000,enemy, 0x080	//MA_SHOWER
 8209,0x90,    ,  0, 1,1000,enemy, 0x006	//MA_SKIDTRAP
 8210,0x93,    ,  0, 0,1000,enemy, 0x006	//MA_LANDMINE
