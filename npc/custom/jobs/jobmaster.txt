@@ -1,11 +1,11 @@
 //===== rAthena Script =======================================
 //= Job Master
 //===== By: ==================================================
-//= rAthena Dev Team [Ori:LunatikBunnie] [Cur:Lance]
+//= rAthena Dev Team [Ori:LunatikBunnie]
 //===== Current Version: =====================================
-//= 1.5a
+//= 1.6
 //===== Compatible With: =====================================
-//= rAthena SVN; 6674+
+//= rAthena SVN; 15624+
 //===== Description: =========================================
 //= Changes your job without asking too much
 //= For other info, please contact me at Lunatikbunnie@gmail.com 
@@ -16,17 +16,26 @@
 //=    All credits go to pxxx [Skotlex]
 //= 1.5 Rewrite everything from scratch. [Lance]
 //= 1.5a fixed Baby -> Super Baby change. Switched to JobName() [Lupus]
+//= 1.6 Added support for both branches of 3rd classes,
+//=    unified response order, fixed minor quirk.
+//===== TODO: ================================================
+//= Add baby 3rd classes
+//= Could be restructured some more using eajobs
 //============================================================
 
 prontera,153,193,6	script	Job Master	123,{
 	mes "^ff0000[Job Master]^000000";
-	if(Upper == 1 && Class >= Job_Lord_Knight) goto L_noReq;
-	if(SkillPoint != 0){
+	if(Class >= Job_Rune_Knight) goto L_noReq;
+	
+	if(SkillPoint != 0)
+	{
 		mes "I'm sorry, please use up all your skill points before changing jobs";
 		mes "Please come again soon!";
 		close;
 	}
+	
 	if(JobLevel < 10) goto L_LvError;
+
 	switch(Class){
 	case Job_Novice_High:
 	case Job_Baby:
@@ -90,7 +99,7 @@ prontera,153,193,6	script	Job Master	123,{
 			}
 		}
 		mes "Are you sure you want to change to " + JobName(@target_job) + "?";
-		if(select("No","Yes") == 2){
+		if(select("Yes","No") == 1){
 			callfunc "Job_Change", @target_job;
 			if(@target_job == Job_Gunslinger || @target_job == Job_Ninja || @target_job == Job_Taekwon) {
 				callfunc "F_ClearJobVar";
@@ -104,7 +113,7 @@ prontera,153,193,6	script	Job Master	123,{
 		if(JobLevel < $@JC_MinimumJB) goto L_LvError;
 		deletearray @job_opt, getarraysize(@job_opt);
 		if(Class < Job_Knight || Class == Job_Taekwon || (Class > Job_Baby && Class < Job_Baby_Knight) || (Class > Job_Novice_High && Class < Job_Lord_Knight)){
-			if(lastJob != 0){
+			if(lastJob != 0 && Class >= Job_Swordman_High){ // lastJob could have been set before changing back to non-trans
 				set @target_job, lastJob + 4001;
 			} else {
 				switch(Class){
@@ -157,7 +166,7 @@ prontera,153,193,6	script	Job Master	123,{
 				if(Class > Job_Novice_High && Class < Job_Lord_Knight) set @target_job, @target_job + 4001;
 			}
 			mes "Are you sure you want to change to " + JobName(@target_job) + "?";
-			if(select("No","Yes")==2){
+			if(select("Yes","No")==1){
 				callfunc "Job_Change", @target_job;
 				if(@target_job == Job_Star_Gladiator || @target_job == Job_Soul_Linker) {
 					callfunc "F_ClearJobVar";
@@ -167,30 +176,52 @@ prontera,153,193,6	script	Job Master	123,{
 			}
 			close;
 		}
+		
+		if(BaseLevel < 99 || JobLevel < 50) goto L_cantCh;
 		if(checkfalcon() || checkcart() || checkriding()) goto L_remove;
-		if((Class >=Job_Knight) && (Class <=Job_Crusader2)){
-			mes "Do you want to reborn?";
-			if(select("Yes","No")==1){
-				if(BaseLevel < 99 || JobLevel < 50) goto L_cantCh;
-				set lastJob, Class;
-				if(Class == Job_Knight2){
-					set lastJob, Job_Knight;
-				} else {
-					if(Class == Job_Crusader2){
-						set lastJob, Job_Crusader;
+		
+		if((Class >= Job_Knight) && (Class <= Job_Crusader2)){
+			mes "Would you like to be reborn or change to 3rd class?";
+			switch(select("I want to be reborn!", "I want to change to 3rd class!", "Cancel"))
+			{
+			case 1:
+				mes "Are you sure you want to be reborn?";
+				if(select("Yes", "No")==1){
+					set lastJob, Class;
+					if(Class == Job_Knight2){
+						set lastJob, Job_Knight;
+					} else {
+						if(Class == Job_Crusader2){
+							set lastJob, Job_Crusader;
+						}
 					}
+					jobchange Job_Novice_High;
+					resetlvl(1);
+					skill 142,1,0;
+					skill 143,1,0;
 				}
-				jobchange Job_Novice_High;
-				resetlvl(1);
-				skill 142,1,0;
-				skill 143,1,0;
+				break;
+			case 2:
+				goto L_Third;
 			}
 			close;
+		}
+		if (Class >= Job_Lord_Knight && Class <= Job_Paladin2)
+		{
+			if(JobLevel < 70) goto L_cantCh;
+			goto L_Third;
 		}
 	}
 	mes "I'm sorry, there are no further classes for your job.";
 	close;
 
+L_Third:
+	set @target_job, roclass(eaclass() | EAJ_THIRD);
+	mes "Are you sure you want to change to " + JobName(@target_job) + "?";
+	if(select("Yes", "No")==1){
+		callfunc "Job_Change", @target_job;
+	}
+	close;
 L_GivePlat:
 	if (BaseClass==Job_SuperNovice) goto L_sSuperN;
 	if (BaseClass==Job_Swordman) goto L_sSword;
@@ -259,7 +290,7 @@ L_remove:
 
 OnInit:
 	// Variable Setup
-	set $@JC_MinimumJB, 40; //Minimum job level for changing between 2nd and advance Class (Default : 40)
+	set $@JC_MinimumJB, 40; //Minimum job level for changing to 2nd classes (Default : 40)
 	set $@JC_Plat, 1; //Give Platinum skills on Jobchange (Default : 1-yes)
 	set $@JC_SupNovM, 45; //Base Level to change into Super Novice (Default : 45)
 	end;
