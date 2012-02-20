@@ -1495,28 +1495,41 @@ int pc_clean_skilltree(struct map_session_data *sd)
 int pc_calc_skilltree_normalize_job(struct map_session_data *sd)
 {
 	int skill_point;
+	int req_points;
 	int c = sd->class_;
 	
 	if (!battle_config.skillup_limit)
 		return c;
 	
 	skill_point = pc_calc_skillpoint(sd);
-	if(pc_checkskill(sd, NV_BASIC) < 9) //Consider Novice Tree when you don't have NV_BASIC maxed.
+
+	// limit 1st class and above to novice job levels
+	req_points = max_level[pc_class2idx(JOB_NOVICE)][1] - 1;
+	if(skill_point < req_points)
 		c = MAPID_NOVICE;
-	else
-	//Do not send S. Novices to first class (Novice)
-	if ((sd->class_&JOBL_2) && (sd->class_&MAPID_UPPERMASK) != MAPID_SUPER_NOVICE &&
-		sd->status.skill_point >= sd->status.job_level &&
-		((sd->change_level > 0 && skill_point < sd->change_level+8) || skill_point < 58)) {
-		//Send it to first class.
-		c &= MAPID_BASEMASK;
+
+	// limit 2nd class and above to first class job levels (super novices are exempt)
+	if ((sd->class_&JOBL_2) && (sd->class_&MAPID_UPPERMASK) != MAPID_SUPER_NOVICE)
+	{
+		req_points += (sd->change_level > 0 ? sd->change_level : max_level[pc_class2idx(pc_mapid2jobid(sd->class_&MAPID_BASEMASK, sd->status.sex))][1]) - 1;
+
+		if (skill_point < req_points)
+		{
+			c &= MAPID_BASEMASK;
+		}
+		// limit 3rd class to 2nd class/trans job levels
+		else if(sd->class_&JOBL_THIRD)
+		{
+			req_points += max_level[pc_class2idx(pc_mapid2jobid(sd->class_&(MAPID_UPPERMASK|JOBL_UPPER), sd->status.sex))][1] - 1;
+
+			if (skill_point < req_points)
+				c &= MAPID_UPPERMASK;
+		}
 	}
-	if (sd->class_&JOBL_UPPER) //Convert to Upper
-		c |= JOBL_UPPER;
-	else if (sd->class_&JOBL_BABY) //Convert to Baby
-		c |= JOBL_BABY;
-	if( sd->class_&JOBL_THIRD && skill_point < 107 )//bugreport:5329, require to spend all 2.x points in your 2.x
-		c &= MAPID_UPPERMASK;	
+
+	// restore non-limiting flags
+	c |= sd->class_&(JOBL_UPPER|JOBL_BABY);
+
 	return c;
 }
 
@@ -6649,7 +6662,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 		if (!(sd->class_&JOBL_2))
 			sd->change_level = sd->status.job_level;
 		else if (!sd->change_level)
-			sd->change_level = 40; //Assume 40?
+			sd->change_level = max_level[pc_class2idx(pc_mapid2jobid(sd->class_&MAPID_BASEMASK, sd->status.sex))][1]; // Assume max level
 		pc_setglobalreg (sd, "jobchange_level", sd->change_level);
 	}
 
