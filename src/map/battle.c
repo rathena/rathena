@@ -892,12 +892,20 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 		weapon = sd->weapontype2;
 	switch(weapon)
 	{
-		case W_DAGGER:
 		case W_1HSWORD:
+			#if REMODE
+				if((skill = pc_checkskill(sd,AM_AXEMASTERY)) > 0)
+					damage += (skill * 3);
+			#endif
+		case W_DAGGER:
 			if((skill = pc_checkskill(sd,SM_SWORD)) > 0)
 				damage += (skill * 4);
 			break;
 		case W_2HSWORD:
+			#if REMODE
+				if((skill = pc_checkskill(sd,AM_AXEMASTERY)) > 0)
+					damage += (skill * 3);
+			#endif
 			if((skill = pc_checkskill(sd,SM_TWOHAND)) > 0)
 				damage += (skill * 4);
 			break;
@@ -1617,7 +1625,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					break;
 				case AC_SHOWER:
 				case MA_SHOWER:
-					skillratio += 5*skill_lv-25;
+					#if REMODE
+						skillratio += 50+10*skill_lv;
+					#else
+						skillratio += -25+5*skill_lv;
+					#endif
 					break;
 				case AC_CHARGEARROW:
 				case MA_CHARGEARROW:
@@ -1718,8 +1730,15 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					break;
 				case NPC_DARKCROSS:
 				case CR_HOLYCROSS:
-					skillratio += 35*skill_lv;
+				{
+					int ratio = 35*skill_lv;
+					#if REMODE
+						if(sd && sd->status.weapon == W_2HSPEAR)
+							ratio *= 2;
+					#endif
+					skillratio += ratio;
 					break;
+				}
 				case AM_DEMONSTRATION:
 					skillratio += 20*skill_lv;
 					break;
@@ -3063,6 +3082,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case NJ_RAIGEKISAI:
 						skillratio += 60 + 40*skill_lv;
 						break;
+				#if REMODE
+					case NJ_HUUJIN:
+						skillratio += 50;
+						break;
+				#endif
 					case NJ_KAMAITACHI:
 					case NPC_ENERGYDRAIN:
 						skillratio += 100*skill_lv;
@@ -3472,6 +3496,18 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 
 	switch( skill_num )
 	{
+#if REMODE
+	case HT_LANDMINE:
+	case MA_LANDMINE:
+	case HT_BLASTMINE:
+	case HT_CLAYMORETRAP:
+		{
+			int level = sd?sd->status.base_level:status_get_lv(src);
+			md.damage = skill_lv*sstatus->dex*(3+level/100)*(1+sstatus->int_/35);
+			md.damage+= md.damage*(rand()%20-10)/100;
+			md.damage+= 40*(sd?pc_checkskill(sd,RA_RESEARCHTRAP):0);
+		}
+#else
 	case HT_LANDMINE:
 	case MA_LANDMINE:
 		md.damage=skill_lv*(sstatus->dex+75)*(100+sstatus->int_)/100;
@@ -3482,6 +3518,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	case HT_CLAYMORETRAP:
 		md.damage=skill_lv*(sstatus->dex/2+75)*(100+sstatus->int_)/100;
 		break;
+#endif
 	case HT_BLITZBEAT:
 	case SN_FALCONASSAULT:
 		//Blitz-beat Damage.

@@ -246,7 +246,7 @@ void initChangeTables(void)
 	add_sc( CR_DEVOTION          , SC_DEVOTION        );
 	set_sc( CR_PROVIDENCE        , SC_PROVIDENCE      , SI_PROVIDENCE      , SCB_ALL );
 	set_sc( CR_DEFENDER          , SC_DEFENDER        , SI_DEFENDER        , SCB_SPEED|SCB_ASPD );
-	set_sc( CR_SPEARQUICKEN      , SC_SPEARQUICKEN    , SI_SPEARQUICKEN    , SCB_ASPD );
+	set_sc( CR_SPEARQUICKEN      , SC_SPEARQUICKEN    , SI_SPEARQUICKEN    , SCB_ASPD|SCB_CRI|SCB_FLEE );
 	set_sc( MO_STEELBODY         , SC_STEELBODY       , SI_STEELBODY       , SCB_DEF|SCB_MDEF|SCB_ASPD|SCB_SPEED );
 	add_sc( MO_BLADESTOP         , SC_BLADESTOP_WAIT  );
 	add_sc( MO_BLADESTOP         , SC_BLADESTOP       );
@@ -1604,6 +1604,8 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
 		sd->sc.data[i=SC_ASPDPOTION1] ||
 		sd->sc.data[i=SC_ASPDPOTION0] )
 			amotion -= sd->sc.data[i]->val1*10;
+		if( sd->sc.data[SC_SPEARQUICKEN] )
+			amotion -= 70;
 	}
 #endif
  	return amotion;
@@ -4135,7 +4137,10 @@ static signed short status_calc_critical(struct block_list *bl, struct status_ch
 		critical += 100;
 	if(sc->data[SC__UNLUCKY])
 		critical -= critical * sc->data[SC__UNLUCKY]->val2 / 100;
-
+#if REMODE
+	if (sc->data[SC_SPEARQUICKEN])
+		critical += 3*sc->data[SC_SPEARQUICKEN]->val1*10;
+#endif
 
 	return (short)cap_value(critical,10,SHRT_MAX);
 }
@@ -4241,7 +4246,10 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 		flee += flee * sc->data[SC_ZEPHYR]->val2 / 100;
 	if( sc->data[SC_MARSHOFABYSS] )
 		flee -= (9 * sc->data[SC_MARSHOFABYSS]->val3 / 10 + sc->data[SC_MARSHOFABYSS]->val2 / 10) * (bl->type == BL_MOB ? 2 : 1);
-
+#if REMODE
+	if( sc->data[SC_SPEARQUICKEN] )
+		flee += 2 * sc->data[SC_SPEARQUICKEN]->val1;
+#endif
 
 	return (short)cap_value(flee,1,SHRT_MAX);
 }
@@ -4674,9 +4682,11 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 			max < sc->data[SC_ADRENALINE]->val3)
 			max = sc->data[SC_ADRENALINE]->val3;
 		
+#if isOFF(REMODE)
 		if(sc->data[SC_SPEARQUICKEN] &&
 			max < sc->data[SC_SPEARQUICKEN]->val2)
 			max = sc->data[SC_SPEARQUICKEN]->val2;
+#endif
 
 		if(sc->data[SC_GATLINGFEVER] &&
 			max < sc->data[SC_GATLINGFEVER]->val2)
@@ -6469,10 +6479,11 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_MERC_QUICKEN:
 			val2 = 300;
 			break;
-
+#if isOFF(REMODE)
 		case SC_SPEARQUICKEN:
 			val2 = 200+10*val1;
 			break;
+#endif
 		case SC_DANCING:
 			//val1 : Skill ID + LV
 			//val2 : Skill Group of the Dance.

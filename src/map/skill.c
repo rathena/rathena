@@ -829,7 +829,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	 * Storm Gust counter was dropped in renewal
 	 **/
 	#if REMODE
-		sc_start(bl,SC_FREEZE,20+(5*skilllv),skilllv,skill_get_time2(skillid,skilllv));
+		sc_start(bl,SC_FREEZE,65-(5*skilllv),skilllv,skill_get_time2(skillid,skilllv));
 	#else
 		 //Tharis pointed out that this is normal freeze chance with a base of 300%
 		if(tsc->sg_counter >= 3 &&
