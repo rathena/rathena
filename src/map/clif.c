@@ -5274,7 +5274,8 @@ void clif_status_change(struct block_list *bl,int type,int flag,unsigned int tic
 		type == SI_TENSIONRELAX || type == SI_LANDENDOW || type == SI_AUTOBERSERK ||
 		type == SI_BUMP || type == SI_READYSTORM || type == SI_READYDOWN ||
 		type == SI_READYTURN || type == SI_READYCOUNTER || type == SI_DODGE ||
-		type == SI_DEVIL || type == SI_NIGHT || type == SI_INTRAVISION)
+		type == SI_DEVIL || type == SI_NIGHT || type == SI_INTRAVISION ||
+		type == SI_BANDING)
 		tick=0;
 
 // TODO: 0x43f PACKETVER?

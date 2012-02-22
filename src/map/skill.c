@@ -13431,7 +13431,7 @@ int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int li
 			break;
 		case LG_BANDING:
 			{
-			struct status_change *sc = NULL;
+				struct status_change *sc = NULL;
 				if( (sc = status_get_sc(src)) && sc->data[SC_BANDING] ) {
 					sc->data[SC_BANDING]->val4 = 0;
 					status_change_end(src,SC_BANDING,-1);
@@ -13684,6 +13684,21 @@ static int skill_unit_timer_sub (DBKey key, void* data, va_list ap)
 				skill_delunit(unit);
 				break;
 			}
+			
+			case UNT_BANDING:
+			{
+				struct block_list *src = map_id2bl(group->src_id);
+				struct status_change *sc;
+				if( !src || (sc = status_get_sc(src)) == NULL || !sc->data[SC_BANDING] )
+				{
+					skill_delunit(unit);
+					break;
+				}
+				// This unit isn't removed while SC_BANDING is active.
+				group->limit = DIFF_TICK(tick+group->interval,group->tick);
+				unit->limit = DIFF_TICK(tick+group->interval,group->tick);
+			}
+			break;
 
 			default:
 				skill_delunit(unit);
