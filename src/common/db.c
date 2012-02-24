@@ -2601,15 +2601,14 @@ void linkdb_insert( struct linkdb_node** head, void *key, void* data)
 
 void linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  )
 {
-	va_list args;
 	struct linkdb_node *node;
-	
 	if( head == NULL ) return;
-	
-	va_start(args, func);
 	node = *head;
 	while ( node ) {
+		va_list args;
+		va_start(args, func);
 		func( node->key, node->data, args );
+		va_end(args);
 		node = node->next;
 	}
 }
