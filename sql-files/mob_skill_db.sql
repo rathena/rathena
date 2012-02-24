@@ -2,6 +2,7 @@
 #  Table structure for table `mob_skill_db`
 #
 
+DROP TABLE IF EXISTS `mob_skill_db`;
 CREATE TABLE IF NOT EXISTS `mob_skill_db` (
   `MOB_ID` smallint(6) NOT NULL,
   `INFO` text NOT NULL,
