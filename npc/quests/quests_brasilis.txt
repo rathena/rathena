@@ -3,11 +3,11 @@
 //===== By ===================================================
 //= L0ne_W0lf
 //===== Version ==============================================
-//= 1.0
+//= 1.1
 //===== Compatible With ======================================
 //= rAthena SVN
 //===== Description ==========================================
-//= [Aegis COnversion]
+//= [Translated from the Official]
 //= Lost Puppies (Repeatable, 24 hours.)
 //= Suspicious Beach (Repeatable, 24 hours / iRO/cRO version.)
 //= Guarana Candy Quest
@@ -16,6 +16,7 @@
 //= Iara (Buff reward. Repeatable, 24 hours.)
 //===== Comments =============================================
 //= 1.0 First version.
+//= 1.1 Hydra Ball (12408)
 //============================================================
 
 // Lost Puppies, Original file: dogdog.sc
@@ -921,7 +922,7 @@ OnDisable:
 // Suspicious Beach, original file: Suspicious_Beach.sc
 //============================================================
 brasilis,192,133,6	script	Lucia#brasilis	478,{
-	/*
+	/* -------------- Hydra Ball -------------------------
 	if (countitem(12408) > 0) {
 		delitem 12408,1; //Leaf_Cat_Ball
 		getitem 12408,1; //Leaf_Cat_Ball
@@ -930,7 +931,7 @@ brasilis,192,133,6	script	Lucia#brasilis	478,{
 		delitem 6221,1; //Mystic_Leaf_Cat_Ball
 		getitem 6221,1; //Mystic_Leaf_Cat_Ball
 	}
-	*/
+	--------------------------------------------------- */
 	if (BaseLevel < 40) {
 		mes "[Lucia]";
 		mes "Hello.";
@@ -952,7 +953,7 @@ brasilis,192,133,6	script	Lucia#brasilis	478,{
 			switch(select("Yes.:No.:^006400What is happening here?^000000")) {
 			case 1:
 				setquest 9028;
-				getitem 12408,1; //Leaf_Cat_Ball
+				getitem 12408,1; //Hydra_Ball
 				mes "[Lucia]";
 				mes "Here, take this ^006400Hydra Ball^000000.";
 				mes "Use it to capture a ^FF0000Strange Hydra^8B4513.^000000";
