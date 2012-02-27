@@ -455,7 +455,7 @@ number	description
 422.	Eswoo (Normal) (Visual Effect)
 423.	Eswoo (Alt. Normal) (Visual Effect)
 424.	Spirit Link (Visual Effect)
-425.	(Nothing)
+425.	Esma Hit (Visual Effect)
 426.	Sprint Collision (Visual Effect)
 427.	(Nothing)
 428.	(Nothing)
@@ -576,7 +576,7 @@ number	description
 543.	Kahii
 544.	Warmth Red Sprite
 545.	Sound And... PUFF Client Crash :P
-546.	Another HP/SP Regeneration
+546.	Kaupe
 547.	Estin
 548.	Instant Red Sprite
 549.	Instant Blue Sprite
@@ -584,7 +584,7 @@ number	description
 551.	Effect Like Estun but with Circle
 552.	(Nothing)
 553.	Esma
-554.	(Nothing)
+554.	Large White Cloud
 555.	Estun
 556.	(Nothing)
 557.	Juperos Energy Waterfall (Horizontal)
@@ -622,7 +622,7 @@ number	description
 589.	Eswoo
 590.	Running Stop
 591.	(Nothing)
-592.	(Nothing)
+592.	Thanatos Tower Bloody Clouds
 593.	Food Effect (STR)
 594.	Food Effect (INT)
 595.	Food Effect (VIT)
@@ -630,14 +630,14 @@ number	description
 597.	Food Effect (DEX)
 598.	Food Effect (LUK)
 599.	Cast Time Sound and Flashing Animation on Player
-600.	Something Happen Near Shadow Sprite
+600.	Throw Venom Knife
 601.	Sight Blaster
-602.	Something About 2nd Class New Skills
-603.	Something About 2nd Class New Skills
-604.	Close Confine
+602.	Close Confine (Grab Effect)
+603.	Like 50
+604.	Close Confine (Ground Effect)
 605.	(Nothing)
-606.	(Nothing)
-607.	(Nothing)
+606.	Pang Voice (Visual Effect)
+607.	Wink of Charm (Visual Effect)
 608.	Cooking Success
 609.	Cooking Failed
 610.	Success
@@ -657,7 +657,7 @@ number	description
 624.	Kamaitachi
 625.	Madness Canceller
 626.	Adjustment
-627.	(Nothing)
+627.	Disarm (Sound Effect)
 628.	Dust
 629.	(Nothing)
 630.	Shadow Slash
@@ -703,8 +703,8 @@ number	description
 670.	Dragon fear (Visual Effect)
 671.	The Japan Earth Symbol (Like 'Seven Wind LV 1' but is in the Ground)
 672.	The Japan Wind Symbol (Like 'Seven Wind LV 2' but is in the Ground)
-673.	(Nothing)
-674.	Like Curse Effect
+673.	Map turns Blue (like Soul Link)
+674.	Evil Land Cell
 675.	Like Parrying/Kyrie Eleison barrier but Yellow with small Cross in every barrier piece
 676.	Slow Casting
 677.	Critical Wounds/Bleeding Attack
@@ -734,9 +734,9 @@ number	description
 701.	Huge Blue Sphere
 702.	Little Colored Violet Sphere
 703.	Light Infiltration with fall of pownder
-704.	(Nothing)
-705.	(Nothing)
-706.	(Nothing)
+704.	Client Error (mobile_ef02.str)
+705.	Client Error (mobile_ef01.str)
+706.	Client Error (mobile_ef03.str)
 707.	Client Crash :P
 708.	A Perfect Copy of Storm Gust Effect (Effect 89)
 709.	A Firework that split in 4 mini fireworks
@@ -748,7 +748,7 @@ number	description
 715.	Something Like a Little Blue Basilica (Probably something related Arch Bishop)
 716.	The same of 715 (Probably something related Arch Bishop)
 717.	Something like Angelus (Probably something related Arch Bishop)
-718.	Another Fire Pillar Effect (Probably something related Warlock)
+718.	Judex (Visual Effect)
 719.	Light Infiltration from the Sky (Probably something related Warlock)
 720.	Some sound and effect of Soul Destroyer but Yellow (Probably something related Warlock)
 721.	Big Lightning from the SKy (Probably something related Warlock)

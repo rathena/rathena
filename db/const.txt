@@ -362,7 +362,7 @@ cell_nochat	7
 cell_chkwall	1
 cell_chkwater	2
 cell_chkcliff	3
-cell_chkpass    4
+cell_chkpass	4
 cell_chkreach	5
 cell_chknopass	6
 cell_chknoreach	7
@@ -699,7 +699,7 @@ IG_S_Grade_Coin_Bag	59
 IG_A_Grade_Coin_Bag	60
 IG_Advanced_Weapons_Box	61
 
-SC_ALL -1
+SC_ALL	-1
 SC_STONE	0
 SC_FREEZE	1
 SC_STUN	2
