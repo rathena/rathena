@@ -120,7 +120,7 @@ static void read_config(void)
 			}
 
 			config_setting_lookup_int(group, "level", &level);
-			config_setting_lookup_int(group, "log_commands", &log_commands);
+			config_setting_lookup_bool(group, "log_commands", &log_commands);
 
 			if (!config_setting_lookup_string(group, "name", &groupname)) {
 				char temp[20];
