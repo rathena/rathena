@@ -2,47 +2,48 @@
 //= Einbroch Airport Staff
 //===== By: ================================================== 
 //= L0ne_W0lf, Muad_Dib
-//===== Current Version: ===================================== 
-//= 1.4
 //===== Compatible With: ===================================== 
-//= rAthena Revision 3000+
+//= rAthena SVN
 //===== Description: ========================================= 
 //= Einbroch Airport Staff
 //===== Additional Comments: ================================= 
-//= Converted by Dr.Evil, 1.0b more typos and credits [Lupus]
-//= 1.1 Fixed wrong check, added extra condition [Justin84]
-//= 1.2 Removed Duplicates [Silent]
-//= 1.3 Fixed syntax errors for duplicate [KarLaeda]
-//= 1.4 Removed use of goto. [L0ne_W0lf]
-//============================================================
+//= Official NPCs.
+//============================================================ 
 
-
-airport,126,43,4	script	Airport Staff#01::AirportE	90,{
+airport,143,43,5	script	Airport Staff#airport1a::airport1	90,{
 	mes "[Airport Staff]";
-	mes "Welcome to the Airport.";
-	mes "How may I help you?";
+	mes "Welcome to the";
+	mes "Einbroch Airport,";
+	mes "where we offer nonstop";
+	mes "flights to the cities of";
+	mes "Juno, Lighthalzen and Hugel.";
 	next;
 	if (select("Board the Airship:Cancel") == 1) {
 		mes "[Airport Staff]";
 		mes "The Airship boarding fee";
 		mes "is 1,200 zeny, but if you've";
-		mes "got a Free Ticket for Airship,"; 
+		mes "got a Free Ticket for Airship,";
 		mes "the fee will be waived. Will";
 		mes "you board the Airship?";
 		next;
 		if (select("Yes:No") == 1) {
-			if(countitem(7311) > 0) {
-				delitem 7311,1;
+			if (countitem(7311) > 0) {
+				delitem 7311,1; //Free_Flying_Ship_Ticket
 				warp "airport",148,51;
-				close;
+				end;
 			}
-			if(Zeny >= 1200) {
+			if (Zeny >= 1200) {
 				set Zeny, Zeny - 1200;
 				warp "airport",148,51;
-				close;
+				end;
 			}
 			mes "[Airport Staff]";
-			mes "You don't have enough zeny.";
+			mes "I'm sorry, but you don't";
+			mes "have a Free Ticket for";
+			mes "Airship and you don't have";
+			mes "enough zeny for boarding";
+			mes "the Airship. Remember, the";
+			mes "boarding fee is 1,200 zeny.";
 			close;
 		}
 	}
@@ -52,30 +53,31 @@ airport,126,43,4	script	Airport Staff#01::AirportE	90,{
 	close;
 }
 
-airport,143,43,4	duplicate(AirportE)	Airport Staff#02	90
-airport,156,43,4	duplicate(AirportE)	Airport Staff#03	90
+airport,158,43,5	duplicate(airport1)	Airport Staff#airport1b	90
+airport,126,43,5	duplicate(airport1)	Airport Staff#airport1c	90
 
-airport,126,51,4	script	Airport Staff#04::AirportE2	90,{
-	mes "[Airport Staff]";
-	mes "Welcome~";
-	mes "Please head this";
-	mes "way to board the Airship.";
+airport,143,49,3	script	Arrival Staff#airport2a::airport2	90,{
+	mes "[Arrival Staff]";
+	mes "Welcome to Einbroch Airport.";
+	mes "If you are arriving from your";
+	mes "flight, let me guide you to the";
+	mes "main terminal. Otherwise, please board the Airship to depart to";
+	mes "Juno, Lighthalzen and Hugel.";
 	next;
-	if (select("Exit to Main Terminal:Cancel") == 1) {
-		mes "[Airport Staff]";
-		mes "If you leave the";
-		mes "main terminal, you'll";
-		mes "have to pay the admission";
-		mes "fee again in order to board";
-		mes "the Airship. Are you sure";
-		mes "that you want to exit?";
+	if (select("Exit to main terminal.:Cancel.") == 1) {
+		mes "[Arrival Staff]";
+		mes "Once you're in the main terminal, you will need to pay the fee again";
+		mes "to board an Airship. You should";
+		mes "only exit if the city of Einbroch";
+		mes "is your intended destination.";
+		mes "Proceed to the main terminal?";
 		next;
 		if (select("Yes:No") == 1) {
 			warp "airport",142,40;
-			close;
+			end;
 		}
 	}
-	mes "[Airport Staff]";
+	mes "[Arrival Staff]";
 	mes "Alright, thank you";
 	mes "for your patronage";
 	mes "and I hope you have";
@@ -83,17 +85,17 @@ airport,126,51,4	script	Airport Staff#04::AirportE2	90,{
 	close;
 }
 
-airport,143,51,4	duplicate(AirportE2)	Airport Staff#05	90
-airport,156,51,4	duplicate(AirportE2)	Airport Staff#06	90
+airport,126,51,3	duplicate(airport2)	Arrival Staff#airport2b	90
+airport,158,50,3	duplicate(airport2)	Arrival Staff#airport2c	90
 
-einbroch,94,267,4	script	Airship Staff#07	91,{
+einbroch,94,267,3	script	Airship Staff#ein01	91,{
 	mes "[Airship Staff]";
 	mes "Welcome to the";
 	mes "Einbroch Airport.";
 	mes "Please use this door to";
-	mes "board the Airship wich stops";
-	mes "over Lighthalzen and Juno in";
-	mes "the Schwarzwald Republic";
+	mes "board the Airship which stops";
+	mes "over Juno, Lighthalzen and";
+	mes "Hugel in the Schwaltzvalt Republic.";
 	next;
 	mes "[Airship Staff]";
 	mes "Otherwise, if Einbroch is";

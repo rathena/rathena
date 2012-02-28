@@ -775,8 +775,8 @@ function	script	cherno	{
 	misceffect 20;
 	mes "^33355F*Crash!*^000000";
 	mes "....."; 
-	emotion 4, "Theo Cherno";
-	Emotion 4, "Tarsha Cherno";
+	emotion 4,0,"Theo Cherno";
+	Emotion 4,0,"Tarsha Cherno";
 	next;
 	mes "[Theo Cherno]";
 	mes "Honey...";
@@ -1080,312 +1080,381 @@ einbech,53,94,5	duplicate(Tree)	Tree#t1-4	111
 
 //=============Monsters Attack======================
 airplane_01,1,1,0	script	Airship#airplane02	-1,{
-OnInit:
-	disablenpc "Airship Captain#02";
-OnInvasion:
-while($@mobinv >= 9 && $@mobrand == 3)
-{
-	Initnpctimer;
 	end;
-OnTimer6000:
+OnEnable:
+	initnpctimer;
+	end;
+OnTimer25000:
+	mapannounce "airplane_01","We are heading to Izlude.",bc_map,0x00FF00;
+	end;
+OnTimer30000:
 	mapannounce "airplane_01","Captain: Attention, all passengers.",bc_map,0x00FF00;
 	end;
-OnTimer10000:
+OnTimer34000:
 	mapannounce "airplane_01","Captain: We are being approached by a group of unidentified creatures.",bc_map,0x00ff00;
 	end;
-OnTimer12000:
+OnTimer38000:
 	mapannounce "airplane_01", "Captain: All passengers on deck, please find shelter inside the ship!",bc_map,0x00ff00;
-	disablenpc "Airship Staff#airplane01";
+	hideonnpc "Airship Staff#airplane01";
 	end;
-OnTimer16000:
-	monster "airplane_01",245,57,"Gremlin",1632,1;
-	monster "airplane_01",247,59,"Gremlin",1632,1;
-	monster "airplane_01",249,52,"Gremlin",1632,1;
-	monster "airplane_01",243,62,"Gremlin",1632,1;
-	monster "airplane_01",239,52,"Beholder",1633,1;
-	monster "airplane_01",234,56,"Beholder",1633,1;
-	monster "airplane_01",227,49,"Beholder",1633,1;
-	monster "airplane_01",233,41,"Beholder",1633,1;
+OnTimer48000:
+	monster "airplane_01",245,57,"Gremlin",1632,1,"Airship#airplane02::OnMyMobDead";
+	monster "airplane_01",247,59,"Gremlin",1632,1,"Airship#airplane02::OnMyMobDead";
+	monster "airplane_01",249,52,"Gremlin",1632,1,"Airship#airplane02::OnMyMobDead";
+	monster "airplane_01",243,62,"Gremlin",1632,1,"Airship#airplane02::OnMyMobDead";
+	monster "airplane_01",239,52,"Beholder",1633,1,"Airship#airplane02::OnMyMobDead";
+	monster "airplane_01",234,56,"Beholder",1633,1,"Airship#airplane02::OnMyMobDead";
+	monster "airplane_01",227,49,"Beholder",1633,1,"Airship#airplane02::OnMyMobDead";
+	monster "airplane_01",233,41,"Beholder",1633,1,"Airship#airplane02::OnMyMobDead";
 	switch(rand(1,5)) {
-	case 1: monster "airplane_01",251,47,"Drainliar",1111,1; break;
-	case 2: monster "airplane_01",251,47,"Rotar Zairo",1392,1; break;
-	case 3: monster "airplane_01",251,47,"Farmiliar",1005,1; break;
-	case 4: monster "airplane_01",251,47,"Picky",1049,1; break;
-	case 5: monster "airplane_01",251,47,"Steel Chonchon",1042,1; break;
+	case 1: monster "airplane_01",251,47,"Drainliar",1111,1,"Airship#airplane02::OnMyMobDead"; break;
+	case 2: monster "airplane_01",251,47,"Rotar Zairo",1392,1,"Airship#airplane02::OnMyMobDead"; break;
+	case 3: monster "airplane_01",251,47,"Farmiliar",1005,1,"Airship#airplane02::OnMyMobDead"; break;
+	case 4: monster "airplane_01",251,47,"Picky",1049,1,"Airship#airplane02::OnMyMobDead"; break;
+	case 5: monster "airplane_01",251,47,"Steel Chonchon",1042,1,"Airship#airplane02::OnMyMobDead"; break;
 	}
 	switch(rand(1,5)) {
-	case 1: monster "airplane_01",245,53,"Drainliar",1111,1; break;
-	case 2: monster "airplane_01",245,53,"Rotar Zairo",1392,1; break;
-	case 3: monster "airplane_01",245,53,"Farmiliar",1005,1; break;
-	case 4: monster "airplane_01",245,53,"Picky",1049,1; break;
-	case 5: monster "airplane_01",245,53,"Steel Chonchon",1042,1; break;
+	case 1: monster "airplane_01",245,53,"Drainliar",1111,1,"Airship#airplane02::OnMyMobDead"; break;
+	case 2: monster "airplane_01",245,53,"Rotar Zairo",1392,1,"Airship#airplane02::OnMyMobDead"; break;
+	case 3: monster "airplane_01",245,53,"Farmiliar",1005,1,"Airship#airplane02::OnMyMobDead"; break;
+	case 4: monster "airplane_01",245,53,"Picky",1049,1,"Airship#airplane02::OnMyMobDead"; break;
+	case 5: monster "airplane_01",245,53,"Steel Chonchon",1042,1,"Airship#airplane02::OnMyMobDead"; break;
 	}
 	switch(rand(1,5)) {
-	case 1: monster "airplane_01",234,46,"Drainliar",1111,1; break;
-	case 2: monster "airplane_01",234,46,"Rotar Zairo",1392,1; break;
-	case 3: monster "airplane_01",234,46,"Farmiliar",1005,1; break;
-	case 4: monster "airplane_01",234,46,"Picky",1049,1; break;
-	case 5: monster "airplane_01",234,46,"Steel Chonchon",1042,1; break;
+	case 1: monster "airplane_01",234,46,"Drainliar",1111,1,"Airship#airplane02::OnMyMobDead"; break;
+	case 2: monster "airplane_01",234,46,"Rotar Zairo",1392,1,"Airship#airplane02::OnMyMobDead"; break;
+	case 3: monster "airplane_01",234,46,"Farmiliar",1005,1,"Airship#airplane02::OnMyMobDead"; break;
+	case 4: monster "airplane_01",234,46,"Picky",1049,1,"Airship#airplane02::OnMyMobDead"; break;
+	case 5: monster "airplane_01",234,46,"Steel Chonchon",1042,1,"Airship#airplane02::OnMyMobDead"; break;
 	}
 	switch(rand(1,5)) {
-	case 1: monster "airplane_01",233,58,"Drainliar",1111,1; break;
-	case 2: monster "airplane_01",233,58,"Rotar Zairo",1392,1; break;
-	case 3: monster "airplane_01",233,58,"Farmiliar",1005,1; break;
-	case 4: monster "airplane_01",233,58,"Picky",1049,1; break;
-	case 5: monster "airplane_01",233,58,"Steel Chonchon",1042,1; break;
+	case 1: monster "airplane_01",233,58,"Drainliar",1111,1,"Airship#airplane02::OnMyMobDead"; break;
+	case 2: monster "airplane_01",233,58,"Rotar Zairo",1392,1,"Airship#airplane02::OnMyMobDead"; break;
+	case 3: monster "airplane_01",233,58,"Farmiliar",1005,1,"Airship#airplane02::OnMyMobDead"; break;
+	case 4: monster "airplane_01",233,58,"Picky",1049,1,"Airship#airplane02::OnMyMobDead"; break;
+	case 5: monster "airplane_01",233,58,"Steel Chonchon",1042,1,"Airship#airplane02::OnMyMobDead"; break;
 	}
 	// it's possible this is an error, but in aegis it stops resetting the random var.
 	switch(rand(1,5)) {
 	case 1:
-		monster "airplane_01",243,60,"Drainliar",1111,1;
-		monster "airplane_01",228,54,"Drainliar",1111,1;
-		monster "airplane_01",232,41,"Drainliar",1111,1;
+		monster "airplane_01",243,60,"Drainliar",1111,1,"Airship#airplane02::OnMyMobDead";
+		monster "airplane_01",228,54,"Drainliar",1111,1,"Airship#airplane02::OnMyMobDead";
+		monster "airplane_01",232,41,"Drainliar",1111,1,"Airship#airplane02::OnMyMobDead";
 		break;
 	case 2:
-		monster "airplane_01",243,60,"Rotar Zairo",1392,1;
-		monster "airplane_01",228,54,"Rotar Zairo",1392,1;
-		monster "airplane_01",232,41,"Rotar Zairo",1392,1;
+		monster "airplane_01",243,60,"Rotar Zairo",1392,1,"Airship#airplane02::OnMyMobDead";
+		monster "airplane_01",228,54,"Rotar Zairo",1392,1,"Airship#airplane02::OnMyMobDead";
+		monster "airplane_01",232,41,"Rotar Zairo",1392,1,"Airship#airplane02::OnMyMobDead";
 		break;
 	case 3:
-		monster "airplane_01",243,60,"Farmiliar",1005,1;
-		monster "airplane_01",228,54,"Farmiliar",1005,1;
-		monster "airplane_01",232,41,"Farmiliar",1005,1;
+		monster "airplane_01",243,60,"Farmiliar",1005,1,"Airship#airplane02::OnMyMobDead";
+		monster "airplane_01",228,54,"Farmiliar",1005,1,"Airship#airplane02::OnMyMobDead";
+		monster "airplane_01",232,41,"Farmiliar",1005,1,"Airship#airplane02::OnMyMobDead";
 		break;
 	case 4:
-		monster "airplane_01",243,60,"Picky",1049,1;
-		monster "airplane_01",228,54,"Picky",1049,1;
-		monster "airplane_01",232,41,"Picky",1049,1;
+		monster "airplane_01",243,60,"Picky",1049,1,"Airship#airplane02::OnMyMobDead";
+		monster "airplane_01",228,54,"Picky",1049,1,"Airship#airplane02::OnMyMobDead";
+		monster "airplane_01",232,41,"Picky",1049,1,"Airship#airplane02::OnMyMobDead";
 		break;
 	case 5:
-		monster "airplane_01",243,60,"Steel Chonchon",1042,1;
-		monster "airplane_01",228,54,"Steel Chonchon",1042,1;
-		monster "airplane_01",232,41,"Steel Chonchon",1042,1;
+		monster "airplane_01",243,60,"Steel Chonchon",1042,1,"Airship#airplane02::OnMyMobDead";
+		monster "airplane_01",228,54,"Steel Chonchon",1042,1,"Airship#airplane02::OnMyMobDead";
+		monster "airplane_01",232,41,"Steel Chonchon",1042,1,"Airship#airplane02::OnMyMobDead";
 		break;
 	}
 	end;
-OnTimer16010:
-	monster "airplane_01",238,56,"Gremlin",1632,1;
-	monster "airplane_01",239,56,"Gremlin",1632,1;
-	monster "airplane_01",240,50,"Gremlin",1632,1;
-	monster "airplane_01",241,56,"Gremlin",1632,1;
-	monster "airplane_01",247,51,"Gremlin",1632,1;
-	monster "airplane_01",237,44,"Beholder",1633,1;
-	monster "airplane_01",233,54,"Beholder",1633,1;
-	monster "airplane_01",237,62,"Beholder",1633,1;
+OnTimer48010:
+	monster "airplane_01",238,56,"Gremlin",1632,1,"Airship#airplane02::OnCaptainMobDead";
+	monster "airplane_01",239,56,"Gremlin",1632,1,"Airship#airplane02::OnCaptainMobDead";
+	monster "airplane_01",240,50,"Gremlin",1632,1,"Airship#airplane02::OnCaptainMobDead";
+	monster "airplane_01",241,56,"Gremlin",1632,1,"Airship#airplane02::OnCaptainMobDead";
+	monster "airplane_01",247,51,"Gremlin",1632,1,"Airship#airplane02::OnCaptainMobDead";
+	monster "airplane_01",237,44,"Beholder",1633,1,"Airship#airplane02::OnCaptainMobDead";
+	monster "airplane_01",233,54,"Beholder",1633,1,"Airship#airplane02::OnCaptainMobDead";
+	monster "airplane_01",237,62,"Beholder",1633,1,"Airship#airplane02::OnCaptainMobDead";
 	end;
-OnTimer21000:
+OnTimer53000:
 	mapannounce "airplane_01", "Attendant: Captain Tarlock, we're in trouble! The monsters are heading to the propellers!",bc_map,0x00FF00;
 	end;
-OnTimer26000:
+OnTimer58000:
 	mapannounce "airplane_01", "Captain Tarlock: What?! I've got to stop them!",bc_map,0x70DBDB;
 	end;
-OnTimer31000:
-	disablenpc "Airship Captain#01";
-	enablenpc "Airship Captain#02";
-	end;
-OnTimer36000:
-	emotion e_ag,"Airship Captain#02";
-	mapannounce "airplane_01", "Captain Tarlock: You ugly, godforsaken creatures... Get off my ship!",bc_map,0x70DBDB;
-	end;
-OnTimer36500:
-	mapannounce "airplane_01", "*Kzzz...Drrrr...Boom! CRASH!*",bc_map,0x00FF00;
-	specialeffect EF_SUI_EXPLOSION,"boom6#airplane";
-	end;
-OnTimer37000:
-	specialeffect EF_SUI_EXPLOSION,"boom7#airplane";
-	end;
-OnTimer37500:
-	specialeffect EF_SUI_EXPLOSION,"boom8#airplane";
-	end;
-OnTimer38000:
-	specialeffect EF_SUI_EXPLOSION,"boom9#airplane";
-	end;
-OnTimer38500:
-	specialeffect EF_SUI_EXPLOSION,"boom10#airplane";
-	end;
-OnTimer39000:
-	specialeffect EF_SUI_EXPLOSION,"boom6#airplane";
-	end;
-OnTimer39500:
-	specialeffect EF_SUI_EXPLOSION,"boom7#airplane";
-	end;
-OnTimer40000:
-	specialeffect EF_SUI_EXPLOSION,"boom8#airplane";
-	end;
-OnTimer40500:
-	specialeffect EF_SUI_EXPLOSION,"boom9#airplane";
-	end;
-OnTimer41000:
-	specialeffect EF_SUI_EXPLOSION,"boom10#airplane";
-	end;
-OnTimer41500:
-	specialeffect EF_SUI_EXPLOSION,"boom6#airplane";
-	mapannounce "airplane_01", "Engineer: Oh no! We've got a problem with the Number One Rear Engine!",bc_map,0x00FF00;
-	end;
-OnTimer42500:
-	specialeffect EF_SUI_EXPLOSION,"boom7#airplane";
-	end;
-OnTimer43500:
-	specialeffect EF_SUI_EXPLOSION,"boom8#airplane";
-	end;
-OnTimer44500:
-	specialeffect EF_SUI_EXPLOSION,"boom9#airplane";
-	end;
-OnTimer45500:
-	specialeffect EF_SUI_EXPLOSION,"boom10#airplane";
-	end;
-OnTimer46500:
-	mapannounce "airplane_01", "Pilot: Hurry! Get the women, old people and children somewhere safe first! Hurry!",bc_map,0x00FF00;
-	end;
-OnTimer47500:
-	specialeffect EF_SUI_EXPLOSION,"boom6#airplane";
-	end;
-OnTimer48500:
-	specialeffect EF_SUI_EXPLOSION,"boom7#airplane";
-	end;
-OnTimer49500:
-	specialeffect EF_SUI_EXPLOSION,"boom8#airplane";
-	end;
-OnTimer50500:
-	specialeffect EF_SUI_EXPLOSION,"boom7#airplane";
-	end;
-OnTimer51500:
-	emotion e_ag,"Airship Captain#02";
-	mapannounce "airplane_01", "Captain Tarlock: You dirty monsters are dealing with this ship's captain...",bc_map,0x70DBDB;
-	end;
-OnTimer56500:
-	emotion e_ag,"Airship Captain#02";
-	mapannounce "airplane_01", "Captain Tarlock: I'll protect this ship and my crew with my life!",bc_map,0x70DBDB;
-	end;
-OnTimer61500:
-	emotion e_pif,"Airship Captain#02";
-	mapannounce "airplane_01", "Captain Tarlock: Here goes! Special Exodus Joker XIII Doom Rifle!",bc_map,0x70DBDB;
-	end;
-OnTimer66500:
-	mapannounce "airplane_01", "*Bang! Bang Bang! Bang Bang! Bang Bang Bang!*",bc_map,0x00FF00;
-	specialeffect EF_HIT5,"Airship Captain#02";
-	end;
-OnTimer67000:
-	specialeffect EF_SUI_EXPLOSION,"boom1#airplane";
-	specialeffect EF_HIT5,"Airship Captain#02";
-	end;
-OnTimer67500:
-	specialeffect EF_SUI_EXPLOSION,"boom2#airplane";
-	specialeffect EF_HIT5,"Airship Captain#02";
+OnTimer63000:
+	hideonnpc "Airship Captain#01";
+	hideoffnpc "Airship Captain#02";
 	end;
 OnTimer68000:
-	specialeffect EF_SUI_EXPLOSION,"boom3#airplane";
-	specialeffect EF_HIT5,"Airship Captain#02";
-	end;
-OnTimer68500:
-	specialeffect EF_SUI_EXPLOSION,"boom4#airplane";
-	specialeffect EF_HIT5,"Airship Captain#02";
-	end;
-OnTimer69000:
-	specialeffect EF_SUI_EXPLOSION,"boom5#airplane";
-	specialeffect EF_HIT5,"Airship Captain#02";
-	end;
-OnTimer69500:
-	specialeffect EF_SUI_EXPLOSION,"boom0#airplane";
-	specialeffect EF_HIT5,"Airship Captain#02";
-	end;
-OnTimer70000:
-	specialeffect EF_SUI_EXPLOSION,"boom1#airplane";
-	specialeffect EF_HIT5,"Airship Captain#02";
-	end;
-OnTimer70500:
-	specialeffect EF_SUI_EXPLOSION,"boom2#airplane";
-	specialeffect EF_HIT5,"Airship Captain#02";
-	end;
-OnTimer71000:
-	specialeffect EF_SUI_EXPLOSION,"boom4#airplane";
-	specialeffect EF_HIT5,"Airship Captain#02";
-	end;
-OnTimer71500:
-	specialeffect EF_SUI_EXPLOSION,"boom5#airplane";
-	end;
-OnTimer72000:
-	emotion e_ag,"Airship Captain#02";
-	mapannounce "airplane_01","Captain Tarlock: Filthy animals! Stop ruining my ship!",bc_map,0x70DBDB;
-	end;
-OnTimer72500:
-	mapannounce "airplane_01", "*Bang! Bang Bang! Bang Bang! Bang Bang Bang!*",bc_map,0x00FF00;
-	specialeffect EF_HIT5,"Airship Captain#02";
+	emotion e_ag,0,"Airship Captain#02";
+	mapannounce "airplane_01", "Captain Tarlock: You ugly, godforsaken creatures... Get off my ship!",bc_map,0x70DBDB;
 	end;
 OnTimer73000:
-	specialeffect EF_SUI_EXPLOSION,"boom6#airplane";
-	specialeffect EF_HIT5,"Airship Captain#02";
+	mapannounce "airplane_01", "*Kzzz...Drrrr...Boom! CRASH!*",bc_map,0x00FF00;
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom6#airplane";
 	end;
 OnTimer73500:
-	specialeffect EF_SUI_EXPLOSION,"boom7#airplane";
-	specialeffect EF_HIT5,"Airship Captain#02";
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom7#airplane";
 	end;
 OnTimer74000:
-	specialeffect EF_SUI_EXPLOSION,"boom8#airplane";
-	specialeffect EF_HIT5,"Airship Captain#02";
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom8#airplane";
 	end;
 OnTimer74500:
-	specialeffect EF_SUI_EXPLOSION,"boom9#airplane";
-	specialeffect EF_HIT5,"Airship Captain#02";
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom9#airplane";
 	end;
 OnTimer75000:
-	specialeffect EF_SUI_EXPLOSION,"boom10#airplane";
-	specialeffect EF_HIT5,"Airship Captain#02";
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom10#airplane";
 	end;
 OnTimer75500:
-	specialeffect EF_SUI_EXPLOSION,"boom6#airplane";
-	specialeffect EF_HIT5,"Airship Captain#02";
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom6#airplane";
 	end;
 OnTimer76000:
-	specialeffect EF_SUI_EXPLOSION,"boom7#airplane";
-	specialeffect EF_HIT5,"Airship Captain#02";
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom7#airplane";
 	end;
 OnTimer76500:
-	specialeffect EF_SUI_EXPLOSION,"boom8#airplane";
-	specialeffect EF_HIT5,"Airship Captain#02";
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom8#airplane";
 	end;
 OnTimer77000:
-	specialeffect EF_SUI_EXPLOSION,"boom9#airplane";
-	specialeffect EF_HIT5,"Airship Captain#02";
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom9#airplane";
 	end;
 OnTimer77500:
-	specialeffect EF_SUI_EXPLOSION,"boom8#airplane";
-	mapannounce "airplane_01", "*Boom! Boom Boom! Boom Boom! Boom!*",bc_map,0x00FF00;
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom10#airplane";
 	end;
 OnTimer78000:
-	specialeffect EF_SUI_EXPLOSION,"boom9#airplane";
-	end;
-OnTimer78500:
-	specialeffect EF_SUI_EXPLOSION,"boom10#airplane";
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom6#airplane";
+	mapannounce "airplane_01", "Engineer: Oh no! We've got a problem with the Number One Rear Engine!",bc_map,0x00FF00;
 	end;
 OnTimer79000:
-	specialeffect EF_SUI_EXPLOSION,"boom6#airplane";
-	end;
-OnTimer79500:
-	specialeffect EF_SUI_EXPLOSION,"boom7#airplane";
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom7#airplane";
 	end;
 OnTimer80000:
-	emotion e_an,"Airship Captain#02";
-	mapannounce "airplane_01", "Captain Tarlock: There's... To many to handle!",bc_map,0x70DBDB;
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom8#airplane";
+	end;
+OnTimer81000:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom9#airplane";
+	end;
+OnTimer82000:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom10#airplane";
+	end;
+OnTimer83000:
+	mapannounce "airplane_01", "Pilot: Hurry! Get the women, old people and children somewhere safe first! Hurry!",bc_map,0x00FF00;
+	end;
+OnTimer84000:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom6#airplane";
 	end;
 OnTimer85000:
-	mapannounce "airplane_01", "Pilot: Captain, sir, the situation is getting critical!",bc_map,0x00FF00;
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom7#airplane";
 	end;
-OnTimer100000:
-	emotion e_swt,"Airship Captain#02";
-	mapannounce "airplane_01", "Captain Tarlock: We'll need all the help we can get!",bc_map,0x70DBDB;
+OnTimer86000:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom8#airplane";
+	end;
+OnTimer87000:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom7#airplane";
+	end;
+OnTimer88000:
+	emotion e_ag,0,"Airship Captain#02";
+	mapannounce "airplane_01", "Captain Tarlock: You dirty monsters are dealing with this ship's captain...",bc_map,0x70DBDB;
+	end;
+OnTimer93000:
+	emotion e_ag,0,"Airship Captain#02";
+	mapannounce "airplane_01", "Captain Tarlock: I'll protect this ship and my crew with my life!",bc_map,0x70DBDB;
+	end;
+OnTimer98000:
+	emotion e_pif,0,"Airship Captain#02";
+	mapannounce "airplane_01", "Captain Tarlock: Here goes! Special Exodus Joker XIII Doom Rifle!",bc_map,0x70DBDB;
+	end;
+OnTimer103000:
+	mapannounce "airplane_01", "*Bang! Bang Bang! Bang Bang! Bang Bang Bang!*",bc_map,0x00FF00;
+	specialeffect EF_HIT5,AREA,"Airship Captain#02";
+	end;
+OnTimer103500:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom1#airplane";
+	specialeffect EF_HIT5,AREA,"Airship Captain#02";
+	end;
+OnTimer104000:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom2#airplane";
+	specialeffect EF_HIT5,AREA,"Airship Captain#02";
+	end;
+OnTimer104500:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom3#airplane";
+	specialeffect EF_HIT5,AREA,"Airship Captain#02";
+	end;
+OnTimer105000:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom4#airplane";
+	specialeffect EF_HIT5,AREA,"Airship Captain#02";
+	end;
+OnTimer105500:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom5#airplane";
+	specialeffect EF_HIT5,AREA,"Airship Captain#02";
+	end;
+OnTimer106000:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom0#airplane";
+	specialeffect EF_HIT5,AREA,"Airship Captain#02";
+	end;
+OnTimer106500:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom1#airplane";
+	specialeffect EF_HIT5,AREA,"Airship Captain#02";
+	end;
+OnTimer107000:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom2#airplane";
+	specialeffect EF_HIT5,AREA,"Airship Captain#02";
+	end;
+OnTimer107500:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom4#airplane";
+	specialeffect EF_HIT5,AREA,"Airship Captain#02";
+	end;
+OnTimer108000:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom5#airplane";
+	killmonster "airplane_01","Airship#airplane02::OnCaptainMobDead";
+	end;
+OnTimer113000:
+	emotion e_pif,0,"Airship Captain#02";
+	mapannounce "airplane_01","Captain Tarlock: Filthy animals! Stop ruining my ship!",bc_map,0x70DBDB;
+	end;
+OnTimer118000:
+	mapannounce "airplane_01", "*Bang! Bang Bang! Bang Bang! Bang Bang Bang!*",bc_map,0x00FF00;
+	specialeffect EF_HIT5,AREA,"Airship Captain#02";
+	end;
+OnTimer118500:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom6#airplane";
+	specialeffect EF_HIT5,AREA,"Airship Captain#02";
+	end;
+OnTimer119000:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom7#airplane";
+	specialeffect EF_HIT5,AREA,"Airship Captain#02";
+	end;
+OnTimer119500:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom8#airplane";
+	specialeffect EF_HIT5,AREA,"Airship Captain#02";
+	end;
+OnTimer120000:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom9#airplane";
+	specialeffect EF_HIT5,AREA,"Airship Captain#02";
+	end;
+OnTimer120500:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom10#airplane";
+	specialeffect EF_HIT5,AREA,"Airship Captain#02";
+	end;
+OnTimer121000:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom6#airplane";
+	specialeffect EF_HIT5,AREA,"Airship Captain#02";
+	end;
+OnTimer121500:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom7#airplane";
+	specialeffect EF_HIT5,AREA,"Airship Captain#02";
+	end;
+OnTimer122000:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom8#airplane";
+	specialeffect EF_HIT5,AREA,"Airship Captain#02";
+	end;
+OnTimer122500:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom9#airplane";
+	specialeffect EF_HIT5,AREA,"Airship Captain#02";
+	end;
+OnTimer123000:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom8#airplane";
+	mapannounce "airplane_01", "*Boom! Boom Boom! Boom Boom! Boom!*",bc_map,0x00FF00;
+	end;
+OnTimer124000:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom9#airplane";
 	end;
 OnTimer125000:
-	emotion e_sry,"Airship Captain#02";
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom10#airplane";
+	end;
+OnTimer126000:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom6#airplane";
+	end;
+OnTimer127000:
+	specialeffect EF_SUI_EXPLOSION,AREA,"boom7#airplane";
+	end;
+OnTimer128000:
+	emotion e_an,0,"Airship Captain#02";
+	mapannounce "airplane_01", "Captain Tarlock: There's... Too many to handle!",bc_map,0x70DBDB;
+	end;
+OnTimer133000:
+	mapannounce "airplane_01", "Pilot: Captain, sir, the situation is getting critical!",bc_map,0x00FF00;
+	end;
+OnTimer138000:
+	emotion e_swt,0,"Airship Captain#02";
+	mapannounce "airplane_01", "Captain Tarlock: We'll need all the help we can get!",bc_map,0x70DBDB;
+	end;
+OnTimer143000:
+	emotion e_sry,0,"Airship Captain#02";
 	mapannounce "airplane_01", "Captain Tarlock: All hands and any passenger who can fight! We've got to drive away these monsters!",bc_map,0x70DBDB;
 	end;
-OnTimer130000:
-	disablenpc "Airship Captain#02";
-	enablenpc "Airship Captain#01";
-	enablenpc "Airship Staff#airplane01";
-	donpcevent "YunoIzl_Airship::OnReturn";
+OnTimer148000:
+	hideonnpc "Airship Captain#02";
+	hideoffnpc "Airship Captain#01";
 	end;
-}
+OnTimer400000:
+	killmonster "airplane_01","Airship#airplane02::OnMyMobDead";
+	end;
+OnTimer405000:
+	mapannounce "airplane_01","Monster threat eliminated. The Airship is now returning to normal operation.",bc_map,0x00FF00;
+	hideoffnpc "Airship Staff#airplane_01";
+	end;
+OnTimer410000:
+	mapannounce "airplane_01","We will arrive in Izlude shortly.",bc_map,"0x00ff00";
+	end;
+OnTimer420000:
+	set $@airplanelocation2,1;
+	donpcevent "#AirshipWarp-3::OnUnhide";
+	donpcevent "#AirshipWarp-4::OnUnhide";
+	mapannounce "airplane_01","Welcome to Izlude. Have a safe trip.",bc_map,"0x00ff00";
+	end;
+OnTimer430000:
+	mapannounce "airplane_01","We are currently in Izlude. The Airship will take off shortly.",bc_map,"0x00ff00";
+	end;
+OnTimer440000:
+	donpcevent "#AirshipWarp-3::OnHide";
+	donpcevent "#AirshipWarp-4::OnHide";
+	mapannounce "airplane_01","The Airship is now taking off. Our next destination is Juno.",bc_map,"0x70dbdb";
+	end;
+OnTimer465000:
+	mapannounce "airplane_01","We are heading to Juno.",bc_map,"0x70dbdb";
+	end;
+OnTimer490000:
+	mapannounce "airplane_01","We will arrive in Juno shortly.",bc_map,"0x70dbdb";
+	end;
+OnTimer500000:
+	set $@airplanelocation2,2;
+	donpcevent "#AirshipWarp-3::OnUnhide";
+	donpcevent "#AirshipWarp-4::OnUnhide";
+	mapannounce "airplane_01","Welcome to Juno. Have a safe trip.",bc_map,"0x70dbdb";
+	end;
+OnTimer510000:
+	mapannounce "airplane_01","We are currently in Juno. The Airship will leave shorty.",bc_map,"0x70dbdb";
+	end;
+OnTimer520000:
+	donpcevent "#AirshipWarp-3::OnHide";
+	donpcevent "#AirshipWarp-4::OnHide";
+	mapannounce "airplane_01","The Airship is leaving the ground. Our next destination is Rachel.",bc_map,"0xFF8200";
+	end;
+OnTimer545000:
+	mapannounce "airplane_01","We are heading to Rachel.",bc_map,"0xFF8200";
+	end;
+OnTimer570000:
+	mapannounce "airplane_01","We will arrive in Rachel shortly.",bc_map,"0xFF8200";
+	end;
+OnTimer580000:
+	set $@airplanelocation2,0;
+	donpcevent "#AirshipWarp-3::OnUnhide";
+	donpcevent "#AirshipWarp-4::OnUnhide";
+	mapannounce "airplane_01","Welcome to Rachel. Have a safe trip.",bc_map,"0xFF8200";
+	end;
+OnTimer590000:
+	mapannounce "airplane_01","We are currently in Rachel. The Airship will take off shortly.",bc_map,"0xFF8200";
+	end;
+OnTimer600000:
+	donpcevent "#AirshipWarp-3::OnHide";
+	donpcevent "#AirshipWarp-4::OnHide";
+	mapannounce "airplane_01","The Airship is now taking off. Our next destination is Izlude.",bc_map,"0x00ff00";
+	stopnpctimer;
+	set getvariableofnpc(.moninv, "International_Airship"),2;
+	donpcevent "International_Airship::OnEnable";
+	end;
+
+OnMyMobDead:
+OnCaptainMobDead:
+	end;
 }
 
 airplane_01,246,54,3	script	Airship Captain#02	873,{
@@ -1397,7 +1466,11 @@ airplane_01,246,54,3	script	Airship Captain#02	873,{
 	mes "fight with the";
 	mes "Gremlins!";
 	close2;
-	cutin "fly_felrock",255;
+	cutin "",255;
+	end;
+	
+OnInit:
+	hideonnpc "Airship Captain#02";
 	end;
 }
 
@@ -1414,8 +1487,7 @@ airplane_01,234,65,0	script	boom9#airplane	139,{ end; }
 airplane_01,227,67,0	script	boom10#airplane	139,{ end; }
 
 //========Captain Tarlock (Inside the Captain Cabin)=======================
-
-airplane_01,238,154,5	script	Airship Captain#01	873,{
+airplane_01,238,154,3	script	Airship Captain#01	873,{
 	cutin "fly_felrock",2;
 	mes "[Tarlock]";
 	mes "I am Tarlock,";
@@ -1432,7 +1504,7 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 	} else if(lght_air == 6) {
 		set .@question$, "Already finished reading?";
 	}
-	switch( select( "Y-you're a reindeer?!", .@question$, "No, not really." )){
+	switch (select("Y-you're a reindeer?!", .@question$, "No, not really.")) {
 	case 1:
 		mes "[Tarlock]";
 		mes "Hm? Oh, that";
@@ -1453,7 +1525,7 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 		cutin "",255;
 		end;
 	case 2:
-		if(lght_air == 1) {
+		if (lght_air == 1) {
 			if (BaseLevel <= 59) {
 				mes "[Tarlock]";
 				mes "Mm...?";
@@ -1471,7 +1543,7 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 				mes "before? Are you just curious";
 				mes "or did you really want to know?";
 				next;
-				switch( select( "No, not really...", "Yes, I really want to know!")) {
+				switch (select("No, not really...:Yes, I really want to know!")) {
 				case 1:
 					mes "[Tarlock]";
 					mes "Hahahaha~";
@@ -1499,7 +1571,7 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 					mes "you that classified info if you";
 					mes "do a little favor for me first.";
 					next;
-					switch( select( "Let me think about it.", "Sure.")) {
+					switch (select("Let me think about it.:Sure.")) {
 					case 1:
 						mes "[Tarlock]";
 						mes "Alright. But don't";
@@ -1545,8 +1617,9 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 					}
 				}
 			}
-		} else if(lght_air == 4) {
+		} else if (lght_air == 4) {
 			set lght_air, 5;
+			changequest 8034,8035;
 			mes "[Tarlock]";
 			mes "Oh!";
 			mes "And he answer you? Really?!";
@@ -1557,7 +1630,7 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 			close2;
 			cutin "",255;
 			end;
-		} else if(lght_air == 5) {
+		} else if (lght_air == 5) {
 			set lght_air, 6;
 			mes "[Tarlock]";
 			mes "Um... Ha ha ha~!";
@@ -1572,7 +1645,7 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 			close2;
 			cutin "",255;
 			end;
-		} else if(lght_air== 6) {
+		} else if (lght_air == 6) {
 			mes "[Tarlock]";
 			mes "Yes, I finished.";
 			mes "Even if I understand him";
@@ -1597,63 +1670,59 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 			mes "That turns the propeller.";
 			mes "That's all. Did you understand?";
 			next;
-			switch( select( "Um? Only that? There's no more?")) {
-			case 1:
-				mes "[Tarlock]";
-				mes "Ha ha ha!";
-				mes "I explained it roughtly to";
-				mes "make it easier to understand";
-				mes "by you. Still, you aren't";
-				mes "pleased? I said it in plain";
-				mes "english that everyone could";
-				mes "understand.";
-				next;
-				mes "[Tarlock]";
-				mes "Obviously, only with a steam";
-				mes "is impossible to make this fly.";
-				mes "Therefore, it uses an amplifier";
-				mes "called ^ff0000Rune Mechanism^000000.";
-				next;
-				switch( select( "Uh? What's a Rune Mechanism?")) {
-				case 1:
-					mes "[Tarlock]";
-					mes "It's a device that uses a";
-					mes "magic stone as power source.";
-					mes "However, I don't know how";
-					mes "this work...";
-					mes "I forgot the details probably";
-					mes "because I didn't paid much attention.";
-					next;
-					mes "[Tarlock]";
-					mes "The only I remember is";
-					mes "that the energy is amplified";
-					mes "while it passes through the";
-					mes "Rune that is attached to a";
-					mes "steam engine.";
-					next;
-					mes "[Tarlock]";
-					mes "In fact, all this airship";
-					mes "floats thanks to the power";
-					mes "given by the stone, no";
-					mes "exaggeration.";
-					mes "It has really a strong power.";
-					next;
-					specialeffect2 EF_MAPPILLAR;
-					mes "[Tarlock]";
-					mes "Did you understand?";
-					mes "I'll rest a little.";
-					mes "I'm tired for reading";
-					mes "and writing those long";
-					mes "letters.";
-					completequest 8035;
-					set lght_air, 7;
-					getexp 20000, 1000;
-					close2;
-					cutin "",255;
-					end;
-				}
-			}
-		} else if(lght_air == 7) {
+			select("Um? Only that? There's no more?");
+			mes "[Tarlock]";
+			mes "Ha ha ha!";
+			mes "I explained it roughtly to";
+			mes "make it easier to understand";
+			mes "by you. Still, you aren't";
+			mes "pleased? I said it in plain";
+			mes "english that everyone could";
+			mes "understand.";
+			next;
+			mes "[Tarlock]";
+			mes "Obviously, only with a steam";
+			mes "is impossible to make this fly.";
+			mes "Therefore, it uses an amplifier";
+			mes "called ^ff0000Rune Mechanism^000000.";
+			next;
+			select("Uh? What's a Rune Mechanism?");
+			mes "[Tarlock]";
+			mes "It's a device that uses a";
+			mes "magic stone as power source.";
+			mes "However, I don't know how";
+			mes "this work...";
+			mes "I forgot the details probably";
+			mes "because I didn't paid much attention.";
+			next;
+			mes "[Tarlock]";
+			mes "The only I remember is";
+			mes "that the energy is amplified";
+			mes "while it passes through the";
+			mes "Rune that is attached to a";
+			mes "steam engine.";
+			next;
+			mes "[Tarlock]";
+			mes "In fact, all this airship";
+			mes "floats thanks to the power";
+			mes "given by the stone, no";
+			mes "exaggeration.";
+			mes "It has really a strong power.";
+			next;
+			specialeffect2 EF_MAPPILLAR;
+			mes "[Tarlock]";
+			mes "Did you understand?";
+			mes "I'll rest a little.";
+			mes "I'm tired for reading";
+			mes "and writing those long";
+			mes "letters.";
+			completequest 8035;
+			set lght_air, 7;
+			getexp 20000, 1000;
+			close2;
+			cutin "",255;
+			end;
+		} else if (lght_air == 7) {
 			mes "[Tarlock]";
 			mes "Didn't I teach you before?";
 			mes "I won't explain such a long";
@@ -1661,7 +1730,7 @@ airplane_01,238,154,5	script	Airship Captain#01	873,{
 			close2;
 			cutin "",255;
 			end;
-		} else if(lght_air == 2) {
+		} else {
 			mes "[Tarlock]";
 			mes "Hahahah! Don't worry, I'll";
 			mes "tell you know this Airship";

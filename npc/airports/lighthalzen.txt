@@ -2,79 +2,76 @@
 //= Lighthalzen Airport Staff
 //===== By: ================================================== 
 //= L0ne_W0lf, Muad_Dib
-//===== Current Version: ===================================== 
-//= 1.3
 //===== Compatible With: ===================================== 
-//= rAthena Revision 3000+
+//= rAthena SVN
 //===== Description: ========================================= 
 //= Lighthalzen Airport Staff
 //===== Additional Comments: ================================= 
-//= 1.0 Cloned from einbroch.txt [Justin84]
-//= 1.1 Removed Duplicates [Silent]
-//= 1.2 Fixed syntax errors for duplicate [KarLaeda]
-//= 1.3 Removed use of goto. [L0ne_W0lf]
-//============================================================
+//= Official NPCs.
+//============================================================ 
 
-
-lhz_airport,126,43,4	script	Airport Staff#1::AirportL	90,{
+lhz_airport,143,43,5	script	Airport Staff#lhz_air1a::lhz_airport1	90,{
 	mes "[Airport Staff]";
-	mes "Welcome to the Airport.";
-	mes "How may I help you?";
+	mes "Welcome to the";
+	mes "Lighthalzen Airport,";
+	mes "where we offer nonstop";
+	mes "flights to Einbroch, Juno and Hugel.";
 	next;
-	if (select("Board the Airship:Cancel") == 1) {
+	if (select("Board the Airship.:Cancel.") == 1) {
 		mes "[Airport Staff]";
-		mes "The Airship boarding fee";
-		mes "is 1,200 zeny, but if you've";
-		mes "got a Free Ticket for Airship,"; 
-		mes "the fee will be waived. Will";
-		mes "you board the Airship?";
+		mes "The boarding fee is";
+		mes "1,200 zeny, but you can";
+		mes "waive the fee if you redeem";
+		mes "a Free Ticket for Airship.";
 		next;
 		if (select("Yes:No") == 1) {
-			if(countitem(7311) > 0) {
-				delitem 7311,1;
+			if (countitem(7311) > 0) {
+				delitem 7311,1; //Free_Flying_Ship_Ticket
 				warp "lhz_airport",148,51;
-				close;
+				end;
 			}
-			if(zeny >= 1200) {
-				set Zeny,zeny-1200;
+			if (Zeny >= 1200) {
+				set Zeny, Zeny - 1200;
 				warp "lhz_airport",148,51;
-				close;
+				end;
 			}
-			mes "[Airport Staff]";
-			mes "You don't have enough zeny.";
+			mes "[Airship Staff]";
+			mes "I'm sorry, but you don't";
+			mes "have 1,200 zeny to pay";
+			mes "for the boarding fee.";
 			close;
 		}
 	}
 	mes "[Airport Staff]";
 	mes "Thank you and";
-	mes "have a nice day.";
+	mes "please come again.";
+	mes "Have a good day~";
 	close;
 }
 
-lhz_airport,143,43,4	duplicate(AirportL)	Airport Staff#2	90
-lhz_airport,156,43,4	duplicate(AirportL)	Airport Staff#3	90
+lhz_airport,158,43,5	duplicate(lhz_airport1)	Airship Staff#lhz_air1b	90
+lhz_airport,126,43,5	duplicate(lhz_airport1)	Airship Staff#lhz_air1c	90
 
-lhz_airport,126,51,4	script	Airport Staff#4::AirportL2	90,{
-	mes "[Airport Staff]";
-	mes "Welcome~";
-	mes "Please head this";
-	mes "way to board the Airship.";
+lhz_airport,143,49,3	script	Arrival Staff#lhz_air2a::lhz_airport2	90,{
+	mes "[Arrival Staff]";
+	mes "Welcome to Lighthalzen Airport.";
+	mes "Please let me guide you to the";
+	mes "main terminal if you are arriving from your flight. Otherwise, please";
+	mes "board the departing Airship to reach your intended destination.";
 	next;
-	if (select("Exit to Main Terminal:Cancel") == 1) {
-		mes "[Airport Staff]";
-		mes "If you leave the";
-		mes "main terminal, you'll";
-		mes "have to pay the admission";
-		mes "fee again in order to board";
-		mes "the Airship. Are you sure";
-		mes "that you want to exit?";
+	if (select("Exit to main terminal.:Cancel.") == 1) {
+		mes "[Arrival Staff]";
+		mes "Once you're in the main terminal, you will need to pay the fee again";
+		mes "to board an Airship. You should";
+		mes "only exit if Lighthalzen is your intended destination. Shall we";
+		mes "proceed to the main terminal?";
 		next;
 		if (select("Yes:No") == 1) {
 			warp "lhz_airport",142,40;
-			close;
+			end;
 		}
 	}
-	mes "[Airport Staff]";
+	mes "[Arrival Staff]";
 	mes "Alright, thank you";
 	mes "for your patronage";
 	mes "and I hope you have";
@@ -82,5 +79,5 @@ lhz_airport,126,51,4	script	Airport Staff#4::AirportL2	90,{
 	close;
 }
 
-lhz_airport,143,51,4	duplicate(AirportL2)	Airport Staff#5	90
-lhz_airport,156,51,4	duplicate(AirportL2)	Airport Staff#6	90
+lhz_airport,126,51,3	duplicate(lhz_airport2)	Arrival Staff#lhz_air2b	90
+lhz_airport,158,50,3	duplicate(lhz_airport2)	Arrival Staff#lhz_air2c	90

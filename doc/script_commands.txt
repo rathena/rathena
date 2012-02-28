@@ -4619,7 +4619,7 @@ character.
 
 ---------------------------------------
 
-*specialeffect <effect number>{,<send_target>}{,"<NPC Name>"};
+*specialeffect <effect number>{,<send_target>{,"<NPC Name>"}};
 
 This command will display special effect with the given number, centered on the 
 specified NPCs coordinates, if any. For a full list of special effect numbers 
@@ -4642,7 +4642,7 @@ will retain the default behavior of the command.
 
 ---------------------------------------
 
-*specialeffect2 <effect number>{,<send_target>}{,"<Player Name>"};
+*specialeffect2 <effect number>{,<send_target>{,"<Player Name>"}};
 
 This command behaves identically to the 'specialeffect', but the effect will be 
 centered on the invoking character's sprite.
@@ -6103,7 +6103,7 @@ A full list of pet IDs can be found inside 'db/pet_db.txt'
 
 ---------------------------------------
 
-*emotion <emotion number>{,<target>}{,"<target name>"};
+*emotion <emotion number>{,<target>{,"<target name>"}};
 
 This command makes an object display an emotion sprite above their own as 
 if they were doing that emotion. For a full list of emotion numbers, 
