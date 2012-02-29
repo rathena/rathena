@@ -270,33 +270,22 @@ int npc_event_dequeue(struct map_session_data* sd)
 
 /*==========================================
  * exports a npc event label
- * npc_parse_script->strdb_foreachから呼ばれる
+ * called from npc_parse_script
  *------------------------------------------*/
-int npc_event_export(char* lname, void* data, va_list ap)
+static int npc_event_export(struct npc_data *nd, int i)
 {
-	int pos = (int)data;
-	struct npc_data* nd = va_arg(ap, struct npc_data *);
-
-	if ((lname[0]=='O' || lname[0]=='o')&&(lname[1]=='N' || lname[1]=='n')) {
+	char* lname = nd->u.scr.label_list[i].name;
+	int pos = nd->u.scr.label_list[i].pos;
+	if ((lname[0] == 'O' || lname[0] == 'o') && (lname[1] == 'N' || lname[1] == 'n')) {
 		struct event_data *ev;
 		char buf[EVENT_NAME_LENGTH];
-		char* p = strchr(lname, ':');
-		// エクスポートされる
-		ev = (struct event_data *) aMalloc(sizeof(struct event_data));
-		if (ev==NULL) {
-			ShowFatalError("npc_event_export: out of memory !\n");
-			exit(EXIT_FAILURE);
-		}else if (p==NULL || (p-lname)>NAME_LENGTH) {
-			ShowFatalError("npc_event_export: label name error !\n");
-			exit(EXIT_FAILURE);
-		}else{
-			ev->nd = nd;
-			ev->pos = pos;
-			*p = '\0';
-			snprintf(buf, ARRAYLENGTH(buf), "%s::%s", nd->exname, lname);
-			*p = ':';
-			strdb_put(ev_db, buf, ev);
-		}
+		snprintf(buf, ARRAYLENGTH(buf), "%s::%s", nd->exname, lname);
+		// generate the data and insert it
+		CREATE(ev, struct event_data, 1);
+		ev->nd = nd;
+		ev->pos = pos;
+		if (strdb_put(ev_db, buf, ev) != NULL) // There was already another event of the same name?
+			return 1;
 	}
 	return 0;
 }
@@ -2362,23 +2351,10 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 
 	//-----------------------------------------
 	// イベント用ラベルデータのエクスポート
-	for (i = 0; i < nd->u.scr.label_list_num; i++)
-	{
-		char* lname = nd->u.scr.label_list[i].name;
-		int pos = nd->u.scr.label_list[i].pos;
-
-		if ((lname[0] == 'O' || lname[0] == 'o') && (lname[1] == 'N' || lname[1] == 'n'))
-		{
-			struct event_data* ev;
-			char buf[EVENT_NAME_LENGTH];
-			snprintf(buf, ARRAYLENGTH(buf), "%s::%s", nd->exname, lname);
-
-			// generate the data and insert it
-			CREATE(ev, struct event_data, 1);
-			ev->nd = nd;
-			ev->pos = pos;
-			if( strdb_put(ev_db, buf, ev) != NULL )// There was already another event of the same name?
-				ShowWarning("npc_parse_script : duplicate event %s (%s)\n", buf, filepath);
+	for (i = 0; i < nd->u.scr.label_list_num; i++) {
+		if (npc_event_export(nd, i)) {
+			ShowWarning("npc_parse_script : duplicate event %s::%s (%s)\n",
+			             nd->exname, nd->u.scr.label_list[i].name, filepath);
 		}
 	}
 
@@ -2550,23 +2526,10 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 	//Handle labels
 	//-----------------------------------------
 	// イベント用ラベルデータのエクスポート
-	for (i = 0; i < nd->u.scr.label_list_num; i++)
-	{
-		char* lname = nd->u.scr.label_list[i].name;
-		int pos = nd->u.scr.label_list[i].pos;
-
-		if ((lname[0] == 'O' || lname[0] == 'o') && (lname[1] == 'N' || lname[1] == 'n'))
-		{
-			struct event_data* ev;
-			char buf[EVENT_NAME_LENGTH];
-			snprintf(buf, ARRAYLENGTH(buf), "%s::%s", nd->exname, lname);
-
-			// generate the data and insert it
-			CREATE(ev, struct event_data, 1);
-			ev->nd = nd;
-			ev->pos = pos;
-			if( strdb_put(ev_db, buf, ev) != NULL )// There was already another event of the same name?
-				ShowWarning("npc_parse_duplicate : duplicate event %s (%s)\n", buf, filepath);
+	for (i = 0; i < nd->u.scr.label_list_num; i++) {
+		if (npc_event_export(nd, i)) {
+			ShowWarning("npc_parse_duplicate : duplicate event %s::%s (%s)\n",
+			             nd->exname, nd->u.scr.label_list[i].name, filepath);
 		}
 	}
 
