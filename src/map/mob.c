@@ -2186,6 +2186,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			{
 				if( md->dmglog[i].flag != MDLF_PET || battle_config.pet_attack_exp_to_master ) {
 #if REMODE
+				if(sd && !md->db->mexp)
 					party_renewal_exp_mod(&base_exp,&job_exp,tmpsd[i]->status.base_level,md->level);
 #endif
 					pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp, false);
@@ -2258,7 +2259,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			if (sd && sd->sc.data[SC_ITEMBOOST]) // now rig the drop rate to never be over 90% unless it is originally >90%.
 				drop_rate = max(drop_rate,cap_value((int)(0.5+drop_rate*(sd->sc.data[SC_ITEMBOOST]->val1)/100.),0,9000));
 #if RE_DROP_MOD
-			if( drop_modifier != 100 )
+			if(sd && drop_modifier != 100 && !md->db->mexp)
 				drop_rate = drop_rate * drop_modifier / 100;
 #endif
 			// attempt to drop the item
