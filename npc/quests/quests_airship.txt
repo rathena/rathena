@@ -1389,6 +1389,7 @@ OnTimer400000:
 	end;
 OnTimer405000:
 	mapannounce "airplane_01","Monster threat eliminated. The Airship is now returning to normal operation.",bc_map,0x00FF00;
+	hideoffnpc "Airship Staff#airplane01";
 	end;
 OnTimer410000:
 	mapannounce "airplane_01","We will arrive in Izlude shortly.",bc_map,"0x00ff00";
