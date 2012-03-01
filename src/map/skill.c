@@ -114,7 +114,7 @@ int skill_name2id(const char* name)
 	if( name == NULL )
 		return 0;
 
-	return (int)strdb_get(skilldb_name2id, name);
+	return *(int*)strdb_get(skilldb_name2id, name);
 }
 
 /// Maps skill ids to skill db offsets.
@@ -15268,7 +15268,7 @@ void skill_cooldown_load(struct map_session_data * sd)
 static bool skill_parse_row_skilldb(char* split[], int columns, int current)
 {// id,range,hit,inf,element,nk,splash,max,list_num,castcancel,cast_defence_rate,inf2,maxcount,skill_type,blow_count,name,description
 	int id = atoi(split[0]);
-	int i;
+	int i, *idp;
 	if( (id >= GD_SKILLRANGEMIN && id <= GD_SKILLRANGEMAX)
 	||  (id >= HM_SKILLRANGEMIN && id <= HM_SKILLRANGEMAX)
 	||  (id >= MC_SKILLRANGEMIN && id <= MC_SKILLRANGEMAX) )
@@ -15308,7 +15308,9 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current)
 	skill_split_atoi(split[14],skill_db[i].blewcount);
 	safestrncpy(skill_db[i].name, trim(split[15]), sizeof(skill_db[i].name));
 	safestrncpy(skill_db[i].desc, trim(split[16]), sizeof(skill_db[i].desc));
-	strdb_put(skilldb_name2id, skill_db[i].name, (void*)id);
+	CREATE(idp, int, 1);
+	*idp = id;
+	strdb_put(skilldb_name2id, skill_db[i].name, idp);
 
 	return true;
 }
@@ -15681,7 +15683,7 @@ void skill_reload (void)
  *------------------------------------------*/
 int do_init_skill (void)
 {
-	skilldb_name2id = strdb_alloc(DB_OPT_DUP_KEY, 0);
+	skilldb_name2id = strdb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA, 0);
 	skill_readdb();
 
 	group_db = idb_alloc(DB_OPT_BASE);
