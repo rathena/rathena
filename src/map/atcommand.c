@@ -8851,31 +8851,19 @@ static void atcommand_config_read(const char* config_filename)
 	return;
 }
 
-static int atcommand_db_free(DBKey key, void *data, va_list va)
-{
-	aFree((AtCommandInfo*)data);
-	return 1;
-}
-
-static int atcommand_alias_db_free(DBKey key, void *data, va_list va)
-{
-	aFree((AliasInfo*)data);
-	return 1;
-}
-
 void atcommand_db_clear(void)
 {
 	if (atcommand_db != NULL)
-		atcommand_db->destroy(atcommand_db, atcommand_db_free);
+		db_destroy(atcommand_db);
 	if (atcommand_alias_db != NULL)
-		atcommand_alias_db->destroy(atcommand_alias_db, atcommand_alias_db_free);
+		db_destroy(atcommand_alias_db);
 }
 
 void atcommand_doload(void)
 {
 	atcommand_db_clear();
-	atcommand_db = stridb_alloc(DB_OPT_DUP_KEY, ATCOMMAND_LENGTH);
-	atcommand_alias_db = stridb_alloc(DB_OPT_DUP_KEY, ATCOMMAND_LENGTH);
+	atcommand_db = stridb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA, ATCOMMAND_LENGTH);
+	atcommand_alias_db = stridb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA, ATCOMMAND_LENGTH);
 	atcommand_basecommands(); //fills initial atcommand_db with known commands
 	atcommand_config_read(ATCOMMAND_CONF_FILENAME);
 }
