@@ -422,19 +422,9 @@ int pc_group_id2level(int group_id)
  */
 void do_init_pc_groups(void)
 {
-	pc_group_db = idb_alloc(DB_OPT_BASE);
+	pc_group_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	pc_groupname_db = stridb_alloc(DB_OPT_DUP_KEY, 0);
 	read_config();
-}
-
-/**
- * DBApply helper function for do_final_pc_groups
- * @private
- */
-static int group_db_free(DBKey key, void *data, va_list args)
-{
-	aFree((GroupSettings*)data);
-	return 1;
 }
 
 /**
@@ -444,7 +434,7 @@ static int group_db_free(DBKey key, void *data, va_list args)
 void do_final_pc_groups(void)
 {
 	if (pc_group_db != NULL)
-		pc_group_db->destroy(pc_group_db, group_db_free);
+		db_destroy(pc_group_db);
 	if (pc_groupname_db != NULL )
 		db_destroy(pc_groupname_db);
 	destroy_config();

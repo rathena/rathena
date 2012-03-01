@@ -14723,10 +14723,9 @@ int skill_blockpc_end(int tid, unsigned int tick, int id, intptr_t data)
 			}
 			cursor++;
 		}
-		if( cursor == 0 ) {
+		if( cursor == 0 )
 			idb_remove(skillcd_db,sd->status.char_id);
-			aFree(cd);
-		} else
+		else
 			cd->cursor = cursor;
 	}
 
@@ -15688,7 +15687,7 @@ int do_init_skill (void)
 
 	group_db = idb_alloc(DB_OPT_BASE);
 	skillunit_db = idb_alloc(DB_OPT_BASE);
-	skillcd_db = idb_alloc(DB_OPT_BASE);
+	skillcd_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	skill_unit_ers = ers_new(sizeof(struct skill_unit_group));
 	skill_timer_ers  = ers_new(sizeof(struct skill_timerskill));
 
@@ -15703,20 +15702,12 @@ int do_init_skill (void)
 	return 0;
 }
 
-int skillcd_db_final(DBKey key, void *data, va_list args)
-{
-	struct skillcd *s = (struct skillcd*)data;
-	if( s != NULL)
-		aFree(s);
-	return 0;
-}
-
 int do_final_skill(void)
 {
 	db_destroy(skilldb_name2id);
 	db_destroy(group_db);
 	db_destroy(skillunit_db);
-	skillcd_db->destroy(skillcd_db, skillcd_db_final);
+	db_destroy(skillcd_db);
 	ers_destroy(skill_unit_ers);
 	ers_destroy(skill_timer_ers);
 	return 0;

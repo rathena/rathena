@@ -1914,12 +1914,6 @@ bool guild_isallied(int guild_id, int guild_id2)
 	return( i < MAX_GUILDALLIANCE && g->alliance[i].opposition == 0 );
 }
 
-static int guild_infoevent_db_final(DBKey key,void *data,va_list ap)
-{
-	aFree(data);
-	return 0;
-}
-
 static int guild_expcache_db_final(DBKey key,void *data,va_list ap)
 {
 	ers_free(expcache_ers, data);
@@ -1940,9 +1934,9 @@ void do_init_guild(void)
 	guild_db=idb_alloc(DB_OPT_RELEASE_DATA);
 	castle_db=idb_alloc(DB_OPT_BASE);
 	guild_expcache_db=idb_alloc(DB_OPT_BASE);
-	guild_infoevent_db=idb_alloc(DB_OPT_BASE);
+	guild_infoevent_db=idb_alloc(DB_OPT_BASE|DB_OPT_RELEASE_DATA);
 	expcache_ers = ers_new(sizeof(struct guild_expcache)); 
-	guild_castleinfoevent_db=idb_alloc(DB_OPT_BASE);
+	guild_castleinfoevent_db=idb_alloc(DB_OPT_BASE|DB_OPT_RELEASE_DATA);
 
 	sv_readdb(db_path, "castle_db.txt", ',', 4, 5, -1, &guild_read_castledb);
 
@@ -1957,10 +1951,10 @@ void do_init_guild(void)
 
 void do_final_guild(void)
 {
-	guild_db->destroy(guild_db,NULL);
+	db_destroy(guild_db);
 	castle_db->destroy(castle_db,guild_castle_db_final);
 	guild_expcache_db->destroy(guild_expcache_db,guild_expcache_db_final);
-	guild_infoevent_db->destroy(guild_infoevent_db,guild_infoevent_db_final);
-	guild_castleinfoevent_db->destroy(guild_castleinfoevent_db,guild_infoevent_db_final);
+	db_destroy(guild_infoevent_db);
+	db_destroy(guild_castleinfoevent_db);
 	ers_destroy(expcache_ers);
 }
