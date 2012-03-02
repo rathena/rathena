@@ -75,7 +75,7 @@ int npc_get_new_npc_id(void)
 }
 
 static DBMap* ev_db; // const char* event_name -> struct event_data*
-DBMap* npcname_db; // const char* npc_name -> struct npc_data*
+static DBMap* npcname_db; // const char* npc_name -> struct npc_data*
 
 struct event_data {
 	struct npc_data *nd;
@@ -435,33 +435,27 @@ void npc_event_do_oninit(void)
 
 /*==========================================
  * タイマーイベント用ラベルの取り込み
- * npc_parse_script->strdb_foreachから呼ばれる
+ * called from npc_parse_script
  *------------------------------------------*/
-int npc_timerevent_import(char* lname, void* data, va_list ap)
+int npc_timerevent_export(struct npc_data *nd, int i)
 {
-	int pos = (int)data;
-	struct npc_data *nd = va_arg(ap,struct npc_data *);
-	int t = 0, i = 0;
-
-	if( sscanf(lname,"OnTimer%d%n",&t,&i)==1 && lname[i]==':' )
-	{
-		struct npc_timerevent_list *te= nd->u.scr.timer_event;
-		int j, i = nd->u.scr.timeramount;
-
-		if( te == NULL )
-			te = (struct npc_timerevent_list*)aMalloc( sizeof(struct npc_timerevent_list) );
+	int t = 0, k = 0;
+	char *lname = nd->u.scr.label_list[i].name;
+	int pos = nd->u.scr.label_list[i].pos;
+	if (sscanf(lname, "OnTimer%d%n", &t, &k) == 1 && lname[k] == '\0') {
+		// タイマーイベント
+		struct npc_timerevent_list *te = nd->u.scr.timer_event;
+		int j, k = nd->u.scr.timeramount;
+		if (te == NULL)
+			te = (struct npc_timerevent_list *)aMalloc(sizeof(struct npc_timerevent_list));
 		else
-			te = (struct npc_timerevent_list*)aRealloc( te, sizeof(struct npc_timerevent_list) * (i+1) );
-
-		if( te == NULL )
-		{
-			ShowFatalError("npc_timerevent_import: out of memory !\n");
-			exit(EXIT_FAILURE);
+			te = (struct npc_timerevent_list *)aRealloc( te, sizeof(struct npc_timerevent_list) * (k+1) );
+		for (j = 0; j < k; j++) {
+			if (te[j].timer > t) {
+				memmove(te+j+1, te+j, sizeof(struct npc_timerevent_list)*(k-j));
+				break;
+			}
 		}
-
-		ARR_FIND( 0, i, j, te[j].timer > t );
-		if( j < i )
-			memmove(te+j+1,te+j,sizeof(struct npc_timerevent_list)*(i-j));
 		te[j].timer = t;
 		te[j].pos = pos;
 		nd->u.scr.timer_event = te;
@@ -469,6 +463,7 @@ int npc_timerevent_import(char* lname, void* data, va_list ap)
 	}
 	return 0;
 }
+
 struct timer_event_data {
 	int rid; //Attached player for this timer.
 	int next; //timer index (starts with 0, then goes up to nd->u.scr.timeramount)
@@ -2360,30 +2355,9 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 
 	//-----------------------------------------
 	// ラベルデータからタイマーイベント取り込み
-	for (i = 0; i < nd->u.scr.label_list_num; i++){
-		int t = 0, k = 0;
-		char *lname = nd->u.scr.label_list[i].name;
-		int pos = nd->u.scr.label_list[i].pos;
-		if (sscanf(lname, "OnTimer%d%n", &t, &k) == 1 && lname[k] == '\0') {
-			// タイマーイベント
-			struct npc_timerevent_list *te = nd->u.scr.timer_event;
-			int j, k = nd->u.scr.timeramount;
-			if (te == NULL)
-				te = (struct npc_timerevent_list *)aMalloc(sizeof(struct npc_timerevent_list));
-			else
-				te = (struct npc_timerevent_list *)aRealloc( te, sizeof(struct npc_timerevent_list) * (k+1) );
-			for (j = 0; j < k; j++){
-				if (te[j].timer > t){
-					memmove(te+j+1, te+j, sizeof(struct npc_timerevent_list)*(k-j));
-					break;
-				}
-			}
-			te[j].timer = t;
-			te[j].pos = pos;
-			nd->u.scr.timer_event = te;
-			nd->u.scr.timeramount++;
-		}
-	}
+	for (i = 0; i < nd->u.scr.label_list_num; i++)
+		npc_timerevent_export(nd, i);
+
 	nd->u.scr.timerid = INVALID_TIMER;
 
 	return end;
@@ -2535,30 +2509,9 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 
 	//-----------------------------------------
 	// ラベルデータからタイマーイベント取り込み
-	for (i = 0; i < nd->u.scr.label_list_num; i++){
-		int t = 0, k = 0;
-		char *lname = nd->u.scr.label_list[i].name;
-		int pos = nd->u.scr.label_list[i].pos;
-		if (sscanf(lname, "OnTimer%d%n", &t, &k) == 1 && lname[k] == '\0') {
-			// タイマーイベント
-			struct npc_timerevent_list *te = nd->u.scr.timer_event;
-			int j, k = nd->u.scr.timeramount;
-			if (te == NULL)
-				te = (struct npc_timerevent_list *)aMalloc(sizeof(struct npc_timerevent_list));
-			else
-				te = (struct npc_timerevent_list *)aRealloc( te, sizeof(struct npc_timerevent_list) * (k+1) );
-			for (j = 0; j < k; j++){
-				if (te[j].timer > t){
-					memmove(te+j+1, te+j, sizeof(struct npc_timerevent_list)*(k-j));
-					break;
-				}
-			}
-			te[j].timer = t;
-			te[j].pos = pos;
-			nd->u.scr.timer_event = te;
-			nd->u.scr.timeramount++;
-		}
-	}
+	for (i = 0; i < nd->u.scr.label_list_num; i++)
+		npc_timerevent_export(nd, i);
+
 	nd->u.scr.timerid = INVALID_TIMER;
 
 	return end;
