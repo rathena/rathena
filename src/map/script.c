@@ -10147,14 +10147,14 @@ BUILDIN_FUNC(getcastledata)
 	if(script_hasdata(st,4) && index==0 && gc) {
 		const char* event = script_getstr(st,4);
 		check_event(st, event);
-		guild_addcastleinfoevent(gc->castle_id,17,event);
+		guild_addcastleinfoevent(gc->castle_id, 9+MAX_GUARDIANS, event);
 	}
 
 	if(gc){
 		switch(index){
 			case 0: {
 				int i;
-				for(i=1;i<18;i++) // Initialize[AgitInit]
+				for (i = 1; i <= 9+MAX_GUARDIANS; i++) // Initialize[AgitInit]
 					guild_castledataload(gc->castle_id,i);
 				} break;
 			case 1:
@@ -10175,17 +10175,12 @@ BUILDIN_FUNC(getcastledata)
 				script_pushint(st,gc->createTime); break;
 			case 9:
 				script_pushint(st,gc->visibleC); break;
-			case 10:
-			case 11:
-			case 12:
-			case 13:
-			case 14:
-			case 15:
-			case 16:
-			case 17:
-				script_pushint(st,gc->guardian[index-10].visible); break;
 			default:
-				script_pushint(st,0); break;
+				if (index > 9 && index <= 9+MAX_GUARDIANS)
+					script_pushint(st,gc->guardian[index-10].visible);
+				else
+					script_pushint(st,0);
+				break;
 		}
 		return 0;
 	}
@@ -10222,16 +10217,11 @@ BUILDIN_FUNC(setcastledata)
 				gc->createTime = value; break;
 			case 9:
 				gc->visibleC = value; break;
-			case 10:
-			case 11:
-			case 12:
-			case 13:
-			case 14:
-			case 15:
-			case 16:
-			case 17:
-				gc->guardian[index-10].visible = value; break;
 			default:
+				if (index > 9 && index <= 9+MAX_GUARDIANS) {
+					gc->guardian[index-10].visible = value;
+					break;
+				}
 				return 0;
 		}
 		guild_castledatasave(gc->castle_id,index,value);

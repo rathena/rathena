@@ -1731,16 +1731,11 @@ int guild_castledataloadack(int castle_id,int index,int value)
 	case 7: gc->payTime = value; break;
 	case 8: gc->createTime = value; break;
 	case 9: gc->visibleC = value; break;
-	case 10:
-	case 11:
-	case 12:
-	case 13:
-	case 14:
-	case 15:
-	case 16:
-	case 17:
-		gc->guardian[index-10].visible = value; break;
 	default:
+		if (index > 9 && index <= 9+MAX_GUARDIANS) {
+			gc->guardian[index-10].visible = value;
+			break;
+		}
 		ShowError("guild_castledataloadack ERROR!! (Not found castle_id=%d index=%d)\n", castle_id, index);
 		return 0;
 	}
@@ -1801,16 +1796,11 @@ int guild_castledatasaveack(int castle_id,int index,int value)
 	case 7: gc->payTime = value; break;
 	case 8: gc->createTime = value; break;
 	case 9: gc->visibleC = value; break;
-	case 10:
-	case 11:
-	case 12:
-	case 13:
-	case 14:
-	case 15:
-	case 16:
-	case 17:
-		gc->guardian[index-10].visible = value; break;
 	default:
+		if (index > 9 && index <= 9+MAX_GUARDIANS) {
+			gc->guardian[index-10].visible = value;
+			break;
+		}
 		ShowError("guild_castledatasaveack ERROR!! (Not found index=%d)\n", index);
 		return 0;
 	}
