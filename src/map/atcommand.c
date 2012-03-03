@@ -8120,7 +8120,8 @@ ACMD_FUNC(stats)
 		{ "Luk - %3d", 0 },
 		{ "Zeny - %d", 0 },
 		{ "Free SK Points - %d", 0 },
-		{ "JobChangeLvl - %d", 0 },
+		{ "JobChangeLvl (2nd) - %d", 0 },
+		{ "JobChangeLvl (3rd) - %d", 0 },
 		{ NULL, 0 }
 	};
 
@@ -8143,7 +8144,8 @@ ACMD_FUNC(stats)
 	output_table[11].value = sd->status.luk;
 	output_table[12].value = sd->status.zeny;
 	output_table[13].value = sd->status.skill_point;
-	output_table[14].value = sd->change_level;
+	output_table[14].value = sd->change_level_2nd;
+	output_table[15].value = sd->change_level_3rd;
 
 	sprintf(job_jobname, "Job - %s %s", job_name(sd->status.class_), "(level %d)");
 	sprintf(output, msg_txt(53), sd->status.name); // '%s' stats:
