@@ -56,7 +56,8 @@ enum item_itemid
 struct item_data {
 	int nameid;
 	char name[ITEM_NAME_LENGTH],jname[ITEM_NAME_LENGTH];
-	//Do not add stuff between value_buy and wlv (see how getiteminfo works)
+	
+	//Do not add stuff between value_buy and view_id (see how getiteminfo works)
 	int value_buy;
 	int value_sell;
 	int type;
@@ -65,9 +66,6 @@ struct item_data {
 	int equip;
 	int weight;
 	int atk;
-#if REMODE
-	int matk;//[RRInd] -- used in RE for matk
-#endif
 	int def;
 	int range;
 	int slot;
@@ -75,6 +73,10 @@ struct item_data {
 	int elv;
 	int wlv;
 	int view_id;
+#if REMODE
+	int matk;//[RRInd] -- used in RE for matk
+#endif
+
 	int delay;
 //Lupus: I rearranged order of these fields due to compatibility with ITEMINFO script command
 //		some script commands should be revised as well...
