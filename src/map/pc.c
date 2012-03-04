@@ -1498,7 +1498,7 @@ int pc_calc_skilltree_normalize_job(struct map_session_data *sd)
 	int skill_point, novice_skills;
 	int c = sd->class_;
 	
-	if (!battle_config.skillup_limit)
+	if (!battle_config.skillup_limit || pc_has_permission(sd, PC_PERM_ALL_SKILL))
 		return c;
 	
 	skill_point = pc_calc_skillpoint(sd);
@@ -5585,7 +5585,8 @@ int pc_skillup(struct map_session_data *sd,int skill_num)
 
 		clif_skillup(sd,skill_num);
 		clif_updatestatus(sd,SP_SKILLPOINT);
-		clif_skillinfoblock(sd);
+		if (!pc_has_permission(sd, PC_PERM_ALL_SKILL)) // may skill everything at any time anyways, and this would cause a huge slowdown
+			clif_skillinfoblock(sd);
 	}
 
 	return 0;
@@ -5609,7 +5610,6 @@ int pc_allskillup(struct map_session_data *sd)
 		}
 	}
 
-	//pc_calc_skilltree takes care of setting the ID to valid skills. [Skotlex]
 	if (pc_has_permission(sd, PC_PERM_ALL_SKILL))
 	{	//Get ALL skills except npc/guild ones. [Skotlex]
 		//and except SG_DEVIL [Komurka] and MO_TRIPLEATTACK and RG_SNATCHER [ultramage]
@@ -5621,7 +5621,8 @@ int pc_allskillup(struct map_session_data *sd)
 					continue;
 				default:
 					if( !(skill_get_inf2(i)&(INF2_NPC_SKILL|INF2_GUILD_SKILL)) )
-						sd->status.skill[i].lv=skill_get_max(i);//Nonexistant skills should return a max of 0 anyway.
+						if (sd->status.skill[i].lv=skill_get_max(i))//Nonexistant skills should return a max of 0 anyway.
+							sd->status.skill[i].id = i;
 			}
 		}
 	} else {
@@ -5634,6 +5635,8 @@ int pc_allskillup(struct map_session_data *sd)
 				id==SG_DEVIL
 			)
 				continue; //Cannot be learned normally.
+
+			sd->status.skill[id].id = id;
 			sd->status.skill[id].lv = skill_tree_get_max(id, sd->status.class_);	// celest
 		}
 	}
@@ -5858,12 +5861,9 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 			continue;
 		}
 
+		// do not reset basic skill
 		if( i == NV_BASIC && (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE )
-		{ // Official server does not include Basic Skill to be resetted. [Jobbie]
-			sd->status.skill[i].lv = 9;
-			sd->status.skill[i].flag = SKILL_FLAG_PERMANENT;
 			continue;
-		}
 
 		if( inf2&INF2_QUEST_SKILL && !battle_config.quest_skill_learn )
 		{ //Only handle quest skills in a special way when you can't learn them manually
