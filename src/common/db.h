@@ -595,6 +595,7 @@ struct DBMap {
 #define db_destroy(db)            ( (db)->destroy((db),NULL) )
 // Other macros
 #define db_clear(db)        ( (db)->clear(db,NULL) )
+#define db_size(db)         ( (db)->size(db) )
 #define db_iterator(db)     ( (db)->iterator(db) )
 #define dbi_first(dbi)      ( (dbi)->first(dbi,NULL) )
 #define dbi_last(dbi)       ( (dbi)->last(dbi,NULL) )

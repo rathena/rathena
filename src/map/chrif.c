@@ -458,6 +458,7 @@ int chrif_connectack(int fd)
 	if( !char_init_done ) {
 		char_init_done = true;
 		ShowStatus("Event '"CL_WHITE"OnInterIfInitOnce"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc_event_doall("OnInterIfInitOnce"));
+		guild_castle_map_init();
 	}
 
 	return 0;

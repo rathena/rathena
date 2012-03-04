@@ -90,12 +90,11 @@ int guild_broken(int guild_id,int flag);
 int guild_gm_change(int guild_id, struct map_session_data *sd);
 int guild_gm_changed(int guild_id, int account_id, int char_id);
 
-int guild_addcastleinfoevent(int castle_id,int index,const char *name);
+void guild_castle_map_init(void);
 int guild_castledataload(int castle_id,int index);
-int guild_castledataloadack(int castle_id,int index,int value);
 int guild_castledatasave(int castle_id,int index,int value);
 int guild_castledatasaveack(int castle_id,int index,int value);
-int guild_castlealldataload(int len,struct guild_castle *gc);
+int guild_castledataloadack(int len, struct guild_castle *gc);
 
 int guild_agit_start(void);
 int guild_agit_end(void);

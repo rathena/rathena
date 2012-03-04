@@ -57,12 +57,6 @@
 -	script	Gld_Agit_Manager::Gld_Agit_Manager	-1,{
 	end;
 
-// Load (or reload) specific information for a castle.
-OnInterIfInitOnce:
-	if (strnpcinfo(0) == "Gld_Agit_Manager") end;
-	GetCastleData strnpcinfo(2),0,strnpcinfo(0) + "::OnRecvCastle";
-	end;
-
 // War of Emperium has started.
 OnAgitStart:
 	if (strnpcinfo(0) == "Gld_Agit_Manager") end;
@@ -128,7 +122,7 @@ OnAgitBreak:
 	MapRespawnGuildID strnpcinfo(2),.@GID,2;
 
 	// Refresh castle data, disable Kafra and reset Invest information.
-	GetCastleData strnpcinfo(2),0,strnpcinfo(0)+"::OnRecvCastle";
+	donpcevent strnpcinfo(0)+"::OnRecvCastle";
 	disablenpc "Kafra Staff#"+strnpcinfo(2);
 	for( set .@i, 4; .@i <= 9; set .@i, .@i+1 ) {
 		SetCastleData strnpcinfo(2), .@i, 0;
@@ -167,12 +161,12 @@ OnGuildBreak:
 	// Wait before refreshing guild information.
 	sleep 7000;
 	Announce "Guild Base [" + GetCastleName(strnpcinfo(2)) + "] has been abandoned.",0;
-	GetCastleData strnpcinfo(2),0,strnpcinfo(0)+"::OnRecvCastle";
+	donpcevent strnpcinfo(0)+"::OnRecvCastle";
 	end;
 
+OnAgitInit:
 OnRecvCastle:
-	RequestGuildInfo GetCastleData(strnpcinfo(2),1);
-
+	if (strnpcinfo(0) == "Gld_Agit_Manager") end;
 	// Spawn Monsters if the castle is empty.
 	set .@GID, GetCastleData(strnpcinfo(2),1);
 	if (.@GID == 0) {

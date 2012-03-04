@@ -33,7 +33,6 @@ static DBMap* guild_db; // int guild_id -> struct guild*
 static DBMap* castle_db; // int castle_id -> struct guild_castle*
 static DBMap* guild_expcache_db; // int char_id -> struct guild_expcache*
 static DBMap* guild_infoevent_db; // int guild_id -> struct eventlist*
-static DBMap* guild_castleinfoevent_db; // int castle_id_index -> struct eventlist*
 
 struct eventlist {
 	char name[EVENT_NAME_LENGTH];
@@ -160,10 +159,14 @@ int guild_check_skill_require(struct guild *g,int id)
 static bool guild_read_castledb(char* str[], int columns, int current)
 {// <castle id>,<map name>,<castle name>,<castle event>[,<reserved/unused switch flag>]
 	struct guild_castle *gc;
+	int mapindex = mapindex_name2id(str[1]);
+
+	if (map_mapindex2mapid(mapindex) < 0) // Map not found or on another map-server
+		return false;
 
 	CREATE(gc, struct guild_castle, 1);
 	gc->castle_id = atoi(str[0]);
-	gc->mapindex = mapindex_name2id(str[1]);
+	gc->mapindex = mapindex;
 	safestrncpy(gc->castle_name, str[2], sizeof(gc->castle_name));
 	safestrncpy(gc->castle_event, str[3], sizeof(gc->castle_event));
 
@@ -1542,28 +1545,29 @@ int castle_guild_broken_sub(DBKey key,void *data,va_list ap)
 	return 0;
 }
 
-//Innvoked on /breakguild "Guild name"
+//Invoked on /breakguild "Guild name"
 int guild_broken(int guild_id,int flag)
 {
-	struct guild *g=guild_search(guild_id);
-	struct guild_castle *gc=NULL;
-	struct map_session_data *sd;
+	struct guild *g = guild_search(guild_id);
+	struct guild_castle *gc = NULL;
+	DBIterator *iter = NULL;
+	struct map_session_data *sd = NULL;
 	int i;
 	char name[EVENT_NAME_LENGTH];
 
 	if(flag!=0 || g==NULL)
 		return 0;
 
-	//we call castle_event::OnGuildBreak of all castlesof the guild
+	//we call castle_event::OnGuildBreak of all castles of the guild
 	//you can set all castle_events in the castle_db.txt
-	for(i=0;i<MAX_GUILDCASTLE;i++){
-		if( (gc=guild_castle_search(i)) != NULL ){
-			if(gc->guild_id == guild_id){
-				safestrncpy(name, gc->castle_event, 50);
-				npc_event_do(strcat(name,"::OnGuildBreak"));
-			}
+	iter = db_iterator(castle_db);
+	for (gc = dbi_first(iter); dbi_exists(iter); gc = dbi_next(iter)) {
+		if (gc->guild_id == guild_id) {
+			safestrncpy(name, gc->castle_event, sizeof(name));
+			npc_event_do(strcat(name, "::OnGuildBreak"));
 		}
 	}
+	dbi_destroy(iter);
 
 	for(i=0;i<g->max_member;i++){	// ギルド解散を通知
 		if((sd=g->member[i].sd)!=NULL){
@@ -1686,71 +1690,32 @@ int guild_break(struct map_session_data *sd,char *name)
 	return 0;
 }
 
-// ギルド城データ要求
-int guild_castledataload(int castle_id,int index)
+/**
+ * Creates a list of guild castle IDs to be requested
+ * from char-server.
+ */
+void guild_castle_map_init(void)
 {
-	return intif_guild_castle_dataload(castle_id,index);
-}
-// ギルド城情報所得時イベント追加
-int guild_addcastleinfoevent(int castle_id,int index,const char *name)
-{
-	struct eventlist *ev;
-	int code=castle_id|(index<<16);
+	DBIterator* iter = NULL;
+	int num = db_size(castle_db);
 
-	if( name==NULL || *name==0 )
-		return 0;
+	if (num > 0) {
+		struct guild_castle* gc = NULL;
+		int *castle_ids, *cursor;
 
-	ev = (struct eventlist *)aMalloc(sizeof(struct eventlist));
-	strncpy(ev->name,name,ARRAYLENGTH(ev->name));
-	//The next event becomes whatever was currently stored.
-	ev->next = (struct eventlist *)idb_put(guild_castleinfoevent_db,code,ev);
-	return 0;
-}
-
-// ギルド城データ要求返信
-int guild_castledataloadack(int castle_id,int index,int value)
-{
-	struct guild_castle *gc=guild_castle_search(castle_id);
-	int code=castle_id|(index<<16);
-	struct eventlist *ev,*ev2;
-
-	if(gc==NULL){
-		return 0;
-	}
-	switch(index){
-	case 1:
-		gc->guild_id = value;
-		if (gc->guild_id && guild_search(gc->guild_id)==NULL) //Request guild data which will be required for spawned guardians. [Skotlex]
-			guild_request_info(gc->guild_id);
-		break;
-	case 2: gc->economy = value; break;
-	case 3: gc->defense = value; break;
-	case 4: gc->triggerE = value; break;
-	case 5: gc->triggerD = value; break;
-	case 6: gc->nextTime = value; break;
-	case 7: gc->payTime = value; break;
-	case 8: gc->createTime = value; break;
-	case 9: gc->visibleC = value; break;
-	default:
-		if (index > 9 && index <= 9+MAX_GUARDIANS) {
-			gc->guardian[index-10].visible = value;
-			break;
+		CREATE(castle_ids, int, num);
+		cursor = castle_ids;
+		iter = db_iterator(castle_db);
+		for (gc = dbi_first(iter); dbi_exists(iter); gc = dbi_next(iter)) {
+			*(cursor++) = gc->castle_id;
 		}
-		ShowError("guild_castledataloadack ERROR!! (Not found castle_id=%d index=%d)\n", castle_id, index);
-		return 0;
+		dbi_destroy(iter);
+		if (intif_guild_castle_dataload(num, castle_ids))
+			ShowStatus("Requested '"CL_WHITE"%d"CL_RESET"' guild castles from char-server...\n", num);
+		aFree(castle_ids);
 	}
-
-	if( (ev = (struct eventlist *)idb_remove(guild_castleinfoevent_db,code))!=NULL )
-	{
-		while(ev){
-			npc_event_do(ev->name);
-			ev2=ev->next;
-			aFree(ev);
-			ev=ev2;
-		}
-	}
-	return 1;
 }
+
 // ギルド城データ変更要求
 int guild_castledatasave(int castle_id,int index,int value)
 {
@@ -1776,7 +1741,7 @@ int guild_castledatasave(int castle_id,int index,int value)
 		}
 	}
 
-	return intif_guild_castle_datasave(castle_id,index,value);
+	return intif_guild_castle_datasave(castle_id, index, value); // FIXME: it may fail if char-server is disconnected
 }
 
 // ギルド城データ変更通知
@@ -1801,14 +1766,14 @@ int guild_castledatasaveack(int castle_id,int index,int value)
 			gc->guardian[index-10].visible = value;
 			break;
 		}
-		ShowError("guild_castledatasaveack ERROR!! (Not found index=%d)\n", index);
+		ShowError("guild_castledatasaveack: not found index=%d\n", index);
 		return 0;
 	}
 	return 1;
 }
 
 // ギルドデータ一括受信（初期化時）
-int guild_castlealldataload(int len,struct guild_castle *gc)
+int guild_castledataloadack(int len, struct guild_castle *gc)
 {
 	int i;
 	int n = (len-4) / sizeof(struct guild_castle);
@@ -1816,7 +1781,7 @@ int guild_castlealldataload(int len,struct guild_castle *gc)
 
 	nullpo_ret(gc);
 
-	//Last owned castle in the list invokes ::OnAgitinit
+	//Last owned castle in the list invokes ::OnAgitInit
 	for( i = n-1; i >= 0 && !(gc[i].guild_id); --i );
 	ev = i; // offset of castle or -1
 
@@ -1829,12 +1794,12 @@ int guild_castlealldataload(int len,struct guild_castle *gc)
 	{
 		struct guild_castle *c = guild_castle_search(gc->castle_id);
 		if (!c) {
-			ShowError("guild_castlealldataload Castle id=%d not found.\n", gc->castle_id);
+			ShowError("guild_castledataloadack: castle id=%d not found.\n", gc->castle_id);
 			continue;
 		}
 
-		// update mapserver castle data with new info
-		memcpy(&c->guild_id, &gc->guild_id, sizeof(struct guild_castle) - ((uintptr_t)&c->guild_id - (uintptr_t)c));
+		// update map-server castle data with new info
+		memcpy(&c->guild_id, &gc->guild_id, sizeof(struct guild_castle) - offsetof(struct guild_castle, guild_id));
 
 		if( c->guild_id )
 		{
@@ -1846,7 +1811,7 @@ int guild_castlealldataload(int len,struct guild_castle *gc)
 			}
 		}
 	}
-
+	ShowStatus("Received '"CL_WHITE"%d"CL_RESET"' guild castles from char-server.\n", n);
 	return 0;
 }
 
@@ -1881,15 +1846,16 @@ int guild_agit2_end(void)
 // How many castles does this guild have?
 int guild_checkcastles(struct guild *g)
 {
-	int i, nb_cas = 0;
-	struct guild_castle* gc;
+	int nb_cas = 0;
+	struct guild_castle* gc = NULL;
+	DBIterator *iter = db_iterator(castle_db);
 
-	for(i = 0; i < MAX_GUILDCASTLE; i++) {
-		gc = guild_castle_search(i);
-		if(gc && gc->guild_id == g->guild_id)
+	for (gc = dbi_first(iter); dbi_exists(iter); gc = dbi_next(iter)) {
+		if (gc->guild_id == g->guild_id) {
 			nb_cas++;
+		}
 	}
-
+	dbi_destroy(iter);
 	return nb_cas;
 }
 
@@ -1938,7 +1904,6 @@ void do_init_guild(void)
 	guild_expcache_db=idb_alloc(DB_OPT_BASE);
 	guild_infoevent_db=idb_alloc(DB_OPT_BASE);
 	expcache_ers = ers_new(sizeof(struct guild_expcache)); 
-	guild_castleinfoevent_db=idb_alloc(DB_OPT_BASE);
 
 	sv_readdb(db_path, "castle_db.txt", ',', 4, 5, -1, &guild_read_castledb);
 
@@ -1957,6 +1922,5 @@ void do_final_guild(void)
 	castle_db->destroy(castle_db,guild_castle_db_final);
 	guild_expcache_db->destroy(guild_expcache_db,guild_expcache_db_final);
 	guild_infoevent_db->destroy(guild_infoevent_db,eventlist_db_final);
-	guild_castleinfoevent_db->destroy(guild_castleinfoevent_db,eventlist_db_final);
 	ers_destroy(expcache_ers);
 }

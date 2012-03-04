@@ -56,7 +56,7 @@ int intif_guild_skillup(int guild_id, int skill_num, int account_id, int max);
 int intif_guild_alliance(int guild_id1, int guild_id2, int account_id1, int account_id2, int flag);
 int intif_guild_notice(int guild_id, const char *mes1, const char *mes2);
 int intif_guild_emblem(int guild_id, int len, const char *data);
-int intif_guild_castle_dataload(int castle_id, int index);
+int intif_guild_castle_dataload(int num, int *castle_ids);
 int intif_guild_castle_datasave(int castle_id, int index, int value);
 
 int intif_create_pet(int account_id, int char_id, short pet_type, short pet_lv, short pet_egg_id,

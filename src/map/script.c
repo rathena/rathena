@@ -10139,52 +10139,44 @@ BUILDIN_FUNC(getcastlename)
 
 BUILDIN_FUNC(getcastledata)
 {
-	const char* mapname = mapindex_getmapname(script_getstr(st,2),NULL);
+	const char *mapname = mapindex_getmapname(script_getstr(st,2),NULL);
 	int index = script_getnum(st,3);
+	struct guild_castle *gc = guild_mapname2gc(mapname);
 
-	struct guild_castle* gc = guild_mapname2gc(mapname);
-
-	if(script_hasdata(st,4) && index==0 && gc) {
-		const char* event = script_getstr(st,4);
-		check_event(st, event);
-		guild_addcastleinfoevent(gc->castle_id, 9+MAX_GUARDIANS, event);
+	if (gc == NULL) {
+		script_pushint(st,0);
+		ShowWarning("builtin_setcastledata: guild castle for map '%s' not found\n", mapname);
+		return 1;
 	}
 
-	if(gc){
-		switch(index){
-			case 0: {
-				int i;
-				for (i = 1; i <= 9+MAX_GUARDIANS; i++) // Initialize[AgitInit]
-					guild_castledataload(gc->castle_id,i);
-				} break;
-			case 1:
-				script_pushint(st,gc->guild_id); break;
-			case 2:
-				script_pushint(st,gc->economy); break;
-			case 3:
-				script_pushint(st,gc->defense); break;
-			case 4:
-				script_pushint(st,gc->triggerE); break;
-			case 5:
-				script_pushint(st,gc->triggerD); break;
-			case 6:
-				script_pushint(st,gc->nextTime); break;
-			case 7:
-				script_pushint(st,gc->payTime); break;
-			case 8:
-				script_pushint(st,gc->createTime); break;
-			case 9:
-				script_pushint(st,gc->visibleC); break;
-			default:
-				if (index > 9 && index <= 9+MAX_GUARDIANS)
-					script_pushint(st,gc->guardian[index-10].visible);
-				else
-					script_pushint(st,0);
+	switch (index) {
+		case 1:
+			script_pushint(st,gc->guild_id); break;
+		case 2:
+			script_pushint(st,gc->economy); break;
+		case 3:
+			script_pushint(st,gc->defense); break;
+		case 4:
+			script_pushint(st,gc->triggerE); break;
+		case 5:
+			script_pushint(st,gc->triggerD); break;
+		case 6:
+			script_pushint(st,gc->nextTime); break;
+		case 7:
+			script_pushint(st,gc->payTime); break;
+		case 8:
+			script_pushint(st,gc->createTime); break;
+		case 9:
+			script_pushint(st,gc->visibleC); break;
+		default:
+			if (index > 9 && index <= 9+MAX_GUARDIANS) {
+				script_pushint(st,gc->guardian[index-10].visible);
 				break;
-		}
-		return 0;
+			}
+			script_pushint(st,0);
+			ShowWarning("buildin_setcastledata: index = '%d' is out of allowed range\n", index);
+			return 1;
 	}
-	script_pushint(st,0);
 	return 0;
 }
 
@@ -10193,39 +10185,41 @@ BUILDIN_FUNC(setcastledata)
 	const char* mapname = mapindex_getmapname(script_getstr(st,2),NULL);
 	int index = script_getnum(st,3);
 	int value = script_getnum(st,4);
-
 	struct guild_castle* gc = guild_mapname2gc(mapname);
 
-	if(gc) {
-		// Save Data byself First
-		switch(index){
-			case 1:
-				gc->guild_id = value; break;
-			case 2:
-				gc->economy = value; break;
-			case 3:
-				gc->defense = value; break;
-			case 4:
-				gc->triggerE = value; break;
-			case 5:
-				gc->triggerD = value; break;
-			case 6:
-				gc->nextTime = value; break;
-			case 7:
-				gc->payTime = value; break;
-			case 8:
-				gc->createTime = value; break;
-			case 9:
-				gc->visibleC = value; break;
-			default:
-				if (index > 9 && index <= 9+MAX_GUARDIANS) {
-					gc->guardian[index-10].visible = value;
-					break;
-				}
-				return 0;
-		}
-		guild_castledatasave(gc->castle_id,index,value);
+	if (gc == NULL) {
+		ShowWarning("builtin_setcastledata: guild castle for map '%s' not found\n", mapname);
+		return 1;
 	}
+
+	switch (index) {
+		case 1:
+			gc->guild_id = value; break;
+		case 2:
+			gc->economy = value; break;
+		case 3:
+			gc->defense = value; break;
+		case 4:
+			gc->triggerE = value; break;
+		case 5:
+			gc->triggerD = value; break;
+		case 6:
+			gc->nextTime = value; break;
+		case 7:
+			gc->payTime = value; break;
+		case 8:
+			gc->createTime = value; break;
+		case 9:
+			gc->visibleC = value; break;
+		default:
+			if (index > 9 && index <= 9+MAX_GUARDIANS) {
+				gc->guardian[index-10].visible = value;
+				break;
+			}
+			ShowWarning("buildin_setcastledata: index = '%d' is out of allowed range\n", index);
+			return 1;
+	}
+	guild_castledatasave(gc->castle_id, index, value);
 	return 0;
 }
 
@@ -16065,7 +16059,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(agitcheck,""),   // <Agitcheck>
 	BUILDIN_DEF(flagemblem,"i"),	// Flag Emblem
 	BUILDIN_DEF(getcastlename,"s"),
-	BUILDIN_DEF(getcastledata,"si?"),
+	BUILDIN_DEF(getcastledata,"si"),
 	BUILDIN_DEF(setcastledata,"sii"),
 	BUILDIN_DEF(requestguildinfo,"i?"),
 	BUILDIN_DEF(getequipcardcnt,"i"),

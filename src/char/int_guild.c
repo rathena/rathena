@@ -32,8 +32,7 @@ static const char dataToHex[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9
 
 //Guild cache
 static DBMap* guild_db_; // int guild_id -> struct guild*
-
-struct guild_castle castles[MAX_GUILDCASTLE];
+static DBMap *castle_db;
 
 static unsigned int guild_exp[100];
 
@@ -525,92 +524,78 @@ struct guild * inter_guild_fromsql(int guild_id)
 	return g;
 }
 
+// `guild_castle` (`castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`, `visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`)
 int inter_guildcastle_tosql(struct guild_castle *gc)
 {
-	// `guild_castle` (`castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`, `visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`)
+	StringBuf buf;
+	int i;
 
-	if (gc==NULL) return 0;
-	#ifdef GUILD_DEBUG
-ShowDebug("Save guild_castle (%d)\n", gc->castle_id);
-	#endif
+	StringBuf_Init(&buf);
+	StringBuf_Printf(&buf, "REPLACE INTO `%s` SET `castle_id`='%d', `guild_id`='%d', `economy`='%d', `defense`='%d', "
+	                 "`triggerE`='%d', `triggerD`='%d', `nextTime`='%d', `payTime`='%d', `createTime`='%d', `visibleC`='%d'",
+	                 guild_castle_db, gc->castle_id, gc->guild_id, gc->economy, gc->defense,
+	                 gc->triggerE, gc->triggerD, gc->nextTime, gc->payTime, gc->createTime, gc->visibleC);
+	for (i = 0; i < MAX_GUARDIANS; ++i)
+		StringBuf_Printf(&buf, ", `visibleG%d`='%d'", i, gc->guardian[i].visible);
 
-//	sql_query("DELETE FROM `%s` WHERE `castle_id`='%d'",guild_castle_db, gc->castle_id);
-	if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` "
-		"(`castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`,"
-		"`visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`)"
-		"VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d')",
-		guild_castle_db, gc->castle_id, gc->guild_id,  gc->economy, gc->defense, gc->triggerE, gc->triggerD, gc->nextTime, gc->payTime, gc->createTime, gc->visibleC,
-		gc->guardian[0].visible, gc->guardian[1].visible, gc->guardian[2].visible, gc->guardian[3].visible, gc->guardian[4].visible, gc->guardian[5].visible, gc->guardian[6].visible, gc->guardian[7].visible) )
+	if (SQL_ERROR == Sql_Query(sql_handle, StringBuf_Value(&buf)))
 		Sql_ShowDebug(sql_handle);
+	else if(save_log)
+		ShowInfo("Saved guild castle (%d)\n", gc->castle_id);
 
-	memcpy(&castles[gc->castle_id],gc,sizeof(struct guild_castle));
+	StringBuf_Destroy(&buf);
 	return 0;
 }
 
-// Read guild_castle from sql
-int inter_guildcastle_fromsql(int castle_id,struct guild_castle *gc)
+// Read guild_castle from SQL
+static struct guild_castle* inter_guildcastle_fromsql(int castle_id)
 {
-	static int castles_init=0;
-	char* data;
+	char *data;
+	int i;
+	StringBuf buf;
+	struct guild_castle *gc = idb_get(castle_db, castle_id);
 
-	if (gc==NULL) return 0;
-	if (castle_id==-1) return 0;
+	if (gc != NULL)
+		return gc;
 
-	if(!castles_init)
-	{
-		int i;
-		for(i=0;i<MAX_GUILDCASTLE;i++)
-			castles[i].castle_id=-1;
-		castles_init = 1;
-	}
-
-	if(castles[castle_id].castle_id == castle_id)
-	{
-		memcpy(gc,&castles[castle_id],sizeof(struct guild_castle));
-		return 1;
-	}
-
-	memset(gc,0,sizeof(struct guild_castle));
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`, "
-		"`visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`"
-		" FROM `%s` WHERE `castle_id`='%d'", guild_castle_db, castle_id) )
-	{
+	StringBuf_Init(&buf);
+	StringBuf_AppendStr(&buf, "SELECT `castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, "
+	                    "`triggerD`, `nextTime`, `payTime`, `createTime`, `visibleC`");
+	for (i = 0; i < MAX_GUARDIANS; ++i)
+		StringBuf_Printf(&buf, ", `visibleG%d`", i);
+	StringBuf_Printf(&buf, " FROM `%s` WHERE `castle_id`='%d'", guild_castle_db, castle_id);
+	if (SQL_ERROR == Sql_Query(sql_handle, StringBuf_Value(&buf))) {
 		Sql_ShowDebug(sql_handle);
-		return 0;
+		StringBuf_Destroy(&buf);
+		return NULL;
 	}
-	// ARU: This needs to be set even if there are no SQL results
-	gc->castle_id=castle_id;
-	if( SQL_SUCCESS != Sql_NextRow(sql_handle) )
-	{
-		Sql_FreeResult(sql_handle);
-		return 1; //Assume empty castle.
+	StringBuf_Destroy(&buf);
+
+	CREATE(gc, struct guild_castle, 1);
+	gc->castle_id = castle_id;
+
+	if (SQL_SUCCESS == Sql_NextRow(sql_handle)) {
+		Sql_GetData(sql_handle, 1, &data, NULL); gc->guild_id =  atoi(data);
+		Sql_GetData(sql_handle, 2, &data, NULL); gc->economy = atoi(data);
+		Sql_GetData(sql_handle, 3, &data, NULL); gc->defense = atoi(data);
+		Sql_GetData(sql_handle, 4, &data, NULL); gc->triggerE = atoi(data);
+		Sql_GetData(sql_handle, 5, &data, NULL); gc->triggerD = atoi(data);
+		Sql_GetData(sql_handle, 6, &data, NULL); gc->nextTime = atoi(data);
+		Sql_GetData(sql_handle, 7, &data, NULL); gc->payTime = atoi(data);
+		Sql_GetData(sql_handle, 8, &data, NULL); gc->createTime = atoi(data);
+		Sql_GetData(sql_handle, 9, &data, NULL); gc->visibleC = atoi(data);
+		for (i = 10; i < 10+MAX_GUARDIANS; i++) {
+			Sql_GetData(sql_handle, i, &data, NULL); gc->guardian[i-10].visible = atoi(data);
+		}
 	}
-
-	Sql_GetData(sql_handle,  1, &data, NULL); gc->guild_id =  atoi(data);
-	Sql_GetData(sql_handle,  2, &data, NULL); gc->economy = atoi(data);
-	Sql_GetData(sql_handle,  3, &data, NULL); gc->defense = atoi(data);
-	Sql_GetData(sql_handle,  4, &data, NULL); gc->triggerE = atoi(data);
-	Sql_GetData(sql_handle,  5, &data, NULL); gc->triggerD = atoi(data);
-	Sql_GetData(sql_handle,  6, &data, NULL); gc->nextTime = atoi(data);
-	Sql_GetData(sql_handle,  7, &data, NULL); gc->payTime = atoi(data);
-	Sql_GetData(sql_handle,  8, &data, NULL); gc->createTime = atoi(data);
-	Sql_GetData(sql_handle,  9, &data, NULL); gc->visibleC = atoi(data);
-	Sql_GetData(sql_handle, 10, &data, NULL); gc->guardian[0].visible = atoi(data);
-	Sql_GetData(sql_handle, 11, &data, NULL); gc->guardian[1].visible = atoi(data);
-	Sql_GetData(sql_handle, 12, &data, NULL); gc->guardian[2].visible = atoi(data);
-	Sql_GetData(sql_handle, 13, &data, NULL); gc->guardian[3].visible = atoi(data);
-	Sql_GetData(sql_handle, 14, &data, NULL); gc->guardian[4].visible = atoi(data);
-	Sql_GetData(sql_handle, 15, &data, NULL); gc->guardian[5].visible = atoi(data);
-	Sql_GetData(sql_handle, 16, &data, NULL); gc->guardian[6].visible = atoi(data);
-	Sql_GetData(sql_handle, 17, &data, NULL); gc->guardian[7].visible = atoi(data);
-
 	Sql_FreeResult(sql_handle);
-	memcpy(&castles[castle_id],gc,sizeof(struct guild_castle));
 
-	if( save_log )
-		ShowInfo("Loaded Castle %d (guild %d)\n", castle_id, gc->guild_id);
+	idb_put(castle_db, castle_id, gc);
 
-	return 1;
+	if (save_log)
+		ShowInfo("Loaded guild castle (%d - guild %d)\n", castle_id, gc->guild_id);
+
+	return gc;
 }
 
 
@@ -752,6 +737,7 @@ int inter_guild_sql_init(void)
 {
 	//Initialize the guild cache
 	guild_db_= idb_alloc(DB_OPT_RELEASE_DATA);
+	castle_db = idb_alloc(DB_OPT_RELEASE_DATA);
 
    //Read exp file
 	inter_guild_ReadEXP();
@@ -774,6 +760,7 @@ static int guild_db_final(DBKey key, void *data, va_list ap)
 void inter_guild_sql_final(void)
 {
 	guild_db_->destroy(guild_db_, guild_db_final);
+	db_destroy(castle_db);
 	return;
 }
 
@@ -1131,76 +1118,34 @@ int mapif_guild_master_changed(struct guild *g, int aid, int cid)
 	return 0;
 }
 
-int mapif_guild_castle_dataload(int castle_id,int index,int value)
+int mapif_guild_castle_dataload(int fd, int sz, int *castle_ids)
 {
-	unsigned char buf[9];
-	WBUFW(buf, 0)=0x3840;
-	WBUFW(buf, 2)=castle_id;
-	WBUFB(buf, 4)=index;
-	WBUFL(buf, 5)=value;
-	mapif_sendall(buf,9);
-	return 0;
-}
-
-int mapif_guild_castle_datasave(int castle_id,int index,int value)
-{
-	unsigned char buf[9];
-	WBUFW(buf, 0)=0x3841;
-	WBUFW(buf, 2)=castle_id;
-	WBUFB(buf, 4)=index;
-	WBUFL(buf, 5)=value;
-	mapif_sendall(buf,9);
-	return 0;
-}
-
-int mapif_guild_castle_alldataload(int fd)
-{
-	struct guild_castle s_gc;
-	struct guild_castle* gc = &s_gc;
+	struct guild_castle *gc = NULL;
+	int num = (sz - 4) / sizeof(int);
+	int len = 4 + num * sizeof(*gc);
 	int i;
-	int len;
-	char* data;
 
-	WFIFOHEAD(fd, 4 + MAX_GUILDCASTLE*sizeof(struct guild_castle));
-	WFIFOW(fd, 0) = 0x3842;
-	if( SQL_ERROR == Sql_Query(sql_handle,
-		"SELECT `castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`,"
-		" `visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`"
-		" FROM `%s` ORDER BY `castle_id`", guild_castle_db) )
-		Sql_ShowDebug(sql_handle);
-	for( i = 0, len = 4; i < MAX_GUILDCASTLE && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
-	{
-		memset(gc, 0, sizeof(struct guild_castle));
-
-		Sql_GetData(sql_handle,  0, &data, NULL); gc->castle_id = atoi(data);
-		Sql_GetData(sql_handle,  1, &data, NULL); gc->guild_id = atoi(data);
-		Sql_GetData(sql_handle,  2, &data, NULL); gc->economy = atoi(data);
-		Sql_GetData(sql_handle,  3, &data, NULL); gc->defense = atoi(data);
-		Sql_GetData(sql_handle,  4, &data, NULL); gc->triggerE = atoi(data);
-		Sql_GetData(sql_handle,  5, &data, NULL); gc->triggerD = atoi(data);
-		Sql_GetData(sql_handle,  6, &data, NULL); gc->nextTime = atoi(data);
-		Sql_GetData(sql_handle,  7, &data, NULL); gc->payTime = atoi(data);
-		Sql_GetData(sql_handle,  8, &data, NULL); gc->createTime = atoi(data);
-		Sql_GetData(sql_handle,  9, &data, NULL); gc->visibleC = atoi(data);
-		Sql_GetData(sql_handle, 10, &data, NULL); gc->guardian[0].visible = atoi(data);
-		Sql_GetData(sql_handle, 11, &data, NULL); gc->guardian[1].visible = atoi(data);
-		Sql_GetData(sql_handle, 12, &data, NULL); gc->guardian[2].visible = atoi(data);
-		Sql_GetData(sql_handle, 13, &data, NULL); gc->guardian[3].visible = atoi(data);
-		Sql_GetData(sql_handle, 14, &data, NULL); gc->guardian[4].visible = atoi(data);
-		Sql_GetData(sql_handle, 15, &data, NULL); gc->guardian[5].visible = atoi(data);
-		Sql_GetData(sql_handle, 16, &data, NULL); gc->guardian[6].visible = atoi(data);
-		Sql_GetData(sql_handle, 17, &data, NULL); gc->guardian[7].visible = atoi(data);
-
-		memcpy(WFIFOP(fd, len), gc, sizeof(struct guild_castle));
-		len += sizeof(struct guild_castle);
-	}
-	Sql_FreeResult(sql_handle);
+	WFIFOHEAD(fd, len);
+	WFIFOW(fd, 0) = 0x3840;
 	WFIFOW(fd, 2) = len;
+	for (i = 0; i < num; i++) {
+		gc = inter_guildcastle_fromsql(*(castle_ids++));
+		memcpy(WFIFOP(fd, 4 + i * sizeof(*gc)), gc, sizeof(*gc));
+	}
 	WFIFOSET(fd, len);
-	
 	return 0;
 }
 
+int mapif_guild_castle_datasave(int fd, int castle_id, int index, int value)
+{
+	WFIFOHEAD(fd, 9);
+	WFIFOW(fd, 0) = 0x3841;
+	WFIFOW(fd, 2) = castle_id;
+	WFIFOB(fd, 4) = index;
+	WFIFOL(fd, 5) = value;
+	WFIFOSET(fd, 9);
+	return 0;
+}
 
 //-------------------------------------------------------------------
 // Packet received from map server
@@ -1820,69 +1765,54 @@ int mapif_parse_GuildEmblem(int fd,int len,int guild_id,int dummy,const char *da
 	return mapif_guild_emblem(g);
 }
 
-int mapif_parse_GuildCastleDataLoad(int fd,int castle_id,int index)
+int mapif_parse_GuildCastleDataLoad(int fd, int len, int *castle_ids)
 {
-	struct guild_castle gc;
-	if (!inter_guildcastle_fromsql(castle_id, &gc)) {
-		return mapif_guild_castle_dataload(castle_id,0,0);
-	}
-	switch(index){
-	case 1: return mapif_guild_castle_dataload(gc.castle_id,index,gc.guild_id); break;
-	case 2: return mapif_guild_castle_dataload(gc.castle_id,index,gc.economy); break;
-	case 3: return mapif_guild_castle_dataload(gc.castle_id,index,gc.defense); break;
-	case 4: return mapif_guild_castle_dataload(gc.castle_id,index,gc.triggerE); break;
-	case 5: return mapif_guild_castle_dataload(gc.castle_id,index,gc.triggerD); break;
-	case 6: return mapif_guild_castle_dataload(gc.castle_id,index,gc.nextTime); break;
-	case 7: return mapif_guild_castle_dataload(gc.castle_id,index,gc.payTime); break;
-	case 8: return mapif_guild_castle_dataload(gc.castle_id,index,gc.createTime); break;
-	case 9: return mapif_guild_castle_dataload(gc.castle_id,index,gc.visibleC); break;
-	default:
-		if (index > 9 && index <= 9+MAX_GUARDIANS)
-			return mapif_guild_castle_dataload(gc.castle_id,index,gc.guardian[index-10].visible);
-		ShowError("mapif_parse_GuildCastleDataLoad ERROR!! (Not found index=%d)\n", index);
-		return 0;
-	}
+	return mapif_guild_castle_dataload(fd, len, castle_ids);
 }
 
-int mapif_parse_GuildCastleDataSave(int fd,int castle_id,int index,int value)
+int mapif_parse_GuildCastleDataSave(int fd, int castle_id, int index, int value)
 {
-	struct guild_castle gc;
-	if(!inter_guildcastle_fromsql(castle_id, &gc))
-		return mapif_guild_castle_datasave(castle_id,index,value);
+	struct guild_castle *gc = inter_guildcastle_fromsql(castle_id);
 
-	switch(index){
-	case 1:
-		if( gc.guild_id!=value ){
-			int gid=(value)?value:gc.guild_id;
-			struct guild *g = (struct guild*)idb_get(guild_db_, gid);
-			if(log_inter)
-				inter_log("guild %s (id=%d) %s castle id=%d\n",
-					(g)?g->name:"??" ,gid, (value)?"occupy":"abandon", castle_id);
-		}
-		gc.guild_id = value;
-		if(gc.guild_id == 0) {
-			//Delete guardians.
-			memset(&gc.guardian, 0, sizeof(gc.guardian));
-		}
-		break;
-	case 2: gc.economy = value; break;
-	case 3: gc.defense = value; break;
-	case 4: gc.triggerE = value; break;
-	case 5: gc.triggerD = value; break;
-	case 6: gc.nextTime = value; break;
-	case 7: gc.payTime = value; break;
-	case 8: gc.createTime = value; break;
-	case 9: gc.visibleC = value; break;
-	default:
-		if (index > 9 && index <= 9+MAX_GUARDIANS) {
-			gc.guardian[index-10].visible = value;
-			break;
-		}
-		ShowError("mapif_parse_GuildCastleDataSave ERROR!! (Not found index=%d)\n", index);
+	if (gc == NULL) {
+		ShowError("mapif_parse_GuildCastleDataSave: castle id=%d not found\n", castle_id);
+		mapif_guild_castle_datasave(fd, castle_id, index, value);
 		return 0;
 	}
-	inter_guildcastle_tosql(&gc);
-	mapif_guild_castle_datasave(gc.castle_id,index,value);
+
+	switch (index) {
+		case 1:
+			if (gc->guild_id != value) {
+				int gid = (value) ? value : gc->guild_id;
+				struct guild *g = idb_get(guild_db_, gid);
+				if (log_inter)
+					inter_log("guild %s (id=%d) %s castle id=%d\n",
+					          (g) ? g->name : "??", gid, (value) ? "occupy" : "abandon", castle_id);
+			}
+			gc->guild_id = value;
+			if (gc->guild_id == 0) {
+				// Delete guardians.
+				memset(gc->guardian, 0, sizeof(gc->guardian));
+			}
+			break;
+		case 2: gc->economy = value; break;
+		case 3: gc->defense = value; break;
+		case 4: gc->triggerE = value; break;
+		case 5: gc->triggerD = value; break;
+		case 6: gc->nextTime = value; break;
+		case 7: gc->payTime = value; break;
+		case 8: gc->createTime = value; break;
+		case 9: gc->visibleC = value; break;
+		default:
+			if (index > 9 && index <= 9+MAX_GUARDIANS) {
+				gc->guardian[index-10].visible = value;
+				break;
+			}
+			ShowError("mapif_parse_GuildCastleDataSave: not found index=%d\n", index);
+			return 0;
+	}
+	inter_guildcastle_tosql(gc);
+	mapif_guild_castle_datasave(fd, gc->castle_id, index, value);
 	return 0;
 }
 
@@ -1947,7 +1877,7 @@ int inter_guild_parse_frommap(int fd)
 	case 0x303D: mapif_parse_GuildAlliance(fd,RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),RFIFOL(fd,14),RFIFOB(fd,18)); break;
 	case 0x303E: mapif_parse_GuildNotice(fd,RFIFOL(fd,2),(const char*)RFIFOP(fd,6),(const char*)RFIFOP(fd,66)); break;
 	case 0x303F: mapif_parse_GuildEmblem(fd,RFIFOW(fd,2)-12,RFIFOL(fd,4),RFIFOL(fd,8),(const char*)RFIFOP(fd,12)); break;
-	case 0x3040: mapif_parse_GuildCastleDataLoad(fd,RFIFOW(fd,2),RFIFOB(fd,4)); break;
+	case 0x3040: mapif_parse_GuildCastleDataLoad(fd,RFIFOW(fd,2),(int *)RFIFOP(fd,4)); break;
 	case 0x3041: mapif_parse_GuildCastleDataSave(fd,RFIFOW(fd,2),RFIFOB(fd,4),RFIFOL(fd,5)); break;
 
 	default:
@@ -1955,12 +1885,6 @@ int inter_guild_parse_frommap(int fd)
 	}
 
 	return 1;
-}
-
-// processes a mapserver connection event
-int inter_guild_mapif_init(int fd)
-{
-	return mapif_guild_castle_alldataload(fd);
 }
 
 // サーバーから脱退要求（キャラ削除用）

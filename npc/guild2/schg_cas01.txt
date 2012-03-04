@@ -30,12 +30,8 @@
 schg_cas01,1,1,0	script	Manager#sch01_02	111,{
 	end;
 
-OnInterIfInitOnce:
-	GetCastleData "schg_cas01",0,"::OnRecvCastleSc01";
-	end;
-
+OnAgitInit2:
 OnRecvCastleSc01:
-	RequestGuildInfo GetCastleData("schg_cas01",1);
 	if (GetCastleData("schg_cas01",1) == 0) {
 		donpcevent "Manager#sch01_02::Onstart";
 	}
@@ -2726,7 +2722,7 @@ OnStartArena:
 		end;
 	}
 	MapRespawnGuildID "schg_cas01",GetCastleData("schg_cas01",1),2;
-	GetCastleData "schg_cas01",0,"::OnRecvCastlesc01";
+	donpcevent "::OnRecvCastlesc01";
 	end;
 
 OnTimer10000:

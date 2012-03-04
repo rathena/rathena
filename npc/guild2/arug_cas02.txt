@@ -32,12 +32,8 @@
 arug_cas02,1,1,0	script	Manager#aru02_02	111,{
 	end;
 
-OnInterIfInitOnce:
-	GetCastleData "arug_cas02",0,"::OnRecvCastleAr02";
-	end;
-
+OnAgitInit2:
 OnRecvCastleAr02:
-	RequestGuildInfo GetCastleData("arug_cas02",1);
 	if (GetCastleData("arug_cas02",1) == 0) {
 		donpcevent "Manager#aru02_02::Onstart";
 	}
@@ -2679,7 +2675,7 @@ OnStartArena:
 		end;
 	}
 	MapRespawnGuildID "arug_cas02",GetCastleData("arug_cas02",1),2;
-	GetCastleData "arug_cas02",0,"::OnRecvCastleAr02";
+	donpcevent "::OnRecvCastleAr02";
 	end;
 
 OnTimer10000:
