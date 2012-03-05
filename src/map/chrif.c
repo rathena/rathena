@@ -510,6 +510,9 @@ void chrif_on_ready(void)
 
 	//Re-save any storages that were modified in the disconnection time. [Skotlex]
 	do_reconnect_storage();
+
+	//Re-save any guild castles that were modified in the disconnection time.
+	guild_castle_reconnect(-1, 0, 0);
 }
 
 

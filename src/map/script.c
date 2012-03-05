@@ -10145,7 +10145,7 @@ BUILDIN_FUNC(getcastledata)
 
 	if (gc == NULL) {
 		script_pushint(st,0);
-		ShowWarning("builtin_setcastledata: guild castle for map '%s' not found\n", mapname);
+		ShowWarning("buildin_setcastledata: guild castle for map '%s' not found\n", mapname);
 		return 1;
 	}
 
@@ -10182,43 +10182,21 @@ BUILDIN_FUNC(getcastledata)
 
 BUILDIN_FUNC(setcastledata)
 {
-	const char* mapname = mapindex_getmapname(script_getstr(st,2),NULL);
+	const char *mapname = mapindex_getmapname(script_getstr(st,2),NULL);
 	int index = script_getnum(st,3);
 	int value = script_getnum(st,4);
-	struct guild_castle* gc = guild_mapname2gc(mapname);
+	struct guild_castle *gc = guild_mapname2gc(mapname);
 
 	if (gc == NULL) {
-		ShowWarning("builtin_setcastledata: guild castle for map '%s' not found\n", mapname);
+		ShowWarning("buildin_setcastledata: guild castle for map '%s' not found\n", mapname);
 		return 1;
 	}
 
-	switch (index) {
-		case 1:
-			gc->guild_id = value; break;
-		case 2:
-			gc->economy = value; break;
-		case 3:
-			gc->defense = value; break;
-		case 4:
-			gc->triggerE = value; break;
-		case 5:
-			gc->triggerD = value; break;
-		case 6:
-			gc->nextTime = value; break;
-		case 7:
-			gc->payTime = value; break;
-		case 8:
-			gc->createTime = value; break;
-		case 9:
-			gc->visibleC = value; break;
-		default:
-			if (index > 9 && index <= 9+MAX_GUARDIANS) {
-				gc->guardian[index-10].visible = value;
-				break;
-			}
-			ShowWarning("buildin_setcastledata: index = '%d' is out of allowed range\n", index);
-			return 1;
+	if (index <= 0 || index > 9+MAX_GUARDIANS) {
+		ShowWarning("buildin_setcastledata: index = '%d' is out of allowed range\n", index);
+		return 1;
 	}
+
 	guild_castledatasave(gc->castle_id, index, value);
 	return 0;
 }

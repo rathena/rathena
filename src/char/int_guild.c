@@ -1136,17 +1136,6 @@ int mapif_guild_castle_dataload(int fd, int sz, int *castle_ids)
 	return 0;
 }
 
-int mapif_guild_castle_datasave(int fd, int castle_id, int index, int value)
-{
-	WFIFOHEAD(fd, 9);
-	WFIFOW(fd, 0) = 0x3841;
-	WFIFOW(fd, 2) = castle_id;
-	WFIFOB(fd, 4) = index;
-	WFIFOL(fd, 5) = value;
-	WFIFOSET(fd, 9);
-	return 0;
-}
-
 //-------------------------------------------------------------------
 // Packet received from map server
 
@@ -1776,24 +1765,18 @@ int mapif_parse_GuildCastleDataSave(int fd, int castle_id, int index, int value)
 
 	if (gc == NULL) {
 		ShowError("mapif_parse_GuildCastleDataSave: castle id=%d not found\n", castle_id);
-		mapif_guild_castle_datasave(fd, castle_id, index, value);
 		return 0;
 	}
 
 	switch (index) {
 		case 1:
-			if (gc->guild_id != value) {
+			if (log_inter && gc->guild_id != value) {
 				int gid = (value) ? value : gc->guild_id;
 				struct guild *g = idb_get(guild_db_, gid);
-				if (log_inter)
-					inter_log("guild %s (id=%d) %s castle id=%d\n",
-					          (g) ? g->name : "??", gid, (value) ? "occupy" : "abandon", castle_id);
+				inter_log("guild %s (id=%d) %s castle id=%d\n",
+				          (g) ? g->name : "??", gid, (value) ? "occupy" : "abandon", castle_id);
 			}
 			gc->guild_id = value;
-			if (gc->guild_id == 0) {
-				// Delete guardians.
-				memset(gc->guardian, 0, sizeof(gc->guardian));
-			}
 			break;
 		case 2: gc->economy = value; break;
 		case 3: gc->defense = value; break;
@@ -1812,7 +1795,6 @@ int mapif_parse_GuildCastleDataSave(int fd, int castle_id, int index, int value)
 			return 0;
 	}
 	inter_guildcastle_tosql(gc);
-	mapif_guild_castle_datasave(fd, gc->castle_id, index, value);
 	return 0;
 }
 

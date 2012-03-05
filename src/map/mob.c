@@ -548,11 +548,8 @@ static int mob_spawn_guardian_sub(int tid, unsigned int tick, int id, intptr_t d
 				guild_castledatasave(md->guardian_data->castle->castle_id, 1, 0);
 			}
 		} else {
-			if( md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS && md->guardian_data->castle->guardian[md->guardian_data->number].visible )
-			{	//Safe removal of guardian.
-				md->guardian_data->castle->guardian[md->guardian_data->number].visible = 0;
+			if (md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS && md->guardian_data->castle->guardian[md->guardian_data->number].visible)
 				guild_castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number,0);
-			}
 			unit_free(&md->bl,CLR_OUTSIGHT); //Remove guardian.
 		}
 		return 0;
@@ -2512,13 +2509,10 @@ void mob_revive(struct mob_data *md, unsigned int hp)
 		clif_charnameack (0, &md->bl);
 }
 
-int mob_guardian_guildchange(struct block_list *bl,va_list ap)
+int mob_guardian_guildchange(struct mob_data *md)
 {
-	struct mob_data *md;
-	struct guild* g;
-
-	nullpo_ret(bl);
-	nullpo_ret(md = (struct mob_data *)bl);
+	struct guild *g;
+	nullpo_ret(md);
 
 	if (!md->guardian_data)
 		return 0;
@@ -2531,11 +2525,8 @@ int mob_guardian_guildchange(struct block_list *bl,va_list ap)
 			md->guardian_data->emblem_id = 0;
 			md->guardian_data->guild_name[0] = '\0';
 		} else {
-			if( md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS && md->guardian_data->castle->guardian[md->guardian_data->number].visible )
-			{	//Safe removal of guardian.
-				md->guardian_data->castle->guardian[md->guardian_data->number].visible = 0;
-				guild_castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number,0);
-			}
+			if (md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS && md->guardian_data->castle->guardian[md->guardian_data->number].visible)
+				guild_castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number, 0);
 			unit_free(&md->bl,CLR_OUTSIGHT); //Remove guardian.
 		}
 		return 0;
@@ -2545,11 +2536,8 @@ int mob_guardian_guildchange(struct block_list *bl,va_list ap)
 	if (g == NULL)
 	{	//Properly remove guardian info from Castle data.
 		ShowError("mob_guardian_guildchange: New Guild (id %d) does not exists!\n", md->guardian_data->guild_id);
-		if( md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS )
-		{
-			md->guardian_data->castle->guardian[md->guardian_data->number].visible = 0;
-			guild_castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number,0);
-		}
+		if (md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS)
+			guild_castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number, 0);
 		unit_free(&md->bl,CLR_OUTSIGHT);
 		return 0;
 	}
