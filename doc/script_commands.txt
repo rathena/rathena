@@ -145,7 +145,7 @@ explanation, see 'setmapflag'.
 
 Map name is the name of the map the monsters will spawn on. x,y are the
 coordinates where the mob should spawn. If xs and ys are non-zero, they
-specify the diameters of a spawn-rectangle area who's center is x,y.
+specify the 'radius' of a spawn-rectangle area centered at x,y.
 Putting zeros instead of these coordinates will spawn the monsters randomly.
 Note this is only the initial spawn zone, as mobs random-walk, they are free
 to move away from their specified spawn region.
