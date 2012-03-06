@@ -1475,7 +1475,40 @@
 5289,73,100		// Vanilmirth Hat
 5291,73,100		// Kettle Hat
 5292,73,100		// Dragon Skull
-5300,73,100		// Bullock Helm
+
+
+5306,507,100	// Freya's Crown
+5307,73,100		// Carmen Miranda's Hat
+5308,73,100		// Brazil National Flag Hat
+5310,73,100		// Shining Electric Bulb Hairband
+5311,73,100		// Large Hisbiscus
+5312,73,100		// Ayothaya King's Hat
+5322,475,100	// Kerchief
+5358,73,100		// Peco Ears
+5367,73,100		// Hyegun Hat
+5385,457,100	// Yoyo Hat
+5388,73,100		// Snake Head Hat
+5397,73,100		// Scuba Gear
+5401,73,100		// Black Frame Glasses
+5402,73,100		// Mischievous Fairy
+5404,73,100		// Blue Ribbon
+5405,73,100		// Filir Hat
+5406,467,100	// Academy Freshman Hat
+5407,467,100	// Academy Completion Hat
+5423,73,100		// I Love China
+5429,73,100		// Bogy Cap
+5430,65,100		// Torch Cap
+5450,475,100	// Solar Hat
+5460,499,100	// Evolved Dragon Skull Hat
+5461,499,100	// Evolved Whisper Mask
+5464,507,100	// Zaha Doll Hat
+5478,457,100	// Classic Hat
+5490,457,100	// Anubis Helm
+5491,457,100	// Bandit Hat
+5496,457,100	// Dice Hat
+5497,457,100	// King Tiger Doll Hat
+5498,73,100		// Wandering Wolf Helm
+5499,73,100		// Pizza Hat
 5304,73,100		// Cap Of Blindness
 5318,467,100	// Poring Party Hat
 5333,457,100	// Radio Antenna
@@ -1717,6 +1750,38 @@
 18500,507,100	// Cheer Scarf6
 18501,507,100	// Cheer Scarf8
 18502,507,100	// Cheer Scarf10
+5306,507,100	// Freya's Crown
+5307,73,100		// Carmen Miranda's Hat
+5308,73,100		// Brazil National Flag Hat
+5310,73,100		// Shining Electric Bulb Hairband
+5311,73,100		// Large Hisbiscus
+5312,73,100		// Ayothaya King's Hat
+5322,475,100	// Kerchief
+5358,73,100		// Peco Ears
+5367,73,100		// Hyegun Hat
+5385,457,100	// Yoyo Hat
+5388,73,100		// Snake Head Hat
+5397,73,100		// Scuba Gear
+5401,73,100		// Black Frame Glasses
+5402,73,100		// Mischievous Fairy
+5404,73,100		// Blue Ribbon
+5405,73,100		// Filir Hat
+5406,467,100	// Academy Freshman Hat
+5407,467,100	// Academy Completion Hat
+5423,73,100		// I Love China
+5429,73,100		// Bogy Cap
+5430,65,100		// Torch Cap
+5450,475,100	// Solar Hat
+5460,499,100	// Evolved Dragon Skull Hat
+5461,499,100	// Evolved Whisper Mask
+5464,507,100	// Zaha Doll Hat
+5478,457,100	// Classic Hat
+5490,457,100	// Anubis Helm
+5491,457,100	// Bandit Hat
+5496,457,100	// Dice Hat
+5497,457,100	// King Tiger Doll Hat
+5498,73,100		// Wandering Wolf Helm
+5499,73,100		// Pizza Hat
 
 //=======================================================================================================
 // RE
