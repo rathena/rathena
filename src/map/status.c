@@ -7954,6 +7954,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 						clif_skillinfo(sd,TK_JUMPKICK, INF_SELF_SKILL);
 					break;
 			}
+			break;
 		case SC_RAISINGDRAGON:
 			sce->val2 = status->max_hp / 100;// Officially tested its 1%hp drain. [Jobbie]
 			break;
