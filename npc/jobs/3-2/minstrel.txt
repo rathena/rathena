@@ -993,7 +993,7 @@ OnTimer100000:
 	end;
 }
 
-lighthalzen,162,126,3	script	Little Girl#job_min	890,3,3,{
+lighthalzen,162,126,3	script	Little Girl#job_min	62,3,3,{
 
 OnTouch:
 	if (checkquest(11145,2) == 2){

@@ -21,3 +21,4 @@ mal_dun01,0,0,0,0	monster	Aster	1266,20,0,0,0
 mal_dun01,0,0,0,0	monster	Red Eruma	2197,120,0,0,0
 mal_dun01,0,0,0,0	monster	Siorava	2199,80,0,0,0
 mal_dun01,0,0,0,0	monster	Wild Rider	2208,1,20000,10000,1
+mal_dun01,0,0,0,0	monster	King Dramoh	2198,1,30000,20000,1
