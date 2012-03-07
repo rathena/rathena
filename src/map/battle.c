@@ -1995,11 +1995,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				 **/
 				case RA_ARROWSTORM:
 					skillratio += 100 + 50 * skill_lv;
-					if( status_get_lv(src) > 100 ) skillratio += skillratio * (status_get_lv(src) - 100) / 200;	// Base level bonus.
+					if( status_get_lv(src) > 100 ) skillratio += skillratio * (status_get_lv(src) / 100);	// Base level bonus.
 					break;
 				case RA_AIMEDBOLT:
-					skillratio += 400 + 50 * skill_lv;
-					if( status_get_lv(src) > 100 ) skillratio += skillratio * (status_get_lv(src) - 100) / 200;	// Base level bonus.
+					skillratio += 500 + 50 * skill_lv;
+					if( status_get_lv(src) > 100 ) skillratio += skillratio * (status_get_lv(src) / 100);	// Base level bonus.
 					if( tsc && (tsc->data[SC_BITE] || tsc->data[SC_ANKLE] || tsc->data[SC_ELECTRICSHOCKER]) )
 						wd.div_ = tstatus->size + 2 + rnd()%2;
 					break;

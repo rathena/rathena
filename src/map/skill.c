@@ -1142,8 +1142,12 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	 * Ranger
 	 **/
 	case RA_WUGBITE:
-		sc_start(bl, SC_BITE, 70, skilllv, skill_get_time(skillid, skilllv) + (sd ? pc_checkskill(sd,RA_TOOTHOFWUG) * 1000 : 0)); // Need official chance.
-		break;
+		{
+			int chance = (50+10*skilllv)-(sstatus->agi/4) + (sd ? pc_checkskill(sd,RA_TOOTHOFWUG)*2 : 0);
+			if(chance < 50) chance = 50;
+			sc_start(bl, SC_BITE, chance, skilllv, (skilllv + (sd ? pc_checkskill(sd,RA_TOOTHOFWUG)/2 : 0)) * 1000);
+			break;
+		}
 	case RA_SENSITIVEKEEN:
 		if( rnd()%100 < 8 * skilllv )
 			skill_castend_damage_id(src, bl, RA_WUGBITE, sd ? pc_checkskill(sd, RA_WUGBITE):skilllv, tick, SD_ANIMATION);
@@ -10984,6 +10988,22 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 	//Can only update state when weapon/arrow info is checked.
 	sd->state.arrow_atk = require.ammo?1:0;
 
+	// Check the skills that can be used while mounted on a warg
+	if( pc_isridingwug(sd) )
+	{
+		switch( skill )
+		{
+		case HT_SKIDTRAP:     case HT_LANDMINE:     case HT_ANKLESNARE:     case HT_SHOCKWAVE:
+		case HT_SANDMAN:      case HT_FLASHER:      case HT_FREEZINGTRAP:   case HT_BLASTMINE:
+		case HT_CLAYMORETRAP: case HT_SPRINGTRAP:   case RA_DETONATOR:      case RA_CLUSTERBOMB:
+		case RA_WUGDASH:      case RA_WUGRIDER:
+			break;
+		default:
+			clif_skill_fail(sd,skill,USESKILL_FAIL_LEVEL,0);
+			return 0;
+		}
+	}
+	
 	// perform skill-specific checks (and actions)
 	switch( skill )
 	{
