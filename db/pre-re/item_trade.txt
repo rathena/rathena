@@ -1749,3 +1749,29 @@
 5497,457,100	// King Tiger Doll Hat
 5498,73,100		// Wandering Wolf Helm
 5499,73,100		// Pizza Hat
+5500,73,100		// Icecream Hat
+5501,457,100	// Pirate's Pride
+5504,73,100		// Wedding Weil
+5519,73,100		// Peacock Feather
+5526,73,100		// Tanigumi Girl Doll
+5528,457,100	// Frog King Hat
+5530,73,100		// Raven Cap
+5537,73,100		// Kwati Hat
+5538,73,100		// Tucan Hat
+5539,73,100		// Jaguar Hat
+5547,73,100		// RJC Katusa Flower
+5548,73,100		// Scarlet Rose
+5557,73,100		// Wild Rose Hat
+5564,73,100		// Crown of Deceit
+5565,507,100	// Dragon Arhat Mask
+5566,507,100	// Tiger Arhat Mask
+5581,73,100		// Cancer Diadem
+5582,73,100		// Cancer Crown
+5603,475,100	// RTC First Place
+5604,475,100	// RTC Second Place
+5605,475,100	// RTC Third Place
+5770,73,100		// Splash Hat
+5818,507,100	// Carnival Hat
+5819,507,100	// Carnival Circlet
+5821,507,100	// Gold Tulip Hairpin
+5822,499,100	// Love Chick Hat
