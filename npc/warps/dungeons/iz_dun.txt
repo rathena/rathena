@@ -28,3 +28,5 @@ iz_dun02,339,331,0	warp	izd05	2,2,iz_dun03,32,63
 iz_dun03,264,245,0	warp	izd06	1,2,iz_dun04,26,27
 iz_dun03,29,63,0	warp	izd05-1	2,2,iz_dun02,339,328
 iz_dun04,26,24,0	warp	izd06-1	2,2,iz_dun03,261,245
+iz_dun04,129,233,0	warp	izd07	2,2,iz_dun05,141,187
+iz_dun05,141,190,0	warp	izd07-1	2,2,iz_dun04,129,230

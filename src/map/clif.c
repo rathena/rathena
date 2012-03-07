@@ -1321,7 +1321,7 @@ int clif_spawn(struct block_list *bl)
 		return 0;
 		
 	/**
-	* Hide NPC from maya puprle card.
+	* Hide NPC from maya purple card.
 	**/
 	if(bl->type == BL_NPC && !((TBL_NPC*)bl)->chat_id && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
 		return 0;
@@ -3966,7 +3966,6 @@ void clif_storageclose(struct map_session_data* sd)
 	WFIFOW(fd,0) = 0xf8; // Storage Closed
 	WFIFOSET(fd,packet_len(0xf8));
 }
-int clif_status_load_single(int fd, int id,int type,int flag,int val1, int val2, int val3);
 
 /*==========================================
  * Server tells 'sd' player client the abouts of 'dstsd' player
