@@ -187,14 +187,14 @@ struct guild* guild_search(int guild_id)
 struct guild* guild_searchname(char* str)
 {
 	struct guild* g;
+	DBIterator *iter = db_iterator(guild_db);
 
-	DBIterator* iter = guild_db->iterator(guild_db);
-	for( g = (struct guild*)iter->first(iter,NULL); iter->exists(iter); g = (struct guild*)iter->next(iter,NULL) )
+	for( g = dbi_first(iter); dbi_exists(iter); g = dbi_next(iter) )
 	{
 		if( strcmpi(g->name, str) == 0 )
 			break;
 	}
-	iter->destroy(iter);
+	dbi_destroy(iter);
 
 	return g;
 }
@@ -209,14 +209,14 @@ struct guild_castle* guild_castle_search(int gcid)
 struct guild_castle* guild_mapindex2gc(short mapindex)
 {
 	struct guild_castle* gc;
+	DBIterator *iter = db_iterator(castle_db);
 
-	DBIterator* iter = castle_db->iterator(castle_db);
-	for( gc = (struct guild_castle*)iter->first(iter,NULL); iter->exists(iter); gc = (struct guild_castle*)iter->next(iter,NULL) )
+	for( gc = dbi_first(iter); dbi_exists(iter); gc = dbi_next(iter) )
 	{
 		if( gc->mapindex == mapindex )
 			break;
 	}
-	iter->destroy(iter);
+	dbi_destroy(iter);
 
 	return gc;
 }

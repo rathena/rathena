@@ -161,10 +161,8 @@ static void read_config(void)
 		group_count = config_setting_length(groups); // Save number of groups
 		
 		// Check if all commands and permissions exist
-		iter = pc_group_db->iterator(pc_group_db);
-		for (group_settings = (GroupSettings*)iter->first(iter, NULL);
-			 iter->exists(iter);
-			 group_settings = (GroupSettings*)iter->next(iter, NULL)) {
+		iter = db_iterator(pc_group_db);
+		for (group_settings = dbi_first(iter); dbi_exists(iter); group_settings = dbi_next(iter)) {
 			config_setting_t *commands = group_settings->commands, *permissions = group_settings->permissions;
 			int count = 0, i;
 
@@ -203,15 +201,13 @@ static void read_config(void)
 				}
 			}
 		}
-		iter->destroy(iter);
+		dbi_destroy(iter);
 
 		// Apply inheritance
 		i = 0; // counter for processed groups
 		while (i < group_count) {
-			iter = pc_group_db->iterator(pc_group_db);
-			for (group_settings = (GroupSettings*)iter->first(iter, NULL);
-			     iter->exists(iter);
-			     group_settings = (GroupSettings*)iter->next(iter, NULL)) {
+			iter = db_iterator(pc_group_db);
+			for (group_settings = dbi_first(iter); dbi_exists(iter); group_settings = dbi_next(iter)) {
 				config_setting_t *inherit = NULL,
 				                 *commands = group_settings->commands,
 					             *permissions = group_settings->permissions;
@@ -265,7 +261,7 @@ static void read_config(void)
 					group_settings->inheritance_done = true; // we're done with this group
 				}
 			}
-			iter->destroy(iter);
+			dbi_destroy(iter);
 
 			if (++loop > group_count) {
 				ShowWarning("pc_groups:read_config: Could not process inheritance rules, check your config '%s' for cycles...\n",
@@ -276,9 +272,7 @@ static void read_config(void)
 
 		// Pack permissions into GroupSettings.e_permissions for faster checking
 		iter = db_iterator(pc_group_db);
-		for (group_settings = (GroupSettings*)dbi_first(iter);
-		     dbi_exists(iter);
-		     group_settings = (GroupSettings*)dbi_next(iter)) {
+		for (group_settings = dbi_first(iter); dbi_exists(iter); group_settings = dbi_next(iter)) {
 			config_setting_t *permissions = group_settings->permissions;
 			int i, count = config_setting_length(permissions);
 
@@ -294,7 +288,7 @@ static void read_config(void)
 				group_settings->e_permissions |= permission_name[j].permission;
 			}
 		}
-		iter->destroy(iter);
+		dbi_destroy(iter);
 	}
 
 	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' groups in '"CL_WHITE"%s"CL_RESET"'.\n", group_count, config_filename);

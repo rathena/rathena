@@ -1876,7 +1876,7 @@ void map_foreachpc(int (*func)(struct map_session_data* sd, va_list args), ...)
 	struct map_session_data* sd;
 
 	iter = db_iterator(pc_db);
-	for( sd = (struct map_session_data*)iter->first(iter,NULL); iter->exists(iter); sd = (struct map_session_data*)iter->next(iter,NULL) )
+	for( sd = dbi_first(iter); dbi_exists(iter); sd = dbi_next(iter) )
 	{
 		va_list args;
 		int ret;
@@ -2619,15 +2619,14 @@ void map_iwall_get(struct map_session_data *sd)
 {
 	struct iwall_data *iwall;
 	DBIterator* iter;
-	DBKey key;
 	int x1, y1;
 	int i;
 
 	if( map[sd->bl.m].iwall_num < 1 )
 		return;
 
-	iter = iwall_db->iterator(iwall_db);
-	for( iwall = (struct iwall_data *)iter->first(iter,&key); iter->exists(iter); iwall = (struct iwall_data *)iter->next(iter,&key) )
+	iter = db_iterator(iwall_db);
+	for( iwall = dbi_first(iter); dbi_exists(iter); iwall = dbi_next(iter) )
 	{
 		if( iwall->m != sd->bl.m )
 			continue;
@@ -2638,7 +2637,7 @@ void map_iwall_get(struct map_session_data *sd)
 			clif_changemapcell(sd->fd, iwall->m, x1, y1, map_getcell(iwall->m, x1, y1, CELL_GETTYPE), SELF);
 		}
 	}
-	iter->destroy(iter);
+	dbi_destroy(iter);
 }
 
 void map_iwall_remove(const char *wall_name)

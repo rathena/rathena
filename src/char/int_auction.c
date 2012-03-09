@@ -27,16 +27,14 @@ static int auction_count(int char_id, bool buy)
 {
 	int i = 0;
 	struct auction_data *auction;
-	DBIterator* iter;
-	DBKey key;
+	DBIterator *iter = db_iterator(auction_db_);
 
-	iter = auction_db_->iterator(auction_db_);
-	for( auction = (struct auction_data*)iter->first(iter,&key); iter->exists(iter); auction = (struct auction_data*)iter->next(iter,&key) )
+	for( auction = dbi_first(iter); dbi_exists(iter); auction = dbi_next(iter) )
 	{
 		if( (buy && auction->buyer_id == char_id) || (!buy && auction->seller_id == char_id) )
 			i++;
 	}
-	iter->destroy(iter);
+	dbi_destroy(iter);
 
 	return i;
 }
@@ -258,15 +256,13 @@ static void mapif_parse_Auction_requestlist(int fd)
 	int price = RFIFOL(fd,10);
 	short type = RFIFOW(fd,8), page = max(1,RFIFOW(fd,14));
 	unsigned char buf[5 * sizeof(struct auction_data)];
-	DBIterator* iter;
-	DBKey key;
+	DBIterator *iter = db_iterator(auction_db_);
 	struct auction_data *auction;
 	short i = 0, j = 0, pages = 1;
 
 	memcpy(searchtext, RFIFOP(fd,16), NAME_LENGTH);
 
-	iter = auction_db_->iterator(auction_db_);
-	for( auction = (struct auction_data*)iter->first(iter,&key); iter->exists(iter); auction = (struct auction_data*)iter->next(iter,&key) )
+	for( auction = dbi_first(iter); dbi_exists(iter); auction = dbi_next(iter) )
 	{
 		if( (type == 0 && auction->type != IT_ARMOR && auction->type != IT_PETARMOR) || 
 			(type == 1 && auction->type != IT_WEAPON) ||
@@ -291,7 +287,7 @@ static void mapif_parse_Auction_requestlist(int fd)
 		memcpy(WBUFP(buf, j * len), auction, len);
 		j++; // Found Results
 	}
-	iter->destroy(iter);
+	dbi_destroy(iter);
 
 	mapif_Auction_sendlist(fd, char_id, j, pages, buf);
 }

@@ -1608,13 +1608,13 @@ ACMD_FUNC(help)
 		StringBuf_AppendStr(&buf, "Available aliases:");
 		command_info = get_atcommandinfo_byname(command_name);
 		iter = db_iterator(atcommand_alias_db);
-		for (alias_info = (AliasInfo*)dbi_first(iter); dbi_exists(iter); alias_info = (AliasInfo*)dbi_next(iter)) {
+		for (alias_info = dbi_first(iter); dbi_exists(iter); alias_info = dbi_next(iter)) {
 			if (alias_info->command == command_info) {
 				StringBuf_Printf(&buf, " %s", alias_info->alias);
 				has_aliases = true;
 			}
 		}
-		iter->destroy(iter);
+		dbi_destroy(iter);
 		if (has_aliases)
 			clif_displaymessage(fd, StringBuf_Value(&buf));
 		StringBuf_Destroy(&buf);
@@ -8268,7 +8268,7 @@ static void atcommand_commands_sub(struct map_session_data* sd, const int fd, At
 	char line_buff[CHATBOX_SIZE];
 	char* cur = line_buff;
 	AtCommandInfo* cmd;
-	DBIterator* iter = atcommand_db->iterator(atcommand_db);
+	DBIterator *iter = db_iterator(atcommand_db);
 	int count = 0;
 
 	memset(line_buff,' ',CHATBOX_SIZE);
@@ -8276,7 +8276,7 @@ static void atcommand_commands_sub(struct map_session_data* sd, const int fd, At
 
 	clif_displaymessage(fd, msg_txt(273)); // "Commands available:"
 
-	for (cmd = (AtCommandInfo*)iter->first(iter, NULL); iter->exists(iter); cmd = (AtCommandInfo*)iter->next(iter, NULL)) {
+	for (cmd = dbi_first(iter); dbi_exists(iter); cmd = dbi_next(iter)) {
 		unsigned int slen = 0;
 
 		if (!pc_can_use_command(sd, cmd->command, type))
@@ -8298,7 +8298,7 @@ static void atcommand_commands_sub(struct map_session_data* sd, const int fd, At
 
 		count++;
 	}
-	iter->destroy(iter);
+	dbi_destroy(iter);
 	clif_displaymessage(fd,line_buff);
 
 	sprintf(atcmd_output, msg_txt(274), count); // "%d commands found."

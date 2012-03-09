@@ -132,13 +132,13 @@ struct party_data* party_searchname(const char* str)
 {
 	struct party_data* p;
 
-	DBIterator* iter = party_db->iterator(party_db);
-	for( p = (struct party_data*)iter->first(iter,NULL); iter->exists(iter); p = (struct party_data*)iter->next(iter,NULL) )
+	DBIterator *iter = db_iterator(party_db);
+	for( p = dbi_first(iter); dbi_exists(iter); p = dbi_next(iter) )
 	{
 		if( strncmpi(p->party.name,str,NAME_LENGTH) == 0 )
 			break;
 	}
-	iter->destroy(iter);
+	dbi_destroy(iter);
 
 	return p;
 }
@@ -864,9 +864,9 @@ int party_send_xy_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct party_data* p;
 
-	DBIterator* iter = party_db->iterator(party_db);
+	DBIterator *iter = db_iterator(party_db);
 	// for each existing party,
-	for( p = (struct party_data*)iter->first(iter,NULL); iter->exists(iter); p = (struct party_data*)iter->next(iter,NULL) )
+	for( p = dbi_first(iter); dbi_exists(iter); p = dbi_next(iter) )
 	{
 		int i;
 
@@ -894,7 +894,7 @@ int party_send_xy_timer(int tid, unsigned int tick, int id, intptr_t data)
 			}
 		}
 	}
-	iter->destroy(iter);
+	dbi_destroy(iter);
 
 	return 0;
 }
@@ -1217,11 +1217,11 @@ void party_booking_search(struct map_session_data *sd, short level, short mapid,
 	int i, count=0;
 	struct party_booking_ad_info* result_list[PARTY_BOOKING_RESULTS];
 	bool more_result = false;
-	DBIterator* iter = party_booking_db->iterator(party_booking_db);
+	DBIterator* iter = db_iterator(party_booking_db);
 	
 	memset(result_list, 0, sizeof(result_list));
 	
-	for( pb_ad = (struct party_booking_ad_info*)iter->first(iter,NULL);	iter->exists(iter);	pb_ad = (struct party_booking_ad_info*)iter->next(iter,NULL) )
+	for( pb_ad = dbi_first(iter); dbi_exists(iter); pb_ad = dbi_next(iter) )
 	{
 		if (pb_ad->index < lastindex || (level && (pb_ad->p_detail.level < level-15 || pb_ad->p_detail.level > level)))
 			continue;
@@ -1244,7 +1244,7 @@ void party_booking_search(struct map_session_data *sd, short level, short mapid,
 			count++;
 		}
 	}
-	iter->destroy(iter);
+	dbi_destroy(iter);
 	clif_PartyBookingSearchAck(sd->fd, result_list, count, more_result);
 }
 
