@@ -35,6 +35,9 @@ CREATE TABLE `item_db_re` (
 # Structure of Database:
 # REPLACE INTO `item_db_re` VALUES ('ID','Name','Name','Type','Price','Sell','Weight','ATK:MATK','DEF','Range','Slot','Job','Upper','Gender','Loc','wLV','eLV','Refineable','View','Script','OnEquip_Script','OnUnequip_Script');
 
+# Usable Items
+REPLACE INTO `item_db` VALUES (678,'Poison_Bottle','Poison Bottle',2,5000,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'if(Class == Job_Assassin_Cross || Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T) { sc_start SC_DPoison,60000,0; sc_start SC_ASPDPOTION2,60000,0; } else percentheal -100,-100;',NULL,NULL);
+
 # Matk updates. Work in progress. 
 # Daggers
 REPLACE INTO `item_db_re` VALUES (645,'Center_Potion','Concentration Potion',2,800,NULL,100,'',NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_ASPDPOTION0,1800000,4;','','');
@@ -77,6 +80,9 @@ REPLACE INTO `item_db_re` VALUES (1637,'Eraser','Eraser',4,20,NULL,500,'80:170',
 REPLACE INTO `item_db_re` VALUES (1640,'Krieger_Onehand_Staff1','Glorious Arc Wand',4,20,NULL,0,'70:135',NULL,1,0,0x00818314,7,2,2,4,80,1,10,'bonus2 bMagicAddRace,RC_DemiHuman,15; bonus2 bIgnoreMdefRate,RC_DemiHuman,25 + ((getrefine() > 5) ? 5 : 0); bonus bUnbreakableWeapon,0; if(getrefine() > 8) { bonus bMatkRate,5; bonus bCastrate,-5; bonus bDelayRate,-5; }',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2000,'Destruction_Rod','Staff of Destruction',4,20,NULL,2500,'130:280',NULL,1,1,0x00000200,2,2,34,4,80,1,23,'bonus bInt,3; bonus bAgi,10; bonus bUseSPrate,(getrefine()*2); bonus3 bAutoSpellWhenHit,"WZ_JUPITEL",5,(getrefine()*20); bonus2 bCastrate,366,-50;','','');
 REPLACE INTO `item_db_re` VALUES (2001,'Divine_Cross','Divine Cross',4,20,NULL,1500,'120:210',NULL,1,0,0x00008100,7,2,34,4,70,1,23,'bonus bAtkEle,Ele_Holy; bonus bDex,4; bonus2 bSubRace,RC_Demon,15; bonus2 bSubRace,RC_Undead,15; if (isequipped(2677) || isequipped(2711)) { bonus bMatkRate,10; bonus bDex,2; bonus2 bSubRace,RC_Demon,10; bonus2 bSubRace,RC_Undead,10; };','','');
+
+# Maces
+REPLACE INTO `item_db_re` VALUES (1549,'Pilebuncker','Pile Bunker',4,10000,NULL,3500,450,NULL,1,0,0x00000400,8,2,2,3,99,1,8,NULL,NULL,NULL);
 
 # Books
 REPLACE INTO `item_db_re` VALUES (1560,'Diary_Of_Great_Sage','Sage\'s Diary',4,20,NULL,1100,'100:120',NULL,1,2,0x00410100,7,2,2,3,60,1,15,'if(readparam(bStr)>=50) bonus bAspdRate,5; if(readparam(bInt)>=70) bonus bMatkRate,5;','','');

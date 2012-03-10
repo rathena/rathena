@@ -177,7 +177,7 @@
 675,Silver_Coin,Silver Coin,3,5000,,40,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 676,Silver_Coin_Moneybag,Bag of Silver Coins,3,50000,,400,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 677,White_Gold_Coin,Platinum Coin,3,2000,,40,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-678,Poison_Bottle,Poison Bottle,2,5000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(Class == Job_Assassin_Cross) { sc_start SC_DPoison,60000,0; sc_start SC_ASPDPOTION2,60000,0; } else percentheal -100,-100; },{},{}
+678,Poison_Bottle,Poison Bottle,2,5000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(Class == Job_Assassin_Cross || Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T) { sc_start SC_DPoison,60000,0; sc_start SC_ASPDPOTION2,60000,0; } else percentheal -100,-100; },{},{}
 679,Gold_Pill,Pilule,2,5000,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ if(rand(1000)<100) sc_start SC_DPoison,10000,0; sc_start SC_Poison,50000,0; },{},{}
 680,Magical_Carnation,Magic Carnation,0,0,,1000,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,20; },{},{}
 681,Memory_Of_Wedding,Sweet Memory of Marriage,2,50000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ if (getpartnerid()) sc_start SC_WEDDING,600000,0; },{},{}
@@ -845,7 +845,7 @@
 1546,Krieger_Onehand_Mace1,Glorious Morning Star,4,20,,0,130,,1,0,0x0004C5B3,7,2,2,4,80,1,8,{ bonus2 bAddRace,RC_DemiHuman,75; bonus2 bIgnoreDefRate,RC_DemiHuman,20; bonus bUnbreakableWeapon,0; if(getrefine() > 5) { bonus2 bAddRace,RC_DemiHuman,(getrefine()-4)*(getrefine()-4); bonus2 bIgnoreDefRate,RC_DemiHuman,5; bonus bAspdRate,5; } if(getrefine() > 8) { bonus2 bAddEff,Eff_Stun,2000; bonus bAspdRate,5; } },{},{}
 1547,Mace_Of_Madness,Mace Of Madness,4,20,,0,150,,1,0,0x0004C5B2,7,2,2,3,0,0,8,{ bonus2 bSkillAtk,"MC_CARTREVOLUTION",25; bonus bStr,2; },{},{}
 1548,Veteran_Hammer,Veteran Hammer,4,10000,,1800,160,,1,2,0x00008110,7,2,2,3,80,1,8,{ bonus bHealPower,getskilllv("AL_DP"); bonus bCritical,getskilllv("PR_MACEMASTERY")*2; bonus bInt,1; bonus bLuk,1; },{},{}
-1549,Pilebuncker,Pile Bunker,4,10000,,3500,450,,1,0,0x00008110,7,2,2,3,99,1,8,{},{},{}
+1549,Pilebuncker,Pile Bunker,4,10000,,3500,450,,1,0,0x00000400,8,2,2,3,99,1,8,{},{},{}
 // Books
 1550,Book,Book,4,30000,,600,85,,1,3,0x00410100,7,2,2,2,14,1,15,{},{},{}
 1551,Bible,Bible,4,60000,,1000,115,,1,2,0x00410100,7,2,2,3,27,1,15,{ bonus bInt,2; },{},{}

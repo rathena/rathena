@@ -870,7 +870,6 @@ REPLACE INTO `item_db` VALUES (1545,'N_Mace','Novice Mace',4,0,NULL,0,57,NULL,1,
 REPLACE INTO `item_db` VALUES (1546,'Krieger_Onehand_Mace1','Glorious Morning Star',4,20,NULL,0,130,NULL,1,0,0x0004C5B3,7,2,2,4,80,1,8,'bonus2 bAddRace,RC_DemiHuman,75; bonus2 bIgnoreDefRate,RC_DemiHuman,20; bonus bUnbreakableWeapon,0; if(getrefine() > 5) { bonus2 bAddRace,RC_DemiHuman,(getrefine()-4)*(getrefine()-4); bonus2 bIgnoreDefRate,RC_DemiHuman,5; bonus bAspdRate,5; } if(getrefine() > 8) { bonus2 bAddEff,Eff_Stun,2000; bonus bAspdRate,5; }',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1547,'Mace_Of_Madness','Mace Of Madness',4,20,NULL,0,150,NULL,1,0,0x0004C5B2,7,2,2,3,0,0,8,'bonus2 bSkillAtk,\"MC_CARTREVOLUTION\",25; bonus bStr,2;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1548,'Veteran_Hammer','Veteran Hammer',4,10000,NULL,1800,160,NULL,1,2,0x00008110,7,2,2,3,80,1,8,'bonus bHealPower,getskilllv(\"AL_DP\"); bonus bCritical,getskilllv(\"PR_MACEMASTERY\")*2; bonus bInt,1; bonus bLuk,1;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (1549,'Pilebuncker','Pile Bunker',4,10000,NULL,3500,450,NULL,1,0,0x00008110,7,2,2,3,99,1,8,NULL,NULL,NULL);
 #  Books
 REPLACE INTO `item_db` VALUES (1550,'Book','Book',4,30000,NULL,600,85,NULL,1,3,0x00410100,7,2,2,2,14,1,15,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (1551,'Bible','Bible',4,60000,NULL,1000,115,NULL,1,2,0x00410100,7,2,2,3,27,1,15,'bonus bInt,2;',NULL,NULL);
