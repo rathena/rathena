@@ -1666,5 +1666,35 @@ packet_ver: 28
 0x088b,2,searchstoreinfonextpage,0
 0x08a2,12,searchstoreinfolistitemclick,2:6:10
 
+//2012-03-07fRagexeRE
+0x086A,19,wanttoconnection,2:6:10:14:18
+0x0437,5,walktoxy,2
+0x0887,6,ticksend,2
+0x0890,5,changedir,2:4
+0x0865,6,takeitem,2
+0x02C4,6,dropitem,2:4
+0x093B,8,movetokafra,2:4
+0x0963,8,movefromkafra,2:4
+0x0438,10,useskilltopos,2:4:6:8
+0x0366,90,useskilltoposinfo,2:4:6:8:10
+0x096A,6,getcharnamerequest,2
+0x0368,6,solvecharname,2
+0x0369,26,friendslistadd,2
+0x0863,5,hommenu,4
+0x0861,36,storagepassword,0
+0x0929,26,partyinvite2,2
+0x0885,7,actionrequest,2:6
+0x0889,10,useskilltoid,2:4:6
+0x0870,-1,itemlistwindowselected,2:4:8
+0x0926,18,bookingregreq,2:4:6
+0x0815,-1,reqopenbuyingstore,2:4:8:9:89
+0x0817,2,reqclosebuyingstore,0
+0x0360,6,reqclickbuyingstore,2
+0x0811,-1,reqtradebuyingstore,2:4:8:12
+0x0884,-1,searchstoreinfo,2:4:5:9:13:14:15
+0x0835,2,searchstoreinfonextpage,0
+0x0838,12,searchstoreinfolistitemclick,2:6:10
+0x0439,8,useitem,2:4
+
 //Add new packets here
-//packet_ver: 27
+//packet_ver: 29
