@@ -8706,8 +8706,8 @@ mosk_in,221,43,0	script	#bowl	111,{
 				set mos_nowinter,17;
 				close;
 			}
-		if (.@nankai == 3) {
-			}
+			if (.@nankai == 3)
+				break;
 		}
 		specialeffect EF_BUBBLE;
 		mes "-The liquid has been changed";
@@ -8865,8 +8865,8 @@ mosk_in,221,43,0	script	#bowl	111,{
 				specialeffect EF_POISONATTACK;
 				close;
 			}
-		if (.@nankai == 7) {
-			}
+			if (.@nankai == 7)
+				break;
 		}
 		mes "-I am sure that the book told me";
 		mes "to wait for some time.-";
