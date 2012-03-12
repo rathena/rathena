@@ -707,7 +707,7 @@ yuno_fild07,254,176,7	script	Buddy#job_shu	483,{
 	next;
 	mes "[Buddy]";
 	mes "This way...";
-	close;
+	close2;
 	warp "sword_1-1",215,244;
 	end;
 }
@@ -767,7 +767,7 @@ OnEnable:
 	end;
 
 OnReset:
-	killmonster "sword2-1","Buddy#Sura_Salon::OnMyMobDead";
+	killmonster "sword_2-1","Buddy#Sura_Salon::OnMyMobDead";
 	end;
 
 OnDisable:
@@ -785,15 +785,15 @@ OnMyMobDead:
 	end;
 
 OnTimer3000:
-	mapannounce "sword2-1","The master is now in the middle of training, and you need to wait in the living room around 5 minutes.",bc_map;
+	mapannounce "sword_2-1","The master is now in the middle of training, and you need to wait in the living room around 5 minutes.",bc_map;
 	end;
 
 OnTimer4000:
-	mapannounce "sword2-1","Ah! You may have hallucinations in the living room, so please be careful.",bc_map;
+	mapannounce "sword_2-1","Ah! You may have hallucinations in the living room, so please be careful.",bc_map;
 	end;
 
 OnTimer5000:
-	mapannounce "sword2-1","This is the policy of the master, so please don't feel unpleasant.",bc_map;
+	mapannounce "sword_2-1","This is the policy of the master, so please don't feel unpleasant.",bc_map;
 	end;
 
 OnTimer33000:
@@ -819,7 +819,7 @@ OnTimer93000:
 	end;
 
 OnTimer153000:
-	mapannounce "sword2-1","If you're bored, may I bring you some magazines?",bc_map;
+	mapannounce "sword_2-1","If you're bored, may I bring you some magazines?",bc_map;
 	monster "sword_2-1",219,210,"Magazine",1478,1,"Buddy#Sura_Salon::OnMyMobDead";
 	monster "sword_2-1",219,210,"Magazine",1478,1,"Buddy#Sura_Salon::OnMyMobDead";
 	monster "sword_2-1",228,209,"Magazine",1478,1,"Buddy#Sura_Salon::OnMyMobDead";
@@ -852,7 +852,7 @@ OnTimer273000:
 	end;
 
 OnTimer300000:
-	mapannounce "sword2-1","The master has arrived. Soon I'll show you into the master's room.",bc_map;
+	mapannounce "sword_2-1","The master has arrived. Soon I'll show you into the master's room.",bc_map;
 	end;
 
 OnTimer303000:
@@ -864,16 +864,16 @@ OnTimer305000:
 	end;
 
 OnTimer315000:
-	mapannounce "sword2-1","Come on here.",bc_map;
+	mapannounce "sword_2-1","Come on here.",bc_map;
 	donpcevent "Buddy#job_shuaneh::OnDisable";
 	donpcevent "Sura_garajjom::OnEnable";
 	end;
 
 OnTimer320000:
-	mapannounce "sword2-1","I guess you're not ready to meet the master yet..",bc_map;
+	mapannounce "sword_2-1","I guess you're not ready to meet the master yet..",bc_map;
 	donpcevent "Sura_garajjom::OnDisable";
 	donpcevent "Drawing Room::OnEnable";
-	mapwarp "sword2-1","yuno_fild07",255,178;
+	mapwarp "sword_2-1","yuno_fild07",255,178;
 	stopnpctimer;
 	end;
 }

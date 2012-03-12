@@ -7229,7 +7229,7 @@ thor_camp,98,213,5	script	Thor Volcano Soldier#vo8	939,{
 	close;
 }
 
-thor_camp,98,213,5	script	Thor Volcano Soldier#vo9	939,{
+thor_camp,98,209,5	script	Thor Volcano Soldier#vo9	939,{
 	mes "[Soldier]";
 	mes "Why am I always";
 	mes "stationed here?!";
