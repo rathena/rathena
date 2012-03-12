@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Slim (og2)
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //===== Additional Comments: ================================= 
 //= v1.0 Translated from the Official [Slim]
 //= v1.1 Fixed variables and optimized script [Slim]
+//= v1.2 Fixed char being stuck with breaks [Slim] (bugreport:5374)
 //============================================================ 
 
 prontera,115,90,0	script	Putty	90,{
@@ -4106,19 +4107,15 @@ prontera,115,90,0	script	Putty	90,{
 				set oversea_event9, (.@points+.@count);
 				mes "[Putty]";
 				mes "Alright, you have received ^CC0000"+.@count+"^000000 points.";
-				close2;
-			break;
+				break;
 			case 2:
 				mes "[Putty]";
 				mes "Okay, let me know if I can help you with something else.";
-				close2;
-			break;
+				break;
 			}
-		}
-		else {
+		} else {
 			mes "[Putty]";
 			mes "Please, come back here if you want to exchange a monster card.";
-			close2;
 		}
 	break;
 	case 2:
@@ -4139,7 +4136,6 @@ prontera,115,90,0	script	Putty	90,{
 				} else {
 					mes "[Putty]";
 					mes "Sorry, but you don't have enough points.";
-					close2;
 				}
 			break;
 			case 2:
@@ -4153,7 +4149,6 @@ prontera,115,90,0	script	Putty	90,{
 				} else {
 					mes "[Putty]";
 					mes "Sorry, but you don't have enough points.";
-					close2;
 				}
 			break;
 			case 3:
@@ -4167,7 +4162,6 @@ prontera,115,90,0	script	Putty	90,{
 				} else {
 					mes "[Putty]";
 					mes "Sorry, but you don't have enough points.";
-					close2;
 				}
 			break;
 			case 4:
@@ -4182,22 +4176,19 @@ prontera,115,90,0	script	Putty	90,{
 				} else {
 					mes "[Putty]";
 					mes "Sorry, but you don't have enough points.";
-					close2;
 				}
 			break;
 			case 5:
 				mes "[Putty]";
 				mes "Alright, come back when you have more points.";
-				close2;
-			break;
+				break;
 			}
 		} else {
 			mes "[Putty]";
 			mes "You have 0 points and you need atleast 1 point to exchange.";
-			close2;
 		}
 	break;
 	}
-end;
+close;
 }
 
