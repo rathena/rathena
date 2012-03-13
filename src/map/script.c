@@ -3634,10 +3634,14 @@ int script_config_read(char *cfgName)
 	return 0;
 }
 
-static int db_script_free_code_sub(DBKey key, void *data, va_list ap)
+/**
+ * @see DBApply
+ */
+static int db_script_free_code_sub(DBKey key, DBData *data, va_list ap)
 {
-	if (data)
-		script_free_code(data);
+	struct script_code *code = db_data2ptr(data);
+	if (code)
+		script_free_code(code);
 	return 0;
 }
 

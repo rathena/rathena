@@ -195,7 +195,10 @@ static DBMap* online_char_db; // int account_id -> struct online_char_data*
 static int chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_t data);
 int delete_char_sql(int char_id);
 
-static void* create_online_char_data(DBKey key, va_list args)
+/**
+ * @see DBCreateData
+ */
+static DBData create_online_char_data(DBKey key, va_list args)
 {
 	struct online_char_data* character;
 	CREATE(character, struct online_char_data, 1);
@@ -204,14 +207,14 @@ static void* create_online_char_data(DBKey key, va_list args)
   	character->server = -1;
 	character->fd = -1;
 	character->waiting_disconnect = INVALID_TIMER;
-	return character;
+	return db_ptr2data(character);
 }
 
 void set_char_charselect(int account_id)
 {
 	struct online_char_data* character;
 
-	character = (struct online_char_data*)idb_ensure(online_char_db, account_id, create_online_char_data);
+	character = idb_ensure(online_char_db, account_id, create_online_char_data);
 
 	if( character->server > -1 )
 		if( server[character->server].users > 0 ) // Prevent this value from going negative.
@@ -245,7 +248,7 @@ void set_char_online(int map_id, int char_id, int account_id)
 		Sql_ShowDebug(sql_handle);
 
 	//Check to see for online conflicts
-	character = (struct online_char_data*)idb_ensure(online_char_db, account_id, create_online_char_data);
+	character = idb_ensure(online_char_db, account_id, create_online_char_data);
 	if( character->char_id != -1 && character->server > -1 && character->server != map_id )
 	{
 		ShowNotice("set_char_online: Character %d:%d marked in map server %d, but map server %d claims to have (%d:%d) online!\n",
@@ -330,9 +333,12 @@ void set_char_offline(int char_id, int account_id)
 	}
 }
 
-static int char_db_setoffline(DBKey key, void* data, va_list ap)
+/**
+ * @see DBApply
+ */
+static int char_db_setoffline(DBKey key, DBData *data, va_list ap)
 {
-	struct online_char_data* character = (struct online_char_data*)data;
+	struct online_char_data* character = db_data2ptr(data);
 	int server = va_arg(ap, int);
 	if (server == -1) {
 		character->char_id = -1;
@@ -346,15 +352,18 @@ static int char_db_setoffline(DBKey key, void* data, va_list ap)
 	return 0;
 }
 
-static int char_db_kickoffline(DBKey key, void* data, va_list ap)
+/**
+ * @see DBApply
+ */
+static int char_db_kickoffline(DBKey key, DBData *data, va_list ap)
 {
-	struct online_char_data* character = (struct online_char_data*)data;
+	struct online_char_data* character = db_data2ptr(data);
 	int server_id = va_arg(ap, int);
 
 	if (server_id > -1 && character->server != server_id)
 		return 0;
 
-	//Kick out any connected characters, and set them offline as appropiate.
+	//Kick out any connected characters, and set them offline as appropriate.
 	if (character->server > -1)
 		mapif_disconnectplayer(server[character->server].fd, character->account_id, character->char_id, 1);
 	else if (character->waiting_disconnect == INVALID_TIMER)
@@ -392,12 +401,15 @@ void set_all_offline_sql(void)
 		Sql_ShowDebug(sql_handle);
 }
 
-static void* create_charstatus(DBKey key, va_list args)
+/**
+ * @see DBCreateData
+ */
+static DBData create_charstatus(DBKey key, va_list args)
 {
 	struct mmo_charstatus *cp;
 	cp = (struct mmo_charstatus *) aCalloc(1,sizeof(struct mmo_charstatus));
 	cp->char_id = key.i;
-	return cp;
+	return db_ptr2data(cp);
 }
 
 
@@ -413,7 +425,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 
 	if (char_id!=p->char_id) return 0;
 
-	cp = (struct mmo_charstatus*)idb_ensure(char_db_, char_id, create_charstatus);
+	cp = idb_ensure(char_db_, char_id, create_charstatus);
 
 	StringBuf_Init(&buf);
 	memset(save_status, 0, sizeof(save_status));
@@ -1184,7 +1196,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 	SqlStmt_Free(stmt);
 	StringBuf_Destroy(&buf);
 
-	cp = (struct mmo_charstatus*)idb_ensure(char_db_, char_id, create_charstatus);
+	cp = idb_ensure(char_db_, char_id, create_charstatus);
 	memcpy(cp, p, sizeof(struct mmo_charstatus));
 	return 1;
 }
@@ -2609,7 +2621,7 @@ int parse_frommap(int fd)
 			for(i = 0; i < server[id].users; i++) {
 				aid = RFIFOL(fd,6+i*8);
 				cid = RFIFOL(fd,6+i*8+4);
-				character = (struct online_char_data*)idb_ensure(online_char_db, aid, create_online_char_data);
+				character = idb_ensure(online_char_db, aid, create_online_char_data);
 				if( character->server > -1 && character->server != id )
 				{
 					ShowNotice("Set map user: Character (%d:%d) marked on map server %d, but map server %d claims to have (%d:%d) online!\n",
@@ -2753,7 +2765,7 @@ int parse_frommap(int fd)
 				node->changing_mapservers = 1;
 				idb_put(auth_db, RFIFOL(fd,2), node);
 
-				data = (struct online_char_data*)idb_ensure(online_char_db, RFIFOL(fd,2), create_online_char_data);
+				data = idb_ensure(online_char_db, RFIFOL(fd,2), create_online_char_data);
 				data->char_id = char_data->char_id;
 				data->server = map_id; //Update server where char is.
 
@@ -4060,10 +4072,13 @@ int broadcast_user_count(int tid, unsigned int tick, int id, intptr_t data)
 	return 0;
 }
 
-/// load this char's account id into the 'online accounts' packet
-static int send_accounts_tologin_sub(DBKey key, void* data, va_list ap)
+/**
+ * Load this character's account id into the 'online accounts' packet
+ * @see DBApply
+ */
+static int send_accounts_tologin_sub(DBKey key, DBData *data, va_list ap)
 {
-	struct online_char_data* character = (struct online_char_data*)data;
+	struct online_char_data* character = db_data2ptr(data);
 	int* i = va_arg(ap, int*);
 
 	if(character->server > -1)
@@ -4152,9 +4167,12 @@ static int chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_
 	return 0;
 }
 
-static int online_data_cleanup_sub(DBKey key, void *data, va_list ap)
+/**
+ * @see DBApply
+ */
+static int online_data_cleanup_sub(DBKey key, DBData *data, va_list ap)
 {
-	struct online_char_data *character= (struct online_char_data*)data;
+	struct online_char_data *character= db_data2ptr(data);
 	if (character->fd != -1)
 		return 0; //Character still connected
 	if (character->server == -2) //Unknown server.. set them offline

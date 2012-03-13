@@ -146,7 +146,7 @@ static void script_load_mapreg(void)
 static void script_save_mapreg(void)
 {
 	DBIterator* iter;
-	void* data;
+	DBData *data;
 	DBKey key;
 
 	iter = db_iterator(mapreg_db);
@@ -159,7 +159,7 @@ static void script_save_mapreg(void)
 		if( name[1] == '@' )
 			continue;
 
-		if( SQL_ERROR == Sql_Query(mmysql_handle, "UPDATE `%s` SET `value`='%d' WHERE `varname`='%s' AND `index`='%d'", mapreg_table, (int)data, name, i) )
+		if( SQL_ERROR == Sql_Query(mmysql_handle, "UPDATE `%s` SET `value`='%d' WHERE `varname`='%s' AND `index`='%d'", mapreg_table, (int)db_data2ptr(data), name, i) )
 			Sql_ShowDebug(mmysql_handle);
 	}
 	dbi_destroy(iter);
@@ -175,7 +175,7 @@ static void script_save_mapreg(void)
 		if( name[1] == '@' )
 			continue;
 
-		Sql_EscapeStringLen(mmysql_handle, tmp_str2, (char*)data, safestrnlen((char*)data, 255));
+		Sql_EscapeStringLen(mmysql_handle, tmp_str2, db_data2ptr(data), safestrnlen(db_data2ptr(data), 255));
 		if( SQL_ERROR == Sql_Query(mmysql_handle, "UPDATE `%s` SET `value`='%s' WHERE `varname`='%s' AND `index`='%d'", mapreg_table, tmp_str2, name, i) )
 			Sql_ShowDebug(mmysql_handle);
 	}

@@ -98,20 +98,23 @@ struct online_login_data {
 static DBMap* online_db; // int account_id -> struct online_login_data*
 static int waiting_disconnect_timer(int tid, unsigned int tick, int id, intptr_t data);
 
-static void* create_online_user(DBKey key, va_list args)
+/**
+ * @see DBCreateData
+ */
+static DBData create_online_user(DBKey key, va_list args)
 {
 	struct online_login_data* p;
 	CREATE(p, struct online_login_data, 1);
 	p->account_id = key.i;
 	p->char_server = -1;
 	p->waiting_disconnect = INVALID_TIMER;
-	return p;
+	return db_ptr2data(p);
 }
 
 struct online_login_data* add_online_user(int char_server, int account_id)
 {
 	struct online_login_data* p;
-	p = (struct online_login_data*)idb_ensure(online_db, account_id, create_online_user);
+	p = idb_ensure(online_db, account_id, create_online_user);
 	p->char_server = char_server;
 	if( p->waiting_disconnect != INVALID_TIMER )
 	{
@@ -145,9 +148,12 @@ static int waiting_disconnect_timer(int tid, unsigned int tick, int id, intptr_t
 	return 0;
 }
 
-static int online_db_setoffline(DBKey key, void* data, va_list ap)
+/**
+ * @see DBApply
+ */
+static int online_db_setoffline(DBKey key, DBData *data, va_list ap)
 {
-	struct online_login_data* p = (struct online_login_data*)data;
+	struct online_login_data* p = db_data2ptr(data);
 	int server = va_arg(ap, int);
 	if( server == -1 )
 	{
@@ -163,9 +169,12 @@ static int online_db_setoffline(DBKey key, void* data, va_list ap)
 	return 0;
 }
 
-static int online_data_cleanup_sub(DBKey key, void *data, va_list ap)
+/**
+ * @see DBApply
+ */
+static int online_data_cleanup_sub(DBKey key, DBData *data, va_list ap)
 {
-	struct online_login_data *character= (struct online_login_data*)data;
+	struct online_login_data *character= db_data2ptr(data);
 	if (character->char_server == -2) //Unknown server.. set them offline
 		remove_online_user(character->account_id);
 	return 0;
@@ -835,7 +844,7 @@ int parse_fromchar(int fd)
 				users = RFIFOW(fd,4);
 				for (i = 0; i < users; i++) {
 					aid = RFIFOL(fd,6+i*4);
-					p = (struct online_login_data*)idb_ensure(online_db, aid, create_online_user);
+					p = idb_ensure(online_db, aid, create_online_user);
 					p->char_server = id;
 					if (p->waiting_disconnect != INVALID_TIMER)
 					{

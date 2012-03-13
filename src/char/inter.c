@@ -421,11 +421,14 @@ int mapif_disconnectplayer(int fd, int account_id, int char_id, int reason)
 
 //--------------------------------------------------------
 
-// Existence check of WISP data
-int check_ttl_wisdata_sub(DBKey key, void *data, va_list ap)
+/**
+ * Existence check of WISP data
+ * @see DBApply
+ */
+int check_ttl_wisdata_sub(DBKey key, DBData *data, va_list ap)
 {
 	unsigned long tick;
-	struct WisData *wd = (struct WisData *)data;
+	struct WisData *wd = db_data2ptr(data);
 	tick = va_arg(ap, unsigned long);
 
 	if (DIFF_TICK(tick, wd->tick) > WISDATA_TTL && wis_delnum < WISDELLIST_MAX)

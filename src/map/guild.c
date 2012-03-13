@@ -282,14 +282,17 @@ void guild_makemember(struct guild_member *m,struct map_session_data *sd)
 	return;
 }
 
-// ギルドのEXPキャッシュをinter鯖にフラッシュする
-int guild_payexp_timer_sub(DBKey dataid, void *data, va_list ap)
+/**
+ *  ギルドのEXPキャッシュをinter鯖にフラッシュする
+ * @see DBApply
+ */
+int guild_payexp_timer_sub(DBKey key, DBData *data, va_list ap)
 {
 	int i;
 	struct guild_expcache *c;
 	struct guild *g;
 
-	c = (struct guild_expcache *)data;
+	c = db_data2ptr(data);
 	
 	if (
 		(g = guild_search(c->guild_id)) == NULL ||
@@ -318,10 +321,13 @@ int guild_payexp_timer(int tid, unsigned int tick, int id, intptr_t data)
 	return 0;
 }
 
-//Taken from party_send_xy_timer_sub. [Skotlex]
-int guild_send_xy_timer_sub(DBKey key,void *data,va_list ap)
+/**
+ * Taken from party_send_xy_timer_sub. [Skotlex]
+ * @see DBApply
+ */
+int guild_send_xy_timer_sub(DBKey key, DBData *data, va_list ap)
 {
-	struct guild *g=(struct guild *)data;
+	struct guild *g = db_data2ptr(data);
 	int i;
 
 	nullpo_ret(g);
@@ -425,11 +431,13 @@ int guild_npc_request_info(int guild_id,const char *event)
 
 	if( event && *event )
 	{
-		struct eventlist* ev;
+		struct eventlist *ev;
+		DBData prev;
 		ev=(struct eventlist *)aCalloc(sizeof(struct eventlist),1);
 		memcpy(ev->name,event,strlen(event));
-		//The one in the db becomes the next event from this.
-		ev->next = (struct eventlist*)idb_put(guild_infoevent_db,guild_id,ev);
+		//The one in the db (if present) becomes the next event from this.
+		if (guild_infoevent_db->put(guild_infoevent_db, db_i2key(guild_id), db_ptr2data(ev), &prev))
+			ev->next = db_data2ptr(&prev);
 	}
 
 	return guild_request_info(guild_id);
@@ -484,7 +492,7 @@ int guild_recv_info(struct guild *sg)
 {
 	struct guild *g,before;
 	int i,bm,m;
-	struct eventlist *ev,*ev2;
+	DBData data;
 	struct map_session_data *sd;
 	bool guild_new = false;
 
@@ -558,8 +566,9 @@ int guild_recv_info(struct guild *sg)
 	}
 
 	// イベントの発生
-	if( (ev = (struct eventlist*)idb_remove(guild_infoevent_db,sg->guild_id))!=NULL )
+	if (guild_infoevent_db->remove(guild_infoevent_db, db_i2key(sg->guild_id), &data))
 	{
+		struct eventlist *ev = db_data2ptr(&data), *ev2;
 		while(ev){
 			npc_event_do(ev->name);
 			ev2=ev->next;
@@ -1122,7 +1131,10 @@ int guild_emblem_changed(int len,int guild_id,int emblem_id,const char *data)
 	return 0;
 }
 
-static void* create_expcache(DBKey key, va_list args)
+/**
+ * @see DBCreateData
+ */
+static DBData create_expcache(DBKey key, va_list args)
 {
 	struct guild_expcache *c;
 	struct map_session_data *sd = va_arg(args, struct map_session_data*);
@@ -1132,7 +1144,7 @@ static void* create_expcache(DBKey key, va_list args)
 	c->account_id = sd->status.account_id;
 	c->char_id = sd->status.char_id;
 	c->exp = 0;
-	return c;
+	return db_ptr2data(c);
 }
 
 // ギルドのEXP上納
@@ -1157,7 +1169,7 @@ unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp)
 		exp = exp * per / 100;
 	//Otherwise tax everything.
 	
-	c = (struct guild_expcache*)guild_expcache_db->ensure(guild_expcache_db, db_i2key(sd->status.char_id), create_expcache, sd);
+	c = db_data2ptr(guild_expcache_db->ensure(guild_expcache_db, db_i2key(sd->status.char_id), create_expcache, sd));
 
 	if (c->exp > UINT64_MAX - exp)
 		c->exp = UINT64_MAX;
@@ -1176,7 +1188,7 @@ int guild_getexp(struct map_session_data *sd,int exp)
 	if (sd->status.guild_id == 0 || guild_search(sd->status.guild_id) == NULL)
 		return 0;
 
-	c = (struct guild_expcache*)guild_expcache_db->ensure(guild_expcache_db, db_i2key(sd->status.char_id), create_expcache, sd);
+	c = db_data2ptr(guild_expcache_db->ensure(guild_expcache_db, db_i2key(sd->status.char_id), create_expcache, sd));
 	if (c->exp > UINT64_MAX - exp)
 		c->exp = UINT64_MAX;
 	else
@@ -1507,10 +1519,14 @@ int guild_allianceack(int guild_id1,int guild_id2,int account_id1,int account_id
 	}
 	return 0;
 }
-// ギルド解散通知用
-int guild_broken_sub(DBKey key,void *data,va_list ap)
+
+/**
+ * ギルド解散通知用
+ * @see DBApply
+ */
+int guild_broken_sub(DBKey key, DBData *data, va_list ap)
 {
-	struct guild *g=(struct guild *)data;
+	struct guild *g = db_data2ptr(data);
 	int guild_id=va_arg(ap,int);
 	int i,j;
 	struct map_session_data *sd=NULL;
@@ -1529,11 +1545,14 @@ int guild_broken_sub(DBKey key,void *data,va_list ap)
 	return 0;
 }
 
-//Invoked on Castles when a guild is broken. [Skotlex]
-int castle_guild_broken_sub(DBKey key, void *data, va_list ap)
+/**
+ * Invoked on Castles when a guild is broken. [Skotlex]
+ * @see DBApply
+ */
+int castle_guild_broken_sub(DBKey key, DBData *data, va_list ap)
 {
 	char name[EVENT_NAME_LENGTH];
-	struct guild_castle *gc = data;
+	struct guild_castle *gc = db_data2ptr(data);
 	int guild_id = va_arg(ap, int);
 
 	nullpo_ret(gc);
@@ -1900,10 +1919,13 @@ bool guild_isallied(int guild_id, int guild_id2)
 	return( i < MAX_GUILDALLIANCE && g->alliance[i].opposition == 0 );
 }
 
-static int eventlist_db_final(DBKey key,void *data,va_list ap)
+/**
+ * @see DBApply
+ */
+static int eventlist_db_final(DBKey key, DBData *data, va_list ap)
 {
 	struct eventlist *next = NULL;
-	struct eventlist *current = data;
+	struct eventlist *current = db_data2ptr(data);
 	while (current != NULL) {
 		next = current->next;
 		aFree(current);
@@ -1912,18 +1934,24 @@ static int eventlist_db_final(DBKey key,void *data,va_list ap)
 	return 0;
 }
 
-static int guild_expcache_db_final(DBKey key,void *data,va_list ap)
+/**
+ * @see DBApply
+ */
+static int guild_expcache_db_final(DBKey key, DBData *data, va_list ap)
 {
-	ers_free(expcache_ers, data);
+	ers_free(expcache_ers, db_data2ptr(data));
 	return 0;
 }
 
-static int guild_castle_db_final(DBKey key, void* data,va_list ap)
+/**
+ * @see DBApply
+ */
+static int guild_castle_db_final(DBKey key, DBData *data, va_list ap)
 {
-	struct guild_castle* gc = (struct guild_castle*)data;
+	struct guild_castle* gc = db_data2ptr(data);
 	if( gc->temp_guardians )
 		aFree(gc->temp_guardians);
-	aFree(data);
+	aFree(gc);
 	return 0;
 }
 

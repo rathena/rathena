@@ -1472,11 +1472,14 @@ int map_addflooritem(struct item *item_data,int amount,int m,int x,int y,int fir
 	return fitem->bl.id;
 }
 
-static void* create_charid2nick(DBKey key, va_list args)
+/**
+ * @see DBCreateData
+ */
+static DBData create_charid2nick(DBKey key, va_list args)
 {
 	struct charid2nick *p;
 	CREATE(p, struct charid2nick, 1);
-	return p;
+	return db_ptr2data(p);
 }
 
 /// Adds(or replaces) the nick of charid to nick_db and fullfils pending requests.
@@ -1490,7 +1493,7 @@ void map_addnickdb(int charid, const char* nick)
 	if( map_charid2sd(charid) )
 		return;// already online
 
-	p = (struct charid2nick*)idb_ensure(nick_db, charid, create_charid2nick);
+	p = idb_ensure(nick_db, charid, create_charid2nick);
 	safestrncpy(p->nick, nick, sizeof(p->nick));
 
 	while( p->requests )
@@ -1511,8 +1514,10 @@ void map_delnickdb(int charid, const char* name)
 	struct charid2nick* p;
 	struct charid_request* req;
 	struct map_session_data* sd;
+	DBData data;
 
-	p = (struct charid2nick*)idb_remove(nick_db, charid);
+	nick_db->remove(nick_db, db_i2key(charid), &data);
+	p = db_data2ptr(&data);
 	if( p == NULL )
 		return;
 
@@ -1546,7 +1551,7 @@ void map_reqnickdb(struct map_session_data * sd, int charid)
 		return;
 	}
 
-	p = (struct charid2nick*)idb_ensure(nick_db, charid, create_charid2nick);
+	p = idb_ensure(nick_db, charid, create_charid2nick);
 	if( *p->nick )
 	{
 		clif_solved_charname(sd->fd, charid, p->nick);
@@ -1765,7 +1770,7 @@ const char* map_charid2nick(int charid)
 	if( sd )
 		return sd->status.name;// character is online, return it's name
 
-	p = (struct charid2nick*)idb_ensure(nick_db, charid, create_charid2nick);
+	p = idb_ensure(nick_db, charid, create_charid2nick);
 	if( *p->nick )
 		return p->nick;// name in nick_db
 
@@ -2662,14 +2667,17 @@ void map_iwall_remove(const char *wall_name)
 	strdb_remove(iwall_db, iwall->wall_name);
 }
 
-static void* create_map_data_other_server(DBKey key, va_list args)
+/**
+ * @see DBCreateData
+ */
+static DBData create_map_data_other_server(DBKey key, va_list args)
 {
 	struct map_data_other_server *mdos;
 	unsigned short mapindex = (unsigned short)key.ui;
 	mdos=(struct map_data_other_server *)aCalloc(1,sizeof(struct map_data_other_server));
 	mdos->index = mapindex;
 	memcpy(mdos->name, mapindex_id2name(mapindex), MAP_NAME_LENGTH);
-	return mdos;
+	return db_ptr2data(mdos);
 }
 
 /*==========================================
@@ -2679,7 +2687,7 @@ int map_setipport(unsigned short mapindex, uint32 ip, uint16 port)
 {
 	struct map_data_other_server *mdos=NULL;
 
-	mdos=(struct map_data_other_server *)uidb_ensure(map_db,(unsigned int)mapindex, create_map_data_other_server);
+	mdos= uidb_ensure(map_db,(unsigned int)mapindex, create_map_data_other_server);
 	
 	if(mdos->cell) //Local map,Do nothing. Give priority to our own local maps over ones from another server. [Skotlex]
 		return 0;
@@ -2693,12 +2701,13 @@ int map_setipport(unsigned short mapindex, uint32 ip, uint16 port)
 	return 1;
 }
 
-/*==========================================
+/**
  * 他鯖管理のマップを全て削除
- *------------------------------------------*/
-int map_eraseallipport_sub(DBKey key,void *data,va_list va)
+ * @see DBApply
+ */
+int map_eraseallipport_sub(DBKey key, DBData *data, va_list va)
 {
-	struct map_data_other_server *mdos = (struct map_data_other_server*)data;
+	struct map_data_other_server *mdos = db_data2ptr(data);
 	if(mdos->cell == NULL) {
 		db_remove(map_db,key);
 		aFree(mdos);
@@ -3425,17 +3434,23 @@ int log_sql_init(void)
 	return 0;
 }
 
-int map_db_final(DBKey k,void *d,va_list ap)
+/**
+ * @see DBApply
+ */
+int map_db_final(DBKey key, DBData *data, va_list ap)
 {
-	struct map_data_other_server *mdos = (struct map_data_other_server*)d;
+	struct map_data_other_server *mdos = db_data2ptr(data);
 	if(mdos && mdos->cell == NULL)
 		aFree(mdos);
 	return 0;
 }
 
-int nick_db_final(DBKey key, void *data, va_list args)
+/**
+ * @see DBApply
+ */
+int nick_db_final(DBKey key, DBData *data, va_list args)
 {
-	struct charid2nick* p = (struct charid2nick*)data;
+	struct charid2nick* p = db_data2ptr(data);
 	struct charid_request* req;
 
 	if( p == NULL )
@@ -3478,9 +3493,12 @@ int cleanup_sub(struct block_list *bl, va_list ap)
 	return 1;
 }
 
-static int cleanup_db_sub(DBKey key,void *data,va_list va)
+/**
+ * @see DBApply
+ */
+static int cleanup_db_sub(DBKey key, DBData *data, va_list va)
 {
-	return cleanup_sub((struct block_list*)data, va);
+	return cleanup_sub(db_data2ptr(data), va);
 }
 
 /*==========================================

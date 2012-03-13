@@ -463,9 +463,13 @@ int chrif_connectack(int fd)
 
 	return 0;
 }
-static int chrif_reconnect(DBKey key,void *data,va_list ap)
+
+/**
+ * @see DBApply
+ */
+static int chrif_reconnect(DBKey key, DBData *data, va_list ap)
 {
-	struct auth_node *node=(struct auth_node*)data;
+	struct auth_node *node = db_data2ptr(data);
 	switch (node->state) {
 	case ST_LOGIN:
 		if (node->sd && node->char_dat == NULL)
@@ -669,10 +673,13 @@ void chrif_authfail(int fd)
 }
 
 
-//This can still happen (client times out while waiting for char to confirm auth data)
-int auth_db_cleanup_sub(DBKey key,void *data,va_list ap)
+/**
+ * This can still happen (client times out while waiting for char to confirm auth data)
+ * @see DBApply
+ */
+int auth_db_cleanup_sub(DBKey key, DBData *data, va_list ap)
 {
-	struct auth_node *node=(struct auth_node*)data;
+	struct auth_node *node = db_data2ptr(data);
 	const char* states[] = { "Login", "Logout", "Map change" };
 	if(DIFF_TICK(gettick(),node->node_created)>60000) {
 		switch (node->state)
@@ -1558,10 +1565,12 @@ int chrif_removefriend(int char_id, int friend_id) {
 	return 0;
 }
 
-
-int auth_db_final(DBKey k,void *d,va_list ap)
+/**
+ * @see DBApply
+ */
+int auth_db_final(DBKey key, DBData *data, va_list ap)
 {
-	struct auth_node *node=(struct auth_node*)d;
+	struct auth_node *node = db_data2ptr(data);
 	if (node->char_dat)
 		aFree(node->char_dat);
 	if (node->sd)
