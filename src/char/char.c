@@ -2527,12 +2527,12 @@ int parse_frommap(int fd)
 			// Transmitting the maps of the other map-servers to the new map-server
 			for(x = 0; x < ARRAYLENGTH(server); x++) {
 				if (server[x].fd > 0 && x != id) {
-					WFIFOHEAD(fd,10 +4*ARRAYLENGTH(server));
+					WFIFOHEAD(fd,10 +4*ARRAYLENGTH(server[x].map));
 					WFIFOW(fd,0) = 0x2b04;
 					WFIFOL(fd,4) = htonl(server[x].ip);
 					WFIFOW(fd,8) = htons(server[x].port);
 					j = 0;
-					for(i = 0; i < ARRAYLENGTH(server); i++)
+					for(i = 0; i < ARRAYLENGTH(server[x].map); i++)
 						if (server[x].map[i])
 							WFIFOW(fd,10+(j++)*4) = server[x].map[i];
 					if (j > 0) {
