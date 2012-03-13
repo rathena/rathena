@@ -1661,17 +1661,6 @@ static void intif_parse_Mail_send(int fd)
 				chrif_save(sd, 0);
 		}
 	}
-
-	if( fail )
-		return;
-
-	// notify recipient (if online)
-	sd = map_charid2sd(msg.dest_id);
-	if( sd != NULL )
-	{
-		sd->mail.changed = true;
-		clif_Mail_new(sd->fd, msg.id, msg.send_name, msg.title);
-	}
 }
 
 static void intif_parse_Mail_new(int fd)
