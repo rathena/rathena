@@ -628,16 +628,16 @@ struct DBMap {
 #define strdb_put(db,k,d) ( (db)->put((db),db_str2key(k),db_ptr2data(d),NULL) )
 
 // Put int-type data into DBMaps of various key types
-#define db_iput(db,k,d)    ( (db)->put((db),(k),db_i2data(d)) )
-#define idb_iput(db,k,d)   ( (db)->put((db),db_i2key(k),db_i2data(d)) )
-#define uidb_iput(db,k,d)  ( (db)->put((db),db_ui2key(k),db_i2data(d)) )
-#define strdb_iput(db,k,d) ( (db)->put((db),db_str2key(k),db_i2data(d)) )
+#define db_iput(db,k,d)    ( (db)->put((db),(k),db_i2data(d),NULL) )
+#define idb_iput(db,k,d)   ( (db)->put((db),db_i2key(k),db_i2data(d),NULL) )
+#define uidb_iput(db,k,d)  ( (db)->put((db),db_ui2key(k),db_i2data(d),NULL) )
+#define strdb_iput(db,k,d) ( (db)->put((db),db_str2key(k),db_i2data(d),NULL) )
 
 // Put uint-type data into DBMaps of various key types
-#define db_uiput(db,k,d)    ( (db)->put((db),(k),db_ui2data(d)) )
-#define idb_uiput(db,k,d)   ( (db)->put((db),db_i2key(k),db_ui2data(d)) )
-#define uidb_uiput(db,k,d)  ( (db)->put((db),db_ui2key(k),db_ui2data(d)) )
-#define strdb_uiput(db,k,d) ( (db)->put((db),db_str2key(k),db_ui2data(d)) )
+#define db_uiput(db,k,d)    ( (db)->put((db),(k),db_ui2data(d),NULL) )
+#define idb_uiput(db,k,d)   ( (db)->put((db),db_i2key(k),db_ui2data(d),NULL) )
+#define uidb_uiput(db,k,d)  ( (db)->put((db),db_ui2key(k),db_ui2data(d),NULL) )
+#define strdb_uiput(db,k,d) ( (db)->put((db),db_str2key(k),db_ui2data(d),NULL) )
 
 // Remove entry from DBMaps of various key types
 #define db_remove(db,k)    ( (db)->remove((db),(k),NULL) )

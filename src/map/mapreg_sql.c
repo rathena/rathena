@@ -24,13 +24,13 @@ static bool mapreg_dirty = false;
 /// Looks up the value of an integer variable using its uid.
 int mapreg_readreg(int uid)
 {
-	return (int)idb_get(mapreg_db, uid);
+	return idb_iget(mapreg_db, uid);
 }
 
 /// Looks up the value of a string variable using its uid.
 char* mapreg_readregstr(int uid)
 {
-	return (char*)idb_get(mapregstr_db, uid);
+	return idb_get(mapregstr_db, uid);
 }
 
 /// Modifies the value of an integer variable.
@@ -42,10 +42,10 @@ bool mapreg_setreg(int uid, int val)
 
 	if( val != 0 )
 	{
-		if( idb_put(mapreg_db,uid,(void*)val) )
+		if( idb_iput(mapreg_db,uid,val) )
 			mapreg_dirty = true; // already exists, delay write
 		else if(name[1] != '@')
-		{// write new wariable to database
+		{// write new variable to database
 			char tmp_str[32*2+1];
 			Sql_EscapeStringLen(mmysql_handle, tmp_str, name, strnlen(name, 32));
 			if( SQL_ERROR == Sql_Query(mmysql_handle, "INSERT INTO `%s`(`varname`,`index`,`value`) VALUES ('%s','%d','%d')", mapreg_table, tmp_str, i, val) )
@@ -134,7 +134,7 @@ static void script_load_mapreg(void)
 		if( varname[length-1] == '$' )
 			idb_put(mapregstr_db, (i<<24)|s, aStrdup(value));
 		else
-			idb_put(mapreg_db, (i<<24)|s, (void *)atoi(value));
+			idb_iput(mapreg_db, (i<<24)|s, atoi(value));
 	}
 	
 	SqlStmt_Free(stmt);
@@ -159,7 +159,7 @@ static void script_save_mapreg(void)
 		if( name[1] == '@' )
 			continue;
 
-		if( SQL_ERROR == Sql_Query(mmysql_handle, "UPDATE `%s` SET `value`='%d' WHERE `varname`='%s' AND `index`='%d'", mapreg_table, (int)db_data2ptr(data), name, i) )
+		if( SQL_ERROR == Sql_Query(mmysql_handle, "UPDATE `%s` SET `value`='%d' WHERE `varname`='%s' AND `index`='%d'", mapreg_table, db_data2i(data), name, i) )
 			Sql_ShowDebug(mmysql_handle);
 	}
 	dbi_destroy(iter);
@@ -198,8 +198,8 @@ void mapreg_reload(void)
 	if( mapreg_dirty )
 		script_save_mapreg();
 
-	mapreg_db->clear(mapreg_db, NULL);
-	mapregstr_db->clear(mapregstr_db, NULL);
+	db_clear(mapreg_db);
+	db_clear(mapregstr_db);
 
 	script_load_mapreg();
 }
@@ -209,8 +209,8 @@ void mapreg_final(void)
 	if( mapreg_dirty )
 		script_save_mapreg();
 
-	mapreg_db->destroy(mapreg_db,NULL);
-	mapregstr_db->destroy(mapregstr_db,NULL);
+	db_destroy(mapreg_db);
+	db_destroy(mapregstr_db);
 }
 
 void mapreg_init(void)
