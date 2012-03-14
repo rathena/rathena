@@ -1516,9 +1516,7 @@ void map_delnickdb(int charid, const char* name)
 	struct map_session_data* sd;
 	DBData data;
 
-	nick_db->remove(nick_db, db_i2key(charid), &data);
-	p = db_data2ptr(&data);
-	if( p == NULL )
+	if (!nick_db->remove(nick_db, db_i2key(charid), &data) || (p = db_data2ptr(&data)) == NULL)
 		return;
 
 	while( p->requests )
