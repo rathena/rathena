@@ -1592,7 +1592,7 @@ void clif_move(struct unit_data *ud)
 		return; //This performance check is needed to keep GM-hidden objects from being notified to bots.
 		
 	/**
-	* Hide NPC from maya puprle card.
+	* Hide NPC from maya purple card.
 	**/
 	if(bl->type == BL_NPC && !((TBL_NPC*)bl)->chat_id && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
 		return;
@@ -4019,7 +4019,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 		return;
 		
 	/**
-	* Hide NPC from maya puprle card.
+	* Hide NPC from maya purple card.
 	**/
 	if(bl->type == BL_NPC && !((TBL_NPC*)bl)->chat_id && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
 		return;
@@ -5230,69 +5230,42 @@ void clif_cooking_list(struct map_session_data *sd, int trigger)
 	}
 }
 
-
-/*==========================================
- * Sends a status change packet to the object only, used for loading status changes. [Skotlex]
- *------------------------------------------*/
-int clif_status_load(struct block_list *bl,int type, int flag)
-{
-	int fd;
-	if (type == SI_BLANK)  //It shows nothing on the client...
-		return 0;
-	
-	if (bl->type != BL_PC)
-		return 0;
-
-	fd = ((struct map_session_data*)bl)->fd;
-	
-	WFIFOHEAD(fd,packet_len(0x196));
-	WFIFOW(fd,0)=0x0196;
-	WFIFOW(fd,2)=type;
-	WFIFOL(fd,4)=bl->id;
-	WFIFOB(fd,8)=flag; //Status start
-	WFIFOSET(fd, packet_len(0x196));
-	return 0;
-}
-
-
 /// Notifies clients of a status change.
-/// 0196 <index>.W <id>.L <state>.B (ZC_MSG_STATE_CHANGE)
-/// 043f <index>.W <id>.L <state>.B <remain msec>.L { <val>.L }*3 (ZC_MSG_STATE_CHANGE2)
-void clif_status_change(struct block_list *bl,int type,int flag,unsigned int tick,int val1, int val2, int val3)
+/// 0196 <index>.W <id>.L <state>.B (ZC_MSG_STATE_CHANGE) [used for ending status changes and starting them on non-pc units (when needed)]
+/// 043f <index>.W <id>.L <state>.B <remain msec>.L { <val>.L }*3 (ZC_MSG_STATE_CHANGE2) [used exclusively for starting statuses on pcs]
+void clif_status_change(struct block_list *bl,int type,int flag,int tick,int val1, int val2, int val3)
 {
 	unsigned char buf[32];
+	struct map_session_data *sd;
 
 	if (type == SI_BLANK)  //It shows nothing on the client...
 		return;
 
 	nullpo_retv(bl);
 
-	if (type == SI_BLANK || type == SI_MAXIMIZEPOWER || type == SI_RIDING ||
-		type == SI_FALCON || type == SI_TRICKDEAD || type == SI_BROKENARMOR ||
-		type == SI_BROKENWEAPON || type == SI_WEIGHT50 || type == SI_WEIGHT90 ||
-		type == SI_TENSIONRELAX || type == SI_LANDENDOW || type == SI_AUTOBERSERK ||
-		type == SI_BUMP || type == SI_READYSTORM || type == SI_READYDOWN ||
-		type == SI_READYTURN || type == SI_READYCOUNTER || type == SI_DODGE ||
-		type == SI_DEVIL || type == SI_NIGHT || type == SI_INTRAVISION ||
-		type == SI_BANDING)
-		tick=0;
+	sd = BL_CAST(BL_PC, bl);
 
-// TODO: 0x43f PACKETVER?
-	if( battle_config.display_status_timers && tick>0 )
+	if (!(status_type2relevant_bl_types(type)&bl->type)) // only send status changes that actually matter to the client
+		return;
+
+	if(flag && battle_config.display_status_timers && sd)
 		WBUFW(buf,0)=0x43f;
 	else
 		WBUFW(buf,0)=0x196;
 	WBUFW(buf,2)=type;
 	WBUFL(buf,4)=bl->id;
 	WBUFB(buf,8)=flag;
-	if( battle_config.display_status_timers && tick>0 )
+	if(flag && battle_config.display_status_timers && sd)
 	{
-		WBUFL(buf,9)=tick;
+		if (tick <= 0)
+				tick = 9999; // this is indeed what official servers do
+
+		WBUFL(buf,9) = tick;
 		WBUFL(buf,13) = val1;
 		WBUFL(buf,17) = val2;
 		WBUFL(buf,21) = val3;
 	}
-	clif_send(buf,packet_len(WBUFW(buf,0)),bl,AREA);
+	clif_send(buf,packet_len(WBUFW(buf,0)),bl, (sd && sd->status.option&OPTION_INVISIBLE) ? SELF : AREA);
 }
 
 

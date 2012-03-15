@@ -2737,7 +2737,7 @@ int skill_guildaura_sub (struct map_session_data* sd, int id, int strvit, int ag
 		if( sce->val3 != strvit || sce->val4 != agidex ) {
 			sce->val3 = strvit;
 			sce->val4 = agidex;
-			status_calc_bl(&sd->bl, StatusChangeFlagTable[SC_GUILDAURA]);
+			status_calc_bl(&sd->bl, status_sc2scb_flag(SC_GUILDAURA));
 		}
 		return 0;
 	}

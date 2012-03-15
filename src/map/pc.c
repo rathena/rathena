@@ -282,7 +282,7 @@ int pc_banding(struct map_session_data *sd, short skill_lv) {
 		if( (sc = status_get_sc(&sd->bl)) != NULL  && sc->data[SC_BANDING] )
 		{
 			sc->data[SC_BANDING]->val2 = 0; // Reset the counter
-			status_calc_bl(&sd->bl,StatusChangeFlagTable[SC_BANDING]);
+			status_calc_bl(&sd->bl, status_sc2scb_flag(SC_BANDING));
 		}
 		return 0;
 	}
@@ -325,7 +325,7 @@ int pc_banding(struct map_session_data *sd, short skill_lv) {
 			if( (sc = status_get_sc(&bsd->bl)) != NULL  && sc->data[SC_BANDING] )
 			{
 				sc->data[SC_BANDING]->val2 = c; // Set the counter. It doesn't count your self.
-				status_calc_bl(&bsd->bl,StatusChangeFlagTable[SC_BANDING]);	// Set atk and def.
+				status_calc_bl(&bsd->bl, status_sc2scb_flag(SC_BANDING));	// Set atk and def.
 			}
 		}
 	}

@@ -72,11 +72,17 @@ int current_equip_card_id; //To prevent card-stacking (from jA) [Skotlex]
 //we need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only
 //to avoid cards exploits
 
-static sc_type SkillStatusChangeTable[MAX_SKILL]; // skill  -> status
-static int StatusIconChangeTable[SC_MAX];         // status -> icon
-unsigned long StatusChangeFlagTable[SC_MAX];      // status -> flags
-static int StatusSkillChangeTable[SC_MAX];        // status -> skill
+static sc_type SkillStatusChangeTable[MAX_SKILL];  // skill  -> status
+static int StatusIconChangeTable[SC_MAX];          // status -> "icon" (icon is a bit of a misnomer, since there exist values with no icon associated)
+static unsigned int StatusChangeFlagTable[SC_MAX]; // status -> flags
+static int StatusSkillChangeTable[SC_MAX];         // status -> skill
+static int StatusRelevantBLTypes[SI_MAX];          // "icon" -> enum bl_type (for clif_status_change to identify for which bl types to send packets)
 
+/**
+ * Returns the status change associated with a skill.
+ * @param skill The skill to look up
+ * @return The status registered for this skill
+ **/
 sc_type status_skill2sc(int skill)
 {
 	int sk = skill_get_index(skill);
@@ -87,17 +93,55 @@ sc_type status_skill2sc(int skill)
 	return SkillStatusChangeTable[sk];
 }
 
+/**
+ * Returns the FIRST skill (in order of definition in initChangeTables) to use a given status change.
+ * Utilized for various duration lookups. Use with caution!
+ * @param sc The status to look up
+ * @return A skill associated with the status
+ **/
 int status_sc2skill(sc_type sc)
 {
 	if( sc < 0 || sc >= SC_MAX ) {
-		ShowError("status_skill2sc: Unsupported status change id %d\n", sc);
+		ShowError("status_sc2skill: Unsupported status change id %d\n", sc);
 		return 0;
 	}
 
 	return StatusSkillChangeTable[sc];
 }
 
+/**
+ * Returns the status calculation flag associated with a given status change.
+ * @param sc The status to look up
+ * @return The scb_flag registered for this status (see enum scb_flag)
+ **/
+unsigned int status_sc2scb_flag(sc_type sc)
+{
+	if( sc < 0 || sc >= SC_MAX ) {
+		ShowError("status_sc2scb_flag: Unsupported status change id %d\n", sc);
+		return SCB_NONE;
+	}
+
+	return StatusChangeFlagTable[sc];
+}
+
+/**
+ * Returns the bl types which require a status change packet to be sent for a given client status identifier.
+ * @param type The client-side status identifier to look up (see enum si_type)
+ * @return The bl types relevant to the type (see enum bl_type)
+ **/
+int status_type2relevant_bl_types(int type)
+{
+	if( type < 0 || type >= SI_MAX ) {
+		ShowError("status_type2relevant_bl_types: Unsupported type %d\n", type);
+		return SI_BLANK;
+	}
+
+	return StatusRelevantBLTypes[type];
+}
+
 #define add_sc(skill,sc) set_sc(skill,sc,SI_BLANK,SCB_NONE)
+// indicates that the status displays a visual effect for the affected unit, and should be sent to the client for all supported units
+#define set_sc_with_vfx(skill, sc, icon, flag) set_sc((skill), (sc), (icon), (flag)); if((icon) < SI_MAX) StatusRelevantBLTypes[(icon)] |= BL_SCEFFECT
 
 static void set_sc(int skill, sc_type sc, int icon, unsigned int flag)
 {
@@ -128,6 +172,8 @@ void initChangeTables(void)
 		StatusIconChangeTable[i] = SI_BLANK;
 	for (i = 0; i < MAX_SKILL; i++)
 		SkillStatusChangeTable[i] = SC_NONE;
+	for (i = 0; i < SI_MAX; i++)
+		StatusRelevantBLTypes[i] = BL_PC;
 
 	memset(StatusSkillChangeTable, 0, sizeof(StatusSkillChangeTable));
 	memset(StatusChangeFlagTable, 0, sizeof(StatusChangeFlagTable));
@@ -471,7 +517,7 @@ void initChangeTables(void)
 	/**
 	 * GC Guillotine Cross
 	 **/
-	set_sc( GC_VENOMIMPRESS      , SC_VENOMIMPRESS     , SI_VENOMIMPRESS     , SCB_NONE );
+	set_sc_with_vfx( GC_VENOMIMPRESS      , SC_VENOMIMPRESS     , SI_VENOMIMPRESS     , SCB_NONE );
 	set_sc( GC_POISONINGWEAPON   , SC_POISONINGWEAPON  , SI_POISONINGWEAPON  , SCB_NONE );
 	set_sc( GC_WEAPONBLOCKING    , SC_WEAPONBLOCKING   , SI_WEAPONBLOCKING   , SCB_NONE );
 	set_sc( GC_CLOAKINGEXCEED    , SC_CLOAKINGEXCEED   , SI_CLOAKINGEXCEED   , SCB_SPEED );
@@ -485,7 +531,7 @@ void initChangeTables(void)
 	add_sc( AB_CANTO             , SC_INCREASEAGI );
 	set_sc( AB_EPICLESIS         , SC_EPICLESIS       , SI_EPICLESIS       , SCB_MAXHP );
 	add_sc( AB_PRAEFATIO         , SC_KYRIE );
-	set_sc( AB_ORATIO            , SC_ORATIO          , SI_ORATIO          , SCB_NONE );
+	set_sc_with_vfx( AB_ORATIO            , SC_ORATIO          , SI_ORATIO          , SCB_NONE );
 	set_sc( AB_LAUDAAGNUS        , SC_LAUDAAGNUS      , SI_LAUDAAGNUS      , SCB_VIT );
 	set_sc( AB_LAUDARAMUS        , SC_LAUDARAMUS      , SI_LAUDARAMUS      , SCB_LUK );
 	set_sc( AB_RENOVATIO         , SC_RENOVATIO       , SI_RENOVATIO       , SCB_REGEN );
@@ -496,7 +542,7 @@ void initChangeTables(void)
 	 * Warlock
 	 **/
 	add_sc( WL_WHITEIMPRISON     , SC_WHITEIMPRISON );
-	set_sc( WL_FROSTMISTY        , SC_FREEZING        , SI_FROSTMISTY      , SCB_ASPD|SCB_SPEED|SCB_DEF|SCB_DEF2 );
+	set_sc_with_vfx( WL_FROSTMISTY        , SC_FREEZING        , SI_FROSTMISTY      , SCB_ASPD|SCB_SPEED|SCB_DEF|SCB_DEF2 );
 	set_sc( WL_MARSHOFABYSS      , SC_MARSHOFABYSS    , SI_MARSHOFABYSS    , SCB_SPEED|SCB_FLEE|SCB_DEF|SCB_MDEF );
 	set_sc( WL_RECOGNIZEDSPELL   , SC_RECOGNIZEDSPELL , SI_RECOGNIZEDSPELL , SCB_NONE );
 	set_sc( WL_STASIS            , SC_STASIS          , SI_STASIS          , SCB_NONE );
@@ -512,7 +558,7 @@ void initChangeTables(void)
 	add_sc( RA_MAIZETRAP         , SC_ELEMENTALCHANGE );
 	add_sc( RA_VERDURETRAP       , SC_ELEMENTALCHANGE );
 	add_sc( RA_FIRINGTRAP        , SC_BURNING         );
-	set_sc( RA_ICEBOUNDTRAP      , SC_FREEZING        , SI_FROSTMISTY      , SCB_NONE );
+	set_sc_with_vfx( RA_ICEBOUNDTRAP      , SC_FREEZING        , SI_FROSTMISTY      , SCB_NONE );
 	/**
 	 * Mechanic
 	 **/
@@ -552,7 +598,7 @@ void initChangeTables(void)
 	set_sc( SC_UNLUCKY           , SC__UNLUCKY        , SI_UNLUCKY         , SCB_CRI|SCB_FLEE2 );
 	set_sc( SC_WEAKNESS          , SC__WEAKNESS       , SI_WEAKNESS        , SCB_FLEE2|SCB_MAXHP );
 	set_sc( SC_STRIPACCESSARY    , SC__STRIPACCESSORY , SI_STRIPACCESSARY  , SCB_DEX|SCB_INT|SCB_LUK );
-	set_sc( SC_MANHOLE           , SC__MANHOLE        , SI_MANHOLE         , SCB_NONE );
+	set_sc_with_vfx( SC_MANHOLE           , SC__MANHOLE        , SI_MANHOLE         , SCB_NONE );
 	add_sc( SC_CHAOSPANIC        , SC_CHAOS );
 	set_sc( SC_BLOODYLUST        , SC__BLOODYLUST     , SI_BLOODYLUST      , SCB_DEF|SCB_DEF2|SCB_BATK|SCB_WATK );
 	/**
@@ -6344,7 +6390,8 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			clif_emotion(bl,E_SWT);
 			break;
 		case SC_MAXIMIZEPOWER:
-			val2 = tick>0?tick:60000;
+			tick_time = val2 = tick>0?tick:60000;
+			tick = -1; // duration sent to the client should be infinite
 			break;
 		case SC_EDP:	// [Celest]
 			val2 = val1 + 2; //Chance to Poison enemies.
@@ -6620,7 +6667,8 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_CLOAKING:
 			if (!sd) //Monsters should be able to walk with no penalties. [Skotlex]
 				val1 = 10;
-			val2 = tick>0?tick:60000; //SP consumption rate.
+			tick_time = val2 = tick>0?tick:60000; //SP consumption rate.
+			tick = -1; // duration sent to the client should be infinite
 			val3 = 0; // unused, previously walk speed adjustment
 			//val4&1 signals the presence of a wall.
 			//val4&2 makes cloak not end on normal attacks [Skotlex]
@@ -6708,6 +6756,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val2 = 12; //SP cost
 			val4 = 10000; //Decrease at 10secs intervals.
 			val3 = tick/val4;
+			tick = -1; // duration sent to the client should be infinite
 			tick_time = val4; // [GodLesZ] tick time
 			break;
 		case SC_PARRYING:
@@ -7857,10 +7906,8 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		calc_flag&=~SCB_DYE;
 	}
 
-	if( vd && (pcdb_checkid(vd->class_) || bl->type == BL_MER || bl->type == BL_MOB ) )
-		clif_status_change(bl,StatusIconChangeTable[type],1,tick,(val_flag&1)?val1:1,(val_flag&2)?val2:0,(val_flag&4)?val3:0);
-	else if( sd ) //Send packet to self otherwise (disguised player?)
-		clif_status_load(bl,StatusIconChangeTable[type],1);
+	clif_status_change(bl,StatusIconChangeTable[type],1,tick,(val_flag&1)?val1:1,(val_flag&2)?val2:0,(val_flag&4)?val3:0);
+
 	/**
 	 * used as temporary storage for scs with interval ticks, so that the actual duration is sent to the client first.
 	 **/
@@ -8660,10 +8707,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	}
 
 	//On Aegis, when turning off a status change, first goes the sc packet, then the option packet.
-	if( vd && (pcdb_checkid(vd->class_) || bl->type == BL_MER ) )
-		clif_status_change(bl,StatusIconChangeTable[type],0,0,0,0,0);
-	else if (sd)
-		clif_status_load(bl,StatusIconChangeTable[type],0);
+	clif_status_change(bl,StatusIconChangeTable[type],0,0,0,0,0);
 
 	if( opt_flag&8 ) //bugreport:681
 		clif_changeoption2(bl);

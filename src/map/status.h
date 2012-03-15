@@ -13,8 +13,6 @@ struct status_change;
 
 #define MAX_REFINE_BONUS 5
 
-extern unsigned long StatusChangeFlagTable[];
-
 
 // Status changes listing. These code are for use by the server. 
 typedef enum sc_type {
@@ -1152,6 +1150,8 @@ enum si_type {
 	SI_EARTH_INSIGNIA = 570,
 	SI_EQUIPED_FLOOR = 571,
 	SI_ALL_RIDING = 613,//awesome 571-613 gap, we're missing quite a few stuff here.
+
+	SI_MAX,
 };
 
 // JOINTBEAT stackable ailments
@@ -1333,7 +1333,8 @@ enum scb_flag
 #define BL_CONSUME (BL_PC|BL_HOM|BL_MER)
 //Define to determine who has regen
 #define BL_REGEN (BL_PC|BL_HOM|BL_MER)
-
+//Define to determine who will receive a clif_status_change packet for effects that require one to display correctly
+#define BL_SCEFFECT (BL_PC|BL_HOM|BL_MER|BL_MOB)
 
 //Basic damage info of a weapon
 //Required because players have two of these, one in status_data
@@ -1458,6 +1459,8 @@ struct status_change {
 // for looking up associated data
 sc_type status_skill2sc(int skill);
 int status_sc2skill(sc_type sc);
+unsigned int status_sc2scb_flag(sc_type sc);
+int status_type2relevant_bl_types(int type);
 
 int status_damage(struct block_list *src,struct block_list *target,int hp,int sp, int walkdelay, int flag);
 //Define for standard HP damage attacks.
