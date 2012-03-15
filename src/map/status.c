@@ -8142,7 +8142,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			case SC_FREEZE:
 			case SC_STUN:
 			case SC_SLEEP:
-			case SC_BURNING:
 			if (sce->val1) {
 			  	//Removing the 'level' shouldn't affect anything in the code
 				//since these SC are not affected by it, and it lets us know
