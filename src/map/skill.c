@@ -114,7 +114,7 @@ int skill_name2id(const char* name)
 	if( name == NULL )
 		return 0;
 
-	return *(int*)strdb_get(skilldb_name2id, name);
+	return strdb_iget(skilldb_name2id, name);
 }
 
 /// Maps skill ids to skill db offsets.
