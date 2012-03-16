@@ -15265,7 +15265,7 @@ void skill_cooldown_load(struct map_session_data * sd)
 static bool skill_parse_row_skilldb(char* split[], int columns, int current)
 {// id,range,hit,inf,element,nk,splash,max,list_num,castcancel,cast_defence_rate,inf2,maxcount,skill_type,blow_count,name,description
 	int id = atoi(split[0]);
-	int i, *idp;
+	int i;
 	if( (id >= GD_SKILLRANGEMIN && id <= GD_SKILLRANGEMAX)
 	||  (id >= HM_SKILLRANGEMIN && id <= HM_SKILLRANGEMAX)
 	||  (id >= MC_SKILLRANGEMIN && id <= MC_SKILLRANGEMAX) )
@@ -15305,9 +15305,7 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current)
 	skill_split_atoi(split[14],skill_db[i].blewcount);
 	safestrncpy(skill_db[i].name, trim(split[15]), sizeof(skill_db[i].name));
 	safestrncpy(skill_db[i].desc, trim(split[16]), sizeof(skill_db[i].desc));
-	CREATE(idp, int, 1);
-	*idp = id;
-	strdb_put(skilldb_name2id, skill_db[i].name, idp);
+	strdb_iput(skilldb_name2id, skill_db[i].name, id);
 
 	return true;
 }
