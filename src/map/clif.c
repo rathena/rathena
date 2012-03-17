@@ -10779,7 +10779,8 @@ void clif_parse_ProduceMix(int fd,struct map_session_data *sd)
 		sd->menuskill_val = sd->menuskill_id = 0;
 		return;
 	}
-	skill_produce_mix(sd,0,RFIFOW(fd,2),RFIFOW(fd,4),RFIFOW(fd,6),RFIFOW(fd,8), 1);
+	if( skill_can_produce_mix(sd,RFIFOW(fd,2),sd->menuskill_val, 1) )
+		skill_produce_mix(sd,0,RFIFOW(fd,2),RFIFOW(fd,4),RFIFOW(fd,6),RFIFOW(fd,8), 1);
 	sd->menuskill_val = sd->menuskill_id = 0;
 }
 
@@ -10798,8 +10799,7 @@ void clif_parse_Cooking(int fd,struct map_session_data *sd)
 	//int type = RFIFOW(fd,2);
 	int nameid = RFIFOW(fd,4);
 
-	if( sd->menuskill_id != AM_PHARMACY )
-	{
+	if( sd->menuskill_id != AM_PHARMACY ) {
 		return;
 	}
 
@@ -10809,7 +10809,8 @@ void clif_parse_Cooking(int fd,struct map_session_data *sd)
 		sd->menuskill_val = sd->menuskill_id = 0;
 		return;
 	}
-	skill_produce_mix(sd,0,nameid,0,0,0,1);
+	if( skill_can_produce_mix(sd,nameid,sd->menuskill_val, 1) )
+		skill_produce_mix(sd,0,nameid,0,0,0,1);
 	sd->menuskill_val = sd->menuskill_id = 0;
 }
 
