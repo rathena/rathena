@@ -7024,11 +7024,9 @@ void clif_guild_masterormember(struct map_session_data *sd)
 /// Guild basic information (Territories [Valaris])
 /// 0150 <guild id>.L <level>.L <member num>.L <member max>.L <exp>.L <max exp>.L <points>.L <honor>.L <virtue>.L <emblem id>.L <name>.24B <master name>.24B <manage land>.16B (ZC_GUILD_INFO)
 /// 01b6 <guild id>.L <level>.L <member num>.L <member max>.L <exp>.L <max exp>.L <points>.L <honor>.L <virtue>.L <emblem id>.L <name>.24B <master name>.24B <manage land>.16B <zeny>.L (ZC_GUILD_INFO2)
-void clif_guild_basicinfo(struct map_session_data *sd)
-{
+void clif_guild_basicinfo(struct map_session_data *sd) {
 	int fd;
 	struct guild *g;
-	struct guild_castle *gc = NULL;
 
 	nullpo_retv(sd);
 	fd = sd->fd;
