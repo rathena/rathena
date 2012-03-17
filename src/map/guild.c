@@ -1968,5 +1968,6 @@ void do_init_guild(void)
 void do_final_guild(void) {
 	db_destroy(guild_db);
 	castle_db->destroy(castle_db,guild_castle_db_final);
+	db_destroy(guild_expcache_db);
 	guild_infoevent_db->destroy(guild_infoevent_db,eventlist_db_final);
 }
