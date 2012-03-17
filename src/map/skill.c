@@ -227,6 +227,7 @@ int skill_attack_area(struct block_list *bl,va_list ap);
 struct skill_unit_group *skill_locate_element_field(struct block_list *bl); // [Skotlex]
 int skill_graffitiremover(struct block_list *bl, va_list ap); // [Valaris]
 int skill_greed(struct block_list *bl, va_list ap);
+static void skill_toggle_magicpower(struct block_list *bl, short skillid);
 static int skill_cell_overlap(struct block_list *bl, va_list ap);
 static int skill_trap_splash(struct block_list *bl, va_list ap);
 struct skill_unit_group_tickset *skill_unitgrouptickset_search(struct block_list *bl,struct skill_unit_group *sg,int tick);
@@ -1401,6 +1402,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 			sd->state.autocast = 1;
 			skill_consume_requirement(sd,skill,skilllv,1);
+			skill_toggle_magicpower(src, skill);
 			switch (type) {
 				case CAST_GROUND:
 					skill_castend_pos2(src, tbl->x, tbl->y, skill, skilllv, tick, 0);
@@ -1661,7 +1663,6 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			if( skillid == WZ_WATERBALL ) {//(bugreport:5303)
 				struct status_change *sc = NULL;
 				if( ( sc = status_get_sc(src) ) ) {
-					status_change_end(src, SC_MAGICPOWER, INVALID_TIMER);
 					if(sc->data[SC_SPIRIT] &&
 								sc->data[SC_SPIRIT]->val2 == SL_WIZARD &&
 								sc->data[SC_SPIRIT]->val3 == WZ_WATERBALL)
@@ -2939,7 +2940,6 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 					} else {
 						struct status_change *sc = status_get_sc(src);
 						if(sc) {
-							status_change_end(src, SC_MAGICPOWER, INVALID_TIMER);
 							if(sc->data[SC_SPIRIT] &&
 								sc->data[SC_SPIRIT]->val2 == SL_WIZARD &&
 								sc->data[SC_SPIRIT]->val3 == skl->skill_id)
@@ -2976,7 +2976,6 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 					skill_attack(BF_MAGIC,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
 					if( skl->type >= 3 )
 					{ // Final Hit
-						status_change_end(src,SC_MAGICPOWER,-1); // Removes Magic Power
 						if( !status_isdead(target) )
 						{ // Final Status Effect
 							int effects[4] = { SC_BURNING, SC_FREEZING, SC_BLEEDING, SC_STUN },
@@ -3058,8 +3057,6 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 					break;
 
 			}
-			if( skl->skill_id >= WL_TETRAVORTEX_FIRE && skl->skill_id <= WL_TETRAVORTEX_GROUND )
-				status_change_end(src,SC_MAGICPOWER,-1);
 		}
 	} while (0);
 	//Free skl now that it is no longer needed.
@@ -3995,8 +3992,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 				if( sd->rsb[0].skillid == 0 )
 					status_change_end(src, SC_READING_SB, INVALID_TIMER);
 
-				status_change_end(src, SC_MAGICPOWER, INVALID_TIMER);
-
 				clif_skill_nodamage(src,bl,skillid,skilllv,1);
 				if( !skill_check_condition_castbegin(sd,rsb_skillid,rsb_skilllv) )
 					break;
@@ -4046,8 +4041,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 							swap(positions[i],positions[k]);
 							swap(spheres[i],spheres[k]);
 						}
-
-				status_change_end(src, SC_MAGICPOWER, INVALID_TIMER);
 
 				if( skilllv == 1 ) j = 1; // Limit only to one ball
 				for( i = 0; i < j; i++ )
@@ -8298,6 +8291,10 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 				src->type, src->id, ud->skillid, ud->skilllv, target->id);
 
 		map_freeblock_lock();
+
+		// SC_MAGICPOWER needs to switch states before any damage is actually dealt
+		skill_toggle_magicpower(src, ud->skillid);
+
 		if (skill_get_casttype(ud->skillid) == CAST_NODAMAGE)
 			skill_castend_nodamage_id(src,target,ud->skillid,ud->skilllv,tick,flag);
 		else
@@ -8305,9 +8302,6 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 
 		sc = status_get_sc(src);
 		if(sc && sc->count) {
-		  	if(sc->data[SC_MAGICPOWER] &&
-				ud->skillid != HW_MAGICPOWER && ud->skillid != WZ_WATERBALL && ud->skillid != WL_TETRAVORTEX)
-				status_change_end(src, SC_MAGICPOWER, INVALID_TIMER);
 			if(sc->data[SC_SPIRIT] &&
 				sc->data[SC_SPIRIT]->val2 == SL_WIZARD &&
 				sc->data[SC_SPIRIT]->val3 == ud->skillid &&
@@ -8562,6 +8556,9 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 				clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
 	}
 
+	// SC_MAGICPOWER needs to switch states before any damage is actually dealt
+	skill_toggle_magicpower(src, skillid);
+
 	switch(skillid)
 	{
 	case PR_BENEDICTIO:
@@ -8738,9 +8735,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 			int flag = 0, area = skill_get_splash(skillid, skilllv);
 			short tmpx = 0, tmpy = 0, x1 = 0, y1 = 0;
 
-			if( sc && sc->data[SC_MAGICPOWER] )
-				flag = flag|2; //Store the magic power flag for future use. [Skotlex]
-
 			for( i = 0; i < 2 + (skilllv>>1); i++ )
 			{
 				// Creates a random Cell in the Splash Area
@@ -8751,13 +8745,13 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 					clif_skill_poseffect(src,skillid,skilllv,tmpx,tmpy,tick);
 
 				if( i > 0 )
-					skill_addtimerskill(src,tick+i*1000,0,tmpx,tmpy,skillid,skilllv,(x1<<16)|y1,flag&2); //Only pass the Magic Power flag
+					skill_addtimerskill(src,tick+i*1000,0,tmpx,tmpy,skillid,skilllv,(x1<<16)|y1,0);
 
 				x1 = tmpx;
 				y1 = tmpy;
 			}
 
-			skill_addtimerskill(src,tick+i*1000,0,tmpx,tmpy,skillid,skilllv,-1,flag&2);
+			skill_addtimerskill(src,tick+i*1000,0,tmpx,tmpy,skillid,skilllv,-1,0);
 		}
 		break;
 
@@ -8997,9 +8991,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 			int i, wave = skilllv + 4, dir = map_calc_dir(src,x,y);
 			int sx = x, sy = y;
 
-			if( sc && sc->data[SC_MAGICPOWER] )
-				flag = flag|2; //Store the magic power flag
-
 			for( i = 0; i < wave; i++ )
 			{
 				switch( dir )
@@ -9110,8 +9101,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 		ShowWarning("skill_castend_pos2: Unknown skill used:%d\n",skillid);
 		return 1;
 	}
-
-	status_change_end(src, SC_MAGICPOWER, INVALID_TIMER);
 
 	if( sd )
 	{// ensure that the skill last-cast tick is recorded
@@ -9366,7 +9355,6 @@ static bool skill_dance_switch(struct skill_unit* unit, int flag)
 /*==========================================
  * Initializes and sets a ground skill.
  * flag&1 is used to determine when the skill 'morphs' (Warp portal becomes active, or Fire Pillar becomes active)
- * flag&2 is used to determine if this skill was casted with Magic Power active.
  *------------------------------------------*/
 struct skill_unit_group* skill_unitsetting (struct block_list *src, short skillid, short skilllv, short x, short y, int flag)
 {
@@ -9643,7 +9631,6 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 	group->val3=val3;
 	group->target_flag=target;
 	group->bl_flag= skill_get_unit_bl_target(skillid);
-	group->state.magic_power = (flag&2 || (sc && sc->data[SC_MAGICPOWER])); //Store the magic power flag. [Skotlex]
 	group->state.ammo_consume = (sd && sd->state.arrow_atk && skillid != GS_GROUNDDRIFT); //Store if this skill needs to consume ammo.
 	group->state.song_dance = (unit_flag&(UF_DANCE|UF_SONG)?1:0)|(unit_flag&UF_ENSEMBLE?2:0); //Signals if this is a song/dance/duet
 
@@ -9967,8 +9954,8 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 	struct skill_unit_group *sg;
 	struct block_list *ss;
 	TBL_PC* tsd;
-	struct status_data *tstatus, *sstatus;
-	struct status_change *tsc, *sc;
+	struct status_data *tstatus;
+	struct status_change *tsc;
 	struct skill_unit_group_tickset *ts;
 	enum sc_type type;
 	int skillid;
@@ -9985,14 +9972,6 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 	tsd = BL_CAST(BL_PC, bl);
 	tsc = status_get_sc(bl);
 	tstatus = status_get_status_data(bl);
-	if (sg->state.magic_power)  //For magic power.
-	{
-		sc = status_get_sc(ss);
-		sstatus = status_get_status_data(ss);
-	} else {
-		sc = NULL;
-		sstatus = NULL;
-	}
 	type = status_skill2sc(sg->skill_id);
 	skillid = sg->skill_id;
 
@@ -10018,13 +9997,6 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 
 		if ((skillid==CR_GRANDCROSS || skillid==NPC_GRANDDARKNESS) && !battle_config.gx_allhit)
 			ts->tick += sg->interval*(map_count_oncell(bl->m,bl->x,bl->y,BL_CHAR)-1);
-	}
-	//Temporarily set magic power to have it take effect. [Skotlex]
-	if (sg->state.magic_power && sc && !sc->data[SC_MAGICPOWER])
-	{	//Store previous values.
-		swap(sstatus->matk_min, sc->mp_matk_min);
-		swap(sstatus->matk_max, sc->mp_matk_max);
-		//Note to NOT return from the function until this is unset!
 	}
 
 	switch (sg->unit_id)
@@ -10476,12 +10448,6 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			}
 			break;
 
-	}
-
-	if (sg->state.magic_power && sc && !sc->data[SC_MAGICPOWER])
-	{	//Unset magic power.
-		swap(sstatus->matk_min, sc->mp_matk_min);
-		swap(sstatus->matk_max, sc->mp_matk_max);
 	}
 
 	if (bl->type == BL_MOB && ss != bl)
@@ -14564,6 +14530,30 @@ int skill_poisoningweapon( struct map_session_data *sd, int nameid) {
 
 	return 0;
 }
+
+static void skill_toggle_magicpower(struct block_list *bl, short skillid)
+{
+	struct status_change *sc = status_get_sc(bl);
+
+	// non-offensive and non-magic skills do not affect the status
+	if (skill_get_nk(skillid)&NK_NO_DAMAGE || !(skill_get_type(skillid)&BF_MAGIC))
+		return;
+
+	if (sc && sc->count && sc->data[SC_MAGICPOWER])
+	{
+		if (sc->data[SC_MAGICPOWER]->val4)
+		{
+			status_change_end(bl, SC_MAGICPOWER, INVALID_TIMER);
+		}
+		else
+		{
+			sc->data[SC_MAGICPOWER]->val4 = 1;
+			status_calc_bl(bl, status_sc2scb_flag(SC_MAGICPOWER));
+		}
+	}
+}
+
+
 int skill_magicdecoy(struct map_session_data *sd, int nameid) {
 	int x, y, i, class_, skill;
 	struct mob_data *md;
@@ -14599,6 +14589,7 @@ int skill_magicdecoy(struct map_session_data *sd, int nameid) {
 
 	return 0;
 }
+
 // Warlock Spellbooks. [LimitLine/3CeAM]
 int skill_spellbook (struct map_session_data *sd, int nameid) {
 	int i, j, points, skillid, preserved = 0, max_preserve;

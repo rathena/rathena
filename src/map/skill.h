@@ -154,7 +154,6 @@ struct skill_unit_group {
 	struct skill_unit *unit;
 	struct {
 		unsigned ammo_consume : 1;
-		unsigned magic_power : 1;
 		unsigned song_dance : 2; //0x1 Song/Dance, 0x2 Ensemble
 	} state;
 };
