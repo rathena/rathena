@@ -864,6 +864,14 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_DEATHHURT] |= SCB_REGEN;
 	StatusChangeFlagTable[SC_VENOMBLEED] |= SCB_MAXHP;
 	StatusChangeFlagTable[SC_OBLIVIONCURSE] |= SCB_REGEN;
+
+	StatusChangeFlagTable[SC_SAVAGE_STEAK] |= SCB_STR;
+	StatusChangeFlagTable[SC_COCKTAIL_WARG_BLOOD] |= SCB_INT;
+	StatusChangeFlagTable[SC_MINOR_BBQ] |= SCB_VIT;
+	StatusChangeFlagTable[SC_SIROMA_ICE_TEA] |= SCB_DEX;
+	StatusChangeFlagTable[SC_DROCERA_HERB_STEAMED] |= SCB_AGI;
+	StatusChangeFlagTable[SC_PUTTI_TAILS_NOODLES] |= SCB_LUK;
+
 #if RE_EDP
 	/**
 	 * In RE EDP increases your atk and weapon atk
@@ -7742,7 +7750,10 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_STONE:  sc->opt1 = OPT1_STONEWAIT; break;
 		case SC_FREEZE: sc->opt1 = OPT1_FREEZE;    break;
 		case SC_STUN:   sc->opt1 = OPT1_STUN;      break;
-		case SC_SLEEP:  sc->opt1 = OPT1_SLEEP;     break;
+		case SC_SLEEP:
+		case SC_DEEPSLEEP:
+			sc->opt1 = OPT1_SLEEP;
+			break;
 		case SC_BURNING:  sc->opt1 = OPT1_BURNING;   break; // Burning need this to be showed correctly. [pakpil]
 		case SC_WHITEIMPRISON: sc->opt1 = OPT1_IMPRISON;  break;
 		//OPT2
@@ -8545,6 +8556,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	case SC_FREEZE:
 	case SC_STUN:
 	case SC_SLEEP:
+	case SC_DEEPSLEEP:
 	case SC_BURNING:
 		sc->opt1 = 0;
 		break;
