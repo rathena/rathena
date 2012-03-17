@@ -8730,13 +8730,11 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 		map_foreachinarea(skill_graffitiremover,src->m,x-i,y-i,x+i,y+i,BL_SKILL);
 		break;
 
-	case WZ_METEOR:
-		{
-			int flag = 0, area = skill_get_splash(skillid, skilllv);
+	case WZ_METEOR: {
+			int area = skill_get_splash(skillid, skilllv);
 			short tmpx = 0, tmpy = 0, x1 = 0, y1 = 0;
 
-			for( i = 0; i < 2 + (skilllv>>1); i++ )
-			{
+			for( i = 0; i < 2 + (skilllv>>1); i++ ) {
 				// Creates a random Cell in the Splash Area
 				tmpx = x - area + rnd()%(area * 2 + 1);
 				tmpy = y - area + rnd()%(area * 2 + 1);
