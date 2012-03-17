@@ -49,7 +49,6 @@ struct guild_expcache {
 	int guild_id, account_id, char_id;
 	uint64 exp;
 };
-static struct eri *expcache_ers; //For handling of guild exp payment.
 
 #define MAX_GUILD_SKILL_REQUIRE 5
 struct{
@@ -298,7 +297,7 @@ int guild_payexp_timer_sub(DBKey key, DBData *data, va_list ap)
 		(g = guild_search(c->guild_id)) == NULL ||
 		(i = guild_getindex(g, c->account_id, c->char_id)) < 0
 	) {
-		ers_free(expcache_ers, data);
+		db_remove(guild_expcache_db, db_i2key(c->char_id));
 		return 0;
 	}
 
@@ -311,7 +310,7 @@ int guild_payexp_timer_sub(DBKey key, DBData *data, va_list ap)
 		GMI_EXP,&g->member[i].exp,sizeof(g->member[i].exp));
 	c->exp=0;
 
-	ers_free(expcache_ers, data);
+	db_remove(guild_expcache_db, db_i2key(c->char_id));
 	return 0;
 }
 
@@ -1134,16 +1133,17 @@ int guild_emblem_changed(int len,int guild_id,int emblem_id,const char *data)
 /**
  * @see DBCreateData
  */
-static DBData create_expcache(DBKey key, va_list args)
-{
+static DBData create_expcache(DBKey key, va_list args) {
 	struct guild_expcache *c;
 	struct map_session_data *sd = va_arg(args, struct map_session_data*);
 
-	c = ers_alloc(expcache_ers, struct guild_expcache);
+	CREATE(c, struct guild_expcache, 1);
+
 	c->guild_id = sd->status.guild_id;
 	c->account_id = sd->status.account_id;
 	c->char_id = sd->status.char_id;
 	c->exp = 0;
+	
 	return db_ptr2data(c);
 }
 
@@ -1189,6 +1189,7 @@ int guild_getexp(struct map_session_data *sd,int exp)
 		return 0;
 
 	c = db_data2ptr(guild_expcache_db->ensure(guild_expcache_db, db_i2key(sd->status.char_id), create_expcache, sd));
+
 	if (c->exp > UINT64_MAX - exp)
 		c->exp = UINT64_MAX;
 	else
@@ -1937,15 +1938,6 @@ static int eventlist_db_final(DBKey key, DBData *data, va_list ap)
 /**
  * @see DBApply
  */
-static int guild_expcache_db_final(DBKey key, DBData *data, va_list ap)
-{
-	ers_free(expcache_ers, db_data2ptr(data));
-	return 0;
-}
-
-/**
- * @see DBApply
- */
 static int guild_castle_db_final(DBKey key, DBData *data, va_list ap)
 {
 	struct guild_castle* gc = db_data2ptr(data);
@@ -1959,9 +1951,8 @@ void do_init_guild(void)
 {
 	guild_db=idb_alloc(DB_OPT_RELEASE_DATA);
 	castle_db=idb_alloc(DB_OPT_BASE);
-	guild_expcache_db=idb_alloc(DB_OPT_BASE);
+	guild_expcache_db=idb_alloc(DB_OPT_RELEASE_DATA);
 	guild_infoevent_db=idb_alloc(DB_OPT_BASE);
-	expcache_ers = ers_new(sizeof(struct guild_expcache)); 
 
 	sv_readdb(db_path, "castle_db.txt", ',', 4, 5, -1, &guild_read_castledb);
 
@@ -1974,11 +1965,8 @@ void do_init_guild(void)
 	add_timer_interval(gettick()+GUILD_SEND_XY_INVERVAL,guild_send_xy_timer,0,0,GUILD_SEND_XY_INVERVAL);
 }
 
-void do_final_guild(void)
-{
+void do_final_guild(void) {
 	db_destroy(guild_db);
 	castle_db->destroy(castle_db,guild_castle_db_final);
-	guild_expcache_db->destroy(guild_expcache_db,guild_expcache_db_final);
 	guild_infoevent_db->destroy(guild_infoevent_db,eventlist_db_final);
-	ers_destroy(expcache_ers);
 }
