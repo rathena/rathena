@@ -9996,6 +9996,10 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 	nullpo_ret(ss=map_id2bl(sg->src_id));
 	tsd = BL_CAST(BL_PC, bl);
 	tsc = status_get_sc(bl);
+	
+	if ( tsc && tsc->data[SC_HOVERING] )
+		return 0; //Under hovering characters are immune to trap and ground target skills.
+
 	tstatus = status_get_status_data(bl);
 	type = status_skill2sc(sg->skill_id);
 	skillid = sg->skill_id;
