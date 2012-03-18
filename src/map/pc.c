@@ -5621,7 +5621,7 @@ int pc_allskillup(struct map_session_data *sd)
 					continue;
 				default:
 					if( !(skill_get_inf2(i)&(INF2_NPC_SKILL|INF2_GUILD_SKILL)) )
-						if (sd->status.skill[i].lv=skill_get_max(i))//Nonexistant skills should return a max of 0 anyway.
+						if ( ( sd->status.skill[i].lv = skill_get_max(i) ) )//Nonexistant skills should return a max of 0 anyway.
 							sd->status.skill[i].id = i;
 			}
 		}
