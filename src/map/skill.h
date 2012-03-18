@@ -155,6 +155,7 @@ struct skill_unit_group {
 	struct {
 		unsigned ammo_consume : 1;
 		unsigned song_dance : 2; //0x1 Song/Dance, 0x2 Ensemble
+		unsigned guildaura : 1;
 	} state;
 };
 
@@ -1558,6 +1559,14 @@ enum {
 	UNT_WATER_INSIGNIA, //TODO
 	UNT_WIND_INSIGNIA, //TODO
 	UNT_EARTH_INSIGNIA, //TODO
+	
+	/**
+	 * Guild Auras
+	 **/
+	UNT_GD_LEADERSHIP = 0xc1,
+	UNT_GD_GLORYWOUNDS = 0xc2,
+	UNT_GD_SOULCOLD = 0xc3,
+	UNT_GD_HAWKEYES = 0xc4,
 
 	UNT_MAX = 0x190
 };

@@ -567,7 +567,11 @@ typedef enum sc_type {
 	SC_TIDAL_WEAPON_OPTION,//505
 	SC_ROCK_CRUSHER,
 	SC_ROCK_CRUSHER_ATK,
-
+	/* Guild Aura */
+	SC_LEADERSHIP,
+	SC_GLORYWOUNDS,
+	SC_SOULCOLD, //510
+	SC_HAWKEYES,
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;
 

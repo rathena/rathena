@@ -415,16 +415,25 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 	if (bl->type&BL_CHAR) {
 		skill_unit_move(bl,tick,3);
 		sc = status_get_sc(bl);
-		if (sc) {
-			if (sc->count) {
-				if (sc->data[SC_CLOAKING])
-					skill_check_cloaking(bl, sc->data[SC_CLOAKING]);
-				if (sc->data[SC_DANCING])
-					skill_unit_move_unit_group(skill_id2group(sc->data[SC_DANCING]->val2), bl->m, x1-x0, y1-y0);
-				if (sc->data[SC_WARM])
-					skill_unit_move_unit_group(skill_id2group(sc->data[SC_WARM]->val4), bl->m, x1-x0, y1-y0);
-				if (sc->data[SC_BANDING])
-					skill_unit_move_unit_group(skill_id2group(sc->data[SC_BANDING]->val4), bl->m, x1-x0, y1-y0);
+		if (sc && sc->count) {
+			if (sc->data[SC_CLOAKING])
+				skill_check_cloaking(bl, sc->data[SC_CLOAKING]);
+			if (sc->data[SC_DANCING])
+				skill_unit_move_unit_group(skill_id2group(sc->data[SC_DANCING]->val2), bl->m, x1-x0, y1-y0);
+			if (sc->data[SC_WARM])
+				skill_unit_move_unit_group(skill_id2group(sc->data[SC_WARM]->val4), bl->m, x1-x0, y1-y0);
+			if (sc->data[SC_BANDING])
+				skill_unit_move_unit_group(skill_id2group(sc->data[SC_BANDING]->val4), bl->m, x1-x0, y1-y0);
+			/* Guild Aura Moving */
+			if( bl->type == BL_PC && ((TBL_PC*)bl)->state.gmaster_flag ) {
+				if (sc->data[SC_LEADERSHIP])
+					skill_unit_move_unit_group(skill_id2group(sc->data[SC_LEADERSHIP]->val4), bl->m, x1-x0, y1-y0);
+				if (sc->data[SC_GLORYWOUNDS])
+					skill_unit_move_unit_group(skill_id2group(sc->data[SC_GLORYWOUNDS]->val4), bl->m, x1-x0, y1-y0);
+				if (sc->data[SC_SOULCOLD])
+					skill_unit_move_unit_group(skill_id2group(sc->data[SC_SOULCOLD]->val4), bl->m, x1-x0, y1-y0);
+				if (sc->data[SC_HAWKEYES])
+					skill_unit_move_unit_group(skill_id2group(sc->data[SC_HAWKEYES]->val4), bl->m, x1-x0, y1-y0);
 			}
 		}
 	} else
@@ -1643,15 +1652,17 @@ int map_quit(struct map_session_data *sd)
 	//Unit_free handles clearing the player related data, 
 	//map_quit handles extra specific data which is related to quitting normally
 	//(changing map-servers invokes unit_free but bypasses map_quit)
-	if( sd->sc.count )
-	{
+	if( sd->sc.count ) {
 		//Status that are not saved...
 		status_change_end(&sd->bl, SC_BOSSMAPINFO, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_AUTOTRADE, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_SPURT, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_BERSERK, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_TRICKDEAD, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_GUILDAURA, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_LEADERSHIP, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_GLORYWOUNDS, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_SOULCOLD, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_HAWKEYES, INVALID_TIMER);
 		if(sd->sc.data[SC_ENDURE] && sd->sc.data[SC_ENDURE]->val4)
 			status_change_end(&sd->bl, SC_ENDURE, INVALID_TIMER); //No need to save infinite endure.
 		status_change_end(&sd->bl, SC_WEIGHT50, INVALID_TIMER);

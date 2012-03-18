@@ -183,29 +183,6 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 		{// mercenary is too far from the master so warp the master's position
 			unit_warp( &sd->md->bl, sd->bl.m, sd->bl.x, sd->bl.y, CLR_TELEPORT );
 		}
-
-		if (sd->state.gmaster_flag &&
-			(battle_config.guild_aura&((agit_flag || agit2_flag)?2:1)) &&
-			(battle_config.guild_aura&(map_flag_gvg2(bl->m)?8:4))
-		)
-		{ //Guild Aura: Likely needs to be recoded, this method seems inefficient.
-			struct guild *g = sd->state.gmaster_flag;
-			int skill, strvit= 0, agidex = 0;
-			if ((skill = guild_checkskill(g, GD_LEADERSHIP)) > 0) strvit |= (skill&0xFFFF)<<16;
-			if ((skill = guild_checkskill(g, GD_GLORYWOUNDS)) > 0) strvit |= (skill&0xFFFF);
-			if ((skill = guild_checkskill(g, GD_SOULCOLD)) > 0) agidex |= (skill&0xFFFF)<<16;
-			if ((skill = guild_checkskill(g, GD_HAWKEYES)) > 0) agidex |= (skill&0xFFFF);
-			if (strvit || agidex)
-			{// replaced redundant foreachinrange call with smaller and much more efficient iteration
-				for( i = 0; i < g->max_member; i++ )
-				{
-					if( g->member[i].online && g->member[i].sd && sd->bl.m == g->member[i].sd->bl.m && check_distance_bl(&sd->bl, &g->member[i].sd->bl, 2) )
-					{// perform the aura on the member as appropriate
-						skill_guildaura_sub(g->member[i].sd, sd->bl.id, strvit, agidex);
-					}
-				}
-			}
-		}
 	} else if (md) {
 		if( map_getcell(bl->m,x,y,CELL_CHKNPC) ) {
 			if( npc_touch_areanpc2(md) ) return 0; // Warped

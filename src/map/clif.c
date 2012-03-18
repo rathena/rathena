@@ -4314,6 +4314,9 @@ static void clif_getareachar_skillunit(struct map_session_data *sd, struct skill
 {
 	int fd = sd->fd;
 
+	if( unit->group->state.guildaura )
+		return;
+
 #if PACKETVER >= 3
 	if(unit->group->unit_id==UNT_GRAFFITI)	{ // Graffiti [Valaris]
 		WFIFOHEAD(fd,packet_len(0x1c9));
@@ -5006,6 +5009,9 @@ void clif_skill_setunit(struct skill_unit *unit)
 	unsigned char buf[128];
 
 	nullpo_retv(unit);
+
+	if( unit->group->state.guildaura )
+		return;
 
 #if PACKETVER >= 3
 	if(unit->group->unit_id==UNT_GRAFFITI)	{ // Graffiti [Valaris]
@@ -9181,6 +9187,14 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	}
 	
 	mail_clear(sd);
+
+	/* Guild Aura Init */
+	if( sd->state.gmaster_flag ) {
+		guild_guildaura_refresh(sd,GD_LEADERSHIP,guild_checkskill(sd->state.gmaster_flag,GD_LEADERSHIP));
+		guild_guildaura_refresh(sd,GD_GLORYWOUNDS,guild_checkskill(sd->state.gmaster_flag,GD_GLORYWOUNDS));
+		guild_guildaura_refresh(sd,GD_SOULCOLD,guild_checkskill(sd->state.gmaster_flag,GD_SOULCOLD));
+		guild_guildaura_refresh(sd,GD_HAWKEYES,guild_checkskill(sd->state.gmaster_flag,GD_HAWKEYES));
+	}
 
 	if(map[sd->bl.m].flag.loadevent) // Lance
 		npc_script_event(sd, NPCE_LOADMAP);

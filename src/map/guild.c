@@ -286,8 +286,7 @@ void guild_makemember(struct guild_member *m,struct map_session_data *sd)
  *  ギルドのEXPキャッシュをinter鯖にフラッシュする
  * @see DBApply
  */
-int guild_payexp_timer_sub(DBKey key, DBData *data, va_list ap)
-{
+int guild_payexp_timer_sub(DBKey key, DBData *data, va_list ap) {
 	int i;
 	struct guild_expcache *c;
 	struct guild *g;
@@ -1225,15 +1224,45 @@ int guild_skillupack(int guild_id,int skill_num,int account_id)
 	int i;
 	if(g==NULL)
 		return 0;
-	if(sd!=NULL)
+	if( sd != NULL ) {
 		clif_guild_skillup(sd,skill_num,g->skill[skill_num-GD_SKILLBASE].lv);
+
+		/* Guild Aura handling */
+		switch( skill_num ) {
+			case GD_LEADERSHIP:
+			case GD_GLORYWOUNDS:
+			case GD_SOULCOLD:
+			case GD_HAWKEYES:
+					guild_guildaura_refresh(sd,skill_num,g->skill[skill_num-GD_SKILLBASE].lv);
+				break;
+		}
+	}
+
 	// 全員に通知
 	for(i=0;i<g->max_member;i++)
 		if((sd=g->member[i].sd)!=NULL)
 			clif_guild_skillinfo(sd);
+
 	return 0;
 }
-
+void guild_guildaura_refresh(struct map_session_data *sd, int skill_num, int skill_lv) {
+	struct skill_unit_group* group = NULL;
+	int type = status_skill2sc(skill_num);
+	if( !(battle_config.guild_aura&((agit_flag || agit2_flag)?2:1)) &&
+			!(battle_config.guild_aura&(map_flag_gvg2(sd->bl.m)?8:4)) )
+		return;
+	if( skill_lv <= 0 )
+		return;
+	if( sd->sc.data[type] && (group = skill_id2group(sd->sc.data[type]->val4)) ) {
+		skill_delunitgroup(group);
+		status_change_end(&sd->bl,type,INVALID_TIMER);
+	}
+	group = skill_unitsetting(&sd->bl,skill_num,skill_lv,sd->bl.x,sd->bl.y,0);
+	if( group ) {
+		sc_start4(&sd->bl,type,100,(battle_config.guild_aura&16)?0:skill_lv,0,0,group->group_id,600000);//duration doesn't matter these status never end with val4
+	}
+	return;
+}
 // ギルド同盟数所得
 int guild_get_alliance_count(struct guild *g,int flag)
 {

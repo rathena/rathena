@@ -5919,7 +5919,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				case SC_INTFOOD:		case SC_DEXFOOD:		case SC_LUKFOOD:
 				case SC_HITFOOD:		case SC_FLEEFOOD:		case SC_BATKFOOD:
 				case SC_WATKFOOD:		case SC_MATKFOOD:		case SC_DANCING:
-				case SC_GUILDAURA:		case SC_EDP:			case SC_AUTOBERSERK:
+				case SC_EDP:			case SC_AUTOBERSERK:
 				case SC_CARTBOOST:		case SC_MELTDOWN:		case SC_SAFETYWALL:
 				case SC_SMA:			case SC_SPEEDUP0:		case SC_NOCHAT:
 				case SC_ANKLE:			case SC_SPIDERWEB:		case SC_JAILED:
@@ -5942,9 +5942,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				//case SC_SAVAGE_STEAK:			case SC_COCKTAIL_WARG_BLOOD:		case SC_MINOR_BBQ:
 				//case SC_SIROMA_ICE_TEA:			case SC_DROCERA_HERB_STEAMED:		case SC_PUTTI_TAILS_NOODLES:
 				case SC_NEUTRALBARRIER_MASTER:		case SC_NEUTRALBARRIER:			case SC_STEALTHFIELD_MASTER:
-				case SC_STEALTHFIELD:			case SC_GIANTGROWTH:			case SC_MILLENNIUMSHIELD:
-				case SC_REFRESH:			case SC_STONEHARDSKIN:			case SC_VITALITYACTIVATION:
-				case SC_FIGHTINGSPIRIT:			case SC_ABUNDANCE:			case SC__SHADOWFORM:
+				case SC_STEALTHFIELD:	case SC_GIANTGROWTH:	case SC_MILLENNIUMSHIELD:
+				case SC_REFRESH:		case SC_STONEHARDSKIN:	case SC_VITALITYACTIVATION:
+				case SC_FIGHTINGSPIRIT:	case SC_ABUNDANCE:		case SC__SHADOWFORM:
+				case SC_LEADERSHIP:		case SC_GLORYWOUNDS:	case SC_SOULCOLD:
+				case SC_HAWKEYES:		case SC_GUILDAURA:
 					continue;
 				/**
 				 * bugreport:4888 these songs may only be dispelled if you're not in their song area anymore
@@ -7239,7 +7241,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				case SC_INTFOOD:     case SC_DEXFOOD:     case SC_LUKFOOD:
 				case SC_HITFOOD:     case SC_FLEEFOOD:    case SC_BATKFOOD:
 				case SC_WATKFOOD:    case SC_MATKFOOD:    case SC_DANCING:
-				case SC_GUILDAURA:   case SC_SPIRIT:      case SC_AUTOBERSERK:
+				case SC_SPIRIT:      case SC_AUTOBERSERK:
 				case SC_CARTBOOST:   case SC_MELTDOWN:    case SC_SAFETYWALL:
 				case SC_SMA:         case SC_SPEEDUP0:    case SC_NOCHAT:
 				case SC_ANKLE:       case SC_SPIDERWEB:   case SC_JAILED:
@@ -7267,6 +7269,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				//case SC_DROCERA_HERB_STEAMED: case SC_PUTTI_TAILS_NOODLES:
 				case SC_NEUTRALBARRIER_MASTER: case SC_NEUTRALBARRIER:
 				case SC_STEALTHFIELD_MASTER: case SC_STEALTHFIELD:
+				case SC_LEADERSHIP:		case SC_GLORYWOUNDS:	case SC_SOULCOLD:
+				case SC_HAWKEYES:		case SC_GUILDAURA:
 					continue;
 				case SC_ASSUMPTIO:
 					if( bl->type == BL_MOB )
@@ -9611,6 +9615,12 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 		val2 = sc->data[SC_POISONINGWEAPON]->val2; // Type of Poison
 		limit = 4000 + 2000 * skilllv;
 		break;
+	case GD_LEADERSHIP:
+	case GD_GLORYWOUNDS:
+	case GD_SOULCOLD:
+	case GD_HAWKEYES:
+		limit = 1000000;//it doesn't matter
+		break;
 	case LG_BANDING:
 		limit = -1;
 		break;
@@ -9631,7 +9641,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 	group->bl_flag= skill_get_unit_bl_target(skillid);
 	group->state.ammo_consume = (sd && sd->state.arrow_atk && skillid != GS_GROUNDDRIFT); //Store if this skill needs to consume ammo.
 	group->state.song_dance = (unit_flag&(UF_DANCE|UF_SONG)?1:0)|(unit_flag&UF_ENSEMBLE?2:0); //Signals if this is a song/dance/duet
-
+	group->state.guildaura = ( skillid >= GD_LEADERSHIP && skillid <= GD_HAWKEYES )?1:0;
   	//if tick is greater than current, do not invoke onplace function just yet. [Skotlex]
 	if (DIFF_TICK(group->tick, gettick()) > SKILLUNITTIMER_INTERVAL)
 		active_flag = 0;
@@ -9939,6 +9949,14 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 		if (ss == bl) //Also needed to prevent infinite loop crash.
 			break;
 		skill_blown(ss,bl,skill_get_blewcount(sg->skill_id,sg->skill_lv),unit_getdir(bl),0);
+		break;
+
+	case UNT_GD_LEADERSHIP:
+	case UNT_GD_GLORYWOUNDS:
+	case UNT_GD_SOULCOLD:
+	case UNT_GD_HAWKEYES:
+		if ( !sce )
+			sc_start4(bl,type,100,sg->skill_lv,0,0,0,1000);
 		break;
 	}
 	return skillid;
@@ -10593,6 +10611,13 @@ static int skill_unit_onleft (int skill_id, struct block_list *bl, unsigned int 
 					}
 				}
 			}
+			break;
+		case GD_LEADERSHIP:
+		case GD_GLORYWOUNDS:
+		case GD_SOULCOLD:
+		case GD_HAWKEYES:
+			if( !(sce && sce->val4) )
+				status_change_end(bl, type, INVALID_TIMER);
 			break;
 	}
 
@@ -13560,7 +13585,7 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 	nullpo_ret(group);
 
 	// check for expiration
-	if( (DIFF_TICK(tick,group->tick) >= group->limit || DIFF_TICK(tick,group->tick) >= unit->limit) )
+	if( !group->state.guildaura && (DIFF_TICK(tick,group->tick) >= group->limit || DIFF_TICK(tick,group->tick) >= unit->limit) )
 	{// skill unit expired (inlined from skill_unit_onlimit())
 		switch( group->unit_id )
 		{
@@ -15447,6 +15472,7 @@ static bool skill_parse_row_unitdb(char* split[], int columns, int current)
 	else if( strcmpi(split[6],"friend")==0 ) skill_db[i].unit_target = BCT_NOENEMY;
 	else if( strcmpi(split[6],"party")==0 ) skill_db[i].unit_target = BCT_PARTY;
 	else if( strcmpi(split[6],"ally")==0 ) skill_db[i].unit_target = BCT_PARTY|BCT_GUILD;
+	else if( strcmpi(split[6],"guild")==0 ) skill_db[i].unit_target = BCT_GUILD;
 	else if( strcmpi(split[6],"all")==0 ) skill_db[i].unit_target = BCT_ALL;
 	else if( strcmpi(split[6],"enemy")==0 ) skill_db[i].unit_target = BCT_ENEMY;
 	else if( strcmpi(split[6],"self")==0 ) skill_db[i].unit_target = BCT_SELF;
