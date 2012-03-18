@@ -8493,8 +8493,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_WHITEIMPRISON:
 			if( tid == -1 )
 				break; // Terminated by Damage
-			clif_damage(bl,bl,0,0,0,400*sce->val1,0,0,0);
-			status_zap(bl,400*sce->val1,0);
+			status_fix_damage(bl,bl,400*sce->val1,clif_damage(bl,bl,gettick(),0,0,400*sce->val1,0,0,0));
 			break;
 		case SC_WUGDASH:
 			{
@@ -8570,6 +8569,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	case SC_SLEEP:
 	case SC_DEEPSLEEP:
 	case SC_BURNING:
+	case SC_WHITEIMPRISON:
 		sc->opt1 = 0;
 		break;
 
