@@ -1406,7 +1406,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	{	//Hit/Flee calculation
 		short
 			flee = tstatus->flee,
-			hitrate=80; //Default hitrate
+#if REMODE
+				hitrate = 0; //Default hitrate
+#else
+				hitrate = 80; //Default hitrate
+#endif
 
 		if(battle_config.agi_penalty_type &&
 			battle_config.agi_penalty_target&target->type)
