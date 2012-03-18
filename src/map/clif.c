@@ -8947,6 +8947,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_changemap(sd, sd->mapindex, sd->bl.x, sd->bl.y);
 		return;
 	}
+	
+	sd->state.warping = 0;
 
 	// look
 #if PACKETVER < 4
@@ -9216,9 +9218,11 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	// If player is dead, and is spawned (such as @refresh) send death packet. [Valaris]
 	if(pc_isdead(sd))
 		clif_clearunit_area(&sd->bl, CLR_DEAD);
+	else {
+		skill_usave_trigger(sd);
 // Uncomment if you want to make player face in the same direction he was facing right before warping. [Skotlex]
-//	else
 //		clif_changed_dir(&sd->bl, SELF);
+	}
 
 //	Trigger skill effects if you appear standing on them
 	if(!battle_config.pc_invincible_time)

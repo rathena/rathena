@@ -1571,6 +1571,11 @@ enum {
 	UNT_MAX = 0x190
 };
 /**
+ * Skill Unit Save
+ **/
+void skill_usave_add(struct map_session_data * sd, int skill_num, int skill_lv);
+void skill_usave_trigger(struct map_session_data *sd);
+/**
  * Skill Cool Downs - load from pc.c when the character logs in
  **/
 void skill_cooldown_load(struct map_session_data * sd);

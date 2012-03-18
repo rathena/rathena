@@ -4372,6 +4372,7 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 	}
 
 	sd->state.changemap = (sd->mapindex != mapindex);
+	sd->state.warping = 1;
 	if( sd->state.changemap )
 	{ // Misc map-changing settings
 		sd->state.pmap = sd->bl.m;

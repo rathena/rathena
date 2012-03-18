@@ -71,6 +71,14 @@ struct skill_cd {
 	unsigned char cursor;
 };
 
+/**
+ * Skill Unit Persistency during endack routes (mostly for songs see bugreport:4574)
+ **/
+DBMap* skillusave_db = NULL; // char_id -> struct skill_usave
+struct skill_usave {
+	int skill_num, skill_lv;
+};
+
 struct s_skill_db skill_db[MAX_SKILL_DB];
 struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
 struct s_skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
@@ -10487,7 +10495,7 @@ int skill_unit_onout (struct skill_unit *src, struct block_list *bl, unsigned in
 	sc = status_get_sc(bl);
 	type = status_skill2sc(sg->skill_id);
 	sce = (sc && type != -1)?sc->data[type]:NULL;
-
+	
 	if( bl->prev==NULL ||
 		(status_isdead(bl) && sg->unit_id != UNT_ANKLESNARE && sg->unit_id != UNT_SPIDERWEB) ) //Need to delete the trap if the source died.
 		return 0;
@@ -13375,7 +13383,7 @@ int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int li
 	struct block_list* src;
 	struct unit_data *ud;
 	int i,j;
-
+	
 	if( group == NULL )
 	{
 		ShowDebug("skill_delunitgroup: group is NULL (source=%s:%d, %s)! Please report this! (#3504)\n", file, line, func);
@@ -13388,6 +13396,24 @@ int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int li
 		ShowError("skill_delunitgroup: Group's source not found! (src_id: %d skill_id: %d)\n", group->src_id, group->skill_id);
 		return 0;
 	}
+
+	if( !status_isdead(src) && ((TBL_PC*)src)->state.warping && !((TBL_PC*)src)->state.changemap ) {
+		switch( group->skill_id ) {
+			case BA_DISSONANCE:
+			case BA_POEMBRAGI:
+			case BA_WHISTLE:
+			case BA_ASSASSINCROSS:
+			case BA_APPLEIDUN:
+			case DC_UGLYDANCE:
+			case DC_HUMMING:
+			case DC_DONTFORGETME:
+			case DC_FORTUNEKISS:
+			case DC_SERVICEFORYOU:
+				skill_usave_add(((TBL_PC*)src), group->skill_id, group->skill_lv);
+				break;
+		}
+	}
+
 	if (skill_get_unit_flag(group->skill_id)&(UF_DANCE|UF_SONG|UF_ENSEMBLE))
 	{
 		struct status_change* sc = status_get_sc(src);
@@ -14856,7 +14882,37 @@ int skill_blockmerc_start(struct mercenary_data *md, int skillid, int tick)
 	md->blockskill[skillid] = 1;
 	return add_timer(gettick() + tick, skill_blockmerc_end, md->bl.id, skillid);
 }
+/**
+ * Adds a new skill unit entry for this player to recast after map load
+ **/
+void skill_usave_add(struct map_session_data * sd, int skill_num, int skill_lv) {
+	struct skill_usave * sus = NULL;
 
+	if( idb_exists(skillusave_db,sd->status.char_id) ) {
+		idb_remove(skillusave_db,sd->status.char_id);
+	}
+	
+	CREATE( sus, struct skill_usave, 1 );
+	idb_put( skillusave_db, sd->status.char_id, sus );
+
+	sus->skill_num = skill_num;
+	sus->skill_lv = skill_lv;
+	
+	return;
+}
+void skill_usave_trigger(struct map_session_data *sd) {
+	struct skill_usave * sus = NULL;
+
+	if( ! (sus = idb_get(skillusave_db,sd->status.char_id)) ) {
+		return;
+	}
+	
+	skill_unitsetting(&sd->bl,sus->skill_num,sus->skill_lv,sd->bl.x,sd->bl.y,0);
+
+	idb_remove(skillusave_db,sd->status.char_id);
+	
+	return;
+}
 /*
  *
  */
@@ -15699,6 +15755,7 @@ int do_init_skill (void)
 	group_db = idb_alloc(DB_OPT_BASE);
 	skillunit_db = idb_alloc(DB_OPT_BASE);
 	skillcd_db = idb_alloc(DB_OPT_RELEASE_DATA);
+	skillusave_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	skill_unit_ers = ers_new(sizeof(struct skill_unit_group));
 	skill_timer_ers  = ers_new(sizeof(struct skill_timerskill));
 
@@ -15719,6 +15776,7 @@ int do_final_skill(void)
 	db_destroy(group_db);
 	db_destroy(skillunit_db);
 	db_destroy(skillcd_db);
+	db_destroy(skillusave_db);
 	ers_destroy(skill_unit_ers);
 	ers_destroy(skill_timer_ers);
 	return 0;
