@@ -588,6 +588,20 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 
 		if (!damage) return 0;
 
+		if( (sce = sc->data[SC_LIGHTNINGWALK]) && flag&BF_LONG && rand()%100 < sce->val1 ) {
+			int dx[8]={0,-1,-1,-1,0,1,1,1};
+			int dy[8]={1,1,0,-1,-1,-1,0,1};
+			int dir = map_calc_dir(bl, src->x, src->y);
+			if( unit_movepos(bl, src->x-dx[dir], src->y-dy[dir], 1, 1) ) {
+				clif_slide(bl,src->x-dx[dir],src->y-dy[dir]);
+				unit_setdir(bl, dir);
+			}
+			d->dmg_lv = ATK_DEF;
+			status_change_end(bl, SC_LIGHTNINGWALK, -1);
+			return 0;
+		}
+
+
 		//Probably not the most correct place, but it'll do here
 		//(since battle_drain is strictly for players currently)
 		if ((sce=sc->data[SC_BLOODLUST]) && flag&BF_WEAPON && damage > 0 &&
