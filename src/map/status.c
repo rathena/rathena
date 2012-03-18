@@ -453,6 +453,7 @@ void initChangeTables(void)
 	set_sc( CASH_ASSUMPTIO       , SC_ASSUMPTIO       , SI_ASSUMPTIO       , SCB_NONE );
 
 	//set_sc( ALL_PARTYFLEE        , SC_INCFLEE         , SI_PARTYFLEE       , SCB_NONE );
+	set_sc( ALL_ODINS_POWER      , SC_ODINS_POWER     , SI_ODINS_POWER     , SCB_MATK|SCB_BATK|SCB_MDEF|SCB_DEF );
 
 	set_sc( CR_SHRINK            , SC_SHRINK          , SI_SHRINK          , SCB_NONE );
 	set_sc( RG_CLOSECONFINE      , SC_CLOSECONFINE2   , SI_CLOSECONFINE2   , SCB_NONE );
@@ -4056,6 +4057,8 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 		batk += batk * sc->data[SC_GT_CHANGE]->val3 / 100;
 	if(sc->data[SC_FULL_SWING_K])
 		batk += sc->data[SC_FULL_SWING_K]->val1;
+	if(sc->data[SC_ODINS_POWER])
+		batk += 70;
 #if RE_EDP
 	/**
 	 * in RE EDP increases your base atk by atk x Skill Level.
@@ -4174,6 +4177,8 @@ static unsigned short status_calc_matk(struct block_list *bl, struct status_chan
 		matk += sc->data[SC_CHILLY_AIR_OPTION]->val2;
 	if(sc->data[SC_WATER_BARRIER])
 		matk -= sc->data[SC_WATER_BARRIER]->val3;
+	if(sc->data[SC_ODINS_POWER])
+		matk += 70;
 
 	return (unsigned short)cap_value(matk,0,USHRT_MAX);
 }
@@ -4407,6 +4412,8 @@ static signed short status_calc_flee2(struct block_list *bl, struct status_chang
 		def += def * sc->data[SC_POWER_OF_GAIA]->val2 / 100;
 	if( sc->data[SC_PRESTIGE] )
 		def += def * sc->data[SC_PRESTIGE]->val1 / 100;
+	if(sc->data[SC_ODINS_POWER])
+		def -= 20;
 #if REMODE
 	return (short)cap_value(def,SHRT_MIN,SHRT_MAX);
 #else
@@ -4504,6 +4511,8 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 		mdef -= mdef * sc->data[SC_GT_CHANGE]->val3 / 100;
 	if(sc->data[SC_WATER_BARRIER])
 		mdef += sc->data[SC_WATER_BARRIER]->val2;
+	if(sc->data[SC_ODINS_POWER])
+		mdef -= 20;
 
 
 #if REMODE

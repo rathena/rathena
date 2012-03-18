@@ -572,6 +572,7 @@ typedef enum sc_type {
 	SC_GLORYWOUNDS,
 	SC_SOULCOLD, //510
 	SC_HAWKEYES,
+	SC_ODINS_POWER,
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;
 
@@ -1153,6 +1154,7 @@ enum si_type {
 	SI_WIND_INSIGNIA = 569,
 	SI_EARTH_INSIGNIA = 570,
 	SI_EQUIPED_FLOOR = 571,
+	SI_ODINS_POWER = 583,
 	SI_ALL_RIDING = 613,//awesome 571-613 gap, we're missing quite a few stuff here.
 
 	SI_MAX,
