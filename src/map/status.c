@@ -2614,6 +2614,11 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		status->max_sp += status->max_sp * skill/100;
 	if((skill=pc_checkskill(sd,HW_SOULDRAIN))>0)
 		status->max_sp += status->max_sp * 2*skill/100;
+	if( (skill = pc_checkskill(sd,RA_RESEARCHTRAP)) > 0 )
+		status->max_sp += 200 + 20 * skill;
+	if( (skill = pc_checkskill(sd,WM_LESSON)) > 0 )
+		status->max_sp += 30 * skill;
+
 
 	// Apply relative modifiers from equipment
 	if(sd->sprate < 0)
@@ -3088,6 +3093,9 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 			val += skill*3 + skill*status->max_sp/500;
 		if( (skill=pc_checkskill(sd,NJ_NINPOU)) > 0 )
 			val += skill*3 + skill*status->max_sp/500;
+		if( (skill=pc_checkskill(sd,WM_LESSON)) > 0 )
+			val += 3 + 3 * skill;
+
 		sregen->sp = cap_value(val, 0, SHRT_MAX);
 
 		// Skill-related recovery (only when sit)
