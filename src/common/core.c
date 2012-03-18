@@ -18,6 +18,8 @@
 #include <string.h>
 #ifndef _WIN32
 #include <unistd.h>
+#else
+#include <windows.h> // Console close event handling
 #endif
 
 
@@ -65,6 +67,35 @@ sigfunc *compat_signal(int signo, sigfunc *func)
 		return (SIG_ERR);
 
 	return (oact.sa_handler);
+}
+#endif
+
+/*======================================
+ *	CORE : Console events for Windows
+ *--------------------------------------*/
+#ifdef _WIN32
+static BOOL WINAPI console_handler(DWORD c_event)
+{
+    switch(c_event)
+    {
+    case CTRL_CLOSE_EVENT:
+    case CTRL_LOGOFF_EVENT:
+    case CTRL_SHUTDOWN_EVENT:
+		if( shutdown_callback != NULL )
+			shutdown_callback();
+		else
+			runflag = CORE_ST_STOP;// auto-shutdown
+        break;
+	default:
+		break;
+    }
+    return TRUE;
+}
+
+static void cevents_init()
+{
+	if (SetConsoleCtrlHandler(console_handler,TRUE)==FALSE)
+		ShowWarning ("Unable to install the console handler!\n");
 }
 #endif
 
@@ -250,6 +281,10 @@ int main (int argc, char **argv)
 
 	db_init();
 	signals_init();
+
+#ifdef _WIN32
+	cevents_init();
+#endif
 
 	timer_init();
 	socket_init();
