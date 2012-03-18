@@ -580,7 +580,7 @@ void initChangeTables(void)
 	set_sc( LG_REFLECTDAMAGE     , SC_REFLECTDAMAGE   , SI_LG_REFLECTDAMAGE, SCB_NONE );
 	set_sc( LG_FORCEOFVANGUARD   , SC_FORCEOFVANGUARD , SI_FORCEOFVANGUARD , SCB_MAXHP|SCB_DEF );
 	set_sc( LG_EXEEDBREAK        , SC_EXEEDBREAK      , SI_EXEEDBREAK      , SCB_NONE );
-	set_sc( LG_PRESTIGE          , SC_PRESTIGE        , SI_PRESTIGE        , SCB_DEF2 );
+	set_sc( LG_PRESTIGE          , SC_PRESTIGE        , SI_PRESTIGE        , SCB_DEF );
 	set_sc( LG_BANDING           , SC_BANDING         , SI_BANDING         , SCB_DEF2|SCB_WATK );// Renewal: atk2 & def2
 	set_sc( LG_PIETY             , SC_BENEDICTIO      , SI_BENEDICTIO      , SCB_DEF_ELE );
 	set_sc( LG_EARTHDRIVE        , SC_EARTHDRIVE      , SI_EARTHDRIVE      , SCB_DEF|SCB_ASPD );
@@ -4397,6 +4397,8 @@ static signed short status_calc_flee2(struct block_list *bl, struct status_chang
 		def -= def * sc->data[SC_ROCK_CRUSHER]->val2 / 100;
 	if( sc->data[SC_POWER_OF_GAIA] )
 		def += def * sc->data[SC_POWER_OF_GAIA]->val2 / 100;
+	if( sc->data[SC_PRESTIGE] )
+		def += def * sc->data[SC_PRESTIGE]->val1 / 100;
 #if REMODE
 	return (short)cap_value(def,SHRT_MIN,SHRT_MAX);
 #else
@@ -4438,8 +4440,6 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 		def2 -= def2 * ( 14 * sc->data[SC_ANALYZE]->val1 ) / 100;
 	if( sc->data[SC_ECHOSONG] )
 		def2 += def2 * sc->data[SC_ECHOSONG]->val2/100;
-	if( sc->data[SC_PRESTIGE] )
-		def2 += def2 * sc->data[SC_PRESTIGE]->val1 / 100;
 	if( sc->data[SC_SHIELDSPELL_REF] && sc->data[SC_SHIELDSPELL_REF]->val1 == 1 )
 		def2 += sc->data[SC_SHIELDSPELL_REF]->val2;
 	if( sc->data[SC_BANDING] && sc->data[SC_BANDING]->val2 > 0 )
