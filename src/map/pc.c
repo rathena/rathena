@@ -8451,11 +8451,9 @@ int pc_readdb(void)
 	// 必要??値?み?み
 	memset(exp_table,0,sizeof(exp_table));
 	memset(max_level,0,sizeof(max_level));
-#if REMODE
-	sprintf(line, "%s/re/exp.txt", db_path);
-#else
-	sprintf(line, "%s/pre-re/exp.txt", db_path);
-#endif
+
+	sprintf(line, "%s/"DBPATH"exp.txt", db_path);
+
 	fp=fopen(line, "r");
 	if(fp==NULL){
 		ShowError("can't read %s\n", line);
@@ -8537,22 +8535,17 @@ int pc_readdb(void)
 
 	// スキルツリ?
 	memset(skill_tree,0,sizeof(skill_tree));
-#if REMODE
-	sv_readdb(db_path, "re/skill_tree.txt", ',', 3+MAX_PC_SKILL_REQUIRE*2, 4+MAX_PC_SKILL_REQUIRE*2, -1, &pc_readdb_skilltree);
-#else
-	sv_readdb(db_path, "pre-re/skill_tree.txt", ',', 3+MAX_PC_SKILL_REQUIRE*2, 4+MAX_PC_SKILL_REQUIRE*2, -1, &pc_readdb_skilltree);
-#endif
+
+	sv_readdb(db_path, DBPATH"skill_tree.txt", ',', 3+MAX_PC_SKILL_REQUIRE*2, 4+MAX_PC_SKILL_REQUIRE*2, -1, &pc_readdb_skilltree);
 
 	// ?性修正テ?ブル
 	for(i=0;i<4;i++)
 		for(j=0;j<ELE_MAX;j++)
 			for(k=0;k<ELE_MAX;k++)
 				attr_fix_table[i][j][k]=100;
-#if REMODE
-	sprintf(line, "%s/re/attr_fix.txt", db_path);
-#else
-	sprintf(line, "%s/pre-re/attr_fix.txt", db_path);
-#endif
+
+	sprintf(line, "%s/"DBPATH"attr_fix.txt", db_path);
+	
 	fp=fopen(line,"r");
 	if(fp==NULL){
 		ShowError("can't read %s\n", line);
@@ -8600,11 +8593,8 @@ int pc_readdb(void)
 	// スキルツリ?
 	memset(statp,0,sizeof(statp));
 	i=1;
-#if REMODE
-	sprintf(line, "%s/re/statpoint.txt", db_path);
-#else
-	sprintf(line, "%s/pre-re/statpoint.txt", db_path);
-#endif
+
+	sprintf(line, "%s/"DBPATH"statpoint.txt", db_path);
 	fp=fopen(line,"r");
 	if(fp == NULL){
 		ShowWarning("Can't read '"CL_WHITE"%s"CL_RESET"'... Generating DB.\n",line);

@@ -567,11 +567,7 @@ static void itemdb_read_itemgroup_sub(const char* filename)
 static void itemdb_read_itemgroup(void)
 {
 	char path[256];
-#if REMODE
-	snprintf(path, 255, "%s/re/item_group_db.txt", db_path);
-#else
-	snprintf(path, 255, "%s/pre-re/item_group_db.txt", db_path);
-#endif
+	snprintf(path, 255, "%s/"DBPATH"item_group_db.txt", db_path);
 	memset(&itemgroup_db, 0, sizeof(itemgroup_db));
 	itemdb_read_itemgroup_sub(path);
 	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n", "item_group_db.txt");
@@ -870,11 +866,7 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 static int itemdb_readdb(void)
 {
 	const char* filename[] = {
-#if REMODE
-		"re/item_db.txt",
-#else
-		"pre-re/item_db.txt",
-#endif
+		DBPATH"item_db.txt",
 		"item_db2.txt" };
 
 	int fi;
@@ -1045,11 +1037,7 @@ static void itemdb_read(void)
 	itemdb_read_itemgroup();
 	sv_readdb(db_path, "item_avail.txt",   ',', 2, 2, -1,             &itemdb_read_itemavail);
 	sv_readdb(db_path, "item_noequip.txt", ',', 2, 2, -1,             &itemdb_read_noequip);
-#if REMODE
-	sv_readdb(db_path, "re/item_trade.txt",   ',', 3, 3, -1,             &itemdb_read_itemtrade);
-#else
-	sv_readdb(db_path, "pre-re/item_trade.txt",   ',', 3, 3, -1,             &itemdb_read_itemtrade);
-#endif
+	sv_readdb(db_path, DBPATH"item_trade.txt",   ',', 3, 3, -1,       &itemdb_read_itemtrade);
 	sv_readdb(db_path, "item_delay.txt",   ',', 2, 2, MAX_ITEMDELAYS, &itemdb_read_itemdelay);
 	sv_readdb(db_path, "item_buyingstore.txt", ',', 1, 1, -1,         &itemdb_read_buyingstore);
 }

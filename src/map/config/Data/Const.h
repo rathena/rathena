@@ -39,6 +39,15 @@
 #endif
 
 /**
+ * Path within the /db folder to (non-)renewal specific db files
+ **/
+#if REMODE
+#define DBPATH "re/"
+#else
+#define DBPATH "pre-re/"
+#endif
+
+/**
  * End of File
  **/
 #endif

@@ -1070,11 +1070,7 @@ void read_homunculus_expdb(void)
 	char line[1024];
 	int i, j=0;
 	char *filename[]={
-#if REMODE
-		"re/exp_homun.txt",
-#else
-		"pre-re/exp_homun.txt",
-#endif
+		DBPATH"exp_homun.txt",
 		"exp_homun2.txt"};
 
 	memset(hexptbl,0,sizeof(hexptbl));

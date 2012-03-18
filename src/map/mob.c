@@ -3730,11 +3730,7 @@ static bool mob_readdb_sub(char* fields[], int columns, int current)
 static void mob_readdb(void)
 {
 	const char* filename[] = {
-#if REMODE
-		"re/mob_db.txt",
-#else
-		"pre-re/mob_db.txt",
-#endif
+		DBPATH"mob_db.txt",
 		"mob_db2.txt" };
 	int fi;
 	
@@ -3861,15 +3857,9 @@ static int mob_read_randommonster(void)
 	char *str[10],*p;
 	int i,j;
 	const char* mobfile[] = {
-#if REMODE
-		"re/mob_branch.txt",
+		DBPATH"mob_branch.txt",
 		"mob_poring.txt",
-		"re/mob_boss.txt",
-#else
-		"pre-re/mob_branch.txt",
-		"mob_poring.txt",
-		"pre-re/mob_boss.txt",
-#endif
+		DBPATH"mob_boss.txt",
 		"mob_pouch.txt"};
 
 	memset(&summon, 0, sizeof(summon));
@@ -4304,11 +4294,7 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
  *------------------------------------------*/
 static void mob_readskilldb(void) {
 	const char* filename[] = {
-#if REMODE
-		"re/mob_skill_db.txt",
-#else
-		"pre-re/mob_skill_db.txt",
-#endif
+		DBPATH"mob_skill_db.txt",
 		"mob_skill_db2.txt" };
 	int fi;
 
