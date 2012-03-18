@@ -902,7 +902,7 @@
 1612,Arc_Wand__,Arc Wand,4,45000,,400,60:95,,1,0,0x00818314,7,2,2,3,24,1,10,{ bonus bInt,3; },{},{}
 1613,Mighty_Staff,Mighty Staff,4,20,,700,130:100,,1,0,0x00818314,7,2,2,3,24,1,10,{ bonus bStr,10; bonus bSPDrainValue,-2; },{},{}
 1614,Blessed_Wand,Wand of Occult,4,20,,700,75:105,,1,0,0x00818314,7,2,2,3,24,1,10,{ bonus bInt,3; },{},{}
-1615,Bone_Wand,Evil Bone Wand,4,20,,700,40,,1,0,0x00818314,7,2,2,3,24,1,10,{ bonus bInt,4; bonus bAtkEle,Ele_Undead; bonus bMatkRate,15; },{},{}
+1615,Bone_Wand,Evil Bone Wand,4,20,,700,40:110,,1,0,0x00818314,7,2,2,3,24,1,10,{ bonus bInt,4; bonus bAtkEle,Ele_Undead; },{},{}
 1616,Staff_Of_Wing,Wing Staff,4,20,,500,60:115,,1,0,0x00810204,7,2,2,4,40,1,10,{ bonus bCastrate,-5; },{},{}
 1617,Survival_Rod,Survivor's Rod,4,85000,,1000,50:120,,1,0,0x00818314,7,2,2,3,24,1,10,{ bonus bDex,2; bonus bMaxHP,300; },{},{}
 1618,Survival_Rod_,Survivor's Rod,4,85000,,1000,50:120,,1,1,0x00818314,7,2,2,3,24,1,10,{ bonus bDex,3; bonus bMaxHP,400; },{},{}

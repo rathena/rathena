@@ -5117,7 +5117,6 @@
 12580,Vending_Search_Scroll,Universal Catalog Silver,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ searchstores 10,0; },{},{}
 12581,Vending_Search_Scroll2,Universal Catalog Gold,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ searchstores 10,1; },{},{}
 12591,Vending_Search_Scroll3,Universal Catalog Bronze,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ searchstores 10,1; },{},{}
-12622,Reins_Of_Mount,Reins Of Mount,11,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "ALL_RIDING",1; },{},{}
 12701,Old_Blue_Box_F,Old Blue Box,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12702,Old_Bleu_Box,Old Navy Box,2,0,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_BleuBox),1; getitem groupranditem(IG_BleuBox),1; },{},{}
 12703,Holy_Egg_2,Holy Egg,11,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
