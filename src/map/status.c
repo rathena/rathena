@@ -2779,7 +2779,8 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		status->aspd_rate -= ((skill+1)/2) * 10;
 	if(pc_isriding(sd))
 		status->aspd_rate += 500-100*pc_checkskill(sd,KN_CAVALIERMASTERY);
-
+	else if( sd->sc.option&OPTION_DRAGON )
+		status->aspd_rate += 250-50*pc_checkskill(sd,RK_DRAGONTRAINING);
 	status->adelay = 2*status->amotion;
 
 
@@ -2797,6 +2798,8 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		sd->max_weight += 2000*skill;
 	if(pc_isriding(sd) && pc_checkskill(sd,KN_RIDING)>0)
 		sd->max_weight += 10000;
+	else if( sd->sc.option&OPTION_DRAGON )
+		sd->max_weight += 200*pc_checkskill(sd,RK_DRAGONTRAINING);
 	if(sc->data[SC_KNOWLEDGE])
 		sd->max_weight += sd->max_weight*sc->data[SC_KNOWLEDGE]->val1/10;
 	if((skill=pc_checkskill(sd,ALL_INCCARRY))>0)
