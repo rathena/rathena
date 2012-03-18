@@ -387,57 +387,57 @@
 12715,507,100	// Black Treasure Box
 
 // Battleground Rewards (Tierra Gorge/Flavius)
-1183,499,100	// Brave Assaulter's Katzbalger
-1184,499,100	// Valorous Assaulter's Katzbalger
-1279,499,100	// Brave Carnage Katar
-1280,499,100	// Valorous Carnage Katar
-1379,499,100	// Valorous Insane Battle Axe
-1380,499,100	// Brave Insane Battle Axe
-1425,499,100	// Assaulter Spear
-1482,499,100	// Assaulter Lance
-1542,499,100	// Valorous Battlefield Morning Star
-1543,499,100	// Brave Battlefield Morning Star
-1574,499,100	// Brave Battle Strategy Book
-1575,499,100	// Valorous Battle Strategy Book
-1632,499,100	// Warlock's Magic Wand
-1633,499,100	// Warlock's Battle Wand
-1634,499,100	// Strong Recovery Wand
-1635,499,100	// Speedy Recovery Wand
-1738,499,100	// Valorous Battle CrossBow
-1739,499,100	// Brave Battle CrossBow
-1823,499,100	// Valorous Battle Fist
-1824,499,100	// Brave Battle Fist
-1923,499,100	// Valorous Battlefield Guitar
-1924,499,100	// Brave Battlefield Guitar
-1977,499,100	// Valorous Battle Lariat
-1978,499,100	// Brave Battle Lariat
-2376,499,100	// Assaulter Plate
-2377,499,100	// Elite Engineer Armor
-2378,499,100	// Assassin Robe
-2379,499,100	// Warlock's Battle Robe
-2380,499,100	// Medic's Robe
-2381,499,100	// Elite Archer Suit
-2382,499,100	// Elite Shooter Suit
-2435,499,100	// Battle Greaves
-2436,499,100	// Combat Boots
-2437,499,100	// Battle Boots
-2538,499,100	// Captain's Manteau
-2539,499,100	// Commander's Manteau
-2540,499,100	// Sheriff's Manteau
-2733,499,100	// Sheriff Badge
-7828,499,100	// Bravery Badge
-7829,499,100	// Valor Badge
-13036,499,100	// Brave Assassin's Damascus
-13037,499,100	// Valorous Assassin's Damascus
-13108,499,100	// Soldier Revolver
-13171,499,100	// Soldier Rifle
-13172,499,100	// Soldier Gatling Gun
-13173,499,100	// Soldier Shotgun
-13174,499,100	// Soldier Grenade Launcher
-13305,499,100	// Brave Huuma Front Shuriken
-13306,499,100	// Valorous Huuma Front Shuriken
-13410,499,100	// Valorous Gladiator Blade
-13411,499,100	// Brave Gladiator Blade
+1183,467,100	// Brave Assaulter's Katzbalger
+1184,467,100	// Valorous Assaulter's Katzbalger
+1279,467,100	// Brave Carnage Katar
+1280,467,100	// Valorous Carnage Katar
+1379,467,100	// Valorous Insane Battle Axe
+1380,467,100	// Brave Insane Battle Axe
+1425,467,100	// Assaulter Spear
+1482,467,100	// Assaulter Lance
+1542,467,100	// Valorous Battlefield Morning Star
+1543,467,100	// Brave Battlefield Morning Star
+1574,467,100	// Brave Battle Strategy Book
+1575,467,100	// Valorous Battle Strategy Book
+1632,467,100	// Warlock's Magic Wand
+1633,467,100	// Warlock's Battle Wand
+1634,467,100	// Strong Recovery Wand
+1635,467,100	// Speedy Recovery Wand
+1738,467,100	// Valorous Battle CrossBow
+1739,467,100	// Brave Battle CrossBow
+1823,467,100	// Valorous Battle Fist
+1824,467,100	// Brave Battle Fist
+1923,467,100	// Valorous Battlefield Guitar
+1924,467,100	// Brave Battlefield Guitar
+1977,467,100	// Valorous Battle Lariat
+1978,467,100	// Brave Battle Lariat
+2376,467,100	// Assaulter Plate
+2377,467,100	// Elite Engineer Armor
+2378,467,100	// Assassin Robe
+2379,467,100	// Warlock's Battle Robe
+2380,467,100	// Medic's Robe
+2381,467,100	// Elite Archer Suit
+2382,467,100	// Elite Shooter Suit
+2435,467,100	// Battle Greaves
+2436,467,100	// Combat Boots
+2437,467,100	// Battle Boots
+2538,467,100	// Captain's Manteau
+2539,467,100	// Commander's Manteau
+2540,467,100	// Sheriff's Manteau
+2733,467,100	// Sheriff Badge
+7828,467,100	// Bravery Badge
+7829,467,100	// Valor Badge
+13036,467,100	// Brave Assassin's Damascus
+13037,467,100	// Valorous Assassin's Damascus
+13108,467,100	// Soldier Revolver
+13171,467,100	// Soldier Rifle
+13172,467,100	// Soldier Gatling Gun
+13173,467,100	// Soldier Shotgun
+13174,467,100	// Soldier Grenade Launcher
+13305,467,100	// Brave Huuma Front Shuriken
+13306,467,100	// Valorous Huuma Front Shuriken
+13410,467,100	// Valorous Gladiator Blade
+13411,467,100	// Brave Gladiator Blade
 
 // "Valentine's Day (2009)" Event related items
 5817,507,100	// Valentine Pledge
