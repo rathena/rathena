@@ -6032,18 +6032,16 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	unsigned int tick = gettick();
 		
 	for(k = 0; k < 5; k++)
-	if (sd->devotion[k]){
-		struct map_session_data *devsd = map_id2sd(sd->devotion[k]);
-		if (devsd)
-			status_change_end(&devsd->bl, SC_DEVOTION, INVALID_TIMER);
-		sd->devotion[k] = 0;
-	}
+		if (sd->devotion[k]){
+			struct map_session_data *devsd = map_id2sd(sd->devotion[k]);
+			if (devsd)
+				status_change_end(&devsd->bl, SC_DEVOTION, INVALID_TIMER);
+			sd->devotion[k] = 0;
+		}
 
-	if(sd->status.pet_id > 0 && sd->pd)
-	{
+	if(sd->status.pet_id > 0 && sd->pd) {
 		struct pet_data *pd = sd->pd;
-		if( !map[sd->bl.m].flag.noexppenalty )
-		{
+		if( !map[sd->bl.m].flag.noexppenalty ) {
 			pet_set_intimate(pd, pd->pet.intimate - pd->petDB->die);
 			if( pd->pet.intimate < 0 )
 				pd->pet.intimate = 0;
@@ -6069,13 +6067,19 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	pc_setglobalreg(sd,"PC_DIE_COUNTER",sd->die_counter+1);
 	pc_setparam(sd, SP_KILLERRID, src?src->id:0);
-	if( sd->bg_id )
-	{
+	
+	if( sd->bg_id ) {
 		struct battleground_data *bg;
 		if( (bg = bg_team_search(sd->bg_id)) != NULL && bg->die_event[0] )
 			npc_event(sd, bg->die_event, 0);
 	}
+	
 	npc_script_event(sd,NPCE_DIE);
+
+	/* e.g. not killed thru pc_damage */
+	if( pc_issit(sd) ) {
+		clif_status_load(&sd->bl,SI_SITTING,0);
+	}
 
 	pc_setdead(sd);
 	//Reset menu skills/item skills
