@@ -2148,7 +2148,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 int npc_convertlabel_db(DBKey key, DBData *data, va_list ap)
 {
 	const char* lname = (const char*)key.str;
-	int lpos = (int)db_data2ptr(data);
+	int lpos = db_data2i(data);
 	struct npc_label_list** label_list;
 	int* label_list_num;
 	const char* filepath;
@@ -2299,7 +2299,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 	{
 		DBMap* label_db = script_get_label_db();
 		label_db->foreach(label_db, npc_convertlabel_db, &label_list, &label_list_num, filepath);
-		label_db->clear(label_db, NULL); // not needed anymore, so clear the db
+		db_clear(label_db); // not needed anymore, so clear the db
 	}
 
 	CREATE(nd, struct npc_data, 1);

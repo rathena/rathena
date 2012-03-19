@@ -214,8 +214,8 @@ int str_hash[SCRIPT_HASH_SIZE];
 static DBMap* scriptlabel_db=NULL; // const char* label_name -> int script_pos
 static DBMap* userfunc_db=NULL; // const char* func_name -> struct script_code*
 static int parse_options=0;
-DBMap* script_get_label_db(){ return scriptlabel_db; }
-DBMap* script_get_userfunc_db(){ return userfunc_db; }
+DBMap* script_get_label_db(void){ return scriptlabel_db; }
+DBMap* script_get_userfunc_db(void){ return userfunc_db; }
 
 // Caches compiled autoscript item code. 
 // Note: This is not cleared when reloading itemdb.
@@ -1627,7 +1627,7 @@ const char* parse_syntax(const char* p)
 					str_data[l].type = C_USERFUNC;
 					set_label(l, script_pos, p);
 					if( parse_options&SCRIPT_USE_LABEL_DB )
-						strdb_put(scriptlabel_db, get_str(l), (void*)script_pos);
+						strdb_iput(scriptlabel_db, get_str(l), script_pos);
 				}
 				else
 					disp_error_message("parse_syntax:function: function name is invalid", func_name);
@@ -2096,7 +2096,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 
 	// who called parse_script is responsible for clearing the database after using it, but just in case... lets clear it here
 	if( options&SCRIPT_USE_LABEL_DB )
-		scriptlabel_db->clear(scriptlabel_db, NULL);
+		db_clear(scriptlabel_db);
 	parse_options = options;
 
 	if( setjmp( error_jump ) != 0 ) {
@@ -2170,7 +2170,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 			i=add_word(p);
 			set_label(i,script_pos,p);
 			if( parse_options&SCRIPT_USE_LABEL_DB )
-				strdb_put(scriptlabel_db, get_str(i), (void*)script_pos);
+				strdb_iput(scriptlabel_db, get_str(i), script_pos);
 			p=tmpp+1;
 			p=skip_space(p);
 			continue;
@@ -3823,7 +3823,7 @@ int do_final_script()
 int do_init_script()
 {
 	userfunc_db=strdb_alloc(DB_OPT_DUP_KEY,0);
-	scriptlabel_db=strdb_alloc(DB_OPT_DUP_KEY|DB_OPT_ALLOW_NULL_DATA,50);
+	scriptlabel_db=strdb_alloc(DB_OPT_DUP_KEY,50);
 	autobonus_db = strdb_alloc(DB_OPT_DUP_KEY,0);
 
 	mapreg_init();
