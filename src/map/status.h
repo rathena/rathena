@@ -1175,7 +1175,7 @@ enum si_type {
 	SI_EQUIPED_FLOOR = 571,
 	SI_ODINS_POWER = 583,
 	SI_ALL_RIDING = 613,//awesome 571-613 gap, we're missing quite a few stuff here.
-
+	SI_SITTING = 622,
 	SI_MAX,
 };
 
