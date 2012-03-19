@@ -6,12 +6,6 @@
  **/
 
 /**
- * Max Refine available to your server
- * Raising this limit requires edits to /db/refine_db.txt
- **/
-#define MAX_REFINE 20
-
-/**
  * Max number of items on @autolootid list
  **/
 #define AUTOLOOTITEM_SIZE 10

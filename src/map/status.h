@@ -11,8 +11,27 @@ struct homun_data;
 struct mercenary_data;
 struct status_change;
 
-#define MAX_REFINE_BONUS 5
+/**
+ * Max Refine available to your server
+ * Changing this limit requires edits to refine_db.txt
+ **/
+#if REMODE
+#define MAX_REFINE 20
+#else
+#define MAX_REFINE 10
+#endif
 
+enum refine_type {
+	REFINE_TYPE_ARMOR   = 0,
+	REFINE_TYPE_WEAPON1 = 1,
+	REFINE_TYPE_WEAPON2 = 2,
+	REFINE_TYPE_WEAPON3 = 3,
+	REFINE_TYPE_WEAPON4 = 4,
+
+	REFINE_TYPE_MAX     = 5
+};
+
+int status_get_refine_chance(enum refine_type wlv, int refine);
 
 // Status changes listing. These code are for use by the server. 
 typedef enum sc_type {
@@ -1175,8 +1194,6 @@ enum e_joint_break
 extern int current_equip_item_index;
 extern int current_equip_card_id;
 
-extern int percentrefinery[5][MAX_REFINE+1]; //The last slot always has a 0% success chance [Skotlex]
-
 //Mode definitions to clear up code reading. [Skotlex]
 enum e_mode
 {
@@ -1588,7 +1605,6 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 void status_calc_regen(struct block_list *bl, struct status_data *status, struct regen_data *regen);
 void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, struct status_change *sc);
 
-int status_getrefinebonus(int lv,int type);
 int status_check_skilluse(struct block_list *src, struct block_list *target, int skill_num, int flag); // [Skotlex]
 int status_check_visibility(struct block_list *src, struct block_list *target); //[Skotlex]
 

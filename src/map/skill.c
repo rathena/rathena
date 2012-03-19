@@ -12480,7 +12480,7 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 				return;
 			}
 
-			per = percentrefinery [ditem->wlv][(int)item->refine];
+			per = status_get_refine_chance(ditem->wlv, (int)item->refine);
 			per += (((signed int)sd->status.job_level)-50)/2; //Updated per the new kro descriptions. [Skotlex]
 
 			pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_OTHER);

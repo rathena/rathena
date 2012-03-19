@@ -635,6 +635,15 @@ enum e_pc_permission {
 ||	( (class_) >= JOB_RUNE_KNIGHT && (class_) <  JOB_MAX         ) \
 )
 
+// clientside atk display macros (values to the left/right of the "+")
+#if REMODE
+#define pc_leftside_atk(sd) ((sd)->battle_status.batk)
+#define pc_rightside_atk(sd) ((sd)->battle_status.rhw.atk + (sd)->battle_status.lhw.atk + (sd)->battle_status.rhw.atk2 + (sd)->battle_status.lhw.atk2)
+#else
+#define pc_leftside_atk(sd) ((sd)->battle_status.batk + (sd)->battle_status.rhw.atk + (sd)->battle_status.lhw.atk)
+#define pc_rightside_atk(sd) ((sd)->battle_status.rhw.atk2 + (sd)->battle_status.lhw.atk2)
+#endif
+
 int pc_class2idx(int class_);
 int pc_get_group_level(struct map_session_data *sd);
 int pc_get_group_id(struct map_session_data *sd);

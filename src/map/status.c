@@ -53,8 +53,14 @@ static int hp_coefficient2[CLASS_COUNT];
 static int hp_sigma_val[CLASS_COUNT][MAX_LEVEL+1];
 static int sp_coefficient[CLASS_COUNT];
 static int aspd_base[CLASS_COUNT][MAX_WEAPON_TYPE];	//[blackhole89]
-static int refinebonus[MAX_REFINE_BONUS][3];	// 精錬ボーナステーブル(refine_db.txt)
-int percentrefinery[5][MAX_REFINE+1];	// 精錬成功率(refine_db.txt)
+
+// bonus values and upgrade chances for refining equipment
+static struct {
+	int chance[MAX_REFINE]; // success chance
+	int bonus[MAX_REFINE]; // cumulative fixed bonus damage
+	int randombonus_max[MAX_REFINE]; // cumulative maximum random bonus damage
+} refine_info[REFINE_TYPE_MAX];
+
 static int atkmods[3][MAX_WEAPON_TYPE];	// 武器ATKサイズ修正(size_fix.txt)
 static char job_bonus[CLASS_COUNT][MAX_LEVEL];
 #if REMODE
@@ -913,17 +919,6 @@ static void initDummyData(void)
 static inline void status_cpy(struct status_data* a, const struct status_data* b)
 {
 	memcpy((void*)&a->max_hp, (const void*)&b->max_hp, sizeof(struct status_data)-(sizeof(a->hp)+sizeof(a->sp)));
-}
-
-
-/*==========================================
- * 精錬ボーナス
- *------------------------------------------*/
-int status_getrefinebonus(int lv,int type)
-{
-	if (lv >= 0 && lv < 5 && type >= 0 && type < 3)
-		return refinebonus[lv][type];
-	return 0;
 }
 
 //Sets HP to given value. Flag is the flag passed to status_heal in case
@@ -2318,12 +2313,16 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 				return 1;
 		}
 
+		// sanitize the refine level in case someone decreased the value inbetween
+		if (sd->status.inventory[index].refine > MAX_REFINE)
+			sd->status.inventory[index].refine = MAX_REFINE;
+
 		if(sd->inventory_data[index]->type == IT_WEAPON) {
 			int r,wlv = sd->inventory_data[index]->wlv;
 			struct weapon_data *wd;
 			struct weapon_atk *wa;
-			if (wlv >= MAX_REFINE_BONUS) 
-				wlv = MAX_REFINE_BONUS - 1;
+			if (wlv >= REFINE_TYPE_MAX) 
+				wlv = REFINE_TYPE_MAX - 1;
 			if(i == EQI_HAND_L && sd->status.inventory[index].equip == EQP_HAND_L) {
 				wd = &sd->left_weapon; // Left-hand weapon
 				wa = &status->lhw;
@@ -2332,7 +2331,8 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 				wa = &status->rhw;
 			}
 			wa->atk += sd->inventory_data[index]->atk;
-			wa->atk2 = (r=sd->status.inventory[index].refine)*refinebonus[wlv][0];
+			if (r = sd->status.inventory[index].refine)
+				wa->atk2 = refine_info[wlv].bonus[r-1] / 100;
 		#if REMODE
 			/**
 			 * in RE matk_max is used as the weapon's matk.
@@ -2342,14 +2342,16 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 			/**
 			 * Refine Bonus
 			 **/
-			status->matk_max += sd->status.inventory[index].refine * refinebonus[wlv][0];
+			if (r)
+				status->matk_max += refine_info[wlv].bonus[r-1] / 100;
 			/**
 			 * In RE weapon level is used in several areas, this way we save performance
 			 **/
 			status->wlv = wlv;
 		#endif
-			if((r-=refinebonus[wlv][2])>0) //Overrefine bonus.
-				wd->overrefine = r*refinebonus[wlv][1];
+			//Overrefine bonus.
+			if (r)
+				wd->overrefine = refine_info[wlv].randombonus_max[r-1] / 100;
 
 			wa->range += sd->inventory_data[index]->range;
 			if(sd->inventory_data[index]->script) {
@@ -2375,7 +2377,9 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 			}
 		}
 		else if(sd->inventory_data[index]->type == IT_ARMOR) {
-			refinedef += sd->status.inventory[index].refine*refinebonus[0][0];
+			int r;
+			if (r = sd->status.inventory[index].refine)
+				refinedef += refine_info[REFINE_TYPE_ARMOR].bonus[r-1];
 			if(sd->inventory_data[index]->script) {
 				if( i == EQI_HAND_L ) //Shield
 					sd->state.lr_flag = 3;
@@ -3648,12 +3652,24 @@ void status_calc_bl_(struct block_list* bl, enum scb_flag flag, bool first)
 			clif_updatestatus(sd,SP_ASPD);
 		if(b_status.speed != status->speed)
 			clif_updatestatus(sd,SP_SPEED);
-		if(b_status.rhw.atk != status->rhw.atk || b_status.lhw.atk != status->lhw.atk || b_status.batk != status->batk)
+
+		if(b_status.batk != status->batk
+#if !REMODE
+			|| b_status.rhw.atk != status->rhw.atk || b_status.lhw.atk != status->lhw.atk
+#endif
+			)
 			clif_updatestatus(sd,SP_ATK1);
+
 		if(b_status.def != status->def)
 			clif_updatestatus(sd,SP_DEF1);
-		if(b_status.rhw.atk2 != status->rhw.atk2 || b_status.lhw.atk2 != status->lhw.atk2)
+
+		if(b_status.rhw.atk2 != status->rhw.atk2 || b_status.lhw.atk2 != status->lhw.atk2
+#if REMODE
+			|| b_status.rhw.atk != status->rhw.atk || b_status.lhw.atk != status->lhw.atk
+#endif
+			)
 			clif_updatestatus(sd,SP_ATK2);
+
 		if(b_status.def2 != status->def2)
 			clif_updatestatus(sd,SP_DEF2);
 		if(b_status.flee2 != status->flee2)
@@ -10039,7 +10055,22 @@ static int status_natural_heal_timer(int tid, unsigned int tick, int id, intptr_
 	return 0;
 }
 
-/*==========================================
+/**
+ * Get the chance to upgrade a piece of equipment.
+ * @param wlv The weapon type of the item to refine (see see enum refine_type)
+ * @param refine The target refine level
+ * @return The chance to refine the item, in percent (0~100)
+ **/
+int status_get_refine_chance(enum refine_type wlv, int refine)
+{
+	 if (wlv < 0 || wlv > REFINE_TYPE_MAX || refine < 0 || refine >= MAX_REFINE)
+		return 0;
+
+	return refine_info[wlv].chance[refine];
+}
+
+
+/*------------------------------------------
  * DB reading.
  * job_db1.txt    - weight, hp, sp, aspd
  * job_db2.txt    - job level stat bonuses
@@ -10124,15 +10155,34 @@ static bool status_readdb_sizefix(char* fields[], int columns, int current)
 
 static bool status_readdb_refine(char* fields[], int columns, int current)
 {
-	int i;
+	int i, bonus_per_level, random_bonus, random_bonus_start_level;
 
-	refinebonus[current][0] = atoi(fields[0]);  // stats per safe-upgrade
-	refinebonus[current][1] = atoi(fields[1]);  // stats after safe-limit
-	refinebonus[current][2] = atoi(fields[2]);  // safe limit
+	current = atoi(fields[0]);
+
+	if (current < 0 || current >= REFINE_TYPE_MAX)
+		return false;
+
+	bonus_per_level = atoi(fields[1]);
+	random_bonus_start_level = atoi(fields[2]);
+	random_bonus = atoi(fields[3]);
 
 	for(i = 0; i < MAX_REFINE; i++)
 	{
-		percentrefinery[current][i] = atoi(fields[3+i]);
+		char* delim;
+
+		if (!(delim = strchr(fields[4+i], ':')))
+			return false;
+
+		*delim = '\0';
+
+		refine_info[current].chance[i] = atoi(fields[4+i]);
+
+		if (i >= random_bonus_start_level - 1)
+			refine_info[current].randombonus_max[i] = random_bonus * (i - random_bonus_start_level + 2);
+
+		refine_info[current].bonus[i] = bonus_per_level + atoi(delim+1);
+		if (i > 0)
+			refine_info[current].bonus[i] += refine_info[current].bonus[i-1];
 	}
 	return true;
 }
@@ -10162,13 +10212,14 @@ int status_readdb(void)
 			atkmods[i][j]=100;
 
 	// refine_db.txt
-	for(i=0;i<ARRAYLENGTH(percentrefinery);i++){
+	for(i=0;i<ARRAYLENGTH(refine_info);i++)
+	{
 		for(j=0;j<MAX_REFINE; j++)
-			percentrefinery[i][j]=100;  // success chance
-		percentrefinery[i][j]=0; //Slot MAX+1 always has 0% success chance [Skotlex]
-		refinebonus[i][0]=0;  // stats per safe-upgrade
-		refinebonus[i][1]=0;  // stats after safe-limit
-		refinebonus[i][2]=10;  // safe limit
+		{
+			refine_info[i].chance[j] = 100;
+			refine_info[i].bonus[j] = 0;
+			refine_info[i].randombonus_max[j] = 0;
+		}
 	}
 
 	// read databases
@@ -10178,9 +10229,9 @@ int status_readdb(void)
 	sv_readdb(db_path, "job_db2.txt",   ',', 1,                 1+MAX_LEVEL,       -1,                            &status_readdb_job2);
 	sv_readdb(db_path, "size_fix.txt",  ',', MAX_WEAPON_TYPE,   MAX_WEAPON_TYPE,    ARRAYLENGTH(atkmods),         &status_readdb_sizefix);
 #if REMODE
-	sv_readdb(db_path, DBPATH"job_db_extra.txt",  ',', 1+RE_JOB_DB_MAX, 1+RE_JOB_DB_MAX,        -1,                   &status_readdb_job_re);
+	sv_readdb(db_path, DBPATH"job_db_extra.txt", ',', 1+RE_JOB_DB_MAX, 1+RE_JOB_DB_MAX, -1, &status_readdb_job_re);
 #endif
-	sv_readdb(db_path, DBPATH"refine_db.txt", ',', 3+MAX_REFINE+1,    3+MAX_REFINE+1,     ARRAYLENGTH(percentrefinery), &status_readdb_refine);
+	sv_readdb(db_path, DBPATH"refine_db.txt", ',', 4+MAX_REFINE, 4+MAX_REFINE, ARRAYLENGTH(refine_info), &status_readdb_refine);
 
 	return 0;
 }
