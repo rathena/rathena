@@ -4883,7 +4883,7 @@ ve_fild07,235,42,3	script	Silk Sand Camel	938,{
 					mes "valor, and my determination";
 					mes "was up to this task. May the";
 					mes "annals of history never forget";
-					mes "this day! Long live "+username+"!";
+					mes "this day! Long live "+strcharinfo(0)+"!";
 					next;
 					mes "^3355FFIt's time for you to";
 					mes "return to Mr. Saraman.^000000";
