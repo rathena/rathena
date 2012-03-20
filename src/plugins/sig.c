@@ -7,7 +7,6 @@
 #include <string.h>
 #include <time.h>
 #include "../common/plugin.h"
-#include "../common/showmsg.h"
 
 PLUGIN_INFO = {
 	"Signals",
@@ -28,14 +27,14 @@ PLUGIN_EVENTS_TABLE = {
 #if defined(_WIN32) || defined(MINGW)
 	int sig_init()
 	{
-		ShowError("sig: This plugin is not supported - Enable 'exchndl' instead!\n");
+		printf("sig: This plugin is not supported - Enable 'exchndl' instead!\n");
 		return 0;
 	}
 	int sig_final() { return 0; }
 #elif defined (__NETBSD__) || defined (__FREEBSD__)
 	int sig_init()
 	{
-		ShowError("sig: This plugin is not supported!\n");
+		printf("sig: This plugin is not supported!\n");
 		return 0;
 	}
 	int sig_final() { return 0; }
@@ -117,7 +116,7 @@ void sig_dump(int sn)
 		size_t size;
 	#endif
 
-		ShowNotice ("Dumping stack to '"CL_WHITE"%s"CL_RESET"'...\n", file);
+		printf ("sig: Dumping stack to '%s'...\n", file);
 		if ((revision = getrevision()) != NULL)
 			fprintf(fp, "Version: svn%s \n", revision);
 		fprintf(fp, "Exception: %s \n", strsignal(sn));
@@ -136,7 +135,7 @@ void sig_dump(int sn)
 		free(stack);
 	#endif
 
-		ShowNotice("%s Saved.\n", file);
+		printf("sig: %s Saved.\n", file);
 		fflush(stdout);
 		fclose(fp);
 	}

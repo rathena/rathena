@@ -5,7 +5,7 @@
 #define _CONF_H_
 
 #include "../common/cbasetypes.h"
-#include <libconfig.h>
+#include "libconfig.h"
 
 int conf_read_file(config_t *config, const char *config_filename);
 int config_setting_copy(config_setting_t *parent, const config_setting_t *src);

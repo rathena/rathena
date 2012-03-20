@@ -151,17 +151,11 @@ option( BUILD_PLUGIN_sig "build sig plugin" OFF )
 if( BUILD_PLUGIN_sig )
 message( STATUS "Creating target sig" )
 set( SIG_SOURCES
-	"${COMMON_SOURCE_DIR}/malloc.c"
-	"${COMMON_SOURCE_DIR}/malloc.h"
-	"${COMMON_SOURCE_DIR}/showmsg.c"
-	"${COMMON_SOURCE_DIR}/showmsg.h"
-	"${COMMON_SOURCE_DIR}/strlib.c"
-	"${COMMON_SOURCE_DIR}/strlib.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/sig.c"
 	)
 set( LIBRARIES ${GLOBAL_LIBRARIES} )
 set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} )
-set( DEFINITIONS "${GLOBAL_DEFINITIONS} ${COMMON_MINI_DEFINITIONS} -DNO_MEMMGR" )
+set( DEFINITIONS "${GLOBAL_DEFINITIONS} -DNO_MEMMGR" )
 set( SOURCE_FILES ${SIG_SOURCES} )
 source_group( sig FILES ${SIG_SOURCES} )
 include_directories( ${INCLUDE_DIRS} )

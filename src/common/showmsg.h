@@ -4,7 +4,7 @@
 #ifndef _SHOWMSG_H_
 #define _SHOWMSG_H_
 
-#include <libconfig.h>
+#include "libconfig.h"
 
 // for help with the console colors look here:
 // http://www.edoceo.com/liberum/?doc=printf-with-color

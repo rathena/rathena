@@ -24,3 +24,6 @@ set( LIBCONFIG_SOURCES
 	"${CMAKE_CURRENT_SOURCE_DIR}/scanner.c"
 	"${CMAKE_CURRENT_SOURCE_DIR}/strbuf.c"
 	CACHE INTERNAL "libconfig sources" )
+set( LIBCONFIG_DEFINITIONS
+	"-DLIBCONFIG_STATIC"
+	CACHE INTERNAL "libconfig definitions" )
