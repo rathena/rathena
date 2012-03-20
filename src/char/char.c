@@ -3318,6 +3318,22 @@ static void char_delete2_req(int fd, struct char_session_data* sd)
 		return;
 	}
 */
+	
+	if( char_del_delay == 0 )
+	{// immediately delete the character if no character deletion delay is found
+		int k;
+
+		// delete the character entirely
+		delete_char_sql(char_id);
+
+		// refresh character list cache
+		for( k = i; k < MAX_CHARS - 1; ++ k )
+			sd->found_char[k] = sd->found_char[k + 1];
+
+		// send the notification packets of this
+		char_delete2_ack(fd, char_id, 1, time(NULL));
+		char_delete2_accept_ack(fd, char_id, 1);
+	}
 
 	// success
 	delete_date = time(NULL)+char_del_delay;
