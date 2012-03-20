@@ -9326,6 +9326,7 @@ BUILDIN_FUNC(changesex)
 	TBL_PC *sd = NULL;
 	sd = script_rid2sd(st);
 
+	pc_resetskill(sd,4);
 	chrif_changesex(sd);
 	return 0;
 }

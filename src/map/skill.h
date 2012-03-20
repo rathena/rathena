@@ -353,6 +353,11 @@ int skill_blockmerc_start (struct mercenary_data*,int,int);
 
 #define skill_blockpc_start(sd, skillid, tick) skill_blockpc_start_( sd, skillid, tick, false )
 
+// (Epoque:) To-do: replace this macro with some sort of skill tree check (rather than hard-coded skill names)
+#define skill_ischangesex(id) ( \
+	((id) >= BD_ADAPTATION     && (id) <= DC_SERVICEFORYOU) || ((id) >= CG_ARROWVULCAN && (id) <= CG_MARIONETTE) || \
+	((id) >= CG_LONGINGFREEDOM && (id) <= CG_TAROTCARD)     || ((id) >= WA_SWING_DANCE && (id) <= WM_UNLIMITED_HUMMING_VOICE))
+
 // ƒXƒLƒ‹U?ˆêŠ‡?—
 int skill_attack( int attack_type, struct block_list* src, struct block_list *dsrc,struct block_list *bl,int skillid,int skilllv,unsigned int tick,int flag );
 

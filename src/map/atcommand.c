@@ -6396,6 +6396,7 @@ ACMD_FUNC(uptime)
 ACMD_FUNC(changesex)
 {
 	nullpo_retr(-1, sd);
+	pc_resetskill(sd,4);
 	chrif_changesex(sd);
 	return 0;
 }

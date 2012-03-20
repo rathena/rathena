@@ -214,7 +214,7 @@ void set_char_charselect(int account_id)
 {
 	struct online_char_data* character;
 
-	character = idb_ensure(online_char_db, account_id, create_online_char_data);
+	character = (struct online_char_data*)idb_ensure(online_char_db, account_id, create_online_char_data);
 
 	if( character->server > -1 )
 		if( server[character->server].users > 0 ) // Prevent this value from going negative.
@@ -248,7 +248,7 @@ void set_char_online(int map_id, int char_id, int account_id)
 		Sql_ShowDebug(sql_handle);
 
 	//Check to see for online conflicts
-	character = idb_ensure(online_char_db, account_id, create_online_char_data);
+	character = (struct online_char_data*)idb_ensure(online_char_db, account_id, create_online_char_data);
 	if( character->char_id != -1 && character->server > -1 && character->server != map_id )
 	{
 		ShowNotice("set_char_online: Character %d:%d marked in map server %d, but map server %d claims to have (%d:%d) online!\n",
@@ -338,7 +338,7 @@ void set_char_offline(int char_id, int account_id)
  */
 static int char_db_setoffline(DBKey key, DBData *data, va_list ap)
 {
-	struct online_char_data* character = db_data2ptr(data);
+	struct online_char_data* character = (struct online_char_data*)db_data2ptr(data);
 	int server = va_arg(ap, int);
 	if (server == -1) {
 		character->char_id = -1;
@@ -357,7 +357,7 @@ static int char_db_setoffline(DBKey key, DBData *data, va_list ap)
  */
 static int char_db_kickoffline(DBKey key, DBData *data, va_list ap)
 {
-	struct online_char_data* character = db_data2ptr(data);
+	struct online_char_data* character = (struct online_char_data*)db_data2ptr(data);
 	int server_id = va_arg(ap, int);
 
 	if (server_id > -1 && character->server != server_id)
@@ -2081,14 +2081,6 @@ int parse_fromlogin(int fd)
 							class_[i] = (sex ? JOB_MINSTREL : JOB_WANDERER);
 						else if( class_[i] == JOB_MINSTREL_T || class_[i] == JOB_WANDERER_T )
 							class_[i] = (sex ? JOB_MINSTREL_T : JOB_WANDERER_T);
-						// remove specifical skills of classes 19,20 4020,4021 and 4042,4043
-						if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `skill_point` = `skill_point` +"
-							" (SELECT SUM(lv) FROM `%s` WHERE `char_id` = '%d' AND `id` >= '315' AND `id` <= '330' AND `lv` > '0')"
-							" WHERE `char_id` = '%d'",
-							char_db, skill_db, char_id[i], char_id[i]) )
-							Sql_ShowDebug(sql_handle);
-						if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d' AND `id` >= '315' AND `id` <= '330'", skill_db, char_id[i]) )
-							Sql_ShowDebug(sql_handle);
 					}
 					// to avoid any problem with equipment and invalid sex, equipment is unequiped.
 					if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `equip` = '0' WHERE `char_id` = '%d'", inventory_db, char_id[i]) )

@@ -5804,11 +5804,16 @@ int pc_resetstate(struct map_session_data* sd)
  * /resetskill
  * if flag&1, perform block resync and status_calc call.
  * if flag&2, just count total amount of skill points used by player, do not really reset.
+ * if flag&4, just reset the skills if the player class is a bard/dancer type (for changesex.)
  *------------------------------------------*/
 int pc_resetskill(struct map_session_data* sd, int flag)
 {
 	int i, lv, inf2, skill_point=0;
 	nullpo_ret(sd);
+
+	if( flag&4 && (sd->class_&MAPID_UPPERMASK) != MAPID_BARDDANCER )
+		return 0;
+
 	if( !(flag&2) ) { //Remove stuff lost when resetting skills.
 		
 		/**
@@ -5863,6 +5868,9 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 
 		// do not reset basic skill
 		if( i == NV_BASIC && (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE )
+			continue;
+
+		if( flag&4 && !skill_ischangesex(i) )
 			continue;
 
 		if( inf2&INF2_QUEST_SKILL && !battle_config.quest_skill_learn )
