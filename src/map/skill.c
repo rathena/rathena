@@ -7990,6 +7990,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			clif_skill_nodamage (src, bl, skillid, skilllv, 1);
 
 			if( sd ) {
+				sd->state.abra_flag = 2;
 				sd->skillitem = improv_skillid;
 				sd->skillitemlv = improv_skilllv;
 				clif_item_skill(sd, improv_skillid, improv_skilllv);
