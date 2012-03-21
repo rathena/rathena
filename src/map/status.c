@@ -1034,14 +1034,14 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 			status_change_end(target, SC_CHASEWALK, INVALID_TIMER);
 			status_change_end(target, SC_CAMOUFLAGE, INVALID_TIMER);
 			status_change_end(target, SC__INVISIBILITY, INVALID_TIMER);
+			status_change_end(target, SC_DEEPSLEEP, INVALID_TIMER);
 			if ((sce=sc->data[SC_ENDURE]) && !sce->val4) {
 				//Endure count is only reduced by non-players on non-gvg maps.
 				//val4 signals infinite endure. [Skotlex]
 				if (src && src->type != BL_PC && !map_flag_gvg(target->m) && !map[target->m].flag.battleground && --(sce->val2) < 0)
 					status_change_end(target, SC_ENDURE, INVALID_TIMER);
 			}
-			if ((sce=sc->data[SC_GRAVITATION]) && sce->val3 == BCT_SELF)
-			{
+			if ((sce=sc->data[SC_GRAVITATION]) && sce->val3 == BCT_SELF) {
 				struct skill_unit_group* sg = skill_id2group(sce->val4);
 				if (sg) {
 					skill_delunitgroup(sg);
@@ -2331,7 +2331,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 				wa = &status->rhw;
 			}
 			wa->atk += sd->inventory_data[index]->atk;
-			if (r = sd->status.inventory[index].refine)
+			if ( (r = sd->status.inventory[index].refine) )
 				wa->atk2 = refine_info[wlv].bonus[r-1] / 100;
 		#if REMODE
 			/**
@@ -2378,7 +2378,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		}
 		else if(sd->inventory_data[index]->type == IT_ARMOR) {
 			int r;
-			if (r = sd->status.inventory[index].refine)
+			if ( (r = sd->status.inventory[index].refine) )
 				refinedef += refine_info[REFINE_TYPE_ARMOR].bonus[r-1];
 			if(sd->inventory_data[index]->script) {
 				if( i == EQI_HAND_L ) //Shield
