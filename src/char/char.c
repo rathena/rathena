@@ -921,11 +921,6 @@ int mmo_chars_fromsql(struct char_session_data* sd, uint8* buf)
 	}
 	for( i = 0; i < MAX_CHARS && SQL_SUCCESS == SqlStmt_NextRow(stmt); i++ )
 	{
-		if( p.delete_date && p.delete_date < time(NULL) ) {
-			delete_char_sql(p.char_id);
-			i--;
-			continue;
-		}
 		p.last_point.map = mapindex_name2id(last_map);
 		sd->found_char[i] = p.char_id;
 		j += mmo_char_tobuf(WBUFP(buf, j), &p);
@@ -3291,11 +3286,11 @@ static void char_delete2_req(int fd, struct char_session_data* sd)
 		char_delete2_ack(fd, char_id, 3, 0);
 		return;
 	}
-
+	
 	Sql_GetData(sql_handle, 0, &data, NULL); guild_id = atoi(data);
 	Sql_GetData(sql_handle, 1, &data, NULL); party_id = atoi(data);
 	Sql_GetData(sql_handle, 2, &data, NULL); delete_date = strtoul(data, NULL, 10);
-
+	
 	if( delete_date )
 	{// character already queued for deletion
 		char_delete2_ack(fd, char_id, 0, 0);
@@ -3318,22 +3313,6 @@ static void char_delete2_req(int fd, struct char_session_data* sd)
 		return;
 	}
 */
-	
-	if( char_del_delay == 0 )
-	{// immediately delete the character if no character deletion delay is found
-		int k;
-
-		// delete the character entirely
-		delete_char_sql(char_id);
-
-		// refresh character list cache
-		for( k = i; k < MAX_CHARS - 1; ++ k )
-			sd->found_char[k] = sd->found_char[k + 1];
-
-		// send the notification packets of this
-		char_delete2_ack(fd, char_id, 1, time(NULL));
-		char_delete2_accept_ack(fd, char_id, 1);
-	}
 
 	// success
 	delete_date = time(NULL)+char_del_delay;
