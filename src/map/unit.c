@@ -912,6 +912,7 @@ int unit_can_move(struct block_list *bl)
 			|| sc->data[SC_MAGNETICFIELD]
 			|| sc->data[SC__MANHOLE]
 			|| (sc->data[SC_FEAR] && sc->data[SC_FEAR]->val2 > 0)
+			|| sc->data[SC_CURSEDCIRCLE_TARGET]
 		))
 			return 0;
 	}
@@ -1277,17 +1278,26 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 	ud->skillid      = skill_num;
 	ud->skilllv      = skill_lv;
 
- 	if( sc && sc->data[SC_CLOAKING] && !(sc->data[SC_CLOAKING]->val4&4) && skill_num != AS_CLOAKING )
-	{
-		status_change_end(src, SC_CLOAKING, INVALID_TIMER);
-		if (!src->prev) return 0; //Warped away!
+	if( sc ) {
+		/**
+		 * why the if else chain: these 3 status do not stack, so its efficient that way.
+		 **/
+ 		if( sc->data[SC_CLOAKING] && !(sc->data[SC_CLOAKING]->val4&4) && skill_num != AS_CLOAKING ) {
+			status_change_end(src, SC_CLOAKING, INVALID_TIMER);
+			if (!src->prev) return 0; //Warped away!
+		} else if( sc->data[SC_CLOAKINGEXCEED] && !(sc->data[SC_CLOAKINGEXCEED]->val4&4) && skill_num != GC_CLOAKINGEXCEED ) {
+			status_change_end(src,SC_CLOAKINGEXCEED, INVALID_TIMER);
+			if (!src->prev) return 0;
+		} else
+			status_change_end(src,SC_CAMOUFLAGE,-1);
+
+		if( sc->data[SC_CURSEDCIRCLE_ATKER] ) {
+			sc->data[SC_CURSEDCIRCLE_ATKER]->val3 = 1;
+			status_change_end(src,SC_CURSEDCIRCLE_ATKER,-1);
+		}
+
 	}
-	
-	if( sc && sc->data[SC_CLOAKINGEXCEED] && !(sc->data[SC_CLOAKINGEXCEED]->val4&4) && skill_num != GC_CLOAKINGEXCEED )
-	{
-		status_change_end(src,SC_CLOAKINGEXCEED, INVALID_TIMER);
-		if (!src->prev) return 0;
-	}
+
 
 	if( casttime > 0 )
 	{
@@ -1396,18 +1406,25 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 	ud->skilly       = skill_y;
 	ud->skilltarget  = 0;
 
-	if (sc && sc->data[SC_CLOAKING] && !(sc->data[SC_CLOAKING]->val4&4))
-	{
-		status_change_end(src, SC_CLOAKING, INVALID_TIMER);
-		if (!src->prev) return 0; //Warped away!
-	}
-	
-	if (sc && sc->data[SC_CLOAKINGEXCEED] && !(sc->data[SC_CLOAKINGEXCEED]->val4&4))
-	{
-		status_change_end(src, SC_CLOAKINGEXCEED, INVALID_TIMER);
-		if (!src->prev) return 0;
-	}
+	if( sc ) {
+		/**
+		 * why the if else chain: these 3 status do not stack, so its efficient that way.
+		 **/
+		if (sc->data[SC_CLOAKING] && !(sc->data[SC_CLOAKING]->val4&4)) {
+			status_change_end(src, SC_CLOAKING, INVALID_TIMER);
+			if (!src->prev) return 0; //Warped away!
+		} else if (sc->data[SC_CLOAKINGEXCEED] && !(sc->data[SC_CLOAKINGEXCEED]->val4&4)) {
+			status_change_end(src, SC_CLOAKINGEXCEED, INVALID_TIMER);
+			if (!src->prev) return 0;
+		} else
+			status_change_end(src,SC_CAMOUFLAGE,-1);
 
+		if( sc->data[SC_CURSEDCIRCLE_ATKER] ) {
+			sc->data[SC_CURSEDCIRCLE_ATKER]->val3 = 1;
+			status_change_end(src,SC_CURSEDCIRCLE_ATKER,-1);
+		}
+
+	}
 	if( casttime > 0 )
 	{
 		unit_stop_walking(src,1);

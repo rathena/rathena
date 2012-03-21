@@ -8579,18 +8579,19 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				map_foreachinrange(status_change_timer_sub, bl, skill_get_splash(SR_CURSEDCIRCLE, sce->val1),BL_CHAR, bl, sce, SC_CURSEDCIRCLE_TARGET, gettick());
 			break;
 		case SC_RAISINGDRAGON:
-			if( sd && sce->val2 && !pc_isdead(sd) )
-			{
+			if( sd && sce->val2 && !pc_isdead(sd) ) {
 				int i;
 				i = min(sd->spiritball,5);
 				pc_delspiritball(sd, sd->spiritball, 0);
 				status_change_end(bl, SC_EXPLOSIONSPIRITS, -1);
-				while( i > 0 )
-				{
+				while( i > 0 ) {
 					pc_addspiritball(sd, skill_get_time(MO_CALLSPIRITS, pc_checkskill(sd,MO_CALLSPIRITS)), 5);
 					--i;
 				}
 			}
+			break;
+		case SC_CURSEDCIRCLE_TARGET:		
+			clif_bladestop(bl, sce->val2, 0);
 			break;
 		}
 
@@ -9613,8 +9614,7 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 
 	tsc = status_get_sc(bl);
 
-	switch( type )
-	{
+	switch( type ) {
 	case SC_SIGHT:	/* ƒTƒCƒg */
 	case SC_CONCENTRATE:
 		status_change_end(bl, SC_HIDING, INVALID_TIMER);
@@ -9653,8 +9653,7 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 		break;
 	case SC_CURSEDCIRCLE_TARGET:
 		if( tsc && tsc->data[SC_CURSEDCIRCLE_TARGET] && tsc->data[SC_CURSEDCIRCLE_TARGET]->val2 == src->id ) {
-			status_change_end(bl, type, -1);			
-			clif_bladestop(src, bl->id, 0);
+			status_change_end(bl, type, -1);
 		}
 		break;
 	}
