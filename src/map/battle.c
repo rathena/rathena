@@ -4056,17 +4056,17 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		}
 	}
 
-	if(sd && (skillv = pc_checkskill(sd,MO_TRIPLEATTACK)) > 0)
-	{
+	if(sd && (skillv = pc_checkskill(sd,MO_TRIPLEATTACK)) > 0) {
 		int triple_rate= 30 - skillv; //Base Rate
-		if (sc && sc->data[SC_SKILLRATE_UP] && sc->data[SC_SKILLRATE_UP]->val1 == MO_TRIPLEATTACK)
-		{
+		if (sc && sc->data[SC_SKILLRATE_UP] && sc->data[SC_SKILLRATE_UP]->val1 == MO_TRIPLEATTACK) {
 			triple_rate+= triple_rate*(sc->data[SC_SKILLRATE_UP]->val2)/100;
 			status_change_end(src, SC_SKILLRATE_UP, INVALID_TIMER);
 		}
-		if (rnd()%100 < triple_rate)
-			//FIXME: invalid return type!
-			return (damage_lv)skill_attack(BF_WEAPON,src,src,target,MO_TRIPLEATTACK,skillv,tick,0);
+		if (rnd()%100 < triple_rate) {
+			if( skill_attack(BF_WEAPON,src,src,target,MO_TRIPLEATTACK,skillv,tick,0) )
+				return wd.dmg_lv;
+			return ATK_MISS;
+		}
 	}
 
 	if (sc) {
@@ -4084,12 +4084,15 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			ret_val = (damage_lv)skill_attack(BF_WEAPON,src,src,target,PA_SACRIFICE,skilllv,tick,0);
 
 			status_zap(src, sstatus->max_hp*9/100, 0);//Damage to self is always 9%
-
+			if( ret_val == ATK_NONE )
+				return ATK_MISS;
 			return ret_val;
 		}
-		if (sc->data[SC_MAGICALATTACK])
-			//FIXME: invalid return type!
-			return (damage_lv)skill_attack(BF_MAGIC,src,src,target,NPC_MAGICALATTACK,sc->data[SC_MAGICALATTACK]->val1,tick,0);
+		if (sc->data[SC_MAGICALATTACK]) {
+			if( skill_attack(BF_MAGIC,src,src,target,NPC_MAGICALATTACK,sc->data[SC_MAGICALATTACK]->val1,tick,0) )
+				return ATK_DEF;
+			return ATK_MISS;
+		}
 	}
 
 	if(tsc && tsc->data[SC_KAAHI] && tsc->data[SC_KAAHI]->val4 == INVALID_TIMER && tstatus->hp < tstatus->max_hp)
