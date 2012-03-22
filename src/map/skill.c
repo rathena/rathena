@@ -11755,11 +11755,16 @@ int skill_check_condition_castend(struct map_session_data* sd, short skill, shor
 	}
 
 	if( require.ammo ) { //Skill requires stuff equipped in the arrow slot.
-		if((i=sd->equip_index[EQI_AMMO]) < 0 ||
-			!sd->inventory_data[i] ||
-			sd->status.inventory[i].amount < require.ammo_qty
-		) {
+		if((i=sd->equip_index[EQI_AMMO]) < 0 || !sd->inventory_data[i] ) {
 			clif_arrow_fail(sd,0);
+			return 0;
+		} else if( sd->status.inventory[i].amount < require.ammo_qty ) {
+			char e_msg[100];
+			sprintf(e_msg,"Skill Failed. [%s] requires %dx %s.",
+						skill_get_desc(skill),
+						require.ammo_qty,
+						itemdb_jname(sd->status.inventory[i].nameid));
+			clif_colormes(sd,COLOR_RED,e_msg);
 			return 0;
 		}
 		if (!(require.ammo&1<<sd->inventory_data[i]->look))

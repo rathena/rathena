@@ -739,8 +739,18 @@ int clif_poison_list(struct map_session_data *sd, int skill_lv);
  **/
 int clif_autoshadowspell_list(struct map_session_data *sd);
 /**
- * [RRInd] for the new mounts
+ * New Mounts
  **/
 int clif_status_load_notick(struct block_list *bl,int type,int flag,int val1, int val2, int val3);
 int clif_status_load_single(int fd, int id,int type,int flag,int val1, int val2, int val3);
+/**
+ * Color Table
+ **/
+enum clif_colors {
+	COLOR_RED,
+
+	COLOR_MAX
+};
+unsigned long color_table[COLOR_MAX];
+int clif_colormes(struct map_session_data * sd, enum clif_colors color, const char* msg);
 #endif /* _CLIF_H_ */

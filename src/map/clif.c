@@ -8023,12 +8023,25 @@ void clif_specialeffect_value(struct block_list* bl, int effect_id, int num, sen
 		clif_send(buf, packet_len(0x284), bl, SELF);
 	}
 }
+// Modification of clif_messagecolor to send colored messages to players to chat log only (doesn't display overhead)
+/// 02c1 <packet len>.W <id>.L <color>.L <message>.?B
+int clif_colormes(struct map_session_data * sd, enum clif_colors color, const char* msg) {
+	unsigned short msg_len = strlen(msg) + 1;
 
+	WFIFOHEAD(sd->fd,msg_len + 12);
+	WFIFOW(sd->fd,0) = 0x2C1;
+	WFIFOW(sd->fd,2) = msg_len + 12;
+	WFIFOL(sd->fd,4) = 0;
+	WFIFOL(sd->fd,8) = color_table[color];
+	safestrncpy((char*)WFIFOP(sd->fd,12), msg, msg_len);
+	clif_send(WFIFOP(sd->fd,0), WFIFOW(sd->fd,2), &sd->bl, SELF);
+
+	return 0;
+}
 
 /// Monster/NPC color chat [SnakeDrak] (ZC_NPC_CHAT).
 /// 02c1 <packet len>.W <id>.L <color>.L <message>.?B
-void clif_messagecolor(struct block_list* bl, unsigned long color, const char* msg)
-{
+void clif_messagecolor(struct block_list* bl, unsigned long color, const char* msg) {
 	unsigned short msg_len = strlen(msg) + 1;
 	uint8 buf[256];
 	color = (color & 0x0000FF) << 16 | (color & 0x00FF00) | (color & 0xFF0000) >> 16; // RGB to BGR
@@ -16546,8 +16559,17 @@ static int packetdb_readdb(void)
 /*==========================================
  *
  *------------------------------------------*/
-int do_init_clif(void)
-{
+int do_init_clif(void) {
+	const char* colors[COLOR_MAX] = { "0xFF0000" };
+	int i;
+	/**
+	 * Setup Color Table (saves unnecessary load of strtoul on every call)
+	 **/
+	for(i = 0; i < COLOR_MAX; i++) {
+		color_table[i] = strtoul(colors[i],NULL,0);
+		color_table[i] = (color_table[i] & 0x0000FF) << 16 | (color_table[i] & 0x00FF00) | (color_table[i] & 0xFF0000) >> 16;//RGB to BGR
+	}
+
 	clif_config.packet_db_ver = -1; // the main packet version of the DB
 	memset(clif_config.connect_cmd, 0, sizeof(clif_config.connect_cmd)); //The default connect command will be determined after reading the packet_db [Skotlex]
 
@@ -16556,13 +16578,13 @@ int do_init_clif(void)
 	packetdb_readdb();
 
 	set_defaultparse(clif_parse);
-	if( make_listen_bind(bind_ip,map_port) == -1 )
-	{
+	if( make_listen_bind(bind_ip,map_port) == -1 ) {
 		ShowFatalError("can't bind game port\n");
 		exit(EXIT_FAILURE);
 	}
 
 	add_timer_func_list(clif_clearunit_delayed_sub, "clif_clearunit_delayed_sub");
 	add_timer_func_list(clif_delayquit, "clif_delayquit");
+
 	return 0;
 }
