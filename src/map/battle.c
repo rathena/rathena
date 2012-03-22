@@ -3865,6 +3865,11 @@ int battle_calc_return_damage(struct block_list* bl, struct block_list *src, int
 					if (rdamage < 1) rdamage = 1;
 				}
 			}
+			if( sc && sc->data[SC_CRESCENTELBOW] && !(flag&BF_SKILL) && !is_boss(src) && rand()%100 < sc->data[SC_CRESCENTELBOW]->val2 )
+			{	// Stimated formula from test
+				rdamage += (int)((*dmg) + (*dmg) * status_get_hp(src) * 2.15 / 100000);
+				if( rdamage < 1 ) rdamage = 1;
+			}
 		}
 	} else {
 		if (sd && sd->long_weapon_damage_return) {
