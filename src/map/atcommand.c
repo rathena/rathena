@@ -8337,6 +8337,12 @@ ACMD_FUNC(charcommands)
 }
 
 ACMD_FUNC(new_mount) {
+
+	if( pc_cant_newmount(sd) && !(sd->sc.option&OPTION_MOUNTING) ) {
+		clif_displaymessage(sd->fd,"Your character cannot mount a new mount");
+		return -1;
+	}
+
 	clif_displaymessage(sd->fd,"NOTICE: If you crash with mount your LUA is outdated");
 	if( !(sd->sc.option&OPTION_MOUNTING) ) {
 		clif_displaymessage(sd->fd,"You have mounted.");
