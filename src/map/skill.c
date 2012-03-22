@@ -4085,10 +4085,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case RA_WUGSTRIKE:
 	case RA_WUGBITE:
 		if( path_search(NULL,src->m,src->x,src->y,bl->x,bl->y,1,CELL_CHKNOREACH) ) {
-			if( skillid == RA_WUGSTRIKE ) {
-				if( sd && pc_isridingwug(sd) && !map_flag_gvg(src->m) && !map[src->m].flag.battleground && unit_movepos(src,bl->x,bl->y,1,1) )
-					clif_slide(src, bl->x, bl->y);
-			}
 			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 		}
 		break;
