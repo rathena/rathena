@@ -1530,8 +1530,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 
 	tsc = status_get_sc(target);
 	
-	if(tsc && tsc->count)
-	{
+	if(tsc && tsc->count) {
 		if( tsc->data[SC_INVINCIBLE] )
 			return 0;
 		if(!skill_num && tsc->data[SC_TRICKDEAD])
@@ -1550,39 +1549,44 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 	if( skill_get_ele(skill_num,1) == ELE_EARTH ) //TODO: Need Skill Lv here :/
 		hide_flag &= ~OPTION_HIDE;
 
-	switch( target->type )
-	{
-	case BL_PC:
-		{
-			struct map_session_data *sd = (TBL_PC*) target;
-			if (pc_isinvisible(sd))
-				return 0;
-			if (tsc->option&hide_flag && !(status->mode&MD_BOSS) &&
-				(sd->special_state.perfect_hiding || !(status->mode&MD_DETECTOR)))
-				return 0;
-			if( tsc->data[SC_CAMOUFLAGE] && !(status->mode&(MD_BOSS|MD_DETECTOR)) && !skill_num )
-				return 0;
-			if ( tsc->data[SC_CLOAKINGEXCEED] && !(status->mode&MD_BOSS) )
-				return 0;
-		}
-		break;
-	case BL_ITEM:	//Allow targetting of items to pick'em up (or in the case of mobs, to loot them).
-		//TODO: Would be nice if this could be used to judge whether the player can or not pick up the item it targets. [Skotlex]
-		if (status->mode&MD_LOOTER)
-			return 1;
-		return 0;
-	case BL_HOM: 
-	case BL_MER:
-		if( target->type == BL_HOM && skill_num && battle_config.hom_setting&0x1 && skill_get_inf(skill_num)&INF_SUPPORT_SKILL && battle_get_master(target) != src )
-			return 0; // Can't use support skills on Homunculus (only Master/Self)
-		if( target->type == BL_MER && (skill_num == PR_ASPERSIO || (skill_num >= SA_FLAMELAUNCHER && skill_num <= SA_SEISMICWEAPON)) && battle_get_master(target) != src )
-			return 0; // Can't use Weapon endow skills on Mercenary (only Master)
-		if( target->type == BL_MER && skill_num == AM_POTIONPITCHER )
-			return 0; // Can't use Potion Pitcher on Mercenaries
-	default:
-		//Check for chase-walk/hiding/cloaking opponents.
-		if (tsc && tsc->option&hide_flag && !(status->mode&(MD_BOSS|MD_DETECTOR)))
+	switch( target->type ) {
+		case BL_PC: {
+				struct map_session_data *sd = (TBL_PC*) target;
+				bool is_boss = (status->mode&MD_BOSS), is_detector = (status->mode&MD_DETECTOR);
+				if (pc_isinvisible(sd))
+					return 0;
+				if (tsc->option&hide_flag && !is_boss &&
+					(sd->special_state.perfect_hiding || !is_detector) )
+					return 0;
+				if( tsc->data[SC_CAMOUFLAGE] && !(is_boss || is_detector) && !skill_num )
+					return 0;
+				if( tsc->data[SC_CLOAKINGEXCEED] && !is_boss )
+					return 0;
+				if( tsc->data[SC_STEALTHFIELD] && !is_boss )
+					return 0;
+			}
+			break;
+		case BL_ITEM:	//Allow targetting of items to pick'em up (or in the case of mobs, to loot them).
+			//TODO: Would be nice if this could be used to judge whether the player can or not pick up the item it targets. [Skotlex]
+			if (status->mode&MD_LOOTER)
+				return 1;
 			return 0;
+		case BL_HOM: 
+		case BL_MER:
+			if( target->type == BL_HOM && skill_num && battle_config.hom_setting&0x1 && skill_get_inf(skill_num)&INF_SUPPORT_SKILL && battle_get_master(target) != src )
+				return 0; // Can't use support skills on Homunculus (only Master/Self)
+			if( target->type == BL_MER && (skill_num == PR_ASPERSIO || (skill_num >= SA_FLAMELAUNCHER && skill_num <= SA_SEISMICWEAPON)) && battle_get_master(target) != src )
+				return 0; // Can't use Weapon endow skills on Mercenary (only Master)
+			if( target->type == BL_MER && skill_num == AM_POTIONPITCHER )
+				return 0; // Can't use Potion Pitcher on Mercenaries
+		default:
+			//Check for chase-walk/hiding/cloaking opponents.
+			if( tsc ) {
+				if( tsc->option&hide_flag && !(status->mode&(MD_BOSS|MD_DETECTOR)))
+					return 0;
+				if( tsc->data[SC_STEALTHFIELD] && !(status->mode&MD_BOSS) )
+					return 0;		
+			}
 	}
 	return 1;
 }

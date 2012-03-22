@@ -9041,8 +9041,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	case NC_NEUTRALBARRIER:
 	case NC_STEALTHFIELD:
 		skill_clear_unitgroup(src); // To remove previous skills - cannot used combined
-		if( (sg = skill_unitsetting(src,skillid,skilllv,src->x,src->y,0)) != NULL )
-		{
+		if( (sg = skill_unitsetting(src,skillid,skilllv,src->x,src->y,0)) != NULL ) {
 			sc_start2(src,skillid == NC_NEUTRALBARRIER ? SC_NEUTRALBARRIER_MASTER : SC_STEALTHFIELD_MASTER,100,skilllv,sg->group_id,skill_get_time(skillid,skilllv));
 			if( sd ) pc_overheat(sd,1);
 		}
@@ -10520,6 +10519,8 @@ int skill_unit_onout (struct skill_unit *src, struct block_list *bl, unsigned in
 	case UNT_SAFETYWALL:
 	case UNT_PNEUMA:
 	case UNT_EPICLESIS://Arch Bishop
+	case UNT_NEUTRALBARRIER:
+	case UNT_STEALTHFIELD:
 		if (sce)
 			status_change_end(bl, type, INVALID_TIMER);
 		break;
