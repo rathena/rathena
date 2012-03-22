@@ -1014,7 +1014,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 
 	//temp: used to signal combo-skills right now.
 	if (sc && sc->data[SC_COMBO] && (sc->data[SC_COMBO]->val1 == skill_num ||
-		skill_num == MO_EXTREMITYFIST || skill_num == SR_DRAGONCOMBO )) {
+		(sd?skill_check_condition_castbegin(sd,skill_num,skill_lv):0) )) {
 		if (sc->data[SC_COMBO]->val2)
 			target_id = sc->data[SC_COMBO]->val2;
 		else

@@ -8058,6 +8058,10 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 					if (sd)
 						clif_skillinfo(sd,TK_JUMPKICK, INF_SELF_SKILL);
 					break;
+				case MO_TRIPLEATTACK:
+					if (sd && pc_checkskill(sd, SR_DRAGONCOMBO) > 0)
+						clif_skillinfo(sd,SR_DRAGONCOMBO, INF_SELF_SKILL);
+					break;
 			}
 			break;
 		case SC_RAISINGDRAGON:
@@ -8423,6 +8427,10 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 					break;
 				case TK_JUMPKICK:
 					clif_skillinfo(sd, TK_JUMPKICK, 0);
+					break;
+				case MO_TRIPLEATTACK:
+					if (pc_checkskill(sd, SR_DRAGONCOMBO) > 0)
+						clif_skillinfo(sd, SR_DRAGONCOMBO, 0);
 					break;
 			}
 			break;
