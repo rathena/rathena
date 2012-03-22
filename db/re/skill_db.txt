@@ -942,7 +942,7 @@
 2432,0,6,4,0,0x3,5,5,1,yes,0,0x4000,0,none,0,	WM_MELODYOFSINK,Melody of Sink
 2433,0,6,4,0,0x3,5,5,1,yes,0,0x4000,0,none,0,	WM_BEYOND_OF_WARCRY,Warcry of Beyond
 2434,0,6,4,0,0x3,5,5,1,yes,0,0x4000,0,none,0,	WM_UNLIMITED_HUMMING_VOICE,Unlimited Humming Voice
-
+2516,11,6,1,-1,0x2,5,5,1,no,0,0,0,weapon,0,	WM_SEVERE_RAINSTORM_MELEE,Severe Rainstorm Melee
 
 //2021,0,0,0,0,0,0,9,0,no,0,0,0,none,0		GC_VENOMIMPRESS,
 //2022,0,0,0,0,0,0,9,0,no,0,0,0,none,0		GC_CROSSIMPACT,

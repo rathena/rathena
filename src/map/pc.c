@@ -1310,6 +1310,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 				case WL_SUMMON_ATK_GROUND:
 				case LG_OVERBRAND_BRANDISH:
 				case LG_OVERBRAND_PLUSATK:
+				case WM_SEVERE_RAINSTORM_MELEE:
 				case ALL_BUYING_STORE:
 					continue;
 				default:
