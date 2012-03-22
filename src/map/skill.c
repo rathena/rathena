@@ -5099,9 +5099,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case CH_SOULCOLLECT:
 		if(sd) {
+			int limit = 5;
+			if( sd->sc.data[SC_RAISINGDRAGON] )
+				limit += sd->sc.data[SC_RAISINGDRAGON]->val1;
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			for (i = 0; i < 5; i++)
-				pc_addspiritball(sd,skill_get_time(skillid,skilllv),5);
+			for (i = 0; i < limit; i++)
+				pc_addspiritball(sd,skill_get_time(skillid,skilllv),limit);
 		}
 		break;
 
