@@ -15746,7 +15746,7 @@ int clif_autoshadowspell_list(struct map_session_data *sd) {
 	WFIFOHEAD(fd, 2 * 6 + 4);
 	WFIFOW(fd,0) = 0x442;
 	for( i = 0, c = 0; i < MAX_SKILL; i++ )
-		if( sd->status.skill[i].flag == 13 && sd->status.skill[i].id > 0 &&
+		if( sd->status.skill[i].flag == SKILL_FLAG_PLAGIARIZED && sd->status.skill[i].id > 0 &&
 				sd->status.skill[i].id < GS_GLITTERING && skill_get_type(sd->status.skill[i].id) == BF_MAGIC )
 		{ // Can't auto cast both Extended class and 3rd class skills.
 			WFIFOW(fd,8+c*2) = sd->status.skill[i].id;
@@ -15819,6 +15819,22 @@ void clif_msgtable_num(int fd, int line, int num) {
 	WFIFOL(fd, 4) = num;
 	WFIFOSET(fd, packet_len(0x7e2));
 #endif
+}
+/*==========================================
+ * used by SC_AUTOSHADOWSPELL
+ *------------------------------------------*/
+void clif_parse_SkillSelectMenu(int fd, struct map_session_data *sd) {
+	
+	if( sd->menuskill_id != SC_AUTOSHADOWSPELL )
+		return;
+
+	if( pc_istrading(sd) ) {
+		clif_skill_fail(sd,sd->ud.skillid,0,0);
+		sd->menuskill_val = sd->menuskill_id = 0;
+		return;
+	}
+	skill_select_menu(sd,RFIFOL(fd,2),RFIFOW(fd,6));
+	sd->menuskill_val = sd->menuskill_id = 0;
 }
 
 /*==========================================
@@ -16393,6 +16409,7 @@ static int packetdb_readdb(void)
 		{clif_parse_BattleChat,"battlechat"},
 		{clif_parse_mercenary_action,"mermenu"},
 		{clif_parse_progressbar,"progressbar"},
+		{clif_parse_SkillSelectMenu,"skillselectmenu"},
 #if PACKETVER >= 20091229
 		{clif_parse_PartyBookingRegisterReq,"bookingregreq"},
 		{clif_parse_PartyBookingSearchReq,"bookingsearchreq"},

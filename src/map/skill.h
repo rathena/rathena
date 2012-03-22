@@ -1627,4 +1627,8 @@ enum gx_poison {
 	PO_MAGICMUSHROOM,
 	PO_VENOMBLEED
 };
+/**
+ * Auto Shadow Spell (Shadow Chaser)
+ **/
+int skill_select_menu(struct map_session_data *sd,int flag,int skill_id);
 #endif /* _SKILL_H_ */

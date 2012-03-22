@@ -2350,7 +2350,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			if( sc && sc->data[SC__REPRODUCE] && (lv = sc->data[SC__REPRODUCE]->val1) ) {
 				//Level dependent and limitation.
 				lv = min(lv,skill_get_max(copy_skill));
-				if( tsd->reproduceskill_id && tsd->status.skill[tsd->reproduceskill_id].flag == 13 ) {
+				if( tsd->reproduceskill_id && tsd->status.skill[tsd->reproduceskill_id].flag == SKILL_FLAG_PLAGIARIZED ) {
 					tsd->status.skill[tsd->reproduceskill_id].id = 0;
 					tsd->status.skill[tsd->reproduceskill_id].lv = 0;
 					tsd->status.skill[tsd->reproduceskill_id].flag = 0;
@@ -2363,7 +2363,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 				tsd->status.skill[copy_skill].id = copy_skill;
 				tsd->status.skill[copy_skill].lv = lv;
-				tsd->status.skill[copy_skill].flag = 13;
+				tsd->status.skill[copy_skill].flag = SKILL_FLAG_PLAGIARIZED;
 				clif_addskill(tsd,copy_skill);
 			} else {
 				lv = skilllv;
@@ -14731,7 +14731,7 @@ int skill_select_menu(struct map_session_data *sd,int flag,int skill_id) {
 		status_change_end(&sd->bl,SC_STOP,-1);
 	}
 
-	if( (id = sd->status.skill[skill_id].id) == 0 || sd->status.skill[skill_id].flag != 13 ||
+	if( (id = sd->status.skill[skill_id].id) == 0 || sd->status.skill[skill_id].flag != SKILL_FLAG_PLAGIARIZED ||
 				skill_id >= GS_GLITTERING || skill_get_type(skill_id) != BF_MAGIC ) {
 		clif_skill_fail(sd,SC_AUTOSHADOWSPELL,0,0);
 		return 0;
