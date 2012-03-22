@@ -1094,8 +1094,7 @@ void battle_consume_ammo(TBL_PC*sd, int skill, int lv)
 	if (!battle_config.arrow_decrement)
 		return;
 	
-	if (skill)
-	{
+	if (skill) {
 		qty = skill_get_ammo_qty(skill, lv);
 		if (!qty) qty = 1;
 	}
@@ -3953,8 +3952,7 @@ int battle_damage_area( struct block_list *bl, va_list ap) {
 /*==========================================
  * ’Ê??UŒ‚?ˆ—?‚Ü‚Æ‚ß
  *------------------------------------------*/
-enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* target, unsigned int tick, int flag)
-{
+enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* target, unsigned int tick, int flag) {
 	struct map_session_data *sd = NULL, *tsd = NULL;
 	struct status_data *sstatus, *tstatus;
 	struct status_change *sc, *tsc;
@@ -4064,7 +4062,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		}
 		if (rnd()%100 < triple_rate) {
 			if( skill_attack(BF_WEAPON,src,src,target,MO_TRIPLEATTACK,skillv,tick,0) )
-				return wd.dmg_lv;
+				return ATK_DEF;
 			return ATK_MISS;
 		}
 	}
