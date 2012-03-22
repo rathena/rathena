@@ -413,8 +413,19 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 #endif
 
 	if (bl->type&BL_CHAR) {
+
 		skill_unit_move(bl,tick,3);
 		sc = status_get_sc(bl);
+
+		if( bl->type == BL_PC && ((TBL_PC*)bl)->shadowform_id ) {//Shadow Form Target Moving
+			struct block_list *d_bl;
+			if( (d_bl = map_id2bl(((TBL_PC*)bl)->shadowform_id)) == NULL || bl->m != d_bl->m || !check_distance_bl(bl,d_bl,skill_get_range(SC_SHADOWFORM,1)) ) {
+				if( d_bl )
+					status_change_end(d_bl,SC__SHADOWFORM,INVALID_TIMER);
+				((TBL_PC*)bl)->shadowform_id = 0;
+			}
+		}
+
 		if (sc && sc->count) {
 			if (sc->data[SC_DANCING])
 				skill_unit_move_unit_group(skill_id2group(sc->data[SC_DANCING]->val2), bl->m, x1-x0, y1-y0);
@@ -430,6 +441,12 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_NEUTRALBARRIER_MASTER]->val2), bl->m, x1-x0, y1-y0);
 				else if (sc->data[SC_STEALTHFIELD_MASTER])
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_STEALTHFIELD_MASTER]->val2), bl->m, x1-x0, y1-y0);
+				
+				if( sc->data[SC__SHADOWFORM] ) {//Shadow Form Caster Moving
+					struct block_list *d_bl;
+					if( (d_bl = map_id2bl(sc->data[SC__SHADOWFORM]->val2)) == NULL || bl->m != d_bl->m || !check_distance_bl(bl,d_bl,skill_get_range(SC_SHADOWFORM,1)) )
+						status_change_end(bl,SC__SHADOWFORM,INVALID_TIMER);	
+				}
 			}
 			/* Guild Aura Moving */
 			if( bl->type == BL_PC && ((TBL_PC*)bl)->state.gmaster_flag ) {

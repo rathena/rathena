@@ -1552,13 +1552,14 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 	switch( target->type ) {
 		case BL_PC: {
 				struct map_session_data *sd = (TBL_PC*) target;
-				bool is_boss = (status->mode&MD_BOSS), is_detector = (status->mode&MD_DETECTOR);
+				bool is_boss = (status->mode&MD_BOSS);
+				bool is_detect = ((status->mode&MD_DETECTOR)?true:false);//god-knows-why gcc doesn't shut up until this happens
 				if (pc_isinvisible(sd))
 					return 0;
 				if (tsc->option&hide_flag && !is_boss &&
-					(sd->special_state.perfect_hiding || !is_detector) )
+					(sd->special_state.perfect_hiding || !is_detect) )
 					return 0;
-				if( tsc->data[SC_CAMOUFLAGE] && !(is_boss || is_detector) && !skill_num )
+				if( tsc->data[SC_CAMOUFLAGE] && !(is_boss || is_detect) && !skill_num )
 					return 0;
 				if( tsc->data[SC_CLOAKINGEXCEED] && !is_boss )
 					return 0;
