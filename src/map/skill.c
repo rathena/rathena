@@ -8050,6 +8050,17 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		break;
 
+	case GM_SANDMAN:
+		if( tsc ) {
+			if( tsc->opt1 == OPT1_SLEEP )
+				tsc->opt1 = 0;
+			else
+				tsc->opt1 = OPT1_SLEEP;
+			clif_changeoption(bl);
+			clif_skill_nodamage (src, bl, skillid, skilllv, 1);
+		}
+		break;
+
 	default:
 		ShowWarning("skill_castend_nodamage_id: Unknown skill used:%d\n",skillid);
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
