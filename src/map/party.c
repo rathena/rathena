@@ -334,7 +334,7 @@ int party_recv_info(struct party* sp, int char_id)
 int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 {
 	struct party_data *p;
-	int i,flag=0;
+	int i;
 	
 	nullpo_ret(sd);
 
