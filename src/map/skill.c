@@ -11111,7 +11111,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 	case TK_COUNTER:
 		if ((sd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER)
 			return 0; //Anti-Soul Linker check in case you job-changed with Stances active.
-		if(!(sc && sc->data[SC_COMBO]))
+		if(!(sc && sc->data[SC_COMBO]) || sc->data[SC_COMBO]->val1 == TK_JUMPKICK)
 			return 0; //Combo needs to be ready
 
 		if (sc->data[SC_COMBO]->val3) {	//Kick chain
