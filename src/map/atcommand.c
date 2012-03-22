@@ -4128,13 +4128,29 @@ ACMD_FUNC(mapinfo)
 ACMD_FUNC(mount_peco)
 {
 	nullpo_retr(-1, sd);
-	if( pc_checkskill(sd,RK_DRAGONTRAINING) > 0 ) {
+
+	if (sd->disguise) {
+		clif_displaymessage(fd, msg_txt(212)); // Cannot mount while in disguise.
+		return -1;
+	}
+
+	if( (sd->class_&MAPID_THIRDMASK) == MAPID_RUNE_KNIGHT && pc_checkskill(sd,RK_DRAGONTRAINING) > 0 ) {
 		if( !(sd->sc.option&OPTION_DRAGON1) ) {
 			clif_displaymessage(sd->fd,"You have mounted your Dragon");
 			pc_setoption(sd, sd->sc.option|OPTION_DRAGON1);
 		} else {
 			clif_displaymessage(sd->fd,"You have released your Dragon");
 			pc_setoption(sd, sd->sc.option&~OPTION_DRAGON1);
+		}
+		return 0;
+	}
+	if( (sd->class_&MAPID_THIRDMASK) == MAPID_RANGER && pc_checkskill(sd,RA_WUGRIDER) > 0 ) {
+		if( !pc_isridingwug(sd) ) {
+			clif_displaymessage(sd->fd,"You have mounted your Wug");
+			pc_setoption(sd, sd->sc.option|OPTION_WUGRIDER);
+		} else {
+			clif_displaymessage(sd->fd,"You have released your Wug");
+			pc_setoption(sd, sd->sc.option&~OPTION_WUGRIDER);
 		}
 		return 0;
 	}
@@ -4149,21 +4165,15 @@ ACMD_FUNC(mount_peco)
 		return 0;
 	}
 	if (!pc_isriding(sd)) { // if actually no peco
-		if (!pc_checkskill(sd, KN_RIDING))
-		{
-			clif_displaymessage(fd, msg_txt(213)); // You can not mount a Peco Peco with your current job.
-			return -1;
-		}
 
-		if (sd->disguise)
-		{
-			clif_displaymessage(fd, msg_txt(212)); // Cannot mount a Peco Peco while in disguise.
+		if (!pc_checkskill(sd, KN_RIDING)) {
+			clif_displaymessage(fd, msg_txt(213)); // You can not mount a Peco Peco with your current job.
 			return -1;
 		}
 
 		pc_setoption(sd, sd->sc.option | OPTION_RIDING);
 		clif_displaymessage(fd, msg_txt(102)); // You have mounted a Peco Peco.
-	} else {	//Dismount
+	} else {//Dismount
 		pc_setoption(sd, sd->sc.option & ~OPTION_RIDING);
 		clif_displaymessage(fd, msg_txt(214)); // You have released your Peco Peco.
 	}
