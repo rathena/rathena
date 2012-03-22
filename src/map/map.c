@@ -1671,6 +1671,9 @@ int map_quit(struct map_session_data *sd)
 
 	if( sd->bg_id )
 		bg_team_leave(sd,1);
+
+	pc_itemcd_do(sd,false);
+
 	npc_script_event(sd, NPCE_LOGOUT);
 
 	//Unit_free handles clearing the player related data, 
