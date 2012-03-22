@@ -337,23 +337,34 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 	int i,flag=0;
 	
 	nullpo_ret(sd);
+
 	if( ( p = party_search(sd->status.party_id) ) == NULL )
 		return 0;
-	if( tsd == NULL) {
-		clif_party_inviteack(sd, "", 7);
+
+	// confirm if this player is a party leader
+	ARR_FIND(0, MAX_PARTY, i, p->data[i].sd == sd);
+
+	if( i == MAX_PARTY || !p->party.member[i].leader ) {
+		clif_displaymessage(sd->fd, msg_txt(282));
+		return 0;
+	}
+
+	// confirm if there is an open slot in the party
+	ARR_FIND(0, MAX_PARTY, i, p->party.member[i].account_id == 0);
+
+	if( i == MAX_PARTY ) {
+		clif_party_inviteack(sd, (tsd?tsd->status.name:""), 3);
 		return 0;
 	}
 	
-	if (!pc_has_permission(sd, PC_PERM_PARTY) || !pc_has_permission(tsd, PC_PERM_PARTY)) {
+	// confirm whether the account has the ability to invite before checking the player
+	if( !pc_has_permission(sd, PC_PERM_PARTY) || !pc_has_permission(tsd, PC_PERM_PARTY) ) {
 		clif_displaymessage(sd->fd, msg_txt(81)); // "Your GM level doesn't authorize you to preform this action on the specified player."
 		return 0;
 	}
-	
-	//Only leader can invite.
-	ARR_FIND(0, MAX_PARTY, i, p->data[i].sd == sd);
-	if (i == MAX_PARTY || !p->party.member[i].leader)
-	{	//TODO: Find the correct reply packet.
-		clif_displaymessage(sd->fd, msg_txt(282));
+
+	if( tsd == NULL) {
+		clif_party_inviteack(sd, "", 7);
 		return 0;
 	}
 
@@ -372,22 +383,6 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 	if( tsd->status.party_id > 0 || tsd->party_invite > 0 )
 	{// already associated with a party
 		clif_party_inviteack(sd,tsd->status.name,0);
-		return 0;
-	}
-	for(i=0;i<MAX_PARTY;i++){
-		if(p->party.member[i].account_id == 0) //Room for a new member.
-			flag = 1;
-	/* By default Aegis BLOCKS more than one char from the same account on a party.
-	 * But eA does support it... so this check is left commented.
-		if(p->party.member[i].account_id==tsd->status.account_id)
-		{
-			clif_party_inviteack(sd,tsd->status.name,4);
-			return 0;
-		}
-	*/
-	}
-	if (!flag) { //Full party.
-		clif_party_inviteack(sd,tsd->status.name,3);
 		return 0;
 	}
 		
