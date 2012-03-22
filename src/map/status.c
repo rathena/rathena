@@ -7545,6 +7545,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_FORCEOFVANGUARD: // This is not the official way to handle it but I think we should use it. [pakpil]
 			val2 = 20 + 12 * (val1 - 1); // Chance
 			val3 = 5 + (2 * val1); // Max rage counters
+			tick = -1; //endless duration in the client
 			tick_time = 6000; // [GodLesZ] tick time
 			val_flag |= 1|2|4;
 			break;
