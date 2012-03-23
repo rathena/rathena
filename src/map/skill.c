@@ -469,7 +469,7 @@ int skillnotok (int skillid, struct map_session_data *sd)
 	// This code will compare the player's attack motion value which is influenced by ASPD before
 	// allowing a skill to be cast. This is to prevent no-delay ACT files from spamming skills such as
 	// AC_DOUBLE which do not have a skill delay and are not regarded in terms of attack motion.
-	if( sd->skillitem != skillid && sd->canskill_tick &&
+	if( !sd->state.autocast && sd->skillitem != skillid && sd->canskill_tick &&
 		DIFF_TICK(gettick(), sd->canskill_tick) < (sd->battle_status.amotion * (100 + battle_config.skill_amotion_leniency) / 100) )
 	{// attempted to cast a skill before the attack motion has finished
 		return 1;
@@ -1350,7 +1350,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	{
 		struct block_list *tbl;
 		struct unit_data *ud;
-		int i, skilllv, type;
+		int i, skilllv, type, notok;
 
 		for (i = 0; i < ARRAYLENGTH(sd->autospell) && sd->autospell[i].id; i++) {
 
@@ -1361,7 +1361,11 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 			skill = (sd->autospell[i].id > 0) ? sd->autospell[i].id : -sd->autospell[i].id;
 
-			if (skillnotok(skill, sd))
+			sd->state.autocast = 1;
+			notok = skillnotok(skill, sd);
+			sd->state.autocast = 0;
+
+			if ( notok )
 				continue;
 
 			skilllv = sd->autospell[i].lv?sd->autospell[i].lv:1;
@@ -1479,16 +1483,14 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	return 0;
 }
 
-int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int skillid, unsigned int tick)
-{
-	int skill, skilllv, i, type;
+int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int skillid, unsigned int tick) {
+	int skill, skilllv, i, type, notok;
 	struct block_list *tbl;
 
 	if( sd == NULL || skillid <= 0 )
 		return 0;
 
-	for( i = 0; i < ARRAYLENGTH(sd->autospell3) && sd->autospell3[i].flag; i++ )
-	{
+	for( i = 0; i < ARRAYLENGTH(sd->autospell3) && sd->autospell3[i].flag; i++ ) {
 		if( sd->autospell3[i].flag != skillid )
 			continue;
 
@@ -1496,7 +1498,12 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 			continue;  // autospell already being executed
 
 		skill = (sd->autospell3[i].id > 0) ? sd->autospell3[i].id : -sd->autospell3[i].id;
-		if( skillnotok(skill, sd) )
+
+		sd->state.autocast = 1;
+		notok = skillnotok(skill, sd);
+		sd->state.autocast = 0;
+
+		if ( notok )
 			continue;
 
 		skilllv = sd->autospell3[i].lv ? sd->autospell3[i].lv : 1;
@@ -1506,6 +1513,7 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 			continue; // No target
 		if( rnd()%1000 >= sd->autospell3[i].rate )
 			continue;
+
 		tbl = (sd->autospell3[i].id < 0) ? &sd->bl : bl;
 
 		if( (type = skill_get_casttype(skill)) == CAST_GROUND ) {
@@ -1690,7 +1698,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	{
 		struct block_list *tbl;
 		struct unit_data *ud;
-		int i, skillid, skilllv, rate, type;
+		int i, skillid, skilllv, rate, type, notok;
 
 		for (i = 0; i < ARRAYLENGTH(dstsd->autospell2) && dstsd->autospell2[i].id; i++) {
 
@@ -1707,8 +1715,13 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			if (attack_type&BF_LONG)
 				 rate>>=1;
 
-			if (skillnotok(skillid, dstsd))
+			dstsd->state.autocast = 1;
+			notok = skillnotok(skillid, dstsd);
+			dstsd->state.autocast = 0;
+
+			if ( notok )
 				continue;
+
 			if (rnd()%1000 >= rate)
 				continue;
 
