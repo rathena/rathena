@@ -5877,10 +5877,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 	case AM_TWILIGHT3:
 		if (sd) {
+			int ebottle = pc_search_inventory(sd,713);
+			if( ebottle >= 0 )
+				ebottle = sd->status.inventory[ebottle].amount;
 			//check if you can produce all three, if not, then fail:
 			if (!skill_can_produce_mix(sd,970,-1, 100) //100 Alcohol
 				|| !skill_can_produce_mix(sd,7136,-1, 50) //50 Acid Bottle
 				|| !skill_can_produce_mix(sd,7135,-1, 50) //50 Flame Bottle
+				|| ebottle < 200 //200 empty bottle are required at total.
 			) {
 				clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
 				break;
