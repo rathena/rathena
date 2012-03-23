@@ -2113,6 +2113,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			sc = status_get_sc(bl);
 			if (sc && !sc->count)
 				sc = NULL; //Don't need it.
+			/* bugreport:2564 flag&2 disables double casting trigger */
+			flag |= 2;
 
 			//Spirit of Wizard blocks Kaite's reflection
 			if( type == 2 && sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_WIZARD )
