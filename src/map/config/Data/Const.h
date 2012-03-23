@@ -13,6 +13,11 @@
  * "Constants"
  **/
 #if RECASTING
+
+	#if REMODE == 0
+		#error RECASTING requires REMODE enabled
+	#endif
+
 	#define CONST_CASTRATE_SCALE RECASTING_VMIN
 	/**
 	 * Cast Rate Formula: (DEX x 2)+INT

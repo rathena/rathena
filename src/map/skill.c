@@ -217,7 +217,9 @@ int	skill_get_unit_bl_target( int id )    { skill_get (skill_db[id].unit_target&
 int	skill_get_unit_flag( int id )         { skill_get (skill_db[id].unit_flag, id, 1); }
 int	skill_get_unit_layout_type( int id ,int lv ){ skill_get (skill_db[id].unit_layout_type[lv-1], id, lv); }
 int	skill_get_cooldown( int id ,int lv )     { skill_get (skill_db[id].cooldown[lv-1], id, lv); }
-
+#if RECASTING
+int	skill_get_fixed_cast( int id ,int lv ){ skill_get (skill_db[id].fixed_cast[lv-1], id, lv); }
+#endif
 int skill_tree_get_max(int id, int b_class)
 {
 	int i;
@@ -12132,15 +12134,14 @@ int skill_castfix (struct block_list *bl, int skill_id, int skill_lv)
 /*==========================================
  * Does cast-time reductions based on sc data.
  *------------------------------------------*/
-int skill_castfix_sc (struct block_list *bl, int time, int skill_id, int skill_lv)
-{
+int skill_castfix_sc (struct block_list *bl, int time, int skill_id, int skill_lv) {
 	struct status_change *sc = status_get_sc(bl);
 #if RECASTING
-	int fixed = skill_get_cast(skill_id, skill_lv);
-	if( fixed > 1 )
-		fixed = fixed * 20 / 100;
-	else
-		fixed = 0;
+	int fixed = skill_get_fixed_cast(skill_id, skill_lv);
+	if( !fixed ) {
+		fixed = skill_get_cast(skill_id, skill_lv);
+		fixed = ( fixed > 1 ? ( fixed * 20 / 100 ) : 0 );
+	}
 #endif
 	if (sc && sc->count) {
 		if (sc->data[SC_SLOWCAST])
@@ -15552,6 +15553,9 @@ static bool skill_parse_row_castdb(char* split[], int columns, int current)
 	skill_split_atoi(split[4],skill_db[i].upkeep_time);
 	skill_split_atoi(split[5],skill_db[i].upkeep_time2);
 	skill_split_atoi(split[6],skill_db[i].cooldown);
+#if RECASTING
+	skill_split_atoi(split[7],skill_db[i].fixed_cast);
+#endif
 	return true;
 }
 
@@ -15783,7 +15787,7 @@ static void skill_readdb(void)
 
 	sv_readdb(db_path, DBPATH"skill_db.txt"          , ',',  17, 17, MAX_SKILL_DB, skill_parse_row_skilldb);
 	sv_readdb(db_path, DBPATH"skill_require_db.txt"  , ',',  32, 32, MAX_SKILL_DB, skill_parse_row_requiredb);
-	sv_readdb(db_path, DBPATH"skill_cast_db.txt"     , ',',   7,  7, MAX_SKILL_DB, skill_parse_row_castdb);
+	sv_readdb(db_path, DBPATH"skill_cast_db.txt"     , ',',   7,  8, MAX_SKILL_DB, skill_parse_row_castdb);
 	sv_readdb(db_path, DBPATH"skill_castnodex_db.txt", ',',   2,  3, MAX_SKILL_DB, skill_parse_row_castnodexdb);
 	sv_readdb(db_path, DBPATH"skill_unit_db.txt"     , ',',   8,  8, MAX_SKILL_DB, skill_parse_row_unitdb);
 
