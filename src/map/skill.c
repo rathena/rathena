@@ -1076,7 +1076,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 	case GS_BULLSEYE: //0.1% coma rate.
 		if(tstatus->race == RC_BRUTE || tstatus->race == RC_DEMIHUMAN)
-			status_change_start(bl,SC_COMA,10,skilllv,0,0,0,0,0);
+			status_change_start(bl,SC_COMA,10,skilllv,0,src->id,0,0,0);
 		break;
 	case GS_PIERCINGSHOT:
 		sc_start(bl,SC_BLEEDING,(skilllv*3),skilllv,skill_get_time2(skillid,skilllv));
@@ -1310,7 +1310,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			rate += sd->weapon_coma_race[tstatus->race];
 			rate += sd->weapon_coma_race[tstatus->mode&MD_BOSS?RC_BOSS:RC_NONBOSS];
 			if (rate)
-				status_change_start(bl, SC_COMA, rate, 0, 0, 0, 0, 0, 0);
+				status_change_start(bl, SC_COMA, rate, 0, 0, src->id, 0, 0, 0);
 		}
 		if( sd && battle_config.equip_self_break_rate )
 		{	// Self weapon breaking

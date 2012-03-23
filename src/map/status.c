@@ -6885,6 +6885,11 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		}
 
 		case SC_COMA: //Coma. Sends a char to 1HP. If val2, do not zap sp
+			if( val3 && bl->type == BL_MOB ) {
+				struct block_list* src = map_id2bl(val3);
+				if( src )
+					mob_log_damage((TBL_MOB*)bl,src,status->hp - 1);
+			}
 			status_zap(bl, status->hp-1, val2?0:status->sp);
 			return 1;
 			break;
