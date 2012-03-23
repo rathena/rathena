@@ -9385,7 +9385,29 @@ static bool skill_dance_switch(struct skill_unit* unit, int flag)
 
 	return true;
 }
+/**
+ * Upon Ice Wall cast it checks all nearby mobs to find any who may be blocked by the IW
+ **/
+static int skill_icewall_block(struct block_list *bl,va_list ap) {
+	struct block_list *src;
+	struct mob_data *md = ((TBL_MOB*)bl);
 
+	nullpo_ret(bl);
+
+	src = va_arg(ap,struct block_list *);
+
+	nullpo_ret(src);
+	nullpo_ret(md);
+
+	if( md->target_id != src->id
+		|| check_distance_bl(bl, src, status_get_range(bl) )
+		|| path_search_long(NULL,bl->m,bl->x,bl->y,src->x,src->y,CELL_CHKICEWALL) )
+		return 0;
+
+	mob_unlocktarget(md,gettick());
+
+	return 0;
+}
 /*==========================================
  * Initializes and sets a ground skill.
  * flag&1 is used to determine when the skill 'morphs' (Warp portal becomes active, or Fire Pillar becomes active)
@@ -9796,9 +9818,15 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 		return NULL;
 	}
 
-
-	if (skillid == NJ_TATAMIGAESHI) //Store number of tiles.
-		group->val1 = group->alive_count;
+	//success, unit created.
+	switch( skillid ) {
+		case WZ_ICEWALL: //Store number of tiles.
+			map_foreachinrange(skill_icewall_block, src, AREA_SIZE, BL_MOB, src);
+			break;
+		case NJ_TATAMIGAESHI: //Store number of tiles.
+			group->val1 = group->alive_count;
+			break;
+	}
 
 	return group;
 }
@@ -13234,6 +13262,7 @@ struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int 
 		map_setgatcell(unit->bl.m,unit->bl.x,unit->bl.y,5);
 		clif_changemapcell(0,unit->bl.m,unit->bl.x,unit->bl.y,5,AREA);
 		skill_unitsetmapcell(unit,WZ_ICEWALL,group->skill_lv,CELL_ICEWALL,true);
+		map[unit->bl.m].icewall_num++;
 		break;
 	case SA_LANDPROTECTOR:
 		skill_unitsetmapcell(unit,SA_LANDPROTECTOR,group->skill_lv,CELL_LANDPROTECTOR,true);
@@ -13278,40 +13307,40 @@ int skill_delunit (struct skill_unit* unit)
 
 	// perform ondelete actions
 	switch (group->skill_id) {
-	case HT_ANKLESNARE:
-		{
-		struct block_list* target = map_id2bl(group->val2);
-		if( target )
-			status_change_end(target, SC_ANKLE, INVALID_TIMER);
-		}
-		break;
-	case WZ_ICEWALL:
-		map_setgatcell(unit->bl.m,unit->bl.x,unit->bl.y,unit->val2);
-		clif_changemapcell(0,unit->bl.m,unit->bl.x,unit->bl.y,unit->val2,ALL_SAMEMAP); // hack to avoid clientside cell bug
-		skill_unitsetmapcell(unit,WZ_ICEWALL,group->skill_lv,CELL_ICEWALL,false);
-		break;
-	case SA_LANDPROTECTOR:
-		skill_unitsetmapcell(unit,SA_LANDPROTECTOR,group->skill_lv,CELL_LANDPROTECTOR,false);
-		break;
-	case HP_BASILICA:
-		skill_unitsetmapcell(unit,HP_BASILICA,group->skill_lv,CELL_BASILICA,false);
-		break;
-	case RA_ELECTRICSHOCKER: {
-			struct block_list* target = map_id2bl(group->val2);
-			if( target )
-				status_change_end(target, SC_ELECTRICSHOCKER, -1);
-			break;		
-		}
-	case SC_MAELSTROM:
-		skill_unitsetmapcell(unit,SC_MAELSTROM,group->skill_lv,CELL_MAELSTROM,false);
-		break;
-	case SC_MANHOLE: // Note : Removing the unit don't remove the status (official info)
-		if( group->val2 ) { // Someone Traped
-			struct status_change *tsc = status_get_sc( map_id2bl(group->val2));
-			if( tsc && tsc->data[SC__MANHOLE] )
-				tsc->data[SC__MANHOLE]->val4 = 0; // Remove the Unit ID
-		}
-		break;
+		case HT_ANKLESNARE: {
+				struct block_list* target = map_id2bl(group->val2);
+				if( target )
+					status_change_end(target, SC_ANKLE, INVALID_TIMER);
+			}
+			break;
+		case WZ_ICEWALL:
+			map_setgatcell(unit->bl.m,unit->bl.x,unit->bl.y,unit->val2);
+			clif_changemapcell(0,unit->bl.m,unit->bl.x,unit->bl.y,unit->val2,ALL_SAMEMAP); // hack to avoid clientside cell bug
+			skill_unitsetmapcell(unit,WZ_ICEWALL,group->skill_lv,CELL_ICEWALL,false);
+			map[unit->bl.m].icewall_num--;
+			break;
+		case SA_LANDPROTECTOR:
+			skill_unitsetmapcell(unit,SA_LANDPROTECTOR,group->skill_lv,CELL_LANDPROTECTOR,false);
+			break;
+		case HP_BASILICA:
+			skill_unitsetmapcell(unit,HP_BASILICA,group->skill_lv,CELL_BASILICA,false);
+			break;
+		case RA_ELECTRICSHOCKER: {
+				struct block_list* target = map_id2bl(group->val2);
+				if( target )
+					status_change_end(target, SC_ELECTRICSHOCKER, -1);	
+			}
+			break;
+		case SC_MAELSTROM:
+			skill_unitsetmapcell(unit,SC_MAELSTROM,group->skill_lv,CELL_MAELSTROM,false);
+			break;
+		case SC_MANHOLE: // Note : Removing the unit don't remove the status (official info)
+			if( group->val2 ) { // Someone Traped
+				struct status_change *tsc = status_get_sc( map_id2bl(group->val2));
+				if( tsc && tsc->data[SC__MANHOLE] )
+					tsc->data[SC__MANHOLE]->val4 = 0; // Remove the Unit ID
+			}
+			break;
 	}
 
 	clif_skill_delunit(unit);

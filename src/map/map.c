@@ -2493,13 +2493,13 @@ int map_getcellp(struct map_data* m,int x,int y,cell_chk cellchk)
 		// base gat type checks
 		case CELL_CHKWALL:
 			return (!cell.walkable && !cell.shootable);
-			//return (map_cell2gat(cell) == 1);
+
 		case CELL_CHKWATER:
 			return (cell.water);
-			//return (map_cell2gat(cell) == 3);
+
 		case CELL_CHKCLIFF:
 			return (!cell.walkable && cell.shootable);
-			//return (map_cell2gat(cell) == 5);
+
 
 		// base cell type checks
 		case CELL_CHKNPC:
