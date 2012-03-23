@@ -13216,6 +13216,7 @@ struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int 
 	case WZ_ICEWALL:
 		map_setgatcell(unit->bl.m,unit->bl.x,unit->bl.y,5);
 		clif_changemapcell(0,unit->bl.m,unit->bl.x,unit->bl.y,5,AREA);
+		skill_unitsetmapcell(unit,WZ_ICEWALL,group->skill_lv,CELL_ICEWALL,true);
 		break;
 	case SA_LANDPROTECTOR:
 		skill_unitsetmapcell(unit,SA_LANDPROTECTOR,group->skill_lv,CELL_LANDPROTECTOR,true);
@@ -13270,6 +13271,7 @@ int skill_delunit (struct skill_unit* unit)
 	case WZ_ICEWALL:
 		map_setgatcell(unit->bl.m,unit->bl.x,unit->bl.y,unit->val2);
 		clif_changemapcell(0,unit->bl.m,unit->bl.x,unit->bl.y,unit->val2,ALL_SAMEMAP); // hack to avoid clientside cell bug
+		skill_unitsetmapcell(unit,WZ_ICEWALL,group->skill_lv,CELL_ICEWALL,false);
 		break;
 	case SA_LANDPROTECTOR:
 		skill_unitsetmapcell(unit,SA_LANDPROTECTOR,group->skill_lv,CELL_LANDPROTECTOR,false);
