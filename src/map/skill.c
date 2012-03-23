@@ -9389,22 +9389,20 @@ static bool skill_dance_switch(struct skill_unit* unit, int flag)
  * Upon Ice Wall cast it checks all nearby mobs to find any who may be blocked by the IW
  **/
 static int skill_icewall_block(struct block_list *bl,va_list ap) {
-	struct block_list *src;
+	struct block_list *target = NULL;
 	struct mob_data *md = ((TBL_MOB*)bl);
 
 	nullpo_ret(bl);
-
-	src = va_arg(ap,struct block_list *);
-
-	nullpo_ret(src);
 	nullpo_ret(md);
+	if( !md->target_id )
+		return 0;
+	nullpo_ret( ( target = map_id2bl(md->target_id) ) );
 
-	if( md->target_id != src->id
-		|| check_distance_bl(bl, src, status_get_range(bl) )
-		|| path_search_long(NULL,bl->m,bl->x,bl->y,src->x,src->y,CELL_CHKICEWALL) )
+	if( path_search_long(NULL,bl->m,bl->x,bl->y,target->x,target->y,CELL_CHKICEWALL) )
 		return 0;
 
-	mob_unlocktarget(md,gettick());
+	if( !check_distance_bl(bl, target, status_get_range(bl) ) )
+		mob_unlocktarget(md,gettick());
 
 	return 0;
 }
@@ -9820,8 +9818,8 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 
 	//success, unit created.
 	switch( skillid ) {
-		case WZ_ICEWALL: //Store number of tiles.
-			map_foreachinrange(skill_icewall_block, src, AREA_SIZE, BL_MOB, src);
+		case WZ_ICEWALL:
+			map_foreachinrange(skill_icewall_block, src, AREA_SIZE, BL_MOB);
 			break;
 		case NJ_TATAMIGAESHI: //Store number of tiles.
 			group->val1 = group->alive_count;
