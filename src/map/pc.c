@@ -1374,8 +1374,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 					f = 0; // job level requirement wasn't satisfied
 			}
 
-			if( f )
-			{
+			if( f ) {
 				inf2 = skill_get_inf2(id);
 
 				if(!sd->status.skill[id].lv && (
@@ -1384,11 +1383,14 @@ int pc_calc_skilltree(struct map_session_data *sd)
 					(inf2&INF2_SPIRIT_SKILL && !sd->sc.data[SC_SPIRIT])
 				))
 					continue; //Cannot be learned via normal means. Note this check DOES allows raising already known skills.
+				
+				/* This thing is present in all skill trees (for whatever reason) and it crashes if gm w/o PC_PERM_ALL_SKILL uses @allskills */
+				if( id == ALL_BUYING_STORE )
+					continue;
 
 				sd->status.skill[id].id = id;
 
-				if(inf2&INF2_SPIRIT_SKILL)
-				{	//Spirit skills cannot be learned, they will only show up on your tree when you get buffed.
+				if(inf2&INF2_SPIRIT_SKILL) { //Spirit skills cannot be learned, they will only show up on your tree when you get buffed.
 					sd->status.skill[id].lv = 1; // need to manually specify a skill level
 					sd->status.skill[id].flag = SKILL_FLAG_TEMPORARY; //So it is not saved, and tagged as a "bonus" skill.
 				}
