@@ -959,6 +959,12 @@ static int itemdb_readdb(void)
 			}
 			str[21] = p;
 
+			p = strstr(p+1,"}");
+			if ( strchr(p,',') != NULL )
+			{
+				ShowError("itemdb_readdb: Extra columns in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
+				continue;
+			}
 
 			if (!itemdb_parse_dbrow(str, path, lines, 0))
 				continue;

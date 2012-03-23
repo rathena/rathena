@@ -3753,7 +3753,7 @@ static void mob_readdb(void)
 			}
 		}
 
-		sv_readdb(db_path, filename[fi], ',', 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, 38+2*MAX_MVP_DROP+2*MAX_MOB_DROP, -1, &mob_readdb_sub);
+		sv_readdb(db_path, filename[fi], ',', 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, -1, &mob_readdb_sub);
 	}
 }
 
