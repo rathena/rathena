@@ -2738,11 +2738,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		sd->def_rate = 0;
 	if(sd->def_rate != 100) {
 		i =  status->def * sd->def_rate/100;
-#if REMODE
-		status->def = cap_value(i, SHRT_MIN, SHRT_MAX);
-#else
-		status->def = cap_value(i, CHAR_MIN, CHAR_MAX);
-#endif
+		status->def = cap_value(i, DEFTYPE_MIN, DEFTYPE_MAX);
 	}
 #if isOFF(REMODE)
 	/**
@@ -2761,11 +2757,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		sd->mdef_rate = 0;
 	if(sd->mdef_rate != 100) {
 		i =  status->mdef * sd->mdef_rate/100;
-#if REMODE
-		status->mdef = cap_value(i, SHRT_MIN, SHRT_MAX);
-#else
-		status->mdef = cap_value(i, CHAR_MIN, CHAR_MAX);
-#endif
+		status->mdef = cap_value(i, DEFTYPE_MIN, DEFTYPE_MAX);
 	}
 #if isOFF(REMODE)
 	/**
@@ -3035,17 +3027,9 @@ static signed short status_calc_hit(struct block_list *,struct status_change *,i
 static signed short status_calc_critical(struct block_list *,struct status_change *,int);
 static signed short status_calc_flee(struct block_list *,struct status_change *,int);
 static signed short status_calc_flee2(struct block_list *,struct status_change *,int);
-#if REMODE
-	static short status_calc_def(struct block_list *bl, struct status_change *sc, int);
-#else
-	static signed char status_calc_def(struct block_list *,struct status_change *,int);
-#endif
+static defType status_calc_def(struct block_list *bl, struct status_change *sc, int);
 static signed short status_calc_def2(struct block_list *,struct status_change *,int);
-#if REMODE
-	static short status_calc_mdef(struct block_list *bl, struct status_change *sc, int);
-#else
-	static signed char status_calc_mdef(struct block_list *,struct status_change *,int);
-#endif
+static defType status_calc_mdef(struct block_list *bl, struct status_change *sc, int);
 static signed short status_calc_mdef2(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_speed(struct block_list *,struct status_change *,int);
 static short status_calc_aspd_rate(struct block_list *,struct status_change *,int);
@@ -4360,18 +4344,11 @@ static signed short status_calc_flee2(struct block_list *bl, struct status_chang
 
 	return (short)cap_value(flee2,10,SHRT_MAX);
 }
-#if REMODE
-	static short status_calc_def(struct block_list *bl, struct status_change *sc, int def)
-#else
-	static signed char status_calc_def(struct block_list *bl, struct status_change *sc, int def)
-#endif
-{
+static defType status_calc_def(struct block_list *bl, struct status_change *sc, int def) {
+	
 	if(!sc || !sc->count)
-#if REMODE
-		return (short)cap_value(def,SHRT_MIN,SHRT_MAX);
-#else
-		return (signed char)cap_value(def,CHAR_MIN,CHAR_MAX);
-#endif
+		return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);
+
 	if(sc->data[SC_BERSERK])
 		return 0;
 	if(sc->data[SC_SKA])
@@ -4437,11 +4414,8 @@ static signed short status_calc_flee2(struct block_list *bl, struct status_chang
 		def += def * sc->data[SC_PRESTIGE]->val1 / 100;
 	if(sc->data[SC_ODINS_POWER])
 		def -= 20;
-#if REMODE
-	return (short)cap_value(def,SHRT_MIN,SHRT_MAX);
-#else
-	return (signed char)cap_value(def,CHAR_MIN,CHAR_MAX);
-#endif
+
+	return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);;
 }
 
 static signed short status_calc_def2(struct block_list *bl, struct status_change *sc, int def2)
@@ -4488,18 +4462,11 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 	return (short)cap_value(def2,1,SHRT_MAX);
 }
 
-#if REMODE
-	static short status_calc_mdef(struct block_list *bl, struct status_change *sc, int mdef)
-#else
-	static signed char status_calc_mdef(struct block_list *bl, struct status_change *sc, int mdef)
-#endif
-{
+
+static defType status_calc_mdef(struct block_list *bl, struct status_change *sc, int mdef) {
+	
 	if(!sc || !sc->count)
-#if REMODE
-		return (short)cap_value(mdef,SHRT_MIN,SHRT_MAX);
-#else
-		return (signed char)cap_value(mdef,CHAR_MIN,CHAR_MAX);
-#endif
+		return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
 
 	if(sc->data[SC_BERSERK])
 		return 0;
@@ -4537,12 +4504,7 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 	if(sc->data[SC_ODINS_POWER])
 		mdef -= 20;
 
-
-#if REMODE
-	return (short)cap_value(mdef,SHRT_MIN,SHRT_MAX);
-#else
-	return (signed char)cap_value(mdef,CHAR_MIN,CHAR_MAX);
-#endif
+	return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
 }
 
 static signed short status_calc_mdef2(struct block_list *bl, struct status_change *sc, int mdef2)
@@ -5150,23 +5112,15 @@ struct status_data *status_get_base_status(struct block_list *bl)
 			return NULL;
 	}
 }
-#if REMODE
-	short status_get_def(struct block_list *bl)
-#else
-	signed char status_get_def(struct block_list *bl)
-#endif
-{
+defType status_get_def(struct block_list *bl) {
 	struct unit_data *ud;
 	struct status_data *status = status_get_status_data(bl);
 	int def = status?status->def:0;
 	ud = unit_bl2ud(bl);
 	if (ud && ud->skilltimer != INVALID_TIMER)
 		def -= def * skill_get_castdef(ud->skillid)/100;
-#if REMODE
-	return cap_value(def, SHRT_MIN, SHRT_MAX);
-#else
-	return cap_value(def, CHAR_MIN, CHAR_MAX);
-#endif
+
+	return cap_value(def, DEFTYPE_MIN, DEFTYPE_MAX);
 }
 
 unsigned short status_get_speed(struct block_list *bl)

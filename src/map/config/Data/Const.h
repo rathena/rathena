@@ -42,9 +42,22 @@
  * Path within the /db folder to (non-)renewal specific db files
  **/
 #if REMODE
-#define DBPATH "re/"
+	#define DBPATH "re/"
 #else
-#define DBPATH "pre-re/"
+	#define DBPATH "pre-re/"
+#endif
+
+/**
+ * DefType
+ **/
+#if REMODE
+	typedef short defType;
+	#define DEFTYPE_MIN SHRT_MIN
+	#define DEFTYPE_MAX SHRT_MAX
+#else
+	typedef signed char defType;
+	#define DEFTYPE_MIN CHAR_MIN
+	#define DEFTYPE_MAX CHAR_MAX
 #endif
 
 /**

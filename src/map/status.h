@@ -1384,13 +1384,12 @@ struct status_data {
 	short 
 		hit, flee, cri, flee2,
 		def2, mdef2,
-#if REMODE
-		/**
-		 * In RE def and mdef can go over 127 (signed char) limit, so in RE mode we use short
-		 **/
-		def,mdef,
-#endif
 		aspd_rate;
+	/**
+	 * defType is REMODE dependent and defined in src/map/config/data/const.h
+	 **/
+	defType def,mdef;
+
 	unsigned char
 		def_ele, ele_lv,
 #if REMODE
@@ -1400,13 +1399,7 @@ struct status_data {
 		wlv,
 #endif
 		size, race;
-#if REMODE == 0
-	/**
-	 * In NON-RE def and mdef are not required to be short, so we keep it signed char (ancient-default)
-	 **/
-	signed char
-		def, mdef;
-#endif
+
 	struct weapon_atk rhw, lhw; //Right Hand/Left Hand Weapon.
 };
 
@@ -1522,11 +1515,7 @@ int status_get_lv(struct block_list *bl);
 #define status_get_luk(bl) status_get_status_data(bl)->luk
 #define status_get_hit(bl) status_get_status_data(bl)->hit
 #define status_get_flee(bl) status_get_status_data(bl)->flee
-#if REMODE
-	short status_get_def(struct block_list *bl);
-#else
-	signed char status_get_def(struct block_list *bl);
-#endif
+defType status_get_def(struct block_list *bl);
 #define status_get_mdef(bl) status_get_status_data(bl)->mdef
 #define status_get_flee2(bl) status_get_status_data(bl)->flee2
 #define status_get_def2(bl) status_get_status_data(bl)->def2

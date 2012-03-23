@@ -2381,11 +2381,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		if (!flag.idef || !flag.idef2)
 		{	//Defense reduction
 			short vit_def;
-#if REMODE
-			short def1 = status_get_def(target); //Don't use tstatus->def1 due to skill timer reductions.
-#else
-			signed char def1 = status_get_def(target); //Don't use tstatus->def1 due to skill timer reductions.
-#endif
+			defType def1 = status_get_def(target); //Don't use tstatus->def1 due to skill timer reductions.
 			short def2 = (short)tstatus->def2;
 
 			if( sd )
@@ -3358,11 +3354,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		}
 
 		if(!flag.imdef){
-#if REMODE
-			short mdef = tstatus->mdef;
-#else
-			char mdef = tstatus->mdef;
-#endif
+			defType mdef = tstatus->mdef;
 			int mdef2= tstatus->mdef2;
 			if(sd) {
 				i = sd->ignore_mdef[is_boss(target)?RC_BOSS:RC_NONBOSS];
