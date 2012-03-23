@@ -1241,8 +1241,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				//Since these do not consume ammo, they need to be explicitly set as arrow attacks.
 				flag.arrow = 1;
 				break;
-
+#if isOFF(REMODE)
 			case CR_SHIELDBOOMERANG:
+#endif
 			case PA_SHIELDCHAIN:
 			case LG_SHIELDPRESS:
 			case LG_EARTHDRIVE:
