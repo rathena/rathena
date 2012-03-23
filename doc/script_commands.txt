@@ -2027,6 +2027,17 @@ Whatever it returns is determined by type.
 
 ---------------------------------------
 
+*getnpcid(<type>)
+
+This function will return the GID of an NPC.
+Type can be:
+
+ 0 - The NPC that the running script is attached to.
+
+Useful for making an NPC perform an action using script commands that require a GID (e.g. unit*)
+
+---------------------------------------
+
 *getarraysize(<array name>)
 
 This function returns the number of values that are contained inside the 

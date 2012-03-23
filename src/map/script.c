@@ -6354,6 +6354,25 @@ BUILDIN_FUNC(getcharid)
 	return 0;
 }
 /*==========================================
+ * returns the GID of an NPC
+ *------------------------------------------*/
+BUILDIN_FUNC(getnpcid)
+{
+	int num;
+	
+	switch (num = script_getnum(st,2)) {
+		case 0:
+			script_pushint(st,st->oid);
+			break;
+		default:
+			ShowError("buildin_getnpcid: invalid parameter (%d).\n", num);
+			script_pushint(st,0);
+			break;
+	}
+	
+	return 0;
+}
+/*==========================================
  *Žw’èID‚ÌPT–¼Žæ“¾
  *------------------------------------------*/
 BUILDIN_FUNC(getpartyname)
@@ -15911,6 +15930,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(checkweight,"vi"),
 	BUILDIN_DEF(readparam,"i?"),
 	BUILDIN_DEF(getcharid,"i?"),
+	BUILDIN_DEF(getnpcid,"i"),
 	BUILDIN_DEF(getpartyname,"i"),
 	BUILDIN_DEF(getpartymember,"i?"),
 	BUILDIN_DEF(getpartyleader,"i?"),
