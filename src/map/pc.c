@@ -3745,7 +3745,8 @@ int pc_dropitem(struct map_session_data *sd,int n,int amount)
 	if (!map_addflooritem(&sd->status.inventory[n], amount, sd->bl.m, sd->bl.x, sd->bl.y, 0, 0, 0, 2))
 		return 0;
 	
-	pc_delitem(sd, n, amount, 0, 7, LOG_TYPE_PICKDROP_PLAYER);
+	pc_delitem(sd, n, amount, 1, 0, LOG_TYPE_PICKDROP_PLAYER);
+	clif_dropitem(sd, n, amount);
 	return 1;
 }
 

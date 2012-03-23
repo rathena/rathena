@@ -2220,12 +2220,6 @@ void clif_delitem(struct map_session_data *sd,int n,int amount, short reason)
 
 	nullpo_retv(sd);
 	
-	if (reason == 7)
-	{
-		clif_dropitem(sd,n,amount);
-		return;
-	}
-
 	fd=sd->fd;
 	
 	WFIFOHEAD(fd, packet_len(0x7fa));
