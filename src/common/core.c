@@ -87,7 +87,7 @@ static BOOL WINAPI console_handler(DWORD c_event)
 			runflag = CORE_ST_STOP;// auto-shutdown
         break;
 	default:
-		break;
+		return FALSE;
     }
     return TRUE;
 }
