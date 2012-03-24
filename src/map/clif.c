@@ -8120,7 +8120,7 @@ void clif_refresh(struct map_session_data *sd)
 		clif_openvending(sd, sd->bl.id, sd->vending);
 	if( pc_issit(sd) )
 		clif_sitting(&sd->bl); // FIXME: just send to self, not area
-	if( pc_isdead(sd) ) //When you refresh, resend the death packet.
+	if( pc_isdead(sd) ) // When you refresh, resend the death packet.
 		clif_clearunit_single(sd->bl.id,CLR_DEAD,sd->fd);
 	else
 		clif_changed_dir(&sd->bl, SELF);
@@ -9228,11 +9228,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_clearunit_area(&sd->bl, CLR_DEAD);
 	else {
 		skill_usave_trigger(sd);
-// Uncomment if you want to make player face in the same direction he was facing right before warping. [Skotlex]
-//		clif_changed_dir(&sd->bl, SELF);
+		clif_changed_dir(&sd->bl, SELF);
 	}
 
-//	Trigger skill effects if you appear standing on them
+// Trigger skill effects if you appear standing on them
 	if(!battle_config.pc_invincible_time)
 		skill_unit_move(&sd->bl,gettick(),1);
 }

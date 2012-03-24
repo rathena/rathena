@@ -43,3 +43,144 @@ nif_fild02,0,0,0,0	monster	Bloody Murderer	1507,11,5000,0,0
 nif_fild02,0,0,0,0	monster	Dullahan	1504,10,5000,0,0
 nif_fild02,0,0,0,0	monster	Lude	1509,10,5000,0,0
 nif_fild02,0,0,0,0	monster	Heirozoist	1510,10,5000,0,0
+
+niflheim,1,1,0	script	NifInvasion	-1,{
+OnInit:
+
+	while(1)
+	{
+	initnpctimer;
+	end;
+
+OnTimer7980000:
+	stopnpctimer;
+    	switch(rand(6))
+	{
+
+	case 0:
+		monster "niflheim",327,193,"Lord Of Death",1373,1,"NifInvasion::OnLoDDead";
+		monster "niflheim",330,193,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",324,193,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",327,196,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",327,190,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",324,190,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",330,190,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",324,196,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",330,196,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+	break;
+
+	case 1:
+		monster "niflheim",337,252,"Lord Of Death",1373,1,"NifInvasion::OnLoDDead";
+		monster "niflheim",337,255,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",337,249,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",334,252,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",340,252,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",334,249,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",340,255,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",340,249,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",334,255,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+	break;
+
+	case 2:
+		monster "niflheim",190,185,"Lord Of Death",1373,1,"NifInvasion::OnLoDDead";
+		monster "niflheim",190,188,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",190,182,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",193,185,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",187,185,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",187,182,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",193,182,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",193,188,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",187,188,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+	break;
+
+	case 3:
+		monster "niflheim",131,138,"Lord Of Death",1373,1,"NifInvasion::OnLoDDead";
+		monster "niflheim",131,141,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",131,135,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",128,138,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",134,138,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",134,141,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",128,141,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",134,135,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",128,135,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+	break;
+
+	case 4:
+		monster "niflheim",311,64,"Lord Of Death",1373,1,"NifInvasion::OnLoDDead";
+		monster "niflheim",311,67,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",311,61,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",308,64,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",314,64,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",314,61,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",314,67,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",308,67,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",308,61,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+	break;
+
+	case 5:
+		monster "niflheim",238,131,"Lord Of Death",1373,1,"NifInvasion::OnLoDDead";
+		monster "niflheim",238,134,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",238,128,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",235,131,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",241,131,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",235,128,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",235,134,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",241,128,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",241,134,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+	break;
+
+	case 6:
+		monster "niflheim",86,219,"Lord Of Death",1373,1,"NifInvasion::OnLoDDead";
+		monster "niflheim",86,222,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",86,216,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",89,219,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",83,219,"Bloody Murderer",1507,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",89,222,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",89,216,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",83,222,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",83,216,"Loli Ruri",1505,1,"NifInvasion::OnInvasionMonsters";
+	break;
+
+	}
+		monster "niflheim",154,95,"Disguise",1506,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",115,65,"Disguise",1506,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",330,195,"Disguise",1506,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",151,83,"Disguise",1506,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",285,245,"Disguise",1506,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",235,135,"Disguise",1506,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",265,48,"Disguise",1506,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",186,139,"Disguise",1506,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",166,267,"Disguise",1506,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",82,202,"Disguise",1506,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",219,44,"Disguise",1506,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",287,44,"Disguise",1506,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",275,165,"Disguise",1506,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",138,204,"Disguise",1506,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",299,39,"Disguise",1506,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",31,154,"Disguise",1506,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",154,96,"Dullahan",1504,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",116,65,"Dullahan",1504,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",151,84,"Dullahan",1504,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",286,245,"Dullahan",1504,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",330,196,"Dullahan",1504,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",236,135,"Dullahan",1504,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",165,49,"Dullahan",1504,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",167,267,"Dullahan",1504,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",82,203,"Dullahan",1504,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",220,44,"Dullahan",1504,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",287,45,"Dullahan",1504,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",287,44,"Dullahan",1504,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",276,166,"Dullahan",1504,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",139,205,"Dullahan",1504,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",300,39,"Dullahan",1504,1,"NifInvasion::OnInvasionMonsters";
+		monster "niflheim",31,155,"Dullahan",1504,1,"NifInvasion::OnInvasionMonsters";
+	end;
+
+OnInvasionMonsters:
+	end;
+
+OnLoDDead:
+	killmonster "niflheim","NifInvasion::OnInvasionMonsters";
+	}
+
+}
