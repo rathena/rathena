@@ -358,7 +358,7 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 	}
 	
 	// confirm whether the account has the ability to invite before checking the player
-	if( !pc_has_permission(sd, PC_PERM_PARTY) || !pc_has_permission(tsd, PC_PERM_PARTY) ) {
+	if( !pc_has_permission(sd, PC_PERM_PARTY) || (tsd && !pc_has_permission(tsd, PC_PERM_PARTY)) ) {
 		clif_displaymessage(sd->fd, msg_txt(81)); // "Your GM level doesn't authorize you to preform this action on the specified player."
 		return 0;
 	}
