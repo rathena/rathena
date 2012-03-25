@@ -4,11 +4,11 @@
 //= Masao
 //= Credits: Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.3
 //===== Compatible With: ===================================== 
 //= Any rAthena SVN
 //===== Description: ========================================= 
-//= [AEGIS Conversion]
+//= [Translated from the Official]
 //= Job change Quest from Hunter / Sniper -> Ranger.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
@@ -17,6 +17,7 @@
 //= 1.2 Fixed first Quest so that when a false poring got killed
 //= it decreases the total points by 1 also commented the SC_STONE
 //= part until M_DESERT_WOLF_B Mercenary is fully working.
+//= 1.3 Fixed waves not being announced and counted [Elias]
 //============================================================
 
 tur_dun01,156,36,5	script	Survival Instructor#jr01	59,{
@@ -1313,8 +1314,6 @@ OnTimer151000:
 
 OnTimer154000:
 	mapwarp "job3_rang02","tur_dun01",93,165;
-	donpcevent "Correct Monster Summon::OnDisable";
-	donpcevent "False Monster Summon::OnDisable";
 	end;
 
 OnTimer157000:
@@ -1584,8 +1583,6 @@ OnEnable:
 	initnpctimer;
 	donpcevent "Test Supervisor#jr_04::OnDisable";
 	donpcevent "First Test Timer#jr_05::OnDisable";
-	donpcevent "Correct Monster Summon::OnDisable";
-	donpcevent "False Monster Summon::OnDisable";
 	end;
 
 OnDisable:
@@ -3168,8 +3165,6 @@ job3_rang01,58,1,0	script	Test#job_ranger	88,{
 			donpcevent "First Test Timer#jr_05::OnDisable";
 			donpcevent "Correct Monster Summon::OnReset";
 			donpcevent "False Monster Summon::OnReset";
-			donpcevent "Correct Monster Summon::OnDisable";
-			donpcevent "False Monster Summon::OnDisable";
 			close;
 		case 5:
 			mes "2nd Test Enabled";
