@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= rAthena Dev Team
 //===== Current Version: ===================================== 
-//= 2.8
+//= 2.9
 //===== Compatible With: ===================================== 
 //= rAthena 1.0+
 //===== Description: ========================================= 
@@ -32,6 +32,7 @@
 //= 2.7a Actually applied the right update to the comodo weapon shop. [L0ne_W0lf]
 //= 2.7b Corrected Brasilis Fruit Merchant. (bugreport:4278) [L0ne_W0lf]
 //= 2.8 Updates to Brasilis Merchants. [L0ne_W0lf]
+//= 2.9 Added missing Cooking Items for Material Seller. [tr0n]
 //============================================================ 
 
 //=======================================================
@@ -52,7 +53,7 @@ aldeba_in,20,60,0	shop	Armor Dealer#alde	101,2228:-1,2103:-1,2105:-1,2307:-1,230
 aldeba_in,28,54,0	shop	Weapon Dealer#alde	49,1201:-1,1204:-1,1207:-1,1210:-1,1213:-1,1216:-1,1219:-1,1222:-1
 aldeba_in,22,47,4	shop	Weapon Dealer#alde2	713,1146:-1,1245:-1
 aldeba_in,94,56,5	shop	Tool Dealer#alde	83,501:-1,502:-1,503:-1,504:-1,506:-1,645:-1,656:-1,601:-1,602:-1,611:-1,610:-1
-alde_alche,38,184,3	shop	Material Seller#alche	755,7143:-1,7141:-1,7140:-1
+alde_alche,38,184,3	shop	Material Seller#alche	755,7143:-1,7141:-1,7140:-1,6248:-1,6250:-1,6251:-1,6255:-1,6261:-1,6262:-1,6297:-1
 
 //=======================================================
 // Amatsu
