@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 1.4a
 //===== Compatible With: ===================================== 
-//= rAthena 7.15 +
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Trade Clover, Fluff and Jellopy for a Mr. Smile mask.
@@ -14,7 +14,7 @@
 //= 1.4a Fixed a little Typo error in duplicates. (bugreport:749) [Samuray22]
 //============================================================ 
 
-prontera,157,187,4	script	Smile Assistance#prt::SmileHelper	92,{
+-	script	Smile Assistance::SmileHelper	92,{
 	mes "[Smile Girl]";
 	mes "Hi ~ Hi ~";
 	mes "This is Smile Assistance.";
@@ -95,12 +95,13 @@ prontera,157,187,4	script	Smile Assistance#prt::SmileHelper	92,{
 }
 
 // Additional Smile Assistance staff
-moc_ruins,59,154,3	duplicate(SmileHelper)	Smile Assistance#moc	92
+alberta,113,53,4	duplicate(SmileHelper)	Smile Assistance#alb	92
 aldebaran,136,135,4	duplicate(SmileHelper)	Smile Assistance#alde	92
 geffen,119,107,4	duplicate(SmileHelper)	Smile Assistance#gef	92
-alberta,113,53,4	duplicate(SmileHelper)	Smile Assistance#alb	92
-payon,186,104,5	duplicate(SmileHelper)	Smile Assistance#pay	92
 izlude,129,118,4	duplicate(SmileHelper)	Smile Assistance#iz	92
+moc_ruins,59,154,3	duplicate(SmileHelper)	Smile Assistance#moc	92
+payon,186,104,5	duplicate(SmileHelper)	Smile Assistance#pay	92
+prontera,157,187,4	duplicate(SmileHelper)	Smile Assistance#prt	92
 
 //============================================================ 
 // Old changelog

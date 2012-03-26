@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 2.9
 //===== Compatible With: ===================================== 
-//= rAthena 7.15 +
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= - Stop Post
@@ -1118,7 +1118,7 @@ moc_fild20,200,21,7	duplicate(MocConGuard)	Continental Guard#06	707,3,3
 moc_fild20,203,336,5	duplicate(MocConGuard)	Continental Guard#07	707,3,3
 moc_fild20,215,336,3	duplicate(MocConGuard)	Continental Guard#08	707,3,3
 
-prontera,164,304,3	script	Continental Messenger#01::ConMessenger	997,3,3,{
+-	script	Continental Messenger#00::ConMessenger	997,3,3,{
 	set .@area$,strnpcinfo(2);
 	if (.@area$ == "01") { set .@area$,"Prontera"; }
 	else if (.@area$ == "02") { set .@area$,"Geffen"; }
@@ -1203,6 +1203,7 @@ OnTouch:
 	end;
 }
 
+prontera,164,304,3	duplicate(ConMessenger)	Continental Messenger#01	997,3,3
 geffen,128,90,3	duplicate(ConMessenger)	Continental Messenger#02	997,3,3
 payon,200,113,3	duplicate(ConMessenger)	Continental Messenger#03	997,3,3
 alberta,127,64,3	duplicate(ConMessenger)	Continental Messenger#04	998,3,3

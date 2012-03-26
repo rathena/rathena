@@ -29,7 +29,7 @@
 //============================================================ 
 // The Sign (Part 1)
 //============================================================ 
-prontera,147,305,0	script	Sign#prontera::TheSign	111,{
+-	script	Sign::TheSign	111,{
 	callfunc "F_UpdateSignVars";
 	cutin "sign_01",4;
 	mes "^3355FFNext^000000";
@@ -61,6 +61,7 @@ OnInit:
 	end;
 }
 
+prontera,147,305,0	duplicate(TheSign)	Sign#prontera	111
 geffen,168,175,0	duplicate(TheSign)	Sign#geffen	111
 morocc,168,265,0	duplicate(TheSign)	Sign#morroc	111
 payon,160,183,0	duplicate(TheSign)	Sign#payon	111

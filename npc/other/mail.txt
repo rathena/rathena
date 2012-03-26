@@ -139,4 +139,3 @@ rachel,122,146,0	duplicate(MailBox)	Post Box#ra	888
 // Veins
 //============================================================
 veins,218,123,0	duplicate(MailBox)	Post Box#ve	888
-

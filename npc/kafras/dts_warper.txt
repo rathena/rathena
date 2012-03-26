@@ -708,7 +708,7 @@ lighthalzen,163,60,4	script	Kafra Voting Staff#lght	861,{
 	callfunc "F_VoteKafra",9;
 }
 
-yuno,153,191,6	script	Cool Event Staff#yuno::VotingStaffCCE	874,{
+-	script	Cool Event Staff::VotingStaffCCE	874,{
 	callfunc "F_ClearGarbage";				//Clear outdated, unused variables
 	cutin "zonda_01",2;
 	mes "[Cool Event Corp. Voting Staff]";
@@ -1100,6 +1100,7 @@ yuno,153,191,6	script	Cool Event Staff#yuno::VotingStaffCCE	874,{
 	end;
 }
 
+yuno,153,191,6	duplicate(VotingStaffCCE)	Cool Event Staff#yuno	874
 prontera,147,125,6	duplicate(VotingStaffCCE)	Cool Event Staff#prt	874
 moc_ruins,104,133,6	duplicate(VotingStaffCCE)	Cool Event Staff#moc	874
 geffen,117,37,6	duplicate(VotingStaffCCE)	Cool Event Staff#gef	874
