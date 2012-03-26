@@ -4,7 +4,7 @@
 //= Masao
 //= Credits: Muad_Dib, Gepard & L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= Any rAthena SVN
 //===== Description: ========================================= 
@@ -14,6 +14,8 @@
 //= 1.0 First Version.
 //= 1.1 Fixed some conversion mistakes, replaced numbers with
 //=     constants, added item names in comments.
+//= 1.2 Fixed the problem where NPC are not enabled and chamber will never open 
+//=		for the second try or use.
 //============================================================
 
 morocc,103,144,0	script	distorted place morroc	139,1,1,{
@@ -1567,6 +1569,7 @@ OnTimer10000:
 		donpcevent "Hollow Stone#W::OnResetNPC";
 		stopnpctimer;
 		enablewaitingroomevent;
+		end;
 	}
 	initnpctimer;
 end;
