@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 3.4
+//= 3.5
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -47,6 +47,7 @@
 //= 3.2 Fixed a question having all correct answers. [brianluau]
 //= 3.3 Added Quest Log commands. [Kisuka]
 //= 3.4 Removed the need for use of 'goto.' [L0ne_W0lf]
+//= 3.5 Fixed the waitingroom where player can enter the Test Area without passing the written exam. Now player will not be warp inside the Test Area when did not passed the written exam instead the player will be warp back to the written exam entrance [JayPee]
 //============================================================ 
 
 in_moc_16,19,33,1	script	Guildsman#asn	55,{
@@ -1105,6 +1106,13 @@ OnInit:
 
 OnStartArena:
 	warpwaitingpc "in_moc_16", 66, 151;
+	attachrid($@warpwaitingpc[0]);
+	if(ASSIN_Q2<5)
+	{
+		warpchar "in_moc_16",20,145,getcharid(0);
+		end;
+	}
+	
 	donpcevent "Beholder#ASNTEST::OnEnable";
 	donpcevent "Keeper of the Door#ASN::OnDisable";
 	set getvariableofnpc(.DisableTraps,"Beholder#ASNTEST"),0;
