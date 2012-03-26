@@ -362,7 +362,7 @@ new_1-2,100,105,4	script	Brade#nv	733,{
 	}
 	else if(job_novice_q == 8) {
 		mes "[Instructor Brade]";
-		mes "Now you've learned the [Firdt Aid] Skill.";
+		mes "Now you've learned the [First Aid] Skill.";
 		mes "Just as I told you before, by registering the First Aid Skill onto the Hot Key Window, you can use the skill fast and easy.";
 		next;
 		mes "[Instructor Brade]";
@@ -497,7 +497,7 @@ new_1-2,32,172,4	script	Chocolat#nv	96,{
 	if(job_novice_q < 9) {
 		mes "[Chocolat]";
 		mes "Hmm? Strange.";
-		mes "Let me see that Traniee ID for a sec.";
+		mes "Let me see that Trainee ID for a sec.";
 		next;
 		mes "[Chocolat]";
 		mes "You were still on the basic course.";
@@ -889,7 +889,7 @@ new_1-2,35,176,4	script	Soldier#nv	105,{
 		mes "[Brade]";
 		mes "Welcome.";
 		mes "Now this is real practice.";
-		mes "We can practive real battle here.";
+		mes "We can practice real battle here.";
 		next;
 		mes "[Brade]";
 		mes "As I explained the first time, we can click on the monsters.";
@@ -993,7 +993,7 @@ new_5-3,96,30,4	duplicate(NvBrade)	Brade#nv5	733
 -	script	Swordman Guide#nv::NvSwd	728,{
 	if(job_novice_q < 16) {
 		mes "[Swordman Guildsman]";
-		mes "I won't help you until you finish Brade's intructions.";
+		mes "I won't help you until you finish Brade's instructions.";
 		close;
 	}
 	else if(checkquest(7123,HUNTING) != -1 && checkquest(7123,HUNTING) != 2) {
@@ -1335,7 +1335,7 @@ new_5-3,101,41,4	duplicate(NvMag)	Mage Guide#nv5	123
 	}
 	else if(checkquest(7127,HUNTING) != -1 && checkquest(7127,HUNTING) != 2) {
 		mes "[Thief Guild Member]";
-		mes "Hunt 5 Willows and then come talk to me to finish youe quest.";
+		mes "Hunt 5 Willows and then come talk to me to finish your quest.";
 		close2;
 	}
 	else if(checkquest(7127) != 2 && checkquest(7127,HUNTING) == 2) {
@@ -1368,7 +1368,7 @@ new_5-3,101,41,4	duplicate(NvMag)	Mage Guide#nv5	123
 		mes "In jeopardy, or in the case that thieves do not want to reveal themselves, they can use their skill to hide themselves easily.";
 		next;
 		mes "[Thief Guild Member]";
-		mes "Thieves can change their jobs to ^8C2121Assasins^000000 or ^8C2121Rogues.^000000";
+		mes "Thieves can change their jobs to ^8C2121Assassins^000000 or ^8C2121Rogues.^000000";
 		if(countitem(2820) == 0 && (getequipid(EQI_ACC_L) != 2820 || getequipid(EQI_ACC_R) != 2820)) {
 			next;
 			mes "[Thief Guild Member]";
@@ -1439,7 +1439,7 @@ new_5-3,101,41,4	duplicate(NvMag)	Mage Guide#nv5	123
 	case 3:
 		if(checkquest(7127,HUNTING) != -1 && checkquest(7127,HUNTING) != 2) {
 			mes "[Thief Guild Member]";
-			mes "Hunt 5 Willows and then come talk to me to finish youe quest.";
+			mes "Hunt 5 Willows and then come talk to me to finish your quest.";
 			close;
 		}
 		else if(checkquest(7127) == 2) {
@@ -1828,7 +1828,7 @@ new_5-3,113,41,4	duplicate(NvArc)	Archer Guide#nv5	727
 		if(select("Let me reconsider.:I will go to the Cathedral.") == 2) {
 			mes "[Prontera Acolyte]";
 			mes "That's great.";
-			mes "Then I will completely end the Training Process and send you to the Cathedral of Prtonera.";
+			mes "Then I will completely end the Training Process and send you to the Cathedral of Prontera.";
 			close2;
 			if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
 			if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
@@ -1853,7 +1853,7 @@ new_5-3,113,41,4	duplicate(NvArc)	Archer Guide#nv5	727
 	case 3:
 		mes "[Prontera Acolyte]";
 		mes "If you have any questions about Acolytes, please ask me anytime.";
-		mes "Ou God, Odin awaits adventurers like you";
+		mes "Our God, Odin awaits adventurers like you";
 		close;
 	}
 }
@@ -2131,7 +2131,7 @@ new_5-3,100,50,4	duplicate(NvPotato)	Merchant#nv5	93
 	switch(select("Send me to another Level:What monsters are there?:Cancel")) {
 	case 1:
 		mes "[Trainer Brutus]";
-		mes "I see, then let me guid you to another level. Which level do you want to go to?";
+		mes "I see, then let me guide you to another level. Which level do you want to go to?";
 		next;
 		for(set .@i,1; .@i<=5; set .@i,.@i+1) {
 			if(strnpcinfo(2) == "nv1") {
