@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth(Most of the NPCs), MasterOfMuppets(Some of the NPCs + bug fixes) & Kargha(The quiz NPCs)
 //===== Current Version: ===================================== 
-//= 3.4
+//= 3.6
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -23,6 +23,7 @@
 //= 3.4 Added Renewal Changes. [Kisuka]
 //= 3.4 Updated 'waitingroom' to support required zeny/lvl. [Kisuka]
 //= 3.5 Fixed two bugs. 4230 & 4404 [CalciumKid]
+//= 3.6 Corrected the Level Requirements for 'Standby Room' [tr0n]
 //============================================================ 
 
 //============================================================ 
@@ -5225,7 +5226,7 @@ cmd_in01,33,33,1	script	Standby Room#sign	66,{
 	end;
 
 OnInit:
-	waitingroom "DANCE~ DANCE~",20,"Standby Room#sign::OnStartArena",1,0,44,99;
+	waitingroom "DANCE~ DANCE~",20,"Standby Room#sign::OnStartArena",1,0,50;
 	enablewaitingroomevent;
 	end;
 
