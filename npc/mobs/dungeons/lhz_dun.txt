@@ -68,91 +68,88 @@ lhz_dun03,139,117,20,11	monster	Sniper Cecil	1644,1,2700000,2500000,1
 lhz_dun03,163,138,12,16	monster	Whitesmith Howard	1642,1,3000000,2700000,1
 lhz_dun03,138,138,36,34	monster	High Priest Margaretha	1643,1,3300000,3000000,1
 
-lhz_dun03,2,2,0	script	summon_boss_lt	-1,{
+lhz_dun03,0,0,0	script	mvp_lhz_dun03	-1,{
 OnInit:
 	initnpctimer;
 	end;
 
 OnTimer6000000:
 	if (rand(1,6) == 1) {
-		donpcevent "summon_boss_lt::Onsummon";
+		donpcevent strnpcinfo(3)+"::OnSummon";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer6300000:
 	if (rand(1,6) == 2) {
-		donpcevent "summon_boss_lt::Onsummon";
+		donpcevent strnpcinfo(3)+"::OnSummon";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer6600000:
 	if (rand(1,6) == 3) {
-		donpcevent "summon_boss_lt::Onsummon";
+		donpcevent strnpcinfo(3)+"::OnSummon";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer6900000:
 	if (rand(1,6) == 4) {
-		donpcevent "summon_boss_lt::Onsummon";
+		donpcevent strnpcinfo(3)+"::OnSummon";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer7200000:
 	if (rand(1,6) == 5) {
-		donpcevent "summon_boss_lt::Onsummon";
+		donpcevent strnpcinfo(3)+"::OnSummon";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer7500000:
 	if (rand(1,6) == 6) {
-		donpcevent "summon_boss_lt::Onsummon";
+		donpcevent strnpcinfo(3)+"::OnSummon";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer7800000:
-	donpcevent "summon_boss_lt::Onsummon";
+	donpcevent strnpcinfo(3)+"::OnSummon";
 	stopnpctimer;
 	end;
 
-Onsummon:
+OnSummon:
 	// Select Coordinates to summon a random MVP on
 	switch(rand(1,6)) {
-	case 1: set .@x,140;	set .@y,232;	break;
-	case 2: set .@x,75;	set .@y,138;	break;
-	case 3: set .@x,140;	set .@y,87;		break;
-	case 4: set .@x,205;	set .@y,140;	break;
-	case 5: set .@x,123;	set .@y,137;	break;
-	case 6: set .@x,175;	set .@y,137;	break;
+		case 1:  set .@x,140;  set .@y,232;  break;
+		case 2:  set .@x,75;   set .@y,138;  break;
+		case 3:  set .@x,140;  set .@y,87;   break;
+		case 4:  set .@x,205;  set .@y,140;  break;
+		case 5:  set .@x,123;  set .@y,137;  break;
+		case 6:  set .@x,175;  set .@y,137;  break;
 	}
 	set .@mob,rand(1646,1651);
-	monster "lhz_dun03",.@x,.@y,strmobinfo(1,.@mob),.@mob,1,"summon_boss_lt::OnMyMvPDead";
+	monster "lhz_dun03",.@x,.@y,strmobinfo(1,.@mob),.@mob,1,strnpcinfo(3)+"::OnMyMVPDead";
 
 	// Select Coordinates to summon a random 99 on
 	switch(rand(1,6)) {
-	case 1: set .@x2,183;	set .@y2,97;	break;
-	case 2: set .@x2,97;	set .@y2,96;	break;
-	case 3: set .@x2,47;	set .@y2,139;	break;
-	case 4: set .@x2,231;	set .@y2,140;	break;
-	case 5: set .@x2,139;	set .@y2,211;	break;
-	case 6: set .@x2,139;	set .@y2,259;	break;
+		case 1:  set .@x2,183;  set .@y2,97;   break;
+		case 2:  set .@x2,97;   set .@y2,96;   break;
+		case 3:  set .@x2,47;   set .@y2,139;  break;
+		case 4:  set .@x2,231;  set .@y2,140;  break;
+		case 5:  set .@x2,139;  set .@y2,211;  break;
+		case 6:  set .@x2,139;  set .@y2,259;  break;
 	}
 	set .@mob2,rand(1640,1645);
-	monster "lhz_dun03",.@x2,.@y2,strmobinfo(1,.@mob2),.@mob2,1,"summon_boss_lt::OnMVP";
+	monster "lhz_dun03",.@x2,.@y2,strmobinfo(1,.@mob2),.@mob2,1,strnpcinfo(3)+"::OnMy99Dead";
 	end;
 
-OnMyMvPDead:
-	killmonster "lhz_dun03","summon_boss_lt::OnMVP";
+OnMyMVPDead:
+	killmonster "lhz_dun03",strnpcinfo(3)+"::OnMy99Dead";
 	initnpctimer;
-	end;
-
-//Required to keep from erroring
-OnMVP:
+OnMy99Dead:
 	end;
 }
 
@@ -174,92 +171,89 @@ lhz_dun04,0,0,0,0	monster	Stalker Gertie	2232,1,3300000,3000000,1
 lhz_dun04,0,0,0,0	monster	Clown Alphoccio	2233,1,2580000,2460000,1
 lhz_dun04,0,0,0,0	monster	Gypsy Trentini	2234,1,2580000,2460000,1
 
-lhz_dun04,2,2,0	script	summon_boss_b4	-1,{
+lhz_dun04,0,0,0	script	mvp_lhz_dun04	-1,{
 OnInit:
 	initnpctimer;
 	end;
 
 OnTimer6000000:
 	if (rand(1,6) == 1) {
-		donpcevent "summon_boss_b4::Onsummon";
+		donpcevent strnpcinfo(3)+"::OnSummon";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer6300000:
 	if (rand(1,6) == 2) {
-		donpcevent "summon_boss_b4::Onsummon";
+		donpcevent strnpcinfo(3)+"::OnSummon";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer6600000:
 	if (rand(1,6) == 3) {
-		donpcevent "summon_boss_b4::Onsummon";
+		donpcevent strnpcinfo(3)+"::OnSummon";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer6900000:
 	if (rand(1,6) == 4) {
-		donpcevent "summon_boss_b4::Onsummon";
+		donpcevent strnpcinfo(3)+"::OnSummon";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer7200000:
 	if (rand(1,6) == 5) {
-		donpcevent "summon_boss_b4::Onsummon";
+		donpcevent strnpcinfo(3)+"::OnSummon";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer7500000:
 	if (rand(1,6) == 6) {
-		donpcevent "summon_boss_b4::Onsummon";
+		donpcevent strnpcinfo(3)+"::OnSummon";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer7800000:
-	donpcevent "summon_boss_b4::Onsummon";
+	donpcevent strnpcinfo(3)+"::OnSummon";
 	stopnpctimer;
 	end;
 
-Onsummon:
+OnSummon:
 	// Select Coordinates to summon a random MVP on
 	switch(rand(1,7)) {
-	case 1: set .@x,77;	set .@y,251;	break;
-	case 2: set .@x,147;	set .@y,224;	break;
-	case 3: set .@x,219;	set .@y,219;	break;
-	case 4: set .@x,244;	set .@y,120;	break;
-	case 5: set .@x,149;	set .@y,41;	break;
-	case 6: set .@x,53;	set .@y,109;	break;
-	case 7: set .@x,149;	set .@y,151;	break;
+		case 1:  set .@x,77;   set .@y,251;  break;
+		case 2:  set .@x,147;  set .@y,224;  break;
+		case 3:  set .@x,219;  set .@y,219;  break;
+		case 4:  set .@x,244;  set .@y,120;  break;
+		case 5:  set .@x,149;  set .@y,41;   break;
+		case 6:  set .@x,53;   set .@y,109;  break;
+		case 7:  set .@x,149;  set .@y,151;  break;
 	}
 	set .@mob,rand(2235,2241);
-	monster "lhz_dun04",.@x,.@y,strmobinfo(1,.@mob),.@mob,1,"summon_boss_b4::OnMyMvPDead";
+	monster "lhz_dun04",.@x,.@y,strmobinfo(1,.@mob),.@mob,1,strnpcinfo(3)+"::OnMyMVPDead";
 
 	// Select Coordinates to summon a random 99 on
 	switch(rand(1,7)) {
-	case 1: set .@x2,77;	set .@y2,251;	break;
-	case 2: set .@x2,147;	set .@y2,224;	break;
-	case 3: set .@x2,219;	set .@y2,219;	break;
-	case 4: set .@x2,244;	set .@y2,120;	break;
-	case 5: set .@x2,149;	set .@y2,41;	break;
-	case 6: set .@x2,53;	set .@y2,109;	break;
-	case 7: set .@x2,149;	set .@y2,151;	break;
+		case 1:  set .@x2,77;   set .@y2,251;  break;
+		case 2:  set .@x2,147;  set .@y2,224;  break;
+		case 3:  set .@x2,219;  set .@y2,219;  break;
+		case 4:  set .@x2,244;  set .@y2,120;  break;
+		case 5:  set .@x2,149;  set .@y2,41;   break;
+		case 6:  set .@x2,53;   set .@y2,109;  break;
+		case 7:  set .@x2,149;  set .@y2,151;  break;
 	}
 	set .@mob2,rand(2228,2234);
-	monster "lhz_dun04",.@x2,.@y2,strmobinfo(1,.@mob2),.@mob2,1,"summon_boss_b4::OnMVP";
+	monster "lhz_dun04",.@x2,.@y2,strmobinfo(1,.@mob2),.@mob2,1,strnpcinfo(3)+"::OnMy99Dead";
 	end;
 
-OnMyMvPDead:
-	killmonster "lhz_dun04","summon_boss_b4::OnMVP";
+OnMyMVPDead:
+	killmonster "lhz_dun04",strnpcinfo(3)+"::OnMy99Dead";
 	initnpctimer;
-	end;
-
-//Required to keep from erroring
-OnMVP:
+OnMy99Dead:
 	end;
 }
