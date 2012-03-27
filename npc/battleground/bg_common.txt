@@ -406,7 +406,7 @@ bat_room,160,150,3	script	Erundek	109,{
 				mes "[Erundek]";
 				mes "The following items are available in the ^3131FFDagger, One-Handed Sword, Two-Handed Sword, and Two-Handed Spear^000000 category.";
 				next;
-				switch(select("Brave Assassin's Damascus(BB):Valorous Assassin's Damascus(VB):Brave Gladiator's Blade(BB):Valorous Gladiator's Blade(VB):Brave Assaulter's Katzbalger(BB):Valorous Assaulters's Katzbalger(VB):Assaulter Spear:Assaulter Lance")) {
+				switch(select("Brave Assassin's Damascus(BB):Valorous Assassin's Damascus(VB):Brave Gladiator's Blade(BB):Valorous Gladiator's Blade(VB):Brave Assaulter's Katzbalger(BB):Valorous Assaulters's Katzbalger(VB):Assaulter Spear(BB):Assaulter Lance(VB)")) {
 				case 1:
 					setarray .@cost[0],7828,100; //BF_Badge1
 					setarray .@item[0],13036,1; //BF_Dagger1
