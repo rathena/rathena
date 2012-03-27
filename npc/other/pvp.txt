@@ -11,8 +11,10 @@
 //= Includes Yoyo Mode, Nightmare Mode, and Event Mode
 //===== Additional Comments: ================================= 
 //= 2.0 Narrators/GateKeepers,etc. Translated from the Official 2011 [Elias]
+//= 2.1 Changed PVP Narrator and GateKeeper to Floating NPC [Elias]
 //============================================================
-morocc_in,144,138,4	script	PVP Narrator::pvpe	84,{
+
+-	script	PVP Narrator::pvpe	-1,{
 	mes "[PVP Narrator]";
 	mes "Hello and welcome!";
 	mes "I am in charge of";
@@ -165,13 +167,15 @@ close;
 }
 
 //PVP Narrator's Duplicates
-alberta_in,22,146,4	duplicate(pvpe)	PVP Narrator#pe1	84
-prt_in,56,140,4	duplicate(pvpe)	PVP Narrator#pe2	84
-geffen_in,67,63,4	duplicate(pvpe)	PVP Narrator#pe3	84
-payon_in01,142,50,4	duplicate(pvpe)	PVP Narrator#pe4	84
-geffen_in,67,63,4	duplicate(pvpe)	PVP Narrator#pe5	84
+morocc_in,144,138,4	duplicate(pvpe)	PVP Narrator#pe1	84
+alberta_in,22,146,4	duplicate(pvpe)	PVP Narrator#pe2	84
+prt_in,56,140,4	duplicate(pvpe)	PVP Narrator#pe3	84
+geffen_in,67,63,4	duplicate(pvpe)	PVP Narrator#pe4	84
+payon_in01,142,50,4	duplicate(pvpe)	PVP Narrator#pe5	84
+geffen_in,67,63,4	duplicate(pvpe)	PVP Narrator#pe6	84
 
-morocc_in,144,142,4	script	Gate Keeper::gkut	83,{
+//Gate Keeper (Floating NPC, Locations below)
+-	script	Gate Keeper::gkut	-1,{
 	mes "[Gate Keeper]";
 	mes "Glad to be of service.";
 	mes "I will open the PVP fight";
@@ -254,13 +258,14 @@ close;
 }
 
 //Gate Keeper's Duplicates
-alberta_in,26,146,4	duplicate(gkut)	Gate Keeper#gke1	83
-prt_in,52,140,4	duplicate(gkut)	Gate Keeper#gke2	83
-geffen_in,63,63,4	duplicate(gkut)	Gate Keeper#gke3	83
-payon_in01,140,53,4	duplicate(gkut)	Gate Keeper#gke4	83
+morocc_in,144,142,4	duplicate(gkut)	Gate Keeper#gke1	83
+alberta_in,26,146,4	duplicate(gkut)	Gate Keeper#gke2	83
+prt_in,52,140,4	duplicate(gkut)	Gate Keeper#gke3	83
+geffen_in,63,63,4	duplicate(gkut)	Gate Keeper#gke4	83
+payon_in01,140,53,4	duplicate(gkut)	Gate Keeper#gke5	83
 
 //Fight square Reception Staff (Locations below)
--	script	FSRS::fsr	105,{
+-	script	FSRS::fsr	-1,{
 if(strnpcinfo(4) == "pvp_y_room") {
 	set .@mapc1, getmapusers("pvp_y_8-1");
 	set .@mapc2, getmapusers("pvp_y_8-2");
