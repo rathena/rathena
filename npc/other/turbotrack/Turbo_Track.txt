@@ -7,10 +7,9 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
 //= General Turbo Track NPCs, includes Kafra and Tool Merchant
 //===== Additional Comments: =================================
-//= 1.0 First version. [L0ne_W0lf]
+//= 1.0 Translated from the Official. [L0ne_W0lf]
 //= 1.1 Fixed exp rewarding working backwards.[L0ne_W0lf]
 //=	Fixed a bug in the while loop in the guide.
 //= 1.2 Fix to prevent point converter from hanging. [L0ne_W0lf]
@@ -35,6 +34,7 @@ turbo_room,130,92,3	script	Kafra Staff#tt	115,{
 
 }
 
+//Turbo Track Shop
 turbo_room,124,86,0	shop	Turbo Track Merchant	90,501:-1,502:-1,503:-1,504:-1,645:-1,656:-1,1065:-1,1750:-1
 
 //This is the name on iRO as well. [Confirmed]
@@ -937,6 +937,7 @@ turbo_room,106,117,3	script	Point Manager#tt	833,{
 		// There is no dialog for this option.
 		// It's possible it's missing, or maybe
 		// the dialog was never translated. XD
+		//??
 		close;
 	}
 

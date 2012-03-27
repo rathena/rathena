@@ -7,16 +7,15 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
 //= Turbo Track Course: Solo Mode/Time Attack
 //===== Additional Comments: =================================
-//= 1.0 First version. [L0ne_W0lf]
+//= 1.0 Translated from the Official. [L0ne_W0lf]
 //= 1.1 Fixed small official bug. [L0ne_W0lf]
 //= 1.2 Fixed end timer not enabling warp. (bugreport:1682) [L0ne_W0lf]
 //= 1.3 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 1.4 Fixed a little mistake [akrus]
-//= 1.5 Fixed variable typo (Deleted in version 1.6) [Slim]
-//= 1.6 Fixed the "bing#n1" issue. (bugreport:5050) [Slim]
+//= 1.5 Fixed variable typo (Deleted in version 1.6) [Elias]
+//= 1.6 Fixed the "bing#n1" issue. (bugreport:5050) [Elias]
 //============================================================
 
 turbo_room,72,132,3	script	Solo Mode#n1	124,{

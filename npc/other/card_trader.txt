@@ -1,7 +1,7 @@
 //===== rAthena Script ======================================= 
 //= Card Trader
 //===== By: ================================================== 
-//= Slim (og2)
+//= Elias (og2)
 //===== Current Version: ===================================== 
 //= 1.2
 //===== Compatible With: ===================================== 
@@ -9,9 +9,9 @@
 //===== Description: ========================================= 
 //= Card and Points Trader
 //===== Additional Comments: ================================= 
-//= v1.0 Translated from the Official [Slim]
-//= v1.1 Fixed variables and optimized script [Slim]
-//= v1.2 Fixed char being stuck with breaks [Slim] (bugreport:5374)
+//= v1.0 Translated from the Official [Elias]
+//= v1.1 Fixed variables and optimized script [Elias]
+//= v1.2 Fixed char being stuck with breaks [Elias] (bugreport:5374)
 //============================================================ 
 
 prontera,115,90,0	script	Putty	90,{

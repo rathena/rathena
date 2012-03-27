@@ -18,7 +18,7 @@
 //= 1.4 Added a Mapflag to prevent mail operations in other maps [Zephyrus]
 //= 1.5 Moved Morroc Mail boxes to Morroc Ruins. [L0ne_W0lf]
 //= 1.6 Duplicates now spawn from floating NPCs. [L0ne_W0lf]
-//= 1.7 Updated Script from the Official. [Slim]
+//= 1.7 Updated Script from the Official. [Elias]
 //============================================================
 
 // Floating mailbox npc that all NPCs duplicate from.

@@ -3,25 +3,14 @@
 //===== By: ==================================================
 //= kobra_k88; L0ne_W0lf, Elias (og2)
 //===== Current Version: =====================================
-//= 1.6
+//= 2.0
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
 //= PvP NPCs that are found in the Inns in major cities.
 //= Includes Yoyo Mode, Nightmare Mode, and Event Mode
 //===== Additional Comments: ================================= 
-//= 1.1 Fixed arena names for Nightmare mode.  Added room limit
-//= 	check.[kobra_k88]
-//= 1.2 Fixed the bug that you aways savepoint in geffen.[shadowlady]
-//= 1.2a Added PvP Narrator function. Using args for Fight
-//= 	Square Helpers. [kobra_k88]
-//= 1.3 Rescripted to the official 10.3 standards. [L0ne_W0lf]
-//=	Removed all receptioned for Yoyo mode, with the
-//=	exception of the "Free for all" mode.
-//=	Added PVP event NPCs.
-//= 1.4 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
-//= 1.5 Duplicates now spawn from floating NPCs. [L0ne_W0lf]
-//= 1.6 Narrators/GateKeepers,etc. Translated from the Official 2011 [Elias]
+//= 2.0 Narrators/GateKeepers,etc. Translated from the Official 2011 [Elias]
 //============================================================
 morocc_in,144,138,4	script	PVP Narrator::pvpe	84,{
 	mes "[PVP Narrator]";
@@ -513,7 +502,6 @@ pvp_2vs2,5,74,0	duplicate(PVPSpecWarp)	Combat Square Staff#2	45,1,1
 pvp_2vs2,74,74,0	duplicate(PVPSpecWarp)	Combat Square Staff#3	45,1,1
 pvp_2vs2,74,5,0	duplicate(PVPSpecWarp)	Combat Square Staff#4	45,1,1
 pvp_2vs2,40,40,0	script	Combat Square Staff#5	45,1,1,{
-	set mapmove,0; //??
 	mes "[Combat Square Staff]";
 	mes "May I help you?";
 	if (select("To the side viewer seat.:Leave Combat Square.") == 1) {
