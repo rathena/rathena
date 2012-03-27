@@ -45,12 +45,9 @@ nif_fild02,0,0,0,0	monster	Lude	1509,10,5000,0,0
 nif_fild02,0,0,0,0	monster	Heirozoist	1510,10,5000,0,0
 
 niflheim,0,0,0	script	mvp_niflheim	-1,{
-OnInit:
-	initnpctimer;
-	end;
-
 OnTimer7980000: // delay1 = 7980000 ms (133 min)
 	stopnpctimer;
+OnInit:
 	switch(rand(6)) {
 	case 0:
 		monster "niflheim",327,193,"Lord Of Death",1373,1,strnpcinfo(3)+"::OnLoDDead";

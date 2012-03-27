@@ -69,58 +69,10 @@ lhz_dun03,163,138,12,16	monster	Whitesmith Howard	1642,1,3000000,2700000,1
 lhz_dun03,138,138,36,34	monster	High Priest Margaretha	1643,1,3300000,3000000,1
 
 lhz_dun03,0,0,0	script	mvp_lhz_dun03	-1,{
-OnInit:
-	initnpctimer;
-	end;
-
-OnTimer6000000:
-	if (rand(1,6) == 1) {
-		donpcevent strnpcinfo(3)+"::OnSummon";
-		stopnpctimer;
-	}
-	end;
-
-OnTimer6300000:
-	if (rand(1,6) == 2) {
-		donpcevent strnpcinfo(3)+"::OnSummon";
-		stopnpctimer;
-	}
-	end;
-
-OnTimer6600000:
-	if (rand(1,6) == 3) {
-		donpcevent strnpcinfo(3)+"::OnSummon";
-		stopnpctimer;
-	}
-	end;
-
-OnTimer6900000:
-	if (rand(1,6) == 4) {
-		donpcevent strnpcinfo(3)+"::OnSummon";
-		stopnpctimer;
-	}
-	end;
-
-OnTimer7200000:
-	if (rand(1,6) == 5) {
-		donpcevent strnpcinfo(3)+"::OnSummon";
-		stopnpctimer;
-	}
-	end;
-
-OnTimer7500000:
-	if (rand(1,6) == 6) {
-		donpcevent strnpcinfo(3)+"::OnSummon";
-		stopnpctimer;
-	}
-	end;
-
-OnTimer7800000:
-	donpcevent strnpcinfo(3)+"::OnSummon";
+OnTimer6000000: // delay1 = 6000000 ms (100 min)
 	stopnpctimer;
-	end;
-
-OnSummon:
+	sleep rand(0,30)*60000; // 0 to 30 minutes
+OnInit:
 	// Select Coordinates to summon a random MVP on
 	switch(rand(1,6)) {
 		case 1:  set .@x,140;  set .@y,232;  break;
@@ -172,58 +124,10 @@ lhz_dun04,0,0,0,0	monster	Clown Alphoccio	2233,1,2580000,2460000,1
 lhz_dun04,0,0,0,0	monster	Gypsy Trentini	2234,1,2580000,2460000,1
 
 lhz_dun04,0,0,0	script	mvp_lhz_dun04	-1,{
-OnInit:
-	initnpctimer;
-	end;
-
-OnTimer6000000:
-	if (rand(1,6) == 1) {
-		donpcevent strnpcinfo(3)+"::OnSummon";
-		stopnpctimer;
-	}
-	end;
-
-OnTimer6300000:
-	if (rand(1,6) == 2) {
-		donpcevent strnpcinfo(3)+"::OnSummon";
-		stopnpctimer;
-	}
-	end;
-
-OnTimer6600000:
-	if (rand(1,6) == 3) {
-		donpcevent strnpcinfo(3)+"::OnSummon";
-		stopnpctimer;
-	}
-	end;
-
-OnTimer6900000:
-	if (rand(1,6) == 4) {
-		donpcevent strnpcinfo(3)+"::OnSummon";
-		stopnpctimer;
-	}
-	end;
-
-OnTimer7200000:
-	if (rand(1,6) == 5) {
-		donpcevent strnpcinfo(3)+"::OnSummon";
-		stopnpctimer;
-	}
-	end;
-
-OnTimer7500000:
-	if (rand(1,6) == 6) {
-		donpcevent strnpcinfo(3)+"::OnSummon";
-		stopnpctimer;
-	}
-	end;
-
-OnTimer7800000:
-	donpcevent strnpcinfo(3)+"::OnSummon";
+OnTimer6000000: // delay1 = 6000000 ms (100 min)
 	stopnpctimer;
-	end;
-
-OnSummon:
+	sleep rand(0,30)*60000; // 0 to 30 minutes
+OnInit:
 	// Select Coordinates to summon a random MVP on
 	switch(rand(1,7)) {
 		case 1:  set .@x,77;   set .@y,251;  break;
