@@ -1439,9 +1439,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			{ // Lvl 5 Lesson or higher allow you use 3rd job skills while dancing.v
 				if( pc_checkskill((TBL_PC*)src,WM_LESSON) < 5 )
 					return 0;
-			}
-			if(sc->data[SC_LONGING])
-			{	//Allow everything except dancing/re-dancing. [Skotlex]
+			} else if(sc->data[SC_LONGING]) { //Allow everything except dancing/re-dancing. [Skotlex]
 				if (skill_num == BD_ENCORE ||
 					skill_get_inf2(skill_num)&(INF2_SONG_DANCE|INF2_ENSEMBLE_SKILL)
 				)
