@@ -3559,6 +3559,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			md.damage+= md.damage*(rand()%20-10)/100;
 			md.damage+= 40*(sd?pc_checkskill(sd,RA_RESEARCHTRAP):0);
 		}
+		break;
 #else
 	case HT_LANDMINE:
 	case MA_LANDMINE:
