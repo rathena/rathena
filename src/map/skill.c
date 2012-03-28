@@ -5523,6 +5523,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			status_change_end(bl, SC_STONE, INVALID_TIMER);
 			status_change_end(bl, SC_SLEEP, INVALID_TIMER);
 			status_change_end(bl, SC_STUN, INVALID_TIMER);
+			status_change_end(bl, SC_WHITEIMPRISON, INVALID_TIMER);
 		}
 		//Is this equation really right? It looks so... special.
 		if(battle_check_undead(tstatus->race,tstatus->def_ele))
