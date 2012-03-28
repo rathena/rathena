@@ -102,25 +102,6 @@ hugel,169,112,5	script	Old Nikki	892,{
 	close;
 }
 
-hugel,168,183,5	script	Bismarc	118,{
-	mes "[Bismarc]";
-	mes "^808080*Ghyklk*";
-	mes "*Huk Hukk*^000000";
-	mes "When will my";
-	mes "o-order arrive...?";
-	next;
-	mes "[Bismarc]";
-	mes "The poison in";
-	mes "my body... the pain...";
-	mes "excruciating... L-lord...";
-	next;
-	mes "[Bismarc]";
-	mes "When is the";
-	mes "antidote gonna";
-	mes "get here?!";
-	close;
-}
-
 hugel,175,115,5	script	Marius	897,{
 	mes "[Marius]";
 	mes "Yes, I'm an old man, but";
