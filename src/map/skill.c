@@ -1212,7 +1212,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		sc_start(bl, SC_STUN, 30 + 8 * skilllv, skilllv, skill_get_time(skillid,skilllv));
 		break;
 	case LG_PINPOINTATTACK:
-		rate = 12 + (10 * skilllv + (sstatus->agi / 100) ) * 140 / 100;
+		rate = 30 + (((5 * (sd?pc_checkskill(sd,LG_PINPOINTATTACK):skilllv)) + (sstatus->agi + status_get_lv(src))) / 10);
 		switch( skilllv ) {
 			case 1:
 				sc_start(bl,SC_BLEEDING,rate,skilllv,skill_get_time(skillid,skilllv));
@@ -1222,7 +1222,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 					pc_delspiritball(dstsd, dstsd->spiritball, 0);
 				break;
 			default:
-				skill_break_equip(bl,(skilllv == 3) ? EQP_SHIELD : (skilllv == 4) ? EQP_ARMOR : EQP_WEAPON,rate,BCT_ENEMY);
+				skill_break_equip(bl,(skilllv == 3) ? EQP_SHIELD : (skilllv == 4) ? EQP_ARMOR : EQP_WEAPON,rate * 100,BCT_ENEMY);
 				break;
 		}
 		break;
