@@ -4356,7 +4356,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 	switch( target->type )
 	{ // Checks on actual target
 		case BL_PC:
-			if (((TBL_PC*)target)->invincible_timer != INVALID_TIMER || pc_isinvisible((TBL_PC*)target) || ((TBL_PC*)target)->sc.data[SC__MANHOLE])
+			if (((TBL_PC*)target)->invincible_timer != INVALID_TIMER || pc_isinvisible((TBL_PC*)target))
 				return -1; //Cannot be targeted yet.
 			break;
 		case BL_MOB:
