@@ -11739,10 +11739,6 @@ int skill_check_condition_castend(struct map_session_data* sd, short skill, shor
 	case PR_BENEDICTIO:
 		skill_check_pc_partner(sd, skill, &lv, 1, 1);
 		break;
-	case AB_ADORAMUS:
-		//if( skill_check_pc_partner(sd,skill,&lv, 1, 2) )
-		//	sd->state.no_gemstone = 1; // Mark this skill as it don't consume ammo because partners gives SP
-		break;
 	case AM_CANNIBALIZE:
 	case AM_SPHEREMINE:
 	{
@@ -11979,25 +11975,31 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, short 
 		req.ammo_qty = 1;
 	}
 
-	for( i = 0; i < MAX_SKILL_ITEM_REQUIRE; i++ )
-	{
+	for( i = 0; i < MAX_SKILL_ITEM_REQUIRE; i++ ) {
 		if( (skill == AM_POTIONPITCHER || skill == CR_SLIMPITCHER || skill == CR_CULTIVATION) && i != lv%11 - 1 )
 			continue;
 
-		switch( skill )
-		{
-		case AM_CALLHOMUN:
-			if (sd->status.hom_id) //Don't delete items when hom is already out.
-				continue;
-			break;
-		case NC_SHAPESHIFT:
-			if( i < 4 )
-				continue;
-			break;
-		case WZ_FIREPILLAR: // celest
-			if (lv <= 5)	// no gems required at level 1-5
-				continue;
-			break;
+		switch( skill ) {
+			case AM_CALLHOMUN:
+				if (sd->status.hom_id) //Don't delete items when hom is already out.
+					continue;
+				break;
+			case NC_SHAPESHIFT:
+				if( i < 4 )
+					continue;
+				break;
+			case WZ_FIREPILLAR: // celest
+				if (lv <= 5)	// no gems required at level 1-5
+					continue;
+				break;
+			case AB_ADORAMUS:
+				if( itemid_isgemstone(skill_db[j].itemid[i]) && skill_check_pc_partner(sd,skill,&lv, 1, 2) )
+					continue;
+				break;
+			case WL_COMET:
+				if( itemid_isgemstone(skill_db[j].itemid[i]) && skill_check_pc_partner(sd,skill,&lv, 1, 0) )
+					continue;
+				break;
 		}
 
 		req.itemid[i] = skill_db[j].itemid[i];
