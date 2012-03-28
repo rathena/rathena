@@ -4007,6 +4007,10 @@ int pc_useitem(struct map_session_data *sd,int n)
 	// Store information for later use before it is lost (via pc_delitem) [Paradox924X]
 	nameid = sd->inventory_data[n]->nameid;
 
+	/* Items with delayed consume are not meant to work while in mounts except reins of mount(12622) */
+	if( sd->inventory_data[n]->flag.delay_consume && nameid != 12622 && sd->sc.option&OPTION_MOUNTING )
+		return 0;
+
 	//Since most delay-consume items involve using a "skill-type" target cursor,
 	//perform a skill-use check before going through. [Skotlex]
 	//resurrection was picked as testing skill, as a non-offensive, generic skill, it will do.
@@ -4058,14 +4062,11 @@ int pc_useitem(struct map_session_data *sd,int n)
 	//Check if the item is to be consumed immediately [Skotlex]
 	if( sd->inventory_data[n]->flag.delay_consume )
 		clif_useitemack(sd,n,amount,true);
-	else
-	{
-		if( sd->status.inventory[n].expire_time == 0 )
-		{
+	else {
+		if( sd->status.inventory[n].expire_time == 0 ) {
 			clif_useitemack(sd,n,amount-1,true);
 			pc_delitem(sd,n,1,1,0,LOG_TYPE_CONSUME); // Rental Usable Items are not deleted until expiration
-		}
-		else
+		} else
 			clif_useitemack(sd,n,0,false);
 	}
 	if(sd->status.inventory[n].card[0]==CARD0_CREATE &&
