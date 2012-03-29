@@ -9827,13 +9827,9 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 		if(!sd->state.mainchat)
 			clif_displaymessage(fd, msg_txt(388)); // You should enable main chat with "@main on" command.
 		else {
-			char output[256];
-			snprintf(output, ARRAYLENGTH(output), msg_txt(386), sd->status.name, message);
-			intif_broadcast2(output, strlen(output) + 1, 0xFE000000, 0, 0, 0, 0);
+			// send the main message using inter-server system
+			intif_main_message( sd, message );
 		}
-
-		// Chat logging type 'M' / Main Chat
-		log_chat(LOG_CHAT_MAINCHAT, 0, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, NULL, message);
 
 		return;
 	}

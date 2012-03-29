@@ -7790,14 +7790,9 @@ ACMD_FUNC(main)
 				clif_displaymessage(fd, msg_txt(387));
 				return -1;
 			}
-			sprintf(atcmd_output, msg_txt(386), sd->status.name, message);
-			// I use 0xFE000000 color for signalizing that this message is
-			// main chat message. 0xFE000000 is invalid color, same using
-			// 0xFF000000 for simple (not colored) GM messages. [LuzZza]
-			intif_broadcast2(atcmd_output, strlen(atcmd_output) + 1, 0xFE000000, 0, 0, 0, 0);
 
-			// Chat logging type 'M' / Main Chat
-			log_chat(LOG_CHAT_MAINCHAT, 0, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, NULL, message);
+			// send the message using inter-server system
+			intif_main_message( sd, message );
 		}
 		
 	} else {

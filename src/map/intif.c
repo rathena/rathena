@@ -192,6 +192,27 @@ int intif_broadcast2(const char* mes, int len, unsigned long fontColor, short fo
 	return 0;
 }
 
+/// send a message using the main chat system
+/// <sd>         the source of message
+/// <message>    the message that was sent
+int intif_main_message(struct map_session_data* sd, const char* message)
+{
+	char output[256];
+
+	nullpo_retv(sd);
+
+	// format the message for main broadcasting
+	snprintf( output, sizeof(output), msg_txt(386), sd->status.name, message );
+
+	// send the message using the inter-server broadcast service
+	intif_broadcast2( output, strlen(output) + 1, 0xFE000000, 0, 0, 0, 0 );
+
+	// log the chat message
+	log_chat( LOG_CHAT_MAINCHAT, 0, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, NULL, message );
+
+	return 0;
+}
+
 // The transmission of Wisp/Page to inter-server (player not found on this server)
 int intif_wis_message(struct map_session_data *sd, char *nick, char *mes, int mes_len)
 {
