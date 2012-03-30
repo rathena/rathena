@@ -199,7 +199,7 @@ int intif_main_message(struct map_session_data* sd, const char* message)
 {
 	char output[256];
 
-	nullpo_retv(sd);
+	nullpo_ret(sd);
 
 	// format the message for main broadcasting
 	snprintf( output, sizeof(output), msg_txt(386), sd->status.name, message );
