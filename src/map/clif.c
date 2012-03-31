@@ -13805,7 +13805,7 @@ void clif_parse_Auction_setitem(int fd, struct map_session_data *sd)
 	}
 
 	if( (item = itemdb_exists(sd->status.inventory[idx].nameid)) != NULL && !(item->type == IT_ARMOR || item->type == IT_PETARMOR || item->type == IT_WEAPON || item->type == IT_CARD || item->type == IT_ETC) )
-	{ // Consumible or pets are not allowed
+	{ // Consumable or pets are not allowed
 		clif_Auction_setitem(sd->fd, idx, true);
 		return;
 	}
@@ -13931,9 +13931,13 @@ void clif_parse_Auction_register(int fd, struct map_session_data *sd)
 		clif_Auction_message(fd, 4); // No Char Server? lets say something to the client
 	else
 	{
+		int zeny = auction.hours*battle_config.auction_feeperhour;
+
 		pc_delitem(sd, sd->auction.index, sd->auction.amount, 1, 6, LOG_TYPE_AUCTION);
 		sd->auction.amount = 0;
-		pc_payzeny(sd, auction.hours * battle_config.auction_feeperhour);
+
+		log_zeny(sd, LOG_TYPE_AUCTION, sd, -zeny);
+		pc_payzeny(sd, zeny);
 	}
 }
 
@@ -13977,6 +13981,7 @@ void clif_parse_Auction_bid(int fd, struct map_session_data *sd)
 	else if ( CheckForCharServer() ) // char server is down (bugreport:1138)
 		clif_Auction_message(fd, 0); // You have failed to bid into the auction
 	else {
+		log_zeny(sd, LOG_TYPE_AUCTION, sd, -bid);
 		pc_payzeny(sd, bid);
 		intif_Auction_bid(sd->status.char_id, sd->status.name, auction_id, bid);
 	}
