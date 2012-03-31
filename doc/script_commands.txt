@@ -2027,17 +2027,6 @@ Whatever it returns is determined by type.
 
 ---------------------------------------
 
-*getnpcid(<type>)
-
-This function will return the GID of an NPC.
-Type can be:
-
- 0 - The NPC that the running script is attached to.
-
-Useful for making an NPC perform an action using script commands that require a GID (e.g. unit*)
-
----------------------------------------
-
 *getarraysize(<array name>)
 
 This function returns the number of values that are contained inside the 
@@ -2138,6 +2127,19 @@ print "player not attached!" error messages, so it is preferred to use
 "playerattached" to check for the character attached to the script.
 
 if( getcharid(2) == 0 ) mes "Only members of a guild are allowed here!";
+
+---------------------------------------
+
+*getnpcid(<type>{,"<npc name>"});
+
+Retrieves IDs of the currently invoked NPC. If a unique npc name is
+given, IDs of that NPC are retrieved instead. Type specifies what ID
+to retrieve and can be one of the following:
+
+    0 - Unit ID (GID)
+
+If an invalid type is given or the NPC does not exist, return value
+is 0.
 
 ---------------------------------------
 
