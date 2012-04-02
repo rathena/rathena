@@ -6359,7 +6359,7 @@ BUILDIN_FUNC(getcharid)
 BUILDIN_FUNC(getnpcid)
 {
 	int num = script_getnum(st,2);
-	struct npc_data* nd;
+	struct npc_data* nd = NULL;
 
 	if( script_hasdata(st,3) )
 	{// unique npc name
