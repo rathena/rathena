@@ -5928,7 +5928,7 @@ BUILDIN_FUNC(grouprandomitem)
 	int group;
 
 	group = script_getnum(st,2);
-	script_pushint(st,-itemdb_searchrandomid(group));
+	script_pushint(st,itemdb_searchrandomid(group));
 	return 0;
 }
 
