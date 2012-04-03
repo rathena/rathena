@@ -50,16 +50,6 @@
 	//#define PACKETVER	20100730
 #endif
 
-// backward compatible PACKETVER 8 and 9
-#if PACKETVER == 8
-#undef PACKETVER
-#define PACKETVER 20070521
-#endif
-#if PACKETVER == 9
-#undef PACKETVER
-#define PACKETVER 20071106
-#endif
-
 //Remove/Comment this line to disable sc_data saving. [Skotlex]
 #define ENABLE_SC_SAVING 
 //Remove/Comment this line to disable server-side hot-key saving support [Skotlex]
@@ -67,16 +57,8 @@
 #define HOTKEY_SAVING
 
 //The number is the max number of hotkeys to save
-#if PACKETVER < 20090603
-	// (27 = 9 skills x 3 bars)               (0x02b9,191)
-	#define MAX_HOTKEYS 27
-#elif PACKETVER < 20090617
-	// (36 = 9 skills x 4 bars)               (0x07d9,254)
-	#define MAX_HOTKEYS 36
-#else
-	// (38 = 9 skills x 4 bars & 2 Quickslots)(0x07d9,268)
-	#define MAX_HOTKEYS 38
-#endif
+// (38 = 9 skills x 4 bars & 2 Quickslots)(0x07d9,268)
+#define MAX_HOTKEYS 38
 
 #define MAX_MAP_PER_SERVER 1500 // Increased to allow creation of Instance Maps
 #define MAX_INVENTORY 100

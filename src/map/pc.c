@@ -5356,12 +5356,10 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 		clif_updatestatus(sd,SP_JOBEXP);
 	}
 
-#if PACKETVER >= 20091027
 	if(base_exp)
 		clif_displayexp(sd, base_exp, SP_BASEEXP, quest);
 	if(job_exp)
 		clif_displayexp(sd, job_exp,  SP_JOBEXP, quest);
-#endif
 	if(sd->state.showexp) {
 		char output[256];
 		sprintf(output,
@@ -6867,13 +6865,8 @@ int pc_equiplookall(struct map_session_data *sd)
 {
 	nullpo_ret(sd);
 
-#if PACKETVER < 4
-	clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
-	clif_changelook(&sd->bl,LOOK_SHIELD,sd->status.shield);
-#else
 	clif_changelook(&sd->bl,LOOK_WEAPON,0);
 	clif_changelook(&sd->bl,LOOK_SHOES,0);
-#endif
 	clif_changelook(&sd->bl,LOOK_HEAD_BOTTOM,sd->status.head_bottom);
 	clif_changelook(&sd->bl,LOOK_HEAD_TOP,sd->status.head_top);
 	clif_changelook(&sd->bl,LOOK_HEAD_MID,sd->status.head_mid);

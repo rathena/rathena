@@ -1622,15 +1622,10 @@ int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 	WBUFL(buf,32) = p->karma;
 	WBUFL(buf,36) = p->manner;
 	WBUFW(buf,40) = min(p->status_point, INT16_MAX);
-#if PACKETVER > 20081217
 	WBUFL(buf,42) = p->hp;
 	WBUFL(buf,46) = p->max_hp;
 	offset+=4;
 	buf = WBUFP(buffer,offset);
-#else
-	WBUFW(buf,42) = min(p->hp, INT16_MAX);
-	WBUFW(buf,44) = min(p->max_hp, INT16_MAX);
-#endif
 	WBUFW(buf,46) = min(p->sp, INT16_MAX);
 	WBUFW(buf,48) = min(p->max_sp, INT16_MAX);
 	WBUFW(buf,50) = DEFAULT_WALK_SPEED; // p->speed;
@@ -1656,10 +1651,8 @@ int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 	WBUFB(buf,102) = min(p->dex, UINT8_MAX);
 	WBUFB(buf,103) = min(p->luk, UINT8_MAX);
 	WBUFW(buf,104) = p->slot;
-#if PACKETVER >= 20061023
 	WBUFW(buf,106) = ( p->rename > 0 ) ? 0 : 1;
 	offset += 2;
-#endif
 #if (PACKETVER >= 20100720 && PACKETVER <= 20100727) || PACKETVER >= 20100803
 	mapindex_getmapname_ext(mapindex_id2name(p->last_point.map), (char*)WBUFP(buf,108));
 	offset += MAP_NAME_LENGTH_EXT;
