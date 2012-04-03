@@ -294,7 +294,7 @@
 248,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		CR_TRUST,Faith
 249,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,	CR_AUTOGUARD,Guard
 250,3,6,1,0,0,0,5,1,no,0,0,0,weapon,5:6:7:8:9,	CR_SHIELDCHARGE,Smite
-251,3:5:7:9:11,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,	CR_SHIELDBOOMERANG,Shield Boomerang
+251,3:5:7:9:11,6,1,0,0,0,5,1,no,0,0,0,weapon,0,	CR_SHIELDBOOMERANG,Shield Boomerang
 252,0,6,4,0,0,0,10,1,no,0,0,0,weapon,0,		CR_REFLECTSHIELD,Shield Reflect
 253,-2,8,1,6,0,0,10,-2,no,0,0,0,weapon,0,	CR_HOLYCROSS,Holy Cross
 254,5,6,4,6,0x48,0,10,1,no,33,0x100,0,magic,0,	CR_GRANDCROSS,Grand Cross
@@ -523,7 +523,7 @@
 477,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,	WS_WEAPONREFINE,Upgrade Weapon
 478,3,6,2,0,0x3,3,10,1,no,0,0,0,none,0,		CR_SLIMPITCHER,Aid Condensed Potion
 479,1,6,16,0,0x1,0,5,1,yes,0,0,0,weapon,0,	CR_FULLPROTECTION,Full Protection
-480,5,8,1,0,0,0,5,5,no,0,0,0,weapon,0,		PA_SHIELDCHAIN,Shield Chain
+480,5,8,1,-1,0,0,5,5,no,0,0,0,weapon,0,		PA_SHIELDCHAIN,Shield Chain
 481,0,0,0,0,0,0,5,0,no,0,0,0,none,0,		HP_MANARECHARGE,Mana Recharge
 482,0,6,4,0,0x1,0,5,1,no,0,0,0,magic,0,		PF_DOUBLECASTING,Double Casting
 483,16,6,2,0,0x1,1:2:3:4:5,1,1,no,0,0,0,none,0,	HW_GANBANTEIN,Ganbantein
