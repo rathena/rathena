@@ -4,7 +4,7 @@
 //= Masao
 //= Credits: Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= Any rAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //= Job change Quest from Bard / Clown -> Minstrel.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
+//= 1.1 Fix the checking of requirements before job change to Minstel - [JayPee]
 //============================================================
 
 alberta,196,133,4	script	Bard#job_min	486,{
@@ -2492,31 +2493,14 @@ OnTouch:
 
 prt_in,94,172,4	script	Karian#job_min3	480,{
 
-	if ((Class >= 4023) && (Class <= 4045)){
-		mes "[Karian]";
-		mes "Why... Why are you so little?";
-		close;
-	}
-	if(checkweight(1201,1) == 0){
-		mes "^3355FFWait a minute! You're";
-		mes "carrying too many items";
-		mes "right now: store some of";
-		mes "your extra things in Kafra";
-		mes "Storage, and then come back.^000000";
-		close;
-	}
-	if (JobLevel < 50 || BaseLevel < 99){
-		mes "[Karian]";
-		mes "Hey... why are you so low?";
-		mes "How did you lose levels?";
-		close;
-	}
-	if (job_min == 27 || SkillPoint != 0){
-		mes "[Karian]";
-		mes "Hey... Don't you know how to use your skill points?";
-		mes "You should use them.";
-		close;
-	}else if (job_min > 99){
+if ((Class >= 4023) && (Class <= 4045)){
+	mes "[Karian]";
+	mes "Why... Why are you so little?";
+	close;
+}
+if(job_min >= 27)
+{
+	if (job_min > 99){
 		switch(select("Talk.:Leave.")){
 		case 1:
 			mes "[Maestro Song]";
@@ -2547,6 +2531,26 @@ prt_in,94,172,4	script	Karian#job_min3	480,{
 			warp "prontera",156,99;
 			end;
 		}
+	}
+	if(checkweight(1201,1) == 0){
+		mes "^3355FFWait a minute! You're";
+		mes "carrying too many items";
+		mes "right now: store some of";
+		mes "your extra things in Kafra";
+		mes "Storage, and then come back.^000000";
+		close;
+	}
+	if (JobLevel < 50 || BaseLevel < 99){
+		mes "[Karian]";
+		mes "Hey... why are you so low?";
+		mes "How did you lose levels?";
+		close;
+	}
+	if (SkillPoint != 0){
+		mes "[Karian]";
+		mes "Hey... Don't you know how to use your skill points?";
+		mes "You should use them.";
+		close;
 	}
 	if (Class == Job_Bard || Class == Job_Clown){
 		mes "[Karian]";
@@ -2598,6 +2602,7 @@ prt_in,94,172,4	script	Karian#job_min3	480,{
 		mes "Huh?";
 		close;
 	}
+}
 	mes "[Karian]";
 	mes "How did you get in here?";
 	close;
