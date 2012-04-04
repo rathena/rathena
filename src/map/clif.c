@@ -851,10 +851,6 @@ void clif_get_weapon_view(struct map_session_data* sd, unsigned short *rhand, un
 		return;
 	}
 
-#if PACKETVER < 4
-	*rhand = sd->status.weapon;
-	*lhand = sd->status.shield;
-#else
 	if (sd->equip_index[EQI_HAND_R] >= 0 &&
 		sd->inventory_data[sd->equip_index[EQI_HAND_R]]) 
 	{
@@ -877,7 +873,6 @@ void clif_get_weapon_view(struct map_session_data* sd, unsigned short *rhand, un
 			*lhand = id->nameid;
 	} else
 		*lhand = 0;
-#endif
 }
 
 //To make the assignation of the level based on limits clearer/easier. [Skotlex]
@@ -923,9 +918,8 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	struct status_change* sc = status_get_sc(bl);
 	struct view_data* vd = status_get_viewdata(bl);
 	unsigned char *buf = WBUFP(buffer,0);
-#if PACKETVER >= 7
 	unsigned short offset = 0;
-#endif
+
 	const char *name;
 	sd = BL_CAST(BL_PC, bl);
 
@@ -956,16 +950,6 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	WBUFW(buf, 6) = status_get_speed(bl);
 	WBUFW(buf, 8) = (sc)? sc->opt1 : 0;
 	WBUFW(buf,10) = (sc)? sc->opt2 : 0;
-#if PACKETVER < 20091103
-	if (type&&spawn) { //uses an older and different packet structure
-		WBUFW(buf,12) = (sc)? sc->option : 0;
-		WBUFW(buf,14) = vd->hair_style;
-		WBUFW(buf,16) = vd->weapon;
-		WBUFW(buf,18) = vd->head_bottom;
-		WBUFW(buf,20) = vd->class_; //Pet armor (ignored by client)
-		WBUFW(buf,22) = vd->shield;
-	} else {
-#endif
 #if PACKETVER >= 20091103
 		WBUFL(buf,12) = (sc)? sc->option : 0;
 		offset+=2;
@@ -983,18 +967,10 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 		WBUFW(buf,14) = vd->class_;
 		WBUFW(buf,16) = vd->hair_style;
 		WBUFW(buf,18) = vd->weapon;
-#if PACKETVER < 4
-		WBUFW(buf,20) = vd->head_bottom;
-		WBUFW(buf,22) = vd->shield;
-#else
 		WBUFW(buf,20) = vd->shield;
 		WBUFW(buf,22) = vd->head_bottom;
-#endif
-#if PACKETVER < 20091103
-	}
-#endif
-	WBUFW(buf,24) = vd->head_top;
-	WBUFW(buf,26) = vd->head_mid;
+		WBUFW(buf,24) = vd->head_top;
+		WBUFW(buf,26) = vd->head_mid;
 
 	if( bl->type == BL_NPC && vd->class_ == FLAG_CLASS )
 	{	//The hell, why flags work like this?
@@ -1006,16 +982,7 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	WBUFW(buf,28) = vd->hair_color;
 	WBUFW(buf,30) = vd->cloth_color;
 	WBUFW(buf,32) = (sd)? sd->head_dir : 0;
-#if PACKETVER < 20091103
-	if (type&&spawn) { //End of packet 0x7c
-		WBUFB(buf,34) = (sd)?sd->status.karma:0; // karma
-		WBUFB(buf,35) = vd->sex;
-		WBUFPOS(buf,36,bl->x,bl->y,unit_getdir(bl));
-		WBUFB(buf,39) = 0;
-		WBUFB(buf,40) = 0;
-		return packet_len(0x7c);
-	}
-#endif
+	
 #if PACKETVER >= 20110111
 	WBUFW(buf,34) = vd->robe;
 	offset+= 2;
@@ -1049,19 +1016,9 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 		buf = WBUFP(buffer,offset);
 	}
 	WBUFW(buf,51) = clif_setlevel(bl);
-#if PACKETVER < 20091103
-	if (type) //End for non-player packet
-		return packet_len(WBUFW(buffer,0));
-#endif
-#if PACKETVER >= 20080102
 	WBUFW(buf,53) = sd?sd->user_font:0;
-#endif
-#if PACKETVER >= 20091103
 	memcpy((char*)WBUFP(buf,55), name, NAME_LENGTH);
 	return WBUFW(buffer,2);
-#else
-	return packet_len(WBUFW(buffer,0));
-#endif
 }
 
 /*==========================================

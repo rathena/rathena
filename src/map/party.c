@@ -629,10 +629,6 @@ int party_optionchanged(int party_id,int account_id,int exp,int item,int flag)
 		p->party.exp=exp;
 	if(!(flag&0x10) && p->party.item != item) {
 		p->party.item=item;
-#if PACKETVER<20090603
-		//item changes aren't updated by clif_party_option for older clients.
-		clif_party_member_info(p,sd);
-#endif
 	}
 
 	clif_party_option(p,sd,flag);
