@@ -56,9 +56,16 @@
 //Note that newer clients no longer save hotkeys in the registry!
 #define HOTKEY_SAVING
 
-//The number is the max number of hotkeys to save
-// (38 = 9 skills x 4 bars & 2 Quickslots)(0x07d9,268)
-#define MAX_HOTKEYS 38
+#if PACKETVER < 20090603
+        // (27 = 9 skills x 3 bars)               (0x02b9,191)
+        #define MAX_HOTKEYS 27
+#elif PACKETVER < 20090617
+        // (36 = 9 skills x 4 bars)               (0x07d9,254)
+        #define MAX_HOTKEYS 36
+#else
+        // (38 = 9 skills x 4 bars & 2 Quickslots)(0x07d9,268)
+        #define MAX_HOTKEYS 38
+#endif
 
 #define MAX_MAP_PER_SERVER 1500 // Increased to allow creation of Instance Maps
 #define MAX_INVENTORY 100
