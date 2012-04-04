@@ -17,11 +17,6 @@
 
 #define MAX_SEARCH	5  //Designed for search functions, species max number of matches to display.
 
-/**
- * Arch Bishop
- **/
-#define ITEMID_ANCILLA 12333
-
 enum item_itemid
 {
 	ITEMID_EMPERIUM = 714,
@@ -32,10 +27,48 @@ enum item_itemid
 	ITEMID_STONE = 7049,
 	ITEMID_SKULL_ = 7420,
 	ITEMID_TOKEN_OF_SIEGFRIED = 7621,
+/**
+ * Ranger
+ **/
+	ITEMID_TRAP_ALLOY = 7940,
+/**
+ * Arch Bishop
+ **/
+	ITEMID_ANCILLA = 12333,
 };
 
-#define itemid_isgemstone(id) ( (id) >= ITEMID_YELLOW_GEMSTONE && (id) <= ITEMID_BLUE_GEMSTONE )
-#define itemdb_iscashfood(id) ( (id) >= 12202 && (id) <= 12207 )
+/**
+ * Rune Knight
+ **/
+
+enum {
+	ITEMID_NAUTHIZ = 12725,
+	ITEMID_RAIDO,
+	ITEMID_BERKANA,
+	ITEMID_ISA,
+	ITEMID_OTHILA,
+	ITEMID_URUZ,
+	ITEMID_THURISAZ,
+	ITEMID_WYRD,
+	ITEMID_HAGALAZ,
+} rune_list;
+
+/**
+ * Mechanic
+ **/
+enum {
+	ITEMID_ACCELERATOR = 2800,
+	ITEMID_HOVERING_BOOSTER,
+	ITEMID_SUICIDAL_DEVICE,
+	ITEMID_SHAPE_SHIFTER,
+	ITEMID_COOLING_DEVICE,
+	ITEMID_MAGNETIC_FIELD_GENERATOR,
+	ITEMID_BARRIER_BUILDER,
+	ITEMID_REPAIR_KIT,
+	ITEMID_CAMOUFLAGE_GENERATOR,
+	ITEMID_HIGH_QUALITY_COOLER,
+	ITEMID_SPECIAL_COOLER,
+	} mecha_item_list;
 
 //The only item group required by the code to be known. See const.txt for the full list.
 #define IG_FINDINGORE 6
@@ -127,6 +160,12 @@ struct item_data* itemdb_exists(int nameid);
 #define itemdb_available(n) (itemdb_search(n)->flag.available)
 #define itemdb_viewid(n) (itemdb_search(n)->view_id)
 #define itemdb_autoequip(n) (itemdb_search(n)->flag.autoequip)
+#define itemdb_is_rune(n) (n >= ITEMID_NAUTHIZ && n <= ITEMID_HAGALAZ)
+#define itemdb_is_element(n) (n >= 990 && n <= 993)
+#define itemdb_is_spellbook(n) (n >= 6188 && n <= 6205)
+#define itemdb_is_poison(n) (n >= 12717 && n <= 12724)
+#define itemid_isgemstone(id) ( (id) >= ITEMID_YELLOW_GEMSTONE && (id) <= ITEMID_BLUE_GEMSTONE )
+#define itemdb_iscashfood(id) ( (id) >= 12202 && (id) <= 12207 )
 const char* itemdb_typename(int type);
 
 int itemdb_group_bonus(struct map_session_data* sd, int itemid);
@@ -167,35 +206,4 @@ void itemdb_reload(void);
 void do_final_itemdb(void);
 int do_init_itemdb(void);
 
-/**
- * Rune Knight
- **/
-enum {
-	ITEMID_NAUTHIZ = 12725,
-	ITEMID_RAIDO,
-	ITEMID_BERKANA,
-	ITEMID_ISA,
-	ITEMID_OTHILA,
-	ITEMID_URUZ,
-	ITEMID_THURISAZ,
-	ITEMID_WYRD,
-	ITEMID_HAGALAZ,
-} rune_list;
-#define itemdb_is_rune(n) (n >= ITEMID_NAUTHIZ && n <= ITEMID_HAGALAZ)
-/**
- * Warlock
- **/
-#define itemdb_is_spellbook(n) (n >= 6188 && n <= 6205)
-/**
- * Ranger
- **/
-#define ITEMID_TRAP_ALLOY 7940
-/**
- * Mechanic
- **/
-#define itemdb_is_element(n) (n >= 990 && n <= 993)
-/**
- * Guilotine Cross
- **/
-#define itemdb_is_poison(n) (n >= 12717 && n <= 12724)
 #endif /* _ITEMDB_H_ */

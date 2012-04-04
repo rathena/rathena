@@ -11,9 +11,11 @@
 #define INVALID_TIMER -1
 
 // timer flags
-#define TIMER_ONCE_AUTODEL 0x01
-#define TIMER_INTERVAL     0x02
-#define TIMER_REMOVE_HEAP  0x10
+enum {
+	TIMER_ONCE_AUTODEL = 0x01,
+	TIMER_INTERVAL = 0x02,
+	TIMER_REMOVE_HEAP = 0x10,
+};
 
 // Struct declaration
 
