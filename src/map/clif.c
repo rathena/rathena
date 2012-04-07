@@ -1100,8 +1100,6 @@ static void clif_setdisguise(struct block_list *bl, unsigned char *buf,int len)
 {
 	WBUFB(buf,4)= pcdb_checkid(status_get_viewdata(bl)->class_) ? 0x0 : 0x5; //PC_TYPE : NPC_MOB_TYPE
 	WBUFL(buf,5)=-bl->id;
-	WBUFB(buf,2)= pcdb_checkid(status_get_viewdata(bl)->class_) ? 0x0 : 0x5; //PC_TYPE : NPC_MOB_TYPE
-	WBUFL(buf,3)=-bl->id;
 	clif_send(buf, len, bl, SELF);
 }
 
@@ -12309,7 +12307,7 @@ void clif_parse_FriendsListReply(int fd, struct map_session_data *sd)
 
 	account_id = RFIFOL(fd,2);
 	char_id = RFIFOL(fd,6);
-	reply = RFIFOB(fd,10);
+	reply = RFIFOL(fd,10);
 
 	if( sd->bl.id == account_id )
 	{// adding oneself as friend
