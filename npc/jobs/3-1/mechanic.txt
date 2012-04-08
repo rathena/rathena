@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Masao
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //= Jobchange Quest from Blacksmith / Whitesmith -> Mechanic.
 //===== Additional Comments: ================================= 
 //= v1.0 First Version.
+//= v1.1 Fixed the Door NPC - [JayPee].
 //============================================================ 
 
 yuno,129,156,3	script	Chainheart	923,{
@@ -759,7 +760,8 @@ OnTouch:
 	}
 }
 
-jupe_core2,288,142,3	script	Door	844,{
+jupe_core2,288,142,3	script	Door	844,1,1,{
+end;
 
 OnInit:
 	disablenpc "Door";
@@ -779,43 +781,48 @@ OnTimer180000:
 	donpcevent "Door::OnDoorClose";
 	end;
 
-	mes "-Once again a voice rings out-";
-	mes "-in my head. This time it is-";
-	mes "-different than before, it is a-";
-	mes "-voice of an impressive person-";
-	next;
-	mes "I know you came this far because you want the knowledge.";
-	mes "Humans are weak animals";
-	mes "and any sacrifice is a hard";
-	mes "decision for them to make.";
-	next;
-	mes "But you are lacking something to pass through this door of truth.";
-	mes "Through this door is knowledge above all human thinking.";
-	next;
-	mes "It won't harm a human's mind if it doesn't surpass your brain capacity.";
-	next;
-	mes "Try to put your body onto the foothold of knowledge at the south.";
-	next;
-	mes "If the knowledge suits you, you'll be able to obtain it without becoming a sacrificial offering.";
-	mes "If you are unqualified, you will lose your body as a sacrifice.";
-	next;
-	mes "When you are qualified, you will be able to pass through the door of truth.";
-	mes "Till that day, don't lose yourself.";
-	next;
-	mes "............";
-	next;
-	mes "-I can't hear any voices-";
-	mes "-anymore and I can't feel-";
-	mes "-anything in this place.-";
-	next;
-	mes "-As the ringing voice in my-";
-	mes "-head instructed, let's go to-";
-	mes "-the southern marker.-";
-	set job__mechanic,9;
-	changequest 10098,10099;
-	close2;
-	donpcevent "Door::OnDoorClose";
-	end;
+OnTouch:
+	if(job__mechanic == 8)
+	{
+		mes "-Once again a voice rings out-";
+		mes "-in my head. This time it is-";
+		mes "-different than before, it is a-";
+		mes "-voice of an impressive person-";
+		next;
+		mes "I know you came this far because you want the knowledge.";
+		mes "Humans are weak animals";
+		mes "and any sacrifice is a hard";
+		mes "decision for them to make.";
+		next;
+		mes "But you are lacking something to pass through this door of truth.";
+		mes "Through this door is knowledge above all human thinking.";
+		next;
+		mes "It won't harm a human's mind if it doesn't surpass your brain capacity.";
+		next;
+		mes "Try to put your body onto the foothold of knowledge at the south.";
+		next;
+		mes "If the knowledge suits you, you'll be able to obtain it without becoming a sacrificial offering.";
+		mes "If you are unqualified, you will lose your body as a sacrifice.";
+		next;
+		mes "When you are qualified, you will be able to pass through the door of truth.";
+		mes "Till that day, don't lose yourself.";
+		next;
+		mes "............";
+		next;
+		mes "-I can't hear any voices-";
+		mes "-anymore and I can't feel-";
+		mes "-anything in this place.-";
+		next;
+		mes "-As the ringing voice in my-";
+		mes "-head instructed, let's go to-";
+		mes "-the southern marker.-";
+		set job__mechanic,9;
+		changequest 10098,10099;
+		close2;
+		donpcevent "Door::OnDoorClose";
+		end;
+	}
+end;
 }
 
 jupe_core2,149,34,1	script	Acquiring Knowledge	139,1,0,{
