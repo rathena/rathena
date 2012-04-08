@@ -12712,9 +12712,9 @@ int skill_sit (struct map_session_data *sd, int type)
 	}
 
 	if( type ) {
-		clif_status_load(&sd->bl,SI_SITTING,1);
+		clif_status_load(&sd->bl,SI_SIT,1);
 	} else {
-		clif_status_load(&sd->bl,SI_SITTING,0);
+		clif_status_load(&sd->bl,SI_SIT,0);
 	}
 
 	if (!flag) return 0;

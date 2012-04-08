@@ -6120,7 +6120,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	/* e.g. not killed thru pc_damage */
 	if( pc_issit(sd) ) {
-		clif_status_load(&sd->bl,SI_SITTING,0);
+		clif_status_load(&sd->bl,SI_SIT,0);
 	}
 
 	pc_setdead(sd);

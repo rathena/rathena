@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team [Ori:LunatikBunnie]
 //===== Current Version: =====================================
-//= 1.6
+//= 1.7
 //===== Compatible With: =====================================
 //= rAthena SVN; 15624+
 //===== Description: =========================================
@@ -18,6 +18,8 @@
 //= 1.5a fixed Baby -> Super Baby change. Switched to JobName() [Lupus]
 //= 1.6 Added support for both branches of 3rd classes,
 //=    unified response order, fixed minor quirk.
+//= 1.7 Corrected typo on EAJ_THIRD to EAJL_THIRD and fixed job
+//=    level requirement to change to 3rd. [Rytech]
 //===== TODO: ================================================
 //= Add baby 3rd classes
 //= Could be restructured some more using eajobs
@@ -208,7 +210,7 @@ prontera,153,193,6	script	Job Master	123,{
 		}
 		if (Class >= Job_Lord_Knight && Class <= Job_Paladin2)
 		{
-			if(JobLevel < 70) goto L_cantCh;
+			if(JobLevel < 50) goto L_cantCh;
 			goto L_Third;
 		}
 	}
@@ -216,7 +218,7 @@ prontera,153,193,6	script	Job Master	123,{
 	close;
 
 L_Third:
-	set @target_job, roclass(eaclass() | EAJ_THIRD);
+	set @target_job, roclass(eaclass() | EAJL_THIRD);
 	mes "Are you sure you want to change to " + JobName(@target_job) + "?";
 	if(select("Yes", "No")==1){
 		callfunc "Job_Change", @target_job;
