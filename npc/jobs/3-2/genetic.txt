@@ -4,7 +4,7 @@
 //= Masao
 //= Credits: Muad_Dib & Aeomin
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= Any rAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //= Job change Quest from Alchemist / Creator -> Genetic.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
+//= 1.1 Fixed Scatter Stuff NPC's - [JayPee].
 //============================================================
 
 alde_alche,35,186,5	script	Alchemist Union Member	805,{
@@ -1175,11 +1176,14 @@ job3_gen01,91,48,3	script	Demi Calberine#gen	982,{
 }
 
 job3_gen01,84,45,3	script	Scattered Stuff#gen1	111,{
+	goto OnDetails;
+end;
 
 OnInit:
 	enablenpc "Scattered Stuff#gen1";
 	end;
-
+	
+OnDetails:
 	if ((job_gen > 62) && (job_gen < 74)){
 		mes "- There is stuff scattered everywhere, what a mess in the lab. -";
 		next;
@@ -1201,11 +1205,14 @@ OnTimer7000:
 }
 
 job3_gen01,77,41,3	script	Scattered Stuff#gen2	111,{
+	goto OnDetails;
+end;
 
 OnInit:
 	enablenpc "Scattered Stuff#gen2";
 	end;
 
+OnDetails:
 	if ((job_gen > 62) && (job_gen < 74)){
 		mes "- There is stuff scattered everywhere, what a mess in the lab. -";
 		next;
@@ -1227,11 +1234,14 @@ OnTimer7000:
 }
 
 job3_gen01,78,57,3	script	Scattered Stuff#gen3	111,{
+	goto OnDetails;
+end;
 
 OnInit:
 	enablenpc "Scattered Stuff#gen3";
 	end;
 
+OnDetails:
 	if ((job_gen > 62) && (job_gen < 74)){
 		mes "- There is stuff scattered everywhere, what a mess in the lab. -";
 		next;
@@ -1253,11 +1263,14 @@ OnTimer7000:
 }
 
 job3_gen01,89,59,3	script	Scattered Stuff#gen4	111,{
+	goto OnDetails;
+end;
 
 OnInit:
 	enablenpc "Scattered Stuff#gen4";
 	end;
 
+OnDetails:	
 	if ((job_gen > 62) && (job_gen < 74)){
 		mes "- There is stuff scattered everywhere, what a mess in the lab. -";
 		next;
@@ -1279,11 +1292,14 @@ OnTimer7000:
 }
 
 job3_gen01,90,51,3	script	Scattered Stuff#gen5	111,{
+	goto OnDetails;
+end;
 
 OnInit:
 	enablenpc "Scattered Stuff#gen5";
 	end;
 
+OnDetails:
 	if ((job_gen > 62) && (job_gen < 74)){
 		mes "- There is stuff scattered everywhere, what a mess in the lab. -";
 		next;
@@ -1305,11 +1321,14 @@ OnTimer7000:
 }
 
 job3_gen01,83,27,3	script	Scattered Stuff#gen6	111,{
+	goto OnDetails;
+end;
 
 OnInit:
 	enablenpc "Scattered Stuff#gen6";
 	end;
 
+OnDetails:
 	if ((job_gen > 62) && (job_gen < 74)){
 		mes "- There is stuff scattered everywhere, what a mess in the lab. -";
 		next;
@@ -1331,11 +1350,14 @@ OnTimer7000:
 }
 
 job3_gen01,74,45,3	script	Scattered Stuff#gen7	111,{
+	goto OnDetails;
+end;
 
 OnInit:
 	enablenpc "Scattered Stuff#gen7";
 	end;
 
+OnDetails:
 	if ((job_gen > 62) & (job_gen < 74)){
 		mes "- There is stuff scattered everywhere, what a mess in the lab. -";
 		next;
