@@ -44,7 +44,7 @@ struct pet_bonus {
 	unsigned short type; //bStr, bVit?
 	unsigned short val;	//Qty
 	unsigned short duration; //in secs
-	unsigned short delay;	//Time before recasting (secs)
+	unsigned short delay;	//Time before RENEWAL_CAST (secs)
 	int timer;
 };
 

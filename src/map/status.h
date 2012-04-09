@@ -15,10 +15,10 @@ struct status_change;
  * Max Refine available to your server
  * Changing this limit requires edits to refine_db.txt
  **/
-#if REMODE
-#define MAX_REFINE 20
+#ifdef RENEWAL
+#	define MAX_REFINE 20
 #else
-#define MAX_REFINE 10
+#	define MAX_REFINE 10
 #endif
 
 enum refine_type {
@@ -1481,7 +1481,7 @@ struct status_data {
 
 	unsigned char
 		def_ele, ele_lv,
-#if REMODE
+#ifdef RENEWAL
 		/**
 		 * in RE weapon level is used in several areas, keeping it here saves performance
 		 **/
@@ -1554,7 +1554,7 @@ struct status_change {
 /**
  * The Storm Gust counter was dropped in renewal
  **/
-#if isOFF(REMODE)
+#ifndef RENEWAL
 	unsigned char sg_counter; //Storm gust counter (previous hits from storm gust)
 #endif
 	struct status_change_entry *data[SC_MAX];
@@ -1630,7 +1630,7 @@ unsigned char status_calc_attack_element(struct block_list *bl, struct status_ch
 #define status_get_race(bl) status_get_status_data(bl)->race
 #define status_get_size(bl) status_get_status_data(bl)->size
 #define status_get_mode(bl) status_get_status_data(bl)->mode
-#if REMODE
+#ifdef RENEWAL
 	/**
 	 * in RE weapon level is used in several areas, keeping it here saves performance
 	 **/

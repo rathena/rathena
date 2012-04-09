@@ -389,7 +389,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 				/**
 				 * in RE, SW possesses a lifetime equal to 3 times the caster's health
 				 **/
-			#if REMODE
+			#ifdef RENEWAL
 				if ( ( group->val2 - damage) > 0 ) {
 					group->val2 -= damage;
 					d->dmg_lv = ATK_BLOCK;
@@ -593,7 +593,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 /**
  * In renewal steel body reduces all incoming damage by 1/10
  **/
-#if REMODE
+#ifdef RENEWAL
 		if( sc->data[SC_STEELBODY] ) {
 			damage = damage > 10 ? damage / 10 : 1;
 		}
@@ -820,7 +820,7 @@ int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int dama
 		if(class_ == MOBID_EMPERIUM && flag&BF_SKILL) {
 		//Skill immunity.
 			switch (skill_num) {
-#if isOFF(REMODE)
+#ifndef RENEWAL
 			case MO_TRIPLEATTACK:
 #endif
 			case HW_GRAVITATION:
@@ -925,7 +925,7 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 	switch(weapon)
 	{
 		case W_1HSWORD:
-			#if REMODE
+			#ifdef RENEWAL
 				if((skill = pc_checkskill(sd,AM_AXEMASTERY)) > 0)
 					damage += (skill * 3);
 			#endif
@@ -934,7 +934,7 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 				damage += (skill * 4);
 			break;
 		case W_2HSWORD:
-			#if REMODE
+			#ifdef RENEWAL
 				if((skill = pc_checkskill(sd,AM_AXEMASTERY)) > 0)
 					damage += (skill * 3);
 			#endif
@@ -1241,7 +1241,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				//Since these do not consume ammo, they need to be explicitly set as arrow attacks.
 				flag.arrow = 1;
 				break;
-#if isOFF(REMODE)
+#ifndef RENEWAL
 			case PA_SHIELDCHAIN:
 			case CR_SHIELDBOOMERANG:
 #endif
@@ -1423,7 +1423,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	{	//Hit/Flee calculation
 		short
 			flee = tstatus->flee,
-#if REMODE
+#ifdef RENEWAL
 				hitrate = 0; //Default hitrate
 #else
 				hitrate = 80; //Default hitrate
@@ -1661,7 +1661,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					break;
 				case AC_SHOWER:
 				case MA_SHOWER:
-					#if REMODE
+					#ifdef RENEWAL
 						skillratio += 50+10*skill_lv;
 					#else
 						skillratio += -25+5*skill_lv;
@@ -1768,7 +1768,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				case CR_HOLYCROSS:
 				{
 					int ratio = 35*skill_lv;
-					#if REMODE
+					#ifdef RENEWAL
 						if(sd && sd->status.weapon == W_2HSPEAR)
 							ratio *= 2;
 					#endif
@@ -2290,17 +2290,15 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		if (sc) {
 			if(sc->data[SC_TRUESIGHT])
 				ATK_ADDRATE(2*sc->data[SC_TRUESIGHT]->val1);
-		#if RE_EDP == 0
-			/**
-			 * In RE EDP doesn't affect your final damage but your atk and weapon atk
-			 **/
+#ifndef RENEWAL_EDP
+			// renewal EDP doesn't affect your final damage but your atk and weapon atk
 			if(sc->data[SC_EDP] &&
 			  	skill_num != ASC_BREAKER &&
 				skill_num != ASC_METEORASSAULT &&
 				skill_num != AS_SPLASHER &&
 				skill_num != AS_VENOMKNIFE)
 				ATK_ADDRATE(sc->data[SC_EDP]->val3);
-		#endif
+#endif
 		}
 
 		switch (skill_num) {
@@ -2436,7 +2434,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				vit_def += def1*battle_config.weapon_defense_type;
 				def1 = 0;
 			}
-			#if REMODE
+			#ifdef RENEWAL
 				/**
 				 * In Renewal 100% damage reduction is 900 DEF
 				 * Formula: (1+(900-def1)/9)%
@@ -2546,7 +2544,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				wd.damage2 += battle_attr_fix(src, target, damage, sc->data[SC_WATK_ELEMENT]->val1, tstatus->def_ele, tstatus->ele_lv);
 			}
 		}
-	#if REMODE
+	#ifdef RENEWAL
 		/**
 		 * In RE Shield Bommerang takes weapon element only for damage calculation,
 		 * - resist calculation is always against neutral
@@ -3036,7 +3034,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				break;
 			default:
 			{
-			#if REMODE //Renewal MATK Appliance according to doddler (?title=Renewal_Changes#Upgrade_MATK)
+			#ifdef RENEWAL //Renewal MATK Appliance according to doddler (?title=Renewal_Changes#Upgrade_MATK)
 				/**
 				 * min: (weaponMATK+upgradeMATK) * 2 + 1.5 * statusMATK
 				 * max: [weaponMATK+upgradeMATK+(wMatk*wLvl)/10] * 2 + 1.5 * statusMATK
@@ -3074,7 +3072,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				/**
 				 * in Renewal Thunder Storm boost is 100% (in pre-re, 80%)
 				 **/
-				#if isOFF(REMODE)
+				#ifndef RENEWAL
 					case MG_THUNDERSTORM:
 						skillratio -= 20;
 						break;
@@ -3138,7 +3136,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case NJ_RAIGEKISAI:
 						skillratio += 60 + 40*skill_lv;
 						break;
-				#if REMODE
+				#ifdef RENEWAL
 					case NJ_HUUJIN:
 						skillratio += 50;
 						break;
@@ -3374,7 +3372,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					//mdef2-= mdef2* i/100;
 				}
 			}
-		#if REMODE
+		#ifdef RENEWAL
 			/**
 			 * RE MDEF Reduction (from doddler:?title=Renewal_Changes#MDEF)
 			 * Damage from magic = Magic Attack * 111.5/(111.5+eMDEF) 
@@ -3548,7 +3546,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 
 	switch( skill_num )
 	{
-#if REMODE
+#ifdef RENEWAL
 	case HT_LANDMINE:
 	case MA_LANDMINE:
 	case HT_BLASTMINE:
@@ -3698,7 +3696,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		else {
 			short
 				flee = tstatus->flee,
-#if REMODE
+#ifdef RENEWAL
 				hitrate = 0; //Default hitrate
 #else
 				hitrate = 80; //Default hitrate

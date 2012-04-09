@@ -1,5 +1,8 @@
-#ifndef _RRCONFIGS_RE_
-#define _RRCONFIGS_RE_
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+#ifndef _CONFIG_RENEWAL_H_
+#define _CONFIG_RENEWAL_H_
+
 /**
  * rAthena configuration file (http://rathena.org)
  * For detailed guidance on these check http://rathena.org/wiki/SRC/map/config/
@@ -9,51 +12,44 @@
  * @INFO: This file holds general-purpose renewal settings, for class-specific ones check /src/map/config/Skills folder
  **/
 
-/**
- * Game Server Mode
- * @values: 1 or 0
- *	1 : renewal support, such as renewal-exclusive formulas
- *    -> Note some features may be enabled/disabled at this file despite this setting being ON
- *  0 : renewal support disabled, use original formulas
- **/
-#define REMODE 1
+/// game renewal server mode
+/// (disable by commenting the line)
+///
+/// leave this line to enable renewal specific support such as renewal formulas
+#define RENEWAL
 
-/**
- * Renewal Cast Time
- * @values: 1 (enabled) or 0 (disabled)
- *  1 : Cast Time is decreased by DEX*2+INT, 20% of the cast time is not reduced by stats,
- *  - for example, on a skill whose cast time is 10s, only 8s may be reduced. other 2s are
- *  - part of a "fixed cast time" that is only reduced by special items and skills (such as
- *  - Arch Bishop's Sacrament skill).
- *  0 : the old cast time method, influenced by dex, items and skills.
- **/
-#define RECASTING 1
+/// renewal cast time
+/// (disable by commenting the line)
+///
+/// leave this line to enable renewal casting time algorithms
+/// cast time is decreased by DEX * 2 + INT while 20% of the cast time is not reduced by stats.
+/// example:
+///  on a skill whos cast time is 10s, only 8s may be reduced. the other 2s are part of a
+///  "fixed cast time" which can only be reduced by specialist items and skills
+#define RENEWAL_CAST
 
-/**
- * Renewal Drop Rate Modifier
- * @values: 1 (enabled) or 0 (disabled)
- * - When enabled a modifier based on difference between the player and the monster level is applied,
- * - based on the http://irowiki.org/wiki/Drop_System#Level_Factor table
- **/
-#define RE_DROP_MOD 1
+/// renewal drop rate algorithms
+/// (disable by commenting the line)
+///
+/// leave this line to enable renewal item drop rate algorithms
+/// while enabled a special modified based on the difference between the player and monster level is applied
+/// based on the http://irowiki.org/wiki/Drop_System#Level_Factor table
+#define RENEWAL_DROP
 
-/**
- * Renewal Cast Time : Variable-Free
- * - Value required for no variable cast time with stats.
- * - Formula: (casterDex x 2) + (casterInt)
- * Default: 530
- **/
-#define RECASTING_VMIN 530
+/// renewal cast time variable cast requirement
+///
+/// this is the value required for no variable cast-time with stats.
+/// formula: (DEX * 2) + INT
+/// default: 530
+#define RENEWAL_CAST_VMIN 530
 
-/**
- * Renewal Enchant Deadly Poison Change
- * - In RE EDP no longer increases final damage by 400%.
- * - it increases your weapon atk and your stat atk
- * - it doesn't affect grimtooth
- **/
-#define RE_EDP 1
+/// renewal enchant deadly poison algorithm
+///
+/// leave this line to enable the renewed EDP algorithm
+/// under renewal mode:
+///  - damage is NOT increased by 400%
+///  - it does NOT affect grimtooth
+///  - weapon and status ATK are increased
+#define RENEWAL_EDP
 
-/**
- * End of File
- **/
-#endif
+#endif // _CONFIG_RENEWAL_H_

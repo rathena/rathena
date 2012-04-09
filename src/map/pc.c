@@ -2047,11 +2047,11 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 	case SP_DEF1:
 		if(sd->state.lr_flag != 2) {
 			bonus = status->def + val;
-	#if REMODE
+#ifdef RENEWAL
 			status->def = cap_value(bonus, SHRT_MIN, SHRT_MAX);
-	#else
+#else
 			status->def = cap_value(bonus, CHAR_MIN, CHAR_MAX);
-	#endif
+#endif
 		}
 		break;
 	case SP_DEF2:
@@ -2063,11 +2063,11 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 	case SP_MDEF1:
 		if(sd->state.lr_flag != 2) {
 			bonus = status->mdef + val;
-	#if REMODE
+#ifdef RENEWAL
 			status->mdef = cap_value(bonus, SHRT_MIN, SHRT_MAX);
-	#else
+#else
 			status->mdef = cap_value(bonus, CHAR_MIN, CHAR_MAX);
-	#endif
+#endif
 			if( sd->state.lr_flag == 3 ) {//Shield, used for royal guard
 				sd->shieldmdef += bonus;
 			}
@@ -5487,7 +5487,7 @@ int pc_need_status_point(struct map_session_data* sd, int type, int val)
 		swap(low, high);
 
 	for ( ; low < high; low++ )
-#if REMODE //Renewal Stat Cost Formula
+#ifdef RENEWAL // renewal status point cost formula
 		sp += (low < 100) ? (2 + (low - 1) / 10) : (16 + 4 * ((low - 100) / 5));
 #else
 		sp += ( 1 + (low + 9) / 10 );

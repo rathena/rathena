@@ -3833,7 +3833,7 @@ int do_init(int argc, char *argv[])
 	}
 
 	map_config_read(MAP_CONF_NAME);
-#if REMODE
+#ifdef RENEWAL
 	/**
 	 * to make pre-re conflict safe
 	 **/

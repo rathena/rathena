@@ -1,5 +1,8 @@
-#ifndef _RRCONFIGS_
-#define _RRCONFIGS_
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+#ifndef _CONFIG_CORE_H_
+#define _CONFIG_CORE_H_
+
 /**
  * rAthena configuration file (http://rathena.org)
  * For detailed guidance on these check http://rathena.org/wiki/SRC/map/config/
@@ -32,7 +35,5 @@
  * Constants come last; so they process anything that could've been modified in early includes
  **/
 #include "./Data/Const.h"
-/**
- * End of File
- **/
-#endif
+
+#endif // _CONFIG_CORE_H_

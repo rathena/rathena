@@ -63,7 +63,7 @@ static struct {
 
 static int atkmods[3][MAX_WEAPON_TYPE];	// •ŠíATKƒTƒCƒYC³(size_fix.txt)
 static char job_bonus[CLASS_COUNT][MAX_LEVEL];
-#if REMODE
+#ifdef RENEWAL
 enum {
 	SHIELD_ASPD,
 	RE_JOB_DB_MAX,
@@ -883,10 +883,8 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_DROCERA_HERB_STEAMED] |= SCB_AGI;
 	StatusChangeFlagTable[SC_PUTTI_TAILS_NOODLES] |= SCB_LUK;
 
-#if RE_EDP
-	/**
-	 * In RE EDP increases your atk and weapon atk
-	 **/
+#ifdef RENEWAL_EDP
+	// renewal EDP increases your atk and weapon atk
 	StatusChangeFlagTable[SC_EDP] |= SCB_BATK|SCB_WATK;
 #endif
 	if( !battle_config.display_hallucination ) //Disable Hallucination.
@@ -1645,26 +1643,26 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
 	
 	// raw delay adjustment from bAspd bonus
 	amotion+= sd->aspd_add;
-#if REMODE
-	/**
-	 * Bearing a shield decreases your ASPD by a fixed value depending on your class
-	 **/
+
+#ifdef RENEWAL
 	if( sd->status.shield )
+	{// bearing a shield decreases your ASPD by a fixed value depending on your class
 		amotion += re_job_db[pc_class2idx(sd->status.class_)][SHIELD_ASPD];
-	/**
-	 * RE Absolute aspd modifiers
-	 **/
-	if( sd->sc.count ) {
+	}
+
+	if( sd->sc.count )
+	{// renewal absolute ASPD modifiers
 		int i;
 		if ( sd->sc.data[i=SC_ASPDPOTION3] ||
-		sd->sc.data[i=SC_ASPDPOTION2] ||
-		sd->sc.data[i=SC_ASPDPOTION1] ||
-		sd->sc.data[i=SC_ASPDPOTION0] )
+			 sd->sc.data[i=SC_ASPDPOTION2] ||
+			 sd->sc.data[i=SC_ASPDPOTION1] ||
+			 sd->sc.data[i=SC_ASPDPOTION0] )
 			amotion -= sd->sc.data[i]->val1*10;
 		if( sd->sc.data[SC_SPEARQUICKEN] )
 			amotion -= 70;
 	}
 #endif
+
  	return amotion;
 }
 
@@ -1707,24 +1705,24 @@ static unsigned short status_base_atk(const struct block_list *bl, const struct 
 
 static inline unsigned short status_base_matk_max(const struct status_data* status)
 {
-	#if REMODE
-		return status->matk_max;//In RE maximum MATK signs weapon matk, which we store in this var
-	#else //Original Max MATK Formula
-		return status->int_+(status->int_/5)*(status->int_/5);
-	#endif
+#ifdef RENEWAL
+	return status->matk_max; // in RE maximum MATK signs weapon matk, which we store in this var
+#else
+	return status->int_+(status->int_/5)*(status->int_/5);
+#endif
 }
 
-#if REMODE
+#ifdef RENEWAL
 static inline unsigned short status_base_matk_min(const struct status_data* status, int lvl)
 #else
 static inline unsigned short status_base_matk_min(const struct status_data* status)
 #endif
 {
-	#if REMODE //Renewal MATK Formula
-		return status->int_+(status->int_/2)+(status->dex/5)+(status->luk/3)+(lvl/4);
-	#else //Original Min MATK Formula
-		return status->int_+(status->int_/7)*(status->int_/7);
-	#endif
+#ifdef RENEWAL
+	return status->int_+(status->int_/2)+(status->dex/5)+(status->luk/3)+(lvl/4);
+#else
+	return status->int_+(status->int_/7)*(status->int_/7);
+#endif
 }
 
 
@@ -1737,19 +1735,19 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 		status->hit = status->flee =
 		status->def2 = status->mdef2 =
 		status->cri = status->flee2 = 0;
-#if REMODE
+#ifdef RENEWAL
 	status->matk_min = status_base_matk_min(status, level);
 #else
 	status->matk_min = status_base_matk_min(status);
 #endif
 	status->matk_max = status_base_matk_max(status);
 
-#if REMODE //Renewal Formulas
+#ifdef RENEWAL // renewal formulas
 	status->hit += level + status->dex + status->luk/3 + 175; //base level + ( every 1 dex = +1 hit ) + (every 3 luk = +1 hit) + 175
 	status->flee += level + status->agi + status->luk/5 + 100; //base level + ( every 1 agi = +1 flee ) + (every 5 luk = +1 flee) + 100
 	status->def2 += (int)(((float)level + status->vit)/2 + ((float)status->agi/5)); //base level + (every 2 agi = +1 def) + (every 5 agi = +1 def)
 	status->mdef2 += (int)(status->int_ + ((float)level/4) + ((float)status->dex/5) + ((float)status->vit/5)); //(every 4 base level = +1 mdef) + (every 1 int = +1 mdef) + (every 5 dex = +1 mdef) + (every 5 vit = +1 mdef)
-#else //Old Formulas
+#else
 	status->hit += level + status->dex;
 	status->flee += level + status->agi;
 	status->def2 += status->vit;
@@ -1771,9 +1769,11 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 		status->batk = cap_value(temp, 0, USHRT_MAX);
 	} else
 		status->batk = status_base_atk(bl, status);
-#if REMODE //Renewal ATK Bonus Formula (after atk is calculated)
+
+#ifdef RENEWAL // renewal attack bonus formula
 	status->batk += (int)((float)status->luk/3 + (float)level/4); //(every 3 luk = + 1ATK) + (every 4 base level = +1 ATK)
 #endif
+
 	if (status->cri)
 	switch (bl->type) {
 	case BL_MOB:
@@ -1932,7 +1932,7 @@ int status_calc_mob_(struct mob_data* md, bool first)
 			ShowError("status_calc_mob: No castle set at map %s\n", map[md->bl.m].name);
 		else
 		if(gc->castle_id < 24 || md->class_ == MOBID_EMPERIUM) {
-#if REMODE
+#ifdef RENEWAL
 			status->max_hp += 50 * gc->defense;
 			status->max_sp += 70 * gc->defense;
 #else
@@ -2336,22 +2336,20 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 			wa->atk += sd->inventory_data[index]->atk;
 			if ( (r = sd->status.inventory[index].refine) )
 				wa->atk2 = refine_info[wlv].bonus[r-1] / 100;
-		#if REMODE
-			/**
-			 * in RE matk_max is used as the weapon's matk.
-			 * += is used so that two-wield weapons (in the case of, say, sinx) bonus stack.
-			 **/
+
+#ifdef RENEWAL
+			// in renewal max MATK is the weapon MATK
 			status->matk_max += sd->inventory_data[index]->matk;
-			/**
-			 * Refine Bonus
-			 **/
-			if (r)
+
+			if( r )
+			{// renewal magic attack refine bonus
 				status->matk_max += refine_info[wlv].bonus[r-1] / 100;
-			/**
-			 * In RE weapon level is used in several areas, this way we save performance
-			 **/
+			}
+			
+			// record the weapon level for future usage
 			status->wlv = wlv;
-		#endif
+#endif
+
 			//Overrefine bonus.
 			if (r)
 				wd->overrefine = refine_info[wlv].randombonus_max[r-1] / 100;
@@ -2413,13 +2411,10 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 
 	status->def += (refinedef+50)/100;
 	
-	#if REMODE
-		/**
-		 * in RE matk_max is used as the weapon's matk.
-		 * sp_weapon_matk is 'bonus bWeaponMatk,<boost>'
-		 **/
-		status->matk_max += sd->sp_weapon_matk;
-	#endif
+#ifdef RENEWAL
+	// increment the weapon ATK using the MATK max value
+	status->matk_max += sd->sp_weapon_matk;
+#endif
 
 	//Parse Cards
 	for(i=0;i<EQI_MAX-1;i++) {
@@ -2738,16 +2733,15 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		i =  status->def * sd->def_rate/100;
 		status->def = cap_value(i, DEFTYPE_MIN, DEFTYPE_MAX);
 	}
-#if isOFF(REMODE)
-	/**
-	 * The following setting does not affect Renewal Mode
-	 **/
+
+#ifndef RENEWAL
 	if (!battle_config.weapon_defense_type && status->def > battle_config.max_def)
 	{
 		status->def2 += battle_config.over_def_bonus*(status->def -battle_config.max_def);
 		status->def = (unsigned char)battle_config.max_def;
 	}
 #endif
+
 // ----- EQUIPMENT-MDEF CALCULATION -----
 
 	// Apply relative modifiers from equipment
@@ -2757,16 +2751,15 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		i =  status->mdef * sd->mdef_rate/100;
 		status->mdef = cap_value(i, DEFTYPE_MIN, DEFTYPE_MAX);
 	}
-#if isOFF(REMODE)
-	/**
-	 * The following setting does not affect Renewal Mode
-	 **/
+
+#ifndef RENEWAL
 	if (!battle_config.magic_defense_type && status->mdef > battle_config.max_def)
 	{
 		status->mdef2 += battle_config.over_def_bonus*(status->mdef -battle_config.max_def);
 		status->mdef = (signed char)battle_config.max_def;
 	}
 #endif
+
 // ----- ASPD CALCULATION -----
 // Unlike other stats, ASPD rate modifiers from skills/SCs/items/etc are first all added together, then the final modifier is applied
 
@@ -3002,12 +2995,11 @@ int status_calc_homunculus_(struct homun_data *hd, bool first)
 	status->adelay = status->amotion; //It seems adelay = amotion for Homunculus.
 
 	status_calc_misc(&hd->bl, status, hom->level);
-#if REMODE
-	/**
-	 * In RE Mode matk_max is used as source of weaponMATK, but homuns don't have it -- so we swap the values here.
-	 **/
+
+#ifdef RENEWAL
 	status->matk_max = status->matk_min;
 #endif
+
 	status_cpy(&hd->battle_status, status);
 	return 1;
 }
@@ -3470,33 +3462,29 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 	}
 
 	if(flag&SCB_MATK) {
-		//New matk
-	#if REMODE
+#ifdef RENEWAL
 		status->matk_min = status_base_matk_min(status,status_get_lv(bl));
-		/**
-		 * in RE matk_min is used as character's base matk
-		 * sp_base_matk is 'bonus bMatk,<boost>'
-		 **/
 		if( sd )
 			status->matk_min += sd->sp_base_matk;
-	#else
+#else
 		status->matk_min = status_base_matk_min(status);
-	#endif
+#endif
 		status->matk_max = status_base_matk_max(status);
 
 		if( bl->type&BL_PC && sd->matk_rate != 100 )
 		{
 			//Bonuses from previous matk
-		#if isOFF(REMODE) //Only changed in non-re [RRInd]
+#ifndef RENEWAL // only changed in non-renewal [Ind]
 			status->matk_max = status->matk_max * sd->matk_rate/100;
-		#endif
+#endif
 			status->matk_min = status->matk_min * sd->matk_rate/100;
 		}
 			
 		status->matk_min = status_calc_matk(bl, sc, status->matk_min);
-		#if isOFF(REMODE) //Only changed in non-re [RRInd]
-			status->matk_max = status_calc_matk(bl, sc, status->matk_max);
-		#endif
+
+#ifndef RENEWAL // only changed in non-renewal [Ind]
+		status->matk_max = status_calc_matk(bl, sc, status->matk_max);
+#endif
 
 		if( bl->type&BL_HOM && battle_config.hom_setting&0x20 ) //Hom Min Matk is always the same as Max Matk
 			status->matk_min = status->matk_max;
@@ -3641,7 +3629,7 @@ void status_calc_bl_(struct block_list* bl, enum scb_flag flag, bool first)
 			clif_updatestatus(sd,SP_SPEED);
 
 		if(b_status.batk != status->batk
-#if !REMODE
+#ifndef RENEWAL
 			|| b_status.rhw.atk != status->rhw.atk || b_status.lhw.atk != status->lhw.atk
 #endif
 			)
@@ -3651,8 +3639,8 @@ void status_calc_bl_(struct block_list* bl, enum scb_flag flag, bool first)
 			clif_updatestatus(sd,SP_DEF1);
 
 		if(b_status.rhw.atk2 != status->rhw.atk2 || b_status.lhw.atk2 != status->lhw.atk2
-#if REMODE
-			|| b_status.rhw.atk != status->rhw.atk || b_status.lhw.atk != status->lhw.atk
+#ifdef RENEWAL
+		|| b_status.rhw.atk != status->rhw.atk || b_status.lhw.atk != status->lhw.atk
 #endif
 			)
 			clif_updatestatus(sd,SP_ATK2);
@@ -4064,10 +4052,8 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 		batk += sc->data[SC_FULL_SWING_K]->val1;
 	if(sc->data[SC_ODINS_POWER])
 		batk += 70;
-#if RE_EDP
-	/**
-	 * in RE EDP increases your base atk by atk x Skill Level.
-	 **/
+#ifdef RENEWAL_EDP
+	// renewal EDP increases your base atk by atk x skill level
 	if( sc->data[SC_EDP] )
 		batk = batk * sc->data[SC_EDP]->val1;
 #endif
@@ -4142,10 +4128,8 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 	if( sc && sc->data[SC_TIDAL_WEAPON] )
 		watk += watk * sc->data[SC_TIDAL_WEAPON]->val2 / 100;
 
-#if RE_EDP
-	/**
-	 * in RE EDP increases your weapon atk by watk x Skill Level - 1
-	 **/
+#ifdef RENEWAL_EDP
+	// renewal EDP increases your weapon atk by watk x Skill Level - 1
 	if( sc->data[SC_EDP] && sc->data[SC_EDP]->val1 > 1 )
 		watk = watk * (sc->data[SC_EDP]->val1 - 1);
 #endif
@@ -4211,7 +4195,7 @@ static signed short status_calc_critical(struct block_list *bl, struct status_ch
 		critical += 100;
 	if(sc->data[SC__UNLUCKY])
 		critical -= critical * sc->data[SC__UNLUCKY]->val2 / 100;
-#if REMODE
+#ifdef RENEWAL
 	if (sc->data[SC_SPEARQUICKEN])
 		critical += 3*sc->data[SC_SPEARQUICKEN]->val1*10;
 #endif
@@ -4320,7 +4304,7 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 		flee += flee * sc->data[SC_ZEPHYR]->val2 / 100;
 	if( sc->data[SC_MARSHOFABYSS] )
 		flee -= (9 * sc->data[SC_MARSHOFABYSS]->val3 / 10 + sc->data[SC_MARSHOFABYSS]->val2 / 10) * (bl->type == BL_MOB ? 2 : 1);
-#if REMODE
+#ifdef RENEWAL
 	if( sc->data[SC_SPEARQUICKEN] )
 		flee += 2 * sc->data[SC_SPEARQUICKEN]->val1;
 #endif
@@ -4355,10 +4339,8 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 		return 100;
 	if(sc->data[SC_KEEPING])
 		return 90;
-/**
- * In renewal it no longer provides 90 def
- **/
-#if isOFF(REMODE)
+
+#ifndef RENEWAL // does not provide 90 DEF in renewal mode
 	if(sc->data[SC_STEELBODY])
 		return 90;
 #endif
@@ -4470,13 +4452,12 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 		return 0;
 	if(sc->data[SC_BARRIER])
 		return 100;
-/**
- * In renewal it no longer provides 90 mdef
- **/
-#if isOFF(REMODE)
+
+#ifndef RENEWAL // no longer provides 90 MDEF in renewal mode
 	if(sc->data[SC_STEELBODY])
 		return 90;
 #endif
+
 	if(sc->data[SC_ARMORCHANGE])
 		mdef += sc->data[SC_ARMORCHANGE]->val3;
 	if(sc->data[SC_STONE] && sc->opt1 == OPT1_STONE)
@@ -4703,12 +4684,10 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 /// Note that the scale of aspd_rate is 1000 = 100%.
 static short status_calc_aspd_rate(struct block_list *bl, struct status_change *sc, int aspd_rate)
 {
-#if isOFF(REMODE)
-	/**
-	 * this variable is not used unless in non-RE
-	 **/
+#ifndef RENEWAL
 	int i;
 #endif
+
 	if(!sc || !sc->count)
 		return cap_value(aspd_rate,0,SHRT_MAX);
 
@@ -4738,7 +4717,7 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 			max < sc->data[SC_ADRENALINE]->val3)
 			max = sc->data[SC_ADRENALINE]->val3;
 		
-#if isOFF(REMODE)
+#ifndef RENEWAL
 		if(sc->data[SC_SPEARQUICKEN] &&
 			max < sc->data[SC_SPEARQUICKEN]->val2)
 			max = sc->data[SC_SPEARQUICKEN]->val2;
@@ -4779,16 +4758,15 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		else if(sc->data[SC_MADNESSCANCEL])
 			aspd_rate -= 200;
 	}
-#if isOFF(REMODE)
-	/**
-	 * in RE they give a fixed boost -- we do so along SERVICE4U in status_base_amotion_pc
-	 **/
-	if(sc->data[i=SC_ASPDPOTION3] ||
+
+#ifndef RENEWAL // non-renewal variable ASPD improvement
+	if( sc->data[i=SC_ASPDPOTION3] ||
 		sc->data[i=SC_ASPDPOTION2] ||
 		sc->data[i=SC_ASPDPOTION1] ||
-		sc->data[i=SC_ASPDPOTION0])
+		sc->data[i=SC_ASPDPOTION0] )
 		aspd_rate -= sc->data[i]->val2;
 #endif
+
 	if(sc->data[SC_DONTFORGETME])
 		aspd_rate += 10 * sc->data[SC_DONTFORGETME]->val2;
 	if(sc->data[SC_LONGING])
@@ -6495,24 +6473,24 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			break;
 		case SC_VOLCANO:
 			val2 = val1*10; //Watk increase
-		#if isOFF(REMODE)
+#ifndef RENEWAL
 			if (status->def_ele != ELE_FIRE)
 				val2 = 0;
-		#endif
+#endif
 			break;
 		case SC_VIOLENTGALE:
 			val2 = val1*3; //Flee increase
-		#if isOFF(REMODE)
+		#ifndef RENEWAL
 			if (status->def_ele != ELE_WIND)
 				val2 = 0;
 		#endif
 			break;
 		case SC_DELUGE:
 			val2 = deluge_eff[val1-1]; //HP increase
-		#if isOFF(REMODE)
+#ifndef RENEWAL
 			if(status->def_ele != ELE_WATER)
 				val2 = 0;
-		#endif	
+#endif	
 			break;
 		case SC_SUITON:
 			if (!val2 || (sd && (sd->class_&MAPID_UPPERMASK) == MAPID_NINJA)) {
@@ -6534,7 +6512,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_MERC_QUICKEN:
 			val2 = 300;
 			break;
-#if isOFF(REMODE)
+#ifndef RENEWAL
 		case SC_SPEARQUICKEN:
 			val2 = 200+10*val1;
 			break;
@@ -6556,10 +6534,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_EXPLOSIONSPIRITS:
 			val2 = 75 + 25*val1; //Cri bonus
 			break;
-#if isOFF(REMODE)
-		/**
-		 * Only in non-RE it's var is changed
-		 **/
+#ifndef RENEWAL
 		case SC_ASPDPOTION0:
 		case SC_ASPDPOTION1:
 		case SC_ASPDPOTION2:
@@ -10047,7 +10022,7 @@ int status_get_refine_chance(enum refine_type wlv, int refine)
  * size_fix.txt   - size adjustment table for weapons
  * refine_db.txt  - refining data table
  *------------------------------------------*/
-#if REMODE
+#ifdef RENEWAL
 static bool status_readdb_job_re(char* fields[], int columns, int current) {
 	int idx, class_;
 	unsigned int i;
@@ -10066,6 +10041,7 @@ static bool status_readdb_job_re(char* fields[], int columns, int current) {
 	return true;
 }
 #endif
+
 static bool status_readdb_job1(char* fields[], int columns, int current)
 {// Job-specific values (weight, HP, SP, ASPD)
 	int idx, class_;
@@ -10170,7 +10146,7 @@ int status_readdb(void)
 	memset(hp_coefficient2, 0, sizeof(hp_coefficient2));
 	memset(sp_coefficient, 0, sizeof(sp_coefficient));
 	memset(aspd_base, 0, sizeof(aspd_base));
-#if REMODE
+#ifdef RENEWAL
 	memset(re_job_db, 0, sizeof(re_job_db));
 #endif
 	// job_db2.txt
@@ -10198,7 +10174,7 @@ int status_readdb(void)
 	sv_readdb(db_path, "job_db1.txt",   ',', 5+MAX_WEAPON_TYPE, 5+MAX_WEAPON_TYPE, -1,                            &status_readdb_job1);
 	sv_readdb(db_path, "job_db2.txt",   ',', 1,                 1+MAX_LEVEL,       -1,                            &status_readdb_job2);
 	sv_readdb(db_path, "size_fix.txt",  ',', MAX_WEAPON_TYPE,   MAX_WEAPON_TYPE,    ARRAYLENGTH(atkmods),         &status_readdb_sizefix);
-#if REMODE
+#ifdef RENEWAL
 	sv_readdb(db_path, DBPATH"job_db_extra.txt", ',', 1+RE_JOB_DB_MAX, 1+RE_JOB_DB_MAX, -1, &status_readdb_job_re);
 #endif
 	sv_readdb(db_path, DBPATH"refine_db.txt", ',', 4+MAX_REFINE, 4+MAX_REFINE, ARRAYLENGTH(refine_info), &status_readdb_refine);

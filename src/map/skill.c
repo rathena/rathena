@@ -217,7 +217,7 @@ int	skill_get_unit_bl_target( int id )    { skill_get (skill_db[id].unit_target&
 int	skill_get_unit_flag( int id )         { skill_get (skill_db[id].unit_flag, id, 1); }
 int	skill_get_unit_layout_type( int id ,int lv ){ skill_get (skill_db[id].unit_layout_type[lv-1], id, lv); }
 int	skill_get_cooldown( int id ,int lv )     { skill_get (skill_db[id].cooldown[lv-1], id, lv); }
-#if RECASTING
+#ifdef RENEWAL_CAST
 int	skill_get_fixed_cast( int id ,int lv ){ skill_get (skill_db[id].fixed_cast[lv-1], id, lv); }
 #endif
 int skill_tree_get_max(int id, int b_class)
@@ -377,7 +377,7 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, int skill
 	default:
 		if (skill_lv >= battle_config.max_heal_lv)
 			return battle_config.max_heal;
-	#if REMODE
+	#ifdef RENEWAL
 		/**
 		 * Renewal Heal Formula (from Doddler)
 		 * TODO: whats that( 1+ %Modifier / 100 ) ? currently using 'x1' (100/100) until found out
@@ -839,7 +839,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	/**
 	 * Storm Gust counter was dropped in renewal
 	 **/
-	#if REMODE
+	#ifdef RENEWAL
 		sc_start(bl,SC_FREEZE,65-(5*skilllv),skilllv,skill_get_time2(skillid,skilllv));
 	#else
 		 //Tharis pointed out that this is normal freeze chance with a base of 300%
@@ -6451,7 +6451,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	/**
 	 * Renewal dropped the 3/4 hp requirement
 	 **/
-	#if isOFF(REMODE)
+	#ifndef RENEWAL
 			|| tstatus-> hp > tstatus->max_hp*3/4
 	#endif
 				) {
@@ -9442,7 +9442,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 
 	switch( skillid ) {
 	case MG_SAFETYWALL:
-	#if REMODE
+	#ifdef RENEWAL
 		/**
 		 * According to data provided in RE, SW life is equal to 3 times caster's health
 		 **/
@@ -10111,7 +10111,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			{
 				int heal = skill_calc_heal(ss,bl,sg->skill_id,sg->skill_lv,true);
 				struct mob_data *md = BL_CAST(BL_MOB, bl);
-#if REMODE
+#ifdef RENEWAL
 				if( md && md->class_ == MOBID_EMPERIUM )
 					break;
 #endif
@@ -10186,7 +10186,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		/**
 		 * The storm gust counter was dropped in renewal
 		 **/
-		#if isOFF(REMODE)
+		#ifndef RENEWAL
 				case WZ_STORMGUST: //SG counter does not reset per stormgust. IE: One hit from a SG and two hits from another will freeze you.
 					if (tsc) 
 						tsc->sg_counter++; //SG hit counter.
@@ -10306,7 +10306,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		case UNT_APPLEIDUN: //Apple of Idun [Skotlex]
 		{
 			int heal;
-#if REMODE
+#ifdef RENEWAL
 			struct mob_data *md = BL_CAST(BL_MOB, bl);
 			if( md && md->class_ == MOBID_EMPERIUM )
 				break;
@@ -12141,7 +12141,7 @@ int skill_castfix (struct block_list *bl, int skill_id, int skill_lv)
  *------------------------------------------*/
 int skill_castfix_sc (struct block_list *bl, int time, int skill_id, int skill_lv) {
 	struct status_change *sc = status_get_sc(bl);
-#if RECASTING
+#ifdef RENEWAL_CAST
 	int fixed = skill_get_fixed_cast(skill_id, skill_lv);
 	if( !fixed ) {
 		fixed = skill_get_cast(skill_id, skill_lv);
@@ -12162,7 +12162,7 @@ int skill_castfix_sc (struct block_list *bl, int time, int skill_id, int skill_l
 		}
 		if (sc->data[SC_POEMBRAGI])
 			time -= time * sc->data[SC_POEMBRAGI]->val2 / 100;
-#if RECASTING
+#ifdef RENEWAL_CAST
 		if( sc->data[SC__LAZINESS] )
 			fixed += fixed * sc->data[SC__LAZINESS]->val2 / 100;
 		/**
@@ -12172,7 +12172,7 @@ int skill_castfix_sc (struct block_list *bl, int time, int skill_id, int skill_l
 			fixed -= fixed * sc->data[SC_SECRAMENT]->val2 / 100;
 #endif
 	}
-#if RECASTING
+#ifdef RENEWAL_CAST
 	/**
 	 * WL_RADIUS decreases 10/15/20% fixed cast time from warlock skills
 	 **/
@@ -15558,7 +15558,7 @@ static bool skill_parse_row_castdb(char* split[], int columns, int current)
 	skill_split_atoi(split[4],skill_db[i].upkeep_time);
 	skill_split_atoi(split[5],skill_db[i].upkeep_time2);
 	skill_split_atoi(split[6],skill_db[i].cooldown);
-#if RECASTING
+#ifdef RENEWAL_CAST
 	skill_split_atoi(split[7],skill_db[i].fixed_cast);
 #endif
 	return true;

@@ -1,5 +1,8 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 #ifndef _RRCONFIGS_CONST_
 #define _RRCONFIGS_CONST_
+
 /**
  * rAthena configuration file (http://rathena.org)
  * For detailed guidance on these check http://rathena.org/wiki/SRC/map/config/
@@ -12,13 +15,13 @@
 /**
  * "Constants"
  **/
-#if RECASTING
+#ifdef RENEWAL_CAST
 
-	#if REMODE == 0
-		#error RECASTING requires REMODE enabled
+	#ifndef RENEWAL
+		#error RENEWAL_CAST requires RENEWAL enabled
 	#endif
 
-	#define CONST_CASTRATE_SCALE RECASTING_VMIN
+	#define CONST_CASTRATE_SCALE RENEWAL_CAST_VMIN
 	/**
 	 * Cast Rate Formula: (DEX x 2)+INT
 	 **/
@@ -30,8 +33,6 @@
 	 **/
 	#define CONST_CASTRATE_CALC (status_get_dex(bl))
 #endif
-
-#define isOFF(def) (def == 0)
 
 /**
  * "Sane Checks" to save you from compiling with cool bugs 
@@ -46,7 +47,7 @@
 /**
  * Path within the /db folder to (non-)renewal specific db files
  **/
-#if REMODE
+#ifdef RENEWAL
 	#define DBPATH "re/"
 #else
 	#define DBPATH "pre-re/"
@@ -55,7 +56,7 @@
 /**
  * DefType
  **/
-#if REMODE
+#ifdef RENEWAL
 	typedef short defType;
 	#define DEFTYPE_MIN SHRT_MIN
 	#define DEFTYPE_MAX SHRT_MAX

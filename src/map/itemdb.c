@@ -799,7 +799,7 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 			id->value_buy, id->value_sell, nameid, id->jname);
 
 	id->weight = atoi(str[6]);
-#if REMODE
+#ifdef RENEWAL
 	itemdb_re_split_atoi(str[7],&id->atk,&id->matk);
 #else
 	id->atk = atoi(str[7]);
@@ -985,7 +985,7 @@ static int itemdb_readdb(void)
  *======================================*/
 static int itemdb_read_sqldb(void)
 {
-#if REMODE
+#ifdef RENEWAL
 	const char* item_db_name[] = { item_db_db, item_db_re_db, item_db2_db };
 #else
 	const char* item_db_name[] = { item_db_db, item_db2_db };

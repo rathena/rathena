@@ -106,7 +106,7 @@ struct item_data {
 	int elv;
 	int wlv;
 	int view_id;
-#if REMODE
+#ifdef RENEWAL
 	int matk;//[RRInd] -- used in RE for matk
 #endif
 

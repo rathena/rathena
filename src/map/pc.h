@@ -653,7 +653,7 @@ enum e_pc_permission {
 )
 
 // clientside atk display macros (values to the left/right of the "+")
-#if REMODE
+#ifdef RENEWAL
 #define pc_leftside_atk(sd) ((sd)->battle_status.batk)
 #define pc_rightside_atk(sd) ((sd)->battle_status.rhw.atk + (sd)->battle_status.lhw.atk + (sd)->battle_status.rhw.atk2 + (sd)->battle_status.lhw.atk2)
 #else

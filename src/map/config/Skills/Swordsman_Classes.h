@@ -1,17 +1,16 @@
-#ifndef _RRCONFIGS_SKILLS_SWORDS_
-#define _RRCONFIGS_SKILLS_SWORDS_
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+#ifndef _CONFIG_SKILLS_SWORDS_H_
+#define _CONFIG_SKILLS_SWORDS_H_
 /**
  * rAthena configuration file (http://rathena.org)
  * For detailed guidance on these check http://rathena.org/wiki/SRC/map/config/
  **/
 
-/**
- * (Rune Knight) the maximum rune items a character may have of the same type
- * Default: 20
- **/
+/// rune knight
+///
+/// maximum number of runes that a rune knight character can carry at any given time
+/// default: 20
 #define MAX_RUNE 20
 
-/**
- * No settings past this point
- **/
-#endif
+#endif // _CONFIG_SKILLS_SWORDS_H_
