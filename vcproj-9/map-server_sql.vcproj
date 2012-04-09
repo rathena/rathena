@@ -496,11 +496,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\map\config\Data\Const.h"
+				RelativePath="..\src\map\config\const.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\map\config\Core.h"
+				RelativePath="..\src\map\config\core.h"
 				>
 			</File>
 			<File
@@ -520,7 +520,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\map\config\Skills\General.h"
+				RelativePath="..\src\map\config\classes\general.h"
 				>
 			</File>
 			<File
@@ -569,10 +569,6 @@
 			</File>
 			<File
 				RelativePath="..\src\map\log.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\config\Skills\Mage_Classes.h"
 				>
 			</File>
 			<File
@@ -676,7 +672,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\map\config\Renewal.h"
+				RelativePath="..\src\map\config\renewal.h"
 				>
 			</File>
 			<File
@@ -696,7 +692,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\map\config\Secure.h"
+				RelativePath="..\src\map\config\secure.h"
 				>
 			</File>
 			<File
@@ -724,7 +720,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\map\config\Skills\Swordsman_Classes.h"
+				RelativePath="..\src\map\config\classes\swordsman.h"
 				>
 			</File>
 			<File

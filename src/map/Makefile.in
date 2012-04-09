@@ -40,8 +40,8 @@ MAP_H = map.h chrif.h clif.h pc.h status.h npc.h \
 	intif.h trade.h party.h vending.h guild.h pet.h \
 	log.h mail.h date.h unit.h homunculus.h mercenary.h quest.h instance.h mapreg.h \
 	buyingstore.h searchstore.h duel.h pc_groups.h \
-	config/Core.h config/Renewal.h config/Secure.h config/Data/Const.h \
-	config/Skills/General.h config/Skills/Swordsman_Classes.h
+	config/core.h config/renewal.h config/secure.h config/const.h \
+	config/classes/general.h config/classes/swordsman.h
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)

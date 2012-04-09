@@ -28,12 +28,13 @@
 /**
  * No settings past this point
  **/
-#include "./Renewal.h"
-#include "./Secure.h"
-#include "./Skills/General.h"
+#include "./renewal.h"
+#include "./secure.h"
+#include "./classes/general.h"
+
 /**
  * Constants come last; so they process anything that could've been modified in early includes
  **/
-#include "./Data/Const.h"
+#include "./const.h"
 
 #endif // _CONFIG_CORE_H_

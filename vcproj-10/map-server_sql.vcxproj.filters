@@ -342,13 +342,12 @@
     <ClInclude Include="..\src\common\utils.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\map\config\Core.h" />
-    <ClInclude Include="..\src\map\config\Renewal.h" />
-    <ClInclude Include="..\src\map\config\Secure.h" />
-    <ClInclude Include="..\src\map\config\Data\Const.h" />
-    <ClInclude Include="..\src\map\config\Skills\General.h" />
-    <ClInclude Include="..\src\map\config\Skills\Mage_Classes.h" />
-    <ClInclude Include="..\src\map\config\Skills\Swordsman_Classes.h" />
+    <ClInclude Include="..\src\map\config\const.h" />
+    <ClInclude Include="..\src\map\config\core.h" />
+    <ClInclude Include="..\src\map\config\renewal.h" />
+    <ClInclude Include="..\src\map\config\secure.h" />
+    <ClInclude Include="..\src\map\config\classes\general.h" />
+    <ClInclude Include="..\src\map\config\classes\swordsman.h" />
     <ClInclude Include="..\src\common\conf.h">
       <Filter>common</Filter>
     </ClInclude>
