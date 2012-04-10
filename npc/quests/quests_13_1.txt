@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -37,6 +37,7 @@
 //= 1.8 Added 13.2 Additions to Report from the New World NPCs
 //= 1.9 Upped success rates for Report from the New World drops.
 //= 2.0 Added Mid Camp Warper, translated from the Official [Slim]
+//= 2.1 Fixed some typos [tr0n]
 //============================================================ 
 
 // Onward to the New World
@@ -11077,7 +11078,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		mes "I don't know what you're talking about. Boss, do you know this adventurer?";
 		next;
 		mes "[Hibba Agip]";
-		mes "Stop calling me bos! Call me Commander, alright? Hey Abidal, is this adventurer really famous?";
+		mes "Stop calling me boss! Call me Commander, alright? Hey Abidal, is this adventurer really famous?";
 		next;
 		mes "[Staff Officer Abidal]";
 		mes "Commander, haven't you read the report? The adventurer who helped the expedition solve the XX case was" + strcharinfo(0)+ ".";
@@ -11092,7 +11093,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		mes "Hey Abidal, he's here to see me, not you. Remember?";
 		next;
 		mes "[Staff Officer Abidal]";
-		mes "Commander, please let me talk. " + strcharinfo(0) + "I'd like to tal to you privately. Can you come back later?";
+		mes "Commander, please let me talk. " + strcharinfo(0) + "I'd like to talk to you privately. Can you come back later?";
 		next;
 		mes "[Hibba Agip]";
 		mes "Why do you want to talk privately?";
@@ -11140,7 +11141,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		mes "Don't you think you're exaggerating?";
 		next;
 		mes "[Hibba Agip]";
-		mes "Hmm... ANyaywas, this is not a difficult mission. All you have to do is deliver this expedition report to officials of three countries of Rune Midgard. Simple right?";
+		mes "Hmm... Anyways, this is not a difficult mission. All you have to do is deliver this expedition report to officials of three countries of Rune Midgard. Simple right?";
 		next;
 		getitem 11012,1; //Expedition_Report
 		set ep13_1_edq,3;
@@ -11218,10 +11219,10 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		mes "Hey, you must find the report. If you bring as may pages of the report as you can, then Abidal will use them to fill missing parts.";
 		next;
 		mes "[Hibba Agip]";
-		mes "Some of them might have be consumed by monsters, or have found their way to the sea, but I don't care. You'll find the at all costs, and that's my order.";
+		mes "Some of them might have be consumed by monsters, or have found their way to the sea, but I don't care. You'll find them at all costs, and that's my order.";
 		next;
 		mes "[Hibba Agip]";
-		mes "I hope you'll do your best. You need to finish what you've started. We'll do our best to help ypu. Am I right, guys? Abidal? Igrid?";
+		mes "I hope you'll do your best. You need to finish what you've started. We'll do our best to help you. Am I right, guys? Abidal? Igrid?";
 		next;
 		mes "[Staff Officer Abidal]";
 		mes "Of Course, I'm happy to...";
@@ -11305,10 +11306,10 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		mes "Hey, you must find the report. If you bring as may pages of the report as you can, then Abidal will use them to fill missing parts.";
 		next;
 		mes "[Hibba Agip]";
-		mes "Some of them might have be consumed by monsters, or have found their way to the sea, but I don't care. You'll find the at all costs, and that's my order.";
+		mes "Some of them might have be consumed by monsters, or have found their way to the sea, but I don't care. You'll find them at all costs, and that's my order.";
 		next;
 		mes "[Hibba Agip]";
-		mes "I hope you'll do your best. You need to finish what you've started. We'll do our best to help ypu. Am I right, guys? Abidal? Igrid?";
+		mes "I hope you'll do your best. You need to finish what you've started. We'll do our best to help you. Am I right, guys? Abidal? Igrid?";
 		next;
 		mes "[Staff Officer Abidal]";
 		mes "Of Course, I'm happy to...";
@@ -11343,13 +11344,13 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		mes "Talk to my staff officer until you're finisehd finding the pages of the lost report. Right now, I'm swarmed with work.";
 		next;
 		mes "[Hibba Agip]";
-		mes "I'm sure you'll easily find thos eif you keep your eyes open. I must warn you about the monsters around this area though. Who knows? They might love the taste of paper.";
+		mes "I'm sure you'll easily find those if you keep your eyes open. I must warn you about the monsters around this area though. Who knows? They might love the taste of paper.";
 		cutin "ep13_captin_edq",255;
 		close;
 	}
 	else if ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
 		mes "[Hibba Agip]";
-		mes "How have you been doing? I've heard Igrid has personaly send out his soldiers to support you guys.";
+		mes "How have you been doing? I've heard Igrid has personally send out his soldiers to support you guys.";
 		mes "Haven't you met them?";
 		next;
 		mes "[Hibba Agip]";
@@ -11363,7 +11364,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		mes "So, the report has been restored successfully?";
 		next;
 		mes "[Hibba Agip]";
-		mes "This was finished more quickly than I though. Let me see...";
+		mes "This was finished more quickly than I thought. Let me see...";
 		next;
 		delitem 11012,1; //Expedition_Report
 		set ep13_1_edq,9;
@@ -11606,7 +11607,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 			mes "We should map out a strategy. There is a method that uses Laphine and Sapha's together.";
 			next;
 			mes "[Staff Officer Abidal]";
-			mes "We send this guy to one of the tribes and ask for cooperation in our investgation.";
+			mes "We send this guy to one of the tribes and ask for cooperation in our investigation.";
 			next;
 			mes "[Hibba Agip]";
 			mes "Will they help us? They have already said threatening words...";
@@ -11630,7 +11631,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 			mes "That's called that Kuhotanrangjigea from east. I didn't make that by myself.";
 			next;
 			mes "[Hibba Agip]";
-			mes "Whatever.. Hey, you there... your name is " + name + " right? Do you know what to do?";
+			mes "Whatever.. Hey, you there... your name is " + strcharinfo(0) + " right? Do you know what to do?";
 			next;
 			mes "[Hibba Agip]";
 			mes "Go to one of the tribes and ask for help officially. I'll send someone to the other tribe.";
@@ -11748,7 +11749,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 	}
 	else if ((ins_nyd == 92) || (ins_nyd == 102) || (ins_nyd == 112)) {
 		mes "[Hibba Agip]";
-		mes "How's the activity Sapha? They have a stern character.";
+		mes "How's the activity in Sapha? They have a stern character.";
 		next;
 		mes "[Hibba Agip]";
 		mes "I'm not cut out for matching with them...ew...";
