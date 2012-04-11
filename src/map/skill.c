@@ -10465,26 +10465,25 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		case UNT_EPICLESIS:
 			if( bl->type == BL_PC && !battle_check_undead(tstatus->race, tstatus->def_ele) && tstatus->race != RC_DEMON )
 			{
-				int hp, sp;
-				switch( sg->skill_lv )
-				{
-					case 1: case 2: hp = 3; sp = 2; break;
-					case 3: case 4: hp = 4; sp = 3; break;
-					case 5: default: hp = 5; sp = 4; break;
+				if( ++sg->val2 % 3 == 0 ) {
+					int hp, sp;
+					switch( sg->skill_lv )
+					{
+						case 1: case 2: hp = 3; sp = 2; break;
+						case 3: case 4: hp = 4; sp = 3; break;
+						case 5: default: hp = 5; sp = 4; break;
+					}
+					hp = tstatus->max_hp * hp / 100;
+					sp = tstatus->max_sp * sp / 100;
+					status_heal(bl, hp, sp, 0);
+					if( tstatus->hp < tstatus->max_hp )
+						clif_skill_nodamage(&src->bl, bl, AL_HEAL, hp, 1);
+					if( tstatus->sp < tstatus->max_sp )
+						clif_skill_nodamage(&src->bl, bl, MG_SRECOVERY, sp, 1);
+					sc_start(bl, type, 100, sg->skill_lv, (sg->interval * 3) + 100);
 				}
-				hp = tstatus->max_hp * hp / 100;
-				sp = tstatus->max_sp * sp / 100;
-				status_heal(bl, hp, sp, 0);
-				if( tstatus->hp < tstatus->max_hp )
-					clif_skill_nodamage(&src->bl, bl, AL_HEAL, hp, 1);
-				if( tstatus->sp < tstatus->max_sp )
-					clif_skill_nodamage(&src->bl, bl, MG_SRECOVERY, sp, 1);
-				sc_start(bl, type, 100, sg->skill_lv, sg->interval + 100);
-				sg->val2++;
 				// Reveal hidden players every 5 seconds.
-				if( sg->val2 >= 5 )
-				{
-					sg->val2 = 0;
+				if( sg->val2 % 5 == 0 ) {
 					// TODO: check if other hidden status can be removed.
 					status_change_end(bl,SC_HIDING,-1);
 					status_change_end(bl,SC_CLOAKING,-1);
