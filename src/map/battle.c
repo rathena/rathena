@@ -333,7 +333,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 
 	if( !damage )
 		return 0;
-	if( mob_ksprotected(src, bl) )
+	if( battle_config.ksprotection && mob_ksprotected(src, bl) )
 		return 0;
 
 	if (bl->type == BL_PC) {
