@@ -104,22 +104,21 @@ static uint8_t grf_substitution(uint8_t in)
 	return out;
 }
 
-
-static void grf_shuffle_enc(BIT64* src)
-{
-	BIT64 out;
-
-	out.b[0] = src->b[3];
-	out.b[1] = src->b[4];
-	out.b[2] = src->b[5];
-	out.b[3] = src->b[0];
-	out.b[4] = src->b[1];
-	out.b[5] = src->b[6];
-	out.b[6] = src->b[2];
-	out.b[7] = grf_substitution(src->b[7]);
-
-	*src = out;
-}
+/* this is not used anywhere, is it ok to delete?  */
+//static void grf_shuffle_enc(BIT64* src) {
+//	BIT64 out;
+//
+//	out.b[0] = src->b[3];
+//	out.b[1] = src->b[4];
+//	out.b[2] = src->b[5];
+//	out.b[3] = src->b[0];
+//	out.b[4] = src->b[1];
+//	out.b[5] = src->b[6];
+//	out.b[6] = src->b[2];
+//	out.b[7] = grf_substitution(src->b[7]);
+//
+//	*src = out;
+//}
 
 
 static void grf_shuffle_dec(BIT64* src)
