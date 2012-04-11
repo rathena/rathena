@@ -1658,7 +1658,9 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
 			 sd->sc.data[i=SC_ASPDPOTION1] ||
 			 sd->sc.data[i=SC_ASPDPOTION0] )
 			amotion -= sd->sc.data[i]->val1*10;
-		if( sd->sc.data[SC_SPEARQUICKEN] )
+		if( sd->sc.data[SC_BERSERK] )//berserk doesn't stack with the quickens.
+			amotion -= 150;
+		else if( sd->sc.data[SC_SPEARQUICKEN] || sd->sc.data[SC_TWOHANDQUICKEN] )
 			amotion -= 70;
 	}
 #endif
@@ -4696,11 +4698,11 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		int max = 0;
 		if(sc->data[SC_STAR_COMFORT])
 			max = sc->data[SC_STAR_COMFORT]->val2;
-
+#ifndef RENEWAL
 		if(sc->data[SC_TWOHANDQUICKEN] &&
 			max < sc->data[SC_TWOHANDQUICKEN]->val2)
 			max = sc->data[SC_TWOHANDQUICKEN]->val2;
-
+#endif
 		if(sc->data[SC_ONEHAND] &&
 			max < sc->data[SC_ONEHAND]->val2)
 			max = sc->data[SC_ONEHAND]->val2;
@@ -4753,9 +4755,12 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		aspd_rate -= max;
 
 	  	//These stack with the rest of bonuses.
+#ifndef RENEWAL
 		if(sc->data[SC_BERSERK])
 			aspd_rate -= 300;
-		else if(sc->data[SC_MADNESSCANCEL])
+		else
+#endif
+		if(sc->data[SC_MADNESSCANCEL])
 			aspd_rate -= 200;
 	}
 
