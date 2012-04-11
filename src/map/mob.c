@@ -915,7 +915,8 @@ int mob_spawn (struct mob_data *md)
 		md->sc.option = md->db->option;
 
 	map_addblock(&md->bl);
-	clif_spawn(&md->bl);
+	if( map[md->bl.m].users )
+		clif_spawn(&md->bl);
 	skill_unit_move(&md->bl,tick,1);
 	mobskill_use(md, tick, MSC_SPAWN);
 	return 0;
