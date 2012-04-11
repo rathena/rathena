@@ -926,7 +926,7 @@ int party_renewal_drop_mod(int diff) {
 	return 50;
 }
 #endif
-#ifdef RENEWAL
+#ifdef RENEWAL_EXP
 /**
  * Renewal Experience Earning Mode
  **/
@@ -961,7 +961,7 @@ int party_exp_share(struct party_data* p, struct block_list* src, unsigned int b
 {
 	struct map_session_data* sd[MAX_PARTY];
 	unsigned int i, c;
-#ifdef RENEWAL
+#ifdef RENEWAL_EXP
 	int src_lvl = status_get_lv(src);
 #endif
 	nullpo_ret(p);
@@ -991,7 +991,7 @@ int party_exp_share(struct party_data* p, struct block_list* src, unsigned int b
 	}
 
 	for (i = 0; i < c; i++) {
-#ifdef RENEWAL
+#ifdef RENEWAL_EXP
 		party_renewal_exp_mod(&base_exp,&job_exp,sd[i]->status.base_level,src_lvl);
 #endif
 		pc_gainexp(sd[i], src, base_exp, job_exp, false);

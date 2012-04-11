@@ -36,6 +36,13 @@
 /// based on the http://irowiki.org/wiki/Drop_System#Level_Factor table
 #define RENEWAL_DROP
 
+/// renewal exp rate algorithms
+/// (disable by commenting the line)
+///
+/// leave this line to enable renewal item exp rate algorithms
+/// while enabled a special modified based on the difference between the player and monster level is applied
+#define RENEWAL_EXP
+
 /// renewal cast time variable cast requirement
 ///
 /// this is the value required for no variable cast-time with stats.

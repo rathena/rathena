@@ -2188,7 +2188,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			if(base_exp || job_exp)
 			{
 				if( md->dmglog[i].flag != MDLF_PET || battle_config.pet_attack_exp_to_master ) {
-#ifdef RENEWAL
+#ifdef RENEWAL_EXP
 				if(!md->db->mexp)
 					party_renewal_exp_mod(&base_exp,&job_exp,tmpsd[i]->status.base_level,md->level);
 #endif
