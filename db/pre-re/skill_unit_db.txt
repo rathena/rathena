@@ -105,12 +105,12 @@
 
 2238,0xd8,    ,  0, 1,1000,enemy, 0x006	//RA_ELECTRICSHOCKER
 2239,0xd9,    ,  0, 1,1000,enemy, 0x006	//RA_CLUSTERBOMB
-2249,0xd2,    ,  0, 1,1000,enemy, 0x026	//RA_MAGENTATRAP
-2250,0xd3,    ,  0, 1,1000,enemy, 0x026	//RA_COBALTTRAP
-2251,0xd4,    ,  0, 1,1000,enemy, 0x026	//RA_MAIZETRAP
-2252,0xd5,    ,  0, 1,1000,enemy, 0x026	//RA_VERDURETRAP
-2253,0xd6,    ,  0, 1,1000,enemy, 0x006	//RA_FIRINGTRAP
-2254,0xd7,    ,  0, 1,1000,enemy, 0x006	//RA_ICEBOUNDTRAP
+2249,0xd2,    ,  0, 1,1000,enemy, 0x022	//RA_MAGENTATRAP
+2250,0xd3,    ,  0, 1,1000,enemy, 0x022	//RA_COBALTTRAP
+2251,0xd4,    ,  0, 1,1000,enemy, 0x022	//RA_MAIZETRAP
+2252,0xd5,    ,  0, 1,1000,enemy, 0x022	//RA_VERDURETRAP
+2253,0xd6,    ,  0, 1,1000,enemy, 0x002	//RA_FIRINGTRAP
+2254,0xd7,    ,  0, 1,1000,enemy, 0x002	//RA_ICEBOUNDTRAP
 
 2273,0xe2,    ,  1, 0, 500,friend,0x000	//NC_NEUTRALBARRIER
 2274,0xe3,    ,  1, 0, 500,all,   0x000	//NC_STEALTHFIELD
