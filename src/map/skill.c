@@ -1560,10 +1560,6 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, int s
 		}
 		sd->autospell3[i].lock = false;
 		sd->state.autocast = 0;
-		/**
-		 * bugreport:5324 trigger recursion
-		 **/
-		skill_onskillusage(sd, bl, skill, tick);
 	}
 
 	if( sd && sd->autobonus3[0].rate )
@@ -2566,6 +2562,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 				status_zap(bl, 0, damage*100/(100*(110-pc_checkskill(sd,WM_LESSON)*10)));
 				break;
 		}
+		if( sd )
+			skill_onskillusage(sd, bl, skillid, tick);
 	}
 
 	if (!(flag&2) &&
@@ -4275,8 +4273,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			battle_consume_ammo(sd, skillid, skilllv);
 		}
 
-		// perform auto-cast routines and skill requirement consumption
-		skill_onskillusage(sd, bl, skillid, tick);
+		// perform skill requirement consumption
 		skill_consume_requirement(sd,skillid,skilllv,2);
 	}
 	
@@ -8103,8 +8100,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			battle_consume_ammo(sd, skillid, skilllv);
 		}
 
-		// perform auto-cast routines and skill requirement consumption
-		skill_onskillusage(sd, bl, skillid, tick);
+		// perform skill requirement consumption
 		skill_consume_requirement(sd,skillid,skilllv,2);
 	}
 
@@ -9150,8 +9146,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 			battle_consume_ammo(sd, skillid, skilllv);
 		}
 
-		// perform auto-cast routines and skill requirement consumption
-		skill_onskillusage(sd, NULL, skillid, tick);
+		// perform skill requirement consumption
 		skill_consume_requirement(sd,skillid,skilllv,2);
 	}
 
