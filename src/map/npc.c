@@ -2354,18 +2354,14 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 	strdb_put(npcname_db, nd->exname, nd);
 
 	//-----------------------------------------
-	// イベント用ラベルデータのエクスポート
+	// Loop through labels to export them as necessary
 	for (i = 0; i < nd->u.scr.label_list_num; i++) {
 		if (npc_event_export(nd, i)) {
 			ShowWarning("npc_parse_script : duplicate event %s::%s (%s)\n",
 			             nd->exname, nd->u.scr.label_list[i].name, filepath);
 		}
-	}
-
-	//-----------------------------------------
-	// ラベルデータからタイマーイベント取り込み
-	for (i = 0; i < nd->u.scr.label_list_num; i++)
 		npc_timerevent_export(nd, i);
+	}
 
 	nd->u.scr.timerid = INVALID_TIMER;
 
@@ -2506,20 +2502,15 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 	if( type != SCRIPT )
 		return end;
 
-	//Handle labels
 	//-----------------------------------------
-	// イベント用ラベルデータのエクスポート
+	// Loop through labels to export them as necessary
 	for (i = 0; i < nd->u.scr.label_list_num; i++) {
 		if (npc_event_export(nd, i)) {
 			ShowWarning("npc_parse_duplicate : duplicate event %s::%s (%s)\n",
 			             nd->exname, nd->u.scr.label_list[i].name, filepath);
 		}
-	}
-
-	//-----------------------------------------
-	// ラベルデータからタイマーイベント取り込み
-	for (i = 0; i < nd->u.scr.label_list_num; i++)
 		npc_timerevent_export(nd, i);
+	}
 
 	nd->u.scr.timerid = INVALID_TIMER;
 
