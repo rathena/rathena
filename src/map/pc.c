@@ -456,13 +456,14 @@ void pc_inventory_rentals(struct map_session_data *sd)
 		if( sd->status.inventory[i].expire_time == 0 )
 			continue;
 
-		if( sd->status.inventory[i].expire_time <= time(NULL) )
-		{
+		if( sd->status.inventory[i].expire_time <= time(NULL) ) {
+			if( sd->status.inventory[i].nameid == ITEMID_REINS_OF_MOUNT
+					&& sd->sc.option&OPTION_MOUNTING ) {
+				pc_setoption(sd, sd->sc.option&~OPTION_MOUNTING);
+			}
 			clif_rental_expired(sd->fd, i, sd->status.inventory[i].nameid);
 			pc_delitem(sd, i, sd->status.inventory[i].amount, 1, 0, LOG_TYPE_OTHER);
-		}
-		else
-		{
+		} else {
 			expire_tick = (unsigned int)(sd->status.inventory[i].expire_time - time(NULL)) * 1000;
 			clif_rental_time(sd->fd, sd->status.inventory[i].nameid, (int)(expire_tick / 1000));
 			next_tick = min(expire_tick, next_tick);

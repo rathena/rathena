@@ -17,8 +17,7 @@
 
 #define MAX_SEARCH	5  //Designed for search functions, species max number of matches to display.
 
-enum item_itemid
-{
+enum item_itemid {
 	ITEMID_EMPERIUM = 714,
 	ITEMID_YELLOW_GEMSTONE = 715,
 	ITEMID_RED_GEMSTONE = 716,
@@ -27,14 +26,9 @@ enum item_itemid
 	ITEMID_STONE = 7049,
 	ITEMID_SKULL_ = 7420,
 	ITEMID_TOKEN_OF_SIEGFRIED = 7621,
-/**
- * Ranger
- **/
 	ITEMID_TRAP_ALLOY = 7940,
-/**
- * Arch Bishop
- **/
 	ITEMID_ANCILLA = 12333,
+	ITEMID_REINS_OF_MOUNT = 12622,
 };
 
 /**
