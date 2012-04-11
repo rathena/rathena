@@ -4352,11 +4352,16 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 	if( (s_bl = battle_get_master(src)) == NULL )
 		s_bl = src;
 
-	switch( target->type )
-	{ // Checks on actual target
-		case BL_PC:
-			if (((TBL_PC*)target)->invincible_timer != INVALID_TIMER || pc_isinvisible((TBL_PC*)target))
-				return -1; //Cannot be targeted yet.
+	switch( target->type ) { // Checks on actual target
+			case BL_PC: {
+				struct status_change* sc = status_get_sc(src);
+				if (((TBL_PC*)target)->invincible_timer != INVALID_TIMER || pc_isinvisible((TBL_PC*)target))
+					return -1; //Cannot be targeted yet.
+				if( sc && sc->count ) {
+					if( sc->data[SC_VOICEOFSIREN] && sc->data[SC_VOICEOFSIREN]->val2 == target->id )
+						return -1;
+				}
+			}
 			break;
 		case BL_MOB:
 			if((((TBL_MOB*)target)->special_state.ai == 2 || //Marine Spheres
