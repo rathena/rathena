@@ -225,7 +225,7 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 
 	if(i > 0) {
 		ud->walktimer = add_timer(tick+i,unit_walktoxy_timer,id,i);
-		if( md )
+		if( md && DIFF_TICK(tick,md->dmgtick) < 3000 )//not required not damaged recently
 			clif_move(ud);
 	} else if(ud->state.running) {
 		//Keep trying to run.

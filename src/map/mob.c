@@ -899,6 +899,7 @@ int mob_spawn (struct mob_data *md)
 	md->state.skillstate = MSS_IDLE;
 	md->next_walktime = tick+rnd()%5000+1000;
 	md->last_linktime = tick;
+	md->dmgtick = tick - 5000;
 	md->last_pcneartime = 0;
 
 	for (i = 0, c = tick-MOB_MAX_DELAY; i < MAX_MOBSKILL; i++)
@@ -1950,12 +1951,14 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 				md->state.skillstate = MSS_RUSH;
 		}
 		//Log damage
-		if (src) mob_log_damage(md, src, damage);
+		if (src)
+			mob_log_damage(md, src, damage);
+		md->dmgtick = gettick();
 	}
 
 	if (battle_config.show_mob_info&3)
 		clif_charnameack (0, &md->bl);
-	
+
 	if (!src)
 		return;
 	
