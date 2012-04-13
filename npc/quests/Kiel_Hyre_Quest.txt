@@ -4629,8 +4629,8 @@ kh_mansion,22,28,4	script	Kiel Hyre#kh	903,{
 		next;
 		mes "[Kiel Hyre]";
 		mes "When you find him, I want";
-		mes "you to take out Allysia's";
-		mes "ring out of his heart. If you";
+		mes "you to take Allysia's ring";
+		mes "out of his heart. If you";
 		mes "remove it, that should stop";
 		mes "him from going berserk.";
 		next;
