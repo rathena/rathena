@@ -66,6 +66,12 @@
 	#define DEFTYPE_MAX CHAR_MAX
 #endif
 
+
+#ifdef __64BIT__
+	#define __64BPRTSIZE(y) (long)y
+#else
+	#define __64BPRTSIZE(y) y
+#endif
 /**
  * End of File
  **/
