@@ -1402,9 +1402,9 @@ const char* parse_syntax(const char* p)
 					set_label(l,script_pos,p);
 				}
 				// check duplication of case label [Rayce]
-				if(linkdb_search(&syntax.curly[pos].case_label, (void*)v) != NULL)
+				if(linkdb_search(&syntax.curly[pos].case_label, (void*)__64BPRTSIZE(v)) != NULL)
 					disp_error_message("parse_syntax: dup 'case'",p);
-				linkdb_insert(&syntax.curly[pos].case_label, (void*)v, (void*)1);
+				linkdb_insert(&syntax.curly[pos].case_label, (void*)__64BPRTSIZE(v), (void*)1);
 
 				sprintf(label,"set $@__SW%x_VAL,0;",syntax.curly[pos].index);
 				syntax.curly[syntax.curly_count++].type = TYPE_NULL;
@@ -2337,7 +2337,7 @@ void get_val(struct script_state* st, struct script_data* data)
 					data->ref      ? data->ref:
 					name[1] == '@' ? st->stack->var_function:// instance/scope variable
 					                 &st->script->script_vars;// npc variable
-				data->u.str = (char*)linkdb_search(n, (void*)reference_getuid(data));
+				data->u.str = (char*)linkdb_search(n, (void*)__64BPRTSIZE(reference_getuid(data)));
 			}
 			break;
 		case '\'':
@@ -2348,7 +2348,7 @@ void get_val(struct script_state* st, struct script_data* data)
 				} else {
 					ShowWarning("script:get_val: cannot access instance variable '%s', defaulting to 0\n", name);
 				}
-				data->u.str = (char*)linkdb_search(n, (void*)reference_getuid(data));
+				data->u.str = (char*)linkdb_search(n, (void*)__64BPRTSIZE(reference_getuid(data)));
 			}
 			break;
 		default:
@@ -2402,7 +2402,7 @@ void get_val(struct script_state* st, struct script_data* data)
 					data->ref      ? data->ref:
 					name[1] == '@' ? st->stack->var_function:// instance/scope variable
 					                 &st->script->script_vars;// npc variable
-				data->u.num = (int)linkdb_search(n, (void*)reference_getuid(data));
+				data->u.num = (int)__64BPRTSIZE(linkdb_search(n, (void*)__64BPRTSIZE(reference_getuid(data))));
 			}
 			break;
 		case '\'':
@@ -2410,7 +2410,7 @@ void get_val(struct script_state* st, struct script_data* data)
 				struct linkdb_node** n = NULL;
 				if( st->instance_id )
 					n = &instance[st->instance_id].ivar;
-				data->u.num = (int)linkdb_search(n, (void*)reference_getuid(data));
+				data->u.num = (int)__64BPRTSIZE(linkdb_search(n, (void*)__64BPRTSIZE(reference_getuid(data))));
 			}
 			break;
 		default:
@@ -2433,7 +2433,7 @@ void* get_val2(struct script_state* st, int uid, struct linkdb_node** ref)
 	push_val2(st->stack, C_NAME, uid, ref);
 	data = script_getdatatop(st, -1);
 	get_val(st, data);
-	return (data->type == C_INT ? (void*)data->u.num : (void*)data->u.str);
+	return (data->type == C_INT ? (void*)__64BPRTSIZE(data->u.num) : (void*)__64BPRTSIZE(data->u.str));
 }
 
 /*==========================================
@@ -2460,9 +2460,9 @@ static int set_reg(struct script_state* st, TBL_PC* sd, int num, const char* nam
 			char* p;
 			struct linkdb_node** n;
 			n = (ref) ? ref : (name[1] == '@') ? st->stack->var_function : &st->script->script_vars;
-			p = (char*)linkdb_erase(n, (void*)num);
+			p = (char*)linkdb_erase(n, (void*)__64BPRTSIZE(num));
 			if (p) aFree(p);
-			if (str[0]) linkdb_insert(n, (void*)num, aStrdup(str));
+			if (str[0]) linkdb_insert(n, (void*)__64BPRTSIZE(num), aStrdup(str));
 			}
 			return 1;
 		case '\'': {
@@ -2471,9 +2471,9 @@ static int set_reg(struct script_state* st, TBL_PC* sd, int num, const char* nam
 			if( st->instance_id )
 				n = &instance[st->instance_id].svar;
 
-			p = (char*)linkdb_erase(n, (void*)num);
+			p = (char*)linkdb_erase(n, (void*)__64BPRTSIZE(num));
 			if (p) aFree(p);
-			if( str[0] ) linkdb_insert(n, (void*)num, aStrdup(str));
+			if( str[0] ) linkdb_insert(n, (void*)__64BPRTSIZE(num), aStrdup(str));
 			}
 			return 1;
 		default:
@@ -2482,7 +2482,7 @@ static int set_reg(struct script_state* st, TBL_PC* sd, int num, const char* nam
 	}
 	else
 	{// integer variable
-		int val = (int)value;
+		int val = (int)__64BPRTSIZE(value);
 		if(str_data[num&0x00ffffff].type == C_PARAM)
 		{
 			if( pc_setparam(sd, str_data[num&0x00ffffff].val, val) == 0 )
@@ -2511,9 +2511,9 @@ static int set_reg(struct script_state* st, TBL_PC* sd, int num, const char* nam
 			struct linkdb_node** n;
 			n = (ref) ? ref : (name[1] == '@') ? st->stack->var_function : &st->script->script_vars;
 			if (val == 0)
-				linkdb_erase(n, (void*)num);
+				linkdb_erase(n, (void*)__64BPRTSIZE(num));
 			else 
-				linkdb_replace(n, (void*)num, (void*)val);
+				linkdb_replace(n, (void*)__64BPRTSIZE(num), (void*)__64BPRTSIZE(val));
 			}
 			return 1;
 		case '\'':
@@ -2523,9 +2523,9 @@ static int set_reg(struct script_state* st, TBL_PC* sd, int num, const char* nam
 					n = &instance[st->instance_id].ivar;
 
 				if( val == 0 )
-					linkdb_erase(n, (void*)num);
+					linkdb_erase(n, (void*)__64BPRTSIZE(num));
 				else
-					linkdb_replace(n, (void*)num, (void*)val);
+					linkdb_replace(n, (void*)__64BPRTSIZE(num), (void*)__64BPRTSIZE(val));
 				return 1;
 			}
 		default:
@@ -2774,7 +2774,7 @@ void script_free_vars(struct linkdb_node **node)
 	struct linkdb_node* n = *node;
 	while( n != NULL)
 	{
-		const char* name = get_str((int)(n->key)&0x00ffffff);
+		const char* name = get_str((int)__64BPRTSIZE((n->key)&0x00ffffff));
 		if( is_string_variable(name) )
 			aFree(n->data); // 文字型変数なので、データ削除
 		n = n->next;
@@ -3305,7 +3305,7 @@ void script_stop_sleeptimers(int id)
 	struct script_state* st;
 	for(;;)
 	{
-		st = (struct script_state*)linkdb_erase(&sleep_db,(void*)id);
+		st = (struct script_state*)linkdb_erase(&sleep_db,(void*)__64BPRTSIZE(id));
 		if( st == NULL )
 			break; // no more sleep timers
 		script_free_state(st);
@@ -3347,7 +3347,7 @@ int run_script_timer(int tid, unsigned int tick, int id, intptr_t data)
 		st->state = END;
 	}
 	while( node && st->sleep.timer != INVALID_TIMER ) {
-		if( (int)node->key == st->oid && ((struct script_state *)node->data)->sleep.timer == st->sleep.timer ) {
+		if( (int)__64BPRTSIZE(node->key) == st->oid && ((struct script_state *)node->data)->sleep.timer == st->sleep.timer ) {
 			script_erase_sleepdb(node);
 			st->sleep.timer = INVALID_TIMER;
 			break;
@@ -3552,7 +3552,7 @@ void run_script_main(struct script_state *st)
 		st->sleep.charid = sd?sd->status.char_id:0;
 		st->sleep.timer  = add_timer(gettick()+st->sleep.tick,
 			run_script_timer, st->sleep.charid, (intptr_t)st);
-		linkdb_insert(&sleep_db, (void*)st->oid, st);
+		linkdb_insert(&sleep_db, (void*)__64BPRTSIZE(st->oid), st);
 	}
 	else if(st->state != END && st->rid){
 		//Resume later (st is already attached to player).
@@ -3693,7 +3693,7 @@ void script_cleararray_pc(struct map_session_data* sd, const char* varname, void
 	{
 		for( idx = 0; idx < SCRIPT_MAX_ARRAYSIZE; idx++ )
 		{
-			pc_setreg(sd, reference_uid(key, idx), (int)value);
+			pc_setreg(sd, reference_uid(key, idx), (int)__64BPRTSIZE(value));
 		}
 	}
 }
@@ -3725,7 +3725,7 @@ void script_setarray_pc(struct map_session_data* sd, const char* varname, uint8 
 	}
 	else
 	{
-		pc_setreg(sd, reference_uid(key, idx), (int)value);
+		pc_setreg(sd, reference_uid(key, idx), (int)__64BPRTSIZE(value));
 	}
 
 	if( refcache )
@@ -4888,7 +4888,7 @@ BUILDIN_FUNC(input)
 		else
 		{
 			int amount = sd->npc_amount;
-			set_reg(st, sd, uid, name, (void*)cap_value(amount,min,max), script_getref(st,2));
+			set_reg(st, sd, uid, name, (void*)__64BPRTSIZE(cap_value(amount,min,max)), script_getref(st,2));
 			script_pushint(st, (amount > max ? 1 : amount < min ? -1 : 0));
 		}
 		st->state = RUN;
@@ -4934,7 +4934,7 @@ BUILDIN_FUNC(set)
 	if( is_string_variable(name) )
 		set_reg(st,sd,num,name,(void*)script_getstr(st,3),script_getref(st,2));
 	else
-		set_reg(st,sd,num,name,(void*)script_getnum(st,3),script_getref(st,2));
+		set_reg(st,sd,num,name,(void*)__64BPRTSIZE(script_getnum(st,3)),script_getref(st,2));
 
 	// return a copy of the variable reference
 	script_pushcopy(st,2);
@@ -4965,7 +4965,7 @@ static int32 getarraysize(struct script_state* st, int32 id, int32 idx, int isst
 	{
 		for( ; idx < SCRIPT_MAX_ARRAYSIZE; ++idx )
 		{
-			int32 num = (int32)get_val2(st, reference_uid(id, idx), ref);
+			int32 num = (int32)__64BPRTSIZE(get_val2(st, reference_uid(id, idx), ref));
 			if( num )
 				ret = idx + 1;
 			script_removetop(st, -1, 0);
@@ -5027,7 +5027,7 @@ BUILDIN_FUNC(setarray)
 	else
 	{// int array
 		for( i = 3; start < end; ++start, ++i )
-			set_reg(st, sd, reference_uid(id, start), name, (void*)script_getnum(st,i), reference_getref(data));
+			set_reg(st, sd, reference_uid(id, start), name, (void*)__64BPRTSIZE(script_getnum(st,i)), reference_getref(data));
 	}
 	return 0;
 }
@@ -5076,7 +5076,7 @@ BUILDIN_FUNC(cleararray)
 	if( is_string_variable(name) )
 		v = (void*)script_getstr(st, 3);
 	else
-		v = (void*)script_getnum(st, 3);
+		v = (void*)__64BPRTSIZE(script_getnum(st, 3));
 
 	end = start + script_getnum(st, 4);
 	if( end > SCRIPT_MAX_ARRAYSIZE )
@@ -12120,7 +12120,7 @@ BUILDIN_FUNC(getmapxy)
 		sd=script_rid2sd(st);
 	else
 		sd=NULL;
-	set_reg(st,sd,num,name,(void*)x,script_getref(st,3));
+	set_reg(st,sd,num,name,(void*)__64BPRTSIZE(x),script_getref(st,3));
 
 	//Set MapY
 	num=st->stack->stack_data[st->start+4].u.num;
@@ -12131,7 +12131,7 @@ BUILDIN_FUNC(getmapxy)
 		sd=script_rid2sd(st);
 	else
 		sd=NULL;
-	set_reg(st,sd,num,name,(void*)y,script_getref(st,4));
+	set_reg(st,sd,num,name,(void*)__64BPRTSIZE(y),script_getref(st,4));
 
 	//Return Success value
 	script_pushint(st,0);
@@ -13095,7 +13095,7 @@ BUILDIN_FUNC(sscanf){
             if(sscanf(str, buf, &ref_int)==0){
                 break;
             }
-            set_reg(st, sd, add_str(buf_p), buf_p, (void *)(ref_int), reference_getref(data));
+            set_reg(st, sd, add_str(buf_p), buf_p, (void *)__64BPRTSIZE(ref_int), reference_getref(data));
         }
         arg++;
 
@@ -13460,7 +13460,7 @@ BUILDIN_FUNC(setd)
 	if( is_string_variable(varname) ) {
 		setd_sub(st, sd, varname, elem, (void *)script_getstr(st, 3), NULL);
 	} else {
-		setd_sub(st, sd, varname, elem, (void *)script_getnum(st, 3), NULL);
+		setd_sub(st, sd, varname, elem, (void *)__64BPRTSIZE(script_getnum(st, 3)), NULL);
 	}
 	
 	return 0;
@@ -13551,7 +13551,7 @@ int buildin_query_sql_sub(struct script_state* st, Sql* handle)
 			if( is_string_variable(name) )
 				setd_sub(st, sd, name, i, (void *)(str?str:""), reference_getref(data));
 			else
-				setd_sub(st, sd, name, i, (void *)(str?atoi(str):0), reference_getref(data));
+				setd_sub(st, sd, name, i, (void *)__64BPRTSIZE((str?atoi(str):0)), reference_getref(data));
 		}
 	}
 	if( i == max_rows && max_rows < Sql_NumRows(handle) )
@@ -14023,7 +14023,7 @@ BUILDIN_FUNC(searchitem)
 
 	for( i = 0; i < count; ++start, ++i )
 	{// Set array
-		void* v = (void*)items[i]->nameid;
+		void* v = (void*)__64BPRTSIZE(items[i]->nameid);
 		set_reg(st, sd, reference_uid(id, start), name, v, reference_getref(data));
 	}
 
@@ -14491,7 +14491,7 @@ BUILDIN_FUNC(awake)
 
 	while( node )
 	{
-		if( (int)node->key == nd->bl.id )
+		if( (int)__64BPRTSIZE(node->key) == nd->bl.id )
 		{// sleep timer for the npc
 			struct script_state* tst = (struct script_state*)node->data;
 			TBL_PC* sd = map_id2sd(tst->rid);
