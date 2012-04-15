@@ -68,7 +68,7 @@
 
 
 #ifdef __64BIT__
-	#define __64BPRTSIZE(y) (long)y
+	#define __64BPRTSIZE(y) (intptr)y
 #else
 	#define __64BPRTSIZE(y) y
 #endif
