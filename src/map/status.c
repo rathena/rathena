@@ -2799,7 +2799,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	if(pc_isriding(sd) && pc_checkskill(sd,KN_RIDING)>0)
 		sd->max_weight += 10000;
 	else if( sd->sc.option&OPTION_DRAGON )
-		sd->max_weight += 200*pc_checkskill(sd,RK_DRAGONTRAINING);
+		sd->max_weight += 5000+2000*pc_checkskill(sd,RK_DRAGONTRAINING);
 	if(sc->data[SC_KNOWLEDGE])
 		sd->max_weight += sd->max_weight*sc->data[SC_KNOWLEDGE]->val1/10;
 	if((skill=pc_checkskill(sd,ALL_INCCARRY))>0)
