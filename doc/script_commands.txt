@@ -6406,7 +6406,7 @@ Valid types are:
 
 Example:
 
-setiteminfo 7049,6,999; // Stone now weighs 999
+setiteminfo 7049,6,9990; // Stone now weighs 999.0
 
 ---------------------------------------
 
@@ -6662,7 +6662,7 @@ The first letter is position 0.
 
 ---------------------------------------
 
-*setfont <font>
+*setfont <font>;
 
 This command sets the current RO client interface font to one of the
 fonts stored in data\*.eot by using an ID of the font. When the ID
