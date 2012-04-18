@@ -5749,6 +5749,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		//Undead are immune to Freeze/Stone
 		if (undead_flag && !(flag&1))
 			return 0;
+	case SC_DEEPSLEEP:
 	case SC_SLEEP:
 	case SC_STUN:
 	case SC_FREEZING:
