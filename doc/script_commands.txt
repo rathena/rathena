@@ -3050,17 +3050,29 @@ It will return -1 if there is no such monster (or the type value is invalid),
 or "null" if you requested the monster's name.
 
 Valid types are listed in const.txt:
-	MOB_NAME	0		MOB_LV	1
-	MOB_MAXHP	2		MOB_BASEEXP	3
-	MOB_JOBEXP	4		MOB_ATK1	5
-	MOB_ATK2	6		MOB_DEF	7
-	MOB_MDEF	8		MOB_STR	9
-	MOB_AGI		10		MOB_VIT		11
-	MOB_INT		12		JOB_DEX		13
-	MOB_LUK		14		MOB_RANGE	15
-	MOB_RANGE2	16		MOB_RANGE3	17
-	MOB_SIZE	18		MOB_RACE	19
-	MOB_ELEMENT	20		MOB_MODE	21
+	MOB_NAME	0
+	MOB_LV	1
+	MOB_MAXHP	2
+	MOB_BASEEXP	3
+	MOB_JOBEXP	4
+	MOB_ATK1	5
+	MOB_ATK2	6
+	MOB_DEF	7
+	MOB_MDEF	8
+	MOB_STR	9
+	MOB_AGI	10
+	MOB_VIT	11
+	MOB_INT	12
+	MOB_DEX	13
+	MOB_LUK	14
+	MOB_RANGE	15
+	MOB_RANGE2	16
+	MOB_RANGE3	17
+	MOB_SIZE	18
+	MOB_RACE	19
+	MOB_ELEMENT	20
+	MOB_MODE	21
+	MOB_MVPEXP	22
 
 Check sample in doc/sample/getmonsterinfo.txt
 
@@ -3334,13 +3346,18 @@ bird and 0 if they don't.
 
 ---------------------------------------
 
-*checkvending ({"<player name>"})
-*checkchatting ({"<Player Name>"})
+*checkvending({"<player name>"})
+*checkchatting({"<Player Name>"})
 
-If the player's name is given, this command checks for that player
-to be online and whether he/she is chatting or vending.
-When no name is given, the attached player is used for checking.
-Returns true or false (1 or 0) when the player is chatting/vending or not.
+Checks if the player is vending or in a chatroom.
+Name is optional, and defaults to the attached player if omitted.
+
+Return values for 'checkvending' are
+  0 = not vending
+  1 = normal vending
+  2 = vending using @autotrade
+
+'checkchatting' returns 1 if they are in a chat room, 0 if they are not.
 
 Example(s):
 if (checkVending("Aaron")) mes "Aaron is currently vending!";
@@ -3349,7 +3366,7 @@ if (checkVending("Aaron")) mes "Aaron is currently vending!";
 
 if (checkChatting()) mes "You are currently chatting!";
 	//This will check if you're in a chat room or not
-	
+
 ---------------------------------------
 
 *agitcheck()
