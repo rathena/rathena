@@ -4712,114 +4712,120 @@ int pc_jobid2mapid(unsigned short b_class)
 {
 	switch(b_class)
 	{
-		case JOB_NOVICE:            return MAPID_NOVICE;
-	//1st classes
-		case JOB_SWORDMAN:          return MAPID_SWORDMAN;
-		case JOB_MAGE:              return MAPID_MAGE;
-		case JOB_ARCHER:            return MAPID_ARCHER;
-		case JOB_ACOLYTE:           return MAPID_ACOLYTE;
-		case JOB_MERCHANT:          return MAPID_MERCHANT;
-		case JOB_THIEF:             return MAPID_THIEF;
-		case JOB_TAEKWON:           return MAPID_TAEKWON;
-		case JOB_WEDDING:           return MAPID_WEDDING;
-		case JOB_GUNSLINGER:        return MAPID_GUNSLINGER;
-		case JOB_NINJA:             return MAPID_NINJA;
-		case JOB_XMAS:              return MAPID_XMAS;
-		case JOB_SUMMER:            return MAPID_SUMMER;
-	//2_1 classes
-		case JOB_SUPER_NOVICE:      return MAPID_SUPER_NOVICE;
-		case JOB_KNIGHT:            return MAPID_KNIGHT;
-		case JOB_WIZARD:            return MAPID_WIZARD;
-		case JOB_HUNTER:            return MAPID_HUNTER;
-		case JOB_PRIEST:            return MAPID_PRIEST;
-		case JOB_BLACKSMITH:        return MAPID_BLACKSMITH;
-		case JOB_ASSASSIN:          return MAPID_ASSASSIN;
-		case JOB_STAR_GLADIATOR:    return MAPID_STAR_GLADIATOR;
-	//2_2 classes
-		case JOB_CRUSADER:          return MAPID_CRUSADER;
-		case JOB_SAGE:              return MAPID_SAGE;
+	//Novice And 1-1 Jobs
+		case JOB_NOVICE:		return MAPID_NOVICE;
+		case JOB_SWORDMAN:		return MAPID_SWORDMAN;
+		case JOB_MAGE:			return MAPID_MAGE;
+		case JOB_ARCHER:		return MAPID_ARCHER;
+		case JOB_ACOLYTE:		return MAPID_ACOLYTE;
+		case JOB_MERCHANT:		return MAPID_MERCHANT;
+		case JOB_THIEF:			return MAPID_THIEF;
+		case JOB_TAEKWON:		return MAPID_TAEKWON;
+		case JOB_WEDDING:		return MAPID_WEDDING;
+		case JOB_GUNSLINGER:		return MAPID_GUNSLINGER;
+		case JOB_NINJA:			return MAPID_NINJA;
+		case JOB_XMAS:			return MAPID_XMAS;
+		case JOB_SUMMER:		return MAPID_SUMMER;
+		//case JOB_GANGSI:		return MAPID_GANGSI;
+	//2-1 Jobs
+		case JOB_SUPER_NOVICE:		return MAPID_SUPER_NOVICE;
+		case JOB_KNIGHT:		return MAPID_KNIGHT;
+		case JOB_WIZARD:		return MAPID_WIZARD;
+		case JOB_HUNTER:		return MAPID_HUNTER;
+		case JOB_PRIEST:		return MAPID_PRIEST;
+		case JOB_BLACKSMITH:		return MAPID_BLACKSMITH;
+		case JOB_ASSASSIN:		return MAPID_ASSASSIN;
+		case JOB_STAR_GLADIATOR:	return MAPID_STAR_GLADIATOR;
+		//case JOB_KAGEROU:
+		//case JOB_OBORO:		return MAPID_KAGEROUOBORO;
+		//case JOB_DEATHKNIGHT:		return MAPID_DEATHKNIGHT;
+	//2-2 Jobs
+		case JOB_CRUSADER:		return MAPID_CRUSADER;
+		case JOB_SAGE:			return MAPID_SAGE;
 		case JOB_BARD:
-		case JOB_DANCER:            return MAPID_BARDDANCER;
-		case JOB_MONK:              return MAPID_MONK;
-		case JOB_ALCHEMIST:         return MAPID_ALCHEMIST;
-		case JOB_ROGUE:             return MAPID_ROGUE;
-		case JOB_SOUL_LINKER:       return MAPID_SOUL_LINKER;
-	//1st: advanced
-		case JOB_NOVICE_HIGH:       return MAPID_NOVICE_HIGH;
-		case JOB_SWORDMAN_HIGH:     return MAPID_SWORDMAN_HIGH;
-		case JOB_MAGE_HIGH:         return MAPID_MAGE_HIGH;
-		case JOB_ARCHER_HIGH:       return MAPID_ARCHER_HIGH;
-		case JOB_ACOLYTE_HIGH:      return MAPID_ACOLYTE_HIGH;
-		case JOB_MERCHANT_HIGH:     return MAPID_MERCHANT_HIGH;
-		case JOB_THIEF_HIGH:        return MAPID_THIEF_HIGH;
-	//2_1 advanced
-		case JOB_LORD_KNIGHT:       return MAPID_LORD_KNIGHT;
-		case JOB_HIGH_WIZARD:       return MAPID_HIGH_WIZARD;
-		case JOB_SNIPER:            return MAPID_SNIPER;
-		case JOB_HIGH_PRIEST:       return MAPID_HIGH_PRIEST;
-		case JOB_WHITESMITH:        return MAPID_WHITESMITH;
-		case JOB_ASSASSIN_CROSS:    return MAPID_ASSASSIN_CROSS;
-	//2_2 advanced
-		case JOB_PALADIN:           return MAPID_PALADIN;
-		case JOB_PROFESSOR:         return MAPID_PROFESSOR;
+		case JOB_DANCER:		return MAPID_BARDDANCER;
+		case JOB_MONK:			return MAPID_MONK;
+		case JOB_ALCHEMIST:		return MAPID_ALCHEMIST;
+		case JOB_ROGUE:			return MAPID_ROGUE;
+		case JOB_SOUL_LINKER:		return MAPID_SOUL_LINKER;
+		//case JOB_DARKCOLLECTOR:	return MAPID_DARKCOLLECTOR;
+	//Trans Novice And Trans 1-1 Jobs
+		case JOB_NOVICE_HIGH:		return MAPID_NOVICE_HIGH;
+		case JOB_SWORDMAN_HIGH:		return MAPID_SWORDMAN_HIGH;
+		case JOB_MAGE_HIGH:		return MAPID_MAGE_HIGH;
+		case JOB_ARCHER_HIGH:		return MAPID_ARCHER_HIGH;
+		case JOB_ACOLYTE_HIGH:		return MAPID_ACOLYTE_HIGH;
+		case JOB_MERCHANT_HIGH:		return MAPID_MERCHANT_HIGH;
+		case JOB_THIEF_HIGH:		return MAPID_THIEF_HIGH;
+	//Trans 2-1 Jobs
+		case JOB_LORD_KNIGHT:		return MAPID_LORD_KNIGHT;
+		case JOB_HIGH_WIZARD:		return MAPID_HIGH_WIZARD;
+		case JOB_SNIPER:		return MAPID_SNIPER;
+		case JOB_HIGH_PRIEST:		return MAPID_HIGH_PRIEST;
+		case JOB_WHITESMITH:		return MAPID_WHITESMITH;
+		case JOB_ASSASSIN_CROSS:	return MAPID_ASSASSIN_CROSS;
+	//Trans 2-2 Jobs
+		case JOB_PALADIN:		return MAPID_PALADIN;
+		case JOB_PROFESSOR:		return MAPID_PROFESSOR;
 		case JOB_CLOWN:
-		case JOB_GYPSY:             return MAPID_CLOWNGYPSY;
-		case JOB_CHAMPION:          return MAPID_CHAMPION;
-		case JOB_CREATOR:           return MAPID_CREATOR;
-		case JOB_STALKER:           return MAPID_STALKER;
-	//1-1 baby
-		case JOB_BABY:              return MAPID_BABY;
-		case JOB_BABY_SWORDMAN:     return MAPID_BABY_SWORDMAN;
-		case JOB_BABY_MAGE:         return MAPID_BABY_MAGE;
-		case JOB_BABY_ARCHER:       return MAPID_BABY_ARCHER;
-		case JOB_BABY_ACOLYTE:      return MAPID_BABY_ACOLYTE;
-		case JOB_BABY_MERCHANT:     return MAPID_BABY_MERCHANT;
-		case JOB_BABY_THIEF:        return MAPID_BABY_THIEF;
-	//2_1 baby
-		case JOB_SUPER_BABY:        return MAPID_SUPER_BABY;
-		case JOB_BABY_KNIGHT:       return MAPID_BABY_KNIGHT;
-		case JOB_BABY_WIZARD:       return MAPID_BABY_WIZARD;
-		case JOB_BABY_HUNTER:       return MAPID_BABY_HUNTER;
-		case JOB_BABY_PRIEST:       return MAPID_BABY_PRIEST;
-		case JOB_BABY_BLACKSMITH:   return MAPID_BABY_BLACKSMITH;
-		case JOB_BABY_ASSASSIN:     return MAPID_BABY_ASSASSIN;
-	//2_2 baby
-		case JOB_BABY_CRUSADER:     return MAPID_BABY_CRUSADER;
-		case JOB_BABY_SAGE:         return MAPID_BABY_SAGE;
+		case JOB_GYPSY:			return MAPID_CLOWNGYPSY;
+		case JOB_CHAMPION:		return MAPID_CHAMPION;
+		case JOB_CREATOR:		return MAPID_CREATOR;
+		case JOB_STALKER:		return MAPID_STALKER;
+	//Baby Novice And Baby 1-1 Jobs
+		case JOB_BABY:			return MAPID_BABY;
+		case JOB_BABY_SWORDMAN:		return MAPID_BABY_SWORDMAN;
+		case JOB_BABY_MAGE:		return MAPID_BABY_MAGE;
+		case JOB_BABY_ARCHER:		return MAPID_BABY_ARCHER;
+		case JOB_BABY_ACOLYTE:		return MAPID_BABY_ACOLYTE;
+		case JOB_BABY_MERCHANT:		return MAPID_BABY_MERCHANT;
+		case JOB_BABY_THIEF:		return MAPID_BABY_THIEF;
+	//Baby 2-1 Jobs
+		case JOB_SUPER_BABY:		return MAPID_SUPER_BABY;
+		case JOB_BABY_KNIGHT:		return MAPID_BABY_KNIGHT;
+		case JOB_BABY_WIZARD:		return MAPID_BABY_WIZARD;
+		case JOB_BABY_HUNTER:		return MAPID_BABY_HUNTER;
+		case JOB_BABY_PRIEST:		return MAPID_BABY_PRIEST;
+		case JOB_BABY_BLACKSMITH:	return MAPID_BABY_BLACKSMITH;
+		case JOB_BABY_ASSASSIN:		return MAPID_BABY_ASSASSIN;
+	//Baby 2-2 Jobs
+		case JOB_BABY_CRUSADER:		return MAPID_BABY_CRUSADER;
+		case JOB_BABY_SAGE:		return MAPID_BABY_SAGE;
 		case JOB_BABY_BARD:
-		case JOB_BABY_DANCER:       return MAPID_BABY_BARDDANCER;
-		case JOB_BABY_MONK:         return MAPID_BABY_MONK;
-		case JOB_BABY_ALCHEMIST:    return MAPID_BABY_ALCHEMIST;
-		case JOB_BABY_ROGUE:        return MAPID_BABY_ROGUE;
-	//3.1 non-trans
+		case JOB_BABY_DANCER:		return MAPID_BABY_BARDDANCER;
+		case JOB_BABY_MONK:		return MAPID_BABY_MONK;
+		case JOB_BABY_ALCHEMIST:	return MAPID_BABY_ALCHEMIST;
+		case JOB_BABY_ROGUE:		return MAPID_BABY_ROGUE;
+	//3-1 Jobs
+		//case JOB_SUPER_NOVICE_E:	return MAPID_SUPER_NOVICE_E;
 		case JOB_RUNE_KNIGHT:		return MAPID_RUNE_KNIGHT;
-		case JOB_WARLOCK:			return MAPID_WARLOCK;
-		case JOB_RANGER:			return MAPID_RANGER;
-		case JOB_ARCH_BISHOP:       return MAPID_ARCH_BISHOP;
-		case JOB_MECHANIC:			return MAPID_MECHANIC;
+		case JOB_WARLOCK:		return MAPID_WARLOCK;
+		case JOB_RANGER:		return MAPID_RANGER;
+		case JOB_ARCH_BISHOP:		return MAPID_ARCH_BISHOP;
+		case JOB_MECHANIC:		return MAPID_MECHANIC;
 		case JOB_GUILLOTINE_CROSS:	return MAPID_GUILLOTINE_CROSS;
-	//3.1 trans
+	//3-2 Jobs
+		case JOB_ROYAL_GUARD:		return MAPID_ROYAL_GUARD;
+		case JOB_SORCERER:		return MAPID_SORCERER;
+		case JOB_MINSTREL:
+		case JOB_WANDERER:		return MAPID_MINSTRELWANDERER;
+		case JOB_SURA:			return MAPID_SURA;
+		case JOB_GENETIC:		return MAPID_GENETIC;
+		case JOB_SHADOW_CHASER:		return MAPID_SHADOW_CHASER;
+	//Trans 3-1 Jobs
 		case JOB_RUNE_KNIGHT_T:		return MAPID_RUNE_KNIGHT_T;
-		case JOB_WARLOCK_T:			return MAPID_WARLOCK_T;
-		case JOB_RANGER_T:			return MAPID_RANGER_T;
+		case JOB_WARLOCK_T:		return MAPID_WARLOCK_T;
+		case JOB_RANGER_T:		return MAPID_RANGER_T;
 		case JOB_ARCH_BISHOP_T:		return MAPID_ARCH_BISHOP_T;
 		case JOB_MECHANIC_T:		return MAPID_MECHANIC_T;
-		case JOB_GUILLOTINE_CROSS_T:return MAPID_GUILLOTINE_CROSS_T;
-	//3.2 non-trans
-		case JOB_ROYAL_GUARD:		return MAPID_ROYAL_GUARD;
-		case JOB_SORCERER:			return MAPID_SORCERER;
-		case JOB_MINSTREL:			return MAPID_MINSTRELWANDERER;
-		case JOB_WANDERER:			return MAPID_MINSTRELWANDERER;
-		case JOB_SURA:				return MAPID_SURA;
-		case JOB_GENETIC:			return MAPID_GENETIC;
-		case JOB_SHADOW_CHASER:		return MAPID_SHADOW_CHASER;
-	//3.2 trans
+		case JOB_GUILLOTINE_CROSS_T:	return MAPID_GUILLOTINE_CROSS_T;
+	//Trans 3-2 Jobs
 		case JOB_ROYAL_GUARD_T:		return MAPID_ROYAL_GUARD_T;
 		case JOB_SORCERER_T:		return MAPID_SORCERER_T;
-		case JOB_MINSTREL_T:		return MAPID_MINSTRELWANDERER_T;
+		case JOB_MINSTREL_T:
 		case JOB_WANDERER_T:		return MAPID_MINSTRELWANDERER_T;
-		case JOB_SURA_T:			return MAPID_SURA_T;
-		case JOB_GENETIC_T:			return MAPID_GENETIC_T;
+		case JOB_SURA_T:		return MAPID_SURA_T;
+		case JOB_GENETIC_T:		return MAPID_GENETIC_T;
 		case JOB_SHADOW_CHASER_T:	return MAPID_SHADOW_CHASER_T;
 		default:
 			return -1;
@@ -4831,109 +4837,114 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 {
 	switch(class_)
 	{
-		case MAPID_NOVICE:          return JOB_NOVICE;
-	//1st classes
-		case MAPID_SWORDMAN:        return JOB_SWORDMAN;
-		case MAPID_MAGE:            return JOB_MAGE;
-		case MAPID_ARCHER:          return JOB_ARCHER;
-		case MAPID_ACOLYTE:         return JOB_ACOLYTE;
-		case MAPID_MERCHANT:        return JOB_MERCHANT;
-		case MAPID_THIEF:           return JOB_THIEF;
-		case MAPID_TAEKWON:         return JOB_TAEKWON;
-		case MAPID_WEDDING:         return JOB_WEDDING;
-		case MAPID_GUNSLINGER:      return JOB_GUNSLINGER;
-		case MAPID_NINJA:           return JOB_NINJA;
-		case MAPID_XMAS:            return JOB_XMAS;
-		case MAPID_SUMMER:          return JOB_SUMMER;
-	//2_1 classes
-		case MAPID_SUPER_NOVICE:    return JOB_SUPER_NOVICE;
-		case MAPID_KNIGHT:          return JOB_KNIGHT;
-		case MAPID_WIZARD:          return JOB_WIZARD;
-		case MAPID_HUNTER:          return JOB_HUNTER;
-		case MAPID_PRIEST:          return JOB_PRIEST;
-		case MAPID_BLACKSMITH:      return JOB_BLACKSMITH;
-		case MAPID_ASSASSIN:        return JOB_ASSASSIN;
-		case MAPID_STAR_GLADIATOR:  return JOB_STAR_GLADIATOR;
-	//2_2 classes
-		case MAPID_CRUSADER:        return JOB_CRUSADER;
-		case MAPID_SAGE:            return JOB_SAGE;
-		case MAPID_BARDDANCER:      return sex?JOB_BARD:JOB_DANCER;
-		case MAPID_MONK:            return JOB_MONK;
-		case MAPID_ALCHEMIST:       return JOB_ALCHEMIST;
-		case MAPID_ROGUE:           return JOB_ROGUE;
-		case MAPID_SOUL_LINKER:     return JOB_SOUL_LINKER;
-	//1st: advanced
-		case MAPID_NOVICE_HIGH:     return JOB_NOVICE_HIGH;
-		case MAPID_SWORDMAN_HIGH:   return JOB_SWORDMAN_HIGH;
-		case MAPID_MAGE_HIGH:       return JOB_MAGE_HIGH;
-		case MAPID_ARCHER_HIGH:     return JOB_ARCHER_HIGH;
-		case MAPID_ACOLYTE_HIGH:    return JOB_ACOLYTE_HIGH;
-		case MAPID_MERCHANT_HIGH:   return JOB_MERCHANT_HIGH;
-		case MAPID_THIEF_HIGH:      return JOB_THIEF_HIGH;
-	//2_1 advanced
-		case MAPID_LORD_KNIGHT:     return JOB_LORD_KNIGHT;
-		case MAPID_HIGH_WIZARD:     return JOB_HIGH_WIZARD;
-		case MAPID_SNIPER:          return JOB_SNIPER;
-		case MAPID_HIGH_PRIEST:     return JOB_HIGH_PRIEST;
-		case MAPID_WHITESMITH:      return JOB_WHITESMITH;
-		case MAPID_ASSASSIN_CROSS:  return JOB_ASSASSIN_CROSS;
-	//2_2 advanced
-		case MAPID_PALADIN:         return JOB_PALADIN;
-		case MAPID_PROFESSOR:       return JOB_PROFESSOR;
-		case MAPID_CLOWNGYPSY:      return sex?JOB_CLOWN:JOB_GYPSY;
-		case MAPID_CHAMPION:        return JOB_CHAMPION;
-		case MAPID_CREATOR:         return JOB_CREATOR;
-		case MAPID_STALKER:         return JOB_STALKER;
-	//1-1 baby
-		case MAPID_BABY:            return JOB_BABY;
-		case MAPID_BABY_SWORDMAN:   return JOB_BABY_SWORDMAN;
-		case MAPID_BABY_MAGE:       return JOB_BABY_MAGE;
-		case MAPID_BABY_ARCHER:     return JOB_BABY_ARCHER;
-		case MAPID_BABY_ACOLYTE:    return JOB_BABY_ACOLYTE;
-		case MAPID_BABY_MERCHANT:   return JOB_BABY_MERCHANT;
-		case MAPID_BABY_THIEF:      return JOB_BABY_THIEF;
-	//2_1 baby
-		case MAPID_SUPER_BABY:      return JOB_SUPER_BABY;
-		case MAPID_BABY_KNIGHT:     return JOB_BABY_KNIGHT;
-		case MAPID_BABY_WIZARD:     return JOB_BABY_WIZARD;
-		case MAPID_BABY_HUNTER:     return JOB_BABY_HUNTER;
-		case MAPID_BABY_PRIEST:     return JOB_BABY_PRIEST;
-		case MAPID_BABY_BLACKSMITH: return JOB_BABY_BLACKSMITH;
-		case MAPID_BABY_ASSASSIN:   return JOB_BABY_ASSASSIN;
-	//2_2 baby
-		case MAPID_BABY_CRUSADER:   return JOB_BABY_CRUSADER;
-		case MAPID_BABY_SAGE:       return JOB_BABY_SAGE;
-		case MAPID_BABY_BARDDANCER: return sex?JOB_BABY_BARD:JOB_BABY_DANCER;
-		case MAPID_BABY_MONK:       return JOB_BABY_MONK;
-		case MAPID_BABY_ALCHEMIST:  return JOB_BABY_ALCHEMIST;
-		case MAPID_BABY_ROGUE:      return JOB_BABY_ROGUE;
-	//3.1 non-trans
+	//Novice And 1-1 Jobs
+		case MAPID_NOVICE:		return JOB_NOVICE;
+		case MAPID_SWORDMAN:		return JOB_SWORDMAN;
+		case MAPID_MAGE:		return JOB_MAGE;
+		case MAPID_ARCHER:		return JOB_ARCHER;
+		case MAPID_ACOLYTE:		return JOB_ACOLYTE;
+		case MAPID_MERCHANT:		return JOB_MERCHANT;
+		case MAPID_THIEF:		return JOB_THIEF;
+		case MAPID_TAEKWON:		return JOB_TAEKWON;
+		case MAPID_WEDDING:		return JOB_WEDDING;
+		case MAPID_GUNSLINGER:		return JOB_GUNSLINGER;
+		case MAPID_NINJA:		return JOB_NINJA;
+		case MAPID_XMAS:		return JOB_XMAS;
+		case MAPID_SUMMER:		return JOB_SUMMER;
+		//case MAPID_GANGSI:		return JOB_GANGSI;
+	//2-1 Jobs
+		case MAPID_SUPER_NOVICE:	return JOB_SUPER_NOVICE;
+		case MAPID_KNIGHT:		return JOB_KNIGHT;
+		case MAPID_WIZARD:		return JOB_WIZARD;
+		case MAPID_HUNTER:		return JOB_HUNTER;
+		case MAPID_PRIEST:		return JOB_PRIEST;
+		case MAPID_BLACKSMITH:		return JOB_BLACKSMITH;
+		case MAPID_ASSASSIN:		return JOB_ASSASSIN;
+		case MAPID_STAR_GLADIATOR:	return JOB_STAR_GLADIATOR;
+		//case MAPID_KAGEROUOBORO:	return sex?JOB_KAGEROU:JOB_OBORO;
+		//case MAPID_DEATHKNIGHT:	return JOB_DEATHKNIGHT;
+	//2-2 Jobs
+		case MAPID_CRUSADER:		return JOB_CRUSADER;
+		case MAPID_SAGE:		return JOB_SAGE;
+		case MAPID_BARDDANCER:		return sex?JOB_BARD:JOB_DANCER;
+		case MAPID_MONK:		return JOB_MONK;
+		case MAPID_ALCHEMIST:		return JOB_ALCHEMIST;
+		case MAPID_ROGUE:		return JOB_ROGUE;
+		case MAPID_SOUL_LINKER:		return JOB_SOUL_LINKER;
+		//case MAPID_DARKCOLLECTOR:	return JOB_DARKCOLLECTOR;
+	//Trans Novice And Trans 2-1 Jobs
+		case MAPID_NOVICE_HIGH:		return JOB_NOVICE_HIGH;
+		case MAPID_SWORDMAN_HIGH:	return JOB_SWORDMAN_HIGH;
+		case MAPID_MAGE_HIGH:		return JOB_MAGE_HIGH;
+		case MAPID_ARCHER_HIGH:		return JOB_ARCHER_HIGH;
+		case MAPID_ACOLYTE_HIGH:	return JOB_ACOLYTE_HIGH;
+		case MAPID_MERCHANT_HIGH:	return JOB_MERCHANT_HIGH;
+		case MAPID_THIEF_HIGH:		return JOB_THIEF_HIGH;
+	//Trans 2-1 Jobs
+		case MAPID_LORD_KNIGHT:		return JOB_LORD_KNIGHT;
+		case MAPID_HIGH_WIZARD:		return JOB_HIGH_WIZARD;
+		case MAPID_SNIPER:		return JOB_SNIPER;
+		case MAPID_HIGH_PRIEST:		return JOB_HIGH_PRIEST;
+		case MAPID_WHITESMITH:		return JOB_WHITESMITH;
+		case MAPID_ASSASSIN_CROSS:	return JOB_ASSASSIN_CROSS;
+	//Trans 2-2 Jobs
+		case MAPID_PALADIN:		return JOB_PALADIN;
+		case MAPID_PROFESSOR:		return JOB_PROFESSOR;
+		case MAPID_CLOWNGYPSY:		return sex?JOB_CLOWN:JOB_GYPSY;
+		case MAPID_CHAMPION:		return JOB_CHAMPION;
+		case MAPID_CREATOR:		return JOB_CREATOR;
+		case MAPID_STALKER:		return JOB_STALKER;
+	//Baby Novice And Baby 1-1 Jobs
+		case MAPID_BABY:		return JOB_BABY;
+		case MAPID_BABY_SWORDMAN:	return JOB_BABY_SWORDMAN;
+		case MAPID_BABY_MAGE:		return JOB_BABY_MAGE;
+		case MAPID_BABY_ARCHER:		return JOB_BABY_ARCHER;
+		case MAPID_BABY_ACOLYTE:	return JOB_BABY_ACOLYTE;
+		case MAPID_BABY_MERCHANT:	return JOB_BABY_MERCHANT;
+		case MAPID_BABY_THIEF:		return JOB_BABY_THIEF;
+	//Baby 2-1 Jobs
+		case MAPID_SUPER_BABY:		return JOB_SUPER_BABY;
+		case MAPID_BABY_KNIGHT:		return JOB_BABY_KNIGHT;
+		case MAPID_BABY_WIZARD:		return JOB_BABY_WIZARD;
+		case MAPID_BABY_HUNTER:		return JOB_BABY_HUNTER;
+		case MAPID_BABY_PRIEST:		return JOB_BABY_PRIEST;
+		case MAPID_BABY_BLACKSMITH:	return JOB_BABY_BLACKSMITH;
+		case MAPID_BABY_ASSASSIN:	return JOB_BABY_ASSASSIN;
+	//Baby 2-2 Jobs
+		case MAPID_BABY_CRUSADER:	return JOB_BABY_CRUSADER;
+		case MAPID_BABY_SAGE:		return JOB_BABY_SAGE;
+		case MAPID_BABY_BARDDANCER:	return sex?JOB_BABY_BARD:JOB_BABY_DANCER;
+		case MAPID_BABY_MONK:		return JOB_BABY_MONK;
+		case MAPID_BABY_ALCHEMIST:	return JOB_BABY_ALCHEMIST;
+		case MAPID_BABY_ROGUE:		return JOB_BABY_ROGUE;
+	//3-1 Jobs
+		//case MAPID_SUPER_NOVICE_E:	return JOB_SUPER_NOVICE_E;
 		case MAPID_RUNE_KNIGHT:		return JOB_RUNE_KNIGHT;
-		case MAPID_WARLOCK:			return JOB_WARLOCK;
-		case MAPID_RANGER:			return JOB_RANGER;
-		case MAPID_ARCH_BISHOP:     return JOB_ARCH_BISHOP;
+		case MAPID_WARLOCK:		return JOB_WARLOCK;
+		case MAPID_RANGER:		return JOB_RANGER;
+		case MAPID_ARCH_BISHOP:		return JOB_ARCH_BISHOP;
 		case MAPID_MECHANIC:		return JOB_MECHANIC;
-		case MAPID_GUILLOTINE_CROSS:return JOB_GUILLOTINE_CROSS;
-	//3.1 trans
+		case MAPID_GUILLOTINE_CROSS:	return JOB_GUILLOTINE_CROSS;
+	//3-2 Jobs
+		case MAPID_ROYAL_GUARD:		return JOB_ROYAL_GUARD;
+		case MAPID_SORCERER:		return JOB_SORCERER;
+		case MAPID_MINSTRELWANDERER:	return sex?JOB_MINSTREL:JOB_WANDERER;
+		case MAPID_SURA:		return JOB_SURA;
+		case MAPID_GENETIC:		return JOB_GENETIC;
+		case MAPID_SHADOW_CHASER:	return JOB_SHADOW_CHASER;
+	//Trans 3-1 Jobs
 		case MAPID_RUNE_KNIGHT_T:	return JOB_RUNE_KNIGHT_T;
 		case MAPID_WARLOCK_T:		return JOB_WARLOCK_T;
 		case MAPID_RANGER_T:		return JOB_RANGER_T;
-		case MAPID_ARCH_BISHOP_T:   return JOB_ARCH_BISHOP_T;
+		case MAPID_ARCH_BISHOP_T:	return JOB_ARCH_BISHOP_T;
 		case MAPID_MECHANIC_T:		return JOB_MECHANIC_T;
-		case MAPID_GUILLOTINE_CROSS_T:return JOB_GUILLOTINE_CROSS_T;
-	//3.2 non-trans
-		case MAPID_ROYAL_GUARD:		return JOB_ROYAL_GUARD;
-		case MAPID_SORCERER:		return JOB_SORCERER;
-		case MAPID_MINSTRELWANDERER:return sex?JOB_MINSTREL:JOB_WANDERER;
-		case MAPID_SURA:			return JOB_SURA;
-		case MAPID_GENETIC:			return JOB_GENETIC;
-		case MAPID_SHADOW_CHASER:	return JOB_SHADOW_CHASER;
-	//3.2 trans
+		case MAPID_GUILLOTINE_CROSS_T:	return JOB_GUILLOTINE_CROSS_T;
+	//Trans 3-2 Jobs
 		case MAPID_ROYAL_GUARD_T:	return JOB_ROYAL_GUARD_T;
 		case MAPID_SORCERER_T:		return JOB_SORCERER_T;
-		case MAPID_MINSTRELWANDERER_T:return sex?JOB_MINSTREL_T:JOB_WANDERER_T;
-		case MAPID_SURA_T:			return JOB_SURA_T;
-		case MAPID_GENETIC_T:			return JOB_GENETIC_T;
+		case MAPID_MINSTRELWANDERER_T:	return sex?JOB_MINSTREL_T:JOB_WANDERER_T;
+		case MAPID_SURA_T:		return JOB_SURA_T;
+		case MAPID_GENETIC_T:		return JOB_GENETIC_T;
 		case MAPID_SHADOW_CHASER_T:	return JOB_SHADOW_CHASER_T;
 		default:
 			return -1;
