@@ -649,7 +649,8 @@ enum e_pc_permission {
 ( \
 	( (class_) >= JOB_NOVICE      && (class_) <  JOB_MAX_BASIC   ) \
 ||	( (class_) >= JOB_NOVICE_HIGH && (class_) <= JOB_SOUL_LINKER ) \
-||	( (class_) >= JOB_RUNE_KNIGHT && (class_) <  JOB_MAX         ) \
+||	( (class_) >= JOB_RUNE_KNIGHT && (class_) <= JOB_MECHANIC_T2 ) \
+||	( (class_) >= JOB_BABY_RUNE   && (class_) <  JOB_MAX         ) \
 )
 
 // clientside atk display macros (values to the left/right of the "+")
