@@ -2057,7 +2057,8 @@ int parse_fromlogin(int fd)
 						class_[i] == JOB_BABY_BARD || class_[i] == JOB_BABY_DANCER ||
 						class_[i] == JOB_MINSTREL || class_[i] == JOB_WANDERER ||
 						class_[i] == JOB_MINSTREL_T || class_[i] == JOB_WANDERER_T ||
-						class_[i] == JOB_BABY_MINSTREL || class_[i] == JOB_BABY_WANDERER )
+						class_[i] == JOB_BABY_MINSTREL || class_[i] == JOB_BABY_WANDERER ||
+						class_[i] == JOB_KAGEROU || class_[i] == JOB_OBORO )
 					{
 						// job modification
 						if( class_[i] == JOB_BARD || class_[i] == JOB_DANCER )
@@ -2072,6 +2073,8 @@ int parse_fromlogin(int fd)
 							class_[i] = (sex ? JOB_MINSTREL_T : JOB_WANDERER_T);
 						else if( class_[i] == JOB_BABY_MINSTREL || class_[i] == JOB_BABY_WANDERER )
 							class_[i] = (sex ? JOB_BABY_MINSTREL : JOB_BABY_WANDERER);
+						else if( class_[i] == JOB_KAGEROU || class_[i] == JOB_OBORO )
+							class_[i] = (sex ? JOB_KAGEROU : JOB_OBORO);
 					}
 					// to avoid any problem with equipment and invalid sex, equipment is unequiped.
 					if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `equip` = '0' WHERE `char_id` = '%d'", inventory_db, char_id[i]) )

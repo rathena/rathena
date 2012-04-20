@@ -4726,7 +4726,7 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_NINJA:                 return MAPID_NINJA;
 		case JOB_XMAS:                  return MAPID_XMAS;
 		case JOB_SUMMER:                return MAPID_SUMMER;
-		//case JOB_GANGSI:                return MAPID_GANGSI;
+		case JOB_GANGSI:                return MAPID_GANGSI;
 	//2-1 Jobs
 		case JOB_SUPER_NOVICE:          return MAPID_SUPER_NOVICE;
 		case JOB_KNIGHT:                return MAPID_KNIGHT;
@@ -4736,9 +4736,9 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_BLACKSMITH:            return MAPID_BLACKSMITH;
 		case JOB_ASSASSIN:              return MAPID_ASSASSIN;
 		case JOB_STAR_GLADIATOR:        return MAPID_STAR_GLADIATOR;
-		//case JOB_KAGEROU:
-		//case JOB_OBORO:                 return MAPID_KAGEROUOBORO;
-		//case JOB_DEATHKNIGHT:           return MAPID_DEATHKNIGHT;
+		case JOB_KAGEROU:
+		case JOB_OBORO:                 return MAPID_KAGEROUOBORO;
+		case JOB_DEATH_KNIGHT:          return MAPID_DEATH_KNIGHT;
 	//2-2 Jobs
 		case JOB_CRUSADER:              return MAPID_CRUSADER;
 		case JOB_SAGE:                  return MAPID_SAGE;
@@ -4748,7 +4748,7 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_ALCHEMIST:             return MAPID_ALCHEMIST;
 		case JOB_ROGUE:                 return MAPID_ROGUE;
 		case JOB_SOUL_LINKER:           return MAPID_SOUL_LINKER;
-		//case JOB_DARKCOLLECTOR:         return MAPID_DARKCOLLECTOR;
+		case JOB_DARK_COLLECTOR:        return MAPID_DARK_COLLECTOR;
 	//Trans Novice And Trans 1-1 Jobs
 		case JOB_NOVICE_HIGH:           return MAPID_NOVICE_HIGH;
 		case JOB_SWORDMAN_HIGH:         return MAPID_SWORDMAN_HIGH;
@@ -4797,7 +4797,7 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_BABY_ALCHEMIST:        return MAPID_BABY_ALCHEMIST;
 		case JOB_BABY_ROGUE:            return MAPID_BABY_ROGUE;
 	//3-1 Jobs
-		//case JOB_SUPER_NOVICE_E:        return MAPID_SUPER_NOVICE_E;
+		case JOB_SUPER_NOVICE_E:        return MAPID_SUPER_NOVICE_E;
 		case JOB_RUNE_KNIGHT:           return MAPID_RUNE_KNIGHT;
 		case JOB_WARLOCK:               return MAPID_WARLOCK;
 		case JOB_RANGER:                return MAPID_RANGER;
@@ -4828,7 +4828,7 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_GENETIC_T:             return MAPID_GENETIC_T;
 		case JOB_SHADOW_CHASER_T:       return MAPID_SHADOW_CHASER_T;
 	//Baby 3-1 Jobs
-		//case JOB_SUPER_BABY_E:          return MAPID_SUPER_BABY_E;
+		case JOB_SUPER_BABY_E:          return MAPID_SUPER_BABY_E;
 		case JOB_BABY_RUNE:             return MAPID_BABY_RUNE;
 		case JOB_BABY_WARLOCK:          return MAPID_BABY_WARLOCK;
 		case JOB_BABY_RANGER:           return MAPID_BABY_RANGER;
@@ -4867,7 +4867,7 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_NINJA:                 return JOB_NINJA;
 		case MAPID_XMAS:                  return JOB_XMAS;
 		case MAPID_SUMMER:                return JOB_SUMMER;
-		//case MAPID_GANGSI:                return JOB_GANGSI;
+		case MAPID_GANGSI:                return JOB_GANGSI;
 	//2-1 Jobs
 		case MAPID_SUPER_NOVICE:          return JOB_SUPER_NOVICE;
 		case MAPID_KNIGHT:                return JOB_KNIGHT;
@@ -4877,8 +4877,8 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_BLACKSMITH:            return JOB_BLACKSMITH;
 		case MAPID_ASSASSIN:              return JOB_ASSASSIN;
 		case MAPID_STAR_GLADIATOR:        return JOB_STAR_GLADIATOR;
-		//case MAPID_KAGEROUOBORO:          return sex?JOB_KAGEROU:JOB_OBORO;
-		//case MAPID_DEATHKNIGHT:           return JOB_DEATHKNIGHT;
+		case MAPID_KAGEROUOBORO:          return sex?JOB_KAGEROU:JOB_OBORO;
+		case MAPID_DEATH_KNIGHT:          return JOB_DEATH_KNIGHT;
 	//2-2 Jobs
 		case MAPID_CRUSADER:              return JOB_CRUSADER;
 		case MAPID_SAGE:                  return JOB_SAGE;
@@ -4887,7 +4887,7 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_ALCHEMIST:             return JOB_ALCHEMIST;
 		case MAPID_ROGUE:                 return JOB_ROGUE;
 		case MAPID_SOUL_LINKER:           return JOB_SOUL_LINKER;
-		//case MAPID_DARKCOLLECTOR:         return JOB_DARKCOLLECTOR;
+		case MAPID_DARK_COLLECTOR:        return JOB_DARK_COLLECTOR;
 	//Trans Novice And Trans 2-1 Jobs
 		case MAPID_NOVICE_HIGH:           return JOB_NOVICE_HIGH;
 		case MAPID_SWORDMAN_HIGH:         return JOB_SWORDMAN_HIGH;
@@ -4934,7 +4934,7 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_BABY_ALCHEMIST:        return JOB_BABY_ALCHEMIST;
 		case MAPID_BABY_ROGUE:            return JOB_BABY_ROGUE;
 	//3-1 Jobs
-		//case MAPID_SUPER_NOVICE_E:        return JOB_SUPER_NOVICE_E;
+		case MAPID_SUPER_NOVICE_E:        return JOB_SUPER_NOVICE_E;
 		case MAPID_RUNE_KNIGHT:           return JOB_RUNE_KNIGHT;
 		case MAPID_WARLOCK:               return JOB_WARLOCK;
 		case MAPID_RANGER:                return JOB_RANGER;
@@ -4963,7 +4963,7 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_GENETIC_T:             return JOB_GENETIC_T;
 		case MAPID_SHADOW_CHASER_T:       return JOB_SHADOW_CHASER_T;
 	//Baby 3-1 Jobs
-		//case MAPID_SUPER_BABY_E:          return JOB_SUPER_BABY_E;
+		case MAPID_SUPER_BABY_E:          return JOB_SUPER_BABY_E;
 		case MAPID_BABY_RUNE:             return JOB_BABY_RUNE;
 		case MAPID_BABY_WARLOCK:          return JOB_BABY_WARLOCK;
 		case MAPID_BABY_RANGER:           return JOB_BABY_RANGER;
@@ -5105,10 +5105,10 @@ const char* job_name(int class_)
 	case JOB_SOUL_LINKER:
 		return msg_txt(618);
 
-	//case JOB_GANGSI:
-	//case JOB_DEATH_KNIGHT:
-	//case JOB_DARK_COLLECTOR:
-	//	return msg_txt(622 - JOB_GANGSI+class_);
+	case JOB_GANGSI:
+	case JOB_DEATH_KNIGHT:
+	case JOB_DARK_COLLECTOR:
+		return msg_txt(622 - JOB_GANGSI+class_);
 
 	case JOB_RUNE_KNIGHT:
 	case JOB_WARLOCK:
@@ -5187,13 +5187,13 @@ const char* job_name(int class_)
 	case JOB_BABY_MECHANIC2:
 		return msg_txt(642);
 
-	//case JOB_SUPER_NOVICE_E:
-	//case JOB_SUPER_BABY_E:
-	//	return msg_txt(651 - JOB_SUPER_NOVICE_E+class_);
+	case JOB_SUPER_NOVICE_E:
+	case JOB_SUPER_BABY_E:
+		return msg_txt(651 - JOB_SUPER_NOVICE_E+class_);
 
-	//case JOB_KAGEROU:
-	//case JOB_OBORO:
-	//	return msg_txt(653 - JOB_KAGEROU+class_);
+	case JOB_KAGEROU:
+	case JOB_OBORO:
+		return msg_txt(653 - JOB_KAGEROU+class_);
 
 	default:
 		return msg_txt(655);

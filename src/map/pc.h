@@ -474,8 +474,8 @@ struct map_session_data {
 };
 
 //Update this max as necessary. 55 is the value needed for Super Baby currently
-//Raised to 75 due to 3rds
-#define MAX_SKILL_TREE 75
+//Raised to 84 since Expanded Super Novice needs it.
+#define MAX_SKILL_TREE 84
 //Total number of classes (for data storage)
 #define CLASS_COUNT (JOB_MAX - JOB_NOVICE_HIGH + JOB_MAX_BASIC)
 
@@ -647,10 +647,12 @@ enum e_pc_permission {
 //Checks if the given class value corresponds to a player class. [Skotlex]
 #define pcdb_checkid(class_) \
 ( \
-	( (class_) >= JOB_NOVICE      && (class_) <  JOB_MAX_BASIC   ) \
-||	( (class_) >= JOB_NOVICE_HIGH && (class_) <= JOB_SOUL_LINKER ) \
-||	( (class_) >= JOB_RUNE_KNIGHT && (class_) <= JOB_MECHANIC_T2 ) \
-||	( (class_) >= JOB_BABY_RUNE   && (class_) <  JOB_MAX         ) \
+	( (class_) >= JOB_NOVICE         && (class_) <  JOB_MAX_BASIC      ) \
+||	( (class_) >= JOB_NOVICE_HIGH    && (class_) <= JOB_DARK_COLLECTOR ) \
+||	( (class_) >= JOB_RUNE_KNIGHT    && (class_) <= JOB_MECHANIC_T2    ) \
+||	( (class_) >= JOB_BABY_RUNE      && (class_) <= JOB_BABY_MECHANIC2 ) \
+||	( (class_) >= JOB_SUPER_NOVICE_E && (class_) <= JOB_SUPER_BABY_E   ) \
+||	( (class_) >= JOB_KAGEROU        && (class_) <  JOB_MAX            ) \
 )
 
 // clientside atk display macros (values to the left/right of the "+")
