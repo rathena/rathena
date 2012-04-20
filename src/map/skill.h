@@ -13,7 +13,7 @@ struct skill_unit_group;
 struct status_change_entry;
 
 #define MAX_SKILL_DB			MAX_SKILL
-#define MAX_SKILL_PRODUCE_DB	170
+#define MAX_SKILL_PRODUCE_DB	200
 #define MAX_PRODUCE_RESOURCE	12
 #define MAX_SKILL_ARROW_DB		150
 #define MAX_ARROW_RESOURCE		5
