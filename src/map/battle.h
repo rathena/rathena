@@ -467,8 +467,10 @@ extern struct Battle_Config
 	int bg_magic_damage_rate;
 	int bg_misc_damage_rate;
 	int bg_flee_penalty;
+
 	// rAthena
 	int max_third_parameter;
+	int max_baby_third_parameter;
 	int atcommand_max_stat_bypass;
 } battle_config;
 
