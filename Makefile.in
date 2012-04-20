@@ -89,7 +89,7 @@ help:
 	@echo "possible targets are:"
 	@echo "'common_sql'  - builds object files used in SQL servers"
 	@echo "'mt19937ar'   - builds object file of Mersenne Twister MT19937"
-	@echo "'libconfig'   - builds object files of libconfig
+	@echo "'libconfig'   - builds object files of libconfig"
 	@echo "'login_sql'   - builds login server (SQL version)"
 	@echo "'char_sql'    - builds char server (SQL version)"
 	@echo "'map_sql'     - builds map server (SQL version)"
