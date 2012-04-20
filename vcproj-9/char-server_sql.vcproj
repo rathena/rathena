@@ -465,6 +465,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\char\int_elemental.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\char\int_elemental.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\char\int_party.c"
 				>
 			</File>

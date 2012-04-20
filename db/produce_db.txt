@@ -442,3 +442,85 @@
 //-- Poison Fatigue <-- GC_RESEARCHNEWPOISON Lv6, 1 Izidor, 1 Medicine Bowl, 10 Sticky Poison, 1 Poison Kit
 12724,25,2024,6,709,1,7134,1,7565,10,7931,1
 //==============================================
+
+//==============================================
+// Genetic Foods And Potions  (LV= 26 -> 29)
+//==============================================
+//---- Change Material --- ItemLV=26 -----------
+//-- Phracon [8] <-- GN_CHANGEMATERIAL Lv1, 40 Glass Bead, 45 Spawn
+1010,26,2494,1,746,40,908,45
+//-- Witch Starsand [2] <-- GN_CHANGEMATERIAL Lv1, 15 Blue Porcelain, 10 InsectFeeler
+1061,26,2494,1,735,15,928,10
+//-- Throwable HP Increase Potion (Small) [10] <-- GN_CHANGEMATERIAL Lv1, 10 Throwing Bottle, 10 HP Potions (Small)
+13275,26,2494,1,6297,10,12422,10
+//-- Throwable HP Increase Potion (Medium) [10] <-- GN_CHANGEMATERIAL Lv1, 10 Throwing Bottle, 10 HP Potions (Medium)
+13276,26,2494,1,6297,10,12423,10
+//-- Throwable HP Increase Potion (Large) [10] <-- GN_CHANGEMATERIAL Lv1, 10 Throwing Bottle, 10 HP Potions (Large)
+13277,26,2494,1,6297,10,12424,10
+//-- Throwable SP Increase Potion (Small) [10] <-- GN_CHANGEMATERIAL Lv1, 10 Throwing Bottle, 10 SP Potions (Small)
+13278,26,2494,1,6297,10,12425,10
+//-- Throwable SP Increase Potion (Medium) [10] <-- GN_CHANGEMATERIAL Lv1, 10 Throwing Bottle, 10 SP Potions (Medium)
+13279,26,2494,1,6297,10,12426,10
+//-- Throwable SP Increase Potion (Large) [10] <-- GN_CHANGEMATERIAL Lv1, 10 Throwing Bottle, 10 SP Potions (Large)
+13280,26,2494,1,6297,10,12427,10
+//-- Throwable Enrich White Potion Z [10] <-- GN_CHANGEMATERIAL Lv1, 10 Throwing Bottle, 10 Enrich White Potion Z
+13281,26,2494,1,6297,10,12428,10
+//-- Vitata 500 [10] <-- GN_CHANGEMATERIAL Lv1, 10 Throwing Bottle, 10 Vitata 500
+13282,26,2494,1,6297,10,12436,10
+//-- Enrich Celermine Juice [10] <-- GN_CHANGEMATERIAL Lv1, 10 Throwing Bottle, 10 Enrich Celermine Juice
+13283,26,2494,1,6297,10,12437,10
+
+//---- Mix Cooking --- ItemLV=27 ---------------
+//-- Savage BBQ <-- GN_MIX_COOKING Lv1, Mix Cook Book, 1 Melange Pot, 1 Savage Meat, 1 Cooking Skewer, 1 Black Charcoal
+12429,27,2495,1,11022,0,6248,1,6249,1,6250,1,6251,1
+//-- Wug Blood Cocktail <-- GN_MIX_COOKING Lv1, Mix Cook Book, 1 Melange Pot, 3 Wolf Blood, 2 Cold Ice
+12430,27,2495,1,11022,0,6248,1,6252,3,6253,2
+//-- Minor Brisket <-- GN_MIX_COOKING Lv1, Mix Cook Book, 1 Melange Pot, 2 Beef Head Meat, 1 Large Cookpot
+12431,27,2495,1,11022,0,6248,1,6254,2,6255,1
+//-- Siroma Icetea <-- GN_MIX_COOKING Lv1, Mix Cook Book, 1 Melange Pot, 3 Ice Fragment, 2 Ice Crystal, 1 Comodo Tropic Fruit
+12432,27,2495,1,11022,0,6248,1,6256,3,6257,2,6258,1
+//-- Drocera Herb Stew <-- GN_MIX_COOKING Lv1, Mix Cook Book, 3 Red Herb, 3 White Herb, 3 Blue Herb, 1 Melange Pot, 1 Large Cookpot, 1 Drocera Tentacle
+12433,27,2495,1,11022,0,507,3,509,3,510,3,6248,1,6255,1,6259,3
+//-- Petti Tail Noodle <-- GN_MIX_COOKING Lv1, Mix Cook Book, 1 Melange Pot, 2 Petti Tail, 1 Fine Noodle, 1 Cool Gravy
+12434,27,2495,1,11022,0,6248,1,6260,2,6261,1,6262,1
+
+//---- Create Bomb --- ItemLV=28 ---------------
+//-- Apple Bomb <-- GN_MAKEBOMB Lv1, Apple Bomb CB, 1 Apple, 1 Scell, 1 Detonator, 1 Gun Powder
+13260,28,2496,1,6279,0,512,1,911,1,1051,1,6244,1
+//-- Coconut Bomb <-- GN_MAKEBOMB Lv1, Coconut Bomb CB, 1 Detonator, 1 Coconut Fruit, 2 Gun Powder
+13261,28,2496,1,6281,0,1051,1,6263,1,6244,2
+//-- Melon Bomb <-- GN_MAKEBOMB Lv1, Melon Bomb CB, 1 Sticky Mucus, 1 Detonator, 2 Gun Powder, 1 Melon
+13262,28,2496,1,6282,0,938,1,1051,1,6244,2,6264,1
+//-- Pineapple Bomb <-- GN_MAKEBOMB Lv1, Pinepple Bomb CB, 1 Cactus Needle, 1 Detonator, 3 Gun Powder, 1 Pineapple
+13263,28,2496,1,6280,0,952,1,1051,1,6244,3,6265,1
+//-- Banana Bomb <-- GN_MAKEBOMB Lv1, Banana Bomb CB, 1 Banana, 1 Detonator, 4 Gun Powder, 1 Mould Powder
+13264,28,2496,1,6283,0,513,1,1051,1,6244,4,7001,1
+
+//---- Special Pharmacy --- ItemLV=29 ----------
+//-- Seed Of Horny Plant <-- GN_S_PHARMACY Lv1, Plant Genetic Grow, 10 Prickly Fruit
+6210,29,2497,1,6284,0,576,10
+//-- Bloodsuck Plant Seed <-- GN_S_PHARMACY Lv1, Plant Genetic Grow, 10 Root Of Maneater
+6211,29,2497,1,6284,0,1033,10
+//-- Bomb Mushroom Spore <-- GN_S_PHARMACY Lv1, Plant Genetic Grow, 10 Mushroom Spore, 2 Gun Powder, 5 Poison Spore
+6212,29,2497,1,6284,0,921,10,6244,2,7033,5
+//-- HP Increase Potion (Small) <-- GN_S_PHARMACY Lv1, Increase Stamina Study, 10 White Herb, 5 Monster's Feed, 10 Empty Bottle, 1 Hot Sauce
+12422,29,2497,1,11023,0,509,10,528,5,713,10,7455,1
+//-- HP Increase Potion (Medium) <-- GN_S_PHARMACY Lv1, Increase Stamina Study, 10 Yellow Herb, 10 White Herb, 10 Empty Bottle, 1 Hot Sauce
+12423,29,2497,1,11023,0,508,10,509,10,713,10,7455,1
+//-- HP Increase Potion (Large) <-- GN_S_PHARMACY Lv1, Increase Stamina Study, 15 White Herb, 3 Fruit Of Mastela, 1 Holy Water, 10 Empty Bottle, 1 Hot Sauce
+12424,29,2497,1,11023,0,509,15,522,3,523,1,713,10,7455,1
+//-- SP Increase Potion (Small) <-- GN_S_PHARMACY Lv1, Vital Drink CB, 10 Grape, 10 Lemon, 10 Empty Bottle, 1 Sweet Sauce
+12425,29,2497,1,11024,0,514,10,568,10,713,10,7453,1
+//-- SP Increase Potion (Medium) <-- GN_S_PHARMACY Lv1, Vital Drink CB, 10 Blue Herb, 10 Honey, 10 Empty Bottle, 1 Sweet Sauce
+12426,29,2497,1,11024,0,510,10,518,10,713,10,7453,1
+//-- SP Increase Potion (Large) <-- GN_S_PHARMACY Lv1, Vital Drink CB, 15 Blue Herb, 10 Royal Jelly, 10 Empty Bottle, 1 Sweet Sauce
+12427,29,2497,1,11024,0,510,15,526,10,713,10,7453,1
+//-- Enrich White Potion Z <-- GN_S_PHARMACY Lv1, Quality Potion Book, 20 White Potion, 10 White Herb, 1 Alchol, 10 Empty Cylinder
+12428,29,2497,1,6285,0,504,20,509,10,970,1,1092,10
+//-- Vitata 500 <-- GN_S_PHARMACY Lv1, Quality Potion Book, 10 Blue Herb, 10 Grape, 10 Honey, 10 Empty Cylinder
+12436,29,2497,1,6285,0,510,10,514,10,518,10,1092,10
+//-- Enrich Celermine Juice <-- GN_S_PHARMACY Lv1, Quality Potion Book, 5 Center Potion, 5 Awakening Potion, 10 Empty Cylinder, 5 Hot Sauce
+12437,29,2497,1,6285,0,645,5,656,5,1092,10,7455,5
+//-- Cure Free <-- GN_S_PHARMACY Lv1, Quality Potion Book, 20 Green Herb, 1 Fruit Of Mastela, 5 Panacea, 1 Leaf Of Yggdrasil, 10 Empty Cylinder
+12475,29,2497,1,6285,0,511,20,522,1,525,5,610,1,1092,10
+//===============================================

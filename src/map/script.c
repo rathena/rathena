@@ -7835,7 +7835,7 @@ BUILDIN_FUNC(cooking)
 		return 0;
 
 	trigger=script_getnum(st,2);
-	clif_cooking_list(sd, trigger);
+	clif_cooking_list(sd, trigger, AM_PHARMACY, 1, 1);
 	return 0;
 }
 /*==========================================

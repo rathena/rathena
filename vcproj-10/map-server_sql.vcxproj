@@ -164,6 +164,7 @@
     <ClInclude Include="..\src\map\clif.h" />
     <ClInclude Include="..\src\map\date.h" />
     <ClInclude Include="..\src\map\duel.h" />
+	<ClInclude Include="..\src\map\elemental.h" />
     <ClInclude Include="..\src\map\guild.h" />
     <ClInclude Include="..\src\map\intif.h" />
     <ClInclude Include="..\src\map\itemdb.h" />
@@ -231,6 +232,7 @@
     <ClCompile Include="..\src\map\clif.c" />
     <ClCompile Include="..\src\map\date.c" />
     <ClCompile Include="..\src\map\duel.c" />
+	<ClCompile Include="..\src\map\elemental.c" />
     <ClCompile Include="..\src\map\guild.c" />
     <ClCompile Include="..\src\map\intif.c" />
     <ClCompile Include="..\src\map\itemdb.c" />

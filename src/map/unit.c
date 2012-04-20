@@ -16,6 +16,7 @@
 #include "homunculus.h"
 #include "instance.h"
 #include "mercenary.h"
+#include "elemental.h"
 #include "skill.h"
 #include "clif.h"
 #include "duel.h"
@@ -50,6 +51,7 @@ struct unit_data* unit_bl2ud(struct block_list *bl)
 	if( bl->type == BL_NPC) return &((struct npc_data*)bl)->ud;
 	if( bl->type == BL_HOM) return &((struct homun_data*)bl)->ud;
 	if( bl->type == BL_MER) return &((struct mercenary_data*)bl)->ud;
+	if( bl->type == BL_ELEM) return &((struct elemental_data*)bl)->ud;
 	return NULL;
 }
 
@@ -2006,148 +2008,155 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		skill_cleartimerskill(bl);
 	}
 
-	switch( bl->type )
-	{
-	case BL_PC:
-	{
-		struct map_session_data *sd = (struct map_session_data*)bl;
+	switch( bl->type ) {
+		case BL_PC: {
+			struct map_session_data *sd = (struct map_session_data*)bl;
 
-		//Leave/reject all invitations.
-		if(sd->chatID)
-			chat_leavechat(sd,0);
-		if(sd->trade_partner)
-			trade_tradecancel(sd);
-		vending_closevending(sd);
-		buyingstore_close(sd);
-		searchstore_close(sd);
-		if(sd->state.storage_flag == 1)
-			storage_storage_quit(sd,0);
-		else if (sd->state.storage_flag == 2)
-			storage_guild_storage_quit(sd,0);
-		sd->state.storage_flag = 0; //Force close it when being warped.
-		if(sd->party_invite>0)
-			party_reply_invite(sd,sd->party_invite,0);
-		if(sd->guild_invite>0)
-			guild_reply_invite(sd,sd->guild_invite,0);
-		if(sd->guild_alliance>0)
-			guild_reply_reqalliance(sd,sd->guild_alliance_account,0);
-		if(sd->menuskill_id)
-			sd->menuskill_id = sd->menuskill_val = 0;
-		if( sd->touching_id )
-			npc_touchnext_areanpc(sd,true);
+			//Leave/reject all invitations.
+			if(sd->chatID)
+				chat_leavechat(sd,0);
+			if(sd->trade_partner)
+				trade_tradecancel(sd);
+			vending_closevending(sd);
+			buyingstore_close(sd);
+			searchstore_close(sd);
+			if(sd->state.storage_flag == 1)
+				storage_storage_quit(sd,0);
+			else if (sd->state.storage_flag == 2)
+				storage_guild_storage_quit(sd,0);
+			sd->state.storage_flag = 0; //Force close it when being warped.
+			if(sd->party_invite>0)
+				party_reply_invite(sd,sd->party_invite,0);
+			if(sd->guild_invite>0)
+				guild_reply_invite(sd,sd->guild_invite,0);
+			if(sd->guild_alliance>0)
+				guild_reply_reqalliance(sd,sd->guild_alliance_account,0);
+			if(sd->menuskill_id)
+				sd->menuskill_id = sd->menuskill_val = 0;
+			if( sd->touching_id )
+				npc_touchnext_areanpc(sd,true);
 
-		sd->npc_shopid = 0;
-		sd->adopt_invite = 0;
+			sd->npc_shopid = 0;
+			sd->adopt_invite = 0;
 
-		if(sd->pvp_timer != INVALID_TIMER) {
-			delete_timer(sd->pvp_timer,pc_calc_pvprank_timer);
-			sd->pvp_timer = INVALID_TIMER;
-			sd->pvp_rank = 0;
-		}
-		if(sd->duel_group > 0)
-			duel_leave(sd->duel_group, sd);
-
-		if(pc_issit(sd)) {
-			pc_setstand(sd);
-			skill_sit(sd,0);
-		}
-		party_send_dot_remove(sd);//minimap dot fix [Kevin]
-		guild_send_dot_remove(sd);
-		bg_send_dot_remove(sd);
-
-		if( map[bl->m].users <= 0 || sd->state.debug_remove_map )
-		{// this is only place where map users is decreased, if the mobs were removed too soon then this function was executed too many times [FlavioJS]
-			if( sd->debug_file == NULL || !(sd->state.debug_remove_map) )
-			{
-				sd->debug_file = "";
-				sd->debug_line = 0;
-				sd->debug_func = "";
+			if(sd->pvp_timer != INVALID_TIMER) {
+				delete_timer(sd->pvp_timer,pc_calc_pvprank_timer);
+				sd->pvp_timer = INVALID_TIMER;
+				sd->pvp_rank = 0;
 			}
-			ShowDebug("unit_remove_map: unexpected state when removing player AID/CID:%d/%d"
-				" (active=%d connect_new=%d rewarp=%d changemap=%d debug_remove_map=%d)"
-				" from map=%s (users=%d)."
-				" Previous call from %s:%d(%s), current call from %s:%d(%s)."
-				" Please report this!!!\n",
-				sd->status.account_id, sd->status.char_id,
-				sd->state.active, sd->state.connect_new, sd->state.rewarp, sd->state.changemap, sd->state.debug_remove_map,
-				map[bl->m].name, map[bl->m].users,
-				sd->debug_file, sd->debug_line, sd->debug_func, file, line, func);
-		}
-		else
-		if (--map[bl->m].users == 0 && battle_config.dynamic_mobs)	//[Skotlex]
-			map_removemobs(bl->m);
-		if( !(sd->sc.option&OPTION_INVISIBLE) )
-		{// decrement the number of active pvp players on the map
-			--map[bl->m].users_pvp;
-		}
-		if( map[bl->m].instance_id )
-		{
-			instance[map[bl->m].instance_id].users--;
-			instance_check_idle(map[bl->m].instance_id);
-		}
-		sd->state.debug_remove_map = 1; // temporary state to track double remove_map's [FlavioJS]
-		sd->debug_file = file;
-		sd->debug_line = line;
-		sd->debug_func = func;
+			if(sd->duel_group > 0)
+				duel_leave(sd->duel_group, sd);
 
-		break;
-	}
-	case BL_MOB:
-	{
-		struct mob_data *md = (struct mob_data*)bl;
-		// Drop previous target mob_slave_keep_target: no.
-		if (!battle_config.mob_slave_keep_target)
-			md->target_id=0;
+			if(pc_issit(sd)) {
+				pc_setstand(sd);
+				skill_sit(sd,0);
+			}
+			party_send_dot_remove(sd);//minimap dot fix [Kevin]
+			guild_send_dot_remove(sd);
+			bg_send_dot_remove(sd);
 
-		md->attacked_id=0;
-		md->state.skillstate= MSS_IDLE;
+			if( map[bl->m].users <= 0 || sd->state.debug_remove_map )
+			{// this is only place where map users is decreased, if the mobs were removed too soon then this function was executed too many times [FlavioJS]
+				if( sd->debug_file == NULL || !(sd->state.debug_remove_map) )
+				{
+					sd->debug_file = "";
+					sd->debug_line = 0;
+					sd->debug_func = "";
+				}
+				ShowDebug("unit_remove_map: unexpected state when removing player AID/CID:%d/%d"
+					" (active=%d connect_new=%d rewarp=%d changemap=%d debug_remove_map=%d)"
+					" from map=%s (users=%d)."
+					" Previous call from %s:%d(%s), current call from %s:%d(%s)."
+					" Please report this!!!\n",
+					sd->status.account_id, sd->status.char_id,
+					sd->state.active, sd->state.connect_new, sd->state.rewarp, sd->state.changemap, sd->state.debug_remove_map,
+					map[bl->m].name, map[bl->m].users,
+					sd->debug_file, sd->debug_line, sd->debug_func, file, line, func);
+			}
+			else
+			if (--map[bl->m].users == 0 && battle_config.dynamic_mobs)	//[Skotlex]
+				map_removemobs(bl->m);
+			if( !(sd->sc.option&OPTION_INVISIBLE) )
+			{// decrement the number of active pvp players on the map
+				--map[bl->m].users_pvp;
+			}
+			if( map[bl->m].instance_id )
+			{
+				instance[map[bl->m].instance_id].users--;
+				instance_check_idle(map[bl->m].instance_id);
+			}
+			sd->state.debug_remove_map = 1; // temporary state to track double remove_map's [FlavioJS]
+			sd->debug_file = file;
+			sd->debug_line = line;
+			sd->debug_func = func;
 
-		break;
-	}
-	case BL_PET:
-	{
-		struct pet_data *pd = (struct pet_data*)bl;
-		if( pd->pet.intimate <= 0 && !(pd->msd && !pd->msd->state.active) )
-		{	//If logging out, this is deleted on unit_free
-			clif_clearunit_area(bl,clrtype);
-			map_delblock(bl);
-			unit_free(bl,CLR_OUTSIGHT);
-			map_freeblock_unlock();
-			return 0;
+			break;
 		}
+		case BL_MOB: {
+			struct mob_data *md = (struct mob_data*)bl;
+			// Drop previous target mob_slave_keep_target: no.
+			if (!battle_config.mob_slave_keep_target)
+				md->target_id=0;
 
-		break;
-	}
-	case BL_HOM:
-	{
-		struct homun_data *hd = (struct homun_data *)bl;
-		ud->canact_tick = ud->canmove_tick; //It appears HOM do reset the can-act tick.
-		if( !hd->homunculus.intimacy && !(hd->master && !hd->master->state.active) )
-		{	//If logging out, this is deleted on unit_free
-			clif_emotion(bl, E_SOB);
-			clif_clearunit_area(bl,clrtype);
-			map_delblock(bl);
-			unit_free(bl,CLR_OUTSIGHT);
-			map_freeblock_unlock();
-			return 0;
+			md->attacked_id=0;
+			md->state.skillstate= MSS_IDLE;
+
+			break;
 		}
-		break;
-	}
-	case BL_MER:
-	{
-		struct mercenary_data *md = (struct mercenary_data *)bl;
-		ud->canact_tick = ud->canmove_tick;
-		if( mercenary_get_lifetime(md) <= 0 && !(md->master && !md->master->state.active) )
-		{
-			clif_clearunit_area(bl,clrtype);
-			map_delblock(bl);
-			unit_free(bl,CLR_OUTSIGHT);
-			map_freeblock_unlock();
-			return 0;
+		case BL_PET: {
+			struct pet_data *pd = (struct pet_data*)bl;
+			if( pd->pet.intimate <= 0 && !(pd->msd && !pd->msd->state.active) )
+			{	//If logging out, this is deleted on unit_free
+				clif_clearunit_area(bl,clrtype);
+				map_delblock(bl);
+				unit_free(bl,CLR_OUTSIGHT);
+				map_freeblock_unlock();
+				return 0;
+			}
+
+			break;
 		}
-		break;
-	}
-	default: ;// do nothing
+		case BL_HOM: {
+			struct homun_data *hd = (struct homun_data *)bl;
+			ud->canact_tick = ud->canmove_tick; //It appears HOM do reset the can-act tick.
+			if( !hd->homunculus.intimacy && !(hd->master && !hd->master->state.active) )
+			{	//If logging out, this is deleted on unit_free
+				clif_emotion(bl, E_SOB);
+				clif_clearunit_area(bl,clrtype);
+				map_delblock(bl);
+				unit_free(bl,CLR_OUTSIGHT);
+				map_freeblock_unlock();
+				return 0;
+			}
+			break;
+		}
+		case BL_MER: {
+			struct mercenary_data *md = (struct mercenary_data *)bl;
+			ud->canact_tick = ud->canmove_tick;
+			if( mercenary_get_lifetime(md) <= 0 && !(md->master && !md->master->state.active) )
+			{
+				clif_clearunit_area(bl,clrtype);
+				map_delblock(bl);
+				unit_free(bl,CLR_OUTSIGHT);
+				map_freeblock_unlock();
+				return 0;
+			}
+			break;
+		}
+		case BL_ELEM: {
+			struct elemental_data *ed = (struct elemental_data *)bl;
+			ud->canact_tick = ud->canmove_tick;
+			if( elemental_get_lifetime(ed) <= 0 && !(ed->master && !ed->master->state.active) )
+			{
+				clif_clearunit_area(bl,clrtype);
+				map_delblock(bl);
+				unit_free(bl,0);
+				map_freeblock_unlock();
+				return 0;
+			}
+			break;
+		}			
+		default: break;// do nothing
 	}
 	/**
 	 * BL_MOB is handled by mob_dead unless the monster is not dead.
@@ -2391,6 +2400,24 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			merc_contract_stop(md);
 			break;
 		}
+		case BL_ELEM: {
+			struct elemental_data *ed = (TBL_ELEM*)bl;
+			struct map_session_data *sd = ed->master;
+			if( clrtype >= 0 ) {
+				if( elemental_get_lifetime(ed) > 0 )
+					elemental_save(ed);
+				else {
+					intif_elemental_delete(ed->elemental.elemental_id);
+					if( sd )
+						sd->status.ele_id = 0;
+				}
+			}
+			if( sd )
+				sd->ed = NULL;
+			
+			elemental_summon_stop(ed);
+			break;
+		}			
 	}
 
 	skill_clear_unitgroup(bl);

@@ -25,8 +25,8 @@ COMMON_SQL_OBJ = ../common/obj_sql/sql.o
 COMMON_H = ../common/sql.h
 
 CHAR_OBJ = obj_sql/char.o obj_sql/inter.o obj_sql/int_party.o obj_sql/int_guild.o \
-	obj_sql/int_storage.o obj_sql/int_pet.o obj_sql/int_homun.o obj_sql/int_mail.o obj_sql/int_auction.o obj_sql/int_quest.o obj_sql/int_mercenary.o
-CHAR_H = char.h inter.h int_party.h int_guild.h int_storage.h int_pet.h int_homun.h int_mail.h int_auction.h int_quest.h int_mercenary.h
+	obj_sql/int_storage.o obj_sql/int_pet.o obj_sql/int_homun.o obj_sql/int_mail.o obj_sql/int_auction.o obj_sql/int_quest.o obj_sql/int_mercenary.o obj_sql/int_elemental.o
+CHAR_H = char.h inter.h int_party.h int_guild.h int_storage.h int_pet.h int_homun.h int_mail.h int_auction.h int_quest.h int_mercenary.h int_elemental.h
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)

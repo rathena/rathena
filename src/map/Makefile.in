@@ -31,7 +31,7 @@ MAP_OBJ = map.o chrif.o clif.o pc.o status.o npc.o \
 	storage.o skill.o atcommand.o battle.o battleground.o \
 	intif.o trade.o party.o vending.o guild.o pet.o \
 	log.o mail.o date.o unit.o homunculus.o mercenary.o quest.o instance.o \
-	buyingstore.o searchstore.o duel.o pc_groups.o
+	buyingstore.o searchstore.o duel.o pc_groups.o elemental.o
 MAP_SQL_OBJ = $(MAP_OBJ:%=obj_sql/%) \
 	obj_sql/mapreg_sql.o
 MAP_H = map.h chrif.h clif.h pc.h status.h npc.h \
@@ -41,7 +41,7 @@ MAP_H = map.h chrif.h clif.h pc.h status.h npc.h \
 	log.h mail.h date.h unit.h homunculus.h mercenary.h quest.h instance.h mapreg.h \
 	buyingstore.h searchstore.h duel.h pc_groups.h \
 	config/core.h config/renewal.h config/secure.h config/const.h \
-	config/classes/general.h config/classes/swordsman.h
+	config/classes/general.h config/classes/swordsman.h elemental.h
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)

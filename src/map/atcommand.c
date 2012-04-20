@@ -34,6 +34,7 @@
 #include "homunculus.h"
 #include "mail.h"
 #include "mercenary.h"
+#include "elemental.h"
 #include "party.h"
 #include "guild.h"
 #include "script.h"
@@ -3764,6 +3765,7 @@ ACMD_FUNC(reloadmobdb)
 	read_petdb();
 	merc_reload();
 	read_mercenarydb();
+	reload_elementaldb();
 	clif_displaymessage(fd, msg_txt(98)); // Monster database has been reloaded.
 
 	return 0;
@@ -3777,6 +3779,7 @@ ACMD_FUNC(reloadskilldb)
 	nullpo_retr(-1, sd);
 	skill_reload();
 	merc_skill_reload();
+	reload_elemental_skilldb();
 	read_mercenary_skilldb();
 	clif_displaymessage(fd, msg_txt(99)); // Skill database has been reloaded.
 

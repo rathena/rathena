@@ -160,6 +160,7 @@ struct item_data* itemdb_exists(int nameid);
 #define itemdb_is_poison(n) (n >= 12717 && n <= 12724)
 #define itemid_isgemstone(id) ( (id) >= ITEMID_YELLOW_GEMSTONE && (id) <= ITEMID_BLUE_GEMSTONE )
 #define itemdb_iscashfood(id) ( (id) >= 12202 && (id) <= 12207 )
+#define itemdb_is_GNbomb(n) (n >= 13260 && n <= 13267)
 const char* itemdb_typename(int type);
 
 int itemdb_group_bonus(struct map_session_data* sd, int itemid);

@@ -592,6 +592,8 @@ typedef enum sc_type {
 	SC_SOULCOLD, //510
 	SC_HAWKEYES,
 	SC_ODINS_POWER,
+	
+	
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;
 
@@ -1038,7 +1040,7 @@ enum si_type {
 	SI_COLD = 437,
 	SI_GLOOMYDAY = 438,
 	SI_SONGOFMANA = 439,
-	SI_CLOUD_KILL = 440,
+	SI_CLOUDKILL = 440,
 	SI_DANCEWITHWUG = 441,
 	SI_RUSHWINDMILL = 442,
 	SI_ECHOSONG = 443,
@@ -1059,10 +1061,10 @@ enum si_type {
 	SI_FREEZE_SP = 458,
 	SI_GN_TRAINING_SWORD = 459,
 	SI_GN_REMODELING_CART = 460,
-	SI_GN_CARTBOOST = 461,
+	SI_CARTSBOOST = 461,
 	SI_FIXEDCASTINGTM_REDUCE = 462,
-	SI_THORNS_TRAP = 463,
-	SI_BLOOD_SUCKER = 464,
+	SI_THORNTRAP = 463,
+	SI_BLOODSUCKER = 464,
 	SI_SPORE_EXPLOSION = 465,
 	SI_DEMONIC_FIRE = 466,
 	SI_FIRE_EXPANSION_SMOKE_POWDER = 467,
@@ -1132,11 +1134,11 @@ enum si_type {
 	SI_STONE_SHIELD = 531,
 	SI_STONE_SHIELD_OPTION = 532,
 	SI_POWER_OF_GAIA = 533,
-	SI_EL_WAIT = 534,
-	SI_EL_PASSIVE = 535,
-	SI_EL_DEFENSIVE = 536,
-	SI_EL_OFFENSIVE = 537,
-	SI_EL_COST = 538,
+	//	SI_EL_WAIT = 534,
+	//	SI_EL_PASSIVE = 535,
+	//	SI_EL_DEFENSIVE = 536,
+	//	SI_EL_OFFENSIVE = 537,
+	//	SI_EL_COST = 538,
 	SI_PYROTECHNIC = 539,
 	SI_PYROTECHNIC_OPTION = 540,
 	SI_HEATER = 541,
@@ -1671,6 +1673,7 @@ int status_change_clear_buffs(struct block_list* bl, int type);
 #define status_calc_pc(sd, first) status_calc_bl_(&(sd)->bl, SCB_ALL, first)
 #define status_calc_homunculus(hd, first) status_calc_bl_(&(hd)->bl, SCB_ALL, first)
 #define status_calc_mercenary(md, first) status_calc_bl_(&(md)->bl, SCB_ALL, first)
+#define status_calc_elemental(ed, first) status_calc_bl_(&(ed)->bl, SCB_ALL, first)
 
 void status_calc_bl_(struct block_list *bl, enum scb_flag flag, bool first);
 int status_calc_mob_(struct mob_data* md, bool first);
@@ -1678,6 +1681,7 @@ int status_calc_pet_(struct pet_data* pd, bool first);
 int status_calc_pc_(struct map_session_data* sd, bool first);
 int status_calc_homunculus_(struct homun_data *hd, bool first);
 int status_calc_mercenary_(struct mercenary_data *md, bool first);
+int status_calc_elemental_(struct elemental_data *ed, bool first);
 
 void status_calc_misc(struct block_list *bl, struct status_data *status, int level);
 void status_calc_regen(struct block_list *bl, struct status_data *status, struct regen_data *regen);

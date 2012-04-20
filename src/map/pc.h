@@ -205,7 +205,7 @@ struct map_session_data {
 	short cook_mastery; // range: [0,1999] [Inkfish]
 	unsigned char blockskill[MAX_SKILL];
 	int cloneskill_id, reproduceskill_id;
-	int menuskill_id, menuskill_val;
+	int menuskill_id, menuskill_val, menuskill_val2;
 
 	int invincible_timer;
 	unsigned int canlog_tick;
@@ -377,6 +377,7 @@ struct map_session_data {
 	struct pet_data *pd;
 	struct homun_data *hd;	// [blackhole89]
 	struct mercenary_data *md;
+	struct elemental_data *ed;
 
 	struct{
 		int  m; //-1 - none, other: map index corresponding to map name.

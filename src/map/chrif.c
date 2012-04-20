@@ -22,6 +22,7 @@
 #include "homunculus.h"
 #include "instance.h"
 #include "mercenary.h"
+#include "elemental.h"
 #include "chrif.h"
 #include "quest.h"
 #include "storage.h"
@@ -307,6 +308,8 @@ int chrif_save(struct map_session_data *sd, int flag)
 		merc_save(sd->hd);
 	if( sd->md && mercenary_get_lifetime(sd->md) > 0 )
 		mercenary_save(sd->md);
+	if( sd->ed && elemental_get_lifetime(sd->ed) > 0 )
+		elemental_save(sd->ed);	
 	if( sd->save_quest )
 		intif_quest_save(sd);
 

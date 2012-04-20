@@ -154,6 +154,14 @@
 #define MAX_MERCSKILL 40
 #define MAX_MERCENARY_CLASS 44
 
+//Elemental System
+#define MAX_ELEMENTALSKILL 42
+#define EL_SKILLBASE 8401
+#define MAX_ELESKILLTREE 3
+#define MAX_ELEMENTAL_CLASS 12
+#define EL_CLASS_BASE 2114
+#define EL_CLASS_MAX (EL_CLASS_BASE+MAX_ELEMENTAL_CLASS-1)
+
 enum item_types {
 	IT_HEALING = 0,
 	IT_UNKNOWN, //1
@@ -292,6 +300,15 @@ struct s_mercenary {
 	unsigned int life_time;
 };
 
+struct s_elemental {
+	int elemental_id;
+	int char_id;
+	short class_;
+	int mode;
+	int hp, sp, max_hp, max_sp, str, agi, vit, int_, dex, luk;
+	int life_time;
+};
+
 struct s_friend {
 	int account_id;
 	int char_id;
@@ -324,7 +341,7 @@ struct mmo_charstatus {
 	short manner;
 	unsigned char karma;
 	short hair,hair_color,clothes_color;
-	int party_id,guild_id,pet_id,hom_id,mer_id;
+	int party_id,guild_id,pet_id,hom_id,mer_id,ele_id;
 	int fame;
 
 	// Mercenary Guilds Rank

@@ -23,6 +23,7 @@
 #include "mob.h"
 #include "homunculus.h"
 #include "mercenary.h"
+#include "elemental.h"
 #include "guild.h"
 #include "itemdb.h"
 #include "skill.h"
@@ -1896,6 +1897,15 @@ void mob_log_damage(struct mob_data *md, struct block_list *src, int damage)
 				md->attacked_id = src->id;
 			break;
 		}
+		case BL_ELEM:
+		{
+			struct elemental_data *ele = (TBL_ELEM*)src;
+			if( ele->master )
+				char_id = ele->master->status.char_id;
+			if( damage )
+				md->attacked_id = src->id;
+			break;
+		}			
 		default: //For all unhandled types.
 			md->attacked_id = src->id;
 	}
