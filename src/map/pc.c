@@ -5574,6 +5574,10 @@ int pc_need_status_point(struct map_session_data* sd, int type, int val)
 		return 0;
 
 	low = pc_getstat(sd,type);
+
+	if ( low >= pc_maxparameter(sd) && val > 0 )
+		return 0; // Official servers show '0' when max is reached
+
 	high = low + val;
 
 	if ( val < 0 )
