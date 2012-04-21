@@ -40,37 +40,42 @@ Slots: Amount of slots the item possesses.
 
 Job: Equippable jobs. Uses the following bitmask table:
 
-	(S.) Novice (2^00): 0x00000001
-	Swordman    (2^01): 0x00000002
-	Mage        (2^02): 0x00000004
-	Archer      (2^03): 0x00000008
-	Acolyte     (2^04): 0x00000010
-	Merchant    (2^05): 0x00000020
-	Thief       (2^06): 0x00000040
-	Knight      (2^07): 0x00000080
-	Priest      (2^08): 0x00000100
-	Wizard      (2^09): 0x00000200
-	Blacksmith  (2^10): 0x00000400
-	Hunter      (2^11): 0x00000800
-	Assassin    (2^12): 0x00001000
-	Unused      (2^13): 0x00002000
-	Crusader    (2^14): 0x00004000
-	Monk        (2^15): 0x00008000
-	Sage        (2^16): 0x00010000
-	Rogue       (2^17): 0x00020000
-	Alchemist   (2^18): 0x00040000
-	Bard/Dancer (2^19): 0x00080000
-	Unused      (2^20): 0x00100000
-	Taekwon     (2^21): 0x00200000
-	StarGladi   (2^22): 0x00400000
-	Soul Linker (2^23): 0x00800000
-	Gunslinger  (2^24): 0x01000000
-	Ninja       (2^25): 0x02000000
+	(S.) Novice    (2^00): 0x00000001
+	Swordman       (2^01): 0x00000002
+	Magician       (2^02): 0x00000004
+	Archer         (2^03): 0x00000008
+	Acolyte        (2^04): 0x00000010
+	Merchant       (2^05): 0x00000020
+	Thief          (2^06): 0x00000040
+	Knight         (2^07): 0x00000080
+	Priest         (2^08): 0x00000100
+	Wizard         (2^09): 0x00000200
+	Blacksmith     (2^10): 0x00000400
+	Hunter         (2^11): 0x00000800
+	Assassin       (2^12): 0x00001000
+	Unused         (2^13): 0x00002000
+	Crusader       (2^14): 0x00004000
+	Monk           (2^15): 0x00008000
+	Sage           (2^16): 0x00010000
+	Rogue          (2^17): 0x00020000
+	Alchemist      (2^18): 0x00040000
+	Bard/Dancer    (2^19): 0x00080000
+	Unused         (2^20): 0x00100000
+	Taekwon        (2^21): 0x00200000
+	Star Gladiator (2^22): 0x00400000
+	Soul Linker    (2^23): 0x00800000
+	Gunslinger     (2^24): 0x01000000
+	Ninja          (2^25): 0x02000000
+	Gangsi         (2^26): 0x04000000
+	Death Knight   (2^27): 0x08000000
+	Dark Collector (2^28): 0x10000000
+	Kagerou/Oboro  (2^29): 0x20000000
 
 Upper: Equippable upper-types. Uses the following bitmasks:
 	1: Normal jobs
 	2: Upper jobs
 	4: Baby jobs
+	8: Third jobs
 
 Gender: Gender restriction. 0 is female, 1 is male, 2 for both.
 
@@ -132,6 +137,8 @@ View: For normal items, defines a replacement view-sprite for the item (eg:
 		5: Grenades
 		6: Shuriken
 		7: Kunai
+		7: Cannonballs
+		7: Throwable Items (Sling Item)
 
 Script: Script to execute when the item is used/equipped.
 
