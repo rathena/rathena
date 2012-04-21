@@ -9611,12 +9611,12 @@ void clif_parse_Emotion(int fd, struct map_session_data *sd)
 			return;
 		}
 		// fix flood of emotion icon (ro-proxy): flood only the hacker player
-		if (sd->emotionlasttime >= time(NULL)) {
-			sd->emotionlasttime = time(NULL) + 1; // not more than 1 per second (using /commands the client can spam it)
+		if (sd->emotionlasttime + 1 >= time(NULL)) { // not more than 1 per second
+			sd->emotionlasttime = time(NULL);
 			clif_skill_fail(sd, 1, USESKILL_FAIL_LEVEL, 1);
 			return;
 		}
-		sd->emotionlasttime = time(NULL) + 1; // not more than 1 per second (using /commands the client can spam it)
+		sd->emotionlasttime = time(NULL);
 
 		if(battle_config.client_reshuffle_dice && emoticon>=E_DICE1 && emoticon<=E_DICE6)
 		{// re-roll dice

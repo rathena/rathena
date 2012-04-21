@@ -3360,12 +3360,14 @@ Return values for 'checkvending' are
 'checkchatting' returns 1 if they are in a chat room, 0 if they are not.
 
 Example(s):
-if (checkVending("Aaron")) mes "Aaron is currently vending!";
 	//This will check if Aaron is vending, and if so, put a message in front
 	//of the attached player saying Aaron is vending.
+	if (checkvending("Aaron"))
+		mes "Aaron is currently vending!";
 
-if (checkChatting()) mes "You are currently chatting!";
-	//This will check if you're in a chat room or not
+	//This will check if the attached player in a chat room or not.
+	if (checkchatting())
+		mes "You are currently in a chat room!";
 
 ---------------------------------------
 

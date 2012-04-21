@@ -78,7 +78,7 @@ OnStartArena:
 	else if (strnpcinfo(2) == "gefg_cas05") { setarray .@emproom[0],194,184; }
 	else if (strnpcinfo(2) == "payg_cas01") { setarray .@emproom[0],139,139; }
 	else if (strnpcinfo(2) == "payg_cas02") { setarray .@emproom[0],38,25; }
-	else if (strnpcinfo(2) == "payg_cas03") { setarray .@emproom[0],268,264; }
+	else if (strnpcinfo(2) == "payg_cas03") { setarray .@emproom[0],269,265; }
 	else if (strnpcinfo(2) == "payg_cas04") { setarray .@emproom[0],270,28; }
 	else if (strnpcinfo(2) == "payg_cas05") { setarray .@emproom[0],30,30; }
 	else if (strnpcinfo(2) == "prtg_cas01") { setarray .@emproom[0],197,197; }
@@ -235,7 +235,7 @@ OnRecvCastle:
 			// Set Emperium room spawn coordinates and spawn monsters.
 			if (strnpcinfo(2) == "payg_cas01") { setarray .@emproom[0],139,139; }
 			else if (strnpcinfo(2) == "payg_cas02") { setarray .@emproom[0],38,25; }
-			else if (strnpcinfo(2) == "payg_cas03") { setarray .@emproom[0],268,264; }
+			else if (strnpcinfo(2) == "payg_cas03") { setarray .@emproom[0],269,265; }
 			else if (strnpcinfo(2) == "payg_cas04") { setarray .@emproom[0],270,28; }
 			else if (strnpcinfo(2) == "payg_cas05") { setarray .@emproom[0],30,30; }
 			monster strnpcinfo(2),.@emproom[0],.@emproom[1],"Moonlight Flower",1150,1;

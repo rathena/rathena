@@ -6177,6 +6177,13 @@ ACMD_FUNC(pettalk)
 		ARR_FIND( 0, ARRAYLENGTH(emo), i, stricmp(message, emo[i]) == 0 );
 		if( i < ARRAYLENGTH(emo) )
 		{
+			if (sd->emotionlasttime + 1 >= time(NULL)) { // not more than 1 per second
+					sd->emotionlasttime = time(NULL);
+					clif_skill_fail(sd, 1, 0, 1);
+					return 0;
+			}
+			sd->emotionlasttime = time(NULL);
+			
 			clif_emotion(&pd->bl, i);
 			return 0;
 		}
