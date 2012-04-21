@@ -167,6 +167,8 @@ struct mob_data {
 	 * Used to flag summon deletions, saves a worth amount of memory
 	 **/
 	bool can_summon : 1;
+
+	int tomb_nid;
 };
 
 

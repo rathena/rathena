@@ -62,6 +62,11 @@ struct npc_data {
 			short x,y; // destination coords
 			unsigned short mapindex; // destination map
 		} warp;
+		struct {
+			struct mob_data *md;
+			time_t kill_time;
+			char *killer_name;
+		} tomb;
 	} u;
 };
 

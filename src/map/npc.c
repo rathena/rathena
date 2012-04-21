@@ -1078,6 +1078,31 @@ int npc_globalmessage(const char* name, const char* mes)
 	return 0;
 }
 
+// MvP tomb [GreenBox]
+void run_tomb(struct map_session_data* sd, struct npc_data* nd)
+{
+	char buffer[200];
+    char time[10];
+	
+    strftime(time, sizeof(time), "%H:%M", localtime(&nd->u.tomb.kill_time));
+
+	// TODO: Find exact color?
+	snprintf(buffer, sizeof(buffer), msg_txt(657), nd->u.tomb.md->db->name);
+    clif_scriptmes(sd, nd->bl.id, buffer);
+
+    clif_scriptmes(sd, nd->bl.id, msg_txt(658));
+
+    snprintf(buffer, sizeof(buffer), msg_txt(659), time);
+    clif_scriptmes(sd, nd->bl.id, buffer);
+	
+    clif_scriptmes(sd, nd->bl.id, msg_txt(660));
+
+	snprintf(buffer, sizeof(buffer), msg_txt(661), nd->u.tomb.killer_name ? nd->u.tomb.killer_name : "Unknown");
+    clif_scriptmes(sd, nd->bl.id, buffer);
+
+    clif_scriptclose(sd, nd->bl.id);
+}
+
 /*==========================================
  * ƒNƒŠƒbƒN‚ÌNPCˆ—
  *------------------------------------------*/
@@ -1107,6 +1132,8 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
 	case SCRIPT:
 		run_script(nd->u.scr.script,0,sd->bl.id,nd->bl.id);
 		break;
+	case TOMB:
+		run_tomb(sd,nd);
 	}
 
 	return 0;
