@@ -2180,6 +2180,8 @@ void unit_remove_map_pc(struct map_session_data *sd, clr_type clrtype)
 		unit_remove_map(&sd->hd->bl, clrtype);
 	if(sd->md)
 		unit_remove_map(&sd->md->bl, clrtype);
+	if(sd->ed)
+		unit_remove_map(&sd->ed->bl, clrtype);
 }
 
 void unit_free_pc(struct map_session_data *sd)
@@ -2187,6 +2189,7 @@ void unit_free_pc(struct map_session_data *sd)
 	if (sd->pd) unit_free(&sd->pd->bl,CLR_OUTSIGHT);
 	if (sd->hd) unit_free(&sd->hd->bl,CLR_OUTSIGHT);
 	if (sd->md) unit_free(&sd->md->bl,CLR_OUTSIGHT);
+	if (sd->ed) unit_free(&sd->ed->bl,CLR_OUTSIGHT);
 	unit_free(&sd->bl,CLR_TELEPORT);
 }
 
