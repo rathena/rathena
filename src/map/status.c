@@ -8708,6 +8708,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	case SC_CLOAKINGEXCEED:
 	case SC__INVISIBILITY:
 		sc->option &= ~OPTION_CLOAK;
+	case SC_CAMOUFLAGE:
 		opt_flag|= 2;
 		break;
 	case SC_CHASEWALK:
