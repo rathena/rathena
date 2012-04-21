@@ -147,6 +147,39 @@ void do_final_msg(void)
 		aFree(msg_table[i]);
 }
 
+/**
+ * retrieves the help string associated with a given command.
+ *
+ * @param name the name of the command to retrieve help information for
+ * @return the string associated with the command, or NULL
+ */
+static const char* atcommand_help_string(const char* name)
+{
+	const char* str = NULL;
+	config_setting_t* info;
+
+	if( *name == atcommand_symbol || *name == charcommand_symbol )
+	{// remove the prefix symbol for the raw name of the command
+		name ++;
+	}
+
+	// attept to find the first default help command
+	info = config_lookup(&atcommand_config, "help");
+
+	if( info == NULL )
+	{// failed to find the help property in the configuration file
+		return NULL;
+	}
+	
+	if( !config_setting_lookup_string( info, name, &str ) )
+	{// failed to find the matching help string
+		return NULL;
+	}
+
+	// push the result from the method
+	return str;
+}
+
 
 /*==========================================
  * @send (used for testing packet sends from the client)
@@ -869,8 +902,21 @@ ACMD_FUNC(option)
 	int param1 = 0, param2 = 0, param3 = 0;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || sscanf(message, "%d %d %d", &param1, &param2, &param3) < 1 || param1 < 0 || param2 < 0 || param3 < 0) {
-		clif_displaymessage(fd, "Please, enter at least a option (usage: @option <param1:0+> <param2:0+> <param3:0+>).");
+	if (!message || !*message || sscanf(message, "%d %d %d", &param1, &param2, &param3) < 1 || param1 < 0 || param2 < 0 || param3 < 0)
+	{// failed to match the parameters so inform the user of the options
+		const char* text = NULL;
+
+		// attempt to find the setting information for this command
+		text = atcommand_help_string( command );
+
+		// notify the user of the requirement to enter an option
+		clif_displaymessage(fd, "Please, enter at least one option..");
+
+		if( text )
+		{// send the help text associated with this command
+			clif_displaymessage( fd, text );
+		}
+
 		return -1;
 	}
 
@@ -1078,6 +1124,7 @@ ACMD_FUNC(jobchange)
 			}
 		}
 
+		// TODO: convert this to use atcommand_help_string()
 		if (!found) {
 			clif_displaymessage(fd, "Please, enter a job ID (usage: @job/@jobchange <job name/ID>).");
 			clif_displaymessage(fd, "----- Novice / 1st Class -----");
@@ -1145,6 +1192,7 @@ ACMD_FUNC(jobchange)
 			return -1;
 		}
 	} else {
+			// TODO: convert this to use atcommand_help_string()
 			clif_displaymessage(fd, "Please enter a valid job ID (usage: @job/@jobchange <job name/ID>).");
 			clif_displaymessage(fd, "----- Novice / 1st Class -----");
 			clif_displaymessage(fd, "   0 Novice              1 Swordman            2 Magician            3 Archer");
@@ -1950,22 +1998,21 @@ ACMD_FUNC(go)
 	// get the number
 	town = atoi(message);
  
-	// if no value, display all value
-	if (!message || !*message || sscanf(message, "%11s", map_name) < 1 || town < 0 || town >= ARRAYLENGTH(data)) {
-		clif_displaymessage(fd, msg_txt(38)); // Invalid location number, or name.
-		clif_displaymessage(fd, msg_txt(82)); // Please provide a name or number from the list provided:
-		clif_displaymessage(fd, " 0=Prontera         1=Morroc       2=Geffen");
-		clif_displaymessage(fd, " 3=Payon            4=Alberta      5=Izlude");
-		clif_displaymessage(fd, " 6=Al De Baran      7=Lutie        8=Comodo");
-		clif_displaymessage(fd, " 9=Yuno             10=Amatsu      11=Gonryun");
-		clif_displaymessage(fd, " 12=Umbala          13=Niflheim    14=Louyang");
-		clif_displaymessage(fd, " 15=Novice Grounds  16=Prison      17=Jawaii");
-		clif_displaymessage(fd, " 18=Ayothaya        19=Einbroch    20=Lighthalzen");
-		clif_displaymessage(fd, " 21=Einbech         22=Hugel       23=Rachel");
-		clif_displaymessage(fd, " 24=Veins        25=Moscovia    26=Midgard Camp");
-		clif_displaymessage(fd, " 27=Manuk        28=Splendide    29=Brasilis");
-		clif_displaymessage(fd, " 30=El Dicastes     31=Mora      32=Dewata");
-		clif_displaymessage(fd, " 33=Malangdo Island  34=Malaya Port  35=Eclage");
+	if (!message || !*message || sscanf(message, "%11s", map_name) < 1 || town < 0 || town >= ARRAYLENGTH(data))
+	{// no value matched so send the list of locations
+		const char* text;
+
+		// attempt to find the text help string
+		text = atcommand_help_string( command );
+
+		// Invalid location number, or name.
+		clif_displaymessage(fd, msg_txt(38));
+
+		if( text )
+		{// send the text to the client
+			clif_displaymessage( fd, text );
+		}
+		
 		return -1;
 	}
 
@@ -3333,8 +3380,21 @@ ACMD_FUNC(questskill)
 	int skill_id;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || (skill_id = atoi(message)) < 0) {
-		clif_displaymessage(fd, "Please, enter a quest skill number (usage: @questskill <#:0+>).");
+	if (!message || !*message || (skill_id = atoi(message)) < 0)
+	{// also send a list of skills applicable to this command
+		const char* text;
+
+		// attempt to find the text corresponding to this command
+		text = atcommand_help_string( command );
+
+		// send the error message as always
+		clif_displaymessage(fd, "Please enter a quest skill number.");
+
+		if( text )
+		{// send the skill ID list associated with this command
+			clif_displaymessage( fd, text );
+		}
+
 		return -1;
 	}
 	if (skill_id < 0 && skill_id >= MAX_SKILL_DB) {
@@ -3364,8 +3424,21 @@ ACMD_FUNC(lostskill)
 	int skill_id;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || (skill_id = atoi(message)) < 0) {
-		clif_displaymessage(fd, "Please, enter a quest skill number (usage: @lostskill <#:0+>).");
+	if (!message || !*message || (skill_id = atoi(message)) < 0)
+	{// also send a list of skills applicable to this command
+		const char* text;
+
+		// attempt to find the text corresponding to this command
+		text = atcommand_help_string( command );
+		
+		// send the error message as always
+		clif_displaymessage(fd, "Please enter a quest skill number.");
+
+		if( text )
+		{// send the skill ID list associated with this command
+			clif_displaymessage( fd, text );
+		}
+
 		return -1;
 	}
 	if (skill_id < 0 && skill_id >= MAX_SKILL) {
