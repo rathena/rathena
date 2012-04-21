@@ -13,6 +13,7 @@ message( STATUS "Creating target char-server_sql" )
 set( SQL_CHAR_HEADERS
 	"${CMAKE_CURRENT_SOURCE_DIR}/char.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/int_auction.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/int_elemental.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/int_guild.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/int_homun.h"
 	"${CMAKE_CURRENT_SOURCE_DIR}/int_mail.h"
@@ -26,6 +27,7 @@ set( SQL_CHAR_HEADERS
 set( SQL_CHAR_SOURCES
 	"${CMAKE_CURRENT_SOURCE_DIR}/char.c"
 	"${CMAKE_CURRENT_SOURCE_DIR}/int_auction.c"
+	"${CMAKE_CURRENT_SOURCE_DIR}/int_elemental.c"
 	"${CMAKE_CURRENT_SOURCE_DIR}/int_guild.c"
 	"${CMAKE_CURRENT_SOURCE_DIR}/int_homun.c"
 	"${CMAKE_CURRENT_SOURCE_DIR}/int_mail.c"
