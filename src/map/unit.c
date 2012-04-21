@@ -1080,7 +1080,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 		return 0;
 
 	//Normally not needed because clif.c checks for it, but the at/char/script commands don't! [Skotlex]
-	if(ud->skilltimer != INVALID_TIMER && skill_num != SA_CASTCANCEL)
+	if(ud->skilltimer != INVALID_TIMER && skill_num != SA_CASTCANCEL && skill_num != SO_SPELLFIST)
 		return 0;
 
 	if(skill_get_inf2(skill_num)&INF2_NO_TARGET_SELF && src->id == target_id)
@@ -1094,6 +1094,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 	if(sd) {
 		switch(skill_num){
 		case SA_CASTCANCEL:
+		case SO_SPELLFIST:
 			if(ud->skillid != skill_num){
 				sd->skillid_old = ud->skillid;
 				sd->skilllv_old = ud->skilllv;
