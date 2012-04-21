@@ -542,6 +542,16 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 				status_change_end(bl, SC_AETERNA, INVALID_TIMER); //Shouldn't end until Breaker's non-weapon part connects.
 		}
 
+#ifdef RENEWAL
+		if( sc->data[SC_RAID] )
+		{
+			damage += 20*damage/100;
+
+			if (--sc->data[SC_RAID]->val1 == 0)
+				status_change_end(bl, SC_RAID, INVALID_TIMER);
+		}
+#endif
+
 		if( damage ) {
 
 			if( sc->data[SC_DEEPSLEEP] ) {

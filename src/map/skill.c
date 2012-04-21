@@ -930,6 +930,10 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case RG_RAID:
 		sc_start(bl,SC_STUN,(10+3*skilllv),skilllv,skill_get_time(skillid,skilllv));
 		sc_start(bl,SC_BLIND,(10+3*skilllv),skilllv,skill_get_time2(skillid,skilllv));
+
+#ifdef RENEWAL
+		sc_start(bl,SC_RAID,100,7,5000);
+#endif
 		break;
 
 	case BA_FROSTJOKER:

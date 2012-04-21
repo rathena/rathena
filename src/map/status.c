@@ -282,6 +282,7 @@ void initChangeTables(void)
 	set_sc( NPC_HALLUCINATION    , SC_HALLUCINATION   , SI_HALLUCINATION   , SCB_NONE );
 	add_sc( NPC_REBIRTH          , SC_REBIRTH         );
 	add_sc( RG_RAID              , SC_STUN            );
+	add_sc( RG_RAID              , SC_RAID            );
 	set_sc( RG_STRIPWEAPON       , SC_STRIPWEAPON     , SI_STRIPWEAPON     , SCB_WATK );
 	set_sc( RG_STRIPSHIELD       , SC_STRIPSHIELD     , SI_STRIPSHIELD     , SCB_DEF );
 	set_sc( RG_STRIPARMOR        , SC_STRIPARMOR      , SI_STRIPARMOR      , SCB_VIT );
