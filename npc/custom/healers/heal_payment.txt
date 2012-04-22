@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 2.0
+//= 1.3
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -13,39 +13,12 @@
 //= each HP need 1 zeny
 //= each SP need (baselevel / 5) zenys
 //= calculation is done at start of the script
+//= Added Duplicates And Correct payon Loc [Darkchild]
+//= Some modifications. Added NPC locations. [massdriller]
+//= Removed Duplicates [Silent]
 //============================================================
 
 -	script	healer2	-1,{
-	set .@hp, MaxHp - Hp;
-	set .@sp, MaxSp - Sp;
-	
-	
-	
-	
-	
-	mes "[Healer]";
-	mes "I have amazing healing powers!!";
-	mes "You look like a person who needs them";
-	mes "Want some?";
-	next;
-	switch(select("Heal:No thanks")) {
-	case 1:
-		percentheal 100,100;
-		mes "[Healer]";
-		mes "Wonderfull, You are now healed!.";
-		mes "Have fun adventuring!!";
-		break;
-	case 2:
-		mes "[Healer]";
-		mes "Alright, come back if you need a heal.";
-		break;
-	}
-	close;
-}
-
-
-
-
 	set @tempHp, MaxHp-Hp;
 	set @tempSpReal, MaxSp-Sp;
 	set @tempSp, ((MaxSp-Sp) * BaseLevel) / 5;
