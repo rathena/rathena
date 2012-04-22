@@ -3582,7 +3582,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			 * Damage from magic = Magic Attack * 111.5/(111.5+eMDEF) 
 			 * Damage = Magic Attack * 111.5/(111.5+eMDEF) - sMDEF 
 			 **/
-			ad.damage = ad.damage * ((1115/10) - mdef)/(1115/10) - mdef2;
+			ad.damage = ad.damage * 1115 / (1115 + mdef * 10) - mdef2;
 		#else
 			if(battle_config.magic_defense_type)
 				ad.damage = ad.damage - mdef*battle_config.magic_defense_type - mdef2;
