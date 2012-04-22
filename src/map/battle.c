@@ -3202,17 +3202,67 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						if (battle_check_undead(tstatus->race,tstatus->def_ele))
 							skillratio += 5*skill_lv;
 						break;
-					case MG_FIREWALL:
-						skillratio -= 50;
+					case MG_FIREWALL: {
+							struct status_change *sc = status_get_sc(src);
+							skillratio -= 50;
+							if( sc && sc->data[SC_PYROTECHNIC_OPTION] )
+								skillratio += skillratio * sc->data[SC_PYROTECHNIC_OPTION]->val3 / 100;
+						}
 						break;
-				/**
-				 * in Renewal Thunder Storm boost is 100% (in pre-re, 80%)
-				 **/
-				#ifndef RENEWAL
-					case MG_THUNDERSTORM:
-						skillratio -= 20;
+					case MG_COLDBOLT: {
+							struct status_change *sc = status_get_sc(src);
+							if ( sc && sc->count ) {
+								if ( sc->data[SC_SPELLFIST] && (!sd || !sd->state.autocast) )  {
+									skillratio += (sc->data[SC_SPELLFIST]->val4 * 100) + (sc->data[SC_SPELLFIST]->val2 * 100) - 100;// val4 = used bolt level, val2 = used spellfist level. [Rytech]
+									ad.div_ = 1;// ad mods, to make it work similar to regular hits [Xazax]
+									ad.flag = BF_WEAPON|BF_SHORT;
+									ad.type = 0;
+								}
+								if( sc->data[SC_AQUAPLAY_OPTION] )
+									skillratio += skillratio * sc->data[SC_AQUAPLAY_OPTION]->val3 / 100;
+							}
+						}
 						break;
-				#endif
+					case MG_FIREBOLT: {
+							struct status_change *sc = status_get_sc(src);
+							if ( sc && sc->count ) {
+								if ( sc->data[SC_SPELLFIST] && (!sd || !sd->state.autocast) ) {
+									skillratio += (sc->data[SC_SPELLFIST]->val4 * 100) + (sc->data[SC_SPELLFIST]->val2 * 100) - 100;
+									ad.div_ = 1;
+									ad.flag = BF_WEAPON|BF_SHORT;
+									ad.type = 0;
+								}
+								if( sc->data[SC_PYROTECHNIC_OPTION] )
+									skillratio += skillratio * sc->data[SC_PYROTECHNIC_OPTION]->val3 / 100;
+							}
+						}
+						break;		
+					case MG_LIGHTNINGBOLT: {
+							struct status_change *sc = status_get_sc(src);
+							if ( sc && sc->count ) {
+								if ( sc->data[SC_SPELLFIST] && (!sd || !sd->state.autocast) ) {
+									skillratio += (sc->data[SC_SPELLFIST]->val4 * 100) + (sc->data[SC_SPELLFIST]->val2 * 100) - 100;
+									ad.div_ = 1;
+									ad.flag = BF_WEAPON|BF_SHORT;
+									ad.type = 0;
+								}
+								if( sc->data[SC_GUST_OPTION] )
+									skillratio += skillratio * sc->data[SC_GUST_OPTION]->val2 / 100;
+							}
+						}
+						break;
+					case MG_THUNDERSTORM: {
+						struct status_change *sc = status_get_sc(src);
+						/**
+						 * in Renewal Thunder Storm boost is 100% (in pre-re, 80%)
+						 **/
+						#ifndef RENEWAL
+							skillratio -= 20;
+						#endif
+						if( sc && sc->data[SC_GUST_OPTION] )
+							skillratio += skillratio * sc->data[SC_GUST_OPTION]->val2 / 100;
+						}
+						break;
 					case MG_FROSTDIVER:
 						skillratio += 10*skill_lv;
 						break;
@@ -4285,10 +4335,16 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 
 	wd = battle_calc_attack(BF_WEAPON, src, target, 0, 0, flag);
 	
-	if(sc) {
+	if( sc && sc->count ) {
 		if (sc->data[SC_EXEEDBREAK]) {
 			wd.damage = wd.damage * sc->data[SC_EXEEDBREAK]->val1 / 100;
 			status_change_end(src, SC_EXEEDBREAK, INVALID_TIMER);
+		}
+		if( sc->data[SC_SPELLFIST] ) {
+			if( --(sc->data[SC_SPELLFIST]->val1) >= 0 )
+				wd = battle_calc_attack(BF_MAGIC,src,target,sc->data[SC_SPELLFIST]->val3,sc->data[SC_SPELLFIST]->val4,flag);
+			else
+				status_change_end(src,SC_SPELLFIST,-1);
 		}
 		if( sc->data[SC_GIANTGROWTH] && (wd.flag&BF_SHORT) && rand()%100 < sc->data[SC_GIANTGROWTH]->val2 )
 			wd.damage *= 3; // Triple Damage
