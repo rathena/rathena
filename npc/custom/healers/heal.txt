@@ -1,54 +1,53 @@
 //===== rAthena Script =======================================
 //= Healer
 //===== By: ==================================================
-//= lots of people
+//= rAthena Dev Team
 //===== Current Version: =====================================
-//= 3.1
+//= 3.2
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
 //= Healer NPC Which Heals For Free
 //===== Additional Comments: =================================
-//= 2.0 Duplicates And Changed A Bit you can replace this script file by 
-//= heal_payment.txt if you want that players have to pay their healings. [Darkchild]
-//= 3.0 Changed and edited the script added other warp points of maps. [massdriller]
-//= 3.1 Optimized for the greater good. [Kisuka]
+//= 
 //============================================================
 
--	script	Healer#h1-1::Healer	742,{
+-	script	healer	-1,{
 	callfunc "F_ClearGarbage",0;
-	
 	mes "[Healer]";
 	mes "I have amazing healing powers!!";
 	mes "You look like a person who needs them";
 	mes "Want some?";
 	next;
-	if (select("Heal:No thanks") == 1) {
+	switch(select("Heal:No thanks")) {
+	case 1:
 		percentheal 100,100;
 		mes "[Healer]";
 		mes "Wonderfull, You are now healed!.";
 		mes "Have fun adventuring!!";
-	} else {
+		break;
+	case 2:
 		mes "[Healer]";
 		mes "Alright, come back if you need a heal.";
+		break;
 	}
 	close;
 }
 
-// --------- NPC Clones ---------
-prontera,150,184,5	duplicate(Healer)	Healer#h1-1	742
-morocc,159,96,5	duplicate(Healer)	Healer#h1-2	742
-ayothaya,155,111,5	duplicate(Healer)	Healer#h1-3	742
-geffen,121,61,5	duplicate(Healer)	Healer#h1-4	742
-umbala,94,162,5	duplicate(Healer)	Healer#h1-5	742
-payon,180,105,5	duplicate(Healer)	Healer#h1-6	742
-alberta,185,144,5	duplicate(Healer)	Healer#h1-7	742
-aldebaran,134,123,5	duplicate(Healer)	Healer#h1-8	742
-izlude,125,118,5	duplicate(Healer)	Healer#h1-9	742
-xmas,149,136,5	duplicate(Healer)	Healer#h1-10	742
-comodo,188,162,5	duplicate(Healer)	Healer#h1-11	742
-amatsu,200,80,5	duplicate(Healer)	Healer#h1-12	742
-gonryun,164,130,5	duplicate(Healer)	Healer#h1-13	742
-yuno,152,186,5	duplicate(Healer)	Healer#h1-14	742
-niflheim,188,180,5	duplicate(Healer)	Healer#h1-15	742
-louyang,225,103,5	duplicate(Healer)	Healer#h1-16	742
+// NPC Duplicates
+alberta,185,144,5	duplicate(healer)	Healer#alb	742
+aldebaran,134,123,5	duplicate(healer)	Healer#alde	742
+amatsu,200,80,5	duplicate(healer)	Healer#ama	742
+ayothaya,155,111,5	duplicate(healer)	Healer#ayo	742
+comodo,188,162,5	duplicate(healer)	Healer#com	742
+geffen,121,61,5	duplicate(healer)	Healer#gef	742
+gonryun,164,130,5	duplicate(healer)	Healer#gon	742
+izlude,125,118,5	duplicate(healer)	Healer#izl	742
+louyang,225,103,5	duplicate(healer)	Healer#lou	742
+morocc,159,96,5	duplicate(healer)	Healer#mor	742
+niflheim,188,180,5	duplicate(healer)	Healer#nif	742
+payon,180,105,5	duplicate(healer)	Healer#pay	742
+prontera,150,184,5	duplicate(healer)	Healer#pront	742
+umbala,94,162,5	duplicate(healer)	Healer#umb	742
+xmas,149,136,5	duplicate(healer)	Healer#xmas	742
+yuno,152,186,5	duplicate(healer)	Healer#yuno	742
