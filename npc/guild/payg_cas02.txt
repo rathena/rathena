@@ -3,37 +3,29 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= NPCs that relate to Payon Guild Castle 2
+//= NPCs that relate to Payon Guild Castle 1
 //===== Additional Comments: =================================
 //= 1.0 First Version. No longer uses functions. [L0ne_W0lf]
 //= 1.1 Corrected flag-in spawn point. [L0ne_W0lf]
 //= 1.2 Removed dialog from interior flags. [L0ne_W0lf]
+//=     Fixed position of Guild dungeon switch.
+//= 1.3 Partially rewrote Script. [Masao]
 //============================================================
 
-// Guild Flag (Town)
+// Guild Flags (Outside Castle)
 //============================================================
-payon,166,173,3	script	Scarlet Palace#f2-1::ScarletPalace	722,{
-	end;
+-	script	Sacred Palace#1::OutsideFlagsPA2	722,{
 
-OnRecvCastlePy02:
-	FlagEmblem GetCastleData("payg_cas02",1);
-	end;
-}
-
-payon,97,322,4	duplicate(ScarletPalace)	Scarlet Palace#f2-2	722
-
-// Guild Flag (Outside Castle)
-//============================================================
-pay_gld,292,112,6	script	Scarlet Palace#f2-3::ScarletPalace2	722,{
 	set .@GID, GetCastleData("payg_cas02",1);
+
 	if (.@GID == 0) {
-		mes " [ Edict of the Divine Rune Midgard Kingdom ]";
+		mes "[ Edict of the Divine Rune-Midgarts Kingdom ]";
 		mes " ";
-		mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
+		mes "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, ";
 		mes "We declare that";
 		mes "there is no formal master of this castle.";
 		mes " ";
@@ -42,33 +34,33 @@ pay_gld,292,112,6	script	Scarlet Palace#f2-3::ScarletPalace2	722,{
 		mes "and destroy the Emperium,";
 		mes "the king will endow the one with";
 		mes "ownership of this castle.";
+		close;
 	}
-	else {
-		if (getcharid(2) == .@GID) {
-			mes "Brave ones...";
-			mes "Do you wish to return to your honorable place?";
-			next;
-			if (select("Return to the guild castle.:Quit.") == 1) {
-				if (getcharid(2) == GetCastleData("payg_cas02",1)) {
-					warp "payg_cas02",22,275;
-					//warp "payg_cas02",278,251;
-					end;
-				}
+	if (getcharid(2) == .@GID) {
+		mes "[ Echoing Voice ]";
+		mes "Brave ones...";
+		mes "Do you wish to return to your honorable place?";
+		next;
+		if(select("Return to the guild castle.:Quit.") == 1) {
+			close2;
+			if (getcharid(2) == GetCastleData("payg_cas02",1)) {
+					warp "payg_cas02",278,251;
+				end;
 			}
-			close;
+			end;
 		}
-		mes "[ Edict of the Divine Rune Midgard Kingdom ]";
-		mes " ";
-		mes "1. Following the ordinance of the";
-		mes "Divine Rune Midgard Kingdom,";
-		mes "we approve that this place is in";
-		mes "the private possession of ^ff0000" + GetGuildName(.@GID) + "^000000 Guild.";
-		mes " ";
-		mes "2. The guild Master of ^ff0000"+ GetGuildName(.@GID) + "^000000 Guild is";
-		mes "^FF0000" + GetGuildMaster(.@GID) + "^000000";
-		mes "If there is anyone who objects to this,";
-		mes " prove your strength and honor with a steel blade in your hand.";
+		close;
 	}
+	mes "[ Edict of the Divine Rune-Midgarts Kingdom ]";
+	mes " ";
+	mes "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, ";
+	mes "we approve that this place is in";
+	mes "the private prossession of ^ff0000"+GetGuildName(.@GID)+"^000000 Guild.";
+	mes " ";
+	mes "2. The guild Master of ^ff0000"+GetGuildName(.@GID)+"^000000 Guild is";
+	mes "^ff0000"+GetGuildMaster(.@GID)+"^000000";
+	mes "If there is anyone who objects to this,";
+	mes "prove your strength and honor with a steel blade in your hand.";
 	close;
 
 OnRecvCastlePy02:
@@ -76,13 +68,14 @@ OnRecvCastlePy02:
 	end;
 }
 
-pay_gld,292,120,6	duplicate(ScarletPalace2)	Scarlet Palace#f2-4	722
-pay_gld,291,135,6	duplicate(ScarletPalace2)	Scarlet Palace#f2-5	722
-pay_gld,271,163,0	duplicate(ScarletPalace2)	Scarlet Palace#f2-6	722
+pay_gld,292,112,6	duplicate(OutsideFlagsPA2)	Sacred Palace#1-2	722
+pay_gld,292,120,6	duplicate(OutsideFlagsPA2)	Sacred Palace#2	722
+pay_gld,291,135,6	duplicate(OutsideFlagsPA2)	Sacred Palace#3	722
+pay_gld,271,163,0	duplicate(OutsideFlagsPA2)	Sacred Palace#4	722
 
-// Guild Flag (Inside Castle)
+// Guild Flags (Inside Castle)
 //============================================================
-payg_cas02,254,40,6	script	Scarlet Palace#f2-7::ScarletPalace3	722,{
+-	script	Sacred Palace#5::InsideFlagsPA2	722,{
 	end;
 
 OnRecvCastlePy02:
@@ -90,47 +83,53 @@ OnRecvCastlePy02:
 	end;
 }
 
-payg_cas02,254,48,6	duplicate(ScarletPalace3)	Scarlet Palace#f2-8	722
-payg_cas02,202,49,0	duplicate(ScarletPalace3)	Scarlet Palace#f2-9	722
-payg_cas02,209,49,0	duplicate(ScarletPalace3)	Scarlet Palace#f2-10	722
-payg_cas02,59,282,4	duplicate(ScarletPalace3)	Scarlet Palace#f2-11	722
-payg_cas02,70,282,4	duplicate(ScarletPalace3)	Scarlet Palace#f2-12	722
+payg_cas02,254,40,6	duplicate(InsideFlagsPA2)	Sacred Palace#5-2	722
+payg_cas02,254,48,6	duplicate(InsideFlagsPA2)	Sacred Palace#6	722
+payg_cas02,202,49,0	duplicate(InsideFlagsPA2)	Sacred Palace#7	722
+payg_cas02,209,49,0	duplicate(InsideFlagsPA2)	Sacred Palace#8	722
+payg_cas02,59,282,4	duplicate(InsideFlagsPA2)	Sacred Palace#9	722
+payg_cas02,70,282,4	duplicate(InsideFlagsPA2)	Sacred Palace#10	722
 
-// AGIT Manager
+// Guild Flag (Town)
 //============================================================
-payg_cas02,39,25,0	duplicate(Gld_Agit_Manager)	Agit#payg_cas02	-1
+payon,97,322,4	duplicate(InsideFlagsPA2)	Sacred Altar#11	722
+payon,166,173,3	duplicate(InsideFlagsPA2)	Sacred Altar#12	722
+
+// Kafra Employee
+//============================================================
+payg_cas02,22,275,5	duplicate(guildkafra)	Kafra Staff#payg_cas02	117
 
 // Steward
 //============================================================
-payg_cas02,22,260,7	duplicate(Gld_Mngr_Template)	Cherieos#payg_cas02	55
+payg_cas02,22,260,7	duplicate(cm)	Cherieos#payg_cas02	55
 
-// Guardians
+// Treasure Room Exit
 //============================================================
-payg_cas02,22,260,7	duplicate(Gld_Guard_Template)	Guardian#payg_cas02	-1
+payg_cas02,149,149,0	script	#lever_PA02	111,{
 
-// Kafra Staff
-//============================================================
-payg_cas02,22,275,5	duplicate(Gld_Kafra_Template)	Kafra Staff#payg_cas02	117
-
-// Master's Room Exit
-//============================================================
-payg_cas02,149,148,0	script	#switch_Py02	111,{
 	mes " ";
-	mes "There's a small lever. Will you pull it? ";
+	mes "There's a small lever. Will you pull it?";
 	next;
-	if(select("Pull.:Do not.") == 2) close;
-	warp "payg_cas02",22,261;
-	end;
+	if(select("Pull.:Do not.") == 1) {
+		close2;
+		warp "payg_cas02",22,261;
+		end;
+	}
+	close;
 }
 
-// Guild Treasure Protection
+// Guild Dungeon Switch
 //============================================================
-payg_cas02,145,144,0	duplicate(Gld_Trea_Protect)	ban_warp#payg_cas02	-1,6,6
+payg_cas02,278,247,0	duplicate(gdlever)	#payg_cas02	111
 
 // Guild Treasure Spawns
 //============================================================
 payg_cas02,145,144,0	duplicate(Gld_Trea_Spawn)	Treasure#payg_cas02	-1
 
-// Guild Dungeon Switch
+// AGIT Manager
 //============================================================
-payg_cas02,278,247,0	duplicate(Gld_Dun_Template)	#payg_cas02	111
+payg_cas02,39,25,0	duplicate(Gld_Agit_Manager)	Agit#payg_cas02	-1
+
+// Guardians
+//============================================================
+payg_cas02,22,260,7	duplicate(Gld_Guard_Template)	Guardian#payg_cas02	-1

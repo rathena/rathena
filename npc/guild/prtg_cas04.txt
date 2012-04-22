@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.2
+//= 1.4
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -11,27 +11,21 @@
 //===== Additional Comments: =================================
 //= 1.0 First Version. No longer uses functions. [L0ne_W0lf]
 //= 1.1 Corrected flag-in spawn point. [L0ne_W0lf]
-//= 1.2 Removed dialog from interior flags. [L0ne_W0lf]
+//= 1.2 Corrected treasure room switch coordinates. [L0ne_W0lf]
+//= 1.3 Removed dialog from interior flags. [L0ne_W0lf]
+//= 1.4 Partially rewrote Script. [Masao]
 //============================================================
 
-// Guild Flag (Town)
+// Guild Flags (Outside Castle)
 //============================================================
-prontera,167,203,6	script	Skoegul#p4-1::Skoegul	722,{
-	end;
+-	script	Skoegul#1::OutsideFlagsPR4	722,{
 
-OnRecvCastlePt04:
-	FlagEmblem GetCastleData("prtg_cas04",1);
-	end;
-}
-
-// Guild Flag (Outside Castle)
-//============================================================
-prt_gld,120,243,6	script	Skoegul#p4-2::Skoegul2	722,{
 	set .@GID, GetCastleData("prtg_cas04",1);
+
 	if (.@GID == 0) {
-		mes " [ Edict of the Divine Rune Midgard Kingdom ]";
+		mes "[ Edict of the Divine Rune-Midgarts Kingdom ]";
 		mes " ";
-		mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
+		mes "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, ";
 		mes "We declare that";
 		mes "there is no formal master of this castle.";
 		mes " ";
@@ -40,32 +34,33 @@ prt_gld,120,243,6	script	Skoegul#p4-2::Skoegul2	722,{
 		mes "and destroy the Emperium,";
 		mes "the king will endow the one with";
 		mes "ownership of this castle.";
+		close;
 	}
-	else {
-		if (getcharid(2) == .@GID) {
-			mes "Brave ones...";
-			mes "Do you wish to return to your honorable place?";
-			next;
-			if (select("Return to the guild castle.:Quit.") == 1) {
-				if (getcharid(2) == GetCastleData("prtg_cas04",1)) {
+	if (getcharid(2) == .@GID) {
+		mes "[ Echoing Voice ]";
+		mes "Brave ones...";
+		mes "Do you wish to return to your honorable place?";
+		next;
+		if(select("Return to the guild castle.:Quit.") == 1) {
+			close2;
+			if (getcharid(2) == GetCastleData("prtg_cas04",1)) {
 					warp "prtg_cas04",258,247;
-					end;
-				}
+				end;
 			}
-			close;
+			end;
 		}
-		mes "[ Edict of the Divine Rune Midgard Kingdom ]";
-		mes " ";
-		mes "1. Following the ordinance of the";
-		mes "Divine Rune Midgard Kingdom,";
-		mes "we approve that this place is in";
-		mes "the private possession of ^ff0000" + GetGuildName(.@GID) + "^000000 Guild.";
-		mes " ";
-		mes "2. The guild Master of ^ff0000"+ GetGuildName(.@GID) + "^000000 Guild is";
-		mes "^FF0000" + GetGuildMaster(.@GID) + "^000000";
-		mes "If there is anyone who objects to this,";
-		mes " prove your strength and honor with a steel blade in your hand.";
+		close;
 	}
+	mes "[ Edict of the Divine Rune-Midgarts Kingdom ]";
+	mes " ";
+	mes "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, ";
+	mes "we approve that this place is in";
+	mes "the private prossession of ^ff0000"+GetGuildName(.@GID)+"^000000 Guild.";
+	mes " ";
+	mes "2. The guild Master of ^ff0000"+GetGuildName(.@GID)+"^000000 Guild is";
+	mes "^ff0000"+GetGuildMaster(.@GID)+"^000000";
+	mes "If there is anyone who objects to this,";
+	mes "prove your strength and honor with a steel blade in your hand.";
 	close;
 
 OnRecvCastlePt04:
@@ -73,13 +68,14 @@ OnRecvCastlePt04:
 	end;
 }
 
-prt_gld,120,236,6	duplicate(Skoegul2)	Skoegul#p4-3	722
-prt_gld,122,243,6	duplicate(Skoegul2)	Skoegul#p4-4	722
-prt_gld,122,236,6	duplicate(Skoegul2)	Skoegul#p4-5	722
+prt_gld,120,243,6	duplicate(OutsideFlagsPR4)	Skoegul#1-2	722
+prt_gld,120,236,6	duplicate(OutsideFlagsPR4)	Skoegul#2	722
+prt_gld,122,243,6	duplicate(OutsideFlagsPR4)	Skoegul#3	722
+prt_gld,122,236,6	duplicate(OutsideFlagsPR4)	Skoegul#4	722
 
-// Guild Flag (Inside Castle)
+// Guild Flags (Inside Castle)
 //============================================================
-prtg_cas04,82,29,4	script	Skoegul#p4-6::Skoegul3	722,{
+-	script	Skoegul#5::InsideFlagsPR4	722,{
 	end;
 
 OnRecvCastlePt04:
@@ -87,51 +83,56 @@ OnRecvCastlePt04:
 	end;
 }
 
-prtg_cas04,75,29,4	duplicate(Skoegul3)	Skoegul#p4-7	722
-prtg_cas04,75,27,4	duplicate(Skoegul3)	Skoegul#p4-8	722
-prtg_cas04,82,27,4	duplicate(Skoegul3)	Skoegul#p4-9	722
-prtg_cas04,59,29,4	duplicate(Skoegul3)	Skoegul#p4-10	722
-prtg_cas04,67,29,4	duplicate(Skoegul3)	Skoegul#p4-11	722
-prtg_cas04,258,25,4	duplicate(Skoegul3)	Skoegul#p4-12	722
-prtg_cas04,258,20,4	duplicate(Skoegul3)	Skoegul#p4-13	722
-prtg_cas04,263,20,4	duplicate(Skoegul3)	Skoegul#p4-14	722
-prtg_cas04,263,27,4	duplicate(Skoegul3)	Skoegul#p4-15	722
+prtg_cas04,82,29,4	duplicate(InsideFlagsPR4)	Skoegul#5-2	722
+prtg_cas04,75,29,4	duplicate(InsideFlagsPR4)	Skoegul#6	722
+prtg_cas04,75,27,4	duplicate(InsideFlagsPR4)	Skoegul#7	722
+prtg_cas04,82,27,4	duplicate(InsideFlagsPR4)	Skoegul#8	722
+prtg_cas04,59,29,4	duplicate(InsideFlagsPR4)	Skoegul#9	722
+prtg_cas04,67,29,4	duplicate(InsideFlagsPR4)	Skoegul#10	722
+prtg_cas04,258,25,4	duplicate(InsideFlagsPR4)	Skoegul#11	722
+prtg_cas04,258,20,4	duplicate(InsideFlagsPR4)	Skoegul#12	722
+prtg_cas04,263,20,4	duplicate(InsideFlagsPR4)	Skoegul#13	722
+prtg_cas04,263,27,4	duplicate(InsideFlagsPR4)	Skoegul#14	722
 
-// AGIT Manager
+// Guild Flag (Town)
 //============================================================
-prtg_cas04,292,14,0	duplicate(Gld_Agit_Manager)	Agit#prtg_cas04	-1
+prontera,167,203,6	duplicate(InsideFlagsPR4)	Skoegul#15	722
+
+// Kafra Employee
+//============================================================
+prtg_cas04,258,247,4	duplicate(guildkafra)	Kafra Staff#prtg_cas04	117
 
 // Steward
 //============================================================
-prtg_cas04,259,265,4	duplicate(Gld_Mngr_Template)	Van Dreth#prtg_cas04	55
+prtg_cas04,259,265,4	duplicate(cm)	Van Dreth#prtg_cas04	55
 
-// Guardians
+// Treasure Room Exit
 //============================================================
-prtg_cas04,259,265,4	duplicate(Gld_Guard_Template)	Guardian#prtg_cas04	-1
+prtg_cas04,275,160,0	script	#Lever_PR04	111,{
 
-// Kafra Staff
-//============================================================
-prtg_cas04,258,247,4	duplicate(Gld_Kafra_Template)	Kafra Staff#prtg_cas04	117
-
-// Master's Room Exit
-//============================================================
-prtg_cas04,275,160,0	script	#switch_Pt04	111,{
 	mes " ";
-	mes "There's a small lever. Will you pull it? ";
+	mes "There's a small lever. Will you pull it?";
 	next;
-	if(select("Pull.:Do not.") == 2) close;
-	warp "prtg_cas04",259,265;
-	end;
+	if(select("Pull.:Do not.") == 1) {
+		close2;
+		warp "prtg_cas04",259,265;
+		end;
+	}
+	close;
 }
 
-// Guild Treasure Protection
+// Guild Dungeon Switch
 //============================================================
-prtg_cas04,271,162,0	duplicate(Gld_Trea_Protect)	ban_warp#prtg_cas04	-1,6,6
+prtg_cas04,56,283,0	duplicate(gdlever)	#prtg_cas04	111
 
 // Guild Treasure Spawns
 //============================================================
 prtg_cas04,271,162,0	duplicate(Gld_Trea_Spawn)	Treasure#prtg_cas04	-1
 
-// Guild Dungeon Switch
+// AGIT Manager
 //============================================================
-prtg_cas04,56,283,0	duplicate(Gld_Dun_Template)	#prtg_cas04	111
+prtg_cas04,292,14,0	duplicate(Gld_Agit_Manager)	Agit#prtg_cas04	-1
+
+// Guardians
+//============================================================
+prtg_cas04,259,265,4	duplicate(Gld_Guard_Template)	Guardian#prtg_cas04	-1

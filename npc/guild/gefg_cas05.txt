@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -11,26 +11,19 @@
 //===== Additional Comments: =================================
 //= 1.0 First Version. No longer uses functions. [L0ne_W0lf]
 //= 1.1 Removed dialog from interior flags. [L0ne_W0lf]
+//= 1.2 Partially rewrote Script. [Masao]
 //============================================================
-
-// Guild Flag (Town)
-//============================================================
-geffen,131,123,6	script	Mersetzdeitz#g5-1::Mersetzdeitz	722,{
-	end;
-
-OnRecvCastleG05:
-	FlagEmblem GetCastleData("gefg_cas05",1);
-	end;
-}
 
 // Guild Flag (Outside Castle)
 //============================================================
-gef_fild13,302,87,7	script	Mersetzdeitz#g5-2::Mersetzdeitz2	722,{
+-	script	Mersetzdeitz#1::OutsideFlagsG5	722,{
+
 	set .@GID, GetCastleData("gefg_cas05",1);
+
 	if (.@GID == 0) {
-		mes " [ Edict of the Divine Rune Midgard Kingdom ]";
+		mes "[ Edict of the Divine Rune-Midgarts Kingdom ]";
 		mes " ";
-		mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
+		mes "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, ";
 		mes "We declare that";
 		mes "there is no formal master of this castle.";
 		mes " ";
@@ -39,33 +32,33 @@ gef_fild13,302,87,7	script	Mersetzdeitz#g5-2::Mersetzdeitz2	722,{
 		mes "and destroy the Emperium,";
 		mes "the king will endow the one with";
 		mes "ownership of this castle.";
+		close;
 	}
-	else {
-		if (getcharid(2) == .@GID) {
-			mes "Brave ones...";
-			mes "Do you wish to return to your honorable place?";
-			next;
-			if (select("Return to the guild castle.:Quit.") == 1) {
-				if (getcharid(2) == GetCastleData("gefg_cas05",1)) {
-					warp "gefg_cas05",61,52;
-					//warp "gefg_cas05",168,31;
-					end;
-				}
+	if (getcharid(2) == .@GID) {
+		mes "[ Echoing Voice ]";
+		mes "Brave ones...";
+		mes "Do you wish to return to your honorable place?";
+		next;
+		if(select("Return to the guild castle.:Quit.") == 1) {
+			close2;
+			if (getcharid(2) == GetCastleData("gefg_cas05",1)) {
+				warp "gefg_cas05",168,31;
+				end;
 			}
-			close;
+			end;
 		}
-		mes "[ Edict of the Divine Rune Midgard Kingdom ]";
-		mes " ";
-		mes "1. Following the ordinance of the";
-		mes "Divine Rune Midgard Kingdom,";
-		mes "we approve that this place is in";
-		mes "the private possession of ^ff0000" + GetGuildName(.@GID) + "^000000 Guild.";
-		mes " ";
-		mes "2. The guild Master of ^ff0000"+ GetGuildName(.@GID) + "^000000 Guild is";
-		mes "^FF0000" + GetGuildMaster(.@GID) + "^000000";
-		mes "If there is anyone who objects to this,";
-		mes " prove your strength and honor with a steel blade in your hand.";
+		close;
 	}
+	mes "[ Edict of the Divine Rune-Midgarts Kingdom ]";
+	mes " ";
+	mes "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, ";
+	mes "we approve that this place is in";
+	mes "the private prossession of ^ff0000"+GetGuildName(.@GID)+"^000000 Guild.";
+	mes " ";
+	mes "2. The guild Master of ^ff0000"+GetGuildName(.@GID)+"^000000 Guild is";
+	mes "^ff0000"+GetGuildMaster(.@GID)+"^000000";
+	mes "If there is anyone who objects to this,";
+	mes "prove your strength and honor with a steel blade in your hand.";
 	close;
 
 OnRecvCastleG05:
@@ -73,13 +66,14 @@ OnRecvCastleG05:
 	end;
 }
 
-gef_fild13,313,83,0	duplicate(Mersetzdeitz2)	Mersetzdeitz#g5-3	722
-gef_fild13,252,51,2	duplicate(Mersetzdeitz2)	Mersetzdeitz#g5-4	722
-gef_fild13,26,147,2	duplicate(Mersetzdeitz2)	Mersetzdeitz#g5-5	722
+gef_fild13,302,87,7	duplicate(OutsideFlagsG5)	Mersetzdeitz#1-2	722
+gef_fild13,313,83,0	duplicate(OutsideFlagsG5)	Mersetzdeitz#2	722
+gef_fild13,252,51,2	duplicate(OutsideFlagsG5)	Mersetzdeitz#3	722
+gef_fild13,26,147,2	duplicate(OutsideFlagsG5)	Mersetzdeitz#4	722
 
 // Guild Flag (Inside Castle)
 //============================================================
-gefg_cas05,77,185,7	script	Mersetzdeitz#g5-5::Mersetzdeitz3	722,{
+-	script	Mersetzdeitz#5::InsideFlagsG5	722,{
 	end;
 
 OnRecvCastleG05:
@@ -87,48 +81,52 @@ OnRecvCastleG05:
 	end;
 }
 
-gefg_cas05,92,181,0	duplicate(Mersetzdeitz3)	Mersetzdeitz#g5-7	722
-gefg_cas05,83,158,1	duplicate(Mersetzdeitz3)	Mersetzdeitz#g5-8	722
-gefg_cas05,62,144,7	duplicate(Mersetzdeitz3)	Mersetzdeitz#g5-9	722
-gefg_cas05,62,66,4	duplicate(Mersetzdeitz3)	Mersetzdeitz#g5-10	722
-gefg_cas05,69,66,4	duplicate(Mersetzdeitz3)	Mersetzdeitz#g5-11	722
+gefg_cas05,77,185,7	duplicate(InsideFlagsG5)	Mersetzdeitz#5-2	722
+gefg_cas05,92,181,0	duplicate(InsideFlagsG5)	Mersetzdeitz#6	722
+gefg_cas05,83,158,1	duplicate(InsideFlagsG5)	Mersetzdeitz#7	722
+gefg_cas05,62,144,7	duplicate(InsideFlagsG5)	Mersetzdeitz#8	722
+gefg_cas05,62,66,4	duplicate(InsideFlagsG5)	Mersetzdeitz#9	722
+gefg_cas05,69,66,4	duplicate(InsideFlagsG5)	Mersetzdeitz#10	722
 
-
-// AGIT Manager
+// Guild Flag (Town)
 //============================================================
-gefg_cas05,194,184,0	duplicate(Gld_Agit_Manager)	Agit#gefg_cas05	-1
+geffen,131,123,6	duplicate(InsideFlagsG5)	Mersetzdeitz#11	722
+
+// Kafra Employee
+//============================================================
+gefg_cas05,61,52,5	duplicate(guildkafra)	Kafra Staff#gefg_cas05	117
 
 // Steward
 //============================================================
-gefg_cas05,70,52,3	duplicate(Gld_Mngr_Template)	Byohre#gefg_cas05	55
+gefg_cas05,70,52,3	duplicate(cm)	Byohre#gefg_cas05	55
 
-// Guardians
+// Treasure Room Exit
 //============================================================
-gefg_cas05,70,52,3	duplicate(Gld_Guard_Template)	Guardian#gefg_cas05	-1
+gefg_cas05,149,107,0	script	#lever_G05	111,{
 
-// Kafra Staff
-//============================================================
-gefg_cas05,61,52,3	duplicate(Gld_Kafra_Template)	Kafra Staff#gefg_cas05	117
-
-// Master's Room Exit
-//============================================================
-gefg_cas05,149,107,0	script	#switch_G05	111,{
 	mes " ";
-	mes "There's a small lever. Will you pull it? ";
+	mes "There's a small lever. Will you pull it?";
 	next;
-	if(select("Pull.:Do not.") == 2) close;
-	warp "gefg_cas05",70,53;
-	end;
+	if(select("Pull.:Do not.") == 1) {
+		close2;
+		warp "gefg_cas05",70,53;
+		end;
+	}
+	close;
 }
 
-// Guild Treasure Protection
+// Guild Dungeon Switch
 //============================================================
-gefg_cas05,144,110,0	duplicate(Gld_Trea_Protect)	ban_warp#gefg_cas05	-1,6,6
+gefg_cas05,65,22,0	duplicate(gdlever)	#gefg_cas05	111
 
 // Guild Treasure Spawns
 //============================================================
 gefg_cas05,144,110,0	duplicate(Gld_Trea_Spawn)	Treasure#gefg_cas05	-1
 
-// Guild Dungeon Switch
+// AGIT Manager
 //============================================================
-gefg_cas05,66,29,0	duplicate(Gld_Dun_Template)	#gefg_cas05	111
+gefg_cas05,194,184,0	duplicate(Gld_Agit_Manager)	Agit#gefg_cas05	-1
+
+// Guardians
+//============================================================
+gefg_cas05,70,52,3	duplicate(Gld_Guard_Template)	Guardian#gefg_cas05	-1
