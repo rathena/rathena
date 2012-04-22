@@ -10110,7 +10110,10 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 		}
 		break;
 	case DC_HUMMING:
-        val1 = 2*skilllv+status->dex/10; // Hit increase
+		val1 = 2*skilllv+status->dex/10; // Hit increase
+		#ifdef RENEWAL
+			val1 *= 2;
+		#endif
 		if(sd)
 			val1 += pc_checkskill(sd,DC_DANCINGLESSON);
 		break;

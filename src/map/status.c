@@ -9122,7 +9122,11 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 					s=5;
 					break;
 				case BA_APPLEIDUN:
-					s=6;
+					#ifdef RENEWAL
+						s=5;
+					#else
+						s=6;
+					#endif
 					break;
 				case CG_MOONLIT:
 					//Moonlit's cost is 4sp*skill_lv [Skotlex]
