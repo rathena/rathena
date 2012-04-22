@@ -5937,8 +5937,14 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	case SC_TWOHANDQUICKEN:
 		if(sc->data[SC_DECREASEAGI])
 			return 0;
-	case SC_CONCENTRATE:
+	
 	case SC_INCREASEAGI:
+		 if(pc_issit(sd)){ 
+			 pc_setstand(sd);
+			 clif_status_load(&sd->bl,SI_SIT,0);
+		 }
+	
+	case SC_CONCENTRATE:
 	case SC_SPEARQUICKEN:
 	case SC_TRUESIGHT:
 	case SC_WINDWALK:
