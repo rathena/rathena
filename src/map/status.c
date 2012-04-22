@@ -9313,7 +9313,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 					}
 				}
 
-				clif_emotion(bl,18);
+				clif_emotion(bl,E_HEH);
 				sc_timer_next(4000+tick,status_change_timer,bl->id,data);
 			}
 			return 0;
@@ -9337,7 +9337,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 	case SC_OBLIVIONCURSE:
 		if( --(sce->val4) >= 0 )
 		{
-			clif_emotion(bl,1);
+			clif_emotion(bl,E_WHAT);
 			sc_timer_next(3000 + tick, status_change_timer, bl->id, data );
 			return 0;
 		}
@@ -9488,7 +9488,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 	case SC_VOICEOFSIREN:
 		if( --(sce->val4) >= 0 )
 		{
-			clif_emotion(bl,3);
+			clif_emotion(bl,E_LV);
 			sc_timer_next(2000 + tick, status_change_timer, bl->id, data);
 			return 0;
 		}

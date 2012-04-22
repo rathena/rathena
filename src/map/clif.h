@@ -140,9 +140,9 @@ typedef enum emotion_type
 	E_FLASH,        // /fsh
 	E_SPIN,         // /spin
 	E_SIGH,
-	E_PROUD,        // /dum
+	E_DUM,          // /dum
 	E_LOUD,         // /crwd
-	E_OHNOES,       // /desp, /otl
+	E_OTL,          // /otl, /desp
 	E_DICE1,
 	E_DICE2,
 	E_DICE3,        // --- 60
@@ -150,15 +150,15 @@ typedef enum emotion_type
 	E_DICE5,
 	E_DICE6,
 	E_INDIA,
-	E_LOOSER,
+	E_LUV,          // /love
 	E_RUSSIA,
 	E_VIRGIN,
-	E_PHONE,
+	E_MOBILE,
 	E_MAIL,
 	E_CHINESE,      // --- 70
-	E_SIGNAL,
-	E_SIGNAL2,
-	E_SIGNAL3,
+	E_ANTENNA1,
+	E_ANTENNA2,
+	E_ANTENNA3,
 	E_HUM,
 	E_ABS,
 	E_OOPS,
