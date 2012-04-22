@@ -913,6 +913,7 @@ int unit_can_move(struct block_list *bl)
 			|| sc->data[SC_BITE]
 			|| sc->data[SC_MAGNETICFIELD]
 			|| sc->data[SC__MANHOLE]
+			|| sc->data[SC_VACUUM_EXTREME]
 			|| (sc->data[SC_FEAR] && sc->data[SC_FEAR]->val2 > 0)
 			|| sc->data[SC_CURSEDCIRCLE_TARGET]
 		))

@@ -128,11 +128,36 @@
 2418,0xdb,    ,  0, 5, 300,enemy, 0x800	//WM_SEVERE_RAINSTORM
 2419,0xde,    ,  0, 1,1000,enemy, 0x010  //WM_POEMOFNETHERWORLD
 
+2443,0xdc,    ,  0, 0,1000,enemy, 0x00A	//SO_FIREWALK
+2444,0xdd,    ,  0, 0,1000,enemy, 0x00A	//SO_ELECTRICWALK
+2446,0x86,    ,  0, 3:3:3:4:4,1000,enemy, 0x018	//SO_EARTHGRAVE
+2447,0x86,    ,  0, 3:3:3:4:4,1000,enemy, 0x018	//SO_DIAMONDDUST
+2449,0xdf,    ,  0, 3:3:4:4:5,500,enemy,  0x018	//SO_PSYCHIC_WAVE
+2450,0xe0,    ,  3, 0, 500,enemy, 0x010	//SO_CLOUD_KILL
+2452,0xe4,    ,  0, 3,3000,all,   0x010	//SO_WARMER
+2453,0xeb,    ,  0, 1:1:2:2:3,1000,enemy,0x010	//SO_VACUUM_EXTREME
+2465,0xf1,    ,  0, 1,1000,all,   0x010	//SO_FIRE_INSIGNIA
+2466,0xf2,    ,  0, 1,1000,all,   0x010	//SO_WATER_INSIGNIA
+2467,0xf3,    ,  0, 1,1000,all,   0x010	//SO_WIND_INSIGNIA
+2468,0xf4,    ,  0, 1,1000,all,   0x010	//SO_EARTH_INSIGNIA
+
+2479,0xe5,    ,  0, 1,1000,enemy, 0x000	//GN_THORNS_TRAP
+2482,0xe6,0x7f, -1, 1,  -1,all,   0x000	//GN_WALLOFTHORN
+2485,0xe7,    ,  0, 3,1000,enemy, 0x098	//GN_DEMONIC_FIRE
+2487,0xe8,    ,  0, 3,1000,enemy, 0x000	//GN_FIRE_EXPANSION_SMOKE_POWDER
+2488,0xe9,    ,  0, 3,1000,enemy, 0x000	//GN_FIRE_EXPANSION_TEAR_GAS
+2490,0xea,    ,  0, 1,1000,all, 0x000	//GN_HELLS_PLANT
+
 8208,0x86,    ,  0, 2,1000,enemy, 0x080	//MA_SHOWER
 8209,0x90,    ,  0, 1,1000,enemy, 0x006	//MA_SKIDTRAP
 8210,0x93,    ,  0, 0,1000,enemy, 0x006	//MA_LANDMINE
 8211,0x95,    ,  0, 1,1000,enemy, 0x006	//MA_SANDMAN
 8212,0x97,    ,  0, 1,1000,enemy, 0x006	//MA_FREEZINGTRAP
+
+8403,0xed,    , -1, 1,1000,enemy, 0x018 //EL_FIRE_MANTLE
+8406,0xee,    ,  0, 1,  -1,friend,0x018	//EL_WATER_BARRIER
+8409,0xef,    ,  0, 1,  -1,friend,0x018	//EL_ZEPHYR
+8412,0xf0,    ,  0, 1,  -1,friend,0x018	//EL_POWER_OF_GAIA
 
 10006,0xc1,   ,  2, 0,  -1,guild, 0x040	//GD_LEADERSHIP 
 10007,0xc2,   ,  2, 0,  -1,guild, 0x040	//GD_GLORYWOUNDS 
