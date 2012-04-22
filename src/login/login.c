@@ -1343,6 +1343,7 @@ int parse_login(int fd)
 		case 0x01dd: // S 01dd <version>.L <username>.24B <password hash>.16B <clienttype>.B
 		case 0x01fa: // S 01fa <version>.L <username>.24B <password hash>.16B <clienttype>.B <?>.B(index of the connection in the clientinfo file (+10 if the command-line contains "pc"))
 		case 0x027c: // S 027c <version>.L <username>.24B <password hash>.16B <clienttype>.B <?>.13B(junk)
+		case 0x0825: // S 0825 <packetsize>.W <version>.L <clienttype>.B <userid>.24B <password>.27B <mac>.17B <ip>.15B <token>.(packetsize - 0x5C)B
 		{
 			size_t packet_len = RFIFOREST(fd);
 
@@ -1351,7 +1352,8 @@ int parse_login(int fd)
 			||  (command == 0x02b0 && packet_len < 85)
 			||  (command == 0x01dd && packet_len < 47)
 			||  (command == 0x01fa && packet_len < 48)
-			||  (command == 0x027c && packet_len < 60) )
+			||  (command == 0x027c && packet_len < 60)
+			||  (command == 0x0825 && (packet_len < 4 || packet_len < RFIFOW(fd, 2))) )
 				return 0;
 		}
 		{
@@ -1360,19 +1362,42 @@ int parse_login(int fd)
 			char password[NAME_LENGTH];
 			unsigned char passhash[16];
 			uint8 clienttype;
-			bool israwpass = (command==0x0064 || command==0x0277 || command==0x02b0);
+			bool israwpass = (command==0x0064 || command==0x0277 || command==0x02b0 || command == 0x0825);
 
-			version = RFIFOL(fd,2);
-			safestrncpy(username, (const char*)RFIFOP(fd,6), NAME_LENGTH);
-			if( israwpass )
+			// Shinryo: For the time being, just use token as password.
+			if(command == 0x0825)
 			{
-				safestrncpy(password, (const char*)RFIFOP(fd,30), NAME_LENGTH);
-				clienttype = RFIFOB(fd,54);
+				char *accname = (char *)RFIFOP(fd, 9);
+				char *token = (char *)RFIFOP(fd, 0x5C);
+				size_t uAccLen = strlen(accname);
+				size_t uTokenLen = RFIFOREST(fd) - 0x5C;
+
+				version = RFIFOL(fd,4);
+
+				if(uAccLen > NAME_LENGTH - 1 || uAccLen <= 0 || uTokenLen > NAME_LENGTH - 1  || uTokenLen <= 0)
+				{
+					login_auth_failed(sd, 3);
+					return 0;
+				}
+
+				safestrncpy(username, accname, uAccLen + 1);
+				safestrncpy(password, token, uTokenLen + 1);
+				clienttype = RFIFOB(fd, 8);
 			}
 			else
 			{
-				memcpy(passhash, RFIFOP(fd,30), 16);
-				clienttype = RFIFOB(fd,46);
+				version = RFIFOL(fd,2);
+				safestrncpy(username, (const char*)RFIFOP(fd,6), NAME_LENGTH);
+				if( israwpass )
+				{
+					safestrncpy(password, (const char*)RFIFOP(fd,30), NAME_LENGTH);
+					clienttype = RFIFOB(fd,54);
+				}
+				else
+				{
+					memcpy(passhash, RFIFOP(fd,30), 16);
+					clienttype = RFIFOB(fd,46);
+				}
 			}
 			RFIFOSKIP(fd,RFIFOREST(fd)); // assume no other packet was sent
 
