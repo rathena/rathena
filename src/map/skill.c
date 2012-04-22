@@ -8091,23 +8091,34 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case SR_GENTLETOUCH_CURE:
-		if( status_isimmune(bl) ) {
-			clif_skill_nodamage(src,bl,skillid,skilllv,0);
-			break;
+		{
+			int heal;
+
+			if( status_isimmune(bl) ) 
+			{
+				clif_skill_nodamage(src,bl,skillid,skilllv,0);
+				break;
+			}
+		
+			heal = 120 * skilllv + status_get_max_hp(bl) * (2 + skilllv) / 100;
+			status_heal(bl, heal, 0, 0);
+			clif_skill_nodamage(src, bl, AL_HEAL, heal, 1);
+
+			if( (tsc && tsc->opt1) && (rnd()%100 < ((skilllv * 5) + (status_get_dex(src) + status_get_lv(src)) / 4) - (1 + (rnd() % 10))) )
+			{
+				status_change_end(bl, SC_STONE, INVALID_TIMER);
+				status_change_end(bl, SC_FREEZE, INVALID_TIMER);
+				status_change_end(bl, SC_STUN, INVALID_TIMER);
+				status_change_end(bl, SC_POISON, INVALID_TIMER);
+				status_change_end(bl, SC_SILENCE, INVALID_TIMER);
+				status_change_end(bl, SC_BLIND, INVALID_TIMER);
+				status_change_end(bl, SC_HALLUCINATION, INVALID_TIMER);
+				status_change_end(bl, SC_BURNING, INVALID_TIMER);
+				status_change_end(bl, SC_FREEZING, INVALID_TIMER);
+			}
+
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		}
-		if( (tsc && tsc->opt1) && rand()%100 < 5 * skilllv ) {
-			status_change_end(bl, SC_STONE, -1 );
-			status_change_end(bl, SC_FREEZE, -1 );
-			status_change_end(bl, SC_STUN, -1 );
-			status_change_end(bl, SC_POISON, -1 );
-			status_change_end(bl, SC_SILENCE, -1 );
-			status_change_end(bl, SC_BLIND, -1 );
-			status_change_end(bl, SC_HALLUCINATION, -1 );
-			status_change_end(bl, SC_BURNING, -1 );
-			status_change_end(bl, SC_FREEZING, -1 );
-			skill_castend_nodamage_id(src, bl, AL_HEAL, skilllv, tick, flag);
-		}
-		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		break;
 	case WA_SWING_DANCE:
 	case WA_MOONLIT_SERENADE:
