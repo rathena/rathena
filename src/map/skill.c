@@ -3827,11 +3827,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			for( y = src->y - range; y <= src->y + range; ++y )
 				for( x = src->x - range; x <= src->x + range; ++x )
 				{
-					if( !map_find_skill_unit_oncell(src,x,y,SA_LANDPROTECTOR,NULL) )
+					if( !map_find_skill_unit_oncell(src,x,y,SA_LANDPROTECTOR,NULL,1) )
 					{
 						if( src->type != BL_PC || map_getcell(src->m,x,y,CELL_CHKWATER) ) // non-players bypass the water requirement
 							count++; // natural water cell
-						else if( (unit = map_find_skill_unit_oncell(src,x,y,SA_DELUGE,NULL)) != NULL || (unit = map_find_skill_unit_oncell(src,x,y,NJ_SUITON,NULL)) != NULL )
+						else if( (unit = map_find_skill_unit_oncell(src,x,y,SA_DELUGE,NULL,1)) != NULL || (unit = map_find_skill_unit_oncell(src,x,y,NJ_SUITON,NULL,1)) != NULL )
 						{
 							count++; // skill-induced water cell
 							skill_delunit(unit); // consume cell

@@ -392,12 +392,17 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 
 	//TODO: Perhaps some outs of bounds checking should be placed here?
 	if (bl->type&BL_CHAR) {
+		sc = status_get_sc(bl);
+		
 		skill_unit_move(bl,tick,2);
 		status_change_end(bl, SC_CLOSECONFINE, INVALID_TIMER);
 		status_change_end(bl, SC_CLOSECONFINE2, INVALID_TIMER);
 //		status_change_end(bl, SC_BLADESTOP, INVALID_TIMER); //Won't stop when you are knocked away, go figure...
 		status_change_end(bl, SC_TATAMIGAESHI, INVALID_TIMER);
 		status_change_end(bl, SC_MAGICROD, INVALID_TIMER);
+		if (sc->data[SC_PROPERTYWALK] &&
+			sc->data[SC_PROPERTYWALK]->val3 >= skill_get_maxcount(sc->data[SC_PROPERTYWALK]->val1,sc->data[SC_PROPERTYWALK]->val2) )
+			status_change_end(bl,SC_PROPERTYWALK,-1);
 	} else
 	if (bl->type == BL_NPC)
 		npc_unsetcells((TBL_NPC*)bl);
@@ -416,7 +421,6 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 	if (bl->type&BL_CHAR) {
 
 		skill_unit_move(bl,tick,3);
-		sc = status_get_sc(bl);
 
 		if( bl->type == BL_PC && ((TBL_PC*)bl)->shadowform_id ) {//Shadow Form Target Moving
 			struct block_list *d_bl;
@@ -448,6 +452,16 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 					if( (d_bl = map_id2bl(sc->data[SC__SHADOWFORM]->val2)) == NULL || bl->m != d_bl->m || !check_distance_bl(bl,d_bl,skill_get_range(SC_SHADOWFORM,1)) )
 						status_change_end(bl,SC__SHADOWFORM,INVALID_TIMER);	
 				}
+				
+				if (sc->data[SC_PROPERTYWALK]
+					&& sc->data[SC_PROPERTYWALK]->val3 < skill_get_maxcount(sc->data[SC_PROPERTYWALK]->val1,sc->data[SC_PROPERTYWALK]->val2)
+					&& map_find_skill_unit_oncell(bl,bl->x,bl->y,SO_ELECTRICWALK,NULL,0) == NULL
+					&& map_find_skill_unit_oncell(bl,bl->x,bl->y,SO_FIREWALK,NULL,0) == NULL
+					&& skill_unitsetting(bl,sc->data[SC_PROPERTYWALK]->val1,sc->data[SC_PROPERTYWALK]->val2,x0, y0,0)) {
+						sc->data[SC_PROPERTYWALK]->val3++;
+				}
+				
+				
 			}
 			/* Guild Aura Moving */
 			if( bl->type == BL_PC && ((TBL_PC*)bl)->state.gmaster_flag ) {
@@ -496,10 +510,10 @@ int map_count_oncell(int m, int x, int y, int type)
 	return count;
 }
 /*
- * «»«E¾ªÎõÌôøªËÌ¸ªÄª±ª¿«¹«­«Eæ«Ë«Ã«ÈªòÚ÷ª?
+ * Looks for a skill unit on a given cell
+ * flag&1: runs battle_check_target check based on unit->group->target_flag
  */
-struct skill_unit* map_find_skill_unit_oncell(struct block_list* target,int x,int y,int skill_id,struct skill_unit* out_unit)
-{
+struct skill_unit* map_find_skill_unit_oncell(struct block_list* target,int x,int y,int skill_id,struct skill_unit* out_unit, int flag) {
 	int m,bx,by;
 	struct block_list *bl;
 	struct skill_unit *unit;
@@ -519,7 +533,7 @@ struct skill_unit* map_find_skill_unit_oncell(struct block_list* target,int x,in
 		unit = (struct skill_unit *) bl;
 		if( unit == out_unit || !unit->alive || !unit->group || unit->group->skill_id != skill_id )
 			continue;
-		if( battle_check_target(&unit->bl,target,unit->group->target_flag) > 0 )
+		if( !(flag&1) || battle_check_target(&unit->bl,target,unit->group->target_flag) > 0 )
 			return unit;
 	}
 	return NULL;
