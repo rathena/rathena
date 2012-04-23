@@ -7708,8 +7708,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case RA_WUGMASTERY:
-		if( sd )
-		{
+		if( sd ) {
 			if( !pc_iswug(sd) )
 				pc_setoption(sd,sd->sc.option|OPTION_WUG);
 			else
@@ -11611,15 +11610,14 @@ int skill_isammotype (struct map_session_data *sd, int skill)
 	);
 }
 
-int skill_check_condition_castbegin(struct map_session_data* sd, short skill, short lv)
-{
+int skill_check_condition_castbegin(struct map_session_data* sd, short skill, short lv) {
 	struct status_data *status;
 	struct status_change *sc;
 	struct skill_condition require;
 	int i;
 
 	nullpo_ret(sd);
-
+	
 	if (lv <= 0 || sd->chatID) return 0;
 
 	if( pc_has_permission(sd, PC_PERM_SKILL_UNCONDITIONAL) && sd->skillitem != skill )
@@ -11689,15 +11687,28 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 	if( sc && ( sc->data[SC__SHADOWFORM] || sc->data[SC__IGNORANCE] ) )
 		return 0;
 
-	switch( skill )
-	{ // Turn off check.
-	case BS_MAXIMIZE:		case NV_TRICKDEAD:	case TF_HIDING:			case AS_CLOAKING:		case CR_AUTOGUARD:
-	case ML_AUTOGUARD:		case CR_DEFENDER:	case ML_DEFENDER:		case ST_CHASEWALK:		case PA_GOSPEL:
-	case CR_SHRINK:			case TK_RUN:		case GS_GATLINGFEVER:	case TK_READYCOUNTER:	case TK_READYDOWN:
-	case TK_READYSTORM:		case TK_READYTURN:	case SG_FUSION:			case RA_WUGDASH:
-		if( sc && sc->data[status_skill2sc(skill)] )
-			return 1;
+	switch( skill ) { // Turn off check.
+		case BS_MAXIMIZE:		case NV_TRICKDEAD:	case TF_HIDING:			case AS_CLOAKING:		case CR_AUTOGUARD:
+		case ML_AUTOGUARD:		case CR_DEFENDER:	case ML_DEFENDER:		case ST_CHASEWALK:		case PA_GOSPEL:
+		case CR_SHRINK:			case TK_RUN:		case GS_GATLINGFEVER:	case TK_READYCOUNTER:	case TK_READYDOWN:
+		case TK_READYSTORM:		case TK_READYTURN:	case SG_FUSION:			case RA_WUGDASH:
+			if( sc && sc->data[status_skill2sc(skill)] )
+				return 1;
 	}
+
+	// Check the skills that can be used while mounted on a warg
+	if( pc_isridingwug(sd) ) {
+		switch( skill ) {
+			case HT_SKIDTRAP:     case HT_LANDMINE:     case HT_ANKLESNARE:     case HT_SHOCKWAVE:
+			case HT_SANDMAN:      case HT_FLASHER:      case HT_FREEZINGTRAP:   case HT_BLASTMINE:
+			case HT_CLAYMORETRAP: case HT_SPRINGTRAP:   case RA_DETONATOR:      case RA_CLUSTERBOMB:
+			case RA_WUGDASH:      case RA_WUGRIDER:
+				break;
+			default:
+				clif_skill_fail(sd,skill,USESKILL_FAIL_LEVEL,0);
+				return 0;
+		}
+	}	
 
 	if( lv < 1 || lv > MAX_SKILL_LEVEL )
 		return 0;
@@ -11706,20 +11717,6 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 
 	//Can only update state when weapon/arrow info is checked.
 	sd->state.arrow_atk = require.ammo?1:0;
-
-	// Check the skills that can be used while mounted on a warg
-	if( pc_isridingwug(sd) ) {
-		switch( skill ) {
-		case HT_SKIDTRAP:     case HT_LANDMINE:     case HT_ANKLESNARE:     case HT_SHOCKWAVE:
-		case HT_SANDMAN:      case HT_FLASHER:      case HT_FREEZINGTRAP:   case HT_BLASTMINE:
-		case HT_CLAYMORETRAP: case HT_SPRINGTRAP:   case RA_DETONATOR:      case RA_CLUSTERBOMB:
-		case RA_WUGDASH:      case RA_WUGRIDER:
-			break;
-		default:
-			clif_skill_fail(sd,skill,USESKILL_FAIL_LEVEL,0);
-			return 0;
-		}
-	}
 	
 	// perform skill-specific checks (and actions)
 	switch( skill ) {
