@@ -3,25 +3,25 @@
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
-//= 1.5
+//= 1.7
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
 //= Quest for skills: Holy Light
 //===== Additional Comments: ================================= 
 //= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //= 1.6 Fixed a typo in job check. (Bugreport:1531) [L0ne_W0lf]
+//= 1.7 Updated to latest available official file. [Masao]
 //============================================================
 
-prt_church,173,23,4	script	Cleric#qsk_al	79,{
+prt_church,173,23,4	script	Cleric	79,{
 	mes "[Acolyte Klift]";
 	mes "Ahh . Brothers ! Does the task of";
 	mes "caring for out lost sheep burden";
 	mes "and tire you ?";
 	mes "I am here to assist you.";
 	next;
-	switch(select("^3355FF' About acolyte's hidden ability '^000000 ..:^3355FF' Holy light '^000000 training:End conversation")) {
+	switch (select("^3355FF' About acolyte's hidden ability '^000000 ..:^3355FF' Holy light '^000000 training:End conversation")) {
 	case 1:
 		mes "[Acolyte Klift]";
 		mes "Our members of the clergy";
@@ -67,40 +67,36 @@ prt_church,173,23,4	script	Cleric#qsk_al	79,{
 			mes "this skill for the work of good . .";
 			close;
 		}
-		else {
-			if (countitem(727) > 0 && countitem(991) > 0 && countitem(2608) > 0) {
-				if ((JobLevel > 29 && BaseJob == Job_Acolyte) || BaseJob == Job_Monk || BaseJob == Job_Priest) {
-					mes "[Acolyte Klift]";
-					mes "Your faith has proven worthy";
-					mes "for you to gain the ' Holy Light ' skill.";
-					mes "Your skill is adequate";
-					mes "to use this skill.";
-					mes "Use it wisely. . .";
-					next;
-					delitem 727,1; //White_Jewel
-					delitem 991,1; //Crystal_Blue
-					delitem 2608,1; //Rosary
-					skill 156,1,0;
-					mes "[Acolyte Klift]";
-					mes "You now know ' Holy Light '";
-					mes "May you use this skill only in the";
-					mes "best conduct . . . . .";
-					close;
-				}
-			}
+		if ((countitem(727) > 0) && (countitem(991) > 0) && (countitem(2608) > 0) && (JobLevel > 29) && (BaseJob == Job_Acolyte)) {
 			mes "[Acolyte Klift]";
-			mes "Oh, it is clear. . .";
-			mes "You are not yet ready to";
-			mes "receive the ' Holy Light ' skill.";
+			mes "Your faith has proven worthy";
+			mes "for you to gain the ' Holy Light ' skill.";
+			mes "Your skill is adequate";
+			mes "to use this skill.";
+			mes "Use it wisely. . .";
 			next;
+			delitem 727,1; //White_Jewel
+			delitem 991,1; //Crystal_Blue
+			delitem 2608,1; //Rosary
+			skill "AL_HOLYLIGHT",1,0;
 			mes "[Acolyte Klift]";
-			mes "You should listen carefully to what";
-			mes "is necessary for this skill.";
-			mes "If you listen closely,";
-			mes "you may learn what you lack.";
-			mes "So that you may improve upon yourself.";
+			mes "You now know ' Holy Light '";
+			mes "May you use this skill only in the";
+			mes "best conduct . . . . .";
 			close;
 		}
+		mes "[Acolyte Klift]";
+		mes "Oh, it is clear. . .";
+		mes "You are not yet ready to";
+		mes "receive the ' Holy Light ' skill.";
+		next;
+		mes "[Acolyte Klift]";
+		mes "You should listen carefully to what";
+		mes "is necessary for this skill.";
+		mes "If you listen closely,";
+		mes "you may learn what you lack.";
+		mes "So that you may improve upon yourself.";
+		close;
 	case 3:
 		mes "[Acolyte Klift]";
 		mes ". . . . .";

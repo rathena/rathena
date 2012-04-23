@@ -3,25 +3,25 @@
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
 //= Quest for skills: Energy Coat
 //===== Additional Comments: ================================= 
 //= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //= 1.6 Fixed a typo in job check. (Bugreport:1531) [L0ne_W0lf]
+//= 1.7 Updated to latest available official file. [Masao]
 //============================================================
 
-geffen_in,151,119,4	script	Great Wizard#qsk_mg	64,{
+geffen_in,151,119,4	script	Great Wizard	64,{
 	mes "[BLIZZARDRISS]";
 	mes "Hey ! My friend !";
 	mes "I see that you are a mage.";
 	mes "Look into yourself to discover";
 	mes "your hidden abilities !";
 	next;
-	switch(select("About mage's hidden ability:About skill ^3355FF' Energy Coat '^000000:End conversation")) {
+	switch (select(" About mage's hidden ability :About skill ^3355FF' Energy Coat '^000000 :End conversation")) {
 	case 1:
 		mes "[BLIZZARDRISS]";
 		mes "For many years";
@@ -92,64 +92,60 @@ geffen_in,151,119,4	script	Great Wizard#qsk_mg	64,{
 			mes "I have nothing more to teach you ...";
 			close;
 		}
-		else {
-			if (countitem(746) > 2 && countitem(730) > 0 && countitem(935) > 4 && countitem(943) > 0) {
-				if ((JobLevel > 34 && BaseJob == Job_Mage) || BaseJob == Job_Wizard || BaseJob == Job_Sage) {
-					mes "[BLIZZARDRISS]";
-					mes "Okay, I have received your request.";
-					mes "I will now awaken your hidden energies . .";
-					mes ". . . . . .";
-					mes ". . . . . . . . . . . . .";
-					mes ". . . . . . . . . . . . . . . . . . . . . . . . . .";
-					next;
-					mes "[BLIZZARDRISS]";
-					mes "Ancient powers of";
-					mes "Geffen! I seek the enlightenment";
-					mes "and honor of your presence. ";
-					mes "I am humbled in your presence!";
-					mes " ...";
-					next;
-					mes "[BLIZZARDRISS]";
-					mes "Grant me your power!";
-					mes "Release your spirit";
-					mes "Mana Shield! Metal Armor!";
-					mes ". . . . . . . . . . . .";
-					mes "ENERGY COAT! ! !";
-					next;
-					delitem 746,3; //Glass_Bead
-					delitem 730,1; //Crystal_Jewel
-					delitem 935,5; //Shell
-					delitem 943,1; //Solid_Shell
-					skill "MG_ENERGYCOAT",1,0;
-					mes "[BLIZZARDRISS]";
-					mes ". . . . .";
-					mes "It is done. . .";
-					mes "You know have the ";
-					mes "elite skill of ^3355FF' Energy Coat '^000000 .";
-					mes "Use it well.";
-					next;
-					mes "[BLIZZARDRISS]";
-					mes "Do not shame our";
-					mes "class with disgraceful";
-					mes "use of this or any skill.";
-					mes "Your new power calls for new responsibility.";
-					close;
-				}
-			}
+		if ((countitem(746) > 2) && (countitem(730) > 0) && (countitem(935) > 4) && (countitem(943) > 0) && (JobLevel > 34) && (BaseJob == Job_Mage)) {
 			mes "[BLIZZARDRISS]";
-			mes "Look!!";
-			mes "Didn't you listen to my explanation ? !";
-			mes "You have not prepared fully";
-			mes "for me to assist you.";
-			mes "Check that you have me all the requirements";
+			mes "Okay, I have received your request.";
+			mes "I will now awaken your hidden energies . .";
+			mes ". . . . . .";
+			mes ". . . . . . . . . . . . .";
+			mes ". . . . . . . . . . . . . . . . . . . . . . . . . .";
 			next;
 			mes "[BLIZZARDRISS]";
-			mes "If you need me to explain";
-			mes "all this again, then ask me.";
-			mes "I would be happy to explain again";
-			mes "if only you would listen. . .";
+			mes "Ancient powers of";
+			mes "Geffen! I seek the enlightenment";
+			mes "and honor of your presence. ";
+			mes "I am humbled in your presence!";
+			mes " ...";
+			next;
+			mes "[BLIZZARDRISS]";
+			mes "Grant me your power!";
+			mes "Release your spirit";
+			mes "Mana Shield! Metal Armor!";
+			mes ". . . . . . . . . . . .";
+			mes "ENERGY COAT! ! !";
+			next;
+			delitem 746,3; //Glass_Bead
+			delitem 730,1; //Crystal_Jewel
+			delitem 935,5; //Shell
+			delitem 943,1; //Solid_Shell
+			skill "MG_ENERGYCOAT",1,0;
+			mes "[BLIZZARDRISS]";
+			mes ". . . . .";
+			mes "It is done. . .";
+			mes "You know have the ";
+			mes "elite skill of ^3355FF' Energy Coat '^000000 .";
+			mes "Use it well.";
+			next;
+			mes "[BLIZZARDRISS]";
+			mes "Do not shame our";
+			mes "class with disgraceful";
+			mes "use of this or any skill.";
+			mes "Your new power calls for new responsibility.";
 			close;
 		}
+		mes "[BLIZZARDRISS]";
+		mes "Look!!";
+		mes "Didn't you listen to my explanation ? !";
+		mes "You have not prepared fully";
+		mes "for me to assist you.";
+		mes "Check that you have me all the requirements";
+		next;
+		mes "[BLIZZARDRISS]";
+		mes "If you need me to explain";
+		mes "all this again, then ask me.";
+		mes "I would be happy to explain again";
+		mes "if only you would listen. . .";
+		close;
 	case 3:
 		mes "[BLIZZARDRISS]";
 		mes "The wise man must have patience !";

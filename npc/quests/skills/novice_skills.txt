@@ -3,19 +3,19 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
 //= Quest for skills: First Aid, Trick Dead
 //===== Additional Comments: ================================= 
 //= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //= 1.6 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.7 Updated to latest available official file. [Masao]
 //============================================================ 
 
-prt_in,234,133,4	script	Nami#qsk_nv	66,{
-	if ((BaseClass == Job_Novice && JobLevel > 3) || (BaseLevel > 11 && NOV_SK < 3)) {
+prt_in,234,133,4	script	Nami	66,{
+	if ((Class == Job_Novice) && (JobLevel > 3 || BaseLevel > 11) && (skill_nov < 3)) {
 		mes "[Nami]";
 		mes "Hello!";
 		mes "I want to be a nurse so bad!";
@@ -23,9 +23,10 @@ prt_in,234,133,4	script	Nami#qsk_nv	66,{
 		mes "Actually, I'm really good.";
 		mes "Do you want me to try on you? ? ? . .";
 		next;
-		if (select("Continue conversation:Slowly slink away. . . .") == 1) {
-			if (NOV_SK >= 0 && NOV_SK <= 2) {
-				switch(NOV_SK) {
+		switch (select("Continue conversation:Slowly slink away. . . .")) {
+		case 1:
+			if ((skill_nov >= 0) && (skill_nov <= 2)) {
+				switch (skill_nov) {
 				case 0:
 					mes "[Nami]";
 					mes "Thank you for giving me this chance!";
@@ -76,7 +77,7 @@ prt_in,234,133,4	script	Nami#qsk_nv	66,{
 					mes "If you go and find these items, ";
 					mes "I will be happy to teach you this skill.";
 					mes "Well, I will be awaiting your return.";
-					set NOV_SK,1;
+					set skill_nov,1;
 					close;
 				case 1:
 					mes "[Nami]";
@@ -103,7 +104,7 @@ prt_in,234,133,4	script	Nami#qsk_nv	66,{
 					mes "this item. . . ";
 					close;
 				case 2:
-					if (countitem(507) > 2 && countitem(705) > 2) {
+					if ((countitem(507) > 2) && (countitem(705) > 2)) {
 						delitem 507,3; //Red_Herb
 						delitem 705,3; //Clover
 						mes "[Nami]";
@@ -135,8 +136,8 @@ prt_in,234,133,4	script	Nami#qsk_nv	66,{
 						mes "and combine them together and. . .";
 						mes "Presto !!";
 						next;
-						skill 142,1,0;
-						set NOV_SK,3;
+						skill "NV_FIRSTAID",1,0;
+						set skill_nov,3;
 						mes "[Nami]";
 						mes "Yes yes, that's right!";
 						mes "Now that you have this";
@@ -145,29 +146,24 @@ prt_in,234,133,4	script	Nami#qsk_nv	66,{
 						mes "Thank you and have a great day !~~~";
 						close;
 					}
-					else {
-						mes "[Nami]";
-						mes "First aid does require";
-						mes "some small preparations. . .";
-						mes "Some simple items you should have on hand are";
-						mes "^3355FF' 3 Red_Herb '^000000 ";
-						mes "^3355FF' 3 Clover '^000000 ";
-						mes "^3355FF' 1 Sterilized Bandages '^000000 ";
-						close;
-					}
+					mes "[Nami]";
+					mes "First aid does require";
+					mes "some small preparations. . .";
+					mes "Some simple items you should have on hand are";
+					mes "^3355FF' 3 Red_Herb '^000000 ";
+					mes "^3355FF' 3 Clover '^000000 ";
+					mes "^3355FF' 1 Sterilized Bandages '^000000 ";
+					close;
 				}
 			}
-			else {
-				mes "[Nami]";
-				mes ". . . . . Z z z";
-				mes "I am so sorry!!!...I know I did it wrong...!!";
-				mes "Wahhhh ..";
-				mes "!! *sigh* !!";
-				mes "- *rolls her eyes* -";
-				close;
-			}
-		}
-		else {
+			mes "[Nami]";
+			mes ". . . . . Z z z";
+			mes "I am so sorry!!!...I know I did it wrong...!!";
+			mes "Wahhhh ..";
+			mes "!! *sigh* !!";
+			mes "- *rolls her eyes* -";
+			close;
+		case 2:
 			mes "[Nami]";
 			mes "Hey! .. Where are you going? !";
 			mes "Come over here and have a shot !";
@@ -176,26 +172,24 @@ prt_in,234,133,4	script	Nami#qsk_nv	66,{
 			close;
 		}
 	}
-	else {
-		mes "[Nami]";
-		mes "I am working hard to receive";
-		mes "my nursing license . . .";
-		mes "I don't think that I lack anything";
-		mes "to become a nurse . .";
-		mes "It must be because of my lack of my experience ?";
-		next;
-		mes "[Nami]";
-		mes "If only you had at least";
-		mes "a first job . .";
-		mes "or maybe be over ^3355FF novice job level 4^000000";
-		mes "I could have talked to";
-		mes "you a little longer. . . . . . .";
-		close;
-	}
+	mes "[Nami]";
+	mes "I am working hard to receive";
+	mes "my nursing license . . .";
+	mes "I don't think that I lack anything";
+	mes "to become a nurse . .";
+	mes "It must be because of my lack of my experience ?";
+	next;
+	mes "[Nami]";
+	mes "If only you had at least";
+	mes "a first job . .";
+	mes "or maybe be over ^3355FF novice job level 4^000000";
+	mes "I could have talked to";
+	mes "you a little longer. . . . . . .";
+	close;
 }
 
-prt_in,73,87,4	script	Chivalry Member#qsk_nv	65,{
-	if ((BaseJob == Job_Novice && Upper != 1 && JobLevel > 6) && NOV_SK >= 3 && NOV_SK <= 5) {
+prt_in,73,87,4	script	Chivalry Member	65,{
+	if ((Class == Job_Novice) && (JobLevel > 6) && ((skill_nov >= 3) && (skill_nov <= 5))) {
 		mes "[Bulma]";
 		mes "Yeah. . . I look great. . .";
 		mes "I am a knight in the knight's";
@@ -204,7 +198,7 @@ prt_in,73,87,4	script	Chivalry Member#qsk_nv	65,{
 		mes " knight, but I still look great huh?";
 		mes "What do you think? ? ?";
 		next;
-		switch(NOV_SK) {
+		switch (skill_nov) {
 		case 3:
 			mes "[Bulma]";
 			mes "Hello my young friend -";
@@ -289,7 +283,7 @@ prt_in,73,87,4	script	Chivalry Member#qsk_nv	65,{
 			mes "If you are late, you have to do it again! !";
 			mes "Now GO ! GO ! GO !";
 			mes "Run ~~~~~!!!!";
-			set NOV_SK,4;
+			set skill_nov, 4;
 			close;
 		case 4:
 			mes "[Bulma]";
@@ -317,65 +311,61 @@ prt_in,73,87,4	script	Chivalry Member#qsk_nv	65,{
 				mes "use this skill as you see fit.";
 				mes " ' Play Dead ' ";
 				mes "Okay okay, See you around ! ! !";
-				set NOV_SK,6;
+				set skill_nov,6;
 				delitem 7039,1; //Novice_Nametag
-				skill 143,1,0;
+				skill "NV_TRICKDEAD",1,0;
 				close;
 			}
-			else {
-				mes "[Bulma]";
-				mes "What? -";
-				mes "Why haven't you finished your quest?";
-				mes " *Tsk* *Tsk* You must have lost the pass . . .";
-				mes "Such irresponsibility is not acceptable.";
-				mes "I can't accept you into training until";
-				mes "I know you are capable. Go and try again.";
-				next;
-				mes "[Bulma]";
-				mes "Don't take me lightly. . .";
-				mes "If I tell you to come in 10 minutes,";
-				mes "I expect that of you.";
-				mes "In order for you to have another chance,";
-				mes "you must start from the beginning. . .";
-				mes "Do it right this time ! ! ! !";
-				set NOV_SK,4;
-				close;
-			}
+			mes "[Bulma]";
+			mes "What? -";
+			mes "Why haven't you finished your quest?";
+			mes " *Tsk* *Tsk* You must have lost the pass . . .";
+			mes "Such irresponsibility is not acceptable.";
+			mes "I can't accept you into training until";
+			mes "I know you are capable. Go and try again.";
+			next;
+			mes "[Bulma]";
+			mes "Don't take me lightly. . .";
+			mes "If I tell you to come in 10 minutes,";
+			mes "I expect that of you.";
+			mes "In order for you to have another chance,";
+			mes "you must start from the beginning. . .";
+			mes "Do it right this time ! ! ! !";
+			set skill_nov,4;
+			close;
 		}
 	}
-	else {
-		mes "[Bulma]";
-		mes "Yeah... I remember back to long ago !";
-		mes "Especially those embarrassing Novice years.";
-		mes "Wow... It is funny to think about those years now.";
-		mes "Those years were difficult. . .";
-		mes "Thankfully you can use the First Aid";
-		mes "skill when you reach novice job level 7.";
-		next;
-		mes "[Bulma]";
-		mes "That saved me many times in the past. . .";
-		mes "I am sure it will help you much as well.";
-		mes "Hopefully, it will be something you use well . .";
-		next;
-		mes "[Bulma]";
-		mes "If you have any friends who are novices,";
-		mes "tell them about me.";
-		mes "If I can, I will help them out";
-		mes "as best as I can . . . .";
-		close;
-	}
+	mes "[Bulma]";
+	mes "Yeah... I remember back to long ago !";
+	mes "Especially those embarrassing Novice years.";
+	mes "Wow... It is funny to think about those years now.";
+	mes "Those years were difficult. . .";
+	mes "Thankfully you can use the First Aid";
+	mes "skill when you reach novice job level 7.";
+	next;
+	mes "[Bulma]";
+	mes "That saved me many times in the past. . .";
+	mes "I am sure it will help you much as well.";
+	mes "Hopefully, it will be something you use well . .";
+	next;
+	mes "[Bulma]";
+	mes "If you have any friends who are novices,";
+	mes "tell them about me.";
+	mes "If I can, I will help them out";
+	mes "as best as I can . . . .";
+	close;
 }
 
-prt_castle,175,146,4	script	Nursing Instructor#qsk_n	50,{
+prt_castle,175,146,4	script	Nursing Instructor	50,{
 	mes "[Dread Lord]";
 	mes ". . . . . . . . . .";
 	mes ". . . . . . . . . .";
 	mes "Stop pestering me! ! !";
 	mes "I am very busy ! ! !";
 	mes "Would you just bug off ? ! ? !";
-	next;
-	if (NOV_SK == 0 || NOV_SK == 1 || NOV_SK == 2 || NOV_SK == 4 || NOV_SK == 5) {
-		switch(NOV_SK) {
+	close2;
+	if ((skill_nov >= 0) && (skill_nov <= 5)) {
+		switch (skill_nov) {
 		case 0:
 			mes "[Dread Lord]";
 			mes "The people who work here at";
@@ -397,7 +387,7 @@ prt_castle,175,146,4	script	Nursing Instructor#qsk_n	50,{
 			mes "Do you even know how we get these";
 			mes "precious bandages ?";
 			mes "They come from a powerful monster";
-			mes "that is found in the pyramids of Moroc.";
+			mes "that is found in the pyramids of Morroc.";
 			next;
 			mes "[Dread Lord]";
 			mes "The monster is some sort of mummy.";
@@ -424,7 +414,7 @@ prt_castle,175,146,4	script	Nursing Instructor#qsk_n	50,{
 			mes "go and get killed, be careful. -";
 			next;
 			mes "^3355FF- Got 1 Sterilized Bandages -^000000";
-			set NOV_SK,2;
+			set skill_nov,2;
 			close;
 		case 2:
 			mes "[Dread Lord]";
@@ -452,20 +442,17 @@ prt_castle,175,146,4	script	Nursing Instructor#qsk_n	50,{
 				mes "-woosh - *storms away*";
 				next;
 				mes "^3355FF- Got 1 Newbie Tag -^000000";
-				set NOV_SK,5;
+				set skill_nov,5;
 				getitem 7039,1; //Novice_Nametag
 				close;
 			}
-			else {
-				mes "[Dread Lord]";
-				mes "What ! !";
-				mes "I'm only going to give you one!";
-				mes "You don't need any more for the test !";
-				mes "Do you want to stay a novice forever???";
-				mes "I would be happy to arrange that !";
-				close;
-			}
-			break;
+			mes "[Dread Lord]";
+			mes "What ! !";
+			mes "I'm only going to give you one!";
+			mes "You don't need any more for the test !";
+			mes "Do you want to stay a novice forever???";
+			mes "I would be happy to arrange that !";
+			close;
 		case 5:
 			mes "[Dread Lord]";
 			mes "What more do you want !";
@@ -474,13 +461,11 @@ prt_castle,175,146,4	script	Nursing Instructor#qsk_n	50,{
 			close;
 		}
 	}
-	else {
-		mes "[Dread Lord]";
-		mes "Argh, Get out of here !!";
-		mes "I don't like shouting but ..";
-		mes "GET OUT OF HERE! ! ! ! ! !";
-		close;
-	}
+	mes "[Dread Lord]";
+	mes "Argh, Get out of here !!";
+	mes "I don't like shouting but ..";
+	mes "GET OUT OF HERE! ! ! ! ! !";
+	close;
 }
 
 //============================================================ 

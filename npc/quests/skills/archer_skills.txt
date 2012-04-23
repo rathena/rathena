@@ -3,19 +3,20 @@
 //===== By: ==================================================
 //= rAthena dev team
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
 //= Quest for skills: Arrow Crafting, Arrow Repel
 //===== Additional Comments: ================================= 
 //= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//= 1.6 Updated to latest available official file.
+//= also fixed Item issue [bugreport:5607]. [Masao]
 //============================================================
 
-moc_ruins,118,99,5	script	Roberto#qsk_ac	88,{
-	if (BaseClass == Job_Archer) {
-		if (getskilllv("AC_MAKINGARROW") == 1) {
+moc_ruins,118,99,5	script	Roberto	88,{
+	if (BaseJob == Job_Archer) {
+		if (ac_makingarrow_x == 1) {
 			mes "[Roberto]";
 			mes "Ooh, you're from my home town!";
 			mes "Nice to see you!";
@@ -32,13 +33,13 @@ moc_ruins,118,99,5	script	Roberto#qsk_ac	88,{
 			mes "Then byebye~";
 			close;
 		}
-		else if ((Basejob == Job_Archer && JobLevel >= 30) || BaseJob == Job_Hunter || BaseJob == Job_Dancer || BaseJob == Job_Bard) {
+		else if ((BaseJob == Job_Archer) && (JobLevel >= 30)) {
 			mes "[Roberto]";
 			mes "Eh!";
 			mes " ";
 			mes "You are...";
 			next;
-			if (countitem(907) > 19 && countitem(921) > 6 && countitem(7012) > 40 && countitem(1019) > 12 && countitem(501) > 0) {
+			if ((countitem(907) > 19) && (countitem(921) > 6) && (countitem(906) > 40) && (countitem(1019) > 12) && (countitem(501) > 0) && (BaseJob == Job_Archer) && (JobLevel >= 30)) {
 				mes "[Roberto]";
 				mes "You brought them!";
 				mes "Thank you very much.";
@@ -46,10 +47,11 @@ moc_ruins,118,99,5	script	Roberto#qsk_ac	88,{
 				next;
 				delitem 907,20; //Resin
 				delitem 921,7; //Mushroom_Spore
-				delitem 7012,41; //Tough_Scalelike_Stem
+				delitem 906,41; //Tough_Scalelike_Stem
 				delitem 1019,13; //Wooden_Block
 				delitem 501,1; //Red_Potion
-				skill 147,1,0;
+				skill "AC_MAKINGARROW",1,0;
+				set ac_makingarrow_x,1;
 				mes "[Roberto]";
 				mes "No need to worry about arrows now.";
 				mes "Oh, and did you happen to see";
@@ -63,93 +65,91 @@ moc_ruins,118,99,5	script	Roberto#qsk_ac	88,{
 				mes "Then bubye~ Thank you for the presents~";
 				close;
 			}
-			else {
+			mes "[Roberto]";
+			mes "An archer in Morroc!?";
+			mes "Nice to see you! Meeting a fellow";
+			mes "archer in a place like this! *sniffsniff*!";
+			mes "I came alone to Morroc..";
+			mes "but I was a newcomer, and the pressure... waaah~";
+			mes "I was very lonely~";
+			next;
+			switch (select("It must be hard. It's ok have faith.:Keep suffering.")) {
+			case 1:
 				mes "[Roberto]";
-				mes "An archer in Morroc!?";
-				mes "Nice to see you! Meeting a fellow";
-				mes "archer in a place like this! *sniffsniff*!";
-				mes "I came alone to Morroc..";
-				mes "but I was a newcomer, and the pressure... waaah~";
-				mes "I was very lonely~";
+				mes "Yes. Thank you...";
+				mes "You must be having a hard";
+				mes "time in a place like this.";
+				mes "Isn't it hard to find arrows?";
+				mes "That's why I make my own.";
 				next;
-				if (select("It must be hard. It's ok have faith.:Keep suffering.") == 1) {
-					mes "[Roberto]";
-					mes "Yes. Thank you...";
-					mes "You must be having a hard";
-					mes "time in a place like this.";
-					mes "Isn't it hard to find arrows?";
-					mes "That's why I make my own.";
-					next;
-					select("Eh, really?!");
-					mes "[Roberto]";
-					mes "Yeah! I gather different items";
-					mes "and make arrows using them.";
-					mes "It is a useful skill to help me";
-					mes "survive alone in this tough world.";
-					mes "If you'd like, I can teach you.";
-					next;
-					select("That would be wonderful.");
-					mes "[Roberto]";
-					mes "But.. I can't do it for free.";
-					mes "Nothing is free in this world~";
-					mes "Mmm... How about this?";
-					mes "You bring me what I ask for.";
-					mes "Then I will teach you the skill.";
-					next;
-					mes "[Roberto]";
-					mes "I've been very lonely since I left my hometown.";
-					mes "I would like to treat my homesick-ness";
-					mes "with things from there.";
-					mes "Bring me 20 Resins from the trees in the ";
-					mes "Payon forest, and 1 Red Potion";
-					mes "sold in the store.";
-					next;
-					mes "[Roberto]";
-					mes "Also, 13 Trunks from the Willows that";
-					mes "lives near the Payon Forest,";
-					mes "41 Tough Scalelike Stem,";
-					mes "7 Mushroom Spores.";
-					mes "If you bring me all of these.";
-					next;
-					mes "[Roberto]";
-					mes "I will teach you the skill.";
-					mes "Then.. I'll be waiting.";
-					mes "For news from our home.";
-					close;
-				}
+				menu "Eh, really?!",-;
 				mes "[Roberto]";
-				if (Sex)
+				mes "Yeah! I gather different items";
+				mes "and make arrows using them.";
+				mes "It is a useful skill to help me";
+				mes "survive alone in this tough world.";
+				mes "If you'd like, I can teach you.";
+				next;
+				menu "That would be wonderful.",-;
+				mes "[Roberto]";
+				mes "But.. I can't do it for free.";
+				mes "Nothing is free in this world~";
+				mes "Mmm... How about this?";
+				mes "You bring me what I ask for.";
+				mes "Then I will teach you the skill.";
+				next;
+				mes "[Roberto]";
+				mes "I've been very lonely since I left my hometown.";
+				mes "I would like to treat my homesick-ness";
+				mes "with things from there.";
+				mes "Bring me 20 Resins from the trees in the ";
+				mes "Payon forest, and 1 Red Potion";
+				mes "sold in the store.";
+				next;
+				mes "[Roberto]";
+				mes "Also, 13 Trunks from the Willows that";
+				mes "lives near the Payon Forest,";
+				mes "41 Pointed Scale,";
+				mes "7 Mushroom Spores.";
+				mes "If you bring me all of these.";
+				next;
+				mes "[Roberto]";
+				mes "I will teach you the skill.";
+				mes "Then.. I'll be waiting.";
+				mes "For news from our home.";
+				close;
+			case 2:
+				mes "[Roberto]";
+				if (Sex > 1) {
 					mes "...hey miss.";
-				else
+				}
+				else {
 					mes "...hey mister.";
+				}
 				mes "...be careful at night.";
 				close;
 			}
 		}
-		else {
-			mes "[Roberto]";
-			mes "Hmm... Do you?";
-			mes "Have something to say?";
-			mes "I,";
-			mes "have nothing.";
-			mes "Difference in levels";
-			mes "cuts off conversations.";
-			close;
-		}
-	}
-	else {
-		mes "[?]";
-		mes "Eh... First time seeing an archer or something?";
-		mes "Just go where you were going.";
-		mes "I only talk to high level archers.";
-		mes "Won't open my mouth otherwise!";
+		mes "[Roberto]";
+		mes "Hmm... Do you?";
+		mes "Have something to say?";
+		mes "I,";
+		mes "have nothing.";
+		mes "Difference in levels";
+		mes "cuts off conversations.";
 		close;
 	}
+	mes "[?]";
+	mes "Eh... First time seeing an archer or something?";
+	mes "Just go where you were going.";
+	mes "I only talk to high level archers.";
+	mes "Won't open my mouth otherwise!";
+	close;
 }
 
-payon,103,63,3	script	Jason#qsk_ac	88,3,3,{
-	if (BaseClass == Job_Archer) {
-		if (getskilllv("AC_CHARGEARROW") == 1) {
+payon,103,63,3	script	Jason	88,3,3,{
+	if (BaseJob == Job_Archer) {
+		if (ac_chargearrow_x == 1) {
 			mes "[Jason]";
 			mes "Eh, we meet again.";
 			mes "Ehhhh so weird.";
@@ -159,7 +159,7 @@ payon,103,63,3	script	Jason#qsk_ac	88,3,3,{
 			mes "Ehhhh... don't come any more ehh...";
 			close;
 		}
-		else if ((Basejob == Job_Archer && JobLevel >= 35) || BaseJob == Job_Hunter || BaseJob == Job_Dancer || BaseJob == Job_Bard) {
+		else if ((Class == Job_Archer) && (JobLevel >= 35)) {
 			mes "[Jason]";
 			mes "Darn... my wound isn't healing.";
 			mes "Bleh.. I was too careless... ";
@@ -174,7 +174,7 @@ payon,103,63,3	script	Jason#qsk_ac	88,3,3,{
 			mes "Someone like you would definitely be";
 			mes "able to know how to use Arrow Repel.";
 			next;
-			switch(select("What is that?:Teach me.")) {
+			switch (select("What is that?:Teach me.")) {
 			case 1:
 				mes "[Jason]";
 				mes "...you're kidding, right?";
@@ -219,7 +219,7 @@ payon,103,63,3	script	Jason#qsk_ac	88,3,3,{
 				mes "(I'm going to be mad if you don't bring the Banana Juice.)";
 				close;
 			case 2:
-				if (countitem(721) > 1 && countitem(942) > 2 && countitem(962) > 9 && countitem(925) > 9 && countitem(532) > 35) {
+				if ((countitem(721) > 1) && (countitem(942) > 2) && (countitem(962) > 9) && (countitem(925) > 9) && (countitem(532) > 35)) {
 					mes "[Jason]";
 					mes "Ok! Perfect!";
 					mes "I shall teach you the nationally";
@@ -230,7 +230,8 @@ payon,103,63,3	script	Jason#qsk_ac	88,3,3,{
 					delitem 962,10; //Tentacle
 					delitem 925,10; //Bill_Of_Birds
 					delitem 532,36; //Banana_Juice
-					skill 148,1,0;
+					skill "AC_CHARGEARROW",1,0;
+					set ac_chargearrow_x,1;
 					mes "[Jason]";
 					mes "Oh, works better than I expected!";
 					mes "Won't be needing to modify the bow!";
@@ -240,37 +241,31 @@ payon,103,63,3	script	Jason#qsk_ac	88,3,3,{
 					mes "He~heh~!";
 					close;
 				}
-				else {
-					mes "[Jason]";
-					mes "Mmm... too bad.";
-					mes "You are missing some things.";
-					mes "Once again, you need 2 Emeralds,";
-					mes "3 Yoyo Tails, 10 Tentacles,";
-					mes "10 Bill of Birds, and last but";
-					mes "not least 36 bottles of Banana juice!";
-					next;
-					mes "[Jason]";
-					mes "Make sure you have all of them and come again!";
-					close;
-				}
+				mes "[Jason]";
+				mes "Mmm... too bad.";
+				mes "You are missing some things.";
+				mes "Once again, you need 2 Emeralds,";
+				mes "3 Yoyo Tails, 10 Tentacles,";
+				mes "10 Bill of Birds, and last but";
+				mes "not least 36 bottles of Banana juice!";
+				next;
+				mes "[Jason]";
+				mes "Make sure you have all of them and come again!";
+				close;
 			}
 		}
-		else {
-			mes "[Jason]";
-			mes "Ooh... you are an archer.";
-			mes "If you try a little more";
-			mes "you will have a great";
-			mes "reputation as an archer!";
-			mes "Exert yourself!";
-			close;
-		}
-	}
-	else {
-		mes "[?]";
-		mes "What does life need from";
-		mes "a lonely lad like me?";
+		mes "[Jason]";
+		mes "Ooh... you are an archer.";
+		mes "If you try a little more";
+		mes "you will have a great";
+		mes "reputation as an archer!";
+		mes "Exert yourself!";
 		close;
 	}
+	mes "[?]";
+	mes "What does life need from";
+	mes "a lonely lad like me?";
+	close;
 
 OnTouch:
 	mes "[???]";
