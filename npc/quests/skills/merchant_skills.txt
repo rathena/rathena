@@ -16,7 +16,7 @@
 
 alberta,83,96,5	script	Necko	98,7,7,{
 	if (BaseJob == Job_Merchant) {
-		if (mc_loud_x == 1) {
+		if (getskilllv("MC_LOUD") == 1) {
 			mes "[Necko]";
 			mes "I'm sorry. Necko's store is...";
 			mes "Oh? Who's this?";
@@ -79,7 +79,6 @@ alberta,83,96,5	script	Necko	98,7,7,{
 				delitem 532,1; //Banana_Juice
 				delitem 921,50; //Mushroom_Spore
 				skill "MC_LOUD",1,0;
-				set mc_loud_x,1;
 				mes "[Necko]";
 				mes "You have learned Crazy Uproar!!";
 				mes "Shout as much as you wish!";
@@ -181,7 +180,7 @@ OnTouch:
 
 alberta,119,221,6	script	Charlron	107,5,5,{
 	if (BaseJob == Job_Merchant) {
-		if (mc_changecart_x == 1) {
+		if (getskilllv("MC_CHANGECART") == 1) {
 			mes "[Charlron]";
 			mes "Mmm? I was wondering who was making all";
 			mes "the raucus carrying around a cart.";
@@ -224,7 +223,6 @@ alberta,119,221,6	script	Charlron	107,5,5,{
 					delitem 998,10; //Iron
 					delitem 919,20; //Animal's_Skin
 					skill "MC_CHANGECART",1,0;
-					set mc_changecart_x,1;
 					mes "[Charlron]";
 					mes "Congratulations.";
 					mes "You can choose a cart";
@@ -335,7 +333,7 @@ alberta,119,221,6	script	Charlron	107,5,5,{
 
 alberta,232,106,6	script	Gershaun	57,5,5,{
 	if (BaseJob == Job_Merchant) {
-		if (mc_cartrevolution_x == 1) {
+		if (getskilllv("MC_CARTREVOLUTION") == 1) {
 			mes "[Gershaun]";
 			mes "Ah, long time no see!";
 			mes "Ohh, the red marks on your cart.";
@@ -378,7 +376,6 @@ alberta,232,106,6	script	Gershaun	57,5,5,{
 						delitem 601,20; //Wing_Of_Fly
 						delitem 962,5; //Tentacle
 						skill "MC_CARTREVOLUTION",1,0;
-						set mc_cartrevolution_x,1;
 						mes "Now you can use Cart Revolution";
 						mes "I expect you to make merchants";
 						mes "famous by using this amazing";
@@ -451,7 +448,6 @@ alberta,232,106,6	script	Gershaun	57,5,5,{
 						delitem 601,15; //Wing_Of_Fly
 						delitem 962,5; //Tentacle
 						skill "MC_CARTREVOLUTION",1,0;
-						set mc_cartrevolution_x,1;
 						mes "Now you can use Cart Revolution";
 						mes "I expect you to make merchants";
 						mes "famous by using its amazing";
@@ -525,7 +521,6 @@ alberta,232,106,6	script	Gershaun	57,5,5,{
 						delitem 601,23; //Wing_Of_Fly
 						delitem 962,6; //Tentacle
 						skill "MC_CARTREVOLUTION",1,0;
-						set mc_cartrevolution_x, 1;
 						mes "Now you can use Cart Revolution";
 						mes "I expect you to make merchants";
 						mes "famous by using its amazing";

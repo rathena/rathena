@@ -54,26 +54,24 @@ izlude_in,175,130,2	script	Knight De Thomas	98,4,4,{
 			mes "Bring your armor!";
 			mes "Last but not least... bring me one ^008800Moth Wing^000000.";
 			next;
-			switch (select("Eh? You need that, too?")) {
-			case 1:
-				mes "[De Thomas]";
-				mes "Not really.. I don't really NEED it.";
-				mes "It's just that my niece has gotten a bug hunting as a holiday task during the summer vacation.";
-				mes "Of course! It would be much easier for me to get it myself.";
-				mes "but I must work here all the time so I don't exactly have the time to go out and get it.";
-				next;
-				mes "[De Thomas]";
-				mes "Don't you think it is pitiful that I have to stay in once place everyday, not being able to go outside?";
-				mes "Please, find me one...*sniffsniff*";
-				mes "If you don't...";
-				set sm_movingrecovery_x,1;
-				mes "You won't get anything! Muahahaha.";
-				close;
-			case 2:
-				mes "[De Thomas]";
-				mes "...";
-				close;
-			}
+			menu "Eh? You need that, too?",-;
+			mes "[De Thomas]";
+			mes "Not really.. I don't really NEED it.";
+			mes "It's just that my niece has gotten a bug hunting as a holiday task during the summer vacation.";
+			mes "Of course! It would be much easier for me to get it myself.";
+			mes "but I must work here all the time so I don't exactly have the time to go out and get it.";
+			next;
+			mes "[De Thomas]";
+			mes "Don't you think it is pitiful that I have to stay in once place everyday, not being able to go outside?";
+			mes "Please, find me one...*sniffsniff*";
+			mes "If you don't...";
+			set sm_movingrecovery_x,1;
+			mes "You won't get anything! Muahahaha.";
+			close;
+		case 2:
+			mes "[De Thomas]";
+			mes "...";
+			close;
 		}
 	}
 	else if ((BaseJob == Job_Swordman) && (sm_movingrecovery_x > 1)) {
@@ -153,7 +151,7 @@ izlude_in,175,130,2	script	Knight De Thomas	98,4,4,{
 prt_in,75,88,5	script	Leon Von Frich	85,3,3,{
 
 	if ((BaseJob == Job_Swordman) && (JobLevel >= 25)) {
-		if (sm_fatalblow_x == 1) {
+		if (getskilllv("SM_FATALBLOW") == 1) {
 			mes "[Leon]";
 			mes "Eh?";
 			mes "I was wondering who that was!";
@@ -179,7 +177,6 @@ prt_in,75,88,5	script	Leon Von Frich	85,3,3,{
 				delitem 962,30; //Tentacle
 				delitem 526,5; //Royal_Jelly
 				skill "SM_FATALBLOW",1,0;
-				set sm_fatalblow_x,1;
 				mes "[Leon]";
 				mes "Success!";
 				mes "Go use your new skill to its full potential.";
@@ -204,93 +201,91 @@ prt_in,75,88,5	script	Leon Von Frich	85,3,3,{
 				close;
 			}
 		}
+		mes "[Leon]";
+		mes "Ooh! A young and strong swordsman!";
+		next;
+		mes "[Leon]";
+		mes "Wow, seeing your arm, you must enjoy using bash?";
+		next;
+		menu "Eh, I.. just...",-;
+		mes "[Leon]";
+		if (Sex == 0) {
+			mes "No need to be surprised.";
+			mes "If you use a sword, of course you ought to have a good arm!";
+		}
 		else {
+			mes "Nothing to be embarrassed about.";
+			mes "Even if you are a female you need a strong arm to use a sword!";
+		}
+		mes "In times of only useless and lazy youngsters,";
+		mes "I'm glad I met someone strong like you.";
+		next;
+		mes "[Leon]";
+		mes "Yes, I would like to give a present to an awesome swordsman like you.";
+		next;
+		switch (select("What present?:It's ok.")) {
+		case 1:
 			mes "[Leon]";
-			mes "Ooh! A young and strong swordsman!";
+			mes "Haha nothing special, but a skill to attack the vital point!";
+			next;
+		case 2:
+			mes "[Leon]";
+			mes "...Haha nothing special, just a skill that aims at the vital spot!";
+			next;
+		}
+		mes "[Leon]";
+		mes "It's a skill I developed recently.";
+		mes "When you use bash, depending on";
+		mes "your level, your opponent can";
+		mes "become stunned.";
+		mes "You have learned bash, haven't you?";
+		next;
+		mes "[Leon]";
+		mes "When I was a swordsman like you,";
+		mes "I used to enjoy using Bash. Every time, I thought";
+		mes "- maybe the attack would be more powerful";
+		mes "if I use stun at the same time.";
+		next;
+		mes "[Leon]";
+		mes "I drew back from the battlefield to do research";
+		mes "and finally, I developed this wonderful new skill!";
+		mes "Would you like to learn this skill?";
+		next;
+		switch (select("Yes.:No.:Do you have any advice on how to eat sushi?")) {
+		case 1:
+			mes "[Leon]";
+			mes "Ok. I'll tell you the requirements.";
+			mes "First you need to have level 5 Bash.";
+			mes "You will also need to prepare 10 Fire Arrows, 10 Silver Arrows, 1 bottle of Banana Juice, 30 Tentacles, and 5 bottles of Royal Jelly.";
+			mes "They are.. somewhat like ingredients.";
 			next;
 			mes "[Leon]";
-			mes "Wow, seeing your arm, you must enjoy using bash?";
-			next;
-			menu "Eh, I.. just...",-;
+			mes "come to me again once you have all the materials.";
+			mes "We shall talk then.";
+			close;
+		case 2:
 			mes "[Leon]";
-			if (Sex == 0) {
-				mes "No need to be surprised.";
-				mes "If you use a sword, of course you ought to have a good arm!";
-			}
-			else {
-				mes "Nothing to be embarrassed about.";
-				mes "Even if you are a female you need a strong arm to use a sword!";
-			}
-			mes "In times of only useless and lazy youngsters,";
-			mes "I'm glad I met someone strong like you.";
+			mes "Hahahahahahahahahaha!";
+			mes "... ";
+			mes " ... ";
+			mes " ...";
+			mes "I'm at a loss of words!?";
+			close;
+		case 3:
+			mes "[Sushi King Leon]";
+			mes "The best way to eat sushi is";
+			mes "with your hands.";
+			mes "That is the basic.";
+			mes "And dip the fish, not the rice,";
+			mes "in the soy sauce.";
 			next;
-			mes "[Leon]";
-			mes "Yes, I would like to give a present to an awesome swordsman like you.";
-			next;
-			switch (select("What present?:It's ok.")) {
-			case 1:
-				mes "[Leon]";
-				mes "Haha nothing special, but a skill to attack the vital point!";
-				next;
-			case 2:
-				mes "[Leon]";
-				mes "...Haha nothing special, just a skill that aims at the vital spot!";
-				next;
-			}
-			mes "[Leon]";
-			mes "It's a skill I developed recently.";
-			mes "When you use bash, depending on";
-			mes "your level, your opponent can";
-			mes "become stunned.";
-			mes "You have learned bash, haven't you?";
-			next;
-			mes "[Leon]";
-			mes "When I was a swordsman like you,";
-			mes "I used to enjoy using Bash. Every time, I thought";
-			mes "- maybe the attack would be more powerful";
-			mes "if I use stun at the same time.";
-			next;
-			mes "[Leon]";
-			mes "I drew back from the battlefield to do research";
-			mes "and finally, I developed this wonderful new skill!";
-			mes "Would you like to learn this skill?";
-			next;
-			switch (select("Yes.:No.:Do you have any advice on how to eat sushi?")) {
-			case 1:
-				mes "[Leon]";
-				mes "Ok. I'll tell you the requirements.";
-				mes "First you need to have level 5 Bash.";
-				mes "You will also need to prepare 10 Fire Arrows, 10 Silver Arrows, 1 bottle of Banana Juice, 30 Tentacles, and 5 bottles of Royal Jelly.";
-				mes "They are.. somewhat like ingredients.";
-				next;
-				mes "[Leon]";
-				mes "come to me again once you have all the materials.";
-				mes "We shall talk then.";
-				close;
-			case 2:
-				mes "[Leon]";
-				mes "Hahahahahahahahahaha!";
-				mes "... ";
-				mes " ... ";
-				mes " ...";
-				mes "I'm at a loss of words!?";
-				close;
-			case 3:
-				mes "[Sushi King Leon]";
-				mes "The best way to eat sushi is";
-				mes "with your hands.";
-				mes "That is the basic.";
-				mes "And dip the fish, not the rice,";
-				mes "in the soy sauce.";
-				next;
-				mes "[Sushi King Leon]";
-				mes "That way you get a richer flavor.";
-				mes "Also, always eat the kind that is in season.";
-				mes "Eating in the order of white fish then";
-				mes "blue fish will make it taste better!";
-				mes "Mmm! I like sushi~~!";
-				close;
-			}
+			mes "[Sushi King Leon]";
+			mes "That way you get a richer flavor.";
+			mes "Also, always eat the kind that is in season.";
+			mes "Eating in the order of white fish then";
+			mes "blue fish will make it taste better!";
+			mes "Mmm! I like sushi~~!";
+			close;
 		}
 	}
 	mes "[Leon]";
@@ -309,7 +304,7 @@ OnTouch:
 
 prt_in,94,57,3	script	Juan	85,4,4,{
 	if (BaseJob == Job_Swordman) {
-		if (sm_autoberserk_x == 1) {
+		if (getskilllv("SM_AUTOBERSERK") == 1) {
 			mes "[Juan]";
 			mes "Mmm? Long time no see!";
 			mes "How are you?";
@@ -348,7 +343,6 @@ prt_in,94,57,3	script	Juan	85,4,4,{
 				delitem 957,10; //Decayed_Nail
 				delitem 518,10; //Honey
 				skill "SM_AUTOBERSERK",1,0;
-				set sm_autoberserk_x,1;
 				mes "[Juan]";
 				mes "You have just become a swordsman";
 				mes "that can use Auto Berserk.";
