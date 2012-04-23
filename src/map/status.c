@@ -5939,7 +5939,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			return 0;
 	
 	case SC_INCREASEAGI:
-		 if(pc_issit(sd)){ 
+		 if(sd && pc_issit(sd)){ 
 			 pc_setstand(sd);
 			 clif_status_load(&sd->bl,SI_SIT,0);
 		 }
