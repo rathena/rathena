@@ -151,9 +151,9 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 	nd->u.tomb.kill_time = time;
 	
 	if (killer)
-		nd->u.tomb.killer_name = aStrdup(killer); // Don't rely that killer name will be available all time
+		safestrncpy(nd->u.tomb.killer_name, killer, NAME_LENGTH);
 	else
-		nd->u.tomb.killer_name = NULL;
+		nd->u.tomb.killer_name[0] = NULL;
 
 	map_addnpc(nd->bl.m, nd);
 	map_addblock(&nd->bl);
@@ -168,12 +168,7 @@ void mvptomb_destroy(struct mob_data *md)
 	struct npc_data *nd = (struct npc_data *)map_id2bl(md->tomb_nid);
 
 	if (nd)
-	{
-		if (nd->u.tomb.killer_name)
-			aFree(nd->u.tomb.killer_name);
-		
 		npc_unload(nd);
-	}
 
 	md->tomb_nid = 0;
 }

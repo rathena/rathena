@@ -287,4 +287,8 @@ int mob_clone_delete(struct mob_data *md);
 
 void mob_reload(void);
 
+// MvP Tomb System
+void mvptomb_create(struct mob_data *md, char *killer, time_t time);
+void mvptomb_destroy(struct mob_data *md);
+
 #endif /* _MOB_H_ */

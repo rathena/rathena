@@ -65,7 +65,7 @@ struct npc_data {
 		struct {
 			struct mob_data *md;
 			time_t kill_time;
-			char *killer_name;
+			char killer_name[NAME_LENGTH];
 		} tomb;
 	} u;
 };
