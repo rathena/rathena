@@ -129,38 +129,38 @@ function	script	F_CashDungeon	{
 function	script	F_CashCity	{
 	switch(getarg(0))
 	{
-		// Yellow
-		case 1: switch(select("Prontera:Geffen:Payon:Morroc:Aldebaran:Alberta")) {
-			case 1: warp "prontera",0,0; end;
-			case 2: warp "geffen",0,0; end;
-			case 3: warp "payon",0,0; end;
-			case 4: warp "morocc",0,0; end;
-			case 5: warp "aldebaran",0,0; end;
-			case 6: warp "alberta",0,0; end;
+		case 1: // Yellow - Rune-Midgart
+			switch(select("Prontera:Geffen:Payon:Morroc:Al de Baran:Alberta")) {
+				case 1: warp "prontera",167,68; end;
+				case 2: warp "geffen",121,147; end;
+				case 3: warp "payon",172,101; end;
+				case 4: warp "morocc",165,255; end;
+				case 5: warp "aldebaran",168,112; end;
+				case 6: warp "alberta",117,56; end;
 			}
-		break;
-		// Green
-		case 2: switch(select("Juno:Lighthalzen:Einbroch:Hugel")) {
-			case 1: warp "yuno",0,0; end;
-			case 2: warp "lighthalzen",0,0; end;
-			case 3: warp "einbroch",0,0; end;
-			case 4: warp "hugel",0,0; end;
+			break;
+		case 2: // Green - Schwartzvalt
+			switch(select("Juno:Einbroch:Lighthalzen:Hugel")) {
+				case 1: warp "yuno",158,39; end;
+				case 2: warp "einbroch",240,200; end;
+				case 3: warp "lighthalzen",214,311; end;
+				case 4: warp "hugel",95,43; end;
 			}
-		break;
-		// Red
-		case 3: switch(select("Rachel:Veins")) {
-			case 1: warp "rachel",0,0; end;
-			case 2: warp "veins",0,0; end;
+			break;
+		case 3: // Red - Arunafeltz
+			switch(select("Rachel:Veins")) {
+				case 1: warp "rachel",115,125; end;
+				case 2: warp "veins",205,102; end;
 			}
-		break;
-		// Blue
-		case 4: switch(select("Ayothaya:Amatsu:Louyang:Gonryun")) {
-			case 1: warp "ayothaya",0,0; end;
-			case 2: warp "amatsu",0,0; end;
-			case 3: warp "louyang",0,0; end;
-			case 4: warp "gonryun",0,0; end;
+			break;
+		case 4: // Blue - Islands
+			switch(select("Louyang:Amatsu:Kunlun Field:Ayothaya")) {
+				case 3: warp "louyang",216,40; end;
+				case 2: warp "amatsu",197,83; end;
+				case 4: warp "gon_fild01",258,82; end;
+				case 1: warp "ayothaya",149,71; end;
 			}
-		break;
+			break;
 	}
 	return;
 }
