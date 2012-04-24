@@ -160,7 +160,7 @@ prt_in,75,88,5	script	Leon Von Frich	85,3,3,{
 			mes "Be careful! Hahaha!";
 			close;
 		}
-		else if ((countitem(1752) > 9) && (countitem(1751) > 9) && (countitem(532) > 0) && (countitem(962) > 29) && (countitem(526) > 4) && (BaseJob == Job_Swordman) && (JobLevel >= 25)) {
+		else if ((countitem(1752) > 9) && (countitem(1751) > 9) && (countitem(532) > 0) && (countitem(962) > 29) && (countitem(526) > 4)) {
 			mes "[Leon]";
 			mes "Ooh! You are more than ready";
 			mes "to learn Fatal Blow!";
@@ -313,7 +313,7 @@ prt_in,94,57,3	script	Juan	85,4,4,{
 			mes "You can do it.";
 			close;
 		}
-		else if ((BaseJob == Job_Swordman) && (JobLevel < 10)) {
+		else if (JobLevel < 10) {
 			mes "[?]";
 			mes "What are you?";
 			mes "Eh, still a beginner.";
@@ -321,13 +321,13 @@ prt_in,94,57,3	script	Juan	85,4,4,{
 			mes "before coming back.";
 			close;
 		}
-		else if ((BaseJob == Job_Swordman) && ((JobLevel > 10) && (JobLevel < 30))) {
+		else if ((JobLevel > 10) && (JobLevel < 30)) {
 			mes "[Juan]";
 			mes "Oh, nice to meet you.";
 			mes "You can be on your way. (smiley~)";
 			close;
 		}
-		else if ((countitem(924) > 34) && (countitem(958) > 9) && (countitem(957) > 9) && (countitem(518) > 9) && (BaseJob == Job_Swordman) && (JobLevel >= 30)) {
+		else if ((countitem(924) > 34) && (countitem(958) > 9) && (countitem(957) > 9) && (countitem(518) > 9) && (JobLevel >= 30)) {
 			mes "[Juan]";
 			mes "Ooh. Young swordsman!";
 			mes "You are ready to learn the";

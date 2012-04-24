@@ -40,7 +40,7 @@ alberta,83,96,5	script	Necko	98,7,7,{
 			mes "Ppyakikakikakakakakakakaka!!";
 			close;
 		}
-		else if ((Class == Job_Merchant) && (JobLevel < 15)) {
+		else if (JobLevel < 15) {
 			mes "[Necko]";
 			mes "Oh, did you come because";
 			mes "you are infatuated with my voice?";
@@ -61,7 +61,7 @@ alberta,83,96,5	script	Necko	98,7,7,{
 			mes "Kyukwakakakakakakakakakaka!";
 			close;
 		}
-		else if ((countitem(722) > 6) && (countitem(532) > 0) && (countitem(921) > 49) && (BaseJob == Job_Merchant) & (JobLevel >= 15)) {
+		else if ((countitem(722) > 6) && (countitem(532) > 0) && (countitem(921) > 49) && (JobLevel >= 15)) {
 			mes "[Necko]";
 			mes "Oh! You!";
 			mes "You are qualified to learn how to shout!";
@@ -178,7 +178,7 @@ OnTouch:
 	close;
 }
 
-alberta,119,221,6	script	Charlron	107,5,5,{
+alberta,119,221,6	script	Charlron	107,{
 	if (BaseJob == Job_Merchant) {
 		if (getskilllv("MC_CHANGECART") == 1) {
 			mes "[Charlron]";
@@ -200,7 +200,7 @@ alberta,119,221,6	script	Charlron	107,5,5,{
 			mes "Be healthy~";
 			close;
 		}
-		else if ((BaseJob == Job_Merchant) && (JobLevel >= 30)) {
+		else if (JobLevel >= 30) {
 			mes "[Charlron]";
 			mes "Nice to see you fellow merchant";
 			mes "If I remember correctly,";
@@ -331,7 +331,7 @@ alberta,119,221,6	script	Charlron	107,5,5,{
 	close;
 }
 
-alberta,232,106,6	script	Gershaun	57,5,5,{
+alberta,232,106,6	script	Gershaun	57,{
 	if (BaseJob == Job_Merchant) {
 		if (getskilllv("MC_CARTREVOLUTION") == 1) {
 			mes "[Gershaun]";

@@ -158,7 +158,7 @@ payon,103,63,3	script	Jason	88,3,3,{
 			mes "Ehhhh... don't come any more ehh...";
 			close;
 		}
-		else if ((Class == Job_Archer) && (JobLevel >= 35)) {
+		else if (JobLevel >= 35) {
 			mes "[Jason]";
 			mes "Darn... my wound isn't healing.";
 			mes "Bleh.. I was too careless... ";

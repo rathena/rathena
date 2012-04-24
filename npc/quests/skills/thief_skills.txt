@@ -29,7 +29,7 @@ moc_prydb1,154,128,4	script	Alcouskou	118,{
 		case 1:
 			switch (skill_thief_1) {
 			case 0:
-				if ((countitem(7041) > 4) && (BaseJob == Job_Thief) && (JobLevel > 24)) {
+				if ((countitem(7041) > 4) && (JobLevel > 24)) {
 					mes "[Alcouskou]";
 					mes "Luckily, you have brought some";
 					mes "sand with you. It is very important";
@@ -151,7 +151,7 @@ moc_prydb1,154,128,4	script	Alcouskou	118,{
 				close;
 			}
 	case 2:
-		if ((countitem(940) > 19) && (BaseJob == Job_Thief) && (JobLevel > 34)) {
+		if ((countitem(940) > 19) && (JobLevel > 34)) {
 			mes "[Alcouskou]";
 			mes "Okay! Let's practice!";
 			next;
@@ -228,7 +228,7 @@ moc_prydb1,154,128,4	script	Alcouskou	118,{
 		mes "If not, I cannot teach you.";
 		close;
 	case 3:
-		if ((countitem(912) > 0) && (countitem(948) > 0) && (countitem(908) > 4) && (BaseJob == Job_Thief) && (JobLevel > 19)) {
+		if ((countitem(912) > 0) && (countitem(948) > 0) && (countitem(908) > 4) && (JobLevel > 19)) {
 			mes "[Alcouskou]";
 			mes "Wow, you have already prepared?";
 			mes "Great, I see promise in you. -";
@@ -318,7 +318,7 @@ moc_prydb1,154,128,4	script	Alcouskou	118,{
 		mes "Retrieve these items by any means you see fit.";
 		close;
 	case 4:
-		if ((countitem(910) > 1) && (countitem(911) > 1) && (BaseJob == Job_Thief) & (JobLevel > 14)) {
+		if ((countitem(910) > 1) && (countitem(911) > 1) && (JobLevel > 14)) {
 			mes "[Alcouskou]";
 			mes "Wow! Have you already gathered the items!";
 			mes "Very well, do you wish to begin?";
