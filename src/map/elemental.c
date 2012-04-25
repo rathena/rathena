@@ -9,6 +9,7 @@
 #include "../common/mmo.h"
 #include "../common/showmsg.h"
 #include "../common/utils.h"
+#include "../common/random.h"
 
 #include "log.h"
 #include "clif.h"
