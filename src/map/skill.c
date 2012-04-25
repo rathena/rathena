@@ -1268,7 +1268,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		if( dstsd )
 			skill_addtimerskill(src,tick+status_get_amotion(src),bl->id,0,0,skillid,skilllv,BF_WEAPON,0);
 		else if( dstmd && !is_boss(bl) )
-			sc_start(bl, SC_STUN, 100, skilllv, 1000 + 1000 * (rand()%3));
+			sc_start(bl, SC_STUN, 100, skilllv, 1000 + 1000 * (rnd() %3));
 		break;
 	case SR_GENTLETOUCH_QUIET:
 		sc_start(bl, SC_SILENCE, 2 * skilllv, skilllv, skill_get_time(skillid, skilllv));
@@ -1277,7 +1277,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		sc_start(bl, SC_FEAR, 5 + 5 * skilllv, skilllv, skill_get_time(skillid, skilllv));
 		break;
 	case WM_SOUND_OF_DESTRUCTION:
-		if( rand()%100 < 5 + 5 * skilllv ) { // Temporarly Check Until We Get the Official Formula
+		if( rnd()%100 < 5 + 5 * skilllv ) { // Temporarly Check Until We Get the Official Formula
 			status_change_end(bl, SC_DANCING, INVALID_TIMER);
 			status_change_end(bl, SC_RICHMANKIM, INVALID_TIMER);
 			status_change_end(bl, SC_ETERNALCHAOS, INVALID_TIMER);
@@ -4338,7 +4338,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case WM_LULLABY_DEEPSLEEP:
-		if( rand()%100 < 88 + 2 * skilllv )
+		if( rnd()%100 < 88 + 2 * skilllv )
 			sc_start(bl,status_skill2sc(skillid),100,skilllv,skill_get_time(skillid,skilllv));
 		break;
 
@@ -4363,7 +4363,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		break;
 		
 	case GN_CRAZYWEED:
-		if( rand()%100 < 75 ) {
+		if( rnd()%100 < 75 ) {
 			if( bl->type == BL_SKILL ) {
 				struct skill_unit *su = (struct skill_unit *)bl;
 				if( !su )
@@ -4407,7 +4407,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			int i = skill_get_splash(skillid,skilllv);
 			clif_skill_nodamage(src,battle_get_master(src),skillid,skilllv,1);
 			clif_skill_damage(src, src, tick, status_get_amotion(src), 0, -30000, 1, skillid, skilllv, 6);
-			if( rand()%100 < 30 )
+			if( rnd()%100 < 30 )
 				map_foreachinrange(skill_area_sub,bl,i,BL_CHAR,src,skillid,skilllv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
 			else
 				skill_attack(skill_get_type(skillid),src,src,bl,skillid,skilllv,tick,flag);
@@ -4417,7 +4417,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case EL_ROCK_CRUSHER:
 		clif_skill_nodamage(src,battle_get_master(src),skillid,skilllv,1);
 		clif_skill_damage(src, src, tick, status_get_amotion(src), 0, -30000, 1, skillid, skilllv, 6);
-		if( rand()%100 < 50 )
+		if( rnd()%100 < 50 )
 			skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
 		else
 			skill_attack(BF_WEAPON,src,src,bl,EL_ROCK_CRUSHER_ATK,skilllv,tick,flag);
@@ -4430,7 +4430,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			int i = skill_get_splash(skillid,skilllv);
 			clif_skill_nodamage(src,battle_get_master(src),skillid,skilllv,1);
 			clif_skill_damage(src, src, tick, status_get_amotion(src), 0, -30000, 1, skillid, skilllv, 6);
-			if( rand()%100 < 30 )
+			if( rnd()%100 < 30 )
 				map_foreachinrange(skill_area_sub,bl,i,BL_CHAR,src,skillid,skilllv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
 			else
 				skill_attack(skill_get_type(skillid),src,src,bl,skillid,skilllv,tick,flag);
@@ -4459,7 +4459,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			if( (sc && sc->data[type2]) || (tsc && tsc->data[type]) ) {
 				elemental_clean_single_effect(ele, skillid);
 			}
-			if( rand()%100 < 50 )
+			if( rnd()%100 < 50 )
 				skill_attack(skill_get_type(skillid),src,src,bl,skillid,skilllv,tick,flag);
 			else {
 				sc_start(src,type2,100,skilllv,skill_get_time(skillid,skilllv));
@@ -8157,7 +8157,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			if( !status_isdead(bl) )
 				break;
 
-			if( rand()%100 < 88 + 2 * skilllv ) {
+			if( rnd()%100 < 88 + 2 * skilllv ) {
 				int heal = tstatus->sp;
 				if( heal <= 0 )
 					heal = 1;
@@ -8254,9 +8254,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case WM_RANDOMIZESPELL: {
 			int improv_skillid = 0, improv_skilllv;
 			do {
-				i = rand() % MAX_SKILL_IMPROVISE_DB;
+				i = rnd() % MAX_SKILL_IMPROVISE_DB;
 				improv_skillid = skill_improvise_db[i].skillid;
-			} while( improv_skillid == 0 || rand()%10000 >= skill_improvise_db[i].per );
+			} while( improv_skillid == 0 || rnd()%10000 >= skill_improvise_db[i].per );
 			improv_skilllv = 4 + skilllv;
 			clif_skill_nodamage (src, bl, skillid, skilllv, 1);
 
@@ -15138,10 +15138,10 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 						qty = 3;
 						break;				//3 items to make at once.
 					case 9:
-						qty = 3 + rand()%3;
+						qty = 3 + rnd()%3;
 						break;					//3~5 items to make at once.
 					case 10:
-						qty = 4 + rand()%3;
+						qty = 4 + rnd()%3;
 						break;					//4~6 items to make at once.
 					default:
 						qty = 2;
@@ -15257,8 +15257,8 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 			tmp_item.amount = 0;
 			if( skill_id == GN_MIX_COOKING && firstQty > 1 ) {// Mix Cooking level 2.
 			// Success. As I see the chance as level 2 is global, not indiviual.
-				if( rand()%10000 < make_per )
-					tmp_item.amount = 5 + rand()%5;
+				if( rnd()%10000 < make_per )
+					tmp_item.amount = 5 + rnd()%5;
 			} else {
 				for (i=0; i< qty; i++) {	//Apply quantity modifiers.
 					if (rnd()%10000 < make_per || qty == 1) { //Success
@@ -15377,11 +15377,11 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 					memset(&tmp_item,0,sizeof(tmp_item));
 					tmp_item.nameid = nameid;
 					do {
-						i = rand()%5;
+						i = rnd()%5;
 						tmp_item.nameid = products[i][0];
 					}
-					while( rand()%10000 >= products[i][1] );
-					tmp_item.amount = (firstQty > 1 )? 5 + rand()%5 : 1; // When it fails it gives a random amount of items.
+					while( rnd()%10000 >= products[i][1] );
+					tmp_item.amount = (firstQty > 1 )? 5 + rnd()%5 : 1; // When it fails it gives a random amount of items.
 					tmp_item.identify = 1;
 					if( pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE) ) {
 						clif_additem(sd,0,0,flag);
@@ -15630,7 +15630,7 @@ int skill_elementalanalysis(struct map_session_data* sd, int n, int skill_lv, un
 		
 		if( skill_lv == 2 )
 			del_amount -= (del_amount % 10);
-		add_amount = (skill_lv == 1) ? del_amount * (5 + rand()%5) : del_amount / 10 ;
+		add_amount = (skill_lv == 1) ? del_amount * (5 + rnd()%5) : del_amount / 10 ;
 		
 		if( (nameid = sd->status.inventory[idx].nameid) <= 0 || del_amount > sd->status.inventory[idx].amount ) {
 			clif_skill_fail(sd,SO_EL_ANALYSIS,0,0);
@@ -15658,7 +15658,7 @@ int skill_elementalanalysis(struct map_session_data* sd, int n, int skill_lv, un
 			return 1;
 		}
 		
-		if( skill_lv == 2 && rand()%100 < 25 ) {	// At level 2 have a fail chance. You loose your items if it fails.
+		if( skill_lv == 2 && rnd()%100 < 25 ) {	// At level 2 have a fail chance. You loose your items if it fails.
 			clif_skill_fail(sd,SO_EL_ANALYSIS,0,0);
 			return 1;
 		}

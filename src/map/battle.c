@@ -652,7 +652,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 
 		if (!damage) return 0;
 
-		if( (sce = sc->data[SC_LIGHTNINGWALK]) && flag&BF_LONG && rand()%100 < sce->val1 ) {
+		if( (sce = sc->data[SC_LIGHTNINGWALK]) && flag&BF_LONG && rnd()%100 < sce->val1 ) {
 			int dx[8]={0,-1,-1,-1,0,1,1,1};
 			int dy[8]={1,1,0,-1,-1,-1,0,1};
 			int dir = map_calc_dir(bl, src->x, src->y);
@@ -674,7 +674,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 		if( sd && (sce = sc->data[SC_FORCEOFVANGUARD]) && flag&BF_WEAPON && rnd()%100 < sce->val2 )
 			pc_addspiritball(sd,skill_get_time(LG_FORCEOFVANGUARD,sce->val1),sce->val3);
 		
-		if( sc->data[SC__DEADLYINFECT] && damage > 0 && rand()%100 < 65 + 5 * sc->data[SC__DEADLYINFECT]->val1 )
+		if( sc->data[SC__DEADLYINFECT] && damage > 0 && rnd()%100 < 65 + 5 * sc->data[SC__DEADLYINFECT]->val1 )
 			status_change_spread(bl, src); // Deadly infect attacked side
 
 		if( sc && sc->data[SC__SHADOWFORM] ) {
@@ -730,7 +730,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 		}
 		if( sc->data[SC_POISONINGWEAPON] && skill_num != GC_VENOMPRESSURE && (flag&BF_WEAPON) && damage > 0 && rnd()%100 < sc->data[SC_POISONINGWEAPON]->val3 )
 			sc_start(bl,sc->data[SC_POISONINGWEAPON]->val2,100,sc->data[SC_POISONINGWEAPON]->val1,skill_get_time2(GC_POISONINGWEAPON,sc->data[SC_POISONINGWEAPON]->val1));
-		if( sc->data[SC__DEADLYINFECT] && damage > 0 && rand()%100 < 65 + 5 * sc->data[SC__DEADLYINFECT]->val1 )
+		if( sc->data[SC__DEADLYINFECT] && damage > 0 && rnd()%100 < 65 + 5 * sc->data[SC__DEADLYINFECT]->val1 )
 			status_change_spread(src, bl);
 	}
 
@@ -768,7 +768,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 			mobskill_event((TBL_MOB*)bl,src,gettick(),MSC_SKILLUSED|(skill_num<<16));
 	}
 	if( sd ) {
-		if( (sd->sc.option&OPTION_MADOGEAR) && rand()%100 < 50 ) {
+		if( (sd->sc.option&OPTION_MADOGEAR) && rnd()%100 < 50 ) {
 			short element = skill_get_ele(skill_num, skill_lv);
 			if( !skill_num || element == -1 ) { //Take weapon's element
 				struct status_data *sstatus = NULL;
@@ -3764,7 +3764,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		{
 			int level = sd?sd->status.base_level:status_get_lv(src);
 			md.damage = skill_lv*sstatus->dex*(3+level/100)*(1+sstatus->int_/35);
-			md.damage+= md.damage*(rand()%20-10)/100;
+			md.damage+= md.damage*(rnd()%20-10)/100;
 			md.damage+= 40*(sd?pc_checkskill(sd,RA_RESEARCHTRAP):0);
 		}
 		break;
@@ -4083,7 +4083,7 @@ int battle_calc_return_damage(struct block_list* bl, struct block_list *src, int
 					if (rdamage < 1) rdamage = 1;
 				}
 			}
-			if( sc && sc->data[SC_CRESCENTELBOW] && !(flag&BF_SKILL) && !is_boss(src) && rand()%100 < sc->data[SC_CRESCENTELBOW]->val2 )
+			if( sc && sc->data[SC_CRESCENTELBOW] && !(flag&BF_SKILL) && !is_boss(src) && rnd()%100 < sc->data[SC_CRESCENTELBOW]->val2 )
 			{	// Stimated formula from test
 				rdamage += (int)((*dmg) + (*dmg) * status_get_hp(src) * 2.15 / 100000);
 				if( rdamage < 1 ) rdamage = 1;
@@ -4321,7 +4321,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			return ATK_MISS;
 		}
 		if( sc->data[SC_GT_ENERGYGAIN] ) {
-			if( sd && rand()%100 < 10 + 5 * sc->data[SC_GT_ENERGYGAIN]->val1)
+			if( sd && rnd()%100 < 10 + 5 * sc->data[SC_GT_ENERGYGAIN]->val1)
 				pc_addspiritball(sd,
 								 skill_get_time(MO_CALLSPIRITS, sc->data[SC_GT_ENERGYGAIN]->val1),
 								 sc->data[SC_GT_ENERGYGAIN]->val1);
@@ -4345,7 +4345,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			else
 				status_change_end(src,SC_SPELLFIST,INVALID_TIMER);
 		}
-		if( sc->data[SC_GIANTGROWTH] && (wd.flag&BF_SHORT) && rand()%100 < sc->data[SC_GIANTGROWTH]->val2 )
+		if( sc->data[SC_GIANTGROWTH] && (wd.flag&BF_SHORT) && rnd()%100 < sc->data[SC_GIANTGROWTH]->val2 )
 			wd.damage *= 3; // Triple Damage
 	}
 	if (sd && sd->state.arrow_atk) //Consume arrow.
@@ -4451,7 +4451,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		}
 	}
 	if (sd) {
-		if( wd.flag&BF_SHORT && sc && sc->data[SC__AUTOSHADOWSPELL] && rand()%100 < sc->data[SC__AUTOSHADOWSPELL]->val3 &&
+		if( wd.flag&BF_SHORT && sc && sc->data[SC__AUTOSHADOWSPELL] && rnd()%100 < sc->data[SC__AUTOSHADOWSPELL]->val3 &&
 			sd->status.skill[sc->data[SC__AUTOSHADOWSPELL]->val1].id != 0 && sd->status.skill[sc->data[SC__AUTOSHADOWSPELL]->val1].flag == SKILL_FLAG_PLAGIARIZED )
 		{
 			int r_skill = sd->status.skill[sc->data[SC__AUTOSHADOWSPELL]->val1].id,
