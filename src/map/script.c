@@ -15843,7 +15843,7 @@ BUILDIN_FUNC(getargcount) {
 BUILDIN_FUNC(is_function) {
 	const char* str = script_getstr(st,2);
 
-	if( ((struct script_code*)strdb_get(userfunc_db, str)) != NULL )
+	if( strdb_exists(userfunc_db, str) )
 		script_pushint(st,1);
 	else
 		script_pushint(st,0);
@@ -15857,9 +15857,9 @@ BUILDIN_FUNC(get_revision) {
 	const char * revision;
 
 	if ( (revision = get_svn_revision()) != 0 )
-		script_pushstrcopy(st,revision);
+		script_pushint(st,atoi(revision));
 	else
-		script_pushconststr(st,"Unknown");
+		script_pushint(st,-1);//unknown
 
 	return 0;
 }
