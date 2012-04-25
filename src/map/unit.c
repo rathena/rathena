@@ -491,7 +491,7 @@ int unit_wugdash(struct block_list *bl, struct map_session_data *sd) {
 	nullpo_ret(bl);
 
 	if (!unit_can_move(bl)) {
-		status_change_end(bl,SC_WUGDASH,-1);
+		status_change_end(bl,SC_WUGDASH,INVALID_TIMER);
 		return 0;
 	}
 	
@@ -516,7 +516,7 @@ int unit_wugdash(struct block_list *bl, struct map_session_data *sd) {
 	if(to_x == bl->x && to_y == bl->y) {
 
 		unit_bl2ud(bl)->state.running = 0;
-		status_change_end(bl,SC_WUGDASH,-1);
+		status_change_end(bl,SC_WUGDASH,INVALID_TIMER);
 
 		if( sd ){
 			clif_fixpos(bl);
@@ -533,7 +533,7 @@ int unit_wugdash(struct block_list *bl, struct map_session_data *sd) {
 	if (i==0) {
 
 		unit_bl2ud(bl)->state.running = 0;
-		status_change_end(bl,SC_WUGDASH,-1);
+		status_change_end(bl,SC_WUGDASH,INVALID_TIMER);
 		
 		if( sd ){
 			clif_fixpos(bl);
@@ -1294,11 +1294,11 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 			status_change_end(src,SC_CLOAKINGEXCEED, INVALID_TIMER);
 			if (!src->prev) return 0;
 		} else if( sc->data[SC_CAMOUFLAGE] && skill_num != RA_CAMOUFLAGE )
-			status_change_end(src,SC_CAMOUFLAGE,-1);
+			status_change_end(src,SC_CAMOUFLAGE,INVALID_TIMER);
 
 		if( sc->data[SC_CURSEDCIRCLE_ATKER] ) {
 			sc->data[SC_CURSEDCIRCLE_ATKER]->val3 = 1;
-			status_change_end(src,SC_CURSEDCIRCLE_ATKER,-1);
+			status_change_end(src,SC_CURSEDCIRCLE_ATKER,INVALID_TIMER);
 		}
 
 	}
@@ -1422,11 +1422,11 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 			status_change_end(src, SC_CLOAKINGEXCEED, INVALID_TIMER);
 			if (!src->prev) return 0;
 		} else if( sc->data[SC_CAMOUFLAGE] && skill_num != RA_CAMOUFLAGE )
-			status_change_end(src,SC_CAMOUFLAGE,-1);
+			status_change_end(src,SC_CAMOUFLAGE,INVALID_TIMER);
 
 		if( sc->data[SC_CURSEDCIRCLE_ATKER] ) {
 			sc->data[SC_CURSEDCIRCLE_ATKER]->val3 = 1;
-			status_change_end(src,SC_CURSEDCIRCLE_ATKER,-1);
+			status_change_end(src,SC_CURSEDCIRCLE_ATKER,INVALID_TIMER);
 		}
 
 	}

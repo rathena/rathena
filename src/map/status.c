@@ -1106,9 +1106,9 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		if (sc->data[SC_BERSERK] && status->hp <= 100)
 			status_change_end(target, SC_BERSERK, INVALID_TIMER);
 		if( sc->data[SC_RAISINGDRAGON] && status->hp <= 1000 )
-			status_change_end(target, SC_RAISINGDRAGON, -1);
+			status_change_end(target, SC_RAISINGDRAGON, INVALID_TIMER);
 		if (sc->data[SC_SATURDAYNIGHTFEVER] && status->hp <= 100)
-			status_change_end(target, SC_SATURDAYNIGHTFEVER, -1);
+			status_change_end(target, SC_SATURDAYNIGHTFEVER, INVALID_TIMER);
 	}
 
 	switch (target->type)
@@ -2250,13 +2250,13 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	//Give them all modes except these (useful for clones)
 	status->mode = MD_MASK&~(MD_BOSS|MD_PLANT|MD_DETECTOR|MD_ANGRY|MD_TARGETWEAK);
 
-	status->size = (sd->class_&JOBL_BABY)?0:1;
+	status->size = (sd->class_&JOBL_BABY)?SZ_SMALL:SZ_MEDIUM;
 	if (battle_config.character_size && pc_isriding(sd)) { //[Lupus]
 		if (sd->class_&JOBL_BABY) {
-			if (battle_config.character_size&2)
+			if (battle_config.character_size&SZ_BIG)
 				status->size++;
 		} else
-		if(battle_config.character_size&1)
+		if(battle_config.character_size&SZ_MEDIUM)
 			status->size++;
 	}
 	status->aspd_rate = 1000;
@@ -7414,13 +7414,13 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val_flag |= 1|2|4;
 			break;
 		case SC_WHITEIMPRISON:
-			status_change_end(bl, SC_BURNING, -1);
-			status_change_end(bl, SC_FREEZING, -1);
-			status_change_end(bl, SC_FREEZE, -1);
-			status_change_end(bl, SC_STONE, -1);
+			status_change_end(bl, SC_BURNING, INVALID_TIMER);
+			status_change_end(bl, SC_FREEZING, INVALID_TIMER);
+			status_change_end(bl, SC_FREEZE, INVALID_TIMER);
+			status_change_end(bl, SC_STONE, INVALID_TIMER);
 			break;
 		case SC_FREEZING:
-			status_change_end(bl, SC_BURNING, -1);
+			status_change_end(bl, SC_BURNING, INVALID_TIMER);
 			break;
 		case SC_READING_SB:
 			// val2 = sp reduction per second
@@ -7532,9 +7532,9 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val3 = 0;
 			break;
 		case SC_WARMER:
-			status_change_end(bl, SC_FREEZE, -1);
-			status_change_end(bl, SC_FREEZING, -1);
-			status_change_end(bl, SC_CRYSTALIZE, -1);
+			status_change_end(bl, SC_FREEZE, INVALID_TIMER);
+			status_change_end(bl, SC_FREEZING, INVALID_TIMER);
+			status_change_end(bl, SC_CRYSTALIZE, INVALID_TIMER);
 			break;
 		case SC_STRIKING:
 			val4 = tick / 1000;
@@ -8635,7 +8635,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			}
 			break;
 		case SC_ADORAMUS:
-			status_change_end(bl, SC_BLIND, -1);
+			status_change_end(bl, SC_BLIND, INVALID_TIMER);
 			break;
 		case SC__SHADOWFORM: {
 				struct map_session_data *s_sd = map_id2sd(sce->val2);
@@ -8679,7 +8679,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				int i;
 				i = min(sd->spiritball,5);
 				pc_delspiritball(sd, sd->spiritball, 0);
-				status_change_end(bl, SC_EXPLOSIONSPIRITS, -1);
+				status_change_end(bl, SC_EXPLOSIONSPIRITS, INVALID_TIMER);
 				while( i > 0 ) {
 					pc_addspiritball(sd, skill_get_time(MO_CALLSPIRITS, pc_checkskill(sd,MO_CALLSPIRITS)), 5);
 					--i;
@@ -9661,8 +9661,8 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		{
 			struct block_list *s_bl = battle_get_master(bl);
 			if( s_bl )
-				status_change_end(s_bl,type+1,-1);
-			status_change_end(bl,type,-1);
+				status_change_end(s_bl,type+1,INVALID_TIMER);
+			status_change_end(bl,type,INVALID_TIMER);
 			break;
 		}
 		sc_timer_next(2000 + tick, status_change_timer, bl->id, data);
@@ -9753,7 +9753,7 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 		break;
 	case SC_CURSEDCIRCLE_TARGET:
 		if( tsc && tsc->data[SC_CURSEDCIRCLE_TARGET] && tsc->data[SC_CURSEDCIRCLE_TARGET]->val2 == src->id ) {
-			status_change_end(bl, type, -1);
+			status_change_end(bl, type, INVALID_TIMER);
 		}
 		break;
 	}

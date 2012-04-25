@@ -394,7 +394,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 				(skill_num && skill_get_ele(skill_num, skill_lv) == ELE_GHOST) ||
 				(!skill_num && (status_get_status_data(src))->rhw.ele == ELE_GHOST)
 					)
-				status_change_end(bl,SC_WHITEIMPRISON,-1); // Those skills do damage and removes effect
+				status_change_end(bl,SC_WHITEIMPRISON,INVALID_TIMER); // Those skills do damage and removes effect
 			else
 			{
 				d->dmg_lv = ATK_BLOCK;
@@ -468,7 +468,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 						clif_millenniumshield(sd,sce->val2);
 					sce->val3 = 1000; // Next Shield
 				} else
-					status_change_end(bl,SC_MILLENNIUMSHIELD,-1); // All shields down
+					status_change_end(bl,SC_MILLENNIUMSHIELD,INVALID_TIMER); // All shields down
 			}
 			return 0;
 		}
@@ -556,11 +556,11 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 
 			if( sc->data[SC_DEEPSLEEP] ) {
 				damage += damage / 2; // 1.5 times more damage while in Deep Sleep.
-				status_change_end(bl,SC_DEEPSLEEP,-1);
+				status_change_end(bl,SC_DEEPSLEEP,INVALID_TIMER);
 			}
 
 			if( sc->data[SC_VOICEOFSIREN] )
-				status_change_end(bl,SC_VOICEOFSIREN,-1);
+				status_change_end(bl,SC_VOICEOFSIREN,INVALID_TIMER);
 		}
 
 
@@ -632,9 +632,9 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 		//Finally added to remove the status of immobile when aimedbolt is used. [Jobbie]
 		if( skill_num == RA_AIMEDBOLT && (sc->data[SC_BITE] || sc->data[SC_ANKLE] || sc->data[SC_ELECTRICSHOCKER]) )
 		{
-			status_change_end(bl, SC_BITE, -1);
-			status_change_end(bl, SC_ANKLE, -1);
-			status_change_end(bl, SC_ELECTRICSHOCKER, -1);
+			status_change_end(bl, SC_BITE, INVALID_TIMER);
+			status_change_end(bl, SC_ANKLE, INVALID_TIMER);
+			status_change_end(bl, SC_ELECTRICSHOCKER, INVALID_TIMER);
 		}
 
 		//Finally Kyrie because it may, or not, reduce damage to 0.
@@ -661,7 +661,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 				unit_setdir(bl, dir);
 			}
 			d->dmg_lv = ATK_DEF;
-			status_change_end(bl, SC_LIGHTNINGWALK, -1);
+			status_change_end(bl, SC_LIGHTNINGWALK, INVALID_TIMER);
 			return 0;
 		}
 
@@ -680,14 +680,14 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 		if( sc && sc->data[SC__SHADOWFORM] ) {
 			struct block_list *s_bl = map_id2bl(sc->data[SC__SHADOWFORM]->val2);
 			if( !s_bl ) { // If the shadow form target is not present remove the sc.
-				status_change_end(bl, SC__SHADOWFORM, -1);
+				status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
 			} else if( status_isdead(s_bl) || !battle_check_target(src,s_bl,BCT_ENEMY)) { // If the shadow form target is dead or not your enemy remove the sc in both.
-				status_change_end(bl, SC__SHADOWFORM, -1);
+				status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
 				if( s_bl->type == BL_PC )
 					((TBL_PC*)s_bl)->shadowform_id = 0;
 			} else {
 				if( (--sc->data[SC__SHADOWFORM]->val3) < 0 ) { // If you have exceded max hits supported, remove the sc in both.
-					status_change_end(bl, SC__SHADOWFORM, -1);
+					status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
 					if( s_bl->type == BL_PC )
 						((TBL_PC*)s_bl)->shadowform_id = 0;
 				} else {
@@ -1589,11 +1589,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				i*=i;
 				ATK_ADD(i); //Add str bonus.
 				switch (tstatus->size) { //Size-fix. Is this modified by weapon perfection?
-					case 0: //Small: 125%
+					case SZ_SMALL: //Small: 125%
 						ATK_RATE(125);
 						break;
-					//case 1: //Medium: 100%
-					case 2: //Large: 75%
+					//case SZ_MEDIUM: //Medium: 100%
+					case SZ_BIG: //Large: 75%
 						ATK_RATE(75);
 						break;
 				}
@@ -1610,7 +1610,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 						sd->inventory_data[index] &&
 						sd->inventory_data[index]->type == IT_ARMOR)
 						ATK_ADD(sd->inventory_data[index]->weight/10);
-					break;
 				} else
 					ATK_ADD(sstatus->rhw.atk2); //Else use Atk2
 				break;
@@ -2123,9 +2122,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					break;
 				case NC_ARMSCANNON:
 					switch( tstatus->size ) {
-						case 0: skillratio += 100 + 500 * skill_lv; break;// Small
-						case 1: skillratio += 100 + 400 * skill_lv; break;// Medium
-						case 2: skillratio += 100 + 300 * skill_lv; break;// Large
+						case SZ_SMALL: skillratio += 100 + 500 * skill_lv; break;// Small
+						case SZ_MEDIUM: skillratio += 100 + 400 * skill_lv; break;// Medium
+						case SZ_BIG: skillratio += 100 + 300 * skill_lv; break;// Large
 					}
 					if( status_get_lv(src) > 100 ) skillratio += skillratio * (status_get_lv(src) - 100) / 200;	// Base level bonus.
 					//NOTE: Their's some other factors that affects damage, but not sure how exactly. Will recheck one day. [Rytech]
@@ -3299,10 +3298,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 10*skill_lv-30;
 						break;
 					case SL_STIN:
-						skillratio += (tstatus->size?-99:10*skill_lv); //target size must be small (0) for full damage.
+						skillratio += (tstatus->size!=SZ_SMALL?-99:10*skill_lv); //target size must be small (0) for full damage.
 						break;
 					case SL_STUN:
-						skillratio += (tstatus->size!=2?5*skill_lv:-99); //Full damage is dealt on small/medium targets
+						skillratio += (tstatus->size!=SZ_BIG?5*skill_lv:-99); //Full damage is dealt on small/medium targets
 						break;
 					case SL_SMA:
 						skillratio += -60 + status_get_lv(src); //Base damage is 40% + lv%
@@ -4079,7 +4078,7 @@ int battle_calc_return_damage(struct block_list* bl, struct block_list *src, int
 					rd1 = min(damage,status_get_max_hp(bl)) * sc->data[SC_DEATHBOUND]->val2 / 100; // Amplify damage.
 					*dmg = rd1 * 30 / 100; // Received damge = 30% of amplifly damage.
 					clif_skill_damage(src,bl,gettick(), status_get_amotion(src), 0, -30000, 1, RK_DEATHBOUND, sc->data[SC_DEATHBOUND]->val1,6);
-					status_change_end(bl,SC_DEATHBOUND,-1);
+					status_change_end(bl,SC_DEATHBOUND,INVALID_TIMER);
 					rdamage += rd1;
 					if (rdamage < 1) rdamage = 1;
 				}
@@ -4344,7 +4343,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			if( --(sc->data[SC_SPELLFIST]->val1) >= 0 )
 				wd = battle_calc_attack(BF_MAGIC,src,target,sc->data[SC_SPELLFIST]->val3,sc->data[SC_SPELLFIST]->val4,flag);
 			else
-				status_change_end(src,SC_SPELLFIST,-1);
+				status_change_end(src,SC_SPELLFIST,INVALID_TIMER);
 		}
 		if( sc->data[SC_GIANTGROWTH] && (wd.flag&BF_SHORT) && rand()%100 < sc->data[SC_GIANTGROWTH]->val2 )
 			wd.damage *= 3; // Triple Damage
@@ -4685,6 +4684,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 				return 0; // Disable guardians/emperiums owned by Guilds on non-woe times.
 			break;
 		}
+		default: break; //other type doesn't have slave yet
 	}
 
 	switch( src->type )

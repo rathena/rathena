@@ -7107,20 +7107,20 @@ int pc_setoption(struct map_session_data *sd,int type)
 	if( (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC ) {
 		if( type&OPTION_MADOGEAR && !(p_type&OPTION_MADOGEAR) ) {
 			status_calc_pc(sd, 0);
-			status_change_end(&sd->bl,SC_MAXIMIZEPOWER,-1);
-			status_change_end(&sd->bl,SC_OVERTHRUST,-1);
-			status_change_end(&sd->bl,SC_WEAPONPERFECTION,-1);
-			status_change_end(&sd->bl,SC_ADRENALINE,-1);
-			status_change_end(&sd->bl,SC_CARTBOOST,-1);
-			status_change_end(&sd->bl,SC_MELTDOWN,-1);
-			status_change_end(&sd->bl,SC_MAXOVERTHRUST,-1);
+			status_change_end(&sd->bl,SC_MAXIMIZEPOWER,INVALID_TIMER);
+			status_change_end(&sd->bl,SC_OVERTHRUST,INVALID_TIMER);
+			status_change_end(&sd->bl,SC_WEAPONPERFECTION,INVALID_TIMER);
+			status_change_end(&sd->bl,SC_ADRENALINE,INVALID_TIMER);
+			status_change_end(&sd->bl,SC_CARTBOOST,INVALID_TIMER);
+			status_change_end(&sd->bl,SC_MELTDOWN,INVALID_TIMER);
+			status_change_end(&sd->bl,SC_MAXOVERTHRUST,INVALID_TIMER);
 		} else if( !(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR ) {
 			status_calc_pc(sd, 0);
-			status_change_end(&sd->bl,SC_SHAPESHIFT,-1);
-			status_change_end(&sd->bl,SC_HOVERING,-1);
-			status_change_end(&sd->bl,SC_ACCELERATION,-1);
-			status_change_end(&sd->bl,SC_OVERHEAT_LIMITPOINT,-1);
-			status_change_end(&sd->bl,SC_OVERHEAT,-1);
+			status_change_end(&sd->bl,SC_SHAPESHIFT,INVALID_TIMER);
+			status_change_end(&sd->bl,SC_HOVERING,INVALID_TIMER);
+			status_change_end(&sd->bl,SC_ACCELERATION,INVALID_TIMER);
+			status_change_end(&sd->bl,SC_OVERHEAT_LIMITPOINT,INVALID_TIMER);
+			status_change_end(&sd->bl,SC_OVERHEAT,INVALID_TIMER);
 		}
 	}
 

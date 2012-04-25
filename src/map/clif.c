@@ -1367,9 +1367,9 @@ int clif_spawn(struct block_list *bl)
 	case BL_NPC:
 		{
 			TBL_NPC *nd = ((TBL_NPC*)bl);
-			if( nd->size == 2 )
+			if( nd->size == SZ_BIG )
 				clif_specialeffect(&nd->bl,423,AREA);
-			else if( nd->size == 1 )
+			else if( nd->size == SZ_MEDIUM )
 				clif_specialeffect(&nd->bl,421,AREA);
 		}
 		break;
@@ -4050,18 +4050,18 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 			TBL_NPC* nd = (TBL_NPC*)bl;
 			if( nd->chat_id )
 				clif_dispchat((struct chat_data*)map_id2bl(nd->chat_id),sd->fd);
-			if( nd->size == 2 )
+			if( nd->size == SZ_BIG )
 				clif_specialeffect_single(bl,423,sd->fd);
-			else if( nd->size == 1 )
+			else if( nd->size == SZ_MEDIUM )
 				clif_specialeffect_single(bl,421,sd->fd);
 		}
 		break;
 	case BL_MOB:
 		{
 			TBL_MOB* md = (TBL_MOB*)bl;
-			if(md->special_state.size==2) // tiny/big mobs [Valaris]
+			if(md->special_state.size==SZ_BIG) // tiny/big mobs [Valaris]
 				clif_specialeffect_single(bl,423,sd->fd);
-			else if(md->special_state.size==1)
+			else if(md->special_state.size==SZ_MEDIUM)
 				clif_specialeffect_single(bl,421,sd->fd);
 		}
 		break;
@@ -15757,7 +15757,7 @@ int clif_spellbook_list(struct map_session_data *sd)
 		sd->menuskill_val = c;
 	}
 	else
-		status_change_end(&sd->bl,SC_STOP,-1);
+		status_change_end(&sd->bl,SC_STOP,INVALID_TIMER);
 
 	return 1;
 }

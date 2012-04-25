@@ -402,7 +402,7 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 		status_change_end(bl, SC_MAGICROD, INVALID_TIMER);
 		if (sc->data[SC_PROPERTYWALK] &&
 			sc->data[SC_PROPERTYWALK]->val3 >= skill_get_maxcount(sc->data[SC_PROPERTYWALK]->val1,sc->data[SC_PROPERTYWALK]->val2) )
-			status_change_end(bl,SC_PROPERTYWALK,-1);
+			status_change_end(bl,SC_PROPERTYWALK,INVALID_TIMER);
 	} else
 	if (bl->type == BL_NPC)
 		npc_unsetcells((TBL_NPC*)bl);

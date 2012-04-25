@@ -63,6 +63,12 @@ enum MobDamageLogFlag
 	MDLF_PET,
 };
 
+enum size {
+	SZ_SMALL = 0,
+	SZ_MEDIUM,
+	SZ_BIG,
+};
+
 struct mob_skill {
 	enum MobSkillState state;
 	short skill_id,skill_lv;
