@@ -911,6 +911,7 @@ int unit_can_move(struct block_list *bl)
 			|| sc->data[SC_WHITEIMPRISON]
 			|| sc->data[SC_ELECTRICSHOCKER]
 			|| sc->data[SC_BITE]
+			|| sc->data[SC_THORNSTRAP]
 			|| sc->data[SC_MAGNETICFIELD]
 			|| sc->data[SC__MANHOLE]
 			|| sc->data[SC_VACUUM_EXTREME]
