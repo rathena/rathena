@@ -833,10 +833,18 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case MG_FROSTDIVER:
+#ifndef RENEWAL
 	case WZ_FROSTNOVA:
+#endif
 		sc_start(bl,SC_FREEZE,skilllv*3+35,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
+#ifdef RENEWAL
+	case WZ_FROSTNOVA:
+		sc_start(bl,SC_FREEZE,skilllv*5+33,skilllv,skill_get_time2(skillid,skilllv));
+		break;
+#endif
+			
 	case WZ_STORMGUST:
 	/**
 	 * Storm Gust counter was dropped in renewal
