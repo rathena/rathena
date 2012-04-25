@@ -7484,8 +7484,6 @@ BUILDIN_FUNC(setoption)
 	if( flag ){// Add option
 		if( option&OPTION_WEDDING && !battle_config.wedding_modifydisplay )
 			option &= ~OPTION_WEDDING;// Do not show the wedding sprites
-		else if ( option&OPTION_MOUNTING && pc_cant_newmount(sd) )
-			option &= ~OPTION_MOUNTING;
 		pc_setoption(sd, sd->sc.option|option);
 	} else// Remove option
 		pc_setoption(sd, sd->sc.option&~option);
@@ -15810,7 +15808,7 @@ BUILDIN_FUNC(setmounting) {
 	TBL_PC* sd;
 	if( (sd = script_rid2sd(st)) == NULL )
 		return 0;
-	if( sd->sc.option&(OPTION_WUGRIDER|OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR) || pc_cant_newmount(sd) )
+	if( sd->sc.option&(OPTION_WUGRIDER|OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR) )
 		script_pushint(st,0);//can't mount with one of these
 	else {
 		if( sd->sc.option&OPTION_MOUNTING )

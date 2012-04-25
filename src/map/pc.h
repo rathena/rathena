@@ -624,23 +624,6 @@ enum e_pc_permission {
 #define pc_iswug(sd)       ( (sd)->sc.option&OPTION_WUG )
 #define pc_isridingwug(sd) ( (sd)->sc.option&OPTION_WUGRIDER )
 
-/**
- * New Mounts -- can this damn job not
- **/
-#define pc_cant_newmount(sd) \
-	( \
-		( (sd)->class_&MAPID_THIRDMASK) == MAPID_RANGER || \
-		( ((sd)->class_&MAPID_BASEMASK) == MAPID_SWORDMAN && (sd)->status.class_ != JOB_SWORDMAN )  \
-	)
-
-/**
- * New Mounts are available to all jobs prior to November 2011
- **/
-#if PACKETVER <= 20111100
-	#undef pc_cant_newmount
-	#define pc_cant_newmount(sd) 0
-#endif
-
 #define pc_stop_walking(sd, type) unit_stop_walking(&(sd)->bl, type)
 #define pc_stop_attack(sd) unit_stop_attack(&(sd)->bl)
 
