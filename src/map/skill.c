@@ -10583,6 +10583,15 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 		skill_blown(ss,bl,skill_get_blewcount(sg->skill_id,sg->skill_lv),unit_getdir(bl),0);
 		break;
 
+	case UNT_WALLOFTHORN:
+		if( status_get_mode(bl)&MD_BOSS )
+			break;	// iRO Wiki says that this skill don't affect to Boss monsters.
+		if( battle_check_target(ss,bl,BCT_ENEMY) <= 0 )
+			skill_blown(&src->bl,bl,skill_get_blewcount(sg->skill_id,sg->skill_lv),unit_getdir(bl),0);
+		else
+			skill_attack(skill_get_type(sg->skill_id), ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
+		break;
+			
 	case UNT_GD_LEADERSHIP:
 	case UNT_GD_GLORYWOUNDS:
 	case UNT_GD_SOULCOLD:
@@ -11416,6 +11425,7 @@ int skill_unit_ondamaged (struct skill_unit *src, struct block_list *bl, int dam
 	case UNT_ANKLESNARE:
 	case UNT_ICEWALL:
 	case UNT_REVERBERATION:
+	case UNT_WALLOFTHORN:
 		src->val1-=damage;
 		break;
 	case UNT_BLASTMINE:
@@ -14552,6 +14562,12 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 				if( unit->val1 <= 0 )
 					unit->limit = DIFF_TICK(tick + 700,group->tick);
 				break;
+			case UNT_WALLOFTHORN:
+				if( unit->val1 <= 0 ) {
+					group->unit_id = UNT_USED_TRAPS;
+					group->limit = DIFF_TICK(tick, group->tick) + 1500;
+				}
+				break;
 		}
 	}
 
@@ -14762,9 +14778,9 @@ int skill_unit_move_unit_group (struct skill_unit_group *group, int m, int dx, i
 	if (skill_get_unit_flag(group->skill_id)&UF_ENSEMBLE)
 		return 0; //Ensembles may not be moved around.
 
-	if( group->unit_id == UNT_ICEWALL )
-		return 0; //Icewalls don't get knocked back
-
+	if( group->unit_id == UNT_ICEWALL || group->unit_id == UNT_WALLOFTHORN )
+		return 0; //Icewalls and Wall of Thorns don't get knocked back
+	
 	m_flag = (int *) aCalloc(group->unit_count, sizeof(int));
 	//    m_flag
 	//		0: Neither of the following (skill_unit_onplace & skill_unit_onout are needed)

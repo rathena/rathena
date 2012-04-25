@@ -1425,19 +1425,29 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			return 0;		
 	}
 
-	if (skill_num == PA_PRESSURE && flag && target) {
-		//Gloria Avoids pretty much everything....
-		tsc = status_get_sc(target);
-		if(tsc && tsc->option&OPTION_HIDE)
-			return 0;
-		return 1;
+	switch( skill_num ) {
+		case PA_PRESSURE:
+			if( flag && target ) {
+				//Gloria Avoids pretty much everything....
+				tsc = status_get_sc(target);
+				if(tsc && tsc->option&OPTION_HIDE)
+					return 0;
+			}
+			break;
+		case GN_WALLOFTHORN:
+			if( target && status_isdead(target) )
+				return 0;
+			break;
+		case AL_TELEPORT:
+			//Should fail when used on top of Land Protector [Skotlex]
+			if (src && map_getcell(src->m, src->x, src->y, CELL_CHKLANDPROTECTOR)
+				&& !(status->mode&MD_BOSS)
+				&& (src->type != BL_PC || ((TBL_PC*)src)->skillitem != skill_num))
+				return 0;
+			break;
+		default:
+			break;
 	}
-
-	//Should fail when used on top of Land Protector [Skotlex]
-	if (src && skill_num == AL_TELEPORT && map_getcell(src->m, src->x, src->y, CELL_CHKLANDPROTECTOR)
-		&& !(status->mode&MD_BOSS)
-		&& (src->type != BL_PC || ((TBL_PC*)src)->skillitem != skill_num))
-		return 0;
 
 	if ( src ) sc = status_get_sc(src);
 
@@ -1486,15 +1496,16 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 					skill_get_inf2(skill_num)&(INF2_SONG_DANCE|INF2_ENSEMBLE_SKILL)
 				)
 					return 0;
-			} else
-			switch (skill_num) {
-			case BD_ADAPTATION:
-			case CG_LONGINGFREEDOM:
-			case BA_MUSICALSTRIKE:
-			case DC_THROWARROW:
-				break;
-			default:
-				return 0;
+			} else {
+				switch (skill_num) {
+					case BD_ADAPTATION:
+					case CG_LONGINGFREEDOM:
+					case BA_MUSICALSTRIKE:
+					case DC_THROWARROW:
+						break;
+					default:
+						return 0;
+				}
 			}
 			if ((sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE && skill_num == BD_ADAPTATION)
 				return 0;	//Can't amp out of Wand of Hermode :/ [Skotlex]
