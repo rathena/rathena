@@ -153,7 +153,7 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 	if (killer)
 		safestrncpy(nd->u.tomb.killer_name, killer, NAME_LENGTH);
 	else
-		nd->u.tomb.killer_name[0] = NULL;
+		nd->u.tomb.killer_name[0] = '\0';
 
 	map_addnpc(nd->bl.m, nd);
 	map_addblock(&nd->bl);
