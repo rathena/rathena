@@ -13,6 +13,13 @@
  **/
 #define AUTOLOOTITEM_SIZE 10
 
+/// leave this line uncommented to enable callfunc checks when processing scripts.
+/// while allowed, the script engine will attempt to match user-defined functions
+/// in scripts allowing direct function callback (without the use of callfunc.)
+/// this CAN affect performance, so if you find scripts running slower or find
+/// your map-server using more resources while this is active, comment the line
+#define SCRIPT_CALLFUNC_CHECK
+
 //Uncomment to enable the Cell Stack Limit mod.
 //It's only config is the battle_config cell_stack_limit.
 //Only chars affected are those defined in BL_CHAR (mobs and players currently)
