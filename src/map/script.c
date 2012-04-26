@@ -951,8 +951,21 @@ const char* parse_callfunc(const char* p, int require_paren)
 			disp_error_message("parse_callfunc: callsub has no arguments, please review it's definition",p);
 		if( *arg != '*' )
 			++arg; // count func as argument
-	} else
-		disp_error_message("parse_line: expect command, missing function name or calling undeclared function",p);
+	} else {
+		const char* name = get_str(func);
+		if( strdb_get(userfunc_db, name) == NULL ) {
+			disp_error_message("parse_line: expect command, missing function name or calling undeclared function",p);
+		} else {
+			int callfunc = search_str("callfunc");
+			add_scriptl(callfunc);
+			add_scriptc(C_ARG);
+			add_scriptc(C_STR);
+			while( *name ) add_scriptb(*name ++);
+			add_scriptb(0);
+			arg = buildin_func[str_data[callfunc].val].arg;
+			if( *arg != '*' ) ++ arg;
+		}
+	}
 
 	p = skip_word(p);
 	p = skip_space(p);
