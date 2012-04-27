@@ -70,7 +70,9 @@ typedef enum c_op {
 	C_LNOT, // ! a
 	C_NOT, // ~ a
 	C_R_SHIFT, // a >> b
-	C_L_SHIFT // a << b
+	C_L_SHIFT, // a << b
+	C_ADD_PP, // ++a
+	C_SUB_PP, // --a
 } c_op;
 
 struct script_retinfo {

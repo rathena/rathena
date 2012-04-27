@@ -1044,6 +1044,174 @@ static void parse_nextline(bool first, const char* p)
 	str_data[LABEL_NEXTLINE].label     = -1;
 }
 
+/// Parse a variable assignment using the direct equals operator
+/// @param p script position where the function should run from
+/// @return NULL if not a variable assignment, the new position otherwise
+const char* parse_variable(const char* p)
+{
+	int i, j, set, word;
+	c_op type = C_NOP;
+	const char *p2 = NULL;
+	const char *var = p;
+			
+	// skip the variable where applicable
+	p = skip_word(p);
+	p = skip_space(p);
+
+	if( p == NULL )
+	{// end of the line or invalid buffer
+		return NULL;
+	}
+
+	if( *p == '[' )
+	{// array variable so process the array as appropriate
+		for( p2 = p, i = 0, j = 1; p; ++ i )
+		{
+			if( *p ++ == ']' && --(j) == 0 ) break;
+			if( *p == '[' ) ++ j;
+		}
+
+		if( !(p = skip_space(p)) )
+		{// end of line or invalid characters remaining
+			disp_error_message("Missing right expression or closing bracket for variable.", p);
+		}
+	}
+
+	if( type == C_NOP &&
+	!( ( p[0] == '=' && p[1] != '=' && (type = C_EQ) ) // =
+	|| ( p[0] == '+' && p[1] == '=' && (type = C_ADD) ) // +=
+	|| ( p[0] == '-' && p[1] == '=' && (type = C_SUB) ) // -=
+	|| ( p[0] == '^' && p[1] == '=' && (type = C_XOR) ) // ^=
+	|| ( p[0] == '|' && p[1] == '=' && (type = C_OR ) ) // |=
+	|| ( p[0] == '&' && p[1] == '=' && (type = C_AND) ) // &=
+	|| ( p[0] == '*' && p[1] == '=' && (type = C_MUL) ) // *=
+	|| ( p[0] == '/' && p[1] == '=' && (type = C_DIV) ) // /=
+	|| ( p[0] == '%' && p[1] == '=' && (type = C_MOD) ) // %=
+	|| ( p[0] == '~' && p[1] == '=' && (type = C_NOT) ) // ~=
+	|| ( p[0] == '+' && p[1] == '+' && (type = C_ADD_PP) ) // ++
+	|| ( p[0] == '-' && p[1] == '+' && (type = C_SUB_PP) ) // --
+	|| ( p[0] == '<' && p[1] == '<' && p[2] == '=' && (type = C_L_SHIFT) ) // <<=
+	|| ( p[0] == '>' && p[1] == '>' && p[2] == '=' && (type = C_R_SHIFT) ) // >>=
+	) )
+	{// failed to find a matching operator combination so invalid
+		return NULL;
+	}
+
+	switch( type )
+	{
+		case C_EQ:
+		{// incremental modifier
+			p = skip_space( &p[1] );
+		}
+		break;
+
+		case C_L_SHIFT:
+		case C_R_SHIFT:
+		{// left or right shift modifier
+			p = skip_space( &p[3] );
+		}
+		break;
+
+		default:
+		{// normal incremental command
+			p = skip_space( &p[2] );
+		}
+	}
+
+	if( p == NULL )
+	{// end of line or invalid buffer
+		return NULL;
+	}
+
+	// find the set function within the source
+	set = search_str("set");
+
+	if( str_data[set].type != C_FUNC )
+	{// invalid function (could not find or match)
+		disp_error_message("Failed to find the buildin predicate 'set'.", p);
+	}
+
+	// push the set function onto the stack
+	add_scriptl(set);
+	add_scriptc(C_ARG);
+
+	// always append parenthesis to avoid errors
+	syntax.curly[syntax.curly_count].type = TYPE_ARGLIST;
+	syntax.curly[syntax.curly_count].count = 0;
+	syntax.curly[syntax.curly_count].flag = ARGLIST_PAREN;
+
+	// increment the total curly count for the position in the script
+	++ syntax.curly_count;
+	
+	// parse the variable currently being modified
+	word = add_word(var);
+
+	if( str_data[word].type == C_FUNC || str_data[word].type == C_USERFUNC || str_data[word].type == C_USERFUNC_POS )
+	{// cannot assign a variable which exists as a function or label
+		disp_error_message("Cannot modify a variable which has the same name as a function or label.", p);
+	}
+
+	// support for the variable array system
+	for( i = 0; 2 > i; ++ i )
+	{
+		if( p2 )
+		{// process the variable index
+			const char* p3 = NULL;
+
+			// push the getelementofarray method into the stack
+			add_scriptl(search_str("getelementofarray"));
+			add_scriptc(C_ARG);
+			add_scriptl(word);
+			
+			// process the sub-expression for this assignment
+			p3 = parse_subexpr(p2 + 1, 1);
+			p3 = skip_space(p3);
+
+			if( *p3 != ']' )
+			{// closing parenthesis is required for this script
+				disp_error_message("Missing closing ']' parenthesis for the variable assignment.", p3);
+			}
+
+			// push the closing function stack operator onto the stack
+			add_scriptc(C_FUNC);
+			p3 ++;
+		}
+		else
+		{// simply push the variable or value onto the stack
+			add_scriptl(word);
+		}
+
+		if( type == C_EQ )
+		{// end of the list so ignore
+			break;
+		}
+	}
+	
+	if( type == C_ADD_PP || type == C_SUB_PP )
+	{// incremental operator for the method
+		add_scripti(1);
+		add_scriptc(type == C_ADD_PP ? C_ADD : C_SUB);
+	}
+	else
+	{// process the value as an expression
+		p = parse_subexpr(p, -1);
+
+		if( type != C_EQ )
+		{// push the type of modifier onto the stack
+			add_scriptc(type);
+		}
+	}
+
+	// decrement the curly count for the position within the script
+	-- syntax.curly_count;
+	
+	// close the script by appending the function operator
+	add_scriptc(C_FUNC);
+		
+	// push the buffer from the method
+	return p;
+}
+
 /*==========================================
  * 項の解析
  *------------------------------------------*/
@@ -1101,6 +1269,8 @@ const char* parse_simpleexpr(const char *p)
 		p++;	//'"'
 	} else {
 		int l;
+		const char* pv;
+
 		// label , register , function etc
 		if(skip_word(p)==p)
 			disp_error_message("parse_simpleexpr: unexpected character",p);
@@ -1116,6 +1286,11 @@ const char* parse_simpleexpr(const char *p)
 			}
 		}
 #endif
+
+		if( (pv = parse_variable(p)) )
+		{// successfully processed a variable assignment
+			return pv;
+		}
 
 		p=skip_word(p);
 		if( *p == '[' ){
@@ -1240,15 +1415,23 @@ const char* parse_line(const char* p)
 	} else if(p[0] == '}') {
 		return parse_curly_close(p);
 	}
-
+		
 	// 構文関連の処理
 	p2 = parse_syntax(p);
 	if(p2 != NULL)
 		return p2;
 
+	// attempt to process a variable assignment
+	p2 = parse_variable(p);
+
+	if( p2 != NULL )
+	{// variable assignment processed so leave the method
+		return parse_syntax_close(p2 + 1);
+	}
+
 	p = parse_callfunc(p,0);
 	p = skip_space(p);
-
+	
 	if(parse_syntax_for_flag) {
 		if( *p != ')' )
 			disp_error_message("parse_line: need ')'",p);
@@ -1570,7 +1753,7 @@ const char* parse_syntax(const char* p)
 			if(*p != ';')
 				disp_error_message("parse_syntax: need ';'",p);
 			p++;
-
+			
 			// ループ開始に飛ばす
 			sprintf(label,"goto __FR%x_BGN;",syntax.curly[pos].index);
 			syntax.curly[syntax.curly_count++].type = TYPE_NULL;
@@ -1581,7 +1764,7 @@ const char* parse_syntax(const char* p)
 			sprintf(label,"__FR%x_NXT",syntax.curly[pos].index);
 			l=add_str(label);
 			set_label(l,script_pos,p);
-
+			
 			// 次のループに入る時の処理
 			// for 最後の ')' を ';' として扱うフラグ
 			parse_syntax_for_flag = 1;
