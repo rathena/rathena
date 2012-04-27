@@ -546,6 +546,40 @@ notable exception is Zeny, which you can and often will address directly -
 setting it will make the character own this number of Zeny.
 If you try to set Zeny to a negative number, the script will be terminated with an error.
 
+Assigning variables
+--------- ---------
+
+As of rAthena revision 15982, variables can be accessed and assigned values directly
+without the use of the built-in 'set' function. This means that variables can be
+accessed and modified much like other programming languages.
+
+    @x = 100;
+    @x = @y = 100;
+
+Support for modifying variable values using 'set' is still supported (and required
+to exist for this new method to work) so previous scripts will continue to work.
+
+When assigning values, all operator methods are supported which exist in the below
+'Operators' section. For instance:
+
+    @x += 100;
+    @x -= 100;
+    @x *= 2;
+    @x /= 2;
+    @x %= 5;
+    @x >>= 2;
+    @x <<= 2;
+
+Will all work. For more information on available operators, see the Operators section
+described below. All operators listed there may be placed in-front of the '=' sign
+when modifying variables to perform the action as required.
+
+Note:
+
+ !! Currently the scripting engine does not support directly copying array variables.
+ !! In order to copy arrays between variables the use of 'copyarray' function is still
+ !! required.
+
 Strings
 -------
 
@@ -1439,6 +1473,26 @@ generally cleaner:
 		if (getarg(0)%2==0) return 0;// it's even
 		return 1;// it's odd
 	}
+
+Alternately, as of rAthena revision 15979 and 15981, user-defined functions
+may be called directly without the use of the 'callfunc' script command.
+
+	function<tab>script<tab>SayHello<tab>{
+		mes "Hello " + getarg(0);
+		return 0;
+	}
+
+	place,50,50,6<tab>script<tab>Man<tab>115,{
+		mes "[Man]";
+		SayHello strcharinfo(0);
+		close;
+	}
+
+Note:
+
+ !! A user-defined function must be declared /before/ a script attempts to
+ !! call it. That is to say, any functions should be placed above scripts or NPCs
+ !! (or loaded in a seperate file first) before attempting to call them directly.
 
 ---------------------------------------
 
