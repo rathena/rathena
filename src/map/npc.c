@@ -2767,9 +2767,9 @@ static const char* npc_parse_function(char* w1, char* w2, char* w3, char* w4, co
 	func_db = script_get_userfunc_db();
 	if (func_db->put(func_db, db_str2key(w3), db_ptr2data(script), &old_data))
 	{
-		struct script_code *oldscript = db_data2ptr(&old_data);
+		struct script_code *oldscript = (struct script_code*)db_data2ptr(&old_data);
 		ShowInfo("npc_parse_function: Overwriting user function [%s] (%s:%d)\n", w3, filepath, strline(buffer,start-buffer));
-		script_free_vars(&oldscript->script_vars);
+		script_free_vars(oldscript->script_vars);
 		aFree(oldscript->script_buf);
 		aFree(oldscript);
 	}

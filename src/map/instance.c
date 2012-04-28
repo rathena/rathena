@@ -343,13 +343,10 @@ void instance_destroy(int instance_id)
 	}
 
 	if( instance[instance_id].ivar )
-		linkdb_final( &instance[instance_id].ivar ); // Remove numeric vars
+		db_destroy(instance[instance_id].ivar);
 
 	if( instance[instance_id].svar )
-	{ // Remove string vars
-		linkdb_foreach( &instance[instance_id].svar, instance_destroy_freesvar );
-		linkdb_final( &instance[instance_id].svar );
-	}
+		db_destroy(instance[instance_id].svar);
 
 	if( instance[instance_id].progress_timer != INVALID_TIMER )
 		delete_timer( instance[instance_id].progress_timer, instance_destroy_timer);

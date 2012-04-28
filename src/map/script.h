@@ -76,7 +76,7 @@ typedef enum c_op {
 } c_op;
 
 struct script_retinfo {
-	struct linkdb_node** var_function;// scope variables
+	struct DBMap* var_function;// scope variables
 	struct script_code* script;// script code
 	int pos;// script location
 	int nargs;// argument count
@@ -90,7 +90,7 @@ struct script_data {
 		char *str;
 		struct script_retinfo* ri;
 	} u;
-	struct linkdb_node** ref;
+	struct DBMap** ref;
 };
 
 // Moved defsp from script_state to script_stack since
@@ -98,7 +98,7 @@ struct script_data {
 struct script_code {
 	int script_size;
 	unsigned char* script_buf;
-	struct linkdb_node* script_vars;
+	struct DBMap* script_vars;
 };
 
 struct script_stack {
@@ -106,7 +106,7 @@ struct script_stack {
 	int sp_max;// capacity of the stack
 	int defsp;
 	struct script_data *stack_data;// stack
-	struct linkdb_node** var_function;// scope variables
+	struct DBMap* var_function;// scope variables
 };
 
 
@@ -164,7 +164,7 @@ void run_script_main(struct script_state *st);
 void script_stop_sleeptimers(int id);
 struct linkdb_node* script_erase_sleepdb(struct linkdb_node *n);
 void script_free_code(struct script_code* code);
-void script_free_vars(struct linkdb_node **node);
+void script_free_vars(struct DBMap *storage);
 struct script_state* script_alloc_state(struct script_code* script, int pos, int rid, int oid);
 void script_free_state(struct script_state* st);
 
