@@ -217,6 +217,12 @@ static int parse_options=0;
 DBMap* script_get_label_db(void){ return scriptlabel_db; }
 DBMap* script_get_userfunc_db(void){ return userfunc_db; }
 
+// important buildin function references for usage in scripts
+static int buildin_set_ref = 0;
+static int buildin_callsub_ref = 0;
+static int buildin_callfunc_ref = 0;
+static int buildin_getelementofarray_ref = 0;
+
 // Caches compiled autoscript item code. 
 // Note: This is not cleared when reloading itemdb.
 static DBMap* autobonus_db=NULL; // char* script -> char* bytecode
@@ -928,7 +934,7 @@ int add_word(const char* p)
 /// The argument list can have parenthesis or not.
 /// The number of arguments is checked.
 static
-const char* parse_callfunc(const char* p, int require_paren)
+const char* parse_callfunc(const char* p, int require_paren, int is_custom)
 {
 	const char* p2;
 	const char* arg=NULL;
@@ -942,11 +948,10 @@ const char* parse_callfunc(const char* p, int require_paren)
 		arg = buildin_func[str_data[func].val].arg;
 	} else if( str_data[func].type == C_USERFUNC || str_data[func].type == C_USERFUNC_POS ){
 		// script defined function
-		int callsub = search_str("callsub");
-		add_scriptl(callsub);
+		add_scriptl(buildin_callsub_ref);
 		add_scriptc(C_ARG);
 		add_scriptl(func);
-		arg = buildin_func[str_data[callsub].val].arg;
+		arg = buildin_func[str_data[buildin_callsub_ref].val].arg;
 		if( *arg == 0 )
 			disp_error_message("parse_callfunc: callsub has no arguments, please review it's definition",p);
 		if( *arg != '*' )
@@ -954,18 +959,17 @@ const char* parse_callfunc(const char* p, int require_paren)
 	} else {
 #ifdef SCRIPT_CALLFUNC_CHECK
 		const char* name = get_str(func);
-		if( strdb_get(userfunc_db, name) == NULL ) {
+		if( !is_custom && strdb_get(userfunc_db, name) == NULL ) {
 #endif
 			disp_error_message("parse_line: expect command, missing function name or calling undeclared function",p);
 #ifdef SCRIPT_CALLFUNC_CHECK
-		} else {
-			int callfunc = search_str("callfunc");
-			add_scriptl(callfunc);
+		} else {;
+			add_scriptl(buildin_callfunc_ref);
 			add_scriptc(C_ARG);
 			add_scriptc(C_STR);
 			while( *name ) add_scriptb(*name ++);
 			add_scriptb(0);
-			arg = buildin_func[str_data[callfunc].val].arg;
+			arg = buildin_func[str_data[buildin_callfunc_ref].val].arg;
 			if( *arg != '*' ) ++ arg;
 		}
 #endif
@@ -1049,7 +1053,7 @@ static void parse_nextline(bool first, const char* p)
 /// @return NULL if not a variable assignment, the new position otherwise
 const char* parse_variable(const char* p)
 {
-	int i, j, set, word;
+	int i, j, word;
 	c_op type = C_NOP;
 	const char *p2 = NULL;
 	const char *var = p;
@@ -1122,17 +1126,9 @@ const char* parse_variable(const char* p)
 	{// end of line or invalid buffer
 		return NULL;
 	}
-
-	// find the set function within the source
-	set = search_str("set");
-
-	if( str_data[set].type != C_FUNC )
-	{// invalid function (could not find or match)
-		disp_error_message("Failed to find the buildin predicate 'set'.", p);
-	}
-
+	
 	// push the set function onto the stack
-	add_scriptl(set);
+	add_scriptl(buildin_set_ref);
 	add_scriptc(C_ARG);
 
 	// always append parenthesis to avoid errors
@@ -1151,40 +1147,31 @@ const char* parse_variable(const char* p)
 		disp_error_message("Cannot modify a variable which has the same name as a function or label.", p);
 	}
 
-	// support for the variable array system
-	for( i = 0; 2 > i; ++ i )
-	{
-		if( p2 )
-		{// process the variable index
-			const char* p3 = NULL;
+	if( p2 )
+	{// process the variable index
+		const char* p3 = NULL;
 
-			// push the getelementofarray method into the stack
-			add_scriptl(search_str("getelementofarray"));
-			add_scriptc(C_ARG);
-			add_scriptl(word);
+		// push the getelementofarray method into the stack
+		add_scriptl(buildin_getelementofarray_ref);
+		add_scriptc(C_ARG);
+		add_scriptl(word);
 			
-			// process the sub-expression for this assignment
-			p3 = parse_subexpr(p2 + 1, 1);
-			p3 = skip_space(p3);
+		// process the sub-expression for this assignment
+		p3 = parse_subexpr(p2 + 1, 1);
+		p3 = skip_space(p3);
 
-			if( *p3 != ']' )
-			{// closing parenthesis is required for this script
-				disp_error_message("Missing closing ']' parenthesis for the variable assignment.", p3);
-			}
-
-			// push the closing function stack operator onto the stack
-			add_scriptc(C_FUNC);
-			p3 ++;
-		}
-		else
-		{// simply push the variable or value onto the stack
-			add_scriptl(word);
+		if( *p3 != ']' )
+		{// closing parenthesis is required for this script
+			disp_error_message("Missing closing ']' parenthesis for the variable assignment.", p3);
 		}
 
-		if( type == C_EQ )
-		{// end of the list so ignore
-			break;
-		}
+		// push the closing function stack operator onto the stack
+		add_scriptc(C_FUNC);
+		p3 ++;
+	}
+	else
+	{// simply push the variable or value onto the stack
+		add_scriptl(word);
 	}
 	
 	if( type == C_ADD_PP || type == C_SUB_PP )
@@ -1277,12 +1264,12 @@ const char* parse_simpleexpr(const char *p)
 
 		l=add_word(p);
 		if( str_data[l].type == C_FUNC || str_data[l].type == C_USERFUNC || str_data[l].type == C_USERFUNC_POS)
-			return parse_callfunc(p,1);
+			return parse_callfunc(p,1,0);
 #ifdef SCRIPT_CALLFUNC_CHECK
 		else {
 			const char* name = get_str(l);
 			if( strdb_get(userfunc_db,name) != NULL ) {
-				return parse_callfunc(p,1);
+				return parse_callfunc(p,1,1);
 			}
 		}
 #endif
@@ -1295,7 +1282,7 @@ const char* parse_simpleexpr(const char *p)
 		p=skip_word(p);
 		if( *p == '[' ){
 			// array(name[i] => getelementofarray(name,i) )
-			add_scriptl(search_str("getelementofarray"));
+			add_scriptl(buildin_getelementofarray_ref);
 			add_scriptc(C_ARG);
 			add_scriptl(l);
 			
@@ -1429,7 +1416,7 @@ const char* parse_line(const char* p)
 		return parse_syntax_close(p2 + 1);
 	}
 
-	p = parse_callfunc(p,0);
+	p = parse_callfunc(p,0,0);
 	p = skip_space(p);
 	
 	if(parse_syntax_for_flag) {
@@ -2152,6 +2139,11 @@ static void add_buildin_func(void)
 			str_data[n].type = C_FUNC;
 			str_data[n].val = i;
 			str_data[n].func = buildin_func[i].func;
+
+			if( !strcmp(buildin_func[i].name, "set") ) buildin_set_ref = n; else
+			if( !strcmp(buildin_func[i].name, "callsub") ) buildin_callsub_ref = n; else
+			if( !strcmp(buildin_func[i].name, "callfunc") ) buildin_callfunc_ref = n; else
+			if( !strcmp(buildin_func[i].name, "getelementofarray") ) buildin_getelementofarray_ref = n;
 		}
 	}
 }
@@ -5104,6 +5096,9 @@ BUILDIN_FUNC(input)
 	return 0;
 }
 
+// declare the copyarray method here for future reference
+BUILDIN_FUNC(copyarray);
+
 /// Sets the value of a variable.
 /// The value is converted to the type of the variable.
 ///
@@ -5112,11 +5107,13 @@ BUILDIN_FUNC(set)
 {
 	TBL_PC* sd = NULL;
 	struct script_data* data;
+	struct script_data* datavalue;
 	int num;
 	const char* name;
 	char prefix;
 
 	data = script_getdata(st,2);
+	datavalue = script_getdata(st,3);
 	if( !data_isreference(data) )
 	{
 		ShowError("script:set: not a variable\n");
@@ -5136,6 +5133,32 @@ BUILDIN_FUNC(set)
 		{
 			ShowError("script:set: no player attached for player variable '%s'\n", name);
 			return 0;
+		}
+	}
+
+	if( data_isreference(datavalue) )
+	{// the value being referenced is a variable
+		const char* namevalue = reference_getname(datavalue);
+
+		if( !not_array_variable(*namevalue) )
+		{// array variable being copied into another array variable
+			if( sd == NULL && not_server_variable(*namevalue) && !(sd = script_rid2sd(st)) )
+			{// player must be attached in order to copy a player variable
+				ShowError("script:set: no player attached for player variable '%s'\n", namevalue);
+				return 0;
+			}
+
+			if( is_string_variable(namevalue) != is_string_variable(name) )
+			{// non-matching array value types
+				ShowWarning("script:set: two array variables do not match in type.\n");
+				return 0;
+			}
+
+			// push the maximum number of array values to the stack
+			push_val(st->stack, C_INT, SCRIPT_MAX_ARRAYSIZE);
+
+			// call the copy array method directly
+			return buildin_copyarray(st);
 		}
 	}
 
