@@ -82,8 +82,7 @@ int instance_create(int party_id, const char *name)
 	instance[i].progress_timeout = 0;
 	instance[i].users = 0;
 	instance[i].party_id = party_id;
-	instance[i].ivar = NULL;
-	instance[i].svar = NULL;
+	instance[i].vars = idb_alloc(DB_OPT_RELEASE_DATA);
 
 	safestrncpy( instance[i].name, name, sizeof(instance[i].name) );
 	memset( instance[i].map, 0x00, sizeof(instance[i].map) );
@@ -299,14 +298,6 @@ void instance_del_map(int m)
 }
 
 /*--------------------------------------
- * Used for instance variables. Clean each variable from memory.
- *--------------------------------------*/
-void instance_destroy_freesvar(void *key, void *data, va_list args)
-{
-	if( data ) aFree(data);
-}
-
-/*--------------------------------------
  * Timer to destroy instance by process or idle
  *--------------------------------------*/
 int instance_destroy_timer(int tid, unsigned int tick, int id, intptr_t data)
@@ -342,19 +333,15 @@ void instance_destroy(int instance_id)
 		instance_del_map( instance[instance_id].map[0] );
 	}
 
-	if( instance[instance_id].ivar )
-		db_destroy(instance[instance_id].ivar);
-
-	if( instance[instance_id].svar )
-		db_destroy(instance[instance_id].svar);
+	if( instance[instance_id].vars )
+		db_destroy(instance[instance_id].vars);
 
 	if( instance[instance_id].progress_timer != INVALID_TIMER )
 		delete_timer( instance[instance_id].progress_timer, instance_destroy_timer);
 	if( instance[instance_id].idle_timer != INVALID_TIMER )
 		delete_timer( instance[instance_id].idle_timer, instance_destroy_timer);
 
-	instance[instance_id].ivar = NULL;
-	instance[instance_id].svar = NULL;
+	instance[instance_id].vars = NULL;
 
 	if( instance[instance_id].party_id && (p = party_search(instance[instance_id].party_id)) != NULL )
 		p->instance_id = 0; // Update Party information

@@ -2541,15 +2541,12 @@ void get_val(struct script_state* st, struct script_data* data)
 			}
 			break;
 		case '\'':
-			{
-				struct DBMap* n = NULL;
 				if (st->instance_id) {
-					n = instance[st->instance_id].svar;
+					data->u.str = (char*)idb_get(instance[st->instance_id].vars,reference_getuid(data));
 				} else {
-					ShowWarning("script:get_val: cannot access instance variable '%s', defaulting to 0\n", name);
+					ShowWarning("script:get_val: cannot access instance variable '%s', defaulting to \"\"\n", name);
+					data->u.str = NULL;
 				}
-				data->u.str = (char*)idb_get(n,reference_getuid(data));
-			}
 			break;
 		default:
 			data->u.str = pc_readglobalreg_str(sd, name);
@@ -2606,12 +2603,12 @@ void get_val(struct script_state* st, struct script_data* data)
 			}
 			break;
 		case '\'':
-			{
-				struct DBMap* n = NULL;
 				if( st->instance_id )
-					n = instance[st->instance_id].ivar;
-				data->u.num = (int)idb_iget(n,reference_getuid(data));
-			}
+					data->u.num = (int)idb_iget(instance[st->instance_id].vars,reference_getuid(data));
+				else {
+					ShowWarning("script:get_val: cannot access instance variable '%s', defaulting to 0\n", name);
+					data->u.num = 0;
+				}
 			break;
 		default:
 			data->u.num = pc_readglobalreg(sd, name);
@@ -2668,8 +2665,8 @@ static int set_reg(struct script_state* st, TBL_PC* sd, int num, const char* nam
 			return 1;
 		case '\'':
 			if( st->instance_id ) {
-				idb_remove(instance[st->instance_id].svar, num);
-				if( str[0] ) idb_put(instance[st->instance_id].svar, num, aStrdup(str));
+				idb_remove(instance[st->instance_id].vars, num);
+				if( str[0] ) idb_put(instance[st->instance_id].vars, num, aStrdup(str));
 			}
 			return 1;
 		default:
@@ -2716,9 +2713,9 @@ static int set_reg(struct script_state* st, TBL_PC* sd, int num, const char* nam
 			return 1;
 		case '\'':
 			if( st->instance_id ) {
-				idb_remove(instance[st->instance_id].ivar, num);
+				idb_remove(instance[st->instance_id].vars, num);
 				if( val != 0 )
-					idb_iput(instance[st->instance_id].ivar, num, val);
+					idb_iput(instance[st->instance_id].vars, num, val);
 			}
 			return 1;
 		default:
