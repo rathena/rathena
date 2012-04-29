@@ -488,6 +488,8 @@ int log_config_read(const char* cfgName)
 			//support the import command, just like any other config
 			else if( strcmpi(w1,"import") == 0 )
 				log_config_read(w2);
+			else
+				ShowWarning("Unknown setting '%s' in file %s\n", w1, cfgName);
 		}
 	}
 

@@ -1111,6 +1111,8 @@ int socket_config_read(const char* cfgName)
 #endif
 		else if (!strcmpi(w1, "import"))
 			socket_config_read(w2);
+		else
+			ShowWarning("Unknown setting '%s' in file %s\n", w1, cfgName);
 	}
 
 	fclose(fp);

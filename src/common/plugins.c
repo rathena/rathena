@@ -325,6 +325,8 @@ static int plugins_config_read(const char *cfgName)
 			plugin_load(filename);
 		} else if( strcmpi(w1,"import") == 0 )
 			plugins_config_read(w2);
+		else
+			ShowWarning("Unknown setting '%s' in file %s\n", w1, cfgName);
 	}
 	fclose(fp);
 	return 0;

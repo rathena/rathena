@@ -3814,6 +3814,9 @@ int script_config_read(char *cfgName)
 		else if(strcmpi(w1,"import")==0){
 			script_config_read(w2);
 		}
+		else {
+			ShowWarning("Unknown setting '%s' in file %s\n", w1, cfgName);
+		}
 	}
 	fclose(fp);
 
