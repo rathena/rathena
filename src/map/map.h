@@ -660,6 +660,7 @@ struct homun_data* map_id2hd(int id);
 struct mercenary_data* map_id2mc(int id);
 struct chat_data* map_id2cd(int id);
 struct block_list * map_id2bl(int id);
+bool map_blid_exists( int id );
 
 #define map_id2index(id) map[(id)].index
 int map_mapindex2mapid(unsigned short mapindex);

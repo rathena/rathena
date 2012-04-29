@@ -1302,19 +1302,17 @@ int map_get_new_object_id(void)
 
 	// find a free id
 	i = last_object_id + 1;
-	while( i != last_object_id )
-	{
+	while( i != last_object_id ) {
 		if( i == MAX_FLOORITEM )
 			i = MIN_FLOORITEM;
 
-		if( idb_get(id_db, i) == NULL )
+		if( !idb_exists(id_db, i) )
 			break;
 
 		++i;
 	}
 
-	if( i == last_object_id )
-	{
+	if( i == last_object_id ) {
 		ShowError("map_addobject: no free object id!\n");
 		return 0;
 	}
@@ -1892,12 +1890,17 @@ struct map_session_data * map_nick2sd(const char *nick)
 }
 
 /*==========================================
- * id”Ô?‚Ì•¨‚ğ’T‚·
- * ˆêObject‚Ìê‡‚Í”z—ñ‚ğˆø‚­‚Ì‚İ
+ * Looksup id_db DBMap and returns BL pointer of 'id' or NULL if not found
  *------------------------------------------*/
-struct block_list * map_id2bl(int id)
-{
+struct block_list * map_id2bl(int id) {
 	return (struct block_list*)idb_get(id_db,id);
+}
+
+/**
+ * Same as map_id2bl except it only checks for its existence
+ **/
+bool map_blid_exists( int id ) {
+	return (idb_exists(id_db,id));
 }
 
 /*==========================================

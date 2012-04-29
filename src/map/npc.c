@@ -55,17 +55,15 @@ static int npc_cache_mob=0;
 
 /// Returns a new npc id that isn't being used in id_db.
 /// Fatal error if nothing is available.
-int npc_get_new_npc_id(void)
-{
-	if( npc_id >= START_NPC_NUM && map_id2bl(npc_id) == NULL )
+int npc_get_new_npc_id(void) {
+	if( npc_id >= START_NPC_NUM && !map_blid_exists(npc_id) )
 		return npc_id++;// available
-	{// find next id
+	else {// find next id
 		int base_id = npc_id;
-		while( base_id != ++npc_id )
-		{
+		while( base_id != ++npc_id ) {
 			if( npc_id < START_NPC_NUM )
 				npc_id = START_NPC_NUM;
-			if( map_id2bl(npc_id) == NULL )
+			if( !map_blid_exists(npc_id) )
 				return npc_id++;// available
 		}
 		// full loop, nothing available
@@ -3578,7 +3576,6 @@ int do_init_npc(void)
 	npcname_db = strdb_alloc(DB_OPT_BASE,NAME_LENGTH);
 
 	timer_event_ers = ers_new(sizeof(struct timer_event_data));
-
 	// process all npc files
 	ShowStatus("Loading NPCs...\r");
 	for( file = npc_src_files; file != NULL; file = file->next )
@@ -3586,7 +3583,6 @@ int do_init_npc(void)
 		ShowStatus("Loading NPC file: %s"CL_CLL"\r", file->name);
 		npc_parsesrcfile(file->name);
 	}
-
 	ShowInfo ("Done loading '"CL_WHITE"%d"CL_RESET"' NPCs:"CL_CLL"\n"
 		"\t-'"CL_WHITE"%d"CL_RESET"' Warps\n"
 		"\t-'"CL_WHITE"%d"CL_RESET"' Shops\n"
