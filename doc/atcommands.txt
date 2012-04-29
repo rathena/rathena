@@ -93,7 +93,7 @@ hairstyle: Changes hair style.
 haircolor: Changes hair color.
 itemreset: Deletes all your items.
 reset: Does a skill/stat reset.
-users: Displays distribution of players on the server per map (% on each map which has players).
+users: Displays distribution of players on the server per map (% on each map which has players.)
 cleanmap: Deletes floor items in sight range.
 killmonster2: Kill all monsters in map (without drops).
 save: Sets spawn point (aka save point).
