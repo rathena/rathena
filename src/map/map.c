@@ -3533,7 +3533,7 @@ int cleanup_sub(struct block_list *bl, va_list ap)
 			map_quit((struct map_session_data *) bl);
 			break;
 		case BL_NPC:
-			npc_unload((struct npc_data *)bl,true);
+			npc_unload((struct npc_data *)bl,false);
 			break;
 		case BL_MOB:
 			unit_free(bl,CLR_OUTSIGHT);
@@ -3571,20 +3571,22 @@ void do_final(void)
 
 	ShowStatus("Terminating...\n");
 
+	//Ladies and babies first.
+	iter = mapit_getallusers();
+	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
+		map_quit(sd);
+	mapit_free(iter);
+	
+	/* prepares npcs for a faster shutdown process */
+	do_clear_npc();
+	
 	// remove all objects on maps
-	for (i = 0; i < map_num; i++)
-	{
+	for (i = 0; i < map_num; i++) {
 		ShowStatus("Cleaning up maps [%d/%d]: %s..."CL_CLL"\r", i+1, map_num, map[i].name);
 		if (map[i].m >= 0)
 			map_foreachinmap(cleanup_sub, i, BL_ALL);
 	}
 	ShowStatus("Cleaned up %d maps."CL_CLL"\n", map_num);
-
-	//Scan any remaining players (between maps?) to kick them out. [Skotlex]
-	iter = mapit_getallusers();
-	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
-		map_quit(sd);
-	mapit_free(iter);
 
 	id_db->foreach(id_db,cleanup_db_sub);
 	chrif_char_reset_offline();

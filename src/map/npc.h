@@ -135,6 +135,7 @@ int npc_get_new_npc_id(void);
 void npc_addsrcfile(const char* name);
 void npc_delsrcfile(const char* name);
 void npc_parsesrcfile(const char* filepath);
+void do_clear_npc(void);
 int do_final_npc(void);
 int do_init_npc(void);
 void npc_event_do_oninit(void);
