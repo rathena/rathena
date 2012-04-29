@@ -4019,9 +4019,12 @@ int pc_useitem(struct map_session_data *sd,int n)
 	nameid = sd->inventory_data[n]->nameid;
 
 	/* Items with delayed consume are not meant to work while in mounts except reins of mount(12622) */
-	if( sd->inventory_data[n]->flag.delay_consume && nameid != 12622 && sd->sc.option&OPTION_MOUNTING )
-		return 0;
-
+	if( sd->inventory_data[n]->flag.delay_consume ) {
+		if( nameid != 12622 && sd->sc.option&OPTION_MOUNTING )
+			return 0;
+		else if( pc_issit(sd) )
+			return 0;
+	}
 	//Since most delay-consume items involve using a "skill-type" target cursor,
 	//perform a skill-use check before going through. [Skotlex]
 	//resurrection was picked as testing skill, as a non-offensive, generic skill, it will do.
