@@ -2537,7 +2537,10 @@ void get_val(struct script_state* st, struct script_data* data)
 					data->ref      ? *data->ref:
 					name[1] == '@' ?  st->stack->var_function:// instance/scope variable
 					                  st->script->script_vars;// npc variable
-				data->u.str = (char*)idb_get(n,reference_getuid(data));
+				if( n )
+					data->u.str = (char*)idb_get(n,reference_getuid(data));
+				else
+					data->u.str = NULL;
 			}
 			break;
 		case '\'':
@@ -2599,7 +2602,10 @@ void get_val(struct script_state* st, struct script_data* data)
 					data->ref      ? *data->ref:
 					name[1] == '@' ?  st->stack->var_function:// instance/scope variable
 					                  st->script->script_vars;// npc variable
-				data->u.num = (int)idb_iget(n,reference_getuid(data));
+				if( n )
+					data->u.num = (int)idb_iget(n,reference_getuid(data));
+				else
+					data->u.num = 0;
 			}
 			break;
 		case '\'':
