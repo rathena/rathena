@@ -4017,8 +4017,7 @@ int do_init_script()
 	return 0;
 }
 
-int script_reload()
-{
+int script_reload() {
 	userfunc_db->clear(userfunc_db, db_script_free_code_sub);
 	db_clear(scriptlabel_db);
 
@@ -4031,7 +4030,6 @@ int script_reload()
 		}
 		linkdb_final(&sleep_db);
 	}
-
 	mapreg_reload();
 	return 0;
 }

@@ -168,7 +168,7 @@ void mvptomb_destroy(struct mob_data *md)
 	struct npc_data *nd = (struct npc_data *)map_id2bl(md->tomb_nid);
 
 	if (nd)
-		npc_unload(nd);
+		npc_unload(nd,true);
 
 	md->tomb_nid = 0;
 }

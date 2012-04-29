@@ -1725,7 +1725,7 @@ static int npc_unload_dup_sub(struct npc_data* nd, va_list args)
 
 	src_id = va_arg(args, int);
 	if (nd->src_id == src_id)
-		npc_unload(nd);
+		npc_unload(nd, true);
 	return 0;
 }
 
@@ -1735,12 +1735,12 @@ void npc_unload_duplicates(struct npc_data* nd)
 	map_foreachnpc(npc_unload_dup_sub,nd->bl.id);
 }
 
-int npc_unload(struct npc_data* nd)
-{
+int npc_unload(struct npc_data* nd, bool single) {
 	nullpo_ret(nd);
 
 	npc_remove_map(nd);
 	map_deliddb(&nd->bl);
+	if( single )
 	strdb_remove(npcname_db, nd->exname);
 
 	if (nd->chat_id) // remove npc chatroom object and kick users
@@ -1752,20 +1752,17 @@ int npc_unload(struct npc_data* nd)
 
 	if( (nd->subtype == SHOP || nd->subtype == CASHSHOP) && nd->src_id == 0) //src check for duplicate shops [Orcao]
 		aFree(nd->u.shop.shop_item);
-	else
-	if( nd->subtype == SCRIPT )
-	{
+	else if( nd->subtype == SCRIPT ) {
 		struct s_mapiterator* iter;
 		struct block_list* bl;
 
-		ev_db->foreach(ev_db,npc_unload_ev,nd->exname); //Clean up all events related
+		if( single )
+			ev_db->foreach(ev_db,npc_unload_ev,nd->exname); //Clean up all events related
 
 		iter = mapit_geteachpc();  
-		for( bl = (struct block_list*)mapit_first(iter); mapit_exists(iter); bl = (struct block_list*)mapit_next(iter) )  
-		{
-			struct map_session_data *sd = map_id2sd(bl->id);
-			if( sd && sd->npc_timer_id != INVALID_TIMER )
-			{
+		for( bl = (struct block_list*)mapit_first(iter); mapit_exists(iter); bl = (struct block_list*)mapit_next(iter) ) {
+			struct map_session_data *sd = ((TBL_PC*)bl);
+			if( sd && sd->npc_timer_id != INVALID_TIMER ) {
 				const struct TimerData *td = get_timer(sd->npc_timer_id);
 
 				if( td && td->id != nd->bl.id )
@@ -3435,14 +3432,18 @@ int npc_reload(void)
 	struct s_mapiterator* iter;
 	struct block_list* bl;
 
+	ShowDebug("Oi4-1 %u\n",gettick());
+	db_clear(npcname_db);
+	ShowDebug("Oi4-2 %u\n",gettick());
+	db_clear(ev_db);
 	//Remove all npcs/mobs. [Skotlex]
+	ShowDebug("Oi5 %u\n",gettick());
 	iter = mapit_geteachiddb();
-	for( bl = (struct block_list*)mapit_first(iter); mapit_exists(iter); bl = (struct block_list*)mapit_next(iter) )
-	{
+	for( bl = (struct block_list*)mapit_first(iter); mapit_exists(iter); bl = (struct block_list*)mapit_next(iter) ) {
 		switch(bl->type) {
 		case BL_NPC:
 			if( bl->id != fake_nd->bl.id )// don't remove fake_nd
-				npc_unload((struct npc_data *)bl);
+				npc_unload((struct npc_data *)bl, false);
 			break;
 		case BL_MOB:
 			unit_free(bl,CLR_OUTSIGHT);
@@ -3450,7 +3451,7 @@ int npc_reload(void)
 		}
 	}
 	mapit_free(iter);
-
+	ShowDebug("Oi6 %u\n",gettick());
 	if(battle_config.dynamic_mobs)
 	{// dynamic check by [random]
 		for (m = 0; m < map_num; m++) {
@@ -3469,19 +3470,21 @@ int npc_reload(void)
 		if (map[m].npc_num > 0)
 			ShowWarning("npc_reload: %d npcs weren't removed at map %s!\n", map[m].npc_num, map[m].name);
 	}
-
+	ShowDebug("Oi7 %u\n",gettick());
 	// clear mob spawn lookup index
 	mob_clear_spawninfo();
-
+	ShowDebug("Oi8 %u\n",gettick());
 	// clear npc-related data structures
 	ev_db->clear(ev_db,NULL);
+	ShowDebug("Oi9 %u\n",gettick());
 	npcname_db->clear(npcname_db,NULL);
+	ShowDebug("Oi10 %u\n",gettick());
 	npc_warp = npc_shop = npc_script = 0;
 	npc_mob = npc_cache_mob = npc_delay_mob = 0;
 
 	// reset mapflags
 	map_flags_init();
-
+	ShowDebug("Oi11 %u\n",gettick());
 	//TODO: the following code is copy-pasted from do_init_npc(); clean it up
 	// Reloading npcs now
 	for (nsl = npc_src_files; nsl; nsl = nsl->next)
@@ -3489,7 +3492,7 @@ int npc_reload(void)
 		ShowStatus("Loading NPC file: %s"CL_CLL"\r", nsl->name);
 		npc_parsesrcfile(nsl->name);
 	}
-
+	ShowDebug("Oi12 %u\n",gettick());
 	ShowInfo ("Done loading '"CL_WHITE"%d"CL_RESET"' NPCs:"CL_CLL"\n"
 		"\t-'"CL_WHITE"%d"CL_RESET"' Warps\n"
 		"\t-'"CL_WHITE"%d"CL_RESET"' Shops\n"
@@ -3501,10 +3504,10 @@ int npc_reload(void)
 
 	for( i = 0; i < ARRAYLENGTH(instance); ++i )
 		instance_init(instance[i].instance_id);
-
+	ShowDebug("Oi13 %u\n",gettick());
 	//Re-read the NPC Script Events cache.
 	npc_read_event_script();
-
+	ShowDebug("Oi14 %u\n",gettick());
 	//Execute the OnInit event for freshly loaded npcs. [Skotlex]
 	ShowStatus("Event '"CL_WHITE"OnInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n",npc_event_doall("OnInit"));
 	// Execute rest of the startup events if connected to char-server. [Lance]
@@ -3523,10 +3526,13 @@ int do_final_npc(void)
 	int i;
 	struct block_list *bl;
 
+	db_clear(npcname_db);
+	db_clear(ev_db);
+	
 	for (i = START_NPC_NUM; i < npc_id; i++){
 		if ((bl = map_id2bl(i))){
 			if (bl->type == BL_NPC)
-				npc_unload((struct npc_data *)bl);
+				npc_unload((struct npc_data *)bl, false);
 			else if (bl->type&(BL_MOB|BL_PET|BL_HOM|BL_MER))
 				unit_free(bl, CLR_OUTSIGHT);
 		}
