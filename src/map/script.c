@@ -2456,7 +2456,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	CREATE(code,struct script_code,1);
 	code->script_buf  = script_buf;
 	code->script_size = script_size;
-	code->script_vars = NULL;
+	code->script_vars = idb_alloc(DB_OPT_RELEASE_DATA);
 	return code;
 }
 
