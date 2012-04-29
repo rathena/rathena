@@ -6301,7 +6301,7 @@ mid_campin,168,82,3	script	Arunafeltz Linguist#1	935,{
 		mes "[Linguist Dictionary]";
 		mes "Ah~ I've heard from our Commander about you. You've done much for the Midgard Alliance Camp. Anyways, what brings you here?";
 		next;
-		switch(select("I though I've confused you a bit...:What were you doing?")) {
+		switch(select("I thought I had confused you a bit...:What were you doing?")) {
 		case 1:
 			mes "[Linguist Dictionary]";
 			mes "Confusion is a feeling that comes from distraction of one's mind when something that couldn't be predicted happens. I'm not a person who easily gets confused.";
