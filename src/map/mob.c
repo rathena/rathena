@@ -1293,7 +1293,7 @@ int mob_unlocktarget(struct mob_data *md, unsigned int tick)
 	}
 	if (md->target_id) {
 		md->target_id=0;
-		md->ud.target = 0;
+		unit_set_target(&md->ud, 0);
 	}
 	return 0;
 }
@@ -3082,11 +3082,11 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 				case MSC_SLAVELT:		// slave < num
 					flag = (mob_countslave(&md->bl) < c2 ); break;
 				case MSC_ATTACKPCGT:	// attack pc > num
-					flag = (unit_counttargeted(&md->bl, 0) > c2); break;
+					flag = (unit_counttargeted(&md->bl) > c2); break;
 				case MSC_SLAVELE:		// slave <= num
 					flag = (mob_countslave(&md->bl) <= c2 ); break;
 				case MSC_ATTACKPCGE:	// attack pc >= num
-					flag = (unit_counttargeted(&md->bl, 0) >= c2); break;
+					flag = (unit_counttargeted(&md->bl) >= c2); break;
 				case MSC_AFTERSKILL:
 					flag = (md->ud.skillid == c2); break;
 				case MSC_RUDEATTACKED:
@@ -3096,7 +3096,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 				case MSC_MASTERHPLTMAXRATE:
 					flag = ((fbl = mob_getmasterhpltmaxrate(md, ms[i].cond2)) != NULL); break;
 				case MSC_MASTERATTACKED:
-					flag = (md->master_id > 0 && (fbl=map_id2bl(md->master_id)) && unit_counttargeted(fbl, 0) > 0); break;
+					flag = (md->master_id > 0 && (fbl=map_id2bl(md->master_id)) && unit_counttargeted(fbl) > 0); break;
 				case MSC_ALCHEMIST:
 					flag = (md->state.alchemist);
 					break;

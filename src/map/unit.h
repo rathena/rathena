@@ -27,6 +27,7 @@ struct unit_data {
 	int   skilltarget;
 	int   skilltimer;
 	int   target;
+	int   target_to;
 	int   attacktimer;
 	int   walktimer;
 	int	chaserange;
@@ -35,6 +36,7 @@ struct unit_data {
 	unsigned int canmove_tick;
 	uint8 dir;
 	unsigned char walk_count;
+	unsigned char target_count;
 	struct {
 		unsigned change_walk_target : 1 ;
 		unsigned skillcastcancel : 1 ;
@@ -113,7 +115,8 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 // ‰r¥ƒLƒƒƒ“ƒZƒ‹
 int unit_skillcastcancel(struct block_list *bl,int type);
 
-int unit_counttargeted(struct block_list *bl,int target_lv);
+int unit_counttargeted(struct block_list *bl);
+int unit_set_target(struct unit_data* ud, int target_id);
 
 // unit_data ‚Ì‰Šú‰»ˆ—
 void unit_dataset(struct block_list *bl);

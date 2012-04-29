@@ -73,7 +73,7 @@ int unit_walktoxy_sub(struct block_list *bl)
 
 	memcpy(&ud->walkpath,&wpd,sizeof(wpd));
 	
-	if (ud->target && ud->chaserange>1) {
+	if (ud->target_to && ud->chaserange>1) {
 		//Generally speaking, the walk path is already to an adjacent tile
 		//so we only need to shorten the path if the range is greater than 1.
 		int dir;
@@ -234,14 +234,15 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 		if ( !(unit_run(bl) || unit_wugdash(bl,sd)) )
 			ud->state.running = 0;
 	}
-	else if (ud->target) {
+	else if (ud->target_to) {
 		//Update target trajectory.
-		struct block_list *tbl = map_id2bl(ud->target);
+		struct block_list *tbl = map_id2bl(ud->target_to);
 		if (!tbl || !status_check_visibility(bl, tbl)) {	//Cancel chase.
 			ud->to_x = bl->x;
 			ud->to_y = bl->y;
-			if (tbl && bl->type == BL_MOB) //See if the mob can do a warp chase.
-				mob_warpchase((TBL_MOB*)bl, tbl);
+			if (tbl && bl->type == BL_MOB && mob_warpchase((TBL_MOB*)bl, tbl) )
+				return 0;
+			ud->target_to = 0;
 			return 0;
 		}
 		if (tbl->m == bl->m && check_distance_bl(bl, tbl, ud->chaserange))
@@ -249,6 +250,7 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 			if (ud->state.attack_continue)
 			{	//Aegis uses one before every attack, we should
 				//only need this one for syncing purposes. [Skotlex]
+				ud->target_to = 0;
 				clif_fixpos(bl);
 				unit_attack(bl, tbl->id, ud->state.attack_continue);
 			}
@@ -260,6 +262,7 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	else {	//Stopped walking. Update to_x and to_y to current location [Skotlex]
 		ud->to_x = bl->x;
 		ud->to_y = bl->y;
+		ud->target_to = 0;
 	}
 	return 0;
 }
@@ -300,9 +303,9 @@ int unit_walktoxy( struct block_list *bl, short x, short y, int flag)
 		return 0;
 	
 	ud->state.walk_easy = flag&1;
-	ud->target = 0;
 	ud->to_x = x;
 	ud->to_y = y;
+	unit_set_target(ud, 0);
 	
 	sc = status_get_sc(bl);
 	if (sc && sc->data[SC_CONFUSION]) //Randomize the target position
@@ -368,13 +371,15 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, int 
 	if (!unit_can_reach_bl(bl, tbl, distance_bl(bl, tbl)+1, flag&1, &ud->to_x, &ud->to_y)) {
 		ud->to_x = bl->x;
 		ud->to_y = bl->y;
+		ud->target_to = 0;
 		return 0;
 	}
 
 	ud->state.walk_easy = flag&1;
-	ud->target = tbl->id;
+	ud->target_to = tbl->id;
 	ud->chaserange = range; //Note that if flag&2, this SHOULD be attack-range
 	ud->state.attack_continue = flag&2?1:0; //Chase to attack.
+	unit_set_target(ud, 0);
 
 	sc = status_get_sc(bl);
 	if (sc && sc->data[SC_CONFUSION]) //Randomize the target position
@@ -1032,7 +1037,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 		target_id = ud->target; //Auto-select target. [Skotlex]
 		temp = 1;
 	}
-
+	
 	if (sd) {
 		//Target_id checking.
 		if(skillnotok(skill_num, sd)) // [MouseJstr]
@@ -1446,6 +1451,27 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 	return 1;
 }
 
+/*========================================
+ * update a block's attack target
+ *----------------------------------------*/
+int unit_set_target(struct unit_data* ud, int target_id)
+{
+	struct unit_data * ux;
+	struct block_list* target;
+
+	nullpo_ret(ud);
+
+	if( ud->target != target_id ) {
+		if( ud->target && (target = map_id2bl(ud->target)) && (ux = unit_bl2ud(target)) && ux->target_count > 0 )
+			ux->target_count --;
+		if( target_id && (target = map_id2bl(target_id)) && (ux = unit_bl2ud(target)) )
+			ux->target_count ++;
+	}
+
+	ud->target = target_id;
+	return 0;
+}
+
 int unit_stop_attack(struct block_list *bl)
 {
 	struct unit_data *ud = unit_bl2ud(bl);
@@ -1456,7 +1482,7 @@ int unit_stop_attack(struct block_list *bl)
 
 	delete_timer( ud->attacktimer, unit_attack_timer );
 	ud->attacktimer = INVALID_TIMER;
-	ud->target = 0;
+	unit_set_target(ud, 0);
 	return 0;
 }
 
@@ -1465,8 +1491,8 @@ int unit_unattackable(struct block_list *bl)
 {
 	struct unit_data *ud = unit_bl2ud(bl);
 	if (ud) {
-		ud->target = 0;
 		ud->state.attack_continue = 0;
+		unit_set_target(ud, 0);
 	}
 	
 	if(bl->type == BL_MOB)
@@ -1515,8 +1541,9 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 		return 1;
 	}
 
-	ud->target = target_id;
 	ud->state.attack_continue = continuous;
+	unit_set_target(ud, target_id);
+
 	if (continuous) //If you're to attack continously, set to auto-case character
 		ud->chaserange = status_get_range(src);
 
@@ -1889,32 +1916,14 @@ void unit_dataset(struct block_list *bl)
 }
 
 /*==========================================
- * Returns 1 if this unit is attacking target 'id'
- *------------------------------------------*/
-static int unit_counttargeted_sub(struct block_list* bl, va_list ap)
-{
-	int id = va_arg(ap, int);
-	int target_lv = va_arg(ap, int); // extra condition
-	struct unit_data* ud;
-
-	if(bl->id == id)
-		return 0;
-
-	ud = unit_bl2ud(bl);
-
-	if (ud && ud->target == id && ud->attacktimer != INVALID_TIMER && ud->attacktarget_lv >= target_lv)
-		return 1;
-
-	return 0;
-}
-
-/*==========================================
  * Counts the number of units attacking 'bl'
  *------------------------------------------*/
-int unit_counttargeted(struct block_list* bl, int target_lv)
+int unit_counttargeted(struct block_list* bl)
 {
-	nullpo_ret(bl);
-	return (map_foreachinrange(unit_counttargeted_sub, bl, AREA_SIZE, BL_CHAR, bl->id, target_lv));
+	struct unit_data* ud;
+	if( bl && (ud = unit_bl2ud(bl)) )
+		return ud->target_count;
+	return 0;
 }
 
 /*==========================================
@@ -1968,13 +1977,15 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 
 	map_freeblock_lock();
 
-	ud->target = 0; //Unlock walk/attack target.
+	unit_set_target(ud, 0);
+
 	if (ud->walktimer != INVALID_TIMER)
 		unit_stop_walking(bl,0);
 	if (ud->attacktimer != INVALID_TIMER)
 		unit_stop_attack(bl);
 	if (ud->skilltimer != INVALID_TIMER)
 		unit_skillcastcancel(bl,0);
+
 // Do not reset can-act delay. [Skotlex]
 	ud->attackabletime = ud->canmove_tick /*= ud->canact_tick*/ = gettick();
 	

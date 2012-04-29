@@ -1461,13 +1461,10 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				hitrate = 80; //Default hitrate
 #endif
 
-		if(battle_config.agi_penalty_type &&
-			battle_config.agi_penalty_target&target->type)
-		{
+		if(battle_config.agi_penalty_type && battle_config.agi_penalty_target&target->type) {
 			unsigned char attacker_count; //256 max targets should be a sane max
-			attacker_count = unit_counttargeted(target,battle_config.agi_penalty_count_lv);
-			if(attacker_count >= battle_config.agi_penalty_count)
-			{
+			attacker_count = unit_counttargeted(target);
+			if(attacker_count >= battle_config.agi_penalty_count) {
 				if (battle_config.agi_penalty_type == 1)
 					flee = (flee * (100 - (attacker_count - (battle_config.agi_penalty_count - 1))*battle_config.agi_penalty_num))/100;
 				else //asume type 2: absolute reduction
@@ -2507,10 +2504,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				}
 			}
 
-			if( battle_config.vit_penalty_type && battle_config.vit_penalty_target&target->type )
-			{
+			if( battle_config.vit_penalty_type && battle_config.vit_penalty_target&target->type ) {
 				unsigned char target_count; //256 max targets should be a sane max
-				target_count = unit_counttargeted(target,battle_config.vit_penalty_count_lv);
+				target_count = unit_counttargeted(target);
 				if(target_count >= battle_config.vit_penalty_count) {
 					if(battle_config.vit_penalty_type == 1) {
 						if( !tsc || !tsc->data[SC_STEELBODY] )
@@ -3920,11 +3916,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 				hitrate = 80; //Default hitrate
 #endif
 
-			if(battle_config.agi_penalty_type && 
-				battle_config.agi_penalty_target&target->type)
-			{
+			if(battle_config.agi_penalty_type && battle_config.agi_penalty_target&target->type) {
 				unsigned char attacker_count; //256 max targets should be a sane max
-				attacker_count = unit_counttargeted(target,battle_config.agi_penalty_count_lv);
+				attacker_count = unit_counttargeted(target);
 				if(attacker_count >= battle_config.agi_penalty_count)
 				{
 					if (battle_config.agi_penalty_type == 1)
@@ -5040,12 +5034,10 @@ static const struct _battle_data {
 	{ "agi_penalty_type",                   &battle_config.agi_penalty_type,                1,      0,      2,              },
 	{ "agi_penalty_count",                  &battle_config.agi_penalty_count,               3,      2,      INT_MAX,        },
 	{ "agi_penalty_num",                    &battle_config.agi_penalty_num,                 10,     0,      INT_MAX,        },
-	{ "agi_penalty_count_lv",               &battle_config.agi_penalty_count_lv,            ATK_FLEE, 0,    INT_MAX,        },
 	{ "vit_penalty_target",                 &battle_config.vit_penalty_target,              BL_PC,  BL_NUL, BL_ALL,         },
 	{ "vit_penalty_type",                   &battle_config.vit_penalty_type,                1,      0,      2,              },
 	{ "vit_penalty_count",                  &battle_config.vit_penalty_count,               3,      2,      INT_MAX,        },
 	{ "vit_penalty_num",                    &battle_config.vit_penalty_num,                 5,      0,      INT_MAX,        },
-	{ "vit_penalty_count_lv",               &battle_config.vit_penalty_count_lv,            ATK_MISS, 0,    INT_MAX,        },
 	{ "weapon_defense_type",                &battle_config.weapon_defense_type,             0,      0,      INT_MAX,        },
 	{ "magic_defense_type",                 &battle_config.magic_defense_type,              0,      0,      INT_MAX,        },
 	{ "skill_reiteration",                  &battle_config.skill_reiteration,               BL_NUL, BL_NUL, BL_ALL,         },

@@ -312,10 +312,7 @@ extern struct Battle_Config
 
 	int manner_system; // end additions [Valaris]
 	int show_mob_info; 
-
-	int agi_penalty_count_lv;
-	int vit_penalty_count_lv;
-
+	
 	int gx_allhit;
 	int gx_disptype;
 	int devotion_level_difference;
