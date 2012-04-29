@@ -3424,20 +3424,18 @@ void npc_read_event_script(void)
 	}
 }
 
-int npc_reload(void)
-{
+int npc_reload(void) {
 	struct npc_src_list *nsl;
 	int m, i;
 	int npc_new_min = npc_id;
 	struct s_mapiterator* iter;
 	struct block_list* bl;
 
-	ShowDebug("Oi4-1 %u\n",gettick());
 	db_clear(npcname_db);
-	ShowDebug("Oi4-2 %u\n",gettick());
 	db_clear(ev_db);
+
 	//Remove all npcs/mobs. [Skotlex]
-	ShowDebug("Oi5 %u\n",gettick());
+
 	iter = mapit_geteachiddb();
 	for( bl = (struct block_list*)mapit_first(iter); mapit_exists(iter); bl = (struct block_list*)mapit_next(iter) ) {
 		switch(bl->type) {
@@ -3451,7 +3449,7 @@ int npc_reload(void)
 		}
 	}
 	mapit_free(iter);
-	ShowDebug("Oi6 %u\n",gettick());
+
 	if(battle_config.dynamic_mobs)
 	{// dynamic check by [random]
 		for (m = 0; m < map_num; m++) {
@@ -3470,29 +3468,22 @@ int npc_reload(void)
 		if (map[m].npc_num > 0)
 			ShowWarning("npc_reload: %d npcs weren't removed at map %s!\n", map[m].npc_num, map[m].name);
 	}
-	ShowDebug("Oi7 %u\n",gettick());
+
 	// clear mob spawn lookup index
 	mob_clear_spawninfo();
-	ShowDebug("Oi8 %u\n",gettick());
-	// clear npc-related data structures
-	ev_db->clear(ev_db,NULL);
-	ShowDebug("Oi9 %u\n",gettick());
-	npcname_db->clear(npcname_db,NULL);
-	ShowDebug("Oi10 %u\n",gettick());
+
 	npc_warp = npc_shop = npc_script = 0;
 	npc_mob = npc_cache_mob = npc_delay_mob = 0;
 
 	// reset mapflags
 	map_flags_init();
-	ShowDebug("Oi11 %u\n",gettick());
+
 	//TODO: the following code is copy-pasted from do_init_npc(); clean it up
 	// Reloading npcs now
-	for (nsl = npc_src_files; nsl; nsl = nsl->next)
-	{
+	for (nsl = npc_src_files; nsl; nsl = nsl->next) {
 		ShowStatus("Loading NPC file: %s"CL_CLL"\r", nsl->name);
 		npc_parsesrcfile(nsl->name);
 	}
-	ShowDebug("Oi12 %u\n",gettick());
 	ShowInfo ("Done loading '"CL_WHITE"%d"CL_RESET"' NPCs:"CL_CLL"\n"
 		"\t-'"CL_WHITE"%d"CL_RESET"' Warps\n"
 		"\t-'"CL_WHITE"%d"CL_RESET"' Shops\n"
@@ -3504,12 +3495,13 @@ int npc_reload(void)
 
 	for( i = 0; i < ARRAYLENGTH(instance); ++i )
 		instance_init(instance[i].instance_id);
-	ShowDebug("Oi13 %u\n",gettick());
+
 	//Re-read the NPC Script Events cache.
 	npc_read_event_script();
-	ShowDebug("Oi14 %u\n",gettick());
+	
 	//Execute the OnInit event for freshly loaded npcs. [Skotlex]
 	ShowStatus("Event '"CL_WHITE"OnInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n",npc_event_doall("OnInit"));
+	
 	// Execute rest of the startup events if connected to char-server. [Lance]
 	if(!CheckForCharServer()){
 		ShowStatus("Event '"CL_WHITE"OnInterIfInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc_event_doall("OnInterIfInit"));
