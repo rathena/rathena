@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -38,6 +38,7 @@
 //= 1.9 Upped success rates for Report from the New World drops.
 //= 2.0 Added Mid Camp Warper, translated from the Official [Slim]
 //= 2.1 Fixed some typos [tr0n]
+//= 2.2 Fixed giving of Base Exp [JayPee]
 //============================================================ 
 
 // Onward to the New World
@@ -9913,7 +9914,7 @@ mid_camp,69,144,0	script	Ferocious Gorurug	421,{
 				mes "You've brough Pieces of Fish!";
 				mes "GOOD JOB!";
 				delitem 6039,10; //Piece_Of_Fish
-				getexp 3000,0;
+				getexp 30000,0;
 				set ep13_yong1,10;
 				setquest 12060;
 				next;
@@ -9933,7 +9934,7 @@ mid_camp,69,144,0	script	Ferocious Gorurug	421,{
 				mes "You've brough Pieces of Fish!";
 				mes "GOOD JOB!";
 				delitem 6039,10; //Piece_Of_Fish
-				getexp 1500,0;
+				getexp 15000,0;
 				setquest 12060;
 				set ep13_yong1,ep13_yong1+1;
 				next;
@@ -9954,7 +9955,7 @@ mid_camp,69,144,0	script	Ferocious Gorurug	421,{
 				mes "You've brough Pieces of Fish!";
 				mes "GOOD JOB!";
 				delitem 6039,10; //Piece_Of_Fish
-				getexp 1500,0;
+				getexp 15000,0;
 				setquest 12060;
 				set ep13_yong1,ep13_yong1+1;
 				next;
@@ -9974,7 +9975,7 @@ mid_camp,69,144,0	script	Ferocious Gorurug	421,{
 				mes "You've brough Pieces of Fish!";
 				mes "GOOD JOB!";
 				delitem 6039,10; //Piece_Of_Fish
-				getexp 1500,0;
+				getexp 15000,0;
 				setquest 12060;
 				set ep13_yong1,ep13_yong1+1;
 				next;
@@ -9997,7 +9998,7 @@ mid_camp,69,144,0	script	Ferocious Gorurug	421,{
 				mes "You've brough Pieces of Fish!";
 				mes "GOOD JOB!";
 				delitem 6039,10; //Piece_Of_Fish
-				getexp 1500,0;
+				getexp 15000,0;
 				setquest 12060;
 				set ep13_yong1,ep13_yong1+1;
 				next;
