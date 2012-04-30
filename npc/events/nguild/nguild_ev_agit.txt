@@ -63,7 +63,7 @@ function	script	F_AgitBreak	{
 	SetCastleData .@map$,1, .@GID;
 	MapAnnounce .@map$,"The emperium has been destroyed.",bc_map,0x00CCFF;
 	Announce "The [" + GetCastleName(.@map$) + "] castle has been conquered by the [" + GetGuildName(.@GID) + "] guild.",bc_all;
-	GetCastleData .@map$,0,"::OnRecvCastle"+.@castle$;
+	donpcevent "::OnRecvCastle"+.@castle$;
 
 	disablenpc "Kafra Staff#"+.@castle$;
 
@@ -97,7 +97,7 @@ function	script	F_AgitEnd	{
 // Castle 1 ================================================================
 nguild_alde,0,0,0	script	Agit_N01	-1,{
 OnInterIfInitOnce:
-	GetCastleData "nguild_alde",0,"::OnRecvCastleN01";
+	donpcevent "::OnRecvCastleN01";
 	end;
 OnRecvCastleN01:
 	RequestGuildInfo GetCastleData("nguild_alde",1);
@@ -124,7 +124,7 @@ OnAgitEnd:
 // Castle 2 ================================================================
 nguild_gef,0,0,0	script	Agit_N02	-1,{
 OnInterIfInitOnce:
-	GetCastleData "nguild_gef",0,"::OnRecvCastleN02";
+	donpcevent "::OnRecvCastleN02";
 	end;
 OnRecvCastleN02:
 	RequestGuildInfo GetCastleData("nguild_gef",1);
@@ -151,7 +151,7 @@ OnAgitEnd:
 // Castle 3 ================================================================
 nguild_pay,0,0,0	script	Agit_N03	-1,{
 OnInterIfInitOnce:
-	GetCastleData "nguild_pay",0,"::OnRecvCastleN03";
+	donpcevent "::OnRecvCastleN03";
 	end;
 OnRecvCastleN03:
 	RequestGuildInfo GetCastleData("nguild_pay",1);
@@ -178,7 +178,7 @@ OnAgitEnd:
 // Castle 4 ================================================================
 nguild_prt,0,0,0	script	Agit_N04	-1,{
 OnInterIfInitOnce:
-	GetCastleData "nguild_prt",0,"::OnRecvCastleN04";
+	donpcevent "::OnRecvCastleN04";
 	end;
 OnRecvCastleN04:
 	RequestGuildInfo GetCastleData("nguild_prt",1);
