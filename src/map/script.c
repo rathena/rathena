@@ -5094,13 +5094,13 @@ BUILDIN_FUNC(set)
 {
 	TBL_PC* sd = NULL;
 	struct script_data* data;
-	struct script_data* datavalue;
+	//struct script_data* datavalue;
 	int num;
 	const char* name;
 	char prefix;
 
 	data = script_getdata(st,2);
-	datavalue = script_getdata(st,3);
+	//datavalue = script_getdata(st,3);
 	if( !data_isreference(data) )
 	{
 		ShowError("script:set: not a variable\n");
@@ -5123,6 +5123,7 @@ BUILDIN_FUNC(set)
 		}
 	}
 
+#if 0
 	if( data_isreference(datavalue) )
 	{// the value being referenced is a variable
 		const char* namevalue = reference_getname(datavalue);
@@ -5148,6 +5149,7 @@ BUILDIN_FUNC(set)
 			return buildin_copyarray(st);
 		}
 	}
+#endif
 
 	if( is_string_variable(name) )
 		set_reg(st,sd,num,name,(void*)script_getstr(st,3),script_getref(st,2));
