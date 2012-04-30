@@ -2934,6 +2934,8 @@ void pop_stack(struct script_state* st, int start, int end)
 			struct script_retinfo* ri = data->u.ri;
 			if( ri->var_function )
 				script_free_vars(ri->var_function);
+			if( data->ref )
+				aFree(data->ref);
 			aFree(ri);
 		}
 		data->type = C_NOP;
@@ -4467,8 +4469,10 @@ BUILDIN_FUNC(callfunc)
 		if( data_isreference(data) && !data->ref )
 		{
 			const char* name = reference_getname(data);
-			if( name[0] == '.' && name[1] == '@' )
-				data->ref = &st->stack->var_function;
+			if( name[0] == '.' && name[1] == '@' ) {
+				data->ref = (struct DBMap**)aCalloc(sizeof(struct DBMap*), 1);
+				data->ref[0] = st->stack->var_function;
+			}
 			else if( name[0] == '.' )
 				data->ref = &st->script->script_vars;
 		}
@@ -4513,8 +4517,10 @@ BUILDIN_FUNC(callsub)
 		if( data_isreference(data) && !data->ref )
 		{
 			const char* name = reference_getname(data);
-			if( name[0] == '.' && name[1] == '@' )
-				data->ref = &st->stack->var_function;
+			if( name[0] == '.' && name[1] == '@' ) {
+				data->ref = (struct DBMap**)aCalloc(sizeof(struct DBMap*), 1);
+				data->ref[0] = st->stack->var_function;
+			}
 		}
 	}
 
