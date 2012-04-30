@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= [Ishizu-chan]
 //===== Current Version: =====================================
-//= 2.2
+//= 2.3
 //===== Compatible With: =====================================
 //= Any rAthena Version i guess?
 //===== Description: =========================================
@@ -24,6 +24,7 @@
 //= 2.0 Cleaned up the trans-only check, and added expanded classes. [L0ne_W0lf]
 //= 2.1 Replaced effect numerics with constants. [Samuray22]
 //= 2.2 Updated the whole Script to match with latest available official file. [Masao]
+//= 2.3 Added continue and break in switch case. [JayPee]
 //============================================================
 
 hu_fild01,140,163,5	script	Tower Keeper	852,3,3,{
@@ -1522,19 +1523,23 @@ tha_t06,43,152,0	script	Machine Devicett4	111,{
 								if ((@small_1 == 2) && (@small_2 == 2) && (@big_1 == 2) && (@big_2 == 2) && (@big_3 == 2)) {
 									break;
 								}
+								continue;
 							case 2:
 								mes "^00B2EE*Sneeeep*^000000";
 								set @small_1,1;
 								if ((@small_1 == 1) && (@small_2 == 1) && (@big_1 == 1) && (@big_2 == 1) && (@big_3 == 1)) {
 									break;
 								}
+								continue;
 							case 3:
 								mes "^5C246E*Mrreeem*^000000";
 								set @small_1,3;
 								if ((@small_1 == 3) && (@small_2 == 3) && (@big_1 == 3) && (@big_2 == 3) && (@big_3 == 3)) {
 									break;
 								}
+								continue;
 							}
+							break;
 						case 2:
 							switch (select("Raise Wheel:Lower Wheel:Press Wheel")) {
 							case 1:
@@ -1543,19 +1548,23 @@ tha_t06,43,152,0	script	Machine Devicett4	111,{
 								if ((@small_1 == 3) && (@small_2 == 3) && (@big_1 == 3) && (@big_2 == 3) && (@big_3 == 3)) {
 									break;
 								}
+								continue;
 							case 2:
 								mes "^EE0000*Choom*^000000";
 								set @small_2,2;
 								if ((@small_1 == 2) && (@small_2 == 2) && (@big_1 == 2) && (@big_2 == 2) && (@big_3 == 2)) {
 									break;
 								}
+								continue;
 							case 3:
 								mes "^00B2EE*Sneeeep*^000000";
 								set @small_2,1;
 								if ((@small_1 == 1) && (@small_2 == 1) && (@big_1 == 1) && (@big_2 == 1) && (@big_3 == 1)) {
 									break;
 								}
+								continue;
 							}
+							break;
 						case 3:
 							switch (select("Raise Wheel:Lower Wheel:Vertically Shift Wheel")) {
 							case 1:
@@ -1564,19 +1573,23 @@ tha_t06,43,152,0	script	Machine Devicett4	111,{
 								if ((@small_1 == 1) && (@small_2 == 1) && (@big_1 == 1) && (@big_2 == 1) && (@big_3 == 1)) {
 									break;
 								}
+								continue;
 							case 2:
 								mes "^5C246E*Mrreeem*^000000";
 								set @big_1,3;
 								if ((@small_1 == 3) && (@small_2 == 3) && (@big_1 == 3) && (@big_2 == 3) && (@big_3 == 3)) {
 									break;
 								}
+								continue;
 							case 3:
 								mes "^EE0000*Choom*^000000";
 								set @big_1,2;
 								if ((@small_1 == 2) && (@small_2 == 2) && (@big_1 == 2) && (@big_2 == 2) && (@big_3 == 2)) {
 									break;
 								}
+								continue;
 							}
+							break;
 						case 4:
 							switch (select("Raise Wheel:Lower Wheel:Vertically Shift Wheel")) {
 							case 1:
@@ -1585,19 +1598,23 @@ tha_t06,43,152,0	script	Machine Devicett4	111,{
 								if ((@small_1 == 2) && (@small_2 == 2) && (@big_1 == 2) && (@big_2 == 2) && (@big_3 == 2)) {
 									break;
 								}
+								continue;
 							case 2:
 								mes "^5C246E*Mrreeem*^000000";
 								set @big_2,3;
 								if ((@small_1 == 3) && (@small_2 == 3) && (@big_1 == 3) && (@big_2 == 3) && (@big_3 == 3)) {
 									break;
 								}
+								continue;
 							case 3:
 								mes "^00B2EE*Sneeeep*^000000";
 								set @big_2,1;
 								if ((@small_1 == 1) && (@small_2 == 1) && (@big_1 == 1) && (@big_2 == 1) && (@big_3 == 1)) {
 									break;
 								}
+								continue;
 							}
+							break;
 						case 5:
 							switch (select("Raise Wheel:Lower Wheel:Vertically Shift Wheel")) {
 							case 1:
@@ -1606,19 +1623,23 @@ tha_t06,43,152,0	script	Machine Devicett4	111,{
 								if ((@small_1 == 2) && (@small_2 == 2) && (@big_1 == 2) && (@big_2 == 2) && (@big_3 == 2)) {
 									break;
 								}
+								continue;
 							case 2:
 								mes "^00B2EE*Sneeeep*^000000";
 								set @big_3,1;
 								if ((@small_1 == 1) && (@small_2 == 1) && (@big_1 == 1) && (@big_2 == 1) && (@big_3 == 1)) {
 									break;
 								}
+								continue;
 							case 3:
 								mes "^5C246E*Mrreeem*^000000";
 								set @big_3,3;
 								if ((@small_1 == 3) && (@small_2 == 3) && (@big_1 == 3) && (@big_2 == 3) && (@big_3 == 3)) {
 									break;
 								}
+								continue;
 							}
+							break;
 						case 6:
 							mes "---Wheel Position---";
 							if (@small_1 == 0) {
@@ -1712,6 +1733,7 @@ tha_t06,43,152,0	script	Machine Devicett4	111,{
 							} else {
 								mes "3rd Big Wheel: *Mrreeem*";
 							}
+							continue;
 						case 7:
 							set @small_1,0;
 							set @small_2,0;
@@ -1720,6 +1742,7 @@ tha_t06,43,152,0	script	Machine Devicett4	111,{
 							set @big_3,0;
 							close;
 						}
+						break;
 					}
 					mes "^3355FFAs you adjust the wheels,";
 					mes "they suddenly immobilize with";
