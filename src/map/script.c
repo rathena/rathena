@@ -4469,12 +4469,10 @@ BUILDIN_FUNC(callfunc)
 		if( data_isreference(data) && !data->ref )
 		{
 			const char* name = reference_getname(data);
-			if( name[0] == '.' && name[1] == '@' ) {
+			if( name[0] == '.' ) {
 				data->ref = (struct DBMap**)aCalloc(sizeof(struct DBMap*), 1);
-				data->ref[0] = st->stack->var_function;
+				data->ref[0] = (name[1] == '@' ? st->stack->var_function : st->script->script_vars);
 			}
-			else if( name[0] == '.' )
-				data->ref = &st->script->script_vars;
 		}
 	}
 
