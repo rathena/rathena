@@ -34,7 +34,7 @@
 
 
 static const int packet_len_table[]={
-	-1,-1,27,-1, -1, 0,37, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3800-0x380f
+	-1,-1,27,-1, -1, 0,37, 522,  0, 0, 0, 0,  0, 0,  0, 0, //0x3800-0x380f
 	 0, 0, 0, 0,  0, 0, 0, 0, -1,11, 0, 0,  0, 0,  0, 0, //0x3810
 	39,-1,15,15, 14,19, 7,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3820
 	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1, //0x3830
@@ -2077,6 +2077,40 @@ int intif_parse_elemental_saved(int fd)
 	return 0;
 }
 
+void intif_request_accinfo( int u_fd, int aid, int group_id, char* query ) {
+
+
+	WFIFOHEAD(inter_fd,2 + 4 + 4 + 4 + NAME_LENGTH);
+	
+	WFIFOW(inter_fd,0) = 0x3007;
+	WFIFOL(inter_fd,2) = u_fd;
+	WFIFOL(inter_fd,6) = aid;
+	WFIFOL(inter_fd,10) = group_id;
+	safestrncpy(WFIFOP(inter_fd,14), query, NAME_LENGTH);
+	
+	WFIFOSET(inter_fd,2 + 4 + 4 + 4 + NAME_LENGTH);
+	
+	return;
+}
+	
+void intif_parse_MessageToFD(int fd) {
+	int u_fd = RFIFOL(fd,2);	
+
+	if( session[u_fd] && session[u_fd]->session_data ) {
+		int aid = RFIFOL(fd,6);
+		struct map_session_data * sd = session[u_fd]->session_data;
+		/* matching e.g. previous fd owner didn't dc during request or is still the same */
+		if( sd->bl.id == aid ) {
+			char msg[512];
+			safestrncpy(msg, (char*)RFIFOP(fd,10), 512);
+			clif_displaymessage(u_fd,msg);
+		}
+	
+	}
+	
+	return;
+}
+
 //-----------------------------------------------------------------
 // inter server‚©‚ç‚Ì’ÊM
 // ƒGƒ‰[‚ª‚ ‚ê‚Î0(false)‚ğ•Ô‚·‚±‚Æ
@@ -2115,6 +2149,7 @@ int intif_parse(int fd)
 	case 0x3803:	mapif_parse_WisToGM(fd); break;
 	case 0x3804:	intif_parse_Registers(fd); break;
 	case 0x3806:	intif_parse_ChangeNameOk(fd); break;
+	case 0x3807:	intif_parse_MessageToFD(fd); break;
 	case 0x3818:	intif_parse_LoadGuildStorage(fd); break;
 	case 0x3819:	intif_parse_SaveGuildStorage(fd); break;
 	case 0x3820:	intif_parse_PartyCreated(fd); break;

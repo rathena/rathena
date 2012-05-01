@@ -104,6 +104,9 @@ int intif_elemental_request(int ele_id, int char_id);
 int intif_elemental_delete(int ele_id);
 int intif_elemental_save(struct s_elemental *ele);
 
+/* @accinfo */
+void intif_request_accinfo( int u_fd, int aid, int group_id, char* query );
+
 int CheckForCharServer(void);
 
 #endif /* _INTIF_H_ */

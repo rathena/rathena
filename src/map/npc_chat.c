@@ -14,7 +14,7 @@
 #include "pc.h" // struct map_session_data
 #include "script.h" // set_var()
 
-#include <pcre.h>
+#include "../../3rdparty/pcre/include/pcre.h"
 
 #include <stdio.h>
 #include <stdlib.h>
