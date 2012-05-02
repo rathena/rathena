@@ -815,7 +815,7 @@ void inter_final(void)
 	inter_pet_sql_final();
 	inter_homunculus_sql_final();
 	inter_mercenary_sql_final();
-	inter_elemental_sql_init();
+	inter_elemental_sql_final();
 	inter_mail_sql_final();
 	inter_auction_sql_final();
 	

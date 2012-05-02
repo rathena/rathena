@@ -138,8 +138,8 @@ static void mapif_parse_elemental_save(int fd, struct s_elemental* ele) {
 	mapif_elemental_saved(fd, result);
 }
 
-int inter_elemental_sql_init(void) {
-	return 0;
+void inter_elemental_sql_init(void) {
+	return;
 }
 void inter_elemental_sql_final(void) {
 	return;

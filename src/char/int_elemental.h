@@ -6,7 +6,7 @@
 
 struct s_elemental;
 
-int inter_elemental_sql_init(void);
+void inter_elemental_sql_init(void);
 void inter_elemental_sql_final(void);
 int inter_elemental_parse_frommap(int fd);
 
