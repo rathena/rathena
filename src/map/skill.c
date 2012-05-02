@@ -11724,8 +11724,24 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 				clif_skill_fail(sd,skill,USESKILL_FAIL_LEVEL,0);
 				return 0;
 		}
-	}	
-
+	}
+	if( sd->sc.option&OPTION_MADOGEAR ) {
+		switch( skill ) { //Blacksmiths and Mastersmiths skills are unusable when Mado is equipped. [Jobbie]
+			case BS_REPAIRWEAPON:  case WS_MELTDOWN:
+			case BS_HAMMERFALL:    case WS_CARTBOOST:
+			case BS_ADRENALINE:    case WS_WEAPONREFINE:
+			case BS_WEAPONPERFECT: case WS_CARTTERMINATION:
+			case BS_OVERTHRUST:    case WS_OVERTHRUSTMAX:
+			case BS_MAXIMIZE:
+			case BS_ADRENALINE2:
+			case BS_UNFAIRLYTRICK:
+			case BS_GREED:
+				clif_skill_fail(sd,skill,USESKILL_FAIL_LEVEL,0);
+				return 0;
+			default: //Only Mechanic exlcusive skill can be used.
+				break;
+		}
+	}
 	if( lv < 1 || lv > MAX_SKILL_LEVEL )
 		return 0;
 
