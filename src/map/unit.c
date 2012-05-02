@@ -921,7 +921,8 @@ int unit_can_move(struct block_list *bl)
 			|| sc->data[SC__MANHOLE]
 			|| sc->data[SC_VACUUM_EXTREME]
 			|| (sc->data[SC_FEAR] && sc->data[SC_FEAR]->val2 > 0)
-			|| sc->data[SC_CURSEDCIRCLE_TARGET]
+			|| sc->data[SC_CURSEDCIRCLE_ATKER]
+			|| sc->data[SC_CURSEDCIRCLE_TARGET]						  
 		))
 			return 0;
 	}

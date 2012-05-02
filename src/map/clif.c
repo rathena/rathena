@@ -9650,7 +9650,10 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 	if (sd->sc.count &&
 		(sd->sc.data[SC_TRICKDEAD] ||
 		sd->sc.data[SC_AUTOCOUNTER] ||
-		sd->sc.data[SC_BLADESTOP]))
+		 sd->sc.data[SC_BLADESTOP] ||
+		 sd->sc.data[SC__MANHOLE] || 
+		 sd->sc.data[SC_CURSEDCIRCLE_ATKER] ||
+		 sd->sc.data[SC_CURSEDCIRCLE_TARGET] ))
 		return;
 
 	pc_stop_walking(sd, 1);
