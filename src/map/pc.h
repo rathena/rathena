@@ -641,13 +641,21 @@ enum e_pc_permission {
 ||	( (class_) >= JOB_KAGEROU        && (class_) <  JOB_MAX            ) \
 )
 
-// clientside atk display macros (values to the left/right of the "+")
+// clientside display macros (values to the left/right of the "+")
 #ifdef RENEWAL
-#define pc_leftside_atk(sd) ((sd)->battle_status.batk)
-#define pc_rightside_atk(sd) ((sd)->battle_status.rhw.atk + (sd)->battle_status.lhw.atk + (sd)->battle_status.rhw.atk2 + (sd)->battle_status.lhw.atk2)
+	#define pc_leftside_atk(sd) ((sd)->battle_status.batk)
+	#define pc_rightside_atk(sd) ((sd)->battle_status.rhw.atk + (sd)->battle_status.lhw.atk + (sd)->battle_status.rhw.atk2 + (sd)->battle_status.lhw.atk2)
+	#define pc_leftside_def(sd) ((sd)->battle_status.def2)
+	#define pc_rightside_def(sd) ((sd)->battle_status.def)
+	#define pc_leftside_mdef(sd) ( (sd)->battle_status.mdef2 - ((sd)->battle_status.vit>>1) )
+	#define pc_rightside_mdef(sd) ((sd)->battle_status.mdef)
 #else
-#define pc_leftside_atk(sd) ((sd)->battle_status.batk + (sd)->battle_status.rhw.atk + (sd)->battle_status.lhw.atk)
-#define pc_rightside_atk(sd) ((sd)->battle_status.rhw.atk2 + (sd)->battle_status.lhw.atk2)
+	#define pc_leftside_atk(sd) ((sd)->battle_status.batk + (sd)->battle_status.rhw.atk + (sd)->battle_status.lhw.atk)
+	#define pc_rightside_atk(sd) ((sd)->battle_status.rhw.atk2 + (sd)->battle_status.lhw.atk2)
+	#define pc_leftside_def(sd) ((sd)->battle_status.def)
+	#define pc_rightside_def(sd) ((sd)->battle_status.def2)	
+	#define pc_leftside_mdef(sd) ((sd)->battle_status.mdef)
+	#define pc_rightside_mdef(sd) ( (sd)->battle_status.mdef2 - ((sd)->battle_status.vit>>1) )
 #endif
 
 int pc_class2idx(int class_);

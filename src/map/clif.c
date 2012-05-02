@@ -2764,25 +2764,24 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 		WFIFOL(fd,4)=pc_leftside_atk(sd);
 		break;
 	case SP_DEF1:
-		WFIFOL(fd,4)=sd->battle_status.def;
+		WFIFOL(fd,4)=pc_leftside_def(sd);
 		break;
 	case SP_MDEF1:
-		WFIFOL(fd,4)=sd->battle_status.mdef;
+		WFIFOL(fd,4)=pc_leftside_mdef(sd);
 		break;
 	case SP_ATK2:
 		WFIFOL(fd,4)=pc_rightside_atk(sd);
 		break;
 	case SP_DEF2:
-		WFIFOL(fd,4)=sd->battle_status.def2;
+		WFIFOL(fd,4)=pc_rightside_def(sd);
 		break;
-	case SP_MDEF2:
-	{
-		//negative check (in case you have something like Berserk active)
-		int mdef2 = sd->battle_status.mdef2 - (sd->battle_status.vit>>1);
+	case SP_MDEF2: {
+			//negative check (in case you have something like Berserk active)
+			int mdef2 = pc_rightside_mdef(sd);
 
-		WFIFOL(fd,4)= ( mdef2 < 0 ) ? 0 : mdef2;
+			WFIFOL(fd,4)= ( mdef2 < 0 ) ? 0 : mdef2;
+		}
 		break;
-	}
 	case SP_CRITICAL:
 		WFIFOL(fd,4)=sd->battle_status.cri/10;
 		break;
@@ -3123,10 +3122,10 @@ void clif_initialstatus(struct map_session_data *sd)
 	WBUFW(buf,18) = pc_rightside_atk(sd);
 	WBUFW(buf,20) = sd->battle_status.matk_max;
 	WBUFW(buf,22) = sd->battle_status.matk_min;
-	WBUFW(buf,24) = sd->battle_status.def; // def
-	WBUFW(buf,26) = sd->battle_status.def2;
-	WBUFW(buf,28) = sd->battle_status.mdef; // mdef
-	mdef2 = sd->battle_status.mdef2 - (sd->battle_status.vit>>1);
+	WBUFW(buf,24) = pc_leftside_def(sd);
+	WBUFW(buf,26) = pc_rightside_def(sd);
+	WBUFW(buf,28) = pc_leftside_mdef(sd);
+	mdef2 = pc_rightside_mdef(sd);
 	WBUFW(buf,30) = ( mdef2 < 0 ) ? 0 : mdef2;  //Negative check for Frenzy'ed characters.
 	WBUFW(buf,32) = sd->battle_status.hit;
 	WBUFW(buf,34) = sd->battle_status.flee;
@@ -10645,7 +10644,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 	}
 
 	pc_delinvincibletimer(sd);
-	
+
 	if( skilllv )
 		unit_skilluse_id(&sd->bl, target_id, skillnum, skilllv);
 }
