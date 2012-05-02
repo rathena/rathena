@@ -1154,20 +1154,16 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 
 	//Check range when not using skill on yourself or is a combo-skill during attack
 	//(these are supposed to always have the same range as your attack)
-	if( src->id != target_id && (!temp || ud->attacktimer == INVALID_TIMER) )
-	{
-		if( skill_get_state(ud->skillid) == ST_MOVE_ENABLE )
-		{
+	if( src->id != target_id && (!temp || ud->attacktimer == INVALID_TIMER) ) {
+		if( skill_get_state(ud->skillid) == ST_MOVE_ENABLE ) {
 			if( !unit_can_reach_bl(src, target, skill_get_range2(src, skill_num,skill_lv) + 1, 1, NULL, NULL) )
 				return 0; // Walk-path check failed.
-		}
-		else if( src->type == BL_MER && skill_num == MA_REMOVETRAP )
-		{
+		} else if( src->type == BL_MER && skill_num == MA_REMOVETRAP ) {
 			if( !battle_check_range(battle_get_master(src), target, skill_get_range2(src, skill_num, skill_lv) + 1) )
 				return 0; // Aegis calc remove trap based on Master position, ignoring mercenary O.O
-		}
-		else if( !battle_check_range(src, target, skill_get_range2(src, skill_num,skill_lv) + (skill_num == RG_CLOSECONFINE?0:2)) )
+		} else if( !battle_check_range(src, target, skill_get_range2(src, skill_num,skill_lv) + (skill_num == RG_CLOSECONFINE?0:2)) ) {
 			return 0; // Arrow-path check failed.
+		}
 	}
 
 	if (!temp) //Stop attack on non-combo skills [Skotlex]
@@ -1514,33 +1510,26 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 	nullpo_ret(ud = unit_bl2ud(src));
 
 	target = map_id2bl(target_id);
-	if( target==NULL || status_isdead(target) )
-	{
+	if( target==NULL || status_isdead(target) ) {
 		unit_unattackable(src);
 		return 1;
 	}
 
-	if( src->type == BL_PC )
-	{
+	if( src->type == BL_PC ) {
 		TBL_PC* sd = (TBL_PC*)src;
-		if( target->type == BL_NPC )
-		{ // monster npcs [Valaris]
+		if( target->type == BL_NPC ) { // monster npcs [Valaris]
 			npc_click(sd,(TBL_NPC*)target); // submitted by leinsirk10 [Celest]
 			return 0;
 		}
-		if( pc_is90overweight(sd) || pc_isridingwug(sd) )
-		{ // overweight or mounted on warg - stop attacking
+		if( pc_is90overweight(sd) || pc_isridingwug(sd) ) { // overweight or mounted on warg - stop attacking
 			unit_stop_attack(src);
 			return 0;
 		}
 	}
-
-	if( battle_check_target(src,target,BCT_ENEMY) <= 0 || !status_check_skilluse(src, target, 0, 0) )
-	{
+	if( battle_check_target(src,target,BCT_ENEMY) <= 0 || !status_check_skilluse(src, target, 0, 0) ) {
 		unit_unattackable(src);
 		return 1;
 	}
-
 	ud->state.attack_continue = continuous;
 	unit_set_target(ud, target_id);
 
@@ -1753,32 +1742,25 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	}
 
 	sstatus = status_get_status_data(src);
-	range = sstatus->rhw.range;
-	
-	if( !sd || sd->status.weapon != W_BOW )
-		range++; //Dunno why everyone but bows gets this extra range...
+	range = sstatus->rhw.range + 1;
+
 	if( unit_is_walking(target) )
 		range++; //Extra range when chasing
-
-	if( !check_distance_bl(src,target,range) )
-	{ //Chase if required.
+	if( !check_distance_bl(src,target,range) ) { //Chase if required.
 		if(sd)
 			clif_movetoattack(sd,target);
 		else if(ud->state.attack_continue)
 			unit_walktobl(src,target,ud->chaserange,ud->state.walk_easy|2);
 		return 1;
 	}
-	if( !battle_check_range(src,target,range) )
-	{
+	if( !battle_check_range(src,target,range) ) {
 	  	//Within range, but no direct line of attack
-		if( ud->state.attack_continue )
-		{
+		if( ud->state.attack_continue ) {
 			if(ud->chaserange > 2) ud->chaserange-=2;
 			unit_walktobl(src,target,ud->chaserange,ud->state.walk_easy|2);
 		}
 		return 1;
 	}
-
 	//Sync packet only for players.
 	//Non-players use the sync packet on the walk timer. [Skotlex]
 	if (tid == INVALID_TIMER && sd) clif_fixpos(src);
