@@ -96,7 +96,8 @@ static void __config_locale_override(void)
 
 #else
 
-#warning "No way to modify calling thread's locale!"
+/* locale overriding is pretty pointless (rathena doesn't make use of the area that uses locale functionality), but I'm actually removing it because it floods the buildbot with warnings  */
+//#warning "No way to modify calling thread's locale!"
 
 #endif
 }
@@ -117,7 +118,8 @@ static void __config_locale_restore(void)
 
 #else
 
-#warning "No way to modify calling thread's locale!"
+/* locale overriding is pretty pointless (rathena doesn't make use of the area that uses locale functionality), but I'm actually removing it because it floods the buildbot with warnings  */
+//#warning "No way to modify calling thread's locale!"
 
 #endif
 }
