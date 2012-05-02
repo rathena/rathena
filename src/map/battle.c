@@ -1760,7 +1760,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				case MC_CARTREVOLUTION:
 					skillratio += 50;
 					if(sd && sd->cart_weight)
-						skillratio += 100*sd->cart_weight/battle_config.max_cart_weight; // +1% every 1% weight
+						skillratio += 100*sd->cart_weight/sd->cart_weight_max; // +1% every 1% weight
 					else if (!sd)
 						skillratio += 100; //Max damage for non players.
 					break;
