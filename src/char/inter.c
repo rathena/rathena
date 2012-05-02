@@ -67,22 +67,20 @@ struct WisData {
 static DBMap* wis_db = NULL; // int wis_id -> struct WisData*
 static int wis_dellist[WISDELLIST_MAX], wis_delnum;
 
-#define MAX_MSG 1000
-static char* msg_table[MAX_MSG]; // Server messages (0-499 reserved for GM commands, 500-999 reserved for others)
+#define MAX_JOB_NAMES 106
+static char* msg_table[MAX_JOB_NAMES]; //  messages 550 ~ 655 are job names
 
-//-----------------------------------------------------------
-// Return the message string of the specified number by [Yor]
-//-----------------------------------------------------------
 const char* msg_txt(int msg_number) {
-	if (msg_number >= 0 && msg_number < MAX_MSG &&
+	msg_number -= 550;
+	if (msg_number >= 0 && msg_number < MAX_JOB_NAMES &&
 	    msg_table[msg_number] != NULL && msg_table[msg_number][0] != '\0')
 		return msg_table[msg_number];
 	
-	return "??";
+	return "Unknown";
 }
 
 /*==========================================
- * Read Message Data
+ * Read Message Data -- at char server we only keep job names.
  *------------------------------------------*/
 int msg_config_read(const char* cfgName) {
 	int msg_number;
@@ -96,7 +94,7 @@ int msg_config_read(const char* cfgName) {
 	}
 	
 	if ((--called) == 0)
-		memset(msg_table, 0, sizeof(msg_table[0]) * MAX_MSG);
+		memset(msg_table, 0, sizeof(msg_table[0]) * MAX_JOB_NAMES);
 	
 	while(fgets(line, sizeof(line), fp) ) {
 		if (line[0] == '/' && line[1] == '/')
@@ -108,7 +106,10 @@ int msg_config_read(const char* cfgName) {
 			msg_config_read(w2);
 		else {
 			msg_number = atoi(w1);
-			if (msg_number >= 0 && msg_number < MAX_MSG) {
+			if( msg_number < 550 || msg_number > (550+MAX_JOB_NAMES) )
+				continue;
+			msg_number -= 550;
+			if (msg_number >= 0 && msg_number < MAX_JOB_NAMES) {
 				if (msg_table[msg_number] != NULL)
 					aFree(msg_table[msg_number]);
 				msg_table[msg_number] = (char *)aMalloc((strlen(w2) + 1)*sizeof (char));
@@ -127,7 +128,7 @@ int msg_config_read(const char* cfgName) {
  *------------------------------------------*/
 void do_final_msg(void) {
 	int i;
-	for (i = 0; i < MAX_MSG; i++)
+	for (i = 0; i < MAX_JOB_NAMES; i++)
 		aFree(msg_table[i]);
 }
 /* from pc.c due to @accinfo. any ideas to replace this crap are more than welcome. */
