@@ -3936,12 +3936,12 @@ int do_init(int argc, char *argv[])
 	do_init_pet();
 	do_init_merc();
 	do_init_mercenary();
+	do_init_elemental();
 	do_init_quest();
 	do_init_npc();
 	do_init_unit();
 	do_init_battleground();
 	do_init_duel();
-	do_init_elemental();
 	
 	npc_event_do_oninit();	// npcのOnInitイベント?行
 
