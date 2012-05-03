@@ -317,7 +317,7 @@ int battle_attr_fix(struct block_list *src, struct block_list *target, int damag
 			int x,y;
 			
 			if( !su || !su->alive || (sg = su->group) == NULL || !sg || sg->val3 == -1 ||
-			   (src = map_id2bl(su->val2)) == NULL || status_isdead(src) )
+			   (src = map_id2bl(sg->src_id)) == NULL || status_isdead(src) )
 				return 0;
 			
 			if( sg->unit_id != UNT_FIREWALL ) {

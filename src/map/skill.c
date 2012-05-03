@@ -1996,6 +1996,7 @@ static int skill_area_temp[8];
  - 'count' is the number of squares to knock back
  - 'direction' indicates the way OPPOSITE to the knockback direction (or -1 for default behavior)
  - if 'flag&0x1', position update packets must not be sent.
+ - if 'flag&0x2', skill blown ignores players' special_state.no_knockback
  -------------------------------------------------------------------------*/
 int skill_blown(struct block_list* src, struct block_list* target, int count, int direction, int flag)
 {
@@ -2009,25 +2010,22 @@ int skill_blown(struct block_list* src, struct block_list* target, int count, in
 	if (count == 0)
 		return 0; //Actual knockback distance is 0.
 
-	switch (target->type)
-	{
-		case BL_MOB:
-		{
-			struct mob_data* md = BL_CAST(BL_MOB, target);
-			if( md->class_ == MOBID_EMPERIUM )
-				return 0;
-			if(src != target && is_boss(target)) //Bosses can't be knocked-back
-				return 0;
-		}
+	switch (target->type) {
+		case BL_MOB: {
+				struct mob_data* md = BL_CAST(BL_MOB, target);
+				if( md->class_ == MOBID_EMPERIUM )
+					return 0;
+				if(src != target && is_boss(target)) //Bosses can't be knocked-back
+					return 0;
+			}
 			break;
-		case BL_PC:
-		{
-			struct map_session_data *sd = BL_CAST(BL_PC, target);
-			if( sd->sc.data[SC_BASILICA] && sd->sc.data[SC_BASILICA]->val4 == sd->bl.id && !is_boss(src))
-				return 0; // Basilica caster can't be knocked-back by normal monsters.
-			if( src != target && sd->special_state.no_knockback )
-				return 0;
-		}
+		case BL_PC: {
+				struct map_session_data *sd = BL_CAST(BL_PC, target);
+				if( sd->sc.data[SC_BASILICA] && sd->sc.data[SC_BASILICA]->val4 == sd->bl.id && !is_boss(src))
+					return 0; // Basilica caster can't be knocked-back by normal monsters.
+				if( !(flag&0x2) && src != target && sd->special_state.no_knockback )
+					return 0;
+			}
 			break;
 		case BL_SKILL:
 			su = (struct skill_unit *)target;
@@ -2036,7 +2034,7 @@ int skill_blown(struct block_list* src, struct block_list* target, int count, in
 				return 0; // ankle snare, electricshocker, clusterbomb, reverberation cannot be knocked back
 			break;
 	}
-
+	
 	if (direction == -1) // <optimized>: do the computation here instead of outside
 		direction = map_calc_dir(target, src->x, src->y); // direction from src to target, reversed
 
@@ -2524,8 +2522,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	//Only knockback if it's still alive, otherwise a "ghost" is left behind. [Skotlex]
 	//Reflected spells do not bounce back (bl == dsrc since it only happens for direct skills)
-	if (dmg.blewcount > 0 && bl!=dsrc && !status_isdead(bl))
-	{
+	if (dmg.blewcount > 0 && bl!=dsrc && !status_isdead(bl)) {
 		int direction = -1; // default
 		switch(skillid) {//direction
 			case MG_FIREWALL:
@@ -2564,8 +2561,13 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 						skill_addtimerskill(src, tick + 300 * ((flag&2) ? 1 : 2), bl->id, 0, 0, skillid, skilllv, BF_WEAPON, flag|4);	
 				}			
 				break;
+			case GN_WALLOFTHORN:
+				unit_stop_walking(bl,1);
+				skill_blown(dsrc,bl,dmg.blewcount,direction, 0x2 );
+				clif_fixpos(bl);
+				break;
 			default:
-				skill_blown(dsrc,bl,dmg.blewcount,direction,0);
+				skill_blown(dsrc,bl,dmg.blewcount,direction, 0x0 );
 				break;
 		}
 	}
@@ -10370,7 +10372,6 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 			break;
 		case GN_WALLOFTHORN:
 			val1 = 1000 * skilllv;	// Need official value. [LimitLine]
-			val2 = src->id;
 			break;				
 		default:
 			if (group->state.song_dance&0x1)
@@ -10600,9 +10601,7 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 	case UNT_WALLOFTHORN:
 		if( status_get_mode(bl)&MD_BOSS )
 			break;	// iRO Wiki says that this skill don't affect to Boss monsters.
-		if( battle_check_target(ss,bl,BCT_ENEMY) <= 0 )
-			skill_blown(&src->bl,bl,skill_get_blewcount(sg->skill_id,sg->skill_lv),unit_getdir(bl),0);
-		else
+		if( map_flag_vs(bl->m) || bl->id == src->bl.id || battle_check_target(&src->bl,bl, BCT_ENEMY) == 1 )
 			skill_attack(skill_get_type(sg->skill_id), ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
 		break;
 			
@@ -14039,25 +14038,25 @@ struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int 
 
 	// perform oninit actions
 	switch (group->skill_id) {
-	case WZ_ICEWALL:
-		map_setgatcell(unit->bl.m,unit->bl.x,unit->bl.y,5);
-		clif_changemapcell(0,unit->bl.m,unit->bl.x,unit->bl.y,5,AREA);
-		skill_unitsetmapcell(unit,WZ_ICEWALL,group->skill_lv,CELL_ICEWALL,true);
-		map[unit->bl.m].icewall_num++;
-		break;
-	case SA_LANDPROTECTOR:
-		skill_unitsetmapcell(unit,SA_LANDPROTECTOR,group->skill_lv,CELL_LANDPROTECTOR,true);
-		break;
-	case HP_BASILICA:
-		skill_unitsetmapcell(unit,HP_BASILICA,group->skill_lv,CELL_BASILICA,true);
-		break;
-	case SC_MAELSTROM:
-		skill_unitsetmapcell(unit,SC_MAELSTROM,group->skill_lv,CELL_MAELSTROM,true);
-		break;
-	default:
-		if (group->state.song_dance&0x1) //Check for dissonance.
-			skill_dance_overlap(unit, 1);
-		break;
+		case WZ_ICEWALL:
+			map_setgatcell(unit->bl.m,unit->bl.x,unit->bl.y,5);
+			clif_changemapcell(0,unit->bl.m,unit->bl.x,unit->bl.y,5,AREA);
+			skill_unitsetmapcell(unit,WZ_ICEWALL,group->skill_lv,CELL_ICEWALL,true);
+			map[unit->bl.m].icewall_num++;
+			break;
+		case SA_LANDPROTECTOR:
+			skill_unitsetmapcell(unit,SA_LANDPROTECTOR,group->skill_lv,CELL_LANDPROTECTOR,true);
+			break;
+		case HP_BASILICA:
+			skill_unitsetmapcell(unit,HP_BASILICA,group->skill_lv,CELL_BASILICA,true);
+			break;
+		case SC_MAELSTROM:
+			skill_unitsetmapcell(unit,SC_MAELSTROM,group->skill_lv,CELL_MAELSTROM,true);
+			break;
+		default:
+			if (group->state.song_dance&0x1) //Check for dissonance.
+				skill_dance_overlap(unit, 1);
+			break;
 	}
 
 	clif_skill_setunit(unit);
