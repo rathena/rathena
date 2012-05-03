@@ -15160,24 +15160,50 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 				// 	TODO: find a proper chance.
 				make_per = (5000 + 50*status->dex + 30*status->luk); //Custom rate value.
 				break;
-			case GN_CHANGEMATERIAL:
+			case GN_CHANGEMATERIAL: // [Igniz]
 				switch( nameid ) {
-					case 1010:
-						qty *= 8;
-						break;
-					case 1061:
-						qty *= 2;
-						break;
+					case 1010: case 1056: case 1064: case 1045:
+					case 1025: case 964:
+						qty *= 8; break;
+					case 971:  case 1059: case 968:  case 1046:
+					case 1058:
+						qty *= 5; break;
+					case 1051:
+						qty *= 7; break;
+					case 1033: case 974:  case 703:  case 1009:
+					case 973:  case 1026: case 1024: case 967:
+					case 1021:
+						qty *= 4; break;
+					case 1061: case 7166: case 1030: case 1019:
+						qty *= 2; break;
+					case 1003: case 2267: case 992:  case 1038:
+						qty *= 1; break;
+					case 1008: case 1043: case 1049: case 1037:
+						qty *= 6; break;
+					case 970:  case 958:
+						qty *= 9; break;
+					case 1041: case 1012: case 1050:
+						qty *= 3; break;
+					case 1034:
+						qty *= 15; break;
+					case 7063: case 991:
+						qty *= 1 + rand()%3; break;
+					case 1020: case 962:  case 1014:
+						qty *= 4 + rand()%3; break;
+					case 1040: case 1035:
+						qty *= 8 + rand()%5; break;
+					case 1013:
+						qty *= 9 + rand()%5; break;
+					case 960: case 1053:
+						qty *= 6 + rand()%4; break;
+					case 1022:
+						qty *= 2 + rand()%2; break;
+					case 1016:
+						qty *= 7 + rand()%4; break;
 						// Throwable potions
-					case 13275:
-					case 13276:
-					case 13277:
-					case 13278:
-					case 13279:
-					case 13280:
-					case 13281:
-					case 13282:
-					case 13283:
+					case 13275: case 13276: case 13277: case 13278:
+					case 13279: case 13280: case 13281: case 13282:
+					case 13283: case 999:
 						qty *= 10;
 						break;
 				}
