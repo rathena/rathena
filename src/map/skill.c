@@ -10837,6 +10837,24 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			}
 			break;
 
+		case UNT_ELECTRICSHOCKER:
+			if( bl->id != ss->id ) {
+				int sec = skill_get_time2(sg->skill_id, sg->skill_lv);
+				if( status_get_mode(bl)&MD_BOSS )
+					break;
+				if( status_change_start(bl,type,10000,sg->skill_lv,sg->group_id,0,0,sec, 8) ) {
+					const struct TimerData* td = tsc->data[type]?get_timer(tsc->data[type]->timer):NULL;
+					if( td ) 
+						sec = DIFF_TICK(td->tick, tick);
+					map_moveblock(bl, src->bl.x, src->bl.y, tick);
+					clif_fixpos(bl);
+				} else
+					sec = 3000; //Couldn't trap it?
+				map_foreachinrange(skill_trap_splash, &src->bl, skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag, &src->bl, tick);
+				src->range = -1;
+			}			
+			break;
+			
 		case UNT_VENOMDUST:
 			if(tsc && !tsc->data[type])
 				status_change_start(bl,type,10000,sg->skill_lv,sg->group_id,0,0,skill_get_time2(sg->skill_id,sg->skill_lv),0);
@@ -14446,6 +14464,7 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 			break;
 
 			case UNT_ANKLESNARE:
+			case UNT_ELECTRICSHOCKER:
 				if( group->val2 > 0 ) {
 					// Used Trap don't returns back to item
 					skill_delunit(unit);
