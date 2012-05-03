@@ -184,7 +184,7 @@
 138,1,6,16,5,0x1,0,10,1,no,0,0x400,0,weapon,0,	AS_ENCHANTPOISON,Enchant Poison
 139,0,6,4,0,0,0,10,1,no,0,0,0,weapon,0,		AS_POISONREACT,Poison React
 140,2,6,2,5,0x1,0,10,1,no,0,0,0,weapon,0,	AS_VENOMDUST,Venom Dust
-141,1,6,1,-1,0xF,2,10,1,yes,0,0,0,weapon,0,	AS_SPLASHER,Venom Splasher
+141,1,6,1,-1,0x51,2,10,1,yes,0,0,0,weapon,0,	AS_SPLASHER,Venom Splasher
 142,0,6,4,0,0x1,0,1,1,no,0,0x1,0,none,0,		NV_FIRSTAID,First Aid
 143,0,6,4,0,0x1,0,1,1,no,0,0x1,0,none,0,		NV_TRICKDEAD,Play Dead
 144,0,0,0,0,0,0,1,0,no,0,0x1,0,none,0,		SM_MOVINGRECOVERY,Moving HP-Recovery
