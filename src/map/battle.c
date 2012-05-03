@@ -5269,6 +5269,7 @@ static const struct _battle_data {
 	{ "atcommand_max_stat_bypass",          &battle_config.atcommand_max_stat_bypass,       0,      0,      100,            },          
 	{ "skill_amotion_leniency",             &battle_config.skill_amotion_leniency,          90,     0,      100				},
 	{ "mvp_tomb_enabled",					&battle_config.mvp_tomb_enabled,				1,      0,      1				},
+	{ "feature.atcommand_suggestions",		&battle_config.atcommand_suggestions_enabled,	0,      0,      1				},
 };
 
 

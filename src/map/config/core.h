@@ -13,6 +13,11 @@
  **/
 #define AUTOLOOTITEM_SIZE 10
 
+/**
+ * The maximum number of atcommand suggestions
+ **/
+#define MAX_SUGGESTIONS 10
+
 /// leave this line uncommented to enable callfunc checks when processing scripts.
 /// while allowed, the script engine will attempt to match user-defined functions
 /// in scripts allowing direct function callback (without the use of callfunc.)

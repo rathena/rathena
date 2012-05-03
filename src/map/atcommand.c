@@ -52,6 +52,7 @@
 #define ACMD_FUNC(x) static int atcommand_ ## x (const int fd, struct map_session_data* sd, const char* command, const char* message)
 #define MAX_MSG 1000
 
+
 typedef struct AtCommandInfo AtCommandInfo;
 typedef struct AliasInfo AliasInfo;
 
@@ -79,6 +80,7 @@ static char atcmd_player_name[NAME_LENGTH];
 
 static AtCommandInfo* get_atcommandinfo_byname(const char *name); // @help
 static const char* atcommand_checkalias(const char *aliasname); // @help
+static void atcommand_get_suggestions(struct map_session_data* sd, const char *name, bool atcommand); // @help
 
 //-----------------------------------------------------------
 // Return the message string of the specified number by [Yor]
@@ -1657,11 +1659,13 @@ ACMD_FUNC(help)
 	if (!pc_can_use_command(sd, command_name, COMMAND_ATCOMMAND)) {
 		sprintf(atcmd_output, msg_txt(153), message); // "%s is Unknown Command"
 		clif_displaymessage(fd, atcmd_output);
+		atcommand_get_suggestions(sd, command_name, true);
 		return -1;
 	}
 	
 	if (!config_setting_lookup_string(help, command_name, &text)) {
 		clif_displaymessage(fd, "There is no help for this command_name.");
+		atcommand_get_suggestions(sd, command_name, true);
 		return -1;
 	}
 
@@ -8757,6 +8761,81 @@ static const char* atcommand_checkalias(const char *aliasname)
 	return aliasname;
 }
 
+/// AtCommand suggestion
+static void atcommand_get_suggestions(struct map_session_data* sd, const char *name, bool atcommand)
+{
+	DBIterator* atcommand_iter = db_iterator(atcommand_db);
+	DBIterator* alias_iter = db_iterator(atcommand_alias_db);
+	AtCommandInfo* command_info = NULL;
+	AliasInfo* alias_info = NULL;
+	AtCommandType type;
+	char* suggestions[MAX_SUGGESTIONS];
+	int count = 0;
+	
+	if (!battle_config.atcommand_suggestions_enabled)
+		return;
+
+	if (atcommand)
+		type = COMMAND_ATCOMMAND;
+	else
+		type = COMMAND_CHARCOMMAND;
+
+	
+	// First match the beginnings of the commands
+	for (command_info = dbi_first(atcommand_iter); dbi_exists(atcommand_iter) && count < MAX_SUGGESTIONS; command_info = dbi_next(atcommand_iter)) {
+		if ( strstr(command_info->command, name) == command_info->command && pc_can_use_command(sd, command_info->command, type) )
+		{
+			suggestions[count] = command_info->command;
+			++count;
+		}
+	}
+
+	for (alias_info = dbi_first(alias_iter); dbi_exists(alias_iter) && count < MAX_SUGGESTIONS; alias_info = dbi_next(alias_iter)) {
+		if ( strstr(alias_info->alias, name) == alias_info->alias && pc_can_use_command(sd, alias_info->command->command, type) )
+		{
+			suggestions[count] = alias_info->alias;
+			++count;
+		}
+	}
+	
+	// Fill up the space left, with full matches
+	for (command_info = dbi_first(atcommand_iter); dbi_exists(atcommand_iter) && count < MAX_SUGGESTIONS; command_info = dbi_next(atcommand_iter)) {
+		if ( strstr(command_info->command, name) != NULL && pc_can_use_command(sd, command_info->command, type) )
+		{
+			suggestions[count] = command_info->command;
+			++count;
+		}
+	}
+
+	for (alias_info = dbi_first(alias_iter); dbi_exists(alias_iter) && count < MAX_SUGGESTIONS; alias_info = dbi_next(alias_iter)) {
+		if ( strstr(alias_info->alias, name) != NULL && pc_can_use_command(sd, alias_info->command->command, type) )
+		{
+			suggestions[count] = alias_info->alias;
+			++count;
+		}
+	}
+
+	if (count > 0)
+	{
+		char buffer[512];
+		int i;
+
+		strcpy(buffer, msg_txt(205));
+		strcat(buffer,"\n");
+		
+		for(i=0; i < count; ++i)
+		{
+			strcat(buffer,suggestions[i]);
+			strcat(buffer," ");
+		}
+
+		clif_displaymessage(sd->fd, buffer);
+	}
+
+	dbi_destroy(atcommand_iter);
+	dbi_destroy(alias_iter);
+}
+
 /// Executes an at-command.
 bool is_atcommand(const int fd, struct map_session_data* sd, const char* message, int type)
 {
@@ -8855,6 +8934,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		if( pc_get_group_level(sd) ) { // TODO: remove or replace with proper permission
 			sprintf(output, msg_txt(153), command); // "%s is Unknown Command."
 			clif_displaymessage(fd, output);
+			atcommand_get_suggestions(sd, command + 1, *message == atcommand_symbol);
 			return true;
 		} else
 			return false;
