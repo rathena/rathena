@@ -774,7 +774,7 @@
 //****
 // RA Ranger
 //****
-2233,9,8,1,-1,0x2,2:2:2:2:2:3:3:3:3:4,10,3,yes,0,0,0,weapon,0,	RA_ARROWSTORM,Arrow Storm
+2233,9,8,1,-1,0x2,3:3:3:3:3:4:4:4:4:5,10,-3,yes,0,0,0,weapon,0, RA_ARROWSTORM,Arrow Storm
 2234,0,6,4,0,0,0,5,1,yes,0,0,0,none,0,		RA_FEARBREEZE,Fear Breeze
 2235,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		RA_RANGERMAIN,Ranger Main
 2236,9,8,1,-1,0,0,10,1,yes,0,0,0,weapon,0,	RA_AIMEDBOLT,Aimed Bolt
