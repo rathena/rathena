@@ -4241,7 +4241,7 @@ void sql_config_read(const char* cfgName)
 	ShowInfo("Reading file %s...\n", cfgName);
 
 	if ((fp = fopen(cfgName, "r")) == NULL) {
-		ShowError("file not found: %s\n", cfgName);
+		ShowError("File not found: %s\n", cfgName);
 		return;
 	}
 
