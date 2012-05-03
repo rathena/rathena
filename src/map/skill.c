@@ -5137,7 +5137,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		if (sd) {
 			int bonus = 25 + 10 * skilllv;
 			bonus += (pc_checkskill(sd, SA_FLAMELAUNCHER)+pc_checkskill(sd, SA_FROSTWEAPON)+pc_checkskill(sd, SA_LIGHTNINGLOADER)+pc_checkskill(sd, SA_SEISMICWEAPON))*5;
-			clif_skill_nodamage( src, bl, skillid, skilllv, sc_start2(bl, type, 100, skilllv, bonus, skill_get_time(skillid,skilllv)) );
+			clif_skill_nodamage( src, bl, skillid, skilllv,
+								battle_check_target(src,bl,BCT_PARTY) ?
+								sc_start2(bl, type, 100, skilllv, bonus, skill_get_time(skillid,skilllv)) :
+								0
+				);
 		}
 		break;			
 			
