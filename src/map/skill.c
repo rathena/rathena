@@ -12770,6 +12770,19 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, short 
 		}
 	}
 
+	/* requirements are level-dependent */
+	switch( skill ) {
+		case NC_SHAPESHIFT:
+		case GN_FIRE_EXPANSION:
+		case SO_SUMMON_AGNI:
+		case SO_SUMMON_AQUA:
+		case SO_SUMMON_VENTUS:
+		case SO_SUMMON_TERA:
+			req.itemid[lv-1] = skill_db[j].itemid[lv-1];
+			req.amount[lv-1] = skill_db[j].amount[lv-1];
+			break;
+	}
+	
 	// Check for cost reductions due to skills & SCs
 	switch(skill) {
 		case MC_MAMMONITE:
