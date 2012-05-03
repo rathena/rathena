@@ -4351,7 +4351,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 				status_change_end(bl, SC_POISON, INVALID_TIMER);
 			}
 			else if( sd )
-				clif_skill_fail(sd, skillid, 0, 0);
+				clif_skill_fail(sd, skillid, USESKILL_FAIL_LEVEL, 0);
 		}
 		break;
 		
@@ -7836,7 +7836,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				clif_skill_nodamage(src,bl,skillid,1,1);
 			}
 			else
-				clif_skill_fail(sd,skillid,0x15,0);
+				clif_skill_fail(sd,skillid,USESKILL_FAIL_IMITATION_SKILL_NONE,0);
 		}
 		break;
 
@@ -7846,7 +7846,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				dstsd->shadowform_id = src->id;
 		}
 		else if( sd )
-			clif_skill_fail(sd, skillid, 0, 0);
+			clif_skill_fail(sd, skillid, USESKILL_FAIL_LEVEL, 0);
 		break;
 
 	case SC_BODYPAINT:
@@ -8212,7 +8212,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				status_fix_damage(src,bl,9999,clif_damage(src,bl,tick,0,0,9999,0,0,0));
 		} else if( sd ) {
 			if( !sd->status.party_id ) {
-				clif_skill_fail(sd,skillid,0x11,0);
+				clif_skill_fail(sd,skillid,USESKILL_FAIL_NEED_HELPER,0);
 				break;
 			}
 			if( map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid,skilllv),
@@ -8442,7 +8442,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			clif_skill_nodamage(src, bl, skillid, skilllv, 1);
 			sc_start2(bl, type, 100, skilllv, src->id, skill_get_time(skillid,skilllv));
 		} else if( sd ) {
-			clif_skill_fail(sd, skillid, 0, 0);
+			clif_skill_fail(sd, skillid, USESKILL_FAIL_LEVEL, 0);
 			break;
 		}
 		break;
@@ -12233,7 +12233,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 				int count;
 				count = skill_check_pc_partner(sd, skill, &lv, skill_get_splash(skill,lv), 0);
 				if( count < 1 ) {
-					clif_skill_fail(sd,skill,0x11,0);
+					clif_skill_fail(sd,skill,USESKILL_FAIL_NEED_HELPER,0);
 					return 0;
 				} else
 					require.sp -= require.sp * 20 * count / 100; //  -20% each W/M in the party.
@@ -12249,7 +12249,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 			break;
 		case SO_EL_CONTROL:
 			if( !sd->status.ele_id || !sd->ed ) {
-				clif_skill_fail(sd,skill,0x00,0);
+				clif_skill_fail(sd,skill,USESKILL_FAIL_LEVEL,0);
 				return 0;
 			}
 			break;
@@ -15712,7 +15712,7 @@ int skill_elementalanalysis(struct map_session_data* sd, int n, int skill_lv, un
 		add_amount = (skill_lv == 1) ? del_amount * (5 + rnd()%5) : del_amount / 10 ;
 		
 		if( (nameid = sd->status.inventory[idx].nameid) <= 0 || del_amount > sd->status.inventory[idx].amount ) {
-			clif_skill_fail(sd,SO_EL_ANALYSIS,0,0);
+			clif_skill_fail(sd,SO_EL_ANALYSIS,USESKILL_FAIL_LEVEL,0);
 			return 1;
 		}
 		
