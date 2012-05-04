@@ -8780,15 +8780,36 @@ static void atcommand_get_suggestions(struct map_session_data* sd, const char *n
 	else
 		type = COMMAND_CHARCOMMAND;
 
+	
+	// First match the beginnings of the commands
 	for (command_info = dbi_first(atcommand_iter); dbi_exists(atcommand_iter) && count < MAX_SUGGESTIONS; command_info = dbi_next(atcommand_iter)) {
-		if ( stristr(command_info->command, name) == command_info->command && pc_can_use_command(sd, command_info->command, type) ) {
+		if ( strstr(command_info->command, name) == command_info->command && pc_can_use_command(sd, command_info->command, type) )
+		{
 			suggestions[count] = command_info->command;
 			++count;
 		}
 	}
 
 	for (alias_info = dbi_first(alias_iter); dbi_exists(alias_iter) && count < MAX_SUGGESTIONS; alias_info = dbi_next(alias_iter)) {
-		if ( stristr(alias_info->alias, name) == alias_info->alias && pc_can_use_command(sd, alias_info->command->command, type) ) {
+		if ( strstr(alias_info->alias, name) == alias_info->alias && pc_can_use_command(sd, alias_info->command->command, type) )
+		{
+			suggestions[count] = alias_info->alias;
+			++count;
+		}
+	}
+	
+	// Fill up the space left, with full matches
+	for (command_info = dbi_first(atcommand_iter); dbi_exists(atcommand_iter) && count < MAX_SUGGESTIONS; command_info = dbi_next(atcommand_iter)) {
+		if ( strstr(command_info->command, name) != NULL && pc_can_use_command(sd, command_info->command, type) )
+		{
+			suggestions[count] = command_info->command;
+			++count;
+		}
+	}
+
+	for (alias_info = dbi_first(alias_iter); dbi_exists(alias_iter) && count < MAX_SUGGESTIONS; alias_info = dbi_next(alias_iter)) {
+		if ( strstr(alias_info->alias, name) != NULL && pc_can_use_command(sd, alias_info->command->command, type) )
+		{
 			suggestions[count] = alias_info->alias;
 			++count;
 		}
