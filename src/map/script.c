@@ -2872,13 +2872,13 @@ struct script_data* push_str(struct script_stack* stack, enum c_op type, char* s
 }
 
 /// Pushes a retinfo into the stack
-struct script_data* push_retinfo(struct script_stack* stack, struct script_retinfo* ri)
+struct script_data* push_retinfo(struct script_stack* stack, struct script_retinfo* ri, DBMap **ref)
 {
 	if( stack->sp >= stack->sp_max )
 		stack_expand(stack);
 	stack->stack_data[stack->sp].type = C_RETINFO;
 	stack->stack_data[stack->sp].u.ri = ri;
-	stack->stack_data[stack->sp].ref  = NULL;
+	stack->stack_data[stack->sp].ref  = ref;
 	stack->sp++;
 	return &stack->stack_data[stack->sp-1];
 }
@@ -4454,6 +4454,7 @@ BUILDIN_FUNC(callfunc)
 	struct script_retinfo* ri;
 	struct script_code* scr;
 	const char* str = script_getstr(st,2);
+	DBMap **ref = NULL;
 
 	scr = (struct script_code*)strdb_get(userfunc_db, str);
 	if( !scr )
@@ -4470,8 +4471,11 @@ BUILDIN_FUNC(callfunc)
 		{
 			const char* name = reference_getname(data);
 			if( name[0] == '.' ) {
-				data->ref = (struct DBMap**)aCalloc(sizeof(struct DBMap*), 1);
-				data->ref[0] = (name[1] == '@' ? st->stack->var_function : st->script->script_vars);
+				if ( !ref )	{
+					ref = (struct DBMap**)aCalloc(sizeof(struct DBMap*), 1);
+					ref[0] = (name[1] == '@' ? st->stack->var_function : st->script->script_vars);
+				}
+				data->ref = ref;
 			}
 		}
 	}
@@ -4482,7 +4486,7 @@ BUILDIN_FUNC(callfunc)
 	ri->pos          = st->pos;// script location
 	ri->nargs        = j;// argument count
 	ri->defsp        = st->stack->defsp;// default stack pointer
-	push_retinfo(st->stack, ri);
+	push_retinfo(st->stack, ri, ref);
 
 	st->pos = 0;
 	st->script = scr;
@@ -4500,6 +4504,7 @@ BUILDIN_FUNC(callsub)
 	int i,j;
 	struct script_retinfo* ri;
 	int pos = script_getnum(st,2);
+	DBMap **ref = NULL;
 
 	if( !data_islabel(script_getdata(st,2)) && !data_isfunclabel(script_getdata(st,2)) )
 	{
@@ -4516,8 +4521,11 @@ BUILDIN_FUNC(callsub)
 		{
 			const char* name = reference_getname(data);
 			if( name[0] == '.' && name[1] == '@' ) {
-				data->ref = (struct DBMap**)aCalloc(sizeof(struct DBMap*), 1);
-				data->ref[0] = st->stack->var_function;
+				if ( !ref ) {
+					ref = (struct DBMap**)aCalloc(sizeof(struct DBMap*), 1);
+					ref[0] = st->stack->var_function;
+				}
+				data->ref = ref;
 			}
 		}
 	}
@@ -4528,7 +4536,7 @@ BUILDIN_FUNC(callsub)
 	ri->pos          = st->pos;// script location
 	ri->nargs        = j;// argument count
 	ri->defsp        = st->stack->defsp;// default stack pointer
-	push_retinfo(st->stack, ri);
+	push_retinfo(st->stack, ri, ref);
 
 	st->pos = pos;
 	st->stack->defsp = st->stack->sp;
