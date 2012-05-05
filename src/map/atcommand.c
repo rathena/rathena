@@ -8762,10 +8762,9 @@ static const char* atcommand_checkalias(const char *aliasname)
 }
 
 /// AtCommand suggestion
-static void atcommand_get_suggestions(struct map_session_data* sd, const char *name, bool atcommand)
-{
-	DBIterator* atcommand_iter = db_iterator(atcommand_db);
-	DBIterator* alias_iter = db_iterator(atcommand_alias_db);
+static void atcommand_get_suggestions(struct map_session_data* sd, const char *name, bool atcommand) {
+	DBIterator* atcommand_iter;
+	DBIterator* alias_iter;
 	AtCommandInfo* command_info = NULL;
 	AliasInfo* alias_info = NULL;
 	AtCommandType type;
@@ -8775,6 +8774,9 @@ static void atcommand_get_suggestions(struct map_session_data* sd, const char *n
 	if (!battle_config.atcommand_suggestions_enabled)
 		return;
 
+	atcommand_iter = db_iterator(atcommand_db);
+	alias_iter = db_iterator(atcommand_alias_db);	
+	
 	if (atcommand)
 		type = COMMAND_ATCOMMAND;
 	else
