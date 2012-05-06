@@ -7796,7 +7796,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		{
 			map_foreachinrange(skill_area_sub,src,skill_get_splash(skillid,skilllv),splash_target(src),src,skillid,skilllv,tick,flag|BCT_ENEMY|SD_SPLASH|1,skill_castend_damage_id);;
 			clif_skill_damage(src,src,tick,status_get_amotion(src),0,-30000,1,skillid,skilllv,6);
-			pc_overheat(sd,1);
+			if (sd) pc_overheat(sd,1);
 		}
 		clif_skill_nodamage(src,src,skillid,skilllv,i);
 		break;
