@@ -1726,7 +1726,12 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
 
 static unsigned short status_base_atk(const struct block_list *bl, const struct status_data *status)
 {
-	int flag = 0, str, dex, dstr;
+	int flag = 0, str, dex,
+#ifdef RENEWAL
+		rstr,
+#endif
+		dstr;
+
 
 	if(!(bl->type&battle_config.enable_baseatk))
 		return 0;
@@ -1744,9 +1749,15 @@ static unsigned short status_base_atk(const struct block_list *bl, const struct 
 			flag = 1;
 	}
 	if (flag) {
+#ifdef RENEWAL
+		rstr =
+#endif
 		str = status->dex;
 		dex = status->str;
 	} else {
+#ifdef RENEWAL
+		rstr =
+#endif
 		str = status->str;
 		dex = status->dex;
 	}
@@ -1756,7 +1767,11 @@ static unsigned short status_base_atk(const struct block_list *bl, const struct 
 	dstr = str/10;
 	str += dstr*dstr;
 	if (bl->type == BL_PC)
+#ifdef RENEWAL
+		str = (rstr*10 + dex*10/5 + status->luk*10/3 + ((TBL_PC*)bl)->status.base_level*10/4)/10;	
+#else
 		str+= dex/5 + status->luk/5;
+#endif
 	return cap_value(str, 0, USHRT_MAX);
 }
 
@@ -1827,11 +1842,6 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 		status->batk = cap_value(temp, 0, USHRT_MAX);
 	} else
 		status->batk = status_base_atk(bl, status);
-
-#ifdef RENEWAL // renewal attack bonus formula
-	status->batk += (int)((float)status->luk/3 + (float)level/4); //(every 3 luk = + 1ATK) + (every 4 base level = +1 ATK)
-#endif
-
 	if (status->cri)
 	switch (bl->type) {
 	case BL_MOB:
