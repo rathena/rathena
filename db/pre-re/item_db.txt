@@ -1417,7 +1417,7 @@
 2551,Rider_Insignia_M,Crest of the Rider,5,20,,500,,4,,1,0xFFFFFFFE,2,2,4,,55,1,0,{ bonus bAgi,2; if (isequipped(2425) || isequipped(2434)) bonus bFlee,10; },{},{}
 2552,Mithril_Magic_Cape_M,Mithril Magic Manteau,5,20,,400,,3,,1,0x00098B1C,2,2,4,,70,1,0,{ bonus bMdef,3; bonus5 bAutoSpellWhenHit,"NPC_ANTIMAGIC",1,200,BF_MAGIC,0; },{},{}
 2553,Dragon_Manteau,Dragon Manteau,5,20,,1000,,5,,1,0xFFFFFFFE,2,2,4,,0,1,0,{ bonus bAgi,1; bonus bMdef,5; },{},{}
-2554,Piece_Of_Angent_Skin,Nydhorgg's Shadow Garb,5,20,,400,,5,,1,0xFFFFFFFE,2,2,4,,90,1,0,{ bonus2 bSubEle,Ele_Neutral,7; bonus2 bSubEle,Ele_Water,7; bonus2 bSubEle,Ele_Earth,7; bonus2 bSubEle,Ele_Fire,7; bonus2 bSubEle,Ele_Wind,7; bonus2 bSubEle,Ele_Poison,7; bonus2 bSubEle,Ele_Holy,7; bonus2 bSubEle,Ele_Dark,7; bonus2 bSubEle,Ele_Ghost,7; bonus2 bSubEle,Ele_Undead,7; bonus bMaxSP,(BaseLevel/3)+(getrefine()*10); bonus3 bSPDrainRate,1,1,0; bonus bMdef,3; },{},{}
+2554,Piece_Of_Angent_Skin,Nydhorgg's Shadow Garb,5,20,,400,,5,,1,0xFFFFFFFE,2,2,4,,90,1,0,{ bonus2 bSubEle,Ele_Neutral,7; bonus2 bSubEle,Ele_Water,7; bonus2 bSubEle,Ele_Earth,7; bonus2 bSubEle,Ele_Fire,7; bonus2 bSubEle,Ele_Wind,7; bonus2 bSubEle,Ele_Poison,7; bonus2 bSubEle,Ele_Holy,7; bonus2 bSubEle,Ele_Dark,7; bonus2 bSubEle,Ele_Ghost,7; bonus2 bSubEle,Ele_Undead,7; bonus bMaxSP,(BaseLevel/3)+(getrefine()*10); bonus3 bSPDrainRate,10,1,0; bonus bMdef,3; },{},{}
 // Accessories
 //===================================================================
 2601,Ring,Ring,5,30000,,100,,0,,0,0xFFFFFFFE,7,2,136,,20,0,0,{ bonus bStr,2; },{},{}
