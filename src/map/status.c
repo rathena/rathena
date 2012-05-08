@@ -612,7 +612,7 @@ void initChangeTables(void)
 	set_sc( SC_WEAKNESS          , SC__WEAKNESS       , SI_WEAKNESS        , SCB_FLEE2|SCB_MAXHP );
 	set_sc( SC_STRIPACCESSARY    , SC__STRIPACCESSORY , SI_STRIPACCESSARY  , SCB_DEX|SCB_INT|SCB_LUK );
 	set_sc_with_vfx( SC_MANHOLE           , SC__MANHOLE        , SI_MANHOLE         , SCB_NONE );
-	add_sc( SC_CHAOSPANIC        , SC_CHAOS );
+	add_sc( SC_CHAOSPANIC        , SC_CONFUSION );
 	set_sc( SC_BLOODYLUST        , SC__BLOODYLUST     , SI_BLOODYLUST      , SCB_DEF|SCB_DEF2|SCB_BATK|SCB_WATK );
 	/**
 	 * Sura
@@ -6468,8 +6468,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			case SC__IGNORANCE:
 			case SC__LAZINESS:
 			case SC__WEAKNESS:
-			case SC__UNLUCKY:
-			case SC_CHAOS:			
+			case SC__UNLUCKY:		
 				return 0;
 			case SC_COMBO: 
 			case SC_DANCING:
@@ -7901,7 +7900,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_BITE:
 		case SC_THORNSTRAP:
 		case SC__MANHOLE:
-		case SC_CHAOS:
 		case SC_CRYSTALIZE:
 		case SC_WHITEIMPRISON:
 		case SC_VACUUM_EXTREME:
@@ -7945,7 +7943,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_SILENCE:      sc->opt2 |= OPT2_SILENCE;      break;
 		
 		case SC_SIGNUMCRUCIS:
-		case SC_CHAOS:
 			sc->opt2 |= OPT2_SIGNUMCRUCIS;
 			break;
 		
@@ -8763,7 +8760,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		sc->opt2 &= ~OPT2_DPOISON;
 		break;
 	case SC_SIGNUMCRUCIS:
-	case SC_CHAOS:
 		sc->opt2 &= ~OPT2_SIGNUMCRUCIS;
 		break;
 
