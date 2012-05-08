@@ -3765,8 +3765,12 @@ void status_calc_bl_(struct block_list* bl, enum scb_flag flag, bool first)
 			)
 			clif_updatestatus(sd,SP_ATK1);
 
-		if(b_status.def != status->def)
+		if(b_status.def != status->def){
 			clif_updatestatus(sd,SP_DEF1);
+#ifdef RENEWAL
+			clif_updatestatus(sd,SP_DEF2);
+#endif
+		}
 
 		if(b_status.rhw.atk2 != status->rhw.atk2 || b_status.lhw.atk2 != status->lhw.atk2
 #ifdef RENEWAL
@@ -3775,8 +3779,12 @@ void status_calc_bl_(struct block_list* bl, enum scb_flag flag, bool first)
 			)
 			clif_updatestatus(sd,SP_ATK2);
 
-		if(b_status.def2 != status->def2)
+		if(b_status.def2 != status->def2){
 			clif_updatestatus(sd,SP_DEF2);
+#ifdef RENEWAL
+			clif_updatestatus(sd,SP_DEF1);
+#endif
+		}
 		if(b_status.flee2 != status->flee2)
 			clif_updatestatus(sd,SP_FLEE2);
 		if(b_status.cri != status->cri)
@@ -3785,10 +3793,18 @@ void status_calc_bl_(struct block_list* bl, enum scb_flag flag, bool first)
 			clif_updatestatus(sd,SP_MATK1);
 		if(b_status.matk_min != status->matk_min)
 			clif_updatestatus(sd,SP_MATK2);
-		if(b_status.mdef != status->mdef)
+		if(b_status.mdef != status->mdef){
 			clif_updatestatus(sd,SP_MDEF1);
-		if(b_status.mdef2 != status->mdef2)
+#ifdef RENEWAL
 			clif_updatestatus(sd,SP_MDEF2);
+#endif
+		}
+		if(b_status.mdef2 != status->mdef2){
+			clif_updatestatus(sd,SP_MDEF2);
+#ifdef RENEWAL
+			clif_updatestatus(sd,SP_MDEF1);
+#endif
+		}
 		if(b_status.rhw.range != status->rhw.range)
 			clif_updatestatus(sd,SP_ATTACKRANGE);
 		if(b_status.max_hp != status->max_hp)
@@ -4535,7 +4551,11 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 static signed short status_calc_def2(struct block_list *bl, struct status_change *sc, int def2)
 {
 	if(!sc || !sc->count)
-		return cap_value(def2,1,SHRT_MAX);
+#ifdef RENEWAL
+		return (short)cap_value(def2,SHRT_MIN,SHRT_MAX);
+#else
+		return (short)cap_value(def2,1,SHRT_MAX);
+#endif
 	
 	if(sc->data[SC_BERSERK])
 		return 0;
@@ -4573,7 +4593,11 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 	if( sc->data[SC_GT_REVITALIZE] )
 		def2 += def2 * ( 50 + 10 * sc->data[SC_GT_REVITALIZE]->val1 ) / 100;
 
+#ifdef RENEWAL
+	return (short)cap_value(def2,SHRT_MIN,SHRT_MAX);
+#else
 	return (short)cap_value(def2,1,SHRT_MAX);
+#endif
 }
 
 
@@ -4623,7 +4647,12 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 static signed short status_calc_mdef2(struct block_list *bl, struct status_change *sc, int mdef2)
 {
 	if(!sc || !sc->count)
-		return cap_value(mdef2,1,SHRT_MAX);
+#ifdef RENEWAL
+		return (short)cap_value(mdef2,SHRT_MIN,SHRT_MAX);
+#else
+		return (short)cap_value(mdef2,1,SHRT_MAX);
+#endif
+
 
 	if(sc->data[SC_BERSERK])
 		return 0;
@@ -4634,7 +4663,11 @@ static signed short status_calc_mdef2(struct block_list *bl, struct status_chang
 	if(sc->data[SC_ANALYZE])
 		mdef2 -= mdef2 * ( 14 * sc->data[SC_ANALYZE]->val1 ) / 100;
 
+#ifdef RENEWAL
+	return (short)cap_value(mdef2,SHRT_MIN,SHRT_MAX);
+#else
 	return (short)cap_value(mdef2,1,SHRT_MAX);
+#endif
 }
 
 static unsigned short status_calc_speed(struct block_list *bl, struct status_change *sc, int speed)
@@ -4935,36 +4968,36 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 	if( sc->data[SC_FIGHTINGSPIRIT] && sc->data[SC_FIGHTINGSPIRIT]->val2 )
 		aspd_rate -= sc->data[SC_FIGHTINGSPIRIT]->val2;
 	if( sc->data[SC_PARALYSE] )
-		aspd_rate += aspd_rate * 10 / 100;
+		aspd_rate += 100;
 	if( sc->data[SC__BODYPAINT] )
-		aspd_rate += aspd_rate * (20 + 5 * sc->data[SC__BODYPAINT]->val1) / 100;
+		aspd_rate +=  200 + 50 * sc->data[SC__BODYPAINT]->val1;
 	if( sc->data[SC__INVISIBILITY] )
-		aspd_rate += aspd_rate * sc->data[SC__INVISIBILITY]->val2 / 100;
+		aspd_rate += sc->data[SC__INVISIBILITY]->val2 * 10 ;
 	if( sc->data[SC__GROOMY] )
-		aspd_rate += aspd_rate * sc->data[SC__GROOMY]->val2 / 100;
+		aspd_rate += sc->data[SC__GROOMY]->val2 * 10;
 	if( sc->data[SC_SWINGDANCE] )
-		aspd_rate -= aspd_rate * sc->data[SC_SWINGDANCE]->val2 / 100;
+		aspd_rate -= sc->data[SC_SWINGDANCE]->val2 * 10;
 	if( sc->data[SC_DANCEWITHWUG] )
-		aspd_rate -= aspd_rate * sc->data[SC_DANCEWITHWUG]->val3 / 100;
+		aspd_rate -= sc->data[SC_DANCEWITHWUG]->val3 * 10;
 	if( sc->data[SC_GLOOMYDAY] )
-		aspd_rate += aspd_rate * sc->data[SC_GLOOMYDAY]->val3 / 100;
+		aspd_rate += sc->data[SC_GLOOMYDAY]->val3 * 10;
 	if( sc->data[SC_EARTHDRIVE] )
-		aspd_rate += aspd_rate * 25 / 100;
+		aspd_rate += 250;
 	/*As far I tested the skill there is no ASPD addition is applied. [Jobbie] */
 	//if( sc->data[SC_RAISINGDRAGON] )
 	//	aspd_rate -= 100; //FIXME: Need official ASPD bonus of this status. [Jobbie]
 	if( sc->data[SC_GT_CHANGE] )
-		aspd_rate -= aspd_rate * (sc->data[SC_GT_CHANGE]->val2/200) / 100;
+		aspd_rate -= (sc->data[SC_GT_CHANGE]->val2/200) * 10;
 	if( sc->data[SC_GT_REVITALIZE] )
-		aspd_rate -= aspd_rate * sc->data[SC_GT_REVITALIZE]->val2 / 100;
+		aspd_rate -= sc->data[SC_GT_REVITALIZE]->val2 * 10;
 	if( sc->data[SC_MELON_BOMB] )
-		aspd_rate += aspd_rate * sc->data[SC_MELON_BOMB]->val1 / 100;
+		aspd_rate += sc->data[SC_MELON_BOMB]->val1 * 10;
 	if( sc->data[SC_BOOST500] )
-		aspd_rate -= aspd_rate * sc->data[SC_BOOST500]->val1/100;
+		aspd_rate -= sc->data[SC_BOOST500]->val1 *10;
 	if( sc->data[SC_EXTRACT_SALAMINE_JUICE] )
-		aspd_rate -= aspd_rate * sc->data[SC_EXTRACT_SALAMINE_JUICE]->val1/100;
+		aspd_rate -= sc->data[SC_EXTRACT_SALAMINE_JUICE]->val1 * 10;
 	if( sc->data[SC_INCASPDRATE] )
-		aspd_rate -= aspd_rate * sc->data[SC_INCASPDRATE]->val1 / 100;
+		aspd_rate -= sc->data[SC_INCASPDRATE]->val1 * 10;
 
 	return (short)cap_value(aspd_rate,0,SHRT_MAX);
 }
