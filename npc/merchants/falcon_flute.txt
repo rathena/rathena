@@ -1,0 +1,107 @@
+//===== rAthena Script ======================================= 
+//= Falcon Flute Trader
+//===== By: ================================================== 
+//= Masao
+//= Credits to Muad_Dib for the translation.
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena
+//===== Description: ========================================= 
+//= An NPC which sells you an Falcon Flute so you're able to
+//= summon an Falcon wherever you are.
+//===== Additional Comments: ================================= 
+//= 1.0 First Version. [Masao]
+//============================================================ 
+
+-	script	Falcon Flute Trader#fft1::fflute	51,{
+
+	if (Class == Job_Hunter || Class == Job_Sniper || Class == Job_Ranger || Class == Job_Ranger_T) {
+		mes "[Falcon Flute Trader]";
+		mes "Do you need a Falcon?";
+		mes "With a magical Flute, you can call your Falcon from anywhere!";
+		next;
+		mes "[Falcon Flute Trader]";
+		mes "It's marvelous, isn't it? Ha ha ha!";
+		next;
+		mes "[Falcon Flute Trader]";
+		mes "Why I'm selling these Falcon Flutes?";
+		mes "It's because I have no clue how they work.";
+		mes "Ha ha ha!";
+		next;
+		mes "[Falcon Flute Trader]";
+		mes "Of course, you'll need the Skill ^ff0000Falcon Mastery^000000.";
+		mes "I don't have the Skill, so I don't know how to handle Falcons.";
+		mes "As it's for now, I may never have a Falcon.";
+		next;
+		mes "[Falcon Flute Trader]";
+		mes "But I can't give you one for free!";
+		mes "I have to make money since i also need to eat!";
+		next;
+		mes "[Falcon Flute Trader]";
+		mes "If you need a Falcon Flute I will sell them for 12,500 zeny. Or is that too expensive?";
+		next;
+		if (Class == Job_Hunter || Class == Job_Sniper) {
+			switch (select("Don't buy one:Buy a Falcon Flute")) {
+			case 1:
+				mes "[Falcon Flute Trader]";
+				mes "That's too bad. If you need one, come back!";
+				close;
+			case 2:
+				if (Zeny >= 12500) {
+					mes "[Falcon Flute Trader]";
+					mes "Here, take this Flute.";
+					mes "With it you can whistle for your Falcon from anywhere.";
+				    set Zeny, Zeny - 12500;
+					getitem 12848,1; // Falcon Flute
+					next;
+					mes "[Falcon Flute Trader]";
+					mes "Just a reminder.";
+					mes "You need the Skill ^ff0000Falcon Mastery^000000 in order to use it!";
+					close;
+				}
+				mes "[Falcon Flute Trader]";
+				mes "I'm sorry but you don't have enough money to buy a Falcon Flute, please come back when you have more money!";
+				close;
+			}
+		}
+		mes "[Falcon Flute Trader]";
+		mes "For Rangers however, I have a special Price of 10,000 zeny!";
+		next;
+		switch (select("Don't buy one:Buy a Falcon flute")) {
+		case 1:
+			mes "[Falcon Flute Trader]";
+			mes "That's too bad. If you need one, come back!";
+			close;
+		case 2:
+			if (Zeny >= 10000) {
+				mes "[Falcon Flute Trader]";
+				mes "Here take this Flute.";
+				mes "With it you can whistle for your Falcon from anywhere.";
+				set Zeny, Zeny - 10000;
+				getitem 12848,1; // Falcon Flute
+				next;
+				mes "[Falcon Flute Trader]";
+				mes "Just a reminder.";
+				mes "You need the Skill ^ff0000Falcon Mastery^000000 in order to use it!";
+				close;
+			}
+			mes "[Falcon Flute Trader]";
+			mes "I'm sorry but you don't have enough money to buy a Falcon Flute, please come back when you have more money!";
+			close;
+		}
+	}
+	if (Class == Job_Archer){
+		mes "[Falcon Flute Trader]";
+		mes "Hello young one!";
+		mes "Currently i can't help you,";
+		mes "but why don't you return to me when you've become an great Hunter and learned how to handle Falcons properly?";
+		close;
+	}
+	mes "[Falcon Flute Trader]";
+	mes "Isn't it a beautiful Day today?";
+	close;
+}
+
+hu_in01,386,306,3	duplicate(fflute)	Falcon Flute Trader#fft2	51
+pay_arche,91,134,3	duplicate(fflute)	Falcon Flute Trader#fft3	51
