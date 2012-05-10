@@ -300,6 +300,8 @@ EAJ_BABY_CHASER		0x6206
 Option_Wedding	0x1000
 Option_Xmas	0x10000
 Option_Summer	0x40000
+Option_Wug	0x100000
+Option_Wugrider	0x200000
 
 bc_all	0
 bc_map	1
