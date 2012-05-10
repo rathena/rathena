@@ -12152,7 +12152,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 			}
 			break;
 		case RA_WUGRIDER:
-			if( !pc_isridingwug(sd) && !pc_iswug(sd) ) {
+			if( pc_isfalcon(sd) || ( !pc_isridingwug(sd) && !pc_iswug(sd) ) ) {
 				clif_skill_fail(sd,skill,USESKILL_FAIL_LEVEL,0);
 				return 0;
 			}
