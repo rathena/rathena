@@ -47,7 +47,6 @@ macro( CONFIGURE_WITH_LOCAL_OR_SYSTEM name )
 endmacro( CONFIGURE_WITH_LOCAL_OR_SYSTEM )
 
 
-set( CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake  CACHE INTERNAL "" )
 add_subdirectory( libconfig )
 add_subdirectory( msinttypes )
 add_subdirectory( mt19937ar )

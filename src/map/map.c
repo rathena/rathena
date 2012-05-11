@@ -3260,46 +3260,33 @@ int map_config_read(char *cfgName)
 			
 		if(strcmpi(w1,"timestamp_format")==0)
 			strncpy(timestamp_format, w2, 20);
-		else 
-		if(strcmpi(w1,"stdout_with_ansisequence")==0)
+		else if(strcmpi(w1,"stdout_with_ansisequence")==0)
 			stdout_with_ansisequence = config_switch(w2);
-		else
-		if(strcmpi(w1,"console_silent")==0) {
+		else if(strcmpi(w1,"console_silent")==0) {
 			ShowInfo("Console Silent Setting: %d\n", atoi(w2));
 			msg_silent = atoi(w2);
-		} else
-		if (strcmpi(w1, "userid")==0)
+		} else if (strcmpi(w1, "userid")==0)
 			chrif_setuserid(w2);
-		else
-		if (strcmpi(w1, "passwd") == 0)
+		else if (strcmpi(w1, "passwd") == 0)
 			chrif_setpasswd(w2);
-		else
-		if (strcmpi(w1, "char_ip") == 0)
+		else if (strcmpi(w1, "char_ip") == 0)
 			char_ip_set = chrif_setip(w2);
-		else
-		if (strcmpi(w1, "char_port") == 0)
+		else if (strcmpi(w1, "char_port") == 0)
 			chrif_setport(atoi(w2));
-		else
-		if (strcmpi(w1, "map_ip") == 0)
+		else if (strcmpi(w1, "map_ip") == 0)
 			map_ip_set = clif_setip(w2);
-		else
-		if (strcmpi(w1, "bind_ip") == 0)
+		else if (strcmpi(w1, "bind_ip") == 0)
 			clif_setbindip(w2);
-		else
-		if (strcmpi(w1, "map_port") == 0) {
+		else if (strcmpi(w1, "map_port") == 0) {
 			clif_setport(atoi(w2));
 			map_port = (atoi(w2));
-		} else
-		if (strcmpi(w1, "map") == 0)
+		} else if (strcmpi(w1, "map") == 0)
 			map_addmap(w2);
-		else
-		if (strcmpi(w1, "delmap") == 0)
+		else if (strcmpi(w1, "delmap") == 0)
 			map_delmap(w2);
-		else
-		if (strcmpi(w1, "npc") == 0)
+		else if (strcmpi(w1, "npc") == 0)
 			npc_addsrcfile(w2);
-		else
-		if (strcmpi(w1, "delnpc") == 0)
+		else if (strcmpi(w1, "delnpc") == 0)
 			npc_delsrcfile(w2);
 		else if (strcmpi(w1, "autosave_time") == 0) {
 			autosave_interval = atoi(w2);
@@ -3307,48 +3294,35 @@ int map_config_read(char *cfgName)
 				autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
 			else
 				autosave_interval *= 1000; //Pass from sec to ms
-		} else
-		if (strcmpi(w1, "minsave_time") == 0) {
+		} else if (strcmpi(w1, "minsave_time") == 0) {
 			minsave_interval= atoi(w2);
 			if (minsave_interval < 1)
 				minsave_interval = 1;
-		} else
-		if (strcmpi(w1, "save_settings") == 0)
+		} else if (strcmpi(w1, "save_settings") == 0)
 			save_settings = atoi(w2);
-		else
-		if (strcmpi(w1, "motd_txt") == 0)
+		else if (strcmpi(w1, "motd_txt") == 0)
 			strcpy(motd_txt, w2);
-		else
-		if (strcmpi(w1, "help_txt") == 0)
+		else if (strcmpi(w1, "help_txt") == 0)
 			strcpy(help_txt, w2);
-		else
-		if (strcmpi(w1, "help2_txt") == 0)
+		else if (strcmpi(w1, "help2_txt") == 0)
 			strcpy(help2_txt, w2);
-		else
-		if (strcmpi(w1, "charhelp_txt") == 0)
+		else if (strcmpi(w1, "charhelp_txt") == 0)
 			strcpy(charhelp_txt, w2);
-		else
-		if(strcmpi(w1,"map_cache_file") == 0)
+		else if(strcmpi(w1,"map_cache_file") == 0)
 			strncpy(map_cache_file,w2,255);
-		else
-		if(strcmpi(w1,"db_path") == 0)
+		else if(strcmpi(w1,"db_path") == 0)
 			strncpy(db_path,w2,255);
-		else
-		if (strcmpi(w1, "console") == 0) {
+		else if (strcmpi(w1, "console") == 0) {
 			console = config_switch(w2);
 			if (console)
 				ShowNotice("Console Commands are enabled.\n");
-		} else
-		if (strcmpi(w1, "enable_spy") == 0)
+		} else if (strcmpi(w1, "enable_spy") == 0)
 			enable_spy = config_switch(w2);
-		else
-		if (strcmpi(w1, "use_grf") == 0)
+		else if (strcmpi(w1, "use_grf") == 0)
 			enable_grf = config_switch(w2);
-		else
-		if (strcmpi(w1, "console_msg_log") == 0)
+		else if (strcmpi(w1, "console_msg_log") == 0)
 			console_msg_log = atoi(w2);//[Ind]
-		else
-		if (strcmpi(w1, "import") == 0)
+		else if (strcmpi(w1, "import") == 0)
 			map_config_read(w2);
 		else
 			ShowWarning("Unknown setting '%s' in file %s\n", w1, cfgName);

@@ -70,7 +70,7 @@ endif()
 #
 # 3rd party
 #
-add_subdirectory( 3rdparty )
+set( CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/cmake  CACHE INTERNAL "" )
 include( CheckCSourceCompiles )
 include( CheckCSourceRuns )
 include( CheckIncludeFile )
@@ -115,7 +115,10 @@ if( SVNVERSION_EXECUTABLE )
 	execute_process( COMMAND ${SVNVERSION_EXECUTABLE} ${PROJECT_SOURCE_DIR}
 		OUTPUT_VARIABLE SVNVERSION
 		OUTPUT_STRIP_TRAILING_WHITESPACE )
-	string( REGEX REPLACE "[^1234567890MSexported]" "_" SVNVERSION ${SVNVERSION} )
+	if( SVNVERSION MATCHES "^Unversioned" )
+		set( SVNVERSION )
+	endif()
+	string( REGEX REPLACE "[^1234567890MSexported]" "_" SVNVERSION "${SVNVERSION}" )
 	message( STATUS "Found version: ${SVNVERSION}" )
 	message( STATUS "Getting svn version - done" )
 endif()
@@ -494,11 +497,17 @@ else()
 			DESTINATION "."
 			COMPONENT Runtime_base )
 		foreach( DIR IN ITEMS ${RUNTIME_DIRECTORIES} )
-			install( DIRECTORY "${DIR}/"
-				DESTINATION "${DIR}"
-				COMPONENT Runtime_base
-				PATTERN ${SVN_FOLDER_PATTERN} EXCLUDE
-				PATTERN "conf/import-tmpl" EXCLUDE )
+			if( EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${DIR}/" )
+				install( DIRECTORY "${DIR}/"
+					DESTINATION "${DIR}"
+					COMPONENT Runtime_base
+					PATTERN ${SVN_FOLDER_PATTERN} EXCLUDE
+					PATTERN "conf/import-tmpl" EXCLUDE )
+			else()
+				# create empty directory
+				install( CODE "file(MAKE_DIRECTORY \"\${ENV}\${CMAKE_INSTALL_PREFIX}/${DIR}\")"
+					COMPONENT Runtime_base )
+			endif()
 		endforeach()
 	endif( INSTALL_COMPONENT_RUNTIME )
 	if( INSTALL_COMPONENT_DEVELOPMENT )
@@ -556,6 +565,7 @@ endif( INSTALL_COMPONENT_RUNTIME )
 # sources
 #
 set( TARGET_LIST  CACHE INTERNAL "" )
+add_subdirectory( 3rdparty )
 add_subdirectory( src )
 
 
