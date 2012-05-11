@@ -5683,20 +5683,17 @@ ACMD_FUNC(changegm)
 	struct map_session_data *pl_sd;
 	nullpo_retr(-1, sd);
 
-	if (sd->status.guild_id == 0 || (g = guild_search(sd->status.guild_id)) == NULL || strcmp(g->master,sd->status.name))
-	{
+	if (sd->status.guild_id == 0 || (g = guild_search(sd->status.guild_id)) == NULL || strcmp(g->master,sd->status.name)) {
 		clif_displaymessage(fd, "You need to be a Guild Master to use this command.");
 		return -1;
 	}
 
-	if( map[sd->bl.m].flag.guildlock )
-	{
+	if( map[sd->bl.m].flag.guildlock || map[sd->bl.m].flag.gvg_castle ) {
 		clif_displaymessage(fd, "You cannot change guild leaders on this map.");
 		return -1;
 	}
 
-	if( !message[0] )
-	{
+	if( !message[0] ) {
 		clif_displaymessage(fd, "Command usage: @changegm <guildmember name>");
 		return -1;
 	}
