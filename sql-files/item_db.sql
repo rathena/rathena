@@ -5756,7 +5756,7 @@ REPLACE INTO `item_db` VALUES (12773,'Victory_Hat_Box2','Victory Hat Box2',2,0,N
 # 
 REPLACE INTO `item_db` VALUES (12775,'Ancient_Spirit_Amulet','Ancient Spirit Amulet',2,20,NULL,600,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 # 
-REPLACE INTO `item_db` VALUES (12848,'Falcon_Flute','Falcon Flute',11,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'if (getskilllv(127)) { if (checkoption(Option_Wug) || checkoption(Option_Wugrider)) end; if (checkfalcon() == 1) { setfalcon 0; } else { setfalcon 1; } }',NULL,NULL);
+REPLACE INTO `item_db` VALUES (12848,'Falcon_Flute','Falcon Flute',11,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'if (getskilllv("HT_FALCON")) { if (checkoption(Option_Wug) || checkoption(Option_Wugrider)) end; if (checkfalcon() == 1) { setfalcon 0; } else { setfalcon 1; } }',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12900,'Battle_Manual_Box','Battle Manual Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem 12208,10;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12901,'Insurance_Package','Insurance Package',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem 12209,10;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12902,'Bubble_Gum_Box','Bubble Gum Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem 12210,10;',NULL,NULL);

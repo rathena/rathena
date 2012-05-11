@@ -8,15 +8,16 @@
 //===== Compatible With: ===================================== 
 //= rAthena
 //===== Description: ========================================= 
-//= An NPC which sells you an Falcon Flute so you're able to
-//= summon an Falcon wherever you are.
+//= An NPC which sells you a Falcon Flute so you're able to
+//= summon a Falcon wherever you are.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version. [Masao]
+//= 1.1 Added Baby Hunter and Baby Ranger check. bugreport:5728 [Masao]
 //============================================================ 
 
--	script	Falcon Flute Trader#fft1::fflute	51,{
+-	script	Falcon Flute Trader::fflute	-1,{
 
-	if (Class == Job_Hunter || Class == Job_Sniper || Class == Job_Ranger || Class == Job_Ranger_T) {
+	if (Class == Job_Baby_Hunter || Class == Job_Hunter || Class == Job_Sniper || Class == Job_Baby_Ranger || Class == Job_Ranger || Class == Job_Ranger_T) {
 		mes "[Falcon Flute Trader]";
 		mes "Do you need a Falcon?";
 		mes "With a magical Flute, you can call your Falcon from anywhere!";
@@ -41,7 +42,7 @@
 		mes "[Falcon Flute Trader]";
 		mes "If you need a Falcon Flute I will sell them for 12,500 zeny. Or is that too expensive?";
 		next;
-		if (Class == Job_Hunter || Class == Job_Sniper) {
+		if (Class == Job_Baby_Hunter || Class == Job_Hunter || Class == Job_Sniper) {
 			switch (select("Don't buy one:Buy a Falcon Flute")) {
 			case 1:
 				mes "[Falcon Flute Trader]";
@@ -49,6 +50,13 @@
 				close;
 			case 2:
 				if (Zeny >= 12500) {
+					if (countitem(12848) >= 1) {
+						mes "[Falcon Flute Trader]";
+						mes "As i can see you already have an Falcon Flute!";
+						mes "Don't worry my young friend, once you've purchased the Falcon Flute you won't need to do so again";
+						mes "since the Falcon Flute won't disappear upon usage, isn't that great?";
+						close;
+					}
 					mes "[Falcon Flute Trader]";
 					mes "Here, take this Flute.";
 					mes "With it you can whistle for your Falcon from anywhere.";
@@ -75,6 +83,13 @@
 			close;
 		case 2:
 			if (Zeny >= 10000) {
+				if (countitem(12848) >= 1) {
+					mes "[Falcon Flute Trader]";
+					mes "As i can see you already have an Falcon Flute!";
+					mes "Don't worry my young friend, once you've purchased the Falcon Flute you won't need to do so again";
+					mes "since the Falcon Flute won't disappear upon usage, isn't that great?";
+					close;
+				}
 				mes "[Falcon Flute Trader]";
 				mes "Here take this Flute.";
 				mes "With it you can whistle for your Falcon from anywhere.";
@@ -91,7 +106,7 @@
 			close;
 		}
 	}
-	if (Class == Job_Archer){
+	if (Class == Job_Baby_Archer || Class == Job_Archer) {
 		mes "[Falcon Flute Trader]";
 		mes "Hello young one!";
 		mes "Currently i can't help you,";
@@ -103,5 +118,5 @@
 	close;
 }
 
-hu_in01,386,306,3	duplicate(fflute)	Falcon Flute Trader#fft2	51
-pay_arche,91,134,3	duplicate(fflute)	Falcon Flute Trader#fft3	51
+hu_in01,386,306,3	duplicate(fflute)	Falcon Flute Trader#fft	51
+pay_arche,91,134,3	duplicate(fflute)	Falcon Flute Trader#fft2	51

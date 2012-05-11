@@ -5732,7 +5732,7 @@
 //
 12775,Ancient_Spirit_Amulet,Ancient Spirit Amulet,2,20,,600,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 //
-12848,Falcon_Flute,Falcon Flute,11,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ if (getskilllv(127)) { if (checkoption(Option_Wug) || checkoption(Option_Wugrider)) end; if (checkfalcon() == 1) { setfalcon 0; } else { setfalcon 1; } } },{},{}
+12848,Falcon_Flute,Falcon Flute,11,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ if (getskilllv("HT_FALCON")) { if (checkoption(Option_Wug) || checkoption(Option_Wugrider)) end; if (checkfalcon() == 1) { setfalcon 0; } else { setfalcon 1; } } },{},{}
 12900,Battle_Manual_Box,Battle Manual Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12208,10; },{},{}
 12901,Insurance_Package,Insurance Package,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12209,10; },{},{}
 12902,Bubble_Gum_Box,Bubble Gum Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12210,10; },{},{}
