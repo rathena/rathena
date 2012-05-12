@@ -61,7 +61,7 @@
 // War of Emperium has started.
 OnAgitStart:
 	if (strnpcinfo(0) == "Gld_Agit_Manager") end;
-	MapRespawnGuildID strnpcinfo(2),GetCastleData(strnpcinfo(2),1),4;
+	MapRespawnGuildID strnpcinfo(2),GetCastleData(strnpcinfo(2),1),6;
 	GvgOn strnpcinfo(2);
 
 // Spawn (fall through), or respawn the Emperium once it has been broken.
@@ -120,7 +120,7 @@ OnAgitBreak:
 
 	// Announce that the Emperium is destroyed, and respawn all but new castle-occupants.
 	mapannounce strnpcinfo(2),"The emperium has been destroyed.",bc_map|bc_woe,"0x00CCFF",FW_NORMAL,12;
-	MapRespawnGuildID strnpcinfo(2),.@GID,4;
+	MapRespawnGuildID strnpcinfo(2),.@GID,6;
 
 	// Refresh castle data, disable Kafra and reset Invest information.
 	donpcevent strnpcinfo(0)+"::OnRecvCastle";
