@@ -23,13 +23,13 @@ geffen_in,176,105,4	script	Magic Book Master Velof	64,{
 		mes "You're overweight with items. Please lose some item weight first.";
 		close;
 	}
-	if (Upper == 2) {
+	if ((Upper == 2) && (Class != Job_Baby_Warlock)) {
 		mes "[Magic Book Master Velof]";
 		mes "What are you, a baby?";
 		mes "I'm not here to babysit. Get lost!";
 		close;
 	}
-	if (Class != Job_Warlock || Class != Job_Warlock_T) {
+	if ((Class != Job_Warlock) && (Class != Job_Warlock_T) && (Class != Job_Baby_Warlock)) {
 		mes "[Magic Book Master Velof]";
 		mes "Ha ha, are you also seeking new knowledge?";
 		next;
@@ -45,7 +45,7 @@ geffen_in,176,105,4	script	Magic Book Master Velof	64,{
 		mes "Learn the spell first. I've got so many things to tell you.";
 		close;
 	}
-	if ((getskilllv(2230) > 0) && (Class == Job_Warlock) || (Class == Job_Warlock_T)) {
+	if ((getskilllv(2230) > 0) && (Class == Job_Warlock) || (Class == Job_Warlock_T) || (Class == Job_Baby_Warlock)) {
 		mes "[Magic Book Master Velof]";
 		mes "Welcome, my friend.";
 		mes "Congratulations on entering a brand new world of magic.";
@@ -283,7 +283,7 @@ geffen_in,175,112,4	script	Lea	123,{
 		mes "You're overweight with items. Please lose some item weight first.";
 		close;
 	}
-	if ((wm_book > 0) && (Class == Job_Warlock) || (Class == Job_Warlock_T)) {
+	if ((wm_book > 0) && (Class == Job_Warlock) || (Class == Job_Warlock_T) || (Class == Job_Baby_Warlock)) {
 		mes "[Lea]";
 		mes "You can only read books here. If you'd like to borrow any books, please receive an approval from 1 manager and 1 High Mage.";
 		next;
@@ -1673,7 +1673,7 @@ mid_camp,255,244,4	script	Galfos	735,{
 		mes "I'm not here to babysit. Get lost!";
 		close;
 	}
-	if ((Class != Job_Warlock) && (Class != Job_Warlock_T)) {
+	if ((Class != Job_Warlock) && (Class != Job_Warlock_T) && (Class != Job_Baby_Warlock)) {
 		mes "[Galfos]";
 		mes "My right arm feels hot while my left arm feels cold. I can never get used to this weird weather!";
 		close;
