@@ -24,16 +24,20 @@ set( COMMON_SOURCES
 set( MAPCACHE_SOURCES
 	"${CMAKE_CURRENT_SOURCE_DIR}/mapcache.c"
 	)
+set( DEPENDENCIES ${ZLIB_DEPENDENCIES} )
 set( LIBRARIES ${GLOBAL_LIBRARIES} ${ZLIB_LIBRARIES} )
 set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${COMMON_MINI_INCLUDE_DIRS} )
-set( DEFINITIONS "${GLOBAL_DEFINITIONS} ${COMMON_MINI_DEFINITIONS}" )
+set( DEFINITIONS "${GLOBAL_DEFINITIONS} ${COMMON_MINI_DEFINITIONS} ${ZLIB_DEFINITIONS}" )
 set( SOURCE_FILES ${COMMON_HEADERS} ${COMMON_SOURCES} ${MAPCACHE_SOURCES} )
 source_group( common FILES ${COMMON_HEADERS} ${COMMON_SOURCES} )
 source_group( mapcache FILES ${MAPCACHE_SOURCES} )
 add_executable( mapcache ${SOURCE_FILES} )
-include_directories( ${INCLUDE_DIRS} )
+if( DEPENDENCIES )
+	add_dependencies( mapcache ${DEPENDENCIES} )
+endif()
 target_link_libraries( mapcache ${LIBRARIES} )
 set_target_properties( mapcache PROPERTIES COMPILE_FLAGS "${DEFINITIONS}" )
+include_directories( ${INCLUDE_DIRS} )
 if( INSTALL_COMPONENT_RUNTIME )
 	cpack_add_component( Runtime_mapcache DESCRIPTION "mapcache generator" DISPLAY_NAME "mapcache" GROUP Runtime )
 	install( TARGETS mapcache

@@ -572,9 +572,7 @@ add_subdirectory( src )
 #####################################################################
 # final checks and warnings
 #
-if( CMAKE_SIZEOF_VOID_P EQUAL 8 )
-	message( WARNING "64bit should work, but is not recommended." )
-elseif( NOT CMAKE_SIZEOF_VOID_P EQUAL 4 )
+if( NOT (CMAKE_SIZEOF_VOID_P EQUAL 4) AND NOT (CMAKE_SIZEOF_VOID_P EQUAL 8) )
 	message( FATAL_ERROR "unexpected architecture (CMAKE_SIZEOF_VOID_P is ${CMAKE_SIZEOF_VOID_P})" )
 endif()
 list( LENGTH  TARGET_LIST  _LEN )

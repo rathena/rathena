@@ -41,7 +41,7 @@ endif( BUILD_PLUGIN_console )
 #
 # dbghelpplug
 #
-if( WIN32 )
+if( WIN32 AND CMAKE_SIZEOF_VOID_P EQUAL 4 )
 	find_path( HAVE_DBGHELP_H dbghelp.h )
 	mark_as_advanced( HAVE_DBGHELP_H )
 	if( HAVE_DBGHELP_H )
@@ -49,7 +49,7 @@ if( WIN32 )
 	endif()
 endif()
 if( NOT DEFINED BUILD_PLUGIN_dbghelpplug )
-	message( STATUS "Disabled dbghelpplug plugin target (requires WIN32 and HAVE_DBGHELP_H)" )
+	message( STATUS "Disabled dbghelpplug plugin target (requires WIN32 and CMAKE_SIZEOF_VOID_P=4 and HAVE_DBGHELP_H)" )
 endif()
 if( BUILD_PLUGIN_dbghelpplug )
 message( STATUS "Creating target dbghelpplug" )
