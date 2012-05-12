@@ -8266,6 +8266,15 @@ int status_change_clear(struct block_list* bl, int type)
 		case SC_FOOD_DEX_CASH:
 		case SC_FOOD_INT_CASH:
 		case SC_FOOD_LUK_CASH:
+		case SC_DEF_RATE:
+		case SC_MDEF_RATE:
+		case SC_INCHEALRATE:
+		case SC_INCFLEE2:
+		case SC_INCHIT:
+		case SC_ATKPOTION:
+		case SC_MATKPOTION:
+		case SC_S_LIFEPOTION:
+		case SC_L_LIFEPOTION:
 			continue;
 
 		}

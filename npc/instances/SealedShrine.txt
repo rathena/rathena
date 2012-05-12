@@ -91,7 +91,7 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 		if (BaseLevel > 74) {
 
 			set .@party_id,getcharid(1);
-			getpartymember(.@party_id);
+			getpartymember(.@party_id),1;
 			set .@partymembercount,$@partymembercount;
 			copyarray .@partymembername$[0],$@partymembername$[0],.@partymembercount;
 
@@ -104,8 +104,14 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 			// Two hour play limit
 			//set .@ins_bapho_check2,checkquest(3045,PLAYTIME);
 
+			for(set .@i,0; .@i < .@partymembercount; set .@i,.@i+1){
+				if(isloggedin($@partymemberaid[.@i],$@partymembercid[.@i])){
+					set .@loggedin,.@loggedin+1;
+				}
+			}
+
 			if (.@ins_bapho_check == -1) {
-				if ((getpartyleader(.@party_id,2) == getcharid(0)) && (.@partymembercount > 1)) {
+				if ((getpartyleader(.@party_id,2) == getcharid(0)) && (.@partymembercount > 1) && (.@loggedin > 1)) {
 					set .@instance, instance_create("Sealed Catacombs", .@party_id);
 					if (.@instance < 0) {
 						mes "[Friar Patrick]";

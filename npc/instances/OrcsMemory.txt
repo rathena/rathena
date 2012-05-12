@@ -43,12 +43,18 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 	set .@p_reader$,strcharinfo(0);
 	set .@md_name$,"Orc's Memory";
 
-	getpartymember(.@party_id);
+	getpartymember(.@party_id),1;
 	set .@partymembercount,$@partymembercount;
 	copyarray .@partymembername$[0],$@partymembername$[0],.@partymembercount;
+	
+	for(set .@i,0; .@i < .@partymembercount; set .@i,.@i+1){
+		if(isloggedin($@partymemberaid[.@i],$@partymembercid[.@i])){
+			set .@loggedin,.@loggedin+1;
+		}
+	}
 
 	set .@orctime,checkquest(12059,PLAYTIME);
-	if ((.@party_id > 0) && ((.@partymembercount > 1))) {
+	if ((.@party_id > 0) && (.@partymembercount > 1) && (.@loggedin > 1)) {
 		if (.@orctime == -1) {
 			if (.@ins_mas == getcharid(0)) {
 				mes "Party status confirmed. Would you like to book entrance to the " + .@md_name$ + "?";

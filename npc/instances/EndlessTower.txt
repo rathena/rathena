@@ -210,7 +210,7 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 	set .@md_name$,"Endless Tower";
 	set .@p_name2$,strcharinfo(0);
 
-	getpartymember(.@party_id);
+	getpartymember(.@party_id),1;
 	set .@partymembercount,$@partymembercount;
 	copyarray .@partymembername$[0],$@partymembername$[0],.@partymembercount;
 
@@ -225,7 +225,13 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 	set .@dun_m,(.@dun_ent_t - (.@dun_h * 3600)) / 60;
 	set .@dun_s,.@dun_ent_t - ((.@dun_h * 3600) + (.@dun_m * 60));
 
-	if ((.@party_id > 0) && (.@partymembercount > 1)) {
+	for(set .@i,0; .@i < .@partymembercount; set .@i,.@i+1){
+		if(isloggedin($@partymemberaid[.@i],$@partymembercid[.@i])){
+			set .@loggedin,.@loggedin+1;
+		}
+	}
+
+	if ((.@party_id > 0) && (.@partymembercount > 1) && (.@loggedin > 1)) {
 		if (.@etower_timer == -1) {
 			if (.@ins_mas == getcharid(0)) {
 				mes "Confirmed the party has been made. Would you like to reserve entrance to the Endless Tower?";

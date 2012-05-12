@@ -127,11 +127,17 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 				set .@leader,getpartyleader(.@party,2);
 				set .@md_name$,"Nidhoggur's Nest";
 
-				getpartymember(.@party);
+				getpartymember(.@party),1;
 				set .@partymembercount,$@partymembercount;
 				copyarray .@partymembername$[0],$@partymembername$[0],.@partymembercount;
 
-				if ((.@party > 0) && ((.@partymembercount > 1)) && (.@leader == getcharid(0))) {
+				for(set .@i,0; .@i < .@partymembercount; set .@i,.@i+1){
+					if(isloggedin($@partymemberaid[.@i],$@partymembercid[.@i])){
+						set .@loggedin,.@loggedin+1;
+					}
+				}
+
+				if ((.@party > 0) && ((.@partymembercount > 1)) && (.@leader == getcharid(0)) && (.@loggedin > 1)) {
 					set .@instance, instance_create(.@md_name$, .@party);
 					if (.@instance < 0) {
 						mes "[Yggdrasil Gatekeeper]";
