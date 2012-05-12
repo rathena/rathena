@@ -50,7 +50,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\3rdparty\mysql\include;..\3rdparty\zlib\include;..\3rdparty\pcre\include;..\3rdparty\msinttypes\include;..\3rdparty\mt19937ar;..\3rdparty\libconfig;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\3rdparty\mysql\old\include;..\3rdparty\zlib\include;..\3rdparty\pcre\include;..\3rdparty\msinttypes\include;..\3rdparty\mt19937ar;..\3rdparty\libconfig;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WIN32;__WIN32;_DEBUG;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;LIBCONFIG_STATIC;YY_USE_CONST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
@@ -72,7 +72,7 @@
     <Link>
       <AdditionalDependencies>libcmtd.lib;oldnames.lib;ws2_32.lib;libmysql.lib;zdll.lib;pcre.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>..\3rdparty\mysql\lib;..\3rdparty\zlib\lib;..\3rdparty\pcre\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\3rdparty\mysql\old\lib;..\3rdparty\zlib\lib;..\3rdparty\pcre\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -93,7 +93,7 @@
       <OmitFramePointers>true</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\3rdparty\mysql\include;..\3rdparty\zlib\include;..\3rdparty\pcre\include;..\3rdparty\msinttypes\include;..\3rdparty\mt19937ar;..\3rdparty\libconfig;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\3rdparty\mysql\old\include;..\3rdparty\zlib\include;..\3rdparty\pcre\include;..\3rdparty\msinttypes\include;..\3rdparty\mt19937ar;..\3rdparty\libconfig;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WIN32;__WIN32;NDEBUG;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;LIBCONFIG_STATIC;YY_USE_CONST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -110,7 +110,7 @@
     <Link>
       <AdditionalDependencies>libcmt.lib;oldnames.lib;ws2_32.lib;libmysql.lib;zdll.lib;pcre.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>..\3rdparty\mysql\lib;..\3rdparty\zlib\lib;..\3rdparty\pcre\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\3rdparty\mysql\old\lib;..\3rdparty\zlib\lib;..\3rdparty\pcre\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>

@@ -465,7 +465,6 @@ set( RUNTIME_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/char-server.sh"
 	"${CMAKE_CURRENT_SOURCE_DIR}/charserv-sql.bat"
 	"${CMAKE_CURRENT_SOURCE_DIR}/dbghelp.dll"
-	"${CMAKE_CURRENT_SOURCE_DIR}/libmysql.dll"
 	"${CMAKE_CURRENT_SOURCE_DIR}/LICENSE"
 	"${CMAKE_CURRENT_SOURCE_DIR}/login-server.sh"
 	"${CMAKE_CURRENT_SOURCE_DIR}/logserv-sql.bat"
