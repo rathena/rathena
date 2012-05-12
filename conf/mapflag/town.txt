@@ -32,3 +32,9 @@ hugel	mapflag	town
 rachel	mapflag	town
 veins	mapflag	town
 brasilis	mapflag	town
+dicastes01	mapflag	town
+mora	mapflag	town
+dewata	mapflag	town
+malangdo	mapflag	town
+malaya	mapflag	town
+eclage	mapflag	town

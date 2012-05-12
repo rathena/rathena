@@ -61,7 +61,7 @@
 // War of Emperium has started.
 OnAgitStart:
 	if (strnpcinfo(0) == "Gld_Agit_Manager") end;
-	MapRespawnGuildID strnpcinfo(2),GetCastleData(strnpcinfo(2),1),2;
+	MapRespawnGuildID strnpcinfo(2),GetCastleData(strnpcinfo(2),1),4;
 	GvgOn strnpcinfo(2);
 
 // Spawn (fall through), or respawn the Emperium once it has been broken.
@@ -120,7 +120,7 @@ OnAgitBreak:
 
 	// Announce that the Emperium is destroyed, and respawn all but new castle-occupants.
 	mapannounce strnpcinfo(2),"The emperium has been destroyed.",bc_map|bc_woe,"0x00CCFF",FW_NORMAL,12;
-	MapRespawnGuildID strnpcinfo(2),.@GID,2;
+	MapRespawnGuildID strnpcinfo(2),.@GID,4;
 
 	// Refresh castle data, disable Kafra and reset Invest information.
 	donpcevent strnpcinfo(0)+"::OnRecvCastle";
@@ -634,6 +634,7 @@ OnRecvCastle:
 		mes "That's all I have to report, Master.";
 		close;
 	case 2:
+		set .@Economy,GetCastleData(strnpcinfo(2),2);
 		if (.@Economy < 6) { set .@eco_invest,5000; }
 		else if ((.@Economy >= 6) && (.@Economy <= 10)) { set .@eco_invest,10000; }
 		else if ((.@Economy >= 11) && (.@Economy <= 15)) { set .@eco_invest,20000; }
@@ -662,15 +663,15 @@ OnRecvCastle:
 		mes "If you invest in commercial growth, the quantity of goods made by the guild will increase. Therfore, if you consider our future, investments will be a necessity.";
 		mes " ";
 		mes "Initially, you are able to invest just once but if you pay more money, you will be able to invest twice.";
-		if (.@Economy == 100) {
+		if (.@Economy >= 100) {
 			mes " ";
 			mes "^ff0000The commercial growth level of our Castle is at it's highest, 100%. No more investments are needed. Just as I have expected from a great economist like you, Master.^000000";
-			end;
+			close;
 		}
 		if (GetCastleData(strnpcinfo(2),4) >= 2) {
 			mes " ";
 			mes "^ff0000You have already invested twice today. You cannot invest any more.^000000 I expect riches of the guild to grow at a high rate.";
-			end;
+			close;
 		}
 		if (GetCastleData(strnpcinfo(2),4) == 0) {
 			mes " ";
@@ -728,7 +729,7 @@ OnRecvCastle:
 		mes "If you raise Castle Defenses, the durability of Guardians and the Emperium will increase. Therefore, if you consider our coming battles, some investment in this area will be required.";
 		mes " ";
 		mes "Originally you can invest just once but if you pay more money, you can invest twice.";
-		if (.@Defence == 100) {
+		if (.@Defence >= 100) {
 			mes " ";
 			mes "^ff0000But the Castle Defense level of our Castle is at it's highest, 100%. No more investments are needed. Just as I have expected from a great strategist like you, Master.^000000";
 			close;

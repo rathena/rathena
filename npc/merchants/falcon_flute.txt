@@ -2,7 +2,8 @@
 //= Falcon Flute Trader
 //===== By: ================================================== 
 //= Masao
-//= Credits to Muad_Dib for the translation.
+//= Credits to Muad_Dib for the translation & Ziu for the
+//= Item ID of the Falcon Flute.
 //===== Current Version: ===================================== 
 //= 1.0
 //===== Compatible With: ===================================== 
