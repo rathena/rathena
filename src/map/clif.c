@@ -9550,7 +9550,7 @@ void clif_parse_MapMove(int fd, struct map_session_data *sd)
 
 	map_name = (char*)RFIFOP(fd,2);
 	map_name[MAP_NAME_LENGTH_EXT-1]='\0';
-	sprintf(command, "@mapmove %s %d %d", map_name, RFIFOW(fd,18), RFIFOW(fd,20));
+	sprintf(command, "%cmapmove %s %d %d", atcommand_symbol, map_name, RFIFOW(fd,18), RFIFOW(fd,20));
 	is_atcommand(fd, sd, command, 1);
 }
 
@@ -9933,7 +9933,7 @@ void clif_parse_Broadcast(int fd, struct map_session_data* sd)
 
 	// as the length varies depending on the command used, just block unreasonably long strings
 	len = mes_len_check(msg, len, CHAT_SIZE_MAX);
-	sprintf(command, "@kami %s", msg);
+	sprintf(command, "%ckami %s", atcommand_symbol, msg);
 	is_atcommand(fd, sd, command, 1);
 }
 
@@ -11068,12 +11068,15 @@ void clif_parse_SolveCharName(int fd, struct map_session_data *sd)
 /// type:
 ///     0 = state
 ///     1 = skill
-void clif_parse_ResetChar(int fd, struct map_session_data *sd)
-{
+void clif_parse_ResetChar(int fd, struct map_session_data *sd) {
+	char cmd[15];
+	
 	if( RFIFOW(fd,2) )
-		is_atcommand(fd, sd, "@resetskill", 1);
+		sprintf(cmd,"%cresetskill",atcommand_symbol);
 	else
-		is_atcommand(fd, sd, "@resetstat", 1);
+		sprintf(cmd,"%cresetstat",atcommand_symbol);
+
+	is_atcommand(fd, sd, cmd, 1);
 }
 
 
@@ -11089,7 +11092,7 @@ void clif_parse_LocalBroadcast(int fd, struct map_session_data* sd)
 	// as the length varies depending on the command used, just block unreasonably long strings
 	len = mes_len_check(msg, len, CHAT_SIZE_MAX);
 
-	sprintf(command, "@lkami %s", msg);
+	sprintf(command, "%clkami %s", atcommand_symbol, msg);
 	is_atcommand(fd, sd, command, 1);
 }
 
@@ -12161,7 +12164,7 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 	case BL_PC:
 	{
 		char command[NAME_LENGTH+6];
-		sprintf(command, "@kick %s", status_get_name(target));
+		sprintf(command, "%ckick %s", atcommand_symbol, status_get_name(target));
 		is_atcommand(fd, sd, command, 1);
 	}
 	break;
@@ -12185,7 +12188,7 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 	case BL_NPC:
 	{
 		char command[NAME_LENGTH+11];
-		sprintf(command, "@unloadnpc %s", status_get_name(target));
+		sprintf(command, "%cunloadnpc %s", atcommand_symbol, status_get_name(target));
 		is_atcommand(fd, sd, command, 1);
 	}
 	break;
@@ -12199,9 +12202,10 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 /// /killall (CZ_DISCONNECT_ALL_CHARACTER).
 /// Request to disconnect all characters.
 /// 00ce
-void clif_parse_GMKickAll(int fd, struct map_session_data* sd)
-{
-	is_atcommand(fd, sd, "@kickall", 1);
+void clif_parse_GMKickAll(int fd, struct map_session_data* sd) {
+	char cmd[15];
+	sprintf(cmd,"%ckickall",atcommand_symbol);
+	is_atcommand(fd, sd, cmd, 1);
 }
 
 
@@ -12220,7 +12224,7 @@ void clif_parse_GMShift(int fd, struct map_session_data *sd)
 	player_name = (char*)RFIFOP(fd,2);
 	player_name[NAME_LENGTH-1] = '\0';
 	
-	sprintf(command, "@jumpto %s", player_name);
+	sprintf(command, "%cjumpto %s", atcommand_symbol, player_name);
 	is_atcommand(fd, sd, command, 1);
 }
 
@@ -12237,7 +12241,7 @@ void clif_parse_GMRemove2(int fd, struct map_session_data* sd)
 	if( (pl_sd = map_id2sd(account_id)) != NULL )
 	{
 		char command[NAME_LENGTH+8];
-		sprintf(command, "@jumpto %s", pl_sd->status.name);
+		sprintf(command, "%cjumpto %s", atcommand_symbol, pl_sd->status.name);
 		is_atcommand(fd, sd, command, 1);
 	}
 }
@@ -12258,7 +12262,7 @@ void clif_parse_GMRecall(int fd, struct map_session_data *sd)
 	player_name = (char*)RFIFOP(fd,2);
 	player_name[NAME_LENGTH-1] = '\0';
 	
-	sprintf(command, "@recall %s", player_name);
+	sprintf(command, "%crecall %s", atcommand_symbol, player_name);
 	is_atcommand(fd, sd, command, 1);
 }
 
@@ -12275,7 +12279,7 @@ void clif_parse_GMRecall2(int fd, struct map_session_data* sd)
 	if( (pl_sd = map_id2sd(account_id)) != NULL )
 	{
 		char command[NAME_LENGTH+8];
-		sprintf(command, "@recall %s", pl_sd->status.name);
+		sprintf(command, "%crecall %s", atcommand_symbol, pl_sd->status.name);
 		is_atcommand(fd, sd, command, 1);
 	}
 }
@@ -12293,13 +12297,13 @@ void clif_parse_GM_Monster_Item(int fd, struct map_session_data *sd)
 	monster_item_name[NAME_LENGTH-1] = '\0';
 
 	if( mobdb_searchname(monster_item_name) ) {
-		snprintf(command, sizeof(command)-1, "@monster %s", monster_item_name);
+		snprintf(command, sizeof(command)-1, "%cmonster %s", atcommand_symbol, monster_item_name);
 		is_atcommand(fd, sd, command, 1);
 		return;
 	}
 
 	if( itemdb_searchname(monster_item_name) ) {
-		snprintf(command, sizeof(command)-1, "@item %s", monster_item_name);
+		snprintf(command, sizeof(command)-1, "%citem %s", atcommand_symbol, monster_item_name);
 		is_atcommand(fd, sd, command, 1);
 		return;
 	}
@@ -12310,9 +12314,12 @@ void clif_parse_GM_Monster_Item(int fd, struct map_session_data *sd)
 /// 019d <effect state>.L
 /// effect state:
 ///     TODO: Any OPTION_* ?
-void clif_parse_GMHide(int fd, struct map_session_data *sd)
-{
-	is_atcommand(fd, sd, "@hide", 1);
+void clif_parse_GMHide(int fd, struct map_session_data *sd) {
+	char cmd[6];
+	
+	sprintf(cmd,"%chide",atcommand_symbol);
+	
+	is_atcommand(fd, sd, cmd, 1);
 }
 
 
@@ -12344,7 +12351,7 @@ void clif_parse_GMReqNoChat(int fd,struct map_session_data *sd)
 	if( dstsd == NULL )
 		return;
 
-	sprintf(command, "@mute %d %s", value, dstsd->status.name);
+	sprintf(command, "%cmute %d %s", atcommand_symbol, value, dstsd->status.name);
 	is_atcommand(fd, sd, command, 1);
 }
 
@@ -12358,7 +12365,7 @@ void clif_parse_GMRc(int fd, struct map_session_data* sd)
 	char *name = (char*)RFIFOP(fd,2);
 
 	name[NAME_LENGTH-1] = '\0';
-	sprintf(command, "@mute %d %s", 60, name);
+	sprintf(command, "%cmute %d %s", atcommand_symbol, 60, name);
 	is_atcommand(fd, sd, command, 1);
 }
 

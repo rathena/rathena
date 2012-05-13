@@ -5476,34 +5476,31 @@ void status_set_viewdata(struct block_list *bl, int class_)
 			if (pcdb_checkid(class_)) {
 				if (sd->sc.option&OPTION_WEDDING)
 					class_ = JOB_WEDDING;
-				else
-				if (sd->sc.option&OPTION_SUMMER)
+				else if (sd->sc.option&OPTION_SUMMER)
 					class_ = JOB_SUMMER;
-				else
-				if (sd->sc.option&OPTION_XMAS)
+				else if (sd->sc.option&OPTION_XMAS)
 					class_ = JOB_XMAS;
-				else
-				if (sd->sc.option&OPTION_RIDING)
-				switch (class_)
-				{	//Adapt class to a Mounted one.
-				case JOB_KNIGHT:
-					class_ = JOB_KNIGHT2;
-					break;
-				case JOB_CRUSADER:
-					class_ = JOB_CRUSADER2;
-					break;
-				case JOB_LORD_KNIGHT:
-					class_ = JOB_LORD_KNIGHT2;
-					break;
-				case JOB_PALADIN:
-					class_ = JOB_PALADIN2;
-					break;
-				case JOB_BABY_KNIGHT:
-					class_ = JOB_BABY_KNIGHT2;
-					break;
-				case JOB_BABY_CRUSADER:
-					class_ = JOB_BABY_CRUSADER2;
-					break;
+				else if (sd->sc.option&OPTION_RIDING) {
+					switch (class_) {	//Adapt class to a Mounted one.
+						case JOB_KNIGHT:
+							class_ = JOB_KNIGHT2;
+							break;
+						case JOB_CRUSADER:
+							class_ = JOB_CRUSADER2;
+							break;
+						case JOB_LORD_KNIGHT:
+							class_ = JOB_LORD_KNIGHT2;
+							break;
+						case JOB_PALADIN:
+							class_ = JOB_PALADIN2;
+							break;
+						case JOB_BABY_KNIGHT:
+							class_ = JOB_BABY_KNIGHT2;
+							break;
+						case JOB_BABY_CRUSADER:
+							class_ = JOB_BABY_CRUSADER2;
+							break;
+					}
 				}
 				sd->vd.class_ = class_;
 				clif_get_weapon_view(sd, &sd->vd.weapon, &sd->vd.shield);
