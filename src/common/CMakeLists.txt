@@ -101,7 +101,6 @@ set( COMMON_BASE_SOURCES
 	"${COMMON_SOURCE_DIR}/utils.c"
 	${LIBCONFIG_SOURCES} # needed by conf.c/showmsg.c
 	CACHE INTERNAL "common_base sources" )
-set( DEPENDENCIES ${ZLIB_DEPENDENCIES} )
 set( COMMON_BASE_INCLUDE_DIRS
 	${LIBCONFIG_INCLUDE_DIRS}
 	CACHE INTERNAL "common_base include dirs" )
@@ -110,14 +109,11 @@ set( COMMON_BASE_DEFINITIONS
 	CACHE INTERNAL "common_base definitions" )
 set( LIBRARIES ${GLOBAL_LIBRARIES} ${ZLIB_LIBRARIES} )
 set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${MT19937AR_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${COMMON_BASE_INCLUDE_DIRS} )
-set( DEFINITIONS "${GLOBAL_DEFINITIONS} ${COMMON_BASE_DEFINITIONS} ${ZLIB_DEFINITIONS}" )
+set( DEFINITIONS "${GLOBAL_DEFINITIONS} ${COMMON_BASE_DEFINITIONS}" )
 set( SOURCE_FILES ${MT19937AR_HEADERS} ${MT19937AR_SOURCES} ${COMMON_BASE_HEADERS} ${COMMON_BASE_SOURCES} )
 source_group( mt19937ar FILES ${MT19937AR_HEADERS} ${MT19937AR_SOURCES} )
 source_group( common FILES ${COMMON_BASE_HEADERS} ${COMMON_BASE_SOURCES} )
 add_library( common_base ${SOURCE_FILES} )
-if( DEPENDENCIES )
-	add_dependencies( common_base ${DEPENDENCIES} )
-endif()
 target_link_libraries( common_base ${LIBRARIES} )
 set_target_properties( common_base PROPERTIES COMPILE_FLAGS "${DEFINITIONS}" )
 include_directories( ${INCLUDE_DIRS} )
@@ -142,17 +138,15 @@ set( COMMON_SQL_HEADERS
 set( COMMON_SQL_SOURCES
 	"${CMAKE_CURRENT_SOURCE_DIR}/sql.c"
 	CACHE INTERNAL "common_sql sources" )
-set( DEPENDENCIES common_base ${MYSQL_DEPENDENCIES} )
-set( LIBRARIES ${GLOBAL_LIBRARIES} common_base ${MYSQL_LIBRARIES} )
+set( DEPENDENCIES common_base )
+set( LIBRARIES ${GLOBAL_LIBRARIES} ${MYSQL_LIBRARIES} )
 set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${MYSQL_INCLUDE_DIRS} )
-set( DEFINITIONS "${GLOBAL_DEFINITIONS} ${MYSQL_DEFINITIONS}" )
+set( DEFINITIONS "${GLOBAL_DEFINITIONS}" )
 set( SOURCE_FILES ${COMMON_SQL_HEADERS} ${COMMON_SQL_SOURCES} )
 source_group( common FILES ${COMMON_SQL_HEADERS} ${COMMON_SQL_SOURCES} )
 add_library( common_sql ${SOURCE_FILES} )
-if( DEPENDENCIES )
-	add_dependencies( common_sql ${DEPENDENCIES} )
-endif()
-target_link_libraries( common_sql ${LIBRARIES} )
+add_dependencies( common_sql ${DEPENDENCIES} )
+target_link_libraries( common_sql ${LIBRARIES} ${DEPENDENCIES} )
 set_target_properties( common_sql PROPERTIES COMPILE_FLAGS "${DEFINITIONS}" )
 include_directories( ${INCLUDE_DIRS} )
 set( HAVE_common_sql ON  CACHE INTERNAL "" )

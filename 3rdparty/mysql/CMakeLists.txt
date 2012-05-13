@@ -4,62 +4,37 @@
 #
 if( WIN32 )
 message( STATUS "Detecting local MYSQL" )
-
-# external_mysql
-message( STATUS "Creating target external_mysql" )
-if( CMAKE_SIZEOF_VOID_P EQUAL 8 )
-	set( _URL "${CMAKE_CURRENT_SOURCE_DIR}/mysql-5.5.24-winx64-libmysql.tar.gz" )
-	set( _URL_MD5 "36ae333e56ff6ae99de13edf893a1792" )
-elseif( CMAKE_SIZEOF_VOID_P EQUAL 4 )
-	set( _URL "${CMAKE_CURRENT_SOURCE_DIR}/mysql-5.5.24-win32-libmysql.tar.gz" )
-	set( _URL_MD5 "e9abe2055bba07995c89e66c7c6d1e2c" )
-else()
-	message( FATAL_ERROR "Not supported: CMAKE_SIZEOF_VOID_P=${CMAKE_SIZEOF_VOID_P}" )
-endif()
-set( _INSTALL_DIR "${CMAKE_BINARY_DIR}/external/mysql" )
-
-
-message( STATUS "Using URL=${_URL}" )
-message( STATUS "Using URL_MD5=${_URL_MD5}" )
-message( STATUS "Using INSTALL_DIR=${_INSTALL_DIR}" )
-include(ExternalProject)
-ExternalProject_Add( external_mysql
-	URL "${_URL}"
-	URL_MD5 "${_URL_MD5}"
-	SOURCE_DIR "${_INSTALL_DIR}"
-	CONFIGURE_COMMAND ""
-	BUILD_COMMAND ""
-	INSTALL_COMMAND ""
-)
-set( TARGET_LIST ${TARGET_LIST} external_mysql  CACHE INTERNAL "" )
-message( STATUS "Creating target external_mysql - done" )
-
-# libmysql
-message( STATUS "Creating import shared library libmysql" )
-add_library( libmysql SHARED IMPORTED GLOBAL )
-set_target_properties( libmysql PROPERTIES
-	IMPORTED_LOCATION "${_INSTALL_DIR}/lib/libmysql.dll"
-	IMPORTED_IMPLIB "${_INSTALL_DIR}/lib/libmysql.lib"  )
-message( STATUS "Creating import shared library libmysql - done" )
-
-set( HAVE_LOCAL_MYSQL ON
-	CACHE BOOL "mysql client is available as a local copy" )
-set( MYSQL_LOCAL_DEPENDENCIES external_mysql
-	CACHE STRING "local mysql dependencies" )
-set( MYSQL_LOCAL_LIBRARIES libmysql
-	CACHE PATH "local mysql libraries" )
-set( MYSQL_LOCAL_INCLUDE_DIRS "${_INSTALL_DIR}/include"
-	CACHE PATH "local mysql include directories" )
-set( MYSQL_LOCAL_DEFINITIONS
-	CACHE STRING "local mysql definitions" )
-mark_as_advanced( HAVE_LOCAL_MYSQL )
-mark_as_advanced( MYSQL_LOCAL_DEPENDENCIES )
+find_path( MYSQL_LOCAL_INCLUDE_DIRS "mysql.h"
+	PATHS "${CMAKE_CURRENT_SOURCE_DIR}/include"
+	NO_DEFAULT_PATH )
+find_library( MYSQL_LOCAL_LIBRARIES
+	NAMES libmysql
+	PATHS "${CMAKE_CURRENT_SOURCE_DIR}/lib"
+	NO_DEFAULT_PATH )
 mark_as_advanced( MYSQL_LOCAL_LIBRARIES )
 mark_as_advanced( MYSQL_LOCAL_INCLUDE_DIRS )
-mark_as_advanced( MYSQL_LOCAL_DEFINITIONS )
+
+if( MYSQL_LOCAL_LIBRARIES AND MYSQL_LOCAL_INCLUDE_DIRS )
+	if( EXISTS "${MYSQL_LOCAL_INCLUDE_DIRS}/mysql_version.h" )
+		file( STRINGS "${MYSQL_LOCAL_INCLUDE_DIRS}/mysql_version.h" MYSQL_VERSION_H REGEX "^#define MYSQL_SERVER_VERSION[ \t]+\"[^\"]+\".*$" )
+		string( REGEX REPLACE "^.*MYSQL_SERVER_VERSION[ \t]+\"([^\"]+)\".*$" "\\1" MYSQL_SERVER_VERSION "${MYSQL_VERSION_H}" )
+		message( STATUS "Found MYSQL: ${MYSQL_LOCAL_LIBRARIES} (found version ${MYSQL_SERVER_VERSION})" )
+	else()
+		message( STATUS "Found MYSQL: ${MYSQL_LOCAL_LIBRARIES}" )
+	endif()
+	set( HAVE_LOCAL_MYSQL ON
+		CACHE BOOL "mysql client is available as a local copy")
+	mark_as_advanced( HAVE_LOCAL_MYSQL )
+else()
+	foreach( _VAR MYSQL_LOCAL_LIBRARIES MYSQL_LOCAL_INCLUDE_DIRS )
+		if( NOT "${_VAR}" )
+			set( MISSING_VARS ${MISSING_VARS} ${_VAR} )
+		endif()
+	endforeach()
+	message( STATUS "Could NOT find MYSQL (missing: ${MISSING_VARS})" )
+	unset( HAVE_LOCAL_MYSQL CACHE )
+endif()
 message( STATUS "Detecting local MYSQL - done" )
-else( WIN32 )
-message( STATUS "Skipping local MYSQL (requires WIN32)" )
 endif( WIN32 )
 
 
@@ -91,9 +66,3 @@ message( STATUS "Detecting system MYSQL - done" )
 # configure
 #
 CONFIGURE_WITH_LOCAL_OR_SYSTEM( MYSQL )
-if( WITH_LOCAL_MYSQL AND INSTALL_COMPONENT_RUNTIME )
-	install( FILES "${_INSTALL_DIR}/lib/libmysql.dll"
-		DESTINATION "."
-		COMPONENT Runtime_base )
-endif( WITH_LOCAL_MYSQL AND INSTALL_COMPONENT_RUNTIME )
-
