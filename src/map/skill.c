@@ -10555,8 +10555,11 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 	case UNT_DONTFORGETME:
 	case UNT_FORTUNEKISS:
 	case UNT_SERVICEFORYOU:
-		if (sg->src_id==bl->id && !(sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_BARDDANCER))
+		if (sg->src_id==bl->id && !(sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_BARDDANCER)) {
+			if( sce )/* We have the status but we're not elegible for it, so we take it away. (bugreport:4591) */
+				sce->val4 = 2;
 			return 0;
+		}
 		if (!sc) return 0;
 		if (!sce)
 			sc_start4(bl,type,100,sg->skill_lv,sg->val1,sg->val2,0,sg->limit);
@@ -11347,13 +11350,17 @@ static int skill_unit_onleft (int skill_id, struct block_list *bl, unsigned int 
 		case DC_DONTFORGETME:
 		case DC_FORTUNEKISS:
 		case DC_SERVICEFORYOU:
-			if (sce)
-			{
-				delete_timer(sce->timer, status_change_timer);
-				//NOTE: It'd be nice if we could get the skill_lv for a more accurate extra time, but alas...
-				//not possible on our current implementation.
-				sce->val4 = 1; //Store the fact that this is a "reduced" duration effect.
-				sce->timer = add_timer(tick+skill_get_time2(skill_id,1), status_change_timer, bl->id, type);
+			if (sce) {
+				if( sce->val4 == 2 ) {/* We have the status but we're not elegible for it, so we take it away. (bugreport:4591) */
+					if( !( sc && sc->data[SC_DANCING] && sc->data[SC_DANCING]->val2 ) )/* check if we're still in the skill */
+						status_change_end(bl,type,INVALID_TIMER);
+				} else {
+					delete_timer(sce->timer, status_change_timer);
+					//NOTE: It'd be nice if we could get the skill_lv for a more accurate extra time, but alas...
+					//not possible on our current implementation.
+					sce->val4 = 1; //Store the fact that this is a "reduced" duration effect.
+					sce->timer = add_timer(tick+skill_get_time2(skill_id,1), status_change_timer, bl->id, type);
+				}
 			}
 			break;
 		case PF_FOGWALL:
