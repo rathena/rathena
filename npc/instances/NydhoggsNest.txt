@@ -127,12 +127,12 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 				set .@leader,getpartyleader(.@party,2);
 				set .@md_name$,"Nidhoggur's Nest";
 
-				getpartymember(.@party),1;
+				getpartymember(.@party),2;
 				set .@partymembercount,$@partymembercount;
 				copyarray .@partymembername$[0],$@partymembername$[0],.@partymembercount;
 
 				for(set .@i,0; .@i < .@partymembercount; set .@i,.@i+1){
-					if(isloggedin($@partymemberaid[.@i],$@partymembercid[.@i])){
+					if(isloggedin($@partymemberaid[.@i])){
 						set .@loggedin,.@loggedin+1;
 					}
 				}

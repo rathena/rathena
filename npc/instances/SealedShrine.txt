@@ -91,7 +91,7 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 		if (BaseLevel > 74) {
 
 			set .@party_id,getcharid(1);
-			getpartymember(.@party_id),1;
+			getpartymember(.@party_id),2;
 			set .@partymembercount,$@partymembercount;
 			copyarray .@partymembername$[0],$@partymembername$[0],.@partymembercount;
 
@@ -105,7 +105,7 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 			//set .@ins_bapho_check2,checkquest(3045,PLAYTIME);
 
 			for(set .@i,0; .@i < .@partymembercount; set .@i,.@i+1){
-				if(isloggedin($@partymemberaid[.@i],$@partymembercid[.@i])){
+				if(isloggedin($@partymemberaid[.@i])){
 					set .@loggedin,.@loggedin+1;
 				}
 			}
