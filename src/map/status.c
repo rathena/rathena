@@ -4699,9 +4699,9 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 			else if( sd ) {
 				if( pc_isriding(sd) || sd->sc.option&(OPTION_DRAGON|OPTION_MOUNTING) )
 					val = 25;//Same bonus
-				else if( sd->sc.option&OPTION_WUGRIDER )
+				else if( pc_isridingwug(sd) )
 					val = 15 + 5 * pc_checkskill(sd, RA_WUGRIDER);
-				else if( sd->sc.option&OPTION_MADOGEAR ) {
+				else if( pc_ismadogear(sd) ) {
 					val = (- 10 * (5 - pc_checkskill(sd,NC_MADOLICENCE)));
 					if( sc->data[SC_ACCELERATION] )
 						val += 25;
@@ -7540,8 +7540,9 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val_flag |= 1|2|4;
 			if( sd )
 			{ // Removes Animals
-				//if( pc_isriding(sd,OPTION_RIDING|OPTION_RIDING_DRAGON|OPTION_RIDING_WUG) ) pc_setriding(sd, 0);
-				//if( pc_iswarg(sd) ) pc_setoption(sd, sd->sc.option&~OPTION_WUG);
+				if( pc_isriding(sd) ){ pc_setriding(sd, 0); pc_setoption(sd, sd->sc.option&~OPTION_DRAGON); }
+				if( pc_iswug(sd) ) pc_setoption(sd, sd->sc.option&~OPTION_WUG);
+				if( pc_isridingwug(sd) ) pc_setoption(sd, sd->sc.option&~OPTION_WUGRIDER);
 				if( pc_isfalcon(sd) ) pc_setoption(sd, sd->sc.option&~OPTION_FALCON);
 				if( sd->status.pet_id > 0 ) pet_menu(sd, 3);
 				if( merc_is_hom_active(sd->hd) ) merc_hom_vaporize(sd,1);

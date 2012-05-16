@@ -613,7 +613,7 @@ enum e_pc_permission {
 #define pc_ischasewalk(sd)    ( (sd)->sc.option&OPTION_CHASEWALK )
 #define pc_iscarton(sd)       ( (sd)->sc.option&OPTION_CART )
 #define pc_isfalcon(sd)       ( (sd)->sc.option&OPTION_FALCON )
-#define pc_isriding(sd)       ( (sd)->sc.option&OPTION_RIDING )
+#define pc_isriding(sd)       ( (sd)->sc.option&OPTION_RIDING || (sd)->sc.option&OPTION_DRAGON )
 #define pc_isinvisible(sd)    ( (sd)->sc.option&OPTION_INVISIBLE )
 #define pc_is50overweight(sd) ( (sd)->weight*100 >= (sd)->max_weight*battle_config.natural_heal_weight_rate )
 #define pc_is90overweight(sd) ( (sd)->weight*10 >= (sd)->max_weight*9 )
@@ -623,6 +623,8 @@ enum e_pc_permission {
  **/
 #define pc_iswug(sd)       ( (sd)->sc.option&OPTION_WUG )
 #define pc_isridingwug(sd) ( (sd)->sc.option&OPTION_WUGRIDER )
+// Mechanic Magic Gear
+#define pc_ismadogear(sd) ( (sd)->sc.option&OPTION_MADOGEAR )
 
 #define pc_stop_walking(sd, type) unit_stop_walking(&(sd)->bl, type)
 #define pc_stop_attack(sd) unit_stop_attack(&(sd)->bl)
@@ -786,6 +788,7 @@ int pc_setoption(struct map_session_data *,int);
 int pc_setcart(struct map_session_data* sd, int type);
 int pc_setfalcon(struct map_session_data* sd, int flag);
 int pc_setriding(struct map_session_data* sd, int flag);
+int pc_setmadogear(struct map_session_data* sd, int flag);
 int pc_changelook(struct map_session_data *,int,int);
 int pc_equiplookall(struct map_session_data *sd);
 

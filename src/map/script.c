@@ -7827,7 +7827,7 @@ BUILDIN_FUNC(checkriding)
 	if( sd == NULL )
 		return 0;// no player attached, report source
 
-	if( pc_isriding(sd) || sd->sc.option&OPTION_MOUNTING )
+	if( pc_isriding(sd) || pc_isridingwug(sd) )
 		script_pushint(st, 1);
 	else
 		script_pushint(st, 0);
@@ -7852,6 +7852,67 @@ BUILDIN_FUNC(setriding)
 	if( script_hasdata(st,2) )
 		flag = script_getnum(st,2);
 	pc_setriding(sd, flag);
+
+	return 0;
+}
+
+/// Returns if the player has a warg.
+///
+/// checkwug() -> <bool>
+///
+BUILDIN_FUNC(checkwug)
+{
+	TBL_PC* sd;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 0;// no player attached, report source
+
+	if( pc_iswug(sd) )
+		script_pushint(st, 1);
+	else
+		script_pushint(st, 0);
+
+	return 0;
+}
+
+/// Returns if the player is wearing MADO Gear.
+///
+/// checkmadogear() -> <bool>
+///
+BUILDIN_FUNC(checkmadogear)
+{
+	TBL_PC* sd;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 0;// no player attached, report source
+
+	if( pc_ismadogear(sd) )
+		script_pushint(st, 1);
+	else
+		script_pushint(st, 0);
+
+	return 0;
+}
+
+/// Sets if the player is riding MADO Gear.
+/// <flag> defaults to 1
+///
+/// setmadogear <flag>;
+/// setmadogear;
+BUILDIN_FUNC(setmadogear)
+{
+	int flag = 1;
+	TBL_PC* sd;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 0;// no player attached, report source
+
+	if( script_hasdata(st,2) )
+		flag = script_getnum(st,2);
+	pc_setmadogear(sd, flag);
 
 	return 0;
 }
@@ -16220,6 +16281,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(checkfalcon,""),
 	BUILDIN_DEF(setriding,"?"),
 	BUILDIN_DEF(checkriding,""),
+	BUILDIN_DEF(checkwug,""),
+	BUILDIN_DEF(checkmadogear,""),
+	BUILDIN_DEF(setmadogear,""),
 	BUILDIN_DEF2(savepoint,"save","sii"),
 	BUILDIN_DEF(savepoint,"sii"),
 	BUILDIN_DEF(gettimetick,"i"),

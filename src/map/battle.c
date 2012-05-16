@@ -781,7 +781,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 			mobskill_event((TBL_MOB*)bl,src,gettick(),MSC_SKILLUSED|(skill_num<<16));
 	}
 	if( sd ) {
-		if( (sd->sc.option&OPTION_MADOGEAR) && rnd()%100 < 50 ) {
+		if( pc_ismadogear(sd) && rnd()%100 < 50 ) {
 			short element = skill_get_ele(skill_num, skill_lv);
 			if( !skill_num || element == -1 ) { //Take weapon's element
 				struct status_data *sstatus = NULL;
@@ -952,7 +952,7 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 		damage += (skill * 5);
 	if( (skill = pc_checkskill(sd,NC_RESEARCHFE)) > 0 && (status->def_ele == ELE_FIRE || status->def_ele == ELE_EARTH) )
 		damage += (skill * 10);
-	if( (sd->sc.option&OPTION_MADOGEAR) )
+	if( pc_ismadogear(sd) )
 		damage += 20 + 20 * pc_checkskill(sd, NC_MADOLICENCE);
 
 	if((skill = pc_checkskill(sd,HT_BEASTBANE)) > 0 && (status->race==RC_BRUTE || status->race==RC_INSECT) ) {

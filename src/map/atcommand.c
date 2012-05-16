@@ -4257,7 +4257,7 @@ ACMD_FUNC(mount_peco)
 		return 0;
 	}
 	if( (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC ) {
-		if( !(sd->sc.option&OPTION_MADOGEAR) ) {
+		if( !pc_ismadogear(sd) ) {
 			clif_displaymessage(sd->fd,"You have mounted your Mado Gear");
 			pc_setoption(sd, sd->sc.option|OPTION_MADOGEAR);
 		} else {

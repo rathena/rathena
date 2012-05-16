@@ -7222,6 +7222,21 @@ int pc_setriding(TBL_PC* sd, int flag)
 }
 
 /*==========================================
+ * 
+ *------------------------------------------*/
+int pc_setmadogear(TBL_PC* sd, int flag)
+{
+	if( flag ){
+		if( pc_checkskill(sd,NC_MADOLICENCE) > 0 ) 
+			pc_setoption(sd, sd->sc.option|OPTION_MADOGEAR);
+	} else if( pc_ismadogear(sd) ){
+			pc_setoption(sd, sd->sc.option&~OPTION_MADOGEAR);
+	}
+
+	return 0;
+}
+
+/*==========================================
  * アイテムドロップ可不可判定
  *------------------------------------------*/
 int pc_candrop(struct map_session_data *sd, struct item *item)
@@ -8422,7 +8437,7 @@ void pc_overheat(struct map_session_data *sd, int val) {
 	int heat = val, skill,
 		limit[] = { 10, 20, 28, 46, 66 };
 
-	if( !(sd->sc.option&OPTION_MADOGEAR) || sd->sc.data[SC_OVERHEAT] )
+	if( !pc_ismadogear(sd) || sd->sc.data[SC_OVERHEAT] )
 		return; // already burning
 
 	skill = cap_value(pc_checkskill(sd,NC_MAINFRAME),0,4);
