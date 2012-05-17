@@ -15,7 +15,7 @@
 
 // Moscovia Transportation
 //============================================================ 
-alberta,245,66,4	script	Moscovia P.R. Officer#1	960,{
+alberta,246,51,4	script	Moscovia P.R. Officer#1	960,{
 	mes "[Moscovia P.R. Officer]";
 	mes "Moscovia! Do you know Moscovia?";
 	mes "the paradise spreading on the endless seas...";
@@ -108,7 +108,7 @@ moscovia,166,53,4	script	Moscovia P.R. Officer#2	960,{
 	mes "Please come and visit soon.";
 	mes "Ok then, Let's get going.";
 	close2;
-	warp "alberta",243,67;
+	warp "alberta",244,52;
 	end;
 }
 

@@ -161,7 +161,7 @@ alberta,23,238,4	script	Guide#01alberta::AlbertaGuide	105,{
 					mes "if you'd like to visit ^800080Brasilis^000000,";
 					mes "the City of Passion.";
 					mes "Would you like to check any other locations?";
-					viewpoint 1,246,115,14,0xDA70D6;
+					viewpoint 1,246,82,14,0xDA70D6;
 					next;
 					break;
 				case 3:
@@ -171,7 +171,7 @@ alberta,23,238,4	script	Guide#01alberta::AlbertaGuide	105,{
 					mes "if you'd like to enjoy viewing cherry blossoms";
 					mes "in ^0000FFAmatsu^000000.";
 					mes "Would you like to check any other locations?";
-					viewpoint 1,246,115,15,0x0A82FF;
+					viewpoint 1,246,74,15,0x0A82FF;
 					next;
 					break;
 				case 4:
@@ -180,7 +180,7 @@ alberta,23,238,4	script	Guide#01alberta::AlbertaGuide	105,{
 					mes "^B9062FKunlun Envoy^000000 at the Alberta Port";
 					mes "if you'd like to experience the exotic atmosphere of ^B9062FKunlun^000000.";
 					mes "Would you like to check any other locations?";
-					viewpoint 1,245,69,16,0xFF0000;
+					viewpoint 1,246,62,16,0xFF0000;
 					next;
 					break;
 				case 5:
@@ -191,7 +191,7 @@ alberta,23,238,4	script	Guide#01alberta::AlbertaGuide	105,{
 					mes "^FF5400Moscovia^000000,";
 					mes "the Eden on the ocean.";
 					mes "Would you like to check any other locations?";
-					viewpoint 1,245,66,17,0xFFB400;
+					viewpoint 1,246,51,17,0xFFB400;
 					next;
 					break;
 				case 6:
@@ -201,7 +201,7 @@ alberta,23,238,4	script	Guide#01alberta::AlbertaGuide	105,{
 					mes "if you'd like to move to the historical city,";
 					mes "^7F3300Louyang^000000.";
 					mes "Would you like to check any other locations?";
-					viewpoint 1,245,45,18,0xD2691E;
+					viewpoint 1,246,40,18,0xD2691E;
 					next;
 					break;
 				case 7:
@@ -212,7 +212,7 @@ alberta,23,238,4	script	Guide#01alberta::AlbertaGuide	105,{
 					mes "^800080Ayothaya^000000,";
 					mes "the religious city.";
 					mes "Would you like to check any other locations?";
-					viewpoint 1,245,42,19,0xDA70D6;
+					viewpoint 1,246,29,19,0xDA70D6;
 					next;
 					break;
 				case 8:

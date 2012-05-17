@@ -1718,17 +1718,6 @@ OnTimer60000:
 		stopnpctimer;
 	}
 	end;
-
-OnTimer600000:
-	mapannounce "job3_arch02","Demons cry: Too boring, can no longer imagine what will happen! Friends, we went to lessons learned that could fool arrogant guy, OK?",bc_map,"0xFF0000"; //FW_NORMAL 12 0 0 //Custom translation;
-	end;
-
-OnTimer605000:
-	mapannounce "job3_arch02","Valkyrie's voice: No! This can not be. I will send you back soon!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
-	mapwarp "job3_arch02","job3_arch01",29,29;
-	donpcevent "Valkyrie#arch::OnBc";
-	stopnpctimer;
-	end;
 }
 
 job3_arch02,390,388,1	script	#arch_2_start	844,{

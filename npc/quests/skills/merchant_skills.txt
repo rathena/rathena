@@ -331,7 +331,7 @@ alberta,119,221,6	script	Charlron	107,{
 	close;
 }
 
-alberta,232,106,6	script	Gershaun	57,{
+alberta,232,103,6	script	Gershaun	57,{
 	if (BaseJob == Job_Merchant) {
 		if (getskilllv("MC_CARTREVOLUTION") == 1) {
 			mes "[Gershaun]";

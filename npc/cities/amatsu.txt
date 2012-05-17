@@ -16,7 +16,7 @@
 
 // Amatsu Transportation
 //=====================================================
-alberta,245,93,3	script	Sea Captain#ama1	709,{
+alberta,246,74,3	script	Sea Captain#ama1	709,{
 	mes "[Walter Moers]";
 	mes "Hey, there.";
 	mes "Have you ever heard that there";
@@ -136,7 +136,7 @@ amatsu,194,79,5	script	Sea Captain#ama2	709,{
 		mes "so many things to talk about,";
 		mes "right? All aboard now.";
 		close2;
-		warp "alberta",243,91;
+		warp "alberta",244,72;
 		end;
 	}
 	mes "[Walter Moers]";

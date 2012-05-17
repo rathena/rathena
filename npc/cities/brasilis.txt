@@ -15,7 +15,7 @@
 //= 1.2 Updated dialog, added Ice Cream Maker. [L0ne_W0lf]
 //============================================================ 
 
-alberta,247,115,3	script	Crewman#bra2	100,{
+alberta,246,82,3	script	Crewman#bra2	100,{
 	mes "[Crewman]";
 	mes "Hey, have you heard of a place called Brasilis?";
 	mes "It's a tropical city that's hot like the desert but also rainy. It is a very mysterious place.";
@@ -55,7 +55,7 @@ brasilis,316,57,3	script	Crewman#bra1	100,{
 		mes "[Crewman]";
 		mes "I sure do miss home.";
 		close2;
-		warp "alberta",244,115;
+		warp "alberta",243,82;
 		end;
 	case 2:
 		mes "[Crewman]";

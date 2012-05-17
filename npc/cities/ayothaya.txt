@@ -16,7 +16,7 @@
 
 // Ayothaya Transportation NPC
 //============================================================ 
-alberta,247,42,3	script	Aibakthing#ayo	843,{
+alberta,246,29,3	script	Aibakthing#ayo	843,{
 	mes "[Aibakthing]";
 	mes "Hoo! Hah! Hoo! Hah!";
 	mes "Let me take you away to";
@@ -91,7 +91,7 @@ ayothaya,152,68,1	script	Aibakthing#ayo2	843,{
 		mes "[Aibakthing]";
 		mes "You will be welcome to come back whenever you please. I hope that we will see each other again sometime soon. Thank you~";
 		close2;
-		warp "alberta",235,45;
+		warp "alberta",238,22;
 		end;
 	}
 	mes "[Aibakthing]";

@@ -20,7 +20,7 @@
 
 // Louyang Transportaion
 //============================================================
-alberta,245,45,3	script	Girl#0lou	815,{
+alberta,246,40,3	script	Girl#0lou	815,{
 	mes "[Girl]";
 	mes "La la la la~";
 	mes "I feel so good today~";
@@ -108,7 +108,7 @@ lou_fild01,190,100,7	script	Girl#1lou	815,{
 		mes "see you again!";
 		mes "Bye bye!";
 		close2;
-		warp "alberta",235,45;
+		warp "alberta",236,40;
 		end;
 	}
 	mes "[Girl]";

@@ -16,7 +16,7 @@
 
 // Kunlun Transportation
 //============================================================ 
-alberta,245,69,3	script	Kunlun Envoy#gon	776,{
+alberta,246,62,3	script	Kunlun Envoy#gon	776,{
 	mes "[Wa Bai Hu]";
 	mes "Good day~";
 	mes "Let me invite you all";
@@ -143,7 +143,7 @@ gon_fild01,255,79,7	script	Kunlun Envoy#gon2	776,{
 		mes "back. Now, let me guide you";
 		mes "back to Alberta.";
 		close2;
-		warp "alberta",243,67;
+		warp "alberta",244,60;
 		end;
 	}
 	mes "[Wa Bai Hu]";
