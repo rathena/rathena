@@ -16,7 +16,6 @@
 //============================================================ 
 
 nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
-	Set ins_nyd,132;//debug
 	if (ins_nyd == 0) {
 		mes "A great stone gate stands before you. The sculpture of a terrible dragon spreads its powerful looking wings.";
 		next;
