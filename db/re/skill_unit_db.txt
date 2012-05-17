@@ -136,10 +136,10 @@
 2450,0xe0,    ,  3, 0, 500,enemy, 0x010	//SO_CLOUD_KILL
 2452,0xe4,    ,  0, 3,3000,all,   0x010	//SO_WARMER
 2453,0xeb,    ,  0, 1:1:2:2:3,1000,enemy,0x010	//SO_VACUUM_EXTREME
-2465,0xf1,    ,  0, 1,1000,all,   0x010	//SO_FIRE_INSIGNIA
-2466,0xf2,    ,  0, 1,1000,all,   0x010	//SO_WATER_INSIGNIA
-2467,0xf3,    ,  0, 1,1000,all,   0x010	//SO_WIND_INSIGNIA
-2468,0xf4,    ,  0, 1,1000,all,   0x010	//SO_EARTH_INSIGNIA
+2465,0xf1,    ,  0, 2,1000,all,   0x010	//SO_FIRE_INSIGNIA
+2466,0xf2,    ,  0, 2,1000,all,   0x010	//SO_WATER_INSIGNIA
+2467,0xf3,    ,  0, 2,1000,all,   0x010	//SO_WIND_INSIGNIA
+2468,0xf4,    ,  0, 2,1000,all,   0x010	//SO_EARTH_INSIGNIA
 
 2479,0xe5,    ,  0, 1,1000,enemy, 0x000	//GN_THORNS_TRAP
 2482,0xe6,0x7f, -1, 1,  -1,all,   0x000	//GN_WALLOFTHORN

@@ -2541,10 +2541,9 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 	return end;
 }
 
-int npc_duplicate4instance(struct npc_data *snd, int m)
-{
+int npc_duplicate4instance(struct npc_data *snd, int m) {
 	char newname[NAME_LENGTH];
-
+	
 	if( map[m].instance_id == 0 )
 		return 1;
 

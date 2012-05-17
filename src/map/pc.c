@@ -6758,17 +6758,21 @@ int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
 		if(bonus != 100)
 			sp = sp * bonus / 100;
 	}
+	if( sd->sc.count ) {
+		if ( sd->sc.data[SC_CRITICALWOUND] ) {
+			hp -= hp * sd->sc.data[SC_CRITICALWOUND]->val2 / 100;
+			sp -= sp * sd->sc.data[SC_CRITICALWOUND]->val2 / 100;
+		}
 
-	if (sd->sc.data[SC_CRITICALWOUND])
-	{
-		hp -= hp * sd->sc.data[SC_CRITICALWOUND]->val2 / 100;
-		sp -= sp * sd->sc.data[SC_CRITICALWOUND]->val2 / 100;
-	}
-	
-	if (sd->sc.data[SC_DEATHHURT])
-	{
-		hp -= hp * 20 / 100;
-		sp -= sp * 20 / 100;
+		if ( sd->sc.data[SC_DEATHHURT] ) {
+			hp -= hp * 20 / 100;
+			sp -= sp * 20 / 100;
+		}
+		
+		if( sd->sc.data[SC_WATER_INSIGNIA] && sd->sc.data[SC_WATER_INSIGNIA]->val1 == 2 ) {
+			hp += hp / 10;
+			sp += sp / 10;
+		}
 	}
 
 	return status_heal(&sd->bl, hp, sp, 1);

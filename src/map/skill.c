@@ -356,45 +356,43 @@ int skill_get_range2 (struct block_list *bl, int id, int lv)
 	return range;
 }
 
-int skill_calc_heal(struct block_list *src, struct block_list *target, int skill_id, int skill_lv, bool heal)
-{
+int skill_calc_heal(struct block_list *src, struct block_list *target, int skill_id, int skill_lv, bool heal) {
 	int skill, hp;
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct map_session_data *tsd = BL_CAST(BL_PC, target);
 	struct status_change* sc;
 
-	switch( skill_id )
-	{
-	case BA_APPLEIDUN:
-		hp = 30+5*skill_lv+5*(status_get_vit(src)/10); // HP recovery
-		if( sd )
-			hp += 5*pc_checkskill(sd,BA_MUSICALLESSON);
-		break;
-	case PR_SANCTUARY:
-		hp = (skill_lv>6)?777:skill_lv*100;
-		break;
-	case NPC_EVILLAND:
-		hp = (skill_lv>6)?666:skill_lv*100;
-		break;
-	default:
-		if (skill_lv >= battle_config.max_heal_lv)
-			return battle_config.max_heal;
-	#ifdef RENEWAL
-		/**
-		 * Renewal Heal Formula (from Doddler)
-		 * TODO: whats that( 1+ %Modifier / 100 ) ? currently using 'x1' (100/100) until found out
-		 * - Min = ( [ ( BaseLvl + INT ) / 5 ] * 30 ) * (1+( %Modifier / 100)) * (HealLvl * 0.1) + StatusMATK + EquipMATK - [(WeaponMATK * WeaponLvl) / 10]
-		 * - Max = ( [ ( BaseLvl + INT ) / 5 ] * 30 ) * (1+( %Modifier / 100)) * (HealLvl * 0.1) + StatusMATK + EquipMATK + [(WeaponMATK * WeaponLvl) / 10] 
-		 **/
-		hp = ( ( ( ( status_get_lv(src) + status_get_int(src) ) / 5 ) * 3 ) * skill_lv  + status_get_matk_min(src) + status_get_matk_max(src) - ( ( status_get_matk_max(src) * status_get_wlv(src) ) / 10 ) ) + rnd()%( ( ( ( status_get_lv(src) + status_get_int(src) ) / 5 ) * 3 ) * skill_lv + status_get_matk_min(src) + status_get_matk_max(src) + ( ( status_get_matk_max(src) * status_get_wlv(src) ) / 10 ) );
-	#else
-		hp = ( status_get_lv(src) + status_get_int(src) ) / 8 * (4 + ( skill_id == AB_HIGHNESSHEAL ? ( sd ? pc_checkskill(sd,AL_HEAL) : 10 ) : skill_lv ) * 8);
-	#endif
-		if( sd && ((skill = pc_checkskill(sd, HP_MEDITATIO)) > 0) )
-			hp += hp * skill * 2 / 100;
-		else if( src->type == BL_HOM && (skill = merc_hom_checkskill(((TBL_HOM*)src), HLIF_BRAIN)) > 0 )
-			hp += hp * skill * 2 / 100;
-		break;
+	switch( skill_id ) {
+		case BA_APPLEIDUN:
+			hp = 30+5*skill_lv+5*(status_get_vit(src)/10); // HP recovery
+			if( sd )
+				hp += 5*pc_checkskill(sd,BA_MUSICALLESSON);
+			break;
+		case PR_SANCTUARY:
+			hp = (skill_lv>6)?777:skill_lv*100;
+			break;
+		case NPC_EVILLAND:
+			hp = (skill_lv>6)?666:skill_lv*100;
+			break;
+		default:
+			if (skill_lv >= battle_config.max_heal_lv)
+				return battle_config.max_heal;
+		#ifdef RENEWAL
+			/**
+			 * Renewal Heal Formula (from Doddler)
+			 * TODO: whats that( 1+ %Modifier / 100 ) ? currently using 'x1' (100/100) until found out
+			 * - Min = ( [ ( BaseLvl + INT ) / 5 ] * 30 ) * (1+( %Modifier / 100)) * (HealLvl * 0.1) + StatusMATK + EquipMATK - [(WeaponMATK * WeaponLvl) / 10]
+			 * - Max = ( [ ( BaseLvl + INT ) / 5 ] * 30 ) * (1+( %Modifier / 100)) * (HealLvl * 0.1) + StatusMATK + EquipMATK + [(WeaponMATK * WeaponLvl) / 10] 
+			 **/
+			hp = ( ( ( ( status_get_lv(src) + status_get_int(src) ) / 5 ) * 3 ) * skill_lv  + status_get_matk_min(src) + status_get_matk_max(src) - ( ( status_get_matk_max(src) * status_get_wlv(src) ) / 10 ) ) + rnd()%( ( ( ( status_get_lv(src) + status_get_int(src) ) / 5 ) * 3 ) * skill_lv + status_get_matk_min(src) + status_get_matk_max(src) + ( ( status_get_matk_max(src) * status_get_wlv(src) ) / 10 ) );
+		#else
+			hp = ( status_get_lv(src) + status_get_int(src) ) / 8 * (4 + ( skill_id == AB_HIGHNESSHEAL ? ( sd ? pc_checkskill(sd,AL_HEAL) : 10 ) : skill_lv ) * 8);
+		#endif
+			if( sd && ((skill = pc_checkskill(sd, HP_MEDITATIO)) > 0) )
+				hp += hp * skill * 2 / 100;
+			else if( src->type == BL_HOM && (skill = merc_hom_checkskill(((TBL_HOM*)src), HLIF_BRAIN)) > 0 )
+				hp += hp * skill * 2 / 100;
+			break;
 	}
 
 	if( ( (target && target->type == BL_MER) || !heal ) && skill_id != NPC_EVILLAND )
@@ -407,14 +405,15 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, int skill
 		hp += hp*skill/100;
 
 	sc = status_get_sc(target);
-	if( sc && sc->count )
-	{
+	if( sc && sc->count ) {
 		if( sc->data[SC_CRITICALWOUND] && heal ) // Critical Wound has no effect on offensive heal. [Inkfish]
 			hp -= hp * sc->data[SC_CRITICALWOUND]->val2/100;
 		if( sc->data[SC_DEATHHURT] && heal )
 			hp -= hp * 20/100;
 		if( sc->data[SC_INCHEALRATE] && skill_id != NPC_EVILLAND && skill_id != BA_APPLEIDUN )
 			hp += hp * sc->data[SC_INCHEALRATE]->val1/100; // Only affects Heal, Sanctuary and PotionPitcher.(like bHealPower) [Inkfish]
+		if( sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 2)
+			hp += hp / 10;
 	}
 
 	return hp;
@@ -6010,34 +6009,27 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	}
 
 	case AM_BERSERKPITCHER:
-	case AM_POTIONPITCHER:
-		{
+	case AM_POTIONPITCHER: {
 			int i,x,hp = 0,sp = 0,bonus=100;
-			if( dstmd && dstmd->class_ == MOBID_EMPERIUM )
-			{
+			if( dstmd && dstmd->class_ == MOBID_EMPERIUM ) {
 				map_freeblock_unlock();
 				return 1;
 			}
-			if( sd )
-			{
+			if( sd ) {
 				x = skilllv%11 - 1;
 				i = pc_search_inventory(sd,skill_db[skillid].itemid[x]);
-				if(i < 0 || skill_db[skillid].itemid[x] <= 0)
-				{
+				if( i < 0 || skill_db[skillid].itemid[x] <= 0 ) {
 					clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
 					map_freeblock_unlock();
 					return 1;
 				}
-				if(sd->inventory_data[i] == NULL || sd->status.inventory[i].amount < skill_db[skillid].amount[x])
-				{
+				if(sd->inventory_data[i] == NULL || sd->status.inventory[i].amount < skill_db[skillid].amount[x]) {
 					clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
 					map_freeblock_unlock();
 					return 1;
 				}
-				if( skillid == AM_BERSERKPITCHER )
-				{
-					if( dstsd && dstsd->status.base_level < (unsigned int)sd->inventory_data[i]->elv )
-					{
+				if( skillid == AM_BERSERKPITCHER ) {
+					if( dstsd && dstsd->status.base_level < (unsigned int)sd->inventory_data[i]->elv ) {
 						clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
 						map_freeblock_unlock();
 						return 1;
@@ -6050,27 +6042,21 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				potion_flag = potion_target = 0;
 				if( sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_ALCHEMIST )
 					bonus += sd->status.base_level;
-				if( potion_per_hp > 0 || potion_per_sp > 0 )
-				{
+				if( potion_per_hp > 0 || potion_per_sp > 0 ) {
 					hp = tstatus->max_hp * potion_per_hp / 100;
 					hp = hp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)*bonus/10000;
-					if( dstsd )
-					{
+					if( dstsd ) {
 						sp = dstsd->status.max_sp * potion_per_sp / 100;
 						sp = sp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)*bonus/10000;
 					}
-				}
-				else
-				{
-					if( potion_hp > 0 )
-					{
+				} else {
+					if( potion_hp > 0 ) {
 						hp = potion_hp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)*bonus/10000;
 						hp = hp * (100 + (tstatus->vit<<1)) / 100;
 						if( dstsd )
 							hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10) / 100;
 					}
-					if( potion_sp > 0 )
-					{
+					if( potion_sp > 0 ) {
 						sp = potion_sp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)*bonus/10000;
 						sp = sp * (100 + (tstatus->int_<<1)) / 100;
 						if( dstsd )
@@ -6078,39 +6064,38 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					}
 				}
 
-				if (sd->itemgrouphealrate[IG_POTION]>0)
-				{
+				if (sd->itemgrouphealrate[IG_POTION]>0) {
 					hp += hp * sd->itemgrouphealrate[IG_POTION] / 100;
 					sp += sp * sd->itemgrouphealrate[IG_POTION] / 100;
 				}
 
-				if( (i = pc_skillheal_bonus(sd, skillid)) )
-				{
+				if( (i = pc_skillheal_bonus(sd, skillid)) ) {
 					hp += hp * i / 100;
 					sp += sp * i / 100;
 				}
-			}
-			else
-			{
+			} else {
 				hp = (1 + rnd()%400) * (100 + skilllv*10) / 100;
 				hp = hp * (100 + (tstatus->vit<<1)) / 100;
 				if( dstsd )
 					hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10) / 100;
 			}
-			if( dstsd && (i = pc_skillheal2_bonus(dstsd, skillid)) )
-			{
+			if( dstsd && (i = pc_skillheal2_bonus(dstsd, skillid)) ) {
 				hp += hp * i / 100;
 				sp += sp * i / 100;
 			}
-			if( tsc && tsc->data[SC_CRITICALWOUND] )
-			{
-				hp -= hp * tsc->data[SC_CRITICALWOUND]->val2 / 100;
-				sp -= sp * tsc->data[SC_CRITICALWOUND]->val2 / 100;
-			}
-			if( tsc && tsc->data[SC_DEATHHURT] )
-			{
-				hp -= hp * 20 / 100;
-				sp -= sp * 20 / 100;
+			if( tsc && tsc->count ) {
+				if( tsc->data[SC_CRITICALWOUND] ) {
+					hp -= hp * tsc->data[SC_CRITICALWOUND]->val2 / 100;
+					sp -= sp * tsc->data[SC_CRITICALWOUND]->val2 / 100;
+				}
+				if( tsc->data[SC_DEATHHURT] ) {
+					hp -= hp * 20 / 100;
+					sp -= sp * 20 / 100;
+				}
+				if( tsc->data[SC_WATER_INSIGNIA] && tsc->data[SC_WATER_INSIGNIA]->val1 == 2 ) {
+					hp += hp / 10;
+					sp += sp / 10;
+				}
 			}
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			if( hp > 0 || (skillid == AM_POTIONPITCHER && sp <= 0) )
@@ -6792,15 +6777,19 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				if (sp)
 					sp = sp * (100 + pc_checkskill(dstsd,MG_SRECOVERY)*10 + pc_skillheal2_bonus(dstsd, skillid))/100;
 			}
-			if (tsc && tsc->data[SC_CRITICALWOUND])
-			{
-				hp -= hp * tsc->data[SC_CRITICALWOUND]->val2 / 100;
-				sp -= sp * tsc->data[SC_CRITICALWOUND]->val2 / 100;
-			}
-			if (tsc && tsc->data[SC_DEATHHURT])
-			{
-				hp -= hp * 20 / 100;
-				sp -= sp * 20 / 100;
+			if( tsc && tsc->count ) {
+				if (tsc->data[SC_CRITICALWOUND]) {
+					hp -= hp * tsc->data[SC_CRITICALWOUND]->val2 / 100;
+					sp -= sp * tsc->data[SC_CRITICALWOUND]->val2 / 100;
+				}
+				if (tsc->data[SC_DEATHHURT]) {
+					hp -= hp * 20 / 100;
+					sp -= sp * 20 / 100;
+				}
+				if( tsc->data[SC_WATER_INSIGNIA] && tsc->data[SC_WATER_INSIGNIA]->val1 == 2) {
+					hp += hp / 10;
+					sp += sp / 10;
+				}
 			}
 			if(hp > 0)
 				clif_skill_nodamage(NULL,bl,AL_HEAL,hp,1);
@@ -11215,6 +11204,13 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			}
 			break;
 			
+		case UNT_FIRE_INSIGNIA:
+		case UNT_WATER_INSIGNIA:
+		case UNT_WIND_INSIGNIA:
+		case UNT_EARTH_INSIGNIA:
+			sc_start(bl,type, 100, sg->skill_lv, sg->interval);
+			break;			
+			
 		case UNT_VACUUM_EXTREME:
 			sc_start(bl, SC_VACUUM_EXTREME, 100, sg->skill_lv, sg->limit);
 			break;
@@ -11340,7 +11336,11 @@ static int skill_unit_onleft (int skill_id, struct block_list *bl, unsigned int 
 		case SC_BLOODYLUST:
 		case EL_WATER_BARRIER:
 		case EL_ZEPHYR:
-		case EL_POWER_OF_GAIA:			
+		case EL_POWER_OF_GAIA:		
+		case SO_FIRE_INSIGNIA:
+		case SO_WATER_INSIGNIA:
+		case SO_WIND_INSIGNIA:
+		case SO_EARTH_INSIGNIA:			
 			if (sce)
 				status_change_end(bl, type, INVALID_TIMER);
 			break;
