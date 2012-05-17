@@ -7008,10 +7008,10 @@ BUILDIN_FUNC(repair)
  *------------------------------------------*/
 BUILDIN_FUNC(getequipisequiped)
 {
-	int i=-1,num;
+	int i = -1,num;
 	TBL_PC *sd;
 
-	num=script_getnum(st,2);
+	num = script_getnum(st,2);
 	sd = script_rid2sd(st);
 	if( sd == NULL )
 		return 0;
@@ -7031,10 +7031,10 @@ BUILDIN_FUNC(getequipisequiped)
  *------------------------------------------*/
 BUILDIN_FUNC(getequipisenableref)
 {
-	int i=-1,num;
+	int i = -1,num;
 	TBL_PC *sd;
 
-	num=script_getnum(st,2);
+	num = script_getnum(st,2);
 	sd = script_rid2sd(st);
 	if( sd == NULL )
 		return 0;
@@ -7054,10 +7054,10 @@ BUILDIN_FUNC(getequipisenableref)
  *------------------------------------------*/
 BUILDIN_FUNC(getequipisidentify)
 {
-	int i=-1,num;
+	int i = -1,num;
 	TBL_PC *sd;
 
-	num=script_getnum(st,2);
+	num = script_getnum(st,2);
 	sd = script_rid2sd(st);
 	if( sd == NULL )
 		return 0;
@@ -7077,10 +7077,10 @@ BUILDIN_FUNC(getequipisidentify)
  *------------------------------------------*/
 BUILDIN_FUNC(getequiprefinerycnt)
 {
-	int i=-1,num;
+	int i = -1,num;
 	TBL_PC *sd;
 
-	num=script_getnum(st,2);
+	num = script_getnum(st,2);
 	sd = script_rid2sd(st);
 	if( sd == NULL )
 		return 0;
@@ -7100,10 +7100,10 @@ BUILDIN_FUNC(getequiprefinerycnt)
  *------------------------------------------*/
 BUILDIN_FUNC(getequipweaponlv)
 {
-	int i=-1,num;
+	int i = -1,num;
 	TBL_PC *sd;
 
-	num=script_getnum(st,2);
+	num = script_getnum(st,2);
 	sd = script_rid2sd(st);
 	if( sd == NULL )
 		return 0;
@@ -7123,10 +7123,10 @@ BUILDIN_FUNC(getequipweaponlv)
  *------------------------------------------*/
 BUILDIN_FUNC(getequippercentrefinery)
 {
-	int i=-1,num;
+	int i = -1,num;
 	TBL_PC *sd;
 
-	num=script_getnum(st,2);
+	num = script_getnum(st,2);
 	sd = script_rid2sd(st);
 	if( sd == NULL )
 		return 0;
@@ -7149,7 +7149,7 @@ BUILDIN_FUNC(successrefitem)
 	int i=-1,num,ep;
 	TBL_PC *sd;
 
-	num=script_getnum(st,2);
+	num = script_getnum(st,2);
 	sd = script_rid2sd(st);
 	if( sd == NULL )
 		return 0;
@@ -7203,7 +7203,7 @@ BUILDIN_FUNC(failedrefitem)
 	int i=-1,num;
 	TBL_PC *sd;
 
-	num=script_getnum(st,2);
+	num = script_getnum(st,2);
 	sd = script_rid2sd(st);
 	if( sd == NULL )
 		return 0;
@@ -7218,6 +7218,44 @@ BUILDIN_FUNC(failedrefitem)
 
 		pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
 		// ‘¼‚Ìl‚É‚àŽ¸”s‚ð’Ê’m
+		clif_misceffect(&sd->bl,2);
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * Downgrades an Equipment Part by -1 . [Masao]
+ *------------------------------------------*/
+BUILDIN_FUNC(downrefitem)
+{
+	int i = -1,num,ep;
+	TBL_PC *sd;
+
+	num = script_getnum(st,2);
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 0;
+
+	if (num > 0 && num <= ARRAYLENGTH(equip))
+		i = pc_checkequip(sd,equip[num-1]);
+	if(i >= 0) {
+		ep = sd->status.inventory[i].equip;
+
+		//Logs items, got from (N)PC scripts [Lupus]
+		log_pick_pc(sd, LOG_TYPE_SCRIPT, -1, &sd->status.inventory[i]);
+
+		sd->status.inventory[i].refine++;
+		pc_unequipitem(sd,i,2); // status calc will happen in pc_equipitem() below
+
+		clif_refine(sd->fd,2,i,sd->status.inventory[i].refine = sd->status.inventory[i].refine - 2);
+		clif_delitem(sd,i,1,3);
+
+		//Logs items, got from (N)PC scripts [Lupus]
+		log_pick_pc(sd, LOG_TYPE_SCRIPT, 1, &sd->status.inventory[i]);
+
+		clif_additem(sd,i,1,0);
+		pc_equipitem(sd,i,ep);
 		clif_misceffect(&sd->bl,2);
 	}
 
@@ -16254,6 +16292,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getequippercentrefinery,"i"),
 	BUILDIN_DEF(successrefitem,"i"),
 	BUILDIN_DEF(failedrefitem,"i"),
+	BUILDIN_DEF(downrefitem,"i"),
 	BUILDIN_DEF(statusup,"i"),
 	BUILDIN_DEF(statusup2,"ii"),
 	BUILDIN_DEF(bonus,"iv"),

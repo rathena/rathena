@@ -31,7 +31,6 @@ payon,174,138,0	script	Suhnbi#cash	85,{
 	mes "armor and equipment, so let me";
 	mes "know what you want to refine.";
 	next;
-	
 	setarray .@position$[1], "Head","Body","Left hand","Right hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3";
 	set .@menu$,"";
 	for( set .@i,1; .@i <= 10; set .@i,.@i+1 )
@@ -88,25 +87,23 @@ payon,174,138,0	script	Suhnbi#cash	85,{
 		mes "It's been a while since I've made such a fine weapon. You must be happy because it has become stronger!";
 		close;
 	}
-	else
-	{
-		mes "[Suhnbi]";
-		mes "Clink! Clank! Clunk!";
-		FailedRefItem .@part;
-		next;
-		if (rand(5) == 1)
-			Emotion e_cash;
-		else 
-			Emotion e_omg;
-		mes "[Suhnbi]";
-		mes "Cough!!!!";
-		next;
-		mes "[Suhnbi]";
-		mes "Cough...Cough..";
-		mes "What a shame...";
-		mes "Your equipment broke during the refining process. I had told you earlier this might happen!";
-		close;
+	mes "[Suhnbi]";
+	mes "Clink! Clank! Clunk!";
+	FailedRefItem .@part;
+	next;
+	if (rand(5) == 1){
+		Emotion e_cash;
+	} else {
+		Emotion e_omg;
 	}
+	mes "[Suhnbi]";
+	mes "Cough!!!!";
+	next;
+	mes "[Suhnbi]";
+	mes "Cough...Cough..";
+	mes "What a shame...";
+	mes "Your equipment broke during the refining process. I had told you earlier this might happen!";
+	close;
 
 S_RefineValidate:
 	mes "[Suhnbi]";
@@ -150,19 +147,13 @@ S_RefineValidate:
 			set Zeny, Zeny - getarg(2);
 			return;
 		}
-		else
-		{
-			mes "[Suhnbi]";
-			mes "You don't seem to have enough Zeny or " + getitemname(getarg(1)) + "...";
-			mes "Go get some more. I'll be here all day if you need me.";
-			close;
-		}
-	}
-	else
-	{
 		mes "[Suhnbi]";
-		mes "Yeah... There's no need to rush.";
-		mes "Take your time.";
+		mes "You don't seem to have enough Zeny or " + getitemname(getarg(1)) + "...";
+		mes "Go get some more. I'll be here all day if you need me.";
 		close;
 	}
+	mes "[Suhnbi]";
+	mes "Yeah... There's no need to rush.";
+	mes "Take your time.";
+	close;
 }

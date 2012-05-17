@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Syrus22 (1.1) dafide18 (1.4) Skotlex (1.5)
 //===== Current Version: =====================================
-//= 2.9
+//= 3.1
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -54,9 +54,10 @@
 //= 2.8 Added proper Blacksmith Supplier to Einroch. [L0ne_W0lf]
 //=     Updated dated features comment to reflect new usage.
 //= 2.8a Small bugfix. (bugreport:2418) [Paradox924X]
-//= 2.9 MOved Morroc repairman to Morroc Ruins. [L0ne_W0lf]
+//= 2.9 Moved Morroc repairman to Morroc Ruins. [L0ne_W0lf]
 //= 3.0 Updated several NPC names and locations. [Xantara]
 //		Added WoE map Refiners.
+//= 3.1 Added the new refinement & Ore creation NPC's for +11 and above Refinement. [Masao]
 //============================================================
 
 
@@ -601,6 +602,9 @@ lhz_in02,282,20,7	script	Fulerr	869,{
 //============================================================
 //= To allow auto safe refining/multiple refining set the
 //= second argument to '1' in the function call.
+//= If you enable this function make sure you set the appropiate +x Level in your refine_db.txt
+//= to 100 and adjust the .@safe Value in the Script to your desired max. Safe Level.
+//= Otherwise it won't work .
 //============================================================
 function	script	refinemain	{
 	set .@features,getarg(1);
@@ -1280,6 +1284,584 @@ function	script	repairmain	{
 		mes "any business with me";
 		mes "if you don't have any";
 		mes "items to repair.";
+		close;
+	}
+}
+
+//=====================================================================================
+// +11 and above Weapon/Armor Refiners
+//=====================================================================================
+prt_in,90,72,5	script	Bestry#prt	826,{
+	callfunc "refinenew","Bestry",0,0;
+	end;
+}
+morocc_in,64,41,5	script	Bestry#moc	826,{
+	callfunc "refinenew","Bestry",0,0;
+	end;
+}
+payon_in01,18,132,3	script	Bestry#pay	826,{
+	callfunc "refinenew","Bestry",0,0;
+	end;
+}
+
+//=====================================================================================
+// +11 and above Weapon/Armor Function
+//=====================================================================================
+//= To allow auto safe refining/multiple refining set the
+//= second argument to '1' in the function call.
+//= If you enable this function make sure you set the appropiate +x Level in your refine_db.txt
+//= to 100 and adjust the .@safe Value in the Script to your desired max. Safe Level.
+//= Otherwise it won't work .
+//=
+//= In the official script the NPC uses an new Command which is called 'GetExdEquipIsSuccessRefinery',
+//= this command seems to generate a random number between 1 and 3 to decide either of 
+//= the following:
+//= 1: Success
+//= 2: Downgrade
+//= 3: Failure
+//=
+//= If you want to enable that feature just set the third argument to '1' in the function call.
+//= Otherwise it will use the % chance in your refine_db.txt .
+//= Side Note: Current values for +11 and above upgrading in the refine_db.txt are custom.
+//=====================================================================================
+
+function	script	refinenew	{
+
+	mes "["+ getarg(0) +"]";
+	mes "I am the best Blacksmith ever!";
+	mes "I don't work with normal, boring items.";
+	mes "But only with items that are level 10 or higher!";
+	next;
+	mes "["+ getarg(0) +"]";
+	mes "Anyway, you may use my services if your item is lv 10 or higher.";
+	mes "What do you want to have refined?";
+	next;
+	setarray .@position$[1],"Head","Body","Left hand","Right hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3";
+	set .@menu$,"";
+	for( set .@i,1; .@i <= 10; set .@i,.@i+1 )
+	{
+		if( getequipisequiped(.@i) )
+			set .@menu$, .@menu$ + .@position$[.@i] + "-" + "[" + getequipname(.@i) + "]";
+
+		set .@menu$, .@menu$ + ":";
+	}
+	set .@part,select(.@menu$);
+	if(!getequipisequiped(.@part)) {
+		mes "[" + getarg(0) + "]";
+		mes "You're not wearing";
+		mes "anything there that";
+		mes "I can refine.";
+		emotion e_an;
+		close;
+	}
+	//Check if the item is refinable...
+	if(!getequipisenableref(.@part)) {
+		mes "[" + getarg(0) + "]";
+		mes "I don't think I can";
+		mes "refine this item at all...";
+		close;
+	}
+	//Check if the item is identified... (Don't know why this is in here... but kept it anyway)
+	if(!getequipisidentify(.@part)) {
+		mes "[" + getarg(0) + "]";
+		mes "You can't refine this";
+		mes "if you haven't appraised";
+		mes "it first. Make sure your";
+		mes "stuff is identified before";
+		mes "I can refine it.";
+		close;
+	}
+	//Check to see if the items is at least +10
+	if(getequiprefinerycnt(.@part) < 10) {
+		mes "["+ getarg(0) +"]";
+		mes "I said I don't work with Equipment under lv. 10.";
+		close;
+	}
+	if(getequiprefinerycnt(.@part) >= 20) {
+		mes "["+ getarg(0) +"]";
+		mes "I can't refine this";
+		mes "any more. This is as";
+		mes "refined as it gets!";
+		close;
+	}
+	set .@refineitemid, getequipid(.@part); // save id of the item
+	set .@refinerycnt, getequiprefinerycnt(.@part); //save refinery count
+	if ((getequipweaponlv(.@part) >= 1) && (getequipweaponlv(.@part) <= 4)) {
+		set .@material,6224;
+		set .@price,100000;
+		set .@safe,10;
+		mes "["+ getarg(0) +"]";
+		mes "Hmm a weapon, is that ok?";
+		mes "If you want to refine this weapon,";
+		mes "I will need 1 ^003366Bradium^000000 and 100,000 zeny.";
+		mes "Are you sure you want to continue?";
+	} else {
+		set .@material,6223;
+		set .@price,100000;
+		set .@safe,10;
+		mes "["+ getarg(0) +"]";
+		mes "Hmm an armor, is that ok?";
+		mes "If you want to refine this armor,";
+		mes "I will need 1 ^003366Carnium^00000 and 100,000 zeny.";
+		mes "Are you sure you want to continue?";
+	}
+	next;
+	if(select("Yes:No") == 2){
+		mes "["+ getarg(0) +"]";
+		mes "Well, no challenge is one way..";
+		mes "No risk.. that could be wise.";
+		close;
+	}
+	if(getarg(1) != 1) {
+		if ((getequipweaponlv(.@part) >= 1) && (getequipweaponlv(.@part) <= 4)) {
+				mes "["+ getarg(0) +"]";
+			mes "This weapon already has been refined serveral times.";
+			mes "It could be destroyed if you try more.";
+			mes "It won't break 100%, but is has a small chance.";
+			next;
+			mes "["+ getarg(0) +"]";
+			mes "You could have the upgrade level of the weapon decreased,";
+			mes "or if it breaks, you will lose ^FF0000any cards^000000 or special properties added to it.";
+		} else {
+			mes "["+ getarg(0) +"]";
+			mes "This armor already has been refined serveral times.";
+			mes "It could be destroyed if you try more.";
+			mes "It won't break 100%, but is has a small chance.";
+			next;
+			mes "["+ getarg(0) +"]";
+			mes "You could have the upgrade level of the armor decreased,";
+			mes "or if it breaks, you will lose ^FF0000any cards^000000 or special properties added to it.";
+		}
+		next;
+		mes "["+ getarg(0) +"]";
+		mes "Do you want me to refine it?";
+		mes "I think I gave you enough warnings.";
+		next;
+		switch (select("Yes.:No.")) {
+		case 1:
+			break;
+		case 2:
+			mes "["+ getarg(0) +"]";
+			mes "Well, no challenge is one way..";
+			mes "No risk.. that could be wise.";
+			close;
+		}
+		if(countitem(.@material) < 1 || Zeny < .@price) {
+			mes "["+ getarg(0) +"]";
+			mes "Hm, it seems you don't have enough materials or money.";
+			mes "Please check it out.";
+			close;
+		}
+		set Zeny,Zeny - .@price;
+		delitem .@material,1;
+		if(getequipisequiped(.@part) == 0) { // hacker has removed the item (not changed, why?)
+			mes "[" + getarg(0) + "]";
+			mes "Look here... you don't have any Items on...";
+			close;
+		}
+		if(getequiprefinerycnt(.@part) != .@refinerycnt || getequipid(.@part) != .@refineitemid) { // hacker has changed the item
+			mes "[" + getarg(0) + "]";
+			Emotion e_an;
+			mes "Wait a second...";
+			mes "Do you think I'm stupid?!";
+			mes "You switched the item while I wasn't looking! Get out of here!";
+			close;
+		}
+		if(getarg(2) == 1){
+			set .@rand,rand(1,3);
+			if (.@rand == 1) {
+				mes "Clang! Clang! Clang! Clang!";
+				successrefitem .@part;
+				next;
+				emotion e_no1;
+				mes "["+ getarg(0) +"]";
+				mes "Good! Succes!!!";
+				mes "I am the best Blacksmith.";
+				close;
+			}
+			if (.@rand == 2) {
+				mes "["+ getarg(0) +"]";
+				mes "Clang! Clang! Clang! Clang!";
+				downrefitem .@part;
+				next;
+				set .@emo, rand(1,5);
+				if (.@emo == 1) {
+					emotion e_cash;
+				}
+				else {
+					emotion e_omg;
+				}
+				mes "["+ getarg(0) +"]";
+				mes "Ahhh!!!";
+				next;
+				mes "["+ getarg(0) +"]";
+				mes "Oh my!";
+				mes "The upgrade level has dropped...";
+				mes "There could've been made an mistake even though I am the best ever.";
+				mes "It was out of my hands.";
+				next;
+				mes "["+ getarg(0) +"]";
+				mes "I will do a better job next time! Don't worry!";
+				close;
+			}
+			mes "["+ getarg(0) +"]";
+			mes "Clang! Clang! Clang!";
+			failedrefitem .@part;
+			next;
+			set .@emo, rand(1,5);
+			if (.@emo == 1) {
+				emotion e_cash;
+			} else {
+				emotion e_omg;
+			}
+			mes "["+ getarg(0) +"]";
+			mes "Hmmm!";
+			next;
+			mes "["+ getarg(0) +"]";
+			mes "Oh my! I've failed to refine stuff...";
+			mes "I didn't mean it!";
+			mes "There could've been made an mistake even though I am the best ever.";
+			mes "It was out of my hands.";
+			next;
+			mes "["+ getarg(0) +"]";
+			mes "I will do a better job next time! Don't worry!";
+			close;
+		}
+		set .@rand,rand(100);
+		if (getequippercentrefinery(.@part) > .@rand) {
+			mes "Clang! Clang! Clang! Clang!";
+			successrefitem .@part;
+			next;
+			emotion e_no1;
+			mes "["+ getarg(0) +"]";
+			mes "Good! Succes!!!";
+			mes "I am the best Blacksmith.";
+			close;
+		}
+		if (getequippercentrefinery(.@part) < .@rand) {
+			mes "["+ getarg(0) +"]";
+			mes "Clang! Clang! Clang! Clang!";
+			downrefitem .@part;
+			next;
+			set .@emo, rand(1,5);
+			if (.@emo == 1) {
+				emotion e_cash;
+			} else {
+				emotion e_omg;
+			}
+			mes "["+ getarg(0) +"]";
+			mes "Ahhh!!!";
+			next;
+			mes "["+ getarg(0) +"]";
+			mes "Oh my!";
+			mes "The upgrade level has dropped...";
+			mes "There could've been made an mistake even though I am the best ever.";
+			mes "It was out of my hands.";
+			next;
+			mes "["+ getarg(0) +"]";
+			mes "I will do a better job next time! Don't worry!";
+			close;
+		}
+		mes "["+ getarg(0) +"]";
+		mes "Clang! Clang! Clang!";
+		failedrefitem .@part;
+		next;
+		set .@emo, rand(1,5);
+		if (.@emo == 1) {
+			emotion e_cash;
+		} else {
+			emotion e_omg;
+		}
+		mes "["+ getarg(0) +"]";
+		mes "Hmmm!";
+		next;
+		mes "["+ getarg(0) +"]";
+		mes "Oh my! I've failed to refine stuff...";
+		mes "I didn't mean it!";
+		mes "There could've been made an mistake even though I am the best ever.";
+		mes "It was out of my hands.";
+		next;
+		mes "["+ getarg(0) +"]";
+		mes "I will do a better job next time! Don't worry!";
+		close;
+	}
+// New +11 and above Refining Functions ========================
+	if(getequiprefinerycnt(.@part) < .@safe) {
+		mes "[" + getarg(0) + "]";
+		mes "I can refine this to the safe limit or a desired number of times... it's your choice...";
+		next;
+		set .@menu2,select("To the safe limit please.","I'll decide how many times.","I've changed my mind...");
+	} else {
+		set .@menu2,2;
+	}
+	switch(.@menu2){
+	case 1: 
+		set .@refinecnt,.@safe - getequiprefinerycnt(.@part);
+		break;
+	case 2:
+		next;
+		mes "[" + getarg(0) + "]";
+		mes "So how many times would you like me to refine your item?";
+		next;
+		input .@refinecnt;
+		set .@refinecheck,.@refinecnt + getequiprefinerycnt(.@part);
+		if (.@refinecnt < 1 || .@refinecheck > 10) {
+			mes "[" + getarg(0) + "]";
+			mes "I can't refine this item that many times.";
+			close;
+		}
+		if(.@refinecheck > .@safe) {
+			set .@refinecheck,.@refinecheck - .@safe;
+			mes "[" + getarg(0) + "]";
+			mes "This will try to refine the equipment " + .@refinecheck + " times past the safe limit. Your equipment may be destroyed... is that ok?";
+			next;
+			if(select("Yes...","No...") == 2){
+				mes "[" + getarg(0) + "]";
+				mes "You said so..Hmm so be it...";
+				close;
+			}
+		}
+		break;
+	case 3:
+		next;
+		mes "[" + getarg(0) + "]";
+		mes "You said so..Hmm so be it...";
+		close;
+	}
+	set .@fullprice,.@price * .@refinecnt;
+	mes "[" + getarg(0) + "]";
+	mes "That will cost you " + .@refinecnt + " " + getitemname(.@material) + " and " + .@fullprice + " Zeny. Is that ok?";
+	next;
+	if(select("Yes","No...") == 2){
+		mes "[" + getarg(0) + "]";
+		mes "You said so..Hmm so be it...";
+		close;
+	}
+	if(countitem(.@material) < .@refinecnt || Zeny < .@fullprice) {
+		mes "[" + getarg(0) + "]";
+		mes "Is that all you got? Unfortunately I can't work for you at a lower price. Try putting yourself in my shoes.";
+		close;
+	}
+	set Zeny,Zeny - .@fullprice;
+	delitem .@material,.@refinecnt;
+	while(.@refinecnt){
+		if (getequipisequiped(.@part) == 0) {
+			mes "[" + getarg(0) + "]";
+			mes "Look here... you don't have any Items on...";
+			close;
+		}
+		if (getequipid(.@part) != .@refineitemid || (.@menu2 == 1 && getequippercentrefinery(.@part) < 100)) {
+			mes "[" + getarg(0) + "]";
+			mes "Clan... No, but Did you imagine I could be so stupid !?!";
+			mes "You have changed it...";
+			mes "Go out before I stun you with my Hammer!!!";
+			close;
+		}
+		if(getarg(2) == 1){
+			set .@rand,rand(1,3);
+			if (.@rand == 1) {
+				mes "Clang! Clang! Clang! Clang!";
+				successrefitem .@part;
+				next;
+				emotion e_no1;
+				mes "["+ getarg(0) +"]";
+				mes "Good! Succes!!!";
+				mes "I am the best Blacksmith.";
+				close;
+			}
+			if (.@rand == 2) {
+				mes "["+ getarg(0) +"]";
+				mes "Clang! Clang! Clang! Clang!";
+				downrefitem .@part;
+				next;
+				set .@emo, rand(1,5);
+				if (.@emo == 1) {
+					emotion e_cash;
+				}
+				else {
+					emotion e_omg;
+				}
+				mes "["+ getarg(0) +"]";
+				mes "Ahhh!!!";
+				next;
+				mes "["+ getarg(0) +"]";
+				mes "Oh my!";
+				mes "The upgrade level has dropped...";
+				mes "There could've been made an mistake even though I am the best ever.";
+				mes "It was out of my hands.";
+				next;
+				mes "["+ getarg(0) +"]";
+				mes "I will do a better job next time! Don't worry!";
+				close;
+			}
+			mes "["+ getarg(0) +"]";
+			mes "Clang! Clang! Clang!";
+			failedrefitem .@part;
+			next;
+			set .@emo, rand(1,5);
+			if (.@emo == 1) {
+				emotion e_cash;
+			} else {
+				emotion e_omg;
+			}
+			mes "["+ getarg(0) +"]";
+			mes "Hmmm!";
+			next;
+			mes "["+ getarg(0) +"]";
+			mes "Oh my! I've failed to refine stuff...";
+			mes "I didn't mean it!";
+			mes "There could've been made an mistake even though I am the best ever.";
+			mes "It was out of my hands.";
+			next;
+			mes "["+ getarg(0) +"]";
+			mes "I will do a better job next time! Don't worry!";
+			close;
+		}
+		set .@rand,rand(100);
+		if (getequippercentrefinery(.@part) > .@rand) {
+			mes "Clang! Clang! Clang! Clang!";
+			successrefitem .@part;
+			next;
+			emotion e_no1;
+			mes "["+ getarg(0) +"]";
+			mes "Good! Succes!!!";
+			mes "I am the best Blacksmith.";
+			close;
+		}
+		if (getequippercentrefinery(.@part) < .@rand) {
+			mes "["+ getarg(0) +"]";
+			mes "Clang! Clang! Clang! Clang!";
+			downrefitem .@part;
+			next;
+			set .@emo, rand(1,5);
+			if (.@emo == 1) {
+				emotion e_cash;
+			} else {
+				emotion e_omg;
+			}
+			mes "["+ getarg(0) +"]";
+			mes "Ahhh!!!";
+			next;
+			mes "["+ getarg(0) +"]";
+			mes "Oh my!";
+			mes "The upgrade level has dropped...";
+			mes "There could've been made an mistake even though I am the best ever.";
+			mes "It was out of my hands.";
+			next;
+			mes "["+ getarg(0) +"]";
+			mes "I will do a better job next time! Don't worry!";
+			close;
+		}
+		mes "["+ getarg(0) +"]";
+		mes "Clang! Clang! Clang!";
+		failedrefitem .@part;
+		next;
+		set .@emo, rand(1,5);
+		if (.@emo == 1) {
+			emotion e_cash;
+		} else {
+			emotion e_omg;
+		}
+		mes "["+ getarg(0) +"]";
+		mes "Hmmm!";
+		next;
+		mes "["+ getarg(0) +"]";
+		mes "Oh my! I've failed to refine stuff...";
+		mes "I didn't mean it!";
+		mes "There could've been made an mistake even though I am the best ever.";
+		mes "It was out of my hands.";
+		next;
+		mes "["+ getarg(0) +"]";
+		mes "I will do a better job next time! Don't worry!";
+		close;
+	}
+	mes "[" + getarg(0) + "]";
+	mes "All finished... Come again soon.";
+	close;
+}
+
+//==============================================================================
+// Ori/Elu to Carnium/Bradium Refiners
+//==============================================================================
+prt_in,85,71,5	script	Austry#prt	826,{
+	callfunc "oreref","Austry";
+	end;
+}
+payon_in01,14,125,5	script	Austry#pay	826,{
+	callfunc "oreref","Austry";
+	end;
+}
+morocc_in,60,38,5	script	Austry#moc	826,{
+	callfunc "oreref","Austry";
+	end;
+}
+
+//============================================================
+//= Ori/Elu to Carnium/Bradium Function
+//============================================================
+
+function	script	oreref	{
+	mes "["+ getarg(0) +"]";
+	mes "If you bring me 3";
+	mes "Oridecon or Elunium";
+	mes "I can exchange them for";
+	mes "Bradium or Carnium.";
+	mes "Just give me 50,000z.";
+	next;
+	switch (select("Oridecon to Bradium.:Elunium to Carnium.:Purified Bradium to Carnium.:No thanks.")) {
+	case 1:
+		if ((countitem(984) > 2) && (Zeny > 49999)) {
+			delitem 984,3; //Oridecon
+			set Zeny, Zeny - 50000;
+			getitem 6224,1; //Bradium
+			mes "["+ getarg(0) +"]";
+			mes "Ok! Here is your Bradium.";
+			mes "Take it and use it well.";
+			close;
+		}
+		mes "["+ getarg(0) +"]";
+		mes "You better not be trying";
+		mes "to cheat me because you";
+		mes "don't have enough zeny";
+		mes "or Oridecon.";
+		close;
+	case 2:
+		if ((countitem(985) > 2) && (Zeny > 49999)) {
+			delitem 985,3; //Elunium
+			set Zeny, Zeny - 50000;
+			getitem 6223,1; //Carnium
+			mes "["+ getarg(0) +"]";
+			mes "Ok! Here is your Carnium.";
+			mes "Take it and use it well.";
+			close;
+		}
+		mes "["+ getarg(0) +"]";
+		mes "You better not be trying";
+		mes "to cheat me because you";
+		mes "don't have enough zeny";
+		mes "or Elunium.";
+		close;
+	case 3:
+		if ((countitem(6090) > 0) && (Zeny > 49999)) {
+			delitem 6090,1; //Purified_Bradium
+			set Zeny, Zeny - 50000;
+			getitem 6223,1; //Carnium
+			mes "["+ getarg(0) +"]";
+			mes "Refining with Purified Bradium";
+			mes "is a little expensive. I can";
+			mes "trade it for some Carnium.";
+			mes "Take it and use it well.";
+			close;
+		}
+		mes "["+ getarg(0) +"]";
+		mes "You better not be trying";
+		mes "to cheat me because you";
+		mes "don't have enough zeny";
+		mes "or Purified Bradium.";
+		close;
+	case 4:
+		mes "["+ getarg(0) +"]";
+		mes "Hmm...";
 		close;
 	}
 }

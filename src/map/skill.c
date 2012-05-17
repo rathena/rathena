@@ -13307,7 +13307,7 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 		if(item->nameid > 0 && ditem->type == IT_WEAPON)
 		{
 			if( item->refine >= sd->menuskill_val
-			||  item->refine >= MAX_REFINE		// if it's no longer refineable
+			||  item->refine >= 10		// if it's no longer refineable
 			||  ditem->flag.no_refine 	// if the item isn't refinable
 			||  (i = pc_search_inventory(sd, material [ditem->wlv])) < 0 )
 			{
@@ -13333,7 +13333,7 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 				if (ep)
 					pc_equipitem(sd,idx,ep);
 				clif_misceffect(&sd->bl,3);
-				if(item->refine == MAX_REFINE &&
+				if(item->refine == 10 &&
 					item->card[0] == CARD0_FORGE &&
 					(int)MakeDWord(item->card[2],item->card[3]) == sd->status.char_id)
 				{ // Fame point system [DracoRPG]

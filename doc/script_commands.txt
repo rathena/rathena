@@ -4377,6 +4377,18 @@ The official scripts seem to use the 'failedrefitem' command as a function
 instead: 'failedrefitem(<number>)' but it returns nothing on the stack. This is 
 since jAthena, so probably nobody knows for sure why is it so.
 
+---------------------------------------
+
+*downrefitem <equipment slot>;
+
+This command will downgrade an item by -1 in the specified equipment slot of the 
+invoking character. So the item will not be destroyed unlikely in failedrefitem.
+This will also display a 'refine failure' effect on the character and put appropriate
+messages into their chat window.
+
+The official scripts seem to use the 'downrefitem' command as a function 
+instead: 'downrefitem(<number>)' but it returns nothing on the stack. This is 
+since jAthena, so probably nobody knows for sure why is it so.
 
 ---------------------------------------
 
