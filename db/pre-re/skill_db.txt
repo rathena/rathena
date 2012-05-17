@@ -763,7 +763,7 @@
 2050,11,6,16,6,0x1,0,1,1,yes,0,0,0,magic,0,	AB_RENOVATIO,Renovatio
 2051,11,6,16,6,0x21,0,5,1,yes,0,0,0,magic,0,	AB_HIGHNESSHEAL,Highness Heal //CHECK Info shows this has magic attack.
 2052,11,6,1,0,0x1,0,5,1,yes,0,0xA00,0,magic,0,	AB_CLEARANCE,Clearance //CHECK Also shows this as a magic attack. Why?
-2053,0,6,4,0,0x1,0,5,1,yes,0,0,0,magic,0,	AB_EXPIATIO,Expiatio //CHECK Does this also give the buff to party members?
+2053,0,6,16,0,0x1,0,5,1,yes,0,0,0,magic,0,	AB_EXPIATIO,Expiatio //CHECK Does this also give the buff to party members?
 2054,0,6,4,6,0x1,0,10,1,yes,0,0,0,none,0,	AB_DUPLELIGHT,Duple Light //CHECK Had issues adding a skill level check to make the % go higher with the skills level. Will do later.
 2055,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,	AB_DUPLELIGHT_MELEE,Duple Light Melee
 2056,-1,6,1,0,0,0,10,1,no,0,0,0,magic,0,	AB_DUPLELIGHT_MAGIC,Duple Light Magic
