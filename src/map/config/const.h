@@ -82,6 +82,24 @@
 	#define MOB_HIT(mob)  ( mob->lv + mob->status.agi )
 #endif
 
+/* Renewal's dmg level modifier, used as a macro for a easy way to turn off. */
+#ifdef RENEWAL_LVDMG
+	#define RE_LVL_DMOD() \
+		if( status_get_lv(src) > 100 ) \
+			skillratio = skillratio * status_get_lv(src) / 100;
+	#define RE_LVL_MDMOD() \
+		if( status_get_lv(src) > 100 ) \
+			md.damage = md.damage * status_get_lv(src) / 150;
+	/* ranger traps special */
+	#define RE_LVL_TMDMOD() \
+		if( status_get_lv(src) > 100 ) \
+			md.damage = md.damage * 150 / 100 + md.damage * status_get_lv(src) / 100;
+#else
+	#define RE_LVL_DMOD() 
+	#define RE_LVL_MDMOD()
+	#define RE_LVL_TMDMOD()
+#endif
+
 /**
  * End of File
  **/

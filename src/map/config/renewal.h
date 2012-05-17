@@ -43,6 +43,12 @@
 /// while enabled a special modified based on the difference between the player and monster level is applied
 #define RENEWAL_EXP
 
+/// renewal level modifier on damage
+/// (disable by commenting the line)
+/// 
+// leave this line to enable renewal base level modifier on skill damage (selected skills only)
+#define RENEWAL_LVDMG
+
 /// renewal cast time variable cast requirement
 ///
 /// this is the value required for no variable cast-time with stats.
