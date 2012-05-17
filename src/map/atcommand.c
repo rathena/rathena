@@ -41,6 +41,7 @@
 #include "storage.h"
 #include "trade.h"
 #include "unit.h"
+#include "mapreg.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8470,6 +8471,117 @@ ACMD_FUNC(accinfo) {
 	return 0;
 }
 
+/* [Ind] */
+ACMD_FUNC(set) {
+	char reg[32], val[128];
+	struct script_data* data;
+	int toset = 0;
+	bool is_str = false;
+	
+	if( !message || !*message || (toset = sscanf(message, "%32s %128[^\n]s", reg, val)) < 1  ) {
+		clif_displaymessage(fd, "Usage: @set <variable name> <value>");
+		clif_displaymessage(fd, "Usage: e.g. @set PoringCharVar 50");
+		clif_displaymessage(fd, "Usage: e.g. @set PoringCharVarSTR$ Super Duper String");
+		clif_displaymessage(fd, "Usage: e.g. \"@set PoringCharVarSTR$\" outputs it's value, Super Duper String");
+		return -1;
+	}
+		
+	/* disabled variable types (they require a proper script state to function, so allowing them would crash the server) */
+	if( reg[0] == '.' ) {
+		clif_displaymessage(fd, "NPC Variables may not be used with @set");
+		return -1;
+	} else if( reg[0] == '\'' ) {
+		clif_displaymessage(fd, "Instance variables may not be used with @set");
+		return -1;
+	}
+
+	is_str = ( reg[strlen(reg) - 1] == '$' ) ? true : false;
+	
+	if( toset >= 2 ) {/* we only set the var if there is an val, otherwise we only output the value */
+		if( is_str )
+			set_var(sd, reg, (void*) val);
+		else
+			set_var(sd, reg, (void*)__64BPRTSIZE((int)(atoi(val))));
+
+	}
+	
+	CREATE(data, struct script_data,1);
+	
+	
+	if( is_str ) {// string variable
+		
+		switch( reg[0] ) {
+			case '@':
+				data->u.str = pc_readregstr(sd, add_str(reg));
+				break;
+			case '$':
+				data->u.str = mapreg_readregstr(add_str(reg));
+				break;
+			case '#':
+				if( reg[1] == '#' )
+					data->u.str = pc_readaccountreg2str(sd, reg);// global
+				else
+					data->u.str = pc_readaccountregstr(sd, reg);// local
+				break;
+			default:
+				data->u.str = pc_readglobalreg_str(sd, reg);
+				break;
+		}
+		
+		if( data->u.str == NULL || data->u.str[0] == '\0' ) {// empty string
+			data->type = C_CONSTSTR;
+			data->u.str = "";
+		} else {// duplicate string
+			data->type = C_STR;
+			data->u.str = aStrdup(data->u.str);
+		}
+		
+	} else {// integer variable
+		
+		data->type = C_INT;
+		switch( reg[0] ) {
+			case '@':
+				data->u.num = pc_readreg(sd, add_str(reg));
+				break;
+			case '$':
+				data->u.num = mapreg_readreg(add_str(reg));
+				break;
+			case '#':
+				if( reg[1] == '#' )
+					data->u.num = pc_readaccountreg2(sd, reg);// global
+				else
+					data->u.num = pc_readaccountreg(sd, reg);// local
+				break;
+			default:
+				data->u.num = pc_readglobalreg(sd, reg);
+				break;
+		}
+		
+	}
+	
+	
+	switch( data->type ) {
+		case C_INT:
+			sprintf(atcmd_output,"%s value is now :%d",reg,data->u.num);
+			break;
+		case C_STR:
+			sprintf(atcmd_output,"%s value is now :%s",reg,data->u.str);
+			break;
+		case C_CONSTSTR:
+			sprintf(atcmd_output,"%s is empty",reg);
+			break;
+		default:
+			sprintf(atcmd_output,"%s data type is not supported :%u",reg,data->type);
+			break;
+	}
+	
+	clif_displaymessage(fd, atcmd_output);
+	
+	aFree(data);
+	
+	return 0;
+}
+
 /**
  * Fills the reference of available commands in atcommand DBMap
  **/
@@ -8714,6 +8826,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(charcommands),
 		ACMD_DEF(font),
 		ACMD_DEF(accinfo),
+		ACMD_DEF(set),
 		/**
 		 * For Testing Purposes, not going to be here after we're done.
 		 **/
