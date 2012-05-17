@@ -1374,8 +1374,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			flag.lh=1;
 	}
 
-	if( sd && !skill_num )
-	{	//Check for double attack.
+	if( sd && !skill_num ) {	//Check for double attack.
 		if( ( ( skill_lv = pc_checkskill(sd,TF_DOUBLE) ) > 0 && sd->weapontype1 == W_DAGGER )
 			|| ( sd->double_rate > 0 && sd->weapontype1 != W_FIST ) ) //Will fail bare-handed 
 		{	//Success chance is not added, the higher one is used [Skotlex]
@@ -1389,6 +1388,20 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		{
 			wd.div_ = skill_get_num(GS_CHAINACTION,skill_lv);
 			wd.type = 0x08;
+		}
+		else if(sc && sc->data[SC_FEARBREEZE] && sd->weapontype1==W_BOW && (i = sd->equip_index[EQI_AMMO]) >= 0 && sd->inventory_data[i] && sd->status.inventory[i].amount > 1){
+			short rate[] = { 4, 4, 7, 9, 10 };
+			if(sc->data[SC_FEARBREEZE]->val1 > 0 && sc->data[SC_FEARBREEZE]->val1 < 6 && rand()%100 < rate[sc->data[SC_FEARBREEZE]->val1-1]) {
+				wd.type = 0x08;
+				wd.div_ = 2;
+				if(sc->data[SC_FEARBREEZE]->val1 > 2){
+					int chance = rand()%100;
+					wd.div_ += (chance >= 40) + (chance >= 70) + (chance >= 90);
+					wd.div_ = min(wd.div_,sc->data[SC_FEARBREEZE]->val1);
+				}
+				wd.div_ = min(wd.div_,sd->status.inventory[i].amount);
+				sc->data[SC_FEARBREEZE]->val4 = wd.div_-1;
+			}
 		}
 	}
 
@@ -4338,6 +4351,11 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		}
 		if( sc->data[SC_GIANTGROWTH] && (wd.flag&BF_SHORT) && rnd()%100 < sc->data[SC_GIANTGROWTH]->val2 )
 			wd.damage *= 3; // Triple Damage
+		
+		if( sc->data[SC_FEARBREEZE] && sc->data[SC_FEARBREEZE]->val4 > 0 && sd->status.inventory[sd->equip_index[EQI_AMMO]].amount >= sc->data[SC_FEARBREEZE]->val4 && battle_config.arrow_decrement){
+			pc_delitem(sd,sd->equip_index[EQI_AMMO],sc->data[SC_FEARBREEZE]->val4,0,1,LOG_TYPE_CONSUME);
+			sc->data[SC_FEARBREEZE]->val4 = 0;
+		}
 	}
 	if (sd && sd->state.arrow_atk) //Consume arrow.
 		battle_consume_ammo(sd, 0, 0);
