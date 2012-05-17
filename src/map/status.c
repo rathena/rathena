@@ -6336,6 +6336,11 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			status_change_end(bl, SC_AURABLADE, INVALID_TIMER);
 			status_change_end(bl, SC_MERC_QUICKEN, INVALID_TIMER);
 		}
+#ifdef RENEWAL
+		else {
+			status_change_end(bl, SC_TWOHANDQUICKEN, INVALID_TIMER);
+		}
+#endif
 		break;
 	case SC_ASSUMPTIO:
 		status_change_end(bl, SC_KYRIE, INVALID_TIMER);
