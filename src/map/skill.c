@@ -7447,11 +7447,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case AB_LAUDAAGNUS:
-		if( flag&1 || sd == NULL )
-		{
+		if( flag&1 || sd == NULL ) {
 			if( (tsc && (tsc->data[SC_FREEZE] || tsc->data[SC_STONE] ||
-				tsc->data[SC_BLIND]))&& (rnd()%100 < 30+5*skilllv) )
-			{
+				tsc->data[SC_BLIND]))&& (rnd()%100 < 30+5*skilllv) ) {
 				status_change_end(bl, SC_FREEZE, INVALID_TIMER);
 				status_change_end(bl, SC_STONE, INVALID_TIMER);
 				status_change_end(bl, SC_BLIND, INVALID_TIMER);
@@ -7459,27 +7457,24 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			// Success rate only applies to the curing effect and not stat bonus.
 			clif_skill_nodamage(bl, bl, skillid, skilllv,
 				sc_start(bl, type, 100, skilllv, skill_get_time(skillid, skilllv)));
-		}
-		else if( sd )
+		} else if( sd )
 			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skillid, skilllv),
 				src, skillid, skilllv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
 		break;
 
 	case AB_LAUDARAMUS:
-		if( flag&1 || sd == NULL )
-		{
-			if( (tsc && (tsc->data[SC_SLEEP] || tsc->data[SC_STUN] ||
-				tsc->data[SC_SILENCE]))&& (rnd()%100 < 30+5*skilllv) )
-			{
+		if( flag&1 || sd == NULL ) {
+			if( (tsc && (tsc->data[SC_SLEEP] || tsc->data[SC_STUN] || tsc->data[SC_MANDRAGORA] ||
+				tsc->data[SC_SILENCE]))&& (rnd()%100 < 30+5*skilllv) ) {
 				status_change_end(bl, SC_SLEEP, INVALID_TIMER);
 				status_change_end(bl, SC_STUN, INVALID_TIMER);
+				status_change_end(bl, SC_MANDRAGORA, INVALID_TIMER);
 				status_change_end(bl, SC_SILENCE, INVALID_TIMER);
 			}
 			clif_skill_nodamage(bl, bl, skillid, skilllv,
 				sc_start(bl, type, 100, skilllv, skill_get_time(skillid, skilllv)));
 			//Success rate only applies to the curing effect and not stat bonus.
-		}
-		else if( sd )
+		} else if( sd )
 			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skillid, skilllv),
 				src, skillid, skilllv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
 		break;
@@ -12946,6 +12941,8 @@ int skill_castfix_sc (struct block_list *bl, int time, int skill_id, int skill_l
 		 **/
 		if( sc->data[SC_SECRAMENT] )
 			fixed -= fixed * sc->data[SC_SECRAMENT]->val2 / 100;
+		if( sc->data[SC_MANDRAGORA] && (skill_id >= SM_BASH && skill_id <= RETURN_TO_ELDICASTES) )
+			fixed += 2000;
 #endif
 	}
 #ifdef RENEWAL_CAST
