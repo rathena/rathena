@@ -4,7 +4,7 @@
 //= (Aegis) Translated by yoshiki, converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 3.1
+//= 3.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -25,6 +25,7 @@
 //=     Was probably cuased by a warp BEFORE a percentheal
 //= 3.0 Added Quest Log commands. [Kisuka]
 //= 3.1 Removed the need for use of 'goto.' [L0ne_W0lf]
+//= 3.2 Modified the quest to renewal. [Vali] (Thanks to Muad_Dib for the necessary info).
 //============================================================ 
 
 gef_tower,111,37,4	script	Wizard Guildsman	70,{
@@ -1096,15 +1097,14 @@ OnInit:
 
 OnEnable:
 	enablenpc "Room of Water";
-	set .MyMobs,8;
+	set .MyMobs,7;
 	monster "job_wiz",109,174,"Phen",1158,1,"Room of Water::OnMyMobDead";
-	monster "job_wiz",118,174,"Clam",1074,1,"Room of Water::OnMyMobDead";
+	monster "job_wiz",118,174,"Shellfish",1074,1,"Room of Water::OnMyMobDead";
 	monster "job_wiz",109,165,"Vadon",1066,1,"Room of Water::OnMyMobDead";
 	monster "job_wiz",118,165,"Cornutus",1067,1,"Room of Water::OnMyMobDead";
 	monster "job_wiz",101,157,"Marina",1141,1,"Room of Water::OnMyMobDead";
 	monster "job_wiz",126,157,"Marin",1242,1,"Room of Water::OnMyMobDead";
 	monster "job_wiz",98,170,"Magnolia",1138,1,"Room of Water::OnMyMobDead";
-	monster "job_wiz",129,170,"Obeaune",1044,1,"Room of Water::OnMyMobDead";
 	initnpctimer;
 	end;
 
@@ -1265,17 +1265,14 @@ OnInit:
 
 OnEnable:
 	enablenpc "Room of Earth";
-	set .MyMobs,10;
+	set .MyMobs,7;
 	monster "job_wiz",111,102,"Yoyo",1057,1,"Room of Earth::OnMyMobDead";
 	monster "job_wiz",120,102,"Deniro",1105,1,"Room of Earth::OnMyMobDead";
 	monster "job_wiz",111,102,"Caramel",1103,1,"Room of Earth::OnMyMobDead";
-	monster "job_wiz",120,102,"Hode",1127,1,"Room of Earth::OnMyMobDead";
-	monster "job_wiz",111,93,"Savage",1166,1,"Room of Earth::OnMyMobDead";
 	monster "job_wiz",120,93,"Giearth",1121,1,"Room of Earth::OnMyMobDead";
 	monster "job_wiz",107,98,"Bigfoot",1060,1,"Room of Earth::OnMyMobDead";
 	monster "job_wiz",124,98,"Orc Warrior",1023,1,"Room of Earth::OnMyMobDead";
 	monster "job_wiz",104,86,"Vitata",1176,1,"Room of Earth::OnMyMobDead";
-	monster "job_wiz",127,86,"Mantis",1139,1,"Room of Earth::OnMyMobDead";
 	initnpctimer;
 	end;
 
@@ -1357,8 +1354,7 @@ OnInit:
 OnEnable:
 	enablenpc "Room of Earth#Door";
 	donpcevent "Room of Earth::OnDisable";
-	set .MyMobs,7;
-	monster "job_wiz",116,97,"Flora",1118,1,"Room of Earth#Door::OnMyMobDead";
+	set .MyMobs,6;
 	monster "job_wiz",114,95,"Mandragora",1020,1,"Room of Earth#Door::OnMyMobDead";
 	monster "job_wiz",118,95,"Mandragora",1020,1,"Room of Earth#Door::OnMyMobDead";
 	monster "job_wiz",114,99,"Mandragora",1020,1,"Room of Earth#Door::OnMyMobDead";
@@ -1437,15 +1433,13 @@ OnInit:
 
 OnEnable:
 	enablenpc "Room of Fire";
-	set .MyMobs,8;
-	monster "job_wiz",58,110,"Zerom",1178,1,"Room of Fire::OnMyMobDead";
+	set .MyMobs,6;
 	monster "job_wiz",33,110,"Goblin",1123,1,"Room of Fire::OnMyMobDead";
 	monster "job_wiz",40,103,"Scorpion",1001,1,"Room of Fire::OnMyMobDead";
 	monster "job_wiz",51,103,"Frilldora",1119,1,"Room of Fire::OnMyMobDead";
 	monster "job_wiz",40,92,"PecoPeco",1019,1,"Room of Fire::OnMyMobDead";
 	monster "job_wiz",51,92,"Elder Willow",1033,1,"Room of Fire::OnMyMobDead";
 	monster "job_wiz",37,89,"Metaller",1058,1,"Room of Fire::OnMyMobDead";
-	monster "job_wiz",54,89,"Desert Wolf",1106,1,"Room of Fire::OnMyMobDead";
 	initnpctimer;
 	end;
 
@@ -1529,8 +1523,8 @@ OnEnable:
 	donpcevent "Room of Fire::OnDisable";
 	set .MyMobs,3;
 	monster "job_wiz",44,99,"Greatest General",1277,1,"Room of Fire#Door::OnMyMobDead";
-	monster "job_wiz",43,99,"Horong",1129,1,"Room of Fire#Door::OnMyMobDead";
-	monster "job_wiz",45,99,"Horong",1129,1,"Room of Fire#Door::OnMyMobDead";
+	monster "job_wiz",43,99,"Greatest General",1277,1,"Room of Fire#Door::OnMyMobDead";
+	monster "job_wiz",45,99,"Greatest General",1277,1,"Room of Fire#Door::OnMyMobDead";
 	initnpctimer;
 	end;
 

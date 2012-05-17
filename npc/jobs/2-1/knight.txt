@@ -5,7 +5,7 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 3.0
+//= 3.1
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -37,6 +37,7 @@
 //= 2.8 Now uses enable and disable waitingroomevent. [L0ne_W0lf]
 //= 2.9 Added Quest Log commands. [Kisuka]
 //= 3.0 Removed the need for use of 'goto.' [L0ne_W0lf]
+//= 3.1 Modified the quest to renewal. [Vali] (Thanks to Muad_Dib for the necessary info).
 //============================================================ 
 
 prt_in,88,101,4	script	Chivalry Captain#knt	56,{
@@ -1450,19 +1451,13 @@ OnInit:
 
 OnEnable:
 	enablenpc "Knight2";
-	set .MyMobs,12;
+	set .MyMobs,6;
 	monster "job_knt",53,52,"Frilldora",1119,1,"Knight2::OnMyMobDead";
 	monster "job_knt",34,52,"Frilldora",1119,1,"Knight2::OnMyMobDead";
-	monster "job_knt",43,42,"Desert Wolf",1106,1,"Knight2::OnMyMobDead";
-	monster "job_knt",43,62,"Desert Wolf",1106,1,"Knight2::OnMyMobDead";
 	monster "job_knt",58,52,"Drainliar",1111,1,"Knight2::OnMyMobDead";
 	monster "job_knt",58,52,"Drainliar",1111,1,"Knight2::OnMyMobDead";
 	monster "job_knt",29,52,"Drainliar",1111,1,"Knight2::OnMyMobDead";
 	monster "job_knt",29,52,"Drainliar",1111,1,"Knight2::OnMyMobDead";
-	monster "job_knt",60,68,"Anacondaq",1030,1,"Knight2::OnMyMobDead";
-	monster "job_knt",27,68,"Anacondaq",1030,1,"Knight2::OnMyMobDead";
-	monster "job_knt",60,35,"Anacondaq",1030,1,"Knight2::OnMyMobDead";
-	monster "job_knt",27,35,"Anacondaq",1030,1,"Knight2::OnMyMobDead";
 	initnpctimer;
 	end;
 
@@ -1511,14 +1506,12 @@ OnInit:
 
 OnEnable:
 	enablenpc "Knight3";
-	set .MyMobs,7;
+	set .MyMobs,5;
 	monster "job_knt",136,152,"Goblin",1122,1,"Knight3::OnMyMobDead";
 	monster "job_knt",150,152,"Goblin",1123,1,"Knight3::OnMyMobDead";
 	monster "job_knt",143,145,"Goblin",1124,1,"Knight3::OnMyMobDead";
 	monster "job_knt",143,167,"Goblin",1125,1,"Knight3::OnMyMobDead";
 	monster "job_knt",139,167,"Goblin",1126,1,"Knight3::OnMyMobDead";
-	monster "job_knt",147,167,"Goblin Archer",1258,1,"Knight3::OnMyMobDead";
-	monster "job_knt",136,158,"Steam Goblin",1280,1,"Knight3::OnMyMobDead";
 	initnpctimer;
 	end;
 

@@ -257,15 +257,11 @@ umbala,139,227,3	script	Priest#arch	60,{
 		mes "[" + strcharinfo(0) + "]";
 		mes "Hmm, I wanted to tell you...";
 		next;
-		input .@inputstr$;
-		mes "[" + strcharinfo(0) + "]";
-		mes "" + .@inputstr$ + "";
-		next;
 		input .@urans$;
 		if (.@urans$ != "I'm here for the Holy Pilgrimage") {
 			mes "Priest Dayan doesn't seem to understand you. He just stares at you and smiles.";
 			next;
-			mes "[Priest]";
+			mes "[Priest Dayan]";
 			mes "Eh? Say what?";
 			close;
 		}
@@ -1019,13 +1015,7 @@ job3_arch01,29,34,3	script	Valkyrie#arch	403,{
 			set $@archbs,0;
 			close2;
 			nude;
-			while (1) {
-				if (countitem(2798) == 0) {
-					break;
-				} else {
-					delitem 2798,1; //Will_Of_Exhausted_Angel
-				}
-			}
+			delitem 2798,countitem(2798); //Will_Of_Exhausted_Angel
 			donpcevent "start#arch::OnEnable";
 			set job_arch, 7;
 			changequest 2190,2191;
@@ -1070,14 +1060,7 @@ job3_arch01,29,34,3	script	Valkyrie#arch	403,{
 			mes "But you have to be careful if an imeprsonation falls down.";
 			close2;
 			nude;
-			while (1) {
-				if (countitem(2798) == 0) {
-					break;
-				}
-				else {
-					delitem 2798,1; //Will_Of_Exhausted_Angel
-				}
-			}
+			delitem 2798,countitem(2798); //Will_Of_Exhausted_Angel
 			donpcevent "start#arch::OnEnable";
 			set job_arch, 7;
 			warp "job3_arch02",119,49;
@@ -1089,10 +1072,6 @@ job3_arch01,29,34,3	script	Valkyrie#arch	403,{
 		mes "I am already talking to someone, please wait and talk to me again.";
 		close;
 	}
-
-OnInit:
-	set $@archbs,0;
-	end;
 
 OnBc:
 	set $@archbs,0;
@@ -1127,12 +1106,8 @@ OnTouch:
 			set .@randht,rand(1,10);
 			if (.@randht < 8) {
 				mapannounce "job3_arch02","Whispering of an impersonation: I can feel the devil's spirits! Be careful!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
-				//GetHEALTHSTATE VAR_CURSE 10
 			} else if (.@randht == 8 || .@randht == 9) {
 				mapannounce "job3_arch02","Embodiment of the voice: They are close to you!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0 //Custom translation;
-				//GetHEALTHSTATE VAR_POISON 10
-			} else {
-				//GetHEALTHSTATE VAR_HEALTHSTATENORMAL 0
 			}
 		} else {
 			mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
@@ -1362,14 +1337,7 @@ OnTouch:
 		mes "It can be dangerous, so let's go back.";
 		close2;
 		nude;
-		while (1) {
-			if (countitem(2798) == 0) {
-				break;
-			}
-			else {
-				delitem 2798,1; //Will_Of_Exhausted_Angel
-			}
-		}
+		delitem 2798,countitem(2798); //Will_Of_Exhausted_Angel
 		delitem 6154,countitem(6154); //Broken_Horn_Pipe
 		mapwarp "job3_arch02","job3_arch01",29,29;
 		end;
@@ -1449,14 +1417,7 @@ OnTouch:
 	mes "Don't forget an altruistic minister's spirit like today forever.";
 	mes "I hope we see each other in Valhalla sometime.";
 	nude;
-	while (1) {
-		if (countitem(2798) == 0) {
-			break;
-		}
-		else {
-			delitem 2798,1; //Will_Of_Exhausted_Angel
-		}
-	}
+	delitem 2798,countitem(2798); //Will_Of_Exhausted_Angel
 	delitem 6154,countitem(6154); //Broken_Horn_Pipe
 	set job_arch,100;
 	completequest 2191;
@@ -1522,13 +1483,10 @@ OnTouch:
 			set .@randht,rand(1,10);
 			if (.@randht < 8) {
 				mapannounce "job3_arch02","Whispering of an impersonation: I can feel the devil's spirits. Can you hear? The sound of gathering in crowds.",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
-				//GetHEALTHSTATE VAR_CURSE 10
 			} else if (.@randht == 8 || .@randht == 9) {
 				mapannounce "job3_arch02","Embodiment of Sounds: Battle Stance!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0 //Custom translation;
-				//GetHEALTHSTATE VAR_POISON 10
 			} else {
 				mapannounce "job3_arch02","Whispering of an impersonation: I can't leave you! Die!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
-				//GetHEALTHSTATE VAR_HEALTHSTATENORMAL 0
 			}
 		} else {
 			mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
@@ -1576,7 +1534,6 @@ OnTouch:
 	} else {
 		if (getmercinfo(1) == 2038) {
 			mapannounce "job3_arch02","A shout of devil: You are so childish. I'll invite you to a party of the devil. I'll make you have a fun!",bc_map,"0xFF0000"; //FW_NORMAL 12 0 0
-			//GetHEALTHSTATE VAR_CURSE 10
 		} else {
 			mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
 			mapwarp "job3_arch02","job3_arch01",29,29;
@@ -1756,69 +1713,6 @@ OnTimeoff:
 
 OnTimer60000:
 	if (getmapusers("job3_arch02") > 0) {
-		mapwarp "job3_arch02","job3_arch01",29,29;
-		donpcevent "Valkyrie#arch::OnBc";
-		stopnpctimer;
-	}
-	end;
-
-OnTimer120000:
-	if (getmapusers("job3_arch02") == 0) {
-		mapwarp "job3_arch02","job3_arch01",29,29;
-		donpcevent "Valkyrie#arch::OnBc";
-		stopnpctimer;
-	}
-	end;
-
-OnTimer180000:
-	if (getmapusers("job3_arch02") == 0) {
-		mapwarp "job3_arch02","job3_arch01",29,29;
-		donpcevent "Valkyrie#arch::OnBc";
-		stopnpctimer;
-	}
-	end;
-
-OnTimer240000:
-	if (getmapusers("job3_arch02") == 0) {
-		mapwarp "job3_arch02","job3_arch01",29,29;
-		donpcevent "Valkyrie#arch::OnBc";
-		stopnpctimer;
-	}
-	end;
-
-OnTimer300000:
-	if (getmapusers("job3_arch02") == 0) {
-		mapwarp "job3_arch02","job3_arch01",29,29;
-		donpcevent "Valkyrie#arch::OnBc";
-		stopnpctimer;
-	}
-	end;
-
-OnTimer360000:
-	if (getmapusers("job3_arch02") == 0) {
-		mapwarp "job3_arch02","job3_arch01",29,29;
-		donpcevent "Valkyrie#arch::OnBc";
-	}
-	end;
-
-OnTimer420000:
-	if (getmapusers("job3_arch02") == 0) {
-		mapwarp "job3_arch02","job3_arch01",29,29;
-		donpcevent "Valkyrie#arch::OnBc";
-		stopnpctimer;
-	}
-	end;
-
-OnTimer480000:
-	if (getmapusers("job3_arch02") == 0) {
-		mapwarp "job3_arch02","job3_arch01",29,29;
-		donpcevent "Valkyrie#arch::OnBc";
-		stopnpctimer;
-	}
-	end;
-
-OnTimer540000:
-	if (getmapusers("job3_arch02") == 0) {
 		mapwarp "job3_arch02","job3_arch01",29,29;
 		donpcevent "Valkyrie#arch::OnBc";
 		stopnpctimer;

@@ -5,7 +5,7 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 3.6
+//= 3.7
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -52,6 +52,7 @@
 //=	-Deleted a Unnecesary Next; on Hunter Guildsman#hnt. (bugreports:1665,2239,2179)
 //= 3.5 Added Quest Log commands. [Kisuka]
 //= 3.6 Removed the need for use of 'goto.' [L0ne_W0lf]
+//= 3.7 Modified the quest to renewal. [Vali] (Thanks to Muad_Dib for the necessary info).
 //============================================================ 
 
 // Notices in the old Hunter Guild.
@@ -503,14 +504,14 @@ hu_in01,382,382,4	script	Guild Receptionist#hnt	732,{
 		mes "You see, we're having some financial problems. Let's see, we're short on these items...";
 		next;
 		switch(rand(1,7)) {
-		//Claw_Of_Desert_Wolf, Wooden_Block, White_Herb
-		case 1: setarray .@items[0], 7030,5, 1019,5, 509,3, 3; changequest 4001,4002; break;
-		//Bill_Of_Birds, Skel_Bonem Green_Herb
+		//Insect_Feeler, Wooden_Block, White_Herb
+		case 1: setarray .@items[0], 928,5, 1019,5, 509,3, 3; changequest 4001,4002; break;
+		//Bill_Of_Birds, Skel_Bone, Green_Herb
 		case 2: setarray .@items[0], 925,3, 932,5, 511,3, 4; changequest 4001,4003; break;
-		//Posionous_Canine, Animal's_Skin, Red_Herb
-		case 3: setarray .@items[0], 937,3, 919,3, 507,5, 5; changequest 4001,4004; break;
-		//Dokkaebi_Horn, Piece_Of_Egg_Shell, Fluff
-		case 4: setarray .@items[0], 1021,3, 7032,3, 914,10, 6; changequest 4001,4005; break;
+		//Colorful_Shell, Animal's_Skin, Red_Herb
+		case 3: setarray .@items[0], 1013,3, 919,3, 507,5, 5; changequest 4001,4004; break;
+		//Horn, Poison_Spore, Fluff
+		case 4: setarray .@items[0], 947,3, 7033,3, 914,10, 6; changequest 4001,4005; break;
 		//Shell, Worm_Peelings, Yellow_Herb
 		case 5: setarray .@items[0], 935,9, 955,9, 508,9, 7; changequest 4001,4006; break;
 		//Tooth_Of_Bat, Sticky_Mucus, Bear's_Foot
@@ -533,14 +534,14 @@ hu_in01,382,382,4	script	Guild Receptionist#hnt	732,{
 	}
 	else if (HNTR_Q >= 3 && HNTR_Q <= 9) {
 		switch(HNTR_Q) {
-		//Claw_Of_Desert_Wolf, Wooden_Block, White_Herb
-		case 3: setarray .@items[0], 7030,5, 1019,5, 509,3, 10; break;
+		//Insect_Feeler, Wooden_Block, White_Herb
+		case 3: setarray .@items[0], 928,5, 1019,5, 509,3, 10; break;
 		//Bill_Of_Birds, Skel_Bonem Green_Herb
 		case 4: setarray .@items[0], 925,3, 932,5, 511,3, 10; break;
-		//Posionous_Canine, Animal's_Skin, Red_Herb
-		case 5: setarray .@items[0], 937,3, 919,3, 507,5, 10; break;
-		//Dokkaebi_Horn, Piece_Of_Egg_Shell, Fluff
-		case 6: setarray .@items[0], 1021,3, 7032,3, 914,10, 10; break;
+		//Colorful_Shell, Animal's_Skin, Red_Herb
+		case 5: setarray .@items[0], 1013,3, 919,3, 507,5, 10; break;
+		//Horn, Poison_Spore, Fluff
+		case 6: setarray .@items[0], 947,3, 7033,3, 914,10, 10; break;
 		//Shell, Worm_Peelings, Yellow_Herb
 		case 7: setarray .@items[0], 935,9, 955,9, 508,9, 11; break;
 		//Tooth_Of_Bat, Sticky_Mucus, Bear's_Foot
