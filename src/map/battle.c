@@ -4696,32 +4696,27 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		default: break; //other type doesn't have slave yet
 	}
 
-	switch( src->type )
-  	{	//Checks on actual src type
+	switch( src->type ) { //Checks on actual src type
 		case BL_PET:
 			if (t_bl->type != BL_MOB && flag&BCT_ENEMY)
 				return 0; //Pet may not attack non-mobs.
 			if (t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->guardian_data && flag&BCT_ENEMY)
 				return 0; //pet may not attack Guardians/Emperium
 			break;
-		case BL_SKILL:
-		{
-			struct skill_unit *su = (struct skill_unit *)src;
-			int inf2 = 0;
-			if (!su->group)
-				return 0;
-			if( battle_config.vs_traps_bctall && (target->type&battle_config.vs_traps_bctall) &&
-				(inf2 = skill_get_inf2(su->group->skill_id))&INF2_TRAP &&
-					map_flag_vs(src->m) )
-				return 1;//traps may target everyone
-			if (su->group->src_id == target->id) {
-				if (inf2&INF2_NO_TARGET_SELF)
-					return -1;
-				if (inf2&INF2_TARGET_SELF)
-					return 1;
+		case BL_SKILL: {
+				struct skill_unit *su = (struct skill_unit *)src;
+				if (!su->group)
+					return 0;
+
+				if (su->group->src_id == target->id) {
+					int inf2 = skill_get_inf2(su->group->skill_id);
+					if (inf2&INF2_NO_TARGET_SELF)
+						return -1;
+					if (inf2&INF2_TARGET_SELF)
+						return 1;
+				}
 			}
 			break;
-		}
 	}
 
 	switch( s_bl->type )
