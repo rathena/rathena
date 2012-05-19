@@ -2272,8 +2272,7 @@ static const char* npc_skip_script(const char* start, const char* buffer, const 
 /// -%TAB%script%TAB%<NPC Name>%TAB%-1,{<code>}
 /// <map name>,<x>,<y>,<facing>%TAB%script%TAB%<NPC Name>%TAB%<sprite id>,{<code>}
 /// <map name>,<x>,<y>,<facing>%TAB%script%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>,{<code>}
-static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
-{
+static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath, bool runOnInit) {
 	int x, y, dir = 0, m, xs = 0, ys = 0, class_ = 0;	// [Valaris] thanks to fov
 	char mapname[32];
 	struct script_code *script;
@@ -2388,6 +2387,20 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 
 	nd->u.scr.timerid = INVALID_TIMER;
 
+	if( runOnInit ) {
+		char evname[EVENT_NAME_LENGTH];
+		struct event_data *ev;
+		
+		snprintf(evname, ARRAYLENGTH(evname), "%s::OnInit", nd->exname);
+		
+		if( ( ev = (struct event_data*)strdb_get(ev_db, evname) ) ) {
+			
+			//Execute OnInit
+			run_script(nd->u.scr.script,ev->pos,0,nd->bl.id);
+			
+		}
+	}
+	
 	return end;
 }
 
@@ -3199,7 +3212,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 	return strchr(start,'\n');// continue
 }
 
-void npc_parsesrcfile(const char* filepath)
+void npc_parsesrcfile(const char* filepath, bool runOnInit)
 {
 	int m, lines = 0;
 	FILE* fp;
@@ -3325,7 +3338,7 @@ void npc_parsesrcfile(const char* filepath)
 			if( strcasecmp(w1,"function") == 0 )
 				p = npc_parse_function(w1, w2, w3, w4, p, buffer, filepath);
 			else
-				p = npc_parse_script(w1,w2,w3,w4, p, buffer, filepath);
+				p = npc_parse_script(w1,w2,w3,w4, p, buffer, filepath,runOnInit);
 		}
 		else if( (i=0, sscanf(w2,"duplicate%n",&i), (i > 0 && w2[i] == '(')) && count > 3 )
 		{
@@ -3479,7 +3492,7 @@ int npc_reload(void) {
 	// Reloading npcs now
 	for (nsl = npc_src_files; nsl; nsl = nsl->next) {
 		ShowStatus("Loading NPC file: %s"CL_CLL"\r", nsl->name);
-		npc_parsesrcfile(nsl->name);
+		npc_parsesrcfile(nsl->name,false);
 	}
 	ShowInfo ("Done loading '"CL_WHITE"%d"CL_RESET"' NPCs:"CL_CLL"\n"
 		"\t-'"CL_WHITE"%d"CL_RESET"' Warps\n"
@@ -3577,10 +3590,9 @@ int do_init_npc(void)
 	timer_event_ers = ers_new(sizeof(struct timer_event_data));
 	// process all npc files
 	ShowStatus("Loading NPCs...\r");
-	for( file = npc_src_files; file != NULL; file = file->next )
-	{
+	for( file = npc_src_files; file != NULL; file = file->next ) {
 		ShowStatus("Loading NPC file: %s"CL_CLL"\r", file->name);
-		npc_parsesrcfile(file->name);
+		npc_parsesrcfile(file->name,false);
 	}
 	ShowInfo ("Done loading '"CL_WHITE"%d"CL_RESET"' NPCs:"CL_CLL"\n"
 		"\t-'"CL_WHITE"%d"CL_RESET"' Warps\n"
