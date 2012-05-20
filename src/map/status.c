@@ -7156,6 +7156,8 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 				struct unit_data *ud = unit_bl2ud(bl);
 				if (ud && !val3) {
 					tick += 300 * battle_config.combo_delay_rate/100;
+					if(val1 == SR_FALLENEMPIRE)//TODO: better option for this bonus. [malufett]
+						tick += 1000;
 					ud->attackabletime = gettick()+tick;
 					unit_set_walkdelay(bl, gettick(), tick, 1);
 				}
@@ -8239,6 +8241,12 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 					if (sd && pc_checkskill(sd, SR_DRAGONCOMBO) > 0)
 						clif_skillinfo(sd,SR_DRAGONCOMBO, INF_SELF_SKILL);
 					break;
+				case SR_FALLENEMPIRE:
+					if (sd){
+						clif_skillinfo(sd,SR_GATEOFHELL, INF_SELF_SKILL);
+						clif_skillinfo(sd,SR_TIGERCANNON, INF_SELF_SKILL);
+					}
+					break;
 			}
 			break;
 		case SC_RAISINGDRAGON:
@@ -8617,6 +8625,10 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				case MO_TRIPLEATTACK:
 					if (pc_checkskill(sd, SR_DRAGONCOMBO) > 0)
 						clif_skillinfo(sd, SR_DRAGONCOMBO, 0);
+					break;
+				case SR_FALLENEMPIRE:
+					clif_skillinfo(sd, SR_GATEOFHELL, 0);
+					clif_skillinfo(sd, SR_TIGERCANNON, 0);
 					break;
 			}
 			break;

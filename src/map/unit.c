@@ -1196,6 +1196,13 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 			casttime = 0;
 		temp = 1;
 	break;
+	case SR_GATEOFHELL:
+	case SR_TIGERCANNON:
+		if (sc && sc->data[SC_COMBO] &&
+		   sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE)
+			casttime = 0;
+		temp = 1;
+	break;
 	case SA_SPELLBREAKER:
 		temp = 1;
 	break;

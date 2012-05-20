@@ -12844,7 +12844,8 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, short 
 							req.spiritball = sd->spiritball?sd->spiritball:1;
 							break;
 					}
-				}
+				}else if( sc->data[SC_RAISINGDRAGON] && sd->spiritball > 5)
+					req.spiritball = sd->spiritball; // must consume all regardless of the amount required
 			}
 			break;
 		case SR_RAMPAGEBLASTER:

@@ -2263,7 +2263,12 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					skillratio += 150;
 					break;
 				case SR_GATEOFHELL:
-					skillratio += 500 * skill_lv -100;
+					if( sc && sc->data[SC_COMBO] 
+						&& sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE )
+						skillratio += 800 * skill_lv -100;
+					else
+						skillratio += 500 * skill_lv -100;
+					RE_LVL_DMOD();
 					break;
 				case SR_GENTLETOUCH_QUIET:
 					skillratio += 100 * skill_lv - 100 + sstatus->dex;
@@ -2401,7 +2406,17 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					}
 					break;
 				case SR_GATEOFHELL:
-					ATK_ADD (sstatus->max_hp - status_get_hp(src));//Will have to add the consumed SP part to the formula in the future. [Rytech]
+					ATK_ADD (sstatus->max_hp - status_get_hp(src));
+					if(sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE){
+						ATK_ADD ( (sstatus->sp * (1 + skill_lv * 2 / 10)) + 10 * status_get_lv(src) );
+					}else{
+						ATK_ADD ( (sstatus->max_sp * (1 + skill_lv * 2 / 10)) + 40 * status_get_lv(src) );
+					}
+					break;
+				case SR_TIGERCANNON:
+					if( sc && sc->data[SC_COMBO] 
+						&& sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE )
+							ATK_ADDRATE(10);// +10% custom value.
 					break;
 			}
 		}
