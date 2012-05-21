@@ -104,7 +104,7 @@ struct mob_db {
 	struct { int nameid,p; } mvpitem[MAX_MVP_DROP];
 	struct status_data status;
 	struct view_data vd;
-	short option;
+	unsigned int option;
 	int summonper[MAX_RANDOMMONSTER];
 	int maxskill;
 	struct mob_skill skill[MAX_MOBSKILL];
