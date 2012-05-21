@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf, various sources
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -13,6 +13,8 @@
 //= 1.0 First version.
 //= 1.1 Minor dialog updates.
 //= 1.2 No longer glitches when anyone but party leader talks to the first NPC.
+//= 1.3 Added 'instance_check_party' command to the script for proper checking if
+//=		the invoking party meets the requirements to join the Memorial Dungeon.
 //============================================================ 
 
 nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
@@ -64,7 +66,7 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 		}
 	}
 	else if (ins_nyd == 1) {
-		if ((ep13_1_edq == 14) || (ep13_1_edq == 15)) {
+		if (ep13_1_edq == 14 || ep13_1_edq == 15) {
 			mes "A mysterious power prevents you from getting too close. It looks like there is something strong beyond the door...";
 			next;
 			mes "Perhaps there's a great hidden secret beyond the gate, beyond expectation.";
@@ -84,7 +86,7 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 			close;
 		}
 	}
-	else if ((ins_nyd == 111) || (ins_nyd == 112)) {
+	else if (ins_nyd == 111 || ins_nyd == 112) {
 		specialeffect2 EF_CHANGECOLD;
 		mes "The strange sensation surrounding your body has disappeared";
 		next;
@@ -112,7 +114,7 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 			close;
 		}
 	}
-	else if ((ins_nyd == 131) || (ins_nyd == 132) || (ins_nyd > 199)) {
+	else if (ins_nyd == 131 || ins_nyd == 132 || ins_nyd > 199) {
 		set .@ins_nyd_check,checkquest(3135,PLAYTIME); // 3 Day cooldown
 		set .@ins_nyd_check2,checkquest(3136,PLAYTIME); // 4 Hour play limit
 		if (.@ins_nyd_check == -1) {
@@ -127,17 +129,12 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 				set .@leader,getpartyleader(.@party,2);
 				set .@md_name$,"Nidhoggur's Nest";
 
-				getpartymember(.@party),2;
-				set .@partymembercount,$@partymembercount;
-				copyarray .@partymembername$[0],$@partymembername$[0],.@partymembercount;
-
-				for(set .@i,0; .@i < .@partymembercount; set .@i,.@i+1){
-					if(isloggedin($@partymemberaid[.@i])){
-						set .@loggedin,.@loggedin+1;
-					}
+				if(!instance_check_party(.@party_id,2,70)){
+					mes "I'm sorry but your Party does not meet the requirements to join the Memorial Dungeon.";
+					close;
 				}
 
-				if ((.@party > 0) && ((.@partymembercount > 1)) && (.@leader == getcharid(0)) && (.@loggedin > 1)) {
+				if (.@leader == getcharid(0)) {
 					set .@instance, instance_create(.@md_name$, .@party);
 					if (.@instance < 0) {
 						mes "[Yggdrasil Gatekeeper]";
@@ -221,21 +218,14 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 					set .@p_name2$,strcharinfo(0);
 					set .@md_name$,"Nidhoggur's Nest";
 
-					getpartymember(.@party);
-					set .@partymembercount,$@partymembercount;
-					copyarray .@partymembername$[0],$@partymembername$[0],.@partymembercount;
+					if(!instance_check_party(.@party_id,2,70)){
+						mes "I'm sorry but your Party does not meet the requirements to join the Memorial Dungeon.";
+						close;
+					}
 
 					if (has_instance("1@nyd") == "") {
 						mes "[Yggdrasil Gatekeeper]";
 						mes "You did not request for entrance. Please let your leader request entrance.";
-						close;
-					}
-					else if ((has_instance("1@nyd") != "") && (.@partymembercount < 2)) {
-						mes "[Yggdrasil Gatekeeper]";
-						mes "Where are the other servants with you? We do not allow individuals to enter alone.";
-						next;
-						mes "[Yggdrasil Gatekeeper]";
-						mes "You must be accompanied by one servant to be able to enter.";
 						close;
 					}
 					else {
@@ -259,7 +249,7 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 				close;
 			}
 		}
-		else if ((.@ins_nyd_check == 0) || (.@ins_nyd_check == 1)) {
+		else if (.@ins_nyd_check == 0 || .@ins_nyd_check == 1) {
 			mes "[Yggdrasil Gatekeeper]";
 			mes "With the defeat of Nidhoggur's Shadow, the roots of the World Tree Yggdrasil are also affected.";
 			next;

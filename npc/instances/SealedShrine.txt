@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -20,6 +20,8 @@
 //=     Changed quest 3046 to 3040. This is the correct quest id.
 //=     Removed checking quest 3045, unofficial check.
 //= 1.7 Fixed a checkquest condition never setting quest. [L0ne_W0lf]
+//= 1.8 Added 'instance_check_party' command to the script for proper checking if
+//=		the invoking party meets the requirements to join the Memorial Dungeon.
 //============================================================ 
 
 // Sealed Catacomb Entrance
@@ -91,9 +93,6 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 		if (BaseLevel > 74) {
 
 			set .@party_id,getcharid(1);
-			getpartymember(.@party_id),2;
-			set .@partymembercount,$@partymembercount;
-			copyarray .@partymembername$[0],$@partymembername$[0],.@partymembercount;
 
 			mes "[Friar Patrick]";
 			mes "Do you mean you'll go to the shrine and reseal Baphomet?";
@@ -104,14 +103,13 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 			// Two hour play limit
 			//set .@ins_bapho_check2,checkquest(3045,PLAYTIME);
 
-			for(set .@i,0; .@i < .@partymembercount; set .@i,.@i+1){
-				if(isloggedin($@partymemberaid[.@i])){
-					set .@loggedin,.@loggedin+1;
-				}
+			if(!instance_check_party(.@party_id,2,75)){
+				mes "I'm sorry but your Party does not meet the requirements to join the Memorial Dungeon.";
+				close;
 			}
 
 			if (.@ins_bapho_check == -1) {
-				if ((getpartyleader(.@party_id,2) == getcharid(0)) && (.@partymembercount > 1) && (.@loggedin > 1)) {
+				if (getpartyleader(.@party_id,2) == getcharid(0)) {
 					set .@instance, instance_create("Sealed Catacombs", .@party_id);
 					if (.@instance < 0) {
 						mes "[Friar Patrick]";
@@ -197,7 +195,7 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 					mes "Once the party leader is permitted, the rest of the party can enter. This is a rule of this monastery, so please understand.";
 				}
 			}
-			else if ((.@ins_bapho_check == 0) || (.@ins_bapho_check == 1)) {
+			else if (.@ins_bapho_check == 0 || .@ins_bapho_check == 1) {
 				mes "[Friar Patrick]";
 				mes "It seems you have entered this shrine recently... You cannot reenter because Baphomet's Curse still remains. Baphomet's Curse disappears only after a certain amount of time has passed.";
 			}
@@ -264,10 +262,6 @@ monk_test,306,151,3	script	Grave of Baphomet#edq	111,{
 	case 1:
 
 		set .@party_id,getcharid(1);
-		getpartymember(.@party_id);
-		set .@partymembercount,$@partymembercount;
-		copyarray .@partymembername$[0],$@partymembername$[0],.@partymembercount;
-
 		set .@instance, instance_id(1);
 		instance_attach(.@instance);
 
@@ -276,26 +270,22 @@ monk_test,306,151,3	script	Grave of Baphomet#edq	111,{
 		// Two hour play limit
 		//set .@ins_bapho_check2,checkquest(3045,PLAYTIME);
 
+		if(!instance_check_party(.@party_id,2,75)){
+			mes "I'm sorry but your Party does not meet the requirements to join the Memorial Dungeon.";
+			close;
+		}
+
 		if (.@ins_bapho_check == -1) {
 			if (has_instance("1@cata") == "") {
 				mes "It's cold to the touch. It doesn't respond.";
 			}
-			//else if (ret == 2) {
-			//	mes "It's cold to the touch. It doesn't respond.";
-			//	close;
-			//}
-			else if ((has_instance("1@cata") != "") && (.@partymembercount < 2)) {
-				mes "[Friar Patrick]";
-				mes "To enter this dangerous place, you can't go alone. Come again after you join a party.";
-			}
-			//else if (ret == 0) {
 			else {
 				mapannounce "monk_test","[" + strcharinfo(0) + "] member of the [" + getpartyname(.@party_id) + "] party has entered the Sealed Shrine.",bc_map,"0x00ff99";
 				if (checkquest(3040) == -1) setquest 3040;
 				warp "1@cata",100,224;
 			}
 		}
-		else if ((.@ins_bapho_check == 0) || (.@ins_bapho_check == 1)) {
+		else if (.@ins_bapho_check == 0 || .@ins_bapho_check == 1) {
 			mes "[Friar Patrick]";
 			mes "It seems you have entered this shrine recently... You cannot reenter because the curse of Baphomet still remains.";
 			mes "The curse of Baphomet disappears after a certain amount of time after you entered.";
@@ -329,7 +319,7 @@ prt_monk,261,91,3	script	Rust Blackhand#edq	826,{
 	mes "[Rust Blackhand]";
 	mes "You're not a monk, then what do you want?";
 	next;
-	if ((.@new_maje == 0) || (.@new_maje == 1)) {
+	if (.@new_maje == 0 || .@new_maje == 1) {
 		mes "[Rust Blackhand]";
 		mes "Did you bring all of the ingredients?";
 		next;
@@ -1916,7 +1906,7 @@ OnTouch:
 		mes "But you can't use your magic for 3 minutes because you used your SP on the altar.";
 		close;
 	}
-	else if ((.@seal_check == 0) || (.@seal_check == 1)) {
+	else if (.@seal_check == 0 || .@seal_check == 1) {
 		specialeffect2 EF_SILENCEATTACK;
 		percentheal -50,0;
 		sc_start Eff_Stone,30000,0;
@@ -1955,7 +1945,7 @@ OnTouch:
 		mes "But you can't use your magic for 3 minutes because you used your SP on the altar.";
 		close;
 	}
-	else if ((.@seal_check == 0) || (.@seal_check == 1)) {
+	else if (.@seal_check == 0 || .@seal_check == 1) {
 		specialeffect2 EF_SILENCEATTACK;
 		percentheal -50,0;
 		sc_start Eff_Stone,30000,0;
@@ -1994,7 +1984,7 @@ OnTouch:
 		mes "But you can't use your magic for 3 minutes because you used your SP on the altar.";
 		close;
 	}
-	else if ((.@seal_check == 0) || (.@seal_check == 1)) {
+	else if (.@seal_check == 0 || .@seal_check == 1) {
 		specialeffect2 EF_SILENCEATTACK;
 		percentheal -50,0;
 		sc_start Eff_Stone,30000,0;
@@ -2033,7 +2023,7 @@ OnTouch:
 		mes "But you can't use your magic for 3 minutes because you used your SP on the altar.";
 		close;
 	}
-	else if ((.@seal_check == 0) || (.@seal_check == 1)) {
+	else if (.@seal_check == 0 || .@seal_check == 1) {
 		specialeffect2 EF_SILENCEATTACK;
 		percentheal -50,0;
 		sc_start Eff_Stone,30000,0;
@@ -2072,7 +2062,7 @@ OnTouch:
 		mes "But you can't use your magic for 3 minutes because you used your SP on the altar.";
 		close;
 	}
-	else if ((.@seal_check == 0) || (.@seal_check == 1)) {
+	else if (.@seal_check == 0 || .@seal_check == 1) {
 		specialeffect2 EF_SILENCEATTACK;
 		percentheal -50,0;
 		sc_start Eff_Stone,30000,0;

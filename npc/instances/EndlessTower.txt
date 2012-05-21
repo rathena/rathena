@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -27,9 +27,10 @@
 //=     warps between floors. (bugreport:4623)
 //=     Added missing end's to prevent infinite mobspawn (bugreport:4540)
 //=     Commented out remaining GM-only NPCs. [Gepard]
-//============================================================ 
 //= 1.8 Adjusted Instance Attach Map to Validate ALL Maps, instead of 
 //=     only 1@tower -> 5@tower (bugreport:4983)
+//= 1.9 Added 'instance_check_party' command to the script for proper checking if
+//=		the invoking party meets the requirements to join the Memorial Dungeon.
 //============================================================ 
 
 alberta,214,77,6	script	Captain Janssen	709,{
@@ -38,7 +39,6 @@ alberta,214,77,6	script	Captain Janssen	709,{
 		mes "You're carrying too much stuff. Why don't you put some of it away, and then come back.^000000";
 		close;
 	}
-	set .@name_102$,strcharinfo(0);
 	if (BaseLevel < 50) {
 		mes "[Captain Janssen]";
 		mes "Sigh... I don't know if I can ever go back to sailing the sea...";
@@ -52,7 +52,7 @@ alberta,214,77,6	script	Captain Janssen	709,{
 		mes "[Captain Janssen]";
 		mes "I was touched when you accepted a request from me, a stranger, so easily. You must truly be one of those good, heroic adventurers. Are you interested in setting out on an ocean voyage?";
 		next;
-		mes "["+.@name_102$+"]";
+		mes "["+strcharinfo(0)+"]";
 		mes "I've sailed a few times... But now that I think about it, I've never gone across the continent.";
 		next;
 		mes "[Captain Janssen]";
@@ -74,7 +74,7 @@ alberta,214,77,6	script	Captain Janssen	709,{
 		mes "[Captain Janssen]";
 		mes "My crew was starving, and a few of them walked into the tower in order to find food... They never came back.";
 		next;
-		mes "["+.@name_102$+"]";
+		mes "["+strcharinfo(0)+"]";
 		mes "Why didn't you go in there with them?";
 		next;
 		mes "[Captain Janssen]";
@@ -91,13 +91,13 @@ alberta,214,77,6	script	Captain Janssen	709,{
 		mes "[Captain Janssen]";
 		mes "I feel so lucky to meet a warm-hearted adventurer like you. With the money you've given me, I can finally go sailing to the tower again.";
 		next;
-		mes "["+.@name_102$+"]";
+		mes "["+strcharinfo(0)+"]";
 		mes "How about hiring me as your first mate?";
 		next;
 		mes "[Captain Janssen]";
 		mes "Thank you, but it is an extremely dangerous place. I have my duty to fulfill, but you don't have any obligation to me or them. I don't wish to sacrifice someone as young as you to such a dangerous place.";
 		next;
-		mes "["+.@name_102$+"]";
+		mes "["+strcharinfo(0)+"]";
 		mes "No...";
 		mes ".";
 		mes ".";
@@ -136,7 +136,7 @@ alberta,214,77,6	script	Captain Janssen	709,{
 		next;
 		switch(select("I'll come back later.:Let's go, now!")) {
 		case 1:
-			mes "["+.@name_102$+"]";
+			mes "["+strcharinfo(0)+"]";
 			mes "I'm sorry, but I don't have that much money. I'll come back when I save enough.";
 			next;
 			mes "[Captain Janssen]";
@@ -170,7 +170,7 @@ alberta,214,77,6	script	Captain Janssen	709,{
 		next;
 		switch(select("No!:Sure thing.")) {
 		case 1:
-			mes "["+.@name_102$+"]";
+			mes "["+strcharinfo(0)+"]";
 			mes "I'm sorry, but you've got the wrong person to ask that.";
 			next;
 			mes "[Captain Janssen]";
@@ -186,7 +186,7 @@ alberta,214,77,6	script	Captain Janssen	709,{
 				close;
 			}
 			else {
-				mes "["+.@name_102$+"]";
+				mes "["+strcharinfo(0)+"]";
 				mes "I don't know why you'd need so much money, but here. You can take it.";
 				next;
 				mes "^0000ffYou have donated 10,000 Zeny to Captain Janssen^000000.";
@@ -210,10 +210,6 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 	set .@md_name$,"Endless Tower";
 	set .@p_name2$,strcharinfo(0);
 
-	getpartymember(.@party_id),2;
-	set .@partymembercount,$@partymembercount;
-	copyarray .@partymembername$[0],$@partymembername$[0],.@partymembercount;
-
 	set .@etower_timer,checkquest(60200,PLAYTIME); // 1 week
 	set .@etower_timer2,checkquest(60201,PLAYTIME); // 4 hours
 
@@ -225,133 +221,99 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 	set .@dun_m,(.@dun_ent_t - (.@dun_h * 3600)) / 60;
 	set .@dun_s,.@dun_ent_t - ((.@dun_h * 3600) + (.@dun_m * 60));
 
-	for(set .@i,0; .@i < .@partymembercount; set .@i,.@i+1){
-		if(isloggedin($@partymemberaid[.@i])){
-			set .@loggedin,.@loggedin+1;
-		}
+	if(!instance_check_party(.@party_id,2)){
+		mes "I'm sorry but your Party does not meet the requirements to join the Memorial Dungeon.";
+		close;
 	}
 
-	if ((.@party_id > 0) && (.@partymembercount > 1) && (.@loggedin > 1)) {
-		if (.@etower_timer == -1) {
-			if (.@ins_mas == getcharid(0)) {
-				mes "Confirmed the party has been made. Would you like to reserve entrance to the Endless Tower?";
-				next;
-				switch(select(.@md_name$ + " Dungeon Generated:Enter the dungeon:Return to Alberta:Cancel")) {
-				case 1:
-					set .@instance, instance_create(.@md_name$, .@party_id);
-					if (.@instance < 0) {
-						mes "Party Name:"+.@p_name$+"";
-						mes "Party Leader:"+.@p_reader$+"";
-						mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
-					}
-					else {
-						mes "^0000ff"+.@md_name$+"^000000 - Try to reserve";
-						mes "After making a reservation, you have to talk to NPC behind and select the menu 'Enter the Dungeon' to enter the dungeon.";
-						// 1,2,3,4,5,6
-						for( set .@i, 1; .@i <= 6; set .@i, .@i + 1 ) {
-							if( instance_attachmap(.@i + "@tower", .@instance) == "" ) {
-								mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
-								instance_destroy(.@instance);
-								close;
-							}
-						}
-						instance_attach(.@instance);
-						instance_set_timeout 14400,300,.@instance;
-						instance_init(.@instance);
-						// Spawn the first floor of each map, which will then spawn the rest when cleared.
-						donpcevent instance_npcname("#1F Controller", instance_id())+"::OnInstanceInit";
-						donpcevent instance_npcname("Immortal Furnace#1", instance_id())+"::OnInstanceInit";
-						donpcevent instance_npcname("Immortal Furnace#2", instance_id())+"::OnInstanceInit";
-						donpcevent instance_npcname("Immortal Furnace#3", instance_id())+"::OnInstanceInit";
-						// Disable the warps on all floor. (enable as floors are cleared)
-						for( set .@i, 1; .@i <= 99; set .@i, .@i + 1 )
-							donpcevent instance_npcname(.@i+"FGate102tower", instance_id())+"::OnInstanceInit";
-						// Warps activate on timer, so players can't get unlimited Ashes.
-						donpcevent instance_npcname("25FGate102tower-2", instance_id())+"::OnInstanceInit";
-						donpcevent instance_npcname("50FGate102tower-2", instance_id())+"::OnInstanceInit";
-						donpcevent instance_npcname("75FGate102tower-2", instance_id())+"::OnInstanceInit";
-						donpcevent instance_npcname("99FGate102tower-2", instance_id())+"::OnInstanceInit";
-						// Disable and ready NPCs for the 100th and 101st floors.
-						donpcevent instance_npcname("Lucid Crystal#102", instance_id())+"::OnInstanceInit";
-						donpcevent instance_npcname("#102Effect1", instance_id())+"::OnInstanceInit";
-						donpcevent instance_npcname("#102Effect2", instance_id())+"::OnInstanceInit";
-						donpcevent instance_npcname("#102FShadowDust1", instance_id())+"::OnInstanceInit";
-						donpcevent instance_npcname("#102FShadowDust", instance_id())+"::OnInstanceInit";
-						donpcevent instance_npcname("Spring of Life#1", instance_id())+"::OnInstanceInit";
-						donpcevent instance_npcname("Tyrant's Throne#", instance_id())+"::OnInstanceInit";
-						donpcevent instance_npcname("Lost Soul#102", instance_id())+"::OnInstanceInit";
-						donpcevent instance_npcname("#Effect30", instance_id())+"::OnInstanceInit";
-						donpcevent instance_npcname("#Effect31", instance_id())+"::OnInstanceInit";
-					}
-					break;
-				case 2:
-					if (has_instance("1@tower") == "") {
-						mes "The memorial dungeon " + .@md_name$ + " does not exist.";
-						mes "The party leader did not generate the dungeon yet.";
-					}
-					else if ((has_instance("1@tower") != "") && (.@partymembercount < 2))
-						mes "You can enter the dungeon after making a party.";
-					else {
-						mapannounce "e_tower", .@p_name2$ + " of the party, " + .@p_name$ + ", is entering the dungeon, " + .@md_name$ + ".",bc_map,"0x00ff99",FW_NORMAL,12;
-						set etower_timer,gettimetick(2);
-						setquest 60200;
-						setquest 60201;
-						warp "1@tower",52,354;
-						end;
-					}
-					break;
-				case 3:
-					mes "I will move you to Alberta.";
-					close2;
-					warp "alberta",223,36;
-					end;
-				case 4:
-					break;
-				}
-				close;
-			}
-			else {
-				switch(select(.@md_name$ + "Enter the dungeon:Return to Alberta:Cancel")) {
-				case 1:
-					if (has_instance("1@tower") == "") {
-						mes "The memorial dungeon " + .@md_name$ + " does not exist.";
-						mes "The party leader did not generate the dungeon yet.";
-					}
-					else if ((has_instance("1@tower") != "") && (.@partymembercount < 2))
-						mes "You can enter the dungeon after making a party.";
-					else {
-						mapannounce "e_tower", .@p_name2$ + " of the party, " + .@p_name$ + ", is entering the dungeon, " + .@md_name$ + ".",bc_map,"0x00ff99",FW_NORMAL,12;
-						set etower_timer,gettimetick(2);
-						setquest 60200;
-						setquest 60201;
-						warp "1@tower",52,354;
-						end;
-					}
-					break;
-				case 2:
-					mes "I will move you to Alberta.";
-					close2;
-					warp "alberta",223,36;
-					end;
-				case 3:
-					break;
-				}
-				close;
-			}
-		}
-		else if ((.@etower_timer >= 0) && (.@etower_timer2 < 2)) {
-			mes "If you have the dungeon generated already, you can enter it. ";
+	if (.@etower_timer == -1) {
+		if (.@ins_mas == getcharid(0)) {
+			mes "Confirmed the party has been made. Would you like to reserve entrance to the Endless Tower?";
 			next;
-			switch(select(.@md_name$ + "Enter the dungeon:Return to Alberta:Cancel")) {
+			switch(select(.@md_name$ + " Dungeon Generated:Enter the dungeon:Return to Alberta:Cancel")) {
+			case 1:
+				set .@instance, instance_create(.@md_name$, .@party_id);
+				if (.@instance < 0) {
+					mes "Party Name:"+.@p_name$+"";
+					mes "Party Leader:"+.@p_reader$+"";
+					mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
+				}
+				else {
+					mes "^0000ff"+.@md_name$+"^000000 - Try to reserve";
+					mes "After making a reservation, you have to talk to NPC behind and select the menu 'Enter the Dungeon' to enter the dungeon.";
+					// 1,2,3,4,5,6
+					for( set .@i, 1; .@i <= 6; set .@i, .@i + 1 ) {
+						if( instance_attachmap(.@i + "@tower", .@instance) == "" ) {
+							mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
+							instance_destroy(.@instance);
+							close;
+						}
+					}
+					instance_attach(.@instance);
+					instance_set_timeout 14400,300,.@instance;
+					instance_init(.@instance);
+					// Spawn the first floor of each map, which will then spawn the rest when cleared.
+					donpcevent instance_npcname("#1F Controller", instance_id())+"::OnInstanceInit";
+					donpcevent instance_npcname("Immortal Furnace#1", instance_id())+"::OnInstanceInit";
+					donpcevent instance_npcname("Immortal Furnace#2", instance_id())+"::OnInstanceInit";
+					donpcevent instance_npcname("Immortal Furnace#3", instance_id())+"::OnInstanceInit";
+					// Disable the warps on all floor. (enable as floors are cleared)
+					for( set .@i, 1; .@i <= 99; set .@i, .@i + 1 )
+						donpcevent instance_npcname(.@i+"FGate102tower", instance_id())+"::OnInstanceInit";
+					// Warps activate on timer, so players can't get unlimited Ashes.
+					donpcevent instance_npcname("25FGate102tower-2", instance_id())+"::OnInstanceInit";
+					donpcevent instance_npcname("50FGate102tower-2", instance_id())+"::OnInstanceInit";
+					donpcevent instance_npcname("75FGate102tower-2", instance_id())+"::OnInstanceInit";
+					donpcevent instance_npcname("99FGate102tower-2", instance_id())+"::OnInstanceInit";
+					// Disable and ready NPCs for the 100th and 101st floors.
+					donpcevent instance_npcname("Lucid Crystal#102", instance_id())+"::OnInstanceInit";
+					donpcevent instance_npcname("#102Effect1", instance_id())+"::OnInstanceInit";
+					donpcevent instance_npcname("#102Effect2", instance_id())+"::OnInstanceInit";
+					donpcevent instance_npcname("#102FShadowDust1", instance_id())+"::OnInstanceInit";
+					donpcevent instance_npcname("#102FShadowDust", instance_id())+"::OnInstanceInit";
+					donpcevent instance_npcname("Spring of Life#1", instance_id())+"::OnInstanceInit";
+					donpcevent instance_npcname("Tyrant's Throne#", instance_id())+"::OnInstanceInit";
+					donpcevent instance_npcname("Lost Soul#102", instance_id())+"::OnInstanceInit";
+					donpcevent instance_npcname("#Effect30", instance_id())+"::OnInstanceInit";
+					donpcevent instance_npcname("#Effect31", instance_id())+"::OnInstanceInit";
+				}
+				break;
+			case 2:
+				if (has_instance("1@tower") == "") {
+					mes "The memorial dungeon " + .@md_name$ + " does not exist.";
+					mes "The party leader did not generate the dungeon yet.";
+				}
+				else {
+					mapannounce "e_tower", .@p_name2$ + " of the party, " + .@p_name$ + ", is entering the dungeon, " + .@md_name$ + ".",bc_map,"0x00ff99",FW_NORMAL,12;
+					set etower_timer,gettimetick(2);
+					setquest 60200;
+					setquest 60201;
+					warp "1@tower",52,354;
+					end;
+				}
+				break;
+			case 3:
+				mes "I will move you to Alberta.";
+				close2;
+				warp "alberta",223,36;
+				end;
+			case 4:
+				break;
+			}
+			close;
+		}
+		else {
+			switch(select(.@md_name$ + " Enter the dungeon:Return to Alberta:Cancel")) {
 			case 1:
 				if (has_instance("1@tower") == "") {
 					mes "The memorial dungeon " + .@md_name$ + " does not exist.";
 					mes "The party leader did not generate the dungeon yet.";
 				}
-				else if ((has_instance("1@tower") != "") && (.@partymembercount < 2))
-					mes "You can enter the dungeon after making a party.";
 				else {
 					mapannounce "e_tower", .@p_name2$ + " of the party, " + .@p_name$ + ", is entering the dungeon, " + .@md_name$ + ".",bc_map,"0x00ff99",FW_NORMAL,12;
+					set etower_timer,gettimetick(2);
+					setquest 60200;
+					setquest 60201;
 					warp "1@tower",52,354;
 					end;
 				}
@@ -366,26 +328,49 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 			}
 			close;
 		}
-		else if ((.@etower_timer >= 0) && (.@etower_timer < 2) && (.@etower_timer2 == 2)) {
-			mes "Due to the tower's aftereffects, you cannot enter the dungeon right now, " + .@dun_h + "hours " + .@dun_m + "minutes " + .@dun_s + "seconds left to enter the next dungeon.";
-			next;
-			mes "It is dangerous here. Let me move you to Alberta.";
+	}
+	else if ((.@etower_timer >= 0) && (.@etower_timer2 < 2)) {
+		mes "If you have the dungeon generated already, you can enter it. ";
+		next;
+		switch(select(.@md_name$ + " Enter the dungeon:Return to Alberta:Cancel")) {
+		case 1:
+			if (has_instance("1@tower") == "") {
+				mes "The memorial dungeon " + .@md_name$ + " does not exist.";
+				mes "The party leader did not generate the dungeon yet.";
+			}
+			else {
+				mapannounce "e_tower", .@p_name2$ + " of the party, " + .@p_name$ + ", is entering the dungeon, " + .@md_name$ + ".",bc_map,"0x00ff99",FW_NORMAL,12;
+				warp "1@tower",52,354;
+				end;
+			}
+			break;
+		case 2:
+			mes "I will move you to Alberta.";
 			close2;
 			warp "alberta",223,36;
 			end;
+		case 3:
+			break;
 		}
-		else {
-			set etower_timer,0;
-			erasequest 60200;
-			erasequest 60201;
-			mes "^0000ffThe records and after effects related to the Endless Tower have been removed. You can generate and enter the Endless Tower again.^000000";
-			close;
-		}
-	}
-	else {
-		mes "Make or join a party with more than 1 member and try again.";
 		close;
 	}
+	else if ((.@etower_timer >= 0) && (.@etower_timer < 2) && (.@etower_timer2 == 2)) {
+		mes "Due to the tower's aftereffects, you cannot enter the dungeon right now, " + .@dun_h + "hours " + .@dun_m + "minutes " + .@dun_s + "seconds left to enter the next dungeon.";
+		next;
+		mes "It is dangerous here. Let me move you to Alberta.";
+		close2;
+		warp "alberta",223,36;
+		end;
+	}
+	else {
+		set etower_timer,0;
+		erasequest 60200;
+		erasequest 60201;
+		mes "^0000ffThe records and after effects related to the Endless Tower have been removed. You can generate and enter the Endless Tower again.^000000";
+		close;
+	}
+	mes "Make or join a party with more than 1 member and try again.";
+	close;
 }
 
 e_tower,30,30,2	script	Huge Vortex	844,2,2,{
