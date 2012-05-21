@@ -22,75 +22,60 @@
 // Lost Puppies, Original file: dogdog.sc
 //============================================================
 brasilis,297,307,5	script	Angelo#br	50,{
-	set .@pongku,checkquest(9032,PLAYTIME);
-	set .@br1,checkquest(9030);
-	set .@br2,checkquest(9031);
 	if (BaseLevel < 40) {
 		mes "[Angelo]";
 		mes "Pets went out the village~!!";
 		mes "Gosh... what can I do... ?";
 		close;
 	}
-	else {
-		if ((.@pongku == 0) || (.@pongku == 1)) {
-			mes "[Angelo]";
-			mes "The day is not finished yet.";
-			mes "You can only help once a day. Hehe.";
-			close;
-		}
-		else {
-			if (checkquest(9032) > -1) erasequest 9032;
-			if ((.@br1 == 0) || (.@br1 == 1)) {
-				mes "[Angelo]";
-				mes "My pets are in the field outside of the village.";
-				mes "Why did they leave? Please find them.";
-				close;
-			}
-			else {
-				if ((.@br2 == 0) || (.@br2 == 1)) {
-					mes "[Angelo]";
-					mes "Oh, thank you. You found all of 3 puppies.";
-					mes "Thanks a lot.";
-					mes "I hope this is useful to you. hoho.";
-					getexp 500000,0;
-					erasequest 9031;
-					setquest 9032;
-					set .@bosang,rand(1,10);
-					if (.@bosang < 5) {
-						specialeffect2 EF_ASSUMPTIO;
-						percentheal 100,100;
-						//ConsumeSpecialItem Yggdrasilberry
-					}
-					else if (.@bosang < 9) {
-						specialeffect2 EF_ASSUMPTIO;
-						//ConsumeSpecialItem Yggdrasilberry
-						percentheal 100,100;
-						getitem 504,2; //White_Potion
-					}
-					else {
-						specialeffect2 EF_ASSUMPTIO;
-						//ConsumeSpecialItem Yggdrasilberry
-						percentheal 100,100;
-						getitem 608,1; //Seed_Of_Yggdrasil
-					}
-					close;
-				}
-				else {
-					mes "[Angelo]";
-					mes "Are you an adventurer? You came here right on time.";
-					mes "Puppies have been disappearing.";
-					mes "And someone said that they saw them out on the field just outside the village....";
-					next;
-					mes "[Angelo]";
-					mes "It's pretty difficult and dangerous to find 'em.";
-					mes "You have to find ^0000FF3 puppies^000000.";
-					setquest 9030;
-					close;
-				}
-			}
-		}
+	if (checkquest(9032,PLAYTIME) == 2) {
+		erasequest 9032;
 	}
-	end;
+	if (checkquest(9032,PLAYTIME) == 0) {
+		mes "[Angelo]";
+		mes "The day is not finished yet.";
+		mes "You can only help once a day. Hehe.";
+		close;
+	}
+	if (checkquest(9030) == 1) {
+		mes "[Angelo]";
+		mes "My pets are in the field outside of the village.";
+		mes "Why did they leave? Please find them.";
+		close;
+	}
+	if (checkquest(9031) == 1) {
+		mes "[Angelo]";
+		mes "Oh, thank you. You found all of 3 puppies.";
+		mes "Thanks a lot.";
+		mes "I hope this is useful to you. hoho.";
+		getexp 50000,0;
+		erasequest 9031;
+		setquest 9032;
+		set .@rand,rand(1,10);
+		if (.@rand < 5) {
+			specialeffect2 EF_ASSUMPTIO;
+			//ConsumeSpecialItem Yggdrasilberry
+		} else if (.@rand < 9) {
+			specialeffect2 EF_ASSUMPTIO;
+			//ConsumeSpecialItem Yggdrasilberry
+			getitem 504,2; //White_Potion
+		} else {
+			specialeffect2 EF_ASSUMPTIO;
+			//ConsumeSpecialItem Yggdrasilberry
+			getitem 608,1; //Seed_Of_Yggdrasil
+		}
+		close;
+	}
+	mes "[Angelo]";
+	mes "Are you an adventurer? You came here right on time.";
+	mes "Puppies have been disappearing.";
+	mes "And someone said that they saw them out on the field just outside the village....";
+	next;
+	mes "[Angelo]";
+	mes "It's pretty difficult and dangerous to find 'em.";
+	mes "You have to find ^0000FF3 puppies^000000.";
+	setquest 9030;
+	close;
 
 OnInit:
 	initnpctimer;
@@ -98,824 +83,671 @@ OnInit:
 
 OnTimer10000:
 	stopnpctimer;
-	donpcevent "Angelo#br::Ongo";
+	donpcevent "Angelo#br::OnGo";
 	end;
 
-Ongo:
+OnGo:
 	emotion e_gasp;
 	initnpctimer;
 	end;
 }
 
-//Puppya1
 bra_fild01,98,96,3	script	Puppy#a1	81,{
-	set .@br1,checkquest(9030);
-	if ((.@br1 == 0) || (.@br1 == 1)) {
+	if (checkquest(9030) == 1) {
 		if (brazil_kid < 3) {
 			mes "[Puppy]";
 			mes "bow wow bow wow!!";
 			next;
 			set brazil_kid,brazil_kid+1;
 			if (brazil_kid == 3) {
-				mes "["+strcharinfo(0)+"]";
+				mes "[" + strcharinfo(0) + "]";
 				mes "Good. I found all 3 puppies.";
 				mes "Now I need to go tell Angelo.";
 				set brazil_kid,0;
 				erasequest 9030;
 				setquest 9031;
-				set .@pk,rand(1,2);
-				if (.@pk == 1) {
+				if (rand(1,2) == 1) {
 					donpcevent "Puppy#a2::OnEnable";
-					disablenpc "Puppy#a1";
-				}
-				else {
+					hideonnpc "Puppy#a1";
+				} else {
 					donpcevent "Puppy#a3::OnEnable";
-					disablenpc "Puppy#a1";
+					hideonnpc "Puppy#a1";
 				}
 				close;
 			}
-			else {
-				mes "["+strcharinfo(0)+"]";
-				mes "Ah... who's a good puppy?";
-				mes "Ok, where are the others?";
-				set .@pk,rand(1,2);
-				if (.@pk == 1) {
-					donpcevent "Puppy#a2::OnEnable";
-					disablenpc "Puppy#a1";
-				}
-				else {
-					donpcevent "Puppy#a3::OnEnable";
-					disablenpc "Puppy#a1";
-				}
+			mes "[" + strcharinfo(0) + "]";
+			mes "Ah... who's a good puppy?";
+			mes "Ok, where are the others?";
+			if (rand(1,2) == 1) {
+				donpcevent "Puppy#a2::OnEnable";
+				hideonnpc "Puppy#a1";
+			} else {
+				donpcevent "Puppy#a3::OnEnable";
+				hideonnpc "Puppy#a1";
 			}
 			close;
 		}
-		else {
-			mes "[Puppy]";
-			mes "bow! wow wow!";
-			close;
-		}
-	}
-	else {
 		mes "[Puppy]";
 		mes "bow! wow wow!";
 		close;
 	}
-	end;
+	mes "[Puppy]";
+	mes "bow! wow wow!";
+	close;
 
 OnEnable:
-	enablenpc "Puppy#a1";
+	hideoffnpc "Puppy#a1";
 	end;
 
 OnDisable:
-	disablenpc "Puppy#a1";
+	hideonnpc "Puppy#a1";
 	end;
 }
 
-//Puppya2
 bra_fild01,59,116,5	script	Puppy#a2	81,{
-	set .@br1,checkquest(9030);
-	set name,strcharinfo(0);
-	if ((.@br1 == 0) || (.@br1 == 1)) {
+	if (checkquest(9030) == 1) {
 		if (brazil_kid < 3) {
 			mes "[Puppy]";
 			mes "bow wow bow wow!!";
 			next;
 			set brazil_kid,brazil_kid+1;
 			if (brazil_kid == 3) {
-				mes "["+strcharinfo(0)+"]";
+				mes "[" + strcharinfo(0) + "]";
 				mes "Good. I found all 3 puppies.";
 				mes "Now I need to go tell Angelo.";
 				set brazil_kid,0;
 				erasequest 9030;
 				setquest 9031;
-				set .@pk,rand(1,2);
-				if (.@pk == 1) {
+				if (rand(1,2) == 1) {
 					donpcevent "Puppy#a1::OnEnable";
-					disablenpc "Puppy#a2";
-				}
-				else {
+					hideonnpc "Puppy#a2";
+				} else {
 					donpcevent "Puppy#a3::OnEnable";
-					disablenpc "Puppy#a2";
+					hideonnpc "Puppy#a2";
 				}
 				close;
 			}
-			else {
-				mes "["+strcharinfo(0)+"]";
-				mes "Ah... who's a good puppy?";
-				mes "Ok, where are the others?";
-				set .@pk,rand(1,2);
-				if (.@pk == 1) {
-					donpcevent "Puppy#a1::OnEnable";
-					disablenpc "Puppy#a2";
-				}
-				else {
-					donpcevent "Puppy#a3::OnEnable";
-					disablenpc "Puppy#a2";
-				}
+			mes "[" + strcharinfo(0) + "]";
+			mes "Ah... who's a good puppy?";
+			mes "Ok, where are the others?";
+			if (rand(1,2) == 1) {
+				donpcevent "Puppy#a1::OnEnable";
+				hideonnpc "Puppy#a2";
+			} else {
+				donpcevent "Puppy#a3::OnEnable";
+				hideonnpc "Puppy#a2";
 			}
 			close;
 		}
-		else {
-			mes "[Puppy]";
-			mes "bow! wow wow!";
-			close;
-		}
-	}
-	else {
 		mes "[Puppy]";
 		mes "bow! wow wow!";
 		close;
 	}
-	end;
+	mes "[Puppy]";
+	mes "bow! wow wow!";
+	close;
 
 OnInit:
-	disablenpc "Puppy#a2";
+	hideonnpc "Puppy#a2";
 	end;
 
 OnEnable:
-	enablenpc "Puppy#a2";
+	hideoffnpc "Puppy#a2";
 	end;
 
 OnDisable:
-	disablenpc "Puppy#a2";
+	hideonnpc "Puppy#a2";
 	end;
 }
 
-//Puppya3
 bra_fild01,62,142,3	script	Puppy#a3	81,{
-	set .@br1,checkquest(9030);
-	if ((.@br1 == 0) || (.@br1 == 1)) {
+	if (checkquest(9030) == 1) {
 		if (brazil_kid < 3) {
 			mes "[Puppy]";
 			mes "bow wow bow wow!!";
 			next;
 			set brazil_kid,brazil_kid+1;
 			if (brazil_kid == 3) {
-				mes "["+strcharinfo(0)+"]";
+				mes "[" + strcharinfo(0) + "]";
 				mes "Good. I found all 3 puppies.";
 				mes "Now I need to go tell Angelo.";
 				set brazil_kid,0;
 				erasequest 9030;
 				setquest 9031;
-				set .@pk,rand(1,2);
-				if (.@pk == 1) {
+				if (rand(1,2) == 1) {
 					donpcevent "Puppy#a1::OnEnable";
-					disablenpc "Puppy#a3";
-				}
-				else {
+					hideonnpc "Puppy#a3";
+				} else {
 					donpcevent "Puppy#a2::OnEnable";
-					disablenpc "Puppy#a3";
+					hideonnpc "Puppy#a3";
 				}
 				close;
 			}
-			else {
-				mes "["+strcharinfo(0)+"]";
-				mes "Ah... who's a good puppy?";
-				mes "Ok, where are the others?";
-				set .@pk,rand(1,2);
-				if (.@pk == 1) {
-					donpcevent "Puppy#a1::OnEnable";
-					disablenpc "Puppy#a3";
-				}
-				else {
-					donpcevent "Puppy#a2::OnEnable";
-					disablenpc "Puppy#a3";
-				}
+			mes "[" + strcharinfo(0) + "]";
+			mes "Ah... who's a good puppy?";
+			mes "Ok, where are the others?";
+			if (rand(1,2) == 1) {
+				donpcevent "Puppy#a1::OnEnable";
+				hideonnpc "Puppy#a3";
+			} else {
+				donpcevent "Puppy#a2::OnEnable";
+				hideonnpc "Puppy#a3";
 			}
 			close;
 		}
-		else {
-			mes "[Puppy]";
-			mes "bow! wow wow!";
-			close;
-		}
-	}
-	else {
 		mes "[Puppy]";
 		mes "bow! wow wow!";
 		close;
 	}
-	end;
+	mes "[Puppy]";
+	mes "bow! wow wow!";
+	close;
 
 OnInit:
-	disablenpc "Puppy#a3";
+	hideonnpc "Puppy#a3";
 	end;
 
 OnEnable:
-	enablenpc "Puppy#a3";
+	hideoffnpc "Puppy#a3";
 	end;
 
 OnDisable:
-	disablenpc "Puppy#a3";
+	hideonnpc "Puppy#a3";
 	end;
 }
 
-//Puppy b1
 bra_fild01,80,163,3	script	Puppy#b1	81,{
-	set .@br1,checkquest(9030);
-	if ((.@br1 == 0) || (.@br1 == 1)) {
+	if (checkquest(9030) == 1) {
 		if (brazil_kid < 3) {
 			mes "[Puppy]";
 			mes "bow wow bow wow!!";
 			next;
 			set brazil_kid,brazil_kid+1;
 			if (brazil_kid == 3) {
-				mes "["+strcharinfo(0)+"]";
+				mes "[" + strcharinfo(0) + "]";
 				mes "Good. I found all 3 puppies.";
 				mes "Now I need to go tell Angelo.";
 				set brazil_kid,0;
 				erasequest 9030;
 				setquest 9031;
-				set .@pk,rand(1,2);
-				if (.@pk == 1) {
+				if (rand(1,2) == 1) {
 					donpcevent "Puppy#b2::OnEnable";
-					disablenpc "Puppy#b1";
-				}
-				else {
+					hideonnpc "Puppy#b1";
+				} else {
 					donpcevent "Puppy#b3::OnEnable";
-					disablenpc "Puppy#b1";
+					hideonnpc "Puppy#b1";
 				}
 				close;
 			}
-			else {
-				mes "["+strcharinfo(0)+"]";
-				mes "Ah... who's a good puppy?";
-				mes "Ok, where are the others?";
-				set .@pk,rand(1,2);
-				if (.@pk == 1) {
-					donpcevent "Puppy#b2::OnEnable";
-					disablenpc "Puppy#b1";
-				}
-				else {
-					donpcevent "Puppy#b3::OnEnable";
-					disablenpc "Puppy#b1";
-				}
+			mes "[" + strcharinfo(0) + "]";
+			mes "Ah... who's a good puppy?";
+			mes "Ok, where are the others?";
+			if (rand(1,2) == 1) {
+				donpcevent "Puppy#b2::OnEnable";
+				hideonnpc "Puppy#b1";
+			} else {
+				donpcevent "Puppy#b3::OnEnable";
+				hideonnpc "Puppy#b1";
 			}
 			close;
 		}
-		else {
-			mes "[Puppy]";
-			mes "bow! wow wow!";
-			close;
-		}
-	}
-	else {
 		mes "[Puppy]";
 		mes "bow! wow wow!";
 		close;
 	}
-	end;
+	mes "[Puppy]";
+	mes "bow! wow wow!";
+	close;
 
 OnEnable:
-	enablenpc "Puppy#b1";
+	hideoffnpc "Puppy#b1";
 	end;
 
 OnDisable:
-	disablenpc "Puppy#b1";
+	hideonnpc "Puppy#b1";
 	end;
 }
 
-//Puppy b2
 bra_fild01,73,210,3	script	Puppy#b2	81,{
-	set .@br1,checkquest(9030);
-	if ((.@br1 == 0) || (.@br1 == 1)) {
+	if (checkquest(9030) == 1) {
 		if (brazil_kid < 3) {
 			mes "[Puppy]";
 			mes "bow wow bow wow!!";
 			next;
 			set brazil_kid,brazil_kid+1;
 			if (brazil_kid == 3) {
-				mes "["+strcharinfo(0)+"]";
+				mes "[" + strcharinfo(0) + "]";
 				mes "Good. I found all 3 puppies.";
 				mes "Now I need to go tell Angelo.";
 				set brazil_kid,0;
 				erasequest 9030;
 				setquest 9031;
-				set .@pk,rand(1,2);
-				if (.@pk == 1) {
+				if (rand(1,2) == 1) {
 					donpcevent "Puppy#b1::OnEnable";
-					disablenpc "Puppy#b2";
-				}
-				else {
+					hideonnpc "Puppy#b2";
+				} else {
 					donpcevent "Puppy#b3::OnEnable";
-					disablenpc "Puppy#b2";
+					hideonnpc "Puppy#b2";
 				}
 				close;
 			}
-			else {
-				mes "["+strcharinfo(0)+"]";
-				mes "Ah... who's a good puppy?";
-				mes "Ok, where are the others?";
-				set .@pk,rand(1,2);
-				if (.@pk == 1) {
-					donpcevent "Puppy#b1::OnEnable";
-					disablenpc "Puppy#b2";
-				}
-				else {
+			mes "[" + strcharinfo(0) + "]";
+			mes "Ah... who's a good puppy?";
+			mes "Ok, where are the others?";
+			if (rand(1,2) == 1) {
+				donpcevent "Puppy#b1::OnEnable";
+				hideonnpc "Puppy#b2";
+			} else {
 					donpcevent "Puppy#b3::OnEnable";
-					disablenpc "Puppy#b2";
-				}
+					hideonnpc "Puppy#b2";
 			}
 			close;
 		}
-		else {
-			mes "[Puppy]";
-			mes "bow! wow wow!";
-			close;
-		}
-	}
-	else {
 		mes "[Puppy]";
 		mes "bow! wow wow!";
 		close;
 	}
-	end;
+	mes "[Puppy]";
+	mes "bow! wow wow!";
+	close;
 
 OnInit:
-	disablenpc "Puppy#b2";
+	hideonnpc "Puppy#b2";
 	end;
 
 OnEnable:
-	enablenpc "Puppy#b2";
+	hideoffnpc "Puppy#b2";
 	end;
 
 OnDisable:
-	disablenpc "Puppy#b2";
+	hideonnpc "Puppy#b2";
 	end;
 }
 
-//Puppy b3
 bra_fild01,80,210,3	script	Puppy#b3	81,{
-	set .@br1,checkquest(9030);
-	if ((.@br1 == 0) || (.@br1 == 1)) {
+	if (checkquest(9030) == 1) {
 		if (brazil_kid < 3) {
 			mes "[Puppy]";
 			mes "bow wow bow wow!!";
 			next;
 			set brazil_kid,brazil_kid+1;
 			if (brazil_kid == 3) {
-				mes "["+strcharinfo(0)+"]";
+				mes "[" + strcharinfo(0) + "]";
 				mes "Good. I found all 3 puppies.";
 				mes "Now I need to go tell Angelo.";
 				set brazil_kid,0;
 				erasequest 9030;
 				setquest 9031;
-				set .@pk,rand(1,2);
-				if (.@pk == 1) {
+				if (rand(1,2) == 1) {
 					donpcevent "Puppy#b1::OnEnable";
-					disablenpc "Puppy#b3";
-				}
-				else {
+					hideonnpc "Puppy#b3";
+				} else {
 					donpcevent "Puppy#b2::OnEnable";
-					disablenpc "Puppy#b3";
+					hideonnpc "Puppy#b3";
 				}
 				close;
 			}
-			else {
-				mes "["+strcharinfo(0)+"]";
-				mes "Ah... who's a good puppy?";
-				mes "Ok, where are the others?";
-				set .@pk,rand(1,2);
-				if (.@pk == 1) {
-					donpcevent "Puppy#b1::OnEnable";
-					disablenpc "Puppy#b3";
-				}
-				else {
-					donpcevent "Puppy#b2::OnEnable";
-					disablenpc "Puppy#b3";
-				}
+			mes "[" + strcharinfo(0) + "]";
+			mes "Ah... who's a good puppy?";
+			mes "Ok, where are the others?";
+			if (rand(1,2) == 1) {
+				donpcevent "Puppy#b1::OnEnable";
+				hideonnpc "Puppy#b3";
+			} else {
+				donpcevent "Puppy#b2::OnEnable";
+				hideonnpc "Puppy#b3";
 			}
 			close;
 		}
-		else {
-			mes "[Puppy]";
-			mes "bow! wow wow!";
-			close;
-		}
-	}
-	else {
 		mes "[Puppy]";
 		mes "bow! wow wow!";
 		close;
 	}
-	end;
+	mes "[Puppy]";
+	mes "bow! wow wow!";
+	close;
 
 OnInit:
-	disablenpc "Puppy#b3";
+	hideonnpc "Puppy#b3";
 	end;
 
 OnEnable:
-	enablenpc "Puppy#b3";
+	hideoffnpc "Puppy#b3";
 	end;
 
 OnDisable:
-	disablenpc "Puppy#b3";
+	hideonnpc "Puppy#b3";
 	end;
 }
 
-//Puppyc1
 bra_fild01,38,235,3	script	Puppy#c1	81,{
-	set .@br1,checkquest(9030);
-	if ((.@br1 == 0) || (.@br1 == 1)) {
+	if (checkquest(9030) == 1) {
 		if (brazil_kid < 3) {
 			mes "[Puppy]";
 			mes "bow wow bow wow!!";
 			next;
 			set brazil_kid,brazil_kid+1;
 			if (brazil_kid == 3) {
-				mes "["+strcharinfo(0)+"]";
+				mes "[" + strcharinfo(0) + "]";
 				mes "Good. I found all 3 puppies.";
 				mes "Now I need to go tell Angelo.";
 				set brazil_kid,0;
 				erasequest 9030;
 				setquest 9031;
-				set .@pk,rand(1,2);
-				if (.@pk == 1) {
+				set rand(1,2), rand(1,2);
+				if (rand(1,2) == 1) {
 					donpcevent "Puppy#c2::OnEnable";
-					disablenpc "Puppy#c1";
-				}
-				else {
+					hideonnpc "Puppy#c1";
+				} else {
 					donpcevent "Puppy#c3::OnEnable";
-					disablenpc "Puppy#c1";
+					hideonnpc "Puppy#c1";
 				}
 				close;
 			}
-			else {
-				mes "["+strcharinfo(0)+"]";
-				mes "Ah... who's a good puppy?";
-				mes "Ok, where are the others?";
-				set .@pk,rand(1,2);
-				if (.@pk == 1) {
-					donpcevent "Puppy#c2::OnEnable";
-					disablenpc "Puppy#c1";
-				}
-				else {
-					donpcevent "Puppy#c3::OnEnable";
-					disablenpc "Puppy#c1";
-				}
+			mes "[" + strcharinfo(0) + "]";
+			mes "Ah... who's a good puppy?";
+			mes "Ok, where are the others?";
+			set rand(1,2), rand(1,2);
+			if (rand(1,2) == 1) {
+				donpcevent "Puppy#c2::OnEnable";
+				hideonnpc "Puppy#c1";
+			} else {
+				donpcevent "Puppy#c3::OnEnable";
+				hideonnpc "Puppy#c1";
 			}
 			close;
 		}
-		else {
-			mes "[Puppy]";
-			mes "bow! wow wow!";
-			close;
-		}
-	}
-	else {
 		mes "[Puppy]";
 		mes "bow! wow wow!";
 		close;
 	}
-	end;
+	mes "[Puppy]";
+	mes "bow! wow wow!";
+	close;
 
 OnEnable:
-	enablenpc "Puppy#c1";
+	hideoffnpc "Puppy#c1";
 	end;
 
 OnDisable:
-	disablenpc "Puppy#c1";
+	hideonnpc "Puppy#c1";
 	end;
 }
 
-//Puppy c2
 bra_fild01,307,64,3	script	Puppy#c2	81,{
-	set .@br1,checkquest(9030);
-	if ((.@br1 == 0) || (.@br1 == 1)) {
+	if (checkquest(9030) == 1) {
 		if (brazil_kid < 3) {
 			mes "[Puppy]";
 			mes "bow wow bow wow!!";
 			next;
 			set brazil_kid,brazil_kid+1;
 			if (brazil_kid == 3) {
-				mes "["+strcharinfo(0)+"]";
+				mes "[" + strcharinfo(0) + "]";
 				mes "Good. I found all 3 puppies.";
 				mes "Now I need to go tell Angelo.";
 				set brazil_kid,0;
 				erasequest 9030;
 				setquest 9031;
-				set .@pk,rand(1,2);
-				if (.@pk == 1) {
+				if (rand(1,2) == 1) {
 					donpcevent "Puppy#c1::OnEnable";
-					disablenpc "Puppy#c2";
-				}
-				else {
+					hideonnpc "Puppy#c2";
+				} else {
 					donpcevent "Puppy#c3::OnEnable";
-					disablenpc "Puppy#c2";
+					hideonnpc "Puppy#c2";
 				}
 				close;
 			}
-			else {
-				mes "["+strcharinfo(0)+"]";
-				mes "Ah... who's a good puppy?";
-				mes "Ok, where are the others?";
-				set .@pk,rand(1,2);
-				if (.@pk == 1) {
-					donpcevent "Puppy#c1::OnEnable";
-					disablenpc "Puppy#c2";
-				}
-				else {
-					donpcevent "Puppy#c3::OnEnable";
-					disablenpc "Puppy#c2";
-				}
+			mes "[" + strcharinfo(0) + "]";
+			mes "Ah... who's a good puppy?";
+			mes "Ok, where are the others?";
+			set rand(1,2), rand(1,2);
+			if (rand(1,2) == 1) {
+				donpcevent "Puppy#c1::OnEnable";
+				hideonnpc "Puppy#c2";
+			} else {
+				donpcevent "Puppy#c3::OnEnable";
+				hideonnpc "Puppy#c2";
 			}
 			close;
 		}
-		else {
-			mes "[Puppy]";
-			mes "bow! wow wow!";
-			close;
-		}
-	}
-	else {
 		mes "[Puppy]";
 		mes "bow! wow wow!";
 		close;
 	}
-	end;
+	mes "[Puppy]";
+	mes "bow! wow wow!";
+	close;
 
 OnInit:
-	disablenpc "Puppy#c2";
+	hideonnpc "Puppy#c2";
 	end;
 
 OnEnable:
-	enablenpc "Puppy#c2";
+	hideoffnpc "Puppy#c2";
 	end;
 
 OnDisable:
-	disablenpc "Puppy#c2";
+	hideonnpc "Puppy#c2";
 	end;
 }
 
-//Puppy c3
 bra_fild01,260,60,3	script	Puppy#c3	81,{
-	set .@br1,checkquest(9030);
-	if ((.@br1 == 0) || (.@br1 == 1)) {
+	if (checkquest(9030) == 1) {
 		if (brazil_kid < 3) {
 			mes "[Puppy]";
 			mes "bow wow bow wow!!";
 			next;
 			set brazil_kid,brazil_kid+1;
 			if (brazil_kid == 3) {
-				mes "["+strcharinfo(0)+"]";
+				mes "[" + strcharinfo(0) + "]";
 				mes "Good. I found all 3 puppies.";
 				mes "Now I need to go tell Angelo.";
 				set brazil_kid,0;
 				erasequest 9030;
 				setquest 9031;
-				set .@pk,rand(1,2);
-				if (.@pk == 1) {
+				if (rand(1,2) == 1) {
 					donpcevent "Puppy#c1::OnEnable";
-					disablenpc "Puppy#c3";
-				}
-				else {
+					hideonnpc "Puppy#c3";
+				} else {
 					donpcevent "Puppy#c2::OnEnable";
-					disablenpc "Puppy#c3";
+					hideonnpc "Puppy#c3";
 				}
 				close;
 			}
-			else {
-				mes "["+strcharinfo(0)+"]";
-				mes "Ah... who's a good puppy?";
-				mes "Ok, where are the others?";
-				set .@pk,rand(1,2);
-				if (.@pk == 1) {
-					donpcevent "Puppy#c1::OnEnable";
-					disablenpc "Puppy#c3";
-				}
-				else {
-					donpcevent "Puppy#c2::OnEnable";
-					disablenpc "Puppy#c3";
-				}
+			mes "[" + strcharinfo(0) + "]";
+			mes "Ah... who's a good puppy?";
+			mes "Ok, where are the others?";
+			if (rand(1,2) == 1) {
+				donpcevent "Puppy#c1::OnEnable";
+				hideonnpc "Puppy#c3";
+			} else {
+				donpcevent "Puppy#c2::OnEnable";
+				hideonnpc "Puppy#c3";
 			}
 			close;
 		}
-		else {
-			mes "[Puppy]";
-			mes "bow! wow wow!";
-			close;
-		}
-	}
-	else {
 		mes "[Puppy]";
 		mes "bow! wow wow!";
 		close;
 	}
-	end;
- OnInit:
-	disablenpc "Puppy#c3";
+	mes "[Puppy]";
+	mes "bow! wow wow!";
+	close;
+
+OnInit:
+	hideonnpc "Puppy#c3";
 	end;
 
 OnEnable:
-	enablenpc "Puppy#c3";
+	hideoffnpc "Puppy#c3";
 	end;
 
 OnDisable:
-	disablenpc "Puppy#c3";
+	hideonnpc "Puppy#c3";
 	end;
 }
 
-//Puppyd1
 bra_fild01,234,101,3	script	Puppy#d1	81,{
-	set .@br1,checkquest(9030);
-	if ((.@br1 == 0) || (.@br1 == 1)) {
+	if (checkquest(9030) == 1) {
 		if (brazil_kid < 3) {
 			mes "[Puppy]";
 			mes "bow wow bow wow!!";
 			next;
 			set brazil_kid,brazil_kid+1;
 			if (brazil_kid == 3) {
-				mes "["+strcharinfo(0)+"]";
+				mes "[" + strcharinfo(0) + "]";
 				mes "Good. I found all 3 puppies.";
 				mes "Now I need to go tell Angelo.";
 				set brazil_kid,0;
 				erasequest 9030;
 				setquest 9031;
-				set .@pk,rand(1,2);
-				if (.@pk == 1) {
+				if (rand(1,2) == 1) {
 					donpcevent "Puppy#d2::OnEnable";
-					disablenpc "Puppy#d1";
-				}
-				else {
+					hideonnpc "Puppy#d1";
+				} else {
 					donpcevent "Puppy#d3::OnEnable";
-					disablenpc "Puppy#d1";
+					hideonnpc "Puppy#d1";
 				}
 				close;
 			}
-			else {
-				mes "["+strcharinfo(0)+"]";
-				mes "Ah... who's a good puppy?";
-				mes "Ok, where are the others?";
-				set .@pk,rand(1,2);
-				if (.@pk == 1) {
-					donpcevent "Puppy#d2::OnEnable";
-					disablenpc "Puppy#d1";
-				}
-				else {
-					donpcevent "Puppy#d3::OnEnable";
-					disablenpc "Puppy#d1";
-				}
+			mes "[" + strcharinfo(0) + "]";
+			mes "Ah... who's a good puppy?";
+			mes "Ok, where are the others?";
+			if (rand(1,2) == 1) {
+				donpcevent "Puppy#d2::OnEnable";
+				hideonnpc "Puppy#d1";
+			} else {
+				donpcevent "Puppy#d3::OnEnable";
+				hideonnpc "Puppy#d1";
 			}
 			close;
 		}
-		else {
-			mes "[Puppy]";
-			mes "bow! wow wow!";
-			close;
-		}
-	}
-	else {
 		mes "[Puppy]";
 		mes "bow! wow wow!";
 		close;
 	}
-	end;
+	mes "[Puppy]";
+	mes "bow! wow wow!";
+	close;
 
 OnEnable:
-	enablenpc "Puppy#d1";
+	hideoffnpc "Puppy#d1";
 	end;
 
 OnDisable:
-	disablenpc "Puppy#d1";
+	hideonnpc "Puppy#d1";
 	end;
 }
 
-//Puppy d2
 bra_fild01,200,84,3	script	Puppy#d2	81,{
-	set .@br1,checkquest(9030);
-	if ((.@br1 == 0) || (.@br1 == 1)) {
+	if (checkquest(9030) == 1) {
 		if (brazil_kid < 3) {
 			mes "[Puppy]";
 			mes "bow wow bow wow!!";
 			next;
 			set brazil_kid,brazil_kid+1;
 			if (brazil_kid == 3) {
-				mes "["+strcharinfo(0)+"]";
+				mes "[" + strcharinfo(0) + "]";
 				mes "Good. I found all 3 puppies.";
 				mes "Now I need to go tell Angelo.";
 				set brazil_kid,0;
 				erasequest 9030;
 				setquest 9031;
-				set .@pk,rand(1,2);
-				if (.@pk == 1) {
+				if (rand(1,2) == 1) {
 					donpcevent "Puppy#d1::OnEnable";
-					disablenpc "Puppy#d2";
-				}
-				else {
+					hideonnpc "Puppy#d2";
+				} else {
 					donpcevent "Puppy#d3::OnEnable";
-					disablenpc "Puppy#d2";
+					hideonnpc "Puppy#d2";
 				}
 				close;
 			}
-			else {
-				mes "["+strcharinfo(0)+"]";
-				mes "Ah... who's a good puppy?";
-				mes "Ok, where are the others?";
-				set .@pk,rand(1,2);
-				if (.@pk == 1) {
-					donpcevent "Puppy#d1::OnEnable";
-					disablenpc "Puppy#d2";
-				}
-				else {
-					donpcevent "Puppy#d3::OnEnable";
-					disablenpc "Puppy#d2";
-				}
+			mes "[" + strcharinfo(0) + "]";
+			mes "Ah... who's a good puppy?";
+			mes "Ok, where are the others?";
+			if (rand(1,2) == 1) {
+				donpcevent "Puppy#d1::OnEnable";
+				hideonnpc "Puppy#d2";
+			} else {
+				donpcevent "Puppy#d3::OnEnable";
+				hideonnpc "Puppy#d2";
 			}
 			close;
 		}
-		else {
-			mes "[Puppy]";
-			mes "bow! wow wow!";
-			close;
-		}
-	}
-	else {
 		mes "[Puppy]";
 		mes "bow! wow wow!";
 		close;
 	}
-	end;
+	mes "[Puppy]";
+	mes "bow! wow wow!";
+	close;
 
 OnInit:
-	disablenpc "Puppy#d2";
+	hideonnpc "Puppy#d2";
 	end;
 
 OnEnable:
-	enablenpc "Puppy#d2";
+	hideoffnpc "Puppy#d2";
 	end;
 
 OnDisable:
-	disablenpc "Puppy#d2";
+	hideonnpc "Puppy#d2";
 	end;
 }
 
-//Puppy d3
 bra_fild01,176,63,5	script	Puppy#d3	81,{
-	set .@br1,checkquest(9030);
-	if ((.@br1 == 0) || (.@br1 == 1)) {
+	if (checkquest(9030) == 1) {
 		if (brazil_kid < 3) {
 			mes "[Puppy]";
 			mes "bow wow bow wow!!";
 			next;
 			set brazil_kid,brazil_kid+1;
 			if (brazil_kid == 3) {
-				mes "["+strcharinfo(0)+"]";
+				mes "[" + strcharinfo(0) + "]";
 				mes "Good. I found all 3 puppies.";
 				mes "Now I need to go tell Angelo.";
 				set brazil_kid,0;
 				erasequest 9030;
 				setquest 9031;
-				set .@pk,rand(1,2);
-				if (.@pk == 1) {
+				if (rand(1,2) == 1) {
 					donpcevent "Puppy#d1::OnEnable";
-					disablenpc "Puppy#d3";
-				}
-				else {
+					hideonnpc "Puppy#d3";
+				} else {
 					donpcevent "Puppy#d2::OnEnable";
-					disablenpc "Puppy#d3";
+					hideonnpc "Puppy#d3";
 				}
 				close;
 			}
-			else {
-				mes "["+strcharinfo(0)+"]";
-				mes "Ah... who's a good puppy?";
-				mes "Ok, where are the others?";
-				set .@pk,rand(1,2);
-				if (.@pk == 1) {
-					donpcevent "Puppy#d1::OnEnable";
-					disablenpc "Puppy#d3";
-				}
-				else {
-					donpcevent "Puppy#d2::OnEnable";
-					disablenpc "Puppy#d3";
-				}
+			mes "[" + strcharinfo(0) + "]";
+			mes "Ah... who's a good puppy?";
+			mes "Ok, where are the others?";
+			if (rand(1,2) == 1) {
+				donpcevent "Puppy#d1::OnEnable";
+				hideonnpc "Puppy#d3";
+			} else {
+				donpcevent "Puppy#d2::OnEnable";
+				hideonnpc "Puppy#d3";
 			}
 			close;
 		}
-		else {
-			mes "[Puppy]";
-			mes "bow! wow wow!";
-			close;
-		}
-	}
-	else {
 		mes "[Puppy]";
 		mes "bow! wow wow!";
 		close;
 	}
-	end;
+	mes "[Puppy]";
+	mes "bow! wow wow!";
+	close;
 
 OnInit:
-	disablenpc "Puppy#d3";
+	hideonnpc "Puppy#d3";
 	end;
 
 OnEnable:
-	enablenpc "Puppy#d3";
+	hideoffnpc "Puppy#d3";
 	end;
 
 OnDisable:
-	disablenpc "Puppy#d3";
+	hideonnpc "Puppy#d3";
 	end;
 }
 

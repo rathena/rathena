@@ -1,4 +1,4 @@
-﻿//===== Athena Doc ===========================================
+﻿//===== rAthena Doc ===========================================
 //= rAthena Script Commands
 //===== By: ==================================================
 //= rAthena Dev Team
@@ -7152,7 +7152,6 @@ amount : Amount of needed Partymembers for the Instance. [Optional Parameter]
 min : Minimum Level needed to join the Instance. [Optional Parameter]
 max : Maxium Level allowed to join the Instance. [Optional Parameter]
 
-If no Party ID is given the party of the currently attached player will be used.
 If no amount is given the Memorial Dungeon will of course at least need 1 Player to enter.
 If no min Level requirement is given, the Player has at least to be Level 1 to enter the Memorial Dungeon.
 If no max Level requirement is given, every Player can enter which is not above your Max. Level setting in the configuration files of your Server.
