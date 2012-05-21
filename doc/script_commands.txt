@@ -4360,7 +4360,7 @@ character and put appropriate messages into their chat window. It will also give
 the character fame points if a weapon reached +10 this way, even though these 
 will only take effect for blacksmith who will later forge a weapon.
 
-The official scripts seem to use the 'successrefitem' command as a function 
+The official scripts seems to use the 'successrefitem' command as a function 
 instead: 'successrefitem(<number>)' but it returns nothing on the stack. 
 This is since jAthena, so probably nobody knows for sure why is it so.
 
@@ -4373,7 +4373,7 @@ invoking character. The item will be destroyed. This will also display a 'refine
 failure' effect on the character and put appropriate messages into their chat 
 window.
 
-The official scripts seem to use the 'failedrefitem' command as a function 
+The official scripts seems to use the 'failedrefitem' command as a function 
 instead: 'failedrefitem(<number>)' but it returns nothing on the stack. This is 
 since jAthena, so probably nobody knows for sure why is it so.
 
@@ -4381,12 +4381,12 @@ since jAthena, so probably nobody knows for sure why is it so.
 
 *downrefitem <equipment slot>;
 
-This command will downgrade an item by -1 in the specified equipment slot of the 
-invoking character. So the item will not be destroyed unlikely in failedrefitem.
+This command will downgrade an item by - 1 in the specified equipment slot of the 
+invoking character. So the item will not be destroyed unlike in the failedrefitem script command.
 This will also display a 'refine failure' effect on the character and put appropriate
 messages into their chat window.
 
-The official scripts seem to use the 'downrefitem' command as a function 
+The official scripts seems to use the 'downrefitem' command as a function 
 instead: 'downrefitem(<number>)' but it returns nothing on the stack. This is 
 since jAthena, so probably nobody knows for sure why is it so.
 
@@ -7135,6 +7135,63 @@ exist. Parameter <idle timeout> specifies how long players have, when they are
 outside of the instance, until it is destroyed.
 
 Both timeout values are in seconds.
+
+---------------------------------------
+
+*instance_check_party <Party ID>{,<amount>{,<min>{,<max>}}};
+
+Checks the Players Party if it meets the above set requirements.
+
+While the Party ID of the invoking character has to be set, the Values amount, min
+and max are optional parameters and doesn't need to be set. You will find below an
+little List for an explenation of what those values are for.
+
+Values:
+Party ID : Party ID of the invoking character. [Required Parameter]
+amount : Amount of needed Partymembers for the Instance. [Optional Parameter]
+min : Minimum Level needed to join the Instance. [Optional Parameter]
+max : Maxium Level allowed to join the Instance. [Optional Parameter]
+
+If no Party ID is given the party of the currently attached player will be used.
+If no amount is given the Memorial Dungeon will of course at least need 1 Player to enter.
+If no min Level requirement is given, the Player has at least to be Level 1 to enter the Memorial Dungeon.
+If no max Level requirement is given, every Player can enter which is not above your Max. Level setting in the configuration files of your Server.
+
+This Command will also check if every Player inside the Party of the invoking Character is online. So if 2 Players are inside a Party
+but one of them is offline, the other Player won't be able to join the Memorial Dungeon.
+
+Also, here are some examples of how this Command will work inside a script:
+
+if(instance_check_party(getcharid(1),2,2,149)){
+	mes "Ok, your party is complete and meets the Memorial Dungeons requirement.",
+	mes	"Members have a Baselevel between 1 and 150 and there are at least 2 Players inside the Party.";
+	close;
+}else{
+	mes "Sorry, but it seems like your Party does not meet the Memorial Dungeon requirements.";
+	close;
+}
+
+You also can use set .@party_id,getcharid(1); for example to save the Players Party ID.
+
+if(instance_check_party(.@party_id,2,2,149)){
+	mes "Ok, your party is complete and meets the Memorial Dungeons requirement.",
+	mes	"Members have a Baselevel between 1 and 150 and there are at least 2 Players inside the Party.";
+	close;
+}else{
+	mes "Sorry, but it seems like your Party does not meet the Memorial Dungeon requirements.";
+	close;
+}
+
+And another way of checking could also be:
+
+if(!instance_check_party(getcharid(1),2,2,149)){
+	mes "Sorry, but it seems like your Party does not meet the Memorial Dungeon requirements.";
+	close;
+}else{
+	mes "Ok, your party is complete and meets the Memorial Dungeons requirement.",
+	mes	"Members have a Baselevel between 1 and 150 and there are at least 2 Players inside the Party.";
+	close;
+}
 
 ---------------------------------------
 

@@ -15823,6 +15823,64 @@ BUILDIN_FUNC(instance_warpall)
 }
 
 /*==========================================
+ * instance_check_party [malufett]
+ * Values:
+ * party_id : Party ID of the invoking character. [Required Parameter]
+ * amount : Amount of needed Partymembers for the Instance. [Optional Parameter]
+ * min : Minimum Level needed to join the Instance. [Optional Parameter]
+ * max : Maxium Level allowed to join the Instance. [Optional Parameter]
+ * Example: instance_check_party (getcharid(1){,amount}{,min}{,max});
+ * Example 2: instance_check_party (getcharid(1),1,1,99);
+ *------------------------------------------*/
+BUILDIN_FUNC(instance_check_party)
+{
+	struct map_session_data *pl_sd;
+	int amount, min, max, i, party_id, c = 0;
+	struct party_data *p = NULL;
+
+	amount = script_hasdata(st,3) ? script_getnum(st,3) : 1; // Amount of needed Partymembers for the Instance.
+	min = script_hasdata(st,4) ? script_getnum(st,4) : 1; // Minimum Level needed to join the Instance.
+	max  = script_hasdata(st,5) ? script_getnum(st,5) : MAX_LEVEL; // Maxium Level allowed to join the Instance.
+
+	if( min < 1 || min > MAX_LEVEL){
+		ShowError("instance_check_party: Invalid min level, %d\n", min);
+		return 0;
+	}else if(  max < 1 || max > MAX_LEVEL){
+		ShowError("instance_check_party: Invalid max level, %d\n", max);
+		return 0;
+	}
+
+	if( script_hasdata(st,2) )
+		party_id = script_getnum(st,2);
+	else return 0;
+
+	if( !(p = party_search(party_id)) ){
+		script_pushint(st, 0); // Returns false if party does not exist.
+		return 0;
+	}
+
+	for( i = 0; i < MAX_PARTY; i++ )
+		if( (pl_sd = p->data[i].sd) ) 
+			if(map_id2bl(pl_sd->bl.id)){ 
+				if(pl_sd->status.base_level < min){
+					script_pushint(st, 0);
+					return 0; 
+				}else if(pl_sd->status.base_level > max){
+					script_pushint(st, 0);
+					return 0;
+				}
+					c++;
+			}
+	
+	if(c < amount){
+		script_pushint(st, 0); // Not enough Members in the Party to join Instance.
+	}else	
+		script_pushint(st, 1);
+
+	return 0;
+}
+
+/*==========================================
  * Custom Fonts
  *------------------------------------------*/
 BUILDIN_FUNC(setfont)
@@ -16626,6 +16684,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_npcname,"s?"),
 	BUILDIN_DEF(has_instance,"s?"),
 	BUILDIN_DEF(instance_warpall,"sii?"),
+	BUILDIN_DEF(instance_check_party,"i???"),
 	/**
 	 * 3rd-related
 	 **/
