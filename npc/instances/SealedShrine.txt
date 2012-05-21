@@ -208,9 +208,9 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 				mes "[Friar Patrick]";
 				mes "Haaaaaaap... Hocus Pocus Wingardium Abracadabra!!!!!";
 				next;
-				if (checkquest(3040)) erasequest 3040;
-				if (checkquest(3041)) erasequest 3041;
-				if (checkquest(3045)) erasequest 3045;
+				if (checkquest(3040)>=0) erasequest 3040;
+				if (checkquest(3041)>=0) erasequest 3041;
+				if (checkquest(3045)>=0) erasequest 3045;
 				mes "[Friar Patrick]";
 				mes "Huu... It's over. Now that I've released Baphomet's Curse, you can enter again.";
 			}
@@ -307,9 +307,9 @@ monk_test,306,151,3	script	Grave of Baphomet#edq	111,{
 			mes "[Friar Patrick]";
 			mes "Haaaaaaap... Wingardium Leviosa Expecto Patronum !!!!!";
 			specialeffect2 EF_HOLYHIT;
-			if (checkquest(3040)) erasequest 3040;
-			if (checkquest(3041)) erasequest 3041;
-			if (checkquest(3045)) erasequest 3045;
+			if (checkquest(3040)>=0) erasequest 3040;
+			if (checkquest(3041)>=0) erasequest 3041;
+			if (checkquest(3045)>=0) erasequest 3045;
 			next;
 			mes "[Friar Patrick]";
 			mes "Huu... It's over. Now I released all of the curses on you. You can enter again.";
@@ -2131,8 +2131,8 @@ OnTouch:
 
 2@cata,80,63,4	script	Ancient Hero's Soul#2F	411,{
 	cutin "ins_cata_champ_s",2;
-	if (checkquest(3041)) erasequest 3041;
-	if (checkquest(3040)) erasequest 3040;
+	if (checkquest(3041)>=0) erasequest 3041;
+	if (checkquest(3040)>=0) erasequest 3040;
 	setquest 3040;
 	mes "[Ancient Hero's Soul]";
 	mes "Good job, my descendants... You've finished the long-cherished task that me and my bretheren could not complete.";
