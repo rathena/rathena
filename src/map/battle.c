@@ -403,10 +403,11 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 				skill_num == WL_SOULEXPANSION ||
 				(skill_num && skill_get_ele(skill_num, skill_lv) == ELE_GHOST) ||
 				(!skill_num && (status_get_status_data(src))->rhw.ele == ELE_GHOST)
-					)
+					){
+				if( skill_num == WL_SOULEXPANSION ) 
+					damage <<= 1; // If used against a player in White Imprison, the skill deals double damage.
 				status_change_end(bl,SC_WHITEIMPRISON,INVALID_TIMER); // Those skills do damage and removes effect
-			else
-			{
+			}else{
 				d->dmg_lv = ATK_BLOCK;
 				return 0;
 			}

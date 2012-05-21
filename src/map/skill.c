@@ -4031,16 +4031,15 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		break;
 	case WL_DRAINLIFE:
 		{
-			int heal = skill_attack(skill_get_type(skillid), src, src, bl, skillid, skilllv, tick, flag);
-			int rate = 70 + 4 * skilllv + ( sd ? sd->status.job_level : 50 ) / 5;
+		    int heal = skill_attack(skill_get_type(skillid), src, src, bl, skillid, skilllv, tick, flag);
+		    int rate = 70 + 5 * skilllv;
 
-			heal = 8 * skilllv;
-			if( status_get_lv(src) > 100 ) heal = heal * status_get_lv(src) / 100;	// Base level bonus.
+		    heal = heal * (5 + 5 * skilllv) / 100;
 
-			if( bl->type == BL_SKILL )
-				heal = 0;	// Don't absorb heal from Ice Walls or other skill units.
+		    if( bl->type == BL_SKILL )
+				heal = 0; // Don't absorb heal from Ice Walls or other skill units.
 
-			if( heal && rnd()%100 < rate )
+		    if( heal && rnd()%100 < rate )
 			{
 				status_heal(src, heal, 0, 0);
 				clif_skill_nodamage(NULL, src, AL_HEAL, heal, 1);
@@ -7568,7 +7567,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case WL_WHITEIMPRISON:
-		if( !(tsc && tsc->data[type]) && (src == bl || battle_check_target(src, bl, BCT_ENEMY)) )
+		if( !(tsc && tsc->data[type]) && (src == bl || battle_check_target(src, bl, BCT_ENEMY)) && !is_boss(bl) )// Should not work with bosses.
 		{
 			int rate = 50 + 3 * skilllv + ( sd? sd->status.job_level : 50 ) / 4;
 			i = sc_start2(bl,type,rate,skilllv,src->id,(src == bl)?skill_get_time2(skillid,skilllv):skill_get_time(skillid, skilllv));
