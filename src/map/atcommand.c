@@ -1535,7 +1535,7 @@ ACMD_FUNC(baselevelup)
 	}
 
 	if (level > 0) {
-		if (sd->status.base_level == pc_maxbaselv(sd)) { // check for max level by Valaris
+		if (sd->status.base_level >= pc_maxbaselv(sd)) { // check for max level by Valaris
 			clif_displaymessage(fd, msg_txt(47)); // Base level can't go any higher.
 			return -1;
 		} // End Addition
@@ -1594,7 +1594,7 @@ ACMD_FUNC(joblevelup)
 		return -1;
 	}
 	if (level > 0) {
-		if (sd->status.job_level == pc_maxjoblv(sd)) {
+		if (sd->status.job_level >= pc_maxjoblv(sd)) {
 			clif_displaymessage(fd, msg_txt(23)); // Job level can't go any higher.
 			return -1;
 		}
