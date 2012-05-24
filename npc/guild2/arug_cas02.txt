@@ -2210,6 +2210,7 @@ arug_cas02,129,178,4	script	Cyr#LF_ar02_13::LF_ar02_2	722,{
 	}
 	end;
 
+OnInterIfInitOnce:
 OnRecvCastleAr02:
 	FlagEmblem GetCastleData("arug_cas02",1);
 	end;
@@ -2879,6 +2880,7 @@ aru_gld,80,41,6	script	Cyr#flag_Ar02_1::Ar02_Flag	722,{
 		close;
 	}
 
+OnInterIfInitOnce:
 OnRecvCastleAr02:
 	FlagEmblem GetCastleData("arug_cas02",1);
 	end;
@@ -2914,8 +2916,8 @@ aru_gld,120,83,5	script	Cyr#flag_Ar02_3	722,{
 		mes "appointed Guild Siege times.";
 		close;
 	}
+OnInterIfInitOnce:
 OnRecvCastleAr02:
 	FlagEmblem GetCastleData("arug_cas02",1);
 	end;
 }
-

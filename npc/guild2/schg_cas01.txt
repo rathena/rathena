@@ -2249,6 +2249,7 @@ schg_cas01,111,46,4	script	Himinn#LF_sc01_3::LF_sc01_2	722,{
 	}
 	end;
 
+OnInterIfInitOnce:
 OnRecvCastleSc01:
 	FlagEmblem GetCastleData("schg_cas01",1);
 	end;
@@ -2926,6 +2927,7 @@ sch_gld,290,90,0	script	Himinn#flag_sc01_1::Sc01_Flag	722,{
 		close;
 	}
 
+OnInterIfInitOnce:
 OnRecvCastlesc01:
 	FlagEmblem GetCastleData("schg_cas01",1);
 	end;

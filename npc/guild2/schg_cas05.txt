@@ -2246,6 +2246,7 @@ schg_cas05,111,46,4	script	Skidbladnir#LF_sc05_3::LF_sc05_2	722,{
 	}
 	end;
 
+OnInterIfInitOnce:
 OnRecvCastlesc05:
 	FlagEmblem GetCastleData("schg_cas05",1);
 	end;
@@ -2921,6 +2922,7 @@ sch_gld,101,284,4	script	Skidbladnir#flag_sc05_1::sc05_Flag	722,{
 		close;
 	}
 
+OnInterIfInitOnce:
 OnRecvCastlesc05:
 	FlagEmblem GetCastleData("schg_cas05",1);
 	end;

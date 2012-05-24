@@ -2259,6 +2259,7 @@ arug_cas05,148,103,4	script	Banadis#LF_ar05_10::LF_ar05_02	722,{
 	}
 	end;
 
+OnInterIfInitOnce:
 OnRecvCastlear05:
 	FlagEmblem GetCastleData("arug_cas05",1);
 	end;
@@ -2929,6 +2930,7 @@ aru_gld,289,103,6	script	Banadis#flag_ar05_1::ar05_Flag	722,{
 		close;
 	}
 
+OnInterIfInitOnce:
 OnRecvCastlear05:
 	FlagEmblem GetCastleData("arug_cas05",1);
 	end;
@@ -2965,6 +2967,7 @@ aru_gld,350,98,6	script	Banadis#flag_ar05_3::ar05_Flag2	722,{
 		close;
 	}
 
+OnInterIfInitOnce:
 OnRecvCastlear05:
 	FlagEmblem GetCastleData("arug_cas05",1);
 	end;

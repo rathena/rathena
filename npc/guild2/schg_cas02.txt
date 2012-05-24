@@ -2860,6 +2860,7 @@ sch_gld,296,247,4	script	Andlangr#flag_sc02_1::Sc02_Flag	722,{
 		close;
 	}
 
+OnInterIfInitOnce:
 OnRecvCastlesc02:
 	FlagEmblem GetCastleData("schg_cas02",1);
 	end;

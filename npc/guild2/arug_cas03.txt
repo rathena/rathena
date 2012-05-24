@@ -2255,6 +2255,7 @@ arug_cas03,148,103,4	script	Horn#LF_ar03_10::LF_ar03_02	722,{
 	}
 	end;
 
+OnInterIfInitOnce:
 OnRecvCastleAr03:
 	FlagEmblem GetCastleData("arug_cas03",1);
 	end;
@@ -2924,6 +2925,7 @@ aru_gld,60,174,0	script	Horn#flag_Ar03_1::Ar03_Flag	722,{
 		close;
 	}
 
+OnInterIfInitOnce:
 OnRecvCastleAr03:
 	FlagEmblem GetCastleData("arug_cas03",1);
 	end;

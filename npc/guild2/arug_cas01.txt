@@ -2240,6 +2240,7 @@ arug_cas01,92,126,4	script	Mardol#LF_ar01_3::LF_ar01_2	111,{
 	}
 	end;
 
+OnInterIfInitOnce:
 OnRecvCastleAr01:
 	FlagEmblem GetCastleData("arug_cas01",1);
 	end;
@@ -2918,6 +2919,7 @@ aru_gld,164,270,4	script	Mardol#flag_Ar01_1::Ar01_Flag	722,{
 		close;
 	}
 
+OnInterIfInitOnce:
 OnRecvCastleAr01:
 	FlagEmblem GetCastleData("arug_cas01",1);
 	end;
