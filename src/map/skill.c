@@ -6247,7 +6247,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		{
 			int x,y, dir = unit_getdir(src);
 
-		  	//Fails on noteleport maps, except for GvG and BG maps [Skotlex]
+			//Fails on noteleport maps, except for GvG and BG maps [Skotlex]
 			if( map[src->m].flag.noteleport &&
 				!(map[src->m].flag.battleground || map_flag_gvg2(src->m) )
 			) {
