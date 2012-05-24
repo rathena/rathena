@@ -790,11 +790,11 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			struct status_change_entry *sce;
 			// Enchant Poison gives a chance to poison attacked enemies
 			if((sce=sc->data[SC_ENCPOISON])) //Don't use sc_start since chance comes in 1/10000 rate.
-				status_change_start(bl,SC_POISON,sce->val2, sce->val1,0,0,0,
+				status_change_start(bl,SC_POISON,sce->val2, sce->val1,src->id,0,0,
 					skill_get_time2(AS_ENCHANTPOISON,sce->val1),0);
 			// Enchant Deadly Poison gives a chance to deadly poison attacked enemies
 			if((sce=sc->data[SC_EDP]))
-				sc_start4(bl,SC_DPOISON,sce->val2, sce->val1,0,0,0,
+				sc_start4(bl,SC_DPOISON,sce->val2, sce->val1,src->id,0,0,
 					skill_get_time2(ASC_EDP,sce->val1));
 		}
 	}
@@ -817,7 +817,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			skilllv = pc_checkskill(sd, TF_POISON);
 	case TF_POISON:
 	case AS_SPLASHER:
-		if(!sc_start(bl,SC_POISON,(4*skilllv+10),skilllv,skill_get_time2(skillid,skilllv))
+		if(!sc_start2(bl,SC_POISON,(4*skilllv+10),skilllv,src->id,skill_get_time2(skillid,skilllv))
 			&&	sd && skillid==TF_POISON
 		)
 			clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
