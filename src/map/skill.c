@@ -9954,12 +9954,14 @@ static int skill_icewall_block(struct block_list *bl,va_list ap) {
 	if( !md->target_id )
 		return 0;
 	nullpo_ret( ( target = map_id2bl(md->target_id) ) );
-
+	
 	if( path_search_long(NULL,bl->m,bl->x,bl->y,target->x,target->y,CELL_CHKICEWALL) )
 		return 0;
 
-	if( !check_distance_bl(bl, target, status_get_range(bl) ) )
+	if( !check_distance_bl(bl, target, status_get_range(bl) ) ) {
 		mob_unlocktarget(md,gettick());
+		mob_stop_walking(md,1);
+	}
 
 	return 0;
 }

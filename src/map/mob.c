@@ -1074,12 +1074,15 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 			((*target) == NULL || !check_distance_bl(&md->bl, *target, dist)) &&
 			battle_check_range(&md->bl,bl,md->db->range2)
 		) { //Pick closest target?
+
 			if( map[bl->m].icewall_num &&
 				!path_search_long(NULL,bl->m,md->bl.x,md->bl.y,bl->x,bl->y,CELL_CHKICEWALL) ) {
 
 				if( !check_distance_bl(&md->bl, bl, status_get_range(&md->bl) ) )
 					return 0;
+
 			}
+			
 			(*target) = bl;
 			md->target_id=bl->id;
 			md->min_chase= dist + md->db->range3;
