@@ -1234,7 +1234,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	//Initial flag
 	flag.rh=1;
 	flag.weapon=1;
-	flag.infdef=(tstatus->mode&MD_PLANT?1:0);
+	flag.infdef=(tstatus->mode&MD_PLANT&&skill_num!=RA_CLUSTERBOMB?1:0);
 
 	//Initial Values
 	wd.type=0; //Normal attack
