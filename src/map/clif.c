@@ -4132,7 +4132,6 @@ int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tic
 {
 	unsigned char buf[33];
 	struct status_change *sc;
-	int dir=0;
 #if PACKETVER < 20071113
 	const int cmd = 0x8a;
 #else
@@ -4150,8 +4149,6 @@ int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tic
 			if(damage2) damage2 = damage2*(sc->data[SC_HALLUCINATION]->val2) + rnd()%100;
 		}
 	}
-
-	dir = unit_getdir(src);
 
 	WBUFW(buf,0)=cmd;
 	WBUFL(buf,2)=src->id;
@@ -4201,8 +4198,9 @@ int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tic
 		clif_send(buf,packet_len(cmd),src,SELF);
 	}
 
-	if(src == dst)
-		unit_setdir(src,dir);
+	if(src == dst) {
+		unit_setdir(src,unit_getdir(src));
+	}
 	//Return adjusted can't walk delay for further processing.
 	return clif_calc_walkdelay(dst,ddelay,type,damage+damage2,div);
 }
