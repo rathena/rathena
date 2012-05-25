@@ -2190,17 +2190,14 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 						skillratio += -100 + 15 * 200;
 					RE_LVL_DMOD();
 					break;
-				case LG_SHIELDSPELL:
-					if( wflag&1 ) {
-						skillratio += 200;
-						if( sd ) {
-							struct item_data *shield_data = sd->inventory_data[sd->equip_index[EQI_HAND_L]];
-							if( shield_data )
-								skillratio *= shield_data->def;
-						} else
-							skillratio *= 9;
+				case LG_SHIELDSPELL:// [(Caster’s Base Level x 4) + (Shield DEF x 10) + (Caster’s VIT x 2)] %
+					if( sd ) { 
+						struct item_data *shield_data = sd->inventory_data[sd->equip_index[EQI_HAND_L]];
+						skillratio = status_get_lv(src) * 4 + status_get_vit(src) * 2;
+						if( shield_data )
+							skillratio += shield_data->def * 10;
 					} else
-						skillratio += (sd) ? sd->shieldmdef * 20 : 1000;
+						skillratio += 2400;	//2500%					
 					break;
 				case LG_MOONSLASHER:
 					skillratio += -100 + (120 * skill_lv + ((sd) ? pc_checkskill(sd,LG_OVERBRAND) : 5) * 80);
@@ -3447,6 +3444,12 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case LG_RAYOFGENESIS:
 						skillratio = (skillratio + 200) * skill_lv;
 						RE_LVL_DMOD();
+						break;
+					case LG_SHIELDSPELL:// [(Caster’s Base Level x 4) + (Shield MDEF x 100) + (Caster’s INT x 2)] %
+					if( sd ) { 
+						skillratio = status_get_lv(src) * 4 + sd->shieldmdef * 100 + status_get_int(src) * 2;
+					} else
+						skillratio += 1900;	//2000%	
 						break;
 					case WM_METALICSOUND:
 						skillratio += 120 * skill_lv + 60 * ( sd? pc_checkskill(sd, WM_LESSON) : 10 ) - 100;
