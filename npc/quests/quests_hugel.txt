@@ -3012,8 +3012,8 @@ hu_in01,256,40,3	script	Herico	897,{
 		mes "[Herico]";
 		mes "By any chance, do you know a man who can aid his power in stopping them?";
 		next;
-		input @inputstr$;
-		if(@inputstr$ == "President Karl" || @inputstr$ == "President Weierstrass" || @inputstr$ == "President" || @inputstr$ == "Karl Weierstrass")
+		input .@inputstr$;
+		if(.@inputstr$ == "President Karl" || .@inputstr$ == "President Weierstrass" || .@inputstr$ == "President" || .@inputstr$ == "Karl Weierstrass")
 		{
 			mes "["+strcharinfo(0)+"]";
 			mes "I think that I know one...";

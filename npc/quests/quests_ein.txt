@@ -6681,7 +6681,7 @@ ein_in01,31,151,3	script	Satra#ein	850,{
 		else {
 			mes "[Satra]";
 			mes "I beg your pardon?";
-			mes "" + inputstr + "? Oh my...";
+			mes .@input$ + "? Oh my...";
 			mes "I believe I may have";
 			mes "misheard you. Ho ho ho ho~";
 			close;

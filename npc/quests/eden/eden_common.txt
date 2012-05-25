@@ -121,7 +121,7 @@ moc_para01,27,35,5	script	Secretary Lime Evenor#1	952,{
 				input .@input$;
 				next;
 				mes "[Lime Evenor]";
-				mes "^3131FFMission Map: "+inputstr+"^000000";
+				mes "^3131FFMission Map: "+.@input$+"^000000";
 				mes "hum, I will note that.";
 				next;
 				mes "[Lime Evenor]";
@@ -150,7 +150,7 @@ moc_para01,27,35,5	script	Secretary Lime Evenor#1	952,{
 				mes "You've got really bad penmanship!";
 				next;
 				mes "[Lime Evenor]";
-				mes "^3131FFMission: "+inputstr+"^000000";
+				mes "^3131FFMission: "+.@input$+"^000000";
 				mes "Anyway, you are done registering for a new mission.";
 				next;
 				mes "[Lime Evenor]";
@@ -187,7 +187,7 @@ moc_para01,27,35,5	script	Secretary Lime Evenor#1	952,{
 	close;
 }
 
-prontera,124,76,3	script	Eden Teleport Officer#1	729,{
+-	script	Eden Teleport Officer#0::eden_teleport_officer	729,{
 	mes "[Eden Teleport Officer]";
 	mes "Those who are wandering around this strange world with aimless eyes listen up and come to me!";
 	mes "Eden group is here to help you and will show you the great future.";
@@ -202,7 +202,7 @@ prontera,124,76,3	script	Eden Teleport Officer#1	729,{
 	case 1:
 		mes "[Eden Teleport Officer]";
 		mes "Let's go to our secret base!";
-		set nak_warp,1;
+		set nak_warp, strnpcinfo(2);
 		close2;
 		warp "moc_para01",31,14;
 		end;
@@ -213,395 +213,22 @@ prontera,124,76,3	script	Eden Teleport Officer#1	729,{
 	}
 }
 
-moc_ruins,68,164,3	script	Eden Teleport Officer#2	729,{
-	mes "[Eden Teleport Officer]";
-	mes "Those who are wandering around this strange world with aimless eyes listen up and come to me!";
-	mes "Eden group is here to help you and will show you the great future.";
-	next;
-	mes "[Eden Teleport Officer]";
-	mes "You have nothing to do but waste your time?";
-	mes "Are you eager to do something good but no one offers you work?";
-	mes "Would you like to be a problem solver?";
-	mes "Eden group is here to solve your problem.";
-	next;
-	switch(select("Move to Eden Group:Don't want to talk anymore.")) {
-	case 1:
-		mes "[Eden Teleport Officer]";
-		mes "Let's go to our secret base!";
-		set nak_warp,2;
-		close2;
-		warp "moc_para01",31,14;
-		end;
-	case 2:
-		mes "[Eden Teleport Officer]";
-		mes "If you don't know what to do for your future, don't hesitate to tell me. Just drop by and talk to me! Ok?";
-		close;
-	}
-}
-
-geffen,132,66,3	script	Eden Teleport Officer#3	729,{
-	mes "[Eden Teleport Officer]";
-	mes "Those who are wandering around this strange world with aimless eyes listen up and come to me!";
-	mes "Eden group is here to help you and will show you the great future.";
-	next;
-	mes "[Eden Teleport Officer]";
-	mes "You have nothing to do but waste your time?";
-	mes "Are you eager to do something good but no one offers you work?";
-	mes "Would you like to be a problem solver?";
-	mes "Eden group is here to solve your problem.";
-	next;
-	switch(select("Move to Eden Group:Don't want to talk anymore.")) {
-	case 1:
-		mes "[Eden Teleport Officer]";
-		mes "Let's go to our secret base!";
-		set nak_warp,3;
-		close2;
-		warp "moc_para01",31,14;
-		end;
-	case 2:
-		mes "[Eden Teleport Officer]";
-		mes "If you don't know what to do for your future, don't hesitate to tell me. Just drop by and talk to me! Ok?";
-		close;
-	}
-}
-
-alberta,124,67,3	script	Eden Teleport Officer#4	729,{
-	mes "[Eden Teleport Officer]";
-	mes "Those who are wandering around this strange world with aimless eyes listen up and come to me!";
-	mes "Eden group is here to help you and will show you the great future.";
-	next;
-	mes "[Eden Teleport Officer]";
-	mes "You have nothing to do but waste your time?";
-	mes "Are you eager to do something good but no one offers you work?";
-	mes "Would you like to be a problem solver?";
-	mes "Eden group is here to solve your problem.";
-	next;
-	switch(select("Move to Eden Group:Don't want to talk anymore.")) {
-	case 1:
-		mes "[Eden Teleport Officer]";
-		mes "Let's go to our secret base!";
-		set nak_warp,4;
-		close2;
-		warp "moc_para01",31,14;
-		end;
-	case 2:
-		mes "[Eden Teleport Officer]";
-		mes "If you don't know what to do for your future, don't hesitate to tell me. Just drop by and talk to me! Ok?";
-		close;
-	}
-}
-
-aldebaran,133,119,5	script	Eden Teleport Officer#5	729,{
-	mes "[Eden Teleport Officer]";
-	mes "Those who are wandering around this strange world with aimless eyes listen up and come to me!";
-	mes "Eden group is here to help you and will show you the great future.";
-	next;
-	mes "[Eden Teleport Officer]";
-	mes "You have nothing to do but waste your time?";
-	mes "Are you eager to do something good but no one offers you work?";
-	mes "Would you like to be a problem solver?";
-	mes "Eden group is here to solve your problem.";
-	next;
-	switch(select("Move to Eden Group:Don't want to talk anymore.")) {
-	case 1:
-		mes "[Eden Teleport Officer]";
-		mes "Let's go to our secret base!";
-		set nak_warp,5;
-		close2;
-		warp "moc_para01",31,14;
-		end;
-	case 2:
-		mes "[Eden Teleport Officer]";
-		mes "If you don't know what to do for your future, don't hesitate to tell me. Just drop by and talk to me! Ok?";
-		close;
-	}
-}
-
-izlude_in,68,162,1	script	Eden Teleport Officer#6	729,{
-	mes "[Eden Teleport Officer]";
-	mes "Those who are wandering around this strange world with aimless eyes listen up and come to me!";
-	mes "Eden group is here to help you and will show you the great future.";
-	next;
-	mes "[Eden Teleport Officer]";
-	mes "You have nothing to do but waste your time?";
-	mes "Are you eager to do something good but no one offers you work?";
-	mes "Would you like to be a problem solver?";
-	mes "Eden group is here to solve your problem.";
-	next;
-	switch(select("Move to Eden Group:Don't want to talk anymore.")) {
-	case 1:
-		mes "[Eden Teleport Officer]";
-		mes "Let's go to our secret base!";
-		set nak_warp,6;
-		close2;
-		warp "moc_para01",31,14;
-		end;
-	case 2:
-		mes "[Eden Teleport Officer]";
-		mes "If you don't know what to do for your future, don't hesitate to tell me. Just drop by and talk to me! Ok?";
-		close;
-	}
-}
-
-prt_church,103,78,3	script	Eden Teleport Officer#7	729,{
-	mes "[Eden Teleport Officer]";
-	mes "Those who are wandering around this strange world with aimless eyes listen up and come to me!";
-	mes "Eden group is here to help you and will show you the great future.";
-	next;
-	mes "[Eden Teleport Officer]";
-	mes "You have nothing to do but waste your time?";
-	mes "Are you eager to do something good but no one offers you work?";
-	mes "Would you like to be a problem solver?";
-	mes "Eden group is here to solve your problem.";
-	next;
-	switch(select("Move to Eden Group:Don't want to talk anymore.")) {
-	case 1:
-		mes "[Eden Teleport Officer]";
-		mes "Let's go to our secret base!";
-		set nak_warp,7;
-		close2;
-		warp "moc_para01",31,14;
-		end;
-	case 2:
-		mes "[Eden Teleport Officer]";
-		mes "If you don't know what to do for your future, don't hesitate to tell me. Just drop by and talk to me! Ok?";
-		close;
-	}
-}
-
-geffen_in,160,104,5	script	Eden Teleport Officer#8	729,{
-	mes "[Eden Teleport Officer]";
-	mes "Those who are wandering around this strange world with aimless eyes listen up and come to me!";
-	mes "Eden group is here to help you and will show you the great future.";
-	next;
-	mes "[Eden Teleport Officer]";
-	mes "You have nothing to do but waste your time?";
-	mes "Are you eager to do something good but no one offers you work?";
-	mes "Would you like to be a problem solver?";
-	mes "Eden group is here to solve your problem.";
-	next;
-	switch(select("Move to Eden Group:Don't want to talk anymore.")) {
-	case 1:
-		mes "[Eden Teleport Officer]";
-		mes "Let's go to our secret base!";
-		set nak_warp,8;
-		close2;
-		warp "moc_para01",31,14;
-		end;
-	case 2:
-		mes "[Eden Teleport Officer]";
-		mes "If you don't know what to do for your future, don't hesitate to tell me. Just drop by and talk to me! Ok?";
-		close;
-	}
-}
-
-moc_prydb1,53,126,3	script	Eden Teleport Officer#9	729,{
-	mes "[Eden Teleport Officer]";
-	mes "Those who are wandering around this strange world with aimless eyes listen up and come to me!";
-	mes "Eden group is here to help you and will show you the great future.";
-	next;
-	mes "[Eden Teleport Officer]";
-	mes "You have nothing to do but waste your time?";
-	mes "Are you eager to do something good but no one offers you work?";
-	mes "Would you like to be a problem solver?";
-	mes "Eden group is here to solve your problem.";
-	next;
-	switch(select("Move to Eden Group:Don't want to talk anymore.")) {
-	case 1:
-		mes "[Eden Teleport Officer]";
-		mes "Let's go to our secret base!";
-		set nak_warp,9;
-		close2;
-		warp "moc_para01",31,14;
-		end;
-	case 2:
-		mes "[Eden Teleport Officer]";
-		mes "If you don't know what to do for your future, don't hesitate to tell me. Just drop by and talk to me! Ok?";
-		close;
-	}
-}
-
-alberta_in,75,39,3	script	Eden Teleport Officer#10	729,{
-	mes "[Eden Teleport Officer]";
-	mes "Those who are wandering around this strange world with aimless eyes listen up and come to me!";
-	mes "Eden group is here to help you and will show you the great future.";
-	next;
-	mes "[Eden Teleport Officer]";
-	mes "You have nothing to do but waste your time?";
-	mes "Are you eager to do something good but no one offers you work?";
-	mes "Would you like to be a problem solver?";
-	mes "Eden group is here to solve your problem.";
-	next;
-	switch(select("Move to Eden Group:Don't want to talk anymore.")) {
-	case 1:
-		mes "[Eden Teleport Officer]";
-		mes "Let's go to our secret base!";
-		set nak_warp,10;
-		close2;
-		warp "moc_para01",31,14;
-		end;
-	case 2:
-		mes "[Eden Teleport Officer]";
-		mes "If you don't know what to do for your future, don't hesitate to tell me. Just drop by and talk to me! Ok?";
-		close;
-	}
-}
-
-payon_in02,58,58,1	script	Eden Teleport Officer#11	729,{
-	mes "[Eden Teleport Officer]";
-	mes "Those who are wandering around this strange world with aimless eyes listen up and come to me!";
-	mes "Eden group is here to help you and will show you the great future.";
-	next;
-	mes "[Eden Teleport Officer]";
-	mes "You have nothing to do but waste your time?";
-	mes "Are you eager to do something good but no one offers you work?";
-	mes "Would you like to be a problem solver?";
-	mes "Eden group is here to solve your problem.";
-	next;
-	switch(select("Move to Eden Group:Don't want to talk anymore.")) {
-	case 1:
-		mes "[Eden Teleport Officer]";
-		mes "Let's go to our secret base!";
-		set nak_warp,11;
-		close2;
-		warp "moc_para01",31,14;
-		end;
-	case 2:
-		mes "[Eden Teleport Officer]";
-		mes "If you don't know what to do for your future, don't hesitate to tell me. Just drop by and talk to me! Ok?";
-		close;
-	}
-}
-
-payon,177,111,3	script	Eden Teleport Officer#12	729,{
-	mes "[Eden Teleport Officer]";
-	mes "Those who are wandering around this strange world with aimless eyes listen up and come to me!";
-	mes "Eden group is here to help you and will show you the great future.";
-	next;
-	mes "[Eden Teleport Officer]";
-	mes "You have nothing to do but waste your time?";
-	mes "Are you eager to do something good but no one offers you work?";
-	mes "Would you like to be a problem solver?";
-	mes "Eden group is here to solve your problem.";
-	next;
-	switch(select("Move to Eden Group:Don't want to talk anymore.")) {
-	case 1:
-		mes "[Eden Teleport Officer]";
-		mes "Let's go to our secret base!";
-		set nak_warp,12;
-		close2;
-		warp "moc_para01",31,14;
-		end;
-	case 2:
-		mes "[Eden Teleport Officer]";
-		mes "If you don't know what to do for your future, don't hesitate to tell me. Just drop by and talk to me! Ok?";
-		close;
-	}
-}
-
-que_ng,33,73,3	script	Eden Teleport Officer#13	729,{
-	mes "[Eden Teleport Officer]";
-	mes "Those who are wandering around this strange world with aimless eyes listen up and come to me!";
-	mes "Eden group is here to help you and will show you the great future.";
-	next;
-	mes "[Eden Teleport Officer]";
-	mes "You have nothing to do but waste your time?";
-	mes "Are you eager to do something good but no one offers you work?";
-	mes "Would you like to be a problem solver?";
-	mes "Eden group is here to solve your problem.";
-	next;
-	switch(select("Move to Eden Group:Don't want to talk anymore.")) {
-	case 1:
-		mes "[Eden Teleport Officer]";
-		mes "Let's go to our secret base!";
-		set nak_warp,13;
-		close2;
-		warp "moc_para01",31,14;
-		end;
-	case 2:
-		mes "[Eden Teleport Officer]";
-		mes "If you don't know what to do for your future, don't hesitate to tell me. Just drop by and talk to me! Ok?";
-		close;
-	}
-}
-
-que_ng,144,161,5	script	Eden Teleport Officer#14	729,{
-	mes "[Eden Teleport Officer]";
-	mes "Those who are wandering around this strange world with aimless eyes listen up and come to me!";
-	mes "Eden group is here to help you and will show you the great future.";
-	next;
-	mes "[Eden Teleport Officer]";
-	mes "You have nothing to do but waste your time?";
-	mes "Are you eager to do something good but no one offers you work?";
-	mes "Would you like to be a problem solver?";
-	mes "Eden group is here to solve your problem.";
-	next;
-	switch(select("Move to Eden Group:Don't want to talk anymore.")) {
-	case 1:
-		mes "[Eden Teleport Officer]";
-		mes "Let's go to our secret base!";
-		set nak_warp,14;
-		close2;
-		warp "moc_para01",31,14;
-		end;
-	case 2:
-		mes "[Eden Teleport Officer]";
-		mes "If you don't know what to do for your future, don't hesitate to tell me. Just drop by and talk to me! Ok?";
-		close;
-	}
-}
-
-yuno,144,189,5	script	Eden Teleport Officer#15	729,{
-	mes "[Eden Teleport Officer]";
-	mes "Those who are wandering around this strange world with aimless eyes listen up and come to me!";
-	mes "Eden group is here to help you and will show you the great future.";
-	next;
-	mes "[Eden Teleport Officer]";
-	mes "You have nothing to do but waste your time?";
-	mes "Are you eager to do something good but no one offers you work?";
-	mes "Would you like to be a problem solver?";
-	mes "Eden group is here to solve your problem.";
-	next;
-	switch(select("Move to Eden Group:Don't want to talk anymore.")) {
-	case 1:
-		mes "[Eden Teleport Officer]";
-		mes "Let's go to our secret base!";
-		set nak_warp,15;
-		close2;
-		warp "moc_para01",31,14;
-		end;
-	case 2:
-		mes "[Eden Teleport Officer]";
-		mes "If you don't know what to do for your future, don't hesitate to tell me. Just drop by and talk to me! Ok?";
-		close;
-	}
-}
-
-rachel,125,144,3	script	Eden Teleport Officer#16	729,{
-	mes "[Eden Teleport Officer]";
-	mes "Those who are wandering around this strange world with aimless eyes listen up and come to me!";
-	mes "Eden group is here to help you and will show you the great future.";
-	next;
-	mes "[Eden Teleport Officer]";
-	mes "You have nothing to do but waste your time?";
-	mes "Are you eager to do something good but no one offers you work?";
-	mes "Would you like to be a problem solver?";
-	mes "Eden group is here to solve your problem.";
-	next;
-	switch(select("Move to Eden Group:Don't want to talk anymore.")) {
-	case 1:
-		mes "[Eden Teleport Officer]";
-		mes "Let's go to our secret base!";
-		set nak_warp,16;
-		close2;
-		warp "moc_para01",31,14;
-		end;
-	case 2:
-		mes "[Eden Teleport Officer]";
-		mes "If you don't know what to do for your future, don't hesitate to tell me. Just drop by and talk to me! Ok?";
-		close;
-	}
-}
+prontera,124,76,3	duplicate(eden_teleport_officer)	Eden Teleport Officer#1	729
+moc_ruins,68,164,3	duplicate(eden_teleport_officer)	Eden Teleport Officer#2	729
+geffen,132,66,3	duplicate(eden_teleport_officer)	Eden Teleport Officer#3	729
+alberta,124,67,3	duplicate(eden_teleport_officer)	Eden Teleport Officer#4	729
+aldebaran,133,119,5	duplicate(eden_teleport_officer)	Eden Teleport Officer#5	729
+izlude_in,68,162,1	duplicate(eden_teleport_officer)	Eden Teleport Officer#6	729
+prt_church,103,78,3	duplicate(eden_teleport_officer)	Eden Teleport Officer#7	729
+geffen_in,160,104,5	duplicate(eden_teleport_officer)	Eden Teleport Officer#8	729
+moc_prydb1,53,126,3	duplicate(eden_teleport_officer)	Eden Teleport Officer#9	729
+alberta_in,75,39,3	duplicate(eden_teleport_officer)	Eden Teleport Officer#10	729
+payon_in02,58,58,1	duplicate(eden_teleport_officer)	Eden Teleport Officer#11	729
+payon,177,111,3	duplicate(eden_teleport_officer)	Eden Teleport Officer#12	729
+que_ng,33,73,3	duplicate(eden_teleport_officer)	Eden Teleport Officer#13	729
+que_ng,144,161,5	duplicate(eden_teleport_officer)	Eden Teleport Officer#14	729
+yuno,144,189,5	duplicate(eden_teleport_officer)	Eden Teleport Officer#15	729
+rachel,125,144,3	duplicate(eden_teleport_officer)	Eden Teleport Officer#16	729
 
 moc_para01,30,10,0	script	#eden_out	45,1,1,{
 OnTouch:

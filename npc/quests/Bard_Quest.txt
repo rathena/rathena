@@ -18,8 +18,8 @@
 //= 1.1 Fixed bug, optimized. Not yet final version [Lupus]
 //=
 //= Variables:
-//=		@random : temp var 
-//=		@inputstr$ : temp var 
+//=		.@random : temp var 
+//=		.@inputstr$ : temp var 
 //=
 //= This Quest has relation with brisingamen_seal.txt (Seals)
 //= 1.2 Changed variable to "gef_bards_q" to avoid job quest conflict. [L0ne_W0lf]
@@ -371,11 +371,11 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "[" + @name$ + "]";
 		mes "Don't you think...";
 		mes "The person would be...";
-		input @inputstr$;
-		mes "" + @inputstr$ + "?";
+		input .@inputstr$;
+		mes .@inputstr$ + "?";
 		next;
 
-		if (@inputstr$ == "Kino Kitty") {
+		if (.@inputstr$ == "Kino Kitty") {
 			cutin "bard_eland04",2;
 			mes "[Errende]";
 			mes "Ah! Of course!";
@@ -411,17 +411,17 @@ geffen,132,38,3	script	Bard#2	51,{
 			}
 			goto L_End;
 
-		} else if (@inputstr$ == "Gunther") {
+		} else if (.@inputstr$ == "Gunther") {
 			mes "[Errende]";
 			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
 			goto L_End;
 
-		} else if (@inputstr$ == "Gunther Doubleharmony") {
+		} else if (.@inputstr$ == "Gunther Doubleharmony") {
 			mes "[Errende]";
 			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
 			goto L_End;
 
-		} else if (@inputstr$ == "Errende") {
+		} else if (.@inputstr$ == "Errende") {
 			cutin "bard_eland04",2;
 			mes "[Errende]";
 			mes "Surely you jest!";
@@ -432,7 +432,7 @@ geffen,132,38,3	script	Bard#2	51,{
 
 		} else {
 			mes "[Errende]";
-			mes "" + @inputstr$ +"...?";
+			mes "" + .@inputstr$ +"...?";
 			mes "I don't think I know that person. Maybe you misunderstood";
 			mes "something? *Sigh...*";
 			next;
@@ -462,10 +462,10 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "No love,";
 		mes "No hope";
 		mes "No....^000000";
-		set @random,rand(1,50);
+		set .@random,rand(1,50);
 		next;
 
-		if (@random > 27  && @random < 37 ) {
+		if (.@random > 27  && .@random < 37 ) {
 			mes "^3355FFErrende continues to sing about his personal despair. He seems to be disappointed in your refusal to help him. Of course, you begin to feel sorry for him.^000000";
 			next;
 
@@ -597,9 +597,9 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "The lyrics. They must have been changed. Did Gunther say anything about this?! Hmmm, but who would change the lyrics...?";
 		next;
 		cutin "bard_eland01",2;
-		input @inputstr$;
+		input .@inputstr$;
 
-		if (@inputstr$ == "Kino Kitty") {
+		if (.@inputstr$ == "Kino Kitty") {
 			mes "[Errende]";
 			mes "Ah! Of course!";
 			mes "I think you're right!";
@@ -632,19 +632,19 @@ geffen,132,38,3	script	Bard#2	51,{
 			}
 			goto L_End;
 
-		} else if (@inputstr$ == "Gunther") {
+		} else if (.@inputstr$ == "Gunther") {
 			mes "[Errende]";
 			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
 			set gef_bard_q,26;
 			goto L_End;
 
-		} else if (@inputstr$ == "Gunther Doubleharmony") {
+		} else if (.@inputstr$ == "Gunther Doubleharmony") {
 			mes "[Errende]";
 			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
 			set gef_bard_q,26;
 			goto L_End;
 
-		} else if (@inputstr$ == "Errende") {
+		} else if (.@inputstr$ == "Errende") {
 			cutin "bard_eland04",2;
 			mes "[Errende]";
 			mes "Surely you jest!";
@@ -656,7 +656,7 @@ geffen,132,38,3	script	Bard#2	51,{
 
 		} else {
 			mes "[Errende]";
-			mes "" + @inputstr$ +"...?";
+			mes "" + .@inputstr$ +"...?";
 			mes "I don't think I know that person. Maybe you misunderstood";
 			mes "something? *Sigh...*";
 			next;
@@ -729,11 +729,11 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "Could it be that";
 		mes "the person who";
 		mes "changed the song is...";
-		input @inputstr$;
-		mes "" + @inputstr$ + "?";
+		input .@inputstr$;
+		mes "" + .@inputstr$ + "?";
 		next;
 
-		if (@inputstr$ == "Kino Kitty") {
+		if (.@inputstr$ == "Kino Kitty") {
 			cutin "bard_eland01",2;
 			mes "[Errende]";
 			mes "Ah! Of course!";
@@ -761,17 +761,17 @@ geffen,132,38,3	script	Bard#2	51,{
 			}
 			goto L_End;
 
-		} else if (@inputstr$ == "Gunther") {
+		} else if (.@inputstr$ == "Gunther") {
 			mes "[Errende]";
 			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
 			goto L_End;
 
-		} else if (@inputstr$ == "Gunther Doubleharmony") {
+		} else if (.@inputstr$ == "Gunther Doubleharmony") {
 			mes "[Errende]";
 			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
 			goto L_End;
 
-		} else if (@inputstr$ == "Errende") {
+		} else if (.@inputstr$ == "Errende") {
 			cutin "bard_eland04",2;
 			mes "[Errende]";
 			mes "Surely you jest! If I did, why would I not know what this song is about?";
@@ -779,7 +779,7 @@ geffen,132,38,3	script	Bard#2	51,{
 
 		} else {
 			mes "[Errende]";
-			mes "" + @inputstr$ +"...?";
+			mes "" + .@inputstr$ +"...?";
 			mes "I don't think I know that person. Maybe you misunderstood something? *Sigh...*";
 			next;
 			mes "[Errende]";
@@ -802,9 +802,9 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "Shattering his dreams...";
 		mes "No dreams, no heart, no love, no hope, no...^000000";
 		next;
-		set @random,rand(1,50);
+		set .@random,rand(1,50);
 
-		if (@random > 27 && @random < 37) {
+		if (.@random > 27 && .@random < 37) {
 			mes "^3355FFErrende continues to sing about his personal despair. He seems to be disappointed in your refusal to help him. Of course, you begin to feel sorry for him.^000000";
 			next;
 
@@ -930,8 +930,8 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "[Errende]";
 		mes "The lyrics. They must have been changed. Did Gunther say anything about this?! Hmmm, but who would change the lyrics...?";
 		next;
-		input @inputstr$;
-		if (@inputstr$ == "Kino Kitty") {
+		input .@inputstr$;
+		if (.@inputstr$ == "Kino Kitty") {
 			cutin "bard_eland01",2;
 			mes "[Errende]";
 			mes "Ah! Of course!";
@@ -960,20 +960,20 @@ geffen,132,38,3	script	Bard#2	51,{
 			}
 			goto L_End;
 
-		} else if (@inputstr$ == "Gunther") {
+		} else if (.@inputstr$ == "Gunther") {
 			mes "[Errende]";
 			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
 			set gef_bard_q,6;
 			goto L_End;
 		}
 
-		else if (@inputstr$ == "Gunther Doubleharmony") {
+		else if (.@inputstr$ == "Gunther Doubleharmony") {
 			mes "[Errende]";
 			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
 			set gef_bard_q,6;
 			goto L_End;
 
-		} else if (@inputstr$ == "Errende") {
+		} else if (.@inputstr$ == "Errende") {
 			cutin "bard_eland04",2;
 			mes "[Errende]";
 			mes "Surely you jest! If I did, why would I not know what this song is about?";
@@ -982,7 +982,7 @@ geffen,132,38,3	script	Bard#2	51,{
 
 		} else {
 			mes "[Errende]";
-			mes "" + @inputstr$ +"...?";
+			mes "" + .@inputstr$ +"...?";
 			mes "I don't think I know that person. Maybe you misunderstood something? *Sigh...*";
 			next;
 			mes "[Errende]";
@@ -1072,8 +1072,8 @@ S_StorySong:
 		if(select("News and rumors~:Cancel.")==1) {
 			cutin "bard_eland01",2;
 			mes "[Errende]";
-			set @random,rand(1,3);
-			if (@random == 1) {
+			set .@random,rand(1,3);
+			if (.@random == 1) {
 				mes "Hmmm. Then shall we talk about this town, Geffen? Have you ever been to the Pub or the Inn here?";
 				next;
 				mes "[Errende]";
@@ -1120,7 +1120,7 @@ S_StorySong:
 				mes "[Errende]";
 				mes "It's tragic that he left his family behind in that way. But perhaps, it is more tragic that his spirit scares away anyone interested in those girls.";
 
-			} else if (@random == 2) {
+			} else if (.@random == 2) {
 				mes "Okay, let me tell you a story about Morroc, city of the desert. Adventurers worth their salt are expected to have explored the city and its surrounding desert.";
 				next;
 				mes "[Errende]";
@@ -1140,7 +1140,7 @@ S_StorySong:
 				mes "I wonder if that man's friend, Pandger Mayer, ever found";
 				mes "his way back home...";
 
-			} else if (@random == 3) {
+			} else if (.@random == 3) {
 				mes "Why don't we talk about Alberta? There is a sunken ship developed by an event agency as a place where adventurers may go on expeditions. It seems they're making a lot of money.";
 				next;
 				mes "[Errende]";
@@ -1194,10 +1194,10 @@ S_StorySong:
 				mes "Alright.";
 				mes "Here we go~";
 
-				set @random,rand(1,3);
-				if (@random == 1)
+				set .@random,rand(1,3);
+				if (.@random == 1)
 					soundeffect "ring_of_nibelungen.wav",0;
-				else if (@random == 2)
+				else if (.@random == 2)
 					soundeffect "dont_forget_me_not.wav",0;
 				else
 					soundeffect "in_to_the_abyss.wav",0;
@@ -1221,10 +1221,10 @@ S_StorySong:
 			next;
 			//for 3 and 4 variants, we need higher chance
 			if(getarg(0) == 3 || getarg(0) == 4)
-				set @random,rand(1,5);
+				set .@random,rand(1,5);
 			else
-				set @random,rand(1,3);
-			if (@random == 1) {
+				set .@random,rand(1,3);
+			if (.@random == 1) {
 				mes "^483D8BValhalla dazzles in gold";
 				mes "The fifth as we know";
 				mes "Is old Glast Heim!";
@@ -1279,7 +1279,7 @@ S_StorySong:
 				}
 				goto L_End;
 
-			} else if (@random == 2) {
+			} else if (.@random == 2) {
 
 				mes "^483D8BThe sounds of galloping";
 				mes "Echo in the distance.";
@@ -1310,7 +1310,7 @@ S_StorySong:
 				mes "Ah, this is called 'Drumming in the Battlefield,' which was written by Mr. Iolo. Yes, I rather like this song.";
 
 			} else {
-				// For 3 and 4 cases we set more chance earlier on @random
+				// For 3 and 4 cases we set more chance earlier on .@random
 				if(getarg(0) == 3 || getarg(0) == 4){
 					mes "[Errende]";
 					if (sex)
@@ -1444,8 +1444,8 @@ morocc,134,111,3	script	Bard#3	741,{
 
 		switch(select("Tell me a story...:Your voice is...:No thanks, I appreciate it though.")) {
 		case 1:
-			set @random,rand(1,3);
-			if (@random == 1) {
+			set .@random,rand(1,3);
+			if (.@random == 1) {
 				mes "[Kino Kitty]";
 				mes "Many legends have been passed down as songs. Stories of Gods and tales of brave warriors have all been written as songs.";
 				next;
@@ -1503,7 +1503,7 @@ morocc,134,111,3	script	Bard#3	741,{
 				mes "Hah... I can't sing more than one song nowadays. But did you like it? ^333333*Cough Cough*^000000";
 				close;
 
-			} else if (@random == 2) {
+			} else if (.@random == 2) {
 				mes "[Kino Kitty]";
 				mes "Ah...";
 				mes "I do feel like singing a song. You know, every song has its own story. ^333333*Cough Cough*^000000";
@@ -1593,8 +1593,8 @@ morocc,134,111,3	script	Bard#3	741,{
 
 		switch(select("Tell me a story, or sing something~:Your voice is...:No thanks. I appreciate it, though.")) {
 		case 1:
-			set @random,rand(1,3);
-			if (@random == 1) {
+			set .@random,rand(1,3);
+			if (.@random == 1) {
 				mes "[Kino Kitty]";
 				mes "Ah...";
 				mes "I do feel like singing a song. You know, every song has its own story. ^333333*Cough Cough*^000000";
@@ -1630,7 +1630,7 @@ morocc,134,111,3	script	Bard#3	741,{
 				mes "This song is about Sigfried, who was invincible, except for a single spot on his back. Just singing this reminds me of the influence women have over the world.";
 				close;
 
-			} else if (@random == 2) {
+			} else if (.@random == 2) {
 				mes "[Kino Kitty]";
 				mes "Ah...";
 				mes "I do feel like singing a song. You know, every song has its own story. ^333333*Cough Cough*^000000";
@@ -2552,15 +2552,15 @@ payon,181,172,3	script	Bard#4	51,{
 		mes "Now, what was the";
 		mes "name of the song again?";
 		next;
-		input @inputstr$;
-		if (@inputstr$ == "At One, I Fall in Love") {
+		input .@inputstr$;
+		if (.@inputstr$ == "At One, I Fall in Love") {
 			mes "[Gunther Doubleharmony]";
 			mes "Ah~ that song...?";
 			mes "By the way, who asked you";
 			mes "to find out about the song?";
 			next;
-			input @inputstr$;
-			if (@inputstr$ == "Minty Errende") {
+			input .@inputstr$;
+			if (.@inputstr$ == "Minty Errende") {
 				mes "[Gunther Doubleharmony]";
 				mes "Yes, that's my friend! Minty Errende! We used to so close to each other, so I'll write every word of the song for my friend Minty Errende, so turn around please!";
 				next;
@@ -2912,8 +2912,8 @@ yuno_in04,20,123,7	script	Representative#bq	95,{
 		mes "[Marlin Putiur]";
 		mes "I also hear the Bards have been helping scholars instill bulletin boards in fields which indicate the location for new adventurers. Would you let me know the full name of the person you're looking for?";
 		next;
-		input @inputstr$;
-		if (@inputstr$ == "Minty Errende") {
+		input .@inputstr$;
+		if (.@inputstr$ == "Minty Errende") {
 			mes "[Marlin Putiur]";
 			mes "Minty Errende...";
 			mes "Oh yes, I remember him. He told me a while ago that he's heading South, and that he's staying in Geffen now.";
@@ -2922,7 +2922,7 @@ yuno_in04,20,123,7	script	Representative#bq	95,{
 			mes "He's a very kind, friendly person. Errende's always doing his best to provide us with the information we need. When you get a chance, would you please give him my regards?";
 			close;
 
-		} else if (@inputstr$ == "Kino Kitty") {
+		} else if (.@inputstr$ == "Kino Kitty") {
 			mes "[Marlin Putiur]";
 			mes "Kino Kitty, Kino Kitty... Oh, here we are. He sent us a letter that says, 'I will stay in the desert until I find my real self.'";
 			next;
@@ -2930,7 +2930,7 @@ yuno_in04,20,123,7	script	Representative#bq	95,{
 			mes "He doesn't seem healthy, but I guess he's still traveling. Trying seeking him out in Morroc, and give my regards to him if you get the chance.";
 			close;
 
-		} else if (@inputstr$ == "Gunther Doubleharmony") {
+		} else if (.@inputstr$ == "Gunther Doubleharmony") {
 			mes "[Marlin Putiur]";
 			mes "Ah, are you a friend of Gunther's? Haha, he's a very funny guy, if a little excitable. Let's see, Gunther, Gunther...";
 			next;
@@ -2940,7 +2940,7 @@ yuno_in04,20,123,7	script	Representative#bq	95,{
 
 		} else {
 			mes "[Marlin Putiur]";
-			mes " " + @inputstr$ + "...?";
+			mes " " + .@inputstr$ + "...?";
 			mes "Ummm hmm...";
 			mes "I'm sorry, but we don't have any records for that person.";
 			close;
@@ -2978,15 +2978,15 @@ yuno_in04,33,119,3	script	Adventurer#1	828,{
 		mes "My name is Pane.";
 		mes "May I ask yours?";
 		set @name$,strcharinfo(0);
-		input @inputstr$;
+		input .@inputstr$;
 		next;
 		mes "[Energetic Young Man]";
 		mes "Oh...";
-		mes "" +@inputstr$+ "...";
-		if (@name$ == @inputstr$) {
+		mes "" +.@inputstr$+ "...";
+		if (@name$ == .@inputstr$) {
 			next;
 			mes "[Energetic Young Man]";
-			mes "^FF6699"+@inputstr$+"!";
+			mes "^FF6699"+.@inputstr$+"!";
 			mes "Such a wonderful name!";
 			next;
 			mes "[Energetic Young Man]";

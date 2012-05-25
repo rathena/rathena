@@ -1878,7 +1878,7 @@ tha_t09,19,158,0	script	Machine Device#tt5	111,{
 				}
 			}
 			mes "You attempt to";
-			mes ""+.@inputstr$+",";
+			mes .@inputstr$+",";
 			mes "but nothing happened.";
 			close;
 		}

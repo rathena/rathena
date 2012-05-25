@@ -876,7 +876,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 				mes "I'm so depressed";
 				mes "because of...";
 				input .@inputstr$;
-				mes ""+.@inputstr$+"...";
+				mes .@inputstr$+"...";
 				next;
 				mes "[Bartender]";
 				mes "There you go...";

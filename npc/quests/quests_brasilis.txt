@@ -3501,7 +3501,7 @@ bra_in01,149,184,3	script	Door#bra	844,{
 			input .@input$;
 			next;
 			mes "["+strcharinfo(0)+"]";
-			mes ""+.@input$+"";
+			mes .@input$;
 			next;
 			set .@braspell$,"Mother the door won't open!";
 			set .@chkspell,compare(.@braspell$,.@input$);
@@ -3602,9 +3602,8 @@ bra_in01,144,187,3	script	Toilet#bra	844,{
 			mes "- What was the second line to that spell now? -";
 			input .@input$;
 			next;
-			set urspell,inputstr;
 			mes "["+strcharinfo(0)+"]";
-			mes ""+.@input$+"";
+			mes .@input$;
 			next;
 			set .@braspell$,"Mother the water is flooding!";
 			set .@chkspell,compare(.@braspell$,.@input$);
@@ -3676,9 +3675,8 @@ bra_in01,134,189,3	script	Faucet#bra	844,{
 			mes "- What was the next line to that spell now? -";
 			input .@input$;
 			next;
-			set urspell,inputstr;
 			mes "["+strcharinfo(0)+"]";
-			mes ""+.@input$+"";
+			mes .@input$;
 			next;
 			set .@braspell$,"Mother the drought has started!";
 			set .@chkspell,compare(.@braspell$,.@input$);
@@ -3752,9 +3750,8 @@ bra_in01,138,184,3	script	Carpet#bra	844,{
 			mes "- What was the next line to that spell now? -";
 			input .@input$;
 			next;
-			set urspell,inputstr;
 			mes "["+strcharinfo(0)+"]";
-			mes ""+.@input$+"";
+			mes .@input$;
 			next;
 			set .@braspell$,"Mother where are my friends?";
 			set .@chkspell,compare(.@braspell$,.@input$);
@@ -3835,9 +3832,8 @@ bra_in01,151,180,3	script	Mirror#bra	844,{
 			mes "- What was the next line to that spell now? -";
 			input .@input$;
 			next;
-			set urspell,inputstr;
 			mes "["+strcharinfo(0)+"]";
-			mes ""+.@input$+"";
+			mes .@input$;
 			next;
 			set .@braspell$,"Where are you mom?";
 			set .@chkspell,compare(.@braspell$,.@input$);

@@ -655,8 +655,8 @@ nif_fild01,167,113,3	script	Masta's chicken#06_hw01	800,{
 		mes "Oh, this must be Chicken Masta's chicken.";
 		mes "I should insert the magic word.";
 		next;
-		input @inputstr$;
-		if( @inputstr$ == "Return" ) {
+		input .@inputstr$;
+		if( .@inputstr$ == "Return" ) {
 			emotion e_omg;
 			specialeffect EF_TELEPORTATION;
 			mes "The magic spell has been casted.";
