@@ -2109,6 +2109,11 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 			else value = 0; // Cashshop doesn't have a "buy price" in the item_db
 		}
 
+		if( type == SHOP && id->value_buy == 0 )
+		{ // NPC selling items for free!
+			ShowWarning("npc_parse_shop: Item %s [%d] is being sold for FREE in file '%s', line '%d'.\n",
+				id->name, nameid, filepath, strline(buffer,start-buffer));
+		}
 		if( type == SHOP && value*0.75 < id->value_sell*1.24 )
 		{// Exploit possible: you can buy and sell back with profit
 			ShowWarning("npc_parse_shop: Item %s [%d] discounted buying price (%d->%d) is less than overcharged selling price (%d->%d) at file '%s', line '%d'.\n",
