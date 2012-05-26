@@ -253,6 +253,34 @@ int instance_del_load(struct map_session_data* sd, va_list args)
 	return 1;
 }
 
+/* for npcs behave differently when being unloaded within a instance */
+int instance_cleanup_sub(struct block_list *bl, va_list ap) {
+	nullpo_ret(bl);
+	
+	switch(bl->type) {
+		case BL_PC:
+			map_quit((struct map_session_data *) bl);
+			break;
+		case BL_NPC:
+			npc_unload((struct npc_data *)bl,true);
+			break;
+		case BL_MOB:
+			unit_free(bl,CLR_OUTSIGHT);
+			break;
+		case BL_PET:
+			//There is no need for this, the pet is removed together with the player. [Skotlex]
+			break;
+		case BL_ITEM:
+			map_clearflooritem(bl->id);
+			break;
+		case BL_SKILL:
+			skill_delunit((struct skill_unit *) bl);
+			break;
+	}
+	
+	return 1;
+}
+
 /*--------------------------------------
  * Removes a simple instance map
  *--------------------------------------*/
@@ -266,7 +294,7 @@ void instance_del_map(int m)
 	}
 
 	map_foreachpc(instance_del_load, m);
-	map_foreachinmap(cleanup_sub, m, BL_ALL);
+	map_foreachinmap(instance_cleanup_sub, m, BL_ALL);
 
 	if( map[m].mob_delete_timer != INVALID_TIMER )
 		delete_timer(map[m].mob_delete_timer, map_removemobs_timer);

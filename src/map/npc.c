@@ -1739,7 +1739,7 @@ int npc_unload(struct npc_data* nd, bool single) {
 	npc_remove_map(nd);
 	map_deliddb(&nd->bl);
 	if( single )
-	strdb_remove(npcname_db, nd->exname);
+		strdb_remove(npcname_db, nd->exname);
 
 	if (nd->chat_id) // remove npc chatroom object and kick users
 		chat_deletenpcchat(nd);
