@@ -1040,7 +1040,7 @@ OnTimer4000:
 	end;
 
 OnTimer60000:
- 	donpcevent "cast#60::timeover2";
+ 	donpcevent "cast#60::Ontimeover2";
 	donpcevent "arn_warp_60::Onout";
 	donpcevent "#arn_timer_60::Onstop";
 	donpcevent "alloff#60::Onon";
@@ -1055,7 +1055,7 @@ Onstop:
 prt_are_in,1,1,1	script	arn_warp_60	-1,{
 
 Onout:
-	areawarp "prt_are_in",23,131,20,20,"arena_room",100,75;
+	areawarp "prt_are_in",14,143,29,128,"arena_room",100,75;
 	end;
 }
 

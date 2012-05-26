@@ -408,6 +408,8 @@ arena_room,158,82,1	script	Helper Lonik	828,{
 
 sec_in02,72,180,3	script	Arena Manager#arena	802,{
 
+	if (!getgmlevel()) end;
+
 	input .@arena;
 	if(!.@arena)
 	{
@@ -497,7 +499,7 @@ sec_in02,72,180,3	script	Arena Manager#arena	802,{
 							case 1:
 								mes "[Arena Manager]";
 								mes "Please enter 0 to cancel.";
-								mes "If not, please write within 400 letters.";
+								mes "If not, please enter a value for minutes first and then seconds..";
 								next;
 								input .@arenamin;
 								set $top_50min,.@arenamin;
@@ -509,7 +511,7 @@ sec_in02,72,180,3	script	Arena Manager#arena	802,{
 							case 2:
 								mes "[Arena Manager]";
 								mes "Please enter 0 to cancel.";
-								mes "If not, please write within 400 letters.";
+								mes "If not, please enter a value for minutes first and then seconds..";
 								next;
 								input .@arenamin;
 								set $top_60min,.@arenamin;
@@ -521,7 +523,7 @@ sec_in02,72,180,3	script	Arena Manager#arena	802,{
 							case 3:
 								mes "[Arena Manager]";
 								mes "Please enter 0 to cancel.";
-								mes "If not, please write within 400 letters.";
+								mes "If not, please enter a value for minutes first and then seconds..";
 								next;
 								input .@arenamin;
 								set $top_70min,.@arenamin;
@@ -533,7 +535,7 @@ sec_in02,72,180,3	script	Arena Manager#arena	802,{
 							case 4:
 								mes "[Arena Manager]";
 								mes "Please enter 0 to cancel.";
-								mes "If not, please write within 400 letters.";
+								mes "If not, please enter a value for minutes first and then seconds..";
 								next;
 								input .@arenamin;
 								set $top_80min,.@arenamin;
@@ -545,7 +547,7 @@ sec_in02,72,180,3	script	Arena Manager#arena	802,{
 							case 5:
 								mes "[Arena Manager]";
 								mes "Please enter 0 to cancel.";
-								mes "If not, please write within 400 letters.";
+								mes "If not, please enter a value for minutes first and then seconds..";
 								next;
 								input .@arenamin;
 								set $top_ptmin,.@arenamin;
@@ -563,6 +565,8 @@ sec_in02,72,180,3	script	Arena Manager#arena	802,{
 }
 
 sec_in02,79,171,3	script	Reward Manager#arena	802,{
+
+	if (!getgmlevel()) end;
 
 	input .@arena;
 	if(!.@arena)
@@ -1026,6 +1030,8 @@ OnTimer62000:
 }
 
 sec_in02,72,171,3	script	Picture Manager#arena	802,{
+
+	if (!getgmlevel()) end;
 
 	input .@arena;
 	if(!.@arena)

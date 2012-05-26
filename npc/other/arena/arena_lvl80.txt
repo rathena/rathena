@@ -995,7 +995,7 @@ Onstop:
 prt_are_in,1,1,1	script	arn_warp_80	-1,{
 
 Onout:
-	areawarp "prt_are_in",22,183,20,20,"arena_room",100,75;
+	areawarp "prt_are_in",66,195,81,180,"arena_room",100,75;
 	end;
 }
 
