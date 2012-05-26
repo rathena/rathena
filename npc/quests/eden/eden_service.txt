@@ -1,25 +1,23 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 // Eden Group Quests - Service NPCs
-//===== By: ================================================== 
+//===== By: ==================================================
 //= L0ne_W0lf
-//===== Current Version: ===================================== 
-//= 1.0
-//===== Compatible With: ===================================== 
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
 //= Any rAthena SVN
-//===== Description: ========================================= 
-//= [AEGIS Conversion]
+//===== Description: =========================================
 //= Paradise Group storage access.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First Version.
 //= 1.1 Replaced 2nd NPC with duplicate function. [Masao]
 //============================================================
 
-moc_para01,173,120,0	script	Goods Cabinet#01::goodsc	111,{
-
+-	script	Goods Cabinet#00::pggc	-1,{
 	mes "It is a Goods Storage Cabinet.";
 	mes "A message is written on a piece of paper.";
 	next;
-	mes "+ Cabinet is exclusively +";
+	mes "+ Cabinet  is exclusively +";
 	mes "+ for the Eden group +";
 	mes "If you want to use this";
 	mes "cabinet please check";
@@ -32,38 +30,35 @@ moc_para01,173,120,0	script	Goods Cabinet#01::goodsc	111,{
 	mes "3.Cabinet fee is";
 	mes "  ^4d4dff500 zeny^000000!";
 	next;
-	if (countitem(6219) > 0)
-	{
-		mes "You need to insert Zeny to use the Cabinet.";
+    if (countitem(6219) > 0) {
+		mes "You need to insert zeny to use the cabinet.";
 		mes "Cost : 500 Zeny ";
 		mes "Would you like to use it?";
 		next;
-		switch(select("Use the Cabinet.:Cancel."))
-		{
-		case 1:
-			if (Zeny > 499)
-			{
-				if(getskilllv("NV_BASIC") < 6)
-				{
-					mes "The cabinet is not working for me.";
-					mes "Maybe I am not yet qualified to use Cabinet.";
-					close;
+		switch (select("Use the Cabinet.:Cancel.")) {
+			case 1:
+				if (Zeny > 499) {
+					if (getskilllv("NV_BASIC") < 6) {
+						mes "The cabinet is not working for me.";
+						mes "Maybe I am not yet qualified to use Cabinet.";
+						close;
+					}
+					set Zeny, Zeny - 500;
+					close2;
+					openstorage;
+					end;
 				}
-				set Zeny,Zeny - 500;
-				close2;
-				openstorage;
-				end;
-			}
-			mes "I don't have enough zeny.";
-			mes "I need at least 500 zeny to use the Cabinet.";
-			close;
-		case 2:
-			mes "I will use it next time.";
-			close;
+				mes "I don't have enough zeny.";
+				mes "I need at least 500 zeny to use the Cabinet.";
+				close;
+			case 2:
+				mes "I will use it next time.";
+				close;
 		}
 	}
 	mes "I need an Eden Group Mark to use this Cabinet.";
 	close;
 }
 
-moc_para01,170,120,0	duplicate(goodsc)	Goods Cabinet#02	111
+moc_para01,173,120,0	duplicate(pggc)	Goods Cabinet#01	111
+moc_para01,170,120,0	duplicate(pggc)	Goods Cabinet#02	111

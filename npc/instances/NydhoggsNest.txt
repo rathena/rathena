@@ -502,7 +502,7 @@ mid_camp,271,299,3	script	Historian Magnifier#edq	755,3,3,{
 }
 
 prt_in,171,94,3	script	Assistant Naomi#edq	893,3,3,{
-	set name,PcName;
+	set .@name$,strcharinfo(0);
 	if (ins_nyd == 3) {
 		mes "[Assistant Naomi]";
 		mes "The doctor never ever tries to come back, and there're too many things to do... How can I do it all...";
@@ -510,7 +510,7 @@ prt_in,171,94,3	script	Assistant Naomi#edq	893,3,3,{
 		mes "[Assistant Naomi]";
 		mes "Hey, you. Please move these books. Put them into shelf 3 row B.";
 		next;
-		mes "[" +strcharinfo(0)+ "]";
+		mes "["+.@name$+"]";
 		mes "Ah...um..I...am...";
 		next;
 		mes "[Assistant Naomi]";
@@ -525,19 +525,19 @@ prt_in,171,94,3	script	Assistant Naomi#edq	893,3,3,{
 			mes "[Assistant Naomi]";
 			mes "Ah... if you're done moving those, then these should go in shelf 3 row B.";
 			next;
-			mes "[" +strcharinfo(0)+ "]";
+			mes "["+.@name$+"]";
 			mes "Ah...I...see...";
 			next;
 			mes "[Assistant Naomi]";
 			mes "Now, I am almost done... Who are you? Are you a new assistant to Dr. Magnifier?";
 			next;
-			mes "[" +strcharinfo(0)+ "]";
+			mes "["+.@name$+"]";
 			mes "He asked me to bring some reports. Didn't he say anything?";
 			next;
 			mes "[Assistant Naomi]";
 			mes "Hmm... I haven't seen him in over a year! What's he doing now?";
 			next;
-			mes "[" +strcharinfo(0)+ "]";
+			mes "["+.@name$+"]";
 			mes "He said that he would send a message to you... didn't you get it?";
 			next;
 			mes "[Assistant Naomi]";
@@ -552,7 +552,7 @@ prt_in,171,94,3	script	Assistant Naomi#edq	893,3,3,{
 			next;
 			mes "It's too messy due to lots of stacked books and files. Dr. Magnifier looks like he has a ton of reports.";
 			next;
-			mes "[" +strcharinfo(0)+ "]";
+			mes "["+.@name$+"]";
 			mes "'Birth of the World', 'The Fiction of Odin's Myth', 'God's Battle Then After', 'Dreams of the Tribes'. There are a variety of books...";
 			next;
 			mes "...";
@@ -566,7 +566,7 @@ prt_in,171,94,3	script	Assistant Naomi#edq	893,3,3,{
 			mes "[Assistant Naomi]";
 			mes "Ah, here's the message about you. He's said to share the information on research and reports.";
 			next;
-			mes "[" +strcharinfo(0)+ "]";
+			mes "["+.@name$+"]";
 			mes "What is the Doctor's area of expertise?";
 			next;
 			mes "[Assistant Naomi]";
@@ -575,13 +575,13 @@ prt_in,171,94,3	script	Assistant Naomi#edq	893,3,3,{
 			mes "[Assistant Naomi]";
 			mes "He researches combat between Odin and the Gods, and about the Gods' origins and life.";
 			next;
-			mes "[" +strcharinfo(0)+ "]";
+			mes "["+.@name$+"]";
 			mes "So, did he already know that the Rebirth of Satan Morocc has occured before?";
 			next;
 			mes "[Assistant Naomi]";
 			mes "I can't be sure, but he thought someday it would occur. It broke out earlier than he expected though.";
 			next;
-			mes "[" +strcharinfo(0)+ "]";
+			mes "["+.@name$+"]";
 			mes "But Rune-Midgarts approved this research?";
 			next;
 			mes "[Assistant Naomi]";
@@ -590,7 +590,7 @@ prt_in,171,94,3	script	Assistant Naomi#edq	893,3,3,{
 			mes "[Assistant Naomi]";
 			mes "The combat of Odin vs. the Gods, and the God's sons and their purpose... The Doctor has researched this his whole life.";
 			next;
-			mes "[" +strcharinfo(0)+ "]";
+			mes "["+.@name$+"]";
 			mes "But those reports haven't come out yet. Have they?";
 			next;
 			mes "[Assistant Naomi]";
@@ -602,7 +602,7 @@ prt_in,171,94,3	script	Assistant Naomi#edq	893,3,3,{
 			mes "[Assistant Naomi]";
 			mes "Anyway, I should make sure that you read all these books, and I'll just keep doing my work.";
 			next;
-			mes "[" +strcharinfo(0)+ "]";
+			mes "["+.@name$+"]";
 			mes "Shouldn't I have filed the books?";
 			next;
 			mes "[Assistant Naomi]";

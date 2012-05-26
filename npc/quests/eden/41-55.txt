@@ -1,19 +1,21 @@
-//===== rAthena Script ======================================= 
-// Eden Group Quests - Repeatable experience quests [41-55]
-//===== By: ================================================== 
+//===== rAthena Script =======================================
+// Eden Group Quests - Mission [41 - 55]
+//===== By: ==================================================
 //= L0ne_W0lf
-//===== Current Version: ===================================== 
-//= 1.0
-//===== Compatible With: ===================================== 
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
 //= rAthena SVN
-//===== Description: ========================================= 
-//= [AEGIS Conversion]
-//===== Additional Comments: ================================= 
+//===== Description: =========================================
+//= Repetable Quests for Players between Baselevel 40 - 56 .
+//===== Additional Comments: =================================
 //= 1.0 First Version.
+//= 1.1 Some little optimization here and there. [Masao]
 //============================================================
 
-moc_para01,40,38,3	script	Mission [41 - 55]#p	857,{
-	if (checkweight(1201,1) == 0) {
+moc_para01,40,38,3	script	Mission [41 - 55]	857,{
+
+	if (checkweight(1201,1) == 0 || (MaxWeight - Weight) < 1000) {
 		mes "^008800Wait a sec!!";
 		mes "You cannot receive any more items because you're carrying too many items. Please try again after you lighten up.^000000";
 		close;
@@ -22,466 +24,411 @@ moc_para01,40,38,3	script	Mission [41 - 55]#p	857,{
 		mes "You are not an Eden group member. You are not qualified to access the bulletin board.";
 		close;
 	}
-	set .@m_client,checkquest(12088);
-	if (.@m_client == -1) {
-		if ((BaseLevel < 41) || (BaseLevel > 55)) {
+	if (checkquest(12088) == -1) {
+		if (BaseLevel < 41 || BaseLevel > 55) {
 			mes "[41 ~ 55 Lv. Mission Board]";
 			close;
 		}
 		mes "[Mission Board]";
 		mes "Mission bulletin board.";
 		next;
-		switch(select("Check the Missions:Cancel")) {
+		switch (select("Check the Missions.:Cancel.")) {
 		case 1:
-			switch(select("Thara Frog Hunting:Cruiser Hunting:Kukre Hunting:Orc Baby Hunting:Orc Warrior Hunting:Vadon Hunting:Megalodon Hunting:Marse Hunting:Cornutus Hunting:Myst Hunting:Shellfish Hunting:Marine Sphere Hunting:Phen Hunting:Orc Skeleton Hunting:Zenorc Hunting:Mummy Hunting")) {
+			switch (select("Thara Frog Hunting:Cruiser Hunting:Kukre Hunting:Orc Baby Hunting:Orc Warrior Hunting:Vadon Hunting:Megalodon Hunting:Marse Hunting:Cornutus Hunting:Myst Hunting:Shellfish Hunting:Marine Sphere Hunting")) {
+			case 1:
+				mes "[Mission Board Memo]";
+				mes "Have you seen a red frog? It is called Thara Frog and it's very rare. We are trying to verify where it inhabits. So please hunt 20 Thara Frogs.";
+				next;
+				switch (select("Accept the mission.:Cancel.")) {
 				case 1:
-					mes "[Mission Board Memo]";
-					mes "Have you seen a red frog? It is called Thara Frog and it's very rare. We are trying to verify where it inhabits. So please hunt 20 Thara Frogs.";
-					next;
-					switch(select("Accept the mission.:Cancel.")) {
-						case 1:
-							mes "[Mission Board]";
-							mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
-							close2;
-							setquest 12072;
-							setquest 12088;
-							break;
-						case 2:
-							close;
-					}
-					break;
+					mes "[Mission Board]";
+					mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
+					setquest 12072;
+					setquest 12088;
+					close;
 				case 2:
-					mes "[Mission Board Memo]";
-					mes "I heard of some toys attacking people. It is ridiculous! Let's show them our power! We have to hunt 15 Cruisers!";
-					next;
-					switch(select("Accept the mission.:Cancel.")) {
-						case 1:
-							mes "[Mission Board]";
-							mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
-							close2;
-							setquest 12073;
-							setquest 12088;
-							break;
-						case 2:
-							close;
-					}
-					break;
-				case 3:
-					mes "[Mission Board Memo]";
-					mes "Someone got robbed near the beach! The possible suspect is a criminal monster called Kukre. Please hunt 30 Kukre.";
-					next;
-					switch(select("Accept the mission.:Cancel.")) {
-						case 1:
-							mes "[Mission Board]";
-							mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
-							close2;
-							setquest 12074;
-							setquest 12088;
-							break;
-						case 2:
-							close;
-					}
-					break;
-				case 4:
-					mes "[Mission Board Memo]";
-					mes "Orc Babies are getting more violent these days. Please hunt 15 Orc Babies.";
-					next;
-					switch(select("Accept the mission.:Cancel.")) {
-						case 1:
-							mes "[Mission Board]";
-							mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
-							close2;
-							setquest 12075;
-							setquest 12088;
-							break;
-						case 2:
-							close;
-					}
-					break;
-				case 5:
-					mes "[Mission Board Memo]";
-					mes "Orc Warriors are increasing their aggression. Please hunt 20 Orc Warriors.";
-					next;
-					switch(select("Accept the mission.:Cancel.")) {
-						case 1:
-							mes "[Mission Board]";
-							mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
-							close2;
-							setquest 12088;
-							setquest 12076;
-							break;
-						case 2:
-							close;
-					}
-					break;
-				case 6:
-					mes "[Mission Board Memo]";
-					mes "Have you seen crabs with thick shells? They are Vadons. Please hunt 15 Vadons..";
-					next;
-					switch(select("Accept the mission.:Cancel.")) {
-						case 1:
-							mes "[Mission Board]";
-							mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
-							close2;
-							setquest 12088;
-							setquest 12077;
-							break;
-						case 2:
-							close;
-					}
-					break;
-				case 7:
-					mes "[Mission Board Memo]";
-					mes "Dead fish are all around the beach and it is getting worse. Please hunt 30 Megalodon.";
-					next;
-					switch(select("Accept the mission.:Cancel.")) {
-						case 1:
-							mes "[Mission Board]";
-							mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
-							close2;
-							setquest 12088;
-							setquest 12078;
-							break;
-						case 2:
-							close;
-					}
-					break;
-				case 8:
-					mes "[Mission Board Memo]";
-					mes "Can you hunt Marse? I need 15 Marse for my study. Please help me.";
-					next;
-					switch(select("Accept the mission.:Cancel.")) {
-						case 1:
-							mes "[Mission Board]";
-							mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
-							close2;
-							setquest 12079;
-							setquest 12088;
-							break;
-						case 2:
-							close;
-					}
-					break;
-				case 9:
-					mes "[Mission Board Memo]";
-					mes "An idiot Cornutus bit the Mayor's foot. The Mayor is upset so we need to hunt 20 Cornutus to make him happy!";
-					next;
-					switch(select("Accept the mission.:Cancel.")) {
-						case 1:
-							mes "[Mission Board]";
-							mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
-							close2;
-							setquest 12088;
-							setquest 12080;
-							break;
-						case 2:
-							close;
-					}
-					break;
-				case 10:
-					mes "[Mission Board Memo]";
-					mes "People are freaking out because of Myst. It looks like a ghost so, it scares people. Please hunt 15 Myst.";
-					next;
-					switch(select("Accept the mission.:Cancel.")) {
-						case 1:
-							mes "[Mission Board]";
-							mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
-							close2;
-							setquest 12088;
-							setquest 12081;
-							break;
-						case 2:
-							close;
-					}
-					break;
-				case 11:
-					mes "[Mission Board Memo]";
-					mes "Don't ask why, but please hunt 30 Shellfish. It is a secret mission!";
-					next;
-					switch(select("Accept the mission.:Cancel.")) {
-						case 1:
-							mes "[Mission Board]";
-							mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
-							close2;
-							setquest 12088;
-							setquest 12082;
-							break;
-						case 2:
-							close;
-					}
-					break;
-				case 12:
-					mes "[Mission Board Memo]";
-					mes "Marine Sphere? Do you know what a Marine Sphere is? I got a mission for you to hunt 15 Marine Sphere, so please do so.";
-					next;
-					switch(select("Accept the mission.:Cancel.")) {
-						case 1:
-							mes "[Mission Board]";
-							mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
-							close2;
-							setquest 12088;
-							setquest 12083;
-							break;
-						case 2:
-							close;
-							break;
-					}
-					break;
-				case 13:
-					mes "[Mission Board Memo]";
-					mes "The mayor wants to eat a delicious fish dish. Phen will be the perfect ingredient for it. Please hunt 20 Phen!";
-					next;
-					switch(select("Accept the mission.:Cancel.")) {
-						case 1:
-							mes "[Mission Board]";
-							mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
-							close2;
-							setquest 12088;
-							setquest 12084;
-							break;
-						case 2:
-							close;
-					}
-					break;
-				case 14:
-					mes "[Mission Board Memo]";
-					mes "Dead Orc monsters got back to our town and they've revived as Orc Skeletons. We are in chaos! Please hunt 15 Orc Skeleton.";
-					next;
-					switch(select("Accept the mission.:Cancel.")) {
-						case 1:
-							mes "[Mission Board]";
-							mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
-							close2;
-							setquest 12088;
-							setquest 12085;
-							break;
-						case 2:
-							close;
-					}
-					break;
-				case 15:
-					mes "[Mission Board Memo]";
-					mes "Some weird monsters called Zenorc are attacking us. Please hunt 30 Zenorc.";
-					next;
-					switch(select("Accept the mission.:Cancel.")) {
-						case 1:
-							mes "[Mission Board]";
-							mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
-							close2;
-							setquest 12088;
-							setquest 12086;
-							break;
-						case 2:
-							close;
-					}
-					break;
-				case 16:
-					mes "[Mission Board Memo]";
-					mes "Be prepared! It is a cruel mission! Hunt 15 Mummies!! I tried once, but I couldn't succeed. It is too scary!";
-					next;
-					switch(select("Accept the mission.:Cancel.")) {
-						case 1:
-							mes "[Mission Board]";
-							mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
-							close2;
-							setquest 12088;
-							setquest 12087;
-							break;
-						case 2:
-							close;
-					}
-					break;
+					close;
+				}
+			case 2:
+				mes "[Mission Board Memo]";
+				mes "I heard of some toys attacking people. It is ridiculous! Let's show them our power! We have to hunt 15 Cruisers!";
+				next;
+				switch (select("Accept the mission.:Cancel.")) {
+				case 1:
+					mes "[Mission Board]";
+					mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
+					setquest 12073;
+					setquest 12088;
+					close;
+				case 2:
+					close;
+				}
+			case 3:
+				mes "[Mission Board Memo]";
+				mes "Someone got robbed near the beach! The possible suspect is a criminal monster called Kukre. Please hunt 30 Kukre.";
+				next;
+				switch (select("Accept the mission.:Cancel.")) {
+				case 1:
+					mes "[Mission Board]";
+					mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
+					setquest 12074;
+					setquest 12088;
+					close;
+				case 2:
+					close;
+				}
+			case 4:
+				mes "[Mission Board Memo]";
+				mes "Orc Babies are getting more violent these days. Please hunt 15 Orc Babies.";
+				next;
+				switch (select("Accept the mission.:Cancel.")) {
+				case 1:
+					mes "[Mission Board]";
+					mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
+					setquest 12075;
+					setquest 12088;
+					close;
+				case 2:
+					close;
+				}
+			case 5:
+				mes "[Mission Board Memo]";
+				mes "Orc Warriors are increasing their aggression. Please hunt 20 Orc Warriors.";
+				next;
+				switch (select("Accept the mission.:Cancel.")) {
+				case 1:
+					mes "[Mission Board]";
+					mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
+					setquest 12088;
+					setquest 12076;
+					close;
+				case 2:
+				}
+			case 6:
+				mes "[Mission Board Memo]";
+				mes "Have you seen crabs with thick shells? They are Vadons. Please hunt 15 Vadons..";
+				next;
+				switch (select("Accept the mission.:Cancel.")) {
+				case 1:
+					mes "[Mission Board]";
+					mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
+					setquest 12088;
+					setquest 12077;
+					close;
+				case 2:
+					close;
+				}
+			case 7:
+				mes "[Mission Board Memo]";
+				mes "Dead fish are all around the beach and it is getting worse. Please hunt 30 Megalodon.";
+				next;
+				switch (select("Accept the mission.:Cancel.")) {
+				case 1:
+					mes "[Mission Board]";
+					mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
+					setquest 12088;
+					setquest 12078;
+					close;
+				case 2:
+					close;
+				}
+			case 8:
+				mes "[Mission Board Memo]";
+				mes "Can you hunt Marse? I need 15 Marse for my study. Please help me.";
+				next;
+				switch (select("Accept the mission.:Cancel.")) {
+				case 1:
+					mes "[Mission Board]";
+					mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
+					setquest 12079;
+					setquest 12088;
+					close;
+				case 2:
+					close;
+				}
+			case 9:
+				mes "[Mission Board Memo]";
+				mes "An idiot Cornutus bit the Mayor's foot. The Mayor is upset so we need to hunt 20 Cornutus to make him happy!";
+				next;
+				switch (select("Accept the mission.:Cancel.")) {
+				case 1:
+					mes "[Mission Board]";
+					mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
+					setquest 12088;
+					setquest 12080;
+					close;
+				case 2:
+					close;
+				}
+			case 10:
+				mes "[Mission Board Memo]";
+				mes "People are freaking out because of Myst. It looks like a ghost so, it scares people. Please hunt 15 Myst.";
+				next;
+				switch (select("Accept the mission.:Cancel.")) {
+				case 1:
+					mes "[Mission Board]";
+					mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
+					setquest 12088;
+					setquest 12081;
+					close;
+				case 2:
+					close;
+				}
+			case 11:
+				mes "[Mission Board Memo]";
+				mes "Don't ask why, but please hunt 30 Shellfish. It is a secret mission!";
+				next;
+				switch (select("Accept the mission.:Cancel.")) {
+				case 1:
+					mes "[Mission Board]";
+					mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
+					setquest 12088;
+					setquest 12082;
+					close;
+				case 2:
+					close;
+				}
+			case 12:
+				mes "[Mission Board Memo]";
+				mes "Marine Sphere? Do you know what a Marine Sphere is? I got a mission for you to hunt 15 Marine Sphere, so please do so.";
+				next;
+				switch (select("Accept the mission.:Cancel.")) {
+				case 1:
+					mes "[Mission Board]";
+					mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
+					setquest 12088;
+					setquest 12083;
+					close;
+				case 2:
+					close;
+				}
+			case 13:
+				mes "[Mission Board Memo]";
+				mes "The mayor wants to eat a delicious fish dish. Phen will be the perfect ingredient for it. Please hunt 20 Phen!";
+				next;
+				switch (select("Accept the mission.:Cancel.")) {
+				case 1:
+					mes "[Mission Board]";
+					mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
+					setquest 12088;
+					setquest 12084;
+					close;
+				case 2:
+					close;
+				}
+			case 14:
+				mes "[Mission Board Memo]";
+				mes "Dead Orc monsters got back to our town and they've revived as Orc Skeletons. We are in chaos! Please hunt 15 Orc Skeleton.";
+				next;
+				switch (select("Accept the mission.:Cancel.")) {
+				case 1:
+					mes "[Mission Board]";
+					mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
+					setquest 12088;
+					setquest 12085;
+					close;
+				case 2:
+					close;
+				}
+			case 15:
+				mes "[Mission Board Memo]";
+				mes "Some weird monsters called Zenorc are attacking us. Please hunt 30 Zenorc.";
+				next;
+				switch (select("Accept the mission.:Cancel.")) {
+				case 1:
+					mes "[Mission Board]";
+					mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
+					setquest 12088;
+					setquest 12086;
+					close;
+				case 2:
+					close;
+				}
+			case 16:
+				mes "[Mission Board Memo]";
+				mes "Be prepared! It is a cruel mission! Hunt 15 Mummies!! I tried once, but I couldn't succeed. It is too scary!";
+				next;
+				switch (select("Accept the mission.:Cancel.")) {
+				case 1:
+					mes "[Mission Board]";
+					mes "You have accepted the mission. For more details, please press 'alt + u' keys, you can get information from the Quest Window.";
+					setquest 12088;
+					setquest 12087;
+					close;
+				case 2:
+					close;
+				}
 			}
-			break;
 		case 2:
 			mes "^000077Ok. Let's check the missions next time.^000000.";
 			close;
 		}
+	}
+	if (checkquest(12072,HUNTING) == 2) {
+		mes "[Mission Board]";
+		mes "You have completed the mission.";
+		mes "Here is your reward.";
+		erasequest 12072;
+		erasequest 12088;
+		specialeffect2 EF_STEAL;
+		getexp 9600,0;
 		close;
 	}
-	else {
-		set .@m_client2,checkquest(12072,HUNTING);
-		if (.@m_client2 == 2) {
-			mes "[Mission Board]";
-			mes "You have completed the mission. Here is your reward.";
-			erasequest 12072;
-			erasequest 12088;
-			specialeffect2 EF_STEAL;
-			getexp 9600,0;
-			close;
-		}
-
-		set .@m_client3,checkquest(12073,HUNTING);
-		if (.@m_client3 == 2) {
-			mes "[Mission Board]";
-			mes "You have completed the mission. Here is your reward.";
-			erasequest 12073;
-			erasequest 12088;
-			specialeffect2 EF_STEAL;
-			getexp 7200,0;
-			close;
-		}
-
-		set .@m_client4,checkquest(12074,HUNTING);
-		if (.@m_client4 == 2) {
-			mes "[Mission Board]";
-			mes "You have completed the mission. Here is your reward.";
-			erasequest 12074;
-			erasequest 12088;
-			specialeffect2 EF_STEAL;
-			getexp 15750,0;
-			close;
-		}
-
-		set .@m_client5,checkquest(12075,HUNTING);
-		if (.@m_client5 == 2) {
-			mes "[Mission Board]";
-			mes "You have completed the mission. Here is your reward.";
-			erasequest 12075;
-			erasequest 12088;
-			specialeffect2 EF_STEAL;
-			getexp 7875,0;
-			close;
-		}
-
-		set .@m_client6,checkquest(12076,HUNTING);
-		if (.@m_client6 == 2) {
-			mes "[Mission Board]";
-			mes "You have completed the mission. Here is your reward.";
-			erasequest 12076;
-			erasequest 12088;
-			specialeffect2 EF_STEAL;
-			getexp 11100,0;
-			close;
-		}
-
-		set .@m_client7,checkquest(12077,HUNTING);
-		if (.@m_client7 == 2) {
-			mes "[Mission Board]";
-			mes "You have completed the mission. Here is your reward.";
-			erasequest 12077;
-			erasequest 12088;
-			specialeffect2 EF_STEAL;
-			getexp 8550,0;
-			close;
-		}
-
-		set .@m_client8,checkquest(12078,HUNTING);
-		if (.@m_client8 == 2) {
-			mes "[Mission Board]";
-			mes "You have completed the mission. Here is your reward.";
-			erasequest 12078;
-			erasequest 12088;
-			specialeffect2 EF_STEAL;
-			getexp 17100,0;
-			close;
-		}
-
-		set .@m_client9,checkquest(12079,HUNTING);
-		if (.@m_client9 == 2) {
-			mes "[Mission Board]";
-			mes "You have completed the mission. Here is your reward.";
-			erasequest 12079;
-			erasequest 12088;
-			specialeffect2 EF_STEAL;
-			getexp 9000,0;
-			close;
-		}
-
-		set .@m_client10,checkquest(12080,HUNTING);
-		if (.@m_client10 == 2) {
-			mes "[Mission Board]";
-			mes "You have completed the mission. Here is your reward.";
-			erasequest 12080;
-			erasequest 12088;
-			specialeffect2 EF_STEAL;
-			getexp 12300,0;
-			close;
-		}
-
-		set .@m_client11,checkquest(12081,HUNTING);
-		if (.@m_client11 == 2) {
-			mes "[Mission Board]";
-			mes "You have completed the mission. Here is your reward.";
-			erasequest 12081;
-			erasequest 12088;
-			specialeffect2 EF_STEAL;
-			getexp 9900,0;
-			close;
-		}
-
-		set .@m_client12,checkquest(12082,HUNTING);
-		if (.@m_client12 == 2) {
-			mes "[Mission Board]";
-			mes "You have completed the mission. Here is your reward.";
-			erasequest 12082;
-			erasequest 12088;
-			specialeffect2 EF_STEAL;
-			getexp 20250,0;
-			close;
-		}
-
-		set .@m_client13,checkquest(12083,HUNTING);
-		if (.@m_client13 == 2) {
-			mes "[Mission Board]";
-			mes "You have completed the mission. Here is your reward.";
-			erasequest 12083;
-			erasequest 12088;
-			specialeffect2 EF_STEAL;
-			getexp 10350,0;
-			close;
-		}
-
-		set .@m_client14,checkquest(12084,HUNTING);
-		if (.@m_client14 == 2) {
-			mes "[Mission Board]";
-			mes "You have completed the mission. Here is your reward.";
-			erasequest 12084;
-			erasequest 12088;
-			specialeffect2 EF_STEAL;
-			getexp 13800,0;
-			close;
-		}
-
-		set .@m_client15,checkquest(12085,HUNTING);
-		if (.@m_client15 == 2) {
-			mes "[Mission Board]";
-			mes "You have completed the mission. Here is your reward.";
-			erasequest 12085;
-			erasequest 12088;
-			specialeffect2 EF_STEAL;
-			getexp 11025,0;
-			close;
-		}
-
-		set .@m_client16,checkquest(12086,HUNTING);
-		if (.@m_client16 == 2) {
-			mes "[Mission Board]";
-			mes "You have completed the mission. Here is your reward.";
-			erasequest 12086;
-			erasequest 12088;
-			specialeffect2 EF_STEAL;
-			getexp 22500,0;
-			close;
-		}
-
-		set .@m_client17,checkquest(12087,HUNTING);
-		if (.@m_client17 == 2) {
-			mes "[Mission Board]";
-			mes "You have completed the mission. Here is your reward.";
-			erasequest 12087;
-			erasequest 12088;
-			specialeffect2 EF_STEAL;
-			getexp 11250,0;
-			close;
-		}
-		if ((.@m_client2 == 0) && (.@m_client3 == 0) && (.@m_client4 == 0) && (.@m_client5 == 0) && (.@m_client6 == 0) && (.@m_client7 == 0) && (.@m_client8 == 0) && (.@m_client9 == 0) && (.@m_client10 == 0) && (.@m_client11 == 0) && (.@m_client12 == 0) && (.@m_client13 == 0) && (.@m_client14 == 0) && (.@m_client15 == 0) && (.@m_client16 == 0) && (.@m_client17 == 0)) {
-			mes "You may now view the bullitiin board.";
-			close2;
-			erasequest 12088;
-			end;
-		}
-		mes "There is nothing special things to do.";
+	if (checkquest(12073,HUNTING) == 2) {
+		mes "[Mission Board]";
+		mes "You have completed the mission.";
+		mes "Here is your reward.";
+		erasequest 12073;
+		erasequest 12088;
+		specialeffect2 EF_STEAL;
+		getexp 7200,0;
 		close;
 	}
+	if (checkquest(12074,HUNTING) == 2) {
+		mes "[Mission Board]";
+		mes "You have completed the mission.";
+		mes "Here is your reward.";
+		erasequest 12074;
+		erasequest 12088;
+		specialeffect2 EF_STEAL;
+		getexp 15750,0;
+		close;
+	}
+	if (checkquest(12075,HUNTING) == 2) {
+		mes "[Mission Board]";
+		mes "You have completed the mission.";
+		mes "Here is your reward.";
+		erasequest 12075;
+		erasequest 12088;
+		specialeffect2 EF_STEAL;
+		getexp 7875,0;
+		close;
+	}
+	if (checkquest(12076,HUNTING) == 2) {
+		mes "[Mission Board]";
+		mes "You have completed the mission.";
+		mes "Here is your reward.";
+		erasequest 12076;
+		erasequest 12088;
+		specialeffect2 EF_STEAL;
+		getexp 11100,0;
+		close;
+	}
+	if (checkquest(12077,HUNTING) == 2) {
+		mes "[Mission Board]";
+		mes "You have completed the mission.";
+		mes "Here is your reward.";
+		erasequest 12077;
+		erasequest 12088;
+		specialeffect2 EF_STEAL;
+		getexp 8550,0;
+		close;
+	}
+	if (checkquest(12078,HUNTING) == 2) {
+		mes "[Mission Board]";
+		mes "You have completed the mission.";
+		mes "Here is your reward.";
+		erasequest 12078;
+		erasequest 12088;
+		specialeffect2 EF_STEAL;
+		getexp 17100,0;
+		close;
+	}
+	if (checkquest(12079,HUNTING) == 2) {
+		mes "[Mission Board]";
+		mes "You have completed the mission.";
+		mes "Here is your reward.";
+		erasequest 12079;
+		erasequest 12088;
+		specialeffect2 EF_STEAL;
+		getexp 9000,0;
+		close;
+	}
+	if (checkquest(12080,HUNTING) == 2) {
+		mes "[Mission Board]";
+		mes "You have completed the mission.";
+		mes "Here is your reward.";
+		erasequest 12080;
+		erasequest 12088;
+		specialeffect2 EF_STEAL;
+		getexp 12300,0;
+		close;
+	}
+	if (checkquest(12081,HUNTING) == 2) {
+		mes "[Mission Board]";
+		mes "You have completed the mission.";
+		mes "Here is your reward.";
+		erasequest 12081;
+		erasequest 12088;
+		specialeffect2 EF_STEAL;
+		getexp 9900,0;
+		close;
+	}
+	if (checkquest(12082,HUNTING) == 2) {
+		mes "[Mission Board]";
+		mes "You have completed the mission.";
+		mes "Here is your reward.";
+		erasequest 12082;
+		erasequest 12088;
+		specialeffect2 EF_STEAL;
+		getexp 20250,0;
+		close;
+	}
+	if (checkquest(12083,HUNTING) == 2) {
+		mes "[Mission Board]";
+		mes "You have completed the mission.";
+		mes "Here is your reward.";
+		erasequest 12083;
+		erasequest 12088;
+		specialeffect2 EF_STEAL;
+		getexp 10350,0;
+		close;
+	}
+	if (checkquest(12084,HUNTING) == 2) {
+		mes "[Mission Board]";
+		mes "You have completed the mission.";
+		mes "Here is your reward.";
+		erasequest 12084;
+		erasequest 12088;
+		specialeffect2 EF_STEAL;
+		getexp 13800,0;
+		close;
+	}
+	if (checkquest(12085,HUNTING) == 2) {
+		mes "[Mission Board]";
+		mes "You have completed the mission.";
+		mes "Here is your reward.";
+		erasequest 12085;
+		erasequest 12088;
+		specialeffect2 EF_STEAL;
+		getexp 11025,0;
+		close;
+	}
+	if (checkquest(12086,HUNTING) == 2) {
+		mes "[Mission Board]";
+		mes "You have completed the mission.";
+		mes "Here is your reward.";
+		erasequest 12086;
+		erasequest 12088;
+		specialeffect2 EF_STEAL;
+		getexp 22500,0;
+		close;
+	}
+	if (checkquest(12087,HUNTING) == 2) {
+		mes "[Mission Board]";
+		mes "You have completed the mission.";
+		mes "Here is your reward.";
+		erasequest 12087;
+		erasequest 12088;
+		specialeffect2 EF_STEAL;
+		getexp 11250,0;
+		close;
+	}
+	if ((checkquest(12072,HUNTING) == 0) && (checkquest(12073,HUNTING) == 0) && (checkquest(12074,HUNTING) == 0) && (checkquest(12075,HUNTING) == 0) && (checkquest(12076,HUNTING) == 0) && (checkquest(12077,HUNTING) == 0) && (checkquest(12078,HUNTING) == 0) && (checkquest(12079,HUNTING) == 0) && (checkquest(12080,HUNTING) == 0) && (checkquest(12081,HUNTING) == 0) && (checkquest(12082,HUNTING) == 0) && (checkquest(12083,HUNTING) == 0) && (checkquest(12084,HUNTING) == 0) && (checkquest(12085,HUNTING) == 0) && (checkquest(12086,HUNTING) == 0) && (checkquest(12087,HUNTING) == 0)) {
+		mes "You may now view the bulletin board.";
+		erasequest 12088;
+		close;
+	}
+	mes "There is nothing special to do.";
+	close;
 }

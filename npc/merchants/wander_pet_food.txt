@@ -20,7 +20,7 @@ prontera,218,218,3	script	Pet Enthusiast	96,{
 	mes "Are you a lover of animals like I am?";
 	next;
 	mes "[Pet Enthusiast Jenny]";
-	mes "I now that it's really hard to keep your cute pets happy.";
+	mes "I know that it's really hard to keep your cute pets happy.";
 	mes "All it takes is the right kind of food.";
 	next;
 	mes "[Pet Enthusiast Jenny]";

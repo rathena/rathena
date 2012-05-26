@@ -44,6 +44,7 @@ alberta,214,77,6	script	Captain Janssen	709,{
 		mes "Sigh... I don't know if I can ever go back to sailing the sea...";
 		close;
 	}
+	set .@name$,strcharinfo(0);
 	if (in_102tower == 1) {
 		mes "^0000ffLooking incredibly excited, the old man ran into the marine shop hurriedly ordering goods. You don't have anything better to do, so you decide to ask him why he is in such a rush.^000000";
 		next;
@@ -52,7 +53,7 @@ alberta,214,77,6	script	Captain Janssen	709,{
 		mes "[Captain Janssen]";
 		mes "I was touched when you accepted a request from me, a stranger, so easily. You must truly be one of those good, heroic adventurers. Are you interested in setting out on an ocean voyage?";
 		next;
-		mes "["+strcharinfo(0)+"]";
+		mes "["+.@name$+"]";
 		mes "I've sailed a few times... But now that I think about it, I've never gone across the continent.";
 		next;
 		mes "[Captain Janssen]";
@@ -74,7 +75,7 @@ alberta,214,77,6	script	Captain Janssen	709,{
 		mes "[Captain Janssen]";
 		mes "My crew was starving, and a few of them walked into the tower in order to find food... They never came back.";
 		next;
-		mes "["+strcharinfo(0)+"]";
+		mes "["+.@name$+"]";
 		mes "Why didn't you go in there with them?";
 		next;
 		mes "[Captain Janssen]";
@@ -91,13 +92,13 @@ alberta,214,77,6	script	Captain Janssen	709,{
 		mes "[Captain Janssen]";
 		mes "I feel so lucky to meet a warm-hearted adventurer like you. With the money you've given me, I can finally go sailing to the tower again.";
 		next;
-		mes "["+strcharinfo(0)+"]";
+		mes "["+.@name$+"]";
 		mes "How about hiring me as your first mate?";
 		next;
 		mes "[Captain Janssen]";
 		mes "Thank you, but it is an extremely dangerous place. I have my duty to fulfill, but you don't have any obligation to me or them. I don't wish to sacrifice someone as young as you to such a dangerous place.";
 		next;
-		mes "["+strcharinfo(0)+"]";
+		mes "["+.@name$+"]";
 		mes "No...";
 		mes ".";
 		mes ".";
@@ -136,7 +137,7 @@ alberta,214,77,6	script	Captain Janssen	709,{
 		next;
 		switch(select("I'll come back later.:Let's go, now!")) {
 		case 1:
-			mes "["+strcharinfo(0)+"]";
+			mes "["+.@name$+"]";
 			mes "I'm sorry, but I don't have that much money. I'll come back when I save enough.";
 			next;
 			mes "[Captain Janssen]";
@@ -170,7 +171,7 @@ alberta,214,77,6	script	Captain Janssen	709,{
 		next;
 		switch(select("No!:Sure thing.")) {
 		case 1:
-			mes "["+strcharinfo(0)+"]";
+			mes "["+.@name$+"]";
 			mes "I'm sorry, but you've got the wrong person to ask that.";
 			next;
 			mes "[Captain Janssen]";
@@ -186,7 +187,7 @@ alberta,214,77,6	script	Captain Janssen	709,{
 				close;
 			}
 			else {
-				mes "["+strcharinfo(0)+"]";
+				mes "["+.@name$+"]";
 				mes "I don't know why you'd need so much money, but here. You can take it.";
 				next;
 				mes "^0000ffYou have donated 10,000 Zeny to Captain Janssen^000000.";
