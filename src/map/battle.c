@@ -413,6 +413,12 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 			}
 		}
 
+		if(sc->data[SC_ZEPHYR] &&
+			flag&(BF_LONG|BF_SHORT)){
+				d->dmg_lv = ATK_BLOCK;
+				return 0;
+		}
+
 		if( sc->data[SC_SAFETYWALL] && (flag&(BF_SHORT|BF_MAGIC))==BF_SHORT )
 		{
 			struct skill_unit_group* group = skill_id2group(sc->data[SC_SAFETYWALL]->val3);
@@ -594,7 +600,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 			(flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
 			damage -= 20*damage/100;
 
-		if(sc->data[SC_FOGWALL]) {
+		if(sc->data[SC_FOGWALL] && skill_num != RK_DRAGONBREATH) {
 			if(flag&BF_SKILL) //25% reduction
 				damage -= 25*damage/100;
 			else if ((flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
@@ -3923,6 +3929,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		md.damage = ((status_get_hp(src) / 50) + (status_get_max_sp(src) / 4)) * skill_lv;
 		RE_LVL_MDMOD();
 		if (sd) md.damage = md.damage * (100 + 5 * (pc_checkskill(sd,RK_DRAGONTRAINING) - 1)) / 100;
+		md.flag |= BF_LONG|BF_WEAPON;
 		break;
 	/**
 	 * Ranger

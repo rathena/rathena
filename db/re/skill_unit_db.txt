@@ -156,7 +156,7 @@
 
 8403,0xed,    , -1, 1,1000,enemy, 0x018 //EL_FIRE_MANTLE
 8406,0xee,    ,  0, 1,  -1,friend,0x018	//EL_WATER_BARRIER
-8409,0xef,    ,  0, 1,  -1,friend,0x018	//EL_ZEPHYR
+8409,0xef,    ,  0, 1,1000,friend,0x018	//EL_ZEPHYR
 8412,0xf0,    ,  0, 1,  -1,friend,0x018	//EL_POWER_OF_GAIA
 
 10006,0xc1,   ,  2, 0,  -1,guild, 0x040	//GD_LEADERSHIP 
