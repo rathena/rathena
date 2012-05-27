@@ -177,7 +177,7 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 	}
 	else if (.@orctime == 2) {
 		mes "^0000ffAll records and after-effects related to the Orc's Memory Dungeon are deleted. You can now regenerate or re-enter the dungeon.^000000";
-		set party_instance_id2,0;
+		set party_instance_id3,0;
 		erasequest 12059;
 		close;
 	}
