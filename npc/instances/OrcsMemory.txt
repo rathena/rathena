@@ -117,8 +117,14 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 					mes "If your dungeon has been destroyed you must wait 7 days before re-entering.";
 					close;
 				}
+				if((party_instance_id3 != 0) && (party_instance_id3 != getcharid(1))) {
+					mes "The Memorial Dungeon "+.@md_name$+" does not exist.";
+					mes "The Memorial Dungeon has been destroyed by the Party Leader or because of the time limit. Please try again after 2 hours.";
+					close;
+				}
 				mapannounce "gef_fild10", .@p_leader$ + " of the party, " + .@p_name$ + " is entering the "+.@md_name$+".",bc_map,"0x00ff99";
 				if (checkquest(12059)== -1) setquest 12059;
+				set party_instance_id3,getcharid(1);
 				warp "1@orcs",179,15;
 				end;
 			case 3:
@@ -132,7 +138,13 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 				mes "The Memorial Dungeon has been destroyed by the Party Leader or because of the time limit. Please try again after 2 hours.";
 				close;
 			}
+			if((party_instance_id3 != 0) && (party_instance_id3 != getcharid(1))) {
+				mes "The Memorial Dungeon "+.@md_name$+" does not exist.";
+				mes "The Memorial Dungeon has been destroyed by the Party Leader or because of the time limit. Please try again after 2 hours.";
+				close;
+			}
 			mapannounce "gef_fild10",.@p_name$+" Party's member "+.@p_leader$+" has entered the "+.@md_name$+".",bc_map,"0x00ff99";
+			set party_instance_id3,getcharid(1);
 			if (checkquest(12059)== -1) setquest 12059;
 			warp "1@orcs",179,15;
 			end;
@@ -149,8 +161,14 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 				mes "The Memorial Dungeon has been destroyed by the Party Leader or because of the time limit. Please try again after 2 hours.";
 				close;
 			}
+			if((party_instance_id3 != 0) && (party_instance_id3 != getcharid(1))) {
+				mes "The Memorial Dungeon "+.@md_name$+" does not exist.";
+				mes "The Memorial Dungeon has been destroyed by the Party Leader or because of the time limit. Please try again after 2 hours.";
+				close;
+			}
 			mapannounce "gef_fild10",.@p_name$+" Party's member "+.@p_leader$+" has entered the "+.@md_name$+".",bc_map,"0x00ff99";
 			if (checkquest(12059)== -1) setquest 12059;
+			set party_instance_id3,getcharid(1);
 			warp "1@orcs",179,15;
 			end;
 		case 2:
@@ -159,6 +177,7 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 	}
 	else if (.@orctime == 2) {
 		mes "^0000ffAll records and after-effects related to the Orc's Memory Dungeon are deleted. You can now regenerate or re-enter the dungeon.^000000";
+		set party_instance_id2,0;
 		erasequest 12059;
 		close;
 	}

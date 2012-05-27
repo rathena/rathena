@@ -27,7 +27,7 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 		case 1:
 			if (ep13_1_edq == 14) {
 				specialeffect2 EF_HOLYHIT;
-				PushPC 3,3;
+				pushpc 3,3;
 				set ep13_1_edq,15;
 				mes "A mysterious power prevents you from getting too close. It looks like there is something strong beyond the door...";
 				next;
@@ -39,7 +39,7 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 			}
 			else if (ep13_1_edq == 15) {
 				specialeffect2 EF_HOLYHIT;
-				PushPC 3,3;
+				pushpc 3,3;
 				mes "A mysterious power prevents you from getting too close. It looks like there is something strong beyond the door...";
 				next;
 				mes "Perhaps there's a great hidden secret beyond the gate, beyond expectation.";
@@ -50,7 +50,7 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 			}
 			else {
 				specialeffect2 EF_HOLYHIT;
-				PushPC 3,3;
+				pushpc 3,3;
 				mes "A mysterious power prevents you from getting too close. It looks like there is something strong beyond the door...";
 				next;
 				mes "Perhaps there's a great hidden secret beyond the gate, beyond expectation.";
@@ -228,8 +228,18 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 						mes "You did not request for entrance. Please let your leader request entrance.";
 						close;
 					}
+					if((party_instance_id2 != 0) && (party_instance_id2 != getcharid(1))) {
+						//Custom
+						mes "[Yggdrasil Gatekeeper]";
+						mes "You are no longer able to enter Nidhogger's Nest, as your instance has expired.";
+						next;
+						mes "[Yggdrasil Gatekeeper]";
+						mes "After Nidhoggur's Shadow disappears, at least 3 days is needed for stabilizing.";
+						close;
+					}
 					else {
 						mapannounce "nyd_dun02", .@p_name$ + "'s Party member " + .@p_name2$ + " has entered " + .@md_name$,bc_map,"0x00ff99";
+						set party_instance_id2,getcharid(1);
 						if (checkquest(3135) == -1) setquest 3135;
 						if (checkquest(3136) == -1) setquest 3136;
 						warp "1@nyd",32,37;
@@ -263,6 +273,7 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 			next;
 			mes "[Yggdrasil Gatekeeper]";
 			mes "If you would like to enter again, please register with me.";
+			set party_instance_id2,0;
 			erasequest 3135;
 			erasequest 3136;
 			set 'ins_nyd2,0;
@@ -280,7 +291,7 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 		switch(select("Move closer to look more carefully.:Step back.")) {
 		case 1:
 			specialeffect2 EF_HOLYHIT;
-			PushPC 3,3;
+			pushpc 3,3;
 			mes "A mysterious power prevents you from getting too close. It looks like there is something strong beyond the door...";
 			next;
 			mes "Perhaps there's a great hidden secret beyond the gate, beyond expectation.";

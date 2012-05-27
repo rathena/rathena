@@ -209,6 +209,7 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 				if (checkquest(3040)>=0) erasequest 3040;
 				if (checkquest(3041)>=0) erasequest 3041;
 				if (checkquest(3045)>=0) erasequest 3045;
+				set party_instance_id4,0;
 				mes "[Friar Patrick]";
 				mes "Huu... It's over. Now that I've released Baphomet's Curse, you can enter again.";
 			}
@@ -279,10 +280,15 @@ monk_test,306,151,3	script	Grave of Baphomet#edq	111,{
 			if (has_instance("1@cata") == "") {
 				mes "It's cold to the touch. It doesn't respond.";
 			}
+			if((party_instance_id4 != 0) && (party_instance_id4 != getcharid(1))) {
+				mes "It seems you have entered this shrine recently... You cannot reenter because Baphomet's Curse still remains. Baphomet's Curse disappears only after a certain amount of time has passed.";
+			}
 			else {
 				mapannounce "monk_test","[" + strcharinfo(0) + "] member of the [" + getpartyname(.@party_id) + "] party has entered the Sealed Shrine.",bc_map,"0x00ff99";
 				if (checkquest(3040) == -1) setquest 3040;
+				set party_instance_id4,getcharid(1);
 				warp "1@cata",100,224;
+				end;
 			}
 		}
 		else if (.@ins_bapho_check == 0 || .@ins_bapho_check == 1) {
@@ -300,6 +306,7 @@ monk_test,306,151,3	script	Grave of Baphomet#edq	111,{
 			if (checkquest(3040)>=0) erasequest 3040;
 			if (checkquest(3041)>=0) erasequest 3041;
 			if (checkquest(3045)>=0) erasequest 3045;
+			set party_instance_id4,0;
 			next;
 			mes "[Friar Patrick]";
 			mes "Huu... It's over. Now I released all of the curses on you. You can enter again.";

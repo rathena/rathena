@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88, mod by Lupus
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.9
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 1.6: Moved the Falcon Master to Hugel [Poki#3]
 //= 1.7 Updated to Aegis 10.3 standards. [L0ne_W0lf]
 //= 1.8 Added 3rd Job creature NPCs (Dragon/Gryphon) [L0ne_W0lf]
+//= 1.9 Enabled Gryphon Renter NPC and added Mado Gear NPC. [Masao]
 //============================================================ 
 
 // PecoPeco Breeder (for Knights)-------------------------------------------
@@ -318,6 +319,7 @@ prontera,125,208,5	script	Peco Peco Remover	105,{
 	close;
 }
 
+// Magic Gear Renter
 prontera,163,178,4	script	Magic Gear Master	105,{
 	mes "[Magic Gear Master]";
 	if (Class == Job_Mechanic || Class == Job_Mechanic_T || Class == Job_Baby_Mechanic) {
