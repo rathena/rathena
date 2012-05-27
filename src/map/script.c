@@ -16380,7 +16380,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(checkriding,""),
 	BUILDIN_DEF(checkwug,""),
 	BUILDIN_DEF(checkmadogear,""),
-	BUILDIN_DEF(setmadogear,""),
+	BUILDIN_DEF(setmadogear,"?"),
 	BUILDIN_DEF2(savepoint,"save","sii"),
 	BUILDIN_DEF(savepoint,"sii"),
 	BUILDIN_DEF(gettimetick,"i"),

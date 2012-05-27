@@ -3885,7 +3885,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case GS_FLING:
 	case NJ_ZENYNAGE:
 	case GN_THORNS_TRAP:
-	case GN_BLOOD_SUCKER:
 	case GN_HELLS_PLANT_ATK:			
 		skill_attack(BF_MISC,src,src,bl,skillid,skilllv,tick,flag);
 		break;
@@ -8424,12 +8423,21 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 		
 	case GN_BLOOD_SUCKER:
-		if( skill_unitsetting(src, skillid, skilllv, bl->x, bl->y, 0) ) { // Do we need this unit setting? [Xazax]
-			clif_skill_nodamage(src, bl, skillid, skilllv, 1);
-			sc_start2(bl, type, 100, skilllv, src->id, skill_get_time(skillid,skilllv));
-		} else if( sd ) {
-			clif_skill_fail(sd, skillid, USESKILL_FAIL_LEVEL, 0);
-			break;
+		{
+			struct status_change *sc = status_get_sc(src);
+					
+			if( sc && sc->bs_counter < skill_get_maxcount( skillid , skilllv) ) {
+				if( tsc && tsc->data[type] ){
+					(sc->bs_counter)--;
+					status_change_end(src, type, INVALID_TIMER); // the first one cancels and the last one will take effect resetting the timer
+				}
+				clif_skill_nodamage(src, bl, skillid, skilllv, 1);
+				sc_start2(bl, type, 100, skilllv, src->id, skill_get_time(skillid,skilllv));
+				(sc->bs_counter)++;
+			} else if( sd ) {
+				clif_skill_fail(sd, skillid, USESKILL_FAIL_LEVEL, 0);
+				break;
+			}
 		}
 		break;
 		
@@ -8461,7 +8469,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 						skill_attack(BF_WEAPON,src,src,bl,GN_SLINGITEM_RANGEMELEEATK,skilllv,tick,flag);
 				} else //Otherwise, it fails, shows animation and removes items.
 					clif_skill_fail(sd,GN_SLINGITEM_RANGEMELEEATK,0xa,0);
-			} else {
+			} else if( itemdb_is_GNthrowable(ammo_id) ){
 				struct script_code *script = sd->inventory_data[i]->script;
 				if( !script )
 					break;

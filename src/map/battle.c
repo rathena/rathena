@@ -1596,6 +1596,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				wd.damage = sstatus->max_hp* 9/100;
 				wd.damage2 = 0;
 				break;
+#ifndef RENEWAL
 			case LK_SPIRALPIERCE:
 			case ML_SPIRALPIERCE:
 				if (sd) {
@@ -1622,6 +1623,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 						break;
 				}
 				break;
+#endif
 			case CR_SHIELDBOOMERANG:
 			case PA_SHIELDCHAIN:
 			case LG_SHIELDPRESS:
@@ -2419,6 +2421,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			}
 		}
 		//Div fix.
+#ifdef RENEWAL
+		if( skill_num != LK_SPIRALPIERCE && skill_num != ML_SPIRALPIERCE)
+#endif
 		damage_div_fix(wd.damage, wd.div_);
 
 		//The following are applied on top of current damage and are stackable.
@@ -2590,12 +2595,41 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				flag.idef2||flag.pdef2?0:-vit_def
 			);
 		}
+#ifdef RENEWAL
+		/**
+		* Racial/Size and etc modifications should not work with this formula(only the ATK is affected w/ mods) except for now, since RE ATK formula is not yet fully implemented in rA. [malufett]
+		* Formula: Floor[Floor(Weapon Weight/2)*skill level + ATK ]*(100%+50%*s.lvl) * 5 multi-hits
+		**/
+		if( skill_num == LK_SPIRALPIERCE || skill_num == ML_SPIRALPIERCE)
+		{
+			short index = sd?sd->equip_index[EQI_HAND_R]:0;
+			int weight = sstatus->rhw.atk2;
 
+			if (sd && index >= 0 &&
+				sd->inventory_data[index] &&
+				sd->inventory_data[index]->type == IT_WEAPON)
+				weight = sd->inventory_data[index]->weight/20;
+							
+			ATK_ADD(weight * skill_lv);
+			ATK_RATE(100+50*skill_lv);
+
+			damage_div_fix(wd.damage, wd.div_);
+		}
+#endif
 		//Post skill/vit reduction damage increases
-		if( sc && skill_num != LK_SPIRALPIERCE && skill_num != ML_SPIRALPIERCE )
+		if( sc )
 		{	//SC skill damages
-			if(sc->data[SC_AURABLADE]) 
-				ATK_ADD(20*sc->data[SC_AURABLADE]->val1);
+			if(sc->data[SC_AURABLADE]
+#ifndef RENEWAL
+					&& skill_num != LK_SPIRALPIERCE && skill_num != ML_SPIRALPIERCE
+#endif
+			){ 
+				int lv = sc->data[SC_AURABLADE]->val1;
+#ifdef RENEWAL
+				lv *= ((skill_num == LK_SPIRALPIERCE || skill_num == ML_SPIRALPIERCE)?wd.div_:1); // +100 per hit in lv 5
+#endif
+				ATK_ADD(20*lv);
+			}
 		}
 
 		//Refine bonus
@@ -3912,9 +3946,6 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		break;
 	case GN_THORNS_TRAP:
 		md.damage = 100 + 200 * skill_lv + sstatus->int_;
-		break;
-	case GN_BLOOD_SUCKER:
-		md.damage = 200 + 100 * skill_lv + sstatus->int_;
 		break;
 	case GN_HELLS_PLANT_ATK:
 		md.damage = sstatus->int_ * 4 * skill_lv * (10 / (10 - pc_checkskill(sd,AM_CANNIBALIZE)));//Need accurate official formula. [Rytech]

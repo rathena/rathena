@@ -669,7 +669,7 @@ void initChangeTables(void)
 	 **/
 	set_sc( GN_CARTBOOST                  , SC_GN_CARTBOOST, SI_CARTSBOOST                 , SCB_SPEED );
 	set_sc( GN_THORNS_TRAP                , SC_THORNSTRAP  , SI_THORNTRAP                  , SCB_NONE );
-	set_sc( GN_BLOOD_SUCKER               , SC_BLOODSUCKER , SI_BLOODSUCKER                , SCB_NONE );
+	set_sc_with_vfx( GN_BLOOD_SUCKER      , SC_BLOODSUCKER , SI_BLOODSUCKER                , SCB_NONE );
 	set_sc( GN_WALLOFTHORN                , SC_STOP        , SI_BLANK                      , SCB_NONE );
 	set_sc( GN_FIRE_EXPANSION_SMOKE_POWDER, SC_SMOKEPOWDER , SI_FIRE_EXPANSION_SMOKE_POWDER, SCB_NONE );
 	set_sc( GN_FIRE_EXPANSION_TEAR_GAS    , SC_TEARGAS     , SI_FIRE_EXPANSION_TEAR_GAS    , SCB_NONE );
@@ -2472,7 +2472,8 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		if(sd->inventory_data[index]){		// Arrows
 			sd->arrow_atk += sd->inventory_data[index]->atk;
 			sd->state.lr_flag = 2;
-			run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
+			if( !itemdb_is_GNthrowable(sd->inventory_data[index]->nameid) ) //don't run scripts on throwable items
+				run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
 			sd->state.lr_flag = 0;
 			if (!calculating) //Abort, run_script retriggered status_calc_pc. [Skotlex]
 				return 1;
@@ -8809,6 +8810,15 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_CURSEDCIRCLE_TARGET:		
 			clif_bladestop(bl, sce->val2, 0);
 			break;
+		case SC_BLOODSUCKER:
+			if( sce->val2 ){
+				struct block_list *src = map_id2bl(sce->val2);
+				if(src){
+					struct status_change *sc = status_get_sc(src);
+					sc->bs_counter--;
+				}
+			}
+			break;
 		}
 
 	opt_flag = 1;
@@ -9615,13 +9625,14 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			if( !src || (src && (status_isdead(src) || src->m != bl->m || distance_bl(src, bl) >= 12)) )
 				break;
 			map_freeblock_lock();
-			damage = skill_attack(skill_get_type(GN_BLOOD_SUCKER), src, src, bl, GN_BLOOD_SUCKER, sce->val1, tick, 0);
+			damage =  200 + 100 * sce->val1 + status_get_int(src);
+			status_damage(src, bl, damage, 0, clif_damage(bl,bl,tick,status->amotion,status->dmotion+200,damage,1,0,0), 1);
+			unit_skillcastcancel(bl,1);
 			if ( sc->data[type] ) {
 				sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
 			}
 			map_freeblock_unlock();
-			status_heal(src, damage, 0, 0);
-			clif_skill_nodamage(src, bl, GN_BLOOD_SUCKER, 0, 1);
+			status_heal(src, damage*(5 + 5 * sce->val1)/100, 0, 0); // 5 + 5% per level
 			return 0;
 		}
 		break;
