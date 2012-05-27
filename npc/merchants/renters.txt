@@ -203,7 +203,6 @@ hu_in01,381,304,5	script	Falcon Breeder#hnt	105,{
 }
 
 // Dragon Breeder on the Rune Knight job change map, couldn't find NPC on iRO.
-/*
 job3_rune01,88,62,5	script	Dragon Breeder	105,{
 	mes "[Dragon Breeder]";
 	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
@@ -230,13 +229,10 @@ job3_rune01,88,62,5	script	Dragon Breeder	105,{
 			close;
 		}
 	}
-	else {
-		mes "What are you doing here?";
-		mes "Only Rune Knights can rent a Dragon.";
-		close;
-	}
+	mes "What are you doing here?";
+	mes "Only Rune Knights can rent a Dragon.";
+	close;
 }
-*/
 
 // Dragon/Gryphon Master
 prontera,130,213,5	script	Riding Creature Master	105,{
@@ -265,8 +261,7 @@ prontera,130,213,5	script	Riding Creature Master	105,{
 			close;
 		}
 	}
-/*
-	else if (Class == Job_Royal_Guard || Class == Job_Royal_Guard_T || Class == Job_Baby_Guard) {
+	if (Class == Job_Royal_Guard || Class == Job_Royal_Guard_T || Class == Job_Baby_Guard) {
 		mes "Welcome. Would you like to rent a Gryphon?";
 		next;
 		switch(select("Yes:No")) {
@@ -276,7 +271,7 @@ prontera,130,213,5	script	Riding Creature Master	105,{
 				mes "Please learn how to ride a Gryphon first.";
 				close;
 			}
-			else if (checkriding()) {
+			if (checkriding()) {
 				mes "[Riding Creature Master]";
 				mes "You already have a Gryphon.";
 				close;
@@ -289,11 +284,8 @@ prontera,130,213,5	script	Riding Creature Master	105,{
 			close;
 		}
 	}
-*/
-	else {
-		mes "I'm here to provide Rune Knights and Royal Guards with riding creatures.";
-		close;
-	}
+	mes "I'm here to provide Rune Knights and Royal Guards with riding creatures.";
+	close;
 }
 
 // Peco removing NPC
@@ -326,3 +318,32 @@ prontera,125,208,5	script	Peco Peco Remover	105,{
 	close;
 }
 
+prontera,163,178,4	script	Magic Gear Master	105,{
+	mes "[Magic Gear Master]";
+	if (Class == Job_Mechanic || Class == Job_Mechanic_T || Class == Job_Baby_Mechanic) {
+		mes "Welcome. Would you like to rent a Magic Gear?";
+		next;
+		switch(select("Yes:No")) {
+		case 1:
+			if (!getskilllv("NC_MADOLICENCE")) {
+				mes "[Magic Gear Master]";
+				mes "Please learn how to use a Magic Gear first.";
+				close;
+			}
+			if (checkmadogear()) {
+				mes "[Magic Gear Master]";
+				mes "You already have a Magic Gear.";
+				close;
+			}
+			setmadogear;
+			close;
+		case 2:
+			mes "[Magic Gear Master]";
+			mes "I see. Then have a great day.";
+			close;
+		}
+	}
+	mes "How may I help you?";
+	mes "Magic Gears are only available for Mechanics.";
+	close;
+}

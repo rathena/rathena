@@ -1402,7 +1402,7 @@ function	script	refinenew	{
 		mes "["+ getarg(0) +"]";
 		mes "Hmm an armor, is that ok?";
 		mes "If you want to refine this armor,";
-		mes "I will need 1 ^003366Carnium^00000 and 100,000 zeny.";
+		mes "I will need 1 ^003366Carnium^000000 and 100,000 zeny.";
 		mes "Are you sure you want to continue?";
 	}
 	next;
