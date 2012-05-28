@@ -2330,7 +2330,7 @@ moc_para01,112,96,5	script	Administrator Michael	967,{
 				mes "Make enough space.";
 				close;
 			case 2:
-				if (Class == Job_Swordman || Class == Job_Swordman_High || Class == Job_Knight || Class == Job_Crusader)
+				if (Class == Job_Swordman || Class == Job_Swordman_High || Class == Job_Knight || Class == Job_Crusader){
 					mes "[Michael]";
 					mes "What kind of weapon do you want?";
 					mes "We have one and Two-handed swords.";
@@ -2413,7 +2413,7 @@ moc_para01,112,96,5	script	Administrator Michael	967,{
 						mes "This is what we strive for.";
 						close;
 					}
-					if (Class == Job_Thief || Class == Job_Thief_High || Class == Job_Assassin || Class == Job_Rogue || Class == Job_Ninja || Class == Job_Novice || Class == Job_Novice_High) {
+				}	if (Class == Job_Thief || Class == Job_Thief_High || Class == Job_Assassin || Class == Job_Rogue || Class == Job_Ninja || Class == Job_Novice || Class == Job_Novice_High) {
 						mes "[Michael]";
 						mes "We only have 1 weapon for you.";
 						next;

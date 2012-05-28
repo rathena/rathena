@@ -1,3 +1,20 @@
+//===== rAthena Script =======================================
+//= Rune Knight Job Quest
+//===== By: ==================================================
+//= L0ne_W0lf
+//= Credits: Gepard, Muad_Dib
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= Job change Quest from Knight / Lord Knight -> Rune Knight.
+//= Does not entirely support changing to Baby Third Class.
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//= 1.1 Added forgoten Header. [Masao]
+//============================================================
+
 prt_in,162,24,3	script	Splendid-Looking Knight	470,{
 	if (Upper == 4) {
 		// custom translation
