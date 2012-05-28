@@ -6181,48 +6181,6 @@ mid_camp,212,237,5	script	Camp Guard Captain#man1	852,{
 // The Tripartite Union's Feud
 //============================================================ 
 mid_campin,376,120,0	script	Research Official#ep131	754,3,3,{
-	mes "[United Research Official]";
-	mes "Hmm? What did you just say?";
-	next;
-	mes "[United Research Official]";
-	mes "I can't really hear you. Could you speak louder?";
-	close;
-
-OnInit:
-	enablenpc "Research Official#ep131";
-	end;
-
-OnEnable:
-	enablenpc "Research Official#ep131";
-	end;
-
-OnDisable:
-	disablenpc "Research Official#ep131";
-	end;
-
-Onmeet:
-	donpcevent "Ryosen#ep131_rhea05::OnEnable";
-	donpcevent "Hue#ep131_rhea06::OnEnable";
-	donpcevent "Hansenne#ep131_rhea07::OnEnable";
-	end;
-
-Oncall:
-	initnpctimer;
-	monster "mid_campin",376,134,"Thief Bug",1051,1,"Research Official#ep131::OnMyMobDead";
-	monster "mid_campin",376,134,"Thief Bug",1051,1,"Research Official#ep131::OnMyMobDead";
-	monster "mid_campin",376,134,"Thief Bug",1051,1,"Research Official#ep131::OnMyMobDead";
-	monster "mid_campin",376,134,"Thief Bug",1051,1,"Research Official#ep131::OnMyMobDead";
-	monster "mid_campin",376,134,"Thief Bug",1051,1,"Research Official#ep131::OnMyMobDead";
-	monster "mid_campin",376,134,"Thief Bug",1051,1,"Research Official#ep131::OnMyMobDead";
-	monster "mid_campin",376,134,"Thief Bug",1051,1,"Research Official#ep131::OnMyMobDead";
-	monster "mid_campin",376,134,"Thief Bug",1051,1,"Research Official#ep131::OnMyMobDead";
-	monster "mid_campin",376,134,"Thief Bug",1051,1,"Research Official#ep131::OnMyMobDead";
-	monster "mid_campin",376,134,"Thief Bug",1051,1,"Research Official#ep131::OnMyMobDead";
-	donpcevent "Research Official#ep131::OnDisable";
-	donpcevent "Ryosen#ep131_rhea05::OnDisable";
-	donpcevent "Hue#ep131_rhea06::OnDisable";
-	donpcevent "Hansenne#ep131_rhea07::OnDisable";
-	end;
 
 OnTouch:
 	if (checkweight(1201,1) == 0) {
@@ -6676,6 +6634,49 @@ OnTouch:
 		mes "It's very dangerous here, and people dwelling is this place are not that nice.";
 		close;
 	}
+	end;
+
+	mes "[United Research Official]";
+	mes "Hmm? What did you just say?";
+	next;
+	mes "[United Research Official]";
+	mes "I can't really hear you. Could you speak louder?";
+	close;
+
+OnInit:
+	enablenpc "Research Official#ep131";
+	end;
+
+OnEnable:
+	hideoffnpc "Research Official#ep131";
+	end;
+
+OnDisable:
+	hideonnpc "Research Official#ep131";
+	end;
+
+Onmeet:
+	donpcevent "Ryosen#ep131_rhea05::OnEnable";
+	donpcevent "Hue#ep131_rhea06::OnEnable";
+	donpcevent "Hansenne#ep131_rhea07::OnEnable";
+	end;
+
+Oncall:
+	initnpctimer;
+	monster "mid_campin",376,134,"Thief Bug",1051,1,"Research Official#ep131::OnMyMobDead";
+	monster "mid_campin",376,134,"Thief Bug",1051,1,"Research Official#ep131::OnMyMobDead";
+	monster "mid_campin",376,134,"Thief Bug",1051,1,"Research Official#ep131::OnMyMobDead";
+	monster "mid_campin",376,134,"Thief Bug",1051,1,"Research Official#ep131::OnMyMobDead";
+	monster "mid_campin",376,134,"Thief Bug",1051,1,"Research Official#ep131::OnMyMobDead";
+	monster "mid_campin",376,134,"Thief Bug",1051,1,"Research Official#ep131::OnMyMobDead";
+	monster "mid_campin",376,134,"Thief Bug",1051,1,"Research Official#ep131::OnMyMobDead";
+	monster "mid_campin",376,134,"Thief Bug",1051,1,"Research Official#ep131::OnMyMobDead";
+	monster "mid_campin",376,134,"Thief Bug",1051,1,"Research Official#ep131::OnMyMobDead";
+	monster "mid_campin",376,134,"Thief Bug",1051,1,"Research Official#ep131::OnMyMobDead";
+	donpcevent "Research Official#ep131::OnDisable";
+	donpcevent "Ryosen#ep131_rhea05::OnDisable";
+	donpcevent "Hue#ep131_rhea06::OnDisable";
+	donpcevent "Hansenne#ep131_rhea07::OnDisable";
 	end;
 
 OnMyMobDead:

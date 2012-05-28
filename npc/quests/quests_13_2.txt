@@ -11503,17 +11503,17 @@ nyd_dun02,139,274,0	script	Strange Device#ep13_in	844,3,3,{
 				set $@08_ep13nydun02_in,1;
 				set .@way_loot,rand(1,2);
 				if (.@way_loot == 1) {
-					donpcevent "ep13_warp_s1::OnDisable";
-					donpcevent "ep13_warp_11::OnDisable";
-					donpcevent "ep13_warp_21::OnDisable";
-					donpcevent "ep13_warp_22::OnDisable";
+					donpcevent "ep13_warp_s1::OnEnable";
+					donpcevent "ep13_warp_11::OnEnable";
+					donpcevent "ep13_warp_21::OnEnable";
+					donpcevent "ep13_warp_22::OnEnable";
 					donpcevent "ep13_warp_22_2::OnEnable";
 				}
 				else {
-					donpcevent "ep13_warp_s3::OnDisable";
-					donpcevent "ep13_warp_13::OnDisable";
-					donpcevent "ep13_warp_14::OnDisable";
-					donpcevent "ep13_warp_24::OnDisable";
+					donpcevent "ep13_warp_s3::OnEnable";
+					donpcevent "ep13_warp_13::OnEnable";
+					donpcevent "ep13_warp_14::OnEnable";
+					donpcevent "ep13_warp_24::OnEnable";
 					donpcevent "ep13_warp_24_2::OnEnable";
 				}
 				initnpctimer;
@@ -11539,7 +11539,7 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,143,272,0	script	ep13_warp_s1	139,1,1,{
+nyd_dun02,143,272,0	script	ep13_warp_s1	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_s1";
@@ -11550,10 +11550,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_s1";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -11584,7 +11580,7 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,143,266,0	script	ep13_warp_s3	139,1,1,{
+nyd_dun02,143,266,0	script	ep13_warp_s3	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_s3";
@@ -11595,10 +11591,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_s3";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -11629,7 +11621,7 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,146,272,0	script	ep13_warp_11	139,1,1,{
+nyd_dun02,146,272,0	script	ep13_warp_11	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_11";
@@ -11640,10 +11632,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_11";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -11674,7 +11662,7 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,146,266,0	script	ep13_warp_13	139,1,1,{
+nyd_dun02,146,266,0	script	ep13_warp_13	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_13";
@@ -11685,10 +11673,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_13";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -11713,7 +11697,7 @@ OnTimer10000:
 	end;
 }
 
-nyd_dun02,146,263,0	script	ep13_warp_14	139,1,1,{
+nyd_dun02,146,263,0	script	ep13_warp_14	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_14";
@@ -11724,10 +11708,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_14";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -11762,7 +11742,7 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,149,272,0	script	ep13_warp_21	139,1,1,{
+nyd_dun02,149,272,0	script	ep13_warp_21	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_21";
@@ -11773,10 +11753,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_21";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -11805,7 +11781,7 @@ OnTimer12000:
 	end;
 }
 
-nyd_dun02,149,269,0	script	ep13_warp_22	139,1,1,{
+nyd_dun02,149,269,0	script	ep13_warp_22	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_22";
@@ -11816,10 +11792,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_22";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -11866,13 +11838,12 @@ OnDisable:
 	end;
 
 OnTouch:
-	disablenpc "ep13_warp_22_2";
-
-	donpcevent "ep13_warp_31::OnDisable";
-	donpcevent "ep13_warp_41::OnDisable";
-	donpcevent "ep13_warp_42::OnDisable";
-	donpcevent "ep13_warp_43::OnDisable";
+	donpcevent "ep13_warp_31::OnEnable";
+	donpcevent "ep13_warp_41::OnEnable";
+	donpcevent "ep13_warp_42::OnEnable";
+	donpcevent "ep13_warp_43::OnEnable";
 	donpcevent "ep13_warp_43_2::OnEnable";
+	donpcevent "ep13_warp_22_2::OnDisable";
 	end;
 }
 
@@ -11882,7 +11853,7 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,149,263,0	script	ep13_warp_24	139,1,1,{
+nyd_dun02,149,263,0	script	ep13_warp_24	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_24";
@@ -11893,10 +11864,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_24";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -11946,22 +11913,22 @@ OnDisable:
 OnTouch:
 	set .@way_loot,rand(1,2);
 	if (.@way_loot == 1) {
-		donpcevent "ep13_warp_33::OnDisable";
-		donpcevent "ep13_warp_43::OnDisable";
+		donpcevent "ep13_warp_33::OnEnable";
+		donpcevent "ep13_warp_43::OnEnable";
 		donpcevent "ep13_warp_43_2::OnEnable";
 	}
 	else {
-		donpcevent "ep13_warp_25::OnDisable";
-		donpcevent "ep13_warp_26::OnDisable";
-		donpcevent "ep13_warp_35::OnDisable";
-		donpcevent "ep13_warp_45::OnDisable";
+		donpcevent "ep13_warp_25::OnEnable";
+		donpcevent "ep13_warp_26::OnEnable";
+		donpcevent "ep13_warp_35::OnEnable";
+		donpcevent "ep13_warp_45::OnEnable";
 		donpcevent "ep13_warp_45_2::OnEnable";
 	}
 	disablenpc "ep13_warp_24_2";
 	end;
 }
 
-nyd_dun02,149,260,0	script	ep13_warp_25	139,1,1,{
+nyd_dun02,149,260,0	script	ep13_warp_25	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_25";
@@ -11974,10 +11941,6 @@ OnDisable:
 	disablenpc "ep13_warp_25";
 	end;
 
-OnTouch:
-	warp "nyd_dun01",214,68;
-	end;
-
 OnTimer2000:
 	specialeffect EF_WIND;
 	end;
@@ -12000,7 +11963,7 @@ OnTimer10000:
 	end;
 }
 
-nyd_dun02,149,257,0	script	ep13_warp_26	139,1,1,{
+nyd_dun02,149,257,0	script	ep13_warp_26	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_26";
@@ -12011,10 +11974,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_26";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -12039,7 +11998,7 @@ OnTimer10000:
 	end;
 }
 
-nyd_dun02,152,270,0	script	ep13_warp_31	139,1,1,{
+nyd_dun02,152,270,0	script	ep13_warp_31	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_31";
@@ -12050,10 +12009,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_31";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -12084,7 +12039,7 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,152,264,0	script	ep13_warp_33	139,1,1,{
+nyd_dun02,152,264,0	script	ep13_warp_33	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_33";
@@ -12095,10 +12050,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_33";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -12129,7 +12080,7 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,152,258,0	script	ep13_warp_35	139,1,1,{
+nyd_dun02,152,258,0	script	ep13_warp_35	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_35";
@@ -12142,10 +12093,6 @@ OnDisable:
 	disablenpc "ep13_warp_35";
 	end;
 
-OnTouch:
-	warp "nyd_dun01",214,68;
-	end;
-
 OnTimer2000:
 	specialeffect EF_WIND;
 	end;
@@ -12172,7 +12119,7 @@ OnTimer12000:
 	end;
 }
 
-nyd_dun02,155,269,0	script	ep13_warp_41	139,1,1,{
+nyd_dun02,155,269,0	script	ep13_warp_41	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_41";
@@ -12183,10 +12130,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_41";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -12211,7 +12154,7 @@ OnTimer10000:
 	end;
 }
 
-nyd_dun02,155,266,0	script	ep13_warp_42	139,1,1,{
+nyd_dun02,155,266,0	script	ep13_warp_42	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_42";
@@ -12222,10 +12165,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_42";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -12254,7 +12193,7 @@ OnTimer12000:
 	end;
 }
 
-nyd_dun02,155,263,0	script	ep13_warp_43	139,1,1,{
+nyd_dun02,155,263,0	script	ep13_warp_43	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_43";
@@ -12265,10 +12204,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_43";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -12316,10 +12251,10 @@ OnDisable:
 	end;
 
 OnTouch:
-	disablenpc "ep13_warp_43_2";
-	donpcevent "ep13_warp_52::OnDisable";
-	donpcevent "ep13_warp_61::OnDisable";
+	donpcevent "ep13_warp_52::OnEnable";
+	donpcevent "ep13_warp_61::OnEnable";
 	donpcevent "ep13_warp_61_2::OnEnable";
+	donpcevent "ep13_warp_43_2::OnDisable";
 	end;
 }
 
@@ -12329,7 +12264,7 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,155,257,0	script	ep13_warp_45	139,1,1,{
+nyd_dun02,155,257,0	script	ep13_warp_45	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_45";
@@ -12340,10 +12275,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_45";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -12391,16 +12322,16 @@ OnDisable:
 	end;
 
 OnTouch:
-	disablenpc "ep13_warp_45_2";
-	donpcevent "ep13_warp_46::OnDisable";
-	donpcevent "ep13_warp_55::OnDisable";
-	donpcevent "ep13_warp_56::OnDisable";
-	donpcevent "ep13_warp_65::OnDisable";
+	donpcevent "ep13_warp_46::OnEnable";
+	donpcevent "ep13_warp_55::OnEnable";
+	donpcevent "ep13_warp_56::OnEnable";
+	donpcevent "ep13_warp_65::OnEnable";
 	donpcevent "ep13_warp_65_2::OnEnable";
+	donpcevent "ep13_warp_45_2::OnDisable";
 	end;
 }
 
-nyd_dun02,155,254,0	script	ep13_warp_46	139,1,1,{
+nyd_dun02,155,254,0	script	ep13_warp_46	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_46";
@@ -12411,10 +12342,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_46";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -12445,7 +12372,7 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,158,263,0	script	ep13_warp_52	139,1,1,{
+nyd_dun02,158,263,0	script	ep13_warp_52	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_52";
@@ -12456,10 +12383,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_52";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -12496,7 +12419,7 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,158,254,0	script	ep13_warp_55	139,1,1,{
+nyd_dun02,158,254,0	script	ep13_warp_55	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_55";
@@ -12507,10 +12430,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_55";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -12535,7 +12454,7 @@ OnTimer10000:
 	end;
 }
 
-nyd_dun02,158,251,0	script	ep13_warp_56	139,1,1,{
+nyd_dun02,158,251,0	script	ep13_warp_56	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_56";
@@ -12546,10 +12465,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_56";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -12578,7 +12493,7 @@ OnTimer12000:
 	end;
 }
 
-nyd_dun02,161,264,0	script	ep13_warp_61	139,1,1,{
+nyd_dun02,161,264,0	script	ep13_warp_61	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_61";
@@ -12589,10 +12504,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_61";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -12640,16 +12551,16 @@ OnDisable:
 	end;
 
 OnTouch:
-	disablenpc "ep13_warp_61_2";
-	donpcevent "ep13_warp_62::OnDisable";
-	donpcevent "ep13_warp_71::OnDisable";
-	donpcevent "ep13_warp_72::OnDisable";
-	donpcevent "ep13_warp_81::OnDisable";
+	donpcevent "ep13_warp_62::OnEnable";
+	donpcevent "ep13_warp_71::OnEnable";
+	donpcevent "ep13_warp_72::OnEnable";
+	donpcevent "ep13_warp_81::OnEnable";
 	donpcevent "ep13_warp_81_2::OnEnable";
+	donpcevent "ep13_warp_61_2::OnDisable";
 	end;
 }
 
-nyd_dun02,161,261,0	script	ep13_warp_62	139,1,1,{
+nyd_dun02,161,261,0	script	ep13_warp_62	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_62";
@@ -12660,10 +12571,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_62";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -12694,7 +12601,7 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,161,255,0	script	ep13_warp_64	139,1,1,{
+nyd_dun02,161,255,0	script	ep13_warp_64	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_64";
@@ -12704,10 +12611,6 @@ OnEnable:
 
 OnDisable:
 	disablenpc "ep13_warp_64";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -12732,7 +12635,7 @@ OnTimer10000:
 	end;
 }
 
-nyd_dun02,161,252,0	script	ep13_warp_65	139,1,1,{
+nyd_dun02,161,252,0	script	ep13_warp_65	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_65";
@@ -12745,9 +12648,6 @@ OnDisable:
 	disablenpc "ep13_warp_65";
 	end;
 
-OnTouch:
-	warp "nyd_dun01",214,68;
-	end;
 OnTimer2000:
 	specialeffect EF_WIND;
 	end;
@@ -12794,24 +12694,24 @@ OnDisable:
 OnTouch:
 	set way_loot,rand(1,2);
 	if (way_loot == 1) {
-		donpcevent "ep13_warp_64::OnDisable";
-		donpcevent "ep13_warp_73::OnDisable";
-		donpcevent "ep13_warp_82::OnDisable";
-		donpcevent "ep13_warp_83::OnDisable";
+		donpcevent "ep13_warp_64::OnEnable";
+		donpcevent "ep13_warp_73::OnEnable";
+		donpcevent "ep13_warp_82::OnEnable";
+		donpcevent "ep13_warp_83::OnEnable";
 		donpcevent "ep13_warp_83_2::OnEnable";
 	}
 	else {
-		donpcevent "ep13_warp_66::OnDisable";
-		donpcevent "ep13_warp_75::OnDisable";
-		donpcevent "ep13_warp_76::OnDisable";
-		donpcevent "ep13_warp_85::OnDisable";
+		donpcevent "ep13_warp_66::OnEnable";
+		donpcevent "ep13_warp_75::OnEnable";
+		donpcevent "ep13_warp_76::OnEnable";
+		donpcevent "ep13_warp_85::OnEnable";
 		donpcevent "ep13_warp_85_2::OnEnable";
 	}
 	disablenpc "ep13_warp_65_2";
 	end;
 }
 
-nyd_dun02,161,249,0	script	ep13_warp_66	139,1,1,{
+nyd_dun02,161,249,0	script	ep13_warp_66	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_66";
@@ -12824,10 +12724,6 @@ OnDisable:
 	disablenpc "ep13_warp_66";
 	end;
 
-OnTouch:
-	warp "nyd_dun01",214,68;
-	end;
-
 OnTimer2000:
 	specialeffect EF_WIND;
 	end;
@@ -12850,7 +12746,7 @@ OnTimer10000:
 	end;
 }
 
-nyd_dun02,164,261,0	script	ep13_warp_71	139,1,1,{
+nyd_dun02,164,261,0	script	ep13_warp_71	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_71";
@@ -12861,10 +12757,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_71";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -12889,7 +12781,7 @@ OnTimer10000:
 	end;
 }
 
-nyd_dun02,164,258,0	script	ep13_warp_72	139,1,1,{
+nyd_dun02,164,258,0	script	ep13_warp_72	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_72";
@@ -12900,10 +12792,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_72";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -12932,7 +12820,7 @@ OnTimer12000:
 	end;
 }
 
-nyd_dun02,164,255,0	script	ep13_warp_73	139,1,1,{
+nyd_dun02,164,255,0	script	ep13_warp_73	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_73";
@@ -12943,10 +12831,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_73";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -12977,7 +12861,7 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,164,249,0	script	ep13_warp_75	139,1,1,{
+nyd_dun02,164,249,0	script	ep13_warp_75	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_75";
@@ -12988,10 +12872,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_75";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -13016,7 +12896,7 @@ OnTimer10000:
 	end;
 }
 
-nyd_dun02,164,246,0	script	ep13_warp_76	139,1,1,{
+nyd_dun02,164,246,0	script	ep13_warp_76	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_76";
@@ -13027,10 +12907,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_76";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -13059,7 +12935,7 @@ OnTimer12000:
 	end;
 }
 
-nyd_dun02,167,258,0	script	ep13_warp_81	139,1,1,{
+nyd_dun02,167,258,0	script	ep13_warp_81	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_81";
@@ -13070,10 +12946,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_81";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -13120,15 +12992,15 @@ OnDisable:
 	end;
 
 OnTouch:
-	disablenpc "ep13_warp_81_2";
-	donpcevent "ep13_warp_91::OnDisable";
-	donpcevent "ep13_warp_92::OnDisable";
-	donpcevent "ep13_warp_93::OnDisable";
-	donpcevent "ep13_warp_e1::OnDisable";
+	donpcevent "ep13_warp_91::OnEnable";
+	donpcevent "ep13_warp_92::OnEnable";
+	donpcevent "ep13_warp_93::OnEnable";
+	donpcevent "ep13_warp_e1::OnEnable";
+	donpcevent "ep13_warp_81_2::OnDisable";
 	end;
 }
 
-nyd_dun02,167,255,0	script	ep13_warp_82	139,1,1,{
+nyd_dun02,167,255,0	script	ep13_warp_82	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_82";
@@ -13139,10 +13011,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_82";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -13171,7 +13039,7 @@ OnTimer12000:
 	end;
 }
 
-nyd_dun02,167,252,0	script	ep13_warp_83	139,1,1,{
+nyd_dun02,167,252,0	script	ep13_warp_83	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_83";
@@ -13182,10 +13050,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_83";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -13233,14 +13097,14 @@ OnDisable:
 	end;
 
 OnTouch:
-	disablenpc "ep13_warp_83_2";
-	donpcevent "ep13_warp_84::OnDisable";
-	donpcevent "ep13_warp_94::OnDisable";
-	donpcevent "ep13_warp_e2::OnDisable";
+	donpcevent "ep13_warp_84::OnEnable";
+	donpcevent "ep13_warp_94::OnEnable";
+	donpcevent "ep13_warp_e2::OnEnable";
+	donpcevent "ep13_warp_83_2::OnDisable";
 	end;
 }
 
-nyd_dun02,167,249,0	script	ep13_warp_84	139,1,1,{
+nyd_dun02,167,249,0	script	ep13_warp_84	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_84";
@@ -13251,10 +13115,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_84";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -13279,7 +13139,7 @@ OnTimer10000:
 	end;
 }
 
-nyd_dun02,167,246,0	script	ep13_warp_85	139,1,1,{
+nyd_dun02,167,246,0	script	ep13_warp_85	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_85";
@@ -13290,10 +13150,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_85";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -13341,13 +13197,13 @@ OnDisable:
 	end;
 
 OnTouch:
-	disablenpc "ep13_warp_85_2";
-	donpcevent "ep13_warp_95::OnDisable";
-	donpcevent "ep13_warp_e3::OnDisable";
+	donpcevent "ep13_warp_95::OnEnable";
+	donpcevent "ep13_warp_e3::OnEnable";
+	donpcevent "ep13_warp_85_2::OnEnable";
 	end;
 }
 
-nyd_dun02,170,257,0	script	ep13_warp_91	139,1,1,{
+nyd_dun02,170,257,0	script	ep13_warp_91	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_91";
@@ -13360,10 +13216,6 @@ OnDisable:
 	disablenpc "ep13_warp_91";
 	end;
 
-OnTouch:
-	warp "nyd_dun01",214,68;
-	end;
-
 OnTimer2000:
 	specialeffect EF_WIND;
 	end;
@@ -13386,7 +13238,7 @@ OnTimer10000:
 	end;
 }
 
-nyd_dun02,170,254,0	script	ep13_warp_92	139,1,1,{
+nyd_dun02,170,254,0	script	ep13_warp_92	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_92";
@@ -13399,10 +13251,6 @@ OnDisable:
 	disablenpc "ep13_warp_92";
 	end;
 
-OnTouch:
-	warp "nyd_dun01",214,68;
-	end;
-
 OnTimer2000:
 	specialeffect EF_WIND;
 	end;
@@ -13425,7 +13273,7 @@ OnTimer10000:
 	end;
 }
 
-nyd_dun02,170,251,0	script	ep13_warp_93	139,1,1,{
+nyd_dun02,170,251,0	script	ep13_warp_93	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_93";
@@ -13438,10 +13286,6 @@ OnDisable:
 	disablenpc "ep13_warp_93";
 	end;
 
-OnTouch:
-	warp "nyd_dun01",214,68;
-	end;
-
 OnTimer2000:
 	specialeffect EF_WIND;
 	end;
@@ -13468,7 +13312,7 @@ OnTimer12000:
 	end;
 }
 
-nyd_dun02,170,248,0	script	ep13_warp_94	139,1,1,{
+nyd_dun02,170,248,0	script	ep13_warp_94	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_94";
@@ -13481,10 +13325,6 @@ OnDisable:
 	disablenpc "ep13_warp_94";
 	end;
 
-OnTouch:
-	warp "nyd_dun01",214,68;
-	end;
-
 OnTimer2000:
 	specialeffect EF_WIND;
 	end;
@@ -13507,7 +13347,7 @@ OnTimer10000:
 	end;
 }
 
-nyd_dun02,170,245,0	script	ep13_warp_95	139,1,1,{
+nyd_dun02,170,245,0	script	ep13_warp_95	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_95";
@@ -13520,10 +13360,6 @@ OnDisable:
 	disablenpc "ep13_warp_95";
 	end;
 
-OnTouch:
-	warp "nyd_dun01",214,68;
-	end;
-
 OnTimer2000:
 	specialeffect EF_WIND;
 	end;
@@ -13546,7 +13382,7 @@ OnTimer10000:
 	end;
 }
 
-nyd_dun02,173,251,0	script	ep13_warp_e1	139,1,1,{
+nyd_dun02,173,251,0	script	ep13_warp_e1	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_e1";
@@ -13559,10 +13395,6 @@ OnDisable:
 	disablenpc "ep13_warp_e1";
 	end;
 
-OnTouch:
-	warp "nyd_dun01",214,68;
-	end;
-
 OnTimer2000:
 	specialeffect EF_WIND;
 	end;
@@ -13593,7 +13425,7 @@ OnTimer15000:
 	end;
 }
 
-nyd_dun02,173,248,0	script	ep13_warp_e2	139,1,1,{
+nyd_dun02,173,248,0	script	ep13_warp_e2	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_e2";
@@ -13604,10 +13436,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_e2";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
@@ -13640,7 +13468,7 @@ OnTimer15000:
 	end;
 }
 
-nyd_dun02,173,245,0	script	ep13_warp_e3	139,1,1,{
+nyd_dun02,173,245,0	script	ep13_warp_e3	139,{
 
 OnEnable:
 	enablenpc "ep13_warp_e3";
@@ -13651,10 +13479,6 @@ OnEnable:
 OnDisable:
 	specialeffect EF_WIND;
 	disablenpc "ep13_warp_e3";
-	end;
-
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 
 OnTimer2000:
