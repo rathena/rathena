@@ -16,20 +16,6 @@
 
 yuno,129,156,3	script	Chainheart	923,{
 
-	if (Upper == 2)
-	{
-		mes "[Chainheart]";
-		mes "Huh? This is not place for Children. Children,";
-		mes "you should stay with your mom and dad.";
-		mes "You shouldn't wander around.";
-		next;
-		mes "[Chainheart]";
-		mes "Truth or technology?";
-		mes "Perhaps you children should wait";
-		mes "till you are a little older.";
-		close;
-	}
-
 	if(BaseLevel > 99)
 	{
 		mes "[Chainheart]";
@@ -50,7 +36,7 @@ yuno,129,156,3	script	Chainheart	923,{
 	}
 	if(job__mechanic == 11)
 	{
-		if((Class == Job_Blacksmith || Class == Job_Whitesmith) && (JobLevel > 49) && (SkillPoint == 0) && (BaseLevel > 98))
+		if((Class == Job_Blacksmith || Class == Job_Whitesmith || Job_Baby_Blacksmith) && (JobLevel > 49) && (SkillPoint == 0) && (BaseLevel > 98))
 		{
 			mes "[Chainheart]";
 			mes "What is it? Is that you?";
@@ -96,7 +82,10 @@ yuno,129,156,3	script	Chainheart	923,{
 				getitem 5760,1; //Driver_Band_
 			}
 			getitem 2795,1; //Green_Apple_Ring
-			if(Class == Job_Blacksmith) {
+			if(Class == Job_Baby_Blacksmith){
+				jobchange Job_Baby_Mechanic;
+			}
+			else if(Class == Job_Blacksmith) {
 				jobchange Job_Mechanic;
 			} else if(Class == Job_Whitesmith) {
 				jobchange Job_Mechanic_T;
@@ -246,7 +235,7 @@ yuno,129,156,3	script	Chainheart	923,{
 		mes "Anyway if you become one of us you can form your own definition and explanation of Mechanics yourself.";
 		close;
 	}
-	if (Class == Job_Blacksmith || Class == Job_Whitesmith)
+	if (Class == Job_Blacksmith || Class == Job_Whitesmith || Class == Job_Baby_Blacksmith)
 	{
 		if ((JobLevel > 49) && (SkillPoint == 0) && (BaseLevel > 98))
 		{

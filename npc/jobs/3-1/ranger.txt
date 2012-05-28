@@ -22,22 +22,10 @@
 
 tur_dun01,156,36,5	script	Survival Instructor#jr01	59,{
 
-	if (Class == Job_Hunter || Class == Job_Sniper)
+	if (Class == Job_Hunter || Class == Job_Sniper || Class == Job_Baby_Hunter)
 	{
 		if (job_ranger01 < 1)
 		{
-			if (Class >= 4022 && Class <= 4045)
-			{
-				mes "[Survival Instructor, Rescue]";
-				mes "The weather is really great.";
-				next;
-				mes "[Survival Instructor, Rescue]";
-				mes "What are you kids doing here?";
-				mes "The monsters here are a";
-				mes "little tough so be careful.";
-				mes "And stay close to your parents!";
-				close;
-			}
 			mes "[Survival Instructor, Rescue]";
 			mes "The weather is really great.";
 			next;
@@ -93,7 +81,7 @@ tur_dun01,156,36,5	script	Survival Instructor#jr01	59,{
 			mes "[Survival Instructor, Rescue]";
 			mes "For the second qualification to judge one's ability exactly, you need to lighten your body and mind.";
 			next;
-			if (Class == Job_Hunter)
+			if (Class == Job_Hunter || Class == Job_Baby_Hunter)
 			{
 				mes "[Survival Instructor, Rescue]";
 				mes "Ah wait, before that.";
@@ -382,7 +370,7 @@ tur_dun01,156,36,5	script	Survival Instructor#jr01	59,{
 
 tur_dun01,91,169,3	script	Test Instructor#jr02	732,{
 
-	if (Class == Job_Hunter || Class == Job_Sniper)
+	if (Class == Job_Hunter || Class == Job_Sniper || Class == Job_Baby_Hunter)
 	{
 		if (job_ranger01 < 3)
 		{
@@ -3017,7 +3005,32 @@ job3_rang01,90,43,3	script	Ranger Master#jr_29	832,{
 		case 2:
 			break;
 		}
-		if (Class == Job_Hunter)
+		if(Class == Job_Baby_Hunter){
+			mes "[Ranger Master, Neveragain]";
+			mes "Your firm answer seems very trustworthy!";
+			next;
+			nude;
+			if (countitem(1703) > 0)
+			{
+				mes "[Ranger Master, Neveragain]";
+				mes "From now on be active as a splendid Ranger!";
+				mes "I wish you luck in your future!";
+				delitem 1703,1;
+				set job_ranger01,7;
+				completequest 8262;
+				jobchange Job_Baby_Ranger;
+				getitem 5748,1;
+				getitem 2795,1;
+				getitem 6124,1;
+				close;
+			}
+			mes "[Ranger Master, Neveragain]";
+			mes "...However,";
+			mes "You have to return your test items.";
+			mes "What did you do with your testing Bow?";
+			close;
+		}
+		else if (Class == Job_Hunter)
 		{
 			mes "[Ranger Master, Neveragain]";
 			mes "Your firm answer seems very trustworthy!";
@@ -3031,7 +3044,7 @@ job3_rang01,90,43,3	script	Ranger Master#jr_29	832,{
 				delitem 1703,1;
 				set job_ranger01,7;
 				completequest 8262;
-				jobchange 4056;
+				jobchange Job_Ranger;
 				getitem 5748,1;
 				getitem 2795,1;
 				getitem 6124,1;
@@ -3056,7 +3069,7 @@ job3_rang01,90,43,3	script	Ranger Master#jr_29	832,{
 				delitem 1703,1;
 				set job_ranger01,7;
 				completequest 8262;
-				jobchange 4062;
+				jobchange Job_Ranger_T;
 				getitem 5748,1;
 				getitem 2795,1;
 				getitem 6124,1;

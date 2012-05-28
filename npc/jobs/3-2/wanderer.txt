@@ -38,7 +38,7 @@ xmas,162,209,5	script	Little Iraki#job_wan	714,{
 		mes "[Mimi]";
 		mes "But I can understand.";
 		mes "I've heard that wanderers are the most acclaimed dancers, so I'm looking forward to it.";
-		if (Class == Job_Dancer || Class == Job_Gypsy){
+		if (Class == Job_Dancer || Class == Job_Gypsy || Class == Job_Baby_Dancer){
 			if (BaseLevel < 99 || JobLevel < 50){
 				close;
 			}
@@ -129,7 +129,7 @@ xmas,163,209,3	script	Mimi#job_wan	714,{
 		mes "[Mimi]";
 		mes "But I can understand.";
 		mes "I've heard that wanderers are the most acclaimed dancers, so I'm looking forward to it.";
-		if (Class == Job_Dancer || Class == Job_Gypsy){
+		if (Class == Job_Dancer || Class == Job_Gypsy || Class == Job_Baby_Dancer){
 			if (BaseLevel < 99 || JobLevel < 50){
 				close;
 			}
@@ -1197,7 +1197,7 @@ OnTouch:
 xmas,147,135,5	script	Dancer Kim#xmas	485,{
 
 if (job_wan == 9){
-	if (Class == Job_Dancer || Class == Job_Gypsy){
+	if (Class == Job_Dancer || Class == Job_Gypsy || Class == Job_Baby_Dancer){
 		if (BaseLevel < 99){
 			mes "- task execution condition is not met, can not perform the task -";
 			close;
@@ -1287,10 +1287,13 @@ if (job_wan == 9){
 		mes "[Dancer Kim]";
 		mes "The hope and future of wanderers, the new shining star, "+strcharinfo(0)+"!";
 		mapannounce "xmas","Dancer Kim: Let me introduce you! The hope and future of wanderers, the new shining star - "+strcharinfo(0)+"!",bc_map;
-		if (Class == Job_Dancer){
+		if(Class == Job_Baby_Dancer){
+			jobchange Job_Baby_Wanderer;
+		}
+		else if (Class == Job_Dancer){
 			jobchange Job_Wanderer;
 		}
-		if (Class == Job_Gypsy){
+		else {
 			jobchange Job_Wanderer_T;
 		}
 		getitem 5758,1; // Swan

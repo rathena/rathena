@@ -21,12 +21,7 @@ prt_castle,48,163,3	script	Gentleman#4386457567	57,{
 		mes "You have too much items, please make more light.";
 		close;
 	}
-	if(upper == 2 || upper == 6) {
-		mes "[Middle-aged Gentleman]";
-		mes "Cute child, what is your name eh?";
-		close;
-	}
-	if(Class == 4066 || Class == 4073) {
+	if(Class == 4066 || Class == 4073 || Class == 4102) {
 		mes "[Middle-aged Gentleman]";
 		mes "Uh? What am I doing? I came here for an errand...";
 		next;
@@ -43,7 +38,7 @@ prt_castle,48,163,3	script	Gentleman#4386457567	57,{
 		mes "You are dragging something. If you're riding something you better dismount it before proceeding.";
 		close;
 	}
-	if(Class != 14 && Class != 4015) {
+	if((Class != 14) && (Class != 4015) && (Class != 4037)) {
 		mes "[Middle-aged Gentleman]";
 		mes "I don't have anything to say to you. Find another person.";
 		close;
@@ -340,7 +335,7 @@ glast_01,240,366,5	script	Memory of King Schmidtz	844,{
 		mes "You are too heavy. Make yourself lighter.";
 		close;
 	}
-	if(job_royal == 5 && (Class == 14 || Class == 4015)) {
+	if(job_royal == 5 && (Class == 14 || Class == 4015 || Class == 4037)) {
 		if(countitem(6275) < 1) {
 			mes "^000099You seem to have lost the shield. Go back to Heinrich and ask for help^000000.";
 			close;
@@ -414,10 +409,14 @@ glast_01,240,366,5	script	Memory of King Schmidtz	844,{
 		specialeffect2 EF_LORD;
 		delitem 6275,1;
 		erasequest 12094;
-		if(class == 14)
+		if(class == 4037){
+			jobchange 4102;
+		}
+		else if(class == 14){
 			jobchange 4066;
-		else
+		}else{
 			jobchange 4073;
+		}
 		getitem 5757,1;
 		getitem 2795,1;
 		end;

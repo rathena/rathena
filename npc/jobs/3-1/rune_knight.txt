@@ -16,142 +16,124 @@
 //============================================================
 
 prt_in,162,24,3	script	Splendid-Looking Knight	470,{
-	if (Upper == 4) {
-		// custom translation
+
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
 		mes "[Rune Knight Manuel]";
-		mes "You're certainly a big child. Where are your parents?";
+		mes "Your are now a member of our select brethren. I can still remember when I first met you.";
 		next;
 		mes "[Rune Knight Manuel]";
-		mes "Your parents wouldn't happen to be a Knight, or Rune Knight, would they? You should introduce me to them.";
+		mes "Strive to live the way of the sword with honor...";
+		next;
+		mes "[Rune Knight Manuel]";
+		mes "Cheers to our new future...";
 		close;
 	}
-	else {
-		if (BaseClass == Job_Rune_Knight) {
-			mes "[Rune Knight Manuel]";
-			mes "Your are now a member of our select brethren. I can still remember when I first met you.";
-			next;
-			mes "[Rune Knight Manuel]";
-			mes "Strive to live the way of the sword with honor...";
-			next;
-			mes "[Rune Knight Manuel]";
-			mes "Cheers to our new future...";
-			close;
-		}
-		else {
-			if (job_rune_edq == 0) {
+	if (job_rune_edq == 0) {
+		mes "[Rune Knight Manuel]";
+		mes "There are many paths one can take in the world. Most people can see their path but don't really follow it...";
+		next;
+		mes "[Rune Knight Manuel]";
+		mes "Anyway the drinks here are really good. Would you like to have one?";
+		next;
+		switch(select("Sure, let's have a drink.:I refuse.")) {
+		case 1:
+			if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 				mes "[Rune Knight Manuel]";
-				mes "There are many paths one can take in the world. Most people can see their path but don't really follow it...";
+				mes "You walk the way of sword too don't you? Then we can understand each other. Drinks taste better when it's with a fellow Swordman.";
 				next;
 				mes "[Rune Knight Manuel]";
-				mes "Anyway the drinks here are really good. Would you like to have one?";
+				mes "I'll buy this round.";
+				mes "A toast to friendship~";
 				next;
-				switch(select("Sure, let's have a drink.:I refuse.")) {
-				case 1:
-					if (BaseJob == Job_Knight) {
+				if ((BaseLevel > 98) && (JobLevel > 49)) {
+					mes "[Rune Knight Manuel]";
+					mes "In my opinion you seem to be ready to start a new way...";
+					next;
+					mes "[Rune Knight Manuel]";
+					mes "Walking the way of the sword is a perpetual battle. From now on you may have a rough journey ahead of you...";
+					next;
+					mes "[Rune Knight Manuel]";
+					mes "If you want to walk on your new way and surpass your current limits, I'm willing to help you.";
+					next;
+					mes "[Rune Knight Manuel]";
+					mes "The true way of a Swordman who learned harmony to break the limit of a sword is a Rune Knight.";
+					next;
+					mes "[Rune Knight Manuel]";
+					mes "Won't you join our brethren? You look like you're fully qualified to become one of us.";
+					next;
+					mes "[Rune Knight Manuel]";
+					mes "If you are interested, I'll introduce you to the masters who will guide you to the way of the Rune Knight with my recommendation.";
+					next;
+					switch(select("I am not ready yet.:I'm ready to be a Rune Knight.")) {
+					case 1:
 						mes "[Rune Knight Manuel]";
-						mes "You walk the way of sword too don't you? Then we can understand each other. Drinks taste better when it's with a fellow Swordman.";
+						mes "Right. Every challenge always needs preparation. Okay, I'll wait for you.";
 						next;
 						mes "[Rune Knight Manuel]";
-						mes "I'll buy this round.";
-						mes "A toast to friendship~";
-						next;
-						if ((BaseLevel > 98) && (JobLevel > 49)) {
-							mes "[Rune Knight Manuel]";
-							mes "In my opinion you seem to be ready to start a new way...";
-							next;
-							mes "[Rune Knight Manuel]";
-							mes "Walking the way of the sword is a perpetual battle. From now on you may have a rough journey ahead of you...";
-							next;
-							mes "[Rune Knight Manuel]";
-							mes "If you want to walk on your new way and surpass your current limits, I'm willing to help you.";
-							next;
-							mes "[Rune Knight Manuel]";
-							mes "The true way of a Swordman who learned harmony to break the limit of a sword is a Rune Knight.";
-							next;
-							mes "[Rune Knight Manuel]";
-							mes "Won't you join our brethren? You look like you're fully qualified to become one of us.";
-							next;
-							mes "[Rune Knight Manuel]";
-							mes "If you are interested, I'll introduce you to the masters who will guide you to the way of the Rune Knight with my recommendation.";
-							next;
-							switch(select("I am not ready yet.:I'm ready to be a Rune Knight.")) {
-							case 1:
-								mes "[Rune Knight Manuel]";
-								mes "Right. Every challenge always needs preparation. Okay, I'll wait for you.";
-								next;
-								mes "[Rune Knight Manuel]";
-								mes "Of course, I would only accept you if you are one hundred percent sure of your conviction to become a Rune Knight.";
-								close;
-							case 2:
-								mes "[Rune Knight Manuel]";
-								mes "You're sure now?";
-								mes "Let me send a dispatch to my comrades that you are willing to join our ranks.";
-								next;
-								set job_rune_edq,1;
-								setquest 3200;
-								mes "[Rune Knight Manuel]";
-								mes "You know the place called Glast Heim? There's a Rune Knight waiting for you there, he will guide you to the entrance of Glast Heim Tower.";
-								next;
-								mes "[Rune Knight Manuel]";
-								mes "My name is Manuel. I am called the Rune Knight of Brilliance. When you tell him that you are a Rune Knight candidate with my recommendation, he will handle the rest.";
-								next;
-								mes "[Rune Knight Manuel]";
-								mes "I will wait for the day that you become our comrade as a true Rune Knight.";
-								close;
-							}
-						}
-						else {
-							mes "[Rune Knight Manuel]";
-							mes "If you continually walk the way of the sword, you will eventually feel the limits of your powers. Like myself before...";
-							next;
-							mes "[Rune Knight Manuel]";
-							mes "When the time comes there will be a way to help you surpass that limit. Until the day that your strength has grown comes, we can at least still have a drink together.";
-							next;
-							mes "[Rune Knight Manuel]";
-							mes "A toast to the day that your strength can withstand the powers of a Rune Knight!";
-							close;
-						}
-					}
-					else {
+						mes "Of course, I would only accept you if you are one hundred percent sure of your conviction to become a Rune Knight.";
+						close;
+					case 2:
 						mes "[Rune Knight Manuel]";
-						mes "I believe that the wind of change is not always a good one.";
+						mes "You're sure now?";
+						mes "Let me send a dispatch to my comrades that you are willing to join our ranks.";
+						next;
+						set job_rune_edq,1;
+						setquest 3200;
+						mes "[Rune Knight Manuel]";
+						mes "You know the place called Glast Heim? There's a Rune Knight waiting for you there, he will guide you to the entrance of Glast Heim Tower.";
 						next;
 						mes "[Rune Knight Manuel]";
-						mes "Just like the taste of this drink. I wish the taste of this drink is kept here forever.";
+						mes "My name is Manuel. I am called the Rune Knight of Brilliance. When you tell him that you are a Rune Knight candidate with my recommendation, he will handle the rest.";
+						next;
+						mes "[Rune Knight Manuel]";
+						mes "I will wait for the day that you become our comrade as a true Rune Knight.";
 						close;
 					}
-				case 2:
-					mes "[Rune Knight Manuel]";
-					mes "Are you sure? You don't know the true elegance of these drinks...";
-					close;
 				}
-			}
-			else if (job_rune_edq == 1) {
 				mes "[Rune Knight Manuel]";
-				mes "The Rune Knight is waiting for you at Glast Heim. He will guide you to the entrance of Glast Heim Tower.";
+				mes "If you continually walk the way of the sword, you will eventually feel the limits of your powers. Like myself before...";
 				next;
 				mes "[Rune Knight Manuel]";
-				mes "Tell him that you are a candidate to be a Rune Knight and he will handle the rest.";
+				mes "When the time comes there will be a way to help you surpass that limit. Until the day that your strength has grown comes, we can at least still have a drink together.";
 				next;
 				mes "[Rune Knight Manuel]";
-				mes "I will wait for the day you become our comrade as a true Rune Knight.";
+				mes "A toast to the day that your strength can withstand the powers of a Rune Knight!";
 				close;
 			}
-			else {
-				mes "[Rune Knight Manuel]";
-				mes "Don't you have things to do right now?";
-				next;
-				mes "[Rune Knight Manuel]";
-				mes "No? Well then never mind.";
-				mes "Don't you love the smell of alcohol?";
-				close;
-			}
+			mes "[Rune Knight Manuel]";
+			mes "I believe that the wind of change is not always a good one.";
+			next;
+			mes "[Rune Knight Manuel]";
+			mes "Just like the taste of this drink. I wish the taste of this drink is kept here forever.";
+			close;
+		case 2:
+			mes "[Rune Knight Manuel]";
+			mes "Are you sure? You don't know the true elegance of these drinks...";
+			close;
 		}
 	}
+	if (job_rune_edq == 1) {
+		mes "[Rune Knight Manuel]";
+		mes "The Rune Knight is waiting for you at Glast Heim. He will guide you to the entrance of Glast Heim Tower.";
+		next;
+		mes "[Rune Knight Manuel]";
+		mes "Tell him that you are a candidate to be a Rune Knight and he will handle the rest.";
+		next;
+		mes "[Rune Knight Manuel]";
+		mes "I will wait for the day you become our comrade as a true Rune Knight.";
+		close;
+	}
+	mes "[Rune Knight Manuel]";
+	mes "Don't you have things to do right now?";
+	next;
+	mes "[Rune Knight Manuel]";
+	mes "No? Well then never mind.";
+	mes "Don't you love the smell of alcohol?";
+	close;
 }
 
 glast_01,44,363,3	script	Guide, Jungberg	468,{
-	if (BaseClass == Job_Rune_Knight) {
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
 		mes "[Guide, Jungberg]";
 		mes "Oh you must be, " + strcharinfo(0) + ".";
 		mes "Welcome.";
@@ -173,7 +155,7 @@ glast_01,44,363,3	script	Guide, Jungberg	468,{
 			close;
 		}
 	}
-	else if (BaseJob == Job_Knight) {
+	else if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 		if (job_rune_edq == 0) {
 			mes "[Guide, Jungberg]";
 			mes "Are you a cursed ghost of this place? Or are you an ignorant adventurer?";
@@ -183,7 +165,7 @@ glast_01,44,363,3	script	Guide, Jungberg	468,{
 			next;
 			switch(select("Who are you?:What are you doing here?:Cancel.")) {
 			case 1:
-				if (BaseJob == Job_Knight) {
+				if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 					mes "[Guide, Jungberg]";
 					mes "I am the only knight who's keeping the way of the Swordman in this cursed place Glast Heim.";
 					next;
@@ -200,7 +182,7 @@ glast_01,44,363,3	script	Guide, Jungberg	468,{
 					close;
 				}
 			case 2:
-				if (BaseJob == Job_Knight) {
+				if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 					mes "[Guide, Jungberg]";
 					mes "I am a man walking the way of the Sword. But I'm not exactly the same as the likes of you, Rune-Midgart knight.";
 					next;
@@ -320,7 +302,7 @@ glast_01,44,363,3	script	Guide, Jungberg	468,{
 }
 
 gl_knt02,150,55,3	script	Rune Knight Staff	83,{
-	if (BaseClass == Job_Rune_Knight) {
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
 		mes "[Rune Knight Staff]";
 		mes "Welcome, " + strcharinfo(0) + ". Are you going to the gathering place?";
 		next;
@@ -339,7 +321,7 @@ gl_knt02,150,55,3	script	Rune Knight Staff	83,{
 			close;
 		}
 	}
-	else if (BaseJob == Job_Knight) {
+	else if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 		if ((job_rune_edq > 0) && (job_rune_edq < 2)) {
 			// custom translation
 			mes "[Rune Knight Staff]";
@@ -379,7 +361,7 @@ job3_rune01,80,60,3	script	Rune Knight Captain	470,{
 		mes "You've got too many things. You cannot proceed anymore. Please try again after losing some weight.";
 		close;
 	}
-	if (BaseClass == Job_Rune_Knight) {
+	if (BaseJob == Job_Swordman) {
 		if (job_rune_edq == 23) {
 			mes "[Captain Tigris]";
 			mes "Oh, I see... Please wait a moment.";
@@ -429,7 +411,7 @@ job3_rune01,80,60,3	script	Rune Knight Captain	470,{
 			close;
 		}
 	}
-	else if (BaseJob == Job_Knight) {
+	else if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 		if (job_rune_edq == 2) {
 			mes "A man wearing glorious armor and passion in his eyes is standing in front of me.";
 			next;
@@ -655,7 +637,13 @@ job3_rune01,80,60,3	script	Rune Knight Captain	470,{
 					getitem 2795,1; //Green_Apple_Ring
 					set job_rune_edq,23;
 					completequest 3219;
-					jobchange Job_Rune_Knight,Upper;
+					if(Class == Job_Baby_Knight){
+						jobchange Job_Baby_Rune;
+					} else if(Class == Job_Knight){
+						jobchange Job_Rune_Knight;
+					} else {
+						jobchange Job_Rune_Knight_T;
+					}
 					mes "[Captain Tigris]";
 					mes "Remember this moment forever for you are now a Rune Knight.";
 					next;
@@ -685,13 +673,13 @@ job3_rune01,80,60,3	script	Rune Knight Captain	470,{
 }
 
 job3_rune01,90,50,3	script	Rune Knight Lunarea	469,{
-	if (BaseClass == Job_Rune_Knight) {
+	if (BaseJob != Job_Swordman) {
 		mes "She holds up her chin quietly, nods lightly and notices me.";
 		next;
 		mes "Then after a moment she puts her face down and seems absorbed with other thoughts.";
 		close;
 	}
-	else if (BaseJob == Job_Knight) {
+	else if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 		if (job_rune_edq < 3) {
 			mes "This pale-skinned absent-looking female Rune Knight doesn't seem to care. Of course she doesn't seem interested with my existence";
 			close;
@@ -855,7 +843,7 @@ job3_rune01,90,50,3	script	Rune Knight Lunarea	469,{
 }
 
 job3_rune01,55,50,3	script	Rune Knight, Renoa	469,{
-	if (BaseClass == Job_Rune_Knight) {
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
 		mes "[Rune Knight, Renoa]";
 		mes "Congratulations for becoming one of us. Junior Rune Knight, " + strcharinfo(0) + ".";
 		next;
@@ -866,7 +854,7 @@ job3_rune01,55,50,3	script	Rune Knight, Renoa	469,{
 		mes "Until then, I'll be here to discover more candidates just like you.";
 		close;
 	}
-	else if (BaseJob == Job_Knight) {
+	else if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 		if (job_rune_edq < 7) {
 			mes "[Rune Knight, Renoa]";
 			mes "Are you the one who wants to be a Rune Knight? There have been so many today.";
@@ -2335,7 +2323,7 @@ job3_rune01,50,36,1	script	Runes, Make & Use	844,{
 }
 
 mid_camp,238,250,3	script	Rune Knight Sage Guard	468,{
-	if (BaseClass == Job_Rune_Knight) {
+	if (BaseJob != Job_Swordman) {
 		mes "[Rune Knight Sage Guard]";
 		mes "The sage Serpeone is the one who has been with us since the beginning of the Rune Knights.";
 		next;
@@ -2343,7 +2331,7 @@ mid_camp,238,250,3	script	Rune Knight Sage Guard	468,{
 		mes "I am very proud as a Rune Knight to serve beside her.";
 		close;
 	}
-	else if (BaseJob == Job_Knight) {
+	else if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 		if (job_rune_edq < 11) {
 			mes "[Rune Knight Sage Guard]";
 			mes "You might be walking the way of the sword but you are not a Rune Knight yet. Don't wander around here too much if you know what I mean.";
@@ -2369,12 +2357,12 @@ mid_camp,238,250,3	script	Rune Knight Sage Guard	468,{
 }
 
 mid_camp,13,138,3	script	Dispatched Rune Knight#1	83,{
-	if (BaseClass == Job_Rune_Knight) {
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
 		mes "[Dispatch Rune Knight Agent]";
 		mes "Thanks for your work. We will continue our mission for the Rune Knight testers.";
 		close;
 	}
-	else if (BaseJob == Job_Knight) {
+	else if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 		if (job_rune_edq < 11) {
 			mes "[Dispatch Rune Knight Agent]";
 			mes "Shh... Our mission is not something to be revealed to the public. Please just move along.";
@@ -2420,12 +2408,12 @@ OnTouch:
 }
 
 spl_fild01,361,327,3	script	Dispatched Rune Knight#2	83,{
-	if (BaseClass == Job_Rune_Knight) {
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
 		mes "[Dispatch Rune Knight Agent]";
 		mes "Thanks for your work. We will continue our mission for the Rune Knight testers.";
 		close;
 	}
-	else if (BaseJob == Job_Knight) {
+	else if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 		if (job_rune_edq < 11) {
 			mes "[Dispatch Rune Knight Agent]";
 			mes "Shh... Our mission is not something to be revealed to the public. Please just move along.";
@@ -2455,7 +2443,7 @@ spl_fild01,361,327,3	script	Dispatched Rune Knight#2	83,{
 }
 
 mid_camp,235,250,3	script	Sage Serpeone	435,{
-	if (BaseClass == Job_Rune_Knight) {
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
 		mes "[Sage Serpeone]";
 		mes "Finally you are an honorable Rune Knight. I'm happy to help you.";
 		next;
@@ -2466,7 +2454,7 @@ mid_camp,235,250,3	script	Sage Serpeone	435,{
 		mes "Please be devoted to the Runes and hopefully your life will be illuminated by it.";
 		close;
 	}
-	else if (BaseJob == Job_Knight) {
+	else if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 		if (job_rune_edq < 12) {
 			mes "[Sage Serpeone]";
 			mes "It must be surprising that I, a Laphine, am here in your people's base.";
@@ -2662,12 +2650,12 @@ job3_rune01,114,50,3	script	Rune Knight Velpino	468,{
 	set .@strRetPart8,getequipisequiped(EQI_ACC_R);
 	set .@strRetPart10,getequipisequiped(EQI_HEAD_MID);
 	set .@strRetPart11,getequipisequiped(EQI_HEAD_LOW);
-	if (BaseClass == Job_Rune_Knight) {
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
 		mes "[Rune Knight Velpino]";
 		mes "You still smell like a fledging. Bring honor to the Rune Knights and raise your power...";
 		close;
 	}
-	else if (BaseJob == Job_Knight) {
+	else if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 		if (job_rune_edq < 17) {
 			mes "A very cold feeling Rune Knight dressed in black from head to toe is scowling at me.";
 			next;

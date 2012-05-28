@@ -16,16 +16,8 @@
 
 ve_in,237,125,0	script	King Crab#job_shu	107,{
 
-	if ((Class >= 4023) && (Class <= 4045)){
-		mes "[King Crab]";
-		// Custom Translation
-		mes "Dear child - you should not be in a place like this~";
-		mes "Terrible Master would get angry, oh ~";
-		close;
-	}
-
 	if (job_shu == 0){
-		if (Class == Job_Monk || Class == Job_Champion){
+		if (Class == Job_Monk || Class == Job_Champion || Job_Baby_Monk){
 			if ((BaseLevel > 98) && (JobLevel > 49)){
 				mes "[King Crab]";
 				mes "Khh ha ha ha ha ha ha.";
@@ -183,16 +175,8 @@ ve_in,237,125,0	script	King Crab#job_shu	107,{
 
 ve_in,241,128,4	script	Sludge Worm#job_shu	110,{
 
-	if ((Class >= 4023) && (Class <= 4045)){
-		mes "[Sludge Worm]";
-		// Custom Translation
-		mes "Go away, child~";
-		mes "This is no place for childen!";
-		close;
-	}
-
 	if (job_shu == 0){
-		if (Class == Job_Monk || Class == Job_Champion){
+		if (Class == Job_Monk || Class == Job_Champion || Job_Baby_Monk){
 			if ((BaseLevel > 98) && (JobLevel > 49)){
 				mes "[King Crab]";
 				mes "Khh ha ha ha ha ha ha.";
@@ -357,7 +341,7 @@ ve_in,244,126,3	script	Waitress#job_shu	69,{
 		mes "I hope there is someone who can scold them for me.";
 		close;
 	}else if (job_shu == 1){
-		if (Class == Job_Monk){
+		if (Class == Job_Monk || Job_Baby_Monk){
 			mes "[Waitress]";
 			mes "Oh dear~";
 			mes "I really appreciate you, Monk, for helping me a while ago.";
@@ -1006,12 +990,6 @@ sword_1-1,223,167,2	script	Master#job_shu	483,{
 				mes "Please use all your Skill Points or you cannot become a Sura.";
 				close;
 			}
-			if ((Class >= 4023) && (Class <= 4045)){
-				mes "[Master]";
-				// Custom Translation
-				mes "No matter how much you want power, I will not let children set foot on the road to the Sura.";
-				close;
-			}
 			if(checkweight(1201,1) == 0){
 				mes "[Master]";
 				// Custom Translation
@@ -1025,7 +1003,46 @@ sword_1-1,223,167,2	script	Master#job_shu	483,{
 				mes "Go train more.";
 				close;
 			}
-			if (Class == Job_Monk){
+			if (Class == Job_Baby_Monk){
+				mes "[Bruno]";
+				mes "Of course~";
+				mes "I have keen eyes.";
+				next;
+				mes "[Bruno]";
+				mes "Master! This is a wolf fur coat.";
+				mes "Put it on when it's cold.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Ahhk! That is the wolf I... caught... Uhh.";
+				next;
+				mes "- Whack -";
+				next;
+				mes "[Bruno]";
+				mes "Ho ho ho~";
+				mes "Do you have something to say, "+strcharinfo(0)+"?";
+				mes "You became a member of our family, let's get along together ~";
+				next;
+				mes "[Master]";
+				mes "Right, I now accept you as my student, too.";
+				next;
+				mes "[Master]";
+				mes "I think you already know it, but to live as a Sura will not be that easy.";
+				next;
+				mes "[Master]";
+				mes "I also shut myself off from the world. If there comes a day when we go to the world again, it must be the day when the world needs ghosts for the wars.";
+				next;
+				mes "[Master]";
+				mes "I hope those days will not come but... I'll willingly be the ghost and kill all enemies.";
+				next;
+				mes "[Master]";
+				mes "You should train yourself steadily until that day.";
+				set job_shu,100;
+				jobchange Job_Baby_Sura;
+				completequest 11158;
+				getitem 5754,1;
+				getitem 2795,1;
+				close;
+			}else if (Class == Job_Monk){
 				mes "[Bruno]";
 				mes "Of course~";
 				mes "I have keen eyes.";

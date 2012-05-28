@@ -17,23 +17,8 @@
 
 alde_alche,35,186,5	script	Alchemist Union Member	805,{
 
-	if ((Class >= 4023) && (Class <= 4045)){
-		mes "[Alchemist Union Member]";
-		mes "Our Alchemist Union brings up many junior alchemists with various promotions and investigations.";
-		next;
-		mes "[Alchemist Union Member]";
-		mes "They have spread to all corners of Rune-Midgart and were active in many fields like sciences or special item production methods.";
-		next;
-		mes "[Alchemist Union Member]";
-		mes "We call the members of our new union ^3131FF'Geneticists'^000000.";
-		next;
-		mes "[Alchemist Union Member]";
-		mes "Geneticists are the ones who have reached their peak potential in the world of Alchemy. They are the ones who currently spearhead alchemy throughout all of Rune-Midgart.";
-		close;
-	}
-
 	if ((BaseLevel == 99) && (JobLevel > 49)){
-		if (Class == Job_Alchemist || Class == Job_Creator){
+		if (Class == Job_Alchemist || Class == Job_Creator || Job_Baby_Alchemist){
 			if (SkillPoint == 0){
 				if (job_gen == 0){
 					mes "[Alchemist Union Member]";
@@ -563,7 +548,7 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 			mes "Bubbles!";
 			mes "Good news!";
 			next;
-			if (Class == Job_Alchemist || Class == Job_Creator && ((JobLevel > 49) && (SkillPoint == 0) && (BaseLevel > 98))){
+			if (Class == Job_Alchemist || Class == Job_Creator || Job_Baby_Alchemist && ((JobLevel > 49) && (SkillPoint == 0) && (BaseLevel > 98))){
 				if (checkcart() == 0){
 					mes "[Devries]";
 					mes "Put that heavy and dirty cart away. On such a happy moment, that thing will just ruin it.";
@@ -606,7 +591,10 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 				mes "[Devries]";
 				mes "Congratulations, Bubbles";
 				mes "From now on, you are a Geneticist!!";
-				if (Class == Job_Alchemist){
+				if(Class == Job_Baby_Alchemist){
+					jobchange Job_Baby_Genetic;
+				}
+				else if (Class == Job_Alchemist){
 					jobchange Job_Genetic;
 				} else {
 					jobchange Job_Genetic_T;

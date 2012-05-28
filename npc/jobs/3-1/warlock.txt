@@ -21,13 +21,8 @@
 morocc,103,144,0	script	distorted place morroc	139,1,1,{
 
 OnTouch:
-	if (Class >= 4023 && Class <= 4045){
-		mes " - I can feel a strange distortion around me - ";
-		close;
-	}
-
 	if (job_wl > 1){
-		if (Class == Job_Warlock || Class == Job_Warlock_T){
+		if (Class == Job_Warlock || Class == Job_Warlock_T || Job_Baby_Warlock){
 			mes " - There is a strange distortion here - ";
 			close;
 		}
@@ -44,7 +39,7 @@ OnTouch:
 			close;
 		}
 	}
-	if (BaseLevel > 94 && Class == Job_Wizard || Class == Job_High_Wizard){
+	if (BaseLevel > 94 && Class == Job_Wizard || Class == Job_High_Wizard || Class == Job_Baby_Wizard){
 		mes " - There is a strange distortion here - ";
 		next;
 		switch(select( "Search the area.:Ignore it.")){
@@ -72,10 +67,6 @@ OnTouch:
 splendide,141,284,0	script	Distorted place molco	139,1,1,{
 
 OnTouch:
-	if (Class >= 4023 && Class <= 4045){
-		mes " - I can feel a strange distortion around me - ";
-		close;
-	}
 	if (job_wl > 1){
 		mes " - There is a strange - ";
 		mes "- distortion here -";
@@ -119,7 +110,7 @@ OnTouch:
 spl_in02,77,107,5	script	Assistant#Warlock	446,{
 
 	if (job_wl < 1){
-		if (Class == Job_Wizard || Class == Job_High_Wizard){
+		if (Class == Job_Wizard || Class == Job_High_Wizard || Class == Job_Baby_Wizard){
 			mes "[Assistant]";
 			mes "Huh!!! Human!?!";
 			mes "How did you enter here?";
@@ -602,7 +593,7 @@ spl_in02,60,231,5	script	Yoop#Warlock	446,{
 spl_in02,84,103,3	script	Assistant#Warlock2	445,{
 
 	if (job_wl < 1){
-		if (Class == Job_Wizard || Class == Job_High_Wizard){
+		if (Class == Job_Wizard || Class == Job_High_Wizard || Class == Job_Baby_Wizard){
 			mes "[Assistant]";
 			mes "Huh!!! Human!?!";
 			mes "How did you enter here?";
@@ -888,7 +879,7 @@ spl_in02,84,103,3	script	Assistant#Warlock2	445,{
 spl_in02,78,110,5	script	Assistant#Warlock3	443,{
 
 	if (job_wl < 1){
-		if (Class == Job_Wizard || Class == Job_High_Wizard){
+		if (Class == Job_Wizard || Class == Job_High_Wizard || Class == Job_Baby_Wizard){
 			mes "[Assistant]";
 			mes "Huh!!! Human!?!";
 			mes "How did you enter here?";
@@ -1129,7 +1120,7 @@ spl_in02,78,110,5	script	Assistant#Warlock3	443,{
 spl_in02,80,108,5	script	Guild Master#Warlock	465,{
 
 	if (job_wl < 1){
-		if (Class == Job_Wizard || Class == Job_High_Wizard){
+		if (Class == Job_Wizard || Class == Job_High_Wizard || Class == Job_Baby_Wizard){
 			mes "[Assistant]";
 			mes "Huh!!! Human!?!";
 			mes "How did you enter here?";
@@ -1415,6 +1406,24 @@ spl_in02,80,108,5	script	Guild Master#Warlock	465,{
 				mes "[Master Egnoloria]";
 				//Custom Translation
 				mes "Unless you like being your current job, you should use all your skill points.";
+				close;
+			}
+			if (Class == Job_Baby_Wizard){
+				mes "[Master Egnoloria]";
+				mes "Beautiful light...";
+				mes "Don't make me disappointed at you...";
+				next;
+				mes "[Master Egnoloria]";
+				mes "You have become a member of the Warlocks.";
+				mes "Be proud.";
+				next;
+				mes "[Master Egnoloria]";
+				mes "This crystallized magical stone will keep you safe.";
+				set job_wl,10;
+				jobchange Job_Baby_Warlock;
+				completequest 11112;
+				getitem 5753,1; //Magic_Stone_Hat
+				getitem 2795,1; //Green_Apple_Ring
 				close;
 			}
 			if (Class == Job_Wizard){

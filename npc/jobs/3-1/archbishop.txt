@@ -45,24 +45,6 @@ prt_church,103,88,3	script	Praying Minister#arch	60,{
 		close;
 	}
 	else {
-		if (Upper == 2) {
-			mes "[Praying Minister]";
-			mes "In front of the Almighty God Odin, there shall be no person smarter than him, and there will be no person more merciful than him.";
-			next;
-			mes "[Praying Minister]";
-			mes "All ministers of Odin should be diligent. They should never be too lazy to serve Odin.";
-			next;
-			mes "[Praying Minister]";
-			mes "Thesedays, I've heard that ministers are becoming lax in their duty to Odin and adorn themselves with the splendors of the world.";
-			next;
-			mes "[Praying Minister]";
-			mes "If you see any of these ministers, can you ask to them to go to the church in prontera?";
-			next;
-			mes "[Praying Minister]";
-			mes "They give out a special aura so you can easily recognize them.";
-			mes "I'm going to make them ministers worthy of serving Odin.";
-			close;
-		}
 		if ((BaseLevel == 99) && (JobLevel > 49)) {
 			if (job_arch == 0) {
 				if (SkillPoint) {
@@ -818,13 +800,7 @@ OnInit:
 }
 
 job3_arch01,29,34,3	script	Valkyrie#arch	403,{
-	if (Upper == 2) {
-		mes "[Valkyrie]";
-		//Custom translation
-		mes "You are only a child.";
-		mes "My job is very difficult, I do not need to tollerate a child's joke. Away with you!";
-		close;
-	}
+
 	if(checkweight(1201,1) == 0){
 		//Custom translation
 		mes "- bags must be emptied before they can proceed. -";
@@ -859,7 +835,7 @@ job3_arch01,29,34,3	script	Valkyrie#arch	403,{
 		mes "- you put some items into Kafra Storage. -";
 		close;
 	}
-	if ((Class != Job_Priest) && (Class != Job_High_Priest)) {
+	if ((Class != Job_Priest) && (Class != Job_High_Priest) && (Class != Job_Baby_Priest)) {
 		warp "odin_tem02",282,263;
 		end;
 	}
@@ -1423,7 +1399,10 @@ OnTouch:
 	completequest 2191;
 	getitem 5747,1; //Mitra
 	getitem 2795,1; //Green_Apple_Ring
-	if (Class == Job_Priest) {
+	if(Class == Job_Baby_Priest){
+		jobchange Job_Baby_Bishop;
+	}
+	else if (Class == Job_Priest) {
 		jobchange Job_Archbishop;
 	}
 	else {

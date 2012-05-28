@@ -20,12 +20,7 @@ gef_tower,102,34,5	script	Merito	742,{
 		mes "You packed so much in your bag. Try again after emptying your bag.";
 		close;
 	}
-	if ((Class >= 4023) && (Class <= 4045)){
-		mes "[Merito]";
-		mes "Lovely child, what's your name?";
-		close;
-	}
-	if (Class == Job_Sorcerer || Class == Job_Sorcerer_T){
+	if (Class == Job_Sorcerer || Class == Job_Sorcerer_T || Class == Job_Baby_Sorcerer){
 		mes "[Merito]";
 		mes "Please get on with the sprits well~ You should~!";
 		close;
@@ -35,12 +30,12 @@ gef_tower,102,34,5	script	Merito	742,{
 		mes "Wow~ you are a young adventurer. I envy you.";
 		close;
 	}
-	if ((Class != Job_Sage) && (Class != Job_Professor)){
+	if ((Class != Job_Sage) && (Class != Job_Professor) && (Class != Job_Baby_Sage)){
 		mes "[Merito]";
 		mes "Wow~ you are a young adventurer. I envy you.";
 		close;
 	}
-	if (Class == Job_Sage || Class == Job_Professor && (job_soc < 1)){
+	if (Class == Job_Sage || Class == Job_Professor || Class == Job_Baby_Sage && (job_soc < 1)){
 		mes "[Merito]";
 		mes "Welcome. What can I help you with?";
 		next;
@@ -87,7 +82,7 @@ gef_tower,102,34,5	script	Merito	742,{
 		set job_soc,1;
 		close;
 	}
-	if (Class == Job_Sage || Class == Job_Professor && (job_soc == 1)){
+	if (Class == Job_Sage || Class == Job_Professor || Class == Job_Baby_Sage && (job_soc == 1)){
 		mes "[Merito]";
 		mes "Good, then I'll give you a short explanation about the Sorcerer.";
 		next;
@@ -145,7 +140,7 @@ gef_tower,102,34,5	script	Merito	742,{
 			close;
 		}
 	}
-	if (Class == Job_Sage || Class == Job_Professor && (job_soc > 1)){
+	if (Class == Job_Sage || Class == Job_Professor || Class == Job_Baby_Sage && (job_soc > 1)){
 		mes "[Merito]";
 		mes "How about your test? Well, Karacas is a little lazy, so that might bother you some... kkk";
 		close;
@@ -158,11 +153,6 @@ gef_tower,113,161,5	script	Karacas	754,{
 		mes "You packed so much in your bag. Try again after emptying your bag.";
 		close;
 	}
-	if ((Class >= 4023) && (Class <= 4045)){
-		mes "[Merito]";
-		mes "Lovely child, what's your name?";
-		close;
-	}
 	if (Class == Job_Sorcerer || Class == Job_Sorcerer_T){
 		mes "[Karacas]";
 		mes "You look happy. Have a great journey.";
@@ -173,17 +163,17 @@ gef_tower,113,161,5	script	Karacas	754,{
 		mes "Is there anything I can do for you?";
 		close;
 	}
-	if (Class != Job_Sage && Class != Job_Professor){
+	if ((Class != Job_Sage) && (Class != Job_Professor) && (Class != Job_Baby_Sage)){
 		mes "[Karacas]";
 		mes "Is there anything I can do for you?";
 		close;
 	}
-	if (Class == Job_Sage || Class == Job_Professor && (job_soc < 2)){
+	if (Class == Job_Sage || Class == Job_Professor || Class == Job_Baby_Sage && (job_soc < 2)){
 		mes "[Karacas]";
 		mes "More people are visiting Geffen Tower thesedays.";
 		close;
 	}
-	if (Class == Job_Sage || Class == Job_Professor && (job_soc == 2)){
+	if (Class == Job_Sage || Class == Job_Professor || Class == Job_Baby_Sage && (job_soc == 2)){
 		mes "[Karacas]";
 		mes "....";
 		next;
@@ -269,7 +259,7 @@ gef_tower,113,161,5	script	Karacas	754,{
 		changequest 12096,12097;
 		close;
 	}
-	if (Class == Job_Sage || Class == Job_Professor && (job_soc == 3)){
+	if (Class == Job_Sage || Class == Job_Professor || Class == Job_Baby_Sage && (job_soc == 3)){
 		if ((countitem(992) > 2) && (countitem(991) > 2) && (countitem(990) > 2) && (countitem(993) > 2)){
 			mes "[Karacas]";
 			mes "Oh, you have all the materials.";
@@ -359,7 +349,7 @@ gef_tower,113,161,5	script	Karacas	754,{
 		mes "When you bring these basic things, I'll guide you to the next step.";
 		close;
 	}
-	if (Class == Job_Sage || Class == Job_Professor && (job_soc == 4)){
+	if (Class == Job_Sage || Class == Job_Professor || Class == Job_Baby_Sage && (job_soc == 4)){
 		if ((countitem(6276) > 0) && (countitem(6278) > 0) && (countitem(6277) > 0)){
 			mes "[Karacas]";
 			mes "Wow~ your skill is good.";
@@ -382,7 +372,7 @@ gef_tower,113,161,5	script	Karacas	754,{
 		mes "Don't give up and keep on trying~";
 		close;
 	}
-	if (Class == Job_Sage || Class == Job_Professor && (job_soc == 5)){
+	if (Class == Job_Sage || Class == Job_Professor || Class == Job_Baby_Sage && (job_soc == 5)){
 		mes "[Karacas]";
 		mes "Originally my teacher needs to check the Sorcerer job change but after he went out to find the spirit of fish, I can't see him. So I'll check it myself.";
 		next;
@@ -401,7 +391,10 @@ gef_tower,113,161,5	script	Karacas	754,{
 		next;
 		mes "[Karacas]";
 		mes "Congratulations, ["+strcharinfo(0)+"]";
-		if (Class == Job_Sage){
+		if(Class == Job_Baby_Sage){
+			jobchange Job_Baby_Sorcerer;
+		}
+		else if (Class == Job_Sage){
 			jobchange Job_Sorcerer;
 		}else if (Class == Job_Professor){
 			jobchange Job_Sorcerer_T;
