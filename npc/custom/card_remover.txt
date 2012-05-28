@@ -14,6 +14,9 @@
 //============================================================
 
 prt_in,28,73,4	script	Wise Old Woman#eAcustom	78,{
+	.zenycost = 200000; // Set base cost in zeny of the card remover services
+	.percardcost = .percardcost; // set cost per card of the card remover services
+	.faildestroy = 1; // Should the card remover have a chance of failure that destroys items?
 	mes "[Wise Old Woman]";
 	mes "Good day, young one. I have the power to remove cards that you have compounded onto your equipment. Does this idea please you?";
 	next;
@@ -55,14 +58,14 @@ prt_in,28,73,4	script	Wise Old Woman#eAcustom	78,{
 			close;
 		}
 		mes "[Wise Old Woman]";
-		mes "This item has " + .@cardcount + " cards compounded on it. To perform my magic, I will need " + (200000+(.@cardcount * 25000)) + " zeny, a ^0000FFStar Crumb^000000, and a ^0000FFYellow Gemstone^000000.";
+		mes "This item has " + .@cardcount + " cards compounded on it. To perform my magic, I will need " + (.zenycost+(.@cardcount * .percardcost)) + " zeny, a ^0000FFStar Crumb^000000, and a ^0000FFYellow Gemstone^000000.";
 		next;
 		if(select("Very well. Do it.:Nevermind.") == 2) {
 			mes "[Wise Old Woman]";
 			mes "Very well. Return at once if you seek my services.";
 			close;
 		}
-		if((zeny < (200000+(.@cardcount * 25000))) || (countitem(1000) < 1) || (countitem(715) < 1)) {
+		if((zeny < (.zenycost+(.@cardcount * .percardcost))) || (countitem(1000) < 1) || (countitem(715) < 1)) {
 			mes "[Wise Old Woman]";
 			mes "You do not have all the items I require to work my magic, child. Come again when you do.";
 			close;
@@ -83,7 +86,7 @@ prt_in,28,73,4	script	Wise Old Woman#eAcustom	78,{
 		}
 		mes "[Wise Old Woman]";
 		mes "Very well. I shall begin.";
-		set zeny,zeny - (200000+(.@cardcount * 25000));
+		set zeny,zeny - (.zenycost+(.@cardcount * .percardcost));
 		delitem 1000,1;
 		delitem 715,1;
 		
@@ -93,7 +96,7 @@ prt_in,28,73,4	script	Wise Old Woman#eAcustom	78,{
 		// Third value = Harmless failure chance (all that's lost is your investment)
 
 		set .@failchance,rand(100);
-		/*
+		if (.faildestroy==1) {
 			if(.@failchance < 2) {
 				next;
 				failedremovecards .@part,0;
@@ -119,7 +122,7 @@ prt_in,28,73,4	script	Wise Old Woman#eAcustom	78,{
 					close;
 				}
 			}
-		*/
+		}
 
 		if(.@failchance < 10) {
 			next;
@@ -135,7 +138,7 @@ prt_in,28,73,4	script	Wise Old Woman#eAcustom	78,{
 		close;
 	case 2:
 		mes "[Wise Old Woman]";
-		mes "I charge a flat fee of 200000 zeny, plus 25000 zeny for each card I remove from the item. In addition, I need a star crumb and a yellow gemstone to work my magic.";
+		mes "I charge a flat fee of "+.zenycost+" zeny, plus "+.percardcost+" zeny for each card I remove from the item. In addition, I need a star crumb and a yellow gemstone to work my magic.";
 		close;
 	case 3:
 		mes "[Wise Old Woman]";

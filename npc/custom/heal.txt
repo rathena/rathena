@@ -1,35 +1,30 @@
-//===== rAthena Script =======================================
-//= Healer
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 3.2
-//===== Compatible With: =====================================
-//= rAthena SVN
-//===== Description: =========================================
-//= Healer NPC Which Heals For Free
-//===== Additional Comments: =================================
-//= 
-//============================================================
-
 -	script	healer	-1,{
+	set .payment,0; // Charge for heals? 1 = yes, 0 = no 
+	.price = 100; // How much zeny to charge for heals?
 	callfunc "F_ClearGarbage",0;
+	
 	mes "[Healer]";
 	mes "I have amazing healing powers!!";
-	mes "You look like a person who needs them";
+	mes "You look like a person who needs them.";
 	mes "Want some?";
+	if (.payment==1) {
+		mes "My healing powers cost "+.price+" zeny.";
+	}
 	next;
 	switch(select("Heal:No thanks")) {
-	case 1:
-		percentheal 100,100;
-		mes "[Healer]";
-		mes "Wonderfull, You are now healed!.";
-		mes "Have fun adventuring!!";
-		break;
-	case 2:
-		mes "[Healer]";
-		mes "Alright, come back if you need a heal.";
-		break;
+		case 1:
+			if (.payment==1) {
+				Zeny = Zeny-.price;
+			}
+			percentheal 100,100;
+			mes "[Healer]";
+			mes "Wonderful, You are now healed!.";
+			mes "Have fun adventuring!!";
+			break;
+		case 2:
+				mes "[Healer]";
+			mes "Alright, come back if you need a heal.";
+			break;
 	}
 	close;
 }

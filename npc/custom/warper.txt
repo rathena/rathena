@@ -45,7 +45,7 @@
 		mes "[Warp Agent]";
 		mes "Please select which town you would like to be teleported to.";
 		next;
-		switch(select("Alberta:Aldebaran:Amatsu:Ayothaya:Comodo:Einbroch:Einbech:Geffen:Gonryun:Hugel:Izlude:Lighthalzen:Louyang:Lutie:Morroc:Payon:Prontera:Umbala:Yuno")) {
+		switch(select("Alberta:Aldebaran:Amatsu:Ayothaya:Brasilis:Comodo:Einbroch:Einbech:El Dicastes:Geffen:Gonryun:Hugel:Izlude:Jawaii:Lighthalzen:Louyang:Lutie:Manuk:Morroc:Moscovia:Payon:Prontera:Splendide:Umbala:Veins:Yuno")) {
 		case 1:
 			warp "alberta",27,236;
 			break;
@@ -59,48 +59,69 @@
 			warp "ayothaya",149,118;
 			break;
 		case 5:
-			warp "comodo",188,161;
+			warp "brasilis",182,239;
 			break;
 		case 6:
-			warp "einbroch",64,200;
+			warp "comodo",188,161;
 			break;
 		case 7:
-			warp "einbech",70,95;
+			warp "einbroch",64,200;
 			break;
 		case 8:
-			warp "geffen",119,66;
+			warp "einbech",70,95;
 			break;
 		case 9:
-			warp "gonryun",150,130;
+			warp "dicastes01",198,187;
 			break;
 		case 10:
-			warp "hugel",96,145;
+			warp "geffen",119,66;
 			break;
 		case 11:
-			warp "izlude",128,111;
+			warp "gonryun",150,130;
 			break;
 		case 12:
-			warp "lighthalzen",158,92;
+			warp "hugel",96,145;
 			break;
 		case 13:
-			warp "louyang",210,108;
+			warp "izlude",128,111;
 			break;
 		case 14:
-			warp "xmas",150,133;
+			warp "jawaii",249,127;
 			break;
 		case 15:
-			warp "morocc",159,93;
+			warp "lighthalzen",158,92;
 			break;
 		case 16:
-			warp "payon",152,75;
+			warp "louyang",210,108;
 			break;
 		case 17:
-			warp "prontera",156,187;
+			warp "xmas",150,133;
 			break;
 		case 18:
-			warp "umbala",130,130;
+			warp "manuk",282,138;
 			break;
 		case 19:
+			warp "morocc",159,93;
+			break;
+		case 20:
+			warp "moscovia",223,184;
+			break;
+		case 21:
+			warp "payon",152,75;
+			break;
+		case 22:
+			warp "prontera",156,187;
+			break;
+		case 23:
+			warp "splendide",197,176;
+			break;
+		case 24:
+			warp "umbala",130,130;
+			break;
+		case 25:
+			warp "veins",216,123;
+			break;
+		case 26:
 			warp "yuno",160,168;
 			break;
 		}
@@ -109,7 +130,7 @@
 		mes "[Warp Agent]";
 		mes "Please select which dungeon you would like to be teleported to.";
 		next;
-		switch(select("Abyss Lake:Amatsu Dungeon:Anthell:Ayothaya Dungeon:Bibilan Dungeon:Coal Mine (Dead Pit):Culvert:Einbech Dungeon:Glast Heim:Gonryun Dungeon:Juperos:Lighthalzen Bio Lab:Magma Dungeon:Niflheim:Odin Temple:Orc Dungeon:Payon Dungeon:Pyramids:Sphinx:Sunken Ship:Thanatos Tower:Turtle Dungeon")) {
+		switch(select("Abyss Lake:Amatsu Dungeon:Anthell:Ayothaya Dungeon:Bibilan Dungeon:Coal Mine (Dead Pit):Culvert:Einbech Dungeon:Glast Heim:Gonryun Dungeon:Ice Dungeon:Juperos:Lighthalzen Bio Lab:Magma Dungeon:Niflheim:Odin Temple:Orc Dungeon:Payon Dungeon:Pyramids:Sphinx:Sunken Ship:Thanatos Tower:Thor Volcano:Turtle Dungeon")) {
 		case 1:
 			warp "hu_fild05",189,207;
 			break;
@@ -141,39 +162,45 @@
 			warp "gonryun",160,195;
 			break;
 		case 11:
-			warp "yuno_fild07",218,176;
+			warp "ice_dun01",157,15;
 			break;
 		case 12:
-			warp "lighthalzen",158,285;
+			warp "yuno_fild07",218,176;
 			break;
 		case 13:
-			warp "yuno_fild03",39,140;
+			warp "lighthalzen",158,285;
 			break;
 		case 14:
-			warp "niflheim",35,161;
+			warp "yuno_fild03",39,140;
 			break;
 		case 15:
-			warp "odin_tem01",98,144;
+			warp "niflheim",35,161;
 			break;
 		case 16:
-			warp "gef_fild10",70,332;
+			warp "odin_tem01",98,144;
 			break;
 		case 17:
-			warp "pay_arche",43,132;
+			warp "gef_fild10",70,332;
 			break;
 		case 18:
-			warp "moc_ruins",62,162;
+			warp "pay_arche",43,132;
 			break;
 		case 19:
-			warp "moc_fild19",107,100;
+			warp "moc_ruins",62,162;
 			break;
 		case 20:
-			warp "alb2trea",75,98;
+			warp "moc_fild19",107,100;
 			break;
 		case 21:
-			warp "tha_scene01",131,223;
+			warp "alb2trea",75,98;
 			break;
 		case 22:
+			warp "tha_scene01",131,223;
+			break;
+		case 23:
+			warp "thor_v01",21,229;
+			break;
+		case 24:
 			warp "tur_dun01",149,238;
 		}
 		break;

@@ -183,32 +183,51 @@ prontera,153,193,6	script	Job Master	123,{
 		if(checkfalcon() || checkcart() || checkriding()) goto L_remove;
 		
 		if((Class >= Job_Knight) && (Class <= Job_Crusader2)){
-			mes "Would you like to be reborn or change to 3rd class?";
-			switch(select("I want to be reborn!", "I want to change to 3rd class!", "Cancel"))
-			{
-			case 1:
-				mes "Are you sure you want to be reborn?";
-				if(select("Yes", "No")==1){
-					set lastJob, Class;
-					if(Class == Job_Knight2){
-						set lastJob, Job_Knight;
-					} else {
-						if(Class == Job_Crusader2){
-							set lastJob, Job_Crusader;
+			if (.thirdclass==1) {
+				mes "Would you like to be reborn or change to 3rd class?";
+				switch(select("I want to be reborn!", "I want to change to 3rd class!", "Cancel"))
+				{
+				case 1:
+					mes "Are you sure you want to be reborn?";
+					if(select("Yes", "No")==1){
+						set lastJob, Class;
+						if(Class == Job_Knight2){
+							set lastJob, Job_Knight;
+						} else {
+							if(Class == Job_Crusader2){
+								set lastJob, Job_Crusader;
+							}
 						}
+						jobchange Job_Novice_High;
+						resetlvl(1);
+						skill 142,1,0;
+						skill 143,1,0;
 					}
-					jobchange Job_Novice_High;
-					resetlvl(1);
-					skill 142,1,0;
-					skill 143,1,0;
+					break;
+				case 2:
+					goto L_Third;
 				}
-				break;
-			case 2:
-				goto L_Third;
+				close;
 			}
-			close;
+			else {
+				mes "Are you sure you want to be reborn?";
+					if(select("Yes", "No")==1){
+						set lastJob, Class;
+						if(Class == Job_Knight2){
+							set lastJob, Job_Knight;
+						} else {
+							if(Class == Job_Crusader2){
+								set lastJob, Job_Crusader;
+							}
+						}
+						jobchange Job_Novice_High;
+						resetlvl(1);
+						skill 142,1,0;
+						skill 143,1,0;
+					}
+			}
 		}
-		if (Class >= Job_Lord_Knight && Class <= Job_Paladin2)
+		if (Class >= Job_Lord_Knight && Class <= Job_Paladin2 && .thirdclass == 1)
 		{
 			if(JobLevel < 50) goto L_cantCh;
 			goto L_Third;
@@ -295,5 +314,6 @@ OnInit:
 	set $@JC_MinimumJB, 40; //Minimum job level for changing to 2nd classes (Default : 40)
 	set $@JC_Plat, 1; //Give Platinum skills on Jobchange (Default : 1-yes)
 	set $@JC_SupNovM, 45; //Base Level to change into Super Novice (Default : 45)
+	set .thirdclass, 1; // Allow players to change into third class?
 	end;
 }
