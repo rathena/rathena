@@ -98,6 +98,7 @@ tur_dun01,156,36,5	script	Survival Instructor#jr01	59,{
 					mes "[Survival Instructor, Rescue]";
 					mes "All right.";
 					mes "You are ready then.";
+					next;
 					break;
 				}
 				mes "[Survival Instructor, Rescue]";

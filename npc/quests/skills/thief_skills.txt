@@ -16,7 +16,7 @@
 //============================================================ 
 
 moc_prydb1,154,128,4	script	Alcouskou	118,{
-	if (BaseJob == Job_Thief) {
+	if (BaseClass == Job_Thief) {
 		mes "[Alcouskou]";
 		mes "As you live life you will encounter";
 		mes "many things. Sometimes you will";

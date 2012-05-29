@@ -92,7 +92,7 @@ geffen_in,151,119,4	script	Great Wizard	64,{
 			mes "I have nothing more to teach you ...";
 			close;
 		}
-		if ((countitem(746) > 2) && (countitem(730) > 0) && (countitem(935) > 4) && (countitem(943) > 0) && (JobLevel > 34) && (BaseJob == Job_Mage)) {
+		if ((countitem(746) > 2) && (countitem(730) > 0) && (countitem(935) > 4) && (countitem(943) > 0) && (JobLevel > 34) && (BaseClass == Job_Mage)) {
 			mes "[BLIZZARDRISS]";
 			mes "Okay, I have received your request.";
 			mes "I will now awaken your hidden energies . .";

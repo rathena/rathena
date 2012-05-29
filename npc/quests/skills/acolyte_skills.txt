@@ -67,7 +67,7 @@ prt_church,173,23,4	script	Cleric	79,{
 			mes "this skill for the work of good . .";
 			close;
 		}
-		if ((countitem(727) > 0) && (countitem(991) > 0) && (countitem(2608) > 0) && (JobLevel > 29) && (BaseJob == Job_Acolyte)) {
+		if ((countitem(727) > 0) && (countitem(991) > 0) && (countitem(2608) > 0) && (JobLevel > 29) && (BaseClass == Job_Acolyte)) {
 			mes "[Acolyte Klift]";
 			mes "Your faith has proven worthy";
 			mes "for you to gain the ' Holy Light ' skill.";

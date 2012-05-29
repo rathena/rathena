@@ -361,7 +361,7 @@ job3_rune01,80,60,3	script	Rune Knight Captain	470,{
 		mes "You've got too many things. You cannot proceed anymore. Please try again after losing some weight.";
 		close;
 	}
-	if (BaseJob == Job_Swordman) {
+	if (BaseClass == Job_Swordman) {
 		if (job_rune_edq == 23) {
 			mes "[Captain Tigris]";
 			mes "Oh, I see... Please wait a moment.";
@@ -621,7 +621,7 @@ job3_rune01,80,60,3	script	Rune Knight Captain	470,{
 					close;
 				}
 				else {
-					if ((BaseJob != Job_Knight) && (JobLevel < 50) && (SkillPoint) && (BaseLevel < 99)) {
+					if (Class != Job_Knight || Class != Job_Lord_Knight || Class != Job_Baby_Knight && ((JobLevel < 50) && (SkillPoint) && (BaseLevel < 99))) {
 						// custom translation
 						mes "[Captain Tigris]";
 						mes "You seem to be missing something?";
@@ -673,7 +673,7 @@ job3_rune01,80,60,3	script	Rune Knight Captain	470,{
 }
 
 job3_rune01,90,50,3	script	Rune Knight Lunarea	469,{
-	if (BaseJob != Job_Swordman) {
+	if (BaseClass != Job_Swordman) {
 		mes "She holds up her chin quietly, nods lightly and notices me.";
 		next;
 		mes "Then after a moment she puts her face down and seems absorbed with other thoughts.";
@@ -2323,7 +2323,7 @@ job3_rune01,50,36,1	script	Runes, Make & Use	844,{
 }
 
 mid_camp,238,250,3	script	Rune Knight Sage Guard	468,{
-	if (BaseJob != Job_Swordman) {
+	if (BaseClass != Job_Swordman) {
 		mes "[Rune Knight Sage Guard]";
 		mes "The sage Serpeone is the one who has been with us since the beginning of the Rune Knights.";
 		next;

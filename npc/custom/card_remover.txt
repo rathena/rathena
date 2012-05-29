@@ -14,9 +14,9 @@
 //============================================================
 
 prt_in,28,73,4	script	Wise Old Woman#eAcustom	78,{
-	.zenycost = 200000; // Set base cost in zeny of the card remover services
-	.percardcost = .percardcost; // set cost per card of the card remover services
-	.faildestroy = 1; // Should the card remover have a chance of failure that destroys items?
+	set .zenycost,200000; // Set base cost in zeny of the card remover services
+	set .percardcost,25000; // set cost per card of the card remover services
+	set .faildestroy,1; // Should the card remover have a chance of failure that destroys items? 1 = Yes, 0 = No.
 	mes "[Wise Old Woman]";
 	mes "Good day, young one. I have the power to remove cards that you have compounded onto your equipment. Does this idea please you?";
 	next;

@@ -227,7 +227,7 @@ hugel,88,151,5	duplicate(warpra)	Warp Agent#13	859
 lighthalzen,155,79,6	duplicate(warpra)	Warp Agent#14	859
 louyang,210,106,4	duplicate(warpra)	Warp Agent#15	859
 morocc,156,95,4	duplicate(warpra)	Warp Agent#16	859
-prontera,161,192,4	duplicate(warpra)	Warp Agent#17	859
+prontera,160,190,4	duplicate(warpra)	Warp Agent#17	859
 payon,182,110,4	duplicate(warpra)	Warp Agent#18	859
 umbala,132,130,4	duplicate(warpra)	Warp Agent#19	859
 xmas,150,136,4	duplicate(warpra)	Warp Agent#20	859

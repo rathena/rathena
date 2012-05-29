@@ -15,7 +15,7 @@
 //============================================================
 
 moc_ruins,118,99,5	script	Roberto	88,{
-	if (BaseJob == Job_Archer) {
+	if (BaseClass == Job_Archer) {
 		if (getskilllv("AC_MAKINGARROW") == 1) {
 			mes "[Roberto]";
 			mes "Ooh, you're from my home town!";
@@ -33,13 +33,13 @@ moc_ruins,118,99,5	script	Roberto	88,{
 			mes "Then byebye~";
 			close;
 		}
-		else if ((BaseJob == Job_Archer) && (JobLevel >= 30)) {
+		else if ((BaseClass == Job_Archer) && (JobLevel >= 30)) {
 			mes "[Roberto]";
 			mes "Eh!";
 			mes " ";
 			mes "You are...";
 			next;
-			if ((countitem(907) > 19) && (countitem(921) > 6) && (countitem(906) > 40) && (countitem(1019) > 12) && (countitem(501) > 0) && (BaseJob == Job_Archer) && (JobLevel >= 30)) {
+			if ((countitem(907) > 19) && (countitem(921) > 6) && (countitem(906) > 40) && (countitem(1019) > 12) && (countitem(501) > 0) && (BaseClass == Job_Archer) && (JobLevel >= 30)) {
 				mes "[Roberto]";
 				mes "You brought them!";
 				mes "Thank you very much.";
@@ -147,7 +147,7 @@ moc_ruins,118,99,5	script	Roberto	88,{
 }
 
 payon,103,63,3	script	Jason	88,3,3,{
-	if (BaseJob == Job_Archer) {
+	if (BaseClass == Job_Archer) {
 		if (getskilllv("AC_CHARGEARROW") == 1) {
 			mes "[Jason]";
 			mes "Eh, we meet again.";

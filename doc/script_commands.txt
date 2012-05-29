@@ -529,7 +529,10 @@ NextJobExp  - Same for job levels.
 Hp          - Current amount of hit points.
 MaxHp       - Maximum amount of hit points.
 Sp          - Current spell points.
-MaxSp       - Maximum amount of spell points.
+MaxSp       - Maximum amount of spell points
+BaseClass	- This will return the starter Class of the invoking Character.
+			  For example: If you're an Knight this would return Swordsman,
+			  or if you're an Bard it will return Archer.
 BaseJob     - This is sneaky, apparently meant for baby class support.
               This will supposedly equal Job_Acolyte regardless of whether the 
               character is an acolyte or a baby acolyte, for example.
