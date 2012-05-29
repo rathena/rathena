@@ -1337,6 +1337,10 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			sd->itemid = -1;
 		}
 		break;
+	case GN_HELLS_PLANT_ATK:
+		sc_start(bl, SC_STUN,  5 + 5 * skilllv, skilllv, skill_get_time2(skillid, skilllv));
+		sc_start(bl, SC_BLEEDING, 20 + 10 * skilllv, skilllv, skill_get_time2(skillid, skilllv));
+		break;
 	case EL_WIND_SLASH:	// Non confirmed rate.
 		sc_start(bl, SC_BLEEDING, 25, skilllv, skill_get_time(skillid,skilllv));
 		break;
@@ -10049,6 +10053,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 		break;
 	case WZ_QUAGMIRE:	//The target changes to "all" if used in a gvg map. [Skotlex]
 	case AM_DEMONSTRATION:
+	case GN_HELLS_PLANT:
 		if (map_flag_vs(src->m) && battle_config.vs_traps_bctall
 			&& (src->type&battle_config.vs_traps_bctall))
 			target = BCT_ALL;
@@ -11186,7 +11191,8 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		case UNT_HELLS_PLANT:
 			if( battle_check_target(&src->bl,bl,BCT_ENEMY) > 0 )
 				skill_attack(skill_get_type(GN_HELLS_PLANT_ATK), ss, &src->bl, bl, GN_HELLS_PLANT_ATK, sg->skill_lv, tick, 0);
-			sg->limit = DIFF_TICK(tick, sg->tick) + 100;
+			if( ss != bl) //The caster is the only one who can step on the Plants, without destroying them
+				sg->limit = DIFF_TICK(tick, sg->tick) + 100;
 			break;
 			
 		case UNT_CLOUD_KILL:
