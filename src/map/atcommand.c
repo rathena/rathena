@@ -6515,8 +6515,12 @@ ACMD_FUNC(uptime)
  *------------------------------------------*/
 ACMD_FUNC(changesex)
 {
+	int i;
 	nullpo_retr(-1, sd);
 	pc_resetskill(sd,4);
+	// to avoid any problem with equipment and invalid sex, equipment is unequiped.
+	for( i=0; i<EQI_MAX; i++ )
+		if( sd->equip_index[i] >= 0 ) pc_unequipitem(sd, sd->equip_index[i], 3);
 	chrif_changesex(sd);
 	return 0;
 }

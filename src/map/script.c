@@ -9684,10 +9684,14 @@ BUILDIN_FUNC(changebase)
  *------------------------------------------*/
 BUILDIN_FUNC(changesex)
 {
+	int i;
 	TBL_PC *sd = NULL;
 	sd = script_rid2sd(st);
 
 	pc_resetskill(sd,4);
+	// to avoid any problem with equipment and invalid sex, equipment is unequiped.
+	for( i=0; i<EQI_MAX; i++ )
+		if( sd->equip_index[i] >= 0 ) pc_unequipitem(sd, sd->equip_index[i], 3);
 	chrif_changesex(sd);
 	return 0;
 }
