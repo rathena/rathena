@@ -5316,12 +5316,14 @@ void clif_displaymessage(const int fd, const char* mes)
 		message = aStrdup(mes);
 		line = strtok(message, "\n");
 		while(line != NULL) {
-			int len = strlen(line);
+			// Limit message to 255+1 characters (otherwise it causes a buffer overflow in the client)
+			int len = strnlen(line, 255);
+			
 			if (len > 0) { // don't send a void message (it's not displaying on the client chat). @help can send void line.
 				WFIFOHEAD(fd, 5 + len);
 				WFIFOW(fd,0) = 0x8e;
 				WFIFOW(fd,2) = 5 + len; // 4 + len + NULL teminate
-				memcpy(WFIFOP(fd,4), line, len + 1);
+				safestrncpy(WFIFOP(fd,4), line, len + 1);
 				WFIFOSET(fd, 5 + len);
 			}
 			line = strtok(NULL, "\n");
