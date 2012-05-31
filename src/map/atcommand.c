@@ -522,12 +522,6 @@ ACMD_FUNC(jumpto)
 		return -1;
 	}
 	
-	if (pl_sd == sd)
-	{
-		clif_displaymessage(fd, "But you are already where you are...");
-		return -1;
-	}
-	
 	if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarpto && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE))
 	{
 		clif_displaymessage(fd, msg_txt(247));	// You are not authorized to warp to this map.
@@ -2974,12 +2968,6 @@ ACMD_FUNC(recall)
 	if((pl_sd=map_nick2sd((char *)message)) == NULL && (pl_sd=map_charid2sd(atoi(message))) == NULL)
 	{
 		clif_displaymessage(fd, msg_txt(3)); // Character not found.
-		return -1;
-	}
-		
-	if (pl_sd == sd)
-	{
-		clif_displaymessage(fd, "You are already where you are...");
 		return -1;
 	}
 
