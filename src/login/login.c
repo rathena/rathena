@@ -1112,14 +1112,20 @@ void login_auth_ok(struct login_session_data* sd)
 		return;
 	}
 
-	if( login_config.group_id_to_connect >= 0 && sd->group_id != login_config.group_id_to_connect )
-	{
+	if( login_config.group_id_to_connect >= 0 && sd->group_id != login_config.group_id_to_connect ) {
 		ShowStatus("Connection refused: the required group id for connection is %d (account: %s, group: %d).\n", login_config.group_id_to_connect, sd->userid, sd->group_id);
 		WFIFOHEAD(fd,3);
 		WFIFOW(fd,0) = 0x81;
 		WFIFOB(fd,2) = 1; // 01 = Server closed
 		WFIFOSET(fd,3);
 		return;
+	} else if( login_config.min_group_id_to_connect >= 0 && login_config.group_id_to_connect == -1 && sd->group_id < login_config.min_group_id_to_connect ) {
+		ShowStatus("Connection refused: the minium group id required for connection is %d (account: %s, group: %d).\n", login_config.min_group_id_to_connect, sd->userid, sd->group_id);
+		WFIFOHEAD(fd,3);
+		WFIFOW(fd,0) = 0x81;
+		WFIFOB(fd,2) = 1; // 01 = Server closed
+		WFIFOSET(fd,3);
+		return;		
 	}
 
 	server_num = 0;
@@ -1538,6 +1544,7 @@ void login_set_defaults()
 	login_config.new_acc_length_limit = true;
 	login_config.use_md5_passwds = false;
 	login_config.group_id_to_connect = -1;
+	login_config.min_group_id_to_connect = -1;
 	login_config.check_client_version = false;
 	login_config.client_version_to_connect = 20;
 
@@ -1606,6 +1613,8 @@ int login_config_read(const char* cfgName)
 			login_config.use_md5_passwds = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "group_id_to_connect"))
 			login_config.group_id_to_connect = atoi(w2);
+		else if(!strcmpi(w1, "min_group_id_to_connect"))
+			login_config.min_group_id_to_connect = atoi(w2);
 		else if(!strcmpi(w1, "date_format"))
 			safestrncpy(login_config.date_format, w2, sizeof(login_config.date_format));
 		else if(!strcmpi(w1, "console"))
