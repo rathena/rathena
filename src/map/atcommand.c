@@ -5607,17 +5607,17 @@ ACMD_FUNC(divorce)
 ACMD_FUNC(changelook)
 {
 	int i, j = 0, k = 0;
-	int pos[6] = { LOOK_HEAD_TOP,LOOK_HEAD_MID,LOOK_HEAD_BOTTOM,LOOK_WEAPON,LOOK_SHIELD,LOOK_SHOES };
-
+	int pos[7] = { LOOK_HEAD_TOP,LOOK_HEAD_MID,LOOK_HEAD_BOTTOM,LOOK_WEAPON,LOOK_SHIELD,LOOK_SHOES,LOOK_ROBE };
+	
 	if((i = sscanf(message, "%d %d", &j, &k)) < 1) {
 		clif_displaymessage(fd, "Usage: @changelook [<position>] <view id> -- [] = optional");
-		clif_displaymessage(fd, "Position: 1-Top 2-Middle 3-Bottom 4-Weapon 5-Shield");
+		clif_displaymessage(fd, "Position: 1-Top 2-Middle 3-Bottom 4-Weapon 5-Shield 6-Shoes 7-Robe");
 		return -1;
-	} else if (i == 2) {
-		if (j < 1) j = 1;
-		else if (j > 6) j = 6;	// 6 = Shoes - for beta clients only perhaps
+	} else if ( i == 2 ) {
+		if (j < 1 || j > 7)
+			j = 1;
 		j = pos[j - 1];
-	} else if (i == 1) {	// position not defined, use HEAD_TOP as default
+	} else if( i == 1 ) {	// position not defined, use HEAD_TOP as default
 		k = j;	// swap
 		j = LOOK_HEAD_TOP;
 	}
