@@ -1,4 +1,4 @@
-# - Find mysqlclient
+# - Find libmysql/mysqlclient
 # Find the native MySQL includes and library
 #
 #  MYSQL_INCLUDE_DIRS - where to find mysql.h, etc.
@@ -15,7 +15,7 @@ find_path( MYSQL_INCLUDE_DIRS "mysql.h"
 		"$ENV{SYSTEMDRIVE}/MySQL/*/include" )
 
 find_library( MYSQL_LIBRARIES
-	NAMES "mysqlclient" "mysqlclient_r"
+	NAMES "libmysql" "mysqlclient" "mysqlclient_r"
 	PATHS
 		"/usr/lib/mysql"
 		"/usr/local/lib/mysql"
