@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Darkchild
 //===== Current Version: =====================================
-//= 2.1
+//= 2.2
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -25,6 +25,7 @@
 //= 1.9 Optimized for the greater good. [Kisuka]
 //= 2.0 Fixed warp for AntHell and Yuno. [Kisuka]
 //= 2.1 Moved AntHell warp agent to the new anthell entrance. [brianluau]
+//= 2.2 Updated Script with newest towns. [Masao]
 //============================================================
 //= To allow selecting the Level of the Dungeon you want to
 //= Warp to set the @lvlselect variable to 1 (Not implemented yet!)
@@ -45,7 +46,7 @@
 		mes "[Warp Agent]";
 		mes "Please select which town you would like to be teleported to.";
 		next;
-		switch(select("Alberta:Aldebaran:Amatsu:Ayothaya:Brasilis:Comodo:Einbroch:Einbech:El Dicastes:Geffen:Gonryun:Hugel:Izlude:Jawaii:Lighthalzen:Louyang:Lutie:Manuk:Morroc:Moscovia:Payon:Prontera:Splendide:Umbala:Veins:Yuno")) {
+		switch(select("Alberta:Aldebaran:Amatsu:Ayothaya:Brasilis:Comodo:Dewata:Eclage:Einbroch:Einbech:El Dicastes:Expedition Camp:Geffen:Gonryun:Hugel:Izlude:Jawaii:Lighthalzen:Louyang:Lutie:Malangdo:Malaya:Manuk:Mora:Morroc:Moscovia:Payon:Prontera:Rachel:Splendide:Umbala:Veins:Yuno")) {
 		case 1:
 			warp "alberta",27,236;
 			break;
@@ -59,69 +60,90 @@
 			warp "ayothaya",149,118;
 			break;
 		case 5:
-			warp "brasilis",182,239;
+			warp "brasilis",195,220;
 			break;
 		case 6:
 			warp "comodo",188,161;
 			break;
 		case 7:
-			warp "einbroch",64,200;
+			warp "dewata",199,179;
 			break;
 		case 8:
-			warp "einbech",70,95;
+			warp "eclage",111,39;
 			break;
 		case 9:
-			warp "dicastes01",198,187;
+			warp "einbroch",64,200;
 			break;
 		case 10:
-			warp "geffen",119,66;
+			warp "einbech",70,95;
 			break;
 		case 11:
-			warp "gonryun",150,130;
+			warp "dicastes01",198,187;
 			break;
 		case 12:
-			warp "hugel",96,145;
+			warp "mid_camp",183,241;
 			break;
 		case 13:
-			warp "izlude",128,111;
+			warp "geffen",119,66;
 			break;
 		case 14:
-			warp "jawaii",249,127;
+			warp "gonryun",150,130;
 			break;
 		case 15:
-			warp "lighthalzen",158,92;
+			warp "hugel",96,145;
 			break;
 		case 16:
-			warp "louyang",210,108;
+			warp "izlude",128,111;
 			break;
 		case 17:
-			warp "xmas",150,133;
+			warp "jawaii",249,127;
 			break;
 		case 18:
-			warp "manuk",282,138;
+			warp "lighthalzen",158,92;
 			break;
 		case 19:
-			warp "morocc",159,93;
+			warp "louyang",210,108;
 			break;
 		case 20:
-			warp "moscovia",223,184;
+			warp "xmas",150,133;
 			break;
 		case 21:
-			warp "payon",152,75;
+			warp "malangdo",224,184;
 			break;
 		case 22:
-			warp "prontera",156,187;
+			warp "malaya",212,206;
 			break;
 		case 23:
-			warp "splendide",197,176;
+			warp "manuk",282,138;
 			break;
 		case 24:
-			warp "umbala",130,130;
+			warp "mora",111,97;
 			break;
 		case 25:
-			warp "veins",216,123;
+			warp "morocc",159,93;
 			break;
 		case 26:
+			warp "moscovia",223,184;
+			break;
+		case 27:
+			warp "payon",152,75;
+			break;
+		case 28:
+			warp "prontera",156,187;
+			break;
+		case 29:
+			warp "rachel",130,110;
+			break;
+		case 30:
+			warp "splendide",197,176;
+			break;
+		case 31:
+			warp "umbala",130,130;
+			break;
+		case 32:
+			warp "veins",216,123;
+			break;
+		case 33:
 			warp "yuno",160,168;
 			break;
 		}
@@ -232,26 +254,41 @@ payon,182,110,4	duplicate(warpra)	Warp Agent#18	859
 umbala,132,130,4	duplicate(warpra)	Warp Agent#19	859
 xmas,150,136,4	duplicate(warpra)	Warp Agent#20	859
 yuno,137,162,4	duplicate(warpra)	Warp Agent#21	859
+lighthalzen,212,136,6	duplicate(warpra)	Warp Agent#22	859
+veins,215,134,6	duplicate(warpra)	Warp Agent#23	859
+splendide,198,153,6	duplicate(warpra)	Warp Agent#24	859
+manuk,281,140,6	duplicate(warpra)	Warp Agent#25	859
+brasilis,200,157,6	duplicate(warpra)	Warp Agent#26	859
+rachel,127,111,6	duplicate(warpra)	Warp Agent#27	859
+moscovia,222,220,6	duplicate(warpra)	Warp Agent#28	859
+mid_camp,180,246,6	duplicate(warpra)	Warp Agent#29	859
+dicastes01,194,188,6	duplicate(warpra)	Warp Agent#30	859
+dewata,194,178,6	duplicate(warpra)	Warp Agent#31	859
+malangdo,220,188,6	duplicate(warpra)	Warp Agent#32	859
+niflheim,32,161,4	duplicate(warpra)	Mina#33	859
+malaya,210,205,4	duplicate(warpra)	Mina#34	859
+mora,110,100,4	duplicate(warpra)	Mina#35	859
+eclage,107,37,4	duplicate(warpra)	Mina#36	859
 
 // ------------ Dungeons ------------
-ama_dun01,233,9,1	duplicate(warpra)	Warp Agent#22	859
-moc_fild20,162,139,6	duplicate(warpra)	Warp Agent#23	859
-ayo_fild02,279,154,4	duplicate(warpra)	Warp Agent#24	859
-izlu2dun,104,82,4	duplicate(warpra)	Warp Agent#25	859
-prt_sewb1,125,253,4	duplicate(warpra)	Warp Agent#26	859
-mjolnir_02,85,363,4	duplicate(warpra)	Warp Agent#27	859
-einbech,81,101,1	duplicate(warpra)	Warp Agent#28	859
-glast_01,370,308,4	duplicate(warpra)	Warp Agent#29	859
-yuno_fild03,37,135,4	duplicate(warpra)	Warp Agent#30	859
-niflheim,32,161,4	duplicate(warpra)	Warp Agent#31	859
-gef_fild10,71,339,4	duplicate(warpra)	Warp Agent#32	859
-pay_arche,39,135,4	duplicate(warpra)	Warp Agent#33	859
-moc_ruins,64,166,4	duplicate(warpra)	Warp Agent#34	859
-moc_fild19,106,97,4	duplicate(warpra)	Warp Agent#35	859
-alb2trea,73,101,4	duplicate(warpra)	Warp Agent#36	859
-tur_dun01,148,239,4	duplicate(warpra)	Warp Agent#37	859
-lhz_dun01,157,285,4	duplicate(warpra)	Warp Agent#38	859
-hu_fild05,186,210,4	duplicate(warpra)	Warp Agent#39	859
-yuno_fild07,221,179,4	duplicate(warpra)	Warp Agent#40	859
-tha_scene01,139,194,1	duplicate(warpra)	Warp Agent#41	859
-odin_tem01,96,149,4	duplicate(warpra)	Warp Agent#42	859
+ama_dun01,233,9,1	duplicate(warpra)	Warp Agent#37	859
+moc_fild20,162,139,6	duplicate(warpra)	Warp Agent#38	859
+ayo_fild02,279,154,4	duplicate(warpra)	Warp Agent#39	859
+izlu2dun,104,82,4	duplicate(warpra)	Warp Agent#40	859
+prt_sewb1,125,253,4	duplicate(warpra)	Warp Agent#41	859
+mjolnir_02,85,363,4	duplicate(warpra)	Warp Agent#42	859
+einbech,81,101,1	duplicate(warpra)	Warp Agent#43	859
+glast_01,370,308,4	duplicate(warpra)	Warp Agent#44	859
+yuno_fild03,37,135,4	duplicate(warpra)	Warp Agent#45	859
+niflheim,32,161,4	duplicate(warpra)	Warp Agent#46	859
+gef_fild10,71,339,4	duplicate(warpra)	Warp Agent#47	859
+pay_arche,39,135,4	duplicate(warpra)	Warp Agent#48	859
+moc_ruins,64,166,4	duplicate(warpra)	Warp Agent#49	859
+moc_fild19,106,97,4	duplicate(warpra)	Warp Agent#50	859
+alb2trea,73,101,4	duplicate(warpra)	Warp Agent#51	859
+tur_dun01,148,239,4	duplicate(warpra)	Warp Agent#52	859
+lhz_dun01,157,285,4	duplicate(warpra)	Warp Agent#53	859
+hu_fild05,186,210,4	duplicate(warpra)	Warp Agent#54	859
+yuno_fild07,221,179,4	duplicate(warpra)	Warp Agent#55	859
+tha_scene01,139,194,1	duplicate(warpra)	Warp Agent#56	859
+odin_tem01,96,149,4	duplicate(warpra)	Warp Agent#57	859

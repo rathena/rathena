@@ -12091,7 +12091,7 @@ S_Reward:
 		case 4:
 			mes "[Ei'felle]";
 			mes "Well, I've been able to";
-			mes "create a "+getitemname(getarg(0));
+			mes "create a Glittering Jacket";
 			mes "using the medals that you've";
 			mes "brought to me. But I just know";
 			mes "I can make something better";

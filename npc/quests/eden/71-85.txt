@@ -363,7 +363,7 @@ morocc,35,174,5	script	Meidi	729,{
 			close;
 		}
 	}
-	end;
+	close;
 }
 
 geffen,146,132,3	script	Ancellia	906,{
@@ -522,7 +522,7 @@ geffen,146,132,3	script	Ancellia	906,{
 			close;
 		}
 	}
-	end;
+	close;
 }
 
 aldebaran,144,230,3	script	Jeanbai	900,{
@@ -676,7 +676,7 @@ aldebaran,144,230,3	script	Jeanbai	900,{
 			close;
 		}
 	}
-	end;
+	close;
 }
 
 aldebaran,105,116,3	script	Risingeter	869,{
@@ -810,7 +810,7 @@ aldebaran,105,116,3	script	Risingeter	869,{
 			close;
 		}
 	}
-	end;
+	close;
 }
 
 alberta,215,111,5	script	Funfi	828,{
@@ -936,5 +936,5 @@ alberta,215,111,5	script	Funfi	828,{
 			close;
 		}
 	}
-	end;
+	close;
 }
