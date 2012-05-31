@@ -5800,6 +5800,20 @@ void clif_item_repaireffect(struct map_session_data *sd,int nameid,int flag)
 }
 
 
+/// Displays a message, that an equipment got damaged (ZC_EQUIPITEM_DAMAGED).
+/// 02bb <equip location>.W <account id>.L
+void clif_item_damaged(struct map_session_data* sd, unsigned short position)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0x2bb));
+	WFIFOW(fd,0) = 0x2bb;
+	WFIFOW(fd,2) = position;
+	WFIFOL(fd,4) = sd->bl.id;  // TODO: the packet seems to be sent to other people as well, probably party and/or guild.
+	WFIFOSET(fd,packet_len(0x2bb));
+}
+
+
 /// Presents a list of weapon items that can be refined [Taken from jAthena] (ZC_NOTIFY_WEAPONITEMLIST).
 /// 0221 <packet len>.W { <index>.W <name id>.W <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W }*
 void clif_item_refine_list(struct map_session_data *sd)
@@ -16256,7 +16270,7 @@ static int packetdb_readdb(void)
 #endif
 	    0,  4,  0, 70, 10,  0,  0,  0,  8,  6, 27, 80,  0, -1,  0,  0,
 	    0,  0,  8,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	   85, -1, -1,107,  6, -1,  7,  7, 22,191,  0,  0,  0,  0,  0,  0,
+	   85, -1, -1,107,  6, -1,  7,  7, 22,191,  0,  8,  0,  0,  0,  0,
 	//#0x02C0
 	    0, -1,  0,  0,  0, 30, 30,  0,  0,  3,  0, 65,  4, 71, 10,  0,
 	   -1, -1, -1,  0, 29,  0,  6, -1, 10, 10,  3,  0, -1, 32,  6, 36,
