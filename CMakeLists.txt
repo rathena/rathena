@@ -209,19 +209,11 @@ endif()
 # (ref. bugreport:1003).
 #
 message( STATUS "Check for monotonic clock" )
-set( SOURCECODE
-	"#include <sys/time.h>\n"
-	"#include <time.h>\n"
-	"#include <unistd.h>\n"
-	"int main(int argc, char** argv){\n"
-	"  struct timespec tval;\n"
-	"  return clock_gettime(CLOCK_MONOTONIC, &tval);\n"
-	"}\n"
-	)
 find_library( RT_LIBRARY rt )# (optional, rt on Debian)
 mark_as_advanced( RT_LIBRARY )
 set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} ${RT_LIBRARY} )
-CHECK_C_SOURCE_RUNS( "${SOURCECODE}" HAVE_MONOTONIC_CLOCK )
+file( READ "${CMAKE_SOURCE_DIR}/3rdparty/cmake/tests/HAVE_MONOTONIC_CLOCK.c" _SOURCE )
+CHECK_C_SOURCE_RUNS( "${_SOURCE}" HAVE_MONOTONIC_CLOCK )
 if( HAVE_MONOTONIC_CLOCK )
 	message( STATUS "Check for monotonic clock - yes" )
 	set_property( CACHE GLOBAL_LIBRARIES    PROPERTY VALUE ${GLOBAL_LIBRARIES} ${RT_LIBRARY} )
