@@ -2954,8 +2954,7 @@ ACMD_FUNC(petrename)
 /*==========================================
  *
  *------------------------------------------*/
-ACMD_FUNC(recall)
-{
+ACMD_FUNC(recall) {
 	struct map_session_data *pl_sd = NULL;
 
 	nullpo_retr(-1, sd);

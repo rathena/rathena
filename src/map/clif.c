@@ -9285,6 +9285,11 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		guild_guildaura_refresh(sd,GD_HAWKEYES,guild_checkskill(sd->state.gmaster_flag,GD_HAWKEYES));
 	}
 
+	if( sd->state.vending ) { /* show we have a vending */
+		clif_openvending(sd,sd->bl.id,sd->vending);
+		clif_showvendingboard(&sd->bl,sd->message,0);
+	}
+	
 	if(map[sd->bl.m].flag.loadevent) // Lance
 		npc_script_event(sd, NPCE_LOADMAP);
 
