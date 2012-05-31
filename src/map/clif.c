@@ -5280,13 +5280,16 @@ void clif_status_change(struct block_list *bl,int type,int flag,int tick,int val
 	if (!(status_type2relevant_bl_types(type)&bl->type)) // only send status changes that actually matter to the client
 		return;
 
+#if PACKETVER >= 20090121
 	if(flag && battle_config.display_status_timers && sd)
 		WBUFW(buf,0)=0x43f;
 	else
+#endif
 		WBUFW(buf,0)=0x196;
 	WBUFW(buf,2)=type;
 	WBUFL(buf,4)=bl->id;
 	WBUFB(buf,8)=flag;
+#if PACKETVER >= 20090121
 	if(flag && battle_config.display_status_timers && sd)
 	{
 		if (tick <= 0)
@@ -5297,6 +5300,7 @@ void clif_status_change(struct block_list *bl,int type,int flag,int tick,int val
 		WBUFL(buf,17) = val2;
 		WBUFL(buf,21) = val3;
 	}
+#endif
 	clif_send(buf,packet_len(WBUFW(buf,0)),bl, (sd && sd->status.option&OPTION_INVISIBLE) ? SELF : AREA);
 }
 
@@ -6409,11 +6413,18 @@ void clif_party_message(struct party_data* p, int account_id, const char* mes, i
 	for(i=0; i < MAX_PARTY && !p->data[i].sd;i++);
 	if(i < MAX_PARTY){
 		unsigned char buf[1024];
+
+		if( len > sizeof(buf)-8 )
+		{
+			ShowWarning("clif_party_message: Truncated message '%s' (len=%d, max=%d, party_id=%d).\n", mes, len, sizeof(buf)-8, p->party.party_id);
+			len = sizeof(buf)-8;
+		}
+
 		sd = p->data[i].sd;
 		WBUFW(buf,0)=0x109;
 		WBUFW(buf,2)=len+8;
 		WBUFL(buf,4)=account_id;
-		memcpy(WBUFP(buf,8),mes,len);  // FIXME: buffer size check
+		safestrncpy(WBUFP(buf,8), mes, len);
 		clif_send(buf,len+8,&sd->bl,PARTY);
 	}
 }
@@ -7728,17 +7739,26 @@ void clif_callpartner(struct map_session_data *sd)
 	const char *p;
 
 	nullpo_retv(sd);
-	// TODO: Send zero-length name if no partner (to initialize the client buffer).
-	if(sd->status.partner_id){
-		WBUFW(buf,0)=0x1e6;
-		p = map_charid2nick(sd->status.partner_id);
-		if(p){
-			memcpy(WBUFP(buf,2),p,NAME_LENGTH);
-		}else{
+
+	WBUFW(buf,0) = 0x1e6;
+
+	if( sd->status.partner_id )
+	{
+		if( ( p = map_charid2nick(sd->status.partner_id) ) != NULL )
+		{
+			memcpy(WBUFP(buf,2), p, NAME_LENGTH);
+		}
+		else
+		{
 			WBUFB(buf,2) = 0;
 		}
-		clif_send(buf,packet_len(0x1e6),&sd->bl,AREA);
 	}
+	else
+	{// Send zero-length name if no partner, to initialize the client buffer.
+		WBUFB(buf,2) = 0;
+	}
+
+	clif_send(buf, packet_len(0x1e6), &sd->bl, AREA);
 }
 
 
@@ -10470,7 +10490,7 @@ void clif_parse_RemoveOption(int fd,struct map_session_data *sd)
 /// Request to change cart's visual look (CZ_REQ_CHANGECART).
 /// 01af <num>.W
 void clif_parse_ChangeCart(int fd,struct map_session_data *sd)
-{
+{// TODO: State tracking?
 	int type;
 
 	if( sd && pc_checkskill(sd, MC_CHANGECART) < 1 )
@@ -12318,11 +12338,15 @@ void clif_parse_GM_Monster_Item(int fd, struct map_session_data *sd)
 	monster_item_name = (char*)RFIFOP(fd,2);
 	monster_item_name[NAME_LENGTH-1] = '\0';
 
+	// FIXME: Should look for item first, then for monster.
+	// FIXME: /monster takes mob_db Sprite_Name as argument
 	if( mobdb_searchname(monster_item_name) ) {
 		snprintf(command, sizeof(command)-1, "%cmonster %s", atcommand_symbol, monster_item_name);
 		is_atcommand(fd, sd, command, 1);
 		return;
 	}
+	// FIXME: Stackables have a quantity of 20.
+	// FIXME: Equips are supposed to be unidentified.
 
 	if( itemdb_searchname(monster_item_name) ) {
 		snprintf(command, sizeof(command)-1, "%citem %s", atcommand_symbol, monster_item_name);
@@ -12893,7 +12917,6 @@ void clif_parse_FriendsListRemove(int fd, struct map_session_data *sd)
 	WFIFOL(fd,2) = account_id;
 	WFIFOL(fd,6) = char_id;
 	WFIFOSET(fd, packet_len(0x20a));
-//	clif_friendslist_send(sd); //This is not needed anymore.
 }
 
 
@@ -13261,7 +13284,7 @@ void clif_check(int fd, struct map_session_data* pl_sd)
 	WFIFOW(fd,34) = pl_sd->battle_status.flee2/10;
 	WFIFOW(fd,36) = pl_sd->battle_status.cri/10;
 	WFIFOW(fd,38) = (2000-pl_sd->battle_status.amotion)/10;  // aspd
-	WFIFOW(fd,40) = 0;  // FIXME: What is 'plusASPD' supposed to be?
+	WFIFOW(fd,40) = 0;  // FIXME: What is 'plusASPD' supposed to be? Maybe adelay?
 	WFIFOSET(fd,packet_len(0x214));
 }
 
