@@ -3047,7 +3047,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 		}
 		if (rnd() % 10000 > ms[i].permillage) //Lupus (max value = 10000)
 			continue;
-
+		
 		if (ms[i].cond1 == event)
 			flag = 1; //Trigger skill.
 		else if (ms[i].cond1 == MSC_SKILLUSED)
@@ -3152,6 +3152,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 					break;
 			}
 			if (!bl) continue;
+						
 			x = bl->x;
 		  	y = bl->y;
 			// Look for an area to cast the spell around...
@@ -3198,6 +3199,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 					break;
 			}
 			if (!bl) continue;
+						
 			md->skillidx = i;
 			map_freeblock_lock();
 			if( !battle_check_range(&md->bl,bl,skill_get_range2(&md->bl, ms[i].skill_id,ms[i].skill_lv)) ||
@@ -3442,6 +3444,8 @@ int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char
 	//Finally, spawn it.
 	md = mob_once_spawn_sub(&sd->bl, m, x, y, "--en--",class_,event);
 	if (!md) return 0; //Failed?
+	
+	md->special_state.clone = 1;
 	
 	if (master_id || flag || duration) { //Further manipulate crafted char.
 		if (flag&1) //Friendly Character
