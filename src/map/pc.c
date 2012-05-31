@@ -1075,13 +1075,6 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 			clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
 		}
 
-		//Night message
-		if (night_flag) {
-			char tmpstr[1024];
-			strcpy(tmpstr, msg_txt(500)); // Actually, it's the night...
-			clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
-		}
-
 		/**
 		 * Fixes login-without-aura glitch (the screen won't blink at this point, don't worry :P)
 		 **/
