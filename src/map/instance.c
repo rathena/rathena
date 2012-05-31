@@ -323,6 +323,9 @@ void instance_del_map(int m)
 
 	map_removemapdb(&map[m]);
 	memset(&map[m], 0x00, sizeof(map[0]));
+	
+	/* for it is default and makes it not try to delete a non-existent timer since we did not delete this entry. */
+	map[m].mob_delete_timer = INVALID_TIMER;
 }
 
 /*--------------------------------------
