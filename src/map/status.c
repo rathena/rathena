@@ -8781,15 +8781,12 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			}
 			break;
 		case SC_BANDING:
-			{
-				struct skill_unit_group *group;
-				if(sce->val4)
-				{
-					group = skill_id2group(sce->val4);
+				if(sce->val4) {
+					struct skill_unit_group *group = skill_id2group(sce->val4);
 					sce->val4 = 0;
-					skill_delunitgroup(group);
+					if( group )
+						skill_delunitgroup(group);
 				}
-			}
 			break;
 		case SC_CURSEDCIRCLE_ATKER:
 			if( sce->val3 )
