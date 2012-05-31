@@ -354,7 +354,6 @@ comodo,273,137,4	script	Traveler#head	702,{
 			mes "If you brought all the required items, I'll go ahead and make it for you~";
 			next;
 			mes "[Isac Mari]";
-			mes "[Isac Mari]";
 			mes "But can you check that the items in your inventory aren't upgraded or have cards compounded into them? If any of the required items have forged upgrades or cards, those will be lost once I create the Money Loser's Grief.";
 			next;
 			mes "[Isac Mari]";
@@ -419,7 +418,7 @@ comodo,273,137,4	script	Traveler#head	702,{
 			mes "But can you check that the items in your inventory aren't upgraded or have cards compounded into them? If any of the required items have forged upgrades or cards, those will be lost once I create the Opera Masque.";
 			next;
 			mes "[Isac Mari]";
-			mes "It's better to keep only the items used to make the Mine Hat in your inventory. Did you check? If so, let's get started.";
+			mes "It's better to keep only the items used to make the Opera Mask in your inventory. Did you check? If so, let's get started.";
 			next;
 			switch(select("Give me a minute~!:Let's make the Opera Masque.")) {
 			case 1:

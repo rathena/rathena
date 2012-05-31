@@ -265,10 +265,10 @@ mid_camp,180,246,6	duplicate(warpra)	Warp Agent#29	859
 dicastes01,194,188,6	duplicate(warpra)	Warp Agent#30	859
 dewata,194,178,6	duplicate(warpra)	Warp Agent#31	859
 malangdo,220,188,6	duplicate(warpra)	Warp Agent#32	859
-niflheim,32,161,4	duplicate(warpra)	Mina#33	859
-malaya,210,205,4	duplicate(warpra)	Mina#34	859
-mora,110,100,4	duplicate(warpra)	Mina#35	859
-eclage,107,37,4	duplicate(warpra)	Mina#36	859
+niflheim,32,161,4	duplicate(warpra)	Warp Agent#33	859
+malaya,210,205,4	duplicate(warpra)	Warp Agent#34	859
+mora,110,100,4	duplicate(warpra)	Warp Agent#35	859
+eclage,107,37,4	duplicate(warpra)	Warp Agent#36	859
 
 // ------------ Dungeons ------------
 ama_dun01,233,9,1	duplicate(warpra)	Warp Agent#37	859

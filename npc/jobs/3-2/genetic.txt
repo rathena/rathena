@@ -548,7 +548,7 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 			mes "Bubbles!";
 			mes "Good news!";
 			next;
-			if (Class == Job_Alchemist || Class == Job_Creator || Job_Baby_Alchemist && ((JobLevel > 49) && (SkillPoint == 0) && (BaseLevel > 98))){
+			if ((Class == Job_Alchemist || Class == Job_Creator || Job_Baby_Alchemist) && ((JobLevel > 49) && (SkillPoint == 0) && (BaseLevel > 98))){
 				if (checkcart() == 0){
 					mes "[Devries]";
 					mes "Put that heavy and dirty cart away. On such a happy moment, that thing will just ruin it.";

@@ -39,7 +39,7 @@ OnTouch:
 			close;
 		}
 	}
-	if (BaseLevel > 94 && Class == Job_Wizard || Class == Job_High_Wizard || Class == Job_Baby_Wizard){
+	if ((BaseLevel > 94) && (Class == Job_Wizard || Class == Job_High_Wizard || Class == Job_Baby_Wizard)){
 		mes " - There is a strange distortion here - ";
 		next;
 		switch(select( "Search the area.:Ignore it.")){

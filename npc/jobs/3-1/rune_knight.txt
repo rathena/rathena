@@ -35,7 +35,7 @@ prt_in,162,24,3	script	Splendid-Looking Knight	470,{
 		mes "[Rune Knight Manuel]";
 		mes "Anyway the drinks here are really good. Would you like to have one?";
 		next;
-		switch(select("Sure, let's have a drink.:I refuse.")) {
+		switch (select("Sure, let's have a drink.:I refuse.")) {
 		case 1:
 			if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 				mes "[Rune Knight Manuel]";
@@ -64,7 +64,7 @@ prt_in,162,24,3	script	Splendid-Looking Knight	470,{
 					mes "[Rune Knight Manuel]";
 					mes "If you are interested, I'll introduce you to the masters who will guide you to the way of the Rune Knight with my recommendation.";
 					next;
-					switch(select("I am not ready yet.:I'm ready to be a Rune Knight.")) {
+					switch (select("I am not ready yet.:I'm ready to be a Rune Knight.")) {
 					case 1:
 						mes "[Rune Knight Manuel]";
 						mes "Right. Every challenge always needs preparation. Okay, I'll wait for you.";
@@ -133,9 +133,10 @@ prt_in,162,24,3	script	Splendid-Looking Knight	470,{
 }
 
 glast_01,44,363,3	script	Guide, Jungberg	468,{
+
 	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
 		mes "[Guide, Jungberg]";
-		mes "Oh you must be, " + strcharinfo(0) + ".";
+		mes "Oh you must be, "+strcharinfo(0)+".";
 		mes "Welcome.";
 		next;
 		mes "[Guide, Jungberg]";
@@ -144,7 +145,7 @@ glast_01,44,363,3	script	Guide, Jungberg	468,{
 		mes "[Guide, Jungberg]";
 		mes "So, What can I help you with?";
 		next;
-		switch(select("I want to go to the gathering place.:Nothing.")) {
+		switch (select("I want to go to the gathering place.:Nothing.")) {
 		case 1:
 			mes "[Guide, Jungberg]";
 			mes "Right. I'll send you right now. I'll see you soon.";
@@ -155,7 +156,7 @@ glast_01,44,363,3	script	Guide, Jungberg	468,{
 			close;
 		}
 	}
-	else if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
+	if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 		if (job_rune_edq == 0) {
 			mes "[Guide, Jungberg]";
 			mes "Are you a cursed ghost of this place? Or are you an ignorant adventurer?";
@@ -163,7 +164,7 @@ glast_01,44,363,3	script	Guide, Jungberg	468,{
 			mes "[Guide, Jungberg]";
 			mes "If you are a breathing human, then listen to me carefullly. I wouldn't risk my life here by hesitating to talk to just anyone.";
 			next;
-			switch(select("Who are you?:What are you doing here?:Cancel.")) {
+			switch (select("Who are you?:What are you doing here?:Cancel.")) {
 			case 1:
 				if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 					mes "[Guide, Jungberg]";
@@ -173,14 +174,12 @@ glast_01,44,363,3	script	Guide, Jungberg	468,{
 					mes "If you also follow the way of the Swordman our paths will most certainly cross again when you have reached your full potential.";
 					close;
 				}
-				else {
-					mes "[Guide, Jungberg]";
-					mes "I am the only knight who's keeping the way of the Swordman in this cursed place Glast Heim.";
-					next;
-					mes "[Guide, Jungberg]";
-					mes "Since you don't walk the way of the Sword, you wouldn't understand our spirit. I can manage by myself. Follow your own path.";
-					close;
-				}
+				mes "[Guide, Jungberg]";
+				mes "I am the only knight who's keeping the way of the Swordman in this cursed place Glast Heim.";
+				next;
+				mes "[Guide, Jungberg]";
+				mes "Since you don't walk the way of the Sword, you wouldn't understand our spirit. I can manage by myself. Follow your own path.";
+				close;
 			case 2:
 				if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 					mes "[Guide, Jungberg]";
@@ -202,46 +201,43 @@ glast_01,44,363,3	script	Guide, Jungberg	468,{
 					mes "If you wish to join the Rune Knights. Please get a recommendation from one of the guides and come to me again.";
 					close;
 				}
-				else {
-					mes "[Guide, Jungberg]";
-					mes "We are not like the other Knights who are absorbed with pomp and circumstance so you may not know of us yet.";
-					next;
-					mes "[Guide, Jungberg]";
-					mes "We are the Rune Knights. A group that leads the true power as well as the physical strength to the righteous way of the Sword.";
-					next;
-					mes "[Guide, Jungberg]";
-					mes "We have been living in secret here in the deep of Glast Heim for a half century but it's time to let the world know our purpose.";
-					next;
-					mes "[Guide, Jungberg]";
-					mes "Now there are many instructors who are looking for talented Sword wielders in various places of Rune Midgard. They are looking for a people who will join the true way of the Sword.";
-					next;
-					mes "[Guide, Jungberg]";
-					// custom translation
-					mes "Unfortunately, you are pursuing a different path than our people...I hope you can follow their path and convictions.";
-					close;
-				}
+				mes "[Guide, Jungberg]";
+				mes "We are not like the other Knights who are absorbed with pomp and circumstance so you may not know of us yet.";
+				next;
+				mes "[Guide, Jungberg]";
+				mes "We are the Rune Knights. A group that leads the true power as well as the physical strength to the righteous way of the Sword.";
+				next;
+				mes "[Guide, Jungberg]";
+				mes "We have been living in secret here in the deep of Glast Heim for a half century but it's time to let the world know our purpose.";
+				next;
+				mes "[Guide, Jungberg]";
+				mes "Now there are many instructors who are looking for talented Sword wielders in various places of Rune Midgard. They are looking for a people who will join the true way of the Sword.";
+				next;
+				mes "[Guide, Jungberg]";
+				// custom translation
+				mes "Unfortunately, you are pursuing a different path than our people...I hope you can follow their path and convictions.";
+				close;
 			case 3:
 				close;
 			}
 		}
-		else if (job_rune_edq == 1) {
+		if (job_rune_edq == 1) {
 			mes "[Guide, Jungberg]";
 			mes "Are you a cursed ghost of this place? Or are you an ignorant adventurer?";
 			next;
 			mes "[Guide, Jungberg]";
 			mes "If you are a breathing human, then listen to me carefullly. I wouldn't risk my life here by hesitating to talk to just anyone.";
 			next;
-			switch(select("I came to be a Rune Knight.:Cancel.")) {
+			switch (select("I came to be a Rune Knight.:Cancel.")) {
 			case 1:
 				mes "[Guide, Jungberg]";
 				mes "Um... Are you the Rune Knight candidate that Manuel talked about?";
 				next;
 				mes "[Guide, Jungberg]";
-				mes "Your name is "+ strcharinfo(0) +", right? I can see clearly that you are qualified to become our comrade.";
+				mes "Your name is "+strcharinfo(0)+", right? I can see clearly that you are qualified to become our comrade.";
 				next;
 				mes "[Guide, Jungberg]";
-				mes "Good. I don't have to ask anymore about your qualification to join our brethren.";
-				mes "Now I'll give you your first assignment.";
+				mes "Good. I don't have to ask anymore about your qualification to join our brethren....1.S...Now I'll give you your first assignment.";
 				next;
 				mes "[Guide, Jungberg]";
 				mes "Find our Rune Knight gathering place hidden inside of Glast Heim.";
@@ -261,7 +257,7 @@ glast_01,44,363,3	script	Guide, Jungberg	468,{
 				close;
 			}
 		}
-		else if (job_rune_edq == 2) {
+		if (job_rune_edq == 2) {
 			mes "[Guide, Jungberg]";
 			mes "The 1st assignment is to find out our Rune Knight gathering place hidden inside of Glast Heim.";
 			next;
@@ -275,38 +271,35 @@ glast_01,44,363,3	script	Guide, Jungberg	468,{
 			mes "Of course your life might be at risk by the ghosts of Glast Heim...but overcoming the risk shouldn't be hard for a Rune Knight candidate.";
 			close;
 		}
-		else {
+		mes "[Guide, Jungberg]";
+		mes "It seems that you are still taking the test. Do your best and pass all the tests.";
+		next;
+		switch (select("I want to go to the gathering place.:Quit the conversation.")) {
+		case 1:
 			mes "[Guide, Jungberg]";
-			mes "It seems that you are still taking the test. Do your best and pass all the tests.";
-			next;
-			switch(select("I want to go to the gathering place.:Quit the conversation.")) {
-			case 1:
-				mes "[Guide, Jungberg]";
-				mes "All right. I'll send you right away. I'll check you later.";
-				close2;
-				warp "job3_rune01",80,65;
-				end;
-			case 2:
-				close;
-			}
+			mes "All right. I'll send you right away. I'll check you later.";
+			close2;
+			warp "job3_rune01",80,65;
+			end;
+		case 2:
+			close;
 		}
 	}
-	else {
-		mes "[Guide, Jungberg]";
-		mes "I am the only knight who's keeping the way of the Swordman in this cursed place Glast Heim.";
-		next;
-		mes "[Guide, Jungberg]";
-		mes "Since you don't walk the way of the Sword, you wouldn't understand our spirit. I can manage by myself. Follow your own path.";
-		close;
-	}
+	mes "[Guide, Jungberg]";
+	mes "I am the only knight who's keeping the way of the Swordman in this cursed place Glast Heim.";
+	next;
+	mes "[Guide, Jungberg]";
+	mes "Since you don't walk the way of the Sword, you wouldn't understand our spirit. I can manage by myself. Follow your own path.";
+	close;
 }
 
 gl_knt02,150,55,3	script	Rune Knight Staff	83,{
+
 	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
 		mes "[Rune Knight Staff]";
 		mes "Welcome, " + strcharinfo(0) + ". Are you going to the gathering place?";
 		next;
-		switch(select("Yes, take me there.:I'm on other business.:Cancel.")) {
+		switch (select("Yes, take me there.:I'm on other business.:Cancel.")) {
 		case 1:
 			mes "[Rune Knight Staff]";
 			mes "Okay, come in. I'll guide you.";
@@ -321,7 +314,7 @@ gl_knt02,150,55,3	script	Rune Knight Staff	83,{
 			close;
 		}
 	}
-	else if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
+	if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 		if ((job_rune_edq > 0) && (job_rune_edq < 2)) {
 			// custom translation
 			mes "[Rune Knight Staff]";
@@ -334,7 +327,7 @@ gl_knt02,150,55,3	script	Rune Knight Staff	83,{
 			mes "I'm sure we'll be crossing paths before long. I believe we will meet again.";
 			close;
 		}
-		else if (job_rune_edq > 1) {
+		if (job_rune_edq > 1) {
 			mes "[Rune Knight Staff]";
 			mes "You found this place correctly. Jungberg sent me to send you to the gathering place.";
 			next;
@@ -347,21 +340,24 @@ gl_knt02,150,55,3	script	Rune Knight Staff	83,{
 			warp "job3_rune01",80,65;
 			end;
 		}
-		end;
-	}
-	else {
-		mes "[Rune Knight Staff]";
-		mes "Wait! This place is prohibited. I don't mind you going around but, don't ever disturb me again.";
 		close;
 	}
+	mes "[Rune Knight Staff]";
+	mes "Wait! This place is prohibited. I don't mind you going around but, don't ever disturb me again.";
+	close;
 }
 
 job3_rune01,80,60,3	script	Rune Knight Captain	470,{
-	if (!checkweight(1201,1)) {
+
+	if (checkweight(1201,1) == 0) {
 		mes "You've got too many things. You cannot proceed anymore. Please try again after losing some weight.";
 		close;
 	}
-	if (BaseClass == Job_Swordman) {
+	if ((MaxWeight - Weight) < 1000) {
+		mes "You've got too many things. You cannot proceed anymore. Please try again after losing some weight.";
+		close;
+	}
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
 		if (job_rune_edq == 23) {
 			mes "[Captain Tigris]";
 			mes "Oh, I see... Please wait a moment.";
@@ -394,24 +390,20 @@ job3_rune01,80,60,3	script	Rune Knight Captain	470,{
 				set job_rune_edq,24;
 				close;
 			}
-			else {
-				mes "[Captain Tigris]";
-				mes "Umm, not bad. It's not a great record but you tried your best.";
-				next;
-				mes "[Captain Tigris]";
-				mes "Well, take this. This is a present that I've kept to give to my juniors like you.";
-				getitem 15002,1; //Rune_Plate
-				set job_rune_edq,24;
-				close;
-			}
-		}
-		else {
 			mes "[Captain Tigris]";
-			mes "Hey, long time no see, " + strcharinfo(0) + ". I don't think you've got any important matters to discuss but make yourself comfortable.";
+			mes "Umm, not bad. It's not a great record but you tried your best.";
+			next;
+			mes "[Captain Tigris]";
+			mes "Well, take this. This is a present that I've kept to give to my juniors like you.";
+			getitem 15002,1; //Rune_Plate
+			set job_rune_edq,24;
 			close;
 		}
+		mes "[Captain Tigris]";
+		mes "Hey, long time no see, "+strcharinfo(0)+". I don't think you've got any important matters to discuss but make yourself comfortable.";
+		close;
 	}
-	else if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
+	if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 		if (job_rune_edq == 2) {
 			mes "A man wearing glorious armor and passion in his eyes is standing in front of me.";
 			next;
@@ -421,7 +413,7 @@ job3_rune01,80,60,3	script	Rune Knight Captain	470,{
 			mes "Hey, are you the Rune Knight candidate that Manuel recommended? I am Captain Tigris from the Rune Knights, and your name is??";
 			next;
 			mes "[Captain Tigris]";
-			mes "Oh, I've heard it before but I've forgotten it. Right, were you " + strcharinfo(0) + "? I truly welcome you from the heart for coming here.";
+			mes "Oh, I've heard it before but I've forgotten it. Right, were you "+strcharinfo(0)+"? I truly welcome you from the heart for coming here.";
 			next;
 			mes "[Captain Tigris]";
 			mes "Let's see. How many candidates have come to this room? Hey, Lunarea, which candidate is this one here?";
@@ -455,7 +447,7 @@ job3_rune01,80,60,3	script	Rune Knight Captain	470,{
 			mes "Well then, I'll be waiting here so take the test.";
 			close;
 		}
-		else if (job_rune_edq == 3) {
+		if (job_rune_edq == 3) {
 			mes "[Captain Tigris]";
 			mes "Now the test begins. First, you'll get the 1st test from that beautiful icy lady, so please try your best.";
 			next;
@@ -466,7 +458,7 @@ job3_rune01,80,60,3	script	Rune Knight Captain	470,{
 			mes "Well then, I'll be waiting here so take the test.";
 			close;
 		}
-		else if ((job_rune_edq > 3) && (job_rune_edq < 6)) {
+		if ((job_rune_edq > 3) && (job_rune_edq < 6)) {
 			mes "[Captain Tigris]";
 			mes "Hey you, weren't you testing? Lunarea, what happened? Is the test all done?";
 			next;
@@ -488,7 +480,7 @@ job3_rune01,80,60,3	script	Rune Knight Captain	470,{
 			mes "Whoa don't look at me like that. Okay, you see that? Aspiring Rune Knight. Go back to Lunarea and take the test as she says. That'll be good for you.";
 			close;
 		}
-		else if (job_rune_edq == 6) {
+		if (job_rune_edq == 6) {
 			mes "[Captain Tigris]";
 			mes "Umm, it seems that you've passed Lunarea's test? I guess I won't have to test more for the basics.";
 			next;
@@ -513,7 +505,7 @@ job3_rune01,80,60,3	script	Rune Knight Captain	470,{
 			changequest 3204,3205;
 			close;
 		}
-		else if ((job_rune_edq > 6) && (job_rune_edq < 16)) {
+		if ((job_rune_edq > 6) && (job_rune_edq < 16)) {
 			mes "[Captain Tigris]";
 			mes "Now, this will be the real test as a Rune Knight. You've got to prepare to take the next test.";
 			next;
@@ -530,7 +522,7 @@ job3_rune01,80,60,3	script	Rune Knight Captain	470,{
 			mes "Go to that fiery lady in the library room to get the next test done and come back.";
 			close;
 		}
-		else if (job_rune_edq == 16) {
+		if (job_rune_edq == 16) {
 			mes "[Captain Tigris]";
 			mes "Oh, I heard that you've passed Renoa's test which only few people could pass.";
 			next;
@@ -553,7 +545,7 @@ job3_rune01,80,60,3	script	Rune Knight Captain	470,{
 			changequest 3215,3216;
 			close;
 		}
-		else if ((job_rune_edq > 16) && (job_rune_edq < 22)) {
+		if ((job_rune_edq > 16) && (job_rune_edq < 22)) {
 			mes "[Captain Tigris]";
 			mes "Take the final test from the Rune Knight Velpino who is at the arsenal's right side.";
 			next;
@@ -561,7 +553,7 @@ job3_rune01,80,60,3	script	Rune Knight Captain	470,{
 			mes "I'm not kidding, I am really looking forward to your new start as a Rune Knight. So please do your best.";
 			close;
 		}
-		else if (job_rune_edq == 22) {
+		if (job_rune_edq == 22) {
 			mes "[Captain Tigris]";
 			mes "Congratulations. Now you've passed all the tests and can walk the way of a Rune Knight.";
 			next;
@@ -598,9 +590,9 @@ job3_rune01,80,60,3	script	Rune Knight Captain	470,{
 			mes "[Captain Tigris]";
 			mes "Well, my job is done now. Would you like to start your new life as a Rune Knight?";
 			next;
-			switch(select("Every preparation is done.:I need more time to think.")) {
+			switch (select("Every preparation is done.:I need more time to think.")) {
 			case 1:
-				if ((Weight > 0) || (checkcart()) || (SkillPoint) || (checkfalcon()) || (checkriding())) {
+				if (Weight > 0 || checkcart() || SkillPoint != 0 || checkfalcon() || checkriding()) {
 					mes "[Captain Tigris]";
 					mes "Weren't you listening?";
 					next;
@@ -620,71 +612,96 @@ job3_rune01,80,60,3	script	Rune Knight Captain	470,{
 					mes "If you understood, then make your preparations and come back.";
 					close;
 				}
-				else {
-					if (Class != Job_Knight || Class != Job_Lord_Knight || Class != Job_Baby_Knight && ((JobLevel < 50) && (SkillPoint) && (BaseLevel < 99))) {
-						// custom translation
-						mes "[Captain Tigris]";
-						mes "You seem to be missing something?";
-						close;
-					}
+				if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight && ((JobLevel > 49) && (SkillPoint == 0) && (BaseLevel > 98))) {
 					mes "[Captain Tigris]";
 					mes "Our Master, Beljeve... and the Great Sage, Serpeone...";
 					next;
 					mes "[Captain Tigris]";
 					mes "This Knight is going to walk the way of the Rune Knights with us, so please give your blessing.";
 					next;
-					getitem 5746,1; //Rune_Circlet
-					getitem 2795,1; //Green_Apple_Ring
-					set job_rune_edq,23;
-					completequest 3219;
-					if(Class == Job_Baby_Knight){
+					if (Class == Job_Baby_Knight) {
+						getitem 5746,1; //Rune_Circlet
+						getitem 2795,1; //Green_Apple_Ring
+						set job_rune_edq,23;
+						completequest 3219;
 						jobchange Job_Baby_Rune;
-					} else if(Class == Job_Knight){
-						jobchange Job_Rune_Knight;
-					} else {
-						jobchange Job_Rune_Knight_T;
+						mes "[Captain Tigris]";
+						mes "Remember this moment forever for you are now a Rune Knight.";
+						next;
+						mes "[Captain Tigris]";
+						mes "There's a royal gift from the Rune-Midgarts Kingdom for all new Rune Knights.";
+						next;
+						mes "[Captain Tigris]";
+						mes "Give me a second to get the royal gift and talk to me again.";
+						close;
 					}
-					mes "[Captain Tigris]";
-					mes "Remember this moment forever for you are now a Rune Knight.";
-					next;
-					mes "[Captain Tigris]";
-					mes "There's a royal gift from the Rune-Midgarts Kingdom for all new Rune Knights.";
-					next;
-					mes "[Captain Tigris]";
-					mes "Give me a second to get the royal gift and talk to me again.";
-					close;
+					else if (Class == Job_Knight) {
+						getitem 5746,1; //Rune_Circlet
+						getitem 2795,1; //Green_Apple_Ring
+						set job_rune_edq,23;
+						completequest 3219;
+						jobchange Job_Rune_Knight;
+						mes "[Captain Tigris]";
+						mes "Remember this moment forever for you are now a Rune Knight.";
+						next;
+						mes "[Captain Tigris]";
+						mes "There's a royal gift from the Rune-Midgarts Kingdom for all new Rune Knights.";
+						next;
+						mes "[Captain Tigris]";
+						mes "Give me a second to get the royal gift and talk to me again.";
+						close;
+					}
+					else if (Class == Job_Lord_Knight) {
+						getitem 5746,1; //Rune_Circlet
+						getitem 2795,1; //Green_Apple_Ring
+						set job_rune_edq,23;
+						completequest 3219;
+						jobchange Job_Rune_Knight_T;
+						mes "[Captain Tigris]";
+						mes "Remember this moment forever for you are now a Rune Knight.";
+						next;
+						mes "[Captain Tigris]";
+						mes "There's a royal gift from the Rune-Midgarts Kingdom for all new Rune Knights.";
+						next;
+						mes "[Captain Tigris]";
+						mes "Give me a second to get the royal gift and talk to me again.";
+						close;
+					}
 				}
+				// custom translation
+				mes "[Captain Tigris]";
+				mes "You seem to be missing something?";
+				close;
 			case 2:
 				close;
 			}
 		}
 	}
-	else {
-		// custom translation
-		mes "[Captain Tigris]";
-		mes "I don't know how you got here...but you should not have come here.";
-		next;
-		mes "[Captain Tigris]";
-		mes "Go back to where came from.";
-		close2;
-		warp "gl_knt02",150,55;
-		end;
-	}
+	// custom translation
+	mes "[Captain Tigris]";
+	mes "I don't know how you got here...but you should not have come here.";
+	next;
+	mes "[Captain Tigris]";
+	mes "Go back to where came from.";
+	close2;
+	warp "gl_knt02",150,55;
+	end;
 }
 
 job3_rune01,90,50,3	script	Rune Knight Lunarea	469,{
-	if (BaseClass != Job_Swordman) {
+
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
 		mes "She holds up her chin quietly, nods lightly and notices me.";
 		next;
 		mes "Then after a moment she puts her face down and seems absorbed with other thoughts.";
 		close;
 	}
-	else if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
+	if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 		if (job_rune_edq < 3) {
 			mes "This pale-skinned absent-looking female Rune Knight doesn't seem to care. Of course she doesn't seem interested with my existence";
 			close;
 		}
-		else if (job_rune_edq == 3) {
+		if (job_rune_edq == 3) {
 			mes "She finally opens her mouth and begins to talk.";
 			next;
 			mes "[Rune Knight, Lunarea]";
@@ -702,18 +719,60 @@ job3_rune01,90,50,3	script	Rune Knight Lunarea	469,{
 			mes "[Rune Knight, Lunarea]";
 			mes "When you are ready to go to the test field talk to me.";
 			next;
-			switch(select("Move to the test field now.:Give me time to get ready.")) {
+			switch (select("Move to the test field now.:Give me time to get ready.")) {
 			case 1:
-				if ($@rune_test1 == 0) {
+				if ($@08_job_rune_test1 == 0) {
 					mes "She nods her head and reaches out her hand lightly. Then she draws her sword and makes a signal.";
-					set job_rune_edq,4;
+					set job_rune_edq, 4;
 					changequest 3202,3203;
-					set $@job_rune_test1,1;
+					set $@08_job_rune_test1,1;
 					close2;
 					warp "job3_rune02",38,40;
 					end;
 				}
-				else {
+				// custom translation
+				mes "She nods her head and reaches out her hand lightly. Then she draws her sword and makes a signal.";
+				next;
+				mes "But her expression suddenly changed a bit as she looked at to speak.";
+				next;
+				mes "[Rune Knight, Lunarea]";
+				mes "Now...the testing room is currently occupied...";
+				next;
+				mes "[Rune Knight, Lunarea]";
+				mes "You'll have to wait...it is regulation that the test must take place on a 1:1 level.";
+				next;
+				mes "[Rune Knight, Lunarea]";
+				mes "Just wait over 5 minutes and it should be your turn.";
+				close;
+			case 2:
+				close;
+			}
+		}
+		if (job_rune_edq == 4) {
+			mes "[Rune Knight, Lunarea]";
+			mes "Did you fail? But, there's no limitation to the number of times you can try.";
+			next;
+			mes "[Rune Knight, Lunarea]";
+			mes "If you want to take the test again. I can send you to the test field.";
+			next;
+			mes "[Rune Knight, Lunarea]";
+			mes "5 minutes... When you endure and get rid of all, you succeed.";
+			next;
+			mes "[Rune Knight, Lunarea]";
+			mes "If you are ready to move to the test field talk to me.";
+			next;
+			switch (select("Move to the test field now.:Please give me time to prepare.")) {
+			case 1:
+				if (checkquest(3220,PLAYTIME) == -1 || checkquest(3220,PLAYTIME) == 0) {
+					if ($@08_job_rune_test1 == 0) {
+						mes "She nods her head and reaches out her hand lightly. Then she draws her sword and makes a signal.";
+						set $@08_job_rune_test1,1;
+						erasequest 3220;
+						setquest 3220;
+						close2;
+						warp "job3_rune02",38,40;
+						end;
+					}
 					// custom translation
 					mes "She nods her head and reaches out her hand lightly. Then she draws her sword and makes a signal.";
 					next;
@@ -729,54 +788,7 @@ job3_rune01,90,50,3	script	Rune Knight Lunarea	469,{
 					mes "Just wait over 5 minutes and it should be your turn.";
 					close;
 				}
-			case 2:
-				close;
-			}
-		}
-		else if (job_rune_edq == 4) {
-			mes "[Rune Knight, Lunarea]";
-			mes "Did you fail? But, there's no limitation to the number of times you can try.";
-			next;
-			mes "[Rune Knight, Lunarea]";
-			mes "If you want to take the test again. I can send you to the test field.";
-			next;
-			mes "[Rune Knight, Lunarea]";
-			mes "5 minutes... When you endure and get rid of all, you succeed.";
-			next;
-			mes "[Rune Knight, Lunarea]";
-			mes "If you are ready to move to the test field talk to me.";
-			next;
-			switch(select("Move to the test field now.:Please give me time to prepare.")) {
-			case 1:
-				set .@test_miss_check,checkquest(3220,PLAYTIME);
-				if (.@test_miss_check == -1) {
-					if ($@rune_test1 == 0) {
-						mes "She nods her head and reaches out her hand lightly. Then she draws her sword and makes a signal.";
-						set $@job_rune_test1,1;
-						if (checkquest(3220) > -1) erasequest 3220;
-						setquest 3220;
-						close2;
-						warp "job3_rune02",38,40;
-						end;
-					}
-					else {
-						// custom translation
-						mes "She nods her head and reaches out her hand lightly. Then she draws her sword and makes a signal.";
-						next;
-						mes "But her expression suddenly changed a bit as she looked at to speak.";
-						next;
-						mes "[Rune Knight, Lunarea]";
-						mes "Now...the testing room is currently occupied...";
-						next;
-						mes "[Rune Knight, Lunarea]";
-						mes "You'll have to wait...it is regulation that the test must take place on a 1:1 level.";
-						next;
-						mes "[Rune Knight, Lunarea]";
-						mes "Just wait over 5 minutes and it should be your turn.";
-						close;
-					}
-				}
-				else if ((.@test_miss_check == 0) || (.@test_miss_check == 1)) {
+				if (checkquest(3220,PLAYTIME) == 1) {
 					mes "[Rune Knight, Lunarea]";
 					mes "Once someone enters into the test field you cannot enter directly. The test is taken one by one.";
 					next;
@@ -784,38 +796,37 @@ job3_rune01,90,50,3	script	Rune Knight Lunarea	469,{
 					mes "When it's your turn to enter you will be sent there directly.";
 					close;
 				}
-				else if (.@test_miss_check == 2) {
+				if (checkquest(3220,PLAYTIME) == 2) {
 					erasequest 3220;
-					if ($@rune_test1 == 0) {
+					if ($@08_job_rune_test1 == 0) {
 						mes "She nods her head and reaches out her hand lightly. Then she draws her sword and makes a signal.";
-						set $@job_rune_test1,1;
+						set $@08_job_rune_test1,1;
+						erasequest 3220;
 						setquest 3220;
 						close2;
 						warp "job3_rune02",38,40;
 						end;
 					}
-					else {
-						// custom translation
-						mes "She nods her head and reaches out her hand lightly. Then she draws her sword and makes a signal.";
-						next;
-						mes "But her expression suddenly changed a bit as she looked at to speak.";
-						next;
-						mes "[Rune Knight, Lunarea]";
-						mes "Now...the testing room is currently occupied...";
-						next;
-						mes "[Rune Knight, Lunarea]";
-						mes "You'll have to wait...it is regulation that the test must take place on a 1:1 level.";
-						next;
-						mes "[Rune Knight, Lunarea]";
-						mes "It will be your turn when the time is up.";
-						close;
-					}
+					// custom translation
+					mes "She nods her head and reaches out her hand lightly. Then she draws her sword and makes a signal.";
+					next;
+					mes "But her expression suddenly changed a bit as she looked at to speak.";
+					next;
+					mes "[Rune Knight, Lunarea]";
+					mes "Now...the testing room is currently occupied...";
+					next;
+					mes "[Rune Knight, Lunarea]";
+					mes "You'll have to wait...it is regulation that the test must take place on a 1:1 level.";
+					next;
+					mes "[Rune Knight, Lunarea]";
+					mes "It will be your turn when the time is up.";
+					close;
 				}
 			case 2:
 				close;
 			}
 		}
-		else if (job_rune_edq == 5) {
+		if (job_rune_edq == 5) {
 			mes "[Rune Knight, Lunarea]";
 			mes "Was your test successful?";
 			next;
@@ -827,7 +838,7 @@ job3_rune01,90,50,3	script	Rune Knight Lunarea	469,{
 			changequest 3203,3204;
 			close;
 		}
-		else if (job_rune_edq > 5) {
+		if (job_rune_edq > 5) {
 			mes "[Rune Knight, Lunarea]";
 			mes "This portion of the test is over. Go talk to Captain Tigris.";
 			next;
@@ -835,17 +846,17 @@ job3_rune01,90,50,3	script	Rune Knight Lunarea	469,{
 			mes "There are other tests you need to complete. I hope you do a good job.";
 			close;
 		}
+		end;
 	}
-	else {
-		mes "This pale-skinned absent-looking female Rune Knight doesn't seem to care. Of course she doesn't seem interested with my existence";
-		close;
-	}
+	mes "This pale-skinned absent-looking female Rune Knight doesn't seem to care. Of course she doesn't seem interested with my existence";
+	close;
 }
 
 job3_rune01,55,50,3	script	Rune Knight, Renoa	469,{
+
 	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
 		mes "[Rune Knight, Renoa]";
-		mes "Congratulations for becoming one of us. Junior Rune Knight, " + strcharinfo(0) + ".";
+		mes "Congratulations for becoming one of us. Junior Rune Knight, "+strcharinfo(0)+".";
 		next;
 		mes "[Rune Knight, Renoa]";
 		mes "Soon you'll see the way we need to go clearly.";
@@ -854,7 +865,7 @@ job3_rune01,55,50,3	script	Rune Knight, Renoa	469,{
 		mes "Until then, I'll be here to discover more candidates just like you.";
 		close;
 	}
-	else if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
+	if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 		if (job_rune_edq < 7) {
 			mes "[Rune Knight, Renoa]";
 			mes "Are you the one who wants to be a Rune Knight? There have been so many today.";
@@ -866,7 +877,7 @@ job3_rune01,55,50,3	script	Rune Knight, Renoa	469,{
 			mes "If you are taking the Rune Knight test I hope that you try your best. This won't be as easy to pass as Lunarea's test ok?";
 			close;
 		}
-		else if (job_rune_edq == 7) {
+		if (job_rune_edq == 7) {
 			mes "[Rune Knight, Renoa]";
 			mes "Finally! Is it my turn? I'm so happy.";
 			next;
@@ -894,7 +905,7 @@ job3_rune01,55,50,3	script	Rune Knight, Renoa	469,{
 			changequest 3205,3206;
 			close;
 		}
-		else if (job_rune_edq == 8) {
+		if (job_rune_edq == 8) {
 			mes "[Rune Knight, Renoa]";
 			mes "Well first, I'll give you an assignment. Let's start by studying. Go to the library and study these books.";
 			next;
@@ -908,7 +919,7 @@ job3_rune01,55,50,3	script	Rune Knight, Renoa	469,{
 			mes "Don't worry, you won't be required to have the same knowledge as the magicians of Geffen or Juno. But you can't be an idiot either.";
 			close;
 		}
-		else if (job_rune_edq == 11) {
+		if (job_rune_edq == 11) {
 			mes "[Rune Knight, Renoa]";
 			mes "Have you read all the books from the library? It won't be easy to read but if you are determined to be a Rune Knight, you have to have this kind of basic knowledge.";
 			next;
@@ -945,11 +956,11 @@ job3_rune01,55,50,3	script	Rune Knight, Renoa	469,{
 			changequest 3206,3207;
 			close;
 		}
-		else if ((job_rune_edq > 11) && (job_rune_edq < 14)) {
+		if ((job_rune_edq > 11) && (job_rune_edq < 14)) {
 			mes "[Rune Knight, Renoa]";
 			mes "If you are ready I'll open the way to the sage, Serpeone who's in the Rune Midgard post at Ash Vacuum. Are you prepared?";
 			next;
-			switch(select("Yes, I am prepared.:Not yet.")) {
+			switch (select("Yes, I am prepared.:Not yet.")) {
 			case 1:
 				mes "[Rune Knight, Renoa]";
 				mes "Good. Then I'll send you there now. But, there's one thing I need to tell you.";
@@ -977,7 +988,7 @@ job3_rune01,55,50,3	script	Rune Knight, Renoa	469,{
 				close;
 			}
 		}
-		else if (job_rune_edq == 14) {
+		if (job_rune_edq == 14) {
 			mes "[Rune Knight, Renoa]";
 			mes "Umm, you're back? How's it like in the Ash Vacuum?";
 			next;
@@ -1002,11 +1013,11 @@ job3_rune01,55,50,3	script	Rune Knight, Renoa	469,{
 			mes "[Rune Knight, Renoa]";
 			mes "The total number of rune stones you need to make is 20.";
 			mes "Remember that well.";
-			set job_rune_edq,15;
+			set job_rune_edq, 15;
 			changequest 3213,3214;
 			close;
 		}
-		else if (job_rune_edq == 15) {
+		if (job_rune_edq == 15) {
 			mes "[Rune Knight, Renoa]";
 			mes "In this test you will be making a rune stone yourself which is going to be used for your last test.";
 			next;
@@ -1019,10 +1030,10 @@ job3_rune01,55,50,3	script	Rune Knight, Renoa	469,{
 			mes "[Rune Knight, Renoa]";
 			mes "The number of total rune stones you need to make is exactly 20. Remember that well.";
 			next;
-			switch(select("Check number of made runes?:I've made all the 20 rune stones.")) {
+			switch (select("Check number of made runes?:I've made all the 20 rune stones.")) {
 			case 1:
 				mes "[Rune Knight, Renoa]";
-				mes "The number of rune stones made 'til now is " + job_rune_edq2 + ".";
+				mes "The number of rune stones made 'til now is "+job_rune_edq2+".";
 				close;
 			case 2:
 				if (job_rune_edq2 == 20) {
@@ -1041,7 +1052,7 @@ job3_rune01,55,50,3	script	Rune Knight, Renoa	469,{
 					changequest 3214,3215;
 					close;
 				}
-				else if (job_rune_edq2 > 20) {
+				if (job_rune_edq2 > 20) {
 					mes "[Rune Knight, Renoa]";
 					mes "Wow! What's this? You've made over 20. It's ok for now but remember to follow directions next time.";
 					next;
@@ -1059,1047 +1070,1067 @@ job3_rune01,55,50,3	script	Rune Knight, Renoa	469,{
 					set job_rune_edq,16;
 					close;
 				}
-				else {
-					mes "[Rune Knight, Renoa]";
-					mes "Hey! I think I told you to make at least 20.";
-					close;
-				}
+				mes "[Rune Knight, Renoa]";
+				mes "Hey! I think I told you to make at least 20.";
+				close;
 			}
 		}
-		else {
-			mes "[Rune Knight, Renoa]";
-			mes "Become a proud Rune Knight.";
-			close;
-		}
-	}
-	else {
-		// custom translation
 		mes "[Rune Knight, Renoa]";
-		mes "HOw...how did you get in here?! Captain we have a spy!";
-		next;
-		mes "[Captain Tigris]";
-		mes "Ah? What are you talking about, Renoa? Do not talk in such a manner! You make us sound like criminals.";
-		next;
-		mes "[Rune Knight, Renoa]";
-		mes "Well, there is an unidentified individual here.";
-		next;
-		mes "[Captain Tigris]";
-		mes "Ah...hey, friend, come over here and let us talk a moment...";
+		mes "Become a proud Rune Knight.";
 		close;
 	}
+	// custom translation
+	mes "[Rune Knight, Renoa]";
+	mes "HOw...how did you get in here?! Captain we have a spy!";
+	next;
+	mes "[Captain Tigris]";
+	mes "Ah? What are you talking about, Renoa? Do not talk in such a manner! You make us sound like criminals.";
+	next;
+	mes "[Rune Knight, Renoa]";
+	mes "Well, there is an unidentified individual here.";
+	next;
+	mes "[Captain Tigris]";
+	mes "Ah...hey, friend, come over here and let us talk a moment...";
+	close;
 }
 
-job3_rune01,58,51,1	script	Rune Furance	844,{
+job3_rune01,58,51,1	script	Rune Furnace	844,{
+
 	if (job_rune_edq < 15) {
 		mes "[Rune Knight Renoa]";
 		mes "You don't want to touch that thing. Believe me, I'm not kidding.";
 		close;
 	}
-	else if (job_rune_edq == 15) {
-		set .@job_rune_crash,5;
-		set .@job_rune_test_rand,rand(1,24);
+	if (job_rune_edq == 15) {
+		set @job_rune_success,job_rune_edq2;
+		set @job_rune_miss,job_rune_edq3;
+		set @job_rune_crash,5;
+		set @job_rune_book_test_action,0;
+		set @job_rune_test_rand,rand(1,24);
 		mes "I can see a hole under the huge Rune Stone Statue behind Renoa. Clearly this is a mass-produced rune heating furnace that I read in the book.";
 		next;
-		switch(select("Use the Rune Heating Furnace:Stop.")) {
+		switch (select("Use the Rune Heating Furnace:Stop.")) {
 		case 1:
-			if (.@job_rune_test_rand == 1) {
+			if (@job_rune_test_rand == 1) {
 				progressbar "ffff00",5;
 				mes "The magical power of the rune pitches and tosses while it is getting shaped.";
 				next;
 				mes "This red hot spiral is...";
 				next;
-				input .@input$;
-				set .@ans$,"Ehwaz";
-				set .@pc_ans$,.@input$;
-				set .@ans_chk,compare(.@ans$,.@pc_ans$);
-				if (.@ans_chk == 1) {
+				input .@inputstr$;
+				if (.@inputstr$ == "Ehwaz") {
 					mes "[Rune Knight Renoa]";
 					mes "Wow! This is great. The image of the rune stone in my head and the modelled rune stone matches perfectly. It's well made.";
 					next;
 					mes "[Rune Knight Renoa]";
 					mes "1 Eiwaz rune was made normally.";
-					set job_rune_edq2,job_rune_edq2 + 1;
+					set @job_rune_success,job_rune_edq2;
+					set @job_rune_success_check,@job_rune_success+1;
+					set job_rune_edq2,@job_rune_success_check;
 					close;
 				}
-				else {
-					set .@job_rune_crash_go,rand(1,(((job_rune_edq3+1)+.@job_rune_crash)+.@job_rune_crash_check));
-					if (.@job_rune_crash_go == 3) {
-						mes "[Rune Knight Renoa]";
-						// occurances of this line are all custom. I couldn't get the damn thing to fail and give me the line.
-						mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "1 Eiwaz rune was made normally.";
-						set job_rune_edq2,job_rune_edq2 + 1;
-						close;
-					}
-					else {
-						mes "[Rune Knight Renoa]";
-						mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "Refining the rune stone is a failure... Please try again.";
-						set job_rune_edq3,job_rune_edq3 + 1;
-						close;
-					}
+				set @job_rune_miss,job_rune_edq3;
+				set @job_rune_miss_check,@job_rune_miss+1;
+				set @job_rune_crash_check,@job_rune_crash+@job_rune_miss_check;
+				if (rand(1,@job_rune_crash_check) == 3) {
+					mes "[Rune Knight Renoa]";
+					// occurances of this line are all custom. I couldn't get the damn thing to fail and give me the line.
+					mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
+					next;
+					mes "[Rune Knight Renoa]";
+					mes "1 Eiwaz rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
+					close;
 				}
+				mes "[Rune Knight Renoa]";
+				mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
+				next;
+				mes "[Rune Knight Renoa]";
+				mes "Refining the rune stone is a failure... Please try again.";
+				set @job_rune_miss,job_rune_edq3;
+				set @job_rune_miss_check,@job_rune_miss+1;
+				set job_rune_edq3,@job_rune_miss_check;
+				close;
 			}
-			else if (.@job_rune_test_rand == 2) {
+			if (@job_rune_test_rand == 2) {
 				progressbar "ffff00",5;
 				mes "The magical power of the rune pitches and tosses while it is getting shaped.";
 				next;
 				mes "The rune flashing with this violet oblique line shape is...";
 				next;
-				input .@input$;
-				set .@ans$,"Osilla";
-				set .@pc_ans$,.@input$;
-				set .@ans_chk,compare(.@ans$,.@pc_ans$);
-				if (.@ans_chk == 1) {
+				input .@inputstr$;
+				if (.@inputstr$ == "Osilla") {
 					mes "[Rune Knight Renoa]";
 					mes "Wow! This is great. The image of the rune stone in my head and the modelled rune stone matches perfectly. It's well made.";
 					next;
 					mes "[Rune Knight Renoa]";
 					mes "1 Othlia rune was made normally.";
-					set job_rune_edq2,job_rune_edq2 + 1;
+					set @job_rune_success,job_rune_edq2;
+					set @job_rune_success_check,@job_rune_success+1;
+					set job_rune_edq2,@job_rune_success_check;
 					close;
 				}
-				else {
-					set .@job_rune_crash_go,rand(1,(((job_rune_edq3+1)+.@job_rune_crash)+.@job_rune_crash_check));
-					if (.@job_rune_crash_go == 3) {
-						mes "[Rune Knight Renoa]";
-						mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "1 Othlia rune was made normally.";
-						set job_rune_edq2,job_rune_edq2 + 1;
-						close;
-					}
-					else {
-						mes "[Rune Knight Renoa]";
-						mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "Refining the rune stone is a failure... Please try again.";
-						set job_rune_edq3,job_rune_edq3 + 1;
-						close;
-					}
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set @job_rune_crash_check, @job_rune_crash + @job_rune_miss_check;
+				if (rand(1,@job_rune_crash_check) == 3) {
+					mes "[Rune Knight Renoa]";
+					mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
+					next;
+					mes "[Rune Knight Renoa]";
+					mes "1 Othlia rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
+					close;
 				}
+				mes "[Rune Knight Renoa]";
+				mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
+				next;
+				mes "[Rune Knight Renoa]";
+				mes "Refining the rune stone is a failure... Please try again.";
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set job_rune_edq3, @job_rune_miss_check;
+				close;
 			}
-			else if (.@job_rune_test_rand == 3) {
+			if (@job_rune_test_rand == 3) {
 				progressbar "ffff00",5;
 				mes "The magical power of the rune pitches and tosses while it is getting shaped.";
 				next;
 				mes "This live emerald diamond rune is...";
 				next;
-				input .@input$;
-				set .@ans$,"Mannaz";
-				set .@pc_ans$,.@input$;
-				set .@ans_chk,compare(.@ans$,.@pc_ans$);
-				if (.@ans_chk == 1) {
+				input .@inputstr$;
+				if (.@inputstr$ == "Mannaz") {
 					mes "[Rune Knight Renoa]";
 					mes "Wow! This is great. The image of the rune stone in my head and the modelled rune stone matches perfectly. It's well made.";
 					next;
 					mes "[Rune Knight Renoa]";
 					mes "1 Mannaz rune was made normally.";
-					set job_rune_edq2,job_rune_edq2 + 1;
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
 					close;
 				}
-				else {
-					set .@job_rune_crash_go,rand(1,(((job_rune_edq3+1)+.@job_rune_crash)+.@job_rune_crash_check));
-					if (.@job_rune_crash_go == 3) {
-						mes "[Rune Knight Renoa]";
-						mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "1 Mannaz rune was made normally.";
-						set job_rune_edq2,job_rune_edq2 + 1;
-						close;
-					}
-					else {
-						mes "[Rune Knight Renoa]";
-						mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "Refining the rune stone is a failure... Please try again.";
-						set job_rune_edq3,job_rune_edq3 + 1;
-						close;
-					}
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set @job_rune_crash_check, @job_rune_crash + @job_rune_miss_check;
+				if (rand(1,@job_rune_crash_check) == 3) {
+					mes "[Rune Knight Renoa]";
+					mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
+					next;
+					mes "[Rune Knight Renoa]";
+					mes "1 Mannaz rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
+					close;
 				}
+				mes "[Rune Knight Renoa]";
+				mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
+				next;
+				mes "[Rune Knight Renoa]";
+				mes "Refining the rune stone is a failure... Please try again.";
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set job_rune_edq3, @job_rune_miss_check;
+				close;
 			}
-			else if (.@job_rune_test_rand == 4) {
+			if (@job_rune_test_rand == 4) {
 				progressbar "ffff00",5;
 				mes "The magical power of the rune pitches and tosses while it is getting shaped.";
 				next;
 				mes "The rune flashing with an emerald round shape is...";
 				next;
-				input .@input$;
-				set .@ans$,"Ansuz";
-				set .@pc_ans$,.@input$;
-				set .@ans_chk,compare(.@ans$,.@pc_ans$);
-				if (.@ans_chk == 1) {
+				input .@inputstr$;
+				if (.@inputstr$ == "Ansuz") {
 					mes "[Rune Knight Renoa]";
 					mes "Wow! This is great. The image of the rune stone in my head and the modelled rune stone matches perfectly. It's well made.";
 					next;
 					mes "[Rune Knight Renoa]";
 					mes "1 Ansuz rune was made normally.";
-					set job_rune_edq2,job_rune_edq2 + 1;
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
 					close;
 				}
-				else {
-					set .@job_rune_crash_go,rand(1,(((job_rune_edq3+1)+.@job_rune_crash)+.@job_rune_crash_check));
-					if (.@job_rune_crash_go == 3) {
-						mes "[Rune Knight Renoa]";
-						mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "1 Ansuz rune was made normally.";
-						set job_rune_edq2,job_rune_edq2 + 1;
-						close;
-					}
-					else {
-						mes "[Rune Knight Renoa]";
-						mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "Refining the rune stone is a failure... Please try again.";
-						set job_rune_edq3,job_rune_edq3 + 1;
-						close;
-					}
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set @job_rune_crash_check, @job_rune_crash + @job_rune_miss_check;
+				if (rand(1,@job_rune_crash_check) == 3) {
+					mes "[Rune Knight Renoa]";
+					mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
+					next;
+					mes "[Rune Knight Renoa]";
+					mes "1 Ansuz rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
+					close;
 				}
+				mes "[Rune Knight Renoa]";
+				mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
+				next;
+				mes "[Rune Knight Renoa]";
+				mes "Refining the rune stone is a failure... Please try again.";
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set job_rune_edq3, @job_rune_miss_check;
+				close;
 			}
-			else if (.@job_rune_test_rand == 5) {
+			if (@job_rune_test_rand == 5) {
 				progressbar "ffff00",5;
 				mes "The magical power of the rune pitches and tosses while it is getting shaped.";
 				next;
 				mes "The rune flashing with this skyblue star shape is...";
 				next;
-				input .@input$;
-				set .@ans$,"Hagalaz";
-				set .@pc_ans$,.@input$;
-				set .@ans_chk,compare(.@ans$,.@pc_ans$);
-				if (.@ans_chk == 1) {
+				input .@inputstr$;
+				if (.@inputstr$ == "Hagalaz") {
 					mes "[Rune Knight Renoa]";
 					mes "Wow! This is great. The image of the rune stone in my head and the modelled rune stone matches perfectly. It's well made.";
 					next;
 					mes "[Rune Knight Renoa]";
 					mes "1 Hagalaz rune was made normally.";
-					set job_rune_edq2,job_rune_edq2 + 1;
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
 					close;
 				}
-				else {
-					set .@job_rune_crash_go,rand(1,(((job_rune_edq3+1)+.@job_rune_crash)+.@job_rune_crash_check));
-					if (.@job_rune_crash_go == 3) {
-						mes "[Rune Knight Renoa]";
-						mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "1 Hagalaz rune was made normally.";
-						set job_rune_edq2,job_rune_edq2 + 1;
-						close;
-					}
-					else {
-						mes "[Rune Knight Renoa]";
-						mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "Refining the rune stone is a failure... Please try again.";
-						set job_rune_edq3,job_rune_edq3 + 1;
-						close;
-					}
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set @job_rune_crash_check, @job_rune_crash + @job_rune_miss_check;
+				if (rand(1,@job_rune_crash_check) == 3) {
+					mes "[Rune Knight Renoa]";
+					mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
+					next;
+					mes "[Rune Knight Renoa]";
+					mes "1 Hagalaz rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
+					close;
 				}
+				mes "[Rune Knight Renoa]";
+				mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
+				next;
+				mes "[Rune Knight Renoa]";
+				mes "Refining the rune stone is a failure... Please try again.";
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set job_rune_edq3, @job_rune_miss_check;
+				close;
 			}
-			else if (.@job_rune_test_rand == 6) {
+			if (@job_rune_test_rand == 6) {
 				progressbar "ffff00",5;
 				mes "The magical power of the rune pitches and tosses while it is getting shaped.";
 				next;
 				mes "This flashing with a red diamond shape rune is...";
 				next;
-				input .@input$;
-				set .@ans$,"Kano";
-				set .@pc_ans$,.@input$;
-				set .@ans_chk,compare(.@ans$,.@pc_ans$);
-				if (.@ans_chk == 1) {
+				input .@inputstr$;
+				if (.@inputstr$ == "Kano") {
 					mes "[Rune Knight Renoa]";
 					mes "Wow! This is great. The image of the rune stone in my head and the modelled rune stone matches perfectly. It's well made.";
 					next;
 					mes "[Rune Knight Renoa]";
 					mes "1 Kano rune was made normally.";
-					set job_rune_edq2,job_rune_edq2 + 1;
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
 					close;
 				}
-				else {
-					set .@job_rune_crash_go,rand(1,(((job_rune_edq3+1)+.@job_rune_crash)+.@job_rune_crash_check));
-					if (.@job_rune_crash_go == 3) {
-						mes "[Rune Knight Renoa]";
-						mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "1 Kano rune was made normally.";
-						set job_rune_edq2,job_rune_edq2 + 1;
-						close;
-					}
-					else {
-						mes "[Rune Knight Renoa]";
-						mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "Refining the rune stone is a failure... Please try again.";
-						set job_rune_edq3,job_rune_edq3 + 1;
-						close;
-					}
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set @job_rune_crash_check, @job_rune_crash + @job_rune_miss_check;
+				if (rand(1,@job_rune_crash_check) == 3) {
+					mes "[Rune Knight Renoa]";
+					mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
+					next;
+					mes "[Rune Knight Renoa]";
+					mes "1 Kano rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
+					close;
 				}
+				mes "[Rune Knight Renoa]";
+				mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
+				next;
+				mes "[Rune Knight Renoa]";
+				mes "Refining the rune stone is a failure... Please try again.";
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set job_rune_edq3, @job_rune_miss_check;
+				close;
 			}
-			else if (.@job_rune_test_rand == 7) {
+			if (@job_rune_test_rand == 7) {
 				progressbar "ffff00",5;
 				mes "The magical power of the rune pitches and tosses while it is getting shaped.";
 				next;
 				mes "The rune flashing with this skyblue oblique line shape is...";
 				next;
-				input .@input$;
-				set .@ans$,"Rhydo";
-				set .@pc_ans$,.@input$;
-				set .@ans_chk,compare(.@ans$,.@pc_ans$);
-				if (.@ans_chk == 1) {
+				input .@inputstr$;
+				if (.@inputstr$ == "Rhydo") {
 					mes "[Rune Knight Renoa]";
 					mes "Wow! This is great. The image of the rune stone in my head and the modelled rune stone matches perfectly. It's well made.";
 					next;
 					mes "[Rune Knight Renoa]";
 					mes "1 Raido rune was made normally.";
-					set job_rune_edq2,job_rune_edq2 + 1;
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
 					close;
 				}
-				else {
-					set .@job_rune_crash_go,rand(1,(((job_rune_edq3+1)+.@job_rune_crash)+.@job_rune_crash_check));
-					if (.@job_rune_crash_go == 3) {
-						mes "[Rune Knight Renoa]";
-						mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "1 Raido rune was made normally.";
-						set job_rune_edq2,job_rune_edq2 + 1;
-						close;
-					}
-					else {
-						mes "[Rune Knight Renoa]";
-						mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "Refining the rune stone is a failure... Please try again.";
-						set job_rune_edq3,job_rune_edq3 + 1;
-						close;
-					}
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set @job_rune_crash_check, @job_rune_crash + @job_rune_miss_check;
+				if (rand(1,@job_rune_crash_check) == 3) {
+					mes "[Rune Knight Renoa]";
+					mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
+					next;
+					mes "[Rune Knight Renoa]";
+					mes "1 Raido rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
+					close;
 				}
+				mes "[Rune Knight Renoa]";
+				mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
+				next;
+				mes "[Rune Knight Renoa]";
+				mes "Refining the rune stone is a failure... Please try again.";
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set job_rune_edq3, @job_rune_miss_check;
+				close;
 			}
-			else if (.@job_rune_test_rand == 8) {
+			if (@job_rune_test_rand == 8) {
 				progressbar "ffff00",5;
 				mes "The magical power of the rune pitches and tosses while it is getting shaped.";
 				next;
 				mes "The rune flashing with this yellow round shape is...";
 				next;
-				input .@input$;
-				set .@ans$,"Turisus";
-				set .@pc_ans$,.@input$;
-				set .@ans_chk,compare(.@ans$,.@pc_ans$);
-				if (.@ans_chk == 1) {
+				input .@inputstr$;
+				if (.@inputstr$ == "Turisus") {
 					mes "[Rune Knight Renoa]";
 					mes "Wow! This is great. The image of the rune stone in my head and the modelled rune stone matches perfectly. It's well made.";
 					next;
 					mes "[Rune Knight Renoa]";
-					mes "1 Turisus rune was made normally.";
-					set job_rune_edq2,job_rune_edq2 + 1;
+					mes "1 Thurisaz rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
 					close;
 				}
-				else {
-					set .@job_rune_crash_go,rand(1,(((job_rune_edq3+1)+.@job_rune_crash)+.@job_rune_crash_check));
-					if (.@job_rune_crash_go == 3) {
-						mes "[Rune Knight Renoa]";
-						mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "1 Turisus rune was made normally.";
-						set job_rune_edq2,job_rune_edq2 + 1;
-						close;
-					}
-					else {
-						mes "[Rune Knight Renoa]";
-						mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "Refining the rune stone is a failure... Please try again.";
-						set job_rune_edq3,job_rune_edq3 + 1;
-						close;
-					}
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set @job_rune_crash_check, @job_rune_crash + @job_rune_miss_check;
+				if (rand(1,@job_rune_crash_check) == 3) {
+					mes "[Rune Knight Renoa]";
+					mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
+					next;
+					mes "[Rune Knight Renoa]";
+					mes "1 Thurisaz rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
+					close;
 				}
+				mes "[Rune Knight Renoa]";
+				mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
+				next;
+				mes "[Rune Knight Renoa]";
+				mes "Refining the rune stone is a failure... Please try again.";
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set job_rune_edq3, @job_rune_miss_check;
+				close;
 			}
-			else if (.@job_rune_test_rand == 9) {
+			if (@job_rune_test_rand == 9) {
 				progressbar "ffff00",5;
 				mes "The magical power of the rune pitches and tosses while it is getting shaped.";
 				next;
 				mes "The rune flashing with this emerald spiral line shape is...";
 				next;
-				input .@input$;
-				set .@ans$,"Dagaz";
-				set .@pc_ans$,.@input$;
-				set .@ans_chk,compare(.@ans$,.@pc_ans$);
-				if (.@ans_chk == 1) {
+				input .@inputstr$;
+				if (.@inputstr$ == "Dagaz") {
 					mes "[Rune Knight Renoa]";
 					mes "Wow! This is great. The image of the rune stone in my head and the modelled rune stone matches perfectly. It's well made.";
 					next;
 					mes "[Rune Knight Renoa]";
 					mes "1 Dagaz rune was made normally.";
-					set job_rune_edq2,job_rune_edq2 + 1;
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
 					close;
 				}
-				else {
-					set .@job_rune_crash_go,rand(1,(((job_rune_edq3+1)+.@job_rune_crash)+.@job_rune_crash_check));
-					if (.@job_rune_crash_go == 3) {
-						mes "[Rune Knight Renoa]";
-						mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "1 Dagaz rune was made normally.";
-						set job_rune_edq2,job_rune_edq2 + 1;
-						close;
-					}
-					else {
-						mes "[Rune Knight Renoa]";
-						mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "Refining the rune stone is a failure... Please try again.";
-						set job_rune_edq3,job_rune_edq3 + 1;
-						close;
-					}
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set @job_rune_crash_check, @job_rune_crash + @job_rune_miss_check;
+				if (rand(1,@job_rune_crash_check) == 3) {
+					mes "[Rune Knight Renoa]";
+					mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
+					next;
+					mes "[Rune Knight Renoa]";
+					mes "1 Dagaz rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
+					close;
 				}
+				mes "[Rune Knight Renoa]";
+				mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
+				next;
+				mes "[Rune Knight Renoa]";
+				mes "Refining the rune stone is a failure... Please try again.";
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set job_rune_edq3, @job_rune_miss_check;
+				close;
 			}
-			else if (.@job_rune_test_rand == 10) {
+			if (@job_rune_test_rand == 10) {
 				progressbar "ffff00",5;
 				mes "The magical power of the rune pitches and tosses while it is getting shaped.";
 				next;
 				mes "The rune flashing with this skyblue fan-shape is...";
 				next;
-				input .@input$;
-				set .@ans$,"Sowilo";
-				set .@pc_ans$,.@input$;
-				set .@ans_chk,compare(.@ans$,.@pc_ans$);
-				if (.@ans_chk == 1) {
+				input .@inputstr$;
+				if (.@inputstr$ == "Sowilo") {
 					mes "[Rune Knight Renoa]";
 					mes "Wow! This is great. The image of the rune stone in my head and the modelled rune stone matches perfectly. It's well made.";
 					next;
 					mes "[Rune Knight Renoa]";
 					mes "1 Sowilo rune was made normally.";
-					set job_rune_edq2,job_rune_edq2 + 1;
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
 					close;
 				}
-				else {
-					set .@job_rune_crash_go,rand(1,(((job_rune_edq3+1)+.@job_rune_crash)+.@job_rune_crash_check));
-					if (.@job_rune_crash_go == 3) {
-						mes "[Rune Knight Renoa]";
-						mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "1 Sowilo rune was made normally.";
-						set job_rune_edq2,job_rune_edq2 + 1;
-						close;
-					}
-					else {
-						mes "[Rune Knight Renoa]";
-						mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "Refining the rune stone is a failure... Please try again.";
-						set job_rune_edq3,job_rune_edq3 + 1;
-						close;
-					}
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set @job_rune_crash_check, @job_rune_crash + @job_rune_miss_check;
+				if (rand(1,@job_rune_crash_check) == 3) {
+					mes "[Rune Knight Renoa]";
+					mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
+					next;
+					mes "[Rune Knight Renoa]";
+					mes "1 Sowilo rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
+					close;
 				}
+				mes "[Rune Knight Renoa]";
+				mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
+				next;
+				mes "[Rune Knight Renoa]";
+				mes "Refining the rune stone is a failure... Please try again.";
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set job_rune_edq3, @job_rune_miss_check;
+				close;
 			}
-			else if (.@job_rune_test_rand == 11) {
+			if (@job_rune_test_rand == 11) {
 				progressbar "ffff00",5;
 				mes "The magical power of the rune pitches and tosses while it is getting shaped.";
 				next;
 				mes "The rune flashing with this yellow diamond shape is...";
 				next;
-				input .@input$;
-				set .@ans$,"Laguz";
-				set .@pc_ans$,.@input$;
-				set .@ans_chk,compare(.@ans$,.@pc_ans$);
-				if (.@ans_chk == 1) {
+				input .@inputstr$;
+				if (.@inputstr$ == "Laguz") {
 					mes "[Rune Knight Renoa]";
 					mes "Wow! This is great. The image of the rune stone in my head and the modelled rune stone matches perfectly. It's well made.";
 					next;
 					mes "[Rune Knight Renoa]";
 					mes "1 Laguz rune was made normally.";
-					set job_rune_edq2,job_rune_edq2 + 1;
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
 					close;
 				}
-				else {
-					set .@job_rune_crash_go,rand(1,(((job_rune_edq3+1)+.@job_rune_crash)+.@job_rune_crash_check));
-					if (.@job_rune_crash_go == 3) {
-						mes "[Rune Knight Renoa]";
-						mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "1 Laguz rune was made normally.";
-						set job_rune_edq2,job_rune_edq2 + 1;
-						close;
-					}
-					else {
-						mes "[Rune Knight Renoa]";
-						mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "Refining the rune stone is a failure... Please try again.";
-						set job_rune_edq3,job_rune_edq3 + 1;
-						close;
-					}
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set @job_rune_crash_check, @job_rune_crash + @job_rune_miss_check;
+				if (rand(1,@job_rune_crash_check) == 3) {
+					mes "[Rune Knight Renoa]";
+					mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
+					next;
+					mes "[Rune Knight Renoa]";
+					mes "1 Laguz rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
+					close;
 				}
+				mes "[Rune Knight Renoa]";
+				mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
+				next;
+				mes "[Rune Knight Renoa]";
+				mes "Refining the rune stone is a failure... Please try again.";
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set job_rune_edq3, @job_rune_miss_check;
+				close;
 			}
-			else if (.@job_rune_test_rand == 12) {
+			if (@job_rune_test_rand == 12) {
 				progressbar "ffff00",5;
 				mes "The magical power of the rune pitches and tosses while it is getting shaped.";
 				next;
 				mes "The rune flashing with this violet spiral line is...";
 				next;
-				input .@input$;
-				set .@ans$,"Isia";
-				set .@pc_ans$,.@input$;
-				set .@ans_chk,compare(.@ans$,.@pc_ans$);
-				if (.@ans_chk == 1) {
+				input .@inputstr$;
+				if (.@inputstr$ == "Isia") {
 					mes "[Rune Knight Renoa]";
 					mes "Wow! This is great. The image of the rune stone in my head and the modelled rune stone matches perfectly. It's well made.";
 					next;
 					mes "[Rune Knight Renoa]";
-					mes "1 Isia rune was made normally.";
-					set job_rune_edq2,job_rune_edq2 + 1;
+					mes "1 Isa rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
 					close;
 				}
-				else {
-					set .@job_rune_crash_go,rand(1,(((job_rune_edq3+1)+.@job_rune_crash)+.@job_rune_crash_check));
-					if (.@job_rune_crash_go == 3) {
-						mes "[Rune Knight Renoa]";
-						mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "1 Isia rune was made normally.";
-						set job_rune_edq2,job_rune_edq2 + 1;
-						close;
-					}
-					else {
-						mes "[Rune Knight Renoa]";
-						mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "Refining the rune stone is a failure... Please try again.";
-						set job_rune_edq3,job_rune_edq3 + 1;
-						close;
-					}
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set @job_rune_crash_check, @job_rune_crash + @job_rune_miss_check;
+				if (rand(1,@job_rune_crash_check) == 3) {
+					mes "[Rune Knight Renoa]";
+					mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
+					next;
+					mes "[Rune Knight Renoa]";
+					mes "1 Isa rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
+					close;
 				}
+				mes "[Rune Knight Renoa]";
+				mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
+				next;
+				mes "[Rune Knight Renoa]";
+				mes "Refining the rune stone is a failure... Please try again.";
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set job_rune_edq3, @job_rune_miss_check;
+				close;
 			}
-			else if (.@job_rune_test_rand == 13) {
+			if (@job_rune_test_rand == 13) {
 				progressbar "ffff00",5;
 				mes "The magical power of the rune pitches and tosses while it is getting shaped.";
 				next;
 				mes "The rune flashing with this silver spiral shape is...";
 				next;
-				input .@input$;
-				set .@ans$,"Pertz";
-				set .@pc_ans$,.@input$;
-				set .@ans_chk,compare(.@ans$,.@pc_ans$);
-				if (.@ans_chk == 1) {
+				input .@inputstr$;
+				if (.@inputstr$ == "Pertz") {
 					mes "[Rune Knight Renoa]";
 					mes "Wow! This is great. The image of the rune stone in my head and the modelled rune stone matches perfectly. It's well made.";
 					next;
 					mes "[Rune Knight Renoa]";
-					mes "1 Pertz rune was made normally.";
-					set job_rune_edq2,job_rune_edq2 + 1;
+					mes "1 Perth rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
 					close;
 				}
-				else {
-					set .@job_rune_crash_go,rand(1,(((job_rune_edq3+1)+.@job_rune_crash)+.@job_rune_crash_check));
-					if (.@job_rune_crash_go == 3) {
-						mes "[Rune Knight Renoa]";
-						mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "1 Pertz rune was made normally.";
-						set job_rune_edq2,job_rune_edq2 + 1;
-						close;
-					}
-					else {
-						mes "[Rune Knight Renoa]";
-						mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "Refining the rune stone is a failure... Please try again.";
-						set job_rune_edq3,job_rune_edq3 + 1;
-						close;
-					}
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set @job_rune_crash_check, @job_rune_crash + @job_rune_miss_check;
+				if (rand(1,@job_rune_crash_check) == 3) {
+					mes "[Rune Knight Renoa]";
+					mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
+					next;
+					mes "[Rune Knight Renoa]";
+					mes "1 Perth rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
+					close;
 				}
+				mes "[Rune Knight Renoa]";
+				mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
+				next;
+				mes "[Rune Knight Renoa]";
+				mes "Refining the rune stone is a failure... Please try again.";
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set job_rune_edq3, @job_rune_miss_check;
+				close;
 			}
-			else if (.@job_rune_test_rand == 14) {
+			if (@job_rune_test_rand == 14) {
 				progressbar "ffff00",5;
 				mes "The magical power of the rune pitches and tosses while it is getting shaped.";
 				next;
 				mes "The rune flashing with this gold star shape is...";
 				next;
-				input .@input$;
-				set .@ans$,"Verkana";
-				set .@pc_ans$,.@input$;
-				set .@ans_chk,compare(.@ans$,.@pc_ans$);
-				if (.@ans_chk == 1) {
+				input .@inputstr$;
+				if (.@inputstr$ == "Verkana") {
 					mes "[Rune Knight Renoa]";
 					mes "Wow! This is great. The image of the rune stone in my head and the modelled rune stone matches perfectly. It's well made.";
 					next;
 					mes "[Rune Knight Renoa]";
-					mes "1 Verkana rune was made normally.";
-					set job_rune_edq2,job_rune_edq2 + 1;
+					mes "1 Berkana rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
 					close;
 				}
-				else {
-					set .@job_rune_crash_go,rand(1,(((job_rune_edq3+1)+.@job_rune_crash)+.@job_rune_crash_check));
-					if (.@job_rune_crash_go == 3) {
-						mes "[Rune Knight Renoa]";
-						mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "1 Verkana rune was made normally.";
-						set job_rune_edq2,job_rune_edq2 + 1;
-						close;
-					}
-					else {
-						mes "[Rune Knight Renoa]";
-						mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "Refining the rune stone is a failure... Please try again.";
-						set job_rune_edq3,job_rune_edq3 + 1;
-						close;
-					}
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set @job_rune_crash_check, @job_rune_crash + @job_rune_miss_check;
+				if (rand(1,@job_rune_crash_check) == 3) {
+					mes "[Rune Knight Renoa]";
+					mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
+					next;
+					mes "[Rune Knight Renoa]";
+					mes "1 Berkana rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
+					close;
 				}
+				mes "[Rune Knight Renoa]";
+				mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
+				next;
+				mes "[Rune Knight Renoa]";
+				mes "Refining the rune stone is a failure... Please try again.";
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set job_rune_edq3, @job_rune_miss_check;
+				close;
 			}
-			else if (.@job_rune_test_rand == 15) {
+			if (@job_rune_test_rand == 15) {
 				progressbar "ffff00",5;
 				mes "The magical power of the rune pitches and tosses while it is getting shaped.";
 				next;
 				mes "The rune flashing with this yellow cone shape is...";
 				next;
-				input .@input$;
-				set .@ans$,"Gebo";
-				set .@pc_ans$,.@input$;
-				set .@ans_chk,compare(.@ans$,.@pc_ans$);
-				if (.@ans_chk == 1) {
+				input .@inputstr$;
+				if (.@inputstr$ == "Gebo") {
 					mes "[Rune Knight Renoa]";
 					mes "Wow! This is great. The image of the rune stone in my head and the modelled rune stone matches perfectly. It's well made.";
 					next;
 					mes "[Rune Knight Renoa]";
 					mes "1 Gebo rune was made normally.";
-					set job_rune_edq2,job_rune_edq2 + 1;
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
 					close;
 				}
-				else {
-					set .@job_rune_crash_go,rand(1,(((job_rune_edq3+1)+.@job_rune_crash)+.@job_rune_crash_check));
-					if (.@job_rune_crash_go == 3) {
-						mes "[Rune Knight Renoa]";
-						mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "1 Gebo rune was made normally.";
-						set job_rune_edq2,job_rune_edq2 + 1;
-						close;
-					}
-					else {
-						mes "[Rune Knight Renoa]";
-						mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "Refining the rune stone is a failure... Please try again.";
-						set job_rune_edq3,job_rune_edq3 + 1;
-						set job_rune_edq3,job_rune_edq3 + 1;
-						close;
-					}
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set @job_rune_crash_check, @job_rune_crash + @job_rune_miss_check;
+				if (rand(1,@job_rune_crash_check) == 3) {
+					mes "[Rune Knight Renoa]";
+					mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
+					next;
+					mes "[Rune Knight Renoa]";
+					mes "1 Gebo rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
+					close;
 				}
+				mes "[Rune Knight Renoa]";
+				mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
+				next;
+				mes "[Rune Knight Renoa]";
+				mes "Refining the rune stone is a failure... Please try again.";
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set job_rune_edq3, @job_rune_miss_check;
+				close;
 			}
-			else if (.@job_rune_test_rand == 16) {
+			if (@job_rune_test_rand == 16) {
 				progressbar "ffff00",5;
 				mes "The magical power of the rune pitches and tosses while it is getting shaped.";
 				next;
 				mes "The rune flashing with this emerald oblique line is...";
 				next;
-				input .@input$;
-				set .@ans$,"Algiz";
-				set .@pc_ans$,.@input$;
-				set .@ans_chk,compare(.@ans$,.@pc_ans$);
-				if (.@ans_chk == 1) {
+				input .@inputstr$;
+				if (.@inputstr$ == "Algiz") {
 					mes "[Rune Knight Renoa]";
 					mes "Wow! This is great. The image of the rune stone in my head and the modelled rune stone matches perfectly. It's well made.";
 					next;
 					mes "[Rune Knight Renoa]";
 					mes "1 Algiz rune was made normally.";
-					set job_rune_edq2,job_rune_edq2 + 1;
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
 					close;
 				}
-				else {
-					set .@job_rune_crash_go,rand(1,(((job_rune_edq3+1)+.@job_rune_crash)+.@job_rune_crash_check));
-					if (.@job_rune_crash_go == 3) {
-						mes "[Rune Knight Renoa]";
-						mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "1 Algiz rune was made normally.";
-						set job_rune_edq2,job_rune_edq2 + 1;
-						close;
-					}
-					else {
-						mes "[Rune Knight Renoa]";
-						mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "Refining the rune stone is a failure... Please try again.";
-						set job_rune_edq3,job_rune_edq3 + 1;
-						close;
-					}
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set @job_rune_crash_check, @job_rune_crash + @job_rune_miss_check;
+				if (rand(1,@job_rune_crash_check) == 3) {
+					mes "[Rune Knight Renoa]";
+					mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
+					next;
+					mes "[Rune Knight Renoa]";
+					mes "1 Algiz rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
+					close;
 				}
+				mes "[Rune Knight Renoa]";
+				mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
+				next;
+				mes "[Rune Knight Renoa]";
+				mes "Refining the rune stone is a failure... Please try again.";
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set job_rune_edq3, @job_rune_miss_check;
+				close;
 			}
-			else if (.@job_rune_test_rand == 17) {
+			if (@job_rune_test_rand == 17) {
 				progressbar "ffff00",5;
 				mes "The magical power of the rune pitches and tosses while it is getting shaped.";
 				next;
 				mes "The rune flashing with this gray diamond is...";
 				next;
-				input .@input$;
-				set .@ans$,"Arwez";
-				set .@pc_ans$,.@input$;
-				set .@ans_chk,compare(.@ans$,.@pc_ans$);
-				if (.@ans_chk == 1) {
+				input .@inputstr$;
+				if (.@inputstr$ == "Arwez") {
 					mes "[Rune Knight Renoa]";
 					mes "Wow! This is great. The image of the rune stone in my head and the modelled rune stone matches perfectly. It's well made.";
 					next;
 					mes "[Rune Knight Renoa]";
-					mes "1 Arwaz rune was made normally.";
-					set job_rune_edq2,job_rune_edq2 + 1;
+					mes "1 ewaz rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
 					close;
 				}
-				else {
-					set .@job_rune_crash_go,rand(1,(((job_rune_edq3+1)+.@job_rune_crash)+.@job_rune_crash_check));
-					if (.@job_rune_crash_go == 3) {
-						mes "[Rune Knight Renoa]";
-						mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "1 Arwaz rune was made normally.";
-						set job_rune_edq2,job_rune_edq2 + 1;
-						close;
-					}
-					else {
-						mes "[Rune Knight Renoa]";
-						mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "Refining the rune stone is a failure... Please try again.";
-						set job_rune_edq3,job_rune_edq3 + 1;
-						close;
-					}
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set @job_rune_crash_check, @job_rune_crash + @job_rune_miss_check;
+				if (rand(1,@job_rune_crash_check) == 3) {
+					mes "[Rune Knight Renoa]";
+					mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
+					next;
+					mes "[Rune Knight Renoa]";
+					mes "1 ewaz rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
+					close;
 				}
+				mes "[Rune Knight Renoa]";
+				mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
+				next;
+				mes "[Rune Knight Renoa]";
+				mes "Refining the rune stone is a failure... Please try again.";
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set job_rune_edq3, @job_rune_miss_check;
+				close;
 			}
-			else if (.@job_rune_test_rand == 18) {
+			if (@job_rune_test_rand == 18) {
 				progressbar "ffff00",5;
 				mes "The magical power of the rune pitches and tosses while it is getting shaped.";
 				next;
 				mes "The rune flashing with this gold round is...";
 				next;
-				input .@input$;
-				set .@ans$,"Teiwaz";
-				set .@pc_ans$,.@input$;
-				set .@ans_chk,compare(.@ans$,.@pc_ans$);
-				if (.@ans_chk == 1) {
+				input .@inputstr$;
+				if (.@inputstr$ == "Teiwaz") {
 					mes "[Rune Knight Renoa]";
 					mes "Wow! This is great. The image of the rune stone in my head and the modelled rune stone matches perfectly. It's well made.";
 					next;
 					mes "[Rune Knight Renoa]";
 					mes "1 Teiwaz rune was made normally.";
-					set job_rune_edq2,job_rune_edq2 + 1;
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
 					close;
 				}
-				else {
-					set .@job_rune_crash_go,rand(1,(((job_rune_edq3+1)+.@job_rune_crash)+.@job_rune_crash_check));
-					if (.@job_rune_crash_go == 3) {
-						mes "[Rune Knight Renoa]";
-						mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "1 Teiwaz rune was made normally.";
-						set job_rune_edq2,job_rune_edq2 + 1;
-						close;
-					}
-					else {
-						mes "[Rune Knight Renoa]";
-						mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "Refining the rune stone is a failure... Please try again.";
-						set job_rune_edq3,job_rune_edq3 + 1;
-						close;
-					}
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set @job_rune_crash_check, @job_rune_crash + @job_rune_miss_check;
+				if (rand(1,@job_rune_crash_check) == 3) {
+					mes "[Rune Knight Renoa]";
+					mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
+					next;
+					mes "[Rune Knight Renoa]";
+					mes "1 Teiwaz rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
+					close;
 				}
+				mes "[Rune Knight Renoa]";
+				mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
+				next;
+				mes "[Rune Knight Renoa]";
+				mes "Refining the rune stone is a failure... Please try again.";
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set job_rune_edq3, @job_rune_miss_check;
+				close;
 			}
-			else if (.@job_rune_test_rand == 19) {
+			if (@job_rune_test_rand == 19) {
 				progressbar "ffff00",5;
 				mes "The magical power of the rune pitches and tosses while it is getting shaped.";
 				next;
 				mes "The rune flashing with this emerald star shape is...";
 				next;
-				input .@input$;
-				set .@ans$,"Wunjo";
-				set .@pc_ans$,.@input$;
-				set .@ans_chk,compare(.@ans$,.@pc_ans$);
-				if (.@ans_chk == 1) {
+				input .@inputstr$;
+				if (.@inputstr$ == "Wunjo") {
 					mes "[Rune Knight Renoa]";
 					mes "Wow! This is great. The image of the rune stone in my head and the modelled rune stone matches perfectly. It's well made.";
 					next;
 					mes "[Rune Knight Renoa]";
 					mes "1 Wunjo rune was made normally.";
-					set job_rune_edq2,job_rune_edq2 + 1;
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
 					close;
 				}
-				else {
-					set .@job_rune_crash_go,rand(1,(((job_rune_edq3+1)+.@job_rune_crash)+.@job_rune_crash_check));
-					if (.@job_rune_crash_go == 3) {
-						mes "[Rune Knight Renoa]";
-						mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "1 Wunjo rune was made normally.";
-						set job_rune_edq2,job_rune_edq2 + 1;
-						close;
-					}
-					else {
-						mes "[Rune Knight Renoa]";
-						mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "Refining the rune stone is a failure... Please try again.";
-						set job_rune_edq3,job_rune_edq3 + 1;
-						close;
-					}
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set @job_rune_crash_check, @job_rune_crash + @job_rune_miss_check;
+				if (rand(1,@job_rune_crash_check) == 3) {
+					mes "[Rune Knight Renoa]";
+					mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
+					next;
+					mes "[Rune Knight Renoa]";
+					mes "1 Wunjo rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
+					close;
 				}
+				mes "[Rune Knight Renoa]";
+				mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
+				next;
+				mes "[Rune Knight Renoa]";
+				mes "Refining the rune stone is a failure... Please try again.";
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set job_rune_edq3, @job_rune_miss_check;
+				close;
 			}
-			else if (.@job_rune_test_rand == 20) {
+			if (@job_rune_test_rand == 20) {
 				progressbar "ffff00",5;
 				mes "The magical power of the rune pitches and tosses while it is getting shaped.";
 				next;
 				mes "The rune flashing with this yellow round is...";
 				next;
-				input .@input$;
-				set .@ans$,"Jera";
-				set .@pc_ans$,.@input$;
-				set .@ans_chk,compare(.@ans$,.@pc_ans$);
-				if (.@ans_chk == 1) {
+				input .@inputstr$;
+				if (.@inputstr$ == "Jera") {
 					mes "[Rune Knight Renoa]";
 					mes "Wow! This is great. The image of the rune stone in my head and the modelled rune stone matches perfectly. It's well made.";
 					next;
 					mes "[Rune Knight Renoa]";
-					mes "1 Jera rune was made normally.";
-					set job_rune_edq2,job_rune_edq2 + 1;
+					mes "1 Jara rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
 					close;
 				}
-				else {
-					set .@job_rune_crash_go,rand(1,(((job_rune_edq3+1)+.@job_rune_crash)+.@job_rune_crash_check));
-					if (.@job_rune_crash_go == 3) {
-						mes "[Rune Knight Renoa]";
-						mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "1 Jera rune was made normally.";
-						set job_rune_edq2,job_rune_edq2 + 1;
-						close;
-					}
-					else {
-						mes "[Rune Knight Renoa]";
-						mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "Refining the rune stone is a failure... Please try again.";
-						set job_rune_edq3,job_rune_edq3 + 1;
-						close;
-					}
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set @job_rune_crash_check, @job_rune_crash + @job_rune_miss_check;
+				if (rand(1,@job_rune_crash_check) == 3) {
+					mes "[Rune Knight Renoa]";
+					mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
+					next;
+					mes "[Rune Knight Renoa]";
+					mes "1 Jara rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
+					close;
 				}
+				mes "[Rune Knight Renoa]";
+				mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
+				next;
+				mes "[Rune Knight Renoa]";
+				mes "Refining the rune stone is a failure... Please try again.";
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set job_rune_edq3, @job_rune_miss_check;
+				close;
 			}
-			else if (.@job_rune_test_rand == 21) {
+			if (@job_rune_test_rand == 21) {
 				progressbar "ffff00",5;
 				mes "The magical power of the rune pitches and tosses while it is getting shaped.";
 				next;
 				mes "The rune flashing with this yellow fan-shape is...";
 				next;
-				input .@input$;
-				set .@ans$,"Nosiege";
-				set .@pc_ans$,.@input$;
-				set .@ans_chk,compare(.@ans$,.@pc_ans$);
-				if (.@ans_chk == 1) {
+				input .@inputstr$;
+				if (.@inputstr$ == "Nosiege") {
 					mes "[Rune Knight Renoa]";
 					mes "Wow! This is great. The image of the rune stone in my head and the modelled rune stone matches perfectly. It's well made.";
 					next;
 					mes "[Rune Knight Renoa]";
-					mes "1 Nosiege rune was made normally.";
-					set job_rune_edq2,job_rune_edq2 + 1;
+					mes "1 Nauthiz rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
 					close;
 				}
-				else {
-					set .@job_rune_crash_go,rand(1,(((job_rune_edq3+1)+.@job_rune_crash)+.@job_rune_crash_check));
-					if (.@job_rune_crash_go == 3) {
-						mes "[Rune Knight Renoa]";
-						mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "1 Nosiege rune was made normally.";
-						set job_rune_edq2,job_rune_edq2 + 1;
-						close;
-					}
-					else {
-						mes "[Rune Knight Renoa]";
-						mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "Refining the rune stone is a failure... Please try again.";
-						set job_rune_edq3,job_rune_edq3 + 1;
-						close;
-					}
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set @job_rune_crash_check, @job_rune_crash + @job_rune_miss_check;
+				if (rand(1,@job_rune_crash_check) == 3) {
+					mes "[Rune Knight Renoa]";
+					mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
+					next;
+					mes "[Rune Knight Renoa]";
+					mes "1 Nauthiz rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
+					close;
 				}
+				mes "[Rune Knight Renoa]";
+				mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
+				next;
+				mes "[Rune Knight Renoa]";
+				mes "Refining the rune stone is a failure... Please try again.";
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set job_rune_edq3, @job_rune_miss_check;
+				close;
 			}
-			else if (.@job_rune_test_rand == 22) {
+			if (@job_rune_test_rand == 22) {
 				progressbar "ffff00",5;
 				mes "The magical power of the rune pitches and tosses while it is getting shaped.";
 				next;
 				mes "The rune flashing with this violet diamond shape is...";
 				next;
-				input .@input$;
-				set .@ans$,"Ingz";
-				set .@pc_ans$,.@input$;
-				set .@ans_chk,compare(.@ans$,.@pc_ans$);
-				if (.@ans_chk == 1) {
+				input .@inputstr$;
+				if (.@inputstr$ == "Ingz") {
 					mes "[Rune Knight Renoa]";
 					mes "Wow! This is great. The image of the rune stone in my head and the modelled rune stone matches perfectly. It's well made.";
 					next;
 					mes "[Rune Knight Renoa]";
-					mes "1 Ingz rune was made normally.";
-					set job_rune_edq2,job_rune_edq2 + 1;
+					mes "1 Inguz rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
 					close;
 				}
-				else {
-					set .@job_rune_crash_go,rand(1,(((job_rune_edq3+1)+.@job_rune_crash)+.@job_rune_crash_check));
-					if (.@job_rune_crash_go == 3) {
-						mes "[Rune Knight Renoa]";
-						mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "1 Ingz rune was made normally.";
-						set job_rune_edq2,job_rune_edq2 + 1;
-						close;
-					}
-					else {
-						mes "[Rune Knight Renoa]";
-						mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "Refining the rune stone is a failure... Please try again.";
-						set job_rune_edq3,job_rune_edq3 + 1;
-						close;
-					}
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set @job_rune_crash_check, @job_rune_crash + @job_rune_miss_check;
+				if (rand(1,@job_rune_crash_check) == 3) {
+					mes "[Rune Knight Renoa]";
+					mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
+					next;
+					mes "[Rune Knight Renoa]";
+					mes "1 Inguz rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
+					close;
 				}
+				mes "[Rune Knight Renoa]";
+				mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
+				next;
+				mes "[Rune Knight Renoa]";
+				mes "Refining the rune stone is a failure... Please try again.";
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set job_rune_edq3, @job_rune_miss_check;
+				close;
 			}
-			else if (.@job_rune_test_rand == 23) {
+			if (@job_rune_test_rand == 23) {
 				progressbar "ffff00",5;
 				mes "The magical power of the rune pitches and tosses while it is getting shaped.";
 				next;
 				mes "The rune flashing with this silver round shape is...";
 				next;
-				input .@input$;
-				set .@ans$,"Fehu";
-				set .@pc_ans$,.@input$;
-				set .@ans_chk,compare(.@ans$,.@pc_ans$);
-				if (.@ans_chk == 1) {
+				input .@inputstr$;
+				if (.@inputstr$ == "Fehu") {
 					mes "[Rune Knight Renoa]";
 					mes "Wow! This is great. The image of the rune stone in my head and the modelled rune stone matches perfectly. It's well made.";
 					next;
 					mes "[Rune Knight Renoa]";
 					mes "1 Fehu rune was made normally.";
-					set job_rune_edq2,job_rune_edq2 + 1;
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
 					close;
 				}
-				else {
-					set .@job_rune_crash_go,rand(1,(((job_rune_edq3+1)+.@job_rune_crash)+.@job_rune_crash_check));
-					if (.@job_rune_crash_go == 3) {
-						mes "[Rune Knight Renoa]";
-						mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "1 Fehu rune was made normally.";
-						set job_rune_edq2,job_rune_edq2 + 1;
-						close;
-					}
-					else {
-						mes "[Rune Knight Renoa]";
-						mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "Refining the rune stone is a failure... Please try again.";
-						set job_rune_edq3,job_rune_edq3 + 1;
-						close;
-					}
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set @job_rune_crash_check, @job_rune_crash + @job_rune_miss_check;
+				if (rand(1,@job_rune_crash_check) == 3) {
+					mes "[Rune Knight Renoa]";
+					mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
+					next;
+					mes "[Rune Knight Renoa]";
+					mes "1 Fehu rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
+					close;
 				}
+				mes "[Rune Knight Renoa]";
+				mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
+				next;
+				mes "[Rune Knight Renoa]";
+				mes "Refining the rune stone is a failure... Please try again.";
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set job_rune_edq3, @job_rune_miss_check;
+				close;
 			}
-			else if (.@job_rune_test_rand == 24) {
+			if (@job_rune_test_rand == 24) {
 				progressbar "ffff00",5;
 				mes "The magical power of the rune pitches and tosses while it is getting shaped.";
 				next;
 				mes "The rune flashing with this violet spiral is...";
 				next;
-				input .@input$;
-				set .@ans$,"Urj";
-				set .@pc_ans$,.@input$;
-				set .@ans_chk,compare(.@ans$,.@pc_ans$);
-				if (.@ans_chk == 1) {
+				input .@inputstr$;
+				if (.@inputstr$ == "Urj") {
 					mes "[Rune Knight Renoa]";
 					mes "Wow! This is great. The image of the rune stone in my head and the modelled rune stone matches perfectly. It's well made.";
 					next;
 					mes "[Rune Knight Renoa]";
-					mes "1 Urj rune was made normally.";
-					set job_rune_edq2,job_rune_edq2 + 1;
+					mes "1 Uruz rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
 					close;
 				}
-				else {
-					set .@job_rune_crash_go,rand(1,(((job_rune_edq3+1)+.@job_rune_crash)+.@job_rune_crash_check));
-					if (.@job_rune_crash_go == 3) {
-						mes "[Rune Knight Renoa]";
-						mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "1 Urj rune was made normally.";
-						set job_rune_edq2,job_rune_edq2 + 1;
-						close;
-					}
-					else {
-						mes "[Rune Knight Renoa]";
-						mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
-						next;
-						mes "[Rune Knight Renoa]";
-						mes "Refining the rune stone is a failure... Please try again.";
-						set job_rune_edq3,job_rune_edq3 + 1;
-						close;
-					}
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set @job_rune_crash_check, @job_rune_crash + @job_rune_miss_check;
+				if (rand(1,@job_rune_crash_check) == 3) {
+					mes "[Rune Knight Renoa]";
+					mes "Ah, you got lucky! Althought the stones don't match perfectly, they are close enough. It's quite rare, though.";
+					next;
+					mes "[Rune Knight Renoa]";
+					mes "1 Uruz rune was made normally.";
+					set @job_rune_success, job_rune_edq2;
+					set @job_rune_success_check, @job_rune_success + 1;
+					set job_rune_edq2, @job_rune_success_check;
+					close;
 				}
+				mes "[Rune Knight Renoa]";
+				mes "It's a natural result. The image of the rune stone in my head and the modelled rune stone didn't match so the rate of success just gets extremely lower.";
+				next;
+				mes "[Rune Knight Renoa]";
+				mes "Refining the rune stone is a failure... Please try again.";
+				set @job_rune_miss, job_rune_edq3;
+				set @job_rune_miss_check, @job_rune_miss + 1;
+				set job_rune_edq3, @job_rune_miss_check;
+				close;
 			}
 		case 2:
 			close;
 		}
 	}
-	else {
-		mes "[Rune Knight Renoa]";
-		mes "You don't want to touch that thing. Believe me, I'm not kidding.";
-		close;
-	}
+	mes "[Rune Knight Renoa]";
+	mes "You don't want to touch that thing. Believe me, I'm not kidding.";
+	close;
 }
 
 job3_rune01,40,54,1	script	Runes and Rune Knights	844,{
+
 	if (job_rune_edq < 8) {
 		mes "[Rune Knight Renoa]";
 		mes "Besides touching stuff in this place without permission. Would you be able to understand the contents of the book?";
@@ -2108,11 +2139,11 @@ job3_rune01,40,54,1	script	Runes and Rune Knights	844,{
 		mes "Hey Renoa go easy on that Knight. You there too, you'd better stop touching stuff here without a permission.";
 		close;
 	}
-	else if (job_rune_edq > 7) {
-		while(1) {
-			switch(select("The birth of Rune Knights:Runes and Magic Energy:Stop Reading")) {
+	if (job_rune_edq > 7) {
+		while (1) {
+			switch (select("The birth of Rune Knights:Runes and Magic Energy:Stop Reading")) {
 			case 1:
-				set job_rune_book1_1,job_rune_book1_1+job_rune_book1_1;
+				set @job_rune_book1_1, @job_rune_book1_1 + 1;
 				mes "Rune Knights are the gathering of evolved swordmen who have achieved the harmony of sword and magic.";
 				next;
 				mes "It had been achieved by the legendary swordman Beljeve who's been known as a Sword Master and a founder of dispensable expenditure.";
@@ -2137,7 +2168,7 @@ job3_rune01,40,54,1	script	Runes and Rune Knights	844,{
 				next;
 				break;
 			case 2:
-				set job_rune_book1_2,job_rune_book1_2+1;
+				set @job_rune_book1_2, @job_rune_book1_2 + 1;
 				mes "A jewel called as a Rune is a medium that contains the formless existence, the magical power and the essence of it can be used directly.";
 				next;
 				mes "The Laphine Sage, Serpeone and the founder of Rune Knights Beljeve co-researched runes and the result of their research has only recently become to be known to the world.";
@@ -2150,20 +2181,24 @@ job3_rune01,40,54,1	script	Runes and Rune Knights	844,{
 				next;
 				break;
 			case 3:
-				if ((job_rune_book1_1 > 0) && (job_rune_book1_2 > 0) && (job_rune_edq == 8))
+				if ((@job_rune_book1_1 > 0) && (@job_rune_book1_2 > 0) && (job_rune_edq == 8)) {
 					set job_rune_edq,9;
-				else if ((job_rune_book1_1 > 0) && (job_rune_book1_2 > 0) && (job_rune_edq == 9))
+				} else if ((@job_rune_book1_1 > 0) && (@job_rune_book1_2 > 0) && (job_rune_edq == 9)) {
 					set job_rune_edq,10;
-				else if ((job_rune_book1_1 > 0) && (job_rune_book1_2 > 0) && (job_rune_edq == 10))
+				} else if ((@job_rune_book1_1 > 0) && (@job_rune_book1_2 > 0) && (job_rune_edq == 10)) {
 					set job_rune_edq,11;
-				close;
+				}
+				break;
 			}
+			break;
 		}
+		close;
 	}
 	end;
 }
 
 job3_rune01,43,44,1	script	The Principles of Runes	844,{
+
 	if (job_rune_edq < 8) {
 		mes "[Rune Knight Renoa]";
 		mes "Besides touching stuff in this place without permission. Would you be able to understand the contents of the book?";
@@ -2172,11 +2207,11 @@ job3_rune01,43,44,1	script	The Principles of Runes	844,{
 		mes "Hey Renoa go easy on that Knight. You there too, you'd better stop touching stuff here without a permission.";
 		close;
 	}
-	else if (job_rune_edq > 7) {
-		while(1) {
-			switch(select("The principle use of Runes:The types of Runes:Stop Reading")) {
+	if (job_rune_edq > 7) {
+		while (1) {
+			switch (select("The principle use of Runes:The types of Runes:Stop Reading")) {
 			case 1:
-				set job_rune_book2_1,job_rune_book2_1+1;
+				set @job_rune_book2_1, @job_rune_book2_1 + 1;
 				mes "A rune is a kind of symbol that's been used on the Rune Midgard continent since ancient times. Up until now it has only been used by occult circles.";
 				next;
 				mes "A rune is a kind of symbol that's been used on the Rune Midgard continent since ancient times. Up until now it has only been used by occult circles.";
@@ -2189,7 +2224,7 @@ job3_rune01,43,44,1	script	The Principles of Runes	844,{
 				next;
 				break;
 			case 2:
-				set job_rune_book2_2,job_rune_book2_2+1;
+				set @job_rune_book2_2, @job_rune_book2_2 + 1;
 				mes "The runes are created from a a total of 25 small stones and they are very fragile to physical shock. So they require special care when being handled.";
 				next;
 				mes "The 25 stones have different meanings and among these, 14 when counter-positioned can have entirely different power and meaning from the original so it's essential to study the exceptional aspects.";
@@ -2204,20 +2239,24 @@ job3_rune01,43,44,1	script	The Principles of Runes	844,{
 				next;
 				break;
 			case 3:
-				if ((job_rune_book2_1 > 0) && (job_rune_book2_2 > 0) && (job_rune_edq == 8))
+				if ((@job_rune_book2_1 > 0) && (@job_rune_book2_2 > 0) && (job_rune_edq == 8)) {
 					set job_rune_edq,9;
-				else if ((job_rune_book2_1 > 0) && (job_rune_book2_2 > 0) && (job_rune_edq == 9))
+				}else if ((@job_rune_book2_1 > 0) && (@job_rune_book2_2 > 0) && (job_rune_edq == 9)) {
 					set job_rune_edq,10;
-				else if ((job_rune_book2_1 > 0) && (job_rune_book2_2 > 0) && (job_rune_edq == 10))
+				}else if ((@job_rune_book2_1 > 0) && (@job_rune_book2_2 > 0) && (job_rune_edq == 10)) {
 					set job_rune_edq,11;
-				close;
+				}
+				break;
 			}
+			break;
 		}
+		close;
 	}
 	end;
 }
 
 job3_rune01,50,36,1	script	Runes, Make & Use	844,{
+
 	if (job_rune_edq < 8) {
 		mes "[Rune Knight Renoa]";
 		mes "Besides touching stuff in this place without permission. Would you be able to understand the contents of the book?";
@@ -2226,11 +2265,11 @@ job3_rune01,50,36,1	script	Runes, Make & Use	844,{
 		mes "Hey Renoa go easy on that Knight. You there too, you'd better stop touching stuff here without a permission.";
 		close;
 	}
-	else if (job_rune_edq > 7) {
-		while(1) {
-			switch(select("The Making of Rune Stones:Rune Stone Ability Details:Stop Reading")) {
+	if (job_rune_edq > 7) {
+		while (1) {
+			switch (select("The Making of Rune Stones:Rune Stone Ability Details:Stop Reading")) {
 			case 1:
-				set job_rune_book3_1,job_rune_book3_1+1;
+				set @job_rune_book3_1, @job_rune_book3_1 + 1;
 				mes "The making of Rune stones is achieved through a skill called rune mastery which is learned when one becomes a Rune Knight.";
 				next;
 				mes "Rune Mastery is like a code that's been put into the body as a mark of a Rune Knight.";
@@ -2245,8 +2284,8 @@ job3_rune01,50,36,1	script	Runes, Make & Use	844,{
 				next;
 				break;
 			case 2:
-				set job_rune_book3_2,job_rune_book3_2+1;
-				switch(select("Chapter One:Chapter Two:Chapter Three:Chapter Four:Stop Reading")) {
+				set @job_rune_book3_2, @job_rune_book3_2 + 1;
+				switch (select("Chapter One:Chapter Two:Chapter Three:Chapter Four:Stop Reading")) {
 				case 1:
 					mes "Ehwaz - This rune means the enhancement of luck and positive power. It shapes the source in the form of a red spiral in a Rune Furnace.";
 					next;
@@ -2309,21 +2348,25 @@ job3_rune01,50,36,1	script	Runes, Make & Use	844,{
 				}
 				break;
 			case 3:
-				if ((job_rune_book3_1 > 0) && (job_rune_book3_2 > 0) && (job_rune_edq == 8))
+				if ((@job_rune_book3_1 > 0) && (@job_rune_book3_2 > 0) && (job_rune_edq == 8)) {
 					set job_rune_edq,9;
-				else if ((job_rune_book3_1 > 0) && (job_rune_book3_2 > 0) && (job_rune_edq == 9))
+				}else if ((@job_rune_book3_1 > 0) && (@job_rune_book3_2 > 0) && (job_rune_edq == 9)) {
 					set job_rune_edq,10;
-				else if ((job_rune_book3_1 > 0) && (job_rune_book3_2 > 0) && (job_rune_edq == 10))
+				}else if ((@job_rune_book3_1 > 0) && (@job_rune_book3_2 > 0) && (job_rune_edq == 10)) {
 					set job_rune_edq,11;
-				close;
+				}
+				break;
 			}
+			break;
 		}
+		close;
 	}
 	end;
 }
 
 mid_camp,238,250,3	script	Rune Knight Sage Guard	468,{
-	if (BaseClass != Job_Swordman) {
+
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
 		mes "[Rune Knight Sage Guard]";
 		mes "The sage Serpeone is the one who has been with us since the beginning of the Rune Knights.";
 		next;
@@ -2331,13 +2374,13 @@ mid_camp,238,250,3	script	Rune Knight Sage Guard	468,{
 		mes "I am very proud as a Rune Knight to serve beside her.";
 		close;
 	}
-	else if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
+	if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 		if (job_rune_edq < 11) {
 			mes "[Rune Knight Sage Guard]";
 			mes "You might be walking the way of the sword but you are not a Rune Knight yet. Don't wander around here too much if you know what I mean.";
 			close;
 		}
-		else if (job_rune_edq > 10) {
+		if (job_rune_edq > 10) {
 			mes "[Rune Knight Sage Guard]";
 			mes "Splendide is the land of the Laphine. We are offering a convenience by an agreement between the Rune Knights and the expeditionary team.";
 			next;
@@ -2349,33 +2392,32 @@ mid_camp,238,250,3	script	Rune Knight Sage Guard	468,{
 			close;
 		}
 	}
-	else {
-		mes "[Rune Knight Sage Guard]";
-		mes "Hanging around this man won't be good for you. Keep going the way you were heading.";
-		close;
-	}
+	mes "[Rune Knight Sage Guard]";
+	mes "Hanging around this man won't be good for you. Keep going the way you were heading.";
+	close;
 }
 
-mid_camp,13,138,3	script	Dispatched Rune Knight#1	83,{
+mid_camp,13,138,3	script	Dispatched Rune Knight	83,{
+
 	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
-		mes "[Dispatch Rune Knight Agent]";
+		mes "[Dispatched Rune Knight]";
 		mes "Thanks for your work. We will continue our mission for the Rune Knight testers.";
 		close;
 	}
-	else if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
+	if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 		if (job_rune_edq < 11) {
-			mes "[Dispatch Rune Knight Agent]";
+			mes "[Dispatched Rune Knight]";
 			mes "Shh... Our mission is not something to be revealed to the public. Please just move along.";
 			close;
 		}
-		else if (job_rune_edq > 10) {
-			mes "[Dispatch Rune Knight Agent]";
+		if (job_rune_edq > 10) {
+			mes "[Dispatched Rune Knight]";
 			mes "I've been waiting for you Rune Knight candidate. I'm helping the candidates as a favor to Ms. Serpeone.";
 			next;
-			mes "[Dispatch Rune Knight Agent]";
+			mes "[Dispatched Rune Knight]";
 			mes "Do you want to go out to the Splendide field?";
 			next;
-			switch(select("Move to Splendide field:Cancel.")) {
+			switch (select("Move to Splendide field:Cancel.")) {
 			case 1:
 				warp "spl_fild01",355,325;
 				end;
@@ -2384,14 +2426,13 @@ mid_camp,13,138,3	script	Dispatched Rune Knight#1	83,{
 			}
 		}
 	}
-	else {
-		mes "[Dispatch Rune Knight Agent]";
-		mes "Shh... Our mission is not something to be revealed to the public. Please just move along.";
-		close;
-	}
+	mes "[Dispatched Rune Knight]";
+	mes "Shh... Our mission is not something to be revealed to the public. Please just move along.";
+	close;
 }
 
-spl_fild02,13,241,0	script	#roadblock1	-1,10,10,{
+spl_fild02,13,241,0	script	#roadblock1	139,10,10,{
+
 OnTouch:
 	if ((job_rune_edq > 0) && (job_rune_edq < 23)) {
 		mes "-Whispers of the sage Serpeone are delivered to my mind.-";
@@ -2403,30 +2444,32 @@ OnTouch:
 		mes "Please understand this and be devoted to this test.";
 		close2;
 		warp "spl_fild02",25,245;
+		end;
 	}
 	end;
 }
 
 spl_fild01,361,327,3	script	Dispatched Rune Knight#2	83,{
+
 	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
-		mes "[Dispatch Rune Knight Agent]";
+		mes "[Dispatched Rune Knight]";
 		mes "Thanks for your work. We will continue our mission for the Rune Knight testers.";
 		close;
 	}
-	else if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
+	if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 		if (job_rune_edq < 11) {
-			mes "[Dispatch Rune Knight Agent]";
+			mes "[Dispatched Rune Knight]";
 			mes "Shh... Our mission is not something to be revealed to the public. Please just move along.";
-			close;
+			close2;
 		}
-		else if (job_rune_edq > 10) {
-			mes "[Dispatch Rune Knight Agent]";
+		if (job_rune_edq > 10) {
+			mes "[Dispatched Rune Knight]";
 			mes "I've been waiting for you Rune Knight candidate. I'm helping the candidates as a favor to Ms. Serpeone.";
 			next;
-			mes "[Dispatch Rune Knight Agent]";
+			mes "[Dispatched Rune Knight]";
 			mes "Do you want to go back to the expeditionary team's post?";
 			next;
-			switch(select("Yes please.:Not yet.")) {
+			switch (select("Yes please.:Not yet.")) {
 			case 1:
 				warp "mid_camp",50,153;
 				end;
@@ -2434,15 +2477,15 @@ spl_fild01,361,327,3	script	Dispatched Rune Knight#2	83,{
 				close;
 			}
 		}
+		end;
 	}
-	else {
-		mes "[Dispatch Rune Knight Agent]";
-		mes "Shh... Our mission is not something to be revealed to the public. Please just move along.";
-		close;
-	}
+	mes "[Dispatched Rune Knight]";
+	mes "Shh... Our mission is not something to be revealed to the public. Please just move along.";
+	close;
 }
 
 mid_camp,235,250,3	script	Sage Serpeone	435,{
+
 	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
 		mes "[Sage Serpeone]";
 		mes "Finally you are an honorable Rune Knight. I'm happy to help you.";
@@ -2454,7 +2497,7 @@ mid_camp,235,250,3	script	Sage Serpeone	435,{
 		mes "Please be devoted to the Runes and hopefully your life will be illuminated by it.";
 		close;
 	}
-	else if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
+	if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 		if (job_rune_edq < 12) {
 			mes "[Sage Serpeone]";
 			mes "It must be surprising that I, a Laphine, am here in your people's base.";
@@ -2472,7 +2515,7 @@ mid_camp,235,250,3	script	Sage Serpeone	435,{
 			mes "More than that... I cannot tell you more. I cannot speak carelessly since I'm speaking for my people here and I am on a special pass to be allowed in your camp.";
 			close;
 		}
-		else if (job_rune_edq == 12) {
+		if (job_rune_edq == 12) {
 			mes "[Sage Serpeone]";
 			mes "Welcome, you are the one taking the job training test of the Rune Knights. I am Serpeone.";
 			next;
@@ -2528,20 +2571,16 @@ mid_camp,235,250,3	script	Sage Serpeone	435,{
 			setquest 3212;
 			close;
 		}
-		else if (job_rune_edq == 13) {
+		if (job_rune_edq == 13) {
 			mes "[Sage Serpeone]";
 			mes "Are you gathering enough magical energy? Or do you have any questions?";
 			next;
-			switch(select("I've gathered enough energy.:To the gathering place.:Stop the conversation.")) {
+			switch (select("I've gathered enough energy.:To the gathering place.:Stop the conversation.")) {
 			case 1:
 				mes "[Sage Serpeone]";
 				mes "Is it so? Then let's check this out.";
 				next;
-				set .@rune_hunt1,checkquest(3209,HUNTING);
-				set .@rune_hunt2,checkquest(3210,HUNTING);
-				set .@rune_hunt3,checkquest(3211,HUNTING);
-				set .@rune_hunt4,checkquest(3212,HUNTING);
-				if ((.@rune_hunt1 == 2) && (.@rune_hunt2 == 2) && (.@rune_hunt3 == 2) && (.@rune_hunt4 == 2)) {
+				if ((checkquest(3209,HUNTING) == 2) && (checkquest(3210,HUNTING) == 2) && (checkquest(3211,HUNTING) == 2) && (checkquest(3212,HUNTING) == 2)) {
 					mes "[Sage Serpeone]";
 					mes "Umm, this is great. Enough amount of living body magical energy has accumulated in your body.";
 					next;
@@ -2559,17 +2598,14 @@ mid_camp,235,250,3	script	Sage Serpeone	435,{
 					completequest 3210;
 					completequest 3211;
 					completequest 3212;
-					close;
+					close2;
 				}
-				else {
-					mes "[Sage Serpeone]";
-					mes "You haven't collected enough magical energy yet.";
-					next;
-					mes "[Sage Serpeone]";
-					mes "Please brace yourself and gather enough energy by dispatching those monsters.";
-					close;
-				}
-				break;
+				mes "[Sage Serpeone]";
+				mes "You haven't collected enough magical energy yet.";
+				next;
+				mes "[Sage Serpeone]";
+				mes "Please brace yourself and gather enough energy by dispatching those monsters.";
+				close;
 			case 2:
 				mes "[Sage Serpeone]";
 				mes "You want to go back to the gathering place? If you want I'll send you back there immediately. But to continue the test you'll need to come and see me again.";
@@ -2577,23 +2613,22 @@ mid_camp,235,250,3	script	Sage Serpeone	435,{
 				mes "[Sage Serpeone]";
 				mes "Do you want to go back the Rune Knight gathering place?";
 				next;
-				switch(select("I want to go back.:I want to cancel.")) {
+				switch (select("I want to go back.:I want to cancel.")) {
 				case 1:
 					warp "job3_rune01",80,65;
 					end;
 				case 2:
 					close;
 				}
-				break;
 			case 3:
 				close;
 			}
 		}
-		else if (job_rune_edq == 14) {
+		if (job_rune_edq == 14) {
 			mes "[Sage Serpeone]";
 			mes "Are you ready to go back to the Rune Knight gathering place?";
 			next;
-			switch(select("I want to go back now.:I am not ready yet.")) {
+			switch (select("I want to go back now.:I am not ready yet.")) {
 			case 1:
 				warp "job3_rune01",80,65;
 				end;
@@ -2601,7 +2636,7 @@ mid_camp,235,250,3	script	Sage Serpeone	435,{
 				close;
 			}
 		}
-		else if (job_rune_edq > 14) {
+		if (job_rune_edq > 14) {
 			mes "[Sage Serpeone]";
 			mes "Are the preparations going well?";
 			next;
@@ -2611,7 +2646,7 @@ mid_camp,235,250,3	script	Sage Serpeone	435,{
 			mes "[Sage Serpeone]";
 			mes "Then I'll send you to the Rune Knight gathering place where you should be.";
 			next;
-			switch(select("I'll go back now.:I'll stay.")) {
+			switch (select("I'll go back now.:I'll stay.")) {
 			case 1:
 				warp "job3_rune01",80,65;
 				end;
@@ -2619,31 +2654,29 @@ mid_camp,235,250,3	script	Sage Serpeone	435,{
 				close;
 			}
 		}
+		end;
 	}
-	else {
-		mes "[Sage Serpeone]";
-		mes "It must be surprising that I, a Laphine, am here in your people's base.";
-		next;
-		mes "[Sage Serpeone]";
-		mes "Some of us have been in contact with humans in special situations since even before the dimensional rift opened up.";
-		next;
-		mes "[Sage Serpeone]";
-		mes "I have been having correspondences with humans for a number of years now. It was for mutual interests. Anyway, that's how I learned your language.";
-		next;
-		mes "[Sage Serpeone]";
-		mes "Maybe there needs to be a machine that can translate the Laphine language to make it easier for humans to understand us.";
-		next;
-		mes "[Sage Serpeone]";
-		mes "More than that... I cannot tell you more. I cannot speak carelessly since I'm speaking for my people here and I am on a special pass to be allowed in your camp.";
-		close;
-	}
+	mes "[Sage Serpeone]";
+	mes "It must be surprising that I, a Laphine, am here in your people's base.";
+	next;
+	mes "[Sage Serpeone]";
+	mes "Some of us have been in contact with humans in special situations since even before the dimensional rift opened up.";
+	next;
+	mes "[Sage Serpeone]";
+	mes "I have been having correspondences with humans for a number of years now. It was for mutual interests. Anyway, that's how I learned your language.";
+	next;
+	mes "[Sage Serpeone]";
+	mes "Maybe there needs to be a machine that can translate the Laphine language to make it easier for humans to understand us.";
+	next;
+	mes "[Sage Serpeone]";
+	mes "More than that... I cannot tell you more. I cannot speak carelessly since I'm speaking for my people here and I am on a special pass to be allowed in your camp.";
+	close;
 }
 
 job3_rune01,114,50,3	script	Rune Knight Velpino	468,{
+
 	set .@strRetPart1,getequipisequiped(EQI_HEAD_TOP);
 	set .@strRetPart2,getequipisequiped(EQI_ARMOR);
-	set .@strRetPart3,getequipisequiped(EQI_HAND_L);
-	set .@strRetPart4,getequipisequiped(EQI_HAND_R);
 	set .@strRetPart5,getequipisequiped(EQI_GARMENT);
 	set .@strRetPart6,getequipisequiped(EQI_SHOES);
 	set .@strRetPart7,getequipisequiped(EQI_ACC_L);
@@ -2655,7 +2688,7 @@ job3_rune01,114,50,3	script	Rune Knight Velpino	468,{
 		mes "You still smell like a fledging. Bring honor to the Rune Knights and raise your power...";
 		close;
 	}
-	else if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
+	if (Class == Job_Knight || Class == Job_Lord_Knight || Class == Job_Baby_Knight) {
 		if (job_rune_edq < 17) {
 			mes "A very cold feeling Rune Knight dressed in black from head to toe is scowling at me.";
 			next;
@@ -2665,7 +2698,7 @@ job3_rune01,114,50,3	script	Rune Knight Velpino	468,{
 			mes "Hey... What about me? I'm not like that!";
 			close;
 		}
-		else if (job_rune_edq == 17) {
+		if (job_rune_edq == 17) {
 			mes "[Rune Knight Velpino]";
 			mes "I didn't think that a candidate would make it to me today...";
 			next;
@@ -2699,7 +2732,7 @@ job3_rune01,114,50,3	script	Rune Knight Velpino	468,{
 			changequest 3216,3217;
 			close;
 		}
-		else if ((job_rune_edq > 17) && (job_rune_edq < 21)) {
+		if ((job_rune_edq > 17) && (job_rune_edq < 21)) {
 			set .@rune_crush,countitem(12388);
 			set .@rune_storm,countitem(12389);
 			set .@rune_millenium,countitem(12390);
@@ -2709,39 +2742,34 @@ job3_rune01,114,50,3	script	Rune Knight Velpino	468,{
 				mes "If all of your preparations are done, I'll send you to the final test field.";
 				set job_rune_edq,18;
 				next;
-				switch(select("Enter the final test field.:I'm not ready yet.")) {
+				switch (select("Enter the final test field.:I'm not ready yet.")) {
 				case 1:
 					if ((.@strRetPart1 == 0) && (.@strRetPart2 == 0) && (.@strRetPart5 == 0) && (.@strRetPart6 == 0) && (.@strRetPart7 == 0) && (.@strRetPart8 == 0) && (.@strRetPart10 == 0) && (.@strRetPart11 == 0)) {
-						set .@test_miss_check,checkquest(3220,PLAYTIME);
-						if (.@test_miss_check == -1) {
-							if ($@job_rune_test1 == 0) {
+						if (checkquest(3220,PLAYTIME) == -1 || checkquest(3220,PLAYTIME) == 0) {
+							if ($@08_job_rune_test1 == 0) {
 								if (Weight < 4001) {
-									set $@job_rune_test1,1;
+									set $@08_job_rune_test1,1;
 									//ConsumeSpecialItem Rune_Kn_Test_Int
-									sc_start SC_INCINT,300000,40;
 									getitem 12389,30; //Runstone_Storm
 									getitem 12390,30; //Runstone_Millennium
-									if (checkquest(3320) > -1) erasequest 3220;
+									erasequest 3220;
 									setquest 3220;
 									warp "job3_rune02",38,40;
+									end;
 								}
-								else {
-									mes "[Rune Knight Velpino]";
-									mes "For this test, only a one-hand weapon, a shield or a two-handed weapon can be equipped. Keep your other equipments with the Kafra Employee in the center.";
-									close;
-								}
-							}
-							else {
-								// custom translation
 								mes "[Rune Knight Velpino]";
-								mes "Looks like there is already an applicant in the test room.";
-								next;
-								mes "[Rune Knight Velpino]";
-								mes "Be patient and wait your turn,";
+								mes "For this test, only a one-hand weapon, a shield or a two-handed weapon can be equipped. Keep your other equipments with the Kafra Employee in the center.";
 								close;
 							}
+							// custom translation
+							mes "[Rune Knight Velpino]";
+							mes "Looks like there is already an applicant in the test room.";
+							next;
+							mes "[Rune Knight Velpino]";
+							mes "Be patient and wait your turn,";
+							close;
 						}
-						else if ((.@test_miss_check == 0) || (.@test_miss_check == 1)) {
+						if (checkquest(3220,PLAYTIME) == 1) {
 							mes "[Rune Knight Velpino]";
 							mes "Haven't you failed at the test... If you fail once, you cannot enter again for 10 minutes.";
 							next;
@@ -2749,85 +2777,73 @@ job3_rune01,114,50,3	script	Rune Knight Velpino	468,{
 							mes "It's a consideration for the other testers who are waiting for the test, just like you, so come back after the designated time.";
 							close;
 						}
-						else if (.@test_miss_check == 2) {
-							if ($@job_rune_test1 == 0) {
+						if (checkquest(3220,PLAYTIME) == 2) {
+							if ($@08_job_rune_test1 == 0) {
 								if (Weight < 4001) {
-									set $@job_rune_test1,1;
+									set $@08_job_rune_test1,1;
 									//ConsumeSpecialItem Rune_Kn_Test_Int
-									sc_start SC_INCINT,300000,40;
 									getitem 12389,30; //Runstone_Storm
 									getitem 12390,30; //Runstone_Millennium
-									if (checkquest(3320) > -1) erasequest 3220;
+									erasequest 3220;
 									setquest 3220;
 									warp "job3_rune02",38,40;
+									end;
 								}
-								else {
-									mes "[Rune Knight Velpino]";
-									mes "The only set of weapons you can use should be within the weight limit of 400. Rune stones to be provided are 30 attack-only rune stones and 30 defense-only rune stones.";
-									next;
-									mes "[Rune Knight Velpino]";
-									mes "The remained stuff you are holding should be kept by the Kafra employee in the middle.";
-									close;
-								}
-							}
-							else {
-								// custom translation
 								mes "[Rune Knight Velpino]";
-								mes "Looks like there is already an applicant in the test room.";
+								mes "The only set of weapons you can use should be within the weight limit of 400. Rune stones to be provided are 30 attack-only rune stones and 30 defense-only rune stones.";
 								next;
 								mes "[Rune Knight Velpino]";
-								mes "Be patient and wait your turn,";
+								mes "The remained stuff you are holding should be kept by the Kafra employee in the middle.";
 								close;
 							}
+							// custom translation
+							mes "[Rune Knight Velpino]";
+							mes "Looks like there is already an applicant in the test room.";
+							next;
+							mes "[Rune Knight Velpino]";
+							mes "Be patient and wait your turn,";
+							close;
 						}
-						end;
 					}
-					else {
-						mes "[Rune Knight Velpino]";
-						mes "For this test, only a one-hand weapon, a shield or a two-handed weapon can be equipped. Keep your other equipments with the Kafra Employee in the center.";
-						close;
-					}
-					break;
+					mes "[Rune Knight Velpino]";
+					mes "For this test, only a one-hand weapon, a shield or a two-handed weapon can be equipped. Keep your other equipments with the Kafra Employee in the center.";
+					close;
 				case 2:
-					break;
+					close;
 				}
 			}
-			else {
-				set .@rune_crush,countitem(12388);
-				set .@rune_storm,countitem(12389);
-				set .@rune_millenium,countitem(12390);
-				if (.@rune_crush > 0) {
-					mes "[Rune Knight Velpino]";
-					mes "Wait, I'll collect all the rune stones provided before. There's a certain limit on using the rune stones that's made for the test.";
-					delitem 12388,.@rune_crush; //Runstone_Crush
-					next;
-					mes "[Rune Knight Velpino]";
-					mes "I'll get new rune stones so if your preparation is all done, please talk to me again.";
-					close;
-				}
-				else if (.@rune_storm > 0) {
-					mes "[Rune Knight Velpino]";
-					mes "Wait, I'll collect all the rune stones provided before. There's a certain limit on using the rune stones that's made for the test.";
-					delitem 12389,.@rune_storm; //Runstone_Storm
-					next;
-					mes "[Rune Knight Velpino]";
-					mes "I'll get new rune stones so if your preparation is all done, please talk to me again.";
-					close;
-				}
-				else if (.@rune_millenium > 0) {
-					mes "[Rune Knight Velpino]";
-					mes "Wait, I'll collect all the rune stones provided before. There's a certain limit on using the rune stones that's made for the test.";
-					delitem 12390,.@rune_millenium; //Runstone_Millennium
-					next;
-					mes "[Rune Knight Velpino]";
-					mes "I'll get new rune stones so if your preparation is all done, please talk to me again.";
-					close;
-				}
-				else {
-				}
+			set .@rune_crush,countitem(12388);
+			set .@rune_storm,countitem(12389);
+			set .@rune_millenium,countitem(12390);
+			if (.@rune_crush > 0) {
+				mes "[Rune Knight Velpino]";
+				mes "Wait, I'll collect all the rune stones provided before. There's a certain limit on using the rune stones that's made for the test.";
+				delitem 12388,.@rune_crush; //Runstone_Crush
+				next;
+				mes "[Rune Knight Velpino]";
+				mes "I'll get new rune stones so if your preparation is all done, please talk to me again.";
+				close;
+			}
+			if (.@rune_storm > 0) {
+				mes "[Rune Knight Velpino]";
+				mes "Wait, I'll collect all the rune stones provided before. There's a certain limit on using the rune stones that's made for the test.";
+				delitem 12389,.@rune_storm; //Runstone_Storm
+				next;
+				mes "[Rune Knight Velpino]";
+				mes "I'll get new rune stones so if your preparation is all done, please talk to me again.";
+				close;
+			}
+			if (.@rune_millenium > 0) {
+				mes "[Rune Knight Velpino]";
+				mes "Wait, I'll collect all the rune stones provided before. There's a certain limit on using the rune stones that's made for the test.";
+				delitem 12390,.@rune_millenium; //Runstone_Millennium
+				next;
+				mes "[Rune Knight Velpino]";
+				mes "I'll get new rune stones so if your preparation is all done, please talk to me again.";
+				close;
 			}
 		}
-		else if (job_rune_edq == 21) {
+		if (job_rune_edq == 21) {
 			mes "[Rune Knight Velpino]";
 			mes "You've been very successful up to the last test.";
 			next;
@@ -2846,92 +2862,90 @@ job3_rune01,114,50,3	script	Rune Knight Velpino	468,{
 				changequest 3218,3219;
 				close;
 			}
-			else {
-				set .@rune_crush,countitem(12388);
-				set .@rune_storm,countitem(12389);
-				set .@rune_millenium,countitem(12390);
-				if (.@rune_crush > 0) {
-					mes "[Rune Knight Velpino]";
-					mes "Wait, I'll collect all the rune stones provided before. There's a certain limit on using the rune stones that's made for the test.";
-					delitem 12388,.@rune_crush; //Runstone_Crush
-					next;
-					mes "[Rune Knight Velpino]";
-					mes "I'll need to re-use these unused rune stones. Talk to me again once I have taken all the test rune stones.";
-					close;
-				}
-				else if (.@rune_storm > 0) {
-					mes "[Rune Knight Velpino]";
-					mes "Wait, I'll collect all the rune stones provided before. There's a certain limit on using the rune stones that's made for the test.";
-					delitem 12389,.@rune_storm; //Runstone_Storm
-					next;
-					mes "[Rune Knight Velpino]";
-					mes "I'll need to re-use these unused rune stones. Talk to me again once I have taken all the test rune stones.";
-					close;
-				}
-				else if (.@rune_millenium > 0) {
-					mes "[Rune Knight Velpino]";
-					mes "Wait, I'll collect all the rune stones provided before. There's a certain limit on using the rune stones that's made for the test.";
-					delitem 12390,.@rune_millenium; //Runstone_Millennium
-					next;
-					mes "[Rune Knight Velpino]";
-					mes "I'll need to re-use these unused rune stones. Talk to me again once I have taken all the test rune stones.";
-					close;
-				}
+			set .@rune_crush, countitem(12388);
+			set .@rune_storm, countitem(12389);
+			set .@rune_millenium, countitem(12390);
+			if (.@rune_crush > 0) {
+				mes "[Rune Knight Velpino]";
+				mes "Wait, I'll collect all the rune stones provided before. There's a certain limit on using the rune stones that's made for the test.";
+				delitem 12388,.@rune_crush; //Runstone_Crush
+				next;
+				mes "[Rune Knight Velpino]";
+				mes "I'll need to re-use these unused rune stones. Talk to me again once I have taken all the test rune stones.";
+				close;
+			}
+			if (.@rune_storm > 0) {
+				mes "[Rune Knight Velpino]";
+				mes "Wait, I'll collect all the rune stones provided before. There's a certain limit on using the rune stones that's made for the test.";
+				delitem 12389,.@rune_storm; //Runstone_Storm
+				next;
+				mes "[Rune Knight Velpino]";
+				mes "I'll need to re-use these unused rune stones. Talk to me again once I have taken all the test rune stones.";
+				close;
+			}
+			if (.@rune_millenium > 0) {
+				mes "[Rune Knight Velpino]";
+				mes "Wait, I'll collect all the rune stones provided before. There's a certain limit on using the rune stones that's made for the test.";
+				delitem 12390,.@rune_millenium; //Runstone_Millennium
+				next;
+				mes "[Rune Knight Velpino]";
+				mes "I'll need to re-use these unused rune stones. Talk to me again once I have taken all the test rune stones.";
+				close;
 			}
 		}
-		else {
-			mes "A very cold feeling Rune Knight dressed in black from head to toe is scowling at me.";
-			close;
-		}
-	}
-	else {
 		mes "A very cold feeling Rune Knight dressed in black from head to toe is scowling at me.";
 		close;
 	}
+	mes "A very cold feeling Rune Knight dressed in black from head to toe is scowling at me.";
+	close;
 }
 
-job3_rune02,38,40,0	script	#RK Test Hidden Portal 1	-1,10,10,{
+job3_rune02,38,40,0	script	#RK Test Hidden Portal 1	139,10,10,{
+	end;
+
 OnInit:
-	enablenpc "#RK Test Hidden Portal 1";
+	hideoffnpc "#RK Test Hidden Portal 1";
 	end;
 
 OnEnable:
-	enablenpc "#RK Test Hidden Portal 1";
+	hideoffnpc "#RK Test Hidden Portal 1";
 	end;
 
 OnDisable:
-	disablenpc "#RK Test Hidden Portal 1";
+	hideonnpc "#RK Test Hidden Portal 1";
 	end;
 
 OnTouch:
 	if (job_rune_edq == 4) {
-		donpcevent "job_rune_edq#1st_broad::OnEnable";
+		donpcevent "job_rune_edq#1st_tb::OnEnable";
 		donpcevent "#RK Test Hidden Portal 1::OnDisable";
+		end;
 	}
-	else if ((job_rune_edq > 17) && (job_rune_edq < 21)) {
-		donpcevent "job_rune_edq#3rd_broad::OnEnable";
+	if ((job_rune_edq > 17) && (job_rune_edq < 21)) {
+		donpcevent "job_rune_edq#3rd_tb::OnEnable";
 		donpcevent "#RK Test Hidden Portal 1::OnDisable";
+		end;
 	}
-	else {
-		donpcevent "#RK Test Hidden Portal 1::OnDisable";
-		donpcevent "job_rune_edq#1st_broad::OnDisable";
-		donpcevent "job_rune_edq#1st_control::OnDisable";
-		donpcevent "job_rune_edq#1st_con_mc::OnDisable";
-		donpcevent "job_rune_edq#1st_con_mc2::OnDisable";
-		donpcevent "job_rune_edq#1st_con_nc::OnDisable";
-		donpcevent "job_rune_edq#3rd_broad::OnDisable";
-		donpcevent "job_rune_edq#3rd_con::OnDisable";
-		set $@job_rune_test1,0;
-		set $@job_rune_test2,0;
-		donpcevent "#RK Test Hidden Portal 1::OnEnable";
-		mapwarp "job3_rune02","job3_rune01",80,65;
-	}
+	donpcevent "#RK Test Hidden Portal 1::OnDisable";
+	donpcevent "job_rune_edq#1st_tb::OnDisable";
+	donpcevent "job_rune_edq#1st_tc::OnDisable";
+	donpcevent "job_rune_edq#1st_tcmc::OnDisable";
+	donpcevent "job_rune_edq#1st_tcmc2::OnDisable";
+	donpcevent "job_rune_edq#1st_tcnc::OnDisable";
+	donpcevent "job_rune_edq#3rd_tb::OnDisable";
+	donpcevent "job_rune_edq#3rd_tc::OnDisable";
+	set $@08_job_rune_test1,0;
+	set $@08_job_rune_test2,0;
+	donpcevent "#RK Test Hidden Portal 1::OnEnable";
+	mapwarp "job3_rune02","job3_rune01",80,65;
 	end;
 }
 
-job3_rune02,1,1,0	script	job_rune_edq#1st_broad	-1,{
+job3_rune02,1,1,0	script	job_rune_edq#1st_tb	139,{
+	end;
+
 OnInit:
-	disablenpc "job_rune_edq#1st_broad";
+	hideonnpc "job_rune_edq#1st_tb";
 	end;
 
 OnEnable:
@@ -2940,582 +2954,608 @@ OnEnable:
 
 OnDisable:
 	stopnpctimer;
-	disablenpc "job_rune_edq#1st_broad";
+	hideonnpc "job_rune_edq#1st_tb";
 	end;
 
 OnTimer5000:
-	mapannounce "job3_rune02", "I'll start the first test of the Rune Knight Job Change.",bc_map,"0xFFFF00";
+	mapannounce "job3_rune02","I'll start the first test of the Rune Knight Job Change.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 	end;
 
 OnTimer8000:
-	mapannounce "job3_rune02", "The content of the test is to get rid of all the monsters for 5 minutes and survive.",bc_map,"0xFFFF00";
+	mapannounce "job3_rune02","The content of the test is to get rid of all the monsters for 5 minutes and survive.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 	end;
 
 OnTimer11000:
-	mapannounce "job3_rune02", "If you fail to survive or cannot get rid of all the monsters within the time limit, I'll consider it a failure.",bc_map,"0xFFFF00";
+	mapannounce "job3_rune02","If you fail to survive or cannot get rid of all the monsters within the time limit, I'll consider it a failure.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 	end;
 
 OnTimer14000:
-	mapannounce "job3_rune02", "Now let's start the test.",bc_map,"0xFFFF00";
-	donpcevent "job_rune_edq#1st_control::OnEnable";
-	donpcevent "job_rune_edq#1st_broad::OnDisable";
+	mapannounce "job3_rune02","Now let's start the test.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
+	donpcevent "job_rune_edq#1st_tc::OnEnable";
+	donpcevent "job_rune_edq#1st_tb::OnDisable";
 	end;
 }
 
-job3_rune02,1,2,0	script	job_rune_edq#1st_control	-1,{
+job3_rune02,1,2,0	script	job_rune_edq#1st_tc	139,{
+	end;
+
 OnInit:
-	disablenpc "job_rune_edq#1st_control";
+	hideonnpc "job_rune_edq#1st_tc";
 	end;
 
 OnEnable:
 	initnpctimer;
-	donpcevent "job_rune_edq#1st_con_mc::OnEnable";
-	donpcevent "job_rune_edq#1st_con_nc::OnEnable";
+	donpcevent "job_rune_edq#1st_tcmc::OnEnable";
+	donpcevent "job_rune_edq#1st_tcnc::OnEnable";
 	end;
 
 OnDisable:
 	stopnpctimer;
-	disablenpc "job_rune_edq#1st_control";
+	hideonnpc "job_rune_edq#1st_tc";
 	end;
 
 OnTimer300000:
-	killmonsterall "job3_rune02";
-	mapannounce "job3_rune02", "You reached the limit time so I'll consider the test as a failure.",bc_map,"0xFFFF00";
+	killmonster "job3_rune02","job_rune_edq#1st_tc::OnMyMobDead";
+	mapannounce "job3_rune02","You reached the limit time so I'll consider the test as a failure.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 	end;
 
 OnTimer305000:
 	donpcevent "#RK Test Hidden Portal 1::OnDisable";
-	donpcevent "job_rune_edq#1st_broad::OnDisable";
-	donpcevent "job_rune_edq#1st_control::OnDisable";
-	donpcevent "job_rune_edq#1st_con_mc::OnDisable";
-	donpcevent "job_rune_edq#1st_con_mc2::OnDisable";
-	donpcevent "job_rune_edq#1st_con_nc::OnDisable";
-	donpcevent "job_rune_edq#3rd_broad::OnDisable";
-	donpcevent "job_rune_edq#3rd_con::OnDisable";
+	donpcevent "job_rune_edq#1st_tb::OnDisable";
+	donpcevent "job_rune_edq#1st_tc::OnDisable";
+	donpcevent "job_rune_edq#1st_tcmc::OnDisable";
+	donpcevent "job_rune_edq#1st_tcmc2::OnDisable";
+	donpcevent "job_rune_edq#1st_tcnc::OnDisable";
+	donpcevent "job_rune_edq#3rd_tb::OnDisable";
+	donpcevent "job_rune_edq#3rd_tc::OnDisable";
 	donpcevent "#RK Test Hidden Portal 1::OnEnable";
 	mapwarp "job3_rune02","job3_rune01",80,65;
-	set $@job_rune_test1,0;
-	set $@job_rune_test2,0;
+	set $@08_job_rune_test1,0;
+	set $@08_job_rune_test2,0;
 	stopnpctimer;
 	end;
 }
 
-job3_rune02,3,10,0	script	job_rune_edq#1st_con_mc	-1,{
+job3_rune02,3,10,0	script	job_rune_edq#1st_tcmc	139,{
+	end;
+
 OnInit:
-	disablenpc "job_rune_edq#1st_con_mc";
+	hideonnpc "job_rune_edq#1st_tcmc";
 	end;
 
 OnEnable:
-	enablenpc "job_rune_edq#1st_con_mc";
+	hideoffnpc "job_rune_edq#1st_tcmc";
 	initnpctimer;
 	end;
 
 OnDisable:
-	killmonster "job3_rune02","job_rune_edq#1st_con_mc::OnMyMobDead";
+	killmonster "job3_rune02","job_rune_edq#1st_tcmc::OnMyMobDead";
 	stopnpctimer;
-	disablenpc "job_rune_edq#1st_con_mc";
+	hideonnpc "job_rune_edq#1st_tcmc";
 	end;
 
-Onreset:
-	killmonsterall "job3_rune02";
+OnReset:
+	killmonster "job3_rune02","job_rune_edq#1st_tcmc::OnMyMobDead";
 	end;
 
 OnTimer5000:
-	monster "job3_rune02",0,0,"Raydric",1467,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-	monster "job3_rune02",0,0,"Raydric Archer",1453,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-	monster "job3_rune02",0,0,"Raydric Archer",1453,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
+	monster "job3_rune02",0,0,"Raydric",1467,1;
+	monster "job3_rune02",0,0,"Raydric Archer",1453,1;
+	monster "job3_rune02",0,0,"Raydric Archer",1453,1;
 	end;
 
 OnTimer50000:
 	set .@job_rune_p,rand(1,6);
 	if (.@job_rune_p == 1) {
-		monster "job3_rune02",0,0,"Raydric",1467,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Raydric Archer",1453,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Raydric Archer",1453,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Raydric",1467,1;
+		monster "job3_rune02",0,0,"Raydric Archer",1453,1;
+		monster "job3_rune02",0,0,"Raydric Archer",1453,1;
+		end;
 	}
-	else if ((.@job_rune_p == 2) || (.@job_rune_p == 4)) {
-		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
+	else if (.@job_rune_p == 2 || .@job_rune_p == 4) {
+		monster "job3_rune02",0,0,"Rideword",1478,1;
+		monster "job3_rune02",0,0,"Rideword",1478,1;
+		monster "job3_rune02",0,0,"Rideword",1478,1;
+		monster "job3_rune02",0,0,"Rideword",1478,1;
+		end;
 	}
-	else if ((.@job_rune_p == 3) || (.@job_rune_p == 5)) {
-		monster "job3_rune02",0,0,"Phendark",1484,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Rybio",1483,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
+	else if (.@job_rune_p == 3 || .@job_rune_p == 5) {
+		monster "job3_rune02",0,0,"Phendark",1484,1;
+		monster "job3_rune02",0,0,"Rybio",1483,1;
+		end;
 	}
 	else if (.@job_rune_p == 6) {
-		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Wraith",1475,1;
+		monster "job3_rune02",0,0,"Wraith",1475,1;
+		monster "job3_rune02",0,0,"Wraith",1475,1;
+		monster "job3_rune02",0,0,"Wraith",1475,1;
+		end;
 	}
 	end;
 
 OnTimer100000:
 	set .@job_rune_p,rand(1,6);
 	if (.@job_rune_p == 1) {
-		monster "job3_rune02",0,0,"Raydric",1467,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Raydric Archer",1453,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Raydric Archer",1453,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Raydric",1467,1;
+		monster "job3_rune02",0,0,"Raydric Archer",1453,1;
+		monster "job3_rune02",0,0,"Raydric Archer",1453,1;
+		end;
 	}
-	else if ((.@job_rune_p == 2) || (.@job_rune_p == 4)) {
-		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
+	else if (.@job_rune_p == 2 || .@job_rune_p == 4) {
+		monster "job3_rune02",0,0,"Rideword",1478,1;
+		monster "job3_rune02",0,0,"Rideword",1478,1;
+		monster "job3_rune02",0,0,"Rideword",1478,1;
+		monster "job3_rune02",0,0,"Rideword",1478,1;
+		end;
 	}
-	else if ((.@job_rune_p == 3) || (.@job_rune_p == 5)) {
-		monster "job3_rune02",0,0,"Phendark",1484,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Rybio",1483,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
+	else if (.@job_rune_p == 3 || .@job_rune_p == 5) {
+		monster "job3_rune02",0,0,"Phendark",1484,1;
+		monster "job3_rune02",0,0,"Rybio",1483,1;
+		end;
 	}
 	else if (.@job_rune_p == 6) {
-		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Wraith",1475,1;
+		monster "job3_rune02",0,0,"Wraith",1475,1;
+		monster "job3_rune02",0,0,"Wraith",1475,1;
+		monster "job3_rune02",0,0,"Wraith",1475,1;
+		end;
 	}
 	end;
 
 OnTimer150000:
 	set .@job_rune_p,rand(1,6);
 	if (.@job_rune_p == 1) {
-		monster "job3_rune02",0,0,"Raydric",1467,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Raydric Archer",1453,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Raydric Archer",1453,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Raydric",1467,1;
+		monster "job3_rune02",0,0,"Raydric Archer",1453,1;
+		monster "job3_rune02",0,0,"Raydric Archer",1453,1;
+		end;
 	}
-	else if ((.@job_rune_p == 2) || (.@job_rune_p == 4)) {
-		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
+	else if (.@job_rune_p == 2 || .@job_rune_p == 4) {
+		monster "job3_rune02",0,0,"Rideword",1478,1;
+		monster "job3_rune02",0,0,"Rideword",1478,1;
+		monster "job3_rune02",0,0,"Rideword",1478,1;
+		monster "job3_rune02",0,0,"Rideword",1478,1;
+		end;
 	}
-	else if ((.@job_rune_p == 3) || (.@job_rune_p == 5)) {
-		monster "job3_rune02",0,0,"Phendark",1484,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Rybio",1483,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
+	else if (.@job_rune_p == 3 || .@job_rune_p == 5) {
+		monster "job3_rune02",0,0,"Phendark",1484,1;
+		monster "job3_rune02",0,0,"Rybio",1483,1;
+		end;
 	}
 	else if (.@job_rune_p == 6) {
-		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Wraith",1475,1;
+		monster "job3_rune02",0,0,"Wraith",1475,1;
+		monster "job3_rune02",0,0,"Wraith",1475,1;
+		monster "job3_rune02",0,0,"Wraith",1475,1;
+		end;
 	}
 	end;
 
 OnTimer200000:
 	set .@job_rune_p,rand(1,6);
 	if (.@job_rune_p == 1) {
-		monster "job3_rune02",0,0,"Raydric",1467,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Raydric Archer",1453,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Raydric Archer",1453,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Raydric",1467,1;
+		monster "job3_rune02",0,0,"Raydric Archer",1453,1;
+		monster "job3_rune02",0,0,"Raydric Archer",1453,1;
+		end;
 	}
-	else if ((.@job_rune_p == 2) || (.@job_rune_p == 4)) {
-		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
+	else if (.@job_rune_p == 2 || .@job_rune_p == 4) {
+		monster "job3_rune02",0,0,"Rideword",1478,1;
+		monster "job3_rune02",0,0,"Rideword",1478,1;
+		monster "job3_rune02",0,0,"Rideword",1478,1;
+		monster "job3_rune02",0,0,"Rideword",1478,1;
+		end;
 	}
-	else if ((.@job_rune_p == 3) || (.@job_rune_p == 5)) {
-		monster "job3_rune02",0,0,"Phendark",1484,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Rybio",1483,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
+	else if (.@job_rune_p == 3 || .@job_rune_p == 5) {
+		monster "job3_rune02",0,0,"Phendark",1484,1;
+		monster "job3_rune02",0,0,"Rybio",1483,1;
+		end;
 	}
 	else if (.@job_rune_p == 6) {
-		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
-		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_con_mc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Wraith",1475,1;
+		monster "job3_rune02",0,0,"Wraith",1475,1;
+		monster "job3_rune02",0,0,"Wraith",1475,1;
+		monster "job3_rune02",0,0,"Wraith",1475,1;
+		end;
 	}
 	end;
 
 OnTimer250000:
-	killmonster "job3_rune02","job_rune_edq#1st_con_mc::OnMyMobDead";
-	donpcevent "job_rune_edq#1st_con_mc2::OnEnable";
-	donpcevent "job_rune_edq#1st_con_mc::OnDisable";
-	end;
-
-OnMyMobDead:
+	killmonster "job3_rune02","job_rune_edq#1st_tcmc::OnMyMobDead";
+	donpcevent "job_rune_edq#1st_tcmc2::OnEnable";
+	donpcevent "job_rune_edq#1st_tcmc::OnDisable";
 	end;
 }
 
-job3_rune02,3,11,0	script	job_rune_edq#1st_con_mc2	-1,{
+job3_rune02,3,11,0	script	job_rune_edq#1st_tcmc2	139,{
+	end;
+
 OnInit:
-	disablenpc "job_rune_edq#1st_con_mc2";
+	hideonnpc "job_rune_edq#1st_tcmc2";
 	end;
 
 OnEnable:
-	enablenpc "job_rune_edq#1st_con_mc2";
+	hideoffnpc "job_rune_edq#1st_tcmc2";
 	initnpctimer;
 	set .@job_rune_p,rand(1,6);
 	if (.@job_rune_p == 1) {
-		monster "job3_rune02",0,0,"Raydric",1467,1,"job_rune_edq#1st_con_mc2::OnMyMobDead";
-		monster "job3_rune02",0,0,"Raydric Archer",1453,1,"job_rune_edq#1st_con_mc2::OnMyMobDead";
-		monster "job3_rune02",0,0,"Raydric Archer",1453,1,"job_rune_edq#1st_con_mc2::OnMyMobDead";
+		monster "job3_rune02",0,0,"Raydric",1467,1,"job_rune_edq#1st_tcmc2::OnMyMobDead";
+		monster "job3_rune02",0,0,"Raydric Archer",1453,1,"job_rune_edq#1st_tcmc2::OnMyMobDead";
+		monster "job3_rune02",0,0,"Raydric Archer",1453,1,"job_rune_edq#1st_tcmc2::OnMyMobDead";
+		end;
 	}
-	else if ((.@job_rune_p == 2) || (.@job_rune_p == 4)) {
-		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_con_mc2::OnMyMobDead";
-		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_con_mc2::OnMyMobDead";
-		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_con_mc2::OnMyMobDead";
-		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_con_mc2::OnMyMobDead";
+	else if (.@job_rune_p == 2 || .@job_rune_p == 4) {
+		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_tcmc2::OnMyMobDead";
+		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_tcmc2::OnMyMobDead";
+		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_tcmc2::OnMyMobDead";
+		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_tcmc2::OnMyMobDead";
+		end;
 	}
-	else if ((.@job_rune_p == 3) || (.@job_rune_p == 5)) {
-		monster "job3_rune02",0,0,"Phendark",1484,1,"job_rune_edq#1st_con_mc2::OnMyMobDead";
-		monster "job3_rune02",0,0,"Rybio",1483,1,"job_rune_edq#1st_con_mc2::OnMyMobDead";
+	else if (.@job_rune_p == 3 || .@job_rune_p == 5) {
+		monster "job3_rune02",0,0,"Phendark",1484,1,"job_rune_edq#1st_tcmc2::OnMyMobDead";
+		monster "job3_rune02",0,0,"Rybio",1483,1,"job_rune_edq#1st_tcmc2::OnMyMobDead";
+		end;
 	}
 	else if (.@job_rune_p == 6) {
-		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_con_mc2::OnMyMobDead";
-		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_con_mc2::OnMyMobDead";
-		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_con_mc2::OnMyMobDead";
-		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_con_mc2::OnMyMobDead";
+		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_tcmc2::OnMyMobDead";
+		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_tcmc2::OnMyMobDead";
+		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_tcmc2::OnMyMobDead";
+		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_tcmc2::OnMyMobDead";
+		end;
 	}
 	end;
 
 OnDisable:
-	killmonster "job3_rune02","job_rune_edq#1st_con_mc2::OnMyMobDead";
+	killmonster "job3_rune02","job_rune_edq#1st_tcmc2::OnMyMobDead";
 	stopnpctimer;
-	disablenpc "job_rune_edq#1st_con_mc2";
+	hideonnpc "job_rune_edq#1st_tcmc2";
 	end;
 
 OnMyMobDead:
-	if (mobcount("job3_rune02","job_rune_edq#1st_con_mc2::OnMyMobDead") < 1) {
+	if (mobcount ("job3_rune02","job_rune_edq#1st_tcmc2::OnMyMobDead") < 1) {
 		set job_rune_edq,5;
 		erasequest 3220;
-		killmonster "job3_rune02","job_rune_edq#1st_con_mc2::OnMyMobDead";
-		mapannounce "job3_rune02", "Congratulations. You've passed the first test.",bc_map,"0xFFFF00";
+		killmonster "job3_rune02","job_rune_edq#1st_tcmc2::OnMyMobDead";
+		mapannounce "job3_rune02","Congratulations. You've passed the first test.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 		mapwarp "job3_rune02","job3_rune01",80,65;
-		donpcevent "job_rune_edq#1st_broad::OnDisable";
-		donpcevent "job_rune_edq#1st_control::OnDisable";
-		donpcevent "job_rune_edq#1st_con_nc::OnDisable";
-		donpcevent "job_rune_edq#1st_con_mc::OnDisable";
-		donpcevent "job_rune_edq#1st_con_mc2::OnDisable";
+		donpcevent "job_rune_edq#1st_tb::OnDisable";
+		donpcevent "job_rune_edq#1st_tc::OnDisable";
+		donpcevent "job_rune_edq#1st_tcnc::OnDisable";
+		donpcevent "job_rune_edq#1st_tcmc::OnDisable";
+		donpcevent "job_rune_edq#1st_tcmc2::OnDisable";
 		donpcevent "#RK Test Hidden Portal 1::OnEnable";
-		set $@job_rune_test1,0;
-		set $@job_rune_test2,0;
+		set $@08_job_rune_test1,0;
+		set $@08_job_rune_test2,0;
+		end;
 	}
 	end;
 }
 
-job3_rune02,1,10,0	script	job_rune_edq#1st_con_nc	-1,{
+job3_rune02,1,10,0	script	job_rune_edq#1st_tcnc	139,{
+	end;
+
 OnInit:
-	disablenpc "job_rune_edq#1st_con_nc";
+	hideonnpc "job_rune_edq#1st_tcnc";
 	end;
 
 OnEnable:
-	enablenpc "job_rune_edq#1st_con_nc";
+	hideoffnpc "job_rune_edq#1st_tcnc";
 	initnpctimer;
 	end;
 
 OnDisable:
-	disablenpc "job_rune_edq#1st_con_nc";
-	set $@job_rune_test2,0;
-	donpcevent "Captain Tigris#job::OnDisable";
-	donpcevent "Rune Knight Lunarea#job::OnDisable";
-	donpcevent "Rune Knight Renoa#job::OnDisable";
-	donpcevent "Rune Knight Velpino#job::OnDisable";
+	hideonnpc "job_rune_edq#1st_tcnc";
+	set $@08_job_rune_test2,0;
+	donpcevent "Captain Tigris#jrt1::OnDisable";
+	donpcevent "Rune Knight Lunarea#jrt1::OnDisable";
+	donpcevent "Rune Knight Renoa#jrt1::OnDisable";
+	donpcevent "Rune Knight Velpino#jrt1::OnDisable";
 	stopnpctimer;
 	end;
 
-Onuse:
-	mapannounce "job3_rune02", "Captain Tigris : Gentleman, Let's watch the test for a while.",bc_map,"0xFFFF00";
+OnUse:
+	mapannounce "job3_rune02","Captain Tigris : Gentleman, Let's watch the test for a while.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 	stopnpctimer;
-	set $@job_rune_test2,0;
-	donpcevent "Captain Tigris#job::OnDisable";
-	donpcevent "Rune Knight Lunarea#job::OnDisable";
-	donpcevent "Rune Knight Renoa#job::OnDisable";
-	donpcevent "Rune Knight Velpino#job::OnDisable";
-	donpcevent "job_rune_edq#1st_con_nc::OnEnable";
+	set $@08_job_rune_test2,0;
+	donpcevent "Captain Tigris#jrt1::OnDisable";
+	donpcevent "Rune Knight Lunarea#jrt1::OnDisable";
+	donpcevent "Rune Knight Renoa#jrt1::OnDisable";
+	donpcevent "Rune Knight Velpino#jrt1::OnDisable";
+	donpcevent "job_rune_edq#1st_tcnc::OnEnable";
 	end;
 
 OnTimer30000:
-	mapannounce "job3_rune02", "Captain Tigris : Rune Knight Candidates... If you want to borrow our power talk to one of us.",bc_map,"0xFFFF00";
-	donpcevent "Captain Tigris#job::OnEnable";
-	donpcevent "Rune Knight Lunarea#job::OnEnable";
-	donpcevent "Rune Knight Renoa#job::OnEnable";
-	donpcevent "Rune Knight Velpino#job::OnEnable";
+	mapannounce "job3_rune02","Captain Tigris : Rune Knight Candidates... If you want to borrow our power talk to one of us.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
+	donpcevent "Captain Tigris#jrt1::OnEnable";
+	donpcevent "Rune Knight Lunarea#jrt1::OnEnable";
+	donpcevent "Rune Knight Renoa#jrt1::OnEnable";
+	donpcevent "Rune Knight Velpino#jrt1::OnEnable";
 	end;
 
 OnTimer60000:
-	mapannounce "job3_rune02", "Captain Tigris : It seems you don't need our help... Let's watch the test for a while.",bc_map,"0xFFFF00";
+	mapannounce "job3_rune02","Captain Tigris : It seems you don't need our help... Let's watch the test for a while.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 	stopnpctimer;
-	donpcevent "Captain Tigris#job::OnDisable";
-	donpcevent "Rune Knight Lunarea#job::OnDisable";
-	donpcevent "Rune Knight Renoa#job::OnDisable";
-	donpcevent "Rune Knight Velpino#job::OnDisable";
-	donpcevent "job_rune_edq#1st_con_nc::OnEnable";
+	donpcevent "Captain Tigris#jrt1::OnDisable";
+	donpcevent "Rune Knight Lunarea#jrt1::OnDisable";
+	donpcevent "Rune Knight Renoa#jrt1::OnDisable";
+	donpcevent "Rune Knight Velpino#jrt1::OnDisable";
+	donpcevent "job_rune_edq#1st_tcnc::OnEnable";
 	end;
 }
 
-job3_rune02,34,46,5	script	Captain Tigris#job	470,{
+job3_rune02,34,46,5	script	Captain Tigris#jrt1	470,{
+
 	set .@tigris,rand(1,6);
-	if ((job_rune_edq == 4) && (!$@job_rune_test2)) {
+	set .@rune_test2,$@08_job_rune_test2;
+	if ((job_rune_edq == 4) && (.@rune_test2 == 0)) {
 		if (.@tigris == 1) {
-			set $@job_rune_test2,1;
+			set $@08_job_rune_test2,1;
 			// custom translation
-			mapannounce "job3_rune02", "Captain Tigris : May Beljeve bless you!",bc_map,"0xFFFF00";
-			//UseSkillToPC 34 0 0 0
-			skilleffect "AL_BLESSING",0;
+			mapannounce "job3_rune02","Captain Tigris : May Beljeve bless you!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
+			sc_start SC_BLESSING,24000,10;
 			initnpctimer;
+			end;
 		}
 		else if ((.@tigris == 2) || (.@tigris == 4)) {
-			set $@job_rune_test2,1;
-			mapannounce "job3_rune02", "Captain Tigris : The Spark of life... may flame again.",bc_map,"0xFFFF00";
-			//UseSkillToPC 28 8 70 99
-			skilleffect "AL_HEAL",2000;
-			heal 2000,0;
+			set $@08_job_rune_test2,1;
+			mapannounce "job3_rune02","Captain Tigris : The Spark of life... may flame again.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
+			percentheal 100,100;
+			skilleffect "AL_HEAL",1500;
 			initnpctimer;
+			end;
 		}
 		else if (.@tigris == 3) {
-			set $@job_rune_test2,1;
+			set $@08_job_rune_test2,1;
 			// custom translation
-			mapannounce "job3_rune02", "Captain Tigris : Evil spirits! Return to your graves!",bc_map,"0xFFFF00";
+			mapannounce "job3_rune02","Captain Tigris : Evil spirits! Return to your graves!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			specialeffect2 EF_METEORSTORM;
-			donpcevent "job_rune_edq#1st_con_mc::Onreset";
+			donpcevent "job_rune_edq#1st_tcmc::OnReset";
 			initnpctimer;
+			end;
 		}
 		else if (.@tigris == 5) {
-			set $@job_rune_test2,1;
+			set $@08_job_rune_test2,1;
 			// custom translation
-			mapannounce "job3_rune02", "Captain Tigris : For a Rune Knight, this kind of ordeal is nothing!",bc_map,"0xFFFF00";
+			mapannounce "job3_rune02","Captain Tigris : For a Rune Knight, this kind of ordeal is nothing!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			sc_start SC_STUN,10000,0;
 			initnpctimer;
+			end;
 		}
 		else if (.@tigris == 6) {
-			set $@job_rune_test2,1;
+			set $@08_job_rune_test2,1;
 			// custom translation
-			mapannounce "job3_rune02", "Captain Tigris : For a Rune Knight, this kind of ordeal is nothing!",bc_map,"0xFFFF00";
+			mapannounce "job3_rune02","Captain Tigris : For a Rune Knight, this kind of ordeal is nothing!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			sc_start SC_BLEEDING,10000,0;
 			initnpctimer;
-		}
-		else {
-			donpcevent "job_rune_edq#1st_con_nc::Onuse";
+			end;
 		}
 	}
-	else {
-		donpcevent "job_rune_edq#1st_con_nc::Onuse";
-	}
+	donpcevent "job_rune_edq#1st_tcnc::OnUse";
 	end;
 
-OnTimer5000:
-	donpcevent "job_rune_edq#1st_con_nc::Onuse";
-	set $@job_rune_test2,0;
-	stopnpctimer;
-	end;
 OnInit:
-	disablenpc "Captain Tigris#job";
+	hideonnpc "Captain Tigris#jrt1";
 	end;
 
 OnEnable:
-	enablenpc "Captain Tigris#job";
+	hideoffnpc "Captain Tigris#jrt1";
 	end;
 
 OnDisable:
-	disablenpc "Captain Tigris#job";
+	hideonnpc "Captain Tigris#jrt1";
+	end;
+
+OnTimer5000:
+	donpcevent "job_rune_edq#1st_tcnc::OnUse";
+	set $@08_job_rune_test2,0;
+	stopnpctimer;
 	end;
 }
 
-job3_rune02,43,46,3	script	Rune Knight Lunarea#job	469,{
+job3_rune02,43,46,3	script	Rune Knight Lunarea#jrt1	469,2,2,{
 	set .@tigris,rand(1,6);
-	if ((job_rune_edq == 4) && (!$@job_rune_test2)) {
+	set .@rune_test2,$@08_job_rune_test2;
+	if ((job_rune_edq == 4) && (.@rune_test2 == 0)) {
 		if (.@tigris == 1) {
-			set $@job_rune_test2,1;
+			set $@08_job_rune_test2, 1;
 			// custom translation
-			mapannounce "job3_rune02", "Rune Knight Lunarea : Quickly...find and strike at the enemy's vital points!",bc_map,"0xFFFF00";
-			//UseSkillToPC 29 0 0 0
-			skilleffect "AL_INCAGI",0;
+			mapannounce "job3_rune02","Rune Knight Lunarea : Quickly...find and strike at the enemy's vital points!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
+			sc_start SC_INCREASEAGI,24000,10;
 			initnpctimer;
+			end;
 		}
-		else if ((.@tigris == 2) || (.@tigris == 4)) {
-			set $@job_rune_test2,1;
-			mapannounce "job3_rune02", "Rune Knight Lunarea : It's not over... you need more power...",bc_map,"0xFFFF00";
-			//UseSkillToPC 28 8 60 90
+		else if (.@tigris == 2 || .@tigris == 4) {
+			set $@08_job_rune_test2,1;
+			mapannounce "job3_rune02","Rune Knight Lunarea : It's not over... you need more power...",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
+			percentheal 100,100;
 			skilleffect "AL_HEAL",1500;
-			heal 1500,0;
 			initnpctimer;
+			end;
 		}
 		else if (.@tigris == 3) {
-			set $@job_rune_test2,1;
+			set $@08_job_rune_test2,1;
 			// custom translation
-			mapannounce "job3_rune02", "Rune Knight Lunarea : Everything shall return from whence it came!",bc_map,"0xFFFF00";
+			mapannounce "job3_rune02","Rune Knight Lunarea : Everything shall return from whence it came!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			//UseSkillToPC 35 0 0 0
 			skilleffect "AL_CURE",0;
 			initnpctimer;
+			end;
 		}
 		else if (.@tigris == 5) {
-			set $@job_rune_test2,1;
-			mapannounce "job3_rune02", "Rune Knight Lunarea : There can't be growth without a trial.",bc_map,"0xFFFF00";
+			set $@08_job_rune_test2,1;
+			mapannounce "job3_rune02","Rune Knight Lunarea : There can't be growth without a trial.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			sc_start SC_POISON,30000,0;
 			initnpctimer;
+			end;
 		}
 		else if (.@tigris == 6) {
-			set $@job_rune_test2,1;
-			mapannounce "job3_rune02", "Rune Knight Lunarea : There can't be growth without a trial.",bc_map,"0xFFFF00";
+			set $@08_job_rune_test2,1;
+			mapannounce "job3_rune02","Rune Knight Lunarea : There can't be growth without a trial.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			sc_start SC_CURSE,30000,0;
 			initnpctimer;
-		}
-		else {
-			donpcevent "job_rune_edq#1st_con_nc::Onuse";
+			end;
 		}
 	}
-	else {
-		donpcevent "job_rune_edq#1st_con_nc::Onuse";
-	}
-	end;
-
-OnTimer5000:
-	donpcevent "job_rune_edq#1st_con_nc::Onuse";
-	set $@job_rune_test2,0;
-	stopnpctimer;
+	donpcevent "job_rune_edq#1st_tcnc::OnUse";
 	end;
 
 OnInit:
-	disablenpc "Rune Knight Lunarea#job";
+	hideonnpc "Rune Knight Lunarea#jrt1";
 	end;
 
 OnEnable:
-	enablenpc "Rune Knight Lunarea#job";
+	hideoffnpc "Rune Knight Lunarea#jrt1";
 	end;
 
 OnDisable:
-	disablenpc "Rune Knight Lunarea#job";
+	hideonnpc "Rune Knight Lunarea#jrt1";
+	end;
+
+OnTimer5000:
+	donpcevent "job_rune_edq#1st_tcnc::OnUse";
+	set $@08_job_rune_test2,0;
+	stopnpctimer;
 	end;
 }
 
-job3_rune02,43,34,1	script	Rune Knight Renoa#job	469,{
-	set .@tigris,rand(1,6);
-	if ((job_rune_edq == 4) && (!$@job_rune_test2)) {
+job3_rune02,43,34,1	script	Rune Knight Renoa#jrt1	469,2,2,{
+	set .@tigris, rand(1,6);
+	set .@rune_test2, $@08_job_rune_test2;
+	if ((job_rune_edq == 4) && (.@rune_test2 == 0)) {
 		if (.@tigris == 1) {
-			set $@job_rune_test2,1;
+			set $@08_job_rune_test2,1;
 			// custom translation
-			mapannounce "job3_rune02", "Rune Knight Renoa : The rune of Blast! May it give you strength!",bc_map,"0xFFFF00";
-			//UseSkillToPC 29 0 0 0
-			skilleffect "AL_INCAGI",0;
+			mapannounce "job3_rune02","Rune Knight Renoa : The rune of Blast! May it give you strength!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
+			sc_start SC_INCREASEAGI,24000,10;
 			initnpctimer;
+			end;
 		}
-		else if ((.@tigris == 2) || (.@tigris == 4)) {
-			set $@job_rune_test2,1;
-			mapannounce "job3_rune02", "Rune Knight Renoa : The rune of birth! May give you the power of life!",bc_map,"0xFFFF00";
-			//UseSkillToPC 28 8 60 90
+		else if (.@tigris == 2 || .@tigris == 4) {
+			set $@08_job_rune_test2,1;
+			mapannounce "job3_rune02","Rune Knight Renoa : The rune of birth! May give you the power of life!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
+			percentheal 100,100;
 			skilleffect "AL_HEAL",1500;
-			heal 1500,0;
 			initnpctimer;
+			end;
 		}
 		else if (.@tigris == 3) {
-			set $@job_rune_test2,1;
+			set $@08_job_rune_test2,1;
 			// custom translation
-			mapannounce "job3_rune02", "Rune Knight Renoa : I am faster than others! Stronger than others!",bc_map,"0xFFFF00";
+			mapannounce "job3_rune02","Rune Knight Renoa : I am faster than others! Stronger than others!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			specialeffect2 EF_PIERCESELF;
-			donpcevent "job_rune_edq#1st_con_mc::Onreset";
+			donpcevent "job_rune_edq#1st_tcmc::OnReset";
 			initnpctimer;
+			end;
 		}
 		else if (.@tigris == 5) {
-			set $@job_rune_test2,1;
-			mapannounce "job3_rune02", "Rune Knight Renoa : For a Rune Knight, this kind of ordeal is nothing!",bc_map,"0xFFFF00";
+			set $@08_job_rune_test2,1;
+			mapannounce "job3_rune02","Rune Knight Renoa : For a Rune Knight, this kind of ordeal is nothing!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			sc_start SC_POISON,30000,0;
 			initnpctimer;
+			end;
 		}
 		else if (.@tigris == 6) {
-			set $@job_rune_test2,1;
-			mapannounce "job3_rune02", "Rune Knight Renoa : For a Rune Knight, this kind of ordeal is nothing!",bc_map,"0xFFFF00";
+			set $@08_job_rune_test2,1;
+			mapannounce "job3_rune02","Rune Knight Renoa : For a Rune Knight, this kind of ordeal is nothing!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			sc_start SC_CURSE,30000,0;
 			initnpctimer;
-		}
-		else {
-			donpcevent "job_rune_edq#1st_con_nc::Onuse";
+			end;
 		}
 	}
-	else {
-		donpcevent "job_rune_edq#1st_con_nc::Onuse";
-	}
-	end;
-
-OnTimer5000:
-	set $@job_rune_test2,0;
-	donpcevent "job_rune_edq#1st_con_nc::Onuse";
-	stopnpctimer;
+	donpcevent "job_rune_edq#1st_tcnc::OnUse";
 	end;
 
 OnInit:
-	disablenpc "Rune Knight Renoa#job";
+	hideonnpc "Rune Knight Renoa#jrt1";
 	end;
 
 OnEnable:
-	enablenpc "Rune Knight Renoa#job";
+	hideoffnpc "Rune Knight Renoa#jrt1";
 	end;
 
 OnDisable:
-	disablenpc "Rune Knight Renoa#job";
+	hideonnpc "Rune Knight Renoa#jrt1";
+	end;
+
+OnTimer5000:
+	set $@08_job_rune_test2,0;
+	donpcevent "job_rune_edq#1st_tcnc::OnUse";
+	stopnpctimer;
 	end;
 }
 
-job3_rune02,34,34,7	script	Rune Knight Velpino#job	468,{
+job3_rune02,34,34,7	script	Rune Knight Velpino#jrt1	468,{
+
 	set .@tigris,rand(1,6);
-	if ((job_rune_edq == 4) && (!$@job_rune_test2)) {
+	set .@rune_test2,$@08_job_rune_test2;
+	if ((job_rune_edq == 4) && (.@rune_test2 == 0)) {
 		if (.@tigris == 1) {
-			set $@job_rune_test2,1;
-			mapannounce "job3_rune02", "Rune Knight Velpino : You are not one who gets to fall down in this kind of place.",bc_map,"0xFFFF00";
-			//UseSkillToPC 28 8 60 90
+			set $@08_job_rune_test2,1;
+			mapannounce "job3_rune02","Rune Knight Velpino : You are not one who gets to fall down in this kind of place.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
+			percentheal 100,100;
 			skilleffect "AL_HEAL",1500;
-			heal 1500,0;
 			initnpctimer;
+			end;
 		}
-		else if ((.@tigris == 2) || (.@tigris == 4)) {
-			set $@job_rune_test2,1;
+		else if (.@tigris == 2 || .@tigris == 4) {
+			set $@08_job_rune_test2, 1;
 			// custom translation
-			mapannounce "job3_rune02", "Rune Knight Velpino : Charge! Knock them all down!",bc_map,"0xFFFF00";
-			//UseSkillToPC 29 0 0 0
-			skilleffect "AL_INCAGI",0;
+			mapannounce "job3_rune02","Rune Knight Velpino : Charge! Knock them all down!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
+			sc_start SC_INCREASEAGI,24000,10;
 			initnpctimer;
+			end;
 		}
 		else if (.@tigris == 3) {
-			set $@job_rune_test2,1;
+			set $@08_job_rune_test2,1;
 			// custom translation
-			mapannounce "job3_rune02", "Rune Knight Velpino : You are not alone. We are by your side.",bc_map,"0xFFFF00";
-			//UseSkillToPC 34 0 0 0
-			skilleffect "AL_BLESSING",0;
+			mapannounce "job3_rune02","Rune Knight Velpino : You are not alone. We are by your side.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
+			sc_start SC_BLESSING,24000,10;
 			initnpctimer;
+			end;
 		}
 		else if (.@tigris == 5) {
-			set $@job_rune_test2,1;
+			set $@08_job_rune_test2,1;
 			// custom translation
-			mapannounce "job3_rune02", "Rune Knight Velpino : Fight and win! Do not hesitate in the face of this test!",bc_map,"0xFFFF00";
+			mapannounce "job3_rune02","Rune Knight Velpino : Fight and win! Do not hesitate in the face of this test!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			sc_start SC_FREEZE,10000,0;
 			initnpctimer;
+			end;
 		}
 		else if (.@tigris == 6) {
-			set $@job_rune_test2,1;
-			mapannounce "job3_rune02", "Rune Knight Velpino : It's not a big trial for a true Rune Knight!",bc_map,"0xFFFF00";
+			set $@08_job_rune_test2,1;
+			mapannounce "job3_rune02","Rune Knight Velpino : It's not a big trial for a true Rune Knight!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			sc_start SC_SLEEP,10000,0;
 			initnpctimer;
-		}
-		else {
-			donpcevent "job_rune_edq#1st_con_nc::Onuse";
+			end;
 		}
 	}
-	else {
-		donpcevent "job_rune_edq#1st_con_nc::Onuse";
-	}
-	end;
-
-OnTimer5000:
-	set $@job_rune_test2,0;
-	donpcevent "job_rune_edq#1st_con_nc::Onuse";
-	stopnpctimer;
+	donpcevent "job_rune_edq#1st_tcnc::OnUse";
 	end;
 
 OnInit:
-	disablenpc "Rune Knight Velpino#job";
+	hideonnpc "Rune Knight Velpino#jrt1";
 	end;
 
 OnEnable:
-	enablenpc "Rune Knight Velpino#job";
+	hideoffnpc "Rune Knight Velpino#jrt1";
 	end;
 
 OnDisable:
-	disablenpc "Rune Knight Velpino#job";
+	hideonnpc "Rune Knight Velpino#jrt1";
+	end;
+
+OnTimer5000:
+	set $@08_job_rune_test2, 0;
+	donpcevent "job_rune_edq#1st_tcnc::OnUse";
+	stopnpctimer;
 	end;
 }
 
-job3_rune02,2,1,0	script	job_rune_edq#3rd_broad	-1,{
+job3_rune02,2,1,0	script	job_rune_edq#3rd_tb	139,{
+	end;
+
 OnInit:
-	disablenpc "job_rune_edq#3rd_broad";
+	hideonnpc "job_rune_edq#3rd_tb";
 	end;
 
 OnEnable:
@@ -3524,155 +3564,166 @@ OnEnable:
 
 OnDisable:
 	stopnpctimer;
-	disablenpc "job_rune_edq#3rd_broad";
+	hideonnpc "job_rune_edq#3rd_tb";
 	end;
 
 OnTimer5000:
-	mapannounce "job3_rune02", "I'll start the last test of the Rune Knight Job change.",bc_map,"0xFFFF00";
+	mapannounce "job3_rune02","I'll start the last test of the Rune Knight Job change.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 	end;
 
 OnTimer8000:
-	mapannounce "job3_rune02", "Get rid of monsters appearing here within 8 minutes by using the provided rune stones.",bc_map,"0xFFFF00";
+	mapannounce "job3_rune02","Get rid of monsters appearing here within 8 minutes by using the provided rune stones.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 	end;
 
 OnTimer11000:
-	mapannounce "job3_rune02", "If you die or can't get rid of all the monsters within the time limit, I'll consider the try as a failure.",bc_map,"0xFFFF00";
+	mapannounce "job3_rune02","If you die or can't get rid of all the monsters within the time limit, I'll consider the try as a failure.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 	end;
 
 OnTimer14000:
-	mapannounce "job3_rune02", "Now I'll start the test.",bc_map,"0xFFFF00";
-	donpcevent "job_rune_edq#3rd_con::OnEnable";
-	donpcevent "job_rune_edq#3rd_broad::OnDisable";
+	mapannounce "job3_rune02","Now I'll start the test.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
+	donpcevent "job_rune_edq#3rd_tc::OnEnable";
+	donpcevent "job_rune_edq#3rd_tb::OnDisable";
 	end;
 }
 
-job3_rune02,2,2,0	script	job_rune_edq#3rd_con	-1,{
+job3_rune02,2,2,0	script	job_rune_edq#3rd_tc	139,{
+	end;
+
 OnInit:
-	disablenpc "job_rune_edq#3rd_con";
+	hideonnpc "job_rune_edq#3rd_tc";
 	end;
 
 OnEnable:
 	initnpctimer;
-	donpcevent "job_rune_edq#3rd_con_1::OnEnable";
+	donpcevent "job_rune_edq#3rd_tc1::OnEnable";
 	end;
 
 OnDisable:
 	stopnpctimer;
-	donpcevent "job_rune_edq#3rd_con_1::OnDisable";
-	donpcevent "job_rune_edq#3rd_con_2::OnDisable";
-	donpcevent "job_rune_edq#3rd_con_3::OnDisable";
-	disablenpc "job_rune_edq#3rd_con";
+	donpcevent "job_rune_edq#3rd_tc1::OnDisable";
+	donpcevent "job_rune_edq#3rd_tc2::OnDisable";
+	donpcevent "job_rune_edq#3rd_tc3::OnDisable";
+	hideonnpc "job_rune_edq#3rd_tc";
 	end;
 
 OnTimer480000:
-	killmonsterall "job3_rune02";
-	mapannounce "job3_rune02", "You reached the limit time so I'll consider the test as a failure.",bc_map,"0xFFFF00";
+	killmonster "job3_rune02","job_rune_edq#3rd_tc::OnMyMobDead";
+	mapannounce "job3_rune02","You reached the limit time so I'll consider the test as a failure.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 	end;
 
 OnTimer482000:
 	mapwarp "job3_rune02","job3_rune01",80,65;
-	donpcevent "job_rune_edq#1st_broad::OnDisable";
-	donpcevent "job_rune_edq#1st_control::OnDisable";
-	donpcevent "job_rune_edq#1st_con_nc::OnDisable";
-	donpcevent "job_rune_edq#1st_con_mc2::OnDisable";
-	donpcevent "job_rune_edq#1st_con_mc::OnDisable";
-	donpcevent "job_rune_edq#3rd_broad::OnDisable";
-	donpcevent "job_rune_edq#3rd_con::OnDisable";
+	donpcevent "job_rune_edq#1st_tb::OnDisable";
+	donpcevent "job_rune_edq#1st_tc::OnDisable";
+	donpcevent "job_rune_edq#1st_tcnc::OnDisable";
+	donpcevent "job_rune_edq#1st_tcmc2::OnDisable";
+	donpcevent "job_rune_edq#1st_tcmc::OnDisable";
+	donpcevent "job_rune_edq#3rd_tb::OnDisable";
+	donpcevent "job_rune_edq#3rd_tc::OnDisable";
 	donpcevent "#RK Test Hidden Portal 1::OnEnable";
-	set $@job_rune_test1,0;
-	set $@job_rune_test2,0;
+	set $@08_job_rune_test1,0;
+	set $@08_job_rune_test2,0;
 	stopnpctimer;
 	end;
 }
 
-job3_rune02,2,3,0	script	job_rune_edq#3rd_con_1	-1,{
+job3_rune02,2,3,0	script	job_rune_edq#3rd_tc1	139,{
+	end;
+
 OnInit:
-	disablenpc "job_rune_edq#3rd_con_1";
+	hideonnpc "job_rune_edq#3rd_tc1";
 	end;
 
 OnEnable:
-	enablenpc "job_rune_edq#3rd_con_1";
-	monster "job3_rune02",40,40,"Executioner",2039,1,"job_rune_edq#3rd_con_1::OnMyMobDead";
+	hideoffnpc "job_rune_edq#3rd_tc1";
+	monster "job3_rune02",40,40,"Executioner",2039,1,"job_rune_edq#3rd_tc1::OnMyMobDead";
 	end;
 
 OnDisable:
-	killmonster "job3_rune02","job_rune_edq#3rd_con_1::OnMyMobDead";
-	disablenpc "job_rune_edq#3rd_con_1";
+	killmonster "job3_rune02","job_rune_edq#3rd_tc1::OnMyMobDead";
+	hideonnpc "job_rune_edq#3rd_tc1";
 	end;
 
 OnMyMobDead:
-	if (mobcount("job3_rune02","job_rune_edq#3rd_con_1::OnMyMobDead") < 1) {
+	if (mobcount ("job3_rune02","job_rune_edq#3rd_tc1::OnMyMobDead") < 1) {
 		set job_rune_edq,19;
-		killmonster "job3_rune02","job_rune_edq#3rd_con_1::OnMyMobDead";
-		donpcevent "job_rune_edq#3rd_con_2::OnEnable";
-		donpcevent "job_rune_edq#3rd_con_1::OnDisable";
+		killmonster "job3_rune02","job_rune_edq#3rd_tc1::OnMyMobDead";
+		donpcevent "job_rune_edq#3rd_tc2::OnEnable";
+		donpcevent "job_rune_edq#3rd_tc1::OnDisable";
+		end;
 	}
 	end;
 }
 
-job3_rune02,2,4,0	script	job_rune_edq#3rd_con_2	-1,{
+job3_rune02,2,4,0	script	job_rune_edq#3rd_tc2	139,{
+	end;
+
 OnInit:
-	disablenpc "job_rune_edq#3rd_con_2";
+	hideonnpc "job_rune_edq#3rd_tc2";
 	end;
 
 OnEnable:
-	enablenpc "job_rune_edq#3rd_con_2";
-	monster "job3_rune02",40,40,"Ogretooth",2040,1,"job_rune_edq#3rd_con_2::OnMyMobDead";
+	hideoffnpc "job_rune_edq#3rd_tc2";
+	monster "job3_rune02",40,40,"Ogretooth",2040,1,"job_rune_edq#3rd_tc2::OnMyMobDead";
 	end;
 
 OnDisable:
-	killmonster "job3_rune02","job_rune_edq#3rd_con_2::OnMyMobDead";
-	disablenpc "job_rune_edq#3rd_con_2";
+	killmonster "job3_rune02","job_rune_edq#3rd_tc2::OnMyMobDead";
+	hideonnpc "job_rune_edq#3rd_tc2";
 	end;
 
 OnMyMobDead:
-	if (mobcount("job3_rune02","job_rune_edq#3rd_con_2::OnMyMobDead") < 1) {
+	if (mobcount ("job3_rune02","job_rune_edq#3rd_tc2::OnMyMobDead") < 1) {
 		set job_rune_edq,20;
-		killmonster "job3_rune02","job_rune_edq#3rd_con_2::OnMyMobDead";
-		donpcevent "job_rune_edq#3rd_con_3::OnEnable";
-		donpcevent "job_rune_edq#3rd_con_2::OnDisable";
+		killmonster "job3_rune02","job_rune_edq#3rd_tc2::OnMyMobDead";
+		donpcevent "job_rune_edq#3rd_tc3::OnEnable";
+		donpcevent "job_rune_edq#3rd_tc2::OnDisable";
+		end;
 	}
 	end;
 }
 
-job3_rune02,2,5,0	script	job_rune_edq#3rd_con_3	-1,{
+job3_rune02,2,5,0	script	job_rune_edq#3rd_tc3	139,{
+	end;
+
 OnInit:
-	disablenpc "job_rune_edq#3rd_con_3";
+	hideonnpc "job_rune_edq#3rd_tc3";
 	end;
 
 OnEnable:
-	enablenpc "job_rune_edq#3rd_con_3";
-	monster "job3_rune02",40,40,"Mysteltainn",2041,1,"job_rune_edq#3rd_con_3::OnMyMobDead";
+	hideoffnpc "job_rune_edq#3rd_tc3";
+	monster "job3_rune02",40,40,"Mysteltainn",2041,1,"job_rune_edq#3rd_tc3::OnMyMobDead";
 	end;
 
 OnDisable:
-	killmonster "job3_rune02","job_rune_edq#3rd_con_3::OnMyMobDead";
-	disablenpc "job_rune_edq#3rd_con_3";
+	killmonster "job3_rune02","job_rune_edq#3rd_tc3::OnMyMobDead";
+	hideonnpc "job_rune_edq#3rd_tc3";
 	end;
 
 OnMyMobDead:
-	if (mobcount("job3_rune02","job_rune_edq#3rd_con_3::OnMyMobDead") < 1) {
+	if (mobcount ("job3_rune02","job_rune_edq#3rd_tc3::OnMyMobDead") < 1) {
 		set job_rune_edq,21;
 		changequest 3217,3218;
 		erasequest 3220;
-		killmonster "job3_rune02","job_rune_edq#3rd_con_3::OnMyMobDead";
-		mapannounce "job3_rune02", "Congratulations. You've passed the second test.",bc_map,"0xFFFF00";
+		killmonster "job3_rune02","job_rune_edq#3rd_tc3::OnMyMobDead";
+		mapannounce "job3_rune02","Congratulations. You've passed the second test.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 		mapwarp "job3_rune02","job3_rune01",80,65;
-		donpcevent "job_rune_edq#1st_broad::OnDisable";
-		donpcevent "job_rune_edq#1st_control::OnDisable";
-		donpcevent "job_rune_edq#1st_con_nc::OnDisable";
-		donpcevent "job_rune_edq#1st_con_mc2::OnDisable";
-		donpcevent "job_rune_edq#1st_con_mc::OnDisable";
-		donpcevent "job_rune_edq#3rd_broad::OnDisable";
-		donpcevent "job_rune_edq#3rd_con::OnDisable";
+		donpcevent "job_rune_edq#1st_tb::OnDisable";
+		donpcevent "job_rune_edq#1st_tc::OnDisable";
+		donpcevent "job_rune_edq#1st_tcnc::OnDisable";
+		donpcevent "job_rune_edq#1st_tcmc2::OnDisable";
+		donpcevent "job_rune_edq#1st_tcmc::OnDisable";
+		donpcevent "job_rune_edq#3rd_tb::OnDisable";
+		donpcevent "job_rune_edq#3rd_tc::OnDisable";
 		donpcevent "#RK Test Hidden Portal 1::OnEnable";
-		set $@job_rune_test1,0;
-		set $@job_rune_test2,0;
+		set $@08_job_rune_test1,0;
+		set $@08_job_rune_test2,0;
+		end;
 	}
 	end;
 }
 
-job3_rune01,92,62,3	script	Kafra Employee#rk	114,{
+job3_rune01,92,62,3	script	Kafra Employee	114,{
 	cutin "kafra_04",2;
 	mes "[Kafra Employee]";
 	mes "Hello. Kafra Service are always with you.";
@@ -3906,31 +3957,26 @@ job3_rune01,92,62,3	script	Kafra Employee#rk	114,{
 }
 
 /*
-npc "sec_in02" "Â·Ã»ÃŽÃ„Ã†Ã¯Ê¿×ªÖ°Ãˆë³¡Â¹ÃœÃ€Ã­Ô±" 4_M_KNIGHT_SILVER 34 167 3 1 1
-	mes "Ã‡Ã«ÃŠÃ¤ÃˆÃ«ÃƒÃœÃ‚ë¡£";
+sec_in02,34,167,3	script	·ûÎÄÆïÊ¿×ªÖ°Èë³¡¹ÜÀíÔ±	470,{
+	mes "ÇëÊäÈëÃÜÂë¡£";
 	next;
-	set .@keyword$, "1854";
-	input .@input$;
-	if (.@input$ == .@keyword$) {
-		mes "Â·Ã»ÃŽÃ„Ã†Ã¯Ê¿×ªÖ°Â¹ÃœÃ€Ã­Ä£Â¿é¿ªÊ¼";
+	input .@inputstr$;
+	if (.@inputstr$ == "1854") {
+		mes "·ûÎÄÆïÊ¿×ªÖ°¹ÜÀíÄ£¿é¿ªÊ¼";
 		next;
-		switch(select("Â¼Ã¬Â²Ã©È«Â¾Ö±Ã¤ÃÂ¿:ÃÞ¸Ã„È«Â¾Ö±Ã¤ÃÂ¿")) {
+		switch (select("¼ì²éÈ«¾Ö±äÁ¿:ÐÞ¸ÄÈ«¾Ö±äÁ¿")) {
 		case 1:
-			set rune_global,job_rune_test1;
-			set rune_mapcount,job3_rune02.gat;
-			mes "ÂµÂ±Ç°Â·Ã»ÃŽÃ„Ã†Ã¯Ê¿×ªÖ°Â±Ã¤ÃÂ¿ÃŠÃ‡" + rune_global + "Â¡Â£";
-			mes "ÂµÂ±Ç°Â·Ã»ÃŽÃ„Ã†Ã¯Ê¿Â¿Â¼Â³Â¡Ã–ÐµÃ„ÃˆÃ‹ÃŠÃ½Îª" + rune_mapcount + "ÃˆË¡Â£";
+			set .@rune_global, $@08_job_rune_test1;
+			mes "µ±Ç°·ûÎÄÆïÊ¿×ªÖ°±äÁ¿ÊÇ "+.@rune_global+" ¡£";
+			mes "µ±Ç°·ûÎÄÆïÊ¿¿¼³¡ÖÐµÄÈËÊýÎª "+getmapusers("job3_rune02")+ "ÈË¡£";
 			close;
-			break;
 		case 2:
-			set rune_global,job_rune_test1;
-			set $@job_rune_test1,0;
-			mes "Â½Â«Â·Ã»ÃŽÃ„Ã†Ã¯Ê¿×ªÖ°È«Â¾Ö±Ã¤ÃÂ¿ÃÞ¸Ã„Îª0Â¡Â£Â¿Â¼Â³Â¡Â¿Ã‰Ã’Ã”Ê¹Ã“Ã¡Â£";
+			set .@rune_global, $@08_job_rune_test1;
+			set $@08_job_rune_test1, 0;
+			mes "½«·ûÎÄÆïÊ¿×ªÖ°È«¾Ö±äÁ¿ÐÞ¸ÄÎª0¡£¿¼³¡¿ÉÒÔÊ¹ÓÃ¡£";
 			close;
-			break;
 		}
 	}
-	else {
-	}
+	close;
 }
 */
