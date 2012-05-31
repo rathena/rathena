@@ -1353,6 +1353,10 @@ int clif_spawn(struct block_list *bl)
 				//New Mounts are not complaint to the original method, so we gotta tell this guy that he is mounting.
 				clif_status_load_notick(&sd->bl,SI_ALL_RIDING,2,1,0,0);
 			}
+		#if PACKETVER <= 20111116
+			if (sd->status.robe)
+				clif_refreshlook(bl,bl->id,LOOK_ROBE,sd->status.robe,AREA);			
+		#endif
 		}
 		break;
 	case BL_MOB:
