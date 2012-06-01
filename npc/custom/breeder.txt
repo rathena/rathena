@@ -25,29 +25,27 @@ prontera,124,201,1	script	Universal Rental Npc	726,{
 	case 1:
 		if((BaseClass == Job_Merchant || BaseJob == Job_SuperNovice) && checkcart() == 0 && getskilllv("MC_PUSHCART")>0) {
 			setcart;
-			close;
 		} else {
 			mes "[Universal Rental Npc]";
 			mes "Sorry " + strcharinfo(0) + ", Please make sure you are the required job and have the required skill.";
-			close;
 		}
+		break;
 	case 2:
 		if(BaseJob != Job_Archer && BaseClass == Job_Archer && checkfalcon() == 0 && getskilllv("HT_FALCON")>0) {
 			setfalcon;
-			close;
 		} else {
 			mes "[Universal Rental Npc]";
 			mes "Sorry " + strcharinfo(0) + ", Please make sure you are the required job and have the required skill.";
-			close;
 		}
+		break;
 	case 3:
 		if (BaseJob != Job_Swordman && BaseClass == Job_Swordman && checkriding() == 0 && getskilllv("KN_RIDING")>0) {
 			setriding;
-			close;
 		} else {
 			mes "[Universal Rental Npc]";
 			mes "Sorry " + strcharinfo(0) + ", Please make sure you are the required job and have the required skill.";
-			close;
 		}
+		break;
 	}
+	close;
 }

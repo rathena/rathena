@@ -1,5 +1,5 @@
 --
--- eAthena Database Converter ( InnoDB -> MyISAM )
+-- rAthena Database Converter ( InnoDB -> MyISAM )
 --
 
 ALTER TABLE `auction` ENGINE = MyISAM;

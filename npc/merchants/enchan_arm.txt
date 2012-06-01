@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 1.1
 //===== Compatible With: ===================================== 
-//= eAhena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Add a +1, 2, or 3, of a random stat to specified armor.

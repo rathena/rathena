@@ -16,19 +16,21 @@
 	set .@Buffs,0;	// Also buff players? (1: yes / 0: no)
 	set .@Delay,0;	// Heal delay, in seconds
 
+	callfunc "F_ClearGarbage",0;
 	if (@HD > gettimetick(2)) end;
 	if (.@Price) {
 		message strcharinfo(0),"Healing costs "+.@Price+" Zeny.";
 		if (Zeny < .@Price) end;
 		if(select("^0055FFHeal^000000:^777777Cancel^000000")==2) close;
-		set Zeny, Zeny-.@Price; }
+		set Zeny, Zeny-.@Price;
+	}
 	specialeffect2 313; percentheal 100,100;
 	if (.@Buffs) {
 		specialeffect2 37; sc_start SC_INCREASEAGI,240000,10;
-		specialeffect2 42; sc_start SC_BLESSING,240000,10; }
+		specialeffect2 42; sc_start SC_BLESSING,240000,10;
+	}
 	if (.@Delay) set @HD, gettimetick(2)+.@Delay;
-	if (.@Price) close;
-	end;
+	close;
 }
 
 alberta,185,144,5	duplicate(Healer)	Healer#alb	742

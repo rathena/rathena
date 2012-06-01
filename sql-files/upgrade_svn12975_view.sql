@@ -1,6 +1,6 @@
 -- The statements below will create a 'view' (virtual table) that mimics
 -- the previous `login` table layout. You can use this hack to make your db
--- compatible with older eathena servers or control panels.
+-- compatible with older *Athena servers or control panels.
 -- Note: also adjust the account.sql.account_db setting in login_athena.conf.
 -- Note: if your CP does not have a config setting for the `login` table name
 --       you'll have to either modify its code or do some table renaming.

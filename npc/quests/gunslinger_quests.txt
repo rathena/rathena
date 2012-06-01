@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.6c
 //===== Compatible With: =====================================
-//= SVN eA
+//= rAthena SVN
 //===== Description: =========================================
 //= Gunslinger guns and bullet quests
 //===== Additional Comments: =================================

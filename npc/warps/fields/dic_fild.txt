@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= El Dicastes Field Warp Script
 //===== By: ==================================================
 //= Chilly
 //===== Current Version: =====================================
 //= 1.0
 //===== Compatible With: =====================================
-//= Any Athena Version
+//= rAthena SVN
 //===== Description: =========================================
 //= Warp Points for El Dicastes Field
 //===== Additional Comments: =================================

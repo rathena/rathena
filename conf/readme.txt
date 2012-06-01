@@ -5,7 +5,7 @@ what you ever did without it.
 
 The main thing it does, is provide a way for you to change your config settings without
 having to update the files every time you update your server. You store your changes, and 
-the rest are updated with eA (usually though SVN).
+the rest are updated with rAthena (usually though SVN).
 
 How does this work?
 

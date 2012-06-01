@@ -116,4 +116,4 @@ switch(select("I'd like to make a deposit.:I'd like to make a withdrawl.:What's 
 		mes "Very well... come again soon.";
 		close;
 	}
-} // EOF
+}

@@ -3944,9 +3944,8 @@ ACMD_FUNC(reloadmotd)
 ACMD_FUNC(reloadscript)
 {
 	nullpo_retr(-1, sd);
-	//atcommand_broadcast( fd, sd, "@broadcast", "eAthena Server is Rehashing..." );
+	//atcommand_broadcast( fd, sd, "@broadcast", "Server is reloading scripts..." );
 	//atcommand_broadcast( fd, sd, "@broadcast", "You will feel a bit of lag at this point !" );
-	//atcommand_broadcast( fd, sd, "@broadcast", "Reloading NPCs..." );
 
 	flush_fifos();
 	script_reload();
@@ -6650,7 +6649,7 @@ ACMD_FUNC(mail)
 
 /*==========================================
  * Show Monster DB Info   v 1.0
- * originally by [Lupus] eAthena
+ * originally by [Lupus]
  *------------------------------------------*/
 ACMD_FUNC(mobinfo)
 {
@@ -7112,7 +7111,7 @@ ACMD_FUNC(homshuffle)
 
 /*==========================================
  * Show Items DB Info   v 1.0
- * originally by [Lupus] eAthena
+ * originally by [Lupus]
  *------------------------------------------*/
 ACMD_FUNC(iteminfo)
 {

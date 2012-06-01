@@ -1,11 +1,11 @@
-//===== eAthena Script =======================================
+//===== rAthena Script =======================================
 //= El Dicastes Warp Script
 //===== By: ==================================================
 //= Chilly
 //===== Current Version: =====================================
 //= 1.1
 //===== Compatible With: =====================================
-//= Any Athena Version
+//= rAthena SVN
 //===== Description: =========================================
 //= Warp Points for El Dicastes
 //===== Additional Comments: =================================

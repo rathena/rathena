@@ -15,7 +15,7 @@
 #   HAVE_*   : internal variable indicating if we have and are using something
 #
 # Maintainer: Flávio J. Saraiva (feel free to send complaints or suggestions)
-#   flaviojs @ eAthena forum/irc
+#   flaviojs @ rAthena forum/irc
 #   flaviojs2005 \A-T/ gmail <D.o,T> com
 #
 #####################################################################

@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.0 [Masao]
 //===== Compatible With: =====================================
-//= Any rA SVN
+//= rAthena SVN
 //===== Description: =========================================
 //= A Shopstreet in Prontera where players can buy some Equipment.
 //============================================================
