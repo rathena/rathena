@@ -1,294 +1,385 @@
-//===== rAthena Script =======================================
+//===== rAthena Script ======================================= 
 //= Warper
-//===== By: ==================================================
-//= Darkchild
+//===== By: ================================================== 
+//= Euphy
 //===== Current Version: =====================================
-//= 2.2
+//= 1.2
 //===== Compatible With: =====================================
 //= rAthena SVN
-//===== Description: =========================================
-//= Generic warper...
-//===== Additional Comments: =================================
-//= 1.0 by Darkchild
-//= 1.1 by jabs
-//= 1.2 by Lupus (placement fixed in Amatsu)
-//= 1.3 fixed Louyang label typo, added warp and WARPRA into 
-//=     Nifleheim. Also sorted all names in alphabet order. [Lupus]
-//= 1.4 fixed morroc warp npc overlaying kafra [Aria]
-//= 1.4a Added Ayothaya and Einbroch to list, and town Warpra's [Fredzilla]
-//= 1.4b fixed Izlude warp npc overlaying BBS [Justin84]
-//= 1.5 Added this NPC to more places [Lupus]
-//= 1.6 Rewrote a lot. Changed the sprite, some locations. [Poki#3]
-//= TODO Add an option for selecting the level of the dungeon. [Poki#3]
-//= 1.7 Temporary? Added F_ClearGarbage to clear unused/outdated variables [Lupus]
-//= 1.8 Removed Duplicates [Silent]
-//= 1.9 Optimized for the greater good. [Kisuka]
-//= 2.0 Fixed warp for AntHell and Yuno. [Kisuka]
-//= 2.1 Moved AntHell warp agent to the new anthell entrance. [brianluau]
-//= 2.2 Updated Script with newest towns. [Masao]
-//============================================================
-//= To allow selecting the Level of the Dungeon you want to
-//= Warp to set the @lvlselect variable to 1 (Not implemented yet!)
+//===== Description: ========================================= 
+//= A complete - but very condensed - warper script.
+//= Coordinates written largely by Tekno-Kanix and ToastOfDoom.
 //============================================================
 
--	script	Warp Agent#01::warpra	859,{
-	//	set @lvlselect,0;
+-	script	Warper	-1,{
+function Go; function Disp; function Pick;
 
-	callfunc "F_ClearGarbage"; //Clear outdated, unused variables
+// --------------------------------------------------
+//	Main Menu:
+// --------------------------------------------------
 
-	mes "[Warp Agent]";
-	mes "Hello " + strcharinfo(0) + ",";
-	mes "I can teleport you to any Town or Dungeon!";
-	mes "Where do you want to go?";
-	next;
-	switch(select("To a Town:To a Dungeon")) {
-	case 1:
-		mes "[Warp Agent]";
-		mes "Please select which town you would like to be teleported to.";
-		next;
-		switch(select("Alberta:Aldebaran:Amatsu:Ayothaya:Brasilis:Comodo:Dewata:Eclage:Einbroch:Einbech:El Dicastes:Expedition Camp:Geffen:Gonryun:Hugel:Izlude:Jawaii:Lighthalzen:Louyang:Lutie:Malangdo:Malaya:Manuk:Mora:Morroc:Moscovia:Payon:Prontera:Rachel:Splendide:Umbala:Veins:Yuno")) {
-		case 1:
-			warp "alberta",27,236;
-			break;
-		case 2:
-			warp "aldebaran",145,120;
-			break;
-		case 3:
-			warp "amatsu",197,86;
-			break;
-		case 4:
-			warp "ayothaya",149,118;
-			break;
-		case 5:
-			warp "brasilis",195,220;
-			break;
-		case 6:
-			warp "comodo",188,161;
-			break;
-		case 7:
-			warp "dewata",199,179;
-			break;
-		case 8:
-			warp "eclage",111,39;
-			break;
-		case 9:
-			warp "einbroch",64,200;
-			break;
-		case 10:
-			warp "einbech",70,95;
-			break;
-		case 11:
-			warp "dicastes01",198,187;
-			break;
-		case 12:
-			warp "mid_camp",183,241;
-			break;
-		case 13:
-			warp "geffen",119,66;
-			break;
-		case 14:
-			warp "gonryun",150,130;
-			break;
-		case 15:
-			warp "hugel",96,145;
-			break;
-		case 16:
-			warp "izlude",128,111;
-			break;
-		case 17:
-			warp "jawaii",249,127;
-			break;
-		case 18:
-			warp "lighthalzen",158,92;
-			break;
-		case 19:
-			warp "louyang",210,108;
-			break;
-		case 20:
-			warp "xmas",150,133;
-			break;
-		case 21:
-			warp "malangdo",224,184;
-			break;
-		case 22:
-			warp "malaya",212,206;
-			break;
-		case 23:
-			warp "manuk",282,138;
-			break;
-		case 24:
-			warp "mora",111,97;
-			break;
-		case 25:
-			warp "morocc",159,93;
-			break;
-		case 26:
-			warp "moscovia",223,184;
-			break;
-		case 27:
-			warp "payon",152,75;
-			break;
-		case 28:
-			warp "prontera",156,187;
-			break;
-		case 29:
-			warp "rachel",130,110;
-			break;
-		case 30:
-			warp "splendide",197,176;
-			break;
-		case 31:
-			warp "umbala",130,130;
-			break;
-		case 32:
-			warp "veins",216,123;
-			break;
-		case 33:
-			warp "yuno",160,168;
-			break;
-		}
-		break;
-	case 2:
-		mes "[Warp Agent]";
-		mes "Please select which dungeon you would like to be teleported to.";
-		next;
-		switch(select("Abyss Lake:Amatsu Dungeon:Anthell:Ayothaya Dungeon:Bibilan Dungeon:Coal Mine (Dead Pit):Culvert:Einbech Dungeon:Glast Heim:Gonryun Dungeon:Ice Dungeon:Juperos:Lighthalzen Bio Lab:Magma Dungeon:Niflheim:Odin Temple:Orc Dungeon:Payon Dungeon:Pyramids:Sphinx:Sunken Ship:Thanatos Tower:Thor Volcano:Turtle Dungeon")) {
-		case 1:
-			warp "hu_fild05",189,207;
-			break;
-		case 2:
-			warp "ama_dun01",229,12;
-			break;
-		case 3:
-			warp "moc_fild20",164,145;
-			break;
-		case 4:
-			warp "ayo_fild02",280,149;
-			break;
-		case 5:
-			warp "izlu2dun",106,88;
-			break;
-		case 6:
-			warp "mjolnir_02",81,359;
-			break;
-		case 7:
-			warp "prt_sewb1",126,248;
-			break;
-		case 8:
-			warp "einbech",135,249;
-			break;
-		case 9:
-			warp "glast_01",368,303;
-			break;
-		case 10:
-			warp "gonryun",160,195;
-			break;
-		case 11:
-			warp "ice_dun01",157,15;
-			break;
-		case 12:
-			warp "yuno_fild07",218,176;
-			break;
-		case 13:
-			warp "lighthalzen",158,285;
-			break;
-		case 14:
-			warp "yuno_fild03",39,140;
-			break;
-		case 15:
-			warp "niflheim",35,161;
-			break;
-		case 16:
-			warp "odin_tem01",98,144;
-			break;
-		case 17:
-			warp "gef_fild10",70,332;
-			break;
-		case 18:
-			warp "pay_arche",43,132;
-			break;
-		case 19:
-			warp "moc_ruins",62,162;
-			break;
-		case 20:
-			warp "moc_fild19",107,100;
-			break;
-		case 21:
-			warp "alb2trea",75,98;
-			break;
-		case 22:
-			warp "tha_scene01",131,223;
-			break;
-		case 23:
-			warp "thor_v01",21,229;
-			break;
-		case 24:
-			warp "tur_dun01",149,238;
-		}
-		break;
-	}
-	end;
+menu	"Last Warp ^777777["+lastwarp$+"]^000000",-,
+	" ~ Towns",Towns, " ~ Fields",Fields, " ~ Dungeons",Dungeons,
+	" ~ Guild Castles",Castles, " ~ Special Areas",Special;
+
+	if (lastwarp$ == "") dispbottom "You have not warped anywhere yet.";
+		else warp lastwarp$,lastwarpx,lastwarpy;
+	close;
+
+// ------------------- Functions -------------------
+// * Go("<map>",<x>,<y>);
+//	~ Warps directly to a map.
+// * Disp("<Menu Option>",<first option>,<last option>);
+// * Pick("<map_prefix>"{,<index offset>});
+//	~ Dynamic menu and map selection.
+// * Disp("","<Option 1>:<Option 2>:<etc.>");
+// * Pick("","<map1>","<map2>","<etc.>");
+//	~ Manual menu and map selection.
+//
+// Other notes:
+//   ~ Array @c[] holds all (x,y) coordinates.
+//   ~ Use @c[2] EXCEPT when maps begin dynamically
+//	  at 0: use @c[0] and Pick() offset 1.
+// --------------------------------------------------
+
+function Go {
+	warp getarg(0),getarg(1,0),getarg(2,0);
+	getmapxy(lastwarp$,lastwarpx,lastwarpy,0);
+	close; }
+function Disp {
+	set @menu$,"";
+	if(getarg(0)=="") {
+		set @menu$,getarg(1);
+		return; }
+	for(set .@i,getarg(1); .@i<=getarg(2); set .@i,.@i+1)
+		set @menu$, @menu$+getarg(0)+" "+.@i+":";
+	return; }
+function Pick {
+	if(getarg(0)=="") {
+		set .@i, select(@menu$);
+		warp getarg(.@i),@c[.@i*2],@c[.@i*2+1]; }
+	else {
+		set .@i, select(@menu$)-getarg(1,0);
+		warp getarg(0)+((.@i<10)?"0":"")+.@i,@c[.@i*2],@c[.@i*2+1]; }
+	getmapxy(lastwarp$,lastwarpx,lastwarpy,0);
+	close; }
+
+// --------------------------------------------------
+	Towns:
+// --------------------------------------------------
+menu	"Prontera",T1, "Alberta",T2, "Aldebaran",T3, "Amatsu",T4, "Ayothaya",T5,
+	"Brasilis",T6, "Comodo",T7, "Dewata",T33, "Eclage",T34, "Einbech",T8, 
+	"Einbroch",T9, "El Dicastes",T10, "Geffen",T11, "Gonryun",T12, "Hugel",T13,
+	"Izlude",T14, "Jawaii",T15, "Lighthalzen",T16, "Louyang",T17, "Lutie",T18,
+	"Malangdo",T35, "Malaya",T36, "Manuk",T19, "Midgarts Expedition Camp",T20,
+	"Mora",T21, "Morroc",T22, "Moscovia",T23, "Nameless Island",T24,
+	"Niflheim",T25, "Payon",T26, "Rachel",T27, "Splendide",T28, "Thor Camp",T29,
+	"Umbala",T30, "Veins",T31, "Yuno",T32;
+
+T1: Go("prontera",155,183);
+T2: Go("alberta",28,234);
+T3: Go("aldebaran",140,131);
+T4: Go("amatsu",198,84);
+T5: Go("ayothaya",208,166);
+T6: Go("brasilis",195,220);
+T7: Go("comodo",209,143);
+T8: Go("einbech",138,243);
+T9: Go("einbroch",64,200);
+T10: Go("dicastes01",197,187);
+T11: Go("geffen",120,68);
+T12: Go("gonryun",160,121);
+T13: Go("hugel",96,145);
+T14: Go("izlude",128,114);
+T15: Go("jawaii",213,230);
+T16: Go("lighthalzen",158,92);
+T17: Go("louyang",217,100);
+T18: Go("xmas",147,134);
+T19: Go("manuk",260,175);
+T20: Go("mid_camp",210,288);
+T21: Go("mora",111,97);
+T22: Go("morocc",156,93);
+T23: Go("moscovia",219,193);
+T24: Go("nameless_n",256,215);
+T25: Go("niflheim",202,174);
+T26: Go("payon",179,100);
+T27: Go("rachel",130,111);
+T28: Go("splendide",200,153);
+T29: Go("thor_camp",246,68);
+T30: Go("umbala",127,128);
+T31: Go("veins",216,123);
+T32: Go("yuno",157,51);
+T33: Go("dewata",199,179);
+T34: Go("eclage",111,39);
+T35: Go("malangdo",224,184);
+T36: Go("malaya",212,206);
+
+// --------------------------------------------------
+	Fields:
+// --------------------------------------------------
+menu	"Amatsu Fields",F1, "Ayothaya Fields",F2, "Bifrost Fields", F3,
+	"Brasilis Fields",F4, "Comodo Fields",F5, "Dewata Fields",F26,
+	"Eclage Fields",F27, "Einbroch Fields",F6, "El Dicastes Fields",F7,
+	"Geffen Fields",F8, "Gonryun Fields",F9, "Hugel Fields",F10,
+	"Lighthalzen Fields",F11, "Louyang Field",F12, "Lutie Field",F13,
+	"Malaya Fields",F28, "Manuk Fields",F14, "Mjolnir Fields",F15,
+	"Moscovia Fields",F16, "Niflheim Fields",F17, "Payon Forests",F18,
+	"Prontera Fields",F19, "Rachel Fields",F20, "Sograt Deserts",F21,
+	"Splendide Fields",F22, "Umbala Fields",F23, "Veins Fields",F24,
+	"Yuno Fields",F25;
+
+F1: setarray @c[2],190,197;
+	Disp("Amatsu Field",1,1); Pick("ama_fild");
+F2: setarray @c[2],173,134,212,150;
+	Disp("Ayothaya Field",1,2); Pick("ayo_fild");
+F3: setarray @c[2],193,220,220,187;
+	Disp("Bifrost Field",1,2); Pick("bif_fild");
+F4: setarray @c[2],74,32;
+	Disp("Brasilis Field",1,1); Pick("bra_fild");
+F5: setarray @c[2],180,178,231,160,191,172,228,194,224,203,190,223,234,177,194,175,172,172;
+	Disp("Comodo Field",1,9); Pick("cmd_fild");
+F6: setarray @c[2],142,225,182,141,187,228,185,173,216,173,195,148,272,220,173,214,207,174,196,200;
+	Disp("Einbroch Field",1,10); Pick("ein_fild");
+F7: setarray @c[2],143,132,143,217;
+	Disp("El Dicastes Field",1,2); Pick("dic_fild");
+F8: setarray @c[0],46,199,213,204,195,212,257,192,188,171,166,263,248,158,195,191,186,183,221,117,178,218,136,328,240,181,235,235,211,185;
+	Disp("Geffen Field",0,14); Pick("gef_fild");
+F9: setarray @c[2],220,227;
+	Disp("Gonryun Field",1,1); Pick("gon_fild");
+F10: setarray @c[2],268,101,222,193,232,185,252,189,196,106,216,220,227,197;
+	Disp("Hugel Field",1,7); Pick("hu_fild");
+F11: setarray @c[2],240,179,185,235,240,226;
+	Disp("Lighthalzen Field",1,3); Pick("lhz_fild");
+F12: setarray @c[2],229,187;
+	Disp("Louyang Field",1,1); Pick("lou_fild");
+F13: setarray @c[2],115,145;
+	Disp("Lutie Field",1,1); Pick("xmas_fild");
+F14: setarray @c[2],35,236,35,262,84,365;
+	Disp("Manuk Field",1,3); Pick("man_fild");
+F15: setarray @c[2],204,120,175,193,208,213,179,180,181,240,195,270,235,202,188,215,205,144,245,223,180,206,196,208;
+	Disp("Mjolnir Field",1,12); Pick("mjolnir_");
+F16: setarray @c[2],82,104,131,147;
+	Disp("Moscovia Field",1,2); Pick("mosk_fild");
+F17: setarray @c[2],215,229,167,234;
+	Disp("Niflheim Field",1,2); Pick("nif_fild");
+F18: setarray @c[2],158,206,151,219,205,148,186,247,134,204,193,235,200,177,137,189,201,224,160,205,194,150;
+	Disp("Payon Forest",1,11); Pick("pay_fild");
+F19: setarray @c[0],208,227,190,206,240,206,190,143,307,252,239,213,185,188,193,194,187,218,210,183,195,149,198,164;
+	Disp("Prontera Field",0,11); Pick("prt_fild");
+F20: setarray @c[2],192,162,235,166,202,206,202,208,225,202,202,214,263,196,217,201,87,121,277,181,221,185,175,200,174,197;
+	Disp("Rachel Field",1,13); Pick("ra_fild");
+F21: setarray @c[2],219,205,177,206,194,182,184,217,203,213,213,208,224,170,229,177,195,198,209,168,198,216,156,187,185,263,209,219,223,188,206,228,208,238,209,223,85,97,207,202,31,195,38,195;
+	Disp("Sograt Desert",1,22); Pick("moc_fild");
+F22: setarray @c[2],175,186,236,184,188,204;
+	Disp("Splendide Field",1,3); Pick("spl_fild");
+F23: setarray @c[2],217,206,223,221,237,215,202,197;
+	Disp("Umbala Field",1,4); Pick("um_fild");
+F24: setarray @c[2],186,175,196,370,222,45,51,250,202,324,150,223,149,307;
+	Disp("Veins Field",1,7); Pick("ve_fild");
+F25: setarray @c[2],189,224,192,207,221,157,226,199,223,177,187,232,231,174,196,203,183,214,200,124,195,226,210,304;
+	Disp("Yuno Field",1,12); Pick("yuno_fild");
+F26: setarray @c[2],371,212;
+	Disp("Dewata Field",1,1); Pick("dew_fild");
+F27: setarray @c[2],97,314;
+	Disp("Eclage Field",1,1); Pick("ecl_fild");
+F28: setarray @c[2],40,272,266,359;
+	Disp("Malaya Field",1,2); Pick("ma_fild");
+
+// --------------------------------------------------
+	Dungeons:
+// --------------------------------------------------
+menu	"Abyss Lakes",D1, "Amatsu Dungeon",D2, "Anthell",D3,
+	"Ayothaya Dungeon",D4, "Beach Dungeon",D5, "Bio Labs",D6,
+	"Brasilis Dungeon",D7, "Byalan Dungeon",D8, "Clock Tower",D9,
+	"Coal Mines",D10, "Culvert",D11, "Cursed Abbey",D12, "Dewata Dungeon",D41,
+	"Einbroch Dungeon",D13, "Endless Tower",D14, "Gefenia",D15,
+	"Geffen Dungeon",D16, "Glast Heim",D17, "Gonryun Dungeon",D18,
+	"Guild Dungeons",GD, "Hidden Dungeon",D19, "Ice Dungeon",D20,
+	"Juperos",D21, "Kiel Dungeon",D22, "Louyang Dungeon",D23,
+	"Magma Dungeon",D24, "Malangdo Dungeon",D42, "Moscovia Dungeon",D25,
+	"Nidhogg's Dungeon",D26, "Odin Temple",D27, "Orc Dungeon",D28, "Payon Dungeon",D29,
+	"Pyramids",D30, "Rachel Sanctuary",D31, "Scaraba Hole",D32, "Sealed Shrine",D33,
+	"Sphinx",D34, "Sunken Ship",D35, "Thanatos Tower",D36, "Thor Volcano",D37,
+	"Toy Factory",D38, "Turtle Dungeon",D39, "Umbala Dungeon",D40;
+
+D1: setarray @c[2],192,207,275,270,116,27;
+	Disp("Abyss Lakes",1,3); Pick("abyss_");
+D2: setarray @c[2],228,11,34,41,119,14;
+	Disp("Amatsu Dungeon",1,3); Pick("ama_dun");
+D3: setarray @c[2],35,262,168,170;
+	Disp("Anthell",1,2); Pick("anthell");
+D4: setarray @c[2],275,19,24,26;
+	Disp("","Ancient Shrine Maze:Inside Ancient Shrine"); Pick("ayo_dun");
+D5: setarray @c[2],266,67,255,244,23,260;
+	Disp("Beach Dungeon",1,3); Pick("","beach_dun","beach_dun2","beach_dun3");
+D6: setarray @c[2],150,288,150,18,140,134;
+	Disp("Bio Lab",1,3); Pick("lhz_dun");
+D7: setarray @c[2],87,47,262,262;
+	Disp("Brasilis Dungeon",1,2); Pick("bra_dun");
+D8: setarray @c[0],168,168,253,252,236,204,32,63,26,27;
+	Disp("Byalan Dungeon",1,5); Pick("iz_dun",1);
+D9: setarray @c[2],199,159,148,283,65,147,56,155,297,25,127,169,277,178,268,74;
+	Disp("","Clock Tower 1:Clock Tower 2:Clock Tower 3:Clock Tower 4:Basement 1:Basement 2:Basement 3:Basement 4");
+	Pick("","c_tower1","c_tower2","c_tower3","c_tower4","alde_dun01","alde_dun02","alde_dun03","alde_dun04");
+D10: setarray @c[2],52,17,381,343,302,262;
+	Disp("Coal Mines",1,3); Pick("mjo_dun");
+D11: setarray @c[2],131,247,19,19,180,169,100,92;
+	Disp("Culvert",1,4); Pick("","prt_sewb1","prt_sewb2","prt_sewb3","prt_sewb4");
+D12: setarray @c[2],51,14,150,11,120,10;
+	Disp("Cursed Abbey",1,3); Pick("abbey");
+D13: setarray @c[2],22,14,292,290;
+	Disp("Einbroch Dungeon",1,2); Pick("ein_dun");
+D14: setarray @c[2],72,112;
+	Disp("","Misty Island"); Pick("","e_tower");
+D15: setarray @c[2],40,103,203,34,266,168,130,272;
+	Disp("Gefenia",1,4); Pick("gefenia",0);
+D16: setarray @c[0],104,99,115,236,106,132,203,200;
+	Disp("Geffen Dungeon",1,4); Pick("gef_dun",1);
+D17: setarray @c[2],375,304,199,29,104,25,150,15,157,287,147,15,258,255,108,291,171,283,68,277,156,7,12,7,133,271,224,274,14,70,150,14;
+	Disp("","Entrance:Castle 1:Castle 2:Chivalry 1:Chivalry 2:Churchyard:Culvert 1:Culvert 2:Culvert 3:Culvert 4:St. Abbey:Staircase Dungeon:Underground Cave 1:Underground Cave 2:Underground Prison 1:Underground Prison 2");
+	Pick("","glast_01","gl_cas01","gl_cas02","gl_knt01","gl_knt02","gl_chyard","gl_sew01","gl_sew02","gl_sew03","gl_sew04","gl_church","gl_step","gl_dun01","gl_dun02","gl_prison","gl_prison1");
+D18: setarray @c[2],153,53,28,113,68,16;
+	Disp("Gonryun Dungeon",1,3); Pick("gon_dun");
+D19: setarray @c[2],176,7,93,20,23,8;
+	Disp("Hidden Dungeon",1,3); Pick("prt_maze");
+D20: setarray @c[2],157,14,151,155,149,22,33,158;
+	Disp("Ice Dungeon",1,4); Pick("ice_dun");
+D21: setarray @c[2],140,51,53,247,37,63,150,285;
+	Disp("","Entrance:Juperos 1:Juperos 2:Core");
+	Pick("","jupe_cave","juperos_01","juperos_02","jupe_core");
+D22: setarray @c[2],28,226,41,198;
+	Disp("Kiel Dungeon",1,2); Pick("kh_dun");
+D23: setarray @c[2],218,196,282,20,165,38;
+	Disp("","The Royal Tomb:Inside the Royal Tomb:Suei Long Gon"); Pick("lou_dun");
+D24: setarray @c[2],126,68,47,30;
+	Disp("Magma Dungeon",1,2); Pick("mag_dun");
+D25: setarray @c[2],189,48,165,30,32,135;
+	Disp("Moscovia Dungeon",1,3); Pick("mosk_dun");
+D26: setarray @c[2],61,239,60,271;
+	Disp("Nidhogg's Dungeon",1,2); Pick("nyd_dun");
+D27: setarray @c[2],298,167,224,149,266,280;
+	Disp("Odin Temple",1,3); Pick("odin_tem");
+D28: setarray @c[2],32,170,21,185;
+	Disp("Orc Dungeon",1,2); Pick("orcsdun");
+D29: setarray @c[0],21,183,19,33,19,63,155,159,201,204;
+	Disp("Payon Dungeon",1,5); Pick("pay_dun",1);
+D30: setarray @c[2],192,9,10,192,100,92,181,11,94,96,192,8;
+	Disp("","Pyramids 1:Pyramids 2:Pyramids 3:Pyramids 4:Basement 1:Basement 2"); Pick("moc_pryd");
+D31: setarray @c[2],140,11,32,21,4,149,204,218,150,9;
+	Disp("Rachel Sanctuary",1,5); Pick("ra_san");
+D32: setarray @c[2],364,44,101,141;
+	Disp("Scaraba Hole",1,2); Pick("dic_dun");
+D33: setarray @c[2],306,143;
+	Disp("","Friar Patrick"); Pick("","monk_test");
+D34: setarray @c[2],288,9,149,81,210,54,10,222,100,99;
+	Disp("Sphinx",1,5); Pick("","in_sphinx1","in_sphinx2","in_sphinx3","in_sphinx4","in_sphinx5");
+D35: setarray @c[2],69,24,102,27;
+	Disp("Sunken Ship",1,2); Pick("treasure");
+D36: setarray @c[2],150,39,150,136,220,158,59,143,62,11,89,221,35,166,93,148,29,107,159,138,19,20,130,52;
+	Disp("Thanatos Tower",1,12); Pick("tha_t");
+D37: setarray @c[2],21,228,75,205,34,272;
+	Disp("Thor Volcano",1,3); Pick("thor_v");
+D38: setarray @c[2],205,15,129,133;
+	Disp("Toy Factory",1,2); Pick("xmas_dun");
+D39: setarray @c[2],154,49,148,261,132,189,100,192;
+	Disp("","Entrance:Turtle Dungeon 1:Turtle Dungeon 2:Turtle Dungeon 3"); Pick("tur_dun");
+D40: setarray @c[2],42,31,48,30,204,78;
+	Disp("","Carpenter's Shop in the Tree:Passage to a Foreign World:Hvergermil's Fountain");
+	Pick("","um_dun01","um_dun02","yggdrasil01");
+D41: setarray @c[2],285,160,299,29;
+	Disp("Dewata Dungeon",1,2); Pick("dew_dun");
+D42: setarray @c[2],33,230;
+	Disp("Malangdo Dungeon",1,1); Pick("mal_dun");
+GD: setarray @c[2],119,93,39,161,50,44,116,45,199,195,200,124;
+	Disp("","Baldur:Luina:Valkyrie:Britoniah:Arunafeltz:Schwaltzvalt");
+	Pick("","gld_dun01","gld_dun02","gld_dun03","gld_dun04","arug_dun01","schg_dun01");
+
+// --------------------------------------------------
+	Castles:
+// --------------------------------------------------
+menu	"Aldebaran Castles",C1, "Geffen Castles",C2, "Payon Castles",C3,
+	"Prontera Castles",C4, "Arunafeltz Castles",C5, "Schwaltzvalt Castles",C6;
+
+C1: setarray @c[2],48,83,95,249,142,85,239,242,264,90;
+	Disp("","Neuschwanstein:Hohenschwangau:Nuenberg:Wuerzburg:Rothenburg");
+	Pick("","alde_gld","alde_gld","alde_gld","alde_gld","alde_gld");
+C2: setarray @c[2],214,75,308,240,143,240,193,278,305,87;
+	Disp("","Repherion:Eeyolbriggar:Yesnelph:Bergel:Mersetzdeitz");
+	Pick("","gef_fild13","gef_fild13","gef_fild13","gef_fild13","gef_fild13");
+C3: setarray @c[2],121,233,295,116,317,293,140,160,204,266;
+	Disp("","Bright Arbor:Scarlet Palace:Holy Shadow:Sacred Altar:Bamboo Grove Hill");
+	Pick("","pay_gld","pay_gld","pay_gld","pay_gld","pay_gld");
+C4: setarray @c[2],134,65,240,128,153,137,111,240,208,240;
+	Disp("","Kriemhild:Swanhild:Fadhgridh:Skoegul:Gondul");
+	Pick("","prt_gld","prt_gld","prt_gld","prt_gld","prt_gld");
+C5: setarray @c[2],158,272,83,47,68,155,299,345,292,107;
+	Disp("","Mardol:Cyr:Horn:Gefn:Banadis");
+	Pick("","aru_gld","aru_gld","aru_gld","aru_gld","aru_gld");
+C6: setarray @c[2],293,100,288,252,97,196,137,90,71,315;
+	Disp("","Himinn:Andlangr:Viblainn:Hljod:Skidbladnir");
+	Pick("","sch_gld","sch_gld","sch_gld","sch_gld","sch_gld");
+
+// --------------------------------------------------
+	Special:
+// --------------------------------------------------
+menu	"Auction Hall",S1, "Battlegrounds",S2, "Casino",S3, "Gonryun Arena",S4,
+	"Izlude Arena",S5, "Monster Race Arena",S6, "Turbo Track",S7;
+
+S1: Go("auction_01",22,68);
+S2: Go("bat_room",154,150);
+S3: Go("cmd_in02",179,129);
+S4: Go("gon_test",48,10);
+S5: Go("arena_room",100,88);
+S6: Go("p_track01",62,41);
+S7: Go("turbo_room",99,114);
 }
 
-// --------- NPC Clones ------------
-// ---------------------------------
-
-// ----------- Towns -------------
-alberta,31,240,4	duplicate(warpra)	Warp Agent#02	859
-aldebaran,145,118,4	duplicate(warpra)	Warp Agent#03	859
-amatsu,192,81,1	duplicate(warpra)	Warp Agent#04	859
-ayothaya,144,117,6	duplicate(warpra)	Warp Agent#05	859
-comodo,194,158,4	duplicate(warpra)	Warp Agent#06	859
-einbroch,59,205,4	duplicate(warpra)	Warp Agent#07	859
-einbroch,243,189,2	duplicate(warpra)	Warp Agent#08	859
-einbech,135,249,4	duplicate(warpra)	Warp Agent#09	859
-geffen,115,66,4	duplicate(warpra)	Warp Agent#10	859
-gonryun,151,130,4	duplicate(warpra)	Warp Agent#11	859
-izlude,133,117,4	duplicate(warpra)	Warp Agent#12	859
-hugel,88,151,5	duplicate(warpra)	Warp Agent#13	859
-lighthalzen,155,79,6	duplicate(warpra)	Warp Agent#14	859
-louyang,210,106,4	duplicate(warpra)	Warp Agent#15	859
-morocc,156,95,4	duplicate(warpra)	Warp Agent#16	859
-prontera,160,190,4	duplicate(warpra)	Warp Agent#17	859
-payon,182,110,4	duplicate(warpra)	Warp Agent#18	859
-umbala,132,130,4	duplicate(warpra)	Warp Agent#19	859
-xmas,150,136,4	duplicate(warpra)	Warp Agent#20	859
-yuno,137,162,4	duplicate(warpra)	Warp Agent#21	859
-lighthalzen,212,136,6	duplicate(warpra)	Warp Agent#22	859
-veins,215,134,6	duplicate(warpra)	Warp Agent#23	859
-splendide,198,153,6	duplicate(warpra)	Warp Agent#24	859
-manuk,281,140,6	duplicate(warpra)	Warp Agent#25	859
-brasilis,200,157,6	duplicate(warpra)	Warp Agent#26	859
-rachel,127,111,6	duplicate(warpra)	Warp Agent#27	859
-moscovia,222,220,6	duplicate(warpra)	Warp Agent#28	859
-mid_camp,180,246,6	duplicate(warpra)	Warp Agent#29	859
-dicastes01,194,188,6	duplicate(warpra)	Warp Agent#30	859
-dewata,194,178,6	duplicate(warpra)	Warp Agent#31	859
-malangdo,220,188,6	duplicate(warpra)	Warp Agent#32	859
-niflheim,32,161,4	duplicate(warpra)	Warp Agent#33	859
-malaya,210,205,4	duplicate(warpra)	Warp Agent#34	859
-mora,110,100,4	duplicate(warpra)	Warp Agent#35	859
-eclage,107,37,4	duplicate(warpra)	Warp Agent#36	859
-
-// ------------ Dungeons ------------
-ama_dun01,233,9,1	duplicate(warpra)	Warp Agent#37	859
-moc_fild20,162,139,6	duplicate(warpra)	Warp Agent#38	859
-ayo_fild02,279,154,4	duplicate(warpra)	Warp Agent#39	859
-izlu2dun,104,82,4	duplicate(warpra)	Warp Agent#40	859
-prt_sewb1,125,253,4	duplicate(warpra)	Warp Agent#41	859
-mjolnir_02,85,363,4	duplicate(warpra)	Warp Agent#42	859
-einbech,81,101,1	duplicate(warpra)	Warp Agent#43	859
-glast_01,370,308,4	duplicate(warpra)	Warp Agent#44	859
-yuno_fild03,37,135,4	duplicate(warpra)	Warp Agent#45	859
-niflheim,32,161,4	duplicate(warpra)	Warp Agent#46	859
-gef_fild10,71,339,4	duplicate(warpra)	Warp Agent#47	859
-pay_arche,39,135,4	duplicate(warpra)	Warp Agent#48	859
-moc_ruins,64,166,4	duplicate(warpra)	Warp Agent#49	859
-moc_fild19,106,97,4	duplicate(warpra)	Warp Agent#50	859
-alb2trea,73,101,4	duplicate(warpra)	Warp Agent#51	859
-tur_dun01,148,239,4	duplicate(warpra)	Warp Agent#52	859
-lhz_dun01,157,285,4	duplicate(warpra)	Warp Agent#53	859
-hu_fild05,186,210,4	duplicate(warpra)	Warp Agent#54	859
-yuno_fild07,221,179,4	duplicate(warpra)	Warp Agent#55	859
-tha_scene01,139,194,1	duplicate(warpra)	Warp Agent#56	859
-odin_tem01,96,149,4	duplicate(warpra)	Warp Agent#57	859
+// --------------------------------------------------
+//	Duplicates:
+// --------------------------------------------------
+prontera,159,192,4	duplicate(Warper)	Warper#1	811
+rachel,135,116,4	duplicate(Warper)	Warper#2	811
+alberta,28,240,4	duplicate(Warper)	Warper#3	811
+aldebaran,145,118,4	duplicate(Warper)	Warper#4	811
+amatsu,203,87,4	duplicate(Warper)	Warper#5	811
+ayothaya,209,169,6	duplicate(Warper)	Warper#6	811
+comodo,194,158,4	duplicate(Warper)	Warper#7	811
+einbech,142,246,4	duplicate(Warper)	Warper#8	811
+einbroch,69,202,4	duplicate(Warper)	Warper#9	811
+hugel,101,151,4	duplicate(Warper)	Warper#10	811
+lighthalzen,151,101,6	duplicate(Warper)	Warper#11	811
+geffen,124,72,4	duplicate(Warper)	Warper#12	811
+izlude,132,120,4	duplicate(Warper)	Warper#13	811
+xmas,150,136,4	duplicate(Warper)	Warper#14	811
+morocc,159,97,4	duplicate(Warper)	Warper#15	811
+payon,182,108,4	duplicate(Warper)	Warper#16	811
+yuno,162,47,4	duplicate(Warper)	Warper#17	811
+moc_fild04,207,331,4	duplicate(Warper)	Warper#18	811
+izlu2dun,104,82,4	duplicate(Warper)	Warper#19	811
+mjolnir_02,85,363,4	duplicate(Warper)	Warper#20	811
+prt_fild05,273,215,4	duplicate(Warper)	Warper#21	811
+glast_01,370,308,4	duplicate(Warper)	Warper#22	811
+yuno_fild03,37,135,4	duplicate(Warper)	Warper#23	811
+gef_fild10,71,339,4	duplicate(Warper)	Warper#24	811
+pay_arche,39,135,4	duplicate(Warper)	Warper#25	811
+moc_ruins,64,166,4	duplicate(Warper)	Warper#26	811
+moc_fild19,106,97,4	duplicate(Warper)	Warper#27	811
+alb2trea,73,101,4	duplicate(Warper)	Warper#28	811
+tur_dun01,148,239,4	duplicate(Warper)	Warper#29	811
+gonryun,162,122,4	duplicate(Warper)	Warper#30	811
+louyang,208,103,6	duplicate(Warper)	Warper#31	811
+umbala,132,130,4	duplicate(Warper)	Warper#32	811
+brasilis,201,222,4	duplicate(Warper)	Warper#33	811
+manuk,262,177,4	duplicate(Warper)	Warper#34	811
+splendide,205,153,4	duplicate(Warper)	Warper#35	811
+mid_camp,216,288,4	duplicate(Warper)	Warper#36	811
+dicastes01,194,194,6	duplicate(Warper)	Warper#37	811
+mora,110,100,4	duplicate(Warper)	Warper#38	811
+moscovia,216,196,6	duplicate(Warper)	Warper#39	811
+nameless_n,259,213,4	duplicate(Warper)	Warper#40	811
+niflheim,205,179,4	duplicate(Warper)	Warper#41	811
+thor_camp,249,76,4	duplicate(Warper)	Warper#42	811
+veins,214,123,4	duplicate(Warper)	Warper#43	811
+dewata,194,178,6	duplicate(Warper)	Warper#44	811
+eclage,107,37,4	duplicate(Warper)	Warper#45	811
+malaya,210,205,4	duplicate(Warper)	Warper#46	811
+malangdo,220,188,6	duplicate(Warper)	Warper#47	811

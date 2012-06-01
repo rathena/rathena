@@ -1,0 +1,39 @@
+//===== rAthena Script =======================================
+//= Market Place
+//===== By: ==================================================
+//= Lupus
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= This script should move vending crowds from Prontera
+//= streets to a suitable market place. Save your traffic 8)
+//===== Additional Comments: =================================
+//= 1.1 Optimized it, Removed labels. [Spre]
+//============================================================
+ 
+prontera,144,174,3	script	Market Place	722,{
+	mes"[Market Place]";
+	mes"Tristan III's order: ^FF0000Move all the private shops to a special Market Place^000000.";
+	next;
+	if (select("Yes Please:No") == 2) {
+		close;
+	}
+	// I didn't see the need to check and show venders.... Since it didnt even work
+	warp "gon_test",27+rand(5),98;
+	end;
+}
+
+gon_test,73,103,0	script	MarketExit	45,1,2,{
+	warp "prontera",155,177-rand(10);
+	end;
+}
+
+//disable vending in Prontera
+prontera	mapflag	novending
+prt_in	mapflag	novending
+//Market Place settings
+gon_test	mapflag	noteleport
+gon_test	mapflag	nomemo
+gon_test	mapflag	nobranch
