@@ -149,7 +149,7 @@ AC_ARG_ENABLE(
 	AC_HELP_STRING(
 		[--disable-64bit],
 		[
-			Disable 64bit binary building (enabled by default)
+			Enforce 32bit output on x86_64 systems.
 		]
 	),
 	[
