@@ -9,7 +9,6 @@
 #include "../common/db.h"
 #include "../common/socket.h"
 #include "../common/timer.h"
-#include "../common/plugins.h"
 #endif
 
 #include <stdio.h>
@@ -288,10 +287,8 @@ int main (int argc, char **argv)
 
 	timer_init();
 	socket_init();
-	plugins_init();
 
 	do_init(argc,argv);
-	plugin_event_trigger(EVENT_ATHENA_INIT);
 
 	{// Main runtime cycle
 		int next;
@@ -301,11 +298,9 @@ int main (int argc, char **argv)
 		}
 	}
 
-	plugin_event_trigger(EVENT_ATHENA_FINAL);
 	do_final();
 
 	timer_final();
-	plugins_final();
 	socket_final();
 	db_final();
 #endif

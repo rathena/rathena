@@ -31,7 +31,6 @@ set( COMMON_ALL_HEADERS
 	"${CMAKE_CURRENT_BINARY_DIR}/svnversion.h"
 	"${COMMON_SOURCE_DIR}/cbasetypes.h"
 	"${COMMON_SOURCE_DIR}/mmo.h"
-	"${COMMON_SOURCE_DIR}/plugin.h"
 	)
 
 set( COMMON_MINI_HEADERS
@@ -71,7 +70,6 @@ set( COMMON_BASE_HEADERS
 	"${COMMON_SOURCE_DIR}/mapindex.h"
 	"${COMMON_SOURCE_DIR}/md5calc.h"
 	"${COMMON_SOURCE_DIR}/nullpo.h"
-	"${COMMON_SOURCE_DIR}/plugins.h"
 	"${COMMON_SOURCE_DIR}/random.h"
 	"${COMMON_SOURCE_DIR}/showmsg.h"
 	"${COMMON_SOURCE_DIR}/socket.h"
@@ -92,7 +90,6 @@ set( COMMON_BASE_SOURCES
 	"${COMMON_SOURCE_DIR}/mapindex.c"
 	"${COMMON_SOURCE_DIR}/md5calc.c"
 	"${COMMON_SOURCE_DIR}/nullpo.c"
-	"${COMMON_SOURCE_DIR}/plugins.c"
 	"${COMMON_SOURCE_DIR}/random.c"
 	"${COMMON_SOURCE_DIR}/showmsg.c"
 	"${COMMON_SOURCE_DIR}/socket.c"

@@ -18,13 +18,6 @@ else
 	MAP_SQL_DEPENDS=needs_mysql
 endif
 
-WITH_PLUGINS=@WITH_PLUGINS@
-ifeq ($(WITH_PLUGINS),yes)
-	ALL_DEPENDS+=plugins
-	PLUGIN_DEPENDS=common_sql
-else
-	PLUGIN_DEPENDS=no_plugins
-endif
 
 #####################################################################
 .PHONY: sql  \
@@ -33,7 +26,7 @@ endif
 	login_sql \
 	char_sql \
 	map_sql \
-	tools plugins addons \
+	tools \
 	import \
 	clean help
 
@@ -62,9 +55,6 @@ map_sql: $(MAP_SQL_DEPENDS)
 tools:
 	@$(MAKE) -C src/tool
 
-plugins addons: $(PLUGIN_DEPENDS)
-	@$(MAKE) -C src/plugins
-	
 import:
 # 1) create conf/import folder
 # 2) add missing files
@@ -81,7 +71,6 @@ clean:
 	@$(MAKE) -C src/login $@
 	@$(MAKE) -C src/char $@
 	@$(MAKE) -C src/map $@
-	@$(MAKE) -C src/plugins $@
 	@$(MAKE) -C src/tool $@
 
 help:
@@ -94,8 +83,6 @@ help:
 	@echo "'char_sql'    - builds char server (SQL version)"
 	@echo "'map_sql'     - builds map server (SQL version)"
 	@echo "'tools'       - builds all the tools in src/tools"
-	@echo "'plugins'     - builds all the plugins in src/plugins"
-	@echo "'addons'"
 	@echo "'import'      - builds conf/import folder from the template conf/import-tmpl"
 	@echo "'all'         - builds all the above targets"
 	@echo "'sql'         - builds sql servers (targets 'common_sql' 'login_sql' 'char_sql'"
@@ -107,10 +94,6 @@ help:
 
 needs_mysql:
 	@echo "MySQL not found or disabled by the configure script"
-	@exit 1
-
-no_plugins:
-	@echo "Plugins disabled by the configure script"
 	@exit 1
 
 #####################################################################
