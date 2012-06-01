@@ -1410,8 +1410,14 @@ enum manner_flags
 
 /* Status Change State Flags */
 enum scs_flag {
-	SCS_CONDITION  = 0x00000001, /* this implies the flag has a condition (if-checkin) */
-	SCS_NOMOVE     = 0x00000002, /* unit unable to move */
+	SCS_NOMOVECOND      = 0x00000001, /* cond flag for nomove */
+	SCS_NOMOVE          = 0x00000002, /* unit unable to move */
+	SCS_NOPICKITEMCOND  = 0x00000004, /* cond flag for nopickitem */
+	SCS_NOPICKITEM      = 0x00000008, /* player unable to pick up items */
+	SCS_NODROPITEMCOND  = 0x00000010, /* cond flag for nodropitem */
+	SCS_NODROPITEM      = 0x00000020, /* player unable to drop items */
+	SCS_NOCASTCOND      = 0x00000040, /* cond flag for nocast */	
+	SCS_NOCAST          = 0x00000080, /* unit unable to cast skills */
 };
 
 //Define flags for the status_calc_bl function. [Skotlex]
@@ -1564,6 +1570,9 @@ struct status_change {
 	unsigned char jb_flag; //Joint Beat type flag
 	struct {
 		unsigned char move;
+		unsigned char pickup;
+		unsigned char drop;
+		unsigned char cast;
 	} cant;/* status change state flags */
 	//int sg_id; //ID of the previous Storm gust that hit you
 	short comet_x, comet_y; // Point where src casted Comet - required to calculate damage from this point

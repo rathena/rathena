@@ -947,16 +947,16 @@ void initChangeTables(void) {
 	StatusChangeStateTable[SC_TRICKDEAD]           |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_BLADESTOP]           |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_BLADESTOP_WAIT]      |= SCS_NOMOVE;
-	StatusChangeStateTable[SC_SPIDERWEB]           |= SCS_NOMOVE|SCS_CONDITION;
-	StatusChangeStateTable[SC_DANCING]             |= SCS_NOMOVE|SCS_CONDITION;
-	StatusChangeStateTable[SC_GOSPEL]              |= SCS_NOMOVE|SCS_CONDITION;
-	StatusChangeStateTable[SC_BASILICA]            |= SCS_NOMOVE|SCS_CONDITION;
+	StatusChangeStateTable[SC_SPIDERWEB]           |= SCS_NOMOVE|SCS_NOMOVECOND;
+	StatusChangeStateTable[SC_DANCING]             |= SCS_NOMOVE|SCS_NOMOVECOND;
+	StatusChangeStateTable[SC_GOSPEL]              |= SCS_NOMOVE|SCS_NOMOVECOND;
+	StatusChangeStateTable[SC_BASILICA]            |= SCS_NOMOVE|SCS_NOMOVECOND;
 	StatusChangeStateTable[SC_STOP]                |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_CLOSECONFINE]        |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_CLOSECONFINE2]       |= SCS_NOMOVE;
-	StatusChangeStateTable[SC_CLOAKING]            |= SCS_NOMOVE|SCS_CONDITION;
+	StatusChangeStateTable[SC_CLOAKING]            |= SCS_NOMOVE|SCS_NOMOVECOND;
 	StatusChangeStateTable[SC_MADNESSCANCEL]       |= SCS_NOMOVE;
-	StatusChangeStateTable[SC_GRAVITATION]         |= SCS_NOMOVE|SCS_CONDITION;
+	StatusChangeStateTable[SC_GRAVITATION]         |= SCS_NOMOVE|SCS_NOMOVECOND;
 	StatusChangeStateTable[SC_WHITEIMPRISON]       |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_ELECTRICSHOCKER]     |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_BITE]                |= SCS_NOMOVE;
@@ -964,9 +964,37 @@ void initChangeTables(void) {
 	StatusChangeStateTable[SC_MAGNETICFIELD]       |= SCS_NOMOVE;
 	StatusChangeStateTable[SC__MANHOLE]            |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_VACUUM_EXTREME]      |= SCS_NOMOVE;
-	StatusChangeStateTable[SC_FEAR]                |= SCS_NOMOVE|SCS_CONDITION;
+	StatusChangeStateTable[SC_FEAR]                |= SCS_NOMOVE|SCS_NOMOVECOND;
 	StatusChangeStateTable[SC_CURSEDCIRCLE_ATKER]  |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_CURSEDCIRCLE_TARGET] |= SCS_NOMOVE;
+	
+	/* StatusChangeState (SCS_) NOPICKUPITEMS */
+	StatusChangeStateTable[SC_HIDING]              |= SCS_NOPICKITEM;
+	StatusChangeStateTable[SC_CLOAKING]            |= SCS_NOPICKITEM;
+	StatusChangeStateTable[SC_TRICKDEAD]           |= SCS_NOPICKITEM;
+	StatusChangeStateTable[SC_BLADESTOP]           |= SCS_NOPICKITEM;
+	StatusChangeStateTable[SC_CLOAKINGEXCEED]      |= SCS_NOPICKITEM;
+	StatusChangeStateTable[SC_NOCHAT]              |= SCS_NOPICKITEM|SCS_NOPICKITEMCOND;
+
+	/* StatusChangeState (SCS_) NODROPITEMS */
+	StatusChangeStateTable[SC_AUTOCOUNTER]         |= SCS_NODROPITEM;
+	StatusChangeStateTable[SC_BLADESTOP]           |= SCS_NODROPITEM;
+	StatusChangeStateTable[SC_NOCHAT]              |= SCS_NODROPITEM|SCS_NODROPITEMCOND;
+
+	/* StatusChangeState (SCS_) NOCAST (skills) */
+	StatusChangeStateTable[SC_SILENCE]             |= SCS_NOCAST;
+	StatusChangeStateTable[SC_STEELBODY]           |= SCS_NOCAST;
+	StatusChangeStateTable[SC_BERSERK]             |= SCS_NOCAST;
+	StatusChangeStateTable[SC_OBLIVIONCURSE]       |= SCS_NOCAST;
+	StatusChangeStateTable[SC_WHITEIMPRISON]       |= SCS_NOCAST;
+	StatusChangeStateTable[SC__INVISIBILITY]       |= SCS_NOCAST;
+	StatusChangeStateTable[SC_CRYSTALIZE]          |= SCS_NOCAST;
+	StatusChangeStateTable[SC__IGNORANCE]          |= SCS_NOCAST;
+	StatusChangeStateTable[SC_DEEPSLEEP]           |= SCS_NOCAST;
+	StatusChangeStateTable[SC_SATURDAYNIGHTFEVER]  |= SCS_NOCAST;
+	StatusChangeStateTable[SC_CURSEDCIRCLE_TARGET] |= SCS_NOCAST;
+	StatusChangeStateTable[SC_SILENCE]             |= SCS_NOCAST;
+	
 }
 
 static void initDummyData(void)
@@ -1553,20 +1581,10 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			(src->type != BL_PC || ((TBL_PC*)src)->skillitem != skill_num)
 		) {	//Skills blocked through status changes...
 			if (!flag && ( //Blocked only from using the skill (stuff like autospell may still go through
-				sc->data[SC_SILENCE] ||
+				sc->cant.cast ||
 				(sc->data[SC_MARIONETTE] && skill_num != CG_MARIONETTE) || //Only skill you can use is marionette again to cancel it
 				(sc->data[SC_MARIONETTE2] && skill_num == CG_MARIONETTE) || //Cannot use marionette if you are being buffed by another
-				sc->data[SC_STEELBODY] ||
-				sc->data[SC_BERSERK] ||
-				sc->data[SC_OBLIVIONCURSE] ||
-				sc->data[SC_WHITEIMPRISON] ||
-				(sc->data[SC_STASIS] && skill_stasis_check(src, sc->data[SC_STASIS]->val2, skill_num)) ||
-				sc->data[SC__INVISIBILITY] ||
-				sc->data[SC_CRYSTALIZE] ||
-				sc->data[SC__IGNORANCE] || // Target afflicted with this debuff cannot use skills or magic.
-				sc->data[SC_DEEPSLEEP] ||
-				sc->data[SC_SATURDAYNIGHTFEVER] ||
-				sc->data[SC_CURSEDCIRCLE_TARGET]
+				(sc->data[SC_STASIS] && skill_stasis_check(src, sc->data[SC_STASIS]->val2, skill_num))
 			))
 				return 0;
 
@@ -3382,7 +3400,6 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 	}
 }
 void status_calc_state( struct block_list *bl, struct status_change *sc, enum scs_flag flag, bool start ) {
-	bool has_condition = ( flag&SCS_CONDITION ) ? true : false;
 	
 	/* no sc at all, we can zero without any extra weight over our conciousness */
 	if( !sc->count ) {
@@ -3390,9 +3407,9 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum sc
 		return;
 	}
 		
-	
+	/* can move? */
 	if( flag&SCS_NOMOVE ) {
-		if( !has_condition ) {
+		if( !(flag&SCS_NOMOVECOND) ) {
 			sc->cant.move += ( start ? 1 : -1 );
 		} else if(
 				  (sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1)
@@ -3412,7 +3429,37 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum sc
 		}
 	}
 	
-	/* others e.g. cant.cast, cant.pickup (check clif_parse_TakeItem) */
+	/* can't use skills */
+	if( flag&SCS_NOCAST ) {
+		if( !(flag&SCS_NOCASTCOND) ) {
+			sc->cant.cast += ( start ? 1 : -1 );
+		} else {
+			/* to date there are usable conditions on nocast sclist */
+			sc->cant.cast += ( start ? 1 : -1 );
+		}
+	}
+	
+	/* player-only states */
+	if( bl->type == BL_PC ) {
+	
+		/* can pick items? */
+		if( flag&SCS_NOPICKITEM ) {
+			if( !(flag&SCS_NOPICKITEMCOND) ) {
+				sc->cant.pickup += ( start ? 1 : -1 );
+			} else if( (sc->data[SC_NOCHAT] && sc->data[SC_NOCHAT]->val1&MANNER_NOITEM) ) {
+				sc->cant.pickup += ( start ? 1 : -1 );
+			}
+		}
+		
+		/* can drop items? */
+		if( flag&SCS_NODROPITEM ) {
+			if( !(flag&SCS_NODROPITEMCOND) ) {
+				sc->cant.drop += ( start ? 1 : -1 );
+			} else if( (sc->data[SC_NOCHAT] && sc->data[SC_NOCHAT]->val1&MANNER_NOITEM) ) {
+				sc->cant.drop += ( start ? 1 : -1 );
+			}
+		}
+	}
 	
 	return;
 }
@@ -8484,11 +8531,12 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		}
 	}
 
+	(sc->count)--;
+
 	if ( StatusChangeStateTable[type] )
 		status_calc_state(bl,sc,( enum scs_flag ) StatusChangeStateTable[type],false);	
 	
 	sc->data[type] = NULL;
-	(sc->count)--;
 
 	vd = status_get_viewdata(bl);
 	calc_flag = StatusChangeFlagTable[type];
