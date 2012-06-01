@@ -7770,6 +7770,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				 pc_setmadogear(sd, 0);
 			clif_skill_nodamage(src, bl, skillid, skilllv, 1);
 			skill_castend_damage_id(src, src, skillid, skilllv, tick, flag);
+			status_set_sp(src, 0, 0);
 		}
 		break;
 

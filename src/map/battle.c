@@ -2077,11 +2077,13 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					break;
 				case GC_ROLLINGCUTTER:
 					skillratio += 20 * skill_lv;
+					RE_LVL_DMOD();
 					break;
 				case GC_CROSSRIPPERSLASHER:
-					skillratio += 60 + 40 * skill_lv;
+					skillratio += 300 + 80 * skill_lv;
+					RE_LVL_DMOD();
 					if( sc && sc->data[SC_ROLLINGCUTTER] )
-						skillratio += 25 * sc->data[SC_ROLLINGCUTTER]->val1;
+						skillratio += sc->data[SC_ROLLINGCUTTER]->val1 * sstatus->agi;
 					break;
 				/**
 				 * Arch Bishop
@@ -3927,7 +3929,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		break;
 	case RK_DRAGONBREATH:
 		md.damage = ((status_get_hp(src) / 50) + (status_get_max_sp(src) / 4)) * skill_lv;
-		RE_LVL_MDMOD();
+		RE_LVL_MDMOD(150);
 		if (sd) md.damage = md.damage * (100 + 5 * (pc_checkskill(sd,RK_DRAGONTRAINING) - 1)) / 100;
 		md.flag |= BF_LONG|BF_WEAPON;
 		break;
@@ -3946,10 +3948,12 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	 * Mechanic
 	 **/
 	case NC_SELFDESTRUCTION:
-		md.damage = (sd?pc_checkskill(sd,NC_MAINFRAME):10) * skill_lv * (status_get_sp(src) + sstatus->vit);
-		RE_LVL_MDMOD();
-		if (sd) md.damage = md.damage + status_get_hp(src);
-		status_set_sp(src, 0, 0);
+		{
+			short totaldef = tstatus->def2 + (short)status_get_def(target);
+			md.damage = ( (sd?pc_checkskill(sd,NC_MAINFRAME):10) + 8 ) * ( skill_lv + 1 ) * ( status_get_sp(src) + sstatus->vit );
+			RE_LVL_MDMOD(100);
+			md.damage += status_get_hp(src) - totaldef;
+		}
 		break;
 	case GN_THORNS_TRAP:
 		md.damage = 100 + 200 * skill_lv + sstatus->int_;

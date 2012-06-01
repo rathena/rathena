@@ -87,9 +87,9 @@
 	#define RE_LVL_DMOD() \
 		if( status_get_lv(src) > 100 ) \
 			skillratio = skillratio * status_get_lv(src) / 100;
-	#define RE_LVL_MDMOD() \
-		if( status_get_lv(src) > 100 ) \
-			md.damage = md.damage * status_get_lv(src) / 150;
+	#define RE_LVL_MDMOD(val) \
+		if( status_get_lv(src) > 100 && val > 0) \
+			md.damage = md.damage * status_get_lv(src) / val;
 	/* ranger traps special */
 	#define RE_LVL_TMDMOD() \
 		if( status_get_lv(src) > 100 ) \
