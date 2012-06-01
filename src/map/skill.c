@@ -11506,7 +11506,7 @@ static int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 	p_sd = va_arg(ap, int *);
 	skillid = va_arg(ap,int);
 
-	if ((skillid != PR_BENEDICTIO && *c >=1) || *c >=2)
+	if ( ((skillid != PR_BENEDICTIO && *c >=1) || *c >=2) && !(skill_get_inf2(skillid)&INF2_CHORUS_SKILL) )
 		return 0; //Partner found for ensembles, or the two companions for Benedictio. [Skotlex]
 
 	if (bl == src)
@@ -11518,52 +11518,58 @@ static int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 	if (tsd->sc.data[SC_SILENCE] || ( tsd->sc.opt1 && tsd->sc.opt1 != OPT1_BURNING ))
 		return 0;
 
-	switch(skillid)
-	{
-		case PR_BENEDICTIO:
-		{
-			int dir = map_calc_dir(&sd->bl,tsd->bl.x,tsd->bl.y);
-			dir = (unit_getdir(&sd->bl) + dir)%8; //This adjusts dir to account for the direction the sd is facing.
-			if ((tsd->class_&MAPID_BASEMASK) == MAPID_ACOLYTE && (dir == 2 || dir == 6) //Must be standing to the left/right of Priest.
-				&& sd->status.sp >= 10)
-				p_sd[(*c)++]=tsd->bl.id;
-			return 1;
-		}
-		case AB_ADORAMUS:
-		// Adoramus does not consume Blue Gemstone when there is at least 1 Priest class next to the caster
-			if( (tsd->class_&MAPID_UPPERMASK) == MAPID_PRIEST )
-				p_sd[(*c)++] = tsd->bl.id;
-			return 1;
-		case WL_COMET:
-		// Comet does not consume Red Gemstones when there is at least 1 Warlock class next to the caster
-			if( ( sd->class_&MAPID_THIRDMASK ) == MAPID_WARLOCK )
-				p_sd[(*c)++] = tsd->bl.id;
-			return 1;
-		case LG_RAYOFGENESIS:
-			if( tsd->status.party_id == sd->status.party_id && (tsd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD &&
-				tsd->sc.data[SC_BANDING] )
-				p_sd[(*c)++] = tsd->bl.id;
-			return 1;
-		default: //Warning: Assuming Ensemble Dance/Songs for code speed. [Skotlex]
-			{
-				int skilllv;
-				if(pc_issit(tsd) || !unit_can_move(&tsd->bl))
-					return 0;
-				if (sd->status.sex != tsd->status.sex &&
-						(tsd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER &&
-						(skilllv = pc_checkskill(tsd, skillid)) > 0 &&
-						(tsd->weapontype1==W_MUSICAL || tsd->weapontype1==W_WHIP) &&
-						sd->status.party_id && tsd->status.party_id &&
-						sd->status.party_id == tsd->status.party_id &&
-						!tsd->sc.data[SC_DANCING])
-				{
+	if( skill_get_inf2(skillid)&INF2_CHORUS_SKILL ) {
+		if( tsd->status.party_id == sd->status.party_id && (tsd->class_&MAPID_THIRDMASK) == MAPID_MINSTRELWANDERER )
+			p_sd[(*c)++] = tsd->bl.id;
+		return 1;
+	} else {
+
+		switch(skillid) {
+			case PR_BENEDICTIO: {
+				int dir = map_calc_dir(&sd->bl,tsd->bl.x,tsd->bl.y);
+				dir = (unit_getdir(&sd->bl) + dir)%8; //This adjusts dir to account for the direction the sd is facing.
+				if ((tsd->class_&MAPID_BASEMASK) == MAPID_ACOLYTE && (dir == 2 || dir == 6) //Must be standing to the left/right of Priest.
+					&& sd->status.sp >= 10)
 					p_sd[(*c)++]=tsd->bl.id;
-					return skilllv;
-				} else {
-					return 0;
-				}
+				return 1;
 			}
-			break;
+			case AB_ADORAMUS:
+			// Adoramus does not consume Blue Gemstone when there is at least 1 Priest class next to the caster
+				if( (tsd->class_&MAPID_UPPERMASK) == MAPID_PRIEST )
+					p_sd[(*c)++] = tsd->bl.id;
+				return 1;
+			case WL_COMET:
+			// Comet does not consume Red Gemstones when there is at least 1 Warlock class next to the caster
+				if( ( sd->class_&MAPID_THIRDMASK ) == MAPID_WARLOCK )
+					p_sd[(*c)++] = tsd->bl.id;
+				return 1;
+			case LG_RAYOFGENESIS:
+				if( tsd->status.party_id == sd->status.party_id && (tsd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD &&
+					tsd->sc.data[SC_BANDING] )
+					p_sd[(*c)++] = tsd->bl.id;
+				return 1;
+			default: //Warning: Assuming Ensemble Dance/Songs for code speed. [Skotlex]
+				{
+					int skilllv;
+					if(pc_issit(tsd) || !unit_can_move(&tsd->bl))
+						return 0;
+					if (sd->status.sex != tsd->status.sex &&
+							(tsd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER &&
+							(skilllv = pc_checkskill(tsd, skillid)) > 0 &&
+							(tsd->weapontype1==W_MUSICAL || tsd->weapontype1==W_WHIP) &&
+							sd->status.party_id && tsd->status.party_id &&
+							sd->status.party_id == tsd->status.party_id &&
+							!tsd->sc.data[SC_DANCING])
+					{
+						p_sd[(*c)++]=tsd->bl.id;
+						return skilllv;
+					} else {
+						return 0;
+					}
+				}
+				break;
+		}
+		
 	}
 	return 0;
 }
