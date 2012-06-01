@@ -31,9 +31,6 @@
     <ClCompile Include="..\src\common\nullpo.c">
       <Filter>common</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\common\plugins.c">
-      <Filter>common</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\common\random.c">
       <Filter>common</Filter>
     </ClCompile>
@@ -109,12 +106,6 @@
       <Filter>common</Filter>
     </ClInclude>
     <ClInclude Include="..\src\common\nullpo.h">
-      <Filter>common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\common\plugin.h">
-      <Filter>common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\common\plugins.h">
       <Filter>common</Filter>
     </ClInclude>
     <ClInclude Include="..\src\common\random.h">
