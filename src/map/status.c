@@ -9373,8 +9373,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		}
 		break;
 	case SC_ABUNDANCE:
-		if(--(sce->val4) > 0)
-		{
+		if(--(sce->val4) > 0) {
 			if( !sc->data[SC_BERSERK] )
 				status_heal(bl,0,60,0);
 			sc_timer_next(10000+tick, status_change_timer, bl->id, data);
@@ -9382,8 +9381,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		break;
 
 	case SC_PYREXIA:
-		if( --(sce->val4) >= 0 )
-		{
+		if( --(sce->val4) >= 0 ) {
 			map_freeblock_lock();
 			clif_damage(bl,bl,tick,status_get_amotion(bl),0,100,0,0,0);
 			status_fix_damage(NULL,bl,100,0);
@@ -9398,15 +9396,14 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		break;
 
 	case SC_LEECHESEND:
-		if( --(sce->val4) >= 0 )
-		{
+		if( --(sce->val4) >= 0 ) {
 			int damage = status->max_hp/100;
 			if( sd && (sd->status.class_ == JOB_GUILLOTINE_CROSS || sd->status.class_ == JOB_GUILLOTINE_CROSS_T ) )
 				damage += 3 * status->vit;
 			else
 				damage += 7 * status->vit;
 			
-			unit_skillcastcancel(bl,2);
+			unit_skillcastcancel(bl,0);
 			
 			map_freeblock_lock();
 			status_zap(bl,damage,0);
@@ -9419,37 +9416,31 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		break;
 
 	case SC_MAGICMUSHROOM:
-		if( --(sce->val4) >= 0 )
-		{
+		if( --(sce->val4) >= 0 ) {
 			bool flag = 0;
 			int damage = status->max_hp * 3 / 100;
 			if( status->hp <= damage )
 				damage = status->hp - 1; // Cannot Kill
 
-			if( damage > 0 )
-			{ // 3% Damage each 4 seconds
+			if( damage > 0 ) { // 3% Damage each 4 seconds
 				map_freeblock_lock();
 				status_zap(bl,damage,0);
 				flag = !sc->data[type]; // Killed? Should not
 				map_freeblock_unlock();
 			}
 
-			if( !flag )
-			{ // Random Skill Cast
-				if( sd )
-				{
+			if( !flag ) { // Random Skill Cast
+				if( sd ) {
 					int mushroom_skillid = 0, i;
 					unit_stop_attack(bl);
 					unit_skillcastcancel(bl,1);
-					do
-					{
+					do {
 						i = rnd() % MAX_SKILL_MAGICMUSHROOM_DB;
 						mushroom_skillid = skill_magicmushroom_db[i].skillid;
 					}
 					while( mushroom_skillid == 0 );
 
-					switch( skill_get_casttype(mushroom_skillid) )
-					{ // Magic Mushroom skills are buffs or area damage
+					switch( skill_get_casttype(mushroom_skillid) ) { // Magic Mushroom skills are buffs or area damage
 						case CAST_GROUND:
 							skill_castend_pos2(bl,bl->x,bl->y,mushroom_skillid,1,tick,0);
 							break;
