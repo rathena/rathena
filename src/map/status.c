@@ -84,6 +84,8 @@ static int StatusIconChangeTable[SC_MAX];          // status -> "icon" (icon is 
 static unsigned int StatusChangeFlagTable[SC_MAX]; // status -> flags
 static int StatusSkillChangeTable[SC_MAX];         // status -> skill
 static int StatusRelevantBLTypes[SI_MAX];          // "icon" -> enum bl_type (for clif_status_change to identify for which bl types to send packets)
+static unsigned int StatusChangeStateTable[SC_MAX]; // status -> flags
+
 
 /**
  * Returns the status change associated with a skill.
@@ -172,18 +174,22 @@ static void set_sc(int skill, sc_type sc, int icon, unsigned int flag)
 		SkillStatusChangeTable[sk] = sc;
 }
 
-void initChangeTables(void)
-{
+void initChangeTables(void) {
 	int i;
+	
 	for (i = 0; i < SC_MAX; i++)
 		StatusIconChangeTable[i] = SI_BLANK;
+	
 	for (i = 0; i < MAX_SKILL; i++)
 		SkillStatusChangeTable[i] = SC_NONE;
+	
 	for (i = 0; i < SI_MAX; i++)
 		StatusRelevantBLTypes[i] = BL_PC;
 
 	memset(StatusSkillChangeTable, 0, sizeof(StatusSkillChangeTable));
 	memset(StatusChangeFlagTable, 0, sizeof(StatusChangeFlagTable));
+	memset(StatusChangeStateTable, 0, sizeof(StatusChangeStateTable));
+
 
 	//First we define the skill for common ailments. These are used in skill_additional_effect through sc cards. [Skotlex]
 	set_sc( NPC_PETRIFYATTACK , SC_STONE     , SI_BLANK    , SCB_DEF_ELE|SCB_DEF|SCB_MDEF );
@@ -934,6 +940,33 @@ void initChangeTables(void)
 	
 	if( !battle_config.display_hallucination ) //Disable Hallucination.
 		StatusIconChangeTable[SC_HALLUCINATION] = SI_BLANK;
+	
+	/* StatusChangeState (SCS_) NOMOVE */
+	StatusChangeStateTable[SC_ANKLE]               |= SCS_NOMOVE;
+	StatusChangeStateTable[SC_AUTOCOUNTER]         |= SCS_NOMOVE;
+	StatusChangeStateTable[SC_TRICKDEAD]           |= SCS_NOMOVE;
+	StatusChangeStateTable[SC_BLADESTOP]           |= SCS_NOMOVE;
+	StatusChangeStateTable[SC_BLADESTOP_WAIT]      |= SCS_NOMOVE;
+	StatusChangeStateTable[SC_SPIDERWEB]           |= SCS_NOMOVE|SCS_CONDITION;
+	StatusChangeStateTable[SC_DANCING]             |= SCS_NOMOVE|SCS_CONDITION;
+	StatusChangeStateTable[SC_GOSPEL]              |= SCS_NOMOVE|SCS_CONDITION;
+	StatusChangeStateTable[SC_BASILICA]            |= SCS_NOMOVE|SCS_CONDITION;
+	StatusChangeStateTable[SC_STOP]                |= SCS_NOMOVE;
+	StatusChangeStateTable[SC_CLOSECONFINE]        |= SCS_NOMOVE;
+	StatusChangeStateTable[SC_CLOSECONFINE2]       |= SCS_NOMOVE;
+	StatusChangeStateTable[SC_CLOAKING]            |= SCS_NOMOVE|SCS_CONDITION;
+	StatusChangeStateTable[SC_MADNESSCANCEL]       |= SCS_NOMOVE;
+	StatusChangeStateTable[SC_GRAVITATION]         |= SCS_NOMOVE|SCS_CONDITION;
+	StatusChangeStateTable[SC_WHITEIMPRISON]       |= SCS_NOMOVE;
+	StatusChangeStateTable[SC_ELECTRICSHOCKER]     |= SCS_NOMOVE;
+	StatusChangeStateTable[SC_BITE]                |= SCS_NOMOVE;
+	StatusChangeStateTable[SC_THORNSTRAP]          |= SCS_NOMOVE;
+	StatusChangeStateTable[SC_MAGNETICFIELD]       |= SCS_NOMOVE;
+	StatusChangeStateTable[SC__MANHOLE]            |= SCS_NOMOVE;
+	StatusChangeStateTable[SC_VACUUM_EXTREME]      |= SCS_NOMOVE;
+	StatusChangeStateTable[SC_FEAR]                |= SCS_NOMOVE|SCS_CONDITION;
+	StatusChangeStateTable[SC_CURSEDCIRCLE_ATKER]  |= SCS_NOMOVE;
+	StatusChangeStateTable[SC_CURSEDCIRCLE_TARGET] |= SCS_NOMOVE;
 }
 
 static void initDummyData(void)
@@ -3348,7 +3381,41 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 			regen->flag&=~sce->val4; //Remove regen as specified by val4
 	}
 }
-
+void status_calc_state( struct block_list *bl, struct status_change *sc, enum scs_flag flag, bool start ) {
+	bool has_condition = ( flag&SCS_CONDITION ) ? true : false;
+	
+	/* no sc at all, we can zero without any extra weight over our conciousness */
+	if( !sc->count ) {
+		memset(&sc->cant, 0, sizeof (sc->cant));
+		return;
+	}
+		
+	
+	if( flag&SCS_NOMOVE ) {
+		if( !has_condition ) {
+			sc->cant.move += ( start ? 1 : -1 );
+		} else if(
+				  (sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1)
+				  || (sc->data[SC_DANCING] && sc->data[SC_DANCING]->val4 && (
+																			 !sc->data[SC_LONGING] ||
+																			 (sc->data[SC_DANCING]->val1&0xFFFF) == CG_MOONLIT ||
+																			 (sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE
+																			 ) )
+				  || (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)	// cannot move while gospel is in effect
+				  || (sc->data[SC_BASILICA] && sc->data[SC_BASILICA]->val4 == bl->id) // Basilica caster cannot move
+				  || (sc->data[SC_GRAVITATION] && sc->data[SC_GRAVITATION]->val3 == BCT_SELF)
+				  || (sc->data[SC_CLOAKING] && //Need wall at level 1-2
+							sc->data[SC_CLOAKING]->val1 < 3 && !(sc->data[SC_CLOAKING]->val4&1))
+				  || (sc->data[SC_FEAR] && sc->data[SC_FEAR]->val2 > 0)
+				 ) {
+			sc->cant.move += ( start ? 1 : -1 );
+		}
+	}
+	
+	/* others e.g. cant.cast, cant.pickup (check clif_parse_TakeItem) */
+	
+	return;
+}
 /// Recalculates parts of an object's battle status according to the specified flags.
 /// @param flag bitfield of values from enum scb_flag
 void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
@@ -8179,6 +8246,9 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	if (calc_flag)
 		status_calc_bl(bl,calc_flag);
 	
+	if ( StatusChangeStateTable[type] ) /* non-zero */
+		status_calc_state(bl,sc,( enum scs_flag ) StatusChangeStateTable[type],true);
+	
 	if(sd && sd->pd)
 		pet_sc_check(sd, type); //Skotlex: Pet Status Effect Healing
 
@@ -8414,6 +8484,9 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		}
 	}
 
+	if ( StatusChangeStateTable[type] )
+		status_calc_state(bl,sc,( enum scs_flag ) StatusChangeStateTable[type],false);	
+	
 	sc->data[type] = NULL;
 	(sc->count)--;
 

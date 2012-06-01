@@ -1408,6 +1408,12 @@ enum manner_flags
 	MANNER_NOROOM    = 0x10,
 };
 
+/* Status Change State Flags */
+enum scs_flag {
+	SCS_CONDITION  = 0x00000001, /* this implies the flag has a condition (if-checkin) */
+	SCS_NOMOVE     = 0x00000002, /* unit unable to move */
+};
+
 //Define flags for the status_calc_bl function. [Skotlex]
 enum scb_flag
 {
@@ -1556,6 +1562,9 @@ struct status_change {
 	unsigned char count;
 	//TODO: See if it is possible to implement the following SC's without requiring extra parameters while the SC is inactive.
 	unsigned char jb_flag; //Joint Beat type flag
+	struct {
+		unsigned char move;
+	} cant;/* status change state flags */
 	//int sg_id; //ID of the previous Storm gust that hit you
 	short comet_x, comet_y; // Point where src casted Comet - required to calculate damage from this point
 /**
