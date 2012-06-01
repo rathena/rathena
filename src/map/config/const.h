@@ -96,7 +96,7 @@
 			md.damage = md.damage * 150 / 100 + md.damage * status_get_lv(src) / 100;
 #else
 	#define RE_LVL_DMOD() 
-	#define RE_LVL_MDMOD()
+	#define RE_LVL_MDMOD(val)
 	#define RE_LVL_TMDMOD()
 #endif
 
