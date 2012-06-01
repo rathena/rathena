@@ -166,6 +166,29 @@ AC_ARG_ENABLE(
 
 
 #
+# LTO
+#
+AC_ARG_ENABLE(
+    [lto],
+    AC_HELP_STRING(
+        [--enable-lto],
+        [
+			Enables or Disables Linktime Code Optimization (LTO is enabled by default)
+        ]
+    ),
+    [
+        enable_lto="$enableval"
+        case $enableval in
+            "no");;
+            "yes");;
+            *) AC_MSG_ERROR([[invalid argument --enable-lto=$disableval... stopping]]);;
+        esac
+    ],
+    [enable_lto="yes"]
+)
+
+
+#
 # Optionally specify the path to mysql_config
 #
 AC_ARG_WITH(
@@ -325,6 +348,40 @@ AC_COMPILE_IFELSE(
 		CFLAGS="$OLD_CFLAGS"
 	]
 )
+
+
+#
+# LTO Support test
+#
+if test "$enable_lto" != "no" ; then
+
+	OLD_CFLAGS="$CFLAGS"
+	CFLAGS="$CFLAGS -flto"
+
+	OLD_LDFLAGS="$LDFLAGS"
+	LDFLAGS="$LDFLAGS -flto"
+
+	AC_MSG_CHECKING([whether $CC supports -flto])
+	AC_RUN_IFELSE(
+		[
+			int main(int argc, char **argv){
+               return 0;
+           }
+		],
+		[
+			AC_MSG_RESULT([yes])
+		],
+		[
+			AC_MSG_RESULT([no])
+			CFLAGS="$OLD_CFLAGS"
+			LDFLAGS="$OLD_LDFLAGS"
+		],
+		[
+			AC_MSG_RESULT([guessing no])
+		]
+	)
+fi
+
 
 
 AC_MSG_CHECKING([whether $CC supports -Wno-pointer-sign])
