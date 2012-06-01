@@ -10,7 +10,8 @@ LIBCONFIG_H = libconfig.h grammar.h parsectx.h scanctx.h scanner.h strbuf.h winc
 all: $(LIBCONFIG_OBJ)
 
 clean:
-	rm -rf *.o
+	@echo "	CLEAN	libconfig"
+	@rm -rf *.o
 
 help:
 	@echo "possible targets are 'all' 'clean' 'help'"
@@ -21,4 +22,5 @@ help:
 #####################################################################
 
 %.o: %.c $(LIBCONFIG_H)
-	@CC@ @CFLAGS@ @DEFS@ @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@echo "	CC	$<"
+	@@CC@ @CFLAGS@ @DEFS@ @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<

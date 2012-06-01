@@ -1,18 +1,5 @@
 
-COMMON_OBJ = ../common/obj_all/core.o ../common/obj_all/socket.o ../common/obj_all/timer.o \
-	../common/obj_all/db.o ../common/obj_all/plugins.o ../common/obj_all/lock.o \
-	../common/obj_all/malloc.o ../common/obj_all/showmsg.o ../common/obj_all/utils.o \
-	../common/obj_all/strlib.o ../common/obj_all/mapindex.o \
-	../common/obj_all/ers.o ../common/obj_all/md5calc.o ../common/obj_all/random.o \
-	../common/obj_all/conf.o
-COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/mmo.h \
-	../common/db.h ../common/plugins.h ../common/lock.h \
-	../common/malloc.h ../common/showmsg.h ../common/utils.h ../common/strlib.h \
-	../common/mapindex.h \
-	../common/ers.h ../common/md5calc.h ../common/random.h ../common/conf.h
-
-COMMON_SQL_OBJ = ../common/obj_sql/sql.o
-COMMON_SQL_H = ../common/sql.h
+COMMON_H = $(shell ls ../common/*.h)
 
 MT19937AR_OBJ = ../../3rdparty/mt19937ar/mt19937ar.o
 MT19937AR_H = ../../3rdparty/mt19937ar/mt19937ar.h
@@ -32,7 +19,7 @@ LOGIN_H = login.h account.h ipban.h loginlog.h
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
-	LOGIN_SERVER_SQL_DEPENDS=obj_sql $(LOGIN_SQL_OBJ) $(COMMON_OBJ) $(COMMON_SQL_OBJ) $(MT19937AR_OBJ)
+	LOGIN_SERVER_SQL_DEPENDS=obj_sql $(LOGIN_SQL_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a  $(MT19937AR_OBJ)
 else
 	LOGIN_SERVER_SQL_DEPENDS=needs_mysql
 endif
@@ -47,7 +34,8 @@ all: sql
 sql: obj_sql login-server_sql
 
 clean:
-	rm -rf *.o obj_sql ../../login-server@EXEEXT@ ../../login-server_sql@EXEEXT@
+	@echo "	CLEAN	login"
+	@rm -rf *.o obj_sql ../../login-server@EXEEXT@ ../../login-server_sql@EXEEXT@
 
 help:
 	@echo "possible targets are 'sql' 'all' 'clean' 'help'"
@@ -65,23 +53,27 @@ needs_mysql:
 # object directories
 
 obj_sql:
-	test -d obj_sql || mkdir obj_sql
+	@echo "	MKDIR	obj_sql"
+	@-mkdir obj_sql
 
 #executables
 
 login-server_sql: $(LOGIN_SERVER_SQL_DEPENDS)
-	@CC@ @LDFLAGS@ -o ../../login-server_sql@EXEEXT@ $(LOGIN_SQL_OBJ) $(COMMON_OBJ) $(COMMON_SQL_OBJ) $(MT19937AR_OBJ) $(LIBCONFIG_OBJ) @LIBS@ @MYSQL_LIBS@
+	@echo "	LD	$@"
+	@@CC@ @LDFLAGS@ -o ../../login-server_sql@EXEEXT@ $(LOGIN_SQL_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a $(MT19937AR_OBJ) $(LIBCONFIG_OBJ) @LIBS@ @MYSQL_LIBS@
+	    
 
 # login object files
 
 obj_sql/%.o: %.c $(LOGIN_H) $(COMMON_H) $(MT19937AR_H) $(LIBCONFIG_H)
-	@CC@ @CFLAGS@ $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) -DWITH_SQL @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@echo "	CC	$<"
+	@@CC@ @CFLAGS@ $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) -DWITH_SQL @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing object files
-../common/obj_all/%.o:
+../common/obj_all/common.a:
 	@$(MAKE) -C ../common sql
 
-../common/obj_sql/%.o:
+../common/obj_sql/common_sql.a:
 	@$(MAKE) -C ../common sql
 
 MT19937AR_OBJ:

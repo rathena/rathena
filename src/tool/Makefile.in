@@ -23,10 +23,12 @@ MAPCACHE_OBJ = obj_all/mapcache.o
 all: mapcache
 
 mapcache: obj_all $(MAPCACHE_OBJ) $(COMMON_OBJ) $(LIBCONFIG_OBJ)
-	@CC@ @LDFLAGS@ $(LIBCONFIG_INCLUDE) -o ../../mapcache@EXEEXT@ $(MAPCACHE_OBJ) $(COMMON_OBJ) $(LIBCONFIG_OBJ) @LIBS@
+	@echo "	LD	$@"
+	@@CC@ @LDFLAGS@ $(LIBCONFIG_INCLUDE) -o ../../mapcache@EXEEXT@ $(MAPCACHE_OBJ) $(COMMON_OBJ) $(LIBCONFIG_OBJ) @LIBS@
 
 clean:
-	rm -rf obj_all/*.o ../../mapcache@EXEEXT@
+	@echo "	CLEAN	tool"
+	@rm -rf obj_all/*.o ../../mapcache@EXEEXT@
 
 help:
 	@echo "possible targets are 'mapcache' 'all' 'clean' 'help'"
@@ -41,7 +43,8 @@ obj_all:
 	-mkdir obj_all
 
 obj_all/%.o: %.c $(COMMON_H) $(LIBCONFIG_H)
-	@CC@ @CFLAGS@ $(LIBCONFIG_INCLUDE) @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@echo "	CC	$<"
+	@@CC@ @CFLAGS@ $(LIBCONFIG_INCLUDE) @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing common object files
 ../common/obj_all/%.o:

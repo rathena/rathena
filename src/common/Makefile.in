@@ -4,11 +4,8 @@ COMMON_OBJ = obj_all/core.o obj_all/socket.o obj_all/timer.o obj_all/db.o obj_al
 	obj_all/grfio.o obj_all/mapindex.o obj_all/ers.o obj_all/md5calc.o \
 	obj_all/minicore.o obj_all/minisocket.o obj_all/minimalloc.o obj_all/random.o obj_all/des.o \
 	obj_all/conf.o
-COMMON_H = mmo.h plugin.h \
-	core.h socket.h timer.h db.h plugins.h lock.h \
-	nullpo.h malloc.h showmsg.h  strlib.h utils.h \
-	grfio.h mapindex.h ers.h md5calc.h random.h des.h \
-	conf.h
+
+COMMON_H = $(shell ls ../common/*.h)
 
 COMMON_SQL_OBJ = obj_sql/sql.o
 COMMON_SQL_H = sql.h
@@ -46,7 +43,8 @@ txt: $(TXT_DEPENDS)
 sql: $(SQL_DEPENDS)
 
 clean:
-	rm -rf *.o obj_all obj_sql
+	@echo "	CLEAN	common"
+	@rm -rf *.o obj_all obj_sql
 
 help:
 	@echo "possible targets are 'txt' 'sql' 'all' 'clean' 'help'"
@@ -63,24 +61,37 @@ needs_mysql:
 	@exit 1
 
 obj_all:
-	-mkdir obj_all
+	@echo "	MKDIR	obj_all"
+	@-mkdir obj_all
 
 obj_sql:
-	-mkdir obj_sql
+	@echo "	MKDIR	obj_sql"
+	@-mkdir obj_sql
 
-common: obj_all $(COMMON_OBJ) $(MT19937AR_OBJ) $(LIBCONFIG_OBJ)
+obj_all/common.a: $(COMMON_OBJ)
+	@echo "	AR	$@"
+	@@AR@ rcs obj_all/common.a $(COMMON_OBJ)
 
-common_sql: obj_sql $(COMMON_SQL_OBJ)
+obj_sql/common_sql.a: $(COMMON_SQL_OBJ)
+	@echo "	AR	$@"
+	@@AR@ rcs obj_sql/common_sql.a $(COMMON_SQL_OBJ)
+                
 
+common: obj_all $(COMMON_OBJ) $(MT19937AR_OBJ) $(LIBCONFIG_OBJ) obj_all/common.a
+
+common_sql: obj_sql $(COMMON_SQL_OBJ) obj_sql/common_sql.a
 
 obj_all/%.o: %.c $(COMMON_H) $(MT19937AR_H) $(LIBCONFIG_H)
-	@CC@ @CFLAGS@ $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@echo "	CC	$<"
+	@@CC@ @CFLAGS@ $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 obj_all/mini%.o: %.c $(COMMON_H) $(MT19937AR_H) $(LIBCONFIG_H)
-	@CC@ @CFLAGS@ $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) -DMINICORE @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@echo "	CC	$<"
+	@@CC@ @CFLAGS@ $(MT19937AR_INCLUDE) $(LIBCONFIG_INCLUDE) -DMINICORE @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 obj_sql/%.o: %.c $(COMMON_H) $(COMMON_SQL_H) $(LIBCONFIG_H)
-	@CC@ @CFLAGS@ $(LIBCONFIG_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@echo "	CC	$<"
+	@@CC@ @CFLAGS@ $(LIBCONFIG_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 
 # missing object files

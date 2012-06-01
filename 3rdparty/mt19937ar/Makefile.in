@@ -9,8 +9,9 @@ MT19937AR_H = mt19937ar.h
 
 all: $(MT19937AR_OBJ)
 
-clean:
-	rm -rf *.o
+clean:	
+	@echo "	CLEAN	mt19937ar"
+	@rm -rf *.o
 
 help:
 	@echo "possible targets are 'all' 'clean' 'help'"
@@ -21,4 +22,5 @@ help:
 #####################################################################
 
 %.o: %.c $(MT19937AR_H)
-	@CC@ @CFLAGS@ @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@echo "	CC	$<"
+	@@CC@ @CFLAGS@ @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
