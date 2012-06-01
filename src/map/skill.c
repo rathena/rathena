@@ -9843,7 +9843,8 @@ int skill_castend_map (struct map_session_data *sd, short skill_num, const char 
 				skill_failed(sd);
 				return 0;
 			}
-
+			
+			group->val1 = (group->val1<<16)|(short)0;
 			// record the destination coordinates
 			group->val2 = (x<<16)|y;
 			group->val3 = mapindex;
@@ -10488,29 +10489,36 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 			sc_start4(bl,type,100,sg->skill_lv,sg->group_id,0,0,sg->limit);
 		break;
 
-	case UNT_WARP_WAITING:
-		if(bl->type==BL_PC){
+	case UNT_WARP_WAITING: {
+		int working = sg->val1&0xffff;
+
+		if(bl->type==BL_PC && !working){
 			struct map_session_data *sd = (struct map_session_data *)bl;
 			if((!sd->chatID || battle_config.chat_warpportal)
 				&& sd->ud.to_x == src->bl.x && sd->ud.to_y == src->bl.y)
 			{
 				int x = sg->val2>>16;
 				int y = sg->val2&0xffff;
+				int count = sg->val1>>16;
 				unsigned short m = sg->val3;
 
-				if( --sg->val1 <= 0 )
+				if( --count <= 0 )
 					skill_delunitgroup(sg);
+				
+				if ( map_mapindex2mapid(sg->val3) == sd->bl.m && x == sd->bl.x && y == sd->bl.y )
+					working = 1;/* we break it because officials break it, lovely stuff. */
 
+				sg->val1 = (count<<16)|working;
+				
 				pc_setpos(sd,m,x,y,CLR_TELEPORT);
 				sg = src->group; // avoid dangling pointer (pc_setpos can cause deletion of 'sg')
 			}
-		} else
-		if(bl->type == BL_MOB && battle_config.mob_warp&2)
-		{
+		} else if(bl->type == BL_MOB && battle_config.mob_warp&2) {
 			int m = map_mapindex2mapid(sg->val3);
 			if (m < 0) break; //Map not available on this map-server.
 			unit_warp(bl,m,sg->val2>>16,sg->val2&0xffff,CLR_TELEPORT);
 		}
+	}
 		break;
 
 	case UNT_QUAGMIRE:
