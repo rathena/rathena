@@ -65,7 +65,7 @@ struct Login_Config {
 	int start_limited_time;                         // new account expiration time (-1: unlimited)
 	bool use_md5_passwds;                           // work with password hashes instead of plaintext passwords?
 	int group_id_to_connect;                        // required group id to connect
-	int min_group_id_to_connect;                        // minimum group id to connect
+	int min_group_id_to_connect;                    // minimum group id to connect
 	bool check_client_version;                      // check the clientversion set in the clientinfo ?
 	uint32 client_version_to_connect;               // the client version needed to connect (if checking is enabled)
 
