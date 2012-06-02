@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -13,6 +13,8 @@
 //= 1.1 Removed unencoded comments (Korean -> Gibberish)
 //=     Readded the GM helper NPC, commented out.
 //= 1.2 Some little optimization here and there. [Masao]
+//= 1.3 Added Instructor Ur and the new Quests which come
+//= alongside him. Special thanks to Chilly for the base. [Masao]
 //============================================================
 
 moc_para01,25,35,4	script	Instructor Boya#para01	469,{
@@ -1042,7 +1044,7 @@ moc_para01,25,35,4	script	Instructor Boya#para01	469,{
 			mes "The arsenal is past the blue gate and at the end of the right side of the passage.";
 			close;
 		}
-		if (para_suv01 == 38) {
+		if (para_suv01 >= 38) {
 			mes "[Boya]";
 			mes "My boss created all the courses for the training.";
 			mes "After he manufactured the uniform and supplies he changed his mind and said that he can't give them for free.";
@@ -1369,7 +1371,7 @@ prt_sewb1,131,262,3	script	Timid Cat#para04	422,{
 			mes "[Timid Cat]";
 			mes "Did you come here to have a battle?";
 			mes "Hunt those Thief Bugs, hurry up!";
-			mes "Hunt atleast 10!";
+			mes "Hunt at least 10!";
 			mes "Meooow!";
 			next;
 			mes "[Timid Cat]";
@@ -1496,7 +1498,7 @@ prt_sewb1,131,262,3	script	Timid Cat#para04	422,{
 		percentheal 0,100;
 		close;
 	}
-	if (para_suv01 == 10) {
+	if (para_suv01 >= 10) {
 		mes "[Timid Cat]";
 		mes "You've completed 'Conquer the Culvert'.";
 		mes "Go back to the Eden Group headquarters to report to Boya.";
@@ -1639,7 +1641,7 @@ pay_arche,41,136,3	script	Eden Member Karl#para05	904,{
 		percentheal 0,100;
 		close;
 	}
-	if (para_suv01 == 16) {
+	if (para_suv01 >= 16) {
 		mes "[Karl]";
 		mes "I already informed Boya at the Eden Group headquarters.";
 		mes "If you go there he will give you a big welcome.";
@@ -1829,7 +1831,7 @@ anthell01,29,264,5	script	Eden Member Cloud#para06	899,{
 		percentheal 100,100;
 		close;
 	}
-	if (para_suv01 == 21) {
+	if (para_suv01 >= 21) {
 		mes "[Cloud]";
 		mes "It's enough to say that you've conquered Ant Hell.";
 		mes "Aren't you getting used to it here?";
@@ -2236,7 +2238,7 @@ iz_dun04,43,46,3	script	Eden Member Callandiva	745,{
 		percentheal 100,100;
 		close;
 	}
-	if (para_suv01 == 36) {
+	if (para_suv01 >= 36) {
 		mes "[Callandiva]";
 		mes "I won't give help to you anymore.";
 		mes "Go back to our headquarters and report about this training mission.";
@@ -3833,6 +3835,2162 @@ moc_para01,179,44,3	script	Chef	820,{
 		mes "Just eat in the restaurant.";
 		mes "We serve meals to everyone.";
 		mes "I am pretty sure they taste great!";
+		close;
+	}
+}
+
+moc_para01,23,35,4	script	Instructor Ur	468,{
+	if (countitem(6219) > 0) {
+		if (BaseLevel < 60) {
+			mes "[Instructor Ur]";
+			mes "Umm. You should raise your level more!";
+			mes "You need to be at least level 60!";
+			mes "I'm sorry but those are the rules.";
+			close;
+		}
+		if ((BaseLevel >= 60) && (BaseLevel < 70) && (para_suv01 < 39)) {
+			mes "[Instructor Ur]";
+			mes "You are just in time! I have a new quest for you, would you like to start it now?";
+			next;
+			switch(select("Yes!:No, thanks.")) {
+			case 1:
+				mes "[Instructor Ur]";
+				mes "Great! I want you to go find ^0000FFRomeo in Comodo^000000.";
+				next;
+				set para_suv01,39;
+				setquest 7214;
+				mes "[Instructor Ur]";
+				mes "You should see him near the entrance to the ^0000FFNorth Cave in Comodo^000000.";
+				close;
+			case 2:
+				mes "[Instructor Ur]";
+				mes "Thats to bad. I have some nice rewards i could have given to you for helping me.";
+				close;
+			}
+		}
+		if ((para_suv01 == 39) && (romeo < 4)) {
+			mes "[Instructor Ur]";
+			mes "What are you waiting for? Go find ^0000FFRomeo in Comodo^000000.";
+			next;
+			mes "[Instructor Ur]";
+			mes "You should see him near the entrance to the ^0000FFNorth Cave in Comodo^000000.";
+			close;
+		}
+		if ((para_suv01 == 40) && (romeo == 4)) {
+			mes "[Instructor Ur]";
+			mes "Done already? Great work!";
+			next;
+			set para_suv01,41;
+			completequest 7218;
+			if (para_suv02 < 5) {
+				set para_suv02,5;
+			}
+			mes "[Instructor Ur]";
+			mes "Go to the back room and talk to ^0000FFToren^000000 for your reward!";
+			close;
+		}
+		if (para_suv01 == 41) {
+			mes "[Instructor Ur]";
+			mes "Go to the back room and talk to ^0000FFToren^000000 for your reward!";
+			close;
+		}
+		if ((para_suv01 == 42) && (BaseLevel < 70)) {
+			mes "[Instructor Ur]";
+			mes "I'm sorry, I have no new quests available for you at this time. Come back when you are at least ^FF0000Base Level 70^000000.";
+			close;
+		}
+		if ((BaseLevel >= 70) && (BaseLevel < 80) && (para_suv01 < 39 || para_suv01 == 42)) {
+			mes "[Instructor Ur]";
+			mes "You are just in time! I have a new quest for you, would you like to start it now?";
+			next;
+			switch(select("Yes!:No, thanks.")) {
+			case 1:
+				mes "[Instructor Ur]";
+				mes "Great! I want you to go find ^0000FFJohan in Glast Heim^000000.";
+				next;
+				set para_suv01,43;
+				setquest 7219;
+				mes "[Instructor Ur]";
+				mes "You should see him near the entrance of the ^0000FFGlast Heim Church^000000.";
+				close;
+			case 2:
+				mes "[Instructor Ur]";
+				mes "Thats to bad. I have some nice rewards i could have given to you for helping me.";
+				close;
+			}
+		}
+		if ((para_suv01 == 43) && (johan < 3)) {
+			mes "[Instructor Ur]";
+			mes "What are you waiting for? Go find ^0000FFJohan in Glast Heim^000000.";
+			next;
+			mes "[Instructor Ur]";
+			mes "You should see him near the entrance of the ^0000FFGlast Heim Church^000000.";
+			close;
+		}
+		if ((para_suv01 == 43) && (johan == 3)) {
+			mes "[Instructor Ur]";
+			mes "Done already? Great work!";
+			next;
+			set para_suv01,44;
+			completequest 7222;
+			if (para_suv02 < 7) {
+				set para_suv02,7;
+			}
+			mes "[Instructor Ur]";
+			mes "Go to the back room and talk to ^0000FFToren and the Weapons Expert^000000 for your rewards!";
+			close;
+		}
+		if (para_suv01 == 44) {
+			mes "[Instructor Ur]";
+			mes "Go to the back room and talk to ^0000FFToren^000000 for your reward!";
+			close;
+		}
+		if ((para_suv01 == 45) && (BaseLevel < 80)) {
+			mes "[Instructor Ur]";
+			mes "I'm sorry, I have no new quests available for you at this time. Come back when you are at least ^FF0000Base Level 80^000000.";
+			close;
+		}
+		if ((BaseLevel >= 80) && (BaseLevel < 90) && (para_suv01 < 39 || para_suv01 == 42 || para_suv01 == 45)) {
+			mes "[Instructor Ur]";
+			mes "You are just in time! I have a new quest for you, would you like to start it now?";
+			next;
+			switch(select("Yes!:No, thanks.")) {
+			case 1:
+				mes "[Instructor Ur]";
+				mes "Great! I want you to go find ^0000FFKiren in Einbroch^000000.";
+				next;
+				set para_suv01,46;
+				setquest 7223;
+				mes "[Instructor Ur]";
+				mes "You should see her near the ^0000FFSouth Enterance^000000 outside of town.";
+				close;
+			case 2:
+				mes "[Instructor Ur]";
+				mes "Thats to bad. I have some nice rewards i could have given to you for helping me.";
+				close;
+			}
+		}
+		if ((para_suv01 == 46) && (kiren < 3)) {
+			mes "[Instructor Ur]";
+			mes "What are you waiting for? Go find ^0000FFKiren in Einbroch^000000.";
+			next;
+			mes "[Instructor Ur]";
+			mes "You should see her near the ^0000FFSouth Enterance^000000 outside of town.";
+			close;
+		}
+		if ((para_suv01 == 46) && (kiren == 3)) {
+			mes "[Instructor Ur]";
+			mes "Done already? Great work!";
+			next;
+			set para_suv01,47;
+			completequest 7228;
+			if (para_suv02 < 9) {
+				set para_suv02,9;
+			}
+			mes "[Instructor Ur]";
+			mes "Go to the back room and talk to ^0000FFToren and the Weapons Expert^000000 for your rewards!";
+			close;
+		}
+		if (para_suv01 == 47) {
+			mes "[Instructor Ur]";
+			mes "Go to the back room and talk to ^0000FFToren^000000 for your reward!";
+			close;
+		}
+		if ((para_suv01 == 48) && (BaseLevel < 90)) {
+			mes "[Instructor Ur]";
+			mes "I'm sorry, I have no new quests available for you at this time. Come back when you are at least ^FF0000Base Level 90^000000.";
+			close;
+		}
+		if ((BaseLevel >= 90) && (BaseLevel < 100) && (para_suv01 < 39 || para_suv01 == 42 || para_suv01 == 45 || para_suv01 == 48)) {
+			mes "[Instructor Ur]";
+			mes "You are just in time! I have a new quest for you, would you like to start it now?";
+			next;
+			switch(select("Yes!:No, thanks.")) {
+			case 1:
+				mes "[Instructor Ur]";
+				mes "Great! I want you to go find ^0000FFNaomi in Ice Dungeon^000000.";
+				next;
+				set para_suv01,49;
+				setquest 7229;
+				mes "[Instructor Ur]";
+				mes "You should see her near the ^0000FFEnterance^000000 when you enter the dungeon.";
+				close;
+			case 2:
+				mes "[Instructor Ur]";
+				mes "Thats to bad. I have some nice rewards i could have given to you for helping me.";
+				close;
+			}
+		}
+		if ((para_suv01 == 49) && (naomi < 3)) {
+			mes "[Instructor Ur]";
+			mes "What are you waiting for? Go find ^0000FFNaomi in Ice Dungeon^000000.";
+			next;
+			mes "[Instructor Ur]";
+			mes "You should see her near the ^0000FFEnterance^000000 when you enter the dungeon.";
+			close;
+		}
+		if ((para_suv01 == 49) && (naomi == 3)) {
+			mes "[Instructor Ur]";
+			mes "Done already? Great work!";
+			next;
+			set para_suv01,50;
+			completequest 7232;
+			if (para_suv02 < 11) {
+				set para_suv02,11;
+			}
+			mes "[Instructor Ur]";
+			mes "Go to the back room and talk to ^0000FFToren and the Weapons Expert^000000 for your rewards!";
+			close;
+		}
+		if (para_suv01 == 50) {
+			mes "[Instructor Ur]";
+			mes "Go to the back room and talk to ^0000FFToren^000000 for your reward!";
+			close;
+		}
+		if ((BaseLevel >= 100) && (para_suv01 < 39 || para_suv01 == 42 || para_suv01 == 45 || para_suv01 == 48 || para_suv01 == 51)) {
+			mes "[Instructor Ur]";
+			mes "You are just in time! I have a new quest for you, would you like to start it now?";
+			next;
+			switch(select("Yes!:No, thanks.")) {
+			case 1:
+				mes "[Instructor Ur]";
+				mes "Great! I want you to go find ^0000FFMargaret in the Expedition Camp^000000.";
+				next;
+				set para_suv01,52;
+				setquest 7233;
+				mes "[Instructor Ur]";
+				mes "You should see her near the ^0000FFBuilding in the Center^000000 of the Expedition Camp.";
+				close;
+			case 2:
+				mes "[Instructor Ur]";
+				mes "Thats too bad.  I had some nice rewards to give you.";
+				close;
+			}
+		}
+		if ((para_suv01 == 52) && (margaret < 7)) {
+			mes "[Instructor Ur]";
+			mes "What are you waiting for? Go find ^0000FFMargaret in the Expedition Camp^000000.";
+			next;
+			mes "[Instructor Ur]";
+			mes "You should see her near the ^0000FFBuilding in the Center^000000 of the Expedition Camp.";
+			close;
+		}
+		if ((para_suv01 == 52) && (margaret == 7)) {
+			mes "[Instructor Ur]";
+			mes "Done already? Great work!";
+			next;
+			set para_suv01,53;
+			completequest 7237;
+			if (para_suv02 < 13) {
+				set para_suv02,13;
+			}
+			mes "[Instructor Ur]";
+			mes "Go to the back room and talk to ^0000FFToren and the Weapons Expert^000000 for your rewards!";
+			close;
+		}
+		if (para_suv01 == 53) {
+			mes "[Instructor Ur]";
+			mes "Go to the back room and talk to ^0000FFToren^000000 for your reward!";
+			close;
+		}
+		if (para_suv01 > 53) {
+			mes "[Instructor Ur]";
+			mes "I'm out of rewards to give to you. But don't worry, there are much better gears out there for you to obtain.";
+			close;
+		}
+	}
+	mes "[Instructor Ur]";
+	mes "You are not in my group are you?";
+	mes "I don't have anything to say to outsiders.";
+	mes "If you want something register with my group.";
+	next;
+	mes "[Instructor Ur]";
+	mes "To register with the Eden Group ask Laime Evenor next to me.";
+	close;
+}
+
+comodo,173,354,6	script	Romeo#01	55,{
+	if ((para_suv01 == 39) && (romeo < 1)) {
+		mes "[Romeo]";
+		mes "Ah, there you are.";
+		next;
+		mes "[Romeo]";
+		mes "Before we begin, I want to test you.";
+		next;
+		set romeo,1;
+		changequest 7214,7215;
+		mes "[Romeo]";
+		mes "Enter the cave and kill ^0000FF3 Stalactic Golems^000000, then return to me.";
+		close;
+	}
+	if (romeo == 1) {
+		if (checkquest(7215,HUNTING) == 2) {
+			mes "[Romeo]";
+			mes "You did it? Thats all the proof I needed.";
+			next;
+			mes "[Romeo]";
+			mes "You should then have no trouble killing ^0000FF10 more Stalactic Golems^000000, right?";
+			next;
+			getexp 10000,10000;
+			set romeo,2;
+			changequest 7215,7216;
+			mes "[Romeo]";
+			mes "^0000FFMeet me at the north-east exit of the cave^000000 when you are done, I will be waiting for you outside.";
+			close;
+		}
+		mes "[Romeo]";
+		mes "Don't give up, I'm only asking you to kill ^0000FF3 Stalactic Golems^000000.";
+		close;
+	}
+	if (romeo == 2) {
+		mes "[Romeo]";
+		mes "You should then have no trouble killing ^0000FF10 more Stalactic Golems^000000, right?";
+		next;
+		mes "[Romeo]";
+		mes "After you have killed all ^0000FF10 Stalactic Golems^000000, ^0000FFmeet me at the north-east exit of the cave^000000. I will be waiting for you outside.";
+		close;
+	}
+	mes "[Romeo]";
+	mes "The person I'm waiting for is late...";
+	close;
+}
+
+um_fild01,34,280,6	script	Romeo#02	55,{
+	if (romeo == 2) {
+		if (checkquest(7216,HUNTING) == 2) {
+			mes "[Romeo]";
+			mes "Wow, you have arrived sooner than I expected.";
+			next;
+			mes "[Romeo]";
+			mes "There is only one more thing I need you to do for me.";
+			next;
+			getexp 10000,10000;
+			set romeo,3;
+			changequest 7216,7217;
+			mes "[Romeo]";
+			mes "Bring me ^0000FF5 Shoulder Pads and 7 Sharp Leafs^000000.";
+			close;
+		}
+		mes "[Romeo]";
+		mes "You are early, but you didn't kill ^0000FF10 Stalactic Golems^000000 like I asked you to do.";
+		close;
+	}
+	if (romeo == 3) {
+		if ((countitem(7196) >= 5) && (countitem(7100) >= 7)) {
+			mes "[Romeo]";
+			mes "Your work here is done my friend.";
+			next;
+			delitem 7196,5; // Shoulder Pad
+			delitem 7100,7; // Sharp Leaf
+			getexp 10000,10000;
+			set romeo,4;
+			changequest 7217,7218;
+			mes "[Romeo]";
+			mes "Return to the ^33CC33Paradise Group Headquarters^000000 for your reward.";
+			close;
+		}
+		mes "[Romeo]";
+		mes "Bring me ^0000FF5 Shoulder Pads and 7 Sharp Leafs^000000.";
+		close;
+	}
+	if (romeo == 4) {
+		mes "[Romeo]";
+		mes "Thank you again for all your help.";
+		next;
+		mes "[Romeo]";
+		mes "Return to the ^33CC33Paradise Group Headquarters^000000 for your reward.";
+		close;
+	}
+	mes "[Romeo]";
+	mes "What is taking so long...";
+	close;
+}
+
+glast_01,195,131,6	script	Johan	95,{
+	if ((para_suv01 == 43) && (johan < 1)) {
+		mes "[Johan]";
+		mes "...";
+		next;
+		mes "[Johan]";
+		mes "I don't need to explain anything to you.";
+		next;
+		set johan,1;
+		changequest 7219,7220;
+		mes "[Johan]";
+		mes "Go kill ^0000FF20 Wraiths^000000.";
+		close;
+	}
+	if (johan == 1) {
+		if (checkquest(7220,HUNTING) == 2) {
+			mes "[Johan]";
+			mes "Good.";
+			next;
+			mes "[Johan]";
+			mes "Next I want you to kill ^0000FF10 Evil Druids^000000.";
+			next;
+			getexp 20000,20000;
+			set johan,2;
+			changequest 7220,7221;
+			mes "[Johan]";
+			mes "This time kill them quickly, I don't like to wait.";
+			close;
+		}
+		mes "[Johan]";
+		mes "... ^0000FF20 Wraiths^000000 shouldn't take this long.";
+		close;
+	}
+	if (johan == 2) {
+		if (checkquest(7221,HUNTING) == 2) {
+			mes "[Johan]";
+			mes "Hmmmm, better.";
+			next;
+			mes "[Johan]";
+			mes "Ok, I'm done with you.";
+			next;
+			getexp 20000,20000;
+			set johan,3;
+			changequest 7221,7222;
+			mes "[Johan]";
+			mes "Return to the ^33CC33Paradise Group Headquarters^000000 for your reward.";
+			close;
+		}
+		mes "[Johan]";
+		mes "Hurry up, it is only ^0000FF10 Evil Druids^000000.";
+		close;
+	}
+	if (johan == 3) {
+		mes "[Johan]";
+		mes "Why are you still here?";
+		next;
+		mes "[Johan]";
+		mes "Return to the ^33CC33Paradise Group Headquarters^000000 for your reward.";
+		close;
+	}
+	mes "[Johan]";
+	mes "Go away... I'm busy.";
+	close;
+}
+
+ein_fild08,172,359,4	script	Kiren	989,{
+	if ((para_suv01 == 46) && (kiren < 1)) {
+		mes "[Kiren]";
+		mes "Hey there.";
+		next;
+		mes "[Kiren]";
+		mes "You must be a member of the Paradise Group, come help me for a second.";
+		next;
+		set kiren,1;
+		changequest 7223,7224;
+		mes "[kiren]";
+		mes "Can you kill ^0000FF30 Porcellios^000000 for me and then return to me?";
+		close;
+	}
+	if (kiren == 1) {
+		if (checkquest(7224,HUNTING) == 2) {
+			mes "[Kiren]";
+			mes "Wow, most people spend twice as long as you did to kill those Porcellios!";
+			next;
+			mes "[Kiren]";
+			mes "I think you need a challenge.";
+			next;
+			getexp 30000,30000;
+			set kiren,2;
+			changequest 7224,7226;
+			setquest 7227;
+			mes "[Kiren]";
+			mes "How about this: Kill ^0000FF30 Venomous and 5 Teddy Bears^000000.";
+			close;
+		}
+		mes "[Kiren]";
+		mes "Come back to me when you have killed the ^0000FF30 Porcellios^000000.";
+		close;
+	}
+	if (kiren == 2) {
+		if ((checkquest(7226,HUNTING) == 2) && (checkquest(7227,HUNTING) == 2)) {
+			mes "[Kiren]";
+			mes "Incredible, you set a new record!";
+			next;
+			mes "[Kiren]";
+			mes "I have never seen anyone kill them all so fast, you are good at this.";
+			next;
+			getexp 30000,30000;
+			set kiren,3;
+			changequest 7226,7228;
+			completequest 7227;
+			mes "[Kiren]";
+			mes "Return to the ^33CC33Paradise Group Headquarters^000000 for your reward.";
+			close;
+		}
+		mes "[Kiren]";
+		mes "Remember, you need to kill ^0000FF30 Venomous and 5 Teddy Bears^000000.";
+		close;
+	}
+	if (kiren == 3) {
+		mes "[Kiren]";
+		mes "Don't worry, nobody else has beaten your record yet.";
+		next;
+		mes "[Kiren]";
+		mes "Return to the ^33CC33Paradise Group Headquarters^000000 for your reward.";
+		close;
+	}
+	mes "[Kiren]";
+	mes "Be careful, there are some fast monsters around here.";
+	close;
+}
+
+ice_dun01,154,13,6	script	Naomi	726,{
+	if ((para_suv01 == 49) && (naomi < 1)) {
+		mes "[Naomi]";
+		mes "It is so cold in here.";
+		next;
+		mes "[Naomi]";
+		mes "I blame those annoying Siromas.";
+		next;
+		set naomi,1;
+		changequest 7229,7230;
+		mes "[Naomi]";
+		mes "Can you kill ^0000FF30 Siromas^000000 for me, please?";
+		close;
+	}
+	if (naomi == 1) {
+		if (checkquest(7230,HUNTING) == 2) {
+			mes "[Naomi]";
+			mes "Thank you, but there are still so many Siromas here!";
+			next;
+			mes "[Naomi]";
+			mes "I need to make a special drink to stay warm, please help me make it.";
+			next;
+			getexp 40000,40000;
+			set naomi,2;
+			changequest 7230,7231;
+			mes "[Naomi]";
+			mes "Can you kill another ^0000FF30 Siromas^000000 and bring me ^0000FF30 Ice Cubics, 1 Milk and 1 Sweet Sauce^000000?";
+			close;
+		}
+		mes "[Naomi]";
+		mes "Please kill ^0000FF30 Siromas^000000, I just hate them.";
+		close;
+	}
+	if (naomi == 2) {
+		if ((checkquest(7231,HUNTING) == 2) && (countitem(7066) >= 30) && (countitem(519) >= 1) && (countitem(7453) >= 1)) {
+			mes "[Naomi]";
+			mes "Yay, you did it!";
+			next;
+			mes "[Naomi]";
+			mes "I will be fine now, don't worry about me.";
+			next;
+			delitem 7066,30; // Ice Cubic
+			delitem 519,1; // Milk
+			delitem 7453,1; // Sweet Sauce
+			getexp 40000,40000;
+			set naomi,3;
+			changequest 7231,7232;
+			mes "[Naomi]";
+			mes "Return to the ^33CC33Paradise Group Headquarters^000000 for your reward.";
+			close;
+		}
+		mes "[Naomi]";
+		mes "Can you kill another ^0000FF30 Siromas^000000 and bring me ^0000FF30 Ice Cubics, 1 Milk and 1 Sweet Sauce^000000?";
+		close;
+	}
+	if (naomi == 3) {
+		mes "[Naomi]";
+		mes "I will be fine now, don't worry about me.";
+		next;
+		mes "[Naomi]";
+		mes "Return to the ^33CC33Paradise Group Headquarters^000000 for your reward.";
+		close;
+	}
+	mes "[Naomi]";
+	mes "So... cold...";
+	close;
+}
+
+mid_camp,212,229,4	script	Margaret	893,{
+	if ((para_suv01 == 52) && (margaret < 1)) {
+		mes "[Margaret]";
+		mes "Oh, hello there.";
+		next;
+		mes "[Margaret]";
+		mes "I have two friends here in the New World which need your help.";
+		next;
+		set margaret,1;
+		changequest 7233,7234;
+		mes "[Margaret]";
+		mes "Please start by helping the ^0000FFParadise Dispatch in Manuk Field^000000.";
+		close;
+	}
+	if (margaret == 1 || margaret == 2) {
+		mes "[Margaret]";
+		mes "Please start by helping the ^0000FFParadise Dispatch in Manuk Field^000000.";
+		close;
+	}
+	if (margaret == 3) {
+		mes "[Margaret]";
+		mes "Ah good, you were able to help him.";
+		next;
+		set margaret,4;
+		mes "[Margaret]";
+		mes "Next can you help the ^0000FFParadise Dispatch in Splendide Field^000000, please?";
+		close;
+	}
+	if (margaret == 4 || margaret == 5) {
+		mes "[Margaret]";
+		mes "Next can you help the ^0000FFParadise Dispatch in Splendide Field^000000, please?";
+		close;
+	}
+	if (margaret == 6) {
+		mes "[Margaret]";
+		mes "Haha, so he still wants a zoom out hack...";
+		next;
+		mes "[Margaret]";
+		mes "Thanks for helping them, I knew you could do it.";
+		next;
+		set margaret,7;
+		changequest 7234,7237;
+		mes "[Margaret]";
+		mes "Return to the ^33CC33Paradise Group Headquarters^000000 for your reward.";
+		close;
+	}
+	mes "[Margaret]";
+	mes "The New World... What a beautiful place!";
+	close;
+}
+
+man_fild01,43,234,2	script	Paradise Dispatch#01	939,{
+	if (margaret == 1) {
+		mes "[Paradise Dispatch]";
+		mes "Hey you, can you help me here?";
+		next;
+		mes "[Paradise Dispatch]";
+		mes "The plant monsters in this area have a long ranged attack.";
+		next;
+		set margaret,2;
+		changequest 7234,7235;
+		mes "[Paradise Dispatch]";
+		mes "Can you please kill ^0000FF1 Nepenthes^000000 so I can go back to the camp?";
+		close;
+	}
+	if (margaret == 2) {
+		if (checkquest(7235,HUNTING) == 2) {
+			mes "[Paradise Dispatch]";
+			mes "Thanks!";
+			next;
+			mes "[Paradise Dispatch]";
+			mes "Ok, I'm out of here.";
+			next;
+			getexp 50000,50000;
+			set margaret,3;
+			changequest 7235,7234;
+			mes "[Paradise Dispatch]";
+			mes "Head back to ^0000FFMargaret^000000 and tell her thanks for me too!";
+			close;
+		}
+		mes "[Paradise Dispatch]";
+		mes "Can you kill ^0000FF1 Nepenthes^000000 so I can go back to the camp?";
+		close;
+	}
+	if (margaret == 3) {
+		mes "[Paradise Dispatch]";
+		mes "...";
+		next;
+		mes "[Paradise Dispatch]";
+		mes "Don't rush me, just head back to ^0000FFMargaret^000000.";
+		close;
+	}
+	mes "[Paradise Dispatch]";
+	mes "Those Nepenthes are so scary!";
+	close;
+}
+
+spl_fild02,377,149,4	script	Paradise Dispatch#02	946,{
+	if (margaret == 4) {
+		mes "[Paradise Dispatch]";
+		mes "So Margaret sent you to help me?";
+		next;
+		mes "[Paradise Dispatch]";
+		mes "Ok, lets get started!";
+		next;
+		set margaret,5;
+		changequest 7234,7236;
+		mes "[Paradise Dispatch]";
+		mes "Kill ^0000FF5 Pinguicula^000000 and then return to me.";
+		close;
+	}
+	if (margaret == 5) {
+		if (checkquest(7236,HUNTING) == 2) {
+			mes "[Paradise Dispatch]";
+			mes "You make it look so easy, but I couldn't even kill 1...";
+			next;
+			mes "[Paradise Dispatch]";
+			mes "Now is my chance to run to Splendide!";
+			next;
+			getexp 50000,50000;
+			set margaret,6;
+			changequest 7236,7234;
+			mes "[Paradise Dispatch]";
+			mes "Head back to ^0000FFMargaret^000000, I will be ok now.";
+			close;
+		}
+		mes "[Paradise Dispatch]";
+		mes "Kill ^0000FF5 Pinguicula^000000 and return to me.";
+		close;
+	}
+	if (margaret == 6) {
+		mes "[Paradise Dispatch]";
+		mes "Now, if only I had a hack for zooming out more...";
+		next;
+		mes "[Paradise Dispatch]";
+		mes "Head back to ^0000FFMargaret^000000, I will be ok now.";
+		close;
+	}
+	mes "[Paradise Dispatch]";
+	mes "I need a hack to zoom out more so I can see if it is safe...";
+	close;
+}
+
+moc_para01,111,83,3	script	Toren	813,{
+	if (checkweight(1101,5) == 0) {
+		mes "^3355FFWait a second!";
+		mes "Right now, you're carrying";
+		mes "to many things with you.";
+		mes "Please come back after";
+		mes "using the Kafra Service";
+		mes "to store some of your items.^000000";
+		close;
+	}
+	mes "[Toren]";
+	mes "Hello adventurer, what can I do for you?";
+	next;
+	switch(select("Where is my reward?:I want an enchantment!")) {
+	case 1:
+		if (para_suv02 == 5 || para_suv02 == 7 || para_suv02 == 9 || para_suv02 == 11 || para_suv02 == 13) {
+			mes "[Toren]";
+			mes "You must be ^0000FF" + strcharinfo(0) + "^000000, right?  Instructor Ur told me about you.";
+			next;
+			mes "[Toren]";
+			mes "Here is a set of our advanced gears for you to use, wear them proudly as a member of the ^33CC33Paradise Group^000000 and don't think about selling them to anyone else.";
+			next;
+			if (BaseJob == Job_Swordman || BaseJob == Job_Knight || BaseJob == Job_Crusader || BaseJob == Job_Knight2 || BaseJob == Job_Crusader2 || Class == Job_Lord_Knight || Class == Job_Paladin || Class == Job_Lord_Knight2 || Class == Job_Paladin2) {
+				mes "[Toren]";
+				mes "Swordman Class gets a choice of weapons, would you like to have a sword or a spear?";
+				next;
+				mes "[Toren]";
+				mes "Slayer: Two-handed Sword, 200 Atk.";
+				mes " ";
+				mes "Saber: One-handed Sword, 185 Atk.";
+				mes " ";
+				mes "Spear: One-handed, 165 Atk.";
+				next;
+				switch(select("Slayer.:Saber.:Spear.")) {
+				case 1:
+					getitem 1197,1; //P.Slayer III
+					break;
+				case 2:
+					getitem 13434,1; //P.Saber III
+					break;
+				case 3:
+					getitem 1434,1; //P.Spear I
+					break;
+				}
+			}
+			if (BaseJob == Job_Merchant || BaseJob == Job_Blacksmith || BaseJob == Job_Alchemist  || Class == Job_Whitesmith || Class == Job_Creator) {
+				mes "[Toren]";
+				mes "Merchant Class gets a choice of weapons, would you like to have a axe, dagger or a sword?";
+				next;
+				mes "[Toren]";
+				mes "Axe: Two-handed, 195 Atk.";
+				mes " ";
+				mes "Dagger: One-handed, 165 Atk, 80 Matk.";
+				mes " ";
+				mes "Sword: One-handed, 185 Atk.";
+				next;
+				switch(select("Axe.:Dagger.:Sword.")) {
+				case 1:
+					getitem 1391,1; //P.Two-Handed Axe I
+					break;
+				case 2:
+					getitem 13066,1; //P.Dagger III
+					break;
+				case 3:
+					getitem 13434,1; //P.Saber III
+					break;
+				}
+			}
+			if (BaseJob == Job_Assassin || Class == Job_Assassin_Cross) {
+				mes "[Toren]";
+				mes "Assassin Class gets a choice of weapons, would you like to have a katar, dagger or a sword?";
+				next;
+				mes "[Toren]";
+				mes "Katar: Two-handed, 155 Atk.";
+				mes " ";
+				mes "Dagger: One-handed, 165 Atk, 80 Matk.";
+				mes " ";
+				mes "Sword: One-handed, 185 Atk.";
+				next;
+				switch(select("Katar.:Dagger.:Sword.")) {
+				case 1:
+					getitem 1289,1; //P.Katar I
+					break;
+				case 2:
+					getitem 13066,1; //P.Dagger III
+					break;
+				case 3:
+					getitem 13434,1; //P.Saber III
+					break;
+				}
+			}
+			if (BaseJob == Job_Rogue || Class == Job_Stalker) {
+				mes "[Toren]";
+				mes "Rogue Class gets a choice of weapons, would you like to have a dagger, bow or a sword?";
+				next;
+				mes "[Toren]";
+				mes "Dagger: One-handed, 165 Atk, 80 Matk.";
+				mes " ";
+				mes "Bow: Two-handed, 140 Atk.";
+				mes " ";
+				mes "Sword: One-handed, 185 Atk.";
+				next;
+				switch(select("Dagger.:Bow.:Sword")) {
+				case 1:
+					getitem 13066,1; //P.Dagger III
+					break;
+				case 2:
+					getitem 18106,1; //P.Bow III
+					break;
+				case 3:
+					getitem 13434,1; //P.Saber III
+					break;
+				}
+			}
+			if (BaseJob == Job_Thief) {
+				mes "[Toren]";
+				mes "Thief Class gets a choice of weapons, would you like to have a dagger or a sword?";
+				next;
+				mes "[Toren]";
+				mes "Dagger: One-handed, 165 Atk, 80 Matk.";
+				mes " ";
+				mes "Sword: One-handed, 185 Atk.";
+				next;
+				switch(select("Dagger.:Sword.")) {
+				case 1:
+					getitem 13066,1; //P.Dagger III
+					break;
+				case 2:
+					getitem 13434,1; //P.Saber III
+					break;
+				}
+			}
+			if (BaseJob == Job_Bard || Class == Job_Clown) {
+				mes "[Toren]";
+				mes "Bard Class gets a choice of weapons, would you like to have a guitar, bow or a dagger?";
+				next;
+				mes "[Toren]";
+				mes "Guitar: One-handed, 125 Atk.";
+				mes " ";
+				mes "Bow: Two-handed, 140 Atk.";
+				mes " ";
+				mes "Dagger: One-handed, 165 Atk, 80 Matk.";
+				next;
+				switch(select("Guitar.:Bow.:Dagger.")) {
+				case 1:
+					getitem 1931,1; //P.Guitar I
+					break;
+				case 2:
+					getitem 18106,1; //P.Bow III
+					break;
+				case 3:
+					getitem 13066,1; //P.Dagger III
+					break;
+				}
+			}
+			if (BaseJob == Job_Dancer || Class == Job_Gypsy) {
+				mes "[Toren]";
+				mes "Dancer Class gets a choice of weapons, would you like to have a whip, bow or a dagger?";
+				next;
+				mes "[Toren]";
+				mes "Whip: One-handed, 125 Atk.";
+				mes " ";
+				mes "Bow: Two-handed, 140 Atk.";
+				mes " ";
+				mes "Dagger: One-handed, 165 Atk, 80 Matk.";
+				next;
+				switch(select("Whip.:Bow.:Dagger.")) {
+				case 1:
+					getitem 1986,1; //P.Tail I
+					break;
+				case 2:
+					getitem 18106,1; //P.Bow III
+					break;
+				case 3:
+					getitem 13066,1; //P.Dagger III
+					break;
+				}
+			}
+			if (BaseJob == Job_Archer || BaseJob == Job_Hunter || Class == Job_Sniper) {
+				mes "[Toren]";
+				mes "Archer Class gets a choice of weapons, would you like to have a bow or a dagger?";
+				next;
+				mes "[Toren]";
+				mes "Bow: Two-handed, 140 Atk.";
+				mes " ";
+				mes "Dagger: One-handed, 165 Atk, 80 Matk.";
+				next;
+				switch(select("Bow.:Dagger.")) {
+				case 1:
+					getitem 18106,1; //P.Bow III
+					break;
+				case 2:
+					getitem 13066,1; //P.Dagger III
+					break;
+				}
+			}
+			if (BaseJob == Job_Priest || Class == Job_High_Priest) {
+				mes "[Toren]";
+				mes "Priest Class gets a choice of weapons, would you like to have a staff, mace or a book?";
+				next;
+				mes "[Toren]";
+				mes "Staff: One-handed, 60 Atk, 170 Matk, 4 Int.";
+				mes " ";
+				mes "Mace: One-handed, 172 Atk.";
+				mes " ";
+				mes "Book: One-handed, 135 Atk, Matk 110.";
+				next;
+				switch(select("Staff.:Mace.:Book.")) {
+				case 1:
+					getitem 1658,1; //P.Staff III
+					break;
+				case 2:
+					getitem 16014,1; //P.Mace III
+					break;
+				case 3:
+					getitem 1583,1; //P.Book I
+					break;
+				}
+			}
+			if (BaseJob == Job_Monk || Class == Job_Champion) {
+				mes "[Toren]";
+				mes "Monk Class gets a choice of weapons, would you like to have a knuckle, mace or a staff?";
+				next;
+				mes "[Toren]";
+				mes "Knuckle: One-handed, 120 Atk.";
+				mes " ";
+				mes "Mace: One-handed, 172 Atk.";
+				mes " ";
+				mes "Staff: One-handed, 60 Atk, 170 Matk, 4 Int.";
+				next;
+				switch(select("Knuckle.:Mace.:Staff.")) {
+				case 1:
+					getitem 1831,1; //P.Knuckle I
+					break;
+				case 2:
+					getitem 16014,1; //P.Mace III
+					break;
+				case 3:
+					getitem 1658,1; //P.Staff III
+					break;
+				}
+			}
+			if (BaseJob == Job_Acolyte) {
+				mes "[Toren]";
+				mes "Acolyte Class gets a choice of weapons, would you like to ave a staff or a mace?";
+				next;
+				mes "[Toren]";
+				mes "Staff: One-handed, 60 Atk, 170 Matk, 4 Int.";
+				mes " ";
+				mes "Mace: One-handed, 172 Atk.";
+				next;
+				switch(select("Staff.:Mace.")) {
+				case 1:
+					getitem 1658,1; //P.Staff III
+					break;
+				case 2:
+					getitem 16014,1; //P.Mace III
+					break;
+				}
+			}
+			if (BaseJob == Job_Sage || Class == Job_Professor) {
+				mes "[Toren]";
+				mes "Sage Class gets a choice of weapons, would you like to have a staff, book or a dagger?";
+				next;
+				mes "[Toren]";
+				mes "Staff: One-handed, 60 Atk, 170 Matk, 4 Int.";
+				mes " ";
+				mes "Book: One-handed, 135 Atk, 110 Matk.";
+				mes " ";
+				mes "Dagger: One-handed, 165 Atk, Matk 80.";
+				next;
+				switch(select("Staff.:Book.:Dagger.")) {
+				case 1:
+					getitem 1658,1; //P.Staff III
+					break;
+				case 2:
+					getitem 1583,1; //P.Book I
+					break;
+				case 3:
+					getitem 13066,1; //P.Dagger III
+					break;
+				}
+			}
+			if (BaseJob == Job_Mage || BaseJob == Job_Wizard || Class == Job_High_Wizard || Class == Job_Soul_Linker) {
+				mes "[Toren]";
+				mes "Mage and Soul Linker Class gets a choice of weapons, would you like to have a staff or a dagger?";
+				next;
+				mes "[Toren]";
+				mes "Staff: One-handed, 60 Atk, 170 Matk, 4 Int.";
+				mes " ";
+				mes "Dagger: One-handed, 165 Atk, Matk 80.";
+				next;
+				switch(select("Staff.:Dagger.")) {
+				case 1:
+					getitem 1658,1; //P.Staff III
+					break;
+				case 2:
+					getitem 13066,1; //P.Dagger III
+					break;
+				}
+			}
+			if (Class == Job_Ninja) {
+				mes "[Toren]";
+				mes "Ninja Class gets a choice of weapons, would you like to have a huuma suriken or a dagger?";
+				next;
+				mes "[Toren]";
+				mes "Huuma Suriken: Two-handed, 170 Atk, 50 Matk.";
+				mes " ";
+				mes "Dagger: One-handed, 165 Atk, Matk 80.";
+				next;
+				switch(select("Huuma Suriken.:Dagger.")) {
+				case 1:
+					getitem 13310,1; //P.Huuma Suriken I
+					break;
+				case 2:
+					getitem 13066,1; //P.Dagger III
+					break;
+				}
+			}
+			if (Class == Job_Star_Gladiator || Class == Job_Star_Gladiator2) {
+				getitem 1583,1; //P.Book I
+			}
+			if (Class == Job_Gunslinger) {
+				getitem 13114,1; //P.Revolver III
+			}
+			if (BaseJob == Job_Novice || BaseJob == Job_SuperNovice || BaseJob == Job_SuperNovice2) {
+				getitem 13066,1; //P.Dagger III
+			}
+			getitem 18514,1; //Paradise Hat II
+			getitem 2571,1; //Paradise Mantle II
+			getitem 2473,1; //Paradise Boots IV
+			getitem 15031,1; //Paradise Uniform IV
+			if(para_suv02 == 5){
+				set para_suv02,6;
+			}
+			if(para_suv02 == 7){
+				set para_suv02,8;
+			}
+			if(para_suv02 == 9){
+				set para_suv02,10;
+			}
+			if(para_suv02 == 11){
+				set para_suv02,12;
+			}
+			if(para_suv02 == 13){
+				set para_suv02,14;
+			}
+			if (Class == Job_Taekwon) {
+				mes "[Toren]";
+				mes "I'm sorry, but Teakwon Class can't wear any of our weapons...";
+				next;
+			}
+			mes "[Toren]";
+			mes "See you later, and good luck on your adventures!";
+			close;
+		}
+		if ((para_suv02 == 14) && (countitem(18514) < 1)) {
+			mes "[Toren]";
+			mes "Where is the Paradise Hat I gave you?";
+			next;
+			mes "[Toren]";
+			mes "... Fine, I will sell you another one for ^FF0000250,000 Zeny^000000. Don't lose it this time.";
+			next;
+			switch(select("Ok.","No, thanks.")) {
+			case 1:
+				if (Zeny >= 250000) {
+					set Zeny, Zeny - 250000;
+					getitem 18514,1; //Paradise Hat II
+					mes "[Toren]";
+					mes "These advanced gears are not easy to make, please take better care of this one.";
+					close;
+				}
+				mes "[Toren]";
+				mes "You dont have enough zeny.";
+				close;
+			case 2:
+				mes "[Toren]";
+				mes "Come back if you change your mind.";
+				close;
+			}
+		}
+		if ((para_suv02 == 14) && (countitem(2571) < 1)) {
+			mes "[Toren]";
+			mes "Where is the Paradise Mantle I gave you?";
+			next;
+			mes "[Toren]";
+			mes "... Fine, I will sell you another one for ^FF0000250,000 Zeny^000000. Don't lose it this time.";
+			next;
+			switch(select("Ok.","No, thanks.")) {
+			case 1:
+				if (Zeny >= 250000) {
+					set Zeny, Zeny - 250000;
+					getitem 2571,1; //Paradise Mantle II
+					mes "[Toren]";
+					mes "These advanced gears are not easy to make, please take better care of this one.";
+					close;
+				}
+				mes "[Toren]";
+				mes "You dont have enough zeny.";
+				close;
+			case 2:
+				mes "[Toren]";
+				mes "Come back if you change your mind.";
+				close;
+			}
+		}
+		if ((para_suv02 == 14) && (countitem(2473) < 1)) {
+			mes "[Toren]";
+			mes "Where is the Paradise Boots I gave you?";
+			next;
+			mes "[Toren]";
+			mes "... Fine, I will sell you another one for ^FF0000250,000 Zeny^000000. Don't lose it this time.";
+			next;
+			switch(select("Ok.","No, thanks.")) {
+			case 1:
+				if (Zeny >= 250000) {
+					set Zeny, Zeny - 250000;
+					getitem 2473,1; //Paradise Boots IV
+					mes "[Toren]";
+					mes "These advanced gears are not easy to make, please take better care of this one.";
+					close;
+				}
+				mes "[Toren]";
+				mes "You dont have enough zeny.";
+				close;
+			case 2:
+				mes "[Toren]";
+				mes "Come back if you change your mind.";
+				close;
+			}
+		}
+		if ((para_suv02 == 14) && (countitem(15031) < 1)) {
+			mes "[Toren]";
+			mes "Where is the Paradise Uniform I gave you?";
+			next;
+			mes "[Toren]";
+			mes "... Fine, I will sell you another one for ^FF0000250,000 Zeny^000000. Don't lose it this time.";
+			next;
+			switch(select("Ok.","No, thanks.")) {
+			case 1:
+				if (Zeny >= 250000) {
+					set Zeny, Zeny - 250000;
+					getitem 15031,1; //Paradise Uniform IV
+					mes "[Toren]";
+					mes "These advanced gears are not easy to make, please take better care of this one.";
+					close;
+				}
+				mes "[Toren]";
+				mes "You dont have enough zeny.";
+				close;
+			case 2:
+				mes "[Toren]";
+				mes "Come back if you change your mind.";
+				close;
+			}
+		}
+		if (para_suv02 == 14) {
+			mes "[Toren]";
+			mes "I already gave you the most advanced gears we have to offer.";
+			close;
+		}
+		mes "[Toren]";
+		mes "You need to complete quests given to you by ^0000FFInstructor Ur^000000 if you want a reward.";
+		close;
+	case 2:
+		if (para_suv02 < 14) {
+			mes "[Toren]";
+			mes "First you need the ^0000FFAdvanced Paradise Gears^000000.";
+			close;
+		}
+		if (paragearenchant < 1) {
+			mes "[Toren]";
+			mes "Alright, but I'll need a few items for the enchantment process.";
+			next;
+			if (BaseLevel >= 90) {
+				set paragearenchant,1;
+				setquest 7239;
+				mes "[Toren]";
+				mes "Just bring me ^0000FF20 Used Iron Plates^000000.";
+				close;
+			}
+			set paragearenchant,2;
+			setquest 7238;
+			mes "[Toren]";
+			mes "Just bring me ^0000FF20 Iron Ores and 10 Irons^000000.";
+			close;
+		}
+		if (paragearenchant == 1) {
+			if (countitem(7319) >= 20) {
+				mes "[Toren]";
+				mes "Thanks, that's what I needed!";
+				next;
+				delitem 7319,20; // Used Iron Plate
+				set paragearenchant,3;
+				changequest 7239,7240;
+				mes "[Toren]";
+				mes "Give me a second to prepare before I enchant your gears.";
+				close;
+			}
+			mes "[Toren]";
+			mes "Just bring me ^0000FF20 Used Iron Plates^000000.";
+			close;
+		}
+		if (paragearenchant == 2) {
+			if ((countitem(1002) >= 20) && (countitem(998) >= 10)) {
+				mes "[Toren]";
+				mes "Thanks, that's what I needed!";
+				next;
+				delitem 1002,20; // Iron Ore
+				delitem 998,10; // Iron
+				set paragearenchant,3;
+				changequest 7238,7240;
+				mes "[Toren]";
+				mes "Give me a second to prepare before I enchant your gears.";
+				close;
+			}
+			mes "[Toren]";
+			mes "Just bring me ^0000FF20 Iron Ores and 10 Irons^000000.";
+			close;
+		}
+		if (paragearenchant == 3) {
+			mes "[Toren]";
+			mes "Before we begin I would like to mention that this enchantment proccess ^FF0000can not fail^000000.";
+			next;
+			mes "[Toren]";
+			mes "I am able to add 2 enchantments at once, and if something is already enchanted I will ^FF0000re-do the current enchantments^000000 for you.";
+			next;
+			mes "[Toren]";
+			mes "Now pick which gear you would like me to enchant.";
+			next;
+			switch(select("Paradise Mantle II.:Paradise Boots IV.:Paradise Uniform IV.")) {
+			case 1:
+				if (countitem(2571) < 1) {
+					mes "[Toren]";
+					mes "Bring one and I'll enchant it.";
+					close;
+				}
+				else {
+					set .@paragearcount,2571;
+				}
+				break;
+			case 2:
+				if (countitem(2473) < 1) {
+					mes "[Toren]";
+					mes "Bring one and I'll enchant it.";
+					close;
+				}
+				else {
+					set .@paragearcount,2473;
+				}
+				break;
+			case 3:
+				if (countitem(15031) < 1) {
+					mes "[Toren]";
+					mes "Bring one and I'll enchant it.";
+					close;
+				}
+				else {
+					set .@paragearcount,15031;
+				}
+				break;
+			}
+			mes "[Toren]";
+			mes "Here we go!";
+			close2;
+			specialeffect2 EF_MAPPILLAR;
+			progressbar "ffff00",4;
+			set .@enc_paragear,rand(1,42);
+			if (.@enc_paragear == 1) {
+				set .@addpart,4763;
+			}
+			else if (.@enc_paragear == 2) {
+				set .@addpart,4765;
+			}
+			else if (.@enc_paragear == 3) {
+				set .@addpart,4790;
+			}
+			else if (.@enc_paragear == 4) {
+				set .@addpart,4794;
+			}
+			else if ((.@enc_paragear > 4) && (.@enc_paragear < 7)) {
+				set .@addpart,4762;
+			}
+			else if ((.@enc_paragear > 6) && (.@enc_paragear < 9)) {
+				set .@addpart,4764;
+			}
+			else if ((.@enc_paragear > 8) && (.@enc_paragear < 11)) {
+				set .@addpart,4789;
+			}
+			else if ((.@enc_paragear > 10) && (.@enc_paragear < 13)) {
+				set .@addpart,4793;
+			}
+			else if ((.@enc_paragear > 12) && (.@enc_paragear < 15)) {
+				set .@addpart,4701;
+			}
+			else if ((.@enc_paragear > 14) && (.@enc_paragear < 17)) {
+				set .@addpart,4711;
+			}
+			else if ((.@enc_paragear > 16) && (.@enc_paragear < 19)) {
+				set .@addpart,4721;
+			}
+			else if ((.@enc_paragear > 18) && (.@enc_paragear < 21)) {
+				set .@addpart,4731;
+			}
+			else if ((.@enc_paragear > 20) && (.@enc_paragear < 23)) {
+				set .@addpart,4741;
+			}
+			else if ((.@enc_paragear > 22) && (.@enc_paragear < 25)) {
+				set .@addpart,4751;
+			}
+			else if ((.@enc_paragear > 24) && (.@enc_paragear < 28)) {
+				set .@addpart,4788;
+			}
+			else if ((.@enc_paragear > 27) && (.@enc_paragear < 31)) {
+				set .@addpart,4792;
+			}
+			else if ((.@enc_paragear > 30) && (.@enc_paragear < 35)) {
+				set .@addpart,4787;
+			}
+			else if ((.@enc_paragear > 34) && (.@enc_paragear < 39)) {
+				set .@addpart,4791;
+			}
+			else if ((.@enc_paragear > 38) && (.@enc_paragear < 43)) {
+				set .@addpart,4786;
+			}
+			set .@enc_paragear2,rand(1,6);
+			if (.@enc_paragear2 == 1) {
+				set .@addpart2,4701;
+			}
+			else if (.@enc_paragear2 == 2) {
+				set .@addpart2,4711;
+			}
+			else if (.@enc_paragear2 == 3) {
+				set .@addpart2,4721;
+			}
+			else if (.@enc_paragear2 == 4) {
+				set .@addpart2,4731;
+			}
+			else if (.@enc_paragear2 == 5) {
+				set .@addpart2,4741;
+			}
+			else if (.@enc_paragear2 == 6) {
+				set .@addpart2,4751;
+			}
+			delitem .@paragearcount,1;
+			getitem2 .@paragearcount, 1, 1, 0, 0, 0, 0, .@addpart2, .@addpart;
+			set paragearenchant,4;
+			changequest 7240,7241;
+			mes "[Toren]";
+			mes "It is finished! Come back tomorrow if you want to enchant more.";
+			close;
+		}
+		if ((paragearenchant == 4) && (checkquest(7241,PLAYTIME) != 2)) {
+			mes "[Toren]";
+			mes "Please come back tomorrow if you want to enchant more.";
+			close;
+		}
+		if ((paragearenchant == 4) && (checkquest(7241,PLAYTIME) == 2)) {
+			set paragearenchant,0;
+			erasequest 7241;
+			mes "[Toren]";
+			mes "Another day, another piece of equipment to enchant!";
+			close;
+		}
+	}
+}
+
+moc_para01,112,79,3	script	Weapons Expert	851,{
+	if (checkweight(1101,5) == 0) {
+		mes "^3355FFWait a second!";
+		mes "Right now, you are carrying";
+		mes "to many things with you.";
+		mes "Please come back after";
+		mes "using the Kafra Service";
+		mes "to store some of your items.^000000";
+		close;
+	}
+	mes "[Weapons Expert]";
+	mes "Hello adventurer, what can I do for you today?";
+	next;
+	switch(select("Where is my reward?","I want an enchantment!")) {
+	case 1:
+		if ((para_suv02 == 14) && (countitem(1197) < 1) && (countitem(1289) < 1) && (countitem(1391) < 1) && (countitem(1434) < 1) && (countitem(1583) < 1) && (countitem(1658) < 1) && (countitem(1831) < 1) && (countitem(1931) < 1) && (countitem(1986) < 1) && (countitem(13066) < 1) && (countitem(13114) < 1) && (countitem(13310) < 1) && (countitem(13434) < 1) && (countitem(16014) < 1) && (countitem(18106) < 1)) {
+			mes "[Weapons Expert]";
+			mes "Where is the Paradise Weapon I gave you?";
+			next;
+			mes "[Weapons Expert]";
+			mes "... Fine, I will sell you another one for ^FF0000250,000 Zeny^000000. Don't lose it this time.";
+			next;
+			switch(select("Ok.","No, thanks.")) {
+			case 1:
+				if (Zeny >= 250000) {
+					if (Class == Job_Taekwon) {
+						mes "[Weapons Expert]";
+						mes "Wait... Your Class doesn't have a weapon.";
+						close;
+					}
+					set Zeny, Zeny - 250000;
+					if (BaseJob == Job_Swordman || BaseJob == Job_Knight || BaseJob == Job_Crusader || BaseJob == Job_Knight2 || BaseJob == Job_Crusader2 || Class == Job_Lord_Knight || Class == Job_Paladin || Class == Job_Lord_Knight2 || Class == Job_Paladin2) {
+						mes "[Weapons Expert]";
+						mes "Swordman Class gets a choice of weapons, would you like to have a sword or a spear?";
+						next;
+						mes "[Weapons Expert]";
+						mes "Slayer: Two-handed Sword, 200 Atk.";
+						mes " ";
+						mes "Saber: One-handed Sword, 185 Atk.";
+						mes " ";
+						mes "Spear: One-handed, 165 Atk.";
+						next;
+						switch(select("Slayer.:Saber.:Spear.")) {
+						case 1:
+							getitem 1197,1; //P.Slayer III
+							break;
+						case 2:
+							getitem 13434,1; //P.Saber III
+							break;
+						case 3:
+							getitem 1434,1; //P.Spear I
+							break;
+						}
+					}
+					if (BaseJob == Job_Merchant || BaseJob == Job_Blacksmith || BaseJob == Job_Alchemist || Class == Job_Whitesmith || Class == Job_Creator) {
+						mes "[Weapons Expert]";
+						mes "Merchant Class gets a choice of weapons, would you like to have an axe, dagger or a sword?";
+						next;
+						mes "[Weapons Expert]";
+						mes "Axe: Two-handed, 195 Atk.";
+						mes " ";
+						mes "Dagger: One-handed, 165 Atk, 80 Matk.";
+						mes " ";
+						mes "Sword: One-handed, 185 Atk.";
+						next;
+						switch(select("Axe.:Dagger.:Sword.")) {
+						case 1:
+							getitem 1391,1; //P.Two-Handed Axe I
+							break;
+						case 2:
+							getitem 13066,1; //P.Dagger III
+							break;
+						case 3:
+							getitem 13434,1; //P.Saber III
+							break;
+						}
+					}
+					if (BaseJob == Job_Assassin || Class == Job_Assassin_Cross) {
+						mes "[Weapons Expert]";
+						mes "Assassin Class gets a choice of weapons, would you like to have a katar, dagger or a sword?";
+						next;
+						mes "[Weapons Expert]";
+						mes "Katar: Two-handed, 155 Atk.";
+						mes " ";
+						mes "Dagger: One-handed, 165 Atk, 80 Matk.";
+						mes " ";
+						mes "Sword: One-handed, 185 Atk.";
+						next;
+						switch(select("Katar.:Dagger.:Sword.")) {
+						case 1:
+							getitem 1289,1; //P.Katar I
+							break;
+						case 2:
+							getitem 13066,1; //P.Dagger III
+							break;
+						case 3:
+							getitem 13434,1; //P.Saber III
+							break;
+						}
+					}
+					if (BaseJob == Job_Rogue || Class == Job_Stalker) {
+						mes "[Weapons Expert]";
+						mes "Rogue Class gets a choice of weapons, would you like to have a dagger, bow or a sword?";
+						next;
+						mes "[Weapons Expert]";
+						mes "Dagger: One-handed, 165 Atk, 80 Matk.";
+						mes " ";
+						mes "Bow: Two-handed, 140 Atk.";
+						mes " ";
+						mes "Sword: One-handed, 185 Atk.";
+						next;
+						switch(select("Dagger.:Bow.:Sword")) {
+						case 1:
+							getitem 13066,1; //P.Dagger III
+							break;
+						case 2:
+							getitem 18106,1; //P.Bow III
+							break;
+						case 3:
+							getitem 13434,1; //P.Saber III
+							break;
+						}
+					}
+					if (BaseJob == Job_Thief) {
+						mes "[Weapons Expert]";
+						mes "Thief Class gets a choice of weapons, would you like to have a dagger or a sword?";
+						next;
+						mes "[Weapons Expert]";
+						mes "Dagger: One-handed, 165 Atk, 80 Matk.";
+						mes " ";
+						mes "Sword: One-handed, 185 Atk.";
+						next;
+						switch(select("Dagger.:Sword.")) {
+						case 1:
+							getitem 13066,1; //P.Dagger III
+							break;
+						case 2:
+							getitem 13434,1; //P.Saber III
+							break;
+						}
+					}
+					if (BaseJob == Job_Bard || Class == Job_Clown) {
+						mes "[Weapons Expert]";
+						mes "Bard Class gets a choice of weapons, would you like to have a guitar, bow or a dagger?";
+						next;
+						mes "[Weapons Expert]";
+						mes "Guitar: One-handed, 125 Atk.";
+						mes " ";
+						mes "Bow: Two-handed, 140 Atk.";
+						mes " ";
+						mes "Dagger: One-handed, 165 Atk, 80 Matk.";
+						next;
+						switch(select("Guitar.:Bow.:Dagger.")) {
+						case 1:
+							getitem 1931,1; //P.Guitar I
+							break;
+						case 2:
+							getitem 18106,1; //P.Bow III
+							break;
+						case 3:
+							getitem 13066,1; //P.Dagger III
+							break;
+						}
+					}
+					if (BaseJob == Job_Dancer || Class == Job_Gypsy) {
+						mes "[Weapons Expert]";
+						mes "Dancer Class gets a choice of weapons, would you like to have a whip, bow or a dagger?";
+						next;
+						mes "[Weapons Expert]";
+						mes "Whip: One-handed, 125 Atk.";
+						mes " ";
+						mes "Bow: Two-handed, 140 Atk.";
+						mes " ";
+						mes "Dagger: One-handed, 165 Atk, 80 Matk.";
+						next;
+						switch(select("Whip.:Bow.:Dagger.")) {
+						case 1:
+							getitem 1986,1; //P.Tail I
+							break;
+						case 2:
+							getitem 18106,1; //P.Bow III
+							break;
+						case 3:
+							getitem 13066,1; //P.Dagger III
+							break;
+						}
+					}
+					if (BaseJob == Job_Archer || BaseJob == Job_Hunter || Class == Job_Sniper) {
+						mes "[Weapons Expert]";
+						mes "Archer Class gets a choice of weapons, would you like to have a bow or a dagger?";
+						next;
+						mes "[Weapons Expert]";
+						mes "Bow: Two-handed, 140 Atk.";
+						mes " ";
+						mes "Dagger: One-handed, 165 Atk, 80 Matk.";
+						next;
+						switch(select("Bow.:Dagger.")) {
+						case 1:
+							getitem 18106,1; //P.Bow III
+							break;
+						case 2:
+							getitem 13066,1; //P.Dagger III
+							break;
+						}
+					}
+					if (BaseJob == Job_Priest || Class == Job_High_Priest) {
+						mes "[Weapons Expert]";
+						mes "Priest Class gets a choice of weapons, would you like to have a staff, mace or a book?";
+						next;
+						mes "[Weapons Expert]";
+						mes "Staff: One-handed, 60 Atk, 170 Matk, 4 Int.";
+						mes " ";
+						mes "Mace: One-handed, 172 Atk.";
+						mes " ";
+						mes "Book: One-handed, 135 Atk, Matk 110.";
+						next;
+						switch(select("Staff.:Mace.:Book.")) {
+						case 1:
+							getitem 1658,1; //P.Staff III
+							break;
+						case 2:
+							getitem 16014,1; //P.Mace III
+							break;
+						case 3:
+							getitem 1583,1; //P.Book I
+							break;
+						}
+					}
+					if (BaseJob == Job_Monk || Class == Job_Champion) {
+						mes "[Weapons Expert]";
+						mes "Monk Class gets a choice of weapons, would you like to have a knuckle, mace or a staff?";
+						next;
+						mes "[Weapons Expert]";
+						mes "Knuckle: One-handed, 120 Atk.";
+						mes " ";
+						mes "Mace: One-handed, 172 Atk.";
+						mes " ";
+						mes "Staff: One-handed, 60 Atk, 170 Matk, 4 Int.";
+						next;
+						switch(select("Knuckle.:Mace.:Staff.")) {
+						case 1:
+							getitem 1831,1; //P.Knuckle I
+							break;
+						case 2:
+							getitem 16014,1; //P.Mace III
+							break;
+						case 3:
+							getitem 1658,1; //P.Staff III
+							break;
+						}
+					}
+					if (BaseJob == Job_Acolyte) {
+						mes "[Weapons Expert]";
+						mes "Acolyte Class gets a choice of weapons, would you like to have a staff or a mace?";
+						next;
+						mes "[Weapons Expert]";
+						mes "Staff: One-handed, 60 Atk, 170 Matk, 4 Int.";
+						mes " ";
+						mes "Mace: One-handed, 172 Atk.";
+						next;
+						switch(select("Staff.:Mace.")) {
+						case 1:
+							getitem 1658,1; //P.Staff III
+							break;
+						case 2:
+							getitem 16014,1; //P.Mace III
+							break;
+						}
+					}
+					if (BaseJob == Job_Sage || Class == Job_Professor) {
+						mes "[Weapons Expert]";
+						mes "Sage Class gets a choice of weapons, would you like to have a staff, book or a dagger?";
+						next;
+						mes "[Weapons Expert]";
+						mes "Staff: One-handed, 60 Atk, 170 Matk, 4 Int.";
+						mes " ";
+						mes "Book: One-handed, 135 Atk, 110 Matk.";
+						mes " ";
+						mes "Dagger: One-handed, 165 Atk, Matk 80.";
+						next;
+						switch(select("Staff.:Book.:Dagger.")) {
+						case 1:
+							getitem 1658,1; //P.Staff III
+							break;
+						case 2:
+							getitem 1583,1; //P.Book I
+							break;
+						case 3:
+							getitem 13066,1; //P.Dagger III
+							break;
+						}
+					}
+					if (BaseJob == Job_Mage || BaseJob == Job_Wizard || Class == Job_High_Wizard || Class == Job_Soul_Linker) {
+						mes "[Weapons Expert]";
+						mes "Mage and Soul Linker Class gets a choice of weapons, would you like to have a staff or a dagger?";
+						next;
+						mes "[Weapons Expert]";
+						mes "Staff: One-handed, 60 Atk, 170 Matk, 4 Int.";
+						mes " ";
+						mes "Dagger: One-handed, 165 Atk, Matk 80.";
+						next;
+						switch(select("Staff.:Dagger.")) {
+						case 1:
+							getitem 1658,1; //P.Staff III
+							break;
+						case 2:
+							getitem 13066,1; //P.Dagger III
+							break;
+						}
+					}
+					if (Class == Job_Ninja) {
+						mes "[Weapons Expert]";
+						mes "Ninja Class gets a choice of weapons, would you like to have a huuma suriken or a dagger?";
+						next;
+						mes "[Weapons Expert]";
+						mes "Huuma Suriken: Two-handed, 170 Atk, 50 Matk.";
+						mes " ";
+						mes "Dagger: One-handed, 165 Atk, Matk 80.";
+						next;
+						switch(select("Huuma Suriken.:Dagger.")) {
+						case 1:
+							getitem 13310,1; //P.Huuma Suriken I
+							break;
+						case 2:
+							getitem 13066,1; //P.Dagger III
+							break;
+						}
+					}
+					if (Class == Job_Star_Gladiator || Class == Job_Star_Gladiator2) {
+						getitem 1583,1; //P.Book I
+					}
+					if (Class == Job_Gunslinger) {
+						getitem 13114,1; //P.Revolver III
+					}
+					if (BaseJob == Job_Novice || BaseJob == Job_SuperNovice || BaseJob == Job_SuperNovice2) {
+						getitem 13066,1; //P.Dagger III
+					}
+					mes "[Weapons Expert]";
+					mes "These weapons aren't easy to make, please take better care of this one.";
+					close;
+				}
+				mes "[Weapons Expert]";
+				mes "You dont have enough zeny.";
+				close;
+			case 2:
+				mes "[Weapons Expert]";
+				mes "Come back if you change your mind.";
+				close;
+			}
+		}
+		mes "[Weapons Expert]";
+		mes "My reward for you is enchantments on your ^0000FFParadise Weapon^000000.";
+		next;
+		mes "[Weapons Expert]";
+		mes "The number of enchantments I can give you depends on which level of ^0000FFAdvanced Paradise Quests^000000 you have completed.";
+		close;
+	case 2:
+		if (para_suv02 < 14) {
+			mes "[Weapons Expert]";
+			mes "First you need the ^0000FFAdvanced Paradise Gears^000000.";
+			close;
+		}
+		if ((countitem(1197) < 1) && (countitem(1289) < 1) && (countitem(1391) < 1) && (countitem(1434) < 1) && (countitem(1583) < 1) && (countitem(1658) < 1) && (countitem(1831) < 1) && (countitem(1931) < 1) && (countitem(1986) < 1) && (countitem(13066) < 1) && (countitem(13114) < 1) && (countitem(13310) < 1) && (countitem(13434) < 1) && (countitem(16014) < 1) && (countitem(18106) < 1)) {
+			mes "[Weapons Expert]";
+			mes "Did you sell your new Paradise Weapon? No enchantments for you.";
+			close;
+		}
+		if (para_suv01 < 44) {
+			mes "[Weapons Expert]";
+			mes "You haven't completed enough quests for an enchantment yet.";
+			next;
+			mes "[Weapons Expert]";
+			mes "Make sure to pick a weapon from Toren too.";
+			close;
+		}
+		if (para_suv01 == 44) {
+			mes "[Weapons Expert]";
+			mes "It seems you have earned your first weapon enchantment.";
+			next;
+			mes "[Weapons Expert]";
+			mes "There are only 2 to choose from, which one would you like?";
+			next;
+			switch(select("Atk + 3%","Matk + 3%")) {
+			case 1:
+				set paraweaponenchant,4767;
+				break;
+			case 2:
+				set paraweaponenchant,4806;
+				break;
+			}
+			if (countitem(1197) == 1) {
+				set paraweaponcount,1197;
+			}
+			if (countitem(1289) == 1) {
+				set paraweaponcount,1289;
+			}
+			if (countitem(1391) == 1) {
+				set paraweaponcount,1391;
+			}
+			if (countitem(1434) == 1) {
+				set paraweaponcount,1434;
+			}
+			if (countitem(1583) == 1) {
+				set paraweaponcount,1583;
+			}
+			if (countitem(1658) == 1) {
+				set paraweaponcount,1658;
+			}
+			if (countitem(1831) == 1) {
+				set paraweaponcount,1831;
+			}
+			if (countitem(1931) == 1) {
+				set paraweaponcount,1931;
+			}
+			if (countitem(1986) == 1) {
+				set paraweaponcount,1986;
+			}
+			if (countitem(13066) == 1) {
+				set paraweaponcount,13066;
+			}
+			if (countitem(13114) == 1) {
+				set paraweaponcount,13114;
+			}
+			if (countitem(13310) == 1) {
+				set paraweaponcount,13310;
+			}
+			if (countitem(13434) == 1) {
+				set paraweaponcount,13434;
+			}
+			if (countitem(16014) == 1) {
+				set paraweaponcount,16014;
+			}
+			if (countitem(18106) == 1) {
+				set paraweaponcount,18106;
+			}
+			mes "[Weapons Expert]";
+			mes "OK, gimmy a sec.";
+			close2;
+			specialeffect2 EF_MAPPILLAR;
+			progressbar "ffff00",4;
+			delitem paraweaponcount,1;
+			getitem2 paraweaponcount, 1, 1, 0, 0, 0, 0, 0, paraweaponenchant;
+			set para_suv01,45;
+			mes "[Weapons Expert]";
+			mes "All done.";
+			close;
+		}
+		if (para_suv01 == 47) {
+			mes "[Weapons Expert]";
+			mes "It seems you have earned your second weapon enchantment.";
+			next;
+			if (paraweaponenchant < 1) {
+				mes "[Weapons Expert]";
+				mes "Before I do the second enchantment, you need to pick the first one.";
+				next;
+				mes "[Weapons Expert]";
+				mes "There are only 2 to choose from, which one would you like?";
+				next;
+				switch(select("Atk + 3%","Matk + 3%")) {
+				case 1:
+					set paraweaponenchant,4767;
+					break;
+				case 2:
+					set paraweaponenchant,4806;
+					break;
+				}
+				if (countitem(1197) == 1) {
+					set paraweaponcount,1197;
+				}
+				if (countitem(1289) == 1) {
+					set paraweaponcount,1289;
+				}
+				if (countitem(1391) == 1) {
+					set paraweaponcount,1391;
+				}
+				if (countitem(1434) == 1) {
+					set paraweaponcount,1434;
+				}
+				if (countitem(1583) == 1) {
+					set paraweaponcount,1583;
+				}
+				if (countitem(1658) == 1) {
+					set paraweaponcount,1658;
+				}
+				if (countitem(1831) == 1) {
+					set paraweaponcount,1831;
+				}
+				if (countitem(1931) == 1) {
+					set paraweaponcount,1931;
+				}
+				if (countitem(1986) == 1) {
+					set paraweaponcount,1986;
+				}
+				if (countitem(13066) == 1) {
+					set paraweaponcount,13066;
+				}
+				if (countitem(13114) == 1) {
+					set paraweaponcount,13114;
+				}
+				if (countitem(13310) == 1) {
+					set paraweaponcount,13310;
+				}
+				if (countitem(13434) == 1) {
+					set paraweaponcount,13434;
+				}
+				if (countitem(16014) == 1) {
+					set paraweaponcount,16014;
+				}
+				if (countitem(18106) == 1) {
+					set paraweaponcount,18106;
+				}
+				mes "[Weapons Expert]";
+				mes "Gotcha, now for the second enchantment.";
+				next;
+			}
+			mes "[Weapons Expert]";
+			mes "This one is a little different, you are given the choice of which ^0000FFRace of monsters^000000 you would like to have increased damage with.";
+			next;
+			mes "[Weapons Expert]";
+			mes "You could also choose to increase your ^0000FFHealing Power^000000 too, which one would you like?";
+			next;
+			switch(select("Animal Type","Plant Type","Insect Type","Fish Type","Dragon Type","Healing Power")) {
+			case 1:
+				if (paraweaponenchant == 4767) {
+					set paraweaponenchant2,4060;
+				}
+				if (paraweaponenchant == 4806) {
+					set paraweaponenchant2,4472;
+				}
+				break;
+			case 2:
+				if (paraweaponenchant == 4767) {
+					set paraweaponenchant2,4068;
+				}
+				if (paraweaponenchant == 4806) {
+					set paraweaponenchant2,4470;
+				}
+				break;
+			case 3:
+				if (paraweaponenchant == 4767) {
+					set paraweaponenchant2,4063;
+				}
+				if (paraweaponenchant == 4806) {
+					set paraweaponenchant2,4476;
+				}
+				break;
+			case 4:
+				if (paraweaponenchant == 4767) {
+					set paraweaponenchant2,4080;
+				}
+				if (paraweaponenchant == 4806) {
+					set paraweaponenchant2,4469;
+				}
+				break;
+			case 5:
+				if (paraweaponenchant == 4767) {
+					set paraweaponenchant2,4118;
+				}
+				if (paraweaponenchant == 4806) {
+					set paraweaponenchant2,4471;
+				}
+				break;
+			case 6:
+				set paraweaponenchant2,4805;
+				break;
+			}
+			mes "[Weapons Expert]";
+			mes "OK, gimmy a sec.";
+			close2;
+			specialeffect2 EF_MAPPILLAR;
+			progressbar "ffff00",4;
+			delitem paraweaponcount,1;
+			getitem2 paraweaponcount, 1, 1, 0, 0, 0, 0, paraweaponenchant2, paraweaponenchant;
+			set para_suv01,48;
+			mes "[Weapons Expert]";
+			mes "All done.";
+			close;
+		}
+		if (para_suv01 == 50 || para_suv01 == 53) {
+			mes "[Weapons Expert]";
+			mes "It seems you have earned your third weapon enchantment.";
+			next;
+			if (paraweaponenchant < 1) {
+				mes "[Weapons Expert]";
+				mes "Before I do the other enchantments, you need to pick the first one.";
+				next;
+				mes "[Weapons Expert]";
+				mes "There are only 2 to choose from, which one would you like?";
+				next;
+				switch(select("Atk + 3%","Matk + 3%")) {
+				case 1:
+					set paraweaponenchant,4767;
+					break;
+				case 2:
+					set paraweaponenchant,4806;
+					break;
+				}
+				if (countitem(1197) == 1) {
+					set paraweaponcount,1197;
+				}
+				if (countitem(1289) == 1) {
+					set paraweaponcount,1289;
+				}
+				if (countitem(1391) == 1) {
+					set paraweaponcount,1391;
+				}
+				if (countitem(1434) == 1) {
+					set paraweaponcount,1434;
+				}
+				if (countitem(1583) == 1) {
+					set paraweaponcount,1583;
+				}
+				if (countitem(1658) == 1) {
+					set paraweaponcount,1658;
+				}
+				if (countitem(1831) == 1) {
+					set paraweaponcount,1831;
+				}
+				if (countitem(1931) == 1) {
+					set paraweaponcount,1931;
+				}
+				if (countitem(1986) == 1) {
+					set paraweaponcount,1986;
+				}
+				if (countitem(13066) == 1) {
+					set paraweaponcount,13066;
+				}
+				if (countitem(13114) == 1) {
+					set paraweaponcount,13114;
+				}
+				if (countitem(13310) == 1) {
+					set paraweaponcount,13310;
+				}
+				if (countitem(13434) == 1) {
+					set paraweaponcount,13434;
+				}
+				if (countitem(16014) == 1) {
+					set paraweaponcount,16014;
+				}
+				if (countitem(18106) == 1) {
+					set paraweaponcount,18106;
+				}
+				mes "[Weapons Expert]";
+				mes "Gotcha, on to the next one.";
+				next;
+			}
+			if (paraweaponenchant2 < 1) {
+				mes "[Weapons Expert]";
+				mes "Before I do the third enchantment, you need to pick the second one.";
+				next;
+				mes "[Weapons Expert]";
+				mes "This one is a little different, you are given the choice of which ^0000FFRace of monsters^000000 you would like to have increased damage with.";
+				next;
+				mes "[Weapons Expert]";
+				mes "You could also choose to increase your ^0000FFHealing Power^000000 too, which one would you like?";
+				next;
+				switch(select("Animal Type","Plant Type","Insect Type","Fish Type","Dragon Type","Healing Power")) {
+				case 1:
+					if (paraweaponenchant == 4767) {
+						set paraweaponenchant2,4060;
+					}
+					if (paraweaponenchant == 4806) {
+						set paraweaponenchant2,4472;
+					}
+					break;
+				case 2:
+					if (paraweaponenchant == 4767) {
+						set paraweaponenchant2,4068;
+					}
+					if (paraweaponenchant == 4806) {
+						set paraweaponenchant2,4470;
+					}
+					break;
+				case 3:
+					if (paraweaponenchant == 4767) {
+						set paraweaponenchant2,4063;
+					}
+					if (paraweaponenchant == 4806) {
+						set paraweaponenchant2,4476;
+					}
+					break;
+				case 4:
+					if (paraweaponenchant == 4767) {
+						set paraweaponenchant2,4080;
+					}
+					if (paraweaponenchant == 4806) {
+						set paraweaponenchant2,4469;
+					}
+					break;
+				case 5:
+					if (paraweaponenchant == 4767) {
+						set paraweaponenchant2,4118;
+					}
+					if (paraweaponenchant == 4806) {
+						set paraweaponenchant2,4471;
+					}
+					break;
+				case 6:
+					set paraweaponenchant2,4805;
+					break;
+				}
+				mes "[Weapons Expert]";
+				mes "Gotcha, now for the third one.";
+				next;
+			}
+			mes "[Weapons Expert]";
+			mes "The third enchantment is the same as the second one, you are given the choice of which ^0000FFRace of monsters^000000 you would like to have increased damage with.";
+			next;
+			mes "[Weapons Expert]";
+			mes "You could also choose to increase your ^0000FFHealing Power^000000 too, which one would you like?";
+			next;
+			switch(select("Animal Type","Plant Type","Insect Type","Fish Type","Dragon Type","Healing Power")) {
+			case 1:
+				if (paraweaponenchant == 4767) {
+					set paraweaponenchant3,4060;
+				}
+				if (paraweaponenchant == 4806) {
+					set paraweaponenchant3,4472;
+				}
+				break;
+			case 2:
+				if (paraweaponenchant == 4767) {
+					set paraweaponenchant3,4068;
+				}
+				if (paraweaponenchant == 4806) {
+					set paraweaponenchant3,4470;
+				}
+				break;
+			case 3:
+				if (paraweaponenchant == 4767) {
+					set paraweaponenchant3,4063;
+				}
+				if (paraweaponenchant == 4806) {
+					set paraweaponenchant3,4476;
+				}
+				break;
+			case 4:
+				if (paraweaponenchant == 4767) {
+					set paraweaponenchant3,4080;
+				}
+				if (paraweaponenchant == 4806) {
+					set paraweaponenchant3,4469;
+				}
+				break;
+			case 5:
+				if (paraweaponenchant == 4767) {
+					set paraweaponenchant3,4118;
+				}
+				if (paraweaponenchant == 4806) {
+					set paraweaponenchant3,4471;
+				}
+				break;
+			case 6:
+				set paraweaponenchant3,4805;
+				break;
+			}
+			mes "[Weapons Expert]";
+			mes "OK, gimmy a sec.";
+			close2;
+			specialeffect2 EF_MAPPILLAR;
+			progressbar "ffff00",4;
+			delitem paraweaponcount,1;
+			getitem2 paraweaponcount, 1, 1, 0, 0, 0, paraweaponenchant3, paraweaponenchant2, paraweaponenchant;
+			set para_suv01,54;
+			mes "[Weapons Expert]";
+			mes "All done.";
+			close;
+		}
+		if (para_suv01 > 53) {
+			mes "[Weapons Expert]";
+			mes "That is the maximum number of enchanments I can do, enjoy them.";
+			close;
+		}
+		mes "[Weapons Expert]";
+		mes "I've already enchanted your weapon, you need to complete more quests for the next enchantment.";
 		close;
 	}
 }

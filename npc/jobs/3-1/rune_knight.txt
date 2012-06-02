@@ -721,11 +721,11 @@ job3_rune01,90,50,3	script	Rune Knight Lunarea	469,{
 			next;
 			switch (select("Move to the test field now.:Give me time to get ready.")) {
 			case 1:
-				if ($@08_job_rune_test1 == 0) {
+				if ($@job_rune_test1 == 0) {
 					mes "She nods her head and reaches out her hand lightly. Then she draws her sword and makes a signal.";
 					set job_rune_edq, 4;
 					changequest 3202,3203;
-					set $@08_job_rune_test1,1;
+					set $@job_rune_test1,1;
 					close2;
 					warp "job3_rune02",38,40;
 					end;
@@ -764,9 +764,9 @@ job3_rune01,90,50,3	script	Rune Knight Lunarea	469,{
 			switch (select("Move to the test field now.:Please give me time to prepare.")) {
 			case 1:
 				if (checkquest(3220,PLAYTIME) == -1 || checkquest(3220,PLAYTIME) == 0) {
-					if ($@08_job_rune_test1 == 0) {
+					if ($@job_rune_test1 == 0) {
 						mes "She nods her head and reaches out her hand lightly. Then she draws her sword and makes a signal.";
-						set $@08_job_rune_test1,1;
+						set $@job_rune_test1,1;
 						erasequest 3220;
 						setquest 3220;
 						close2;
@@ -798,9 +798,9 @@ job3_rune01,90,50,3	script	Rune Knight Lunarea	469,{
 				}
 				if (checkquest(3220,PLAYTIME) == 2) {
 					erasequest 3220;
-					if ($@08_job_rune_test1 == 0) {
+					if ($@job_rune_test1 == 0) {
 						mes "She nods her head and reaches out her hand lightly. Then she draws her sword and makes a signal.";
-						set $@08_job_rune_test1,1;
+						set $@job_rune_test1,1;
 						erasequest 3220;
 						setquest 3220;
 						close2;
@@ -2746,9 +2746,9 @@ job3_rune01,114,50,3	script	Rune Knight Velpino	468,{
 				case 1:
 					if ((.@strRetPart1 == 0) && (.@strRetPart2 == 0) && (.@strRetPart5 == 0) && (.@strRetPart6 == 0) && (.@strRetPart7 == 0) && (.@strRetPart8 == 0) && (.@strRetPart10 == 0) && (.@strRetPart11 == 0)) {
 						if (checkquest(3220,PLAYTIME) == -1 || checkquest(3220,PLAYTIME) == 0) {
-							if ($@08_job_rune_test1 == 0) {
+							if ($@job_rune_test1 == 0) {
 								if (Weight < 4001) {
-									set $@08_job_rune_test1,1;
+									set $@job_rune_test1,1;
 									//ConsumeSpecialItem Rune_Kn_Test_Int
 									getitem 12389,30; //Runstone_Storm
 									getitem 12390,30; //Runstone_Millennium
@@ -2778,9 +2778,9 @@ job3_rune01,114,50,3	script	Rune Knight Velpino	468,{
 							close;
 						}
 						if (checkquest(3220,PLAYTIME) == 2) {
-							if ($@08_job_rune_test1 == 0) {
+							if ($@job_rune_test1 == 0) {
 								if (Weight < 4001) {
-									set $@08_job_rune_test1,1;
+									set $@job_rune_test1,1;
 									//ConsumeSpecialItem Rune_Kn_Test_Int
 									getitem 12389,30; //Runstone_Storm
 									getitem 12390,30; //Runstone_Millennium
@@ -2934,8 +2934,8 @@ OnTouch:
 	donpcevent "job_rune_edq#1st_tcnc::OnDisable";
 	donpcevent "job_rune_edq#3rd_tb::OnDisable";
 	donpcevent "job_rune_edq#3rd_tc::OnDisable";
-	set $@08_job_rune_test1,0;
-	set $@08_job_rune_test2,0;
+	set $@job_rune_test1,0;
+	set $@job_rune_test2,0;
 	donpcevent "#RK Test Hidden Portal 1::OnEnable";
 	mapwarp "job3_rune02","job3_rune01",80,65;
 	end;
@@ -3010,8 +3010,8 @@ OnTimer305000:
 	donpcevent "job_rune_edq#3rd_tc::OnDisable";
 	donpcevent "#RK Test Hidden Portal 1::OnEnable";
 	mapwarp "job3_rune02","job3_rune01",80,65;
-	set $@08_job_rune_test1,0;
-	set $@08_job_rune_test2,0;
+	set $@job_rune_test1,0;
+	set $@job_rune_test2,0;
 	stopnpctimer;
 	end;
 }
@@ -3039,36 +3039,36 @@ OnReset:
 	end;
 
 OnTimer5000:
-	monster "job3_rune02",0,0,"Raydric",1467,1;
-	monster "job3_rune02",0,0,"Raydric Archer",1453,1;
-	monster "job3_rune02",0,0,"Raydric Archer",1453,1;
+	monster "job3_rune02",0,0,"Raydric",1467,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+	monster "job3_rune02",0,0,"Raydric Archer",1453,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+	monster "job3_rune02",0,0,"Raydric Archer",1453,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
 	end;
 
 OnTimer50000:
 	set .@job_rune_p,rand(1,6);
 	if (.@job_rune_p == 1) {
-		monster "job3_rune02",0,0,"Raydric",1467,1;
-		monster "job3_rune02",0,0,"Raydric Archer",1453,1;
-		monster "job3_rune02",0,0,"Raydric Archer",1453,1;
+		monster "job3_rune02",0,0,"Raydric",1467,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Raydric Archer",1453,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Raydric Archer",1453,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
 		end;
 	}
 	else if (.@job_rune_p == 2 || .@job_rune_p == 4) {
-		monster "job3_rune02",0,0,"Rideword",1478,1;
-		monster "job3_rune02",0,0,"Rideword",1478,1;
-		monster "job3_rune02",0,0,"Rideword",1478,1;
-		monster "job3_rune02",0,0,"Rideword",1478,1;
+		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
 		end;
 	}
 	else if (.@job_rune_p == 3 || .@job_rune_p == 5) {
-		monster "job3_rune02",0,0,"Phendark",1484,1;
-		monster "job3_rune02",0,0,"Rybio",1483,1;
+		monster "job3_rune02",0,0,"Phendark",1484,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Rybio",1483,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
 		end;
 	}
 	else if (.@job_rune_p == 6) {
-		monster "job3_rune02",0,0,"Wraith",1475,1;
-		monster "job3_rune02",0,0,"Wraith",1475,1;
-		monster "job3_rune02",0,0,"Wraith",1475,1;
-		monster "job3_rune02",0,0,"Wraith",1475,1;
+		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
 		end;
 	}
 	end;
@@ -3076,28 +3076,28 @@ OnTimer50000:
 OnTimer100000:
 	set .@job_rune_p,rand(1,6);
 	if (.@job_rune_p == 1) {
-		monster "job3_rune02",0,0,"Raydric",1467,1;
-		monster "job3_rune02",0,0,"Raydric Archer",1453,1;
-		monster "job3_rune02",0,0,"Raydric Archer",1453,1;
+		monster "job3_rune02",0,0,"Raydric",1467,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Raydric Archer",1453,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Raydric Archer",1453,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
 		end;
 	}
 	else if (.@job_rune_p == 2 || .@job_rune_p == 4) {
-		monster "job3_rune02",0,0,"Rideword",1478,1;
-		monster "job3_rune02",0,0,"Rideword",1478,1;
-		monster "job3_rune02",0,0,"Rideword",1478,1;
-		monster "job3_rune02",0,0,"Rideword",1478,1;
+		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
 		end;
 	}
 	else if (.@job_rune_p == 3 || .@job_rune_p == 5) {
-		monster "job3_rune02",0,0,"Phendark",1484,1;
-		monster "job3_rune02",0,0,"Rybio",1483,1;
+		monster "job3_rune02",0,0,"Phendark",1484,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Rybio",1483,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
 		end;
 	}
 	else if (.@job_rune_p == 6) {
-		monster "job3_rune02",0,0,"Wraith",1475,1;
-		monster "job3_rune02",0,0,"Wraith",1475,1;
-		monster "job3_rune02",0,0,"Wraith",1475,1;
-		monster "job3_rune02",0,0,"Wraith",1475,1;
+		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
 		end;
 	}
 	end;
@@ -3105,28 +3105,28 @@ OnTimer100000:
 OnTimer150000:
 	set .@job_rune_p,rand(1,6);
 	if (.@job_rune_p == 1) {
-		monster "job3_rune02",0,0,"Raydric",1467,1;
-		monster "job3_rune02",0,0,"Raydric Archer",1453,1;
-		monster "job3_rune02",0,0,"Raydric Archer",1453,1;
+		monster "job3_rune02",0,0,"Raydric",1467,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Raydric Archer",1453,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Raydric Archer",1453,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
 		end;
 	}
 	else if (.@job_rune_p == 2 || .@job_rune_p == 4) {
-		monster "job3_rune02",0,0,"Rideword",1478,1;
-		monster "job3_rune02",0,0,"Rideword",1478,1;
-		monster "job3_rune02",0,0,"Rideword",1478,1;
-		monster "job3_rune02",0,0,"Rideword",1478,1;
+		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
 		end;
 	}
 	else if (.@job_rune_p == 3 || .@job_rune_p == 5) {
-		monster "job3_rune02",0,0,"Phendark",1484,1;
-		monster "job3_rune02",0,0,"Rybio",1483,1;
+		monster "job3_rune02",0,0,"Phendark",1484,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Rybio",1483,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
 		end;
 	}
 	else if (.@job_rune_p == 6) {
-		monster "job3_rune02",0,0,"Wraith",1475,1;
-		monster "job3_rune02",0,0,"Wraith",1475,1;
-		monster "job3_rune02",0,0,"Wraith",1475,1;
-		monster "job3_rune02",0,0,"Wraith",1475,1;
+		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
 		end;
 	}
 	end;
@@ -3134,28 +3134,28 @@ OnTimer150000:
 OnTimer200000:
 	set .@job_rune_p,rand(1,6);
 	if (.@job_rune_p == 1) {
-		monster "job3_rune02",0,0,"Raydric",1467,1;
-		monster "job3_rune02",0,0,"Raydric Archer",1453,1;
-		monster "job3_rune02",0,0,"Raydric Archer",1453,1;
+		monster "job3_rune02",0,0,"Raydric",1467,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Raydric Archer",1453,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Raydric Archer",1453,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
 		end;
 	}
 	else if (.@job_rune_p == 2 || .@job_rune_p == 4) {
-		monster "job3_rune02",0,0,"Rideword",1478,1;
-		monster "job3_rune02",0,0,"Rideword",1478,1;
-		monster "job3_rune02",0,0,"Rideword",1478,1;
-		monster "job3_rune02",0,0,"Rideword",1478,1;
+		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Rideword",1478,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
 		end;
 	}
 	else if (.@job_rune_p == 3 || .@job_rune_p == 5) {
-		monster "job3_rune02",0,0,"Phendark",1484,1;
-		monster "job3_rune02",0,0,"Rybio",1483,1;
+		monster "job3_rune02",0,0,"Phendark",1484,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Rybio",1483,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
 		end;
 	}
 	else if (.@job_rune_p == 6) {
-		monster "job3_rune02",0,0,"Wraith",1475,1;
-		monster "job3_rune02",0,0,"Wraith",1475,1;
-		monster "job3_rune02",0,0,"Wraith",1475,1;
-		monster "job3_rune02",0,0,"Wraith",1475,1;
+		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
+		monster "job3_rune02",0,0,"Wraith",1475,1,"job_rune_edq#1st_tcmc::OnMyMobDead";
 		end;
 	}
 	end;
@@ -3164,6 +3164,9 @@ OnTimer250000:
 	killmonster "job3_rune02","job_rune_edq#1st_tcmc::OnMyMobDead";
 	donpcevent "job_rune_edq#1st_tcmc2::OnEnable";
 	donpcevent "job_rune_edq#1st_tcmc::OnDisable";
+	end;
+
+OnMyMobDead:
 	end;
 }
 
@@ -3224,8 +3227,8 @@ OnMyMobDead:
 		donpcevent "job_rune_edq#1st_tcmc::OnDisable";
 		donpcevent "job_rune_edq#1st_tcmc2::OnDisable";
 		donpcevent "#RK Test Hidden Portal 1::OnEnable";
-		set $@08_job_rune_test1,0;
-		set $@08_job_rune_test2,0;
+		set $@job_rune_test1,0;
+		set $@job_rune_test2,0;
 		end;
 	}
 	end;
@@ -3245,7 +3248,7 @@ OnEnable:
 
 OnDisable:
 	hideonnpc "job_rune_edq#1st_tcnc";
-	set $@08_job_rune_test2,0;
+	set $@job_rune_test2,0;
 	donpcevent "Captain Tigris#jrt1::OnDisable";
 	donpcevent "Rune Knight Lunarea#jrt1::OnDisable";
 	donpcevent "Rune Knight Renoa#jrt1::OnDisable";
@@ -3256,7 +3259,7 @@ OnDisable:
 OnUse:
 	mapannounce "job3_rune02","Captain Tigris : Gentleman, Let's watch the test for a while.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 	stopnpctimer;
-	set $@08_job_rune_test2,0;
+	set $@job_rune_test2,0;
 	donpcevent "Captain Tigris#jrt1::OnDisable";
 	donpcevent "Rune Knight Lunarea#jrt1::OnDisable";
 	donpcevent "Rune Knight Renoa#jrt1::OnDisable";
@@ -3286,10 +3289,10 @@ OnTimer60000:
 job3_rune02,34,46,5	script	Captain Tigris#jrt1	470,{
 
 	set .@tigris,rand(1,6);
-	set .@rune_test2,$@08_job_rune_test2;
+	set .@rune_test2,$@job_rune_test2;
 	if ((job_rune_edq == 4) && (.@rune_test2 == 0)) {
 		if (.@tigris == 1) {
-			set $@08_job_rune_test2,1;
+			set $@job_rune_test2,1;
 			// custom translation
 			mapannounce "job3_rune02","Captain Tigris : May Beljeve bless you!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			sc_start SC_BLESSING,24000,10;
@@ -3297,7 +3300,7 @@ job3_rune02,34,46,5	script	Captain Tigris#jrt1	470,{
 			end;
 		}
 		else if ((.@tigris == 2) || (.@tigris == 4)) {
-			set $@08_job_rune_test2,1;
+			set $@job_rune_test2,1;
 			mapannounce "job3_rune02","Captain Tigris : The Spark of life... may flame again.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			percentheal 100,100;
 			skilleffect "AL_HEAL",1500;
@@ -3305,7 +3308,7 @@ job3_rune02,34,46,5	script	Captain Tigris#jrt1	470,{
 			end;
 		}
 		else if (.@tigris == 3) {
-			set $@08_job_rune_test2,1;
+			set $@job_rune_test2,1;
 			// custom translation
 			mapannounce "job3_rune02","Captain Tigris : Evil spirits! Return to your graves!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			specialeffect2 EF_METEORSTORM;
@@ -3314,7 +3317,7 @@ job3_rune02,34,46,5	script	Captain Tigris#jrt1	470,{
 			end;
 		}
 		else if (.@tigris == 5) {
-			set $@08_job_rune_test2,1;
+			set $@job_rune_test2,1;
 			// custom translation
 			mapannounce "job3_rune02","Captain Tigris : For a Rune Knight, this kind of ordeal is nothing!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			sc_start SC_STUN,10000,0;
@@ -3322,7 +3325,7 @@ job3_rune02,34,46,5	script	Captain Tigris#jrt1	470,{
 			end;
 		}
 		else if (.@tigris == 6) {
-			set $@08_job_rune_test2,1;
+			set $@job_rune_test2,1;
 			// custom translation
 			mapannounce "job3_rune02","Captain Tigris : For a Rune Knight, this kind of ordeal is nothing!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			sc_start SC_BLEEDING,10000,0;
@@ -3347,17 +3350,17 @@ OnDisable:
 
 OnTimer5000:
 	donpcevent "job_rune_edq#1st_tcnc::OnUse";
-	set $@08_job_rune_test2,0;
+	set $@job_rune_test2,0;
 	stopnpctimer;
 	end;
 }
 
 job3_rune02,43,46,3	script	Rune Knight Lunarea#jrt1	469,2,2,{
 	set .@tigris,rand(1,6);
-	set .@rune_test2,$@08_job_rune_test2;
+	set .@rune_test2,$@job_rune_test2;
 	if ((job_rune_edq == 4) && (.@rune_test2 == 0)) {
 		if (.@tigris == 1) {
-			set $@08_job_rune_test2, 1;
+			set $@job_rune_test2, 1;
 			// custom translation
 			mapannounce "job3_rune02","Rune Knight Lunarea : Quickly...find and strike at the enemy's vital points!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			sc_start SC_INCREASEAGI,24000,10;
@@ -3365,7 +3368,7 @@ job3_rune02,43,46,3	script	Rune Knight Lunarea#jrt1	469,2,2,{
 			end;
 		}
 		else if (.@tigris == 2 || .@tigris == 4) {
-			set $@08_job_rune_test2,1;
+			set $@job_rune_test2,1;
 			mapannounce "job3_rune02","Rune Knight Lunarea : It's not over... you need more power...",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			percentheal 100,100;
 			skilleffect "AL_HEAL",1500;
@@ -3373,7 +3376,7 @@ job3_rune02,43,46,3	script	Rune Knight Lunarea#jrt1	469,2,2,{
 			end;
 		}
 		else if (.@tigris == 3) {
-			set $@08_job_rune_test2,1;
+			set $@job_rune_test2,1;
 			// custom translation
 			mapannounce "job3_rune02","Rune Knight Lunarea : Everything shall return from whence it came!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			//UseSkillToPC 35 0 0 0
@@ -3382,14 +3385,14 @@ job3_rune02,43,46,3	script	Rune Knight Lunarea#jrt1	469,2,2,{
 			end;
 		}
 		else if (.@tigris == 5) {
-			set $@08_job_rune_test2,1;
+			set $@job_rune_test2,1;
 			mapannounce "job3_rune02","Rune Knight Lunarea : There can't be growth without a trial.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			sc_start SC_POISON,30000,0;
 			initnpctimer;
 			end;
 		}
 		else if (.@tigris == 6) {
-			set $@08_job_rune_test2,1;
+			set $@job_rune_test2,1;
 			mapannounce "job3_rune02","Rune Knight Lunarea : There can't be growth without a trial.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			sc_start SC_CURSE,30000,0;
 			initnpctimer;
@@ -3413,17 +3416,17 @@ OnDisable:
 
 OnTimer5000:
 	donpcevent "job_rune_edq#1st_tcnc::OnUse";
-	set $@08_job_rune_test2,0;
+	set $@job_rune_test2,0;
 	stopnpctimer;
 	end;
 }
 
 job3_rune02,43,34,1	script	Rune Knight Renoa#jrt1	469,2,2,{
 	set .@tigris, rand(1,6);
-	set .@rune_test2, $@08_job_rune_test2;
+	set .@rune_test2, $@job_rune_test2;
 	if ((job_rune_edq == 4) && (.@rune_test2 == 0)) {
 		if (.@tigris == 1) {
-			set $@08_job_rune_test2,1;
+			set $@job_rune_test2,1;
 			// custom translation
 			mapannounce "job3_rune02","Rune Knight Renoa : The rune of Blast! May it give you strength!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			sc_start SC_INCREASEAGI,24000,10;
@@ -3431,7 +3434,7 @@ job3_rune02,43,34,1	script	Rune Knight Renoa#jrt1	469,2,2,{
 			end;
 		}
 		else if (.@tigris == 2 || .@tigris == 4) {
-			set $@08_job_rune_test2,1;
+			set $@job_rune_test2,1;
 			mapannounce "job3_rune02","Rune Knight Renoa : The rune of birth! May give you the power of life!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			percentheal 100,100;
 			skilleffect "AL_HEAL",1500;
@@ -3439,7 +3442,7 @@ job3_rune02,43,34,1	script	Rune Knight Renoa#jrt1	469,2,2,{
 			end;
 		}
 		else if (.@tigris == 3) {
-			set $@08_job_rune_test2,1;
+			set $@job_rune_test2,1;
 			// custom translation
 			mapannounce "job3_rune02","Rune Knight Renoa : I am faster than others! Stronger than others!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			specialeffect2 EF_PIERCESELF;
@@ -3448,14 +3451,14 @@ job3_rune02,43,34,1	script	Rune Knight Renoa#jrt1	469,2,2,{
 			end;
 		}
 		else if (.@tigris == 5) {
-			set $@08_job_rune_test2,1;
+			set $@job_rune_test2,1;
 			mapannounce "job3_rune02","Rune Knight Renoa : For a Rune Knight, this kind of ordeal is nothing!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			sc_start SC_POISON,30000,0;
 			initnpctimer;
 			end;
 		}
 		else if (.@tigris == 6) {
-			set $@08_job_rune_test2,1;
+			set $@job_rune_test2,1;
 			mapannounce "job3_rune02","Rune Knight Renoa : For a Rune Knight, this kind of ordeal is nothing!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			sc_start SC_CURSE,30000,0;
 			initnpctimer;
@@ -3478,7 +3481,7 @@ OnDisable:
 	end;
 
 OnTimer5000:
-	set $@08_job_rune_test2,0;
+	set $@job_rune_test2,0;
 	donpcevent "job_rune_edq#1st_tcnc::OnUse";
 	stopnpctimer;
 	end;
@@ -3487,10 +3490,10 @@ OnTimer5000:
 job3_rune02,34,34,7	script	Rune Knight Velpino#jrt1	468,{
 
 	set .@tigris,rand(1,6);
-	set .@rune_test2,$@08_job_rune_test2;
+	set .@rune_test2,$@job_rune_test2;
 	if ((job_rune_edq == 4) && (.@rune_test2 == 0)) {
 		if (.@tigris == 1) {
-			set $@08_job_rune_test2,1;
+			set $@job_rune_test2,1;
 			mapannounce "job3_rune02","Rune Knight Velpino : You are not one who gets to fall down in this kind of place.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			percentheal 100,100;
 			skilleffect "AL_HEAL",1500;
@@ -3498,7 +3501,7 @@ job3_rune02,34,34,7	script	Rune Knight Velpino#jrt1	468,{
 			end;
 		}
 		else if (.@tigris == 2 || .@tigris == 4) {
-			set $@08_job_rune_test2, 1;
+			set $@job_rune_test2, 1;
 			// custom translation
 			mapannounce "job3_rune02","Rune Knight Velpino : Charge! Knock them all down!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			sc_start SC_INCREASEAGI,24000,10;
@@ -3506,7 +3509,7 @@ job3_rune02,34,34,7	script	Rune Knight Velpino#jrt1	468,{
 			end;
 		}
 		else if (.@tigris == 3) {
-			set $@08_job_rune_test2,1;
+			set $@job_rune_test2,1;
 			// custom translation
 			mapannounce "job3_rune02","Rune Knight Velpino : You are not alone. We are by your side.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			sc_start SC_BLESSING,24000,10;
@@ -3514,7 +3517,7 @@ job3_rune02,34,34,7	script	Rune Knight Velpino#jrt1	468,{
 			end;
 		}
 		else if (.@tigris == 5) {
-			set $@08_job_rune_test2,1;
+			set $@job_rune_test2,1;
 			// custom translation
 			mapannounce "job3_rune02","Rune Knight Velpino : Fight and win! Do not hesitate in the face of this test!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			sc_start SC_FREEZE,10000,0;
@@ -3522,7 +3525,7 @@ job3_rune02,34,34,7	script	Rune Knight Velpino#jrt1	468,{
 			end;
 		}
 		else if (.@tigris == 6) {
-			set $@08_job_rune_test2,1;
+			set $@job_rune_test2,1;
 			mapannounce "job3_rune02","Rune Knight Velpino : It's not a big trial for a true Rune Knight!",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 			sc_start SC_SLEEP,10000,0;
 			initnpctimer;
@@ -3545,7 +3548,7 @@ OnDisable:
 	end;
 
 OnTimer5000:
-	set $@08_job_rune_test2, 0;
+	set $@job_rune_test2,0;
 	donpcevent "job_rune_edq#1st_tcnc::OnUse";
 	stopnpctimer;
 	end;
@@ -3607,7 +3610,6 @@ OnDisable:
 	end;
 
 OnTimer480000:
-	killmonster "job3_rune02","job_rune_edq#3rd_tc::OnMyMobDead";
 	mapannounce "job3_rune02","You reached the limit time so I'll consider the test as a failure.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
 	end;
 
@@ -3621,8 +3623,8 @@ OnTimer482000:
 	donpcevent "job_rune_edq#3rd_tb::OnDisable";
 	donpcevent "job_rune_edq#3rd_tc::OnDisable";
 	donpcevent "#RK Test Hidden Portal 1::OnEnable";
-	set $@08_job_rune_test1,0;
-	set $@08_job_rune_test2,0;
+	set $@job_rune_test1,0;
+	set $@job_rune_test2,0;
 	stopnpctimer;
 	end;
 }
@@ -3716,8 +3718,8 @@ OnMyMobDead:
 		donpcevent "job_rune_edq#3rd_tb::OnDisable";
 		donpcevent "job_rune_edq#3rd_tc::OnDisable";
 		donpcevent "#RK Test Hidden Portal 1::OnEnable";
-		set $@08_job_rune_test1,0;
-		set $@08_job_rune_test2,0;
+		set $@job_rune_test1,0;
+		set $@job_rune_test2,0;
 		end;
 	}
 	end;
@@ -3966,13 +3968,13 @@ sec_in02,34,167,3	script	符文骑士转职入场管理员	470,{
 		next;
 		switch (select("检查全局变量:修改全局变量")) {
 		case 1:
-			set .@rune_global, $@08_job_rune_test1;
+			set .@rune_global, $@job_rune_test1;
 			mes "当前符文骑士转职变量是 "+.@rune_global+" 。";
 			mes "当前符文骑士考场中的人数为 "+getmapusers("job3_rune02")+ "人。";
 			close;
 		case 2:
-			set .@rune_global, $@08_job_rune_test1;
-			set $@08_job_rune_test1, 0;
+			set .@rune_global, $@job_rune_test1;
+			set $@job_rune_test1, 0;
 			mes "将符文骑士转职全局变量修改为0。考场可以使用。";
 			close;
 		}
