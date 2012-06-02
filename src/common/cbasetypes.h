@@ -218,10 +218,18 @@ typedef uintptr_t uintptr;
 #define strtoull			_strtoui64
 #endif
 
-// keyword replacement in windows
+// keyword replacement
 #ifdef _WIN32
+// For MSVC (windows)
 #define inline __inline
+#define forceinline __forceinline
+#define ra_align(n) __declspec(align(n))
+#else
+// For GCC
+#define forceinline __attribute__((always_inline)) inline
+#define ra_align(n) __attribute__(( aligned(n) ))
 #endif
+
 
 /////////////////////////////
 // for those still not building c++
