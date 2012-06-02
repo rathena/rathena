@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="char-server_sql"
 	ProjectGUID="{D356871D-58E1-450B-967A-E4E9646175AF}"
 	RootNamespace="char-server_sql"
@@ -345,18 +345,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\common\plugin.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\plugins.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\plugins.h"
-				>
-			</File>
-			<File
 				RelativePath="..\src\common\random.c"
 				>
 			</File>
@@ -433,6 +421,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\char\int_elemental.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\char\int_elemental.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\char\int_guild.c"
 				>
 			</File>
@@ -462,14 +458,6 @@
 			</File>
 			<File
 				RelativePath="..\src\char\int_mercenary.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\char\int_elemental.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\char\int_elemental.h"
 				>
 			</File>
 			<File
