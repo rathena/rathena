@@ -1,9 +1,9 @@
-//===== rAthena Script ======================================= 
+﻿//===== rAthena Script ======================================= 
 //= Clothes Dyer
 //===== By: ================================================== 
 //= Usnul
 //===== Current Version: ===================================== 
-//= 2.4
+//= 2.5
 //===== Compatible With: ===================================== 
 //= rAthena 1.0+
 //===== Description: ========================================= 
@@ -12,377 +12,133 @@
 //= Fully working
 //= 2.1 Shortened some labels to make this script loading,
 //= Added Black+White Colors desc [Lupus]
-//= 2.1a - added adv classes + abby class support [Lupus]
-//= 2.2 � Spell checked. [Nexon]
+//= 2.1a - added adv classes + baby class support [Lupus]
+//= 2.2 - Spell checked. [Nexon]
 //= 2.3 - Fixed dis $hit! [Poki#3]
 //= 2.4 - Disabled cloth dyeing since it's not implemented
 //	  on official servers and cause your client to crash
 //	  [Playtester]
+//= 2.5 - Optimized. [Euphy]
 //============================================================
-//Note: To enable it, replace L_Busy with L_Dye
-//============================================================ 
 
-
-// Dyer Ginedin Rephere ---------------------------------------------------
 prt_in,284,168,2	script	Dyer Ginedin Rephere	55,{
-	mes "[Dyer Ginedin Rephere]";
-	mes "11... 12... Mmm... good. I think I'll be able to finish before tonight�s party. Oh! I didn't notice that you were here. Anyway how may I assist you?";
-M_Menu:
-	next;
-	menu "-Talk",L_Talk,"-Dye Clothing",L_Busy,"-Price list",L_PriceList,"-Cancel",L_End;
-	
-L_Talk:
-	mes "[Dyer Ginedin Rephere]";
-	mes "Life may have gotten a little better.... but when I look at all of the orders I've received... Whew!";
-	mes "It seems that the young women of Rune Midgard must be very well off these days.";
-	next;
-	mes "[Dyer Ginedin Rephere]";
-	mes "Not that I think that they are indulging in anything luxurious mind you.";
-	mes "I don't think there is anything wrong with the pursuit of beauty and being fashionable.";
-	next;
-	mes "[Dyer Ginedin Rephere]";
-	mes "For us humans, who have no colorful fur or decorative scales, clothes are one of the few ways we have to display our personality, style, and beauty.";
-	next;
-	mes "[Dyer Ginedin Rephere]";
-	mes "Haha... When I think about it, I really feel that my job is worthwhile.  I believe that I provide a service that the people desire.";
-	next;
-	mes "[Dyer Ginedin Rephere]";
-	mes "Can you feel it too? The energy that is released when rough fabric and leather are brought to life with color?.....";
-	next;
-	mes "[Dyer Ginedin Rephere]";
-	mes "Although the process is very tedious and time consuming, the joy and happiness I feel when a dress is finished.....";
-	mes "more than makes up for all of the hard work!!";
-	goto M_Menu;
+function Dyes;
 
-L_Dye:
-	mes "[Dyer Ginedin Rephere]";
-	mes "Oh... you need my work? Well... okay sounds good.";
-	next;
-	mes "[Dyer Ginedin Rephere]";
-	mes "Please choose a color that suits you.";
-	next;
-	if(Sex==0) goto Female_dye;
-//=================================
-// Clothing Dyeing for Males
-//=================================
+	set .@EnableDyes,1;	// Disable (set to 0) if palettes cause errors [see note v2.4]
 
-Male_dye:
-	if(BaseJob==Job_Novice || BaseJob==Job_Novice_High || BaseJob==Job_Baby) goto L_Novice_M;
-	if(BaseJob==Job_Swordman || BaseJob==Job_Swordman_High || BaseJob==Job_Baby_Swordman) goto L_Swordman_M;
-	if(BaseJob==Job_Mage || BaseJob==Job_Mage_High || BaseJob==Job_Baby_Mage) goto L_Mage_M;
-	if(BaseJob==Job_Archer || BaseJob==Job_Archer_High || BaseJob==Job_Baby_Archer) goto L_Archer_M;
-	if(BaseJob==Job_Acolyte || BaseJob==Job_Acolyte_High || BaseJob==Job_Baby_Acolyte) goto L_Acolyte_M;
-	if(BaseJob==Job_Merchant || BaseJob==Job_Merchant_High || BaseJob==Job_Baby_Merchant) goto L_Merchant_M;
-	if(BaseJob==Job_Thief || BaseJob==Job_Thief_High || BaseJob==Job_Baby_Thief) goto L_Thief_M;
-	if(BaseJob==Job_Knight || BaseJob==Job_Knight2 || BaseJob==Job_Crusader || BaseJob==Job_Crusader2 || BaseJob==Job_Lord_Knight || BaseJob==Job_Lord_Knight2 || BaseJob==Job_Paladin || BaseJob==Job_Paladin2 || BaseJob==Job_Stalker || BaseJob==Job_Baby_Knight || BaseJob==Job_Baby_Knight2 || BaseJob==Job_Baby_Crusader || BaseJob==Job_Baby_Crusader2) goto L_Swordman2_M;
-	if(BaseJob==Job_Priest || BaseJob==Job_Monk || BaseJob==Job_High_Priest || BaseJob==Job_Champion || BaseJob==Job_Baby_Priest || BaseJob==Job_Baby_Monk) goto L_Acolyte2_M;
-	if(BaseJob==Job_Wizard || BaseJob==Job_High_Wizard || BaseJob==Job_Baby_Wizard) goto L_Mage2_M;
-	if(BaseJob==Job_Blacksmith || BaseJob==Job_Alchemist || BaseJob==Job_Whitesmith || BaseJob==Job_Creator || BaseJob==Job_Baby_Blacksmith || BaseJob==Job_Baby_Alchemist) goto L_Merchant2_M;
-	if(BaseJob==Job_Hunter || BaseJob==Job_Bard || BaseJob==Job_Sniper || BaseJob==Job_Clown || BaseJob==Job_Baby_Hunter || BaseJob==Job_Baby_Bard) goto L_Archer2_M;
-	if(BaseJob==Job_Assassin || BaseJob==Job_Rogue || BaseJob==Job_Assassin_Cross || BaseJob==Job_Baby_Assassin || BaseJob==Job_Baby_Rogue) goto L_Thief2_M;
-	if(BaseJob==Job_SuperNovice || BaseJob==Job_Super_Baby) goto L_Super_Novice_M;
-	goto sL_Sorry;
-//NOTE: Although Sages have pellets, they color non existent piece's of clothing. They are not listed, so players won't waste their items and zeny.
-//Professors also have a problem <.< The only thing that changes is a part of there Fox scarf. The Stalker Placement is not a bug!
+	set .n$,"[Dyer Ginedin Rephere]";
+	mes .n$;
+	mes "11... 12... Mmm... good. I think I'll be able to finish before tonight's party. Oh! I didn't notice you were here!";
+	while(1) {
+		next;
+		mes .n$;
+		mes "How may I assist you?";
+		next;
+		switch(select("- Talk:- Dye Clothing:- Price List:- ^777777Cancel^000000")) {
+			case 1:
+				mes .n$;
+				mes "Life may have gotten a bit better, but when I look at all of the orders I've received... Whew!";
+				mes "It seems that the young women of Rune Midgard must be very well off these days.";
+				next;
+				mes .n$;
+				mes "Not that I think that they are indulging in anything luxurious, mind you.";
+				mes "I don't think there is anything wrong with the pursuit of beauty and being fashionable.";
+				next;
+				mes .n$;
+				mes "For us humans, who have no colorful fur or decorative scales, clothes are one of the few ways we have to display our personality, style, and beauty.";
+				next;
+				mes .n$;
+				mes "Haha... When I think about it, I really feel that my job is worthwhile.  I believe that I provide a service that the people desire.";
+				next;
+				mes .n$;
+				mes "Can you feel it too? The energy that is released when rough fabric and leather are brought to life with color?.....";
+				next;
+				mes .n$;
+				mes "Although the process is very tedious and time consuming, the joy and happiness I feel when a dress is finished more than makes up for all of the hard work!!";
+				break;
+			case 2:
+				mes .n$;
+				if (!.@EnableDyes) {
+					mes "Sorry, I'm too busy with other jobs to dye your clothes."; break; }
+				mes "Oh... you need my work? Well... okay, sounds good.";
+				next;
+				mes .n$;
+				mes "Please choose a color";
+				mes "that suits you.";
+				next;
+				set .@eac, eaclass();
+				switch(roclass(eaclass()&EAJ_UPPERMASK)) {
 
-L_Novice_M:
-	set @black, 1;
-	set @blue, 2;
-	set @green, 3;
-	menu "- Default",L_Dye_Default,"- Black",L_Dye_Black,"- Blue",L_Dye_Blue,"- Green",L_Dye_Green,"- Cancel",L_End;
-L_Swordman_M:
-	set @black, 1;
-	set @blue, 2;
-	set @green, 3;
-	menu "- Default",L_Dye_Default,"- Black",L_Dye_Black,"- Blue",L_Dye_Blue,"- Green",L_Dye_Green,"- Cancel",L_End;
-L_Mage_M:
-	set @red, 1;
-	set @violet, 2;
-	set @orange, 3;
-	set @white, 4;
-	menu "- Default",L_Dye_Default,"- Red",L_Dye_Red,"- Violet",L_Dye_Violet,"- Orange",L_Dye_Orange,"- White",L_Dye_White,"- Cancel",L_End;
-L_Archer_M:
-	set @black, 1;
-	set @violet, 2;
-	set @green, 3;
-	menu "- Default",L_Dye_Default,"- Black",L_Dye_Black,"- Violet",L_Dye_Violet,"- Green",L_Dye_Green,"- Cancel",L_End;
-L_Acolyte_M:
-	set @blue, 1;
-	set @red, 2;
-	set @white, 3;
-	set @black, 4;
-	menu "- Default",L_Dye_Default,"- Blue",L_Dye_Blue,"- Red",L_Dye_Red,"- White",L_Dye_White,"- Black",L_Dye_Black,"- Cancel",L_End;
-L_Merchant_M:
-	set @black, 1;
-	set @blue, 2;
-	set @green, 3;
-	menu "- Default",L_Dye_Default,"- Black",L_Dye_Black,"- Blue",L_Dye_Blue,"- Green",L_Dye_Green,"- Cancel",L_End;
-L_Thief_M:
-	set @green, 1;
-	set @red, 2;
-	set @white, 4;
-	menu "- Default",L_Dye_Default,"- Green",L_Dye_Green,"- Red",L_Dye_Red,"- White",L_Dye_White,"- Cancel",L_End;
-L_Swordman2_M:
-	set @violet, 1;
-	set @red, 3;
-	set @black, 4;
-	menu "- Default",L_Dye_Default,"- Violet",L_Dye_Violet,"- Red",L_Dye_Red,"- Black",L_Dye_Black,"- Cancel",L_End;
-L_Acolyte2_M:
-	set @blue, 1;
-	set @green, 2;
-	set @red, 3;
-	set @white, 4;
-	menu "- Default",L_Dye_Default,"- Blue",L_Dye_Blue,"- Green",L_Dye_Green,"- Red",L_Dye_Red,"- White",L_Dye_White,"- Cancel",L_End;
-L_Mage2_M:
-	set @blue, 1;
-	set @green, 3;
-	set @black, 4;
-	menu "- Default",L_Dye_Default,"- Blue",L_Dye_Blue,"- Green",L_Dye_Green,"- Black",L_Dye_Black,"- Cancel",L_End;
-L_Merchant2_M:
-	set @black, 1;
-	set @green, 2;
-	set @white, 3;
-	menu "- Default",L_Dye_Default,"- Black",L_Dye_Black,"- Green",L_Dye_Green,"- White",L_Dye_White,"- Cancel",L_End;
-L_Archer2_M:
-	set @black, 1;
-	set @blue, 2;
-	set @green, 3;
-	menu "- Default",L_Dye_Default,"- Black",L_Dye_Black,"- Blue",L_Dye_Blue,"- Green",L_Dye_Green,"- Cancel",L_End;
-L_Thief2_M:
-	set @blue, 1;
-	menu "- Default",L_Dye_Default,"- Blue",L_Dye_Blue,"- Cancel",L_End;
-L_Super_Novice_M:
-	set @violet, 1;
-	set @blue, 2;
-	set @green, 3;
-	set @black, 4;
-	menu "- Default",L_Dye_Default,"- Violet",L_Dye_Violet,"- Blue",L_Dye_Blue,"- Green",L_Dye_Green,"- Black",L_Dye_Black,"- Cancel",L_End;
+				// Dyes(<color value>,<dye number>{,...});
+				// Colors: [1]Orange, [2]Violet, [3]Red, [4]Black, [5]Green, [6]Blue, [7]White, [8]Yellow
 
-
-//=================================
-// Clothing Dyeing for Females
-//=================================
-Female_dye:
-	if(BaseJob==Job_Novice || BaseJob==Job_Novice_High || BaseJob==Job_Baby) goto L_Novice_F;
-	if(BaseJob==Job_Swordman || BaseJob==Job_Swordman_High || BaseJob==Job_Baby_Swordman) goto L_Swordman_F;
-	if(BaseJob==Job_Mage || BaseJob==Job_Mage_High || BaseJob==Job_Baby_Mage) goto L_Mage_F;
-	if(BaseJob==Job_Archer || BaseJob==Job_Archer_High || BaseJob==Job_Baby_Archer) goto L_Archer_F;
-	if(BaseJob==Job_Acolyte || BaseJob==Job_Acolyte_High || BaseJob==Job_Baby_Acolyte) goto L_Acolyte_F;
-	if(BaseJob==Job_Merchant || BaseJob==Job_Merchant_High || BaseJob==Job_Baby_Merchant) goto L_Merchant_F;
-	if(BaseJob==Job_Thief || BaseJob==Job_Thief_High || BaseJob==Job_Baby_Thief) goto L_Thief_F;
-	if(BaseJob==Job_Knight || BaseJob==Job_Knight2 || BaseJob==Job_Crusader || BaseJob==Job_Crusader2 || BaseJob==Job_Lord_Knight || BaseJob==Job_Lord_Knight2 || BaseJob==Job_Paladin || BaseJob==Job_Paladin2 || BaseJob==Job_Stalker || BaseJob==Job_Baby_Knight || BaseJob==Job_Baby_Knight2 || BaseJob==Job_Baby_Crusader || BaseJob==Job_Baby_Crusader2) goto L_Swordman2_F;
-	if(BaseJob==Job_Priest || BaseJob==Job_Baby_Priest) goto L_Acolyte2_F;
-	if(BaseJob==Job_Wizard || BaseJob==Job_Sage || BaseJob==Job_High_Wizard || BaseJob==Job_Professor || BaseJob==Job_Baby_Wizard || BaseJob==Job_Baby_Sage) goto L_Mage2_F;
-	if(BaseJob==Job_Blacksmith || BaseJob==Job_Alchemist || BaseJob==Job_Whitesmith || BaseJob==Job_Creator || BaseJob==Job_Baby_Blacksmith || BaseJob==Job_Baby_Alchemist) goto L_Merchant2_F;
-	if(BaseJob==Job_Hunter || BaseJob==Job_Dancer || BaseJob==Job_Sniper || BaseJob==Job_Gypsy || BaseJob==Job_Baby_Hunter || BaseJob==Job_Baby_Dancer) goto L_Archer2_F;
-	if(BaseJob==Job_Assassin || BaseJob==Job_Baby_Assassin) goto L_Thief2_F;
-	if(BaseJob==Job_Rogue || BaseJob==Job_Assassin_Cross || BaseJob==Job_Baby_Rogue) goto L_Thief3_F;
-	if(BaseJob==Job_SuperNovice || BaseJob==Job_Super_Baby) goto L_Super_Novice_F;
-	goto sL_Sorry;
-//NOTE: Same problems as with Males. This time: Monk, High Priest, Champion.
-//Rogue and Assassin Cross have her own check, because the default dye is black <.< The Stalker Placement is not a bug!
-
-L_Novice_F:
-	set @blue, 1;
-	set @red, 2;
-	set @green, 3;
-	set @black, 4;
-	menu "- Default",L_Dye_Default,"- Blue",L_Dye_Blue,"- Red",L_Dye_Red,"- Green",L_Dye_Green,"- Black",L_Dye_Black,"- Cancel",L_End;
-L_Swordman_F:
-	set @red, 1;
-	set @green, 3;
-	set @black, 4;
-	menu "- Default",L_Dye_Default,"- Red",L_Dye_Red,"- Green",L_Dye_Green,"- Black",L_Dye_Black,"- Cancel",L_End;
-L_Mage_F:
-	set @red, 1;
-	set @violet, 2;
-	set @white, 3;
-	set @black, 4;
-	menu "- Default",L_Dye_Default,"- Red",L_Dye_Red,"- Violet",L_Dye_Violet,"- White",L_Dye_White,"- Black",L_Dye_Black,"- Cancel",L_End;
-L_Archer_F:
-	set @red, 1;
-	set @green, 2;
-	set @white, 3;
-	set @black, 4;
-	menu "- Default",L_Dye_Default,"- Red",L_Dye_Red,"- Green",L_Dye_Green,"- White",L_Dye_White,"- Black",L_Dye_Black,"- Cancel",L_End;
-L_Acolyte_F:
-	set @red, 1;
-	set @green, 3;
-	set @black, 4;
-	menu "- Default",L_Dye_Default,"- Red",L_Dye_Red,"- Green",L_Dye_Green,"- Black",L_Dye_Black,"- Cancel",L_End;
-L_Merchant_F:
-	set @violet, 1;
-	set @green, 3;
-	set @black, 4;
-	menu "- Default",L_Dye_Default,"- Violet",L_Dye_Violet,"- Green",L_Dye_Green,"- Black",L_Dye_Black,"- Cancel",L_End;
-L_Thief_F:
-	set @red, 1;
-	set @white, 3;
-	set @black, 4;
-	menu "- Default",L_Dye_Default,"- Red",L_Dye_Red,"- White",L_Dye_White,"- Black",L_Dye_Black,"- Cancel",L_End;
-L_Swordman2_F:
-	set @blue, 1;
-	set @white, 3;
-	set @black, 4;
-	menu "- Default",L_Dye_Default,"- Blue",L_Dye_Blue,"- White",L_Dye_White,"- Black",L_Dye_Black,"- Cancel",L_End;
-L_Acolyte2_F:
-	set @red, 1;
-	set @green, 2;
-	set @white, 3;
-	set @black, 4;
-	menu "- Default",L_Dye_Default,"- Red",L_Dye_Red,"- Green",L_Dye_Green,"- White",L_Dye_White,"- Black",L_Dye_Black,"- Cancel",L_End;
-L_Mage2_F:
-	set @red, 1;
-	set @blue, 2;
-	set @white, 3;
-	set @green, 4;
-	menu "- Default",L_Dye_Default,"- Red",L_Dye_Red,"- Blue",L_Dye_Blue,"- White",L_Dye_White,"- Green",L_Dye_Green,"- Cancel",L_End;
-L_Merchant2_F:
-	set @red, 1;
-	set @green, 2;
-	set @violet, 3;
-	set @black, 4;
-	menu "- Default",L_Dye_Default,"- Red",L_Dye_Red,"- Green",L_Dye_Green,"- Violet",L_Dye_Violet,"- Black",L_Dye_Black,"- Cancel",L_End;
-L_Archer2_F:
-	set @blue, 1;
-	set @green, 3;
-	set @violet, 4;
-	menu "- Default",L_Dye_Default,"- Blue",L_Dye_Blue,"- Green",L_Dye_Green,"- Violet",L_Dye_Violet,"- Cancel",L_End;
-L_Thief2_F:
-	set @black, 1;
-	set @yellow, 2;
-	set @white, 3;
-	menu "- Default",L_Dye_Default,"- Black",L_Dye_Black,"- Yellow",L_Dye_Yellow,"- White",L_Dye_White,"- Cancel",L_End;
-L_Thief3_F:
-	set @yellow, 2;
-	set @white, 3;
-	menu "- Default",L_Dye_Default,"- Yellow",L_Dye_Yellow,"- White",L_Dye_White,"- Cancel",L_End;
-L_Super_Novice_F:
-	set @blue, 1;
-	set @red, 2;
-	set @green, 3;
-	set @black, 4;
-	menu "- Default",L_Dye_Default,"- Blue",L_Dye_Blue,"- Red",L_Dye_Red,"- Green",L_Dye_Green,"- Black",L_Dye_Black,"- Cancel",L_End;
-
-//=================================
-// Rest of the script
-//=================================
-
-L_Dye_Default:
-	mes "[Dyer Ginedin Rephere]";
-	mes "I can change your dye to the default one for free.";
-	mes "Are you sure?";
-	next;
-	menu "Yes",-,"No",L_End;
-	mes "[Dyer Ginedin Rephere]";
-	mes "OK. Here goes nothing.";
-	setlook 7,0;
-	close;
-L_Dye_Orange:
-	mes "[Dyer Ginedin Rephere]";
-	if(countitem(980) < 1) goto sL_NoDye;
-	if(Zeny < 10000) goto sL_Zeny;
-	delitem 980,1;
-	set Zeny, Zeny - 10000;
-	mes "Ok. I will dye you clothes orange.";
-	setlook 7,@orange;
-	close;
-L_Dye_Violet:
-	mes "[Dyer Ginedin Rephere]";
-	if(countitem(981) < 1) goto  sL_NoDye;
-	if(Zeny < 10000) goto sL_Zeny;
-	delitem 981,1;
-	set Zeny, Zeny - 10000;
-	mes "Ok. I will dye you clothes Violet.";
-	setlook 7,@violet;
-	close;
-L_Dye_Red:
-	mes "[Dyer Ginedin Rephere]";
-	if(countitem(975) < 1) goto sL_NoDye;
-	if(Zeny < 10000) goto sL_Zeny;
-	delitem 975,1;
-	set Zeny, Zeny - 10000;
-	mes "Ok. I will dye you clothes red.";
-	setlook 7,@red;
-	close;
-L_Dye_Black:
-	mes "[Dyer Ginedin Rephere]";
-	if(countitem(983) < 1) goto sL_NoDye;
-	if(Zeny < 10000) goto sL_Zeny;
-	delitem 983,1;
-	set Zeny, Zeny - 10000;
-	mes "Ok. I will dye you clothes black.";
-	setlook 7,@black;
-	close;
-L_Dye_Green:
-	mes "[Dyer Ginedin Rephere]";
-	if(countitem(979) < 1) goto sL_NoDye;
-	if(Zeny < 10000) goto sL_Zeny;
-	delitem 979,1;
-	set Zeny, Zeny - 10000;
-	mes "Ok. I will dye you clothes green.";
-	setlook 7,@green;
-	close;
-L_Dye_Blue:
-	mes "[Dyer Ginedin Rephere]";
-	if(countitem(978) < 1) goto sL_NoDye;
-	if(Zeny < 10000) goto sL_Zeny;
-	delitem 978,1;
-	set Zeny, Zeny - 10000;
-	mes "Ok. I will dye you clothes blue.";
-	setlook 7,@blue;
-	close;
-L_Dye_White:
-	mes "[Dyer Ginedin Rephere]";
-	if(countitem(982) < 1) goto sL_NoDye;
-	if(Zeny < 10000) goto sL_Zeny;
-	delitem 982,1;
-	set Zeny, Zeny - 10000;
-	mes "Ok. I will dye you clothes white.";
-	setlook 7,@white;
-	close;
-L_Dye_Yellow:
-	mes "[Dyer Ginedin Rephere]";
-	if(countitem(976) < 1) goto sL_NoDye;
-	if(Zeny < 10000) goto sL_Zeny;
-	delitem 976,1;
-	set Zeny, Zeny - 10000;
-	mes "Ok. I will dye you clothes yellow.";
-	setlook 7,@yellow;
-	close;
-
-sL_Sorry:
-	mes "Wow, your clothes is very strange, I haven't seen anything like it before. Hmmm... I'm sorry, but there is no way I can paint it.";
-	close;
-
-sL_Zeny:
-	mes "I'm sorry but you don't have enough money.";
-	close;
-
-sL_NoDye:
-	mes "For me to dye your clothes, I'll need the appropriate Dyestuffs. Please check my price list for the information.";
-	next;
-
-L_Busy:
-	mes "Sorry, I'm too busy with other jobs to dye your clothes.";
-	goto M_Menu;
-
-L_PriceList:
-	mes "[Dyer Ginedin Rephere]";
-	mes "Here is the list of colors you can choose from and their prices:";
-	mes " ";
-	mes " - ^FF4422Red^000000: 10000 zeny, 1 Scarlet Dyestuffs";
-	mes " - ^D5A500Yellow^000000: 10000 zeny, 1 Lemon Dyestuffs";
-	mes " - ^AA00AAViolet^000000: 10000 zeny, 1 Violet Dyestuffs";
-	mes " - ^FF8800Orange^000000: 10000 zeny, 1 Orange Dyestuffs";
-	mes " - ^4422FFBlue^000000: 10000 zeny, 1 CobaltBlue Dyestuffs";
-	mes " - ^009500Green^000000: 10000 zeny, 1 DarkGreen Dyestuffs";
-	mes " - Black: 10000 zeny, 1 Black Dyestuffs";
-	mes " - White: 10000 zeny, 1 White Dyestuffs";
-	goto M_Menu;
-
+					case Job_Novice: if (Sex) Dyes(4,1,6,2,5,3); else Dyes(6,1,3,2,5,3,4,4);
+					case Job_Swordman: if (Sex) Dyes(4,1,6,2,5,3); else Dyes(3,1,5,3,4,4);
+					case Job_Mage: if (Sex) Dyes(3,1,2,2,1,3,7,4); else Dyes(3,1,2,2,7,3,4,4);
+					case Job_Archer: if (Sex) Dyes(4,1,2,2,5,3); else Dyes(3,1,5,2,7,3,4,4);
+					case Job_Acolyte: if (Sex) Dyes(6,1,3,2,7,3,4,4); else Dyes(3,1,5,3,4,4);
+					case Job_Merchant: if (Sex) Dyes(4,1,6,2,5,3); else Dyes(2,1,5,3,4,4);
+					case Job_Thief: if (Sex) Dyes(5,1,3,2,7,4); else Dyes(3,1,7,3,4,4);
+					case Job_Knight: case Job_Crusader: if (Sex) Dyes(2,1,3,3,4,4); else Dyes(6,1,7,3,4,4);
+					case Job_Priest: case Job_Monk: if (Sex) Dyes(6,1,5,2,3,3,7,4); else Dyes(3,1,5,2,7,3,4,4);
+					case Job_Wizard: case Job_Sage: if (Sex) Dyes(6,1,5,3,4,4); else Dyes(3,1,6,2,7,3,5,4);
+					case Job_Blacksmith: case Job_Alchemist: if (Sex) Dyes(4,4,5,2,7,3); else Dyes(3,1,5,2,2,3,4,4);
+					case Job_Hunter: case Job_Bard: case Job_Dancer: if (Sex) Dyes(4,1,6,2,5,3); else Dyes(6,1,5,3,2,4);
+					case Job_Assassin: case Job_Rogue: if (Sex) Dyes(6,1); else Dyes(4,1,8,2,7,3);
+					case Job_SuperNovice: if (Sex) Dyes(2,1,6,2,5,3,4,4); else Dyes(6,1,3,2,5,3,4,4);
+					default: 
+						mes "Wow, I've never seen clothes like that before! I'm sorry, but I don't think I can paint it.";
+						close; }
+			case 3:
+				mes .n$;
+				mes "Each color costs 10000z and 1 dye:";
+				mes " ";
+				mes " - ^FF4422Red^000000: Scarlet Dyestuffs";
+				mes " - ^D5A500Yellow^000000: Lemon Dyestuffs";
+				mes " - ^AA00AAViolet^000000: Violet Dyestuffs";
+				mes " - ^FF8800Orange^000000: Orange Dyestuffs";
+				mes " - ^4422FFBlue^000000: CobaltBlue Dyestuffs";
+				mes " - ^009500Green^000000: DarkGreen Dyestuffs";
+				mes " - Black: Black Dyestuffs";
+				mes " - White: White Dyestuffs";
+				break;
+			case 4:
+				goto L_End; } }
 L_End:
-	mes "[Dyer Ginedin Rephere]";
+	mes .n$;
 	mes "Make yourself at home. Even though I don't have time for you.";
 	close;
+
+function Dyes {
+	setarray .@DyeName$[0],"the default color","Orange","Violet","Red","Black","Green","Blue","White","Yellow";
+	setarray .@DyeItems[0],0,980,981,975,983,979,978,982,976;
+	set .@menu$,"- Default:";
+	for(set .@i,0; 1; set .@i,.@i+2) {
+		if (!getarg(.@i,0)) break;
+		set .@menu$, .@menu$+"- "+.@DyeName$[getarg(.@i)]+":"; }
+	set .@menu$, .@menu$+"- ^777777Cancel^000000";
+	set .@s, select(.@menu$)-1;
+	if (.@s==.@i-2) goto L_End;
+	mes .n$;
+	if (!.@s) {
+		mes "I can change your dye to";
+		mes "the default for free.";
+		mes "Are you sure?";
+		next;
+		if(select("Yes:No")==2) goto L_End;
+		mes .n$;
+		setlook 7,0;
+		mes "Your clothes have been dyed "+.@DyeName$[0]+".";
+		close; }
+	if (!countitem(.@DyeItems[getarg((.@s-1)*2)])) {
+		mes "For me to dye your clothes, I'll need the appropriate Dyestuffs. Please check my price list for the information.";
+		close; }
+	if (Zeny < 10000) {
+		mes "I'm sorry, but you don't have enough money.";
+		close; }
+	delitem .@DyeItems[getarg((.@s-1)*2)],1;
+	set Zeny, Zeny-10000;
+	setlook 7, ((.@s)?(getarg((.@s-1)*2+1)):0);
+	mes "Your clothes have been dyed "+((.@s)?.@DyeName$[getarg((.@s-1)*2)]:.@DyeName$[0])+".";
+	close; }
 }

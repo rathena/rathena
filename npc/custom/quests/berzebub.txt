@@ -10,64 +10,55 @@
 //= Quest to get the Berzebub Card
 //===== Additional Comments: =================================
 //= 1.1 Fixed ingredients. Was too exploitable [Lupus]
+//= 1.2 Optimized. [Euphy]
 //============================================================
 
 prontera,165,178,8	script	Old Woman	103,{
-	mes "[Old Woman]";
-	if(BerzQuest == 1) goto L_Already;
-	mes "Greeting lad. I found a really nifty item while I was picking mushrooms near Glast Heim.";
+
+	setarray .@Items[0],714,25,1061,100,1095,200,618,10,1551,2,1614,1,727,20;
+	set .@n$,"[Old Woman]";
+
+	mes .@n$;
+	if(BerzQuest == 1) {
+		mes "Hey, I remember you! I already told you that you may only complete this quest once.";
+		close; }
+	mes "Greeting, lad. I found a really nifty item while I was picking mushrooms near Glast Heim.";
 	next;
-	menu "Keep talking",-, "Leave", M_Leave;
-	
-	mes "[Old Woman]";
-	mes "I have never seen an item like this before.  I am told it can be placed inside am accessory that has a slot avaiable in it.";
+	if(select("Keep Talking:Leave")==2) goto M_Leave;
+
+	mes .@n$;
+	mes "I have never seen an item like this before. I am told it can be placed inside any accessory with a slot available.";
 	next;
-	mes "[Old Woman]";
-	mes "If you're interested in this item, tell me and I'll tell you what you need for me to make you one of your own.  I can only give one of these to each player, so once you finish this quest once, you may not do it again.";
+	mes .@n$;
+	mes "If you're interested in this item, I'll tell you what you need for me to make you one of your own. I can only give one of these to each player, so once you finish this quest, you may not do it again.";
 	next;
-	menu "Tell me more about it",-, "Nah, I don't care about it", M_Leave;
-	
-	mes "[Old Woman]";
-	mes "I believe the item is called a ^FF0000Berzebub Card^000000.  It can make any spell caster cast spells really fast!";
+	if(select("Tell me more about it:Nah, I don't care about it")==2) goto M_Leave;
+
+	mes .@n$;
+	mes "I believe the item is called a ^FF0000Berzebub Card^000000. It makes you cast spells really fast!";
 	next;
-	mes "[Old Woman]";
+	mes .@n$;
 	mes "I need all of the following items:";
-	mes "^0080FF25^000000 Emperiums";
-	mes "^0080FF100^000000 Witched Starsands";
-	mes "^0080FF200^000000 Needles of Alarm";
-	mes "^0080FF10^000000 Worn Out Scrolls";
-	mes "^0080FF2^000000 Biblies";
-	mes "^0080FF1^000000 Wand of the Occult";
-	mes "^0080FF20^000000 Opals";
+	for(set .@i,0; .@i<getarraysize(.@Items); set .@i,.@i+2) {
+		mes " ~ "+.@Items[.@i+1]+"x "+getitemname(.@Items[.@i]);
+		if (countitem(.@Items[.@i]) < .@Items[.@i+1]) set .@nr,1; }
 	next;
-	menu "I have all that!",-, "I'll get those ASAP", M_Leave;
-	
-	mes "[Old Woman]";
-	mes "Anyone can say they have the items, but do they really have them?  Let's take a look here...";
-	next;
-	mes "[Old Woman]";
-	if(countitem(714) < 25 || countitem(1061) < 100 || countitem(1095) < 200 || countitem(618) < 10 || countitem(1551) < 2 || countitem(1614) < 1 || countitem(727) < 20) goto L_noItems;
-	delitem 714, 25;
-	delitem 1061, 100;
-	delitem 1095, 200;
-	delitem 618, 10;
-	delitem 1551, 2;
-	delitem 1614, 1;
-	delitem 727, 20;
-	getitem 4145, 1;
+	if(select("I have all of that!:I'll get those ASAP")==2) goto M_Leave;
+
+	mes .@n$;
+	if (.@nr) {
+		mes "You lie! Get out of here and get those items, you sorry excuse for a rock star.";
+		close; }
+	for(set .@i,0; .@i<getarraysize(.@Items); set .@i,.@i+2)
+		delitem .@Items[.@i], .@Items[.@i+1];
+	getitem 4145,1;
 	set BerzQuest, 1;
-	mes "Well congratulations!  You have all the items.  Here is your ^FF0000Berzebub Card^000000, just as I promised.";
+	mes "Congratulations! You have all the items. Here is your ^FF0000Berzebub Card^000000, as promised.";
 	emotion e_grat;
 	close;
 
 M_Leave:
-	mes "[Old Woman]";
+	mes .@n$;
 	mes "Such a great item I have right here...";
-	close;
-L_noItems:
-	mes "I knew you were lying!  Get out of here and get those items you sorry excuse for a rock star.";
-	close;
-L_Already:
-	mes "Hey I remember you!  I already told you that you may only complete this quest once.";
 	close;
 }

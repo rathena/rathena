@@ -181,7 +181,7 @@ F26: setarray @c[2],371,212;
 	Disp("Dewata Field",1,1); Pick("dew_fild");
 F27: setarray @c[2],97,314;
 	Disp("Eclage Field",1,1); Pick("ecl_fild");
-F28: setarray @c[2],40,272,266,359;
+F28: setarray @c[2],40,272,207,180;
 	Disp("Malaya Field",1,2); Pick("ma_fild");
 
 // --------------------------------------------------
