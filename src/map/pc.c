@@ -4665,7 +4665,8 @@ int pc_checkallowskill(struct map_session_data *sd)
 	const enum sc_type scs_list[] = {
 		SC_AUTOGUARD,
 		SC_DEFENDER,
-		SC_REFLECTSHIELD
+		SC_REFLECTSHIELD,
+		SC_REFLECTDAMAGE
 	};
 	int i;
 	nullpo_ret(sd);

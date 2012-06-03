@@ -4635,7 +4635,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			}
 			if( status_isimmune(bl) ||
 					(dstmd && (dstmd->class_ == MOBID_EMPERIUM || mob_is_battleground(dstmd))) ||
-					(skillid == AL_HEAL && dstsd && pc_ismadogear(dstsd)) )//Mado is immune to AL_HEAL
+					(dstsd && pc_ismadogear(dstsd)) )//Mado is immune to heal
 				heal=0;
 
 			if( sd && dstsd && sd->status.partner_id == dstsd->status.char_id && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.sex == 0 )
@@ -7429,6 +7429,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			if( sd && tstatus && !battle_check_undead(tstatus->race, tstatus->def_ele) )
 			{
 				i = skill_calc_heal(src, bl, AL_HEAL, pc_checkskill(sd, AL_HEAL), true);
+				if(dstsd && pc_ismadogear(dstsd)) i = 0; // Should heal by 0 or won't do anything? [malufett]
 				status_heal(bl, i, 0, 1);
 				clif_skill_nodamage(bl, bl, skillid, i, 1);
 			}
@@ -11783,15 +11784,15 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 		}
 	}
 	if( pc_ismadogear(sd) ) {
-		switch( skill ) { //Blacksmiths and Mastersmiths skills are unusable when Mado is equipped. [Jobbie]
+		switch( skill ) { //None Mado skills are unusable when Mado is equipped. [Jobbie]
 			case BS_REPAIRWEAPON:  case WS_MELTDOWN:
 			case BS_HAMMERFALL:    case WS_CARTBOOST:
 			case BS_ADRENALINE:    case WS_WEAPONREFINE:
 			case BS_WEAPONPERFECT: case WS_CARTTERMINATION:
 			case BS_OVERTHRUST:    case WS_OVERTHRUSTMAX:
-			case BS_MAXIMIZE:
-			case BS_ADRENALINE2:
-			case BS_UNFAIRLYTRICK:
+			case BS_MAXIMIZE:	   case NC_AXEBOOMERANG:
+			case BS_ADRENALINE2:   case NC_POWERSWING:
+			case BS_UNFAIRLYTRICK: case NC_AXETORNADO:
 			case BS_GREED:
 				clif_skill_fail(sd,skill,USESKILL_FAIL_LEVEL,0);
 				return 0;
