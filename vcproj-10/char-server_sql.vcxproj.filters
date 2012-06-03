@@ -201,6 +201,9 @@
     <ClInclude Include="..\3rdparty\libconfig\wincompat.h">
       <Filter>3rdparty\libconfig</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\common\winapi.h">
+      <Filter>common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="common">

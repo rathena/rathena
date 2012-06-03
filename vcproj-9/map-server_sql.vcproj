@@ -423,6 +423,10 @@
 				RelativePath="..\src\common\utils.h"
 				>
 			</File>
+			<File
+				RelativePath="..\src\common\winapi.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="map_sql"

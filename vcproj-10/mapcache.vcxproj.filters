@@ -54,6 +54,9 @@
     <ClInclude Include="..\src\common\utils.h">
       <Filter>common</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\common\winapi.h">
+      <Filter>common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="common">

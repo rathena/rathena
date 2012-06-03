@@ -153,6 +153,7 @@
     <ClInclude Include="..\src\common\strlib.h" />
     <ClInclude Include="..\src\common\timer.h" />
     <ClInclude Include="..\src\common\utils.h" />
+    <ClInclude Include="..\src\common\winapi.h" />
     <ClInclude Include="..\src\map\atcommand.h" />
     <ClInclude Include="..\src\map\battle.h" />
     <ClInclude Include="..\src\map\battleground.h" />

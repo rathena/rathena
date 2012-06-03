@@ -164,6 +164,7 @@
     <ClInclude Include="..\src\char\int_quest.h" />
     <ClInclude Include="..\src\char\int_storage.h" />
     <ClInclude Include="..\src\char\inter.h" />
+    <ClInclude Include="..\src\common\winapi.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\3rdparty\libconfig\grammar.c" />
