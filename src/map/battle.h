@@ -473,6 +473,7 @@ extern struct Battle_Config
 	int mvp_tomb_enabled;
 	
 	int atcommand_suggestions_enabled;
+    int min_npc_vending_distance;
 } battle_config;
 
 void do_init_battle(void);
