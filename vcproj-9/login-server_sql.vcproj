@@ -355,6 +355,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\common\thread.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\thread.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\common\timer.c"
 				>
 			</File>

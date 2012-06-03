@@ -151,6 +151,7 @@
     <ClInclude Include="..\src\common\socket.h" />
     <ClInclude Include="..\src\common\sql.h" />
     <ClInclude Include="..\src\common\strlib.h" />
+    <ClInclude Include="..\src\common\thread.h" />
     <ClInclude Include="..\src\common\timer.h" />
     <ClInclude Include="..\src\common\utils.h" />
     <ClInclude Include="..\src\common\winapi.h" />
@@ -219,6 +220,7 @@
     <ClCompile Include="..\src\common\socket.c" />
     <ClCompile Include="..\src\common\sql.c" />
     <ClCompile Include="..\src\common\strlib.c" />
+    <ClCompile Include="..\src\common\thread.c" />
     <ClCompile Include="..\src\common\timer.c" />
     <ClCompile Include="..\src\common\utils.c" />
     <ClCompile Include="..\src\map\atcommand.c" />

@@ -181,6 +181,9 @@
     <ClCompile Include="..\3rdparty\libconfig\strbuf.c">
       <Filter>3rdparty\libconfig</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\common\thread.c">
+      <Filter>common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\map\atcommand.h">
@@ -379,6 +382,9 @@
       <Filter>3rdparty\libconfig</Filter>
     </ClInclude>
     <ClInclude Include="..\src\common\winapi.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\thread.h">
       <Filter>common</Filter>
     </ClInclude>
   </ItemGroup>
