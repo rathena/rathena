@@ -9,6 +9,7 @@
 #include "../common/db.h"
 #include "../common/socket.h"
 #include "../common/timer.h"
+#include "../common/thread.h"
 #endif
 
 #include <stdio.h>
@@ -278,6 +279,8 @@ int main (int argc, char **argv)
 	display_title();
 	usercheck();
 
+	rathread_init();
+
 	db_init();
 	signals_init();
 
@@ -303,6 +306,8 @@ int main (int argc, char **argv)
 	timer_final();
 	socket_final();
 	db_final();
+	
+	rathread_final();
 #endif
 
 	malloc_final();

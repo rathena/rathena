@@ -28,6 +28,7 @@ endif
 	map_sql \
 	tools \
 	import \
+	test \
 	clean help
 
 all: $(ALL_DEPENDS)
@@ -55,6 +56,9 @@ map_sql: $(MAP_SQL_DEPENDS)
 tools:
 	@$(MAKE) -C src/tool
 
+test:
+	@$(MAKE) -C src/test
+
 import:
 # 1) create conf/import folder
 # 2) add missing files
@@ -72,6 +76,7 @@ clean:
 	@$(MAKE) -C src/char $@
 	@$(MAKE) -C src/map $@
 	@$(MAKE) -C src/tool $@
+	@$(MAKE) -C src/test $@
 
 help:
 	@echo "most common targets are 'all' 'sql' 'conf' 'clean' 'help'"
@@ -87,6 +92,7 @@ help:
 	@echo "'all'         - builds all the above targets"
 	@echo "'sql'         - builds sql servers (targets 'common_sql' 'login_sql' 'char_sql'"
 	@echo "                'map_sql' and 'import')"
+	@echo "'test'        - builds tests"
 	@echo "'clean'       - cleans builds and objects"
 	@echo "'help'        - outputs this message"
 

@@ -9,6 +9,7 @@ AC_CONFIG_FILES([Makefile src/common/Makefile])
 AC_CONFIG_FILES([3rdparty/mt19937ar/Makefile 3rdparty/libconfig/Makefile])
 AC_CONFIG_FILES([src/char/Makefile src/login/Makefile])
 AC_CONFIG_FILES([src/map/Makefile src/tool/Makefile])
+AC_CONFIG_FILES([src/test/Makefile])
 
 AC_GNU_SOURCE
 
@@ -337,6 +338,31 @@ if test "$enable_64bit" = "no" ; then
 fi
 
 
+# 
+# check if we're producing 32bit code - so well produce binarys for at least i686 (speedup: cmovs, and cmpchg8 support)
+#
+AC_MSG_CHECKING([whether $CC produces 32bit code])
+AC_RUN_IFELSE(
+	[
+		int main(int argc, char **argv){
+			if(sizeof(void*) == 4) return 0;
+			else return 1;
+		}
+	],
+	[
+		AC_MSG_RESULT([yes])
+		CFLAGS="$CFLAGS -march=i686"
+		LDFLAGS="$LDFLAGS -march=i686"
+	],
+	[
+		AC_MSG_RESULT([no])
+	],
+	[
+		AC_MSG_RESULT([guessing no])
+	]
+)
+
+
 AC_MSG_CHECKING([whether $CC supports -Wno-unused-parameter])
 OLD_CFLAGS="$CFLAGS"
 CFLAGS="$CFLAGS -Wno-unused-parameter"
@@ -634,6 +660,20 @@ if test "$ac_cv_search_clock_gettime" != "no" ; then
 		]
 	)
 fi
+
+
+#
+# pthread
+#
+AC_CHECK_LIB([pthread], [pthread_create], [], [AC_MSG_ERROR([pthread library not found or incompatible])])
+AC_CHECK_LIB([pthread], [pthread_sigmask], [], [AC_MSG_ERROR([pthread library not found or incompatible])])
+AC_CHECK_LIB([pthread], [pthread_attr_init], [], [AC_MSG_ERROR([pthread library not found or incompatible])])
+AC_CHECK_LIB([pthread], [pthread_attr_setstacksize], [], [AC_MSG_ERROR([pthread library not found or incompatible])])
+AC_CHECK_LIB([pthread], [pthread_attr_destroy], [], [AC_MSG_ERROR([pthread library not found or incompatible])])
+AC_CHECK_LIB([pthread], [pthread_cancel], [], [AC_MSG_ERROR([pthread library not found or incompatible])])
+AC_CHECK_LIB([pthread], [pthread_join], [], [AC_MSG_ERROR([pthread library not found or incompatible])])
+
+LDFLAGS="$LDFLAGS -lpthread"
 
 
 #
