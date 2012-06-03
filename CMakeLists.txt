@@ -139,6 +139,19 @@ endif()
 
 
 #
+# threads
+#
+message( STATUS "Detecting threads library" )
+set( CMAKE_THREAD_PREFER_PTHREAD 1 )
+find_package(Threads REQUIRED)
+if( CMAKE_THREAD_LIBS_INIT )
+	message( STATUS "Adding global library: ${FUNCTION_FLOOR_LIBRARIES}" )
+	set_property( CACHE GLOBAL_LIBRARIES  PROPERTY VALUE ${GLOBAL_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} )
+endif()
+message( STATUS "Detecting threads library - done" )
+
+
+#
 # math library (FreeBSD/Linux/Solaris)
 #
 message( STATUS "Detecting math library (m)" )
