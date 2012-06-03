@@ -17,6 +17,11 @@
 #include "showmsg.h"
 #include "thread.h"
 
+// When Compiling using MSC (on win32..) we know we have support in any case!
+#ifdef _MSC_VER 
+#define HAS_TLS 
+#endif
+
 
 #define RA_THREADS_MAX 64
 
@@ -35,7 +40,9 @@ struct rAthread {
 };
 
 
+#ifdef HAS_TLS
 __thread int g_rathread_ID = -1;
+#endif
 
 
 ///
@@ -52,7 +59,9 @@ void rathread_init(){
 	}
 
 	// now lets init thread id 0, which represnts the main thread
+#ifdef HAS_TLS
 	g_rathread_ID = 0;
+#endif
 	l_threads[0].prio = RAT_PRIO_NORMAL;
 	l_threads[0].proc = (rAthreadProc)0xDEADCAFE;
 
@@ -100,7 +109,9 @@ static void *_raThreadMainRedirector( void *p ){
 	void *ret;
 	
 	// Update myID @ TLS to right id.
+#ifdef HAS_TLS
 	g_rathread_ID = ((rAthread)p)->myID; 
+#endif
 
 #ifndef WIN32
 	// When using posix threads
@@ -216,18 +227,47 @@ void rathread_destroy ( rAthread handle ){
 }//end: rathread_destroy()
 
 rAthread rathread_self( ){
+#ifdef HAS_TLS
 	rAthread handle = &l_threads[g_rathread_ID];
 	
 	if(handle->proc != NULL) // entry point set, so its used!	
 		return handle;
+#else
+	// .. so no tls means we have to search the thread by its api-handle .. 
+	int i;
+
+	#ifdef WIN32
+		HANDLE hSelf;
+		hSelf = GetCurrent = GetCurrentThread();
+	#else
+		pthread_t hSelf;
+		hSelf = pthread_self();
+	#endif
+	
+	for(i = 0; i < RA_THREADS_MAX; i++){
+		if(l_threads[i].hThread == hSelf  &&  l_threads[i].proc != NULL)
+			return &l_threads[i];
+	}
+	
+#endif
 		
 	return NULL;	
 }//end: rathread_self()
 
 
 int rathread_get_tid(){
-	
+
+#ifdef HAS_TLS	
 	return g_rathread_ID;
+#else
+	// todo
+	#ifdef WIN32
+		return (int)GetCurrentThreadId();
+	#else
+		return (int)pthread_self();
+	#endif
+	
+#endif
 	
 }//end: rathread_get_tid()
 

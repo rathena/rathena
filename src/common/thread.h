@@ -62,7 +62,8 @@ rAthread rathread_self( );
 /**
  * Returns own thrad id (TID) 
  *
- * @note this is not the operating system THREAD ID!
+ * @note this is an unique identifier for the calling thread, and 
+ *        depends on platfrom / compiler, and may not be the systems Thread ID! 
  *
  * @return -1 when fails, otherwise >= 0
  */

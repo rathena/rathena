@@ -363,6 +363,30 @@ AC_RUN_IFELSE(
 )
 
 
+# 
+# Check if CC supports __thread attribute (Thread Local Storage) 
+# (Usually our OSX friends 're lacking support of it in older llvm versions ..)
+# 
+AC_MSG_CHECKING([whether $CC supports __thread specifier (TLS)])
+AC_RUN_IFELSE(
+	[
+		__thread int g_Test = -1;
+
+		int main(int argc, char **argv){
+			g_Test = 0;
+			return g_Test;		
+		}
+	],
+	[
+		AC_MSG_RESULT([yes])
+		CFLAGS="$CFLAGS -DHAS_TLS"
+	],
+	[
+		AC_MSG_RESULT([no])
+	]
+)
+
+
 AC_MSG_CHECKING([whether $CC supports -Wno-unused-parameter])
 OLD_CFLAGS="$CFLAGS"
 CFLAGS="$CFLAGS -Wno-unused-parameter"
