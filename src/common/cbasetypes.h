@@ -219,7 +219,7 @@ typedef uintptr_t uintptr;
 #endif
 
 // keyword replacement
-#ifdef _WIN32
+#ifdef _MSC_VER
 // For MSVC (windows)
 #define inline __inline
 #define forceinline __forceinline
