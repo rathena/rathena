@@ -9,7 +9,7 @@
 #include "sql.h"
 
 #ifdef WIN32
-#include <winsock2.h>
+#include "../common/winapi.h"
 #endif
 #include <mysql.h>
 #include <string.h>// strlen/strnlen/memcpy/memset

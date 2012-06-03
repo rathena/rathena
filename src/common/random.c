@@ -5,8 +5,7 @@
 #include "../common/timer.h" // gettick
 #include "random.h"
 #if defined(WIN32)
-	#define WIN32_LEAN_AND_MEAN
-	#include <windows.h>
+	#include "../common/winapi.h"
 #elif defined(HAVE_GETPID) || defined(HAVE_GETTID)
 	#include <sys/types.h>
 	#include <unistd.h>

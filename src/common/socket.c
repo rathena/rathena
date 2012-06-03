@@ -15,8 +15,7 @@
 #include <sys/types.h>
 
 #ifdef WIN32
-	#include <winsock2.h>
-	#include <io.h>
+	#include "../common/winapi.h"
 #else
 	#include <errno.h>
 	#include <sys/socket.h>

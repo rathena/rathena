@@ -14,8 +14,7 @@
 #include <time.h>
 
 #ifdef WIN32
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h> // GetTickCount()
+#include "../common/winapi.h" // GetTickCount()
 #else
 #include <unistd.h>
 #include <sys/time.h> // struct timeval, gettimeofday()

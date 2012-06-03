@@ -18,7 +18,7 @@
 #ifndef _WIN32
 #include <unistd.h>
 #else
-#include <windows.h> // Console close event handling
+#include "../common/winapi.h" // Console close event handling
 #endif
 
 

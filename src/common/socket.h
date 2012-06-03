@@ -7,8 +7,7 @@
 #include "../common/cbasetypes.h"
 
 #ifdef WIN32
-	#define WIN32_LEAN_AND_MEAN  // otherwise winsock2.h includes full windows.h
-	#include <winsock2.h>
+	#include "../common/winapi.h"
 	typedef long in_addr_t;
 #else
 	#include <sys/types.h>

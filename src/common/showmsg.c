@@ -15,8 +15,7 @@
 #include "libconfig.h"
 
 #ifdef WIN32
-	#define WIN32_LEAN_AND_MEAN
-	#include <windows.h>
+	#include "../common/winapi.h"
 
 	#ifdef DEBUGLOGMAP
 		#define DEBUGLOGPATH "log\\map-server.log"
