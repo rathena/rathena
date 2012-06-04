@@ -8271,15 +8271,14 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		tick = tick_time;
 
 	//Don't trust the previous sce assignment, in case the SC ended somewhere between there and here.
-	if((sce=sc->data[type]))
-	{// reuse old sc
+	if((sce=sc->data[type])) {// reuse old sc
 		if( sce->timer != INVALID_TIMER )
 			delete_timer(sce->timer, status_change_timer);
-	}
-	else
-	{// new sc
+	} else {// new sc
 		++(sc->count);
 		sce = sc->data[type] = ers_alloc(sc_data_ers, struct status_change_entry);
+        if ( StatusChangeStateTable[type] ) /* non-zero */
+            status_calc_state(bl,sc,( enum scs_flag ) StatusChangeStateTable[type],true);
 	}
 	sce->val1 = val1;
 	sce->val2 = val2;
@@ -8292,10 +8291,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 
 	if (calc_flag)
 		status_calc_bl(bl,calc_flag);
-	
-	if ( StatusChangeStateTable[type] ) /* non-zero */
-		status_calc_state(bl,sc,( enum scs_flag ) StatusChangeStateTable[type],true);
-	
+		
 	if(sd && sd->pd)
 		pet_sc_check(sd, type); //Skotlex: Pet Status Effect Healing
 
