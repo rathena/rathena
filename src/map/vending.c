@@ -238,7 +238,7 @@ static int vending_checknearnpc_sub(struct block_list* bl, va_list args) {
     struct npc_data *nd = (struct npc_data*)bl;
     
     if( nd->sc.option & (OPTION_HIDE|OPTION_INVISIBLE) )
-        return 1;
+        return 0;
 
     return 1;
 }
