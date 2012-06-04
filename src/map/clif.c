@@ -11735,13 +11735,13 @@ void clif_parse_OpenVending(int fd, struct map_session_data* sd)
 		return;
 	}
     
-    if( vending_checknearnpc(&sd->bl) ) {
-        char output[50];
-        sprintf(output,"You're too close to a NPC, you must be at least %d cells away from any NPC.",battle_config.min_npc_vending_distance);
-        clif_displaymessage(sd->fd, output);
-        clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
-        return;
-    }
+	if( vending_checknearnpc(&sd->bl) ) {
+		char output[50];
+		sprintf(output,"You're too close to a NPC, you must be at least %d cells away from any NPC.",battle_config.min_npc_vending_distance);
+		clif_displaymessage(sd->fd, output);
+		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
+		return;
+	}
 
 	if( message[0] == '\0' ) // invalid input
 		return;
