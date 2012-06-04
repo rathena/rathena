@@ -1274,12 +1274,6 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 			if (!src->prev) return 0;
 		} else if( sc->data[SC_CAMOUFLAGE] && skill_num != RA_CAMOUFLAGE )
 			status_change_end(src,SC_CAMOUFLAGE,INVALID_TIMER);
-
-		if( sc->data[SC_CURSEDCIRCLE_ATKER] ) {
-			sc->data[SC_CURSEDCIRCLE_ATKER]->val3 = 1;
-			status_change_end(src,SC_CURSEDCIRCLE_ATKER,INVALID_TIMER);
-		}
-
 	}
 
 
@@ -1402,12 +1396,6 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 			if (!src->prev) return 0;
 		} else if( sc->data[SC_CAMOUFLAGE] && skill_num != RA_CAMOUFLAGE )
 			status_change_end(src,SC_CAMOUFLAGE,INVALID_TIMER);
-
-		if( sc->data[SC_CURSEDCIRCLE_ATKER] ) {
-			sc->data[SC_CURSEDCIRCLE_ATKER]->val3 = 1;
-			status_change_end(src,SC_CURSEDCIRCLE_ATKER,INVALID_TIMER);
-		}
-
 	}
 	if( casttime > 0 )
 	{

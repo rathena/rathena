@@ -3078,7 +3078,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			 **/
 			if( sc->data[SC_ENCHANTBLADE] && sd && ( (flag.rh && sd->weapontype1) || (flag.lh && sd->weapontype2) ) ) {
 				//[( ( Skill Lv x 20 ) + 100 ) x ( casterBaseLevel / 150 )] + casterInt
-				wd.damage += ( ( ( sc->data[SC_ENCHANTBLADE]->val1 * 20 ) + 100 ) * ( status_get_lv(src) / 150 ) ) + status_get_int(src);
+				ATK_ADD( ( sc->data[SC_ENCHANTBLADE]->val1*20+100 ) * status_get_lv(src) / 150 + status_get_int(src) );
 			}
 		}
 	}

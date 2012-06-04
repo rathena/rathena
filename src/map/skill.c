@@ -4501,6 +4501,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		return 1;
 	}
 
+	if( sc && sc->data[SC_CURSEDCIRCLE_ATKER] ) { //Should only remove after the skill has been casted.
+		sc->data[SC_CURSEDCIRCLE_ATKER]->val3 = 1;
+		status_change_end(src,SC_CURSEDCIRCLE_ATKER,INVALID_TIMER);
+	}
+
 	map_freeblock_unlock();
 	
 	if( sd && !(flag&1) )
@@ -8585,6 +8590,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		return 1;
 	}
 
+	if(skillid != SR_CURSEDCIRCLE){
+		struct status_change *sc = status_get_sc(src);
+		if( sc && sc->data[SC_CURSEDCIRCLE_ATKER] ) { //Should only remove after the skill had been casted.
+			sc->data[SC_CURSEDCIRCLE_ATKER]->val3 = 1;
+			status_change_end(src,SC_CURSEDCIRCLE_ATKER,INVALID_TIMER);
+		}
+	}
+
 	if (dstmd) { //Mob skill event for no damage skills (damage ones are handled in battle_calc_damage) [Skotlex]
 		mob_log_damage(dstmd, src, 0); //Log interaction (counts as 'attacker' for the exp bonus)
 		mobskill_event(dstmd, src, tick, MSC_SKILLUSED|(skillid<<16));
@@ -9706,6 +9719,11 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	default:
 		ShowWarning("skill_castend_pos2: Unknown skill used:%d\n",skillid);
 		return 1;
+	}
+
+	if( sc && sc->data[SC_CURSEDCIRCLE_ATKER] ) { //Should only remove after the skill has been casted.
+		sc->data[SC_CURSEDCIRCLE_ATKER]->val3 = 1;
+		status_change_end(src,SC_CURSEDCIRCLE_ATKER,INVALID_TIMER);
 	}
 
 	if( sd )
@@ -11863,7 +11881,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 		case MO_EXTREMITYFIST:
 	//		if(sc && sc->data[SC_EXTREMITYFIST]) //To disable Asura during the 5 min skill block uncomment this...
 	//			return 0;
-			if( sc && sc->data[SC_BLADESTOP] )
+			if( sc && (sc->data[SC_BLADESTOP] || sc->data[SC_CURSEDCIRCLE_ATKER]) )
 				break;
 			if( sc && sc->data[SC_COMBO] )
 			{
