@@ -25,6 +25,7 @@
 //= 2.1 Replaced effect numerics with constants. [Samuray22]
 //= 2.2 Updated the whole Script to match with latest available official file. [Masao]
 //= 2.3 Added continue and break in switch case. [JayPee]
+//= 2.4a Fixed a minor bug with Arch Bishop checks. [Euphy]
 //============================================================
 
 hu_fild01,140,163,5	script	Tower Keeper	852,3,3,{
@@ -3111,11 +3112,11 @@ OnTouch:
 		warp "thana_step",69,369;
 		end;
 	}
-	else if ((Class == Job_Rune_Knight) || (Class == Job_Archbishop) || (Class == Job_Warlock) || (Class == Job_Mechanic) || (Class == Job_Ranger) || (Class == Job_Guillotine_Cross) || (Class == Job_Royal_Guard) || (Class == Job_Sura) || (Class == Job_Sorcerer) || (Class == Job_Shadow_Chaser) || (Class == Job_Genetic) || (Class == Job_Wanderer) || (Class == Job_Minstrel)) {
+	else if ((Class == Job_Rune_Knight) || (Class == Job_Arch_Bishop) || (Class == Job_Warlock) || (Class == Job_Mechanic) || (Class == Job_Ranger) || (Class == Job_Guillotine_Cross) || (Class == Job_Royal_Guard) || (Class == Job_Sura) || (Class == Job_Sorcerer) || (Class == Job_Shadow_Chaser) || (Class == Job_Genetic) || (Class == Job_Wanderer) || (Class == Job_Minstrel)) {
 		warp "thana_step",69,369;
 		end;
 	}
-	else if ((Class == Job_Rune_Knight_T) || (Class == Job_Archbishop_T) || (Class == Job_Warlock_T) || (Class == Job_Mechanic_T) || (Class == Job_Ranger_T) || (Class == Job_Guillotine_Cross_T) || (Class == Job_Royal_Guard_T) || (Class == Job_Sura_T) || (Class == Job_Sorcerer_T) || (Class == Job_Shadow_Chaser_T) || (Class == Job_Genetic_T) || (Class == Job_Wanderer_T) || (Class == Job_Minstrel_T)) {
+	else if ((Class == Job_Rune_Knight_T) || (Class == Job_Arch_Bishop_T) || (Class == Job_Warlock_T) || (Class == Job_Mechanic_T) || (Class == Job_Ranger_T) || (Class == Job_Guillotine_Cross_T) || (Class == Job_Royal_Guard_T) || (Class == Job_Sura_T) || (Class == Job_Sorcerer_T) || (Class == Job_Shadow_Chaser_T) || (Class == Job_Genetic_T) || (Class == Job_Wanderer_T) || (Class == Job_Minstrel_T)) {
 		warp "thana_step",69,369;
 		end;
 	}
