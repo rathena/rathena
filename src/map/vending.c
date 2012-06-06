@@ -281,7 +281,7 @@ void vending_openvending(struct map_session_data* sd, const char* message, bool 
 	}
 
     if( vending_checknearnpc(&sd->bl) ) {
-        char output[50];
+        char output[150];
         sprintf(output,"You're too close to a NPC, you must be at least %d cells away from any NPC.",battle_config.min_npc_vending_distance);
         clif_displaymessage(sd->fd, output);
         clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
