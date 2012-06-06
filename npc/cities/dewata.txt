@@ -1,0 +1,1156 @@
+//===== rAthena Script ======================================= 
+//= Dewata Town
+//===== By: ================================================== 
+//= Gennosuke Kouga
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena SVN
+//===== Description: ========================================= 
+//= Dewata Town Script
+//===== Additional Comments: ================================= 
+//= 1.0 First version.
+//= 1.1 Standardized. [Euphy]
+//============================================================
+
+dewata,181,88,6	script	Young Man#dewata	536,{
+	mes "[Young Man]";
+	mes "Isn't ^C35817Dewata^000000 beach";
+	mes "really beautiful?";
+	mes "The children always play";
+	mes "at this beach; it really";
+	mes "reminds me of my youth.";
+	next;
+	mes "[Young Man]";
+	mes "In the evening, you can see";
+	mes "fireworks from this beach.";
+	mes "With the ocean breeze, the crashing waves, and fireworks lighting";
+	mes "the sky, the night is a time of beauty here!";
+	close;
+}
+
+dewata,159,81,4	script	Tourist#dewata	881,{
+	mes "[Nasolo]";
+	mes "Wow~ Pure ocean, a warm beach...";
+	mes "Perfect for a date with a girlfriend..";
+	next;
+	emotion e_sob;
+	mes "[Nasolo]";
+	mes "If only I had one...";
+	next;
+	emotion e_ohnoes;
+	mes "[Nasolo]";
+	mes "I wonder when  my princess will come..";
+	close;
+}
+
+dewata,154,107,4,	script	Sightseer#dewata	86,{
+	mes "[Tourist]";
+	mes "Wow...";
+	mes "How many has he already eaten?";
+	close;
+}
+
+dewata,147,107,5	script	Gourmet#dewata	85,{
+	emotion e_sob;
+	mes "[Gourmet]";
+	mes "Oh.. it's like a party in my";
+	mes "mouth... and everyone's invited!";
+	next;
+	emotion e_no1;
+	emotion e_sob,0,"Restauranteur#dewata";
+	mes "[Gourmet]";
+	mes "Master~ One more please~";
+	next;
+	mes "[Gourmet]";
+	mes "You must try this! The Food here is succulent~";
+	close;
+}
+
+dewata,146,109,5	script	Restauranteur#dewata	886,{
+	set .@n$, "[Restauranteur]";
+	mes .@n$;
+	mes "Welcome to the island of Dewata.";
+	mes "I hope you behave like a noble";
+	mes "traveler, unlike some of these";
+	mes "teenage punks..";
+	next;
+	switch(select("About Dewata dishes:Today's menu?:I'm okay.")) {
+		case 1:
+			mes .@n$;
+			mes "Need info about our foods? Well...";
+			mes "I don't have much to talk about,";
+			mes "but feel free to listen if you want.";
+			next;
+			mes .@n$;
+			mes "So much to cover, let me begin.";
+			next;
+			mes .@n$;
+			mes "First, Dewata dishes have special";
+			mes "names based on each cooking recipe.";
+			next;
+			mes .@n$;
+			mes "If dish name has 'Goreng' in it,";
+			mes "then it is either stir or deep";
+			mes "fried food.";
+			next;
+			mes .@n$;
+			mes "If it is a type of 'Bakar', then";
+			mes "it is a grilled food.";
+			next;
+			mes .@n$;
+			mes "And if it's 'Satay', then you are";
+			mes "eating a skewered dish.";
+			next;
+			mes .@n$;
+			mes "Second, we have dishes named after";
+			mes "basic ingredients.";
+			next;
+			mes .@n$;
+			mes "In Dewata island, we refer to rice";
+			mes "as Nasi, noodle as Mie, bread as";
+			mes "Roti, chicken as Ayam, fish as";
+			mes "Ikan, and corn as Jagung.";
+			next;
+			mes .@n$;
+			mes "So, if rice is fried we call it";
+			mes "'Nasi Goreng', and fried noodle is";
+			mes "'Mie Goreng'.";
+			next;
+			mes .@n$;
+			mes "Well.. This is enough to enjoy our";
+			mes "foods in Dewata! If you are";
+			mes "hungry, we have our special set";
+			mes "menu for only ^0000FF5000^000000 Zeny.";
+			close;
+		case 2:
+			mes .@n$;
+			mes "We have 2 items, 'Nasi Goreng' and";
+			mes "'Satay'. Which one do you want?";
+			next;
+			if(select("Nasi Goreng:Satay")==2) {
+				mes .@n$;
+				mes "This is the Satay, a slice of meat";
+				mes "skewered and grilled over Palm";
+				mes "fruit charcoal. It costs only ^0000FF5000^000000 Zeny.";
+				next;
+				if(select("Taste:Walk away")==2) {
+					mes .@n$;
+					mes "It's a shame you won't taste this great dish..";
+					close; }
+				if (Zeny < 5000) {
+					mes .@n$;
+					mes "Where's the money, kid? Sheesh!";
+					mes "No free food here! Ok?";
+					close; }
+				mes .@n$;
+				mes "Here's your Satay, you won't";
+				mes "regret it!";
+				getitem 11533,1;
+				set Zeny, Zeny-5000;
+				close; }
+			mes .@n$;
+			mes "This is Nasi Goreng fried with my";
+			mes "special sauce and egg fry on the";
+			mes "top. It only costs ^0000FF5000^000000 Zeny.";
+			next;
+			if(select("Taste:Walk away")==2) {
+				mes .@n$;
+				mes "It's a shame you won't taste this great dish..";
+				close; }
+			if (Zeny < 5000) {
+				mes .@n$;
+				mes "Where's the money, kid? Sheesh!";
+				mes "No free food here! Ok?";
+				close; }	
+			mes .@n$;
+			mes "Here's your Nasi Goreng. You won't";
+			mes "regret it!";
+			getitem 11532,1;
+			set Zeny, Zeny-5000;
+			close;
+		case 3:
+			mes .@n$;
+			mes "Are you serious? This is not even funny.";
+			close;
+	}
+}
+
+dewata,165,103,5	script	Adventurer Semangat	534,{
+	mes "[Adventurer Semangat]";
+	mes "I also traveled around the world";
+	mes "when I was young like you.";
+	mes "^FF0000Moneky, Cuttlefish";
+	mes "Eagle, and Snake^000000,";
+	mes "All were good friends I met";
+	mes "during my travels.";
+	next;
+	mes "[Adventurer Semangat]";
+	mes "I still have passion for adventure";
+	mes "and traveling.";
+	mes "But, I can't just leave";
+	mes "my beloved wife and";
+	mes "grandchildren behind...";
+	next;
+	mes "[Adventurer Semangat]";
+	mes "You will also have something";
+	mes "or someone that is as precious";
+	mes "in your heart someday.";
+	close;	
+}
+
+dewata,139,114,5	script	Old Wife#dewata	535,{
+	mes "[Semangat's Wife]";
+	mes "Where's that old man";
+	mes "gone off to again?";
+	mes "Have you seen my husband around?";
+	next;
+	if(select("I think I saw him there!:No, I haven't...")==2) {
+		mes "[Semangat's Wife]";
+		mes "Oh. Please let me know";
+		mes "if you ever see him around.";
+		close; }
+	mes "[Semangat's Wife]";
+	mes "He ran away when I was";
+	mes "looking for him. He should";
+	mes "be somewhere, telling tall tales";
+	mes "to some travelers, like always.";
+	next;
+	mes "[Semangat's Wife]";
+	mes "I apologize on behalf of";
+	mes "my husband. Please don't";
+	mes "believe his foolish stories,";
+	mes "saying he met with ^FF0000Monkey and";
+	mes "Snakes^000000, or that he fought alongside a ^FF0000Cuttlerfish^000000.";
+	next;
+	mes "[Semangat's Wife]";
+	mes "He has been living here";
+	mes "for entire life.";
+	mes "Yet, he always finds some";
+	mes "travelers who will listen to his made-up tales.";
+	close;
+}
+
+dewata,249,87,4	script	Mum#dewata	101,{
+	mes "[Mum]";
+	mes "Ukki~ Ukki~ Where did she go?";
+	close;
+}
+
+dewata,251,85,5	script	Poppa#dewata	97,{
+	mes "[Poppa]";
+	mes "Honey, is Ukki lost again?";
+	close;
+}
+
+dewata,227,129,4	script	Sarr#dewata	538,{
+	mes "[Sarr]";
+	mes "They're hiding so I should seek.";
+	mes "I'll find them for sure!~";
+	next;
+	mes "[Sarr]";
+	mes "One~";
+	next;
+	mes "[Sarr]";
+	mes "Two~ Three~";
+	next;
+	mes "[Sarr]";
+	mes "Four~ Five~ Six~";
+	next;
+	mes "[Sarr]";
+	mes "... ... ... ...";
+	next;
+	mes "[Sarr]";
+	mes "Ninty nine~ One hundred!!! Now I'm coming~";
+	close;
+}
+
+dewata,193,145,4	script	Sipo#dewata	538,{
+	mes "[Sipo]";
+	mes "Sarr won't find me here, right?";
+	next;
+	emotion e_omg,1;
+	emotion e_gg;
+	mes "[Sipo]";
+	mes "I found Siyak!! Come out, come out!!";
+	next;
+	mes "[Sipo]";
+	mes "Hehe~ Now Siyak is IT~ I'll just keep hiding in here.";
+	close;
+}
+
+dewata,228,177,4	script	Majya#dewata	538,{
+	mes "[Majya]";
+	mes "I was playing hide-and-seek with my friends...";
+	next;
+	emotion e_hmm;
+	mes "[Majya]";
+	mes "I've been just standing here, and";
+	mes "they haven't found me for 3 hours...";
+	next;
+	mes "[Majya]";
+	mes "What should I do? Come out? I";
+	mes "don't want to be IT!";
+	close;
+}
+
+dewata,269,208,5	script	Little Kid in Town	538,{
+	mes "[Kid]";
+	mes "Hey bro, look at that man!";
+	next;
+	mes "[Kid]";
+	mes "He's been lying there for a week doin' nothin'...";
+	next;
+	mes "[Kid]";
+	mes "Who IS that man?";
+	next;
+	mes "[Kid]";
+	mes "I sure don't want to be a lazybones like him when I grown up.";
+	close;
+}
+
+dewata,279,213,4	script	Tourist#dewata-1	887,{
+	mes "[Reclining Tourist]";
+	mes "Wow~ This is really comfy~";
+	next;
+	mes "[Reclining Tourist]";
+	mes "I'm having a great time just relaxing.";
+	next;
+	mes "[Reclining Tourist]";
+	mes "You should lie down here, too.";
+	mes "Once you do, you'll never want to get up.";
+	next;
+	emotion e_heh;
+	mes "[Reclining Tourist]";
+	mes "That's why I haven't moved in a";
+	mes "whole week! Hahahaha~";
+	close;
+}
+
+dewata,280,236,5	script	Settler#dewata	726,{
+	mes "[Settler]";
+	mes "I'm not really from ^C35817Dewata^000000.";
+	mes "But while traveling,";
+	mes "I found this place...";
+	mes "and made my decision";
+	mes "to live in this beautiful town.";
+	next;
+	mes "[Settler]";
+	mes "I've been happy to live here,";
+	mes "to find and experience";
+	mes "all these beautiful sights.";
+	mes "It's a dream come true!";
+	next;
+	mes "[Settler]";
+	mes "Would you ever think of settling here too?";
+	close;
+}
+
+dewata,221,237,5	script	Young Man#dewata-2	536,{
+	set .@n$, "[Fruit Fancier]";
+	mes .@n$;
+	mes "What's wrong with your faaaaaace?";
+	mes "You must really be clueless!";
+	next;
+	mes .@n$;
+	mes "Let me drop some knowledge on ya.";
+	next;
+	mes .@n$;
+	mes "I may be a youngling, but no one";
+	mes "knows more than I do about ^C7A317Palm";
+	mes "Fruit^000000. All right! What do you want to know?";
+	next;
+	switch(select("About the shell...:About the pulp...:About the palm kernel...:No thanks.")) {
+		case 1:
+			mes .@n$;
+			mes "So you want to know about Palm";
+			mes "Fruit's pulp? Let me explain.";
+			next;
+			mes .@n$;
+			mes "Normally Palm Fruit's shell is";
+			mes "used for making oil. Palm Oil is a";
+			mes "useful ingredient for many dishes.";
+			next;
+			mes .@n$;
+			mes "If you want to know how to use";
+			mes "Palm Oil, go and find Memo on the";
+			mes "north side of Dewata island. Every";
+			mes "day he makes traditional drinks with Palm Oil.";
+			next;
+			mes .@n$;
+			mes "Anyway, we refer to the oil that";
+			mes "comes from the Palm Fruit as Palm";
+			mes "Oil or Coconut Oil, which is well";
+			mes "known for its quality.";
+			next;
+			mes .@n$;
+			mes "The leftovers from oil production";
+			mes "get dried, and are used for fuel";
+			mes "in cooking or heating.";
+			next;
+			mes .@n$;
+			mes "It burns well and has a good smell. It can't get better than that.";
+			next;
+			mes .@n$;
+			mes "Ok!! That is all about pulp!";
+			mes "It takes too long to explain all";
+			mes "the useful effects of Palm Fruit shells.";
+			next;
+			mes .@n$;
+			mes "It's not like this is extent of";
+			mes "my knowledge. Don't get me wrong!";
+			close;
+		case 2:
+			mes .@n$;
+			mes "So, you want to know about the";
+			mes "Palm interior? Let me explain.";
+			next;
+			mes .@n$;
+			mes "Palm tree fruit has 2 layers of";
+			mes "pulp. The outside is very rough,";
+			mes "and the inside is smooth.";
+			next;
+			mes .@n$;
+			mes "Hmm... Yes! The pulp of the Palm";
+			mes "tree fruit is a little harder than";
+			mes "a walnut shell. It must be the";
+			mes "water that it contains inside.";
+			next;
+			mes .@n$;
+			mes "Inside of the shell, there's about";
+			mes "300cc water, which is useful in";
+			mes "quenching people's thirst since";
+			mes "Dewata island has very hot weather.";
+			next;
+			mes .@n$;
+			mes "And it's not like we just throw it";
+			mes "away one we drink the water inside!!";
+			next;
+			mes .@n$;
+			mes "We can also make a quality canteen";
+			mes "out of it! Like i said, it has a";
+			mes "really thick outer shell, enough";
+			mes "to act as water bottle.";
+			next;
+			mes .@n$;
+			mes "It is also great to make charcoal.";
+			mes "Charcoal made out of palm fruit is";
+			mes "well known for long-lasting and";
+			mes "quality fire.";
+			next;
+			mes .@n$;
+			mes "People love to cook seafood and";
+			mes "chicken with Palm Fruit charcoal.";
+			next;
+			mes .@n$;
+			mes "It has the extra bonus of";
+			mes "burning with a pleasant palm smell.";
+			next;
+			mes .@n$;
+			mes "Ok!! That is all for pulp";
+			mes "information. It takes too long to";
+			mes "explain all the useful effects.";
+			next;
+			mes .@n$;
+			mes "It's not like this is all I know.";
+			mes "Don't get me wrong!";
+			close;
+		case 3:
+			mes .@n$;
+			mes "So, you want to know about tender";
+			mes "kernel inside? Let me explain.";
+			next;
+			mes .@n$;
+			mes "Ther kernel inside of the hard pulp is used as a natural digestive.";
+			next;
+			mes .@n$;
+			mes "Not much to say about the kernel inside...";
+			next;
+			mes .@n$;
+			mes "But we do make sure to use every";
+			mes "part of the palm fruit.";
+			next;
+			mes .@n$;
+			mes "Wouldn't you argee?";
+			close;
+		case 4:
+			mes .@n$;
+			mes "Argh! You have no interest in the world!";
+			close;
+	}
+}
+
+dewata,245,244,4	script	Lodge Employee	536,{
+	mes "[Lodge Employee]";
+	mes "Argg~ This is really ticking me off!";
+	close;
+}
+
+dewata,204,230,5	script	Dieting Lady	537,{
+	
+	if (!countitem(11533)) {
+		mes "[Dieting Lady]";
+		mes "Ah~ I'm starving!!";
+		mes "I should be on a diet now.";
+		mes "Why am I hungry?";
+		next;
+		mes "[Dieting Lady]";
+		mes "Don't talk to me too much!!";
+		mes "I want to try that grilled ^348017Satay^000000";
+		mes "so much~!!!!!";
+		close; }
+	mes "[Dieting Lady]";
+	mes "Is that mouth-watering";
+	mes "^348017Satay^000000 for me?";
+	next;
+	if(select("Yes, want a taste?:No, it's for me!")==2) {
+		emotion e_pif;
+		mes "[Dieting Lady]";
+		mes "Argh... You are so greedy!";
+		mes "Since you don't want to share...";
+		mes "I shouldn't cheat on my diet";
+		mes "even for something that looks and";
+		mes "smells so good...";
+		close; }
+	mes "[Dieting Lady]";
+	mes "Thank you so much!!";
+	mes "I've been so hungry~!!";
+	mes "The smell of this ^348017Satay^000000";
+	mes "is so good~!";
+	delitem 11533,1;
+	next;
+	getitem 11533,1;
+	mes "[Dieting Lady]";
+	mes "Ah... gotta come back to my senses.";
+	mes "Too much of a good thing is bad...";
+	mes "I should stick with my diet.";
+	mes "Sorry, I'll give it back to you.";
+	close;
+}
+
+dewata,179,204,4	script	Young Lady#dewata	537,{
+	mes "[Young Lady]";
+	mes "When you are outside of the town";
+	mes "and meet ^FF0000Tiger, Monkey, or Pig^000000,";
+	mes "make sure avoid them.";
+	next;
+	select("What do you mean?");
+	mes "[Young Lady]";
+	mes "I haven't seen yet,";
+	mes "but legend says there's a";
+	mes "cruel monster named ^FF0000Leak^000000";
+	mes "which can transform into an animal";
+	mes "and hypnotize people into killing.";
+	next;
+	mes "[Young Lady]";
+	mes "You know the dangers of this world.";
+	mes "It never hurts to be careful,";
+	mes "even if it's just an urban legend.";
+	close;
+}
+
+dewata,144,216,4	script	Energetic Kid	538,{
+	mes "[Energetic Kid]";
+	mes "My parents used to tell me...";
+	next;
+	mes "[Energetic Kid]";
+	mes "^348017- Son, -";
+	mes "- You should study hard. -";
+	mes "- Be happy. -";
+	mes "- Live a slow -";
+	mes "- and safe life. -";
+	mes "- The moutain over yonder -";
+	mes "- will always be there for you. -^000000";
+	next;
+	mes "[Energetic Kid]";
+	mes "Isn't it a great philosophy?";
+	mes "I want to live that way";
+	mes "and become a great person,";
+	mes "and help all of the people in our";
+	mes "town live happily ever after!";
+	close;
+}
+
+dewata,117,156,5	script	Dreaming Kid	538,{
+	mes "[Dreaming Kid]";
+	mes "My granny says";
+	mes "there was once a bird named ^FF0000Garuda^000000";
+	mes "who flew above this town.";
+	mes "Afterwards we had some great harvests";
+	mes "and were able to live happily.";
+	next;
+	mes "[Dreaming Kid]";
+	mes "I want to see that bird";
+	mes "flying above our town again!";
+	mes "Then my mom, dad";
+	mes "granny, and grandpa";
+	mes "can be happy like the old times.";
+	mes "What do you think?";
+	close;
+}
+
+dewata,211,272,4	script	Lodge Owner	534,{
+	mes "[Lodge Owner]";
+	mes "These days we have many";
+	mes "honeymooners visiting us.";
+	next;
+	mes "[Lodge Owner]";
+	mes "It must be the beautiful scenery, right?";
+	next;
+	mes "[Lodge Owner]";
+	mes "I'm happy with my business. I hope";
+	mes "we have a lot more visitors like that.";
+	next;
+	mes "[Lodge Owner]";
+	mes "Ah! You should bring your lover to";
+	mes "Dewata on your honeymoon.";
+	mes "I'll give you a good price~";
+	close;
+}
+
+dewata,233,263,7	script	Sweet Married Couple#1	828,{
+	emotion e_kis;
+	mes "[Sweet Husband]";
+	mes "You are the most beautiful thing in";
+	mes "the world, baby~";
+	next;
+	emotion e_kis2;
+	mes "[Sweet Wife]";
+	mes "Really? I'm that beautiful? I love";
+	mes "you, honey~";
+	next;
+	emotion e_heh;
+	emotion e_heh,1,"Sweet Married Couple#2";
+	mes "[Sweet Married Couple]";
+	mes "Hahahahahahahahahahahahahahahahahah";
+	mes "ahahahahahahahahahahahahahahahahahaha";
+	mes "Hohohohohohohohohohohohohohohohohoh";
+	mes "ohohohohohohohohohohohohohohohohohoho";
+	next;
+	mes "[Sweet Husband]";
+	mes "Come on now, I'm growing tired of this. Let's go.";
+	close;
+}
+
+dewata,234,263,7	script	Sweet Married Couple#2	727,{
+	emotion e_what;
+	mes "[Sweet Wife]";
+	mes "Baby~ You know what flower that is~?";
+	next;
+	mes "[Sweet Husband]";
+	mes "Hmm? I don't know. But it's really pretty.";
+	next;
+	emotion e_what;
+	mes "[Sweet Wife]";
+	mes "Baby~ Who's prettier, me or the flower?";
+	next;
+	emotion e_kis;
+	mes "[Sweet Husband]";
+	mes "No matter how pretty the flower is,";
+	mes "you are always more beautiful~";
+	next;
+	emotion e_kis2;
+	mes "[Sweet Wife]";
+	mes "Really? I'm that pretty? I love you, sweetie~";
+	next;
+	emotion e_heh;
+	emotion e_heh,1,"Sweet Married Couple#1";
+	mes "[Sweet Married Couple]";
+	mes "Hahahahahahahahahahahahahahahahahah";
+	mes "ahahahahahahahahahahahahahahahahahaha";
+	mes "Hohohohohohohohohohohohohohohohohoh";
+	mes "ohohohohohohohohohohohohohohohohohoho";
+	next;
+	mes "[Sweet Wife]";
+	mes "Come on now, this bores me. Let's move on.";
+	close;
+}
+
+dewata,278,281,4	script	Happily Married Grandpa	534,{
+	mes "[Happily Married Grandpa]";
+	mes "Today, I should ask my lady to";
+	mes "cook me some ^348017fried rice^000000.";
+	next;
+	mes "[Happily Married Grandpa]";
+	mes "My wife's ^348017fried rice^000000 is";
+	mes "always very special!";
+	next;
+	emotion e_lv;
+	mes "[Happily Married Grandpa]";
+	mes "It makes me love her even more.";
+	mes "You can't imagine the wonderful flavor!";
+	close;
+}
+
+dewata,280,277,4	script	Happily Married Grandma	535,{
+	emotion e_swt2;
+	mes "[Happily Married Grandma]";
+	mes "In my younger days,";
+	mes "there were many gentleman";
+	mes "who wanted to court me.";
+	next;
+	mes "[Happily Married Grandma]";
+	mes "Yet, I met just the right guy,";
+	mes "and got married.";
+	mes "I asked what he likes best";
+	mes "about me, he said it was";
+	mes "my homemade ^348017fried rice^000000.";
+	next;
+	mes "[Happily Married Grandma]";
+	mes "And since then, he only asks me";
+	mes "to make ^348017fried rice^000000 for dinner.";
+	mes "Over 40 years of marriage and";
+	mes "he still doesn't get tired of it.";
+	next;
+	emotion e_lv;
+	mes "[Happily Married Grandma]";
+	mes "I always think it was lucky";
+	mes "to be growing old with a guy";
+	mes "who loves what I cook.";
+	close;
+}
+
+dewata,114,243,5	script	Lazy Young Man	536,1,1,{
+	if (countitem(11534)) {
+		mes "[Lazy Young Man]";
+		mes "Wewt~!! Isn't that Palm Juice?";
+		mes "Can you give me that? I just woke";
+		mes "up, and my throat is parched!";
+		next;
+		if(select("Give:Don't give")==2) {
+			mes "[Lazy Young Man]";
+			mes "So be it~ Ok...";
+			close; }
+		mes "[Lazy Young Man]";
+		mes "Really? For me?? I'll give you this in return... Thanks!";
+		delitem 11534,1;
+		// Need more information
+		if (rand(1,2)==1) getitem 7034,1; // Red Stocking
+		else getitem 735,1; // Chung Jah
+		close; }
+	mes "[Lazy Young Man]";
+	mes "Ah~ Thristy~ Anyone have some Palm";
+	mes "juice for me?~";
+	close;
+OnTouch:
+	if (countitem(11534)) end;
+	for(set .@i,0; .@i<4; set .@i,.@i+1) {
+		emotion e_an;
+		mes "[Lazy Young Man]";
+		mes "Arrgg~ I'm thirsty~~ so thirsty~~";
+		mes "Give me Palm juice... Palm Juuiice~~";
+		if (.@i==3) close;
+		next;
+	}
+}
+
+dewata,127,248,5	script	Wishing Kid	539,{
+	mes "[Wishing Kid]";
+	mes "My family has been brewing";
+	mes "traditional Dewata Wine for ages.";
+	mes "I want to drink it myself,";
+	mes "but my dad says I'm too young.";
+	mes "He said I can drink it";
+	mes "only after I sleep for over";
+	mes "^FF0000100 days^000000.";
+	next;
+	mes "[Wishing Kid]";
+	mes "All grown-ups love to drink";
+	mes "my dad's wine.";
+	mes "I want to try some so bad.";
+	mes "But, what should I do...?";
+	mes "I've forgotten how many ^FF0000nights^000000";
+	mes "I've already slept... boo hoo!";
+	close;
+}
+
+dewata,75,122,5	script	Monk#dewata-1	834,{
+	mes "[Monk]";
+	mes "You are stranger here. What";
+	mes "brings here to this quiet place?";
+	next;
+	if(select("I'm sightseeing:No reason")==2) {
+		mes "[Monk]";
+		mes "Good day to you...";
+		close; }
+	mes "[Monk]";
+	mes "Oh, you are a tourist. This is the";
+	mes "'^0000FFPadoga^000000' worshiping the great";
+	mes "Buddha. Please be respectful of";
+	mes "the monks praying here.";
+	close;
+}
+
+dewata,71,79,0	script	Monk#dewata-2	834,{
+	mes "[Monk]";
+	mes "This tower is built on the edge of a";
+	mes "coastal cliff. You can pray with the";
+	mes "cool ocean breeze in your hair.";
+	next;
+	mes "[Monk]";
+	mes "Come, you should feel the";
+	mes "compassion of our Buddha in this";
+	mes "pleasant weather.";
+	close;
+}
+
+dewata,69,101,5	script	Monk#dewata-3	834,{
+	mes "[Monk]";
+	mes "We have the pagoda for the worship of";
+	mes "Buddhas. Each temple has one of";
+	mes "these towers, though not many";
+	mes "people come here besides other monks.";
+	next;
+	switch(select("I see...:Explain about Buddhas:Ah, okay.")) {
+		case 1:
+			mes "[Monk]";
+			mes "You must feel the compassion of our Buddha!";
+			close;
+		case 2:
+			mes "[Monk]";
+			mes "Buddha is our God from Dewata myth,";
+			mes "the king of souls and also";
+			mes "the leader of good gods.";
+			next;
+			mes "[Monk]";
+			mes "Buddha is the guardian of souls,";
+			mes "often described in traditional";
+			mes "Dance fighting against the";
+			mes "Magician Rangda.";
+			next;
+			mes "[Monk]";
+			mes "In Dewata we believe there are many";
+			mes "deities protecting each island and";
+			mes "tribal locale.";
+			next;
+			mes "[Monk]";
+			mes "So we do have different";
+			mes "manifestations of the Buddha,";
+			mes "usually described as a bear, tiger,";
+			mes "dragon, snake, or lion.";
+			next;
+			mes "[Monk]";
+			mes "Great Lion is one of the famous Buddhas";
+			mes "worshipped in Dewata.";
+			next;
+			mes "[Monk]";
+			mes "I hope this was a good explanation";
+			mes "for you. Let me know if there is";
+			mes "anything else you want to know.";
+			close;
+		case 3:
+			mes "[Monk]";
+			mes "Good day to you...";
+			close;
+	}
+}
+
+dewata,67,186,7	script	Monk#dewata-4	834,{
+	mes "[Monk]";
+	mes "I am a monk, content to spend my days in religious study.";
+	next;
+	mes "[Monk]";
+	mes "I've just returned from a";
+	mes "pilgrimage to Borobudur temple with";
+	mes "my fellow monks...";
+	next;
+	mes "[Monk]";
+	mes "Borobudur temple has many pilgrims";
+	mes "visiting, since it is one of few";
+	mes "temples left worshipping the";
+	mes "Great Buddha.";
+	close;
+}
+
+dewata,65,188,7	script	Monk#dewata-5	834,{
+	mes "[Monk]";
+	mes "Borobudur temple is one of few";
+	mes "temples left worshipping the";
+	mes "Great Buddha.";
+	next;
+	mes "[Monk]";
+	mes "I' don't understand why there are";
+	mes "only a few temples left that follow";
+	mes "our ways...";
+	close;
+}
+
+dewata,63,190,7	script	Monk#dewata-6	834,{
+	mes "[Monk]";
+	mes "Are you a Tourist? You can make an";
+	mes "offering and a wish to one of the shrines.";
+	next;
+	mes "[Monk]";
+	mes "Our Great Buddha may grant your wish...";
+	close;
+}
+
+dewata,61,192,7	script	Monk#dewata-7	834,{
+	mes "[Monk]";
+	mes "Our Great Buddha is the king of";
+	mes "souls and the leader of all good gods.";
+	next;
+	mes "[Monk]";
+	mes "The Dewata tribes believe in";
+	mes "Buddha, but the strange thing is how they";
+	mes "all describe Buddha as different creatures.";
+	next;
+	mes "[Monk]";
+	mes "I'm not really sure about the";
+	mes "reason for that. Maybe because";
+	mes "there are many different tribes in";
+	mes "Dewata with different characteristics.";
+	close;
+}
+
+dewata,89,191,0	script	Small Shrine#A::DewShrine	111,{
+	mes "- There is a small shrine here. -";
+	mes "There are many people making wishes.";
+	next;
+	switch(select("Make a donation:Make a wish:Walk away.")) {
+		case 1:
+			mes "Donation case says:";
+			mes "^FF00001,000 ~ 100,000 Zeny^000000";
+			mes "How much you want to donate?";
+			next;
+			input .@donate,0,100000;
+			if (.@donate < 1000) {
+				mes "- Cancelled. -";
+				close; }
+			mes "- What do you wish for? -";
+			next;
+			input .@wish$;
+			mes "You have donated to the small shrine and made the wish ^0000FF"+.@wish$+"^000000.";
+			next;
+			set Zeny, Zeny-.@donate;
+			specialeffect EF_FLASHER;
+			mes "- Mysterious energy comes out from the shrine. -";
+			next;
+			skilleffect 34,0; sc_start SC_BLESSING,360000,10;
+			mes "- You have received the shrine's blessing. -";
+			next;
+			mes "- It feels like this wish could come true. -";
+			close;	
+		case 2:
+			mes "- What is your wish? -";
+			next;
+			input .@wish$;
+			mes "- You have made your wish for ^0000FF"+.@wish$+"^000000 at this small shrine. -";
+			next;
+			specialeffect EF_FLASHER;
+			mes "- Mysterious energy comes out from the shrine. -";
+			next;
+			skilleffect 34,0; sc_start SC_BLESSING,60000,1;
+			mes "- You have received the shrine's blessing. -";
+			next;
+			mes "- It feels like this wish could come true. -";
+			close;
+		case 3:
+			close;
+	}
+}
+
+dewata,89,212,0	duplicate(DewShrine)	Small Shrine#B	111
+dewata,68,212,0	duplicate(DewShrine)	Small Shrine#C	111
+dewata,68,191,0	duplicate(DewShrine)	Small Shrine#D	111
+
+dewata,78,192,5	script	Borobudur Temple Manager	536,{
+	mes "[Borobudur Temple Manager]";
+	mes "The weather today is so beautiful.";
+	if (checkquest(9164)>=0 && countitem(11533)) {
+		next;
+		mes "[Borobudur Temple Manager]";
+		mes "By the way, do you have";
+		mes "something to tell me...?";
+		next;
+		select("^0000FFTribal Chief Paiko^000000");
+		mes "[Borobudur Temple Manager]";
+		mes "I never knew such a thing had";
+		mes "happened. If you had told me in";
+		mes "advance, I could have helped at";
+		mes "least a little bit.";
+		mes "Still, things have gone well with your help.";
+		next;
+		mes "[Borobudur Temple Manager]";
+		mes "Ah, it is the ^4AA02CSatay^000000 that I";
+		mes "sampled when the tribe invited me some time ago.";
+		next;
+		mes "[Borobudur Temple Manager]";
+		mes "Good~ This is the same taste I";
+		mes "remember. To give my thanks";
+		mes "I will pass along story";
+		mes "that may interest you.";
+		next;
+		mes "[Borobudur Temple Manager]";
+		mes "Legend tells of a strange bird";
+		mes "called ^FF0000Garuda^000000.";
+		mes "It has the torso, arms and legs of";
+		mes "a human but has the head and beak";
+		mes "of an eagle.";
+		next;
+		mes "[Borobudur Temple Manager]";
+		mes "The Story of this bird describes";
+		mes "it helping the gods exterminate";
+		mes "wicked demons and snakes.";
+		next;
+		mes "[Borobudur Temple Manager]";
+		mes "The tale has been passed down from";
+		mes "generation to generation.";
+		mes "Quite interesting, isn't it?";
+		next;
+		mes "[Borobudur Temple Manager]";
+		mes "I am sure in the village of the";
+		mes "^C35817Jaty Tribe^000000 there are many";
+		mes "legendary stories.";
+		mes "When I get to meet the Chief, I";
+		mes "will hear many such stories for sure.";
+		next;
+		mes "[Borobudur Temple Manager]";
+		mes "I am not certain when we will";
+		mes "cross paths again, but I hope we";
+		mes "will meet again someday.";
+		mes "I wish you a pleasant journey,";
+		mes "young traveler.";
+		delitem 11533,1;
+		changequest 9164,9165; }
+	close;
+}
+
+dewata,95,203,5	script	Travel Guide#dewata	536,{
+	emotion e_swt2;
+	mes "[Travel Guide]";
+	mes "This temple behind me is called";
+	mes "Borobudur.";
+	mes "Borobudur temple was built in the";
+	mes "9th century";
+	mes "to venerate the Great Buddha, an";
+	mes "ancient religious figure.";
+	next;
+	emotion e_swt2;
+	mes "[Travel Guide]";
+	mes "This temple is made with 6 square";
+	mes "platforms and 3 round platforms,";
+	mes "and 2672 hand carved relief panels";
+	mes "as well as 504 statues of various";
+	mes "Buddhas.";
+	next;
+	emotion e_swt2;
+	mes "[Travel Guide]";
+	mes "The central stupa, or shrine, is";
+	mes "located at the center of the high";
+	mes "platform, surrounded by 72";
+	mes "more statues.";
+	next;
+	emotion e_swt2;
+	mes "[Travel Guide]";
+	mes "Even in modern times Borobudur";
+	mes "temple is the pilgrimage site for many";
+	mes "monks worshipping the Buddha. It's";
+	mes "also a major tourist attraction, as";
+	mes "you can imagine.";
+	next;
+	mes "[Travel Guide]";
+	mes "That is all I have on Borobudur";
+	mes "temple, are there any questions?";
+	mes "If not, we can move to the next spot.";
+	close;
+}
+
+dewata,97,207,4	script	Tourist#dewata-2	803,{
+	mes "[Tourist]";
+	mes "Oh, dag-nabbit... I've gone and";
+	mes "picked the wrong tour guide...";
+	next;
+	emotion e_turn;
+	mes "[Tourist]";
+	mes "This hombre is a real snooze...";
+	mes "Why make it longer..";
+	next;
+	emotion e_sigh;
+	mes "[Tourist]";
+	mes "I need to change my travel agent...";
+	close;
+}
+
+dewata,99,203,4	script	Tourist#dewata-3	755,{
+	emotion e_ok;
+	mes "[Tourist]";
+	mes "Oh~ This is very interesting. A";
+	mes "temple that worships the Buddha..";
+	next;
+	mes "[Tourist]";
+	mes "But I don't really get all the";
+	mes "symbology here.";
+	next;
+	mes "[Tourist]";
+	mes "So beautiful... I wonder who built";
+	mes "this place?";
+	close;
+}
+
+dewata,101,206,4	script	Tourist#dewata-4	90,{
+	mes "[Tourist]";
+	mes "Aren't we going to get lost without";
+	mes "the guide?";
+	next;
+	mes "[Tourist]";
+	mes "We get lost already last time..";
+	close;
+}
+
+dewata,100,206,4	script	Tourist#dewata-5	59,{
+	mes "[Tourist]";
+	mes "Hey, let's go there! Hurry up,";
+	mes "while the tour guide is explaining~";
+	next;
+	mes "[Tourist]";
+	mes "Come on... It doesn't sound like";
+	mes "he's going to stop talking anytime soon.";
+	close;
+}
+
+dewata,278,100,4	script	Missing Child#dewata	703,{
+	mes "[Ukki]";
+	mes "WaaWaaWaaWaaWaaWaaWaaWaaWaaWaa";
+	mes "WaaWaaWaaWaaWaaWaa~";
+	next;
+	select("Hey, kid...");
+	emotion e_sob;
+	mes "[Ukki]";
+	mes "WaaWaaWaaWaaWaaWaaWaaWaaWaaWaa";
+	mes "WaaWaaWaaWaaWaaWaa~";
+	next;
+	emotion e_sob;
+	emotion e_swt2;
+	mes "[Ukki]";
+	mes "Mama~ Papa~ Where are youuu~ Waa~";
+	next;
+	emotion e_dots,0;
+	select("... ... ...");
+	close;
+}
+
+dew_fild01,101,259,5	script	Jaty Tribe Gatekeeper	541,{
+	mes "[Jaty Tribe Gatekeeper]";
+	mes "Welcome to ^FF0000Jaty^000000 town,";
+	mes "which reveres strength and bravery.";
+	mes "I wish you a safe and restful time here.";
+	close;
+}
+
+dew_fild01,106,306,4	script	R. Jaty Tribe Warrior	541,{
+	mes "[Reserved Jaty Warrior]";
+	mes "I want to be the very best";
+	mes "like no one ever was.";
+	next;
+	mes "[Reserved Jaty Warrior]";
+	mes "I'm learning hunting skills";
+	mes "these days. And I'm getting";
+	mes "better and better";
+	mes "every day!";
+	next;
+	mes "[Reserved Jaty Warrior]";
+	mes "I won't stop until";
+	mes "I become a true warrior!";
+	close;
+}
