@@ -964,7 +964,6 @@ void initChangeTables(void) {
 	StatusChangeStateTable[SC_MAGNETICFIELD]       |= SCS_NOMOVE;
 	StatusChangeStateTable[SC__MANHOLE]            |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_VACUUM_EXTREME]      |= SCS_NOMOVE;
-	StatusChangeStateTable[SC_FEAR]                |= SCS_NOMOVE|SCS_NOMOVECOND;
 	StatusChangeStateTable[SC_CURSEDCIRCLE_ATKER]  |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_CURSEDCIRCLE_TARGET] |= SCS_NOMOVE;
 	
@@ -3423,7 +3422,6 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum sc
 				  || (sc->data[SC_GRAVITATION] && sc->data[SC_GRAVITATION]->val3 == BCT_SELF)
 				  || (sc->data[SC_CLOAKING] && //Need wall at level 1-2
 							sc->data[SC_CLOAKING]->val1 < 3 && !(sc->data[SC_CLOAKING]->val4&1))
-				  || (sc->data[SC_FEAR] && sc->data[SC_FEAR]->val2 > 0)
 				 ) {
 			sc->cant.move += ( start ? 1 : -1 );
 		}
