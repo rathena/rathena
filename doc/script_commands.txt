@@ -1610,6 +1610,22 @@ in the previous example getarg(2,-1) would be 3 and getarg(3,-1) would be -1
 
 ---------------------------------------
 
+*getargcount()
+
+This function is used when you use the 'callsub' or 'callfunc' commands. In the 
+call you can specify arguments. This function will return the number of arguments 
+provided.
+
+Example:
+	callfunc "funcNPC",5,4,3;
+	...
+	function%TAB%script%TAB%funcNPC%TAB%{
+		set .@count, getargcount(); // 3
+		...
+	}
+
+---------------------------------------
+
 *return {<value>};
 
 This command causes the script execution to leave previously called function
@@ -1713,6 +1729,23 @@ prontera,150,150,0	script	TestNPC	123,{
 	}
 }
 
+
+---------------------------------------
+
+*is_function("<function name>")
+
+This command checks whether a function exists, returning 1 if function is found. 
+Otherwise, it will return 0.
+
+Example:
+	function	script	try	{
+		dothat;
+	}
+
+	-	script	test	-1,{
+		set .@try, is_function("try"); // 1
+		set .@not, is_function("not"); // 0
+	}
 
 ---------------------------------------
 
@@ -1964,6 +1997,31 @@ Example 2: counter-controlled loop
 		mes .@i;
 		set .@i, .@i - 1;
 	} while (.@i > 0);
+
+---------------------------------------
+
+*freeloop(<toggle>)
+
+Toggling this to enabled (1) allows the script instance to bypass the infinite loop 
+protection, allowing your script to loop as much as it may need. Disabling (0) will
+warn you if an infinite loop is detected.
+
+Example:
+	freeloop(1); // enable script to loop freely
+
+	//Be aware with what you do here.
+	for ( set .@i,0; .@i<.@bigloop; set .@i, .@i+1 ) {
+		dothis;
+		// will sleep the script for 1ms when detect an infinity loop to 
+		// let rathena do what it need to do (socket, timer, process, etc.)
+	}
+
+	freeloop(0); // disable
+
+	for ( set .@i,0; .@i<.@bigloop; set .@i, .@i+1 ) {
+		dothis;
+		// throw an infinity loop error
+	}
 
 ---------------------------------------
 
@@ -2668,6 +2726,8 @@ Valid types are:
 		if = 10000, then this item is sold in NPC shops only
 	4 - sex; 5 - equip; 6 - weight; 7 - atk; 8 - def; 9 - range;
 	10 - slot; 11 - look; 12 - elv; 13 - wlv; 14 - view id
+	
+	If RENEWAL is defined, 15 - matk
 
 Check sample in doc/sample/getiteminfo.txt
 
@@ -3948,6 +4008,16 @@ wall), the character is pushed only up to the obstacle.
     pushpc DIR_EAST, 5;
 
 ---------------------------------------
+
+*get_revision()
+
+This command will return the SVN revision number that the server is
+currently running on.
+
+	if ( get_revision() >= 15000 )
+        mes "Welcome rAthena !";
+
+---------------------------------------
 \\
 4,1.- Item-related commands
 \\
@@ -4275,10 +4345,15 @@ target cursor is shown.
 
 This command will open a crafting window on the client connected to the invoking 
 character. The 'item level' is a number which determines what kind of a crafting 
-window will pop-up. You can see the full list of such item levels in 
-'db/produce_db.txt' which determines what can actually be produced.
-The window will not be empty only if the invoking character can actually produce 
-the items of that type and has the appropriate raw materials in their inventory.
+window will pop-up. 
+
+You can see the full list of such item levels in 'db/produce_db.txt' which determines 
+what can actually be produced. The window will not be empty only if the invoking 
+character can actually produce the items of that type and has the appropriate raw
+materials in their inventory.
+
+The success rate to produce the item is the same as the success rate of the skill
+associated with the item level. If there is no skill id, the success rate will be 50%.
 
 Valid item levels are:
 
