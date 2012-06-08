@@ -4184,6 +4184,7 @@ um_fild01,34,280,6	script	Romeo#02	55,{
 			delitem 7100,7; // Sharp Leaf
 			getexp 10000,10000;
 			set romeo,4;
+			set para_suv01,40;
 			changequest 7217,7218;
 			mes "[Romeo]";
 			mes "Return to the ^33CC33Paradise Group Headquarters^000000 for your reward.";

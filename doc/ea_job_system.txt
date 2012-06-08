@@ -3,9 +3,10 @@
 //===== By ================================================
 //= Skotlex
 //===== Version ===========================================
-//= 0.1
+//= 0.2
 //=========================================================
 //= 0.1 - First release, explained as well as I could.
+//= 0.2 - Added info on third jobs. [Euphy]
 //===== Description =======================================
 //= A reference description of eA's inner job system (for
 //= use on scripts through the eaclass and roclass script
@@ -37,7 +38,8 @@ The eA Job System:
 	EAJ_THIEF	0x6
 	EAJ_TAEKWON	0x7
 	EAJ_GUNSLINGER	0x9
-	EAJ_NINJA	0x10
+	EAJ_NINJA	0x0A
+	EAJ_GANGSI	0x0D
 
 - Branch: All classes can be classified as "1st Class", "2-1 Class" or "2-2 Class":
 	
@@ -45,10 +47,11 @@ The eA Job System:
 	EAJL_2_2	0x200
 	EAJL_2	0x300
 
-- The third category is type. Classes can either be normal, rebirth/advanced or adopted.
+- The third category is type. Classes can either be normal, rebirth/advanced, adopted, or third class.
 
 	EAJL_UPPER	0x1000
 	EAJL_BABY	0x2000
+	EAJL_THIRD	0x4000
 
 So using these three categories, any job class can be constructed from the others. Let's take a swordman, for example.
 
@@ -70,6 +73,7 @@ Or getting out the rebirth versions of a swordman:
 	EAJ_SWORDMAN|EAJL_UPPER	-> EAJ_SWORDMAN_HIGH
 	EAJ_SWORDMAN|EAJL_2_1|EAJL_UPPER	-> EAJ_LORD_KNIGHT
 	EAJ_SWORDMAN|EAJL_2_2|EAJL_UPPER	-> EAJ_PALADIN
+	EAJ_SWORDMAN|EAJL_2_2|EAJL_THIRD	-> EAJ_ROYAL_GUARD
 
 Why are we using the bitwise OR operand ('|') rather than just adding? Because the OR is wreck-proof:
 
@@ -105,6 +109,11 @@ EAJL_BABY:
 	if (@job&EAJL_BABY)
 		mes "Don't you hate being weak?";
 
+EAJL_THIRD:
+	Checks if a class is a third job.
+	if(@job&EAJL_THIRD)
+		mes "Wow, you've really grown!";
+
 EAJ_UPPERMASK:
 	The upper mask can be used to "strip" the upper/baby characteristics of a class, used when you want to know if someone is a certain class regardless of rebirth/adopted status. For example, the following code would go through for Monks, Champions and Baby Monks:
 	if ((@job&EAJ_UPPERMASK) == EAJ_MONK)
@@ -118,6 +127,11 @@ EAJ_BASEMASK:
 		mes "Why I can't have discount like you guys do?";
 
 	Note that, like before, if you try to check versus any of the other classes (High merchant, blacksmith, etc) instead of basic merchant, the check will always fail for the same reasons previously explained.
+
+EAJ_THIRDMASK:
+	This mask strips 3rd class attributes.  It will give the "normal" class of a third job, regardless of rebirth/adopted status.  When used on non-third class characters, it will return the second job, or, if that also doesn't exist, the first.
+	if ((@job&EAJ_THIRDMASK) == EAJ_WARLOCK_T)
+		mes "You've gone through rebirth, I see.";
 
 The script commands eaclass, roclass:
 -------------------------------------------------------------------------------

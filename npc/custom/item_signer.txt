@@ -3,221 +3,122 @@
 //===== By: ==================================================
 //= Lupus
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
 //= Write you name on your rare equipment or weapon ^_-
 //= Original X-Mas mini-quest(could be used as a permanent one)
 //===== Additional Comments: =================================
-//= 
+//= 1.1 Cleaned and edited for general use. [Euphy]
 //============================================================
 
 prt_in,24,61,7	script	Perchik	47,{
+	
+	setarray .@Item[0],644,3;	// Item requirements: <ID>,<Count>{,...} (0 to disable)
+	setarray .@Cost[0],0,5000;	// Zeny requirements: <base price>,<price per refine>
+	
 	mes "[Perchik]";
-	if(BaseJob==Job_Novice || BaseLevel<50) {
-		mes "Sorry, I don't help newbies. Go kill more Porings.";
-		emotion e_sry;
-		close;
-	}
-	mes "Hi, I can ^000090sign your name^000000 on almost any rare item you can hold.";
+	mes "I can ^0055FFsign your name^000000 on almost any rare item you hold.";
 	next;
-	menu "Tell me more...",-, "Sign my items, please",M_DO;
-
-	mes "[Perchik]";
-	mes "I can put your name on any slotless equipment or weapon.";
-	emotion e_ic;
-	next;
-	mes "[Perchik]";
-	mes "A week ago, my BOSS told me to send away newbies. I dunno why.";
-	next;
-	mes "[Perchik]";
-	mes "For my work I accept ^0000803 Gift Box^000000es (gray one)";
-	mes "plus ^FF00005000z^000000 per each refine of your item.";
-	next;
-	emotion e_cry;
-	mes "[Perchik]";
-	mes "Alas, I have 12 hungry children";
-	mes "and a very angry wife.";
-	next;
-	mes "[Perchik]";
-	mes "Or it was... 12 angry children";
-	mes "and a very hungry wife...";
-	emotion e_hmm;
-	close;
-
-M_DO:
+	if(select("Tell me more...:Sign my items, please!")==1) {
+		mes "[Perchik]";
+		mes "I can put your name on any slotless equipment or weapon.";
+		emotion e_ic;
+		next;
+		mes "[Perchik]";
+		if (getarraysize(.@Item) || getarraysize(.@Cost)) {
+			mes "For my work I accept:";
+			if (getarraysize(.@Item))
+				for(set .@i,0; .@i<getarraysize(.@Item); set .@i,.@i+2)
+					mes " ~ "+.@Item[.@i+1]+"x "+getitemname(.@Item[.@i]);
+			if (.@Cost[0]) mes " ~ "+.@Cost[0]+" Zeny";
+			if (.@Cost[1]) mes " ~ "+.@Cost[1]+" Zeny per refine"; }
+		else mes "I work for free, but...";
+		next;
+		emotion e_cry;
+		mes "[Perchik]";
+		mes "Alas, I have 12 hungry children";
+		mes "and a very angry wife.";
+		next;
+		mes "[Perchik]";
+		mes "Or it was 12 angry children";
+		mes "and a very hungry wife...";
+		emotion e_hmm;
+		close; }
 	mes "[Perchik]";
 	mes "Show me your items to sign...";
-M_MENU:
 	next;
-	menu getequipname(1),M_PART1,getequipname(9),M_PART9,getequipname(10),M_PART10,getequipname(2),M_PART2,getequipname(4),M_PART4,
-	getequipname(3),M_PART3,getequipname(5),M_PART5,getequipname(6),M_PART6,getequipname(7),M_PART7,getequipname(8),M_PART8;
-
-	//Head Gear
-M_PART1:
-	set @part,1;
-	if (getequipisequiped(1)) goto L_CHECK1;
+	setarray .@pos$[1],"Upper Headgear","Armor","Left hand","Right hand","Garment","Footgear","Left Accessory","Right Accessory","Mid Headgear","Lower Headgear";
+	set .@menu$,"";
+	for (set .@i,1; .@i<=10; set .@i,.@i+1) {
+		if (getequipisequiped(.@i))
+			set .@menu$, .@menu$+.@pos$[.@i]+" [^0055FF"+getequipname(.@i)+"^000000]";
+		set .@menu$, .@menu$+":"; }
+	set .@part, select(.@menu$);
+	set .@id, getequipid(.@part);
+	set .@ref, getequiprefinerycnt(.@part);
 	mes "[Perchik]";
-	mes "A bald head under a cheap wig... There's nothing worthy to sign.";
-	emotion 6;
-	goto M_MENU;
-M_PART9:
-	set @part,9;
-	if (getequipisequiped(9)) goto L_CHECK1;
-	mes "[Perchik]";
-	mes "Glasses... I can't see any glasses...";
-	emotion 20;
-	goto M_MENU;
-M_PART10:
-	set @part,10;
-	if (getequipisequiped(10)) goto L_CHECK1;
-	mes "[Perchik]";
-	mes "I don't see any mask here.";
-	emotion 20;
-	goto M_MENU;
-	//Armor
-M_PART2:
-	set @part,2;
-	if (getequipisequiped(2)) goto L_CHECK1;
-	mes "[Perchik]";
-	mes "Your belly...? Yes, it's rather fat.";
-	emotion 6;
-	goto M_MENU;
-	//Left Hand
-M_PART3:
-	set @part,3;
-	if (getequipisequiped(3)) goto L_CHECK1;
-	mes "[Perchik]";
-	mes "Sign your left hand? I'm not a celebrity, you know...";
-	emotion 4;
-	goto M_MENU;
-	//Right Hand
-M_PART4:
-	set @part,4;
-	if (getequipisequiped(4)) goto L_CHECK1;
-	mes "[Perchik]";
-	mes "It isn't an armor... It's a mud!!! Wash your hands more often.";
-	emotion 4;
-	goto M_MENU;
-	//Garment
-M_PART5:
-	set @part,5;
-	if (getequipisequiped(5)) goto L_CHECK1;
-	mes "[Perchik]";
-	mes "Look... It's empty...";
-	goto M_MENU;
-	//Foot Gear
-M_PART6:
-	set @part,6;
-	if (getequipisequiped(6)) goto L_CHECK1;
-	mes "[Perchik]";
-	mes "Aw!! I don't like stinky feet.";
-	emotion 16;
-	goto M_MENU;
-	//Accessory1
-M_PART7:
-	set @part,7;
-	if (getequipisequiped(7)) goto L_CHECK1;
-	mes "[Perchik]";
-	mes "Yep... a pocket with a huge hole...";
-	emotion 20;
-	goto M_MENU;
-	//Accessory2
-M_PART8:
-	set @part,8;
-	if (getequipisequiped(8)) goto L_CHECK1;
-	mes "[Perchik]";
-	mes "I see your fat belly...";
-	emotion 20;
-	goto M_MENU;
-
-L_CHECK1:
-	set @ref,0;
-	set @id,getequipid(@part);
-	if(getequipisidentify(@part)) goto L_CHECK2;
-	mes "[Perchik]";
-	mes "How could you equip such unknown item?";
-	npctalk "What a sneaky cheater!";
-	emotion e_wah;
-	close;
-
-L_CHECK2:
-	set @ref,getequiprefinerycnt(@part);
-	mes "[Perchik]";
-	mes "You want me to sign your "+getitemname(@id)+"...";
-	if(BaseJob==Job_Novice) {
-		mes "But you're a Novice. My BOSS told me to send such weaklings away.";
-		emotion e_sry;
-		goto M_MENU;
-	}
-	set @slot0,getequipcardid(@part,0);
-	set @slot1,getequipcardid(@part,1);
-	set @slot2,getequipcardid(@part,2);
-	set @slot3,getequipcardid(@part,3);
-
-	if(@slot0==255 || @slot0==254 || @slot0<0) {
+	if (!getequipisequiped(.@part)) {
+		mes "Nothing is equipped there!";
+		emotion e_wah;
+		close; }
+	for(set .@i,0; .@i<4; set .@i,.@i+1)
+		set .@slot[.@i], getequipcardid(.@part,.@i);
+	if (.@slot[0]==255 || .@slot[0]==254 || .@slot[0]<0) {
 		mes "Alas, this item's already signed.";
-		mes "I would never touch masters work.";
+		mes "I would never touch a master's work.";
 		emotion e_hmm;
-		goto M_MENU;
-	}
-	if(@slot0>4000 && @slot0<5000) {
+		close; }
+	if (.@slot[0]>4000 && .@slot[0]<5000) {
 		mes "A card? Here?!";
 		mes "As I said before, I don't sign items with cards.";
 		emotion e_hmm;
-		goto M_MENU;
-	}
-	if(getiteminfo(@id,10)) {
-		mes "Sorry. I don't sign slotted items.";
+		close; }
+	if (getiteminfo(.@id,10)) {
+		mes "Sorry, I don't sign slotted items.";
 		emotion e_sry;
-		goto M_MENU;
-	}
+		close; }
 	getinventorylist;
-	for (set .@i,0; .@i < @inventorylist_count; set .@i,.@i+1){
-		if(@inventorylist_expire[.@i] != 0) {
+	for(set .@i,0; .@i<@inventorylist_count; set .@i,.@i+1)
+		if (@inventorylist_expire[.@i] != 0) {
 			mes "Sorry, I don't sign rental items!";
 			emotion e_hmm;
-			goto M_MENU;
-		}
-	}
-
-	if(@ref)mes "It has been refined "+@ref+" times... Adding ^FF00005000z^000000 per time.";
-	mes "Give me ^0000803 gray Gift Boxes^000000";
-	if(@ref)mes "and ^FF0000"+(5000*@ref)+"z^000000.";
+			close; }
+	set .@price, .@Cost[0]+(.@Cost[1]*.@ref);
+	if (getarraysize(.@Item) || .@price) {
+		mes "I will need:";
+		if (getarraysize(.@Item))
+			for(set .@i,0; .@i<getarraysize(.@Item); set .@i,.@i+2) {
+				mes " ~ "+.@Item[.@i+1]+"x "+getitemname(.@Item[.@i]);
+				if (countitem(.@Item[.@i]) < .@Item[.@i+1]) set .@nr,1; }
+		if (.@price) mes " ~ "+.@price+" Zeny"; }
+	mes "Shall I sign your ^0055FF"+getitemname(.@id)+"^000000?";
 	next;
-	menu "Ok!",-, "Leave",M_END;
-	if(Zeny>=(5000*@ref) && countitem(644)>=3) {
-		delitem 644,3;
-		set Zeny,Zeny-(5000*@ref);
-		goto L_MAKE;
-	}
-	mes "[Perchik]";
-	mes "I don't work for 'thanks'.";
-	emotion e_sry;
-	close;
-
-L_MAKE:
-	if(countitem2(@id,1,@ref,0,@slot0,@slot1,@slot2,@slot3)==0) {
+	if(select("Ok!:Leave")==2) {
 		mes "[Perchik]";
-		mes "Where is... "+getitemname(@id)+"?";
+		mes "See you...";
+		emotion e_yawn;
+		close; }
+	mes "[Perchik]";
+	if (Zeny < .@price || .@nr) {
+		mes "I don't work for 'thanks'.";
+		emotion e_sry;
+		close; }
+	if (!countitem2(.@id,1,.@ref,0,.@slot[0],.@slot[1],.@slot[2],.@slot[3])) {
+		mes "Where is "+getitemname(@id)+"...?";
 		npctalk "You're a snoozy cheater!";
 		logmes "CHEATER: Tried to sign an item not having it: "+getitemname(@id);
 		emotion e_wah;
-		close;
-	}
-	delitem2 @id,1,1,@ref,0,@slot0,@slot1,@slot2,@slot3;
-
-	mes "[Perchik]";
+		close; }
+	if (.@price) set Zeny, Zeny-.@price;
+	if (getarraysize(.@Item)) 
+		for(set .@i,0; .@i<getarraysize(.@Item); set .@i,.@i+2)
+			delitem .@Item[.@i], .@Item[.@i+1];
+	delitem2 .@id,1,1,.@ref,0,.@slot[0],.@slot[1],.@slot[2],.@slot[3];
 	mes "Done!";
 	emotion e_proud;
-
-	getitem2 @id,1,1,@ref,0,254,0,getcharid(0)&0xffff,(getcharid(0)>>16)&0xffff;
-	close;
-
-M_END:
-	mes "[Perchik]";
-	mes "See you...";
-	emotion e_yawn;
+	getitem2 .@id,1,1,.@ref,0,254,0,getcharid(0)&0xffff,(getcharid(0)>>16)&0xffff;
+	equip .@id;
 	close;
 }
