@@ -3592,7 +3592,7 @@ int parse_char(int fd)
 			i = search_mapserver(cd->last_point.map, -1, -1);
 
 			// if map is not found, we check major cities
-			if (i < 0) {
+			if (i < 0 || !cd->last_point.map) {
 				unsigned short j;
 				//First check that there's actually a map server online.
 				ARR_FIND( 0, ARRAYLENGTH(server), j, server[j].fd >= 0 && server[j].map[0] );
