@@ -743,7 +743,7 @@
 2034,0,6,4,-1,0x2,3,1,1,no,0,0,0,weapon,0,	GC_PHANTOMMENACE,Phantom Menace
 2035,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,		GC_HALLUCINATIONWALK,Hallucination Walk
 2036,0,6,4,-1,0x2,1:1:1:1:2,5,1,no,0,0,0,weapon,0,	GC_ROLLINGCUTTER,Rolling Cutter
-2037,7,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,	GC_CROSSRIPPERSLASHER,Cross Ripper Slasher
+2037,9:10:11:12:13,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,	GC_CROSSRIPPERSLASHER,Cross Ripper Slasher
 
 //****
 // AB Arch Bishop

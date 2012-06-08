@@ -2642,7 +2642,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		 **/
 		switch( skillid ) {
 			case RK_CRUSHSTRIKE:
-				skill_break_equip(src,EQP_WEAPON,10000,BCT_SELF);
+				skill_break_equip(src,EQP_WEAPON,2000,BCT_SELF); // 20% chance to destroy the weapon.
 				break;
 			case GC_VENOMPRESSURE: {
 					struct status_change *ssc = status_get_sc(src);
@@ -5973,7 +5973,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		if (i < 5) i = 5; //Minimum rate 5%
 
 		//Duration in ms
-		d = skill_get_time(skillid,skilllv) + (sstatus->dex - tstatus->dex)*500;
+		if( skillid == GC_WEAPONCRUSH){
+			d = skill_get_time(skillid,skilllv);
+			if(bl->type == BL_PC)
+				d += skilllv * 15 + (sstatus->dex - tstatus->dex);
+			else
+				d += skilllv * 30 + (sstatus->dex - tstatus->dex) / 2;
+		}else
+			d = skill_get_time(skillid,skilllv) + (sstatus->dex - tstatus->dex)*500;
+
 		if (d < 0) d = 0; //Minimum duration 0ms
 
 		switch (skillid) {
@@ -12402,7 +12410,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 	 * Rune Knight
 	 **/
 	case ST_RIDINGDRAGON:
-		if( !(sd->sc.option&OPTION_DRAGON)) {
+		if( !pc_isridingdragon(sd) ) {
 			clif_skill_fail(sd,skill,USESKILL_FAIL_LEVEL,0);
 			return 0;
 		}

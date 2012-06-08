@@ -84,9 +84,9 @@
 
 /* Renewal's dmg level modifier, used as a macro for a easy way to turn off. */
 #ifdef RENEWAL_LVDMG
-	#define RE_LVL_DMOD() \
-		if( status_get_lv(src) > 100 ) \
-			skillratio = skillratio * status_get_lv(src) / 100;
+	#define RE_LVL_DMOD(val) \
+		if( status_get_lv(src) > 100 && val > 0 ) \
+			skillratio = skillratio * status_get_lv(src) / val;
 	#define RE_LVL_MDMOD(val) \
 		if( status_get_lv(src) > 100 && val > 0) \
 			md.damage = md.damage * status_get_lv(src) / val;
@@ -95,7 +95,7 @@
 		if( status_get_lv(src) > 100 ) \
 			md.damage = md.damage * 150 / 100 + md.damage * status_get_lv(src) / 100;
 #else
-	#define RE_LVL_DMOD() 
+	#define RE_LVL_DMOD(val) 
 	#define RE_LVL_MDMOD(val)
 	#define RE_LVL_TMDMOD()
 #endif

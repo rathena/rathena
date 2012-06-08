@@ -625,6 +625,8 @@ enum e_pc_permission {
 #define pc_isridingwug(sd) ( (sd)->sc.option&OPTION_WUGRIDER )
 // Mechanic Magic Gear
 #define pc_ismadogear(sd) ( (sd)->sc.option&OPTION_MADOGEAR )
+// Rune Knight Dragon
+#define pc_isridingdragon(sd) ( (sd)->sc.option&OPTION_DRAGON )
 
 #define pc_stop_walking(sd, type) unit_stop_walking(&(sd)->bl, type)
 #define pc_stop_attack(sd) unit_stop_attack(&(sd)->bl)

@@ -1126,8 +1126,8 @@
 2028,0,2000,0,180000,0,0
 //-- GC_COUNTERSLASH
 2029,0,2000,0,0,0,0
-//-- GC_WEAPONCRUSH //CHECK duration 1 devist
-2030,0,1000,0,40000:80000:120000:160000:200000,0,0
+//-- GC_WEAPONCRUSH
+2030,0,1000,0,60000,0,0
 //-- GC_VENOMPRESSURE
 2031,0,1000,0,0,0,0
 //-- GC_POISONSMOKE //CHECK Cast time is said 2 second fixed, but no variable. Check duration 1 (was added / thought to be AoE duration)

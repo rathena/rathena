@@ -2904,7 +2904,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		status->aspd_rate -= ((skill+1)/2) * 10;
 	if(pc_isriding(sd))
 		status->aspd_rate += 500-100*pc_checkskill(sd,KN_CAVALIERMASTERY);
-	else if( sd->sc.option&OPTION_DRAGON )
+	else if(pc_isridingdragon(sd))
 		status->aspd_rate += 250-50*pc_checkskill(sd,RK_DRAGONTRAINING);
 	status->adelay = 2*status->amotion;
 
@@ -2923,7 +2923,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		sd->max_weight += 2000*skill;
 	if(pc_isriding(sd) && pc_checkskill(sd,KN_RIDING)>0)
 		sd->max_weight += 10000;
-	else if( sd->sc.option&OPTION_DRAGON )
+	else if(pc_isridingdragon(sd))
 		sd->max_weight += 5000+2000*pc_checkskill(sd,RK_DRAGONTRAINING);
 	if(sc->data[SC_KNOWLEDGE])
 		sd->max_weight += sd->max_weight*sc->data[SC_KNOWLEDGE]->val1/10;
@@ -7711,7 +7711,8 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val_flag |= 1|2|4;
 			if( sd )
 			{ // Removes Animals
-				if( pc_isriding(sd) ){ pc_setriding(sd, 0); pc_setoption(sd, sd->sc.option&~OPTION_DRAGON); }
+				if( pc_isriding(sd) ) pc_setriding(sd, 0);
+				if( pc_isridingdragon(sd) ) pc_setoption(sd, sd->sc.option&~OPTION_DRAGON);
 				if( pc_iswug(sd) ) pc_setoption(sd, sd->sc.option&~OPTION_WUG);
 				if( pc_isridingwug(sd) ) pc_setoption(sd, sd->sc.option&~OPTION_WUGRIDER);
 				if( pc_isfalcon(sd) ) pc_setoption(sd, sd->sc.option&~OPTION_FALCON);

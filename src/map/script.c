@@ -7865,7 +7865,7 @@ BUILDIN_FUNC(checkriding)
 	if( sd == NULL )
 		return 0;// no player attached, report source
 
-	if( pc_isriding(sd) || pc_isridingwug(sd) || sd->sc.option&OPTION_DRAGON )
+	if( pc_isriding(sd) || pc_isridingwug(sd) || pc_isridingdragon(sd) )
 		script_pushint(st, 1);
 	else
 		script_pushint(st, 0);
@@ -16132,7 +16132,7 @@ BUILDIN_FUNC(checkdragon) {
 	TBL_PC* sd;
 	if( (sd = script_rid2sd(st)) == NULL )
 		return 0;
-	if( sd->sc.option&OPTION_DRAGON )
+	if( pc_isridingdragon(sd) )
 		script_pushint(st,1);
 	else
 		script_pushint(st,0);
@@ -16156,7 +16156,7 @@ BUILDIN_FUNC(setdragon) {
 		return 0;
 	if( !pc_checkskill(sd,RK_DRAGONTRAINING) || (sd->class_&MAPID_THIRDMASK) != MAPID_RUNE_KNIGHT )
 		script_pushint(st,0);//Doesn't have the skill or it's not a Rune Knight
-	else if ( sd->sc.option&OPTION_DRAGON ) {//Is mounted; release
+	else if ( pc_isridingdragon(sd) ) {//Is mounted; release
 		pc_setoption(sd, sd->sc.option&~OPTION_DRAGON);
 		script_pushint(st,1);
 	} else {//Not mounted; Mount now.
