@@ -36,7 +36,7 @@ CREATE TABLE `item_db_re` (
 # REPLACE INTO `item_db_re` VALUES ('ID','Name','Name','Type','Price','Sell','Weight','ATK:MATK','DEF','Range','Slot','Job','Upper','Gender','Loc','wLV','eLV','Refineable','View','Script','OnEquip_Script','OnUnequip_Script');
 
 # Usable Items
-REPLACE INTO `item_db` VALUES (678,'Poison_Bottle','Poison Bottle',2,5000,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'if(Class == Job_Assassin_Cross || Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T) { sc_start SC_DPoison,60000,0; sc_start SC_ASPDPOTION2,60000,0; } else percentheal -100,-100;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (678,'Poison_Bottle','Poison Bottle',2,5000,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'if(Class == Job_Assassin_Cross || Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T) { sc_start SC_DPoison,60000,0; sc_start SC_ASPDPOTION3,60000,0; } else percentheal -100,-100;',NULL,NULL);
 
 # Matk updates. Work in progress. 
 # Daggers

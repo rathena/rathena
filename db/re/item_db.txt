@@ -177,7 +177,7 @@
 675,Silver_Coin,Silver Coin,3,5000,,40,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 676,Silver_Coin_Moneybag,Bag of Silver Coins,3,50000,,400,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 677,White_Gold_Coin,Platinum Coin,3,2000,,40,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-678,Poison_Bottle,Poison Bottle,2,5000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(Class == Job_Assassin_Cross || Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T) { sc_start SC_DPoison,60000,0; sc_start SC_ASPDPOTION2,60000,0; } else percentheal -100,-100; },{},{}
+678,Poison_Bottle,Poison Bottle,2,5000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(Class == Job_Assassin_Cross || Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T) { sc_start SC_DPoison,60000,0; sc_start SC_ASPDPOTION3,60000,0; } else percentheal -100,-100; },{},{}
 679,Gold_Pill,Pilule,2,5000,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ if(rand(1000)<100) sc_start SC_DPoison,10000,0; sc_start SC_Poison,50000,0; },{},{}
 680,Magical_Carnation,Magic Carnation,0,0,,1000,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,20; },{},{}
 681,Memory_Of_Wedding,Sweet Memory of Marriage,2,50000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ if (getpartnerid()) sc_start SC_WEDDING,600000,0; },{},{}
