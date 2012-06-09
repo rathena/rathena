@@ -1225,7 +1225,7 @@ REPLACE INTO `item_db` VALUES (2149,'Upg_Guard','Upg Guard',5,20,NULL,150,NULL,2
 REPLACE INTO `item_db` VALUES (2150,'Upg_Buckler','Upg Buckler',5,20,NULL,300,NULL,45,NULL,1,0x000ED5F2,7,2,32,NULL,1,1,2,'bonus bMaxHPrate,3;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2151,'Upg_Shield','Upg Shield',5,20,NULL,650,NULL,65,NULL,1,0x00004082,7,2,32,NULL,1,1,3,'bonus bMaxHPrate,3;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2152,'Anti_Demon_Shield_C','Anti-Demon Shield',5,0,NULL,0,NULL,120,NULL,0,0xFFFFFFFF,7,2,32,NULL,1,0,3,'bonus2 bSubRace,RC_DemiHuman,25; bonus2 bSubRace,RC_Demon,25; bonus bMaxHP,400;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (2153,'Imperial_Guard','Imperial Guard',5,20,NULL,2500,NULL,120,NULL,1,0x00004000,7,2,32,NULL,102,1,0,'bonus bMdef,5; /* if(getrefine()>=6){ bonus2 bSkillAtk,\"LG_SHIELDPRESS\",20+((getrefine()-5)*2); } else { bonus2 bSkillAtk,\"LG_SHIELDPRESS\",20; } */',NULL,NULL);
+REPLACE INTO `item_db` VALUES (2153,'Imperial_Guard','Imperial Guard',5,20,NULL,2500,NULL,120,NULL,1,0x00004000,7,2,32,NULL,102,1,4,'bonus bMdef,5; /* if(getrefine()>=6){ bonus2 bSkillAtk,\"LG_SHIELDPRESS\",20+((getrefine()-5)*2); } else { bonus2 bSkillAtk,\"LG_SHIELDPRESS\",20; } */',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2154,'Toy_Shield','Toy Shield',5,0,NULL,500,NULL,1,NULL,1,0xFFFFFFFF,7,2,32,NULL,10,1,1,NULL,NULL,NULL);
 # 2155,
 REPLACE INTO `item_db` VALUES (2156,'Bible_Of_Promise1','Bible Of Promise Vol1',5,20,NULL,500,NULL,10,NULL,1,0x00000100,7,2,32,NULL,110,1,5,'/* skill \"ALL_ODINS_POWER\",1; */',NULL,NULL);

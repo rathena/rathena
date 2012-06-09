@@ -1201,7 +1201,7 @@
 2150,Upg_Buckler,Upg Buckler,5,20,,300,,45,,1,0x000ED5F2,7,2,32,,1,1,2,{ bonus bMaxHPrate,3; },{},{}
 2151,Upg_Shield,Upg Shield,5,20,,650,,65,,1,0x00004082,7,2,32,,1,1,3,{ bonus bMaxHPrate,3; },{},{}
 2152,Anti_Demon_Shield_C,Anti-Demon Shield,5,0,,0,,120,,0,0xFFFFFFFF,7,2,32,,1,0,3,{ bonus2 bSubRace,RC_DemiHuman,25; bonus2 bSubRace,RC_Demon,25; bonus bMaxHP,400; },{},{}
-2153,Imperial_Guard,Imperial Guard,5,20,,2500,,120,,1,0x00004000,7,2,32,,102,1,0,{ bonus bMdef,5; /* if(getrefine()>=6){ bonus2 bSkillAtk,"LG_SHIELDPRESS",20+((getrefine()-5)*2); } else { bonus2 bSkillAtk,"LG_SHIELDPRESS",20; } */ },{},{}
+2153,Imperial_Guard,Imperial Guard,5,20,,2500,,120,,1,0x00004000,7,2,32,,102,1,4,{ bonus bMdef,5; /* if(getrefine()>=6){ bonus2 bSkillAtk,"LG_SHIELDPRESS",20+((getrefine()-5)*2); } else { bonus2 bSkillAtk,"LG_SHIELDPRESS",20; } */ },{},{}
 2154,Toy_Shield,Toy Shield,5,0,,500,,1,,1,0xFFFFFFFF,7,2,32,,10,1,1,{},{},{}
 //2155,
 2156,Bible_Of_Promise1,Bible Of Promise Vol1,5,20,,500,,10,,1,0x00000100,7,2,32,,110,1,5,{ /* skill "ALL_ODINS_POWER",1; */ },{},{}
@@ -2886,8 +2886,8 @@
 5306,Freyja_Crown,Freya\'s Crown,5,0,,500,,12,,0,0xFFFFFFFE,7,2,256,,0,0,328,{ bonus2 bSubRace, RC_DemiHuman, 5; },{},{}
 5307,Carmen_Miranda\'s_Hat,Carmen Miranda\'s Hat,5,20,,400,,3,,0,0xFFFFFFFF,7,2,256,,0,1,329,{ bonus bMdef, 3; bonus3 bAutoSpellWhenHit, DC_WINKCHARM, 1, 50; },{},{}
 5308,Brazilian_Flag_Hat,Brazil National Flag Hat,5,20,,300,,3,,1,0xFFFFFFFF,7,2,256,,0,1,330,{ bonus bSpeedAddRate, 25; },{},{}
-5309,Mahican,Wool Mask,5,20,,200,,1,,0,0xFFFFFFFF,7,2,769,,0,1,331,{ skill RG_GRAFFITI, 1; },{},{}
-5310,Bulb_Hairband,Shining Electric Bulb Hairband,5,20,,100,,3,,1,0xFFFFFFFF,7,2,256,,0,1,332,{ bonus2 bSubEle, Ele_Dark, 10; skill MG_SIGHT, 1; },{},{ sc_end SC_SIGHT; }
+5309,Mahican,Wool Mask,5,20,,200,,1,,0,0xFFFFFFFF,7,2,769,,0,1,331,{ skill "RG_GRAFFITI", 1; },{},{}
+5310,Bulb_Hairband,Shining Electric Bulb Hairband,5,20,,100,,3,,1,0xFFFFFFFF,7,2,256,,0,1,332,{ bonus2 bSubEle, Ele_Dark, 10; skill "MG_SIGHT", 1; },{},{ sc_end SC_SIGHT; }
 5311,Large_Hibiscus,Large Hisbiscus,5,20,,100,,1,,1,0xFFFFFFFF,7,2,256,,0,1,333,{ bonus bMdef, 15; },{},{}
 5312,Ayothaya_Hat,Ayothaya King\'s Hat,5,20,,100,,5,,1,0x000654E2,7,2,256,,0,1,334,{ bonus bStr, 1; bonus2 bAddRace, RC_DemiHuman, 5; },{},{}
 5313,Diadem,Diadem,5,20,,100,,3,,1,0xFFFFFFFF,7,2,768,,0,1,335,{ bonus bInt,1; bonus bMatkRate,3; bonus bCastrate,-3; },{},{}
