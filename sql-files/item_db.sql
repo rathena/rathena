@@ -7026,7 +7026,7 @@ REPLACE INTO `item_db` VALUES (14607,'Luxurious_Dinner_W','Luxurious Western Foo
 REPLACE INTO `item_db` VALUES (14608,'Luxurious_Dinner_E','Manchu-Han Imperial Feast',2,20000,NULL,1200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_INCALLSTATUS,3600000,6;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (14609,'Spoiled_Cuisine','Spoiled Cuisine',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'percentheal 10,10;',NULL,NULL);
 #  More Armors
-REPLACE INTO `item_db` VALUES (15000,'Bone_Plate','Bone Plate',5,20,NULL,1000,NULL,7,NULL,1,0x00021040,2,2,16,NULL,85,1,0,'bonus bStr,1; bonus bMdef,3; bonus2 bIgnoreDefRate,RC_DemiHuman,10; bonus2 bIgnoreDefRate,RC_Brute,10; bonus3 bAutoSpellWhenHit,\"NPC_WIDEBLEEDING\",1,10;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (15000,'Bone_Plate','Bone Plate',5,20,NULL,1000,NULL,7,NULL,1,0x000654E2,2,2,16,NULL,85,1,0,'bonus bStr,1; bonus bMdef,3; bonus2 bIgnoreDefRate,RC_DemiHuman,10; bonus2 bIgnoreDefRate,RC_Brute,10; bonus3 bAutoSpellWhenHit,\"NPC_WIDEBLEEDING\",1,10;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (15001,'Odin\'s_Blessing_I','Odin\'s Blessing',5,0,NULL,0,NULL,10,NULL,0,0xFFFFFFFE,7,2,16,NULL,0,0,0,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (15002,'Rune_Plate','Rune Plate',5,0,NULL,0,NULL,95,NULL,1,0x00000080,7,2,16,NULL,99,1,0,NULL,NULL,NULL);
 # REPLACE INTO `item_db` VALUES (15003,'Freyja_SRobe7','Freyja SRobe7',5,0,NULL,300,NULL,7,NULL,0,0xFFFFFFFF,7,2,16,NULL,20,0,0,'bonus bMaxHP,700;',NULL,NULL);
@@ -7215,12 +7215,6 @@ REPLACE INTO `item_db` VALUES (16777,'Universal_Catalog_Gold_Box50','Universal C
 REPLACE INTO `item_db` VALUES (16998,'Archangel_Wings_Box','Archangel Wings Box',2,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem 2573,1;',NULL,NULL);
 # 
 REPLACE INTO `item_db` VALUES (17155,'Enhance_Huuma_Shuriken_Box','Enhance Huuma Shuriken Box',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'rentitem 13316,86400;',NULL,NULL);
-# Mechanic Cannon Balls
-REPLACE INTO `item_db` VALUES (18000,'Cannon_Ball','Cannon Ball',10,100,NULL,10,100,NULL,NULL,NULL,0x00000400,8,2,32768,NULL,1,NULL,8,NULL,NULL,NULL);
-REPLACE INTO `item_db` VALUES (18001,'Holy_Cannon_Ball','Holy Cannon Ball',10,200,NULL,100,120,NULL,NULL,NULL,0x00000400,8,2,32768,NULL,1,NULL,8,'bonus bAtkEle,Ele_Holy;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (18002,'Dark_Cannon_Ball','Dark Cannon Ball',10,200,NULL,100,120,NULL,NULL,NULL,0x00000400,8,2,32768,NULL,1,NULL,8,'bonus bAtkEle,Ele_Dark;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (18003,'Soul_Cannon_Ball','Soul Cannon Ball',10,200,NULL,100,120,NULL,NULL,NULL,0x00000400,8,2,32768,NULL,1,NULL,8,'bonus bAtkEle,Ele_Ghost;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (18004,'Iron_Cannon_Ball','Iron Cannon Ball',10,500,NULL,100,250,NULL,NULL,NULL,0x00000400,8,2,32768,NULL,1,NULL,8,'bonus bAtkEle,Ele_Neutral;',NULL,NULL);
 #  More Bows
 REPLACE INTO `item_db` VALUES (18100,'Shooting_Star','Shooting Star',4,20,NULL,0,190,NULL,5,0,0x00080800,7,2,34,4,1,1,11,'bonus bLongAtkRate,20;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (18101,'F_Bow_Of_Rudra_C','Rudra Bow',4,2,NULL,0,185,NULL,5,0,0x000A0848,7,2,34,4,0,0,11,'bonus bAtkEle,Ele_Holy; bonus bInt,5; skill \"AL_CURE\",1; skill \"AL_HEAL\",1; bonus2 bResEff,Eff_Poison,5000; bonus2 bResEff,Eff_Curse,5000; bonus2 bResEff,Eff_Silence,5000; bonus2 bResEff,Eff_Confusion,5000; bonus2 bResEff,Eff_Blind,5000;',NULL,NULL);

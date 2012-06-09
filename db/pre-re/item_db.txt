@@ -6415,7 +6415,7 @@
 14608,Luxurious_Dinner_E,Manchu-Han Imperial Feast,2,20000,,1200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCALLSTATUS,3600000,6; },{},{}
 14609,Spoiled_Cuisine,Spoiled Cuisine,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 10,10; },{},{}
 // More Armors
-15000,Bone_Plate,Bone Plate,5,20,,1000,,7,,1,0x00021040,2,2,16,,85,1,0,{ bonus bStr,1; bonus bMdef,3; bonus2 bIgnoreDefRate,RC_DemiHuman,10; bonus2 bIgnoreDefRate,RC_Brute,10; bonus3 bAutoSpellWhenHit,"NPC_WIDEBLEEDING",1,10; },{},{}
+15000,Bone_Plate,Bone Plate,5,20,,1000,,7,,1,0x000654E2,2,2,16,,85,1,0,{ bonus bStr,1; bonus bMdef,3; bonus2 bIgnoreDefRate,RC_DemiHuman,10; bonus2 bIgnoreDefRate,RC_Brute,10; bonus3 bAutoSpellWhenHit,"NPC_WIDEBLEEDING",1,10; },{},{}
 15001,Odin's_Blessing_I,Odin's Blessing,5,0,,0,,10,,0,0xFFFFFFFE,7,2,16,,0,0,0,{},{},{}
 // More Maces
 16000,Erde,Erde,4,20,,500,130,,1,2,0x0004C5B2,2,2,2,4,50,1,8,{ bonus2 bSkillAtk,"AM_ACIDTERROR",20; bonus2 bSkillAtk,"AM_DEMONSTRATION",20; bonus bMaxSP,50; bonus bHealPower,10; },{},{}

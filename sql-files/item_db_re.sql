@@ -49,6 +49,7 @@ REPLACE INTO `item_db_re` VALUES (1231,'Bazerald','Bazerald',4,20,NULL,500,'70:1
 
 # Staffs
 REPLACE INTO `item_db_re` VALUES (1472,'Staff_Of_Soul','Soul Staff',4,20,NULL,1400,'25:200',NULL,1,0,0x00810204,7,2,34,3,73,1,10,'bonus bInt,5; bonus bAgi,2; if(isequipped(2677) || isequipped(2711)){ bonus bMatkRate,6; bonus bDex,2; bonus bCastrate,-getrefine(); }','','');
+REPLACE INTO `item_db_re` VALUES (1473,'Wizardy_Staff','Wizardry Staff',4,20,NULL,2400,'120:200',NULL,1,0,0x00810204,7,2,34,4,90,1,10,'bonus bInt,6; bonus bDex,2; if(isequipped(2677) || isequipped(2711)){ bonus bMatkRate,6; bonus bDex,2; bonus bCastrate,-getrefine(); }',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1601,'Rod','Rod',4,50,NULL,400,'15:30',NULL,1,3,0x00818315,7,2,2,1,1,1,10,'','','');
 REPLACE INTO `item_db_re` VALUES (1602,'Rod_','Rod',4,50,NULL,400,'15:30',NULL,1,4,0x00818315,7,2,2,1,1,1,10,'','','');
 REPLACE INTO `item_db_re` VALUES (1603,'Rod__','Rod',4,50,NULL,400,'15:30',NULL,1,0,0x00818315,7,2,2,1,1,1,10,'','','');
@@ -371,7 +372,14 @@ REPLACE INTO `item_db_re` VALUES (2560,'Para_Team_Manteau','Eden Team Manteau',5
 REPLACE INTO `item_db_re` VALUES (2564,'Feral_Tail','Feral Tail',5,20,NULL,0,NULL,16,NULL,0,0xFFFFFFFF,7,2,4,NULL,75,0,0,'','','');
 
 #  Accessories
-REPLACE INTO `item_db` VALUES (2629,'Magingiorde','Megingjard',5,20,NULL,8000,NULL,2,NULL,0,0xFFFFFFFF,7,2,136,NULL,94,0,0,'bonus bStr,40+BaseLevel/5; bonus bMdef,7; if(readparam(bStr)==120) bonus2 bAddRace,RC_Boss,10;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2629,'Magingiorde','Megingjard',5,20,NULL,8000,NULL,2,NULL,0,0xFFFFFFFF,7,2,136,NULL,94,0,0,'bonus bStr,40+BaseLevel/5; bonus bMdef,7; if(readparam(bStr)==120) bonus2 bAddRace,RC_Boss,10;',NULL,NULL);
 
 #Cards
-REPLACE INTO `item_db` VALUES (4302,'Tao_Gunka_Card','Tao Gunka Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,'bonus bMaxHPrate,100; bonus bDefRate,-50; bonus bMdefRate,-50;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (4302,'Tao_Gunka_Card','Tao Gunka Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,'bonus bMaxHPrate,100; bonus bDefRate,-50; bonus bMdefRate,-50;',NULL,NULL);
+
+# Mechanic Cannon Balls
+REPLACE INTO `item_db` VALUES (18000,'Cannon_Ball','Cannon Ball',			10,100,NULL,10,100,NULL,NULL,NULL,0x00000400,8,2,32768,NULL,1,NULL,8,NULL,NULL,NULL);
+REPLACE INTO `item_db` VALUES (18001,'Holy_Cannon_Ball','Holy Cannon Ball',	10,200,NULL,10,120,NULL,NULL,NULL,0x00000400,8,2,32768,NULL,1,NULL,8,'bonus bAtkEle,Ele_Holy;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (18002,'Dark_Cannon_Ball','Dark Cannon Ball',	10,200,NULL,10,120,NULL,NULL,NULL,0x00000400,8,2,32768,NULL,1,NULL,8,'bonus bAtkEle,Ele_Dark;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (18003,'Soul_Cannon_Ball','Soul Cannon Ball',	10,200,NULL,10,120,NULL,NULL,NULL,0x00000400,8,2,32768,NULL,1,NULL,8,'bonus bAtkEle,Ele_Ghost;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (18004,'Iron_Cannon_Ball','Iron Cannon Ball',	10,500,NULL,10,250,NULL,NULL,NULL,0x00000400,8,2,32768,NULL,1,NULL,8,NULL,NULL,NULL);
