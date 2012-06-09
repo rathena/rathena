@@ -511,7 +511,7 @@ REPLACE INTO `item_db` VALUES (1126,'Saber','Saber',4,49000,NULL,1000,115,NULL,1
 REPLACE INTO `item_db` VALUES (1127,'Saber_','Saber',4,49000,NULL,1000,115,NULL,1,3,0x000654E2,7,2,2,3,27,1,2,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (1128,'Hae_Dong_Gum_','Haedonggum',4,50000,NULL,900,120,NULL,1,2,0x000654E2,7,2,2,3,27,1,2,'bonus bInt,3;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1129,'Flamberge','Flamberge',4,60000,NULL,1500,150,NULL,1,0,0x00004080,7,2,2,3,27,1,2,NULL,NULL,NULL);
-REPLACE INTO `item_db` VALUES (1130,'Nagan','Nagan',4,20,NULL,500,120,NULL,1,0,0x000654E2,7,2,2,4,40,1,2,'bonus bDoubleRate,25; bonus2 bAddRace,RC_DemiHuman,5;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (1130,'Nagan','Nagan',4,20,NULL,500,120,NULL,1,0,0x000654E2,7,2,2,4,40,1,2,'skill \"TF_DOUBLE\",5; bonus2 bAddRace,RC_DemiHuman,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1131,'Ice_Falchon','Ice Falchion',4,20,NULL,600,100,NULL,1,0,0x000654E2,7,2,2,4,40,1,2,'bonus bAtkEle,Ele_Water; bonus2 bAddEff,Eff_Freeze,500; bonus2 bAddEff2,Eff_Freeze,10; skill \"MG_COLDBOLT\",3; bonus3 bAutoSpell,\"MG_COLDBOLT\",3,100;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1132,'Edge','Edge',4,20,NULL,700,115,NULL,1,0,0x000654E2,7,2,2,4,40,1,2,'bonus2 bAddEff,Eff_Curse,30; bonus2 bWeaponComaRace,RC_NonBoss,10;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1133,'Fire_Brand','Fireblend',4,20,NULL,500,100,NULL,1,0,0x000654E2,7,2,2,4,40,1,2,'bonus bAtkEle,Ele_Fire; skill \"MG_FIREBOLT\",3; bonus3 bAutoSpell,\"MG_FIREBOLT\",3,100;',NULL,NULL);
@@ -2046,7 +2046,7 @@ REPLACE INTO `item_db` VALUES (4113,'Marionette_Card','Marionette Card',6,20,NUL
 REPLACE INTO `item_db` VALUES (4114,'Argiope_Card','Argiope Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,'bonus bDefEle,Ele_Poison; bonus bDef,1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4115,'Hunter_Fly_Card','Hunter Fly Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus2 bHpDrainRate,30,15;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4116,'Isis_Card','Isis Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL,NULL,'bonus2 bSubEle,Ele_Dark,30; bonus bFlee,5;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (4117,'Side_Winder_Card','Sidewinder Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus bDoubleRate,5;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (4117,'Side_Winder_Card','Sidewinder Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'skill \"TF_DOUBLE\",1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4118,'Petit_Card','Earth Petite Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus2 bAddRace,RC_Dragon,20;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4119,'Bathory_Card','Bathory Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,'bonus bDefEle,Ele_Dark;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4120,'Petit__Card','Sky Petite Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,NULL,NULL,'bonus2 bSubRace,RC_Dragon,30;',NULL,NULL);
@@ -2884,7 +2884,7 @@ REPLACE INTO `item_db` VALUES (5279,'Drooping_Kitty_C','Refined Drooping Cat',5,
 REPLACE INTO `item_db` VALUES (5280,'Magestic_Goat_C','Baphomet Horns',5,2,NULL,0,NULL,5,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,0,41,'bonus bStr,1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5281,'Deviruchi_Cap_C','Refined Deviruchi Hat',5,2,NULL,0,NULL,2,NULL,0,0xFFFFFFFE,7,2,256,NULL,0,0,123,'bonus bStr,1; bonus bInt,1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5282,'euRO_Baseball_Cap','Europe Baseball Cap',5,0,NULL,200,NULL,3,NULL,1,0xFFFFFFFF,7,2,256,NULL,0,1,216,NULL,NULL,NULL);
-REPLACE INTO `item_db` VALUES (5283,'Chick_Hat','Chick Hat',5,20,NULL,100,NULL,1,NULL,0,0xFFFFFFFF,7,2,256,NULL,10,0,311,'bonus bLuk,2; bonus bMaxHP,50; bonus bMaxSP,50; bonus bDoubleRate,10; bonus2 bSubRace,RC_DemiHuman,3;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (5283,'Chick_Hat','Chick Hat',5,20,NULL,100,NULL,1,NULL,0,0xFFFFFFFF,7,2,256,NULL,10,0,311,'bonus bLuk,2; bonus bMaxHP,50; bonus bMaxSP,50; skill \"TF_DOUBLE\",2; bonus2 bSubRace,RC_DemiHuman,3;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5284,'Water_Lily_Crown','Water Lily Crown',5,20,NULL,200,NULL,0,NULL,1,0xFFFFFFFF,7,2,256,NULL,30,0,312,'bonus bDex,1; bonus bAgi,1; bonus bHPrecovRate,5; bonus bSPrecovRate,3;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5285,'Vane_Hairpin','Vane Hairpin',5,20,NULL,300,NULL,3,NULL,1,0xFFFFFFFF,7,2,256,NULL,30,0,313,'bonus bAgi,2;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5286,'Pecopeco_Hairband','Pecopeco Hairband',5,20,NULL,0,NULL,3,NULL,0,0xFFFFFFFF,7,2,256,NULL,70,0,314,'bonus bSpeedRate,25; bonus bAspdRate,-10; bonus bCastrate,25;',NULL,NULL);
@@ -6065,7 +6065,7 @@ REPLACE INTO `item_db` VALUES (13403,'Solar_Sword_C','Solar Sword',4,2,NULL,0,12
 REPLACE INTO `item_db` VALUES (13404,'Platinum_Shotel','Platinum Shotel',4,20,NULL,1500,130,NULL,1,1,0x000654E2,7,2,2,4,55,1,2,'bonus bCritical,50;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (13405,'Curved_Sword','Curved Sword',4,20,NULL,800,125,NULL,1,2,0x000654E2,7,2,2,4,55,1,2,'bonus bAspdRate,10; bonus2 bAddEff,Eff_Curse,300;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (13406,'Edger','Edger',4,20,NULL,0,120,NULL,1,0,0x000654E2,7,2,2,1,0,0,2,'bonus2 bAddRace,RC_Boss,50; bonus2 bAddRace,RC_NonBoss,50;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (13407,'Nagan_C','Refined Nagan',4,1,NULL,0,148,NULL,1,0,0x000654E2,7,2,2,4,0,0,2,'bonus bDoubleRate,25; bonus2 bAddRace,RC_DemiHuman,40;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (13407,'Nagan_C','Refined Nagan',4,1,NULL,0,148,NULL,1,0,0x000654E2,7,2,2,4,0,0,2,'skill \"TF_DOUBLE\",5; bonus2 bAddRace,RC_DemiHuman,40;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (13408,'Fire_Brand_C','Refined Fireblend',4,1,NULL,0,120,NULL,1,0,0x000654E2,7,2,2,4,0,0,2,'bonus bAtkEle,Ele_Fire; bonus bInt,2; skill \"MG_FIREBOLT\",5; bonus3 bAutoSpell,\"MG_FIREBOLT\",5,100;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (13409,'Immaterial_Sword_C','Refined Immaterial Sword',4,1,NULL,0,160,NULL,1,0,0x000654E2,7,2,2,4,0,0,2,'bonus bAtkEle,Ele_Ghost; bonus2 bSPVanishRate,45,30; bonus bSPDrainValue,-1; bonus bUnbreakableWeapon,0;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (13410,'BF_Sword1','Valorous Gladiator Blade',4,20,NULL,0,115,NULL,1,0,0x000654E3,7,2,2,3,80,1,2,'bonus bStr,1; bonus bDex,1; bonus2 bAddRace,RC_DemiHuman,75; bonus2 bIgnoreDefRate,RC_DemiHuman,20; bonus bUnbreakableWeapon,0;',NULL,NULL);

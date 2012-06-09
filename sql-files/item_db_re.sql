@@ -135,9 +135,21 @@ REPLACE INTO `item_db_re` VALUES (1549,'Pilebuncker','Pile Bunker',4,10000,NULL,
 # Books
 REPLACE INTO `item_db_re` VALUES (1560,'Diary_Of_Great_Sage','Sage\'s Diary',4,20,NULL,1100,'100:120',NULL,1,2,0x00410100,7,2,2,3,60,1,15,'if(readparam(bStr)>=50) bonus bAspdRate,5; if(readparam(bInt)>=70) bonus bMatkRate,5;','','');
 REPLACE INTO `item_db_re` VALUES (1561,'Hardback','Hardcover Book',4,20,NULL,1500,'140',NULL,1,1,0x00410100,7,2,2,4,55,1,15,'bonus bStr,3; bonus bDex,2;','','');
+REPLACE INTO `item_db_re` VALUES (1563,'Diary_Of_Great_Sage_C','Sage\'s Diary',4,1,NULL,0,'135:140',NULL,1,2,0x00410100,7,2,2,3,1,0,15,'bonus bMatkRate,20; bonus bAspdRate,5;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1564,'Encyclopedia','Encyclopedia',4,20,NULL,2000,'110:100',NULL,1,2,0x00410100,7,2,2,3,70,1,15,'bonus bInt,3; bonus bDex,2; bonus bCritical,20+((readparam(bLuk)*2)/10);','','');
+REPLACE INTO `item_db_re` VALUES (1565,'Death_Note','Ledger of Death',4,20,NULL,1000,'137:100',NULL,1,2,0x00410100,7,2,2,4,85,1,15,'bonus bMatkRate,15; bonus bStr,3; bonus bInt,3; bonus bLuk,-20; bonus2 bWeaponComaRace,RC_DemiHuman,10; bonus bAspdRate,getrefine(); if(BaseJob == Job_Sage) bonus3 bAutoSpell,\"NPC_HELLJUDGEMENT\",5,20;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1566,'Diary_Of_Great_Basil','Diary Of Great Basil',4,'120:125',NULL,0,120,NULL,1,0,0x00410100,7,2,2,1,0,0,15,'bonus2 bAddRace,RC_Boss,50; bonus2 bAddRace,RC_NonBoss,50;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1567,'Hardback_C','Refined Hardcover Book',4,1,NULL,0,'168:100',NULL,1,0,0x00410100,7,2,2,4,0,0,15,'bonus bStr,5; bonus bDex,2; bonus bMatkRate,20;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1572,'Principles_Of_Magic','Principles of Magic',4,20,NULL,300,'60:160',NULL,1,2,0x00410100,7,2,2,3,60,1,15,'bonus bInt,3; bonus bSPrecovRate,5;','','');
 REPLACE INTO `item_db_re` VALUES (1573,'Ancient_Magic','Ancient Magic',4,20,NULL,700,'30:140',NULL,1,2,0x00410100,7,2,2,3,70,1,15,'if (isequipped(2334) || isequipped(2372)) { bonus bMdef,8; bonus bMaxSPRate,10; bonus bInt,4; };','','');
-REPLACE INTO `item_db_re` VALUES (1564,'Encyclopedia','Encyclopedia',4,20,NULL,2000,'110:100',NULL,1,2,0x00410100,7,2,2,3,70,1,15,'bonus bInt,3; bonus bDex,2; bonus bCritical,20+((readparam(bLuk)*2)/10);','','');
+REPLACE INTO `item_db_re` VALUES (1574,'BF_Book1','Brave Battle Strategy Book',4,20,NULL,0,'90:125',NULL,1,0,0x00410100,7,2,2,3,80,1,15,'bonus bStr,2; bonus bInt,1; bonus bMatkRate,15; bonus2 bAddRace,RC_DemiHuman,75; bonus2 bIgnoreDefRate,RC_DemiHuman,20; bonus bUnbreakableWeapon,0;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1575,'BF_Book2','Valorous Battle Strategy Book',4,20,NULL,0,'90:125',NULL,1,0,0x00410100,7,2,2,3,80,1,15,'bonus bStr,2; bonus bInt,1; bonus bMatkRate,15; bonus2 bIgnoreMDefRate,RC_DemiHuman,25; bonus bUnbreakableWeapon,0;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1576,'Krieger_Book1','Glorious Tablet',4,20,NULL,0,'90:115',NULL,1,0,0x00410100,7,2,2,4,80,1,15,'bonus bMatkRate,15; bonus2 bAddRace,RC_DemiHuman,80; bonus2 bIgnoreDefRate,RC_DemiHuman,25; bonus bUnbreakableWeapon,0; if(getrefine() > 5) { bonus2 bAddRace,RC_DemiHuman,(getrefine()-4)*(getrefine()-4); bonus2 bIgnoreDefRate,RC_DemiHuman,5; } if(getrefine() > 8) autobonus \"{ bonus bBaseAtk,200; }\",30,3000,BF_WEAPON,\"{ specialeffect2 EF_BASH3D; }\";',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1577,'Krieger_Book2','Glorious Apocalypse',4,20,NULL,0,'90:115',NULL,1,0,0x00410100,7,2,2,4,80,1,15,'bonus bMatkRate,15; bonus2 bAddRace,RC_DemiHuman,80; bonus2 bIgnoreDefRate,RC_DemiHuman,25; bonus bUnbreakableWeapon,0; if(getrefine() > 5) bonus2 bIgnoreDefRate,RC_DemiHuman,5; if(getrefine() > 8) { bonus bMatkRate,5; bonus bCastrate,-5; bonus bDelayRate,-5; }',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1580,'Encyclopedia_C','Giant Encyclopedia',4,0,NULL,0,'145:100',NULL,1,0,0x00410100,7,2,2,3,0,0,15,'bonus bMatkRate,15; bonus bInt,3; bonus bDex,2; bonus bCritical,20+((readparam(bLuk)*2)/10); bonus2 bAddSize,0,40; bonus2 bAddSize,1,40; bonus2 bAddSize,2,40;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1583,'P_Book1','Eden Book I',4,0,NULL,0,'135:110',NULL,1,0,0x00410100,7,2,2,3,60,0,15,'',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1584,'Cold_Magic_Book','Cold Magic Book',4,56000,NULL,1000,'100:160',NULL,1,2,0x00010000,7,2,2,4,100,1,15,'bonus bAtkEle,Ele_Water; bonus bUnbreakableWeapon,0; bonus bDex,1; bonus2 bSkillAtk,\"MG_COLDBOLT\",(getrefine()/3); /* bonus2 bSkillAtk,\"SO_DIAMONDDUST\",(getrefine()/3); */ bonus bUseSPrate,getrefine();',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1586,'Bellum_Bible','Bellum Bible',4,20,NULL,600,'110:125',NULL,1,0,0x00410100,7,2,2,4,95,1,15,'if(BaseLevel > 104) { bonus bHealPower,(BaseLevel/5)-20; }',NULL,NULL);
 
 # DEF updates
 # Headgears - Work in progress.
@@ -378,8 +390,8 @@ REPLACE INTO `item_db_re` VALUES (2629,'Magingiorde','Megingjard',5,20,NULL,8000
 REPLACE INTO `item_db_re` VALUES (4302,'Tao_Gunka_Card','Tao Gunka Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,'bonus bMaxHPrate,100; bonus bDefRate,-50; bonus bMdefRate,-50;',NULL,NULL);
 
 # Mechanic Cannon Balls
-REPLACE INTO `item_db` VALUES (18000,'Cannon_Ball','Cannon Ball',			10,100,NULL,10,100,NULL,NULL,NULL,0x00000400,8,2,32768,NULL,1,NULL,8,NULL,NULL,NULL);
-REPLACE INTO `item_db` VALUES (18001,'Holy_Cannon_Ball','Holy Cannon Ball',	10,200,NULL,10,120,NULL,NULL,NULL,0x00000400,8,2,32768,NULL,1,NULL,8,'bonus bAtkEle,Ele_Holy;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (18002,'Dark_Cannon_Ball','Dark Cannon Ball',	10,200,NULL,10,120,NULL,NULL,NULL,0x00000400,8,2,32768,NULL,1,NULL,8,'bonus bAtkEle,Ele_Dark;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (18003,'Soul_Cannon_Ball','Soul Cannon Ball',	10,200,NULL,10,120,NULL,NULL,NULL,0x00000400,8,2,32768,NULL,1,NULL,8,'bonus bAtkEle,Ele_Ghost;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (18004,'Iron_Cannon_Ball','Iron Cannon Ball',	10,500,NULL,10,250,NULL,NULL,NULL,0x00000400,8,2,32768,NULL,1,NULL,8,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (18000,'Cannon_Ball','Cannon Ball',			10,100,NULL,10,100,NULL,NULL,NULL,0x00000400,8,2,32768,NULL,1,NULL,8,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (18001,'Holy_Cannon_Ball','Holy Cannon Ball',	10,200,NULL,10,120,NULL,NULL,NULL,0x00000400,8,2,32768,NULL,1,NULL,8,'bonus bAtkEle,Ele_Holy;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (18002,'Dark_Cannon_Ball','Dark Cannon Ball',	10,200,NULL,10,120,NULL,NULL,NULL,0x00000400,8,2,32768,NULL,1,NULL,8,'bonus bAtkEle,Ele_Dark;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (18003,'Soul_Cannon_Ball','Soul Cannon Ball',	10,200,NULL,10,120,NULL,NULL,NULL,0x00000400,8,2,32768,NULL,1,NULL,8,'bonus bAtkEle,Ele_Ghost;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (18004,'Iron_Cannon_Ball','Iron Cannon Ball',	10,500,NULL,10,250,NULL,NULL,NULL,0x00000400,8,2,32768,NULL,1,NULL,8,NULL,NULL,NULL);
