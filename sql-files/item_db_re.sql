@@ -372,3 +372,6 @@ REPLACE INTO `item_db_re` VALUES (2564,'Feral_Tail','Feral Tail',5,20,NULL,0,NUL
 
 #  Accessories
 REPLACE INTO `item_db` VALUES (2629,'Magingiorde','Megingjard',5,20,NULL,8000,NULL,2,NULL,0,0xFFFFFFFF,7,2,136,NULL,94,0,0,'bonus bStr,40+BaseLevel/5; bonus bMdef,7; if(readparam(bStr)==120) bonus2 bAddRace,RC_Boss,10;',NULL,NULL);
+
+#Cards
+REPLACE INTO `item_db` VALUES (4302,'Tao_Gunka_Card','Tao Gunka Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,'bonus bMaxHPrate,100; bonus bDefRate,-50; bonus bMdefRate,-50;',NULL,NULL);
