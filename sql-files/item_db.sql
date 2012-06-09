@@ -1526,12 +1526,12 @@ REPLACE INTO `item_db` VALUES (2471,'Mercy_Shoes','Mercy Shoes',5,20,NULL,300,NU
 REPLACE INTO `item_db` VALUES (2472,'Judgement_Shoes','Judgement Shoes',5,20,NULL,300,NULL,12,NULL,0,0x00000100,7,2,64,NULL,100,1,0,'bonus bMaxSP,150; /* bonus2 bSkillAtk,\"AB_JUDEX\",30; */',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2473,'Para_Team_Boots4','Eden Team Boots IV',5,0,NULL,0,NULL,20,NULL,0,0xFFFFFFFF,7,2,64,NULL,60,0,0,'bonus bAgi,1; bonus bVit,1; bonus bHPrecovRate,28; bonus bSPrecovRate,12;',NULL,NULL);
 # 2474,
-REPLACE INTO `item_db` VALUES (2475,'Urj_Greaves','Urj Greaves',5,20,NULL,900,NULL,32,NULL,1,0x00004000,7,2,64,NULL,100,1,0,'bonus bMaxSP,40; if(getrefine()>=8){ bonus bMaxHPRate,getrefine()-7; }',NULL,NULL);
-REPLACE INTO `item_db` VALUES (2476,'Pertz_Greaves','Pertz Greaves',5,20,NULL,900,NULL,32,NULL,1,0x00004000,7,2,64,NULL,100,1,0,'bonus bMaxSP,40; if(getrefine()>=8){ bonus bAgi,getrefine()-7; }',NULL,NULL);
+REPLACE INTO `item_db` VALUES (2475,'Urj_Greaves','Urj Greaves',5,20,NULL,900,NULL,32,NULL,1,0x00000080,8,2,64,NULL,100,1,0,'bonus bMaxSP,40; if(getequiprefinerycnt(EQI_SHOES)>7) bonus bMaxHPRate,getequiprefinerycnt(EQI_SHOES)-7;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (2476,'Pertz_Greaves','Pertz Greaves',5,20,NULL,900,NULL,32,NULL,1,0x00000080,8,2,64,NULL,100,1,0,'bonus bMaxSP,40; bonus bAgi,-7+(getequiprefinerycnt(EQI_SHOES)>8)?8:getequiprefinerycnt(EQI_SHOES);',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2477,'Sabath_Shoes','Sabath Shoes',5,20,NULL,400,NULL,18,NULL,1,0x00001000,7,2,64,NULL,100,1,0,'bonus bMaxSP,30; bonus bLuk,3;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2478,'Nabeu\'s_Shoes','Nabeu\'s Shoes',5,20,NULL,400,NULL,18,NULL,1,0x00001000,7,2,64,NULL,100,1,0,'bonus bFlee,3; bonus bInt,2;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2479,'White_Wing_Boots','White Wing Boots',5,20,NULL,400,NULL,18,NULL,1,0x00000800,7,2,64,NULL,100,1,0,'bonus bAgi,2;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (2480,'Black_Wing_Boots','Black Wing Boots',5,20,NULL,400,NULL,18,NULL,1,0x00000800,7,2,64,NULL,100,1,0,'bonus bInt,2; bonus bMaxSPRate,5;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (2480,'Black_Wing_Boots','Black Wing Boots',5,20,NULL,400,NULL,18,NULL,1,0x00000800,8,2,64,NULL,100,1,0,'bonus bInt,2; bonus bMaxSPRate,5;',NULL,NULL);
 # 2481,
 # 2482,
 REPLACE INTO `item_db` VALUES (2483,'Siege_Greaves','Siege Greaves',5,0,NULL,750,NULL,30,NULL,1,0x006444A2,7,2,64,NULL,95,1,0,'bonus bMdef,1; bonus2 bSubRace,RC_DemiHuman,2;',NULL,NULL);
@@ -1619,14 +1619,14 @@ REPLACE INTO `item_db` VALUES (2570,'Judgement_Shawl','Judgement Shawl',5,20,NUL
 REPLACE INTO `item_db` VALUES (2571,'Para_Team_Manteau2','Eden Team Manteau II',5,0,NULL,0,NULL,18,NULL,0,0xFFFFFFFF,7,2,4,NULL,60,0,0,'bonus bFlee,12; bonus2 bSubEle,Ele_Neutral,10;',NULL,NULL);
 # 2572,
 REPLACE INTO `item_db` VALUES (2573,'Archangel_Wings','Archangel Wings',5,0,NULL,200,NULL,18,NULL,1,0xFFFFFFFF,7,2,4,NULL,0,1,1,NULL,NULL,NULL);
-REPLACE INTO `item_db` VALUES (2574,'Urj_Manteau','Urj Manteau',5,20,NULL,600,NULL,20,NULL,0,0x00004000,7,2,4,NULL,100,1,0,'bonus bMaxHPRate,2; bonus2 bSubEle,Ele_Neutral,10;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (2575,'Pertz_Manteau','Pertz Manteau',5,20,NULL,600,NULL,16,NULL,0,0x00004000,7,2,4,NULL,100,1,0,'bonus bFlee,10; bonus bCritical,10;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (2574,'Urj_Manteau','Urj Manteau',5,20,NULL,600,NULL,20,NULL,0,0x00000080,8,2,4,NULL,100,1,0,'bonus bMaxHPRate,2; bonus2 bSubEle,Ele_Neutral,10;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (2575,'Pertz_Manteau','Pertz Manteau',5,20,NULL,600,NULL,16,NULL,0,0x00000080,8,2,4,NULL,100,1,0,'bonus bFlee,10; bonus bCritical,10;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2576,'Adventurer\'s_Backpack','Adventurer\'s Backpack',5,0,NULL,200,NULL,20,NULL,1,0xFFFFFFFF,7,2,4,NULL,0,1,2,'skill \"BS_GREED\",1; if(getrefine() > 6) { if(readparam(bStr)>=90){ bonus bBaseAtk,20; } if(readparam(bInt)>=90){ /* bonus bEquipmentMatk,30; */ } if(readparam(bVit)>=90){ bonus2 bSubEle,Ele_Neutral,10; } if(readparam(bAgi)>=90){ bonus bAspdRate,8; } if(readparam(bDex)>=90){ bonus bLongAtkRate,5; } if(readparam(bLuk)>=90){ bonus bCritAtkRate,10; } } if(getrefine() > 8) { if(readparam(bStr)>=90){ bonus bBaseAtk,10; } if(readparam(bInt)>=90){ /* bonus bEquipmentMatk,20; */ } if(readparam(bVit)>=90){ bonus2 bSubEle,Ele_Neutral,5; } if(readparam(bAgi)>=90){ bonus bAspd,1; } if(readparam(bDex)>=90){ bonus bLongAtkRate,5; } if(readparam(bLuk)>=90){ bonus bCritAtkRate,5; } }',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2577,'Sabath_Hood','Sabath Hood',5,20,NULL,100,NULL,13,NULL,0,0x00001000,7,2,4,NULL,100,1,0,'bonus bFlee,12; bonus bCritical,getrefine();',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2578,'Nabeu\'s_Hood','Nabeu\'s Hood',5,20,NULL,100,NULL,13,NULL,0,0x00001000,7,2,4,NULL,100,1,0,'bonus bFlee,getrefine()*2; bonus bBaseAtk,getrefine()*2;',NULL,NULL);
 # 2579,
 REPLACE INTO `item_db` VALUES (2580,'White_Wing_Manteau','White Wing Manteau',5,20,NULL,200,NULL,15,NULL,0,0x00000800,7,2,4,NULL,100,1,0,'bonus bAgi,2; bonus bFlee,10; autobonus2 \"{ bonus bFlee,20; }\",10,7000,BF_LONG,\"{ specialeffect2 EF_WIND; }\";',NULL,NULL);
-REPLACE INTO `item_db` VALUES (2581,'Black_Wing_Manteau','Black Wing Manteau',5,20,NULL,200,NULL,15,NULL,0,0x00000800,7,2,4,NULL,100,1,0,'bonus bInt,1; if(getrefine()>=7){ bonus bFlee2,getrefine()-6; }',NULL,NULL);
+REPLACE INTO `item_db` VALUES (2581,'Black_Wing_Manteau','Black Wing Manteau',5,20,NULL,200,NULL,15,NULL,0,0x00000800,8,2,4,NULL,100,1,0,'bonus bInt,2; if(getequiprefinerycnt(EQI_GARMENT)>6) bonus bFlee2,getequiprefinerycnt(EQI_GARMENT)-6;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2582,'Salvage_Cape','Salvage Cape',5,56000,NULL,400,NULL,1,NULL,0,0x00000300,7,2,4,NULL,130,1,0,'skill \"NJ_UTSUSEMI\",1; bonus bUseSPrate,100;',NULL,'heal 0,-1200;');
 # 2583,
 # 2584,
@@ -1905,15 +1905,15 @@ REPLACE INTO `item_db` VALUES (2864,'Light_Of_Cure','Liht Of Cure',5,20,NULL,0,N
 REPLACE INTO `item_db` VALUES (2865,'Seal_Of_Cathedral','Seal Of Cathedral',5,20,NULL,0,NULL,0,NULL,0,0x00000100,7,2,136,NULL,110,0,0,'bonus bInt,2; bonus bHealPower,2;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2866,'Ring_Of_Archbishop','Ring Of Archbishop',5,20,NULL,0,NULL,0,NULL,0,0x00000100,7,2,136,NULL,110,0,0,'bonus bDex,2; bonus bHealPower,2;',NULL,NULL);
 # 
-REPLACE INTO `item_db` VALUES (2883,'Urj_Seal','Urj Seal',5,20,NULL,200,NULL,4,NULL,1,0x00004000,7,2,136,NULL,100,0,0,'bonus bMaxHPrate,2;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (2884,'Pertz_Seal','Pertz Seal',5,20,NULL,200,NULL,3,NULL,1,0x00004000,7,2,136,NULL,100,0,0,'bonus bBaseAtk,20; bonus bMaxSP,20;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (2883,'Urj_Seal','Urj Seal',5,20,NULL,200,NULL,4,NULL,1,0x00000080,8,2,136,NULL,100,0,0,'bonus bMaxHPrate,2;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (2884,'Pertz_Seal','Pertz Seal',5,20,NULL,200,NULL,3,NULL,1,0x00000080,8,2,136,NULL,100,0,0,'bonus bBaseAtk,20; bonus bMaxSP,20;',NULL,NULL);
 # 2885,
 REPLACE INTO `item_db` VALUES (2886,'Sabath_Seal','Sabath Seal',5,20,NULL,100,NULL,0,NULL,0,0x00001000,7,2,136,NULL,100,0,0,'bonus bCritical,3;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2887,'Nabeu\'s_Seal','Nabeu\'s Seal',5,20,NULL,100,NULL,0,NULL,0,0x00001000,7,2,136,NULL,100,0,0,'bonus bBaseAtk,10; /* bonus bEquipmentMatk,20; */',NULL,NULL);
 # 2888,
 # 2889,
 REPLACE INTO `item_db` VALUES (2890,'White_Wing_Brooch','White Wing Brooch',5,20,NULL,100,NULL,0,NULL,0,0x00000800,7,2,136,NULL,100,0,0,'bonus bDex,2; bonus bLongAtkRate,3;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (2891,'Black_Wing_Brooch','Black Wing Brooch',5,20,NULL,100,NULL,0,NULL,0,0x00000800,7,2,136,NULL,100,0,0,'bonus bInt,2; bonus bFlee2,3;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (2891,'Black_Wing_Brooch','Black Wing Brooch',5,20,NULL,100,NULL,0,NULL,0,0x00000800,8,2,136,NULL,100,0,0,'bonus bInt,2; bonus bFlee2,3;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2892,'Assassin\'s_Glove','Assassin\'s Glove',5,56000,NULL,400,NULL,3,NULL,0,0x00001000,7,2,136,NULL,100,0,0,'bonus bMaxSP,20; bonus bCritical,3; if(isequipped(1284)){ bonus bBaseAtk,50; bonus2 bSkillAtk,\"AS_SONICBLOW\",50; bonus bFlee,-30; } if(isequipped(1285)){ bonus bCritAtkRate,40; bonus bCritical,4; bonus bMaxHPRate,-10; }',NULL,NULL);
 # 2893,
 REPLACE INTO `item_db` VALUES (2894,'Sura_Gauntlet','Sura Gauntlet',5,20,NULL,400,NULL,1,NULL,0,0x00008000,7,2,136,NULL,130,0,0,'bonus bStr,5; bonus bMaxSPRate,6; bonus bMaxHPRate,-6; if(readparam(bStr)>=120){ bonus bBaseAtk,30; }',NULL,NULL);
@@ -3149,7 +3149,7 @@ REPLACE INTO `item_db` VALUES (5544,'Time_Keeper_Hat','Time Keeper Hat',5,30000,
 REPLACE INTO `item_db` VALUES (5545,'Aries_Diadem','Aries Diadem',5,20,NULL,400,NULL,3,NULL,0,0xFFFFFFFF,7,2,256,NULL,70,1,531,'bonus bVit,2; bonus2 bSubEle,Ele_fire,5; if(getrefine()>6) { bonus bDef,1; bonus bVit,1; }',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5546,'Aries_Crown','Aries Crown',5,20,NULL,400,NULL,3,NULL,0,0xFFFFFFFF,7,2,256,NULL,70,1,532,'bonus bVit,2; bonus2 bSubEle,Ele_fire,5; if(getrefine()>6) { bonus bDef,1; bonus bVit,1; }',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5547,'RJC_Katusa','RJC Katusa Flower',5,20,NULL,200,NULL,1,NULL,1,0xFFFFFFFF,7,2,256,NULL,0,1,533,'bonus2 bSkillAtk, \"WZ_HEAVENDRIVE\", getequiprefinerycnt(EQI_HAND_R) + 15; bonus2 bSkillAtk, \"WZ_HEAVENDRIVE\", getequiprefinerycnt(EQI_HAND_R) + 15; bonus2 bCastrate, \"WZ_HEAVENDRIVE\", -25; bonus2 bCastrate, \"WZ_HEAVENDRIVE\", -25;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (5548,'Scarlet_Rose','Scarlet Rose',5,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,256,NULL,50,1,534,'bonus bLuk, 1;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (5548,'Scarlet_Rose','Scarlet Rose',5,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,1,NULL,50,1,534,'bonus bLuk, 1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5549,'Taurus_Diadem','Taurus Diadem',5,20,NULL,300,NULL,3,NULL,0,0xFFFFFFFF,7,2,256,NULL,70,1,535,'bonus bDex,2; bonus bDelayRate,-2; bonus2 bSubEle,Ele_earth,5; if(getrefine()>6) { bonus bDex,1; bonus bMatkRate,1; }',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5550,'Taurus_Crown','Taurus Crown',5,20,NULL,300,NULL,3,NULL,0,0xFFFFFFFF,7,2,256,NULL,70,1,536,'bonus bDex,2; bonus bDelayRate,-2; bonus2 bSubEle,Ele_earth,5; if(getrefine()>6) { bonus bDex,1; bonus bMatkRate,1; }',NULL,NULL);
 # REPLACE INTO `item_db` VALUES (5551,'Holy_Egg_Hat','Holy Egg Hat',5,20,NULL,0,NULL,1,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,1,537,NULL,NULL,NULL);
@@ -7040,7 +7040,7 @@ REPLACE INTO `item_db` VALUES (15010,'Para_Team_Uniform2','Eden Team Uniform II'
 REPLACE INTO `item_db` VALUES (15011,'Para_Team_Uniform3','Eden Team Uniform III',5,0,NULL,0,NULL,58,NULL,0,0xFFFFFFFF,7,2,16,NULL,40,0,0,'bonus bMaxHP,300; bonus bMaxSP,30; bonus bMdef,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (15012,'Puente_Robe','Puente Robe',5,12000,NULL,400,NULL,42,NULL,1,0xFFFFFFFF,7,2,16,NULL,22,1,0,'/* bonus bFixedCastrate,-3; */ bonus bHealPower,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (15013,'Claire_Suits','Claire Suits',5,28000,NULL,2800,NULL,58,NULL,1,0xFFFFFFFE,2,2,16,NULL,22,1,0,NULL,NULL,NULL);
-REPLACE INTO `item_db` VALUES (15014,'Ebone_Armor','Ebon Armor',5,40000,NULL,4500,NULL,93,NULL,1,0x00004080,7,2,16,NULL,100,1,0,NULL,NULL,NULL);
+REPLACE INTO `item_db` VALUES (15014,'Ebone_Armor','Ebon Armor',5,40000,NULL,4500,NULL,93,NULL,1,0x000FDF80,8,2,16,NULL,100,1,0,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (15015,'Upg_Adv_Suit','Upg Adv Suit',5,20,NULL,150,NULL,25,NULL,1,0xFFFFFFFF,7,2,16,NULL,1,1,0,'bonus bMaxHPRate,3;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (15016,'Upg_Coat','Upg Coat',5,20,NULL,600,NULL,47,NULL,1,0xFFFFFFFE,7,2,16,NULL,1,1,0,'bonus bMaxHPRate,3;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (15017,'Upg_Saint_Robe','Upg Saint Robe',5,20,NULL,300,NULL,55,NULL,1,0x00048530,7,2,16,NULL,1,1,0,'bonus bMdef,5; bonus bMaxHPRate,3;',NULL,NULL);
@@ -7062,14 +7062,14 @@ REPLACE INTO `item_db` VALUES (15032,'Tidon','Tidon',5,20,NULL,500,NULL,2,NULL,1
 # 15033,
 # 15034,
 # 15035,
-REPLACE INTO `item_db` VALUES (15036,'Urj_Plate','Urj Plate',5,20,NULL,3000,NULL,110,NULL,0,0x00004000,7,2,16,NULL,100,1,0,'bonus bMdef,10; bonus bMaxHPRate,getrefine(); if(isequipped(2475,2574,2883)){ bonus bMaxHPRate,14; bonus2 bSubEle,Ele_Neutral,10; bonus2 bSubEle,Ele_Ghost,5; bonus2 bSubRace,RC_DemiHuman,5; /* bonus2 bSkillAtk,\"RK_HUNDREDSPEAR\",50; */ skill \"CR_AUTOGUARD\",1; bonus bUseSPrate,10; }',NULL,NULL);
-REPLACE INTO `item_db` VALUES (15037,'Pertz_Plate','Pertz Plate',5,20,NULL,3000,NULL,110,NULL,0,0x00004000,7,2,16,NULL,100,1,0,'bonus bMdef,10; bonus bBaseAtk,20; bonus bFlee,17; if(isequipped(2476,2575,2884)){ bonus2 bAddRace,RC_NonBoss,10; bonus2 bAddRace,RC_Boss,10; /* bonus2 bSkillAtk,\"RK_SONICWAVE\",100; bonus2 bSkillAtk,\"RK_WINDCUTTER\",100; bonus3 bAutoSpell,\"RK_STORMBLAST\",1,10; */ bonus bAspd,2; }',NULL,NULL);
+REPLACE INTO `item_db` VALUES (15036,'Urj_Plate','Urj Plate',5,20,NULL,3000,NULL,110,NULL,0,0x00000080,8,2,16,NULL,100,1,0,'bonus bMdef,10; bonus bMaxHPRate,getequiprefinerycnt(EQI_ARMOR); bonus2 bSubRace,RC_DemiHuman,5; bonus2 bSubEle,Ele_Neutral,5; if(isequipped(2475,2574,2883)) { bonus bMaxHPRate,14; bonus2 bSkillAtk,\"RK_HUNDREDSPEAR\",50; skill \"CR_AUTOGUARD\",1; }',NULL,NULL);
+REPLACE INTO `item_db` VALUES (15037,'Pertz_Plate','Pertz Plate',5,20,NULL,3000,NULL,110,NULL,0,0x00000080,8,2,16,NULL,100,1,0,'bonus bMdef,10; bonus bBaseAtk,20; bonus bFlee,17; if(isequipped(2476,2575,2884)) { bonus2 bAddRace,RC_NonBoss,10; bonus2 bAddRace,RC_Boss,10; bonus2 bSkillAtk,\"RK_SONICWAVE\",100; bonus2 bSkillAtk,\"RK_WINDCUTTER\",100; autobonus \"{ sc_start SC_CONCENTRATION,10000,(getskilllv(\"LK_CONCENTRATION\"))?getskilllv(\"LK_CONCENTRATION\"):1; bonus bAspd,2; }\",1,10000,BF_WEAPON,\"{}\"; }',NULL,NULL);
 REPLACE INTO `item_db` VALUES (15038,'Sabath\'s_Cloth','Sabath\'s Cloth',5,20,NULL,100,NULL,45,NULL,1,0x00001000,7,2,16,NULL,100,1,0,'bonus bLuk,3; bonus3 bAutoSpell,\"ASC_METEORASSAULT\",getskilllv(\"ASC_METEORASSAULT\"),10; if(isequipped(2477,2577,2886)){ bonus bCritical,15; bonus bFlee,10; bonus bCritAtkRate,40; /* bonus2 bSkillAtk,\"GC_CROSSIMPACT\",20; */ }',NULL,NULL);
 REPLACE INTO `item_db` VALUES (15039,'Nabeu\'s_Cloth','Nabeu\'s Cloth',5,20,NULL,100,NULL,45,NULL,1,0x00001000,7,2,16,NULL,100,1,0,'bonus bStr,2; bonus bInt,2; if(isequipped(2478,2578,2887)){ bonus2 bAddRace,RC_NonBoss,10; bonus2 bAddRace,RC_Boss,10; /* bonus bEquipmentMatk,10; */ if(readparam(bStr)>=120){ bonus bBaseAtk,30; } bonus3 bAutoSpell,\"ASC_BREAKER\",getskilllv(\"ASC_BREAKER\"),10; bonus bCritical,-20; }',NULL,NULL);
 # 15040,
 # 15041,
 REPLACE INTO `item_db` VALUES (15042,'White_Wing_Suit','White Wing Suit',5,20,NULL,100,NULL,45,NULL,1,0x00000800,7,2,16,NULL,100,1,0,'bonus bLongAtkRate,getrefine()*2; bonus bFlee,getrefine(); if(isequipped(2479,2580,2890)){ bonus bAspd,2; bonus bLongAtkRate,30; bonus3 bAutoSpell,\"AC_DOUBLE\",3,10; /* bonus2 bSkillAtk,\"RA_ARROWSTORM\",50; */ }',NULL,NULL);
-REPLACE INTO `item_db` VALUES (15043,'Black_Wing_Suit','Black Wing Suit',5,20,NULL,100,NULL,45,NULL,1,0x00000800,7,2,16,NULL,100,1,0,'bonus bInt,2; bonus bBaseAtk,getrefine()*3; if(isequipped(2480,2581,2891)){ bonus bMaxHPRate,15; bonus bFlee2,20; bonus bLongAtkRate,-30; bonus bAspd,-7; }',NULL,NULL);
+REPLACE INTO `item_db` VALUES (15043,'Black_Wing_Suit','Black Wing Suit',5,20,NULL,100,NULL,45,NULL,1,0x00000800,8,2,16,NULL,100,1,0,'bonus bInt,2; bonus bBaseAtk,getequiprefinerycnt(EQI_ARMOR)*3; if(isequipped(2480,2581,2891)) { bonus bMaxHPRate,15; bonus2 bSkillAtk,\"RA_CLUSTERBOMB\",20; bonus bFlee2,20; bonus bLongAtkRate,-30; bonus bAspd,-7; }',NULL,NULL);
 REPLACE INTO `item_db` VALUES (15044,'Green_Surgical_Gown','Green Surgical Gown',5,56000,NULL,660,NULL,66,NULL,1,0x00040000,7,2,16,NULL,100,1,0,'bonus bDex,1; bonus bMaxSP,30; if(isequipped(13027)){ bonus3 bAddMonsterDropItem,929,RC_Brute,100+(getrefine()*10); bonus3 bAddMonsterDropItem,929,RC_DemiHuman,100+(getrefine()*10); bonus3 bAddMonsterDropItem,970,RC_Brute,20+(getrefine()*2); bonus3 bAddMonsterDropItem,970,RC_DemiHuman,20+(getrefine()*2); }',NULL,NULL);
 # 15045,
 REPLACE INTO `item_db` VALUES (15046,'Siege_Plate','Siege Plate',5,0,NULL,3300,NULL,85,NULL,1,0x006444A2,7,2,16,NULL,95,1,0,'bonus bMdef,5; bonus2 bSubRace,RC_DemiHuman,2; if(getrefine() > 5) { bonus bHealpower2,12; bonus bAddItemHealRate,12; } if(getrefine() > 8) { bonus bMaxHPRate,25; } if(isequipped(2483,2586)){ bonus2 bSubRace,RC_DemiHuman,15; }',NULL,NULL);

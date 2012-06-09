@@ -2709,7 +2709,7 @@
 5545,Aries_Diadem,Aries Diadem,5,20,,400,,3,,0,0xFFFFFFFF,7,2,256,,70,1,531,{ bonus bVit,2; bonus2 bSubEle,Ele_fire,5; if(getrefine()>6) { bonus bDef,1; bonus bVit,1; } },{},{}
 5546,Aries_Crown,Aries Crown,5,20,,400,,3,,0,0xFFFFFFFF,7,2,256,,70,1,532,{ bonus bVit,2; bonus2 bSubEle,Ele_fire,5; if(getrefine()>6) { bonus bDef,1; bonus bVit,1; } },{},{}
 5547,RJC_Katusa,RJC Katusa Flower,5,20,,200,,1,,1,0xFFFFFFFF,7,2,256,,0,1,533,{ bonus2 bSkillAtk, "WZ_HEAVENDRIVE", getequiprefinerycnt(EQI_HAND_R) + 15; bonus2 bSkillAtk, "WZ_HEAVENDRIVE", getequiprefinerycnt(EQI_HAND_R) + 15; bonus2 bCastrate, "WZ_HEAVENDRIVE", -25; bonus2 bCastrate, "WZ_HEAVENDRIVE", -25; },{},{}
-5548,Scarlet_Rose,Scarlet Rose,5,20,,100,,0,,0,0xFFFFFFFF,7,2,256,,50,1,534,{ bonus bLuk, 1; },{},{}
+5548,Scarlet_Rose,Scarlet Rose,5,20,,100,,0,,0,0xFFFFFFFF,7,2,1,,50,1,534,{ bonus bLuk, 1; },{},{}
 5549,Taurus_Diadem,Taurus Diadem,5,20,,300,,3,,0,0xFFFFFFFF,7,2,256,,70,1,535,{ bonus bDex,2; bonus bDelayRate,-2; bonus2 bSubEle,Ele_earth,5; if(getrefine()>6) { bonus bDex,1; bonus bMatkRate,1; } },{},{}
 5550,Taurus_Crown,Taurus Crown,5,20,,300,,3,,0,0xFFFFFFFF,7,2,256,,70,1,536,{ bonus bDex,2; bonus bDelayRate,-2; bonus2 bSubEle,Ele_earth,5; if(getrefine()>6) { bonus bDex,1; bonus bMatkRate,1; } },{},{}
 //5551,Holy_Egg_Hat,Holy Egg Hat,5,20,,0,,1,,0,0xFFFFFFFF,7,2,256,,0,1,537,{},{},{}
