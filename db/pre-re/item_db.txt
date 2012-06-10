@@ -4964,7 +4964,7 @@
 12425,SP_Increase_Potion_(Small),SP Increase Potion (Small),0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCMSPRATE,500000,2; percentheal 0,2; },{},{}
 12426,SP_Increase_Potion_(Medium),SP Increase Potion (Medium),0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCMSPRATE,500000,4; percentheal 0,4; },{},{}
 12427,SP_Increase_Potion_(Large),SP Increase Potion (Large),0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCMSPRATE,500000,8; percentheal 0,8; },{},{}
-12428,Concentrated_White_Potion_Z,Concentrated White Potion Z,0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_WHITEPOTIONZ,500000,0; itemheal 1000,0; },{},{}
+12428,Concentrated_White_Potion_Z,Concentrated White Potion Z,0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXTRACT_WHITE_POTION_Z,500000,0; itemheal 1000,0; },{},{}
 12429,Savage_Full_Roast,Savage Full Roast,2,,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SAVAGE_STEAK, 300000, 20; },{},{}
 12430,Cocktail_Warg_Blood,Cocktail Warg Blood,2,,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_COCKTAIL_WARG_BLOOD, 300000, 20; },{},{}
 12431,Minor_Stew,Minor Stew,2,,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_MINOR_BBQ, 300000, 20; },{},{}
@@ -5693,7 +5693,7 @@
 13707,Super_Pet_Egg8,Super Pet Egg 8,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 13708,Pet_Egg_Scroll_E,Pet Egg Scroll E,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 13709,BRO_Package_1,BRO Package Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-13710,Max_Weight_Up_Box,Gym Pass Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 7776,1; },{},{}
+13710,Max_Weight_Up_Box,Gym Pass Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 7776,10; },{},{}
 13711,Small_Life_Potion_Box,Small Life Potion 10 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14534,10; },{},{}
 13712,Small_Life_Potion_Box30,Small Life Potion 30 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14534,30; },{},{}
 13713,Small_Life_Potion_Box50,Small Life Potion 50 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14534,50; },{},{}
