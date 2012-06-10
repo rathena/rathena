@@ -138,7 +138,9 @@
     <ClInclude Include="..\3rdparty\libconfig\scanner.h" />
     <ClInclude Include="..\3rdparty\libconfig\strbuf.h" />
     <ClInclude Include="..\3rdparty\libconfig\wincompat.h" />
+    <ClInclude Include="..\src\common\mempool.h" />
     <ClInclude Include="..\src\common\mutex.h" />
+    <ClInclude Include="..\src\common\raconf.h" />
     <ClInclude Include="..\src\common\thread.h" />
     <ClInclude Include="..\src\common\winapi.h" />
     <ClInclude Include="..\src\login\account.h" />
@@ -168,7 +170,9 @@
     <ClCompile Include="..\3rdparty\libconfig\scanctx.c" />
     <ClCompile Include="..\3rdparty\libconfig\scanner.c" />
     <ClCompile Include="..\3rdparty\libconfig\strbuf.c" />
+    <ClCompile Include="..\src\common\mempool.c" />
     <ClCompile Include="..\src\common\mutex.c" />
+    <ClCompile Include="..\src\common\raconf.c" />
     <ClCompile Include="..\src\common\thread.c" />
     <ClCompile Include="..\src\login\account_sql.c" />
     <ClCompile Include="..\src\login\ipban_sql.c" />
