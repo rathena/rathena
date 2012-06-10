@@ -79,6 +79,9 @@ set( COMMON_BASE_HEADERS
 	"${COMMON_SOURCE_DIR}/atomic.h"
 	"${COMMON_SOURCE_DIR}/spinlock.h"
 	"${COMMON_SOURCE_DIR}/thread.h"
+	"${COMMON_SOURCE_DIR}/mutex.h"
+	"${COMMON_SOURCE_DIR}/raconf.h"
+	"${COMMON_SOURCE_DIR}/mempool.h"
 	${LIBCONFIG_HEADERS} # needed by conf.h/showmsg.h
 	CACHE INTERNAL "common_base headers" )
 set( COMMON_BASE_SOURCES
@@ -100,6 +103,9 @@ set( COMMON_BASE_SOURCES
 	"${COMMON_SOURCE_DIR}/timer.c"
 	"${COMMON_SOURCE_DIR}/utils.c"
 	"${COMMON_SOURCE_DIR}/thread.c"
+	"${COMMON_SOURCE_DIR}/mutex.c"
+	"${COMMON_SOURCE_DIR}/mempool.c"
+	"${COMMON_SOURCE_DIR}/raconf.c"
 	${LIBCONFIG_SOURCES} # needed by conf.c/showmsg.c
 	CACHE INTERNAL "common_base sources" )
 set( COMMON_BASE_INCLUDE_DIRS

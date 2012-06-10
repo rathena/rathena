@@ -10,6 +10,7 @@
 #include "../common/socket.h"
 #include "../common/timer.h"
 #include "../common/thread.h"
+#include "../common/mempool.h"
 #endif
 
 #include <stdio.h>
@@ -280,7 +281,7 @@ int main (int argc, char **argv)
 	usercheck();
 
 	rathread_init();
-
+	mempool_init();
 	db_init();
 	signals_init();
 
@@ -306,7 +307,7 @@ int main (int argc, char **argv)
 	timer_final();
 	socket_final();
 	db_final();
-	
+	mempool_final();	
 	rathread_final();
 #endif
 

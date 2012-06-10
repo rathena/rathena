@@ -1,3 +1,5 @@
+// Copyright (c) rAthena Project (www.rathena.org) - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
 #ifdef WIN32
 #include "../common/winapi.h"

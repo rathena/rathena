@@ -1,3 +1,6 @@
+// Copyright (c) rAthena Project (www.rathena.org) - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
 #ifndef _rA_ATOMIC_H_
 #define _rA_ATOMIC_H_
 
