@@ -1050,11 +1050,11 @@ static void itemdb_read(void)
 		itemdb_readdb();
 
 	itemdb_read_itemgroup();
-	sv_readdb(db_path, "item_avail.txt",   ',', 2, 2, -1,             &itemdb_read_itemavail);
-	sv_readdb(db_path, "item_noequip.txt", ',', 2, 2, -1,             &itemdb_read_noequip);
-	sv_readdb(db_path, DBPATH"item_trade.txt",   ',', 3, 3, -1,       &itemdb_read_itemtrade);
-	sv_readdb(db_path, "item_delay.txt",   ',', 2, 2, -1, &itemdb_read_itemdelay);
-	sv_readdb(db_path, "item_buyingstore.txt", ',', 1, 1, -1,         &itemdb_read_buyingstore);
+	sv_readdb(db_path, "item_avail.txt",   ',', 2, 2, -1,		&itemdb_read_itemavail);
+	sv_readdb(db_path, DBPATH"item_noequip.txt", ',', 2, 2, -1,	&itemdb_read_noequip);
+	sv_readdb(db_path, DBPATH"item_trade.txt",   ',', 3, 3, -1,	&itemdb_read_itemtrade);
+	sv_readdb(db_path, "item_delay.txt",   ',', 2, 2, -1,		&itemdb_read_itemdelay);
+	sv_readdb(db_path, "item_buyingstore.txt", ',', 1, 1, -1,	&itemdb_read_buyingstore);
 }
 
 /*==========================================
