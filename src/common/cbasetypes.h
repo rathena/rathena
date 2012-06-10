@@ -198,6 +198,30 @@ typedef uintptr_t uintptr;
 
 
 //////////////////////////////////////////////////////////////////////////
+// Add a 'sysint' Type which has the width of the platform we're compiled for.
+//////////////////////////////////////////////////////////////////////////
+#if defined(__GNUC__)
+	#if defined(__x86_64__)
+		typedef int64 sysint;
+		typedef uint64 usysint;
+	#else
+		typedef int32 sysint;
+		typedef uint32 usysint;
+	#endif
+#elif defined(_MSC_VER)
+	#if defined(_M_X64)
+		typedef int64 sysint;
+		typedef uint64 usysint;
+	#else
+		typedef int32 sysint;
+		typedef uint32 usysint;
+	#endif
+#else
+	#error Compiler / Platform is unsupported.
+#endif
+
+
+//////////////////////////////////////////////////////////////////////////
 // some redefine of function redefines for some Compilers
 //////////////////////////////////////////////////////////////////////////
 #if defined(_MSC_VER) || defined(__BORLANDC__)
