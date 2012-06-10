@@ -97,6 +97,9 @@
     <ClCompile Include="..\src\common\thread.c">
       <Filter>common</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\common\mutex.c">
+      <Filter>common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\common\cbasetypes.h">
@@ -208,6 +211,9 @@
       <Filter>common</Filter>
     </ClInclude>
     <ClInclude Include="..\src\common\thread.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\mutex.h">
       <Filter>common</Filter>
     </ClInclude>
   </ItemGroup>

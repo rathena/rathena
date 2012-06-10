@@ -360,6 +360,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\common\mutex.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\mutex.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\common\nullpo.c"
 				>
 			</File>

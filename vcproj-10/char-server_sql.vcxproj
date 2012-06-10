@@ -144,6 +144,7 @@
     <ClInclude Include="..\src\common\malloc.h" />
     <ClInclude Include="..\src\common\mapindex.h" />
     <ClInclude Include="..\src\common\mmo.h" />
+    <ClInclude Include="..\src\common\mutex.h" />
     <ClInclude Include="..\src\common\nullpo.h" />
     <ClInclude Include="..\src\common\random.h" />
     <ClInclude Include="..\src\common\showmsg.h" />
@@ -179,6 +180,7 @@
     <ClCompile Include="..\src\common\ers.c" />
     <ClCompile Include="..\src\common\malloc.c" />
     <ClCompile Include="..\src\common\mapindex.c" />
+    <ClCompile Include="..\src\common\mutex.c" />
     <ClCompile Include="..\src\common\nullpo.c" />
     <ClCompile Include="..\src\common\random.c" />
     <ClCompile Include="..\src\common\showmsg.c" />
