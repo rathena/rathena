@@ -129,7 +129,7 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 				set .@leader,getpartyleader(.@party,2);
 				set .@md_name$,"Nidhoggur's Nest";
 
-				if(!instance_check_party(.@party_id,2,70)){
+				if(!instance_check_party(.@party,2,70)){
 					mes "I'm sorry but your Party does not meet the requirements to join the Memorial Dungeon.";
 					close;
 				}
@@ -218,7 +218,7 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 					set .@p_name2$,strcharinfo(0);
 					set .@md_name$,"Nidhoggur's Nest";
 
-					if(!instance_check_party(.@party_id,2,70)){
+					if(!instance_check_party(.@party,2,70)){
 						mes "I'm sorry but your Party does not meet the requirements to join the Memorial Dungeon.";
 						close;
 					}
