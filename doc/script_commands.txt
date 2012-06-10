@@ -3497,6 +3497,13 @@ mount and 0 if they don't.
 
 ---------------------------------------
 
+*checkwug()
+
+This function will return 1 if the invoking character has a
+warg and 0 if they don't.
+
+---------------------------------------
+
 *checkvending({"<player name>"})
 *checkchatting({"<Player Name>"})
 
@@ -6285,7 +6292,6 @@ placement of the illustration and takes following values:
     3 - middle of screen in a movable window with an empty title bar 
     4 - middle of screen without the window header, but still movable 
 
-
 The picture is read from data\texture\유저인터페이스\illust, from both the GRF archive
 and data folder, and is required to be a bitmap. The file extension .bmp can be
 omitted. Magenta color (#ff00ff) is considered transparent. There is no limit
@@ -6775,7 +6781,6 @@ The first letter is position 0.
 	//.@my_array$[2]: "1965"
 	//.@my_array$[3]: "red"
 	//.@my_array$[4]: "PIE"
-	
 
 ---------------------------------------
 
@@ -7138,6 +7143,7 @@ Example:
 	else (.@id < 0) { // Unspecified error while queuing instance.
 		...
 	}
+
 ---------------------------------------
 
 *instance_destroy {<instance id>};
@@ -7357,6 +7363,7 @@ If parameter "HUNTING" is supplied:
 	2  = you've killed all of the target monsters
 
 ---------------------------------------
+
 *showevent <state>, <color>;
 
 Show a colored mark in the mini-map like "viewpoint" and an emotion on top of a NPC.
