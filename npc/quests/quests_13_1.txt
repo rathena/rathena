@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -38,6 +38,7 @@
 //= 1.9 Upped success rates for Report from the New World drops.
 //= 2.0 Added Mid Camp Warper, translated from the Official [Slim]
 //= 2.1 Fixed some typos [tr0n]
+//= 2.2 A little optimization (-25kb). [Euphy]
 //============================================================ 
 
 // Onward to the New World
@@ -8774,6 +8775,7 @@ OnMyMobDead:
 // Cat Hand Trading Post
 //============================================================ 
 mid_camp,62,125,4	script	Cat Hand Agent	421,{
+function Catwarp;
 	if (ep13_yong1 < 1) {
 		mes "[Cat Hand Agent]";
 		mes "Welcome to Cat Trading.";
@@ -8954,324 +8956,65 @@ mid_camp,62,125,4	script	Cat Hand Agent	421,{
 			next;
 			if ((ep13_yong1 > 39) && (ep13_yong1 <= 49)) {
 				switch(select("Prontera -> 5500z:Cancel")) {
-				case 1:
-					if (Zeny >= 5500) {
-						set zeny,zeny-5500;
-						warp "prontera",116,72;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 2:
-					break;
+					case 1: Catwarp(5500,2);
+					case 2: break;
 				}
 			}
 			else if ((ep13_yong1 > 49) && (ep13_yong1 < 60)) {
 				switch(select("Alberta -> 5500z:Prontera -> 5500z:Cancel")) {
-				case 1:
-					if (Zeny >= 5500) {
-						set zeny,zeny-5500;
-						warp "alberta",117,56;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 2:
-					if (Zeny >= 5500) {
-						set zeny,zeny-5500;
-						warp "prontera",116,72;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 3:
-					break;
+					case 1: Catwarp(5500,1);
+					case 2: Catwarp(5500,2);
+					case 3: break;
 				}
 			}
 			else if ((ep13_yong1 > 59) && (ep13_yong1 < 70)) {
 				switch(select("Alberta -> 5025z:Prontera -> 5025z:Izlude -> 5025z:Cancel")) {
-				case 1:
-					if (Zeny >= 5025) {
-						set zeny,zeny-5025;
-						warp "alberta",117,56;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 2:
-					if (Zeny >= 5025) {
-						set zeny,zeny-5025;
-						warp "prontera",116,72;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 3:
-					if (Zeny >= 5025) {
-						set zeny,zeny-5025;
-						warp "izlude",91,105;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 4:
-					break;
+					case 1: Catwarp(5025,1);
+					case 2: Catwarp(5025,2);
+					case 3: Catwarp(5025,3);
+					case 4: break;
 				}
 			}
 			else if ((ep13_yong1 > 69) && (ep13_yong1 < 80)) {
 				switch(select("Alberta -> 5025z:Prontera -> 5025z:Izlude -> 5025z:Geffen -> 5025z:Cancel")) {
-				case 1:
-					if (Zeny >= 5025) {
-						set zeny,zeny-5025;
-						warp "alberta",117,56;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 2:
-					if (Zeny >= 5025) {
-						set zeny,zeny-5025;
-						warp "prontera",116,72;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 3:
-					if (Zeny >= 5025) {
-						set zeny,zeny-5025;
-						warp "izlude",91,105;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 4:
-					if (Zeny >= 5025) {
-						set zeny,zeny-5025;
-						warp "geffen",120,39;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 5:
-					break;
+					case 1: Catwarp(5025,1);
+					case 2: Catwarp(5025,2);
+					case 3: Catwarp(5025,3);
+					case 4: Catwarp(5025,4);
+					case 5: break;
 				}
 			}
 			else if ((ep13_yong1 > 79) && (ep13_yong1 < 90)) {
 				switch(select("Alberta -> 4765z:Prontera -> 4765z:Izlude -> 4765z:Geffen -> 4765z:Payon -> 4765z:Cancel")) {
-				case 1:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "alberta",117,56;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 2:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "prontera",116,72;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 3:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "izlude",91,105;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 4:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "geffen",120,39;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 5:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "payon",161,58;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 6:
-					break;
+					case 1: Catwarp(4765,1);
+					case 2: Catwarp(4765,2);
+					case 3: Catwarp(4765,3);
+					case 4: Catwarp(4765,4);
+					case 5: Catwarp(4765,5);
+					case 6: break;
 				}
 			}
 			else if ((ep13_yong1 > 89) && (ep13_yong1 < 100)) {
 				switch(select("Alberta -> 4765z:Prontera -> 4765z:Izlude -> 4765z:Geffen -> 4765z:Payon -> 4765z:Morroc -> 4765z:Cancel")) {
-				case 1:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "alberta",117,56;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 2:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "prontera",116,72;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 3:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "izlude",91,105;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 4:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "geffen",120,39;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 5:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "payon",161,58;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 6:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "morocc",156,46;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 7:
-					break;
+					case 1: Catwarp(4765,1);
+					case 2: Catwarp(4765,2);
+					case 3: Catwarp(4765,3);
+					case 4: Catwarp(4765,4);
+					case 5: Catwarp(4765,5);
+					case 6: Catwarp(4765,6);
+					case 7: break;
 				}
 			}
 			else if (ep13_yong1 > 99) {
 				switch(select("Alberta -> 4590z:Prontera -> 4590z:Izlude -> 4590z:Geffen -> 4590z:Payon -> 4590z:Morroc -> 4590z:Al De Baran -> 4590z:Cancel")) {
-				case 1:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "alberta",117,56;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 2:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "prontera",116,72;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 3:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "izlude",91,105;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 4:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "geffen",120,39;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 5:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "payon",161,58;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 6:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "morocc",156,46;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 7:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "aldebaran",168,112;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 8:
-					break;
+					case 1: Catwarp(4590,1);
+					case 2: Catwarp(4590,2);
+					case 3: Catwarp(4590,3);
+					case 4: Catwarp(4590,4);
+					case 5: Catwarp(4590,5);
+					case 6: Catwarp(4590,6);
+					case 7: Catwarp(4590,7);
+					case 8: break;
 				}
 			}
 			else {
@@ -9336,366 +9079,56 @@ mid_camp,62,125,4	script	Cat Hand Agent	421,{
 			next;
 			if ((ep13_yong1 > 99) && (ep13_yong1 < 200)) {
 				switch(select("Alberta -> 4590z:Prontera -> 4590z:Izlude -> 4590z:Geffen -> 4590z:Payon -> 4590z:Morroc -> 4590z:Al De Baran -> 4590z:Cancel")) {
-				case 1:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "alberta",117,56;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 2:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "prontera",116,72;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 3:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "izlude",91,105;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 4:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "geffen",120,39;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 5:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "payon",161,58;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 6:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "morocc",156,46;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 7:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "aldebaran",168,112;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 8:
-					break;
+				case 1: Catwarp(4590,1);
+					case 2: Catwarp(4590,2);
+					case 3: Catwarp(4590,3);
+					case 4: Catwarp(4590,4);
+					case 5: Catwarp(4590,5);
+					case 6: Catwarp(4590,6);
+					case 7: Catwarp(4590,7);
+					case 8: break;
 				}
 			}
 			else if ((ep13_yong1 > 199) && (ep13_yong1 < 250)) {
 				switch(select("Alberta -> 4170z:Prontera -> 4170z:Izlude -> 4170z:Geffen -> 4170z:Payon -> 4170z:Morroc -> 4170z:Al De Baran -> 4170z:Juno -> 4170z:Cancel")) {
-				case 1:
-					if (Zeny >= 4170) {
-						set zeny,zeny-4170;
-						warp "alberta",117,56;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 2:
-					if (Zeny >= 4170) {
-						set zeny,zeny-4170;
-						warp "prontera",116,72;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 3:
-					if (Zeny >= 4170) {
-						set zeny,zeny-4170;
-						warp "izlude",91,105;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 4:
-					if (Zeny >= 4170) {
-						set zeny,zeny-4170;
-						warp "geffen",120,39;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 5:
-					if (Zeny >= 4170) {
-						set zeny,zeny-4170;
-						warp "payon",161,58;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 6:
-					if (Zeny >= 4170) {
-						set zeny,zeny-4170;
-						warp "morocc",156,46;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 7:
-					if (Zeny >= 4170) {
-						set zeny,zeny-4170;
-						warp "aldebaran",168,112;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 8:
-					if (Zeny >= 4170) {
-						set zeny,zeny-4170;
-						warp "yuno",158,125;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 9:
-					break;
+					case 1: Catwarp(4170,1);
+					case 2: Catwarp(4170,2);
+					case 3: Catwarp(4170,3);
+					case 4: Catwarp(4170,4);
+					case 5: Catwarp(4170,5);
+					case 6: Catwarp(4170,6);
+					case 7: Catwarp(4170,7);
+					case 8: Catwarp(4170,8);
+					case 9: break;
 				}
 			}
 			else if ((ep13_yong1 > 249) && (ep13_yong1 < 300)) {
 				switch(select("Alberta -> 4025z:Prontera -> 4025z:Izlude -> 4025z:Geffen -> 4025z:Payon -> 4025z:Morroc -> 4025z:Al De Baran -> 4025z:Juno -> 4025z:Einbroch -> 4025z:Cancel")) {
-				case 1:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "alberta",117,56;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 2:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "prontera",116,72;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 3:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "izlude",91,105;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 4:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "geffen",120,39;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 5:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "payon",161,58;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 6:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "morocc",156,46;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 7:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "aldebaran",168,112;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 8:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "yuno",158,125;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 9:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "einbroch",158,301;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 10:
-					break;
+					case 1: Catwarp(4025,1);
+					case 2: Catwarp(4025,2);
+					case 3: Catwarp(4025,3);
+					case 4: Catwarp(4025,4);
+					case 5: Catwarp(4025,5);
+					case 6: Catwarp(4025,6);
+					case 7: Catwarp(4025,7);
+					case 8: Catwarp(4025,8);
+					case 9: Catwarp(4025,9);
+					case 10: break;
 				}
 			}
 			else if (ep13_yong1 > 299) {
 				switch(select("Alberta -> 3970z:Prontera -> 3970z:Izlude -> 3970z:Geffen -> 3970z:Payon -> 3970z:Morroc -> 3970z:Al De Baran -> 3970z:Juno -> 3970z:Einbroch -> 3970z:Lighthalzen -> 3970z:Cancel")) {
-				case 1:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "alberta",117,56;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 2:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "prontera",116,72;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 3:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "izlude",91,105;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 4:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "geffen",120,39;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 5:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "payon",161,58;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 6:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "morocc",156,46;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 7:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "aldebaran",168,112;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 8:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "yuno",158,125;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 9:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "einbroch",158,301;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 10:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "lighthalzen",163,64;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-					}
-					close;
-				case 11:
-					break;
+					case 1: Catwarp(3970,1);
+					case 2: Catwarp(3970,2);
+					case 3: Catwarp(3970,3);
+					case 4: Catwarp(3970,4);
+					case 5: Catwarp(3970,5);
+					case 6: Catwarp(3970,6);
+					case 7: Catwarp(3970,7);
+					case 8: Catwarp(3970,8);
+					case 9: Catwarp(3970,9);
+					case 10: Catwarp(3970,10);
+					case 11: break;
 				}
 			}
 			else {
@@ -9706,30 +9139,12 @@ mid_camp,62,125,4	script	Cat Hand Agent	421,{
 			close;
 		case 4:
 			switch(select("Splendide Camp -> 5500z:Manuk Camp -> 5500z:Cancel")) {
-			case 1:
-				if (Zeny >= 5500) {
-					set zeny,zeny-5500;
-					warp "spl_fild02",32,225;
-				}
-				else {
+				case 1: Catwarp(5500,11);
+				case 2: Catwarp(5500,12);
+				case 3:
 					mes "[Cat Hand Agent]";
-					mes "Don't play with money.";
-				}
-				close;
-			case 2:
-				if (Zeny >= 5500) {
-					set zeny,zeny-5500;
-					warp "man_fild02",129,61;
-				}
-				else {
-					mes "[Cat Hand Agent]";
-					mes "Don't play with money.";
-				}
-				close;
-			case 3:
-				mes "[Cat Hand Agent]";
-				mes "Thank you for using our service.";
-				close;
+					mes "Thank you for using our service.";
+					close;
 			}
 			close;
 		case 5:
@@ -9744,6 +9159,27 @@ mid_camp,62,125,4	script	Cat Hand Agent	421,{
 		mes "I want to eat fish.";
 		close;
 	}
+function Catwarp {
+	if (Zeny < getarg(0)) {
+		mes "[Cat Hand Agent]";
+		mes "Don't play with money.";
+		close; }
+	set Zeny, Zeny-getarg(0);
+	switch(getarg(1)) {
+		case 1: warp "alberta",117,56; close;
+		case 2: warp "prontera",116,72; close;
+		case 3: warp "izlude",91,105; close;
+		case 4: warp "geffen",120,39; close;
+		case 5: warp "payon",161,58; close;
+		case 6: warp "morocc",156,46; close;
+		case 7: warp "aldebaran",168,112; close;
+		case 8: warp "yuno",158,125; close;
+		case 9: warp "einbroch",158,301; close;
+		case 10: warp "lighthalzen",163,64; close;
+		case 11: warp "spl_fild02",32,225; close;
+		case 12: warp "man_fild02",129,61; close;
+	}
+}
 }
 
 mid_camp,72,94,4	script	Fluffy Gyaruk	421,{
@@ -10322,725 +9758,50 @@ mid_camp,88,100,55	script	Cat Hand Mining Agent	876,{
 	}
 }
 
-man_fild01,180,170,0	script	Mysterious Rock#1	844,{
+-	script	Mysterious Rock#0::manukrock	-1,{
 	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
 		specialeffect2 EF_REPAIRWEAPON;
 		progressbar "ffff00",10;
 		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran > 17) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
+		if (.@rhea_ran < 13) getitem 7049,1; //Stone
+		else if (.@rhea_ran == 13) getitem 990,1; //Boody_Red
+		else if (.@rhea_ran == 14) getitem 991,1; //Crystal_Blue
+		else if (.@rhea_ran == 15) getitem 992,1; //Wind_Of_Verdure
+		else if (.@rhea_ran == 16) getitem 993,1; //Yellow_Live
+		else getitem 6048,1; //Unidentified_Mineral
 		initnpctimer;
-		disablenpc "Mysterious Rock#1";
-		end;
-	}
+		disablenpc strnpcinfo(0);
+		end; }
 	else {
 		mes "This rock contains unidentified minerals.";
 		mes "It's not possible to mine more than the limit.";
-		close;
-	}
+		close; }
 	end;
 
 OnTimer120000:
-	enablenpc "Mysterious Rock#1";
+	enablenpc strnpcinfo(0);
 	stopnpctimer;
 	end;
 }
 
-man_fild01,147,157,0	script	Mysterious Rock#2	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran > 17) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#2";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#2";
-	stopnpctimer;
-	end;
-}
-
-man_fild01,114,174,0	script	Mysterious Rock#3	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran > 17) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#3";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#3";
-	stopnpctimer;
-	end;
-}
-
-man_fild01,92,155,0	script	Mysterious Rock#4	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran > 17) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#4";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#4";
-	stopnpctimer;
-	end;
-}
-
-man_fild01,170,318,0	script	Mysterious Rock#5	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran > 17) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#5";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#5";
-	stopnpctimer;
-	end;
-}
-
-man_fild01,146,269,0	script	Mysterious Rock#6	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran > 17) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#6";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#6";
-	stopnpctimer;
-	end;
-}
-
-man_fild01,118,238,0	script	Mysterious Rock#7	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran > 17) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#7";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#7";
-	stopnpctimer;
-	end;
-}
-
-man_fild01,70,246,0	script	Mysterious Rock#8	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran > 17) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#8";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#8";
-	stopnpctimer;
-	end;
-}
-
-man_fild01,64,197,0	script	Mysterious Rock#9	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran > 17) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#9";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#9";
-	stopnpctimer;
-	end;
-}
-
-man_fild03,82,134,0	script	Mysterious Rock#10	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran > 17) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#10";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#10";
-	stopnpctimer;
-	end;
-}
-
-man_fild03,67,160,0	script	Mysterious Rock#11	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran > 17) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#11";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#11";
-	stopnpctimer;
-	end;
-}
-
-man_fild03,66,171,0	script	Mysterious Rock#12	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran > 17) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#12";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#12";
-	stopnpctimer;
-	end;
-}
-
-man_fild03,81,198,0	script	Mysterious Rock#13	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran > 17) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#13";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#13";
-	stopnpctimer;
-	end;
-}
-
-man_fild03,82,216,0	script	Mysterious Rock#14	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran > 17) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#14";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#14";
-	stopnpctimer;
-	end;
-}
-
-man_fild03,98,226,0	script	Mysterious Rock#15	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran > 17) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#15";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#15";
-	stopnpctimer;
-	end;
-}
-
-man_fild03,104,248,0	script	Mysterious Rock#16	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran > 17) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#16";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#16";
-	stopnpctimer;
-	end;
-}
-
-man_fild03,91,272,0	script	Mysterious Rock#17	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran > 17) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#17";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#17";
-	stopnpctimer;
-	end;
-}
-
-man_fild03,95,301,0	script	Mysterious Rock#18	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran > 17) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#18";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#18";
-	stopnpctimer;
-	end;
-}
+man_fild01,180,170,0	duplicate(manukrock)	Mysterious Rock#1	844
+man_fild01,147,157,0	duplicate(manukrock)	Mysterious Rock#2	844
+man_fild01,114,174,0	duplicate(manukrock)	Mysterious Rock#3	844
+man_fild01,92,155,0	duplicate(manukrock)	Mysterious Rock#4	844
+man_fild01,170,318,0	duplicate(manukrock)	Mysterious Rock#5	844
+man_fild01,146,269,0	duplicate(manukrock)	Mysterious Rock#6	844
+man_fild01,118,238,0	duplicate(manukrock)	Mysterious Rock#7	844
+man_fild01,70,246,0	duplicate(manukrock)	Mysterious Rock#8	844
+man_fild01,64,197,0	duplicate(manukrock)	Mysterious Rock#9	844
+man_fild03,82,134,0	duplicate(manukrock)	Mysterious Rock#10	844
+man_fild03,67,160,0	duplicate(manukrock)	Mysterious Rock#11	844
+man_fild03,66,171,0	duplicate(manukrock)	Mysterious Rock#12	844
+man_fild03,81,198,0	duplicate(manukrock)	Mysterious Rock#13	844
+man_fild03,82,216,0	duplicate(manukrock)	Mysterious Rock#14	844
+man_fild03,98,226,0	duplicate(manukrock)	Mysterious Rock#15	844
+man_fild03,104,248,0	duplicate(manukrock)	Mysterious Rock#16	844
+man_fild03,91,272,0	duplicate(manukrock)	Mysterious Rock#17	844
+man_fild03,95,301,0	duplicate(manukrock)	Mysterious Rock#18	844
 
 // Report from the New World
 //============================================================ 

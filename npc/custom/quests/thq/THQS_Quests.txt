@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Fredzilla
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -16,6 +16,7 @@
 //= 1.3 Removed Duplicates [Silent]
 //= 1.4 Further removed duplicates. [L0ne_W0lf]
 //= 1.5 Fixed name collision with 'Little Girl' in cities/lutie.txt [Ai4rei]
+//= 1.6 Changed "Caral" coordinates because moc_fild04 no longer exists. [Euphy]
 //============================================================
 
 ///////Job list 1///////
@@ -1000,7 +1001,7 @@ N_QuestStart:
 	close;
 }
 //10-3;
-moc_fild04,193,51,6	script	Caral	119,{
+cmd_fild08,328,349,4	script	Caral	119,{
 	if (ten_qset == 3 && countitem(1015) > 0) goto N_QuestComp;
 	if (ten_qset == 3) goto N_QuestStart;
 	mes "[Caral]";
