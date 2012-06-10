@@ -59,20 +59,24 @@ The first step is basic swordman, with nothing else:
 
 	EAJ_SWORDMAN
 
+If a swordman is adopted...
+
+	EAJ_SWORDMAN|EAJL_BABY -> EAJ_BABY_SWORDMAN
+
 The next step is to either become a 2-1 or a 2-2 job:
 
 	EAJ_SWORDMAN|EAJL_2_1 -> EAJ_KNIGHT
 	EAJ_SWORDMAN|EAJL_2_2 -> EAJ_CRUSADER
 
-if a swordman is adopted...
-
-	EAJ_SWORDMAN|EAJL_BABY -> EAJ_BABY_SWORDMAN
-
-Or getting out the rebirth versions of a swordman:
+Getting out the rebirth versions of a swordman:
 
 	EAJ_SWORDMAN|EAJL_UPPER	-> EAJ_SWORDMAN_HIGH
 	EAJ_SWORDMAN|EAJL_2_1|EAJL_UPPER	-> EAJ_LORD_KNIGHT
 	EAJ_SWORDMAN|EAJL_2_2|EAJL_UPPER	-> EAJ_PALADIN
+
+Or getting the third job versions:
+
+	EAJ_SWORDMAN|EAJL_2_1|EAJL_THIRD	-> EAJ_RUNE_KNIGHT
 	EAJ_SWORDMAN|EAJL_2_2|EAJL_THIRD	-> EAJ_ROYAL_GUARD
 
 Why are we using the bitwise OR operand ('|') rather than just adding? Because the OR is wreck-proof:

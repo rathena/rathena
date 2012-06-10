@@ -3450,16 +3450,50 @@ and 0 if they don't.
 *checkriding()
 
 If <flag> is 0 this command will remove the mount from the character.
-Otherwise it give the invoking character a PecoPeco (if they are a Knight 
-series class) or a GrandPeco (if they are a Crusader series class). Unlike 
-'setfalcon' and 'setcart' this will not work at all if they aren't of a class 
-which can ride.
+Otherwise it gives the invoking character a PecoPeco (if they are a Knight 
+series class), a GrandPeco (if they are a Crusader series class), or
+a Gryphon (if they are a Royal Guard). Unlike 'setfalcon' and 'setcart'
+this will not work at all if they aren't of a class which can ride.
 Note: the character needs to have the skill KN_RIDING to gain a mount
 
 The accompanying function will return 1 if the invoking character is riding a 
-bird and 0 if they don't.
+bird and 0 if they aren't.
 
     if (checkriding()) mes "PLEASE leave your bird outside! No riding birds on the floor here!";
+
+---------------------------------------
+
+*setdragon {<flag>};
+
+If <flag> is 0 this command will remove the mount from the character.
+Otherwise it gives the invoking character a dragon mount, which is
+checked using checkriding().
+Note: the character needs to have the skill KN_RIDING to gain a mount
+
+The accompanying function will return 1 if the invoking character is riding a 
+dragon and 0 if they aren't.
+
+---------------------------------------
+
+*setmadogear {<flag>};
+*checkmadogear()
+
+If <flag> is 0 this command will remove the mount from the character.
+Otherwise it gives the invoking character a Mado (if they are a Mechanic).
+
+The accompanying function will return 1 if the invoking character has a
+Mado and 0 if they don't.
+
+---------------------------------------
+
+*setmounting;
+*ismounting()
+
+Gives the invoking character a cash mount.  Unlike the other mount
+commands, it cannot be used to remove a cash mount.
+
+The accompanying function will return 1 if the invoking character has a
+mount and 0 if they don't.
 
 ---------------------------------------
 
