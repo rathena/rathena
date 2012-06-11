@@ -156,7 +156,7 @@ void mempool_init(){
 	l_async_lock = ramutex_create();
 	l_async_cond = racond_create();
 
-	l_async_thread = rathread_createEx(mempool_async_allocator, NULL,  512*1024,  RAT_PRIO_NORMAL);
+	l_async_thread = rathread_createEx(mempool_async_allocator, NULL, 1024*1024,  RAT_PRIO_NORMAL);
 	if(l_async_thread == NULL){
 		ShowFatalError("mempool_init: cannot spawn Async Allocator Thread.\n");
 		exit(EXIT_FAILURE);

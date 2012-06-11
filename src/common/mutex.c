@@ -133,6 +133,7 @@ racond racond_create(){
 	c->nWaiters = 0;
 	c->events[ EVENT_COND_SIGNAL ]		= CreateEvent( NULL,  FALSE,  FALSE,  NULL );
 	c->events[ EVENT_COND_BROADCAST ]	= CreateEvent( NULL,  TRUE,   FALSE,  NULL );
+	InitializeCriticalSection( &c->waiters_lock );
 #else
 	pthread_cond_init(&c->hCond, NULL);
 #endif
@@ -145,7 +146,7 @@ void racond_destroy( racond c ){
 #ifdef WIN32
 	CloseHandle( c->events[ EVENT_COND_SIGNAL ] );
 	CloseHandle( c->events[ EVENT_COND_BROADCAST ] );
-	InitializeCriticalSection( &c->waiters_lock );
+	DeleteCriticalSection( &c->waiters_lock );
 #else
 	pthread_cond_destroy(&c->hCond);
 #endif
