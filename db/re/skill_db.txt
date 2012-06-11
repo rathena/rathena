@@ -411,7 +411,7 @@
 365,9,8,1,-1,0,0,1,1,yes,0,0,0,weapon,0,		HW_MAGICCRASHER,Stave Crasher
 366,0,6,4,0,0x1,0,10,1,no,0,0,0,magic,0,		HW_MAGICPOWER,Mystical Amplification
 367,9,8,1,0,0xD0,0,5,1,no,0,0,0,misc,0,		PA_PRESSURE,Gloria Domini
-368,0,6,4,0,0x61,0,5,1,yes,0,0,0,weapon,0,	PA_SACRIFICE, Martyr's Reckoning
+368,0,6,4,0,0x69,0,5,1,yes,0,0,0,weapon,0,	PA_SACRIFICE, Martyr's Reckoning
 369,0,6,4,0,0x41,0,10,1,yes,0,0,0,misc,0,	PA_GOSPEL,Battle Chant
 370,-2,6,1,-1,0,0,5,1,yes,0,0,0,weapon,3,	CH_PALMSTRIKE,Raging Palm Strike
 371,-2,8,4,-1,0,0,5,1,no,0,0x200,0,weapon,0,	CH_TIGERFIST,Glacier Fist

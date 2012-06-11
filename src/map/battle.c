@@ -3279,7 +3279,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case MG_COLDBOLT: {
 							struct status_change *sc = status_get_sc(src);
 							if ( sc && sc->count ) {
-								if ( sc->data[SC_SPELLFIST] && (!sd || !sd->state.autocast) )  {
+								if ( sc->data[SC_SPELLFIST] && mflag&BF_SHORT )  {
 									skillratio += (sc->data[SC_SPELLFIST]->val4 * 100) + (sc->data[SC_SPELLFIST]->val2 * 100) - 100;// val4 = used bolt level, val2 = used spellfist level. [Rytech]
 									ad.div_ = 1;// ad mods, to make it work similar to regular hits [Xazax]
 									ad.flag = BF_WEAPON|BF_SHORT;
@@ -3293,7 +3293,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case MG_FIREBOLT: {
 							struct status_change *sc = status_get_sc(src);
 							if ( sc && sc->count ) {
-								if ( sc->data[SC_SPELLFIST] && (!sd || !sd->state.autocast) ) {
+								if ( sc->data[SC_SPELLFIST] && mflag&BF_SHORT ) {
 									skillratio += (sc->data[SC_SPELLFIST]->val4 * 100) + (sc->data[SC_SPELLFIST]->val2 * 100) - 100;
 									ad.div_ = 1;
 									ad.flag = BF_WEAPON|BF_SHORT;
@@ -3307,7 +3307,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case MG_LIGHTNINGBOLT: {
 							struct status_change *sc = status_get_sc(src);
 							if ( sc && sc->count ) {
-								if ( sc->data[SC_SPELLFIST] && (!sd || !sd->state.autocast) ) {
+								if ( sc->data[SC_SPELLFIST] && mflag&BF_SHORT ) {
 									skillratio += (sc->data[SC_SPELLFIST]->val4 * 100) + (sc->data[SC_SPELLFIST]->val2 * 100) - 100;
 									ad.div_ = 1;
 									ad.flag = BF_WEAPON|BF_SHORT;
@@ -4412,9 +4412,10 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			status_change_end(src, SC_EXEEDBREAK, INVALID_TIMER);
 		}
 		if( sc->data[SC_SPELLFIST] ) {
-			if( --(sc->data[SC_SPELLFIST]->val1) >= 0 )
-				wd = battle_calc_attack(BF_MAGIC,src,target,sc->data[SC_SPELLFIST]->val3,sc->data[SC_SPELLFIST]->val4,flag);
-			else
+			if( --(sc->data[SC_SPELLFIST]->val1) >= 0 ){
+				struct Damage ad = battle_calc_attack(BF_MAGIC,src,target,sc->data[SC_SPELLFIST]->val3,sc->data[SC_SPELLFIST]->val4,flag|BF_SHORT);
+				wd.damage = ad.damage;
+			}else
 				status_change_end(src,SC_SPELLFIST,INVALID_TIMER);
 		}
 		if( sc->data[SC_GIANTGROWTH] && (wd.flag&BF_SHORT) && rnd()%100 < sc->data[SC_GIANTGROWTH]->val2 )

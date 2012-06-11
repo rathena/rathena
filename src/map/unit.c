@@ -1072,7 +1072,6 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 	if(sd) {
 		switch(skill_num){
 		case SA_CASTCANCEL:
-		case SO_SPELLFIST:
 			if(ud->skillid != skill_num){
 				sd->skillid_old = ud->skillid;
 				sd->skilllv_old = ud->skilllv;
@@ -1107,7 +1106,12 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 				return 0;
 			}
 			break;
-
+		case MG_FIREBOLT:
+		case MG_LIGHTNINGBOLT:
+		case MG_COLDBOLT:
+			sd->skillid_old = skill_num;
+			sd->skilllv_old = skill_lv;
+			break;
 		}
 		if (!skill_check_condition_castbegin(sd, skill_num, skill_lv))
 			return 0;
