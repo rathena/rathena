@@ -44,7 +44,7 @@ obj_all:
 
 obj_all/%.o: %.c $(COMMON_H) $(LIBCONFIG_H)
 	@echo "	CC	$<"
-	@@CC@ @CFLAGS@ $(LIBCONFIG_INCLUDE) @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CC@ @CFLAGS@ $(LIBCONFIG_INCLUDE) @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing common object files
 ../common/obj_all/%.o:

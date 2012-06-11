@@ -86,71 +86,53 @@ forceinline volatile int64 InterlockedExchange64(volatile int64 *target, int64 v
 #error Your Target Platfrom is not supported
 #endif
 
-static forceinline volatile int64 InterlockedExchangeAdd64(volatile int64 *addend, int64 increment){
+static forceinline int64 InterlockedExchangeAdd64(volatile int64 *addend, int64 increment){
 	return __sync_fetch_and_add(addend, increment);
 }//end: InterlockedExchangeAdd64()
 
 
-static forceinline volatile int32 InterlockedExchangeAdd(volatile int32 *addend, int32 increment){
+static forceinline int32 InterlockedExchangeAdd(volatile int32 *addend, int32 increment){
 	return __sync_fetch_and_add(addend, increment);
 }//end: InterlockedExchangeAdd()
 
 
-static forceinline volatile int64 InterlockedIncrement64(volatile int64 *addend){
+static forceinline int64 InterlockedIncrement64(volatile int64 *addend){
 	return __sync_add_and_fetch(addend, 1);
 }//end: InterlockedIncrement64()
 
 
-static forceinline volatile int32 InterlockedIncrement(volatile int32 *addend){
+static forceinline int32 InterlockedIncrement(volatile int32 *addend){
         return __sync_add_and_fetch(addend, 1);
 }//end: InterlockedIncrement()
 
 
-static forceinline volatile int64 InterlockedDecrement64(volatile int64 *addend){
+static forceinline int64 InterlockedDecrement64(volatile int64 *addend){
 	return __sync_sub_and_fetch(addend, 1);
 }//end: InterlockedDecrement64()
 
 
-static forceinline volatile int32 InterlockedDecrement(volatile int32 *addend){
+static forceinline int32 InterlockedDecrement(volatile int32 *addend){
 	return __sync_sub_and_fetch(addend, 1);
 }//end: InterlockedDecrement()
 
 
-static forceinline volatile int64 InterlockedCompareExchange64(volatile int64 *dest, int64 exch, int64 cmp){
+static forceinline int64 InterlockedCompareExchange64(volatile int64 *dest, int64 exch, int64 cmp){
 	return __sync_val_compare_and_swap(dest, cmp, exch);
 }//end: InterlockedCompareExchange64()
 
 
-static forceinline volatile int32 InterlockedCompareExchange(volatile int32 *dest, int32 exch, int32 cmp){
-        return __sync_val_compare_and_swap(dest, cmp, exch);
+static forceinline int32 InterlockedCompareExchange(volatile int32 *dest, int32 exch, int32 cmp){
+	return __sync_val_compare_and_swap(dest, cmp, exch);
 }//end: InterlockedCompareExchnage()
 
 
-static forceinline volatile int64 InterlockedExchange64(volatile int64 *target, int64 val){
-	int ret;
-	
-	__asm__ __volatile__(
-		"lock xchg %2, (%1)"
-		:"=r" (ret)
-		:"r" (target), "0" (val)
-		:"memory"
-	);
-	
-	return ret;
+static forceinline int64 InterlockedExchange64(volatile int64 *target, int64 val){
+	return __sync_lock_test_and_set(target, val);
 }//end: InterlockedExchange64()
 
 
-static forceinline volatile int32 InterlockedExchange(volatile int32 *target, int32 val){
-	int ret;
-	
-	__asm__ __volatile__(
-		"lock xchgl %2, (%1)"
-		:"=r" (ret)
-		:"r" (target), "0" (val)
-		:"memory"
-	);
-	
-	return ret;
+static forceinline int32 InterlockedExchange(volatile int32 *target, int32 val){
+    return __sync_lock_test_and_set(target, val);
 }//end: InterlockedExchange()
 
 
