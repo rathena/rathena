@@ -12747,9 +12747,11 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, short 
 		req.sp += (status->sp * sp_rate)/100;
 	else
 		req.sp += (status->max_sp * (-sp_rate))/100;
-	if( sd->dsprate!=100 )
+	if( sd->dsprate != 100 )
 		req.sp = req.sp * sd->dsprate / 100;
 
+	req.sp = cap_value(req.sp * pc_sp_rate_skill(sd,skill) / 100, 0, SHRT_MAX);
+	
 	if( sc ) {
 		if( sc->data[SC__LAZINESS] )
 			req.sp += req.sp + sc->data[SC__LAZINESS]->val1 * 10;

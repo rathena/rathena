@@ -7320,63 +7320,62 @@ BUILDIN_FUNC(bonus)
 		return 0; // no player attached
 
 	type = script_getnum(st,2);
-	switch( type )
-	{
-	case SP_AUTOSPELL:
-	case SP_AUTOSPELL_WHENHIT:
-	case SP_AUTOSPELL_ONSKILL:
-	case SP_SKILL_ATK:
-	case SP_SKILL_HEAL:
-	case SP_SKILL_HEAL2:
-	case SP_ADD_SKILL_BLOW:
-	case SP_CASTRATE:
-	case SP_ADDEFF_ONSKILL:
-		// these bonuses support skill names
-		val1 = ( script_isstring(st,3) ? skill_name2id(script_getstr(st,3)) : script_getnum(st,3) );
-		break;
-	default:
-		val1 = script_getnum(st,3);
-		break;
+	switch( type ) {
+		case SP_AUTOSPELL:
+		case SP_AUTOSPELL_WHENHIT:
+		case SP_AUTOSPELL_ONSKILL:
+		case SP_SKILL_ATK:
+		case SP_SKILL_HEAL:
+		case SP_SKILL_HEAL2:
+		case SP_ADD_SKILL_BLOW:
+		case SP_CASTRATE:
+		case SP_ADDEFF_ONSKILL:
+		case SP_SP_RATE_SKILL:
+			// these bonuses support skill names
+			val1 = ( script_isstring(st,3) ? skill_name2id(script_getstr(st,3)) : script_getnum(st,3) );
+			break;
+		default:
+			val1 = script_getnum(st,3);
+			break;
 	}
 
-	switch( script_lastdata(st)-2 )
-	{
-	case 1:
-		pc_bonus(sd, type, val1);
-		break;
-	case 2:
-		val2 = script_getnum(st,4);
-		pc_bonus2(sd, type, val1, val2);
-		break;
-	case 3:
-		val2 = script_getnum(st,4);
-		val3 = script_getnum(st,5);
-		pc_bonus3(sd, type, val1, val2, val3);
-		break;
-	case 4:
-		if( type == SP_AUTOSPELL_ONSKILL && script_isstring(st,4) )
-			val2 = skill_name2id(script_getstr(st,4)); // 2nd value can be skill name
-		else
+	switch( script_lastdata(st)-2 ) {
+		case 1:
+			pc_bonus(sd, type, val1);
+			break;
+		case 2:
 			val2 = script_getnum(st,4);
-
-		val3 = script_getnum(st,5);
-		val4 = script_getnum(st,6);
-		pc_bonus4(sd, type, val1, val2, val3, val4);
-		break;
-	case 5:
-		if( type == SP_AUTOSPELL_ONSKILL && script_isstring(st,4) )
-			val2 = skill_name2id(script_getstr(st,4)); // 2nd value can be skill name
-		else
+			pc_bonus2(sd, type, val1, val2);
+			break;
+		case 3:
 			val2 = script_getnum(st,4);
+			val3 = script_getnum(st,5);
+			pc_bonus3(sd, type, val1, val2, val3);
+			break;
+		case 4:
+			if( type == SP_AUTOSPELL_ONSKILL && script_isstring(st,4) )
+				val2 = skill_name2id(script_getstr(st,4)); // 2nd value can be skill name
+			else
+				val2 = script_getnum(st,4);
 
-		val3 = script_getnum(st,5);
-		val4 = script_getnum(st,6);
-		val5 = script_getnum(st,7);
-		pc_bonus5(sd, type, val1, val2, val3, val4, val5);
-		break;
-	default:
-		ShowDebug("buildin_bonus: unexpected number of arguments (%d)\n", (script_lastdata(st) - 1));
-		break;
+			val3 = script_getnum(st,5);
+			val4 = script_getnum(st,6);
+			pc_bonus4(sd, type, val1, val2, val3, val4);
+			break;
+		case 5:
+			if( type == SP_AUTOSPELL_ONSKILL && script_isstring(st,4) )
+				val2 = skill_name2id(script_getstr(st,4)); // 2nd value can be skill name
+			else
+				val2 = script_getnum(st,4);
+
+			val3 = script_getnum(st,5);
+			val4 = script_getnum(st,6);
+			val5 = script_getnum(st,7);
+			pc_bonus5(sd, type, val1, val2, val3, val4, val5);
+			break;
+		default:
+			ShowDebug("buildin_bonus: unexpected number of arguments (%d)\n", (script_lastdata(st) - 1));
+			break;
 	}
 
 	return 0;

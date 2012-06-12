@@ -3046,6 +3046,21 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag != 2)
 			sd->hp_gain_race_attack[type2] = cap_value(sd->hp_gain_race_attack[type2] + val, 0, INT16_MAX);
 		break;
+	case SP_SP_RATE_SKILL: //bonus2 bUseSPrateSkill,n,x;
+		if(sd->state.lr_flag == 2)
+			break;
+		ARR_FIND(0, ARRAYLENGTH(sd->sprateskill), i, sd->sprateskill[i].id == 0 || sd->sprateskill[i].id == type2);
+		if (i == ARRAYLENGTH(sd->sprateskill)) {
+			ShowDebug("run_script: bonus2 bUseSPrateSkill reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->sprateskill), type2, val);
+			break;
+		}
+		if (sd->sprateskill[i].id == type2)
+			sd->sprateskill[i].val += val;
+		else {
+			sd->sprateskill[i].id = type2;
+			sd->sprateskill[i].val = val;
+		}
+		break;			
 	default:
 		ShowWarning("pc_bonus2: unknown type %d %d %d!\n",type,type2,val);
 		break;
@@ -6080,6 +6095,16 @@ int pc_skillatk_bonus(struct map_session_data *sd, int skill_num)
 	ARR_FIND(0, ARRAYLENGTH(sd->skillatk), i, sd->skillatk[i].id == skill_num);
 	if( i < ARRAYLENGTH(sd->skillatk) ) bonus = sd->skillatk[i].val;
 
+	return bonus;
+}
+
+inline int pc_sp_rate_skill(struct map_session_data *sd, int skill_num) {
+	int i, bonus = 100;
+	
+	ARR_FIND(0, ARRAYLENGTH(sd->sprateskill), i, sd->sprateskill[i].id == skill_num);
+	if( i < ARRAYLENGTH(sd->sprateskill) )
+		bonus += sd->sprateskill[i].val;
+	
 	return bonus;
 }
 

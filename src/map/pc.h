@@ -261,7 +261,7 @@ struct map_session_data {
 	struct { //skillatk raises bonus dmg% of skills, skillheal increases heal%, skillblown increases bonus blewcount for some skills.
 		unsigned short id;
 		short val;
-	} skillatk[MAX_PC_BONUS], skillheal[5], skillheal2[5], skillblown[MAX_PC_BONUS], skillcast[MAX_PC_BONUS];
+	} skillatk[MAX_PC_BONUS], sprateskill[MAX_PC_BONUS], skillheal[5], skillheal2[5], skillblown[MAX_PC_BONUS], skillcast[MAX_PC_BONUS];
 	struct {
 		short value;
 		int rate;
@@ -901,16 +901,12 @@ void pc_inventory_rental_add(struct map_session_data *sd, int seconds);
 int pc_read_motd(void); // [Valaris]
 int pc_disguise(struct map_session_data *sd, int class_);
 bool pc_isautolooting(struct map_session_data *sd, int nameid);
-/**
- * Mechanic (Mado Gear)
- **/
+
 void pc_overheat(struct map_session_data *sd, int val);
-/**
- * Royal Guard
- **/
+
 int pc_banding(struct map_session_data *sd, short skill_lv);
-/**
- * Item Cooldown persistency
- **/
+
 void pc_itemcd_do(struct map_session_data *sd, bool load);
+
+inline int pc_sp_rate_skill(struct map_session_data *sd, int skill_num);
 #endif /* _PC_H_ */
