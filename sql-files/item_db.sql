@@ -7253,18 +7253,32 @@ REPLACE INTO `item_db` VALUES (18523,'Thunderstorm_Cloud','Thunderstorm Cloud',5
 REPLACE INTO `item_db` VALUES (18525,'Watermelon_Hat','Watermelon Cap',5,20,NULL,100,NULL,4,NULL,1,0xFFFFFFFF,7,2,256,NULL,30,1,690,'bonus bMdef,4; bonus2 bAddEle,Ele_Fire,3;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (18526,'Candy_Cane_In_Mouth','Candy Cane In Mouth',5,20,NULL,100,NULL,2,NULL,0,0xFFFFFFFF,7,2,512,NULL,1,0,446,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (18527,'Dark_Pumpkin_Hat','Dark Pumpkin-head',5,20,NULL,500,NULL,5,NULL,0,0xFFFFFFFF,7,2,256,NULL,45,1,691,'bonus2 bAddMonsterDropItem,12192,20; bonus bMdef,5; bonus bAllStats,2; if(isequipped(2278)){ bonus2 bAddMonsterDropItem,12192,20; } if(isequipped(5176)){ bonus bAspdRate,5; } if(isequipped(5086)){ bonus2 bAddItemHealRate,12192,200; } if(isequipped(2281)){ bonus bFlee,10; }',NULL,NULL);
+#
+REPLACE INTO `item_db` VALUES (18539,'Skull_Cap','Skull Cap',5,40,NULL,200,NULL,5,NULL,1,0xFFFFFFFF,7,2,256,NULL,10,1,713,'bonus bMatkRate,2; if(getrefine() >= 5) { bonus bMatkRate,3; } if(getrefine() >= 7) { bonus bMatkRate,3; } if(isequipped(2286) || isequipped(18507)) {bonus bUseSPrate,-3;} if(isequipped(1615) || isequipped(1636)) { bonus bWeaponMatk,10*getequiprefinerycnt(EQI_HAND_R); bonus bCastRate,-10;}',NULL,NULL);
 # 
 REPLACE INTO `item_db` VALUES (18570,'Ancient_Gold_Ornament','Ancient Gold Ornament',5,20,NULL,400,NULL,7,NULL,1,0xFFFFFFFE,7,2,256,NULL,100,1,739,'if(BaseLevel >= 150) { bonus bAllStats,2; } if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief){ bonus2 bAddRace,RC_Boss,8; bonus2 bAddRace,RC_NonBoss,8; } if(BaseClass==Job_Mage||BaseClass==Job_Acolyte){ /* bonus bEquipmentMatk,8; */ } if(BaseClass==Job_Archer){ bonus bDex,3; bonus bLongAtkRate,10; }',NULL,NULL);
 # 
 REPLACE INTO `item_db` VALUES (18580,'Yggdrasil_Crown','Yggdrasil Crown',5,20,NULL,200,NULL,3,NULL,0,0xFFFFFFFF,7,2,256,NULL,1,1,724,'bonus bMdef,3; bonus bHealPower,2; bonus bHealpower2,10; if(getrefine() >= 7){ bonus bHealPower,5; } if(getrefine() >= 9){ bonus bHealPower,3; }',NULL,NULL);
+#
+REPLACE INTO `item_db` VALUES (18595,'Horn_Of_Ancient','Horn of Ancient',5,40,NULL,200,NULL,8,NULL,1,0xFFFFFFFF,7,2,256,NULL,50,1,757,'autobonus \"{ bonus bAtk,100; }\",5,10000,0,\"{ specialeffect2 EF_POTION_BERSERK; }\";',NULL,NULL);
+REPLACE INTO `item_db` VALUES (18596,'Sprout_Hat','Sprout Hat',5,20,NULL,200,NULL,4,NULL,0,0xFFFFFFFF,7,2,256,NULL,70,1,758,'skill \"WZ_HEAVENDRIVE\",3;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (18597,'Mercury_Riser','Mercury Riser',5,40,NULL,200,NULL,10,NULL,1,0xFFFFFFFF,7,2,256,NULL,70,1,759,'bonus bAspdRate,3; bonus bCritical,3; if(getrefine() == 7 || getrefine() == 8) { bonus bAspdRate,2; bonus bCritical,2; } if(getrefine() >= 9) { bonus bAspdRate,2; bonus bCritical,2; }',NULL,NULL);
 # 
+REPLACE INTO `item_db` VALUES (18600,'Cat_Ear_Beret','Cat Ear Beret',5,30,NULL,200,NULL,5,NULL,1,0xFFFFFFFF,7,2,256,NULL,0,1,761,'if(getrefine() > 5 && getrefine() <= 12) { bonus2 bAddRace,RC_DemiHuman,2*(getrefine() - 4); bonus2 bSubRace,RC_DemiHuman,2*(getrefine() - 4);}',NULL,NULL);
+#
 REPLACE INTO `item_db` VALUES (18602,'Watermelon_Bite','Watermelon Bite',5,20,NULL,100,NULL,4,NULL,0,0xFFFFFFFF,7,2,1,NULL,30,0,763,'bonus bMdef,4; bonus2 bAddEle,Ele_Fire,4;',NULL,NULL);
 # 
 REPLACE INTO `item_db` VALUES (18607,'Blush_S','Blush',5,20,NULL,100,NULL,0,NULL,1,0xFFFFFFFF,7,2,512,NULL,0,0,125,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (18608,'Pair_Of_Red_Ribbon_S','Small Ribbons',5,20,NULL,100,NULL,2,NULL,1,0xFFFFFFFF,7,2,512,NULL,45,0,169,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (18609,'Dark_Blindfold_S','Dark Blinder',5,20,NULL,100,NULL,0,NULL,1,0xFFFFFFFE,7,2,512,NULL,0,0,187,'bonus2 bResEff,Eff_Blind,10000; bonus2 bResEff,Eff_Stun,200;',NULL,NULL);
+#
+REPLACE INTO `item_db` VALUES (18612,'White_Musang_Hat','White Musang Hat',5,40,NULL,200,NULL,3,NULL,1,0xFFFFFFFF,7,2,256,NULL,0,1,770,'bonus bStr,2; bonus bVit,2; bonus bLuk,1; bonus bUnbreakableHelm,0;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (18613,'Black_Musang_Hat','Black Musang Hat',5,40,NULL,200,NULL,3,NULL,1,0xFFFFFFFF,7,2,256,NULL,0,1,771,'bonus bInt,2; bonus bDex,2; bonus bAgi,1; bonus bUnbreakableHelm,0;',NULL,NULL);
+#
+REPLACE INTO `item_db` VALUES (18620,'Heart_Eye_Patch','Heart Eyepatch',5,5,NULL,200,NULL,2,NULL,0,0xFFFFFFFF,7,2,512,NULL,20,1,779,NULL,NULL,NULL);
 # 
-REPLACE INTO `item_db` VALUES (18656,'Witch\'s_Pumpkin_Hat','Witch\'s Pumpkin Hat',5,20,NULL,300,NULL,10,NULL,0,0xFFFFFFFF,7,2,256,NULL,20,1,717,'bonus bMdef,10; bonus bStr,2; bonus bInt,2; bonus2 bMagicAddRace,RC_Undead,15; bonus2 bMagicAddRace,RC_Demon,15;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (18656,'Witch\'s_Pumpkin_Hat','Witch\'s Pumpkin Hat',5,20,NULL,300,NULL,10,NULL,0,0xFFFFFFFF,7,2,256,NULL,20,1,717,'bonus bMdef,10; bonus bStr,2; bonus bInt,2; bonus2 bMagicAddRace,RC_Undead,15; bonus2 bMagicAddRace,RC_Demon,15; if(isequipped(2278)) {bonus2 bAddMonsterDropItem,12192,1;} if(isequipped(5176)) {bonus bAspdRate,5; autobonus \"{ bonus bAtk,50; }\",5,10000,0,\"{ specialeffect2 EF_POTION_BERSERK; }\";}  if(isequipped(5086)) {bonus2 bAddMonsterDropItem,12192,1; bonus2 bAddMonsterDropItem,538,1; bonus2 bAddItemHealRate,12192,100; bonus2 bAddItemHealRate,538,100;} if(isequipped(2281)) {bonus bFlee,10; bonus2 bAddEff,Eff_Stun,1000;}',NULL,NULL);
+#
 #  Costume System
 REPLACE INTO `item_db` VALUES (19500,'T_Mr_Smile','T Mr Smile',5,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,7,2,6144,NULL,0,0,65,'bonus bStr,2;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (19501,'T_Spinx_Helm','T Spinx Helm',5,0,NULL,0,NULL,0,NULL,1,0xFFFFFFFF,7,2,5120,NULL,0,0,137,NULL,NULL,NULL);
