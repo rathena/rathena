@@ -3256,8 +3256,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 
 				switch(skill_num){
 					case MG_NAPALMBEAT:
-					case MG_FIREBALL:
 						skillratio += skill_lv*10-30;
+					case MG_FIREBALL:
+						skillratio += 20*skill_lv;
 						break;
 					case MG_SOULSTRIKE:
 						if (battle_check_undead(tstatus->race,tstatus->def_ele))
