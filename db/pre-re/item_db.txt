@@ -6523,6 +6523,22 @@
 18505,Umbala_Spirit,Umbala Spirit,5,0,,200,,1,,1,0xFFFFFFFF,7,2,1,,30,0,675,{ bonus bVit,1; },{},{}
 18506,Hattah_Black,Hattah Black,5,12000,,4000,,2,,1,0xFFFFFFFF,7,2,769,,1,1,676,{},{},{}
 18507,Elven_Ears_,Elven Ears,5,20,,100,,0,,1,0xFFFFFFFE,7,2,512,,70,0,73,{},{},{}
+//
+18539,Skull_Cap,Skull Cap,5,40,,200,,5,,1,0xFFFFFFFF,7,2,256,,10,1,713,{ bonus bMatkRate,2; if(getrefine() >= 5) { bonus bMatkRate,3; } if(getrefine() >= 7) { bonus bMatkRate,3; } if(isequipped(2286) || isequipped(18507)) {bonus bUseSPrate,-3;} if(isequipped(1615) || isequipped(1636)) { bonus bWeaponMatk,10*getequiprefinerycnt(EQI_HAND_R); bonus bCastRate,-10;} },{},{}
+//
+18595,Horn_Of_Ancient,Horn of Ancient,5,40,,200,,8,,1,0xFFFFFFFF,7,2,256,,50,1,757,{ autobonus "{ bonus bAtk,100; }",5,10000,0,"{ specialeffect2 EF_POTION_BERSERK; }"; },{},{}
+18596,Sprout_Hat,Sprout Hat,5,20,,200,,4,,0,0xFFFFFFFF,7,2,256,,70,1,758,{ skill "WZ_HEAVENDRIVE", 3; },{},{}
+18597,Mercury_Riser,Mercury Riser,5,40,,200,,10,,1,0xFFFFFFFF,7,2,256,,0,,759,{ bonus bAspdRate,3; bonus bCritical,3; if(getrefine() == 7 || getrefine() == 8) { bonus bAspdRate,2; bonus bCritical,2; } if(getrefine() >= 9) { bonus bAspdRate,2; bonus bCritical,2; },{},{}
+//
+18600,Cat_Ear_Beret,Cat Ear Beret,5,20,,100,,5,,0,0xFFFFFFFF,7,2,256,,0,1,761,{ if(getrefine() > 5 && getrefine() <= 12) { bonus2 bAddRace,RC_DemiHuman,2*(getrefine() - 4); bonus2 bSubRace,RC_DemiHuman,2*(getrefine() - 4); },{},{}
+//
+18612,White_Musang_Hat,White Musang Hat,5,40,,200,,3,,1,0xFFFFFFFF,7,2,256,,0,1,770,{ bonus bStr,2; bonus bVit,2; bonus bLuk,1; bonus bUnbreakableHelm,0; },{},{}
+18613,Black_Musang_Hat,Black Musang Hat,5,40,,200,,3,,1,0xFFFFFFFF,7,2,256,,0,1,770,{ bonus bInt,2; bonus bDex,2; bonus bAgi,1; bonus bUnbreakableHelm,0; },{},{}
+//
+18620,Heart_Eye_Patch,Heart Eyepatch,5,5,,200,,2,,0,0xFFFFFFFF,7,2,512,,20,1,779,{},{},{}
+//
+18656,Witch's_Pumpkin_Hat,Witch's Pumpkin Hat,5,20,,300,,10,,0,0xFFFFFFFF,7,2,256,,20,1,717,{ bonus bMdef,10; bonus bStr,2; bonus bInt,2; bonus2 bMagicAddRace,RC_Undead,15; bonus2 bMagicAddRace,RC_Demon,15; if(isequipped(2278)) {bonus2 bAddMonsterDropItem,12192,1;} if(isequipped(5176)) {bonus bAspdRate,5; autobonus { bonus bAtk,50; },5,10000,0,{ specialeffect2 EF_POTION_BERSERK; };}  if(isequipped(5086)) {bonus2 bAddMonsterDropItem,12192,1; bonus2 bAddMonsterDropItem,538,1; bonus2 bAddItemHealRate,12192,100; bonus2 bAddItemHealRate,538,100;} if(isequipped(2281)) {bonus bFlee,10; bonus2 bAddEff,Eff_Stun,1000;}},{},{}
+
 // Costume System
 19500,T_Mr_Smile,T Mr Smile,5,0,,0,,0,,0,0xFFFFFFFF,7,2,6144,,0,0,65,{ bonus bStr,2; },{},{}
 19501,T_Spinx_Helm,T Spinx Helm,5,0,,0,,0,,1,0xFFFFFFFF,7,2,5120,,0,0,137,{},{},{}
