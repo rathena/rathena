@@ -1391,7 +1391,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			// Target weapon breaking
 			rate = 0;
 			if( sd )
-				rate += sd->break_weapon_rate;
+				rate += sd->bonus.break_weapon_rate;
 			if( sc && sc->data[SC_MELTDOWN] )
 				rate += sc->data[SC_MELTDOWN]->val2;
 			if( rate )
@@ -1400,7 +1400,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			// Target armor breaking
 			rate = 0;
 			if( sd )
-				rate += sd->break_armor_rate;
+				rate += sd->bonus.break_armor_rate;
 			if( sc && sc->data[SC_MELTDOWN] )
 				rate += sc->data[SC_MELTDOWN]->val3;
 			if( rate )
@@ -1522,9 +1522,9 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	}
 
 	//Polymorph
-	if(sd && sd->classchange && attack_type&BF_WEAPON &&
+	if(sd && sd->bonus.classchange && attack_type&BF_WEAPON &&
 		dstmd && !(tstatus->mode&MD_BOSS) &&
-		(rnd()%10000 < sd->classchange))
+		(rnd()%10000 < sd->bonus.classchange))
 	{
 		struct mob_db *mob;
 		int class_;
@@ -1726,19 +1726,17 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		status_heal(src, 0, status_get_lv(bl)*(95+15*rate)/100, 2);
 	}
 
-	if( sd && status_isdead(bl) )
-	{
+	if( sd && status_isdead(bl) ) {
 		int sp = 0, hp = 0;
-		if( attack_type&BF_WEAPON )
-		{
-			sp += sd->sp_gain_value;
+		if( attack_type&BF_WEAPON ) {
+			sp += sd->bonus.sp_gain_value;
 			sp += sd->sp_gain_race[status_get_race(bl)];
 			sp += sd->sp_gain_race[is_boss(bl)?RC_BOSS:RC_NONBOSS];
-			hp += sd->hp_gain_value;
+			hp += sd->bonus.hp_gain_value;
 		}
 		if( attack_type&BF_MAGIC ) {
-			sp += sd->magic_sp_gain_value;
-			hp += sd->magic_hp_gain_value;
+			sp += sd->bonus.magic_sp_gain_value;
+			hp += sd->bonus.magic_hp_gain_value;
 			if( skillid == WZ_WATERBALL ) {//(bugreport:5303)
 				struct status_change *sc = NULL;
 				if( ( sc = status_get_sc(src) ) ) {
@@ -1749,8 +1747,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 				}
 			}
 		}
-		if( hp || sp )
-		{// updated to force healing to allow healing through berserk
+		if( hp || sp ) { // updated to force healing to allow healing through berserk
 			status_heal(src, hp, sp, battle_config.show_hp_sp_gain ? 3 : 1);
 		}
 	}
@@ -1887,10 +1884,10 @@ int skill_break_equip (struct block_list *bl, unsigned short where, int rate, in
 		sc = NULL;
 
 	if (sd) {
-		if (sd->unbreakable_equip)
-			where &= ~sd->unbreakable_equip;
-		if (sd->unbreakable)
-			rate -= rate*sd->unbreakable/100;
+		if (sd->bonus.unbreakable_equip)
+			where &= ~sd->bonus.unbreakable_equip;
+		if (sd->bonus.unbreakable)
+			rate -= rate*sd->bonus.unbreakable/100;
 		if (where&EQP_WEAPON) {
 			switch (sd->status.weapon) {
 				case W_FIST:	//Bare fists should not break :P
@@ -2059,7 +2056,7 @@ static int skill_magic_reflect(struct block_list* src, struct block_list* bl, in
 	struct map_session_data* sd = BL_CAST(BL_PC, bl);
 
 	// item-based reflection
-	if( sd && sd->magic_damage_return && type && rnd()%100 < sd->magic_damage_return )
+	if( sd && sd->bonus.magic_damage_return && type && rnd()%100 < sd->bonus.magic_damage_return )
 		return 1;
 
 	if( is_boss(src) )
@@ -4484,7 +4481,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			} else {
 				skill_area_temp[1] = bl->id;
 				map_foreachinrange(skill_area_sub, bl,
-					sd->splash_range, BL_CHAR,
+					sd->bonus.splash_range, BL_CHAR,
 					src, skillid, skilllv, tick, flag | BCT_ENEMY | 1,
 					skill_castend_damage_id);
 				flag|=1; //Set flag to 1 so ammo is not double-consumed. [Skotlex]
@@ -7926,7 +7923,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case LG_SHIELDSPELL:
 		if( flag&1 ) {
-			int duration = (sd) ? sd->shieldmdef * 2000 : 10000;
+			int duration = (sd) ? sd->bonus.shieldmdef * 2000 : 10000;
 			sc_start(bl,SC_SILENCE,100,skilllv,duration);
 		} else if( sd ) {
 			int opt = skilllv;
@@ -7969,7 +7966,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					break;
 
 				case 2:
-					brate = sd->shieldmdef * 20;
+					brate = sd->bonus.shieldmdef * 20;
 					if( rate < 30 )
 						opt = 1;
 					else if( rate < 60 )
@@ -7991,9 +7988,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 								map_foreachinrange(skill_area_sub,src,skill_get_splash(skillid,skilllv),BL_CHAR,src,skillid,skilllv,tick,flag|BCT_ENEMY|1,skill_castend_nodamage_id);
 							break;
 						case 3:
-							if( sc_start(bl,SC_SHIELDSPELL_MDEF,brate,opt,sd->shieldmdef * 30000) )
+							if( sc_start(bl,SC_SHIELDSPELL_MDEF,brate,opt,sd->bonus.shieldmdef * 30000) )
 								clif_skill_nodamage(src,bl,PR_MAGNIFICAT,skilllv,
-								sc_start(bl,SC_MAGNIFICAT,100,1,sd->shieldmdef * 30000));
+								sc_start(bl,SC_MAGNIFICAT,100,1,sd->bonus.shieldmdef * 30000));
 							break;
 					}
 					break;

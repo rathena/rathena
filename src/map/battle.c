@@ -792,8 +792,8 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 			short element = skill_get_ele(skill_num, skill_lv);
 			if( !skill_num || element == -1 ) { //Take weapon's element
 				struct status_data *sstatus = NULL;
-				if( src->type == BL_PC && ((TBL_PC*)src)->arrow_ele )
-					element = ((TBL_PC*)src)->arrow_ele;
+				if( src->type == BL_PC && ((TBL_PC*)src)->bonus.arrow_ele )
+					element = ((TBL_PC*)src)->bonus.arrow_ele;
 				else if( (sstatus = status_get_status_data(src)) ) {
 					element = sstatus->rhw.ele;
 				}
@@ -1109,8 +1109,8 @@ static int battle_calc_base_damage(struct status_data *status, struct weapon_atk
 	if (sd)
 	{
 		//rodatazone says the range is 0~arrow_atk-1 for non crit
-		if (flag&2 && sd->arrow_atk)
-			damage += ((flag&1)?sd->arrow_atk:rnd()%sd->arrow_atk);
+		if (flag&2 && sd->bonus.arrow_atk)
+			damage += ( (flag&1) ? sd->bonus.arrow_atk : rnd()%sd->bonus.arrow_atk );
 
 		//SizeFix only for players
 		if (!(sd->special_state.no_sizefix || (flag&8)))
@@ -1351,8 +1351,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	{ //Take weapon's element
 		s_ele = sstatus->rhw.ele;
 		s_ele_ = sstatus->lhw.ele;
-		if( flag.arrow && sd && sd->arrow_ele )
-			s_ele = sd->arrow_ele;
+		if( flag.arrow && sd && sd->bonus.arrow_ele )
+			s_ele = sd->bonus.arrow_ele;
 		if( battle_config.attack_attr_none&src->type )
 			n_ele = true; //Weapon's element is "not elemental"
 	}
@@ -1383,9 +1383,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 
 	if( sd && !skill_num ) {	//Check for double attack.
 		if( ( ( skill_lv = pc_checkskill(sd,TF_DOUBLE) ) > 0 && sd->weapontype1 == W_DAGGER )
-			|| ( sd->double_rate > 0 && sd->weapontype1 != W_FIST ) ) //Will fail bare-handed 
+			|| ( sd->bonus.double_rate > 0 && sd->weapontype1 != W_FIST ) ) //Will fail bare-handed 
 		{	//Success chance is not added, the higher one is used [Skotlex]
-			if( rnd()%100 < ( 5*skill_lv > sd->double_rate ? 5*skill_lv : sd->double_rate ) )
+			if( rnd()%100 < ( 5*skill_lv > sd->bonus.double_rate ? 5*skill_lv : sd->bonus.double_rate ) )
 			{
 				wd.div_ = skill_get_num(TF_DOUBLE,skill_lv?skill_lv:1);
 				wd.type = 0x08;
@@ -1424,19 +1424,16 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		{
 			cri+= sd->critaddrace[tstatus->race];
 			if(flag.arrow)
-				cri += sd->arrow_cri;
+				cri += sd->bonus.arrow_cri;
 		}
 		//The official equation is *2, but that only applies when sd's do critical.
 		//Therefore, we use the old value 3 on cases when an sd gets attacked by a mob
 		cri -= tstatus->luk*(!sd&&tsd?3:2);
 		
-		if(tsc)
-		{
-			if (tsc->data[SC_SLEEP])
-				cri <<=1;
+		if( tsc && tsc->data[SC_SLEEP] ) {
+			cri <<= 1;
 		}
-		switch (skill_num)
-		{
+		switch (skill_num) {
 			case KN_AUTOCOUNTER:
 				if(battle_config.auto_counter_type &&
 					(battle_config.auto_counter_type&src->type))
@@ -1452,17 +1449,17 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				cri += 250 + 50*skill_lv;
 				break;
 		}
-		if(tsd && tsd->critical_def)
-			cri = cri*(100-tsd->critical_def)/100;
+		if(tsd && tsd->bonus.critical_def)
+			cri = cri * ( 100 - tsd->bonus.critical_def ) / 100;
 		if (rnd()%1000 < cri)
-			flag.cri= 1;
+			flag.cri = 1;
 	}
 	if (flag.cri)
 	{
 		wd.type = 0x0a;
 		flag.idef = flag.idef2 = flag.hit = 1;
 	} else {	//Check for Perfect Hit
-		if(sd && sd->perfect_hit > 0 && rnd()%100 < sd->perfect_hit)
+		if(sd && sd->bonus.perfect_hit > 0 && rnd()%100 < sd->bonus.perfect_hit)
 			flag.hit = 1;
 		if (sc && sc->data[SC_FUSION]) {
 			flag.hit = 1; //SG_FUSION always hit [Komurka]
@@ -1513,7 +1510,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			hitrate -= 50;
 
 		if(sd && flag.arrow)
-			hitrate += sd->arrow_hit;
+			hitrate += sd->bonus.arrow_hit;
 		if(skill_num)
 			switch(skill_num)
 		{	//Hit skill modifiers
@@ -1681,13 +1678,12 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				}
 
 				//Add any bonuses that modify the base baseatk+watk (pre-skills)
-				if(sd)
-				{
-					if (sd->atk_rate)
-						ATK_ADDRATE(sd->atk_rate);
+				if(sd) {
+					if (sd->bonus.atk_rate)
+						ATK_ADDRATE(sd->bonus.atk_rate);
 
-					if(flag.cri && sd->crit_atk_rate)
-						ATK_ADDRATE(sd->crit_atk_rate);
+					if(flag.cri && sd->bonus.crit_atk_rate)
+						ATK_ADDRATE(sd->bonus.crit_atk_rate);
 
 					if(sd->status.party_id && (skill=pc_checkskill(sd,TK_POWER)) > 0){
 						if( (i = party_foreachsamemap(party_sub_count, sd, 0)) > 1 ) // exclude the player himself [Inkfish]
@@ -2872,7 +2868,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			}
 
 			if( wd.flag&BF_LONG )
-				cardfix=cardfix*(100+sd->long_attack_atk_rate)/100;
+				cardfix = cardfix * ( 100 + sd->bonus.long_attack_atk_rate ) / 100;
 
 			if( cardfix != 1000 || cardfix_ != 1000 )
 				ATK_RATE2(cardfix/10, cardfix_/10);	//What happens if you use right-to-left and there's no right weapon, only left?
@@ -2930,25 +2926,23 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		if( sstatus->race != RC_DEMIHUMAN )
 			cardfix=cardfix*(100-tsd->subrace[RC_NONDEMIHUMAN])/100;
 
-		for( i = 0; i < ARRAYLENGTH(tsd->add_def) && tsd->add_def[i].rate;i++ )
-		{
-			if( tsd->add_def[i].class_ == s_class )
-			{
+		for( i = 0; i < ARRAYLENGTH(tsd->add_def) && tsd->add_def[i].rate;i++ ) {
+			if( tsd->add_def[i].class_ == s_class ) {
 				cardfix=cardfix*(100-tsd->add_def[i].rate)/100;
 				break;
 			}
 		}
 
 		if( wd.flag&BF_SHORT )
-			cardfix=cardfix*(100-tsd->near_attack_def_rate)/100;
+			cardfix = cardfix * ( 100 - tsd->bonus.near_attack_def_rate ) / 100;
 		else	// BF_LONG (there's no other choice)
-			cardfix=cardfix*(100-tsd->long_attack_def_rate)/100;
+			cardfix = cardfix * ( 100 - tsd->bonus.long_attack_def_rate ) / 100;
 
 		if( tsd->sc.data[SC_DEF_RATE] )
-			cardfix=cardfix*(100-tsd->sc.data[SC_DEF_RATE]->val1)/100;
+			cardfix = cardfix * ( 100 - tsd->sc.data[SC_DEF_RATE]->val1 ) / 100;
 
 		if( cardfix != 1000 )
-			ATK_RATE(cardfix/10);
+			ATK_RATE( cardfix / 10 );
 	}
 
 	if( flag.infdef )
@@ -3495,7 +3489,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case LG_SHIELDSPELL:// [(Caster’s Base Level x 4) + (Shield MDEF x 100) + (Caster’s INT x 2)] %
 					if( sd ) { 
-						skillratio = status_get_lv(src) * 4 + sd->shieldmdef * 100 + status_get_int(src) * 2;
+						skillratio = status_get_lv(src) * 4 + sd->bonus.shieldmdef * 100 + status_get_int(src) * 2;
 					} else
 						skillratio += 1900;	//2000%	
 						break;
@@ -3627,9 +3621,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 
 			//Ignore Defense?
 			if (!flag.imdef && (
-				sd->ignore_mdef_ele & (1<<tstatus->def_ele) ||
-				sd->ignore_mdef_race & (1<<tstatus->race) ||
-				sd->ignore_mdef_race & (is_boss(target)?1<<RC_BOSS:1<<RC_NONBOSS)
+				sd->bonus.ignore_mdef_ele & ( 1 << tstatus->def_ele ) ||
+				sd->bonus.ignore_mdef_race & ( 1 << tstatus->race ) ||
+				sd->bonus.ignore_mdef_race & ( is_boss(target) ? 1 << RC_BOSS : 1 << RC_NONBOSS )
 			))
 				flag.imdef = 1;
 		}
@@ -3744,18 +3738,18 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				}
 			}
 			//It was discovered that ranged defense also counts vs magic! [Skotlex]
-			if (ad.flag&BF_SHORT)
-				cardfix=cardfix*(100-tsd->near_attack_def_rate)/100;
+			if ( ad.flag&BF_SHORT )
+				cardfix = cardfix * ( 100 - tsd->bonus.near_attack_def_rate ) / 100;
 			else
-				cardfix=cardfix*(100-tsd->long_attack_def_rate)/100;
+				cardfix = cardfix * ( 100 - tsd->bonus.long_attack_def_rate ) / 100;
 
-			cardfix=cardfix*(100-tsd->magic_def_rate)/100;
+			cardfix = cardfix * ( 100 - tsd->bonus.magic_def_rate ) / 100;
 
 			if( tsd->sc.data[SC_MDEF_RATE] )
-				cardfix=cardfix*(100-tsd->sc.data[SC_MDEF_RATE]->val1)/100;
+				cardfix = cardfix * ( 100 - tsd->sc.data[SC_MDEF_RATE]->val1 ) / 100;
 
 			if (cardfix != 1000)
-				MATK_RATE(cardfix/10);
+				MATK_RATE( cardfix / 10 );
 		}
 	}
 
@@ -4044,14 +4038,14 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		if( sstatus->race != RC_DEMIHUMAN )
 			cardfix=cardfix*(100-tsd->subrace[RC_NONDEMIHUMAN])/100;
 
-		cardfix=cardfix*(100-tsd->misc_def_rate)/100;
-		if(md.flag&BF_SHORT)
-			cardfix=cardfix*(100-tsd->near_attack_def_rate)/100;
+		cardfix = cardfix * ( 100 - tsd->bonus.misc_def_rate ) / 100;
+		if( md.flag&BF_SHORT )
+			cardfix = cardfix * ( 100 - tsd->bonus.near_attack_def_rate ) / 100;
 		else	// BF_LONG (there's no other choice)
-			cardfix=cardfix*(100-tsd->long_attack_def_rate)/100;
+			cardfix = cardfix * ( 100 - tsd->bonus.long_attack_def_rate ) / 100;
 
 		if (cardfix != 10000)
-			md.damage=(int)((int64)md.damage*cardfix/10000);
+			md.damage= (int)( (int64)md.damage * cardfix / 10000 );
 	}
 
 	if (sd && (i = pc_skillatk_bonus(sd, skill_num)))
@@ -4133,8 +4127,8 @@ int battle_calc_return_damage(struct block_list* bl, struct block_list *src, int
 		rdamage = (*dmg) * sc->data[SC_REFLECTDAMAGE]->val2 / 100;
 		if( rdamage > max_damage ) rdamage = max_damage;
 	} else if (flag & BF_SHORT) {//Bounces back part of the damage.
-		if (sd && sd->short_weapon_damage_return){
-			rdamage += damage * sd->short_weapon_damage_return / 100;
+		if ( sd && sd->bonus.short_weapon_damage_return ) {
+			rdamage += damage * sd->bonus.short_weapon_damage_return / 100;
 			if(rdamage < 1) rdamage = 1;
 		}
 		if( sc && sc->count ) {
@@ -4162,8 +4156,8 @@ int battle_calc_return_damage(struct block_list* bl, struct block_list *src, int
 			}
 		}
 	} else {
-		if (sd && sd->long_weapon_damage_return) {
-			rdamage += damage * sd->long_weapon_damage_return / 100;
+		if (sd && sd->bonus.long_weapon_damage_return) {
+			rdamage += damage * sd->bonus.long_weapon_damage_return / 100;
 			if (rdamage < 1) rdamage = 1;
 		}
 	}
@@ -4205,8 +4199,8 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int rdamage, int ldamage, 
 		}
 	}
 
-	if (sd->sp_vanish_rate && rnd()%1000 < sd->sp_vanish_rate)
-		status_percent_damage(&sd->bl, tbl, 0, (unsigned char)sd->sp_vanish_per, false);
+	if (sd->bonus.sp_vanish_rate && rnd()%1000 < sd->bonus.sp_vanish_rate)
+		status_percent_damage(&sd->bl, tbl, 0, (unsigned char)sd->bonus.sp_vanish_per, false);
 
 	if( sd->sp_gain_race_attack[race] )
 		tsp += sd->sp_gain_race_attack[race];
@@ -4464,7 +4458,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 
 	wd.dmotion = clif_damage(src, target, tick, wd.amotion, wd.dmotion, wd.damage, wd.div_ , wd.type, wd.damage2);
 
-	if (sd && sd->splash_range > 0 && damage > 0)
+	if (sd && sd->bonus.splash_range > 0 && damage > 0)
 		skill_castend_damage_id(src, target, 0, 1, tick, 0);
 
 	map_freeblock_lock();

@@ -2427,9 +2427,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 			
 			// process script-granted zeny bonus (get_zeny_num) [Skotlex]
-			if(sd->get_zeny_num && rnd()%100 < sd->get_zeny_rate)
-			{
-				i = sd->get_zeny_num > 0?sd->get_zeny_num:-md->level*sd->get_zeny_num;
+			if( sd->bonus.get_zeny_num && rnd()%100 < sd->bonus.get_zeny_rate ) {
+				i = sd->bonus.get_zeny_num > 0 ? sd->bonus.get_zeny_num : -md->level * sd->bonus.get_zeny_num;
 				if (!i) i = 1;
 				pc_getzeny(sd, 1+rnd()%i);
 			}

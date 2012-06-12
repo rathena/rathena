@@ -1750,10 +1750,10 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
 	 : (aspd_base[pc_class2idx(sd->status.class_)][sd->weapontype1] + aspd_base[pc_class2idx(sd->status.class_)][sd->weapontype2])*7/10; // dual-wield
 	
 	// percentual delay reduction from stats
-	amotion-= amotion * (4*status->agi + status->dex)/1000;
+	amotion -= amotion * (4*status->agi + status->dex)/1000;
 	
 	// raw delay adjustment from bAspd bonus
-	amotion+= sd->aspd_add;
+	amotion += sd->bonus.aspd_add;
 
 #ifdef RENEWAL
 	if( sd->status.shield ) {// bearing a shield decreases your ASPD by a fixed value depending on your class
@@ -2353,61 +2353,8 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		+ sizeof(sd->subele2)
 	);
 	
-	// vars zeroing. ints, shorts, chars. in that order.
-	memset (&sd->atk_rate, 0,sizeof(sd->atk_rate)
-		+ sizeof(sd->arrow_atk)
-		+ sizeof(sd->arrow_ele)
-		+ sizeof(sd->arrow_cri)
-		+ sizeof(sd->arrow_hit)
-		+ sizeof(sd->nsshealhp)
-		+ sizeof(sd->nsshealsp)
-		+ sizeof(sd->critical_def)
-		+ sizeof(sd->double_rate)
-		+ sizeof(sd->long_attack_atk_rate)
-		+ sizeof(sd->near_attack_def_rate)
-		+ sizeof(sd->long_attack_def_rate)
-		+ sizeof(sd->magic_def_rate)
-		+ sizeof(sd->misc_def_rate)
-		+ sizeof(sd->ignore_mdef_ele)
-		+ sizeof(sd->ignore_mdef_race)
-		+ sizeof(sd->perfect_hit)
-		+ sizeof(sd->perfect_hit_add)
-		+ sizeof(sd->get_zeny_rate)
-		+ sizeof(sd->get_zeny_num)
-		+ sizeof(sd->double_add_rate)
-		+ sizeof(sd->short_weapon_damage_return)
-		+ sizeof(sd->long_weapon_damage_return)
-		+ sizeof(sd->magic_damage_return)
-		+ sizeof(sd->break_weapon_rate)
-		+ sizeof(sd->break_armor_rate)
-		+ sizeof(sd->crit_atk_rate)
-		+ sizeof(sd->classchange)
-		+ sizeof(sd->speed_rate)
-		+ sizeof(sd->speed_add_rate)
-		+ sizeof(sd->aspd_add)
-		+ sizeof(sd->setitem_hash)
-		+ sizeof(sd->setitem_hash2)
-		+ sizeof(sd->itemhealrate2)
-		+ sizeof(sd->shieldmdef)
-		// shorts
-		+ sizeof(sd->splash_range)
-		+ sizeof(sd->splash_add_range)
-		+ sizeof(sd->add_steal_rate)
-		+ sizeof(sd->add_heal_rate)
-		+ sizeof(sd->add_heal2_rate)
-		+ sizeof(sd->hp_gain_value)
-		+ sizeof(sd->sp_gain_value)
-		+ sizeof(sd->magic_hp_gain_value)
-		+ sizeof(sd->magic_sp_gain_value)
-		+ sizeof(sd->sp_vanish_rate)
-		+ sizeof(sd->sp_vanish_per)
-		+ sizeof(sd->sp_weapon_matk)
-		+ sizeof(sd->sp_base_matk)
-		+ sizeof(sd->unbreakable)
-		+ sizeof(sd->unbreakable_equip)
-		+ sizeof(sd->unstripable_equip)
-		);
-
+	memset (&sd->bonus, 0,sizeof(sd->bonus));
+	
 	// Autobonus
 	pc_delautobonus(sd,sd->autobonus,ARRAYLENGTH(sd->autobonus),true);
 	pc_delautobonus(sd,sd->autobonus2,ARRAYLENGTH(sd->autobonus2),true);
@@ -2520,7 +2467,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	if(sd->equip_index[EQI_AMMO] >= 0){
 		index = sd->equip_index[EQI_AMMO];
 		if(sd->inventory_data[index]){		// Arrows
-			sd->arrow_atk += sd->inventory_data[index]->atk;
+			sd->bonus.arrow_atk += sd->inventory_data[index]->atk;
 			sd->state.lr_flag = 2;
 			if( !itemdb_is_GNthrowable(sd->inventory_data[index]->nameid) ) //don't run scripts on throwable items
 				run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
@@ -2538,7 +2485,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	
 #ifdef RENEWAL
 	// increment the weapon ATK using the MATK max value
-	status->matk_max += sd->sp_weapon_matk;
+	status->matk_max += sd->bonus.sp_weapon_matk;
 #endif
 
 	//Parse Cards
@@ -2622,9 +2569,9 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	if(status->rhw.range < status->lhw.range)
 		status->rhw.range = status->lhw.range;
 
-	sd->double_rate += sd->double_add_rate;
-	sd->perfect_hit += sd->perfect_hit_add;
-	sd->splash_range += sd->splash_add_range;
+	sd->bonus.double_rate += sd->bonus.double_add_rate;
+	sd->bonus.perfect_hit += sd->bonus.perfect_hit_add;
+	sd->bonus.splash_range += sd->bonus.splash_add_range;
 
 	// Damage modifiers from weapon type
 	sd->right_weapon.atkmods[0] = atkmods[0][sd->weapontype1];
@@ -3724,7 +3671,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 #ifdef RENEWAL
 		status->matk_min = status_base_matk_min(status,status_get_lv(bl));
 		if( sd )
-			status->matk_min += sd->sp_base_matk;
+			status->matk_min += sd->bonus.sp_base_matk;
 #else
 		status->matk_min = status_base_matk_min(status);
 #endif
@@ -4922,8 +4869,8 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 				if( sc->data[SC_MELON_BOMB] )
 					val = max( val, sc->data[SC_MELON_BOMB]->val1 );
 
-				if( sd && sd->speed_rate + sd->speed_add_rate > 0 ) // permanent item-based speedup
-					val = max( val, sd->speed_rate + sd->speed_add_rate );
+				if( sd && sd->bonus.speed_rate + sd->bonus.speed_add_rate > 0 ) // permanent item-based speedup
+					val = max( val, sd->bonus.speed_rate + sd->bonus.speed_add_rate );
 			}
 
 			speed_rate += val;
@@ -4971,8 +4918,8 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 			//FIXME: official items use a single bonus for this [ultramage]
 			if( sc->data[SC_SPEEDUP0] ) // temporary item-based speedup
 				val = max( val, 25 );
-			if( sd && sd->speed_rate + sd->speed_add_rate < 0 ) // permanent item-based speedup
-				val = max( val, -(sd->speed_rate + sd->speed_add_rate) );
+			if( sd && sd->bonus.speed_rate + sd->bonus.speed_add_rate < 0 ) // permanent item-based speedup
+				val = max( val, -(sd->bonus.speed_rate + sd->bonus.speed_add_rate) );
 
 			speed_rate -= val;
 		}
@@ -6207,20 +6154,16 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		if (sd && !(flag&4)) { //apply sc anyway if loading saved sc_data
 			int i;
 			opt_flag = 0; //Reuse to check success condition.
-			if(sd->unstripable_equip&EQP_WEAPON)
+			if(sd->bonus.unstripable_equip&EQP_WEAPON)
 				return 0;
 			i = sd->equip_index[EQI_HAND_L];
-			if (i>=0 && sd->inventory_data[i] &&
-				sd->inventory_data[i]->type == IT_WEAPON)
-			{
+			if (i>=0 && sd->inventory_data[i] && sd->inventory_data[i]->type == IT_WEAPON) {
 				opt_flag|=1;
 				pc_unequipitem(sd,i,3); //L-hand weapon
 			}
 
 			i = sd->equip_index[EQI_HAND_R];
-			if (i>=0 && sd->inventory_data[i] &&
-				sd->inventory_data[i]->type == IT_WEAPON)
-			{
+			if (i>=0 && sd->inventory_data[i] && sd->inventory_data[i]->type == IT_WEAPON) {
 				opt_flag|=2;
 				pc_unequipitem(sd,i,3);
 			}
@@ -6233,11 +6176,10 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		else
 		if (sd && !(flag&4)) {
 			int i;
-			if(sd->unstripable_equip&EQP_SHIELD)
+			if(sd->bonus.unstripable_equip&EQP_SHIELD)
 				return 0;
 			i = sd->equip_index[EQI_HAND_L];
-			if (i<0 || !sd->inventory_data[i] ||
-				sd->inventory_data[i]->type != IT_ARMOR)
+			if ( i < 0 || !sd->inventory_data[i] || sd->inventory_data[i]->type != IT_ARMOR )
 				return 0;
 			pc_unequipitem(sd,i,3);
 		}
@@ -6246,10 +6188,10 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	case SC_STRIPARMOR:
 		if (sd && !(flag&4)) {
 			int i;
-			if(sd->unstripable_equip&EQP_ARMOR)
+			if(sd->bonus.unstripable_equip&EQP_ARMOR)
 				return 0;
 			i = sd->equip_index[EQI_ARMOR];
-			if (i<0 || !sd->inventory_data[i])
+			if ( i < 0 || !sd->inventory_data[i] )
 				return 0;
 			pc_unequipitem(sd,i,3);
 		}
@@ -6258,10 +6200,10 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	case SC_STRIPHELM:
 		if (sd && !(flag&4)) {
 			int i;
-			if(sd->unstripable_equip&EQP_HELM)
+			if(sd->bonus.unstripable_equip&EQP_HELM)
 				return 0;
 			i = sd->equip_index[EQI_HEAD_TOP];
-			if (i<0 || !sd->inventory_data[i])
+			if ( i < 0 || !sd->inventory_data[i] )
 				return 0;
 			pc_unequipitem(sd,i,3);
 		}
@@ -6330,11 +6272,11 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	case SC__STRIPACCESSORY:
 		if( sd ) {
 			int i = -1;
-			if( !(sd->unstripable_equip&EQI_ACC_L) ) {
+			if( !(sd->bonus.unstripable_equip&EQI_ACC_L) ) {
 				i = sd->equip_index[EQI_ACC_L];
 				if( i >= 0 && sd->inventory_data[i] && sd->inventory_data[i]->type == IT_ARMOR )
 					pc_unequipitem(sd,i,3); //L-Accessory
-			} if( !(sd->unstripable_equip&EQI_ACC_R) ) {
+			} if( !(sd->bonus.unstripable_equip&EQI_ACC_R) ) {
 				i = sd->equip_index[EQI_ACC_R];
 				if( i >= 0 && sd->inventory_data[i] && sd->inventory_data[i]->type == IT_ARMOR )
 					pc_unequipitem(sd,i,3); //R-Accessory
