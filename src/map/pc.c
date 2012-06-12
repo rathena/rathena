@@ -3433,19 +3433,25 @@ int pc_modifysellvalue(struct map_session_data *sd,int orig_value)
 int pc_checkadditem(struct map_session_data *sd,int nameid,int amount)
 {
 	int i;
+	struct item_data* data;
 
 	nullpo_ret(sd);
 
 	if(amount > MAX_AMOUNT)
 		return ADDITEM_OVERAMOUNT;
 
-	if(!itemdb_isstackable(nameid))
+	data = itemdb_search(nameid);
+
+	if(!itemdb_isstackable2(data))
 		return ADDITEM_NEW;
+
+	if( data->stack.inventory && amount > data->stack.amount )
+		return ADDITEM_OVERAMOUNT;
 
 	for(i=0;i<MAX_INVENTORY;i++){
 		// FIXME: This does not consider the checked item's cards, thus could check a wrong slot for stackability.
 		if(sd->status.inventory[i].nameid==nameid){
-			if(sd->status.inventory[i].amount+amount > MAX_AMOUNT)
+			if( amount > MAX_AMOUNT - sd->status.inventory[i].amount || ( data->stack.inventory && amount > data->stack.amount - sd->status.inventory[i].amount ) )
 				return ADDITEM_OVERAMOUNT;
 			return ADDITEM_EXIST;
 		}
@@ -3644,6 +3650,12 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount,e_l
 		return 5;
 	
 	data = itemdb_search(item_data->nameid);
+
+	if( data->stack.inventory && amount > data->stack.amount )
+	{// item stack limitation
+		return 7;
+	}
+
 	w = data->weight*amount;
 	if(sd->weight + w > sd->max_weight)
 		return 2;
@@ -3664,7 +3676,7 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount,e_l
 		{
 			if( sd->status.inventory[i].nameid == item_data->nameid && memcmp(&sd->status.inventory[i].card, &item_data->card, sizeof(item_data->card)) == 0 )
 			{
-				if( amount > MAX_AMOUNT - sd->status.inventory[i].amount )
+				if( amount > MAX_AMOUNT - sd->status.inventory[i].amount || ( data->stack.inventory && amount > data->stack.amount - sd->status.inventory[i].amount ) )
 					return 5;
 				sd->status.inventory[i].amount += amount;
 				clif_additem(sd,i,amount,0);
@@ -4122,6 +4134,11 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 		return 1;
 	data = itemdb_search(item_data->nameid);
 
+	if( data->stack.cart && amount > data->stack.amount )
+	{// item stack limitation
+		return 1;
+	}
+
 	if( !itemdb_cancartstore(item_data, pc_get_group_level(sd)) )
 	{ // Check item trade restrictions	[Skotlex]
 		clif_displaymessage (sd->fd, msg_txt(264));
@@ -4142,7 +4159,7 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 
 	if( i < MAX_CART )
 	{// item already in cart, stack it
-		if(sd->status.cart[i].amount+amount > MAX_AMOUNT)
+		if( amount > MAX_AMOUNT - sd->status.cart[i].amount || ( data->stack.cart && amount > data->stack.amount - sd->status.cart[i].amount ) )
 			return 1; // no room
 
 		sd->status.cart[i].amount+=amount;

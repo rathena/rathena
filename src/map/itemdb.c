@@ -670,6 +670,46 @@ static bool itemdb_read_itemdelay(char* str[], int columns, int current)
 	return true;
 }
 
+/*==================================================================
+ * Reads item stacking restrictions
+ *----------------------------------------------------------------*/
+static bool itemdb_read_stack(char* fields[], int columns, int current)
+{// <item id>,<stack limit amount>,<type>
+	unsigned short nameid, amount;
+	unsigned int type;
+	struct item_data* id;
+
+	nameid = (unsigned short)strtoul(fields[0], NULL, 10);
+
+	if( ( id = itemdb_exists(nameid) ) == NULL )
+	{
+		ShowWarning("itemdb_read_stack: Unknown item id '%hu'.\n", nameid);
+		return false;
+	}
+
+	if( !itemdb_isstackable2(id) )
+	{
+		ShowWarning("itemdb_read_stack: Item id '%hu' is not stackable.\n", nameid);
+		return false;
+	}
+
+	amount = (unsigned short)strtoul(fields[1], NULL, 10);
+	type = strtoul(fields[2], NULL, 10);
+
+	if( !amount )
+	{// ignore
+		return true;
+	}
+
+	id->stack.amount       = amount;
+	id->stack.inventory    = (type&1)!=0;
+	id->stack.cart         = (type&2)!=0;
+	id->stack.storage      = (type&4)!=0;
+	id->stack.guildstorage = (type&8)!=0;
+
+	return true;
+}
+
 
 /// Reads items allowed to be sold in buying stores
 static bool itemdb_read_buyingstore(char* fields[], int columns, int current)
@@ -1050,11 +1090,12 @@ static void itemdb_read(void)
 		itemdb_readdb();
 
 	itemdb_read_itemgroup();
-	sv_readdb(db_path, "item_avail.txt",   ',', 2, 2, -1,		&itemdb_read_itemavail);
-	sv_readdb(db_path, DBPATH"item_noequip.txt", ',', 2, 2, -1,	&itemdb_read_noequip);
-	sv_readdb(db_path, DBPATH"item_trade.txt",   ',', 3, 3, -1,	&itemdb_read_itemtrade);
-	sv_readdb(db_path, "item_delay.txt",   ',', 2, 2, -1,		&itemdb_read_itemdelay);
-	sv_readdb(db_path, "item_buyingstore.txt", ',', 1, 1, -1,	&itemdb_read_buyingstore);
+	sv_readdb(db_path, "item_avail.txt",         ',', 2, 2, -1, &itemdb_read_itemavail);
+	sv_readdb(db_path, DBPATH"item_noequip.txt", ',', 2, 2, -1, &itemdb_read_noequip);
+	sv_readdb(db_path, DBPATH"item_trade.txt",   ',', 3, 3, -1, &itemdb_read_itemtrade);
+	sv_readdb(db_path, "item_delay.txt",         ',', 2, 2, -1, &itemdb_read_itemdelay);
+	sv_readdb(db_path, "item_stack.txt",         ',', 3, 3, -1, &itemdb_read_stack);
+	sv_readdb(db_path, "item_buyingstore.txt",   ',', 1, 1, -1, &itemdb_read_buyingstore);
 }
 
 /*==========================================

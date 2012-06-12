@@ -125,6 +125,14 @@ struct item_data {
 		unsigned autoequip: 1;
 		unsigned buyingstore : 1;
 	} flag;
+	struct
+	{// item stacking limitation
+		unsigned short amount;
+		unsigned int inventory:1;
+		unsigned int cart:1;
+		unsigned int storage:1;
+		unsigned int guildstorage:1;
+	} stack;
 	short gm_lv_trade_override;	//GM-level to override trade_restriction
 };
 
