@@ -1,4 +1,4 @@
- //
+//
 // Network Subsystem (previously known as socket system)
 //
 // Author: Florian Wilkemeyer <fw@f-ws.de>
@@ -1059,4 +1059,3 @@ void network_parser_set_ro(int32 fd,
 	//
 	
 }//end: network_parser_set_ro()
-

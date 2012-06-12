@@ -230,4 +230,3 @@ void evdp_writable_remove(int32 fd, EVDP_DATA *ep){
 	
 	return;	
 }//end: evdp_writable_remove()
-
