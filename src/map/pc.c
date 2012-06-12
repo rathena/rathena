@@ -6098,16 +6098,6 @@ int pc_skillatk_bonus(struct map_session_data *sd, int skill_num)
 	return bonus;
 }
 
-inline int pc_sp_rate_skill(struct map_session_data *sd, int skill_num) {
-	int i, bonus = 100;
-	
-	ARR_FIND(0, ARRAYLENGTH(sd->sprateskill), i, sd->sprateskill[i].id == skill_num);
-	if( i < ARRAYLENGTH(sd->sprateskill) )
-		bonus += sd->sprateskill[i].val;
-	
-	return bonus;
-}
-
 int pc_skillheal_bonus(struct map_session_data *sd, int skill_num) {
 	int i, bonus = sd->bonus.add_heal_rate;
 

@@ -12700,7 +12700,7 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, short 
 	struct skill_condition req;
 	struct status_data *status;
 	struct status_change *sc;
-	int i,j,hp_rate,sp_rate;
+	int i,j,hp_rate,sp_rate, sp_skill_rate_bonus = 100;
 
 	memset(&req,0,sizeof(req));
 
@@ -12750,7 +12750,11 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, short 
 	if( sd->dsprate != 100 )
 		req.sp = req.sp * sd->dsprate / 100;
 
-	req.sp = cap_value(req.sp * pc_sp_rate_skill(sd,skill) / 100, 0, SHRT_MAX);
+	ARR_FIND(0, ARRAYLENGTH(sd->sprateskill), i, sd->sprateskill[i].id == skill);
+	if( i < ARRAYLENGTH(sd->sprateskill) )
+		sp_skill_rate_bonus += sd->sprateskill[i].val;
+	
+	req.sp = cap_value(req.sp * sp_skill_rate_bonus / 100, 0, SHRT_MAX);
 	
 	if( sc ) {
 		if( sc->data[SC__LAZINESS] )

@@ -907,6 +907,4 @@ void pc_overheat(struct map_session_data *sd, int val);
 int pc_banding(struct map_session_data *sd, short skill_lv);
 
 void pc_itemcd_do(struct map_session_data *sd, bool load);
-
-inline int pc_sp_rate_skill(struct map_session_data *sd, int skill_num);
 #endif /* _PC_H_ */
