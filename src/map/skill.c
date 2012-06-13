@@ -7467,15 +7467,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case AB_LAUDAAGNUS:
 		if( flag&1 || sd == NULL ) {
-			if( (tsc && (tsc->data[SC_FREEZE] || tsc->data[SC_STONE] ||
-				tsc->data[SC_BLIND]))&& (rnd()%100 < 30+5*skilllv) ) {
+			if( tsc && (tsc->data[SC_FREEZE] || tsc->data[SC_STONE] || tsc->data[SC_BLIND]) ) {
+				// Success Chance: (40 + 10 * Skill Level) %
+				if( rnd()%100 > 40+10*skilllv ) break; 
 				status_change_end(bl, SC_FREEZE, INVALID_TIMER);
 				status_change_end(bl, SC_STONE, INVALID_TIMER);
 				status_change_end(bl, SC_BLIND, INVALID_TIMER);
-			}
-			// Success rate only applies to the curing effect and not stat bonus.
-			clif_skill_nodamage(bl, bl, skillid, skilllv,
-				sc_start(bl, type, 100, skilllv, skill_get_time(skillid, skilllv)));
+			}else //Success rate only applies to the curing effect and not stat bonus. Bonus status only applies to non infected targets
+				clif_skill_nodamage(bl, bl, skillid, skilllv,
+					sc_start(bl, type, 100, skilllv, skill_get_time(skillid, skilllv)));
 		} else if( sd )
 			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skillid, skilllv),
 				src, skillid, skilllv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
@@ -7483,16 +7483,16 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case AB_LAUDARAMUS:
 		if( flag&1 || sd == NULL ) {
-			if( (tsc && (tsc->data[SC_SLEEP] || tsc->data[SC_STUN] || tsc->data[SC_MANDRAGORA] ||
-				tsc->data[SC_SILENCE]))&& (rnd()%100 < 30+5*skilllv) ) {
+			if( tsc && (tsc->data[SC_SLEEP] || tsc->data[SC_STUN] || tsc->data[SC_MANDRAGORA] || tsc->data[SC_SILENCE]) ){
+				// Success Chance: (40 + 10 * Skill Level) %
+				if( rnd()%100 > 40+10*skilllv )  break; 
 				status_change_end(bl, SC_SLEEP, INVALID_TIMER);
 				status_change_end(bl, SC_STUN, INVALID_TIMER);
 				status_change_end(bl, SC_MANDRAGORA, INVALID_TIMER);
 				status_change_end(bl, SC_SILENCE, INVALID_TIMER);
-			}
-			clif_skill_nodamage(bl, bl, skillid, skilllv,
-				sc_start(bl, type, 100, skilllv, skill_get_time(skillid, skilllv)));
-			//Success rate only applies to the curing effect and not stat bonus.
+			}else // Success rate only applies to the curing effect and not stat bonus. Bonus status only applies to non infected targets
+				clif_skill_nodamage(bl, bl, skillid, skilllv,
+					sc_start(bl, type, 100, skilllv, skill_get_time(skillid, skilllv)));
 		} else if( sd )
 			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skillid, skilllv),
 				src, skillid, skilllv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
@@ -8622,7 +8622,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		{// consume arrow on last invocation to this skill.
 			battle_consume_ammo(sd, skillid, skilllv);
 		}
-
+		skill_onskillusage(sd, bl, skillid, tick);
 		// perform skill requirement consumption
 		skill_consume_requirement(sd,skillid,skilllv,2);
 	}
