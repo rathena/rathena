@@ -7255,7 +7255,7 @@
 18609,Dark_Blindfold_S,Dark Blinder,5,20,,100,,0,,1,0xFFFFFFFE,7,2,512,,0,0,187,{ bonus2 bResEff,Eff_Blind,10000; bonus2 bResEff,Eff_Stun,200; },{},{}
 //
 18612,White_Musang_Hat,White Musang Hat,5,40,,200,,3,,1,0xFFFFFFFF,7,2,256,,0,1,770,{ bonus bStr,2; bonus bVit,2; bonus bLuk,1; bonus bUnbreakableHelm,0; },{},{}
-18613,Black_Musang_Hat,Black Musang Hat,5,40,,200,,3,,1,0xFFFFFFFF,7,2,256,,0,1,770,{ bonus bInt,2; bonus bDex,2; bonus bAgi,1; bonus bUnbreakableHelm,0; },{},{}
+18613,Black_Musang_Hat,Black Musang Hat,5,40,,200,,3,,1,0xFFFFFFFF,7,2,256,,0,1,771,{ bonus bInt,2; bonus bDex,2; bonus bAgi,1; bonus bUnbreakableHelm,0; },{},{}
 //
 18620,Heart_Eye_Patch,Heart Eyepatch,5,5,,200,,2,,0,0xFFFFFFFF,7,2,512,,20,1,779,{},{},{}
 //

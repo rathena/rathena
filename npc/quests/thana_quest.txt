@@ -3,9 +3,9 @@
 //===== By: ==================================================
 //= [Ishizu-chan]
 //===== Current Version: =====================================
-//= 2.3
+//= 2.5
 //===== Compatible With: =====================================
-//= Any rAthena Version i guess?
+//= rAthena SVN
 //===== Description: =========================================
 //= It's the Thanatos Tower Quest...
 //===== Additional Comments: =================================
@@ -25,7 +25,8 @@
 //= 2.1 Replaced effect numerics with constants. [Samuray22]
 //= 2.2 Updated the whole Script to match with latest available official file. [Masao]
 //= 2.3 Added continue and break in switch case. [JayPee]
-//= 2.4a Fixed a minor bug with Arch Bishop checks. [Euphy]
+//= 2.4 Fixed a minor bug with Arch Bishop checks. [Euphy]
+//= 2.5 Cleaning. [Euphy]
 //============================================================
 
 hu_fild01,140,163,5	script	Tower Keeper	852,3,3,{
@@ -539,9 +540,9 @@ tha_t01,149,78,4	script	Guide	90,{
 }
 
 tha_t01,140,78,4	script	Guide#reward	831,{
-
+	
+	mes "[Liei]";
 	if (thana_tower == 0) {
-		mes "[Liei]";
 		mes "Good day, I'm";
 		mes "Liei Kuniziet of the";
 		mes "Employee Mission";
@@ -566,260 +567,92 @@ tha_t01,140,78,4	script	Guide#reward	831,{
 			close;
 		}
 	}
-	mes "[Liei]";
 	mes "Ah, hello~";
 	mes "How may I help you?";
 	next;
-	switch (select("Reward:Nothing")) {
-	case 1:
+	if(select("Reward:Nothing")==2) {
 		mes "[Liei]";
-		mes "You're "+strcharinfo(0)+", yes?";
-		mes "Let me check our temp";
-		mes "employee records for--ah.";
-		mes "Here it is. Alright, so would";
-		mes "you please tell me what kind";
-		mes "of mission proof you brought?";
-		next;
-		switch (select("Golden Ornament:Red Feather:Blue Feather:Cursed Seal")) {
+		mes "Alright, then.";
+		mes "Please do your best";
+		mes "to exterminate the";
+		mes "monsters that infest";
+		mes "the higher floors of";
+		mes "the Thanatos Tower~";
+		close; }
+	mes "[Liei]";
+	mes "You're "+strcharinfo(0)+", yes?";
+	mes "Let me check our temp";
+	mes "employee records for--ah.";
+	mes "Here it is. Alright, so would";
+	mes "you please tell me what kind";
+	mes "of mission proof you brought?";
+	next;
+	setarray .@Items[1],7435,7440,7441,7442;
+	set .@i, select("Golden Ornament:Red Feather:Blue Feather:Cursed Seal");
+	mes "[Liei]";
+	if (!countitem(.@Items[.@i])) {
+		mes "I'm sorry, but you are not";
+		mes "carrying any "+getitemname(.@Items[.@i])+"s.";
+		mes "Please check your inventory";
+		mes "one more time, and then come";
+		mes "to me to redeem your items";
+		mes "for a reward later, alright?";
+		close;
+	}
+	mes "The reward for each";
+	mes getitemname(.@Items[.@i])+" is...";
+	mes " ";
+	mes "1,000 zeny";
+	mes "2,000 EXP";
+	next;
+	set .@zeny_tt,(countitem(.@Items[.@i]) * 1000);
+	set .@exp_tt,(countitem(.@Items[.@i]) * 200);
+	mes "[Liei]";
+	mes "If you turn in your";
+	mes countitem(.@Items[.@i])+" "+getitemname(.@Items[.@i])+"s, then";
+	mes "you will receive a total of...";
+	mes " ";
+	mes ""+.@zeny_tt+" zeny";
+	mes ""+.@exp_tt+" EXP";
+	next;
+	mes "[Liei]";
+	mes "Would you like to exchange";
+	mes "all of your "+getitemname(.@Items[.@i])+"s";
+	mes "for your reward right now?";
+	next;
+	switch(select("Yes:No")) {
 		case 1:
-			if (countitem(7435) > 0) {
-				mes "[Liei]";
-				mes "The reward for each";
-				mes "Golden Ornament is...";
-				mes " ";
-				mes "1,000 zeny";
-				mes "2,000 EXP";
-				next;
-				set .@zeny_tt,(countitem(7435) * 1000);
-				set .@exp_tt,(countitem(7435) * 200);
-				mes "[Liei]";
-				mes "If you turn in your "+countitem(7435)+"";
-				mes "Golden Ornaments, then";
-				mes "you will receive a total of...";
-				mes " ";
-				mes ""+.@zeny_tt+" zeny";
-				mes ""+.@exp_tt+" EXP";
-				next;
-				mes "[Liei]";
-				mes "So would you like to";
-				mes "exchange all of your Golden";
-				mes "Ornaments for your reward now?";
-				next;
-				switch (select("Yes:No")) {
-				case 1:
-					mes "[Liei]";
-					mes "Great! Here is your";
-					mes ""+.@zeny_tt+" zeny and";
-					mes ""+.@exp_tt+" EXP. Thank you,";
-					mes "and please keep up";
-					mes "the good work~";
-					delitem 7435,countitem(7435); //Golden_Bracelet
-					set Zeny, Zeny + .@zeny_tt;
-					getexp .@exp_tt,0;
-					close;
-				case 2:
-					mes "[Liei]";
-					mes "Sure, no problem.";
-					mes "Just come back and";
-					mes "talk to me whenever";
-					mes "you want to receive";
-					mes "your reward, alright?";
-					close;
-				}
-			}
 			mes "[Liei]";
-			mes "Oh, I'm sorry, but you";
-			mes "don't have any Golden";
-			mes "Ornaments. Please check";
-			mes "your inventory one more time...";
+			mes "Great! Here is your";
+			mes ""+.@zeny_tt+" zeny and";
+			mes ""+.@exp_tt+" EXP. Thank you,";
+			mes "and please keep up";
+			mes "the good work~";
+			delitem .@Items[.@i], countitem(.@Items[.@i]);
+			set Zeny, Zeny + .@zeny_tt;
+			getexp .@exp_tt,0;
 			close;
 		case 2:
-			if (countitem(7440) > 0) {
-				mes "[Liei]";
-				mes "The reward for";
-				mes "each Red Feather is...";
-				mes " ";
-				mes "1,000 zeny";
-				mes "2,000 EXP";
-				next;
-				set .@zeny_tt,(countitem(7440) * 1000);
-				set .@exp_tt,(countitem(7440) * 200);
-				mes "[Liei]";
-				mes "If you turn in your";
-				mes ""+countitem(7440)+" Red Feathers, then";
-				mes "you will receive a total of...";
-				mes " ";
-				mes ""+.@zeny_tt+" zeny";
-				mes ""+.@exp_tt+" EXP";
-				next;
-				mes "[Liei]";
-				mes "Would you like to exchange";
-				mes "all of your Red Feathers";
-				mes "for your reward right now?";
-				next;
-				switch (select("Yes:No")) {
-				case 1:
-					mes "[Liei]";
-					mes "Great! Here is your";
-					mes ""+.@zeny_tt+" zeny and";
-					mes ""+.@exp_tt+" EXP. Thank you,";
-					mes "and please keep up";
-					mes "the good work~";
-					delitem 7440,countitem(7440); //Red_Feather
-					set Zeny, Zeny + .@zeny_tt;
-					getexp .@exp_tt,0;
-					close;
-				case 2:
-					mes "[Liei]";
-					mes "Sure, no problem.";
-					mes "Just come back and";
-					mes "talk to me whenever";
-					mes "you want to receive";
-					mes "your reward, alright?";
-					close;
-				}
-			}
 			mes "[Liei]";
-			mes "I'm sorry, but you are not";
-			mes "carrying any Red Feathers.";
-			mes "Please check your inventory";
-			mes "one more time, and then come";
-			mes "to me to redeem your items";
-			mes "for a reward later, alright?";
-			close;
-		case 3:
-			if (countitem(7441) > 0) {
-				mes "[Liei]";
-				mes "The reward for";
-				mes "each Blue Feather is...";
-				mes " ";
-				mes "1,000 zeny";
-				mes "2,000 EXP";
-				next;
-				set .@zeny_tt,(countitem(7441) * 1000);
-				set .@exp_tt,(countitem(7441) * 200);
-				mes "[Liei]";
-				mes "If you turn in your";
-				mes ""+countitem(7441)+" Blue Feathers, then";
-				mes "you will receive a total of...";
-				mes " ";
-				mes ""+.@zeny_tt+" zeny";
-				mes ""+.@exp_tt+" EXP";
-				next;
-				mes "[Liei]";
-				mes "Would you like to exchange";
-				mes "all of your Blue Feathers";
-				mes "for your reward right now?";
-				next;
-				switch (select("Yes:No")) {
-				case 1:
-					mes "[Liei]";
-					mes "Great! Here is your";
-					mes ""+.@zeny_tt+" zeny and";
-					mes ""+.@exp_tt+" EXP. Thank you,";
-					mes "and please keep up";
-					mes "the good work~";
-					delitem 7441,countitem(7441); //Blue_Feather
-					set Zeny, Zeny + .@zeny_tt;
-					getexp .@exp_tt,0;
-					close;
-				case 2:
-					mes "[Liei]";
-					mes "Sure, no problem.";
-					mes "Just come back and";
-					mes "talk to me whenever";
-					mes "you want to receive";
-					mes "your reward, alright?";
-					close;
-				}
-			}
-			mes "[Liei]";
-			mes "I'm sorry, but you are not";
-			mes "carrying any Blue Feathers.";
-			mes "Please check your inventory";
-			mes "one more time, and then come";
-			mes "to me to redeem your items";
-			mes "for a reward later, alright?";
-			close;
-		case 4:
-			if (countitem(7442) > 0) {
-				mes "[Liei]";
-				mes "The reward for";
-				mes "each Cursed Seal is...";
-				mes " ";
-				mes "1,000 zeny";
-				mes "2,000 EXP";
-				next;
-				set .@zeny_tt,(countitem(7442) * 1000);
-				set .@exp_tt,(countitem(7442) * 200);
-				mes "[Liei]";
-				mes "If you turn in your";
-				mes ""+countitem(7442)+" Cursed Seals, then";
-				mes "you will receive a total of...";
-				mes " ";
-				mes ""+.@zeny_tt+" zeny";
-				mes ""+.@exp_tt+" EXP";
-				next;
-				mes "[Liei]";
-				mes "Would you like to exchange";
-				mes "all of your Cursed Seals";
-				mes "for your reward right now?";
-				next;
-				switch (select("Yes:No")) {
-				case 1:
-					mes "[Liei]";
-					mes "Great! Here is your";
-					mes ""+.@zeny_tt+" zeny and";
-					mes ""+.@exp_tt+" EXP. Thank you,";
-					mes "and please keep up";
-					mes "the good work~";
-					delitem 7442,countitem(7442); //Cursed_Seal
-					set Zeny, Zeny + .@zeny_tt;
-					getexp .@exp_tt,0;
-					close;
-				case 2:
-					mes "[Liei]";
-					mes "Sure, no problem.";
-					mes "Just come back and";
-					mes "talk to me whenever";
-					mes "you want to receive";
-					mes "your reward, alright?";
-					close;
-				}
-			}
-			mes "[Liei]";
-			mes "I'm sorry, but you are not";
-			mes "carrying any Cursed Seals.";
-			mes "Please check your inventory";
-			mes "one more time, and then come";
-			mes "to me to redeem your items";
-			mes "for a reward later, alright?";
-			close;
-		}
-		case 2:
-			mes "[Liei]";
-			mes "Alright, then.";
-			mes "Please do your best";
-			mes "to exterminate the";
-			mes "monsters that infest";
-			mes "the higher floors of";
-			mes "the Thanatos Tower~";
+			mes "Sure, no problem.";
+			mes "Just come back and";
+			mes "talk to me whenever";
+			mes "you want to receive";
+			mes "your reward, alright?";
 			close;
 	}
 }
 
 tha_t02,231,161,5	script	Entrance Guide	874,{
 
+	mes "[Burled]";
 	if (thana_tower == 0) {
-		mes "[Burled]";
 		mes "You are in front of the entrance to the 3rd Floor. Only contracted";
 		mes "temp employees are authorized";
 		mes "to enter that area. For Rekenber temp contract information, please";
 		mes "speak to the 2nd Floor Guide.";
 		close;
 	}
-
-	mes "[Burled]";
 	mes "......";
 	mes ".........";
 	mes "............";
@@ -876,37 +709,37 @@ tha_t02,231,161,5	script	Entrance Guide	874,{
 				donpcevent "3rdf_warp#tt::OnEnable";
 				end;
 			case 2:
-					mes "[Burled]";
-					mes "This gate is the only passage";
-					mes "that connects to the 3rd Floor.";
-					mes "After the 4th Floor, passages";
-					mes "between floors only travel one";
-					mes "way, meaning you can't exit the";
-					mes "same way you that you entered.";
-					next;
-					mes "[Burled]";
-					mes "You see, there's a strange";
-					mes "power that affects the 5th";
-					mes "Floor, and all floors above,";
-					mes "which doesn't allow people to";
-					mes "backtrack through the passage in which they entered the floor.";
-					next;
-					mes "[Burled]";
-					mes "So if you ascend past the";
-					mes "4th Floor, please be careful";
-					mes "and make sure that you find";
-					mes "a way to get back. Also, the";
-					mes "monsters grow more powerful";
-					mes "as you ascend the tower...";
-					next;
-					mes "[Burled]";
-					mes "Because the higher levels are";
-					mes "too dangerous, we only open the";
-					mes "3rd Floor Gate when 5 or more";
-					mes "are gathered here. Therefore,";
-					mes "you may need to wait if less";
-					mes "than 5 temps have gathered.";
-					close;
+				mes "[Burled]";
+				mes "This gate is the only passage";
+				mes "that connects to the 3rd Floor.";
+				mes "After the 4th Floor, passages";
+				mes "between floors only travel one";
+				mes "way, meaning you can't exit the";
+				mes "same way you that you entered.";
+				next;
+				mes "[Burled]";
+				mes "You see, there's a strange";
+				mes "power that affects the 5th";
+				mes "Floor, and all floors above,";
+				mes "which doesn't allow people to";
+				mes "backtrack through the passage in which they entered the floor.";
+				next;
+				mes "[Burled]";
+				mes "So if you ascend past the";
+				mes "4th Floor, please be careful";
+				mes "and make sure that you find";
+				mes "a way to get back. Also, the";
+				mes "monsters grow more powerful";
+				mes "as you ascend the tower...";
+				next;
+				mes "[Burled]";
+				mes "Because the higher levels are";
+				mes "too dangerous, we only open the";
+				mes "3rd Floor Gate when 5 or more";
+				mes "are gathered here. Therefore,";
+				mes "you may need to wait if less";
+				mes "than 5 temps have gathered.";
+				close;
 			}
 		}
 		switch (select("Enter the 3rd Floor:Gate Information:About Satan Morroc...")) {
@@ -1058,12 +891,8 @@ OnInit:
 	end;
 	
 OnTouch:
-	if (thana_tower == 0) {
-		warp "tha_t02",227,158;
-	}
-	else {
-		warp "tha_t03",219,159;
-	}
+	if (thana_tower == 0) warp "tha_t02",227,158;
+	else warp "tha_t03",219,159;
 	end;
 
 OnEnable:
@@ -1247,24 +1076,12 @@ L_Retry:
 			next;
 			set @strike,0;
 			set @ball,0;
-			if (@yagu100 == @input100) {
-				set @strike,@strike+1;
-			}
-			if (@yagu10 == @input10) {
-				set @strike,@strike+1;
-			}
-			if (@yagu1 == (@input % 10)) {
-				set @strike,@strike+1;
-			}
-			if ((@yagu100 == @input10) || (@yagu100 == (@input % 10))) {
-				set .@ball,.@ball+1;
-			}
-			if ((@yagu10 == @input100) || (@yagu10 == (@input % 10))) {
-				set @ball,@ball+1;
-			}
-			if ((@yagu1 == @input100) || (@yagu1 == @input10)) {
-				set @ball,@ball+1;
-			}
+			if (@yagu100 == @input100) set @strike,@strike+1;
+			if (@yagu10 == @input10) set @strike,@strike+1;
+			if (@yagu1 == (@input % 10)) set @strike,@strike+1;
+			if ((@yagu100 == @input10) || (@yagu100 == (@input % 10))) set .@ball,.@ball+1;
+			if ((@yagu10 == @input100) || (@yagu10 == (@input % 10))) set @ball,@ball+1;
+			if ((@yagu1 == @input100) || (@yagu1 == @input10)) set @ball,@ball+1;
 			if (@strike == 3) {
 				mes "[Screen]";
 				mes "Input number accepted.";
@@ -1312,9 +1129,7 @@ L_Retry:
 						mes "Monitor's Storage receptacle.";
 						mes "Merely holding it makes you";
 						mes "feel some strange sensation.^000000";
-						if (thana_tower == 1) {
-							set thana_tower,2;
-						}
+						if (thana_tower == 1) set thana_tower,2;
 						getitem 7422,1; //Key_Yellow
 						close;
 					case 2:
@@ -1521,23 +1336,17 @@ tha_t06,43,152,0	script	Machine Devicett4	111,{
 							case 1:
 								mes "^EE0000*Choom*^000000";
 								set @small_1,2;
-								if ((@small_1 == 2) && (@small_2 == 2) && (@big_1 == 2) && (@big_2 == 2) && (@big_3 == 2)) {
-									break;
-								}
+								if ((@small_1 == 2) && (@small_2 == 2) && (@big_1 == 2) && (@big_2 == 2) && (@big_3 == 2)) break;
 								continue;
 							case 2:
 								mes "^00B2EE*Sneeeep*^000000";
 								set @small_1,1;
-								if ((@small_1 == 1) && (@small_2 == 1) && (@big_1 == 1) && (@big_2 == 1) && (@big_3 == 1)) {
-									break;
-								}
+								if ((@small_1 == 1) && (@small_2 == 1) && (@big_1 == 1) && (@big_2 == 1) && (@big_3 == 1)) break;
 								continue;
 							case 3:
 								mes "^5C246E*Mrreeem*^000000";
 								set @small_1,3;
-								if ((@small_1 == 3) && (@small_2 == 3) && (@big_1 == 3) && (@big_2 == 3) && (@big_3 == 3)) {
-									break;
-								}
+								if ((@small_1 == 3) && (@small_2 == 3) && (@big_1 == 3) && (@big_2 == 3) && (@big_3 == 3)) break;
 								continue;
 							}
 							break;
@@ -1546,23 +1355,17 @@ tha_t06,43,152,0	script	Machine Devicett4	111,{
 							case 1:
 								mes "^5C246E*Mrreeem*^000000";
 								set @small_2,3;
-								if ((@small_1 == 3) && (@small_2 == 3) && (@big_1 == 3) && (@big_2 == 3) && (@big_3 == 3)) {
-									break;
-								}
+								if ((@small_1 == 3) && (@small_2 == 3) && (@big_1 == 3) && (@big_2 == 3) && (@big_3 == 3)) break;
 								continue;
 							case 2:
 								mes "^EE0000*Choom*^000000";
 								set @small_2,2;
-								if ((@small_1 == 2) && (@small_2 == 2) && (@big_1 == 2) && (@big_2 == 2) && (@big_3 == 2)) {
-									break;
-								}
+								if ((@small_1 == 2) && (@small_2 == 2) && (@big_1 == 2) && (@big_2 == 2) && (@big_3 == 2)) break;
 								continue;
 							case 3:
 								mes "^00B2EE*Sneeeep*^000000";
 								set @small_2,1;
-								if ((@small_1 == 1) && (@small_2 == 1) && (@big_1 == 1) && (@big_2 == 1) && (@big_3 == 1)) {
-									break;
-								}
+								if ((@small_1 == 1) && (@small_2 == 1) && (@big_1 == 1) && (@big_2 == 1) && (@big_3 == 1)) break;
 								continue;
 							}
 							break;
@@ -1571,23 +1374,17 @@ tha_t06,43,152,0	script	Machine Devicett4	111,{
 							case 1:
 								mes "^00B2EE*Sneeeep*^000000";
 								set @big_1,1;
-								if ((@small_1 == 1) && (@small_2 == 1) && (@big_1 == 1) && (@big_2 == 1) && (@big_3 == 1)) {
-									break;
-								}
+								if ((@small_1 == 1) && (@small_2 == 1) && (@big_1 == 1) && (@big_2 == 1) && (@big_3 == 1)) break;
 								continue;
 							case 2:
 								mes "^5C246E*Mrreeem*^000000";
 								set @big_1,3;
-								if ((@small_1 == 3) && (@small_2 == 3) && (@big_1 == 3) && (@big_2 == 3) && (@big_3 == 3)) {
-									break;
-								}
+								if ((@small_1 == 3) && (@small_2 == 3) && (@big_1 == 3) && (@big_2 == 3) && (@big_3 == 3)) break;
 								continue;
 							case 3:
 								mes "^EE0000*Choom*^000000";
 								set @big_1,2;
-								if ((@small_1 == 2) && (@small_2 == 2) && (@big_1 == 2) && (@big_2 == 2) && (@big_3 == 2)) {
-									break;
-								}
+								if ((@small_1 == 2) && (@small_2 == 2) && (@big_1 == 2) && (@big_2 == 2) && (@big_3 == 2)) break;
 								continue;
 							}
 							break;
@@ -1596,23 +1393,17 @@ tha_t06,43,152,0	script	Machine Devicett4	111,{
 							case 1:
 								mes "^EE0000*Choom*^000000";
 								set @big_2,2;
-								if ((@small_1 == 2) && (@small_2 == 2) && (@big_1 == 2) && (@big_2 == 2) && (@big_3 == 2)) {
-									break;
-								}
+								if ((@small_1 == 2) && (@small_2 == 2) && (@big_1 == 2) && (@big_2 == 2) && (@big_3 == 2)) break;
 								continue;
 							case 2:
 								mes "^5C246E*Mrreeem*^000000";
 								set @big_2,3;
-								if ((@small_1 == 3) && (@small_2 == 3) && (@big_1 == 3) && (@big_2 == 3) && (@big_3 == 3)) {
-									break;
-								}
+								if ((@small_1 == 3) && (@small_2 == 3) && (@big_1 == 3) && (@big_2 == 3) && (@big_3 == 3)) break;
 								continue;
 							case 3:
 								mes "^00B2EE*Sneeeep*^000000";
 								set @big_2,1;
-								if ((@small_1 == 1) && (@small_2 == 1) && (@big_1 == 1) && (@big_2 == 1) && (@big_3 == 1)) {
-									break;
-								}
+								if ((@small_1 == 1) && (@small_2 == 1) && (@big_1 == 1) && (@big_2 == 1) && (@big_3 == 1)) break;
 								continue;
 							}
 							break;
@@ -1621,119 +1412,74 @@ tha_t06,43,152,0	script	Machine Devicett4	111,{
 							case 1:
 								mes "^EE0000*Choom*^000000";
 								set @big_3,2;
-								if ((@small_1 == 2) && (@small_2 == 2) && (@big_1 == 2) && (@big_2 == 2) && (@big_3 == 2)) {
-									break;
-								}
+								if ((@small_1 == 2) && (@small_2 == 2) && (@big_1 == 2) && (@big_2 == 2) && (@big_3 == 2)) break;
 								continue;
 							case 2:
 								mes "^00B2EE*Sneeeep*^000000";
 								set @big_3,1;
-								if ((@small_1 == 1) && (@small_2 == 1) && (@big_1 == 1) && (@big_2 == 1) && (@big_3 == 1)) {
-									break;
-								}
+								if ((@small_1 == 1) && (@small_2 == 1) && (@big_1 == 1) && (@big_2 == 1) && (@big_3 == 1)) break;
 								continue;
 							case 3:
 								mes "^5C246E*Mrreeem*^000000";
 								set @big_3,3;
-								if ((@small_1 == 3) && (@small_2 == 3) && (@big_1 == 3) && (@big_2 == 3) && (@big_3 == 3)) {
-									break;
-								}
+								if ((@small_1 == 3) && (@small_2 == 3) && (@big_1 == 3) && (@big_2 == 3) && (@big_3 == 3)) break;
 								continue;
 							}
 							break;
 						case 6:
 							mes "---Wheel Position---";
-							if (@small_1 == 0) {
-								mes "1st Small Wheel: No Change";
-							}else if (@small_1 == 1) {
-								mes "1st Small Wheel: Down";
-							} else if (@small_1 == 2) {
-								mes "1st Small Wheel: Up";
-							} else {
-								mes "1st Small Wheel: Pressed";
-							}
-							if (@small_2 == 0) {
-								mes "2nd Small Wheel: No Change";
-							} else if (@small_2 == 1) {
-								mes "2nd Small Wheel: Pressed";
-							} else if (@small_2 == 2) {
-								mes "2nd Small Wheel: Down";
-							} else {
-								mes "2nd Small Wheel: Up";
-							}
-							if (@big_1 == 0) {
-								mes "1st Big Wheel: No Change";
-							} else if (@big_1 == 1) {
-								mes "1st Big Wheel: Up";
-							} else if (@big_1 == 2) {
-								mes "1st Big Wheel: Moved";
-							} else {
-								mes "1st Big Wheel: Down";
-							}
-							if (@big_2 == 0) {
-								mes "2nd Big Wheel: No Change";
-							} else if (@big_2 == 1) {
-								mes "2nd Big Wheel: Moved";
-							} else if (@big_2 == 2) {
-								mes "2nd Big Wheel: Up";
-							} else {
-								mes "2nd Big Wheel: Down";
-							}
-							if (@big_3 == 0) {
-								mes "3rd Big Wheel: No Change";
-							} else if (@big_3 == 1) {
-								mes "3rd Big Wheel: Down";
-							} else if (@big_3 == 2) {
-								mes "3rd Big Wheel: Up";
-							} else {
-								mes "3rd Big Wheel: Moved";
-							}
+							if (@small_1 == 0) mes "1st Small Wheel: No Change";
+							else if (@small_1 == 1) mes "1st Small Wheel: Down";
+							else if (@small_1 == 2) mes "1st Small Wheel: Up";
+							else mes "1st Small Wheel: Pressed";
+
+							if (@small_2 == 0) mes "2nd Small Wheel: No Change";
+							else if (@small_2 == 1) mes "2nd Small Wheel: Pressed";
+							else if (@small_2 == 2) mes "2nd Small Wheel: Down";
+							else mes "2nd Small Wheel: Up";
+
+							if (@big_1 == 0) mes "1st Big Wheel: No Change";
+							else if (@big_1 == 1) mes "1st Big Wheel: Up";
+							else if (@big_1 == 2) mes "1st Big Wheel: Moved";
+							else mes "1st Big Wheel: Down";
+
+							if (@big_2 == 0) mes "2nd Big Wheel: No Change";
+							else if (@big_2 == 1) mes "2nd Big Wheel: Moved";
+							else if (@big_2 == 2) mes "2nd Big Wheel: Up";
+							else mes "2nd Big Wheel: Down";
+
+							if (@big_3 == 0) mes "3rd Big Wheel: No Change";
+							else if (@big_3 == 1) mes "3rd Big Wheel: Down";
+							else if (@big_3 == 2) mes "3rd Big Wheel: Up";
+							else mes "3rd Big Wheel: Moved";
+
 							next;
 							mes "---Wheel Sound---";
-							if (@small_1 == 0) {
-								mes "1st Small Wheel: *Br-brak!*";
-							} else if (@small_1 == 1) {
-								mes "1st Small Wheel: *Sneeeep*";
-							} else if (@small_1 == 2) {
-								mes "1st Small Wheel: *Choom*";
-							} else {
-								mes "1st Small Wheel: *Mrreeem*";
-							} if (@small_2 == 0) {
-								mes "2nd Small Wheel: *Br-brak!*";
-							} else if (@small_2 == 1) {
-								mes "2nd Small Wheel: *Sneeeep*";
-							} else if (@small_2 == 2) {
-								mes "2nd Small Wheel: *Choom*";
-							} else {
-								mes "2nd Small Wheel: *Mrreeem*";
-							}
-							if (@big_1 == 0) {
-								mes "1st Big Wheel: *Br-brak!*";
-							} else if (@big_1 == 1) {
-								mes "1st Big Wheel: *Sneeeep*";
-							} else if (@big_1 == 2) {
-								mes "1st Big Wheel: *Choom*";
-							} else {
-								mes "1st Big Wheel: *Mrreeem*";
-							}
-							if (@big_2 == 0) {
-								mes "2nd Big Wheel: *Br-brak!*";
-							} else if (@big_2 == 1) {
-								mes "2nd Big Wheel: *Sneeeep*";
-							} else if (@big_2 == 2) {
-								mes "2nd Big Wheel: *Choom*";
-							} else {
-								mes "2nd Big Wheel: *Mrreeem*";
-							}
-							if (@big_3 == 0) {
-								mes "3rd Big Wheel: *Br-brak!*";
-							} else if (@big_3 == 1) {
-								mes "3rd Big Wheel: *Sneeeep*";
-							} else if (@big_3 == 2) {
-								mes "3rd Big Wheel: *Choom*";
-							} else {
-								mes "3rd Big Wheel: *Mrreeem*";
-							}
+							if (@small_1 == 0) mes "1st Small Wheel: *Br-brak!*";
+							else if (@small_1 == 1) mes "1st Small Wheel: *Sneeeep*";
+							else if (@small_1 == 2) mes "1st Small Wheel: *Choom*";
+							else mes "1st Small Wheel: *Mrreeem*";
+
+							if (@small_2 == 0) mes "2nd Small Wheel: *Br-brak!*";
+							else if (@small_2 == 1) mes "2nd Small Wheel: *Sneeeep*";
+							else if (@small_2 == 2) mes "2nd Small Wheel: *Choom*";
+							else mes "2nd Small Wheel: *Mrreeem*";
+
+							if (@big_1 == 0) mes "1st Big Wheel: *Br-brak!*";
+							else if (@big_1 == 1) mes "1st Big Wheel: *Sneeeep*";
+							else if (@big_1 == 2) mes "1st Big Wheel: *Choom*";
+							else mes "1st Big Wheel: *Mrreeem*";
+
+							if (@big_2 == 0) mes "2nd Big Wheel: *Br-brak!*";
+							else if (@big_2 == 1) mes "2nd Big Wheel: *Sneeeep*";
+							else if (@big_2 == 2) mes "2nd Big Wheel: *Choom*";
+							else mes "2nd Big Wheel: *Mrreeem*";
+
+							if (@big_3 == 0) mes "3rd Big Wheel: *Br-brak!*";
+							else if (@big_3 == 1) mes "3rd Big Wheel: *Sneeeep*";
+							else if (@big_3 == 2) mes "3rd Big Wheel: *Choom*";
+							else mes "3rd Big Wheel: *Mrreeem*";
+
 							continue;
 						case 7:
 							set @small_1,0;
@@ -3108,27 +2854,13 @@ tha_t06,119,120,0	script	to the 7th floor	45,1,1,{
 	end;
 
 OnTouch:
-	if ((Class == Job_Lord_Knight) || (Class == Job_High_Priest) || (Class == Job_High_Wizard) || (Class == Job_Whitesmith) || (Class == Job_Sniper) || (Class == Job_Assassin_Cross) || (Class == Job_Paladin) || (Class == Job_Champion) || (Class == Job_Professor) || (Class == Job_Stalker) || (Class == Job_Creator) || (Class == Job_Clown) || (Class == Job_Gypsy)) {
+	if (eaclass()&(EAJL_2|EAJL_UPPER) || eaclass()&EAJL_THIRD) {
 		warp "thana_step",69,369;
 		end;
 	}
-	else if ((Class == Job_Rune_Knight) || (Class == Job_Arch_Bishop) || (Class == Job_Warlock) || (Class == Job_Mechanic) || (Class == Job_Ranger) || (Class == Job_Guillotine_Cross) || (Class == Job_Royal_Guard) || (Class == Job_Sura) || (Class == Job_Sorcerer) || (Class == Job_Shadow_Chaser) || (Class == Job_Genetic) || (Class == Job_Wanderer) || (Class == Job_Minstrel)) {
+	if ((Class == Job_SuperNovice || Class == Job_Taekwon || Class == Job_Star_Gladiator || Class == Job_Soul_Linker || Class == Job_Ninja || Class == Job_Gunslinger) && BaseLevel > 94) {
 		warp "thana_step",69,369;
 		end;
-	}
-	else if ((Class == Job_Rune_Knight_T) || (Class == Job_Arch_Bishop_T) || (Class == Job_Warlock_T) || (Class == Job_Mechanic_T) || (Class == Job_Ranger_T) || (Class == Job_Guillotine_Cross_T) || (Class == Job_Royal_Guard_T) || (Class == Job_Sura_T) || (Class == Job_Sorcerer_T) || (Class == Job_Shadow_Chaser_T) || (Class == Job_Genetic_T) || (Class == Job_Wanderer_T) || (Class == Job_Minstrel_T)) {
-		warp "thana_step",69,369;
-		end;
-	}
-	else if ((Class == Job_SuperNovice) || (Class == Job_Taekwon) || (Class == Job_Star_Gladiator) || (Class == Job_Soul_Linker) || (Class == Job_Ninja) || (Class == Job_Gunslinger)) {
-		if (BaseLevel > 94) {
-			warp "thana_step",69,369;
-			end;
-		}
-		mes "^3355FFAn overwhelming force";
-		mes "acts against you, preventing";
-		mes "you from proceeding this way...^000000";
-		close;
 	}
 	mes "^3355FFAn overwhelming force";
 	mes "acts against you, preventing";

@@ -201,7 +201,7 @@ menu	"Abyss Lakes",D1, "Amatsu Dungeon",D2, "Anthell",D3,
 	"Sphinx",D34, "Sunken Ship",D35, "Thanatos Tower",D36, "Thor Volcano",D37,
 	"Toy Factory",D38, "Turtle Dungeon",D39, "Umbala Dungeon",D40;
 
-D1: setarray @c[2],192,207,275,270,116,27;
+D1: setarray @c[2],261,272,275,270,116,27;
 	Disp("Abyss Lakes",1,3); Pick("abyss_");
 D2: setarray @c[2],228,11,34,41,119,14;
 	Disp("Amatsu Dungeon",1,3); Pick("ama_dun");

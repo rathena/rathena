@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf, various sources
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 1.2 No longer glitches when anyone but party leader talks to the first NPC.
 //= 1.3 Added 'instance_check_party' command to the script for proper checking if
 //=		the invoking party meets the requirements to join the Memorial Dungeon.
+//= 1.4 Cleaning. [Euphy]
 //============================================================ 
 
 nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
@@ -66,21 +67,16 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 		}
 	}
 	else if (ins_nyd == 1) {
+		mes "A mysterious power prevents you from getting too close. It looks like there is something strong beyond the door...";
+		next;
+		mes "Perhaps there's a great hidden secret beyond the gate, beyond expectation.";
+		next;
+		mes "It would be better to go back to camp and inform the others and ask for help.";
 		if (ep13_1_edq == 14 || ep13_1_edq == 15) {
-			mes "A mysterious power prevents you from getting too close. It looks like there is something strong beyond the door...";
-			next;
-			mes "Perhaps there's a great hidden secret beyond the gate, beyond expectation.";
-			next;
-			mes "It would be better to go back to camp and inform the others and ask for help.";
 			set ep13_1_edq,15;
 			close;
 		}
 		else {
-			mes "A mysterious power prevents you from getting too close. It looks like there is something strong beyond the door...";
-			next;
-			mes "Perhaps there's a great hidden secret beyond the gate, beyond expectation.";
-			next;
-			mes "It would be better to go back to camp and inform the others and ask for help.";
 			next;
 			mes "You'll have to obtain the others trust in the expendition camp by working hard.";
 			close;
@@ -311,8 +307,8 @@ OnTouch_:
 }
 
 mid_camp,271,299,3	script	Historian Magnifier#edq	755,3,3,{
+	mes "[Historian Magniffer]";
 	if (ins_nyd == 1) {
-		mes "[Historian Magniffer]";
 		mes "Sure, the mainland also has lots of interesting adventures... Hello, I am Magnifier, a historian dispatched from the Prontera royal court.";
 		next;
 		mes "[Historian Magniffer]";
@@ -326,7 +322,6 @@ mid_camp,271,299,3	script	Historian Magnifier#edq	755,3,3,{
 		close;
 	}
 	else if (ins_nyd == 2) {
-		mes "[Historian Magniffer]";
 		mes "Does Commander Agip want to talk to me? Let's listen to his story.";
 		next;
 		mes "[Historian Magniffer]";
@@ -370,12 +365,10 @@ mid_camp,271,299,3	script	Historian Magnifier#edq	755,3,3,{
 		close;
 	}
 	else if (ins_nyd == 3) {
-		mes "[Historian Magnifier]";
 		mes "Why are you standing there? Go to my assistant in the Prontera Library!";
 		close;
 	}
 	else if (ins_nyd == 4) {
-		mes "[Historian Magnifier]";
 		mes "You've come back... Good, how's Naomi? Actually, I don't need to worry about her. She is always cheerful. Haha.";
 		next;
 		mes "[Historian Magnifier]";
@@ -433,7 +426,6 @@ mid_camp,271,299,3	script	Historian Magnifier#edq	755,3,3,{
 		}
 	}
 	else if ((ins_nyd == 5) || (ins_nyd == 51) || (ins_nyd == 52)) {
-		mes "[Historian Magnifier]";
 		mes "Okay, let's try to contact them first, to be clear about any caves or treasures.";
 		next;
 		mes "[Historian Magnifier]";
@@ -444,7 +436,6 @@ mid_camp,271,299,3	script	Historian Magnifier#edq	755,3,3,{
 		close;
 	}
 	else if ((ins_nyd == 61) || (ins_nyd == 62)) {
-		mes "[Historian Magnifier]";
 		mes "Ah, you've come at a proper time. I found a curious thing while looking for reports from Arunafeltz.";
 		next;
 		mes "[Historian Magnifier]";
@@ -475,12 +466,10 @@ mid_camp,271,299,3	script	Historian Magnifier#edq	755,3,3,{
 		close;
 	}
 	else if ((ins_nyd == 7) || (ins_nyd == 8)) {
-		mes "[Historian Magnifier]";
 		mes "Report to Commander Hibba Agip about what we have discovered, since time is dependent on his decision.";
 		close;
 	}
 	else if ((ins_nyd == 121) || (ins_nyd == 122) || (ins_nyd == 131) || (ins_nyd == 132) || (ins_nyd ==14)) {
-		mes "[Historian Magnifier]";
 		mes "So that's how it is... we were right about some parts of it... it's called the Guardian's Nest.";
 		next;
 		mes "[Historian Magnifier]";
@@ -497,7 +486,6 @@ mid_camp,271,299,3	script	Historian Magnifier#edq	755,3,3,{
 		close;
 	}
 	else {
-		mes "[Historian Magnifier]";
 		mes "Sure, the mainland also has lots of interesting adventures... Hello, I am Magnifier, a historian dispatched from the Prontera royal court.";
 		next;
 		mes "[Historian Magnifier]";
@@ -513,9 +501,9 @@ mid_camp,271,299,3	script	Historian Magnifier#edq	755,3,3,{
 }
 
 prt_in,171,94,3	script	Assistant Naomi#edq	893,3,3,{
+	mes "[Assistant Naomi]";
 	set .@name$,strcharinfo(0);
 	if (ins_nyd == 3) {
-		mes "[Assistant Naomi]";
 		mes "The doctor never ever tries to come back, and there're too many things to do... How can I do it all...";
 		next;
 		mes "[Assistant Naomi]";
@@ -626,7 +614,6 @@ prt_in,171,94,3	script	Assistant Naomi#edq	893,3,3,{
 		}
 	}
 	else if (ins_nyd == 4) {
-		mes "[Assistant Naomi]";
 		mes "Browse around, to take a look at the books.";
 		next;
 		switch(select("Discovery of Heterogeneity:Report of Indigenous Tribes")) {
@@ -693,7 +680,6 @@ prt_in,171,94,3	script	Assistant Naomi#edq	893,3,3,{
 		}
 	}
 	else {
-		mes "[Assistant Naomi]";
 		mes "The doctor never ever tries to come back, and there're too many things to do... How can I do it all...";
 		next;
 		mes "[Assistant Naomi]";
@@ -703,8 +689,8 @@ prt_in,171,94,3	script	Assistant Naomi#edq	893,3,3,{
 }
 
 splendide,198,178,3	script	Grumbling Soldier#edq	447,3,3,{
+	mes "[Grumbling Soldier]";
 	if (isequipped(2782) == 1) {
-		mes "[Grumbling Soldier]";
 		mes "Nowadays, the world has turned unstable. I can't even fly comfortably anymore.";
 		next;
 		if (ins_nyd == 5) {
@@ -759,15 +745,14 @@ splendide,198,178,3	script	Grumbling Soldier#edq	447,3,3,{
 		}
 	}
 	else {
-		mes "[Grumbling Soldier]";
 		mes "SeLarsmar Di marThusVil U SeMushVohl";
 		close;
 	}
 }
 
 splendide,240,164,3	script	Sighing Soldier#edq	461,3,3,{
+	mes "[Sighing Soldier]";
 	if (isequipped(2782) == 1) {
-		mes "[Sighing Soldier]";
 		mes "When will we be finished with this combat with the Sapha? Ugghhhh...";
 		next;
 		if (ins_nyd == 5) {
@@ -819,16 +804,15 @@ splendide,240,164,3	script	Sighing Soldier#edq	461,3,3,{
 		}
 	}
 	else {
-		mes "[Grumbling Soldier]";
 		mes "VohlLarsmar Ha DielCyatas";
 		close;
 	}
 }
 
 spl_in01,109,60,3	script	Commander Lebiordirr#edq	435,3,3,{
+	mes "[Commander Lebiordirr]";
 	if (isequipped(2782) == 1) {
 		if (ins_nyd == 51) {
-			mes "[Commander Lebiordirr]";
 			mes "Are you...? Are you the one collecting information from my soldiers...?";
 			next;
 			mes "[Commander Lebiordirr]";
@@ -846,42 +830,37 @@ spl_in01,109,60,3	script	Commander Lebiordirr#edq	435,3,3,{
 			mes "[Commander Lebiordirr]";
 			mes "Unless you have any messages for me...? Your face says you do...";
 			next;
-			switch(select("No. Nothing. We can talk later.:I intend to stay. For good reasons.")) {
-			case 1:
-				close;
-			case 2:
-				mes "[Splendide Guard]";
-				mes "Sir, I can drag this pest out right now.";
-				next;
-				mes "[Commander Lebiordirr]";
-				mes "No. Let's hear an explanation. Good? Now, if you want...";
-				next;
-				mes "[Commander Lebiordirr]";
-				mes "I have known that, recently, time has broken... so, you're here exploring for a solution, no?";
-				next;
-				mes "[Commander Lebiordirr]";
-				mes "Our tribe has respected you, so just forget about the searching and exploring around here.";
-				next;
-				mes "[Commander Lebiordirr]";
-				mes "I heard that you are to search for any treasure in the closed cave to the north.";
-				next;
-				mes "[Commander Lebiordirr]";
-				mes "That place is banned by order of the Laphine tribe. So, people can't just go there without permission.";
-				next;
-				mes "[Commander Lebiordirr]";
-				mes "If you can't follow this rule, I will stop associating with you and ban all of your people from here.";
-				next;
-				mes "[Commander Lebiordirr]";
-				mes "We still have an unstable relationship with the Sapha, we usually don't worry about outsiders.";
-				next;
-				mes "[Commander Lebiordirr]";
-				mes "Now, if you understand this, inform your friends.";
-				set ins_nyd,61;
-				close;
-			}
+			if(select("No. Nothing. We can talk later.:I intend to stay. For good reasons.")==1) close;
+			mes "[Splendide Guard]";
+			mes "Sir, I can drag this pest out right now.";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "No. Let's hear an explanation. Good? Now, if you want...";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "I have known that, recently, time has broken... so, you're here exploring for a solution, no?";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "Our tribe has respected you, so just forget about the searching and exploring around here.";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "I heard that you are to search for any treasure in the closed cave to the north.";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "That place is banned by order of the Laphine tribe. So, people can't just go there without permission.";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "If you can't follow this rule, I will stop associating with you and ban all of your people from here.";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "We still have an unstable relationship with the Sapha, we usually don't worry about outsiders.";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "Now, if you understand this, inform your friends.";
+			set ins_nyd,61;
+			close;
 		}
 		else if (ins_nyd == 61) {
-			mes "[Commander Lebiordirr]";
 			mes "If you can't follow this rule, I will stop associating with you and ban all of your people from here.";
 			next;
 			mes "[Commander Lebiordirr]";
@@ -892,99 +871,84 @@ spl_in01,109,60,3	script	Commander Lebiordirr#edq	435,3,3,{
 			close;
 		}
 		else if (ins_nyd == 81) {
-			mes "[Commander Lebiordirr]";
 			mes "Why have you come back, outsider?";
 			next;
-			switch(select("To ask the Laphines about exploring...")) {
-			case 1:
-				mes "[Commander Lebiordirr]";
-				mes "Exploring what? Choose your words wisely?";
-				next;
-				mes "[Commander Lebiordirr]";
-				mes "Do we not understand each other? What do you want?";
-				next;
-				switch(select("I must explore the cave.")) {
-				case 1:
-					mes "[Commander Lebiordirr]";
-					mes "That means... that you are ignoring my warning? Is this your decision or are you just following orders?";
-					next;
-					switch(select("I'm just following orders")) {
-					case 1:
-						mes "[Commander Lebiordirr]";
-						mes "Are you trying to insult me on purpose, outsider?";
-						next;
-						mes "[Commander Lebiordirr]";
-						mes "Why do you want to explore? It better be a very good reason.";
-						next;
-						switch(select("It's about Dr. Magnifier's report...")) {
-						case 1:
-							mes "[Commander Lebiordirr]";
-							mes "So... What do I care about an outsider's report?";
-							next;
-							mes "[Commander Lebiordirr]";
-							mes "To protect the Yggdrasil! That's the Laphine's fate. Can you say that about yourself?";
-							next;
-							mes "[Commander Lebiordirr]";
-							mes "Do you have any proof of your birth with Odin and Yggdrasil's blessings?";
-							next;
-							mes "[Commander Lebiordirr]";
-							mes "I shouldn't say anymore. Please don't take this as being rude but, please go now!";
-							next;
-							switch(select("Then I'll ask the Sapha for help.")) {
-							case 1:
-								mes "[Commander Lebiordirr]";
-								mes "What are you talking about, outsider?";
-								next;
-								mes "[Splendide Guard]";
-								mes "Sir, I can get rid of this rude outsider if you wish?";
-								next;
-								mes "[Commander Lebiordirr]";
-								mes "No, wait... The Sapha tribesmen know the meaning of that place? Did you ask to associate with them?";
-								next;
-								mes "[Commander Lebiordirr]";
-								mes "Ah... How tricky... Are you testing us?";
-								next;
-								mes "[Splendide Guard]";
-								mes "Calm down, sir. I will throw this outsider into prison.";
-								next;
-								mes "[Commander Lebiordirr]";
-								mes "No... No, wait. Ok, I will accept it. I can accept your admission into the Holy Sekos.";
-								next;
-								mes "[Commander Lebiordirr]";
-								mes "Okay. If you are a servant of the Yggdrasil as you claim to be, I will allow you admission. But I am not responsible for your actions.";
-								next;
-								mes "[Commander Lebiordirr]";
-								mes "And make sure that if you find anything out of the ordinary in there, that you share it with us!";
-								next;
-								switch(select("But of course!")) {
-								case 1:
-									mes "[Commander Lebiordirr]";
-									mes "So... since I have agreed to allow your exploration... Arioss, help them, and take the results.";
-									next;
-									mes "[Aide Arioss]";
-									mes "Sir... are you sure? This is an invasion of the Holy Sekos...";
-									next;
-									mes "[Commander Lebiordirr]";
-									mes "Invasion is a harsh word. I am allowing them entrance. Better them than a dirty giant. It might just save our lives...";
-									next;
-									mes "[Commander Lebiordirr]";
-									mes "Here, outsider. Arioss will explain the situation with the giants. Talk with him...";
-									set ins_nyd,91;
-									close;
-								}
-							}
-						}
-					}
-				}
-			}
+			select("To ask the Laphines about exploring...");
+			mes "[Commander Lebiordirr]";
+			mes "Exploring what? Choose your words wisely?";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "Do we not understand each other? What do you want?";
+			next;
+			select("I must explore the cave.");
+			mes "[Commander Lebiordirr]";
+			mes "That means... that you are ignoring my warning? Is this your decision or are you just following orders?";
+			next;
+			select("I'm just following orders");
+			mes "[Commander Lebiordirr]";
+			mes "Are you trying to insult me on purpose, outsider?";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "Why do you want to explore? It better be a very good reason.";
+			next;
+			select("It's about Dr. Magnifier's report...");
+			mes "[Commander Lebiordirr]";
+			mes "So... What do I care about an outsider's report?";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "To protect the Yggdrasil! That's the Laphine's fate. Can you say that about yourself?";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "Do you have any proof of your birth with Odin and Yggdrasil's blessings?";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "I shouldn't say anymore. Please don't take this as being rude but, please go now!";
+			next;
+			select("Then I'll ask the Sapha for help.");
+			mes "[Commander Lebiordirr]";
+			mes "What are you talking about, outsider?";
+			next;
+			mes "[Splendide Guard]";
+			mes "Sir, I can get rid of this rude outsider if you wish?";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "No, wait... The Sapha tribesmen know the meaning of that place? Did you ask to associate with them?";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "Ah... How tricky... Are you testing us?";
+			next;
+			mes "[Splendide Guard]";
+			mes "Calm down, sir. I will throw this outsider into prison.";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "No... No, wait. Ok, I will accept it. I can accept your admission into the Holy Sekos.";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "Okay. If you are a servant of the Yggdrasil as you claim to be, I will allow you admission. But I am not responsible for your actions.";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "And make sure that if you find anything out of the ordinary in there, that you share it with us!";
+			next;
+			select("But of course!");
+			mes "[Commander Lebiordirr]";
+			mes "So... since I have agreed to allow your exploration... Arioss, help them, and take the results.";
+			next;
+			mes "[Aide Arioss]";
+			mes "Sir... are you sure? This is an invasion of the Holy Sekos...";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "Invasion is a harsh word. I am allowing them entrance. Better them than a dirty giant. It might just save our lives...";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "Here, outsider. Arioss will explain the situation with the giants. Talk with him...";
+			set ins_nyd,91;
+			close;
 		}
 		else if ((ins_nyd == 91) || (ins_nyd == 101) || (ins_nyd == 111) || (ins_nyd == 200) || (ins_nyd == 201) || (ins_nyd == 202)) {
-			mes "[Commander Lebiordirr]";
 			mes "Outsider. Arioss here will explain the situation with the giants, talk with him...";
 			close;
 		}
 		else if ((ins_nyd == 72) || (ins_nyd == 82) || (ins_nyd == 92) || (ins_nyd == 102) || (ins_nyd == 112) || (ins_nyd == 122) || (ins_nyd == 132)) {
-			mes "[Commander Lebiordirr]";
 			mes "Welcome to the Laphine camp in Splendide, outsider... I am Lebiordirr. I am in charge here.";
 			next;
 			mes "[Commander Lebiordirr]";
@@ -995,69 +959,62 @@ spl_in01,109,60,3	script	Commander Lebiordirr#edq	435,3,3,{
 			close;
 		}
 		else if (ins_nyd == 203) {
-			mes "[Commander Lebiordirr]";
 			mes "I was waiting for you. You came back safe, that's good news. Did you find anything?";
 			next;
-			switch(select("Explain about the guardian Nidhoggur's leave.")) {
-			case 1:
-				mes "[Commander Lebiordirr]";
-				mes "What? The Guardian is not in his nest...?";
-				next;
-				mes "[Commander Lebiordirr]";
-				mes "And because of his disppearance, the Guardian's Shadow is currently destorying the roots of the World Tree...?";
-				next;
-				mes "[Commander Lebiordirr]";
-				mes "That's unbelievable. You must be insulting the Guardian's and our pride. I did not provide you with our help for that.";
-				next;
-				mes "[Aide Arioss]";
-				mes "It's not like that, Commander, they speak the truth.";
-				next;
-				mes "[Commander Lebiordirr]";
-				mes "What are you saying? Arioss, do not forget your place as the Guardian's priest.";
-				next;
-				mes "[Aide Arioss]";
-				mes "Even though I have not seen it with my own eyes, this does explain why we lost communication with the great World Tree Yggdrasil.";
-				next;
-				mes "[Commander Lebiordirr]";
-				mes "Do not speak of His Highness, the World Tree Yggdrasil's name so lightly.";
-				next;
-				switch(select("Pass along World Tree Yggdrasil's words.")) {
-				case 1:
-					mes "[Commander Lebiordirr]";
-					mes "His Highness, the World Tree Yggdrasil, said that?";
-					next;
-					mes "[Commander Lebiordirr]";
-					mes "The reason behind all of this... is not because of the Sapha tribe, but because of the sudden leave of the Guardian? And the Guaridan has given up on his identity?";
-					next;
-					mes "[Commander Lebiordirr]";
-					mes "This must be reported... reported to the High Priest of Alfheim... Unbelievable.";
-					next;
-					mes "[Aide Arioss]";
-					mes "Commander... do we need to alert the rest of the tribe...?";
-					next;
-					mes "[Commander Lebiordirr]";
-					mes "You don't need to worry about this, Arioss. As commander, I will handle it. You just pretend nothing happened...";
-					next;
-					mes "[Commander Lebiordirr]";
-					mes "Strange one, thank you for your cooperation in such situations... Please forget what has happened today...";
-					next;
-					mes "[Commander Lebiordirr]";
-					mes "Arioss, please compensate this strange one for the help. I need to go rest...";
-					next;
-					mes "[Aide Arioss]";
-					mes "Commander...";
-					set ins_nyd,121;
-					close;
-				}
-			}
+			select("Explain about the guardian Nidhoggur's leave.");
+			mes "[Commander Lebiordirr]";
+			mes "What? The Guardian is not in his nest...?";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "And because of his disppearance, the Guardian's Shadow is currently destorying the roots of the World Tree...?";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "That's unbelievable. You must be insulting the Guardian's and our pride. I did not provide you with our help for that.";
+			next;
+			mes "[Aide Arioss]";
+			mes "It's not like that, Commander, they speak the truth.";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "What are you saying? Arioss, do not forget your place as the Guardian's priest.";
+			next;
+			mes "[Aide Arioss]";
+			mes "Even though I have not seen it with my own eyes, this does explain why we lost communication with the great World Tree Yggdrasil.";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "Do not speak of His Highness, the World Tree Yggdrasil's name so lightly.";
+			next;
+			select("Pass along World Tree Yggdrasil's words.");
+			mes "[Commander Lebiordirr]";
+			mes "His Highness, the World Tree Yggdrasil, said that?";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "The reason behind all of this... is not because of the Sapha tribe, but because of the sudden leave of the Guardian? And the Guaridan has given up on his identity?";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "This must be reported... reported to the High Priest of Alfheim... Unbelievable.";
+			next;
+			mes "[Aide Arioss]";
+			mes "Commander... do we need to alert the rest of the tribe...?";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "You don't need to worry about this, Arioss. As commander, I will handle it. You just pretend nothing happened...";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "Strange one, thank you for your cooperation in such situations... Please forget what has happened today...";
+			next;
+			mes "[Commander Lebiordirr]";
+			mes "Arioss, please compensate this strange one for the help. I need to go rest...";
+			next;
+			mes "[Aide Arioss]";
+			mes "Commander...";
+			set ins_nyd,121;
+			close;
 		}
 		else if ((ins_nyd == 121) || (ins_nyd == 131)) {
-			mes "[Commander Lebiordirr]";
 			mes "Strange one, thank you for your cooperation in such situations... Please forget what has happened today...";
 			close;
 		}
 		else {
-			mes "[Commander Lebiordirr]";
 			mes "Welcome to the Laphine camp in Splendide, outsider... I am Lebiordirr. I am in charge here.";
 			next;
 			mes "[Commander Lebiordirr]";
@@ -1069,16 +1026,15 @@ spl_in01,109,60,3	script	Commander Lebiordirr#edq	435,3,3,{
 		}
 	}
 	else {
-		mes "[Commander Lebiordirr]";
 		mes "ThusDurnah Ra SharVeldIyaz U UorAmanDur Yee neaOsaAdor Yee...";
 		close;
 	}
 }
 
 spl_in01,104,56,3	script	Aide Arioss#edq	437,3,3,{
+	mes "[Aide Arioss]";
 	if (isequipped(2782) == 1) {
 		if (ins_nyd == 91) {
-			mes "[Aide Arioss]";
 			mes "Sigh, since it's Commander Lebiordirr's wish, I will cooperate with you...";
 			next;
 			mes "[Aide Arioss]";
@@ -1087,52 +1043,49 @@ spl_in01,104,56,3	script	Aide Arioss#edq	437,3,3,{
 			mes "[Aide Arioss]";
 			mes "Alright...it's as you have assumed, a place connecting to the World Tree. It's also the Guardian's Nest.";
 			next;
-			switch(select("Guardian's Nest?")) {
-			case 1:
-				mes "[Aide Arioss]";
-				mes "Yes, that's the nest of Nidhoggur, the Guardian of the World Tree...";
-				next;
-				mes "[Aide Arioss]";
-				mes "Only a marked guardian's servant from the Laphine tribe is allowed to enter.";
-				next;
-				mes "[Aide Arioss]";
-				mes "That place was initially closed off from the public, but then the giants of the Sapha tribe turned things around...";
-				next;
-				mes "[Aide Arioss]";
-				mes "To obtain more minerals, they started to dig with madness.";
-				next;
-				mes "[Aide Arioss]";
-				mes "In the end, they have harmed a part of the World Tree's root that lies very close to their mine, and thus, the World Tree became very ill.";
-				next;
-				mes "[Aide Arioss]";
-				mes "After we have arrived here knowing the facts, the World Tree was already in a very bad state due to the many factories built by the Sapha tribe.";
-				next;
-				mes "[Aide Arioss]";
-				mes "Even though, for a long time, we have been attacking the Sapha tribe, trying to force them to leave, they are not so easily defeated, leading to this stalemate.";
-				next;
-				mes "[Aide Arioss]";
-				mes "During this time, your people have travelled through the space-time gap to this land.";
-				next;
-				mes "[Aide Arioss]";
-				mes "Because of those many unexpected reasons, the Guardian's nest, which was meant to stay hidden deep underground, has been discovered by your race...";
-				next;
-				mes "[Aide Arioss]";
-				mes "Now you understand how serious this situation is. Because of the Sapha tribe, we are no longer able to approach the Guardian, and seek his teachings of wisdom.";
-				next;
-				mes "[Aide Arioss]";
-				mes "It's very insulting to our pride... but if you can help us enter that place again, and speak to the Guardian, maybe we can find a solution...";
-				next;
-				mes "[Aide Arioss]";
-				mes "Then we'll leave it to you. As for your request, I will do my best to cooperate.";
-				next;
-				mes "[Aide Arioss]";
-				mes "I have already told you what you wanted to know... If you need anything else, just let me know.";
-				set ins_nyd,101;
-				close;
-			}
+			select("Guardian's Nest?");
+			mes "[Aide Arioss]";
+			mes "Yes, that's the nest of Nidhoggur, the Guardian of the World Tree...";
+			next;
+			mes "[Aide Arioss]";
+			mes "Only a marked guardian's servant from the Laphine tribe is allowed to enter.";
+			next;
+			mes "[Aide Arioss]";
+			mes "That place was initially closed off from the public, but then the giants of the Sapha tribe turned things around...";
+			next;
+			mes "[Aide Arioss]";
+			mes "To obtain more minerals, they started to dig with madness.";
+			next;
+			mes "[Aide Arioss]";
+			mes "In the end, they have harmed a part of the World Tree's root that lies very close to their mine, and thus, the World Tree became very ill.";
+			next;
+			mes "[Aide Arioss]";
+			mes "After we have arrived here knowing the facts, the World Tree was already in a very bad state due to the many factories built by the Sapha tribe.";
+			next;
+			mes "[Aide Arioss]";
+			mes "Even though, for a long time, we have been attacking the Sapha tribe, trying to force them to leave, they are not so easily defeated, leading to this stalemate.";
+			next;
+			mes "[Aide Arioss]";
+			mes "During this time, your people have travelled through the space-time gap to this land.";
+			next;
+			mes "[Aide Arioss]";
+			mes "Because of those many unexpected reasons, the Guardian's nest, which was meant to stay hidden deep underground, has been discovered by your race...";
+			next;
+			mes "[Aide Arioss]";
+			mes "Now you understand how serious this situation is. Because of the Sapha tribe, we are no longer able to approach the Guardian, and seek his teachings of wisdom.";
+			next;
+			mes "[Aide Arioss]";
+			mes "It's very insulting to our pride... but if you can help us enter that place again, and speak to the Guardian, maybe we can find a solution...";
+			next;
+			mes "[Aide Arioss]";
+			mes "Then we'll leave it to you. As for your request, I will do my best to cooperate.";
+			next;
+			mes "[Aide Arioss]";
+			mes "I have already told you what you wanted to know... If you need anything else, just let me know.";
+			set ins_nyd,101;
+			close;
 		}
 		else if (ins_nyd == 101) {
-			mes "[Aide Arioss]";
 			mes "Ah, you said that there is a strange power blocking the entrance to the Guardian's nest, right?";
 			next;
 			mes "[Aide Arioss]";
@@ -1175,19 +1128,16 @@ spl_in01,104,56,3	script	Aide Arioss#edq	437,3,3,{
 			close;
 		}
 		else if ((ins_nyd == 101) || (ins_nyd == 111) || (ins_nyd == 200) || (ins_nyd == 201) || (ins_nyd == 202)) {
-			mes "[Aide Arioss]";
 			mes "Please meet with the Guardian and take a wise answer from him. I will trust you.";
 			close;
 		}
 		else if ((ins_nyd == 72) || (ins_nyd == 82) || (ins_nyd == 92) || (ins_nyd == 102) || (ins_nyd == 112)) {
-			mes "[Aide Arioss]";
 			mes "... ...";
 			next;
 			mes "Not even caring about this a single bit? What a stupid woman...";
 			close;
 		}
 		else if (ins_nyd == 121) {
-			mes "[Aide Arioss]";
 			mes "Things have actually become like this... as priests of the Guardian, it's our responsibility...";
 			next;
 			mes "[Aide Arioss]";
@@ -1203,12 +1153,10 @@ spl_in01,104,56,3	script	Aide Arioss#edq	437,3,3,{
 			close;
 		}
 		else if (ins_nyd == 131) {
-			mes "[Aide Arioss]";
 			mes "If we can help you with anything in the future, we will do all we can to assist you. Once again, thank you.";
 			close;
 		}
 		else {
-			mes "[Aide Arioss]";
 			mes "... ...";
 			next;
 			mes "Never give attention to... um... a blunt woman...";
@@ -1216,7 +1164,6 @@ spl_in01,104,56,3	script	Aide Arioss#edq	437,3,3,{
 		}
 	}
 	else {
-		mes "[Aide Arioss]";
 		mes "AmanVilShar Ie DorLuShar Mu Re";
 		close;
 	}
@@ -1237,35 +1184,23 @@ OnTouch_:
 }
 
 spl_in01,101,52,5	script	Splendide Guard#1_edq	447,1,1,{
-	if (isequipped(2782) == 1) {
-		mes "[Splendide Guard]";
-		mes "This is the Splendide office. Don't act impolitely.";
-		close;
-	}
-	else {
-		mes "[Splendide Guard]";
-		mes "ThusDurnah Ra SharVeldIyaz U UorAmanDur Yee neaOsaAdor Yee ";
-		close;
-	}
+	mes "[Splendide Guard]";
+	if (isequipped(2782) == 1) mes "This is the Splendide office. Don't act impolitely.";
+	else mes "ThusDurnah Ra SharVeldIyaz U UorAmanDur Yee neaOsaAdor Yee ";
+	close;
 }
 
 spl_in01,118,52,3	script	Splendide Guard#2_edq	447,1,1,{
-	if (isequipped(2782) == 1) {
-		mes "[Splendide Guard]";
-		mes "This is the Splendide office. Don't act impolitely.";
-		close;
-	}
-	else {
-		mes "[Splendide Guard]";
-		mes "ThusDurnah Ra SharVeldIyaz U UorAmanDur Yee neaOsaAdor Yee ";
-		close;
-	}
+	mes "[Splendide Guard]";
+	if (isequipped(2782) == 1) mes "This is the Splendide office. Don't act impolitely.";
+	else mes "ThusDurnah Ra SharVeldIyaz U UorAmanDur Yee neaOsaAdor Yee ";
+	close;
 }
 
 man_in01,311,57,3	script	Neat Etorr#edq	453,3,3,{
+	mes "[Neat Etorr]";
 	if (isequipped(2782) == 1) {
 		if (ins_nyd == 52) {
-			mes "[Neat Etorr]";
 			mes "Guest from the other world, please excuse our rudeness...";
 			next;
 			mes "[Neat Etorr]";
@@ -1283,48 +1218,43 @@ man_in01,311,57,3	script	Neat Etorr#edq	453,3,3,{
 			mes "[Neat Etorr]";
 			mes "I hope that your people will becareful of your actions on this land, and terminate any unnecessary interventions.";
 			next;
-			switch(select("Leave quietly.:Don't know what he's talking about, and ask for details.")) {
-			case 1:
-				close;
-			case 2:
-				mes "[Manuk Field Elite Soldier]";
-				mes "Are we really just letting these people go after they have stirred up problems on our land?";
-				next;
-				mes "[Neat Etorr]";
-				mes "After what happened, I don't think they know what else they can do. Let me explain.";
-				next;
-				mes "[Neat Etorr]";
-				mes "For now, we have acknowledged your race, and have been tolerant towards your activities.";
-				next;
-				mes "[Neat Etorr]";
-				mes "But we have recently started to suspect you of being the Laphine tribe's eyes and ears.";
-				next;
-				mes "[Neat Etorr]";
-				mes "Not long ago, We have heard that you have found remains in an abandoned cave in the north, and have been conducting investigations and researches regarding it.";
-				next;
-				mes "[Neat Etorr]";
-				mes "We have captured a Laphine tribe priest during the last war, and we have heard that you have had contact with said captive.";
-				next;
-				mes "[Neat Etorr]";
-				mes "That captive is the only reference for our tribe, so we have taken good care of her. She is related to your current investigation.";
-				next;
-				mes "[Neat Etorr]";
-				mes "For your people, who have no direct connections, it is not a place satisfy your curiosity. I hope that you stop your investigations, and mind your own business.";
-				next;
-				mes "[Neat Etorr]";
-				mes "If you don't accept our request, then do not expect any cooperations between our races in the future.";
-				next;
-				mes "[Neat Etorr]";
-				mes "Because of the war against the Laphine tribe, everything is a mess. But even then, we cannot allow a foreign race to interfere.";
-				next;
-				mes "[Neat Etorr]";
-				mes "You have heard it all, now please report back to your race.";
-				set ins_nyd,62;
-				close;
-			}
+			if(select("Leave quietly.:Don't know what he's talking about, and ask for details.")==1) close;
+			mes "[Manuk Field Elite Soldier]";
+			mes "Are we really just letting these people go after they have stirred up problems on our land?";
+			next;
+			mes "[Neat Etorr]";
+			mes "After what happened, I don't think they know what else they can do. Let me explain.";
+			next;
+			mes "[Neat Etorr]";
+			mes "For now, we have acknowledged your race, and have been tolerant towards your activities.";
+			next;
+			mes "[Neat Etorr]";
+			mes "But we have recently started to suspect you of being the Laphine tribe's eyes and ears.";
+			next;
+			mes "[Neat Etorr]";
+			mes "Not long ago, We have heard that you have found remains in an abandoned cave in the north, and have been conducting investigations and researches regarding it.";
+			next;
+			mes "[Neat Etorr]";
+			mes "We have captured a Laphine tribe priest during the last war, and we have heard that you have had contact with said captive.";
+			next;
+			mes "[Neat Etorr]";
+			mes "That captive is the only reference for our tribe, so we have taken good care of her. She is related to your current investigation.";
+			next;
+			mes "[Neat Etorr]";
+			mes "For your people, who have no direct connections, it is not a place satisfy your curiosity. I hope that you stop your investigations, and mind your own business.";
+			next;
+			mes "[Neat Etorr]";
+			mes "If you don't accept our request, then do not expect any cooperations between our races in the future.";
+			next;
+			mes "[Neat Etorr]";
+			mes "Because of the war against the Laphine tribe, everything is a mess. But even then, we cannot allow a foreign race to interfere.";
+			next;
+			mes "[Neat Etorr]";
+			mes "You have heard it all, now please report back to your race.";
+			set ins_nyd,62;
+			close;
 		}
 		else if (ins_nyd == 62) {
-			mes "[Neat Etorr]";
 			mes "That captive is the only reference for our tribe, so we have taken good care of her. She is related to your current investigation.";
 			next;
 			mes "[Neat Etorr]";
@@ -1335,7 +1265,6 @@ man_in01,311,57,3	script	Neat Etorr#edq	453,3,3,{
 			close;
 		}
 		else if (ins_nyd == 72) {
-			mes "[Neat Etorr]";
 			mes "Recently, because you do not understand the current situations, you have done some things that I, as a leader, can't ignore any longer.";
 			next;
 			mes "[Neat Etorr]";
@@ -1343,96 +1272,81 @@ man_in01,311,57,3	script	Neat Etorr#edq	453,3,3,{
 			close;
 		}
 		else if (ins_nyd == 82) {
-			mes "[Neat Etorr]";
 			mes "Do you need me for something, strange one?";
 			next;
-			switch(select("Received invitation from the Sapha tribe to cooperate and investigate.")) {
-			case 1:
-				mes "[Neat Etorr]";
-				mes "Cooperate and investigate? What do you mean?";
-				next;
-				mes "[Neat Etorr]";
-				mes "It seems like you did not understand what I said. What are you thinking?";
-				next;
-				switch(select("Please allow me to investigate the cave.")) {
-				case 1:
-					mes "[Neat Etorr]";
-					mes "From what I can tell, you are disrespecting my request. Is this your intention, or your people's intention?";
-					next;
-					switch(select("It's our intention.")) {
-					case 1:
-						mes "[Neat Etorr]";
-						mes "Ah, it is not an easy decision. You frighten me.";
-						next;
-						mes "[Neat Etorr]";
-						mes "But may I ask why you want to do this?";
-						next;
-						switch(select("Explain Professor Magnifier's theory.")) {
-						case 1:
-							mes "[Neat Etorr]";
-							mes "It's surprising that you are able to obtain such results. We also have a similar theory.";
-							next;
-							mes "[Neat Etorr]";
-							mes "At least we also think that we must use the Laphine prisoner to get information.";
-							next;
-							mes "[Neat Etorr]";
-							mes "This problem has been the root of our conflicts with the Laphine tribe. Of course, it may also be an opportunity to resolve them.";
-							next;
-							mes "[Neat Etorr]";
-							mes "Therefore, it's more of a reason to depend on our own powers. There is no room for you to interfere. Please give up.";
-							next;
-							switch(select("Give up request, and ask Laphine tribe for help instead.")) {
-							case 1:
-								mes "[Manuk Field Elite Soldier]";
-								mes "You finally showed your true face. I knew you were a spy from the Laphine tribe!";
-								next;
-								mes "[Neat Etorr]";
-								mes "Ah...you'd go as far as saying that. What good will it do for you, helping the Laphine tribe?";
-								next;
-								mes "[Neat Etorr]";
-								mes "Those obnoxious dwarves offended our right of living, and are trying to get rid of us.";
-								next;
-								mes "[Neat Etorr]";
-								mes "The reason we don't allow anyone to enter that site is because it's full of suspicions.";
-								next;
-								mes "[Neat Etorr]";
-								mes "Alright, I'll approve of your request, and let you investigate the secret the Laphine tribe has hidden inside the cave.";
-								next;
-								mes "[Neat Etorr]";
-								mes "If you promise to share all of your research results and findings, we will accept your request.";
-								next;
-								switch(select("Of course.")) {
-								case 1:
-									mes "[Neat Etorr]";
-									mes "Alright, from now on, we will cooperate with you, and allow you to directly communicate with the Laphine prisoner.";
-									next;
-									mes "[Manuk Field Elite Soldier]";
-									mes "Commander...are you sure of this? We don't even know if they're friend or foe...";
-									next;
-									mes "[Neat Etorr]";
-									mes "With just our powers, it's impossible to figure out what the Laphine is up to. I think the past has proven that.";
-									next;
-									mes "[Neat Etorr]";
-									mes "What they're doing right now could potentially lead us to a solution.";
-									next;
-									mes "[Neat Etorr]";
-									mes "Strange one, we hope our cooperation will be a good one. Now please go interrogate the Laphine prisoner.";
-									set ins_nyd,92;
-									close;
-								}
-							}
-						}
-					}
-				}
-			}
+			select("Received invitation from the Sapha tribe to cooperate and investigate.");
+			mes "[Neat Etorr]";
+			mes "Cooperate and investigate? What do you mean?";
+			next;
+			mes "[Neat Etorr]";
+			mes "It seems like you did not understand what I said. What are you thinking?";
+			next;
+			select("Please allow me to investigate the cave.");
+			mes "[Neat Etorr]";
+			mes "From what I can tell, you are disrespecting my request. Is this your intention, or your people's intention?";
+			next;
+			select("It's our intention.");
+			mes "[Neat Etorr]";
+			mes "Ah, it is not an easy decision. You frighten me.";
+			next;
+			mes "[Neat Etorr]";
+			mes "But may I ask why you want to do this?";
+			next;
+			select("Explain Professor Magnifier's theory.");
+			mes "[Neat Etorr]";
+			mes "It's surprising that you are able to obtain such results. We also have a similar theory.";
+			next;
+			mes "[Neat Etorr]";
+			mes "At least we also think that we must use the Laphine prisoner to get information.";
+			next;
+			mes "[Neat Etorr]";
+			mes "This problem has been the root of our conflicts with the Laphine tribe. Of course, it may also be an opportunity to resolve them.";
+			next;
+			mes "[Neat Etorr]";
+			mes "Therefore, it's more of a reason to depend on our own powers. There is no room for you to interfere. Please give up.";
+			next;
+			select("Give up request, and ask Laphine tribe for help instead.");
+			mes "[Manuk Field Elite Soldier]";
+			mes "You finally showed your true face. I knew you were a spy from the Laphine tribe!";
+			next;
+			mes "[Neat Etorr]";
+			mes "Ah...you'd go as far as saying that. What good will it do for you, helping the Laphine tribe?";
+			next;
+			mes "[Neat Etorr]";
+			mes "Those obnoxious dwarves offended our right of living, and are trying to get rid of us.";
+			next;
+			mes "[Neat Etorr]";
+			mes "The reason we don't allow anyone to enter that site is because it's full of suspicions.";
+			next;
+			mes "[Neat Etorr]";
+			mes "Alright, I'll approve of your request, and let you investigate the secret the Laphine tribe has hidden inside the cave.";
+			next;
+			mes "[Neat Etorr]";
+			mes "If you promise to share all of your research results and findings, we will accept your request.";
+			next;
+			select("Of course.");
+			mes "[Neat Etorr]";
+			mes "Alright, from now on, we will cooperate with you, and allow you to directly communicate with the Laphine prisoner.";
+			next;
+			mes "[Manuk Field Elite Soldier]";
+			mes "Commander...are you sure of this? We don't even know if they're friend or foe...";
+			next;
+			mes "[Neat Etorr]";
+			mes "With just our powers, it's impossible to figure out what the Laphine is up to. I think the past has proven that.";
+			next;
+			mes "[Neat Etorr]";
+			mes "What they're doing right now could potentially lead us to a solution.";
+			next;
+			mes "[Neat Etorr]";
+			mes "Strange one, we hope our cooperation will be a good one. Now please go interrogate the Laphine prisoner.";
+			set ins_nyd,92;
+			close;
 		}
 		else if ((ins_nyd == 92) || (ins_nyd == 102) || (ins_nyd == 112) || (ins_nyd == 200) || (ins_nyd == 201) || (ins_nyd == 202)) {
-			mes "[Neat Etorr]";
 			mes "Strange one, we hope our cooperation will be a good one. Now please go interrogate the Laphine prisoner.";
 			close;
 		}
 		else if ((ins_nyd == 71) || (ins_nyd == 81) || (ins_nyd == 91) || (ins_nyd == 101) || (ins_nyd == 111) || (ins_nyd == 121) || (ins_nyd == 131)) {
-			mes "[Neat Etorr]";
 			mes "Outsider. Welcome to Manuk, the village of the Sapha. I am its representative, Neat Etorr.";
 			next;
 			mes "[Neat Etorr]";
@@ -1440,59 +1354,52 @@ man_in01,311,57,3	script	Neat Etorr#edq	453,3,3,{
 			close;
 		}
 		else if (ins_nyd == 203) {
-			mes "[Neat Etorr]";
 			mes "I was waiting for you. It's good that you're safe. Did you find anything?";
 			next;
-			switch(select("Explain the sudden leave of the Guardian.")) {
-			case 1:
-				mes "[Neat Etorr]";
-				mes "So... that's the nest of the Guardian of the World Tree, the sacred grounds for the Laphine tribe.";
-				next;
-				mes "[Neat Etorr]";
-				mes "But because of the angry leave of the Guardian, his shadow is wreaking havoc on the World Tree?";
-				next;
-				mes "[Neat Etorr]";
-				mes "If what you're saying is true, then there is no more reason for us to continue fighting the Laphine tribe...";
-				next;
-				mes "[Neat Etorr]";
-				mes "What a huge discovery... So Nidhoggur is no longer the Guardian of the World Tree...?";
-				next;
-				mes "[Neat Etorr]";
-				mes "Nidhoggur's Shadow came to exist in this world, and harmed the roots of the World Tree... what a disaster.";
-				next;
-				switch(select("Pass along the World Tree Yggdrasil's message.")) {
-				case 1:
-					mes "[Neat Etorr]";
-					mes "Is that what the priest of the Guardian said?";
-					next;
-					mes "[Neat Etorr]";
-					mes "From now on, we need to talk about this with the Laphine tribe.";
-					next;
-					mes "[Neat Etorr]";
-					mes "But of course...we don't know if they're reasonable enough...hehe.";
-					next;
-					mes "[Neat Etorr]";
-					mes "This is all we needed from you...What is left is business between us and the Laphine tribe.";
-					next;
-					mes "[Neat Etorr]";
-					mes "Thank you for helping us with such a huge problem. You may forget about it now.";
-					next;
-					mes "[Neat Etorr]";
-					mes "It's not a lot, but please this as a token of our appreciation.";
-					getexp 1500000,350000;
-					getitem 6080,10; //Manuk_Coin
-					set ins_nyd,132;
-					close;
-				}
-			}
+			select("Explain the sudden leave of the Guardian.");
+			mes "[Neat Etorr]";
+			mes "So... that's the nest of the Guardian of the World Tree, the sacred grounds for the Laphine tribe.";
+			next;
+			mes "[Neat Etorr]";
+			mes "But because of the angry leave of the Guardian, his shadow is wreaking havoc on the World Tree?";
+			next;
+			mes "[Neat Etorr]";
+			mes "If what you're saying is true, then there is no more reason for us to continue fighting the Laphine tribe...";
+			next;
+			mes "[Neat Etorr]";
+			mes "What a huge discovery... So Nidhoggur is no longer the Guardian of the World Tree...?";
+			next;
+			mes "[Neat Etorr]";
+			mes "Nidhoggur's Shadow came to exist in this world, and harmed the roots of the World Tree... what a disaster.";
+			next;
+			select("Pass along the World Tree Yggdrasil's message.");
+			mes "[Neat Etorr]";
+			mes "Is that what the priest of the Guardian said?";
+			next;
+			mes "[Neat Etorr]";
+			mes "From now on, we need to talk about this with the Laphine tribe.";
+			next;
+			mes "[Neat Etorr]";
+			mes "But of course...we don't know if they're reasonable enough...hehe.";
+			next;
+			mes "[Neat Etorr]";
+			mes "This is all we needed from you...What is left is business between us and the Laphine tribe.";
+			next;
+			mes "[Neat Etorr]";
+			mes "Thank you for helping us with such a huge problem. You may forget about it now.";
+			next;
+			mes "[Neat Etorr]";
+			mes "It's not a lot, but please this as a token of our appreciation.";
+			getexp 1500000,350000;
+			getitem 6080,10; //Manuk_Coin
+			set ins_nyd,132;
+			close;
 		}
 		else if (ins_nyd == 132) {
-			mes "[Neat Etorr]";
 			mes "Strange one, thank you for helping us in the time of need. I will never forget your kindness.";
 			close;
 		}
 		else {
-			mes "[Neat Etorr]";
 			mes "Outsider. Welcome to the Manuk village of Sapha. I am its representative, Neat Etorr.";
 			next;
 			mes "[Neat Etorr]";
@@ -1501,42 +1408,29 @@ man_in01,311,57,3	script	Neat Etorr#edq	453,3,3,{
 		}
 	}
 	else {
-		mes "[Neat Etorr]";
 		mes "Tkeh likek Ohek QekhlHkl PkedlioH.";
 		close;
 	}
 }
 
 man_in01,286,61,5	script	Manuk Guard#1_edq	450,1,1,{
-	if (isequipped(2782) == 1) {
-		mes "[Manuk Guard]";
-		mes "I'm guarding this Laphine prisoner. Leave me alone.";
-		close;
-	}
-	else {
-		mes "[Manuk Guard]";
-		mes "Klekod Oi Thekd Pheid Okei.";
-		close;
-	}
+	mes "[Manuk Guard]";
+	if (isequipped(2782) == 1) mes "I'm guarding this Laphine prisoner. Leave me alone.";
+	else mes "Klekod Oi Thekd Pheid Okei.";
+	close;
 }
 
 man_in01,295,61,3	script	Manuk Guard#2_edq	450,1,1,{
-	if (isequipped(2782) == 1) {
-		mes "[Manuk Guard]";
-		mes "I'm guarding this Laphine prisoner. Leave me alone.";
-		close;
-	}
-	else {
-		mes "[Manuk Guard]";
-		mes "Liek QUekdk Ohei Vue.";
-		close;
-	}
+	mes "[Manuk Guard]";
+	if (isequipped(2782) == 1) mes "I'm guarding this Laphine prisoner. Leave me alone.";
+	else mes "Liek QUekdk Ohei Vue.";
+	close;
 }
 
 man_in01,291,62,3	script	Laphine Prisoner#edq	437,3,3,{
+	mes "[Laphine Prisoner]";
 	if (isequipped(2782) == 1) {
 		if (ins_nyd == 5) {
-			mes "[Laphine Prisoner]";
 			mes "You... are not of the Sapha tribe... Are you... an outsider?";
 			next;
 			mes "[Laphine Prisoner]";
@@ -1594,7 +1488,6 @@ man_in01,291,62,3	script	Laphine Prisoner#edq	437,3,3,{
 			}
 		}
 		else if (ins_nyd == 92) {
-			mes "[Laphine Prisoner]";
 			mes "The sapha tribe went as far as cooperating with an unknown race?";
 			next;
 			mes "[Laphine Prisoner]";
@@ -1603,58 +1496,55 @@ man_in01,291,62,3	script	Laphine Prisoner#edq	437,3,3,{
 			mes "[Laphine Prisoner]";
 			mes "lright...it's as you have assumed, a place connecting to the World Tree. It's also the Guardian's Nest.";
 			next;
-			switch(select("Guardian's Nest?")) {
-			case 1:
-				mes "[Laphine Prisoner]";
-				mes "Yes, that's the nest of Nidhoggur, the Guardian of the World Tree...";
-				next;
-				mes "[Laphine Prisoner]";
-				mes "Only a marked guardian's servant from the Laphine tribe is allowed to enter.";
-				next;
-				mes "[Laphine Prisoner]";
-				mes "That place was initially closed off from the public, but then the giants of the Sapha tribe turned things around...";
-				next;
-				mes "[Laphine Prisoner]";
-				mes "To obtain more minerals, they started to dig with madness.";
-				next;
-				mes "[Laphine Prisoner]";
-				mes "In the end, they have harmed a part of the World Tree's root that lies very close to their mine, and thus, the World Tree became very ill.";
-				next;
-				mes "[Laphine Prisoner]";
-				mes "After we have arrived here knowing the facts, the World Tree was already in a very bad state due to the many factories built by the Sapha tribe.";
-				next;
-				mes "[Laphine Prisoner]";
-				mes "Even though, for a long time, we have been attacking the Sapha tribe, trying to force them to leave, they are not so easily defeated, leading to this stalemate.";
-				next;
-				mes "[Laphine Prisoner]";
-				mes "During this time, your people have travelled through the space-time gap to this land.";
-				next;
-				mes "[Laphine Prisoner]";
-				mes "Because of those many unexpected reasons, the Guardian's nest, which was meant to stay hidden deep underground, has been discovered by your race...";
-				next;
-				mes "[Laphine Prisoner]";
-				mes "Now you understand how serious this situation is. Because of the Sapha tribe, we are no longer able to approach the Guardian, and seek his teachings of wisdom.";
-				next;
-				mes "[Laphine Prisoner]";
-				mes "Hmph...even if I don't cooperate, I know you will find other means to get in...";
-				next;
-				mes "[Laphine Prisoner]";
-				mes "Looking at the current situation of the Laphine tribe, we do not have enough power to surround the Manuk fields, and chase the giants away.";
-				next;
-				mes "[Laphine Prisoner]";
-				mes "Okay, if it has already become like this, I will help you. There are no dead-ends. If you keep going, you will find a solution.";
-				next;
-				mes "[Laphine Prisoner]";
-				mes "Even if I don't say anything, my situation will not change.";
-				next;
-				mes "[Laphine Prisoner]";
-				mes "I have already told you everything you wanted to hear. If you have any other requests, please let me know.";
-				set ins_nyd,102;
-				close;
-			}
+			select("Guardian's Nest?");
+			mes "[Laphine Prisoner]";
+			mes "Yes, that's the nest of Nidhoggur, the Guardian of the World Tree...";
+			next;
+			mes "[Laphine Prisoner]";
+			mes "Only a marked guardian's servant from the Laphine tribe is allowed to enter.";
+			next;
+			mes "[Laphine Prisoner]";
+			mes "That place was initially closed off from the public, but then the giants of the Sapha tribe turned things around...";
+			next;
+			mes "[Laphine Prisoner]";
+			mes "To obtain more minerals, they started to dig with madness.";
+			next;
+			mes "[Laphine Prisoner]";
+			mes "In the end, they have harmed a part of the World Tree's root that lies very close to their mine, and thus, the World Tree became very ill.";
+			next;
+			mes "[Laphine Prisoner]";
+			mes "After we have arrived here knowing the facts, the World Tree was already in a very bad state due to the many factories built by the Sapha tribe.";
+			next;
+			mes "[Laphine Prisoner]";
+			mes "Even though, for a long time, we have been attacking the Sapha tribe, trying to force them to leave, they are not so easily defeated, leading to this stalemate.";
+			next;
+			mes "[Laphine Prisoner]";
+			mes "During this time, your people have travelled through the space-time gap to this land.";
+			next;
+			mes "[Laphine Prisoner]";
+			mes "Because of those many unexpected reasons, the Guardian's nest, which was meant to stay hidden deep underground, has been discovered by your race...";
+			next;
+			mes "[Laphine Prisoner]";
+			mes "Now you understand how serious this situation is. Because of the Sapha tribe, we are no longer able to approach the Guardian, and seek his teachings of wisdom.";
+			next;
+			mes "[Laphine Prisoner]";
+			mes "Hmph...even if I don't cooperate, I know you will find other means to get in...";
+			next;
+			mes "[Laphine Prisoner]";
+			mes "Looking at the current situation of the Laphine tribe, we do not have enough power to surround the Manuk fields, and chase the giants away.";
+			next;
+			mes "[Laphine Prisoner]";
+			mes "Okay, if it has already become like this, I will help you. There are no dead-ends. If you keep going, you will find a solution.";
+			next;
+			mes "[Laphine Prisoner]";
+			mes "Even if I don't say anything, my situation will not change.";
+			next;
+			mes "[Laphine Prisoner]";
+			mes "I have already told you everything you wanted to hear. If you have any other requests, please let me know.";
+			set ins_nyd,102;
+			close;
 		}
 		else if (ins_nyd == 102) {
-			mes "[Laphine Prisoner]";
 			mes "Ah, you said that there is a strange power blocking the entrance to the Guardian's nest, right?";
 			next;
 			mes "[Laphine Prisoner]";
@@ -1697,7 +1587,6 @@ man_in01,291,62,3	script	Laphine Prisoner#edq	437,3,3,{
 			close;
 		}
 		else if ((ins_nyd == 71) || (ins_nyd == 81) || (ins_nyd == 91) || (ins_nyd == 101) || (ins_nyd == 111) || (ins_nyd == 121) || (ins_nyd == 131)) {
-			mes "[Laphine Prisoner]";
 			mes "... ...";
 			next;
 			mes "[Manuk Guard]";
@@ -1705,12 +1594,10 @@ man_in01,291,62,3	script	Laphine Prisoner#edq	437,3,3,{
 			close;
 		}
 		else if (ins_nyd == 112) {
-			mes "[Laphine Prisoner]";
 			mes "Please meet the Guardian, and come back with an answer to everything. And tell the answer to...";
 			close;
 		}
 		else if (ins_nyd == 132) {
-			mes "[Laphine Prisoner]";
 			mes "Yes...I heard your conversation with the Sapha tribe...";
 			next;
 			mes "[Laphine Prisoner]";
@@ -1727,7 +1614,6 @@ man_in01,291,62,3	script	Laphine Prisoner#edq	437,3,3,{
 			close;
 		}
 		else {
-			mes "[Laphine Prisoner]";
 			mes "... ...";
 			next;
 			mes "[Manuk Guard]";
@@ -1736,7 +1622,6 @@ man_in01,291,62,3	script	Laphine Prisoner#edq	437,3,3,{
 		}
 	}
 	else {
-		mes "[Laphine Prisoner]";
 		mes "AmanVilShar Ie DorLuShar Mu Re";
 		close;
 	}
@@ -1800,86 +1685,73 @@ OnTouch_:
 			}
 			if (.@exit) break;
 		}
-		switch(select("Nidhoggur's Shadow?")) {
-		case 1:
-			mes "[World Tree Yggdrasil]";
-			mes "The Guardian Nidhoggur... he's not in the nest.";
+		select("Nidhoggur's Shadow?");
+		mes "[World Tree Yggdrasil]";
+		mes "The Guardian Nidhoggur... he's not in the nest.";
+		next;
+		mes "[World Tree Yggdrasil]";
+		mes "He...for some reason abandoned his own shadow, and left.";
+		next;
+		mes "[World Tree Yggdrasil]";
+		mes "All that's left, is the ugly Shadow of the Guardian of Nidhoggur...the Shadow that is going mad.";
+		next;
+		mes "[World Tree Yggdrasil]";
+		mes "The Shadow sucked all the nutrients from the World Tree Yggdrasil, and has gone mad when there is nothing more left to obtain. Now, he wants this land.";
+		next;
+		mes "[World Tree Yggdrasil]";
+		mes "Once the ugly Shadow leaves here to steal power from the other World Yggdrasil Trees, there will be great destruction. This world will become hell.";
+		next;
+		mes "[World Tree Yggdrasil]";
+		mes "You must... tell the commanders of Alfheim about this, and come up with a plan. Only them...";
+		next;
+		select("Is there nothing else we can do?");
+		mes "[World Tree Yggdrasil]";
+		mes "With our current powers...it is impossible to defeat the Guardian.";
+		next;
+		mes "[World Tree Yggdrasil]";
+		mes "But the one going mad is not the Guardian, but his dark Shadow...maybe we can trap him here...";
+		next;
+		mes "[World Tree Yggdrasil]";
+		mes "Are you willing to accept this mission? Even if it means to pay with your life?";
+		next;
+		if(select("Leave it to us.:We can't do it.")==2) close;
+		mes "[World Tree Yggdrasil]";
+		mes "I thank you deeply for your decision. I will use what is left of my powers to open up the path towards the Guardian's Nest.";
+		next;
+		mes "[World Tree Yggdrasil]";
+		if (getpartyleader(getcharid(1),2) == getcharid(0)) {
+			mes "The path to the Guardian's Nest is just past the waterfall by the large World Tree Yggdrasil to the North. The defensive mechanisms of the Sanctuary will start immediately.";
 			next;
 			mes "[World Tree Yggdrasil]";
-			mes "He...for some reason abandoned his own shadow, and left.";
+			mes "Defeat all of Nidhoggur's guardians and go through the waterfall into the nest... and stop Nidhoggur's Shadow there.";
 			next;
 			mes "[World Tree Yggdrasil]";
-			mes "All that's left, is the ugly Shadow of the Guardian of Nidhoggur...the Shadow that is going mad.";
+			mes "The gate will open soon. Go defeat all of the guardians... you must kill them all in 30 minutes before the gate opens...";
 			next;
 			mes "[World Tree Yggdrasil]";
-			mes "The Shadow sucked all the nutrients from the World Tree Yggdrasil, and has gone mad when there is nothing more left to obtain. Now, he wants this land.";
+			mes "30 minutes... that's the limit of my powers. Please hurry.";
 			next;
 			mes "[World Tree Yggdrasil]";
-			mes "Once the ugly Shadow leaves here to steal power from the other World Yggdrasil Trees, there will be great destruction. This world will become hell.";
+			mes "And... Be careful... Be careful of the shadow's power.";
+			set 'ins_nyd2,1;
+			donpcevent instance_npcname("ins_nyd_1f_timer", instance_id())+"::OnEnable";
+			donpcevent instance_npcname("nyd_call_mon_1", instance_id())+"::OnEnable";
+			close;
+		} else {
+			mes "The path to the Guardian's Nest is just past the waterfall by the large World Tree Yggdrasil to the North. The defensive mechanisms will start immediately.";
 			next;
 			mes "[World Tree Yggdrasil]";
-			mes "You must... tell the commanders of Alfheim about this, and come up with a plan. Only them...";
+			mes "Defeat all of Nidhoggur's guardians and go through the waterfall into the nest... and stop Nidhoggur's Shadow there.";
 			next;
-			switch(select("Is there nothing else we can do?")) {
-			case 1:
-				mes "[World Tree Yggdrasil]";
-				mes "With our current powers...it is impossible to defeat the Guardian.";
-				next;
-				mes "[World Tree Yggdrasil]";
-				mes "But the one going mad is not the Guardian, but his dark Shadow...maybe we can trap him here...";
-				next;
-				mes "[World Tree Yggdrasil]";
-				mes "Are you willing to accept this mission? Even if it means to pay with your life?";
-				next;
-				switch(select("Leave it to us.:We can't do it.")) {
-				case 1:
-					if (getpartyleader(getcharid(1),2) == getcharid(0)) {
-						mes "[World Tree Yggdrasil]";
-						mes "I thank you deeply for your decision. I will use what is left of my powers to open up the path towards the Guardian's Nest.";
-						next;
-						mes "[World Tree Yggdrasil]";
-						mes "The path to the Guardian's Nest is just past the waterfall by the large World Tree Yggdrasil to the North. The defensive mechanisms of the Sanctuary will start immediately.";
-						next;
-						mes "[World Tree Yggdrasil]";
-						mes "Defeat all of Nidhoggur's guardians and go through the waterfall into the nest... and stop Nidhoggur's Shadow there.";
-						next;
-						mes "[World Tree Yggdrasil]";
-						mes "The gate will open soon. Go defeat all of the guardians... you must kill them all in 30 minutes before the gate opens...";
-						next;
-						mes "[World Tree Yggdrasil]";
-						mes "30 minutes... that's the limit of my powers. Please hurry.";
-						next;
-						mes "[World Tree Yggdrasil]";
-						mes "And... Be careful... Be careful of the shadow's power.";
-						set 'ins_nyd2,1;
-						donpcevent instance_npcname("ins_nyd_1f_timer", instance_id())+"::OnEnable";
-						donpcevent instance_npcname("nyd_call_mon_1", instance_id())+"::OnEnable";
-						close;
-					}
-					else {
-						mes "[World Tree Yggdrasil]";
-						mes "I thank you deeply for your decision. I will use what is left of my powers to open up the path towards the Guardian's Nest.";
-						next;
-						mes "[World Tree Yggdrasil]";
-						mes "The path to the Guardian's Nest is just past the waterfall by the large World Tree Yggdrasil to the North. The defensive mechanisms will start immediately.";
-						next;
-						mes "[World Tree Yggdrasil]";
-						mes "Defeat all of Nidhoggur's guardians and go through the waterfall into the nest... and stop Nidhoggur's Shadow there.";
-						next;
-						mes "[World Tree Yggdrasil]";
-						mes "The gate will open soon. Go defeat all of the guardians... you must kill them all in 30 minutes before the gate opens...";
-						next;
-						mes "[World Tree Yggdrasil]";
-						mes "30 minutes... that's the limit of my powers. Please hurry.";
-						next;
-						mes "[World Tree Yggdrasil]";
-						mes "And... Be careful... Be careful of the shadow's power.";
-						close;
-					}
-				case 2:
-					close;
-				}
-			}
+			mes "[World Tree Yggdrasil]";
+			mes "The gate will open soon. Go defeat all of the guardians... you must kill them all in 30 minutes before the gate opens...";
+			next;
+			mes "[World Tree Yggdrasil]";
+			mes "30 minutes... that's the limit of my powers. Please hurry.";
+			next;
+			mes "[World Tree Yggdrasil]";
+			mes "And... Be careful... Be careful of the shadow's power.";
+			close;
 		}
 	}
 	else if ('ins_nyd2 == 1) {
