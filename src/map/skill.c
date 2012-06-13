@@ -363,9 +363,13 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, int skill
 	struct status_change* sc;
 
 	switch( skill_id ) {
-		case BA_APPLEIDUN:
-			hp = 30+5*skill_lv+5*(status_get_vit(src)/10); // HP recovery
-			if( sd )
+	case BA_APPLEIDUN:
+	#ifdef RENEWAL
+		hp = 100+5*skill_lv+5*(status_get_vit(src)/10); // HP recovery
+	#else
+		hp = 30+5*skill_lv+5*(status_get_vit(src)/10); // HP recovery
+	#endif
+		if( sd )
 				hp += 5*pc_checkskill(sd,BA_MUSICALLESSON);
 			break;
 		case PR_SANCTUARY:
@@ -10210,8 +10214,13 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 		val1*=10; //Because every 10 crit is an actual cri point.
 		break;
 	case BD_DRUMBATTLEFIELD:
+	#ifdef RENEWAL
+		val1 = (skilllv+5)*25;	//Watk increase
+		val2 = skilllv*10;		//Def increase
+	#else
 		val1 = (skilllv+1)*25;	//Watk increase
 		val2 = (skilllv+1)*2;	//Def increase
+	#endif
 		break;
 	case BD_RINGNIBELUNGEN:
 		val1 = (skilllv+2)*25;	//Watk increase

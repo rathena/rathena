@@ -568,7 +568,7 @@
 522,0,0,0,0,0,0,10,1,no,0,0,0,weapon,0,		NJ_TOBIDOUGU,Shuriken Training
 523,9,6,1,-1,0x40,0,10,1,no,0,0,0,weapon,0,	NJ_SYURIKEN,Throw Shuriken
 524,9,8,1,-1,0x40,0,5,3,no,0,0,0,weapon,0,	NJ_KUNAI,Throw Kunai
-525,9,8,1,-1,0x6,1,5,-3:-3:-4:-4:-5,yes,0,0,0,weapon,0,	NJ_HUUMA,Throw Huuma Shuriken
+525,9,8,1,-1,0x6,1,5,-3:-3:-4:-4:-5,no,0,0,0,weapon,0,	NJ_HUUMA,Throw Huuma Shuriken
 526,9,6,1,0,0x50,0,10,1,no,0,0,0,misc,0,		NJ_ZENYNAGE,Throw Zeny
 527,0,6,4,-1,0,0,5,1,no,0,0,0,weapon,3,		NJ_TATAMIGAESHI,Improvised Defense
 528,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,	NJ_KASUMIKIRI,Vanishing Slash

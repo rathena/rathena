@@ -4320,9 +4320,11 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 		if (bl->type != BL_PC)
 			watk += sc->data[SC_NIBELUNGEN]->val2;
 		else {
+		#ifndef RENEWAL
 			TBL_PC *sd = (TBL_PC*)bl;
 			int index = sd->equip_index[sd->state.lr_flag?EQI_HAND_L:EQI_HAND_R];
 			if(index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->wlv == 4)
+		#endif
 				watk += sc->data[SC_NIBELUNGEN]->val2;
 		}
 	}
@@ -4582,11 +4584,11 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 		return 100;
 	if(sc->data[SC_KEEPING])
 		return 90;
-
 #ifndef RENEWAL // does not provide 90 DEF in renewal mode
 	if(sc->data[SC_STEELBODY])
 		return 90;
 #endif
+
 	if(sc->data[SC_ARMORCHANGE])
 		def += sc->data[SC_ARMORCHANGE]->val2;
 	if(sc->data[SC_DRUMBATTLE])

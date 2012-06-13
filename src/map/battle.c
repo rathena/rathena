@@ -628,8 +628,11 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 			sce->val3&flag && sce->val4&flag)
 			damage -= damage*sc->data[SC_ARMOR]->val2/100;
 
-		if(sc->data[SC_ENERGYCOAT] && flag&BF_WEAPON
-			&& skill_num != WS_CARTTERMINATION)
+#ifdef RENEWAL
+		if(sc->data[SC_ENERGYCOAT] && (flag&BF_WEAPON || flag&BF_MAGIC) && skill_num != WS_CARTTERMINATION)
+#else
+		if(sc->data[SC_ENERGYCOAT] && flag&BF_WEAPON && skill_num != WS_CARTTERMINATION)
+#endif
 		{
 			struct status_data *status = status_get_status_data(bl);
 			int per = 100*status->sp / status->max_sp -1; //100% should be counted as the 80~99% interval
@@ -1983,7 +1986,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					skillratio += 100*(skill_lv+2);
 					break;
 				case GS_SPREADATTACK:
+				#ifdef RENEWAL
+					skillratio += 20*(skill_lv);
+				#else
 					skillratio += 20*(skill_lv-1);
+				#endif
 					break;
 				case NJ_HUUMA:
 					skillratio += 50 + 150*skill_lv;
@@ -3211,13 +3218,23 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			case ALL_RESURRECTION:
 			case PR_TURNUNDEAD:
 				//Undead check is on skill_castend_damageid code.
+			#ifdef RENEWAL
+				i = 10*skill_lv + sstatus->luk + sstatus->int_ + status_get_lv(src)
+				  	+ 300 - 300*tstatus->hp/tstatus->max_hp;
+			#else
 				i = 20*skill_lv + sstatus->luk + sstatus->int_ + status_get_lv(src)
 				  	+ 200 - 200*tstatus->hp/tstatus->max_hp;
+			#endif
 				if(i > 700) i = 700;
 				if(rnd()%1000 < i && !(tstatus->mode&MD_BOSS))
 					ad.damage = tstatus->hp;
-				else
-					ad.damage = status_get_lv(src) + sstatus->int_ + skill_lv * 10;
+				else {
+					#ifdef RENEWAL
+						ad.damage = status_get_lv(src) * (sstatus->matk_min + sstatus->matk_max);
+					#else
+						ad.damage = status_get_lv(src) + sstatus->int_ + skill_lv * 10;
+					#endif
+				}
 				break;
 			case PF_SOULBURN:
 				ad.damage = tstatus->sp * 2;
