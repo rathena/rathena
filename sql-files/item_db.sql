@@ -2706,7 +2706,7 @@ REPLACE INTO `item_db` VALUES (5101,'Takius_Blindfold','Takius\'s Blindfold',5,2
 REPLACE INTO `item_db` VALUES (5102,'Round_Eyes','Blank Eyes',5,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,512,NULL,0,0,185,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (5103,'Sunflower_Hairpin','Sunflower Hairpin',5,20,NULL,600,NULL,1,NULL,0,0xFFFFFFFE,7,2,256,NULL,30,0,186,'bonus bAgi,2; bonus bCritical,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5104,'Dark_Blindfold','Dark Blinder',5,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFE,7,2,512,NULL,0,0,187,'bonus2 bResEff,Eff_Blind,10000; bonus2 bResEff,Eff_Stun,200;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (5105,'Hat_Of_Cake_','2nd Anniversary Hat',5,20,NULL,1000,NULL,1,NULL,0,0xFFFFFFFF,7,2,256,NULL,24,1,109,'bonus bDex,1; bonus bMaxSP,80;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (5105,'Hat_Of_Cake_','2nd Anniversary Hat',5,20,NULL,1000,NULL,1,NULL,0,0xFFFFFFFF,7,2,256,NULL,24,1,109,'bonus bDex,1; bonus bMaxSP,80; bonus3 bAddMonsterDropItem,7864,7,50;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5106,'Cone_Hat_INA','2nd Anniversary Hat',5,20,NULL,300,NULL,3,NULL,0,0xFFFFFFFF,7,2,256,NULL,1,0,144,'bonus bLuk,1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5107,'Well_Baked_Toast','Crunch Toast',5,20,NULL,50,NULL,0,NULL,0,0xFFFFFFFF,7,2,1,NULL,0,0,188,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (5108,'Detective_Hat','Renown Detective\'s Cap',5,20,NULL,350,NULL,3,NULL,1,0xFFFFFFFF,7,2,256,NULL,0,1,189,NULL,NULL,NULL);

@@ -1,0 +1,183 @@
+//===== rAthena Script =======================================
+//= Valentine's Day NPC's 2012
+//===== By: ==================================================
+//= Rikimaru
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= The full Valentine's Day NPC's of the Valentine's Day
+//= Event 2012 (Account based,not Character based)
+//===== Additional Comments: =================================
+//= 1.0 First version. [Rikimaru]
+//============================================================
+//=============== Pinkamenia =================================
+mosk_in,21,246,5	script	Pinkamenia	71,{
+set .@n$,"^0000FF[ Pinkamenia ]^000000";
+if(#v_QUE15==1) {
+set .LFlowerID,7864;
+setarray @SweetsID[0],538,558,539,573,559,560,12062,596,597,12414,12319;
+setarray @SweetsCost[0],1,2,5,10,10,10,15,15,15,20,20;
+setarray @SweetsCount[0],1,1,1,1,1,1,1,1,1,1,1;
+mes .@n$;
+mes "Hello ["+strcharinfo(0)+"],do";
+mes "you want to buy some items?";
+mes "You'll have to give me Love";
+mes "Flowers for the Items!";
+next;
+	if (select("Yes,sure","No,nevermind!") == 2) 
+		close;
+	next;
+	mes .@n$;
+	mes "Item = Cost";
+	for( set .@i, 0; .@i < getarraysize(@SweetsID); set .@i, .@i + 1 ) {
+		mes "^0000ff"+@SweetsCount[.@i]+"x "+getitemname(@SweetsID[.@i])+"^000000 = ^00aa00"+@SweetsCost[.@i]+"^000000";
+		if( .@i < 1 )
+			set .@menu$, getitemname(@SweetsID[.@i]);
+		else
+			set .@menu$, .@menu$+":"+getitemname(@SweetsID[.@i]);
+	}
+
+	next;
+	select(.@menu$);
+	set @choice, @menu - 1;
+
+	mes .@n$;
+	if(countitem(.LFlowerID) <@SweetsCost[@choice]) {
+		mes "You need more Love Flowers for "+@SweetsCount[@choice]+"x '"+getitemname(@SweetsID[@choice])+"'";
+		close;
+	}
+	mes "Are u realy sure to trade "+@SweetsCount[@choice]+"x '^ff0000"+getitemname(@SweetsID[@choice])+"^000000' for ^00aa00"+@SweetsCost[@choice]+"^000000 Love Flowerss?";
+	if(select("No! Cancel!:Yes, Trade me!") == 1 ) {
+		mes "Canceled the Trade";
+		close;
+	}
+
+	set .@new, .LFlowerID - @SweetsCost[@choice];
+	if( .@new < 0 )
+		set .@new, 0;
+	delitem .LFlowerID,@SweetsCost[@choice];
+	getitem @SweetsID[@choice], @SweetsCount[@choice];
+	mes "The Trade was succesfull. Have fun with the Item!";
+	close;
+}
+if(#V_QUE14==1) {
+mes .@n$;
+if(countitem(7864) < 15) {
+mes "Sorry but you have to bring me 15 Love Flower!";
+close;
+}
+mes "Thank you so much,for";
+mes "getting out Flowers back!";
+delitem 7864,15;
+next;
+mes .@n$;
+mes "Take this as a little";
+mes "Thank you.";
+set BaseEXP,+500000;
+set JobEXP,+400000;
+getitem 617,1;
+getitem 12319,2;
+next;
+mes .@n$;
+mes "If you get more Love";
+mes "Flowers,you can exchange";
+mes "them for some sweets here.";
+next;
+mes .@n$;
+mes "See you soon!";
+set #V_QUE15,1;
+close;
+}
+if(#V_QUE12==1) {
+mes .@n$;
+mes "Please bring a ";
+mes "+8 Cake Hat to Baker";
+mes "Extraordinaire,who is standing";
+mes "right next to me!";
+close;
+}
+if(BaseLevel >= 45) {
+mes .@n$;
+mes "Hello "+strcharinfo(0)+",it's";
+mes "Valentine's Day and we";
+mes "love to deliver sweet";
+mes "chocolate to the Friends";
+mes "of people,who pay us.";
+next;
+mes .@n$;
+mes "Our problem is,that we";
+mes "need a strong Person";
+mes "like you,who could help";
+mes "us,but first you'll have";
+mes "to bring a +8 Cake Hat";
+mes "to Baker Extraordinaire,who";
+mes "is standing right next to me!";
+set #V_QUE12,1;
+close;
+}
+mes .@n$;
+mes "Hello "+strcharinfo(0)+"!";
+close;
+}
+//=============== Baker Extraordinaire =======================
+mosk_in,21,244,3	script	Baker Extraordinaire	410,{
+set .@n$,"^0000FF[ Baker Extraordinaire ]^000000";
+if(#V_QUE15==1) {
+mes .@n$;
+mes "Exchange your Love Flowers at Pinkamenia!";
+close;
+}
+if(#V_QUE14==1) {
+mes .@n$;
+mes "Bring 15 Love Flowers to Pinkamenia!";
+close;
+}
+if(#V_QUE12==1) { 
+mes .@n$;
+if(getequipid(1==5024) && getequiprefinerycnt(1) >= 8) {
+mes "Ah,so Pinkamenia told you";
+mes "to bring me the +8 Cake";
+mes "Hat.Now I'm going";
+mes "to change your +8 Cake";
+mes "Hat into another Cake Hat.";
+next;
+mes .@n$;
+delitem 5024,1;
+getitem 5105,1;
+mes "Now,if you wear the";
+mes "new Cake Hat,there";
+mes "is a chance,that";
+mes "Demi-Human Monsters drop";
+mes "the item Love Flower";
+next;
+mes .@n$;
+mes "The Mobs stole our Flowers,";
+mes "which we need to create ";
+mes "our Chocolate.Now ";
+mes "get 15 Love Flowers and";
+mes "bring them to Pinkamenia,please.";
+set #V_QUE14,1;
+close;
+} else {
+mes "Sorry,but where is your";
+mes "+8 Cake Hat?";
+mes "Bring it to me,please.";
+mes "and remember,that you";
+mes "have to equip it on";
+mes "your head!";
+close;
+}
+}
+if(BaseLevel < 45) {
+mes .@n$;
+mes "Hello "+strcharinfo(0)+"!";
+close;
+}
+if(BaseLevel >= 45) {
+mes .@n$;
+mes "Hello "+strcharinfo(0)+"!";
+close;
+}
+}
