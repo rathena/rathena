@@ -6530,7 +6530,7 @@
 18596,Sprout_Hat,Sprout Hat,5,20,,200,,4,,0,0xFFFFFFFF,7,2,256,,70,1,758,{ skill "WZ_HEAVENDRIVE", 3; },{},{}
 18597,Mercury_Riser,Mercury Riser,5,40,,200,,10,,1,0xFFFFFFFF,7,2,256,,0,,759,{ bonus bAspdRate,3; bonus bCritical,3; if(getrefine() == 7 || getrefine() == 8) { bonus bAspdRate,2; bonus bCritical,2; } if(getrefine() >= 9) { bonus bAspdRate,2; bonus bCritical,2; }},{},{}
 //
-18600,Cat_Ear_Beret,Cat Ear Beret,5,20,,100,,5,,0,0xFFFFFFFF,7,2,256,,0,1,761,{ if(getrefine() > 5 && getrefine() <= 12) { bonus2 bAddRace,RC_DemiHuman,2*(getrefine() - 4); bonus2 bSubRace,RC_DemiHuman,2*(getrefine() - 4); }},{},{}
+18600,Cat_Ear_Beret,Cat Ear Beret,5,20,,100,,5,,0,0xFFFFFFFF,7,2,256,,0,1,761,{ if(getrefine() > 5 && getrefine() <= 12) { bonus2 bAddRace,RC_DemiHuman,(getrefine() - 5); bonus2 bSubRace,RC_DemiHuman,(getrefine() - 5); }},{},{}
 //
 18612,White_Musang_Hat,White Musang Hat,5,40,,200,,3,,1,0xFFFFFFFF,7,2,256,,0,1,770,{ bonus bStr,2; bonus bVit,2; bonus bLuk,1; bonus bUnbreakableHelm,0; },{},{}
 18613,Black_Musang_Hat,Black Musang Hat,5,40,,200,,3,,1,0xFFFFFFFF,7,2,256,,0,1,770,{ bonus bInt,2; bonus bDex,2; bonus bAgi,1; bonus bUnbreakableHelm,0; },{},{}
