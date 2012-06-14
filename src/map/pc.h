@@ -613,7 +613,13 @@ enum e_pc_permission {
 #define pc_ishiding(sd)       ( (sd)->sc.option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) )
 #define pc_iscloaking(sd)     ( !((sd)->sc.option&OPTION_CHASEWALK) && ((sd)->sc.option&OPTION_CLOAK) )
 #define pc_ischasewalk(sd)    ( (sd)->sc.option&OPTION_CHASEWALK )
-#define pc_iscarton(sd)       ( (sd)->sc.option&OPTION_CART )
+
+#ifdef NEW_CARTS
+	#define pc_iscarton(sd)       ( (sd)->sc.data[SC_PUSH_CART] )
+#else
+	#define pc_iscarton(sd)       ( (sd)->sc.option&OPTION_CART )
+#endif
+
 #define pc_isfalcon(sd)       ( (sd)->sc.option&OPTION_FALCON )
 #define pc_isriding(sd)       ( (sd)->sc.option&OPTION_RIDING )
 #define pc_isinvisible(sd)    ( (sd)->sc.option&OPTION_INVISIBLE )

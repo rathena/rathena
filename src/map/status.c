@@ -6992,6 +6992,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_READYCOUNTER:
 		case SC_READYTURN:
 		case SC_DODGE:
+		case SC_PUSH_CART:
 			tick = -1;
 			break;
 

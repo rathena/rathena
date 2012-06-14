@@ -1223,19 +1223,16 @@ int chrif_load_scdata(int fd)
 	cid = RFIFOL(fd,8); //Player Char ID
 	
 	sd = map_id2sd(aid);
-	if (!sd)
-	{
+	if (!sd) {
 		ShowError("chrif_load_scdata: Player of AID %d not found!\n", aid);
 		return -1;
 	}
-	if (sd->status.char_id != cid)
-	{
+	if (sd->status.char_id != cid) {
 		ShowError("chrif_load_scdata: Receiving data for account %d, char id does not matches (%d != %d)!\n", aid, sd->status.char_id, cid);
 		return -1;
 	}
 	count = RFIFOW(fd,12); //sc_count
-	for (i = 0; i < count; i++)
-	{
+	for (i = 0; i < count; i++) {
 		data = (struct status_change_data*)RFIFOP(fd,14 + i*sizeof(struct status_change_data));
 		status_change_start(&sd->bl, (sc_type)data->type, 10000, data->val1, data->val2, data->val3, data->val4, data->tick, 15);
 	}

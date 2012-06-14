@@ -100,6 +100,14 @@
 	#define RE_LVL_TMDMOD()
 #endif
 
+/* Feb 1st 2012 */
+#ifdef PACKETVER >= 20120201
+	#define NEW_CARTS
+	#define MAX_CARTS 9
+#else
+	#define MAX_CARTS 5
+#endif
+
 /**
  * End of File
  **/

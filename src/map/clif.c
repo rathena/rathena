@@ -1353,6 +1353,10 @@ int clif_spawn(struct block_list *bl)
 				//New Mounts are not complaint to the original method, so we gotta tell this guy that he is mounting.
 				clif_status_load_notick(&sd->bl,SI_ALL_RIDING,2,1,0,0);
 			}
+		#ifdef NEW_CARTS
+			if( sd->sc.data[SC_PUSH_CART] )
+				clif_status_load_notick(&sd->bl, SI_ON_PUSH_CART, 2, sd->sc.data[SC_PUSH_CART]->val1, 0, 0);
+		#endif
 		#if PACKETVER <= 20120207
 			if (sd->status.robe)
 				clif_refreshlook(bl,bl->id,LOOK_ROBE,sd->status.robe,AREA);			
@@ -3998,6 +4002,10 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 		//New Mounts are not complaint to the original method, so we gotta tell this guy that I'm mounting.
 		clif_status_load_single(sd->fd,dstsd->bl.id,SI_ALL_RIDING,2,1,0,0);
 	}
+#ifdef NEW_CARTS
+	if( dstsd->sc.data[SC_PUSH_CART] )
+		clif_status_load_single(sd->fd, dstsd->bl.id, SI_ON_PUSH_CART, 2, dstsd->sc.data[SC_PUSH_CART]->val1, 0, 0);
+#endif
 	if( (sd->status.party_id && dstsd->status.party_id == sd->status.party_id) || //Party-mate, or hpdisp setting.
 		(sd->bg_id && sd->bg_id == dstsd->bg_id) || //BattleGround
 		pc_has_permission(sd, PC_PERM_VIEW_HPMETER)
@@ -10485,7 +10493,13 @@ void clif_parse_RemoveOption(int fd,struct map_session_data *sd)
 	/**
 	 * Attempts to remove these options when this function is called (will remove all available)
 	 **/
+#ifdef NEW_CARTS
+	pc_setoption(sd,sd->sc.option&~(OPTION_RIDING|OPTION_FALCON|OPTION_DRAGON|OPTION_MADOGEAR));
+	if( sd->sc.data[SC_PUSH_CART] )
+		pc_setcart(sd,0);	
+#else
 	pc_setoption(sd,sd->sc.option&~(OPTION_CART|OPTION_RIDING|OPTION_FALCON|OPTION_DRAGON|OPTION_MADOGEAR));
+#endif
 }
 
 
@@ -10499,12 +10513,23 @@ void clif_parse_ChangeCart(int fd,struct map_session_data *sd)
 		return;
 
 	type = (int)RFIFOW(fd,2);
-
+#ifdef NEW_CARTS
+	if( (type == 9 && sd->status.base_level > 131) ||
+		(type == 8 && sd->status.base_level > 121) ||
+		(type == 7 && sd->status.base_level > 111) ||
+		(type == 6 && sd->status.base_level > 101) ||
+		(type == 5 && sd->status.base_level >  90) ||
+		(type == 4 && sd->status.base_level >  80) ||
+		(type == 3 && sd->status.base_level >  65) ||
+		(type == 2 && sd->status.base_level >  40) ||
+		(type == 1))	
+#else
 	if( (type == 5 && sd->status.base_level > 90) ||
 	    (type == 4 && sd->status.base_level > 80) ||
 	    (type == 3 && sd->status.base_level > 65) ||
 	    (type == 2 && sd->status.base_level > 40) ||
 	    (type == 1))
+#endif
 		pc_setcart(sd,type);
 }
 

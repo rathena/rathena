@@ -519,8 +519,11 @@ int pc_makesavestatus(struct map_session_data *sd)
 
   	//Only copy the Cart/Peco/Falcon options, the rest are handled via 
 	//status change load/saving. [Skotlex]
+#ifdef NEW_CARTS
+	sd->status.option = sd->sc.option&(OPTION_FALCON|OPTION_RIDING|OPTION_DRAGON|OPTION_WUG|OPTION_MADOGEAR|OPTION_MOUNTING);
+#else
 	sd->status.option = sd->sc.option&(OPTION_CART|OPTION_FALCON|OPTION_RIDING|OPTION_DRAGON|OPTION_WUG|OPTION_MADOGEAR|OPTION_MOUNTING);
-		
+#endif
 	if (sd->sc.data[SC_JAILED])
 	{	//When Jailed, do not move last point.
 		if(pc_isdead(sd)){
@@ -1003,6 +1006,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	pc_setequipindex(sd);
 
 	status_change_init(&sd->bl);
+	
 	if (pc_can_use_command(sd, "hide", COMMAND_ATCOMMAND))
 		sd->status.option &= (OPTION_MASK | OPTION_INVISIBLE);
 	else
@@ -5992,8 +5996,6 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		i = sd->sc.option;
 		if( i&OPTION_RIDING && pc_checkskill(sd, KN_RIDING) )
 			i &= ~OPTION_RIDING;
-		if( i&OPTION_CART && pc_checkskill(sd, MC_PUSHCART) )
-			i &= ~OPTION_CART;
 		if( i&OPTION_FALCON && pc_checkskill(sd, HT_FALCON) )
 			i &= ~OPTION_FALCON;
 		if( i&OPTION_DRAGON && pc_checkskill(sd, RK_DRAGONTRAINING) )
@@ -6006,6 +6008,13 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 			i &= ~OPTION_MADOGEAR;
 		if( i&OPTION_MOUNTING )
 			i &= ~OPTION_MOUNTING;
+#ifndef NEW_CARTS
+		if( i&OPTION_CART && pc_checkskill(sd, MC_PUSHCART) )
+			i &= ~OPTION_CART;
+#else
+		if( sd->sc.data[SC_PUSH_CART] )
+			pc_setcart(sd, 0);
+#endif
 		if( i != sd->sc.option )
 			pc_setoption(sd, i);
 
@@ -6953,11 +6962,9 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 
 	//Remove peco/cart/falcon
 	i = sd->sc.option;
-	if(i&OPTION_RIDING && !pc_checkskill(sd, KN_RIDING))
+	if( i&OPTION_RIDING && !pc_checkskill(sd, KN_RIDING) )
 		i&=~OPTION_RIDING;
-	if(i&OPTION_CART && !pc_checkskill(sd, MC_PUSHCART))
-		i&=~OPTION_CART;
-	if(i&OPTION_FALCON && !pc_checkskill(sd, HT_FALCON))
+	if( i&OPTION_FALCON && !pc_checkskill(sd, HT_FALCON) )
 		i&=~OPTION_FALCON;
 	if( i&OPTION_DRAGON && !pc_checkskill(sd,RK_DRAGONTRAINING) )
 		i&=~OPTION_DRAGON;
@@ -6967,6 +6974,13 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 		i&=~OPTION_WUG;
 	if( i&OPTION_MADOGEAR ) //You do not need a skill for this.
 		i&=~OPTION_MADOGEAR;
+#ifndef NEW_CARTS
+	if( i&OPTION_CART && !pc_checkskill(sd, MC_PUSHCART) )
+		i&=~OPTION_CART;
+#else
+	if( sd->sc.data[SC_PUSH_CART] && !pc_checkskill(sd, MC_PUSHCART) )
+		pc_setcart(sd, 0);
+#endif
 	if(i != sd->sc.option)
 		pc_setoption(sd, i);
 
@@ -7099,20 +7113,19 @@ int pc_setoption(struct map_session_data *sd,int type)
 		clif_status_load(&sd->bl,SI_RIDING,0);
 		status_calc_pc(sd,0);
 	}
-
-	if(type&OPTION_CART && !(p_type&OPTION_CART))
-  	{ //Cart On
+	
+#ifndef NEW_CARTS
+	if( type&OPTION_CART && !( p_type&OPTION_CART ) ) { //Cart On
 		clif_cartlist(sd);
 		clif_updatestatus(sd, SP_CARTINFO);
 		if(pc_checkskill(sd, MC_PUSHCART) < 10)
 			status_calc_pc(sd,0); //Apply speed penalty.
-	} else
-	if(!(type&OPTION_CART) && p_type&OPTION_CART)
-	{ //Cart Off
+	} else if( !( type&OPTION_CART ) && p_type&OPTION_CART ){ //Cart Off
 		clif_clearcart(sd->fd);
 		if(pc_checkskill(sd, MC_PUSHCART) < 10)
 			status_calc_pc(sd,0); //Remove speed penalty.
 	}
+#endif
 
 	if (type&OPTION_MOUNTING && !(p_type&OPTION_MOUNTING) ) {
 		clif_status_load_notick(&sd->bl,SI_ALL_RIDING,2,1,0,0);
@@ -7197,25 +7210,47 @@ int pc_setoption(struct map_session_data *sd,int type)
 /*==========================================
  * ÉJ?Égê›íË
  *------------------------------------------*/
-int pc_setcart(struct map_session_data *sd,int type)
-{
+int pc_setcart(struct map_session_data *sd,int type) {
+#ifndef NEW_CARTS
 	int cart[6] = {0x0000,OPTION_CART1,OPTION_CART2,OPTION_CART3,OPTION_CART4,OPTION_CART5};
 	int option;
-
+#endif
 	nullpo_ret(sd);
 
-	if( type < 0 || type > 5 )
+	if( type < 0 || type > MAX_CARTS )
 		return 1;// Never trust the values sent by the client! [Skotlex]
 
 	if( pc_checkskill(sd,MC_PUSHCART) <= 0 )
 		return 1;// Push cart is required
 
+#ifdef NEW_CARTS
+	
+	switch( type ) {
+		case 0:
+			if( !sd->sc.data[SC_PUSH_CART] )
+				return 0;
+			status_change_end(&sd->bl,SC_PUSH_CART,INVALID_TIMER);
+			clif_clearcart(sd->fd);
+			break;
+		default:/* everything else is an allowed ID so we can move on */
+			if( !sd->sc.data[SC_PUSH_CART] ) /* first time, so fill cart data */
+				clif_cartlist(sd);
+			clif_updatestatus(sd, SP_CARTINFO);
+			sc_start(&sd->bl, SC_PUSH_CART, 100, type, 0);
+			clif_status_load_notick(&sd->bl, SI_ON_PUSH_CART, 2, type, 0, 0);
+			break;
+	}
+	
+	if(pc_checkskill(sd, MC_PUSHCART) < 10)
+		status_calc_pc(sd,0); //Recalc speed penalty.
+#else
 	// Update option
 	option = sd->sc.option;
 	option &= ~OPTION_CART;// clear cart bits
 	option |= cart[type]; // set cart
 	pc_setoption(sd, option);
-
+#endif
+	
 	return 0;
 }
 
