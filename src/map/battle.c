@@ -344,7 +344,13 @@ int battle_attr_fix(struct block_list *src, struct block_list *target, int damag
 		if( tsc->data[SC_THORNSTRAP] && atk_elem == ELE_FIRE )
 			status_change_end(target, SC_THORNSTRAP, -1);
 		if( tsc->data[SC_FIRE_CLOAK_OPTION] && atk_elem == ELE_FIRE )
-			damage -= damage * tsc->data[SC_FIRE_CLOAK_OPTION]->val2 / 100;		
+			damage -= damage * tsc->data[SC_FIRE_CLOAK_OPTION]->val2 / 100;	
+		if( tsc->data[SC_CRYSTALIZE] && target->type != BL_MOB){
+			if( atk_elem == ELE_WIND)
+				damage = damage * 150 / 100;
+			if( atk_elem == ELE_FIRE )
+				status_change_end(target, SC_CRYSTALIZE, INVALID_TIMER);
+		}
 	}
 	return damage*ratio/100;
 }
@@ -573,12 +579,36 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 #endif
 
 		if( damage ) {
-
+			struct map_session_data *tsd = BL_CAST(BL_PC, src);
 			if( sc->data[SC_DEEPSLEEP] ) {
 				damage += damage / 2; // 1.5 times more damage while in Deep Sleep.
 				status_change_end(bl,SC_DEEPSLEEP,INVALID_TIMER);
 			}
-
+			if( tsd && sd && sc->data[SC_CRYSTALIZE] && flag&BF_WEAPON ){
+				switch(tsd->status.weapon){
+					case W_MACE:
+					case W_2HMACE:
+					case W_1HAXE:
+					case W_2HAXE:
+						damage = damage * 150 / 100;
+						break;
+					case W_MUSICAL: 
+					case W_WHIP:
+						if(!sd->state.arrow_atk)
+							break;
+					case W_BOW:
+					case W_REVOLVER:
+					case W_RIFLE:
+					case W_GATLING:
+					case W_SHOTGUN:
+					case W_GRENADE:
+					case W_DAGGER:
+					case W_1HSWORD:
+					case W_2HSWORD:
+						damage = damage * 50 / 100;
+						break;
+				}
+			}
 			if( sc->data[SC_VOICEOFSIREN] )
 				status_change_end(bl,SC_VOICEOFSIREN,INVALID_TIMER);
 		}
@@ -2548,6 +2578,12 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					def1 -= def1 * i / 100;
 					def2 -= def2 * i / 100;
 				}
+			}
+
+			if( sc && sc->data[SC_EXPIATIO] ){
+				i = 5 * sc->data[SC_EXPIATIO]->val1; // 5% per level
+				def1 -= def1 * i / 100;
+				def2 -= def2 * i / 100;
 			}
 
 			if( battle_config.vit_penalty_type && battle_config.vit_penalty_target&target->type ) {

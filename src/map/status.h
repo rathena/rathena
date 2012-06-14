@@ -1324,6 +1324,7 @@ enum {
 	OPT1_STONEWAIT=6, //Petrifying
 	OPT1_BURNING,
 	OPT1_IMPRISON,
+	OPT1_CRYSTALIZE,
 };
 
 //opt2: Stackable status changes.

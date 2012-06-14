@@ -889,7 +889,7 @@ int unit_can_move(struct block_list *bl)
 		if( sc->cant.move || (sc->data[SC_FEAR] && sc->data[SC_FEAR]->val2 > 0) )
 			return 0;
 		
-		if (sc->opt1 > 0 && sc->opt1 != OPT1_STONEWAIT && sc->opt1 != OPT1_BURNING)
+		if (sc->opt1 > 0 && sc->opt1 != OPT1_STONEWAIT && sc->opt1 != OPT1_BURNING && (sc->opt1 != OPT1_CRYSTALIZE && bl->type != BL_MOB))
 			return 0;
 
 		if ((sc->option & OPTION_HIDE) && (!sd || pc_checkskill(sd, RG_TUNNELDRIVE) <= 0))
