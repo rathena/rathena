@@ -3372,8 +3372,8 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum sc
 				  || (sc->data[SC_BASILICA] && sc->data[SC_BASILICA]->val4 == bl->id) // Basilica caster cannot move
 				  || (sc->data[SC_GRAVITATION] && sc->data[SC_GRAVITATION]->val3 == BCT_SELF)
 				  || (sc->data[SC_CLOAKING] && //Need wall at level 1-2
-							sc->data[SC_CLOAKING]->val1 < 3 && !(sc->data[SC_CLOAKING]->val4&1)
-							|| (sc->data[SC_CRYSTALIZE] && bl->type != BL_MOB))
+							sc->data[SC_CLOAKING]->val1 < 3 && !(sc->data[SC_CLOAKING]->val4&1))
+				  || (sc->data[SC_CRYSTALIZE] && bl->type != BL_MOB)
 				 ) {
 			sc->cant.move += ( start ? 1 : -1 );
 		}
