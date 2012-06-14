@@ -10230,7 +10230,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		mes "And please take this small reward.";
 		mes "Thank you for your help so far.";
 		next;
-		getexp 250000,0;
+		getexp 3750000,0;
 		getitem 12110,3; //First_Aid_Kit
 		set ep13_1_edq,14;
 		completequest 3094;

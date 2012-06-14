@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Gennosuke Kouga
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -14,6 +14,7 @@
 //===== Additional Comments: =================================
 //= 1.0 First version. 14107 lines, oh, the pain...
 //= 1.1 Standardized and reduced by 7000+ lines. [Euphy]
+//= 1.2 Further optimization. [Euphy]
 //============================================================
 
 // Entrance
@@ -307,6 +308,30 @@ dic_in01,254,119,0	script	Item Storage#01	844,{
 // Civil Services
 //============================================================
 
+function	script	que_dic	{
+	if (getarg(0) > 1) {
+		for(set .@i,0; .@i<getargcount(); set .@i,.@i+1)
+			if (checkquest(getarg(.@i)) >= 0) {
+				erasequest getarg(.@i);
+				break; }
+		return; }
+	if (!getarg(0)) {
+		if (checkquest(getarg(1),HUNTING) != 2) return;
+		mes getarg(3); }
+	else if (getarg(0)) {
+		if (checkquest(getarg(1)) == -1) return;
+		if (countitem(getarg(3)) < getarg(4)) {
+			mes "It looks like you are short on the amount.";
+			close; }
+		mes getarg(5); mes getarg(6,"");
+		delitem getarg(3), getarg(4); }
+	getexp getarg(2),0;
+	erasequest getarg(1);
+	specialeffect2 18;
+	getitem 6304,1;
+	close;
+}
+
 dic_in01,48,263,5	script	Hunting Dept. 1 Manager	449,{
 	mes "[Hunting Dept. 1 Manager]";
 	if (isequipped(2782)) {
@@ -326,13 +351,7 @@ dic_in01,48,263,5	script	Hunting Dept. 1 Manager	449,{
 				next;
 				mes "[Hunting Dept. 1 Manager]";
 				mes "You can get a new request after the existing request record being removed, go to see Laponte.";
-				if (checkquest(12099) >= 0) erasequest 12099;
-				else if (checkquest(12100) >= 0) erasequest 12100;
-				else if (checkquest(12101) >= 0) erasequest 12101;
-				else if (checkquest(12102) >= 0) erasequest 12102;
-				else if (checkquest(12103) >= 0) erasequest 12103;
-				else if (checkquest(12104) >= 0) erasequest 12104;
-				else if (checkquest(12105) >= 0) erasequest 12105;
+				que_dic(12099,12100,12101,12102,12103,12104,12105);
 				erasequest 12159;
 				close; }
 			mes "Welcome.";
@@ -346,59 +365,15 @@ dic_in01,48,263,5	script	Hunting Dept. 1 Manager	449,{
 			next;
 			mes "[Hunting Dept. 1 Manager]";
 			set .@s$, "Oh, you completed all your requests. Confirmation complete.";
-			if (checkquest(12099,HUNTING) == 2) {
-				mes .@s$;
-				getexp 4000,0;
-				erasequest 12009;
-				specialeffect2 18;
-				getitem 6304,1;
-				close;
-			} else if (checkquest(12100,HUNTING) == 2) {
-				mes .@s$;
-				getexp 49000,0;
-				erasequest 12100;
-				specialeffect2 18;
-				getitem 6304,1;
-				close;
-			} else if (checkquest(12101,HUNTING) == 2) {
-				mes .@s$;
-				getexp 18000,0;
-				erasequest 12101;
-				specialeffect2 18;
-				getitem 6304,1;
-				close;
-			} else if (checkquest(12102,HUNTING) == 2) {
-				mes .@s$;
-				getexp 45000,0;
-				erasequest 12102;
-				specialeffect2 18;
-				getitem 6304,1;
-				close;
-			} else if (checkquest(12103,HUNTING) == 2) {
-				mes .@s$;
-				getexp 4000,0;
-				erasequest 12103;
-				specialeffect2 18;
-				getitem 6304,1;
-				close;
-			} else if (checkquest(12104,HUNTING) == 2) {
-				mes .@s$;
-				getexp 73000,0;
-				erasequest 12104;
-				specialeffect2 18;
-				getitem 6304,1;
-				close;
-			} else if (checkquest(12105,HUNTING) == 2) {
-				mes .@s$;
-				getexp 59000,0;
-				erasequest 12105;
-				specialeffect2 18;
-				getitem 6304,1;
-				close;
-			} else {
-				mes "You will get in trouble if you lie about the request...";
-				close; }
-			}
+				que_dic(0,12099,4000,.@s$);
+				que_dic(0,12100,49000,.@s$);
+				que_dic(0,12101,18000,.@s$);
+				que_dic(0,12102,45000,.@s$);
+				que_dic(0,12103,4000,.@s$);
+				que_dic(0,12104,73000,.@s$);
+				que_dic(0,12105,59000,.@s$);
+			mes "You will get in trouble if you lie about the request...";
+			close; }
 		mes "- The Sapha keeps a distance from you even when you try to talk.";
 		mes "It looks like he is calling for a Galten. Time to go. -";
 		close; }
@@ -425,12 +400,7 @@ dic_in01,51,266,6	script	Hunting Dept. 2 Manager	449,{
 				next;
 				mes "[Hunting Dept. 2 Manager]";
 				mes "Your request history is cleared now. Please visit Kalipo.";
-				if (checkquest(12106) >= 0) erasequest 12106;
-				else if (checkquest(12107) >= 0) erasequest 12107;
-				else if (checkquest(12108) >= 0) erasequest 12108;
-				else if (checkquest(12109) >= 0) erasequest 12109;
-				else if (checkquest(12110) >= 0) erasequest 12110;
-				else if (checkquest(12111) >= 0) erasequest 12111;
+				que_dic(12106,12107,12108,12109,12110,12111);
 				erasequest 12160;
 				close; }	
 			mes "Welcome.";
@@ -444,52 +414,14 @@ dic_in01,51,266,6	script	Hunting Dept. 2 Manager	449,{
 			next;
 			mes "[Hunting Dept. 2 Manager]";
 			set .@s$, "Oh, you completed all your requests. Confirmation complete.";
-			if (checkquest(12106,HUNTING) == 2) {
-				mes .@s$;
-				getexp 77000,0;
-				erasequest 12106;
-				specialeffect2 18;
-				getitem 6304,1;
-				close;
-			} else if (checkquest(12107,HUNTING) == 2) {
-				mes .@s$;
-				getexp 47000,0;
-				erasequest 12107;
-				specialeffect2 18;
-				getitem 6304,1;
-				close;
-			} else if (checkquest(12108,HUNTING) == 2) {
-				mes .@s$;
-				getexp 50000,0;
-				erasequest 12108;
-				specialeffect2 18;
-				getitem 6304,1;
-				close;
-			} else if (checkquest(12109,HUNTING) == 2) {
-				mes .@s$;
-				getexp 53000,0;
-				erasequest 12109;
-				specialeffect2 18;
-				getitem 6304,1;
-				close;
-			} else if (checkquest(12110,HUNTING) == 2) {
-				mes .@s$;
-				getexp 30000,0;
-				erasequest 12110;
-				specialeffect2 18;
-				getitem 6304,1;
-				close;
-			} else if (checkquest(12111,HUNTING) == 2) {
-				mes .@s$;
-				getexp 42000,0;
-				erasequest 12111;
-				specialeffect2 18;
-				getitem 6304,1;
-				close;
-			} else {
-				mes "Please check your request history again. There is a discrepancy with our documents.";
-				close; }
-			}
+				que_dic(0,12106,77000,.@s$);
+				que_dic(0,12107,47000,.@s$);
+				que_dic(0,12108,50000,.@s$);
+				que_dic(0,12109,53000,.@s$);
+				que_dic(0,12110,30000,.@s$);
+				que_dic(0,12111,42000,.@s$);
+			mes "Please check your request history again. There is a discrepancy with our documents.";
+			close; }
 		mes "- The Sapha keeps a distance from you even when you try to talk.";
 		mes "It looks like he is calling for a Galten. Time to go. -";
 		close; }
@@ -509,16 +441,7 @@ dic_in01,51,270,6	script	Supply Dept. 1 Manager#	449,{
 				close;
 			} else if (checkquest(12163,PLAYTIME) == 2) {
 				mes "I erased all records related with the previous request. Go to meet Pura.";
-				if (checkquest(12117) >= 0) erasequest 12117;
-				else if (checkquest(12118) >= 0) erasequest 12118;
-				else if (checkquest(12119) >= 0) erasequest 12119;
-				else if (checkquest(12120) >= 0) erasequest 12120;
-				else if (checkquest(12121) >= 0) erasequest 12121;
-				else if (checkquest(12122) >= 0) erasequest 12122;
-				else if (checkquest(12123) >= 0) erasequest 12123;
-				else if (checkquest(12124) >= 0) erasequest 12124;
-				else if (checkquest(12125) >= 0) erasequest 12125;
-				else if (checkquest(12126) >= 0) erasequest 12126;
+				que_dic(12117,12118,12119,12120,12121,12122,12123,12124,12125,12126);
 				erasequest 12161;
 				close; }
 			mes "Welcome.";
@@ -532,99 +455,17 @@ dic_in01,51,270,6	script	Supply Dept. 1 Manager#	449,{
 			next;
 			mes "[Supply Dept. 1 Manager]";
 			set .@s$, "It's done. You can't start any other request till tomorrow, why don't you go to the famous pub and rest?";
-			if (checkquest(12117) >= 0) {
-				if (countitem(6086) > 5) {
-					mes .@s$;
-					getexp 26300,0;
-					delitem 6086,6;
-					erasequest 12117;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }	
-			} else if (checkquest(12118) >= 0) {
-				if (countitem(6090) > 2) {
-					mes .@s$;
-					getexp 25600,0;
-					delitem 6090,3;
-					erasequest 12118;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }	
-			} else if (checkquest(12119) >= 0) {
-				if (countitem(6073) > 15) {
-					mes .@s$;
-					getexp 51100,0;
-					delitem 6073,16;
-					erasequest 12119;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }	
-			} else if (checkquest(12120) >= 0) {
-				if (countitem(1037) > 5) {
-					mes .@s$;
-					getexp 26300,0;
-					delitem 1037,6;
-					erasequest 12120;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }	
-			} else if (checkquest(12121) >= 0) {
-				if (countitem(7032) > 25) {
-					mes .@s$;
-					getexp 79900,0;
-					delitem 7032,26;
-					erasequest 12121;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }	
-			} else if (checkquest(12122) >= 0) {
-				if (countitem(6075) > 5) {
-					mes .@s$;
-					getexp 26300,0;
-					delitem 6075,6;
-					erasequest 12122;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12123) >= 0) {
-				if (countitem(7326) > 25) {
-					mes .@s$;
-					getexp 79900,0;
-					delitem 7326,26;
-					erasequest 12123;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12124) >= 0) {
-				if (countitem(12353) > 0) {
-					mes .@s$;
-					getexp 53000,0;
-					delitem 12353,1;
-					erasequest 12124;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }	
-			} else if (checkquest(12125) >= 0) {
-				if (countitem(936) > 17) {
-					mes .@s$;
-					getexp 56700,0;
-					delitem 936,18;
-					erasequest 12125;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12126) >= 0) {
-				if (countitem(954) > 10) {
-					mes .@s$;
-					getexp 37500,0;
-					delitem 954,11;
-					erasequest 12126;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (( checkquest(12117) == -1 || checkquest(12118) == -1 || checkquest(12119) == -1 || checkquest(12120) == -1 ||
-	checkquest(12121) == -1 || checkquest(12122) == -1 || checkquest(12123) == -1 || checkquest(12124) == -1 || checkquest(12125) == -1 || 
-	checkquest(12126) == -1) && checkquest(12161) >= 0) {
+				que_dic(1,12117,26300,6086,6,.@s$);
+				que_dic(1,12118,25600,6090,3,.@s$);
+				que_dic(1,12119,51100,6073,16,.@s$);
+				que_dic(1,12120,26300,1037,6,.@s$);
+				que_dic(1,12121,79900,7032,26,.@s$);
+				que_dic(1,12122,26300,6075,6,.@s$);
+				que_dic(1,12123,79900,7326,26,.@s$);
+				que_dic(1,12124,53000,12353,1,.@s$);
+				que_dic(1,12125,56700,936,18,.@s$);
+				que_dic(1,12126,37500,954,11,.@s$);
+			if ((checkquest(12117) == -1 || checkquest(12118) == -1 || checkquest(12119) == -1 || checkquest(12120) == -1 || checkquest(12121) == -1 || checkquest(12122) == -1 || checkquest(12123) == -1 || checkquest(12124) == -1 || checkquest(12125) == -1 || checkquest(12126) == -1) && checkquest(12161) >= 0) {
 				mes "Cannot find any record...";
 				mes "Nothing... There is nothing that I can say ^E77471Request completed!^000000.";
 				close; }
@@ -650,16 +491,7 @@ dic_in01,48,273,1	script	Supply Dept. 2 Manager#	449,{
 				close;
 			} else if (checkquest(12162,PLAYTIME) == 2) {
 				mes "I erased all records related with the previous request. Tragis is looking for you so hurry up to meet him.";
-				if (checkquest(12127) >= 0) erasequest 12127;
-				else if (checkquest(12128) >= 0) erasequest 12128;
-				else if (checkquest(12129) >= 0) erasequest 12129;
-				else if (checkquest(12130) >= 0) erasequest 12130;
-				else if (checkquest(12131) >= 0) erasequest 12131;
-				else if (checkquest(12132) >= 0) erasequest 12132;
-				else if (checkquest(12133) >= 0) erasequest 12133;
-				else if (checkquest(12134) >= 0) erasequest 12134;
-				else if (checkquest(12135) >= 0) erasequest 12135;
-				else if (checkquest(12136) >= 0) erasequest 12136;
+				que_dic(12127,12128,12129,12130,12131,12132,12133,12134,12135,12136);
 				erasequest 12162;
 				close; }
 			mes "Welcome.";
@@ -674,97 +506,17 @@ dic_in01,48,273,1	script	Supply Dept. 2 Manager#	449,{
 			mes "[Supply Dept. 2 Manager]";
 			set .@s1$, strcharinfo(0)+", you handle your requests quite well.";
 			set .@s2$, "You are not like the pub owner who just sends requests here every day.";
-			if (checkquest(12127) >= 0) {
-				if (countitem(6023) > 4) {
-					mes .@s1$; mes .@s2$;
-					getexp 65300,0;
-					delitem 6023,5;
-					erasequest 12127;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12128) >= 0) {
-				if (countitem(6020) > 20) {
-					mes .@s1$; mes .@s2$;
-					getexp 65300,0;
-					delitem 6020,21;
-					erasequest 12128;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12129) >= 0) {
-				if (countitem(1042) > 26) {
-					mes .@s1$; mes .@s2$;
-					getexp 82800,0;
-					delitem 1042,27;
-					erasequest 12129;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12130) >= 0) {
-				if (countitem(912) > 25) {
-					mes .@s1$; mes .@s2$;
-					getexp 79900,0;
-					delitem 912,26;
-					erasequest 12130;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12131) >= 0) {
-				if (countitem(943) > 12) {
-					mes .@s1$; mes .@s2$;
-					getexp 42800,0;
-					delitem 943,13;
-					erasequest 12131;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12132) >= 0) {
-				if (countitem(6041) > 15) {
-					mes .@s1$; mes .@s2$;
-					getexp 51100,0;
-					delitem 6041,16;
-					erasequest 12132;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12133) >= 0) {
-				if (countitem(7100) > 25) {
-					mes .@s1$; mes .@s2$;
-					getexp 79900,0;
-					delitem 7100,26;
-					erasequest 12133;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12134) >= 0) {
-				if (countitem(7198) > 10) {
-					mes .@s1$; mes .@s2$;
-					getexp 37500,0;
-					delitem 7198,11;
-					erasequest 12134;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12135) >= 0) {
-				if (countitem(7188) > 15) {
-					mes .@s1$; mes .@s2$;
-					getexp 51100,0;
-					delitem 7188,16;
-					erasequest 12135;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12136) >= 0) {
-				if (countitem(518) > 1) {
-					mes .@s1$; mes .@s2$;
-					getexp 31000,0;
-					delitem 518,2;
-					erasequest 12136;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (( checkquest(12127) == -1 || checkquest(12128) == -1 || checkquest(12129) == -1 || checkquest(12130) == -1 || checkquest(12131) == -1 || checkquest(12132) == -1 || checkquest(12133) == -1 || checkquest(12134) == -1 || checkquest(12135) == -1 || checkquest(12136) == -1) && checkquest(12162) >= 0) {
+				que_dic(1,12127,65300,6023,5,.@s1$,.@s2$);
+				que_dic(1,12128,65300,6020,21,.@s1$,.@s2$);
+				que_dic(1,12129,82800,1042,27,.@s1$,.@s2$);
+				que_dic(1,12130,79900,912,26,.@s1$,.@s2$);
+				que_dic(1,12131,42800,943,13,.@s1$,.@s2$);
+				que_dic(1,12132,51100,6041,16,.@s1$,.@s2$);
+				que_dic(1,12133,79900,7100,26,.@s1$,.@s2$);
+				que_dic(1,12134,37500,7198,11,.@s1$,.@s2$);
+				que_dic(1,12135,51100,7188,16,.@s1$,.@s2$);
+				que_dic(1,12136,31000,518,2,.@s1$,.@s2$);
+			if ((checkquest(12127) == -1 || checkquest(12128) == -1 || checkquest(12129) == -1 || checkquest(12130) == -1 || checkquest(12131) == -1 || checkquest(12132) == -1 || checkquest(12133) == -1 || checkquest(12134) == -1 || checkquest(12135) == -1 || checkquest(12136) == -1) && checkquest(12162) >= 0) {
 				mes " I would like to complete a request for you but you have none going on now.";
 				close; }
 			mes "It looks like you are short on the amount.";
@@ -789,17 +541,7 @@ dic_in01,43,273,1	script	Transport Dept. 1 Mgr.#	449,{
 				close;
 			} else if (checkquest(12163,PLAYTIME) == 2) {
 				mes "I erased all records related with the previous request. Calyon is looking for you so hurry up to meet him.";
-				if (checkquest(12137) >= 0) erasequest 12137;
-				else if (checkquest(12138) >= 0) erasequest 12138;
-				else if (checkquest(12139) >= 0) erasequest 12139;
-				else if (checkquest(12140) >= 0) erasequest 12140;
-				else if (checkquest(12141) >= 0) erasequest 12141;
-				else if (checkquest(12142) >= 0) erasequest 12142;
-				else if (checkquest(12143) >= 0) erasequest 12143;
-				else if (checkquest(12144) >= 0) erasequest 12144;
-				else if (checkquest(12145) >= 0) erasequest 12145;
-				else if (checkquest(12146) >= 0) erasequest 12146;
-				else if (checkquest(12147) >= 0) erasequest 12147;
+				que_dic(12137,12138,12139,12140,12141,12142,12143,12144,12145,12146,12147);
 				erasequest 12163;
 				close; }
 			mes "Welcome.";
@@ -814,106 +556,18 @@ dic_in01,43,273,1	script	Transport Dept. 1 Mgr.#	449,{
 			mes "[Transport Dept. 1 Mgr.]";
 			set .@s1$, "Quantity check finished. Ahhh, you going to rest?";
 			set .@s2$, "Then why don't you visit the famous pub of the Capital? They have no yummy food though....";
-			if (checkquest(12137) >= 0) {
-				if (countitem(7143) > 3) {
-					mes .@s1$; mes .@s2$;
-					getexp 30000,0;
-					delitem 7143,4;
-					erasequest 12137;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12138) >= 0) {
-				if (countitem(744) > 4) {
-					mes .@s1$; mes .@s2$;
-					getexp 25000,0;
-					delitem 744,5;
-					erasequest 12138;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12139) >= 0) {
-				if (countitem(748) > 0) {
-					mes .@s1$; mes .@s2$;
-					getexp 47500,0;
-					delitem 748,1;
-					erasequest 12139;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12140) >= 0) {
-				if (countitem(736) > 14) {
-				mes .@s1$; mes .@s2$;
-					getexp 27500,0;
-					delitem 736,15;
-					erasequest 12140;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12141) >= 0) {
-				if (countitem(746) > 9) {
-					mes .@s1$; mes .@s2$;
-					getexp 27000,0;
-					delitem 746,10;
-					erasequest 12141;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12142) >= 0) {
-				if (countitem(740) > 14) {
-					mes .@s1$; mes .@s2$;
-					getexp 27500,0;
-					delitem 740,15;
-					erasequest 12142;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12143) >= 0) {
-				if (countitem(925) > 49) {
-					mes .@s1$; mes .@s2$;
-					getexp 21600,0;
-					delitem 925,50;
-					erasequest 12143;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12144) >= 0) {
-				if (countitem(965) > 49) {
-					mes .@s1$; mes .@s2$;
-					getexp 21400,0;
-					delitem 965,50;
-					erasequest 12144;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12145) >= 0) {
-				if (countitem(964) > 19) {
-					mes .@s1$; mes .@s2$;
-					getexp 20900,0;
-					delitem 964,20;
-					erasequest 12145;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12146) >= 0) {
-				if (countitem(911) > 29) {
-					mes .@s1$; mes .@s2$;
-					getexp 22400,0;
-					delitem 911,30;
-					erasequest 12146;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12147) >= 0) {
-				if (countitem(910) > 39) {
-					mes .@s1$; mes .@s2$;
-					getexp 22400,0;
-					delitem 910,40;
-					erasequest 12147;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (( checkquest(12137) == -1 || checkquest(12138) == -1 || checkquest(12139) == -1 || checkquest(12140) == -1 || checkquest(12141) == -1 || checkquest(12142) == -1 || checkquest(12143) == -1 || checkquest(12144) == -1 || checkquest(12145) == -1 || checkquest(12146) == -1 || checkquest(12147) == -1) && checkquest(12163) >= 0) {
+				que_dic(1,12137,30000,7143,4,.@s1$,.@s2$);
+				que_dic(1,12138,25000,744,5,.@s1$,.@s2$);
+				que_dic(1,12139,47500,748,1,.@s1$,.@s2$);
+				que_dic(1,12140,27500,736,15,.@s1$,.@s2$);
+				que_dic(1,12141,27000,746,10,.@s1$,.@s2$);
+				que_dic(1,12142,27500,740,15,.@s1$,.@s2$);
+				que_dic(1,12143,21600,925,50,.@s1$,.@s2$);
+				que_dic(1,12144,21400,965,50,.@s1$,.@s2$);
+				que_dic(1,12145,20900,964,20,.@s1$,.@s2$);
+				que_dic(1,12146,22400,911,30,.@s1$,.@s2$);
+				que_dic(1,12147,22400,910,40,.@s1$,.@s2$);
+			if ((checkquest(12137) == -1 || checkquest(12138) == -1 || checkquest(12139) == -1 || checkquest(12140) == -1 || checkquest(12141) == -1 || checkquest(12142) == -1 || checkquest(12143) == -1 || checkquest(12144) == -1 || checkquest(12145) == -1 || checkquest(12146) == -1 || checkquest(12147) == -1) && checkquest(12163) >= 0) {
 				mes "Um... What do you want me to do?";
 				next;
 				mes "[Transport Dept. 1 Mgr.]";
@@ -941,17 +595,7 @@ dic_in01,40,270,3	script	Transport Dept. 2 Mgr.#	449,{
 				close;
 			} else if (checkquest(12164,PLAYTIME) == 2) {
 				mes "I erased all records related with the previous request. Moltuka is looking for you so hurry up to meet him.";
-				if (checkquest(12148) >= 0) erasequest 12148;
-				else if (checkquest(12149) >= 0) erasequest 12149;
-				else if (checkquest(12150) >= 0) erasequest 12150;
-				else if (checkquest(12151) >= 0) erasequest 12151;
-				else if (checkquest(12152) >= 0) erasequest 12152;
-				else if (checkquest(12153) >= 0) erasequest 12153;
-				else if (checkquest(12154) >= 0) erasequest 12154;
-				else if (checkquest(12155) >= 0) erasequest 12155;
-				else if (checkquest(12156) >= 0) erasequest 12156;
-				else if (checkquest(12157) >= 0) erasequest 12157;
-				else if (checkquest(12158) >= 0) erasequest 12158;
+				que_dic(12148,12149,12150,12151,12152,12153,12154,12155,12156,12157,12158);
 				erasequest 12164;
 				close; }
 			mes "Welcome.";
@@ -965,106 +609,18 @@ dic_in01,40,270,3	script	Transport Dept. 2 Mgr.#	449,{
 			next;
 			mes "[Transport Dept. 2 Mgr.]";
 			set .@s$, "Well received. One less thing to worry about now.";
-			if (checkquest(12148) >= 0) {
-				if (countitem(528) > 99) {
-					mes .@s$;
-					getexp 23000,0;
-					delitem 528,100;
-					erasequest 12148;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12149) >= 0) {
-				if (countitem(512) > 99) {
-					mes .@s$;
-					getexp 20750,0;
-					delitem 512,100;
-					erasequest 12149;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12150) >= 0) {
-				if (countitem(515) > 99) {
-					mes .@s$;
-					getexp 20750,0;
-					delitem 515,100;
-					erasequest 12150;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12151) >= 0) {
-				if (countitem(535) > 99) {
-					mes .@s$;
-					getexp 20750,0;
-					delitem 535,100;
-					erasequest 12151;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12152) >= 0) {
-				if (countitem(516) > 49) {
-					mes .@s$;
-					getexp 24500,0;
-					delitem 516,50;
-					erasequest 12152;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12153) >= 0) {
-				if (countitem(513) > 99) {
-					mes .@s$;
-					getexp 20750,0;
-					delitem 513,100;
-					erasequest 12153;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12154) >= 0) {
-				if (countitem(517) > 49) {
-					mes .@s$;
-					getexp 21250,0;
-					delitem 517,50;
-					erasequest 12154;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12155) >= 0) {
-				if (countitem(737) > 19) {
-					mes .@s$;
-					getexp 24000,0;
-					delitem 737,20;
-					erasequest 12155;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12156) >= 0) {
-				if (countitem(747) > 4) {
-					mes .@s$;
-					getexp 20037,0;
-					delitem 747,5;
-					erasequest 12156;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12157) >= 0) {
-				if (countitem(6265) > 1) {
-					mes .@s$;
-					getexp 23000,0;
-					delitem 6265,2;
-					erasequest 12157;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (checkquest(12158) >= 0) {
-				if (countitem(6264) > 1) {
-					mes .@s$;
-					getexp 23000,0;
-					delitem 6264,2;
-					erasequest 12158;
-					specialeffect2 18;
-					getitem 6304,1;
-					close; }
-			} else if (( checkquest(12148) == -1 || checkquest(12149) == -1 || checkquest(12150) == -1 || checkquest(12151) == -1 || checkquest(12152) == -1 || checkquest(12153) == -1 || checkquest(12154) == -1 || checkquest(12155) == -1 || checkquest(12156) == -1 || checkquest(12157) == -1 || checkquest(12158) == -1) && checkquest(12164) >= 0) {
+				que_dic(1,12148,23000,528,100,.@s$);
+				que_dic(1,12149,20750,512,100,.@s$);
+				que_dic(1,12150,20750,515,100,.@s$);
+				que_dic(1,12151,20750,535,100,.@s$);
+				que_dic(1,12152,24500,516,50,.@s$);
+				que_dic(1,12153,20750,513,100,.@s$);
+				que_dic(1,12154,21250,517,50,.@s$);
+				que_dic(1,12155,24000,737,20,.@s$);
+				que_dic(1,12156,20037,747,5,.@s$);
+				que_dic(1,12157,23000,6265,2,.@s$);
+				que_dic(1,12158,23000,6264,2,.@s$);
+			if ((checkquest(12148) == -1 || checkquest(12149) == -1 || checkquest(12150) == -1 || checkquest(12151) == -1 || checkquest(12152) == -1 || checkquest(12153) == -1 || checkquest(12154) == -1 || checkquest(12155) == -1 || checkquest(12156) == -1 || checkquest(12157) == -1 || checkquest(12158) == -1) && checkquest(12164) >= 0) {
 				mes "This is the first time in my 200 years of working at this department that a person comes back to complete a request without starting any.";
 				close; }
 			mes "It looks like you are short on the amount.";
