@@ -2488,17 +2488,17 @@ ACMD_FUNC(gat)
  *------------------------------------------*/
 ACMD_FUNC(displaystatus)
 {
-	int i, type, flag, tick;
+	int i, type, flag, tick, val1 = 0, val2 = 0, val3 = 0;
 	nullpo_retr(-1, sd);
 	
-	if (!message || !*message || (i = sscanf(message, "%d %d %d", &type, &flag, &tick)) < 1) {
-		clif_displaymessage(fd, "Please, enter a status type/flag (usage: @displaystatus <status type> <flag> <tick>).");
+	if (!message || !*message || (i = sscanf(message, "%d %d %d %d %d %d", &type, &flag, &tick, &val1, &val2, &val3)) < 1) {
+		clif_displaymessage(fd, "Please, enter a status type/flag (usage: @displaystatus <status type> <flag> <tick> {<val1> {<val2> {<val3>}}}).");
 		return -1;
 	}
 	if (i < 2) flag = 1;
 	if (i < 3) tick = 0;
 
-	clif_status_change(&sd->bl, type, flag, tick, 0, 0, 0);
+	clif_status_change(&sd->bl, type, flag, tick, val1, val2, val3);
 
 	return 0;
 }
