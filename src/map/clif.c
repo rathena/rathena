@@ -16114,7 +16114,7 @@ static int clif_parse(int fd)
 		// check authentification packet to know packet version
 		packet_ver = clif_guess_PacketVer(fd, 0, &err);
 		if( err ) {// failed to identify packet version
-			ShowInfo("clif_parse: Disconnecting session #%d with unknown packet version%s (p:0x%04x|l:%d).\n", fd, (
+			ShowInfo("clif_parse: Disconnecting session #%d with unknown packet version%s (p:0x%04x,l:%d).\n", fd, (
 				err == 1 ? "" :
 				err == 2 ? ", possibly for having an invalid account_id" :
 				err == 3 ? ", possibly for having an invalid char_id." :
@@ -16167,12 +16167,10 @@ static int clif_parse(int fd)
 	}
 	if ((int)RFIFOREST(fd) < packet_len)
 		return 0; // not enough data received to form the packet
-
+		
 	if( packet_db[packet_ver][cmd].func == clif_parse_debug )
 		packet_db[packet_ver][cmd].func(fd, sd);
-	else
-	if( packet_db[packet_ver][cmd].func != NULL )
-	{
+	else if( packet_db[packet_ver][cmd].func != NULL ) {
 		if( !sd && packet_db[packet_ver][cmd].func != clif_parse_WantToConnection )
 			; //Only valid packet when there is no session
 		else
@@ -16185,37 +16183,27 @@ static int clif_parse(int fd)
 			packet_db[packet_ver][cmd].func(fd, sd); 
 	}
 #ifdef DUMP_UNKNOWN_PACKET
-	else
-	{
+	else {
 		const char* packet_txt = "save/packet.txt";
 		FILE* fp;
 
-		if((fp = fopen(packet_txt, "a"))!=NULL)
-		{
-			if( sd )
-			{
+		if( ( fp = fopen( packet_txt , "a" ) ) != NULL ) {
+			if( sd ) {
 				fprintf(fp, "Unknown packet 0x%04X (length %d), %s session #%d, %d/%d (AID/CID)\n", cmd, packet_len, sd->state.active ? "authed" : "unauthed", fd, sd->status.account_id, sd->status.char_id);
-			}
-			else
-			{
+			} else {
 				fprintf(fp, "Unknown packet 0x%04X (length %d), session #%d\n", cmd, packet_len, fd);
 			}
 
 			WriteDump(fp, RFIFOP(fd,0), packet_len);
 			fprintf(fp, "\n");
 			fclose(fp);
-		}
-		else
-		{
+		} else {
 			ShowError("Failed to write '%s'.\n", packet_txt);
 
 			// Dump on console instead
-			if( sd )
-			{
+			if( sd ) {
 				ShowDebug("Unknown packet 0x%04X (length %d), %s session #%d, %d/%d (AID/CID)\n", cmd, packet_len, sd->state.active ? "authed" : "unauthed", fd, sd->status.account_id, sd->status.char_id);
-			}
-			else
-			{
+			} else {
 				ShowDebug("Unknown packet 0x%04X (length %d), session #%d\n", cmd, packet_len, fd);
 			}
 
@@ -16454,6 +16442,21 @@ static int packetdb_readdb(void)
 	    0,  0,  0,  0,  0,  0, -1, -1, -1, -1,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	//#0x0880
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	//#0x08C0
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	//#0x0900
+		0,  0,  0,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  0,  0,
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,		
 	};
 	struct {
 		void (*func)(int, struct map_session_data *);
