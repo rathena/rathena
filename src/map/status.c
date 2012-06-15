@@ -5852,6 +5852,9 @@ int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int ti
 	case SC_VACUUM_EXTREME:
 		tick -= 50*status->str;
 		break;
+	case SC_MANDRAGORA:
+		sc_def = (status->vit+status->luk)/5;
+		break;
 	default:
 		//Effect that cannot be reduced? Likely a buff.
 		if (!(rnd()%10000 < rate))

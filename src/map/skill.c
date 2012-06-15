@@ -4117,6 +4117,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 				rsb_skillid = sd->rsb[i].skillid;
 				rsb_skilllv = sd->rsb[i].level;
 
+				if( sc && sc->data[SC_READING_SB] && sc->data[SC_READING_SB]->val2 > 0 )
+					sc->data[SC_READING_SB]->val2 -= sd->rsb[i].points;
+
 				if( skilllv > 1 )
 					sd->rsb[i].skillid = 0; // Last position - only remove it from list
 				else
@@ -8474,7 +8477,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case GN_MANDRAGORA:
 		if( flag&1 ) {
 			if ( clif_skill_nodamage(bl, src, skillid, skilllv,
-									 sc_start(bl, type, 35 + 10 * skilllv, skilllv, skill_get_time(skillid, skilllv))) )
+									 sc_start(bl, type, 25 + 10 * skilllv, skilllv, skill_get_time(skillid, skilllv))) )
 				status_zap(bl, 0, status_get_max_sp(bl) / 100 * 25 + 5 * skilllv);
 		} else
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), BL_CHAR,
