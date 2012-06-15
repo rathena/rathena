@@ -47,6 +47,7 @@ typedef enum c_op {
 	C_RETINFO,
 	C_USERFUNC, // internal script function
 	C_USERFUNC_POS, // internal script function label
+	C_REF, // the next call to c_op2 should push back a ref to the left operand
 
 	// operators
 	C_OP3, // a ? b : c
@@ -130,6 +131,7 @@ struct script_state {
 	struct script_state *bk_st;
 	int bk_npcid;
 	unsigned freeloop : 1;// used by buildin_freeloop
+	unsigned op2ref : 1;// used by op_2
 };
 
 struct script_reg {

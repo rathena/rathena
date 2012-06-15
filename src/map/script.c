@@ -1174,6 +1174,8 @@ const char* parse_variable(const char* p)
 		add_scriptl(word);
 	}
 	
+	add_scriptc(C_REF);
+
 	if( type == C_ADD_PP || type == C_SUB_PP )
 	{// incremental operator for the method
 		add_scripti(1);
@@ -3209,11 +3211,21 @@ void op_2num(struct script_state* st, int op, int i1, int i2)
 /// Binary operators
 void op_2(struct script_state *st, int op)
 {
-	struct script_data* left;
+	struct script_data* left, leftref;
 	struct script_data* right;
+
+	leftref.type = C_NOP;
 
 	left = script_getdatatop(st, -2);
 	right = script_getdatatop(st, -1);
+
+	if (st->op2ref)
+	{
+		if (data_isreference(left))
+			leftref = *left;
+
+		st->op2ref = 0;
+	}
 
 	get_val(st, left);
 	get_val(st, right);
@@ -3236,14 +3248,24 @@ void op_2(struct script_state *st, int op)
 	if( data_isstring(left) && data_isstring(right) )
 	{// ss => op_2str
 		op_2str(st, op, left->u.str, right->u.str);
-		script_removetop(st, -3, -1);// pop the two values before the top one
+		script_removetop(st, leftref.type == C_NOP ? -3 : -2, -1);// pop the two values before the top one
+
+		if (leftref.type != C_NOP)
+		{
+			aFree(left->u.str);
+			*left = leftref;
+		}
 	}
 	else if( data_isint(left) && data_isint(right) )
 	{// ii => op_2num
 		int i1 = left->u.num;
 		int i2 = right->u.num;
-		script_removetop(st, -2, 0);
+
+		script_removetop(st, leftref.type == C_NOP ? -2 : -1, 0);
 		op_2num(st, op, i1, i2);
+
+		if (leftref.type != C_NOP)
+			*left = leftref;
 	}
 	else
 	{// invalid argument
@@ -3683,6 +3705,10 @@ void run_script_main(struct script_state *st)
 					st->state=END;
 				}
 			}
+			break;
+
+		case C_REF:
+			st->op2ref = 1;
 			break;
 
 		case C_NEG:
