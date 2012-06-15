@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 1.1
+//= 1.3
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -12,6 +12,7 @@
 //= 1.0 First Version
 //= 1.1 Optimized for the greater good. [Kisuka]
 //= 1.2 Cleaning [Euphy]
+//= 1.3 All statuses removed upon skill reset. [Euphy]
 //============================================================
 
 prontera,150,193,4	script	Reset Girl	124,{
@@ -34,6 +35,7 @@ prontera,150,193,4	script	Reset Girl	124,{
 			mes "Sorry, you don't have enough Zeny.";
 			close; }
 		set Zeny, Zeny-.@ResetSkill;
+		sc_end SC_ALL;
 		ResetSkill;
 		mes "There you go!";
 		close;
@@ -52,6 +54,7 @@ prontera,150,193,4	script	Reset Girl	124,{
 			mes "Sorry, you don't have enough Zeny.";
 			close; }
 		set Zeny, Zeny-.@ResetBoth;
+		sc_end SC_ALL;
 		ResetSkill;
 		ResetStatus;
 		mes "There you go!";
