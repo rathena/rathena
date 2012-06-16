@@ -2476,7 +2476,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		if (sc) {
 			if(sc->data[SC_TRUESIGHT])
 				ATK_ADDRATE(2*sc->data[SC_TRUESIGHT]->val1);
-#ifndef RENEWAL_EDP
+#ifdef RENEWAL_EDP
 			// renewal EDP doesn't affect your final damage but your atk and weapon atk
 			if(sc->data[SC_EDP] &&
 				skill_num != AS_GRIMTOOTH &&
