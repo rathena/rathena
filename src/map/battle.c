@@ -2479,11 +2479,22 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 #ifndef RENEWAL_EDP
 			// renewal EDP doesn't affect your final damage but your atk and weapon atk
 			if(sc->data[SC_EDP] &&
-			  	skill_num != ASC_BREAKER &&
+				skill_num != AS_GRIMTOOTH &&
 				skill_num != ASC_METEORASSAULT &&
 				skill_num != AS_SPLASHER &&
-				skill_num != AS_VENOMKNIFE)
-				ATK_ADDRATE(sc->data[SC_EDP]->val3);
+				skill_num != AS_VENOMKNIFE &&
+				skill_num != AS_SONICBLOW &&
+				skill_num != ASC_BREAKER &&
+				skill_num != GC_COUNTERSLASH &&
+				skill_num != GC_CROSSIMPACT)
+					ATK_ADDRATE(sc->data[SC_EDP]->val3);
+			// Skills that have halved damage [Igniz]
+			if(sc->data[SC_EDP] &&
+				(skill_num == AS_SONICBLOW ||
+				skill_num == ASC_BREAKER ||
+				skill_num == GC_COUNTERSLASH ||
+				skill_num == GC_CROSSIMPACT))
+					ATK_RATE(50);
 #endif
 		}
 
