@@ -1,19 +1,19 @@
 //===== rAthena Script =======================================
 //= Valentine Event Script
 //===== By: ==================================================
-//= Muad_Dib(Prometheus Project)
+//= Muad_Dib (Prometheus Project)
 //===== Current Version: =====================================
-//= 1.01
+//= 1.1
 //===== Compatible With: =====================================
-//= Any Athena Version
+//= rAthena SVN
 //===== Description: =========================================
 //
 //===== Additional Comments: =================================
 //= 07/06/05 : Added 1st Version. [Muad_Dib]
 //= 08/28/05 : Ver. 1.01 Added a missing close; [Muad_Dib]
 //= Converted to rAthena format by Dr.Evil
+//= 1.1 Cleaning. [Euphy]
 //============================================================
-
 
 // Stephen - Valentine Event Chocolate seller ------------------
 alberta,26,243,4	script	Stephen	58,{
@@ -26,46 +26,35 @@ alberta,26,243,4	script	Stephen	58,{
 	mes "That's right, don't you love chocolate.... I do.";
 	mes "And you are in luck, because I'm selling them for only 5,000 zeny a piece!";
 	next;
-	menu "I want some chocolate!",M_CHOCO,"No thanks.",-;
-	mes "[Stephen]";
-	mes "You don't want any chocolate?";
-	mes "I'm telling you! You'll regret it!";
-	mes "You better get some now... you won't come across Chocolate like this ever again!";
-	mes "Think it over and visit me again sometime.";
-	close;
-
-M_CHOCO:
+	if(select("I want some chocolate!:No thanks.")==2) {
+		mes "[Stephen]";
+		mes "You don't want any chocolate?";
+		mes "I'm telling you! You'll regret it!";
+		mes "You better get some now... you won't come across Chocolate like this ever again!";
+		mes "Think it over and visit me again sometime.";
+		close; }
 	mes "[Stephen]";
 	mes "Hah!";
 	mes "I knew it!";
-	mes "But I can't sell you more then 5 at once....but, if you really need more....";
+	mes "But I can't sell you more then 5 at once... but, if you really need more....";
 	mes "you can come back again.";
 	mes "So how many do you want?";
 	next;
-	set @needmon,0;
-	input @flag_num;
-	if (@flag_num <= 0) goto L_NONE;
-	if (@flag_num > 5) goto L_ERR;
-	set @needmon,@flag_num*5000;
-	if (Zeny < @needmon) goto L_NOTENO;
-	set Zeny,Zeny - @needmon;
-	getitem 558,@flag_num;
+	input .@i;
+	if (.@i <= 0) close;
 	mes "[Stephen]";
+	if (.@i > 5)  {
+		mes "I'm sorry, but I can't give you that many.";
+		close; }
+	if (Zeny < .@i*5000) {
+		mes "I'm sorry, but it seems you can't afford to buy these off me.";
+		close; }
+	set Zeny, Zeny - .@i*5000;
+	getitem 558,.@i;
 	mes "There you go!";
 	mes "You can give that to someone as a gift, or enjoy it yourself!";
-	mes "Mmm....sweet chocolate...";
+	mes "Mmm... sweet chocolate...";
 	mes "Visit me anytime...!";
-	close;
-
-L_ERR:
-	mes "[Stephen]";
-	mes "I'm sorry but I can't give you that many.";
-L_NONE:
-	close;
-
-L_NOTENO:
-	mes "[Stephen]";
-	mes "I'm sorry but it seems you can't afford to buy these off me.";
 	close;
 }
 
@@ -97,44 +86,43 @@ prt_castle,54,34,4	script	Carl Orleans	47,{
 	mes "[Carl Orleans]";
 	mes "Yes?";
 	next;
-	menu "I want some hand made chocolate...",-,"I'm lost, sorry to bother you.",M_WAT;
-     
+	if(select("I want some hand made chocolate...:I'm lost, sorry to bother you.")==2) {
+		mes "[Carl Orleans]";
+		mes "Oh... well, if you want me to make some of my special Hand Made Chocolate....";
+		mes "You will need to give me at least ^0000FF 3 Chocolates^000000.";
+		next;
+		mes "[Carl Orleans]";
+		mes "That's right, only ^0000FF 3 Chocolates^000000";
+		mes "Bring them to me and you'll get what you came for.";
+		next;
+		mes "[Carl Orleans]";
+		mes "See You.";
+		close; }
 	mes "[Carl Orleans]";
 	mes "Well, I just might be able to fulfill your needs...";
 	next;
-	if (countitem(558) >=3) goto L_ENO;
-	mes "I'm sorry you do not have enough Chocolate Bars to do this";
-	close;
-
-L_ENO:
-	delitem 558,3;
 	mes "[Carl Orleans]";
-	mes "You got 3 pieces of pure chocolate I see.";
+	if (countitem(558) < 3) {
+		mes "I'm sorry, you don't have enough Chocolate Bars to do this.";
+		close; }
+	delitem 558,3;
+	mes "You got 3 pieces of pure chocolate, I see.";
 	mes "Give them to me...";
 	next;
+	mes "[Carl Orleans]";
 	mes "Ok, now I will only create my special hand made chocolates if you promise to use it wisely.";
 	next;
+	mes "[Carl Orleans]";
 	mes "....Hmmmmmm.....";
 	mes "Well...";
 	next;
-	mes "Here.";
+	mes "[Carl Orleans]";
 	getitem 559,1;
+	mes "Here.";
 	mes "I hope you give it to someone special, because its a special chocolate.";
 	mes "As you know... only I can create this.";
 	next;
+	mes "[Carl Orleans]";
 	mes "Enjoy.";
-	close;
-
-M_WAT:
-	mes "[Carl Orleans]";
-	mes "Oh..well, if you want me to make some of my special Hand Made Chocolate....";
-	mes "You will need to give me at least ^0000FF 3 Chocolates^000000.";
-	next;
-	mes "[Carl Orleans]";
-	mes "That's right, only ^0000FF 3 Chocolates^000000";
-	mes "Bring them to me and you'll get what you came for.";
-	next;
-	mes "[Carl Orleans]";
-	mes "See You.";
 	close;
 }

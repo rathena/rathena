@@ -3,84 +3,49 @@
 //===== By: ==================================================
 //= MagicalTux
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= 
+//= Custom quests for Balmung and Lord Kaho's Horns.
+//= WARNING: The quests are very easy, so be careful!
 //===== Additional Comments: =================================
-//= Warning! Don't use this quest 8)
+//= 1.1 Cleaned and optimized. [Euphy]
 //============================================================
 
 prontera,158,356,4	script	Royal Messenger	105,{
+	
+	setarray .@Req1[0],1161,999,120,984,10,996,10,994,10,995,10,997,10;
+	setarray .@Req2[0],5013,2298,1,1001,10,996,10,994,10,995,10,997,10;
+	
 	mes "[Royal Messenger]";
-	mes "Welcome to prontera, I am the Royal Messenger in charge of the royal quest.";
+	mes "Welcome to Prontera.";
+	mes "I am the messenger in charge of the Royal Quests.";
 	next;
-	menu "Listen",-,"No",Lend;
-
+	if(select("Listen...:Walk away")==2) close;
 	mes "[Royal Messenger]";
-	mes "There are too quests please chose the one you must like.";
+	mes "There are two quests.";
+	mes "Choose the one you like.";
 	next;
-	menu "Balmung",-,"Lord Kahos horns",Lkahos,"No",Lend;
-
+	set .@i, select("Balmung:Lord Kaho's Horns:^777777Never mind.^000000");
 	mes "[Royal Messenger]";
-	mes "The Balmung quest consist of the next items:";
-	mes "120 Steel";
-	mes "10 Oridecon";
-	mes "10 Rough Wind";
-	mes "10 Flame Heart";
-	mes "10 Mystic Frozen";
-	mes "10 Great Nature";
-	mes "1,000,000z";
+	if (.@i==3) {
+		mes "Have a nice day.";
+		close; }
+	mes "You will need the following items:";
+	for(set .@j,1; .@j<13; set .@j,.@j+2) {
+		mes " ~ "+getd(".@Req"+.@i+"["+(.@j+1)+"]")+"x ^0055FF"+getitemname(getd(".@Req"+.@i+"["+.@j+"]"))+"^000000";
+		if (!.@nr && countitem(getd(".@Req"+.@i+"["+.@j+"]")) < getd(".@Req"+.@i+"["+(.@j+1)+"]")) set .@nr,1; }
+	mes " ~ 1,000,000z";
 	next;
-	if(countitem(999)<120 || countitem(984)<10 || countitem(996)<10 || countitem(994)<10
-		|| countitem(995)<10 || countitem(997)<10 || Zeny<1000000) goto NoItems;
-	delitem 999,120;
-	delitem 984,10;
-	delitem 996,10;
-	delitem 994,10;
-	delitem 995,10;
-	delitem 997,10;
-	set Zeny,Zeny-1000000;
 	mes "[Royal Messenger]";
-	mes "I see you already have all the items you need.";
-	mes "nice work.";
-	getitem 1161,1;
-	close;
-
-Lkahos:
-	mes "[Royal Messenger]";
-	mes "The Lord Kahos horns quest consists of the next items:";
-	mes "1 Green Feelers";
-	mes "10 Star Dust";
-	mes "10 Rough Wind";
-	mes "10 Flame Heart";
-	mes "10 Mystic Frozen";
-	mes "10 Great Nature";
-	mes "1,000,000z";
-	next;
-	if(countitem(2298)<1 || countitem(1001)<10 || countitem(996)<10 || countitem(994)<10
-		|| countitem(995)<10 || countitem(997)<10 || Zeny<1000000) goto NoItems;
-	delitem 2298,1;
-	delitem 1001,10;
-	delitem 996,10;
-	delitem 994,10;
-	delitem 995,10;
-	delitem 997,10;
-	set Zeny,Zeny-1000000;
-	mes "[Royal Messenger]";
-	mes "I see you already have all the items you need.";
-	mes "nice work.";
-	getitem 5013,1;
-	close;
-
-Lend:
-	mes "[Royal Messenger]";
-	mes "Have a nice day.";
-	close;
-NoItems:
-	mes "[Royal Messenger]";
-	mes "Sorry you don't have all the items or zeny I need.";
-	mes "Come back when you have them all";
+	if (.@nr || Zeny < 1000000) {
+		mes "Come back when you meet all the requirements.";
+		close; }
+	for(set .@j,1; .@j<13; set .@j,.@j+2)
+		delitem getd(".@Req"+.@i+"["+.@j+"]"), getd(".@Req"+.@i+"["+(.@j+1)+"]");
+	set Zeny, Zeny-1000000;
+	mes "I see you already have all the items you need. Here's your "+getitemname(getd(".@Req"+.@i+"[0]"))+", as promised.";
+	getitem getd(".@Req"+.@i+"[0]"),1;
 	close;
 }

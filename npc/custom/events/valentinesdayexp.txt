@@ -10,7 +10,7 @@
 // Close to other official stValentine event (added white chocolate)
 // Custom: Handmade choco gives some EXP bonuses to married people
 //===== Additional Comments: =================================
-//= WARNING!! To use this event, dicable original valentinesday.txt
+//= WARNING!! To use this event, disable original valentinesday.txt
 //= You can use this event from 12 till 16 February 8) [Lupus]
 //= 1.1 Removed Duplicates [Silent]
 //============================================================

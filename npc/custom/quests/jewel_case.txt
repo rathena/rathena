@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Quest for 99 Base Level Players
+//= Jewel Case Quest
 //===== By: ==================================================
 //= Lupus
 //===== Current Version: =====================================
@@ -7,8 +7,8 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= It makes players stay longer at 99th level and get a
-//= Jewel Case as a reward
+//= A quest for players at base level 99,
+//= with Jewel Case as a reward.
 //===== Additional Comments: =================================
 //= 
 //============================================================

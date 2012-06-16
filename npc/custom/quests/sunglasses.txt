@@ -1,60 +1,64 @@
 //===== rAthena Script =======================================
-//= Quest For Slotted Sunglasses
+//= Slotted Sunglasses Quest
 //===== By: ==================================================
 //= amichan
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= Quest to get Slotted Sunglasses
+//= Quest to get Slotted Sunglasses.
+//= Will reset after quest completion.
 //===== Additional Comments: =================================
-//= quest will reset it self after 1 pair of Slotted Sunglasses is made. 
-//=
 //= 1.0 by Aegis 1.1 by aichan 1.2 by x[tsk] 1.3 by Darkchild
 //= 1.5 Fixed Exploit [Lupus]
 //= 1.6 Fixed Exploit [KarLaeda]
 //= 1.7 Relocated 'Maseph' to moc_fild07. [Kisuka]
+//= 1.8 Cleaning. [Euphy]
 //============================================================
 
-// 1st part of the quest
 alberta,88,193,5	script	Sunglasses Trader	73,{
-	if(SG_QUEST1 == 1) goto L_SG_Q1_Done;
 	mes "[Sunglasses Trader]";
+	if(SG_QUEST1 == 1) {
+		mes "There is nothing more I can tell you.";
+		next;
+		mes "[Sunglasses Trader]";
+		mes "Go see Maseph. She is somewhere north of Morroc.";
+		close; }
 	mes "Hello. What can I do for you?";
 	next;
-	menu "I heard that you can make ^0000FFSlotted Sunglasses^000000.",-,"Nothing, sorry to bother you.",L_SG_No;
-
+	if(select("I heard that you can make ^0000FFSlotted Sunglasses^000000.:Nothing, sorry to bother you.")==2) {
+		mes "[Sunglasses Trader]";
+		mes "Come back to me than you are ready.";
+		close; }
 	mes "[Sunglasses Trader]";
 	mes "I do not make them, but I can tell you where to find the person who does. For a small fee...";
 	next;
-	menu "How much?",L_SG_1,"No way, I will find her, myself!",-;
-
+	if(select("How much?:No way, I will find her myself!")==2) {
+		mes "[Sunglasses Trader]";
+		mes "Suit yourself, the Maker will not make you ^0000FFSlotted Sunglasses^000000 unless she knows that you are coming.";
+		mes "Only I can tell her you are coming.";
+		next;
+		mes "[Sunglasses Trader]";
+		mes "Come back to me when you have given up. Hahaha...";
+		close; }
 	mes "[Sunglasses Trader]";
-	mes "Suit yourself, the Maker will not make you ^0000FFSlotted Sunglasses^000000 unless she knows that you are coming.";
-	mes "Only I can tell her you are coming.";
+	mes "In order for me to tell you information on ^0000FFSlotted Sunglasses^000000 you need to get me:";
+	mes " - ^0000881 Carat Diamond^000000";
+	mes " - ^00008850 Feathers^000000";
+	mes " - ^000088100000z^000000";
 	next;
+	if(select("Alright, here.:That's too much!")==2) {
+		mes "[Sunglasses Trader]";
+		mes "Suit yourself.";
+		close; }
 	mes "[Sunglasses Trader]";
-	mes "Come back to me, when you have given up. Hahaha.";
-	close;
-L_SG_1:
-	mes "[Sunglasses Trader]";
-	mes "In order for me to tell you information on ^0000FFSlotted Sunglasses^000000 you need to get me: ";
-	mes "^0000881 Carat Diamond^000000, ";
-	mes "^00008850 Feathers^000000, ";
-	mes "and ^000088100000z^000000.";
-	next;
-	menu "Alright, here.",L_SG_1_Check,"That's too much!",-;
-	mes "[Sunglasses Trader]";
-	mes "Suit Yourself.";
-	close;
-L_SG_1_Check:
-	if (countitem(730) < 1) goto L_SG_Diamond;
-	if (countitem(949) < 50) goto L_SG_Feathers;
-	if (zeny<100000) goto L_SG_Funds;
+	if (countitem(730) < 1 || countitem(949) < 50 || Zeny < 100000) {
+		mes "You're missing something. Come back when you've gathered all the materials.";
+		close; }
 	delitem 730,1;
 	delitem 949,50;
-	set zeny,zeny-100000;
+	set Zeny, Zeny-100000;
 	set SG_QUEST1,1;
 	mes "[Sunglasses Trader]";
 	mes "Great. Now, listen carefully.";
@@ -63,81 +67,42 @@ L_SG_1_Check:
 	mes "Look for someone named Maseph somewhere north of Morroc.";
 	mes "I will send her a message to let her know that you are coming.";
 	close;
-L_SG_Diamond:
-	mes "[Sunglasses Trader]";
-	mes "You do not have the ^0000881 Carat Diamond^000000. Come back to me when you do.";
-	close;
-L_SG_Feathers:
-	mes "[Sunglasses Trader]";
-	mes "You do not have ^00008850 Feathers^000000. Come back to me when you do.";
-	close;
-L_SG_Funds:
-	mes "[Sunglasses Trader]";
-	mes "You do not have ^000088100000z^000000. Come back to me when you do.";
-	close;
-L_SG_Q1_Done:
-	mes "[Sunglasses Trader]";
-	mes "There is nothing more I can tell you.";
-	next;
-	mes "[Sunglasses Trader]";
-	mes "Go see Maseph. She is somewhere north of Morroc.";
-	close;
-L_SG_No:
-	mes "[Sunglasses Trader]";
-	mes "Come back to me than you are ready.";
-	close;
 }
- 
-// 2nd part of the quest
+
 moc_fild07,334,186,5	script	Maseph	702,{
-	if(SG_QUEST1 == 1) goto L_SG_2;
 	mes "[Maseph]";
-	mes "Lovely Day, isn't it ?";
-	close;
-L_SG_2:
-	mes "[Maseph]";
+	if(SG_QUEST1 != 1) {
+		mes "Lovely day, isn't it ?";
+		close; }
 	mes "Hello there.";
-	next;
-	mes "[Maseph]";
 	mes "You came for the ^000088Slotted Sunglasses^000000, right?";
 	next;
-	menu "Yes",L_SG_2_Start,"No, sorry to bother you.",-;
-
-	mes "[Maseph]";
-	mes "Off you go, then.";
-	close;
-L_SG_2_Start:
+	if(select("Yes:No, sorry to bother you.")==2) {
+		mes "[Maseph]";
+		mes "Off you go, then.";
+		close; }
 	mes "[Maseph]";
 	mes "To make one, I will need one pair of ^000088Sunglasses^000000 and 400000z.";
 	next;
-	menu "Here you go.",L_SG_Q2_Check,"No, thanks.",-;
-
+	if(select("Here you go.:No, thanks.")==2) {
+		mes "[Maseph]";
+		mes "As you wish.";
+		close; }
 	mes "[Maseph]";
-	mes "As you wish.";
-	close;
-L_SG_Q2_Check:
-	if(countitem(2201) < 1) goto L_SG_Sunglasses;
-	if(zeny<400000) goto L_SG_Funds;
+	if (countitem(2201) < 1) {
+		mes "I need one pair of ^000088Sunglasses^000000. Come back to me when you have one.";
+		close; }
+	if (Zeny < 400000) {
+		mes "You do not have enough Zeny. Come back to me when you do.";
+		close; }
 	delitem 2201,1;
-	set zeny,zeny-400000;
-	mes "[Maseph]";
-	mes "Thank you. I will get on it right away.";
+	set Zeny, Zeny-400000;
+	mes "Thank you. I will get on it right away...";
 	next;
 	mes "[Maseph]";
-	mes "Here you go my friend.";
-	getitem 2202,1;
-// quest reset
-	set SG_QUEST1,0;
-	next;
-	mes "[Maseph]";
+	mes "Here you go, my friend.";
 	mes "Enjoy your ^000088Slotted Sunglasses^000000.";
-	close;
-L_SG_Sunglasses:
-	mes "[Maseph]";
-	mes "I need one pair of ^000088Sunglasses^000000. Come back to me when you have one.";
-	close;
-L_SG_Funds:
-	mes "[Maseph]";
-	mes "You do not have enough money. Please come back to me when you do.";
+	getitem 2202,1;
+	set SG_QUEST1,0;
 	close;
 }
