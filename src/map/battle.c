@@ -1274,6 +1274,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	flag.rh=1;
 	flag.weapon=1;
 	flag.infdef=(tstatus->mode&MD_PLANT&&skill_num!=RA_CLUSTERBOMB?1:0);
+	if( target->type == BL_SKILL){
+		TBL_SKILL *su = (TBL_SKILL*)target;
+		if( su->group && su->group->skill_id == WM_REVERBERATION)
+			flag.infdef = 1;
+	}
 
 	//Initial Values
 	wd.type=0; //Normal attack
@@ -2326,7 +2331,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					skillratio += 200 * skill_lv -100;
 					break;
 				case WM_REVERBERATION_MELEE:
+					// ATK [{(Skill Level x 100) + 300} x Caster’s Base Level / 100]
 					skillratio += 200 + 100 * pc_checkskill(sd, WM_REVERBERATION);
+					RE_LVL_DMOD(100);
 					break;
 				case WM_SEVERE_RAINSTORM_MELEE:
 					skillratio = 50 + 50 * skill_lv;
@@ -3570,7 +3577,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 50 * skill_lv;
 						break;
 					case WM_REVERBERATION_MAGIC:
+						// MATK [{(Skill Level x 100) + 100} x Caster’s Base Level / 100] %
 						skillratio += 100 * (sd ? pc_checkskill(sd, WM_REVERBERATION) : 1);
+						RE_LVL_DMOD(100);
 						break;
 					case SO_FIREWALK: {
 						struct status_change * sc = status_get_sc(src);

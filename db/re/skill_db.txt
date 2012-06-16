@@ -921,9 +921,9 @@
 // WM Wanderer/Minstrel
 2412,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		WM_LESSON,Lesson
 2413,9,8,1,-1,0,0,5,-2:-2:-3:-3:-4,yes,0,0,0,magic,0,	WM_METALICSOUND,Metallic Sound
-2414,9,6,2,-1,0x3,1,5,1,yes,0,0x80,3,none,0,	WM_REVERBERATION,Reverberation //CHECK May need to recode. Testing needed.
-2415,0,6,1,-1,0x2,1,5,1,no,0,0,0,weapon,0,	WM_REVERBERATION_MELEE,Reverberation Melee
-2416,0,6,1,-1,0x2,1,5,1,no,0,0,0,magic,0,	WM_REVERBERATION_MAGIC,Reverberation Magic
+2414,9,6,2,-1,0x3,1,5,1,yes,0,0x80,3,none,0,	WM_REVERBERATION,Reverberation
+2415,0,6,1,-1,0x6,1,5,1,no,0,0,0,weapon,0,	WM_REVERBERATION_MELEE,Reverberation Melee
+2416,0,6,1,0,0x6,1,5,1,no,0,0,0,magic,0,	WM_REVERBERATION_MAGIC,Reverberation Magic
 2417,11,6,2,0,0x3,5,1,1,no,0,0,0,none,0,	WM_DOMINION_IMPULSE,Dominion Impulse
 2418,9,6,2,-1,0x1,0,5,1,yes,0,0,0,none,0,	WM_SEVERE_RAINSTORM,Severe Rainstorm
 2419,9,6,2,0,0x3,1,5,1,yes,0,0x80,5,none,0,	WM_POEMOFNETHERWORLD,Poem of The Netherworld //CHECK May need to recode too.

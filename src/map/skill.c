@@ -3123,7 +3123,7 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 					break;
 				case WM_REVERBERATION_MELEE:
 				case WM_REVERBERATION_MAGIC:
-					skill_attack(skill_get_type(skl->skill_id),src, src, target, skl->skill_id, skl->skill_lv, 0, SD_LEVEL);
+					skill_castend_damage_id(src, target, skl->skill_id, skl->skill_lv, tick, skl->flag|SD_LEVEL); // damage should split among targets
 					break;
 				case SC_FATALMENACE:
 					if( src == target ) // Casters Part
@@ -3245,6 +3245,7 @@ static int skill_ative_reverberation( struct block_list *bl, va_list ap) {
 		return 0;
 	if( su->alive && (sg = su->group) && sg->skill_id == WM_REVERBERATION ) {
 		clif_changetraplook(bl, UNT_USED_TRAPS);
+		map_foreachinrange(skill_trap_splash, bl, skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag, bl, gettick());
 		su->limit=DIFF_TICK(gettick(),sg->tick)+1500;
 		sg->unit_id = UNT_USED_TRAPS;
 	}
@@ -3640,8 +3641,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case SR_RAMPAGEBLASTER:
 	case SR_WINDMILL:
 	case SR_RIDEINLIGHTNING:
-	case WM_REVERBERATION:
 	case WM_SOUND_OF_DESTRUCTION:
+	case WM_REVERBERATION_MELEE:
+	case WM_REVERBERATION_MAGIC:
 	case SO_VARETYR_SPEAR:
 	case GN_CART_TORNADO:
 	case GN_CARTCANNON:			
@@ -10416,7 +10418,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 			val2 = 0;
 			break;
 		case WM_REVERBERATION:
-			val1 = 1;
+			val1 = 1 + skilllv;
 			break;
 		case GN_WALLOFTHORN:
 			val1 = 1000 * skilllv;	// Need official value. [LimitLine]
@@ -11183,6 +11185,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			clif_changetraplook(&src->bl,UNT_USED_TRAPS);
 			map_foreachinrange(skill_trap_splash,&src->bl, skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag, &src->bl,tick);
 			sg->limit = DIFF_TICK(tick,sg->tick) + 1500;
+			sg->unit_id = UNT_USED_TRAPS;
 			break;
 
 		case UNT_SEVERE_RAINSTORM:
@@ -13997,8 +14000,8 @@ static int skill_trap_splash (struct block_list *bl, va_list ap)
 				clif_skill_damage(src,bl,tick,0,0,-30000,1,sg->skill_id,sg->skill_lv,5);
 			break;
 		case UNT_REVERBERATION:
-			skill_attack(BF_WEAPON,ss,src,bl,WM_REVERBERATION_MELEE,sg->skill_lv,tick,0);
-			skill_addtimerskill(ss,tick+200,bl->id,0,0,WM_REVERBERATION_MAGIC,sg->skill_lv,BF_MAGIC,SD_LEVEL);
+			skill_addtimerskill(ss,tick+50,bl->id,0,0,WM_REVERBERATION_MELEE,sg->skill_lv,BF_WEAPON,SD_LEVEL); // for proper skill delay animation when use with Dominion Impulse
+			skill_addtimerskill(ss,tick+250,bl->id,0,0,WM_REVERBERATION_MAGIC,sg->skill_lv,BF_MAGIC,SD_LEVEL);
 			break;
 		case UNT_SEVERE_RAINSTORM:
 			skill_attack(BF_WEAPON,ss,ss,bl,WM_SEVERE_RAINSTORM_MELEE,sg->skill_lv,tick,0);
@@ -14710,8 +14713,13 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 				}
 				break;
 			case UNT_REVERBERATION:
-				if( unit->val1 <= 0 )
-					unit->limit = DIFF_TICK(tick + 700,group->tick);
+				if( unit->val1 <= 0 ){
+					clif_changetraplook(bl,UNT_USED_TRAPS);
+					map_foreachinrange(skill_trap_splash, bl, skill_get_splash(group->skill_id, group->skill_lv), group->bl_flag, bl, tick);
+					group->limit = DIFF_TICK(tick,group->tick) + 1500;
+					unit->limit = DIFF_TICK(tick,group->tick) + 1500;
+					group->unit_id = UNT_USED_TRAPS;
+				}
 				break;
 			case UNT_WALLOFTHORN:
 				if( unit->val1 <= 0 ) {
