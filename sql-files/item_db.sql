@@ -7264,7 +7264,7 @@ REPLACE INTO `item_db` VALUES (18595,'Horn_Of_Ancient','Horn of Ancient',5,40,NU
 REPLACE INTO `item_db` VALUES (18596,'Sprout_Hat','Sprout Hat',5,20,NULL,200,NULL,4,NULL,0,0xFFFFFFFF,7,2,256,NULL,70,1,758,'skill \"WZ_HEAVENDRIVE\",3;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (18597,'Mercury_Riser','Mercury Riser',5,40,NULL,200,NULL,10,NULL,1,0xFFFFFFFF,7,2,256,NULL,70,1,759,'bonus bAspdRate,3; bonus bCritical,3; if(getrefine() >= 7) { bonus bAspdRate,2; bonus bCritical,2; } if(getrefine() >= 9) { bonus bAspdRate,2; bonus bCritical,2;}',NULL,NULL);
 # 
-REPLACE INTO `item_db` VALUES (18600,'Cat_Ear_Beret','Cat Ear Beret',5,30,NULL,200,NULL,5,NULL,1,0xFFFFFFFF,7,2,256,NULL,0,1,761,'bonus bAspdRate,3; bonus bCritical,3; if(getrefine() >= 7) { bonus bAspdRate,2; bonus bCritical,2; } if(getrefine() >= 9) { bonus bAspdRate,2; bonus bCritical,2;}',NULL,NULL);
+REPLACE INTO `item_db` VALUES (18600,'Cat_Ear_Beret','Cat Ear Beret',5,30,NULL,200,NULL,5,NULL,1,0xFFFFFFFF,7,2,256,NULL,0,1,761,'bonus bAtkRate,5; if(getrefine() > 5 && getrefine() <= 12) { bonus2 bAddRace,RC_DemiHuman,(getrefine() - 5); bonus2 bSubRace,RC_DemiHuman,(getrefine() - 5); } if(getrefine() > 12) { bonus2 bAddRace,RC_DemiHuman,7; bonus2 bSubRace,RC_DemiHuman,7;}',NULL,NULL);
 #
 REPLACE INTO `item_db` VALUES (18602,'Watermelon_Bite','Watermelon Bite',5,20,NULL,100,NULL,4,NULL,0,0xFFFFFFFF,7,2,1,NULL,30,0,763,'bonus bMdef,4; bonus2 bAddEle,Ele_Fire,4;',NULL,NULL);
 # 
