@@ -6537,7 +6537,7 @@
 //
 18620,Heart_Eye_Patch,Heart Eyepatch,5,5,,200,,2,,0,0xFFFFFFFF,7,2,512,,20,1,779,{},{},{}
 //
-18656,Witch's_Pumpkin_Hat,Witch's Pumpkin Hat,5,20,,300,,10,,0,0xFFFFFFFF,7,2,256,,20,1,717,{ bonus bMdef,10; bonus bStr,2; bonus bInt,2; bonus2 bMagicAddRace,RC_Undead,15; bonus2 bMagicAddRace,RC_Demon,15; if(isequipped(2278)) {bonus2 bAddMonsterDropItem,12192,1;} if(isequipped(5176)) {bonus bAspdRate,5; autobonus { bonus bAtk,50; },5,10000,0,{ specialeffect2 EF_POTION_BERSERK; };}  if(isequipped(5086)) {bonus2 bAddMonsterDropItem,12192,1; bonus2 bAddMonsterDropItem,538,1; bonus2 bAddItemHealRate,12192,100; bonus2 bAddItemHealRate,538,100;} if(isequipped(2281)) {bonus bFlee,10; bonus2 bAddEff,Eff_Stun,1000;}},{},{}
+18656,Witch's_Pumpkin_Hat,Witch's Pumpkin Hat,5,20,,300,,10,,0,0xFFFFFFFF,7,2,256,,20,1,717,{ bonus bMdef,10; bonus bStr,2; bonus bInt,2; bonus2 bMagicAddRace,RC_Undead,15; bonus2 bMagicAddRace,RC_Demon,15; if(isequipped(2278)) {bonus2 bAddMonsterDropItem,12192,1;} if(isequipped(5176)) {bonus bAspdRate,5; autobonus "{ bonus bAtk,50; }",5,10000,0,"{ specialeffect2 EF_POTION_BERSERK; }";}  if(isequipped(5086)) {bonus2 bAddMonsterDropItem,12192,1; bonus2 bAddMonsterDropItem,538,1; bonus2 bAddItemHealRate,12192,100; bonus2 bAddItemHealRate,538,100;} if(isequipped(2281)) {bonus bFlee,10; bonus2 bAddEff,Eff_Stun,1000;}},{},{}
 
 // Costume System
 19500,T_Mr_Smile,T Mr Smile,5,0,,0,,0,,0,0xFFFFFFFF,7,2,6144,,0,0,65,{ bonus bStr,2; },{},{}
