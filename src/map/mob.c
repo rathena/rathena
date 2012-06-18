@@ -131,9 +131,12 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 {
 	struct npc_data *nd;
 
+	if (md->tomb_npc != NULL)
+		mvptomb_destroy(md);
+
 	CREATE(nd, struct npc_data, 1);
 
-	nd->bl.id = md->tomb_nid = npc_get_new_npc_id();
+	nd->bl.id = npc_get_new_npc_id();
 	
     nd->ud.dir = md->ud.dir;
 	nd->bl.m = md->bl.m;
@@ -161,16 +164,18 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
     status_change_init(&nd->bl);
     unit_dataset(&nd->bl);
     clif_spawn(&nd->bl);
+
+	md->tomb_npc = nd;
 }
 
 void mvptomb_destroy(struct mob_data *md)
 {
-	struct npc_data *nd = (struct npc_data *)map_id2bl(md->tomb_nid);
+	struct npc_data *nd = md->tomb_npc;
 
 	if (nd)
 		npc_unload(nd,true);
 
-	md->tomb_nid = 0;
+	md->tomb_npc = NULL;
 }
 
 /*==========================================
@@ -966,7 +971,7 @@ int mob_spawn (struct mob_data *md)
 		md->sc.option = md->db->option;
 
 	// MvP tomb [GreenBox]
-	if (md->tomb_nid)
+	if (md->tomb_npc)
 		mvptomb_destroy(md);
 
 	map_addblock(&md->bl);
