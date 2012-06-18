@@ -3275,11 +3275,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				if(rnd()%1000 < i && !(tstatus->mode&MD_BOSS))
 					ad.damage = tstatus->hp;
 				else {
-					#ifdef RENEWAL
-						ad.damage = status_get_lv(src) * (sstatus->matk_min + sstatus->matk_max);
-					#else
-						ad.damage = status_get_lv(src) + sstatus->int_ + skill_lv * 10;
-					#endif
+				#ifdef RENEWAL
+					ad.damage = skill_lv * (sstatus->matk_min + sstatus->matk_max);
+				#else
+					ad.damage = status_get_lv(src) + sstatus->int_ + skill_lv * 10;
+				#endif
 				}
 				break;
 			case PF_SOULBURN:
