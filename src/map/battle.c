@@ -1937,6 +1937,21 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					if (wflag&BREAK_NECK) i*=2;
 					skillratio += i;
 					break;
+#ifdef RENEWAL
+				case LK_SPIRALPIERCE:
+				case ML_SPIRALPIERCE:
+				{// Formula: Floor[Floor(Weapon Weight/2)*skill level + ATK ]*(100%+50%*s.lvl) * 5 multi-hits
+					short index = sd?sd->equip_index[EQI_HAND_R]:0;
+					int weight = 0;
+
+					if (sd && index >= 0 &&
+						sd->inventory_data[index] &&
+						sd->inventory_data[index]->type == IT_WEAPON)
+							weight = sd->inventory_data[index]->weight/20;					
+					ATK_ADD(weight * skill_lv)
+					skillratio += 50*skill_lv;
+				}
+#endif
 				case ASC_METEORASSAULT:
 					skillratio += 40*skill_lv-60;
 					break;
@@ -2228,8 +2243,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					break;
 				case LG_SHIELDPRESS:
 					skillratio += 60 + 43 * skill_lv;
-					//if( sc && sc->data[SC_GLOOMYDAY_SK] )
-					//	skillratio += 80 + (5 * sc->data[SC_GLOOMYDAY_SK]->val1);
 					RE_LVL_DMOD(100);
 					break;
 				case LG_PINPOINTATTACK:
@@ -2474,35 +2487,34 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			}
 		}
 		//Div fix.
-#ifdef RENEWAL
-		if( skill_num != LK_SPIRALPIERCE && skill_num != ML_SPIRALPIERCE)
-#endif
 		damage_div_fix(wd.damage, wd.div_);
 
 		//The following are applied on top of current damage and are stackable.
-		if (sc) {
-			if(sc->data[SC_TRUESIGHT])
+		if ( sc ) {
+			if( sc->data[SC_TRUESIGHT] )
 				ATK_ADDRATE(2*sc->data[SC_TRUESIGHT]->val1);
-#ifdef RENEWAL_EDP
+			if( sc->data[SC_GLOOMYDAY_SK] && 
+				( skill_num == LK_SPIRALPIERCE || skill_num == KN_BRANDISHSPEAR ||
+				  skill_num == CR_SHIELDBOOMERANG || skill_num == PA_SHIELDCHAIN ||
+				  skill_num == LG_SHIELDPRESS ) )
+				ATK_ADDRATE(sc->data[SC_GLOOMYDAY_SK]->val2);
 			// renewal EDP doesn't affect your final damage but your atk and weapon atk
-			if(sc->data[SC_EDP] &&
-				skill_num != AS_GRIMTOOTH &&
-				skill_num != ASC_METEORASSAULT &&
-				skill_num != AS_SPLASHER &&
-				skill_num != AS_VENOMKNIFE &&
-				skill_num != AS_SONICBLOW &&
-				skill_num != ASC_BREAKER &&
-				skill_num != GC_COUNTERSLASH &&
-				skill_num != GC_CROSSIMPACT)
-					ATK_ADDRATE(sc->data[SC_EDP]->val3);
-			// Skills that have halved damage [Igniz]
-			if(sc->data[SC_EDP] &&
-				(skill_num == AS_SONICBLOW ||
-				skill_num == ASC_BREAKER ||
-				skill_num == GC_COUNTERSLASH ||
-				skill_num == GC_CROSSIMPACT))
-					ATK_RATE(50);
+			if( sc->data[SC_EDP] ){
+				switch(skill_num){
+					case AS_SPLASHER:	case AS_VENOMKNIFE:	break;
+#ifndef RENEWAL_EDP
+					case ASC_BREAKER:	case ASC_METEORASSAULT: break;
+#else
+					case AS_SONICBLOW:
+					case ASC_BREAKER:
+					case GC_COUNTERSLASH:
+					case GC_CROSSIMPACT:
+					ATK_RATE(50); // only modifier is halved but still benefit with the damage bonus
 #endif
+				default:
+					ATK_ADDRATE(sc->data[SC_EDP]->val3);
+				}
+			}
 		}
 
 		switch (skill_num) {
@@ -2665,27 +2677,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				flag.idef2||flag.pdef2?0:-vit_def
 			);
 		}
-#ifdef RENEWAL
-		/**
-		* Racial/Size and etc modifications should not work with this formula(only the ATK is affected w/ mods) except for now, since RE ATK formula is not yet fully implemented in rA. [malufett]
-		* Formula: Floor[Floor(Weapon Weight/2)*skill level + ATK ]*(100%+50%*s.lvl) * 5 multi-hits
-		**/
-		if( skill_num == LK_SPIRALPIERCE || skill_num == ML_SPIRALPIERCE)
-		{
-			short index = sd?sd->equip_index[EQI_HAND_R]:0;
-			int weight = sstatus->rhw.atk2;
 
-			if (sd && index >= 0 &&
-				sd->inventory_data[index] &&
-				sd->inventory_data[index]->type == IT_WEAPON)
-				weight = sd->inventory_data[index]->weight/20;
-							
-			ATK_ADD(weight * skill_lv);
-			ATK_RATE(100+50*skill_lv);
-
-			damage_div_fix(wd.damage, wd.div_);
-		}
-#endif
 		//Post skill/vit reduction damage increases
 		if( sc )
 		{	//SC skill damages
@@ -4609,6 +4601,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				r_lv = sc->data[SC__AUTOSHADOWSPELL]->val2;
 
 			if (r_skill != AL_HOLYLIGHT && r_skill != PR_MAGNUS) {
+				sd->state.autocast = 1;
 				skill_consume_requirement(sd,r_skill,r_lv,3);
 				switch( skill_get_casttype(r_skill) ) {
 				case CAST_GROUND:
@@ -4621,6 +4614,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 					skill_castend_damage_id(src, target, r_skill, r_lv, tick, flag);
 					break;
 				}
+				sd->state.autocast = 0;
 
 				sd->ud.canact_tick = tick + skill_delayfix(src, r_skill, r_lv);
 				clif_status_change(src, SI_ACTIONDELAY, 1, skill_delayfix(src, r_skill, r_lv), 0, 0, 1);

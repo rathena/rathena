@@ -4830,7 +4830,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 
 				if( sc->data[SC_DECREASEAGI] )
 					val = max( val, 25 );
-				if( sc->data[SC_QUAGMIRE] || sc->data[SC_HALLUCINATIONWALK_POSTDELAY])
+				if( sc->data[SC_QUAGMIRE] || sc->data[SC_HALLUCINATIONWALK_POSTDELAY] || (sc->data[SC_GLOOMYDAY] && sc->data[SC_GLOOMYDAY]->val4) )
 					val = max( val, 50 );
 				if( sc->data[SC_DONTFORGETME] )
 					val = max( val, sc->data[SC_DONTFORGETME]->val3 );
@@ -7756,8 +7756,17 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			tick_time = val4; // [GodLesZ] tick time
 			break;
 		case SC_GLOOMYDAY:
-			val2 = 3 + 2 * val1; // Flee reduction.
-			val3 = 3 * val1; // ASPD reduction.
+			val2 = 20 + 5 * val1; // Flee reduction.
+			val3 = 15 + 5 * val1; // ASPD reduction.
+			if( rand()%100 < val1 ){ // (Skill Lv) %
+				val4 = 1; // reduce walk speed by half.
+				if( pc_isriding(sd) ) pc_setriding(sd, 0); 
+				if( pc_isridingdragon(sd) ) pc_setoption(sd, sd->sc.option&~OPTION_DRAGON);
+			}
+			break;
+		case SC_GLOOMYDAY_SK:
+			// Random number between [15 ~ (Voice Lesson Skill Level x 5) + (Skill Level x 10)] %.
+			val2 = 15 + rand()%( (sd?pc_checkskill(sd, WM_LESSON)*5:0) + val1*10 );
 			break;
 		case SC_SITDOWN_FORCE:
 		case SC_BANANA_BOMB_SITDOWN:
