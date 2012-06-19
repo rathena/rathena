@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Gennosuke Kouga
 //===== Current Version: =====================================
-//= 1.2
+//= 1.2a
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -15,6 +15,7 @@
 //= 1.0 First version. 14107 lines, oh, the pain...
 //= 1.1 Standardized and reduced by 7000+ lines. [Euphy]
 //= 1.2 Further optimization. [Euphy]
+//= 1.2a Small bug fix. [Euphy]
 //============================================================
 
 // Entrance
@@ -6507,10 +6508,10 @@ dic_in01,353,37,5	script	Kareka#pa0829	460,{
 				mes "Please come back again";
 				close; }
 			mes "[Kareka]";
-			if (EP13Enchant2 > 1) {
+			if (EP13Enchant2 > 1 && countitem(6304) < 3) {
 				mes "Sorry, but you need to know... your Sapha is not enough to do third stage, please come back again.";
 				close; }
-			else if (EP13Enchant1 > 1) {
+			else if ((EP13Enchant1 > 1 && countitem(6304) < 2) || (EP13Enchant1 == 0 && countitem(6304) < 1)) {
 				mes "Please come back here when you collect enough Sapha.";
 				close; }
 			mes "Then let's start.";

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88, mod by Lupus
 //===== Current Version: ===================================== 
-//= 1.9
+//= 2.0
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -21,6 +21,7 @@
 //= 1.7 Updated to Aegis 10.3 standards. [L0ne_W0lf]
 //= 1.8 Added 3rd Job creature NPCs (Dragon/Gryphon) [L0ne_W0lf]
 //= 1.9 Enabled Gryphon Renter NPC and added Mado Gear NPC. [Masao]
+//= 2.0 Fixed problems with third classes and new mounts. [Euphy]
 //============================================================ 
 
 // PecoPeco Breeder (for Knights)-------------------------------------------
@@ -30,7 +31,7 @@ prontera,55,350,5	script	Peco Peco Breeder#knt	105,{
 	if(Upper==2) set .@price,2500; //Baby Peco
 
 	mes "[Peco Peco Breeder]";
-	if (BaseJob == Job_Knight) {
+	if (BaseJob == Job_Knight && Class < Job_Rune_Knight) {
 		mes "Welcome.";
 		mes "Honorable Knight,";
 		mes "would you like to rent";
@@ -62,6 +63,11 @@ prontera,55,350,5	script	Peco Peco Breeder#knt	105,{
 				mes "Peco Peco.";
 				close;
 			}
+			else if(ismounting()) {
+				mes "[Peco Peco Breeder]";
+				mes "Please remove your cash mount.";
+				close;
+			}
 			set zeny,zeny-.@price;
 			setriding;
 			close;
@@ -88,7 +94,7 @@ prontera,232,318,3	script	Peco Peco Breeder#cru	105,{
 	if(Upper==2) set .@price,3500; //Baby Peco
 
 	mes "[PecoPeco Breeder]";
-	if (BaseJob == Job_Crusader) {
+	if (BaseJob == Job_Crusader && Class < Job_Rune_Knight) {
 		if(Upper != 1 ) mes "Welcome, Crusader.";
 		else mes "Welcome, Paladin.";
 		mes "We have a special";
@@ -107,7 +113,6 @@ prontera,232,318,3	script	Peco Peco Breeder#cru	105,{
 				mes "bring "+.@price+" zeny...";
 				close;
 			}
-
 			else if(getskilllv("KN_RIDING") == 0) {
 				mes "[Peco Peco Breeder]";
 				mes "You must first learn";
@@ -119,6 +124,11 @@ prontera,232,318,3	script	Peco Peco Breeder#cru	105,{
 				mes "[Peco Peco Breeder]";
 				mes "You are already";
 				mes "mounted on a Peco Peco.";
+				close;
+			}
+			else if(ismounting()) {
+				mes "[Peco Peco Breeder]";
+				mes "Please remove your cash mount.";
 				close;
 			}
 			set zeny,zeny-.@price;
@@ -217,9 +227,14 @@ job3_rune01,88,62,5	script	Dragon Breeder	105,{
 				mes "Please learn how to ride a Dragon first.";
 				close;
 			}
-			if (checkriding()) {
+			else if (checkriding()) {
 				mes "[Dragon Breeder]";
 				mes "You already have a Dragon.";
+				close;
+			}
+			else if(ismounting()) {
+				mes "[Dragon Breeder]";
+				mes "Please remove your cash mount.";
 				close;
 			}
 			setdragon;
@@ -249,9 +264,14 @@ prontera,130,213,5	script	Riding Creature Master	105,{
 				mes "Please learn how to ride a Dragon first.";
 				close;
 			}
-			if (checkriding()) {
+			else if (checkriding()) {
 				mes "[Riding Creature Master]";
 				mes "You already have a Dragon.";
+				close;
+			}
+			else if(ismounting()) {
+				mes "[Riding Creature Master]";
+				mes "Please remove your cash mount.";
 				close;
 			}
 			setdragon;
@@ -272,9 +292,14 @@ prontera,130,213,5	script	Riding Creature Master	105,{
 				mes "Please learn how to ride a Gryphon first.";
 				close;
 			}
-			if (checkriding()) {
+			else if (checkriding()) {
 				mes "[Riding Creature Master]";
 				mes "You already have a Gryphon.";
+				close;
+			}
+			else if(ismounting()) {
+				mes "[Riding Creature Master]";
+				mes "Please remove your cash mount.";
 				close;
 			}
 			setriding;
@@ -332,9 +357,14 @@ prontera,163,178,4	script	Magic Gear Master	105,{
 				mes "Please learn how to use a Magic Gear first.";
 				close;
 			}
-			if (checkmadogear()) {
+			else if (checkmadogear()) {
 				mes "[Magic Gear Master]";
 				mes "You already have a Magic Gear.";
+				close;
+			}
+			else if(ismounting()) {
+				mes "[Magic Gear Master]";
+				mes "Please remove your cash mount.";
 				close;
 			}
 			setmadogear;
