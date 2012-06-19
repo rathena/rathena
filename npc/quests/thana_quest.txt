@@ -606,7 +606,7 @@ tha_t01,140,78,4	script	Guide#reward	831,{
 	mes "2,000 EXP";
 	next;
 	set .@zeny_tt,(countitem(.@Items[.@i]) * 1000);
-	set .@exp_tt,(countitem(.@Items[.@i]) * 200);
+	set .@exp_tt,(countitem(.@Items[.@i]) * 2000);
 	mes "[Liei]";
 	mes "If you turn in your";
 	mes countitem(.@Items[.@i])+" "+getitemname(.@Items[.@i])+"s, then";

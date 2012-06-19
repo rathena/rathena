@@ -389,6 +389,9 @@ REPLACE INTO `item_db_re` VALUES (2629,'Magingiorde','Megingjard',5,20,NULL,8000
 #Cards
 REPLACE INTO `item_db_re` VALUES (4302,'Tao_Gunka_Card','Tao Gunka Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,'bonus bMaxHPrate,100; bonus bDefRate,-50; bonus bMdefRate,-50;',NULL,NULL);
 
+# More Armors
+REPLACE INTO `item_db_re` VALUES (15000,'Bone_Plate','Bone Plate',5,20,NULL,1000,NULL,60,NULL,1,0x000654E2,2,2,16,NULL,85,1,0,'bonus bStr,1; bonus bMdef,3; bonus2 bIgnoreDefRate,RC_DemiHuman,10; bonus2 bIgnoreDefRate,RC_Brute,10; bonus3 bAutoSpellWhenHit,\"NPC_WIDEBLEEDING\",1,10;',NULL,NULL);
+
 # Weapons
 REPLACE INTO `item_db_re` VALUES (16010,'Red_Ether_Bag','Red Ether Bag',4,20,NULL,0,'15:100',NULL,1,1,0x0004C5B2,7,2,2,3,102,1,8,' if(getrefine()>=6){ bonus2 bSkillAtk,\"GN_CRAZYWEED\",20+((getrefine()-5)*2); bonus2 bSkillAtk,\"GN_DEMONIC_FIRE\",20+((getrefine()-5)*2); } else { bonus2 bSkillAtk,\"GN_CRAZYWEED\",20; bonus2 bSkillAtk,\"GN_DEMONIC_FIRE\",20; } ',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (16013,'Judgement_Mace1','Judgement Mace I',4,20,NULL,1200,'140:180',NULL,1,2,0x00000100,2,2,2,3,100,1,8,' bonus bStr,1; bonus bInt,1; autobonus \"{ bonus2 bAddRace,RC_Demon,20; }\",10,7000,BF_WEAPON|BF_MAGIC,\"{ specialeffect2 EF_BLOODDRAIN; }\"; if (isequipped(2472,2570,15030)) { bonus2 bAddRace,RC_Undead,15; bonus2 bMagicAddRace,RC_Undead,15; bonus2 bSkillAtk,\"AB_ADORAMUS\",100; };',NULL,NULL);
