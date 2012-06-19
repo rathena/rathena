@@ -2498,23 +2498,27 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				  skill_num == CR_SHIELDBOOMERANG || skill_num == PA_SHIELDCHAIN ||
 				  skill_num == LG_SHIELDPRESS ) )
 				ATK_ADDRATE(sc->data[SC_GLOOMYDAY_SK]->val2);
+#ifdef RENEWAL_EDP
+			// First, we halve the damage, then we apply the atk & weapon atk bonus. [Igniz]
+			// Skills that have halved damage
+			if(sc->data[SC_EDP] &&
+					(skill_num == AS_SONICBLOW ||
+					skill_num == ASC_BREAKER ||
+					skill_num == GC_COUNTERSLASH ||
+					skill_num == GC_CROSSIMPACT))
+						ATK_RATE(50);
 			// renewal EDP doesn't affect your final damage but your atk and weapon atk
-			if( sc->data[SC_EDP] ){
-				switch(skill_num){
-					case AS_SPLASHER:	case AS_VENOMKNIFE:	break;
-#ifndef RENEWAL_EDP
-					case ASC_BREAKER:	case ASC_METEORASSAULT: break;
-#else
-					case AS_SONICBLOW:
-					case ASC_BREAKER:
-					case GC_COUNTERSLASH:
-					case GC_CROSSIMPACT:
-					ATK_RATE(50); // only modifier is halved but still benefit with the damage bonus
-#endif
-				default:
+			if(sc->data[SC_EDP] && 
+				skill_num != AS_GRIMTOOTH &&
+				skill_num != ASC_METEORASSAULT &&
+				skill_num != AS_SPLASHER &&
+				skill_num != AS_VENOMKNIFE &&
+				skill_num != AS_SONICBLOW &&
+				skill_num != ASC_BREAKER &&
+				skill_num != GC_COUNTERSLASH &&
+				skill_num != GC_CROSSIMPACT)
 					ATK_ADDRATE(sc->data[SC_EDP]->val3);
-				}
-			}
+#endif
 		}
 
 		switch (skill_num) {
