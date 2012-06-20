@@ -1,9 +1,9 @@
 //===== rAthena Script ======================================= 
 //= Elemental Stone Trader
 //===== By: ================================================== 
-//= rAthena team & others? & MasterOfMuppets
+//= rAthena Team & MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -11,10 +11,9 @@
 //= Trade impure types of elemental stones for pure ones.
 //===== Additional Comments: ================================= 
 //= 1.0 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.1 Optimized. [Euphy]
 //============================================================ 
 
-// Elemental Stone Trader
-//============================================================ 
 ama_in02,61,27,7	script	Alchemist#ama	749,{
 	mes "[Laspuchin Gregory]";
 	mes "KeekeekeeKeheheh.";
@@ -82,314 +81,80 @@ ama_in02,61,27,7	script	Alchemist#ama	749,{
 	mes "[Laspuchin Gregory]";
 	mes "Uh-huh, what did you bring?";
 	next;
-	switch(select("Mystic Frozen:Great Nature:Flame Heart:Rough Wind")) {
-	case 1:
-		if (countitem(995) > 7) {
-			mes "[Laspuchin Gregory]";
-			mes "I will take 8 of them and";
-			mes "give you an enchant stone.";
-			mes "How's that sound?";
-			mes "Keheheh.....";
-			next;
-			mes "[Laspuchin Gregory]";
-			mes "HeeHee, what do you want? Choose one!";
-			next;
-			switch(select("Great Nature:Flame Heart:Rough Wind:Cancel the trade")) {
-			case 1:
-				delitem 995,8; //Mistic_Frozen
-				getitem 997,1; //Great_Nature
-				mes "[Laspuchin Gregory]";
-				mes "Keheheh! You've chosen a good one!";
-				mes "Use it well...";
-				mes "Bring me other stones if you have them!";
-				close;
-			case 2:
-				delitem 995,8; //Mistic_Frozen
-				getitem 994,1; //Flame_Heart
-				mes "[Laspuchin Gregory]";
-				mes "Keheheh! You've chosen good one!";
-				mes "Use it well...";
-				mes "Bring me other stones if you have!";
-				close;
-			case 3:
-				if (countitem(995) > 11) {
-					delitem 995,12; //Mistic_Frozen
-					getitem 996,1; //Rough_Wind
-					mes "[Laspuchin Gregory]";
-					mes "Kehhehheh, You know something?";
-					mes "I don't have many of those";
-					mes "so I'm going to take ^0000FF12^000000 of yours, okay?";
-					mes "Of course, it is okay.";
-					mes "It is an honor to help Laspuchin!";
-					close;
-				}
-				mes "[Laspuchin Gregory]";
-				mes "Keheheh, You know something.";
-				mes "I don't have many of these so";
-				mes "I can't just get 8 of yours.";
-				mes "If you want to change them to Rough Wind,";
-				mes "bring me 4 more stones. 8 + 4 = 12...";
-				mes "Requires ^0000FF12^000000 stones.";
-				next;
-				mes "[Laspuchin Gregory]";
-				mes "Bring me stones, slave~!!";
-				mes "And keep your promise! Kehheheheheh...";
-				close;
-			case 4:
-				mes "[Laspuchin Gregory]";
-				mes "Oh, well.";
-				mes "Don't tell anyone about my location...";
-				mes "Keheheh...after all, you did promise~";
+	setarray .@Items[1],995,997,994,996;
+	set .@i, .@Items[select("Mystic Frozen:Great Nature:Flame Heart:Rough Wind")];
+	mes "[Laspuchin Gregory]";
+	if (countitem(.@i) > 7) {
+		mes "I will take 8 of them and";
+		mes "give you an enchant stone.";
+		mes "How's that sound?";
+		mes "Keheheh.....";
+		next;
+		mes "[Laspuchin Gregory]";
+		mes "HeeHee, what do you want? Choose one!";
+		next;
+		set .@menu$, "";
+		for(set .@j,1; .@j<5; set .@j,.@j+1) {
+			if (.@Items[.@j] != .@i) set .@menu$, .@menu$+getitemname(.@Items[.@j]);
+			set .@menu$, .@menu$+":";
+		}
+		set .@menu$, .@menu$+"Cancel the trade";
+		set .@j, select(.@menu$);
+		mes "[Laspuchin Gregory]";
+		if (.@j == 5) {
+			mes "Oh, well.";
+			mes "Don't tell anyone about my location...";
+			mes "Keheheh...after all, you did promise~";
+			close;
+		}
+		else if (.@j == 4) {
+			if (countitem(.@i) > 11) {
+				delitem .@i,12;
+				getitem 996,1;
+				mes "Kehhehheh, You know something?";
+				mes "I don't have many of those";
+				mes "so I'm going to take ^0000FF12^000000 of yours, okay?";
+				mes "Of course, it is okay.";
+				mes "It is an honor to help Laspuchin!";
 				close;
 			}
-		}
-		else if (countitem(995) > 0) {
-			mes "[Laspuchin Gregory]";
-			mes "You can't help Laspuchin with just a couple";
-			mes "of enchant stones... I said 8!";
-			mes "Bring me just 8 stones!";
-			mes "Keheheh.....";
+			mes "Keheheh, You know something.";
+			mes "I don't have many of these so";
+			mes "I can't just get 8 of yours.";
+			mes "If you want to change them to Rough Wind,";
+			mes "bring me 4 more stones. 8 + 4 = 12...";
+			mes "Requires ^0000FF12^000000 stones.";
 			next;
 			mes "[Laspuchin Gregory]";
 			mes "Bring me stones, slave~!!";
-			mes "And keep your promise! Keheheheheh...";
+			mes "And keep your promise! Kehheheheheh...";
 			close;
 		}
-		mes "[Laspuchin Gregory]";
-		mes "Keheheh~ Check your pockets";
-		mes "before you tell me";
-		mes "how foolish you are.....";
-		next;
-		mes "[Laspuchin Gregory]";
-		mes "Bring me stones! You said you are going to help me!";
-		mes "Keep your promises! Kehehehkehkeh...";
-		close;
-	case 2:
-		if (countitem(997) > 7) {
-			mes "[Laspuchin Gregory]";
-			mes "I will have 8 of them and";
-			mes "give you an enchant stone.";
-			mes "Hows it sound?";
-			mes "Keheheh.....";
-			next;
-			mes "[Laspuchin Gregory]";
-			mes "Keekee, what do you want? Choose one!";
-			next;
-			switch(select("Mystic Frozen:Flame Heart:Rough Wind:Cancel the trade")) {
-			case 1:
-				delitem 997,8; //Great_Nature
-				getitem 995,1; //Mistic_Frozen
-				mes "[Laspuchin Gregory]";
-				mes "Keheheh! You've chosen a good one!";
-				mes "Use it well...";
-				mes "Bring me other stones if you have them!";
-				close;
-			case 2:
-				delitem 997,8; //Great_Nature
-				getitem 994,1; //Flame_Heart
-				mes "[Laspuchin Gregory]";
-				mes "Keheheh! You've chosen a good one!";
-				mes "Use it well...";
-				mes "Bring me other stones if you have them!";
-				close;
-			case 3:
-				if (countitem(997) > 11) {
-					delitem 997,12; //Great_Nature
-					getitem 996,1; //Rough_Wind
-					mes "[Laspuchin Gregory]";
-					mes "Keheheh, You know something?";
-					mes "I don't have many of these";
-					mes "so I'm going to take ^0000FF12^000000 of yours, okay?";
-					mes "Of course, it is okay.";
-					mes "It is an honor to help Laspuchin!";
-					close;
-				}
-				mes "[Laspuchin Gregory]";
-				mes "Keheheh, You know something?";
-				mes "I don't have many of these so";
-				mes "I can't just get 8 of yours.";
-				mes "If you want to change them to Rough Wind,";
-				mes "bring me 4 more stones. 8 + 4 = 12...";
-				mes "Requires ^0000FF12^000000 stones.";
-				next;
-				mes "[Laspuchin Gregory]";
-				mes "Bring me stones, slave~!!";
-				mes "And keep your promise! Kehehehkehkeh...";
-				close;
-			case 4:
-				mes "[Laspuchin Gregory]";
-				mes "Oh, well.";
-				mes "Don't tell anyone about my location...";
-				mes "Keheheh...You did promise after all...";
-				close;
-			}
-		}
-		else if (countitem(997) > 0) {
-			mes "[Laspuchin Gregory]";
-			mes "You can't help Laspuchin with just a couple";
-			mes "of enchant stones... I said 8!";
-			mes "Bring me just 8 stones!";
-			mes "Keheheh.....";
-			next;
-			mes "[Laspuchin Gregory]";
-			mes "Bring me stones, slave!!";
-			mes "And keep your promise! Kehehehkehkeh...";
+		else {
+			delitem .@i,8;
+			getitem .@Items[.@j],1;
+			mes "Keheheh! You've chosen a good one!";
+			mes "Use it well...";
+			mes "Bring me other stones if you have them!";
 			close;
 		}
-		mes "[Laspuchin Gregory]";
-		mes "Keheheh~ Check your pockets";
-		mes "before you tell me";
-		mes "how stupid you are.....";
+	} else if (countitem(.@i)) {
+		mes "You can't help Laspuchin with just a couple";
+		mes "of enchant stones... I said 8!";
+		mes "Bring me just 8 stones!";
+		mes "Keheheh.....";
 		next;
 		mes "[Laspuchin Gregory]";
-		mes "Bring me stones! You said you are going to help me,";
-		mes "so keep your promise! Keheheheheh...";
-		close;
-	case 3:
-		if (countitem(994) > 7) {
-			mes "[Laspuchin Gregory]";
-			mes "I will take 8 of them and";
-			mes "give you an enchant stone.";
-			mes "Hows it sound?";
-			mes "Keheheh.....";
-			next;
-			mes "[Laspuchin Gregory]";
-			mes "Keekee, what do you want? Choose one!";
-			next;
-			switch(select("Mystic Frozen:Great Nature:Rough Wind:Cancel the trade")) {
-			case 1:
-				delitem 994,8; //Flame_Heart
-				getitem 995,1; //Mistic_Frozen
-				mes "[Laspuchin Gregory]";
-				mes "Keheheh! You've chosen a good one!";
-				mes "Use it well...";
-				mes "Bring me other stones if you have them!";
-				close;
-			case 2:
-				delitem 994,8; //Flame_Heart
-				getitem 997,1; //Great_Nature
-				mes "[Laspuchin Gregory]";
-				mes "Keheheh! You've chosen a good one!";
-				mes "Use it well...";
-				mes "Bring me other stones if you have them!";
-				close;
-			case 3:
-				if (countitem(994) > 11) {
-					delitem 994,12; //Flame_Heart
-					getitem 996,1; //Rough_Wind
-					mes "[Laspuchin Gregory]";
-					mes "Keheheh, You know something.";
-					mes "I don't have many of these";
-					mes "so I'm going to take ^0000FF12^000000 of yours, okay?";
-					mes "Of course, it is okay.";
-					mes "It is an honor to help Laspuchin!";
-					close;
-				}
-				mes "[Laspuchin Gregory]";
-				mes "Keheheh, You know something?";
-				mes "I don't have many of these so";
-				mes "I can't just get 8 of yours.";
-				mes "If you want to change them to Rough Wind,";
-				mes "bring me 4 more stones. 8 + 4 = 12...";
-				mes "Requires ^0000FF12^000000 stones.";
-				next;
-				mes "[Laspuchin Gregory]";
-				mes "Bring me stones, slave~!!";
-				mes "Keep your promise! Kehehehkehkeh...";
-				close;
-			case 4:
-				mes "[Laspuchin Gregory]";
-				mes "Oh, well.";
-				mes "Don't tell anyone about my location...";
-				mes "Keheheh...You did promise, after all...";
-				close;
-			}
-		}
-		else if (countitem(994) > 0) {
-			mes "[Laspuchin Gregory]";
-			mes "You can't help Laspuchin with just a couple";
-			mes "of enchant stones... I said 8!";
-			mes "Bring me just 8 stones!";
-			mes "Keheheh.....";
-			next;
-			mes "[Laspuchin Gregory]";
-			mes "Bring me stones, slave~!!";
-			mes "And keep your promise! Kehehehkehkeh...";
-			close;
-		}
-		mes "[Laspuchin Gregory]";
-		mes "Keheheh, Check your pockets";
-		mes "before you tell me";
-		mes "how foolish you are.....";
-		next;
-		mes "[Laspuchin Gregory]";
-		mes "Bring me stones! You said you are going to help me,";
-		mes "so keep your promise! Kehehehkehkeh...";
-		close;
-	case 4:
-		if (countitem(996) > 7) {
-			mes "[Laspuchin Gregory]";
-			mes "I will take 8 of them and";
-			mes "give you an enchant stone.";
-			mes "Hows it sound?";
-			mes "Keheheh.....";
-			next;
-			mes "[Laspuchin Gregory]";
-			mes "Keekee, what do you want? Choose one!";
-			next;
-			switch(select("Mystic Frozen:Great Nature:Flame Heart:Cancel the trade")) {
-			case 1:
-				delitem 996,8; //Rough_Wind
-				getitem 995,1; //Mistic_Frozen
-				mes "[Laspuchin Gregory]";
-				mes "Keheheh! You've chosen a good one!";
-				mes "Use it well...";
-				mes "Bring me other stones if you have them!";
-				close;
-			case 2:
-				delitem 996,8; //Rough_Wind
-				getitem 997,1; //Great_Nature
-				mes "[Laspuchin Gregory]";
-				mes "Keheheh! You've chosen a good one!";
-				mes "Use it well...";
-				mes "Bring me other stones if you have them!";
-				close;
-			case 3:
-				delitem 996,8; //Rough_Wind
-				getitem 994,1; //Flame_Heart
-				mes "[Laspuchin Gregory]";
-				mes "Keheheh! You've chosen a good one!";
-				mes "Use it well...";
-				mes "Bring me other stones if you have them!";
-				close;
-			case 4:
-				mes "[Laspuchin Gregory]";
-				mes "Oh, well.";
-				mes "Don't tell anyone about my location...";
-				mes "Keheheh... You did promise, after all...";
-				close;
-			}
-		}
-		else if (countitem(996) > 0) {
-			mes "[Laspuchin Gregory]";
-			mes "You can't help Laspuchin with just a couple";
-			mes "of enchant stones... I said 8!";
-			mes "Bring me just 8 stones!";
-			mes "Keheheh.....";
-			next;
-			mes "[Laspuchin Gregory]";
-			mes "Bring me stones, slave~!!";
-			mes "And keep your promise! Kehehehkehkeh...";
-			close;
-		}
-		mes "[Laspuchin Gregory]";
-		mes "Keheheh, Check your pockets";
-		mes "before you tell me";
-		mes "how stupid you are.....";
-		next;
-		mes "[Laspuchin Gregory]";
-		mes "Bring me stones! You said you are going to help me,";
-		mes "so keep your promise! Kehehehkehkeh...";
+		mes "Bring me stones, slave~!!";
+		mes "And keep your promise! Keheheheheh...";
 		close;
 	}
+	mes "Keheheh~ Check your pockets";
+	mes "before you tell me";
+	mes "how foolish you are.....";
+	next;
+	mes "[Laspuchin Gregory]";
+	mes "Bring me stones! You said you are going to help me!";
+	mes "Keep your promises! Kehehehkehkeh...";
+	close;
 }

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= [Ishizu-chan]
 //===== Current Version: =====================================
-//= 2.5
+//= 2.5a
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -27,6 +27,7 @@
 //= 2.3 Added continue and break in switch case. [JayPee]
 //= 2.4 Fixed a minor bug with Arch Bishop checks. [Euphy]
 //= 2.5 Cleaning. [Euphy]
+//= 2.5a Fixed an incorrect variable. [Euphy]
 //============================================================
 
 hu_fild01,140,163,5	script	Tower Keeper	852,3,3,{
@@ -2528,7 +2529,7 @@ OnTouch:
 	next;
 	input .@inputstr$;
 	if (countitem(7437) > 0) {
-		if (@inputstr$ == "Fragment of Misery") {
+		if (.@inputstr$ == "Fragment of Misery") {
 			mes "^3355FFYou insert the";
 			mes "Fragment of Misery";
 			mes "into the crest, causing";

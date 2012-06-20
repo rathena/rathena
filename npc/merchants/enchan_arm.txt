@@ -3,20 +3,21 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
-//= Add a +1, 2, or 3, of a random stat to specified armor.
+//= Add a +1, +2, or +3 random stat to a specified armor.
 //===== Additional Comments: ================================= 
 //= 1.0 First version.
 //= 1.1 Corrected typo (Sit -> Suit) (bugreport:4586)
+//= 1.2 Optimized. [Euphy]
 //============================================================ 
 
 prontera,165,60,2	script	Apprentice Craftsman	73,{
+	mes "[Apprentice Craftsman]";
 	if (Zeny > 399999) {
-		mes "[Apprentice Craftsman]";
 		mes "I've been studying ways to enhance an armor to maximize it's capability.";
 		next;
 		mes "[Apprentice Craftsman]";
@@ -26,143 +27,37 @@ prontera,165,60,2	script	Apprentice Craftsman	73,{
 		mes "However, you have to keep in mind that if there are two armors of the same kind in your possession, the Enchantment will be applied in the order they are placed in your inventory.";
 		next;
 		mes "[Apprentice Craftsman]";
-		mes "In that case, the Enchantment may be applied to an item which you didn't mean to Enchant. So just bring ^5555ffONE Armor^000000 you want enchanted to be safe..";
+		mes "In that case, the Enchantment may be applied to an item which you didn't mean to Enchant. So just bring ^5555ffONE Armor^000000 you want enchanted to be safe...";
 		next;
 		mes "[Apprentice Craftsman]";
 		mes "I'm not responsible for what would happen if you have more than one of the same kind in your inventory.";
 		next;
 		switch(select("Non Slotted Armor.:Slotted Armor.:High Grade Armor.:Maybe next time.")) {
-		case 1:
-			switch(select("Mantle:Coat:Chain Mail:Full Plate:Silk Robe:Saint's Robe:Holy Robe:Wooden Mail:Tights:Silver Robe:Mage Coat:Thief Clothes:Legion Plate Armor:Lucius's Fierce Armor of Volcano:Saphien's Armor of Ocean:Aebeccee's Raging Typhoon Armor:Claytos Cracking Earth Armor:Ninja Suit:Chameleon Armor:Glorious Suit:Glorious Popularized Suit:Glorious Mass-Production Suit")) {
 			case 1:
-				callsub S_EnchantArmor,2307,50;
+				setarray .@Items[0],2307,2309,2314,2316,2321,2325,2327,2328,2330,2332,2334,2335,2341,2344,2346,2348,2350,2337,2386,2394,2395,2396;
+				set .@j,50;
+				break;
 			case 2:
-				callsub S_EnchantArmor,2309,50;
+				setarray .@Items[0],2311,2318,2319,2320,2308,2310,2315,2317,2322,2324,2326,2331,2333,2336,2342,2345,2347,2349,2351;
+				set .@j,55;
+				set .@k,1;
+				break;
 			case 3:
-				callsub S_EnchantArmor,2314,50;
+				setarray .@Items[0],2364,2365,2391,2374,2375,2376,2377,2378,2379,2380,2381,2382,2387,2388,2389,2390;
+				set .@j,60;
+				break;
 			case 4:
-				callsub S_EnchantArmor,2316,50;
-			case 5:
-				callsub S_EnchantArmor,2321,50;
-			case 6:
-				callsub S_EnchantArmor,2325,50;
-			case 7:
-				callsub S_EnchantArmor,2327,50;
-			case 8:
-				callsub S_EnchantArmor,2328,50;
-			case 9:
-				callsub S_EnchantArmor,2330,50;
-			case 10:
-				callsub S_EnchantArmor,2332,50;
-			case 11:
-				callsub S_EnchantArmor,2334,50;
-			case 12:
-				callsub S_EnchantArmor,2335,50;
-			case 13:
-				callsub S_EnchantArmor,2341,50;
-			case 14:
-				callsub S_EnchantArmor,2344,50;
-			case 15:
-				callsub S_EnchantArmor,2346,50;
-			case 16:
-				callsub S_EnchantArmor,2348,50;
-			case 17:
-				callsub S_EnchantArmor,2350,50;
-			case 18:
-				callsub S_EnchantArmor,2337,50;
-			case 19:
-				callsub S_EnchantArmor,2386,50;
-			case 20:
-				callsub S_EnchantArmor,2394,50;
-			case 21:
-				callsub S_EnchantArmor,2395,50;
-			case 22:
-				callsub S_EnchantArmor,2396,50;
-			}
-		case 2:
-			switch(select("Mink Coat:Lord's Clothes:Glittering Jacket:Formal Suit:Mantle(1):Coat(1):Chain Mail(1):Full Plate(1):Silk Robe(1):Scapulare(1):Saint's Robe(1):Tights(1):Silver Robe(1):Thief Clothes(1):Legion Plate Armor(1):Lucius's Fierce Armor of Volcano(1):Saphien's Armor of Ocean(1):Aebeccee's Raging Typhoon Armor(1):Claytos Cracking Earth Armor(1)")) {
-			case 1:
-				callsub S_EnchantArmor,2311,55;
-			case 2:
-				callsub S_EnchantArmor,2318,55;
-			case 3:
-				callsub S_EnchantArmor,2319,55;
-			case 4:
-				callsub S_EnchantArmor,2320,55;
-			case 5:
-				callsub S_EnchantArmor,2308,55;
-			case 6:
-				callsub S_EnchantArmor,2310,55;
-			case 7:
-				callsub S_EnchantArmor,2315,55;
-			case 8:
-				callsub S_EnchantArmor,2317,55;
-			case 9:
-				callsub S_EnchantArmor,2322,55;
-			case 10:
-				callsub S_EnchantArmor,2324,55;
-			case 11:
-				callsub S_EnchantArmor,2326,55;
-			case 12:
-				callsub S_EnchantArmor,2331,55;
-			case 13:
-				callsub S_EnchantArmor,2333,55;
-			case 14:
-				callsub S_EnchantArmor,2336,55;
-			case 15:
-				callsub S_EnchantArmor,2342,55;
-			case 16:
-				callsub S_EnchantArmor,2345,55;
-			case 17:
-				callsub S_EnchantArmor,2347,55;
-			case 18:
-				callsub S_EnchantArmor,2349,55;
-			case 19:
-				callsub S_EnchantArmor,2351,55;
-			}
-		case 3:
-			switch(select("Meteo Plate Armor:Orlean's Gown:Life Link:Diablos Robe:Diablos Armor:Assaulter Plate:Elite Engineer Armor:Assassin Robe:Warlock's Battle Robe:Medic's Robe:Elite Archer Suit:Elite Shooter Suit:Sprint Mail:Kandura:Armor of Naga:Improved Tights")) {
-			case 1:
-				callsub S_EnchantArmor,2364,60;
-			case 2:
-				callsub S_EnchantArmor,2365,60;
-			case 3:
-				callsub S_EnchantArmor,2391,60;
-			case 4:
-				callsub S_EnchantArmor,2374,60;
-			case 5:
-				callsub S_EnchantArmor,2375,60;
-			case 6:
-				callsub S_EnchantArmor,2376,60;
-			case 7:
-				callsub S_EnchantArmor,2377,60;
-			case 8:
-				callsub S_EnchantArmor,2378,60;
-			case 9:
-				callsub S_EnchantArmor,2379,60;
-			case 10:
-				callsub S_EnchantArmor,2380,60;
-			case 11:
-				callsub S_EnchantArmor,2381,60;
-			case 12:
-				callsub S_EnchantArmor,2382,60;
-			case 13:
-				callsub S_EnchantArmor,2387,60;
-			case 14:
-				callsub S_EnchantArmor,2388,60;
-			case 15:
-				callsub S_EnchantArmor,2389,60;
-			case 16:
-				callsub S_EnchantArmor,2390,60;
-			}
-		case 4:
-			mes "[Apprentice Craftsman]";
-			mes "Please come back when you have any interest in enchanting your armor.";
-			close;
+				mes "[Apprentice Craftsman]";
+				mes "Please come back when you have any interest in enchanting your armor.";
+				close;
 		}
+		set .@menu$,"";
+		for(set .@i,0; .@i<getarraysize(.@Items); set .@i,.@i+1)
+			set .@menu$, .@menu$+getitemname(.@Items[.@i])+((.@k)?" [1]":"")+":";
+		callsub S_EnchantArmor, .@Items[select(.@menu$)-1], .@j;
+		end;
 	}
 	else {
-		mes "[Apprentice Craftsman]";
 		mes "I am in charge of Enchanting Armors. Simply put, I've been studying ways to power-up armor.";
 		next;
 		mes "[Apprentice Craftsman]";
@@ -173,8 +68,8 @@ prontera,165,60,2	script	Apprentice Craftsman	73,{
 S_EnchantArmor:
 	set .@itemid,getarg(0);
 	set .@failrate,getarg(1);
+	mes "[Apprentice Craftsman]";
 	if ((countitem(.@itemid) > 0) && (countitem(.@itemid) < 2)) {
-		mes "[Apprentice Craftsman]";
 		mes "Socket enchant wil cost you 400,000 zeny. And there will be a random option enchanted. Of course, there is a chance of breaking your armor.";
 		next;
 		mes "[Apprentice Craftsman]";
@@ -183,92 +78,53 @@ S_EnchantArmor:
 		mes "and Cards will be GONE.^000000";
 		mes "Do you still want to try an Enchant?";
 		next;
-		switch(select("Hmm... Let me think it over.:Go ahead.")) {
-		case 1:
+		if(select("Hmm... Let me think it over.:Go ahead.")==1) {
 			mes "[Apprentice Craftsman]";
-			mes "Well, I can't blame you. Safety first, Ey?";
+			mes "Well, I can't blame you. Safety first, eh?";
 			mes "Now you have a nice day.";
 			close;
-		case 2:
-			mes "[Apprentice Craftsman]";
-			mes "Quite of an adventurer huh? Well, shall we?";
-			close2;
-			specialeffect2 EF_MAPPILLAR;
-			if (Zeny < 400000) {
-				mes "[Apprentice Craftsman]";
-				mes "Sorry, but you don't have enough zeny.";
-				close;
-			}
-			progressbar "ffff00",7;
-			set .@enc_ran,rand(1,.@failrate);
-			set zeny,zeny-400000;
-			delitem .@itemid,1;
-			if (.@enc_ran == 1) {
-				set .@addpart,4702;
-			}
-			else if (.@enc_ran == 2) {
-				set .@addpart,4712;
-			}
-			else if (.@enc_ran == 3) {
-				set .@addpart,4722;
-			}
-			else if (.@enc_ran == 4) {
-				set .@addpart,4732;
-			}
-			else if (.@enc_ran == 5) {
-				set .@addpart,4742;
-			}
-			else if (.@enc_ran == 6) {
-				set .@addpart,4752;
-			}
-			else if ((.@enc_ran > 6) && (.@enc_ran < 9)) {
-				set .@addpart,4701;
-			}
-			else if ((.@enc_ran > 8) && (.@enc_ran < 11)) {
-				set .@addpart,4711;
-			}
-			else if ((.@enc_ran > 10) && (.@enc_ran < 13)) {
-				set .@addpart,4721;
-			}
-			else if ((.@enc_ran > 12) && (.@enc_ran < 15)) {
-				set .@addpart,4731;
-			}
-			else if ((.@enc_ran > 14) && (.@enc_ran < 17)) {
-				set .@addpart,4741;
-			}
-			else if ((.@enc_ran > 16) && (.@enc_ran < 19)) {
-				set .@addpart,4751;
-			}
-			else if ((.@enc_ran > 18) && (.@enc_ran < 22)) {
-				set .@addpart,4700;
-			}
-			else if ((.@enc_ran > 21) && (.@enc_ran < 25)) {
-				set .@addpart,4710;
-			}
-			else if ((.@enc_ran > 24) && (.@enc_ran < 28)) {
-				set .@addpart,4720;
-			}
-			else if ((.@enc_ran > 27) && (.@enc_ran < 31)) {
-				set .@addpart,4730;
-			}
-			else if ((.@enc_ran > 30) && (.@enc_ran < 34)) {
-				set .@addpart,4740;
-			}
-			else if ((.@enc_ran > 33) && (.@enc_ran < 37)) {
-				set .@addpart,4750;
-			}
-			else {
-				specialeffect2 EF_PHARMACY_FAIL;
-				mes "[Apprentice Craftsman]";
-				mes "Well that's too bad.";
-				mes "The requested equipment has failed to enchant.";
-				close;
-			}
-			getitem2 .@itemid, 1, 1, 0, 0, 0, 0, 0, .@addpart;
 		}
+		mes "[Apprentice Craftsman]";
+		mes "Quite of an adventurer huh? Well, shall we?";
+		close2;
+		specialeffect2 EF_MAPPILLAR;
+		if (Zeny < 400000) {
+			mes "[Apprentice Craftsman]";
+			mes "Sorry, but you don't have enough zeny.";
+			close;
+		}
+		progressbar "ffff00",7;
+		set .@enc_ran,rand(1,.@failrate);
+		set zeny,zeny-400000;
+		delitem .@itemid,1;
+		if (.@enc_ran == 1) set .@addpart,4702;
+		else if (.@enc_ran == 2) set .@addpart,4712;
+		else if (.@enc_ran == 3) set .@addpart,4722;
+		else if (.@enc_ran == 4) set .@addpart,4732;
+		else if (.@enc_ran == 5) set .@addpart,4742;
+		else if (.@enc_ran == 6) set .@addpart,4752;
+		else if ((.@enc_ran > 6) && (.@enc_ran < 9)) set .@addpart,4701;
+		else if ((.@enc_ran > 8) && (.@enc_ran < 11)) set .@addpart,4711;
+		else if ((.@enc_ran > 10) && (.@enc_ran < 13)) set .@addpart,4721;
+		else if ((.@enc_ran > 12) && (.@enc_ran < 15)) set .@addpart,4731;
+		else if ((.@enc_ran > 14) && (.@enc_ran < 17)) set .@addpart,4741;
+		else if ((.@enc_ran > 16) && (.@enc_ran < 19)) set .@addpart,4751;
+		else if ((.@enc_ran > 18) && (.@enc_ran < 22)) set .@addpart,4700;
+		else if ((.@enc_ran > 21) && (.@enc_ran < 25)) set .@addpart,4710;
+		else if ((.@enc_ran > 24) && (.@enc_ran < 28)) set .@addpart,4720;
+		else if ((.@enc_ran > 27) && (.@enc_ran < 31)) set .@addpart,4730;
+		else if ((.@enc_ran > 30) && (.@enc_ran < 34)) set .@addpart,4740;
+		else if ((.@enc_ran > 33) && (.@enc_ran < 37)) set .@addpart,4750;
+		else {
+			specialeffect2 EF_PHARMACY_FAIL;
+			mes "[Apprentice Craftsman]";
+			mes "Well that's too bad.";
+			mes "The requested equipment has failed to enchant.";
+			close;
+		}
+		getitem2 .@itemid, 1, 1, 0, 0, 0, 0, 0, .@addpart;
 	}
 	else {
-		mes "[Apprentice Craftsman]";
 		mes "Hmm? There's nothing to be enchanted!";
 		mes "Please come back with just ONE equipment to be enchanted.";
 		close;
