@@ -1,5 +1,4 @@
 //===== rAthena Script ======================================= 
-//===== rAthena Script ======================================= 
 //= Mercenary related NPCs
 //===== By: ================================================== 
 //= L0ne_W0lf
@@ -9,8 +8,8 @@
 //= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
-//= Sells Lancer, Sword, and Archer, mercenaries
-//= Sells related mercenary items.
+//= Sells Lancer, Sword, and Archer mercenaries,
+//= along with related mercenary items.
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [L0ne_W0lf]
 //= 1.1 Optimization. [Zephyrus]

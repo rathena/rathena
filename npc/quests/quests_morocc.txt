@@ -1,4 +1,4 @@
-//===== rAthena Script ======================================= 
+﻿//===== rAthena Script ======================================= 
 //= Quest NPCs related to Morroc
 //===== By: ================================================== 
 //= kobra_k88
@@ -32,7 +32,7 @@
 //= 2.2 Updated Binocular and Stop Post quests. [L0ne_W0lf]
 //= 2.3 Replaced effect numerics with constants. [Samuray22]
 //= 2.4 Implemented Ep. 12.1 Continental Guard Quest. [L0ne_W0lf]
-//=     Moved Dandelion's Request to a it's own file.
+//=     Moved Dandelion's Request to its own file.
 //=     Added support NPCs required to finish Gaebolg quest.
 //= 2.5 Fixed Group of Evil never re-enabling. [L0ne_W0lf]
 //= 2.6 Added quest log commands for Resurrection of Satan Morroc. [L0ne_W0lf]

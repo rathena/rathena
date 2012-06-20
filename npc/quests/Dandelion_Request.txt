@@ -1,6 +1,18 @@
-//==================================================================================//
-//			Dandelion's Request / Morocc Invasion quest
-//==================================================================================//
+//===== rAthena Script ======================================= 
+//= Dandelion's Request / Morocc Invasion quest
+//===== By: ================================================== 
+//= SinSloth
+//===== Current Version: ===================================== 
+//= 1.2
+//===== Compatible With: ===================================== 
+//= rAthena SVN
+//===== Description: ========================================= 
+//= A Morroc quest that is no longer used.
+//===== Additional Comments: ================================= 
+//= 1.1 Fixed a small bug in Dandelion's Request. [SinSloth]
+//= 1.2 Moved Dandelion's Request to its own file.
+//============================================================ 
+
 izlude,103,106,3	script	Guildsman#1	48,3,3,{
 
 	if(checkweight(7416,1) != 1)

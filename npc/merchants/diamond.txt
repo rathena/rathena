@@ -50,10 +50,8 @@
 	next;
 
 	set .@menu$, "^FF82FF'17 Carat Diamond'^000000?";
-
-	if (countitem(6024)) {
-		set .@menu$, .@menu$ + ":Exchange my 17 Carat Diamond for zeny..";
-	}
+	if (countitem(6024))
+		set .@menu$, .@menu$ + ":Exchange my 17 Carat Diamond for zeny...";
 
 	switch(select(.@menu$)) {
 	case 1:
@@ -109,7 +107,6 @@
 		next;
 		
 		while(1) {
-			
 			if (select("^B9062FI will sign the contract.^000000:^828282Nevermind, I changed my mind.^000000") == 2) {
 				mes .@npc$;
 				mes "I see, that's too bad..";
@@ -129,7 +126,6 @@
 			next;
 			
 			input .@charname$;
-			
 			if (.@charname$ == strcharinfo(0)) {
 				mes .@npc$;
 				mes "Okay, good.";
@@ -145,11 +141,8 @@
 					mes "Calculating the price and service fee..";
 					mes "501,000,000 zeny.";
 					mes "Amount has been confirmed.";
-					
 					emotion e_loud;
-					
 					set Zeny, Zeny - 501000000;
-					
 					getitem 6024, 1;
 					next;
 
@@ -157,9 +150,7 @@
 					mes "You may exchange the diamond back for zeny at any time.";
 					mes "However, there will be a 1,000,000z service fee.";
 					mes "Thank you for your business.";
-					
 					emotion e_thx;
-					
 					close;
 				}
 				else {
@@ -168,9 +159,7 @@
 					mes "I'm sorry, but you don't have sufficient funds.";
 					mes "Including the service fee, a total of 501,000,000z is required.";
 					mes "Please check your zeny balance and try again.";
-					
 					emotion e_hmm;
-					
 					close;
 				}
 			}
@@ -184,15 +173,12 @@
 	case 2:
 		mes .@npc$;
 		mes "AAH. You would like to exchange your ^FF82FF'17 Carat Diamond'^000000 for zeny?";
-
 		emotion e_gasp;
 		next;
-
 		if (select("Yes:No") == 2) {
 			mes .@npc$;
 			mes "Then, what is it you desire?..";
 			mes ". . . . . ....";
-
 			emotion e_dots;
 			close;
 		}
@@ -223,7 +209,6 @@
 			}
 			
 			input .@charname$;
-			
 			if (.@charname$ == strcharinfo(0)) {
 				mes .@npc$;
 				mes "Your signature has been received.";
@@ -235,11 +220,8 @@
 				mes "Thank you for your business.";
 				mes "Whenever you need a ^FF82FF'17 Carat Diamond'^000000,";
 				mes "come back anytime with 500 million zeny.";
-				
 				emotion e_thx;
-				
 				delitem 6024, 1;
-				
 				set Zeny, Zeny + 499000000;
 				close;
 			}

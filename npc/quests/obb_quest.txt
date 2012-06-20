@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-// [Aegis COnversion]
+// [Aegis Conversion]
 //= Old Blue Box quest (?)
 //= Officially this quest gave an OBB in exhange for a the
 //= required items unlimitedly, however this was changed by
