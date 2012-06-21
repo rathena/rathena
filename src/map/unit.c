@@ -194,7 +194,7 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 				unit_warp( &sd->md->bl, sd->bl.m, sd->bl.x, sd->bl.y, CLR_TELEPORT );
 			}
 		}
-		else
+		else if( sd->md )
 		{
 			// reset the tick, he is not far anymore
 			sd->md->masterteleport_timer = 0;
