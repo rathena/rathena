@@ -46,6 +46,7 @@ struct mercenary_data {
 	int contract_timer;
 	
 	unsigned devotion_flag : 1;
+	unsigned int masterteleport_timer;
 };
 
 bool merc_class(int class_);

@@ -182,8 +182,22 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 			sd->areanpc_id=0;
 
 		if( sd->md && !check_distance_bl(&sd->bl, &sd->md->bl, MAX_MER_DISTANCE) )
-		{// mercenary is too far from the master so warp the master's position
-			unit_warp( &sd->md->bl, sd->bl.m, sd->bl.x, sd->bl.y, CLR_TELEPORT );
+		{
+			// mercenary should be warped after being 3 seconds too far from the master [greenbox]
+			if (sd->md->masterteleport_timer == 0)
+			{
+				sd->md->masterteleport_timer = gettick();
+			}
+			else if (DIFF_TICK(gettick(), sd->md->masterteleport_timer) > 3000)
+			{
+				sd->md->masterteleport_timer = 0;
+				unit_warp( &sd->md->bl, sd->bl.m, sd->bl.x, sd->bl.y, CLR_TELEPORT );
+			}
+		}
+		else
+		{
+			// reset the tick, he is not far anymore
+			sd->md->masterteleport_timer = 0;
 		}
 	} else if (md) {
 		if( map_getcell(bl->m,x,y,CELL_CHKNPC) ) {
@@ -206,9 +220,25 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 			clif_move(ud);
 		}
 	}
-	else if( mrd && mrd->master && !check_distance_bl(&mrd->master->bl, bl, MAX_MER_DISTANCE) )
-	{// mercenary is too far from the master so warp the master's position
-		unit_warp( bl, mrd->master->bl.id, mrd->master->bl.x, mrd->master->bl.y, CLR_TELEPORT );
+	else if( mrd && mrd->master )
+	{
+		if (!check_distance_bl(&mrd->master->bl, bl, MAX_MER_DISTANCE))
+		{
+			// mercenary should be warped after being 3 seconds too far from the master [greenbox]
+			if (mrd->masterteleport_timer == 0)
+			{
+				mrd->masterteleport_timer = gettick();
+			}
+			else if (DIFF_TICK(gettick(), mrd->masterteleport_timer) > 3000)
+			{
+				mrd->masterteleport_timer = 0;
+				unit_warp( bl, mrd->master->bl.id, mrd->master->bl.x, mrd->master->bl.y, CLR_TELEPORT );
+			}
+		}
+		else
+		{
+			mrd->masterteleport_timer = 0;
+		}
 	}
 
 	if(tid == INVALID_TIMER) //A directly invoked timer is from battle_stop_walking, therefore the rest is irrelevant.
