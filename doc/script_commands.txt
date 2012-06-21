@@ -2766,7 +2766,10 @@ Type is the type of object to search for:
   0 - Character object
   1 - NPC object
   2 - Pet object
-  3 - Monster object.
+  3 - Monster object
+  4 - Homunculus object
+  5 - Mercenary object
+  6 - Elemental object
   
 While 3 is meant to look for a monster object, no searching will be done if you 
 specify type 3, and the function will always return -1.
