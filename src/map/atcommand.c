@@ -3830,6 +3830,7 @@ ACMD_FUNC(reloadmobdb)
 	read_petdb();
 	merc_reload();
 	read_mercenarydb();
+	read_mercenary_skilldb();
 	reload_elementaldb();
 	clif_displaymessage(fd, msg_txt(98)); // Monster database has been reloaded.
 
