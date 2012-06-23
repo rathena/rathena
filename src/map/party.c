@@ -993,7 +993,8 @@ int party_exp_share(struct party_data* p, struct block_list* src, unsigned int b
 	for (i = 0; i < c; i++) {
 #ifdef RENEWAL_EXP
 		unsigned int b_exp = base_exp, j_exp = job_exp;
-		party_renewal_exp_mod(&b_exp,&j_exp,sd[i]->status.base_level,src_lvl);
+		if( !(src && src->type == BL_MOB && ((TBL_MOB*)src)->db->mexp) )
+			party_renewal_exp_mod(&b_exp,&j_exp,sd[i]->status.base_level,src_lvl);
 		pc_gainexp(sd[i], src, b_exp, j_exp, false);
 #else
 		pc_gainexp(sd[i], src, base_exp, job_exp, false);
