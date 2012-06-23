@@ -3,21 +3,22 @@
 //===== By: ================================================== 
 //= ????, L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.3
 //===== Compatible With: ===================================== 
 //= rAthena 1.0
 //===== Description: ========================================= 
 //= [AEGIS Conversion]
-//= Battleground npcs:
+//= Battleground NPCs:
 //= - Generals and Aides
-//= - Battlegroun Warper
+//= - Battleground Warper
 //= - Kafra and Repairman.
-//= - GM Management NPC (Disabled by default)
-//= - Badge Exhanger (Tierra and Flavius.)
+//= - GM Management NPC (disabled by default)
+//= - Badge Exchanger (Tierra and Flavius)
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
 //= 1.1 Updated several NPCs to Official.
 //= 1.2 Updated Repairman NPC
+//= 1.3 Optimized "Erundek" NPC. [Euphy]
 //============================================================
 
 // Generals
@@ -406,219 +407,70 @@ bat_room,160,150,3	script	Erundek	109,{
 				mes "[Erundek]";
 				mes "The following items are available in the ^3131FFDagger, One-Handed Sword, Two-Handed Sword, and Two-Handed Spear^000000 category.";
 				next;
-				switch(select("Brave Assassin's Damascus(BB):Valorous Assassin's Damascus(VB):Brave Gladiator's Blade(BB):Valorous Gladiator's Blade(VB):Brave Assaulter's Katzbalger(BB):Valorous Assaulters's Katzbalger(VB):Assaulter Spear(BB):Assaulter Lance(VB)")) {
-				case 1:
-					setarray .@cost[0],7828,100; //BF_Badge1
-					setarray .@item[0],13036,1; //BF_Dagger1
-					break;
-				case 2:
-					setarray .@cost[0],7829,100; //BF_Badge2
-					setarray .@item[0],13037,1; //BF_Dagger2
-					break;
-				case 3:
-					setarray .@cost[0],7828,100; //BF_Badge1
-					setarray .@item[0],13411,1; //BF_Sword2
-					break;
-				case 4:
-					setarray .@cost[0],7829,100; //BF_Badge2
-					setarray .@item[0],13410,1; //BF_Sword1
-					break;
-				case 5:
-					setarray .@cost[0],7828,100; //BF_Badge1
-					setarray .@item[0],1183,1; //BF_Two_Handed_Sword1
-					break;
-				case 6:
-					setarray .@cost[0],7829,100; //BF_Badge2
-					setarray .@item[0],1184,1; //BF_Two_Handed_Sword2
-					break;
-				case 7:
-					setarray .@cost[0],7828,100; //BF_Badge1
-					setarray .@item[0],1425,1; //BF_Spear1
-					break;
-				case 8:
-					setarray .@cost[0],7829,100; //BF_Badge2
-					setarray .@item[0],1482,1; //BF_Lance1
-					break;
-				}
+				setarray .@Weapons[0],13036,7828,13037,7829,13411,7828,13410,7829,1183,7828,1184,7829,1425,7828,1482,7829;
 				break;
 			case 2:
 				mes "[Erundek]";
 				mes "The following items are available in the ^3131FFStaff / Mace / Two-Handed Axe / Huuma Shuriken^000000 category.";
 				next;
-				switch(select("Warlock's Magic Wand(BB):Warlock's Battle Wand(VB):Strong Recovery Wand:Speedy Recovery Wand:Brave Battlefield Morning Star(BB):Valorous Battlefield Morning Star(VB):Insane Battle Axe(BB):Insane Battle Axe(VB):Brave Huuma Front Shuriken(BB):Valorous Huuma Front Shuriken(VB)")) {
-				case 1:
-					setarray .@cost[0],7828,100; //BF_Badge1
-					setarray .@item[0],1632,1; //BF_Staff1
-					break;
-				case 2:
-					setarray .@cost[0],7829,100; //BF_Badge2
-					setarray .@item[0],1633,1; //BF_Staff2
-					break;
-				case 3:
-					setarray .@cost[0],7828,100; //BF_Badge1
-					setarray .@item[0],1634,1; //BF_Staff3
-					break;
-				case 4:
-					setarray .@cost[0],7829,100; //BF_Badge2
-					setarray .@item[0],1635,1; //BF_Staff4
-					break;
-				case 5:
-					setarray .@cost[0],7828,100; //BF_Badge1
-					setarray .@item[0],1543,1; //BF_Morning_Star2
-					break;
-				case 6:
-					setarray .@cost[0],7829,100; //BF_Badge2
-					setarray .@item[0],1542,1; //BF_Morning_Star1
-					break;
-				case 7:
-					setarray .@cost[0],7828,100; //BF_Badge1
-					setarray .@item[0],1380,1; //BF_Two_Handed_Axe2
-					break;
-				case 8:
-					setarray .@cost[0],7829,100; //BF_Badge2
-					setarray .@item[0],1379,1; //BF_Two_Handed_Axe1
-					break;
-				case 9:
-					setarray .@cost[0],7828,100; //BF_Badge1
-					setarray .@item[0],13305,1; //BF_Huuma_Shuriken1
-					break;
-				case 10:
-					setarray .@cost[0],7829,100; //BF_Badge2
-					setarray .@item[0],13306,1; //BF_Huuma_Shuriken2
-					break;
-				}
+				setarray .@Weapons[0],1632,7828,1633,7829,1634,7828,1635,7829,1543,7828,1542,7829,1380,7828,1379,7829,13305,7828,13306,7829;
 				break;
 			case 3:
 				mes "[Erundek]";
 				mes "The following weapons are available in the ^3131FFBow / Katar / Musical Instrument / Whip^000000 category.";
 				next;
-				switch(select("Brave Battle CrossBow(BB):Valorous Battle CrossBow(VB):Brave Carnage Katar(BB):Valorous Carnage Katar(VB):Brave Battlefield Guitar(BB):Valorous Battlefield Guitar(VB):Brave Battle Lariat(BB):Valorous Battle Lariat(VB)")) {
-				case 1:
-					setarray .@cost[0],7828,100; //BF_Badge1
-					setarray .@item[0],1739,1; //BF_Bow2
-					break;
-				case 2:
-					setarray .@cost[0],7829,100; //BF_Badge2
-					setarray .@item[0],1738,1; //BF_Bow1
-					break;
-				case 3:
-					setarray .@cost[0],7828,100; //BF_Badge1
-					setarray .@item[0],1279,1; //BF_Katar1
-					break;
-				case 4:
-					setarray .@cost[0],7829,100; //BF_Badge2
-					setarray .@item[0],1280,1; //BF_Katar2
-					break;
-				case 5:
-					setarray .@cost[0],7828,100; //BF_Badge1
-					setarray .@item[0],1924,1; //BF_Instrument2
-					break;
-				case 6:
-					setarray .@cost[0],7829,100; //BF_Badge2
-					setarray .@item[0],1923,1; //BF_Instrument1
-					break;
-				case 7:
-					setarray .@cost[0],7828,100; //BF_Badge1
-					setarray .@item[0],1978,1; //BF_Whip2
-					break;
-				case 8:
-					setarray .@cost[0],7829,100; //BF_Badge2
-					setarray .@item[0],1977,1; //BF_Whip1
-					break;
-				}
+				setarray .@Weapons[0],1739,7828,1738,7829,1279,7828,1280,7829,1924,7828,1923,7829,1978,7828,1977,7829;
 				break;
 			case 4:
 				mes "[Erundek]";
 				mes "The following weapons are available in the ^3131FFBook / Knuckle^000000 category.";
 				next;
-				switch(select("Brave Battle Strategy Book(BB):Valorous Battle Strategy Book(VB):Brave Battle Fist(BB):Valorous Battle Fist(VB)")) {
-				case 1:
-					setarray .@cost[0],7828,100; //BF_Badge1
-					setarray .@item[0],1574,1; //BF_Book1
-					break;
-				case 2:
-					setarray .@cost[0],7829,100; //BF_Badge2
-					setarray .@item[0],1575,1; //BF_Book2
-					break;
-				case 3:
-					setarray .@cost[0],7828,100; //BF_Badge1
-					setarray .@item[0],1824,1; //BF_Knuckle2
-					break;
-				case 4:
-					setarray .@cost[0],7829,100; //BF_Badge2
-					setarray .@item[0],1823,1; //BF_Knuckle1
-					break;
-				}
+				setarray .@Weapons[0],1574,7828,1575,7829,1824,7828,1823,7829;
 				break;
 			case 5:
 				mes "[Erundek]";
 				mes "The following weapons are available in the ^3131FFRevolver / Rifle / Gatling Gun / Shotgun / Grenade Launcher^000000 category.";
 				next;
-				switch(select("Soldier Revolver:Soldier Rifle:Soldier Gatling Gun:Soldier Shotgun:Soldier Grenade Launcher")) {
-				case 1:
-					setarray .@cost[0],7828,100; //BF_Badge1
-					setarray .@item[0],13108,1; //BF_Pistol1
-					break;
-				case 2:
-					setarray .@cost[0],7829,100; //BF_Badge2
-					setarray .@item[0],13171,1; //BF_Rifle1
-					break;
-				case 3:
-					setarray .@cost[0],7828,100; //BF_Badge1
-					setarray .@item[0],13172,1; //BF_Gatling_Gun1
-					break;
-				case 4:
-					setarray .@cost[0],7829,100; //BF_Badge2
-					setarray .@item[0],13173,1; //BF_Shotgun1
-					break;
-				case 5:
-					setarray .@cost[0],7829,100; //BF_Badge2
-					setarray .@item[0],13174,1; //BF_Launcher1
-					break;
-				}
+				setarray .@Weapons[0],13108,7828,13171,7829,13172,7828,13173,7829,13174,7829;
 				break;
 			}
-			if (.@cost[0] == 7829)
-				set .@type$,"(VB)";
-			else 
-				set .@type$,"(BB)";
+			set .@menu$,"";
+			for(set .@i,0; .@i<getarraysize(.@Weapons); set .@i,.@i+2)
+				set .@menu$, .@menu$+getitemname(.@Weapons[.@i])+((.@Weapons[.@i+1]==7828)?"(BB)":"(VB)")+":";
+			set .@i, (select(.@menu$)-1)*2;
+			set .@type$, ((.@Weapons[.@i+1]==7828)?"(BB)":"(VB)");
 			mes "[Erundek]";
-			mes "You chose ^3131FF"+getitemname(.@item[0])+""+.@type$+"^000000.";
-			mes "You can exchange for this item with ^FF0000"+.@cost[1]+" "+getitemname(.@cost[0])+"^000000.";
+			mes "You chose ^3131FF"+getitemname(.@Weapons[.@i])+.@type$+"^000000.";
+			mes "You can exchange for this item with ^FF0000100 "+getitemname(.@Weapons[.@i+1])+"^000000.";
 			mes "Would you like to exchange?";
 			next;
 			switch(select("Do not exchange:Exchange")) {
 			case 1:
-				mes "[Erundek]";
-				mes "Do you need more time to check the items?";
 				break;
 			case 2:
 				mes "[Erundek]";
-				mes "Would you like to spend ^FF0000"+.@cost[1]+" "+getitemname(.@cost[0])+"^000000 and receive an ^3131FF"+getitemname(.@item[0])+""+.@type$+"^000000?";
+				mes "Would you like to spend ^FF0000100 "+getitemname(.@Weapons[.@i+1])+"^000000 and receive a ^3131FF"+getitemname(.@Weapons[.@i])+.@type$+"^000000?";
 				next;
 				mes "[Erundek]";
 				mes "Remember, Battleground Reward Items are ^FF0000Character Bound^000000. Are you sure you want this item?";
 				next;
 				switch(select("Yes:No")) {
 				case 1:
-					if (countitem(.@cost[0]) >= .@cost[1]) {
-						mes "[Erundek]";
-						mes "Thank you for exchanging.";
-						delitem .@cost[0],.@cost[1];
-						getitem .@item[0],.@item[1];
-					}
-					else {
-						mes "[Erundek]";
-						mes "I'm sorry, but you don't have enough badges to exchange.";
-					}
-					break;
-				case 2:
 					mes "[Erundek]";
-					mes "Do you need more time to check out the items?";
+					if (countitem(.@Weapons[.@i+1]) >= 100) {
+						mes "Thank you for exchanging.";
+						delitem .@Weapons[.@i+1],100;
+						getitem .@Weapons[.@i],1;
+					}
+					else mes "I'm sorry, but you don't have enough badges to exchange.";
+					close;
+				case 2:
 					break;
 				}
 				break;
 			}
+			mes "[Erundek]";
+			mes "Do you need more time to check the items?";
 			close;
 		case 2:
 			mes "[Erundek]";
@@ -627,64 +479,10 @@ bat_room,160,150,3	script	Erundek	109,{
 			next;
 			switch(select("Garments / Shoes:Armor")) {
 			case 1:
-				switch(select("Captain's Manteau:Commander's Manteau:Sheriff's Manteau:Battle Greave:Combat Boots:Battle Boots")) {
-				case 1:
-					setarray .@cost[0],7828,50,7829,50; //BF_Badge1
-					setarray .@item[0],2538,1; //Commander_Manteau
-					break;
-				case 2:
-					setarray .@cost[0],7828,50,7829,50; //BF_Badge1
-					setarray .@item[0],2539,1; //Commander_Manteau_
-					break;
-				case 3:
-					setarray .@cost[0],7828,50,7829,50; //BF_Badge1
-					setarray .@item[0],2540,1; //Sheriff_Manteau
-					break;
-				case 4:
-					setarray .@cost[0],7828,50,7829,50; //BF_Badge1
-					setarray .@item[0],2435,1; //Battle_Greave
-					break;
-				case 5:
-					setarray .@cost[0],7828,50,7829,50; //BF_Badge1
-					setarray .@item[0],2436,1; //Combat_Boots
-					break;
-				case 6:
-					setarray .@cost[0],7828,50,7829,50; //BF_Badge1
-					setarray .@item[0],2437,1; //Battle_Boots
-					break;
-				}
+				setarray .@Items[0],2538,50,2539,50,2540,50,2435,50,2436,50,2437,50;
 				break;
 			case 2:
-				switch(select("Assaulter Plate:Elite Engineer Armor:Assassin Robe:Warlock's Battle Robe:Medic's Robe:Elite Archer Suit:Elite Shooter Suit")) {
-				case 1:
-					setarray .@cost[0],7828,80,7829,80; //BF_Badge1
-					setarray .@item[0],2376,1; //Assaulter_Plate
-					break;
-				case 2:
-					setarray .@cost[0],7828,80,7829,80; //BF_Badge1
-					setarray .@item[0],2377,1; //Elite_Engineer_Armor
-					break;
-				case 3:
-					setarray .@cost[0],7828,80,7829,80; //BF_Badge1
-					setarray .@item[0],2378,1; //Assassin_Robe
-					break;
-				case 4:
-					setarray .@cost[0],7828,80,7829,80; //BF_Badge1
-					setarray .@item[0],2379,1; //Warlock_Battle_Robe
-					break;
-				case 5:
-					setarray .@cost[0],7828,80,7829,80; //BF_Badge1
-					setarray .@item[0],2380,1; //Medic_Robe
-					break;
-				case 6:
-					setarray .@cost[0],7828,80,7829,80; //BF_Badge1
-					setarray .@item[0],2381,1; //Elite_Archer_Suit
-					break;
-				case 7:
-					setarray .@cost[0],7828,80,7829,80; //BF_Badge1
-					setarray .@item[0],2382,1; //Elite_Shooter_Suit
-					break;
-				}
+				setarray .@Items[0],2376,80,2377,80,2378,80,2379,80,2380,80,2381,80,2382,80;
 				break;
 			}
 			break;
@@ -693,64 +491,15 @@ bat_room,160,150,3	script	Erundek	109,{
 			mes "You chose ^3131FFAccessory^000000.";
 			mes "You can exchange the Medal of Honors with your Badges according to the job classes, as follows:";
 			next;
-			switch(select("Gunslinger:Swordman/Taekwon Master:Thief:Acolyte:Magician:Archer:Merchant")) {
-			case 1:
-				setarray .@cost[0],7828,500,7829,500; //BF_Badge1
-				setarray .@item[0],2733,1; //Medal_Gunner
-				break;
-			case 2:
-				setarray .@cost[0],7828,500,7829,500; //BF_Badge1
-				setarray .@item[0],2720,1; //Medal_Swordman
-				break;
-			case 3:
-				setarray .@cost[0],7828,500,7829,500; //BF_Badge1
-				setarray .@item[0],2721,1; //Medal_Thief
-				break;
-			case 4:
-				setarray .@cost[0],7828,500,7829,500; //BF_Badge1
-				setarray .@item[0],2722,1; //Medal_Acolyte
-				break;
-			case 5:
-				setarray .@cost[0],7828,500,7829,500; //BF_Badge1
-				setarray .@item[0],2723,1; //Medal_Mage
-				break;
-			case 6:
-				setarray .@cost[0],7828,500,7829,500; //BF_Badge1
-				setarray .@item[0],2724,1; //Medal_Archer
-				break;
-			case 7:
-				setarray .@cost[0],7828,500,7829,500; //BF_Badge1
-				setarray .@item[0],2725,1; //Medal_Merchant
-				break;
-			}
+			setarray .@Items[0],2733,500,2720,500,2721,500,2722,500,2723,500,2724,500,2725,500;
+			set .@menu1$,"Gunslinger:Swordman/Taekwon Master:Thief:Acolyte:Magician:Archer:Merchant";
 			break;
 		case 4:
 			mes "[Erundek]";
 			mes "You chose ^3131FFConsumable^000000.";
 			mes "The following consumable items are available for exchange with the battlefield badges:";
 			next;
-			switch(select("Tasty Pink Ration:Tasty White Ration:Military Ration A:Military Ration B:Military Ration C")) {
-			case 1:
-				setarray .@cost[0],7828,10,7829,10; //BF_Badge1
-				setarray .@item[0],12269,1; //Tasty_Colonel
-				break;
-			case 2:
-				setarray .@cost[0],7828,10,7829,10; //BF_Badge1
-				setarray .@item[0],12270,1; //Tasty_Major
-				break;
-			case 3:
-				setarray .@cost[0],7828,5,7829,5; //BF_Badge1
-				setarray .@item[0],12271,1; //Mre_A
-				break;
-			case 4:
-				setarray .@cost[0],7828,10,7829,10; //BF_Badge1
-				setarray .@item[0],12272,1; //Mre_B
-				break;
-			case 5:
-				setarray .@cost[0],7828,10,7829,10; //BF_Badge1
-				setarray .@item[0],12273,1; //Mre_C
-				break;
-			}
+			setarray .@Items[0],12269,10,12270,10,12271,5,12272,10,12273,10;
 			break;
 		}
 		break;
@@ -761,20 +510,24 @@ bat_room,160,150,3	script	Erundek	109,{
 		ReadBook 11010,1;
 		end;
 	}
-
+	set .@menu$,"";
+	if (.@menu1$ != "") set .@menu$, .@menu1$;
+	else for(set .@i,0; .@i<getarraysize(.@Items); set .@i,.@i+2)
+		set .@menu$, .@menu$+getitemname(.@Items[.@i])+":";
+	set .@i, (select(.@menu$)-1)*2;
 	mes "[Erundek]";
-	mes "You chose ^3131FF"+getitemname(.@item[0])+"^000000.";
-	switch(.@item[0]) {
-	case 2720: mes "This item is for Swordman and Taekwon Master Class only."; break;
-	case 2721: mes "This item is for Thief Class only."; break;
-	case 2722: mes "This item is for Acolyte Class only."; break;
-	case 2723: mes "This item is for Magician Class only."; break;
-	case 2724: mes "This item is for Archer Class only."; break;
-	case 2725: mes "This item is for Merchant Class only."; break;
-	case 2733: mes "This item is for Gunslinger only."; break;
-	default: break;
+	mes "You chose ^3131FF"+getitemname(.@Items[.@i])+"^000000.";
+	switch(.@Items[.@i]) {
+		case 2720: mes "This item is for Swordman and Taekwon Master Class only."; break;
+		case 2721: mes "This item is for Thief Class only."; break;
+		case 2722: mes "This item is for Acolyte Class only."; break;
+		case 2723: mes "This item is for Magician Class only."; break;
+		case 2724: mes "This item is for Archer Class only."; break;
+		case 2725: mes "This item is for Merchant Class only."; break;
+		case 2733: mes "This item is for Gunslinger only."; break;
+		default: break;
 	}
-	mes "You can exchange for this item with ^FF0000"+.@cost[1]+" "+getitemname(.@cost[0])+" or "+.@cost[3]+" "+getitemname(.@cost[2])+"^000000.";
+	mes "You can exchange for this item with ^FF0000"+.@Items[.@i+1]+" "+getitemname(7828)+" or "+.@Items[.@i+1]+" "+getitemname(7829)+"^000000.";
 	mes "Would you like to exchange?";
 	next;
 	switch(select("Do not exchange:Exchange")) {
@@ -785,43 +538,26 @@ bat_room,160,150,3	script	Erundek	109,{
 	case 2:
 		mes "[Erundek]";
 		mes "Which Badge do you want to exchange?";
-		mes "You need ^3131FF"+.@cost[1]+" Badges^000000 to exchange.";
+		mes "You need ^3131FF"+.@Items[.@i+1]+" Badges^000000 to exchange.";
 		next;
 		if (.@item[0] < 12269 || .@item[0] > 12273 ) {
 			mes "[Erundek]";
 			mes "Remember, Battleground Reward Items are ^FF0000Character Bound^000000. Are you sure you want this item?";
 			next;
 		}
-		switch(select("Bravery Badge:Valor Badge:Cancel")) {
-		case 1:
-			if (countitem(.@cost[0]) >= .@cost[1]) {
-				mes "[Erundek]";
-				mes "Thank you for exchanging.";
-				delitem .@cost[0],.@cost[1];
-				getitem .@item[0],.@item[1];
-			}
-			else {
-				mes "[Erundek]";
-				mes "You do not have enough Bravery Badges.";
-			}
-			break;
-		case 2:
-			if (countitem(.@cost[2]) >= .@cost[3]) {
-				mes "[Erundek]";
-				mes "Thank you for exchanging.";
-				delitem .@cost[2],.@cost[3];
-				getitem .@item[0],.@item[1];
-			}
-			else {
-				mes "[Erundek]";
-				mes "You do not have enough Valor Badges.";
-			}
-			break;
-		case 3:
-			mes "[Erundek]";
+		set .@j, select("Bravery Badge:Valor Badge:Cancel");
+		mes "[Erundek]";
+		if (.@j == 3) {
 			mes "You cancelled the exchange.";
 			break;
 		}
+		set .@cost, ((.@j==1)?7828:7829);
+		if (countitem(.@cost) >= .@Items[.@i+1]) {
+			mes "Thank you for exchanging.";
+			delitem .@cost, .@Items[.@i+1];
+			getitem .@Items[.@i],1;
+		}
+		else mes "You do not have enough "+getitemname(.@cost)+"s.";
 		break;
 	}
 	close;

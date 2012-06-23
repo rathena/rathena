@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= [Ishizu-chan]
 //===== Current Version: =====================================
-//= 2.5a
+//= 2.6
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -28,6 +28,7 @@
 //= 2.4 Fixed a minor bug with Arch Bishop checks. [Euphy]
 //= 2.5 Cleaning. [Euphy]
 //= 2.5a Fixed an incorrect variable. [Euphy]
+//= 2.6 Merged identical timer labels. [Euphy]
 //============================================================
 
 hu_fild01,140,163,5	script	Tower Keeper	852,3,3,{
@@ -2280,34 +2281,17 @@ OnEnable:
 	end;
 
 OnTimer500:
-	specialeffect EF_BEGINSPELL7;
-	end;
-
 OnTimer1000:
-	specialeffect EF_BEGINSPELL7;
-	end;
-
 OnTimer1500:
-	specialeffect EF_BEGINSPELL7;
-	end;
-
 OnTimer2000:
-	specialeffect EF_BEGINSPELL7;
-	end;
-
 OnTimer2500:
 	specialeffect EF_BEGINSPELL7;
 	end;
 
 OnTimer3000:
 	specialeffect EF_BEGINSPELL7;
-	if ($@thana_summon == 6) {
-		stopnpctimer;
-	}
-	else {
-		stopnpctimer;
-		initnpctimer;
-	}
+	stopnpctimer;
+	if ($@thana_summon != 6) initnpctimer;
 	end;
 
 OnDisable:
@@ -2323,34 +2307,17 @@ OnEnable:
 	end;
 
 OnTimer500:
-	specialeffect EF_BEGINSPELL3;
-	end;
-
 OnTimer1000:
-	specialeffect EF_BEGINSPELL3;
-	end;
-
 OnTimer1500:
-	specialeffect EF_BEGINSPELL3;
-	end;
-
 OnTimer2000:
-	specialeffect EF_BEGINSPELL3;
-	end;
-
 OnTimer2500:
 	specialeffect EF_BEGINSPELL3;
 	end;
 
 OnTimer3000:
 	specialeffect EF_BEGINSPELL3;
-	if ($@thana_summon == 6) {
-		stopnpctimer;
-	}
-	else {
-		stopnpctimer;
-		initnpctimer;
-	}
+	stopnpctimer;
+	if ($@thana_summon != 6) initnpctimer;
 	end;
 
 OnDisable:
@@ -2365,34 +2332,17 @@ OnEnable:
 	end;
 
 OnTimer500:
-	specialeffect EF_BEGINSPELL5;
-	end;
-
 OnTimer1000:
-	specialeffect EF_BEGINSPELL5;
-	end;
-
 OnTimer1500:
-	specialeffect EF_BEGINSPELL5;
-	end;
-
 OnTimer2000:
-	specialeffect EF_BEGINSPELL5;
-	end;
-
 OnTimer2500:
 	specialeffect EF_BEGINSPELL5;
 	end;
 
 OnTimer3000:
 	specialeffect EF_BEGINSPELL5;
-	if ($@thana_summon == 6) {
-		stopnpctimer;
-	}
-	else {
-		stopnpctimer;
-		initnpctimer;
-	}
+	stopnpctimer;
+	if ($@thana_summon != 6) initnpctimer;
 	end;
 
 OnDisable:
@@ -2408,34 +2358,17 @@ OnEnable:
 	end;
 
 OnTimer500:
-	specialeffect EF_BEGINSPELL4;
-	end;
-
 OnTimer1000:
-	specialeffect EF_BEGINSPELL4;
-	end;
-
 OnTimer1500:
-	specialeffect EF_BEGINSPELL4;
-	end;
-
 OnTimer2000:
-	specialeffect EF_BEGINSPELL4;
-	end;
-
 OnTimer2500:
 	specialeffect EF_BEGINSPELL4;
 	end;
 
 OnTimer3000:
 	specialeffect EF_BEGINSPELL4;
-	if ($@thana_summon == 6) {
-		stopnpctimer;
-	}
-	else {
-		stopnpctimer;
-		initnpctimer;
-	}
+	stopnpctimer;
+	if ($@thana_summon != 6) initnpctimer;
 	end;
 
 OnDisable:
@@ -2451,34 +2384,17 @@ OnEnable:
 	end;
 
 OnTimer500:
-	specialeffect EF_BEGINSPELL2;
-	end;
-
 OnTimer1000:
-	specialeffect EF_BEGINSPELL2;
-	end;
-
 OnTimer1500:
-	specialeffect EF_BEGINSPELL2;
-	end;
-
 OnTimer2000:
-	specialeffect EF_BEGINSPELL2;
-	end;
-
 OnTimer2500:
 	specialeffect EF_BEGINSPELL2;
 	end;
 
 OnTimer3000:
 	specialeffect EF_BEGINSPELL2;
-	if ($@thana_summon == 6) {
-		stopnpctimer;
-	}
-	else {
-		stopnpctimer;
-		initnpctimer;
-	}
+	stopnpctimer;
+	if ($@thana_summon != 6) initnpctimer;
 	end;
 
 OnDisable:
@@ -2502,9 +2418,7 @@ OnTouch:
 		donpcevent "tt_effect5::OnDisable";
 		hideonnpc "to_the_boss_room_tt";
 	}
-	else {
-		warp "thana_boss",136,116;
-	}
+	else warp "thana_boss",136,116;
 	end;
 }
 
@@ -2813,29 +2727,11 @@ OnTimer5000:
 	end;
 
 OnTimer60000:
-	mapwarp "thana_boss","tha_t12",130,47;
-	end;
-
 OnTimer1000000:
-	mapwarp "thana_boss","tha_t12",130,47;
-	end;
-
 OnTimer2000000:
-	mapwarp "thana_boss","tha_t12",130,47;
-	end;
-
 OnTimer3000000:
-	mapwarp "thana_boss","tha_t12",130,47;
-	end;
-
 OnTimer4000000:
-	mapwarp "thana_boss","tha_t12",130,47;
-	end;
-
 OnTimer5000000:
-	mapwarp "thana_boss","tha_t12",130,47;
-	end;
-
 OnTimer6000000:
 	mapwarp "thana_boss","tha_t12",130,47;
 	end;
