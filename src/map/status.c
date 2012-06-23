@@ -948,7 +948,6 @@ void initChangeTables(void) {
 	StatusChangeStateTable[SC_TRICKDEAD]           |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_BLADESTOP]           |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_BLADESTOP_WAIT]      |= SCS_NOMOVE;
-	StatusChangeStateTable[SC_SPIDERWEB]           |= SCS_NOMOVE|SCS_NOMOVECOND;
 	StatusChangeStateTable[SC_DANCING]             |= SCS_NOMOVE|SCS_NOMOVECOND;
 	StatusChangeStateTable[SC_GOSPEL]              |= SCS_NOMOVE|SCS_NOMOVECOND;
 	StatusChangeStateTable[SC_BASILICA]            |= SCS_NOMOVE|SCS_NOMOVECOND;
@@ -3363,8 +3362,7 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum sc
 		if( !(flag&SCS_NOMOVECOND) ) {
 			sc->cant.move += ( start ? 1 : -1 );
 		} else if(
-				  (sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1)
-				  || (sc->data[SC_DANCING] && sc->data[SC_DANCING]->val4 && (
+					 (sc->data[SC_DANCING] && sc->data[SC_DANCING]->val4 && (
 																			 !sc->data[SC_LONGING] ||
 																			 (sc->data[SC_DANCING]->val1&0xFFFF) == CG_MOONLIT ||
 																			 (sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE
