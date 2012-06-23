@@ -7237,10 +7237,9 @@ int pc_setcart(struct map_session_data *sd,int type) {
 				clif_cartlist(sd);
 			clif_updatestatus(sd, SP_CARTINFO);
 			sc_start(&sd->bl, SC_PUSH_CART, 100, type, 0);
+			clif_status_load_notick(&sd->bl, SI_ON_PUSH_CART,   2 , type, 0, 0);
 			break;
 	}
-	
-	clif_status_load_notick(&sd->bl, SI_ON_PUSH_CART,  type != 0 ? 2 : 0, type, 0, 0);
 	
 	if(pc_checkskill(sd, MC_PUSHCART) < 10)
 		status_calc_pc(sd,0); //Recalc speed penalty.
