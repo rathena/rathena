@@ -3,11 +3,14 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= rAthena SVN r16114+
 //===== Description: =========================================
 //= A fully functional job changer.
+//===== Additional Comments: =================================  
+//= 1.0 First Version
+//= 1.1 Fixed the problem of skill points on change job
 //============================================================
 
 prontera,153,193,6	script	Job Master	123,{
@@ -100,7 +103,8 @@ function Job_Menu {
 			if (.@i==4001) {
 				if (.LastJob) set lastJob, Class;
 				jobchange .@i;
-				resetlvl(1); }
+				resetlvl(1);
+				set SkillPoint, 0;	}
 			else jobchange .@i;
 			specialeffect2 338; specialeffect2 432;
 			if (.Platinum) callsub Get_Platinum;
