@@ -9282,7 +9282,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		if (--(sce->val4) >= 0) {
 			int hp =  rnd()%600 + 200;
 			map_freeblock_lock();
-			status_fix_damage(NULL, bl, sd||hp<status->hp?hp:status->hp-1, 0);
+			status_fix_damage(NULL, bl, sd||hp<status->hp?hp:status->hp-1, 1);
 			if( sc->data[type] ) {
 				if( status->hp == 1 ) break;
 				sc_timer_next(10000 + tick, status_change_timer, bl->id, data);
