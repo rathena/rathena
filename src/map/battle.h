@@ -474,6 +474,7 @@ extern struct Battle_Config
 	
 	int atcommand_suggestions_enabled;
     int min_npc_vending_distance;
+	int atcommand_mobinfo_type;
 } battle_config;
 
 void do_init_battle(void);

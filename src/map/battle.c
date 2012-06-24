@@ -5407,6 +5407,7 @@ static const struct _battle_data {
 	{ "mvp_tomb_enabled",					&battle_config.mvp_tomb_enabled,				1,      0,      1				},
 	{ "feature.atcommand_suggestions",		&battle_config.atcommand_suggestions_enabled,	0,      0,      1				},
 	{ "min_npc_vending_distance",           &battle_config.min_npc_vending_distance,		3,		0,		100				},
+	{ "atcommand_mobinfo_type",				&battle_config.atcommand_mobinfo_type,			0,		0,		1				},
 };
 
 
