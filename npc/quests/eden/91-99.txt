@@ -20,7 +20,7 @@ moc_para01,48,177,3	script	Mission [91 - 99]	857,{
 		mes "- this bulletin board. -";
 		close;
 	}
-	if (BaseLevel < 91 || BaseLevel > 99) {
+	if (BaseLevel < 91) {
 		mes "- This missions can only be -";
 		mes "- read by those who are -";
 		mes "- of the correct level. -";
@@ -28,6 +28,209 @@ moc_para01,48,177,3	script	Mission [91 - 99]	857,{
 		mes "- board somewhere for -";
 		mes "- my level. -";
 		close;
+	}
+	if (BaseLevel > 99) {
+		if (checkquest(4181,HUNTING) == 2) {
+			mes "You hunted all 30 Solider.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4181;
+			getexp 94000,94000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4182,HUNTING) == 2) {
+			mes "You hunted all 30 Freezer.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4182;
+			getexp 94000,94000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4183,HUNTING) == 2) {
+			mes "You hunted all 30 Heater.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4183;
+			getexp 94000,94000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4184,HUNTING) == 2) {
+			mes "You hunted all 30 Injustice.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4184;
+			getexp 94000,94000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4185,HUNTING) == 2) {
+			mes "You hunted all 30 Rybio.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4185;
+			getexp 94000,94000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4186,HUNTING) == 2) {
+			mes "You hunted all 30 Dark Priest.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4186;
+			getexp 94000,94000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4187,HUNTING) == 2) {
+			mes "You hunted all 30 Stapo.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4187;
+			getexp 94000,94000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4188,HUNTING) == 2) {
+			mes "You hunted all 30 Roween.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4188;
+			getexp 94000,94000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4189,HUNTING) == 2) {
+			mes "You hunted all 30 Siroma.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4189;
+			getexp 94000,94000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4190,HUNTING) == 2) {
+			mes "You hunted all 30 Shinobi.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4190;
+			getexp 94000,94000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4191,HUNTING) == 2) {
+			mes "You hunted all 30 Evil Nymph.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4191;
+			getexp 94000,94000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4192,HUNTING) == 2) {
+			mes "You hunted all 30 Deviruchi.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4192;
+			getexp 94000,94000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4193,HUNTING) == 2) {
+			mes "You hunted all 30 Mineral.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4193;
+			getexp 94000,94000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4194,HUNTING) == 2) {
+			mes "You hunted all 30 Kaho.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4194;
+			getexp 94000,94000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4195,HUNTING) == 2) {
+			mes "You hunted all 30 Neraid.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4195;
+			getexp 94000,94000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4196,HUNTING) == 2) {
+			mes "You hunted all 30 Disguise.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4196;
+			getexp 94000,94000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else {
+			mes "- This missions can only be -";
+			mes "- read by those who are -";
+			mes "- of the correct level. -";
+			mes "- There might be another -";
+			mes "- board somewhere for -";
+			mes "- my level. -";
+			close;
+		}
 	}
 	mes "- Many hunting missions -";
 	mes "- are on the bulletin board. -";

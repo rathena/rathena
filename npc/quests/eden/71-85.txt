@@ -44,7 +44,7 @@ moc_para01,44,38,3	script	Mission [71 - 85]	857,{
 					mes "- current mission first. -";
 					close;
 				}
-				if (checkquest(10102) == 0) {
+				if (checkquest(10102) == -1 || checkquest(10102) == 0) {
 					setquest 10102;
 					set slv_quest,1;
 					mes "- Good. Now go find Meidi -";
@@ -81,7 +81,7 @@ moc_para01,44,38,3	script	Mission [71 - 85]	857,{
 					mes "- current mission first. -";
 					close;
 				}
-				if (checkquest(10103) == 0) {
+				if (checkquest(10103) == -1 || checkquest(10103) == 0) {
 					setquest 10103;
 					set slv_quest,2;
 					mes "- Look for Ancellia. -";
@@ -118,7 +118,7 @@ moc_para01,44,38,3	script	Mission [71 - 85]	857,{
 					mes "- current mission first. -";
 					close;
 				}
-				if (checkquest(10104) == 0) {
+				if (checkquest(10104) == -1 || checkquest(10104) == 0) {
 					setquest 10104;
 					set slv_quest,3;
 					mes "- Look for Jeanbai -";
@@ -154,7 +154,7 @@ moc_para01,44,38,3	script	Mission [71 - 85]	857,{
 					mes "- current mission first. -";
 					close;
 				}
-				if (checkquest(10105) == 0) {
+				if (checkquest(10105) == -1 || checkquest(10105) == 0) {
 					setquest 10105;
 					set slv_quest,4;
 					mes "- Look for Risingeter -";
@@ -189,7 +189,7 @@ moc_para01,44,38,3	script	Mission [71 - 85]	857,{
 					mes "- current mission first. -";
 					close;
 				}
-				if (checkquest(10106) == 0) {
+				if (checkquest(10106) == -1 || checkquest(10106) == 0) {
 					setquest 10106;
 					set slv_quest,5;
 					mes "- Loof for Funfi -";
