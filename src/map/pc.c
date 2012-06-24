@@ -7223,6 +7223,9 @@ int pc_setcart(struct map_session_data *sd,int type) {
 	if( pc_checkskill(sd,MC_PUSHCART) <= 0 )
 		return 1;// Push cart is required
 
+	if( type == 0 && pc_iscarton(sd) )
+		status_change_end(&sd->bl,SC_GN_CARTBOOST,INVALID_TIMER);
+	
 #ifdef NEW_CARTS
 	
 	switch( type ) {
