@@ -991,7 +991,7 @@
 2488,9,6,2,0,0,0,1,1,no,0,0,0,none,0,		GN_FIRE_EXPANSION_TEAR_GAS,Fire Expansion Tear Gas
 2489,11,6,1,0,0,0,10,1:2:3:4:5:6:7:8:9:10,no,0,0,0,weapon,0,		GN_FIRE_EXPANSION_ACID,Fire Expansion Acid
 2490,9,6,2,0,0x3,1,5,1,yes,0,0x80,2:3:4:5:6,none,0,	GN_HELLS_PLANT,Hell's Plant
-2491,0,6,1,0,0x90,0,5,1,no,0,0,0,misc,0,	GN_HELLS_PLANT_ATK,Hell's Plant Attack
+2491,0,6,1,0,0xC0,0,5,1,no,0,0,0,misc,0,	GN_HELLS_PLANT_ATK,Hell's Plant Attack
 2492,0,6,4,0,0x3,6:7:8:9:10,5,1,yes,0,0,0,none,0,	GN_MANDRAGORA,Howling of Mandragora
 2493,11,6,16,0,0x1,0,1,1,yes,0,0,0,none,0,	GN_SLINGITEM,Sling Item
 2494,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,		GN_CHANGEMATERIAL,Change Material
