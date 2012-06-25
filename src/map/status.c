@@ -1727,6 +1727,7 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 	{	//Check for chase-walk/hiding/cloaking opponents.
 	case BL_PC:
 		if ( tsc->data[SC_CLOAKINGEXCEED] && !(status->mode&MD_BOSS) )
+			return 0;
 		if( (tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) || tsc->data[SC__INVISIBILITY] || tsc->data[SC_CAMOUFLAGE]) && !(status->mode&MD_BOSS) &&
 			( ((TBL_PC*)target)->special_state.perfect_hiding || !(status->mode&MD_DETECTOR) ) )
 			return 0;
@@ -9224,6 +9225,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		if(sc->opt1 == OPT1_STONEWAIT && sce->val3) {
 			sce->val4 = 0;
 			unit_stop_walking(bl,1);
+			unit_stop_attack(bl);
 			sc->opt1 = OPT1_STONE;
 			clif_changeoption(bl);
 			sc_timer_next(1000+tick,status_change_timer, bl->id, data );

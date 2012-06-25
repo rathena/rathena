@@ -3513,11 +3513,12 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case WL_HELLINFERNO:
-						if( status_get_element(target) == ELE_FIRE )
-							skillratio = 60 * skill_lv;
-						else
-							skillratio = 240 * skill_lv;
-						RE_LVL_DMOD(100);
+						skillratio = 300 * skill_lv;
+						RE_LVL_DMOD(100);	
+						// Shadow: MATK [{( Skill Level x 300 ) x ( Caster’s Base Level / 100 ) x 4/5 }] %
+						// Fire : MATK [{( Skill Level x 300 ) x ( Caster’s Base Level / 100 ) /5 }] %
+						if( mflag&ELE_DARK ){ skillratio *= 4; s_ele = ELE_DARK; }
+						skillratio /= 5;
 						break;
 					case WL_COMET: {
 						struct status_change * sc = status_get_sc(src);
@@ -3560,10 +3561,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case LG_SHIELDSPELL:// [(Caster’s Base Level x 4) + (Shield MDEF x 100) + (Caster’s INT x 2)] %
-					if( sd ) { 
-						skillratio = status_get_lv(src) * 4 + sd->bonus.shieldmdef * 100 + status_get_int(src) * 2;
-					} else
-						skillratio += 1900;	//2000%	
+						if( sd ) { 
+							skillratio = status_get_lv(src) * 4 + sd->bonus.shieldmdef * 100 + status_get_int(src) * 2;
+						} else
+							skillratio += 1900;	//2000%	
 						break;
 					case WM_METALICSOUND:
 						skillratio += 120 * skill_lv + 60 * ( sd? pc_checkskill(sd, WM_LESSON) : 10 ) - 100;
