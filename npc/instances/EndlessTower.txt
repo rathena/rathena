@@ -418,7 +418,7 @@ e_tower,1,1,2	script	#102Administrator Mode104	844,{
 		switch(select("Generate Purification Stone:Remove Purification Stone:Cancel")) {
 		case 1:
 			mes "Create the Purification Stone that stays for 30 minutes.";
-			donpcevent "Purification Stone#et1::Enable";
+			donpcevent "Purification Stone#et1::OnEnable";
 			break;
 		case 2:
 			mes "Destroy the Purification Stone immediately";
