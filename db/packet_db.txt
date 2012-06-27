@@ -1697,7 +1697,7 @@ packet_ver:29
 0x0838,12,searchstoreinfolistitemclick,2:6:10
 0x0439,8,useitem,2:4
 
-//2012-04-10aRagexeRE [Judas]
+//2012-04-10aRagexeRE
 packet_ver: 30
 0x01FD,15,repairitem,2
 0x089C,26,friendslistadd,2
@@ -1728,18 +1728,32 @@ packet_ver: 30
 0x0366,90,useskilltoposinfo,2:4:6:8:10
 0x0889,6,getcharnamerequest,2
 0x0884,6,solvecharname,2
-0x08E5,41,bookingregreq,0
+0x08E5,41,bookingregreq,2:4	//Added to prevent disconnections
 0x08E6,4
-0x08E7,10,bookingsearchreq,0
+0x08E7,10,bookingsearchreq,2
 0x08E8,-1
-0x08E9,2,bookingdelreq,0
+0x08E9,2,bookingdelreq,2
 0x08EA,4
-0x08EB,39,bookingupdatereq,0
+0x08EB,39,bookingupdatereq,2
 0x08EC,73
 0x08ED,43
 0x08EE,6
+0x08EF,6,bookingignorereq,2
+0x08F0,6
+0x08F1,6,bookingjoinpartyreq,2
+0x08F2,36
+0x08F3,-1
+0x08F4,6
+0x08F5,-1,bookingsummonmember,2:4
+0x08F6,22
+0x08F7,3
+0x08F8,7
+0x08F9,6
+0x08FA,6
+0x08FB,6,bookingcanceljoinparty,2
 0x0907,5,moveitem,2:4
 0x0908,5
+0x08D7,28,battlegroundreg,2:4 //Added to prevent disconnections
 
 //Add new packets here
 //packet_ver: 31
