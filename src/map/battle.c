@@ -4567,6 +4567,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				status_damage(target,e_bl,damage,0,0,0);
 				// Just show damage in target.
 				clif_damage(src, target, tick, wd.amotion, wd.dmotion, damage, wd.div_, wd.type, wd.damage2 );
+				map_freeblock_unlock();
 				return ATK_NONE;
 			}			
 		}		

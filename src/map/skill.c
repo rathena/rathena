@@ -8348,6 +8348,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			if(!mapindex)
 			{ //Given map not found?
 				clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
+				map_freeblock_unlock();
 				return 0;
 			}
 			pc_setpos(sd, mapindex, x, y, CLR_TELEPORT);
