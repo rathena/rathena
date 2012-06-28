@@ -163,6 +163,7 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	y += dy;
 	map_moveblock(bl, x, y, tick);
 	ud->walk_count++; //walked cell counter, to be used for walk-triggered skills. [Skotlex]
+	status_change_end(bl, SC_ROLLINGCUTTER, INVALID_TIMER); //If you move, you lose your counters. [malufett]
 
 	if (bl->x != x || bl->y != y || ud->walktimer != INVALID_TIMER)
 		return 0; //map_moveblock has altered the object beyond what we expected (moved/warped it)

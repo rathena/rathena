@@ -2362,16 +2362,15 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					skillratio += 400;
 					break;
 				case GN_CART_TORNADO:
-					if( sd )
-						skillratio += 50 * skill_lv + pc_checkskill(sd, GN_REMODELING_CART) * 100 - 100;
-					RE_LVL_DMOD(100);
-					if( sc && sc->data[SC_GN_CARTBOOST] )
-						skillratio += 10 * sc->data[SC_GN_CARTBOOST]->val1;
+					// ATK [( Skill Level x 50 ) + ( Cart Weight / ( 150 - Caster’s Base STR ))] + ( Cart Remodeling Skill Level x 50 )] %
+					skillratio = 50 * skill_lv;
+					if( sd && sd->cart_weight)
+						 skillratio += sd->cart_weight/10 / (150-sstatus->str) + pc_checkskill(sd, GN_REMODELING_CART) * 50;
 					break;
 				case GN_CARTCANNON:
-					if( sd ) skillratio += 250 + 50 * skill_lv + pc_checkskill(sd, GN_REMODELING_CART) * (sstatus->int_ / 2);
-					if( sc && sc->data[SC_GN_CARTBOOST] )
-						skillratio += 10 * sc->data[SC_GN_CARTBOOST]->val1;
+					// ATK [{( Cart Remodeling Skill Level x 50 ) x ( INT / 40 )} + ( Cart Cannon Skill Level x 60 )] %
+					skillratio = 60 * skill_lv; 
+					if( sd ) skillratio += pc_checkskill(sd, GN_REMODELING_CART) * 50 * (sstatus->int_ / 40);
 					break;
 				case GN_SPORE_EXPLOSION:
 					skillratio += 200 + 100 * skill_lv;
@@ -2695,6 +2694,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 #endif
 				ATK_ADD(20*lv);
 			}
+			if(sc->data[SC_GN_CARTBOOST])
+				ATK_ADD(10*sc->data[SC_GN_CARTBOOST]->val1);
 		}
 
 		//Refine bonus

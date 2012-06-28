@@ -3373,6 +3373,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case CH_TIGERFIST:
 	case PA_SHIELDCHAIN:	// Shield Chain
 	case PA_SACRIFICE:
+	case ASC_EDP:
 	case WS_CARTTERMINATION:	// Cart Termination
 	case AS_VENOMKNIFE:
 	case HT_PHANTASMIC:
@@ -5070,10 +5071,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		break;
 
-	case ASC_EDP:
-		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv) + ( sd ? 3000 * pc_checkskill(sd,GC_RESEARCHNEWPOISON) : 0 )));
-		break;
 	case AL_INCAGI:
 	case AL_BLESSING:
 	case MER_INCAGI:
@@ -11208,7 +11205,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 						const struct TimerData* td = tsc->data[type]?get_timer(tsc->data[type]->timer):NULL; 
 						if( td )
 							sec = DIFF_TICK(td->tick, tick);
-						map_moveblock(bl, src->bl.x, src->bl.y, tick);
+						///map_moveblock(bl, src->bl.x, src->bl.y, tick); // in official server it doesn't behave like this. [malufett]
 						clif_fixpos(bl);
 						sg->val2 = bl->id;
 					} else

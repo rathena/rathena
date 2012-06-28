@@ -8411,6 +8411,7 @@ int status_change_clear(struct block_list* bl, int type)
 		case SC_MATKPOTION:
 		case SC_S_LIFEPOTION:
 		case SC_L_LIFEPOTION:
+		case SC_PUSH_CART:
 			continue;
 
 		}
