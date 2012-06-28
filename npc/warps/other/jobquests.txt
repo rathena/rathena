@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 2.0
+//= 2.1
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Version Ep4+
 //===== Description: =========================================
@@ -21,8 +21,9 @@
 //= 1.6 removed swordman quest map warps. They are now contained in the swordman quest. [L0ne_W0lf]
 //= 1.7 Updated some 2-2 job quest related warps. [L0ne_W0lf]
 //= 1.8 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
-//= 1.9 Added Gungslinger and NInja warps. [L0ne_W0lf]
+//= 1.9 Added Gungslinger and Ninja warps. [L0ne_W0lf]
 //= 2.0 Updated Novice warps to use correct maps. [L0ne_W0lf]
+//= 2.1 Added one Shadow Chaser job warp. [Euphy]
 //============================================================
 
 
@@ -123,3 +124,8 @@ que_ng,10,183,0	warp	ninja03	1,1,que_ng,33,64
 que_ng,37,64,0	warp	ninja04	1,1,que_ng,15,182
 que_ng,30,37,0	warp	ninja05	1,1,que_ng,67,28
 que_ng,63,30,0	warp	ninja06	1,1,que_ng,25,37
+
+//==============================================================================
+//Shadow Chaser
+//==============================================================================
+job3_sha01,71,19,0	warp	shadowc1	1,1,tha_t01,149,224

@@ -9,7 +9,7 @@
 //===== Description: =========================================
 //= A fully functional job changer.
 //===== Additional Comments: =================================  
-//= 1.1 Fixed reset on Baby job change.
+//= 1.1 Fixed reset on Baby job change. [Euphy]
 //============================================================
 
 prontera,153,193,6	script	Job Master	123,{
@@ -99,7 +99,7 @@ function Job_Menu {
 		if (select(" ~ Change into ^0055FF"+jobname(.@i)+"^000000 class: ~ ^777777Go back^000000")==1) {
 			mes "[Job Master]";
 			mes "You are now "+A_An(jobname(.@i))+"!";
-			if (.@i==4001) if (.LastJob) set lastJob, Class;
+			if (.@i==4001 && .LastJob) set lastJob, Class;
 			jobchange .@i;
 			if (.@i==4001 || .@i==4023) resetlvl(1);
 			specialeffect2 338; specialeffect2 432;
