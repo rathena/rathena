@@ -3373,7 +3373,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case CH_TIGERFIST:
 	case PA_SHIELDCHAIN:	// Shield Chain
 	case PA_SACRIFICE:
-	case ASC_EDP:
 	case WS_CARTTERMINATION:	// Cart Termination
 	case AS_VENOMKNIFE:
 	case HT_PHANTASMIC:
@@ -5111,6 +5110,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case HW_MAGICPOWER:
 	case PF_MEMORIZE:
 	case PA_SACRIFICE:
+	case ASC_EDP:
 	case PF_DOUBLECASTING:
 	case SG_SUN_COMFORT:
 	case SG_MOON_COMFORT:
