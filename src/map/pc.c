@@ -2583,6 +2583,14 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		if(sd->state.lr_flag != 2)
 			sd->bonus.sp_base_matk += val;
 		break;
+	case SP_FIXCASTRATE:
+		if(sd->state.lr_flag != 2)
+			sd->fixcastrate+=val;
+		break;
+	case SP_VARCASTRATE:
+		if(sd->state.lr_flag != 2)
+			sd->varcastrate+=val;
+		break;
 	default:
 		ShowWarning("pc_bonus: unknown type %d %d !\n",type,val);
 		break;
@@ -3064,7 +3072,55 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->sprateskill[i].id = type2;
 			sd->sprateskill[i].val = val;
 		}
-		break;			
+		break;		
+	case SP_SKILL_COOLDOWN:
+		if(sd->state.lr_flag == 2)
+			break;
+		ARR_FIND(0, ARRAYLENGTH(sd->skillcooldown), i, sd->skillcooldown[i].id == 0 || sd->skillcooldown[i].id == type2);
+		if (i == ARRAYLENGTH(sd->skillcooldown))
+		{	
+			ShowDebug("run_script: bonus2 bSkillCoolDown reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillcooldown), type2, val);
+			break;
+		}
+		if (sd->skillcooldown[i].id == type2)
+			sd->skillcooldown[i].val += val;
+		else {
+			sd->skillcooldown[i].id = type2;
+			sd->skillcooldown[i].val = val;
+		}
+		break;
+	case SP_SKILL_FIXEDCAST:
+		if(sd->state.lr_flag == 2)
+			break;
+		ARR_FIND(0, ARRAYLENGTH(sd->skillfixcast), i, sd->skillfixcast[i].id == 0 || sd->skillfixcast[i].id == type2);
+		if (i == ARRAYLENGTH(sd->skillfixcast))
+		{	
+			ShowDebug("run_script: bonus2 bSkillFixedCast reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillfixcast), type2, val);
+			break;
+		}
+		if (sd->skillfixcast[i].id == type2)
+			sd->skillfixcast[i].val += val;
+		else {
+			sd->skillfixcast[i].id = type2;
+			sd->skillfixcast[i].val = val;
+		}
+		break;
+	case SP_SKILL_VARIABLECAST:
+		if(sd->state.lr_flag == 2)
+			break;
+		ARR_FIND(0, ARRAYLENGTH(sd->skillvarcast), i, sd->skillvarcast[i].id == 0 || sd->skillvarcast[i].id == type2);
+		if (i == ARRAYLENGTH(sd->skillvarcast))
+		{	
+			ShowDebug("run_script: bonus2 bSkillVariableCast reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillvarcast), type2, val);
+			break;
+		}
+		if (sd->skillvarcast[i].id == type2)
+			sd->skillvarcast[i].val += val;
+		else {
+			sd->skillvarcast[i].id = type2;
+			sd->skillvarcast[i].val = val;
+		}
+		break;
 	default:
 		ShowWarning("pc_bonus2: unknown type %d %d %d!\n",type,type2,val);
 		break;

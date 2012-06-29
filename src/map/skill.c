@@ -8837,8 +8837,16 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 
 		if( !sd || sd->skillitem != ud->skillid || skill_get_delay(ud->skillid,ud->skilllv) )
 			ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv); //Tests show wings don't overwrite the delay but skill scrolls do. [Inkfish]
-		if( sd && skill_get_cooldown(ud->skillid,ud->skilllv) > 0 )
-			skill_blockpc_start(sd, ud->skillid, skill_get_cooldown(ud->skillid, ud->skilllv));
+		if( sd && skill_get_cooldown(ud->skillid,ud->skilllv) > 0 ){
+			int i, cooldown = skill_get_cooldown(ud->skillid, ud->skilllv);
+			for (i = 0; i < ARRAYLENGTH(sd->skillcooldown) && sd->skillcooldown[i].id; i++) { // Increases/Decreases cooldown of a skill by item/card bonuses.
+				if (sd->skillcooldown[i].id == ud->skillid){
+					cooldown += sd->skillcooldown[i].val;
+					break;
+				}
+			}
+			skill_blockpc_start(sd, ud->skillid, cooldown);
+		}
 		if( battle_config.display_status_timers && sd )
 			clif_status_change(src, SI_ACTIONDELAY, 1, skill_delayfix(src, ud->skillid, ud->skilllv), 0, 0, 0);
 		if( sd )
@@ -13001,11 +13009,23 @@ int skill_castfix (struct block_list *bl, int skill_id, int skill_lv)
  *------------------------------------------*/
 int skill_castfix_sc (struct block_list *bl, int time, int skill_id, int skill_lv) {
 	struct status_change *sc = status_get_sc(bl);
+	struct map_session_data *sd = BL_CAST(BL_PC,bl);
 #ifdef RENEWAL_CAST
 	int fixed = skill_get_fixed_cast(skill_id, skill_lv);
 	if( !fixed ) {
 		fixed = skill_get_cast(skill_id, skill_lv);
 		fixed = ( fixed > 1 ? ( fixed * 20 / 100 ) : 0 );
+	}
+	if(sd){// Increases/Decreases fixed cast time of a skill by item/card bonuses.
+		int i;
+		if( sd->fixcastrate != 100 )
+			fixed = fixed * sd->fixcastrate / 100;
+		for (i = 0; i < ARRAYLENGTH(sd->skillfixcast) && sd->skillfixcast[i].id; i++) { 
+			if (sd->skillfixcast[i].id == skill_id){
+				fixed += sd->skillfixcast[i].val;
+				break;
+			}
+		}
 	}
 #endif
 	if (sc && sc->count) {
@@ -13038,7 +13058,7 @@ int skill_castfix_sc (struct block_list *bl, int time, int skill_id, int skill_l
 	/**
 	 * WL_RADIUS decreases 10/15/20% fixed cast time from warlock skills
 	 **/
-	if( bl->type == BL_PC && skill_id >= WL_WHITEIMPRISON && skill_id <= WL_FREEZE_SP && ( skill_lv = pc_checkskill((TBL_PC*)bl, WL_RADIUS) ) )
+	if( sd && skill_id >= WL_WHITEIMPRISON && skill_id <= WL_FREEZE_SP && ( skill_lv = pc_checkskill(sd, WL_RADIUS) ) )
 		fixed -= fixed * (5+(skill_lv*5)) / 100;
 	return (time > 0 || fixed > 0) ? cap_value( time , fixed , INT_MAX ) : 0;
 #else
