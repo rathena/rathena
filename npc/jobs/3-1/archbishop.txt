@@ -1,26 +1,26 @@
 //===== rAthena Script =======================================
-//= Arch Bishop Job Quest
+//= Arch Bishop Job change Quest
 //===== By: ==================================================
 //= L0ne_W0lf
 //= Credits: Gepard
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= [Aegis Conversion]
-//= Job change script for Third class (Arch Bishop)
-//= Does not entirely support changing to Baby Third Class.
+//= [Translated from the Official]
+//= Job change Quest from Priest / High Priest -> Arch Bishop.
 //===== Additional Comments: =================================
 //= 1.0 First version.
 //= 1.1 Fixed class checks for arch bishops.
 //= 1.2 Fixed Job tags typos.
 //= 1.3 Made some NPC's into duplicates and fixed some && / || checks. [Masao]
 //= 1.4 Fixed Job_Archbishop/Job_Archbishop_T typos. [Euphy]
+//= 1.5 Redone the whole Script. [Masao]
 //============================================================
 
 prt_church,103,88,3	script	Praying Minister#arch	60,{
-	if ((Class != Job_Priest) && (Class != Job_High_Priest)) {
+	if ((Class != Job_Priest) && (Class != Job_High_Priest) && (Class != Job_Baby_Priest)) {
 		if (Class == Job_Arch_Bishop || Class == Job_Arch_Bishop_T || Class == Job_Baby_Bishop) {
 			mes "[Praying Minister]";
 			mes "Ah! An Archbishop.";
@@ -45,124 +45,122 @@ prt_church,103,88,3	script	Praying Minister#arch	60,{
 		mes "I'm going to make them ministers worthy of serving Odin.";
 		close;
 	}
-	else {
-		if ((BaseLevel == 99) && (JobLevel > 49)) {
-			if (job_arch == 0) {
-				if (SkillPoint) {
-					mes "You can't change jobs without using all your skill points. Please use all of your skill points before applying to change jobs~";
-					close;
-				}
-				mes "[Praying Minister]";
-				mes "In front of the Almighty God Odin, there shall be no person smarter than him, and there will be no person more merciful than him.";
-				next;
-				mes "[Praying Minister]";
-				mes "All ministers of Odin should be diligent. They should never be too lazy to serve Odin.";
-				next;
-				if (Sex == 1) {
-					mes "[Praying Minister]";
-					mes "Brother, how has your life been?";
-				}
-				else {
-					mes "[Praying Minister]";
-					mes "Sister, how has your life been?";
-				}
-				mes "Have you lived it to it's fullest?";
-				mes "Have you served your life in the light of Odin?";
-				next;
-				mes "[Praying Minister]";
-				mes "We are ministers and our behavior is seen as acts of the Gods.";
-				mes "We should always be mindful of this.";
-				next;
-				mes "[Praying Minister]";
-				mes "We should always tell the truth.";
-				mes "We should not fall prey to lies and deceit.";
-				next;
-				if (Sex == 1) {
-					mes "[Praying Minister]";
-					mes "Brother...";
-				}
-				else {
-					mes "[Praying Minister]";
-					mes "Sister...";
-				}
-				mes "Even though we serve Odin, we are normal people.";
-				mes "We can be degraded in spite of ourselves and we must realize that.";
-				next;
-				mes "[Praying Minister]";
-				mes "We always try to keep our original intention in mind and spread Odin's rule.";
-				next;
-				select("How do I become like that?");
-				mes "[Praying Minister]";
-				mes "That's a good question.";
-				mes "We have lots of methods.";
-				mes "But, I recommend this.";
-				next;
-				mes "[Praying Minister]";
-				mes "Have you ever heard of a";
-				mes "^3131FFHoly Pilgrimage^000000?";
-				mes "A Holy Pilgrimage means going to a holy place to pray to the God Odin for protection and grace.";
-				next;
-				mes "[Praying Minister]";
-				mes "When you pray to Odin in the holy place, you will feel that you are born again.";
-				next;
-				mes "[Praying Minister]";
-				mes "What do you think?";
-				mes "Would you like to do a Holy Pilgrimage?";
-				next;
-				switch (select("Yes I want to.:I'll think about it.")) {
-				case 1:
-					mes "[Praying Minister]";
-					mes "That's the correct attitude.";
-					mes "A person who lives in one's mundane life would better have a new mind and body and evolve to the way of a true minister of Odin.";
-					next;
-					mes "[Praying Minister]";
-					mes "There is a small village named Umbala far from here.";
-					mes "That village is a where a tribe lives in harmony with nature.";
-					next;
-					mes "[Praying Minister]";
-					mes "Go there and find Priest Dayan.";
-					mes "Tell him exactly, ''^3131FFI'm here for the Holy Pilgrimage^000000.''";
-					next;
-					mes "[Praying Minister]";
-					mes "He's very old so he is hard of hearing.";
-					mes "You have to speak loud and clearly. You got it?";
-					mes "I hope that this paves the way for you to live in the light of Odin......";
-					set job_arch,1;
-					setquest 2187;
-					close;
-				case 2:
-					mes "[Praying Minister]";
-					mes "A Holy Pilgrimage isn't that difficult.";
-					mes "Just be mindful that once you start the path you will be on your way to the way of a true minister of Odin.";
-					next;
-					mes "[Praying Minister]";
-					mes "Feel free to visit me if you change your mind.";
-					mes "I'll always be here for you.";
-					close;
-				}
+	if ((BaseLevel == 99) && (JobLevel > 49)) {
+		if (job_arch == 0) {
+			if (SkillPoint) {
+				mes "You can't change jobs without using all your skill points. Please use all of your skill points before applying to change jobs~";
+				close;
 			}
 			mes "[Praying Minister]";
-			mes "How's it going?";
-			mes "Did you meet Priest Dayan in Umbala?";
-			close;
+			mes "In front of the Almighty God Odin, there shall be no person smarter than him, and there will be no person more merciful than him.";
+			next;
+			mes "[Praying Minister]";
+			mes "All ministers of Odin should be diligent. They should never be too lazy to serve Odin.";
+			next;
+			if (Sex == 1) {
+				mes "[Praying Minister]";
+				mes "Brother, how has your life been?";
+			}
+			else {
+				mes "[Praying Minister]";
+				mes "Sister, how has your life been?";
+			}
+			mes "Have you lived it to it's fullest?";
+			mes "Have you served your life in the light of Odin?";
+			next;
+			mes "[Praying Minister]";
+			mes "We are ministers and our behavior is seen as acts of the Gods.";
+			mes "We should always be mindful of this.";
+			next;
+			mes "[Praying Minister]";
+			mes "We should always tell the truth.";
+			mes "We should not fall prey to lies and deceit.";
+			next;
+			if (Sex == 1) {
+				mes "[Praying Minister]";
+				mes "Brother...";
+			}
+			else {
+				mes "[Praying Minister]";
+				mes "Sister...";
+			}
+			mes "Even though we serve Odin, we are normal people.";
+			mes "We can be degraded in spite of ourselves and we must realize that.";
+			next;
+			mes "[Praying Minister]";
+			mes "We always try to keep our original intention in mind and spread Odin's rule.";
+			next;
+			menu "How do I become like that?",-;
+			mes "[Praying Minister]";
+			mes "That's a good question.";
+			mes "We have lots of methods.";
+			mes "But, I recommend this.";
+			next;
+			mes "[Praying Minister]";
+			mes "Have you ever heard of a";
+			mes "^3131FFHoly Pilgrimage^000000?";
+			mes "A Holy Pilgrimage means going to a holy place to pray to the God Odin for protection and grace.";
+			next;
+			mes "[Praying Minister]";
+			mes "When you pray to Odin in the holy place, you will feel that you are born again.";
+			next;
+			mes "[Praying Minister]";
+			mes "What do you think?";
+			mes "Would you like to do a Holy Pilgrimage?";
+			next;
+			switch (select("Yes I want to.:I'll think about it.")) {
+			case 1:
+				mes "[Praying Minister]";
+				mes "That's the correct attitude.";
+				mes "A person who lives in one's mundane life would better have a new mind and body and evolve to the way of a true minister of Odin.";
+				next;
+				mes "[Praying Minister]";
+				mes "There is a small village named Umbala far from here.";
+				mes "That village is a where a tribe lives in harmony with nature.";
+				next;
+				mes "[Praying Minister]";
+				mes "Go there and find Priest Dayan.";
+				mes "Tell him exactly, ''^3131FFI'm here for the Holy Pilgrimage^000000.''";
+				next;
+				mes "[Praying Minister]";
+				mes "He's very old so he is hard of hearing.";
+				mes "You have to speak loud and clearly. You got it?";
+				mes "I hope that this paves the way for you to live in the light of Odin......";
+				set job_arch,1;
+				setquest 2187;
+				close;
+			case 2:
+				mes "[Praying Minister]";
+				mes "A Holy Pilgrimage isn't that difficult.";
+				mes "Just be mindful that once you start the path you will be on your way to the way of a true minister of Odin.";
+				next;
+				mes "[Praying Minister]";
+				mes "Feel free to visit me if you change your mind.";
+				mes "I'll always be here for you.";
+				close;
+			}
 		}
 		mes "[Praying Minister]";
-		mes "In front of the Almighty God Odin, there shall be no person smarter than him, and there will be no person more merciful than him.";
-		next;
-		mes "[Praying Minister]";
-		mes "All ministers of Odin should be diligent. They should never be too lazy to serve Odin.";
-		next;
-		mes "[Praying Minister]";
-		mes "Thesedays, I've heard that ministers are becoming lax in their duty to Odin and adorn themselves with the splendors of the world.";
-		next;
-		mes "[Praying Minister]";
-		mes "If you see any of these ministers, can you ask to them to go to the church in prontera?";
-		next;
-		mes "[Praying Minister]";
-		mes "They give out a special aura so you can easily recognize them.";
-		mes "I'm going to make them ministers worthy of serving Odin.";
+		mes "How's it going?";
+		mes "Did you meet Priest Dayan in Umbala?";
 		close;
 	}
+	mes "[Praying Minister]";
+	mes "In front of the Almighty God Odin, there shall be no person smarter than him, and there will be no person more merciful than him.";
+	next;
+	mes "[Praying Minister]";
+	mes "All ministers of Odin should be diligent. They should never be too lazy to serve Odin.";
+	next;
+	mes "[Praying Minister]";
+	mes "Thesedays, I've heard that ministers are becoming lax in their duty to Odin and adorn themselves with the splendors of the world.";
+	next;
+	mes "[Praying Minister]";
+	mes "If you see any of these ministers, can you ask to them to go to the church in prontera?";
+	next;
+	mes "[Praying Minister]";
+	mes "They give out a special aura so you can easily recognize them.";
+	mes "I'm going to make them ministers worthy of serving Odin.";
+	close;
 }
 
 umbala,137,227,5	script	Utan Boy#arch	787,{
@@ -177,7 +175,7 @@ umbala,139,227,3	script	Priest#arch	60,{
 		mes "Un...ba... Unba?";
 		close;
 	}
-	else if (job_arch == 1) {
+	if (job_arch == 1) {
 		mes "[Priest]";
 		mes "Un...ba... Umba?";
 		next;
@@ -240,11 +238,14 @@ umbala,139,227,3	script	Priest#arch	60,{
 		mes "[" + strcharinfo(0) + "]";
 		mes "Hmm, I wanted to tell you...";
 		next;
-		input .@urans$;
-		if (.@urans$ != "I'm here for the Holy Pilgrimage") {
+		input .@inputstr$;
+		mes "[" + strcharinfo(0) + "]";
+		mes "" + .@inputstr$ + "";
+		next;
+		if (.@inputstr$ != "I'm here for the Holy Pilgrimage") {
 			mes "Priest Dayan doesn't seem to understand you. He just stares at you and smiles.";
 			next;
-			mes "[Priest Dayan]";
+			mes "[Priest]";
 			mes "Eh? Say what?";
 			close;
 		}
@@ -327,7 +328,7 @@ umbala,139,227,3	script	Priest#arch	60,{
 		changequest 2187,2188;
 		close;
 	}
-	else if (job_arch == 2) {
+	if (job_arch == 2) {
 		mes "[Priest Dayan]";
 		mes "This place is the holiest place in the world, Yggdrasil.";
 		mes "This holy ceremony will brighten your soul.";
@@ -382,7 +383,7 @@ umbala,139,227,3	script	Priest#arch	60,{
 			close;
 		}
 	}
-	else if (job_arch == 3) {
+	if (job_arch == 3) {
 		mes "[Priest Dayan]";
 		mes "Oh, you've come back.";
 		mes "I can feel that you have a fresh energy. Maybe you did pray truthfully.";
@@ -438,7 +439,6 @@ umbala,139,227,3	script	Priest#arch	60,{
 }
 
 yggdrasil01,220,47,0	script	#A pilgrimage to the Ho	139,5,5,{
-	end;
 
 OnTouch:
 	if (job_arch == 2) {
@@ -586,7 +586,7 @@ OnTouch:
 		warp "umbala",138,219;
 		end;
 	}
-	else if (job_arch == 3) {
+	if (job_arch == 3) {
 		mes "[" + strcharinfo(0) + "]";
 		mes "The song is over. It's time to go back to Priest Dayan.";
 		close2;
@@ -753,7 +753,7 @@ hu_in01,205,204,7	script	Praying Nun#benew	79,{
 		changequest 2189,2190;
 		close;
 	}
-	else if ((job_arch > 4) && (job_arch < 100)) {
+	if ((job_arch > 4) && (job_arch < 100)) {
 		mes "[Vinue]";
 		mes "I'll pray for your safe return.";
 		close;
@@ -766,7 +766,7 @@ hu_in01,205,204,7	script	Praying Nun#benew	79,{
 }
 
 odin_tem02,282,263,0	script	#find_val	139,3,3,{
-	end;
+
 OnTouch:
 	if ((job_arch > 4) && (job_arch < 100)) {
 		hideoffnpc "Valkyrie Illusion#arch";
@@ -802,16 +802,16 @@ OnInit:
 
 job3_arch01,29,34,3	script	Valkyrie#arch	403,{
 
-	if(checkweight(1201,1) == 0){
+	if(checkweight(1201,2) == 1){
 		//Custom translation
 		mes "- bags must be emptied before they can proceed. -";
 		close;
 	}
-	if ((BaseLevel != 99) || (JobLevel < 50)) {
+	if ((BaseLevel != 99) && (JobLevel < 50)) {
 		warp "odin_tem02",282,263;
 		end;
 	}
-	if (getmercinfo(0)) {
+	if (getmercinfo(1)) {
 		mes "[Valkyrie]";
 		mes "If you want to talk with me, you have to ^3131FFcancel all contracts^000000 with any mercenaries you have.";
 		close;
@@ -836,219 +836,226 @@ job3_arch01,29,34,3	script	Valkyrie#arch	403,{
 		mes "- you put some items into Kafra Storage. -";
 		close;
 	}
-	if ((Class != Job_Priest) && (Class != Job_High_Priest) && (Class != Job_Baby_Priest)) {
+	if ((Class != Job_Priest) && (Class != Job_High_Priest) && (Class == Job_Baby_Priest)) {
 		warp "odin_tem02",282,263;
-		end;
 	}
-	if (Class == Job_Arch_Bishop || Class == Job_Arch_Bishop_T || Class == Job_Baby_Bishop) {
-		warp "odin_tem02",282,263;
-		end;
-	}
-	if (job_arch < 5) {
-		warp "odin_tem02",282,263;
-		end;
-	}
-	if (job_arch == 5) {
-		mes "[Valkyrie]";
-		mes "In the heavens the sound of pipes spread out, but a bird that can't fly crawls and finally is crushed to pieces on the ground.";
-		mes "Ah, I'm resentful! so regretful!";
-		next;
-		mes "- Valkyrie holds its face, then she finds you and stares with a threatening face. -";
-		next;
-		mes "[Valkyrie]";
-		mes "You are a descendant of Heimdal living in pain as a mortal, why are you in here?";
-		mes "Are you here to ridicule my grim fate?";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "No way!";
-		mes "But it's true that I'm here for you.";
-		next;
-		mes "[Valkyrie Anguhilde]";
-		mes "...me?";
-		mes "Of course I'm staying in Midgard, but we are under the yoke of fate that can't coexist in this world.";
-		next;
-		mes "[Valkyrie Anguhilde]";
-		mes "I see, is your goal to enter Valhalla?";
-		mes "If you do, it's the wrong place for you.";
-		next;
-		mes "[Valkyrie Anguhilde]";
-		mes "I was already expelled from Asgard.";
-		mes "My duty is protecting this small island from humans trying to take it from the Gods and even I don't have any energy to do so.";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "It's not that kind of problem.";
-		mes "But someone who perceives your painful situation has sent me here.";
-		next;
-		mes "[Valkyrie Anguhilde]";
-		mes "Haha! You are going to help me?!";
-		next;
-		mes "[Valkyrie Anguhilde]";
-		mes "...................";
-		next;
-		mes "- Valkyrie gives you a fierce scowl. -";
-		next;
-		mes "[Valkyrie Anguhilde]";
-		mes "In fact, I can't do anything with my body now.";
-		next;
-		mes "[Valkyrie Anguhilde]";
-		mes "Human, answer me. Are you here to sincerely help me?";
-		next;
-		switch (select("Yes:No")) {
-		case 1:
-			break;
-		case 2:
-			mes "[Valkyrie Anguhilde]";
-			mes "I knew that I couldn't trust a human!";
-			close2;
+	if (Class != Job_Arch_Bishop || Class != Job_Arch_Bishop_T || Class == Job_Baby_Bishop) {
+		if (job_arch < 5) {
 			warp "odin_tem02",282,263;
-			end;
 		}
-		mes "[Valkyrie Anguhilde]";
-		mes "Ok...";
-		mes "I don't have any energy to hold my own, so I have no choice but to trust you.";
-		next;
-		mes "[Valkyrie Anguhilde]";
-		mes "I was a normal Valkyrie that lead soldiers to Valhalla according to the order of Odin.";
-		next;
-		mes "[Valkyrie Anguhilde]";
-		mes "But I harmed Freki, one of Odin's wolves, and I was expelled form Asgard without any energy as a Valkyrie with orders to protect this island.";
-		next;
-		mes "[Valkyrie Anguhilde]";
-		mes "I was disgraced, this island is important as a temple for Odin and the various Gods.";
-		mes "I tried to do my best to protect this holy place.";
-		next;
-		mes "[Valkyrie Anguhilde]";
-		mes "But one day, the devil started to gain influence on this island.";
-		mes "I don't know why they came here and from where they came from.";
-		next;
-		mes "[Valkyrie Anguhilde]";
-		mes "They seiged the temple and I exhausted my energy tring to fight them all myself.";
-		next;
-		mes "[Valkyrie Anguhilde]";
-		mes "The holy shrine was tainted by the devils.";
-		mes "How long do I have to be under this dishonorable fate!";
-		next;
-		mes "[Valkyrie Anguhilde]";
-		mes "Mortal one, what is your name?";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "My name is " + strcharinfo(0) + ".";
-		next;
-		mes "[Valkyrie Anguhilde]";
-		mes "" + strcharinfo(0) + ",";
-		mes "You told me that you want to help me, right? Even though it disgraces me, I am asking for your help.";
-		next;
-		mes "[Valkyrie Anguhilde]";
-		mes "This place may look like it was made my humans. Actually, it's a very important monument and also a part of the God's history.";
-		next;
-		mes "[Valkyrie Anguhilde]";
-		mes "I've lost all of my energy and my body is sealed so there is no way for me to protect the shrine.";
-		mes "You have to send a message to Valhalla to ask for help from a Valkyrie quickly.";
-		next;
-		select("How can I do that?");
-		mes "[Valkyrie Anguhilde]";
-		mes "At the ^3131FFtop of the shrine^000000, You can contact to them with a ^3131FFGolden pipe^000000.";
-		next;
-		mes "[Valkyrie Anguhilde]";
-		mes "I'm going to give you a scroll of paper written in an ancient language.";
-		mes "In that scroll, there is my impersonation.";
-		mes "^3131FFIf you go outside, you can summon a Valkyrie with that scroll.^000000";
-		next;
-		mes "[Valkyrie Anguhilde]";
-		mes "After you summon my impersonation, you have to find a ^3131FFBroken pipe^000000.";
-		mes "Maybe it'll be spread in the shrine...";
-		next;
-		mes "[Valkyrie Anguhilde]";
-		mes "You have to go to the top of the shrine, collecting all broken pipes from the impersonation.";
-		mes "And then I'm going to take care of the matter.";
-		next;
-		mes "[Valkyrie Anguhilde]";
-		mes "An impersonation will help when you move or attack as you want through ^FF0000ALT+click^000000.";
-		mes "But you have to be careful if an imeprsonation falls down.";
-		next;
-		mes "[Valkyrie Anguhilde]";
-		mes "When you finish preparing to go on, talk to me again.";
-		mes "It'll be a long journey...";
-		set job_arch,6;
-		close;
-	}
-	if (job_arch == 6) {
-		if ($@archbs == 0) {
-			set $@archbs,1;
-			mes "[Valkyrie Anguhilde]";
-			mes "" + strcharinfo(0) + " Did you finish preparing for your way of asceticism?";
+		if (job_arch == 5) {
+			mes "[Valkyrie]";
+			mes "In the heavens the sound of pipes spread out, but a bird that can't fly crawls and finally is crushed to pieces on the ground.";
+			mes "Ah, I'm resentful! so regretful!";
 			next;
-			if (getmapusers("job3_arch02") > 0) {
-				mes "[Valkyrie Anguhilde]";
-				//Custom translation
-				mes "Ah, it seems someone is already combating the evil in the temple.";
-				mes "I will go see who it is, please wait a moment.";
-				set $@archbs,0;
-				close;
-			}
-			mes "[Valkyrie Anguhilde]";
-			mes "Ok. Now I'm going to send you there.";
-			mes "^FF0000When you go there, you have to summon my impersonation with the scroll^000000. Don't forget.";
-			set $@archbs,0;
-			close2;
-			nude;
-			delitem 2798,countitem(2798); //Will_Of_Exhausted_Angel
-			donpcevent "start#arch::OnEnable";
-			set job_arch, 7;
-			changequest 2190,2191;
-			warp "job3_arch02",119,49;
-			hideonnpc "Valkyrie#arch";
-			end;
-		}
-		mes "[Valkyrie Anguhilde]";
-		//Custom translation
-		mes "I am already talking to someone, please wait and talk to me again.";
-		close;
-	}
-	if (job_arch == 7) {
-		if (countitem(12381) > 0 || countitem(12382) > 0) {
-			if (countitem(12381) > 0) {
-				delitem 12381,countitem(12381); //ValkyrieA_Scroll
-			}
-			if (countitem(12382) > 0) {
-				delitem 12382,countitem(12382); //ValkyrieB_Scroll
-			}
-		}
-		if ($@archbs == 0) {
-			set $@archbs,1;
-			mes "[Valkyrie Anguhilde]";
-			mes "Are you ok human?";
-			mes "It was not as easy as I expected.";
-			mes "Will you challenge again?";
+			mes "- Valkyrie holds its face, then she finds you and stares with a threatening face. -";
 			next;
-			if (getmapusers("job3_arch02") > 0) {
-				set $@archbs,0;
-				mes "[Valkyrie Anguhilde]";
-				//Custom translation
-				mes "Ah, it seems someone is already combating the evil in the temple.";
-				mes "I will see who it is, please wait a moment.";
-				close;
-			}
-			set $@archbs,0;
+			mes "[Valkyrie]";
+			mes "You are a descendant of Heimdal living in pain as a mortal, why are you in here?";
+			mes "Are you here to ridicule my grim fate?";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "No way!";
+			mes "But it's true that I'm here for you.";
+			next;
 			mes "[Valkyrie Anguhilde]";
-			mes "OK. now I'm going to send you there.";
-			mes "^FF0000When you go there, you have to summon my impersonation with the scroll^000000.";
+			mes "...me?";
+			mes "Of course I'm staying in Midgard, but we are under the yoke of fate that can't coexist in this world.";
+			next;
+			mes "[Valkyrie Anguhilde]";
+			mes "I see, is your goal to enter Valhalla?";
+			mes "If you do, it's the wrong place for you.";
+			next;
+			mes "[Valkyrie Anguhilde]";
+			mes "I was already expelled from Asgard.";
+			mes "My duty is protecting this small island from humans trying to take it from the Gods and even I don't have any energy to do so.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "It's not that kind of problem.";
+			mes "But someone who perceives your painful situation has sent me here.";
+			next;
+			mes "[Valkyrie Anguhilde]";
+			mes "Haha! You are going to help me?!";
+			next;
+			mes "[Valkyrie Anguhilde]";
+			mes "...................";
+			next;
+			mes "- Valkyrie gives you a fierce scowl. -";
+			next;
+			mes "[Valkyrie Anguhilde]";
+			mes "In fact, I can't do anything with my body now.";
+			next;
+			mes "[Valkyrie Anguhilde]";
+			mes "Human, answer me. Are you here to sincerely help me?";
+			next;
+			switch (select("Yes:No")) {
+			case 1:
+				break;
+			case 2:
+				mes "[Valkyrie Anguhilde]";
+				mes "I knew that I couldn't trust a human!";
+				close2;
+				warp "odin_tem02",282,263;
+				end;
+			}
+			mes "[Valkyrie Anguhilde]";
+			mes "Ok...";
+			mes "I don't have any energy to hold my own, so I have no choice but to trust you.";
+			next;
+			mes "[Valkyrie Anguhilde]";
+			mes "I was a normal Valkyrie that lead soldiers to Valhalla according to the order of Odin.";
+			next;
+			mes "[Valkyrie Anguhilde]";
+			mes "But I harmed Freki, one of Odin's wolves, and I was expelled form Asgard without any energy as a Valkyrie with orders to protect this island.";
+			next;
+			mes "[Valkyrie Anguhilde]";
+			mes "I was disgraced, this island is important as a temple for Odin and the various Gods.";
+			mes "I tried to do my best to protect this holy place.";
+			next;
+			mes "[Valkyrie Anguhilde]";
+			mes "But one day, the devil started to gain influence on this island.";
+			mes "I don't know why they came here and from where they came from.";
+			next;
+			mes "[Valkyrie Anguhilde]";
+			mes "They seiged the temple and I exhausted my energy tring to fight them all myself.";
+			next;
+			mes "[Valkyrie Anguhilde]";
+			mes "The holy shrine was tainted by the devils.";
+			mes "How long do I have to be under this dishonorable fate!";
+			next;
+			mes "[Valkyrie Anguhilde]";
+			mes "Mortal one, what is your name?";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "My name is " + strcharinfo(0) + ".";
+			next;
+			mes "[Valkyrie Anguhilde]";
+			mes "" + strcharinfo(0) + ",";
+			mes "You told me that you want to help me, right? Even though it disgraces me, I am asking for your help.";
+			next;
+			mes "[Valkyrie Anguhilde]";
+			mes "This place may look like it was made my humans. Actually, it's a very important monument and also a part of the God's history.";
+			next;
+			mes "[Valkyrie Anguhilde]";
+			mes "I've lost all of my energy and my body is sealed so there is no way for me to protect the shrine.";
+			mes "You have to send a message to Valhalla to ask for help from a Valkyrie quickly.";
+			next;
+			menu "How can I do that?",-;
+			mes "[Valkyrie Anguhilde]";
+			mes "At the ^3131FFtop of the shrine^000000, You can contact to them with a ^3131FFGolden pipe^000000.";
+			next;
+			mes "[Valkyrie Anguhilde]";
+			mes "I'm going to give you a scroll of paper written in an ancient language.";
+			mes "In that scroll, there is my impersonation.";
+			mes "^3131FFIf you go outside, you can summon a Valkyrie with that scroll.^000000";
+			next;
+			mes "[Valkyrie Anguhilde]";
+			mes "After you summon my impersonation, you have to find a ^3131FFBroken pipe^000000.";
+			mes "Maybe it'll be spread in the shrine...";
+			next;
+			mes "[Valkyrie Anguhilde]";
+			mes "You have to go to the top of the shrine, collecting all broken pipes from the impersonation.";
+			mes "And then I'm going to take care of the matter.";
+			next;
+			mes "[Valkyrie Anguhilde]";
 			mes "An impersonation will help when you move or attack as you want through ^FF0000ALT+click^000000.";
 			mes "But you have to be careful if an imeprsonation falls down.";
-			close2;
-			nude;
-			delitem 2798,countitem(2798); //Will_Of_Exhausted_Angel
-			donpcevent "start#arch::OnEnable";
-			set job_arch, 7;
-			warp "job3_arch02",119,49;
-			hideonnpc "Valkyrie#arch";
+			next;
+			mes "[Valkyrie Anguhilde]";
+			mes "When you finish preparing to go on, talk to me again.";
+			mes "It'll be a long journey...";
+			set job_arch,6;
+			close;
+		}
+		if (job_arch == 6) {
+			if ($@archbs == 0) {
+				set $@archbs,1;
+				mes "[Valkyrie Anguhilde]";
+				mes "" + strcharinfo(0) + " Did you finish preparing for your way of asceticism?";
+				next;
+				if (getmapusers("job3_arch02") > 0) {
+					mes "[Valkyrie Anguhilde]";
+					//Custom translation
+					mes "Ah, it seems someone is already combating the evil in the temple.";
+					mes "I will go see who it is, please wait a moment.";
+					set $@archbs,0;
+					close;
+				}
+				mes "[Valkyrie Anguhilde]";
+				mes "Ok. Now I'm going to send you there.";
+				mes "^FF0000When you go there, you have to summon my impersonation with the scroll^000000. Don't forget.";
+				set $@archbs,0;
+				close2;
+				nude;
+				if (countitem(2798) > 0) {
+					delitem 2798,countitem(2798); //Will_Of_Exhausted_Angel
+				}
+				donpcevent "start#arch::OnEnable";
+				set job_arch,7;
+				changequest 2190,2191;
+				warp "job3_arch02",119,49;
+				hideonnpc "Valkyrie#arch";
+				end;
+			}
+			mes "[Valkyrie Anguhilde]";
+			//Custom translation
+			mes "I am already talking to someone, please wait and talk to me again.";
+			close;
+		}
+		if (job_arch == 7) {
+			if (countitem(12381) > 0 || countitem(12382) > 0) {
+				if (countitem(12381) > 0) {
+					delitem 12381,countitem(12381); //ValkyrieA_Scroll
+				}
+				if (countitem(12382) > 0) {
+						delitem 12382,countitem(12382); //ValkyrieB_Scroll
+				}
+				if ($@archbs == 0) {
+					set $@archbs,1;
+					mes "[Valkyrie Anguhilde]";
+					mes "Are you ok human?";
+					mes "It was not as easy as I expected.";
+					mes "Will you challenge again?";
+					next;
+					if (getmapusers("job3_arch02") > 0) {
+						set $@archbs,0;
+						mes "[Valkyrie Anguhilde]";
+						//Custom translation
+						mes "Ah, it seems someone is already combating the evil in the temple.";
+						mes "I will see who it is, please wait a moment.";
+						close;
+					}
+					set $@archbs,0;
+					mes "[Valkyrie Anguhilde]";
+					mes "OK. now I'm going to send you there.";
+					mes "^FF0000When you go there, you have to summon my impersonation with the scroll^000000.";
+					mes "An impersonation will help when you move or attack as you want through ^FF0000ALT+click^000000.";
+					mes "But you have to be careful if an imeprsonation falls down.";
+					close2;
+					nude;
+					if (countitem(2798) > 0) {
+						delitem 2798,countitem(2798); //Will_Of_Exhausted_Angel
+					}
+					donpcevent "start#arch::OnEnable";
+					set job_arch, 7;
+					warp "job3_arch02",119,49;
+					hideonnpc "Valkyrie#arch";
+					end;
+				}
+				mes "[Valkyrie Anguhilde]";
+				//Custom translation
+				mes "I am already talking to someone, please wait and talk to me again.";
+				close;
+			}
 			end;
 		}
-		mes "[Valkyrie Anguhilde]";
-		//Custom translation
-		mes "I am already talking to someone, please wait and talk to me again.";
-		close;
+		end;
 	}
+	end;
+
+OnInit:
+	set $@archbs,0;
+	end;
 
 OnBc:
 	set $@archbs,0;
@@ -1059,7 +1066,6 @@ OnBc:
 }
 
 job3_arch02,119,49,0	script	#arch_1_start	139,6,6,{
-	end;
 
 OnTouch:
 	if (countitem(12381) == 0) {
@@ -1071,26 +1077,26 @@ OnTouch:
 }
 
 -	script	#arch_1_01_0::archbjcq	139,5,5,{
-	end;
 
 OnTouch:
 	if (countitem(12381) > 0) {
 		delitem 12381,1; //ValkyrieA_Scroll
 		mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
 		mapwarp "job3_arch02","job3_arch01",29,29;
-	} else {
-		if (getmercinfo(1) == 2037) {
-			set .@randht,rand(1,10);
-			if (.@randht < 8) {
-				mapannounce "job3_arch02","Whispering of an impersonation: I can feel the devil's spirits! Be careful!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
-			} else if (.@randht == 8 || .@randht == 9) {
-				mapannounce "job3_arch02","Embodiment of the voice: They are close to you!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0 //Custom translation;
-			}
-		} else {
-			mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
-			mapwarp "job3_arch02","job3_arch01",29,29;
-		}
+		end;
 	}
+	if (getmercinfo(1) == 2037) {
+		set .@randht, rand(1,10);
+		if (.@randht < 8) {
+			mapannounce "job3_arch02","Whispering of an impersonation: I can feel the devil's spirits! Be careful!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
+		}
+		else if (.@randht == 8 || .@randht == 9) {
+			mapannounce "job3_arch02","Embodiment of the voice: They are close to you!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0 //Custom translation
+		}
+		end;
+	}
+	mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
+	mapwarp "job3_arch02","job3_arch01",29,29;
 	end;
 }
 
@@ -1108,21 +1114,21 @@ job3_arch02,269,302,0	duplicate(archbjcq)	#arch_1_11	139,5,5
 job3_arch02,245,289,0	duplicate(archbjcq)	#arch_1_12	139,5,5
 
 job3_arch02,203,286,0	script	#arch_1_boss	139,5,5,{
-	end;
 
 OnTouch:
 	if (countitem(12381) > 0) {
 		delitem 12381,1; //ValkyrieA_Scroll
 		mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
 		mapwarp "job3_arch02","job3_arch01",29,29;
-	} else {
-		if (getmercinfo(1) == 2037) {
-			mapannounce "job3_arch02","Valkyrie's Nightmare: An incompetent illusion of Valkyrie came here with the assistance of humans. You wanna have that nightmare?",bc_map,"0xFF0000"; //FW_NORMAL 12 0 0
-			donpcevent "mob#arch_1::OnKill";
-		} else {
-			mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
-			mapwarp "job3_arch02","job3_arch01",29,29;
-		}
+		end;
+	}
+	if (GetMyMercenary == 2037) {
+		mapannounce "job3_arch02","Valkyrie's Nightmare: An incompetent illusion of Valkyrie came here with the assistance of humans. You wanna have that nightmare?",bc_map,"0xFF0000"; //FW_NORMAL 12 0 0
+		donpcevent "mob#arch_1::OnKill";
+	}
+	else {
+		mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
+		mapwarp "job3_arch02","job3_arch01",29,29;
 	}
 	end;
 }
@@ -1188,7 +1194,7 @@ OnEnable:
 	end;
 
 OnMyMobDead:
-	if (mobcount("job3_arch02","#arch_val02::OnMyMobDead") < 1) {
+	if (mobcount ("job3_arch02","#arch_val02::OnMyMobDead") < 1) {
 		mapannounce "job3_arch02","Valkyrie's Nightmare: You are so childish. I invite you to a devil's party. I'll make sure you have a fun!",bc_map,"0xFF0000"; //FW_NORMAL 12 0 0
 		hideoffnpc "Valkyrie#arch_02";
 		hideonnpc "#arch_2_boss";
@@ -1202,7 +1208,7 @@ OnKill:
 }
 
 job3_arch02,113,327,5	script	Valkyrie#arch_01	403,{
-	if (getmercinfo(0)) {
+	if (getmercinfo(1)) {
 		mes "[Valkyrie]";
 		mes "If you want to talk with me, you have to ^3131FFcancel all contracts^000000 with any mercenaries you have.";
 		close;
@@ -1237,7 +1243,6 @@ job3_arch02,113,327,5	script	Valkyrie#arch_01	403,{
 }
 
 job3_arch02,244,46,5	script	Valkyrie#arch_02	403,{
-
 	mes "[Valkyrie Anguhilde]";
 	mes "Did you find the rest of the pieces?";
 	next;
@@ -1275,11 +1280,6 @@ job3_arch02,244,46,5	script	Valkyrie#arch_02	403,{
 }
 
 job3_arch02,279,234,0	script	#arch_end	139,7,7,{
-	end;
-
-OnInit:
-	hideonnpc "#arch_end";
-	end;
 
 OnTouch:
 	donpcevent "#arch_3_01::OnKill";
@@ -1314,7 +1314,9 @@ OnTouch:
 		mes "It can be dangerous, so let's go back.";
 		close2;
 		nude;
-		delitem 2798,countitem(2798); //Will_Of_Exhausted_Angel
+		if (countitem(2798) > 0) {
+			delitem 2798,(2798); //Will_Of_Exhausted_Angel
+		}
 		delitem 6154,countitem(6154); //Broken_Horn_Pipe
 		mapwarp "job3_arch02","job3_arch01",29,29;
 		end;
@@ -1394,7 +1396,9 @@ OnTouch:
 	mes "Don't forget an altruistic minister's spirit like today forever.";
 	mes "I hope we see each other in Valhalla sometime.";
 	nude;
-	delitem 2798,countitem(2798); //Will_Of_Exhausted_Angel
+	if (countitem(2798) > 0) {
+		delitem 2798,countitem(2798); //Will_Of_Exhausted_Angel
+	}
 	delitem 6154,countitem(6154); //Broken_Horn_Pipe
 	set job_arch,100;
 	completequest 2191;
@@ -1410,6 +1414,10 @@ OnTouch:
 		jobchange Job_Arch_Bishop_T;
 	}
 	close;
+
+OnInit:
+	hideonnpc "#arch_end";
+	end;
 }
 
 job3_arch02,281,232,1	script	Valkyrie Anguhilde#end	403,{
@@ -1441,7 +1449,6 @@ OnInit:
 }
 
 job3_arch02,132,323,0	script	#arch_2_01	139,5,5,{
-	end;
 
 OnTouch:
 	if (countitem(12382) > 0) {
@@ -1451,28 +1458,29 @@ OnTouch:
 }
 
 -	script	#arch_2_02_0::archbjcq2	139,5,5,{
-	end;
 
 OnTouch:
 	if (countitem(12382) > 0) {
 		delitem 12382,1; //ValkyrieB_Scroll
 		mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
 		mapwarp "job3_arch02","job3_arch01",29,29;
-	} else {
-		if (getmercinfo(1) == 2038) {
-			set .@randht,rand(1,10);
-			if (.@randht < 8) {
-				mapannounce "job3_arch02","Whispering of an impersonation: I can feel the devil's spirits. Can you hear? The sound of gathering in crowds.",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
-			} else if (.@randht == 8 || .@randht == 9) {
-				mapannounce "job3_arch02","Embodiment of Sounds: Battle Stance!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0 //Custom translation;
-			} else {
-				mapannounce "job3_arch02","Whispering of an impersonation: I can't leave you! Die!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
-			}
-		} else {
-			mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
-			mapwarp "job3_arch02","job3_arch01",29,29;
-		}
+		end;
 	}
+	if (getmercinfo(1) == 2038) {
+		set .@randht, rand(1,10);
+		if (.@randht < 8) {
+			mapannounce "job3_arch02","Whispering of an impersonation: I can feel the devil's spirits. Can you hear? The sound of gathering in crowds.",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
+		}
+		else if (.@randht == 8 || .@randht == 9) {
+			mapannounce "job3_arch02","Embodiment of Sounds: Battle Stance!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0 //Custom translation
+		}
+		else {
+			mapannounce "job3_arch02","Whispering of an impersonation: I can't leave you! Die!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
+		}
+		end;
+	}
+	mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
+	mapwarp "job3_arch02","job3_arch01",29,29;
 	end;
 }
 
@@ -1488,7 +1496,6 @@ job3_arch02,227,169,0	duplicate(archbjcq2)	#arch_2_10	139,5,5
 job3_arch02,190,146,0	duplicate(archbjcq2)	#arch_2_11	139,5,5
 
 job3_arch02,252,267,0	script	#arch_2_12	139,5,5,{
-	end;
 
 OnTouch:
 	mapannounce "job3_arch02","Whispering of an impersonation: It's a crossroad. Let's go to the left side. I have to find my pipe.",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
@@ -1496,7 +1503,6 @@ OnTouch:
 }
 
 job3_arch02,250,290,0	script	#arch_2_13	139,5,5,{
-	end;
 
 OnTouch:
 	mapannounce "job3_arch02","Whispering of an impersonation: I can see a ruined shrine. Take a rest in there.",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
@@ -1504,33 +1510,28 @@ OnTouch:
 }
 
 job3_arch02,206,113,0	script	#arch_2_boss	139,5,5,{
-	end;
 
 OnTouch:
 	if (countitem(12382) > 0) {
 		delitem 12382,1; //ValkyrieB_Scroll
 		mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
 		mapwarp "job3_arch02","job3_arch01",29,29;
-	} else {
-		if (getmercinfo(1) == 2038) {
-			mapannounce "job3_arch02","A shout of devil: You are so childish. I'll invite you to a party of the devil. I'll make you have a fun!",bc_map,"0xFF0000"; //FW_NORMAL 12 0 0
-		} else {
-			mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
-			mapwarp "job3_arch02","job3_arch01",29,29;
-		}
+		end;
+	}
+	if (getmercinfo(1) == 2038) {
+		mapannounce "job3_arch02","A shout of devil: You are so childish. I invite you a party of devil. I'll make you have a fun!",bc_map,"0xFF0000"; //FW_NORMAL 12 0 0
+	}
+	else {
+		mapannounce "job3_arch02","Whispering of an impersonation: You can't do anything by yourself! Let's go back!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
+		mapwarp "job3_arch02","job3_arch01",29,29;
 	}
 	end;
 }
 
 job3_arch02,284,159,0	script	#arch_3_01	139,20,20,{
-	end;
-
-OnInit:
-	hideoffnpc "#arch_3_01";
-	end;
 
 OnTouch:
-	if (Class != Job_Priest) {
+	if ((Class != Job_Priest) && (Class != Job_Baby_Priest)) {
 		mapannounce "job3_arch02","Frus: Do you want to see God? Okay, I'll send you to the land of the dead by myself!",bc_map,"0xFF0000"; //FW_NORMAL 12 0 0
 		areamonster "job3_arch02",242,44,246,48,"Frus",1762,1;
 	}
@@ -1540,17 +1541,16 @@ OnTouch:
 OnKill:
 	killmonster "job3_arch02","#arch_3_01::OnMyMobDead";
 	end;
+
+OnInit:
+	hideoffnpc "#arch_3_01";
+	end;
 }
 
 job3_arch02,307,200,0	script	#arch_3_02	139,5,5,{
-	end;
-
-OnInit:
-	hideoffnpc "#arch_3_02";
-	end;
 
 OnTouch:
-	if (Class == Job_Priest) {
+	if (Class == Job_Priest || Class == Job_Baby_Priest) {
 		mapannounce "job3_arch02","Skogul: You are my guest!",bc_map,"0xFF0000"; //FW_NORMAL 12 0 0
 		monster "job3_arch02",307,200,"Skogul",1761,1;
 	}
@@ -1560,14 +1560,14 @@ OnTouch:
 OnKill:
 	killmonster "job3_arch02","#arch_3_02::OnMyMobDead";
 	end;
+
+OnInit:
+	hideoffnpc "#arch_3_02";
+	end;
+
 }
 
 job3_arch02,296,216,0	script	#arch_3_03	139,5,5,{
-	end;
-
-OnInit:
-	hideonnpc "#arch_3_03";
-	end;
 
 OnTouch:
 	mapannounce "job3_arch02","Frus: I like your face... Can I steal it?",bc_map,"0xFF0000"; //FW_NORMAL 12 0 0
@@ -1578,6 +1578,11 @@ OnTouch:
 OnKill:
 	killmonster "job3_arch02","#arch_3_03::OnMyMobDead";
 	end;
+
+OnInit:
+	hideonnpc "#arch_3_03";
+	end;
+
 }
 
 job3_arch02,389,390,1	script	mob#arch_1	844,{
@@ -1626,7 +1631,7 @@ OnKill:
 
 job3_arch02,389,388,1	script	start#arch	844,{
 	end;
-	
+
 OnInit:
 	mapwarp "job3_arch02","job3_arch02",29,29;
 	end;
@@ -1692,11 +1697,85 @@ OnTimeoff:
 	end;
 
 OnTimer60000:
-	if (getmapusers("job3_arch02") > 0) {
+	if (getmapusers("job3_arch02") == 0) {
 		mapwarp "job3_arch02","job3_arch01",29,29;
 		donpcevent "Valkyrie#arch::OnBc";
 		stopnpctimer;
 	}
+	end;
+
+OnTimer120000:
+	if (getmapusers("job3_arch02") == 0) {
+		mapwarp "job3_arch02","job3_arch01",29,29;
+		donpcevent "Valkyrie#arch::OnBc";
+		stopnpctimer;
+	}
+	end;
+
+OnTimer180000:
+	if (getmapusers("job3_arch02") == 0) {
+		mapwarp "job3_arch02","job3_arch01",29,29;
+		donpcevent "Valkyrie#arch::OnBc";
+		stopnpctimer;
+	}
+	end;
+
+OnTimer240000:
+	if (getmapusers("job3_arch02") == 0) {
+		mapwarp "job3_arch02","job3_arch01",29,29;
+		donpcevent "Valkyrie#arch::OnBc";
+		stopnpctimer;
+	}
+	end;
+
+OnTimer300000:
+	if (getmapusers("job3_arch02") == 0) {
+		mapwarp "job3_arch02","job3_arch01",29,29;
+		donpcevent "Valkyrie#arch::OnBc";
+		stopnpctimer;
+	}
+	end;
+
+OnTimer360000:
+	if (getmapusers("job3_arch02") == 0) {
+		mapwarp "job3_arch02","job3_arch01",29,29;
+		donpcevent "Valkyrie#arch::OnBc";
+	}
+	end;
+
+OnTimer420000:
+	if (getmapusers("job3_arch02") == 0) {
+		mapwarp "job3_arch02","job3_arch01",29,29;
+		donpcevent "Valkyrie#arch::OnBc";
+		stopnpctimer;
+	}
+	end;
+
+OnTimer480000:
+	if (getmapusers("job3_arch02") == 0) {
+		mapwarp "job3_arch02","job3_arch01",29,29;
+		donpcevent "Valkyrie#arch::OnBc";
+		stopnpctimer;
+	}
+	end;
+
+OnTimer540000:
+	if (getmapusers("job3_arch02") == 0) {
+		mapwarp "job3_arch02","job3_arch01",29,29;
+		donpcevent "Valkyrie#arch::OnBc";
+		stopnpctimer;
+	}
+	end;
+
+OnTimer600000:
+	mapannounce "job3_arch02","Demons cry: Too boring, can no longer imagine what will happen! Friends, we went to lessons learned that could fool arrogant guy, OK?",bc_map,"0xFF0000"; //FW_NORMAL 12 0 0 //Custom translation;
+	end;
+
+OnTimer605000:
+	mapannounce "job3_arch02","Valkyrie's voice: No! This can not be. I will send you back soon!",bc_map,"0xFFCE00"; //FW_NORMAL 12 0 0
+	mapwarp "job3_arch02","job3_arch01",29,29;
+	donpcevent "Valkyrie#arch::OnBc";
+	stopnpctimer;
 	end;
 }
 
@@ -1749,7 +1828,7 @@ OnEnable:
 }
 
 job3_arch02,290,221,0	script	#arch_end_eff	139,5,5,{
-	end;
+
 OnTouch:
 	if (countitem(6154) > 0) {
 		delitem 6154,countitem(6154); //Broken_Horn_Pipe
@@ -1757,7 +1836,7 @@ OnTouch:
 	if (countitem(12381) > 0) {
 		delitem 12381,countitem(12381); //ValkyrieA_Scroll
 	}
-	if (countitem(12382) > 0) {
+	if (countitem(12381) > 0) {
 		delitem 12382,countitem(12382); //ValkyrieB_Scroll
 	}
 	if (countitem(2798) > 0) {
@@ -1769,42 +1848,38 @@ OnTouch:
 job3_arch01,29,24,0	warp	#archout	1,1,odin_tem02,282,263
 
 /*
-job3_arch01,1,1,1	script	????#arch	844,{
-	mes "[????????]";
-	mes "??????????";
+job3_arch01,1,1,1	script	¿ØÖÆ#arch	844,{
+	mes "[Íç¹ÌµÄÊÞÈË]";
+	mes "ÇëÊäÈëÃÜÂë¡£";
 	next;
 	input .@input;
 	if (.@input == 1854) {
-		set .@archglo,$@archbs;
-		mes "[???]";
-		mes "????????????";
-		mes "" + .@archglo + "??";
-		mes "??????????";
+		mes "[Í¨ÐÐ]";
+		mes "ÏÖÔÚµÄÈ«¾Ö±äÁ¿ÖµÎª";
+		mes "" + $@archbs + "¡£";
+		mes "ÄãÏëÐÞ¸ÄÂð?";
 		next;
 		switch (select("0:1")) {
 		case 1:
-			close2;
-			set $@archbs, 0;
+			set $@archbs,0;
 			hideoffnpc "Valkyrie#arch";
-			end;
+			close;
 		case 2:
-			close2;
-			set $@archbs, 1;
+			set $@archbs,1;
 			hideoffnpc "Valkyrie#arch";
-			end;
+			close;
 		}
 	}
-	else if (.@input < 0 || .@input > 9999) {
-		mes "[????????]";
-		mes "????????????????????????";
+	if (.@input < 0 || .@input > 9999) {
+		mes "[Íç¹ÌµÄÊÞÈË]";
+		mes "ÎÒ²»ÊÇËµ¹ýÃÜÂëÒªÊäÈëÕýÈ·Âð£¡£¡";
 		close;
 	}
-	end;
 }
 */
 
 odin_tem02,30,181,0	script	#wherearch01	139,10,10,{
-	end;
+
 OnTouch:
 	if (job_arch == 5) {
 		viewpoint 263,282,1,1,0xFFFF9900;
@@ -1813,7 +1888,7 @@ OnTouch:
 }
 
 odin_tem02,30,335,0	script	#wherearch02	139,10,10,{
-	end;
+
 OnTouch:
 	if (job_arch == 5) {
 		viewpoint 263,282,1,1,0xFFFF9900;
