@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.3
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -39,6 +39,7 @@
 //= 2.0 Added Mid Camp Warper, translated from the Official [Slim]
 //= 2.1 Fixed some typos [tr0n]
 //= 2.2 A little optimization (-25kb). [Euphy]
+//= 2.3 Updated to match the new Izlude Map. [Masao]
 //============================================================ 
 
 // Onward to the New World
@@ -677,7 +678,7 @@ geffen,90,67,3	script	Promotional Staff#gef	100,{
 	}
 }
 
-izlude,99,136,5	script	Promotional Staff#iz	100,{
+izlude,101,173,6	script	Promotional Staff#iz	100,{
 	if (ep13_ryu > 8) {
 		mes "[Promotional Staff]";
 		mes "I bless you for your future! May it be full of happiness!";

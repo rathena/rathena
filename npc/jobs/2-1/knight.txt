@@ -2204,7 +2204,7 @@ prt_in,87,92,4	script	Sir Gray#knt	119,{
 					close;
 				}
 				else {
-					if (Zeny > 73999 && countitem(999) > 0 && BaseJob == Job_Knight) {
+					if ((Zeny > 73999) && (countitem(999) > 0) && (BaseJob == Job_Knight)) {
 						mes "[Sir Gray]";
 						mes "You are ready!";
 						mes "You must know the";
@@ -2228,7 +2228,7 @@ prt_in,87,92,4	script	Sir Gray#knt	119,{
 						mes "You attained a reliable item.";
 						mes "It'll be a good companion on your adventures.";
 						delitem 999,1; //Steel
-						set zeny,zeny-74000;
+						set Zeny, Zeny - 74000;
 						getitem 1163,1; //Claymore
 						close;
 					}

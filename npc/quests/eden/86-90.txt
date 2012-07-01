@@ -20,7 +20,7 @@ moc_para01,48,175,3	script	Mission [86 - 90]	857,{
 		mes "- this bulletin board. -";
 		close;
 	}
-	if (BaseLevel < 86 || BaseLevel > 90) {
+	if (BaseLevel < 86) {
 		mes "- This missions can only be -";
 		mes "- read by those who are -";
 		mes "- of the correct level. -";
@@ -28,6 +28,185 @@ moc_para01,48,175,3	script	Mission [86 - 90]	857,{
 		mes "- board somewhere for -";
 		mes "- my level. -";
 		close;
+	}
+	if (BaseLevel > 90) {
+		if (checkquest(4167,HUNTING) == 2) {
+			mes "You hunted all 30 Dragon Tail.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4167;
+			getexp 76000,0;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4168,HUNTING) == 2) {
+			mes "You hunted all 30 Spring Rabbit.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4168;
+			getexp 82000,0;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4169,HUNTING) == 2) {
+			mes "You hunted all 30 Pest.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4169;
+			getexp 82000,0;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4170,HUNTING) == 2) {
+			mes "You hunted all 30 Bathory.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4170;
+			getexp 72000,0;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4171,HUNTING) == 2) {
+			mes "You hunted all 30 Alarm.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4171;
+			getexp 76000,0;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4172,HUNTING) == 2) {
+			mes "You hunted all 30 Baba Yaga.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4172;
+			getexp 72000,0;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4173,HUNTING) == 2) {
+			mes "You hunted all 30 Hyegun.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4173;
+			getexp 117000,0;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4174,HUNTING) == 2) {
+			mes "You hunted all 30 Firelock Soldier.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4174;
+			getexp 82000,0;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4175,HUNTING) == 2) {
+			mes "You hunted all 30 Zipper Bear.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4175;
+			getexp 120000,0;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4176,HUNTING) == 2) {
+			mes "You hunted all 30 Earth Petite.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4176;
+			getexp 72000,0;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4177,HUNTING) == 2) {
+			mes "You hunted all 30 Rafflesia.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4177;
+			getexp 72000,0;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4178,HUNTING) == 2) {
+			mes "You hunted all 30 Venomous.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4178;
+			getexp 72000,0;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4179,HUNTING) == 2) {
+			mes "You hunted all 30 Pitman.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4179;
+			getexp 86000,0;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4180,HUNTING) == 2) {
+			mes "You hunted all 30 Yellow Novus.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4180;
+			getexp 80000,0;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else {
+			mes "- This missions can only be -";
+			mes "- read by those who are -";
+			mes "- of the correct level. -";
+			mes "- There might be another -";
+			mes "- board somewhere for -";
+			mes "- my level. -";
+			close;
+		}
 	}
 	mes "- Many hunting missions -";
 	mes "- are on the bulletin board. -";
@@ -67,7 +246,7 @@ moc_para01,48,175,3	script	Mission [86 - 90]	857,{
 				mes "I hope that it helps you at least a little bit.";
 				next;
 				erasequest 4168;
-				getexp 76000,0;
+				getexp 82000,0;
 				mes "Wooohoo!";
 				mes "Good luck.";
 				close;
@@ -90,7 +269,7 @@ moc_para01,48,175,3	script	Mission [86 - 90]	857,{
 				mes "I hope that it helps you at least a little bit.";
 				next;
 				erasequest 4169;
-				getexp 76000,0;
+				getexp 82000,0;
 				mes "Wooohoo!";
 				mes "Good luck.";
 				close;
@@ -116,7 +295,7 @@ moc_para01,48,175,3	script	Mission [86 - 90]	857,{
 				mes "I hope that it helps you at least a little bit.";
 				next;
 				erasequest 4170;
-				getexp 76000,0;
+				getexp 72000,0;
 				mes "Wooohoo!";
 				mes "Good luck.";
 				close;
@@ -165,7 +344,7 @@ moc_para01,48,175,3	script	Mission [86 - 90]	857,{
 				mes "I hope that it helps you at least a little bit.";
 				next;
 				erasequest 4172;
-				getexp 76000,0;
+				getexp 72000,0;
 				mes "Wooohoo!";
 				mes "Good luck.";
 				close;
@@ -188,7 +367,7 @@ moc_para01,48,175,3	script	Mission [86 - 90]	857,{
 				mes "I hope that it helps you at least a little bit.";
 				next;
 				erasequest 4173;
-				getexp 76000,0;
+				getexp 117000,0;
 				mes "Wooohoo!";
 				mes "Good luck.";
 				close;
@@ -211,7 +390,7 @@ moc_para01,48,175,3	script	Mission [86 - 90]	857,{
 				mes "I hope that it helps you at least a little bit.";
 				next;
 				erasequest 4174;
-				getexp 76000,0;
+				getexp 82000,0;
 				mes "Wooohoo!";
 				mes "Good luck.";
 				close;
@@ -234,7 +413,7 @@ moc_para01,48,175,3	script	Mission [86 - 90]	857,{
 				mes "I hope that it helps you at least a little bit.";
 				next;
 				erasequest 4175;
-				getexp 76000,0;
+				getexp 120000,0;
 				mes "Wooohoo!";
 				mes "Good luck.";
 				close;
@@ -260,7 +439,7 @@ moc_para01,48,175,3	script	Mission [86 - 90]	857,{
 				mes "I hope that it helps you at least a little bit.";
 				next;
 				erasequest 4176;
-				getexp 76000,0;
+				getexp 72000,0;
 				mes "Wooohoo!";
 				mes "Good luck.";
 				close;
@@ -283,7 +462,7 @@ moc_para01,48,175,3	script	Mission [86 - 90]	857,{
 				mes "I hope that it helps you at least a little bit.";
 				next;
 				erasequest 4177;
-				getexp 76000,0;
+				getexp 72000,0;
 				mes "Wooohoo!";
 				mes "Good luck.";
 				close;
@@ -306,7 +485,7 @@ moc_para01,48,175,3	script	Mission [86 - 90]	857,{
 				mes "I hope that it helps you at least a little bit.";
 				next;
 				erasequest 4178;
-				getexp 76000,0;
+				getexp 72000,0;
 				mes "Wooohoo!";
 				mes "Good luck.";
 				close;
@@ -329,7 +508,7 @@ moc_para01,48,175,3	script	Mission [86 - 90]	857,{
 				mes "I hope that it helps you at least a little bit.";
 				next;
 				erasequest 4179;
-				getexp 76000,0;
+				getexp 86000,0;
 				mes "Wooohoo!";
 				mes "Good luck.";
 				close;
@@ -352,7 +531,7 @@ moc_para01,48,175,3	script	Mission [86 - 90]	857,{
 				mes "I hope that it helps you at least a little bit.";
 				next;
 				erasequest 4180;
-				getexp 76000,0;
+				getexp 80000,0;
 				mes "Wooohoo!";
 				mes "Good luck.";
 				close;

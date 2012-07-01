@@ -1391,7 +1391,7 @@ OnTouch:
 		mes "[Deviruchi]";
 		mes "But how about this...? Now, isn't this an attractive sight? A nice, shiny new card. Mint condition. Not too many people have this you know. But I happen to have soooo many, my pockets hurt.";
 		next;
-		cutin "�̽�Ʈ����ī��.bmp",4;
+		cutin "¹Ì½ºÆ®·¹½ºÄ«µå.bmp",4;
 		mes "[Deviruchi]";
 		mes "Isn't it everyone's dream to have one of these? Think about it, being a Priest can only bring you suffering...";
 		next;
@@ -1401,7 +1401,7 @@ OnTouch:
 			mes "This card can";
 			mes "can be yours...";
 			next;
-			cutin "�̽�Ʈ����ī��.bmp",255;
+			cutin "¹Ì½ºÆ®·¹½ºÄ«µå.bmp",255;
 			mes "[Deviruchi]";
 			mes "Theoretically!";
 			mes "BWAHAHAHAHAHAHAHA!";
@@ -1410,7 +1410,7 @@ OnTouch:
 			warp "mjolnir_05",200,200;
 			end;
 		}
-		cutin "�̽�Ʈ����ī��.bmp",255;
+		cutin "¹Ì½ºÆ®·¹½ºÄ«µå.bmp",255;
 		mes "[Deviruchi]";
 		mes "Did...";
 		mes "Did you just tell";

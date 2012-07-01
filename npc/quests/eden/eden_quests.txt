@@ -2701,8 +2701,8 @@ moc_para01,112,96,5	script	Administrator Michael	967,{
 							getitem 1650,1; //P_Staff1
 							getitem 2457,1; //Para_Team_Boots2
 							getitem 15010,1; //Para_Team_Uniform2
-							set Para_Team_Hat,Para_Team_Hat+1;
-							set Para_Team_Manteau,Para_Team_Manteau+1;
+							getitem 5583,1; //Para_Team_Hat
+							getitem 2560,1; //Para_Team_Manteau
 							next;
 							mes "[Michael]";
 							mes "Check your supplies again and look after it.";
