@@ -1,29 +1,41 @@
-Adapted from: http://www.eathena.ws/board/index.php?showtopic=42659
-Copied by: Massdriller
-Post made by: lordalfa
+//===== Athena Doc ========================================
+//= NPC Whisper System
+//===== By ================================================
+//= lordalfa, Massdriller
+//===== Version ===========================================
+//= 1.1
+//=========================================================
+//= 1.1 - Cleanup. [Euphy]
+//===== Description =======================================
+//= A description of rAthena's NPC whispering system.
+//=========================================================
 
-As requested by MassDriller, I made this piece of code to allow you to whisper your NPCS and let them execute some commands for you.
+This piece of code to allows characters to execute events in NPCs by whispering
+them up to ten parameters. The NPC must have an "OnWhisperGlobal" label, or an
+"event not found" error will result.
 
-An example of what you can do with it, before you eventually go on reading.
+	NPC:<NPC Name> 	<String>{#String 2{#...{#String 10}}}
+	
+The whispered strings are separated by the "#" character, and are each stored
+into separate temporary character string variables:
 
-Let's say you prepared a special NPC called NPCCommander.
-You whisper to NPCCommander in Game with formatted instructions like these:
+	@whispervar0$, @whispervar1$, ... @whispervar9$
 
-//============================================================
+---------------------------------------------------------------------------------
 
-[To NPC:NPCCommander]       Report#Killstealing#Lordalfa
+Below is an example of how this feature might be used.
+You whisper an NPC "NPCCommander" in-game with the following instructions:
 
-//============================================================
+	NPC:NPCCommander	Report#Killstealing#Lordalfa
 
-Now what happens is that this code allows you to trigger a Label called "OnWhisperGlobal" into that NPC and execute some code, passing it The values you just input.
+The parameters are passed on to the "OnWhisperGlobal" label of the NPC, and can
+be processed accordingly:
 
-Values will be passed into Temp string Variables called @whispervar0$, @whispervar1$ and so on..
-In the example above:
-
-@whispervar0$ would contain the word "Report"
-@whispervar1$ would contain the word "KillStealing"
-@whispervar2$ would contain the word "Lordalfa"
-
-so you might prepare the NPC Label to process these Variables and give Executing Character a Feedback ( via dispbottom "message" for example )
-
-Now , it's allowed to use up to 10 commands in a Row, separed by "#" character, they will be splitted and passed to the NPC Label in their respective variables, for you to process them.
+	-	script	NPCCommander	-1,{
+	OnWhisperGlobal:
+		// The following code will inform player "Lordalfa" that he has been
+		// reported for killstealing.
+		if (@whispervar0$ == "Report")
+			message @whispervar2$,"You have been reported for "+@whispervar1$+".";
+		end;
+	}

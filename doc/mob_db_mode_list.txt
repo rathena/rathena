@@ -7,7 +7,7 @@
 //=========================================================
 //= 1.0 - Standardized doc file
 //===== Description =======================================
-//= A reference description of eA's mob_db 'mode' field
+//= A reference description of rAthena's mob_db 'mode' field
 //=========================================================
 
 Bit Legend:

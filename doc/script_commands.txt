@@ -5390,11 +5390,13 @@ while hidden then revealing.... you can wonder around =P
 *doevent "<NPC object name>::<event label>";
 
 This command will start a new execution thread in a specified NPC object at the 
-specified label. The execution of the script running this command will not stop. 
-No parameters may be passed with a doevent call.
+specified label. The execution of the script running this command will not stop,
+and the event called by the 'doevent' command will not run until the invoking
+script has terminated. No parameters may be passed with a doevent call.
 
 The script of the NPC object invoked in this manner will run as if it's been 
-invoked by the RID that was active in the script that issued a 'doevent'.
+invoked by the RID that was active in the script that issued a 'doevent'. As
+such, the command will not work if an RID is not attached.
 
     place,100,100,1%TAB%script%TAB%NPC%TAB%53,{
         mes "This is what you will see when you click me";
@@ -5412,13 +5414,16 @@ invoked by the RID that was active in the script that issued a 'doevent'.
 
 *donpcevent "{NPC NAME}::<event label>";
 
-This command invokes the event label code within an another NPC or NPCs. If
-event label has the form "NpcName::OnLabel", then only given NPC's event label
-will be invoked (much like 'goto' into another NPC). If the form is "::OnLabel"
-(NpcName omitted), the event code of all NPCs with given label will be invoked,
-one after another. In both cases the invoked script will run without an attached
-RID, whether or not the invoking script was attached to a player. The event
-label name is required to start with On.
+This command invokes the event label code within an another NPC or NPCs. It
+starts a separate instance of execution, and the invoking NPC will resume
+execution its immediately.
+
+If the supplied event label has the form "NpcName::OnLabel", then only given
+NPC's event label will be invoked (much like 'goto' into another NPC). If the
+form is "::OnLabel" (NPC name omitted), the event code of all NPCs with given
+label will be invoked, one after another. In both cases the invoked script
+will run without an attached RID, whether or not the invoking script was
+attached to a player. The event label name is required to start with "On".
 
 This command can be used to make other NPCs act, as if they were responding to
 the invoking NPC's actions, such as using an emotion or talking.
