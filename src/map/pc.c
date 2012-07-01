@@ -3761,11 +3761,25 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount,e_l
 		clif_additem(sd,i,amount,0);
 	}
 	log_pick_pc(sd, log_type, amount, &sd->status.inventory[i]);
-
+	
 	sd->weight += w;
 	clif_updatestatus(sd,SP_WEIGHT);
 	//Auto-equip
-	if(data->flag.autoequip) pc_equipitem(sd, i, data->equip);
+	if(data->flag.autoequip)
+		pc_equipitem(sd, i, data->equip);
+	
+	/* rental item check */
+	if( item_data->expire_time ) {
+		if( time(NULL) > item_data->expire_time ) {
+			clif_rental_expired(sd->fd, i, sd->status.inventory[i].nameid);
+			pc_delitem(sd, i, sd->status.inventory[i].amount, 1, 0, LOG_TYPE_OTHER);
+		} else {
+			int seconds = (int)( item_data->expire_time - time(NULL) );
+			clif_rental_time(sd->fd, sd->status.inventory[i].nameid, seconds);
+			pc_inventory_rental_add(sd, seconds);
+		}
+	}
+
 	return 0;
 }
 
