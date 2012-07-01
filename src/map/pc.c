@@ -4511,11 +4511,10 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 
 	sd->state.changemap = (sd->mapindex != mapindex);
 	sd->state.warping = 1;
-	if( sd->state.changemap )
-	{ // Misc map-changing settings
+	if( sd->state.changemap ) { // Misc map-changing settings
+		int i;
 		sd->state.pmap = sd->bl.m;
-		if (sd->sc.count)
-		{ // Cancel some map related stuff.
+		if (sd->sc.count) { // Cancel some map related stuff.
 			if (sd->sc.data[SC_JAILED])
 				return 1; //You may not get out!
 			status_change_end(&sd->bl, SC_BOSSMAPINFO, INVALID_TIMER);
@@ -4530,6 +4529,11 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 					delete_timer(sce->timer, status_change_timer);
 				sce->timer = add_timer(gettick() + skill_get_time(SG_KNOWLEDGE, sce->val1), status_change_timer, sd->bl.id, SC_KNOWLEDGE);
 			}
+		}
+		for( i = 0; i < EQI_MAX; i++ ) {
+			if( sd->equip_index[ i ] >= 0 )
+				if( !pc_isequip( sd , sd->equip_index[ i ] ) )
+					pc_unequipitem( sd , sd->equip_index[ i ] , 2 );
 		}
 		if (battle_config.clear_unit_onwarp&BL_PC)
 			skill_clear_unitgroup(&sd->bl);

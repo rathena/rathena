@@ -1663,8 +1663,9 @@ void map_deliddb(struct block_list *bl)
 /*==========================================
  * Standard call when a player connection is closed.
  *------------------------------------------*/
-int map_quit(struct map_session_data *sd)
-{
+int map_quit(struct map_session_data *sd) {
+	int i;
+	
 	if(!sd->state.active) { //Removing a player that is not active.
 		struct auth_node *node = chrif_search(sd->status.account_id);
 		if (node && node->char_id == sd->status.char_id &&
@@ -1722,8 +1723,7 @@ int map_quit(struct map_session_data *sd)
 			status_change_end(&sd->bl, SC_SLOWCAST, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_CRITICALWOUND, INVALID_TIMER);
 		}
-		if (battle_config.debuff_on_logout&2)
-		{
+		if (battle_config.debuff_on_logout&2) {
 			status_change_end(&sd->bl, SC_MAXIMIZEPOWER, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_MAXOVERTHRUST, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_STEELBODY, INVALID_TIMER);
@@ -1731,6 +1731,12 @@ int map_quit(struct map_session_data *sd)
 			status_change_end(&sd->bl, SC_KAAHI, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_SPIRIT, INVALID_TIMER);
 		}
+	}
+	
+	for( i = 0; i < EQI_MAX; i++ ) {
+		if( sd->equip_index[ i ] >= 0 )
+			if( !pc_isequip( sd , sd->equip_index[ i ] ) )
+				pc_unequipitem( sd , sd->equip_index[ i ] , 2 );
 	}
 	
 	// Return loot to owner
