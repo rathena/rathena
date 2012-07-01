@@ -97,7 +97,7 @@ bool skill_reproduce_db[MAX_SKILL_DB];
 struct s_skill_spellbook_db {
 	int nameid;
 	int skillid;
-	int points;
+	int point;
 };
 
 struct s_skill_spellbook_db skill_spellbook_db[MAX_SKILL_SPELLBOOK_DB];
@@ -482,8 +482,10 @@ int skillnotok (int skillid, struct map_session_data *sd)
 		return 1;
 	}
 
-	if (sd->blockskill[i] > 0)
+	if (sd->blockskill[i] > 0){
+		clif_skill_fail(sd, skillid, USESKILL_FAIL_SKILLINTERVAL, 0);
 		return 1;
+	}
 	/**
 	 * It has been confirmed on a official server (thanks to Yommy) that item-cast skills bypass all the restrictions above
 	 * Also, without this check, an exploit where an item casting + healing (or any other kind buff) isn't deleted after used on a restricted map
@@ -4104,50 +4106,47 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		{
 			int i;
 			// Priority is to release SpellBook
-			ARR_FIND(0,MAX_SPELLBOOK,i,sd->rsb[i].skillid != 0);
-			if( i < MAX_SPELLBOOK )
+			if( sc && sc->data[SC_READING_SB] )
 			{ // SpellBook
-				int rsb_skillid, rsb_skilllv;
+				int skill_id, skill_lv, point, s = 0;
+				int spell[SC_MAXSPELLBOOK-SC_SPELLBOOK1 + 1];
 
-				if( skilllv > 1 )
-				{
-					ARR_FIND(0,MAX_SPELLBOOK,i,sd->rsb[i].skillid == 0);
-					i--; // At skilllvl 2, Release uses the last learned skill in spellbook
-				}
+				for(i = SC_MAXSPELLBOOK; i >= SC_SPELLBOOK1; i--) // List all available spell to be released
+					if( sc->data[i] ) spell[s++] = i;
 
-				rsb_skillid = sd->rsb[i].skillid;
-				rsb_skilllv = sd->rsb[i].level;
-
-				if( sc && sc->data[SC_READING_SB] && sc->data[SC_READING_SB]->val2 > 0 )
-					sc->data[SC_READING_SB]->val2 -= sd->rsb[i].points;
-
-				if( skilllv > 1 )
-					sd->rsb[i].skillid = 0; // Last position - only remove it from list
-				else
-					memmove(&sd->rsb[0],&sd->rsb[1],sizeof(sd->rsb) - sizeof(sd->rsb[0]));
-
-				if( sd->rsb[0].skillid == 0 )
-					status_change_end(src, SC_READING_SB, INVALID_TIMER);
-
-				clif_skill_nodamage(src,bl,skillid,skilllv,1);
-				if( !skill_check_condition_castbegin(sd,rsb_skillid,rsb_skilllv) )
+				i = spell[s==1?0:rand()%s];// Random select of spell to be released.
+				if( s && sc->data[i] ){// Now extract the data from the preserved spell
+					skill_id = sc->data[i]->val1; 
+					skill_lv = sc->data[i]->val2;
+					point = sc->data[i]->val3;
+					status_change_end(src, (sc_type)i, INVALID_TIMER);
+				}else //something went wrong :(
 					break;
 
-				switch( skill_get_casttype(rsb_skillid) )
+				if( sc->data[SC_READING_SB]->val2 > point )
+					sc->data[SC_READING_SB]->val2 -= point;
+				else // Last spell to be released 
+					status_change_end(src, SC_READING_SB, INVALID_TIMER);
+
+				clif_skill_nodamage(src, bl, skillid, skilllv, 1);
+				if( !skill_check_condition_castbegin(sd, skill_id, skill_lv) )
+					break;
+
+				switch( skill_get_casttype(skill_id) )
 				{
 					case CAST_GROUND:
-						skill_castend_pos2(src,bl->x,bl->y,rsb_skillid,rsb_skilllv,tick,0);
+						skill_castend_pos2(src, bl->x, bl->y, skill_id, skill_lv, tick, 0);
 						break;
 					case CAST_NODAMAGE:
-						skill_castend_nodamage_id(src,bl,rsb_skillid,rsb_skilllv,tick,0);
+						skill_castend_nodamage_id(src, bl, skill_id, skill_lv, tick, 0);
 						break;
 					case CAST_DAMAGE:
-						skill_castend_damage_id(src,bl,rsb_skillid,rsb_skilllv,tick,0);
+						skill_castend_damage_id(src, bl, skill_id, skill_lv, tick, 0);
 						break;
 				}
 
-				sd->ud.canact_tick = tick + skill_delayfix(src, rsb_skillid, rsb_skilllv);
-				clif_status_change(src, SI_ACTIONDELAY, 1, skill_delayfix(src, rsb_skillid, rsb_skilllv), 0, 0, 0);
+				sd->ud.canact_tick = tick + skill_delayfix(src, skill_id, skill_lv);
+				clif_status_change(src, SI_ACTIONDELAY, 1, skill_delayfix(src, skill_id, skill_lv), 0, 0, 0);
 			}
 			else
 			{ // Summon Balls
@@ -4166,7 +4165,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 
 				if( j == 0 )
 				{ // No Spheres
-					clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
+					clif_skill_fail(sd,skillid,USESKILL_FAIL_SUMMON_NONE,0);
 					break;
 				}
 				
@@ -7600,16 +7599,25 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case WL_WHITEIMPRISON:
-		if( !(tsc && tsc->data[type]) && (src == bl || battle_check_target(src, bl, BCT_ENEMY)) && !is_boss(bl) )// Should not work with bosses.
+		if( (src == bl || battle_check_target(src, bl, BCT_ENEMY)) && !is_boss(bl) )// Should not work with bosses.
 		{
-			int rate = 50 + 3 * skilllv + ( sd? sd->status.job_level : 50 ) / 4;
-			i = sc_start2(bl,type,rate,skilllv,src->id,(src == bl)?skill_get_time2(skillid,skilllv):skill_get_time(skillid, skilllv));
-			clif_skill_nodamage(src,bl,skillid,skilllv,i);
+			int rate = ( sd? sd->status.job_level : 50 ) / 4;
+		
+			if(src == bl ) rate = 100; // Success Chance: On self, 100%
+			else if(bl->type == BL_PC) rate += 20 + 10 * skilllv; // On Players, (20 + 10 * Skill Level) %
+			else rate += 40 + 10 * skilllv; // On Monsters, (40 + 10 * Skill Level) %
+
+			if( !(tsc && tsc->data[type]) ){
+				i = sc_start2(bl,type,rate,skilllv,src->id,(src == bl)?5000:(bl->type == BL_PC)?skill_get_time(skillid,skilllv):skill_get_time2(skillid, skilllv));
+				clif_skill_nodamage(src,bl,skillid,skilllv,i);
+			}
+
 			if( sd && i )
 				skill_blockpc_start(sd,skillid,4000); // Reuse Delay only activated on success
-		}
-		else if( sd )
-			clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
+			else if(sd)
+				clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
+		}else if( sd )
+			clif_skill_fail(sd,skillid,USESKILL_FAIL_TOTARGET,0);
 		break;
 
 	case WL_FROSTMISTY:
@@ -7711,25 +7719,19 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case WL_READING_SB:
 		if( sd )
 		{
-			int i, preserved = 0, max_preserve = 4 * pc_checkskill(sd,WL_FREEZE_SP) + sstatus->int_ / 10 + sd->status.base_level / 10;
-			ARR_FIND(0, MAX_SPELLBOOK, i, sd->rsb[i].skillid == 0); // Search for a Free Slot
-			if( i == MAX_SPELLBOOK )
-			{
-				clif_skill_fail(sd,skillid,USESKILL_FAIL_SKILLINTERVAL,0);
-				break;
-			}
-			for( i = 0; i < MAX_SPELLBOOK && sd->rsb[i].skillid; i++ )
-				preserved += sd->rsb[i].points;
+			struct status_change *sc = status_get_sc(bl);
+			int i, max_preserve = 4 * pc_checkskill(sd, WL_FREEZE_SP) + sstatus->int_ / 10 + sd->status.base_level / 10;
 
-			if( preserved >= max_preserve )
-			{
-				clif_skill_fail(sd,skillid,USESKILL_FAIL_SKILLINTERVAL,0);
+			for(i=SC_SPELLBOOK1; i <= SC_MAXSPELLBOOK; i++) if( sc && !sc->data[i] ) break;
+			if( i == SC_MAXSPELLBOOK ) 
+			{ 
+				clif_skill_fail(sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK_READING, 0);
 				break;
 			}
 
-			sc_start(bl,SC_STOP,100,skilllv,-1); //Can't move while selecting a spellbook.
+			sc_start(bl, SC_STOP, 100, skilllv, INVALID_TIMER); //Can't move while selecting a spellbook.
 			clif_spellbook_list(sd);
-			clif_skill_nodamage(src,bl,skillid,skilllv,1);
+			clif_skill_nodamage(src, bl, skillid, skilllv, 1);
 		}
 		break;
 	/**
@@ -9590,20 +9592,19 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	case WL_EARTHSTRAIN:
 		{
 			int i, wave = skilllv + 4, dir = map_calc_dir(src,x,y);
-			int sx = x, sy = y;
+			int sx = x = src->x, sy = y = src->y; // Store first caster's location to avoid glitch on unit setting
 
-			for( i = 0; i < wave; i++ )
+			for( i = 1; i <= wave; i++ )
 			{
-				switch( dir )
-				{
-				case 0: case 1: case 7: sy = src->y + i; break;
-				case 3: case 4: case 5: sy = src->y - i; break;
-				case 2: sx = src->x - i; break;
-				case 6: sx = src->x + i; break;
+				switch( dir ){
+					case 0: case 1: case 7: sy = y + i; break;
+					case 3: case 4: case 5: sy = y - i; break;
+					case 2: sx = x - i; break;
+					case 6: sx = x + i; break;
 				}
-				skill_addtimerskill(src,gettick() + (200 * i),0,sx,sy,skillid,skilllv,dir,flag&2); // Temp code until animation is replaced. [Rytech]
-				//skill_addtimerskill(src,gettick() + (150 * i),0,sx,sy,skillid,skilllv,dir,flag&2); // Official steping timer, but disabled due to too much noise.
+				skill_addtimerskill(src,gettick() + (150 * i),0,sx,sy,skillid,skilllv,dir,flag&2);
 			}
+			if(sd) skill_blockpc_start(sd, skillid, skill_get_cooldown(skillid, skilllv));
 		}
 		break;
 	/**
@@ -15738,56 +15739,51 @@ int skill_magicdecoy(struct map_session_data *sd, int nameid) {
 
 // Warlock Spellbooks. [LimitLine/3CeAM]
 int skill_spellbook (struct map_session_data *sd, int nameid) {
-	int i, j, points, skillid, preserved = 0, max_preserve;
-	nullpo_ret(sd);
+	int i, max_preserve, skill_id, point;
+	struct status_change *sc;
 	
-	if( sd->sc.data[SC_STOP] ) status_change_end(&sd->bl,SC_STOP,INVALID_TIMER);
-	if( nameid <= 0 ) return 0;
+	nullpo_ret(sd);
 
-	if( pc_search_inventory(sd,nameid) < 0 )
-	{ // User with no item on inventory
-		clif_skill_fail(sd,WL_READING_SB,USESKILL_FAIL_SKILLINTERVAL,0);
-		return 0;
-	}
+	sc = status_get_sc(&sd->bl);
+	status_change_end(&sd->bl, SC_STOP, INVALID_TIMER);
 
-	ARR_FIND(0,MAX_SPELLBOOK,j,sd->rsb[j].skillid == 0); // Search for a free slot
-	if( j == MAX_SPELLBOOK )
-	{ // No more free slots
-		clif_skill_fail(sd,WL_READING_SB,USESKILL_FAIL_SPELLBOOK_PRESERVATION_POINT,0);
+	for(i=SC_SPELLBOOK1; i <= SC_MAXSPELLBOOK; i++) if( sc && !sc->data[i] ) break;
+	if( i > SC_MAXSPELLBOOK ) 
+	{ 
+		clif_skill_fail(sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK_READING, 0);
 		return 0;
 	}
 
 	ARR_FIND(0,MAX_SKILL_SPELLBOOK_DB,i,skill_spellbook_db[i].nameid == nameid); // Search for information of this item
-	if( i == MAX_SKILL_SPELLBOOK_DB )
-	{ // Fake nameid
-		clif_skill_fail(sd,WL_READING_SB,USESKILL_FAIL_SKILLINTERVAL,0);
-		return 0;
-	}
+	if( i == MAX_SKILL_SPELLBOOK_DB ) return 0; 
 
-	skillid = skill_spellbook_db[i].skillid;
-	points = skill_spellbook_db[i].points;
-
-	if( !pc_checkskill(sd,skillid) )
+	if( !pc_checkskill(sd, (skill_id = skill_spellbook_db[i].skillid)) )
 	{ // User don't know the skill
-		sc_start(&sd->bl,SC_SLEEP,100,1,skill_get_time(WL_READING_SB,pc_checkskill(sd,WL_READING_SB)));
-		clif_skill_fail(sd,WL_READING_SB,USESKILL_FAIL_SPELLBOOK_DIFFICULT_SLEEP,0);
+		sc_start(&sd->bl, SC_SLEEP, 100, 1, skill_get_time(WL_READING_SB, pc_checkskill(sd,WL_READING_SB)));
+		clif_skill_fail(sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK_DIFFICULT_SLEEP, 0);
 		return 0;
 	}
 
-	max_preserve = 4 * pc_checkskill(sd,WL_FREEZE_SP) + status_get_int(&sd->bl) / 10 + sd->status.base_level / 10;
-	for( i = 0; i < MAX_SPELLBOOK && sd->rsb[i].skillid; i++ )
-		preserved += sd->rsb[i].points;
+	max_preserve = 4 * pc_checkskill(sd, WL_FREEZE_SP) + status_get_int(&sd->bl) / 10 + sd->status.base_level / 10;
+	point = skill_spellbook_db[i].point;
 
-	if( preserved + points >= max_preserve )
-	{ // No more free points
-		clif_skill_fail(sd,WL_READING_SB,USESKILL_FAIL_SKILLINTERVAL,0);
-		return 0;
+	if( sc && sc->data[SC_READING_SB] ){
+		if( (sc->data[SC_READING_SB]->val2 + point) > max_preserve )
+		{ 
+			clif_skill_fail(sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK_PRESERVATION_POINT, 0);
+			return 0;
+		}
+		for(i = SC_MAXSPELLBOOK; i >= SC_SPELLBOOK1; i--){ // This is how official saves spellbook. [malufett]
+			if( !sc->data[i] ){
+				sc->data[SC_READING_SB]->val2 += point; // increase points
+				sc_start4(&sd->bl, (sc_type)i, 100, skill_id, pc_checkskill(sd,skill_id), point, 0, INVALID_TIMER);
+				break;
+			}
+		}
+	}else{
+		sc_start2(&sd->bl, SC_READING_SB, 100, 0, point, INVALID_TIMER);
+		sc_start4(&sd->bl, SC_MAXSPELLBOOK, 100, skill_id, pc_checkskill(sd,skill_id), point, 0, INVALID_TIMER);
 	}
-
-	sd->rsb[j].skillid = skillid;
-	sd->rsb[j].level = pc_checkskill(sd,skillid);
-	sd->rsb[j].points = points;
-	sc_start2(&sd->bl,SC_READING_SB,100,0,preserved+points,-1);
 
 	return 1;
 }
@@ -16435,16 +16431,13 @@ void skill_init_unit_layout (void)
 	earthstrain_unit_pos = pos;
 	for( i = 0; i < 8; i++ )
 	{ // For each Direction
-		skill_unit_layout[pos].count = 3; // Temp code being used as the official method makes too much noise in game. [Rytech]
-		//skill_unit_layout[pos].count = 15; // This line is here to replace the above one once gravity changes the animation.
+		skill_unit_layout[pos].count = 15;
 		switch( i )
 		{
 		case 0: case 1: case 3: case 4: case 5: case 7:
 			{
-				int dx[] = {-5, 0, 5};
-				int dy[] = { 0, 0, 0};
-				//int dx[] = {-7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7}; // Leave this here for future use.
-				//int dy[] = { 0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0};
+				int dx[] = {-7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7};
+				int dy[] = { 0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0};
 				memcpy(skill_unit_layout[pos].dx,dx,sizeof(dx));
 				memcpy(skill_unit_layout[pos].dy,dy,sizeof(dy));
 			}
@@ -16452,10 +16445,8 @@ void skill_init_unit_layout (void)
 		case 2:
 		case 6:
 			{
-				int dx[] = { 0, 0, 0};
-				int dy[] = {-5, 0, 5};
-				//int dx[] = { 0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0}; // Leave this here for future use.
-				//int dy[] = {-7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7};
+				int dx[] = { 0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0};
+				int dy[] = {-7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7};
 				memcpy(skill_unit_layout[pos].dx,dx,sizeof(dx));
 				memcpy(skill_unit_layout[pos].dy,dy,sizeof(dy));
 			}
@@ -16847,7 +16838,7 @@ static bool skill_parse_row_spellbookdb(char* split[], int columns, int current)
 	else
 	{
 		skill_spellbook_db[current].skillid = skillid;
-		skill_spellbook_db[current].points = points;
+		skill_spellbook_db[current].point = points;
 		skill_spellbook_db[current].nameid = nameid;
 
 		return true;

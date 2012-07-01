@@ -15859,8 +15859,10 @@ int clif_spellbook_list(struct map_session_data *sd)
 		sd->menuskill_id = WL_READING_SB;
 		sd->menuskill_val = c;
 	}
-	else
+	else{
 		status_change_end(&sd->bl,SC_STOP,INVALID_TIMER);
+		clif_skill_fail(sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK, 0);
+	}
 
 	return 1;
 }

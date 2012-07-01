@@ -600,6 +600,18 @@ typedef enum sc_type {
 	SC_EARTH_INSIGNIA,
 	/* new pushcart */
 	SC_PUSH_CART,
+	/* Warlock Spell books */
+	SC_SPELLBOOK1,
+	SC_SPELLBOOK2,
+	SC_SPELLBOOK3,
+	SC_SPELLBOOK4,
+	SC_SPELLBOOK5,
+	SC_SPELLBOOK6,
+/**
+ * In official server there are only 7 maximum number of spell books that can be memorized
+ * To increase the maximum value just add another status type before SC_MAXSPELLBOOK (ex. SC_SPELLBOOK7, SC_SPELLBOOK8 and so on)
+ **/
+	SC_MAXSPELLBOOK,
 	
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;

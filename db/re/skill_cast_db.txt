@@ -1185,8 +1185,8 @@
 //==========================================
 
 //===== Warlock ============================
-//-- WL_WHITEIMPRISON //CHECK Is reuse delay hard coded to work only if successful? Duration 1 may be incorrect. Is duration 2 for if casted on self?
-2201,0,0,0,10000:12000:14000:16000:18000,5000,0,0
+//-- WL_WHITEIMPRISON 
+2201,0,0,0,6000:8000:10000:12000:14000,15000,0,0
 //-- WL_SOULEXPANSION
 2202,2000,500,0,0,0,0,0
 //-- WL_FROSTMISTY
@@ -1213,8 +1213,8 @@
 //-- WL_CHAINLIGHTNING //CHECK Whats duration 1 used for?
 2214,4500:5000:5500:6000:6500,3000,0,1000,0,0,0
 
-//-- WL_EARTHSTRAIN //CHECK What is duration 2 used for?
-2216,3000:4000:5000:6000:7000,1000,0,500,60000,10000,0
+//-- WL_EARTHSTRAIN 
+2216,2000:3000:4000:5000:6000,1000,0,150,0,10000,2000
 //-- WL_TETRAVORTEX //CHECK Duration 1 might be correct?
 2217,6000:7000:8000:9000:10000,2000,0,20000,0,15000,0
 
@@ -1228,8 +1228,8 @@
 //-- WL_SUMMONSTONE
 2229,2000,0,0,30000:40000:50000:60000:70000,0,0,0
 
-//-- WL_READING_SB //CHECK Is duration 1 how long the spell will be stored for?
-2231,4000,500,0,30000,0,5000,0
+//-- WL_READING_SB 
+2231,4000,500,0,0,0,5000,0
 //==========================================
 
 //===== Ranger =============================

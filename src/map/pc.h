@@ -23,9 +23,6 @@
 #define MAX_PC_SKILL_REQUIRE 5
 #define MAX_PC_FEELHATE 3
 
-//For Warlock
-#define MAX_SPELLBOOK 10
-
 struct weapon_data {
 	int atkmods[3];
 	// all the variables except atkmods get zero'ed in each call of status_calc_pc
@@ -421,13 +418,6 @@ struct map_session_data {
 		struct mail_data inbox;
 		bool changed; // if true, should sync with charserver on next mailbox request
 	} mail;
-
-	// Reading SpellBook
-	struct {
-		unsigned short skillid;
-		unsigned char level;
-		unsigned char points;
-	} rsb[MAX_SPELLBOOK];
 
 	//Quest log system [Kevin] [Inkfish]
 	int num_quests;

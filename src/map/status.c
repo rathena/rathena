@@ -785,6 +785,14 @@ void initChangeTables(void) {
 	StatusIconChangeTable[SC_SPHERE_3] = SI_SPHERE_3;
 	StatusIconChangeTable[SC_SPHERE_4] = SI_SPHERE_4;
 	StatusIconChangeTable[SC_SPHERE_5] = SI_SPHERE_5;
+	// Warlock Preserved spells
+	StatusIconChangeTable[SC_SPELLBOOK1] = SI_SPELLBOOK1;
+	StatusIconChangeTable[SC_SPELLBOOK2] = SI_SPELLBOOK2;
+	StatusIconChangeTable[SC_SPELLBOOK3] = SI_SPELLBOOK3;
+	StatusIconChangeTable[SC_SPELLBOOK4] = SI_SPELLBOOK4;
+	StatusIconChangeTable[SC_SPELLBOOK5] = SI_SPELLBOOK5;
+	StatusIconChangeTable[SC_SPELLBOOK6] = SI_SPELLBOOK6;
+	StatusIconChangeTable[SC_MAXSPELLBOOK] = SI_SPELLBOOK7;
 
 	StatusIconChangeTable[SC_NEUTRALBARRIER_MASTER] = SI_NEUTRALBARRIER_MASTER;
 	StatusIconChangeTable[SC_STEALTHFIELD_MASTER] = SI_STEALTHFIELD_MASTER;
@@ -5831,9 +5839,12 @@ int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int ti
 		if (sd) //Duration greatly reduced for players.
 			tick /= 15;
 		//No defense against it (buff).
-	case SC_WHITEIMPRISON:
 		rate -= (status_get_lv(bl) / 5 + status->vit / 4 + status->agi / 10)*100; // Lineal Reduction of Rate
-		//tick_def = (int)floor(log10(status_get_lv(bl)) * 10.);
+		break;
+	case SC_WHITEIMPRISON:
+		rate -= (status_get_lv(bl) / 5 + status->vit / 4 + status->agi / 10)*100; 
+		if( tick != 5000) // not applied on caster
+			tick -= (status->vit + status->luk) / 20 * 1000; 
 		break;
 	case SC_BURNING:
 		// From iROwiki : http://forums.irowiki.org/showpost.php?p=577240&postcount=583
@@ -7600,7 +7611,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			break;
 		case SC_READING_SB:
 			// val2 = sp reduction per second
-			tick_time = 1000; // [GodLesZ] tick time
+			tick_time = 5000; // [GodLesZ] tick time
 			break;
 		case SC_SPHERE_1:
 		case SC_SPHERE_2:
@@ -9644,9 +9655,13 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		break;
 
 	case SC_READING_SB:
-		if( !status_charge(bl, 0, sce->val2) )
+		if( !status_charge(bl, 0, sce->val2) ){
+			int i;
+			for(i = SC_SPELLBOOK1; i <= SC_MAXSPELLBOOK; i++) // Also remove stored spell as well.
+				status_change_end(bl, (sc_type)i, INVALID_TIMER);
 			break;
-		sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
+		}
+		sc_timer_next(5000 + tick, status_change_timer, bl->id, data);
 		return 0;
 
 	case SC_ELECTRICSHOCKER:
