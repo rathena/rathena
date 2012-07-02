@@ -7717,14 +7717,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case WL_READING_SB:
-		if( sd )
-		{
+		if( sd ) {
 			struct status_change *sc = status_get_sc(bl);
-			int i, max_preserve = 4 * pc_checkskill(sd, WL_FREEZE_SP) + sstatus->int_ / 10 + sd->status.base_level / 10;
 
-			for(i=SC_SPELLBOOK1; i <= SC_MAXSPELLBOOK; i++) if( sc && !sc->data[i] ) break;
-			if( i == SC_MAXSPELLBOOK ) 
-			{ 
+			for( i = SC_SPELLBOOK1; i <= SC_MAXSPELLBOOK; i++)
+				if( sc && !sc->data[i] )
+					break;
+			if( i == SC_MAXSPELLBOOK ) {
 				clif_skill_fail(sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK_READING, 0);
 				break;
 			}
