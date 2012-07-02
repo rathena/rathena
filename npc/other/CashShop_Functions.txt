@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -21,6 +21,7 @@
 //= 1.2 Updated the dungeon teleport scroll menu. [L0ne_w0lf]
 //= 1.3 Implemented Aozi Giant Flywing Fix. (bugreport:4242) [L0ne_w0lf]
 //= 1.4 Simplified Giant Flywing function using warpparty. [L0ne_w0lf]
+//= 1.5 Neuralizer is no longer consumed upon failure. [Euphy]
 //============================================================ 
 
 // Kafra Card
@@ -78,14 +79,10 @@ function	script	F_CashPartyCall2	{
 // - Reset players skills. Weight must be 0, options must be off.
 // - No arguments.
 function	script	F_CashReset	{
-	if (Class != Job_Novice) {
-		if (Weight < 1) { 
-			if (checkriding() || checkfalcon() || checkcart()) return;
-			else {
-				resetskill;
-				sc_end SC_ALL;
-			}
-		}
+	if (Class != Job_Novice && Weight == 0 && !checkriding() && !checkfalcon() && !checkcart() && !ismounting()) {
+		resetskill;
+		sc_end SC_ALL;
+		if (countitem(12213)) delitem 12213,1;
 	}
 	return;
 }

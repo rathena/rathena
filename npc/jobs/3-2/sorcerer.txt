@@ -4,7 +4,7 @@
 //= Masao
 //= Credits: Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= Any rAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //= Job change Quest from Sage / Professor -> Sorcerer.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
+//= 1.1 Cleaning. [Euphy]
 //============================================================
 
 gef_tower,102,34,5	script	Merito	742,{
@@ -20,40 +21,30 @@ gef_tower,102,34,5	script	Merito	742,{
 		mes "You packed so much in your bag. Try again after emptying your bag.";
 		close;
 	}
+	mes "[Merito]";
 	if (Class == Job_Sorcerer || Class == Job_Sorcerer_T || Class == Job_Baby_Sorcerer){
-		mes "[Merito]";
 		mes "Please get on with the sprits well~ You should~!";
 		close;
 	}
 	if (JobLevel < 50 || SkillPoint != 0 || BaseLevel < 99){
-		mes "[Merito]";
 		mes "Wow~ you are a young adventurer. I envy you.";
 		close;
 	}
 	if ((Class != Job_Sage) && (Class != Job_Professor) && (Class != Job_Baby_Sage)){
-		mes "[Merito]";
 		mes "Wow~ you are a young adventurer. I envy you.";
 		close;
 	}
-	if ((Class == Job_Sage || Class == Job_Professor || Class == Job_Baby_Sage) && (job_soc < 1)){
-		mes "[Merito]";
+	if (job_soc < 1){
 		mes "Welcome. What can I help you with?";
 		next;
-		menu "Do you know about Sorcerers?",-;
+		select("Do you know about Sorcerers?");
 		mes "[Merito]";
 		mes "Wouldn't it be more comfortable to just live as a scholar? Sorcerers are busy communicating with the spirits and don't have much time to read books...";
 		next;
 		mes "[Merito]";
 		mes "What made you want to be a sorcerer?";
 		next;
-		switch(select("The spirit of fire led me here.:The spirit of water led me here.:The spirit of earth led me here:The spirit of meat led me here.")){
-		case 1:
-			break;
-		case 2:
-			break;
-		case 3:
-			break;
-		case 4:
+		if(select("The spirit of fire led me here.:The spirit of water led me here.:The spirit of earth led me here:The spirit of meat led me here.")==4) {
 			mes "[Merito]";
 			mes "That kind of spirit doesn't exist!";
 			close;
@@ -65,10 +56,7 @@ gef_tower,102,34,5	script	Merito	742,{
 		mes "[Merito]";
 		mes "Hmm... Then first, can you write down your name on this list?";
 		next;
-		switch(select("Write name.:I won't.")){
-		case 1:
-			break;
-		case 2:
+		if(select("Write name.:I won't.")==2){
 			mes "[Merito]";
 			mes "Well, okay. See you again when you get a chance.";
 			close;
@@ -82,17 +70,13 @@ gef_tower,102,34,5	script	Merito	742,{
 		set job_soc,1;
 		close;
 	}
-	if ((Class == Job_Sage || Class == Job_Professor || Class == Job_Baby_Sage) && (job_soc == 1)){
-		mes "[Merito]";
+	else if (job_soc == 1){
 		mes "Good, then I'll give you a short explanation about the Sorcerer.";
 		next;
 		mes "[Merito]";
 		mes "["+strcharinfo(0)+"], can you handle magic skillfully?";
 		next;
-		switch(select("Yes, I can.:No, I'm not really good at it.")){
-		case 1:
-			break;
-		case 2:
+		if(select("Yes, I can.:No, I'm not really good at it.")==2){
 			mes "[Merito]";
 			mes "What!? You don't know how to use magic?";
 			mes "What are you doing here then? Get out of here. Right now!";
@@ -140,9 +124,8 @@ gef_tower,102,34,5	script	Merito	742,{
 			close;
 		}
 	}
-	if ((Class == Job_Sage || Class == Job_Professor || Class == Job_Baby_Sage) && (job_soc > 1)){
-		mes "[Merito]";
-		mes "How about your test? Well, Karacas is a little lazy, so that might bother you some... kkk";
+	else if (job_soc > 1){
+		mes "How about your test? Well, Karacas is a little lazy, so that might bother you some...";
 		close;
 	}
 }
@@ -153,35 +136,31 @@ gef_tower,113,161,5	script	Karacas	754,{
 		mes "You packed so much in your bag. Try again after emptying your bag.";
 		close;
 	}
-	if (Class == Job_Sorcerer || Class == Job_Sorcerer_T){
-		mes "[Karacas]";
+	mes "[Karacas]";
+	if (Class == Job_Sorcerer || Class == Job_Sorcerer_T || Class == Job_Baby_Sorcerer){
 		mes "You look happy. Have a great journey.";
 		close;
 	}
 	if (JobLevel < 50 || SkillPoint != 0 || BaseLevel < 99){
-		mes "[Karacas]";
 		mes "Is there anything I can do for you?";
 		close;
 	}
 	if ((Class != Job_Sage) && (Class != Job_Professor) && (Class != Job_Baby_Sage)){
-		mes "[Karacas]";
 		mes "Is there anything I can do for you?";
 		close;
 	}
-	if ((Class == Job_Sage || Class == Job_Professor || Class == Job_Baby_Sage) && (job_soc < 2)){
-		mes "[Karacas]";
+	if (job_soc < 2){
 		mes "More people are visiting Geffen Tower thesedays.";
 		close;
 	}
-	if ((Class == Job_Sage || Class == Job_Professor || Class == Job_Baby_Sage) && (job_soc == 2)){
-		mes "[Karacas]";
+	else if (job_soc == 2){
 		mes "....";
 		next;
-		menu "Ah... excuse me~",-;
+		select("Ah... excuse me~");
 		mes "[Karacas]";
 		mes "... (Z z z~)";
 		next;
-		menu "Hm hm!!!~",-;
+		selecT("Hm hm!!!~");
 		mes "[Karacas]";
 		mes "Aaaak!! ";
 		mes "Oh, my... ";
@@ -189,7 +168,7 @@ gef_tower,113,161,5	script	Karacas	754,{
 		mes "[Karacas]";
 		mes "Wh... where are you from?";
 		next;
-		menu "Merito told me to visit you.",-;
+		select("Merito told me to visit you.");
 		mes "[Karacas]";
 		mes "I see, give me a moment.";
 		mes "The list... has already arrived.";
@@ -197,10 +176,7 @@ gef_tower,113,161,5	script	Karacas	754,{
 		mes "[Karacas]";
 		mes "So, you are ["+strcharinfo(0)+"]... right?";
 		next;
-		switch(select("Yes, I am.:No, I'm not!")){
-		case 1:
-			break;
-		case 2:
+		if(select("Yes, I am.:No, I'm not!")==2){
 			mes "[Karacas]";
 			mes "Oh, there must be some mistake in the list, I think. Will you come again later?";
 			close;
@@ -214,7 +190,7 @@ gef_tower,113,161,5	script	Karacas	754,{
 		mes "[Karacas]";
 		mes "Sounds easy, right?";
 		next;
-		menu "Ahh... sir. Is that really possible?",-;
+		select("Ahh... sir. Is that really possible?");
 		mes "[Karacas]";
 		mes "Well, it is impossible to meet every spirit by yourself. You need to train yourself very hard to give a shape to the spirits and see them clearly through your eyes.";
 		next;
@@ -236,7 +212,7 @@ gef_tower,113,161,5	script	Karacas	754,{
 		mes "[Karacas]";
 		mes "Sorcerers use this basic principle, this is the essential knowledge that Sorcerers need to have to reach the spirits.";
 		next;
-		menu "So communicating with spirits...",-;
+		select("So communicating with spirits...");
 		mes "[Karacas]";
 		mes "Right~";
 		mes "This job is based on the power of spirits.";
@@ -259,12 +235,11 @@ gef_tower,113,161,5	script	Karacas	754,{
 		changequest 12096,12097;
 		close;
 	}
-	if ((Class == Job_Sage || Class == Job_Professor || Class == Job_Baby_Sage) && (job_soc == 3)){
+	else if (job_soc == 3){
 		if ((countitem(992) > 2) && (countitem(991) > 2) && (countitem(990) > 2) && (countitem(993) > 2)){
-			mes "[Karacas]";
 			mes "Oh, you have all the materials.";
 			next;
-			menu "What should I do next?",-;
+			select("What should I do next?");
 			mes "[Karacas]";
 			mes "I'll tell you about it now. First, I'll tell you the places for the test. You better write them down.";
 			next;
@@ -283,7 +258,7 @@ gef_tower,113,161,5	script	Karacas	754,{
 			mes "[Karacas]";
 			mes "You need to prepare at least 3 small stones for each property. For example, you need Wind of Verdure, not Rough Wind.";
 			next;
-			menu "So I need the property stones...",-;
+			select("So I need the property stones...");
 			mes "[Karacas]";
 			mes "Yes, you have quick wits!";
 			next;
@@ -296,7 +271,7 @@ gef_tower,113,161,5	script	Karacas	754,{
 			mes "[Karacas]";
 			mes "Of course if you are lucky enough, if you fail, a Wind of Verdure can be changed into a Rough Wind... Well, that's not a common situation so let's leave that out of the discussion for now.";
 			next;
-			menu "What if I run out of stones?",-;
+			select("What if I run out of stones?");
 			mes "[Karacas]";
 			mes "Ahahaha... If you run out of property stones, you simply have to get more.";
 			next;
@@ -306,7 +281,7 @@ gef_tower,113,161,5	script	Karacas	754,{
 			mes "[Karacas]";
 			mes "If you are an advanced Sorcerer, you will be able to talk with spirits without going through this process again. But beginners need to use that kind of medium to talk with them.";
 			next;
-			menu "So the reagent is...?",-;
+			select("So the reagent is...?");
 			mes "[Karacas]";
 			mes "We don't know which reagent is going to be made from the spirits. It differs by the state of spirits.";
 			next;
@@ -319,14 +294,10 @@ gef_tower,113,161,5	script	Karacas	754,{
 			mes "[Karacas]";
 			mes "Have any questions?";
 			next;
-			switch(select("No.:Please explain it again.")){
-			case 1:
-				break;
-			case 2:
+			if(select("No.:Please explain it again.")==2){
 				mes "[Karacas]";
 				mes "Haha, then can I have a cup of water for a minute? Please come and find me again later.";
 				next;
-				break;
 			}
 			mes "[Karacas]";
 			mes "Then I'll write down the progress that I've summarized shortly. Wait...";
@@ -336,7 +307,6 @@ gef_tower,113,161,5	script	Karacas	754,{
 			changequest 12097,12098;
 			close;
 		}
-		mes "[Karacas]";
 		mes "Before I let you know the progressing way, you'll need to bring some required material.";
 		next;
 		mes "[Karacas]";
@@ -349,13 +319,12 @@ gef_tower,113,161,5	script	Karacas	754,{
 		mes "When you bring these basic things, I'll guide you to the next step.";
 		close;
 	}
-	if ((Class == Job_Sage || Class == Job_Professor || Class == Job_Baby_Sage) && (job_soc == 4)){
-		if ((countitem(6276) > 0) && (countitem(6278) > 0) && (countitem(6277) > 0)){
-			mes "[Karacas]";
+	else if (job_soc == 4){
+		if (countitem(6276) && countitem(6278) && countitem(6277)){
 			mes "Wow~ your skill is good.";
 			mes "I thought you'd be overwhelmed by the spirits but you've managed to get the effective medicine!";
 			next;
-			menu "Is this all I need to do?",-;
+			select("Is this all I need to do?");
 			mes "[Karacas]";
 			mes "Well done. First, I will organize the miraculous medicine so please wait a moment.";
 			delitem 6276,1;
@@ -365,15 +334,13 @@ gef_tower,113,161,5	script	Karacas	754,{
 			completequest 12098;
 			close;
 		}
-		mes "[Karacas]";
 		mes "It's not an easy thing to get the desired effect by communicating with spirits.";
 		next;
 		mes "[Karacas]";
 		mes "Don't give up and keep on trying~";
 		close;
 	}
-	if ((Class == Job_Sage || Class == Job_Professor || Class == Job_Baby_Sage) && (job_soc == 5)){
-		mes "[Karacas]";
+	else if (job_soc == 5){
 		mes "Originally my teacher needs to check the Sorcerer job change but after he went out to find the spirit of fish, I can't see him. So I'll check it myself.";
 		next;
 		mes "[Karacas]";
@@ -391,14 +358,7 @@ gef_tower,113,161,5	script	Karacas	754,{
 		next;
 		mes "[Karacas]";
 		mes "Congratulations, ["+strcharinfo(0)+"]";
-		if(Class == Job_Baby_Sage){
-			jobchange Job_Baby_Sorcerer;
-		}
-		else if (Class == Job_Sage){
-			jobchange Job_Sorcerer;
-		}else if (Class == Job_Professor){
-			jobchange Job_Sorcerer_T;
-		}
+		jobchange roclass(eaclass()|EAJL_THIRD);
 		getitem 5756,1;
 		getitem 2795,1;
 		next;

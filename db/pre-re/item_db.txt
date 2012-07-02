@@ -4752,7 +4752,7 @@
 12210,Bubble_Gum,Bubble Gum,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ITEMBOOST,1800000,200; },{},{}
 12211,Kafra_Card,Kafra Card,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CashStore"; },{},{}
 12212,Giant_Fly_Wing,Giant Fly Wing,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CashPartyCall"; },{},{}
-12213,Neuralizer,Neuralizer,2,2,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CashReset"; },{},{}
+12213,Neuralizer,Neuralizer,11,2,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CashReset"; },{},{}
 12214,Convex_Mirror,Convex Mirror,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_BOSSMAPINFO,600000,0; },{},{}
 12215,Blessing_10_Scroll,LV10 Blessing Scroll,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ skilleffect "AL_BLESSING",0; sc_start SC_BLESSING,240000,10; },{},{}
 12216,Inc_Agi_10_Scroll,LV10 Agil Scroll,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ if (Hp > 15) { skilleffect "AL_INCAGI",0; sc_start SC_INCREASEAGI,240000,10; heal -15,0; } },{},{}

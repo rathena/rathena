@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= rAthena Dev Team
 //===== Current Version: ===================================== 
-//= v1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -11,8 +11,9 @@
 //= Quest to obtain a Bunny Band headgear.
 //===== Additional Comments: ================================= 
 //= 1.5 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
-//	Changed @BUNYBAN back to a BUNYBAND, it hsoudl be this way.
+//	Changed @BUNYBAN back to BUNYBND, it should be this way.
 //	Removed duplicates. NPC is ALberta-only.
+//= 1.6 Cleaning. [Euphy]
 //============================================================ 
 
 alberta,26,229,0	script	Kafra Employee#bunny	83,{
@@ -32,37 +33,16 @@ alberta,26,229,0	script	Kafra Employee#bunny	83,{
 			mes "see if you brought";
 			mes "all the items...";
 			next;
-			if (countitem(949) < 100) {
-				mes "[Kafra Employee]";
-				mes "Ooh, I'm sorry";
-				mes "but you need to";
-				mes "bring at least";
-				mes "100 Feathers.";
-				close;
-			}
-			if (countitem(706) == 0) {
-				mes "[Kafra Employee]";
-				mes "Ooh, I'm sorry";
-				mes "but you need to";
-				mes "bring at least";
-				mes "1 Four-Leaf Clover.";
-				close;
-			}
-			if (countitem(722) == 0) {
-				mes "[Kafra Employee]";
-				mes "Ooh, I'm sorry";
-				mes "but you need to";
-				mes "bring at least";
-				mes "1 Pearl.";
-				close;
-			}
-			if (countitem(2213) == 0) {
-				mes "Ooh, I'm sorry";
-				mes "but you need to";
-				mes "bring at least";
-				mes "1 Kitty Band.";
-				close;
-			}
+			setarray .@Items[0],949,100,706,1,722,1,2213,1;
+			for(set .@i,0; .@i<8; set .@i,.@i+2)
+				if (countitem(.@Items[.@i]) < .@Items[.@i+1]) {
+					mes "[Kafra Employee]";
+					mes "Ooh, I'm sorry";
+					mes "but you need to";
+					mes "bring at least";
+					mes .@Items[.@i+1]+" "+getitemname(.@Items[.@i])+((!.@i)?"s.":".");
+					close;
+				}
 			mes "[Kafra Employee]";
 			mes "Great, I see that";
 			mes "you've gathered";
@@ -71,46 +51,17 @@ alberta,26,229,0	script	Kafra Employee#bunny	83,{
 			mes "Please wait a moment";
 			mes "while I put it together...";
 			next;
-			if (countitem(949) < 100) {
-				mes "[Kafra Employee]";
-				mes "Hm? I'm sorry,";
-				mes "but I actually can't";
-				mes "make this right now.";
-				mes "You need 100 Feathers";
-				mes "in order for me to put this";
-				mes "Bunny Band together...";
-				close;
-			}
-			if (countitem(706) < 1) {
-				mes "[Kafra Employee]";
-				mes "Hm? I'm sorry,";
-				mes "but I actually can't";
-				mes "make this right now. You";
-				mes "need 1 Four-Leaf Clover";
-				mes "in order for me to put this";
-				mes "Bunny Band together...";
-				close;
-			}
-			if (countitem(722) < 1) {
-				mes "[Kafra Employee]";
-				mes "Hm? I'm sorry,";
-				mes "but I actually can't";
-				mes "make this right now.";
-				mes "You need 1 Pearl in";
-				mes "order for me to put this";
-				mes "Bunny Band together...";
-				close;
-			}
-			if (countitem(2213) < 1) {
-				mes "[Kafra Employee]";
-				mes "Hm? I'm sorry,";
-				mes "but I actually can't";
-				mes "make this right now.";
-				mes "You need 1 Kitty Band";
-				mes "in order for me to put this";
-				mes "Bunny Band together...";
-				close;
-			}
+			for(set .@i,0; .@i<8; set .@i,.@i+2)
+				if (countitem(.@Items[.@i]) < .@Items[.@i+1]) {
+					mes "[Kafra Employee]";
+					mes "Hm? I'm sorry,";
+					mes "but I actually can't";
+					mes "make this right now. You";
+					mes "need "+.@Items[.@i+1]+" "+getitemname(.@Items[.@i])+((!.@i)?"s":"");
+					mes "in order for me to put this";
+					mes "Bunny Band together...";
+					close;
+				}
 			delitem 949,100; //Feather
 			delitem 706,1; //Four_Leaf_Clover
 			delitem 722,1; //Scarlet_Jewel
@@ -130,29 +81,7 @@ alberta,26,229,0	script	Kafra Employee#bunny	83,{
 			mes "of the Kafra Services~";
 			close;
 		case 2:
-			mes "[Kafra Employee]";
-			mes "To thank our valued";
-			mes "customers, Kafra Corporation";
-			mes "has prepared a special event";
-			mes "where Kafra Employee will assemble";
-			mes "Bunny Bands for adventurers";
-			mes "who bring the required items.";
-			next;
-			mes "[Kafra Employee]";
-			mes "For this special,";
-			mes "one of a kind item,";
-			mes "bring 100 Feathers,";
-			mes "1 Four-Leaf Clover,";
-			mes "1 Kitty Band and";
-			mes "1 Pearl.";
-			next;
-			mes "[Kafra Employee]";
-			mes "When you're ready,";
-			mes "come back and bring";
-			mes "those items to me.";
-			mes "(Sponsored by the";
-			mes "Alberta Merchant Guild).";
-			close;
+			goto L_Info;
 		case 3:
 			close;
 		}
@@ -184,32 +113,34 @@ alberta,26,229,0	script	Kafra Employee#bunny	83,{
 		mes "waiting for you here~";
 		close;
 	case 2:
-		mes "[Kafra Employee]";
-		mes "To thank our valued";
-		mes "customers, Kafra Corporation";
-		mes "has prepared a special event";
-		mes "where Kafra Employee will assemble";
-		mes "Bunny Bands for adventurers";
-		mes "who bring the required items.";
-		next;
-		mes "[Kafra Employee]";
-		mes "For this special,";
-		mes "one of a kind item,";
-		mes "bring 100 Feathers,";
-		mes "1 Four-Leaf Clover,";
-		mes "1 Kitty Band and";
-		mes "1 Pearl.";
-		next;
-		mes "[Kafra Employee]";
-		mes "When you're ready,";
-		mes "come back and bring";
-		mes "those items to me.";
-		mes "(Sponsored by the";
-		mes "Alberta Merchant Guild).";
-		close;
+		break;
 	case 3:
 		close;
 	}
+L_Info:
+	mes "[Kafra Employee]";
+	mes "To thank our valued";
+	mes "customers, Kafra Corporation";
+	mes "has prepared a special event";
+	mes "where Kafra Employee will assemble";
+	mes "Bunny Bands for adventurers";
+	mes "who bring the required items.";
+	next;
+	mes "[Kafra Employee]";
+	mes "For this special,";
+	mes "one of a kind item,";
+	mes "bring 100 Feathers,";
+	mes "1 Four-Leaf Clover,";
+	mes "1 Kitty Band and";
+	mes "1 Pearl.";
+	next;
+	mes "[Kafra Employee]";
+	mes "When you're ready,";
+	mes "come back and bring";
+	mes "those items to me.";
+	mes "(Sponsored by the";
+	mes "Alberta Merchant Guild).";
+	close;
 }
 
 //============================================================ 
