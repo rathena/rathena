@@ -4124,8 +4124,10 @@ int pc_useitem(struct map_session_data *sd,int n)
 	if( sd->inventory_data[n]->flag.delay_consume && ( sd->ud.skilltimer != INVALID_TIMER /*|| !status_check_skilluse(&sd->bl, &sd->bl, ALL_RESURRECTION, 0)*/ ) )
 		return 0;
 
-	if( sd->inventory_data[n]->delay > 0 ) { // Check if there is a delay on this item [Paradox924X]
-		ARR_FIND(0, MAX_ITEMDELAYS, i, sd->item_delay[i].nameid == nameid || !sd->item_delay[i].nameid);
+	if( sd->inventory_data[n]->delay > 0 ) {
+		ARR_FIND(0, MAX_ITEMDELAYS, i, sd->item_delay[i].nameid == nameid );
+			if( i == MAX_ITEMDELAYS ) /* item not found. try first empty now */
+				ARR_FIND(0, MAX_ITEMDELAYS, i, !sd->item_delay[i].nameid );
 		if( i < MAX_ITEMDELAYS ) {
 			if( sd->item_delay[i].nameid ) {// found
 				if( DIFF_TICK(sd->item_delay[i].tick, tick) > 0 ) {
@@ -4138,7 +4140,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 					else
 						sprintf(e_msg,"Item Failed. [%s] is cooling down. wait %d seconds.",
 										itemdb_jname(sd->status.inventory[n].nameid),
-										e_tick);
+										e_tick+1);
 					clif_colormes(sd,COLOR_RED,e_msg);
 					return 0; // Delay has not expired yet
 				}
