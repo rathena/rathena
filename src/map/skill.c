@@ -6622,9 +6622,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case MA_REMOVETRAP:
-	case HT_REMOVETRAP:
-		//FIXME: I think clif_skill_fail() is supposed to be sent if it fails below [ultramage]
-		clif_skill_nodamage(src, bl, skillid, skilllv, 1);
+	case HT_REMOVETRAP:		
 		{
 			struct skill_unit* su;
 			struct skill_unit_group* sg;
@@ -6634,6 +6632,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			// Players can only remove their own traps or traps on Vs maps.
 			if( su && (sg = su->group) && (src->type == BL_MER || sg->src_id == src->id || map_flag_vs(bl->m)) && (skill_get_inf2(sg->skill_id)&INF2_TRAP) )
 			{
+				clif_skill_nodamage(src, bl, skillid, skilllv, 1);
 				if( sd && !(sg->unit_id == UNT_USED_TRAPS || (sg->unit_id == UNT_ANKLESNARE && sg->val2 != 0 )) )
 				{ // prevent picking up expired traps
 					if( battle_config.skill_removetrap_type )
@@ -6669,7 +6668,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					}
 				}
 				skill_delunit(su);
-			}
+			}else if(sd)
+				clif_skill_fail(sd, skillid, USESKILL_FAIL_LEVEL, 0);
+
 		}
 		break;
 	case HT_SPRINGTRAP:
@@ -8822,6 +8823,9 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 			else
 				skill_consume_requirement(sd,ud->skillid,ud->skilllv,1);
 		}
+
+		if( !path_search_long(NULL, src->m, src->x, src->y, target->x, target->y, CELL_CHKWALL) )
+			break;
 
 		if( (src->type == BL_MER || src->type == BL_HOM) && !skill_check_condition_mercenary(src, ud->skillid, ud->skilllv, 1) )
 			break;
