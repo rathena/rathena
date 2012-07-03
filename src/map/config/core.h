@@ -18,6 +18,12 @@
  **/
 #define MAX_SUGGESTIONS 10
 
+//Comment to disable the official walk path
+// -- The official walkpath disables users from taking non-clear walk paths,
+// -- e.g. if they want to get around a obstacle they have to walk around it,
+// -- while with OFFICIAL_WALKPATH disabled if they click to walk around a obstacle the server will do it automatically
+#define OFFICIAL_WALKPATH
+
 /// leave this line uncommented to enable callfunc checks when processing scripts.
 /// while allowed, the script engine will attempt to match user-defined functions
 /// in scripts allowing direct function callback (without the use of callfunc.)

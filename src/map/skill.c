@@ -8823,10 +8823,10 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 			else
 				skill_consume_requirement(sd,ud->skillid,ud->skilllv,1);
 		}
-
+#ifdef OFFICIAL_WALKPATH
 		if( !path_search_long(NULL, src->m, src->x, src->y, target->x, target->y, CELL_CHKWALL) )
 			break;
-
+#endif
 		if( (src->type == BL_MER || src->type == BL_HOM) && !skill_check_condition_mercenary(src, ud->skillid, ud->skilllv, 1) )
 			break;
 
