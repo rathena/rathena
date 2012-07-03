@@ -12,7 +12,6 @@
 //= 1.1 Replaced effect numerics with constants. [Samuray22]
 //============================================================
 
-
 prontera,146,92,3	script	Cellerb	58,{
 	set @npcname$,"[Staff Idul Fitri]";
 	mes @npcname$;
@@ -67,7 +66,6 @@ prontera,146,92,3	script	Cellerb	58,{
 		mes "We appreciate your participation in this special event.";
 		emotion e_thx;
 		close;
-
 	case 2:
 		mes @npcname$;
 		mes "Oh well, maybe you will participate in tommorow's quest.";
@@ -75,4 +73,3 @@ prontera,146,92,3	script	Cellerb	58,{
 		close;
 	}
 }
-
