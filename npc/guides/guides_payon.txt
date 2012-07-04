@@ -3,14 +3,15 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
-//= rAthena  SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
-//= Guides for the city of Payon
+//= Guides for the city of Payon.
 //===== Additional Comments: ================================= 
 //= 1.0 First version, Renewal guides.
+//= 1.1 Fixed and optimized. [Euphy]
 //============================================================ 
 
 payon,163,64,3	script	Guide#01payon::GuidePayon	708,{
@@ -36,56 +37,32 @@ payon,163,64,3	script	Guide#01payon::GuidePayon	708,{
 					next;
 					break;
 				case 2:
-					mes "[Payon Guide]";
-					mes "Let me mark the location of the";
-					mes "the ^0000FFTool Shop^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^0000FFTool Shop";
 					viewpoint 1,144,85,1,0x0A82FF;
 					next;
 					break;
 				case 3:
-					mes "[Payon Guide]";
-					mes "Let me mark the location of the";
-					mes "the ^FF5400Weapon & Armor Shop^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^FF5400Weapon & Armor Shop";
 					viewpoint 1,139,159,2,0xFFB400;
 					next;
 					break;
 				case 4:
-					mes "[Payon Guide]";
-					mes "Let me mark the location of the";
-					mes "the ^006400Inn & Tavern^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^006400Inn & Tavern";
 					viewpoint 1,220,117,3,0xAAFF00;
 					next;
 					break;
 				case 5:
-					mes "[Payon Guide]";
-					mes "Let me mark the location of the";
-					mes "the ^7F3300Central Palace^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^7F3300Central Palace";
 					viewpoint 1,155,245,4,0xD2691E;
 					next;
 					break;
 				case 6:
-					mes "[Payon Guide]";
-					mes "Let me mark the location of the";
-					mes "the ^800080Palace Court^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^800080Palace Court";
 					viewpoint 1,107,325,5,0xDA70D6;
 					next;
 					break;
 				case 7:
-					mes "[Payon Guide]";
-					mes "Let me mark the location of the";
-					mes "the ^B9062FRoyal Kitchen^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^B9062FRoyal Kitchen";
 					viewpoint 1,154,325,6,0xFF0000;
 					next;
 					break;
@@ -98,50 +75,30 @@ payon,163,64,3	script	Guide#01payon::GuidePayon	708,{
 		case 2:
 			set .@loop,1;
 			while (.@loop) {
-				switch(select("[ Eden Teleport Officer ]:[ Kafra Shop ]:[ Repair /Armsmith ]:[ Trap Specialist ]:[ Seiayblem ]:[ Leablem ]:[ Jade ]:[ Pet Groomer ]:[ Chef Assistant ]:Previous Menu")) {
+				switch(select("[ Eden Teleport Officer ]:[ Kafra Shop ]:[ Repair / Armsmith ]:[ Kafra Employee]:[ Trap Specialist ]:[ Seiayblem ]:[ Leablem ]:[ Jade ]:[ Pet Groomer ]:[ Chef Assistant ]:Previous Menu")) {
 				case 1:
-					mes "[Payon Guide]";
-					mes "Let me mark the location of the";
-					mes "^0000FFEden Teleport Officer^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^0000FFEden Teleport Officer";
 					viewpoint 1,177,111,7,0x0A82FF;
 					next;
 					break;
 				case 2:
-					mes "[Payon Guide]";
-					mes "Let me mark the location of the";
-					mes "^FF5400Kafra Shop Girls^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^FF5400Kafra Shop Girls";
 					viewpoint 1,164,157,8,0xFFB400;
 					next;
 					break;
 				case 3:
-					mes "[Payon Guide]";
-					mes "Let me mark the location of the";
-					mes "^006400Repairman & Armsmith^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^006400Repairman & Armsmith";
 					viewpoint 1,144,170,9,0xAAFF00;
 					next;
 					break;
 				case 4:
-					mes "[Payon Guide]";
-					mes "Let me mark the location of the";
-					mes "^7F3300Kafra Employees^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^7F3300Kafra Employees";
 					viewpoint 1,181,104,10,0xD2691E;
 					viewpoint 1,175,226,11,0xD2691E;
 					next;
 					break;
 				case 5:
-					mes "[Payon Guide]";
-					mes "Let me mark the location of the";
-					mes "^800080Trap Specialist^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^800080Trap Specialist";
 					viewpoint 1,123,109,12,0xDA70D6;
 					next;
 					break;
@@ -177,20 +134,12 @@ payon,163,64,3	script	Guide#01payon::GuidePayon	708,{
 					next;
 					break;
 				case 9:
-					mes "[Payon Guide]";
-					mes "Let me mark the location of the";
-					mes "^006400Pet Groomer^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^006400Pet Groomer";
 					viewpoint 1,177,131,16,0xAAFF00;
 					next;
 					break;
 				case 10:
-					mes "[Payon Guide]";
-					mes "Let me mark the location of the";
-					mes "^7F3300Chef Assistant^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^7F3300Chef Assistant";
 					viewpoint 1,206,119,17,0xD2691E;
 					next;
 					break;
@@ -232,6 +181,14 @@ payon,163,64,3	script	Guide#01payon::GuidePayon	708,{
 			end;
 		}
 	}
+	end;
+L_Mark:
+	mes "[Payon Guide]";
+	mes "Let me mark the location of the";
+	mes getarg(0)+"^000000";
+	mes "on your mini-map.";
+	mes "Would you like to check any other locations?";
+	return;
 }
 
 payon,151,182,6	duplicate(GuidePayon)	Guide#02payon	708
@@ -245,6 +202,7 @@ pay_arche,86,33,4	script	Guide#05payon	708,{
 	mes "a subsidiary village of Payon.";
 	mes "Do you need help navigating the village?";
 	next;
+	set .@str$,"Would you like to check any other locations?";
 	while (1) {
 		switch(select("[ Payon Dungeon ]:[ Archer Guild ]:[ Tool Shop ]:[ Kafra Employee ]:[ Mercenary Guildsman ]:[ Alchemist Guildsman ]:[ Eden Teleport Officer ]:Remove Marks from Mini-Map:Cancel")) {
 		case 1:
@@ -252,7 +210,7 @@ pay_arche,86,33,4	script	Guide#05payon	708,{
 			mes "Let me mark the entrance of";
 			mes "the ^B9062FPayon Dungeon^000000";
 			mes "on your mini-map.";
-			mes "Would you like to check any other locations?";
+			mes .@str$;
 			viewpoint 1,38,131,0,0xFF0000;
 			next;
 			break;
@@ -261,7 +219,7 @@ pay_arche,86,33,4	script	Guide#05payon	708,{
 			mes "The ^0000FFArcher Guild^000000";
 			mes "is where you can change";
 			mes "your job to Archer.";
-			mes "Would you like to check any other locations?";
+			mes .@str$;
 			viewpoint 1,143,164,1,0x0A82FF;
 			next;
 			break;
@@ -270,7 +228,7 @@ pay_arche,86,33,4	script	Guide#05payon	708,{
 			mes "Let me mark the location of the";
 			mes "^FF5400Tool Shop^000000";
 			mes "on your mini-map.";
-			mes "Would you like to check any other locations?";
+			mes .@str$;
 			viewpoint 1,72,156,2,0xFFB400;
 			next;
 			break;
@@ -278,7 +236,7 @@ pay_arche,86,33,4	script	Guide#05payon	708,{
 			mes "[Payon Guide]";
 			mes "Let me mark the location of the ^006400Kafra Employee^000000";
 			mes "on your mini-map.";
-			mes "Would you like to check any other locations?";
+			mes .@str$;
 			viewpoint 1,55,123,3,0xAAFF00;
 			next;
 			break;
@@ -288,7 +246,7 @@ pay_arche,86,33,4	script	Guide#05payon	708,{
 			mes "^7F3300Bow Mercenary Manager^000000 and";
 			mes "^7F3300Mercenary Goods Merchant^000000";
 			mes "on your mini-map.";
-			mes "Would you like to check any other locations?";
+			mes .@str$;
 			viewpoint 1,101,166,4,0xD2691E;
 			next;
 			break;
@@ -297,7 +255,7 @@ pay_arche,86,33,4	script	Guide#05payon	708,{
 			mes "Let me mark the location of the";
 			mes "^800080Alchemist Guildsman^000000";
 			mes "on your mini-map.";
-			mes "Would you like to check any other locations?";
+			mes .@str$;
 			viewpoint 1,127,113,5,0xDA70D6;
 			next;
 			break;
@@ -306,14 +264,14 @@ pay_arche,86,33,4	script	Guide#05payon	708,{
 			mes "The ^0000FFEden Teleport Officer^000000";
 			mes "is currently staying inside";
 			mes "the Archer Guild building.";
-			mes "Would you like to check any other locations?";
+			mes .@str$;
 			viewpoint 1,143,164,6,0x0A82FF;
 			next;
 			break;
 		case 8:
 			mes "[Payon Guide]";
 			mes "Sure, I'll remove all marks from your mini-map.";
-			mes "Would you like to check any other locations?";
+			mes .@str$;
 			viewpoint 2,1,1,0,0xFFFF00;
 			viewpoint 2,1,1,1,0x000000;
 			viewpoint 2,1,1,2,0xFF0000;

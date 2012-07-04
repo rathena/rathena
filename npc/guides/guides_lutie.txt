@@ -3,70 +3,47 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
-//= rAthena  SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
-//= Guide for the city of Lutie
+//= Guide for the city of Lutie.
 //===== Additional Comments: ================================= 
 //= 1.0 First version, Renewal guide.
+//= 1.1 Fixed and optimized. [Euphy]
 //============================================================ 
 
 xmas,140,137,3	script	Lutie Guide#xmas	717,{
 	mes "[Lutie Guide]";
 	mes "Welcome to ^8B4513Lutie^000000,";
 	mes "the Snow Village.";
-	mes "Do you need help navigating the village?"	;
+	mes "Do you need help navigating the village?";
 	while (1) {
 		next;
 		switch(select("[ Gift Shop ]:[ Church ]:[ Weapon & Armor Shop ]:[ Tool Shop ]:[ Santa's House ]:[ Toy Factory ]:Remove Marks from Mini-Map:Cancel")) {
 		case 1:
-			mes "[Lutie Guide]";
-			mes "Let me mark the location of the";
-			mes "^00808Gift Shop^000000";
-			mes "on your mini-map.";
-			mes "Would you like to check any other locations?";
+			callsub L_Mark,"^008080Gift Shop";
 			viewpoint 1,172,131,2,0x008080;
 			break;
 		case 2:
-			mes "[Lutie Guide]";
-			mes "Let me mark the location of the";
-			mes "^006400Church^000000";
-			mes "on your mini-map.";
-			mes "Would you like to check any other locations?";
+			callsub L_Mark,"^006400Church";
 			viewpoint 1,104,287,1,0xAAFF00;
 			break;
 		case 3:
-			mes "[Lutie Guide]";
-			mes "Let me mark the location of the";
-			mes "^FF1493Weapon & Armor Shop^000000";
-			mes "on your mini-map.";
-			mes "Would you like to check any other locations?";
+			callsub L_Mark,"^FF1493Weapon & Armor Shop";
 			viewpoint 1,171,158,3,0xFF1493;
 			break;
 		case 4:
-			mes "[Lutie Guide]";
-			mes "Let me mark the location of the";
-			mes "^8B4513Tool Shop^000000";
-			mes "on your mini-map.";
-			mes "Would you like to check any other locations?";
+			callsub L_Mark,"^8B4513Tool Shop";
 			viewpoint 1,122,131,4,0x8B4513;
 			break;
 		case 5:
-			mes "[Lutie Guide]";
-			mes "Let me mark the location of the";
-			mes "^9400D3Toy Factory^000000";
-			mes "on your mini-map.";
-			mes "Would you like to check any other locations?";
+			callsub L_Mark,"^B9062FSanta's House",1;
 			viewpoint 1,149,237,5,0x9400D3;
 			break;
 		case 6:
-			mes "[Lutie Guide]";
-			mes "Let me mark the location of";
-			mes "^B9062FSanta's House^000000";
-			mes "on your mini-map.";
-			mes "Would you like to check any other locations?";
+			callsub L_Mark,"^9400D3Toy Factory";
 			viewpoint 1,143,312,6,0xFF0000;
 			break;
 		case 7:
@@ -87,4 +64,12 @@ xmas,140,137,3	script	Lutie Guide#xmas	717,{
 			close;
 		}
 	}
+	end;
+L_Mark:
+	mes "[Lutie Guide]";
+	mes "Let me mark the location of "+((getarg(1,0))?"":"the");
+	mes getarg(0)+"^000000";
+	mes "on your mini-map.";
+	mes "Would you like to check any other locations?";
+	return;
 }

@@ -3,14 +3,15 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
-//= rAthena  SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
-//= Guides for the city of Geffen
+//= Guides for the city of Geffen.
 //===== Additional Comments: ================================= 
 //= 1.0 First version, Renewal guide.
+//= 1.1 Fixed and optimized. [Euphy]
 //============================================================ 
 
 geffen,203,116,4	script	Guide#01geffen::GuideGeffen	705,{
@@ -38,29 +39,17 @@ geffen,203,116,4	script	Guide#01geffen::GuideGeffen	705,{
 					next;
 					break;
 				case 2:
-					mes "[Geffen Guide]";
-					mes "Let me mark the location of the";
-					mes "the ^0000FFGeffen Tower^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^0000FFGeffen Tower";
 					viewpoint 1,120,114,1,0x0000FF;
 					next;
 					break;
 				case 3:
-					mes "[Geffen Guide]";
-					mes "Let me mark the location of the";
-					mes "the ^FF5400Fountain^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^FF5400Fountain";
 					viewpoint 1,126,48,2,0xFFB400;
 					next;
 					break;
 				case 4:
-					mes "[Geffen Guide]";
-					mes "Let me mark the location of the";
-					mes "the ^006400Tool Shop^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^006400Tool Shop";
 					viewpoint 1,44,86,3,0xAAFF00;
 					next;
 					break;
@@ -75,20 +64,12 @@ geffen,203,116,4	script	Guide#01geffen::GuideGeffen	705,{
 					next;
 					break;
 				case 6:
-					mes "[Geffen Guide]";
-					mes "Let me mark the location of the";
-					mes "the ^800080Inn^00000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^800080Inn";
 					viewpoint 1,172,174,5,0xDA70D6;
 					next;
 					break;
 				case 7:
-					mes "[Geffen Guide]";
-					mes "Let me mark the location of the";
-					mes "the ^B9062FTavern^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^B9062FTavern";
 					viewpoint 1,138,138,6,0xFF0000;
 					next;
 					break;
@@ -112,49 +93,29 @@ geffen,203,116,4	script	Guide#01geffen::GuideGeffen	705,{
 			while (.@loop) {
 				switch(select("[ Eden Teleport Officer ]:[ Kafra Employee ]:[ Pet Groomer ]:[ Chef Assistant ]:[ Dimensional Arcanist Guide ]:Previous Menu")) {
 				case 1:
-					mes "[Geffen Guide]";
-					mes "Let me mark the location of the";
-					mes "^B9062FEden Teleport Officers^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^B9062FEden Teleport Officers";
 					viewpoint 1,61,180,7,0xFF0000;
 					viewpoint 1,132,66,8,0xFF0000;
 					next;
 					break;
 				case 2:
-					mes "[Geffen Guide]";
-					mes "Let me mark the location of the";
-					mes "^FF5400Kafra Employees^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^FF5400Kafra Employees";
 					viewpoint 1,203,123,10,0xFFB400;
 					viewpoint 1,120,62,11,0xFFB400;
 					next;
 					break;
 				case 3:
-					mes "[Geffen Guide]";
-					mes "Let me mark the location of the";
-					mes "^006400Pet Groomer^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^006400Pet Groomer";
 					viewpoint 1,193,152,12,0xAAFF00;
 					next;
 					break;
 				case 4:
-					mes "[Geffen Guide]";
-					mes "Let me mark the location of the";
-					mes "^7F3300Chef Assistant^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^7F3300Chef Assistant";
 					viewpoint 1,196,111,13,0xD2691E;
 					next;
 					break;
 				case 5:
-					mes "[Geffen Guide]";
-					mes "Let me mark the location of the";
-					mes "^800080Dimensional Arcanist Guide^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^800080Dimensional Arcanist Guide";
 					viewpoint 1,140,196,14,0xDA70D6;
 					next;
 					break;
@@ -193,6 +154,14 @@ geffen,203,116,4	script	Guide#01geffen::GuideGeffen	705,{
 			end;
 		}
 	}
+	end;
+L_Mark:
+	mes "[Geffen Guide]";
+	mes "Let me mark the location of the";
+	mes getarg(0)+"^000000";
+	mes "on your mini-map.";
+	mes "Would you like to check any other locations?";
+	return;
 }
 
 geffen,118,62,0	duplicate(GuideGeffen)	Guide#02geffen	705

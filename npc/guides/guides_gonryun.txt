@@ -3,14 +3,15 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
-//= rAthena  SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
-//= Guide for the city of Kunlun
+//= Guide for the city of Kunlun.
 //===== Additional Comments: ================================= 
 //= 1.0 First version, Renewal guide.
+//= 1.1 Optimized. [Euphy]
 //============================================================ 
 
 gonryun,163,60,4	script	Kunlun Guide#01gonryun	780,{
@@ -29,59 +30,31 @@ gonryun,163,60,4	script	Kunlun Guide#01gonryun	780,{
 		next;
 		switch(select("[ Kafra Employee ]:[ Chief's Residence ]:[ Tool Dealer ]:[ Weapon Dealer ]:[ Armor Dealer ]:[ Wine Maker ]:[ Kunlun Envoy ]:Remove Marks from Mini-Map:Cancel")) {
 		case 1:
-			mes "[He Yuen Zhe]";
-			mes "The ^0000FFKafra Employee^000000 is";
-			mes "marked on your mini-map.";
-			mes "Check your mini-map.";
-			mes "Is there anything else I can do for you?";
+			callsub L_Mark,"^0000FFKafra Employee";
 			viewpoint 1,159,122,0,0x0A82FF;
 			break;
 		case 2:
-			mes "[He Yuen Zhe]";
-			mes "The ^006400Chief's Residence^000000 is";
-			mes "marked on your mini-map.";
-			mes "Check your mini-map.";
-			mes "Is there anything else I can do for you?";
+			callsub L_Mark,"^006400Chief's Residence";
 			viewpoint 1,110,131,1,0xAAFF00;
 			break;
 		case 3:
-			mes "[He Yuen Zhe]";
-			mes "The ^D8BFD8Tool Dealer^000000 is";
-			mes "marked on your mini-map.";
-			mes "Check your mini-map.";
-			mes "Is there anything else I can do for you?";
+			callsub L_Mark,"^D8BFD8Tool Dealer";
 			viewpoint 1,147,84,2,0xD8BFD8;
 			break;
 		case 4:
-			mes "[He Yuen Zhe]";
-			mes "The ^FF1493Weapon Dealer^000000 is";
-			mes "marked on your mini-map.";
-			mes "Check your mini-map.";
-			mes "Is there anything else I can do for you?";
+			callsub L_Mark,"^FF1493Weapon Dealer";
 			viewpoint 1,174,101,3,0xFF1493;
 			break;
 		case 5:
-			mes "[He Yuen Zhe]";
-			mes "The ^8B4513Armor Dealer^000000 is";
-			mes "marked on your mini-map.";
-			mes "Check your mini-map.";
-			mes "Is there anything else I can do for you?";
+			callsub L_Mark,"^8B4513Armor Dealer";
 			viewpoint 1,173,84,4,0x8B4513;
 			break;
 		case 6:
-			mes "[He Yuen Zhe]";
-			mes "The ^9400DWine Maker^000000 is";
-			mes "marked on your Mini-Map.";
-			mes "Check your mini-map.";
-			mes "Is there anything else I can do for you?";
+			callsub L_Mark,"^9400DWine Maker";
 			viewpoint 1,213,115,5,0x9400D3;
 			break;
 		case 7:
-			mes "[He Yuen Zhe]";
-			mes "The ^00BFFFKunlun Envoy^000000 is";
-			mes "marked on your mini-map.";
-			mes "Check your mini-map.";
-			mes "Is there anything else I can do for you?";
+			callsub L_Mark,"^00BFFFKunlun Envoy";
 			viewpoint 1,161,11,6,0x00BFFF;
 			break;
 		case 8:
@@ -102,4 +75,12 @@ gonryun,163,60,4	script	Kunlun Guide#01gonryun	780,{
 			close;
 		}
 	}
+	end;
+L_Mark:
+	mes "[He Yuen Zhe]";
+	mes "The "+getarg(0)+"^000000 is";
+	mes "marked on your mini-map.";
+	mes "Check your mini-map.";
+	mes "Is there anything else I can do for you?";
+	return;
 }

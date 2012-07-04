@@ -3,37 +3,12 @@
 //===== By: ================================================== 
 //= rAthena Dev Team
 //===== Current Version: ===================================== 
-//= 3.0
+//= 3.1
 //===== Compatible With: ===================================== 
 //= rAthena 1.0+
 //===== Description: ========================================= 
-//=
+//= Renewal-specific town shop NPCs.
 //===== Additional Comments: ================================= 
-//= For earlier update notes see the bottom.
-//= 2.0 updated several shop npcs. [L0ne_W0lf]
-//=	Added proper Venom Knife dealer, and consiquently removed wenom Knives from weapon dealers.
-//=	Moved all Cooking related NPCs to their own section.
-//=	Re-alphabetized sections. Some of them were out of place.
-//=	Removed commented out shops.
-//= 2.0b Einbech tool dealer got lost somewhere along the way, re-added. [L0ne_W0lf]
-//= 2.1 Fixed missing item from "Fresh Fish" from cooking addition shops. [L0ne_W0lf]
-//= 2.1a Fixed the second "Line" selling in Comodo Weapon shop. (Should have been Whip) [L0ne_W0lf]
-//= 2.2 Added Veins shops. [L0ne_W0lf]
-//= 2.3 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
-//= 2.4 Fixed Jawaii Ice cream salesman. [L0ne_W0lf]
-//= 2.5 Updated Morroc shops to episode 12.1. [L0ne_W0lf]
-//= 2.6 Added Brasilis shops. [L0ne_W0lf]
-//=     Updated Pet Groomers with four new pet feeds.
-//= 2.7 Added Trading merchants, (ninja& gunslinger) to Izlude and Alberta. [L0ne_W0lf]
-//=     Made Brasilis shop names unique, and uncommented.
-//=     Changed the whip sold in comodo weapon shop. (1956 ->1960)
-//=     Added Fire and Silver arrow to Einbroch tool dealer.
-//=     Re-added Bill of Birds to Morroc Item Collectors.
-//= 2.7a Actually applied the right update to the comodo weapon shop. [L0ne_W0lf]
-//= 2.7b Corrected Brasilis Fruit Merchant. (bugreport:4278) [L0ne_W0lf]
-//= 2.8 Updates to Brasilis Merchants. [L0ne_W0lf]
-//= 2.9 Added missing Cooking Items for Material Seller. [tr0n]
-//= 3.0 Added all new Shops which were available in the latest available official files. [Masao]
 //= 3.1 Moved some merchants to a separate renewal file. [Kenpachi]
 //============================================================ 
 

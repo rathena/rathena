@@ -3,54 +3,39 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
-//= rAthena  SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
-//= Guide for the city of Niflehim
+//= Guide for the city of Niflehim.
 //===== Additional Comments: ================================= 
 //= 1.0 First version, Renewal guide.
+//= 1.1 Optimized. [Euphy]
 //============================================================ 
 
 niflheim,201,187,3	script	Niflheim Guide#01nif	849,{
 	mes "[Niflheim Guide]";
 	mes "Welcome to.. ^8B4513Niflheim^000000...";
 	mes "the Realm of the Dead...";
-	mes "Do you need help navigating the realm...?"	;
+	mes "Do you need help navigating the realm...?";
 	while (1) {
 		next;
 		switch(select("[ Tool Shop ]:[ Pub ]:[ Weapon Shop ]:[ Witch's Castle ]:Remove Marks from Mini-Map:Cancel")) {
 		case 1:
-			mes "[Niflheim Guide]";
-			mes "Let me mark the location of the";
-			mes "^0000FFTool Shop^000000..";
-			mes "on your mini-map.";
-			mes "Would you like to check any other locations?";
+			callsub L_Mark,"^0000FFTool Shop";
 			viewpoint 1,218,196,0,0x0A82FF;
 			break;
 		case 2:
-			mes "[Niflheim Guide]";
-			mes "Let me mark the location of the";
-			mes "^006400Pub^000000..";
-			mes "on your mini-map.";
-			mes "Would you like to check any other locations?";
+			callsub L_Mark,"^006400Pub";
 			viewpoint 1,189,208,1,0xAAFF00;
 			break;
 		case 3:
-			mes "[Niflheim Guide]";
-			mes "Let me mark the location of the";
-			mes "^800080Weapon Shop^000000..";
-			mes "on your mini-map.";
-			mes "Would you like to check any other locations?";
+			callsub L_Mark,"^800080Weapon Shop";
 			viewpoint 1,218,170,2,0xDA70D6;
 			break;
 		case 4:
-			mes "[Niflheim Guide]";
-			mes "Let me mark the location of the";
-			mes "^FF1493Witch's Castle^000000..";
-			mes "on your mini-map.";
-			mes "Would you like to check any other locations?";
+			callsub L_Mark,"^FF1493Witch's Castle";
 			viewpoint 1,255,195,3,0xFF1493;
 			break;
 		case 5:
@@ -68,4 +53,12 @@ niflheim,201,187,3	script	Niflheim Guide#01nif	849,{
 			close;
 		}
 	}
+	end;
+L_Mark:
+	mes "[Niflheim Guide]";
+	mes "Let me mark the location of the";
+	mes getarg(0)+"^000000...";
+	mes "on your mini-map.";
+	mes "Would you like to check any other locations?";
+	return;
 }

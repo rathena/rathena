@@ -3,14 +3,15 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
-//= rAthena  SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
-//= Guide for the city of Amatsu
+//= Guide for the city of Amatsu.
 //===== Additional Comments: ================================= 
 //= 1.0 First version, Renewal guide.
+//= 1.1 Optimized. [Euphy]
 //============================================================ 
 
 amatsu,202,91,3	script	Amatsu Guide#amatsu	758,{
@@ -30,59 +31,35 @@ amatsu,202,91,3	script	Amatsu Guide#amatsu	758,{
 		next;
 		switch(select("[ Kafra Employee ]:[ Bar ]:[ Weapon Dealer ]:[ Tool Dealer ]:[ Amatsu Palace ]:[ Chef Assistant ]:[ Ninja Guild Building ]:[ Sea Captain ]:Remove Marks from Mini-Map:Cancel")) {
 		case 1:
-			mes "[Amachang]";
-			mes "The ^0000FFKafra Employee^000000 is";
-			mes "marked on your mini-map.";
-			mes "Is there anything else I can do for you?";
+			callsub L_Mark,"^0000FFKafra Employee";
 			viewpoint 1,102,149,0,0x0A82FF;
 			break;
 		case 2:
-			mes "[Amachang]";
-			mes "The ^006400Bar^000000 is";
-			mes "marked on your mini-map.";
-			mes "Is there anything else I can do for you?";
+			callsub L_Mark,"^006400Bar";
 			viewpoint 1,215,116,1,0xAAFF00;
 			break;
 		case 3:
-			mes "[Amachang]";
-			mes "The ^008080Weapon Dealer^000000 is";
-			mes "marked on your mini-map.";
-			mes "Is there anything else I can do for you?";
+			callsub L_Mark,"^008080Weapon Dealer";
 			viewpoint 1,129,117,2,0x008080;
 			break;
 		case 4:
-			mes "[Amachang]";
-			mes "The ^FF1493Tool Dealer^000000 is";
-			mes "marked on your mini-map.";
-			mes "Is there anything else I can do for you?";
+			callsub L_Mark,"^FF1493Tool Dealer";
 			viewpoint 1,97,117,3,0xFF1493;
 			break;
 		case 5:
-			mes "[Amachang]";
-			mes "The ^8B4513Amatsu Palace^000000 is";
-			mes "marked on your mini-map.";
-			mes "Is there anything else I can do for you?";
+			callsub L_Mark,"^8B4513Amatsu Palace";
 			viewpoint 1,87,235,4,0x8B4513;
 			break;
 		case 6:
-			mes "[Amachang]";
-			mes "The ^8A2BE2Chef Assistant^000000 is";
-			mes "marked on your mini-map.";
-			mes "Is there anything else I can do for you?";
+			callsub L_Mark,"^8A2BE2Chef Assistant";
 			viewpoint 1,206,150,5,0x8A2BE2;
 			break;
 		case 7:
-			mes "[Amachang]";
-			mes "The ^4B0082Ninja Guild Building^000000 is";
-			mes "marked on your mini-map.";
-			mes "Is there anything else I can do for you?";
+			callsub L_Mark,"^4B0082Ninja Guild Building";
 			viewpoint 1,148,137,6,0x4B0082;
 			break;
 		case 8:
-			mes "[Amachang]";
-			mes "The ^00BFFFSea Captain^000000 is";
-			mes "marked on your mini-map.";
-			mes "Is there anything else I can do for you?";
+			callsub L_Mark,"^00BFFFSea Captain";
 			viewpoint 1,195,79,7,0x00BFFF;
 			break;
 		case 9:
@@ -104,5 +81,11 @@ amatsu,202,91,3	script	Amatsu Guide#amatsu	758,{
 			close;
 		}
 	}
+	end;
+L_Mark:
+	mes "[Amachang]";
+	mes "The "+getarg(0)+"^000000 is";
+	mes "marked on your mini-map.";
+	mes "Is there anything else I can do for you?";
+	return;
 }
-

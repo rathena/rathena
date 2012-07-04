@@ -4,7 +4,7 @@
 //= Masao
 //= Credits: Muad_Dib, Gepard & L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.2a
 //===== Compatible With: ===================================== 
 //= Any rAthena SVN
 //===== Description: ========================================= 
@@ -16,13 +16,14 @@
 //=     constants, added item names in comments.
 //= 1.2 Fixed the problem where NPC are not enabled and chamber will never open 
 //=		for the second try or use.
+//= 1.2a Fixed a typo. [Euphy]
 //============================================================
 
 morocc,103,144,0	script	distorted place morroc	139,1,1,{
 
 OnTouch:
 	if (job_wl > 1){
-		if (Class == Job_Warlock || Class == Job_Warlock_T || Job_Baby_Warlock){
+		if (Class == Job_Warlock || Class == Job_Warlock_T || Class == Job_Baby_Warlock){
 			mes " - There is a strange distortion here - ";
 			close;
 		}

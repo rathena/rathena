@@ -3,14 +3,15 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
-//= rAthena  SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
-//= Guides for the city of Morroc, and Morroc Ruins
+//= Guides for the city of Morroc and Morroc Ruins.
 //===== Additional Comments: ================================= 
 //= 1.0 First version, Renewal guide.
+//= 1.1 Fixed and optimized. [Euphy]
 //============================================================ 
 
 morocc,153,286,6	script	Guide#01morocc::GuideMorroc	707,{
@@ -52,20 +53,12 @@ morocc,153,286,6	script	Guide#01morocc::GuideMorroc	707,{
 					next;
 					break;
 				case 4:
-					mes "[Morroc Guide]";
-					mes "Let me mark the location of the";
-					mes "the ^006400Forge^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^006400Forge";
 					viewpoint 1,47,47,3,0xAAFF00;
 					next;
 					break;
 				case 5:
-					mes "[Morroc Guide]";
-					mes "Let me mark the location of the";
-					mes "the ^7F3300Weapon & Armor Shop^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^7F3300Weapon & Armor Shop";
 					viewpoint 1,253,56,4,0xD2691E;
 					next;
 					break;
@@ -80,11 +73,7 @@ morocc,153,286,6	script	Guide#01morocc::GuideMorroc	707,{
 					next;
 					break;
 				case 7:
-					mes "[Morroc Guide]";
-					mes "Let me mark the location of the";
-					mes "the ^B9062FTavern^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^B9062FTavern";
 					viewpoint 1,52,259,6,0xFF0000;
 					next;
 					break;
@@ -99,21 +88,13 @@ morocc,153,286,6	script	Guide#01morocc::GuideMorroc	707,{
 			while (.@loop) {
 				switch(select("[ Kafra Employee ]:[ Poison Herb Salesman ]:[ Dye Maker ]:[ Seiyablem ]:Previous Menu")) {
 				case 1:
-					mes "[Morroc Guide]";
-					mes "Let me mark the location of the";
-					mes "^0000FFKafra Employees^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^0000FFKafra Employees";
 					viewpoint 1,156,97,7,0x0A82FF;
 					viewpoint 1,160,258,8,0x0A82FF;
 					next;
 					break;
 				case 2:
-					mes "[Morroc Guide]";
-					mes "Let me mark the location of the";
-					mes "^006400Poison Herb Salesman^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^006400Poison Herb Salesman";
 					viewpoint 1,190,96,9,0xAAFF00;
 					next;
 					break;
@@ -171,6 +152,14 @@ morocc,153,286,6	script	Guide#01morocc::GuideMorroc	707,{
 			end;
 		}
 	}
+	end;
+L_Mark:
+	mes "[Morroc Guide]";
+	mes "Let me mark the location of the";
+	mes getarg(0)+"^000000";
+	mes "on your mini-map.";
+	mes "Would you like to check any other locations?";
+	return;
 }
 
 morocc,154,38,6	duplicate(GuideMorroc)	Guide#02morocc	707,{
@@ -229,57 +218,33 @@ moc_ruins,159,53,3	script	Guide#01ruins::GuideMocRuins	707,{
 			while (.@loop) {
 				switch(select("[ Eden Teleport Officer ]:[ Tool Dealer ]:[ Kafra Employee ]:[ Repairman ]:[ Pet Groomer ]:[ Chef Assistant ]:[ Leablem ]:Previous Menu")) {
 				case 1:
-					mes "[Morroc Guide]";
-					mes "Let me mark the location of the";
-					mes "^006400Eden Teleport Officer^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^006400Eden Teleport Officer";
 					viewpoint 1,68,164,3,0xAAFF00;
 					next;
 					break;
 				case 2:
-					mes "[Morroc Guide]";
-					mes "Let me mark the location of the";
-					mes "^800080Tool Dealers^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^800080Tool Dealers";
 					viewpoint 1,92,128,5,0xDA70D6;
 					viewpoint 1,114,63,6,0xDA70D6;
 					next;
 					break;
 				case 3:
-					mes "[Morroc Guide]";
-					mes "Let me mark the location of the";
-					mes "^B9062FKafra Employee^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^B9062FKafra Employee";
 					viewpoint 1,59,157,7,0xFF0000;
 					next;
 					break;
 				case 4:
-					mes "[Morroc Guide]";
-					mes "Let me mark the location of the";
-					mes "^0000FFRepairman^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^0000FFRepairman";
 					viewpoint 1,107,94,8,0x0A82FF;
 					next;
 					break;
 				case 5:
-					mes "[Morroc Guide]";
-					mes "Let me mark the location of the";
-					mes "^FF5400Pet Groomer^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^FF5400Pet Groomer";
 					viewpoint 1,118,170,9,0xFFB400;
 					next;
 					break;
 				case 6:
-					mes "[Morroc Guide]";
-					mes "Let me mark the location of the";
-					mes "^006400Chef Assistant^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^006400Chef Assistant";
 					viewpoint 1,115,123,10,0xAAFF00;
 					next;
 					break;
@@ -326,6 +291,14 @@ moc_ruins,159,53,3	script	Guide#01ruins::GuideMocRuins	707,{
 			end;
 		}
 	}
+	end;
+L_Mark:
+	mes "[Morroc Guide]";
+	mes "Let me mark the location of the";
+	mes getarg(0)+"^000000";
+	mes "on your mini-map.";
+	mes "Would you like to check any other locations?";
+	return;
 }
 
 moc_ruins,70,164,3	duplicate(GuideMocRuins)	Guide#02ruins	707

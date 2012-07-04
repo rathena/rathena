@@ -3,14 +3,15 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
-//= rAthena  SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
-//= Guides for the city of Comodo
+//= Guides for the city of Comodo.
 //===== Additional Comments: ================================= 
 //= 1.0 First version, Renewal guide.
+//= 1.1 Fixed and optimized. [Euphy]
 //============================================================ 
 
 comodo,322,178,4	script	Comodo Guide#01comodo::GuideComodo	700,{
@@ -26,101 +27,57 @@ comodo,322,178,4	script	Comodo Guide#01comodo::GuideComodo	700,{
 			while (.@loop) {
 				switch(select("[ Tavern ]:[ Casino ]:[ Weapon & Armor Shop ]:[ Tool Shop ]:[ Campsite ]:[ Souvenir Vendor ]:[ East Cave Mao ]:[ West Cave Karu ]:[ North Cave Ruanda ]:[ Hula Dance Stage ]:[ Kafra Co. Western Branch ]:Previous Menu")) {
 				case 1:
-					mes "[Comodo Guide]";
-					mes "Let me mark the location of";
-					mes "the ^FF0000Tavern^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^FF0000Tavern";
 					viewpoint 1,166,298,0,0xFF0000;
 					next;
 					break;
 				case 2:
-					mes "[Comodo Guide]";
-					mes "Let me mark the location of";
-					mes "the ^FF4500Weapon & Armor Shop^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^FFA500Casino";
 					viewpoint 1,140,98,1,0xFFA500;
 					next;
 					break;
 				case 3:
-					mes "[Comodo Guide]";
-					mes "Let me mark the location of";
-					mes "the ^FFA500Casino^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^FF4500Weapon & Armor Shop";
 					viewpoint 1,266,70,2,0xFF4500;
 					next;
 					break;
 				case 4:
-					mes "[Comodo Guide]";
-					mes "Let me mark the location of";
-					mes "the ^B8860BTool Shop^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^B8860BTool Shop";
 					viewpoint 1,86,128,3,0xB8860B;
 					next;
 					break;
 				case 5:
-					mes "[Comodo Guide]";
-					mes "Let me mark the location of";
-					mes "the ^32CD32Campsite^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^32CD32Campsite";
 					viewpoint 1,210,308,4,0x32CD32;
 					next;
 					break;
 				case 6:
-					mes "[Comodo Guide]";
-					mes "Let me mark the location of";
-					mes "the ^6B8E23Souvenir Vendor^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^6B8E23Souvenir Vendor";
 					viewpoint 1,298,124,5,0x6B8E23;
 					next;
 					break;
 				case 7:
-					mes "[Comodo Guide]";
-					mes "Let me mark the location of";
-					mes "^008B8BEast Cave Mao^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^008B8BEast Cave Mao",1;
 					viewpoint 1,333,175,6,0x008B8B;
 					next;
 					break;
 				case 8:
-					mes "[Comodo Guide]";
-					mes "Let me mark the location of";
-					mes "^1E90FFWest Cave Karu^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^1E90FFWest Cave Karu",1;
 					viewpoint 1,24,214,7,0x1E90FF;
 					next;
 					break;
 				case 9:
-					mes "[Comodo Guide]";
-					mes "Let me mark the location of";
-					mes "^0000CDNorth Cave Ruanda^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^0000CDNorth Cave Ruanda",1;
 					viewpoint 1,176,358,8,0x0000CD;
 					next;
 					break;
 				case 10:
-					mes "[Comodo Guide]";
-					mes "Let me mark the location of";
-					mes "the ^C71585Hula Dance Stage^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^C71585Hula Dance Stage";
 					viewpoint 1,188,168,9,0xC71585;
 					next;
 					break;
 				case 11:
-					mes "[Comodo Guide]";
-					mes "Let me mark the location of";
-					mes "the ^DB7093Kafra Corporation Western Branch^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^DB7093Kafra Corporation Western Branch";
 					viewpoint 1,136,202,10,0xDB7093;
 					next;
 					break;
@@ -135,10 +92,7 @@ comodo,322,178,4	script	Comodo Guide#01comodo::GuideComodo	700,{
 			while (.@loop) {
 				switch(select("[ Chief's House ]:[ Bor Robin ]:[ Kafra Employee ]:[ Roaming Bard ]:Previous Menu")) {
 				case 1:
-					mes "[Comodo Guide]";
-					mes "Let me mark the ^6495EDChief's House^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^6495EDChief's House";
 					viewpoint 1,114,294,11,0x6495ED;
 					next;
 					break;
@@ -151,11 +105,7 @@ comodo,322,178,4	script	Comodo Guide#01comodo::GuideComodo	700,{
 					next;
 					break;
 				case 3:
-					mes "[Comodo Guide]";
-					mes "Let me mark the location of the";
-					mes "^1E90FFKafra Employee^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
+					callsub L_Mark,"^1E90FFKafra Employee";
 					viewpoint 1,195,149,13,0x1E90FF;
 					next;
 					break;
@@ -213,6 +163,14 @@ comodo,322,178,4	script	Comodo Guide#01comodo::GuideComodo	700,{
 			break;
 		}
 	}
+	end;
+L_Mark:
+	mes "[Comodo Guide]";
+	mes "Let me mark the location of";
+	mes ((getarg(1,0))?"":"the ")+getarg(0)+"^000000";
+	mes "on your mini-map.";
+	mes "Would you like to check any other locations?";
+	return;
 }
 
 comodo,181,347,4	duplicate(GuideComodo)	Comodo Guide#02comodo	700

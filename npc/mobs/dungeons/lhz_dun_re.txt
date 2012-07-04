@@ -3,24 +3,10 @@
 //===== By: ==================================================
 // The Prometheus Project, rAthena dev team
 //===== Current Version: =====================================
-//= 1.9
+//= 1.9a
 //===== Compatible With: =====================================
 //= Any Athena
 //===== Additional Comments: =================================
-//= 08/24/05 : Added 1st version. [Muad_Dib]
-//= 1.1: Some corrections to level 1, 2 as pointed out by
-//=      MasterofMuppets. [Skotlex]
-//= 1.3: Some fixes based on kRO's "RO Map" [Poki#3]
-//=	 I also made the place more Moby ^^
-//= 1.4: Adjusted spawns according to own info from iRO [MasterOfMuppets]
-//= 1.5: More accurate spawn numbers and iRO names thanks to Tharis [Playtester]
-//= 1.6: Official X.3 spawns [Playtester]
-//= 1.7 Corrected MVP spawn function to be standard to iRO. [L0ne_W0lf]
-//=	- A random 99 will now be spawned when the MVP spawns.
-//=	- Spare spawn and MVP spawn now spawn in official locations.
-//=	- Expandeded timer to allow for varying spawn times.
-//= 1.7a Added dummy event to keep from causnig warnings. [L0ne_W0lf]
-//= 1.8 Corrected MVP spawn variance (Labs2 MVP). [L0ne_W0lf]
 //= 1.9 Added Bio4 spawns. [Chilly]
 //= 1.9a Moved Bio4 spawns to separate file. [Kenpachi]
 //============================================================

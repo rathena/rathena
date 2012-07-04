@@ -3,11 +3,11 @@
 //===== By: ================================================== 
 //= rAthena Dev Team
 //===== Current Version: ===================================== 
-//= 3.0
+//= 3.1
 //===== Compatible With: ===================================== 
 //= rAthena 1.0+
 //===== Description: ========================================= 
-//=
+//= Town shop NPCs.
 //===== Additional Comments: ================================= 
 //= For earlier update notes see the bottom.
 //= 2.0 updated several shop npcs. [L0ne_W0lf]
