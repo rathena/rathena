@@ -2410,14 +2410,12 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 		case BL_ELEM: {
 			struct elemental_data *ed = (TBL_ELEM*)bl;
 			struct map_session_data *sd = ed->master;
-			if( clrtype >= 0 ) {
-				if( elemental_get_lifetime(ed) > 0 )
-					elemental_save(ed);
-				else {
-					intif_elemental_delete(ed->elemental.elemental_id);
-					if( sd )
-						sd->status.ele_id = 0;
-				}
+			if( elemental_get_lifetime(ed) > 0 )
+				elemental_save(ed);
+			else {
+				intif_elemental_delete(ed->elemental.elemental_id);
+				if( sd )
+					sd->status.ele_id = 0;
 			}
 			if( sd )
 				sd->ed = NULL;

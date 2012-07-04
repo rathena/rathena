@@ -4545,7 +4545,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	struct status_change *tsc;
 	struct status_change_entry *tsce;
 
-	int i;
+	int i = 0;
 	enum sc_type type;
 
 	if(skillid > 0 && skilllv <= 0) return 0;	// celest
