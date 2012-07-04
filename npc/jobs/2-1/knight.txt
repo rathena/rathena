@@ -5,7 +5,7 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 3.1
+//= 3.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -38,11 +38,12 @@
 //= 2.9 Added Quest Log commands. [Kisuka]
 //= 3.0 Removed the need for use of 'goto.' [L0ne_W0lf]
 //= 3.1 Modified the quest to renewal. [Vali] (Thanks to Muad_Dib for the necessary info).
+//= 3.2 More Renewal updates and some optimization. [Euphy]
 //============================================================ 
 
 prt_in,88,101,4	script	Chivalry Captain#knt	56,{
+	mes "[Captain Herman]";
 	if (Upper == 1) {
-		mes "[Captain Herman]";
 		mes "Hm? You're... What is it about you? I've been an honorable Knight for a long time, but I cannot understand this feeling I'm getting from you...";
 		next;
 		mes "[Captain Herman]";
@@ -51,13 +52,11 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 	}
 	if (BaseJob != Job_Swordman) {
 		if (BaseJob == Job_Knight) {
-			mes "[Captain Herman]";
 			mes "Ah, a member of our Chivalry.";
 			mes "I hope you are living up to my expectations. We have vowed to be strong for our kingdom, even if death is upon us...";
 			close;
 		}
 		else if (BaseClass == Job_Novice) {
-			mes "[Captain Herman]";
 			mes "Welcome,";
 			mes "this is the";
 			mes "Prontera Chivalry.";
@@ -68,10 +67,7 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 				mes "[Captain Herman]";
 				mes "A-ha~";
 				mes "A Swordman, you say?";
-				if (sex)
-					mes "I'm sorry, lad, but you've";
-				else
-					mes "I'm sorry, lass, but you've";
+				mes "I'm sorry, "+((Sex)?"lad":"lass")+", but you've";
 				mes "come to the wrong place!";
 				next;
 				mes "[Captain Herman]";
@@ -93,13 +89,11 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 			}
 		}
 		else {
-			mes "[Captain Herman]";
 			mes "Welcome. We, the proud Knights of the Prontera Chivalry, will give our lives for king and country! Please enjoy your stay.";
 			close;
 		}
 	}
 	if (KNIGHT_Q == 0) {
-		mes "[Captain Herman]";
 		mes "Welcome, this is";
 		mes "the Prontera Chivalry.";
 		mes "What brings you here?";
@@ -107,10 +101,7 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 		if (select("I want to change my job to a Knight.:Just visiting.") == 1) {
 			mes "[Captain Herman]";
 			mes "Ohh...";
-			if (sex)
-				mes "A young man who wishes";
-			else
-				mes "A young lady who wishes";
+			mes "A young "+((Sex)?"man":"lady")+" who wishes";
 			mes "to become a Knight!";
 			mes "Our Prontera Chivalry";
 			mes "will assist you.";
@@ -129,8 +120,8 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 			mes "like to apply now?";
 			next;
 			if (select("Yes, I would like to apply.:I'd like to think about it please.") == 1) {
+				mes "[Captain Herman]";
 				if (JobLevel < 40) {
-					mes "[Captain Herman]";
 					mes "Ah, you are not yet ready to become a Knight! Didn't I specifically mention the Job Level 40 requirement?";
 					next;
 					mes "[Captain Herman]";
@@ -138,7 +129,6 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 					close;
 				}
 				if (SkillPoint) {
-					mes "[Captain Herman]";
 					mes "Ah...!";
 					mes "You cannot change jobs if you have unused skill points remaining. Return when you have used";
 					mes "all of your skill points.";
@@ -146,10 +136,9 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 				}
 				set KNIGHT_Q,1;
 				setquest 9000;
-				mes "[Captain Herman]";
 				mes "Let me see...";
 				mes "Your name is";
-				mes "" + strcharinfo(0) + "...";
+				mes strcharinfo(0) + "...";
 				mes "Is that right?";
 				next;
 				mes "[Captain Herman]";
@@ -190,7 +179,6 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 		close;
 	}
 	else if (KNIGHT_Q == 1) {
-		mes "[Captain Herman]";
 		mes "Mmm?";
 		mes strcharinfo(0) + ",";
 		mes "what can I do for you?";
@@ -205,33 +193,10 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 		mes "Sir Andrew for your first test. Don't be too nervous, he'll explain everything once you talk to him.";
 		close;
 	}
-	else if (KNIGHT_Q == 2) {
-		mes "[Captain Herman]";
-		mes "Mmm?";
-		mes "Swordman " + strcharinfo(0) + ".";
-		mes "How are the tests?";
-		mes "It may be difficult,";
-		mes "but do your best.";
-		close;
-	}
-	else if (KNIGHT_Q == 3) {
-		mes "[Captain Herman]";
-		mes "Mmm?";
-		mes "Swordman " + strcharinfo(0) + ".";
-		mes "How are the tests?";
-		mes "It may be difficult,";
-		mes "but do your best.";
-		close;
-	}
+	else if (KNIGHT_Q == 2) callsub L_Mission,0;
+	else if (KNIGHT_Q == 3) callsub L_Mission,0;
 	else if (KNIGHT_Q == 4) {
-		mes "[Captain Herman]";
-		mes "Mmm?";
-		mes "Swordman " + strcharinfo(0) + ".";
-		mes "How are the tests?";
-		mes "Ah~ You do not know";
-		mes "who to visit next?";
-		next;
-		mes "[Captain Herman]";
+		callsub L_Mission,1;
 		mes "It appears that you have finished one test. Let's see. Sir Andrew, who must this Swordman visit next?";
 		next;
 		mes "[Sir Andrew]";
@@ -245,24 +210,9 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 		mes "Go to Sir Siracuse and take his test. Once you complete his test, do not forget who you're supposed to visit next as well.";
 		close;
 	}
-	else if (KNIGHT_Q == 5) {
-		mes "[Captain Herman]";
-		mes "Mmm?";
-		mes "Swordman " + strcharinfo(0) + ".";
-		mes "How are the tests?";
-		mes "It may be difficult,";
-		mes "but do your best.";
-		close;
-	}
+	else if (KNIGHT_Q == 5) callsub L_Mission,0;
 	else if (KNIGHT_Q == 6) {
-		mes "[Captain Herman]";
-		mes "Mmm?";
-		mes "Swordman " + strcharinfo(0) + ".";
-		mes "How are the tests?";
-		mes "Ah~ You do not know";
-		mes "who to visit next?";
-		next;
-		mes "[Captain Herman]";
+		callsub L_Mission,1;
 		mes "Let's see...";
 		mes "You've completed two tests.";
 		mes "Sir Siracuse, who must this Swordman visit next?";
@@ -277,24 +227,9 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 		mes "Sir Windsor Benedict for your next test. Listen carefully to the Knights in charge of testing so that you don't feel lost, alright?";
 		close;
 	}
-	else if (KNIGHT_Q == 7) {
-		mes "[Captain Herman]";
-		mes "Mmm?";
-		mes "Swordman " + strcharinfo(0) + ".";
-		mes "How are the tests?";
-		mes "It may be difficult,";
-		mes "but do your best.";
-		close;
-	}
+	else if (KNIGHT_Q == 7) callsub L_Mission,0;
 	else if (KNIGHT_Q == 8) {
-		mes "[Captain Herman]";
-		mes "Mmm?";
-		mes "Swordman " + strcharinfo(0) + ".";
-		mes "How are the tests?";
-		mes "Ah~ You do not know";
-		mes "who to visit next?";
-		next;
-		mes "[Captain Herman]";
+		callsub L_Mission,1;
 		mes "Sir Windor...?";
 		mes "Who must this";
 		mes "Swordman visit";
@@ -315,24 +250,9 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 		mes "Lady Amy and take her test. Make sure you pay attention to who you must go to for your next test.";
 		close;
 	}
-	else if (KNIGHT_Q == 9) {
-		mes "[Captain Herman]";
-		mes "Mmm?";
-		mes "Swordman " + strcharinfo(0) + ".";
-		mes "How are the tests?";
-		mes "It may be difficult,";
-		mes "but do your best.";
-		close;
-	}
+	else if (KNIGHT_Q == 9) callsub L_Mission,0;
 	else if (KNIGHT_Q == 10) {
-		mes "[Captain Herman]";
-		mes "Mmm?";
-		mes "Swordman " + strcharinfo(0) + ".";
-		mes "How are the tests?";
-		mes "Ah~ You do not know";
-		mes "who to visit next?";
-		next;
-		mes "[Captain Herman]";
+		callsub L_Mission,1;
 		mes "Let's see...";
 		mes "Lady Amy, who";
 		mes "must this Swordman";
@@ -351,24 +271,9 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 		mes "next test.";
 		close;
 	}
-	else if (KNIGHT_Q == 11) {
-		mes "[Captain Herman]";
-		mes "Mmm?";
-		mes "Swordman " + strcharinfo(0) + ".";
-		mes "How are the tests?";
-		mes "It may be difficult,";
-		mes "but do your best.";
-		close;
-	}
+	else if (KNIGHT_Q == 11) callsub L_Mission,0;
 	else if (KNIGHT_Q == 12) {
-		mes "[Captain Herman]";
-		mes "Mmm?";
-		mes "Swordman " + strcharinfo(0) + ".";
-		mes "How are the tests?";
-		mes "Ah~ You do not know";
-		mes "who to visit next?";
-		next;
-		mes "[Captain Herman]";
+		callsub L_Mission,1;
 		mes "Don't you only have to visit one more person? The Knight in";
 		mes "charge of the final test";
 		mes "is Sir Gray Prospheiro.";
@@ -391,19 +296,16 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 		close;
 	}
 	else if (KNIGHT_Q == 13) {
-		mes "[Captain Herman]";
 		mes "Finish the last test.";
 		mes "Once that is complete, all the Knights involved in your testing shall gather, and we will evaluate your performance.";
 		close;
 	}
 	else if (KNIGHT_Q == 14) {
 		if (SkillPoint) {
-			mes "[Captain Herman]";
 			mes "Oh...!";
 			mes "You cannot change jobs if you have unused skill points remaining. Return once you have distributed all your skill points.";
 			close;
 		}
-		mes "[Captain Herman]";
 		mes "Oh, have you completed all the tests? But not everyone who completes the tests can";
 		mes "become a Knight.";
 		next;
@@ -419,8 +321,8 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 		mes "to everyone's thoughts!";
 		mes "Andrew, what do you think?";
 		next;
+		mes "[Sir Andrew]";
 		if (JobLevel == 50) {
-			mes "[Sir Andrew]";
 			mes "What can I say?";
 			mes "I approve!";
 			mes "Having lived as";
@@ -429,15 +331,11 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 			mes "is enough.";
 		}
 		else {
-			mes "[Sir Andrew]";
 			mes "This one has";
 			mes "gathered items";
 			mes "that are troublesome";
 			mes "to obtain. I approve!";
-			if (sex)
-				mes "I believe he will continue to be loyal after becoming a Knight.";
-			else
-				mes "I believe she will continue to be loyal after becoming a Knight.";
+			mes "I believe "+((Sex)?"":"s")+"he will continue to be loyal after becoming a Knight.";
 		}
 		next;
 		mes "[Captain Herman]";
@@ -508,10 +406,7 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 		mes "to hear your thoughts.";
 		next;
 		mes "[Gray]";
-		if (sex)
-			mes "A young gentleman coming here with the determination to become a Knight is enough...";
-		else
-			mes "A young lady coming here with the determination to become a Knight is enough...";
+		mes "A young "+((Sex)?"gentleman":"lady")+" coming here with the determination to become a Knight is enough...";
 		next;
 		mes "[Captain Herman]";
 		mes "Everyone";
@@ -532,7 +427,7 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 		next;
 		completequest 9012;
 		callfunc "Job_Change",Job_Knight;
-		callfunc "F_ClearJobVar";		// clears all job variables for the current player
+		callfunc "F_ClearJobVar"; // Clears all job variables for the current player
 		mes "[Captain Herman]";
 		mes "I hereby declare";
 		mes "you a member of";
@@ -553,12 +448,27 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 		mes "shoulders!";
 		close;
 	}
+L_Mission:
+	mes "Mmm?";
+	mes "Swordman " + strcharinfo(0) + ".";
+	mes "How are the tests?";
+	if (getarg(0)) {
+		mes "Ah~ You do not know";
+		mes "who to visit next?";
+		next;
+		mes "[Captain Herman]";
+		return;
+	} else {
+		mes "It may be difficult,";
+		mes "but do your best.";
+		close;
+	}
 }
 
 prt_in,75,107,4	script	Sir Andrew#knt	65,{
+	mes "[Sir Andrew]";
 	if (BaseJob != Job_Swordman) {
 		if (BaseJob == Job_Knight) {
-			mes "[Sir Andrew]";
 			mes "You must be";
 			mes "a member of";
 			mes "the Chivalry.";
@@ -575,7 +485,6 @@ prt_in,75,107,4	script	Sir Andrew#knt	65,{
 			close;
 		}
 		else if (BaseClass == Job_Novice) {
-			mes "[Sir Andrew]";
 			mes "Hey there,";
 			mes "little Novice.";
 			mes "Welcome to the";
@@ -591,7 +500,6 @@ prt_in,75,107,4	script	Sir Andrew#knt	65,{
 			close;
 		}
 		else {
-			mes "[Sir Andrew]";
 			mes "We, the members of the";
 			mes "Prontera Chivalry, are putting our best effort in protecting peace in this world.";
 			next;
@@ -602,7 +510,6 @@ prt_in,75,107,4	script	Sir Andrew#knt	65,{
 		}
 	}
 	if (KNIGHT_Q == 0) {
-		mes "[Sir Andrew]";
 		mes "We, the members of the";
 		mes "Prontera Chivalry, are putting our best effort in protecting peace in this world.";
 		next;
@@ -612,7 +519,6 @@ prt_in,75,107,4	script	Sir Andrew#knt	65,{
 		close;
 	}
 	else if (KNIGHT_Q == 1) {
-		mes "[Sir Andrew]";
 		mes "Good day.";
 		mes "May I help you";
 		mes "with something?";
@@ -623,7 +529,7 @@ prt_in,75,107,4	script	Sir Andrew#knt	65,{
 			mes "You wish";
 			mes "to become a Knight.";
 			mes "Your name is";
-			mes "" + strcharinfo(0) + ",";
+			mes strcharinfo(0) + ",";
 			mes "correct?";
 			next;
 			mes "[Sir Andrew]";
@@ -673,11 +579,8 @@ prt_in,75,107,4	script	Sir Andrew#knt	65,{
 			case 2: setarray .@items[0], 1042,5, 950,5, 1032,5, 966,5, 7031,5, 946,5, 3; break;
 			}
 			set KNIGHT_Q,.@items[12];
-			if(KNIGHT_Q == 2) {
-				changequest 9000,9001;
-			}else{
-				changequest 9000,9002;
-			}
+			if (KNIGHT_Q == 2) changequest 9000,9001;
+			else changequest 9000,9002;
 			mes "^236B8E"+.@items[1]+" "+getitemname(.@items[0])+"^000000,";
 			mes "^236B8E"+.@items[3]+" "+getitemname(.@items[2])+"^000000,";
 			mes "^236B8E"+.@items[5]+" "+getitemname(.@items[4])+"^000000,";
@@ -701,7 +604,6 @@ prt_in,75,107,4	script	Sir Andrew#knt	65,{
 		}
 	}
 	else if (KNIGHT_Q == 2 || KNIGHT_Q == 3) {
-		mes "[Sir Andrew]";
 		mes "Welcome back~";
 		mes "Did you gather";
 		mes "all the items?";
@@ -723,11 +625,8 @@ prt_in,75,107,4	script	Sir Andrew#knt	65,{
 			delitem .@items[6],.@items[7];
 			delitem .@items[8],.@items[9];
 			delitem .@items[10],.@items[11];
-			if(KNIGHT_Q == 2) {
-				changequest 9001,9003;
-			}else{
-				changequest 9002,9003;
-			}
+			if (KNIGHT_Q == 2) changequest 9001,9003;
+			else changequest 9002,9003;
 			set KNIGHT_Q,4;
 			mes "[Sir Andrew]";
 			mes "Please visit my fellow Knight, Sir Siracuse, and continue the tests with the dedication and loyalty you've shown to me this day.";
@@ -756,17 +655,14 @@ prt_in,75,107,4	script	Sir Andrew#knt	65,{
 		close;
 	}
 	else if (KNIGHT_Q == 4) {
-		mes "[Sir Andrew]";
 		mes "Did you have something you needed to ask me? You should go and take the next test. Hurry, Sir Siracuse is waiting for you~";
 		close;
 	}
 	else if (KNIGHT_Q == 14) {
-		mes "[Sir Andrew]";
 		mes "You must have finished all the tests. Good job! You should go see our Captain so that we can all give our evaluation.";
 		close;
 	}
 	else {
-		mes "[Sir Andrew]";
 		mes "Did you have something you needed to ask me? You should go and take your next test. Do your best.";
 		mes "I know you can do it!";
 		close;
@@ -774,9 +670,9 @@ prt_in,75,107,4	script	Sir Andrew#knt	65,{
 }
 
 prt_in,71,91,0	script	Sir Siracuse#knt	65,{
+	mes "[Sir Siracuse]";
 	if (BaseJob != Job_Swordman) {
 		if (BaseJob == Job_Knight) {
-			mes "[Sir Siracuse]";
 			mes "Hey there!";
 			mes "How are you doing?";
 			mes "The Chivalry's been";
@@ -798,7 +694,6 @@ prt_in,71,91,0	script	Sir Siracuse#knt	65,{
 			close;
 		}
 		else if (Baseclass == Job_Novice) {
-			mes "[Sir Siracuse]";
 			mes "Oh?";
 			mes "What is a Novice";
 			mes "doing here?";
@@ -815,7 +710,6 @@ prt_in,71,91,0	script	Sir Siracuse#knt	65,{
 			close;
 		}
 		else {
-			mes "[Sir Siracuse]";
 			mes "Offense and defense.";
 			mes "Is there a way to have both without compromising one or the other?";
 			next;
@@ -831,7 +725,6 @@ prt_in,71,91,0	script	Sir Siracuse#knt	65,{
 		}
 	}
 	if (KNIGHT_Q == 0) {
-		mes "[Sir Siracuse]";
 		mes "Offense and defense.";
 		mes "Is there a way to have both without compromising one or the other?";
 		next;
@@ -846,7 +739,6 @@ prt_in,71,91,0	script	Sir Siracuse#knt	65,{
 		close;
 	}
 	else if (KNIGHT_Q == 1) {
-		mes "[Sir Siracuse]";
 		mes "Eh?";
 		mes "Do you have";
 		mes "something to";
@@ -857,16 +749,13 @@ prt_in,71,91,0	script	Sir Siracuse#knt	65,{
 			mes "Oh, to become";
 			mes "a Knight? Come to";
 			mes "think of it, aren't";
-			if (sex)
-				mes "you the guy that";
-			else
-				mes "you the girl that";
+			mes "you the "+((Sex)?"guy":"girl")+" that";
 			mes "just applied?";
 			next;
 			mes "[Sir Siracuse]";
 			mes "Let's see...";
 			mes "Your name was";
-			mes "" + strcharinfo(0) + ".";
+			mes strcharinfo(0) + ".";
 			next;
 			mes "[Sir Siracuse]";
 			mes "But, before you come to me, you must visit the others. The way";
@@ -885,7 +774,6 @@ prt_in,71,91,0	script	Sir Siracuse#knt	65,{
 		close;
 	}
 	else if (KNIGHT_Q == 2 || KNIGHT_Q == 3) {
-		mes "[Sir Siracuse]";
 		mes "Eh?";
 		mes "Do you have";
 		mes "something to";
@@ -912,7 +800,6 @@ prt_in,71,91,0	script	Sir Siracuse#knt	65,{
 	}
 	else if (KNIGHT_Q == 4 || KNIGHT_Q == 5) {
 		if (KNIGHT_Q == 4) {
-			mes "[Sir Siracuse]";
 			mes "Oh?";
 			mes "Do you have";
 			mes "something to";
@@ -947,7 +834,6 @@ prt_in,71,91,0	script	Sir Siracuse#knt	65,{
 			}
 		}
 		else if (KNIGHT_Q == 5) {
-			mes "[Sir Siracuse]";
 			mes "What...";
 			mes "You again?";
 			next;
@@ -1126,7 +1012,6 @@ prt_in,71,91,0	script	Sir Siracuse#knt	65,{
 		close;
 	}
 	else if (KNIGHT_Q == 6) {
-		mes "[Sir Siracuse]";
 		mes "Oh?";
 		mes "Do you have";
 		mes "something to";
@@ -1148,7 +1033,6 @@ prt_in,71,91,0	script	Sir Siracuse#knt	65,{
 		close;
 	}
 	else if (KNIGHT_Q == 14) {
-		mes "[Sir Siracuse]";
 		mes "Mmm...?";
 		mes "You finished";
 		mes "everyone else's";
@@ -1163,7 +1047,6 @@ prt_in,71,91,0	script	Sir Siracuse#knt	65,{
 		close;
 	}
 	else {
-		mes "[Sir Siracuse]";
 		mes "Hey again.";
 		mes "Did you need something?";
 		mes "Sorry, but I'm busy at the moment. You should go and finish the rest of your tests.";
@@ -1181,19 +1064,13 @@ prt_in,79,94,4	script	Sir Windsor#knt	733,{
 	next;
 	mes "[Sir Windsor]";
 	if (BaseJob != Job_Swordman) {
-		if (BaseJob == Job_Knight) {
-			mes "Protect.";
-			close;
-		}
+		if (BaseJob == Job_Knight) mes "Protect.";
 		else if (BaseClass == Job_Novice) {
 			mes "...Go play";
 			mes "outside.";
-			close;
 		}
-		else {
-			mes "...Hmpf.";
-			close;
-		}
+		else mes "...Hmpf.";
+		close;
 	}
 	if (KNIGHT_Q == 0) {
 		mes "...What?";
@@ -1250,9 +1127,7 @@ prt_in,79,94,4	script	Sir Windsor#knt	733,{
 				mes "...This way.";
 			}
 			close2;
-			if(checkquest(9006) == -1) {
-				changequest 9005,9006;
-			}
+			if(checkquest(9006) == -1) changequest 9005,9006;
 			warp "job_knt",89,101;
 			end;
 		}
@@ -1285,14 +1160,16 @@ job_knt,89,106,4	script	Knight Windsor#knt	733,{
 	mes "[Sir Windsor]";
 	mes "...Question?";
 	next;
-	switch(select("What kind of test is this?:How do I take the test?:I'd like to leave.:No.")) {
+	set .@i, select("What kind of test is this?:How do I take the test?:I'd like to leave.:No.");
+	mes "[Sir Windsor]";
+	mes "...";
+	if (.@i == 4) close;
+	next;
+	mes "[Sir Windsor]";
+	mes "...";
+	mes "......";
+	switch(.@i) {
 	case 1:
-		mes "[Sir Windsor]";
-		mes "...";
-		next;
-		mes "[Sir Windsor]";
-		mes "...";
-		mes "......";
 		next;
 		mes "[Sir Windsor]";
 		mes "...You fight monsters.";
@@ -1315,12 +1192,6 @@ job_knt,89,106,4	script	Knight Windsor#knt	733,{
 		mes "..........";
 		close;
 	case 2:
-		mes "[Sir Windsor]";
-		mes "...";
-		next;
-		mes "[Sir Windsor]";
-		mes "...";
-		mes "......";
 		next;
 		mes "[Sir Windsor]";
 		mes "...Go in the";
@@ -1345,19 +1216,9 @@ job_knt,89,106,4	script	Knight Windsor#knt	733,{
 		mes "...";
 		close;
 	case 3:
-		mes "[Sir Windsor]";
-		mes "...";
-		next;
-		mes "[Sir Windsor]";
-		mes "...";
-		mes "......";
 		close2;
 		warp "prt_in",80,100;
 		end;
-	case 4:
-		mes "[Sir Windsor]";
-		mes "...";
-		close;
 	}
 }
 
@@ -1389,11 +1250,7 @@ OnInit:
 
 OnEnable:
 	enablenpc "Knight1";
-	set .MyMobs,12;
-	monster "job_knt",39,150,"Dustiness",1114,1,"Knight1::OnMyMobDead";
-	monster "job_knt",47,150,"Dustiness",1114,1,"Knight1::OnMyMobDead";
-	monster "job_knt",39,142,"Dustiness",1114,1,"Knight1::OnMyMobDead";
-	monster "job_knt",47,142,"Dustiness",1114,1,"Knight1::OnMyMobDead";
+	set .MyMobs,8;
 	monster "job_knt",43,137,"Piere",1160,1,"Knight1::OnMyMobDead";
 	monster "job_knt",43,137,"Andre",1095,1,"Knight1::OnMyMobDead";
 	monster "job_knt",43,137,"Deniro",1105,1,"Knight1::OnMyMobDead";
@@ -1562,9 +1419,9 @@ OnTimer182000:
 // Test 3 (Manners)
 //==========================================================
 prt_in,69,107,6	script	Lady Amy#knt	728,{
+	mes "[Lady Amy]";
 	if (BaseJob != Job_Swordman) {
 		if (BaseJob == Job_Knight) {
-			mes "[Lady Amy]";
 			mes "Oh...!";
 			mes "I wonder, why";
 			mes "have you come";
@@ -1583,7 +1440,6 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 			close;
 		}
 		else if (BaseClass == Job_Novice) {
-			mes "[Lady Amy]";
 			mes "Aww~";
 			mes "What a cute";
 			mes "little Novice!";
@@ -1603,7 +1459,6 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 			close;
 		}
 		else {
-			mes "[Lady Amy]";
 			mes "Welcome to";
 			mes "the Prontera Chivalry~";
 			next;
@@ -1616,7 +1471,6 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 		}
 	}
 	if (KNIGHT_Q == 0) {
-		mes "[Lady Amy]";
 		mes "Ooh, you're";
 		mes "a Swordsman...?";
 		mes "Did you come to";
@@ -1631,7 +1485,6 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 		close;
 	}
 	else if (KNIGHT_Q >= 1 && KNIGHT_Q <= 7) {
-		mes "[Lady Amy]";
 		mes "Hmmm?";
 		mes "Why did you";
 		mes "come to Amy?";
@@ -1661,15 +1514,12 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 	}
 	else if ((KNIGHT_Q == 8) || (KNIGHT_Q == 9)){
 		if (KNIGHT_Q == 8) {
-			mes "[Lady Amy]";
 			mes "Hmmm?";
 			mes "Why did you";
 			mes "come to Amy?";
 			next;
 			if (select("Sir Windsor told me to--:Oh, nothing.") == 1) {
-				if(checkquest(9008) == -1) {
-					changequest 9007,9008;
-				}
+				if(checkquest(9008) == -1) changequest 9007,9008;
 				mes "[Lady Amy]";
 				mes "Oh!";
 				mes "No need to say";
@@ -1703,7 +1553,6 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 			}
 		}
 		else if (KNIGHT_Q == 9) {
-			mes "[Lady Amy]";
 			mes "Hmmm?";
 			mes "Why did you";
 			mes "come to Amy?";
@@ -1736,17 +1585,11 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 				close;
 			}
 		}
-		mes "[Lady Amy]";
 		mes "You are a Knight and you are looking for a party in Morroc.";
 		mes "How would you go about doing so?";
 		next;
-		switch(select("Shout out that you are looking for a party.:Open a chat room and wait.:Look for people seeking Knights.")) {
-		case 2:
-		case 3:
+		if (select("Shout out that you are looking for a party.:Open a chat room and wait.:Look for people seeking Knights.") != 1)
 			set .@knight_t,.@knight_t+10;
-		default:
-			break;
-		}
 		mes "[Lady Amy]";
 		mes "You have formed a party with equal leveled players. There's a Priest, a Wizard, a Hunter, an Assassin, and a Blacksmith...";
 		next;
@@ -1759,13 +1602,8 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 		mes "with your party.";
 		mes "What should you do?";
 		next;
-		switch(select("Check out the area and plan ahead.:Gather monsters for your party members.:Lead the party slowly at the front.")) {
-		case 1:
-		case 3:
+		if (select("Check out the area and plan ahead.:Gather monsters for your party members.:Lead the party slowly at the front.") != 2)
 			set .@knight_t,.@knight_t+10;
-		default:
-			break;
-		}
 		mes "[Lady Amy]";
 		mes "But some rude players came with a group of monsters and disappeared! What should you do?";
 		next;
@@ -1788,13 +1626,8 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 		mes "the battle. What";
 		mes "should you do?";
 		next;
-		switch(select("Give it to who deserves it the most.:Pretend like nothing happened and keep it.:Decide with party who gets it.")) {
-		case 1:
-		case 3:
+		if(select("Give it to who deserves it the most.:Pretend like nothing happened and keep it.:Decide with party who gets it.") != 2)
 			set .@knight_t,.@knight_t+10;
-		default:
-			break;
-		}
 		mes "[Lady Amy]";
 		mes "You end up with the item and you go to Prontera to sell it. There are many people with shops and chat rooms opened selling items.";
 		next;
@@ -1820,13 +1653,8 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 		mes "someone that is lost.";
 		mes "What should you do?";
 		next;
-		switch(select("Tell the person how to reach the exit.:Lead the person to the exit.:Give a Butterfly Wing.")) {
-		case 1:
-		case 2:
+		if(select("Tell the person how to reach the exit.:Lead the person to the exit.:Give a Butterfly Wing.") != 3)
 			set .@knight_t,.@knight_t+10;
-		default:
-			break;
-		}
 		mes "[Lady Amy]";
 		mes "You've been hunting for a while, and now you're low on HP!";
 		mes "It's red now, which is very dangerous.";
@@ -1851,22 +1679,17 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 		mes "What should";
 		mes "you do?";
 		next;
-		switch(select("Pick it up and keep it.:Ask around to find the owner.:Simply walk by.")) {
-		case 2:
-		case 3:
+		if (select("Pick it up and keep it.:Ask around to find the owner.:Simply walk by.") != 1)
 			set .@knight_t,.@knight_t+10;
-		default:
-			break;
-		}
 		mes "[Lady Amy]";
 		mes "Okay,";
 		mes "that was the";
 		mes "end of my test!";
 		next;
+		mes "[Lady Amy]";
 		if (.@knight_t == 100) {
 			set KNIGHT_Q,10;
 			changequest 9008,9009;
-			mes "[Lady Amy]";
 			mes "Well done, that kind of mentality is needed for a Knight! For your next test, visit Sir Edmond, please~";
 			next;
 			mes "[Lady Amy]";
@@ -1876,7 +1699,6 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 		else if (.@knight_t == 90) {
 			set KNIGHT_Q,10;
 			changequest 9008,9009;
-			mes "[Lady Amy]";
 			mes "Well, it wasn't perfect,";
 			mes "but I think you know enough";
 			mes "about etiquette to be";
@@ -1887,7 +1709,6 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 			close;
 		}
 		set KNIGHT_Q,9;
-		mes "[Lady Amy]";
 		mes "Mmm...";
 		mes "To be honest, I don't think your attitude is good enough to be a Knight quite yet.";
 		next;
@@ -1901,7 +1722,6 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 		close;
 	}
 	else if (KNIGHT_Q == 10) {
-		mes "[Lady Amy]";
 		mes "Hmmm?";
 		mes "Why did you";
 		mes "come to Amy?";
@@ -1913,7 +1733,6 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 		close;
 	}
 	else if (KNIGHT_Q == 14) {
-		mes "[Lady Amy]";
 		mes "Wow~";
 		mes "Now it's time for";
 		mes "everyone to decide";
@@ -1927,7 +1746,6 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 		close;
 	}
 	else {
-		mes "[Lady Amy]";
 		mes "Hmmm?";
 		mes "Why did you";
 		mes "come to Amy?";
@@ -1943,9 +1761,9 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 // Test 4 (patience)
 //==========================================================
 prt_in,70,99,6	script	Sir Edmond#knt	734,{
+	mes "[Sir Edmond]";
 	if (BaseJob != Job_Swordman) {
 		if (BaseJob == Job_Knight) {
-			mes "[Sir Edmond]";
 			mes "Think of your";
 			mes "mind as if it were";
 			mes "flowing water.";
@@ -1962,8 +1780,7 @@ prt_in,70,99,6	script	Sir Edmond#knt	734,{
 			mes "any situation.";
 			close;
 		}
-		else if (BaseClass == Job_NOvice) {
-			mes "[Sir Edmond]";
+		else if (BaseClass == Job_Novice) {
 			mes "Trees with deep roots don't sway with the wind. The fact that powerful skills must be built on strong basics is immutable...";
 			next;
 			mes "[Sir Edmond]";
@@ -1973,18 +1790,15 @@ prt_in,70,99,6	script	Sir Edmond#knt	734,{
 			close;
 		}
 		else {
-			mes "[Sir Edmond]";
 			mes "Everything in this world exists in harmony. Living without disrupting this harmony is the right way to live...";
 			close;
 		}
 	}
 	if (KNIGHT_Q == 0) {
-		mes "[Sir Edmond]";
 		mes "Those with ominous thoughts will only dream such dreams. It's better to have no dreams at all than to have dreams of sadness and despair.";
 		close;
 	}
 	else if (KNIGHT_Q >= 1 && KNIGHT_Q <= 9) {
-		mes "[Sir Edmond]";
 		mes "What is it...";
 		mes "Wandering Swordman?";
 		next;
@@ -2014,7 +1828,6 @@ prt_in,70,99,6	script	Sir Edmond#knt	734,{
 		close;
 	}
 	else if (KNIGHT_Q == 10) {
-		mes "[Sir Edmond]";
 		mes "What is it...";
 		mes "Wandering Swordman.";
 		next;
@@ -2056,7 +1869,6 @@ prt_in,70,99,6	script	Sir Edmond#knt	734,{
 		close;
 	}
 	else if (KNIGHT_Q == 11) {
-		mes "[Sir Edmond]";
 		mes "What is it...";
 		mes "Wandering Swordman?";
 		next;
@@ -2086,13 +1898,11 @@ prt_in,70,99,6	script	Sir Edmond#knt	734,{
 		close;
 	}
 	else if (KNIGHT_Q == 12 || KNIGHT_Q == 13) {
-		mes "[Sir Edmond]";
 		mes "I have seen your character for myself. It is now time for you to take the last test. Go and speak";
 		mes "to Sir Gray...";
 		close;
 	}
 	else {
-		mes "[Sir Edmond]";
 		mes "Go and speak";
 		mes "to our captain.";
 		mes "The time has come";
@@ -2166,9 +1976,9 @@ OnTouch:
 // Test 5, and creates Claymores for knights
 //==========================================================
 prt_in,87,92,4	script	Sir Gray#knt	119,{
+	mes "[Sir Gray]";
 	if (BaseJob != Job_Swordman) {
 		if (BaseJob == Job_Knight) {
-			mes "[Sir Gray]";
 			mes "The glint of light";
 			mes "that shines off this blade cannot be put into words. This is the weapon every Knight must have.";
 			next;
@@ -2250,7 +2060,6 @@ prt_in,87,92,4	script	Sir Gray#knt	119,{
 			}
 		}
 		else if (BaseClass == Job_Novice) {
-			mes "[Sir Gray]";
 			mes "Believe it";
 			mes "or not, I was";
 			mes "once a Novice";
@@ -2260,7 +2069,6 @@ prt_in,87,92,4	script	Sir Gray#knt	119,{
 			mes "I never really planned to become a Knight, but I did decide to become a strong person. Somehow, along my journeys, I ended up joining the Prontera Chivalry. Ha ha ha!";
 			close;
 		}
-		mes "[Sir Gray]";
 		mes "Young one,";
 		mes "use your time";
 		mes "wisely.";
@@ -2272,7 +2080,6 @@ prt_in,87,92,4	script	Sir Gray#knt	119,{
 		close;
 	}
 	if (KNIGHT_Q == 0) {
-		mes "[Sir Gray]";
 		mes "Young one,";
 		mes "use your time";
 		mes "wisely.";
@@ -2285,7 +2092,6 @@ prt_in,87,92,4	script	Sir Gray#knt	119,{
 	}
 	else if ((KNIGHT_Q == 12) || (KNIGHT_Q == 13)) {
 		if (KNIGHT_Q == 12) {
-			mes "[Sir Gray]";
 			mes "Oh...";
 			mes "A young Swordman.";
 			mes "Yes, what can";
@@ -2323,7 +2129,6 @@ prt_in,87,92,4	script	Sir Gray#knt	119,{
 			}
 		}
 		else if (KNIGHT_Q == 13) {
-			mes "[Sir Gray]";
 			mes "Ah, you again.";
 			mes "What brings you";
 			mes "to me?";
@@ -2527,10 +2332,7 @@ prt_in,87,92,4	script	Sir Gray#knt	119,{
 				mes "Oh, youth!";
 				mes "Becoming a Knight";
 				mes "for your beloved!";
-				if (sex)
-					mes "Always protect her...";
-				else
-					mes "Always protect him...";
+				mes "Always protect "+((Sex)?"her":"him")+"...";
 				mes "Even at the sacrifice";
 				mes "of your own life!";
 				next;
@@ -2636,7 +2438,6 @@ prt_in,87,92,4	script	Sir Gray#knt	119,{
 		}
 	}
 	else if (KNIGHT_Q == 14) {
-		mes "[Sir Gray]";
 		mes "I told you";
 		mes "to go to";
 		mes "the captain.";
@@ -2649,7 +2450,6 @@ prt_in,87,92,4	script	Sir Gray#knt	119,{
 		close;
 	}
 	else {
-		mes "[Sir Gray]";
 		mes "Oh...";
 		mes "A young Swordman.";
 		mes "What can I do for you?";
