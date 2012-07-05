@@ -322,9 +322,10 @@ int unit_walktoxy( struct block_list *bl, short x, short y, int flag)
 	ud = unit_bl2ud(bl);
 	
 	if( ud == NULL) return 0;
-#ifdef OFFICIAL_WALKPATH
-	if( !path_search_long(NULL, bl->m, bl->x, bl->y, x, y, CELL_CHKWALL) ) return 0;
-#endif
+// disabled until we find the correct algorithm. [malufett]
+//#ifdef OFFICIAL_WALKPATH
+//	if( !path_search_long(NULL, bl->m, bl->x, bl->y, x, y, CELL_CHKWALL) ) return 0;
+//#endif
 	if (flag&4 && DIFF_TICK(ud->canmove_tick, gettick()) > 0 &&
 		DIFF_TICK(ud->canmove_tick, gettick()) < 2000)
   	{	// Delay walking command. [Skotlex]

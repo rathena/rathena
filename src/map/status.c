@@ -37,7 +37,7 @@
 #include <stdlib.h>
 #include <memory.h>
 #include <string.h>
-
+#include <math.h>
 
 //Regen related flags.
 enum e_regen
@@ -53,7 +53,11 @@ static int hp_coefficient[CLASS_COUNT];
 static int hp_coefficient2[CLASS_COUNT];
 static int hp_sigma_val[CLASS_COUNT][MAX_LEVEL+1];
 static int sp_coefficient[CLASS_COUNT];
+#ifdef RENEWAL_ASPD
+static int aspd_base[CLASS_COUNT][MAX_WEAPON_TYPE+1];
+#else
 static int aspd_base[CLASS_COUNT][MAX_WEAPON_TYPE];	//[blackhole89]
+#endif
 
 // bonus values and upgrade chances for refining equipment
 static struct {
@@ -64,13 +68,7 @@ static struct {
 
 static int atkmods[3][MAX_WEAPON_TYPE];	// •ŠíATKƒTƒCƒYC³(size_fix.txt)
 static char job_bonus[CLASS_COUNT][MAX_LEVEL];
-#ifdef RENEWAL
-enum {
-	SHIELD_ASPD,
-	RE_JOB_DB_MAX,
-} RE_JOB_DB;
-static int re_job_db[CLASS_COUNT][RE_JOB_DB_MAX];//[RRInd]
-#endif
+
 static struct eri *sc_data_ers; //For sc_data entries
 static struct status_data dummy_status;
 
@@ -1753,7 +1751,29 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 int status_base_amotion_pc(struct map_session_data* sd, struct status_data* status)
 {
 	int amotion;
-	
+#ifdef RENEWAL_ASPD
+	short mod = -1;
+
+	switch( sd->weapontype2 ){ // adjustment for dual weilding
+		case W_DAGGER:	mod = 0;	break; // 0, 1, 1
+		case W_1HSWORD:		
+		case W_1HAXE:	mod = 1;
+			if( (sd->class_&MAPID_THIRDMASK) == MAPID_GUILLOTINE_CROSS ) // 0, 2, 3
+				mod = sd->weapontype2 / W_1HSWORD + W_1HSWORD / sd->weapontype2 ;		
+	}
+
+	amotion = ( sd->status.weapon < MAX_WEAPON_TYPE && mod < 0 )
+			? (aspd_base[pc_class2idx(sd->status.class_)][sd->status.weapon]) // single weapon
+			: ((aspd_base[pc_class2idx(sd->status.class_)][sd->weapontype2] // dual-wield
+			+ aspd_base[pc_class2idx(sd->status.class_)][sd->weapontype2]) * 6 / 10 + 10 * mod
+			- aspd_base[pc_class2idx(sd->status.class_)][sd->weapontype2]
+			+ aspd_base[pc_class2idx(sd->status.class_)][sd->weapontype1]);		 
+
+	if ( sd->status.shield )
+			amotion += ( 2000 - aspd_base[pc_class2idx(sd->status.class_)][W_FIST] ) +
+					( aspd_base[pc_class2idx(sd->status.class_)][MAX_WEAPON_TYPE] - 2000 );
+
+#else
 	// base weapon delay
 	amotion = (sd->status.weapon < MAX_WEAPON_TYPE)
 	 ? (aspd_base[pc_class2idx(sd->status.class_)][sd->status.weapon]) // single weapon
@@ -1761,30 +1781,9 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
 	
 	// percentual delay reduction from stats
 	amotion -= amotion * (4*status->agi + status->dex)/1000;
-	
+#endif
 	// raw delay adjustment from bAspd bonus
 	amotion += sd->bonus.aspd_add;
-
-#ifdef RENEWAL
-	if( sd->status.shield ) {// bearing a shield decreases your ASPD by a fixed value depending on your class
-		amotion += re_job_db[pc_class2idx(sd->status.class_)][SHIELD_ASPD];
-	}
-
-	if( sd->sc.count ) {// renewal absolute ASPD modifiers
-		int i;
-		if ( sd->sc.data[i=SC_ASPDPOTION3] ||
-			 sd->sc.data[i=SC_ASPDPOTION2] ||
-			 sd->sc.data[i=SC_ASPDPOTION1] ||
-			 sd->sc.data[i=SC_ASPDPOTION0] )
-			amotion -= sd->sc.data[i]->val1*10;
-		if( sd->sc.data[SC_BERSERK] )//berserk doesn't stack with the quickens.
-			amotion -= 150;
-		else if( sd->sc.data[SC_SPEARQUICKEN] || sd->sc.data[SC_TWOHANDQUICKEN] )
-			amotion -= 70;
-		if( sd->sc.data[SC_ADRENALINE] )/* +7 for self, +6 for others */
-			amotion -= sd->sc.data[SC_ADRENALINE]->val2 ? 70 : 60;
-	}
-#endif
 
  	return amotion;
 }
@@ -2855,9 +2854,10 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 
 	// Basic ASPD value
 	i = status_base_amotion_pc(sd,status);
-	status->amotion = cap_value(i,battle_config.max_aspd,2000);
+	status->amotion = cap_value(i,((sd->class_&JOBL_THIRD) ? battle_config.max_third_aspd : battle_config.max_aspd),2000);
 
 	// Relative modifiers from passive skills
+#ifndef RENEWAL_ASPD
 	if((skill=pc_checkskill(sd,SA_ADVANCEDBOOK))>0 && sd->status.weapon == W_BOOK)
 		status->aspd_rate -= 5*skill;
 	if((skill = pc_checkskill(sd,SG_DEVIL)) > 0 && !pc_nextjobexp(sd))
@@ -2869,6 +2869,19 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		status->aspd_rate += 500-100*pc_checkskill(sd,KN_CAVALIERMASTERY);
 	else if(pc_isridingdragon(sd))
 		status->aspd_rate += 250-50*pc_checkskill(sd,RK_DRAGONTRAINING);
+#else // needs more info
+	if((skill=pc_checkskill(sd,SA_ADVANCEDBOOK))>0 && sd->status.weapon == W_BOOK)
+		status->aspd_rate += 5*skill;
+	if((skill = pc_checkskill(sd,SG_DEVIL)) > 0 && !pc_nextjobexp(sd))
+		status->aspd_rate += 30*skill;
+	if((skill=pc_checkskill(sd,GS_SINGLEACTION))>0 &&
+		(sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE))
+		status->aspd_rate += ((skill+1)/2) * 10;
+	if(pc_isriding(sd))
+		status->aspd_rate -= 500-100*pc_checkskill(sd,KN_CAVALIERMASTERY);
+	else if(pc_isridingdragon(sd))
+		status->aspd_rate -= 250-50*pc_checkskill(sd,RK_DRAGONTRAINING);
+#endif
 	status->adelay = 2*status->amotion;
 
 
@@ -3187,6 +3200,7 @@ static signed short status_calc_mdef2(struct block_list *,struct status_change *
 static unsigned short status_calc_speed(struct block_list *,struct status_change *,int);
 static short status_calc_aspd_rate(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_dmotion(struct block_list *bl, struct status_change *sc, int dmotion);
+static short status_calc_aspd(struct block_list *bl, struct status_change *sc, short flag);
 static unsigned int status_calc_maxhp(struct block_list *,struct status_change *,unsigned int);
 static unsigned int status_calc_maxsp(struct block_list *,struct status_change *,unsigned int);
 static unsigned char status_calc_element(struct block_list *bl, struct status_change *sc, int element);
@@ -3721,12 +3735,23 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 		if( bl->type&BL_PC )
 		{
 			amotion = status_base_amotion_pc(sd,status);
+#ifndef RENEWAL_ASPD
 			status->aspd_rate = status_calc_aspd_rate(bl, sc, b_status->aspd_rate);
-			
+
 			if(status->aspd_rate != 1000)
 				amotion = amotion*status->aspd_rate/1000;
+#else
+			// aspd = baseaspd + floor(sqrt((agi^2/2) + (dex^2/5))/4 + (potskillbonus*agi/200))
+			amotion -= (int)(sqrt( (pow(status->agi, 2) / 2) + (pow(status->dex, 2) / 5) ) / 4 + (status_calc_aspd(bl, sc, 1) * status->agi / 200)) * 10;
 			
-			status->amotion = cap_value(amotion,battle_config.max_aspd,2000);
+			if( (status_calc_aspd(bl, sc, 2) + status->aspd_rate2) != 0 ) // RE ASPD percertage modifier
+				amotion -= ( amotion - ((sd->class_&JOBL_THIRD) ? battle_config.max_third_aspd : battle_config.max_aspd) ) 
+							* (status_calc_aspd(bl, sc, 2) + status->aspd_rate2) / 100;
+
+			if(status->aspd_rate != 1000) // absolute percentage modifier
+				amotion = ( 200 - (200-amotion/10) * status->aspd_rate / 1000 ) * 10;
+#endif			
+			status->amotion = cap_value(amotion,((sd->class_&JOBL_THIRD) ? battle_config.max_third_aspd : battle_config.max_aspd),2000);
 			
 			status->adelay = 2*status->amotion;
 		}
@@ -4968,13 +4993,137 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 	return (short)cap_value(speed,10,USHRT_MAX);
 }
 
+// flag&1 - fixed value [malufett]
+// flag&2 - percentage value
+static short status_calc_aspd(struct block_list *bl, struct status_change *sc, short flag)
+{
+	int i, pots = 0, skills1 = 0, skills2 = 0;
+
+	if(!sc || !sc->count)
+		return 0;
+
+	if(sc->data[i=SC_ASPDPOTION3] ||
+		sc->data[i=SC_ASPDPOTION2] ||
+		sc->data[i=SC_ASPDPOTION1] ||
+		sc->data[i=SC_ASPDPOTION0])
+		pots += sc->data[i]->val1;
+
+	if( !sc->data[SC_QUAGMIRE] ){
+		if(sc->data[SC_STAR_COMFORT])
+			skills1 = 5; // needs more info
+
+		if(sc->data[SC_TWOHANDQUICKEN] && skills1 < 7)
+			skills1 = 7;
+
+		if(sc->data[SC_ONEHAND] && skills1 < 7) skills1 = 7;
+
+		if(sc->data[SC_MERC_QUICKEN] && skills1 < 7) // needs more info
+			skills1 = 7;
+
+		if(sc->data[SC_ADRENALINE2] && skills1 < 6)
+			skills1 = 6;
+		
+		if(sc->data[SC_ADRENALINE] && skills1 < 7)
+			skills1 = 7;
+		
+		if(sc->data[SC_SPEARQUICKEN] && skills1 < 7)
+			skills1 = 7;
+
+		if(sc->data[SC_GATLINGFEVER] && skills1 < 9) // needs more info
+			skills1 = 9;
+		
+		if(sc->data[SC_FLEET] && skills1 < 5)
+			skills1 = 5;
+
+		if(sc->data[SC_ASSNCROS] &&
+			skills1 < 5+1*sc->data[SC_ASSNCROS]->val1) // needs more info
+		{
+			if (bl->type!=BL_PC)
+				skills1 = 4+1*sc->data[SC_ASSNCROS]->val1;
+			else
+			switch(((TBL_PC*)bl)->status.weapon)
+			{
+				case W_BOW:
+				case W_REVOLVER:
+				case W_RIFLE:
+				case W_GATLING:
+				case W_SHOTGUN:
+				case W_GRENADE:
+					break;
+				default:
+					skills1 = 5+1*sc->data[SC_ASSNCROS]->val1;
+			}
+		}
+	}
+
+	if(sc->data[SC_BERSERK] &&	skills1 < 15)
+		skills1 = 15;
+	else if(sc->data[SC_MADNESSCANCEL] && skills1 < 15) // needs more info
+		skills1 = 15;
+
+	if(sc->data[SC_DONTFORGETME])
+		skills2 -= sc->data[SC_DONTFORGETME]->val2; // needs more info
+	if(sc->data[SC_LONGING])
+		skills2 -= sc->data[SC_LONGING]->val2; // needs more info
+	if(sc->data[SC_STEELBODY])
+		skills2 -= 25;
+	if(sc->data[SC_SKA])
+		skills2 -= 25;
+	if(sc->data[SC_DEFENDER])
+		skills2 -= sc->data[SC_DEFENDER]->val4; // needs more info
+	if(sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_ENEMY) // needs more info
+		skills2 -= 25;
+	if(sc->data[SC_GRAVITATION])
+		skills2 -= sc->data[SC_GRAVITATION]->val2; // needs more info
+	if(sc->data[SC_JOINTBEAT]) { // needs more info
+		if( sc->data[SC_JOINTBEAT]->val2&BREAK_WRIST )
+			skills2 -= 25;
+		if( sc->data[SC_JOINTBEAT]->val2&BREAK_KNEE )
+			skills2 -= 10;
+	}
+	if( sc->data[SC_FREEZING] )
+		skills2 -= 30;
+	if( sc->data[SC_HALLUCINATIONWALK_POSTDELAY] )
+		skills2 -= 50;
+	if( sc->data[SC_FIGHTINGSPIRIT] && sc->data[SC_FIGHTINGSPIRIT]->val2 )
+		skills2 += sc->data[SC_FIGHTINGSPIRIT]->val2;
+	if( sc->data[SC_PARALYSE] )
+		skills2 -= 10;
+	if( sc->data[SC__BODYPAINT] )
+		skills2 -=  2 + 5 * sc->data[SC__BODYPAINT]->val1;
+	if( sc->data[SC__INVISIBILITY] )
+		skills2 -= sc->data[SC__INVISIBILITY]->val2 ;
+	if( sc->data[SC__GROOMY] )
+		skills2 -= sc->data[SC__GROOMY]->val2;
+	if( sc->data[SC_SWINGDANCE] )
+		skills2 += sc->data[SC_SWINGDANCE]->val2;
+	if( sc->data[SC_DANCEWITHWUG] )
+		skills2 += sc->data[SC_DANCEWITHWUG]->val3;
+	if( sc->data[SC_GLOOMYDAY] )
+		skills2 -= sc->data[SC_GLOOMYDAY]->val3;
+	if( sc->data[SC_EARTHDRIVE] )
+		skills2 -= 25;
+	if( sc->data[SC_GT_CHANGE] )
+		skills2 += (sc->data[SC_GT_CHANGE]->val2/200);
+	if( sc->data[SC_GT_REVITALIZE] )
+		skills2 += sc->data[SC_GT_REVITALIZE]->val2;
+	if( sc->data[SC_MELON_BOMB] )
+		skills2 -= sc->data[SC_MELON_BOMB]->val1;
+	if( sc->data[SC_BOOST500] )
+		skills2 += sc->data[SC_BOOST500]->val1;
+	if( sc->data[SC_EXTRACT_SALAMINE_JUICE] )
+		skills2 += sc->data[SC_EXTRACT_SALAMINE_JUICE]->val1;
+	if( sc->data[SC_INCASPDRATE] )
+		skills2 += sc->data[SC_INCASPDRATE]->val1;
+
+	return ( flag&1? (skills1 + pots) : skills2 );
+}
+
 /// Calculates an object's ASPD modifier (alters the base amotion value).
 /// Note that the scale of aspd_rate is 1000 = 100%.
 static short status_calc_aspd_rate(struct block_list *bl, struct status_change *sc, int aspd_rate)
 {
-#ifndef RENEWAL
 	int i;
-#endif
 
 	if(!sc || !sc->count)
 		return cap_value(aspd_rate,0,SHRT_MAX);
@@ -4983,11 +5132,11 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		int max = 0;
 		if(sc->data[SC_STAR_COMFORT])
 			max = sc->data[SC_STAR_COMFORT]->val2;
-#ifndef RENEWAL
+
 		if(sc->data[SC_TWOHANDQUICKEN] &&
 			max < sc->data[SC_TWOHANDQUICKEN]->val2)
 			max = sc->data[SC_TWOHANDQUICKEN]->val2;
-#endif
+
 		if(sc->data[SC_ONEHAND] &&
 			max < sc->data[SC_ONEHAND]->val2)
 			max = sc->data[SC_ONEHAND]->val2;
@@ -4999,7 +5148,7 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		if(sc->data[SC_ADRENALINE2] &&
 			max < sc->data[SC_ADRENALINE2]->val3)
 			max = sc->data[SC_ADRENALINE2]->val3;
-#ifndef RENEWAL
+
 		if(sc->data[SC_ADRENALINE] &&
 			max < sc->data[SC_ADRENALINE]->val3)
 			max = sc->data[SC_ADRENALINE]->val3;
@@ -5007,7 +5156,6 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		if(sc->data[SC_SPEARQUICKEN] &&
 			max < sc->data[SC_SPEARQUICKEN]->val2)
 			max = sc->data[SC_SPEARQUICKEN]->val2;
-#endif
 
 		if(sc->data[SC_GATLINGFEVER] &&
 			max < sc->data[SC_GATLINGFEVER]->val2)
@@ -5038,23 +5186,19 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		}
 		aspd_rate -= max;
 
-	  	//These stack with the rest of bonuses.
-#ifndef RENEWAL
 		if(sc->data[SC_BERSERK])
 			aspd_rate -= 300;
 		else
-#endif
+
 		if(sc->data[SC_MADNESSCANCEL])
 			aspd_rate -= 200;
 	}
 
-#ifndef RENEWAL // non-renewal variable ASPD improvement
 	if( sc->data[i=SC_ASPDPOTION3] ||
 		sc->data[i=SC_ASPDPOTION2] ||
 		sc->data[i=SC_ASPDPOTION1] ||
 		sc->data[i=SC_ASPDPOTION0] )
 		aspd_rate -= sc->data[i]->val2;
-#endif
 
 	if(sc->data[SC_DONTFORGETME])
 		aspd_rate += 10 * sc->data[SC_DONTFORGETME]->val2;
@@ -6864,11 +7008,10 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_EXPLOSIONSPIRITS:
 			val2 = 75 + 25*val1; //Cri bonus
 			break;
-#ifndef RENEWAL
+
 		case SC_ASPDPOTION0:
 		case SC_ASPDPOTION1:
 		case SC_ASPDPOTION2:
-#endif
 		case SC_ASPDPOTION3:
 			val2 = 50*(2+type-SC_ASPDPOTION0);
 			break;
@@ -10415,26 +10558,6 @@ int status_get_refine_chance(enum refine_type wlv, int refine)
  * size_fix.txt   - size adjustment table for weapons
  * refine_db.txt  - refining data table
  *------------------------------------------*/
-#ifdef RENEWAL
-static bool status_readdb_job_re(char* fields[], int columns, int current) {
-	int idx, class_;
-	unsigned int i;
-
-	class_ = atoi(fields[0]);
-
-	if(!pcdb_checkid(class_)) {
-		ShowWarning("status_readdb_job_re: Invalid job class %d specified.\n", class_);
-		return false;
-	}
-	idx = pc_class2idx(class_);
-
-	for(i = 0; i < RE_JOB_DB_MAX; i++) {
-		re_job_db[idx][i] = atoi(fields[i+1]);
-	}
-	return true;
-}
-#endif
-
 static bool status_readdb_job1(char* fields[], int columns, int current)
 {// Job-specific values (weight, HP, SP, ASPD)
 	int idx, class_;
@@ -10453,8 +10576,11 @@ static bool status_readdb_job1(char* fields[], int columns, int current)
 	hp_coefficient[idx]  = atoi(fields[2]);
 	hp_coefficient2[idx] = atoi(fields[3]);
 	sp_coefficient[idx]  = atoi(fields[4]);
-
+#ifdef RENEWAL_ASPD
+	for(i = 0; i <= MAX_WEAPON_TYPE; i++)
+#else
 	for(i = 0; i < MAX_WEAPON_TYPE; i++)
+#endif
 	{
 		aspd_base[idx][i] = atoi(fields[i+5]);
 	}
@@ -10539,9 +10665,6 @@ int status_readdb(void)
 	memset(hp_coefficient2, 0, sizeof(hp_coefficient2));
 	memset(sp_coefficient, 0, sizeof(sp_coefficient));
 	memset(aspd_base, 0, sizeof(aspd_base));
-#ifdef RENEWAL
-	memset(re_job_db, 0, sizeof(re_job_db));
-#endif
 	// job_db2.txt
 	memset(job_bonus,0,sizeof(job_bonus)); // Job-specific stats bonus
 
@@ -10564,12 +10687,14 @@ int status_readdb(void)
 	// read databases
 	//
 
-	sv_readdb(db_path, "job_db1.txt",   ',', 5+MAX_WEAPON_TYPE, 5+MAX_WEAPON_TYPE, -1,                            &status_readdb_job1);
+	
+#ifdef RENEWAL_ASPD
+	sv_readdb(db_path, "re/job_db1.txt",   ',',	6+MAX_WEAPON_TYPE, 6+MAX_WEAPON_TYPE,	-1,		&status_readdb_job1);
+#else
+	sv_readdb(db_path, "pre-re/job_db1.txt",   ',',	5+MAX_WEAPON_TYPE, 5+MAX_WEAPON_TYPE,	-1,		&status_readdb_job1);
+#endif
 	sv_readdb(db_path, "job_db2.txt",   ',', 1,                 1+MAX_LEVEL,       -1,                            &status_readdb_job2);
 	sv_readdb(db_path, "size_fix.txt",  ',', MAX_WEAPON_TYPE,   MAX_WEAPON_TYPE,    ARRAYLENGTH(atkmods),         &status_readdb_sizefix);
-#ifdef RENEWAL
-	sv_readdb(db_path, DBPATH"job_db_extra.txt", ',', 1+RE_JOB_DB_MAX, 1+RE_JOB_DB_MAX, -1, &status_readdb_job_re);
-#endif
 	sv_readdb(db_path, DBPATH"refine_db.txt", ',', 4+MAX_REFINE, 4+MAX_REFINE, ARRAYLENGTH(refine_info), &status_readdb_refine);
 
 	return 0;

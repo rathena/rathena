@@ -65,4 +65,14 @@
 ///  - weapon and status ATK are increased
 #define RENEWAL_EDP
 
+/// renewal ASPD [malufett]
+/// (disable by commenting the line)
+/// 
+/// leave this line to enable renewal ASPD
+/// - shield penalty is applied
+/// - agi has a greater factor to your ASPD increase
+/// - there is a change in how skill/items give ASPD
+/// - some skills/items ASPD bonus won't stack
+#define RENEWAL_ASPD
+
 #endif // _CONFIG_RENEWAL_H_

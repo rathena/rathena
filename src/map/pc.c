@@ -2214,7 +2214,11 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		break;
 	case SP_ASPD_RATE:	//Stackable increase - Made it linear as per rodatazone
 		if(sd->state.lr_flag != 2)
+#ifndef RENEWAL_ASPD
 			status->aspd_rate -= 10*val;
+#else
+			status->aspd_rate2 += val;
+#endif
 		break;
 	case SP_HP_RECOV_RATE:
 		if(sd->state.lr_flag != 2)

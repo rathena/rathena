@@ -1513,6 +1513,9 @@ struct status_data {
 	short 
 		hit, flee, cri, flee2,
 		def2, mdef2,
+#ifdef RENEWAL_ASPD
+		aspd_rate2,
+#endif
 		aspd_rate;
 	/**
 	 * defType is REMODE dependent and defined in src/map/config/data/const.h
