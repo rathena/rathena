@@ -846,7 +846,7 @@ monk_in,18,38,6	script	Priest Gardron#tu	110,{
 			close;
 		}
 	} else if(tu_acolyte01 == 8){
-		if(countitem(957) > 4){
+		if(countitem(939) > 4){
 			mes "Oh..!";
 			mes "You've returned!";
 			mes "Let's see... One...";
