@@ -8,9 +8,10 @@
 //= Izlude Airport NPCs
 //===== Additional Comments: ================================= 
 //= Official NPCs.
+//= Updated to match the new Izlude Map. [Masao]
 //============================================================ 
 
-izlude,206,55,3	script	Airship Staff#izlude	90,{
+izlude,204,75,3	script	Airship Staff#izlude	90,{
 	mes "[Airship Staff]";
 	mes "Welcome! Would you like";
 	mes "to board the Airship that";

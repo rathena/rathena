@@ -16,6 +16,8 @@
 //= 1.1 Standardized and reduced by 7000+ lines. [Euphy]
 //= 1.2 Further optimization. [Euphy]
 //= 1.2a Small bug fix. [Euphy]
+//= 1.3 Temporarly disabled Izlude Fish Tail?#33 NPC because of
+//= the new Izlude Town Map. [Masao]
 //============================================================
 
 // Entrance
@@ -920,8 +922,9 @@ iz_dun03,155,165,0	script	Gill?#33	844,{
 	callfunc "unknown_d",12176,956; }
 prt_fild05,303,169,0	script	Worm Peeling?#33	844,{
 	callfunc "unknown_d",12175,955; }
-izlude,132,136,0	script	Fish Tail?#33	844,{
+/*izlude,132,136,0	script	Fish Tail?#33	844,{
 	callfunc "unknown_d",12174,1023; }
+*/
 pay_fild01,152,171,0	script	Resin?#33	844,{
 	callfunc "unknown_d",12171,907; }
 pay_fild02,105,113,0	script	Pointed Scale?#33	844,{

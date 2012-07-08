@@ -35,6 +35,7 @@
 //= 3.4 Added missing checkweights. [L0ne_W0lf]
 //= 3.5 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 3.6 Fixed bartender so he no longer hangs. [L0ne_W0lf]
+//= 3.7 Updated to match the new Izlude Map. [Masao]
 //============================================================
 
 // Jawaii
@@ -1396,7 +1397,7 @@ prt_in,170,14,0	script	Customer#Bachewcca	89,{
 
 // Izlude
 //============================================================
-izlude,171,185,3	script	Honeymoon Helper#Izlude	71,{
+izlude,102,150,6	script	Honeymoon Helper#Izlude	71,{
 	mes "[Helper]";
 	mes "Newlyweds and";
 	mes "long time couples...";

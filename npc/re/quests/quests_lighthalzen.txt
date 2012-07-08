@@ -4,7 +4,7 @@
 //= Persian, Vicious_Pucca, aoa00, Evera, MasterOfMupppets,
 //= Lupus, Lord Gywall
 //===== Current Version: ===================================== 
-//= 4.7
+//= 4.8
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -77,6 +77,7 @@
 //= 4.6 Added quest log entries for:
 //=     - Cursed Spirit Quest
 //= 4.7 Fixed missing label. (bugreport:4654) [L0ne_W0lf]
+//= 4.8 Updated to match the new Izlude Map. [Masao]
 //============================================================ 
 
 // Gangster Alert [Aegis Conversion]
@@ -11461,7 +11462,7 @@ OnStop:
 	end;
 }
 
-izlude,186,57,5	script	Scamp	853,{
+izlude,171,73,6	script	Scamp	853,{
 
 	if(lhz_rekenber > 21)
 	{

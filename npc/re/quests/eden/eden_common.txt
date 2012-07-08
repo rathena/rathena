@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //=     Commented out warps that should not be active.
 //= 1.2 Reduced 300+ copy-paste lines to 1 duplicated NPC. [Brian]
 //= 1.3 Some little optimization here and there. [Masao]
+//= 1.4 Updated to match the new Izlude Map. [Masao]
 //============================================================
 
 moc_para01,27,35,5	script	Secretary Lime Evenor	952,{
@@ -220,7 +221,7 @@ moc_ruins,68,164,3	duplicate(eto)	Eden Teleport Officer#2	729
 geffen,132,66,3	duplicate(eto)	Eden Teleport Officer#3	729
 alberta,124,67,3	duplicate(eto)	Eden Teleport Officer#4	729
 aldebaran,133,119,5	duplicate(eto)	Eden Teleport Officer#5	729
-izlude_in,68,162,1	duplicate(eto)	Eden Teleport Officer#6	729
+izlude,131,148,4	duplicate(eto)	Eden Teleport Officer#6	729
 prt_church,103,78,3	duplicate(eto)	Eden Teleport Officer#7	729
 geffen_in,160,104,5	duplicate(eto)	Eden Teleport Officer#8	729
 moc_prydb1,53,126,3	duplicate(eto)	Eden Teleport Officer#9	729
@@ -241,7 +242,7 @@ OnTouch:
 		case 3: warp "geffen",120,39; end;
 		case 4: warp "alberta",117,56; end;
 		case 5: warp "aldebaran",168,112; end;
-		case 6: warp "izlude_in",73,165; end;
+		case 6: warp "izlude",127,142; end;
 		case 7: warp "prt_church",99,78; end;
 		case 8: warp "geffen_in",162,99; end;
 		case 9: warp "moc_prydb1",51,118; end;

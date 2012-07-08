@@ -25,7 +25,7 @@
 //=	Added unique Kafra Welcome message2.
 //=====================================================================
 
-izlude,134,87,3	script	Kafra Employee::kaf_izlude	117,{
+izlude,128,148,6	script	Kafra Employee::kaf_izlude	117,{
 	cutin "kafra_01",2;
 	cleararray @wrpC$[0],"",getarraysize(@wrpC$);
 	setarray @wrpD$[0], "Geffen", "Prontera", "Morroc", "Al De Baran";
@@ -43,7 +43,7 @@ izlude,134,87,3	script	Kafra Employee::kaf_izlude	117,{
 	mes "How may I assist you?";
 	callfunc "F_Kafra",5,0,1,40,820;
 
-	M_Save:
-		savepoint "izlude",94,103;
-		callfunc "F_KafEnd",0,1,"in the city of Izlude";
+M_Save:
+	savepoint "izlude",94,103;
+	callfunc "F_KafEnd",0,1,"in the city of Izlude";
 }
