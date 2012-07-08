@@ -707,6 +707,13 @@ void initChangeTables(void) {
 	set_sc( EL_ROCK_CRUSHER    , SC_ROCK_CRUSHER         , SI_ROCK_CRUSHER         , SCB_DEF );
 	set_sc( EL_ROCK_CRUSHER_ATK, SC_ROCK_CRUSHER_ATK     , SI_ROCK_CRUSHER_ATK     , SCB_SPEED );	
 	
+	add_sc( MH_STAHL_HORN		 , SC_STUN            );
+	set_sc( MH_ANGRIFFS_MODUS	 , SC_ANGRIFFS_MODUS  , SI_ANGRIFFS_MODUS	, SCB_BATK|SCB_WATK|SCB_DEF|SCB_FLEE );
+	set_sc( MH_GOLDENE_FERSE	 , SC_GOLDENE_FERSE   , SI_GOLDENE_FERSE	, SCB_SPEED|SCB_FLEE|SCB_ATK_ELE );
+	add_sc( MH_LAVA_SLIDE		 , SC_BURNING         );
+	add_sc( MH_POISON_MIST		 , SC_BLIND			  );
+	set_sc( MH_ERASER_CUTTER	 , SC_ERASER_CUTTER   , SI_BLANK			, SCB_NONE );
+	
 	// Storing the target job rather than simply SC_SPIRIT simplifies code later on.
 	SkillStatusChangeTable[SL_ALCHEMIST]   = (sc_type)MAPID_ALCHEMIST,
 	SkillStatusChangeTable[SL_MONK]        = (sc_type)MAPID_MONK,
@@ -4330,6 +4337,8 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 		batk += sc->data[SC_FULL_SWING_K]->val1;
 	if(sc->data[SC_ODINS_POWER])
 		batk += 70;
+	if(sc->data[SC_ANGRIFFS_MODUS])
+		batk += batk * sc->data[SC_ANGRIFFS_MODUS]->val2/100;
 #ifdef RENEWAL_EDP
 	// renewal EDP increases your base atk by atk x skill level
 	if( sc->data[SC_EDP] )
@@ -4413,7 +4422,8 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 		watk += watk / 10;
 	if( sc && sc->data[SC_TIDAL_WEAPON] )
 		watk += watk * sc->data[SC_TIDAL_WEAPON]->val2 / 100;
-
+	if(sc->data[SC_ANGRIFFS_MODUS])
+		watk += watk * sc->data[SC_ANGRIFFS_MODUS]->val2/100;
 #ifdef RENEWAL_EDP
 	// renewal EDP increases your weapon atk by watk x Skill Level - 1
 	if( sc->data[SC_EDP] && sc->data[SC_EDP]->val1 > 1 )
@@ -4592,6 +4602,10 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 		flee += flee * sc->data[SC_ZEPHYR]->val2 / 100;
 	if( sc->data[SC_MARSHOFABYSS] )
 		flee -= (9 * sc->data[SC_MARSHOFABYSS]->val3 / 10 + sc->data[SC_MARSHOFABYSS]->val2 / 10) * (bl->type == BL_MOB ? 2 : 1);
+	if( sc->data[SC_ANGRIFFS_MODUS] )
+		flee -= flee * sc->data[SC_ANGRIFFS_MODUS]->val3 / 100;
+	if( sc->data[SC_GOLDENE_FERSE ] )
+		flee -= flee * sc->data[SC_GOLDENE_FERSE ]->val2 / 100;
 #ifdef RENEWAL
 	if( sc->data[SC_SPEARQUICKEN] )
 		flee += 2 * sc->data[SC_SPEARQUICKEN]->val1;
@@ -4684,7 +4698,9 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 		def += 50;	
 	if(sc->data[SC_ODINS_POWER])
 		def -= 20;
-
+	if( sc->data[SC_ANGRIFFS_MODUS] )
+		def -= def * sc->data[SC_ANGRIFFS_MODUS]->val4 / 100;
+	
 	return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);;
 }
 
@@ -5164,7 +5180,10 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		if(sc->data[SC_FLEET] &&
 			max < sc->data[SC_FLEET]->val2)
 			max = sc->data[SC_FLEET]->val2;
-
+		
+		if( sc->data[SC_GOLDENE_FERSE] && max < sc->data[SC_GOLDENE_FERSE]->val3 )
+			max = sc->data[SC_GOLDENE_FERSE]->val3;
+		
 		if(sc->data[SC_ASSNCROS] &&
 			max < sc->data[SC_ASSNCROS]->val2)
 		{
@@ -5428,6 +5447,8 @@ unsigned char status_calc_attack_element(struct block_list *bl, struct status_ch
 		return ELE_GHOST;
 	if(sc->data[SC_TIDAL_WEAPON_OPTION] || sc->data[SC_TIDAL_WEAPON] )
 		return ELE_WATER;
+	if(sc->data[SC_GOLDENE_FERSE] && rand()%100 < sc->data[SC_GOLDENE_FERSE]->val4)
+		return ELE_HOLY;
 	return (unsigned char)cap_value(element,0,UCHAR_MAX);
 }
 
@@ -7507,6 +7528,16 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val3 = 3*val1; //Leech chance
 			val4 = 20; //Leech percent
 			break;
+		case SC_ANGRIFFS_MODUS:
+			val2 = 70 + 30*val1; //atk
+			val3 = 50 + 20*val1; //flee
+			val4 = 60 + 20*val1; //def
+			break;
+		case SC_GOLDENE_FERSE:
+			val2 = 20 + 10*val1; //flee
+			val3 = 10 + 4*val1; //aspd
+			val4 = 2 + 2*val1; //chance to issue holy-ele attack
+			break;			
 		case SC_FLEET:
 			val2 = 30*val1; //Aspd change
 			val3 = 5+5*val1; //bAtk/wAtk rate change

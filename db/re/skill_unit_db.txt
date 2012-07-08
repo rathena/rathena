@@ -148,6 +148,12 @@
 2488,0xe9,    ,  0, 3,1000,enemy, 0x000	//GN_FIRE_EXPANSION_TEAR_GAS
 2490,0xea,    ,  0, 1,1000,enemy, 0x000	//GN_HELLS_PLANT
 
+8020,0xf5,    ,  0, 3,2300:2100:1900:1700:1500,enemy,   0x018	//MH_POISON_MIST
+8033,0x7e,    ,  0, 0,  -1,all,   0x003	//MH_STEINWAND 
+8025,0x86,    ,  0, 2:2:3:3:4,1000,enemy, 0x018	//MH_XENO_SLASHER
+8041,0xf6,    ,  1:1:2:2:3, 0,1000,enemy,   0x018	//MH_LAVA_SLIDE
+8043,0xf7,    ,  0, 1,1000,enemy,   0x018	//MH_VOLCANIC_ASH
+
 8208,0x86,    ,  0, 2,1000,enemy, 0x080	//MA_SHOWER
 8209,0x90,    ,  0, 1,1000,enemy, 0x006	//MA_SKIDTRAP
 8210,0x93,    ,  0, 0,1000,enemy, 0x006	//MA_LANDMINE

@@ -1024,6 +1024,33 @@
 8014,0,6,4,0,0x1,0,5,0,no,0,0,0,none,0,		HVAN_CHAOTIC,Benediction of Chaos
 8015,0,0,0,0,0x1,0,5,0,no,0,0,0,none,0,		HVAN_INSTRUCT,Instruct
 8016,4,6,4,-1,0xD2,4,3,1,no,0,0,0,misc,0,	HVAN_EXPLOSION,Bio Explosion
+//
+8018,9,6,1,0,0x1,0,5,1,no,0,0,0,none,0,		MH_SUMMON_LEGION,Summon Legion
+8019,5,6,1,5,0,0,5,1,no,0,0,0,weapon,0,		MH_NEEDLE_OF_PARALYZE,Needle of Paralyze
+8020,5,6,2,5,0,0,5,1,no,0,0,1,weapon,0,		MH_POISON_MIST,Nevoa Venenosa
+8021,1,6,1,0,0x1,0,5,1,no,0,0,0,none,0,		MH_PAIN_KILLER,Pain Killer
+8022,0,6,4,0,0,0x1,5,1,no,0,0,0,none,0,		MH_LIGHT_OF_REGENE,Light of Regene
+8023,0,6,4,0,0,0x1,5,1,no,0,0,0,none,0,		MH_OVERED_BOOST,Overed Boost
+8024,7,6,1,4:0:4:0:4,0,0,5,1,no,0,0,0,magic,0,	MH_ERASER_CUTTER,Corte Ilusório
+8025,7,6,2,4:0:4:0:4,0,0,5,1,no,0,0,0,magic,0,	MH_XENO_SLASHER,Xeno Slasher
+8026,5:5:7:7:9,6,16,0,0x1,0,5,1,no,0,0,0,magic,0,	MH_SILENT_BREEZE,Silent Breeze
+8027,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,		MH_STYLE_CHANGE,Style Change
+8028,1,8,1,0,0,0,5,1,no,0,0,0,weapon,0,		MH_SONIC_CRAW,Sonic Claw
+8029,1,6,4,0,0,0,5,1,no,0,0x200,0,weapon,0,	MH_SILVERVEIN_RUSH,Silver Bain Rush
+8030,1,6,4,0,0,0,5,1,no,0,0x200,0,weapon,0,	MH_MIDNIGHT_FRENZY,Midnight Frenzy
+8031,5:6:7:8:9,6,1,0,0,0,5,1,no,0,0,0,weapon,3,	MH_STAHL_HORN,Chifre de Aço
+8032,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,		MH_GOLDENE_FERSE,Ferraduras de Ouro
+8033,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,		MH_STEINWAND,Stone Wall
+8034,9,6,1,6,0x2,1:1:1:1:2,5,1,no,0,0,0,magic,0,	MH_HEILIGE_STANGE,Holy Pole
+8035,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,		MH_ANGRIFFS_MODUS,Modo de Ataque
+8036,3:4:5:6:7,6,1,0,0,0,5,1,no,0,0,0,weapon,0,	MH_TINDER_BREAKER,Tinder Breaker
+8037,1,6,4,0,0,0,5,1,no,0,0x200,0,weapon,0,	MH_CBC,Continual Break Combo
+8038,1,6,4,0,0,0,5,1,no,0,0x200,0,weapon,0,	MH_EQC,Eternal Quick Combo
+8039,0,6,4,3,0x2,1:1:1:2:2,5,1,no,0,0,0,weapon,0,	MH_MAGMA_FLOW,Magma Flow
+8040,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,		MH_GRANITIC_ARMOR,Granitic Armor
+8041,7,6,2,3,0x2,0,5,1,no,0,0,1,weapon,0,		MH_LAVA_SLIDE,Deslizamento de Lava
+8042,0,6,4,3,0x1,0,5,1,no,0,0,0,none,0,		MH_PYROCLASTIC,Pyroclastic
+8043,7,6,2,0,0x1,0,5,1,no,0,0,3,none,0,		MH_VOLCANIC_ASH,Volcanic Ash
 
 // Mercenary Skill Place holders
 8201,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,	MS_BASH,Bash

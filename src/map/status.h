@@ -612,6 +612,10 @@ typedef enum sc_type {
  * To increase the maximum value just add another status type before SC_MAXSPELLBOOK (ex. SC_SPELLBOOK7, SC_SPELLBOOK8 and so on)
  **/
 	SC_MAXSPELLBOOK,
+	/* homun-s */
+	SC_ANGRIFFS_MODUS,
+	SC_GOLDENE_FERSE,
+	SC_ERASER_CUTTER,
 	
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;

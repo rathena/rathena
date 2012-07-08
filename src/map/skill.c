@@ -44,15 +44,18 @@
 #define SKILLUNITTIMER_INTERVAL	100
 
 // ranges reserved for mapping skill ids to skilldb offsets
-#define GD_SKILLRANGEMIN 900
-#define GD_SKILLRANGEMAX (GD_SKILLRANGEMIN+MAX_GUILDSKILL)
-#define MC_SKILLRANGEMIN 800
-#define MC_SKILLRANGEMAX (MC_SKILLRANGEMIN+MAX_MERCSKILL)
 #define HM_SKILLRANGEMIN 700
-#define HM_SKILLRANGEMAX (HM_SKILLRANGEMIN+MAX_HOMUNSKILL)
+#define HM_SKILLRANGEMAX HM_SKILLRANGEMIN + MAX_HOMUNSKILL
+#define MC_SKILLRANGEMIN HM_SKILLRANGEMAX + 1
+#define MC_SKILLRANGEMAX MC_SKILLRANGEMIN + MAX_MERCSKILL
 #define EL_SKILLRANGEMIN MC_SKILLRANGEMAX + 1
 #define EL_SKILLRANGEMAX EL_SKILLRANGEMIN + MAX_ELEMENTALSKILL
+#define GD_SKILLRANGEMIN EL_SKILLRANGEMAX + 1
+#define GD_SKILLRANGEMAX GD_SKILLRANGEMIN + MAX_GUILDSKILL
 
+#if GD_SKILLRANGEMAX > 999
+	#error GD_SKILLRANGEMAX is greater than 999
+#endif
 static struct eri *skill_unit_ers = NULL; //For handling skill_unit's [Skotlex]
 static struct eri *skill_timer_ers = NULL; //For handling skill_timerskills [Skotlex]
 
@@ -1122,9 +1125,6 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case NPC_CRITICALWOUND:
 		sc_start(bl,SC_CRITICALWOUND,100,skilllv,skill_get_time2(skillid,skilllv));
 		break;
-	/**
-	 * Rune Knight
-	 **/
 	case RK_HUNDREDSPEAR:
 		if( !sd || pc_checkskill(sd,KN_SPEARBOOMERANG) == 0 )
 			break; // Spear Boomerang auto cast chance only works if you have mastered Spear Boomerang.
@@ -1138,16 +1138,10 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case RK_DRAGONBREATH:
 		sc_start4(bl,SC_BURNING,5+5*skilllv,skilllv,1000,src->id,0,skill_get_time(skillid,skilllv));
 		break;
-	/**
-	 * Arch Bishop
-	 **/
 	case AB_ADORAMUS:
 		if( tsc && !tsc->data[SC_DECREASEAGI] ) //Prevent duplicate agi-down effect.
 			sc_start(bl, SC_ADORAMUS, 100, skilllv, skill_get_time(skillid, skilllv));
 		break;
-	/**
-	 * Warlock
-	 **/
 	case WL_CRIMSONROCK:
 		sc_start(bl, SC_STUN, 40, skilllv, skill_get_time(skillid, skilllv));
 		break;
@@ -1168,9 +1162,6 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case WL_JACKFROST:
 		sc_start(bl,SC_FREEZE,100,skilllv,skill_get_time(skillid,skilllv));
 		break;
-	/**
-	 * Ranger
-	 **/
 	case RA_WUGBITE:
 		{
 			int chance = (50+10*skilllv)-(sstatus->agi/4) + (sd ? pc_checkskill(sd,RA_TOOTHOFWUG)*2 : 0);
@@ -1193,9 +1184,6 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case RA_ICEBOUNDTRAP:
 		sc_start(bl, (skillid == RA_FIRINGTRAP) ? SC_BURNING:SC_FREEZING, 40 + 10 * skilllv, skilllv, skill_get_time2(skillid, skilllv));
 		break;
-	/**
-	 * Mechanic
-	 **/
 	case NC_PILEBUNKER:
 		if( rnd()%100 < 5 + 15*skilllv )
 		{ //Deactivatable Statuses: Kyrie Eleison, Auto Guard, Steel Body, Assumptio, and Millennium Shield
@@ -1218,15 +1206,9 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		if( rnd()%100 < 5*skilllv )
 			skill_castend_damage_id(src, bl, NC_AXEBOOMERANG, pc_checkskill(sd, NC_AXEBOOMERANG), tick, 1);
 		break;
-	/**
-	 * Guilotine Cross
-	 **/
 	case GC_WEAPONCRUSH:
 		skill_castend_nodamage_id(src,bl,skillid,skilllv,tick,BCT_ENEMY);
 		break;
-	/**
-	 * Royal Guard
-	 **/
 	case LG_SHIELDPRESS:
 		sc_start(bl, SC_STUN, 30 + 8 * skilllv, skilllv, skill_get_time(skillid,skilllv));
 		break;
@@ -1360,6 +1342,12 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 	case EL_TYPOON_MIS:
 		sc_start(bl,SC_SILENCE,10*skilllv,skilllv,skill_get_time(skillid,skilllv));
+		break;
+	case MH_LAVA_SLIDE:
+		sc_start4(bl,SC_BURNING,10*skilllv,skilllv,1000,src->id,0,skill_get_time(skillid,skilllv));
+		break;			
+	case MH_STAHL_HORN:
+		sc_start(bl,SC_STUN,(20 + 4 * skilllv),skilllv,skill_get_time2(skillid,skilllv));
 		break;
 	}
 
@@ -2769,7 +2757,7 @@ static int skill_check_unit_range_sub (struct block_list *bl, va_list ap)
 		case RA_ICEBOUNDTRAP:
 		case SC_DIMENSIONDOOR:
 			//Non stackable on themselves and traps (including venom dust which does not has the trap inf2 set)
-			if (skillid != g_skillid && !(skill_get_inf2(g_skillid)&INF2_TRAP) && g_skillid != AS_VENOMDUST)
+			if (skillid != g_skillid && !(skill_get_inf2(g_skillid)&INF2_TRAP) && g_skillid != AS_VENOMDUST && g_skillid != MH_POISON_MIST)
 				return 0;
 			break;
 		default: //Avoid stacking with same kind of trap. [Skotlex]
@@ -3421,7 +3409,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case SR_GENTLETOUCH_QUIET:
 	case WM_SEVERE_RAINSTORM_MELEE:
 	case WM_GREAT_ECHO:
-	case GN_SLINGITEM_RANGEMELEEATK:			
+	case GN_SLINGITEM_RANGEMELEEATK:
+	case MH_STAHL_HORN:
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 	break;
 
@@ -3648,7 +3637,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case WM_REVERBERATION_MAGIC:
 	case SO_VARETYR_SPEAR:
 	case GN_CART_TORNADO:
-	case GN_CARTCANNON:			
+	case GN_CARTCANNON:
+	case MH_LAVA_SLIDE:
 		if( flag&1 ) {//Recursive invocation
 			// skill_area_temp[0] holds number of targets in area
 			// skill_area_temp[1] holds the id of the original target
@@ -3806,6 +3796,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case AB_HIGHNESSHEAL:
 	case AB_DUPLELIGHT_MAGIC:
 	case WM_METALICSOUND:
+	case MH_ERASER_CUTTER:
 		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
 		break;
 
@@ -4501,7 +4492,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	default:
-		ShowWarning("skill_castend_damage_id: Unknown skill used:%d\n",skillid);
+		if( skillid >= HM_SKILLBASE && skillid <= HM_SKILLBASE + MAX_HOMUNSKILL ) {
+			if( src->type == BL_HOM && ((TBL_HOM*)src)->master->fd )
+				clif_colormes(((TBL_HOM*)src)->master, COLOR_RED, "This skill is not yet supported");
+		} else /* temporary until all the homun-s skills are supported otherwise console would fill up with pointless warnings */
+			ShowWarning("skill_castend_damage_id: Unknown skill used:%d\n",skillid);
 		clif_skill_damage(src, bl, tick, status_get_amotion(src), tstatus->dmotion,
 			0, abs(skill_get_num(skillid, skilllv)),
 			skillid, skilllv, skill_get_hit(skillid));
@@ -7119,15 +7114,19 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case AM_REST:
-		if (sd)
-		{
+		if (sd) {
 			if (merc_hom_vaporize(sd,1))
 				clif_skill_nodamage(src, bl, skillid, skilllv, 1);
 			else
 				clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
 		}
 		break;
-
+	case MH_STAHL_HORN:
+		if (sd) {
+			if( skillid == MH_GOLDENE_FERSE )
+				clif_skill_fail(sd,skillid,USESKILL_FAIL_CONDITION,0);
+		}
+		break;
 	case HAMI_CASTLE:	//[orn]
 		if(rnd()%100 < 20*skilllv && src != bl)
 		{
@@ -7182,6 +7181,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case HFLI_FLEET:
 	case HFLI_SPEED:
 	case HLIF_CHANGE:
+	case MH_ANGRIFFS_MODUS:
+	case MH_GOLDENE_FERSE:			
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		if (hd)
@@ -7263,7 +7264,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		break;
 	case RK_IGNITIONBREAK:
-	case LG_EARTHDRIVE: 
+	case LG_EARTHDRIVE:
+	case MH_LAVA_SLIDE:
 			clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skillid, skilllv, 6);
 			i = skill_get_splash(skillid,skilllv);
 			if( skillid == LG_EARTHDRIVE ) {
@@ -8609,7 +8611,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 			
 	default:
-		ShowWarning("skill_castend_nodamage_id: Unknown skill used:%d\n",skillid);
+		if( skillid >= HM_SKILLBASE && skillid <= HM_SKILLBASE + MAX_HOMUNSKILL ) {
+			if( src->type == BL_HOM && ((TBL_HOM*)src)->master->fd )
+				clif_colormes(((TBL_HOM*)src)->master, COLOR_RED, "This skill is not yet supported");
+		} else /* temporary until all the homun-s skills are supported otherwise console would fill up with pointless warnings */
+			ShowWarning("skill_castend_nodamage_id: Unknown skill used:%d\n",skillid);
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		map_freeblock_unlock();
 		return 1;
@@ -9299,7 +9305,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	case SO_FIRE_INSIGNIA:
 	case SO_WATER_INSIGNIA:
 	case SO_WIND_INSIGNIA:
-	case SO_EARTH_INSIGNIA:			
+	case SO_EARTH_INSIGNIA:
+	case MH_POISON_MIST:
 		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 	case GS_GROUNDDRIFT: //Ammo should be deleted right away.
 		skill_unitsetting(src,skillid,skilllv,x,y,0);
@@ -9751,7 +9758,11 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 		break;
 
 	default:
-		ShowWarning("skill_castend_pos2: Unknown skill used:%d\n",skillid);
+		if( skillid >= HM_SKILLBASE && skillid <= HM_SKILLBASE + MAX_HOMUNSKILL ) {
+			if( src->type == BL_HOM && ((TBL_HOM*)src)->master->fd )
+				clif_colormes(((TBL_HOM*)src)->master, COLOR_RED, "This skill is not yet supported");
+		} else /* temporary until all the homun-s skills are supported otherwise console would fill up with pointless warnings */
+			ShowWarning("skill_castend_pos2: Unknown skill used:%d\n",skillid);
 		return 1;
 	}
 
@@ -16253,6 +16264,7 @@ void skill_init_unit_layout (void)
 						memcpy(skill_unit_layout[pos].dy,dy,sizeof(dy));
 					}
 					break;
+				case MH_POISON_MIST:
 				case AS_VENOMDUST: {
 						static const int dx[] = {-1, 0, 0, 0, 1};
 						static const int dy[] = { 0,-1, 0, 1, 0};

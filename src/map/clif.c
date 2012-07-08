@@ -10582,6 +10582,27 @@ static void clif_parse_UseSkillToId_homun(struct homun_data *hd, struct map_sess
 		unit_skilluse_id(&hd->bl, target_id, skillnum, skilllv);
 }
 
+static void clif_parse_UseSkillToPos_homun(struct homun_data *hd, struct map_session_data *sd, unsigned int tick, short skillnum, short skilllv, short x, short y, int skillmoreinfo)
+{
+	int lv;
+	if( !hd )
+		return;
+	if( skillnotok_hom(skillnum, hd) )
+		return;
+	if( hd->ud.skilltimer != INVALID_TIMER ) {
+		if( skillnum != SA_CASTCANCEL && skillnum != SO_SPELLFIST ) return;
+	} else if( DIFF_TICK(tick, hd->ud.canact_tick) < 0 )
+		return;
+	
+	if( hd->sc.data[SC_BASILICA] )
+		return;
+	lv = merc_hom_checkskill(hd, skillnum);
+	if( skilllv > lv )
+		skilllv = lv;
+	if( skilllv )
+		unit_skilluse_pos(&hd->bl, x, y, skillnum, skilllv);
+}
+
 static void clif_parse_UseSkillToId_mercenary(struct mercenary_data *md, struct map_session_data *sd, unsigned int tick, short skillnum, short skilllv, int target_id)
 {
 	int lv;
@@ -10743,6 +10764,11 @@ static void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, sho
 
 	if( !(skill_get_inf(skillnum)&INF_GROUND_SKILL) )
 		return; //Using a target skill on the ground? WRONG.
+	
+	if( skillnum >= HM_SKILLBASE && skillnum < HM_SKILLBASE + MAX_HOMUNSKILL ) {
+		clif_parse_UseSkillToPos_homun(sd->hd, sd, tick, skillnum, skilllv, x, y, skillmoreinfo);
+		return;
+	}
 
 	if( skillnum >= MC_SKILLBASE && skillnum < MC_SKILLBASE + MAX_MERCSKILL )
 	{
