@@ -3840,12 +3840,14 @@ int do_init(int argc, char *argv[])
 	}
 
 	map_config_read(MAP_CONF_NAME);
+	/* only temporary until sirius's datapack patch is complete  */
+	
 #ifdef RENEWAL
-	/**
-	 * to make pre-re conflict safe
-	 **/
-	map_config_read("npc/scripts_renewal.conf");
+	map_config_read("npc/re/scripts_main.conf");
+#else
+	map_config_read("npc/pre-re/scripts_main.conf");
 #endif
+
 	chrif_checkdefaultlogin();
 
 	if (!map_ip_set || !char_ip_set) {

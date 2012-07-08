@@ -1,0 +1,89 @@
+//===== rAthena Script ======================================= 
+//= Bossnia Warp NPCs
+//===== By: ================================================== 
+//= Masao
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena
+//===== Description: ========================================= 
+//= Bossnia Warp NPC's.
+//===== Additional Comments: ================================= 
+//= 1.0 Converted from the official script.
+//= 1.1 Optimized. [Euphy]
+//============================================================ 
+
+prontera,132,125,4	script	Bossnia Staff::bsw	908,{
+
+	mes "[Riss]";
+	mes "Hello?";
+	mes "I found some beautiful places";
+	mes "while I travelled all over the world.";
+	mes "I am an adventurer.";
+	mes "Haha~";
+	next;
+	mes "[Riss]";
+	mes "What? My name is...";
+	mes "'Bossnia Staff'?? No no...";
+	mes "Well, my name is not so important.";
+	mes "Sometimes you should be generous.";
+	mes "No time for considering that kind of small stuff";
+	mes "when you have to concentrate on more important things.";
+	next;
+	mes "[Riss]";
+	mes "Hum... anyway I want to say... something..";
+	mes "While I was travelling through some places,";
+	mes "I found a really fearful place.";
+	next;
+	mes "[Riss]";
+	mes "Most of the time when you come to a place,";
+	mes "there is one strong and fearful monster.";
+	mes "Isn't it?";
+	next;
+	mes "[Riss]";
+	mes "But... but... in there...";
+	mes "There are lots of fearful and strong monsters in there...";
+	mes "That was really frightful.";
+	next;
+	mes "[Riss]";
+	mes "If I had reacted a bit later... a few seconds...";
+	mes "I might have been killed.";
+	next;
+	mes "[Riss]";
+	mes "What?";
+	mes "You want to go in there?";
+	mes "Oh~ Boy~ you didn't get me.";
+	mes "In there.......";
+	next;
+	mes "[Riss]";
+	mes "Uh... you already know?";
+	mes "Although you know the place, you want to go in...";
+	mes "Good, I will send you there.";
+	mes "But after you went there, don't hold";
+	mes "a grudge against me. Also it costs 5,000 zeny.";
+	next;
+	if (Zeny > 4999) {
+		mes "[Riss]";
+		mes "Would you really like to take the challenge??";
+		mes "Ok, just choose the course.";
+		next;
+		set .@i, select("First","Second","Third","Fourth");
+		mes "[Riss]";
+		mes "Take care, boy~";
+		mes "Don't hold a grudge against me.";
+		close2;
+		set Zeny, Zeny - 5000;
+		warp "bossnia_0"+.@i,rand(202,204),rand(202,204);
+		end;
+	}
+	mes "[Riss]";
+	mes "You don't have enough money...";
+	mes "Come back when you have at least 5,000 zeny.";
+	close;
+}
+
+geffen,124,169,4	duplicate(bsw)	Bossnia Staff#2	908
+payon,165,150,4	duplicate(bsw)	Bossnia Staff#3	908
+morocc,142,100,4	duplicate(bsw)	Bossnia Staff#4	908
+lighthalzen,203,140,4	duplicate(bsw)	Bossnia Staff#5	908
+rachel,132,144,4	duplicate(bsw)	Bossnia Staff#6	908

@@ -1,0 +1,72 @@
+//===== rAthena Script =======================================
+//= Arena Warps
+//===== By: ==================================================
+//= SinSloth
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Description: =========================================
+//= Warp Points related to Izlude Arena && Control Panel
+//===== Additional Comments: =================================
+//= 1.0 First version, done by SinSloth. [MasterOfMuppets]
+//= 1.1 updated welcome_arena warp coords (was 128,126) [Lupus]
+//= 1.2 Made some updates due to Izlude Battle Arena release. [SinSloth]
+//============================================================
+
+izlude,128,226,0	warp	welcome_arena	1,1,arena_room,100,30
+arena_room,99,24,0	warp	bye_arena	2,2,izlude,128,220
+arena_room,84,103,0	warp	arn_room_11_1	1,1,arena_room,63,130
+arena_room,63,126,0	warp	arn_room_11_2	1,1,arena_room,87,100
+arena_room,76,87,0	warp	arn_room_9_1	1,1,arena_room,46,87
+arena_room,49,87,0	warp	arn_room_9_2	1,1,arena_room,78,87
+arena_room,84,71,0	warp	arn_room_7_1	1,1,arena_room,60,50
+arena_room,63,53,0	warp	arn_room_7_2	1,1,arena_room,86,74
+arena_room,115,71,0	warp	arn_room_5_1	1,1,arena_room,139,50
+arena_room,136,53,0	warp	arn_room_5_2	1,1,arena_room,113,74
+arena_room,123,88,0	warp	arn_room_3_1	1,1,arena_room,153,87
+arena_room,150,87,0	warp	arn_room_3_2	1,1,arena_room,120,87
+prt_are_in,54,13,0	warp	toarn_room	1,1,arena_room,100,77
+
+sec_in02,79,180,3	script	#arenacontrol	81,{
+
+DLGTEMP:
+	input @input_arena;
+	if (@input_arena < 0 || @input_arena > 2000) goto DLGTEMP;	//CHECK
+	if (@input_arena == 0)
+	{
+		mes "Error!";
+		close;
+	}
+	else if (@input_arena == 1357)
+	{
+		mes "Opening Control Panel";
+		mes "' A - R - E - N - A '";
+		next;
+		mes "Please select a";
+		mes "state for the arena.";
+		next;
+		switch( select( "Open.","Closed.") )
+		{
+			case 1:
+				mes "Currently";
+				mes "opening arena.";
+				misceffect EF_ENHANCE;	//CHECK
+				enablenpc "welcome_arena";
+				next;
+				break;
+			case 2:
+				mes "Currently";
+				mes "closing arena.";
+				misceffect EF_EXIT;	//CHECK
+				disablenpc "welcome_arena";
+				next;
+				break;
+		}
+	}
+	else
+	{
+		mes "Closing control panel.";
+		close;
+	}
+}

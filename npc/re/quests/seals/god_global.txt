@@ -1,0 +1,137 @@
+//===== rAthena Script ======================================= 
+//= Variable Management NPC for the god item quest
+//===== By: ================================================== 
+//= MasterOfMuppets
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena
+//===== Description: ========================================= 
+//= Use this NPC if the seals quest variables get messed up.
+//===== Additional Comments: =================================
+//= 1.0 First version. [MasterOfMuppets]
+//= 1.1 Updated several aspects of the script. [L0ne_W0lf]
+//============================================================
+
+sec_in02,15,170,0	script	Golbal var	817,{
+	//mes "[Check]";
+	//mes "Please enter the password.";
+	//next;
+	//set .@check,68392411;
+	//dlgwrite 0 10000000
+	//if (check == input){
+	if (getgmlevel() > 98) {
+		mes "[Check]";
+		mes "Please choose a menu.";
+		next;
+		switch(select("Now:No.1:No.2:No.3:No.4:Reset")) {
+		case 1:
+			mes "^0000FF$God1^000000 = ^FF0000" + $God1 + "^000000.";
+			mes "^0000FF$God2^000000 = ^FF0000" + $God2 + "^000000.";
+			mes "^0000FF$God3^000000 = ^FF0000" + $God3 + "^000000.";
+			mes "^0000FF$God4^000000 = ^FF0000" + $God4 + "^000000.";
+			close;
+		case 2:
+			input .@input,0,100;
+			mes "[Check]";
+			mes "Would you like to change to "+.@input+"?";
+			next;
+			if (select("Yes:No") == 1) {
+				mes "[Check]";
+				mes "The command "+.@input+" has been confirmed.";
+				next;
+				set $God1,.@input;
+				mes "$God1 "+.@input+"";
+				close;
+			}
+			else {
+				mes "[Check]";
+				mes "The command has been canceled.";
+				close;
+			}
+		case 3:
+			input .@input,0,100;
+			mes "[Check]";
+			mes "Would you like to change to "+.@input+"?";
+			next;
+			if (select("Yes:No") == 1) {
+				mes "[Check]";
+				mes "The command "+.@input+" has been confirmed.";
+				next;
+				set $God2,.@input;
+				mes "$God2 "+.@input+"";
+				close;
+			}
+			else {
+				mes "[Check]";
+				mes "The command has been canceled.";
+				close;
+			}
+		case 4:
+			input .@input,0,100;
+			mes "[Check]";
+			mes "Would you like to change to "+.@input+"?";
+			next;
+			if (select("Yes:No") == 1) {
+				mes "[Check]";
+				mes "The command "+.@input+" has been confirmed.";
+				next;
+				set $God3,.@input;
+				mes "$God3 "+.@input+"";
+				close;
+			}
+			else {
+				mes "[Check]";
+				mes "The command has been canceled.";
+				close;
+			}
+		case 5:
+			input .@input,0,100;
+			mes "[Check]";
+			mes "Would you like to change to "+.@input+"?";
+			next;
+			if (select("Yes:No") == 1) {
+				mes "[Check]";
+				mes "The command "+.@input+" has been confirmed.";
+				next;
+				set $God4,.@input;
+				mes "$God4 "+.@input+"";
+				close;
+			}
+			else {
+				mes "[Check]";
+				mes "The command has been canceled.";
+				close;
+			}
+		case 6:
+			mes "[Check]";
+			mes "Are you really sure that you want to reset the entire list of God Globalvar?";
+			next;
+			if (select("Yes:No") == 1) {
+				mes "[Check]";
+				mes "Now, the entire list of God Globalvar is being reset.";
+				next;
+				set $God1,0;
+				set $God2,0;
+				set $God3,0;
+				set $God4,0;
+				mes "^0000FF$God1^000000 = ^FF0000" + $God1 + "^000000.";
+				mes "^0000FF$God2^000000 = ^FF0000" + $God2 + "^000000.";
+				mes "^0000FF$God3^000000 = ^FF0000" + $God3 + "^000000.";
+				mes "^0000FF$God4^000000 = ^FF0000" + $God4 + "^000000.";
+				close;
+			}
+			else {
+				mes "[Check]";
+				mes "The command has been canceled.";
+				close;
+			}
+		}
+	}
+	else {
+		mes "[Check]";
+		//mes "Incorrect password.";
+		mes "You cannot access this NPC.";
+		close;
+	}
+}

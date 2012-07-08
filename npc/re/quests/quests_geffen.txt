@@ -1,0 +1,168 @@
+//===== rAthena Script ======================================= 
+//= Quest NPCs related to Geffen
+//===== By: ================================================== 
+//= kobra_k88 & Samuray22
+//===== Current Version: ===================================== 
+//= 1.4
+//===== Compatible With: ===================================== 
+//= rAthena 7.15 +
+//===== Description: ========================================= 
+//= Welding Mask and Headset Quests.
+//===== Additional Comments: ================================= 
+//= 1.1 Fixed exploits [Lupus]
+//= 1.2 Removed Duplicates [Silent]
+//= 1.3 Updated "Welding Mask" Quest to the Official one. [Samuray22]
+//= 1.3a replaced item "names" with item id. Added missing [Lupus]
+//= 1.4 Updated welding mask and headset quests. [L0ne_W0lf]
+//============================================================ 
+
+//==============================================================================================//
+// 					Blacksmith: 'Welding Mask' Quest
+//==============================================================================================//
+geffen_in,144,166,4	script	Blacksmith	63,{
+	mes "[Blacksmith]";
+	mes "You've never heard of me? Why, I'm the Veteran Blacksmith of this land. I've spent 30 years in this hot and bloody hellfire, bending steel to my iron will!";
+	next;
+	mes "[Blacksmith]";
+	mes "But...";
+	mes "I am growing older and my prowess begins to fade with age. So I've invented something for young, hot, upcoming Blacksmiths, in hopes that they too will master my craft...";
+	next;
+	switch(select("What is it?:...")) {
+	case 1:
+		mes "[Blacksmith]";
+		mes "We Blacksmiths must always manipulate steel under extreme heat, and the hot air and melted metals are more than most people can stand.";
+		next;
+		mes "[Blacksmith]";
+		mes "For the sake of our craft, our beautiful, yet masculine faces are put at risk...";
+		next;
+		mes "[Blacksmith]";
+		mes "But with this wonder of technology, there's no need to worry! Behold, the ^3355FFWelding Mask^000000 !!";
+		next;
+		mes "[Blacksmith]";
+		mes "It works by covering your face with a fat metal plate. Truly, it's an item that everyone should want! If not yourself, it'd be a good idea to give this to a friend who is studying smithing.";
+		next;
+		mes "[Blacksmith]";
+		mes "So how about it ? If you give me ^2244FF50 Steel^000000 and ^4422FFonly 2000 Zeny^000000, I will make it for you right away~!!";
+		next;
+		switch(select("Hm... Not bad. Alright.:How does it work again?")) {
+		case 1:
+			if ((countitem(999) > 49) && (Zeny > 1999)){
+				mes "[Blacksmith]";
+				mes "Ah, I see that you appreciate a Blacksmith's work! Alright, I'll do it right away !!";
+				next;
+				delitem 999,50;  //Steel
+				set Zeny,Zeny-2000;
+				getitem 2292,1; // Welding_Mask
+				mes "[Blacksmith]";
+				mes "Hahaha~! Make good use of that!";
+				close;
+			}
+			else {
+				mes "[Blacksmith]";
+				mes "Hmmm...";
+				mes "You do not have the items I require.";
+				next;
+				mes "[Blacksmith]";
+				mes "A common Blacksmith would interpret this as a sign of disrepect, but I will forgive you. Just don't forget what I need if you want me to make you this mask.";
+				close;
+			}
+		case 2:
+			mes "[Blacksmith]";
+			mes "The ^3355FFWelding Mask^000000 protects your face by covering it with a fat metal plate. This invention is the result of 30 years of endless toil at the hammer and anvil.";
+			close;
+		}
+	case 2:
+		mes "[Blacksmith]";
+		mes "Ah...!";
+		mes "I guess this is the first time you've met a Blacksmith as great as me, and you're just speechless with awe. Please, take your time and speak up when you are ready.";
+		next;
+		mes "^3355FFThis guy seems";
+		mes "a little full";
+		mes "of himself.^000000";
+		close;
+	}
+}
+
+
+
+//=============================================================================================//
+//					Eric: Headset Quest
+//=============================================================================================//
+geffen_in,30,71,4	script	Eric	83,{
+	mes "[Eric]";
+	mes "Please listen";
+	mes "to my story";
+	mes "of my blessed";
+	mes "grandfather.";
+	next;
+	switch(select("Talk:Ask about Items needed:Manufacture:Quit")) {
+	case 1:
+		mes "[Eric]";
+		mes "My Grandfather, who passed away a few years ago, was special to me. He always stayed with me, and took care of me. He was much better than my old man, who was always busy working.";
+		next;
+		mes "[Eric]";
+		mes "To me, Grandfather's library was always like a fantasy land where I could escape. I spent most of my time there.";
+		next;
+		mes "[Eric]";
+		mes "I learned a lot of things from his books in the Library. Grandfather was interested in Alchemy and Music, and his Library was filled with many mysterious old books.";
+		next;
+		mes "[Eric]";
+		mes "One day...";
+		mes "As usual, I went to the Library and discovered an interesting schematic.";
+		next;
+		mes "[Eric]";
+		mes "It showed some instrument which looked like Ear Muffs that, when worn on the head, could transmit music or whispers to the ears through a thin wire.";
+		next;
+		mes "[Eric]";
+		mes "I guess...";
+		mes "It is my grand father's unfinished work. I met a few Alchemists and asked them to produce it, but they rejected my offer...";
+		next;
+		mes "[Eric]";
+		mes "In the end, I thought 'I've gotta make it myself.' So I researched for a few years, and now I fully understand how to make that thing. But, I could never gather the materials to make it!";
+		next;
+		mes "[Eric]";
+		mes "If I can get those articles, I would build it right away. If you are interested in my idea, would you bring them for me?";
+		next;
+		mes "[Eric]";
+		mes "All I wanna do is build this thing in honor of my grandfather and finish the work he started. If you ask me to keep it, I wouldn't mind.";
+		close;
+	case 2:
+		mes "[Eric]";
+		mes "40 ^3355FFSteel^000000";
+		mes "1 ^3355FFOridecon^000000";
+		mes "1 ^3355FFAlcohol^000000";
+		mes "1 ^3355FFCoal^000000";
+		mes "These are the things I need for Grandfather's masterpiece.";
+		close;
+	case 3:
+		if ((countitem(999) > 39) && (countitem(984) > 0) && (countitem(970) > 0) && (countitem(1003) > 0)) {
+			delitem 999,40;  //Steel
+			delitem 984,1;  //Oridecon
+			delitem 970,1;  //Alchol
+			delitem 1003,1;  //Coal
+			getitem 5001,1; // Headset
+			mes "*Tap! Tap! Tap!*";
+			next;
+			mes "[Eric]";
+			mes "Thank you.";
+			mes "Because of you, I could accomplish my grandfather's wish. He would be happy if he looked down on me from Heaven.";
+			next;
+			mes "[Eric]";
+			mes "As I said, please take this. I am just proud that I can make this by myself.";
+			close;
+		}
+		else {
+			mes "[Eric]";
+			mes "Thank you for trying to help me, but you didn't bring all the items I need. I think you will find them all soon though.";
+			close;
+		}
+	case 4:
+		mes "[Eric]";
+		mes "N-no?";
+		mes "Well...";
+		mes "You have your own";
+		mes "worries, I suppose.";
+		mes "Farewell.";
+		close;
+	}
+}

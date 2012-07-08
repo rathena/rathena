@@ -1,0 +1,1088 @@
+//===== rAthena Script ========================================
+//= Izlude Arena lvl 70
+//===== By: ==================================================
+//= SinSloth
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Description: =========================================
+//= Izlude Battle Arena Level 70
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//= 1.1 Replaced effect numerics with constants. [Samuray22]
+//============================================================
+
+arena_room,52,42,7	script	lvl 70s Waiting Room	124,{
+	end;
+
+OnInit:
+	waitingroom "Individual : lvl 70 or higher",50,"lvl 70s Waiting Room::OnStartArena",1,1000,70;
+	enablewaitingroomevent;
+	end;
+
+OnStartArena:
+	warpwaitingpc "force_3-1",99,12;
+	donpcevent "arena#70::Onstart";
+	disablewaitingroomevent;
+	end;
+
+Onstart:
+	enablewaitingroomevent;
+	end;
+}
+
+force_3-1,99,20,4	script	Cadillac#arena	124,{
+	end;
+	
+OnInit:
+	set $@mapcount70, 0;
+	end;
+	
+Onstart:
+	initnpctimer;
+	set $arena_min70st,gettime(2);
+	set $arena_sec70st,gettime(1);
+	end;
+	
+OnTimer3000:
+	mapannounce "force_3-1","Good day, my name is Cadillac, the guide of Time Force Battle for lvl 70s!",0;
+	end;
+	
+OnTimer4000:
+	mapannounce "force_3-1","Remember your right decision will save a lot of your time!",0;
+	end;
+	
+OnTimer7000:
+	mapannounce "force_3-1","In order to complete this battle course, you must start from the far left of this room to the clock wise direction. Please move to the far left side. You have 7 minutes from now.",0;
+	end;
+	
+OnTimer60000:
+	set $@mapcount70, getmapusers ("force_3-1");
+	if ($@mapcount70 == 0) {
+		donpcevent "Cadillac#arena::Onfailclearstage";
+	}
+	mapannounce "force_3-1","Remaining Time : 6 minutes ",0;
+	end;
+	
+OnTimer120000:
+	 set $@mapcount70, getmapusers ("force_3-1");
+	if ($@mapcount70 == 0) {
+		donpcevent "Cadillac#arena::Onfailclearstage";
+	}
+	mapannounce "force_3-1","Remaining Time : 5 minutes ",0;
+	end;
+	
+OnTimer180000:
+	 set $@mapcount70, getmapusers ("force_3-1");
+	if ($@mapcount70 == 0) {
+		donpcevent "Cadillac#arena::Onfailclearstage";
+	}
+	mapannounce "force_3-1","Remaining Time : 4 minutes ",0;
+end;
+OnTimer240000:
+	 set $@mapcount70, getmapusers ("force_3-1");
+	if ($@mapcount70 == 0) {
+		donpcevent "Cadillac#arena::Onfailclearstage";
+	}
+	mapannounce "force_3-1","Remaining Time : 3 minutes ",0;
+	end;
+
+OnTimer300000:
+	 set $@mapcount70, getmapusers ("force_3-1");
+	if ($@mapcount70 == 0) {
+		donpcevent "Cadillac#arena::Onfailclearstage";
+	}
+	mapannounce "force_3-1","Remaining Time : 2 minutes ",0;
+	end;
+
+OnTimer360000:
+	 set $@mapcount70, getmapusers ("force_3-1");
+	if ($@mapcount70 == 0) {
+		donpcevent "Cadillac#arena::Onfailclearstage";
+	}
+	mapannounce "force_3-1","Remaining Time : 1 minute ",0;
+	end;
+	
+OnTimer420000:
+	mapannounce "force_3-1","Your time is over. I hope you had a good time~",0;
+	end;
+	
+OnTimer425000:
+OnTimer426000:
+OnTimer427000:
+OnTimer428000:
+OnTimer429000:
+OnTimer430000:
+OnTimer431000:
+OnTimer432000:
+OnTimer433000:
+OnTimer434000:
+	mapwarp "force_3-1","prt_are_in",126,87,0,0;
+	end;
+	
+OnTimer435000:
+	mapwarp "force_3-1","prt_are_in",126,87,0,0;
+	donpcevent "Cadillac#arena::Onfailclearstage";
+	end;
+	
+Ontimeroff:
+	stopnpctimer;
+	end;
+
+Onfailclearstage:
+	donpcevent "cast#70::Ontimeover1";
+	mapwarp "force_3-1","prt_are_in",126,87,0,0;
+	donpcevent "Cadillac#arena::Ontimeroff";
+	donpcevent "arena#70::Onreset_all";
+	donpcevent "alloff#70::Onon";
+	donpcevent "lvl 70s Waiting Room::Onstart";
+	end;
+	
+On01_start:
+	mapannounce "force_3-1","In order to clear this battle, you must kill all Kobolds!",0;
+	end;
+	
+On01_end:
+	mapannounce "force_3-1","A door to the north room has opened!",0;
+	end;
+	
+On02_start:
+	mapannounce "force_3-1","In order to clear this battle, you must kill all Horongs and escape!",0;
+	end;
+	
+On02_end:
+	mapannounce "force_3-1","A door to the north room has opened!",0;
+	end;
+	
+On03_start:
+	mapannounce "force_3-1","In order to clear this battle, you must kill all monsters except Enchanted Peach Trees!",0;
+	end;
+	
+On03_end:
+	mapannounce "force_3-1","Clear! A door to the east room has opened!",0;
+	end;
+	
+On04_start:
+	mapannounce "force_3-1","In order to clear this battle, you must kill all Stem Worms while dodging Bathories!",0;
+	end;
+	
+On04_end:
+	mapannounce "force_3-1","A door to the east room has opened!",0;
+	end;
+	
+On05_start:
+	mapannounce "force_3-1","In order to clear this battle, you must kill all Argiopes!",0;
+	end;
+	
+On05_end:
+	mapannounce "force_3-1","Clear! A door to the south room has opened!",0;
+	end;
+	
+On06_start:
+	mapannounce "force_3-1","In order to clear this battle, you must kill all Hammer Goblins!",0;
+	end;
+	
+On06_end:
+	mapannounce "force_3-1","A door to the south room has opened!",0;
+	end;
+	
+On07_start:
+	mapannounce "force_3-1","In order to clear this battle, you must kill an Alice in the center!",0;
+	end;
+	
+On07_end:
+	mapannounce "force_3-1","Clear! A door to the west room has opened!",0;
+	end;
+	
+On08_start:
+	mapannounce "force_3-1","Please escape to the north exit!",0;
+	end;
+	
+On09_start:
+	mapannounce "force_3-1","In order to clear this battle, you must kill a Kobold Leader and all Kobolds!",0;
+	end;
+	
+On09_end:
+	mapannounce "force_3-1","Boss Clear! - A door at the north has opened. Thank you. ",0;
+	end;
+
+}
+
+force_3-1,10,56,4	script	arena#70	139,{
+
+Onreset_01:
+	donpcevent "force_01ex#70::Onreset";
+	donpcevent "force_02start#70::Onon";
+	enablenpc "force_01_02#70";
+	end;
+	
+Onreset_02:
+	donpcevent "force_02ex#70::Onreset";
+	donpcevent "force_03start#70::Onon";
+	enablenpc "force_02_03#70";
+	end;
+	
+Onreset_03:
+	enablenpc "force_03_04#70";
+	donpcevent "force_04start#70::Onon";
+	donpcevent "force_03ex#70::Onreset";
+	end;
+	
+Onreset_04:
+	enablenpc "force_04_05#70";
+	donpcevent "force_05start#70::Onon";
+	donpcevent "force_04ex#70::Onreset";
+	end;
+	
+Onreset_05:
+	enablenpc "force_05_06#70";
+	donpcevent "force_06start#70::Onon";
+	donpcevent "force_05ex#70::Onreset";
+	end;
+	
+Onreset_06:
+	enablenpc "force_06_07#70";
+	donpcevent "force_07start#70::Onon";
+	donpcevent "force_06ex#70::Onreset";
+	end;
+	
+Onreset_07:
+	enablenpc "force_07_08#70";
+	donpcevent "force_07ex#70::Onreset";
+	donpcevent "force_08start#70::Onon";
+	end;
+	
+Onreset_08:
+	donpcevent "force_09start#70::Onon";
+	enablenpc "force_08_09#70";
+	end;
+	
+Onreset_09:
+	enablenpc "force_exit#70";
+	end;
+	
+Onstart:
+	disablenpc "force_01_02#70";
+	disablenpc "force_02_03#70";
+	disablenpc "force_03_04#70";
+	disablenpc "force_04_05#70";
+	disablenpc "force_05_06#70";
+	disablenpc "force_06_07#70";
+	disablenpc "force_07_08#70";
+	disablenpc "force_08_09#70";
+	disablenpc "force_exit#70";
+	donpcevent "Cadillac#arena::Ontimeroff";
+	donpcevent "force_09mob#70::Ontimeroff";
+	donpcevent "force_01mob#70::Onreset";
+	donpcevent "force_02mob#70::Onreset";
+	donpcevent "force_03mob#70::Onreset";
+	donpcevent "force_04mob#70::Onreset";
+	donpcevent "force_05mob#70::Onreset";
+	donpcevent "force_06mob#70::Onreset";
+	donpcevent "force_07mob#70::Onreset";
+	donpcevent "force_08mob#70::Onreset";
+	donpcevent "force_09mob#70::Onreset";
+	donpcevent "force_01ex#70::Onreset";
+	donpcevent "force_02ex#70::Onreset";
+	donpcevent "force_03ex#70::Onreset";
+	donpcevent "force_04ex#70::Onreset";
+	donpcevent "force_05ex#70::Onreset";
+	donpcevent "force_06ex#70::Onreset";
+	donpcevent "force_07ex#70::Onreset";
+	donpcevent "force_08ex#70::Onreset";
+	donpcevent "force_09ex#70::Onreset";
+	enablenpc "force_08_01#70";
+	donpcevent "force_01start#70::Onon";
+	donpcevent "Cadillac#arena::Onstart";
+	end;
+	
+Onreset_all:
+	donpcevent "force_01mob#70::Onreset";
+	donpcevent "force_02mob#70::Onreset";
+	donpcevent "force_03mob#70::Onreset";
+	donpcevent "force_04mob#70::Onreset";
+	donpcevent "force_05mob#70::Onreset";
+	donpcevent "force_06mob#70::Onreset";
+	donpcevent "force_07mob#70::Onreset";
+	donpcevent "force_09mob#70::Onreset";
+	donpcevent "force_01ex#70::Onreset";
+	donpcevent "force_02ex#70::Onreset";
+	donpcevent "force_03ex#70::Onreset";
+	donpcevent "force_04ex#70::Onreset";
+	donpcevent "force_05ex#70::Onreset";
+	donpcevent "force_06ex#70::Onreset";
+	donpcevent "force_07ex#70::Onreset";
+	donpcevent "force_08ex#70::Onreset";
+	donpcevent "force_09ex#70::Onreset";
+	end;
+
+}
+
+force_3-1,62,26,1	script	force_08_01#70	45,1,1,{
+
+OnTouch:
+	donpcevent "Cadillac#arena::On01_start";
+	warp "force_3-1",40,26;
+	end;
+
+}
+
+force_3-1,25,44,1	script	force_01_02#70	45,1,1,{
+
+OnTouch:
+	donpcevent "Cadillac#arena::On02_start";
+	warp "force_3-1",25,69;
+	end;
+
+}
+
+force_3-1,25,134,1	script	force_02_03#70	45,1,1,{
+
+OnTouch:
+	donpcevent "Cadillac#arena::On03_start";
+	warp "force_3-1",25,159;
+	end;
+
+}
+
+force_3-1,44,174,1	script	force_03_04#70	45,1,1,{
+
+OnTouch:
+	donpcevent "Cadillac#arena::On04_start";
+	warp "force_3-1",69,174;
+	end;
+
+}
+
+force_3-1,134,174,1	script	force_04_05#70	45,1,1,{
+
+OnTouch:
+	donpcevent "Cadillac#arena::On05_start";
+	warp "force_3-1",159,174;
+	end;
+
+}
+
+force_3-1,174,155,1	script	force_05_06#70	45,1,1,{
+
+OnTouch:
+	donpcevent "Cadillac#arena::On06_start";
+	warp "force_3-1",174,130;
+	end;
+
+}
+
+force_3-1,174,65,1	script	force_06_07#70	45,1,1,{
+
+OnTouch:
+	donpcevent "Cadillac#arena::On07_start";
+	warp "force_3-1",174,40;
+	end;
+
+}
+
+force_3-1,155,26,1	script	force_07_08#70	45,1,1,{
+
+OnTouch:
+	donpcevent "Cadillac#arena::On08_start";
+	warp "force_3-1",132,26;
+	enablenpc "force_08_09#70";
+	end;
+
+}
+
+force_3-1,99,54,1	script	force_08_09#70	45,1,1,{
+
+OnTouch:
+	donpcevent "Cadillac#arena::On09_start";
+	warp "force_3-1",99,82;
+	end;
+
+}
+
+force_3-1,99,124,1	script	force_exit#70	45,1,1,{
+
+OnTouch:
+	donpcevent "Cadillac#arena::Ontimeroff";
+	donpcevent "#arn_timer_70::Onon";
+	mapwarp "force_3-1","prt_are_in",22,87,0,0;
+	end;
+
+}
+
+force_3-1,1,1,1	script	force_01start#70	-1,{
+Onon:
+	donpcevent "force_01mob#70::Onon";
+end;
+
+}
+
+force_3-1,10,56,4	script	force_01mob#70	139,{
+
+Onon:
+	monster "force_3-1",25,36,"Kobold",1545,1,"force_01mob#70::OnMobDeath";
+	monster "force_3-1",20,36,"Kobold",1545,1,"force_01mob#70::OnMobDeath";
+	monster "force_3-1",25,20,"Kobold",1546,1,"force_01mob#70::OnMobDeath";
+	monster "force_3-1",30,36,"Kobold",1547,1,"force_01mob#70::OnMobDeath";
+	monster "force_3-1",28,15,"Kobold",1547,1,"force_01mob#70::OnMobDeath";
+	set $force_01_70,5;
+	end;
+
+Onreset:
+	killmonster "force_3-1","force_01mob#70::OnMobDeath";
+	end;
+
+OnMobDeath:
+	set $force_01_70,$force_01_70 -1;
+	if ($force_01_70 < 1) {
+		donpcevent "Cadillac#arena::On01_end";
+		donpcevent "arena#70::Onreset_01";
+	}
+	end;
+}
+
+force_3-1,1,1,1	script	force_02start#70	-1,{
+
+Onon:
+	donpcevent "force_02mob#70::Onon";
+	end;
+}
+
+force_3-1,10,56,4	script	force_02ex#70	139,{
+
+Onreset:
+	killmonster "force_3-1","force_02ex#70::OnMobEx";
+	end;
+	
+Onsummonmob2:
+	monster "force_3-1",21,78,"Archer Skeleton",1420,1,"force_02ex#70::OnMobEx";
+	monster "force_3-1",22,93,"Archer Skeleton",1420,1,"force_02ex#70::OnMobEx";
+	monster "force_3-1",29,93,"Archer Skeleton",1420,1,"force_02ex#70::OnMobEx";
+	monster "force_3-1",25,101,"Mummy",1393,1,"force_02ex#70::OnMobEx";
+	monster "force_3-1",26,101,"Mummy",1393,1,"force_02ex#70::OnMobEx";
+	monster "force_3-1",27,101,"Mummy",1393,1,"force_02ex#70::OnMobEx";
+	monster "force_3-1",28,101,"Mummy",1393,1,"force_02ex#70::OnMobEx";
+	monster "force_3-1",24,104,"Ghoul",1423,1,"force_02ex#70::OnMobEx";
+	monster "force_3-1",24,113,"Ghoul",1423,1,"force_02ex#70::OnMobEx";
+	monster "force_3-1",29,120,"Ghoul",1423,1,"force_02ex#70::OnMobEx";
+	monster "force_3-1",29,126,"Ghoul",1423,1,"force_02ex#70::OnMobEx";
+	monster "force_3-1",30,110,"Ghoul",1423,1,"force_02ex#70::OnMobEx";
+	end;
+
+OnMobEx:
+	end;
+}
+
+force_3-1,10,56,4	script	force_02mob#70	139,{
+
+Onreset:
+	killmonster "force_3-1","force_02mob#70::OnMobDeath";
+	end;
+	
+Onon:
+	monster "force_3-1",25,79,"Horong",1578,1,"force_02mob#70::OnMobDeath";
+	monster "force_3-1",29,114,"Horong",1578,1,"force_02mob#70::OnMobDeath";
+	donpcevent "force_02ex#70::Onsummonmob2";
+	set $force_02_70,2;
+	end;
+
+OnMobDeath:
+	set $force_02_70,$force_02_70 -1;
+	if ($force_02_70 < 1) {
+		donpcevent "Cadillac#arena::On02_end";
+		donpcevent "arena#70::Onreset_02";
+	}
+	end;
+}
+
+force_3-1,1,1,1	script	force_03start#70	-1,{
+
+Onon:
+	donpcevent "force_03mob#70::Onon";
+	end;
+}
+
+force_3-1,10,56,4	script	force_03ex#70	139,{
+
+Onreset:
+	killmonster "force_3-1","force_03ex#70::OnMobEx";
+	end;
+	
+Onsummonmob_03:
+	monster "force_3-1",10,170,"Enchanted Peach Tree",1550,1,"force_03ex#70::OnMobEx";
+	monster "force_3-1",26,180,"Enchanted Peach Tree",1550,1,"force_03ex#70::OnMobEx";
+	end;
+
+OnMobEx:
+	end;
+}
+
+force_3-1,20,56,4	script	force_03mob#70	139,{
+
+Onon:
+	donpcevent "force_03ex#70::Onsummonmob_03";
+	monster "force_3-1",23,174,"Parasite",1555,1,"force_03mob#70::OnMobDeath";
+	monster "force_3-1",33,173,"Parasite",1555,1,"force_03mob#70::OnMobDeath";
+	monster "force_3-1",26,166,"Blood Butterfly",1526,1,"force_03mob#70::OnMobDeath";
+	set $force_03_70,3;
+	end;
+
+Onreset:
+	killmonster "force_3-1","force_03mob#70::OnMobDeath";
+	end;
+
+OnMobDeath:
+	set $force_03_70,$force_03_70 -1;
+	donpcevent "force_03ex#70::Onsummonmob_03";
+	if ($force_03_70 < 1) {
+		donpcevent "Cadillac#arena::On03_end";
+		donpcevent "arena#70::Onreset_03";
+	}
+	end;
+}
+
+force_3-1,1,1,1	script	force_04start#70	-1,{
+
+Onon:
+	donpcevent "force_04mob#70::Onon";
+end;
+
+}
+
+force_3-1,10,56,4	script	force_04ex#70	139,{
+
+Onreset:
+	killmonster "force_3-1","force_04ex#70::OnMobEx";
+	end;
+	
+Onsummonmob_04:
+	monster "force_3-1",94,179,"Bathory",1525,1,"force_04ex#70::OnMobEx";
+	monster "force_3-1",110,179,"Bathory",1525,1,"force_04ex#70::OnMobEx";
+	monster "force_3-1",90,170,"Bathory",1525,1,"force_04ex#70::OnMobEx";
+	monster "force_3-1",100,170,"Bathory",1525,1,"force_04ex#70::OnMobEx";
+	monster "force_3-1",125,178,"Bathory",1525,1,"force_04ex#70::OnMobEx";
+	monster "force_3-1",125,169,"Bathory",1525,1,"force_04ex#70::OnMobEx";
+	end;
+
+OnMobEx:
+	end;
+
+}
+
+force_3-1,22,56,4	script	force_04mob#70	139,{
+
+Onon:
+	donpcevent "force_04ex#70::Onsummonmob_04";
+	monster "force_3-1",87,174,"Stem Worm",1440,1,"force_04mob#70::OnMobDeath";
+	monster "force_3-1",103,174,"Stem Worm",1440,1,"force_04mob#70::OnMobDeath";
+	monster "force_3-1",96,170,"Stem Worm",1440,1,"force_04mob#70::OnMobDeath";
+	set $force_04_70,3;
+	end;
+Onreset:
+	killmonster "force_3-1","force_04mob#70::OnMobDeath";
+	end;
+	
+OnMobDeath:
+	set $force_04_70,$force_04_70 -1;
+	if ($force_04_70 < 1) {
+		donpcevent "Cadillac#arena::On04_end";
+		donpcevent "arena#70::Onreset_04";
+	}
+	end;
+}
+
+force_3-1,1,1,1	script	force_05start#70	-1,{
+
+Onon:
+	donpcevent "force_05mob#70::Onon";
+	end;
+}
+
+force_3-1,10,56,4	script	force_05ex#70	139,{
+
+Onreset:
+	killmonster "force_3-1","force_05ex#70::OnMobEx";
+	end;
+	
+Onsummonmob_05:
+	set $@randmonster70,rand(1,2);
+	switch($@randmonster70) {
+	case 1:
+		monster "force_3-1",174,174,"Ride Word",1478,1,"force_05ex#70::OnMobEx";
+		break;
+	case 2:
+		monster "force_3-1",173,173,"Mantis",1457,1,"force_05ex#70::OnMobEx";
+		break;
+	}
+	end;
+
+OnMobEx:
+	end;
+}
+
+force_3-1,24,56,4	script	force_05mob#70	139,{
+
+Onon:
+	monster "force_3-1",164,183,"Argiope",1429,1,"force_05mob#70::OnMobDeath";
+	monster "force_3-1",168,158,"Argiope",1429,1,"force_05mob#70::OnMobDeath";
+	monster "force_3-1",175,174,"Argiope",1429,1,"force_05mob#70::OnMobDeath";
+	monster "force_3-1",176,179,"Argiope",1429,1,"force_05mob#70::OnMobDeath";
+	monster "force_3-1",183,160,"Argiope",1429,1,"force_05mob#70::OnMobDeath";
+	set $force_05_70,5;
+	end;
+
+Onreset:
+	killmonster "force_3-1","force_05mob#70::OnMobDeath";
+	end;
+
+OnMobDeath:
+	set $force_05_70,$force_05_70 -1;
+	if ($force_05_70 < 1) {
+		donpcevent "Cadillac#arena::On05_end";
+		donpcevent "arena#70::Onreset_05";
+	}
+	else donpcevent "force_05ex#70::Onsummonmob_05";
+	end;
+
+}
+
+force_3-1,1,1,1	script	force_06start#70	-1,{
+
+Onon:
+	donpcevent "force_06mob#70::Onon";
+	end;
+}
+
+force_3-1,10,56,4	script	force_06ex#70	139,{
+
+Onreset:
+	killmonster "force_3-1","force_06ex#70::OnMobEx";
+	end;
+	
+Onsummonmob_06:
+	monster "force_3-1",176,99,"Goblin",1534,1,"force_06ex#70::OnMobEx";
+	monster "force_3-1",170,86,"Goblin",1535,1,"force_06ex#70::OnMobEx";
+	monster "force_3-1",176,97,"Goblin",1535,1,"force_06ex#70::OnMobEx";
+	monster "force_3-1",170,108,"Goblin",1535,1,"force_06ex#70::OnMobEx";
+	monster "force_3-1",176,112,"Goblin",1536,1,"force_06ex#70::OnMobEx";
+	monster "force_3-1",173,120,"Goblin",1536,1,"force_06ex#70::OnMobEx";
+	monster "force_3-1",177,74,"Goblin",1536,1,"force_06ex#70::OnMobEx";
+	monster "force_3-1",173,118,"Goblin",1538,1,"force_06ex#70::OnMobEx";
+	monster "force_3-1",171,101,"Goblin",1538,1,"force_06ex#70::OnMobEx";
+	monster "force_3-1",174,118,"Goblin",1538,1,"force_06ex#70::OnMobEx";
+	end;
+
+OnMobEx:
+	end;
+}
+
+force_3-1,18,56,4	script	force_06mob#70	139,{
+
+Onon:
+	donpcevent "force_06ex#70::Onsummonmob_06";
+	monster "force_3-1",173,90,"Goblin",1537,1,"force_06mob#70::OnMobDeath";
+	monster "force_3-1",173,79,"Goblin",1537,1,"force_06mob#70::OnMobDeath";
+	monster "force_3-1",172,70,"Goblin",1537,1,"force_06mob#70::OnMobDeath";
+	monster "force_3-1",175,70,"Goblin",1537,1,"force_06mob#70::OnMobDeath";
+	monster "force_3-1",171,118,"Goblin",1537,1,"force_06mob#70::OnMobDeath";
+	set $force_06_70,5;
+	end;
+
+Onreset:
+	killmonster "force_3-1","force_06mob#70::OnMobDeath";
+	end;
+
+OnMobDeath:
+	set $force_06_70,$force_06_70 -1;
+	if ($force_06_70 < 1) {
+		donpcevent "Cadillac#arena::On06_end";
+		donpcevent "arena#70::Onreset_06";
+	}
+	end;
+}
+
+force_3-1,1,1,1	script	force_07start#70	-1,{
+
+Onon:
+	donpcevent "force_07mob#70::Onon";
+	end;
+}
+
+force_3-1,12,56,4	script	force_07ex#70	139,{
+
+Onreset:
+	killmonster "force_3-1","force_07ex#70::OnMobEx";
+	end;
+	
+Onsummonmob_07:
+	monster "force_3-1",168,26,"Nightmare",1427,1,"force_07ex#70::OnMobEx";
+	monster "force_3-1",186,23,"Nightmare",1427,1,"force_07ex#70::OnMobEx";
+	monster "force_3-1",160,23,"Nightmare",1427,1,"force_07ex#70::OnMobEx";
+	monster "force_3-1",188,33,"Nightmare",1427,1,"force_07ex#70::OnMobEx";
+	monster "force_3-1",174,13,"Raydric",1453,1,"force_07ex#70::OnMobEx";
+	monster "force_3-1",163,15,"Farmiliar",1419,1,"force_07ex#70::OnMobEx";
+	monster "force_3-1",164,15,"Farmiliar",1419,1,"force_07ex#70::OnMobEx";
+	monster "force_3-1",163,16,"Farmiliar",1419,1,"force_07ex#70::OnMobEx";
+	monster "force_3-1",164,16,"Farmiliar",1419,1,"force_07ex#70::OnMobEx";
+	monster "force_3-1",187,13,"Farmiliar",1419,1,"force_07ex#70::OnMobEx";
+	monster "force_3-1",187,14,"Farmiliar",1419,1,"force_07ex#70::OnMobEx";
+	monster "force_3-1",186,14,"Farmiliar",1419,1,"force_07ex#70::OnMobEx";
+	monster "force_3-1",186,14,"Farmiliar",1419,1,"force_07ex#70::OnMobEx";
+
+
+OnMobEx:
+	end;
+}
+
+force_3-1,18,56,4	script	force_07mob#70	139,{
+
+Onon:
+	donpcevent "force_07ex#70::Onsummonmob_07";
+	monster "force_3-1",174,25,"Alice",1521,1,"force_07mob#70::OnMobDeath";
+	set $force_07_70,1;
+	end;
+
+Onreset:
+	killmonster "force_3-1","force_07mob#70::OnMobDeath";
+	end;
+
+OnMobDeath:
+	set $force_07_70,$force_07_70 -1;
+	if ($force_07_70 < 1) {
+		donpcevent "Cadillac#arena::On07_end";
+		donpcevent "arena#70::Onreset_07";
+	}
+	end;
+}
+
+force_3-1,1,1,1	script	force_08start#70	-1,{
+
+Onon:
+	donpcevent "force_08ex#70::Onon";
+	end;
+}
+
+force_3-1,18,56,4	script	force_08ex#70	139,{
+
+Onon:
+	donpcevent "arena#70::Onreset_08";
+	end;
+}
+
+force_3-1,1,1,1	script	force_09start#70	-1,{
+
+Onon:
+	donpcevent "force_09mob#70::Onon";
+	end;
+}
+
+force_3-1,10,56,4	script	force_09ex#70	139,{
+
+Onreset:
+	killmonster "force_3-1","force_09ex#70::OnMobEx";
+	end;
+	
+Onsummonmob_09:
+	monster "force_3-1",93,100,"Familiar",1419,1,"force_09ex#70::OnMobEx";
+	monster "force_3-1",94,100,"Familiar",1419,1,"force_09ex#70::OnMobEx";
+	monster "force_3-1",93,99,"Familiar",1419,1,"force_09ex#70::OnMobEx";
+	monster "force_3-1",85,114,"Familiar",1419,1,"force_09ex#70::OnMobEx";
+	monster "force_3-1",87,114,"Familiar",1419,1,"force_09ex#70::OnMobEx";
+	monster "force_3-1",89,114,"Familiar",1419,1,"force_09ex#70::OnMobEx";
+	monster "force_3-1",91,114,"Familiar",1419,1,"force_09ex#70::OnMobEx";
+	monster "force_3-1",93,114,"Familiar",1419,1,"force_09ex#70::OnMobEx";
+	monster "force_3-1",95,114,"Familiar",1419,1,"force_09ex#70::OnMobEx";
+	monster "force_3-1",85,112,"Familiar",1419,1,"force_09ex#70::OnMobEx";
+	monster "force_3-1",85,110,"Familiar",1419,1,"force_09ex#70::OnMobEx";
+	monster "force_3-1",85,108,"Familiar",1419,1,"force_09ex#70::OnMobEx";
+	monster "force_3-1",85,106,"Familiar",1419,1,"force_09ex#70::OnMobEx";
+	monster "force_3-1",85,104,"Familiar",1419,1,"force_09ex#70::OnMobEx";
+	end;
+
+OnMobEx:
+	end;
+}
+
+force_3-1,16,56,4	script	force_09mob#70	139,{
+
+Onon:
+	monster "force_3-1",99,99,"Kobold Leader",1548,1,"force_09mob#70::OnMobDeath";
+	monster "force_3-1",98,99,"Kobold",1545,1,"force_09mob#70::OnMobDeath";
+	monster "force_3-1",100,99,"Kobold",1546,1,"force_09mob#70::OnMobDeath";
+	monster "force_3-1",99,98,"Kobold",1547,1,"force_09mob#70::OnMobDeath";
+	donpcevent "force_09ex#70::Onsummonmob_09";
+	set $force_09_70,4;
+	end;
+	
+Onreset:
+	killmonster "force_3-1","force_09mob#70::OnMobDeath";
+	end;
+	
+OnMobDeath:
+	set $force_09_70,$force_09_70 -1;
+	if ($force_09_70 < 1) {
+		donpcevent "Cadillac#arena::On09_end";
+		donpcevent "arena#70::Onreset_09";
+		donpcevent "arena#70::Onreset_all";
+		set $arena_min70end,gettime(2);
+		set $arena_sec70end,gettime(1);
+	}
+	end;
+}
+
+prt_are_in,129,83,3	script	Staff#70-1	67,{
+
+	mes "[Staff]";
+	mes "You did a good job.";
+	mes "Even if you have failed to clear a time attack battle, I will reward you with a small amount of arena points.";
+	next;
+	if (arena_point == 30000) {
+		mes "[Staff]";
+		mes "Uh huh!";
+		mes "You already have enough arena points.";
+		mes "Please spend some arena points later. When I see you next time, I will make sure to give you some reward.";
+		next;
+	}
+	else set arena_point, arena_point + 1;
+	mes "[Staff]";
+	mes "Let me guide you outside. I hope you had a good time.";
+	close2;
+	specialeffect2 EF_EXIT;
+	warp "arena_room",100,75;
+	end;
+}
+
+prt_are_in,25,84,3	script	Staff#70-2	67,{
+
+	if($arena_min70end < $arena_min70st)
+	{
+		if($arena_sec70end < $arena_sec70st)
+		{
+			set @record_min70,60 - $arena_min70st + $arena_min70end -1;
+			set @record_sec70,60 - $arena_sec70st + $arena_sec70end;
+		}
+		else
+		{
+			set @record_min70,60 - $arena_min70st + $arena_min70end;
+			set @record_sec70,$arena_sec70end - $arena_sec70st;
+		}
+	}
+	else
+	{
+		if($arena_sec70end < $arena_sec70st)
+		{
+			set @record_min70,$arena_min70end - $arena_min70st -1;
+			set @record_sec70,60 - $arena_sec70st + $arena_sec70end;
+		}
+		else
+		{
+			set @record_min70,$arena_min70end - $arena_min70st;
+			set @record_sec70,$arena_sec70end - $arena_sec70st;
+		}
+	}
+	set @gap70,(60 * $top_70min + $top_70sec) - (60 * @record_min70 + @record_sec70);
+	mes "[Staff]";
+	mes "Wow, you did a good job~ ";
+	mes "Your name is...^3131FF" + strcharinfo(0) +"^000000, isn't it?";
+	mes "^3131FF"+ strcharinfo(0) +"^000000, total time you spent to pass the battle..";
+	next;
+	mes "[Staff]";
+	mes "is "+@record_min70+"minutes "+@record_sec70+"seconds.";
+	mes "Congratulations!";
+	next;
+	mes "[Staff]";
+	mes "The fastest player among people who cleared lvl 70s arena time force battle is ^3131FF"+$arena_70topn$+"^000000.";
+	next;
+	mes "[Staff]";
+	mes "^3131FF"+$arena_70topn$+"^000000's running time was ^3131FF"+$top_70min+"^000000minutes ^3131FF"+$top_70sec+"^000000seconds.";
+	next;
+	if (@gap70 < 0) {
+		mes "[Staff]";
+		mes "Although you failed to make a new record, I hope you will succeed next time.";
+		next;
+		if (arena_point > 29980) {
+			mes "[Staff]";
+			mes "Then let me reward you with some arena points....eh?";
+			mes "Your arena points have exceeded the maximum amount. I cannot give you more points until you spend some points.";
+			next;
+			mes "[Staff]";
+			mes "You can check the amount of arena points you have in the arena waiting room.";
+			next;
+			mes "[Staff]";
+			mes "I hope you had a good time and let me guide you to the entrance of arena.";
+			mes "Thank you.";
+			close2;
+		}
+		else
+		{
+			set arena_point, arena_point + 20;
+			mes "[Staff]";
+			mes "Let me reward you some arena points.";
+			mes "If you wish to check the amount of arena points you have, please go talk to ^3131FFVendigos^000000 at the arena entrance.";
+			next;
+			mes "[Staff]";
+			mes "Let me guide you to the entrance of arena.";
+			mes "See you later~";
+			close2;
+		}
+		specialeffect2 EF_EXIT;
+ 		donpcevent "cast#70::Onnomal1";
+		warp "arena_room",100,75;
+		donpcevent "#arn_timer_70::Onstop";
+		donpcevent "alloff#70::Onon";
+		donpcevent "lvl 70s Waiting Room::Onstart";
+		end;
+	}
+	else
+	{
+		emotion e_omg;
+		mes "[Staff]";
+		mes "Wow! You have renewed the record!";
+		mes "What a great job!";
+		next;
+		mes "[Staff]";
+		mes "You have been recorded as the fastest player among people who cleared ^FF0000Arena Time Force Battle lvl 70s^000000, ^3131FF"+strcharinfo(0)+"^000000.";
+		set $top_70min, @record_min70;
+		set $top_70sec, @record_sec70;
+		set $arena_70topn$,strcharinfo(0);
+		donpcevent "Vendigos::Onlinerec_70";
+		next;
+		if (arena_point > 29970) {
+			mes "[Staff]";
+			mes "Then let me reward you with some arena points....eh?";
+			mes "Your arena points have exceeded the maximum amount. I cannot give you more points until you spend some points.";
+			next;
+			mes "[Staff]";
+			mes "You can check the amount of arena points you have in the arena waiting room.";
+			next;
+			mes "[Staff]";
+			mes "I hope you had a good time and let me guide you to the entrance of arena.";
+			mes "Thank you.";
+			close2;
+		}
+		else
+		{
+			mes "[Staff]";
+			mes "Let me reward you with some arena points.";
+			mes "At the same time, since you have renewed the record you will receive an extra amount of the points this time.";
+			next;
+			set arena_point, arena_point + 50;
+			mes "[Staff]";
+			mes "Let me reward you some arena points.";
+			mes "If you wish to check the amount of arena points you have, please go talk to ^3131FFVendigos^000000 at the arena entrance.";
+			next;
+			mes "[Staff]";
+			mes "Let me guide you to the entrance of arena.";
+			mes "See you later~";
+			close2;
+		}
+		specialeffect2 EF_HIT5;
+ 		donpcevent "cast#70::Onnomal2";
+		warp "arena_room",100,75;
+		donpcevent "#arn_timer_70::Onstop";
+		donpcevent "alloff#70::Onon";
+		donpcevent "lvl 70s Waiting Room::Onstart";
+		end;
+	}
+}
+
+prt_are_in,14,195,3	script	#arn_timer_70	139,{
+
+Onon:
+	initnpctimer;
+	end;
+
+OnTimer2000:
+	mapannounce "prt_are_in","This broadcast informs you about the restriction for arena lvl 70s.",0,0xFFCE00;
+	end;
+
+OnTimer3000:
+	mapannounce "prt_are_in","For a smooth game play, exit warp portal will be activated in 1 minute.",0,0xFFCE00;
+	end;
+
+OnTimer4000:
+	mapannounce "prt_are_in","Please proceed your battle quickly as possible in order to avoid disadvantage. Thank you for your cooperation.",0,0xFFCE00;
+	end;
+
+OnTimer60000:
+ 	donpcevent "cast#70::Ontimeover2";
+	donpcevent "arn_warp_70::Onout";
+	donpcevent "#arn_timer_70::Onstop";
+	donpcevent "alloff#70::Onon";
+	donpcevent "lvl 70s Waiting Room::Onstart";
+	end;
+	
+Onstop:
+	stopnpctimer;
+	end;
+
+}
+
+prt_are_in,1,1,1	script	arn_warp_70	-1,{
+
+Onout:
+	areawarp "prt_are_in",14,91,29,76,"arena_room",100,75;
+	end;
+}
+
+force_3-1,10,55,4	script	cast#70	139,{
+Ontimeover1:
+	mapannounce "force_3-1","Arena will be reactivated due to an error occurred during battle.",0,0xFFCE00;
+	end;
+Ontimeover2:
+	mapannounce "force_3-1","Arena will be activated due to an error occurred in the waiting room.",0,0xFFCE00;
+	end;
+Onnomal1:
+	mapannounce "force_3-1","Arena will be reactivated.",0,0xFFCE00;
+	end;
+Onnomal2:
+	mapannounce "force_3-1","Arena will be reactivated.",0,0xFFCE00;
+	end;
+}
+
+force_3-1,100,60,3	script	alloff#70	139,{
+
+Onon:
+	mapwarp "force_3-1","prt_are_in",126,190,0,0;
+	donpcevent "force_01mob#70::Onreset";
+	donpcevent "force_02mob#70::Onreset";
+	donpcevent "force_03mob#70::Onreset";
+	donpcevent "force_04mob#70::Onreset";
+	donpcevent "force_05mob#70::Onreset";
+	donpcevent "force_06mob#70::Onreset";
+	donpcevent "force_07mob#70::Onreset";
+	donpcevent "force_08mob#70::Onreset";
+	donpcevent "force_09mob#70::Onreset";
+	donpcevent "force_01ex#70::Onreset";
+	donpcevent "force_02ex#70::Onreset";
+	donpcevent "force_03ex#70::Onreset";
+	donpcevent "force_04ex#70::Onreset";
+	donpcevent "force_05ex#70::Onreset";
+	donpcevent "force_06ex#70::Onreset";
+	donpcevent "force_07ex#70::Onreset";
+	donpcevent "force_08ex#70::Onreset";
+	donpcevent "force_09ex#70::Onreset";
+	donpcevent "Cadillac#arena::Ontimeroff";
+	disablenpc "Cadillac#arena";
+	disablenpc "force_01_02#70";
+	disablenpc "force_02_03#70";
+	disablenpc "force_03_04#70";
+	disablenpc "force_04_05#70";
+	disablenpc "force_05_06#70";
+	disablenpc "force_06_07#70";
+	disablenpc "force_07_08#70";
+	disablenpc "force_08_09#70";
+	disablenpc "force_exit#70";
+	disablenpc "arena#70";
+	donpcevent "#arn_timer_70::Onstop";
+	enablenpc "Cadillac#arena";
+	enablenpc "arena#70";
+	end;
+
+OnInit:
+	if(!$top_70min && !$top_70sec) set $top_70min,7;
+	end;
+
+}
+

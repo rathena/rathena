@@ -1,0 +1,623 @@
+//===== rAthena Script =======================================
+// Eden Group Quests - Mission [91 - 99]
+//===== By: ==================================================
+//= Chilly
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= Repetable Quests for Players between Baselevel 90 - 100 .
+//===== Additional Comments: =================================
+//= 1.0 First Version. [Chilly]
+//= 1.1 Some little improvements here and there. [Masao]
+//============================================================
+
+moc_para01,48,177,3	script	Mission [91 - 99]	857,{
+	if (countitem(6219) < 1) {
+		mes "- Only members of the -";
+		mes "- Eden Group can read -";
+		mes "- this bulletin board. -";
+		close;
+	}
+	if (BaseLevel < 91) {
+		mes "- This missions can only be -";
+		mes "- read by those who are -";
+		mes "- of the correct level. -";
+		mes "- There might be another -";
+		mes "- board somewhere for -";
+		mes "- my level. -";
+		close;
+	}
+	if (BaseLevel > 99) {
+		if (checkquest(4181,HUNTING) == 2) {
+			mes "You hunted all 30 Solider.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4181;
+			getexp 90000,311000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4182,HUNTING) == 2) {
+			mes "You hunted all 30 Freezer.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4182;
+			getexp 94000,311000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4183,HUNTING) == 2) {
+			mes "You hunted all 30 Heater.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4183;
+			getexp 114000,311000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4184,HUNTING) == 2) {
+			mes "You hunted all 30 Injustice.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4184;
+			getexp 96000,311000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4185,HUNTING) == 2) {
+			mes "You hunted all 30 Rybio.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4185;
+			getexp 96000,311000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4186,HUNTING) == 2) {
+			mes "You hunted all 30 Dark Priest.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4186;
+			getexp 146000,311000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4187,HUNTING) == 2) {
+			mes "You hunted all 30 Stapo.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4187;
+			getexp 96000,311000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4188,HUNTING) == 2) {
+			mes "You hunted all 30 Roween.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4188;
+			getexp 102000,311000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4189,HUNTING) == 2) {
+			mes "You hunted all 30 Siroma.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4189;
+			getexp 110000,311000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4190,HUNTING) == 2) {
+			mes "You hunted all 30 Shinobi.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4190;
+			getexp 102000,311000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4191,HUNTING) == 2) {
+			mes "You hunted all 30 Evil Nymph.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4191;
+			getexp 108000,311000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4192,HUNTING) == 2) {
+			mes "You hunted all 30 Deviruchi.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4192;
+			getexp 110000,311000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4193,HUNTING) == 2) {
+			mes "You hunted all 30 Mineral.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4193;
+			getexp 138000,311000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4194,HUNTING) == 2) {
+			mes "You hunted all 30 Kaho.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4194;
+			getexp 118000,311000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4195,HUNTING) == 2) {
+			mes "You hunted all 30 Neraid.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4195;
+			getexp 96000,311000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else if (checkquest(4196,HUNTING) == 2) {
+			mes "You hunted all 30 Disguise.";
+			mes "Thank you very much.";
+			next;
+			mes "I know it isn't much but here's a small gift.";
+			mes "I hope that it helps you at least a little bit.";
+			next;
+			erasequest 4196;
+			getexp 134000,311000;
+			mes "Wooohoo!";
+			mes "Good luck.";
+			close;
+		} else {
+			mes "- This missions can only be -";
+			mes "- read by those who are -";
+			mes "- of the correct level. -";
+			mes "- There might be another -";
+			mes "- board somewhere for -";
+			mes "- my level. -";
+			close;
+		}
+	}
+	mes "- Many hunting missions -";
+	mes "- are on the bulletin board. -";
+	next;
+	switch(select("Turtle Dungeon Area:Glast Heim Area:Rachel Area:Local Area:Other Area")) {
+	case 1:
+		switch(select("Solider:Freezer:Heater")) {
+		case 1:
+			if (checkquest(4181,HUNTING) == 2) {
+				mes "You hunted all 30 Solider.";
+				mes "Thank you very much.";
+				next;
+				mes "I know it isn't much but here's a small gift.";
+				mes "I hope that it helps you at least a little bit.";
+				next;
+				erasequest 4181;
+				getexp 90000,311000;
+				mes "Wooohoo!";
+				mes "Good luck.";
+				close;
+			}
+			if (checkquest(4181) == -1) {
+				setquest 4181;
+				mes "Please hunt 30 Solider and return here.";
+				close;
+			}
+			mes "Umm? You didn't hunt";
+			mes "all 30 Solider yet...";
+			mes "Will you check again?";
+			close;
+		case 2:
+			if (checkquest(4182,HUNTING) == 2) {
+				mes "You hunted all 30 Freezer.";
+				mes "Thank you very much.";
+				next;
+				mes "I know it isn't much but here's a small gift.";
+				mes "I hope that it helps you at least a little bit.";
+				next;
+				erasequest 4182;
+				getexp 94000,311000;
+				mes "Wooohoo!";
+				mes "Good luck.";
+				close;
+			}
+			if (checkquest(4182) == -1) {
+				setquest 4182;
+				mes "Please hunt 30 Freezer and return here.";
+				close;
+			}
+			mes "Umm? You didn't hunt";
+			mes "all 30 Freezer yet...";
+			mes "Will you check again?";
+			close;
+		case 3:
+			if (checkquest(4183,HUNTING) == 2) {
+				mes "You hunted all 30 Heater.";
+				mes "Thank you very much.";
+				next;
+				mes "I know it isn't much but here's a small gift.";
+				mes "I hope that it helps you at least a little bit.";
+				next;
+				erasequest 4183;
+				getexp 114000,311000;
+				mes "Wooohoo!";
+				mes "Good luck.";
+				close;
+			}
+			if (checkquest(4183) == -1) {
+				setquest 4183;
+				mes "Please hunt 30 Heater and return here.";
+				close;
+			}
+			mes "Umm? You didn't hunt";
+			mes "all 30 Heater yet...";
+			mes "Will you check again?";
+			close;
+		}
+	case 2:
+		switch(select("Injustice:Rybio:Dark Priest")) {
+		case 1:
+			if (checkquest(4184,HUNTING) == 2) {
+				mes "You hunted all 30 Injustice.";
+				mes "Thank you very much.";
+				next;
+				mes "I know it isn't much but here's a small gift.";
+				mes "I hope that it helps you at least a little bit.";
+				next;
+				erasequest 4184;
+				getexp 96000,311000;
+				mes "Wooohoo!";
+				mes "Good luck.";
+				close;
+			}
+			if (checkquest(4184) == -1) {
+				setquest 4184;
+				mes "Please hunt 30 Injustice and return here.";
+				close;
+			}
+			mes "Umm? You didn't hunt";
+			mes "all 30 Injustice yet...";
+			mes "Will you check again?";
+			close;
+		case 2:
+			if (checkquest(4185,HUNTING) == 2) {
+				mes "You hunted all 30 Rybio.";
+				mes "Thank you very much.";
+				next;
+				mes "I know it isn't much but here's a small gift.";
+				mes "I hope that it helps you at least a little bit.";
+				next;
+				erasequest 4185;
+				getexp 96000,311000;
+				mes "Wooohoo!";
+				mes "Good luck.";
+				close;
+			}
+			if (checkquest(4185) == -1) {
+				setquest 4185;
+				mes "Please hunt 30 Rybio and return here.";
+				close;
+			}
+			mes "Umm? You didn't hunt";
+			mes "all 30 Rybio yet...";
+			mes "Will you check again?";
+			close;
+		case 3:
+			if (checkquest(4186,HUNTING) == 2) {
+				mes "You hunted all 30 Dark Priest.";
+				mes "Thank you very much.";
+				next;
+				mes "I know it isn't much but here's a small gift.";
+				mes "I hope that it helps you at least a little bit.";
+				next;
+				erasequest 4186;
+				getexp 146000,311000;
+				mes "Wooohoo!";
+				mes "Good luck.";
+				close;
+			}
+			if (checkquest(4186) == -1) {
+				setquest 4186;
+				mes "Please hunt 30 Dark Priest and return here.";
+				close;
+			}
+			mes "Umm? You didn't hunt";
+			mes "all 30 Dark Priest yet...";
+			mes "Will you check again?";
+			close;
+		}
+	case 3:
+		switch(select("Stapo:Roween:Siroma")) {
+		case 1:
+			if (checkquest(4187,HUNTING) == 2) {
+				mes "You hunted all 30 Stapo.";
+				mes "Thank you very much.";
+				next;
+				mes "I know it isn't much but here's a small gift.";
+				mes "I hope that it helps you at least a little bit.";
+				next;
+				erasequest 4187;
+				getexp 96000,311000;
+				mes "Wooohoo!";
+				mes "Good luck.";
+				close;
+			}
+			if (checkquest(4187) == -1) {
+				setquest 4187;
+				mes "Please hunt 30 Stapo and return here.";
+				close;
+			}
+			mes "Umm? You didn't hunt";
+			mes "all 30 Stapo yet...";
+			mes "Will you check again?";
+			close;
+		case 2:
+			if (checkquest(4188,HUNTING) == 2) {
+				mes "You hunted all 30 Roween.";
+				mes "Thank you very much.";
+				next;
+				mes "I know it isn't much but here's a small gift.";
+				mes "I hope that it helps you at least a little bit.";
+				next;
+				erasequest 4188;
+				getexp 102000,311000;
+				mes "Wooohoo!";
+				mes "Good luck.";
+				close;
+			}
+			if (checkquest(4188) == -1) {
+				setquest 4188;
+				mes "Please hunt 30 Roween and return here.";
+				close;
+			}
+			mes "Umm? You didn't hunt";
+			mes "all 30 Roween yet...";
+			mes "Will you check again?";
+			close;
+		case 3:
+			if (checkquest(4189,HUNTING) == 2) {
+				mes "You hunted all 30 Siroma.";
+				mes "Thank you very much.";
+				next;
+				mes "I know it isn't much but here's a small gift.";
+				mes "I hope that it helps you at least a little bit.";
+				next;
+				erasequest 4189;
+				getexp 110000,311000;
+				mes "Wooohoo!";
+				mes "Good luck.";
+				close;
+			}
+			if (checkquest(4189) == -1) {
+				setquest 4189;
+				mes "Please hunt 30 Siroma and return here.";
+				close;
+			}
+			mes "Umm? You didn't hunt";
+			mes "all 30 Siroma yet...";
+			mes "Will you check again?";
+			close;
+		}
+	case 4:
+		switch(select("Shinobi:Evil Nymph")) {
+		case 1:
+			if (checkquest(4190,HUNTING) == 2) {
+				mes "You hunted all 30 Shinobi.";
+				mes "Thank you very much.";
+				next;
+				mes "I know it isn't much but here's a small gift.";
+				mes "I hope that it helps you at least a little bit.";
+				next;
+				erasequest 4190;
+				getexp 102000,311000;
+				mes "Wooohoo!";
+				mes "Good luck.";
+				close;
+			}
+			if (checkquest(4190) == -1) {
+				setquest 4190;
+				mes "Please hunt 30 Shinobi and return here.";
+				close;
+			}
+			mes "Umm? You didn't hunt";
+			mes "all 30 Shinobi yet...";
+			mes "Will you check again?";
+			close;
+		case 2:
+			if (checkquest(4191,HUNTING) == 2) {
+				mes "You hunted all 30 Evil Nymph.";
+				mes "Thank you very much.";
+				next;
+				mes "I know it isn't much but here's a small gift.";
+				mes "I hope that it helps you at least a little bit.";
+				next;
+				erasequest 4191;
+				getexp 108000,311000;
+				mes "Wooohoo!";
+				mes "Good luck.";
+				close;
+			}
+			if (checkquest(4191) == -1) {
+				setquest 4191;
+				mes "Please hunt 30 Evil Nymph and return here.";
+				close;
+			}
+			mes "Umm? You didn't hunt";
+			mes "all 30 Evil Nymph yet...";
+			mes "Will you check again?";
+			close;
+		}
+	case 5:
+		switch(select("Deviruchi:Mineral:Kaho:Neraid:Disguise")) {
+		case 1:
+			if (checkquest(4192,HUNTING) == 2) {
+				mes "You hunted all 30 Deviruchi.";
+				mes "Thank you very much.";
+				next;
+				mes "I know it isn't much but here's a small gift.";
+				mes "I hope that it helps you at least a little bit.";
+				next;
+				erasequest 4192;
+				getexp 110000,311000;
+				mes "Wooohoo!";
+				mes "Good luck.";
+				close;
+			}
+			if (checkquest(4192) == -1) {
+				setquest 4192;
+				mes "Please hunt 30 Deviruchi and return here.";
+				close;
+			}
+			mes "Umm? You didn't hunt";
+			mes "all 30 Deviruchi yet...";
+			mes "Will you check again?";
+			close;
+		case 2:
+			if (checkquest(4193,HUNTING) == 2) {
+				mes "You hunted all 30 Mineral.";
+				mes "Thank you very much.";
+				next;
+				mes "I know it isn't much but here's a small gift.";
+				mes "I hope that it helps you at least a little bit.";
+				next;
+				erasequest 4193;
+				getexp 138000,311000;
+				mes "Wooohoo!";
+				mes "Good luck.";
+				close;
+			}
+			if (checkquest(4193) == -1) {
+				setquest 4193;
+				mes "Please hunt 30 Mineral and return here.";
+				close;
+			}
+			mes "Umm? You didn't hunt";
+			mes "all 30 Mineral yet...";
+			mes "Will you check again?";
+			close;
+		case 3:
+			if (checkquest(4194,HUNTING) == 2) {
+				mes "You hunted all 30 Kaho.";
+				mes "Thank you very much.";
+				next;
+				mes "I know it isn't much but here's a small gift.";
+				mes "I hope that it helps you at least a little bit.";
+				next;
+				erasequest 4194;
+				getexp 118000,311000;
+				mes "Wooohoo!";
+				mes "Good luck.";
+				close;
+			}
+			if (checkquest(4194) == -1) {
+				setquest 4194;
+				mes "Please hunt 30 Kaho and return here.";
+				close;
+			}
+			mes "Umm? You didn't hunt";
+			mes "all 30 Kaho yet...";
+			mes "Will you check again?";
+			close;
+		case 4:
+			if (checkquest(4195,HUNTING) == 2) {
+				mes "You hunted all 30 Neraid.";
+				mes "Thank you very much.";
+				next;
+				mes "I know it isn't much but here's a small gift.";
+				mes "I hope that it helps you at least a little bit.";
+				next;
+				erasequest 4195;
+				getexp 96000,311000;
+				mes "Wooohoo!";
+				mes "Good luck.";
+				close;
+			}
+			if (checkquest(4195) == -1) {
+				setquest 4195;
+				mes "Please hunt 30 Neraid and return here.";
+				close;
+			}
+			mes "Umm? You didn't hunt";
+			mes "all 30 Neraid yet...";
+			mes "Will you check again?";
+			close;
+		case 5:
+			if (checkquest(4196,HUNTING) == 2) {
+				mes "You hunted all 30 Disguise.";
+				mes "Thank you very much.";
+				next;
+				mes "I know it isn't much but here's a small gift.";
+				mes "I hope that it helps you at least a little bit.";
+				next;
+				erasequest 4196;
+				getexp 134000,311000;
+				mes "Wooohoo!";
+				mes "Good luck.";
+				close;
+			}
+			if (checkquest(4196) == -1) {
+				setquest 4196;
+				mes "Please hunt 30 Disguise and return here.";
+				close;
+			}
+			mes "Umm? You didn't hunt";
+			mes "all 30 Disguise yet...";
+			mes "Will you check again?";
+			close;
+		}
+	}
+}

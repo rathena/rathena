@@ -1,0 +1,192 @@
+//===== rAthena Script =======================================
+//= El Dicastes Warp Script
+//===== By: ==================================================
+//= Chilly
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= Warp Points for El Dicastes
+//===== Additional Comments: =================================
+//= 1.0 First Version.
+//= 1.1 Added Elevators.
+//============================================================
+
+// Town Warps
+dicastes01,283,285,0	warp	eldicastes0001	1,1,dic_in01,45,31
+dic_in01,45,28,0	warp	eldicastes0002	1,1,dicastes01,281,283
+dicastes01,163,297,0	warp	eldicastes0003	1,1,dic_in01,372,102
+dic_in01,372,99,0	warp	eldicastes0004	1,1,dicastes01,163,294
+dicastes01,94,259,0	warp	eldicastes0005	1,1,dic_in01,390,52
+dic_in01,390,55,0	warp	eldicastes0006	1,1,dicastes01,96,257
+dicastes01,136,103,0	warp	eldicastes0007	1,1,dic_in01,26,99
+dic_in01,26,96,0	warp	eldicastes0008	1,1,dicastes01,136,106
+dicastes01,255,175,0	warp	eldicastes0009	1,1,dic_in01,345,271
+dic_in01,342,271,0	warp	eldicastes0010	1,1,dicastes01,255,172
+dicastes01,198,353,0	warp	eldicastes0011	1,1,dicastes02,120,81
+dicastes02,120,77,0	warp	eldicastes0012	1,1,dicastes01,198,349
+dicastes02,120,237,0	warp	eldicastes0013	1,1,dic_in01,45,247
+dic_in01,45,244,0	warp	eldicastes0014	1,1,dicastes02,120,234
+dic_in01,138,226,0	warp	eldicastes0015	1,1,dic_in01,242,177
+dic_in01,242,180,0	warp	eldicastes0016	1,1,dic_in01,138,223
+dic_in01,300,248,0	warp	eldicastes0017	1,1,dic_in01,262,191
+
+// Elevators
+dic_in01,46,288,4	script	Elevator#01	111,{
+	switch(select("Headquarters","Document Vault","General Command Room","Top Secret")) {
+	case 1:
+		warp "dic_in01",46,286;
+		end;
+	case 2:
+		warp "dic_in01",36,212;
+		end;
+	case 3:
+		warp "dic_in01",122,282;
+		end;
+	case 4:
+		warp "dic_in01",122,201;
+		end;
+	}
+}
+
+dic_in01,36,214,4	script	Elevator#02	111,{
+	switch(select("Headquarters","Document Vault","General Command Room","Top Secret")) {
+	case 1:
+		warp "dic_in01",46,286;
+		end;
+	case 2:
+		warp "dic_in01",36,212;
+		end;
+	case 3:
+		warp "dic_in01",122,282;
+		end;
+	case 4:
+		warp "dic_in01",122,201;
+		end;
+	}
+}
+
+dic_in01,122,284,4	script	Elevator#03	111,{
+	switch(select("Headquarters","Document Vault","General Command Room","Top Secret")) {
+	case 1:
+		warp "dic_in01",46,286;
+		end;
+	case 2:
+		warp "dic_in01",36,212;
+		end;
+	case 3:
+		warp "dic_in01",122,282;
+		end;
+	case 4:
+		warp "dic_in01",122,201;
+		end;
+	}
+}
+
+dic_in01,123,205,4	script	Elevator#04	111,{
+	switch(select("Headquarters","Document Vault","General Command Room","Top Secret")) {
+	case 1:
+		warp "dic_in01",46,286;
+		end;
+	case 2:
+		warp "dic_in01",36,212;
+		end;
+	case 3:
+		warp "dic_in01",122,282;
+		end;
+	case 4:
+		warp "dic_in01",122,202;
+		end;
+	}
+}
+
+dic_in01,44,116,4	script	Elevator#05	111,{
+	switch(select("1st Floor Residence","2nd Floor Residence","3rd Floor Residence","The Pub")) {
+	case 1:
+		warp "dic_in01",42,116;
+		end;
+	case 2:
+		warp "dic_in01",110,108;
+		end;
+	case 3:
+		warp "dic_in01",178,108;
+		end;
+	case 4:
+		warp "dic_in01",260,116;
+		end;
+	}
+}
+
+dic_in01,112,108,4	script	Elevator#06	111,{
+	switch(select("1st Floor Residence","2nd Floor Residence","3rd Floor Residence","The Pub")) {
+	case 1:
+		warp "dic_in01",42,116;
+		end;
+	case 2:
+		warp "dic_in01",110,108;
+		end;
+	case 3:
+		warp "dic_in01",178,108;
+		end;
+	case 4:
+		warp "dic_in01",260,116;
+		end;
+	}
+}
+
+dic_in01,180,108,4	script	Elevator#07	111,{
+	switch(select("1st Floor Residence","2nd Floor Residence","3rd Floor Residence","The Pub")) {
+	case 1:
+		warp "dic_in01",42,116;
+		end;
+	case 2:
+		warp "dic_in01",110,108;
+		end;
+	case 3:
+		warp "dic_in01",178,108;
+		end;
+	case 4:
+		warp "dic_in01",260,116;
+		end;
+	}
+}
+
+dic_in01,262,116,4	script	Elevator#08	111,{
+	switch(select("1st Floor Residence","2nd Floor Residence","3rd Floor Residence","The Pub")) {
+	case 1:
+		warp "dic_in01",42,116;
+		end;
+	case 2:
+		warp "dic_in01",110,108;
+		end;
+	case 3:
+		warp "dic_in01",178,108;
+		end;
+	case 4:
+		warp "dic_in01",260,116;
+		end;
+	}
+}
+
+dic_in01,388,272,4	script	Elevator#09	111,{
+	switch(select("Battle Room","Residence Area")) {
+	case 1:
+		warp "dic_in01",386,272;
+		end;
+	case 2:
+		warp "dic_in01",386,208;
+		end;
+	}
+}
+
+dic_in01,388,208,4	script	Elevator#10	111,{
+	switch(select("Battle Room","Residence Area")) {
+	case 1:
+		warp "dic_in01",386,272;
+		end;
+	case 2:
+		warp "dic_in01",386,208;
+		end;
+	}
+}

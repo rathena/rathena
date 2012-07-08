@@ -1,0 +1,82 @@
+//===== rAthena Script ======================================= 
+//= Treasure Room Protection
+//===== By: ================================================== 
+//= Masao
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena
+//===== Description: ========================================= 
+//= Warps every Player out of the Treasure Room except for the
+//= Guildleader.
+//===== Additional Comments: ================================= 
+//= 1.0 Converted from the official script.
+//============================================================ 
+
+-	script	ban_warp#1::prtg	139,6,6,{
+
+OnTouch:
+	set .@GID,getcharid(2);
+	if (GetGuildMaster(.@GID) != strcharinfo(0)) {
+		warp "prontera",119,64;
+		end;
+	}
+	end;
+}
+
+prtg_cas01,11,208,0	duplicate(prtg)	ban_warp#1-2	139,6,6
+prtg_cas02,202,228,0	duplicate(prtg)	ban_warp#2	139,6,6
+prtg_cas03,189,132,0	duplicate(prtg)	ban_warp#3	139,6,6
+prtg_cas04,271,162,0	duplicate(prtg)	ban_warp#4	139,6,6
+prtg_cas05,276,178,0	duplicate(prtg)	ban_warp#5	139,6,6
+
+-	script	ban_warp#6::payg	139,6,6,{
+
+OnTouch:
+	set .@GID,getcharid(2);
+	if (GetGuildMaster(.@GID) != strcharinfo(0)) {
+		warp "payon",100,100;
+		end;
+	}
+	end;
+}
+
+payg_cas01,291,8,0	duplicate(payg)	ban_warp#6-2	139,6,6
+payg_cas02,145,144,0	duplicate(payg)	ban_warp#7	139,6,6
+payg_cas03,159,168,0	duplicate(payg)	ban_warp#8	139,6,6
+payg_cas04,147,48,0	duplicate(payg)	ban_warp#9	139,6,6
+payg_cas05,157,132,0	duplicate(payg)	ban_warp#10	139,6,6
+
+-	script	ban_warp#11::aldeg	139,8,8,{
+
+OnTouch:
+	set .@GID,getcharid(2);
+	if (GetGuildMaster(.@GID) != strcharinfo(0)) {
+		warp "aldebaran",143,112;
+		end;
+	}
+	end;
+}
+
+aldeg_cas01,118,223,0	duplicate(aldeg)	ban_warp#11-2	139,8,8
+aldeg_cas02,135,230,0	duplicate(aldeg)	ban_warp#12	139,8,8
+aldeg_cas03,225,269,0	duplicate(aldeg)	ban_warp#13	139,8,8
+aldeg_cas04,84,13,0	duplicate(aldeg)	ban_warp#14	139,8,8
+aldeg_cas05,62,12,0	duplicate(aldeg)	ban_warp#15	139,8,8
+
+-	script	ban_warp#16::gefg	139,6,6,{
+
+OnTouch:
+	set .@GID,getcharid(2);
+	if (GetGuildMaster(.@GID) != strcharinfo(0)) {
+		warp "geffen",120,38;
+		end;
+	}
+	end;
+}
+
+gefg_cas01,154,112,0	duplicate(gefg)	ban_warp#16-2	139,6,6
+gefg_cas02,140,116,0	duplicate(gefg)	ban_warp#17	139,6,6
+gefg_cas03,271,290,0	duplicate(gefg)	ban_warp#18	139,6,6
+gefg_cas04,116,119,0	duplicate(gefg)	ban_warp#19	139,6,6
+gefg_cas05,144,110,0	duplicate(gefg)	ban_warp#20	139,6,6

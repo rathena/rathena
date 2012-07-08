@@ -1,0 +1,1405 @@
+//===== rAthena Script =======================================
+//= Turbo Track - Expert - 4 Person
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: ========================================= 
+//= Turbo Track Course: Expert (PVP) - 4 Person
+//===== Additional Comments: =================================
+//= 1.0 Translated from the Official [L0ne_W0lf]
+//= 1.1 Fixed small official bug. [L0ne_W0lf]
+//= 1.2 Fixed a little mistake [akrus]
+//= 1.3 Corrected issue with top record setting. [L0ne_W0lf]
+//= 1.4 Updated 'waitingroom' to support required zeny/lvl. [Kisuka]
+//= 1.5 Fixed variable typo [Elias]
+//============================================================
+
+turbo_room,110,135,3	script	Expert mode - 4 person	124,{
+	end;
+
+OnInit:
+	waitingroom "Expert mode - 4 person",60,"Expert mode - 4 person::OnStartArena",4,1000,10,99;
+	enablewaitingroomevent "Expert mode - 4 person";
+	end;
+
+OnEnable:
+	enablenpc "Expert mode - 4 person";
+	enablewaitingroomevent "Expert mode - 4 person";
+	end;
+
+OnStartArena:
+	warpwaitingpc "turbo_e_4",298,161;
+	donpcevent "Broadcast#e4::OnEnable";
+	disablewaitingroomevent "Expert mode - 4 person";
+	end;
+}
+	
+turbo_e_4,298,167,3	script	Helper#e4_F	124,{
+	mes "[Helper]";
+	mes "You are now in the";
+	mes "Waiting Room. You will";
+	mes "be guided to the Starting Line";
+	mes "after 30 seconds, so please use";
+	mes "this time to prepare your items";
+	mes "and equipment. Thank you.";
+	close;
+}
+
+turbo_e_4,298,167,0	script	Point Give-Away Guy#e4	-1,15,15,{
+OnInit:
+	disablenpc "Point Give-Away Guy#e4";
+	end;
+
+OnTouch:
+	if (tt_point < 28999) {
+		set tt_point,tt_point+2;
+		warp "turbo_e_4",59,364;
+	}
+	else
+		warp "turbo_e_4",59,364;
+	end;
+}
+
+turbo_e_4,167,3,0	script	Broadcast#e4	-1,{
+OnInit:
+	disablenpc "Broadcast#e4";
+	end;
+
+OnEnable:
+	enablenpc "Broadcast#e4";
+	initnpctimer;
+	end;
+
+OnTimer2000:
+	mapannounce "turbo_e_4","You are now in the Waiting Room where you can check your items and prepare for the race.",bc_map,"0x33FF66";
+	end;
+
+OnTimer7000:
+	mapannounce "turbo_e_4","You will have 30 seconds before you are transported to the Starting Line.",bc_map,"0x33FF66";
+	end;
+
+OnTimer10000:
+	mapannounce "turbo_e_4","Please make sure that you have suitable equipment and items with you.",bc_map,"0x33FF66";
+	end;
+
+OnTimer15000:
+	mapannounce "turbo_e_4","The 30 second countdown will begin shortly.",bc_map,"0x33FF66";
+	end;
+
+OnTimer17000:
+	mapannounce "turbo_e_4","30 seconds remaining.",bc_map,"0x33FF66";
+	end;
+
+OnTimer27000:
+	mapannounce "turbo_e_4","20 seconds remaining.",bc_map,"0x33FF66";
+	end;
+
+OnTimer37000:
+	mapannounce "turbo_e_4","10 seconds remaining.",bc_map,"0x33FF66";
+	end;
+
+OnTimer42000:
+	mapannounce "turbo_e_4","5 seconds remaining.",bc_map,"0x33FF66";
+	end;
+
+OnTimer43000:
+	mapannounce "turbo_e_4","4 seconds remaining.",bc_map,"0x33FF66";
+	end;
+
+OnTimer44000:
+	mapannounce "turbo_e_4","3 seconds remaining.",bc_map,"0x33FF66";
+	end;
+
+OnTimer45000:
+	mapannounce "turbo_e_4","2 seconds remaining.",bc_map,"0x33FF66";
+	end;
+
+OnTimer46000:
+	mapannounce "turbo_e_4","1 second remaining.",bc_map,"0x33FF66";
+	end;
+
+OnTimer47000:
+	mapannounce "turbo_e_4","You will be transported to the Starting Line shortly.",bc_map,"0x33FF66";
+	end;
+
+OnTimer49000:
+	enablenpc "Point Give-Away Guy#e4";
+	donpcevent "Master#e4::OnEnable";
+	end;
+
+OnTimer50000:
+	donpcevent "snake#e4::OnEnable";
+	donpcevent "hunting#e4::OnEnable";
+	enablenpc "bing#e4";
+	end;
+
+OnTimer57000:
+	disablenpc "Point Give-Away Guy#e4";
+	end;
+}
+
+turbo_e_4,167,3,0	script	Master#e4	-1,{
+OnInit:
+	disablenpc "Master#e4";
+	end;
+
+OnEnable:
+	enablenpc "Master#e4";
+	initnpctimer;
+	end;
+
+OnDisable:
+	stopnpctimer;
+	disablenpc "Master#e4";
+	end;
+
+OnTimer7000:
+	mapannounce "turbo_e_4","Welcome to the Turbo Track.",bc_map,"0x33FF66";
+	end;
+
+OnTimer9000:
+	mapannounce "turbo_e_4","The game will be hosted for 15 minutes and at least one person must complete the entire course.",bc_map,"0x33FF66";
+	end;
+
+OnTimer11000:
+	mapannounce "turbo_e_4","We hope you will do your best.",bc_map,"0x33FF66";
+	end;
+
+OnTimer13000:
+	mapannounce "turbo_e_4","The game will begin after a 5 second countdown. Everyone, please take your positions behind the Starting Line.",bc_map,"0x33FF66";
+	end;
+
+OnTimer15000:
+	mapannounce "turbo_e_4","The countdown will commence shortly.",bc_map,"0x33FF66";
+	end;
+
+OnTimer17000:
+	mapannounce "turbo_e_4","- 5 -",bc_map,"0x33FF66";
+	end;
+
+OnTimer18000:
+	mapannounce "turbo_e_4","- 4 -",bc_map,"0x33FF66";
+	end;
+
+OnTimer19000:
+	mapannounce "turbo_e_4","- 3 -",bc_map,"0x33FF66";
+	end;
+
+OnTimer20000:
+	mapannounce "turbo_e_4","- 2 -",bc_map,"0x33FF66";
+	end;
+
+OnTimer21000:
+	mapannounce "turbo_e_4","- 1 -",bc_map,"0x33FF66";
+	end;
+
+OnTimer22000:
+	mapannounce "turbo_e_4","- 0 -",bc_map,"0x33FF66";
+	end;
+
+OnTimer23000:
+	mapannounce "turbo_e_4","Now! The race has begun! Go Go Go!!",bc_map,"0x33FF66";
+	disablenpc "No_Unfair_Start#e4-1";
+	disablenpc "No_Unfair_Start#e4-2";
+	end;
+
+OnTimer30000:
+	mapannounce "turbo_e_4","Remember that this is a 15 minute race. After 15 minutes, everyone will be transported out of the race track.",bc_map,"0x33FF66";
+	end;
+
+OnTimer83000:
+	mapannounce "turbo_e_4","You have 14 minutes left.",bc_map,"0x33FF66";
+	end;
+
+OnTimer143000:
+	mapannounce "turbo_e_4","You have 13 minutes left.",bc_map,"0x33FF66";
+	end;
+
+OnTimer203000:
+	mapannounce "turbo_e_4","You have 12 minutes left.",bc_map,"0x33FF66";
+	end;
+
+OnTimer263000:
+	mapannounce "turbo_e_4","You have 11 minutes left.",bc_map,"0x33FF66";
+	end;
+
+OnTimer323000:
+	mapannounce "turbo_e_4","You have 10 minutes left.",bc_map,"0x33FF66";
+	end;
+
+OnTimer383000:
+	mapannounce "turbo_e_4","You have 9 minutes left.",bc_map,"0x33FF66";
+	end;
+
+OnTimer443000:
+	mapannounce "turbo_e_4","You have 8 minutes left.",bc_map,"0x33FF66";
+	end;
+
+OnTimer503000:
+	mapannounce "turbo_e_4","You have 7 minutes left.",bc_map,"0x33FF66";
+	end;
+
+OnTimer563000:
+	mapannounce "turbo_e_4","You have 6 minutes left.",bc_map,"0x33FF66";
+	end;
+
+OnTimer623000:
+	mapannounce "turbo_e_4","You have 5 minutes left.",bc_map,"0x33FF66";
+	end;
+
+OnTimer683000:
+	mapannounce "turbo_e_4","You have 4 minutes left.",bc_map,"0x33FF66";
+	end;
+
+OnTimer743000:
+	mapannounce "turbo_e_4","You have 3 minutes left.",bc_map,"0x33FF66";
+	end;
+
+OnTimer803000:
+	mapannounce "turbo_e_4","You have 2 minutes left.",bc_map,"0x33FF66";
+	end;
+
+OnTimer863000:
+	mapannounce "turbo_e_4","You have 1 minute left.",bc_map,"0x33FF66";
+	end;
+
+OnTimer893000:
+	mapannounce "turbo_e_4","You have 30 seconds left.",bc_map,"0x33FF66";
+	end;
+
+OnTimer903000:
+	mapannounce "turbo_e_4","You have 20 seconds left.",bc_map,"0x33FF66";
+	end;
+
+OnTimer913000:
+	mapannounce "turbo_e_4","You have 10 seconds left.",bc_map,"0x33FF66";
+	end;
+
+OnTimer918000:
+	mapannounce "turbo_e_4","You have 5 seconds left.",bc_map,"0x33FF66";
+	end;
+
+OnTimer919000:
+	mapannounce "turbo_e_4","You have 4 seconds left.",bc_map,"0x33FF66";
+	end;
+
+OnTimer920000:
+	mapannounce "turbo_e_4","You have 3 seconds left.",bc_map,"0x33FF66";
+	end;
+
+OnTimer921000:
+	mapannounce "turbo_e_4","You have 2 seconds left.",bc_map,"0x33FF66";
+	end;
+
+OnTimer922000:
+	mapannounce "turbo_e_4","You have 1 second left.",bc_map,"0x33FF66";
+	end;
+
+OnTimer923000:
+	mapannounce "turbo_e_4","Time's up!",bc_map,"0x33FF66";
+	end;
+
+OnTimer925000:
+	mapannounce "turbo_e_4","The race is over.",bc_map,"0x33FF66";
+	end;
+
+OnTimer927000:
+	mapannounce "turbo_e_4","[Everyone will be transported to a Waiting Room.]",bc_map,"0x33FF66";
+	mapwarp "turbo_e_4","turbo_room",71,89;
+	// all NPC OFF
+	disablenpc "Broadcast#e4";
+	donpcevent "Master#e4::OnDisable";
+	donpcevent "Expert mode - 4 person::OnEnable";
+	// start line NPC ON
+	enablenpc "No_Unfair_Start#e4-1";
+	enablenpc "No_Unfair_Start#e4-2";
+	// monster reset
+	donpcevent "snake#e4::Onreset";
+	donpcevent "hunting#e4::Onreset";
+	disablenpc "bing2#e4";
+	// NPC
+	disablenpc "Winner Helper#TBT_e_4";
+	enablenpc "cos_e_4_end";
+	enablenpc "Notice_Maker1#TBT_e_4";
+	enablenpc "Notice_Maker3#TBT_e_4";
+	enablenpc "Notice_Maker4#TBT_e_4";
+	enablenpc "Disposable_Switch#e4";
+	disablenpc "Flasher_Exit_1#e4";
+	disablenpc "Flasher_Exit_2#e4";
+	end;
+}
+
+turbo_e_4,62,379,0	script	No_Unfair_Start#e4-1	-1,0,31,{
+OnTouch:
+	warp "turbo_e_4",59,364;
+	end;
+}
+
+turbo_e_4,68,379,5	script	No_Unfair_Start#e4-2	-1,5,31,{
+OnTouch:
+	warp "turbo_e_4",59,364;
+	end;
+}
+
+// Turbo Track: Expert Mode - 4 Players (Log Race)
+turbo_e_4,118,377,0	script	trap_a#e_4-1::TurboLogRace_e_4	-1,44,1,{
+OnTouch:
+	set .@dropuser,rand(1,3);
+	if (.@dropuser == 1)
+		warp "turbo_e_4",72,372;
+	else if (.@dropuser == 2)
+		warp "turbo_e_4",72,365;
+	else
+		warp "turbo_e_4",72,357;
+	end;
+}
+turbo_e_4,77,375,0	duplicate(TurboLogRace_e_4)	trap_a#e_4-2	-1,3,1
+turbo_e_4,82,375,0	duplicate(TurboLogRace_e_4)	trap_a#e_4-3	-1,1,1
+turbo_e_4,82,372,0	duplicate(TurboLogRace_e_4)	trap_a#e_4-4	-1,0,2
+turbo_e_4,83,372,0	duplicate(TurboLogRace_e_4)	trap_a#e_4-5	-1,0,2
+turbo_e_4,97,374,0	duplicate(TurboLogRace_e_4)	trap_a#e_4-6	-1,1,2
+turbo_e_4,98,374,0	duplicate(TurboLogRace_e_4)	trap_a#e_4-7	-1,1,2
+turbo_e_4,122,372,0	duplicate(TurboLogRace_e_4)	trap_a#e_4-8	-1,2,4
+turbo_e_4,125,374,0	duplicate(TurboLogRace_e_4)	trap_a#e_4-9	-1,0,4
+turbo_e_4,132,374,0	duplicate(TurboLogRace_e_4)	trap_a#e_4-10	-1,7,2
+turbo_e_4,156,374,0	duplicate(TurboLogRace_e_4)	trap_a#e_4-11	-1,6,2
+turbo_e_4,163,375,0	duplicate(TurboLogRace_e_4)	trap_a#e_4-12	-1,0,3
+turbo_e_4,164,377,0	duplicate(TurboLogRace_e_4)	trap_a#e_4-13	-1,1,1
+// second line
+turbo_e_4,76,369,0	duplicate(TurboLogRace_e_4)	trap_b#e_4-1	-1,2,2
+turbo_e_4,79,369,0	duplicate(TurboLogRace_e_4)	trap_b#e_4-2	-1,0,2
+turbo_e_4,77,366,0	duplicate(TurboLogRace_e_4)	trap_b#e_4-3	-1,3,0
+turbo_e_4,85,366,0	duplicate(TurboLogRace_e_4)	trap_b#e_4-4	-1,5,1
+turbo_e_4,87,363,0	duplicate(TurboLogRace_e_4)	trap_b#e_4-5	-1,2,1
+turbo_e_4,88,368,0	duplicate(TurboLogRace_e_4)	trap_b#e_4-6	-1,2,5
+turbo_e_4,92,370,0	duplicate(TurboLogRace_e_4)	trap_b#e_4-7	-1,1,3
+turbo_e_4,98,368,0	duplicate(TurboLogRace_e_4)	trap_b#e_4-8	-1,4,1
+turbo_e_4,109,371,0	duplicate(TurboLogRace_e_4)	trap_b#e_4-9	-1,7,2
+turbo_e_4,110,368,0	duplicate(TurboLogRace_e_4)	trap_b#e_4-10	-1,7,0
+turbo_e_4,113,366,0	duplicate(TurboLogRace_e_4)	trap_b#e_4-11	-1,3,2
+turbo_e_4,117,368,0	duplicate(TurboLogRace_e_4)	trap_b#e_4-12	-1,0,5
+turbo_e_4,123,364,0	duplicate(TurboLogRace_e_4)	trap_b#e_4-13	-1,6,1
+turbo_e_4,136,368,0	duplicate(TurboLogRace_e_4)	trap_b#e_4-14	-1,8,1
+turbo_e_4,136,366,0	duplicate(TurboLogRace_e_4)	trap_b#e_4-15	-1,8,0
+turbo_e_4,144,370,0	duplicate(TurboLogRace_e_4)	trap_b#e_4-16	-1,2,3
+turbo_e_4,147,370,0	duplicate(TurboLogRace_e_4)	trap_b#e_4-17	-1,0,3
+turbo_e_4,155,369,0	duplicate(TurboLogRace_e_4)	trap_b#e_4-18	-1,7,0
+turbo_e_4,155,368,0	duplicate(TurboLogRace_e_4)	trap_b#e_4-19	-1,7,0
+turbo_e_4,151,367,0	duplicate(TurboLogRace_e_4)	trap_b#e_4-20	-1,3,0
+turbo_e_4,153,366,0	duplicate(TurboLogRace_e_4)	trap_b#e_4-21	-1,1,0
+turbo_e_4,155,367,0	duplicate(TurboLogRace_e_4)	trap_b#e_4-22	-1,0,1
+//third line
+turbo_e_4,78,362,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-1	-1,4,1
+turbo_e_4,78,359,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-2	-1,4,1
+turbo_e_4,83,362,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-3	-1,0,1
+turbo_e_4,88,359,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-4	-1,5,1
+turbo_e_4,89,357,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-5	-1,1,1
+turbo_e_4,92,390,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-6	-1,1,1
+turbo_e_4,92,357,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-7	-1,1,1
+turbo_e_4,98,364,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-8	-1,6,1
+turbo_e_4,98,362,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-9	-1,6,0
+turbo_e_4,106,364,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-10	-1,2,2
+turbo_e_4,107,360,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-11	-1,1,2
+turbo_e_4,109,360,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-12	-1,0,2
+turbo_e_4,112,361,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-13	-1,3,1
+turbo_e_4,116,359,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-14	-1,0,2
+turbo_e_4,117,359,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-15	-1,0,2
+turbo_e_4,116,356,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-16	-1,0,2
+turbo_e_4,117,356,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-17	-1,0,2
+turbo_e_4,129,360,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-18	-1,12,1
+turbo_e_4,129,358,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-19	-1,12,0
+turbo_e_4,132,357,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-20	-1,2,1
+turbo_e_4,137,357,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-21	-1,2,1
+turbo_e_4,147,363,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-22	-1,16,1
+turbo_e_4,149,365,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-23	-1,1,0
+turbo_e_4,158,362,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-24	-1,1,4
+turbo_e_4,154,360,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-25	-1,2,2
+turbo_e_4,161,360,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-26	-1,1,2
+turbo_e_4,161,365,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-27	-1,1,0
+turbo_e_4,160,366,0	duplicate(TurboLogRace_e_4)	trap_c#e_4-28	-1
+//fourth line
+turbo_e_4,79,353,0	duplicate(TurboLogRace_e_4)	trap_d#e_4-1	-1,5,2
+turbo_e_4,85,354,0	duplicate(TurboLogRace_e_4)	trap_d#e_4-2	-1,0,1
+turbo_e_4,99,353,0	duplicate(TurboLogRace_e_4)	trap_d#e_4-3	-1,14,0
+turbo_e_4,99,352,0	duplicate(TurboLogRace_e_4)	trap_d#e_4-4	-1,14,0
+turbo_e_4,99,356,0	duplicate(TurboLogRace_e_4)	trap_d#e_4-5	-1,3,3
+turbo_e_4,103,356,0	duplicate(TurboLogRace_e_4)	trap_d#e_4-6	-1,0,3
+turbo_e_4,108,354,0	duplicate(TurboLogRace_e_4)	trap_d#e_4-7	-1,5,1
+turbo_e_4,112,356,0	duplicate(TurboLogRace_e_4)	trap_d#e_4-8	-1,0,1
+turbo_e_4,113,356,0	duplicate(TurboLogRace_e_4)	trap_d#e_4-9	-1,0,1
+turbo_e_4,123,353,0	duplicate(TurboLogRace_e_4)	trap_d#e_4-10	-1,3,2
+turbo_e_4,127,353,0	duplicate(TurboLogRace_e_4)	trap_d#e_4-11	-1,0,2
+turbo_e_4,145,352,0	duplicate(TurboLogRace_e_4)	trap_d#e_4-12	-1,17,1
+turbo_e_4,152,354,0	duplicate(TurboLogRace_e_4)	trap_d#e_4-13	-1,10,1
+turbo_e_4,145,357,0	duplicate(TurboLogRace_e_4)	trap_d#e_4-14	-1,1,2
+turbo_e_4,148,357,0	duplicate(TurboLogRace_e_4)	trap_d#e_4-15	-1,1,2
+
+// Turbo Track: Expert Mode - 4 Players (Sand Hill)
+turbo_e_4,322,354,0	script	#TBT_trap_e4-::TurboSandHill_e4	-1,3,3,{
+OnTouch:
+	switch(rand(1,10)) {
+	case 1:
+	case 9:
+		sc_start SC_CONFUSION,8000,0;
+		emotion e_swt2,1;
+		end;
+	case 2:
+		sc_start SC_STONE,4000,0;
+		end;
+	case 4:
+		sc_start SC_SLEEP,4000,0;
+		end;
+	case 6:
+		sc_start SC_FREEZE,4000,0;
+		emotion e_swt2,1;
+		end;
+	case 8:
+		sc_start SC_STUN,4000,0;
+		end;
+	case 10:
+		sc_start SC_CURSE,80000,0;
+		end;
+	}
+}
+
+turbo_e_4,323,360,0	duplicate(TurboSandHill_e4)	#TBT_trap_e4-2	-1,3,3
+turbo_e_4,324,365,0	duplicate(TurboSandHill_e4)	#TBT_trap_e4-3	-1,1,1
+turbo_e_4,325,370,0	duplicate(TurboSandHill_e4)	#TBT_trap_e4-4	-1,3,3
+turbo_e_4,325,375,0	duplicate(TurboSandHill_e4)	#TBT_trap_e4-5	-1,1,1
+turbo_e_4,329,377,0	duplicate(TurboSandHill_e4)	#TBT_trap_e4-6	-1,3,3
+turbo_e_4,338,372,0	duplicate(TurboSandHill_e4)	#TBT_trap_e4-7	-1,3,3
+turbo_e_4,341,364,0	duplicate(TurboSandHill_e4)	#TBT_trap_e4-8	-1,3,3
+turbo_e_4,325,359,0	duplicate(TurboSandHill_e4)	#TBT_trap_e4-9	-1,2,2
+turbo_e_4,341,355,0	duplicate(TurboSandHill_e4)	#TBT_trap_e4-10	-1,1,1
+turbo_e_4,350,355,0	duplicate(TurboSandHill_e4)	#TBT_trap_e4-11	-1,3,3
+turbo_e_4,348,363,0	duplicate(TurboSandHill_e4)	#TBT_trap_e4-12	-1,1,1
+turbo_e_4,347,370,0	duplicate(TurboSandHill_e4)	#TBT_trap_e4-13	-1,2,2
+turbo_e_4,349,377,0	duplicate(TurboSandHill_e4)	#TBT_trap_e4-14	-1,9,9
+turbo_e_4,362,372,0	duplicate(TurboSandHill_e4)	#TBT_trap_e4-15	-1,3,3
+turbo_e_4,364,365,0	duplicate(TurboSandHill_e4)	#TBT_trap_e4-16	-1,1,1
+turbo_e_4,363,357,0	duplicate(TurboSandHill_e4)	#TBT_trap_e4-17	-1,3,3
+turbo_e_4,374,358,0	duplicate(TurboSandHill_e4)	#TBT_trap_e4-18	-1,2,2
+turbo_e_4,371,367,0	duplicate(TurboSandHill_e4)	#TBT_trap_e4-19	-1,3,3
+turbo_e_4,371,376,0	duplicate(TurboSandHill_e4)	#TBT_trap_e4-20	-1,1,1
+turbo_e_4,379,375,0	duplicate(TurboSandHill_e4)	#TBT_trap_e4-21	-1,3,3
+turbo_e_4,382,363,0	duplicate(TurboSandHill_e4)	#TBT_trap_e4-22	-1,2,2
+turbo_e_4,381,354,0	duplicate(TurboSandHill_e4)	#TBT_trap_e4-23	-1,1,1
+turbo_e_4,355,362,0	script	#TBT_trap_e4-24	-1,3,3,{
+OnTouch:
+	if (rand(1,3) == 1) {
+		cutin "kafra_03",2;
+		mes "^4d4dffAl De Baran";
+		mes "Turbo Track";
+		mes "is brought to you by";
+		mes "the ^800000Kafra Corporation^4d4dff.^000000";
+		next;
+		mes "^4d4dffWe wish the best of luck to all";
+		mes "Turbo Track participants today";
+		mes "and thank everyone for using the Kafra Services with all our hearts.^000000";
+		next;
+		mes "^800000Kafra Corporation^4d4dff has been providing Storage Services,";
+		mes "Save Point Services and Teleport Services^4d4dff to our valued customers for years. Just listen to these real customers...^000000";
+		next;
+		mes "^4d4dff[Kachua]";
+		mes "Oh yes, they provide the best Storage! There's even enough";
+		mes "room for my Diaaaamonds!";
+		mes " ";
+		mes "[Chief Mahnsoo]";
+		mes "I looove you Kafra!^000000";
+		next;
+		mes "^ff0000Turbo Track";
+		mes "^ff0000Traps in the Cursed Desert!";
+		mes "^4d4dffSponsored by ^800000Kafra Corporation^4d4dff";
+		mes "''We are always by your side.''^000000";
+		close2;
+		cutin "kafra_03",255;
+		end;
+	}
+	else {
+		sc_start SC_CONFUSION,4000,0;
+		end;
+	}
+}
+
+// Turbo Track: Expert Mode - 4 Players (Water Maze)
+turbo_e_4,13,266,0	script	flasher#e_4-01#turbo::TurboWaterMaze_e_4	-1,0,2,{
+OnTouch:
+	sc_start SC_BLIND,60000,0;
+	end;
+}
+turbo_e_4,24,268,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-02	-1,1,0
+turbo_e_4,20,258,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-03	-1,1,0
+turbo_e_4,23,251,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-04	-1,0,1
+turbo_e_4,36,270,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-05	-1,1,0
+turbo_e_4,22,239,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-06	-1,1,0
+turbo_e_4,38,239,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-07	-1,0,1
+turbo_e_4,37,237,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-08	-1,1,0
+turbo_e_4,55,247,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-09	-1,0,1
+turbo_e_4,55,246,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-10	-1,1,0
+turbo_e_4,63,253,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-11	-1,0,1
+turbo_e_4,36,216,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-12	-1,1,0
+turbo_e_4,20,209,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-13	-1,1,0
+turbo_e_4,28,195,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-14	-1,1,0
+turbo_e_4,82,264,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-15	-1,1,0
+turbo_e_4,47,185,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-16	-1,0,1
+turbo_e_4,53,207,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-17	-1,1,0
+turbo_e_4,54,208,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-18	-1,0,1
+turbo_e_4,81,247,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-19	-1,0,1
+turbo_e_4,105,257,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-20	-1,0,1
+turbo_e_4,95,242,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-21	-1,0,1
+turbo_e_4,77,232,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-22	-1,2,0
+turbo_e_4,67,222,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-23	-1,2,0
+turbo_e_4,83,206,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-24	-1,0,1
+turbo_e_4,95,224,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-25	-1,0,1
+turbo_e_4,106,220,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-26	-1,2,0
+turbo_e_4,93,191,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-27	-1,1,0
+turbo_e_4,94,192,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-28a	-1,0,1
+turbo_e_4,46,214,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-28b	-1,0,1
+turbo_e_4,16,247,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-29	-1,1,0
+turbo_e_4,58,268,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-30	-1,1,1
+turbo_e_4,36,253,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-31	-1,1,0
+turbo_e_4,69,238,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-32	-1,1,1
+turbo_e_4,58,268,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-33	-1,1,1
+turbo_e_4,74,188,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-34	-1,2,0
+turbo_e_4,99,207,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-35	-1,1,1
+turbo_e_4,74,188,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-36	-1,2,0
+turbo_e_4,111,188,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-37a	-1,1,0
+turbo_e_4,51,232,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-37b	-1,1,1
+turbo_e_4,30,232,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-38	-1,1,1
+turbo_e_4,92,256,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-39	-1,1,1
+turbo_e_4,79,220,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-40	-1,1,1
+turbo_e_4,51,192,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-41	-1,1,1
+turbo_e_4,22,227,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-42	-1,1,1
+turbo_e_4,51,232,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-43	-1,1,1
+turbo_e_4,42,258,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-44	-1,1,0
+turbo_e_4,45,271,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-45	-1,2,1
+turbo_e_4,72,207,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-46	-1,1,1
+turbo_e_4,33,192,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-47	-1,0,1
+turbo_e_4,90,241,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-48a	-1,1,0
+turbo_e_4,236,3,0	duplicate(TurboWaterMaze_e_4)	flasher#e_4-48b	-1,3,0
+
+// Turbo Track: Expert Mode - 4 Players (Snake Dice course)
+turbo_e_4,324,279,0	script	snake01#e4	45,1,1,{
+OnTouch:
+	set .@turbo2,rand(1,7);
+	if (.@turbo2 > 0) && (.@turbo2 < 3)
+		warp "turbo_e_4",370,292;
+	else if (.@turbo2 > 2) && (.@turbo2 < 5)
+		warp "turbo_e_4",295,293;
+	else if (.@turbo2 > 4) && (.@turbo2 < 7)
+		warp "turbo_e_4",355,292;
+	else
+		warp "turbo_e_4",279,292;
+	end;
+}
+
+turbo_e_4,332,279,0	script	snake02#e4	45,1,1,{
+OnTouch:
+	set .@turbo2,rand(1,8);
+	if (.@turbo2 > 0) && (.@turbo2 < 3)
+		warp "turbo_e_4",287,256;
+	else if (.@turbo2 > 2) && (.@turbo2 < 5)
+		warp "turbo_e_4",303,256;
+	else if (.@turbo2 > 4) && (.@turbo2 < 7)
+		warp "turbo_e_4",347,256;
+	else
+		warp "turbo_e_4",363,256;
+	end;
+}
+
+turbo_e_4,324,270,0	script	snake03#e4	45,1,1,{
+OnTouch:
+	set .@turbo2,rand(1,8);
+	if (.@turbo2 > 0) && (.@turbo2 < 3)
+		warp "turbo_e_4",279,292;
+	else if (.@turbo2 > 2) && (.@turbo2 < 5)
+		warp "turbo_e_4",311,292;
+	else if (.@turbo2 > 4) && (.@turbo2 < 7)
+		warp "turbo_e_4",347,256;
+	else
+		warp "turbo_e_4",370,292;
+	end;
+}
+
+turbo_e_4,332,270,0	script	snake04#e4	45,1,1,{
+OnTouch:
+	set .@turbo2,rand(1,7);
+	if (.@turbo2 > 0) && (.@turbo2 < 3)
+		warp "turbo_e_4",363,256;
+	else if (.@turbo2 > 2) && (.@turbo2 < 5)
+		warp "turbo_e_4",295,293;
+	else if (.@turbo2 > 4) && (.@turbo2 < 7)
+		warp "turbo_e_4",355,292;
+	else
+		warp "turbo_e_4",287,256;
+	end;
+}
+
+//monsters
+turbo_e_4,389,288,0	script	snake#e4	111,{
+Onreset:
+	killmonsterall "turbo_e_4";
+	end;
+
+OnEnable:
+	monster "turbo_e_4",279,284,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",279,268,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",279,260,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",287,288,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",287,280,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",287,264,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",295,284,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",295,268,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",295,260,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",303,288,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",303,280,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",303,264,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",311,284,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",311,268,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",311,260,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",347,288,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",347,280,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",347,264,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",355,284,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",355,268,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",355,260,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",363,288,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",363,280,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",363,264,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",371,284,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",371,268,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",371,260,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",379,288,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",379,280,"Archer Skeleton",1420,1;
+	monster "turbo_e_4",379,264,"Archer Skeleton",1420,1;
+	end;
+}
+
+// �����ڽ�
+turbo_e_4,90,46,0	script	hunting#e4	111,{
+Onreset:
+	killmonsterall "turbo_e_4";
+	end;
+
+OnEnable:
+	monster "turbo_e_4",47,87,"Munak",1610,1;
+	monster "turbo_e_4",47,87,"Bongun",1611,1;
+	monster "turbo_e_4",47,87,"Munak",1610,1;
+	monster "turbo_e_4",24,74,"Munak",1610,1;
+	monster "turbo_e_4",24,74,"Bongun",1611,1;
+	monster "turbo_e_4",24,74,"Munak",1610,1;
+	monster "turbo_e_4",67,42,"Munak",1610,1;
+	monster "turbo_e_4",67,42,"Bongun",1611,1;
+	monster "turbo_e_4",67,42,"Munak",1610,1;
+	monster "turbo_e_4",60,70,"Munak",1610,1;
+	monster "turbo_e_4",60,70,"Bongun",1611,1;
+	monster "turbo_e_4",60,70,"Munak",1610,1;
+	monster "turbo_e_4",32,51,"Munak",1610,1;
+	monster "turbo_e_4",32,51,"Bongun",1611,1;
+	monster "turbo_e_4",32,51,"Munak",1610,1;
+	monster "turbo_e_4",30,25,"Munak",1610,1;
+	monster "turbo_e_4",30,25,"Bongun",1611,1;
+	monster "turbo_e_4",30,25,"Munak",1610,1;
+	monster "turbo_e_4",68,56,"Yao Jun",1612,1;
+	monster "turbo_e_4",26,46,"Yao Jun",1612,1;
+	monster "turbo_e_4",62,20,"Munak",1610,1;
+	monster "turbo_e_4",62,20,"Bongun",1611,1;
+	monster "turbo_e_4",62,20,"Munak",1610,1;
+	monster "turbo_e_4",216,378,"Munak",1610,1;
+	monster "turbo_e_4",218,360,"Munak",1610,1;
+	monster "turbo_e_4",223,361,"Munak",1610,1;
+	monster "turbo_e_4",243,342,"Munak",1610,1;
+	monster "turbo_e_4",247,364,"Munak",1610,1;
+	end;
+}
+
+
+// Turbo Track: Expert Mode - 4 Players (Course-clear broadcasters, and exits?)
+turbo_e_4,168,363,0	script	cos_e_4_1	45,1,1,{
+OnTouch:
+	mapannounce "turbo_e_4","" + strcharinfo(0) +" has just passed the Log Bridge course!",bc_map,"0x70DBDB";
+	set .@move1,rand(1,3);
+	if (.@move1 == 1)
+		warp "turbo_e_4",210,369;
+	else if (.@move1 == 2)
+		warp "turbo_e_4",210,361;
+	else
+		warp "turbo_e_4",210,354;
+	end;
+}
+
+turbo_e_4,258,364,0	script	cos_e_4_2	45,1,1,{
+OnTouch:
+	mapannounce "turbo_e_4","" + strcharinfo(0) +" has just passed the Cube Hills course!",bc_map,"0x70DBDB";
+	warp "turbo_e_4",316,365;
+	end;
+}
+
+turbo_e_4,316,365,0	script	Disposable_Switch#e4	-1,1,1,{
+OnTouch:
+	if (rand(1,2) == 1)
+		enablenpc "Flasher_Exit_1#e4";
+	else
+		enablenpc "Flasher_Exit_2#e4";
+	disablenpc "Disposable_Switch#e4";
+	end;
+}
+
+turbo_e_4,385,365,0	script	cos_e_4_3	45,1,1,{
+OnTouch:
+	set .@to_miro,rand(1,4);
+	mapannounce "turbo_e_4","" + strcharinfo(0) +" has just passed the Cursed Desert!",bc_map,"0x70DBDB";
+	if (.@to_miro == 1)
+		warp "turbo_e_4",46,254;
+	else if (.@to_miro == 2)
+		warp "turbo_e_4",76,227;
+	else if (.@to_miro == 3)
+		warp "turbo_e_4",42,197;
+	else
+		warp "turbo_e_4",86,220;
+	end;
+}
+
+turbo_e_4,11,266,0	script	Flasher_Exit_1#e4	45,1,1,{
+OnInit:
+	disablenpc "Flasher_Exit_1#e4";
+	end;
+
+OnTouch:
+	mapannounce "turbo_e_4","" + strcharinfo(0) +" has just passed the Flasher Maze!",bc_map,"0x70DBDB";
+	warp "turbo_e_4",185,227;
+	end;
+}
+
+turbo_e_4,114,190,0	script	Flasher_Exit_2#e4	45,1,1,{
+OnInit:
+	disablenpc "Flasher_Exit_2#e4";
+	end;
+
+OnTouch:
+	mapannounce "turbo_e_4","" + strcharinfo(0) +" has just passed the Flasher Maze!",bc_map,"0x70DBDB";
+	warp "turbo_e_4",185,227;
+	end;
+}
+
+turbo_e_4,250,200,0	script	cos_e_4_5	45,1,1,{
+OnTouch:
+	mapannounce "turbo_e_4","" + strcharinfo(0) +" has just passed the Single Snail course!",bc_map,"0x70DBDB";
+	warp "turbo_e_4",268,275;
+	end;
+}
+
+turbo_e_4,389,275,0	script	cos_e_4_6	45,1,1,{
+OnTouch:
+	mapannounce "turbo_e_4","" + strcharinfo(0) +" has just passed the Snake Dice course!",bc_map,"0x70DBDB";
+	warp "turbo_e_4",5,91;
+	end;
+}
+
+turbo_e_4,93,19,0	script	cos_e_4_7	45,1,1,{
+OnTouch:
+	mapannounce "turbo_e_4","" + strcharinfo(0) +" has just passed the Small Cave course! Hurry, you're almost at the finish!",bc_map,"0x70DBDB";
+	set .@move1,rand(1,3);
+	if (.@move1 == 1)
+		warp "turbo_e_4",307,52;
+	else if (.@move1 == 2)
+		warp "turbo_e_4",307,46;
+	else
+		warp "turbo_e_4",307,40;
+	end;
+}
+
+turbo_e_4,371,47,0	script	cos_e_4_end	45,1,1,{
+OnInit:
+	enablenpc "cos_e_4_end";
+	end;
+
+OnTouch:
+	mapannounce "turbo_e_4","" + strcharinfo(0) +" has just arrived at the Finish Line! Congratulations!",bc_map,"0xFFFF00";
+	set $ttnames$[4],strcharinfo(0);
+	donpcevent "TBT_Guide#Broadcast::Onwin_e4";
+	warp "turbo_e_4",384,161;
+	donpcevent "Winner Helper#TBT_e_4::OnEnable";
+	donpcevent "Master#e4::OnDisable";
+	disablenpc "Broadcast#e4";
+	disablenpc "cos_e_4_end";
+	end;
+}
+
+turbo_e_4,384,167,1	script	Winner Helper#TBT_e_4	47,{
+//---reward points & record player name
+	if (tt_rank < 29999) {
+		mes "[Guide]";
+		mes "Congratulations!";
+		if (tt_point < 28961) {
+			mes "As the winner, your reward";
+			mes "is 40 Turbo Track Points~";
+			set tt_point,tt_point+40;
+			set my_point,tt_point;
+			mes "You now have a total of";
+			mes "" + tt_point + " Turbo Track points,";
+			mes "" + strcharinfo(0) +".";
+		}
+		else {
+			mes "Unfortunately, I can't give";
+			mes "you any Turbo Track Points";
+			mes "since you would exceed the";
+			mes "maximum limit. Sorry,";
+			mes "" + strcharinfo(0) +"...";
+		}
+		set tt_rank,tt_rank+1;
+		next;
+		if (tt_rank > $ttranks[1]) {
+			setarray $ttranks[0],$ttranks[0],tt_rank,$ttranks[1],$ttranks[2],$ttranks[3],$ttranks[4];
+			setarray $ttnames$[9],strcharinfo(0);
+			mes "[Guide]";
+			mes "Congratulations!";
+			mes "You are ranked as";
+			mes "the top player for";
+			mes "winning the most games!";
+			donpcevent "TBT_Guide#Broadcast::Onnew_top1";
+			if (tt_rank == 29999) {
+				if ($ttnames$[7] == "Breezy Havana") {
+					set $ttnames$[7],strcharinfo(0);
+					mes "You've secured your place in";
+					mes "the Turbo Track Hall of Honor!";
+					announce "" + strcharinfo(0) + " has joined the Turbo Track Hall of Honor!",bc_all,"FF0000";
+				}
+				else if ($ttnames$[8] == "RS125") {
+					set $ttnames$[8],strcharinfo(0);
+					mes "You've secured your place in";
+					mes "the Turbo Track Hall of Honor!";
+					announce " " + strcharinfo(0) + " has joined the Turbo Track Hall of Honor!",bc_all,"FF0000";
+				}
+			}
+		}
+		else if (tt_rank > $ttranks[2]) {
+			setarray $ttranks[0],$ttranks[0],$ttranks[1],tt_rank,$ttranks[3],$ttranks[4],$ttranks[5];
+			setarray $ttnames$[10],strcharinfo(0);
+			mes "[Guide]";
+			mes "Congratulations!";
+			mes "You've ranked Second";
+			mes "among the Top Five Players";
+			mes "who've won the most games!";
+			donpcevent "TBT_Guide#Broadcast::Onnew_top2";
+			if (tt_rank == 29999) {
+				if ($ttnames$[7] == "Breezy Havana") {
+					set $ttnames$[7],strcharinfo(0);
+					mes "You've secured your place in";
+					mes "the Turbo Track Hall of Honor!";
+					announce "" + strcharinfo(0) + " has joined the Turbo Track Hall of Honor!",bc_all,"FF0000";
+				}
+				else if ($ttnames$[8] == "RS125") {
+					set $ttnames$[8],strcharinfo(0);
+					mes "You've secured your place in";
+					mes "the Turbo Track Hall of Honor!";
+					announce "" + strcharinfo(0) + " has joined the Turbo Track Hall of Honor!",bc_all,"FF0000";
+				}
+			}
+		}
+		else if (tt_rank > $ttranks[3]) {
+			setarray $ttranks[0],$ttranks[0],$ttranks[1],$ttranks[2],tt_rank,$ttranks[4],$ttranks[5];
+			setarray $ttnames$[11],strcharinfo(0);
+			mes "[Guide]";
+			mes "Congratulations!";
+			mes "You've ranked Third";
+			mes "among the Top Five Players";
+			mes "who've won the most games!";
+			donpcevent "TBT_Guide#Broadcast::Onnew_top3";
+			if (tt_rank == 29999) {
+				if ($ttnames$[7] == "Breezy Havana") {
+					set $ttnames$[7],strcharinfo(0);
+					mes "You've secured your place in";
+					mes "the Turbo Track Hall of Honor!";
+					announce "" + strcharinfo(0) + " has joined the Turbo Track Hall of Honor!",bc_all,"FF0000";
+				}
+				else if ($ttnames$[8] == "RS125") {
+					set $ttnames$[8],strcharinfo(0);
+					mes "You've secured your place in";
+					mes "the Turbo Track Hall of Honor!";
+					announce "" + strcharinfo(0) + " has joined the Turbo Track Hall of Honor!",bc_all,"FF0000";
+				}
+			}
+		}
+		else if (tt_rank > $ttranks[4]) {
+			setarray $ttranks[0],$ttranks[0],$ttranks[1],$ttranks[2],$ttranks[3],tt_rank,$ttranks[5];
+			setarray $ttnames$[12],strcharinfo(0);
+			mes "[Guide]";
+			mes "Congratulations!";
+			mes "You've ranked Fourth";
+			mes "among the Top Five Players";
+			mes "who've won the most games!";
+			donpcevent "TBT_Guide#Broadcast::Onnew_top4";
+			if (tt_rank == 29999) {
+				if ($ttnames$[7] == "Breezy Havana") {
+					set $ttnames$[7],strcharinfo(0);
+					mes "You've secured your place in";
+					mes "the Turbo Track Hall of Honor!";
+					announce "" + strcharinfo(0) + " has joined the Turbo Track Hall of Honor!",bc_all,"FF0000";
+				}
+				else if ($ttnames$[8] == "RS125") {
+					set $ttnames$[8],strcharinfo(0);
+					mes "You've secured your place in";
+					mes "the Turbo Track Hall of Honor!";
+					announce "" + strcharinfo(0) + " has joined the Turbo Track Hall of Honor!",bc_all,"FF0000";
+				}
+			}
+		}
+		else if (tt_rank > $ttranks[5]) {
+			setarray $ttranks[0],$ttranks[0],$ttranks[1],$ttranks[2],$ttranks[3],$ttranks[4],tt_rank;
+			setarray $ttnames$[13],strcharinfo(0);
+			mes "[Guide]";
+			mes "Congratulations!";
+			mes "You've ranked Fifth";
+			mes "among the Top Five Players";
+			mes "who've won the most games!";
+			donpcevent "TBT_Guide#Broadcast::Onnew_top5";
+			if (tt_rank == 29999) {
+				if ($ttnames$[7] == "Breezy Havana") {
+					set $ttnames$[7],strcharinfo(0);
+					mes "You've secured your place in";
+					mes "the Turbo Track Hall of Honor!";
+					announce "" + strcharinfo(0) + " has joined the Turbo Track Hall of Honor!",bc_all,"FF0000";
+				}
+				else if ($ttnames$[8] == "RS125") {
+					set $ttnames$[8],strcharinfo(0);
+					mes "You've secured your place in";
+					mes "the Turbo Track Hall of Honor!";
+					announce "" + strcharinfo(0) + " has joined the Turbo Track Hall of Honor!",bc_all,"FF0000";
+				}
+			}
+		}
+		else {
+			mes "[Guide]";
+			mes "If you can win more games";
+			mes "than everybody else, your";
+			mes "name will be registered in";
+			mes "our Top Five Player Ranking.";
+			next;
+			mes "[Guide]";
+			mes "What do you";
+			mes "think, " + strcharinfo(0) +"?";
+			mes "Glory can be yours if";
+			mes "you can achieve victory!";
+		}
+		next;
+		mes "[Guide]";
+		mes "Thank you for";
+		mes "participating in";
+		mes "the Turbo Track.";
+		mes "You will be transported";
+		mes "to a Waiting Room shortly.";
+		close2;
+		warp "turbo_room",72,89;
+		end;
+	}
+	else {
+		if ($ttnames$[7] == strcharinfo(0)) {
+			mes "[Guide]";
+			mes "Oh wow!";
+			mes "You're a member";
+			mes "in our Hall of Honor,";
+			mes "aren't you? This is great!";
+			mes "I'm talking to a living legend!";
+			next;
+			mes "[Guide]";
+			mes "Right, your reward...";
+			if (tt_point < 28961) {
+				mes "40 Turbo Track Points!";
+				set tt_point,tt_point+40;
+				mes "You now have a total of";
+				mes ""+ tt_point +" Turbo Track Points.";
+			}
+			else {
+				mes "Unfortunately, I can't give";
+				mes "you any Turbo Track Points";
+				mes "since you would exceed the";
+				mes "maximum limit. Sorry,";
+				mes "" + strcharinfo(0) +"...";
+			}
+			next;
+			mes "[Guide]";
+			mes "Oh, and thanks for";
+			mes "participating in the";
+			mes "Turbo Track! You'll be sent";
+			mes "to the Waiting Room soon~";
+			close2;
+			warp "turbo_room",72,89;
+			end;
+		}
+		else if ($ttnames$[8] == strcharinfo(0)) {
+			mes "[Guide]";
+			mes "Hey, aren't you";
+			mes "in our Hall of Honor?";
+			mes "I've been watching your";
+			mes "races... You're pretty quick";
+			mes "on your feet, hotshot~";
+			next;
+			mes "[Guide]";
+			mes "Right, your reward...";
+			if (tt_point < 28961) {
+				mes "40 Turbo Track Points!";
+				set tt_point,tt_point+40;
+				mes "You now have a total of";
+				mes ""+ tt_point +" Turbo Track Points.";
+			}
+			else {
+				mes "Unfortunately, I can't give";
+				mes "you any Turbo Track Points";
+				mes "since you would exceed the";
+				mes "maximum limit. Sorry...";
+			}
+			next;
+			mes "[Guide]";
+			mes "Oh, and thanks for";
+			mes "participating in the";
+			mes "Turbo Track! You'll be sent";
+			mes "to the Waiting Room soon~";
+			close2;
+			warp "turbo_room",72,89;
+			end;
+		}
+		else {
+			mes "[Guide]";
+			mes "Awwww~";
+			mes "You were almost able";
+			mes "to join our Hall of Honor...!";
+			mes "But don't let that get you";
+			mes "down. Maybe next time!";
+			next;
+			mes "[Guide]";
+			mes "Right, your reward...";
+			mes "40 Turbo Track Points!";
+			if (tt_point < 28961) {
+				set tt_point,tt_point+40;
+				set my_point,tt_point;
+				mes "You now have a total of";
+				mes ""+ tt_point +" Turbo Track Points.";
+			}
+			else {
+				mes "Unfortunately, I can't give";
+				mes "you any Turbo Track Points";
+				mes "since you would exceed the";
+				mes "maximum limit. Sorry...";
+			}
+			next;
+			mes "[Guide]";
+			mes "Thank you for";
+			mes "participating in";
+			mes "the Turbo Track.";
+			mes "You will be transported";
+			mes "to a Waiting Room shortly.";
+			close2;
+			warp "turbo_room",72,89;
+			end;
+		}
+	}
+
+OnInit:
+	disablenpc "Winner Helper#TBT_e_4";
+	end;
+
+OnEnable:
+	enablenpc "Winner Helper#TBT_e_4";
+	initnpctimer;
+	end;
+
+OnTimer4000:
+	mapannounce "turbo_e_4","This is the ending broadcast for Turbo Track Expert Mode - 4 person.",bc_map,"0x33FF66";
+	end;
+
+OnTimer8000:
+	mapannounce "turbo_e_4","For smooth game play, the game will end in approximately 1 minute.",bc_map,"0x33FF66";
+	end;
+
+OnTimer12000:
+	mapannounce "turbo_e_4","At that time, a Warp portal will open.",bc_map,"0x33FF66";
+	end;
+
+OnTimer16000:
+	mapannounce "turbo_e_4","Players in the arena must be ready to leave through the Warp Portal.",bc_map,"0x33FF66";
+	end;
+
+OnTimer20000:
+	mapannounce "turbo_e_4","In the meantime, winners must proceed to receive their rewards as soon as possible.",bc_map,"0x33FF66";
+	end;
+
+OnTimer24000:
+	mapannounce "turbo_e_4","Thank you for visiting Al De Baran Turbo Track.",bc_map,"0x33FF66";
+	end;
+
+OnTimer28000:
+	mapannounce "turbo_e_4","Al De Baran Turbo Track is brought to you by...",bc_map,"0x33FF66";
+	end;
+
+OnTimer32000:
+	mapannounce "turbo_e_4","[Al De Baran Kafra Corporation Headquarters]",bc_map,"0x33FF66";
+	end;
+
+OnTimer36000:
+	mapannounce "turbo_e_4","[Al De Baran Guild Castle Management Luina]",bc_map,"0x33FF66";
+	end;
+
+OnTimer40000:
+	mapannounce "turbo_e_4","[Blacksmith Union]",bc_map,"0x33FF66";
+	end;
+
+OnTimer44000:
+	mapannounce "turbo_e_4","And [Comodo Casino].",bc_map,"0x33FF66";
+	end;
+
+OnTimer48000:
+	mapannounce "turbo_e_4","Once again, we'd like to thank our sponsors.",bc_map,"0x33FF66";
+	end;
+
+OnTimer52000:
+	mapannounce "turbo_e_4","Have a good day.",bc_map,"0x33FF66";
+	end;
+
+//--- warp all players to turbo room
+OnTimer58000:
+	mapwarp "turbo_e_4","turbo_room",72,89;
+	end;
+
+//----end game, reset all
+OnTimer60000:
+	enablenpc "Notice_Maker1#TBT_e_4";
+	enablenpc "Notice_Maker3#TBT_e_4";
+	enablenpc "Notice_Maker4#TBT_e_4";
+	enablenpc "Disposable_Switch#e4";
+	disablenpc "Flasher_Exit_1#e4";
+	disablenpc "Flasher_Exit_2#e4";
+	enablenpc "No_Unfair_Start#e4-1";
+	enablenpc "No_Unfair_Start#e4-2";
+	donpcevent "snake#e4::Onreset";
+	donpcevent "hunting#e4::Onreset";
+	donpcevent "Expert mode - 4 person::OnEnable";
+	disablenpc "bing2#e4";
+	enablenpc "cos_e_4_end";
+	stopnpctimer;
+	end;
+}
+
+turbo_e_4,11,91,0	script	Notice_Maker1#TBT_e_4	-1,3,3,{
+OnInit:
+	enablenpc "Notice_Maker1#TBT_e_4";
+	end;
+
+OnTouch:
+	mapannounce "turbo_e_4","" + strcharinfo(0) +" is now entering the Small Cave! " + strcharinfo(0) +" is now in the lead!",bc_map,"0xFFFF00";
+	donpcevent "TBT_Guide#Broadcast::Onend_e4";
+	disablenpc "Notice_Maker1#TBT_e_4";
+	end;
+}
+
+turbo_e_4,234,223,0	script	Notice_Maker3#TBT_e_4	-1,2,2,{
+OnInit:
+	enablenpc "Notice_Maker3#TBT_e_4";
+	end;
+
+OnTouch:
+	mapannounce "turbo_e_4","" + strcharinfo(0) +" is now entering the Single Snail! " + strcharinfo(0) +" is now in the lead!",bc_map,"0xFFFF00";
+	disablenpc "Notice_Maker3#TBT_e_4";
+	end;
+}
+
+turbo_e_4,226,15,0	script	Notice_Maker4#TBT_e_4	-1,1,1,{
+OnInit:
+	enablenpc "Notice_Maker4#TBT_e_4";
+	end;
+
+OnTouch:
+	mapannounce "turbo_e_4","" + strcharinfo(0) +" is currently in First Place!",bc_map,"0xFFFF00";
+	disablenpc "Notice_Maker4#TBT_e_4";
+	end;
+}
+
+turbo_e_4,227,379,0	script	Warp#e_4_1::Warp_e_4	-1,1,1,{
+OnTouch:
+	set .@warprand,rand(1,20);
+	if (.@warprand == 1)
+		warp "turbo_e_4",216,378;
+	else if (.@warprand == 2)
+		warp "turbo_e_4",218,360;
+	else if (.@warprand == 4)
+		warp "turbo_e_4",223,361;
+	else if (.@warprand == 5)
+		warp "turbo_e_4",243,342;
+	else if (.@warprand == 6)
+		warp "turbo_e_4",247,364;
+	end;
+}
+turbo_e_4,237,380,0	duplicate(Warp_e_4)	Warp#e_4_2	-1,1,1,{
+turbo_e_4,227,367,0	duplicate(Warp_e_4)	Warp#e_4_3	-1,1,1,{
+turbo_e_4,231,360,0	duplicate(Warp_e_4)	Warp#e_4_4	-1,1,1,{
+turbo_e_4,225,349,0	duplicate(Warp_e_4)	Warp#e_4_5	-1,1,1,{
+turbo_e_4,249,352,0	duplicate(Warp_e_4)	Warp#e_4_6	-1,1,1,{
+turbo_e_4,253,364,0	duplicate(Warp_e_4)	Warp#e_4_7	-1,2,2,{
+
+turbo_e_4,307,55,0	script	trap_e4#F1::TurboTrap_e4	139,1,1,{
+OnTouch:
+	specialeffect EF_BLASTMINEBOMB;
+	set .@HitTrap,10;
+	if (.@HitTrap > 0 && .@HitTrap < 4)
+		percentheal -1,0;
+	else if (.@HitTrap > 4 && .@HitTrap < 8)
+		percentheal -5,0;
+	else
+		percentheal -2,0;
+	end;
+}
+
+turbo_e_4,307,51,0	duplicate(TurboTrap_e4)	trap_e4#F2	139,1,1
+turbo_e_4,307,47,0	duplicate(TurboTrap_e4)	trap_e4#F3	139,1,1
+turbo_e_4,307,43,0	duplicate(TurboTrap_e4)	trap_e4#F4	139,1,1
+turbo_e_4,307,39,0	duplicate(TurboTrap_e4)	trap_e4#F5	139,1,1
+turbo_e_4,307,39,0	duplicate(TurboTrap_e4)	trap_e4#F96	139,1,1
+turbo_e_4,312,56,0	duplicate(TurboTrap_e4)	trap_e4#F6	139,1,1
+turbo_e_4,312,52,0	duplicate(TurboTrap_e4)	trap_e4#F7	139,1,1
+turbo_e_4,312,48,0	duplicate(TurboTrap_e4)	trap_e4#F8	139,1,1
+turbo_e_4,312,44,0	duplicate(TurboTrap_e4)	trap_e4#F9	139,1,1
+turbo_e_4,312,40,0	duplicate(TurboTrap_e4)	trap_e4#F10	139,1,1
+turbo_e_4,312,36,0	duplicate(TurboTrap_e4)	trap_e4#F11	139,1,1
+turbo_e_4,316,55,0	duplicate(TurboTrap_e4)	trap_e4#F12	139,1,1
+turbo_e_4,316,51,0	duplicate(TurboTrap_e4)	trap_e4#F13	139,1,1
+turbo_e_4,316,47,0	duplicate(TurboTrap_e4)	trap_e4#F14	139,1,1
+turbo_e_4,316,43,0	duplicate(TurboTrap_e4)	trap_e4#F15	139,1,1
+turbo_e_4,316,39,0	duplicate(TurboTrap_e4)	trap_e4#F16	139,1,1
+turbo_e_4,316,36,0	duplicate(TurboTrap_e4)	trap_e4#F17	139,1,1
+turbo_e_4,320,56,0	duplicate(TurboTrap_e4)	trap_e4#F18	139,1,1
+turbo_e_4,320,52,0	duplicate(TurboTrap_e4)	trap_e4#F19	139,1,1
+turbo_e_4,320,48,0	duplicate(TurboTrap_e4)	trap_e4#F20	139,1,1
+turbo_e_4,320,44,0	duplicate(TurboTrap_e4)	trap_e4#F21	139,1,1
+turbo_e_4,320,40,0	duplicate(TurboTrap_e4)	trap_e4#F22	139,1,1
+turbo_e_4,320,36,0	duplicate(TurboTrap_e4)	trap_e4#F23	139,1,1
+turbo_e_4,324,55,0	duplicate(TurboTrap_e4)	trap_e4#F24	139,1,1
+turbo_e_4,324,51,0	duplicate(TurboTrap_e4)	trap_e4#F25	139,1,1
+turbo_e_4,324,47,0	duplicate(TurboTrap_e4)	trap_e4#F26	139,1,1
+turbo_e_4,324,43,0	duplicate(TurboTrap_e4)	trap_e4#F27	139,1,1
+turbo_e_4,324,39,0	duplicate(TurboTrap_e4)	trap_e4#F28	139,1,1
+turbo_e_4,324,36,0	duplicate(TurboTrap_e4)	trap_e4#F29	139,1,1
+turbo_e_4,328,56,0	duplicate(TurboTrap_e4)	trap_e4#F30	139,1,1
+turbo_e_4,328,52,0	duplicate(TurboTrap_e4)	trap_e4#F31	139,1,1
+turbo_e_4,328,48,0	duplicate(TurboTrap_e4)	trap_e4#F32	139,1,1
+turbo_e_4,328,44,0	duplicate(TurboTrap_e4)	trap_e4#F33	139,1,1
+turbo_e_4,328,40,0	duplicate(TurboTrap_e4)	trap_e4#F34	139,1,1
+turbo_e_4,328,36,0	duplicate(TurboTrap_e4)	trap_e4#F35	139,1,1
+turbo_e_4,332,55,0	duplicate(TurboTrap_e4)	trap_e4#F36	139,1,1
+turbo_e_4,332,51,0	duplicate(TurboTrap_e4)	trap_e4#F37	139,1,1
+turbo_e_4,332,47,0	duplicate(TurboTrap_e4)	trap_e4#F38	139,1,1
+turbo_e_4,332,43,0	duplicate(TurboTrap_e4)	trap_e4#F39	139,1,1
+turbo_e_4,332,39,0	duplicate(TurboTrap_e4)	trap_e4#F40	139,1,1
+turbo_e_4,332,36,0	duplicate(TurboTrap_e4)	trap_e4#F41	139,1,1
+
+turbo_e_4,336,56,0	script	trap_e4#F42::TurboTrap_e4_2	-1,1,1,{
+OnTouch:
+	specialeffect EF_FREEZING;
+	set .@HitTrap,10;
+	if (.@HitTrap > 0 && .@HitTrap < 4)
+		percentheal -1,0;
+	else if (.@HitTrap > 4 && .@HitTrap < 8) {
+		percentheal -5,0;
+		sc_start SC_FREEZE,3000,0;
+	}
+	else {
+		sc_start SC_FREEZE,4000,0;
+		percentheal -2,0;
+	}
+}
+turbo_e_4,336,52,0	duplicate(TurboTrap_e4_2)	trap_e4#F43	139,1,1
+turbo_e_4,336,48,0	duplicate(TurboTrap_e4_2)	trap_e4#F44	139,1,1
+turbo_e_4,336,44,0	duplicate(TurboTrap_e4_2)	trap_e4#F45	139,1,1
+turbo_e_4,336,50,0	duplicate(TurboTrap_e4_2)	trap_e4#F46	139,1,1
+turbo_e_4,336,36,0	duplicate(TurboTrap_e4_2)	trap_e4#F47	139,1,1
+turbo_e_4,340,55,0	duplicate(TurboTrap_e4_2)	trap_e4#F48	139,1,1
+
+turbo_e_4,340,51,0	duplicate(TurboTrap_e4)	trap_e4#F49	139,1,1
+turbo_e_4,340,47,0	duplicate(TurboTrap_e4)	trap_e4#F50	139,1,1
+turbo_e_4,340,43,0	duplicate(TurboTrap_e4)	trap_e4#F51	139,1,1
+turbo_e_4,340,39,0	duplicate(TurboTrap_e4)	trap_e4#F52	139,1,1
+turbo_e_4,340,36,0	duplicate(TurboTrap_e4)	trap_e4#F53	139,1,1
+turbo_e_4,344,56,0	duplicate(TurboTrap_e4)	trap_e4#F54	139,1,1
+turbo_e_4,344,52,0	duplicate(TurboTrap_e4)	trap_e4#F55	139,1,1
+turbo_e_4,344,48,0	duplicate(TurboTrap_e4)	trap_e4#F56	139,1,1
+turbo_e_4,344,44,0	duplicate(TurboTrap_e4)	trap_e4#F57	139,1,1
+turbo_e_4,344,40,0	duplicate(TurboTrap_e4)	trap_e4#F58	139,1,1
+turbo_e_4,344,36,0	duplicate(TurboTrap_e4)	trap_e4#F59	139,1,1
+turbo_e_4,348,55,0	duplicate(TurboTrap_e4)	trap_e4#F60	139,1,1
+turbo_e_4,348,51,0	duplicate(TurboTrap_e4)	trap_e4#F61	139,1,1
+turbo_e_4,348,47,0	duplicate(TurboTrap_e4)	trap_e4#F62	139,1,1
+turbo_e_4,348,43,0	duplicate(TurboTrap_e4)	trap_e4#F63	139,1,1
+turbo_e_4,348,39,0	duplicate(TurboTrap_e4)	trap_e4#F64	139,1,1
+turbo_e_4,348,36,0	duplicate(TurboTrap_e4)	trap_e4#F65	139,1,1
+turbo_e_4,352,56,0	duplicate(TurboTrap_e4)	trap_e4#F66	139,1,1
+turbo_e_4,352,52,0	duplicate(TurboTrap_e4)	trap_e4#F67	139,1,1
+turbo_e_4,352,48,0	duplicate(TurboTrap_e4)	trap_e4#F68	139,1,1
+turbo_e_4,352,44,0	duplicate(TurboTrap_e4)	trap_e4#F69	139,1,1
+turbo_e_4,352,40,0	duplicate(TurboTrap_e4)	trap_e4#F70	139,1,1
+turbo_e_4,352,36,0	duplicate(TurboTrap_e4)	trap_e4#F71	139,1,1
+turbo_e_4,356,55,0	duplicate(TurboTrap_e4)	trap_e4#F72	139,1,1
+turbo_e_4,356,51,0	duplicate(TurboTrap_e4)	trap_e4#F73	139,1,1
+turbo_e_4,356,47,0	duplicate(TurboTrap_e4)	trap_e4#F74	139,1,1
+turbo_e_4,356,43,0	duplicate(TurboTrap_e4)	trap_e4#F75	139,1,1
+turbo_e_4,356,39,0	duplicate(TurboTrap_e4)	trap_e4#F76	139,1,1
+turbo_e_4,356,36,0	duplicate(TurboTrap_e4)	trap_e4#F77	139,1,1
+turbo_e_4,360,56,0	duplicate(TurboTrap_e4)	trap_e4#F78	139,1,1
+turbo_e_4,360,52,0	duplicate(TurboTrap_e4)	trap_e4#F79	139,1,1
+turbo_e_4,360,48,0	duplicate(TurboTrap_e4)	trap_e4#F80	139,1,1
+turbo_e_4,360,44,0	duplicate(TurboTrap_e4)	trap_e4#F81	139,1,1
+turbo_e_4,360,40,0	duplicate(TurboTrap_e4)	trap_e4#F82	139,1,1
+turbo_e_4,360,36,0	duplicate(TurboTrap_e4)	trap_e4#F83	139,1,1
+turbo_e_4,364,55,0	duplicate(TurboTrap_e4)	trap_e4#F84	139,1,1
+turbo_e_4,364,51,0	duplicate(TurboTrap_e4)	trap_e4#F85	139,1,1
+turbo_e_4,364,47,0	duplicate(TurboTrap_e4)	trap_e4#F86	139,1,1
+turbo_e_4,364,43,0	duplicate(TurboTrap_e4)	trap_e4#F87	139,1,1
+turbo_e_4,364,39,0	duplicate(TurboTrap_e4)	trap_e4#F88	139,1,1
+turbo_e_4,364,36,0	duplicate(TurboTrap_e4)	trap_e4#F89	139,1,1
+turbo_e_4,368,56,0	duplicate(TurboTrap_e4)	trap_e4#F90	139,1,1
+turbo_e_4,368,52,0	duplicate(TurboTrap_e4)	trap_e4#F91	139,1,1
+turbo_e_4,368,48,0	duplicate(TurboTrap_e4)	trap_e4#F92	139,1,1
+turbo_e_4,368,44,0	duplicate(TurboTrap_e4)	trap_e4#F93	139,1,1
+turbo_e_4,368,40,0	duplicate(TurboTrap_e4)	trap_e4#F94	139,1,1
+turbo_e_4,368,36,0	duplicate(TurboTrap_e4)	trap_e4#F95	139,1,1
+
+turbo_e_4,217,214,0	script	bing#e4	45,3,3,{
+OnTouch:
+	set .@bing1,rand(1,10);
+	if (.@bing1 > 0 && .@bing1 < 4)
+		warp "turbo_e_4",217,232;
+	else if (.@bing1 == 6)
+		warp "turbo_e_4",233,207;
+	else if (.@bing1 == 7)
+		warp "turbo_e_4",208,219;
+	else if (.@bing1 == 8)
+		warp "turbo_e_4",219,202;
+	else if (.@bing1 == 9)
+		warp "turbo_e_4",218,228;
+	disablenpc "bing#e4";
+	enablenpc "bing2#e4";
+	end;
+}
+
+turbo_e_4,217,214,0	script	bing2#e4	45,3,3,{
+OnInit:
+	disablenpc "bing2#e4";
+	end;
+
+OnTouch:
+	set .@bing1,rand(1,10);
+	if (.@bing1 == 1)
+		warp "turbo_e_4",217,232;
+	else if (.@bing1 == 2)
+		warp "turbo_e_4",233,207;
+	else if (.@bing1 == 3)
+		warp "turbo_e_4",208,219;
+	else if (.@bing1 == 4)
+		warp "turbo_e_4",219,202;
+	else if (.@bing1 == 5)
+		warp "turbo_e_4",218,228;
+	else if (.@bing1 == 6)
+		warp "turbo_e_4",220,195;
+	end;
+}

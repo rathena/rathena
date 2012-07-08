@@ -1,0 +1,126 @@
+//===== rAthena Script ======================================= 
+//= Rachel Guides
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena  SVN
+//===== Description: ========================================= 
+//= [Aegis Conversion]
+//= Guide for the city of Rachel
+//===== Additional Comments: ================================= 
+//= 1.0 First version, Renewal guide.
+//============================================================ 
+
+rachel,138,146,5	script	Rachel Guide#rachel	934,{
+	mes "[Rachel Guide]";
+	mes "Welcome to the capital of Arunafeltz, ^8B4513Rachel^000000 where the warm breath of the goddess Freya reaches.";
+	mes "If this is the first time for you to use the guide services, I suggest you ask many questions.";
+	next;
+	while (1) {
+		switch(select("[ Main Facilities ]:[ Merchants & Helpers ]:Remove Marks from Mini-Map:Cancel")) {
+		case 1:
+			set .@loop,1;
+			while (.@loop) {
+				switch(select("[ Inn ]:[ Weapon Shop ]:[ Tool Shop ]:[ Airport ]:[ Cheshrumnir ]:[ Priest Zed's Mansion ]:Previous Menu")) {
+				case 1:
+					mes "[Rachel Guide]";
+					mes "You can rest your fatigue of the journey in the Inn. The left building next to me is the Inn of Rachel.";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,115,144,0,0xFF0000;
+					next;
+					break;
+				case 2:
+					mes "[Rachel Guide]";
+					mes "Do you want to check out the weapons that are sold in Rachel? The Weapon Shop is located near the west gate.";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,42,82,1,0xFF4500;
+					next;
+					break;
+				case 3:
+					mes "[Rachel Guide]";
+					mes "Rachel's Tool Shop sells the best quality potions. It's located near the west gate.";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,83,73,2,0xDAA520;
+					next;
+					break;
+				case 4:
+					mes "[Rachel Guide]";
+					mes "The Airport is located outside of the east gate.";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,272,125,3,0x008000;
+					next;
+					break;
+				case 5:
+					mes "[Rachel Guide]";
+					mes "Cheshrumnir is a holy ground where pope, the incarnation of goddess Freya stays.";
+					mes "Take the road to the north to find the building.";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,150,243,4,0x0000FF;
+					next;
+					break;
+				case 6:
+					mes "[Rachel Guide]";
+					mes "I will mark the location";
+					mes "of the ^000080Priest Zed's Mansion^000000";
+					mes "on your mini-map.";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,98,238,5,0x000080;
+					next;
+					break;
+				case 7:
+					set .@loop,0;
+					break;
+				}
+			}
+			break;
+		case 2:
+			set .@loop,1;
+			while (.@loop) {
+				switch(select("[ Cool Event Corp. Staff ]:[ Eden Teleport Officer ]:Previous Menu")) {
+				case 1:
+					mes "[Rachel Guide]";
+					mes "I will mark the location";
+					mes "of the ^803232Cool Event Corp. Staff^000000";
+					mes "on your mini map.";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,110,138,7,0x803232;
+					next;
+					break;
+				case 2:
+					mes "[Rachel Guide]";
+					mes "I will mark the location";
+					mes "of the ^556B2FEden Teleport Officer^000000";
+					mes "on your mini-map.";
+					mes "Would you like to check any other locations?";
+					viewpoint 1,125,144,8,0x556B2F;
+					next;
+					break;
+				case 3:
+					set .@loop,0;
+					break;
+				}
+			}
+			break;
+		case 3:
+			mes "[Rachel Guide]";
+			mes "Sure, I'll remove all marks from your mini-map.";
+			mes "Is there anything else I can do for you?";
+			viewpoint 2,115,144,0,0xFFFFFF;
+			viewpoint 2,42,82,1,0xFFFFFF;
+			viewpoint 2,83,73,2,0xFFFFFF;
+			viewpoint 2,272,125,3,0xFFFFFF;
+			viewpoint 2,150,243,4,0xFFFFFF;
+			viewpoint 2,98,238,5,0xFFFFFF;
+			viewpoint 2,110,138,7,0xFFFFFF;
+			viewpoint 2,125,144,8,0xFFFFFF;
+			next;
+			break;
+		case 4:
+			mes "[Rachel Guide]";
+			mes "Have a safe journey!";
+			close;
+		}
+	}
+}

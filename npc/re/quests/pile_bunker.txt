@@ -1,0 +1,59 @@
+//===== rAthena Script ======================================= 
+//= Pile Bunker Quest
+//===== By: ================================================== 
+//= JayPee Mateo
+//===== Current Version: ===================================== 
+//= 2.0
+//===== Compatible With: ===================================== 
+//= rAthena SVN
+//===== Description: ========================================= 
+//= 1.0 A Pile Bunker quest based on iRO WiKi. [JayPee Mateo]
+//= iRO WiKi Link: http://irowiki.org/wiki/Pile_Bunker_quest
+//= 2.0 Rewrited the Script a little so it looks a bit better. [Masao]
+//============================================================  
+
+yuno,179,174,5	script	Gomer	813,{
+
+	if(Class == Job_Mechanic || Class == Job_Mechanic_T || Class == Job_Baby_Mechanic){
+		mes "[Gomer]";
+		mes "Hello "+strcharinfo(0)+",";
+		mes "My name is Gomer and i can create Pile Bunkers for you if you bring me the required Items i need.";
+		next;
+		switch(select("Required items for Pile Bunker?:I brought the materials!")){
+		case 1:
+			mes "[Gomer]";
+			mes "These are the required Items:";
+			mes "1x Brocca";
+			mes "200x Steel";
+			mes "30x Flexible Tube";
+			close;
+		case 2:
+			if(countitem(1415) < 1 || countitem(999) < 200 || countitem(7325) < 30){
+				mes "[Gomer]";
+				mes "You dont have all the required items. Just talk to me when you have all the requirements.";
+				close;
+			}
+			mes "[Gomer]";
+			mes "Great you brought me all the materials i needed!";
+			next;
+			delitem 1415,1; // Brocca
+			delitem 999,50; // Steel
+			delitem 7325,30; // Flexible Tube
+			getitem 1549,1; // Pile Bunker
+			getitem 1360,1; // Two-Handed Axe
+			mes "[Gomer]";
+			mes "So please, take this Pile Bunker and this Two-Handed Axe i made for you.";
+			mes "If you need an new Pile Bunker just come and visit me again!";
+			close;
+		}
+	}
+	if(BaseJob == Merchant){
+		mes "[Gomer]";
+		mes "I'm sorry young one, but you do not seem ready yet to use the Pile Bunker.";
+		mes "Come back when you've grown in strength!";
+		close;
+	}
+	mes "[Gomer]";
+	mes "Isn't it a beautiful Day today?";
+	close;
+}

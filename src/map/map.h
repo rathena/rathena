@@ -13,7 +13,7 @@
 /**
  * [rAthena.org]
  **/
-#include "./config/core.h"
+#include "../config/core.h"
 
 #include <stdarg.h>
 

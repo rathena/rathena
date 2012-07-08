@@ -1,0 +1,169 @@
+//===== rAthena Script ======================================= 
+//= Ayothaya Guide
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena  SVN
+//===== Description: ========================================= 
+//= [Aegis Conversion]
+//= Guide for the city of Ayothaya
+//===== Additional Comments: ================================= 
+//= 1.0 First version, Renewal guide.
+//============================================================ 
+
+ayothaya,203,169,4	script	Ayothaya Guide Noi#01ay	839,{
+	mes "[Noi]";
+	mes "Hello~";
+	mes "Welcome to ^8B4513Ayothaya^000000.";
+	mes "This town is linked to a river through the wild forest.";
+	mes "It's a really calm country.";
+	mes "Take your time to look around.";
+	while (1) {
+		next;
+		switch(select("[ Weapon Shop ]:[ Tool Shop ]:[ Tavern ]:[ Shrine ]:[ Fishing Spot ]:Remove Marks from Mini-Map:Cancel")) {
+		case 1:
+			mes "[Noi]";
+			mes "The ^0000FFWeapon Shop^000000";
+			mes "in Ayothaya has special weapons.";
+			mes "You can find great weapons there.";
+			mes "Is there anything else I can do for you?";
+			viewpoint 1,163,90,0,0x0A82FF;
+			break;
+		case 2:
+			mes "[Noi]";
+			mes "Our citizens purchase many products in the ^006400Tool Shop^000000.";
+			mes "Make sure you get all you need there.";
+			mes "Do you need anything else??";
+			viewpoint 1,131,86,1,0xAAFF00;
+			break;
+		case 3:
+			mes "[Noi]";
+			mes "Part of adventuring is collecting information.";
+			mes "The ^008080Tavern^000000 is crowded with lots of travelers where you can get useful information.";
+			mes "Is there anything else I can do for you?";
+			viewpoint 1,229,72,2,0x008080;
+			break;
+		case 4:
+			mes "[Noi]";
+			mes "To calm your heart, go to the ^FF1493Shrine^000000 and say a prayer.";
+			mes "Is there anything else I can do for you?";
+			viewpoint 1,208,280,3,0xFF1493;
+			break;
+		case 5:
+			mes "[Noi]";
+			mes "Ayothaya is close to the beach, so most people enjoy fishing.";
+			mes "They really love to fish.";
+			mes "Go ^8B4513fishing^000000 and try to grab a big fish.";
+			mes "Is there anything else I can do for you?";
+			viewpoint 1,255,99,4,0x8B4513;
+			break;
+		case 6:
+			mes "[Noi]";
+			mes "If you want to return home";
+			mes "find ^00BFFFAibakthing^000000";
+			mes "and ask him to send you back.";
+			mes "Is there anything else I can do for you?";
+			viewpoint 1,151,68,5,0x00BFFF;
+			break;
+		case 7:
+			mes "[Noi]";
+			mes "I'll remove all marks from your mini-map.";
+			mes "Do you need anything else??";
+			viewpoint 2,1,1,0,0xFFFFFF;
+			viewpoint 2,1,1,1,0xFFFFFF;
+			viewpoint 2,1,1,2,0xFFFFFF;
+			viewpoint 2,1,1,3,0xFFFFFF;
+			viewpoint 2,1,1,4,0xFFFFFF;
+			viewpoint 2,1,1,5,0xFFFFFF;
+			break;
+		case 8:
+			mes "[Noi]";
+			mes "Enjoy your trip~!";
+			close;
+		}
+	}
+}
+
+ayothaya,146,86,4	script	Ayothaya Guide Noa#01ay	839,{
+	mes "[Noa]";
+	mes "Hello~";
+	mes "Welcome to ^8B4513Ayothaya^000000.";
+	mes "This town is linked to a river through the wild forest.";
+	mes "It's a really calm country.";
+	mes "Take your time to look around.";
+	while (1) {
+		next;
+		switch(select("[ Kafra Employee ]:[ Weapon Shop ]:[ Tool Shop ]:[ Tavern ]:[ Shrine ]:[ Fishing Spot ]:Remove Marks from Mini-Map:Cancel")) {
+		case 1:
+			mes "[Noa]";
+			mes "The ^0000FFKafra Employee^000000 is";
+			mes "marked on your mini-map.";
+			mes "Check your mini-map.";
+			mes "Is there anything else I can do for you?";
+			viewpoint 1,212,169,0,0x0A82FF;
+			break;
+		case 2:
+			mes "[Noa]";
+			mes "The ^0000FFWeapon Shop^000000";
+			mes "in Ayothaya has special weapons.";
+			mes "You can find great weapons there.";
+			mes "Is there anything else I can do for you?";
+			viewpoint 1,163,90,1,0xAAFF00;
+			break;
+		case 3:
+			mes "[Noa]";
+			mes "Our citizens purchase many products in the ^006400Tool Shop^000000.";
+			mes "Make sure you get all you need there.";
+			mes "Do you need anything else??";
+			viewpoint 1,131,86,2,0x008080;
+			break;
+		case 4:
+			mes "[Noa]";
+			mes "Part of adventuring is collecting information.";
+			mes "The ^008080Tavern^000000 is crowded with lots of travelers where you can get useful information.";
+			mes "Is there anything else I can do for you?";
+			viewpoint 1,229,72,3,0xFF1493;
+			break;
+		case 5:
+			mes "[Noa]";
+			mes "To calm your heart, go to the ^FF1493Shrine^000000 and say a prayer.";
+			mes "Is there anything else I can do for you?";
+			viewpoint 1,208,280,4,0x8B4513;
+			break;
+		case 6:
+			mes "[Noa]";
+			mes "Ayothaya is close to the beach, so most people enjoy fishing.";
+			mes "They really love to fish.";
+			mes "Go ^8B4513fishing^000000 and try to grab a big fish.";
+			mes "Is there anything else I can do for you?";
+			viewpoint 1,255,99,5,0x9400D3;
+			break;
+		case 7:
+			mes "[Noa]";
+			mes "If you want to return home";
+			mes "find ^00BFFFAibakthing^000000";
+			mes "and ask him to send you back.";
+			mes "Is there anything else I can do for you?";
+			viewpoint 1,151,68,6,0x00BFFF;
+			break;
+		case 8:
+			mes "[Noa]";
+			mes "I'll remove all marks from your mini-map.";
+			mes "Do you need anything else??";
+			viewpoint 2,1,1,0,0xFFFFFF;
+			viewpoint 2,1,1,1,0xFFFFFF;
+			viewpoint 2,1,1,2,0xFFFFFF;
+			viewpoint 2,1,1,3,0xFFFFFF;
+			viewpoint 2,1,1,4,0xFFFFFF;
+			viewpoint 2,1,1,5,0xFFFFFF;
+			viewpoint 2,1,1,6,0xFFFFFF;
+			break;
+		case 9:
+			mes "[Noa]";
+			mes "Enjoy your trip~!";
+			close;
+		}
+	}
+}

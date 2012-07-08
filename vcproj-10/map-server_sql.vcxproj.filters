@@ -351,12 +351,12 @@
     <ClInclude Include="..\src\common\utils.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\map\config\const.h" />
-    <ClInclude Include="..\src\map\config\core.h" />
-    <ClInclude Include="..\src\map\config\renewal.h" />
-    <ClInclude Include="..\src\map\config\secure.h" />
-    <ClInclude Include="..\src\map\config\classes\general.h" />
-    <ClInclude Include="..\src\map\config\classes\swordsman.h" />
+    <ClInclude Include="..\src\config\const.h" />
+    <ClInclude Include="..\src\config\core.h" />
+    <ClInclude Include="..\src\config\renewal.h" />
+    <ClInclude Include="..\src\config\secure.h" />
+    <ClInclude Include="..\src\config\classes\general.h" />
+    <ClInclude Include="..\src\config\classes\swordsman.h" />
     <ClInclude Include="..\src\common\conf.h">
       <Filter>common</Filter>
     </ClInclude>

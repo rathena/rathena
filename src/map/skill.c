@@ -13024,8 +13024,8 @@ int skill_castfix (struct block_list *bl, int skill_id, int skill_lv)
  *------------------------------------------*/
 int skill_castfix_sc (struct block_list *bl, int time, int skill_id, int skill_lv) {
 	struct status_change *sc = status_get_sc(bl);
-	struct map_session_data *sd = BL_CAST(BL_PC,bl);
 #ifdef RENEWAL_CAST
+	struct map_session_data *sd = BL_CAST(BL_PC,bl);
 	int fixed = skill_get_fixed_cast(skill_id, skill_lv);
 	if( !fixed ) {
 		fixed = skill_get_cast(skill_id, skill_lv);

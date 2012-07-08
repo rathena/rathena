@@ -1,0 +1,138 @@
+//===== rAthena Script ================
+//= Kafras in Dungeons and Fields
+//===== By: ============================
+//= rAthena Dev Team
+//===== Current Version: =======================
+//= 2.7a
+//===== Compatible With: ============================
+//= rAthena 1.0
+//===== Description: ============================================
+//= Description of argument settings for callfunc "F_Kafra".
+//=  arg(0): When set at 0 the default Kafra message is displayed.
+//=    When set to 1 the Niflhiem Kafra message is displayed.
+//=    When set to 2 the Guild Kafra message is displayed. 
+//=  arg(1): Set to 1 to disable teleport menu option.  Otherwise set to 0.
+//=  arg(2): Set to 1 to disable info menu.  Otherwise set to 0.
+//=  arg(3): Cost of Storage service
+//=  arg(4): Cost of Rent a Pushcart service
+//===== Additional Comments: =================================
+//= v1.1 Now using functions. Added teleport service for Orc Dungeon
+//= and Coal Mine Kafras.
+//= v2.1 Fixed bug with Merc job quest kafra.[Lupus]
+//= v2.1b Minor changes to function calls.  Using arguments.
+//= Added ant hell kafras.  This version uses arrays .[kobra_k88]
+//= Fixed Kafras, not giving you Save menu [Lupus]
+//= 2.3 Removed SAVE menu from dungeons Kafras [Lupus]
+//= 2.4 Now Baby Merchant can pass Merch Job Quest w/o probs [Lupus]
+//= 2.41 Removed useless warp points, already nullified by func call [Evera]
+//= 2.5 Allowed Culvert save point [Evera]
+//= 2.6 Updated function calls with new arguments. [L0ne_W0lf]
+//=	Added unique Kafra Welcome message.
+//=	Removed Ant Hell Kafra Employees.
+//= 2.7 Merchant quest in the Biliban kafra. (Barron-Monster) [L0ne_W0lf]
+//= 2.7a Corrected a problem with Dobuel "Welcome Message". (bugreport:783) [Samuray22]
+//===============================================================
+
+//<============================= Byalan Island ============================>\\
+izlu2dun,106,58,8	script	Kafra Employee::kaf_izlu2dun	115,{
+
+	cutin "kafra_03",2;
+	if(BaseJob==Job_Novice && job_merchant_q2>0) callfunc "F_MercKafra";  //F_MercKafra found in merchant.txt
+	mes "[Kafra Employee]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "Kafra's Employees are";
+	mes "always ready to serve you.";
+	mes "How can I help you today?";
+	callfunc "F_Kafra",5,2,1,120,1200;
+
+	M_Save:
+		savepoint "izlu2dun",87,170;
+		callfunc "F_KafEnd",0,1,"at Byalan Island";
+}
+
+
+//<============================ Culvert Sewers ============================>\\
+prt_fild05,290,224,3	script	Kafra Employee::prt_fild05	114,{
+	cutin "kafra_04",2;
+	mes "[Kafra Employee]";
+	mes "Welcome!";
+	mes "The Kafra Corporation";
+	mes "will always support the";
+	mes "adventurers of Rune-Midgard";
+	mes "with its excellent service. So";
+	mes "what can I do for you today?";
+	callfunc "F_Kafra",5,1,1,40,0;
+
+	M_Save:
+		savepoint "prt_fild05",274,243;
+		callfunc "F_KafEnd",0,1, "at the Prontera Culverts";
+}
+
+
+//<=========================== Coal Mine (Dead Pitt) =======================>\\
+mjolnir_02,83,362,4	script	Kafra Employee::kaf_mjolnir_02	116,{
+	cutin "kafra_02",2;
+	mes "[Kafra Employee]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "Kafra's Employees are";
+	mes "always ready to serve you.";
+	mes "How can I help you today?";
+	callfunc "F_Kafra",5,6,1,100,0;
+
+	M_Save:
+		savepoint "mjolnir_02",98,352;
+		callfunc "F_KafEnd",0,1,"at Mjolnir Dead Pit";
+}
+
+
+//<=============================== Morroc Ruins ============================>\\
+moc_ruins,59,157,5	script	Kafra Employee::moc_ruins	114,{
+	cutin "kafra_04",2;
+	mes "[Kafra Employee]";
+	mes "Welcome!";
+	mes "The Kafra Corporation";
+	mes "will always support the";
+	mes "adventurers of Rune-Midgard";
+	mes "with its excellent service. So";
+	mes "what can I do for you today?";
+	callfunc "F_Kafra",5,2,1,90,1200;
+
+	M_Save:
+		savepoint "moc_ruins",41,141;
+		callfunc "F_KafEnd",0,1," at the Pyramids";
+}
+
+
+//<================================ Orc Dungeon ============================>\\
+gef_fild10,73,340,5	script	Kafra Employee::kaf_gef_fild10	116,{
+	cutin "kafra_02",2;
+	mes "[Kafra Employee]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "Kafra's Employees are";
+	mes "always ready to serve you.";
+	mes "How can I help you today?";
+	callfunc "F_Kafra",5,6,1,130,0;
+
+	M_Save:
+		savepoint "gef_fild10",54,326;
+		callfunc "F_KafEnd",0,1,"at the Orc Dungeon";
+}
+
+//<============================== Treasure Island ==========================>\\
+alb2trea,59,69,5	script	Kafra Employee::kaf_alb2trea	117,{
+	cutin "kafra_01",2;
+	mes "[Kafra Employee]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "The Kafra services";
+	mes "are always on your side.";
+	mes "How may I assist you?";
+	callfunc "F_Kafra",5,2,1,50,0;
+
+	M_Save:
+		savepoint "alb2trea",92,64;
+		callfunc "F_KafEnd",0,1,0,"at Sunken Ship";
+}

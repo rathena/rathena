@@ -1,0 +1,77 @@
+//===== rAthena Script ============
+//= Alberta Kafras
+//===== By: =========================
+//= rAthena Dev Team
+//===== Current Version: ===================
+//= 2.4
+//===== Compatible With: =====================
+//= rAthena 1.0
+//===== Description: ============================================
+//= Description of argument settings for callfunc "F_Kafra".
+//=  arg(0): When set at 0 the default Kafra message is displayed.
+//=    When set to 1 the Niflhiem Kafra message is displayed.
+//=    When set to 2 the Guild Kafra message is displayed. 
+//=  arg(1): Set to 1 to disable teleport menu option. Otherwise set to 0.
+//=  arg(2): Set to 1 to disable info menu.  Otherwise set to 0.
+//=  arg(3): Cost of Storage service
+//=  arg(4): Cost of Rent a Pushcart service
+//===== Additional Comments: ==========================================
+//= v1.1 Now using functions :)
+//= v2.1b Minor changes to function calls. Using arguments.
+//= This version uses arrays .[kobra_k88]
+//= 2.2 New Teleport list and prices [Lupus]
+//= 2.3 Can't save outside city anymore [Evera]
+//= 2.4 Updated function calls with new arguments. [L0ne_W0lf]
+//=	Added unique Kafra Welcome message.
+//=====================================================================
+
+
+// NorthWest -----------------------------------------------------------------
+alberta,28,229,0	script	Kafra Employee::kaf_alberta	116,{
+	cutin "kafra_02",2;
+	callfunc "F_KafSetAlb";
+	mes "[Kafra Employee]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "Kafra's Employees are";
+	mes "always ready to serve you.";
+	mes "How can I help you today?";
+	callfunc "F_Kafra",5,0,0,50,850;
+
+	M_Save:
+		savepoint "alberta",31,231;
+		callfunc "F_KafEnd",0,1,"in the city of Alberta";
+}
+
+// South ---------------------------------------------------------------------
+alberta,113,60,6	script	Kafra Employee::kaf_alberta2	112,{
+	cutin "kafra_06",2;
+	callfunc "F_KafSetAlb";
+	mes "[Kafra Employee]";
+	mes "Welcome to the";
+	mes "Kafra Corporation~";
+	mes "The Kafra Services are";
+	mes "always here to support";
+	mes "you. So how can I be";
+	mes "of service today?";
+	callfunc "F_Kafra",5,0,0,50,850;
+
+	M_Save:
+		savepoint "alberta",117,57;
+		callfunc "F_KafEnd",0,1,"in the city of Alberta";
+}
+
+
+// Function: Sets variables for Ablerta Kafras -------------------------------
+function	script	F_KafSetAlb	{
+	cleararray @wrpC$[0],"",getarraysize(@wrpC$);
+	setarray @wrpP[0], 1200, 1800, 1800;
+	setarray @wrpD$[0], "Payon", "Morroc", "Prontera";
+	set @wrpC$[0], @wrpD$[0]+" -> "+@wrpP[0];
+	set @wrpC$[1], @wrpD$[1]+" -> "+@wrpP[1];
+	set @wrpC$[2], @wrpD$[2]+" -> "+@wrpP[2];
+	set @wrpC$[3], "Cancel";
+	setarray @viewpX[0], 28, 113, 0, 0;
+	setarray @viewpY[0], 229, 60, 0, 0;
+	return;
+}

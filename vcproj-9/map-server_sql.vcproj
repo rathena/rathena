@@ -520,11 +520,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\map\config\const.h"
+				RelativePath="..\src\config\const.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\map\config\core.h"
+				RelativePath="..\src\config\core.h"
 				>
 			</File>
 			<File
@@ -552,7 +552,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\map\config\classes\general.h"
+				RelativePath="..\src\config\classes\general.h"
 				>
 			</File>
 			<File
@@ -704,7 +704,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\map\config\renewal.h"
+				RelativePath="..\src\config\renewal.h"
 				>
 			</File>
 			<File
@@ -724,7 +724,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\map\config\secure.h"
+				RelativePath="..\src\config\secure.h"
 				>
 			</File>
 			<File
@@ -752,7 +752,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\map\config\classes\swordsman.h"
+				RelativePath="..\src\config\classes\swordsman.h"
 				>
 			</File>
 			<File

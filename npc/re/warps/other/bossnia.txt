@@ -1,0 +1,18 @@
+//===== rAthena Script =======================================
+//= Bossnia Warps
+//===== By: ==================================================
+//= Masao
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any rAthena Version
+//===== Description: =========================================
+//= Back Warp Points related to the Bossnia event.
+//===== Additional Comments: =================================
+//= 1.0 First Version.
+//============================================================
+
+bossnia_01,204,204,0	warp	bossnia01	1,1,prontera,155,180
+bossnia_02,204,204,0	warp	bossnia02	1,1,prontera,155,180
+bossnia_03,204,204,0	warp	bossnia03	1,1,prontera,155,180
+bossnia_04,204,204,0	warp	bossnia04	1,1,prontera,155,180
