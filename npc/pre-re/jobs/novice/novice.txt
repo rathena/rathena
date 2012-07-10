@@ -2242,7 +2242,7 @@ new_1-1,144,107,2	script	Guard#nv2	105,{
 	mes "[Training Grounds Guard]";
 	if(rand(2)) {
 		mes "Come in!";
-		mes "I would like o welcome you to the Training Grounds!";
+		mes "I would like to welcome you to the Training Grounds!";
 		next;
 		mes "[Training Grounds Guard]";
 		mes "In here, you can prepare yourself for your future adventures throughout the Ragnarok world!";

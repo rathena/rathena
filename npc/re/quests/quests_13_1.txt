@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.3
+//= 2.4
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -40,6 +40,7 @@
 //= 2.1 Fixed some typos [tr0n]
 //= 2.2 A little optimization (-25kb). [Euphy]
 //= 2.3 Updated to match the new Izlude Map. [Masao]
+//= 2.4 More optimization (-32kb). [Euphy]
 //============================================================ 
 
 // Onward to the New World
@@ -8120,18 +8121,15 @@ mid_camp,222,218,3	script	Hansenne#ep131_rhea03	931,{
 
 mid_campin,379,123,5	script	Ryosen#ep131_rhea05	748,{
 	end;
-OnInit:
-	disablenpc "Ryosen#ep131_rhea05";
-	end;
-
 OnEnable:
 	initnpctimer;
 	enablenpc "Ryosen#ep131_rhea05";
 	end;
 
 OnDisable:
-	disablenpc "Ryosen#ep131_rhea05";
 	stopnpctimer;
+OnInit:
+	disablenpc "Ryosen#ep131_rhea05";
 	end;
 
 OnTimer300000:
@@ -8141,18 +8139,15 @@ OnTimer300000:
 
 mid_campin,372,123,5	script	Hue#ep131_rhea06	868,{
 	end;
-OnInit:
-	disablenpc "Hue#ep131_rhea06";
-	end;
-
 OnEnable:
 	initnpctimer;
 	enablenpc "Hue#ep131_rhea06";
 	end;
 
 OnDisable:
-	disablenpc "Hue#ep131_rhea06";
 	stopnpctimer;
+OnInit:
+	disablenpc "Hue#ep131_rhea06";
 	end;
 
 OnTimer300000:
@@ -8162,18 +8157,15 @@ OnTimer300000:
 
 mid_campin,375,129,5	script	Hansenne#ep131_rhea07	931,{
 	end;
-OnInit:
-	disablenpc "Hansenne#ep131_rhea07";
-	end;
-
 OnEnable:
 	initnpctimer;
 	enablenpc "Hansenne#ep131_rhea07";
 	end;
 
 OnDisable:
-	disablenpc "Hansenne#ep131_rhea07";
 	stopnpctimer;
+OnInit:
+	disablenpc "Hansenne#ep131_rhea07";
 	end;
 
 OnTimer300000:
@@ -8228,9 +8220,6 @@ mid_camp,1,1,0	script	#timer_alba01	844,{
 OnInit:
 	set $@PartTimeOn,0;
 	set $@PartTimeSlots,0;
-	initnpctimer;
-	end;
-
 OnEnable:
 	initnpctimer;
 	end;
@@ -8246,21 +8235,9 @@ OnTimer1000:
 	end;
 
 OnTimer180000:
-	if ($@PartTimeOn < 5) {
-		mapannounce "mid_camp", "Breeder Taab: I'm looking for a part-timer who can work for my breeding farm. If you're interested, please visit me at the farm.",bc_map,"0x00ff00";
-	}
-	else {
-		mapannounce "mid_camp", "Breeder Taab: The recruitment for my breeding farm has ended. I'll see you next time. Thanks!",bc_map,"0x00ff00";
-	}
-	end;
-
 OnTimer360000:
-	if ($@PartTimeOn < 5) {
-		mapannounce "mid_camp", "Breeder Taab: I'm looking for a part-timer who can work for my breeding farm. If you're interested, please visit me at the farm.",bc_map,"0x00ff00";
-	}
-	else {
-		mapannounce "mid_camp", "Breeder Taab: The recruitment for my breeding farm has ended. I'll see you next time. Thanks!",bc_map,"0x00ff00";
-	}
+	if ($@PartTimeOn < 5) mapannounce "mid_camp", "Breeder Taab: I'm looking for a part-timer who can work for my breeding farm. If you're interested, please visit me at the farm.",bc_map,"0x00ff00";
+	else mapannounce "mid_camp", "Breeder Taab: The recruitment for my breeding farm has ended. I'll see you next time. Thanks!",bc_map,"0x00ff00";
 	end;
 
 OnTimer600000:
@@ -8725,9 +8702,7 @@ OnTouch:
 
 mid_camp,1,2,0	script	#monster_master	844,{
 OnEnable:
-	if (rand(1,3) > 1) {
-		initnpctimer;
-	}
+	if (rand(1,3) > 1) initnpctimer;
 	end;
 
 Onstop:
@@ -9480,82 +9455,54 @@ spl_fild02,314,165,0	script	School of Fish#1::Fishinghole	844,{
 		specialeffect2 EF_BUBBLE;
 		specialeffect2 EF_INVENOM;
 		set .@fcast,15;
-		if (isequipped(2550)) { //Fisher's_Muffler
+		if (isequipped(2550)) //Fisher's_Muffler
 			set .@fcast,.@fcast - 2;
-		}
-		if (isequipped(2443)) { //Fish_Shoes
+		if (isequipped(2443)) //Fish_Shoes
 			set .@fcast,.@fcast - 2;
-		}
-		if (isequipped(2764)) { //Small_Fishing_Rod
+		if (isequipped(2764)) //Small_Fishing_Rod
 			set .@fcast,.@fcast - 3;
-		}
-		if (isequipped(2775)) { //Lure
+		if (isequipped(2775)) //Lure
 			set .@fcast,.@fcast - 1;
-		}
-		if (isequipped(1599)) { //Ahura_Mazda
+		if (isequipped(1599)) //Ahura_Mazda
 			set .@fcast,.@fcast - 3;
-		}
-		if (isequipped(2199)) { //Angra_Manyu
+		if (isequipped(2199)) //Angra_Manyu
 			set .@fcast,.@fcast - 4;
-		}
 		progressbar "ffff00",.@fcast;
 		if (ep13_1_rhea == 13) {
 			if (rand(1,20) == 2) {
 				getitem 6037,1; //Rough_File
 				set ep13_1_rhea,14;
 				specialeffect EF_BUBBLE;
-				mapannounce "spl_fild02","" + strcharinfo(0) + " has caught a Messy File!!",bc_map,"0xff77ff";
+				mapannounce strcharinfo(3),strcharinfo(0) + " has caught a Messy File!!",bc_map,"0xff77ff";
 			}
 		}
 		set .@rhea_ran,rand(1,70);
-		if (.@rhea_ran < 20) {
-			getitem 6039,1; //Piece_Of_Fish
-		}
-		else if (.@rhea_ran == 20) {
-			getitem 908,1; //Spawn
-		}
-		else if (.@rhea_ran == 21) {
-			getitem 909,1; //Jellopy
-		}
-		else if (.@rhea_ran == 22) {
-			getitem 963,1; //Sharp_Scale
-		}
-		else if (.@rhea_ran == 23) {
-			getitem 956,1; //Gill
-		}
-		else if (.@rhea_ran == 24) {
-			getitem 6049,1; //Marlin
-		}
-		else if (.@rhea_ran == 25) {
-			getitem 918,1; //Sticky_Webfoot
-		}
-		else if (.@rhea_ran == 26) {
-			getitem 960,1; //Nipper
-		}
-		else if (.@rhea_ran == 27) {
-			getitem 910,1; //Garlet
-		}
-		else if (.@rhea_ran == 28) {
-			getitem 938,1; //Sticky_Mucus
-		}
-		else if ((.@rhea_ran > 28) && (.@rhea_ran < 40)) {
-			getitem 7049,1; //Stone
-		}
+		if (.@rhea_ran < 20) getitem 6039,1; //Piece_Of_Fish
+		else if (.@rhea_ran == 20) getitem 908,1; //Spawn
+		else if (.@rhea_ran == 21) getitem 909,1; //Jellopy
+		else if (.@rhea_ran == 22) getitem 963,1; //Sharp_Scale
+		else if (.@rhea_ran == 23) getitem 956,1; //Gill
+		else if (.@rhea_ran == 24) getitem 6049,1; //Marlin
+		else if (.@rhea_ran == 25) getitem 918,1; //Sticky_Webfoot
+		else if (.@rhea_ran == 26) getitem 960,1; //Nipper
+		else if (.@rhea_ran == 27) getitem 910,1; //Garlet
+		else if (.@rhea_ran == 28) getitem 938,1; //Sticky_Mucus
+		else if ((.@rhea_ran > 28) && (.@rhea_ran < 40)) getitem 7049,1; //Stone
 		else {
 			mes "Nothing was caught.";
 			close;
 		}
 		if (rand(1,200) == 3) {
 			getitem 644,1; //Gift_Box
-			mapannounce "spl_fild02","" + strcharinfo(0) + " has caught a Gift Box!!",bc_map,"0x00ffff";
+			mapannounce strcharinfo(3),strcharinfo(0) + " has caught a Gift Box!!",bc_map,"0x00ffff";
 		}
 		if (rand(1,500) == 3) {
 			getitem 603,1; //Old_Blue_Box
-			mapannounce "spl_fild02","" + strcharinfo(0) + " has caught an Old Blue Box!!",bc_map,"0x00ffff";
+			mapannounce strcharinfo(3),strcharinfo(0) + " has caught an Old Blue Box!!",bc_map,"0x00ffff";
 		}
 		if (rand(1,3000) == 3) {
 			getitem 617,1; //Old_Violet_Box
-			mapannounce "spl_fild02","" + strcharinfo(0) + " has caught an Old Purple Box!!",bc_map,"0x44ff44";
+			mapannounce strcharinfo(3),strcharinfo(0) + " has caught an Old Purple Box!!",bc_map,"0x44ff44";
 		}
 		end;
 	}
@@ -9565,98 +9512,9 @@ spl_fild02,314,165,0	script	School of Fish#1::Fishinghole	844,{
 	}
 }
 
-spl_fild02,321,169,0	duplicate(Fishinghole)	School of Fish#2	844,{
-spl_fild02,326,171,0	duplicate(Fishinghole)	School of Fish#3	844,{
-
-mid_camp,75,135,0	script	School of Fish#4	844,{
-	if ((checkquest(12060,PLAYTIME) == -1) && (countitem(6039) < 20)) {
-		specialeffect2 EF_BUBBLE;
-		specialeffect2 EF_INVENOM;
-		set .@fcast,15;
-		if (isequipped(2550)) { //Fisher's_Muffler
-			set .@fcast,.@fcast - 2;
-		}
-		if (isequipped(2443)) { //Fish_Shoes
-			set .@fcast,.@fcast - 2;
-		}
-		if (isequipped(2764)) { //Small_Fishing_Rod
-			set .@fcast,.@fcast - 3;
-		}
-		if (isequipped(2775)) { //Lure
-			set .@fcast,.@fcast - 1;
-		}
-		if (isequipped(1599)) { //Ahura_Mazda
-			set .@fcast,.@fcast - 3;
-		}
-		if (isequipped(2199)) { //Angra_Manyu
-			set .@fcast,.@fcast - 4;
-		}
-		progressbar "ffff00",.@fcast;
-		if (ep13_1_rhea == 13) {
-			if (rand(1,20) == 2) {
-				getitem 6037,1; //Rough_File
-				set ep13_1_rhea,14;
-				specialeffect EF_BUBBLE;
-				mapannounce "mid_camp","" + strcharinfo(0) + " has caught a Messy File!!",bc_map,"0xff77ff";
-			}
-		}
-		set .@rhea_ran,rand(1,70);
-		if (.@rhea_ran < 20) {
-			getitem 6039,1; //Piece_Of_Fish
-		}
-		else if (.@rhea_ran == 20) {
-			getitem 908,1; //Spawn
-		}
-		else if (.@rhea_ran == 21) {
-			getitem 909,1; //Jellopy
-		}
-		else if (.@rhea_ran == 22) {
-			getitem 963,1; //Sharp_Scale
-		}
-		else if (.@rhea_ran == 23) {
-			getitem 956,1; //Gill
-		}
-		else if (.@rhea_ran == 24) {
-			getitem 6049,1; //Marlin
-		}
-		else if (.@rhea_ran == 25) {
-			getitem 918,1; //Sticky_Webfoot
-		}
-		else if (.@rhea_ran == 26) {
-			getitem 960,1; //Nipper
-		}
-		else if (.@rhea_ran == 27) {
-			getitem 910,1; //Garlet
-		}
-		else if (.@rhea_ran == 28) {
-			getitem 938,1; //Sticky_Mucus
-		}
-		else if ((.@rhea_ran > 28) && (.@rhea_ran < 40)) {
-			getitem 7049,1; //Stone
-		}
-		else {
-			mes "Nothing was caught.";
-			close;
-		}
-		if (rand(1,200) == 3) {
-			getitem 644,1; //Gift_Box
-			mapannounce "mid_camp","" + strcharinfo(0) + " has caught a Gift Box!!",bc_map,"0x00ffff";
-		}
-		if (rand(1,500) == 3) {
-			getitem 603,1; //Old_Blue_Box
-			mapannounce "mid_camp","" + strcharinfo(0) + " has caught an Old Blue Box!!",bc_map,"0x00ffff";
-		}
-		if (rand(1,3000) == 3) {
-			getitem 617,1; //Old_Violet_Box
-			mapannounce "mid_camp","" + strcharinfo(0) + " has caught an Old Purple Box!!",bc_map,"0x44ff44";
-		}
-		end;
-	}
-	else {
-		mes "Fish are swimming in the water.";
-		close;
-	}
-}
+spl_fild02,321,169,0	duplicate(Fishinghole)	School of Fish#2	844
+spl_fild02,326,171,0	duplicate(Fishinghole)	School of Fish#3	844
+mid_camp,75,135,0	duplicate(Fishinghole)	School of Fish#4	844
 
 mid_camp,66,122,55	script	Henry Clifford	712,{
 	if (countitem(6049) > 0) {
@@ -12089,8 +11947,8 @@ spl_fild03,172,71,3	script	Expedition Scout#4	707,{
 }
 
 prt_castle,88,165,3	script	Laur	57,{
-	if (ep13_1_edq == 9) {
-		mes "[Laur]";
+	mes "[Laur]";
+	if (ep13_1_edq == 9 || ep13_1_edq == 111 || ep13_1_edq == 121 || ep13_1_edq == 113 || ep13_1_edq == 123) {
 		mes "I'm Laur, the aide of the Home Minister of the Rune-Midgarts Kingdom. Do you have any business with me?";
 		next;
 		mes "[Laur]";
@@ -12103,121 +11961,13 @@ prt_castle,88,165,3	script	Laur	57,{
 		mes "I knew it was the wrong idea to out a mercenary in the commander position. See, nothing is done on time. Gosh!";
 		next;
 		delitem 11012,1; //Expedition_Report
-		set ep13_1_edq,101;
-		mes "...";
-		next;
-		mes "... ...";
-		next;
-		mes "... ... ...";
-		next;
-		mes "[Laur]";
-		mes "*Ahem Ahem* Thank you for bringing me the report. I guess I was wrong about the commander. This report is actually very well done.";
-		next;
-		mes "[Laur]";
-		mes "But don't forget to tell him that I need the expedition reports on time from now on. Alright? *Ahem*";
-		close;
-	}
-	else if (ep13_1_edq == 111) {
-		mes "[Laur]";
-		mes "I'm Laur, the aide of the Home Minister of the Rune-Midgarts Kingdom. Do you have any business with me?";
-		next;
-		mes "[Laur]";
-		mes "Oh, you brought me the report from the Midgard Expedition. What took you so long? I received a message about your departure a long time ago.";
-		next;
-		mes "[Laur]";
-		mes "Well, tell the commander that I'm not happy with your tardiness. Now, give me the report.";
-		next;
-		mes "[Laur]";
-		mes "I knew it was the wrong idea to out a mercenary in the commander position. See, nothing is done on time. Gosh!";
-		next;
-		delitem 11012,1; //Expedition_Report
-		set ep13_1_edq,112;
-		mes "...";
-		next;
-		mes "... ...";
-		next;
-		mes "... ... ...";
-		next;
-		mes "[Laur]";
-		mes "*Ahem Ahem* Thank you for bringing me the report. I guess I was wrong about the commander. This report is actually very well done.";
-		next;
-		mes "[Laur]";
-		mes "But don't forget to tell him that I need the expedition reports on time from now on. Alright? *Ahem*";
-		close;
-	}
-	else if (ep13_1_edq == 121) {
-		mes "[Laur]";
-		mes "I'm Laur, the aide of the Home Minister of the Rune-Midgarts Kingdom. Do you have any business with me?";
-		next;
-		mes "[Laur]";
-		mes "Oh, you brought me the report from the Midgard Expedition. What took you so long? I received a message about your departure a long time ago.";
-		next;
-		mes "[Laur]";
-		mes "Well, tell the commander that I'm not happy with your tardiness. Now, give me the report.";
-		next;
-		mes "[Laur]";
-		mes "I knew it was the wrong idea to out a mercenary in the commander position. See, nothing is done on time. Gosh!";
-		next;
-		delitem 11012,1; //Expedition_Report
-		set ep13_1_edq,122;
-		mes "...";
-		next;
-		mes "... ...";
-		next;
-		mes "... ... ...";
-		next;
-		mes "[Laur]";
-		mes "*Ahem Ahem* Thank you for bringing me the report. I guess I was wrong about the commander. This report is actually very well done.";
-		next;
-		mes "[Laur]";
-		mes "But don't forget to tell him that I need the expedition reports on time from now on. Alright? *Ahem*";
-		close;
-	}
-	else if (ep13_1_edq == 113) {
-		mes "[Laur]";
-		mes "I'm Laur, the aide of the Home Minister of the Rune-Midgarts Kingdom. Do you have any business with me?";
-		next;
-		mes "[Laur]";
-		mes "Oh, you brought me the report from the Midgard Expedition. What took you so long? I received a message about your departure a long time ago.";
-		next;
-		mes "[Laur]";
-		mes "Well, tell the commander that I'm not happy with your tardiness. Now, give me the report.";
-		next;
-		mes "[Laur]";
-		mes "I knew it was the wrong idea to out a mercenary in the commander position. See, nothing is done on time. Gosh!";
-		next;
-		delitem 11012,1; //Expedition_Report
-		set ep13_1_edq,13;
-		changequest 3093,3094;
-		mes "...";
-		next;
-		mes "... ...";
-		next;
-		mes "... ... ...";
-		next;
-		mes "[Laur]";
-		mes "*Ahem Ahem* Thank you for bringing me the report. I guess I was wrong about the commander. This report is actually very well done.";
-		next;
-		mes "[Laur]";
-		mes "But don't forget to tell him that I need the expedition reports on time from now on. Alright? *Ahem*";
-		close;
-	}
-	else if (ep13_1_edq == 123) {
-		mes "[Laur]";
-		mes "I'm Laur, the aide of the Home Minister of the Rune-Midgarts Kingdom. Do you have any business with me?";
-		next;
-		mes "[Laur]";
-		mes "Oh, you brought me the report from the Midgard Expedition. What took you so long? I received a message about your departure a long time ago.";
-		next;
-		mes "[Laur]";
-		mes "Well, tell the commander that I'm not happy with your tardiness. Now, give me the report.";
-		next;
-		mes "[Laur]";
-		mes "I knew it was the wrong idea to out a mercenary in the commander position. See, nothing is done on time. Gosh!";
-		next;
-		delitem 11012,1; //Expedition_Report
-		set ep13_1_edq,13;
-		changequest 3093,3094;
+		if (ep13_1_edq == 9) set ep13_1_edq,101;
+		else if (ep13_1_edq == 111) set ep13_1_edq,112;
+		else if (ep13_1_edq == 121) set ep13_1_edq,122;
+		else if (ep13_1_edq == 113) {
+			set ep13_1_edq,13;
+			changequest 3093,3094;
+		}
 		mes "...";
 		next;
 		mes "... ...";
@@ -12232,7 +11982,6 @@ prt_castle,88,165,3	script	Laur	57,{
 		close;
 	}
 	else if ((ep13_1_edq == 101) || (ep13_1_edq == 102) || (ep13_1_edq == 103) || (ep13_1_edq == 112) || (ep13_1_edq == 122) || (ep13_1_edq == 13)) {
-		mes "[Laur]";
 		mes "Why are you back? You've delivered the report to me already. Are you suffering from amnesia or something?";
 		next;
 		mes "[Laur]";
@@ -12240,7 +11989,6 @@ prt_castle,88,165,3	script	Laur	57,{
 		close;
 	}
 	else {
-		mes "[Laur]";
 		mes "I'm Laur, the aide of the Home Minister of the Rune Midgarts Kingdom. Do you have any business with me?";
 		next;
 		mes "[Laur]";
@@ -12256,8 +12004,8 @@ prt_castle,88,165,3	script	Laur	57,{
 }
 
 ra_temple,122,174,3	script	Nuria	918,{
-	if (ep13_1_edq == 9) {
-		mes "[Nuria]";
+	mes "[Nuria]";
+	if (ep13_1_edq == 9 || ep13_1_edq == 101 || ep13_1_edq == 121 || ep13_1_edq == 122 || ep13_1_edq == 103) {
 		mes "Welcome, stranger. How can I help you?";
 		next;
 		mes "[Nuria]";
@@ -12267,109 +12015,13 @@ ra_temple,122,174,3	script	Nuria	918,{
 		mes "I regret admitting that you've brought it much later than I expected, but... I'm glad it is here safely. Please give it to me.";
 		next;
 		delitem 11012,1; //Expedition_Report
-		set ep13_1_edq,111;
-		mes "...";
-		next;
-		mes "... ...";
-		next;
-		mes "... ... ...";
-		next;
-		mes "[Nuria]";
-		mes "I'm happy to see that they've made good progress so far. Please tell the commander to keep up the good work.";
-		next;
-		mes "[Nuria]";
-		mes "Excuse me, but it's time to pray now. Please be safe on your travels.";
-		close;
-	}
-	else if (ep13_1_edq == 101) {
-		mes "[Nuria]";
-		mes "Welcome, stranger. How can I help you?";
-		next;
-		mes "[Nuria]";
-		mes "Oh, I see. You've brought me a report from the expedition beyond the time-space gap.";
-		next;
-		mes "[Nuria]";
-		mes "I regret admitting that you've brought it much later than I expected, but... I'm glad it is here safely. Please give it to me.";
-		next;
-		delitem 11012,1; //Expedition_Report
-		set ep13_1_edq,102;
-		mes "...";
-		next;
-		mes "... ...";
-		next;
-		mes "... ... ...";
-		next;
-		mes "[Nuria]";
-		mes "I'm happy to see that they've made good progress so far. Please tell the commander to keep up the good work.";
-		next;
-		mes "[Nuria]";
-		mes "Excuse me, but it's time to pray now. Please be safe on your travels.";
-		close;
-	}
-	else if (ep13_1_edq == 121) {
-		mes "[Nuria]";
-		mes "Welcome, stranger. How can I help you?";
-		next;
-		mes "[Nuria]";
-		mes "Oh, I see. You've brought me a report from the expedition beyond the time-space gap.";
-		next;
-		mes "[Nuria]";
-		mes "I regret admitting that you've brought it much later than I expected, but... I'm glad it is here safely. Please give it to me.";
-		next;
-		delitem 11012,1; //Expedition_Report
-		set ep13_1_edq,123;
-		mes "...";
-		next;
-		mes "... ...";
-		next;
-		mes "... ... ...";
-		next;
-		mes "[Nuria]";
-		mes "I'm happy to see that they've made good progress so far. Please tell the commander to keep up the good work.";
-		next;
-		mes "[Nuria]";
-		mes "Excuse me, but it's time to pray now. Please be safe on your travels.";
-		close;
-	}
-	else if (ep13_1_edq == 122) {
-		mes "[Nuria]";
-		mes "Welcome, stranger. How can I help you?";
-		next;
-		mes "[Nuria]";
-		mes "Oh, I see. You've brought me a report from the expedition beyond the time-space gap.";
-		next;
-		mes "[Nuria]";
-		mes "I regret admitting that you've brought it much later than I expected, but... I'm glad it is here safely. Please give it to me.";
-		next;
-		delitem 11012,1; //Expedition_Report
-		set ep13_1_edq,13;
-		changequest 3093,3094;
-		mes "...";
-		next;
-		mes "... ...";
-		next;
-		mes "... ... ...";
-		next;
-		mes "[Nuria]";
-		mes "I'm happy to see that they've made good progress so far. Please tell the commander to keep up the good work.";
-		next;
-		mes "[Nuria]";
-		mes "Excuse me, but it's time to pray now. Please be safe on your travels.";
-		close;
-	}
-	else if (ep13_1_edq == 103) {
-		mes "[Nuria]";
-		mes "Welcome, stranger. How can I help you?";
-		next;
-		mes "[Nuria]";
-		mes "Oh, I see. You've brought me a report from the expedition beyond the time-space gap.";
-		next;
-		mes "[Nuria]";
-		mes "I regret admitting that you've brought it much later than I expected, but... I'm glad it is here safely. Please give it to me.";
-		next;
-		delitem 11012,1; //Expedition_Report
-		set ep13_1_edq,13;
-		changequest 3093,3094;
+		if (ep13_1_edq == 9) set ep13_1_edq,111;
+		else if (ep13_1_edq == 101) set ep13_1_edq,102;
+		else if (ep13_1_edq == 121) set ep13_1_edq,123;
+		else if (ep13_1_edq == 122 || ep13_1_edq == 103) {
+			set ep13_1_edq,13;
+			changequest 3093,3094;
+		}
 		mes "...";
 		next;
 		mes "... ...";
@@ -12384,7 +12036,6 @@ ra_temple,122,174,3	script	Nuria	918,{
 		close;
 	}
 	else if ((ep13_1_edq == 111) || (ep13_1_edq == 102) || (ep13_1_edq == 112) || (ep13_1_edq == 123) || (ep13_1_edq == 113) || (ep13_1_edq == 13)) {
-		mes "[Nuria]";
 		mes "Oh, right, I already received the report from you. Don't worry, you didn't forget.";
 		next;
 		mes "[Nuria]";
@@ -12392,15 +12043,14 @@ ra_temple,122,174,3	script	Nuria	918,{
 		close;
 	}
 	else {
-		mes "[Nuria]";
 		mes "Good day, stranger. May Freya bless you.";
 		close;
 	}
 }
 
 lhz_in01,110,174,5	script	Gerhart	903,{
-	if (ep13_1_edq == 9) {
-		mes "[Gerhart]";
+	mes "[Gerhart]";
+	if (ep13_1_edq == 9 || ep13_1_edq == 101 || ep13_1_edq == 111 || ep13_1_edq == 102 || ep13_1_edq == 112) {
 		mes "Welcome, " + strcharinfo(0) + ". What took you so long?";
 		next;
 		mes "[Gerhart]";
@@ -12411,129 +12061,13 @@ lhz_in01,110,174,5	script	Gerhart	903,{
 		mes "Do you know how long I waited for this report? *Sigh* ...Fine, just give it to me.";
 		next;
 		delitem 11012,1; //Expedition_Report
-		set ep13_1_edq,121;
-		mes "...";
-		next;
-		mes "... ...";
-		next;
-		mes "... ... ...";
-		next;
-		mes "[Gerhart]";
-		mes "Hmmm... This report is a clear demonstration of Commander Hibba Agip's competence... Well, that's great.";
-		next;
-		mes "[Gerhart]";
-		mes "Thank you for bringing the report.";
-		mes "Please tell the commander to keep up the good work.";
-		next;
-		mes "[Gerhart]";
-		mes "Now excuse me, I must go back to work.";
-		close;
-	}
-	else if (ep13_1_edq == 101) {
-		mes "[Gerhart]";
-		mes "Welcome, " + strcharinfo(0) + ". What took you so long?";
-		next;
-		mes "[Gerhart]";
-		mes "Oh, who am I? Let's say... That you can make ends meet because of me.";
-		mes "Make sense?";
-		next;
-		mes "[Gerhart]";
-		mes "Do you know how long I waited for this report? *Sigh* ...Fine, just give it to me.";
-		next;
-		delitem 11012,1; //Expedition_Report
-		set ep13_1_edq,103;
-		mes "...";
-		next;
-		mes "... ...";
-		next;
-		mes "... ... ...";
-		next;
-		mes "[Gerhart]";
-		mes "Hmmm... This report is a clear demonstration of Commander Hibba Agip's competence... Well, that's great.";
-		next;
-		mes "[Gerhart]";
-		mes "Thank you for bringing the report.";
-		mes "Please tell the commander to keep up the good work.";
-		next;
-		mes "[Gerhart]";
-		mes "Now excuse me, I must go back to work.";
-		close;
-	}
-	else if (ep13_1_edq == 111) {
-		mes "[Gerhart]";
-		mes "Welcome, " + strcharinfo(0) + ". What took you so long?";
-		next;
-		mes "[Gerhart]";
-		mes "Oh, who am I? Let's say... That you can make ends meet because of me.";
-		mes "Make sense?";
-		next;
-		mes "[Gerhart]";
-		mes "Do you know how long I waited for this report? *Sigh* ...Fine, just give it to me.";
-		next;
-		delitem 11012,1; //Expedition_Report
-		set ep13_1_edq,113;
-		mes "...";
-		next;
-		mes "... ...";
-		next;
-		mes "... ... ...";
-		next;
-		mes "[Gerhart]";
-		mes "Hmmm... This report is a clear demonstration of Commander Hibba Agip's competence... Well, that's great.";
-		next;
-		mes "[Gerhart]";
-		mes "Thank you for bringing the report.";
-		mes "Please tell the commander to keep up the good work.";
-		next;
-		mes "[Gerhart]";
-		mes "Now excuse me, I must go back to work.";
-		close;
-	}
-	else if (ep13_1_edq == 102) {
-		mes "[Gerhart]";
-		mes "Welcome, " + strcharinfo(0) + ". What took you so long?";
-		next;
-		mes "[Gerhart]";
-		mes "Oh, who am I? Let's say... That you can make ends meet because of me.";
-		mes "Make sense?";
-		next;
-		mes "[Gerhart]";
-		mes "Do you know how long I waited for this report? *Sigh* ...Fine, just give it to me.";
-		next;
-		delitem 11012,1; //Expedition_Report
-		set ep13_1_edq,13;
-		changequest 3093,3094;
-		mes "...";
-		next;
-		mes "... ...";
-		next;
-		mes "... ... ...";
-		next;
-		mes "[Gerhart]";
-		mes "Hmmm... This report is a clear demonstration of Commander Hibba Agip's competence... Well, that's great.";
-		next;
-		mes "[Gerhart]";
-		mes "Thank you for bringing the report.";
-		mes "Please tell the commander to keep up the good work.";
-		next;
-		mes "[Gerhart]";
-		mes "Now excuse me, I must go back to work.";
-		close;
-	}
-	else if (ep13_1_edq == 112) {
-		mes "[Gerhart]";
-		mes "Welcome, " + strcharinfo(0) + ". What took you so long?";
-		next;
-		mes "[Gerhart]";
-		mes "Oh, who am I? Let's say... That you can make ends meet because of me.";
-		mes "Make sense?";
-		next;
-		mes "[Gerhart]";
-		mes "Do you know how long I waited for this report? *Sigh* ...Fine, just give it to me.";
-		next;
-		delitem 11012,1; //Expedition_Report
-		set ep13_1_edq,13;
-		changequest 3093,3094;
+		if (ep13_1_edq == 9) set ep13_1_edq,121;
+		else if (ep13_1_edq == 101) set ep13_1_edq,103;
+		else if (ep13_1_edq == 111) set ep13_1_edq,113;
+		else if (ep13_1_edq == 102 || ep13_1_edq == 112) {
+			set ep13_1_edq,13;
+			changequest 3093,3094;
+		}
 		mes "...";
 		next;
 		mes "... ...";
@@ -12552,7 +12086,6 @@ lhz_in01,110,174,5	script	Gerhart	903,{
 		close;
 	}
 	else if ((ep13_1_edq == 121) || (ep13_1_edq == 103) || (ep13_1_edq == 113) || (ep13_1_edq == 123) || (ep13_1_edq == 122) || (ep13_1_edq == 13)) {
-		mes "[Gerhart]";
 		mes "What is it? Do you still have business with me?";
 		next;
 		mes "[Gerhart]";
@@ -12561,7 +12094,6 @@ lhz_in01,110,174,5	script	Gerhart	903,{
 		close;
 	}
 	else {
-		mes "[Gerhart]";
 		mes "What is it? I don't have time for chitchat.";
 		next;
 		mes "[Gerhart]";
@@ -12577,20 +12109,8 @@ OnInit:
 	end;
 
 OnEnable:
-	monster "spl_fild02",0,0,"Luciola Vespa",1994,1,"ep13_spl_fild02_mon_edq::OnMyMobDead";
-	monster "spl_fild02",0,0,"Luciola Vespa",1994,1,"ep13_spl_fild02_mon_edq::OnMyMobDead";
-	monster "spl_fild02",0,0,"Luciola Vespa",1994,1,"ep13_spl_fild02_mon_edq::OnMyMobDead";
-	monster "spl_fild02",0,0,"Luciola Vespa",1994,1,"ep13_spl_fild02_mon_edq::OnMyMobDead";
-	monster "spl_fild02",0,0,"Luciola Vespa",1994,1,"ep13_spl_fild02_mon_edq::OnMyMobDead";
-	monster "spl_fild02",0,0,"Luciola Vespa",1994,1,"ep13_spl_fild02_mon_edq::OnMyMobDead";
-	monster "spl_fild02",0,0,"Luciola Vespa",1994,1,"ep13_spl_fild02_mon_edq::OnMyMobDead";
-	monster "spl_fild02",0,0,"Pinguicula",1995,1,"ep13_spl_fild02_mon_edq::OnMyMobDead";
-	monster "spl_fild02",0,0,"Pinguicula",1995,1,"ep13_spl_fild02_mon_edq::OnMyMobDead";
-	monster "spl_fild02",0,0,"Pinguicula",1995,1,"ep13_spl_fild02_mon_edq::OnMyMobDead";
-	monster "spl_fild02",0,0,"Pinguicula",1995,1,"ep13_spl_fild02_mon_edq::OnMyMobDead";
-	monster "spl_fild02",0,0,"Pinguicula",1995,1,"ep13_spl_fild02_mon_edq::OnMyMobDead";
-	monster "spl_fild02",0,0,"Pinguicula",1995,1,"ep13_spl_fild02_mon_edq::OnMyMobDead";
-	monster "spl_fild02",0,0,"Pinguicula",1995,1,"ep13_spl_fild02_mon_edq::OnMyMobDead";
+	monster "spl_fild02",0,0,"Luciola Vespa",1994,7,"ep13_spl_fild02_mon_edq::OnMyMobDead";
+	monster "spl_fild02",0,0,"Pinguicula",1995,7,"ep13_spl_fild02_mon_edq::OnMyMobDead";
 	initnpctimer;
 	end;
 
@@ -12607,52 +12127,8 @@ OnTimer600000:
 	end;
 
 OnMyMobDead:
-	set .@spl_fild02_mob_dead,mobcount("spl_fild02","ep13_spl_fild02_mon_edq::OnMyMobDead");
-	if (.@spl_fild02_mob_dead < 14) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
+	if (mobcount("spl_fild02","ep13_spl_fild02_mon_edq::OnMyMobDead") < 14 && (ep13_1_edq == 71 || ep13_1_edq == 72))
 		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild02_mob_dead < 13) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild02_mob_dead < 12) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild02_mob_dead < 11) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild02_mob_dead < 10) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild02_mob_dead < 9) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild02_mob_dead < 9) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild02_mob_dead < 8) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild02_mob_dead < 7) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild02_mob_dead < 6) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild02_mob_dead < 5) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild02_mob_dead < 4) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild02_mob_dead < 3) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild02_mob_dead < 2) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild02_mob_dead < 1) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
 	end;
 }
 
@@ -12663,20 +12139,9 @@ OnInit:
 	end;
 
 OnEnable:
-	monster "spl_fild03",0,0,"Luciola Vespa",1994,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
-	monster "spl_fild03",0,0,"Luciola Vespa",1994,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
-	monster "spl_fild03",0,0,"Luciola Vespa",1994,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
-	monster "spl_fild03",0,0,"Luciola Vespa",1994,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
-	monster "spl_fild03",0,0,"Cornus",1992,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
-	monster "spl_fild03",0,0,"Cornus",1992,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
-	monster "spl_fild03",0,0,"Cornus",1992,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
-	monster "spl_fild03",0,0,"Cornus",1992,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
-	monster "spl_fild03",0,0,"Cornus",1992,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
-	monster "spl_fild03",0,0,"Naga",1993,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
-	monster "spl_fild03",0,0,"Naga",1993,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
-	monster "spl_fild03",0,0,"Naga",1993,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
-	monster "spl_fild03",0,0,"Naga",1993,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
-	monster "spl_fild03",0,0,"Naga",1993,1,"ep13_spl_fild03_mon_edq::OnMyMobDead";
+	monster "spl_fild03",0,0,"Luciola Vespa",1994,4,"ep13_spl_fild03_mon_edq::OnMyMobDead";
+	monster "spl_fild03",0,0,"Cornus",1992,5,"ep13_spl_fild03_mon_edq::OnMyMobDead";
+	monster "spl_fild03",0,0,"Naga",1993,5,"ep13_spl_fild03_mon_edq::OnMyMobDead";
 	initnpctimer;
 	end;
 
@@ -12694,51 +12159,8 @@ OnTimer600000:
 
 OnMyMobDead:
 	set .@spl_fild03_mob_dead,mobcount("spl_fild03","ep13_spl_fild03_mon_edq::OnMyMobDead");
-	if (.@spl_fild03_mob_dead < 14) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
+	if (mobcount("spl_fild03","ep13_spl_fild03_mon_edq::OnMyMobDead") < 14 && (ep13_1_edq == 71 || ep13_1_edq == 72))
 		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild03_mob_dead < 13) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild03_mob_dead < 12) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild03_mob_dead < 11) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild03_mob_dead < 10) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild03_mob_dead < 9) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild03_mob_dead < 9) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild03_mob_dead < 8) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild03_mob_dead < 7) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild03_mob_dead < 6) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild03_mob_dead < 5) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild03_mob_dead < 4) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild03_mob_dead < 3) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild03_mob_dead < 2) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@spl_fild03_mob_dead < 1) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
 	end;
 }
 
@@ -12749,20 +12171,8 @@ OnInit:
 	end;
 
 OnEnable:
-	monster "man_fild01",0,0,"Nepenthes",1988,1,"ep13_man_fild01_mon_edq::OnMyMobDead";
-	monster "man_fild01",0,0,"Nepenthes",1988,1,"ep13_man_fild01_mon_edq::OnMyMobDead";
-	monster "man_fild01",0,0,"Nepenthes",1988,1,"ep13_man_fild01_mon_edq::OnMyMobDead";
-	monster "man_fild01",0,0,"Nepenthes",1988,1,"ep13_man_fild01_mon_edq::OnMyMobDead";
-	monster "man_fild01",0,0,"Nepenthes",1988,1,"ep13_man_fild01_mon_edq::OnMyMobDead";
-	monster "man_fild01",0,0,"Nepenthes",1988,1,"ep13_man_fild01_mon_edq::OnMyMobDead";
-	monster "man_fild01",0,0,"Nepenthes",1988,1,"ep13_man_fild01_mon_edq::OnMyMobDead";
-	monster "man_fild01",0,0,"Hillslion",1989,1,"ep13_man_fild01_mon_edq::OnMyMobDead";
-	monster "man_fild01",0,0,"Hillslion",1989,1,"ep13_man_fild01_mon_edq::OnMyMobDead";
-	monster "man_fild01",0,0,"Hillslion",1989,1,"ep13_man_fild01_mon_edq::OnMyMobDead";
-	monster "man_fild01",0,0,"Hillslion",1989,1,"ep13_man_fild01_mon_edq::OnMyMobDead";
-	monster "man_fild01",0,0,"Hillslion",1989,1,"ep13_man_fild01_mon_edq::OnMyMobDead";
-	monster "man_fild01",0,0,"Hillslion",1989,1,"ep13_man_fild01_mon_edq::OnMyMobDead";
-	monster "man_fild01",0,0,"Hillslion",1989,1,"ep13_man_fild01_mon_edq::OnMyMobDead";
+	monster "man_fild01",0,0,"Nepenthes",1988,7,"ep13_man_fild01_mon_edq::OnMyMobDead";
+	monster "man_fild01",0,0,"Hillslion",1989,7,"ep13_man_fild01_mon_edq::OnMyMobDead";
 	initnpctimer;
 	end;
 
@@ -12779,52 +12189,8 @@ OnTimer600000:
 	end;
 
 OnMyMobDead:
-	set .@man_fild01_mob_dead,mobcount("man_fild01","ep13_man_fild01_mon_edq::OnMyMobDead");
-	if (.@man_fild01_mob_dead < 14) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
+	if (mobcount("man_fild01","ep13_man_fild01_mon_edq::OnMyMobDead") < 14 && (ep13_1_edq == 71 || ep13_1_edq == 72))
 		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild01_mob_dead < 13) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild01_mob_dead < 12) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild01_mob_dead < 11) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild01_mob_dead < 10) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild01_mob_dead < 9) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild01_mob_dead < 9) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild01_mob_dead < 8) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild01_mob_dead < 7) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild01_mob_dead < 6) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild01_mob_dead < 5) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild01_mob_dead < 4) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild01_mob_dead < 3) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild01_mob_dead < 2) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild01_mob_dead < 1) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
 	end;
 }
 
@@ -12835,20 +12201,8 @@ OnInit:
 	end;
 
 OnEnable:
-	monster "man_fild03",0,0,"Centipede",1987,1,"ep13_man_fild03_mon_edq::OnMyMobDead";
-	monster "man_fild03",0,0,"Centipede",1987,1,"ep13_man_fild03_mon_edq::OnMyMobDead";
-	monster "man_fild03",0,0,"Centipede",1987,1,"ep13_man_fild03_mon_edq::OnMyMobDead";
-	monster "man_fild03",0,0,"Centipede",1987,1,"ep13_man_fild03_mon_edq::OnMyMobDead";
-	monster "man_fild03",0,0,"Centipede",1987,1,"ep13_man_fild03_mon_edq::OnMyMobDead";
-	monster "man_fild03",0,0,"Centipede",1987,1,"ep13_man_fild03_mon_edq::OnMyMobDead";
-	monster "man_fild03",0,0,"Centipede",1987,1,"ep13_man_fild03_mon_edq::OnMyMobDead";
-	monster "man_fild03",0,0,"Tatacho",1986,1,"ep13_man_fild03_mon_edq::OnMyMobDead";
-	monster "man_fild03",0,0,"Tatacho",1986,1,"ep13_man_fild03_mon_edq::OnMyMobDead";
-	monster "man_fild03",0,0,"Tatacho",1986,1,"ep13_man_fild03_mon_edq::OnMyMobDead";
-	monster "man_fild03",0,0,"Tatacho",1986,1,"ep13_man_fild03_mon_edq::OnMyMobDead";
-	monster "man_fild03",0,0,"Tatacho",1986,1,"ep13_man_fild03_mon_edq::OnMyMobDead";
-	monster "man_fild03",0,0,"Tatacho",1986,1,"ep13_man_fild03_mon_edq::OnMyMobDead";
-	monster "man_fild03",0,0,"Tatacho",1986,1,"ep13_man_fild03_mon_edq::OnMyMobDead";
+	monster "man_fild03",0,0,"Centipede",1987,7,"ep13_man_fild03_mon_edq::OnMyMobDead";
+	monster "man_fild03",0,0,"Tatacho",1986,7,"ep13_man_fild03_mon_edq::OnMyMobDead";
 	initnpctimer;
 	end;
 
@@ -12865,52 +12219,8 @@ OnTimer600000:
 	end;
 
 OnMyMobDead:
-	set .@man_fild03_mob_dead,mobcount("man_fild03","ep13_man_fild03_mon_edq::OnMyMobDead");
-	if (.@man_fild03_mob_dead < 14) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
+	if (mobcount("man_fild03","ep13_man_fild03_mon_edq::OnMyMobDead") < 14 && (ep13_1_edq == 71 || ep13_1_edq == 72))
 		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild03_mob_dead < 13) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild03_mob_dead < 12) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild03_mob_dead < 11) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild03_mob_dead < 10) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild03_mob_dead < 9) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild03_mob_dead < 9) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild03_mob_dead < 8) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild03_mob_dead < 7) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild03_mob_dead < 6) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild03_mob_dead < 5) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild03_mob_dead < 4) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild03_mob_dead < 3) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild03_mob_dead < 2) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
-	else if (.@man_fild03_mob_dead < 1) && ((ep13_1_edq == 71) || (ep13_1_edq == 72)) {
-		getitem 6040,1; //Some_Of_Report
-	}
 	end;
 }
 
@@ -13052,251 +12362,67 @@ mid_campin,68,185,3	script	Pursuit Party Leader#1	803,{
 		mes "I don't practice magic, so I wouldn't know anything about it.";
 		close;
 	}
-	else if ((mao_morocc2 > 22) && (mao_morocc2 < 26)) {
-		mes "[Echinacea]";
-		mes "Oh, welcome back.";
-		mes "How can I help you?";
-		mes "Oh.. You've brought the journal..";
-		next;
-		mes "[Echinacea]";
-		mes ".........";
-		mes "......";
-		mes "...";
-		next;
-		mes "[Echinacea]";
-		mes "I see..";
-		mes ".. Basically it all comes down to Rayan.";
-		mes "He's been abducted by Satan Morocc.";
-		mes "If we find Rayan using this location-tracing spell.";
-		next;
-		select("We'll find Satan Morocc too!");
-		mes "[Echinacea]";
-		mes "That's right.";
-		mes "But it'll work only if Satan Morocc actually abducted Rayan.";
-		next;
+	else if ((mao_morocc2 > 22) && (mao_morocc2 < 29)) {
+		if (mao_morocc2 < 26) {
+			mes "[Echinacea]";
+			mes "Oh, welcome back.";
+			mes "How can I help you?";
+			mes "Oh... You've brought the journal..";
+			next;
+			mes "[Echinacea]";
+			mes ".........";
+			mes "......";
+			mes "...";
+			next;
+			mes "[Echinacea]";
+			mes "I see...";
+			mes "...Basically it all comes down to Rayan.";
+			mes "He's been abducted by Satan Morocc.";
+			mes "If we find Rayan using this location-tracing spell.";
+			next;
+			select("We'll find Satan Morocc too!");
+			mes "[Echinacea]";
+			mes "That's right.";
+			mes "But it'll work only if Satan Morocc actually abducted Rayan.";
+			next;
+		}
 		mes "[Echinacea]";
 		mes "Say, what's the tracing pattern number?";
 		next;
 		input .@input$;
-		if (mao_morocc2 == 23) {
-			if (.@input$ == "SDHF92F-SDF") {
-				mes "[Echinacea]";
-				mes "[" + .@input$ + "]";
-				mes "...Ah, there it is.";
-				next;
-				mes "[Echinacea]";
-				mes "This location-tracing spell uses a pair of magic stones of the same wavelength..";
-				mes "We can use the spell with one stone to find the other stone with the matching wavelength.";
-				next;
-				mes "[Echinacea]";
-				mes "We'll analyze this pattern number and detect the wavelength.";
-				mes "It'll take some time before we get the results.";
-				if (countitem(6029) > 0) {
-					delitem 6029,countitem(6029); //Morocc_Tracing_Log
-				}
-				set mao_morocc2,29;
-				changequest 7031,7034;
-				close;
-			}
-			else {
-				mes "[Echinacea]";
-				mes "[" + .@input$ + "]";
-				mes "It's not working for some reason.";
-				mes "I can't find a magic stone that has the same wavelength as yours.";
-				next;
-				mes "[Echinacea]";
-				mes "This location-tracing spell uses a pair of magic stones of the same wavelength..";
-				mes "I can't find a magic stone that has the same wavelength as your pattern number.";
-				next;
-				mes "[Echinacea]";
-				mes "Go check the number again.";
-				set mao_morocc2,26;
-				close;
-			}
-		}
-		else if (mao_morocc2 == 24) {
-			if (.@input$ == "VWNM94GVWN90") {
-				mes "[Echinacea]";
-				mes "[" + .@input$ + "]";
-				mes "...Ah, there it is.";
-				next;
-				mes "[Echinacea]";
-				mes "This location-tracing spell uses a pair of magic stones of the same wavelength..";
-				mes "We can use the spell with one stone to find the other stone with the matching wavelength.";
-				next;
-				mes "[Echinacea]";
-				mes "We'll analyze this pattern number and detect the wavelength.";
-				mes "It'll take some time before we get the results.";
-				if (countitem(6029) > 0) {
-					delitem 6029,countitem(6029); //Morocc_Tracing_Log
-				}
-				set mao_morocc2,29;
-				changequest 7032,7034;
-				close;
-			}
-			else {
-				mes "[Echinacea]";
-				mes "[" + .@input$ + "]";
-				mes "It's not working for some reason.";
-				mes "I can't find a magic stone that has the same wavelength as yours.";
-				next;
-				mes "[Echinacea]";
-				mes "This location-tracing spell uses a pair of magic stones of the same wavelength..";
-				mes "I can't find a magic stone that has the same wavelength as your pattern number.";
-				next;
-				mes "[Echinacea]";
-				mes "Go check the number again.";
-				set mao_morocc2,27;
-				close;
-			}
-		}
-		else {
-			if (.@input$ == "CM3-TRDFGHE0") {
-				mes "[Echinacea]";
-				mes "[" + .@input$ + "]";
-				mes "...Ah, there it is.";
-				next;
-				mes "[Echinacea]";
-				mes "This location-tracing spell uses a pair of magic stones of the same wavelength..";
-				mes "We can use the spell with one stone to find the other stone with the matching wavelength.";
-				next;
-				mes "[Echinacea]";
-				mes "We'll analyze this pattern number and detect the wavelength.";
-				mes "It'll take some time before we get the results.";
-				if (countitem(6029) > 0) {
-					delitem 6029,countitem(6029); //Morocc_Tracing_Log
-				}
-				set mao_morocc2,29;
-				changequest 7033,7034;
-				close;
-			}
-			else {
-				mes "[Echinacea]";
-				mes "[" + .@input$ + "]";
-				mes "It's not working for some reason.";
-				mes "I can't find a magic stone that has the same wavelength as yours.";
-				next;
-				mes "[Echinacea]";
-				mes "This location-tracing spell uses a pair of magic stones of the same wavelength..";
-				mes "I can't find a magic stone that has the same wavelength as your pattern number.";
-				next;
-				mes "[Echinacea]";
-				mes "Go check the number again.";
-				set mao_morocc2,28;
-				close;
-			}
-		}
-	}
-	else if ((mao_morocc2 > 25) && (mao_morocc2 < 29)) {
+		setarray .@pattern$[0],"SDHF92F-SDF","VWNM94GVWN90","CM3-TRDFGHE0";
+		set .@quest, mao_morocc2;
+		if (.@quest > 25) set .@quest,.@quest-3;
 		mes "[Echinacea]";
-		//custom translation
-		mes "Hey, did you find the tracing pattern number?";
-		next;
-		input .@input$;
-		if (mao_morocc2 == 26) {
-			if (.@input$ == "SDHF92F-SDF") {
-				mes "[Echinacea]";
-				mes "[" + .@input$ + "]";
-				mes "...Ah, there it is.";
-				next;
-				mes "[Echinacea]";
-				mes "This location-tracing spell uses a pair of magic stones of the same wavelength..";
-				mes "We can use the spell with one stone to find the other stone with the matching wavelength.";
-				next;
-				mes "[Echinacea]";
-				mes "We'll analyze this pattern number and detect the wavelength.";
-				mes "It'll take some time before we get the results.";
-				if (countitem(6029) > 0) {
-					delitem 6029,countitem(6029); //Morocc_Tracing_Log
-				}
-				set mao_morocc2,29;
-				changequest 7031,7034;
-				close;
-			}
-			else {
-				mes "[Echinacea]";
-				mes "[" + .@input$ + "]";
-				mes "It's not working for some reason.";
-				mes "I can't find a magic stone that has the same wavelength as yours.";
-				next;
-				mes "[Echinacea]";
-				mes "This location-tracing spell uses a pair of magic stones of the same wavelength..";
-				mes "I can't find a magic stone that has the same wavelength as your pattern number.";
-				next;
-				mes "[Echinacea]";
-				mes "Go check the number again.";
-				close;
-			}
-		}
-		else if (mao_morocc2 == 27) {
-			if (.@input$ == "VWNM94GVWN90") {
-				mes "[Echinacea]";
-				mes "[" + .@input$ + "]";
-				mes "...Ah, there it is.";
-				next;
-				mes "[Echinacea]";
-				mes "This location-tracing spell uses a pair of magic stones of the same wavelength..";
-				mes "We can use the spell with one stone to find the other stone with the matching wavelength.";
-				next;
-				mes "[Echinacea]";
-				mes "We'll analyze this pattern number and detect the wavelength.";
-				mes "It'll take some time before we get the results.";
-				if (countitem(6029) > 0) {
-					delitem 6029,countitem(6029); //Morocc_Tracing_Log
-				}
-				set mao_morocc2,29;
-				changequest 7032,7034;
-				close;
-			}
-			else {
-				mes "[Echinacea]";
-				mes "[" + .@input$ + "]";
-				mes "It's not working for some reason.";
-				mes "I can't find a magic stone that has the same wavelength as yours.";
-				next;
-				mes "[Echinacea]";
-				mes "This location-tracing spell uses a pair of magic stones of the same wavelength..";
-				mes "I can't find a magic stone that has the same wavelength as your pattern number.";
-				next;
-				mes "[Echinacea]";
-				mes "Go check the number again.";
-				close;
-			}
+		mes "[" + .@input$ + "]";
+		if (.@input$ == .@pattern$[.@quest-23]) {
+			mes "...Ah, there it is.";
+			next;
+			mes "[Echinacea]";
+			mes "This location-tracing spell uses a pair of magic stones of the same wavelength...";
+			mes "We can use the spell with one stone to find the other stone with the matching wavelength.";
+			next;
+			mes "[Echinacea]";
+			mes "We'll analyze this pattern number and detect the wavelength.";
+			mes "It'll take some time before we get the results.";
+			if (countitem(6029) > 0)
+				delitem 6029,countitem(6029); //Morocc_Tracing_Log
+			set mao_morocc2,29;
+			changequest 7031+(.@quest-23),7034;
+			close;
 		}
 		else {
-			if (.@input$ == "CM3-TRDFGHE0") {
-				mes "[Echinacea]";
-				mes "[" + .@input$ + "]";
-				mes "...Ah, there it is.";
-				next;
-				mes "[Echinacea]";
-				mes "This location-tracing spell uses a pair of magic stones of the same wavelength..";
-				mes "We can use the spell with one stone to find the other stone with the matching wavelength.";
-				next;
-				mes "[Echinacea]";
-				mes "We'll analyze this pattern number and detect the wavelength.";
-				mes "It'll take some time before we get the results.";
-				if (countitem(6029) > 0) {
-					delitem 6029,countitem(6029); //Morocc_Tracing_Log
-				}
-				set mao_morocc2,29;
-				changequest 7033,7034;
-				close;
-			}
-			else {
-				mes "[Echinacea]";
-				mes "[" + .@input$ + "]";
-				mes "It's not working for some reason.";
-				mes "I can't find a magic stone that has the same wavelength as yours.";
-				next;
-				mes "[Echinacea]";
-				mes "This location-tracing spell uses a pair of magic stones of the same wavelength..";
-				mes "I can't find a magic stone that has the same wavelength as your pattern number.";
-				next;
-				mes "[Echinacea]";
-				mes "Go check the number again.";
-				close;
-			}
+			mes "It's not working for some reason.";
+			mes "I can't find a magic stone that has the same wavelength as yours.";
+			next;
+			mes "[Echinacea]";
+			mes "This location-tracing spell uses a pair of magic stones of the same wavelength..";
+			mes "I can't find a magic stone that has the same wavelength as your pattern number.";
+			next;
+			mes "[Echinacea]";
+			mes "Go check the number again.";
+			set mao_morocc2,.@quest+3;
+			close;
 		}
 	}
 	else if (mao_morocc2 == 29) {
@@ -13346,10 +12472,10 @@ mid_campin,68,185,3	script	Pursuit Party Leader#1	803,{
 		next;
 		mes "[Echinacea]";
 		mes "Pursuing Satan Morocc was supposed to be our last resort..";
-		mes "..I guess we have no choice now..";
+		mes "...I guess we have no choice now..";
 		next;
 		mes "[Echinacea]";
-		mes "..I should log a report entry into this journal.";
+		mes "...I should log a report entry into this journal.";
 		mes "Our pursuit of Satan Morocc is at an end for now.";
 		next;
 		mes "[Echinacea]";
@@ -13368,22 +12494,20 @@ mid_campin,68,185,3	script	Pursuit Party Leader#1	803,{
 		mes "[Echinacea]";
 		mes "....";
 		next;
-		switch(select(".....")) {
-		}
+		select(".....");
 		mes "[Echinacea]";
 		mes "Hmm..";
 		next;
-		switch(select("... . ..")) {
-		}
+		select("... . ..");
 		mes "[Echinacea]";
-		mes ".. Grr..!";
+		mes "...Grr...!";
 		mes "What?! What do you want?";
 		mes "Why do you keep giving me that dirty look?!";
 		next;
 		switch(select("Nothing.:Something is bothering me...")) {
 		case 1:
 			mes "[Echinacea]";
-			mes "Argh..!";
+			mes "Argh...!";
 			mes "Are you annoying me on purpose?";
 			mes "Go and find something else to do!";
 			next;
@@ -13397,13 +12521,13 @@ mid_campin,68,185,3	script	Pursuit Party Leader#1	803,{
 			mes "Please, I've got enough worries already.";
 			next;
 			mes "[Echinacea]";
-			mes "So, tell me; what is it?";
-			mes ", you've done a great job helping us..";
+			mes "So, tell me, what is it?";
+			mes strcharinfo(0)+", you've done a great job helping us...";
 			mes "Oh, you must have questions about that last case, is that right?";
 			next;
 			mes "[Echinacea]";
-			mes "..Wait, are you worried because of him?";
-			mes "..I see, you're worried about him being supported by the country.";
+			mes "...Wait, are you worried because of him?";
+			mes "...I see, you're worried about him being supported by the country.";
 			next;
 			mes "[Echinacea]";
 			mes "This isn't a good time to disclose the truth. It'll cause more confusion.";
@@ -13501,8 +12625,8 @@ mid_camp,191,206,3	script	Manager#moc2_finder	852,{
 	mes "Everything's okay so far!";
 	mes "How may I help you?";
 	next;
+	mes "[Manager]";
 	if (mao_morocc2 == 30) {
-		mes "[Manager]";
 		mes "Everything's okay so far!";
 		mes "How may I help you?";
 		next;
@@ -13538,7 +12662,6 @@ mid_camp,191,206,3	script	Manager#moc2_finder	852,{
 		close;
 	}
 	else if (mao_morocc2 == 31) {
-		mes "[Manager]";
 		mes "Everything's okay so far!";
 		mes "How may I help you?";
 		next;
@@ -13549,7 +12672,6 @@ mid_camp,191,206,3	script	Manager#moc2_finder	852,{
 		close;
 	}
 	else {
-		mes "[Manager]";
 		mes "This device detects mana and magic wavelengths around this area. identifying what enemies we're dealing with.";
 		mes "It can be used to trace the wavelengths of location-tracing spells.";
 		next;
@@ -14254,30 +13376,30 @@ mid_camp,256,272,3	script	Defaria#moc2	897,{
 		next;
 		select("...No.");
 		mes "[Defaria]";
-		mes "..No? Then what brings you here?";
-		mes "..Huh?";
+		mes "...No? Then what brings you here?";
+		mes "...Huh?";
 		mes "A spell scroll? May I see?";
 		next;
 		mes "[Defaria]";
-		mes "..Isn't.. Isn't this?!";
-		mes "..Hmm..";
-		mes "Eek..So Echinacea referred you to me, huh?";
+		mes "...Isn't... Isn't this?!";
+		mes "...Hmm...";
+		mes "Eek... So Echinacea referred you to me, huh?";
 		mes "...Does that means she knows everything...?";
 		next;
 		mes "[Defaria]";
-		mes "..Alright then, I'll tell you.";
+		mes "...Alright then, I'll tell you.";
 		mes "As you can see, this scroll is sealed.";
 		mes "It can only be unsealed by a secret method.";
-		mes "..And..";
+		mes "...And...";
 		next;
 		mes "[Defaria]";
-		mes "..It is from...";
-		mes "..Arunafeltz.";
+		mes "...It is from....";
+		mes "...Arunafeltz?";
 		mes "The way it's sealed is the same method used by the temple...";
 		next;
 		mes "[Defaria]";
 		mes "I don't know how you've gotten this scroll,";
-		mes "..but I'll try to help you on behalf of the respectable scholars of Arunafeltz.";
+		mes "...but I'll try to help you on behalf of the respectable scholars of Arunafeltz.";
 		next;
 		mes "[Defaria]";
 		mes "But remember; I'm not doing this officially. Please don't make me disgrace my country by helping you. Do you understand what I'm saying?";
@@ -14340,7 +13462,7 @@ mid_camp,256,272,3	script	Defaria#moc2	897,{
 			mes "That's the spell contained in this scroll.";
 			next;
 			mes "[Defaria]";
-			mes "The only difference is..";
+			mes "The only difference is...";
 			mes "This scroll will teleport you to a specific location.";
 			mes "Such scrolls are generally used by ^4d4dfforganizations to gather their members^000000.";
 			next;
@@ -14350,8 +13472,8 @@ mid_camp,256,272,3	script	Defaria#moc2	897,{
 			mes "Here, please take this.";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			mes "'To gather members..?'";
-			mes "..Right! I remember";
+			mes "'To gather members...?'";
+			mes "...Right! I remember";
 			mes "Rayan mentioned a gathering somewhere!";
 			mes "So this scroll will take me to that meeting?";
 			next;
@@ -14424,14 +13546,14 @@ mid_camp,256,272,3	script	Defaria#moc2	897,{
 				case 2:
 					mes "[Defaria]";
 					mes "Then...";
-					mes "..Umm.. Can you bring me some Logs?";
-					mes "..And some sweet potatoes too, if you don't mind.";
+					mes "...Umm... Can you bring me some Logs?";
+					mes "...And some sweet potatoes too, if you don't mind.";
 					next;
 					select("Sure thing. How many?");
 					mes "[Defaria]";
-					mes "..Let's see..";
-					mes "I need sweet potatoes for me, Mr. Kidd, and Echi.. Umm..";
-					mes "..And then I need.. Yes!";
+					mes "...Let's see...";
+					mes "I need sweet potatoes for me, Mr. Kidd, and Echi... Umm...";
+					mes "...And then I need... Yes!";
 					next;
 					mes "[Defaria]";
 					mes "Please bring me ^4d4dff20 Sweet Potatoes and 30 Logs^000000.";
@@ -14454,8 +13576,8 @@ mid_camp,256,272,3	script	Defaria#moc2	897,{
 		}
 		else if (.@input$ == "Arunafeltz") {
 			mes "[Defaria]";
-			mes ".. Arunafeltz..?";
-			mes "Yes, I'm from Arunafeltz..";
+			mes "...Arunafeltz...?";
+			mes "Yes, I'm from Arunafeltz...";
 			mes "So what?";
 			close;
 		}
@@ -14517,10 +13639,10 @@ mid_camp,256,272,3	script	Defaria#moc2	897,{
 		mes "if Dandelion is really supported by Arunafeltz?";
 		next;
 		mes "[Defaria]";
-		mes "Umm.. I don't know what to say.. I don't feel comfortable talking about politics.";
+		mes "Umm... I don't know what to say... I don't feel comfortable talking about politics.";
 		next;
 		mes "[Defaria]";
-		mes "..Do you mind delivering these to Mr. Kidd?";
+		mes "...Do you mind delivering these to Mr. Kidd?";
 		next;
 		mes "- Defaria has given you 2 Nice Sweet Potatoes. -";
 		set mao_morocc2,104;
@@ -14536,7 +13658,7 @@ mid_camp,256,272,3	script	Defaria#moc2	897,{
 	else if (mao_morocc2 == 105) {
 		mes "[Defaria]";
 		mes "Say, did he like them?";
-		mes "Hahaha..";
+		mes "Hahaha...";
 		mes "... ... ";
 		next;
 		mes "[Defaria]";
@@ -14642,15 +13764,14 @@ mid_camp,255,269,0	script	Wet Firewood#moc2	844,{
 }
 
 morocc,43,108,5	script	Sharp-Looking Boy#dan_07	82,{
+	mes "[Jack]";
 	if (BaseClass == Job_Assassin) {
-		mes "[Jack]";
 		mes "Almost half of this town has been destroyed,";
 		mes "and yet some people still come to visit.";
 		mes "I must say that it's amazing that our stronghold is still intact, and withstood all the devastation.";
 		close;
 	}
 	else {
-		mes "[Jack]";
 		mes "As you see, half of this town is gone. I guess there's no real reason to control access to this tavern.";
 		mes "Just feel free to go in.";
 		next;
@@ -14890,11 +14011,7 @@ que_job01,82,95,3	script	Bar Master#moc2_01	46,{
 
 que_job01,80,77,0	script	que_job01#04	45,2,2,{
 OnTouch:
-	if (BaseClass == Job_Assassin) {
-		warp "que_job01",61,50;
-		end;
-	}
-	else if ((mao_request > 0) || (mao_morocc2 > 4)) {
+	if (BaseClass == Job_Assassin || mao_request > 0 || mao_morocc2 > 4) {
 		warp "que_job01",61,50;
 		end;
 	}
@@ -14942,8 +14059,8 @@ OnTouch:
 			next;
 			switch(select("Sure:Why should I?!")) {
 			case 1:
+				mes "[Litheron]";
 				if (Zeny > 999) {
-					mes "[Litheron]";
 					mes "Heh, that's what";
 					mes "I'm talking about!";
 					mes "Hey, bartender! Gimme";
@@ -14961,7 +14078,6 @@ OnTouch:
 					end;
 				}
 				else {
-					mes "[Litheron]";
 					mes "Huh...";
 					mes "Oh, you don't even";
 					mes "have enough zeny to";
@@ -15003,9 +14119,8 @@ que_job01,81,79,5	script	Idle Knight#dan_08	733,{
 	mes "[Litheron]";
 	mes "What, haven't you seen a Knight before?";
 	mes "You think Knights don't belong here?";
-	if (BaseClass == Job_Knight) {
+	if (BaseClass == Job_Knight)
 		mes "Looks like this is a case of the pot calling the kettle black.";
-	}
 	next;
 	mes "[Litheron]";
 	mes "You know, I'm just here to take a break from the town restoration work.";
@@ -15016,8 +14131,8 @@ que_job01,81,79,5	script	Idle Knight#dan_08	733,{
 que_job01,65,50,0	warp	que_job01#05	2,2,que_job01,84,77
 
 que_job01,49,49,5	script	Tao#dan_09	877,{
+	mes "[Tao]";
 	if (BaseClass == Job_Assassin) {
-		mes "[Tao]";
 		mes "Welcome, meow.";
 		mes "Say, how's it like outside? Meow?";
 		next;
@@ -15048,13 +14163,12 @@ que_job01,49,49,5	script	Tao#dan_09	877,{
 			mes "Somehow you're here, but you can't go in the room.";
 			next;
 			mes "[Tao]";
-			mes "No, wait.. I think you may be able to go in.. I don't know, meow!";
+			mes "No, wait... I think you may be able to go in... I don't know, meow!";
 			mes "Tao is tired of being a door keeper, meow! Meow!";
 			close;
 		}
 	}
 	else {
-		mes "[Tao]";
 		mes "Why are you here, meow?";
 		next;
 		switch(select("Hey kid, are you alone?:What are you, meow?!:Why do you keep meowing?!")) {
@@ -15100,24 +14214,18 @@ que_job01,49,49,5	script	Tao#dan_09	877,{
 
 que_job01,51,55,0	script	que_job01#room_1	45,1,1,{
 OnInit:
-	set $@moc_mao_room1,0; //Global Variable
-	// remove the old global variable.
-	if ($maobar_room) {
-		set $maobar_room,0;
-	}
-	end;
-
+	if ($maobar_room) set $maobar_room,0;
 Onreset:
 	set $@moc_mao_room1,0; //Global Variable
 	end;
 
 OnTouch:
+	mes "[Tao]";
 	if (prt_curse == 24) {
 		if ($@moc_mao_room1 == 0) {
 			set $@moc_mao_room1,1; //Global Variable
 			donpcevent " #room1timer::OnEnable";
 			donpcevent "Marjana#poison::OnEnable";
-			mes "[Tao]";
 			mes "Ah, that place is protected";
 			mes "by security magic, so you'll";
 			mes "only have ^4D4DFF4 minutes^000000 to remain";
@@ -15127,7 +14235,6 @@ OnTouch:
 			end;
 		}
 		else {
-			mes "[Tao]";
 			mes "Sooo sorry, meow~";
 			mes "Someone else is already";
 			mes "inside. Just come back";
@@ -15142,7 +14249,6 @@ OnTouch:
 			set $@moc_mao_room1,1; //Global Variable
 			donpcevent " #room1timer::OnEnable";
 			donpcevent "Valdes#moc_master_1::OnEnable";
-			mes "[Tao]";
 			mes "Ah, that place is protected";
 			mes "by security magic, so you'll";
 			mes "only have ^4D4DFF4 minutes^000000 to remain";
@@ -15152,7 +14258,6 @@ OnTouch:
 			end;
 		}
 		else {
-			mes "[Tao]";
 			mes "Sooo sorry, meow~";
 			mes "Someone else is already";
 			mes "inside. Just come back";
@@ -15163,7 +14268,6 @@ OnTouch:
 		}
 	}
 	else {
-		mes "[Tao]";
 		mes "Who are you, meow?!";
 		mes "Only authorized personnel can enter the inner room, meow!";
 		mes "You are not authorized!";
@@ -15207,15 +14311,12 @@ OnTimer250000:
 
 que_job01,12,13,0	script	#room1_warp13	-1,15,15,{
 OnInit:
+OnDisable:
 	disablenpc "#room1_warp13";
 	end;
 
 OnEnable:
 	enablenpc "#room1_warp13";
-	end;
-
-OnDisable:
-	disablenpc "#room1_warp13";
 	end;
 
 OnTouch:
@@ -15231,52 +14332,42 @@ OnTouch:
 }
 
 que_job01,16,21,5	script	Valdes#moc_master_1	55,{
+	mes "[Valdes]";
 	if (BaseClass == Job_Assassin) {
-		mes "[Valdes]";
 		mes "What is it? I have nothing to ask you to do.";
 		mes "Could you please leave me alone? I have a bad headache.";
 		next;
 		mes "[Valdes]";
 		mes "I'll ask you for a help some other time.";
 		mes "You look pretty passionate after all.";
-		if (countitem(6029) > 0) {
+		if (countitem(6029) > 0)
 			delitem 6029,countitem(6029); //Morocc_Tracing_Log
-		}
-		if (countitem(7418) > 0) {
+		if (countitem(7418) > 0)
 			delitem 7418,countitem(7418); //Mission_ScrollB
-		}
-		if (countitem(7416) > 0) {
+		if (countitem(7416) > 0)
 			delitem 7416,countitem(7416); //Letter_Of_Recommend
-		}
 		close;
 	}
 	else {
-		mes "[Valdes]";
-		mes "....Sorry, but could you please leave?";
+		mes "...Sorry, but could you please leave?";
 		mes "I'm really stressed out right now.";
 		mes "If you're here for the request that we made earlier, you can just forget about it.";
-		if (countitem(6029) > 0) {
+		if (countitem(6029) > 0)
 			delitem 6029,countitem(6029); //Morocc_Tracing_Log
-		}
-		if (countitem(7418) > 0) {
+		if (countitem(7418) > 0)
 			delitem 7418,countitem(7418); //Mission_ScrollB
-		}
-		if (countitem(7416) > 0) {
+		if (countitem(7416) > 0)
 			delitem 7416,countitem(7416); //Letter_Of_Recommend
-		}
 		close;
 	}
 
 OnInit:
+OnDisable:
 	disablenpc "Valdes#moc_master_1";
 	end;
 
 OnEnable:
 	enablenpc "Valdes#moc_master_1";
-	end;
-
-OnDisable:
-	disablenpc "Valdes#moc_master_1";
 	end;
 }
 
@@ -15284,9 +14375,6 @@ que_job01,51,44,0	script	que_job01#room_2	45,1,1,{
 	end;
 
 OnInit:
-	set $@moc_mao_room2,0; //Global Variable
-	end;
-
 Onreset:
 	set $@moc_mao_room2,0; //Global Variable
 	end;
@@ -15406,15 +14494,12 @@ OnTimer250000:
 
 que_job01,80,17,0	script	#room2_1_warp	-1,15,15,{
 OnInit:
+OnDisable:
 	disablenpc "#room2_1_warp";
 	end;
 
 OnEnable:
 	enablenpc "#room2_1_warp";
-	end;
-
-OnDisable:
-	disablenpc "#room2_1_warp";
 	end;
 
 OnTouch:
@@ -15424,15 +14509,12 @@ OnTouch:
 
 que_job01,144,51,0	script	#room2_2_warp	-1,15,15,{
 OnInit:
+OnDisable:
 	disablenpc "#room2_2_warp";
 	end;
 
 OnEnable:
 	enablenpc "#room2_2_warp";
-	end;
-
-OnDisable:
-	disablenpc "#room2_2_warp";
 	end;
 
 OnTouch:
@@ -15825,7 +14907,7 @@ que_job01,144,54,3	script	Rin#moc_room2_2	885,{
 				break;
 			case 2:
 				specialeffect EF_HIT4,AREA,"Rayan#moc_room2_2";
-				mes "- Wanting to stop Rayan from going berserk, you sucker punched him in the 'ole bread basket. Rayan staggered and then fell to the ground..! -";
+				mes "- Wanting to stop Rayan from going berserk, you sucker punched him in the 'ole bread basket. Rayan staggered and then fell to the ground...! -";
 				next;
 				break;
 			case 3:
@@ -15864,7 +14946,7 @@ que_job01,144,54,3	script	Rin#moc_room2_2	885,{
 			next;
 			cutin "moc2_rin04",2;
 			mes "[Rin]";
-			mes "What.. What just happened?";
+			mes "What... What just happened?";
 			mes "Are you Rayan? Or are you someone else now?!";
 			next;
 			cutin "moc2_dan01",0;
@@ -15874,7 +14956,7 @@ que_job01,144,54,3	script	Rin#moc_room2_2	885,{
 			mes "You're too foolish to understand his great will.";
 			next;
 			mes "[Rayan]";
-			mes "Haha.. Muhahaha!";
+			mes "Haha... Muhahaha!";
 			mes "He's calling me!";
 			mes "He needs me now!";
 			next;
@@ -15892,8 +14974,8 @@ que_job01,144,54,3	script	Rin#moc_room2_2	885,{
 			mes "What just happened?";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			mes "..I don't know..";
-			mes "..I think he's gone..?";
+			mes "...I don't know...";
+			mes "...I think he's gone...?";
 			delitem 6029,1; //Morocc_Tracing_Log
 			delitem 6027,1; //Crystal_Of_Feardoom
 			set mao_morocc2,22;
@@ -15919,7 +15001,7 @@ que_job01,144,54,3	script	Rin#moc_room2_2	885,{
 		cutin "moc2_rin01",2;
 		mes "[Rin]";
 		mes "..Maybe.";
-		mes "Based on what the more normal Rayan has told us,";
+		mes "B.ased on what the more normal Rayan has told us,";
 		mes "it seems that another personality within him was forcibly created by Satan Morocc.";
 		next;
 		mes "[Rin]";
@@ -15927,7 +15009,7 @@ que_job01,144,54,3	script	Rin#moc_room2_2	885,{
 		mes "He's been controlling Rayan from deep inside his mind..";
 		next;
 		mes "[Rin]";
-		mes "And.. That Mad Rayan seems to have a connection with your Bloody Crystal of Darkness.";
+		mes "And... That Mad Rayan seems to have a connection with your Bloody Crystal of Darkness.";
 		next;
 		cutin "moc2_rin02",2;
 		mes "[Rin]";
@@ -15960,36 +15042,17 @@ que_job01,144,54,3	script	Rin#moc_room2_2	885,{
 		mes "She'll take care of the rest.";
 		next;
 		set .@rotto,rand(1,3);
-		if (.@rotto == 1) {
-			mes "[Rin]";
-			mes "The pattern number is...";
-			mes "^4d4dff[SDHF92F-SDF]^000000";
-			mes "Don't leave out even one character. Okay?";
-			set mao_morocc2,23;
-			getitem 6029,1; //Morocc_Tracing_Log
-			changequest 7030,7031;
-			next;
-		}
-		else if (.@rotto == 2) {
-			mes "[Rin]";
-			mes "The pattern number is...";
-			mes "^4d4dff[VWNM94GVWN90]^000000";
-			mes "Don't leave out even one character. Okay?";
-			set mao_morocc2,24;
-			getitem 6029,1; //Morocc_Tracing_Log
-			changequest 7030,7032;
-			next;
-		}
-		else {
-			mes "[Rin]";
-			mes "The pattern number is...";
-			mes "^4d4dff[CM3-TRDFGHE0]^000000";
-			mes "Don't leave out even one character. Okay?";
-			set mao_morocc2,25;
-			getitem 6029,1; //Morocc_Tracing_Log
-			changequest 7030,7033;
-			next;
-		}
+		if (.@rotto == 1) set .@pattern$,"SDHF92F-SDF";
+		else if (.@rotto == 2) set .@pattern$,"VWNM94GVWN90";
+		else set .@pattern$,"CM3-TRDFGHE0";
+		mes "[Rin]";
+		mes "The pattern number is...";
+		mes "^4d4dff["+.@pattern$+"]^000000";
+		mes "Don't leave out even one character. Okay?";
+		set mao_morocc2,22+.@rotto;
+		getitem 6029,1; //Morocc_Tracing_Log
+		changequest 7030,7030+.@rotto;
+		next;
 		mes "[Rin]";
 		mes "Here, bring this journal with you.";
 		mes "Please don't forget the pattern number. Alright? Make sure that Echinacea gets it.";
@@ -16020,27 +15083,22 @@ que_job01,144,54,3	script	Rin#moc_room2_2	885,{
 		// Missed
 		cutin "moc2_rin01",2;
 		mes "[Rin]";
-		mes "Ouch, my head..";
+		mes "Ouch, my head...";
 		mes "Yes? Why are you back again?";
 		mes "What...you forgot the pattern number?";
 		mes "Sigh...Oh well.";
 		next;
 		mes "[Rin]";
-		mes "Make sure you don't forget it again. The pattern number is..";
-		if (mao_morocc2 == 26) {
-			mes "^4d4dff[SDHF92F-SDF]^000000. Don't leave out even one character. Okay?";
-		}
-		else if (mao_morocc2 == 27) {
-			mes "^4d4dff[VWNM94GVWN90]^000000. Don't leave out even one character. Okay?";
-		}
-		else {
-			mes "^4d4dff[CM3-TRDFGHE0]^000000. Don't leave out even one character. Okay?";
-		}
+		mes "Make sure you don't forget it again. The pattern number is...";
+		if (mao_morocc2 == 26) set .@pattern$,"SDHF92F-SDF";
+		else if (mao_morocc2 == 27) set .@pattern$,"VWNM94GVWN90";
+		else set .@pattern$,"CM3-TRDFGHE0";
+		mes "^4d4dff["+.@pattern$+"]^000000. Don't leave out even one character. Okay?";
 		mes "Got it?";
 		next;
 		mes "[Rin]";
-		mes "Sigh. Get going, then..";
-		mes "I need to take a break..";
+		mes "Sigh. Get going, then...";
+		mes "I need to take a break...";
 		close2;
 	}
 	else {
@@ -16055,15 +15113,12 @@ que_job01,144,54,3	script	Rin#moc_room2_2	885,{
 	end;
 
 OnInit:
+OnDisable:
 	disablenpc "Rin#moc_room2_2";
 	end;
 
 OnEnable:
 	enablenpc "Rin#moc_room2_2";
-	end;
-
-OnDisable:
-	disablenpc "Rin#moc_room2_2";
 	end;
 }
 
@@ -16080,15 +15135,12 @@ que_job01,143,50,1	script	Rayan#moc_room2_2	456,{
 	end;
 
 OnInit:
+OnDisable:
 	disablenpc "Rayan#moc_room2_2";
 	end;
 
 OnEnable:
 	enablenpc "Rayan#moc_room2_2";
-	end;
-
-OnDisable:
-	disablenpc "Rayan#moc_room2_2";
 	end;
 }
 
@@ -16208,15 +15260,15 @@ OnTouch:
 	end;
 
 OnTimer300000:
-	mapannounce "que_dan01", "...Hey-!!.. Where are you?!!.... Hey-!",bc_map,"0xdda0dd";
+	mapannounce "que_dan01", "...Hey-!!... Where are you?!!.... Hey-!",bc_map,"0xdda0dd";
 	end;
 
 OnTimer303000:
-	mapannounce "que_dan01", "..Isn't this voice..? ..Kidd?",bc_map,"0xdda0dd";
+	mapannounce "que_dan01", "...Isn't this voice...? ...Kidd?",bc_map,"0xdda0dd";
 	end;
 
 OnTimer306000:
-	 mapwarp "que_dan01","mid_camp",205,312;
+	mapwarp "que_dan01","mid_camp",205,312;
 	end;
 
 OnTimer307000:
@@ -16241,15 +15293,12 @@ OnTimer308000:
 
 que_dan01,31,27,0	script	#moc2_event01	-1,2,2,{
 OnInit:
+OnDisable:
 	disablenpc "#moc2_event01";
 	end;
 
 OnEnable:
 	enablenpc "#moc2_event01";
-	end;
-
-OnDisable:
-	disablenpc "#moc2_event01";
 	end;
 
 OnTouch:
@@ -16408,15 +15457,12 @@ que_dan01,49,36,5	script	Corpse#moc2_dead01	457,{
 	end;
 
 OnInit:
+OnDisable:
 	disablenpc "Corpse#moc2_dead01";
 	end;
 
 OnEnable:
 	enablenpc "Corpse#moc2_dead01";
-	end;
-
-OnDisable:
-	disablenpc "Corpse#moc2_dead01";
 	end;
 
 Oncall:
@@ -16461,134 +15507,27 @@ OnTimer11000:
 	end;
 }
 
-que_dan01,34,34,7	script	Rin#moc2_bt_rin01	885,{
+-	script	#dandelion_duplicates	-1,{
 	end;
 
 OnInit:
-	disablenpc "Rin#moc2_bt_rin01";
+OnDisable:
+	disablenpc strnpcinfo(0);
 	end;
 
 OnEnable:
-	enablenpc "Rin#moc2_bt_rin01";
-	end;
-
-OnDisable:
-	disablenpc "Rin#moc2_bt_rin01";
+	enablenpc strnpcinfo(0);
 	end;
 }
 
-que_dan01,29,34,7	script	Rin#moc2_bt_rin02	885,{
-	end;
-
-OnInit:
-	disablenpc "Rin#moc2_bt_rin02";
-	end;
-
-OnEnable:
-	enablenpc "Rin#moc2_bt_rin02";
-	end;
-
-OnDisable:
-	disablenpc "Rin#moc2_bt_rin02";
-	end;
-}
-
-que_dan01,36,34,3	script	Rayan#moc2_bt_r01	456,{
-	end;
-
-OnInit:
-	disablenpc "Rayan#moc2_bt_r01";
-	end;
-
-OnEnable:
-	enablenpc "Rayan#moc2_bt_r01";
-	end;
-
-OnDisable:
-	disablenpc "Rayan#moc2_bt_r01";
-	end;
-}
-
-que_dan01,39,37,3	script	Dandelion Member#moc2_1	456,{
-	end;
-
-OnInit:
-	disablenpc "Dandelion Member#moc2_1";
-	end;
-
-OnEnable:
-	enablenpc "Dandelion Member#moc2_1";
-	end;
-
-OnDisable:
-	disablenpc "Dandelion Member#moc2_1";
-	end;
-
-}
-
-que_dan01,41,34,3	script	Dandelion Member#moc2_2	456,{
-	end;
-
-OnInit:
-	disablenpc "Dandelion Member#moc2_2";
-	end;
-
-OnEnable:
-	enablenpc "Dandelion Member#moc2_2";
-	end;
-
-OnDisable:
-	disablenpc "Dandelion Member#moc2_2";
-	end;
-}
-
-que_dan01,26,40,5	script	Dandelion Member#moc2_3	456,{
-	end;
-
-OnInit:
-	disablenpc "Dandelion Member#moc2_3";
-	end;
-
-OnEnable:
-	enablenpc "Dandelion Member#moc2_3";
-	end;
-
-OnDisable:
-	disablenpc "Dandelion Member#moc2_3";
-	end;
-}
-
-que_dan01,21,35,5	script	Dandelion Member#moc2_4	456,{
-	end;
-
-OnInit:
-	disablenpc "Dandelion Member#moc2_4";
-	end;
-
-OnEnable:
-	enablenpc "Dandelion Member#moc2_4";
-	end;
-
-OnDisable:
-	disablenpc "Dandelion Member#moc2_4";
-	end;
-}
-
-que_dan01,25,32,7	script	Dandelion Member#moc2_5	456,{
-	end;
-
-OnInit:
-	disablenpc "Dandelion Member#moc2_5";
-	end;
-
-OnEnable:
-	enablenpc "Dandelion Member#moc2_5";
-	end;
-
-OnDisable:
-	disablenpc "Dandelion Member#moc2_5";
-	end;
-}
+que_dan01,34,34,7	duplicate(#dandelion_duplicates)	Rin#moc2_bt_rin01	885
+que_dan01,29,34,7	duplicate(#dandelion_duplicates)	Rin#moc2_bt_rin02	885
+que_dan01,36,34,3	duplicate(#dandelion_duplicates)	Rayan#moc2_bt_r01	456
+que_dan01,39,37,3	duplicate(#dandelion_duplicates)	Dandelion Member#moc2_1	456
+que_dan01,41,34,3	duplicate(#dandelion_duplicates)	Dandelion Member#moc2_2	456
+que_dan01,26,40,5	duplicate(#dandelion_duplicates)	Dandelion Member#moc2_3	456
+que_dan01,21,35,5	duplicate(#dandelion_duplicates)	Dandelion Member#moc2_4	456
+que_dan01,25,32,7	duplicate(#dandelion_duplicates)	Dandelion Member#moc2_5	456
 
 yuno_fild09,234,133,0	warp	#moc2_fild09-que_dan02	1,1,que_dan02,13,10
 que_dan02,13,6,0	warp	#moc_que_dan02-fild09	1,1,yuno_fild09,234,129
@@ -16786,15 +15725,12 @@ que_dan02,115,54,5	script	Mr. Kidd#moc_extra01	884,{
 	end;
 
 OnInit:
+OnDisable:
 	disablenpc "Mr. Kidd#moc_extra01";
 	end;
 
 OnEnable:
 	enablenpc "Mr. Kidd#moc_extra01";
-	end;
-
-OnDisable:
-	disablenpc "Mr. Kidd#moc_extra01";
 	end;
 }
 
