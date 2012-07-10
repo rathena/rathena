@@ -353,7 +353,7 @@ void initChangeTables(void) {
 	set_sc( LK_CONCENTRATION     , SC_CONCENTRATION   , SI_CONCENTRATION   , SCB_BATK|SCB_WATK|SCB_HIT|SCB_DEF|SCB_DEF2|SCB_MDEF|SCB_DSPD );
 	set_sc( LK_TENSIONRELAX      , SC_TENSIONRELAX    , SI_TENSIONRELAX    , SCB_REGEN );
 	set_sc( LK_BERSERK           , SC_BERSERK         , SI_BERSERK         , SCB_DEF|SCB_DEF2|SCB_MDEF|SCB_MDEF2|SCB_FLEE|SCB_SPEED|SCB_ASPD|SCB_MAXHP|SCB_REGEN );
-	set_sc( HP_ASSUMPTIO         , SC_ASSUMPTIO       , SI_ASSUMPTIO       , SCB_NONE );
+	set_sc( HP_ASSUMPTIO         , SC_ASSUMPTIO       , SI_ASSUMPTIO       , SCB_DEF|SCB_DEF2|SCB_MDEF|SCB_MDEF2 );
 	add_sc( HP_BASILICA          , SC_BASILICA        );
 	set_sc( HW_MAGICPOWER        , SC_MAGICPOWER      , SI_MAGICPOWER      , SCB_MATK );
 	add_sc( PA_SACRIFICE         , SC_SACRIFICE       );
@@ -462,7 +462,7 @@ void initChangeTables(void) {
 
 	set_sc( CASH_BLESSING        , SC_BLESSING        , SI_BLESSING        , SCB_STR|SCB_INT|SCB_DEX );
 	set_sc( CASH_INCAGI          , SC_INCREASEAGI     , SI_INCREASEAGI     , SCB_AGI|SCB_SPEED );
-	set_sc( CASH_ASSUMPTIO       , SC_ASSUMPTIO       , SI_ASSUMPTIO       , SCB_NONE );
+	set_sc( CASH_ASSUMPTIO       , SC_ASSUMPTIO       , SI_ASSUMPTIO       , SCB_DEF|SCB_DEF2|SCB_MDEF|SCB_MDEF2 );
 
 	//set_sc( ALL_PARTYFLEE        , SC_INCFLEE         , SI_PARTYFLEE       , SCB_NONE );
 	set_sc( ALL_ODINS_POWER      , SC_ODINS_POWER     , SI_ODINS_POWER     , SCB_MATK|SCB_BATK|SCB_MDEF|SCB_DEF );
@@ -4658,6 +4658,10 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 		def >>=1;
 	if(sc->data[SC_FREEZE])
 		def >>=1;
+#ifdef RENEWAL
+		if(sc->data[SC_ASSUMPTIO])
+		def *= 2;
+#endif
 	if(sc->data[SC_SIGNUMCRUCIS])
 		def -= def * sc->data[SC_SIGNUMCRUCIS]->val2/100;
 	if(sc->data[SC_CONCENTRATION])
@@ -4731,6 +4735,10 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 		def2 -= def2 * 50/100;
 	if(sc->data[SC_PROVOKE])
 		def2 -= def2 * sc->data[SC_PROVOKE]->val4/100;
+#ifdef RENEWAL
+		if(sc->data[SC_ASSUMPTIO])
+		def2 *= 2;
+#endif
 	if(sc->data[SC_JOINTBEAT])
 		def2 -= def2 * ( sc->data[SC_JOINTBEAT]->val2&BREAK_SHOULDER ? 50 : 0 ) / 100
 			  + def2 * ( sc->data[SC_JOINTBEAT]->val2&BREAK_WAIST ? 25 : 0 ) / 100;
@@ -4782,6 +4790,10 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 		mdef += (sc->data[SC_ENDURE]->val4 == 0) ? sc->data[SC_ENDURE]->val1 : 1;
 	if(sc->data[SC_CONCENTRATION])
 		mdef += 1; //Skill info says it adds a fixed 1 Mdef point.
+#ifdef RENEWAL
+		if(sc->data[SC_ASSUMPTIO])
+		mdef *= 2;
+#endif
 	if(sc->data[SC_STONEHARDSKIN])// Final MDEF increase divided by 10 since were using classic (pre-renewal) mechanics. [Rytech]
 		mdef += sc->data[SC_STONEHARDSKIN]->val1;
 	if( sc->data[SC_MARSHOFABYSS] )
@@ -4816,6 +4828,10 @@ static signed short status_calc_mdef2(struct block_list *bl, struct status_chang
 		return 0;
 	if(sc->data[SC_SKA])
 		return 90;
+#ifdef RENEWAL
+		if(sc->data[SC_ASSUMPTIO])
+		mdef2 *= 2;
+#endif
 	if(sc->data[SC_MINDBREAKER])
 		mdef2 -= mdef2 * sc->data[SC_MINDBREAKER]->val3/100;
 	if(sc->data[SC_ANALYZE])
