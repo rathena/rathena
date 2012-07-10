@@ -4105,6 +4105,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 				for(i = SC_MAXSPELLBOOK; i >= SC_SPELLBOOK1; i--) // List all available spell to be released
 					if( sc->data[i] ) spell[s++] = i;
 
+                if ( i == 0 )
+                    break;
+
 				i = spell[s==1?0:rand()%s];// Random select of spell to be released.
 				if( s && sc->data[i] ){// Now extract the data from the preserved spell
 					skill_id = sc->data[i]->val1; 
