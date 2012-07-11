@@ -9055,7 +9055,7 @@ function Catwarp;
 			next;
 			if ((ep13_yong1 > 99) && (ep13_yong1 < 200)) {
 				switch(select("Alberta -> 4590z:Prontera -> 4590z:Izlude -> 4590z:Geffen -> 4590z:Payon -> 4590z:Morroc -> 4590z:Al De Baran -> 4590z:Cancel")) {
-				case 1: Catwarp(4590,1);
+					case 1: Catwarp(4590,1);
 					case 2: Catwarp(4590,2);
 					case 3: Catwarp(4590,3);
 					case 4: Catwarp(4590,4);

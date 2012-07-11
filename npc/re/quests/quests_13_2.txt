@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 2.2
+//= 2.4
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -41,11 +41,13 @@
 //= 2.1 Fixed Myterious Rock 31, and Cart Hand Agents.
 //= 2.2 Added a missing close. (bugreport:4520) [L0ne_W0lf]
 //= 2.3 Fixed EF_Wind not showing. (bugreport:5149) [Masao]
+//= 2.4 Optimized (6000+ lines reduced!). [Euphy]
 //============================================================ 
 
 // Cat Hand Addition.
 //============================================================ 
 spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
+function Catwarp;
 	if (ep13_yong1 < 3) {
 		mes "[Cat Hand Agent]";
 		mes "Welcome to Cat Trading.";
@@ -62,7 +64,8 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 		next;
 		switch(select("Save your location:Cancel")) {
 		case 1:
-			savepoint "spl_fild02",32,225;
+			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225;
+			else savepoint "man_fild02",129,61;
 			mes "[Cat Hand Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
@@ -81,7 +84,8 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 		next;
 		switch(select("Save your location:Use Storage:Cancel")) {
 		case 1:
-			savepoint "spl_fild02",32,225;
+			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225;
+			else savepoint "man_fild02",129,61;
 			mes "[Cat Hand Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
@@ -127,7 +131,8 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 		next;
 		switch(select("Save your location:Use Storage:Use Cat Warp (Midgard):Cancel")) {
 		case 1:
-			savepoint "spl_fild02",32,225;
+			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225;
+			else savepoint "man_fild02",129,61;
 			mes "[Cat Hand Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
@@ -167,352 +172,65 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 			next;
 			if ((ep13_yong1 > 39) && (ep13_yong1 < 50)) {
 				switch(select("Prontera -> 5500z:Cancel")) {
-				case 1:
-					if (Zeny >= 5500) {
-						set zeny,zeny-5500;
-						warp "prontera",116,72;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 2:
-					close;
+					case 1: Catwarp(5500,2);
+					case 2: close;
 				}
 			}
 			else if ((ep13_yong1 > 49) && (ep13_yong1 < 60)) {
 				switch(select("Alberta -> 5500z:Prontera -> 5500z:Cancel")) {
-				case 1:
-					if (Zeny >= 5500) {
-						set zeny,zeny-5500;
-						warp "alberta",117,56;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 2:
-					if (Zeny >= 5500) {
-						set zeny,zeny-5500;
-						warp "prontera",116,72;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 3:
-					close;
+					case 1: Catwarp(5500,1);
+					case 2: Catwarp(5500,2);
+					case 3: close;
 				}
 			}
 			else if ((ep13_yong1 > 59) && (ep13_yong1 < 70)) {
 				switch(select("Alberta -> 5025z:Prontera -> 5025z:Izlude -> 5025z:Cancel")) {
-				case 1:
-					if (Zeny >= 5025) {
-						set zeny,zeny-5025;
-						warp "alberta",117,56;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 2:
-					if (Zeny >= 5025) {
-						set zeny,zeny-5025;
-						warp "prontera",116,72;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 3:
-					if (Zeny >= 5025) {
-						set zeny,zeny-5025;
-						warp "izlude",91,105;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 4:
-					close;
+					case 1: Catwarp(5025,1);
+					case 2: Catwarp(5025,2);
+					case 3: Catwarp(5025,3);
+					case 4: close;
 				}
 			}
 			else if ((ep13_yong1 > 69) && (ep13_yong1 < 80)) {
 				switch(select("Alberta -> 5025z:Prontera -> 5025z:Izlude -> 5025z:Geffen -> 5025z:Cancel")) {
-				case 1:
-					if (Zeny >= 5025) {
-						set zeny,zeny-5025;
-						warp "alberta",117,56;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 2:
-					if (Zeny >= 5025) {
-						set zeny,zeny-5025;
-						warp "prontera",116,72;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 3:
-					if (Zeny >= 5025) {
-						set zeny,zeny-5025;
-						warp "izlude",91,105;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 4:
-					if (Zeny >= 5025) {
-						set zeny,zeny-5025;
-						warp "geffen",120,39;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 5:
-					close;
+					case 1: Catwarp(5025,1);
+					case 2: Catwarp(5025,2);
+					case 3: Catwarp(5025,3);
+					case 4: Catwarp(5025,4);
+					case 5: close;
 				}
 			}
 			else if ((ep13_yong1 > 79) && (ep13_yong1 < 90)) {
 				switch(select("Alberta -> 4765z:Prontera -> 4765z:Izlude -> 4765z:Geffen -> 4765z:Payon -> 4765z:Cancel")) {
-				case 1:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "alberta",117,56;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 2:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "prontera",116,72;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 3:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "izlude",91,105;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 4:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "geffen",120,39;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 5:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "payon",161,58;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 6:
-					close;
+					case 1: Catwarp(4765,1);
+					case 2: Catwarp(4765,2);
+					case 3: Catwarp(4765,3);
+					case 4: Catwarp(4765,4);
+					case 5: Catwarp(4765,5);
+					case 6: close;
 				}
 			}
 			else if ((ep13_yong1 > 89) && (ep13_yong1 < 100)) {
 				switch(select("Alberta -> 4765z:Prontera -> 4765z:Izlude -> 4765z:Geffen -> 4765z:Payon -> 4765z:Morroc -> 4765z:Cancel")) {
-				case 1:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "alberta",117,56;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 2:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "prontera",116,72;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 3:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "izlude",91,105;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 4:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "geffen",120,39;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 5:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "payon",161,58;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 6:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "morocc",156,46;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 7:
-					close;
+					case 1: Catwarp(4765,1);
+					case 2: Catwarp(4765,2);
+					case 3: Catwarp(4765,3);
+					case 4: Catwarp(4765,4);
+					case 5: Catwarp(4765,5);
+					case 6: Catwarp(4765,6);
+					case 7: close;
 				}
 			}
 			else if (ep13_yong1 > 99) {
 				switch(select("Alberta -> 4590z:Prontera -> 4590z:Izlude -> 4590z:Geffen -> 4590z:Payon -> 4590z:Morroc -> 4590z:Al De Baran -> 4590z:Cancel")) {
-				case 1:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "alberta",117,56;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 2:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "prontera",116,72;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 3:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "izlude",91,105;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 4:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "geffen",120,39;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 5:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "payon",161,58;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 6:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "morocc",156,46;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 7:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "aldebaran",168,112;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 8:
-					close;
+					case 1: Catwarp(4590,1);
+					case 2: Catwarp(4590,2);
+					case 3: Catwarp(4590,3);
+					case 4: Catwarp(4590,4);
+					case 5: Catwarp(4590,5);
+					case 6: Catwarp(4590,6);
+					case 7: Catwarp(4590,7);
+					case 8: close;
 				}
 			}
 			else {
@@ -534,7 +252,8 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 		next;
 		switch(select("Save your location:Use Storage:Use Cat Warp (Midgard):Use Cat Warp (Jottunheim):Cancel")) {
 		case 1:
-			savepoint "spl_fild02",32,225;
+			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225;
+			else savepoint "man_fild02",129,61;
 			mes "[Cat Hand Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
@@ -574,402 +293,58 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 			next;
 			if ((ep13_yong1 > 99) && (ep13_yong1 < 200)) {
 				switch(select("Alberta -> 4590z:Prontera -> 4590z:Izlude -> 4590z:Geffen -> 4590z:Payon -> 4590z:Morroc -> 4590z:Al De Baran -> 4590z:Cancel")) {
-				case 1:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "alberta",117,56;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 2:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "prontera",116,72;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 3:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "izlude",91,105;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 4:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "geffen",120,39;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 5:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "payon",161,58;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 6:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "morocc",156,46;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 7:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "aldebaran",168,112;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 8:
-					close;
+					case 1: Catwarp(4590,1);
+					case 2: Catwarp(4590,2);
+					case 3: Catwarp(4590,3);
+					case 4: Catwarp(4590,4);
+					case 5: Catwarp(4590,5);
+					case 6: Catwarp(4590,6);
+					case 7: Catwarp(4590,7);
+					case 8: close;
 				}
 			}
 			else if ((ep13_yong1 > 199) && (ep13_yong1 < 250)) {
 				switch(select("Alberta -> 4170z:Prontera -> 4170z:Izlude -> 4170z:Geffen -> 4170z:Payon -> 4170z:Morroc -> 4170z:Al De Baran -> 4170z:Juno -> 4170z:Cancel")) {
-				case 1:
-					if (Zeny >= 4170) {
-						set zeny,zeny-4170;
-						warp "alberta",117,56;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 2:
-					if (Zeny >= 4170) {
-						set zeny,zeny-4170;
-						warp "prontera",116,72;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 3:
-					if (Zeny >= 4170) {
-						set zeny,zeny-4170;
-						warp "izlude",91,105;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 4:
-					if (Zeny >= 4170) {
-						set zeny,zeny-4170;
-						warp "geffen",120,39;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 5:
-					if (Zeny >= 4170) {
-						set zeny,zeny-4170;
-						warp "payon",161,58;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 6:
-					if (Zeny >= 4170) {
-						set zeny,zeny-4170;
-						warp "morocc",156,46;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 7:
-					if (Zeny >= 4170) {
-						set zeny,zeny-4170;
-						warp "aldebaran",168,112;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 8:
-					if (Zeny >= 4170) {
-						set zeny,zeny-4170;
-						warp "yuno",158,125;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 9:
-					close;
+					case 1: Catwarp(4170,1);
+					case 2: Catwarp(4170,2);
+					case 3: Catwarp(4170,3);
+					case 4: Catwarp(4170,4);
+					case 5: Catwarp(4170,5);
+					case 6: Catwarp(4170,6);
+					case 7: Catwarp(4170,7);
+					case 8: Catwarp(4170,8);
+					case 9: close;
 				}
 				close;
 			}
 			else if ((ep13_yong1 > 249) && (ep13_yong1 < 300)) {
 				switch(select("Alberta -> 4025z:Prontera -> 4025z:Izlude -> 4025z:Geffen -> 4025z:Payon -> 4025z:Morroc -> 4025z:Al De Baran -> 4025z:Juno -> 4025z:Einbroch -> 4025z:Cancel")) {
-				case 1:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "alberta",117,56;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 2:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "prontera",116,72;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 3:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "izlude",91,105;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 4:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "geffen",120,39;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 5:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "payon",161,58;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 6:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "morocc",156,46;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 7:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "aldebaran",168,112;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 8:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "yuno",158,125;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 9:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "einbroch",158,301;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 10:
-					close;
+					case 1: Catwarp(4025,1);
+					case 2: Catwarp(4025,2);
+					case 3: Catwarp(4025,3);
+					case 4: Catwarp(4025,4);
+					case 5: Catwarp(4025,5);
+					case 6: Catwarp(4025,6);
+					case 7: Catwarp(4025,7);
+					case 8: Catwarp(4025,8);
+					case 9: Catwarp(4025,9);
+					case 10: close;
 				}
 				close;
 			}
 			else if (ep13_yong1 > 299) {
 				switch(select("Alberta -> 3970z:Prontera -> 3970z:Izlude -> 3970z:Geffen -> 3970z:Payon -> 3970z:Morroc -> 3970z:Al De Baran -> 3970z:Juno -> 3970z:Einbroch -> 3970z:Lighthalzen -> 3970z:Cancel")) {
-				case 1:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "alberta",117,56;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 2:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "prontera",116,72;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 3:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "izlude",91,105;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 4:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "geffen",120,39;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 5:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "payon",161,58;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 6:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "morocc",156,46;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 7:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "aldebaran",168,112;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 8:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "yuno",158,125;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 9:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "einbroch",158,301;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 10:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "lighthalzen",163,64;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 11:
-					close;
+					case 1: Catwarp(3970,1);
+					case 2: Catwarp(3970,2);
+					case 3: Catwarp(3970,3);
+					case 4: Catwarp(3970,4);
+					case 5: Catwarp(3970,5);
+					case 6: Catwarp(3970,6);
+					case 7: Catwarp(3970,7);
+					case 8: Catwarp(3970,8);
+					case 9: Catwarp(3970,9);
+					case 10: Catwarp(3970,10);
+					case 11: close;
 				}
 				close;
 			}
@@ -980,34 +355,22 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 				close;
 			}
 		case 4:
-			switch(select("Alliance Forces Post -> 5500z:Manuk Camp -> 7500z:Cancel")) {
-			case 1:
-				if (Zeny >= 5500) {
-					set zeny,zeny-5500;
-					warp "mid_camp",62,127;
-					close;
-				}
-				else {
+			if (strnpcinfo(2) == "spl") switch(select("Alliance Forces Post -> 5500z:Manuk Camp -> 7500z:Cancel")) {
+				case 1: Catwarp(5500,13);
+				case 2: Catwarp(5500,12);
+				case 3:
 					mes "[Cat Hand Agent]";
-					mes "Don't play with money.";
+					mes "Thank you for using our service.";
 					close;
 				}
-			case 2:
-				if (Zeny >= 7500) {
-					set zeny,zeny-7500;
-					warp "man_fild02",129,61;
-					close;
-				}
-				else {
+			else switch(select("Alliance Forces Post -> 5500z:Splendide Camp -> 7500z:Cancel")) {
+				case 1: Catwarp(5500,13);
+				case 2: Catwarp(5500,11);
+				case 3:
 					mes "[Cat Hand Agent]";
-					mes "Don't play with money.";
+					mes "Thank you for using our service.";
 					close;
 				}
-			case 3:
-				mes "[Cat Hand Agent]";
-				mes "Thank you for using our service.";
-				close;
-			}
 		case 5:
 			mes "[Cat Hand Agent]";
 			mes "Thank you for using our service.";
@@ -1020,1481 +383,108 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 		mes "Please give me some Piece of Fish.";
 		close;
 	}
-}
-
-man_fild02,132,47,4	script	Cat Hand Agent#man	421,{
-	if (ep13_yong1 < 3) {
+function Catwarp {
+	if (Zeny < getarg(0)) {
 		mes "[Cat Hand Agent]";
-		mes "Welcome to Cat Trading.";
-		mes "I guess you're a first-time customer, huh?";
-		next;
-		mes "[Cat Hand Agent]";
-		mes "For more details about our contract, you need to talk to our staff first.";
-		close;
-	}
-	else if ((ep13_yong1 > 2) && (ep13_yong1 < 20)) {
-		mes "[Cat Hand Agent]";
-		mes "Cat Trading's available services are as followed.";
-		mes "For additional services, please consult Agent Gyaruk.";
-		next;
-		switch(select("Save your location:Cancel")) {
-		case 1:
-			savepoint "man_fild02",129,61;
-			mes "[Cat Hand Agent]";
-			mes "Thank you.";
-			mes "Your location has been saved.";
-			mes "You can now directly return to this camp.";
-			close;
-		case 2:
-			mes "[Cat Hand Agent]";
-			mes "Thank you for using our service.";
-			close;
-		}
-	}
-	else if ((ep13_yong1 > 19) && (ep13_yong1 < 40)) {
-		mes "[Cat Hand Agent]";
-		mes "Cat Trading's available services are as followed.";
-		mes "For additional services, please consult Agent Gyaruk.";
-		next;
-		switch(select("Save your location:Use Storage:Cancel")) {
-		case 1:
-			savepoint "man_fild02",129,61;
-			mes "[Cat Hand Agent]";
-			mes "Thank you.";
-			mes "Your location has been saved.";
-			mes "You can now directly return to this camp.";
-			close;
-		case 2:
-			if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
-				mes "[Cat Hand Agent]";
-				mes "I'm sorry, but you";
-				mes "need the Novice's";
-				mes "Basic Skill Level 6 to";
-				mes "use the Storage Service.";
-				close;
-			}
-			else if (Zeny >= 60) {
-				set zeny,zeny-60;
-				mes "[Cat Hand Agent]";
-				mes "Thank you.";
-				mes "Your storage will be opened shortly.";
-				close2;
-				openstorage;
-				end;
-			}
-			else {
-				mes "[Cat Hand Agent]";
-				mes "I'm sorry, but you don't";
-				mes "have enough money?";
-				mes "Cat Trading's storage";
-				mes "service is 60 zeny.";
-				mes "It's cheap, isn't it?";
-				close;
-			}
-		case 3:
-			mes "[Cat Hand Agent]";
-			mes "Thank you for using our service.";
-			close;
-		}
-	}
-	else if ((ep13_yong1 > 39) && (ep13_yong1 < 100)) {
-		mes "[Cat Hand Agent]";
-		mes "Cat Trading's available services are as followed.";
-		mes "For additional services, please consult Agent Gyaruk.";
-		next;
-		switch(select("Save your location:Use Storage:Use Cat Warp (Midgard):Cancel")) {
-		case 1:
-			savepoint "man_fild02",129,61;
-			mes "[Cat Hand Agent]";
-			mes "Thank you.";
-			mes "Your location has been saved.";
-			mes "You can now directly return to this camp.";
-			close;
-		case 2:
-			if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
-				mes "[Cat Hand Agent]";
-				mes "I'm sorry, but you";
-				mes "need the Novice's";
-				mes "Basic Skill Level 6 to";
-				mes "use the Storage Service.";
-				close;
-			}
-			else if (Zeny >= 60) {
-				set zeny,zeny-60;
-				mes "[Cat Hand Agent]";
-				mes "Thank you.";
-				mes "Your storage will be opened shortly.";
-				close2;
-				openstorage;
-				end;
-			}
-			else {
-				mes "[Cat Hand Agent]";
-				mes "I'm sorry, but you don't";
-				mes "have enough money?";
-				mes "Cat Trading's storage";
-				mes "service is 60 zeny.";
-				mes "It's cheap, isn't it?";
-				close;
-			}
-		case 3:
-			// Custom Translation.
-			mes "[Cat Hand Agent]";
-			mes "With " + ep13_yong1 + " credit points, we offer the following warp services. Please remember, you can't come back easily once you move to Midgard.";
-			next;
-			if ((ep13_yong1 > 39) && (ep13_yong1 < 50)) {
-				switch(select("Prontera -> 5500z:Cancel")) {
-				case 1:
-					if (Zeny >= 5500) {
-						set zeny,zeny-5500;
-						warp "prontera",116,72;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 2:
-					close;
-				}
-			}
-			else if ((ep13_yong1 > 49) && (ep13_yong1 < 60)) {
-				switch(select("Alberta -> 5500z:Prontera -> 5500z:Cancel")) {
-				case 1:
-					if (Zeny >= 5500) {
-						set zeny,zeny-5500;
-						warp "alberta",117,56;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 2:
-					if (Zeny >= 5500) {
-						set zeny,zeny-5500;
-						warp "prontera",116,72;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 3:
-					close;
-				}
-			}
-			else if ((ep13_yong1 > 59) && (ep13_yong1 < 70)) {
-				switch(select("Alberta -> 5025z:Prontera -> 5025z:Izlude -> 5025z:Cancel")) {
-				case 1:
-					if (Zeny >= 5025) {
-						set zeny,zeny-5025;
-						warp "alberta",117,56;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 2:
-					if (Zeny >= 5025) {
-						set zeny,zeny-5025;
-						warp "prontera",116,72;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 3:
-					if (Zeny >= 5025) {
-						set zeny,zeny-5025;
-						warp "izlude",91,105;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 4:
-					close;
-				}
-			}
-			else if ((ep13_yong1 > 69) && (ep13_yong1 < 80)) {
-				switch(select("Alberta -> 5025z:Prontera -> 5025z:Izlude -> 5025z:Geffen -> 5025z:Cancel")) {
-				case 1:
-					if (Zeny >= 5025) {
-						set zeny,zeny-5025;
-						warp "alberta",117,56;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 2:
-					if (Zeny >= 5025) {
-						set zeny,zeny-5025;
-						warp "prontera",116,72;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 3:
-					if (Zeny >= 5025) {
-						set zeny,zeny-5025;
-						warp "izlude",91,105;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 4:
-					if (Zeny >= 5025) {
-						set zeny,zeny-5025;
-						warp "geffen",120,39;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 5:
-					close;
-				}
-			}
-			else if ((ep13_yong1 > 79) && (ep13_yong1 < 90)) {
-				switch(select("Alberta -> 4765z:Prontera -> 4765z:Izlude -> 4765z:Geffen -> 4765z:Payon -> 4765z:Cancel")) {
-				case 1:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "alberta",117,56;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 2:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "prontera",116,72;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 3:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "izlude",91,105;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 4:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "geffen",120,39;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 5:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "payon",161,58;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 6:
-					close;
-				}
-			}
-			else if ((ep13_yong1 > 89) && (ep13_yong1 < 100)) {
-				switch(select("Alberta -> 4765z:Prontera -> 4765z:Izlude -> 4765z:Geffen -> 4765z:Payon -> 4765z:Morroc -> 4765z:Cancel")) {
-				case 1:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "alberta",117,56;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 2:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "prontera",116,72;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 3:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "izlude",91,105;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 4:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "geffen",120,39;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 5:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "payon",161,58;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 6:
-					if (Zeny >= 4765) {
-						set zeny,zeny-4765;
-						warp "morocc",156,46;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 7:
-					close;
-				}
-			}
-			else if (ep13_yong1 > 99) {
-				switch(select("Alberta -> 4590z:Prontera -> 4590z:Izlude -> 4590z:Geffen -> 4590z:Payon -> 4590z:Morroc -> 4590z:Al De Baran -> 4590z:Cancel")) {
-				case 1:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "alberta",117,56;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 2:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "prontera",116,72;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 3:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "izlude",91,105;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 4:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "geffen",120,39;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 5:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "payon",161,58;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 6:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "morocc",156,46;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 7:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "aldebaran",168,112;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 8:
-					close;
-				}
-			}
-			else {
-				// Custom Translation.
-				mes "[Cat Hand Agent]";
-				mes "I am sorry, but you don't have enough credit points to use the warp service. Please come back when you have more points.";
-				close;
-			}
-		case 4:
-			mes "[Cat Hand Agent]";
-			mes "Thank you for using our service.";
-			close;
-		}
-	}
-	else if (ep13_yong1 > 99) {
-		mes "[Cat Hand Agent]";
-		mes "Cat Trading's available services are as followed.";
-		mes "For additional services, please consult Agent Gyaruk.";
-		next;
-		switch(select("Save your location:Use Storage:Use Cat Warp (Midgard):Use Cat Warp (Jottunheim):Cancel")) {
-		case 1:
-			savepoint "man_fild02",129,61;
-			mes "[Cat Hand Agent]";
-			mes "Thank you.";
-			mes "Your location has been saved.";
-			mes "You can now directly return to this camp.";
-			close;
-		case 2:
-			if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
-				mes "[Cat Hand Agent]";
-				mes "I'm sorry, but you";
-				mes "need the Novice's";
-				mes "Basic Skill Level 6 to";
-				mes "use the Storage Service.";
-				close;
-			}
-			else if (Zeny >= 60) {
-				set zeny,zeny-60;
-				mes "[Cat Hand Agent]";
-				mes "Thank you.";
-				mes "Your storage will be opened shortly.";
-				close2;
-				openstorage;
-				end;
-			}
-			else {
-				mes "[Cat Hand Agent]";
-				mes "I'm sorry, but you don't";
-				mes "have enough money?";
-				mes "Cat Trading's storage";
-				mes "service is 60 zeny.";
-				mes "It's cheap, isn't it?";
-				close;
-			}
-		case 3:
-			// Custom Translation.
-			mes "[Cat Hand Agent]";
-			mes "With " + ep13_yong1 + " credit points, we offer the following warp services. Please remember, you can't come back easily once you move to Midgard.";
-			next;
-			if ((ep13_yong1 > 99) && (ep13_yong1 < 200)) {
-				switch(select("Alberta -> 4590z:Prontera -> 4590z:Izlude -> 4590z:Geffen -> 4590z:Payon -> 4590z:Morroc -> 4590z:Al De Baran -> 4590z:Cancel")) {
-				case 1:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "alberta",117,56;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 2:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "prontera",116,72;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 3:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "izlude",91,105;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 4:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "geffen",120,39;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 5:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "payon",161,58;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 6:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "morocc",156,46;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 7:
-					if (Zeny >= 4590) {
-						set zeny,zeny-4590;
-						warp "aldebaran",168,112;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 8:
-					close;
-				}
-			}
-			else if ((ep13_yong1 > 199) && (ep13_yong1 < 250)) {
-				switch(select("Alberta -> 4170z:Prontera -> 4170z:Izlude -> 4170z:Geffen -> 4170z:Payon -> 4170z:Morroc -> 4170z:Al De Baran -> 4170z:Juno -> 4170z:Cancel")) {
-				case 1:
-					if (Zeny >= 4170) {
-						set zeny,zeny-4170;
-						warp "alberta",117,56;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 2:
-					if (Zeny >= 4170) {
-						set zeny,zeny-4170;
-						warp "prontera",116,72;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 3:
-					if (Zeny >= 4170) {
-						set zeny,zeny-4170;
-						warp "izlude",91,105;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 4:
-					if (Zeny >= 4170) {
-						set zeny,zeny-4170;
-						warp "geffen",120,39;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 5:
-					if (Zeny >= 4170) {
-						set zeny,zeny-4170;
-						warp "payon",161,58;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 6:
-					if (Zeny >= 4170) {
-						set zeny,zeny-4170;
-						warp "morocc",156,46;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 7:
-					if (Zeny >= 4170) {
-						set zeny,zeny-4170;
-						warp "aldebaran",168,112;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 8:
-					if (Zeny >= 4170) {
-						set zeny,zeny-4170;
-						warp "yuno",158,125;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 9:
-					close;
-				}
-				close;
-			}
-			else if ((ep13_yong1 > 249) && (ep13_yong1 < 300)) {
-				switch(select("Alberta -> 4025z:Prontera -> 4025z:Izlude -> 4025z:Geffen -> 4025z:Payon -> 4025z:Morroc -> 4025z:Al De Baran -> 4025z:Juno -> 4025z:Einbroch -> 4025z:Cancel")) {
-				case 1:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "alberta",117,56;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 2:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "prontera",116,72;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 3:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "izlude",91,105;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 4:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "geffen",120,39;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 5:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "payon",161,58;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 6:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "morocc",156,46;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 7:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "aldebaran",168,112;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 8:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "yuno",158,125;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 9:
-					if (Zeny >= 4025) {
-						set zeny,zeny-4025;
-						warp "einbroch",158,301;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 10:
-					close;
-				}
-				close;
-			}
-			else if (ep13_yong1 > 299) {
-				switch(select("Alberta -> 3970z:Prontera -> 3970z:Izlude -> 3970z:Geffen -> 3970z:Payon -> 3970z:Morroc -> 3970z:Al De Baran -> 3970z:Juno -> 3970z:Einbroch -> 3970z:Lighthalzen -> 3970z:Cancel")) {
-				case 1:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "alberta",117,56;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 2:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "prontera",116,72;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 3:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "izlude",91,105;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 4:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "geffen",120,39;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 5:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "payon",161,58;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 6:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "morocc",156,46;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 7:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "aldebaran",168,112;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 8:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "yuno",158,125;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 9:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "einbroch",158,301;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 10:
-					if (Zeny >= 3970) {
-						set zeny,zeny-3970;
-						warp "lighthalzen",163,64;
-						close;
-					}
-					else {
-						mes "[Cat Hand Agent]";
-						mes "Don't play with money.";
-						close;
-					}
-				case 11:
-					close;
-				}
-				close;
-			}
-			else {
-				// Custom Translation
-				mes "[Cat Hand Agent]";
-				mes "I am sorry, but you don't have enough credit points to use the warp service. Please come back when you have more points.";
-				close;
-			}
-		case 4:
-			switch(select("Alliance Forces Post -> 5500z:Splendide Camp -> 7500z:Cancel")) {
-			case 1:
-				if (Zeny >= 5500) {
-					set zeny,zeny-5500;
-					warp "mid_camp",62,127;
-					close;
-				}
-				else {
-					mes "[Cat Hand Agent]";
-					mes "Don't play with money.";
-					close;
-				}
-			case 2:
-				if (Zeny >= 7500) {
-					set zeny,zeny-7500;
-					warp "spl_fild02",32,225;
-					close;
-				}
-				else {
-					mes "[Cat Hand Agent]";
-					mes "Don't play with money.";
-					close;
-				}
-			case 3:
-				mes "[Cat Hand Agent]";
-				mes "Thank you for using our service.";
-				close;
-			}
-		case 5:
-			mes "[Cat Hand Agent]";
-			mes "Thank you for using our service.";
-			close;
-		}
-	}
-	else {
-		mes "[Cat Hand Agent]";
-		mes "... ... ... ...";
-		mes "Please give me some Piece of Fish.";
-		close;
+		mes "Don't play with money.";
+		close; }
+	set Zeny, Zeny-getarg(0);
+	switch(getarg(1)) {
+		case 1: warp "alberta",117,56; close;
+		case 2: warp "prontera",116,72; close;
+		case 3: warp "izlude",91,105; close;
+		case 4: warp "geffen",120,39; close;
+		case 5: warp "payon",161,58; close;
+		case 6: warp "morocc",156,46; close;
+		case 7: warp "aldebaran",168,112; close;
+		case 8: warp "yuno",158,125; close;
+		case 9: warp "einbroch",158,301; close;
+		case 10: warp "lighthalzen",163,64; close;
+		case 11: warp "spl_fild02",32,225; close;
+		case 12: warp "man_fild02",129,61; close;
+		case 13: warp "mid_camp",62,127; close;
 	}
 }
+}
 
-man_fild02,146,81,0	script	Mysterious Rock#31	844,{
+man_fild02,132,47,4	duplicate(Cat Hand Agent#spl)	Cat Hand Agent#man	421
+
+-	script	Mysterious Rock#30::manukrock2	-1,{
 	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
 		specialeffect2 EF_REPAIRWEAPON;
 		progressbar "ffff00",10;
 		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran == 17) {
-			getitem 6080,1; //Manuk_Coin
-		}
-		else if (.@rhea_ran > 18) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
+		if (.@rhea_ran < 13) getitem 7049,1; //Stone
+		else if (.@rhea_ran == 13) getitem 990,1; //Boody_Red
+		else if (.@rhea_ran == 14) getitem 991,1; //Crystal_Blue
+		else if (.@rhea_ran == 15) getitem 992,1; //Wind_Of_Verdure
+		else if (.@rhea_ran == 16) getitem 993,1; //Yellow_Live
+		else if (.@rhea_ran == 17) getitem 6080,1; //Manuk_Coin
+		else getitem 6048,1; //Unidentified_Mineral
 		initnpctimer;
-		disablenpc "Mysterious Rock#31";
-		end;
-	}
+		disablenpc strnpcinfo(0);
+		end; }
 	else {
 		mes "This rock contains unidentified minerals.";
 		mes "It's not possible to mine more than the limit.";
-		close;
-	}
+		close; }
 	end;
 
 OnTimer120000:
-	enablenpc "Mysterious Rock#31";
+	enablenpc strnpcinfo(0);
 	stopnpctimer;
 	end;
 }
 
-man_fild02,140,148,0	script	Mysterious Rock#32	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran == 17) {
-			getitem 6080,1; //Manuk_Coin
-		}
-		else if (.@rhea_ran > 18) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#32";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#32";
-	stopnpctimer;
-	end;
-}
-
-man_fild02,88,263,0	script	Mysterious Rock#33	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran == 17) {
-			getitem 6080,1; //Manuk_Coin
-		}
-		else if (.@rhea_ran > 18) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#33";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#33";
-	stopnpctimer;
-	end;
-}
-
-man_fild02,146,365,0	script	Mysterious Rock#34	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran == 17) {
-			getitem 6080,1; //Manuk_Coin
-		}
-		else if (.@rhea_ran > 18) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#34";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#34";
-	stopnpctimer;
-	end;
-}
-
-man_fild02,336,305,0	script	Mysterious Rock#35	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran == 17) {
-			getitem 6080,1; //Manuk_Coin
-		}
-		else if (.@rhea_ran > 18) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#35";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#35";
-	stopnpctimer;
-	end;
-}
-
-man_fild02,248,124,0	script	Mysterious Rock#36	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran == 17) {
-			getitem 6080,1; //Manuk_Coin
-		}
-		else if (.@rhea_ran > 18) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#36";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#36";
-	stopnpctimer;
-	end;
-}
-
-man_fild02,285,115,0	script	Mysterious Rock#37	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran == 17) {
-			getitem 6080,1; //Manuk_Coin
-		}
-		else if (.@rhea_ran > 18) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#37";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#37";
-	stopnpctimer;
-	end;
-}
-
-man_fild02,346,116,0	script	Mysterious Rock#38	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran == 17) {
-			getitem 6080,1; //Manuk_Coin
-		}
-		else if (.@rhea_ran > 18) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#38";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#38";
-	stopnpctimer;
-	end;
-}
-
-man_fild02,358,174,0	script	Mysterious Rock#39	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran == 17) {
-			getitem 6080,1; //Manuk_Coin
-		}
-		else if (.@rhea_ran > 18) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#39";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#39";
-	stopnpctimer;
-	end;
-}
-
-man_fild02,241,227,0	script	Mysterious Rock#40	844,{
-	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
-		specialeffect2 EF_REPAIRWEAPON;
-		progressbar "ffff00",10;
-		set .@rhea_ran,rand(1,20);
-		if (.@rhea_ran < 13) {
-			getitem 7049,1; //Stone
-		}
-		else if (.@rhea_ran == 13) {
-			getitem 990,1; //Boody_Red
-		}
-		else if (.@rhea_ran == 14) {
-			getitem 991,1; //Crystal_Blue
-		}
-		else if (.@rhea_ran == 15) {
-			getitem 992,1; //Wind_Of_Verdure
-		}
-		else if (.@rhea_ran == 16) {
-			getitem 993,1; //Yellow_Live
-		}
-		else if (.@rhea_ran == 17) {
-			getitem 6080,1; //Manuk_Coin
-		}
-		else if (.@rhea_ran > 18) {
-			getitem 6048,1; //Unidentified_Mineral
-		}
-		initnpctimer;
-		disablenpc "Mysterious Rock#40";
-		end;
-	}
-	else {
-		mes "This rock contains unidentified minerals.";
-		mes "It's not possible to mine more than the limit.";
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Mysterious Rock#40";
-	stopnpctimer;
-	end;
-}
+man_fild02,146,81,0	duplicate(manukrock2)	Mysterious Rock#31	844
+man_fild02,140,148,0	duplicate(manukrock2)	Mysterious Rock#32	844
+man_fild02,88,263,0	duplicate(manukrock2)	Mysterious Rock#33	844
+man_fild02,146,365,0	duplicate(manukrock2)	Mysterious Rock#34	844
+man_fild02,336,305,0	duplicate(manukrock2)	Mysterious Rock#35	844
+man_fild02,248,124,0	duplicate(manukrock2)	Mysterious Rock#36	844
+man_fild02,285,115,0	duplicate(manukrock2)	Mysterious Rock#37	844
+man_fild02,346,116,0	duplicate(manukrock2)	Mysterious Rock#38	844
+man_fild02,358,174,0	duplicate(manukrock2)	Mysterious Rock#39	844
+man_fild02,241,227,0	duplicate(manukrock2)	Mysterious Rock#40	844
 
 spl_fild03,226,151,0	script	School of Fish#5::FishingHole_spl3	844,{
 	if ((checkquest(12060,PLAYTIME) == -1) && (countitem(6039) < 20)) {
 		specialeffect2 EF_BUBBLE;
 		specialeffect2 EF_INVENOM;
 		set .@fcast,15;
-		if (isequipped(2550)) { //Fisher's_Muffler
+		if (isequipped(2550)) //Fisher's_Muffler
 			set .@fcast,.@fcast - 2;
-		}
-		if (isequipped(2443)) { //Fish_Shoes
+		if (isequipped(2443)) //Fish_Shoes
 			set .@fcast,.@fcast - 2;
-		}
-		if (isequipped(2764)) { //Small_Fishing_Rod
+		if (isequipped(2764)) //Small_Fishing_Rod
 			set .@fcast,.@fcast - 3;
-		}
-		if (isequipped(2775)) { //Lure
+		if (isequipped(2775)) //Lure
 			set .@fcast,.@fcast - 1;
-		}
-		if (isequipped(1599)) { //Ahura_Mazda
+		if (isequipped(1599)) //Ahura_Mazda
 			set .@fcast,.@fcast - 3;
-		}
-		if (isequipped(2199)) { //Angra_Manyu
+		if (isequipped(2199)) //Angra_Manyu
 			set .@fcast,.@fcast - 4;
-		}
 		progressbar "ffff00",.@fcast;
 		if (ep13_1_rhea == 13) {
 			if (rand(1,20) == 2) {
 				getitem 6037,1; //Rough_File
 				set ep13_1_rhea,14;
 				specialeffect2 EF_BUBBLE;
-				mapannounce "spl_fild03","" + strcharinfo(0) + " has caught a Loose File.",bc_map,"0xff77ff";
+				mapannounce strcharinfo(3),strcharinfo(0) + " has caught a Loose File.",bc_map,"0xff77ff";
 			}
 		}
 		set .@rhea_ran,rand(1,70);
-		if (.@rhea_ran < 20) {
-			getitem 6039,1; //Piece_Of_Fish
-		}
-		else if (.@rhea_ran == 20) {
-			getitem 908,1; //Spawn
-		}
-		else if (.@rhea_ran == 21) {
-			getitem 909,1; //Jellopy
-		}
-		else if (.@rhea_ran == 22) {
-			getitem 963,1; //Sharp_Scale
-		}
-		else if (.@rhea_ran == 23) {
-			getitem 956,1; //Gill
-		}
-		else if (.@rhea_ran == 24) {
-			getitem 6049,1; //Marlin
-		}
-		else if (.@rhea_ran == 25) {
-			getitem 918,1; //Sticky_Webfoot
-		}
-		else if (.@rhea_ran == 26) {
-			getitem 960,1; //Nipper
-		}
-		else if (.@rhea_ran == 27) {
-			getitem 910,1; //Garlet
-		}
-		else if (.@rhea_ran == 28) {
-			getitem 6081,1; //Splendide_Coin
-		}
-		else if ((.@rhea_ran > 28) && (.@rhea_ran < 40)) {
-			getitem 7049,1; //Stone
-		}
+		if (.@rhea_ran < 20) getitem 6039,1; //Piece_Of_Fish
+		else if (.@rhea_ran == 20) getitem 908,1; //Spawn
+		else if (.@rhea_ran == 21) getitem 909,1; //Jellopy
+		else if (.@rhea_ran == 22) getitem 963,1; //Sharp_Scale
+		else if (.@rhea_ran == 23) getitem 956,1; //Gill
+		else if (.@rhea_ran == 24) getitem 6049,1; //Marlin
+		else if (.@rhea_ran == 25) getitem 918,1; //Sticky_Webfoot
+		else if (.@rhea_ran == 26) getitem 960,1; //Nipper
+		else if (.@rhea_ran == 27) getitem 910,1; //Garlet
+		else if (.@rhea_ran == 28) getitem 6081,1; //Splendide_Coin
+		else if ((.@rhea_ran > 28) && (.@rhea_ran < 40)) getitem 7049,1; //Stone
 		else {
 			mes "Nothing was caught.";
 			close;
@@ -2502,17 +492,17 @@ spl_fild03,226,151,0	script	School of Fish#5::FishingHole_spl3	844,{
 		set .@rhea_ran5,rand(1,200);
 		if (.@rhea_ran5 == 3) {
 			getitem 644,1; //Gift_Box
-			mapannounce "spl_fild03","" + strcharinfo(0) + " has caught a Gift Box.",bc_map,"0x00ffff";
+			mapannounce strcharinfo(3),strcharinfo(0) + " has caught a Gift Box.",bc_map,"0x00ffff";
 		}
 		set .@rhea_ran3,rand(1,500);
 		if (.@rhea_ran3 == 3) {
 			getitem 603,1; //Old_Blue_Box
-			mapannounce "spl_fild03","" + strcharinfo(0) + " has caught an Old Blue Box.",bc_map,"0x00ffff";
+			mapannounce strcharinfo(3),strcharinfo(0) + " has caught an Old Blue Box.",bc_map,"0x00ffff";
 		}
 		set .@rhea_ran4,rand(1,3000);
 		if (.@rhea_ran4 == 3) {
 			getitem 617,1; //Old_Violet_Box
-			mapannounce "spl_fild03","" + strcharinfo(0) + " has caught an Old Purple Box.",bc_map,"0x44ff44";
+			mapannounce strcharinfo(3),strcharinfo(0) + " has caught an Old Purple Box.",bc_map,"0x44ff44";
 		}
 	}
 	else {
@@ -2521,109 +511,15 @@ spl_fild03,226,151,0	script	School of Fish#5::FishingHole_spl3	844,{
 	}
 	end;
 }
-
 spl_fild03,268,230,0	duplicate(FishingHole_spl3)	School of Fish#6	844
 spl_fild03,293,253,0	duplicate(FishingHole_spl3)	School of Fish#7	844
 spl_fild03,165,100,0	duplicate(FishingHole_spl3)	School of Fish#8	844
 spl_fild03,317,190,0	duplicate(FishingHole_spl3)	School of Fish#9	844
-
-spl_fild01,41,118,0	script	School of Fish#10::FishingHole_spl1	844,{
-	if ((checkquest(12060,PLAYTIME) == -1) && (countitem(6039) < 20)) {
-		specialeffect2 EF_BUBBLE;
-		specialeffect2 EF_INVENOM;
-		set .@fcast,15;
-		if (isequipped(2550)) { //Fisher's_Muffler
-			set .@fcast,.@fcast - 2;
-		}
-		if (isequipped(2443)) { //Fish_Shoes
-			set .@fcast,.@fcast - 2;
-		}
-		if (isequipped(2764)) { //Small_Fishing_Rod
-			set .@fcast,.@fcast - 3;
-		}
-		if (isequipped(2775)) { //Lure
-			set .@fcast,.@fcast - 1;
-		}
-		if (isequipped(1599)) { //Ahura_Mazda
-			set .@fcast,.@fcast - 3;
-		}
-		if (isequipped(2199)) { //Angra_Manyu
-			set .@fcast,.@fcast - 4;
-		}
-		progressbar "ffff00",.@fcast;
-		if (ep13_1_rhea == 13) {
-			if (rand(1,20) == 2) {
-				getitem 6037,1; //Rough_File
-				set ep13_1_rhea,14;
-				specialeffect2 EF_BUBBLE;
-				mapannounce "spl_fild01","" + strcharinfo(0) + " has caught a Loose File.",bc_map,"0xff77ff";
-			}
-		}
-		set .@rhea_ran,rand(1,70);
-		if (.@rhea_ran < 20) {
-			getitem 6039,1; //Piece_Of_Fish
-		}
-		else if (.@rhea_ran == 20) {
-			getitem 908,1; //Spawn
-		}
-		else if (.@rhea_ran == 21) {
-			getitem 909,1; //Jellopy
-		}
-		else if (.@rhea_ran == 22) {
-			getitem 963,1; //Sharp_Scale
-		}
-		else if (.@rhea_ran == 23) {
-			getitem 956,1; //Gill
-		}
-		else if (.@rhea_ran == 24) {
-			getitem 6049,1; //Marlin
-		}
-		else if (.@rhea_ran == 25) {
-			getitem 918,1; //Sticky_Webfoot
-		}
-		else if (.@rhea_ran == 26) {
-			getitem 960,1; //Nipper
-		}
-		else if (.@rhea_ran == 27) {
-			getitem 910,1; //Garlet
-		}
-		else if (.@rhea_ran == 28) {
-			getitem 6081,1; //Splendide_Coin
-		}
-		else if ((.@rhea_ran > 28) && (.@rhea_ran < 40)) {
-			getitem 7049,1; //Stone
-		}
-		else {
-			mes "Nothing was caught.";
-			close;
-		}
-		set .@rhea_ran5,rand(1,200);
-		if (.@rhea_ran5 == 3) {
-			getitem 644,1; //Gift_Box
-			mapannounce "spl_fild01","" + strcharinfo(0) + " has caught a Gift Box.",bc_map,"0x00ffff";
-		}
-		set .@rhea_ran3,rand(1,500);
-		if (.@rhea_ran3 == 3) {
-			getitem 603,1; //Old_Blue_Box
-			mapannounce "spl_fild01","" + strcharinfo(0) + " has caught a Old Blue Box.",bc_map,"0x00ffff";
-		}
-		set .@rhea_ran4,rand(1,3000);
-		if (.@rhea_ran4 == 3) {
-			getitem 617,1; //Old_Violet_Box
-			mapannounce "spl_fild01","" + strcharinfo(0) + " has caught a Old Purple Box.",bc_map,"0x44ff44";
-		}
-	}
-	else {
-		mes "Fish are swimming in the water.";
-		close;
-	}
-	end;
-}
-
-spl_fild01,317,361,0	duplicate(FishingHole_spl1)	School of Fish#11	844
-spl_fild01,55,269,0	duplicate(FishingHole_spl1)	School of Fish#12	844
-spl_fild01,332,131,0	duplicate(FishingHole_spl1)	School of Fish#13	844
-spl_fild01,170,74,0	duplicate(FishingHole_spl1)	School of Fish#14	844
+spl_fild01,41,118,0	duplicate(FishingHole_spl3)	School of Fish#10	844
+spl_fild01,317,361,0	duplicate(FishingHole_spl3)	School of Fish#11	844
+spl_fild01,55,269,0	duplicate(FishingHole_spl3)	School of Fish#12	844
+spl_fild01,332,131,0	duplicate(FishingHole_spl3)	School of Fish#13	844
+spl_fild01,170,74,0	duplicate(FishingHole_spl3)	School of Fish#14	844
 
 // Two Tribes
 //============================================================
@@ -3418,15 +1314,12 @@ nyd_dun01,55,223,5	script	Snorren#ep13md17	454,{
 	end;
 
 OnInit:
+OnDisable:
 	disablenpc "Snorren#ep13md17";
 	end;
 
 OnEnable:
 	enablenpc "Snorren#ep13md17";
-	end;
-
-OnDisable:
-	disablenpc "Snorren#ep13md17";
 	end;
 }
 
@@ -4462,148 +2355,6 @@ OnTouch:
 	close;
 }
 
-spl_in02,239,93,3	script	Terra#ep13md_l03	441,{
-	if (checkweight(1201,2) == 0) {
-		mes "Wait a moment!!";
-		mes "You have too many items.";
-		mes "You can't receive this.";
-		mes "Lighten your weight and";
-		mes "try again.";
-		close;
-	}
-	if (isequipped(2782) == 1) {
-		if (ep13_mdrama == 26) {
-			mes "[Terra]";
-			mes ".........";
-			next;
-			mes "[Arc]";
-			mes "I see. That's what happened.";
-			mes "But... That Sapha...What has he become to you in that short period of time?";
-			next;
-			select("Arc?");
-			mes "[Arc]";
-			mes "Ah, finally. I've been speaking with Terra while we waited for you.";
-			mes "Terra. This is who saved you...";
-			if (Sex == 0) {
-				mes "You should thank her.";
-			}
-			else {
-				mes "You should thank him.";
-			}
-			next;
-			mes "[Terra]";
-			mes "Thank you...";
-			mes "I'm sorry Arc... Sorry...";
-			mes "......";
-			next;
-			mes "[Arc]";
-			mes "So, this is the story.";
-			mes "Terra was wandering around your Camp and found a Sapha who was also wandering around your Camp at the time.";
-			next;
-			mes "[Arc]";
-			mes "They were both being cautious not to be seen by you humans but they caught sight of each other and started to fight.";
-			next;
-			mes "[Arc]";
-			mes "And then they eventually fell into that hole in the swamp and ended up in that cave.";
-			next;
-			mes "[Terra]";
-			mes "Yeah... We were both unconscious for some time..";
-			mes "And by the time we were able to wake up and see... We were surrounded.";
-			next;
-			mes "[Terra]";
-			mes "Our main concern was getting out of there...";
-			mes "Even though we couldn't understand each other's language... We made a temporary truce.";
-			next;
-			mes "[Terra]";
-			mes "And then.....";
-			mes ".........";
-			next;
-			select("So that's what happened.");
-			mes "[" + strcharinfo(0) + "]";
-			mes "You were outnumbered and at the last moment Ogen sacrificed himself to protect you.";
-			next;
-			mes "[Terra]";
-			mes "So... I wanted to help him...";
-			mes "I was just trying to repay him...";
-			next;
-			mes "[Terra]";
-			mes "Was I wrong...?";
-			mes "Was I thinking wrong?";
-			next;
-			mes "[Arc]";
-			mes "Repaying one's dept is a good thing.";
-			mes "Especially for a proud Laphine, It sure is.";
-			next;
-			mes "[Arc]";
-			mes "But Terra...";
-			mes "You've made two big mistakes.";
-			mes "First is, You went away without permission...";
-			mes "And secondly...";
-			next;
-			mes "[Arc]";
-			mes "You didn't ask for help.";
-			mes "If something like that happened... of course I would help...";
-			next;
-			mes "[Terra]";
-			mes "I'm sorry Arc... I'm sorry...";
-			mes "I won't act foolish ever again.";
-			next;
-			mes "[Arc]";
-			mes "Get some rest.";
-			mes "I will put in a good word to the superiors...";
-			mes "And " + strcharinfo(0) + "...";
-			mes "Thank you.";
-			next;
-			mes "[Arc]";
-			mes "Here, I will give you these to show my appreciation.";
-			mes "It's not much, but you will be able to buy things in Splendide with these.";
-			next;
-			mes "[Arc]";
-			mes "I'm sorry this is all I can give you for now.";
-			set ep13_mdrama,27;
-			getitem 6081,25; //Splendide_Coin
-			getexp 120000,10000;
-			completequest 7071;
-			close;
-		}
-		else if (ep13_mdrama == 27) {
-			mes "[Terra]";
-			mes "Arc... I will get some rest...";
-			mes "I'm sorry... And. You...";
-			next;
-			mes "[Terra]";
-			mes "Originally.. we Laphine were extremely reluctant to have others in our area...";
-			mes "but you are ok...";
-			next;
-			mes "[Terra]";
-			// custom translation
-			mes "You are always welcome to visit us...";
-			set ep13_mdrama,28;
-			close;
-		}
-		else if (ep13_mdrama > 27) {
-			mes "[Terra]";
-			mes "I'm sorry...";
-			mes "My body is not fully recovered yet...";
-			close;
-		}
-		else {
-			// custom translation
-			mes "[Terra]";
-			mes "I'm sorry... I'm so sleepy...";
-			mes "...I want to sleep...";
-			close;
-		}
-	}
-	else {
-		mes "[Terra]";
-		mes "ModBurDana...? Mu AnduWehFus Yee OsaLoLars...";
-		mes "eoFusser....";
-		mes "maurNohser Ur...... ThorNuffLars So ";
-		close;
-	}
-}
-
 spl_in02,236,92,5	script	Arc#ep13md_l02	447,{
 	if (checkweight(1201,2) == 0) {
 		mes "Wait a moment!!";
@@ -4626,12 +2377,7 @@ spl_in02,236,92,5	script	Arc#ep13md_l02	447,{
 			mes "[Arc]";
 			mes "Ah, finally. I've been speaking with Terra while we waited for you.";
 			mes "Terra. This is who saved you...";
-			if (Sex == 0) {
-				mes "You should thank her.";
-			}
-			else {
-				mes "You should thank him.";
-			}
+			mes "You should thank "+((Sex)?"him.":"her.");
 			next;
 			mes "[Terra]";
 			mes "Thank you...";
@@ -4709,43 +2455,73 @@ spl_in02,236,92,5	script	Arc#ep13md_l02	447,{
 			close;
 		}
 		else if (ep13_mdrama == 27) {
-			mes "[Arc]";
-			mes "Terra. Get some rest...";
-			mes "Rest easy...";
-			mes "And...";
+			if (strnpcinfo(1) == "Arc") {
+				mes "[Arc]";
+				mes "Terra. Get some rest...";
+				mes "Rest easy...";
+				mes "And...";
+			}
+			else {
+				mes "[Terra]";
+				mes "Arc... I will get some rest...";
+				mes "I'm sorry... And. You...";
+			}
 			next;
-			mes "[Arc]";
-			mes ".Originally.. we Laphine were extremely reluctant to have others in our area.";
-			mes "" + strcharinfo(0) + ", you will be a special exception.";
+			mes "["+strnpcinfo(1)+"]";
+			mes "Originally... we Laphine were extremely reluctant to have others in our area.";
+			mes strcharinfo(0) + ", you will be a special exception.";
 			next;
-			mes "[Arc]";
-			mes "That's what Terra wants too.";
+			mes "["+strnpcinfo(1)+"]";
+			if (strnpcinfo(1) == "Arc") mes "That's what Terra wants too.";
 			mes "It might be cramped, but you are always welcome to visit us.";
 			set ep13_mdrama,28;
 			close;
 		}
 		else if (ep13_mdrama > 27) {
-			mes "[Arc]";
-			mes "How are you adapting to Splendide?";
-			mes "Terra's still not fully recovered yet, so keep that in mind.";
+			if (strnpcinfo(1) == "Arc") {
+				mes "[Arc]";
+				mes "How are you adapting to Splendide?";
+				mes "Terra's still not fully recovered yet, so keep that in mind.";
+			}
+			else {
+				mes "[Terra]";
+				mes "I'm sorry...";
+				mes "My body is not fully recovered yet...";
+			}
 			close;
 		}
 		else {
 			// custom translation
-			mes "[Arc]";
-			mes "The back of the right ... ";
-			mes "......";
+			if (strnpcinfo(1) == "Arc") {
+				mes "[Arc]";
+				mes "The back of the right ... ";
+				mes "......";
+			}
+			else {
+				mes "[Terra]";
+				mes "I'm sorry... I'm so sleepy...";
+				mes "...I want to sleep...";
+			}
 			close;
 		}
 	}
 	else {
-		mes "[Arc]";
-		mes "HirWosWeh. Yee DiebVilFar U manTalVil.";
-		mes "LarsNeiser...??";
-		mes "VeldTiTal Ko SharDurYur Di ?";
+		if (strnpcinfo(1) == "Arc") {
+			mes "[Arc]";
+			mes "HirWosWeh. Yee DiebVilFar U manTalVil.";
+			mes "LarsNeiser...??";
+			mes "VeldTiTal Ko SharDurYur Di ?";
+		}
+		else {
+			mes "[Terra]";
+			mes "ModBurDana...? Mu AnduWehFus Yee OsaLoLars...";
+			mes "eoFusser....";
+			mes "maurNohser Ur...... ThorNuffLars So ";
+		}
 		close;
 	}
 }
+spl_in02,239,93,3	duplicate(Arc#ep13md_l02)	Terra#ep13md_l03	441
 
 splendide,287,140,0	script	terrashome_in	45,1,1,{
 OnTouch:
@@ -5531,7 +3307,7 @@ mid_camp,192,239,4	script	Wanted Sign#ep13_2ect01	857,{
 	}
 }
 
-nyd_dun01,258,134,0	script	Dragon Egg#ep13_degg01	463,{
+-	script	Dragon Egg#ep13_degg_0	-1,{
 	if (checkweight(1201,2) == 0) {
 		mes "- You're carrying too many items. -";
 		close;
@@ -5539,27 +3315,34 @@ nyd_dun01,258,134,0	script	Dragon Egg#ep13_degg01	463,{
 	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
 		mes "We just got fresh eggs from the dragon nest.";
 		getitem 6093,1; //Egg_Of_Draco
-		disablenpc "Dragon Egg#ep13_degg01";
+		disablenpc strnpcinfo(1);
 		initnpctimer;
 		close;
 	}
 	end;
 
 OnTimer420000:
-	enablenpc "Dragon Egg#ep13_degg01";
+	enablenpc strnpcinfo(1);
 	stopnpctimer;
 	end;
 
 OnEnable:
-	enablenpc "Dragon Egg#ep13_degg01";
+	enablenpc strnpcinfo(1);
 	end;
 
 OnDisable:
-	disablenpc "Dragon Egg#ep13_degg01";
+	disablenpc strnpcinfo(1);
 	end;
 }
 
-nyd_dun01,100,210,0	script	Dragon Egg#ep13_degg02	463,{
+nyd_dun01,258,134,0	duplicate(Dragon Egg#ep13_degg_0)	Dragon Egg#ep13_degg01	463
+nyd_dun01,100,210,0	duplicate(Dragon Egg#ep13_degg_0)	Dragon Egg#ep13_degg02	463
+nyd_dun01,74,68,0	duplicate(Dragon Egg#ep13_degg_0)	Dragon Egg#ep13_degg03	463
+nyd_dun01,98,142,0	duplicate(Dragon Egg#ep13_degg_0)	Dragon Egg#ep13_degg04	463
+nyd_dun01,244,157,0	duplicate(Dragon Egg#ep13_degg_0)	Dragon Egg#ep13_degg05	463
+nyd_dun01,59,185,0	duplicate(Dragon Egg#ep13_degg_0)	Dragon Egg#ep13_degg06	463
+
+nyd_dun02,68,256,0	script	Dragon Egg#ep13_degg_1	463,{
 	if (checkweight(1201,2) == 0) {
 		mes "- You're carrying too many items. -";
 		close;
@@ -5567,167 +3350,31 @@ nyd_dun01,100,210,0	script	Dragon Egg#ep13_degg02	463,{
 	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
 		mes "We just got fresh eggs from the dragon nest.";
 		getitem 6093,1; //Egg_Of_Draco
-		disablenpc "Dragon Egg#ep13_degg02";
-		initnpctimer;
-		close;
-	}
-	end;
-
-OnTimer420000:
-	enablenpc "Dragon Egg#ep13_degg02";
-	stopnpctimer;
-	end;
-
-OnEnable:
-	enablenpc "Dragon Egg#ep13_degg02";
-	end;
-
-OnDisable:
-	disablenpc "Dragon Egg#ep13_degg02";
-	end;
-}
-
-nyd_dun01,74,68,0	script	Dragon Egg#ep13_degg03	463,{
-	if (checkweight(1201,2) == 0) {
-		mes "- You're carrying too many items. -";
-		close;
-	}
-	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
-		mes "We just got fresh eggs from the dragon nest.";
-		getitem 6093,1; //Egg_Of_Draco
-		disablenpc "Dragon Egg#ep13_degg03";
-		initnpctimer;
-		close;
-	}
-	end;
-
-OnTimer420000:
-	enablenpc "Dragon Egg#ep13_degg03";
-	stopnpctimer;
-	end;
-
-OnEnable:
-	enablenpc "Dragon Egg#ep13_degg03";
-	end;
-
-OnDisable:
-	disablenpc "Dragon Egg#ep13_degg03";
-	end;
-}
-
-nyd_dun01,98,142,0	script	Dragon Egg#ep13_degg04	463,{
-	if (checkweight(1201,2) == 0) {
-		mes "- You're carrying too many items. -";
-		close;
-	}
-	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
-		mes "We just got fresh eggs from the dragon nest.";
-		getitem 6093,1; //Egg_Of_Draco
-		disablenpc "Dragon Egg#ep13_degg04";
-		initnpctimer;
-		close;
-	}
-	end;
-
-OnTimer420000:
-	enablenpc "Dragon Egg#ep13_degg04";
-	stopnpctimer;
-	end;
-
-OnEnable:
-	enablenpc "Dragon Egg#ep13_degg04";
-	end;
-
-OnDisable:
-	disablenpc "Dragon Egg#ep13_degg04";
-	end;
-}
-
-nyd_dun01,244,157,0	script	Dragon Egg#ep13_degg05	463,{
-	if (checkweight(1201,2) == 0) {
-		mes "- You're carrying too many items. -";
-		close;
-	}
-	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
-		mes "We just got fresh eggs from the dragon nest.";
-		getitem 6093,1; //Egg_Of_Draco
-		disablenpc "Dragon Egg#ep13_degg05";
-		initnpctimer;
-		close;
-	}
-	end;
-
-OnTimer420000:
-	enablenpc "Dragon Egg#ep13_degg05";
-	stopnpctimer;
-	end;
-
-OnEnable:
-	enablenpc "Dragon Egg#ep13_degg05";
-	end;
-
-OnDisable:
-	disablenpc "Dragon Egg#ep13_degg05";
-	end;
-}
-
-nyd_dun01,59,185,0	script	Dragon Egg#ep13_degg06	463,{
-	if (checkweight(1201,2) == 0) {
-		mes "- You're carrying too many items. -";
-		close;
-	}
-	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
-		mes "We just got fresh eggs from the dragon nest.";
-		getitem 6093,1; //Egg_Of_Draco
-		disablenpc "Dragon Egg#ep13_degg06";
-		initnpctimer;
-		close;
-	}
-	end;
-
-OnTimer420000:
-	enablenpc "Dragon Egg#ep13_degg06";
-	stopnpctimer;
-	end;
-
-OnEnable:
-	enablenpc "Dragon Egg#ep13_degg06";
-	end;
-
-OnDisable:
-	disablenpc "Dragon Egg#ep13_degg06";
-	end;
-}
-
-nyd_dun02,68,256,0	script	Dragon Egg#ep13_degg11	463,{
-	if (checkweight(1201,2) == 0) {
-		mes "- You're carrying too many items. -";
-		close;
-	}
-	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
-		mes "We just got fresh eggs from the dragon nest.";
-		getitem 6093,1; //Egg_Of_Draco
-		disablenpc "Dragon Egg#ep13_degg11";
+		disablenpc strnpcinfo(1);
 		initnpctimer;
 		close;
 	}
 	end;
 
 OnTimer240000:
-	enablenpc "Dragon Egg#ep13_degg11";
+	enablenpc strnpcinfo(1);
 	stopnpctimer;
 	end;
 
 OnEnable:
-	enablenpc "Dragon Egg#ep13_degg11";
+	enablenpc strnpcinfo(1);
 	end;
 
 OnDisable:
-	disablenpc "Dragon Egg#ep13_degg11";
+	disablenpc strnpcinfo(1);
 	end;
 }
 
-nyd_dun02,202,166,0	script	Dragon Egg#ep13_degg12	463,{
+nyd_dun02,68,256,0	duplicate(Dragon Egg#ep13_degg_1)	Dragon Egg#ep13_degg11	463
+nyd_dun02,202,166,0	duplicate(Dragon Egg#ep13_degg_1)	Dragon Egg#ep13_degg12	463
+nyd_dun02,200,165,0	duplicate(Dragon Egg#ep13_degg_1)	Dragon Egg#ep13_degg13	463
+
+nyd_dun02,201,166,0	script	Dragon Egg#ep13_degg_2	463,{
 	if (checkweight(1201,2) == 0) {
 		mes "- You're carrying too many items. -";
 		close;
@@ -5735,139 +3382,29 @@ nyd_dun02,202,166,0	script	Dragon Egg#ep13_degg12	463,{
 	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
 		mes "We just got fresh eggs from the dragon nest.";
 		getitem 6093,1; //Egg_Of_Draco
-		disablenpc "Dragon Egg#ep13_degg12";
-		initnpctimer;
-		close;
-	}
-	end;
-
-OnTimer240000:
-	enablenpc "Dragon Egg#ep13_degg12";
-	stopnpctimer;
-	end;
-
-OnEnable:
-	enablenpc "Dragon Egg#ep13_degg12";
-	end;
-
-OnDisable:
-	disablenpc "Dragon Egg#ep13_degg12";
-	end;
-}
-
-nyd_dun02,200,165,0	script	Dragon Egg#ep13_degg13	463,{
-	if (checkweight(1201,2) == 0) {
-		mes "- You're carrying too many items. -";
-		close;
-	}
-	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
-		mes "We just got fresh eggs from the dragon nest.";
-		getitem 6093,1; //Egg_Of_Draco
-		disablenpc "Dragon Egg#ep13_degg13";
-		initnpctimer;
-		close;
-	}
-	end;
-
-OnTimer240000:
-	enablenpc "Dragon Egg#ep13_degg13";
-	stopnpctimer;
-	end;
-
-OnEnable:
-	enablenpc "Dragon Egg#ep13_degg13";
-	end;
-
-OnDisable:
-	disablenpc "Dragon Egg#ep13_degg13";
-	end;
-}
-
-nyd_dun02,201,166,0	script	Dragon Egg#ep13_degg16	463,{
-	if (checkweight(1201,2) == 0) {
-		mes "- You're carrying too many items. -";
-		close;
-	}
-	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
-		mes "We just got fresh eggs from the dragon nest.";
-		getitem 6093,1; //Egg_Of_Draco
-		disablenpc "Dragon Egg#ep13_degg16";
+		disablenpc strnpcinfo(1);
 		initnpctimer;
 		close;
 	}
 	end;
 
 OnTimer120000:
-	enablenpc "Dragon Egg#ep13_degg16";
+	enablenpc strnpcinfo(1);
 	stopnpctimer;
 	end;
 
 OnEnable:
-	enablenpc "Dragon Egg#ep13_degg16";
+	enablenpc strnpcinfo(1);
 	end;
 
 OnDisable:
-	disablenpc "Dragon Egg#ep13_degg16";
+	disablenpc strnpcinfo(1);
 	end;
 }
 
-nyd_dun02,203,167,0	script	Dragon Egg#ep13_degg17	463,{
-	if (checkweight(1201,2) == 0) {
-		mes "- You're carrying too many items. -";
-		close;
-	}
-	else {
-	}
-	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
-		mes "We just got fresh eggs from the dragon nest.";
-		getitem 6093,1; //Egg_Of_Draco
-		disablenpc "Dragon Egg#ep13_degg17";
-		initnpctimer;
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Dragon Egg#ep13_degg17";
-	stopnpctimer;
-	end;
-
-OnEnable:
-	enablenpc "Dragon Egg#ep13_degg17";
-	end;
-
-OnDisable:
-	disablenpc "Dragon Egg#ep13_degg17";
-	end;
-}
-
-nyd_dun02,201,164,0	script	Dragon Egg#ep13_degg18	463,{
-	if (checkweight(1201,2) == 0) {
-		mes "- You're carrying too many items. -";
-		close;
-	}
-	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
-		mes "We just got fresh eggs from the dragon nest.";
-		getitem 6093,1; //Egg_Of_Draco
-		disablenpc "Dragon Egg#ep13_degg18";
-		initnpctimer;
-		close;
-	}
-	end;
-
-OnTimer120000:
-	enablenpc "Dragon Egg#ep13_degg18";
-	stopnpctimer;
-	end;
-
-OnEnable:
-	enablenpc "Dragon Egg#ep13_degg18";
-	end;
-
-OnDisable:
-	disablenpc "Dragon Egg#ep13_degg18";
-	end;
-}
+nyd_dun02,201,166,0	duplicate(Dragon Egg#ep13_degg_2)	Dragon Egg#ep13_degg16	463
+nyd_dun02,203,167,0	duplicate(Dragon Egg#ep13_degg_2)	Dragon Egg#ep13_degg17	463
+nyd_dun02,201,164,0	duplicate(Dragon Egg#ep13_degg_2)	Dragon Egg#ep13_degg18	463
 
 nyd_dun02,201,157,5	script	Egg Keeper Draco#13_1	2013,3,3,{
 
@@ -5959,15 +3496,12 @@ nyd_dun02,206,114,5	script	Stranger#ep13_2_dan02	456,3,3,{
 	end;
 
 OnInit:
+OnDisable:
 	disablenpc "Stranger#ep13_2_dan02";
 	end;
 
 OnEnable:
 	enablenpc "Stranger#ep13_2_dan02";
-	end;
-
-OnDisable:
-	disablenpc "Stranger#ep13_2_dan02";
 	end;
 
 Oncall:
@@ -5994,13 +3528,8 @@ OnMyMobDead:
 	end;
 
 OnTimer300000:
-	set .@temp_call,rand(1,2);
-	if (.@temp_call == 1) {
-		enablenpc "Stranger#ep13_2_dan01";
-	}
-	else {
-		donpcevent "Stranger#ep13_2_dan02::OnEnable";
-	}
+	if (rand(2)) enablenpc "Stranger#ep13_2_dan01";
+	else donpcevent "Stranger#ep13_2_dan02::OnEnable";
 	stopnpctimer;
 	end;
 }
@@ -6013,13 +3542,8 @@ OnMyMobDead:
 	end;
 
 OnTimer300000:
-	set .@temp_call,rand(1,2);
-	if (.@temp_call == 1) {
-		enablenpc "Stranger#ep13_2_dan02";
-	}
-	else {
-		donpcevent "Stranger#ep13_2_dan01::OnEnable";
-	}
+	if (rand(2)) enablenpc "Stranger#ep13_2_dan02";
+	else donpcevent "Stranger#ep13_2_dan01::OnEnable";
 	stopnpctimer;
 	end;
 }
@@ -6974,24 +4498,20 @@ mid_camp,147,256,3	script	Rune Midgarts Magician#1	735,{
 	}
 }
 
-spl_fild02,27,218,0	script	Half-buried Gem#1	844,{
+function	script	jewel_13_2	{
 	if (ep13_2_rhea < 5) {
 		mes "- Under a round pile of earth, -";
-		mes "- there's a Red Gem -";
+		mes "- there's a "+getarg(0)+" Gem -";
 		mes "- half-buried. -";
 		close;
 	}
 	else if (ep13_2_rhea == 5) {
-		set .@check_spljew00,checkquest(8241);
-		if (.@check_spljew00 == -1) {
+		if (checkquest(8240+getarg(1)) == -1) {
 			mes "- Under a round pile of earth, -";
-			mes "- there's a Red Gem -";
+			mes "- there's a "+getarg(0)+" Gem -";
 			mes "- half-buried. -";
 			next;
-			switch(select("Dig out the Gem:Leave it alone")) {
-			case 1:
-				break;
-			case 2:
+			if(select("Dig out the Gem:Leave it alone")==2) {
 				mes "- You overspread some earth over the Gem -";
 				mes "- and left the Gem as it was. -";
 				next;
@@ -7001,15 +4521,15 @@ spl_fild02,27,218,0	script	Half-buried Gem#1	844,{
 			}
 			if (rand(1,4) == 2) {
 				mes "- You dug up a pile of earth -";
-				mes "- and pulled out the Red Gem -";
-				setquest 8241;
-				getitem 7575,1; //Red_Jewel_
+				mes "- and pulled out the "+getarg(0)+" Gem -";
+				setquest 8240+getarg(1);
+				getitem 7574+getarg(1),1;
 				close;
 			}
 			else {
 				mes "- As you dug up a pile of earth, -";
 				mes "- a Thief Bug attacks you! -";
-				donpcevent "Half-buried Gem#1::OnDisable";
+				donpcevent "Half-buried Gem#"+getarg(1)+"::OnDisable";
 				next;
 				mes "["+ strcharinfo(0) +"]";
 				mes "What the heck is this?!?!?!";
@@ -7018,17 +4538,20 @@ spl_fild02,27,218,0	script	Half-buried Gem#1	844,{
 		}
 		else {
 			mes "- Small pile of earth -";
-			mes "- which you dug up the Red Gem -";
+			mes "- which you dug up the "+getarg(0)+" Gem -";
 			close;
 		}
 	}
 	else {
 		mes "- Small pile of earth -";
-		mes "- which you dug up the Red Gem -";
+		mes "- which you dug up the "+getarg(0)+" Gem -";
 		close;
 	}
 	end;
+}
 
+spl_fild02,27,218,0	script	Half-buried Gem#1	844,{
+	callfunc "jewel_13_2","Red",1;
 
 OnInit:
 	hideoffnpc "Half-buried Gem#1";
@@ -7060,59 +4583,7 @@ OnTimer300000:
 }
 
 man_fild03,227,109,0	script	Half-buried Gem#2	844,{
-	if (ep13_2_rhea < 5) {
-		mes "- Under a round pile of earth, -";
-		mes "- there's a Blue Gem -";
-		mes "- half-buried. -";
-		close;
-	}
-	else if (ep13_2_rhea == 5) {
-		set .@check_manjew00,checkquest(8242);
-		if (.@check_manjew00 == -1) {
-			mes "- Under a round pile of earth, -";
-			mes "- there's a Red Gem -";
-			mes "- half-buried. -";
-			next;
-			switch(select("Dig out the Gem:Leave it alone")) {
-			case 1:
-				break;
-			case 2:
-				mes "- You overspread some earth over the Gem -";
-				mes "- and left the Gem as it was. -";
-				next;
-				mes "["+ strcharinfo(0) +"]";
-				mes "...What the heck am I doing now...";
-				close;
-			}
-			if (rand(1,4) == 2) {
-				mes "- You dug up a pile of earth -";
-				mes "- and pulled out the Blue Gem -";
-				setquest 8242;
-				getitem 7576,1; //Blue_Jewel_
-				close;
-			}
-			else {
-				mes "- As you dug up a pile of earth, -";
-				mes "- a Thief Bug attacks you! -";
-				donpcevent "Half-buried Gem#2::OnDisable";
-				next;
-				mes "["+ strcharinfo(0) +"]";
-				mes "What the heck is this?!?!?!";
-				close;
-			}
-		}
-		else {
-			mes "- Small pile of earth -";
-			mes "- which you dug up the Blue Gem -";
-			close;
-		}
-	}
-	else {
-		mes "- Small pile of earth -";
-		mes "- which you dug up the Blue Gem -";
-		close;
-	}
-	end;
+	callfunc "jewel_13_2","Blue",2;
 
 OnInit:
 	hideoffnpc "Half-buried Gem#2";
@@ -7217,8 +4688,8 @@ mid_camp,7,3,0	script	Translator Preparation#1	708,{
 //============================================================ 
 man_in01,372,221,5	script	Scientist#lifeguard	449,{
 	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[Dr. Lifeguard]";
 		if (ep13_2_tre == 0) {
-			mes "[Dr. Lifeguard]";
 			mes "Recently, it seems like my skin is becoming really dry.";
 			next;
 			mes "[Dr. Lifeguard]";
@@ -7281,157 +4752,67 @@ man_in01,372,221,5	script	Scientist#lifeguard	449,{
 		}
 		else if ((ep13_2_tre == 1) || (ep13_2_tre == 100)) {
 			if (checkweight(1201,1) == 0) {
-				mes "[Dr. Lifeguard]";
 				mes "It looks like you're carrying too many things.";
 				mes "Why not put some of your items in storage and come back?";
 				close;
 			}
-			
 			set .@dayq_chk,checkquest(2182,PLAYTIME);
 			if ((.@dayq_chk == 0) || (.@dayq_chk == 1)) {
-				mes "[Dr. Lifeguard]";
 				mes "The future of the Sapha is up to you.";
 				mes "I do not have any need of your help right now.";
 				close;
 			}
 			else {
 				erasequest 2182;
-				set .@rand_dayq,rand(1,3);
-				if (.@rand_dayq == 1) {
-					mes "[Dr. Lifeguard]";
-					mes "Recently, someone who came from Schwaltzvalt gave me a small mineral as a gift from his home town when he saw our study of Bradium.";
-					next;
-					mes "[Dr. Lifeguard]";
-					mes "I can't say for sure until now,";
-					mes "but this mineral seems to have";
-					mes "many interesting features.";
-					next;
-					mes "[Dr. Lifeguard]";
-					mes "As I examine this mineral";
-					mes "more and more, it's really";
-					mes "different from the one in Jotunheim.";
-					mes "This mineral must be helpful";
-					mes "to make a new vaccine!";
-					next;
-					mes "[Dr. Lifeguard]";
-					mes "But the amount of the mineral";
-					mes "is too little to make a";
-					mes "preparation for the";
-					mes "examination.";
-					next;
-					mes "[Dr. Lifeguard]";
-					mes "You said you're from Rune Midgard, right? Do you think you can bring me a little bit more of that mineral..";
-					next;
-					mes "[Dr. Lifeguard]";
-					mes "He said it's from";
-					mes "^FF0000Mt. Mjolnir^000000.";
-					mes "I think ^FF000010^000000 would be enough.";
-					next;
-					mes "[Dr. Lifeguard]";
-					mes "I'll give you this portable toolbox.";
-					mes "Things like a detector and a little hammer for mining minerals are included in this toolbox.";
-					next;
-					mes "[Dr. Lifeguard]";
-					mes "Take it, it shold be";
-					mes "helpful in collecting";
-					mes "the minerals I need.";
-					set ep13_2_tre,2;
-					setquest 2179;
-					getitem 6076,1; //Portable_Toolbox
-					close;
+				switch(rand(1,3)) {
+					case 1: setarray .@rand_dayq$[0],"Mt. Mjolnir","10","2"; break;
+					case 2: setarray .@rand_dayq$[0],"Abyss Lake","5","3"; break;
+					case 3: setarray .@rand_dayq$[0],"Thor Volcano","5","4"; break;
 				}
-				else if (.@rand_dayq == 2) {
-					mes "[Dr. Lifeguard]";
-					mes "Recently, someone who came from Schwaltzvalt gave me a small mineral as a gift from his home town when he saw our study of Bradium.";
-					next;
-					mes "[Dr. Lifeguard]";
-					mes "I can't say for sure until now,";
-					mes "but this mineral seems to have";
-					mes "many interesting features.";
-					next;
-					mes "[Dr. Lifeguard]";
-					mes "As I examine this mineral";
-					mes "more and more, it's really";
-					mes "different from the one in Jotunheim.";
-					mes "This mineral must be helpful";
-					mes "to make a new vaccine!";
-					next;
-					mes "[Dr. Lifeguard]";
-					mes "But the amount of the mineral";
-					mes "is too little to make a";
-					mes "preparation for the";
-					mes "examination.";
-					next;
-					mes "[Dr. Lifeguard]";
-					mes "You said you're from Rune Midgard, right? Do you think you can bring me a little bit more of that mineral..";
-					next;
-					mes "[Dr. Lifeguard]";
-					mes "He said it's from";
-					mes "^FF0000Abyss Lake^000000.";
-					mes "I think ^FF00005^000000 would be enough.";
-					next;
-					mes "[Dr. Lifeguard]";
-					mes "I'll give you this portable toolbox.";
-					mes "Things like a detector and a little hammer for mining minerals are included in this toolbox.";
-					next;
-					mes "[Dr. Lifeguard]";
-					mes "Take it, it shold be";
-					mes "helpful in collecting";
-					mes "the minerals I need.";
-					set ep13_2_tre,3;
-					setquest 2180;
-					getitem 6076,1; //Portable_Toolbox
-					close;
-				}
-				else {
-					mes "[Dr. Lifeguard]";
-					mes "Recently, someone who came from Schwaltzvalt gave me a small mineral as a gift from his home town when he saw our study of Bradium.";
-					next;
-					mes "[Dr. Lifeguard]";
-					mes "I can't say for sure until now,";
-					mes "but this mineral seems to have";
-					mes "many interesting features.";
-					next;
-					mes "[Dr. Lifeguard]";
-					mes "As I examine this mineral";
-					mes "more and more, it's really";
-					mes "different from the one in Jotunheim.";
-					mes "This mineral must be helpful";
-					mes "to make a new vaccine!";
-					next;
-					mes "[Dr. Lifeguard]";
-					mes "But the amount of the mineral";
-					mes "is too little to make a";
-					mes "preparation for the";
-					mes "examination.";
-					next;
-					mes "[Dr. Lifeguard]";
-					mes "You said you're from Rune Midgard, right? Do you think you can bring me a little bit more of that mineral..";
-					next;
-					mes "[Dr. Lifeguard]";
-					mes "He said it's from";
-					mes "^FF0000Thor Volcano^000000.";
-					mes "I think ^FF00005^000000 would be enough.";
-					next;
-					mes "[Dr. Lifeguard]";
-					mes "I'll give you this portable toolbox.";
-					mes "Things like a detector and a little hammer for mining minerals are included in this toolbox.";
-					next;
-					mes "[Dr. Lifeguard]";
-					mes "Take it, it shold be";
-					mes "helpful in collecting";
-					mes "the minerals I need.";
-					set ep13_2_tre,4;
-					setquest 2181;
-					getitem 6076,1; //Portable_Toolbox
-					close;
-				}
-			}
-		
-		}
-		else if (ep13_2_tre == 2) {
-			if (countitem(6077) > 9) {
+				mes "Recently, someone who came from Schwaltzvalt gave me a small mineral as a gift from his home town when he saw our study of Bradium.";
+				next;
 				mes "[Dr. Lifeguard]";
+				mes "I can't say for sure until now,";
+				mes "but this mineral seems to have";
+				mes "many interesting features.";
+				next;
+				mes "[Dr. Lifeguard]";
+				mes "As I examine this mineral";
+				mes "more and more, it's really";
+				mes "different from the one in Jotunheim.";
+				mes "This mineral must be helpful";
+				mes "to make a new vaccine!";
+				next;
+				mes "[Dr. Lifeguard]";
+				mes "But the amount of the mineral";
+				mes "is too little to make a";
+				mes "preparation for the";
+				mes "examination.";
+				next;
+				mes "[Dr. Lifeguard]";
+				mes "You said you're from Rune Midgard, right? Do you think you can bring me a little bit more of that mineral..";
+				next;
+				mes "[Dr. Lifeguard]";
+				mes "He said it's from";
+				mes "^FF0000"+.@rand_dayq$[0]+"^000000.";
+				mes "I think ^FF0000"+.@rand_dayq$[1]+"^000000 would be enough.";
+				next;
+				mes "[Dr. Lifeguard]";
+				mes "I'll give you this portable toolbox.";
+				mes "Things like a detector and a little hammer for mining minerals are included in this toolbox.";
+				next;
+				mes "[Dr. Lifeguard]";
+				mes "Take it, it shold be";
+				mes "helpful in collecting";
+				mes "the minerals I need.";
+				set ep13_2_tre,atoi(.@rand_dayq$[2]);
+				setquest 2179+(atoi(.@rand_dayq$[2])-2);
+				getitem 6076,1; //Portable_Toolbox
+				close;
+			}
+		}
+		else if (ep13_2_tre == 2 || ep13_2_tre == 3 || ep13_2_tre == 4) {
+			if ((ep13_2_tre == 2 && countitem(6077) > 9) || (ep13_2_tre != 2 && countitem(6077) > 4)) {
 				mes "Oh! Yes, that's it!";
 				mes "This much will be enough!";
 				next;
@@ -7453,86 +4834,16 @@ man_in01,372,221,5	script	Scientist#lifeguard	449,{
 				set ep13_2_tre,100;
 				getitem 6080,2; //Manuk_Coin
 				getexp 0,70000;
-				changequest 2179,2182;
+				changequest 2179+(ep13_2_tre-2),2182;
 				close;
 			}
 			else {
-				mes "[Dr. Lifeguard]";
-				mes "The future of the Sapha is up to you.";
-				mes "I wish you good luck.";
-				close;
-			}
-		}
-		else if (ep13_2_tre == 3) {
-			if (countitem(6077) > 4) {
-				mes "[Dr. Lifeguard]";
-				mes "Oh! Yes, that's it!";
-				mes "This much will be enough!";
-				next;
-				mes "[Dr. Lifeguard]";
-				mes "I really appreciate your help.";
-				next;
-				mes "[Dr. Lifeguard]";
-				mes "These are coins of the Manuk.";
-				mes "This may not be much, but if you collect more, they can be used to buy some items from our merchants.";
-				next;
-				mes "[Dr. Lifeguard]";
-				mes "If you want to help my study for the sake of the Sapha, come to me at any time.";
-				mes "I will be very happy for any help you can give.";
-				set .@stone_chk,countitem(6077);
-				set .@stoneelse_chk,countitem(6078);
-				delitem 6077,.@stone_chk; //Rough_Mineral
-				delitem 6078,.@stoneelse_chk; //Stone_Fragments
-				delitem 6076,1; //Portable_Toolbox
-				set ep13_2_tre,100;
-				getitem 6080,2; //Manuk_Coin
-				getexp 0,70000;
-				changequest 2180,2182;
-				close;
-			}
-			else {
-				mes "[Dr. Lifeguard]";
-				mes "The future of the Sapha is up to you.";
-				mes "I wish you good luck.";
-				close;
-			}
-		}
-		else if (ep13_2_tre == 4) {
-			if (countitem(6077) > 4) {
-				mes "[Dr. Lifeguard]";
-				mes "Oh! Yes, that's it!";
-				mes "This much will be enough!";
-				next;
-				mes "[Dr. Lifeguard]";
-				mes "I really appreciate your help.";
-				next;
-				mes "[Dr. Lifeguard]";
-				mes "These are coins of the Manuk.";
-				mes "This may not be much, but if you collect more, they can be used to buy some items from our merchants.";
-				next;
-				mes "[Dr. Lifeguard]";
-				mes "If you want to help my study for the sake of the Sapha, come to me at any time.";
-				mes "I will be very happy for any help you can give.";
-				set .@stone_chk,countitem(6077);
-				set .@stoneelse_chk,countitem(6078);
-				delitem 6077,.@stone_chk; //Rough_Mineral
-				delitem 6078,.@stoneelse_chk; //Stone_Fragments
-				delitem 6076,1; //Portable_Toolbox
-				set ep13_2_tre,100;
-				getitem 6080,2; //Manuk_Coin
-				getexp 0,70000;
-				changequest 2181,2182;
-				close;
-			}
-			else {
-				mes "[Dr. Lifeguard]";
 				mes "The future of the Sapha is up to you.";
 				mes "I wish you good luck.";
 				close;
 			}
 		}
 		else {
-			mes "[Dr. Lifeguard]";
 			mes "Hmm...";
 			close;
 		}
@@ -7548,33 +4859,64 @@ man_in01,372,221,5	script	Scientist#lifeguard	449,{
 	}
 }
 
-mjolnir_01,364,256,0	script	#mj01_find	-1,5,5,{
+function	script	find_13_2	{
+	switch (getarg(0)) {
+		case 0: setarray .@Check[0],2,10; set .@str$,"Mt. Mjolnir"; break;
+		case 1: setarray .@Check[0],3,5; set .@str$,"Abyss Lake"; break;
+		case 2: setarray .@Check[0],4,5; set .@str$,"Thor Volcano"; break;
+	}
+	if (ep13_2_tre != .@Check[0] || countitem(6076) != 1 || countitem(6077) >= .@Check[1]) end;
+	mes "- Just arrived at "+.@str$+". I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
+	next;
+	switch(select("Check current location.:Do nothing.")) {
+		case 1:
+			mes "- You pressed the button of the detector. -";
+			next;
+			mes "[Mineral Detector]";
+			mes "Bee beep -";
+			if (getarg(1)) return;
+			next;
+			mes "- Nothing's found. -";
+			close;
+		case 2:
+			mes "- You decide to do nothing. -";
+			close;
+	}
+}
+
+-	script	mjo_no_find	-1,{
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				viewpoint 1,32,309,1,0x00FF00;
-				viewpoint 1,217,34,2,0x00FF00;
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
+	callfunc "find_13_2",0,0;
 	end;
 }
 
-mjolnir_01,32,309,3	script	#mj01_01	111,7,7,{
+mjolnir_03,76,258,0	duplicate(mjo_no_find)	#mj03_find_1	-1,5,5
+mjolnir_03,227,204,0	duplicate(mjo_no_find)	#mj03_find_2	-1,5,5
+mjolnir_05,82,171,0	duplicate(mjo_no_find)	#mj05_find_1	-1,5,5
+mjolnir_05,219,375,0	duplicate(mjo_no_find)	#mj05_find_2	-1,5,5
+mjolnir_06,28,332,0	duplicate(mjo_no_find)	#mj06_find_1	-1,5,5
+mjolnir_06,275,50,0	duplicate(mjo_no_find)	#mj06_find_2	-1,5,5
+mjolnir_06,371,78,0	duplicate(mjo_no_find)	#mj06_find_3	-1,5,5
+mjolnir_07,26,373,0	duplicate(mjo_no_find)	#mj07_find_1	-1,5,5
+mjolnir_07,214,373,0	duplicate(mjo_no_find)	#mj07_find_2	-1,5,5
+mjolnir_07,372,355,0	duplicate(mjo_no_find)	#mj07_find_3	-1,5,5
+mjolnir_07,375,233,0	duplicate(mjo_no_find)	#mj07_find_4	-1,5,5
+mjolnir_07,26,78,0	duplicate(mjo_no_find)	#mj07_find_5	-1,5,5
+mjolnir_07,157,25,0	duplicate(mjo_no_find)	#mj07_find_6	-1,5,5
+mjolnir_08,39,239,0	duplicate(mjo_no_find)	#mj08_find_1	-1,5,5
+mjolnir_08,36,344,0	duplicate(mjo_no_find)	#mj08_find_2	-1,5,5
+mjolnir_08,160,349,0	duplicate(mjo_no_find)	#mj08_find_3	-1,5,5
+mjolnir_08,359,258,0	duplicate(mjo_no_find)	#mj08_find_4	-1,5,5
+mjolnir_08,193,62,0	duplicate(mjo_no_find)	#mj08_find_5	-1,5,5
+mjolnir_11,29,220,0	duplicate(mjo_no_find)	#mj11_find_1	-1,5,5
+mjolnir_11,175,29,0	duplicate(mjo_no_find)	#mj11_find_2	-1,5,5
+mjolnir_12,199,370,0	duplicate(mjo_no_find)	#mj12_find_1	-1,5,5
+mjolnir_12,44,25,0	duplicate(mjo_no_find)	#mj12_find_2	-1,5,5
+mjolnir_12,220,37,0	duplicate(mjo_no_find)	#mj12_find_3	-1,5,5
+
+-	script	mjo_find	-1,{
 	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
 		if (countitem(6077) < 10) {
 			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
@@ -7584,8 +4926,7 @@ mjolnir_01,32,309,3	script	#mj01_01	111,7,7,{
 				mes "Clang! Clang! Clang! Clang!";
 				close2;
 				progressbar "ffff00",4;
-				set .@get_stone,rand(1,6);
-				if (.@get_stone < 4) {
+				if (rand(1,6) < 4) {
 					mes "- You failed to mine minerals. -";
 					getitem 6078,1; //Stone_Fragments
 					close;
@@ -7594,18 +4935,12 @@ mjolnir_01,32,309,3	script	#mj01_01	111,7,7,{
 					mes "- You succeeded to mine minerals. -";
 					emotion e_ic,1;
 					set .@stst,rand(1,5);
-					if (.@stst == 5) {
-						getitem 6077,5; //Rough_Mineral
-					}
-					else if (.@stst == 1) {
-						getitem 6077,1; //Rough_Mineral
-					}
-					else {
-						getitem 6077,2; //Rough_Mineral
-					}
+					if (.@stst == 5) getitem 6077,5; //Rough_Mineral
+					else if (.@stst == 1) getitem 6077,1; //Rough_Mineral
+					else getitem 6077,2; //Rough_Mineral
 					close2;
-					donpcevent "#mj01_01_t::OnEnable";
-					disablenpc "#mj01_01";
+					donpcevent strnpcinfo(0)+"_t::OnEnable";
+					disablenpc strnpcinfo(0);
 					end;
 				}
 			case 2:
@@ -7621,16 +4956,32 @@ mjolnir_01,32,309,3	script	#mj01_01	111,7,7,{
 	end;
 
 OnInit:
-	enablenpc "#mj01_01";
+	enablenpc strnpcinfo(0);
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			specialeffect EF_COUPLECASTING; 
-		}
-	}
+	if (ep13_2_tre == 2 && countitem(6076) == 1 && countitem(6077) < 10)
+		specialeffect EF_COUPLECASTING;
 	end;
+}
+
+mjolnir_01,32,309,3	duplicate(mjo_find)	#mj01_01	111,7,7
+mjolnir_01,217,34,3	duplicate(mjo_find)	#mj01_02	111,7,7
+mjolnir_02,90,195,3	duplicate(mjo_find)	#mj02_01	111,5,10
+mjolnir_02,206,187,3	duplicate(mjo_find)	#mj02_02	111,7,7
+mjolnir_04,125,380,3	duplicate(mjo_find)	#mj04_01	111,7,7
+mjolnir_04,220,130,3	duplicate(mjo_find)	#mj04_02	111,7,7
+mjolnir_09,229,214,3	duplicate(mjo_find)	#mj09_01	111,10,10
+mjolnir_10,188,260,3	duplicate(mjo_find)	#mj10_01	111,10,10
+
+mjolnir_01,364,256,0	script	#mj01_find	-1,5,5,{
+	end;
+
+OnTouch:
+	callfunc "find_13_2",0,1;
+	viewpoint 1,32,309,1,0x00FF00;
+	viewpoint 1,217,34,2,0x00FF00;
+	close;
 }
 
 mjolnir_01,1,1,3	script	#mj01_01_t	111,{
@@ -7643,65 +4994,6 @@ OnEnable:
 OnTimer60000:
 	enablenpc "#mj01_01";
 	stopnpctimer;
-	end;
-}
-
-mjolnir_01,217,34,3	script	#mj01_02	111,7,7,{
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
-			next;
-			switch(select("Mine minerals.:Do nothing.")) {
-			case 1:
-				mes "Clang! Clang! Clang! Clang!";
-				close2;
-				progressbar "ffff00",4;
-				set .@get_stone,rand(1,6);
-				if (.@get_stone < 4) {
-					mes "- You failed to mine minerals. -";
-					getitem 6078,1; //Stone_Fragments
-					close;
-				}
-				else {
-					mes "- You succeeded to mine minerals. -";
-					emotion e_ic,1;
-					set .@stst,rand(1,5);
-					if (.@stst == 5) {
-						getitem 6077,5; //Rough_Mineral
-					}
-					else if (.@stst == 1) {
-						getitem 6077,1; //Rough_Mineral
-					}
-					else {
-						getitem 6077,2; //Rough_Mineral
-					}
-					close2;
-					donpcevent "#mj01_02_t::OnEnable";
-					disablenpc "#mj01_02";
-					end;
-				}
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-		else {
-			mes "- I think I have enough minerals. -";
-			close;
-		}
-	}
-	end;
-
-OnInit:
-	enablenpc "#mj01_02";
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			specialeffect EF_COUPLECASTING;
-		}
-	}
 	end;
 }
 
@@ -7720,112 +5012,22 @@ mjolnir_02,313,289,0	script	#mj02_find_1	-1,5,5,{
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				viewpoint 1,90,195,1,0x00FF00;
-				viewpoint 1,206,187,2,0x00FF00;
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
+	callfunc "find_13_2",0,1;
+	viewpoint 1,90,195,1,0x00FF00;
+	viewpoint 1,206,187,2,0x00FF00;
+	close;
 }
 
 mjolnir_02,78,258,0	script	#mj02_find_2	-1,5,5,{
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				viewpoint 1,90,195,1,0x00FF00;
-				viewpoint 1,206,187,2,0x00FF00;
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
+	callfunc "find_13_2",0,1;
+	viewpoint 1,90,195,1,0x00FF00;
+	viewpoint 1,206,187,2,0x00FF00;
+	close;
 }
 
-mjolnir_02,90,195,3	script	#mj02_01	111,5,10,{
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
-			next;
-			switch(select("Mine minerals.:Do nothing.")) {
-			case 1:
-				mes "Clang! Clang! Clang! Clang!";
-				close2;
-				progressbar "ffff00",4;
-				set .@get_stone,rand(1,6);
-				if (.@get_stone < 4) {
-					mes "- You failed to mine minerals. -";
-					getitem 6078,1; //Stone_Fragments
-					close;
-				}
-				else {
-					mes "- You succeeded to mine minerals. -";
-					emotion e_ic,1;
-					set .@stst,rand(1,5);
-					if (.@stst == 5) {
-						getitem 6077,5; //Rough_Mineral
-					}
-					else if (.@stst == 1) {
-						getitem 6077,1; //Rough_Mineral
-					}
-					else {
-						getitem 6077,2; //Rough_Mineral
-					}
-					close2;
-					donpcevent "#mj02_01_t::OnEnable";
-					disablenpc "#mj02_01";
-					end;
-				}
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-		else {
-			mes "- I think I have enough minerals. -";
-			close;
-		}
-	}
-	end;
-
-OnInit:
-	enablenpc "#mj02_01";
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			specialeffect EF_COUPLECASTING;
-		}
-	}
-	end;
-}
 
 mjolnir_02,1,1,3	script	#mj02_01_t	111,{
 OnEnable:
@@ -7835,65 +5037,6 @@ OnEnable:
 OnTimer60000:
 	enablenpc "#mj02_01";
 	stopnpctimer;
-	end;
-}
-
-mjolnir_02,206,187,3	script	#mj02_02	111,7,7,{
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
-			next;
-			switch(select("Mine minerals.:Do nothing.")) {
-			case 1:
-				mes "Clang! Clang! Clang! Clang!";
-				close2;
-				progressbar "ffff00",4;
-				set .@get_stone,rand(1,6);
-				if (.@get_stone < 4) {
-					mes "- You failed to mine minerals. -";
-					getitem 6078,1; //Stone_Fragments
-					close;
-				}
-				else {
-					mes "- You succeeded to mine minerals. -";
-					emotion e_ic,1;
-					set .@stst,rand(1,5);
-					if (.@stst == 5) {
-						getitem 6077,5; //Rough_Mineral
-					}
-					else if (.@stst == 1) {
-						getitem 6077,1; //Rough_Mineral
-					}
-					else {
-						getitem 6077,2; //Rough_Mineral
-					}
-					close2;
-					donpcevent "#mj02_02_t::OnEnable";
-					disablenpc "#mj02_02";
-					end;
-				}
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-		else {
-			mes "- I think I have enough minerals. -";
-			close;
-		}
-	}
-	end;
-
-OnInit:
-	enablenpc "#mj02_02";
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			specialeffect EF_COUPLECASTING;
-		}
-	}
 	end;
 }
 
@@ -7908,193 +5051,34 @@ OnTimer60000:
 	end;
 }
 
-mjolnir_03,76,258,0	script	#mj03_find_1	-1,5,5,{
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				next;
-				mes "- Nothing's found. -";
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
-mjolnir_03,227,204,0	script	#mj03_find_2	-1,5,5,{
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				next;
-				mes "- Nothing's found. -";
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
 mjolnir_04,147,208,0	script	#mj04_find_1	-1,5,5,{
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				viewpoint 1,125,380,1,0x00FF00;
-				viewpoint 1,220,130,2,0x00FF00;
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
+	callfunc "find_13_2",0,1;
+	viewpoint 1,125,380,1,0x00FF00;
+	viewpoint 1,220,130,2,0x00FF00;
+	close;
 }
 
 mjolnir_04,160,77,0	script	#mj04_find_2	-1,5,5,{
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				viewpoint 1,125,380,1,0x00FF00;
-				viewpoint 1,220,130,2,0x00FF00;
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
+	callfunc "find_13_2",0,1;
+	viewpoint 1,125,380,1,0x00FF00;
+	viewpoint 1,220,130,2,0x00FF00;
+	close;
 }
 
 mjolnir_04,361,174,0	script	#mj04_find_3	-1,5,5,{
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				viewpoint 1,125,380,1,0x00FF00;
-				viewpoint 1,220,130,2,0x00FF00;
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
-mjolnir_04,125,380,3	script	#mj04_01	111,7,7,{
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
-			next;
-			switch(select("Mine minerals.:Do nothing.")) {
-			case 1:
-				mes "Clang! Clang! Clang! Clang!";
-				close2;
-				progressbar "ffff00",4;
-				set .@get_stone,rand(1,6);
-				if (.@get_stone < 4) {
-					mes "- You failed to mine minerals. -";
-					getitem 6078,1; //Stone_Fragments
-					close;
-				}
-				else {
-					mes "- You succeeded to mine minerals. -";
-					emotion e_ic,1;
-					set .@stst,rand(1,5);
-					if (.@stst == 5) {
-						getitem 6077,5; //Rough_Mineral
-					}
-					else if (.@stst == 1) {
-						getitem 6077,1; //Rough_Mineral
-					}
-					else {
-						getitem 6077,2; //Rough_Mineral
-					}
-					close2;
-					donpcevent "#mj04_01_t::OnEnable";
-					disablenpc "#mj04_01";
-					end;
-				}
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-		else {
-			mes "- I think I have enough minerals. -";
-			close;
-		}
-	}
-	end;
-
-OnInit:
-	enablenpc "#mj04_01";
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			specialeffect EF_COUPLECASTING;
-		}
-	}
-	end;
+	callfunc "find_13_2",0,1;
+	viewpoint 1,125,380,1,0x00FF00;
+	viewpoint 1,220,130,2,0x00FF00;
+	close;
 }
 
 mjolnir_04,1,1,3	script	#mj04_01_t	111,{
@@ -8105,66 +5089,6 @@ OnEnable:
 OnTimer60000:
 	enablenpc "#mj04_01";
 	stopnpctimer;
-	end;
-}
-
-mjolnir_04,220,130,3	script	#mj04_02	111,7,7,{
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-				mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
-				next;
-				switch(select("Mine minerals.:Do nothing.")) {
-				case 1:
-					mes "Clang! Clang! Clang! Clang!";
-					close2;
-					progressbar "ffff00",4;
-					set .@get_stone,rand(1,6);
-					if (.@get_stone < 4) {
-						mes "- You failed to mine minerals. -";
-						getitem 6078,1; //Stone_Fragments
-						close;
-					}
-					else {
-						mes "- You succeeded to mine minerals. -";
-						emotion e_ic,1;
-						set .@stst,rand(1,5);
-						if (.@stst == 5) {
-							getitem 6077,5; //Rough_Mineral
-						}
-						else if (.@stst == 1) {
-							getitem 6077,1; //Rough_Mineral
-						}
-						else {
-							getitem 6077,2; //Rough_Mineral
-						}
-						close2;
-						donpcevent "#mj04_02_t::OnEnable";
-						disablenpc "#mj04_02";
-						end;
-					}
-					break;
-				case 2:
-					mes "- You decide to do nothing. -";
-					close;
-				}
-		}
-		else {
-			mes "- I think I have enough minerals. -";
-			close;
-		}
-	}
-	end;
-
-OnInit:
-	enablenpc "#mj04_02";
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			specialeffect EF_COUPLECASTING;
-		}
-	}
 	end;
 }
 
@@ -8179,604 +5103,49 @@ OnTimer60000:
 	end;
 }
 
-mjolnir_05,82,171,0	script	#mj05_find_1	-1,5,5,{
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				next;
-				mes "- Nothing's found. -";
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
-mjolnir_05,219,375,0	script	#mj05_find_2	-1,5,5,{
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				next;
-				mes "- Nothing's found. -";
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
-mjolnir_06,28,332,0	script	#mj06_find_1	-1,5,5,{
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				next;
-				mes "- Nothing's found. -";
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
-mjolnir_06,275,50,0	script	#mj06_find_2	-1,5,5,{
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				next;
-				mes "- Nothing's found. -";
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
-mjolnir_06,371,78,0	script	#mj06_find_3	-1,5,5,{
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				next;
-				mes "- Nothing's found. -";
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
-mjolnir_07,26,373,0	script	#mj07_find_1	-1,5,5,{
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				next;
-				mes "- Nothing's found. -";
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
-mjolnir_07,214,373,0	script	#mj07_find_2	-1,5,5,{
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				next;
-				mes "- Nothing's found. -";
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
-mjolnir_07,372,355,0	script	#mj07_find_3	-1,5,5,{
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				next;
-				mes "- Nothing's found. -";
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
-mjolnir_07,375,233,0	script	#mj07_find_4	-1,5,5,{
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				next;
-				mes "- Nothing's found. -";
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
-mjolnir_07,26,78,0	script	#mj07_find_5	-1,5,5,{
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				next;
-				mes "- Nothing's found. -";
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
-mjolnir_07,157,25,0	script	#mj07_find_6	-1,5,5,{
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				next;
-				mes "- Nothing's found. -";
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
-mjolnir_08,39,239,0	script	#mj08_find_1	-1,5,5,{
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				next;
-				mes "- Nothing's found. -";
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
-mjolnir_08,36,344,0	script	#mj08_find_2	-1,5,5,{
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				next;
-				mes "- Nothing's found. -";
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
-mjolnir_08,160,349,0	script	#mj08_find_3	-1,5,5,{
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				next;
-				mes "- Nothing's found. -";
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
-mjolnir_08,359,258,0	script	#mj08_find_4	-1,5,5,{
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				next;
-				mes "- Nothing's found. -";
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
-mjolnir_08,193,62,0	script	#mj08_find_5	-1,5,5,{
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				next;
-				mes "- Nothing's found. -";
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
 mjolnir_09,201,355,0	script	#mj09_find_1	-1,5,5,{
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				viewpoint 1,229,214,1,0x00FF00;
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
+	callfunc "find_13_2",0,1;
+	viewpoint 1,229,214,1,0x00FF00;
+	close;
 }
 
 mjolnir_09,38,243,0	script	#mj09_find_2	-1,5,5,{
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				viewpoint 1,229,214,1,0x00FF00;
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
+	callfunc "find_13_2",0,1;
+	viewpoint 1,229,214,1,0x00FF00;
+	close;
 }
 
 mjolnir_09,106,36,0	script	#mj09_find_3	-1,5,5,{
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				viewpoint 1,229,214,1,0x00FF00;
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
+	callfunc "find_13_2",0,1;
+	viewpoint 1,229,214,1,0x00FF00;
+	close;
 }
 
 mjolnir_09,306,36,0	script	#mj09_find_4	-1,5,5,{
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				viewpoint 1,229,214,1,0x00FF00;
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
+	callfunc "find_13_2",0,1;
+	viewpoint 1,229,214,1,0x00FF00;
+	close;
 }
 
 mjolnir_09,369,279,0	script	#mj09_find_5	-1,5,5,{
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				viewpoint 1,229,214,1,0x00FF00;
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
-mjolnir_09,229,214,3	script	#mj09_01	111,10,10,{
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
-			next;
-			switch(select("Mine minerals.:Do nothing.")) {
-			case 1:
-				mes "Clang! Clang! Clang! Clang!";
-				close2;
-				progressbar "ffff00",4;
-				set .@get_stone,rand(1,6);
-				if (.@get_stone < 4) {
-					mes "- You failed to mine minerals. -";
-					getitem 6078,1; //Stone_Fragments
-					close;
-				}
-				else {
-					mes "- You succeeded to mine minerals. -";
-					emotion e_ic,1;
-					set .@stst,rand(1,5);
-					if (.@stst == 5) {
-						getitem 6077,5; //Rough_Mineral
-					}
-					else if (.@stst == 1) {
-						getitem 6077,1; //Rough_Mineral
-					}
-					else {
-						getitem 6077,2; //Rough_Mineral
-					}
-					close2;
-					donpcevent "#mj09_01_t::OnEnable";
-					disablenpc "#mj09_01";
-					end;
-				}
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-		else {
-			mes "- I think I have enough minerals. -";
-			close;
-		}
-	}
-	end;
-
-OnInit:
-	enablenpc "#mj09_01";
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			specialeffect EF_COUPLECASTING;
-		}
-	}
-	end;
+	callfunc "find_13_2",0,1;
+	viewpoint 1,229,214,1,0x00FF00;
+	close;
 }
 
 mjolnir_09,1,1,3	script	#mj09_01_t	111,{
@@ -8794,184 +5163,45 @@ mjolnir_10,201,355,0	script	#mj10_find_1	-1,5,5,{
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				viewpoint 1,188,260,1,0x00FF00;
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
+	callfunc "find_13_2",0,1;
+	viewpoint 1,188,260,1,0x00FF00;
+	close;
 }
 
 mjolnir_10,374,215,0	script	#mj10_find_2	-1,5,5,{
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				viewpoint 1,188,260,1,0x00FF00;
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
+	callfunc "find_13_2",0,1;
+	viewpoint 1,188,260,1,0x00FF00;
+	close;
 }
 
 mjolnir_10,272,20,0	script	#mj10_find_3	-1,5,5,{
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				viewpoint 1,188,260,1,0x00FF00;
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
+	callfunc "find_13_2",0,1;
+	viewpoint 1,188,260,1,0x00FF00;
+	close;
 }
 
 mjolnir_10,75,22,0	script	#mj10_find_4	-1,5,5,{
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				viewpoint 1,188,260,1,0x00FF00;
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
+	callfunc "find_13_2",0,1;
+	viewpoint 1,188,260,1,0x00FF00;
+	close;
 }
 
 mjolnir_10,27,258,0	script	#mj10_find_5	-1,5,5,{
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				viewpoint 1,229,214,1,0x00FF00;
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
-mjolnir_10,188,260,3	script	#mj10_01	111,10,10,{
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-				mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
-				next;
-				switch(select("Mine minerals.:Do nothing.")) {
-				case 1:
-					mes "Clang! Clang! Clang! Clang!";
-					close2;
-					progressbar "ffff00",4;
-					set .@get_stone,rand(1,6);
-					if (.@get_stone < 4) {
-						mes "- You failed to mine minerals. -";
-						getitem 6078,1; //Stone_Fragments
-					}
-					else {
-						mes "- You succeeded to mine minerals. -";
-						emotion e_ic,1;
-						set .@stst,rand(1,5);
-						if (.@stst == 5) {
-							getitem 6077,5; //Rough_Mineral
-						}
-						else if (.@stst == 1) {
-							getitem 6077,1; //Rough_Mineral
-						}
-						else {
-							getitem 6077,2; //Rough_Mineral
-						}
-						
-						close2;
-						donpcevent "#mj10_01_t::OnEnable";
-						disablenpc "#mj10_01";
-						end;
-					}
-				case 2:
-					mes "- You decide to do nothing. -";
-					close;
-				}
-		}
-		else {
-			mes "- I think I have enough minerals. -";
-			close;
-		}
-	}
-	end;
-
-OnInit:
-	enablenpc "#mj10_01";
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			specialeffect EF_COUPLECASTING;
-		}
-	}
-	end;
+	callfunc "find_13_2",0,1;
+	viewpoint 1,229,214,1,0x00FF00;
+	close;
 }
 
 mjolnir_10,1,1,3	script	#mj10_01_t	111,{
@@ -8985,251 +5215,59 @@ OnTimer60000:
 	end;
 }
 
-mjolnir_11,29,220,0	script	#mj11_find_1	-1,5,5,{
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				next;
-				mes "- Nothing's found. -";
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
-mjolnir_11,175,29,0	script	#mj11_find_2	-1,5,5,{
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				next;
-				mes "- Nothing's found. -";
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
-mjolnir_12,199,370,0	script	#mj12_find_1	-1,5,5,{
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				next;
-				mes "- Nothing's found. -";
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
-mjolnir_12,44,25,0	script	#mj12_find_2	-1,5,5,{
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				next;
-				mes "- Nothing's found. -";
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
-mjolnir_12,220,37,0	script	#mj12_find_3	-1,5,5,{
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 2) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 10) {
-			mes "- Just arrived at Mt. Mjolnir. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				next;
-				mes "- Nothing's found. -";
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
-}
-
 hu_fild05,335,152,0	script	#hu_find_1	-1,5,5,{
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 5) {
-			mes "- Just arrived at Abyss Lake. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				viewpoint 1,251,345,1,0x00FF00;
-				viewpoint 1,134,322,2,0x00FF00;
-				viewpoint 1,72,104,3,0x00FF00;
-				viewpoint 1,65,99,4,0x00FF00;
-				viewpoint 1,323,84,5,0x00FF00;
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
+	callfunc "find_13_2",1,1;
+	viewpoint 1,251,345,1,0x00FF00;
+	viewpoint 1,134,322,2,0x00FF00;
+	viewpoint 1,72,104,3,0x00FF00;
+	viewpoint 1,65,99,4,0x00FF00;
+	viewpoint 1,323,84,5,0x00FF00;
+	close;
 }
 
 hu_fild05,89,52,0	script	#hu_find_2	-1,5,5,{
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 5) {
-			mes "- Just arrived at Abyss Lake. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				viewpoint 1,251,345,1,0x00FF00;
-				viewpoint 1,134,322,2,0x00FF00;
-				viewpoint 1,72,104,3,0x00FF00;
-				viewpoint 1,65,99,4,0x00FF00;
-				viewpoint 1,323,84,5,0x00FF00;
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
+	callfunc "find_13_2",1,1;
+	viewpoint 1,251,345,1,0x00FF00;
+	viewpoint 1,134,322,2,0x00FF00;
+	viewpoint 1,72,104,3,0x00FF00;
+	viewpoint 1,65,99,4,0x00FF00;
+	viewpoint 1,323,84,5,0x00FF00;
+	close;
 }
 
 hu_fild05,42,205,0	script	#hu_find_3	-1,5,5,{
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 5) {
-			mes "- Just arrived at Abyss Lake. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				viewpoint 1,251,345,1,0x00FF00;
-				viewpoint 1,134,322,2,0x00FF00;
-				viewpoint 1,72,104,3,0x00FF00;
-				viewpoint 1,65,99,4,0x00FF00;
-				viewpoint 1,323,84,5,0x00FF00;
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
+	callfunc "find_13_2",1,1;
+	viewpoint 1,251,345,1,0x00FF00;
+	viewpoint 1,134,322,2,0x00FF00;
+	viewpoint 1,72,104,3,0x00FF00;
+	viewpoint 1,65,99,4,0x00FF00;
+	viewpoint 1,323,84,5,0x00FF00;
+	close;
 }
 
 hu_fild05,276,349,0	script	#hu_find_4	-1,5,5,{
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 5) {
-			mes "- Just arrived at Abyss Lake. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				viewpoint 1,251,345,1,0x00FF00;
-				viewpoint 1,134,322,2,0x00FF00;
-				viewpoint 1,72,104,3,0x00FF00;
-				viewpoint 1,65,99,4,0x00FF00;
-				viewpoint 1,323,84,5,0x00FF00;
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
+	callfunc "find_13_2",1,1;
+	viewpoint 1,251,345,1,0x00FF00;
+	viewpoint 1,134,322,2,0x00FF00;
+	viewpoint 1,72,104,3,0x00FF00;
+	viewpoint 1,65,99,4,0x00FF00;
+	viewpoint 1,323,84,5,0x00FF00;
+	close;
 }
 
-hu_fild05,251,345,3	script	#hu_01	111,10,10,{
+-	script	hu_find	-1,{
 	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
 		if (countitem(6077) < 5) {
 			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
@@ -9239,8 +5277,7 @@ hu_fild05,251,345,3	script	#hu_01	111,10,10,{
 				mes "Clang! Clang! Clang! Clang!";
 				close2;
 				progressbar "ffff00",4;
-				set .@get_stone,rand(1,6);
-				if (.@get_stone < 4) {
+				if (rand(1,6) < 4) {
 					mes "- You failed to mine minerals. -";
 					getitem 6078,1; //Stone_Fragments
 					close;
@@ -9249,17 +5286,11 @@ hu_fild05,251,345,3	script	#hu_01	111,10,10,{
 					mes "- You succeeded to mine minerals. -";
 					emotion e_ic,1;
 					set .@stst,rand(1,5);
-					if (.@stst == 5) {
-						getitem 6077,5; //Rough_Mineral
-					}
-					else if (.@stst == 1) {
-						getitem 6077,2; //Rough_Mineral
-					}
-					else {
-						getitem 6077,1; //Rough_Mineral
-					}
-					donpcevent "#hu_01_t::OnEnable";
-					disablenpc "#hu_01";
+					if (.@stst == 5) getitem 6077,5; //Rough_Mineral
+					else if (.@stst == 1) getitem 6077,2; //Rough_Mineral
+					else getitem 6077,1; //Rough_Mineral
+					donpcevent strnpcinfo(0)+"_t::OnEnable";
+					disablenpc strnpcinfo(0);
 					close;
 				}
 			case 2:
@@ -9275,17 +5306,20 @@ hu_fild05,251,345,3	script	#hu_01	111,10,10,{
 	end;
 
 OnInit:
-	enablenpc "#hu_01";
+	enablenpc strnpcinfo(0);
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 5) {
-			specialeffect EF_COUPLECASTING;
-		}
-	}
+	if (ep13_2_tre == 3 && countitem(6076) == 1 && countitem(6077) < 5)
+		specialeffect EF_COUPLECASTING;
 	end;
 }
+
+hu_fild05,251,345,3	duplicate(hu_find)	#hu_01	111,10,10
+hu_fild05,134,322,3	duplicate(hu_find)	#hu_02	111,10,10
+hu_fild05,72,104,3	duplicate(hu_find)	#hu_03	111,10,10
+hu_fild05,65,99,3	duplicate(hu_find)	#hu_04	111,10,10
+hu_fild05,323,84,3	duplicate(hu_find)	#hu_05	111,10,10
 
 hu_fild05,1,1,3	script	#hu_01_t	111,{
 OnEnable:
@@ -9297,64 +5331,6 @@ OnTimer60000:
 	stopnpctimer;
 	end;
 }
-hu_fild05,134,322,3	script	#hu_02	111,10,10,{
-	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 5) {
-			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
-			next;
-			switch(select("Mine minerals.:Do nothing.")) {
-			case 1:
-				mes "Clang! Clang! Clang! Clang!";
-				close2;
-				progressbar "ffff00",4;
-				set .@get_stone,rand(1,6);
-				if (.@get_stone < 4) {
-					mes "- You failed to mine minerals. -";
-					getitem 6078,1; //Stone_Fragments
-					close;
-				}
-				else {
-					mes "- You succeeded to mine minerals. -";
-					emotion e_ic,1;
-					set .@stst,rand(1,5);
-					if (.@stst == 5) {
-							getitem 6077,5; //Rough_Mineral
-					}
-					else if (.@stst == 1) {
-							getitem 6077,2; //Rough_Mineral
-					}
-					else {
-							getitem 6077,1; //Rough_Mineral
-					}
-					donpcevent "#hu_02_t::OnEnable";
-					disablenpc "#hu_02";
-					close;
-				}
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-		else {
-			mes "- I think I have enough minerals. -";
-			close;
-		}
-	}
-	end;
-
-OnInit:
-	enablenpc "#hu_02";
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 5) {
-			specialeffect EF_COUPLECASTING;
-		}
-	}
-	end;
-
-}
 
 hu_fild05,1,1,3	script	#hu_02_t	111,{
 OnEnable:
@@ -9364,64 +5340,6 @@ OnEnable:
 OnTimer60000:
 	enablenpc "#hu_02";
 	stopnpctimer;
-	end;
-}
-
-hu_fild05,72,104,3	script	#hu_03	111,10,10,{
-	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 5) {
-			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
-			next;
-			switch(select("Mine minerals.:Do nothing.")) {
-			case 1:
-				mes "Clang! Clang! Clang! Clang!";
-				close2;
-				progressbar "ffff00",4;
-				set .@get_stone,rand(1,6);
-				if (.@get_stone < 4) {
-					mes "- You failed to mine minerals. -";
-					getitem 6078,1; //Stone_Fragments
-					close;
-				}
-				else {
-					mes "- You succeeded to mine minerals. -";
-					emotion e_ic,1;
-					set .@stst,rand(1,5);
-					if (.@stst == 5) {
-						getitem 6077,5; //Rough_Mineral
-					}
-					else if (.@stst == 1) {
-						getitem 6077,2; //Rough_Mineral
-					}
-					else {
-						getitem 6077,1; //Rough_Mineral
-					}
-					donpcevent "#hu_03_t::OnEnable";
-					disablenpc "#hu_03";
-					close;
-				}
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-		else {
-			mes "- I think I have enough minerals. -";
-			close;
-		}
-	}
-	end;
-
-OnInit:
-	enablenpc "#hu_03";
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 5) {
-			specialeffect EF_COUPLECASTING;
-		}
-	}
 	end;
 }
 
@@ -9436,63 +5354,6 @@ OnTimer60000:
 	end;
 }
 
-hu_fild05,65,99,3	script	#hu_04	111,10,10,{
-	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 5) {
-			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
-			next;
-			switch(select("Mine minerals.:Do nothing.")) {
-			case 1:
-				mes "Clang! Clang! Clang! Clang!";
-				close2;
-				progressbar "ffff00",4;
-				set .@get_stone,rand(1,6);
-				if (.@get_stone < 4) {
-					mes "- You failed to mine minerals. -";
-					getitem 6078,1; //Stone_Fragments
-					close;
-				}
-				else {
-					mes "- You succeeded to mine minerals. -";
-					emotion e_ic,1;
-					set .@stst,rand(1,5);
-					if (.@stst == 5) {
-						getitem 6077,5; //Rough_Mineral
-					}
-					else if (.@stst == 1) {
-						getitem 6077,2; //Rough_Mineral
-					}
-					else {
-						getitem 6077,1; //Rough_Mineral
-					}
-					donpcevent "#hu_04_t::OnEnable";
-					disablenpc "#hu_04";
-				}
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-		else {
-			mes "- I think I have enough minerals. -";
-			close;
-		}
-	}
-	end;
-
-OnInit:
-	enablenpc "#hu_04";
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 5) {
-			specialeffect EF_COUPLECASTING;
-		}
-	}
-	end;
-}
-
 hu_fild05,1,1,3	script	#hu_04_t	111,{
 OnEnable:
 	initnpctimer;
@@ -9501,63 +5362,6 @@ OnEnable:
 OnTimer60000:
 	enablenpc "#hu_04";
 	stopnpctimer;
-	end;
-}
-hu_fild05,323,84,3	script	#hu_05	111,10,10,{
-	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 5) {
-			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
-			next;
-			switch(select("Mine minerals.:Do nothing.")) {
-			case 1:
-				mes "Clang! Clang! Clang! Clang!";
-				close2;
-				progressbar "ffff00",4;
-				set .@get_stone,rand(1,6);
-				if (.@get_stone < 4) {
-					mes "- You failed to mine minerals. -";
-					getitem 6078,1; //Stone_Fragments
-					close;
-				}
-				else {
-					mes "- You succeeded to mine minerals. -";
-					emotion e_ic,1;
-					set .@stst,rand(1,5);
-					if (.@stst == 5) {
-						getitem 6077,5; //Rough_Mineral
-					}
-					else if (.@stst == 1) {
-						getitem 6077,2	; //Rough_Mineral
-					}
-					else {
-						getitem 6077,1; //Rough_Mineral
-					}
-					donpcevent "#hu_05_t::OnEnable";
-					disablenpc "#hu_05";
-					close;
-				}
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-		else {
-			mes "- I think I have enough minerals. -";
-			close;
-		}
-	}
-	end;
-
-OnInit:
-	enablenpc "#hu_05";
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 3) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 5) {
-			specialeffect EF_COUPLECASTING;
-		}
-	}
 	end;
 }
 
@@ -9576,59 +5380,27 @@ ve_fild03,351,219,0	script	#ve_find_1	-1,5,5,{
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 4) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 5) {
-			mes "- Just arrived at Thor Volcano. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				viewpoint 1,152,134,1,0x00FF00;
-				viewpoint 1,256,228,2,0x00FF00;
-				viewpoint 1,85,189,3,0x00FF00;
-				viewpoint 1,282,268,4,0x00FF00;
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
+	callfunc "find_13_2",2,1;
+	viewpoint 1,152,134,1,0x00FF00;
+	viewpoint 1,256,228,2,0x00FF00;
+	viewpoint 1,85,189,3,0x00FF00;
+	viewpoint 1,282,268,4,0x00FF00;
+	close;
 }
 
 ve_fild03,223,51,0	script	#ve_find_2	-1,5,5,{
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 4) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 5) {
-			mes "- Just arrived at Thor Volcano. I think I can find the mineral by using the Mineral Detector in the Portable Toolbox. -";
-			next;
-			switch(select("Check current location.:Do nothing.")) {
-			case 1:
-				mes "- You pressed the button of the detector. -";
-				next;
-				mes "[Mineral Detector]";
-				mes "Bee beep -";
-				viewpoint 1,152,134,1,0x00FF00;
-				viewpoint 1,256,228,2,0x00FF00;
-				viewpoint 1,85,189,3,0x00FF00;
-				viewpoint 1,282,268,4,0x00FF00;
-				close;
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-	}
-	end;
+	callfunc "find_13_2",2,1;
+	viewpoint 1,152,134,1,0x00FF00;
+	viewpoint 1,256,228,2,0x00FF00;
+	viewpoint 1,85,189,3,0x00FF00;
+	viewpoint 1,282,268,4,0x00FF00;
+	close;
 }
 
-ve_fild03,152,134,3	script	#ve_01	111,10,10,{
+-	script	ve_find	-1,{
 	if ((ep13_2_tre == 4) && (countitem(6076) == 1)) {
 		if (countitem(6077) < 5) {
 			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
@@ -9638,8 +5410,7 @@ ve_fild03,152,134,3	script	#ve_01	111,10,10,{
 				mes "Clang! Clang! Clang! Clang!";
 				close2;
 				progressbar "ffff00",4;
-				set .@get_stone,rand(1,6);
-				if (.@get_stone < 4) {
+				if (rand(1,6) < 4) {
 					mes "- You failed to mine minerals. -";
 					getitem 6078,1; //Stone_Fragments
 					close;
@@ -9648,17 +5419,11 @@ ve_fild03,152,134,3	script	#ve_01	111,10,10,{
 					mes "- You succeeded to mine minerals. -";
 					emotion e_ic,1;
 					set .@stst,rand(1,5);
-					if (.@stst == 5) {
-						getitem 6077,5; //Rough_Mineral
-					}
-					else if (.@stst == 1) {
-						getitem 6077,2; //Rough_Mineral
-					}
-					else {
-						getitem 6077,1; //Rough_Mineral
-					}
-					donpcevent "#ve_01_t::OnEnable";
-					disablenpc "#ve_01";
+					if (.@stst == 5) getitem 6077,5; //Rough_Mineral
+					else if (.@stst == 1) getitem 6077,2; //Rough_Mineral
+					else getitem 6077,1; //Rough_Mineral
+					donpcevent strnpcinfo(0)+"_t::OnEnable";
+					disablenpc strnpcinfo(0);
 					close;
 				}
 			case 2:
@@ -9674,17 +5439,19 @@ ve_fild03,152,134,3	script	#ve_01	111,10,10,{
 	end;
 
 OnInit:
-	enablenpc "#ve_01";
+	enablenpc strnpcinfo(0);
 	end;
 
 OnTouch:
-	if ((ep13_2_tre == 4) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 5) {
-			specialeffect EF_COUPLECASTING;
-		}
-	}
+	if (ep13_2_tre == 4 && countitem(6076) == 1 && countitem(6077) < 5)
+		specialeffect EF_COUPLECASTING;
 	end;
 }
+
+ve_fild03,152,134,3	duplicate(ve_find)	#ve_01	111,10,10
+ve_fild03,256,228,3	duplicate(ve_find)	#ve_02	111,10,10
+ve_fild03,85,189,3	duplicate(ve_find)	#ve_03	111,10,10
+ve_fild03,282,268,3	duplicate(ve_find)	#ve_04	111,10,10
 
 ve_fild03,1,1,3	script	#ve_01_t	111,{
 OnEnable:
@@ -9694,64 +5461,6 @@ OnEnable:
 OnTimer40000:
 	enablenpc "#ve_01";
 	stopnpctimer;
-	end;
-}
-
-ve_fild03,256,228,3	script	#ve_02	111,10,10,{
-	if ((ep13_2_tre == 4) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 5) {
-			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
-			next;
-			switch(select("Mine minerals.:Do nothing.")) {
-			case 1:
-				mes "Clang! Clang! Clang! Clang!";
-				close2;
-				progressbar "ffff00",4;
-				set .@get_stone,rand(1,6);
-				if (.@get_stone < 4) {
-					mes "- You failed to mine minerals. -";
-					getitem 6078,1; //Stone_Fragments
-					close;
-				}
-				else {
-					mes "- You succeeded to mine minerals. -";
-					emotion e_ic,1;
-					set .@stst,rand(1,5);
-					if (.@stst == 5) {
-						getitem 6077,5; //Rough_Mineral
-					}
-					else if (.@stst == 1) {
-						getitem 6077,2; //Rough_Mineral
-					}
-					else {
-						getitem 6077,1; //Rough_Mineral
-					}
-					donpcevent "#ve_02_t::OnEnable";
-					disablenpc "#ve_02";
-					close;
-				}
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-		else {
-			mes "- I think I have enough minerals. -";
-			close;
-		}
-	}
-	end;
-
-OnInit:
-	enablenpc "#ve_02";
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 4) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 5) {
-			specialeffect EF_COUPLECASTING;
-		}
-	}
 	end;
 }
 
@@ -9766,64 +5475,6 @@ OnTimer40000:
 	end;
 }
 
-ve_fild03,85,189,3	script	#ve_03	111,10,10,{
-	if ((ep13_2_tre == 4) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 5) {
-			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
-			next;
-			switch(select("Mine minerals.:Do nothing.")) {
-			case 1:
-				mes "Clang! Clang! Clang! Clang!";
-				close2;
-				progressbar "ffff00",4;
-				set .@get_stone,rand(1,6);
-				if (.@get_stone < 4) {
-					mes "- You failed to mine minerals. -";
-					getitem 6078,1; //Stone_Fragments
-					close;
-				}
-				else {
-					mes "- You succeeded to mine minerals. -";
-					emotion e_ic,1;
-					set .@stst,rand(1,5);
-					if (.@stst == 5) {
-						getitem 6077,5; //Rough_Mineral
-					}
-					else if (.@stst == 1) {
-						getitem 6077,2; //Rough_Mineral
-					}
-					else {
-						getitem 6077,1; //Rough_Mineral
-					}
-					donpcevent "#ve_03_t::OnEnable";
-					disablenpc "#ve_03";
-					close;
-				}
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-		else {
-			mes "- I think I have enough minerals. -";
-			close;
-		}
-	}
-	end;
-
-OnInit:
-	enablenpc "#hu_03";
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 4) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 5) {
-			specialeffect EF_COUPLECASTING;
-		}
-	}
-	end;
-}
-
 ve_fild03,1,1,3	script	#ve_03_t	111,{
 OnEnable:
 	initnpctimer;
@@ -9832,64 +5483,6 @@ OnEnable:
 OnTimer40000:
 	enablenpc "#ve_03";
 	stopnpctimer;
-	end;
-}
-
-ve_fild03,282,268,3	script	#ve_04	111,10,10,{
-	if ((ep13_2_tre == 4) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 5) {
-			mes "- I can see some different colored minerals where the detector pointed to. This must be the mineral that Mr. Lifeguard told me about. -";
-			next;
-			switch(select("Mine minerals.:Do nothing.")) {
-			case 1:
-				mes "Clang! Clang! Clang! Clang!";
-				close2;
-				progressbar "ffff00",4;
-				set .@get_stone,rand(1,6);
-				if (.@get_stone < 4) {
-					mes "- You failed to mine minerals. -";
-					getitem 6078,1; //Stone_Fragments
-					close;
-				}
-				else {
-					mes "- You succeeded to mine minerals. -";
-					emotion e_ic,1;
-					set .@stst,rand(1,5);
-					if (.@stst == 5) {
-						getitem 6077,5; //Rough_Mineral
-					}
-					else if (.@stst == 1) {
-						getitem 6077,2; //Rough_Mineral
-					}
-					else {
-						getitem 6077,1; //Rough_Mineral
-					}
-					donpcevent "#ve_04_t::OnEnable";
-					disablenpc "#ve_04";
-					close;
-				}
-			case 2:
-				mes "- You decide to do nothing. -";
-				close;
-			}
-		}
-		else {
-			mes "- I think I have enough minerals. -";
-			close;
-		}
-	}
-	end;
-
-OnInit:
-	enablenpc "#ve_04";
-	end;
-
-OnTouch:
-	if ((ep13_2_tre == 4) && (countitem(6076) == 1)) {
-		if (countitem(6077) < 5) {
-			specialeffect EF_COUPLECASTING;
-		}
-	}
 	end;
 }
 
@@ -10215,7 +5808,7 @@ spl_in02,139,65,3	script	Middle-Ranked Laphine#la	438,{
 	}
 }
 
-splendide,160,265,3	script	Purifier#1	844,{
+-	script	Purifier	-1,{
 	if (ep13_2_tre1 == 2) {
 		if (countitem(7193) > 0) {
 			mes "- You put the seed in the";
@@ -10242,140 +5835,12 @@ splendide,160,265,3	script	Purifier#1	844,{
 	end;
 }
 
-splendide,262,262,3	script	Purifier#2	844,{
-	if (ep13_2_tre1 == 2) {
-		if (countitem(7193) > 0) {
-			mes "- You put the seed in the";
-			mes "device and watched it";
-			mes "as Grenouille told you. -";
-			next;
-			mes "- Booowoong -";
-			specialeffect2 EF_HEALSP;
-			next;
-			mes "- When the lights gone,";
-			mes "a big flower of Alfheim was lied";
-			mes "in your hand, instead of the seed. -";
-			delitem 7193,1; //Germinating_Sprout
-			set ep13_2_tre1,3;
-			getitem 6079,1; //Flower_Of_Alfheim
-			close;
-		}
-		else {
-			mes "["+ strcharinfo(0) +"]";
-			mes "Where are the seeds?";
-			close;
-		}
-	}
-	end;
-}
-
-splendide,262,187,3	script	Purifier#3	844,{
-	if (ep13_2_tre1 == 2) {
-		if (countitem(7193) > 0) {
-			mes "- You put the seed in the";
-			mes "device and watched it";
-			mes "as Grenouille told you. -";
-			next;
-			mes "- Booowoong -";
-			specialeffect2 EF_HEALSP;
-			next;
-			mes "- When the lights gone,";
-			mes "a big flower of Alfheim was lied";
-			mes "in your hand, instead of the seed. -";
-			delitem 7193,1; //Germinating_Sprout
-			set ep13_2_tre1,3;
-			getitem 6079,1; //Flower_Of_Alfheim
-			close;
-		}
-		else {
-			mes "["+ strcharinfo(0) +"]";
-			mes "Where are the seeds?";
-			close;
-		}
-	}
-	end;
-}
-
-splendide,164,82,3	script	Purifier#4	844,{
-	if (ep13_2_tre1 == 2) {
-		if (countitem(7193) > 0) {
-			mes "- You put the seed in the";
-			mes "device and watched it";
-			mes "as Grenouille told you. -";
-			next;
-			mes "- Booowoong -";
-			specialeffect2 EF_HEALSP;
-			next;
-			mes "- When the lights gone,";
-			mes "a big flower of Alfheim was lied";
-			mes "in your hand, instead of the seed. -";
-			delitem 7193,1; //Germinating_Sprout
-			set ep13_2_tre1,3;
-			getitem 6079,1; //Flower_Of_Alfheim
-			close;
-		}
-		else {
-			mes "["+ strcharinfo(0) +"]";
-			mes "Where are the seeds?";
-			close;
-		}
-	}
-	end;
-}
-
-splendide,171,116,3	script	Purifier#5	844,{
-	if (ep13_2_tre1 == 2) {
-		if (countitem(7193) > 0) {
-			mes "- You put the seed in the";
-			mes "device and watched it";
-			mes "as Grenouille told you. -";
-			next;
-			mes "- Booowoong -";
-			specialeffect2 EF_HEALSP;
-			next;
-			mes "- When the lights gone,";
-			mes "a big flower of Alfheim was lied";
-			mes "in your hand, instead of the seed. -";
-			delitem 7193,1; //Germinating_Sprout
-			set ep13_2_tre1,3;
-			getitem 6079,1; //Flower_Of_Alfheim
-			close;
-		}
-		else {
-			mes "["+ strcharinfo(0) +"]";
-			mes "Where are the seeds?";
-			close;
-		}
-	}
-	end;
-}
-
-splendide,134,280,3	script	Purifier#6	844,{
-	if (ep13_2_tre1 == 2) {
-		if (countitem(7193) > 0) {
-			mes "- You put the seed in the";
-			mes "device and watched it";
-			mes "as Grenouille told you. -";
-			next;
-			mes "- Booowoong -";
-			specialeffect2 EF_HEALSP;
-			next;
-			mes "- When the lights gone,";
-			mes "a big flower of Alfheim was lied";
-			mes "in your hand, instead of the seed. -";
-			delitem 7193,1; //Germinating_Sprout
-			set ep13_2_tre1,3;
-			getitem 6079,1; //Flower_Of_Alfheim
-			close;
-		}
-		else {
-			mes "["+ strcharinfo(0) +"]";
-			mes "Where are the seeds?";
-			close;
-		}
-	}
-	end;
-}
+splendide,160,265,3	duplicate(Purifier)	Purifier#1	844
+splendide,262,262,3	duplicate(Purifier)	Purifier#2	844
+splendide,262,187,3	duplicate(Purifier)	Purifier#3	844
+splendide,164,82,3	duplicate(Purifier)	Purifier#4	844
+splendide,171,116,3	duplicate(Purifier)	Purifier#5	844
+splendide,134,280,3	duplicate(Purifier)	Purifier#6	844
 
 splendide,205,139,5	script	Exhausted Soldier#1	447,{
 	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
@@ -10813,14 +6278,14 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	883,{
 		emotion e_ic,"Bazett Teablack#ep13bs";
 		next;
 		mes "[Industrious Man]";
-		mes "write..write...";
-		mes "crunch..crunch...";
+		mes "write...write...";
+		mes "crunch...crunch...";
 		next;
 		mes " - He doesn't seem to recognize that I am standing next to him as he continues writing something. -";
 		next;
 		mes "[Industrious Man]";
-		mes "write..write...";
-		mes "crunch..crunch...";
+		mes "write...write...";
+		mes "crunch...crunch...";
 		mes "....";
 		close;
 	}
@@ -10833,8 +6298,8 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	883,{
 			emotion e_ic,"Bazett Teablack#ep13bs";
 			next;
 			mes "[Industrious Man]";
-			mes "write..write...";
-			mes "crunch..crunch...";
+			mes "write...write...";
+			mes "crunch...crunch...";
 			next;
 			mes " - He doesn't seem to recognize that I am standing next to him as he continues writing something. -";
 			next;
@@ -11539,27 +7004,12 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,143,272,0	script	ep13_warp_s1	139,{
-
+-	script	ep13_warp_s_0	-1,{
 OnEnable:
-	enablenpc "ep13_warp_s1";
-	specialeffect EF_WIND;
+	enablenpc strnpcinfo(1);
 	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_s1";
-	end;
-
 OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
 OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
 OnTimer6000:
 	specialeffect EF_WIND;
 	end;
@@ -11570,271 +7020,144 @@ OnTimer8000:
 
 OnTimer10000:
 	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_s1";
-	end;
-}
-
-nyd_dun02,143,269,0	script	ep13_warp_s2	139,1,1,{
-OnTouch:
-	warp "nyd_dun01",214,68;
-	end;
-}
-
-nyd_dun02,143,266,0	script	ep13_warp_s3	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_s3";
-	specialeffect EF_WIND;
-	initnpctimer;
+	disablenpc strnpcinfo(1);
 	end;
 
 OnDisable:
 	specialeffect EF_WIND;
-	disablenpc "ep13_warp_s3";
+	disablenpc strnpcinfo(1);
 	end;
+}
 
+-	script	ep13_warp_s_1	-1,{
+OnEnable:
+	enablenpc strnpcinfo(1);
+	initnpctimer;
 OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
 OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
 OnTimer6000:
 	specialeffect EF_WIND;
 	end;
 
 OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_s3";
-	end;
-}
-
-nyd_dun02,143,263,0	script	ep13_warp_s4	139,1,1,{
-OnTouch:
-	warp "nyd_dun01",214,68;
-	end;
-}
-
-nyd_dun02,146,272,0	script	ep13_warp_11	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_11";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_11";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_11";
-	end;
-}
-
-nyd_dun02,146,269,0	script	ep13_warp_12	139,1,1,{
-OnTouch:
-	warp "nyd_dun01",214,68;
-	end;
-}
-
-nyd_dun02,146,266,0	script	ep13_warp_13	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_13";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_13";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_13";
-	end;
-}
-
-nyd_dun02,146,263,0	script	ep13_warp_14	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_14";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_14";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
 OnTimer10000:
 	specialeffect EF_STEAL;
 	end;
 
 OnTimer12000:
 	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_14";
-	end;
-}
-
-nyd_dun02,146,260,0	script	ep13_warp_15	139,1,1,{
-OnTouch:
-	warp "nyd_dun01",214,68;
-	end;
-}
-
-nyd_dun02,149,272,0	script	ep13_warp_21	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_21";
-	specialeffect EF_WIND;
-	initnpctimer;
+	disablenpc strnpcinfo(1);
 	end;
 
 OnDisable:
 	specialeffect EF_WIND;
-	disablenpc "ep13_warp_21";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer12000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_21";
+	disablenpc strnpcinfo(1);
 	end;
 }
 
-nyd_dun02,149,269,0	script	ep13_warp_22	139,{
-
+-	script	ep13_warp_s_2	-1,{
 OnEnable:
-	enablenpc "ep13_warp_22";
-	specialeffect EF_WIND;
+	enablenpc strnpcinfo(1);
 	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_22";
-	end;
-
 OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
 OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
 OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
 OnTimer8000:
 	specialeffect EF_WIND;
 	end;
 
 OnTimer10000:
-	specialeffect EF_STEAL;
-	end;
-
 OnTimer12000:
 	specialeffect EF_STEAL;
 	end;
 
 OnTimer15000:
 	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_22";
+	disablenpc strnpcinfo(1);
+	end;
+
+OnDisable:
+	specialeffect EF_WIND;
+	disablenpc strnpcinfo(1);
 	end;
 }
 
+-	script	ep13_warp_w_0	-1,{
+OnTouch:
+	warp "nyd_dun01",214,68;
+	end;
+}
+
+nyd_dun02,143,272,0	duplicate(ep13_warp_s_0)	ep13_warp_s1	139
+nyd_dun02,143,266,0	duplicate(ep13_warp_s_0)	ep13_warp_s3	139
+nyd_dun02,146,272,0	duplicate(ep13_warp_s_0)	ep13_warp_11	139
+nyd_dun02,146,266,0	duplicate(ep13_warp_s_0)	ep13_warp_13	139
+nyd_dun02,149,260,0	duplicate(ep13_warp_s_0)	ep13_warp_25	139
+nyd_dun02,149,257,0	duplicate(ep13_warp_s_0)	ep13_warp_26	139
+nyd_dun02,152,270,0	duplicate(ep13_warp_s_0)	ep13_warp_31	139
+nyd_dun02,152,264,0	duplicate(ep13_warp_s_0)	ep13_warp_33	139
+nyd_dun02,155,269,0	duplicate(ep13_warp_s_0)	ep13_warp_41	139
+nyd_dun02,155,254,0	duplicate(ep13_warp_s_0)	ep13_warp_46	139
+nyd_dun02,158,263,0	duplicate(ep13_warp_s_0)	ep13_warp_52	139
+nyd_dun02,158,254,0	duplicate(ep13_warp_s_0)	ep13_warp_55	139
+nyd_dun02,161,261,0	duplicate(ep13_warp_s_0)	ep13_warp_62	139
+nyd_dun02,161,255,0	duplicate(ep13_warp_s_0)	ep13_warp_64	139
+nyd_dun02,161,249,0	duplicate(ep13_warp_s_0)	ep13_warp_66	139
+nyd_dun02,164,261,0	duplicate(ep13_warp_s_0)	ep13_warp_71	139
+nyd_dun02,164,255,0	duplicate(ep13_warp_s_0)	ep13_warp_73	139
+nyd_dun02,164,249,0	duplicate(ep13_warp_s_0)	ep13_warp_75	139
+nyd_dun02,167,249,0	duplicate(ep13_warp_s_0)	ep13_warp_84	139
+nyd_dun02,170,257,0	duplicate(ep13_warp_s_0)	ep13_warp_91	139
+nyd_dun02,170,254,0	duplicate(ep13_warp_s_0)	ep13_warp_92	139
+nyd_dun02,170,248,0	duplicate(ep13_warp_s_0)	ep13_warp_94	139
+nyd_dun02,170,245,0	duplicate(ep13_warp_s_0)	ep13_warp_95	139
+
+nyd_dun02,146,263,0	duplicate(ep13_warp_s_1)	ep13_warp_14	139
+nyd_dun02,149,272,0	duplicate(ep13_warp_s_1)	ep13_warp_21	139
+nyd_dun02,152,258,0	duplicate(ep13_warp_s_1)	ep13_warp_35	139
+nyd_dun02,155,266,0	duplicate(ep13_warp_s_1)	ep13_warp_42	139
+nyd_dun02,158,251,0	duplicate(ep13_warp_s_1)	ep13_warp_56	139
+nyd_dun02,164,258,0	duplicate(ep13_warp_s_1)	ep13_warp_72	139
+nyd_dun02,164,246,0	duplicate(ep13_warp_s_1)	ep13_warp_76	139
+nyd_dun02,167,255,0	duplicate(ep13_warp_s_1)	ep13_warp_82	139
+nyd_dun02,170,251,0	duplicate(ep13_warp_s_1)	ep13_warp_93	139
+
+nyd_dun02,149,269,0	duplicate(ep13_warp_s_2)	ep13_warp_22	139
+nyd_dun02,149,263,0	duplicate(ep13_warp_s_2)	ep13_warp_24	139
+nyd_dun02,155,263,0	duplicate(ep13_warp_s_2)	ep13_warp_43	139
+nyd_dun02,155,257,0	duplicate(ep13_warp_s_2)	ep13_warp_45	139
+nyd_dun02,161,264,0	duplicate(ep13_warp_s_2)	ep13_warp_61	139
+nyd_dun02,161,252,0	duplicate(ep13_warp_s_2)	ep13_warp_65	139
+nyd_dun02,167,258,0	duplicate(ep13_warp_s_2)	ep13_warp_81	139
+nyd_dun02,167,252,0	duplicate(ep13_warp_s_2)	ep13_warp_83	139
+nyd_dun02,167,246,0	duplicate(ep13_warp_s_2)	ep13_warp_85	139
+nyd_dun02,173,251,0	duplicate(ep13_warp_s_2)	ep13_warp_e1	139
+nyd_dun02,173,248,0	duplicate(ep13_warp_s_2)	ep13_warp_e2	139
+nyd_dun02,173,245,0	duplicate(ep13_warp_s_2)	ep13_warp_e3	139
+
+nyd_dun02,143,269,0	duplicate(ep13_warp_w_0)	ep13_warp_s2	139,1,1
+nyd_dun02,143,263,0	duplicate(ep13_warp_w_0)	ep13_warp_s4	139,1,1
+nyd_dun02,146,269,0	duplicate(ep13_warp_w_0)	ep13_warp_12	139,1,1
+nyd_dun02,146,260,0	duplicate(ep13_warp_w_0)	ep13_warp_15	139,1,1
+nyd_dun02,149,266,0	duplicate(ep13_warp_w_0)	ep13_warp_23	139,1,1
+nyd_dun02,152,267,0	duplicate(ep13_warp_w_0)	ep13_warp_32	139,1,1
+nyd_dun02,152,261,0	duplicate(ep13_warp_w_0)	ep13_warp_34	139,1,1
+nyd_dun02,155,260,0	duplicate(ep13_warp_w_0)	ep13_warp_44	139,1,1
+nyd_dun02,158,266,0	duplicate(ep13_warp_w_0)	ep13_warp_51	139,1,1
+nyd_dun02,158,260,0	duplicate(ep13_warp_w_0)	ep13_warp_53	139,1,1
+nyd_dun02,158,257,0	duplicate(ep13_warp_w_0)	ep13_warp_54	139,1,1
+nyd_dun02,161,258,0	duplicate(ep13_warp_w_0)	ep13_warp_63	139,1,1
+nyd_dun02,164,252,0	duplicate(ep13_warp_w_0)	ep13_warp_74	139,1,1
+nyd_dun02,173,242,0	duplicate(ep13_warp_w_0)	ep13_warp_e4	139,1,1
+
 nyd_dun02,149,269,0	script	ep13_warp_22_2	139,1,1,{
 OnInit:
+OnDisable:
 	disablenpc "ep13_warp_22_2";
 	end;
 
 OnEnable:
 	enablenpc "ep13_warp_22_2";
-	end;
-
-OnDisable:
-	disablenpc "ep13_warp_22_2";
 	end;
 
 OnTouch:
@@ -11847,72 +7170,13 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,149,266,0	script	ep13_warp_23	139,1,1,{
-OnTouch:
-	warp "nyd_dun01",214,68;
-	end;
-}
-
-nyd_dun02,149,263,0	script	ep13_warp_24	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_24";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_24";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer12000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer15000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_24";
-	end;
-}
-
 nyd_dun02,149,263,0	script	ep13_warp_24_2	139,1,1,{
-
-OnInit:
-	disablenpc "ep13_warp_24_2";
-	end;
-
 OnEnable:
 	enablenpc "ep13_warp_24_2";
 	end;
 
-OnDisable:
-	disablenpc "ep13_warp_24_2";
-	end;
-
 OnTouch:
-	set .@way_loot,rand(1,2);
-	if (.@way_loot == 1) {
+	if (rand(2)) {
 		donpcevent "ep13_warp_33::OnEnable";
 		donpcevent "ep13_warp_43::OnEnable";
 		donpcevent "ep13_warp_43_2::OnEnable";
@@ -11924,330 +7188,20 @@ OnTouch:
 		donpcevent "ep13_warp_45::OnEnable";
 		donpcevent "ep13_warp_45_2::OnEnable";
 	}
+OnInit:
+OnDisable:
 	disablenpc "ep13_warp_24_2";
 	end;
 }
 
-nyd_dun02,149,260,0	script	ep13_warp_25	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_25";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_25";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_25";
-	end;
-}
-
-nyd_dun02,149,257,0	script	ep13_warp_26	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_26";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_26";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_26";
-	end;
-}
-
-nyd_dun02,152,270,0	script	ep13_warp_31	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_31";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_31";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_31";
-	end;
-}
-
-nyd_dun02,152,267,0	script	ep13_warp_32	139,1,1,{
-OnTouch:
-	warp "nyd_dun01",214,68;
-	end;
-}
-
-nyd_dun02,152,264,0	script	ep13_warp_33	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_33";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_33";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_33";
-	end;
-}
-
-nyd_dun02,152,261,0	script	ep13_warp_34	139,1,1,{
-OnTouch:
-	warp "nyd_dun01",214,68;
-	end;
-}
-
-nyd_dun02,152,258,0	script	ep13_warp_35	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_35";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_35";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer12000:
-	specialeffect EF_STEAL;
-	enablenpc "ep13_warp_35";
-	end;
-}
-
-nyd_dun02,155,269,0	script	ep13_warp_41	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_41";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_41";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_41";
-	end;
-}
-
-nyd_dun02,155,266,0	script	ep13_warp_42	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_42";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_42";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer12000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_42";
-	end;
-}
-
-nyd_dun02,155,263,0	script	ep13_warp_43	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_43";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_43";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer12000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer15000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_43";
-	end;
-}
-
 nyd_dun02,155,263,0	script	ep13_warp_43_2	139,1,1,{
-
 OnInit:
+OnDisable:
 	disablenpc "ep13_warp_43_2";
 	end;
 
 OnEnable:
 	enablenpc "ep13_warp_43_2";
-	end;
-
-OnDisable:
-	disablenpc "ep13_warp_43_2";
 	end;
 
 OnTouch:
@@ -12258,67 +7212,14 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,155,260,0	script	ep13_warp_44	139,1,1,{
-OnTouch:
-	warp "nyd_dun01",214,68;
-	end;
-}
-
-nyd_dun02,155,257,0	script	ep13_warp_45	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_45";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_45";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer12000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer15000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_45";
-	end;
-}
-
 nyd_dun02,155,257,0	script	ep13_warp_45_2	139,1,1,{
-
 OnInit:
+OnDisable:
 	disablenpc "ep13_warp_45_2";
 	end;
 
 OnEnable:
 	enablenpc "ep13_warp_45_2";
-	end;
-
-OnDisable:
-	disablenpc "ep13_warp_45_2";
 	end;
 
 OnTouch:
@@ -12331,223 +7232,14 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,155,254,0	script	ep13_warp_46	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_46";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_46";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_46";
-	end;
-}
-
-nyd_dun02,158,266,0	script	ep13_warp_51	139,1,1,{
-OnTouch:
-	warp "nyd_dun01",214,68;
-	end;
-}
-
-nyd_dun02,158,263,0	script	ep13_warp_52	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_52";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_52";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_52";
-	end;
-}
-
-nyd_dun02,158,260,0	script	ep13_warp_53	139,1,1,{
-OnTouch:
-	warp "nyd_dun01",214,68;
-	end;
-}
-
-nyd_dun02,158,257,0	script	ep13_warp_54	139,1,1,{
-OnTouch:
-	warp "nyd_dun01",214,68;
-	end;
-}
-
-nyd_dun02,158,254,0	script	ep13_warp_55	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_55";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_55";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_55";
-	end;
-}
-
-nyd_dun02,158,251,0	script	ep13_warp_56	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_56";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_56";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer12000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_56";
-	end;
-}
-
-nyd_dun02,161,264,0	script	ep13_warp_61	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_61";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_61";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer12000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer15000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_61";
-	end;
-}
-
 nyd_dun02,161,264,0	script	ep13_warp_61_2	139,1,1,{
-
 OnInit:
+OnDisable:
 	disablenpc "ep13_warp_61_2";
 	end;
 
 OnEnable:
 	enablenpc "ep13_warp_61_2";
-	end;
-
-OnDisable:
-	disablenpc "ep13_warp_61_2";
 	end;
 
 OnTouch:
@@ -12560,140 +7252,13 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,161,261,0	script	ep13_warp_62	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_62";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_62";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_62";
-	end;
-}
-
-nyd_dun02,161,258,0	script	ep13_warp_63	139,1,1,{
-OnTouch:
-	warp "nyd_dun01",214,68;
-	end;
-}
-
-nyd_dun02,161,255,0	script	ep13_warp_64	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_64";
-	initnpctimer;
-	specialeffect EF_WIND;
-	end;
-
-OnDisable:
-	disablenpc "ep13_warp_64";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_64";
-	end;
-}
-
-nyd_dun02,161,252,0	script	ep13_warp_65	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_65";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_65";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer12000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer15000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_65";
-	end;
-}
-
 nyd_dun02,161,252,0	script	ep13_warp_65_2	139,1,1,{
-OnInit:
-	disablenpc "ep13_warp_65_2";
-	end;
-
 OnEnable:
 	enablenpc "ep13_warp_65_2";
 	end;
 
-OnDisable:
-	disablenpc "ep13_warp_65_2";
-	end;
-
 OnTouch:
-	set way_loot,rand(1,2);
-	if (way_loot == 1) {
+	if (rand(2)) {
 		donpcevent "ep13_warp_64::OnEnable";
 		donpcevent "ep13_warp_73::OnEnable";
 		donpcevent "ep13_warp_82::OnEnable";
@@ -12707,288 +7272,20 @@ OnTouch:
 		donpcevent "ep13_warp_85::OnEnable";
 		donpcevent "ep13_warp_85_2::OnEnable";
 	}
+OnInit:
+OnDisable:
 	disablenpc "ep13_warp_65_2";
-	end;
-}
-
-nyd_dun02,161,249,0	script	ep13_warp_66	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_66";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_66";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_66";
-	end;
-}
-
-nyd_dun02,164,261,0	script	ep13_warp_71	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_71";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_71";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_71";
-	end;
-}
-
-nyd_dun02,164,258,0	script	ep13_warp_72	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_72";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_72";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer12000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_72";
-	end;
-}
-
-nyd_dun02,164,255,0	script	ep13_warp_73	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_73";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_73";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_73";
-	end;
-}
-
-nyd_dun02,164,252,0	script	ep13_warp_74	139,1,1,{
-OnTouch:
-	warp "nyd_dun01",214,68;
-	end;
-}
-
-nyd_dun02,164,249,0	script	ep13_warp_75	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_75";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_75";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_75";
-	end;
-}
-
-nyd_dun02,164,246,0	script	ep13_warp_76	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_76";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_76";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer12000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_76";
-	end;
-}
-
-nyd_dun02,167,258,0	script	ep13_warp_81	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_81";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_81";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer12000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer15000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_81";
 	end;
 }
 
 nyd_dun02,167,258,0	script	ep13_warp_81_2	139,1,1,{
 OnInit:
+OnDisable:
 	disablenpc "ep13_warp_81_2";
 	end;
 
 OnEnable:
 	enablenpc "ep13_warp_81_2";
-	end;
-
-OnDisable:
-	disablenpc "ep13_warp_81_2";
 	end;
 
 OnTouch:
@@ -13000,100 +7297,14 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,167,255,0	script	ep13_warp_82	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_82";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_82";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer12000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_82";
-	end;
-}
-
-nyd_dun02,167,252,0	script	ep13_warp_83	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_83";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_83";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer12000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer15000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_83";
-	end;
-}
-
 nyd_dun02,167,252,0	script	ep13_warp_83_2	139,1,1,{
-
 OnInit:
+OnDisable:
 	disablenpc "ep13_warp_83_2";
 	end;
 
 OnEnable:
 	enablenpc "ep13_warp_83_2";
-	end;
-
-OnDisable:
-	disablenpc "ep13_warp_83_2";
 	end;
 
 OnTouch:
@@ -13104,87 +7315,9 @@ OnTouch:
 	end;
 }
 
-nyd_dun02,167,249,0	script	ep13_warp_84	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_84";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_84";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_84";
-	end;
-}
-
-nyd_dun02,167,246,0	script	ep13_warp_85	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_85";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_85";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer12000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer15000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_85";
-	end;
-}
-
 nyd_dun02,167,246,0	script	ep13_warp_85_2	139,1,1,{
-
 OnInit:
+OnDisable:
 	disablenpc "ep13_warp_85_2";
 	end;
 
@@ -13192,328 +7325,10 @@ OnEnable:
 	enablenpc "ep13_warp_85_2";
 	end;
 
-OnDisable:
-	disablenpc "ep13_warp_85_2";
-	end;
-
 OnTouch:
 	donpcevent "ep13_warp_95::OnEnable";
 	donpcevent "ep13_warp_e3::OnEnable";
 	donpcevent "ep13_warp_85_2::OnEnable";
-	end;
-}
-
-nyd_dun02,170,257,0	script	ep13_warp_91	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_91";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_91";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_91";
-	end;
-}
-
-nyd_dun02,170,254,0	script	ep13_warp_92	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_92";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_92";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_92";
-	end;
-}
-
-nyd_dun02,170,251,0	script	ep13_warp_93	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_93";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_93";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer12000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_93";
-	end;
-}
-
-nyd_dun02,170,248,0	script	ep13_warp_94	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_94";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_94";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_94";
-	end;
-}
-
-nyd_dun02,170,245,0	script	ep13_warp_95	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_95";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_95";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_95";
-	end;
-}
-
-nyd_dun02,173,251,0	script	ep13_warp_e1	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_e1";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_e1";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer12000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer15000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_e1";
-	end;
-}
-
-nyd_dun02,173,248,0	script	ep13_warp_e2	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_e2";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_e2";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer12000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer15000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_e2";
-	end;
-}
-
-nyd_dun02,173,245,0	script	ep13_warp_e3	139,{
-
-OnEnable:
-	enablenpc "ep13_warp_e3";
-	specialeffect EF_WIND;
-	initnpctimer;
-	end;
-
-OnDisable:
-	specialeffect EF_WIND;
-	disablenpc "ep13_warp_e3";
-	end;
-
-OnTimer2000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer4000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer6000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer8000:
-	specialeffect EF_WIND;
-	end;
-
-OnTimer10000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer12000:
-	specialeffect EF_STEAL;
-	end;
-
-OnTimer15000:
-	specialeffect EF_STEAL;
-	disablenpc "ep13_warp_e3";
-	end;
-}
-
-nyd_dun02,173,242,0	script	ep13_warp_e4	139,1,1,{
-OnTouch:
-	warp "nyd_dun01",214,68;
 	end;
 }
 
