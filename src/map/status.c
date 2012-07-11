@@ -640,7 +640,7 @@ void initChangeTables(void) {
 	set_sc( MI_RUSH_WINDMILL          , SC_RUSHWINDMILL         , SI_RUSHWINDMILL         , SCB_BATK  );
 	set_sc( MI_ECHOSONG               , SC_ECHOSONG             , SI_ECHOSONG             , SCB_DEF2  );
 	set_sc( MI_HARMONIZE              , SC_HARMONIZE            , SI_HARMONIZE            , SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK );
-	set_sc( WM_POEMOFNETHERWORLD      , SC_STOP                 , SI_NETHERWORLD          , SCB_NONE );
+	set_sc_with_vfx( WM_POEMOFNETHERWORLD      , SC_NETHERWORLD          , SI_NETHERWORLD          , SCB_NONE );
 	set_sc( WM_VOICEOFSIREN           , SC_VOICEOFSIREN         , SI_VOICEOFSIREN         , SCB_NONE );
 	set_sc( WM_LULLABY_DEEPSLEEP      , SC_DEEPSLEEP            , SI_DEEPSLEEP            , SCB_NONE );
 	set_sc( WM_SIRCLEOFNATURE         , SC_SIRCLEOFNATURE       , SI_SIRCLEOFNATURE       , SCB_NONE );
@@ -980,6 +980,7 @@ void initChangeTables(void) {
 	StatusChangeStateTable[SC_CURSEDCIRCLE_ATKER]  |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_CURSEDCIRCLE_TARGET] |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_CRYSTALIZE]          |= SCS_NOMOVE|SCS_NOMOVECOND;
+	StatusChangeStateTable[SC_NETHERWORLD]         |= SCS_NOMOVE;
 	
 	/* StatusChangeState (SCS_) NOPICKUPITEMS */
 	StatusChangeStateTable[SC_HIDING]              |= SCS_NOPICKITEM;
@@ -1645,6 +1646,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 		if(sc->option&OPTION_MOUNTING)
 			return 0;//New mounts can't attack nor use skills in the client; this check makes it cheat-safe [Ind]
 	}
+
 	if (target == NULL || target == src) //No further checking needed.
 		return 1;
 
@@ -1668,7 +1670,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
  	//You cannot hide from ground skills.
 	if( skill_get_ele(skill_num,1) == ELE_EARTH ) //TODO: Need Skill Lv here :/
 		hide_flag &= ~OPTION_HIDE;
-
+	
 	switch( target->type ) {
 		case BL_PC: {
 				struct map_session_data *sd = (TBL_PC*) target;
@@ -1680,8 +1682,6 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 					(sd->special_state.perfect_hiding || !is_detect) )
 					return 0;
 				if( tsc->data[SC_CAMOUFLAGE] && !(is_boss || is_detect) && !skill_num )
-					return 0;
-				if( tsc->data[SC_CLOAKINGEXCEED] && !is_boss )
 					return 0;
 				if( tsc->data[SC_STEALTHFIELD] && !is_boss )
 					return 0;
@@ -5118,7 +5118,7 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, s
 	if( sc->data[SC_HALLUCINATIONWALK_POSTDELAY] )
 		skills2 -= 50;
 	if( sc->data[SC_FIGHTINGSPIRIT] && sc->data[SC_FIGHTINGSPIRIT]->val2 )
-		skills2 += sc->data[SC_FIGHTINGSPIRIT]->val2;
+		skills2 += 4;
 	if( sc->data[SC_PARALYSE] )
 		skills2 -= 10;
 	if( sc->data[SC__BODYPAINT] )
@@ -6036,8 +6036,9 @@ int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int ti
 		tick -= 1000 * ((status->vit + status->dex) / 20);
 		tick = max(tick,10000); // Minimum Duration 10s.
 		break;
-	case SC_OBLIVIONCURSE:
-		sc_def = status->int_*4/5; //FIXME: info said this is the formula of status chance. Check again pls. [Jobbie]
+	case SC_OBLIVIONCURSE: // 100% - (100 - 0.8 x INT)
+		sc_def = 100 - ( 100 - status->int_* 8 / 10 ); 
+		sc_def = max(sc_def, 5); // minimum of 5%
 		break;
 	case SC_ELECTRICSHOCKER:
 	case SC_BITE: {
@@ -6493,6 +6494,20 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 				return 0;
 		}
 		if (tick == 1) return 1; //Minimal duration: Only strip without causing the SC
+	break;
+	case SC_TOXIN:
+	case SC_PARALYSE:
+	case SC_VENOMBLEED:
+	case SC_MAGICMUSHROOM:
+	case SC_DEATHHURT:
+	case SC_PYREXIA:
+	case SC_OBLIVIONCURSE:
+	case SC_LEECHESEND:
+		{ // it doesn't stack or even renewed
+			int i = SC_TOXIN;
+			for(; i<= SC_LEECHESEND; i++)
+				if(sc->data[i])	return 0;
+		}
 	break;
 	}
 
@@ -7761,6 +7776,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			tick_time = 4000; // [GodLesZ] tick time
 			break;
 		case SC_PYREXIA:
+			status_change_start(bl,SC_BLIND,10000,val1,0,0,0,30000,11); // Blind status that last for 30 seconds
 			val4 = tick / 3000;
 			tick_time = 4000; // [GodLesZ] tick time
 			break;
@@ -8246,6 +8262,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_CURSEDCIRCLE_ATKER:
 		case SC_CURSEDCIRCLE_TARGET:
 		case SC_FEAR:
+		case SC_NETHERWORLD:
 			unit_stop_walking(bl,1);
 		break;
 		case SC_HIDING:
@@ -9677,11 +9694,9 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 	case SC_PYREXIA:
 		if( --(sce->val4) >= 0 ) {
 			map_freeblock_lock();
-			clif_damage(bl,bl,tick,status_get_amotion(bl),0,100,0,0,0);
+			clif_damage(bl,bl,tick,status_get_amotion(bl),status_get_dmotion(bl)+500,100,0,0,0);
 			status_fix_damage(NULL,bl,100,0);
 			if( sc->data[type] ) {
-				if( sce->val4 == 10 )
-					sc_start(bl,SC_BLIND,100,sce->val1,30000); // Blind status for the final 30 seconds
 				sc_timer_next(3000+tick,status_change_timer,bl->id,data);
 			}
 			map_freeblock_unlock();
@@ -9691,16 +9706,11 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 
 	case SC_LEECHESEND:
 		if( --(sce->val4) >= 0 ) {
-			int damage = status->max_hp/100;
-			if( sd && (sd->status.class_ == JOB_GUILLOTINE_CROSS || sd->status.class_ == JOB_GUILLOTINE_CROSS_T ) )
-				damage += 3 * status->vit;
-			else
-				damage += 7 * status->vit;
-			
-			unit_skillcastcancel(bl,0);
-			
+			int damage = status->max_hp/100; // {Target VIT x (New Poison Research Skill Level - 3)} + (Target HP/100)
+			damage += status->vit * (sce->val1 - 3);
+			unit_skillcastcancel(bl,0);		
 			map_freeblock_lock();
-			status_zap(bl,damage,0);
+			status_damage(bl, bl, damage, 0, clif_damage(bl,bl,tick,status_get_amotion(bl),status_get_dmotion(bl)+500,damage,1,0,0), 1);
 			if( sc->data[type] ) {
 				sc_timer_next(1000 + tick, status_change_timer, bl->id, data );
 			}
@@ -10287,6 +10297,7 @@ int status_change_clear_buffs (struct block_list* bl, int type)
 			case SC_BURNING:
 			case SC_FEAR:
 			case SC_MAGNETICFIELD:
+			case SC_NETHERWORLD:
 				if (!(type&2))
 					continue;
 				break;
