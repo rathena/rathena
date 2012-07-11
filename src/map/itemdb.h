@@ -4,8 +4,9 @@
 #ifndef _ITEMDB_H_
 #define _ITEMDB_H_
 
+#include "../common/db.h"
 #include "../common/mmo.h" // ITEM_NAME_LENGTH
-#include "map.h" //REMODE
+#include "map.h"
 
 // 32k array entries in array (the rest goes to the db)
 #define MAX_ITEMDB 0x8000
@@ -16,6 +17,9 @@
 #define MAX_ITEMDELAYS	10
 
 #define MAX_SEARCH	5  //Designed for search functions, species max number of matches to display.
+
+/* maximum amount of items a combo may require */
+#define MAX_ITEMS_PER_COMBO 6
 
 enum item_itemid {
 	ITEMID_EMPERIUM = 714,
@@ -139,6 +143,10 @@ struct item_data {
 struct item_group {
 	int nameid[MAX_RANDITEM];
 	int qty; //Counts amount of items in the group.
+};
+
+struct item_combo {
+	char script[2048]; /* combo script */
 };
 
 struct item_data* itemdb_searchname(const char *name);

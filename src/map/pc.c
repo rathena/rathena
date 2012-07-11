@@ -999,7 +999,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	
 	if (!(battle_config.display_skill_fail&2))
 		sd->state.showdelay = 1;
-		
+			
 	pc_setinventorydata(sd);
 	pc_setequipindex(sd);
 
@@ -8012,14 +8012,15 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 			run_script(id->equip_script,0,sd->bl.id,fake_nd->bl.id);
 		if(itemdb_isspecial(sd->status.inventory[n].card[0]))
 			; //No cards
-		else
-		for(i=0;i<id->slot; i++)
-		{
-			if (!sd->status.inventory[n].card[i])
-				continue;
-			data = itemdb_exists(sd->status.inventory[n].card[i]);
-			if (data && data->equip_script)
-				run_script(data->equip_script,0,sd->bl.id,fake_nd->bl.id);
+		else {
+			for( i = 0; i < id->slot; i++ ) {
+				if (!sd->status.inventory[n].card[i])
+					continue;
+				if ( ( data = itemdb_exists(sd->status.inventory[n].card[i]) ) != NULL ) {
+					if( data->equip_script )
+						run_script(data->equip_script,0,sd->bl.id,fake_nd->bl.id);
+				}
+			}
 		}
 	}
 	return 0;
@@ -8140,14 +8141,17 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 			run_script(sd->inventory_data[n]->unequip_script,0,sd->bl.id,fake_nd->bl.id);
 		if(itemdb_isspecial(sd->status.inventory[n].card[0]))
 			; //No cards
-		else
-		for(i=0;i<sd->inventory_data[n]->slot; i++)
-		{
-			if (!sd->status.inventory[n].card[i])
-				continue;
-			data = itemdb_exists(sd->status.inventory[n].card[i]);
-			if (data && data->unequip_script)
-				run_script(data->unequip_script,0,sd->bl.id,fake_nd->bl.id);
+		else {
+			for( i = 0; i < sd->inventory_data[n]->slot; i++ ) {
+				if (!sd->status.inventory[n].card[i])
+					continue;
+
+				if ( ( data = itemdb_exists(sd->status.inventory[n].card[i]) ) != NULL ) {
+					if( data->unequip_script )
+						run_script(data->unequip_script,0,sd->bl.id,fake_nd->bl.id);
+				}
+				
+			}
 		}
 	}
 
