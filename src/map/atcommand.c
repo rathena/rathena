@@ -3949,7 +3949,7 @@ ACMD_FUNC(reloadscript)
 	//atcommand_broadcast( fd, sd, "@broadcast", "You will feel a bit of lag at this point !" );
 
 	flush_fifos();
-	map_reloadnpc(); // reload config files seeking for npcs
+	map_reloadnpc(true); // reload config files seeking for npcs
 	script_reload();
 	npc_reload();
 

@@ -3378,10 +3378,16 @@ void map_reloadnpc_sub(char *cfgName)
 	fclose(fp);
 }
 
-void map_reloadnpc()
+void map_reloadnpc(bool clear)
 {
-	npc_addsrcfile("clear"); // this will clear the current script list
-	map_reloadnpc_sub(MAP_CONF_NAME);
+	if (clear)
+		npc_addsrcfile("clear"); // this will clear the current script list
+
+#ifdef RENEWAL
+	map_reloadnpc_sub("npc/re/scripts_main.conf");
+#else
+	map_reloadnpc_sub("npc/pre-re/scripts_main.conf");
+#endif
 }
 
 int inter_config_read(char *cfgName)
@@ -3888,11 +3894,8 @@ int do_init(int argc, char *argv[])
 	map_config_read(MAP_CONF_NAME);
 	/* only temporary until sirius's datapack patch is complete  */
 	
-#ifdef RENEWAL
-	map_config_read("npc/re/scripts_main.conf");
-#else
-	map_config_read("npc/pre-re/scripts_main.conf");
-#endif
+	// loads npcs
+	map_reloadnpc(false);
 
 	chrif_checkdefaultlogin();
 
