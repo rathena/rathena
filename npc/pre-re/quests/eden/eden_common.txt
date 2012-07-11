@@ -233,13 +233,13 @@ que_ng,33,73,3	duplicate(eto)	Eden Teleport Officer#13	729
 que_ng,144,161,5	duplicate(eto)	Eden Teleport Officer#14	729
 yuno,144,189,5	duplicate(eto)	Eden Teleport Officer#15	729
 rachel,125,144,3	duplicate(eto)	Eden Teleport Officer#16	729
-morocc,161,97,6	duplicate(eto)	Eden Teleport Officer#16	729
-comodo,202,151,4	duplicate(eto)	Eden Teleport Officer#17	729
-umbala,104,158,4	duplicate(eto)	Eden Teleport Officer#18	729
-veins,220,109,4	duplicate(eto)	Eden Teleport Officer#19	729
-lighthalzen,164,86,4	duplicate(eto)	Eden Teleport Officer#20	729
-einbroch,250,211,4	duplicate(eto)	Eden Teleport Officer#21	729
-hugel,93,153,4	duplicate(eto)	Eden Teleport Officer#22	729
+morocc,161,97,6	duplicate(eto)	Eden Teleport Officer#17	729
+comodo,202,151,4	duplicate(eto)	Eden Teleport Officer#18	729
+umbala,104,158,4	duplicate(eto)	Eden Teleport Officer#19	729
+veins,220,109,4	duplicate(eto)	Eden Teleport Officer#20	729
+lighthalzen,164,86,4	duplicate(eto)	Eden Teleport Officer#21	729
+einbroch,250,211,4	duplicate(eto)	Eden Teleport Officer#22	729
+hugel,93,153,4	duplicate(eto)	Eden Teleport Officer#23	729
 
 moc_para01,30,10,0	script	#eden_out	45,1,1,{
 
