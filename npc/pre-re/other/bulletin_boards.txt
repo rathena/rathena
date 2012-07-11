@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= MasterOfMuppets
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
@@ -19,6 +19,7 @@
 //= 1.5b Fixed another small screw up with the color codes in the Glastheim BB [Kayla]
 //= 1.6 Removed Duplicates [Silent]
 //= 1.7 Updated MOrroc NPCs to reflect episode 12.1 changes. [L0ne_W0lf]
+//= 1.8 Updated Payon Cave Bulletion Board Locations. [Masao]
 //============================================================
 
 alberta,111,59,5	script	Bulletin Board#1	837,{
@@ -131,7 +132,7 @@ payon,178,108,5	script	Bulletin Board#06	837,{
 	close;
 }
 	
-pay_arche,79,30,5	script	Bulletin Board#07	837,{
+pay_arche,79,31,5	script	Bulletin Board#07	837,{
 	mes "[Archer Village]"; 
 	mes "Welcome to the Payon Archer Village where Novices can change their jobs to Archer.";
 	next;
@@ -143,7 +144,7 @@ pay_arche,79,30,5	script	Bulletin Board#07	837,{
 	close;
 }
 
-pay_arche,40,135,5	script	Bulletin Board#08	837,{
+pay_arche,39,134,5	script	Bulletin Board#08	837,{
 	mes "[Payon Cave]";
 	mes "^6B1312Caution!^000000";
 	mes "Payon Cave consists of 5 levels full of Undead and Demon monsters. Beware of swarms of Hydra in the third and fourth levels.";

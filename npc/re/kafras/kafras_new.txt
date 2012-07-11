@@ -3,7 +3,7 @@
 //===== By: =========================
 //= rAthena Dev Team
 //===== Current Version: ===================
-//= 3.1
+//= 3.2
 //===== Compatible With: =====================
 //= rAthena 1.0
 //===== Description: ============================================
@@ -33,6 +33,7 @@
 //= 3.0 Updated function calls with new arguments. [L0ne_W0lf]
 //=	Added unique Kafra Welcome messages.
 //= 3.1 Fixed one of Einbroch (east) kafras not displaying a name, bugreport:857 [Brainstorm]
+//= 3.2 Changed Umbala Kafra Position to official. [Masao]
 //==========================================================================
 
 // Amatsu ------------------------------------------------------------------
@@ -196,7 +197,7 @@ louyang,210,104,5	script	Kafra Employee::kaf_louyang	117,{
 }
 
 // Umbala Kafra ------------------------------------------------------------
-umbala,128,133,4	script	Kafra Employee::kaf_umbala	721,{
+umbala,87,160,4	script	Kafra Employee::kaf_umbala	721,{
 	cutin "kafra_07",2;
 	cleararray @wrpC$[0],"",getarraysize(@wrpC$);
 	setarray @wrpD$[0], "Comodo";

@@ -359,7 +359,7 @@ job3_guil01,91,93,3	script	Rare Herb Collector	49,{
 	close;
 }
 
-gef_tower,105,172,5	script	Point Salesman#Sorcerer	700,{
+gef_tower,105,172,5	script	Point Salesman#Sorcerer::pss	700,{
 
 	if(checkweight(1201,1) == 0 || MaxWeight - Weight < 20000)
 	{
@@ -519,3 +519,6 @@ gef_tower,105,172,5	script	Point Salesman#Sorcerer	700,{
 morocc,190,96,4	duplicate(PHS)	Poison Herb Salesman#moc	877
 lhz_in02,16,205,4	duplicate(PHS)	Poison Herb Salesman#lhz	877
 prontera,168,228,3	duplicate(runesale)	Rune Salesman#1	853
+comodo,241,103,6	duplicate(pss)	Point Salesman#1	700
+alberta,105,52,7	duplicate(pss)	Point Salesman#2	700
+veins,202,128,6	duplicate(pss)	Point Salesman#3	700

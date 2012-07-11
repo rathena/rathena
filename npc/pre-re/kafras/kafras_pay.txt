@@ -3,7 +3,7 @@
 //===== By: =========================
 //= rAthena Dev Team
 //===== Current Version: ===================
-//= 2.4b
+//= 2.5
 //===== Compatible With: =====================
 //= rAthena 1.0
 //===== Description: ============================================
@@ -26,6 +26,7 @@
 //= 2.4 Updated function calls with new arguments. [L0ne_W0lf]
 //=	Added unique Kafra Welcome message.
 //= 2.4b Updated the remaning names for the Kafras. [L0ne_W0lf]
+//= 2.5 Changed Order in the Warp menu to official. [Masao]
 //==========================================================================
 
 
@@ -83,7 +84,7 @@ pay_arche,55,123,0	script	Kafra Employee::kaf_payon3	115,{
 // Function: Sets variables for Payon Kafras ---------------------------------
 function	script	F_KafSetPay	{
 	cleararray @wrpC$[0],"",getarraysize(@wrpC$);
-	setarray @wrpD$[0], "Alberta", "Prontera", "Morroc";
+	setarray @wrpD$[0], "Prontera", "Alberta", "Morroc";
 	setarray @wrpP[0], 1200, 1200, 1200;
 	set @wrpC$[0], @wrpD$[0]+" -> "+@wrpP[0];
 	set @wrpC$[1], @wrpD$[1]+" -> "+@wrpP[1];

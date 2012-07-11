@@ -196,7 +196,7 @@ louyang,210,104,5	script	Kafra Employee::kaf_louyang	117,{
 }
 
 // Umbala Kafra ------------------------------------------------------------
-umbala,128,133,4	script	Kafra Employee::kaf_umbala	721,{
+umbala,87,160,4	script	Kafra Employee::kaf_umbala	721,{
 	cutin "kafra_07",2;
 	cleararray @wrpC$[0],"",getarraysize(@wrpC$);
 	setarray @wrpD$[0], "Comodo";

@@ -3,7 +3,7 @@
 //===== By: =========================
 //= rAthena Dev Team
 //===== Current Version: ===================
-//= 2.3
+//= 2.4
 //===== Compatible With: =====================
 //= rAthena 1.0
 //===== Description: ============================================
@@ -23,12 +23,13 @@
 //= 2.21 Warps to Prontera rather than Payon now [Evera]
 //= 2.3 Updated function calls with new arguments. [L0ne_W0lf]
 //=	Added unique Kafra Welcome message2.
+//= 2.4 Izlude Kafra doesn't warp to Prontera but to Payon. [Masao]
 //=====================================================================
 
 izlude,128,148,6	script	Kafra Employee::kaf_izlude	117,{
 	cutin "kafra_01",2;
 	cleararray @wrpC$[0],"",getarraysize(@wrpC$);
-	setarray @wrpD$[0], "Geffen", "Prontera", "Morroc", "Al De Baran";
+	setarray @wrpD$[0], "Geffen", "Payon", "Morroc", "Al De Baran";
 	setarray @wrpP[0], 1200, 1200, 1200, 1800;
 	set @wrpC$[0], @wrpD$[0]+" -> "+@wrpP[0];
 	set @wrpC$[1], @wrpD$[1]+" -> "+@wrpP[1];
