@@ -1121,17 +1121,18 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
 		return 1;
 
 	switch(nd->subtype) {
-	case SHOP:
-		clif_npcbuysell(sd,nd->bl.id);
-		break;
-	case CASHSHOP:
-		clif_cashshop_show(sd,nd);
-		break;
-	case SCRIPT:
-		run_script(nd->u.scr.script,0,sd->bl.id,nd->bl.id);
-		break;
-	case TOMB:
-		run_tomb(sd,nd);
+		case SHOP:
+			clif_npcbuysell(sd,nd->bl.id);
+			break;
+		case CASHSHOP:
+			clif_cashshop_show(sd,nd);
+			break;
+		case SCRIPT:
+			run_script(nd->u.scr.script,0,sd->bl.id,nd->bl.id);
+			break;
+		case TOMB:
+			run_tomb(sd,nd);
+			break;
 	}
 
 	return 0;
