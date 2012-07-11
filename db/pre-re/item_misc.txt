@@ -1,5 +1,22 @@
 // GroupID,ItemID,Rate
 // 
+// Cookie Bag
+7,529,5		//Candy
+7,530,5		//Candy Cane
+7,538,5		//Well-baked Cookie
+7,539,5		//Piece of Cake
+7,558,1		//Chocolate
+7,559,1		//Hand-made Chocolate
+7,560,1		//Hand-made White Chocolate
+7,561,1		//White Chocolate
+7,564,5		//Rice Ball
+7,570,5		//Lucky Candy
+7,571,5		//Lucky Candy Cane
+7,572,5		//Lucky Cookie
+7,573,1		//Chocolate Drink
+7,12122,1	//Sesame Pastry
+7,12123,1	//Honey Pastry
+7,12124,1	//Rainbow Cake
 // First Aid Kit
 8,501,5		// Red Potion
 8,502,5		// Orange Potion
@@ -16,7 +33,7 @@
 8,656,5		// Awakening Potion
 8,657,5		// Berserk Potion
 8,678,1		// Poison Bottle
-8,12016,4	// Speed Potion
+8,12016,5	// Speed Potion
 8,12017,5	// Slow Potion
 8,12020,5	// Cursed_Water
 // Herbs
@@ -183,9 +200,9 @@
 22,10018,1	// Monkey Circlet
 22,10019,1	// Red Scarf
 22,10020,1	// Grave Keeper's Sword
-22,12373,1	// 
-22,12374,1	// 
-22,12395,1	// 
+22,12373,1	// Boy's Pure Heart
+22,12374,1	// Ice Fireworks
+22,12395,1	// Tantan Noodle
 // Bundle Of Magic Scroll
 23,686,1	// Level 3 Earth Spike
 23,687,1	// Level 5 Earth Spike
@@ -218,7 +235,7 @@
 24,12013,1	// Shadow Arrow Quiver
 24,12014,1	// Immaterial Arrow Quiver
 24,12015,1	// Rusty Arrow Quiver
-24,12183,1	// Holy Arrow Quiver
+24,12183,2	// Holy Arrow Quiver
 // Wrapped Mask
 25,2278,10	// Mr. Smile
 25,2281,10	// Opera Masque
@@ -245,7 +262,7 @@
 26,2610,14	// Gold Ring
 26,2611,14	// Silver Ring
 26,2612,14	// Flower Ring
-26,2613,12	// Diamond Ring
+26,2613,11	// Diamond Ring
 26,2615,1	// Safety Ring
 26,2616,1	// Critical Ring
 26,2617,10	// Celebrant's Mitten
@@ -267,10 +284,10 @@
 26,2661,2	// Vesper Core 03
 26,2662,2	// Vesper Core 04
 26,2671,1	// Bow Thimble
-26,2700,2	// Red Silk of Seal
-26,2701,1	// Glove of Orleans
 26,2677,1	// Spiritual Ring
 26,2680,9	// Ring of Minor Spirits
+26,2700,2	// Red Silk of Seal
+26,2701,1	// Glove of Orleans
 26,2703,1	// Expert Ring
 26,2716,1	// Librarian Glove
 26,2717,1	// Pocket Watch
@@ -303,18 +320,16 @@
 32,660,20	// Forbidden Red Candle
 32,682,100	// Distilled Fighting Spirit
 32,683,50	// Herb of Incantation
-32,2235,2	// Crown
 32,2274,5	// Ghost Bandana
-32,5072,1	// Incubus Horn
+32,5072,2	// Incubus Horn
 // Egg Girl
 33,514,300	// Grape
 33,564,522	// Rice Ball
 33,661,20	// Soft Apron
 33,682,100	// Distilled Fighting Spirit
 33,683,50	// Herb of Incantation
-33,2234,2	// Tiara
 33,5042,5	// Bao Bao
-33,5066,1	// Succubus Horn
+33,5066,2	// Succubus Horn
 // Lotto Box
 35,7391,1	// Lotto Ball 31
 35,7392,1	// Lotto Ball 32
@@ -382,142 +397,109 @@
 38,5139,10	// Lotus
 38,5140,10	// Kawaii Ribbon
 // Old Bleu Box
+39,519,1	// Milk
+39,538,1	// Well-baked Cookie
+39,644,1	// Gift Box
 39,687,1	// Level 5 Earth Spike
 39,689,1	// Level 5 Cold Bolt
 39,691,1	// Level 5 Fire Bolt
 39,693,1	// Level 5 Lightening Bolt
 39,697,1	// Level 5 Fire Ball
 39,699,1	// Level 5 Fire Wall
-39,12002,1	// Level 5 Heal
 39,12000,1	// Level 5 Frost Diver
-39,644,1	// Gift Box
-39,519,1	// Milk
-39,538,1	// Well-baked Cookie
+39,12002,1	// Level 5 Heal
 // Red Box
-40,5187,10	// Twin Ribbon
-40,5181,11	// Helm of Darkness
-40,5182,1	// Puppy Hat
-40,5186,11	// Geographer Decoration
-40,5185,11	// Laurel Crown
-40,5183,11	// Nest Hat
+40,5099,1	// Neko Mimi
 40,5137,11	// Alice Doll
-40,5139,11	// Lotus
 40,5138,11	// Magic Eyes
+40,5139,11	// Lotus
 40,5140,11	// Kawaii Ribbon
-40,5152,1	// Phoenix Crown
 40,5142,11	// Crescent Helm
 40,5143,12	// Kabuki Mask
-40,5099,12	// Neko Mimi
+40,5152,1	// Phoenix Crown
+40,5181,11	// Helm of Darkness
+40,5182,1	// Puppy Hat
+40,5183,11	// Nest Hat
+40,5185,11	// Laurel Crown
+40,5186,11	// Geographer Decoration
+40,5187,10	// Twin Ribbon
 // Green Box
+41,573,100	// Chocolate Drink
+41,607,99	// Yggdrasil Berry
+41,608,100	// Yggdrasil Seed
+41,5182,1	// Puppy Hat
+41,12018,100	// Firecracker
 41,12075,100	// Steamed Tongue
 41,12080,100	// Dragon Breath Cocktail
 41,12085,100	// Immortal Stew
 41,12090,100	// Steamed Desert Scorpions
 41,12095,100	// Hwergelmir's Tonic
 41,12100,100	// Cooked Nine Tail
-41,607,100	// Yggdrasil Berry
-41,608,100	// Yggdrasil Seed
-41,12018,100	// Firecracker
-41,573,100	// Chocolate Drink
-41,5182,1	// Puppy Hat
 // Old Yellow Box
 42,5259,1	// Elephant Hat
 42,5260,1	// Cookie Hat
 42,5261,1	// Silver Tiara
 42,5262,1	// Golden Tiara
-// Old Gift Box
-43,5271,15	// Phoenix Crown
-43,5272,40	// Smiling Mask
-43,5270,45	// Happy Wig
-// Magic Card Album
-44,4047,1	// Ghostring Card
-44,4054,1	// Angeling Card
-44,4163,1	// Gryphon Card
-44,4169,1	// Dark Illusion Card
-44,4174,1	// Deviling Card
-44,4179,10	// Dragon Fly Card
-44,4183,10	// Vagabond Wolf Card
-44,4197,10	// Mastering Card
-44,4198,1	// Maya Purple Card
-44,4203,10	// Mutant Dragonoid Card
-44,4207,1	// Mysteltainn Card
-44,4211,1	// Vocal card
-44,4237,5	// Owl Duke Card
-44,4238,5	// Owl Baron Card
-44,4241,1	// Arc Angeling Card
-44,4250,1	// Executioner Card
-44,4254,1	// Tirfing Card
-44,4266,10	// Eclipse Card
-44,4284,10	// Chepet Card
-44,4285,10	// Choco Card
-44,4290,5	// Cat O' Nine Tails Card
-44,4291,10	// Kobold Leader Card
-44,4300,10	// Chimera Card
-44,4306,10	// Toad Card
-44,4320,1	// Bloody Knight Card
-44,4336,1	// Ungoliant Card
-44,4354,1	// Gemini-S58 Card
-44,4384,1	// Hydro Card
-44,4395,3	// Thanatos Maero Card
-44,4396,3	// Thanatos Odium Card
-44,4397,3	// Thanatos Despero Card
 // Hometown Gift
+45,663,1	// Korean Rice Cake
+45,12122,1	// Sesame Pastry
+45,12123,1	// Honey Pastry
+45,12124,1	// Rainbow Cake
 45,12195,1	// Plain Rice Cake
 45,12196,1	// Hearty Rice Cake
 45,12197,1	// Salty Rice Cake
 45,12198,1	// Lucky Rice Cake
-45,12122,1	// Sesame Pastry
-45,12123,1	// Honey Pastry
-45,12124,1	// Rainbow Cake
-45,663,1	// Korean Rice Cake
 // Masquerade Ball Box
 46,5296,10	// Drooping Nine Tail
 46,5297,1	// Soul Wing
 46,5298,10	// Dokebi's Wig
 46,5299,10	// Pagdayaw
 // Tresure Box WoE
+47,603,6	// Old Blue Box
+47,658,6	// Tribal Solidarity
+47,678,3	// Poison Bottle
+47,732,9	// 3carat Diamond
 47,12010,24	// Wind Arrow Quiver
 47,12011,25	// Stone Arrow Quiver
 47,12012,26	// Crystal Arrow Quiver
-47,12183,7	// Holy Arrow Quiver
+47,12105,12	// Taming Gift Set
+47,12107,2	// Wrapped Mask
+47,12108,9	// Scroll Package
+47,12110,9	// First Aid Kit
+47,12111,36	// Bundle of Food
+47,12130,48	// Cookie Bag
 47,12149,27	// Bullet Casing
 47,12150,27	// Shell of Blood Casing
 47,12151,27	// Silver Bullet Casing
-47,12105,12	// Taming Gift Set
-47,12110,8	// First Aid Kit
-47,12111,36	// Bundle of Food
-47,12108,9	// Scroll Package
-47,12702,8	// Old Bleu Box
-47,12130,48	// Cookie Bag
+47,12183,7	// Holy Arrow Quiver
 47,12194,6	// Present from Home
 47,12260,22	// Summer Event Suit
-47,658,6	// Tribal Solidarity
-47,12107,2	// Wrapped Mask
-47,678,3	// Poison Bottle
-47,603,6	// Old Blue Box
-47,732,8	// 3carat Diamond
+47,12702,8	// Old Bleu Box
 // Masquerade Ball Box2
+48,5211,1	// Ribbon Hat
 48,5213,13	// Rabbit Ears
 48,5289,10	// Vanilmirth Hat
-48,5304,9	// Executioner Hood
-48,5211,1	// Ribbon Hat
+48,5304,10	// Executioner Hood
 // Easter Scroll
-49,638,110	// Silver Knife of Chastity
-49,659,110	// Her Heart
 49,636,110	// No Recipient
 49,637,110	// Old Broom
+49,638,110	// Silver Knife of Chastity
 49,639,110	// Armlet of Obedience
 49,640,110	// Shining Stone
 49,641,110	// Contracts in Shadow
 49,642,110	// Book of the Devil
 49,643,205	// Pet Incubator
+49,659,110	// Her Heart
 49,2264,1	// Munak Hat
+49,2274,1	// Ghost Bandana
 49,5046,1	// Bongun Hat
 49,5167,1	// Munak Hat [1]
 49,5168,1	// Bongun Hat [1]
-49,2274,1	// Ghost Bandana
 // Pierre Treasurebox
-50,12018,2	// Firecracker
+50,603,11	// Old Blue Box
+50,604,3	// Dead Branch
+50,617,5	// Old Purple Box
+50,644,3	// Gift Box
 50,975,3	// Scarlet Dyestuff
 50,976,3	// Lemon Dyestuff
 50,978,3	// Cobaltblue Dyestuff
@@ -535,46 +517,43 @@
 50,7295,3	// Citrin
 50,7296,3	// Pyroxene
 50,7297,3	// Biotite
+50,12018,3	// Firecracker
 50,12075,3	// Steamed Tongue
-50,12090,3	// Steamed Desert Scorpions
 50,12085,3	// Immortal Stew
-50,12100,3	// Cooked Nine Tail
+50,12090,3	// Steamed Desert Scorpions
 50,12095,3	// Hwergelmir's Tonic
-50,604,3	// Dead Branch
-50,617,4	// Old Purple Box
-50,644,3	// Gift Box
-50,603,11	// Old Blue Box
+50,12100,3	// Cooked Nine Tail
 50,12103,1	// Bloody Branch
 // Cherish Box
 51,5454,1	// Puppy Hat
 51,5455,4	// Decorative Geographer
-51,5456,4	// Summer Hat
+51,5456,5	// Summer Hat
 // Cherish Box Ori
-52,5256,1	// Valkyrie Feather Band
+52,2712,3	// Collector's Edition Book
 52,5212,2	// Solar Panels
+52,5256,1	// Valkyrie Feather Band
 52,5305,2	// Pirate Dagger
 52,5332,2	// Loki Mask
-52,2712,2	// Collector's Edition Book
 // Louise_Costume_Box
-53,12132,9	// Red_Bag
-53,12260,1	// Cool_Summer_Outfit
+53,12132,18	// Red_Bag
+53,12260,2	// Cool_Summer_Outfit
 // Xmas_Gift
-54,14550,3	// Fire_Cracker_Xmas
-54,14546,3	// Fire_Cracker_Love
-54,644,33	// Gift_Box
-54,12702,18	// Old_Bleu_Box
-54,12105,3	// Set_Of_Taiming_Item
-54,12107,3	// Wrapped_Mask
-54,603,12	// Old_Blue_Box
-54,12108,6	// Bundle_Of_Magic_Scroll
-54,12354,21	// Buche_De_Noel
-54,12016,6	// Speed_Up_Potion
-54,12017,6	// Slow_Down_Potion
-54,12130,6	// Cookie_Bag
-54,12132,3	// Red_Bag
-54,12110,6	// First_Aid_Kit
-54,732,6	// Crystal_Jewel__
-54,559,9	// Light_Orange_Pot
-54,560,9	// HandMade_Chocolate_
-54,573,9	// Chocolate_Drink
-54,5136,6	// Santa's_Hat_
+54,559,18	// Light_Orange_Pot
+54,560,18	// HandMade_Chocolate_
+54,573,18	// Chocolate_Drink
+54,603,24	// Old_Blue_Box
+54,644,66	// Gift_Box
+54,732,12	// Crystal_Jewel__
+54,5136,12	// Santa's_Hat_
+54,12016,12	// Speed_Up_Potion
+54,12017,12	// Slow_Down_Potion
+54,12105,6	// Set_Of_Taiming_Item
+54,12107,6	// Wrapped_Mask
+54,12108,12	// Bundle_Of_Magic_Scroll
+54,12110,12	// First_Aid_Kit
+54,12130,12	// Cookie_Bag
+54,12132,6	// Red_Bag
+54,12354,24	// Buche_De_Noel
+54,12702,36	// Old_Bleu_Box
+54,14546,6	// Fire_Cracker_Love
+54,14550,6	// Fire_Cracker_Xmas

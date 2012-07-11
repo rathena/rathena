@@ -3,12 +3,12 @@
 // Structure of Database:
 // GroupID,ItemID,Rate
 
-3,4001,15	// Poring Card
-3,4002,17	// Fabre Card
+3,4001,10	// Poring Card
+3,4002,10	// Fabre Card
 3,4003,6	// Pupa Card
-3,4004,18	// Drops Card
-3,4005,2	// Santa Poring Card
-3,4006,14	// Lunatic Card
+3,4004,11	// Drops Card
+3,4005,1	// Santa Poring Card
+3,4006,7	// Lunatic Card
 3,4007,4	// Peco Peco Egg Card
 3,4008,10	// Picky Card
 3,4009,10	// Chonchon Card
@@ -204,6 +204,7 @@
 3,4239,1	// Iron Fist Card
 3,4240,1	// Arclouze Card
 3,4242,1	// Apocalipse Card
+3,4243,1	// Antonio Card
 3,4244,1	// Alarm Card
 3,4245,1	// Am Mut Card
 3,4246,1	// Assaulter Card

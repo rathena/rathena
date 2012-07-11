@@ -1,0 +1,928 @@
+// Old Violet Box Obtainable Items Database
+//
+// Structure of Database:
+// GroupID,ItemID,Rate
+
+2,501,14	// Red Potion
+2,502,14	// Orange Potion
+2,503,14	// Yellow Potion
+2,504,14	// White Potion
+2,505,14	// Blue Potion
+2,506,14	// Green Potion
+2,507,14	// Red Herb
+2,508,14	// Yellow Herb
+2,509,14	// White Herb
+2,510,14	// Blue Herb
+2,511,14	// Green Herb
+2,512,14	// Apple
+2,513,14	// Banana
+2,514,14	// Grape
+2,515,14	// Carrot
+2,516,14	// Potato
+2,517,14	// Meat
+2,518,14	// Honey
+2,519,14	// Milk
+2,520,14	// Hinalle Leaflet
+2,521,14	// Aloe Leaflet
+2,522,14	// Mastela Fruit
+2,523,14	// Holy Water
+2,525,14	// Panacea
+2,526,14	// Royal Jelly
+2,528,14	// Monster Food
+2,529,14	// Candy
+2,530,14	// Candy Cane
+2,531,14	// Apple Juice
+2,532,14	// Banana Juice
+2,533,14	// Grape Juice
+2,534,14	// Carrot Juice
+2,535,14	// Pumpkin
+2,536,14	// Ice Cream
+2,537,14	// Pet Food
+2,538,14	// Well-baked Cookie
+2,539,14	// Piece of Cake
+2,544,14	// Raw Fish
+2,545,14	// Condensed Red Potion
+2,546,14	// Condensed Yellow Potion
+2,547,14	// Condensed White Potion
+2,548,14	// Cheese
+2,549,14	// Yam
+2,550,14	// Rice Cake
+2,551,14	// Sushi
+2,553,14	// Bao
+2,555,14	// Traditional Rice Cake
+2,558,14	// Chocolate
+2,561,14	// White Chocolate
+2,601,14	// Fly Wing
+2,602,14	// Butterfly Wing
+2,604,214	// Dead Branch
+2,605,14	// Anodyne
+2,606,14	// Aloevera
+2,607,14	// Yggdrasil Berry
+2,608,14	// Yggdrasil Seed
+2,609,14	// Amulet
+2,610,14	// Yggdrasil Leaf
+2,611,14	// Magnifier
+2,612,14	// Mini Furnace
+2,613,14	// Iron Hammer
+2,614,14	// Golden Hammer
+2,615,14	// Oridecon Hammer
+2,616,1		// Old Card Album
+2,617,103	// Old Purple Box
+2,618,14	// Worn Out Scroll
+2,619,14	// Unripe Apple
+2,620,14	// Orange Juice
+2,621,14	// Bitter Herb
+2,622,14	// Rainbow Carrot
+2,623,14	// Earthworm the Dude
+2,624,14	// Rotten Fish
+2,625,14	// Rusty Iron
+2,626,14	// Monster Juice
+2,627,14	// Sweet Milk
+2,628,14	// Well-Dried Bone
+2,629,14	// Singing Flower
+2,630,14	// Dew Laden Moss
+2,631,14	// Deadly Noxious Herb
+2,632,14	// Fatty Chubby Earthworm
+2,633,14	// Sweet Potato
+2,634,14	// Tropical Banana
+2,635,14	// Orc Trophy
+2,636,14	// No Recipient
+2,637,14	// Old Broom
+2,638,14	// Silver Knife of Chastity
+2,639,14	// Armlet of Obedience
+2,640,14	// Shining Stone
+2,641,14	// Contracts in Shadow
+2,642,14	// Book of the Devil
+2,643,14	// Pet Incubator
+2,644,114	// Gift Box
+2,645,14	// Concentration Potion
+2,656,14	// Awakening Potion
+2,657,14	// Berserk Potion
+2,659,14	// Her Heart
+2,663,14	// Songpyun
+2,664,14	// Gift Box
+2,665,14	// Gift Box
+2,666,14	// Gift Box
+2,667,14	// Gift Box
+2,668,14	// Red_Envelope
+2,678,14	// Poison Bottle
+2,679,14	// Pilule
+2,701,14	// Ora Ora
+2,702,14	// Animal Gore
+2,703,14	// Hinalle
+2,704,14	// Aloe
+2,705,14	// Clover
+2,706,14	// Four Leaf Clover
+2,707,14	// Singing Plant
+2,708,14	// Ment
+2,710,14	// Illusion Flower
+2,711,14	// Shoot
+2,712,14	// Flower
+2,713,14	// Empty Bottle
+2,715,14	// Yellow Gemstone
+2,716,14	// Red Gemstone
+2,717,14	// Blue Gemstone
+2,718,14	// Garnet
+2,719,14	// Amethyst
+2,720,14	// Aquamarine
+2,721,14	// Emerald
+2,722,14	// Pearl
+2,723,14	// Ruby
+2,724,14	// Cursed Ruby
+2,725,14	// Sardonyx
+2,726,14	// Sapphire
+2,727,14	// Opal
+2,728,14	// Topaz
+2,729,14	// Zircon
+2,730,14	// 1carat Diamond
+2,731,14	// 2carat Diamond
+2,732,14	// 3carat Diamond
+2,733,14	// Cracked Diamond
+2,734,14	// Red Frame
+2,735,14	// Chung Jah
+2,736,14	// China
+2,737,14	// Black Ladle
+2,738,14	// Pencil Case
+2,739,14	// Rouge
+2,740,14	// Puppet
+2,741,14	// Poring Doll
+2,742,14	// Chonchon Doll
+2,743,14	// Spore Doll
+2,744,14	// Bouquet
+2,745,14	// Wedding Bouquet
+2,746,14	// Glass Bead
+2,747,14	// Crystal Mirror
+2,748,14	// Witherless Rose
+2,749,14	// Frozen Rose
+2,750,14	// Baphomet Doll
+2,751,14	// Osiris Doll
+2,752,14	// Grasshopper Doll
+2,753,14	// Yoyo Doll
+2,754,14	// Raccoon Doll
+2,901,14	// Danggie
+2,902,14	// Tree Root
+2,903,14	// Reptile Tongue
+2,904,14	// Scorpion Tail
+2,905,14	// Stem
+2,906,14	// Pointed Scale
+2,907,14	// Resin
+2,908,14	// Spawn
+2,909,14	// Jellopy
+2,910,14	// Garlet
+2,911,14	// Scell
+2,912,14	// Zargon
+2,913,14	// Tooth of Bat
+2,914,14	// Fluff
+2,915,14	// Chrysalis
+2,916,14	// Feather of Birds
+2,917,14	// Talon
+2,918,14	// Sticky Webfoot
+2,919,14	// Animal Skin
+2,920,14	// Wolf Claw
+2,921,14	// Mushroom Spore
+2,922,14	// Orc's Fang
+2,923,14	// Evil Horn
+2,924,14	// Powder of Butterfly
+2,925,14	// Bill of Birds
+2,926,14	// Snake Scale
+2,928,14	// Insect Feeler
+2,929,14	// Immortal Heart
+2,930,14	// Rotten Bandage
+2,931,14	// Orcish Voucher
+2,932,14	// Skel-Bone
+2,934,14	// Memento
+2,935,14	// Shell
+2,936,14	// Scale Shell
+2,937,14	// Venom Canine
+2,938,14	// Sticky Mucus
+2,939,14	// Bee Sting
+2,940,14	// Grasshopper's Leg
+2,941,14	// Nose Ring
+2,942,14	// Yoyo Tail
+2,943,14	// Solid Shell
+2,944,14	// Horseshoe
+2,945,14	// Raccoon Leaf
+2,946,14	// Snail's Shell
+2,947,14	// Horn
+2,948,14	// Bear's Footskin
+2,949,14	// Feather
+2,950,14	// Heart of Mermaid
+2,951,14	// Fin
+2,952,14	// Cactus Needle
+2,953,14	// Stone Heart
+2,954,14	// Shining Scale
+2,955,14	// Worm Peeling
+2,956,14	// Gill
+2,957,14	// Decayed Nail
+2,958,14	// Horrendous Mouth
+2,959,14	// Stinky Scale
+2,960,14	// Nipper
+2,961,14	// Conch
+2,962,14	// Tentacle
+2,963,14	// Sharp Scale
+2,964,14	// Crab Shell
+2,965,14	// Clam Shell
+2,966,14	// Clam Flesh
+2,967,14	// Turtle Shell
+2,968,14	// Heroic Emblem
+2,969,14	// Gold
+2,971,14	// Detrimindexta
+2,972,14	// Karvodailnirol
+2,973,14	// Counteragent
+2,974,14	// Mixture
+2,975,14	// Scarlet Dyestuff
+2,976,14	// Lemon Dyestuff
+2,978,14	// Cobaltblue Dyestuff
+2,979,14	// Darkgreen Dyestuff
+2,980,14	// Orange Dyestuff
+2,981,14	// Violet Dyestuff
+2,982,14	// White Dyestuff
+2,983,14	// Black Dyestuff
+2,986,14	// Anvil
+2,987,14	// Oridecon Anvil
+2,988,14	// Golden Anvil
+2,989,14	// Emperium Anvil
+2,990,14	// Red Blood
+2,991,14	// Crystal Blue
+2,992,14	// Wind of Verdure
+2,993,14	// Green Live
+2,994,14	// Flame Heart
+2,995,14	// Mystic Frozen
+2,996,14	// Rough Wind
+2,997,14	// Great Nature
+2,998,14	// Iron
+2,999,14	// Steel
+2,1000,14	// Star Crumb
+2,1001,14	// Star Dust
+2,1002,14	// Iron Ore
+2,1003,14	// Coal
+2,1004,14	// Chivalry Emblem
+2,1005,14	// Hammer of Blacksmith
+2,1006,14	// Old Magicbook
+2,1007,14	// Necklace of Wisdom
+2,1008,14	// Necklace of Oblivion
+2,1009,14	// Hand of God
+2,1010,14	// Phracon
+2,1011,14	// Emveretarcon
+2,1012,14	// Frill
+2,1013,14	// Rainbow Shell
+2,1014,14	// Ant Jaw
+2,1015,14	// Tongue
+2,1016,14	// Rat Tail
+2,1017,14	// Mole Whiskers
+2,1018,14	// Mole Claw
+2,1019,14	// Trunk
+2,1020,14	// Black Hair
+2,1021,14	// Dokebi Horn
+2,1022,14	// Nine Tails
+2,1023,14	// Fish Tail
+2,1024,14	// Squid Ink
+2,1025,14	// Cobweb
+2,1026,14	// Acorn
+2,1027,14	// Porcupine Quill
+2,1028,14	// Mane
+2,1029,14	// Tiger Skin
+2,1031,14	// Mantis Scythe
+2,1032,14	// Maneater Blossom
+2,1033,14	// Maneater Root
+2,1034,14	// Blue Hair
+2,1035,14	// Dragon Canine
+2,1036,14	// Dragon Scale
+2,1037,14	// Dragon Tail
+2,1038,14	// Little Evil Horn
+2,1039,14	// Little Evil Wing
+2,1040,14	// Elder Pixie's Moustache
+2,1041,14	// Lantern
+2,1042,14	// Bug Leg
+2,1043,14	// Orc Claw
+2,1044,14	// Zenorc's Fang
+2,1045,14	// Cultish Masque
+2,1046,14	// Scorpion Nipper
+2,1047,14	// Dead Medusa
+2,1048,14	// Horrendous Hair
+2,1049,14	// Skirt of Virgin
+2,1050,14	// Tendon
+2,1051,14	// Detonator
+2,1052,14	// Single Cell
+2,1053,14	// Ancient Tooth
+2,1054,14	// Ancient Lips
+2,1055,14	// Earthworm Peeling
+2,1056,14	// Grit
+2,1057,14	// Moth Dust
+2,1058,14	// Moth Wings
+2,1059,14	// Fabric
+2,1060,14	// Golden Hair
+2,1061,14	// Witched Starsand
+2,1062,14	// Jack o' Pumpkin
+2,1063,14	// Fang
+2,1064,14	// Reins
+2,1065,14	// Trap
+2,1066,14	// Fine-grained Trunk
+2,1067,14	// Solid Trunk
+2,1068,14	// Barren Trunk
+2,1088,14	// Morocc Solution
+2,1089,14	// Payon Solution
+2,1092,14	// Empty Test Tube
+2,1093,14	// Empty Potion Bottle
+2,1094,14	// Short Daenggie
+2,1095,14	// Clock Hand
+2,1096,14	// Round Shell
+2,1097,14	// Worn Out Page
+2,1098,14	// Manacles
+2,1099,14	// Worn-out Prison Uniform
+2,1102,7	// Sword
+2,1105,7	// Falchion
+2,1108,7	// Blade
+2,1111,7	// Rapier
+2,1114,7	// Scimitar
+2,1117,7	// Katana
+2,1120,7	// Tsurugi
+2,1124,7	// Orcish sword
+2,1125,7	// Ring Pommel Saber
+2,1127,7	// Saber
+2,1128,7	// Haedonggum
+2,1129,7	// Flamberge
+2,1147,1	// Town Sword
+2,1148,1	// Star Dust Blade
+2,1152,7	// Slayer
+2,1155,7	// Bastard Sword
+2,1158,7	// Two-Handed Sword
+2,1162,7	// Broad Sword
+2,1163,7	// Claymore
+2,1202,7	// Knife
+2,1205,7	// Cutter
+2,1208,7	// Main Gauche
+2,1211,7	// Dirk
+2,1214,7	// Dagger
+2,1217,7	// Stiletto
+2,1220,7	// Gladius
+2,1226,7	// Damascus
+2,1243,7	// Novice Main Gauche
+2,1251,7	// Jur
+2,1253,7	// Katar
+2,1255,7	// Jamadhar
+2,1256,7	// Katar of Frozen Icicle
+2,1257,7	// Katar of Quaking
+2,1258,7	// Katar of Raging Blaze
+2,1259,7	// Katar of Piercing Wind
+2,1262,1	// Loki's Nail
+2,1263,1	// Unholy Touch
+2,1264,2	// Specialty Jur
+2,1265,1	// Bloody Roar
+2,1269,1	// Inverse Scale
+2,1271,1	// Blood Tears
+2,1302,7	// Axe
+2,1304,7	// Orcish Axe
+2,1307,1	// Windhawk
+2,1352,7	// Battle Axe
+2,1355,7	// Hammer
+2,1358,7	// Buster
+2,1361,7	// Two-Handed Axe
+2,1370,1	// Doom Slayer
+2,1376,1	// Heart Breaker
+2,1377,1	// Hurricane Fury
+2,1402,7	// Javelin
+2,1405,7	// Spear
+2,1408,7	// Pike
+2,1411,7	// Lance
+2,1452,7	// Guisarme
+2,1455,7	// Glaive
+2,1458,7	// Partizan
+2,1461,7	// Trident
+2,1464,7	// Halberd
+2,1472,7	// Soul Staff
+2,1474,1	// Gae Bolg
+2,1478,1	// Ahlspiess
+2,1502,7	// Club
+2,1505,7	// Mace
+2,1508,7	// Smasher
+2,1511,7	// Flail
+2,1514,7	// Morning Star
+2,1517,7	// Sword Mace
+2,1520,7	// Chain
+2,1522,7	// Stunner
+2,1550,7	// Book
+2,1551,7	// Bible
+2,1552,7	// Tablet
+2,1553,7	// Book of Billows
+2,1554,7	// Book of Mother Earth
+2,1555,7	// Book of the Blazing Sun
+2,1556,7	// Book of Gust of Wind
+2,1558,7	// Girl's Diary
+2,1559,1	// Legacy of Dragon
+2,1560,1	// Sage's Diary
+2,1561,1	// Hardcover Book
+2,1602,7	// Rod
+2,1605,7	// Wand
+2,1608,7	// Staff
+2,1611,7	// Arc Wand
+2,1613,7	// Mighty Staff
+2,1614,7	// Wand of Occult
+2,1615,7	// Evil Bone Wand
+2,1616,1	// Wing Staff
+2,1618,1	// Survivor's Rod
+2,1620,1	// Survivor's Rod
+2,1622,1	// Hypnotist's Staff
+2,1702,7	// Bow
+2,1705,7	// Composite Bow
+2,1708,7	// Great Bow
+2,1711,7	// Crossbow
+2,1715,7	// Arbalest
+2,1716,7	// Gakkung Bow
+2,1718,7	// Hunter Bow
+2,1723,1	// Luna Bow
+2,1724,1	// Dragon Wing
+2,1730,1	// Burning Bow
+2,1731,1	// Frozen Bow
+2,1732,1	// Earth Bow
+2,1733,1	// Gust Bow
+2,1750,14	// Arrow
+2,1751,14	// Silver Arrow
+2,1752,14	// Fire Arrow
+2,1753,14	// Steel Arrow
+2,1754,14	// Crystal Arrow
+2,1755,14	// Arrow of Wind
+2,1756,14	// Stone Arrow
+2,1757,14	// Immaterial Arrow
+2,1758,14	// Stun Arrow
+2,1759,14	// Frozen Arrow
+2,1760,14	// Flash Arrow
+2,1761,14	// Cursed Arrow
+2,1762,14	// Rusty Arrow
+2,1763,14	// Poison Arrow
+2,1764,14	// Sharp Arrow
+2,1765,14	// Oridecon Arrow
+2,1767,14	// Shadow Arrow
+2,1768,14	// Sleep Arrow
+2,1769,14	// Mute Arrow
+2,1770,14	// Iron Arrow
+2,1802,7	// Waghnak
+2,1804,7	// Knuckle Duster
+2,1806,7	// Studded Knuckles
+2,1808,7	// Fist
+2,1810,7	// Claw
+2,1812,7	// Finger
+2,1815,1	// Hatii Claw
+2,1818,1	// Magma Fist
+2,1819,1	// Icicle Fist
+2,1820,1	// Electric Fist
+2,1821,1	// Seismic Fist
+2,1822,1	// Combo Battle Glove
+2,1902,7	// Violin
+2,1904,7	// Mandolin
+2,1906,7	// Lute
+2,1908,7	// Guitar
+2,1910,7	// Harp
+2,1912,7	// Gumoongoh
+2,1914,1	// Burning Passion Guitar
+2,1915,1	// Loner's Guitar
+2,1916,1	// Green Acre Guitar
+2,1917,1	// Gentle Breeze Guitar
+2,1918,1	// Oriental Lute
+2,1919,1	// Base Guitar
+2,1951,7	// Rope
+2,1953,7	// Whip
+2,1955,7	// Wire Whip
+2,1957,7	// Rante Whip
+2,1959,7	// Tail Whip
+2,1961,7	// Whip
+2,1965,1	// Red Flame Whip
+2,1966,1	// Icicle Whip
+2,1967,1	// Gaia Whip
+2,1968,1	// Skipping Rope
+2,1969,1	// Blade Whip
+2,1970,1	// Queen's Whip
+2,1971,1	// Electric Wire
+2,1972,1	// Electric Eel
+2,1973,1	// Sea Witch's Foot
+2,1974,1	// Carrot Whip
+2,2102,7	// Guard
+2,2104,7	// Buckler
+2,2106,7	// Shield
+2,2108,7	// Mirror Shield
+2,2109,7	// Memory Book
+2,2112,7	// Novice Guard
+2,2201,7	// Sunglasses
+2,2203,7	// Glasses
+2,2205,7	// Diver Goggles
+2,2206,7	// Wedding Veil
+2,2207,7	// Fancy Flower
+2,2208,7	// Ribbon
+2,2209,7	// Ribbon
+2,2210,7	// Hair Band
+2,2211,7	// Bandana
+2,2212,7	// Eye Patch
+2,2213,7	// Kitty Band
+2,2214,7	// Bunny Band
+2,2215,7	// Flower Band
+2,2216,7	// Biretta
+2,2217,7	// Biretta
+2,2218,7	// Flu Mask
+2,2220,7	// Hat
+2,2221,7	// Hat
+2,2222,7	// Turban
+2,2223,7	// Turban
+2,2224,7	// Goggles
+2,2225,7	// Goggles
+2,2226,7	// Cap
+2,2227,7	// Cap
+2,2228,7	// Helm
+2,2229,7	// Helm
+2,2230,7	// Gemmed Sallet
+2,2231,7	// Gemmed Sallet
+2,2232,7	// Circlet
+2,2233,7	// Circlet
+2,2236,7	// Santa Hat
+2,2239,7	// Monocle
+2,2241,7	// Grandpa Beard
+2,2242,7	// Purple Glasses
+2,2243,7	// Geek Glasses
+2,2244,7	// Big Ribbon
+2,2245,7	// Sweet Gent
+2,2246,7	// Golden Gear
+2,2247,7	// Romantic Gent
+2,2248,7	// Western Grace
+2,2249,1	// Coronet
+2,2250,7	// Cute Ribbon
+2,2251,7	// Monk Hat
+2,2252,7	// Wizard Hat
+2,2253,7	// Sunflower
+2,2254,1	// Angel Wing
+2,2255,1	// Evil Wing
+2,2257,7	// Unicorn Horn
+2,2258,1	// Spiky Band
+2,2259,7	// Mini Propeller
+2,2260,7	// Mini Glasses
+2,2261,7	// Army Cap
+2,2262,7	// Clown Nose
+2,2263,7	// Zorro Masque
+2,2265,7	// Gangster Mask
+2,2266,7	// Iron Cain
+2,2267,7	// Cigarette
+2,2268,7	// Pipe
+2,2269,7	// Romantic Flower
+2,2270,7	// Romantic Leaf
+2,2271,7	// Jack be Dandy
+2,2274,1	// Ghost Bandana
+2,2275,7	// Red Bandana
+2,2276,7	// Angled Glasses
+2,2277,7	// Nurse Cap
+2,2278,7	// Mr. Smile
+2,2279,7	// Bomb Wick
+2,2282,7	// Halo
+2,2285,7	// Apple of Archer
+2,2286,1	// Elven Ears
+2,2287,7	// Pirate Bandana
+2,2288,7	// Mr. Scream
+2,2289,7	// Poo Poo Hat
+2,2290,7	// Funeral Hat
+2,2291,7	// Masquerade
+2,2294,7	// Stellar
+2,2295,7	// Blinker
+2,2297,7	// Goblin Mask
+2,2298,7	// Green Feeler
+2,2299,7	// Orc Helm
+2,2302,7	// Cotton Shirt
+2,2304,7	// Jacket
+2,2306,7	// Adventurer's Suit
+2,2308,7	// Mantle
+2,2310,7	// Coat
+2,2311,7	// Mink Coat
+2,2313,7	// Padded Armor
+2,2315,7	// Chain Mail
+2,2317,7	// Full Plate
+2,2318,7	// Lord's Clothes
+2,2320,7	// Formal Suit
+2,2322,7	// Silk Robe
+2,2324,7	// Scapulare
+2,2326,7	// Saint's Robe
+2,2327,1	// Holy Robe
+2,2329,7	// Wooden Mail
+2,2331,7	// Tights
+2,2333,7	// Silver Robe
+2,2334,1	// Mage Coat
+2,2336,7	// Thief Clothes
+2,2337,7	// Ninja Suit
+2,2339,7	// Pantie
+2,2340,7	// Novice Breastplate
+2,2352,7	// Tattered Novice Ninja Suit
+2,2402,7	// Sandals
+2,2404,7	// Shoes
+2,2406,7	// Boots
+2,2407,7	// Crystal Pumps
+2,2408,7	// Shackles
+2,2409,7	// High Heels
+2,2411,7	// Greaves
+2,2414,7	// Novice Slippers
+2,2502,7	// Hood
+2,2504,7	// Muffler
+2,2506,7	// Manteau
+2,2507,7	// Ancient Cape
+2,2508,7	// Ragamuffin Manteau
+2,2510,7	// Somber Novice Hood
+2,2513,1	// Heavenly Maiden Robe
+2,2514,1	// Pauldron
+2,2515,1	// Eagle Wing
+2,2601,7	// Ring
+2,2602,7	// Earring
+2,2603,7	// Necklace
+2,2604,7	// Glove
+2,2605,7	// Brooch
+2,2607,7	// Clip
+2,2608,7	// Rosary
+2,2609,7	// Skull Ring
+2,2610,7	// Gold Ring
+2,2611,7	// Silver Ring
+2,2612,7	// Flower Ring
+2,2613,7	// Diamond Ring
+2,2614,1	// Eye of Dullahan
+2,2615,1	// Safety Ring
+2,2616,1	// Critical Ring
+2,2617,7	// Celebrant's Mitten
+2,2618,7	// Matyr's Leash
+2,2621,1	// Ring
+2,2622,1	// Earring
+2,2623,1	// Necklace
+2,2624,1	// Glove
+2,2625,1	// Brooch
+2,2626,1	// Rosary
+2,2627,7	// Belt
+2,2628,7	// Novice Armlet
+2,2652,1	// Goddess of Fortune's Cursed Brooch
+2,2654,1	// Shinobi Sash
+2,2655,1	// Bloodied Shackle Ball
+2,2656,1	// Armor Charm
+2,5002,1	// Jewel Crown
+2,5003,7	// Joker Jester
+2,5005,7	// Gas Mask
+2,5006,7	// Machoman's Glasses
+2,5007,1	// Grand Circlet
+2,5009,7	// Safety Helmet
+2,5010,7	// Indian Fillet
+2,5011,7	// Aerial
+2,5014,7	// Fin Helm
+2,5015,7	// Egg Shell
+2,5017,1	// Bone Helm
+2,5030,7	// Panda Hat
+2,5035,7	// Poring Hat
+2,5037,7	// Nutshell
+2,5053,1	// Sphinx Hat
+2,5055,7	// Novice False Eggshell
+2,5066,1	// Succubus Horn
+2,5072,1	// Incubus Horn
+2,5085,1	// Small Ribbons
+2,5088,7	// Surprised Mask
+2,5089,7	// Annoyed Mask
+2,5090,7	// Goblin Leader Mask
+2,5111,1	// Galapago Cap
+2,5113,1	// Angry Snarl
+2,5116,1	// Banana Hat
+2,5118,1	// Puppy Headband
+2,5119,1	// Super Novice Hat
+2,5120,1	// Bucket Hat
+2,7001,14	// Mould Powder
+2,7002,14	// Ogre Tooth
+2,7003,14	// Anolian Skin
+2,7004,14	// Mud Lump
+2,7005,14	// Skull
+2,7006,14	// Wing of Red Bat
+2,7007,14	// Claw of Rat
+2,7008,14	// Stiff Horn
+2,7009,14	// Glitter Shell
+2,7010,14	// Tail of Steel Scorpion
+2,7011,14	// Claw of Monkey
+2,7012,14	// Tough Scalelike Stem
+2,7013,14	// Coral Reef
+2,7014,14	// Old Portrait
+2,7015,14	// Memory Bookmark
+2,7016,14	// Bent Spoon
+2,7026,14	// Key of the Clock Tower
+2,7027,14	// Key of the Underground
+2,7030,14	// Claw of Desert Wolf
+2,7031,14	// Old Frying Pan
+2,7032,14	// Piece of Egg Shell
+2,7033,14	// Poison Spore
+2,7034,14	// Red Stocking
+2,7035,14	// Matchstick
+2,7036,14	// Fang of Garm
+2,7038,14	// Yarn
+2,7041,14	// Fine Grit
+2,7047,14	// Alice's Apron
+2,7048,14	// Talon of Griffon
+2,7049,14	// Stone
+2,7053,14	// Cyfar
+2,7054,14	// Brigan
+2,7059,14	// Free Ticket for Kafra Storage
+2,7060,14	// Free Ticket for Kafra Transportation
+2,7061,14	// Free Ticket for the Cart Service
+2,7063,14	// Soft Feather
+2,7064,14	// Wing of Dragonfly
+2,7065,14	// Sea-Otter Fur
+2,7066,14	// Ice Cubic
+2,7067,14	// Stone Fragment
+2,7068,14	// Burnt Tree
+2,7069,14	// Destroyed Armor
+2,7070,14	// Broken Shell
+2,7071,14	// Tattered Clothes
+2,7072,14	// Old Shuriken
+2,7093,14	// Cogwheel
+2,7094,14	// Fragment
+2,7095,14	// Metal Fragment
+2,7096,14	// Lava
+2,7097,14	// Burning Heart
+2,7098,14	// Live Coal
+2,7099,14	// Worn-out Magic Scroll
+2,7100,14	// Sharp Leaf
+2,7101,14	// Peco Peco Feather
+2,7106,14	// Antelope Horn
+2,7107,14	// Antelope Skin
+2,7108,14	// Piece of Shield
+2,7109,14	// Shining Spear Blade
+2,7110,14	// Broken Sword
+2,7111,14	// Slick Paper
+2,7112,14	// Sharp Paper
+2,7113,14	// Broken Pharaoh Emblem
+2,7114,14	// Masque of Tutankhamen
+2,7115,14	// Harpy Feather
+2,7116,14	// Harpy Talon
+2,7117,14	// Torn Magic Book
+2,7118,14	// Torn Scroll
+2,7119,14	// Bacillus
+2,7120,14	// Burning Horseshoe
+2,7121,14	// Honey Pot
+2,7122,14	// Burning Hair
+2,7123,14	// Dragon Skin
+2,7124,14	// Sand Clump
+2,7125,14	// Scorpion Claw
+2,7126,14	// Large Jellopy
+2,7134,14	// Medicine Bowl
+2,7135,14	// Fire Bottle
+2,7136,14	// Acid Bottle
+2,7137,14	// Plant Bottle
+2,7138,14	// Marine Sphere Bottle
+2,7139,14	// Glistening Coat
+2,7149,14	// Yellow Plate
+2,7150,14	// Piece of Bamboo
+2,7151,14	// Oil Paper
+2,7152,14	// Glossy Hair
+2,7153,14	// Worn-out Kimono
+2,7154,14	// Poisonous Powder
+2,7155,14	// Poisonous Toad Skin
+2,7156,14	// Broken Shuriken
+2,7157,14	// Dark Mask
+2,7158,14	// Broken Liquor Jar
+2,7159,14	// Tengu Nose
+2,7161,14	// Black Bear Skin
+2,7162,14	// Cloud Crumb
+2,7163,14	// Hard Feeler
+2,7164,14	// Solid_Peach
+2,7165,14	// Transparent Celestial Robe
+2,7166,14	// Soft Silk
+2,7167,14	// Strange Steel Piece
+2,7168,14	// Giant Butterfly Wing
+2,7169,14	// Ba_Gua
+2,7171,14	// Leopard Skin
+2,7172,14	// Leopard Claw
+2,7174,14	// Wrapping Lace
+2,7175,14	// Wrapping Paper
+2,7182,14	// Cacao
+2,7186,14	// Thin Trunk
+2,7187,14	// Festival Mask
+2,7188,14	// Brown_Root
+2,7189,14	// Wooden Heart
+2,7190,14	// Solid Husk
+2,7191,14	// Lamp
+2,7192,14	// Vane
+2,7193,14	// Sprout
+2,7194,14	// Soft Blade of Grass
+2,7195,14	// Slingshot
+2,7196,14	// Shoulder Protector
+2,7197,14	// Tough Vines
+2,7198,14	// Huge Leaf
+2,7200,14	// Elastic Band
+2,7201,14	// Log
+2,7202,14	// Pincher of Beetle
+2,7203,14	// Strong Branch
+2,7205,14	// Piece of Black Cloth
+2,7206,14	// Black Cat Doll
+2,7207,14	// Old Manteau
+2,7208,14	// Rusty Kitchen Knife
+2,7209,14	// Helm of Dullahan
+2,7210,14	// Armor Piece of Dullahan
+2,7211,14	// Fragment of Rossata Stone
+2,7212,14	// Hung Doll
+2,7213,14	// Needle Packet
+2,7214,14	// Bat Cage
+2,7215,14	// Broken Needle
+2,7216,14	// Red Muffler
+2,7217,14	// Spool
+2,7218,14	// Decomposed Rope
+2,7219,14	// Striped Sock
+2,7220,14	// Ectoplasm
+2,7221,14	// Tangled Chains
+2,7222,14	// Wooden Gnarl
+2,7223,14	// Contorted Self-Portrait
+2,7225,14	// Pumpkin Lantern
+2,7262,14	// Folding Fan of Cat Ghost
+2,7263,14	// Cat's Eye
+2,7264,14	// Dry Sand
+2,7265,14	// Dragon Horn
+2,7266,14	// Denture from Dragon Mask
+2,7267,14	// Tiger Panty
+2,7268,14	// Little Ghost Doll
+2,7269,14	// Pinafore
+2,7270,14	// Nursing_Bottle
+2,7315,1	// Dark Crystal Fragment
+2,7316,1	// Insect Leg
+2,7317,1	// Rusty Screw
+2,7318,1	// Old Pick
+2,7319,1	// Used Iron Plate
+2,7320,1	// Dust Pollutant
+2,7321,1	// Crystal Fragment
+2,7322,1	// Toxic Gas
+2,7323,1	// Battered Kettle
+2,7325,1	// Flexible Tube
+2,7326,1	// Fluorescent Liquid
+2,7327,1	// Flashlight
+2,7436,1	// Fragment of Agony
+2,7437,1	// Fragment of Misery
+2,7438,1	// Fragment of Hatred
+2,7439,1	// Fragment of Despair
+2,7440,1	// Red Feather
+2,7441,1	// Blue Feather
+2,7442,1	// Cursed Seal
+2,7443,1	// Three-Headed Dragon's Head
+2,7444,1	// Treasure Box
+2,7445,1	// Green Bijou
+2,7446,1	// Blue Bijou
+2,7447,1	// Red Bijou
+2,7448,1	// Yellow Bijou
+2,7449,1	// Bloody Page
+2,7450,1	// Skeletal Armor Piece
+2,7451,1	// Fire Dragon Scale
+2,7452,1	// Yellow Spice
+2,7453,1	// Sweet Sauce
+2,7454,1	// Savory Sauce
+2,7455,1	// Spicy Sauce
+2,7456,1	// Red Spice
+2,7457,1	// Cooking Oil
+2,7472,1	// Level 1 Cookbook
+2,7473,1	// Level 2 Cookbook
+2,7474,1	// Level 3 Cookbook
+2,7475,1	// Level 4 Cookbook
+2,7476,1	// Level 5 Cookbook
+2,7477,1	// Level 6 Cookbook
+2,7478,1	// Level 7 Cookbook
+2,7479,1	// Level 8 Cookbook
+2,7480,1	// Level 9 Cookbook
+2,7481,1	// Level 10 Cookbook
+2,7482,1	// Pot
+2,7512,1	// Burnt Part
+2,7513,1	// Pocket Watch
+2,7561,1	// Glacial Heart
+2,7562,1	// Ice Scale
+2,7563,1	// Bloody Rune
+2,7564,1	// Rotten Meat
+2,7565,1	// Sticky Poison
+2,7567,1	// Suspicious Hat
+2,7568,1	// White Mask
+2,7751,17	// Old White Cloth
+2,7752,16	// Clattering Skull
+2,7753,17	// Broken Farming Utensil
+2,10001,7	// Skull Helm
+2,10002,7	// Monster Oxygen Mask
+2,10003,7	// Transparent Headgear
+2,10004,7	// Pacifier
+2,10005,7	// Wig
+2,10006,7	// Queen's Hair Ornament
+2,10007,7	// Silk Ribbon
+2,10008,7	// Punisher
+2,10009,7	// Wild Flower
+2,10010,7	// Battered Pot
+2,10011,7	// Stellar Hairpin
+2,10012,7	// Tiny Egg Shell
+2,10013,7	// Backpack
+2,10014,7	// Rocker Glasses
+2,10015,7	// Green Lace
+2,10016,7	// Golden Bell
+2,10017,7	// Bark Shorts
+2,10018,7	// Monkey Circlet
+2,10019,7	// Red Scarf
+2,10020,7	// Grave Keeper's Sword
+2,13001,1	// Dragon Killer
+2,13002,1	// Ginnungagap
+2,13004,1	// Cowardice Blade
+2,13163,1	// Long Barrel
+2,13164,1	// Long Barrel
+2,13167,1	// Gate Keeper-DD
+2,13168,1	// Thunder P
+2,13170,2	// Lever Action Rifle
+2,13200,1	// Bullet
+2,13201,1	// Silver Bullet
+2,13202,1	// Bloody Shell
+2,13203,1	// Flare Sphere
+2,13204,1	// Lightning Sphere
+2,13205,1	// Poison Sphere
+2,13206,1	// Blind Sphere
+2,13207,1	// Freezing Sphere
+2,13304,1	// Huuma Calm Mind

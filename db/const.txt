@@ -721,6 +721,7 @@ IG_Minor_Coin_Bag	58
 IG_S_Grade_Coin_Bag	59
 IG_A_Grade_Coin_Bag	60
 IG_Advanced_Weapons_Box	61
+IG_Splendid_Box	62
 
 SC_ALL	-1
 SC_STONE	0

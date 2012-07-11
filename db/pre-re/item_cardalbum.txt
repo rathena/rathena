@@ -3,12 +3,12 @@
 // Structure of Database:
 // GroupID,ItemID,Rate
 
-3,4001,15	// Poring Card
-3,4002,17	// Fabre Card
+3,4001,10	// Poring Card
+3,4002,10	// Fabre Card
 3,4003,6	// Pupa Card
-3,4004,18	// Drops Card
-3,4005,2	// Santa Poring Card
-3,4006,14	// Lunatic Card
+3,4004,11	// Drops Card
+3,4005,1	// Santa Poring Card
+3,4006,7	// Lunatic Card
 3,4007,4	// Peco Peco Egg Card
 3,4008,10	// Picky Card
 3,4009,10	// Chonchon Card
@@ -204,6 +204,7 @@
 3,4239,1	// Iron Fist Card
 3,4240,1	// Arclouze Card
 3,4242,1	// Apocalipse Card
+3,4243,1	// Antonio Card
 3,4244,1	// Alarm Card
 3,4245,1	// Am Mut Card
 3,4246,1	// Assaulter Card
@@ -364,13 +365,35 @@
 3,4438,2	// Banshee Card
 3,4439,1	// Flame Skull Card
 3,4440,1	// Necromancer Card
-3,4442,1	// Tatacho Card
-3,4443,2	// Aqua Elemental Card
-3,4444,2	// Draco Card
-3,4445,1	// Luciola Vespa Card
-3,4447,1	// Centipede Card
-3,4448,1	// Cornus Card
-3,4449,1	// Dark Shadow Card
-3,4451,1	// Entweihen Card
-3,4452,2	// Centipede Larva Card
-3,4453,1	// Hillsrion Card
+// Magic Card Album
+44,4047,1	// Ghostring Card
+44,4054,1	// Angeling Card
+44,4163,1	// Gryphon Card
+44,4169,1	// Dark Illusion Card
+44,4174,1	// Deviling Card
+44,4179,10	// Dragon Fly Card
+44,4183,10	// Vagabond Wolf Card
+44,4197,10	// Mastering Card
+44,4198,1	// Maya Purple Card
+44,4203,10	// Mutant Dragonoid Card
+44,4207,1	// Mysteltainn Card
+44,4211,1	// Vocal card
+44,4237,5	// Owl Duke Card
+44,4238,5	// Owl Baron Card
+44,4241,1	// Arc Angeling Card
+44,4250,1	// Executioner Card
+44,4254,1	// Tirfing Card
+44,4266,10	// Eclipse Card
+44,4284,10	// Chepet Card
+44,4285,10	// Choco Card
+44,4290,5	// Cat O' Nine Tails Card
+44,4291,10	// Kobold Leader Card
+44,4300,10	// Chimera Card
+44,4306,10	// Toad Card
+44,4320,1	// Bloody Knight Card
+44,4336,1	// Ungoliant Card
+44,4354,1	// Gemini-S58 Card
+44,4384,1	// Hydro Card
+44,4395,3	// Thanatos Maero Card
+44,4396,3	// Thanatos Odium Card
+44,4397,3	// Thanatos Despero Card
