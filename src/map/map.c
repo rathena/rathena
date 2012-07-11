@@ -3338,6 +3338,52 @@ int map_config_read(char *cfgName)
 	return 0;
 }
 
+void map_reloadnpc_sub(char *cfgName)
+{
+	char line[1024], w1[1024], w2[1024];
+	FILE *fp;
+
+	fp = fopen(cfgName,"r");
+	if( fp == NULL )
+	{
+		ShowError("Map configuration file not found at: %s\n", cfgName);
+		return;
+	}
+
+	while( fgets(line, sizeof(line), fp) )
+	{
+		char* ptr;
+
+		if( line[0] == '/' && line[1] == '/' )
+			continue;
+		if( (ptr = strstr(line, "//")) != NULL )
+			*ptr = '\n'; //Strip comments
+		if( sscanf(line, "%[^:]: %[^\t\r\n]", w1, w2) < 2 )
+			continue;
+
+		//Strip trailing spaces
+		ptr = w2 + strlen(w2);
+		while (--ptr >= w2 && *ptr == ' ');
+		ptr++;
+		*ptr = '\0';
+			
+		if (strcmpi(w1, "npc") == 0)
+			npc_addsrcfile(w2);
+		else if (strcmpi(w1, "import") == 0)
+			map_reloadnpc_sub(w2);
+		else
+			ShowWarning("Unknown setting '%s' in file %s\n", w1, cfgName);
+	}
+
+	fclose(fp);
+}
+
+void map_reloadnpc()
+{
+	npc_addsrcfile("clear"); // this will clear the current script list
+	map_reloadnpc_sub(MAP_CONF_NAME);
+}
+
 int inter_config_read(char *cfgName)
 {
 	char line[1024],w1[1024],w2[1024];
