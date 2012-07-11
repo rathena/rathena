@@ -3981,7 +3981,8 @@ static int mob_read_randommonster(void)
 		DBPATH"mob_branch.txt",
 		"mob_poring.txt",
 		DBPATH"mob_boss.txt",
-		"mob_pouch.txt"};
+		"mob_pouch.txt",
+		"mob_classchange.txt"};
 
 	memset(&summon, 0, sizeof(summon));
 
