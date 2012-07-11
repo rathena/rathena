@@ -3721,15 +3721,7 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount,e_l
 	w = data->weight*amount;
 	if(sd->weight + w > sd->max_weight)
 		return 2;
-	if( itemdb_is_rune(item_data->nameid) ) {
-		int rune = pc_search_inventory(sd,item_data->nameid);
-		if( ( rune >= 0 && sd->status.inventory[rune].amount + amount > MAX_RUNE ) ||
-			( rune == -1 && amount > MAX_RUNE )
-				) {
-			clif_msgtable(sd->fd,0x61b);
-			return 1;
-		}
-	}
+
 	i = MAX_INVENTORY;
 
 	if( itemdb_isstackable2(data) && item_data->expire_time == 0 )
