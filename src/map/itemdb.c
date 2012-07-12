@@ -848,8 +848,10 @@ void itemdb_read_combos(DBMap* item_combo_db) {
 						
 			safestrncpy(ic->script + slen, combo_out, len);
 			
-			if (!exists)
+			if (!exists) {
+				ic->nameid = items[0];
 				idb_put(item_combo_db, items[0], ic);
+			}
 		}
 		
 		count++;
@@ -1181,8 +1183,17 @@ static int itemdb_readdb(void)
 	}
 
 	if( db_size(item_combo_db) ) {
+		DBIterator * iter = db_iterator(item_combo_db);
+		struct item_combo * ic = NULL;
+		int icount = 1;
 		/* non-processed entries */
 		ShowWarning("item_combo_db: There are %d unused entries in the file (combo(s) with non-available item IDs)\n",db_size(item_combo_db));
+		
+		for( ic = dbi_first(iter); dbi_exists(iter); ic = dbi_next(iter) ) {
+			ShowWarning("item_combo_db(%d): (ID:%d) \"%s\" combo unused\n",icount++,ic->nameid,ic->script);
+		}
+
+		dbi_destroy(iter);
 	}
 	
 	db_destroy(item_combo_db);

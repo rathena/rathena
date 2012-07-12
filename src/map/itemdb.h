@@ -147,6 +147,7 @@ struct item_group {
 
 struct item_combo {
 	char script[2048]; /* combo script */
+	short nameid;/* id of the first */
 };
 
 struct item_data* itemdb_searchname(const char *name);
