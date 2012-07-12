@@ -2300,8 +2300,6 @@ Lets say the ID of a party was saved as a global variable:
 
 *getpartymember <party id>{,<type>};
 
-Thank you to HappyDenn for all this information.
-
 This command will find all members of a specified party and returns their names 
 (or character id or account id depending on the value of "type") into an array
 of temporary global variables. There's actually quite a few commands like this
@@ -3142,7 +3140,6 @@ This function works as a direct counterpart of 'getpetinfo':
  6 - Homunculus level
 
 ---------------------------------------
-
 
 *petstat(<flag>)
 
@@ -4111,7 +4108,7 @@ quite a few item scripts. For more examples check just about any official script
 ---------------------------------------
 
 *getitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
-*getitem2 "<Item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*getitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 
 This command will give an amount of specified items to the invoking character. 
 If an optional account ID is specified, and the target character is currently 
@@ -4210,7 +4207,8 @@ this really cause.
 
 ---------------------------------------
 
-*getnameditem <item name|item id>,<Character name|character ID>;
+*getnameditem <item id>,<character name|character ID>;
+*getnameditem "<item name>",<character name|character ID>;
 
 -Note: there's a total of 4 possible combinations of this command.
 E.g: item name and character name, or with character id, etc...
@@ -4305,7 +4303,7 @@ database. If the name is not found, nothing will be deleted.
 ---------------------------------------
 
 *delitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
-*delitem2 "<Item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*delitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 
 This command will take a specified amount of items from the invoking/target character. 
 Check 'getitem2' to understand its expanded parameters.
@@ -6412,7 +6410,7 @@ timer and ranking as will @pvpon GM command do.
 
 ---------------------------------------
 
-*atcommand "<command line>";
+*atcommand "<command>";
 
 This command will run the given command line exactly as if it was typed in from 
 the keyboard by the player connected to the invoking character, and that 
@@ -6428,7 +6426,7 @@ one.
 
 ---------------------------------------
 
-*charcommand <command>;
+*charcommand "<command>";
 
 This command will run the given command line exactly as if it was typed in from 
 the keyboard from a character that belonged to an account which had GM level 99.

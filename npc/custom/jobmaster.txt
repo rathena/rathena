@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN r16114+
 //===== Description: =========================================
 //= A fully functional job changer.
 //===== Additional Comments: =================================  
 //= 1.1 Fixed reset on Baby job change. [Euphy]
+//= 1.2 Added Expanded Super Novice support and initial Kagerou/Oboro support. [Euphy]
 //============================================================
 
 prontera,153,193,6	script	Job Master	123,{
@@ -49,6 +50,18 @@ function Job_Menu; function A_An;
 			Job_Menu(((.@i==1)?4001:roclass(.@eac|EAJL_THIRD)));
 			mes "[Job Master]"; } }
 	set .@j1, roclass(.@eac|EAJL_2_1); set .@j2,roclass(.@eac|EAJL_2_2);
+	if ((.@eac&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE) setarray .@exp[0],roclass(.@eac|EAJL_THIRD),99;
+	// Kagerou & Oboro pending skill completion.
+	// if (Class == Job_Ninja) setarray .@exp[0],.@j1,70;
+	if (.@exp[0] && .ThirdClass) {
+		if (BaseLevel < .Rebirth[0] || JobLevel < .@exp[1]) {
+			set .@blvl, .Rebirth[0]-BaseLevel; set .@jlvl, .@exp[1]-JobLevel;
+			mes "You need "+((.@blvl>0)?.@blvl+" more base levels "+((.@jlvl>0)?"/ ":""):"")+((.@jlvl>0)?.@jlvl+" more job levels ":"")+"to continue.";
+			close; }
+		mes "Switch to "+jobname(.@exp[0])+"?";
+		next;
+		Job_Menu(.@exp[0]);
+		close; }
 	if (.@eac&EAJL_2)
 		if (.@eac&(EAJL_UPPER|EAJL_BABY) || roclass(.@eac|EAJL_UPPER) == -1) {
 			mes "No more jobs are available.";
@@ -96,7 +109,7 @@ function Job_Menu {
 			mes "Are you sure?";
 			next; }
 		else set .@i, getarg(0);
-		if (select(" ~ Change into ^0055FF"+jobname(.@i)+"^000000 class: ~ ^777777Go back^000000")==1) {
+		if (select(" ~ Change into ^0055FF"+jobname(.@i)+"^000000 class: ~ ^777777"+((getargcount() > 1)?"Go back":"Cancel")+"^000000")==1) {
 			mes "[Job Master]";
 			mes "You are now "+A_An(jobname(.@i))+"!";
 			if (.@i==4001 && .LastJob) set lastJob, Class;

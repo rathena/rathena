@@ -64,8 +64,8 @@ Info:		Not really a quest, but to
 How to set: 	set MISC_QUEST,MISC_QUEST|128;
 How to check: 	if(MISC_QUEST&128){}
 
-Quest: 		Book of Devil
-Info:		The Lost Girl in Niflheim.
+Quest: 		-
+Info:		-
 How to set: 	set MISC_QUEST,MISC_QUEST | 256;
 How to check: 	if(MISC_QUEST & 256){}
 
