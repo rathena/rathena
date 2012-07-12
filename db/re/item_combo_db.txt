@@ -147,7 +147,7 @@
 2725:2772,{ bonus2 bAddRace,RC_NonBoss,5; bonus2 bAddRace,RC_Boss,5; bonus bMatkRate,3; bonus bHealPower,5; }
 2726:2727,{ bonus bUseSPrate,-25; }
 2733:2772,{ bonus2 bAddRace,RC_NonBoss,5; bonus2 bAddRace,RC_Boss,5; bonus bMatkRate,3; bonus bHealPower,5; }
-2747:13061,{ bonus bHit,5; /* bonus bWeaponMatk,5; */ };
+2747:13061,{ bonus bHit,5; /* bonus bWeaponMatk,5; */ }
 2777:2778:5479,{ bonus bMaxHP,300; bonus bMatkRate,5; bonus2 bSubEle,Ele_Neutral,5; }
 2779:2780:5482,{ bonus bMatkRate,10; bonus bInt,5; bonus2 bSubRace,RC_Angel,10; }
 2779:2780:5577,{ bonus bMatkRate,10; bonus bInt,5; bonus2 bSubRace,RC_Angel,10; }
