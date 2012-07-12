@@ -786,8 +786,8 @@ void itemdb_read_combos(DBMap* item_combo_db) {
 		memset(str, 0, sizeof(str));
 		
 		p = line;
-		while (ISSPACE(*p))
-				++p;
+		
+		p = trim(p);
 
 		if (*p == '\0')
 			continue;// empty line
@@ -814,7 +814,7 @@ void itemdb_read_combos(DBMap* item_combo_db) {
 		}
 		
 		/* no ending key anywhere (missing \}\) */
-		if ((p = strstr(p + 1, "}")) == NULL ) {
+		if ( str[1][strlen(str[1])-1] != '}' ) {
 			ShowError("itemdb_read_combos(#2): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
 			continue;
 		} else {
@@ -846,7 +846,7 @@ void itemdb_read_combos(DBMap* item_combo_db) {
 			
 			len += sprintf(combo_out + len - 1, "))%s", str[1]);
 						
-			safestrncpy(ic->script + (slen?slen-1:0), combo_out, len);
+			safestrncpy(ic->script + slen, combo_out, len);
 			
 			if (!exists)
 				idb_put(item_combo_db, items[0], ic);
