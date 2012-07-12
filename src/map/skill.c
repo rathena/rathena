@@ -268,7 +268,7 @@ int skill_get_casttype (int id)
 	if (skill_get_nk(id)&NK_NO_DAMAGE)
 		return CAST_NODAMAGE;
 	return CAST_DAMAGE;
-};
+}
 
 //Returns actual skill range taking into account attack range and AC_OWL [Skotlex]
 int skill_get_range2 (struct block_list *bl, int id, int lv)

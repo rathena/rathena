@@ -5575,12 +5575,12 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 unsigned int pc_maxbaselv(struct map_session_data *sd)
 {
   	return max_level[pc_class2idx(sd->status.class_)][0];
-};
+}
 
 unsigned int pc_maxjoblv(struct map_session_data *sd)
 {
   	return max_level[pc_class2idx(sd->status.class_)][1];
-};
+}
 
 /*==========================================
  * base level側必要??値計算

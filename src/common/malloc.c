@@ -327,7 +327,7 @@ void* _mmalloc(size_t size, const char *file, int line, const char *func )
 	head->size  = (unsigned short)size;
 	*(long*)((char*)head + sizeof(struct unit_head) - sizeof(long) + size) = 0xdeadbeaf;
 	return (char *)head + sizeof(struct unit_head) - sizeof(long);
-};
+}
 
 void* _mcalloc(size_t num, size_t size, const char *file, int line, const char *func )
 {
