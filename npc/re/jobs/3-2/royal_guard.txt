@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= Any rAthena or brAthena SVN
 //===== Description: ========================================= 
-//= [AEGIS Conversion]
+//= [Translated from the Official]
 //= Job change Quest from Crusader / Paladin -> Royal Guard.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
@@ -464,16 +464,16 @@ gl_church,158,100,0	script	#Clue of traces	111,4,4,{
 		if(job_royal == 4 && !countitem(6274)) {
 			specialeffect2 EF_FREEZE;
 			mes "I can feel strong power around here. It would be better to explore around here.";
-			viewpoint 1,173,88 ,1, "0xFFFF00";
-			viewpoint 1,158,103,2, "0xFFFF00";
-			viewpoint 1,139,90 ,3, "0xFFFF00";
-			viewpoint 1,126,62 ,4, "0xFFFF00";
-			viewpoint 1,148,5  ,5, "0xFFFF00";
-			viewpoint 1,185,72 ,6, "0xFFFF00";
-			viewpoint 1,211,94 ,7, "0xFFFF00";
-			viewpoint 1,185,125,8, "0xFFFF00";
-			viewpoint 1,143,125,9, "0xFFFF00";
-			viewpoint 1,105,115,10,"0xFFFF00";
+			viewpoint 1,173,88 ,1, 0xFFFF00;
+			viewpoint 1,158,103,2, 0xFFFF00;
+			viewpoint 1,139,90 ,3, 0xFFFF00;
+			viewpoint 1,126,62 ,4, 0xFFFF00;
+			viewpoint 1,148,5  ,5, 0xFFFF00;
+			viewpoint 1,185,72 ,6, 0xFFFF00;
+			viewpoint 1,211,94 ,7, 0xFFFF00;
+			viewpoint 1,185,125,8, 0xFFFF00;
+			viewpoint 1,143,125,9, 0xFFFF00;
+			viewpoint 1,105,115,10,0xFFFF00;
 			close;
 		}
 }

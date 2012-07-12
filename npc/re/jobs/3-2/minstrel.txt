@@ -8,7 +8,7 @@
 //===== Compatible With: ===================================== 
 //= Any rAthena SVN
 //===== Description: ========================================= 
-//= [AEGIS Conversion]
+//= [Translated from the Official]
 //= Job change Quest from Bard / Clown -> Minstrel.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
