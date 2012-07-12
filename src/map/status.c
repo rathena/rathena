@@ -9708,7 +9708,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		if( --(sce->val4) >= 0 ) {
 			int damage = status->max_hp/100; // {Target VIT x (New Poison Research Skill Level - 3)} + (Target HP/100)
 			damage += status->vit * (sce->val1 - 3);
-			unit_skillcastcancel(bl,0);		
+			unit_skillcastcancel(bl,2);		
 			map_freeblock_lock();
 			status_damage(bl, bl, damage, 0, clif_damage(bl,bl,tick,status_get_amotion(bl),status_get_dmotion(bl)+500,damage,1,0,0), 1);
 			if( sc->data[type] ) {

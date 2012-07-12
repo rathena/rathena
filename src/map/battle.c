@@ -4223,10 +4223,11 @@ int battle_calc_return_damage(struct block_list* bl, struct block_list *src, int
 		int ratio = (status_get_hp(src) / 100) * sc->data[SC_CRESCENTELBOW]->val1 * status_get_lv(bl) / 125;
 		if (ratio > 5000) ratio = 5000; // Maximum of 5000% ATK
 		rdamage = rdamage * ratio / 100 + (*dmg) * (10 + sc->data[SC_CRESCENTELBOW]->val1 * 20 / 10) / 10;
-		clif_damage(src, bl, gettick(), status_get_amotion(src)+1000, 0, status_damage(src, bl, rdamage/10, 0, 0, 1), 1, 0, 0);
 		skill_blown(bl, src, skill_get_blewcount(SR_CRESCENTELBOW_AUTOSPELL, sc->data[SC_CRESCENTELBOW]->val1), unit_getdir(src), 0);
-		clif_skill_damage(bl, src, gettick(), status_get_amotion(src), 0, status_damage(src, bl, rdamage, 0, 0, 1),
+		clif_skill_damage(bl, src, gettick(), status_get_amotion(src), 0, rdamage,	
 			1, SR_CRESCENTELBOW_AUTOSPELL, sc->data[SC_CRESCENTELBOW]->val1, 6); // This is how official does
+		clif_damage(src, bl, gettick(), status_get_amotion(src)+1000, 0, rdamage/10, 1, 0, 0);
+		status_damage(src, bl, status_damage(bl, src, rdamage, 0, 0, 1)/10, 0, 0, 1);
 		status_change_end(bl, SC_CRESCENTELBOW, INVALID_TIMER);
 		return 0; // Just put here to minimize redundancy
 	}else if (flag & BF_SHORT) {//Bounces back part of the damage.
