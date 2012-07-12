@@ -152,5 +152,5 @@
 //5184:5657,{ bonus bLongAtkRate,getrefine(); }
 5358:5653,{ bonus bAgi,1; bonus bFlee,3; }
 5401:5653,{ bonus bInt,1; bonus bMatkRate,2; }
-5470:5653,{ bonus bDex,1; bonus bLongAtkRate,3; }
+//5470:5653,{ bonus bDex,1; bonus bLongAtkRate,3; }
 13034:13035,{ bonus bMaxSP,20; bonus bMaxHPRate,5; bonus bHit,10; bonus2 bAddSize,2,30; autobonus "{ bonus bAspdRate,100; }",1,7000,0,"{ specialeffect2 EF_POTION_BERSERK; }"; }

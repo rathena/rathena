@@ -193,7 +193,7 @@
 //5184:5657,{ bonus bLongAtkRate,getrefine(); }
 5358:5653,{ bonus bAgi,1; bonus bFlee,3; }
 5401:5653,{ bonus bInt,1; bonus bMatkRate,2; }
-5470:5653,{ bonus bDex,1; bonus bLongAtkRate,3; }
+//5470:5653,{ bonus bDex,1; bonus bLongAtkRate,3; }
 13027:15044,{ bonus3 bAddMonsterDropItem,929,RC_Brute,100+(getrefine()*10); bonus3 bAddMonsterDropItem,929,RC_DemiHuman,100+(getrefine()*10); bonus3 bAddMonsterDropItem,970,RC_Brute,20+(getrefine()*2); bonus3 bAddMonsterDropItem,970,RC_DemiHuman,20+(getrefine()*2); }
 13034:13035,{ bonus bMaxSP,20; bonus bMaxHPRate,5; bonus bHit,10; bonus2 bAddSize,2,30; autobonus "{ bonus bAspdRate,100; }",1,7000,0,"{ specialeffect2 EF_POTION_BERSERK; }"; }
 18507:18539,{ bonus bUseSPrate,-3; }
