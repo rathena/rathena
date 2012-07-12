@@ -962,10 +962,10 @@ int mob_spawn (struct mob_data *md)
 
 	memset(md->dmglog, 0, sizeof(md->dmglog));
 	md->tdmg = 0;
-	if (md->lootitem) {
-		aFree(md->lootitem);
-		md->lootitem = NULL;
-	}
+	
+	if (md->lootitem)
+		memset(md->lootitem, 0, sizeof(md->lootitem));
+	
 	md->lootitem_count = 0;
 
 	if(md->db->option)
