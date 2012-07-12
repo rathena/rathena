@@ -10600,9 +10600,9 @@ static int status_natural_heal_timer(int tid, unsigned int tick, int id, intptr_
  * @param refine The target refine level
  * @return The chance to refine the item, in percent (0~100)
  **/
-int status_get_refine_chance(enum refine_type wlv, int refine)
-{
-	 if (wlv < 0 || wlv > REFINE_TYPE_MAX || refine < 0 || refine >= MAX_REFINE)
+int status_get_refine_chance(enum refine_type wlv, int refine) {
+	 
+	if ( refine < 0 || refine >= MAX_REFINE)
 		return 0;
 
 	return refine_info[wlv].chance[refine];
