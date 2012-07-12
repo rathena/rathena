@@ -6978,6 +6978,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 		pc_setglobalreg(sd, "CLONE_SKILL", 0);
 		pc_setglobalreg(sd, "CLONE_SKILL_LV", 0);
 	}
+	
 	if(sd->reproduceskill_id) {
 		if( sd->status.skill[sd->reproduceskill_id].flag == SKILL_FLAG_PLAGIARIZED ) {
 			sd->status.skill[sd->reproduceskill_id].id = 0;
@@ -6989,8 +6990,8 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 		pc_setglobalreg(sd, "REPRODUCE_SKILL",0);
 		pc_setglobalreg(sd, "REPRODUCE_SKILL_LV",0);
 	}
-	if ((b_class&&MAPID_UPPERMASK) != (sd->class_&MAPID_UPPERMASK))
-	{ //Things to remove when changing class tree.
+	
+	if ( (b_class&MAPID_UPPERMASK) != (sd->class_&MAPID_UPPERMASK) ) { //Things to remove when changing class tree.
 		const int class_ = pc_class2idx(sd->status.class_);
 		short id;
 		for(i = 0; i < MAX_SKILL_TREE && (id = skill_tree[class_][i].id) > 0; i++) {
