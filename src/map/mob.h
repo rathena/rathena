@@ -173,7 +173,7 @@ struct mob_data {
 	 * Did this monster summon something?
 	 * Used to flag summon deletions, saves a worth amount of memory
 	 **/
-	bool can_summon : 1;
+	bool can_summon;
 
 	struct npc_data *tomb_npc;
 };
