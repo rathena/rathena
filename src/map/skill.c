@@ -1468,6 +1468,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 			if (skill == AS_SONICBLOW)
 				pc_stop_attack(sd); //Special case, Sonic Blow autospell should stop the player attacking.
+			if (skill == PF_SPIDERWEB) //Special case, due to its nature of coding.
+				type = CAST_GROUND;
 
 			sd->state.autocast = 1;
 			skill_consume_requirement(sd,skill,skilllv,1);
@@ -15853,17 +15855,17 @@ int skill_elementalanalysis(struct map_session_data* sd, int n, int skill_lv, un
 			case 992: product = 996; break; // Wind of Verdure -> Rough Wind.
 			case 993: product = 997; break; // Green Live -> Great Nature.
 			default:
-				clif_skill_fail(sd,SO_EL_ANALYSIS,0,0);
+				clif_skill_fail(sd,SO_EL_ANALYSIS,USESKILL_FAIL_LEVEL,0);
 				return 1;
 		}
-		
-		if( pc_delitem(sd,idx,del_amount,1,0,LOG_TYPE_CONSUME) ) {
-			clif_skill_fail(sd,SO_EL_ANALYSIS,0,0);
+
+		if( pc_delitem(sd,idx,del_amount,0,1,LOG_TYPE_CONSUME) ) {
+			clif_skill_fail(sd,SO_EL_ANALYSIS,USESKILL_FAIL_LEVEL,0);
 			return 1;
 		}
-		
+
 		if( skill_lv == 2 && rnd()%100 < 25 ) {	// At level 2 have a fail chance. You loose your items if it fails.
-			clif_skill_fail(sd,SO_EL_ANALYSIS,0,0);
+			clif_skill_fail(sd,SO_EL_ANALYSIS,USESKILL_FAIL_LEVEL,0);
 			return 1;
 		}
 		
