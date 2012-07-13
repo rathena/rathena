@@ -1243,13 +1243,10 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		sc_start(bl, SC_EARTHDRIVE, 100, skilllv, skill_get_time(skillid, skilllv));
 		break;
 	case SR_DRAGONCOMBO:
-		sc_start(bl, SC_STUN, 1 + 1 * skilllv, skilllv, skill_get_time(skillid, skilllv));
+		sc_start(bl, SC_STUN, 1 + skilllv, skilllv, skill_get_time(skillid, skilllv));
 		break;
 	case SR_FALLENEMPIRE:
 		sc_start(bl, SC_STOP, 100, skilllv, skill_get_time(skillid, skilllv));
-		break;
-	case SR_TIGERCANNON:
-		status_percent_damage(src, bl, 0, 5+1*skilllv, false); // The hell is this? [Rytech]
 		break;
 	case SR_WINDMILL:
 		if( dstsd )
@@ -2648,6 +2645,9 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 				break;
 			case WM_METALICSOUND:
 				status_zap(bl, 0, damage*100/(100*(110-pc_checkskill(sd,WM_LESSON)*10)));
+				break;
+			case SR_TIGERCANNON:
+				status_zap(bl, 0, damage/10); // 10% of damage dealt
 				break;
 		}
 		if( sd )
@@ -5445,7 +5445,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		i = map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), splash_target(src), 
 			src, skillid, skilllv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
-		if( !i && skillid == NC_AXETORNADO )
+		if( !i && skillid == NC_AXETORNADO || skillid == SR_SKYNETBLOW )
 			clif_skill_damage(src,src,tick, status_get_amotion(src), 0, -30000, 1, skillid, skilllv, 6);
 		break;
 
@@ -12519,7 +12519,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 	}
 
 	if( require.spiritball > 0 && sd->spiritball < require.spiritball) {
-		clif_skill_fail(sd,skill,USESKILL_FAIL_LEVEL,0);
+		clif_skill_fail(sd,skill,USESKILL_FAIL_SPIRITS,require.spiritball);
 		return 0;
 	}
 
@@ -13039,6 +13039,7 @@ int skill_castfix_sc (struct block_list *bl, int time, int skill_id, int skill_l
 		}
 	}
 #endif
+	if( time < 0 ) return 0; // due to fixed castime so use -1 to nullify the casting. [malufett]
 	if (sc && sc->count) {
 		if (sc->data[SC_SLOWCAST])
 			time += time * sc->data[SC_SLOWCAST]->val2 / 100;
@@ -15874,7 +15875,7 @@ int skill_elementalanalysis(struct map_session_data* sd, int n, int skill_lv, un
 		tmp_item.nameid = product;
 		tmp_item.amount = add_amount;
 		tmp_item.identify = 1;
-		
+
 		if( tmp_item.amount ) {
 			if( (flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_CONSUME)) ) {
 				clif_additem(sd,0,0,flag);

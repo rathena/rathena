@@ -7441,8 +7441,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 				struct unit_data *ud = unit_bl2ud(bl);
 				if (ud && !val3) {
 					tick += 300 * battle_config.combo_delay_rate/100;
-					if(val1 == SR_FALLENEMPIRE)//TODO: better option for this bonus. [malufett]
-						tick += 1000;
 					ud->attackabletime = gettick()+tick;
 					unit_set_walkdelay(bl, gettick(), tick, 1);
 				}
@@ -8083,8 +8081,8 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val2 = 94 + val1;
 			val_flag |= 1|2;
 			break;
-		case SC_LIGHTNINGWALK:
-			val1 = 88 + 2 * val1;
+		case SC_LIGHTNINGWALK: //  [(Job Level / 2) + (40 + 5 * Skill Level)] %
+			val1 = (sd?sd->status.job_level:2)/2 + 40 + 5 * val1;
 			val_flag |= 1;
 			break;
 		case SC_RAISINGDRAGON:

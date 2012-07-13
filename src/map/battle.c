@@ -2296,23 +2296,32 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					break;
 				case SR_DRAGONCOMBO:
 					skillratio += 40 * skill_lv;
+					RE_LVL_DMOD(100);
 					break;
 				case SR_SKYNETBLOW:
-					skillratio += 80 * skill_lv - 100 + ( sstatus->agi * 4 );
+					//ATK [{(Skill Level x 80) + (Caster’s AGI)} x Caster’s Base Level / 100] %
+					skillratio = 80 * skill_lv + sstatus->agi;
+					if( sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_DRAGONCOMBO )//ATK [{(Skill Level x 100) + (Caster’s AGI) + 150} x Caster’s Base Level / 100] %
+						skillratio = 100 * skill_lv + sstatus->agi + 150;
+					RE_LVL_DMOD(100);
 					break;
 				case SR_EARTHSHAKER:
 					skillratio += 50 * skill_lv - 50;// Need to code a check to make the ratio 3x when hitting a hidden player. [Rytech]
 					break;
-				case SR_FALLENEMPIRE:
-					skillratio += 150 * skill_lv; // Need official on how much enemy players weight affects damage. [Rytech]
-					//if( tsd && tsd->weight )
-					//	skillratio = (100 + 150 * skill_lv) * tsd->weight / 10000;
-					//else
-					//	skillratio = (100 + 150 * skill_lv) * 600 / 100;
-					break;
-				case SR_TIGERCANNON:
-						skillratio = 2000 + ( sstatus->hp * ( 10 + 2 * skill_lv ) / 100 );
-					break;
+				case SR_FALLENEMPIRE:// ATK [(Skill Level x 150 + 100) x Caster’s Base Level / 150] % 
+					skillratio += 150 *skill_lv;
+					RE_LVL_DMOD(100);
+ 					break;
+				case SR_TIGERCANNON:// ATK [((Caster’s consumed HP + SP) / 4) x Caster’s Base Level / 100] % 
+					{
+						int hp = sstatus->max_hp * (10 + 2 * skill_lv) / 100,
+							sp = sstatus->max_sp * (6 + skill_lv) / 100;
+						skillratio = (hp+sp) / 4;
+						if( sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE ) // ATK [((Caster’s consumed HP + SP) / 2) x Caster’s Base Level / 100] %
+							skillratio = (hp+sp) / 2;
+						RE_LVL_DMOD(100);
+					}
+						break;
 				case SR_RAMPAGEBLASTER:
 					if( sc && sc->data[SC_EXPLOSIONSPIRITS] )
 						skillratio += 40 * skill_lv * (sd?sd->spiritball_old:5) - 100;
@@ -2325,8 +2334,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					else
 						skillratio += 400 + (100 * skill_lv);
 					break;
-				case SR_WINDMILL:
-					skillratio += 150;
+				case SR_WINDMILL: // ATK [(Caster’s Base Level + Caster’s DEX) x Caster’s Base Level / 100] %
+					skillratio = status_get_lv(src) + sstatus->dex;
+					RE_LVL_DMOD(100);
 					break;
 				case SR_GATEOFHELL:
 					if( sc && sc->data[SC_COMBO] 
@@ -2342,8 +2352,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				case SR_HOWLINGOFLION:
 					skillratio += 300 * skill_lv - 100;
 					break;
-				case SR_RIDEINLIGHTNING:
-					skillratio += 200 * skill_lv -100;
+				case SR_RIDEINLIGHTNING: // ATK [{(Skill Level x 200) + Additional Damage} x Caster’s Base Level / 100] %
+					if( (sstatus->rhw.ele) == ELE_WIND || (sstatus->lhw.ele) == ELE_WIND )
+						skillratio += skill_lv * 50;
+					skillratio += -100 + 200 * skill_lv;
+					RE_LVL_DMOD(100);
 					break;
 				case WM_REVERBERATION_MELEE:
 					// ATK [{(Skill Level x 100) + 300} x Caster’s Base Level / 100]
@@ -2486,10 +2499,19 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 						ATK_ADD ( (sstatus->max_sp * (1 + skill_lv * 2 / 10)) + 40 * status_get_lv(src) );
 					}
 					break;
-				case SR_TIGERCANNON:
+				case SR_TIGERCANNON: // (Tiger Cannon skill level x 240) + (Target’s Base Level x 40)
+					ATK_ADD( skill_lv * 240 + status_get_lv(target) * 40 );
 					if( sc && sc->data[SC_COMBO] 
-						&& sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE )
-							ATK_ADDRATE(10);// +10% custom value.
+						&& sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE ) // (Tiger Cannon skill level x 500) + (Target’s Base Level x 40)
+							ATK_ADD( skill_lv * 500 + status_get_lv(target) * 40 );
+					break;
+				case SR_FALLENEMPIRE:// [(Target’s Size value + Skill Level - 1) x Caster’s STR] + [(Target’s current weight x Caster’s DEX / 120)]
+					ATK_ADD( ((tstatus->size+1)*2 + skill_lv - 1) * sstatus->str);
+					if( tsd && tsd->weight ){
+						ATK_ADD( (tsd->weight/10) * sstatus->dex / 120 );
+					}else{
+						ATK_ADD( status_get_lv(target) * 50 ); //mobs
+					}
 					break;
 			}
 		}
@@ -2548,10 +2570,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			case SR_EARTHSHAKER:
 				if( tsc && (tsc->data[SC_HIDING] || tsc->data[SC_CLOAKING] || tsc->data[SC_CHASEWALK] || tsc->data[SC_CLOAKINGEXCEED]) )
 					ATK_ADDRATE(150+150*skill_lv);
-				break;
-			case SR_RIDEINLIGHTNING:
-				if( (sstatus->rhw.ele) == ELE_WIND || (sstatus->lhw.ele) == ELE_WIND )
-					ATK_ADDRATE(skill_lv*5);
 				break;
 		}
 		

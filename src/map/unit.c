@@ -1201,14 +1201,14 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 		   (sc->data[SC_COMBO]->val1 == MO_COMBOFINISH ||
 			sc->data[SC_COMBO]->val1 == CH_TIGERFIST ||
 			sc->data[SC_COMBO]->val1 == CH_CHAINCRUSH))
-			casttime = 0;
+			casttime = -1;
 		temp = 1;
 	break;
 	case SR_GATEOFHELL:
 	case SR_TIGERCANNON:
 		if (sc && sc->data[SC_COMBO] &&
 		   sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE)
-			casttime = 0;
+			casttime = -1;
 		temp = 1;
 	break;
 	case SA_SPELLBREAKER:
@@ -1216,15 +1216,15 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 	break;
 	case ST_CHASEWALK:
 		if (sc && sc->data[SC_CHASEWALK])
-			casttime = 0;
+			casttime = -1;
 	break;
 	case TK_RUN:
 		if (sc && sc->data[SC_RUN])
-			casttime = 0;
+			casttime = -1;
 	break;
 	case HP_BASILICA:
 		if( sc && sc->data[SC_BASILICA] )
-			casttime = 0; // No Casting time on basilica cancel
+			casttime = -1; // No Casting time on basilica cancel
 	break;
 	case KN_CHARGEATK:
 		{
@@ -1239,11 +1239,11 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 		break;
 	case RA_WUGDASH:
 		if (sc && sc->data[SC_WUGDASH])
-			casttime = 0;
+			casttime = -1;
 	}
 	
 	// moved here to prevent Suffragium from ending if skill fails
-	if (!(skill_get_castnodex(skill_num, skill_lv)&2))
+	if (!(skill_get_castnodex(skill_num, skill_lv)&2)) 
 		casttime = skill_castfix_sc(src, casttime, skill_num, skill_lv);
 
 	if( casttime > 0 || temp )
