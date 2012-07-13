@@ -116,8 +116,6 @@ prontera,160,155,4	script	Disguise Event	795,{
 	close;
 
 OnInit:
-	defpattern 1,"([^:]+):.\\s*OMFGBBQLEETSAUCEGMOCEANRULESHAI!!.*", "iCorrect";
-	activatepset 1;
 	set $@EventON,0;
 	set $@Wait,0;
 	set $@Winner,0;
