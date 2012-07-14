@@ -5318,14 +5318,15 @@ the homunculus must have above 91000 intimacy with it's owner.
 
 *hommutate {<ID>};
 
-This Command will evolve the current player's Homunculus into the new Homunculus S.
-If it doesn't work, the /swt emotion is shown.
+This command will try to evolve the current player's homunculus into the
+new Homunculus S. If it doesn't work, the /swt emotion is shown.
 
-To change a Homunculus into the new Homunculus S,
-the invoking Player must have an evolved Homunculus and it must be at least Level 99.
+To mutate a homunculus, the invoking player must have an evolved
+homunculus and it must be at least level 99.
 
-If the optional parameter <ID> is set, the invoking Players Homunculus will change into the given ID's Homunculus S,
-otherwise the Homunculus will change into an randomly chosen Homunculus S Class.
+If the optional parameter <ID> is set, the invoking player's homunculus will
+change into the given homunculus ID. Otherwise, a random Homunculus S
+will be chosen.
 
 ---------------------------------------
 
