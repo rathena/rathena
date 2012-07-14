@@ -9551,6 +9551,36 @@ BUILDIN_FUNC(homunculus_evolution)
 	return 0;
 }
 
+/*==========================================
+ * [Xantara]
+ *------------------------------------------*/
+BUILDIN_FUNC(homunculus_mutate)
+{
+	int homun_id, m_class, m_id;
+	int homun_array[5] = {6048,6049,6050,6051,6052};
+	TBL_PC *sd;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 0;
+
+	if(script_hasdata(st,2))
+		homun_id = script_getnum(st,2);
+	else
+		homun_id = homun_array[rnd() % 5];
+
+	if(merc_is_hom_active(sd->hd)) {
+		m_class = hom_class2mapid(sd->hd->homunculus.class_);
+		m_id    = hom_class2mapid(homun_id);
+		
+		if ( m_class&HOM_EVO && m_id&HOM_S && sd->hd->homunculus.level >= 99 )
+			hom_mutate(sd->hd, homun_id);
+		else
+			clif_emotion(&sd->hd->bl, E_SWT);
+	}
+	return 0;
+}
+
 // [Zephyrus]
 BUILDIN_FUNC(homunculus_shuffle)
 {
@@ -16676,6 +16706,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getvariableofnpc,"rs"),
 	BUILDIN_DEF(warpportal,"iisii"),
 	BUILDIN_DEF2(homunculus_evolution,"homevolution",""),	//[orn]
+	BUILDIN_DEF2(homunculus_mutate,"hommutate","?"),
 	BUILDIN_DEF2(homunculus_shuffle,"homshuffle",""),	//[Zephyrus]
 	BUILDIN_DEF(eaclass,"?"),	//[Skotlex]
 	BUILDIN_DEF(roclass,"i?"),	//[Skotlex]

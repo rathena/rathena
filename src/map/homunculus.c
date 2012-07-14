@@ -56,6 +56,31 @@ struct view_data* merc_get_hom_viewdata(int class_)
 	return NULL;
 }
 
+int hom_class2mapid(int hom_class)
+{
+	switch(hom_class)
+	{
+		// Normal Homunculus
+		case 6001: case 6005:                return MAPID_LIF;
+		case 6002: case 6006:                return MAPID_AMISTR;
+		case 6003: case 6007:                return MAPID_FILIR;
+		case 6004: case 6008:                return MAPID_VANILMIRTH;
+		// Evolved Homunculus
+		case 6009: case 6013:                return MAPID_LIF_E;
+		case 6010: case 6014:                return MAPID_AMISTR_E;
+		case 6011: case 6015:                return MAPID_FILIR_E;
+		case 6012: case 6016:                return MAPID_VANILMIRTH_E;
+		// Homunculus S
+		case 6048:                           return MAPID_EIRA;
+		case 6049:                           return MAPID_BAYERI;
+		case 6050:                           return MAPID_SERA;
+		case 6051:                           return MAPID_DIETER;
+		case 6052:                           return MAPID_ELANOR;
+		
+		default:                             return -1;
+	}
+}
+
 void merc_damage(struct homun_data *hd,struct block_list *src,int hp,int sp)
 {
 	clif_hominfo(hd->master,hd,0);
@@ -215,10 +240,13 @@ int merc_hom_levelup(struct homun_data *hd)
 	int growth_str, growth_agi, growth_vit, growth_int, growth_dex, growth_luk ;
 	int growth_max_hp, growth_max_sp ;
 	char output[256] ;
+	int m_class;
 
-	if (hd->homunculus.level == MAX_LEVEL || !hd->exp_next || hd->homunculus.exp < hd->exp_next)
+	m_class = hom_class2mapid(hd->homunculus.class_);
+
+	if((m_class&HOM_REG) && hd->homunculus.level >= battle_config.hom_max_level || (m_class&HOM_S) && hd->homunculus.level >= battle_config.hom_S_max_level || !hd->exp_next || hd->homunculus.exp < hd->exp_next)
 		return 0 ;
-	
+
 	hom = &hd->homunculus;
 	hom->level++ ;
 	if (!(hom->level % 3)) 
@@ -333,13 +361,62 @@ int merc_hom_evolution(struct homun_data *hd)
 	return 1 ;
 }
 
+int hom_mutate(struct homun_data *hd, int homun_id)
+{
+	struct s_homunculus *hom;
+	struct map_session_data *sd;
+	int m_class, m_id;
+	nullpo_ret(hd);
+
+	m_class = hom_class2mapid(hd->homunculus.class_);
+	m_id    = hom_class2mapid(homun_id);
+	
+	if( !m_class&HOM_EVO || !m_id&HOM_S ) {
+		clif_emotion(&hd->bl, E_SWT);
+		return 0;
+	}
+	
+	sd = hd->master;
+	if (!sd)
+		return 0;
+
+	if (!merc_hom_change_class(hd, homun_id)) {
+		ShowError("hom_mutate: Can't evolve homunc from %d to %d", hd->homunculus.class_, homun_id);
+		return 0;
+	}
+
+	unit_remove_map(&hd->bl, CLR_OUTSIGHT);
+	map_addblock(&hd->bl);
+
+	clif_spawn(&hd->bl);
+	clif_emotion(&sd->bl, E_NO1);
+	clif_specialeffect(&hd->bl,568,AREA);
+
+	//status_Calc flag&1 will make current HP/SP be reloaded from hom structure
+	hom = &hd->homunculus;
+	hom->hp = hd->battle_status.hp;
+	hom->sp = hd->battle_status.sp;
+	status_calc_homunculus(hd,1);
+
+	if (!(battle_config.hom_setting&0x2))
+		skill_unit_move(&sd->hd->bl,gettick(),1); // apply land skills immediately
+	
+	return 1;
+}
+
 int merc_hom_gainexp(struct homun_data *hd,int exp)
 {
+	int m_class;
+
 	if(hd->homunculus.vaporize)
 		return 1;
 
-	if( hd->exp_next == 0 ) {
-		hd->homunculus.exp = 0 ;
+	m_class = hom_class2mapid(hd->homunculus.class_);
+	
+	if( hd->exp_next == 0 || 
+	   ((m_class&HOM_REG) && hd->homunculus.level >= battle_config.hom_max_level) ||
+	   ((m_class&HOM_S)   && hd->homunculus.level >= battle_config.hom_S_max_level) ) {
+	  	hd->homunculus.exp = 0;
 		return 0;
 	}
 

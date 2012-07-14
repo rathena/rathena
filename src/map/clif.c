@@ -1395,10 +1395,13 @@ void clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 {
 	struct status_data *status;
 	unsigned char buf[128];
+	int m_class;
 	
 	nullpo_retv(hd);
 
-	status = &hd->battle_status;
+	status  = &hd->battle_status;
+	m_class = hom_class2mapid(hd->homunculus.class_);
+
 	memset(buf,0,packet_len(0x22e));
 	WBUFW(buf,0)=0x22e;
 	memcpy(WBUFP(buf,2),hd->homunculus.name,NAME_LENGTH);
@@ -1434,7 +1437,10 @@ void clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 		WBUFW(buf,57)=status->max_sp;
 	}
 	WBUFL(buf,59)=hd->homunculus.exp;
-	WBUFL(buf,63)=hd->exp_next;
+	if( ((m_class&HOM_REG) && hd->homunculus.level >= battle_config.hom_max_level) || ((m_class&HOM_S) && hd->homunculus.level >= battle_config.hom_S_max_level) )
+		WBUFL(buf,63)=0;
+	else
+		WBUFL(buf,63)=hd->exp_next;
 	WBUFW(buf,67)=hd->homunculus.skillpts;
 	WBUFW(buf,69)=status_get_range(&hd->bl);
 	clif_send(buf,packet_len(0x22e),&sd->bl,SELF);

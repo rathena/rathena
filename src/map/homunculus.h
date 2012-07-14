@@ -47,6 +47,29 @@ struct homun_data {
 	char blockskill[MAX_SKILL];	// [orn]
 };
 
+#define HOM_EVO 0x100 //256
+#define HOM_S 0x200 //512
+
+#define HOM_REG 0x1000 //4096
+
+enum {
+// Normal Homunculus
+	MAPID_LIF = HOM_REG|0x0,
+	MAPID_AMISTR,
+	MAPID_FILIR,
+	MAPID_VANILMIRTH,
+// Evolved Homunulus
+	MAPID_LIF_E = HOM_REG|HOM_EVO|0x0,
+	MAPID_AMISTR_E,
+	MAPID_FILIR_E,
+	MAPID_VANILMIRTH_E,
+// Homunculus S
+	MAPID_EIRA = HOM_S|0x0,
+	MAPID_BAYERI,
+	MAPID_SERA,
+	MAPID_DIETER,
+	MAPID_ELANOR,
+};
 
 #define homdb_checkid(id) (id >=  HM_CLASS_BASE && id <= HM_CLASS_MAX)
 
@@ -55,14 +78,16 @@ struct homun_data {
 int do_init_merc(void);
 int merc_hom_recv_data(int account_id, struct s_homunculus *sh, int flag); //albator
 struct view_data* merc_get_hom_viewdata(int class_);
+int hom_class2mapid(int hom_class);
 void merc_damage(struct homun_data *hd,struct block_list *src,int hp,int sp);
 int merc_hom_dead(struct homun_data *hd, struct block_list *src);
 void merc_hom_skillup(struct homun_data *hd,int skillnum);
-int merc_hom_calc_skilltree(struct homun_data *hd) ;
-int merc_hom_checkskill(struct homun_data *hd,int skill_id) ;
-int merc_hom_gainexp(struct homun_data *hd,int exp) ;
-int merc_hom_levelup(struct homun_data *hd) ;
-int merc_hom_evolution(struct homun_data *hd) ;
+int merc_hom_calc_skilltree(struct homun_data *hd);
+int merc_hom_checkskill(struct homun_data *hd,int skill_id);
+int merc_hom_gainexp(struct homun_data *hd,int exp);
+int merc_hom_levelup(struct homun_data *hd);
+int merc_hom_evolution(struct homun_data *hd);
+int hom_mutate(struct homun_data *hd,int homun_id);
 void merc_hom_heal(struct homun_data *hd,int hp,int sp);
 int merc_hom_vaporize(struct map_session_data *sd, int flag);
 int merc_resurrect_homunculus(struct map_session_data *sd, unsigned char per, short x, short y);

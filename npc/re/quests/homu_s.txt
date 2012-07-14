@@ -1,0 +1,236 @@
+//===== rAthena Script ======================================= 
+//= Homunculus S Quest
+//===== By: ================================================== 
+//= Masao
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena SVN
+//===== Description: ========================================= 
+//= Evolves an Homunculus which is at least Level 99 to the
+//= new Homunculus S Class.
+//===== Additional Comments: ================================= 
+//= 1.0 First Version. The actual changing dialog is currently
+//=     customized. [Masao]
+//============================================================ 
+
+job3_gen01,12,44,4	script	Viorel#job3_gen01	542,{
+
+	if((Class != Job_Genetic) && (Class != Job_Genetic_T) && (Class != Job_Baby_Genetic)){
+		mes "[Viorel]";
+		mes "^FF4800Homunculus^000000 research requires a lot of time and funding.";
+		mes "However, I believe passion is the most important factor.";
+		next;
+		switch(select("End conversation.:What are you talking about?:Why are you always standing there?")) {
+		case 1:
+			mes "[Viorel]";
+			mes "So long~!";
+			close;
+		case 2:
+			mes "[Viorel]";
+			mes "You see, ^006400Alchemists^000000 have an inquisitive nature.";
+			mes "People like me, especially, even think of creating life itself.";
+			next;
+			mes "[Viorel]";
+			mes "You'd have to research ^FF4800Homunculus^000000 to understand.";
+			mes "Now, if you'll excuse me~!";
+			close;
+		case 3:
+			emotion 4,0;
+			mes "[Viorel]";
+			mes "What, is it so strange to see an Alchemist in their own lab?";
+			mes "How so?";
+			close;
+		}
+	}
+	mes "[Viorel]";
+	mes "Hello "+strcharinfo(0)+",";
+	mes "what can I do for an fellow Alchemist like you?";
+	next;
+	switch(select("I want to evolve my Homunculus:About Homunculus S:Cancel")){
+	case 1:
+		mes "[Viorel]";
+		if(!getskilllv("AM_BIOETHICS")){
+			mes "I'm sorry but you must know the Skill Bioethics! Otherwise I can't let your Homunculus evolve into an Homunculus S.";
+			close;
+		}
+		if(gethominfo(1) < 6009){
+			mes "I'm sorry but you must have an evolved Homunculus, otherwise you can't let it evolve to the new Homunculus S.";
+			close;
+		}
+		if(gethominfo(6) < 99){
+			mes "I'm sorry but to evolve your Homunculus to the next level it must be Level 99!";
+			mes "Come back after you've trained your Homunculus a little bit more.";
+			close;
+		}
+		if(gethominfo(1) == 6048 || gethominfo(1) == 6049 || gethominfo(1) == 6050 || gethominfo(1) == 6051 || gethominfo(1) == 6052){
+			mes "Your Homunculus S looks great!";
+			mes "I hope you wil experience many great adventures with it!";
+			close;
+		}
+		mes "Great, it seems like you're all ready to get your Homunculus to the next level!";
+		next;
+		mes "[Viorel]";
+		mes "Now if you want to you can either directly change your Homunculus to an new random Homunculus S Form or you can donate a little fee";
+		mes "of 50'000 zeny to the Alchemist Guild and for this you'll be able to change your Homunculus into your desired Homunculus S Class!";
+		mes "So, what do you think?";
+		next;
+		switch(Select("I want to Donate:I don't want to Donate:Cancel")){
+		case 1:
+			if(Zeny < 50000){
+				mes "[Viorel]";
+				mes "Haha, nice try my friend! But you don't even have the 50'000 zeny to donate!";
+				mes "Come back if you have the zeny, thanks.";
+				close;
+			}
+			mes "[Viorel]";
+			mes "Allright, now please tell me which Homunculus you'd like to have:";
+			next;
+			switch(select("Eira:Bayeri:Sera:Dieter:Elanor:Cancel")){
+			case 1:
+				mes "[Viorel]";
+				mes "Ok, it's all set! Now just give me a moment!";
+				next;
+				mes "[Viorel]";
+				mes "Abra...";
+				next;
+				mes "[Viorel]";
+				mes "Kadabra...";
+				next;
+				mes "[Viorel]";
+				mes "Simsala!";
+				mes "...";
+				mes "Oh sorry.. wrong game!";
+				next;
+				mes "[Viorel]";
+				mes "Here you go! Your new Homunculus S!";
+				hommutate 6048;
+				set Zeny,Zeny - 50000;
+				close;
+			case 2:
+				mes "[Viorel]";
+				mes "Ok, it's all set! Now just give me a moment!";
+				next;
+				mes "[Viorel]";
+				mes "Abra...";
+				next;
+				mes "[Viorel]";
+				mes "Kadabra...";
+				next;
+				mes "[Viorel]";
+				mes "Simsala!";
+				mes "...";
+				mes "Oh sorry.. wrong game!";
+				next;
+				mes "[Viorel]";
+				mes "Here you go! Your new Homunculus S!";
+				hommutate 6049;
+				set Zeny,Zeny - 50000;
+				close;
+			case 3:
+				mes "[Viorel]";
+				mes "Ok, it's all set! Now just give me a moment!";
+				next;
+				mes "[Viorel]";
+				mes "Abra...";
+				next;
+				mes "[Viorel]";
+				mes "Kadabra...";
+				next;
+				mes "[Viorel]";
+				mes "Simsala!";
+				mes "...";
+				mes "Oh sorry.. wrong game!";
+				next;
+				mes "[Viorel]";
+				mes "Here you go! Your new Homunculus S!";
+				hommutate 6050;
+				set Zeny,Zeny - 50000;
+				close;
+			case 4:
+				mes "[Viorel]";
+				mes "Ok, it's all set! Now just give me a moment!";
+				next;
+				mes "[Viorel]";
+				mes "Abra...";
+				next;
+				mes "[Viorel]";
+				mes "Kadabra...";
+				next;
+				mes "[Viorel]";
+				mes "Simsala!";
+				mes "...";
+				mes "Oh sorry.. wrong game!";
+				next;
+				mes "[Viorel]";
+				mes "Here you go! Your new Homunculus S!";
+				hommutate 6051;
+				set Zeny,Zeny - 50000;
+				close;
+			case 5:
+				mes "[Viorel]";
+				mes "Ok, it's all set! Now just give me a moment!";
+				next;
+				mes "[Viorel]";
+				mes "Abra...";
+				next;
+				mes "[Viorel]";
+				mes "Kadabra...";
+				next;
+				mes "[Viorel]";
+				mes "Simsala!";
+				mes "...";
+				mes "Oh sorry.. wrong game!";
+				next;
+				mes "[Viorel]";
+				mes "Here you go! Your new Homunculus S!";
+				hommutate 6052;
+				set Zeny,Zeny - 50000;
+				close;
+			case 6:
+				mes "[Viorel]";
+				mes "So long~!";
+				close;
+			}
+		case 2:
+			mes "[Viorel]";
+			mes "Ok, it's all set! Now just give me a moment!";
+			next;
+			mes "[Viorel]";
+			mes "Abra...";
+			next;
+			mes "[Viorel]";
+			mes "Kadabra...";
+			next;
+			mes "[Viorel]";
+			mes "Simsala!";
+			mes "...";
+			mes "Oh sorry.. wrong game!";
+			next;
+			mes "[Viorel]";
+			mes "Here you go! Your new Homunculus S!";
+			hommutate;
+			close;
+		case 3:
+			mes "[Viorel]";
+			mes "So long~!";
+			close;
+		}
+	case 2:
+		mes "[Viorel]";
+		mes "The Homunculus S are the new and improved Versions of the current Homunculus you know.";
+		mes "These new Homunculus have been made since the Monsters in our World keep getting stronger and stronger";
+		mes "and our current loyal Homunculus are just not able to keep up with them anymore so they can't";
+		mes "protect their Masters anymore!";
+		next;
+		mes "[Viorel]";
+		mes "But since we're Alchemists and we don't want to abandon our precious Homunculus we found a Way to improve their";
+		mes "skills and strength in order to keep them by our side and joining us once more in battle!";
+		mes "Isn't that great?";
+		close;
+	case 3:
+		mes "[Viorel]";
+		mes "So long~!";
+		close;
+	}
+}
