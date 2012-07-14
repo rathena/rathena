@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.4
+//= 2.5
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -41,6 +41,7 @@
 //= 2.2 A little optimization (-25kb). [Euphy]
 //= 2.3 Updated to match the new Izlude Map. [Masao]
 //= 2.4 More optimization (-32kb). [Euphy]
+//= 2.5 Yet more optimization (-22kb). [Euphy]
 //============================================================ 
 
 // Onward to the New World
@@ -1261,509 +1262,65 @@ lhz_in01,132,259,5	script	Sikaiz#1	868,{
 	close;
 }
 
+function	script	Guard_13_1	{
+	mes "[Guard]";
+	if (ep13_ryu > 19) {
+		mes "You're not allowed to enter.";
+		mes "All of you are instructed to go to the Time-Gap of Dimension on Rune-Midgarts!";
+		next;
+		mes "[Guard]";
+		mes "Just go there.";
+		mes "This is a restricted area.";
+		close2;
+		warp "lhz_in01",getarg(1),getarg(2);
+		end;
+	}
+	if (ep13_ryu > 8) {
+		mes "You've come here";
+		mes "to register as a member of the three kingdoms?";
+		next;
+		mes "[Guard]";
+		mes "Enter.";
+		close;
+	}
+	else {
+		mes "You are not allowed";
+		mes "to enter.";
+		if (!getarg(0)) close;
+		close2;
+		warp "lhz_in01",getarg(1),getarg(2);
+		end;
+	}
+	end;
+}
+
 lhz_in01,115,250,3	script	Guard#ep13_1-1	899,2,2,{
-	if (ep13_ryu > 19) {
-		mes "[Guard]";
-		mes "You're not allowed to enter.";
-		mes "All of you are instructed to go to the Time-Gap of Dimension on Rune-Midgarts!";
-		next;
-		mes "[Guard]";
-		mes "Just go there.";
-		mes "This is a restricted area.";
-		close2;
-		warp "lhz_in01",108,252;
-		end;
-	}
-	if (ep13_ryu > 8) {
-		mes "[Guard]";
-		mes "You've come here";
-		mes "to register as a member of the three kingdoms?";
-		next;
-		mes "[Guard]";
-		mes "Enter.";
-		close;
-	}
-	else {
-		mes "[Guard]";
-		mes "You are not allowed";
-		mes "to enter.";
-		close;
-	}
-
-//OnTouch2:
+	callfunc "Guard_13_1",0,108,252;
 OnTouch:
-	if (ep13_ryu > 19) {
-		mes "[Guard]";
-		mes "You're not allowed to enter.";
-		mes "All of you are instructed to go to the Time-Gap of Dimension on Rune-Midgarts!";
-		next;
-		mes "[Guard]";
-		mes "Just go there.";
-		mes "This is a restricted area.";
-		close2;
-		warp "lhz_in01",108,252;
-		end;
-	}
-	if (ep13_ryu > 8) {
-		mes "[Guard]";
-		mes "You've come here";
-		mes "to register as a member of the three kingdoms?";
-		next;
-		mes "[Guard]";
-		mes "Enter.";
-		close;
-	}
-	else {
-		mes "[Guard]";
-		mes "You are not allowed";
-		mes "to enter.";
-		close2;
-		warp "lhz_in01",108,252;
-		end;
-	}
-	end;
+	callfunc "Guard_13_1",1,108,252;
 }
-
-lhz_in01,115,252,3	script	Guard#ep13_1-2	899,2,2,{
-	if (ep13_ryu > 19) {
-		mes "[Guard]";
-		mes "You're not allowed to enter.";
-		mes "All of you are instructed to go to the Time-Gap of Dimension on Rune-Midgarts!";
-		next;
-		mes "[Guard]";
-		mes "Just go there.";
-		mes "This is a restricted area.";
-		close2;
-		warp "lhz_in01",108,252;
-		end;
-	}
-	if (ep13_ryu > 8) {
-		mes "[Guard]";
-		mes "You've come here";
-		mes "to register as a member of the three kingdoms?";
-		next;
-		mes "[Guard]";
-		mes "Enter.";
-		close;
-	}
-	else {
-		mes "[Guard]";
-		mes "You are not allowed";
-		mes "to enter.";
-		close;
-	}
-
-//OnTouch2:
-OnTouch:
-	if (ep13_ryu > 19) {
-		mes "[Guard]";
-		mes "You're not allowed to enter.";
-		mes "All of you are instructed to go to the Time-Gap of Dimension on Rune-Midgarts!";
-		next;
-		mes "[Guard]";
-		mes "Just go there.";
-		mes "This is a restricted area.";
-		close2;
-		warp "lhz_in01",108,252;
-		end;
-	}
-	if (ep13_ryu > 8) {
-		mes "[Guard]";
-		mes "You've come here";
-		mes "to register as a member of the three kingdoms?";
-		next;
-		mes "[Guard]";
-		mes "Enter.";
-		close;
-	}
-	else {
-		mes "[Guard]";
-		mes "You are not allowed";
-		mes "to enter.";
-		close2;
-		warp "lhz_in01",108,252;
-		end;
-	}
-	end;
-}
+lhz_in01,115,252,3	duplicate(Guard#ep13_1-1)	Guard#ep13_1-2	899,2,2
 
 lhz_in01,147,252,7	script	Guard#ep13_1-3	899,2,2,{
-	if (ep13_ryu > 19) {
-		mes "[Guard]";
-		mes "You're not allowed to enter.";
-		mes "All of you are instructed to go to the Time-Gap of Dimension on Rune-Midgarts!";
-		next;
-		mes "[Guard]";
-		mes "Just go there.";
-		mes "This is a restricted area.";
-		close2;
-		warp "lhz_in01",152,252;
-		end;
-	}
-	if (ep13_ryu > 8) {
-		mes "[Guard]";
-		mes "You've come here";
-		mes "to register as a member of the three kingdoms?";
-		next;
-		mes "[Guard]";
-		mes "Enter.";
-		close;
-	}
-	else {
-		mes "[Guard]";
-		mes "You are not allowed";
-		mes "to enter.";
-		close;
-	}
-
-//OnTouch2:
+	callfunc "Guard_13_1",0,152,252;
 OnTouch:
-	if (ep13_ryu > 19) {
-		mes "[Guard]";
-		mes "You're not allowed to enter.";
-		mes "All of you are instructed to go to the Time-Gap of Dimension on Rune-Midgarts!";
-		next;
-		mes "[Guard]";
-		mes "Just go there.";
-		mes "This is a restricted area.";
-		close2;
-		warp "lhz_in01",152,252;
-		end;
-	}
-	if (ep13_ryu > 8) {
-		mes "[Guard]";
-		mes "You've come here";
-		mes "to register as a member of the three kingdoms?";
-		next;
-		mes "[Guard]";
-		mes "Enter.";
-		close;
-	}
-	else {
-		mes "[Guard]";
-		mes "You are not allowed";
-		mes "to enter.";
-		close2;
-		warp "lhz_in01",152,252;
-		end;
-	}
-	end;
+	callfunc "Guard_13_1",1,152,252;
 }
-
-lhz_in01,147,250,7	script	Guard#ep13_1-4	899,2,2,{
-	if (ep13_ryu > 19) {
-		mes "[Guard]";
-		mes "You're not allowed to enter.";
-		mes "All of you are instructed to go to the Time-Gap of Dimension on Rune-Midgarts!";
-		next;
-		mes "[Guard]";
-		mes "Just go there.";
-		mes "This is a restricted area.";
-		close2;
-		warp "lhz_in01",152,252;
-		end;
-	}
-	if (ep13_ryu > 8) {
-		mes "[Guard]";
-		mes "You've come here";
-		mes "to register as a member of the three kingdoms?";
-		next;
-		mes "[Guard]";
-		mes "Enter.";
-		close;
-	}
-	else {
-		mes "[Guard]";
-		mes "You are not allowed";
-		mes "to enter.";
-		close;
-	}
-
-//OnTouch2:
-OnTouch:
-	if (ep13_ryu > 19) {
-		mes "[Guard]";
-		mes "You're not allowed to enter.";
-		mes "All of you are instructed to go to the Time-Gap of Dimension on Rune-Midgarts!";
-		next;
-		mes "[Guard]";
-		mes "Just go there.";
-		mes "This is a restricted area.";
-		close2;
-		warp "lhz_in01",152,252;
-		end;
-	}
-	if (ep13_ryu > 8) {
-		mes "[Guard]";
-		mes "You've come here";
-		mes "to register as a member of the three kingdoms?";
-		next;
-		mes "[Guard]";
-		mes "Enter.";
-		close;
-	}
-	else {
-		mes "[Guard]";
-		mes "You are not allowed";
-		mes "to enter.";
-		close2;
-		warp "lhz_in01",152,252;
-		end;
-	}
-	end;
-}
+lhz_in01,147,250,7	duplicate(Guard#ep13_1-3)	Guard#ep13_1-4	899,2,2
 
 lhz_in01,124,234,5	script	Guard#ep13_1-5	899,2,2,{
-	if (ep13_ryu > 19) {
-		mes "[Guard]";
-		mes "You're not allowed to enter.";
-		mes "All of you are instructed to go to the Time-Gap of Dimension on Rune-Midgarts!";
-		next;
-		mes "[Guard]";
-		mes "Just go there.";
-		mes "This is a restricted area.";
-		close2;
-		warp "lhz_in01",123,229;
-		end;
-	}
-	if (ep13_ryu > 8) {
-		mes "[Guard]";
-		mes "You've come here";
-		mes "to register as a member of the three kingdoms?";
-		next;
-		mes "[Guard]";
-		mes "Enter.";
-		close;
-	}
-	else {
-		mes "[Guard]";
-		mes "You are not allowed";
-		mes "to enter.";
-		close;
-	}
-
-//OnTouch2:
+	callfunc "Guard_13_1",0,123,229;
 OnTouch:
-	if (ep13_ryu > 19) {
-		mes "[Guard]";
-		mes "You're not allowed to enter.";
-		mes "All of you are instructed to go to the Time-Gap of Dimension on Rune-Midgarts!";
-		next;
-		mes "[Guard]";
-		mes "Just go there.";
-		mes "This is a restricted area.";
-		close2;
-		warp "lhz_in01",123,229;
-		end;
-	}
-	if (ep13_ryu > 8) {
-		mes "[Guard]";
-		mes "You've come here";
-		mes "to register as a member of the three kingdoms?";
-		next;
-		mes "[Guard]";
-		mes "Enter.";
-		close;
-	}
-	else {
-		mes "[Guard]";
-		mes "You are not allowed";
-		mes "to enter.";
-		close2;
-		warp "lhz_in01",123,229;
-		end;
-	}
-	end;
+	callfunc "Guard_13_1",1,123,229;
 }
-
-lhz_in01,121,234,5	script	Guard#ep13_1-6	899,2,2,{
-	if (ep13_ryu > 19) {
-		mes "[Guard]";
-		mes "You're not allowed to enter.";
-		mes "All of you are instructed to go to the Time-Gap of Dimension on Rune-Midgarts!";
-		next;
-		mes "[Guard]";
-		mes "Just go there.";
-		mes "This is a restricted area.";
-		close2;
-		warp "lhz_in01",123,229;
-		end;
-	}
-	if (ep13_ryu > 8) {
-		mes "[Guard]";
-		mes "You've come here";
-		mes "to register as a member of the three kingdoms?";
-		next;
-		mes "[Guard]";
-		mes "Enter.";
-		close;
-	}
-	else {
-		mes "[Guard]";
-		mes "You are not allowed";
-		mes "to enter.";
-		close;
-	}
-
-//OnTouch2:
-OnTouch:
-	if (ep13_ryu > 19) {
-		mes "[Guard]";
-		mes "You're not allowed to enter.";
-		mes "All of you are instructed to go to the Time-Gap of Dimension on Rune-Midgarts!";
-		next;
-		mes "[Guard]";
-		mes "Just go there.";
-		mes "This is a restricted area.";
-		close2;
-		warp "lhz_in01",123,229;
-		end;
-	}
-	if (ep13_ryu > 8) {
-		mes "[Guard]";
-		mes "You've come here";
-		mes "to register as a member of the three kingdoms?";
-		next;
-		mes "[Guard]";
-		mes "Enter.";
-		close;
-	}
-	else {
-		mes "[Guard]";
-		mes "You are not allowed";
-		mes "to enter.";
-		close2;
-		warp "lhz_in01",123,229;
-		end;
-	}
-	end;
-}
+lhz_in01,121,234,5	duplicate(Guard#ep13_1-5)	Guard#ep13_1-6	899,2,2
 
 lhz_in01,137,234,5	script	Guard#ep13_1-7	899,2,2,{
-	if (ep13_ryu > 19) {
-		mes "[Guard]";
-		mes "You're not allowed to enter.";
-		mes "All of you are instructed to go to the Time-Gap of Dimension on Rune-Midgarts!";
-		next;
-		mes "[Guard]";
-		mes "Just go there.";
-		mes "This is a restricted area.";
-		close2;
-		warp "lhz_in01",139,228;
-		end;
-	}
-	if (ep13_ryu > 8) {
-		mes "[Guard]";
-		mes "You've come here";
-		mes "to register as a member of the three kingdoms?";
-		next;
-		mes "[Guard]";
-		mes "Enter.";
-		close;
-	}
-	else {
-		mes "[Guard]";
-		mes "You are not allowed";
-		mes "to enter.";
-		close;
-	}
-
-//OnTouch2:
+	callfunc "Guard_13_1",0,139,228;
 OnTouch:
-	if (ep13_ryu > 19) {
-		mes "[Guard]";
-		mes "You're not allowed to enter.";
-		mes "All of you are instructed to go to the Time-Gap of Dimension on Rune-Midgarts!";
-		next;
-		mes "[Guard]";
-		mes "Just go there.";
-		mes "This is a restricted area.";
-		close2;
-		warp "lhz_in01",139,228;
-		end;
-	}
-	if (ep13_ryu > 8) {
-		mes "[Guard]";
-		mes "You've come here";
-		mes "to register as a member of the three kingdoms?";
-		next;
-		mes "[Guard]";
-		mes "Enter.";
-		close;
-	}
-	else {
-		mes "[Guard]";
-		mes "You are not allowed";
-		mes "to enter.";
-		close2;
-		warp "lhz_in01",139,228;
-		end;
-	}
-	end;
+	callfunc "Guard_13_1",1,139,228;
 }
-
-lhz_in01,140,234,5	script	Guard#ep13_1-8	899,2,2,{
-	if (ep13_ryu > 19) {
-		mes "[Guard]";
-		mes "You're not allowed to enter.";
-		mes "All of you are instructed to go to the Time-Gap of Dimension on Rune-Midgarts!";
-		next;
-		mes "[Guard]";
-		mes "Just go there.";
-		mes "This is a restricted area.";
-		close2;
-		warp "lhz_in01",139,228;
-		end;
-	}
-	if (ep13_ryu > 8) {
-		mes "[Guard]";
-		mes "You've come here";
-		mes "to register as a member of the three kingdoms?";
-		next;
-		mes "[Guard]";
-		mes "Enter.";
-		close;
-	}
-	else {
-		mes "[Guard]";
-		mes "You are not allowed";
-		mes "to enter.";
-		close;
-	}
-
-//OnTouch2:
-OnTouch:
-	if (ep13_ryu > 19) {
-		mes "[Guard]";
-		mes "You're not allowed to enter.";
-		mes "All of you are instructed to go to the Time-Gap of Dimension on Rune-Midgarts!";
-		next;
-		mes "[Guard]";
-		mes "Just go there.";
-		mes "This is a restricted area.";
-		close2;
-		warp "lhz_in01",139,228;
-		end;
-	}
-	if (ep13_ryu > 8) {
-		mes "[Guard]";
-		mes "You've come here";
-		mes "to register as a member of the three kingdoms?";
-		next;
-		mes "[Guard]";
-		mes "Enter.";
-		close;
-	}
-	else {
-		mes "[Guard]";
-		mes "You are not allowed";
-		mes "to enter.";
-		close2;
-		warp "lhz_in01",139,228;
-		end;
-	}
-	end;
-}
+lhz_in01,140,234,5	duplicate(Guard#ep13_1-7)	Guard#ep13_1-8	899,2,2
 
 lhz_in01,130,232,5	script	Guard#ep13_1-9	899,{
 	if (ep13_ryu > 19) {
@@ -2677,54 +2234,11 @@ mid_camp,222,283,4	script	Marian#ep13bs	727,{
 		changequest 11091,11092;
 		close;
 	}
-	if ((ep13_newbs == 14) || (ep13_newbs == 15)) {
-		if (countitem(6045) < 3) {
-			mes "[Marian]";
-			mes "Ha! You misplaced the Supply Box?!";
-			mes "What the~~?";
-			emotion e_omg;
-			next;
-			mes "[Marian]";
-			mes "Ok, I have spares.";
-			mes "Let me give one to you.";
-			mes "Don't misplace this one, ok?!";
-			getitem 6045,1; //Supply_Box
-			close;
-		}
-		else {
-			mes "[Marian]";
-			mes "Do your job, man~";
-			mes "And please say hello";
-			mes "to the instructor.";
-			emotion e_lv;
-			close;
-		}
-	}
-	if ((ep13_newbs == 16) || (ep13_newbs == 17)) {
-		if (countitem(6045) < 2) {
-			mes "[Marian]";
-			mes "Ha! You misplaced the Supply Box?!";
-			mes "What the~~?";
-			emotion e_omg;
-			next;
-			mes "[Marian]";
-			mes "Ok, I have spares.";
-			mes "Let me give one to you.";
-			mes "Don't misplace this one, ok?!";
-			getitem 6045,1; //Supply_Box
-			close;
-		}
-		else {
-			mes "[Marian]";
-			mes "Do your job, man~";
-			mes "And please say hello";
-			mes "to the instructor.";
-			emotion e_lv;
-			close;
-		}
-	}
-	if ((ep13_newbs == 18) || (ep13_newbs == 19)) {
-		if (countitem(6045) < 1) {
+	if (ep13_newbs > 13 && ep13_newbs < 20) {
+		if (ep13_newbs < 16) set .@i,3;
+		else if (ep13_newbs < 18) set .@i,2;
+		else set .@i,1;
+		if (countitem(6045) < .@i) {
 			mes "[Marian]";
 			mes "Ha! You misplaced the Supply Box?!";
 			mes "What the~~?";
@@ -4223,14 +3737,7 @@ mid_camp,267,258,0	script	Post#ep13bs2	111,{
 		mes "- barracks are broken. -";
 		close;
 	}
-	else if (ep13_newbs == 6) {
-		mes "- The posts of the -";
-		mes "- barracks are broken. -";
-		mes "- You'd better go out and -";
-		mes "- find the materials to fix it. -";
-		close;
-	}
-	else if (ep13_newbs == 7) {
+	else if (ep13_newbs == 6 || ep13_newbs == 7) {
 		mes "- The posts of the -";
 		mes "- barracks are broken. -";
 		mes "- You'd better go out and -";
@@ -5270,46 +4777,7 @@ mid_camp,240,270,3	script	Botanist#ep13	750,{
 
 mid_camp,336,171,1	script	Camp Guard#man1	852,{
 	if (ep13_animal == 0) {
-		if (ep13_newbs == 6) {
-			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
-			mes "[Camp Guard]";
-			mes "Your cooperation is appreciated.";
-			next;
-			mes "[Camp Guard]";
-			mes "Oh, I was informed of your arrival by Mr. Diego.";
-			mes "You may pass.";
-			next;
-			mes "[Camp Guard]";
-			mes "Please be careful out there.";
-			mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-			close2;
-			warp "man_fild01",36,235;
-			end;
-		}
-		else if (ep13_newbs == 19) {
-			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
-			mes "[Camp Guard]";
-			mes "Your cooperation is appreciated.";
-			next;
-			mes "[Camp Guard]";
-			mes "Oh, I was informed of your arrival by Mr. Lugen.";
-			mes "You may pass.";
-			next;
-			mes "[Camp Guard]";
-			mes "Please be careful out there.";
-			mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-			close2;
-			warp "man_fild01",36,235;
-			end;
-		}
+		if (ep13_newbs == 6 || ep13_newbs == 19) goto OnHalt;
 		else {
 			mes "[Camp Guard]";
 			mes "Stop!";
@@ -5322,46 +4790,7 @@ mid_camp,336,171,1	script	Camp Guard#man1	852,{
 		}
 	}
 	else if (ep13_animal == 1) {
-		if (ep13_newbs == 6) {
-			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
-			mes "[Camp Guard]";
-			mes "Your cooperation is appreciated.";
-			next;
-			mes "[Camp Guard]";
-			mes "Oh, I was informed of your arrival by Mr. Diego.";
-			mes "You may pass.";
-			next;
-			mes "[Camp Guard]";
-			mes "Please be careful out there.";
-			mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-			close2;
-			warp "man_fild01",36,235;
-			end;
-		}
-		else if (ep13_newbs == 19) {
-			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
-			mes "[Camp Guard]";
-			mes "Your cooperation is appreciated.";
-			next;
-			mes "[Camp Guard]";
-			mes "Oh, I was informed of your arrival by Mr. Lugen.";
-			mes "You may pass.";
-			next;
-			mes "[Camp Guard]";
-			mes "Please be careful out there.";
-			mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-			close2;
-			warp "man_fild01",36,235;
-			end;
-		}
+		if (ep13_newbs == 6 || ep13_newbs == 19) goto OnHalt;
 		else {
 			mes "[Camp Guard]";
 			mes "Stop!";
@@ -5395,46 +4824,7 @@ mid_camp,336,171,1	script	Camp Guard#man1	852,{
 		}
 	}
 	else {
-		if (ep13_newbs == 6) {
-			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
-			mes "[Camp Guard]";
-			mes "Your cooperation is appreciated.";
-			next;
-			mes "[Camp Guard]";
-			mes "Oh, I was informed of your arrival by Mr. Diego.";
-			mes "You may pass.";
-			next;
-			mes "[Camp Guard]";
-			mes "Please be careful out there.";
-			mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-			close2;
-			warp "man_fild01",36,235;
-			end;
-		}
-		else if (ep13_newbs == 19) {
-			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
-			mes "[Camp Guard]";
-			mes "Your cooperation is appreciated.";
-			next;
-			mes "[Camp Guard]";
-			mes "Oh, I was informed of your arrival by Mr. Lugen.";
-			mes "You may pass.";
-			next;
-			mes "[Camp Guard]";
-			mes "Please be careful out there.";
-			mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-			close2;
-			warp "man_fild01",36,235;
-			end;
-		}
+		if (ep13_newbs == 6 || ep13_newbs == 19) goto OnHalt;
 		else {
 			mes "[Camp Guard]";
 			mes "Stop!";
@@ -5456,50 +4846,32 @@ mid_camp,336,171,1	script	Camp Guard#man1	852,{
 			}
 		}
 	}
+OnHalt:
+	if (ep13_newbs == 6) set .@n$,"Diego.";
+	else if (ep13_newbs == 19) set .@n$,"Lugen.";
+	mes "[Camp Guard]";
+	mes "Stop!";
+	mes "You're about to enter an area that has not been fully explored.";
+	mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
+	next;
+	mes "[Camp Guard]";
+	mes "Your cooperation is appreciated.";
+	next;
+	mes "[Camp Guard]";
+	mes "Oh, I was informed of your arrival by Mr. "+.@n$;
+	mes "You may pass.";
+	next;
+	mes "[Camp Guard]";
+	mes "Please be careful out there.";
+	mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
+	close2;
+	warp "man_fild01",36,235;
+	end;
 }
 
 mid_camp,13,143,5	script	Camp Guard#man2	852,{
 	if (ep13_animal == 0) {
-		if (ep13_newbs == 6) {
-			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
-			mes "[Camp Guard]";
-			mes "Your cooperation is appreciated.";
-			next;
-			mes "[Camp Guard]";
-			mes "Oh, I was informed of your arrival by Mr. Diego.";
-			mes "You may pass.";
-			next;
-			mes "[Camp Guard]";
-			mes "Please be careful out there.";
-			mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-			close2;
-			warp "spl_fild02",379,143;
-			end;
-		}
-		else if (ep13_newbs == 19) {
-			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
-			mes "[Camp Guard]";
-			mes "Your cooperation is appreciated.";
-			next;
-			mes "[Camp Guard]";
-			mes "Oh, I was informed of your arrival by Mr. Lugen.";
-			mes "You may pass.";
-			next;
-			mes "[Camp Guard]";
-			mes "Please be careful out there.";
-			mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-			close2;
-			warp "spl_fild02",379,143;
-			end;
-		}
+		if (ep13_newbs == 6 || ep13_newbs == 19) goto OnHalt;
 		else {
 			mes "[Camp Guard]";
 			mes "Stop!";
@@ -5511,109 +4883,9 @@ mid_camp,13,143,5	script	Camp Guard#man2	852,{
 			close;
 		}
 	}
-	else if (ep13_animal == 5) {
-		if (ep13_newbs == 6) {
-			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
-			mes "[Camp Guard]";
-			mes "Your cooperation is appreciated.";
-			next;
-			mes "[Camp Guard]";
-			mes "Oh, I was informed of your arrival by Mr. Diego.";
-			mes "You may pass.";
-			next;
-			mes "[Camp Guard]";
-			mes "Please be careful out there.";
-			mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-			close2;
-			warp "spl_fild02",379,143;
-			end;
-		}
-		else if (ep13_newbs == 19) {
-			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
-			mes "[Camp Guard]";
-			mes "Your cooperation is appreciated.";
-			next;
-			mes "[Camp Guard]";
-			mes "Oh, I was informed of your arrival by Mr. Lugen.";
-			mes "You may pass.";
-			next;
-			mes "[Camp Guard]";
-			mes "Please be careful out there.";
-			mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-			close2;
-			warp "spl_fild02",379,143;
-			end;
-		}
-		else {
-			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
-			mes "[Camp Guard]";
-			mes "Your cooperation is appreciated.";
-			next;
-			mes "[Camp Guard]";
-			mes "Oh, I was informed of your arrival by Mr. Terris.";
-			mes "You may pass.";
-			next;
-			mes "[Camp Guard]";
-			mes "Please be careful out there.";
-			mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-			close2;
-			warp "spl_fild02",379,143;
-			end;
-		}
-	}
+	else if (ep13_animal == 5) goto OnHalt;
 	else {
-		if (ep13_newbs == 6) {
-			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
-			mes "[Camp Guard]";
-			mes "Your cooperation is appreciated.";
-			next;
-			mes "[Camp Guard]";
-			mes "Oh, I was informed of your arrival by Mr. Diego.";
-			mes "You may pass.";
-			next;
-			mes "[Camp Guard]";
-			mes "Please be careful out there.";
-			mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-			close2;
-			warp "spl_fild02",379,143;
-			end;
-		}
-		else if (ep13_newbs == 19) {
-			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
-			mes "[Camp Guard]";
-			mes "Your cooperation is appreciated.";
-			next;
-			mes "[Camp Guard]";
-			mes "Oh, I was informed of your arrival by Mr. Lugen.";
-			mes "You may pass.";
-			next;
-			mes "[Camp Guard]";
-			mes "Please be careful out there.";
-			mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-			close2;
-			warp "spl_fild02",379,143;
-			end;
-		}
+		if (ep13_newbs == 6 || ep13_newbs == 19) goto OnHalt;
 		else {
 			mes "[Camp Guard]";
 			mes "Stop!";
@@ -5635,50 +4907,33 @@ mid_camp,13,143,5	script	Camp Guard#man2	852,{
 			}
 		}
 	}
+OnHalt:
+	if (ep13_newbs == 6) set .@n$,"Diego.";
+	else if (ep13_newbs == 19) set .@n$,"Lugen.";
+	else set .@n$,"Terris.";
+	mes "[Camp Guard]";
+	mes "Stop!";
+	mes "You're about to enter an area that has not been fully explored.";
+	mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
+	next;
+	mes "[Camp Guard]";
+	mes "Your cooperation is appreciated.";
+	next;
+	mes "[Camp Guard]";
+	mes "Oh, I was informed of your arrival by Mr. "+.@n$;
+	mes "You may pass.";
+	next;
+	mes "[Camp Guard]";
+	mes "Please be careful out there.";
+	mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
+	close2;
+	warp "spl_fild02",379,143;
+	end;
 }
 
 mid_camp,9,215,5	script	Camp Guard#man3	852,{
 	if (ep13_animal == 0) {
-		if (ep13_newbs == 6) {
-			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
-			mes "[Camp Guard]";
-			mes "Your cooperation is appreciated.";
-			next;
-			mes "[Camp Guard]";
-			mes "Oh, I was informed of your arrival by Mr. Diego.";
-			mes "You may pass.";
-			next;
-			mes "[Camp Guard]";
-			mes "Please be careful out there.";
-			mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-			close2;
-			warp "spl_fild02",380,217;
-			end;
-		}
-		else if (ep13_newbs == 19) {
-			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
-			mes "[Camp Guard]";
-			mes "Your cooperation is appreciated.";
-			next;
-			mes "[Camp Guard]";
-			mes "Oh, I was informed of your arrival by Mr. Lugen.";
-			mes "You may pass.";
-			next;
-			mes "[Camp Guard]";
-			mes "Please be careful out there.";
-			mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-			close2;
-			warp "spl_fild02",380,217;
-			end;
-		}
+		if (ep13_newbs == 6 || ep13_newbs == 19) goto OnHalt;
 		else {
 			mes "[Camp Guard]";
 			mes "Stop!";
@@ -5690,109 +4945,9 @@ mid_camp,9,215,5	script	Camp Guard#man3	852,{
 			close;
 		}
 	}
-	else if (ep13_animal == 5) {
-		if (ep13_newbs == 6) {
-			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
-			mes "[Camp Guard]";
-			mes "Your cooperation is appreciated.";
-			next;
-			mes "[Camp Guard]";
-			mes "Oh, I was informed of your arrival by Mr. Diego.";
-			mes "You may pass.";
-			next;
-			mes "[Camp Guard]";
-			mes "Please be careful out there.";
-			mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-			close2;
-			warp "spl_fild02",380,217;
-			end;
-		}
-		else if (ep13_newbs == 19) {
-			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
-			mes "[Camp Guard]";
-			mes "Your cooperation is appreciated.";
-			next;
-			mes "[Camp Guard]";
-			mes "Oh, I was informed of your arrival by Mr. Lugen.";
-			mes "You may pass.";
-			next;
-			mes "[Camp Guard]";
-			mes "Please be careful out there.";
-			mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-			close2;
-			warp "spl_fild02",380,217;
-			end;
-		}
-		else {
-			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
-			mes "[Camp Guard]";
-			mes "Your cooperation is appreciated.";
-			next;
-			mes "[Camp Guard]";
-			mes "Oh, I was informed of your arrival by Mr. Terris.";
-			mes "You may pass.";
-			next;
-			mes "[Camp Guard]";
-			mes "Please be careful out there.";
-			mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-			close2;
-			warp "spl_fild02",380,217;
-			end;
-		}
-	}
+	else if (ep13_animal == 5) goto OnHalt;
 	else {
-		if (ep13_newbs == 6) {
-			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
-			mes "[Camp Guard]";
-			mes "Your cooperation is appreciated.";
-			next;
-			mes "[Camp Guard]";
-			mes "Oh, I was informed of your arrival by Mr. Diego.";
-			mes "You may pass.";
-			next;
-			mes "[Camp Guard]";
-			mes "Please be careful out there.";
-			mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-			close2;
-			warp "spl_fild02",380,217;
-			end;
-		}
-		else if (ep13_newbs == 19) {
-			mes "[Camp Guard]";
-			mes "Stop!";
-			mes "You're about to enter an area that has not been fully explored.";
-			mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
-			next;
-			mes "[Camp Guard]";
-			mes "Your cooperation is appreciated.";
-			next;
-			mes "[Camp Guard]";
-			mes "Oh, I was informed of your arrival by Mr. Lugen.";
-			mes "You may pass.";
-			next;
-			mes "[Camp Guard]";
-			mes "Please be careful out there.";
-			mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
-			close2;
-			warp "spl_fild02",380,217;
-			end;
-		}
+		if (ep13_newbs == 6 || ep13_newbs == 19) goto OnHalt;
 		else {
 			mes "[Camp Guard]";
 			mes "Stop!";
@@ -5814,6 +4969,28 @@ mid_camp,9,215,5	script	Camp Guard#man3	852,{
 			}
 		}
 	}
+OnHalt:
+	if (ep13_newbs == 6) set .@n$,"Diego.";
+	else if (ep13_newbs == 19) set .@n$,"Lugen.";
+	else set .@n$,"Terris.";
+	mes "[Camp Guard]";
+	mes "Stop!";
+	mes "You're about to enter an area that has not been fully explored.";
+	mes "Only personnel--researchers and explorers--authorized by United Midgard and the garrison are allowed to enter the danger zone.";
+	next;
+	mes "[Camp Guard]";
+	mes "Your cooperation is appreciated.";
+	next;
+	mes "[Camp Guard]";
+	mes "Oh, I was informed of your arrival by Mr. "+.@n$;
+	mes "You may pass.";
+	next;
+	mes "[Camp Guard]";
+	mes "Please be careful out there.";
+	mes "If you encounter any threats or strange phenomenon, then please don't hesitate to report to us at the garrison.";
+	close2;
+	warp "spl_fild02",380,217;
+	end;
 }
 
 mid_camp,49,154,0	script	#env_clear	-1,3,3,{
@@ -6603,17 +5780,6 @@ OnTouch:
 			mes "[United Research Official]";
 			mes "Please, stop by and say hellp to us from time to time.";
 			getitem 12110,1; //First_Aid_Kit
-			close;
-		}
-		else if (ep13_1_rhea > 99) {
-			mes "[United Research Official]";
-			mes "Thank you for everything.";
-			next;
-			mes "[United Research Official]";
-			mes "Please, stop by and say hellp to us from time to time.";
-			next;
-			mes "[United Research Official]";
-			mes "Oh, I'm not asking you to keep your eye on those 3 researchers. Don't get me wrong, hahaha.~";
 			close;
 		}
 		else {
@@ -15546,14 +14712,14 @@ OnTouch:
 		mes "but...";
 		next;
 		mes "[Male Voice]";
-		mes "..This is totally wrong.";
+		mes "...This is totally wrong.";
 		mes "We did something that we shouldn't have.";
 		mes "Come on, reconsider this.";
 		next;
 		mes "[Male Voice]";
 		mes "Rayan, Rayan!";
 		mes "All we wanted was just to shake up the town just a little bit,";
-		mes "not summon Satan Morocc! The ritual failed like we first planned, but..";
+		mes "not summon Satan Morocc! The ritual failed like we first planned, but...";
 		next;
 		mes "[Voices]";
 		mes "That's right. It failed, but what happened? Satan Morocc resurrected himself.";
@@ -15562,19 +14728,19 @@ OnTouch:
 		mes "We can't even go back to our country now!";
 		next;
 		mes "[Anxious Voice]";
-		mes "..We all knew that we would be disposed after we stopped being useful.. Just like pawns in a chess match.";
+		mes "...We all knew that we would be disposed after we stopped being useful.. Just like pawns in a chess match.";
 		mes "But I'm curious.";
-		mes "Rayan..";
+		mes "Rayan...";
 		next;
 		mes "[Anxious Voice]";
 		mes "Rayan, say something!";
 		mes "What the hell's wrong with you?";
 		mes "Why, can't you still forget the Assassin?";
-		mes "..Hey, tell us. What should we do now?";
+		mes "...Hey, tell us. What should we do now?";
 		next;
 		mes "[Anxious Voice]";
 		mes "Let me ask you one question.";
-		mes "..Did you.. Did you really summon Satan Morocc?";
+		mes "...Did you... Did you really summon Satan Morocc?";
 		mes "Did you?";
 		mes "Did you really ask us to help you resurrect Satan Morocc?!";
 		next;
@@ -15596,13 +14762,13 @@ OnTouch:
 		mes "It sounds like they're having a serious dispute.-";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "..Rayan? ..Morroc? ..Resurrect..?";
+		mes "...Rayan? ...Morroc? ...Resurrect...?";
 		mes "I have no idea what they're talking about. Why are they fighting?";
 		next;
 		mes "[Rayan]";
 		mes "You ignorant puppets..";
-		mes "You're too stupid to understand my master's great will..";
-		mes "..Oh, right. I completely forgot about 'it.' It's time to take it back.";
+		mes "You're too stupid to understand my master's great will...";
+		mes "...Oh, right. I completely forgot about 'it.' It's time to take it back.";
 		mes "What do you say? *Giggle Giggle*";
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -15653,21 +14819,21 @@ que_dan02,115,53,3	script	Man#moc2_crazyR01	456,{
 		mes "Woah! Where did you come from?";
 		next;
 		mes "[Mr. Kidd]";
-		mes "..From somewhere.";
-		mes "Anyways..";
+		mes "...From somewhere.";
+		mes "Anyways...";
 		mes "What happened?";
 		mes "Who are you?";
 		next;
 		cutin "moc2_dan01",2;
 		mes "[Man]";
-		mes "..Who am I..?";
-		mes "..I think I forgot..";
+		mes "...Who am I...?";
+		mes "...I think I forgot...";
 		mes "They're all dead.. I've killed them.";
 		mes "Hehehe, I just followed the will of my master.";
 		mes "Muhahahahaha!!";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "No.. No way!";
+		mes "No... No way!";
 		next;
 		select("Rayan?!");
 		cutin "moc2_kid02",0;
@@ -15678,19 +14844,19 @@ que_dan02,115,53,3	script	Man#moc2_crazyR01	456,{
 		next;
 		cutin "moc2_dan02",2;
 		mes "[Rayan]";
-		mes "..Ray.. Rayan? That's my name? That's right..";
+		mes "...Ray... Rayan? That's my name? That's right...";
 		mes "I'm Rayan. Rayan Moore.";
 		mes "Who are you..?";
 		next;
 		mes "[Rayan]";
 		mes "Where am I? What's all this blood?!";
-		mes "..Huh? Where am I? What happened to my friends?";
+		mes "...Huh? Where am I? What happened to my friends?";
 		next;
 		cutin "mocseal_kid01",0;
 		mes "[Mr. Kidd]";
-		mes "..I guess I was right. He really is Rayan Moore.";
+		mes "...I guess I was right. He really is Rayan Moore.";
 		mes "What's wrong with him?";
-		mes "He seems.. He seems really confused. Maybe even unstable.";
+		mes "He seems... He seems really confused. Maybe even unstable.";
 		next;
 		mes "[Mr. Kidd]";
 		mes "Well, it's the perfect time to capture this guy before he can kill us.";
