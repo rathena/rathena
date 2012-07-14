@@ -5445,7 +5445,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		i = map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), splash_target(src), 
 			src, skillid, skilllv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
-		if( !i && skillid == NC_AXETORNADO || skillid == SR_SKYNETBLOW )
+		if( !i && ( skillid == NC_AXETORNADO || skillid == SR_SKYNETBLOW ) )
 			clif_skill_damage(src,src,tick, status_get_amotion(src), 0, -30000, 1, skillid, skilllv, 6);
 		break;
 
@@ -10022,9 +10022,8 @@ static int skill_icewall_block(struct block_list *bl,va_list ap) {
 
 	nullpo_ret(bl);
 	nullpo_ret(md);
-	if( !md->target_id )
+	if( !md->target_id || ( target = map_id2bl(md->target_id) ) == NULL )
 		return 0;
-	nullpo_ret( ( target = map_id2bl(md->target_id) ) );
 	
 	if( path_search_long(NULL,bl->m,bl->x,bl->y,target->x,target->y,CELL_CHKICEWALL) )
 		return 0;
