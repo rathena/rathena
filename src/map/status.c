@@ -9507,7 +9507,10 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			map_freeblock_lock();
 			status_fix_damage(NULL, bl, sd||hp<status->hp?hp:status->hp-1, 1);
 			if( sc->data[type] ) {
-				if( status->hp == 1 ) break;
+				if( status->hp == 1 ) {
+					map_freeblock_unlock();
+					break;
+				}
 				sc_timer_next(10000 + tick, status_change_timer, bl->id, data);
 			}
 			map_freeblock_unlock();
