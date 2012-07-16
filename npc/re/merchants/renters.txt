@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88, mod by Lupus
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -22,6 +22,7 @@
 //= 1.8 Added 3rd Job creature NPCs (Dragon/Gryphon) [L0ne_W0lf]
 //= 1.9 Enabled Gryphon Renter NPC and added Mado Gear NPC. [Masao]
 //= 2.0 Fixed problems with third classes and new mounts. [Euphy]
+//= 2.1 Moved some renters to a separate renewal file. [Daegaladh]
 //============================================================ 
 
 // PecoPeco Breeder (for Knights)-------------------------------------------
@@ -211,171 +212,4 @@ hu_in01,381,304,5	script	Falcon Breeder#hnt	105,{
 		mes "...Heh heh, jealous?";
 		close;
 	}
-}
-
-// Dragon Breeder on the Rune Knight job change map, couldn't find NPC on iRO.
-job3_rune01,88,62,5	script	Dragon Breeder	105,{
-	mes "[Dragon Breeder]";
-	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
-		mes "Welcome. Would you like to rent a Dragon?";
-		next;
-		switch(select("Yes:No")) {
-		case 1:
-			//if (!getskilllv("RK_DRAGONTRAINING")) {
-			if (!getskilllv("KN_RIDING")) {
-				mes "[Dragon Breeder]";
-				mes "Please learn how to ride a Dragon first.";
-				close;
-			}
-			else if (checkriding()) {
-				mes "[Dragon Breeder]";
-				mes "You already have a Dragon.";
-				close;
-			}
-			else if(ismounting()) {
-				mes "[Dragon Breeder]";
-				mes "Please remove your cash mount.";
-				close;
-			}
-			setdragon;
-			close;
-		case 2:
-			mes "[Dragon Breeder]";
-			mes "I see. Then have a great day.";
-			close;
-		}
-	}
-	mes "What are you doing here?";
-	mes "Only Rune Knights can rent a Dragon.";
-	close;
-}
-
-// Dragon/Gryphon Master
-prontera,130,213,5	script	Riding Creature Master	105,{
-	mes "[Riding Creature Master]";
-	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
-		mes "Welcome. Would you like to rent a Dragon?";
-		next;
-		switch(select("Yes:No")) {
-		case 1:
-			//if (!getskilllv("RK_DRAGONTRAINING")) {
-			if (!getskilllv("KN_RIDING")) {
-				mes "[Riding Creature Master]";
-				mes "Please learn how to ride a Dragon first.";
-				close;
-			}
-			else if (checkriding()) {
-				mes "[Riding Creature Master]";
-				mes "You already have a Dragon.";
-				close;
-			}
-			else if(ismounting()) {
-				mes "[Riding Creature Master]";
-				mes "Please remove your cash mount.";
-				close;
-			}
-			setdragon;
-			close;
-		case 2:
-			mes "[Riding Creature Master]";
-			mes "I see. Then have a great day.";
-			close;
-		}
-	}
-	if (Class == Job_Royal_Guard || Class == Job_Royal_Guard_T || Class == Job_Baby_Guard) {
-		mes "Welcome. Would you like to rent a Gryphon?";
-		next;
-		switch(select("Yes:No")) {
-		case 1:
-			if(!getskilllv("KN_RIDING")) {
-				mes "[Riding Creature Master]";
-				mes "Please learn how to ride a Gryphon first.";
-				close;
-			}
-			else if (checkriding()) {
-				mes "[Riding Creature Master]";
-				mes "You already have a Gryphon.";
-				close;
-			}
-			else if(ismounting()) {
-				mes "[Riding Creature Master]";
-				mes "Please remove your cash mount.";
-				close;
-			}
-			setriding;
-			close;
-		case 2:
-			mes "[Riding Creature Master]";
-			mes "I see. Then have a great day.";
-			close;
-		}
-	}
-	mes "I'm here to provide Rune Knights and Royal Guards with riding creatures.";
-	close;
-}
-
-// Peco removing NPC
-prontera,125,208,5	script	Peco Peco Remover	105,{
-	mes "[Soldier]";
-	mes "If you're unable to dismount from a Peco Peco";
-	mes "for some unknown reason,";
-	mes "please feel free to use my services.";
-	if (checkriding()) {
-		next;
-		mes "[Soldier]";
-		mes "You're riding a Peco Peco.";
-		mes "Would you like to dismount?";
-		next;
-		switch(select("Yes:No")) {
-		case 1:
-			setriding 0;
-			mes "[Soldier]";
-			mes "Say, how does it feel to";
-			mes "step on the ground on your own";
-			mes "feet again?";
-			close;
-		case 2:
-			mes "[Soldier]";
-			mes "I see. Please feel free to ask me";
-			mes "if you change your mind.";
-			close;
-		}
-	}
-	close;
-}
-
-// Magic Gear Renter
-prontera,163,178,4	script	Magic Gear Master	105,{
-	mes "[Magic Gear Master]";
-	if (Class == Job_Mechanic || Class == Job_Mechanic_T || Class == Job_Baby_Mechanic) {
-		mes "Welcome. Would you like to rent a Magic Gear?";
-		next;
-		switch(select("Yes:No")) {
-		case 1:
-			if (!getskilllv("NC_MADOLICENCE")) {
-				mes "[Magic Gear Master]";
-				mes "Please learn how to use a Magic Gear first.";
-				close;
-			}
-			else if (checkmadogear()) {
-				mes "[Magic Gear Master]";
-				mes "You already have a Magic Gear.";
-				close;
-			}
-			else if(ismounting()) {
-				mes "[Magic Gear Master]";
-				mes "Please remove your cash mount.";
-				close;
-			}
-			setmadogear;
-			close;
-		case 2:
-			mes "[Magic Gear Master]";
-			mes "I see. Then have a great day.";
-			close;
-		}
-	}
-	mes "How may I help you?";
-	mes "Magic Gears are only available for Mechanics.";
-	close;
 }
