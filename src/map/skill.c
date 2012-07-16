@@ -1254,8 +1254,11 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		else if( dstmd && !is_boss(bl) )
 			sc_start(bl, SC_STUN, 100, skilllv, 1000 + 1000 * (rnd() %3));
 		break;
-	case SR_GENTLETOUCH_QUIET:
-		sc_start(bl, SC_SILENCE, 2 * skilllv, skilllv, skill_get_time(skillid, skilllv));
+	case SR_GENTLETOUCH_QUIET:  //  [(Skill Level x 5) + (Caster’s DEX + Caster’s Base Level) / 10]
+		sc_start(bl, SC_SILENCE, 5 * skilllv + (sstatus->dex + status_get_lv(src)) / 10, skilllv, skill_get_time(skillid, skilllv));
+		break;
+	case SR_EARTHSHAKER:
+		sc_start(bl,SC_STUN, 25 + 5 * skilllv,skilllv,skill_get_time(skillid,skilllv));
 		break;
 	case SR_HOWLINGOFLION:
 		sc_start(bl, SC_FEAR, 5 + 5 * skilllv, skilllv, skill_get_time(skillid, skilllv));
@@ -4319,20 +4322,14 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case SR_EARTHSHAKER:
-		if( flag&1 ) {
-			struct status_change *tsc = status_get_sc(bl);
-			if( tsc && (tsc->data[SC_HIDING] || tsc->data[SC_CHASEWALK] || tsc->data[SC_CLOAKING] || tsc->data[SC_CLOAKINGEXCEED]) ) {
-				status_change_end(bl, SC_HIDING, INVALID_TIMER);
-				status_change_end(bl, SC_CLOAKING, INVALID_TIMER);
-				status_change_end(bl, SC_CHASEWALK, INVALID_TIMER);
-				status_change_end(bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
-				sc_start(bl,SC_STUN, 25 + 5 * skilllv,skilllv,skill_get_time(skillid,skilllv));//Does it apply the stun chance to targets knocked out of hiding, or it applys allways? [Rytech]
-				skill_attack(BF_WEAPON, src, src, bl, skillid, skilllv, tick, flag);
-			} else
-				skill_attack(BF_WEAPON, src, src, bl, skillid, skilllv, tick, flag);
-		} else
+		if( flag&1 ) { //by default cloaking skills are remove by aoe skills so no more checking/removing except hiding and cloaking exceed.
+			status_change_end(bl, SC_HIDING, INVALID_TIMER);
+			status_change_end(bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
+			skill_attack(BF_WEAPON, src, src, bl, skillid, skilllv, tick, flag);
+		} else{
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), splash_target(src), src, skillid, skilllv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
-		clif_skill_damage(src, src, tick, status_get_amotion(src), 0, -30000, 1, skillid, skilllv, 6);
+			clif_skill_damage(src, src, tick, status_get_amotion(src), 0, -30000, 1, skillid, skilllv, 6);
+		}
 		break;
 
 	case WM_LULLABY_DEEPSLEEP:
@@ -5130,8 +5127,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case SR_CRESCENTELBOW:
 	case SR_LIGHTNINGWALK:
 	case SR_GENTLETOUCH_ENERGYGAIN:
-	case SR_GENTLETOUCH_CHANGE:
-	case SR_GENTLETOUCH_REVITALIZE:
 	case GN_CARTBOOST:			
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
@@ -8151,6 +8146,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		}
+		break;
+	case SR_GENTLETOUCH_CHANGE:
+	case SR_GENTLETOUCH_REVITALIZE:		
+		clif_skill_nodamage(src,bl,skillid,skilllv,
+			sc_start2(bl,type,100,skilllv,src->id,skill_get_time(skillid,skilllv)));
 		break;
 	case WA_SWING_DANCE:
 	case WA_MOONLIT_SERENADE:
@@ -13990,7 +13990,7 @@ static int skill_trap_splash (struct block_list *bl, va_list ap)
 	nullpo_ret(sg = unit->group);
 	nullpo_ret(ss = map_id2bl(sg->src_id));
 
-	if(battle_check_target(src,bl,BCT_ENEMY) <= 0)
+	if(battle_check_target(src,bl,sg->target_flag) <= 0)
 		return 0;
 
 	switch(sg->unit_id){

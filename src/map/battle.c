@@ -2306,11 +2306,20 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					RE_LVL_DMOD(100);
 					break;
 				case SR_EARTHSHAKER:
-					skillratio += 50 * skill_lv - 50;// Need to code a check to make the ratio 3x when hitting a hidden player. [Rytech]
+					if( tsc && (tsc->data[SC_HIDING] || tsc->data[SC_CLOAKING] || // [(Skill Level x 150) x (Caster’s Base Level / 100) + (Caster’s INT x 3)] %
+						tsc->data[SC_CHASEWALK] || tsc->data[SC_CLOAKINGEXCEED] || tsc->data[SC__INVISIBILITY]) ){
+						skillratio = 150 * skill_lv;
+						RE_LVL_DMOD(100);
+						skillratio += sstatus->int_ * 3;
+					}else{ //[(Skill Level x 50) x (Caster’s Base Level / 100) + (Caster’s INT x 2)] %
+						skillratio += 50 * (skill_lv-2);
+						RE_LVL_DMOD(100);
+						skillratio += sstatus->int_ * 2;
+					}
 					break;
 				case SR_FALLENEMPIRE:// ATK [(Skill Level x 150 + 100) x Caster’s Base Level / 150] % 
 					skillratio += 150 *skill_lv;
-					RE_LVL_DMOD(100);
+					RE_LVL_DMOD(150);
  					break;
 				case SR_TIGERCANNON:// ATK [((Caster’s consumed HP + SP) / 4) x Caster’s Base Level / 100] % 
 					{
@@ -2323,22 +2332,27 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					}
 						break;
 				case SR_RAMPAGEBLASTER:
-					if( sc && sc->data[SC_EXPLOSIONSPIRITS] )
-						skillratio += 40 * skill_lv * (sd?sd->spiritball_old:5) - 100;
-					else
-						skillratio += 20 * skill_lv * (sd?sd->spiritball_old:5) - 100;
+					skillratio += 20 * skill_lv * (sd?sd->spiritball_old:5) - 100;
+					if( sc && sc->data[SC_EXPLOSIONSPIRITS] ){
+						skillratio += sc->data[SC_EXPLOSIONSPIRITS]->val1 * 20;
+						RE_LVL_DMOD(120);
+					}else
+						RE_LVL_DMOD(150);
 					break;
 				case SR_KNUCKLEARROW:
-					if( wflag&4 )
-						skillratio = 150 * skill_lv; //+Knockback Damage (Must check and test. [Rytech])
-					else
+					if( wflag&4 ){  // ATK [(Skill Level x 150) + (1000 x Target’s current weight / Maximum weight) + (Target’s Base Level x 5) x (Caster’s Base Level / 150)] %
+						skillratio = 150 * skill_lv + status_get_lv(target) * 5 * (status_get_lv(src) / 100) ;
+						if( tsd && tsd->weight )
+							skillratio += 100 * (tsd->weight / tsd->max_weight);
+					}else // ATK [(Skill Level x 100 + 500) x Caster’s Base Level / 100] %
 						skillratio += 400 + (100 * skill_lv);
+					RE_LVL_DMOD(100);
 					break;
 				case SR_WINDMILL: // ATK [(Caster’s Base Level + Caster’s DEX) x Caster’s Base Level / 100] %
 					skillratio = status_get_lv(src) + sstatus->dex;
 					RE_LVL_DMOD(100);
 					break;
-				case SR_GATEOFHELL:
+				case SR_GATEOFHELL: 
 					if( sc && sc->data[SC_COMBO] 
 						&& sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE )
 						skillratio += 800 * skill_lv -100;
@@ -2348,9 +2362,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					break;
 				case SR_GENTLETOUCH_QUIET:
 					skillratio += 100 * skill_lv - 100 + sstatus->dex;
+					RE_LVL_DMOD(100);
 					break;
 				case SR_HOWLINGOFLION:
 					skillratio += 300 * skill_lv - 100;
+					RE_LVL_DMOD(150);
 					break;
 				case SR_RIDEINLIGHTNING: // ATK [{(Skill Level x 200) + Additional Damage} x Caster’s Base Level / 100] %
 					if( (sstatus->rhw.ele) == ELE_WIND || (sstatus->lhw.ele) == ELE_WIND )
@@ -2567,10 +2583,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				if( (sstatus->rhw.ele) == ELE_WIND || (sstatus->lhw.ele) == ELE_WIND )
 					ATK_ADDRATE(50);
 				break;
-			case SR_EARTHSHAKER:
-				if( tsc && (tsc->data[SC_HIDING] || tsc->data[SC_CLOAKING] || tsc->data[SC_CHASEWALK] || tsc->data[SC_CLOAKINGEXCEED]) )
-					ATK_ADDRATE(150+150*skill_lv);
-				break;
 		}
 		
 		if( sd )
@@ -2643,6 +2655,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				def1 -= def1 * i / 100;
 				def2 -= def2 * i / 100;
 			}
+
+			if( tsc && tsc->data[SC_GT_REVITALIZE] && tsc->data[SC_GT_REVITALIZE]->val4 )
+				def2 += 2 * tsc->data[SC_GT_REVITALIZE]->val4;
 
 			if( battle_config.vit_penalty_type && battle_config.vit_penalty_target&target->type ) {
 				unsigned char target_count; //256 max targets should be a sane max
@@ -2720,8 +2735,15 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 #endif
 				ATK_ADD(20*lv);
 			}
+
 			if(sc->data[SC_GN_CARTBOOST])
 				ATK_ADD(10*sc->data[SC_GN_CARTBOOST]->val1);
+
+			if(sc->data[SC_GT_CHANGE] && sc->data[SC_GT_CHANGE]->val2){
+				struct block_list *bl; // ATK increase: ATK [{(Caster’s DEX / 4) + (Caster’s STR / 2)} x Skill Level / 5]
+				if( bl = map_id2bl(sc->data[SC_GT_CHANGE]->val2) )
+					ATK_ADD( ( status_get_dex(bl)/4 + status_get_str(bl)/2 ) * sc->data[SC_GT_CHANGE]->val1 / 5 );
+			}
 		}
 
 		//Refine bonus

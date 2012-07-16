@@ -627,10 +627,10 @@ void initChangeTables(void) {
 	set_sc( SR_CRESCENTELBOW         , SC_CRESCENTELBOW      , SI_CRESCENTELBOW         , SCB_NONE );
 	set_sc_with_vfx( SR_CURSEDCIRCLE          , SC_CURSEDCIRCLE_TARGET, SI_CURSEDCIRCLE_TARGET   , SCB_NONE );
 	set_sc( SR_LIGHTNINGWALK         , SC_LIGHTNINGWALK      , SI_LIGHTNINGWALK         , SCB_NONE );
-	set_sc( SR_RAISINGDRAGON         , SC_RAISINGDRAGON      , SI_RAISINGDRAGON         , SCB_REGEN|SCB_MAXHP|SCB_MAXSP/*|SCB_ASPD*/ );
+	set_sc( SR_RAISINGDRAGON         , SC_RAISINGDRAGON      , SI_RAISINGDRAGON         , SCB_REGEN|SCB_MAXHP|SCB_MAXSP );
 	set_sc( SR_GENTLETOUCH_ENERGYGAIN, SC_GT_ENERGYGAIN      , SI_GENTLETOUCH_ENERGYGAIN, SCB_NONE );
-	set_sc( SR_GENTLETOUCH_CHANGE    , SC_GT_CHANGE          , SI_GENTLETOUCH_CHANGE    , SCB_BATK|SCB_ASPD|SCB_DEF|SCB_MDEF );
-	set_sc( SR_GENTLETOUCH_REVITALIZE, SC_GT_REVITALIZE      , SI_GENTLETOUCH_REVITALIZE, SCB_MAXHP|SCB_VIT|SCB_DEF2|SCB_REGEN|SCB_ASPD|SCB_SPEED );
+	set_sc( SR_GENTLETOUCH_CHANGE    , SC_GT_CHANGE          , SI_GENTLETOUCH_CHANGE    , SCB_ASPD|SCB_MDEF|SCB_MAXHP );
+	set_sc( SR_GENTLETOUCH_REVITALIZE, SC_GT_REVITALIZE      , SI_GENTLETOUCH_REVITALIZE, SCB_MAXHP|SCB_REGEN );
 	/**
 	 * Wanderer / Minstrel
 	 **/
@@ -3387,6 +3387,11 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 		} else
 			regen->flag&=~sce->val4; //Remove regen as specified by val4
 	}
+	if(sc->data[SC_GT_REVITALIZE]){
+		regen->hp = cap_value(regen->hp*sc->data[SC_GT_REVITALIZE]->val3/100, 1, SHRT_MAX);
+		regen->state.walk= 1;
+	}
+
 }
 void status_calc_state( struct block_list *bl, struct status_change *sc, enum scs_flag flag, bool start ) {
 	
@@ -4125,9 +4130,6 @@ static unsigned short status_calc_vit(struct block_list *bl, struct status_chang
 		vit += sc->data[SC_INSPIRATION]->val3;
 	if(sc->data[SC_STOMACHACHE])
 		vit -= sc->data[SC_STOMACHACHE]->val1;
-	if(sc->data[SC_GT_REVITALIZE])
-		vit += sc->data[SC_GT_REVITALIZE]->val1;
-
 
 	return (unsigned short)cap_value(vit,0,USHRT_MAX);
 }
@@ -4322,8 +4324,6 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 		batk -= batk * sc->data[SC_MELODYOFSINK]->val3/100;
 	if(sc->data[SC_BEYONDOFWARCRY])
 		batk += batk * sc->data[SC_BEYONDOFWARCRY]->val3/100;
-	if(sc->data[SC_GT_CHANGE])
-		batk += batk * sc->data[SC_GT_CHANGE]->val3 / 100;
 	if(sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 2)
 		batk += 50;
 	if(bl->type == BL_ELEM
@@ -4690,8 +4690,6 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 		def -= def * (10 + 10 * sc->data[SC_SATURDAYNIGHTFEVER]->val1) / 100;
 	if(sc->data[SC_EARTHDRIVE])
 		def -= def * 25 / 100;
-	if( sc->data[SC_GT_CHANGE] )
-		def -= def * sc->data[SC_GT_CHANGE]->val3 / 100;
 	if( sc->data[SC_ROCK_CRUSHER] )
 		def -= def * sc->data[SC_ROCK_CRUSHER]->val2 / 100;
 	if( sc->data[SC_POWER_OF_GAIA] )
@@ -4754,8 +4752,8 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 		def2 += sc->data[SC_SHIELDSPELL_REF]->val2;
 	if( sc->data[SC_BANDING] && sc->data[SC_BANDING]->val2 > 0 )
 		def2 += (5 + sc->data[SC_BANDING]->val1) * (sc->data[SC_BANDING]->val2);
-	if( sc->data[SC_GT_REVITALIZE] )
-		def2 += def2 * ( 50 + 10 * sc->data[SC_GT_REVITALIZE]->val1 ) / 100;
+	if( sc->data[SC_GT_REVITALIZE] && sc->data[SC_GT_REVITALIZE]->val4)
+		def2 += def2 * sc->data[SC_GT_REVITALIZE]->val4 / 100;
 
 #ifdef RENEWAL
 	return (short)cap_value(def2,SHRT_MIN,SHRT_MAX);
@@ -4802,8 +4800,8 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 		mdef -= mdef * ( 14 * sc->data[SC_ANALYZE]->val1 ) / 100;
 	if(sc->data[SC_SYMPHONYOFLOVER])
 		mdef += mdef * sc->data[SC_SYMPHONYOFLOVER]->val2 / 100;
-	if(sc->data[SC_GT_CHANGE])
-		mdef -= mdef * sc->data[SC_GT_CHANGE]->val3 / 100;
+	if(sc->data[SC_GT_CHANGE] && sc->data[SC_GT_CHANGE]->val4)
+		mdef -= mdef * sc->data[SC_GT_CHANGE]->val4 / 100;
 	if(sc->data[SC_WATER_BARRIER])
 		mdef += sc->data[SC_WATER_BARRIER]->val2;
 	if(sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 3)
@@ -4983,13 +4981,9 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 			if( sc->data[SC_HOVERING] )
 				val = max( val, 10 );
 			if( sc->data[SC_GN_CARTBOOST] )
-				val = max( val, sc->data[SC_GN_CARTBOOST]->val2 );			
-			if( sc->data[SC_GT_REVITALIZE] )
-				val = max( val, sc->data[SC_GT_REVITALIZE]->val2 );
+				val = max( val, sc->data[SC_GN_CARTBOOST]->val2 );		
 			if( sc->data[SC_SWINGDANCE] )
 				val = max( val, sc->data[SC_SWINGDANCE]->val2 );
-			if( sc->data[SC_GT_REVITALIZE] )
-				val = max( val, sc->data[SC_GT_REVITALIZE]->val2 );
 			if( sc->data[SC_WIND_STEP_OPTION] )
 				val = max( val, sc->data[SC_WIND_STEP_OPTION]->val2 );
 
@@ -5136,9 +5130,7 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, s
 	if( sc->data[SC_EARTHDRIVE] )
 		skills2 -= 25;
 	if( sc->data[SC_GT_CHANGE] )
-		skills2 += (sc->data[SC_GT_CHANGE]->val2/200);
-	if( sc->data[SC_GT_REVITALIZE] )
-		skills2 += sc->data[SC_GT_REVITALIZE]->val2;
+		skills2 += sc->data[SC_GT_CHANGE]->val3;
 	if( sc->data[SC_MELON_BOMB] )
 		skills2 -= sc->data[SC_MELON_BOMB]->val1;
 	if( sc->data[SC_BOOST500] )
@@ -5277,13 +5269,8 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		aspd_rate += sc->data[SC_GLOOMYDAY]->val3 * 10;
 	if( sc->data[SC_EARTHDRIVE] )
 		aspd_rate += 250;
-	/*As far I tested the skill there is no ASPD addition is applied. [Jobbie] */
-	//if( sc->data[SC_RAISINGDRAGON] )
-	//	aspd_rate -= 100; //FIXME: Need official ASPD bonus of this status. [Jobbie]
 	if( sc->data[SC_GT_CHANGE] )
-		aspd_rate -= (sc->data[SC_GT_CHANGE]->val2/200) * 10;
-	if( sc->data[SC_GT_REVITALIZE] )
-		aspd_rate -= sc->data[SC_GT_REVITALIZE]->val2 * 10;
+		aspd_rate -= sc->data[SC_GT_CHANGE]->val3 * 10;
 	if( sc->data[SC_MELON_BOMB] )
 		aspd_rate += sc->data[SC_MELON_BOMB]->val1 * 10;
 	if( sc->data[SC_BOOST500] )
@@ -5346,10 +5333,10 @@ static unsigned int status_calc_maxhp(struct block_list *bl, struct status_chang
 		maxhp += maxhp * 3 * sc->data[SC_INSPIRATION]->val1 / 100;
 	if(sc->data[SC_RAISINGDRAGON])
 		maxhp += maxhp * (2 + sc->data[SC_RAISINGDRAGON]->val1) / 100;
-	if(sc->data[SC_GT_CHANGE])
-		maxhp -= maxhp * (2 * sc->data[SC_GT_CHANGE]->val1) / 100;
-	if(sc->data[SC_GT_REVITALIZE])
-		maxhp += maxhp * (3 * sc->data[SC_GT_REVITALIZE]->val1) / 100;
+	if(sc->data[SC_GT_CHANGE]) // Max HP decrease: [Skill Level x 4] %
+		maxhp -= maxhp * (4 * sc->data[SC_GT_CHANGE]->val1) / 100;
+	if(sc->data[SC_GT_REVITALIZE])// Max HP increase: [Skill Level x 2] %
+		maxhp += maxhp * (2 * sc->data[SC_GT_REVITALIZE]->val1) / 100;
 	if(sc->data[SC_MUSTLE_M])
 		maxhp += maxhp * sc->data[SC_MUSTLE_M]->val1/100;
 	if(sc->data[SC_SOLID_SKIN_OPTION])
@@ -8090,12 +8077,20 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			tick_time = 5000; // [GodLesZ] tick time
 			break;
 		case SC_GT_CHANGE:
-			if( sd ) val2 = (13 * val1 / 2) * sd->status.agi; //Aspd - old formula.
-			val3 = 20 + 1 * val1; //Base Atk, Reduction to DEF & MDEF
+			{// take note there is no def increase as skill desc says. [malufett]
+				struct block_list * src;
+				val3 = status->agi * val1 / 60; // ASPD increase: [(Target’s AGI x Skill Level) / 60] %
+				if( (src = map_id2bl(val2)) )
+					val4 = ( 200/status_get_int(src) ) * val1;// MDEF decrease: MDEF [(200 / Caster’s INT) x Skill Level]
+			}
 			break;
 		case SC_GT_REVITALIZE:
-			val2 = 5 * val1; //Custom value VIT, ASPD, SPEED bonus.
-			val3 = 60 + 40 * val1; //HP recovery
+			{// take note there is no vit,aspd,speed increase as skill desc says. [malufett]
+				struct block_list * src;
+				val3 = val1 * 30 + 150; // Natural HP recovery increase: [(Skill Level x 30) + 50] %
+				if( (src = map_id2bl(val2)) ) // the stat def is not shown in the status window and it is process differently
+					val4 = ( status_get_vit(src)/4 ) * val1; // STAT DEF increase: [(Caster’s VIT / 4) x Skill Level]
+			}
 			break;
 		case SC_PYROTECHNIC_OPTION:
 			val2 = 60;	// Watk TODO: Renewal (Atk2)
