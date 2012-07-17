@@ -3365,23 +3365,25 @@ return 1 if the option is set and 0 if the option is not set.
 
 Option numbers valid for the first (option) version of this command are:
 
-0x1     - Sight in effect.
-0x2     - Hide in effect.
-0x4     - Cloaking in effect.
-0x8     - Cart number 1 present.
-0x10    - Falcon present.
-0x20    - Peco Peco present.
-0x40    - GM Perfect Hide in effect.
-0x80    - Cart number 2 present.
-0x100   - Cart number 3 present.
-0x200   - Cart number 4 present.
-0x400   - Cart number 5 present.
-0x800   - Orc head present.
-0x1000  - The character is wearing a wedding sprite.
-0x2000  - Ruwach is in effect.
-0x4000  - Chasewalk in effect.
-0x8000  - Flying or Xmas suit.
-0x10000 - Sighttrasher.
+0x1       - Sight in effect.
+0x2       - Hide in effect.
+0x4       - Cloaking in effect.
+0x8       - Cart number 1 present.
+0x10      - Falcon present.
+0x20      - Peco Peco present.
+0x40      - GM Perfect Hide in effect.
+0x80      - Cart number 2 present.
+0x100     - Cart number 3 present.
+0x200     - Cart number 4 present.
+0x400     - Cart number 5 present.
+0x800     - Orc head present.
+0x1000    - The character is wearing a wedding sprite.
+0x2000    - Ruwach is in effect.
+0x4000    - Chasewalk in effect.
+0x8000    - Flying or Xmas suit.
+0x10000   - Sighttrasher.
+0x100000  - Warg present.
+0x200000  - The character is riding a warg.
 
 Option numbers valid for the second version (opt1) of this command are:
 
