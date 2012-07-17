@@ -412,3 +412,35 @@
 3,4531,2	// Red Eruma Card
 3,4532,1	// Wild Rider Card
 3,4533,2	// Octopus Card
+// Magic Card Album
+44,4047,1	// Ghostring Card
+44,4054,1	// Angeling Card
+44,4163,1	// Gryphon Card
+44,4169,1	// Dark Illusion Card
+44,4174,1	// Deviling Card
+44,4179,10	// Dragon Fly Card
+44,4183,10	// Vagabond Wolf Card
+44,4197,10	// Mastering Card
+44,4198,1	// Maya Purple Card
+44,4203,10	// Mutant Dragonoid Card
+44,4207,1	// Mysteltainn Card
+44,4211,1	// Vocal card
+44,4237,5	// Owl Duke Card
+44,4238,5	// Owl Baron Card
+44,4241,1	// Arc Angeling Card
+44,4250,1	// Executioner Card
+44,4254,1	// Tirfing Card
+44,4266,10	// Eclipse Card
+44,4284,10	// Chepet Card
+44,4285,10	// Choco Card
+44,4290,5	// Cat O' Nine Tails Card
+44,4291,10	// Kobold Leader Card
+44,4300,10	// Chimera Card
+44,4306,10	// Toad Card
+44,4320,1	// Bloody Knight Card
+44,4336,1	// Ungoliant Card
+44,4354,1	// Gemini-S58 Card
+44,4384,1	// Hydro Card
+44,4395,3	// Thanatos Maero Card
+44,4396,3	// Thanatos Odium Card
+44,4397,3	// Thanatos Despero Card
