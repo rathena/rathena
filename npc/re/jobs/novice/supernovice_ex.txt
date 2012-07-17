@@ -1,0 +1,246 @@
+//===== rAthena Script ======================================= 
+//= Expanded Super Novice Job Quest
+//===== By: ================================================== 
+//= Euphy
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena SVN
+//===== Description: ========================================= 
+//= Job Change quest for Expanded Super Novice class.
+//===== Additional Comments: ================================= 
+//= 1.0 All dialogue is custom, contains some incorrect behaviors.
+//============================================================ 
+
+function	script	Esseray_Ex	{
+	if (SUPNOV_Q > 1) {
+		mes "[Esseray]";
+		mes "There's a Novice in the";
+		mes "^0055FFnorthern Comodo Dungeon^000000";
+		mes "that could probably tell you";
+		mes "more...";
+		close;
+	}
+	else if (BaseLevel == 99 && JobLevel == 99) {
+		mes "[Esseray]";
+		mes "Ah... it seems you've truly";
+		mes "come far in your adventures.";
+		mes "But...";
+		next;
+		mes "[Esseray]";
+		mes "There's still another step you";
+		mes "can take, should you choose";
+		mes "to do so.";
+		next;
+		if(select("What is it?:More?! No way!") == 2) {
+			mes "[Esseray]";
+			mes "Hey, I respect that.";
+			mes "Come talk to me if you";
+			mes "ever change your mind.";
+			close;
+		}
+		mes "[Esseray]";
+		mes "What I propose is that you";
+		mes "^0055FFunlock the ultimate mediocrity^000000.";
+		mes "There are rumors that";
+		mes "even as a Novice, you";
+		mes "can be strong...";
+		next;
+		mes "[Esseray]";
+		mes "But that's all I know.";
+		mes "There's a Novice in the";
+		mes "^0055FFnorthern Comodo Dungeon^000000";
+		mes "that could probably tell you";
+		mes "more...";
+		next;
+		mes "[Esseray]";
+		mes "Well, what are you";
+		mes "waiting for? Find him!";
+		set SUPNOV_Q,2;
+		setquest 5092;
+		close;
+	}
+	else return;
+}
+
+beach_dun2,119,92,3	script	Fishing Novice	567,{
+	if (Class == Job_Super_Novice_E || Class == Job_Super_Baby_E) {
+		mes "[Nodor]";
+		mes "Finished at last!";
+		mes "How does it feel?";
+		close;
+	}
+	if (SUPNOV_Q == 2) {
+		mes "[Fishing Novice]";
+		mes "Oh, "+strcharinfo(0)+"...?";
+		mes "I've heard talk about you.";
+		mes "You think you've already";
+		mes "hit the top of the bottom, eh?";
+		next;
+		emotion e_hmm;
+		mes "[Fishing Novice]";
+		mes "...give me a moment, I'll";
+		mes "get right back to you.";
+		changequest 5092,5093;
+		set SUPNOV_Q,3;
+		close;
+	}
+	else if (SUPNOV_Q == 3) {
+		mes "[Nodor]";
+		mes "Sorry about that.";
+		mes "I'm Nodor, how can";
+		mes "I help you?";
+		next;
+		select("Esseray sent me here.");
+		mes "[Nodor]";
+		mes "I see. So you want to";
+		mes "increase your abilities...";
+		next;
+		mes "[Nodor]";
+		mes "In any case, you're going";
+		mes "to have to prove yourself first.";
+		mes "I won't just reveal my secrets!";
+		next;
+		setarray .@rand$[0],"Porings","Lunatics","Fabres","Pickys";
+		set .@i, rand(4);
+		mes "[Nodor]";
+		mes "Go kill 1000 "+.@rand$[.@i]+".";
+		mes "It shouldn't be a problem for";
+		mes "someone as strong as you, right?";
+		changequest 5093,5094+.@i;
+		set SUPNOV_Q, 4+.@i;
+		close;
+	}
+	else if (SUPNOV_Q > 3 && SUPNOV_Q < 8) {
+		if (checkquest(5090+SUPNOV_Q,HUNTING) != 2) {
+			mes "[Nodor]";
+			mes "What, giving up already?";
+			mes "Keep going, you're almost";
+			mes "there!";
+			close;
+		}
+		mes "[Nodor]";
+		mes "Wow, you're done!";
+		mes "I wasn't quite prepared";
+		mes "for this, wait a second!";
+		changequest 5090+SUPNOV_Q,5098;
+		set SUPNOV_Q,8;
+		close;
+	}
+	else if (SUPNOV_Q == 8) {
+		// There is a LOT of missing content here.
+		mes "[Nodor]";
+		mes "You're almost finished now.";
+		mes "My brother Nudor will walk";
+		mes "you through the last steps.";
+		next;
+		mes "[Nodor]";
+		mes "Nudor's currently on the";
+		mes "^0055FFAirship^000000. He's a";
+		mes "bit greedy, so make sure you";
+		mes "carry some cash with you...";
+		changequest 5098,5099;
+		set SUPNOV_Q,9;
+		close;
+	}
+	else if (SUPNOV_Q == 9 || SUPNOV_Q == 10) {
+		mes "[Nodor]";
+		mes "Go and visit my brother";
+		mes "Nudor on the ^0055FFAirship^000000.";
+		close;
+	}
+	else if (SUPNOV_Q == 11 || SUPNOV_Q == 12) {
+		mes "[Nodor]";
+		mes "You're back!";
+		mes "Well, here goes...";
+		next;
+		mes "[Nodor]";
+		mes "Ah ------- !!";
+		specialeffect2 EF_STORMGUST;
+		specialeffect2 EF_LORD;
+		jobchange roclass(eaclass()|EAJL_THIRD);
+		next;
+		mes "[Nodor]";
+		mes "All done!";
+		mes "Lastly, here's a small gift";
+		mes "for your efforts. Enjoy!";
+		if (SUPNOV_Q == 11) getitem 2522,1;
+		else getitem 2340,1;
+		completequest 5100;
+		set SUPNOV_Q,13;
+		close;
+	}
+	else {
+		mes "[Fishing Novice]";
+		mes "I'm a bit busy,";
+		mes "can't you see?";
+		close;
+	}
+}
+
+airplane,33,47,5	script	Nudor	729,{
+	if (Class == Job_Super_Novice_E || Class == Job_Super_Baby_E) {
+		mes "[Nudor]";
+		mes "Finished at last!";
+		mes "How does it feel?";
+		close;
+	}
+	else if (SUPNOV_Q == 9 || SUPNOV_Q == 10) {
+		if (SUPNOV_Q == 9) {
+			mes "[Nudor]";
+			mes "Who are you?";
+			next;
+			select("Nodor sent me.");
+			mes "[Nudor]";
+			mes "Oh, yes, my brother did";
+			mes "mention that someone was";
+			mes "coming... let me see.";
+			next;
+			mes "[Nudor]";
+			mes "I'll need some Zeny from";
+			mes "you to let you turn into";
+			mes "an Expanded Super Novice.";
+			mes "I can't tell you how much,";
+			mes "But I'd suggest giving at";
+			mes "least ^FF0000100,000z^000000...";
+			set SUPNOV_Q,10;
+			next;
+			mes "[Nudor]";
+			mes "So, what'll it be?";
+		}
+		else {
+			mes "[Nudor]";
+			mes "So, what'll it be?";
+			mes "I'd suggest giving at";
+			mes "least ^FF0000100,000z^000000...";
+		}
+		next;
+		input .@i;
+		mes "[Nudor]";
+		if (Zeny < .@i) {
+			mes "I'm afraid you don't have";
+			mes "that much to give.";
+			close;
+		}
+		if (.@i < 100010) {
+			mes "That... isn't enough.";
+			mes "I'll be taking it anyway,";
+			mes "though... *grins*";
+			set Zeny, Zeny-.@i;
+			close;
+		}
+		set Zeny, Zeny-.@i;
+		emotion e_cash;
+		if (.@i > 200000) set SUPNOV_Q,12;
+		else set SUPNOV_Q,11;
+		mes "Ah, thank you, thank you!";
+		mes "Go back and talk to Nodor.";
+		mes "He'll turn you into an";
+		mes "Expanded Super Novice.";
+		changequest 5099,5100;
+		close;
+	}
+	mes "[Nudor]";
+	mes "Who are you?";
+	close;
+}
