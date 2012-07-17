@@ -4637,6 +4637,12 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 		sd->md->ud.dir = sd->ud.dir;
 	}
 
+	// If the player is changing maps, end cloaking and cloaking exceed.
+	if ( sd->state.changemap && sd->sc.count )
+	{
+		status_change_end(&sd->bl, SC_CLOAKING, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
+	}
 	return 0;
 }
 
