@@ -96,7 +96,7 @@ static void read_config(void)
 		return;
 
 	groups = config_lookup(&pc_group_config, "groups");
-	
+
 	if (groups != NULL) {
 		GroupSettings *group_settings = NULL;
 		DBIterator *iter = NULL;

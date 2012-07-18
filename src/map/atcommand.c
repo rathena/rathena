@@ -3859,6 +3859,22 @@ ACMD_FUNC(reloadskilldb)
  *------------------------------------------*/
 void atcommand_doload();
 ACMD_FUNC(reloadatcommand) {
+	config_t run_test;
+
+	if (conf_read_file(&run_test, "conf/groups.conf")) {
+		clif_displaymessage(fd, "Error reading groups.conf, can't reload");
+		return -1;
+	}
+	
+	config_destroy(&run_test);
+		
+	if (conf_read_file(&run_test, ATCOMMAND_CONF_FILENAME)) {
+		clif_displaymessage(fd, "Error reading atcommand.conf, can't reload");
+		return -1;
+	}
+
+	config_destroy(&run_test);
+	
 	atcommand_doload();
 	pc_groups_reload();
 	clif_displaymessage(fd, msg_txt(254));
@@ -9226,6 +9242,8 @@ void atcommand_db_clear(void) {
 	}
 	if (atcommand_alias_db != NULL)
 		db_destroy(atcommand_alias_db);
+	
+	config_destroy(&atcommand_config);
 }
 
 void atcommand_doload(void) {
