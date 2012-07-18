@@ -2741,7 +2741,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 
 			if(sc->data[SC_GT_CHANGE] && sc->data[SC_GT_CHANGE]->val2){
 				struct block_list *bl; // ATK increase: ATK [{(Caster’s DEX / 4) + (Caster’s STR / 2)} x Skill Level / 5]
-				if( bl = map_id2bl(sc->data[SC_GT_CHANGE]->val2) )
+				if( (bl = map_id2bl(sc->data[SC_GT_CHANGE]->val2)) )
 					ATK_ADD( ( status_get_dex(bl)/4 + status_get_str(bl)/2 ) * sc->data[SC_GT_CHANGE]->val1 / 5 );
 			}
 		}
