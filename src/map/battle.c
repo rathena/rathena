@@ -4801,38 +4801,21 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 	if( (s_bl = battle_get_master(src)) == NULL )
 		s_bl = src;
 
-	// Disable PVM for specific groups.
-	if (src->type&BL_PC && target->type&BL_MOB && src->id && map_id2sd(src->id) != NULL)
-	{	// Source => PC, Target => MOB
-		if (pc_has_permission(map_id2sd(src->id), PC_PERM_DISABLE_PVM))
-			return 0;
-	}
-	else if (src->type&BL_HOM && target->type&BL_MOB)
-	{	// Source => HOM, Target => MOB; check the master BL id of homun
-		struct homun_data *hd = (TBL_HOM*)src;
-		if (hd != NULL && hd->master->bl.id)
-		{
-			if (pc_has_permission(map_id2sd(hd->master->bl.id), PC_PERM_DISABLE_PVM))
-				return 0;
+	if ( s_bl->type == BL_PC ) {
+		switch( t_bl->type ) {
+			case BL_MOB: // Source => PC, Target => MOB
+				if ( pc_has_permission((TBL_PC*)s_bl, PC_PERM_DISABLE_PVM) )
+					return 0;
+				break;
+			case BL_PC:
+				if (pc_has_permission((TBL_PC*)s_bl, PC_PERM_DISABLE_PVP))
+					return 0;
+				break;
+			default:/* anything else goes */
+				break;
 		}
 	}
-
-	// Disable PVP
-	if (src->type&BL_PC && target->type&(BL_PC|BL_HOM) && src->id && map_id2sd(src->id) != NULL)
-	{	// Source => PC, Target => PC
-		if (pc_has_permission(map_id2sd(src->id), PC_PERM_DISABLE_PVP))
-			return 0;
-	}
-	else if (src->type&BL_HOM && target->type&(BL_HOM|BL_PC))
-	{	// Source => HOM, Target => MOB|PC; check the master BL id of homun
-		struct homun_data *hd = (TBL_HOM*)src;
-		if (hd != NULL && hd->master->bl.id)
-		{
-			if (pc_has_permission(map_id2sd(hd->master->bl.id), PC_PERM_DISABLE_PVP))
-				return 0;
-		}
-	}
-
+	
 	switch( target->type ) { // Checks on actual target
 			case BL_PC: {
 				struct status_change* sc = status_get_sc(src);
