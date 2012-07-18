@@ -590,6 +590,9 @@ enum e_pc_permission {
 	PC_PERM_USE_CHANGEMAPTYPE   = 0x04000,
 	PC_PERM_USE_ALL_COMMANDS    = 0x08000,
 	PC_PERM_RECEIVE_REQUESTS    = 0x10000,
+	PC_PERM_SHOW_BOSS			= 0x20000,
+	PC_PERM_DISABLE_PVM			= 0x40000,
+	PC_PERM_DISABLE_PVP			= 0x80000,
 };
 
 #define pc_setdead(sd)        ( (sd)->state.dead_sit = (sd)->vd.dead_sit = 1 )

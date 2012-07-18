@@ -59,6 +59,9 @@ static const struct {
 	{ "use_changemaptype", PC_PERM_USE_CHANGEMAPTYPE },
 	{ "all_commands", PC_PERM_USE_ALL_COMMANDS },
 	{ "receive_requests", PC_PERM_RECEIVE_REQUESTS },
+	{ "show_bossmobs", PC_PERM_SHOW_BOSS },
+	{ "disable_pvm", PC_PERM_DISABLE_PVM },
+	{ "disable_pvp", PC_PERM_DISABLE_PVP },
 };
 
 /**

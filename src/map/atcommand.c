@@ -6790,15 +6790,13 @@ ACMD_FUNC(showmobs)
 		clif_displaymessage(fd, atcmd_output);
 		return 0;
 	}
-// Uncomment the following line to show mini-bosses & MVP.
-//#define SHOW_MVP
-#ifndef SHOW_MVP
-	if(mob_db(mob_id)->status.mode&MD_BOSS){
+
+	if(mob_db(mob_id)->status.mode&MD_BOSS && !pc_has_permission(sd, PC_PERM_SHOW_BOSS)){	// If player group does not have access to boss mobs.
 		snprintf(atcmd_output, sizeof atcmd_output, "Can't show Boss mobs!");
 		clif_displaymessage(fd, atcmd_output);
 		return 0;
 	}
-#endif
+
 	if(mob_id == atoi(mob_name) && mob_db(mob_id)->jname)
 		strcpy(mob_name,mob_db(mob_id)->jname);    // --ja--
 		//strcpy(mob_name,mob_db(mob_id)->name);    // --en--

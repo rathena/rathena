@@ -19,3 +19,6 @@ use_check : Ability to use client command /check (display character status).
 use_changemaptype : Ability to use client command /changemaptype.
 all_commands: Ability to use ALL atcommands/charcommands.
 receive_requests: Ability to receive @requests.
+show_bossmobs: Ability to see boss mobs with @showmobs.
+disable_pvm: Ability to disable Player v.s. Monster.
+disable_pvp: Ability to disable Player v.s. Player.
