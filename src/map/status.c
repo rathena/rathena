@@ -1681,6 +1681,8 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 				if (tsc->option&hide_flag && !is_boss &&
 					(sd->special_state.perfect_hiding || !is_detect) )
 					return 0;
+				if( tsc->data[SC_CLOAKINGEXCEED] && !(is_boss) && (status->mode&(RC_INSECT|RC_DEMON)) )	// Cloaking Exceed => undetected from insect & demon except bosses [Cookie]
+					return 0;
 				if( tsc->data[SC_CAMOUFLAGE] && !(is_boss || is_detect) && !skill_num )
 					return 0;
 				if( tsc->data[SC_STEALTHFIELD] && !is_boss )
