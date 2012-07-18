@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Kisuka
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -12,6 +12,7 @@
 //===== Additional Comments: =================================
 //= 1.0 First version. [Kisuka]
 //= 1.1 Updated warps, savepoints, NPC locations. [Kisuka]
+//= 1.2 Cleaning. [Euphy]
 //============================================================
 
 //============================================================================
@@ -136,7 +137,6 @@ new_1-2,100,29,4	script	Sprakki#nv2	90,{
 	}
 }
 
-
 //============================================================================
 // Instructor Brade
 //============================================================================
@@ -189,7 +189,7 @@ new_1-2,100,105,4	script	Brade#nv	733,{
 		mes "The item window has 3 sections...";
 		next;
 		mes "[Instructor Brade]";
-		mes "consumable items, equipment and other items.";
+		mes "Consumable items, equipment, and other items.";
 		mes "If you want to use or equip items, double-click on the item or drag them into the Equipment Window.";
 		next;
 		mes "[Instructor Brade]";
@@ -282,12 +282,8 @@ new_1-2,100,105,4	script	Brade#nv	733,{
 	}
 	else if(job_novice_q == 5 || job_novice_q == 6) {
 		set .@EquipCheck,0;
-		if (getequipisequiped(EQI_SHOES)) { set .@EquipCheck,.@EquipCheck+1; }
-		if (getequipisequiped(EQI_ARMOR)) { set .@EquipCheck,.@EquipCheck+1; }
-		if (getequipisequiped(EQI_GARMET)) { set .@EquipCheck,.@EquipCheck+1; }
-		if (getequipisequiped(EQI_HEAD_TOP)) { set .@EquipCheck,.@EquipCheck+1; }
-		if (getequipisequiped(EQI_HAND_L)) { set .@EquipCheck,.@EquipCheck+1; }
-		if (getequipisequiped(EQI_HAND_R)) { set .@EquipCheck,.@EquipCheck+1; }
+		for(set .@i,1; .@i<7; set .@i,.@i+1)
+			if (getequipisequiped(.@i)) set .@EquipCheck, .@EquipCheck+1;
 		if(.@EquipCheck >= 4) {
 			if(job_novice_q == 5) {
 				mes "[Instructor Brade]";
@@ -625,7 +621,6 @@ new_1-2,32,172,4	script	Chocolat#nv	96,{
 		end;
 	}
 }
-
 
 // ---------- Kafra ----------
 new_1-2,29,176,4	script	Kafra#nv	117,{
@@ -973,7 +968,7 @@ new_1-2,35,176,4	script	Soldier#nv	105,{
 		next;
 		mes "[Brade]";
 		mes "Try using the job manuals to find out the characteristics of each job's skills.";
-		mes "I will restore your HP and SP...Keep it up.";
+		mes "I will restore your HP and SP... Keep it up.";
 		percentheal 100,100;
 		skilleffect 28,9999;
 		close;
@@ -989,6 +984,24 @@ new_5-3,96,30,4	duplicate(NvBrade)	Brade#nv5	733
 //============================================================================
 // Job Guides (Real Combat Training)
 //============================================================================
+// --------------------------- Deletion Function ------------------------------
+function	script	F_NvErase	{
+	if (getarg(0,0)) {
+		if (checkquest(7123) == 0 || checkquest(7123) == 1) erasequest 7123;
+		if (checkquest(7124) == 0 || checkquest(7124) == 1) erasequest 7124;
+		if (checkquest(7126) == 0 || checkquest(7126) == 1) erasequest 7126;
+		if (checkquest(7127) == 0 || checkquest(7127) == 1) erasequest 7127;
+	}
+	nude;
+	if (countitem(2819)) delitem 2819,1;	// Swordsman_Manual
+	if (countitem(2820)) delitem 2820,1;	// Thief_Manual
+	if (countitem(2821)) delitem 2821,1;	// Acolyte_Manual
+	if (countitem(2822)) delitem 2822,1;	// Archer_Manual
+	if (countitem(2823)) delitem 2823,1;	// Merchant_Manual
+	if (countitem(2824)) delitem 2824,1;	// Mage_Manual
+	return;
+}
+
 // ---------------------------- Swordman Guide -------------------------------
 -	script	Swordman Guide#nv::NvSwd	728,{
 	if(job_novice_q < 16) {
@@ -1063,16 +1076,7 @@ new_5-3,96,30,4	duplicate(NvBrade)	Brade#nv5	733
 			mes "[Swordman Guildsman]";
 			mes "Here is the Swordman manual.";
 			mes "I'll just take any manuals from any other classes you have.";
-			next;
-			mes "[Swordman Guildsman]";
-			mes "Here is the Swordman manual.";
-			mes "I'll just take any manuals from any other classes you have.";
-			nude;
-			if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
-			if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
-			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
-			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
-			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+			callfunc "F_NvErase";
 			getitem 2819,1;	// Swordsman_Manual
 			next;
 			mes "[Swordman Guildsman]";
@@ -1094,17 +1098,7 @@ new_5-3,96,30,4	duplicate(NvBrade)	Brade#nv5	733
 			mes "I see.";
 			mes "Then I'll end your training process and send you to the Swordman Guild.";
 			close2;
-			if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
-			if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
-			if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
-			if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
-			nude;
-			if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
-			if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
-			if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
-			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
-			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
-			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+			callfunc "F_NvErase",1;
 			savepoint "izlude",94,103;
 			warp "izlude_in",74,167;
 			end;
@@ -1235,12 +1229,7 @@ new_5-3,97,41,4	duplicate(NvSwd)	Swordman Guide#nv5	728
 			mes "[Mage Guide]";
 			mes "Here is the Mage Manual.";
 			mes "I will take the other job registration forms and manuals from you.";
-			nude;
-			if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
-			if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
-			if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
-			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
-			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
+			callfunc "F_NvErase";
 			getitem 2824,1;	// Mage_Manual
 			next;
 			mes "[Mage Guide]";
@@ -1262,17 +1251,7 @@ new_5-3,97,41,4	duplicate(NvSwd)	Swordman Guide#nv5	728
 			mes "Welcome!!";
 			mes "I will send you to the Mage Guilds union after you complete your Novice training.";
 			close2;
-			if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
-			if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
-			if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
-			if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
-			nude;
-			if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
-			if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
-			if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
-			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
-			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
-			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+			callfunc "F_NvErase",1;
 			savepoint "geffen",119,38;
 			warp "geffen_in",163,98;
 			end;
@@ -1389,12 +1368,7 @@ new_5-3,101,41,4	duplicate(NvMag)	Mage Guide#nv5	123
 			mes "[Thief Guild Member]";
 			mes "Here, please take the Thief manual.";
 			mes "I'll just take the other class manuals while I'm at it.";
-			nude;
-			if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
-			if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
-			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
-			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
-			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+			callfunc "F_NvErase";
 			getitem 2820,1;	// Thief_Manual
 			next;
 			mes "[Thief Guild Member]";
@@ -1417,17 +1391,7 @@ new_5-3,101,41,4	duplicate(NvMag)	Mage Guide#nv5	123
 			mes "Ok, I see.";
 			mes "Welcome. Then your Novice training is totally complete and you will be sent to the Thief Guild immediately.";
 			close2;
-			if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
-			if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
-			if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
-			if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
-			nude;
-			if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
-			if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
-			if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
-			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
-			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
-			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+			callfunc "F_NvErase",1;
 			savepoint "morocc",150,100;
 			warp "moc_prydb1",99,185;
 			end;
@@ -1559,12 +1523,7 @@ new_5-3,105,41,4	duplicate(NvThf)	Thief Guide#nv5	118
 			mes "[Merchant Guide]";
 			mes "Here is the Merchant skill manual.";
 			mes "I will take other job manuals from you while I'm at it.";
-			nude;
-			if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
-			if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
-			if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
-			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
-			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+			callfunc "F_NvErase";
 			getitem 2823,1;	// Merchant_Manual
 			next;
 			mes "[Merchant Guide]";
@@ -1587,17 +1546,7 @@ new_5-3,105,41,4	duplicate(NvThf)	Thief Guide#nv5	118
 			mes "Welcome!!";
 			mes "I will send you to the Merchant Guild's union after you complete your Novice training.";
 			close2;
-			if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
-			if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
-			if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
-			if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
-			nude;
-			if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
-			if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
-			if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
-			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
-			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
-			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+			callfunc "F_NvErase",1;
 			savepoint "alberta",29,231;
 			warp "alberta_in",62,44;
 			end;
@@ -1704,12 +1653,7 @@ new_5-3,109,41,4	duplicate(NvMer)	Merchant Guide#nv5	97
 			next;
 			mes "[Archer Guide]";
 			mes "I will take the other job manuals from you while you test the Archer manual out.";
-			nude;
-			if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
-			if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
-			if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
-			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
-			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+			callfunc "F_NvErase";
 			getitem 2822,1;	// Archer_Manual
 			next;
 			mes "[Archer Guide]";
@@ -1731,17 +1675,7 @@ new_5-3,109,41,4	duplicate(NvMer)	Merchant Guide#nv5	97
 			mes "Welcome!!";
 			mes "I will send you to the Archer Guild after you complete your Novice training.";
 			close2;
-			if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
-			if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
-			if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
-			if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
-			nude;
-			if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
-			if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
-			if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
-			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
-			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
-			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+			callfunc "F_NvErase",1;
 			savepoint "payon",256,242;
 			warp "payon_in02",64,65;
 			end;
@@ -1807,12 +1741,7 @@ new_5-3,113,41,4	duplicate(NvArc)	Archer Guide#nv5	727
 			mes "[Prontera Acolyte]";
 			mes "Here you go, the instruction manual of an Acolyte.";
 			mes "I will take away those other job's manuals while you study this one.";
-			nude;
-			if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
-			if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
-			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
-			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
-			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+			callfunc "F_NvErase";
 			getitem 2821,1;	// Acolyte_Manual
 			next;
 			mes "[Prontera Acolyte]";
@@ -1830,17 +1759,7 @@ new_5-3,113,41,4	duplicate(NvArc)	Archer Guide#nv5	727
 			mes "That's great.";
 			mes "Then I will completely end the Training Process and send you to the Cathedral of Prontera.";
 			close2;
-			if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
-			if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
-			if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
-			if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
-			nude;
-			if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
-			if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
-			if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
-			if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
-			if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
-			if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+			callfunc "F_NvErase",1;
 			savepoint "prontera",117,72;
 			warp "prt_church",172,19;
 			end;
@@ -1969,17 +1888,7 @@ new_5-3,121,41,4	duplicate(NvBruce)	Bruce#nv5	57
 				mes "Prontera, the Capital city of the Rune-Midgarts Kingdom.";
 				mes "Take care and may Freya bless you on your journey.";
 				close2;
-				if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
-				if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
-				if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
-				if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
-				nude;
-				if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
-				if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
-				if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
-				if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
-				if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
-				if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+				callfunc "F_NvErase",1;
 				savepoint "prontera",122,77;
 				warp "prontera",121,76;
 				end;
@@ -1988,17 +1897,7 @@ new_5-3,121,41,4	duplicate(NvBruce)	Bruce#nv5	57
 				mes "The desert city of Morocc was recently destroyed.";
 				mes "I will send you to the camp where the survivors are.";
 				close2;
-				if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
-				if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
-				if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
-				if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
-				nude;
-				if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
-				if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
-				if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
-				if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
-				if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
-				if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+				callfunc "F_NvErase",1;
 				savepoint "moc_ruins",71,157;
 				warp "moc_ruins",70,158;
 				end;
@@ -2007,17 +1906,7 @@ new_5-3,121,41,4	duplicate(NvBruce)	Bruce#nv5	57
 				mes "Just north of Payon you'll find the Archer Village.";
 				mes "Good luck on your journeys.";
 				close2;
-				if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
-				if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
-				if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
-				if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
-				nude;
-				if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
-				if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
-				if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
-				if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
-				if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
-				if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+				callfunc "F_NvErase",1;
 				savepoint "payon",167,68;
 				warp "payon",172,111;
 				end;
@@ -2027,17 +1916,7 @@ new_5-3,121,41,4	duplicate(NvBruce)	Bruce#nv5	57
 				mes "It's the main hub of all trades.";
 				mes "If you want to travel to other civilizations, Alberta is the only outlet.";
 				close2;
-				if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
-				if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
-				if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
-				if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
-				nude;
-				if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
-				if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
-				if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
-				if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
-				if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
-				if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+				callfunc "F_NvErase",1;
 				savepoint "alberta",115,57;
 				warp "alberta",116,58;
 				end;
@@ -2047,17 +1926,7 @@ new_5-3,121,41,4	duplicate(NvBruce)	Bruce#nv5	57
 				mes "I will send you near the Fountains.";
 				mes "Goddess Freya bless you.";
 				close2;
-				if(checkquest(7123) == 0 || checkquest(7123) == 1) { erasequest 7123; }
-				if(checkquest(7124) == 0 || checkquest(7124) == 1) { erasequest 7124; }
-				if(checkquest(7126) == 0 || checkquest(7126) == 1) { erasequest 7126; }
-				if(checkquest(7127) == 0 || checkquest(7127) == 1) { erasequest 7127; }
-				nude;
-				if(countitem(2819) > 0) delitem 2819,1;	// Swordsman_Manual
-				if(countitem(2820) > 0) delitem 2820,1;	// Thief_Manual
-				if(countitem(2821) > 0) delitem 2821,1;	// Acolyte_Manual
-				if(countitem(2822) > 0) delitem 2822,1;	// Archer_Manual
-				if(countitem(2823) > 0) delitem 2823,1;	// Merchant_Manual
-				if(countitem(2824) > 0) delitem 2824,1;	// Mage_Manual
+				callfunc "F_NvErase",1;
 				savepoint "geffen",118,36;
 				warp "geffen",128,66;
 				end;
@@ -2133,55 +2002,14 @@ new_5-3,100,50,4	duplicate(NvPotato)	Merchant#nv5	93
 		mes "[Trainer Brutus]";
 		mes "I see, then let me guide you to another level. Which level do you want to go to?";
 		next;
-		for(set .@i,1; .@i<=5; set .@i,.@i+1) {
-			if(strnpcinfo(2) == "nv1") {
-				set .@select$,"Send me to Level 2:Send me to Level 3:Send me to Level 4:Send me to Level 5";
-			}
-			if(strnpcinfo(2) == "nv2") {
-				set .@select$,"Send me to Level 1:Send me to Level 3:Send me to Level 4:Send me to Level 5";
-			}
-			if(strnpcinfo(2) == "nv3") {
-				set .@select$,"Send me to Level 1:Send me to Level 2:Send me to Level 4:Send me to Level 5";
-			}
-			if(strnpcinfo(2) == "nv4") {
-				set .@select$,"Send me to Level 1:Send me to Level 2:Send me to Level 3:Send me to Level 5";
-			}
-			if(strnpcinfo(2) == "nv5") {
-				set .@select$,"Send me to Level 1:Send me to Level 2:Send me to Level 3:Send me to Level 4";
-			}
+		for(set .@i,1; .@i<6; set .@i,.@i+1) {
+			if (!compare(strnpcinfo(2),"nv"+.@i))
+				set .@menu$, .@menu$+"Send me to Level "+.@i;
+			set .@menu$, .@menu$+":";
 		}
-		switch(select(""+.@select$+":Cancel")) {
-		case 1:
-			if(strnpcinfo(2) == "nv1") {
-				warp "new_2-3",96,21;
-			}else{
-				warp "new_1-3",96,21;
-			}
-			end;
-		case 2:
-			if(strnpcinfo(2) == "nv1" || strnpcinfo(2) == "nv2") {
-				warp "new_3-3",96,21;
-			}else{
-				warp "new_2-3",96,21;
-			}
-			end;
-		case 3:
-			if(strnpcinfo(2) == "nv4" || strnpcinfo(2) == "nv5") {
-				warp "new_3-3",96,21;
-			}else{
-				warp "new_4-3",96,21;
-			}
-			end;
-		case 4:
-			if(strnpcinfo(2) == "nv5") {
-				warp "new_4-3",96,21;
-			}else{
-				warp "new_5-3",96,21;
-			}
-			end;
-		case 5:
-			close;
-		}
+		set .@i, select(.@menu$+"Cancel");
+		if (.@i < 7) warp "new_"+.@i+"-3",96,21;
+		close;
 	case 2:
 		mes "[Trainer Brutus]";
 		mes "You seem eager to fight.";

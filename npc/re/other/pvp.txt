@@ -3,15 +3,16 @@
 //===== By: ==================================================
 //= kobra_k88; L0ne_W0lf, Elias (og2)
 //===== Current Version: =====================================
-//= 2.0
+//= 2.2
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
 //= PvP NPCs that are found in the Inns in major cities.
-//= Includes Yoyo Mode, Nightmare Mode, and Event Mode
+//= Includes Yoyo Mode, Nightmare Mode, and Event Mode.
 //===== Additional Comments: ================================= 
 //= 2.0 Narrators/GateKeepers,etc. Translated from the Official 2011 [Elias]
 //= 2.1 Changed PVP Narrator and GateKeeper to Floating NPC [Elias]
+//= 2.2 Some cleaning. [Euphy]
 //============================================================
 
 -	script	PVP Narrator::pvpe	-1,{
@@ -257,7 +258,7 @@ geffen_in,67,63,4	duplicate(pvpe)	PVP Narrator#pe6	84
 close;
 }
 
-//Gate Keeper's Duplicates
+//Gate Keeper Duplicates
 morocc_in,144,142,4	duplicate(gkut)	Gate Keeper#gke1	83
 alberta_in,26,146,4	duplicate(gkut)	Gate Keeper#gke2	83
 prt_in,52,140,4	duplicate(gkut)	Gate Keeper#gke3	83
@@ -266,101 +267,26 @@ payon_in01,140,53,4	duplicate(gkut)	Gate Keeper#gke5	83
 
 //Fight square Reception Staff (Locations below)
 -	script	FSRS::fsr	-1,{
-if(strnpcinfo(4) == "pvp_y_room") {
-	set .@mapc1, getmapusers("pvp_y_8-1");
-	set .@mapc2, getmapusers("pvp_y_8-2");
-	set .@mapc3, getmapusers("pvp_y_8-3");
-	set .@mapc4, getmapusers("pvp_y_8-4");
-	set .@mapc5, getmapusers("pvp_y_8-5");
-	set .@showc1$, "Prontera [ "+.@mapc1+" / 128 ]";
-	set .@showc2$, "Izlude [ "+.@mapc2+" / 128 ]";
-	set .@showc3$, "Payon [ "+.@mapc3+" / 128 ]";
-	set .@showc4$, "Alberta [ "+.@mapc4+" / 128 ]";
-	set .@showc5$, "Morroc [ "+.@mapc5+" / 128 ]";
-	set .@showcexit$, "Cancel.";
-		switch(select(.@showc1$,.@showc2$,.@showc3$,.@showc4$,.@showc5$,.@showcexit$)) {
-		case 1:
-			if (.@mapc1 >= 128) {
-				mes "[PVP Fight Square Reception Staff]";
-				mes "This map is currently full.";
-			} else { warp "pvp_y_8-1",0,0; }
-		break;
-		case 2:
-			if (.@mapc2 >= 128) {
-				mes "[PVP Fight Square Reception Staff]";
-				mes "This map is currently full.";
-			} else { warp "pvp_y_8-2",0,0; }
-		break;
-		case 3:
-			if (.@mapc3 >= 128) {
-				mes "[PVP Fight Square Reception Staff]";
-				mes "This map is currently full.";
-			} else { warp "pvp_y_8-3",0,0; }
-		break;
-		case 4:
-			if (.@mapc4 >= 128) {
-				mes "[PVP Fight Square Reception Staff]";
-				mes "This map is currently full.";
-			} else { warp "pvp_y_8-4",0,0; }
-		break;
-		case 5:
-			if (.@mapc5 >= 128) {
-				mes "[PVP Fight Square Reception Staff]";
-				mes "This map is currently full.";
-			} else { warp "pvp_y_8-5",0,0; }
-		break;
-		case 6:
-			break;
-		}
-close;
+	if(strnpcinfo(4) == "pvp_y_room") {
+		setarray .@Maps$[0],"pvp_y_8-1","pvp_y_8-2","pvp_y_8-3","pvp_y_8-4","pvp_y_8-5";
+		setarray .@Name$[0],"Prontera","Izlude","Payon","Alberta","Morroc";
+		setarray .@Limit[0],128,128,128,128,128;
 	} else {
-	set .@mapc1, getmapusers("pvp_n_8-1");
-	set .@mapc2, getmapusers("pvp_n_8-2");
-	set .@mapc3, getmapusers("pvp_n_8-3");
-	set .@mapc4, getmapusers("pvp_n_8-4");
-	set .@mapc5, getmapusers("pvp_n_8-5");
-	set .@showc1$, "Sandwich [ "+.@mapc1+" / 64 ]";
-	set .@showc2$, "Lock on [ "+.@mapc2+" / 32 ]";
-	set .@showc3$, "Four Room [ "+.@mapc3+" / 32 ]";
-	set .@showc4$, "Under cross [ "+.@mapc4+" / 32 ]";
-	set .@showc5$, "Compass Room [ "+.@mapc5+" / 32 ]";
-	set .@showcexit$, "Cancel.";
-		switch(select(.@showc1$,.@showc2$,.@showc3$,.@showc4$,.@showc5$,.@showcexit$)) {
-		case 1:
-			if (.@mapc1 >= 64) {
-				mes "[PVP Fight Square Reception Staff]";
-				mes "This map is currently full.";
-			} else { warp "pvp_n_8-1",0,0; }
-		break;
-		case 2:
-			if (.@mapc2 >= 64) {
-				mes "[PVP Fight Square Reception Staff]";
-				mes "This map is currently full.";
-			} else { warp "pvp_n_8-2",0,0; }
-		break;
-		case 3:
-			if (.@mapc3 >= 64) {
-				mes "[PVP Fight Square Reception Staff]";
-				mes "This map is currently full.";
-			} else { warp "pvp_n_8-3",0,0; }
-		break;
-		case 4:
-			if (.@mapc4 >= 64) {
-				mes "[PVP Fight Square Reception Staff]";
-				mes "This map is currently full.";
-			} else { warp "pvp_n_8-4",0,0; }
-		break;
-		case 5:
-			if (.@mapc5 >= 64) {
-				mes "[PVP Fight Square Reception Staff]";
-				mes "This map is currently full.";
-			} else { warp "pvp_n_8-5",0,0; }
-		break;
-		case 6:
-			break;
-		}
-close;
-}
+		setarray .@Maps$[0],"pvp_n_8-1","pvp_n_8-2","pvp_n_8-3","pvp_n_8-4","pvp_n_8-5";
+		setarray .@Name$[0],"Sandwich","Lock on","Four Room","Under cross","Compass Room";
+		setarray .@Limit[0],64,32,32,32,32;
+	}
+	for(set .@i,0; .@i<5; set .@i,.@i+1)
+		set .@menu$, .@menu$+.@Name$[.@i]+" ["+getmapusers(.@Maps$[.@i])+" / "+.@Limit[.@i]+"]:";
+	set .@menu$, .@menu$+"Cancel.";
+	set .@i, select(.@menu$)-1;
+	if (.@i == 5) close;
+	if (getmapusers(.@Maps$[.@i]) >= .@Limit[.@i]) {
+		mes "[PVP Fight Square Reception Staff]";
+		mes "This map is currently full.";
+	}
+	else warp .@Maps$[.@i],0,0;
+	close;
 
 OnInit:
 	waitingroom "Free for all",0;
@@ -529,7 +455,7 @@ OnTouch:
 	mes "Did you have fun in Combat Square?";
 	mes "May I ask where you want to go?";
 	next;
-	switch(select("prontera.:morocc.:geffen.:payon.:alberta.:Cancel.")) {
+	switch(select("Prontera.:Morocc.:Geffen.:Payon.:Alberta.:Cancel.")) {
 	case 1: warp "prontera",107,60; end;
 	case 2: warp "morocc",157,96; end;
 	case 3: warp "geffen",120,36; end;
