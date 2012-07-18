@@ -316,7 +316,7 @@
 1512,Yao Jun,71428
 1513,Mao Guai,71428
 1514,Zhu Po Long,71428
-1515,Garm Baby,71428
+1515,Baby Hatii,71428
 1516,Mi Gao,71428
 1517,Jing Guai,71428
 1519,Green Maiden,71428
@@ -412,28 +412,28 @@
 1781,Drosera,71428
 1782,Roween,71428
 1783,Galion,71428
-1784,Stapo,142856
+1784,Stapo,142857
 1789,Iceicle,71428
-1796,Aunoe,71428
-1797,Fanat,71428
+1796,Aunoe,142857
+1797,Fanat,142857
 1829,Sword Guardian,71428
 1830,Bow Guardian,71428
 1831,Salamander,71428
 1833,Kasa,71428
 1836,Magmaring,214285
-1837,Fire Imp,71428
+1837,Imp,71428
 1838,Knocker,71428
-1839,Byorgue,71428
+1839,Byrogue,71428
 1864,Zombie Slaughter,71428
 1865,Ragged Zombie,71428
-1866,Hell Poodle,71428
+1866,Hellhound,71428
 1867,Banshee,71428
 1869,Flame Skull,71428
 1870,Necromancer,71428
 1872,Hell Fly,71428
 1880,Wood Goblin,71428
 1881,Les,71428
-1882,Baba Yaga,71428
+1882,Baba-Yaga,71428
 1883,Uzhas,71428
 1884,Mavka,71428
 1918,Incarnation of Morroc,71428
@@ -444,14 +444,14 @@
 1975,Beholder Master,71428
 1976,Cobalt Mineral,71428
 1977,Heavy Metaling,71428
-1978,Hell Apocalypse,71428
-1979,Zukadam,71428
+1978,Hell Vesper,71428
+1979,Zakudam,71428
 1986,Tatacho,71428
 1987,Centipede,71428
 1988,Nepenthes,71428
-1989,Hills Lion,71428
+1989,Hillthrion,71428
 1990,Hardrock Mammoth,71428
-1991,Tendril Lion,71428
+1991,Tendrillion,71428
 1992,Cornus,71428
 1993,Naga,71428
 1994,Luciola Vespa,71428
@@ -473,12 +473,13 @@
 2072,Jaguar,71428
 2073,Toucan,71428
 2074,Curupira,71428
-2083,One-Horn Scaraba,71428
-2084,Two-Horn Scaraba,71428
+2083,One-Horned Scaraba,71428
+2084,Two-Horned Scaraba,71428
 2085,Antler Scaraba,71428
 2086,Rake Scaraba,71428
-2088,One-Horn Scaraba Egg,71428
-2089,Two-Horn Scaraba Egg,71428
+2088,Scaraba Egg,71428
+2089,Scaraba Egg,71428
 2090,Antler Scaraba Egg,71428
 2091,Rake Scaraba Egg,71428
 2092,Dolomedes,71428
+2093,Botaring,142857

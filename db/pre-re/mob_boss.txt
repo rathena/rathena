@@ -20,7 +20,7 @@
 1159,Phreeoni,1000000
 1190,Orc Lord,1000000
 1251,Stormy Knight,1000000
-1252,Garm,1000000
+1252,Hatii,1000000
 1272,Dark Lord,1000000
 1312,Turtle General,1000000
 1373,Lord of the Dead,1000000
@@ -42,9 +42,9 @@
 1751,Valkyrie Randgris,1000000
 1768,Gloom Under Night,1000000
 1779,Ktullanux,1000000
-1785,Atros,1000000
-1785,Atros,1000000
+1785,Atroce,1000000
 1832,Ifrit,1000000
-1871,Fallen Bishop Hibram,1000000
+1871,Falling Bishop,1000000
 1873,Beelzebub,1000000
 1885,Gopinich,1000000
+2022,Nidhoggur's Shadow,1000000

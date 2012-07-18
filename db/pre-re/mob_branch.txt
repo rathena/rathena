@@ -87,6 +87,7 @@
 1095,Andre,357142
 1096,Angeling,71428
 1097,Ant Egg,71428
+1098,Anubis,71428
 1099,Argiope,71428
 1100,Argos,214285
 1101,Baphomet Jr.,71428
@@ -315,7 +316,7 @@
 1512,Yao Jun,71428
 1513,Mao Guai,71428
 1514,Zhu Po Long,71428
-1515,Garm Baby,71428
+1515,Baby Hatii,71428
 1516,Mi Gao,71428
 1517,Jing Guai,71428
 1519,Green Maiden,71428
@@ -411,5 +412,58 @@
 1781,Drosera,71428
 1782,Roween,71428
 1783,Galion,71428
-1784,Stapo,71428
+1784,Stapo,142857
 1789,Iceicle,71428
+1796,Aunoe,142857
+1797,Fanat,142857
+1829,Sword Guardian,71428
+1830,Bow Guardian,71428
+1831,Salamander,71428
+1833,Kasa,71428
+1836,Magmaring,214285
+1837,Imp,71428
+1838,Knocker,71428
+1839,Byrogue,71428
+1864,Zombie Slaughter,71428
+1865,Ragged Zombie,71428
+1866,Hellhound,71428
+1867,Banshee,71428
+1869,Flame Skull,71428
+1870,Necromancer,71428
+1872,Hell Fly,71428
+1880,Wood Goblin,71428
+1881,Les,71428
+1882,Baba-Yaga,71428
+1883,Uzhas,71428
+1884,Mavka,71428
+1918,Incarnation of Morroc,71428
+1919,Incarnation of Morroc,71428
+1920,Incarnation of Morroc,71428
+1921,Incarnation of Morroc,71428
+1974,Banshee Master,71428
+1975,Beholder Master,71428
+1976,Cobalt Mineral,71428
+1977,Heavy Metaling,71428
+1978,Hell Vesper,71428
+1979,Zakudam,71428
+1986,Tatacho,71428
+1987,Centipede,71428
+1988,Nepenthes,71428
+1989,Hillthrion,71428
+1990,Hardrock Mammoth,71428
+1991,Tendrillion,71428
+1992,Cornus,71428
+1993,Naga,71428
+1994,Luciola Vespa,71428
+1995,Pinguicula,71428
+1999,Centipede Larva,71428
+2013,Draco,71428
+2015,Dark Pinguicula,71428
+2016,Aqua Elemental,71428
+2017,Rata,71428
+2018,Duneyrr,71428
+2019,Ancient Tree,71428
+2020,Rhyncho,71428
+2021,Phylla,71428
+2023,Dark Shadow,71428
+2024,Bradium Golem,71428

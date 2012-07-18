@@ -3981,7 +3981,7 @@ static int mob_read_randommonster(void)
 	int i,j;
 	const char* mobfile[] = {
 		DBPATH"mob_branch.txt",
-		"mob_poring.txt",
+		DBPATH"mob_poring.txt",
 		DBPATH"mob_boss.txt",
 		"mob_pouch.txt",
 		"mob_classchange.txt"};
