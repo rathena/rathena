@@ -60,6 +60,8 @@ typedef struct AliasInfo AliasInfo;
 struct AtCommandInfo {
 	char command[ATCOMMAND_LENGTH]; 
 	AtCommandFunc func;
+	char* at_groups;/* quick @commands "can-use" lookup */
+	char* char_groups;/* quick @charcommands "can-use" lookup */
 };
 
 struct AliasInfo {
@@ -8393,8 +8395,19 @@ static void atcommand_commands_sub(struct map_session_data* sd, const int fd, At
 	for (cmd = dbi_first(iter); dbi_exists(iter); cmd = dbi_next(iter)) {
 		unsigned int slen = 0;
 
-		if (!pc_can_use_command(sd, cmd->command, type))
-			continue;
+		switch( type ) {
+			case COMMAND_CHARCOMMAND:
+				if( cmd->char_groups[sd->group_pos] == 0 )
+					continue;
+				break;
+			case COMMAND_ATCOMMAND:
+				if( cmd->at_groups[sd->group_pos] == 0 )
+					continue;
+				break;
+			default:
+				continue;
+		}
+		
 
 		slen = strlen(cmd->command);
 
@@ -8583,8 +8596,8 @@ ACMD_FUNC(set) {
 /**
  * Fills the reference of available commands in atcommand DBMap
  **/
-#define ACMD_DEF(x) { #x, atcommand_ ## x }
-#define ACMD_DEF2(x2, x) { x2, atcommand_ ## x }
+#define ACMD_DEF(x) { #x, atcommand_ ## x, NULL, NULL }
+#define ACMD_DEF2(x2, x) { x2, atcommand_ ## x, NULL, NULL }
 void atcommand_basecommands(void) {
 	/**
 	 * Command reference list, place the base of your commands here
@@ -9039,8 +9052,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	
 	//Grab the command information and check for the proper GM level required to use it or if the command exists
 	info = get_atcommandinfo_byname(atcommand_checkalias(command + 1));
-	if (info == NULL)
-	{
+	if (info == NULL) {
 		if( pc_get_group_level(sd) ) { // TODO: remove or replace with proper permission
 			sprintf(output, msg_txt(153), command); // "%s is Unknown Command."
 			clif_displaymessage(fd, output);
@@ -9052,8 +9064,8 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	
 	// type == 1 : player invoked
 	if (type == 1) {
-		if ((*command == atcommand_symbol && !pc_can_use_command(sd, atcommand_checkalias(command + 1), COMMAND_ATCOMMAND)) ||
-		    (*command == charcommand_symbol && !pc_can_use_command(sd, atcommand_checkalias(command + 1), COMMAND_CHARCOMMAND))) {
+		if ((*command == atcommand_symbol && info->at_groups[sd->group_pos] == 0) ||
+		    (*command == charcommand_symbol && info->char_groups[sd->group_pos] == 0) ) {
 			return false;
 		}
 	}
@@ -9175,17 +9187,50 @@ static void atcommand_config_read(const char* config_filename)
 	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' command aliases in '"CL_WHITE"%s"CL_RESET"'.\n", num_aliases, config_filename);
 	return;
 }
+void atcommand_db_load_groups(int* group_ids) {
+	DBIterator *iter = db_iterator(atcommand_db);
+	AtCommandInfo* cmd;
+	int i;
+	
+	for (cmd = dbi_first(iter); dbi_exists(iter); cmd = dbi_next(iter)) {
+		cmd->at_groups = aMalloc( pc_group_max * sizeof(char) );
+		cmd->char_groups = aMalloc( pc_group_max * sizeof(char) );
+		for(i = 0; i < pc_group_max; i++) {
+			if( pc_group_can_use_command(group_ids[i], cmd->command, COMMAND_ATCOMMAND ) )
+			   cmd->at_groups[i] = 1;
+			else
+			   cmd->at_groups[i] = 0;
+		   if( pc_group_can_use_command(group_ids[i], cmd->command, COMMAND_CHARCOMMAND ) )
+			  cmd->char_groups[i] = 1;
+			else
+			  cmd->char_groups[i] = 0;
+		}
+	}
+	
+	dbi_destroy(iter);
+	
+	return;
+}
+void atcommand_db_clear(void) {
+	
+	if (atcommand_db != NULL) {
+		DBIterator *iter = db_iterator(atcommand_db);
+		AtCommandInfo* cmd;
+		
+		for (cmd = dbi_first(iter); dbi_exists(iter); cmd = dbi_next(iter)) {
+			aFree(cmd->at_groups);
+			aFree(cmd->char_groups);
+		}
+		
+		dbi_destroy(iter);
 
-void atcommand_db_clear(void)
-{
-	if (atcommand_db != NULL)
 		db_destroy(atcommand_db);
+	}
 	if (atcommand_alias_db != NULL)
 		db_destroy(atcommand_alias_db);
 }
 
-void atcommand_doload(void)
-{
+void atcommand_doload(void) {
 	atcommand_db_clear();
 	atcommand_db = stridb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA, ATCOMMAND_LENGTH);
 	atcommand_alias_db = stridb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA, ATCOMMAND_LENGTH);
@@ -9193,12 +9238,10 @@ void atcommand_doload(void)
 	atcommand_config_read(ATCOMMAND_CONF_FILENAME);
 }
 
-void do_init_atcommand(void)
-{
+void do_init_atcommand(void) {
 	atcommand_doload();
 }
 
-void do_final_atcommand(void)
-{
+void do_final_atcommand(void) {
 	atcommand_db_clear();
 }

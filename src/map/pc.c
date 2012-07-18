@@ -101,7 +101,7 @@ inline int pc_get_group_id(struct map_session_data *sd) {
 }
 
 inline int pc_get_group_level(struct map_session_data *sd) {
-	return pc_group_id2level(pc_get_group_id(sd));
+	return sd->group_level;
 }
 
 static int pc_invincible_timer(int tid, unsigned int tick, int id, intptr_t data)
@@ -922,6 +922,10 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 
 	sd->login_id2 = login_id2;
 	sd->group_id = group_id;
+	
+	/* load user permissions */
+	pc_group_pc_load(sd);
+	
 	memcpy(&sd->status, st, sizeof(*st));
 
 	if (st->sex != sd->status.sex) {
@@ -8623,16 +8627,6 @@ bool pc_isautolooting(struct map_session_data *sd, int nameid)
 bool pc_can_use_command(struct map_session_data *sd, const char *command, AtCommandType type)
 {
 	return pc_group_can_use_command(pc_get_group_id(sd), command, type);
-}
-
-/**
- * Checks if player has a permission
- * @param sd Player map session data
- * @param permission permission to check
- */
-bool pc_has_permission(struct map_session_data *sd, int permission)
-{
-	return pc_group_has_permission(pc_get_group_id(sd), permission);
 }
 
 /**

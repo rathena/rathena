@@ -7,6 +7,7 @@
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
 #include "../common/strlib.h" // strcmp
+#include "../common/socket.h"
 
 #include "atcommand.h" // AtCommandType
 #include "pc_groups.h"
@@ -28,8 +29,10 @@ struct GroupSettings {
 	config_setting_t *inherit; // groups.[].inherit
 	bool inheritance_done; // have all inheritance rules been evaluated?
 	config_setting_t *root; // groups.[]
+	int group_pos;/* pos on load */
 };
 
+int pc_group_max; /* known number of groups */
 
 static config_t pc_group_config;
 static DBMap* pc_group_db; // id -> GroupSettings
@@ -85,7 +88,7 @@ static void read_config(void)
 	config_setting_t *groups = NULL;
 	const char *config_filename = "conf/groups.conf"; // FIXME hardcoded name
 	int group_count = 0;
-
+	
 	if (conf_read_file(&pc_group_config, config_filename))
 		return;
 
@@ -153,6 +156,7 @@ static void read_config(void)
 			group_settings->permissions = config_setting_get_member(group, "permissions");
 			group_settings->inheritance_done = false;
 			group_settings->root = group;
+			group_settings->group_pos = i;
 
 			strdb_put(pc_groupname_db, groupname, group_settings);
 			idb_put(pc_group_db, id, group_settings);
@@ -292,6 +296,23 @@ static void read_config(void)
 	}
 
 	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' groups in '"CL_WHITE"%s"CL_RESET"'.\n", group_count, config_filename);
+
+	
+	if( ( pc_group_max = group_count ) ) {
+		DBIterator *iter = db_iterator(pc_group_db);
+		GroupSettings *group_settings = NULL;
+		int* group_ids = aMalloc( pc_group_max * sizeof(int) );
+		int i = 0;
+		for (group_settings = dbi_first(iter); dbi_exists(iter); group_settings = dbi_next(iter)) {
+			group_ids[i++] = group_settings->id;
+		}
+		
+		atcommand_db_load_groups(group_ids);
+		
+		aFree(group_ids);
+		
+		dbi_destroy(iter);
+	}
 }
 
 /**
@@ -346,7 +367,20 @@ bool pc_group_can_use_command(int group_id, const char *command, AtCommandType t
 	}
 	return false;
 }
-
+void pc_group_pc_load(struct map_session_data * sd) {
+	GroupSettings *group = NULL;
+	if ((group = id2group(sd->group_id)) == NULL) {
+		ShowWarning("pc_group_pc_load: %s (AID:%d) logged in with unknown group id (%d)! kicking...\n",
+					sd->status.name,
+					sd->status.account_id,
+					sd->group_id);
+		set_eof(sd->fd);
+		return;
+	}
+	sd->permissions = group->e_permissions;
+	sd->group_pos = group->group_pos;
+	sd->group_level = group->level;
+}
 /**
  * Checks if player group has a permission
  * @param group_id ID of the group
@@ -439,8 +473,19 @@ void do_final_pc_groups(void)
  * Used in @reloadatcommand
  * @public
  */
-void pc_groups_reload(void)
-{
+void pc_groups_reload(void) {
+	struct map_session_data* sd = NULL;
+	struct s_mapiterator* iter = NULL;
+
 	do_final_pc_groups();
 	do_init_pc_groups();
+	
+	/* refresh online users permissions */
+	iter = mapit_getallusers();
+	for (sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter))	{
+		pc_group_pc_load(sd);
+	}
+	mapit_free(iter);
+
+	
 }

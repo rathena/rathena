@@ -158,7 +158,8 @@ struct map_session_data {
 	} special_state;
 	int login_id1, login_id2;
 	unsigned short class_;	//This is the internal job ID used by the map server to simplify comparisons/queries/etc. [Skotlex]
-	int group_id;
+	int group_id, group_pos, group_level;
+	unsigned int permissions;/* group permissions */
 
 	int packet_ver;  // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 ... 18
 	struct mmo_charstatus status;
@@ -669,7 +670,7 @@ int pc_getrefinebonus(int lv,int type);
 bool pc_can_give_items(struct map_session_data *sd);
 
 bool pc_can_use_command(struct map_session_data *sd, const char *command, AtCommandType type);
-bool pc_has_permission(struct map_session_data *sd, int permission);
+#define pc_has_permission(sd, permission) ( ((sd)->permissions&permission) != 0 )
 bool pc_should_log_commands(struct map_session_data *sd);
 
 int pc_setrestartvalue(struct map_session_data *sd,int type);
