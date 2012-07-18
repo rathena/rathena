@@ -496,16 +496,14 @@ int skillnotok (int skillid, struct map_session_data *sd)
 	if( sd->skillitem == skillid )
 		return 0;
 	// Check skill restrictions [Celest]
-	if(!map_flag_vs(m) && skill_get_nocast (skillid) & 1)
-		return 1;
-	if(map[m].flag.pvp && skill_get_nocast (skillid) & 2)
-		return 1;
-	if(map_flag_gvg(m) && skill_get_nocast (skillid) & 4)
-		return 1;
-	if(map[m].flag.battleground && skill_get_nocast (skillid) & 8)
-		return 1;
-	if(map[m].flag.restricted && map[m].zone && skill_get_nocast (skillid) & (8*map[m].zone))
-		return 1;
+	if( (!map_flag_vs(m) && skill_get_nocast (skillid) & 1) ||
+		(map[m].flag.pvp && skill_get_nocast (skillid) & 2) ||
+		(map_flag_gvg(m) && skill_get_nocast (skillid) & 4) ||
+		(map[m].flag.battleground && skill_get_nocast (skillid) & 8) ||
+		(map[m].flag.restricted && map[m].zone && skill_get_nocast (skillid) & (8*map[m].zone)) ){
+			clif_msgtable(sd->fd,0x536); // This skill cannot be used within this area
+			return 1;
+	}
 
 	if( sd->sc.option&OPTION_MOUNTING )
 		return 1;//You can't use skills while in the new mounts (The client doesn't let you, this is to make cheat-safe)
@@ -8196,8 +8194,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 		
 	case WM_SIRCLEOFNATURE:
-		flag |= BCT_PARTY|BCT_SELF;
+		flag |= BCT_SELF|BCT_PARTY|BCT_GUILD;
 	case WM_VOICEOFSIREN:
+		if( skillid != WM_SIRCLEOFNATURE )
+			flag &= ~BCT_SELF;
 		if( flag&1 ) {
 			sc_start2(bl,type,(skillid==WM_VOICEOFSIREN)?20+10*skilllv:100,skilllv,(skillid==WM_VOICEOFSIREN)?src->id:0,skill_get_time(skillid,skilllv));
 		} else {
@@ -9065,6 +9065,16 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr_t data)
 
 		if( !sd || sd->skillitem != ud->skillid || skill_get_delay(ud->skillid,ud->skilllv) )
 			ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv);
+		if( sd && skill_get_cooldown(ud->skillid,ud->skilllv) > 0 ){
+			int i, cooldown = skill_get_cooldown(ud->skillid, ud->skilllv);
+			for (i = 0; i < ARRAYLENGTH(sd->skillcooldown) && sd->skillcooldown[i].id; i++) { // Increases/Decreases cooldown of a skill by item/card bonuses.
+				if (sd->skillcooldown[i].id == ud->skillid){
+					cooldown += sd->skillcooldown[i].val;
+					break;
+				}
+			}
+			skill_blockpc_start(sd, ud->skillid, cooldown);
+		}
 		if( battle_config.display_status_timers && sd )
 			clif_status_change(src, SI_ACTIONDELAY, 1, skill_delayfix(src, ud->skillid, ud->skilllv), 0, 0, 0);
 //		if( sd )
@@ -9607,7 +9617,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 				}
 				skill_addtimerskill(src,gettick() + (150 * i),0,sx,sy,skillid,skilllv,dir,flag&2);
 			}
-			if(sd) skill_blockpc_start(sd, skillid, skill_get_cooldown(skillid, skilllv));
 		}
 		break;
 	/**
@@ -15050,8 +15059,12 @@ int skill_can_produce_mix (struct map_session_data *sd, int nameid, int trigger,
 		return 0;
 
 	for(i=0;i<MAX_SKILL_PRODUCE_DB;i++){
-		if(skill_produce_db[i].nameid == nameid )
+		if(skill_produce_db[i].nameid == nameid ){
+			if((j=skill_produce_db[i].req_skill)>0 &&
+				pc_checkskill(sd,j) < skill_produce_db[i].req_skill_lv)
+					continue; // must iterate again to check other skills that produce it. [malufett]
 			break;
+		}
 	}
 	if( i >= MAX_SKILL_PRODUCE_DB )
 		return 0;
@@ -15073,9 +15086,6 @@ int skill_can_produce_mix (struct map_session_data *sd, int nameid, int trigger,
 				return 0;
 		}
 	}
-	if((j=skill_produce_db[i].req_skill)>0 &&
-		pc_checkskill(sd,j) < skill_produce_db[i].req_skill_lv)
-		return 0;
 
 	for(j=0;j<MAX_PRODUCE_RESOURCE;j++){
 		int id,x,y;

@@ -641,8 +641,8 @@ void initChangeTables(void) {
 	set_sc( MI_ECHOSONG               , SC_ECHOSONG             , SI_ECHOSONG             , SCB_DEF2  );
 	set_sc( MI_HARMONIZE              , SC_HARMONIZE            , SI_HARMONIZE            , SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK );
 	set_sc_with_vfx( WM_POEMOFNETHERWORLD      , SC_NETHERWORLD          , SI_NETHERWORLD          , SCB_NONE );
-	set_sc( WM_VOICEOFSIREN           , SC_VOICEOFSIREN         , SI_VOICEOFSIREN         , SCB_NONE );
-	set_sc( WM_LULLABY_DEEPSLEEP      , SC_DEEPSLEEP            , SI_DEEPSLEEP            , SCB_NONE );
+	set_sc_with_vfx( WM_VOICEOFSIREN           , SC_VOICEOFSIREN         , SI_VOICEOFSIREN         , SCB_NONE );
+	set_sc_with_vfx( WM_LULLABY_DEEPSLEEP      , SC_DEEPSLEEP            , SI_DEEPSLEEP            , SCB_NONE );
 	set_sc( WM_SIRCLEOFNATURE         , SC_SIRCLEOFNATURE       , SI_SIRCLEOFNATURE       , SCB_NONE );
 	set_sc( WM_GLOOMYDAY              , SC_GLOOMYDAY            , SI_GLOOMYDAY            , SCB_FLEE|SCB_ASPD );
 	set_sc( WM_SONG_OF_MANA           , SC_SONGOFMANA           , SI_SONGOFMANA           , SCB_NONE );
@@ -1679,9 +1679,8 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 				if (pc_isinvisible(sd))
 					return 0;
 				if (tsc->option&hide_flag && !is_boss &&
-					(sd->special_state.perfect_hiding || !is_detect) )
-					return 0;
-				if( tsc->data[SC_CLOAKINGEXCEED] && !(is_boss) && (status->mode&(RC_INSECT|RC_DEMON)) )	// Cloaking Exceed => undetected from insect & demon except bosses
+					((sd->special_state.perfect_hiding || !is_detect) ||
+					(tsc->data[SC_CLOAKINGEXCEED] && is_detect)))
 					return 0;
 				if( tsc->data[SC_CAMOUFLAGE] && !(is_boss || is_detect) && !skill_num )
 					return 0;
