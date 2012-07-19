@@ -1,307 +1,242 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Prontera Guides
-//===== By: ================================================== 
-//= L0ne_W0lf
-//===== Current Version: ===================================== 
-//= 1.0
-//===== Compatible With: ===================================== 
-//= rAthena  SVN
-//===== Description: ========================================= 
-//= [Aegis Conversion]
-//= Guides for the city of Prontera
-//===== Additional Comments: ================================= 
-//= 1.0 First version, Renewal guides.
-//============================================================ 
+//===== By: ==================================================
+//= kobra_k88; L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.6a
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= [Official Conversion]
+//= Guides for the City of Prontera
+//===== Additional Comments: =================================
+//= 1.1 Now using duplicate command.
+//= 1.2 Optimized, updated common guide names [Lupus]
+//= 1.3 Updated the guide according to how it is on iRO, thanks [MasterOfMuppets]
+//=     to Muad_Dib
+//= 1.4 Fitted the many lines into 1 or 2, and corrected some typos [erKURITA]
+//= 1.5 Removed Duplicates [Silent]
+//= 1.6 Rescripted to official 10.3 standards. [L0ne_W0lf]
+//= 1.6a Fixed some errors with the loop. [Samuray22]
+//	-Thanks to $ephiroth.
+//= 1.6b Fixed a Problem with Unnecesary RGB Values. [Samuray22]
+//	-Thanks to Brainstorm.
+//============================================================
 
-prontera,154,187,4	script	Guide#01prontera::GuideProntera	105,{
+prontera,154,187,4	script	Guide#prt::PrtGuide	105,{
 	cutin "prt_soldier",2;
 	mes "[Prontera Guide]";
-	mes "Welcome to ^8B4513Prontera^000000,";
+	mes "Welcome to Prontera,";
 	mes "the beautiful capital of the";
-	mes "Rune-Midgarts Kingdom.";
-	mes "Do you need help navigating the city?";
-	next;
-	while (1) {
-		switch(select("[ Main Facilities ]:[ Merchants & Helpers ]:Remove Marks from Mini-Map:Cancel")) {
+	mes "Rune-Midgarts Kingdom. If";
+	mes "you have questions or need help finding something in the city, don't hesitate to ask.";
+	set .@loop1,1;
+	while (.@loop1) {
+		next;
+		switch(select("City Guide.:Remove Marks from Mini-Map:Notice:Cancel")) {
 		case 1:
-			set .@loop,1;
-			while (.@loop) {
-				switch(select("[ Tool Shop ]:[ Weapon & Armor Shop ]:[ Forge ]:[ Sanctuary ]:[ Chivalry Office ]:[ Inn ]:[ Tavern ]:[ Library ]:[ Prontera Castle ]:[ Job Agency ]:[ City Hall ]:Previous Menu")) {
+			mes "[Prontera Guide]";
+			mes "Please select";
+			mes "a location from";
+			mes "the following menu.";
+			if (.@compass_check == 0) {
+				mes "Would you like me";
+				mes "to mark locations";
+				mes "on your Mini-Map?";
+				next;
+				if (select("Yes:No") == 1) set .@compass_check,1;
+			}
+			set .@loop2,1;
+			while (.@loop2) {
+				if (.@wait_button_chk == 0) set .@wait_button_chk,1;
+				else next;
+
+				switch(select("Swordman Association:^0000FFSanctuary^000000:Prontera Chivalry:Weapon Shop:Tool Shop:Inn:Trading Post:Pub:Library:Job Agency:Prontera Castle:City Hall:Cancel")) {
 				case 1:
 					mes "[Prontera Guide]";
-					mes "Let me mark the location of the ^B9062FTool Shop^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,134,221,0,0xFF0000;
-					next;
+					mes "The Swordman Association,";
+					mes "which handles Job Changes";
+					mes "to the Swordman class, has";
+					mes "moved to Izlude. This facility";
+					mes "is just an empty building now.";
+					if (.@compass_check)
+						viewpoint 1,237,41,4,0x00FF00;
 					break;
 				case 2:
 					mes "[Prontera Guide]";
-					mes "Let me mark the location of the ^0000FFWeapon & Armor Shop^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,175,220,1,0x0A82FF;
-					next;
+					mes "The Prontera Sanctuary";
+					mes "handles Job Changes to";
+					mes "the Acolyte class, and can";
+					mes "be found in the northeast";
+					mes "corner of Prontera.";
+					if (.@compass_check)
+						viewpoint 1,236,316,5,0xFF0000;
 					break;
 				case 3:
 					mes "[Prontera Guide]";
-					mes "Let me mark the location of the ^FF5400Forge^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,179,184,2,0xFFB400;
-					next;
+					mes "The Prontera Chivralry,";
+					mes "which is responsible for";
+					mes "the safety of our capital, is";
+					mes "in Prontera's northwest corner.";
+					if (.@compass_check)
+						viewpoint 1,46,345,6,0x00FF00;
 					break;
 				case 4:
 					mes "[Prontera Guide]";
-					mes "The ^006400Prontera Sanctuary^000000 is";
-					mes "where you can change your job to Acolyte,";
-					mes "its located in the far northeast of Prontera.";
-					mes "Let me mark the location on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,236,316,3,0xAAFF00;
-					next;
+					mes "The Weapon Shop";
+					mes "is located northeast";
+					mes "of the central fountain.";
+					if (.@compass_check)
+						viewpoint 1,175,220,7,0xFF00FF;
 					break;
 				case 5:
 					mes "[Prontera Guide]";
-					mes "The Chivalry Office is";
-					mes "where you can change your job to ^7F3300Knight^000000";
-					mes "or apply for the ^7F3300Culvert^000000 Subjugation Party.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,46,345,4,0xD2691E;
-					next;
+					mes "The Tool Shop";
+					mes "is located northwest";
+					mes "of the central fountain.";
+					if (.@compass_check)
+						viewpoint 1,134,221,8,0xFF00FF;
 					break;
 				case 6:
 					mes "[Prontera Guide]";
-					mes "Let me mark the location of the ^800080Inn^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,204,191,5,0xDA70D6;
-					next;
+					mes "The Inns in Prontera are";
+					mes "located both to the east";
+					mes "and west of Prontera's";
+					mes "central fountain area.";
+					if (.@compass_check) {
+						viewpoint 1,204,191,9,0xFF00FF;
+						viewpoint 1,107,192,10,0xFF00FF;
+					}
 					break;
 				case 7:
 					mes "[Prontera Guide]";
-					mes "Let me mark the location of the ^B9062FTaverns^000000";
-					mes "on your mini-map.";
-					mes "Only the ^B9062Fnorthern^000000 tavern";
-					mes "is open for now.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,208,154,6,0xFF0000;
-					viewpoint 1,46,67,7,0xFF0000;
-					next;
+					mes "The Trading Post";
+					mes "can be found southeast";
+					mes "from the central fountain.";
+					if (.@compass_check)
+						viewpoint 1,179,184,11,0x00FF00;
 					break;
 				case 8:
 					mes "[Prontera Guide]";
-					mes "The ^0000FFLibrary^000000 is";
-					mes "where you can find useful information, like the Monster Encyclopedia.";
-					mes "There are currently twi libaries available";
-					mes "in the northern area of Prontera.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,120,264,8,0x0A82FF;
-					viewpoint 1,192,264,9,0x0A82FF;
-					next;
+					mes "The Pub is located";
+					mes "southeast of the fountain,";
+					mes "behind the Trading Post.";
+					if (.@compass_check)
+						viewpoint 1,208,154,12,0x00FF00;
 					break;
 				case 9:
 					mes "[Prontera Guide]";
-					mes "The ^FF5400Prontera Castle^000000 is north from here,";
-					mes "and its rear gate is connected to";
-					mes "the northern Prontera Fields.";
-					mes "Let me mark the castle on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,156,360,10,0xFFB400;
-					next;
+					mes "If you head north from";
+					mes "the central fountain, you'll";
+					mes "find an empty area in which";
+					mes "both branches of the Prontera";
+					mes "Library can be accessed if you";
+					mes "head towards the east or west.";
+					if (.@compass_check) {
+						viewpoint 1,120,267,13,0x00FF00;
+						viewpoint 1,192,267,14,0x00FF00;
+					}
 					break;
 				case 10:
 					mes "[Prontera Guide]";
-					mes "Let me mark the location of the ^006400Job Agency^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,133,183,11,0xAAFF00;
-					next;
+					mes "The Job Agency is";
+					mes "just southwest of the";
+					mes "central fountain area.";
+					if (.@compass_check)
+						viewpoint 1,133,183,15,0x00FF00;
 					break;
 				case 11:
 					mes "[Prontera Guide]";
-					mes "Let me mark the location of ^7F3300City Hall^000000";
-					mes "on your mini-map.";
-					mes "There's a hairstylist";
-					mes "there that can change your hair color.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,75,91,12,0xD2691E;
-					next;
+					mes "The Prontera Castle is";
+					mes "located at the northern";
+					mes "sector of this city. You can";
+					mes "go to the fields that are north";
+					mes "of Prontera by going through";
+					mes "the castle's rear exit.";
+					if (.@compass_check)
+						viewpoint 1,156,360,16,0x00FF00;
 					break;
 				case 12:
-					set .@loop,0;
+					mes "[Prontera Guide]";
+					mes "The City Hall";
+					mes "is located in the";
+					mes "southwest corner";
+					mes "in our city of Prontera.";
+					if (.@compass_check)
+						viewpoint 1,75,91,17,0x01FF01;
+					break;
+				case 13:
+					mes "[Prontera Guide]";
+					mes "Please ask me to ''Remove";
+					mes "Marks from Mini-Map'' if you";
+					mes "no longer wish to have the";
+					mes "location marks displayed";
+					mes "on your Mini-Map.";
+					set .@loop2,0;
 					break;
 				}
 			}
 			break;
 		case 2:
-			set .@loop,1;
-			while (.@loop) {
-				switch(select("[ Eden Teleport Officer ]:[ Peco Peco Breeder ]:[ Riding Creature Master ]:[ Magic Gear Master ]:[ Peco Peco Remover ]:[ Rune Salesman ]:[ Mercenary Guildsman ]:[ Hypnotist ]:[ Kafra Employee ]:[ Leablem ]:[ Apprentice Craftsman ]:Previous Menu")) {
-				case 1:
-					mes "[Prontera Guide]";
-					mes "Let me mark the location of the";
-					mes "^800080Eden Teleport Officer^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,124,76,13,0xDA70D6;
-					next;
-					break;
-				case 2:
-					mes "[Prontera Guide]";
-					mes "Two ^0000FFPeco Peco Breeders^000000 are available,";
-					mes "one for ^0000FFKnights^000000 to the ^0000FFnorthwest^000000";
-					mes "and the other for ^0000FFCrusaders^000000 to the ^0000FFnortheast^000000.";
-					viewpoint 1,55,350,15,0x0A82FF;
-					viewpoint 1,232,310,16,0x0A82FF;
-					next;
-					break;
-				case 3:
-					mes "[Prontera Guide]";
-					mes "The ^FF5400Riding Creature Master^000000 provides services for";
-					mes "^FF5400Rune Knights^000000 and ^FF5400Royal Guards^000000.";
-					mes "Let me mark his location";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,131,213,17,0xFFB400;
-					next;
-					break;
-				case 4:
-					mes "[Prontera Guide]";
-					mes "The ^006400Magic Gear Master^000000";
-					mes "provides services for";
-					mes "^006400Mechanics^000000.";
-					mes "Let me mark his location";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,163,178,18,0xAAFF00;
-					next;
-					break;
-				case 5:
-					mes "[Prontera Guide]";
-					mes "If your beloved Peco Peco refuses";
-					mes "to leave you,";
-					mes "please talk to the ^7F3300Peco Peco Remover^000000";
-					mes "near the central fountain.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,125,208,19,0xD2691E;
-					next;
-					break;
-				case 6:
-					mes "[Prontera Guide]";
-					mes "Let me mark the location of";
-					mes "the ^800080Rune Salesman^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,168,228,20,0xDA70D6;
-					next;
-					break;
-				case 7:
-					mes "[Prontera Guide]";
-					mes "Let me mark the location of ^0000FFSpear Mercenary Manager^000000 and";
-					mes "^0000FFMercenary Goods Merchant^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,35,337,21,0x0A82FF;
-					next;
-					break;
-				case 8:
-					mes "[Prontera Guide]";
-					mes "The ^FF5400Hypnotist^000000";
-					mes "helps beginner adventurers";
-					mes "to reset their skills.";
-					mes "Let me mark his location";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,146,232,22,0xFFB400;
-					next;
-					break;
-				case 9:
-					mes "[Prontera Guide]";
-					mes "Let me mark the location of the";
-					mes "^006400Kafra Employees^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,152,326,23,0xAAFF00;
-					viewpoint 1,30,207,24,0xAAFF00;
-					viewpoint 1,282,200,25,0xAAFF00;
-					viewpoint 1,151,29,26,0xAAFF00;
-					viewpoint 1,146,89,27,0xAAFF00;
-					next;
-					break;
-				case 10:
-					mes "[Prontera Guide]";
-					mes "^0000FFLeablem^000000";
-					mes "is a technician";
-					mes "who can create ^0000FFslots^000000 on weapons and armors,";
-					mes "As amazing as it sounds,";
-					mes "not all equipment can be slotted.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,244,169,28,0x0A82FF;
-					next;
-					break;
-				case 11:
-					mes "[Prontera Guide]";
-					mes "Let me mark the location of the";
-					mes "^800080Apprentice Craftsman^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,165,60,29,0xDA70D6;
-					next;
-					break;
-				case 12:
-					set .@loop,0;
-					break;
-				}
-			}
+			viewpoint 2,237,41,4,0x00FF00;
+			viewpoint 2,237,41,5,0x0000FF;
+			viewpoint 2,46,345,6,0x00FF00;
+			viewpoint 2,175,220,7,0xFF0000;
+			viewpoint 2,134,221,8,0xFF0000;
+			viewpoint 2,204,191,9,0xFF0000;
+			viewpoint 2,107,192,10,0xFF0000;
+			viewpoint 2,179,184,11,0x00FF00;
+			viewpoint 2,208,154,12,0x00FF00;
+			viewpoint 2,120,267,13,0x00FF00;
+			viewpoint 2,192,267,14,0x00FF00;
+			viewpoint 2,133,183,15,0x00FF00;
+			viewpoint 2,156,360,16,0x00FF00;
+			viewpoint 2,75,91,17,0x00FF00;
+			set .@compass_check,0;
 			break;
 		case 3:
 			mes "[Prontera Guide]";
-			mes "Sure, I'll remove all marks from your mini-map.";
-			mes "Is there anything else I can do for you?";
-			viewpoint 2,1,1,0,0xFFFF00;
-			viewpoint 2,1,1,1,0x000000;
-			viewpoint 2,1,1,2,0xFF0000;
-			viewpoint 2,1,1,3,0xFFFF00;
-			viewpoint 2,1,1,4,0xFFFF00;
-			viewpoint 2,1,1,5,0xFFFF00;
-			viewpoint 2,1,1,6,0xFFFF00;
-			viewpoint 2,1,1,7,0xFFFF00;
-			viewpoint 2,1,1,8,0xFFFF00;
-			viewpoint 2,1,1,9,0xFFFF00;
-			viewpoint 2,1,1,10,0xFFFF00;
-			viewpoint 2,1,1,11,0xFFFF00;
-			viewpoint 2,1,1,12,0xFFFF00;
-			viewpoint 2,1,1,13,0xFFFF00;
-			viewpoint 2,1,1,14,0xFFFF00;
-			viewpoint 2,1,1,15,0xFFFF00;
-			viewpoint 2,1,1,16,0xFFFF00;
-			viewpoint 2,1,1,17,0xFFFF00;
-			viewpoint 2,1,1,18,0xFFFF00;
-			viewpoint 2,1,1,19,0xFFFF00;
-			viewpoint 2,1,1,20,0xFFFF00;
-			viewpoint 2,1,1,21,0xFFFF00;
-			viewpoint 2,1,1,22,0xFFFF00;
-			viewpoint 2,1,1,23,0xFFFF00;
-			viewpoint 2,1,1,24,0xFFFF00;
-			viewpoint 2,1,1,25,0xFFFF00;
-			viewpoint 2,1,1,26,0xFFFF00;
-			viewpoint 2,1,1,27,0xFFFF00;
-			viewpoint 2,1,1,28,0xFFFF00;
-			viewpoint 2,1,1,29,0xFFFF00;
+			mes "Advances in sorcery and";
+			mes "technology have allowed";
+			mes "us to update our information";
+			mes "system, enabling up to mark";
+			mes "locations on your Mini-Map";
+			mes "for easier navigation.";
 			next;
+			mes "[Prontera Guide]";
+			mes "Your Mini-Map is located";
+			mes "in the upper right corner";
+			mes "of the screen. If you can't";
+			mes "see it, press the Ctrl + Tab";
+			mes "keys or click the ''Map'' button in your Basic Info Window.";
+			next;
+			mes "[Prontera Guide]";
+			mes "On your Mini-Map,";
+			mes "click on the ''+'' and ''-''";
+			mes "symbols to zoom in and";
+			mes "our of your Mini-Map. We";
+			mes "hope you enjoy your travels";
+			mes "here in the city of Prontera.";
 			break;
 		case 4:
 			mes "[Prontera Guide]";
-			mes "Enjoy your stay.";
+			mes "Well, adventurer...";
+			mes "I hope your journeys";
+			mes "through Rune-Midgard";
+			mes "are both fun and safe.";
 			close2;
-			cutin "prt_soldier",255;
-			end;
+			set .@loop1,0;
+			break;
 		}
 	}
+	cutin "prt_soldier",255;
+	end;
 }
 
-prontera,282,208,2	duplicate(GuideProntera)	Guide#02prontera	105
-prontera,29,200,6	duplicate(GuideProntera)	Guide#03prontera	105
-prontera,160,29,0	duplicate(GuideProntera)	Guide#04prontera	105
-prontera,151,330,4	duplicate(GuideProntera)	Guide#05prontera	105
+prontera,282,208,2	duplicate(PrtGuide)	East Gate-Guide	105
+
+prontera,29,200,6	duplicate(PrtGuide)	West Gate-Guide	105
+
+prontera,160,29,0	duplicate(PrtGuide)	South Gate-Guide	105
+
+prontera,151,330,4	duplicate(PrtGuide)	North Gate-Guide	105

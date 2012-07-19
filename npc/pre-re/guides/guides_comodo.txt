@@ -1,178 +1,127 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Comodo Guides
-//===== By: ================================================== 
-//= L0ne_W0lf
-//===== Current Version: ===================================== 
-//= 1.1
-//===== Compatible With: ===================================== 
+//===== By: ==================================================
+//= kobra_k88; L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
 //= rAthena SVN
-//===== Description: ========================================= 
-//= [Aegis Conversion]
-//= Guides for the city of Comodo.
-//===== Additional Comments: ================================= 
-//= 1.0 First version, Renewal guide.
-//= 1.1 Fixed and optimized. [Euphy]
-//============================================================ 
+//===== Description: =========================================
+//= [Official Conversion]
+//= Guides for the City of Comodo
+//===== Additional Comments: =================================
+//= Fully working v1.1 Now using duplicate command.
+//= 1.2 Optimized, updated common guide names [Lupus]
+//= 1.3 Updated the guide according to how it is on iRO, thanks
+//=	to Muad_Dib [MasterOfMuppets]
+//= 1.4	Removed 3 guides, and converted to use functions.
+//= 1.5 Rescripted to official 10.3 standards. [L0ne_W0lf]
+//============================================================
 
-comodo,322,178,4	script	Comodo Guide#01comodo::GuideComodo	700,{
-	mes "[Comodo Guide]";
-	mes "Welcome to ^8B4513Comodo^000000,";
-	mes "the Beach Town of the Rune-Midgarts Kingdom.";
-	mes "Do you need help navigating the town?";
-	next;
-	while (1) {
-		switch(select("[ Main Facilities ]:[ Merchants & Helpers ]:Remove Marks from Mini-Map:Cancel:About ^8B4513Comodo^000000")) {
-		case 1:
-			set .@loop,1;
-			while (.@loop) {
-				switch(select("[ Tavern ]:[ Casino ]:[ Weapon & Armor Shop ]:[ Tool Shop ]:[ Campsite ]:[ Souvenir Vendor ]:[ East Cave Mao ]:[ West Cave Karu ]:[ North Cave Ruanda ]:[ Hula Dance Stage ]:[ Kafra Co. Western Branch ]:Previous Menu")) {
-				case 1:
-					callsub L_Mark,"^FF0000Tavern";
-					viewpoint 1,166,298,0,0xFF0000;
-					next;
-					break;
-				case 2:
-					callsub L_Mark,"^FFA500Casino";
-					viewpoint 1,140,98,1,0xFFA500;
-					next;
-					break;
-				case 3:
-					callsub L_Mark,"^FF4500Weapon & Armor Shop";
-					viewpoint 1,266,70,2,0xFF4500;
-					next;
-					break;
-				case 4:
-					callsub L_Mark,"^B8860BTool Shop";
-					viewpoint 1,86,128,3,0xB8860B;
-					next;
-					break;
-				case 5:
-					callsub L_Mark,"^32CD32Campsite";
-					viewpoint 1,210,308,4,0x32CD32;
-					next;
-					break;
-				case 6:
-					callsub L_Mark,"^6B8E23Souvenir Vendor";
-					viewpoint 1,298,124,5,0x6B8E23;
-					next;
-					break;
-				case 7:
-					callsub L_Mark,"^008B8BEast Cave Mao",1;
-					viewpoint 1,333,175,6,0x008B8B;
-					next;
-					break;
-				case 8:
-					callsub L_Mark,"^1E90FFWest Cave Karu",1;
-					viewpoint 1,24,214,7,0x1E90FF;
-					next;
-					break;
-				case 9:
-					callsub L_Mark,"^0000CDNorth Cave Ruanda",1;
-					viewpoint 1,176,358,8,0x0000CD;
-					next;
-					break;
-				case 10:
-					callsub L_Mark,"^C71585Hula Dance Stage";
-					viewpoint 1,188,168,9,0xC71585;
-					next;
-					break;
-				case 11:
-					callsub L_Mark,"^DB7093Kafra Corporation Western Branch";
-					viewpoint 1,136,202,10,0xDB7093;
-					next;
-					break;
-				case 12:
-					set .@loop,0;
-					break;
-				}
-			}
-			break;
-		case 2:
-			set .@loop,1;
-			while (.@loop) {
-				switch(select("[ Chief's House ]:[ Bor Robin ]:[ Kafra Employee ]:[ Roaming Bard ]:Previous Menu")) {
-				case 1:
-					callsub L_Mark,"^6495EDChief's House";
-					viewpoint 1,114,294,11,0x6495ED;
-					next;
-					break;
-				case 2:
-					mes "[Comodo Guide]";
-					mes "^228B22Bor Robin^000000";
-					mes "helps adventurers to become ^228B22Dancers^000000.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,193,151,12,0x228B22;
-					next;
-					break;
-				case 3:
-					callsub L_Mark,"^1E90FFKafra Employee";
-					viewpoint 1,195,149,13,0x1E90FF;
-					next;
-					break;
-				case 4:
-					mes "[Comodo Guide]";
-					mes "The ^DB7093Roaming Bard^000000";
-					mes "helps adventurers to become ^DB7093Bards^000000.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,211,155,14,0xDB7093;
-					next;
-					break;
-				case 5:
-					set .@loop,0;
-					break;
-				}
-			}
-			break;
-		case 3:
-			mes "[Comodo Guide]";
-			mes "Sure, I'll remove all marks from your mini-map.";
-			mes "Is there anything else I can do for you?";
-			viewpoint 2,166,298,0,0xFFFFFF;
-			viewpoint 2,140,98,1,0xFFFFFF;
-			viewpoint 2,266,70,2,0xFFFFFF;
-			viewpoint 2,86,128,3,0xFFFFFF;
-			viewpoint 2,210,308,4,0xFFFFFF;
-			viewpoint 2,298,124,5,0xFFFFFF;
-			viewpoint 2,333,175,6,0xFFFFFF;
-			viewpoint 2,24,214,7,0xFFFFFF;
-			viewpoint 2,176,358,8,0xFFFFFF;
-			viewpoint 2,188,168,9,0xFFFFFF;
-			viewpoint 2,136,202,10,0xFFFFFF;
-			viewpoint 2,114,294,11,0xFFFFFF;
-			viewpoint 2,193,151,12,0xFFFFFF;
-			viewpoint 2,195,149,13,0xFFFFFF;
-			viewpoint 2,211,155,14,0xFFFFFF;
-			next;
-			break;
-		case 4:
-			mes "[Comodo Guide]";
-			mes "Enjoy your stay.";
-			close;
-		case 5:
-			mes "[Comodo Guide]";
-			mes "^8B4513Comodo^000000 is";
-			mes "located inside a cave";
-			mes "and can never be reached by natural sunlight.";
-			next;
-			mes "[Comodo Guide]";
-			mes "The villagers of ^8B4513Comodo^000000";
-			mes "have overcome their poor natural surroundings";
-			mes "to create a popular tourist site.";
-			mes "Is there anything else I can do for you?";
-			next;
-			break;
-		}
-	}
-	end;
-L_Mark:
-	mes "[Comodo Guide]";
-	mes "Let me mark the location of";
-	mes ((getarg(1,0))?"":"the ")+getarg(0)+"^000000";
-	mes "on your mini-map.";
-	mes "Would you like to check any other locations?";
-	return;
+comodo,322,178,4	script	Comodo Guide#cmd::CmdGuide	700,{
+	callfunc "F_CmdGuide","Native Kokomo";
 }
 
-comodo,181,347,4	duplicate(GuideComodo)	Comodo Guide#02comodo	700
-comodo,197,149,3	duplicate(GuideComodo)	Comodo Guide#03comodo	700
-comodo,37,219,4	duplicate(GuideComodo)	Comodo Guide#04comodo	700
+comodo,176,350,4	script	Comodo Guide#2cmd	700,{
+	callfunc "F_CmdGuide","Native Nutcoco";
+}
+
+comodo,37,219,4	script	Guide#2cmd	700,{
+	callfunc "F_CmdGuide","Native Papaya";
+}
+
+function	script	F_CmdGuide	{
+	mes "["+getarg(0)+"]";
+	mes "Welcome to Comodo, the";
+	mes "city of dreams and fantasy,";
+	mes "where the nightlife never ends!";
+	mes "I know this area really well,";
+	mes "so let me know if you need";
+	mes "directions anywhere here.";
+	next;
+	switch(select("Casino:Hula Dance Stage ^3355FF(Dancer Job Change)^000000:Weapon and Armor Shop:Tool Shop:Tourist Shop:Kafra Co. Western Branch:Chief's House:Pub:Campground:End Conversation")) {
+	case 1:
+		viewpoint 1,140,98,0,0xFF6633;
+		mes "Please refer to the cross mark,";
+		mes "^FF6633+^000000, on your Mini-Map to find the";
+		mes "Casino, a haven for rest for";
+		mes "weary travlers and the heart";
+		mes "of Comodo's nightlife.";
+		close;
+	case 2:
+		viewpoint 1,188,168,1,0x0000FF;
+		mes "Please refer to the cross mark,";
+		mes "^0000FF+^000000, on your Mini-Map to find the";
+		mes "Hula Dance Stage, the place";
+		mes "where female Archers can";
+		mes "change jobs to Dancers.";
+		close;
+	case 3:
+		viewpoint 1,266,70,2,0x00FFFF;
+		mes "Please refer to the cross mark,";
+		mes "^00FFFF+^000000, on your Mini-Map to find the";
+		mes "Weapon and Armor shop. Be";
+		mes "sure to check that shop for";
+		mes "any special items that are";
+		mes "unique to Comodo!";
+		close;
+	case 4:
+		viewpoint 1,86,128,3,0x515151;
+		mes "Please refer to the cross mark,";
+		mes "^515151+^000000, on your Mini-Map to find the";
+		mes "Tool Shop. If you've never been";
+		mes "there before, then I suggest";
+		mes "you check it out and stock up";
+		mes "on tools you might need later.";
+		close;
+	case 5:
+		viewpoint 1,298,124,4,0x3355FF;
+		mes "Please refer to the cross mark,";
+		mes "^3355FF+^000000, on your Mini-Map to find the";
+		mes "Tourist Shop where you can ";
+		mes "buy gifts that can only be found^FFFFFF ^000000 in the Comodo region~";
+		close;
+	case 6:
+		viewpoint 1,136,202,5,0xFF5555;
+		mes "Please refer to the cross mark,";
+		mes "^FF5555+^000000, on your Mini-Map to find the";
+		mes "Western branch of the Kafra";
+		mes "Corporation. They offer some";
+		mes "pretty important services that^FFFFFF ^000000 you may want to check out later.";
+		close;
+	case 7:
+		viewpoint 1,114,294,5,0xFF5555;
+		mes "Please refer to the cross mark,";
+		mes "^FF5555+^000000, on your Mini-Map to find the";
+		mes "Chief's House. You're welcome";
+		mes "to visit him, and he's usually";
+		mes "happy to have visitors.";
+		close;
+	case 8:
+		viewpoint 1,166,298,5,0xFF5555;
+		mes "Please refer to the cross mark,";
+		mes "^FF5555+^000000, on your Mini-Map to find the";
+		mes "Pub. There, you can meet other";
+		mes "tourists, relax, and socialize";
+		mes "in an enjoyable environment~";
+		close;
+	case 9:
+		viewpoint 1,210,308,5,0xFF5555;
+		mes "Please refer to the cross mark,";
+		mes "^FF5555+^000000, on your Mini-Map to find the";
+		mes "Campground. Gather with your";
+		mes "family and friends, and enjoy";
+		mes "the special barbeque of";
+		mes "Comodo's camping grounds~";
+		close;
+	case 10:
+		mes "["+getarg(0)+"]";
+		mes "Actually, it always looks";
+		mes "like nighttime in Comodo";
+		mes "because it's built in a huge";
+		mes "cave. We don't get any sunlight";
+		mes "here, but the darkness here is";
+		mes "more exciting than gloomy~";
+		close;
+	}
+}

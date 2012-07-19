@@ -1,163 +1,109 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Al De Baran Guides
-//===== By: ================================================== 
-//= L0ne_W0lf
-//===== Current Version: ===================================== 
-//= 1.0
-//===== Compatible With: ===================================== 
-//= rAthena  SVN
-//===== Description: ========================================= 
-//= [Aegis Conversion]
-//= Guides for the city of Al De baran
-//===== Additional Comments: ================================= 
-//= 1.0 First version, Renewal guide.
-//============================================================ 
+//===== By: ==================================================
+//= kobra_k88; L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.7
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= [Official conversion]
+//= Guides for the City of Al De Baran
+//===== Additional Comments: =================================
+//= Corrected building locations and descriptions
+//= 1.2 Optimized, updated common guide names [Lupus]
+//= 1.3 Updated the guide according to how it is on iRO, thanks [MasterOfMuppets]
+//=     to Muad_Dib
+//= 1.4 Fitted the many lines into 1 or 2, and corrected some typos [erKURITA]
+//= 1.5 Removed Duplicates [Silent]
+//= 1.6 Rescripted to official 10.3 standards. [L0ne_W0lf]
+//= 1.6a Changed some "close"s to "close2"s. (bugreport:1597) [Samuray22]
+//= 1.7 Fixed viewpoint coordinates [Playtester]
+//============================================================
 
-aldebaran,139,63,4	script	Guide#01aldebaran::GuideAldearan	105,{
+aldebaran,139,63,4	script	Soldier#alde	105,{
 	cutin "prt_soldier",2;
-	mes "[Al De Baran Guide]";
-	mes "Welcome to ^8B4513Al De Baran^000000,";
-	mes "the Border City.";
-	mes "Do you need help navigating the city?";
+	mes "[Al De Baran Guard]";
+	mes "I'm just an ordinary guard";
+	mes "that you could find in any other city. I don't think I even have a name...";
 	next;
-	while (1) {
-		switch(select("[ Main Facilities ]:[ Merchants & Helpers ]:Remove Marks from Mini-Map:Cancel")) {
-		case 1:
-			set .@loop,1;
-			while (.@loop) {
-				switch(select("[ Kafra Headquarters ]:[ Alchemist Guild ]:[ Clock Tower ]:[ Inn & Tool Shop ]:[ Repair & Buy Equipment ]:[ Tavern ]:Previous Menu")) {
-				case 1:
-					mes "[Al De Baran Guide]";
-					mes "Let me mark the location of the";
-					mes "^B9062FKafra Headquarters^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,61,229,0,0xFF0000;
-					next;
-					break;
-				case 2:
-					mes "[Al De Baran Guide]";
-					mes "Let me mark the location of the";
-					mes "the ^0000FFAlchemist Guild^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,60,60,1,0x0A82FF;
-					next;
-					break;
-				case 3:
-					mes "[Al De Baran Guide]";
-					mes "Let me mark the location of the";
-					mes "the ^FF5400Clock Tower^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,139,133,2,0xFFB400;
-					next;
-					break;
-				case 4:
-					mes "[Al De Baran Guide]";
-					mes "Let me mark the location of the";
-					mes "the ^006400Inn^000000 and";
-					mes "the ^006400Tool Shop^000000 building";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,197,70,3,0xAAFF00;
-					next;
-					break;
-				case 5:
-					mes "[Al De Baran Guide]";
-					mes "If you'd like to ^7F3300Buy or Repair Equipment^000000,";
-					mes "then this is the place you'll want to visit.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,72,197,4,0xD2691E;
-					next;
-					break;
-				case 6:
-					mes "[Al De Baran Guide]";
-					mes "Let me mark the location of the";
-					mes "the ^800080Tavern^000000";
-					mes "on your mini-map.";
-					viewpoint 1,231,106,5,0xDA70D6;
-					next;
-					break;
-				case 7:
-					set .@loop,0;
-					break;
-				}
-			}
-			break;
-		case 2:
-			set .@loop,1;
-			while (.@loop) {
-				switch(select("[ Eden Teleport Officer ]:[ Kafra Employee ]:[ Mr. Claus ]:[ Chef Assistant ]:Previous Menu")) {
-				case 1:
-					mes "[Al De Baran Guide]";
-					mes "Let me mark the location of the";
-					mes "^B9062FEden Teleport Officer^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,133,119,6,0xFF0000;
-					next;
-					break;
-				case 2:
-					mes "[Al De Baran Guide]";
-					mes "Let me mark the location of the";
-					mes "^0000FFKafra Employee^000000";
-					mes "on your mini-map.";
-					viewpoint 1,143,119,7,0x0A82FF;
-					next;
-					break;
-				case 3:
-					mes "[Al De Baran Guide]";
-					mes "Mr. Claus can teleport";
-					mes "you to ^006400Lutie^000000.";
-					mes "Let me mark his location";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,168,168,8,0xAAFF00;
-					next;
-					break;
-				case 4:
-					mes "[Al De Baran Guide]";
-					mes "Let me mark the location of the";
-					mes "^7F3300Chef Assistant^000000";
-					mes "on your mini-map.";
-					mes "Would you like to check any other locations?";
-					viewpoint 1,165,107,9,0xD2691E;
-					next;
-					break;
-				case 5:
-					set .@loop,0;
-					break;
-				}
-			}
-			break;
-		case 3:
-			mes "[Al De Baran Guide]";
-			mes "Sure, I'll remove all marks from your mini-map.";
-			mes "Is there anything else I can do for you?";
-			viewpoint 2,1,1,0,0xFFFF00;
-			viewpoint 2,1,1,1,0x000000;
-			viewpoint 2,1,1,2,0xFF0000;
-			viewpoint 2,1,1,3,0xFFFF00;
-			viewpoint 2,1,1,4,0xFFFF00;
-			viewpoint 2,1,1,5,0xFFFF00;
-			viewpoint 2,1,1,6,0xFFFF00;
-			viewpoint 2,1,1,7,0xFFFF00;
-			viewpoint 2,1,1,8,0xFFFF00;
-			viewpoint 2,1,1,9,0xFFFF00;
-			next;
-			break;
-		case 4:
-			mes "[Al De Baran Guide]";
-			mes "Alright then,";
-			mes "enjoy your stay!";
-			close2;
-			cutin "prt_soldier",255;
-			end;
-		}
+	mes "[Al De Baran Guard]";
+	mes "I am in charge of the Service Guides from the Al De Baran Garrison. Let me guide you";
+	mes "through our town!";
+	next;
+	if (select("Get Location Guide.:End conversation.") == 1) {
+		viewpoint 1,61,229,0,0xFF6633;
+		viewpoint 1,72,197,1,0x0000FF;
+		viewpoint 1,223,222,2,0x00FFFF;
+		viewpoint 1,233,105,3,0x515151;
+		viewpoint 1,197,70,4,0x3355FF;
+		viewpoint 1,60,60,5,0xFF5555;
+		mes "^FF6633+^000000 -> Kafra Main Office ";
+		mes "^0000FF+^000000 -> Weapon Shop ";
+		mes "^00FFFF+^000000 -> Sorcerer Guild (Closed)";
+		mes "^515151+^000000 -> Pub";
+		mes "^3355FF+^000000 -> Item Shop";
+		mes "^FF5555+^000000 -> Alchemist Guild";
+		close2;
+		cutin "prt_soldier",255;
+		end;
 	}
+	mes "[Al De Baran Guard]";
+	mes "We are sworn to protect Al De Baran! May the forces of evil always be crushed by the";
+	mes "righteous fist of good!";
+	close2;
+	cutin "prt_soldier",255;
+	end;
 }
 
-aldebaran,243,143,2	duplicate(GuideAldearan)	Guide#02aldebaran	105
-aldebaran,135,243,4	duplicate(GuideAldearan)	Guide#03aldebaran	105
-aldebaran,36,135,6	duplicate(GuideAldearan)	Guide#04aldebaran	105
+aldebaran,133,108,4	script	Soldier#2alde	105,{
+	cutin "prt_soldier",2;
+	mes "[Al De Baran Guard]";
+	mes "I'm just an";
+	mes "ordinary guard,";
+	mes "the kind you can";
+	mes "find in any other city.";
+	next;
+	mes "[Al De Baran Guard]";
+	mes "When I'm not too busy";
+	mes "protecting the Al De Baran";
+	mes "populace, I'm here giving directions to adventurers";
+	mes "like yourself.";
+	next;
+	switch(select("Kafra Main Office :Weapon Shop :Sorcerer Guild :Pub :Item Shop :Alchemist Guild :End Conversation ")) {
+	case 1:
+		viewpoint 1,61,229,0,0xFF6633;
+		mes "^FF6633+^000000 -> Kafra Main Office ";
+		break;
+	case 2:
+		viewpoint 1,72,197,1,0x0000FF;
+		mes "^0000FF+^000000 -> Weapon Shop ";
+		break;
+	case 3:
+		viewpoint 1,223,222,2,0x00FFFF;
+		mes "^00FFFF+^000000 -> Sorcerer Guild (Closed)";
+		break;
+	case 4:
+		viewpoint 1,233,105,3,0x515151;
+		mes "^515151+^000000 -> Pub ";
+		break;
+	case 5:
+		viewpoint 1,197,70,4,0x3355FF;
+		mes "^3355FF+^000000 -> Item Shop ";
+		break;
+	case 6:
+		viewpoint 1,60,60,5,0xFF5555;
+		mes "^FF5555+^000000 -> Alchemist Guild";
+		break;
+	case 7:
+		mes "[Al De Baran Guard]";
+		mes "We are sworn to";
+		mes "protect Al De Baran!";
+		mes "May the forces of good";
+		mes "always prevail over evil~";
+		break;
+	}
+	close2;
+	cutin "prt_soldier",255;
+	end;
+}
