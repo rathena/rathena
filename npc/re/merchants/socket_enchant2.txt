@@ -17,11 +17,11 @@
 -	script	Leablem#dummy::SocketEnchant2	-1,{
 	if (checkweight(1201,1) == 0)
 	{
-		mes "- Wait a seconds !! -";
-		mes "- You have carried too many items -";
-		mes "- so, you can't get more items. -";
-		mes "- Make your weight as low -";
-		mes "- after then try it again. -";
+		mes "- Wait a minute !! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	mes "[Leablem]";

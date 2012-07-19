@@ -300,7 +300,6 @@ ra_in01,384,246,3	script	Vincent#ra_in01	47,{
 		close;
 	}
 
-
 	else if (lost_boy == 8) {
 		mes "[Vincent]";
 		mes "The gem is very special...";
@@ -339,7 +338,6 @@ ra_in01,384,246,3	script	Vincent#ra_in01	47,{
 		mes "hiding somewhere in town...";
 		close;
 	}
-
 
 	else if (lost_boy == 9) {
 		mes "[Vincent]";
@@ -6990,13 +6988,11 @@ ra_temin,134,134,3	duplicate(raofficeguard)	Pope's Office Guard#2ra	926
 
 ra_temin,134,131,0	script	gyoin1#rachel	45,1,1,{
 OnTouch:
-	if (ra_tem_q == 16) {
+	if (ra_tem_q == 16)
 		warp "ra_temin",276,239;
-	}
 	else if ((ra_tem_q > 16) || (MISC_QUEST & 8192)){
-		if ((aru_em == 15) || (aru_em == 21)) {
+		if ((aru_em == 15) || (aru_em == 21))
 			warp "ra_temin",276,239;
-		}
 		else {
 			mes "[Pope's Office Guard]";
 			mes "I'm sorry, but the pope";
@@ -7281,7 +7277,6 @@ OnTouch:
 		warp "ra_temin",300,153;
 		end;
 	}
-
 	end;
 
 }
@@ -7532,73 +7527,73 @@ OnTouch:
 }
 
 que_san04,119,203,0	script	imir3#rachel	-1,7,7,{
-	OnTouch:
-		if (ra_tem_q == 21) {
-			mes "^3355FFNo wonder this object";
-			mes "in the water seems so";
-			mes "familiar: it's a Ymir's";
-			mes "Heart Piece! In fact, there's";
-			mes "dozens of them just lying here.^000000";
-			next;
-			mes "^3355FFWhy would so many of these";
-			mes "powerful artifacts be here";
-			mes "in the Holy Ground? Perhaps";
-			mes "this is the secret that the";
-			mes "priests are trying to keep.^000000";
-			next;
-			hideoffnpc "High Priestess Niren#r2";
-			cutin "ra_gwoman",2;
-			mes "[High Priestess Niren]";
-			mes "How dare you intrude";
-			mes "the Holy Ground! Identify";
-			mes "yourself! I'll have you tried!";
-			next;
-			cutin "ra_gwoman2",2;
-			mes "[High Priestess Niren]";
-			mes "O-oh! It's you, the";
-			mes "adventurer recommended";
-			mes "by Bekento. Hm. I apologize";
-			mes "for snapping at you like";
-			mes "that. Didn't you know that";
-			mes "no one's allowed here?";
-			next;
-			cutin "ra_gwoman",2;
-			mes "[High Priestess Niren]";
-			mes "Hmm. Well, you Rune-Midgarts";
-			mes "adventurers are famous for your";
-			mes "skills and abilities, but this";
-			mes "was not expected. I mean, we";
-			mes "made sure this place was";
-			mes "absolutely secure.";
-			next;
-			cutin "ra_gwoman2",2;
-			mes "[High Priestess Niren]";
-			mes "What's done is done...";
-			mes "I warned Bekento that he";
-			mes "might cause trouble for you,";
-			mes "but it seems that you've";
-			mes "caused trouble for him.";
-			next;
-			mes "[High Priestess Niren]";
-			mes "Understand this:";
-			mes "most intruders are";
-			mes "severely punished, but";
-			mes "because of my friendship";
-			mes "with Bekento, I'm letting";
-			mes "you off easy. Remember that.";
-			next;
-			sc_start SC_Blind,600000,0;
-			mes "^3355FFNiren began to chant";
-			mes "in a low voice, and your";
-			mes "eyelids grow heavier as you";
-			mes "grow drowsier and sleepier...^000000";
-			set ra_tem_q,22;
-			close2;
-			hideonnpc "High Priestess Niren#r2";
-			warp "rachel",163,152;
-			end;
-		}
+OnTouch:
+	if (ra_tem_q == 21) {
+		mes "^3355FFNo wonder this object";
+		mes "in the water seems so";
+		mes "familiar: it's a Ymir's";
+		mes "Heart Piece! In fact, there's";
+		mes "dozens of them just lying here.^000000";
+		next;
+		mes "^3355FFWhy would so many of these";
+		mes "powerful artifacts be here";
+		mes "in the Holy Ground? Perhaps";
+		mes "this is the secret that the";
+		mes "priests are trying to keep.^000000";
+		next;
+		hideoffnpc "High Priestess Niren#r2";
+		cutin "ra_gwoman",2;
+		mes "[High Priestess Niren]";
+		mes "How dare you intrude";
+		mes "the Holy Ground! Identify";
+		mes "yourself! I'll have you tried!";
+		next;
+		cutin "ra_gwoman2",2;
+		mes "[High Priestess Niren]";
+		mes "O-oh! It's you, the";
+		mes "adventurer recommended";
+		mes "by Bekento. Hm. I apologize";
+		mes "for snapping at you like";
+		mes "that. Didn't you know that";
+		mes "no one's allowed here?";
+		next;
+		cutin "ra_gwoman",2;
+		mes "[High Priestess Niren]";
+		mes "Hmm. Well, you Rune-Midgarts";
+		mes "adventurers are famous for your";
+		mes "skills and abilities, but this";
+		mes "was not expected. I mean, we";
+		mes "made sure this place was";
+		mes "absolutely secure.";
+		next;
+		cutin "ra_gwoman2",2;
+		mes "[High Priestess Niren]";
+		mes "What's done is done...";
+		mes "I warned Bekento that he";
+		mes "might cause trouble for you,";
+		mes "but it seems that you've";
+		mes "caused trouble for him.";
+		next;
+		mes "[High Priestess Niren]";
+		mes "Understand this:";
+		mes "most intruders are";
+		mes "severely punished, but";
+		mes "because of my friendship";
+		mes "with Bekento, I'm letting";
+		mes "you off easy. Remember that.";
+		next;
+		sc_start SC_Blind,600000,0;
+		mes "^3355FFNiren began to chant";
+		mes "in a low voice, and your";
+		mes "eyelids grow heavier as you";
+		mes "grow drowsier and sleepier...^000000";
+		set ra_tem_q,22;
+		close2;
+		hideonnpc "High Priestess Niren#r2";
+		warp "rachel",163,152;
 		end;
+	}
+	end;
 }
 
 que_san04,122,200,4	script	High Priestess Niren#r2	915,{
@@ -7634,13 +7629,12 @@ OnTouch:
 		set ra_tem_q,23;
 		close;
 	}
-
 	end;
 }
 
-//rachel,142,167,5	script	Seeking Follower#rachel	917,6,6,{
 rachel,142,167,5	script	Seeking Follower#rachel	916,6,6,{
 	if ((lost_boy == 13) && (ra_tem_q == 20)) {
+		L_Mes:
 		mes "[Arunafeltz Follower]";
 		mes "Excuse me, but";
 		mes "are you "+strcharinfo(0)+"?";
@@ -7661,7 +7655,6 @@ rachel,142,167,5	script	Seeking Follower#rachel	916,6,6,{
 		mes "right room of the temple.";
 		close;
 	}
-
 	else {
 		mes "[Arunafeltz Follower]";
 		mes "May Freya bless you";
@@ -7670,28 +7663,8 @@ rachel,142,167,5	script	Seeking Follower#rachel	916,6,6,{
 	}
 
 OnTouch:
-	if ((lost_boy == 13) && (ra_tem_q == 20)) {
-		mes "[Arunafeltz Follower]";
-		mes "Excuse me, but";
-		mes "are you "+strcharinfo(0)+"?";
-		next;
-		select("Yes.");
-		mes "[Arunafeltz Follower]";
-		mes "High Priest Zhed";
-		mes "would like to see";
-		mes "you right away, "+strcharinfo(0)+".";
-		next;
-		select("May ask why?");
-		mes "[Arunafeltz Follower]";
-		mes "Well, I actually have no";
-		mes "idea. I'm only supposed to";
-		mes "inform you that he's looking";
-		mes "for you. Please visit High";
-		mes "Priest Zhed in the second";
-		mes "right room of the temple.";
-		close;
-	}
-
+	if ((lost_boy == 13) && (ra_tem_q == 20)) goto L_Mes;
+	end;
 }
 
 // End of Donation Lottery/High Priest quest
