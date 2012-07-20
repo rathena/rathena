@@ -894,6 +894,8 @@ void initChangeTables(void) {
 	StatusChangeFlagTable[SC_INCFLEE2] |= SCB_FLEE2;
 	StatusChangeFlagTable[SC_INCMHPRATE] |= SCB_MAXHP;
 	StatusChangeFlagTable[SC_INCMSPRATE] |= SCB_MAXSP;
+	StatusChangeFlagTable[SC_INCMHP] |= SCB_MAXHP;
+	StatusChangeFlagTable[SC_INCMSP] |= SCB_MAXSP;
 	StatusChangeFlagTable[SC_INCATKRATE] |= SCB_BATK|SCB_WATK;
 	StatusChangeFlagTable[SC_INCMATKRATE] |= SCB_MATK;
 	StatusChangeFlagTable[SC_INCDEFRATE] |= SCB_DEF;
@@ -5308,6 +5310,8 @@ static unsigned int status_calc_maxhp(struct block_list *bl, struct status_chang
 
 	if(sc->data[SC_INCMHPRATE])
 		maxhp += maxhp * sc->data[SC_INCMHPRATE]->val1/100;
+	if(sc->data[SC_INCMHP])
+		maxhp += (sc->data[SC_INCMHP]->val1);
 	if(sc->data[SC_APPLEIDUN])
 		maxhp += maxhp * sc->data[SC_APPLEIDUN]->val2/100;
 	if(sc->data[SC_DELUGE])
@@ -5359,6 +5363,8 @@ static unsigned int status_calc_maxsp(struct block_list *bl, struct status_chang
 
 	if(sc->data[SC_INCMSPRATE])
 		maxsp += maxsp * sc->data[SC_INCMSPRATE]->val1/100;
+	if(sc->data[SC_INCMSP])
+		maxsp += (sc->data[SC_INCMSP]->val1);
 	if(sc->data[SC_SERVICE4U])
 		maxsp += maxsp * sc->data[SC_SERVICE4U]->val2/100;
 	if(sc->data[SC_MERC_SPUP])

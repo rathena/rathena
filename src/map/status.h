@@ -617,7 +617,9 @@ typedef enum sc_type {
 	SC_ANGRIFFS_MODUS,
 	SC_GOLDENE_FERSE,
 	SC_ERASER_CUTTER,
-	
+	/* Max HP & SP */
+	SC_INCMHP,
+	SC_INCMSP,	
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;
 
