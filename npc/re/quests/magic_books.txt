@@ -4,13 +4,14 @@
 //= Masao
 //= Credits to Muad_Dib for the translation.
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= rAthena
 //===== Description: ========================================= 
 //= An NPC which sells you different kinds of Magic Books.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version. [Masao]
+//= 1.1 Optimized, 60% size reduction. [Euphy]
 //============================================================ 
 
 geffen_in,176,105,4	script	Magic Book Master Velof	64,{
@@ -37,7 +38,7 @@ geffen_in,176,105,4	script	Magic Book Master Velof	64,{
 		mes "I'm sorry, but my knowledge doesn't concern you.";
 		close;
 	}
-	if (getskilllv(2230) < 1) {	// WL_RELEASE
+	if (getskilllv(2230) < 1) {
 		mes "[Magic Book Master Velof]";
 		mes "Well you've met all the qualifications except one: you need the Release spell.";
 		next;
@@ -175,9 +176,7 @@ geffen_in,176,105,4	script	Magic Book Master Velof	64,{
 				next;
 				mes "[Magic Book Master Velof]";
 				mes "For your information, she won't give it to you without anything in return. Expect her to ask you for something!";
-				if (wm_book < 1) {
-					set wm_book, 1;
-				}
+				if (wm_book < 1) set wm_book, 1;
 				close;
 			case 2:
 				mes "[Magic Book Master Velof]";
@@ -310,845 +309,90 @@ geffen_in,175,112,4	script	Lea	123,{
 			mes "[Lea]";
 			mes "Yes. You may pay a minimum of 10,000 Rune-Midgarts zeny. Alternatively, you can bring 2 Old Magic Books or 50 Old Pages. Once you pay the deposit, I'll let you borrow some Magic Books.";
 			next;
-			switch (select("Where can I find Old Magic Books and Old Pages?:I'll pay with zeny.:I'll pay with Old Magic Books.:I'll pay with Old Pages.")) {
-			case 1:
-				mes "[Lea]";
+			set .@Payment, select("Where can I find Old Magic Books and Old Pages?:I'll pay with zeny.:I'll pay with Old Magic Books.:I'll pay with Old Pages.")-1;
+			mes "[Lea]";
+			if (!.@Payment) {
 				mes "I heard that you can find them from Ride Words, Death Words, Bathorys, and other monsters. I ask that you please don't strain yourself to find those items.";
 				next;
 				mes "[Lea]";
 				mes "Your life is more important than anything else, you know?";
 				close;
-			case 2:
-				if (Zeny > 10000) {
-					mes "[Lea]";
-					mes "What kind of Magic Book do you want?";
-					next;
-					switch (select("Let me think.:Magic Book (Fire Bolt):Magic Book (Cold Bolt):Magic Book (Lightning Bolt)")) {
-					case 1:
-						mes "[Lea]";
-						mes "No problem.";
-						close;
-					case 2:
-						if (countitem(6189) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (Zeny > 10000) {
-							mes "[Lea]";
-							mes "The book's return date is written on the lending card on the back cover of the book.";
-							next;
-							mes "[Lea]";
-							mes "Please try not to lose or damage the book to avoid paying any extra charges.";
-							set Zeny, Zeny - 10000;
-							getitem 6189,1; //Magic_Book_FB
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 3:
-						if (countitem(6190) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (Zeny > 10000) {
-							mes "[Lea]";
-							mes "The book's return date is written on the lending card on the back cover of the book.";
-							next;
-							mes "[Lea]";
-							mes "Please try not to lose or damage the book to avoid paying any extra charges.";
-							set Zeny, Zeny - 10000;
-							getitem 6190,1; //Magic_Book_CB
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 4:
-						if (countitem(6191) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (Zeny > 10000) {
-							mes "[Lea]";
-							mes "The book's return date is written on the lending card on the back cover of the book.";
-							next;
-							mes "[Lea]";
-							mes "Please try not to lose or damage the book to avoid paying any extra charges.";
-							set Zeny, Zeny - 10000;
-							getitem 6191,1; //Magic_Book_LB
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					}
-				}
-				mes "[Lea]";
-				mes "I'm sorry, but you don't have enough funds.";
-				close;
-			case 3:
-				if (countitem(1006) > 1) {
-					mes "[Lea]";
-					mes "What kind of Magic Book do you want?";
-					next;
-					switch (select("Let me think.:Magic Book (Fire Bolt):Magic Book (Cold Bolt):Magic Book (Lightning Bolt)")) {
-					case 1:
-						mes "[Lea]";
-						mes "No problem.";
-						close;
-					case 2:
-						if (countitem(6189) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (countitem(1006) > 1) {
-							mes "[Lea]";
-							mes "The book's return date is written on the lending card on the back cover of the book.";
-							next;
-							mes "[Lea]";
-							mes "Please try not to lose or damage the book to avoid paying any extra charges.";
-							delitem 1006,2; //Old_Magic_Book
-							getitem 6189,1; //Magic_Book_FB
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 3:
-						if (countitem(6190) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (countitem(1006) > 1) {
-							mes "[Lea]";
-							mes "The book's return date is written on the lending card on the back cover of the book.";
-							next;
-							mes "[Lea]";
-							mes "Please try not to lose or damage the book to avoid paying any extra charges.";
-							delitem 1006,2; //Old_Magic_Book
-							getitem 6190,1; //Magic_Book_CB
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 4:
-						if (countitem(6191) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (countitem(1006) > 1) {
-							mes "[Lea]";
-							mes "The book's return date is written on the lending card on the back cover of the book.";
-							next;
-							mes "[Lea]";
-							mes "Please try not to lose or damage the book to avoid paying any extra charges.";
-							delitem 1006,2; //Old_Magic_Book
-							getitem 6191,1; //Magic_Book_LB
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					}
-				}
-				mes "[Lea]";
-				mes "I'm sorry, but you don't have enough funds.";
-				close;
-			case 4:
-				if (countitem(1097) > 49) {
-					mes "[Lea]";
-					mes "What kind of Magic Book do you want?";
-					next;
-					switch (select("Let me think.:Magic Book (Fire Bolt):Magic Book (Cold Bolt):Magic Book (Lightning Bolt)")) {
-					case 1:
-						mes "[Lea]";
-						mes "No problem.";
-						close;
-					case 2:
-						if (countitem(6189) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (countitem(1097) > 49) {
-							mes "[Lea]";
-							mes "The book's return date is written on the lending card on the back cover of the book.";
-							next;
-							mes "[Lea]";
-							mes "Please try not to lose or damage the book to avoid paying any extra charges.";
-							delitem 1097,50; //Worn_Out_Page
-							getitem 6189,1; //Magic_Book_FB
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 3:
-						if (countitem(6190) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (countitem(1097) > 49) {
-							mes "[Lea]";
-							mes "The book's return date is written on the lending card on the back cover of the book.";
-							next;
-							mes "[Lea]";
-							mes "Please try not to lose or damage the book to avoid paying any extra charges.";
-							delitem 1097,50; //Worn_Out_Page
-							getitem 6190,1; //Magic_Book_CB
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 4:
-						if (countitem(6191) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						else if (countitem(1097) > 49) {
-							mes "[Lea]";
-							mes "The book's return date is written on the lending card on the back cover of the book.";
-							next;
-							mes "[Lea]";
-							mes "Please try not to lose or damage the book to avoid paying any extra charges.";
-							delitem 1097,50; //Worn_Out_Page
-							getitem 6191,1; //Magic_Book_LB
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					}
-				}
-				mes "[Lea]";
-				mes "I'm sorry, but you don't have enough funds.";
-				close;
 			}
+			if ((.@Payment == 1 && Zeny > 10000) || (.@Payment == 2 && countitem(1006) > 1) || (.@Payment == 3 && countitem(1097) > 49)) {
+				mes "What kind of Magic Book do you want?";
+				next;
+				set .@i, select("Let me think.:Magic Book (Fire Bolt):Magic Book (Cold Bolt):Magic Book (Lightning Bolt)")-1;
+				mes "[Lea]";
+				if (!.@i) {
+					mes "No problem.";
+					close;
+				}
+				if (countitem(6188+.@i)) {
+					mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
+					next;
+					mes "[Lea]";
+					mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
+					close;
+				}
+				if ((.@Payment == 1 && Zeny > 10000) || (.@Payment == 2 && countitem(1006) > 1) || (.@Payment == 3 && countitem(1097) > 49)) {
+					mes "The book's return date is written on the lending card on the back cover of the book.";
+					next;
+					mes "[Lea]";
+					mes "Please try not to lose or damage the book to avoid paying any extra charges.";
+					if (.@Payment == 1) set Zeny, Zeny - 10000;
+					else if (.@Payment == 2) delitem 1006,2; //Old_Magic_Book
+					else delitem 1097,50; //Worn_Out_Page
+					getitem 6188+.@i,1; //Magic_Book_FB, Magic_Book_CB, Magic_Book_LB
+					close;
+				}
+			}
+			mes "I'm sorry, but you don't have enough funds.";
+			close;
 		case 3:
 			mes "[Lea]";
 			mes "Ah, so you want the Intermediate Magic Books. Please pay 50,000 Rune-Midgartian zeny, or you can bring me 2 Old Blue Boxes or 9 Eluniums to borrow the Intermediate Magic Books.";
 			next;
-			switch (select("Where can I find Old Blue Boxes and Eluniums?:I'll pay 50,000 zeny.:I'll pay with Old Blue Boxes.:I'll pay with Eluniums.")) {
-			case 1:
-				mes "[Lea]";
+			set .@Payment, select("Where can I find Old Blue Boxes and Eluniums?:I'll pay 50,000 zeny.:I'll pay with Old Blue Boxes.:I'll pay with Eluniums.")-1;
+			mes "[Lea]";
+			if (!.@Payment) {
 				mes "Old Blue Boxes are quite rare to find, but they can be obtained from monsters everywhere in the world, including Myst Cases, Megalogons, Mimics, Nightmares, Krabens, Requiems, Nine Tails, Noxiouses, and Byorgues.";
 				mes "If you have sufficient funds, you may buy the boxes from street vendors.";
 				next;
 				mes "[Lea]";
 				mes "Eluniums can be obtained from Hyeguns, Zombie Prisoners, Teddy Bears, Obsedians, and Loli Ruris. Or you can refine Rough Eluniums to Eluniums at the Forge in town, and that may be easier.";
 				close;
-			case 2:
-				if (Zeny > 50000) {
-					mes "[Lea]";
-					mes "What kind of Magic Book do you want?";
-					next;
-					switch (select("Let me think.:Magic Book (Storm Gust):Magic Book (Lord of Vermillion):Magic Book (Meteor Storm):Magic Book (Thunderstorm):Magic Book (Jupitel Thunder):Magic Book (Water Ball):Magic Book (Heaven's Drive):Magic Book (Earth Spike)")) {
-					case 1:
-						mes "[Lea]";
-						mes "No problem.";
-						close;
-					case 2:
-						if (countitem(6192) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (Zeny > 50000) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							set Zeny, Zeny - 50000;
-							getitem 6192,1; //Magic_Book_SG
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 3:
-						if (countitem(6193) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (Zeny > 50000) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							set Zeny, Zeny - 50000;
-							getitem 6193,1; //Magic_Book_LOV
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 4:
-						if (countitem(6194) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						else if (Zeny > 50000) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							set Zeny, Zeny - 50000;
-							getitem 6194,1; //Magic_Book_MS
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 5:
-						if (countitem(6197) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (Zeny > 50000) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							set Zeny, Zeny - 50000;
-							getitem 6197,1; //Magic_Book_TS
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 6:
-						if (countitem(6198) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (Zeny > 50000) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							set Zeny, Zeny - 50000;
-							getitem 6198,1; //Magic_Book_JT
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 7:
-						if (countitem(6199) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (Zeny > 50000) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							set Zeny, Zeny - 50000;
-							getitem 6199,1; //Magic_Book_WB
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 8:
-						if (countitem(6200) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						else if (Zeny > 50000) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							set Zeny, Zeny - 50000;
-							getitem 6200,1; //Magic_Book_HD
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 9:
-						if (countitem(6201) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (Zeny > 50000) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							set Zeny, Zeny - 50000;
-							getitem 6201,1; //Magic_Book_ES
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					}
-				}
-				mes "[Lea]";
-				mes "I'm sorry, but you don't have enough funds.";
-				close;
-			case 3:
-				if (countitem(603) > 1) {
-					mes "[Lea]";
-					mes "What kind of Magic Book do you want?";
-					next;
-					switch (select("Let me think.:Magic Book (Storm Gust):Magic Book (Lord of Vermillion):Magic Book (Meteor Storm):Magic Book (Thunderstorm):Magic Book (Jupitel Thunder):Magic Book (Water Ball):Magic Book (Heaven's Drive):Magic Book (Earth Spike)")) {
-					case 1:
-						mes "[Lea]";
-						mes "No problem.";
-						close;
-					case 2:
-						if (countitem(6192) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (countitem(603) > 1) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							delitem 603,2; //Old_Blue_Box
-							getitem 6192,1; //Magic_Book_SG
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 3:
-						if (countitem(6193) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (countitem(603) > 1) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							delitem 603,2; //Old_Blue_Box
-							getitem 6193,1; //Magic_Book_LOV
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 4:
-						if (countitem(6194) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (countitem(603) > 1) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							delitem 603,2; //Old_Blue_Box
-							getitem 6194,1; //Magic_Book_MS
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 5:
-						if (countitem(6197) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (countitem(603) > 1) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							delitem 603,2; //Old_Blue_Box
-							getitem 6197,1; //Magic_Book_TS
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 6:
-						if (countitem(6198) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (countitem(603) > 1) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							delitem 603,2; //Old_Blue_Box
-							getitem 6198,1; //Magic_Book_JT
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 7:
-						if (countitem(6199) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (countitem(603) > 1) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							delitem 603,2; //Old_Blue_Box
-							getitem 6199,1; //Magic_Book_WB
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 8:
-						if (countitem(6200) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (countitem(603) > 1) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							delitem 603,2; //Old_Blue_Box
-							getitem 6200,1; //Magic_Book_HD
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 9:
-						if (countitem(6201) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (countitem(603) > 1) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							delitem 603,2; //Old_Blue_Box
-							getitem 6201,1; //Magic_Book_ES
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					}
-				}
-				mes "[Lea]";
-				mes "I'm sorry, but you don't have enough funds.";
-				close;
-			case 4:
-				if (countitem(985) > 8) {
-					mes "[Lea]";
-					mes "What kind of Magic Book do you want?";
-					next;
-					switch (select("Let me think.:Magic Book (Storm Gust):Magic Book (Lord of Vermillion):Magic Book (Meteor Storm):Magic Book (Thunderstorm):Magic Book (Jupitel Thunder):Magic Book (Water Ball):Magic Book (Heaven's Drive):Magic Book (Earth Spike)")) {
-					case 1:
-						mes "[Lea]";
-						mes "No problem.";
-						close;
-					case 2:
-						if (countitem(6192) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (countitem(985) > 8) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							delitem 985,9; //Elunium
-							getitem 6192,1; //Magic_Book_SG
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 3:
-						if (countitem(6193) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (countitem(985) > 8) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							delitem 985,9; //Elunium
-							getitem 6193,1; //Magic_Book_LOV
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 4:
-						if (countitem(6194) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (countitem(985) > 8) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							delitem 985,9; //Elunium
-							getitem 6194,1; //Magic_Book_MS
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 5:
-						if (countitem(6197) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (countitem(985) > 8) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							delitem 985,9; //Elunium
-							getitem 6197,1; //Magic_Book_TS
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 6:
-						if (countitem(6198) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (countitem(985) > 8) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							delitem 985,9; //Elunium
-							getitem 6198,1; //Magic_Book_JT
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 7:
-						if (countitem(6199) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (countitem(985) > 8) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							delitem 985,9; //Elunium
-							getitem 6199,1; //Magic_Book_WB
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 8:
-						if (countitem(6200) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (countitem(985) > 8) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							delitem 985,9; //Elunium
-							getitem 6200,1; //Magic_Book_HD
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 9:
-						if (countitem(6201) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if (countitem(985) > 8) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							delitem 985,9; //Elunium
-							getitem 6201,1; //Magic_Book_ES
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					}
-				}
-				mes "[Lea]";
-				mes "I'm sorry, but you don't have enough funds.";
-				close;
 			}
+			if ((.@Payment == 1 && Zeny > 50000) || (.@Payment == 2 && countitem(603) > 1) || (.@Payment == 3 && countitem(985) > 8)) {
+				mes "What kind of Magic Book do you want?";
+				next;
+				set .@i, select("Let me think.:Magic Book (Storm Gust):Magic Book (Lord of Vermillion):Magic Book (Meteor Storm):Magic Book (Thunderstorm):Magic Book (Jupitel Thunder):Magic Book (Water Ball):Magic Book (Heaven's Drive):Magic Book (Earth Spike)")-1;
+				setarray .@Books[0],6192,6193,6194,6197,6198,6199,6200,6201;
+				mes "[Lea]";
+				if (!.@i) {
+					mes "No problem.";
+					close;
+				}
+				if (countitem(.@Books[.@i-1])) {
+					mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
+					next;
+					mes "[Lea]";
+					mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
+					close;
+				}
+				if ((.@Payment == 1 && Zeny > 50000) || (.@Payment == 2 && countitem(603) > 1) || (.@Payment == 3 && countitem(985) > 8)) {
+					mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
+					next;
+					mes "[Lea]";
+					mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
+					if (.@Payment == 1) set Zeny, Zeny - 50000;
+					else if (.@Payment == 2) delitem 603,2; //Old_Blue_Box
+					else delitem 985,9; //Elunium
+					getitem .@Books[.@i-1],1; //Magic_Book_SG, Magic_Book_LOV, Magic_Book_MS, Magic_Book_TS, Magic_Book_JT, Magic_Book_WB, Magic_Book_HD, Magic_Book_ES
+					close;
+				}
+			}
+			mes "I'm sorry, but you don't have enough funds.";
+			close;
 		case 4:
 			mes "[Lea]";
 			mes "Oh, do you want the Superior Magic Books? For your information, borrowing those Magic Books requires many conditions and restrictions. Are you sure that you want it?";
@@ -1159,10 +403,10 @@ geffen_in,175,112,4	script	Lea	123,{
 			next;
 			mes "[Lea]";
 			mes "[12 Mystery Pieces and 100,000 zeny], [7 Oridecons and 100,000 zeny], or [1 Old Violet Box and 100,000 zeny]. Now how would you like to pay your deposit?";
-			switch (select("Where can I find those items?:Let me think.:I'll pay with 12 Mystery Pieces and 100,000 zeny.:I'll pay with 7 Oridecons and 100,000 zeny.:I'll pay with 1 Old Violet Box and 100,000 zeny.")) {
 			next;
-			case 1:
-				mes "[Lea] ";
+			set .@Payment, select("Where can I find those items?:Let me think.:I'll pay with 12 Mystery Pieces and 100,000 zeny.:I'll pay with 7 Oridecons and 100,000 zeny.:I'll pay with 1 Old Violet Box and 100,000 zeny.")-1;
+			mes "[Lea]";
+			if (!.@Payment) {
 				mes "Mystery Pieces can be obtained from machine creatures in the Juperos Dungeon, and they're the fountain of knowledge from the ancient civilization. Ah, I get excited thinking about those artifacts.";
 				next;
 				mes "[Lea]";
@@ -1177,444 +421,52 @@ geffen_in,175,112,4	script	Lea	123,{
 				mes "[Lea]";
 				mes "The boxes are a subject worthy of serious study since they're used to test Schrodinger's pet cat.";
 				close;
-			case 2:
-				mes "[Lea]";
+			}
+			if (.@Payment == 1) {
 				mes "If you're unable to collect the items for the security deposit, I can offer you an alternate payment method.";
 				next;
 				mes "[Lea]";
 				mes "How does 200,000 Rune-Midgartian zeny sound?";
-				switch (select("I'm sorry, but I can't pay that much.:Sounds good.")) {
 				next;
-				case 1:
+				if(select("I'm sorry, but I can't pay that much.:Sounds good.") == 1) {
 					mes "[Lea]";
 					mes "I see.";
 					close;
-				case 2:
-					if (Zeny > 199999) {
-						mes "[Lea]";
-						mes "What kind of Magic Book do you want?";
-						next;
-						switch (select("Let me think.:Magic Book (Earth Strain):Magic Book (Chain Lightning):Magic Book (Crimson Rock):Magic Book (Drain Life)")) {
-						case 1:
-							mes "[Lea]";
-							mes "No problem.";
-							close;
-						case 2:
-							if (countitem(6202) > 0) {
-								mes "[Lea]";
-								mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-								next;
-								mes "[Lea]";
-								mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-								close;
-							}
-							if (Zeny > 199999) {
-								mes "[Lea]";
-								mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-								next;
-								mes "[Lea]";
-								mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-								set Zeny, Zeny - 200000;
-								getitem 6202,1; //Magic_Book_ES_
-								close;
-							}
-							mes "[Lea]";
-							mes "I'm sorry, but you don't have enough funds.";
-							close;
-						case 3:
-							if (countitem(6203) > 0) {
-								mes "[Lea]";
-								mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-								next;
-								mes "[Lea]";
-								mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-								close;
-							}
-							if (Zeny > 199999) {
-								mes "[Lea]";
-								mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-								next;
-								mes "[Lea]";
-								mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-								set Zeny, Zeny - 200000;
-								getitem 6203,1; //Magic_Book_CL
-								close;
-							}
-							mes "[Lea]";
-							mes "I'm sorry, but you don't have enough funds.";
-							close;
-						case 4:
-							if (countitem(6204) > 0) {
-								mes "[Lea]";
-								mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-								next;
-								mes "[Lea]";
-								mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-								close;
-							}
-							if (Zeny > 199999) {
-								mes "[Lea]";
-								mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-								next;
-								mes "[Lea]";
-								mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-								set Zeny, Zeny - 200000;
-								getitem 6204,1; //Magic_Book_CR
-								close;
-							}
-							mes "[Lea]";
-							mes "I'm sorry, but you don't have enough funds.";
-							close;
-						case 5:
-							if (countitem(6205) > 0) {
-								mes "[Lea]";
-								mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-								next;
-								mes "[Lea]";
-								mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-								close;
-							}
-							if (Zeny > 199999) {
-								mes "[Lea]";
-								mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-								next;
-								mes "[Lea]";
-								mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-								set Zeny, Zeny - 200000;
-								getitem 6205,1; //Magic_Book_DL
-								close;
-							}
-							mes "[Lea]";
-							mes "I'm sorry, but you don't have enough funds.";
-							close;
-						}
-					}
-					mes "[Lea]";
-					mes "I'm sorry, but you don't have enough funds.";
+				}
+				mes "[Lea]";
+			}
+			if ((.@Payment == 1 && Zeny > 199999) || (Zeny > 99999 && ((.@Payment == 2 && countitem(7094) > 11) || (.@Payment == 3 && countitem(984) > 6) || (.@Payment == 4 && countitem(617))))) {
+				mes "What kind of Magic Book do you want?";
+				next;
+				set .@i, select("Let me think.:Magic Book (Earth Strain):Magic Book (Chain Lightning):Magic Book (Crimson Rock):Magic Book (Drain Life)")-1;
+				mes "[Lea]";
+				if (!.@i) {
+					mes "No problem.";
 					close;
 				}
-			case 3:
-				if ((Zeny > 99999) && (countitem(7094) > 11)) {
-					mes "[Lea]";
-					mes "What kind of Magic Book do you want?";
+				if (countitem(6201+.@i)) {
+					mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
 					next;
-					switch (select("Let me think.:Magic Book (Earth Strain):Magic Book (Chain Lightning):Magic Book (Crimson Rock):Magic Book (Drain Life)")) {
-					case 1:
-						mes "[Lea]";
-						mes "No problem.";
-						close;
-					case 2:
-						if (countitem(6202) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if ((Zeny > 99999) && (countitem(7094) > 11)) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							set Zeny, Zeny - 100000;
-							delitem 7094,12; //Mystery_Piece
-							getitem 6202,1; //Magic_Book_ES_
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 3:
-						if (countitem(6203) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if ((Zeny > 99999) && (countitem(7094) > 11)) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							set Zeny, Zeny - 100000;
-							delitem 7094,12; //Mystery_Piece
-							getitem 6203,1; //Magic_Book_CL
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 4:
-						if (countitem(6204) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if ((Zeny > 99999) && (countitem(7094) > 11)) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							set Zeny, Zeny - 100000;
-							delitem 7094,12; //Mystery_Piece
-							getitem 6204,1; //Magic_Book_CR
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 5:
-						if (countitem(6205) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if ((Zeny > 99999) && (countitem(7094) > 11)) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							set Zeny, Zeny - 100000;
-							delitem 7094,12; //Mystery_Piece
-							getitem 6205,1; //Magic_Book_DL
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					}
-				}
-				mes "[Lea]";
-				mes "I'm sorry, but you don't have enough funds.";
-				close;
-			case 4:
-				if ((Zeny > 99999) && (countitem(984) > 6)) {
 					mes "[Lea]";
-					mes "What kind of Magic Book do you want?";
-					next;
-					switch (select("Let me think.:Magic Book (Earth Strain):Magic Book (Chain Lightning):Magic Book (Crimson Rock):Magic Book (Drain Life)")) {
-					case 1:
-						mes "[Lea]";
-						mes "No problem.";
-						close;
-					case 2:
-						if (countitem(6202) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if ((Zeny > 99999) && (countitem(984) > 6)) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							set Zeny, Zeny - 100000;
-							delitem 984,7; //Oridecon
-							getitem 6202,1; //Magic_Book_ES_
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 3:
-						if (countitem(6203) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if ((Zeny > 99999) && (countitem(984) > 6)) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							set Zeny, Zeny - 100000;
-							delitem 984,7; //Oridecon
-							getitem 6203,1; //Magic_Book_CL
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 4:
-						if (countitem(6204) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if ((Zeny > 99999) && (countitem(984) > 6)) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							set Zeny, Zeny - 100000;
-							delitem 984,7; //Oridecon
-							getitem 6204,1; //Magic_Book_CR
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 5:
-						if (countitem(6205) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if ((Zeny > 99999) && (countitem(984) > 6)) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							set Zeny, Zeny - 100000;
-							delitem 984,7; //Oridecon
-							getitem 6205,1; //Magic_Book_DL
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					}
+					mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
+					close;
 				}
-				mes "[Lea]";
-				mes "I'm sorry, but you don't have enough funds.";
-				close;
-			case 5:
-				if ((Zeny > 99999) && (countitem(617) > 0)) {
+				if ((.@Payment == 1 && Zeny > 199999) || (Zeny > 99999 && ((.@Payment == 2 && countitem(7094) > 11) || (.@Payment == 3 && countitem(984) > 6) || (.@Payment == 4 && countitem(617))))) {
+					mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
+					next;
 					mes "[Lea]";
-					mes "What kind of Magic Book do you want?";
-					next;
-					switch (select("Let me think.:Magic Book (Earth Strain):Magic Book (Chain Lightning):Magic Book (Crimson Rock):Magic Book (Drain Life)")) {
-					case 1:
-						mes "[Lea]";
-						mes "No problem.";
-						close;
-					case 2:
-						if (countitem(6202) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if ((Zeny > 99999) && (countitem(617) > 0)) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							set Zeny, Zeny - 100000;
-							delitem 617,1; //Old_Violet_Box
-							getitem 6202,1; //Magic_Book_ES_
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 3:
-						if (countitem(6203) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if ((Zeny > 99999) && (countitem(617) > 0)) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							set Zeny, Zeny - 100000;
-							delitem 617,1; //Old_Violet_Box
-							getitem 6203,1; //Magic_Book_CL
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 4:
-						if (countitem(6204) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if ((Zeny > 99999) && (countitem(617) > 0)) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							set Zeny, Zeny - 100000;
-							delitem 617,1; //Old_Violet_Box
-							getitem 6204,1; //Magic_Book_CR
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					case 5:
-						if (countitem(6205) > 0) {
-							mes "[Lea]";
-							mes "You already have that Magic Book. You can't borrow a new book until you return the current one.";
-							next;
-							mes "[Lea]";
-							mes "Don't you know how many others would want the book you already have? It's a bit selfish to want more than one, you know.";
-							close;
-						}
-						if ((Zeny > 99999) && (countitem(617) > 0)) {
-							mes "[Lea]";
-							mes "Thank you for your deposit. The book's return date is written on the lending card on the back cover of the book. Please try not to lose or damage the book and avoid paying compensation.";
-							next;
-							mes "[Lea]";
-							mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
-							set Zeny, Zeny - 100000;
-							delitem 617,1; //Old_Violet_Box
-							getitem 6205,1; //Magic_Book_DL
-							close;
-						}
-						mes "[Lea]";
-						mes "I'm sorry, but you don't have enough funds.";
-						close;
-					}
+					mes "The Intermediate and Superior Magic Books must be returned upon borrowing the Ultimate Magic Book. Remember that you're just borrowing them, so make sure you take good care of those books.";
+					if (.@Payment == 1) set Zeny, Zeny - 200000;
+					else if (.@Payment == 2) delitem 7094,12; //Mystery_Piece
+					else if (.@Payment == 3) delitem 984,7; //Oridecon
+					else delitem 617,1; //Old_Violet_Box
+					if (.@Payment > 1) set Zeny, Zeny - 100000;
+					getitem 6201+.@i,1; //Magic_Book_ES_, Magic_Book_CL, Magic_Book_CR, Magic_Book_DL
+					close;
 				}
-				mes "[Lea]";
-				mes "I'm sorry, but you don't have enough funds.";
-				close;
 			}
+			mes "I'm sorry, but you don't have enough funds.";
+			close;
 		case 5:
 			if ((BaseLevel > 139) && (mac_book < 1) && ((getskilllv(2217) > 0) || (getskilllv(2213) > 0))) {
 				mes "[Lea]";
@@ -1774,100 +626,47 @@ mid_camp,255,244,4	script	Galfos	735,{
 		mes "Oh, did you find";
 		mes "anything useful?";
 		next;
-		switch (select("I've discovered everything about Comet.:I've mastered the zenith of Tetra Vortex.")) {
-		case 1:
-			if (countitem(6195) > 0) {
+		set .@i, select("I've discovered everything about Comet.:I've mastered the zenith of Tetra Vortex.");
+		mes "[Galfos]";
+		if ((.@i == 1 && countitem(6195)) || (.@i == 2 && countitem(6196))) {
+			mes "Are you kidding me? You already have the book!";
+			close;
+		}
+		if ((.@i == 1 && checkquest(12218) == 2) || (.@i == 2 && checkquest(12219) == 2 && checkquest(12220) == 2 && checkquest(12221) == 2 && checkquest(12222) == 2)) {
+			mes "Oh my, I sense incredible energy coming from you. This is great! Now we're ready to make the Ultimate Magic Book.";
+			next;
+			mes "[Galfos]";
+			mes "There's one problem, though: I'm so broke that I don't even have enough money to buy the tools to make the book.";
+			next;
+			mes "[Galfos]";
+			mes "I need at least ^0000aa1,000,000 zeny^000000 to buy all the necessary tools. Do you have the money?";
+			next;
+			if(select("Wh-what? No!:Sure.") == 1) {
 				mes "[Galfos]";
-				mes "Are you kidding me? You already have the book!";
+				mes "Aw, you don't? It's disappointing, but there's nothing I can do. Come back when you have enough money, okay?";
 				close;
-			}
-			if (checkquest(12218) == 2) {
-				mes "[Galfos]";
-				mes "Oh my, I sense incredible energy coming from you. This is great! Now we're ready to make the Ultimate Magic Book.";
-				next;
-				mes "[Galfos]";
-				mes "There's one problem, though: I'm so broke that I don't even have enough money to buy the tools to make the book.";
-				next;
-				mes "[Galfos]";
-				mes "I need at least ^0000aa1000,000 zeny^000000 to buy all the necessary tools. Do you have the money?";
-				next;
-				switch (select("Wh-what? No!:Sure.")) {
-				case 1:
-					mes "[Galfos]";
-					mes "Aw, you don't? It's disappointing, but there's nothing I can do. Come back when you have enough money, okay?";
-					close;
-				case 2:
-					if (Zeny > 1000000) {
-						mes "[Galfos]";
-						mes "Alright then, let's get started!";
-						next;
-						specialeffect2 EF_DISPELL;
-						progressbar "ffff00",4;
-						specialeffect2 EF_LORD;
-						set Zeny, Zeny - 1000000;
-						getitem 6195,1; //Magic_Book_CM
-						mes "[Galfos]";
-						mes "Man, I almost lost my control to the incredible magic energy! Here's your Magic Book.";
-						next;
-						mes "[Galfos]";
-						mes "Thank you for making my dream come true. Feel free to come back if you need another one of these books.";
-						close;
-					}
-					mes "[Galfos]";
-					mes "Hey, what did I tell you? I can't buy the tools to make the book without money!";
-					close;
-				}
 			}
 			mes "[Galfos]";
-			mes "Are you sure that you've found something? It doesn't seem like you've learned what we need...";
-			close;
-		case 2:
-				if (countitem(6196) > 0) {
-					mes "[Galfos]";
-					mes "Are you kidding me? You already have the book!";
-					close;
-				}
-				if ((checkquest(12219) == 2) && (checkquest(12220) == 2) && (checkquest(12221) == 2) && (checkquest(12222) == 2)) {
-					mes "[Galfos]";
-					mes "Oh my, I sense incredible energy coming from you. This is great! Now we're ready to make the Ultimate Magic Book.";
-					next;
-					mes "[Galfos]";
-					mes "There's one problem, though: I'm so broke that I don't even have enough money to buy the tools to make the book.";
-					next;
-					mes "[Galfos]";
-					mes "I need at least ^0000aa1000,000 zeny^000000 to buy all the necessary tools. Do you have the money?";
-					next;
-					switch (select("Wh-what? No!:Sure.")) {
-					case 1:
-						mes "[Galfos]";
-						mes "Aw, you don't? It's disappointing, but there's nothing I can do. Come back when you have enough money, okay?";
-						close;
-					case 2:
-						if (Zeny > 1000000) {
-							mes "[Galfos]";
-							mes "Alright then, let's get started!";
-							next;
-							specialeffect2 EF_DISPELL;
-							progressbar "ffff00",4;
-							specialeffect2 EF_LORD;
-							set Zeny, Zeny - 1000000;
-							getitem 6196,1; //Magic_Book_TV
-							mes "[Galfos]";
-							mes "Man, I almost lost my control to the incredible magic energy. Here's your Magic Book.";
-							next;
-							mes "[Galfos]";
-							mes "Thank you for making my dream come true. Feel free to come back if you need another one of these books.";
-							close;
-						}
-						mes "[Galfos]";
-						mes "Hey, what did I tell you? I can't buy the tools to make the book without money!";
-						close;
-					}
-				}
+			if (Zeny >= 1000000) {
+				mes "Alright then, let's get started!";
+				next;
+				specialeffect2 EF_DISPELL;
+				progressbar "ffff00",4;
+				specialeffect2 EF_LORD;
+				set Zeny, Zeny - 1000000;
+				getitem 6194+.@i,1; //Magic_Book_CM, Magic_Book_TV
 				mes "[Galfos]";
-				mes "Are you sure that you've found something? It doesn't seem like you've learned what we need...";
+				mes "Man, I almost lost my control to the incredible magic energy! Here's your Magic Book.";
+				next;
+				mes "[Galfos]";
+				mes "Thank you for making my dream come true. Feel free to come back if you need another one of these books.";
 				close;
+			}
+			mes "Hey, what did I tell you? I can't buy the tools to make the book without money!";
+			close;
 		}
+		mes "Are you sure that you've found something? It doesn't seem like you've learned what we need...";
+		close;
 	}
 	mes "[Galfos]";
 	mes "Is there anything else you need?";
@@ -2010,152 +809,37 @@ dic_in01,25,190,0	script	Mysterious Documents	844,{
 	close;
 }
 
-thor_v02,163,104,0	script	Powerful Lava Energy#33	844,{
-
-	if ((MaxWeight - Weight) < 1000) {
+function	script	Magic_Book_Essence	{
+	if (MaxWeight - Weight < 1000) {
 		mes "Please lighten your bag.";
 		close;
 	}
-	if ((checkquest(12218) == 1) && (countitem(7097) > 39)) {
+	if (checkquest(getarg(0)) == 1 && countitem(getarg(1)) >= getarg(2)) {
 		specialeffect2 EF_BLIND;
 		specialeffect2 EF_BEGINSPELL;
 		progressbar "ffff00",4;
-		delitem 7097,40; //Burning_Heart
-		if (rand(1,2) == 1) {
-			mes "You have used 40 Burning Hearts to create ^999900Lava Essence^000000.";
+		delitem getarg(1),getarg(2);
+		if (rand(2)) {
+			mes "You have used "+getarg(2)+" "+getitemname(getarg(1))+"s to create ^999900"+getarg(3)+" Essence^000000.";
 			next;
-			mes "^008800The Lava Essence will last permanently, unless there's a problem.^000000";
-			completequest 12218;
+			mes "^008800The "+getarg(3)+" Essence will last permanently, unless there's a problem.^000000";
+			completequest getarg(0);
 			specialeffect2 EF_LORD;
 			close;
 		}
-		mes "^008888You have failed to refine the essence using 40 Burning Hearts.^000000";
+		mes "^008888You have failed to refine the essence using "+getarg(2)+" "+getitemname(getarg(1))+"s.^000000";
 		close;
 	}
-	if (checkquest(12218) == 2) {
-		mes "You've already created Lava Essence in this area.";
+	if (checkquest(getarg(0)) == 2) {
+		mes "You've already created "+getarg(3)+" Essence in this area.";
 		close;
 	}
 	mes "Someone already used this area.";
 	close;
 }
 
-thor_v01,185,91,0	script	Powerful Flame Energy#33	844,{
-
-	if ((MaxWeight - Weight) < 1000) {
-		mes "Please lighten your bag.";
-		close;
-	}
-	if ((checkquest(12219) == 1) && (countitem(7098) > 9)) {
-		specialeffect2 EF_BLIND;
-		specialeffect2 EF_BEGINSPELL;
-		progressbar "ffff00",4;
-		delitem 7098,10; //Live_Coal
-		if (rand(1,3) == 1) {
-			mes "You have used 10 Live Coals to create ^999900Flame Essence^000000.";
-			next;
-			mes "^008800The Flame Essence will last permanently, unless there's a problem.^000000";
-			completequest 12219;
-			specialeffect2 EF_LORD;
-			close;
-		}
-		mes "^008888You have failed to refine the essence using 10 Live Coals.^000000";
-		close;
-	}
-	if (checkquest(12219) == 2) {
-		mes "You've already created Flame Essence in this area.";
-		close;
-	}
-	mes "Someone already used this area.";
-	close;
-}
-
-ice_dun03,137,148,0	script	Powerful Glacier Energy	844,{
-
-	if ((MaxWeight - Weight) < 1000) {
-		mes "Please lighten your bag.";
-		close;
-	}
-	if ((checkquest(12220) == 1) && (countitem(7561) > 9)) {
-		specialeffect2 EF_BLIND;
-		specialeffect2 EF_BEGINSPELL;
-		progressbar "ffff00",4;
-		delitem 7561,10; //Ice_Heart
-		if (rand(1,3) == 1) {
-			mes "You have used 10 Glacial Hearts to create ^999900Glacier Essence^000000.";
-			next;
-			mes "^008800The Glacier Essence will last permanently, unless there's a problem.^000000";
-			completequest 12220;
-			specialeffect2 EF_LORD;
-			close;
-		}
-		mes "^008888You have failed to refine the essence using 10 Glacial Hearts.^000000";
-		close;
-	}
-	if (checkquest(12220) == 2) {
-		mes "You've already created Glacier Essence in this area.";
-		close;
-	}
-	mes "Someone already used this area.";
-	close;
-}
-
-ein_dun02,181,124,0	script	Powerful Fossil Energy	844,{
-
-	if ((MaxWeight - Weight) < 1000) {
-		mes "Please lighten your bag.";
-		close;
-	}
-	if ((checkquest(12221) == 1) && (countitem(7312) > 9)) {
-		specialeffect2 EF_BLIND;
-		specialeffect2 EF_BEGINSPELL;
-		progressbar "ffff00",4;
-		delitem 7312,10; //Jubilee
-		if (rand(1,3) == 1) {
-			mes "You have used 10 Jubilees to create ^999900Fossil Essence^000000.";
-			next;
-			mes "^008800The Fossil Essence will last permanently, unless there's a problem.^000000";
-			specialeffect2 EF_LORD;
-			completequest 12221;
-			close;
-		}
-		mes "^008888You have failed to refine the essence using 10 Jubilees.^000000";
-		close;
-	}
-	if (checkquest(12221) == 2) {
-		mes "You've already created Fossil Essence in this area.";
-		close;
-	}
-	mes "Someone already used this area.";
-	close;
-}
-
-gon_dun02,252,198,0	script	Powerful Storm Energy#33	844,{
-
-	if ((MaxWeight - Weight) < 1000) {
-		mes "Please lighten your bag.";
-		close;
-	}
-	if ((checkquest(12222) == 1) && (countitem(7266) > 9)) {
-		specialeffect2 EF_BLIND;
-		specialeffect2 EF_BEGINSPELL;
-		progressbar "ffff00",4;
-		delitem 7266,10; //Dragon_Fang
-		if (rand(1,3) == 1) {
-			mes "You have used 10 Dragon Teeth to create ^999900Storm Essence^000000.";
-			next;
-			mes "^008800The Storm Essence will last permanently, unless there's a problem.^000000";
-			specialeffect2 EF_LORD;
-			completequest 12222;
-			close;
-		}
-		mes "^008888You have failed to refine the essence using 10 Dragon Teeth.^000000";
-		close;
-	}
-	if (checkquest(12222) == 2) {
-		mes "You've already created Storm Essence in this area.";
-		close;
-	}
-	mes "Someone already used this area.";
-	close;
-}
+thor_v02,163,104,0	script	Powerful Lava Energy#33	844,{ callfunc "Magic_Book_Essence",12218,7097,40,"Lava"; end; }
+thor_v01,185,91,0	script	Powerful Flame Energy#33	844,{ callfunc "Magic_Book_Essence",12219,7098,10,"Flame"; end; }
+ice_dun03,137,148,0	script	Powerful Glacier Energy	844,{ callfunc "Magic_Book_Essence",12220,7561,10,"Glacier"; end; }
+ein_dun02,181,124,0	script	Powerful Fossil Energy	844,{ callfunc "Magic_Book_Essence",12221,7312,10,"Fossil"; end; }
+gon_dun02,252,198,0	script	Powerful Storm Energy#33	844,{ callfunc "Magic_Book_Essence",12222,7266,10,"Storm"; end; }
