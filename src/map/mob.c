@@ -172,8 +172,26 @@ void mvptomb_destroy(struct mob_data *md)
 {
 	struct npc_data *nd = md->tomb_npc;
 
-	if (nd)
-		npc_unload(nd,true);
+	if (nd) {
+		int m, i;
+
+		m = nd->bl.m;
+		
+		clif_clearunit_area(&nd->bl,CLR_OUTSIGHT);
+		
+		map_delblock(&nd->bl);
+
+		ARR_FIND( 0, map[m].npc_num, i, map[m].npc[i] == nd );
+		if( !(i == map[m].npc_num) ) {
+			map[m].npc_num--;
+			map[m].npc[i] = map[m].npc[map[m].npc_num];
+			map[m].npc[map[m].npc_num] = NULL;
+		}
+
+		map_deliddb(&nd->bl);
+
+		aFree(nd);
+	}
 
 	md->tomb_npc = NULL;
 }
