@@ -25,7 +25,7 @@ bat_room,169,226,5	script	KVM Waiting Room#a::KvM01R_Guillaume	418,{
 	end;
 
 OnInit:
-	waitingroom "Battle Station 5 Players",5,"KvM01_BG::OnGuillaumeJoin",1;
+	waitingroom "Battle Station 5 Players",6,"KvM01_BG::OnGuillaumeJoin",1;
 	end;
 	
 OnEnterBG:
@@ -39,7 +39,7 @@ bat_room,169,205,3	script	KVM Waiting Room#b::KvM01R_Croix	414,{
 	end;
 
 OnInit:
-	waitingroom "Battle Station 5 Players",5,"KvM01_BG::OnCroixJoin",1;
+	waitingroom "Battle Station 5 Players",6,"KvM01_BG::OnCroixJoin",1;
 	end;
 
 OnEnterBG:

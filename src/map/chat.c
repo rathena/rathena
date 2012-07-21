@@ -119,7 +119,7 @@ int chat_joinchat(struct map_session_data* sd, int chatid, const char* pass)
 	nullpo_ret(sd);
 	cd = (struct chat_data*)map_id2bl(chatid);
 
-	if( cd == NULL || cd->bl.type != BL_CHAT || cd->bl.m != sd->bl.m || sd->state.vending || sd->state.buyingstore || sd->chatID || cd->users >= cd->limit )
+	if( cd == NULL || cd->bl.type != BL_CHAT || cd->bl.m != sd->bl.m || sd->state.vending || sd->state.buyingstore || sd->chatID || ((cd->owner->type == BL_NPC) ? cd->users+1 : cd->users) >= cd->limit )
 	{
 		clif_joinchatfail(sd,0);
 		return 0;

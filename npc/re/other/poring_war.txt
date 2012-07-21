@@ -358,7 +358,7 @@ poring_w01,91,97,3	script	Poring#wop_door_all	1002,{
 	end;
 	
 OnInit:
-	waitingroom "[Recruiting 10 Battle Participants]",10,"Poring#wop_door_all::OnStartArena",10,500,9;
+	waitingroom "[Recruiting 10 Battle Participants]",11,"Poring#wop_door_all::OnStartArena",10,500,9;
 	enablewaitingroomevent;
 	end;
 
@@ -381,7 +381,7 @@ poring_w01,91,68,5	script	Poring#wop_door_a	1002,{
 	end;
 
 OnInit:
-	waitingroom "[Angeling Team Recruiter]",5,"Poring#wop_door_a::OnStartArena",5,0,9;
+	waitingroom "[Angeling Team Recruiter]",6,"Poring#wop_door_a::OnStartArena",5,0,9;
 	enablewaitingroomevent;
 	end;
 
@@ -473,7 +473,7 @@ poring_w01,112,68,3	script	Poring#wop_door_d	1002,{
 	end;
 
 OnInit:
-	waitingroom "[Deviling Team Recruiter]",5,"Poring#wop_door_d::OnStartArena",5,0,9;
+	waitingroom "[Deviling Team Recruiter]",6,"Poring#wop_door_d::OnStartArena",5,0,9;
 	enablewaitingroomevent;
 	end;
 
