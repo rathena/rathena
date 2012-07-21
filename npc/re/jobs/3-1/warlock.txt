@@ -2107,3 +2107,6 @@ job3_war01,1,2,0	script	???	66,{
 	}
 }
 */
+
+spl_fild02,0,0,0,0	monster	Bradium Golem	2049,20,5000,0,0
+spl_fild02,0,0,0,0	monster	Naga	2047,20,5000,0,0
