@@ -4979,7 +4979,7 @@
 12434,Petite_Tail_Noodles,Petite Tail Noodles,2,,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_PUTTI_TAILS_NOODLES, 300000, 20; },{},{}
 12435,Black_Mass,Black Mass,2,,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_STOMACHACHE, 60000,  rand(5,10); },{},{}
 12436,Vitata_500,Vitata 500,0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_VITATA_500,500000,0; itemheal 0,200; },{},{}
-12437,Concentrated_Ceromain_Soup,Concentrated Ceromain Soup,2,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXTRACT_SALAMINE_JUICE,500000; },{},{}
+12437,Concentrated_Ceromain_Soup,Concentrated Ceromain Soup,2,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXTRACT_SALAMINE_JUICE,500000,10; },{},{}
 12438,F_Giant_Fly_Wing,F Giant Fly Wing,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12439,F_Battle_Manual,F Battle Manual,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12440,F_Insurance,F Insurance,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
