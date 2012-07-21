@@ -1,13 +1,16 @@
 //===== rAthena Script =======================================
-//= Battleground map setting. '2' shows scoreboard.
+//= Mapflag: Battleground map setting.
 //===== By: ==================================================
 //= Epoque
 //===== Current Version: =====================================
-//= 1.0a [Epoque]
+//= 1.0a
 //===== Compatible With: =====================================
-//=
-//===== Description: =========================================
-//=
+//= rAthena SVN
+//===== Description: ========================================= 
+//= Defines a Battleground map.
+//= Additional parameter '2' shows scoreboard.
+//===== Additional Comments: ================================= 
+//= 1.0 - Initial script.
 //============================================================
 
 bat_c01	mapflag	battleground	2

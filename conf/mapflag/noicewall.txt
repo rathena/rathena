@@ -1,13 +1,17 @@
 //===== rAthena Script =======================================
-//= Map flags that disable icewall skill
+//= Mapflag: Disable Ice Wall.
 //===== By: ==================================================
 //= rAthena Dev Team
-//=============================================================
-//= noicewall: Disables Icewall skill.
-//= To disable Icewall on a specific map add the mapname here.
-//= 1.6a Re-enabled icewalls for cities [Lupus]
-//= 1.7 Officially icewall is allowed on interoirs. [L0ne_w0lf]
-//= 1.8 fixed aru castles mapnames
+//===== Current Version: =====================================
+//= 1.8
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: ========================================= 
+//= Blocks usage of WZ_ICEWALL.
+//===== Additional Comments: ================================= 
+//= 1.6a - Re-enabled icewalls for cities [Lupus]
+//= 1.7 - Officially icewall is allowed on interiors. [L0ne_w0lf]
+//= 1.8 - Fixed arug_cas map names.
 //============================================================
 
 //ayo_in01	mapflag	noicewall

@@ -4,10 +4,10 @@
 #define _CONFIG_SKILLS_SWORDS_H_
 /**
  * rAthena configuration file (http://rathena.org)
- * For detailed guidance on these check http://rathena.org/wiki/SRC/map/config/
+ * For detailed guidance on these check http://rathena.org/wiki/SRC/config/
  **/
 
-/// rune knight
+/// Rune Knight
 ///
 /// maximum number of runes that a rune knight character can carry at any given time
 /// default: 20

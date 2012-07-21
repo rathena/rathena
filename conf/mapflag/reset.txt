@@ -1,13 +1,15 @@
 //===== rAthena Script =======================================
-//= Map flags that enable the use of Neuralizer
+//= Mapflag: Enable Neuralizer use.
 //===== By: ==================================================
 //= Daegaladh
 //===== Current Version: =====================================
-//= 1.0 [Daegaladh]
+//= 1.0
 //===== Compatible With: =====================================
-//=
-//===== Description: =========================================
-//=
+//= rAthena SVN
+//===== Description: ========================================= 
+//= Maps where Neuralizer (12213) can be used.
+//===== Additional Comments: ================================= 
+//= 1.0 - Initial script.
 //============================================================
 
 alberta	mapflag	reset

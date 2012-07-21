@@ -1,7 +1,15 @@
-//===== Description: =========================================
-//= pvp	off: Disables Player versus Player mode.
-//= To disable PvP mode on a specific map add the mapname here.
-//= v 1.1a
+//===== rAthena Script =======================================
+//= Mapflag: Disable Player versus Player mode.
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.1a
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: ========================================= 
+//= Prevents PvP mode on a map.
+//===== Additional Comments: ================================= 
+//= 1.0 - Initial script.
 //============================================================
 
 1@cata	mapflag	pvp	off

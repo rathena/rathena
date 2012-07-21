@@ -1,11 +1,21 @@
 //===== rAthena Script =======================================
-//= Map flags that allow players to drop items/equips on death
+//= Mapflag: Nightmare mode.
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: ========================================= 
+//= Players drop items/equipment on death.
+//= pvp_nightmaredrop	id,type,percent
+//=   id: Drop a specific item ID or "random"
+//=   type: "inventory", "equip", or "all"
+//=   percent: Rate of item drop.
+//===== Additional Comments: ================================= 
+//= 1.0 - Initial script.
+//============================================================
 
-
-//Nightmare Equipment Drops PVP
 pvp_n_1-1	mapflag	pvp_nightmaredrop	random,equip,300
 pvp_n_2-1	mapflag	pvp_nightmaredrop	random,equip,300
 pvp_n_3-1	mapflag	pvp_nightmaredrop	random,equip,300

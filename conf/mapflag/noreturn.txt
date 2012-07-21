@@ -1,16 +1,24 @@
 //===== rAthena Script =======================================
-//= Map flags that disable use of Butterfly wings
+//= Mapflag: Disable return warp.
 //===== By: ==================================================
 //= rAthena Dev Team
-//= 1.4a [Lupus]
-//===== Notes: ===============================================
-//= For disabling Fly wings use noteleport
-//= 1.3 According to the patch, enabled Butterfly wings in the Castles [Lupus]
-//= 1.4 Enabled Butterfly wings on PvP maps. [Skotlex]
-//= 1.4a Added job_knt. [Samuray22]
-//= 1.5 Commented out new_zone entries. [L0ne_W0lf]
-//= 1.6 Enabled B. wings on all maps but que_hugel. [L0ne_W0lf]
 //===== Current Version: =====================================
+//= 1.6
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: ========================================= 
+//= Disables the following items:
+//=   Butterfly Wing (602), Siege Teleport Scroll (14591),
+//=   Yellow/Green/Red/Blue Butterfly Wings (14582-14585),
+//=   Dungeon Teleport Scrolls (14527/14581)
+//= Also restricts "warpparty" and "warpguild" script commands.
+//===== Additional Comments: ================================= 
+//= 1.3 - According to the patch, enabled Butterfly wings in the Castles. [Lupus]
+//= 1.4 - Enabled Butterfly wings on PvP maps. [Skotlex]
+//= 1.4a - Added job_knt. [Samuray22]
+//= 1.5 - Commented out new_zone entries. [L0ne_W0lf]
+//= 1.6 - Enabled B. wings on all maps but que_hugel. [L0ne_W0lf]
+//============================================================
 
 // Cities ========================
 //ayo_in01	mapflag	noreturn
@@ -140,7 +148,7 @@ que_hugel	mapflag	noreturn
 //guild_vs4	mapflag	noreturn
 //guild_vs5	mapflag	noreturn
 
-// Arenas =====================>\\
+// Arenas =====================
 //arena_room	mapflag	noreturn
 //sec_in01	mapflag	noreturn
 //sec_in02	mapflag	noreturn

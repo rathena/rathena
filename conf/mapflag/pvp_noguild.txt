@@ -1,9 +1,16 @@
 //===== rAthena Script =======================================
-//= Map flags that disable guilds on pvp grounds. 
+//= Mapflag: Ignore guilds.
 //===== By: ==================================================
 //= rAthena Dev Team
-//= v 1.1
 //===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: ========================================= 
+//= Ignores guild alliances on GvG-enabled maps.
+//===== Additional Comments: ================================= 
+//= 1.0 - Initial script.
+//============================================================
 
 // PvP Arenas =================
 pvp_y_1-1	mapflag	pvp_noguild

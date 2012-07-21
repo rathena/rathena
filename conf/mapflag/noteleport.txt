@@ -1,11 +1,22 @@
 //===== rAthena Script =======================================
-//= Map flags that disable use of fly wings
+//= Mapflag: Disable teleportation.
 //===== By: ==================================================
 //= rAthena Dev Team
-//= 1.6a [Lupus]
-//===== Notes: ===============================================
-//= For disabling Butterfly wings use noreturn
 //===== Current Version: =====================================
+//= 1.6a
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: ========================================= 
+//= Disables all means of teleportation within a map.
+//= Script commands 'warp', 'areawarp', 'warpchar',
+//=   'warpparty', 'warpguild', 'warpwaitingpc' will not
+//=   work with "Random" destination.
+//= Disables skills AL_TELEPORT and TK_HIGHJUMP.
+//= Disables the following items:
+//=   Fly Wing (601), Giant Fly Wing (12212)
+//===== Additional Comments: ================================= 
+//= 1.6a - Updated. [Lupus]
+//============================================================
 
 // Cities ========================
 ayo_in01	mapflag	noteleport

@@ -1,9 +1,17 @@
 //===== rAthena Script =======================================
-//= Map flags that disable auto saving
+//= Mapflag: Disable auto-save.
 //===== By: ==================================================
 //= rAthena Dev Team
-//= 1.7 [Lupus]
 //===== Current Version: =====================================
+//= 1.7
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: ========================================= 
+//= Characters logging out on the specified map will be warped
+//= to the map specified in the last field, or "SavePoint".
+//===== Additional Comments: ================================= 
+//= 1.7 - Updated. [Lupus]
+//============================================================
 
 // Job Quests ====================
 job_sword1	mapflag	nosave	SavePoint

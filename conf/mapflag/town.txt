@@ -1,13 +1,15 @@
 //===== rAthena Script =======================================
-//= Allows Mailbox access
+//= Mapflag: Town.
 //===== By: ==================================================
 //= Epoque
 //===== Current Version: =====================================
-//= 1.0a [Epoque]
+//= 1.0a
 //===== Compatible With: =====================================
-//=
-//===== Description: =========================================
-//=
+//= rAthena SVN
+//===== Description: ========================================= 
+//= Designates a map as a town, granting mailbox access.
+//===== Additional Comments: ================================= 
+//= 1.0 - Initial script.
 //============================================================
 
 prontera	mapflag	town

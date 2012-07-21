@@ -5,11 +5,11 @@
 
 /**
  * rAthena configuration file (http://rathena.org)
- * For detailed guidance on these check http://rathena.org/wiki/SRC/map/config/
+ * For detailed guidance on these check http://rathena.org/wiki/SRC/config/
  **/
 
 /**
- * @INFO: This file holds general-purpose renewal settings, for class-specific ones check /src/map/config/Skills folder
+ * @INFO: This file holds general-purpose renewal settings, for class-specific ones check /src/config/classes folder
  **/
 
 /// game renewal server mode
@@ -70,9 +70,9 @@
 /// 
 /// leave this line to enable renewal ASPD
 /// - shield penalty is applied
-/// - agi has a greater factor to your ASPD increase
-/// - there is a change in how skill/items give ASPD
-/// - some skills/items ASPD bonus won't stack
+/// - AGI has a greater factor in ASPD increase
+/// - there is a change in how skills/items give ASPD
+/// - some skill/item ASPD bonuses won't stack
 #define RENEWAL_ASPD
 
 #endif // _CONFIG_RENEWAL_H_

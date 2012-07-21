@@ -1,14 +1,20 @@
 //===== rAthena Script =======================================
-//= Map flags that disable exp. penalty on death.
+//= Mapflag: Disable death penalty.
 //===== By: ==================================================
 //= rAthena Dev Team
-//= 1.2 [Lupus]
-//= 1.3 Added all novice maps. [L0ne_W0lf]
-//= 1.4 Removed Nightmare PVP maps. [L0ne_W0lf]
 //===== Current Version: =====================================
+//= 1.4
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: ========================================= 
+//= Same as 'noexppenalty' and 'nozenypenalty' combined.
+//===== Additional Comments: ================================= 
+//= 1.2 - Updated. [Lupus]
+//= 1.3 - Added all novice maps. [L0ne_W0lf]
+//= 1.4 - Removed Nightmare PVP maps. [L0ne_W0lf]
+//============================================================
 
-
-// Towns ====================>\\
+// Towns ====================
 ayo_in01	mapflag	nopenalty
 ayo_in02	mapflag	nopenalty
 alb_ship	mapflag	nopenalty
@@ -214,7 +220,7 @@ guild_vs3	mapflag	nopenalty
 guild_vs4	mapflag	nopenalty
 guild_vs5	mapflag	nopenalty
 
-// Arenas=======================>\\
+// Arenas=======================
 sec_in01	mapflag	nopenalty
 sec_in02	mapflag	nopenalty
 
