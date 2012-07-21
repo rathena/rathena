@@ -3259,9 +3259,9 @@ REPLACE INTO `item_db` VALUES (5654,'Holy_Marching_Hat_J','Holy Marching Hat',5,
 # REPLACE INTO `item_db` VALUES (5655,'Dark_Snake_Lord_Hat_J','Evil Snake Lord Hat',5,20,NULL,500,NULL,2,NULL,0,0xFFFFFFFF,7,2,256,NULL,60,1,372,'bonus bInt,2; bonus bAgi,2; bonus bDex,-2; autobonus \"{ bonus bCastrate,-50; bonus bFlee,30; }\",50,5000,BF_MAGIC,\"{ specialeffect2 EF_SUFFRAGIUM; }\";',NULL,NULL);
 # REPLACE INTO `item_db` VALUES (5656,'Scooter_Hat_J','Scooter Helmet',5,20,NULL,1000,NULL,7,NULL,1,0xFFFFFFFF,7,2,256,NULL,50,1,588,'bonus bUnbreakableHelm,0;',NULL,NULL);
 # REPLACE INTO `item_db` VALUES (5657,'Antique_Pipe_J','Captain\'s Pipe',5,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,1,NULL,30,0,383,'if(isequipped(5184)) bonus bLongAtkRate,getrefine();',NULL,NULL);
-# REPLACE INTO `item_db` VALUES (5658,'Imp_Hat','Imp Hat',5,20,NULL,400,NULL,1,NULL,0,0xFFFFFFFF,7,2,256,NULL,1,1,589,NULL,NULL,NULL);
-# REPLACE INTO `item_db` VALUES (5659,'Sleepr_Hat','Sleepr Hat',5,20,NULL,400,NULL,1,NULL,0,0xFFFFFFFF,7,2,256,NULL,1,1,590,NULL,NULL,NULL);
-# REPLACE INTO `item_db` VALUES (5660,'Gryphon_Hat','Gryphon Hat',5,20,NULL,400,NULL,1,NULL,0,0xFFFFFFFF,7,2,256,NULL,1,1,591,NULL,NULL,NULL);
+REPLACE INTO `item_db` VALUES (5658,'Imp_Hat','Imp Hat',5,20,NULL,400,NULL,1,NULL,0,0xFFFFFFFF,7,2,256,NULL,1,1,589,'bonus3 bAutoSpell,\"SA_FLAMELAUNCHER\",1,10;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (5659,'Sleeper_Hat','Sleeper Hat',5,20,NULL,400,NULL,1,NULL,0,0xFFFFFFFF,7,2,256,NULL,1,1,590,'bonus3 bAutoSpell,\"SA_SEISMICWEAPON\",1,10;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (5660,'Gryphon_Hat','Gryphon Hat',5,20,NULL,400,NULL,1,NULL,0,0xFFFFFFFF,7,2,256,NULL,1,1,591,'bonus3 bAutoSpell,\"SA_LIGHTNINGLOADER\",1,10;',NULL,NULL);
 # REPLACE INTO `item_db` VALUES (5661,'Red_Pirate_Bandana','Red Pirate Banada',5,0,NULL,0,NULL,3,NULL,0,0xFFFFFFFF,7,2,256,NULL,10,1,592,'bonus bStr,1; bonus bDex,1; bonus bAspdRate,2; bonus bCastRate,-2; bonus3 bAutoSpell,\"MO_EXTREMITYFIST\",1,30;',NULL,NULL);
 # REPLACE INTO `item_db` VALUES (5662,'Libra_Crown','Libra Crown',5,10,NULL,300,NULL,3,NULL,0,0xFFFFFFFF,7,2,256,NULL,1,1,593,'bonus bDex,3;',NULL,NULL);
 # REPLACE INTO `item_db` VALUES (5663,'Libra_Diadem','Libra Diadem',5,10,NULL,300,NULL,3,NULL,0,0xFFFFFFFF,7,2,256,NULL,1,1,594,'bonus bDex,3;',NULL,NULL);
