@@ -2258,7 +2258,7 @@
 4049,470,7,454,1,0,0,0,0,0,0,0,0	//SL_SWOO#Esu#
 4049,471,3,452,1,0,0,0,0,0,0,0,0	//SL_SKE#Esk#
 4049,472,3,447,1,0,0,0,0,0,0,0,0	//SL_SKA#Eska#
-4049,494,5,451,1,0,0,0,0,0,0,0,0	//SL_HIGH#Spirit of Rebirth#
+4049,494,5,451,5,0,0,0,0,0,0,0,0	//SL_HIGH#Spirit of Rebirth#
 4049,410,1,0,0,0,0,0,0,0,0,0,0 //WE_CALLBABY#Call Baby#
 4049,681,1,0,0,0,0,0,0,0,0,0,0 //ALL_INCCARRY#Enlarge Weight Limit R#
 //Gangsi (Bongun/Munak)
