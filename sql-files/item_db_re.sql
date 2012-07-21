@@ -103,7 +103,7 @@ REPLACE INTO `item_db_re` VALUES (1650,'P_Staff1','Eden Staff I',4,0,NULL,0,'60:
 REPLACE INTO `item_db_re` VALUES (1651,'P_Staff2','Eden Staff II',4,0,NULL,0,'60:150',NULL,1,0,0x00818314,7,2,2,2,40,0,10,'bonus bInt,3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1652,'Tourist_Staff','Tourist Staff',4,0,NULL,500,'35:0',NULL,1,0,0x00818315,7,2,2,1,1,0,10,'bonus bInt,2; bonus bAgi,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1653,'Staff_Of_Healing_C','Staff of Healing',4,20,NULL,0,'10:100',NULL,1,0,0x00008110,7,2,2,3,1,0,10,'bonus bAtkEle,Ele_Holy;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (1654,'Mental_Stick','Mental Stick',4,20,NULL,500,'40:170',NULL,1,1,0x00818315,7,2,2,3,102,1,10,'if (getrefine() > 5) { /* bonus bSkillAtk,\"SO_PSYCHIC_WAVE\",(getrefine()-5)*2; */ bonus bMaxHPRate,-(getrefine()-5)*2; } /* bonus2 bVariableCastTime,\"SO_PSYCHIC_WAVE\",-3000; bonus2 bUseSPAmount,\"SO_PSYCHIC_WAVE\",-60; */',NULL,'itemheal 0,-100;');
+REPLACE INTO `item_db_re` VALUES (1654,'Mental_Stick','Mental Stick',4,20,NULL,500,'40:170',NULL,1,1,0x00818315,7,2,2,3,102,1,10,'if(getrefine()>5) { bonus bSkillAtk,"SO_PSYCHIC_WAVE",(getrefine()-5)*2; bonus bMaxHPRate,-(getrefine()-5)*2; } bonus2 bSkillVariableCast,"SO_PSYCHIC_WAVE",-3000; bonus2 bSkillUseSP,"SO_PSYCHIC_WAVE",-60;',NULL,'itemheal 0,-100;');
 # 1655,
 # 1656,
 REPLACE INTO `item_db_re` VALUES (1657,'Mercy_Staff1','Mercy Staff I',4,20,NULL,500,'30:160',NULL,1,2,0x00000100,7,2,2,3,100,1,10,'bonus bInt,2; bonus bAtkEle,Ele_Holy; bonus bHealPower,10; if(isequipped(2471,2569,15029)){ bonus bHealPower,25; };',NULL,NULL);

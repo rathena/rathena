@@ -12794,10 +12794,13 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, short 
 		req.sp += (status->max_sp * (-sp_rate))/100;
 	if( sd->dsprate != 100 )
 		req.sp = req.sp * sd->dsprate / 100;
-
-	ARR_FIND(0, ARRAYLENGTH(sd->sprateskill), i, sd->sprateskill[i].id == skill);
-	if( i < ARRAYLENGTH(sd->sprateskill) )
-		sp_skill_rate_bonus += sd->sprateskill[i].val;
+	
+	ARR_FIND(0, ARRAYLENGTH(sd->skillusesprate), i, sd->skillusesprate[i].id == skill);
+	if( i < ARRAYLENGTH(sd->skillusesprate) )
+		sp_skill_rate_bonus += sd->skillusesprate[i].val;
+	ARR_FIND(0, ARRAYLENGTH(sd->skillusesp), i, sd->skillusesp[i].id == skill);
+	if( i < ARRAYLENGTH(sd->skillusesp) )
+		req.sp -= sd->skillusesp[i].val;
 	
 	req.sp = cap_value(req.sp * sp_skill_rate_bonus / 100, 0, SHRT_MAX);
 	

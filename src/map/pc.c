@@ -3064,19 +3064,19 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag != 2)
 			sd->hp_gain_race_attack[type2] = cap_value(sd->hp_gain_race_attack[type2] + val, 0, INT16_MAX);
 		break;
-	case SP_SP_RATE_SKILL: //bonus2 bUseSPrateSkill,n,x;
+	case SP_SKILL_USE_SP_RATE: //bonus2 bSkillUseSPrate,n,x;
 		if(sd->state.lr_flag == 2)
 			break;
-		ARR_FIND(0, ARRAYLENGTH(sd->sprateskill), i, sd->sprateskill[i].id == 0 || sd->sprateskill[i].id == type2);
-		if (i == ARRAYLENGTH(sd->sprateskill)) {
-			ShowDebug("run_script: bonus2 bUseSPrateSkill reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->sprateskill), type2, val);
+		ARR_FIND(0, ARRAYLENGTH(sd->skillusesprate), i, sd->skillusesprate[i].id == 0 || sd->skillusesprate[i].id == type2);
+		if (i == ARRAYLENGTH(sd->skillusesprate)) {
+			ShowDebug("run_script: bonus2 bSkillUseSPrate reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillusesprate), type2, val);
 			break;
 		}
-		if (sd->sprateskill[i].id == type2)
-			sd->sprateskill[i].val += val;
+		if (sd->skillusesprate[i].id == type2)
+			sd->skillusesprate[i].val += val;
 		else {
-			sd->sprateskill[i].id = type2;
-			sd->sprateskill[i].val = val;
+			sd->skillusesprate[i].id = type2;
+			sd->skillusesprate[i].val = val;
 		}
 		break;		
 	case SP_SKILL_COOLDOWN:
@@ -3125,6 +3125,21 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		else {
 			sd->skillvarcast[i].id = type2;
 			sd->skillvarcast[i].val = val;
+		}
+		break;
+	case SP_SKILL_USE_SP: //bonus2 bSkillUseSP,n,x;
+		if(sd->state.lr_flag == 2)
+			break;
+		ARR_FIND(0, ARRAYLENGTH(sd->skillusesp), i, sd->skillusesp[i].id == 0 || sd->skillusesp[i].id == type2);
+		if (i == ARRAYLENGTH(sd->skillusesp)) {
+			ShowDebug("run_script: bonus2 bSkillUseSP reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillusesp), type2, val);
+			break;
+		}
+		if (sd->skillusesp[i].id == type2)
+			sd->skillusesp[i].val += val;
+		else {
+			sd->skillusesp[i].id = type2;
+			sd->skillusesp[i].val = val;
 		}
 		break;
 	default:

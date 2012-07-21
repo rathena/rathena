@@ -965,7 +965,6 @@ REPLACE INTO `item_db` VALUES (1650,'P_Staff1','Eden Staff I',4,0,NULL,0,60,NULL
 REPLACE INTO `item_db` VALUES (1651,'P_Staff2','Eden Staff II',4,0,NULL,0,60,NULL,1,0,0x00818314,7,2,2,2,40,0,10,'/* bonus bWeaponMatk,150; */ bonus bInt,3;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1652,'Tourist_Staff','Tourist Staff',4,0,NULL,500,35,NULL,1,0,0x00818315,7,2,2,1,1,0,10,'bonus bInt,2; bonus bAgi,1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1653,'Staff_Of_Healing_C','Staff of Healing',4,20,NULL,0,10,NULL,1,0,0x00008110,7,2,2,3,1,0,10,'/* bonus bWeaponMatk,100; */ bonus bAtkEle,Ele_Holy;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (1654,'Mental_Stick','Mental Stick',4,20,NULL,500,40,NULL,1,1,0x00818315,7,2,2,3,102,1,10,'/* bonus bWeaponMatk,170; */ if (getrefine() > 5) { /* bonus bSkillAtk,\"SO_PSYCHIC_WAVE\",(getrefine()-5)*2; */ bonus bMaxHPRate,-(getrefine()-5)*2; } /* bonus2 bVariableCastTime,\"SO_PSYCHIC_WAVE\",-3000; bonus2 bUseSPAmount,\"SO_PSYCHIC_WAVE\",-60; */',NULL,'itemheal 0,-100;');
 # 1655,
 # 1656,
 REPLACE INTO `item_db` VALUES (1657,'Mercy_Staff1','Mercy Staff I',4,20,NULL,500,30,NULL,1,2,0x00000100,7,2,2,3,100,1,10,'/* bonus bWeaponMatk,160; */ bonus bInt,2; bonus bAtkEle,Ele_Holy; bonus bHealPower,10; if(isequipped(2471,2569,15029)){ bonus bHealPower,25; };',NULL,NULL);
@@ -5495,7 +5494,7 @@ REPLACE INTO `item_db` VALUES (12424,'HP_Increase_Potion_(Large)','HP Increase P
 REPLACE INTO `item_db` VALUES (12425,'SP_Increase_Potion_(Small)','SP Increase Potion (Small)',0,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_INCMSPRATE,500000,2; percentheal 0,2;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12426,'SP_Increase_Potion_(Medium)','SP Increase Potion (Medium)',0,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_INCMSPRATE,500000,4; percentheal 0,4;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12427,'SP_Increase_Potion_(Large)','SP Increase Potion (Large)',0,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_INCMSPRATE,500000,8; percentheal 0,8;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (12428,'Concentrated_White_Potion_Z','Concentrated White Potion Z',0,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_EXTRACT_WHITE_POTION_Z,500000,0; itemheal 1000,0;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (12428,'Concentrated_White_Potion_Z','Concentrated White Potion Z',0,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_EXTRACT_WHITE_POTION_Z,500000,0; heal 1000,0;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12429,'Savage_Full_Roast','Savage Full Roast',2,NULL,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_SAVAGE_STEAK, 300000, 20;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12430,'Cocktail_Warg_Blood','Cocktail Warg Blood',2,NULL,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_COCKTAIL_WARG_BLOOD, 300000, 20;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12431,'Minor_Stew','Minor Stew',2,NULL,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_MINOR_BBQ, 300000, 20;',NULL,NULL);
@@ -5504,7 +5503,7 @@ REPLACE INTO `item_db` VALUES (12433,'Drosera_Herb_Salad','Drosera Herb Salad',2
 REPLACE INTO `item_db` VALUES (12434,'Petite_Tail_Noodles','Petite Tail Noodles',2,NULL,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_PUTTI_TAILS_NOODLES, 300000, 20;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12435,'Black_Mass','Black Mass',2,NULL,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_STOMACHACHE, 60000,  rand(5,10);',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12436,'Vitata_500','Vitata 500',0,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_VITATA_500,500000,0; itemheal 0,200;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (12437,'Concentrated_Ceromain_Soup','Concentrated Ceromain Soup',2,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(1500,1600),0;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (12437,'Concentrated_Ceromain_Soup','Concentrated Ceromain Soup',2,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_EXTRACT_SALAMINE_JUICE,500000;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12438,'F_Giant_Fly_Wing','F Giant Fly Wing',2,2,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (12439,'F_Battle_Manual','F Battle Manual',2,2,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (12440,'F_Insurance','F Insurance',2,2,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
