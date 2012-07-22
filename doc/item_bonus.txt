@@ -118,8 +118,8 @@ bonus bRestartFullRecover,n;		When reviving, HP and SP are fully healed (n is me
 bonus bNoCastCancel,n;			Prevents casting from being interrupted when hit (does not work in GvG | n is meaningless)
 bonus bNoCastCancel2,n;			Prevents casting from being interrupted when hit (works even in GvG | n is meaningless)
 bonus bNoSizeFix,n;			The attack revision with the size of the monster is not received (n is meaningless)
-bonus bNoWeaponDamage,n;		Prevents from receiving n% physical damage (n is meaningless)
-bonus bNoMagicDamage,n;			Prevents from receiving n% magical effect (Attack, Healing, Support spells are all blocked | n is meaningless)
+bonus bNoWeaponDamage,n;		Prevents from receiving n% physical damage
+bonus bNoMagicDamage,n;			Prevents from receiving n% magical effect (Attack, Healing, Support spells are all blocked)
 bonus bNoGemStone,n;			Skills requiring Gemstones do no require them (Hocus Pocus will still require 1 Yellow Gemstone | n is meaningless)
 bonus bIntravision,n;			Always see Hiding and Cloaking players/mobs (n is meaningless)
 bonus bHealPower,n;			Increase heal amount of all heal skills by n%
