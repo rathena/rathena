@@ -200,7 +200,7 @@ int battle_delay_damage_sub(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct delay_damage *dat = (struct delay_damage *)data;
 
-	if ( dat && dat->target && dat->target->prev != NULL && !status_isdead(dat->target) ) {
+	if ( dat && dat->target && map_id2bl(id) == dat->src && dat->target->prev != NULL && !status_isdead(dat->target) ) {
 		if( dat->src && dat->src->prev != NULL && id == dat->src->id &&
 			dat->target->m == dat->src->m &&
 			(dat->target->type != BL_PC || ((TBL_PC*)dat->target)->invincible_timer == INVALID_TIMER) &&
