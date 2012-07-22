@@ -2075,12 +2075,12 @@ some cases invaluable.
     // @array2[1] will be equal to @array[3].
 
 So using the examples above:
- @array[0]  = 100
- @array[1]  = 200
- @array[2]  = 300
- @array[3]  = 400
- @array[4]  = 500
- @array[5]  = 600
+ @array[0] = 100
+ @array[1] = 200
+ @array[2] = 300
+ @array[3] = 400
+ @array[4] = 500
+ @array[5] = 600
  
 New Array:
  @array2[0] = 300
@@ -2109,34 +2109,47 @@ array, shifting all the elements beyond this towards the beginning.
 
 ---------------------------------------
 
-*bindatcmd "command","{NPC NAME}::<event label>"{,atcommand level,charcommand level};
-*bindatcmd ("command","{NPC NAME}::<event label>"{,atcommand level,charcommand level});
+*bindatcmd "command","<NPC object name>::<event label>"{,<atcommand level>,<charcommand level>};
+*bindatcmd("command","<NPC object name>::<event label>"{,<atcommand level>,<charcommand level>});
 
 This command will bind a NPC event label to an atcommand. Upon execution of
-the atcommand the user will invoke the NPC event label.
+the atcommand, the user will invoke the NPC event label. Note that a hardcoded
+limit of bindings is set in /src/map/atcommand.h, with 100 as the default value.
+
+Example:
+When a user types the command "@test", an angel effect will be shown.
+
+-	script	atcmd_example	-1,{
+OnInit:
+	bindatcmd("test","atcmd_example::OnAtcommand");
+	end;
+OnAtcommand:
+	specialeffect2 338;
+	end;
+}
 
 ---------------------------------------
 
 *unbindatcmd "command";
-*unbindatcmd ("command");
+*unbindatcmd("command");
 
 This command will unbind a NPC event label from an atcommand.
 
 ---------------------------------------
 
 *useatcmd "command";
-*useatcmd ("command");
+*useatcmd("command");
 
 This command will execute a custom atcommand on the attached RID from a script.
-
-This command, whether invoked by a script or command, will set paremeters to
-an array .@atcmd_parameters$[index] starting with an index of 0.
+Whether invoked by a script or command, an array .@atcmd_parameters$[] will be
+filled with the given parameters, starting with an index of 0.
 
 Example:
-@test Testing Command
+   @test Testing Command
 
-The above would reflect the .@atcmd_parameters$[0] to equal "Testing" and
-.@atcmd_parameters$[1] to equal "Command".
+The following array values will be generated:
+   .@atcmd_parameters$[0] = "Testing"
+   .@atcmd_parameters$[1] = "Command"
 
 ---------------------------------------
 
@@ -5457,7 +5470,7 @@ such, the command will not work if an RID is not attached.
 
 ---------------------------------------
 
-*donpcevent "{NPC NAME}::<event label>";
+*donpcevent "<NPC object name>::<event label>";
 
 This command invokes the event label code within an another NPC or NPCs. It
 starts a separate instance of execution, and the invoking NPC will resume
@@ -5554,7 +5567,7 @@ One more thing. These timers are stored as part of player data. If the player
 logs out, all of these get immediately deleted, without executing the script.
 If this behavior is undesirable, use some other timer mechanism (like 'sleep').
 
-Example 1:
+Example:
 <NPC Header> {
 	dispbottom "Starting a 5 second timer...";
 	addtimer 5000, strnpcinfo(3)+"::On5secs";

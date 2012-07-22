@@ -20,13 +20,9 @@ himinn	mapflag	noskill
 
 // Quiz Maps ===================
 quiz_00	mapflag	noskill
-
 quiz_01	mapflag	noskill
-
 quiz_02	mapflag	noskill
-
 quiz_test	mapflag	noskill
-
 
 //Hugel Minigames ==============
 que_bingo	mapflag	noskill
