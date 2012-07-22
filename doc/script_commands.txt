@@ -2109,6 +2109,28 @@ array, shifting all the elements beyond this towards the beginning.
 
 ---------------------------------------
 
+*bindatcmd "command","{NPC NAME}::<event label>"{,atcommand level,charcommand level};
+*bindatcmd ("command","{NPC NAME}::<event label>"{,atcommand level,charcommand level});
+
+This command will bind a NPC event label to an atcommand. Upon execution of
+the atcommand the user will invoke the NPC event label.
+
+---------------------------------------
+
+*unbindatcmd "command";
+*unbindatcmd ("command");
+
+This command will unbind a NPC event label from an atcommand.
+
+---------------------------------------
+
+*useatcmd "command";
+*useatcmd ("command");
+
+This command will execute a custom atcommand on the attached RID from a script.
+
+---------------------------------------
+
 ======================================
 |2.- Information-retrieving commands.|
 ======================================

@@ -2750,6 +2750,72 @@ void npc_setclass(struct npc_data* nd, short class_)
 		clif_spawn(&nd->bl);// fade in
 }
 
+// @commands (script based)
+int npc_do_atcmd_event(struct map_session_data* sd, const char* command, const char* message, const char* eventname)
+{
+	struct event_data* ev = (struct event_data*)strdb_get(ev_db, eventname);
+	struct npc_data *nd;
+	struct script_state *st;
+	int i = 0, j = 0, k = 0;
+	char *temp;
+	temp = (char*)aMalloc(strlen(message) + 1);
+
+	nullpo_ret(sd);
+
+	if( ev == NULL || (nd = ev->nd) == NULL )
+	{
+		ShowError("npc_event: event not found [%s]\n", eventname);
+		return 0;
+	}
+
+	if( sd->npc_id != 0 )
+	{ // Enqueue the event trigger.
+		int i;
+		ARR_FIND( 0, MAX_EVENTQUEUE, i, sd->eventqueue[i][0] == '\0' );
+		if( i < MAX_EVENTQUEUE )
+		{
+			safestrncpy(sd->eventqueue[i],eventname,50); //Event enqueued.
+			return 0;
+		}
+
+		ShowWarning("npc_event: player's event queue is full, can't add event '%s' !\n", eventname);
+		return 1;
+	}
+
+	if( ev->nd->sc.option&OPTION_INVISIBLE )
+	{ // Disabled npc, shouldn't trigger event.
+		npc_event_dequeue(sd);
+		return 2;
+	}
+
+	st = script_alloc_state(ev->nd->u.scr.script, ev->pos, sd->bl.id, ev->nd->bl.id);
+	setd_sub(st, NULL, ".@atcmd_command$", 0, (void *)command, NULL);
+
+	// split atcmd parameters based on spaces
+	i = 0;
+	j = 0;
+	while( message[i] != '\0' )
+	{
+		if( message[i] == ' ' && k < 127 )
+		{
+			temp[j] = '\0';
+			setd_sub(st, NULL, ".@atcmd_parameters$", k++, (void *)temp, NULL);
+			j = 0;
+			++i;
+		}
+		else
+			temp[j++] = message[i++];
+	}
+
+	temp[j] = '\0';
+	setd_sub(st, NULL, ".@atcmd_parameters$", k++, (void *)temp, NULL);
+	setd_sub(st, NULL, ".@atcmd_numparameters", 0, (void *)&k, NULL);
+	aFree(temp);
+
+	run_script_main(st);
+	return 0;
+}
+
 /// Parses a function.
 /// function%TAB%script%TAB%<function name>%TAB%{<code>}
 static const char* npc_parse_function(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
