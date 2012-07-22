@@ -920,6 +920,14 @@ int unit_can_move(struct block_list *bl)
 		return 0; //Can't move
 	
 	if (sc) {
+		// Ensemble checks to prevent freezing characters
+		if( sc->cant.move && sc->data[SC_LONGING] && !((sc->data[SC_DANCING]->val1&0xFFFF) == CG_MOONLIT))
+		{
+			// allow movement
+			sc->cant.move = 0;
+			return 1;
+		}
+
 		if( sc->cant.move || (sc->data[SC_FEAR] && sc->data[SC_FEAR]->val2 > 0) || (sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1) )
 			return 0;
 		

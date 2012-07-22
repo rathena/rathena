@@ -8858,8 +8858,15 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				{// end status on partner as well
 					dsc = dsd->sc.data[SC_DANCING];
 					if(dsc)
-					{	//This will prevent recursive loops. 
+					{	
+						struct status_change *tsc = status_get_sc(&dsd->bl);
+
+						//This will prevent recursive loops. 
 						dsc->val2 = dsc->val4 = 0;
+
+						// Set cant.move back to 0 to avoid character freezing.
+						tsc->cant.move = 0;
+						sc->cant.move = 0;
 						status_change_end(&dsd->bl, SC_DANCING, INVALID_TIMER);
 					}
 				}

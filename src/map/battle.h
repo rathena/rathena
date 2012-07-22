@@ -327,6 +327,7 @@ extern struct Battle_Config
 	int sp_rate;
 	int bone_drop;
 	int buyer_name;
+	int dancing_weaponswitch_fix;
 
 // eAthena additions
 	int night_at_start; // added by [Yor]
