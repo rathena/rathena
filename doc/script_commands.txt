@@ -2129,6 +2129,15 @@ This command will unbind a NPC event label from an atcommand.
 
 This command will execute a custom atcommand on the attached RID from a script.
 
+This command, whether invoked by a script or command, will set paremeters to
+an array .@atcmd_parameters$[index] starting with an index of 0.
+
+Example:
+@test Testing Command
+
+The above would reflect the .@atcmd_parameters$[0] to equal "Testing" and
+.@atcmd_parameters$[1] to equal "Command".
+
 ---------------------------------------
 
 ======================================
