@@ -1253,11 +1253,11 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 	// moved here to prevent Suffragium from ending if skill fails
 	if (!(skill_get_castnodex(skill_num, skill_lv)&2)) 
 		casttime = skill_castfix_sc(src, casttime, skill_num, skill_lv);
-
+	// in official this is triggered even if no cast time.
+	clif_skillcasting(src, src->id, target_id, 0,0, skill_num, skill_get_ele(skill_num, skill_lv), casttime);
 	if( casttime > 0 || temp )
 	{ 
 		unit_stop_walking(src,1);
-		clif_skillcasting(src, src->id, target_id, 0,0, skill_num, skill_get_ele(skill_num, skill_lv), casttime);
 
 		if (sd && target->type == BL_MOB)
 		{
@@ -1318,8 +1318,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 		} else if( sc->data[SC_CLOAKINGEXCEED] && !(sc->data[SC_CLOAKINGEXCEED]->val4&4) && skill_num != GC_CLOAKINGEXCEED ) {
 			status_change_end(src,SC_CLOAKINGEXCEED, INVALID_TIMER);
 			if (!src->prev) return 0;
-		} else if( sc->data[SC_CAMOUFLAGE] && skill_num != RA_CAMOUFLAGE )
-			status_change_end(src,SC_CAMOUFLAGE,INVALID_TIMER);
+		}
 	}
 
 
@@ -1440,13 +1439,13 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 		} else if (sc->data[SC_CLOAKINGEXCEED] && !(sc->data[SC_CLOAKINGEXCEED]->val4&4)) {
 			status_change_end(src, SC_CLOAKINGEXCEED, INVALID_TIMER);
 			if (!src->prev) return 0;
-		} else if( sc->data[SC_CAMOUFLAGE] && skill_num != RA_CAMOUFLAGE )
-			status_change_end(src,SC_CAMOUFLAGE,INVALID_TIMER);
+		}
 	}
+	// in official this is triggered even if no cast time.
+	clif_skillcasting(src, src->id, 0, skill_x, skill_y, skill_num, skill_get_ele(skill_num, skill_lv), casttime);
 	if( casttime > 0 )
 	{
 		unit_stop_walking(src,1);
-		clif_skillcasting(src, src->id, 0, skill_x, skill_y, skill_num, skill_get_ele(skill_num, skill_lv), casttime);
 		ud->skilltimer = add_timer( tick+casttime, skill_castend_pos, src->id, 0 );
 		if( (sd && pc_checkskill(sd,SA_FREECAST) > 0) || skill_num == LG_EXEEDBREAK)
 			status_calc_bl(&sd->bl, SCB_SPEED);

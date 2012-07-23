@@ -154,6 +154,7 @@ struct skill_unit_group {
 	int unit_id;
 	int group_id;
 	int unit_count,alive_count;
+	int item_id; //store item used.
 	struct skill_unit *unit;
 	struct {
 		unsigned ammo_consume : 1;
