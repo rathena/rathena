@@ -57,6 +57,8 @@
 typedef struct AtCommandInfo AtCommandInfo;
 typedef struct AliasInfo AliasInfo;
 
+int atcmd_binding_count = 0;
+
 struct AtCommandInfo {
 	char command[ATCOMMAND_LENGTH]; 
 	AtCommandFunc func;
@@ -86,14 +88,15 @@ static const char* atcommand_checkalias(const char *aliasname); // @help
 static void atcommand_get_suggestions(struct map_session_data* sd, const char *name, bool atcommand); // @help
 
 // @commands (script-based)
-struct Atcmd_Binding* get_atcommandbind_byname(const char* name)
-{
+struct atcmd_binding_data* get_atcommandbind_byname(const char* name) {
 	int i = 0;
+	
 	if( *name == atcommand_symbol || *name == charcommand_symbol )
 		name++; // for backwards compatibility
-	ARR_FIND( 0, ARRAYLENGTH(atcmd_binding), i, strcmp(atcmd_binding[i].command, name) == 0 );
-	return ( i < ARRAYLENGTH(atcmd_binding) ) ? &atcmd_binding[i] : NULL;
-	return NULL;
+	
+	ARR_FIND( 0, atcmd_binding_count, i, strcmp(atcmd_binding[i]->command, name) == 0 );
+	
+	return ( i < atcmd_binding_count ) ? atcmd_binding[i] : NULL;
 }
 
 //-----------------------------------------------------------
@@ -8998,9 +9001,6 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	TBL_PC * ssd = NULL; //sd for target
 	AtCommandInfo * info;
 
-	// @commands (script based)
-	Atcmd_Binding * binding;
-
 	nullpo_retr(false, sd);
 	
 	//Shouldn't happen
@@ -9079,11 +9079,12 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		params[0] = '\0';
 
 	// @commands (script based)
-	if(type == 1) {
+	if(type == 1 && atcmd_binding_count > 0) {
+		struct atcmd_binding_data * binding;
+
 		// Check if the command initiated is a character command
 		if (*message == charcommand_symbol &&
-	    (ssd = map_nick2sd(charname)) == NULL && (ssd = map_nick2sd(charname2)) == NULL )
-		{
+				(ssd = map_nick2sd(charname)) == NULL && (ssd = map_nick2sd(charname2)) == NULL ) {
 			sprintf(output, "%s failed. Player not found.", command);
 			clif_displaymessage(fd, output);
 			return true;

@@ -34,17 +34,18 @@ const char* msg_txt(int msg_number);
 int msg_config_read(const char* cfgName);
 void do_final_msg(void);
 
-#define MAX_ATCMD_BINDINGS 100
+extern int atcmd_binding_count;
 
 // @commands (script based)
-typedef struct Atcmd_Binding {
+struct atcmd_binding_data {
 	char command[50];
 	char npc_event[50];
 	int level;
 	int level2;
-} Atcmd_Binding;
+};
 
-struct Atcmd_Binding atcmd_binding[MAX_ATCMD_BINDINGS];
-struct Atcmd_Binding* get_atcommandbind_byname(const char* name);
+struct atcmd_binding_data** atcmd_binding;
+
+struct atcmd_binding_data* get_atcommandbind_byname(const char* name);
 
 #endif /* _ATCOMMAND_H_ */
