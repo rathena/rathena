@@ -6211,7 +6211,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				case SC_REFRESH:		case SC_STONEHARDSKIN:	case SC_VITALITYACTIVATION:
 				case SC_FIGHTINGSPIRIT:	case SC_ABUNDANCE:		case SC__SHADOWFORM:
 				case SC_LEADERSHIP:		case SC_GLORYWOUNDS:	case SC_SOULCOLD:
-				case SC_HAWKEYES:		case SC_GUILDAURA:
+				case SC_HAWKEYES:		case SC_GUILDAURA:	case SC_PUSH_CART:
 					continue;
 				/**
 				 * bugreport:4888 these songs may only be dispelled if you're not in their song area anymore
@@ -7556,7 +7556,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				case SC_NEUTRALBARRIER_MASTER: case SC_NEUTRALBARRIER:
 				case SC_STEALTHFIELD_MASTER: case SC_STEALTHFIELD:
 				case SC_LEADERSHIP:		case SC_GLORYWOUNDS:	case SC_SOULCOLD:
-				case SC_HAWKEYES:		case SC_GUILDAURA:
+				case SC_HAWKEYES:		case SC_GUILDAURA:	case SC_PUSH_CART:
 					continue;
 				case SC_ASSUMPTIO:
 					if( bl->type == BL_MOB )
