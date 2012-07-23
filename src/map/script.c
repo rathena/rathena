@@ -16445,6 +16445,76 @@ BUILDIN_FUNC(useatcmd)
 	return 0;
 }
 
+BUILDIN_FUNC(checkre)
+{
+	int num;
+
+	num=script_getnum(st,2);
+	switch(num){
+		case 0:
+			#ifdef RENEWAL
+				script_pushint(st, 1);
+			#else
+				script_pushint(st, 0);
+			#endif
+			break;
+		case 1:
+			#ifdef RENEWAL_CAST
+				script_pushint(st, 1);
+			#else
+				script_pushint(st, 0);
+			#endif
+			break;
+		case 2:
+			#ifdef RENEWAL_DROP
+				script_pushint(st, 1);
+			#else
+				script_pushint(st, 0);
+			#endif
+			break;
+		case 3:
+			#ifdef RENEWAL_EXP
+				script_pushint(st, 1);
+			#else
+				script_pushint(st, 0);
+			#endif
+			break;
+		case 4:
+			#ifdef RENEWAL_LVDMG
+				script_pushint(st, 1);
+			#else
+				script_pushint(st, 0);
+			#endif
+			break;
+		case 5:
+			#ifdef RENEWAL_CAST_VMIN
+				script_pushint(st, 1);
+			#else
+				script_pushint(st, 0);
+			#endif
+			break;
+		case 6:
+			#ifdef RENEWAL_EDP
+				script_pushint(st, 1);
+			#else
+				script_pushint(st, 0);
+			#endif
+			break;
+		case 7:
+			#ifdef RENEWAL_ASPD
+				script_pushint(st, 1);
+			#else
+				script_pushint(st, 0);
+			#endif
+			break;
+
+		default:
+			ShowWarning("buildin_checkre: unknown parameter.\n");
+			break;
+	}
+	return 0;
+}
+
 // declarations that were supposed to be exported from npc_chat.c
 #ifdef PCRE_SUPPORT
 BUILDIN_FUNC(defpattern);
@@ -16873,6 +16943,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setdragon,"?"),//[Ind]
 	BUILDIN_DEF(ismounting,""),//[Ind]
 	BUILDIN_DEF(setmounting,""),//[Ind]
+	BUILDIN_DEF(checkre,"i"),
 	/**
 	 * rAthena and beyond!
 	 **/
