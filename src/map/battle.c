@@ -2091,7 +2091,18 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 						RE_LVL_DMOD(100);
 					break;
 				case RK_HUNDREDSPEAR:
-						skillratio += 500 + 40 * skill_lv;
+						skillratio += 500 + (80 * skill_lv) + (50 * pc_checkskill(sd,LK_SPIRALPIERCE));
+						if( sd )
+						{
+							short index = sd->equip_index[EQI_HAND_R];
+							if( index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_WEAPON )
+							{
+								short spearwbd = 1000 - sd->inventory_data[index]->weight / 10;// Spear Weight Bonus Damage.
+								if ( spearwbd < 0 )
+									spearwbd = 0;// If weight of weapon is more then 1000, bonus is set to 0 to prevent negative value. [Rytech]
+								skillratio += spearwbd;
+							}
+						}
 						RE_LVL_DMOD(100);
 					break;
 				case RK_WINDCUTTER:
