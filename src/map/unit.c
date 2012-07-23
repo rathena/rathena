@@ -929,6 +929,7 @@ int unit_can_move(struct block_list *bl)
 																	(sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE
 																	) )
 			)
+			return 0;
 		
 		if (sc->opt1 > 0 && sc->opt1 != OPT1_STONEWAIT && sc->opt1 != OPT1_BURNING && (sc->opt1 != OPT1_CRYSTALIZE && bl->type != BL_MOB))
 			return 0;
