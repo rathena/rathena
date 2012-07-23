@@ -963,7 +963,6 @@ void initChangeTables(void) {
 	StatusChangeStateTable[SC_TRICKDEAD]           |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_BLADESTOP]           |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_BLADESTOP_WAIT]      |= SCS_NOMOVE;
-	StatusChangeStateTable[SC_DANCING]             |= SCS_NOMOVE|SCS_NOMOVECOND;
 	StatusChangeStateTable[SC_GOSPEL]              |= SCS_NOMOVE|SCS_NOMOVECOND;
 	StatusChangeStateTable[SC_BASILICA]            |= SCS_NOMOVE|SCS_NOMOVECOND;
 	StatusChangeStateTable[SC_STOP]                |= SCS_NOMOVE;
@@ -3410,12 +3409,7 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum sc
 		if( !(flag&SCS_NOMOVECOND) ) {
 			sc->cant.move += ( start ? 1 : -1 );
 		} else if(
-					 (sc->data[SC_DANCING] && sc->data[SC_DANCING]->val4 && (
-																			 !sc->data[SC_LONGING] ||
-																			 (sc->data[SC_DANCING]->val1&0xFFFF) == CG_MOONLIT ||
-																			 (sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE
-																			 ) )
-				  || (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)	// cannot move while gospel is in effect
+				     (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)	// cannot move while gospel is in effect
 				  || (sc->data[SC_BASILICA] && sc->data[SC_BASILICA]->val4 == bl->id) // Basilica caster cannot move
 				  || (sc->data[SC_GRAVITATION] && sc->data[SC_GRAVITATION]->val3 == BCT_SELF)
 				  || (sc->data[SC_CLOAKING] && //Need wall at level 1-2
@@ -8857,16 +8851,11 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				if(sce->val4 && sce->val4 != BCT_SELF && (dsd=map_id2sd(sce->val4)))
 				{// end status on partner as well
 					dsc = dsd->sc.data[SC_DANCING];
-					if(dsc)
-					{	
-						struct status_change *tsc = status_get_sc(&dsd->bl);
+					if(dsc) {	
 
 						//This will prevent recursive loops. 
 						dsc->val2 = dsc->val4 = 0;
 
-						// Set cant.move back to 0 to avoid character freezing.
-						tsc->cant.move = 0;
-						sc->cant.move = 0;
 						status_change_end(&dsd->bl, SC_DANCING, INVALID_TIMER);
 					}
 				}
