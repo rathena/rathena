@@ -88,7 +88,7 @@ int chat_createpcchat(struct map_session_data* sd, const char* title, const char
 
 	if( map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKNOCHAT) )
 	{
-		clif_displaymessage (sd->fd, "Can't create chat rooms in this Area.");
+		clif_displaymessage (sd->fd, msg_txt(665));
 		return 0;
 	}
 

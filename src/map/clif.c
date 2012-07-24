@@ -6649,7 +6649,7 @@ void clif_sendegg(struct map_session_data *sd)
 	fd=sd->fd;
 	if (battle_config.pet_no_gvg && map_flag_gvg(sd->bl.m))
 	{	//Disable pet hatching in GvG grounds during Guild Wars [Skotlex]
-		clif_displaymessage(fd, "Pets are not allowed in Guild Wars.");
+		clif_displaymessage(fd, msg_txt(666));
 		return;
 	}
 	WFIFOHEAD(fd, MAX_INVENTORY * 2 + 4);
@@ -9161,7 +9161,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	{
 		if( battle_config.pet_no_gvg && map_flag_gvg(sd->bl.m) )
 		{	//Return the pet to egg. [Skotlex]
-			clif_displaymessage(sd->fd, "Pets are not allowed in Guild Wars.");
+			clif_displaymessage(sd->fd, msg_txt(666));
 			pet_menu(sd, 3); //Option 3 is return to egg.
 		}
 		else
@@ -11818,9 +11818,7 @@ void clif_parse_OpenVending(int fd, struct map_session_data* sd)
 	}
     
 	if( vending_checknearnpc(&sd->bl) ) {
-		char output[150];
-		sprintf(output,"You're too close to a NPC, you must be at least %d cells away from any NPC.",battle_config.min_npc_vending_distance);
-		clif_displaymessage(sd->fd, output);
+		clif_displaymessage(sd->fd, msg_txt(662));
 		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
 		return;
 	}

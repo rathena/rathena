@@ -552,7 +552,7 @@ ACMD_FUNC(jumpto)
 
 	if( pc_isdead(sd) )
 	{
-		clif_displaymessage(fd, "You cannot use this command when dead.");
+		clif_displaymessage(fd, msg_txt(664));
 		return -1;
 	}
 
@@ -583,7 +583,7 @@ ACMD_FUNC(jump)
 
 	if( pc_isdead(sd) )
 	{
-		clif_displaymessage(fd, "You cannot use this command when dead.");
+		clif_displaymessage(fd, msg_txt(664));
 		return -1;
 	}
 
@@ -1280,7 +1280,7 @@ ACMD_FUNC(alive)
 	nullpo_retr(-1, sd);
 	if (!status_revive(&sd->bl, 100, 100))
 	{
-		clif_displaymessage(fd, "You're not dead.");
+		clif_displaymessage(fd, msg_txt(667));
 		return -1;
 	}
 	clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,4,1);
@@ -2451,7 +2451,7 @@ ACMD_FUNC(memo)
 	if( !message || !*message || sscanf(message, "%d", &position) < 1 )
 	{
 		int i;
-		clif_displaymessage(sd->fd,  "Your actual memo positions are:");
+		clif_displaymessage(sd->fd,  msg_txt(668));
 		for( i = 0; i < MAX_MEMOPOINTS; i++ )
 		{
 			if( sd->status.memo_point[i].map )
