@@ -8917,66 +8917,61 @@ static void atcommand_get_suggestions(struct map_session_data* sd, const char *n
 	DBIterator* alias_iter;
 	AtCommandInfo* command_info = NULL;
 	AliasInfo* alias_info = NULL;
-	AtCommandType type;
+	AtCommandType type = atcommand ? COMMAND_ATCOMMAND : COMMAND_CHARCOMMAND;
+	char* full_match[MAX_SUGGESTIONS];
 	char* suggestions[MAX_SUGGESTIONS];
-	int count = 0;
-	
+	char* match;
+	int prefix_count = 0, full_count = 0;
+	bool can_use;
+
 	if (!battle_config.atcommand_suggestions_enabled)
 		return;
 
 	atcommand_iter = db_iterator(atcommand_db);
-	alias_iter = db_iterator(atcommand_alias_db);	
+	alias_iter = db_iterator(atcommand_alias_db);
 	
-	if (atcommand)
-		type = COMMAND_ATCOMMAND;
-	else
-		type = COMMAND_CHARCOMMAND;
-
-	
-	// First match the beginnings of the commands
-	for (command_info = dbi_first(atcommand_iter); dbi_exists(atcommand_iter) && count < MAX_SUGGESTIONS; command_info = dbi_next(atcommand_iter)) {
-		if ( strstr(command_info->command, name) == command_info->command && pc_can_use_command(sd, command_info->command, type) )
-		{
-			suggestions[count] = command_info->command;
-			++count;
+	// Build the matches
+	for (command_info = dbi_first(atcommand_iter); dbi_exists(atcommand_iter); command_info = dbi_next(atcommand_iter))     {
+		match = strstr(command_info->command, name);
+		can_use = pc_can_use_command(sd, command_info->command, type);
+		if ( prefix_count < MAX_SUGGESTIONS && match == command_info->command && can_use ) {
+			suggestions[prefix_count] = command_info->command;
+			++prefix_count;
 		}
-	}
-
-	for (alias_info = dbi_first(alias_iter); dbi_exists(alias_iter) && count < MAX_SUGGESTIONS; alias_info = dbi_next(alias_iter)) {
-		if ( strstr(alias_info->alias, name) == alias_info->alias && pc_can_use_command(sd, alias_info->command->command, type) )
-		{
-			suggestions[count] = alias_info->alias;
-			++count;
+		if ( full_count < MAX_SUGGESTIONS && match != NULL && match != command_info->command && can_use ) {
+			full_match[full_count] = command_info->command;
+			++full_count;
 		}
 	}
 	
-	// Fill up the space left, with full matches
-	for (command_info = dbi_first(atcommand_iter); dbi_exists(atcommand_iter) && count < MAX_SUGGESTIONS; command_info = dbi_next(atcommand_iter)) {
-		if ( strstr(command_info->command, name) != NULL && pc_can_use_command(sd, command_info->command, type) )
-		{
-			suggestions[count] = command_info->command;
-			++count;
+	for (alias_info = dbi_first(alias_iter); dbi_exists(alias_iter); alias_info = dbi_next(alias_iter)) {
+		match = strstr(alias_info->alias, name);
+		can_use = pc_can_use_command(sd, alias_info->command->command, type);
+		if ( prefix_count < MAX_SUGGESTIONS && match == alias_info->alias && can_use) {
+			suggestions[prefix_count] = alias_info->alias;
+			++prefix_count;
+		}
+		if ( full_count < MAX_SUGGESTIONS && match != NULL && match != alias_info->alias && can_use ) {
+			full_match[full_count] = alias_info->alias;
+			++full_count;
 		}
 	}
 
-	for (alias_info = dbi_first(alias_iter); dbi_exists(alias_iter) && count < MAX_SUGGESTIONS; alias_info = dbi_next(alias_iter)) {
-		if ( strstr(alias_info->alias, name) != NULL && pc_can_use_command(sd, alias_info->command->command, type) )
-		{
-			suggestions[count] = alias_info->alias;
-			++count;
-		}
-	}
-
-	if (count > 0)
-	{
+	if ((full_count+prefix_count) > 0) {
 		char buffer[512];
 		int i;
 
+		// Merge full match and prefix match results
+		if (prefix_count < MAX_SUGGESTIONS) {
+			memmove(&suggestions[prefix_count], full_match, sizeof(char*) * (MAX_SUGGESTIONS-prefix_count));
+			prefix_count = min(prefix_count+full_count, MAX_SUGGESTIONS);
+		}
+
+		// Build the suggestion string
 		strcpy(buffer, msg_txt(205));
 		strcat(buffer,"\n");
 		
-		for(i=0; i < count; ++i)
-		{
+		for(i=0; i < prefix_count; ++i) {
 			strcat(buffer,suggestions[i]);
 			strcat(buffer," ");
 		}
