@@ -30,7 +30,7 @@ CREATE TABLE `item_db_re` (
 ) ENGINE=MyISAM;
 
 # Renewal-Specific Database
-# specially for renewal-modified items, when compiled in REMODE entries in this file override item_db.txt and are overriden by item_db2.txt
+# specially for renewal-modified items, when compiled in RENEWAL entries in this file override item_db.txt and are overriden by item_db2.txt
 # 
 # Structure of Database:
 # REPLACE INTO `item_db_re` VALUES ('ID','Name','Name','Type','Price','Sell','Weight','ATK:MATK','DEF','Range','Slot','Job','Upper','Gender','Loc','wLV','eLV','Refineable','View','Script','OnEquip_Script','OnUnequip_Script');

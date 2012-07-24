@@ -11267,7 +11267,7 @@ BUILDIN_FUNC(getitemslots)
 	return 0;
 }
 
-// TODO: add matk here if needed/once we get rid of REMODE
+// TODO: add matk here if needed/once we get rid of RENEWAL
 
 /*==========================================
  * Returns some values of an item [Lupus]

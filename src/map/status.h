@@ -1525,7 +1525,7 @@ struct status_data {
 #endif
 		aspd_rate;
 	/**
-	 * defType is REMODE dependent and defined in src/map/config/data/const.h
+	 * defType is RENEWAL dependent and defined in src/map/config/data/const.h
 	 **/
 	defType def,mdef;
 
