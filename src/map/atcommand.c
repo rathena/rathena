@@ -6421,6 +6421,7 @@ ACMD_FUNC(adjgroup)
 	}
 	
 	sd->group_id = new_group;
+	pc_group_pc_load(sd);/* update cache */
 	clif_displaymessage(fd, "Group changed successfully.");
 	clif_displaymessage(sd->fd, "Your group has changed.");
 	return 0;
