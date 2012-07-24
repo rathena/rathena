@@ -2387,7 +2387,9 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	case RA_CLUSTERBOMB:
 	case RA_FIRINGTRAP:
 	case RA_ICEBOUNDTRAP:
-		clif_skill_damage((bl->type==BL_PC)?dsrc:src,bl,tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skillid,flag&SD_LEVEL?-1:skilllv, 5);
+		dmg.dmotion = clif_skill_damage(src,bl,tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skillid,flag&SD_LEVEL?-1:skilllv, 5);
+		if( dsrc != src ) // avoid damage display redundancy
+			break;
 	case HT_LANDMINE:
 		dmg.dmotion = clif_skill_damage(dsrc,bl,tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skillid, -1, type);
 		break;
