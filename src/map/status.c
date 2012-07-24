@@ -464,7 +464,7 @@ void initChangeTables(void) {
 	set_sc( CASH_INCAGI          , SC_INCREASEAGI     , SI_INCREASEAGI     , SCB_AGI|SCB_SPEED );
 	set_sc( CASH_ASSUMPTIO       , SC_ASSUMPTIO       , SI_ASSUMPTIO       , SCB_DEF|SCB_DEF2|SCB_MDEF|SCB_MDEF2 );
 
-	//set_sc( ALL_PARTYFLEE        , SC_INCFLEE         , SI_PARTYFLEE       , SCB_NONE );
+	set_sc( ALL_PARTYFLEE        , SC_PARTYFLEE       , SI_PARTYFLEE       , SCB_NONE );
 	set_sc( ALL_ODINS_POWER      , SC_ODINS_POWER     , SI_ODINS_POWER     , SCB_MATK|SCB_BATK|SCB_MDEF|SCB_DEF );
 
 	set_sc( CR_SHRINK            , SC_SHRINK          , SI_SHRINK          , SCB_NONE );
@@ -4577,6 +4577,8 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 		flee -= sc->data[SC_GATLINGFEVER]->val4;
 	if(sc->data[SC_SPEED])
 		flee += 10 + sc->data[SC_SPEED]->val1 * 10;
+	if(sc->data[SC_PARTYFLEE])
+		flee += sc->data[SC_PARTYFLEE]->val1 * 10;
 	if(sc->data[SC_MERC_FLEEUP])
 		flee += sc->data[SC_MERC_FLEEUP]->val2;
 	if(sc->data[SC_FEAR])

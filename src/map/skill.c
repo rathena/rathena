@@ -7245,6 +7245,19 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				skill_castend_nodamage_id);
 		}
 		break;
+	case ALL_PARTYFLEE:
+		if( sd  && !(flag&1) )
+		{
+			if( !sd->status.party_id ) 
+			{
+				clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
+				break;
+			}
+			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skillid, skilllv), src, skillid, skilllv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
+		}
+		else 
+			clif_skill_nodamage(src,bl,skillid,skilllv,sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
+		break;
 	case NPC_TALK:
 	case ALL_WEWISH:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
@@ -7577,6 +7590,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				case SC_STEALTHFIELD_MASTER: case SC_STEALTHFIELD:
 				case SC_LEADERSHIP:		case SC_GLORYWOUNDS:	case SC_SOULCOLD:
 				case SC_HAWKEYES:		case SC_GUILDAURA:	case SC_PUSH_CART:
+				case SC_PARTYFLEE:
 					continue;
 				case SC_ASSUMPTIO:
 					if( bl->type == BL_MOB )

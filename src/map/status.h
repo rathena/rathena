@@ -619,7 +619,8 @@ typedef enum sc_type {
 	SC_ERASER_CUTTER,
 	/* Max HP & SP */
 	SC_INCMHP,
-	SC_INCMSP,	
+	SC_INCMSP,
+	SC_PARTYFLEE, // 531
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;
 
@@ -939,7 +940,7 @@ enum si_type {
 //	SI_REUSE_LIMIT_F = 310,
 	SI_INVINCIBLE = 311,
 	SI_CASH_PLUSONLYJOBEXP = 312,
-//	SI_PARTYFLEE = 313,
+	SI_PARTYFLEE = 313,
 //	SI_ANGEL_PROTECT = 314,
 	SI_ENDURE_MDEF = 315,
 	SI_ENCHANTBLADE = 316,
