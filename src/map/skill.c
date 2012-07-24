@@ -11890,11 +11890,13 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 			case HT_SKIDTRAP:     case HT_LANDMINE:     case HT_ANKLESNARE:     case HT_SHOCKWAVE:
 			case HT_SANDMAN:      case HT_FLASHER:      case HT_FREEZINGTRAP:   case HT_BLASTMINE:
 			case HT_CLAYMORETRAP: case HT_SPRINGTRAP:   case RA_DETONATOR:      case RA_CLUSTERBOMB:
+			case HT_TALKIEBOX:	  case RA_FIRINGTRAP:	case RA_ICEBOUNDTRAP:
 			case RA_WUGDASH:      case RA_WUGRIDER:		case RA_WUGSTRIKE:
 				break;
 			default: // in official there is no message.
 				return 0;
 		}
+
 	}
 	if( pc_ismadogear(sd) ) {
 		switch( skill ) { //None Mado skills are unusable when Mado is equipped. [Jobbie]
