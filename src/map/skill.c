@@ -10363,6 +10363,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 		if( !(sc && sc->data[SC_POISONINGWEAPON]) )
 			return NULL;
 		val2 = sc->data[SC_POISONINGWEAPON]->val2; // Type of Poison
+		val3 = sc->data[SC_POISONINGWEAPON]->val1;
 		limit = 4000 + 2000 * skilllv;
 		break;
 	case GD_LEADERSHIP:
@@ -11216,7 +11217,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		 **/
 		case UNT_POISONSMOKE:
 			if( battle_check_target(ss,bl,BCT_ENEMY) > 0 && !(tsc && tsc->data[sg->val2]) && rnd()%100 < 20 )
-				sc_start(bl,sg->val2,100,sg->val1,skill_get_time2(GC_POISONINGWEAPON, 1));
+				sc_start(bl,sg->val2,100,sg->val3,skill_get_time2(GC_POISONINGWEAPON, 1));
 			break;
 
 		case UNT_EPICLESIS:
