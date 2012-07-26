@@ -2113,8 +2113,7 @@ array, shifting all the elements beyond this towards the beginning.
 *bindatcmd("command","<NPC object name>::<event label>"{,<atcommand level>,<charcommand level>});
 
 This command will bind a NPC event label to an atcommand. Upon execution of
-the atcommand, the user will invoke the NPC event label. Note that a hardcoded
-limit of bindings is set in /src/map/atcommand.h, with 100 as the default value.
+the atcommand, the user will invoke the NPC event label.
 
 Example:
 When a user types the command "@test", an angel effect will be shown.

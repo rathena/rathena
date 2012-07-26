@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Darkchild
 //===== Current Version: ===================================== 
-//= 2.3
+//= 2.4
 //===== Compatible With: ===================================== 
 //= rAthena SVN r15340+
 //===== Description: ========================================= 
@@ -17,6 +17,7 @@
 //= 2.1 Swapped use of baseclass for basejob. [L0ne_W0lf]
 //= 2.2 Added Quest Log commands. [Kisuka]
 //= 2.3 NPC "Esseray" calls Ex. Super Novice script when enabled. [Euphy]
+//= 2.4 Added an Ex. Super Novice dialog check. [Euphy]
 //============================================================ 
 
 aldeba_in,223,167,3	script	Tzerero#sn	709,{
@@ -328,6 +329,12 @@ aldeba_in,223,167,3	script	Tzerero#sn	709,{
 }
 
 aldeba_in,216,169,5	script	Esseray#sn	86,{
+	if (Class == Job_Super_Novice_E || Class == Job_Super_Baby_E) {
+		mes "[Esseray]";
+		mes "You! Stronger than before.";
+		mes "I knew you could pass the test~";
+		close;
+	}
 	if (BaseJob == Job_SuperNovice) {
 		if (is_function("Esseray_Ex")) callfunc "Esseray_Ex";
 		mes "[Esseray]";
