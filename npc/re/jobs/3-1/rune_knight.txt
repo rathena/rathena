@@ -9,10 +9,11 @@
 //= rAthena SVN
 //===== Description: =========================================
 //= Job change Quest from Knight / Lord Knight -> Rune Knight.
-//= Does not entirely support changing to Baby Third Class.
 //===== Additional Comments: =================================
 //= 1.0 First version.
 //= 1.1 Added forgoten Header. [Masao]
+//= 1.2 Added Energy Rune item reward after finishing the
+//= job change quest and changed an close2; to close; command. [Masao]
 //============================================================
 
 prt_in,162,24,3	script	Splendid-Looking Knight	470,{
@@ -622,6 +623,7 @@ job3_rune01,80,60,3	script	Rune Knight Captain	470,{
 					if (Class == Job_Baby_Knight) {
 						getitem 5746,1; //Rune_Circlet
 						getitem 2795,1; //Green_Apple_Ring
+						getitem 2140,1; //Energy_Rune
 						set job_rune_edq,23;
 						completequest 3219;
 						jobchange Job_Baby_Rune;
@@ -638,6 +640,7 @@ job3_rune01,80,60,3	script	Rune Knight Captain	470,{
 					else if (Class == Job_Knight) {
 						getitem 5746,1; //Rune_Circlet
 						getitem 2795,1; //Green_Apple_Ring
+						getitem 2140,1; //Energy_Rune
 						set job_rune_edq,23;
 						completequest 3219;
 						jobchange Job_Rune_Knight;
@@ -654,6 +657,7 @@ job3_rune01,80,60,3	script	Rune Knight Captain	470,{
 					else if (Class == Job_Lord_Knight) {
 						getitem 5746,1; //Rune_Circlet
 						getitem 2795,1; //Green_Apple_Ring
+						getitem 2140,1; //Energy_Rune
 						set job_rune_edq,23;
 						completequest 3219;
 						jobchange Job_Rune_Knight_T;
@@ -2343,8 +2347,7 @@ job3_rune01,50,36,1	script	Runes, Make & Use	844,{
 					next;
 					break;
 				case 5:
-					close2;
-					break;
+					close;
 				}
 				break;
 			case 3:

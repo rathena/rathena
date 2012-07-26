@@ -18,6 +18,7 @@
 //= it decreases the total points by 1 also commented the SC_STONE
 //= part until M_DESERT_WOLF_B Mercenary is fully working.
 //= 1.3 Fixed waves not being announced and counted [Elias]
+//= 1.3a Little beauty fix, changed break; to next; . [Masao]
 //============================================================
 
 tur_dun01,156,36,5	script	Survival Instructor#jr01	59,{
@@ -2979,9 +2980,8 @@ job3_rang01,90,43,3	script	Ranger Master#jr_29	832,{
 				}
 				mes "[Ranger Master, Neveragain]";
 				mes "Good. No falcon and you've used up all your skill points.";
-				break;
-			}else
-			{
+				next;
+			}else{
 				mes "[Ranger Master, Neveragain]";
 				mes "Didn't you dismiss your falcon??";
 				next;

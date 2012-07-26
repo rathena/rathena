@@ -17,6 +17,7 @@
 //= 1.3 Made some NPC's into duplicates and fixed some && / || checks. [Masao]
 //= 1.4 Fixed Job_Archbishop/Job_Archbishop_T typos. [Euphy]
 //= 1.5 Redone the whole Script. [Masao]
+//= 1.5a Fixed little typo in Baby Priest & Baby Arch Bishop checks. [Masao]
 //============================================================
 
 prt_church,103,88,3	script	Praying Minister#arch	60,{
@@ -836,10 +837,10 @@ job3_arch01,29,34,3	script	Valkyrie#arch	403,{
 		mes "- you put some items into Kafra Storage. -";
 		close;
 	}
-	if ((Class != Job_Priest) && (Class != Job_High_Priest) && (Class == Job_Baby_Priest)) {
+	if ((Class != Job_Priest) && (Class != Job_High_Priest) && (Class != Job_Baby_Priest)) {
 		warp "odin_tem02",282,263;
 	}
-	if (Class != Job_Arch_Bishop || Class != Job_Arch_Bishop_T || Class == Job_Baby_Bishop) {
+	if (Class != Job_Arch_Bishop || Class != Job_Arch_Bishop_T || Class != Job_Baby_Bishop) {
 		if (job_arch < 5) {
 			warp "odin_tem02",282,263;
 		}
