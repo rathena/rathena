@@ -865,6 +865,7 @@ int battle_calc_bg_damage(struct block_list *src, struct block_list *bl, int dam
 		case PA_PRESSURE:
 		case HW_GRAVITATION:
 		case NJ_ZENYNAGE:
+		case KO_MUCHANAGE:
 			break;
 		default:
 			if( flag&BF_SKILL )
@@ -930,6 +931,7 @@ int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int dama
 	case PA_PRESSURE:
 	case HW_GRAVITATION:
 	case NJ_ZENYNAGE:
+	case KO_MUCHANAGE:
 		break;
 	default:
 		/* Uncomment if you want god-mode Emperiums at 100 defense. [Kisuka]
@@ -2098,7 +2100,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 							short index = sd->equip_index[EQI_HAND_R];
 							if( index >= 0 && sd->inventory_data[index] 
 								&& sd->inventory_data[index]->type == IT_WEAPON )
-								skillratio += max(10000 - sd->inventory_data[index]->weight, 0);
+								skillratio += max(10000 - sd->inventory_data[index]->weight, 0) / 10;
 							skillratio += 50 * pc_checkskill(sd,LK_SPIRALPIERCE);
 						} // (1 + [(Caster’s Base Level - 100) / 200])
 						skillratio = skillratio * (100 + (status_get_lv(src)-100) / 2) / 100;
@@ -2478,6 +2480,19 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				case EL_ROCK_CRUSHER:
 					skillratio += 700;
 					break;
+				case KO_JYUMONJIKIRI:
+					if( tsc && tsc->data[SC_JYUMONJIKIRI] )
+						wd.div_ = wd.div_ * -1;// needs more info
+					skillratio += -100 + 150 * skill_lv;
+				case KO_HUUMARANKA:
+					skillratio += -100 + 150 * skill_lv + sstatus->dex/2 + sstatus->agi/2; // needs more info
+					break;
+				case KO_SETSUDAN:
+					skillratio += 100 * (skill_lv-1);
+					break;
+				case KO_BAKURETSU:
+					skillratio = 50 * skill_lv * (sd?pc_checkskill(sd,NJ_TOBIDOUGU):10);
+					break;
 				case MH_STAHL_HORN:
 					skillratio += 500 + 100 * skill_lv;
 					break;
@@ -2550,6 +2565,12 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 						ATK_ADD( (tsd->weight/10) * sstatus->dex / 120 );
 					}else{
 						ATK_ADD( status_get_lv(target) * 50 ); //mobs
+					}
+					break;
+				case KO_SETSUDAN:
+					if( tsc && tsc->data[SC_SPIRIT] ){
+						ATK_ADDRATE(10*tsc->data[SC_SPIRIT]->val1);// +10% custom value.
+						status_change_end(target,SC_SPIRIT,INVALID_TIMER);
 					}
 					break;
 			}
@@ -3117,14 +3138,18 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		{	//Dual-wield
 			if (wd.damage)
 			{
-				skill = pc_checkskill(sd,AS_RIGHT);
-				wd.damage = wd.damage * (50 + (skill * 10))/100;
+				if( skill = pc_checkskill(sd,AS_RIGHT) )
+					wd.damage = wd.damage * (50 + (skill * 10))/100;
+				else if( skill = pc_checkskill(sd,KO_RIGHT) )
+					wd.damage = wd.damage * (70 + (skill * 10))/100;
 				if(wd.damage < 1) wd.damage = 1;
 			}
 			if (wd.damage2)
 			{
-				skill = pc_checkskill(sd,AS_LEFT);
-				wd.damage2 = wd.damage2 * (30 + (skill * 10))/100;
+				if( skill = pc_checkskill(sd,AS_LEFT) )
+					wd.damage2 = wd.damage2 * (30 + (skill * 10))/100;
+				else if( skill = pc_checkskill(sd,KO_LEFT) )
+					wd.damage2 = wd.damage2 * (50 + (skill * 10))/100;
 				if(wd.damage2 < 1) wd.damage2 = 1;
 			}
 		} else if(sd->status.weapon == W_KATAR && !skill_num)
@@ -3505,9 +3530,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case WZ_SIGHTRASHER:
 						skillratio += 20*skill_lv;
 						break;
-					case WZ_VERMILION:
-						skillratio += 20*skill_lv-20;
-						break;
 					case WZ_WATERBALL:
 						skillratio += 30*skill_lv;
 						break;
@@ -3541,11 +3563,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case NJ_RAIGEKISAI:
 						skillratio += 60 + 40*skill_lv;
 						break;
-				#ifdef RENEWAL
-					case NJ_HUUJIN:
-						skillratio += 50;
-						break;
-				#endif
 					case NJ_KAMAITACHI:
 					case NPC_ENERGYDRAIN:
 						skillratio += 100*skill_lv;
@@ -3553,6 +3570,31 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case NPC_EARTHQUAKE:
 						skillratio += 100 +100*skill_lv +100*(skill_lv/2);
 						break;
+				#ifdef RENEWAL
+					case WZ_HEAVENDRIVE:
+					case WZ_METEOR:
+						skillratio += 25;
+						break;
+					case WZ_VERMILION:
+						{
+    						int interval = 0, per = interval , ratio = per;
+    						while( (per++) < skill_lv ){
+     							ratio += interval; 
+     							if(per%3==0) interval += 20;
+    						}
+							if( skill_lv > 9 )
+								ratio -= 10;
+							skillratio += ratio;
+						}
+						break;
+					case NJ_HUUJIN:
+						skillratio += 50;
+						break;
+				#else	
+					case WZ_VERMILION:
+						skillratio += 20*skill_lv-20;
+						break;
+				#endif
 					/**
 					 * Arch Bishop
 					 **/
@@ -4068,13 +4110,14 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			md.damage = INT_MAX>>1;
 		break;
 	case NJ_ZENYNAGE:
-		md.damage = skill_get_zeny(skill_num ,skill_lv);
-		if (!md.damage) md.damage = 2;
-		md.damage = md.damage + rnd()%md.damage;
-		if (is_boss(target))
-			md.damage=md.damage/3;
-		else if (tsd)
-			md.damage=md.damage/2;
+	case KO_MUCHANAGE:
+			md.damage = skill_get_zeny(skill_num ,skill_lv);
+			if (!md.damage) md.damage = 2;
+			md.damage = rand()%md.damage + md.damage / (skill_num==NJ_ZENYNAGE?1:2) ;
+			if (is_boss(target))
+				md.damage=md.damage / (skill_num==NJ_ZENYNAGE?3:2);
+			else if (tsd) // need confirmation for KO_MUCHANAGE
+				md.damage=md.damage/2;
 		break;
 	case GS_FLING:
 		md.damage = sd?sd->status.job_level:status_get_lv(src);
@@ -4127,6 +4170,14 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	case GN_HELLS_PLANT_ATK:
 		//[{( Hell Plant Skill Level x Caster’s Base Level ) x 10 } + {( Caster’s INT x 7 ) / 2 } x { 18 + ( Caster’s Job Level / 4 )] x ( 5 / ( 10 - Summon Flora Skill Level ))
 		md.damage = ( skill_lv * status_get_lv(src) * 10 ) + ( sstatus->int_ * 7 / 2 ) * ( 18 + (sd?sd->status.job_level:0) / 4 ) * ( 5 / (10 - (sd?pc_checkskill(sd,AM_CANNIBALIZE):0)) ); 
+		break;
+	case KO_HAPPOKUNAI:
+		{
+			struct Damage wd = battle_calc_weapon_attack(src,target,skill_num,skill_lv,mflag);
+			short totaldef = tstatus->def2 + (short)status_get_def(target);
+			md.damage = wd.damage * 60 * (5 + skill_lv) / 100;
+			md.damage -= totaldef;
+		}
 		break;
 	}
 

@@ -706,6 +706,8 @@ void initChangeTables(void) {
 	set_sc( EL_TIDAL_WEAPON    , SC_TIDAL_WEAPON_OPTION  , SI_TIDAL_WEAPON_OPTION  , SCB_ALL );
 	set_sc( EL_ROCK_CRUSHER    , SC_ROCK_CRUSHER         , SI_ROCK_CRUSHER         , SCB_DEF );
 	set_sc( EL_ROCK_CRUSHER_ATK, SC_ROCK_CRUSHER_ATK     , SI_ROCK_CRUSHER_ATK     , SCB_SPEED );	
+	add_sc( KO_YAMIKUMO			, SC_HIDING		  );
+	set_sc( KO_JYUMONJIKIRI		, SC_JYUMONJIKIRI		 , SI_KO_JYUMONJIKIRI	   , SCB_NONE );
 	
 	add_sc( MH_STAHL_HORN		 , SC_STUN            );
 	set_sc( MH_ANGRIFFS_MODUS	 , SC_ANGRIFFS_MODUS  , SI_ANGRIFFS_MODUS	, SCB_BATK|SCB_WATK|SCB_DEF|SCB_FLEE );
@@ -1637,6 +1639,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 			case RG_RAID:
 			case NJ_SHADOWJUMP:
 			case NJ_KIRIKAGE:
+			case KO_YAMIKUMO:
 				break;
 			default:
 				//Non players can use all skills while hidden.

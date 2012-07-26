@@ -91,6 +91,7 @@
 488,0xb9,    ,  3, 0,  -1,all,   0x200	//CG_HERMODE
 516,0x86,    ,  3, 0, 100,enemy, 0x000	//GS_DESPERADO
 521,0xbe,    ,  0, 1,1000,enemy, 0x000	//GS_GROUNDDRIFT
+525,0x86,    ,  0, 2, 100,enemy, 0x018	//NJ_HUUMA
 527,0xbc,    , -1, 0,2000,enemy, 0x018	//NJ_TATAMIGAESHI
 535,0xbd,    , -1, 0,  20,enemy, 0x010	//NJ_KAENSIN
 538,0xbb,    ,  1:1:1:2:2:2:3:3:3:4,0,-1,all,0x010	//NJ_SUITON
@@ -147,6 +148,9 @@
 2487,0xe8,    ,  0, 3,1000,enemy, 0x000	//GN_FIRE_EXPANSION_SMOKE_POWDER
 2488,0xe9,    ,  0, 3,1000,enemy, 0x000	//GN_FIRE_EXPANSION_TEAR_GAS
 2490,0xea,    ,  0, 1,1000,enemy, 0x000	//GN_HELLS_PLANT
+
+3006,0x86,    ,  0, 2, 100,enemy, 0x018	//KO_BAKURETSU
+3008,0x86,    ,  0, 2, 100,enemy, 0x018	//KO_MUCHANAGE
 
 8020,0xf5,    ,  0, 3,2300:2100:1900:1700:1500,enemy,   0x018	//MH_POISON_MIST
 8033,0x7e,    ,  0, 0,  -1,all,   0x003	//MH_STEINWAND 

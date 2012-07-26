@@ -621,6 +621,19 @@ typedef enum sc_type {
 	SC_INCMHP,
 	SC_INCMSP,
 	SC_PARTYFLEE, // 531
+	/**
+	* Kagerou & Oboro [malufett]
+	**/
+	SC_MEIKYOUSISUI,
+	SC_JYUMONJIKIRI,
+	SC_KYOUGAKU,
+	SC_IZAYOI,
+	SC_KAGEHUMI,
+	SC_KYOMU,
+	SC_KAGEMUSYA,
+	SC_ZANGETSU,
+	SC_OBOROGENSOU,
+
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;
 

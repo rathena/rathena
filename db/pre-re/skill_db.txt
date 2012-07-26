@@ -1007,6 +1007,17 @@
 2536,0,0,4,0,0x1,0,1,0,no,0,0,0,none,0,	ALL_GUARDIAN_RECALL,Guardian's Recall
 //2537,9,6,16,0,0x1,0,2,1,yes,0,0,0,magic,0,	ALL_ODINS_POWER,Odin's Power
 
+//****
+// Kagerou & Oboro
+3001,0,6,4,0,0,0,1,1,no,0,0,0,none,0,		KO_YAMIKUMO,Yamikumo
+3002,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,		KO_RIGHT,Right Hand Mastery
+3003,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,		KO_LEFT,Left Hand Mastery
+3004,3:4:5:6:7,8,1,-1,0,0,5,-2,no,0,0,0,weapon,0,	KO_JYUMONJIKIRI,Cross Strike
+3005,2,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,		KO_SETSUDAN,Soul Sever
+3006,7:8:9:10:11,6,2,0,0x2,0,5,0,no,0,0,0,weapon,0,	KO_BAKURETSU,Bakuretsu Kunai
+3007,0,6,4,-1,0x42,4:4:4:4:5,5,0,no,0,0,0,misc,0,	KO_HAPPOKUNAI,Happo Kunai
+3008,9,8,2,0,0x52,0,10,-10,no,0,0,0,misc,0,	KO_MUCHANAGE,Mucha Nage
+
 8001,9,6,4,0,0x1,0,5,1,no,0,0,0,magic,0,	HLIF_HEAL,Healing Touch
 8002,0,6,4,0,0x3,-1,5,1,no,0,0,0,none,0,	HLIF_AVOID,Avoid
 8003,0,0,0,0,0,1,5,0,no,0,0,0,none,0,		HLIF_BRAIN,Brain Surgery
