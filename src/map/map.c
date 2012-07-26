@@ -3904,7 +3904,7 @@ int do_init(int argc, char *argv[])
 		char ip_str[16];
 		ip2str(addr_[0], ip_str);
 
-		ShowError("Not all IP addresses in map_athena.conf configured, autodetecting...\n");
+		ShowWarning("Not all IP addresses in map_athena.conf configured, autodetecting...\n");
 
 		if (naddr_ == 0)
 			ShowError("Unable to determine your IP address...\n");

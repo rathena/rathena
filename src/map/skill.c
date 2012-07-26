@@ -13442,16 +13442,16 @@ void skill_repairweapon (struct map_session_data *sd, int idx)
 	if(idx < 0 || idx >= MAX_INVENTORY)
 		return; //Invalid index??
 
-   item = &target_sd->status.inventory[idx];
+	item = &target_sd->status.inventory[idx];
 	if(item->nameid <= 0 || item->attribute == 0)
 		return; //Again invalid item....
 
 	if(sd!=target_sd && !battle_check_range(&sd->bl,&target_sd->bl,skill_get_range2(&sd->bl, sd->menuskill_id,pc_checkskill(sd, sd->menuskill_id)))){
-		clif_item_repaireffect(sd,item->nameid,1);
+		clif_item_repaireffect(sd,idx,1);
 		return;
 	}
 
-	if (itemdb_type(item->nameid)==IT_WEAPON)
+	if ( sd->inventory_data[idx]->type == IT_WEAPON)
 		material = materials [itemdb_wlv(item->nameid)-1]; // Lv1/2/3/4 weapons consume 1 Iron Ore/Iron/Steel/Rough Oridecon
 	else
 		material = materials [2]; // Armors consume 1 Steel
@@ -13463,9 +13463,9 @@ void skill_repairweapon (struct map_session_data *sd, int idx)
 	item->attribute=0;
 	clif_equiplist(target_sd);
 	pc_delitem(sd,pc_search_inventory(sd,material),1,0,0,LOG_TYPE_CONSUME);
-	clif_item_repaireffect(sd,item->nameid,0);
+	clif_item_repaireffect(sd,idx,0);
 	if(sd!=target_sd)
-		clif_item_repaireffect(target_sd,item->nameid,0);
+		clif_item_repaireffect(target_sd,idx,0);
 }
 
 /*==========================================
