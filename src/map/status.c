@@ -1992,6 +1992,8 @@ int status_calc_mob_(struct mob_data* md, bool first)
 		if (mstatus &&
 			battle_config.slaves_inherit_speed&(mstatus->mode&MD_CANMOVE?1:2))
 			status->speed = mstatus->speed;
+		if( status->speed < 2 ) /* minimum for the unit to function properly */
+			status->speed = 2;
 	}
 
 	if (flag&16 && mbl)
