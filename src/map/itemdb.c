@@ -761,7 +761,7 @@ int itemdb_combo_split_atoi (char *str, int *val) {
 /**
  * <combo{:combo{:combo:{..}}}>,<{ script }>
  **/
-void itemdb_read_combos(DBMap* item_combo_db) {
+void itemdb_read_combos() {
 	uint32 lines = 0, count = 0;
 	char line[1024];
 	
@@ -821,38 +821,73 @@ void itemdb_read_combos(DBMap* item_combo_db) {
 		} else {
 			int items[MAX_ITEMS_PER_COMBO];
 			int v = 0, retcount = 0;
-			struct item_combo * ic = NULL;
-			char combo_out[2048];
-			int len = 0, slen = 0;
-			bool exists = false;
+			struct item_data * id = NULL;
+			int idx = 0;
 			
 			if((retcount = itemdb_combo_split_atoi(str[0], items)) < 2) {
 				ShowError("itemdb_read_combos: line %d of \"%s\" doesn't have enough items to make for a combo (min:2), skipping.\n", lines, path);
 				continue;
 			}
 			
-			if ((ic = idb_get(item_combo_db, items[0])) != NULL) {
-				slen = strlen(ic->script);
-				exists = true;
+			/* validate */
+			for(v = 0; v < retcount; v++) {
+				if( !itemdb_exists(items[v]) ) {
+					ShowError("itemdb_read_combos: line %d of \"%s\" contains unknown item ID %d, skipping.\n", lines, path,items[v]);
+					break;
+				}
+			}
+			/* failed at some item */
+			if( v < retcount )
+				continue;
+
+			id = itemdb_exists(items[0]);
+			
+			idx = id->combos_count;
+			
+			/* first entry, create */
+			if( id->combos == NULL ) {
+				CREATE(id->combos, struct item_combo*, 1);
+				id->combos_count = 1;
 			} else {
-				CREATE(ic, struct item_combo, 1);
+				RECREATE(id->combos, struct item_combo*, ++id->combos_count);
 			}
 			
-			len += sprintf(combo_out + len, "if(isequipped(");
+			CREATE(id->combos[idx],struct item_combo,1);
 			
-			/* we skip the first for its not a required check */
-			for(v = 1; v < retcount; v++) {
-				len += sprintf(combo_out + len, "%d,", items[v]);
+			id->combos[idx]->nameid = aMalloc( retcount * sizeof(unsigned short) );
+			id->combos[idx]->count = retcount;
+			id->combos[idx]->script = parse_script(str[1], path, lines, 0);
+			id->combos[idx]->id = count;
+			id->combos[idx]->isRef = false;
+			/* populate ->nameid field */
+			for( v = 0; v < retcount; v++ ) {
+				id->combos[idx]->nameid[v] = items[v];
 			}
 			
-			len += sprintf(combo_out + len - 1, "))%s", str[1]);
-						
-			safestrncpy(ic->script + slen, combo_out, len);
-			
-			if (!exists) {
-				ic->nameid = items[0];
-				idb_put(item_combo_db, items[0], ic);
+			/* populate the children to refer to this combo */
+			for( v = 1; v < retcount; v++ ) {
+				struct item_data * it = NULL;
+				int index;
+				
+				it = itemdb_exists(items[v]);
+				
+				index = it->combos_count;
+				
+				if( it->combos == NULL ) {
+					CREATE(it->combos, struct item_combo*, 1);
+					it->combos_count = 1;
+				} else {
+					RECREATE(it->combos, struct item_combo*, ++it->combos_count);
+				}
+				
+				CREATE(it->combos[index],struct item_combo,1);
+				
+				/* we copy previously alloc'd pointers and just set it to reference */
+				memcpy(it->combos[index],id->combos[idx],sizeof(struct item_combo));
+				/* we flag this way to ensure we don't double-dealloc same data */
+				it->combos[index]->isRef = true;
 			}
+			
 		}
 		
 		count++;
@@ -915,8 +950,7 @@ void itemdb_re_split_atoi(char *str, int *atk, int *matk) {
 /*==========================================
  * processes one itemdb entry
  *------------------------------------------*/
-static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scriptopt, char *comboScript)
-{
+static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scriptopt) {
 	/*
 		+----+--------------+---------------+------+-----------+------------+--------+--------+---------+-------+-------+------------+-------------+---------------+-----------------+--------------+-------------+------------+------+--------+--------------+----------------+
 		| 00 |      01      |       02      |  03  |     04    |     05     |   06   |   07   |    08   |   09  |   10  |     11     |      12     |       13      |        14       |      15      |      16     |     17     |  18  |   19   |      20      |        21      |
@@ -1013,42 +1047,21 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 	id->view_id = 0;
 	id->sex = itemdb_gendercheck(id); //Apply gender filtering.
 
-	if (id->script)
-	{
+	if (id->script) {
 		script_free_code(id->script);
 		id->script = NULL;
 	}
-	if (id->equip_script)
-	{
+	if (id->equip_script) {
 		script_free_code(id->equip_script);
 		id->equip_script = NULL;
 	}
-	if (id->unequip_script)
-	{
+	if (id->unequip_script) {
 		script_free_code(id->unequip_script);
 		id->unequip_script = NULL;
 	}
 
-	if (*str[19]) {
-		char *scriptCode = str[19];
-
-		if ( comboScript ) {
-			char *script1 = str[19];
-
-			while (*script1++ != '{');
-
-			scriptCode = (char *)aMalloc(strlen(script1) + strlen(comboScript) + 2); // +2 = {\0
-			sprintf(scriptCode, "{%s%s", comboScript, script1);
-		}
-
-		id->script = parse_script(scriptCode, source, line, scriptopt);
-		
-		if( comboScript )
-			aFree(scriptCode);
-
-	} else if ( comboScript )
-		id->script = parse_script(comboScript, source, line, scriptopt);
-	
+	if (*str[19])
+		id->script = parse_script(str[19], source, line, scriptopt);
 	if (*str[20])
 		id->equip_script = parse_script(str[20], source, line, scriptopt);
 	if (*str[21])
@@ -1067,9 +1080,6 @@ static int itemdb_readdb(void)
 		"item_db2.txt" };
 
 	int fi;
-	DBMap* item_combo_db = idb_alloc(DB_OPT_RELEASE_DATA);
-	
-	itemdb_read_combos(item_combo_db);
 
 	for( fi = 0; fi < ARRAYLENGTH(filename); ++fi ) {
 		uint32 lines = 0, count = 0;
@@ -1090,8 +1100,6 @@ static int itemdb_readdb(void)
 		{
 			char *str[32], *p;
 			int i;
-			struct item_combo *ic = NULL;
-			char *script2 = NULL;
 			lines++;
 			if(line[0] == '/' && line[1] == '/')
 				continue;
@@ -1165,15 +1173,8 @@ static int itemdb_readdb(void)
 				continue;
 			}
 
-			if ((ic = idb_get(item_combo_db, atoi(str[0])))) {
-				script2 = ic->script;
-			}
-			
-			if (!itemdb_parse_dbrow(str, path, lines, 0, script2))
+			if (!itemdb_parse_dbrow(str, path, lines, 0))
 				continue;
-
-			if( script2 != NULL )
-				idb_remove(item_combo_db,atoi(str[0]));
 			
 			count++;
 		}
@@ -1182,22 +1183,6 @@ static int itemdb_readdb(void)
 
 		ShowStatus("Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, filename[fi]);
 	}
-
-	if( db_size(item_combo_db) ) {
-		DBIterator * iter = db_iterator(item_combo_db);
-		struct item_combo * ic = NULL;
-		int icount = 1;
-		/* non-processed entries */
-		ShowWarning("item_combo_db: There are %d unused entries in the file (combo(s) with non-available item IDs)\n",db_size(item_combo_db));
-		
-		for( ic = dbi_first(iter); dbi_exists(iter); ic = dbi_next(iter) ) {
-			ShowWarning("item_combo_db(%d): (ID:%d) \"%s\" combo unused\n",icount++,ic->nameid,ic->script);
-		}
-
-		dbi_destroy(iter);
-	}
-	
-	db_destroy(item_combo_db);
 
 	return 0;
 }
@@ -1238,7 +1223,7 @@ static int itemdb_read_sqldb(void)
 				if( str[i] == NULL ) str[i] = dummy; // get rid of NULL columns
 			}
 
-			if (!itemdb_parse_dbrow(str, item_db_name[fi], lines, SCRIPT_IGNORE_EXTERNAL_BRACKETS, NULL))
+			if (!itemdb_parse_dbrow(str, item_db_name[fi], lines, SCRIPT_IGNORE_EXTERNAL_BRACKETS))
 				continue;
 			++count;
 		}
@@ -1261,7 +1246,8 @@ static void itemdb_read(void) {
 		itemdb_read_sqldb();
 	else
 		itemdb_readdb();
-
+	
+	itemdb_read_combos();
 	itemdb_read_itemgroup();
 	sv_readdb(db_path, "item_avail.txt",         ',', 2, 2, -1, &itemdb_read_itemavail);
 	sv_readdb(db_path, DBPATH"item_noequip.txt", ',', 2, 2, -1, &itemdb_read_noequip);
@@ -1287,6 +1273,17 @@ static void destroy_item_data(struct item_data* self, int free_self)
 		script_free_code(self->equip_script);
 	if( self->unequip_script )
 		script_free_code(self->unequip_script);
+	if( self->combos_count ) {
+		int i;
+		for( i = 0; i < self->combos_count; i++ ) {
+			if( !self->combos[i]->isRef ) {
+				aFree(self->combos[i]->nameid);
+				script_free_code(self->combos[i]->script);
+			}
+			aFree(self->combos[i]);
+		}
+		aFree(self->combos);
+	}
 #if defined(DEBUG)
 	// trash item
 	memset(self, 0xDD, sizeof(struct item_data));
@@ -1358,10 +1355,20 @@ void itemdb_reload(void)
 
 	// readjust itemdb pointer cache for each player
 	iter = mapit_geteachpc();
-	for( sd = (struct map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (struct map_session_data*)mapit_next(iter) )
-	{
+	for( sd = (struct map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (struct map_session_data*)mapit_next(iter) ) {
 		memset(sd->item_delay, 0, sizeof(sd->item_delay));  // reset item delays
 		pc_setinventorydata(sd);
+		/* clear combo bonuses */
+		if( sd->combos.count ) {
+			aFree(sd->combos.bonus);
+			aFree(sd->combos.id);
+			sd->combos.bonus = NULL;
+			sd->combos.id = NULL;
+			sd->combos.count = 0;
+			if( pc_load_combo(sd) > 0 )
+				status_calc_pc(sd,0);
+		}
+
 	}
 	mapit_free(iter);
 }

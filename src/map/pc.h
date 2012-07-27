@@ -454,6 +454,12 @@ struct map_session_data {
 	unsigned int npc_idle_tick;
 #endif
 
+	struct {
+		struct script_code **bonus;/* the script */
+		unsigned short *id;/* array of combo ids */
+		unsigned char count;
+	} combos;
+	
 	/**
 	 * Guarantees your friend request is legit (for bugreport:4629)
 	 **/
@@ -909,4 +915,7 @@ void pc_overheat(struct map_session_data *sd, int val);
 int pc_banding(struct map_session_data *sd, short skill_lv);
 
 void pc_itemcd_do(struct map_session_data *sd, bool load);
+
+int pc_load_combo(struct map_session_data *sd);
+
 #endif /* _PC_H_ */

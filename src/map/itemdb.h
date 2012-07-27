@@ -129,8 +129,7 @@ struct item_data {
 		unsigned autoequip: 1;
 		unsigned buyingstore : 1;
 	} flag;
-	struct
-	{// item stacking limitation
+	struct {// item stacking limitation
 		unsigned short amount;
 		unsigned int inventory:1;
 		unsigned int cart:1;
@@ -138,6 +137,9 @@ struct item_data {
 		unsigned int guildstorage:1;
 	} stack;
 	short gm_lv_trade_override;	//GM-level to override trade_restriction
+	/* bugreport:309 */
+	struct item_combo **combos;
+	unsigned char combos_count;
 };
 
 struct item_group {
@@ -146,8 +148,11 @@ struct item_group {
 };
 
 struct item_combo {
-	char script[2048]; /* combo script */
-	short nameid;/* id of the first */
+	struct script_code *script;
+	unsigned short *nameid;/* nameid array */
+	unsigned char count;
+	unsigned short id;/* id of this combo */
+	bool isRef;/* whether this struct is a reference or the master */
 };
 
 struct item_data* itemdb_searchname(const char *name);

@@ -2254,14 +2254,12 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			pc_inventory_rental_clear(sd);
 			pc_delspiritball(sd,sd->spiritball,1);
 
-			if( sd->reg )
-			{	//Double logout already freed pointer fix... [Skotlex]
+			if( sd->reg ) {	//Double logout already freed pointer fix... [Skotlex]
 				aFree(sd->reg);
 				sd->reg = NULL;
 				sd->reg_num = 0;
 			}
-			if( sd->regstr )
-			{
+			if( sd->regstr ) {
 				int i;
 				for( i = 0; i < sd->regstr_num; ++i )
 					if( sd->regstr[i].data )
@@ -2270,11 +2268,15 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				sd->regstr = NULL;
 				sd->regstr_num = 0;
 			}
-			if( sd->st && sd->st->state != RUN )
-			{// free attached scripts that are waiting
+			if( sd->st && sd->st->state != RUN ) {// free attached scripts that are waiting
 				script_free_state(sd->st);
 				sd->st = NULL;
 				sd->npc_id = 0;
+			}
+			if( sd->combos.count ) {
+				aFree(sd->combos.bonus);
+				aFree(sd->combos.id);
+				sd->combos.count = 0;
 			}
 			break;
 		}

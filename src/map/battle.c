@@ -3126,34 +3126,28 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			return wd;
 	}
 
-	if (sd)
-	{
-		if (!flag.rh && flag.lh) 
-		{	//Move lh damage to the rh
+	if (sd) {
+		if (!flag.rh && flag.lh) {	//Move lh damage to the rh
 			wd.damage = wd.damage2;
 			wd.damage2 = 0;
 			flag.rh=1;
 			flag.lh=0;
-		} else if(flag.rh && flag.lh)
-		{	//Dual-wield
-			if (wd.damage)
-			{
-				if( skill = pc_checkskill(sd,AS_RIGHT) )
+		} else if(flag.rh && flag.lh) {	//Dual-wield
+			if (wd.damage) {
+				if( (skill = pc_checkskill(sd,AS_RIGHT)) )
 					wd.damage = wd.damage * (50 + (skill * 10))/100;
-				else if( skill = pc_checkskill(sd,KO_RIGHT) )
+				else if( (skill = pc_checkskill(sd,KO_RIGHT)) )
 					wd.damage = wd.damage * (70 + (skill * 10))/100;
 				if(wd.damage < 1) wd.damage = 1;
 			}
-			if (wd.damage2)
-			{
-				if( skill = pc_checkskill(sd,AS_LEFT) )
+			if (wd.damage2) {
+				if( (skill = pc_checkskill(sd,AS_LEFT)) )
 					wd.damage2 = wd.damage2 * (30 + (skill * 10))/100;
-				else if( skill = pc_checkskill(sd,KO_LEFT) )
+				else if( (skill = pc_checkskill(sd,KO_LEFT)) )
 					wd.damage2 = wd.damage2 * (50 + (skill * 10))/100;
 				if(wd.damage2 < 1) wd.damage2 = 1;
 			}
-		} else if(sd->status.weapon == W_KATAR && !skill_num)
-		{ //Katars (offhand damage only applies to normal attacks, tested on Aegis 10.2)
+		} else if(sd->status.weapon == W_KATAR && !skill_num) { //Katars (offhand damage only applies to normal attacks, tested on Aegis 10.2)
 			skill = pc_checkskill(sd,TF_DOUBLE);
 			wd.damage2 = wd.damage * (1 + (skill * 2))/100;
 

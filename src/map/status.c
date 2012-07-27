@@ -2507,7 +2507,16 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 				return 1;
 		}
 	}
-
+	
+	/* we've got combos to process */
+	if( sd->combos.count ) {
+		for( i = 0; i < sd->combos.count; i++ ) {
+			run_script(sd->combos.bonus[i],0,sd->bl.id,0);
+			if (!calculating) //Abort, run_script retriggered this.
+				return 1;
+		}
+	}
+	
 	//Store equipment script bonuses 
 	memcpy(sd->param_equip,sd->param_bonus,sizeof(sd->param_equip));
 	memset(sd->param_bonus, 0, sizeof(sd->param_bonus));
