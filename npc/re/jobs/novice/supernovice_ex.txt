@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Euphy
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.1a
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //= 1.0 All dialogue is custom, contains some incorrect behaviors.
 //= 1.1 Switched to a translated copy of the official script
 //=     by Gennosuke Kouga, but vastly edited its content. [Euphy]
+//= 1.1a Replaced effect numerics with constants. [Euphy]
 //============================================================ 
 
 function	script	Esseray_Ex	{
@@ -466,9 +467,9 @@ beach_dun2,119,92,4	script	Fishing Novice#sp2	567,{
 			mes "I can't make you stronger until you use those points.";
 			close;
 		}
-		specialeffect2 90;
-		specialeffect2 62;
-		specialeffect2 89;
+		specialeffect2 EF_LORD;
+		specialeffect2 EF_SIGHTRASHER;
+		specialeffect2 EF_STORMGUST;
 		erasequest 5100;
 		mes "[Nodor]";
 		mes "Haha ------------- !!";
@@ -568,7 +569,7 @@ beach_dun2,119,92,4	script	Fishing Novice#sp2	567,{
 		mes "[Nodor]";
 		mes "Now I am going to say greetings again.";
 		next;
-		specialeffect2 78;
+		specialeffect2 EF_RECOVERY;
 		mes "[Nodor]";
 		mes "Let Super Novice "+strcharinfo(0)+" be blessed with the Super Novice Guardian!";
 		set EXSUPNOV_Q,6;

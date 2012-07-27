@@ -3,17 +3,18 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
 //= Changes your hair style, hair color, and cloth color.
+//===== Additional Comments: =================================  
+//= 1.1 Switched to 'getbattleflag', credits to Saithis. [Euphy]
 //============================================================
 
 prontera,170,180,1	script	Stylist#custom_stylist	122,{
 
-	setarray .@Styles[1],553,37,250;	// Maximum dye, hair style, and hair color
-
+	setarray .@Styles[1],getbattleflag("max_cloth_color"),getbattleflag("max_hair_style"),getbattleflag("max_hair_color");
 	setarray .@Look[1],7,1,6;
 	set .@s, select(" ~ Cloth color: ~ Hairstyle: ~ Hair color");
 	set .@Revert, getlook(.@Look[.@s]); set .@Style,1;
