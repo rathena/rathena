@@ -4,7 +4,7 @@
 //= Masao
 //= Credits: Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= Any rAthena SVN
 //===== Description: ========================================= 
@@ -12,7 +12,8 @@
 //= Job change Quest from Bard / Clown -> Minstrel.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
-//= 1.1 Fix the checking of requirements before job change to Minstel - [JayPee]
+//= 1.1 Fix the checking of requirements before job change to Minstel [JayPee]
+//= 1.2 Optimized. [Euphy]
 //============================================================
 
 alberta,196,133,4	script	Bard#job_min	486,{
@@ -521,12 +522,7 @@ hu_in01,361,103,3	script	Tone-deaf person	995,{
 		mes "- that such sounds could -";
 		mes "- be made from humans. -";
 		next;
-		switch(select("You move to other side.:Keep listening.")){
-		case 1:
-			close;
-		case 2:
-			break;
-		}
+		if(select("You move to other side.:Keep listening.")==1) close;
 		mes "[Tone-deaf person]";
 		mes "Turuturu~";
 		mes "Dadada~";
@@ -537,17 +533,10 @@ hu_in01,361,103,3	script	Tone-deaf person	995,{
 		mes "Lalala...";
 		mes "......!!";
 		next;
-		if (Class == Job_Bard || Class == Job_Baby_Bard){
-			mes "[Tone-deaf person]";
-			mes "Hum!! Hey you, you were listening to my song.";
-			mes "You look like a Bard, how about you sing for me as rewarding my song?";
-			next;
-		}else{
-			mes "[Tone-deaf person]";
-			mes "Hum!! Hey you, you were listening to my song.";
-			mes "You look like a Clown, how about you sing for me as rewarding my song?";
-			next;
-		}
+		mes "[Tone-deaf person]";
+		mes "Hum!! Hey you, you were listening to my song.";
+		mes "You look like a "+((Class == Job_Bard || Class == Job_Baby_Bard)?"Bard":"Clown")+", how about you sing for me as rewarding my song?";
+		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "What?!";
 		next;
@@ -740,7 +729,7 @@ hu_in01,361,103,3	script	Tone-deaf person	995,{
 tha_scene01,140,200,0	script	min_receipt	139,3,3,{
 
 OnTouch:
-	if (job_min == 10){
+	if (job_min == 10 || (job_min == 11 && countitem(6271) < 1)){
 		mes "-There is a piece of paper on the ground.-";
 		next;
 		mes "["+strcharinfo(0)+"]";
@@ -770,44 +759,12 @@ OnTouch:
 		mes "[Karian]";
 		mes "Juno's store...";
 		mes "Let's go to Juno...";
-		set job_min,11;
-		changequest 11143,11144;
+		if (job_min == 10) {
+			set job_min,11;
+			changequest 11143,11144;
+		}
 		donpcevent "Karian#cmd1::OnDisable";
 		close;
-	}else if (job_min == 11){
-		if (countitem(6271) < 1){
-			mes "-There is a piece of paper on the ground.-";
-			next;
-			mes "["+strcharinfo(0)+"]";
-			mes "What is this?";
-			next;
-			mes "[Karian]";
-			mes "What does it say?";
-			donpcevent "Karian#cmd1::OnEnable";
-			next;
-			mes "===================";
-			mes "==photo exchange==";
-			mes "======receipt======";
-			mes "===================";
-			mes "Name : Maestro Song";
-			next;
-			mes "- Bring this receipt and exchange it";
-			mes "";
-			mes "- Juno's store manager : Mr. Click.";
-			next;
-			mes "- Directions : Around Juno's plaza.";
-			getitem 6271,1;
-			next;
-			mes "["+strcharinfo(0)+"]";
-			mes "Photo exchange receipt?";
-			mes "How did he drop it...";
-			next;
-			mes "[Karian]";
-			mes "Juno's store...";
-			mes "Let's go to Juno...";
-			donpcevent "Karian#cmd1::OnDisable";
-			close;
-		}
 	}
 }
 
@@ -965,21 +922,21 @@ yuno,146,168,0	script	Karian#cmd2	486,{
 	end;
 
 OnInit:
-	disablenpc "Karian#cmd2";
+	disablenpc strnpcinfo(0);
 	end;
 
 OnEnable:
-	enablenpc "Karian#cmd2";
+	enablenpc strnpcinfo(0);
 	initnpctimer;
 	end;
 
 OnDisable:
-	disablenpc "Karian#cmd2";
+	disablenpc strnpcinfo(0);
 	stopnpctimer;
 	end;
 
 OnTimer100000:
-	donpcevent "Karian#cmd2::OnDisable";
+	donpcevent strnpcinfo(0)+"::OnDisable";
 	stopnpctimer;
 	end;
 }
@@ -1114,28 +1071,7 @@ OnTouch:
 	close;
 }
 
-lighthalzen,160,124,6	script	Karian#cmd3	486,{
-	end;
-
-OnInit:
-	disablenpc "Karian#cmd3";
-	end;
-
-OnEnable:
-	enablenpc "Karian#cmd3";
-	initnpctimer;
-	end;
-
-OnDisable:
-	disablenpc "Karian#cmd3";
-	stopnpctimer;
-	end;
-
-OnTimer100000:
-	donpcevent "Karian#cmd3::OnDisable";
-	stopnpctimer;
-	end;
-}
+lighthalzen,160,124,6	duplicate(Karian#cmd2)	Karian#cmd3	486
 
 ice_dun01,157,15,0	script	Ice Cave Minstrel1	139,2,2,{
 
@@ -1401,31 +1337,10 @@ ra_in01,358,130,4	script	Old Woman#job_min	979,{
 	close;
 }
 
-ra_in01,357,128,0	script	Karian#cmd4	486,{
-	end;
-
-OnInit:
-	disablenpc "Karian#cmd4";;
-	end;
-
-OnEnable:
-	enablenpc "Karian#cmd4";;
-	initnpctimer;
-	end;
-
-OnDisable:
-	disablenpc "Karian#cmd4";;
-	stopnpctimer;
-	end;
-
-OnTimer100000:
-	donpcevent "Karian#cmd4::OnDisable";
-	stopnpctimer;
-	end;
-}
+ra_in01,357,128,0	duplicate(Karian#cmd2)	Karian#cmd4	486
 
 ve_fild07,131,132,5	script	=Notice=#job_min	837,{
-
+function Choice;
 	if (job_min == 16){
 		mes "===Notice===";
 		mes "Maestro Song, Go to Comodo by boat!";
@@ -1486,495 +1401,46 @@ ve_fild07,131,132,5	script	=Notice=#job_min	837,{
 			mes "[Karian]";
 			mes "Ahhhh!!!!!!!!!!!!!!";
 			next;
-			set .@rand,rand(7,9);
-			if (.@rand == 7){
-				switch(select("Throw the water out.:Row.:Dance.")){
-				case 1:
-					mes "[Karian]";
-					mes "I'll row and you just throw the water out!!";
-					next;
-					break;
-				case 2:
-					mes "[Karian]";
-					mes "The boat is sinking!!!";
-					close;
-				case 3:
-					mes "[Karian]";
-					mes "What the hell do you think you're doing?";
-					close;
-				}
-			}else if (.@rand == 8){
-				switch(select("Row.:Throw the water out.:Dance.")){
-				case 1:
-					mes "[Karian]";
-					mes "The boat is sinking!!!";
-					close;
-				case 2:
-					mes "[Karian]";
-					mes "I'll row and you just throw the water out!!";
-					next;
-					break;
-				case 3:
-					mes "[Karian]";
-					mes "What the hell do you think you're doing?";
-					close;
-				}
-			}
-			switch(select("Dance.:Row.:Throw the water out.")){
-			case 1:
-				mes "[Karian]";
-				mes "What the hell do you think you're doing?";
-				close;
-			case 2:
-				mes "[Karian]";
-				mes "The boat is sinking!!!";
-				close;
-			case 3:
-				mes "[Karian]";
-				mes "I'll row and you just throw the water out!!";
-				next;
-				break;
-			}
-			set .@rand,rand(7,9);
-			if (.@rand == 7){
-				switch(select("Throw the water out.:Row.:Dance.")){
-				case 1:
-					mes "[Karian]";
-					mes "I'll row and you just throw the water out!!";
-					next;
-					break;
-				case 2:
-					mes "[Karian]";
-					mes "The boat is sinking!!!";
-					close;
-				case 3:
-					mes "[Karian]";
-					mes "What the hell do you think you're doing?";
-					close;
-				}
-			}else if (.@rand == 8){
-				switch(select("Row.:Throw the water out.:Sleep.")){
-				case 1:
-					mes "[Karian]";
-					mes "The boat is sinking!!!";
-					close;
-				case 2:
-					mes "[Karian]";
-					mes "I'll row and you just throw the water out!!";
-					next;
-					break;
-				case 3:
-					mes "[Karian]";
-					mes "What the hell do you think you're doing?";
-					close;
-				}
-			}
-			switch(select("Sleep.:Row.:Throw the water out.")){
-			case 1:
-				mes "[Karian]";
-				mes "What the hell do you think you're doing?";
-				close;
-			case 2:
-				mes "[Karian]";
-				mes "The boat is sinking!!!";
-				close;
-			case 3:
-				mes "[Karian]";
-				mes "I'll row and you just throw the water out!!";
-				next;
-				break;
-			}
-			set .@rand,rand(7,9);
-			if (.@rand == 7){
-				switch(select("Throw the water out.:Row.:Sleep.")){
-				case 1:
-					mes "[Karian]";
-					mes "I'll row and you just throw the water out!!";
-					next;
-					break;
-				case 2:
-					mes "[Karian]";
-					mes "The boat is sinking!!!";
-					close;
-				case 3:
-					mes "[Karian]";
-					mes "What the hell do you think you're doing?";
-					close;
-				}
-			}else if (.@rand == 8){
-				switch(select("Row.:Throw the water out.:Sing.")){
-				case 1:
-					mes "[Karian]";
-					mes "The boat is sinking!!!";
-					close;
-				case 2:
-					mes "[Karian]";
-					mes "I'll row and you just throw the water out!!";
-					next;
-					break;
-				case 3:
-					mes "[Karian]";
-					mes "What the hell do you think you're doing?";
-					close;
-				}
-			}
-			switch(select("Sing.:Row.:Throw the water out.")){
-			case 1:
-				mes "[Karian]";
-				mes "What the hell do you think you're doing?";
-				close;
-			case 2:
-				mes "[Karian]";
-				mes "The boat is sinking!!!";
-				close;
-			case 3:
-				mes "[Karian]";
-				mes "I'll row and you just throw the water out!!";
-				next;
-				break;
-			}
-			set .@rand,rand(7,9);
-			if (.@rand == 7){
-				switch(select("Throw the water out.:Row.:Have some water.")){
-				case 1:
-					mes "[Karian]";
-					mes "I'll row and you just throw the water out!!";
-					next;
-					break;
-				case 2:
-					mes "[Karian]";
-					mes "The boat is sinking!!!";
-					close;
-				case 3:
-					mes "[Karian]";
-					mes "What the hell do you think you're doing?";
-					close;
-				}
-			}else if (.@rand == 8){
-				switch(select("Row.:Throw the water out.:Have some water.")){
-				case 1:
-					mes "[Karian]";
-					mes "The boat is sinking!!!";
-					close;
-				case 2:
-					mes "[Karian]";
-					mes "I'll row and you just throw the water out!!";
-					next;
-					break;
-				case 3:
-					mes "[Karian]";
-					mes "What the hell do you think you're doing?";
-					close;
-				}
-			}
-			switch(select("Have some water.:Row.:Throw the water out.")){
-			case 1:
-				mes "[Karian]";
-				mes "What the hell do you think you're doing?";
-				close;
-			case 2:
-				mes "[Karian]";
-				mes "The boat is sinking!!!";
-				close;
-			case 3:
-				mes "[Karian]";
-				mes "I'll row and you just throw the water out!!";
-				next;
-				break;
-			}
-			set .@rand,rand(7,9);
-			if (.@rand == 7){
-				switch(select("Throw the water out.:Row.:Shout 'Viva'.")){
-				case 1:
-					mes "[Karian]";
-					mes "I'll row and you just throw the water out!!";
-					next;
-					break;
-				case 2:
-					mes "[Karian]";
-					mes "The boat is sinking!!!";
-					close;
-				case 3:
-					mes "[Karian]";
-					mes "What the hell do you think you're doing?";
-					close;
-				}
-			}else if (.@rand == 8){
-				switch(select("Row.:Throw the water out.:Shout 'Viva'.")){
-				case 1:
-					mes "[Karian]";
-					mes "The boat is sinking!!!";
-					close;
-				case 2:
-					mes "[Karian]";
-					mes "I'll row and you just throw the water out!!";
-					next;
-					break;
-				case 3:
-					mes "[Karian]";
-					mes "What the hell do you think you're doing?";
-					close;
-				}
-			}
-			switch(select("Shout 'Viva'.:Row.:Throw the water out.")){
-			case 1:
-				mes "[Karian]";
-				mes "What the hell do you think you're doing?";
-				close;
-			case 2:
-				mes "[Karian]";
-				mes "The boat is sinking!!!";
-				close;
-			case 3:
-				mes "[Karian]";
-				mes "I'll row and you just throw the water out!!";
-				next;
-				break;
-			}
-			set .@rand,rand(7,9);
-			if (.@rand == 7){
-				switch(select("Throw the water out.:Row.:Go fishing.")){
-				case 1:
-					mes "[Karian]";
-					mes "I'll row and you just throw the water out!!";
-					next;
-					break;
-				case 2:
-					mes "[Karian]";
-					mes "The boat is sinking!!!";
-					close;
-				case 3:
-					mes "[Karian]";
-					mes "What the hell do you think you're doing?";
-					close;
-				}
-			}else if (.@rand == 8){
-				switch(select("Row.:Throw the water out.:Go fishing.")){
-				case 1:
-					mes "[Karian]";
-					mes "The boat is sinking!!!";
-					close;
-				case 2:
-					mes "[Karian]";
-					mes "I'll row and you just throw the water out!!";
-					next;
-					break;
-				case 3:
-					mes "[Karian]";
-					mes "What the hell do you think you're doing?";
-					close;
-				}
-			}
-			switch(select("Go fishing.:Row.:Throw the water out.")){
-			case 1:
-				mes "[Karian]";
-				mes "What the hell do you think you're doing?";
-				close;
-			case 2:
-				mes "[Karian]";
-				mes "The boat is sinking!!!";
-				close;
-			case 3:
-				mes "[Karian]";
-				mes "I'll row and you just throw the water out!!";
-				next;
-				break;
-			}
-			set .@rand,rand(7,9);
-			if (.@rand == 7){
-				switch(select("Throw the water out.:Row.:Listen to my song.")){
-				case 1:
-					mes "[Karian]";
-					mes "I'll row and you just throw the water out!!";
-					next;
-					break;
-				case 2:
-					mes "[Karian]";
-					mes "The boat is sinking!!!";
-					close;
-				case 3:
-					mes "[Karian]";
-					mes "What the hell do you think you're doing?";
-					close;
-				}
-			}else if (.@rand == 8){
-				switch(select("Row.:Throw the water out.:Listen to my song.")){
-				case 1:
-					mes "[Karian]";
-					mes "The boat is sinking!!!";
-					close;
-				case 2:
-					mes "[Karian]";
-					mes "I'll row and you just throw the water out!!";
-					next;
-					break;
-				case 3:
-					mes "[Karian]";
-					mes "What the hell do you think you're doing?";
-					close;
-				}
-			}
-			switch(select("Listen to my song.:Row.:Throw the water out.")){
-			case 1:
-				mes "[Karian]";
-				mes "What the hell do you think you're doing?";
-				close;
-			case 2:
-				mes "[Karian]";
-				mes "The boat is sinking!!!";
-				close;
-			case 3:
-				mes "[Karian]";
-				mes "I'll row and you just throw the water out!!";
-				next;
-				break;
-			}
-			set .@rand,rand(7,9);
-			if (.@rand == 7){
-				switch(select("Throw the water out.:Row.:Pray.")){
-				case 1:
-					mes "[Karian]";
-					mes "I'll row and you just throw the water out!!";
-					next;
-					break;
-				case 2:
-					mes "[Karian]";
-					mes "The boat is sinking!!!";
-					close;
-				case 3:
-					mes "[Karian]";
-					mes "What the hell do you think you're doing?";
-					close;
-				}
-			}else if (.@rand == 8){
-				switch(select("Row.:Throw the water out.:Pray.")){
-				case 1:
-					mes "[Karian]";
-					mes "The boat is sinking!!!";
-					close;
-				case 2:
-					mes "[Karian]";
-					mes "I'll row and you just throw the water out!!";
-					next;
-					break;
-				case 3:
-					mes "[Karian]";
-					mes "What the hell do you think you're doing?";
-					close;
-				}
-			}
-			switch(select("Pray.:Row.:Throw the water out.")){
-			case 1:
-				mes "[Karian]";
-				mes "What the hell do you think you're doing?";
-				close;
-			case 2:
-				mes "[Karian]";
-				mes "The boat is sinking!!!";
-				close;
-			case 3:
-				mes "[Karian]";
-				mes "I'll row and you just throw the water out!!";
-				next;
-				break;
-			}
-			set .@rand,rand(7,9);
-			if (.@rand == 7){
-				switch(select("Throw the water out.:Row.:Eat some food.")){
-				case 1:
-					mes "[Karian]";
-					mes "I'll row and you just throw the water out!!";
-					next;
-					break;
-				case 2:
-					mes "[Karian]";
-					mes "The boat is sinking!!!";
-					close;
-				case 3:
-					mes "[Karian]";
-					mes "What the hell do you think you're doing?";
-					close;
-				}
-			}else if (.@rand == 8){
-				switch(select("Row.:Throw the water out.:Eat some food.")){
-				case 1:
-					mes "[Karian]";
-					mes "The boat is sinking!!!";
-					close;
-				case 2:
-					mes "[Karian]";
-					mes "I'll row and you just throw the water out!!";
-					next;
-					break;
-				case 3:
-					mes "[Karian]";
-					mes "What the hell do you think you're doing?";
-					close;
-				}
-			}
-			switch(select("Eat some food.:Row.:Throw the water out.")){
-			case 1:
-				mes "[Karian]";
-				mes "What the hell do you think you're doing?";
-				close;
-			case 2:
-				mes "[Karian]";
-				mes "The boat is sinking!!!";
-			case 3:
-				mes "[Karian]";
-				mes "I'll row and you just throw the water out!!";
-				next;
-				break;
-			}
-			set .@rand,rand(7,9);
-			if (.@rand == 7){
-				switch(select("Throw the water out.:Row.:Give up.")){
-				case 1:
-					mes "[Karian]";
-					mes "I'll row and you just throw the water out!!";
-					next;
-					break;
-				case 2:
-					mes "[Karian]";
-					mes "The boat is sinking!!!";
-					close;
-				case 3:
-					mes "[Karian]";
-					mes "What the hell do you think you're doing?";
-					close;
-				}
-			}else if (.@rand == 8){
-				switch(select("Row.:Throw the water out.:Give up.")){
-				case 1:
-					mes "[Karian]";
-					mes "The boat is sinking!!!";
-					close;
-				case 2:
-					mes "[Karian]";
-					mes "I'll row and you just throw the water out!!";
-					next;
-					break;
-				case 3:
-					mes "[Karian]";
-					mes "What the hell do you think you're doing?";
-					close;
-				}
-			}
-			switch(select("Give up.:Row.:Throw the water out.")){
-			case 1:
-				mes "[Karian]";
-				mes "What the hell do you think you're doing?";
-				close;
-			case 2:
-				mes "[Karian]";
-				mes "The boat is sinking!!!";
-				close;
-			case 3:
-				mes "[Karian]";
-				mes "I'll row and you just throw the water out!!";
-				next;
-				break;
-			}
+			set .@rand,rand(3);
+			if (.@rand == 1) Choice("Throw the water out.","Row.","Dance.");
+			else if (.@rand == 2) Choice("Row.","Throw the water out.","Dance.");
+			Choice("Dance.","Row.","Throw the water out.");
+			set .@rand,rand(3);
+			if (.@rand == 1) Choice("Throw the water out.","Row.","Dance.");
+			else if (.@rand == 2) Choice("Row.","Throw the water out.","Sleep.");
+			Choice("Sleep.","Row.","Throw the water out.");
+			set .@rand,rand(3);
+			if (.@rand == 1) Choice("Throw the water out.","Row.","Sleep.");
+			else if (.@rand == 2) Choice("Row.","Throw the water out.","Sing.");
+			Choice("Sing.","Row.","Throw the water out.");
+			set .@rand,rand(3);
+			if (.@rand == 1) Choice("Throw the water out.","Row.","Have some water.");
+			else if (.@rand == 2) Choice("Row.","Throw the water out.","Have some water.");
+			Choice("Have some water.","Row.","Throw the water out.");
+			set .@rand,rand(3);
+			if (.@rand == 1) Choice("Throw the water out.","Row.","Shout 'Viva'.");
+			else if (.@rand == 2) Choice("Row.","Throw the water out.","Shout 'Viva'.");
+			Choice("Shout 'Viva'.","Row.","Throw the water out.");
+			set .@rand,rand(3);
+			if (.@rand == 1) Choice("Throw the water out.","Row.","Go fishing.");
+			else if (.@rand == 2) Choice("Row.","Throw the water out.","Go fishing.");
+			Choice("Go fishing.","Row.","Throw the water out.");
+			set .@rand,rand(3);
+			if (.@rand == 1) Choice("Throw the water out.","Row.","Listen to my song.");
+			else if (.@rand == 2) Choice("Row.","Throw the water out.","Listen to my song.");
+			Choice("Listen to my song.","Row.","Throw the water out.");
+			set .@rand,rand(3);
+			if (.@rand == 1) Choice("Throw the water out.","Row.","Pray.");
+			else if (.@rand == 2) Choice("Row.","Throw the water out.","Pray.");
+			Choice("Pray.","Row.","Throw the water out.");
+			set .@rand,rand(3);
+			if (.@rand == 1) Choice("Throw the water out.","Row.","Eat some food.");
+			else if (.@rand == 2) Choice("Row.","Throw the water out.","Eat some food.");
+			Choice("Eat some food.","Row.","Throw the water out.");
+			set .@rand,rand(3);
+			if (.@rand == 1) Choice("Throw the water out.","Row.","Give up.");
+			else if (.@rand == 2) Choice("Row.","Throw the water out.","Give up.");
+			Choice("Give up.","Row.","Throw the water out.");
 			mes "-I've escaped from the-";
 			mes "-throes of death a-";
 			mes "-countless amount of times.-";
@@ -1989,6 +1455,19 @@ ve_fild07,131,132,5	script	=Notice=#job_min	837,{
 	mes "Maestro Song, Go to Comodo by boat!";
 	mes "Be ambitious!";
 	close;
+	
+function Choice {
+	set .@i$, getarg(select(getarg(0),getarg(1),getarg(2))-1);
+	mes "[Karian]";
+	if (.@i$ == "Throw the water out.") {
+		mes "I'll row and you just throw the water out!!";
+		next;
+		return;
+	}
+	if (.@i$ == "Row.") mes "The boat is sinking!!!";
+	else mes "What the hell do you think you're doing?";
+	close;
+}
 }
 
 ve_fild07,129,132,5	script	Karian#cmd5	486,{
@@ -2055,28 +1534,7 @@ OnTouch:
 	end;
 }
 
-comodo,184,109,0	script	Karian#cmd6	486,{
-	end;
-
-OnInit:
-	disablenpc "Karian#cmd6";
-	end;
-
-OnEnable:
-	enablenpc "Karian#cmd6";
-	initnpctimer;
-	end;
-
-OnDisable:
-	disablenpc "Karian#cmd6";
-	stopnpctimer;
-	end;
-
-OnTimer100000:
-	donpcevent "Karian#cmd6::OnDisable";
-	stopnpctimer;
-	end;
-}
+comodo,184,109,0	duplicate(Karian#cmd2)	Karian#cmd6	486
 
 comodo,192,119,0	script	Kayak Master#job_min	98,{
 
@@ -2211,49 +1669,25 @@ OnTouch:
 			mes "We don't have anymore clues.";
 			next;
 			mes "[Karian]";
-			mes "Hey! Let's go~~";
-			donpcevent "Karian#cmd7::OnDisable";
-			set job_min,21;
-			changequest 11152,11153;
-			close;
+			break;
 		case 2:
 			mes "["+strcharinfo(0)+"]";
 			mes "Ok that's not a bad idea...";
 			next;
 			mes "[Karian]";
 			mes "Ok!!!";
-			mes "Hey! Let's go~~";
-			donpcevent "Karian#cmd7::OnDisable";
-			set job_min,21;
-			changequest 11152,11153;
-			close;
+			break;
 		}
+		mes "Hey! Let's go~~";
+		donpcevent "Karian#cmd7::OnDisable";
+		set job_min,21;
+		changequest 11152,11153;
+		close;
 	}
 	end;
 }
 
-moc_fild16,204,231,0	script	Karian#cmd7	486,{
-	end;
-
-OnInit:
-	disablenpc "Karian#cmd7";
-	end;
-
-OnEnable:
-	enablenpc "Karian#cmd7";
-	initnpctimer;
-	end;
-
-OnDisable:
-	disablenpc "Karian#cmd7";
-	stopnpctimer;
-	end;
-
-OnTimer100000:
-	donpcevent "Karian#cmd7::OnDisable";
-	stopnpctimer;
-	end;
-}
+moc_fild16,204,231,0	duplicate(Karian#cmd2)	Karian#cmd7	486
 
 aldebaran,140,130,0	script	jmAldebaran Clock Tower	139,3,3,{
 
@@ -2321,28 +1755,7 @@ OnTouch:
 	end;
 }
 
-aldebaran,142,128,2	script	Karian#cmd8	486,{
-	end;
-
-OnInit:
-	disablenpc "Karian#cmd8";
-	end;
-
-OnEnable:
-	enablenpc "Karian#cmd8";
-	initnpctimer;
-	end;
-
-OnDisable:
-	disablenpc "Karian#cmd8";
-	stopnpctimer;
-	end;
-
-OnTimer100000:
-	donpcevent "Karian#cmd8::OnDisable";
-	stopnpctimer;
-	end;
-}
+aldebaran,142,128,2	duplicate(Karian#cmd2)	Karian#cmd8	486
 
 prontera,155,40,0	script	jmprt1	139,2,2,{
 
@@ -2478,8 +1891,7 @@ OnTouch:
 
 prt_in,94,172,4	script	Karian#job_min3	480,{
 
-if(job_min >= 27)
-{
+if(job_min >= 27) {
 	if (job_min > 99){
 		switch(select("Talk.:Leave.")){
 		case 1:
@@ -2559,36 +1971,13 @@ if(job_min >= 27)
 		mes "[Maestro Song]";
 		mes "This is my present to you.";
 		next;
-		if (Class == Job_Baby_Bard){
-			mes "[Maestro Song]";
-			mes "You are also my friend.";
-			set job_min,100;
-			jobchange Job_Baby_Minstrel;
-			completequest 11154;
-			getitem 5751,1;
-			getitem 2795,1;
-			close;
-		}if (Class == Job_Bard){
-			mes "[Maestro Song]";
-			mes "You are also my friend.";
-			set job_min,100;
-			jobchange Job_Minstrel;
-			completequest 11154;
-			getitem 5751,1;
-			getitem 2795,1;
-			close;
-		}else if (Class == Job_Clown){
-			mes "[Maestro Song]";
-			mes "You are also my friend.";
-			set job_min,100;
-			jobchange Job_Minstrel_T;
-			completequest 11154;
-			getitem 5751,1;
-			getitem 2795,1;
-			close;
-		}
 		mes "[Maestro Song]";
-		mes "Huh?";
+		mes "You are also my friend.";
+		set job_min,100;
+		jobchange roclass(eaclass()|EAJL_THIRD);
+		completequest 11154;
+		getitem 5751,1;
+		getitem 2795,1;
 		close;
 	}
 }
