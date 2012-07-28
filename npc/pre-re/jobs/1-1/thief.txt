@@ -3,30 +3,31 @@
 //===== By: ================================================== 
 //= Kisuka
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
 //= Job Change to Thief Class
 //===== Additional Comments: ================================= 
 //= 1.0 First Version. [Kisuka]
+//= 1.1 Added Baby job change support. [Masao]
 //============================================================ 
-moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
+moc_prydb1,39,129,2	script	Thief Guildsman	69,{
 	if (Upper == 1) {
 		if (ADVJOB == Job_Assassin_Cross || ADVJOB == Job_Stalker) {
 			if (Class == Job_Novice_High) {
-				mes "[Thief Guide]";
+				mes "[Thief Guildsman]";
 				mes "Huh? Do I know you? It's creepy that you seem so familiar. You don't have a twin, do you?";
 				next;
 				if (getskilllv("NV_BASIC") < 9) {
-					mes "[Thief Guide]";
+					mes "[Thief Guildsman]";
 					mes "What, do you want to be a Thief? I'm sorry, but you look like you need more training.";
 					next;
-					mes "[Thief Guide]";
+					mes "[Thief Guildsman]";
 					mes "Take your time and learn all the Basic Skills, will you? Well then, see you later~!";
 					close;
 				}
-				mes "[Thief Guide]";
+				mes "[Thief Guildsman]";
 				mes "Well, I got this feeling like you've been through a lifetime of fighting, so I'm promoting you to a Thief right this minute. I better give you tough guys what you want...";
 				next;
 				skill 143,0,0;
@@ -35,173 +36,297 @@ moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
 				skill 150,1,0;
 				skill 151,1,0;
 				skill 152,1,0;
-				mes "[Thief Guide]";
+				mes "[Thief Guildsman]";
 				mes "Since you've become a Thief, live as a Thief. Now, go for it! Next~";
 				close;
-			}else{
-				mes "[Thief Guide]";
-				if (sex)
-					mes "Hey, dude.";
-				else
-					mes "Hey, baby~";
-				close;
 			}
-		}else{
-			mes "[Thief Guide]";
-			if (sex)
-				mes "Hey, dude.";
-			else
-				mes "Hey, baby.";
-			mes "...Hey! You look too goody-goody to want to be a Thief!! Now scram, I'm busy. Next!";
-			close;
-		}
-	}
-	if(q_job_thief == 1) {
-		mes "[Thief Guildsman]";
-		mes "Ehh... Seems like a beloved "+(Sex?"son":"daughter")+" of a rich family, but why are you here in this dirty place?";
-		next;
-		mes "[Thief Guildsman]";
-		mes "Well, I'm not in charge of making you a Thief. I just accept applications, get it?";
-		mes "If you want to become a Thief, ask the sharp-eyed guy next to me.";
-		close;
-	}
-	if(Class != Job_Novice) {
-		if(Class == Job_Thief) {
 			mes "[Thief Guildsman]";
-			mes "Hey~ if you have any trouble, get it out to me anytime, huh?";
+			if (Sex == 1) {
+				mes "Hey, dude.";
+			} else {
+				mes "Hey, baby~";
+			}
 			close;
-		}else{
-			if(Sex) {
+		}
+		mes "[Thief Guildsman]";
+		if (Sex == 1) {
+			mes "Hey, dude.";
+		} else {
+			mes "Hey, baby~";
+		}
+		mes "...Hey! You look too goody-goody to want to be a Thief!! Now scram, I'm busy. Next!";
+		close;
+	}
+	if (Class == Job_Baby_Thief || Class == Job_Thief || Class == Job_Thief_High) {
+		mes "[Thief Guildsman]";
+		mes "Hey~ if you have any trouble, get it out to me anytime, huh?";
+		close;
+	}
+	if ((Class != Job_Baby) && (Class != Job_Novice) && (Class != Job_Baby_Thief) && (Class != Job_Thief)) {
+		mes "[Thief Guildsman]";
+		mes "What the heck...?";
+		switch (Class) {
+		case Job_Swordman:
+			mes "Huh.";
+			mes "Now, that's";
+			mes "a big sword.";
+			next;
+			mes "[Thief Guildsman]";
+			mes "So...";
+			mes "Trying to make";
+			mes "up for something";
+			mes "...Buddy?";
+			close;
+		case Job_Mage:
+			mes "What's a Mage doin' here? Shouldn't you be doing card tricks elsewhere? Oh well, it's a free country...";
+			next;
+			mes "[Thief Guildsman]";
+			mes "Oh wait,";
+			mes "it's not...";
+			mes "Get outta here!";
+			close;
+		case Job_Archer:
+			mes "Man, shouldn't you";
+			mes "Archers be playing";
+			mes "in the forest";
+			mes "or something?";
+			close;
+		case Job_Merchant:
+			mes "You're a Merchant,";
+			mes "right? Why are you";
+			mes "walking into a den";
+			mes "of Thieves?!";
+			next;
+			mes "[Thief Guildsman]";
+			mes "It's like you're begging";
+			mes "us to steal from you!";
+			mes "Come on, hurry and";
+			mes "get outta here~";
+			close;
+		case Job_Acolyte:
+			mes "You know we all steal for a living, right? What are you doing in this kinda place, Acolyte?";
+			close;
+		case Job_Assassin:
+			mes "Didn't you use to be one of us?! Man, you changed. You seem real dangerous now...";
+			close;
+			close;
+		case Job_Rogue:
+			mes "Man, you got real cool all of a sudden! You must have some skills I can only dream of!";
+			close;
+			close;
+		case Job_Priest:
+			mes "Oh my God...";
+			mes "Am I dying?";
+			next;
+			mes "[Thief Guildsman]";
+			mes "Why else would a Priest come here? I guess I better start confessing all of my misdeeds.";
+			close;
+		}
+		next;
+		if (Sex == 1) {
+			mes "Hey, dude.";
+		}
+		else {
+			mes "Hey, baby~";
+		}
+		mes "...Hey! You look too goody-goody to want to be a Thief!! Now scram, I'm busy. Next!";
+		close;
+	}
+	if (Class == Job_Baby || Class == Job_Novice) {
+		mes "[Thief Guildsman]";
+		if (Sex == 1) {
+			mes "Ehh... Seems like a beloved son of a rich family, but why are you here in this dirty place?";
+		}
+		else {
+			mes "Ehh... Seems like a beloved daughter of a rich family, but why are you here in this dirty place?";
+		}
+		next;
+		switch (select("I want to be a Thief.:Nothing.")) {
+		case 1:
+			if (job_thief_q == 0) {
 				mes "[Thief Guildsman]";
-				mes "What the heck...?";
-				mes "Huh.. you are a "+jobname(Class)+" blockhead...!";
+				mes "Well, are you that proud of it? You're telling me so proudly that you want to be a Thief! Why don't you go to all the villages and advertise yourself for being a thief?";
+				mes "'Ha ha ha! Go put up a banner that says 'I will be a proud thief who steals other people's stuff.'";
 				next;
 				mes "[Thief Guildsman]";
-				mes "Hey, brother.";
-				mes "Why are you here? Go back to your place~ go back~~";
-				close;
-			}else{
+				mes "Do you want to be a thief so badly?";
+				next;
+				switch (select("Yes.:No.:How about you?")) {
+				case 1:
+					mes "[Thief Guildsman]";
+					mes "Well, are you that proud of it? You're telling me so proudly that you want to be a Thief! Why don't you go to all the villages and advertise yourself for being a thief?";
+					mes "'Ha ha ha! Go put up a banner that says 'I will be a proud thief who steals other people's stuff.'";
+					next;
+					break;
+				case 2:
+					mes "[Thief Guildsman]";
+					mes "Then why are you here? Do you think you can become a thief so easily?";
+					next;
+					break;
+				case 3:
+					mes "[Thief Guildsman]";
+					mes "Eh..? me? me?";
+					mes "Well... I just fit well to being a thief... characteristically... I don't mind this silly matter.";
+					next;
+					break;
+				}
 				mes "[Thief Guildsman]";
-				mes "What the heck...?";
+				mes "Anyway, in the outside world, never say that you want to be a Thief!!";
 				next;
 				mes "[Thief Guildsman]";
-				mes "Hey, lady.";
-				mes "Why are you here? Go back to your place~ go back~~";
+				mes "So, do you want to apply for being a Thief?";
+				next;
+				switch (select("Yes, I do.:No.")) {
+				case 1:
+					mes "[Thief Guildsman]";
+					mes "Alright, tell me your name. Huh? What?";
+					mes "" + strcharinfo(0) + ". " + strcharinfo(0) + ", right...?";
+					next;
+					if (getskilllv("NV_BASIC") < 9) {
+						mes "[Thief Guildsman]";
+						mes "I can see your strong will to become a Thief......";
+						mes "But only with your will, you cannot make it in a real fight, can you? So go and reach at least Basic Skill Level 9.";
+						close;
+					}
+					mes "[Thief Guildsman]";
+					mes "Alright. I looked at your Felony Record, and you seem to have a very interesting history. You might have what it takes to be a Thief.";
+					mes "" + strcharinfo(0) + ". I now decree that you have passed this interview. Good work!";
+					set job_thief_q,1;
+					next;
+					mes "[Thief Guildsman]";
+					mes "Well, I'm not in charge of making you a Thief. I just accept applications, get it?";
+					mes "If you want to become a Thief, ask the guy next to me.";
+					close;
+				case 2:
+					mes "[Thief Guildsman]";
+					mes "Well... do what you want to do~ Go your way~";
+					close;
+				}
+			}
+			if (job_thief_q == 1) {
+				mes "[Thief Guildsman]";
+				mes "Well, I'm not in charge of making you a Thief. I just accept applications, get it?";
+				mes " If you want to become a Thief, ask the sharp-eyed guy next to me.";
 				close;
 			}
+			mes "[Thief Guildsman]";
+			mes "Oh, before I let you go... ...did you take any mushrooms?";
+			mes "... ...It was a joke.";
+			mes "You don't need to do a test, and if you want to jobchange, you can do it directly.";
+			next;
+			mes "[Thief Guildsman]";
+			mes "In short it was just a joke.";
+			mes "Ha ha ha ha ha!!";
+			close;
+		case 2:
+			mes "[Thief Guildsman]";
+			mes "You know you cannot be a thief without an application.....";
+			mes "What's on your mind..?";
+			close;
 		}
 	}
-	mes "[Thief Guildsman]";
-	mes "Ehh... Seems like a beloved "+(Sex?"son":"daughter")+" of a rich family, but why are you here in this dirty place?";
-	next;
-	if(select("I want to be a Thief.:Nothing.") == 2) {
-		mes "[Thief Guildsman]";
-		mes "You know you cannot be a thief without an application.....";
-		mes "What's on your mind..?";
-		close;
-	}
-	mes "[Thief Guildsman]";
-	mes "Well, are you that proud of it?";
-	mes "You're telling me so proudly that you want to be a Thief! Why don't you go to all the villages and advertise yourself for being a thief?";
-	mes "'Ha ha ha! Go put up a banner that says 'I will be a proud thief who steals other people's stuff.'";
-	next;
-	mes "[Thief Guildsman]";
-	mes "Do you want to be a thief so badly?";
-	next;
-	switch(select("Yes.:No.:How about you?")) {
-	case 1:
-		mes "[Thief Guildsman]";
-		mes "Oh, do you...? Huh.. well... I do live and learn to see strange people like you.";
-		next;
-		break;
-	case 2:
-		mes "[Thief Guildsman]";
-		mes "Then why are you here? Do you think you can become a thief so easily?";
-		next;
-		break;
-	case 3:
-		mes "[Thief Guildsman]";
-		mes "Eh..? me? me?";
-		mes "Well... I just fit well to being a thief... characteristically... I don't mind this silly matter.";
-		next;
-		break;
-	}
-	mes "[Thief Guildsman]";
-	mes "Anyway, in the outside world, never say that you want to be a Thief!!";
-	next;
-	mes "[Thief Guildsman]";
-	mes "So, do you want to apply for being a Thief?";
-	next;
-	if(select("Yes, I do.:No.") == 2) {
-		mes "[Thief Guildsman]";
-		mes "Well... do what you want to do~ Go your way~";
-		close;
-	}
-	mes "[Thief Guildsman]";
-	mes "Alright, tell me your name. Huh? What?";
-	mes ""+strcharinfo(0)+". So "+strcharinfo(0)+", right...?";
-	next;
-	if (getskilllv("NV_BASIC") < 9) {
-		mes "[Thief Guildsman]";
-		mes "I can see your strong will to become a Thief......";
-		mes "But only with your will, you cannot make it in a real fight, can you?";
-		mes "So go and reach at least Basic Skill Level 9.";
-		close;
-	}
-	mes "[Thief Guildsman]";
-	mes "Hmm.... I found your interesting criminal records from the data of the detective agency. Well you seem to have what it takes to be a good thief.";
-	mes ""+strcharinfo(0)+". I now declare that you have passed the job interview!";
-	next;
-	mes "[Thief Guildsman]";
-	mes "Well, I'm not in charge of making you a Thief. I just accept applications, get it?";
-	mes "If you want to become a Thief, ask the guy next to me.";
-	set q_job_thief,1;
-	close;
 }
 
-moc_prydb1,42,133,2	script	Thief Guildsman#thief	118,{
-	if(q_job_thief == 1) {
+moc_prydb1,42,133,2	script	Comrade	118,{
+	if (Class == Job_Baby_Thief || Class == Job_Thief || Class == Job_Thief_High) {
+		mes "[Brad]";
+		mes "I don't have any special events now. So go on your way and come back later.";
+		close;
+	}
+	if ((Class != Job_Baby) && (Class != Job_Novice) && (Class != Job_Baby_Thief) && (Class != Job_Thief)) {
+		mes "[Comrade]";
+		mes "Um...";
+		mes "You don't look";
+		mes "like a Thief.";
+		next;
+		mes "[Comrade]";
+		mes "What the heck are";
+		mes "you doing here anyway?";
+		close;
+	}
+	if (job_thief_q == 0) {
+		mes "[Comrade]";
+		mes "What's the matter? If you want to be a Thief, speak to the woman beside me.";
+		close;
+	}
+	if (job_thief_q == 1) {
 		mes "[Thief Guildsman]";
 		mes "Alright. You must have passed the job interview, huh?";
 		mes "Good. I'll accept you.";
 		mes "Let's begin the job-changing ceremony of our guild!";
 		next;
-		mes "[Commander of Thief Guild]";
-		mes "'"+strcharinfo(0)+".'";
-		mes "'For those who are ready, the moonlight shall open the way. Now you are fully ready, I now officially allow you to become a member of the Thief Guild.'";
-		jobchange Job_Thief;
-		set q_job_thief,0;
-		getitem 13041,1; // N_Main_Gauche
+		mes "[Leader of Thief Guild 'E']";
+		mes "" + strcharinfo(0) + "...";
+		mes "'For those who are ready, the moonlight shall open the way. You are now one of us.'";
+		skill 143,0,1;
+		if(Class == Job_Baby){
+			jobchange Job_Baby_Thief;
+		} else {
+			jobchange Job_Thief;
+		}
+		getitem 13041,1; //N_Main_Gauche
+		erasequest 1013;
 		next;
-		mes "[Commander of Thief Guild]";
-		mes "'Congratulations on becoming a Thief.'";
-		mes "'From now on, keep the rules of our guild and be an honorable member.'";
-		mes "'If you bring us any disgrace by breaking our rules, you better watch your back.'";
-		mes "'Anyway, I expect you to be a great thief.'";
+		mes "[Leader of Thief Guild 'E']";
+		mes "'Congratulations on becoming a Thief!'";
+		mes "'From now, be an honorable representative of the Thief's Guild.'";
+		mes "'If you bring disgrace to our guild, you will be killed.'";
+		mes "'Anyway, I expect you to be a great Thief.'";
 		next;
 		mes "[Brad]";
-		mes "Heee~Yaaaa~! Congratulations! My friend.";
-		mes "My name is 'Brad'. I'm in charge of human resources here.";
+		mes "*Ahem* Welcome to the Guild, comrade!";
+		mes "I'm Brad, and I'm in charge of human resources here.";
 		mes "I'm not sure for now but you'll have more chances to see me later on.";
 		next;
 		mes "[Brad]";
-		mes "Okay, I've done what I can do to you, so go on your way. I'm quite a busy man.";
-		mes "See you again.";
+		mes "Okay, I've done what I can do to you, so go on your way. I'm a quite busy man.";
+		mes "Alright then, I'll see you around~";
 		close;
 	}
-	if(Class != Job_Novice) {
-		if(Class == Job_Thief) {
-			mes "[Brad]";
-			mes "I don't have any special events now. So go on your way and come back later.";
-		}else{
-			mes "[Thief Guildsman]";
-			mes "Hey~ Hey~ You're not a novice or a thief!";
-			mes "What are you doing here? You're not welcome to make this place your home~ Hweeeee~ Get outta here~";
+}
+
+moc_ruins,141,125,3	script	Mr. Irrelevant	83,{
+	if (Class == Job_Baby_Thief || Class == Job_Thief) {
+		mes "[Mr. Irrelevant]";
+		mes "Ah, I see that you are now a Thief. I always knew you'd join us.";
+		next;
+		mes "[Mr. Irrelevant]";
+		mes "Why don't you leave this place?";
+		close;
+	}
+	if ((Class != Job_Baby) && (Class != Job_Novice) && (Class != Job_Baby_Thief) && (Class != Job_Thief)) {
+		set .@rand,rand(1,5);
+		switch(.@rand){
+			mes "[Mr. Irrelevant]";
+		case 1:
+			mes "Today looks like a good day to go to the pyramids and hunt with some of my friends.";
+			close;
+		case 2:
+			mes "I could use a good, hard drink.";
+			close;
+		case 3:
+			mes "Gimme your money.";
+			next;
+			mes "[Mr. Irrelevant]";
+			mes "Kidding, I'm off the clock.";
+			close;
+		case 4:
+			mes "WHO YOU CALLING A PSYCHO?!?!";
+			close;
+		case 5:
+			mes "I've got nothing to say to you. Would you mind leaving me alone?";
+			close;
 		}
+	}
+	if (job_thief_q == 1) {
+		mes "[Mr. Irrelevant]";
+		mes "There is this strange smell coming from... You. Now why would that be?";
 		close;
 	}
-	mes "[Thief Guildsman]";
-	mes "Ho? Why is a novice like you visiting here?";
-	mes "If you are here to be a Thief, ask the nasty-tempered lady right next to me.";
+	mes "[Mr. Irrelevant]";
+	mes "Hey Novice! Why don't you join the ranks of the Thief Guild? You newbies are always welcome to join us and our selfish cause.";
+	next;
+	mes "[Mr. Irrelevant]";
+	mes "You can get more information in the Underground Room in the Pyramid 1 BF.";
 	close;
 }
