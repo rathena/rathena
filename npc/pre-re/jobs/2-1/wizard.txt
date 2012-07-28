@@ -65,7 +65,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		mes "Ok, then. Farewell.";
 		close;
 	}
-	if (WZRD_Q, == 0) {
+	if (WZRD_Q == 0) {
 		mes "[Wizard Guildsman]";
 		mes "Huh? What are you doing way up here...?";
 		mes "So what brings you here?";
@@ -185,7 +185,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 			close;
 		}
 	}
-	if (WZRD_Q, == 1) {
+	if (WZRD_Q == 1) {
 		mes "[Catherine]";
 		mes "Let me see, did you get all the items?";
 		mes "Then let's check...";
@@ -224,7 +224,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		mes "Don't forget this time, and bring all the items, ok?...";
 		close;
 	}
-	if (WZRD_Q, == 2) {
+	if (WZRD_Q == 2) {
 		mes "[Catherine]";
 		mes "Did you get all the items?";
 		mes "Let's see... Do you have the right ones?...";
@@ -265,7 +265,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		mes "Don't forget them this time and gather the correct ones, ok? See you soon...";
 		close;
 	}
-	if (WZRD_Q, == 3) {
+	if (WZRD_Q == 3) {
 		mes "[Catherine]";
 		mes "What is it? You didn't go talk to the guy in the corner?";
 		mes "You can't become a Wizard by just brining the items I requested, no no, that just wont do...";
@@ -275,7 +275,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		mes "I'll be waiting, so go now.";
 		close;
 	}
-	if (WZRD_Q, == 4) {
+	if (WZRD_Q == 4) {
 		mes "[Catherine]";
 		mes "*sigh*...Poor thing, what a pity.";
 		mes "How can you think of trying to become a Wizard when you can't even answer those simple questions?";
@@ -354,7 +354,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		mes "Hurry, he's waiting for you!";
 		close;
 	}
-	if (WZRD_Q, == 5) {
+	if (WZRD_Q == 5) {
 		mes "[Catherine]";
 		mes "Tehehehe~ I was listening all along.";
 		mes "Well done in answering all those questions. I want to give something, like a present...";
@@ -368,7 +368,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		mes "He's waiting for you!";
 		close;
 	}
-	if (WZRD_Q, == 6) {
+	if (WZRD_Q == 6) {
 		mes "[Catherine]";
 		mes "Eh, did you leave in the middle of the test?";
 		mes "You...*sigh*...I didn't think you would do such a dishonorable thing.";
@@ -393,7 +393,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		mes "He's waiting!";
 		close;
 	}
-	if (WZRD_Q, == 7) {
+	if (WZRD_Q == 7) {
 		if (JobLevel < 40) {
 			set WZRD_Q,0;
 			mes "[Catherine]";
@@ -503,7 +503,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 		mes "What do you want? Jeez...just get lost, won't you?";
 		close;
 	}
-	if (WZRD_Q, == 0) {
+	if (WZRD_Q == 0) {
 		mes "[Raulel]";
 		mes "*cough* *cough* *sneeze* I don't know who you are and what you do, but I don't have any business with you.";
 		next;
@@ -511,7 +511,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 		mes "Go away! Get lost!";
 		close;
 	}
-	if (WZRD_Q, == 1) {
+	if (WZRD_Q == 1) {
 		mes "[Raulel]";
 		mes "Hahahaha~ You're the one that wants to become a Wizard?!";
 		next;
@@ -522,7 +522,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 		mes "*Cough* *cough* Let's see how well you live as a Wizard. ~Hahahahhaha";
 		close;
 	}
-	if (WZRD_Q, == 2) {
+	if (WZRD_Q == 2) {
 		mes "[Raulel]";
 		mes "Hahahaha~ You're the one that wants to become a Wizard?!";
 		next;
@@ -533,7 +533,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 		mes "*Cough* *cough* Let's see how well you live as a Wizard. ~Hahahahhaha";
 		close;
 	}
-	if (WZRD_Q, == 3) {
+	if (WZRD_Q == 3) {
 		mes "[Raulel]";
 		mes "*Cough* *cough*...You must've passed the first test.";
 		mes "Ok, I'm the Wizard in charge of your testing from now on. My name is 'Raulel Asparagus'.";
@@ -1034,7 +1034,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 		mes "Get lost! If you were a Wizard right now, the monsters I deal with would eat you up in no time!";
 		close;
 	}
-	if (WZRD_Q, == 4) {
+	if (WZRD_Q == 4) {
 		mes "[Raulel]";
 		mes "Hahahaha~ Are you that desperate? *sneeze* What a pain in the arse...";
 		next;
@@ -1545,7 +1545,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 		mes "Get lost! If you were a Wizard right now, the monsters that I fight, would eat you up in no time!";
 		close;
 	}
-	if (WZRD_Q, == 5) {
+	if (WZRD_Q == 5) {
 		mes "[Raulel]";
 		mes "Ok, hope you got plenty of rest. Hahahahahah~";
 		mes "Then let's begin the last test.";
@@ -1613,7 +1613,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 			}
 		}
 	}
-	if (WZRD_Q, == 6) {
+	if (WZRD_Q == 6) {
 		if (@asn_skill == 6) {
 			mes "[Raulel]";
 			mes "Hahahahahaha~ I've never seen anyone so...sooo...*sneeze* tenacious as you.";
@@ -1822,7 +1822,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 			}
 		}
 	}
-	if (WZRD_Q, == 7) {
+	if (WZRD_Q == 7) {
 		mes "[Raulel]";
 		mes "You shouldn't have any more business with me as far as I'm concerned.";
 		mes "But, since your so darned persistent, I'll let you take the test again. Hahahahaha~";
@@ -1900,7 +1900,7 @@ OnMyMobDead:
 	if (mobcount ("job_wiz","Room of Water::OnMyMobDead") < 1) {
 		set @asn_skill,@asn_skill+1;
 		mapannounce "job_wiz","" + strcharinfo(0) + " has succeeded in eliminating the monsters.",bc_map;
-		donpcevent "Room of Water#Door Keeper::OnEnable";
+		donpcevent "Room of Water#DK::OnEnable";
 		stopnpctimer;
 	}
 	end;
@@ -1961,39 +1961,39 @@ OnTimer186000:
 	end;
 }
 
-job_wiz,1,2,1	script	Room of Water#Door Keeper	66,{
+job_wiz,1,2,1	script	Room of Water#DK	66,{
 	end;
 
 OnInit:
-	hideonnpc "Room of Water#Door Keeper";
+	hideonnpc "Room of Water#DK";
 	end;
 
 OnEnable:
-	hideoffnpc "Room of Water#Door Keeper";
+	hideoffnpc "Room of Water#DK";
 	donpcevent "Room of Water::OnReset";
 	donpcevent "Room of Water::OnDisable";
-	monster "job_wiz",114,169,"Marine Sphere",1142,1,"Room of Water#Door Keeper::OnMyMobDead";
-	monster "job_wiz",112,169,"Hydra",1068,1,"Room of Water#Door Keeper::OnMyMobDead";
-	monster "job_wiz",116,169,"Hydra",1068,1,"Room of Water#Door Keeper::OnMyMobDead";
-	monster "job_wiz",114,171,"Hydra",1068,1,"Room of Water#Door Keeper::OnMyMobDead";
-	monster "job_wiz",114,167,"Hydra",1068,1,"Room of Water#Door Keeper::OnMyMobDead";
+	monster "job_wiz",114,169,"Marine Sphere",1142,1,"Room of Water#DK::OnMyMobDead";
+	monster "job_wiz",112,169,"Hydra",1068,1,"Room of Water#DK::OnMyMobDead";
+	monster "job_wiz",116,169,"Hydra",1068,1,"Room of Water#DK::OnMyMobDead";
+	monster "job_wiz",114,171,"Hydra",1068,1,"Room of Water#DK::OnMyMobDead";
+	monster "job_wiz",114,167,"Hydra",1068,1,"Room of Water#DK::OnMyMobDead";
 	initnpctimer;
 	end;
 
 OnReset:
-	killmonster "job_wiz","Room of Water#Door Keeper::OnMyMobDead";
+	killmonster "job_wiz","Room of Water#DK::OnMyMobDead";
 	end;
 
 OnDisable:
-	hideonnpc "Room of Water#Door Keeper";
+	hideonnpc "Room of Water#DK";
 	end;
 
 OnMyMobDead:
-	if (mobcount ("job_wiz","Room of Water#Door Keeper::OnMyMobDead") < 1) {
+	if (mobcount ("job_wiz","Room of Water#DK::OnMyMobDead") < 1) {
 		mapannounce "job_wiz","" + strcharinfo(0) + " has succeeded in eliminating the monsters.",bc_map;
 		warp "job_wiz",116,97;
-		donpcevent "Room of Water#Door Keeper::OnReset";
-		donpcevent "Room of Water#Door Keeper::OnDisable";
+		donpcevent "Room of Water#DK::OnReset";
+		donpcevent "Room of Water#DK::OnDisable";
 		donpcevent "Room of Earth::OnEnable";
 		stopnpctimer;
 	}
@@ -2013,7 +2013,7 @@ OnTimer50000:
 
 OnTimer60000:
 	mapannounce "job_wiz","Time is up.",bc_map;
-	donpcevent "Room of Water#Door Keeper::OnReset";
+	donpcevent "Room of Water#DK::OnReset";
 	end;
 
 OnTimer61000:
@@ -2026,7 +2026,7 @@ OnTimer62000:
 
 OnTimer63000:
 	donpcevent "Room of Water#Failed::OnDisable";
-	donpcevent "Room of Water#Door Keeper::OnDisable";
+	donpcevent "Room of Water#DK::OnDisable";
 	donpcevent "Waiting Room::OnEnable";
 	end;
 }
@@ -2085,7 +2085,7 @@ OnDisable:
 OnMyMobDead:
 	if (mobcount ("job_wiz","Room of Earth::OnMyMobDead") < 1) {
 		mapannounce "job_wiz","" + strcharinfo(0) + " has succeeded in eliminating the monsters.",bc_map;
-		donpcevent "Room of Earth#Door Keeper::OnEnable";
+		donpcevent "Room of Earth#DK::OnEnable";
 		stopnpctimer;
 	}
 	end;
@@ -2146,42 +2146,42 @@ OnTimer186000:
 	end;
 }
 
-job_wiz,1,4,1	script	Room of Earth#Door Keeper	66,{
+job_wiz,1,4,1	script	Room of Earth#DK	66,{
 	end;
 
 OnInit:
-	hideonnpc "Room of Earth#Door Keeper";
+	hideonnpc "Room of Earth#DK";
 	end;
 
 OnEnable:
-	hideoffnpc "Room of Earth#Door Keeper";
+	hideoffnpc "Room of Earth#DK";
 	donpcevent "Room of Earth::OnReset";
 	donpcevent "Room of Earth::OnDisable";
-	monster "job_wiz",116,97,"Flora",1118,1,"Room of Earth#Door Keeper::OnMyMobDead";
-	monster "job_wiz",114,95,"Mandragora",1020,1,"Room of Earth#Door Keeper::OnMyMobDead";
-	monster "job_wiz",118,95,"Mandragora",1020,1,"Room of Earth#Door Keeper::OnMyMobDead";
-	monster "job_wiz",114,99,"Mandragora",1020,1,"Room of Earth#Door Keeper::OnMyMobDead";
-	monster "job_wiz",118,99,"Mandragora",1020,1,"Room of Earth#Door Keeper::OnMyMobDead";
-	monster "job_wiz",116,94,"Mandragora",1020,1,"Room of Earth#Door Keeper::OnMyMobDead";
-	monster "job_wiz",116,100,"Mandragora",1020,1,"Room of Earth#Door Keeper::OnMyMobDead";
+	monster "job_wiz",116,97,"Flora",1118,1,"Room of Earth#DK::OnMyMobDead";
+	monster "job_wiz",114,95,"Mandragora",1020,1,"Room of Earth#DK::OnMyMobDead";
+	monster "job_wiz",118,95,"Mandragora",1020,1,"Room of Earth#DK::OnMyMobDead";
+	monster "job_wiz",114,99,"Mandragora",1020,1,"Room of Earth#DK::OnMyMobDead";
+	monster "job_wiz",118,99,"Mandragora",1020,1,"Room of Earth#DK::OnMyMobDead";
+	monster "job_wiz",116,94,"Mandragora",1020,1,"Room of Earth#DK::OnMyMobDead";
+	monster "job_wiz",116,100,"Mandragora",1020,1,"Room of Earth#DK::OnMyMobDead";
 	initnpctimer;
 	end;
 
 OnReset:
-	killmonster "job_wiz","Room of Earth#Door Keeper::OnMyMobDead";
+	killmonster "job_wiz","Room of Earth#DK::OnMyMobDead";
 	end;
 
 OnDisable:
-	hideonnpc "Room of Earth#Door Keeper";
+	hideonnpc "Room of Earth#DK";
 	end;
 
 OnMyMobDead:
-	if (mobcount ("job_wiz","Room of Earth#Door Keeper::OnMyMobDead") < 1) {
+	if (mobcount ("job_wiz","Room of Earth#DK::OnMyMobDead") < 1) {
 		mapannounce "job_wiz","" + strcharinfo(0) + " has succeeded in eliminating the monster.",bc_map;
 		percentheal 100,100;
 		warp "job_wiz",46,99;
-		donpcevent "Room of Earth#Door Keeper::OnReset";
-		donpcevent "Room of Earth#Door Keeper::OnDisable";
+		donpcevent "Room of Earth#DK::OnReset";
+		donpcevent "Room of Earth#DK::OnDisable";
 		donpcevent "Room of Fire::OnEnable";
 		stopnpctimer;
 	}
@@ -2201,7 +2201,7 @@ OnTimer50000:
 
 OnTimer60000:
 	mapannounce "job_wiz","End time.",bc_map;
-	donpcevent "Room of Earth#Door Keeper::OnReset";
+	donpcevent "Room of Earth#DK::OnReset";
 	end;
 
 OnTimer61000:
@@ -2214,7 +2214,7 @@ OnTimer62000:
 
 OnTimer63000:
 	donpcevent "Room of Earth#Failed::OnDisable";
-	donpcevent "Room of Earth#Door Keeper::OnDisable";
+	donpcevent "Room of Earth#DK::OnDisable";
 	donpcevent "Waiting Room::OnEnable";
 	end;
 }
@@ -2522,7 +2522,7 @@ gef_tower,107,36,4	script	White Dog	81,{
 		cutin "",255;
 		end;
 	}
-	if (WZRD_Q, == 0) {
+	if (WZRD_Q == 0) {
 		cutin "job_wizard_maria01",2;
 		mes "[Dog]";
 		mes "Ah...I know what you're about to say. You want to change jobs to a Wizard, right?";
@@ -2647,7 +2647,7 @@ gef_tower,107,36,4	script	White Dog	81,{
 			end;
 		}
 	}
-	if (WZRD_Q, == 1) {
+	if (WZRD_Q == 1) {
 		cutin "job_wizard_maria01",2;
 		mes "[Maria]";
 		mes "You seem lost...";
@@ -2684,7 +2684,7 @@ gef_tower,107,36,4	script	White Dog	81,{
 		cutin "",255;
 		end;
 	}
-	if (WZRD_Q, == 2) {
+	if (WZRD_Q == 2) {
 		cutin "job_wizard_maria01",2;
 		mes "[Maria]";
 		mes "You seem lost...";
@@ -2721,7 +2721,7 @@ gef_tower,107,36,4	script	White Dog	81,{
 		cutin "",255;
 		end;
 	}
-	if (WZRD_Q, == 3) {
+	if (WZRD_Q == 3) {
 		cutin "job_wizard_maria01",2;
 		mes "[Maria]";
 		mes "Don't be too relieved just after the first test.";
@@ -2730,7 +2730,7 @@ gef_tower,107,36,4	script	White Dog	81,{
 		cutin "",255;
 		end;
 	}
-	if (WZRD_Q, == 4) {
+	if (WZRD_Q == 4) {
 		cutin "job_wizard_maria01",2;
 		mes "[Maria]";
 		mes "ZzzzZzzzZzzz...";
@@ -2742,7 +2742,7 @@ gef_tower,107,36,4	script	White Dog	81,{
 		cutin "",255;
 		end;
 	}
-	if (WZRD_Q, == 5) {
+	if (WZRD_Q == 5) {
 		cutin "job_wizard_maria01",2;
 		mes "[Maria]";
 		mes "Oh, you're doing well aren't you?";
@@ -2754,7 +2754,7 @@ gef_tower,107,36,4	script	White Dog	81,{
 		cutin "",255;
 		end;
 	}
-	if (WZRD_Q, == 6) {
+	if (WZRD_Q == 6) {
 		cutin "job_wizard_maria01",2;
 		mes "[Maria]";
 		mes "*BARK*...you gave up?";
@@ -2775,7 +2775,7 @@ gef_tower,107,36,4	script	White Dog	81,{
 		cutin "",255;
 		end;
 	}
-	if (WZRD_Q, == 7) {
+	if (WZRD_Q == 7) {
 		cutin "job_wizard_maria01",2;
 		mes "[Maria]";
 		mes "As I thought, I knew you'd be able to do it, I could smell it in yah! *Woof*";
