@@ -2279,7 +2279,7 @@ void clif_item_sub(unsigned char *buf, int n, struct item *i, struct item_data *
 	}
 
 }
-
+void clif_favorite_item(struct map_session_data* sd, unsigned short index);
 //Unified inventory function which sends all of the inventory (requires two packets, one for equipable items and one for stackable ones. [Skotlex]
 void clif_inventorylist(struct map_session_data *sd)
 {
@@ -2367,7 +2367,16 @@ void clif_inventorylist(struct map_session_data *sd)
 		WBUFW(bufe,2)=4+ne*se;
 		clif_send(bufe, WBUFW(bufe,2), &sd->bl, SELF);
 	}
-
+#if PACKETVER >= 20111122
+	for( i = 0; i < MAX_INVENTORY; i++ ) {
+		if( sd->status.inventory[i].nameid <= 0 || sd->inventory_data[i] == NULL )
+			continue;
+				
+		if ( sd->status.inventory[i].favorite )
+			clif_favorite_item(sd, i);
+	}
+#endif
+	
 	if( buf ) aFree(buf);
 	if( bufe ) aFree(bufe);
 }
@@ -16115,6 +16124,45 @@ void clif_parse_SkillSelectMenu(int fd, struct map_session_data *sd) {
 	clif_menuskill_clear(sd);
 }
 
+/// Move Item from or to Personal Tab (CZ_WHATSOEVER) [FE]
+/// 0907 <index>.W
+///
+/// R 0908 <index>.w <type>.b
+/// type:
+/// 	0 = move item to personal tab
+/// 	1 = move item to normal tab
+void clif_parse_MoveItem(int fd, struct map_session_data *sd) {
+#if PACKETVER >= 20111122
+	int index;
+		
+	if(pc_isdead(sd)) {
+		return;
+	}
+	index = RFIFOW(fd,2)-2; 
+	if (index < 0 || index >= MAX_INVENTORY)
+		return;
+	if (sd->status.inventory[index].favorite && sd->status.inventory[index].favorite == 1)
+			sd->status.inventory[index].favorite = 0;
+		else
+			sd->status.inventory[index].favorite = 1;
+
+	clif_favorite_item(sd, index);
+#endif
+}
+
+
+/// Items that are in favorite tab of inventory (ZC_ITEM_FAVORITE).
+/// 0900 <index>.W <favorite>.B
+void clif_favorite_item(struct map_session_data* sd, unsigned short index) {
+	int fd = sd->fd;
+	
+	WFIFOHEAD(fd,packet_len(0x908));
+	WFIFOW(fd,0) = 0x908;
+	WFIFOW(fd,2) = index+2;
+	WFIFOL(fd,4) = (sd->status.inventory[index].favorite == 1) ? 0 : 1;
+	WFIFOSET(fd,packet_len(0x908));
+}
+
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/
@@ -16711,6 +16759,8 @@ static int packetdb_readdb(void)
 		{clif_parse_SearchStoreInfoNextPage,"searchstoreinfonextpage"},
 		{clif_parse_CloseSearchStoreInfo,"closesearchstoreinfo"},
 		{clif_parse_SearchStoreInfoListItemClick,"searchstoreinfolistitemclick"},
+		/* */
+		{ clif_parse_MoveItem , "moveitem" },
 		{NULL,NULL}
 	};
 
