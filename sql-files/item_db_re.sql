@@ -11,7 +11,7 @@ CREATE TABLE `item_db_re` (
   `price_buy` mediumint(10) unsigned default NULL,
   `price_sell` mediumint(10) unsigned default NULL,
   `weight` smallint(5) unsigned NOT NULL default '0',
-  `attack` smallint(3) unsigned default NULL,
+  `atk:matk` varchar(10) default '',
   `defence` tinyint(3) unsigned default NULL,
   `range` tinyint(2) unsigned default NULL,
   `slots` tinyint(2) unsigned default NULL,
