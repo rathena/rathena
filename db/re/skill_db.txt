@@ -584,7 +584,7 @@
 538,9,6,2,1,0x1,0,10,1,yes,0,0,0,magic,0,	NJ_SUITON,Hidden Water
 539,0,6,4,1,0x2,3,5,1,yes,0,0,0,magic,0,		NJ_HYOUSYOURAKU,Ice Meteor
 540,9,8,1,4,0,0,10,1:2:2:3:3:4:4:5:5:6,yes,0,0,0,magic,0,	NJ_HUUJIN,Wind Blade
-541,9,6,4,4,0x2,2:2:3:3:4,5,1,yes,0,0,0,magic,0,	NJ_RAIGEKISAI,Lightning Strike of Destruction
+541,9,6,2,4,0x2,2:2:3:3:4,5,1,yes,0,0,0,magic,0,	NJ_RAIGEKISAI,Lightning Strike of Destruction
 542,9,8,1,4,0,3,5,1,yes,0,0,5:6:7:8:9,magic,0,	NJ_KAMAITACHI,Kamaitachi
 543,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,		NJ_NEN,Soul
 544,-5,6,1,0,0x40,0,10,1,no,0,0,0,weapon,0,	NJ_ISSEN,Final Strike
@@ -1015,9 +1015,19 @@
 3003,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,		KO_LEFT,Left Hand Mastery
 3004,3:4:5:6:7,8,1,-1,0,0,5,-2,no,0,0,0,weapon,0,	KO_JYUMONJIKIRI,Cross Strike
 3005,2,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,		KO_SETSUDAN,Soul Sever
-3006,7:8:9:10:11,6,2,0,0x2,0,5,0,no,0,0,0,weapon,0,	KO_BAKURETSU,Bakuretsu Kunai
+3006,7:8:9:10:11,6,2,0,0x2,2,5,0,no,0,0,0,weapon,0,	KO_BAKURETSU,Bakuretsu Kunai
 3007,0,6,4,-1,0x42,4:4:4:4:5,5,0,no,0,0,0,misc,0,	KO_HAPPOKUNAI,Happo Kunai
-3008,9,8,2,0,0x52,0,10,-10,no,0,0,0,misc,0,	KO_MUCHANAGE,Mucha Nage
+3008,9,8,2,0,0x52,2,10,-10,no,0,0,0,misc,0,	KO_MUCHANAGE,Mucha Nage
+3009,9:10:11:12:13,8,2,-1,0x2,3,5,2,no,0,0,0,weapon,0,	KO_HUUMARANKA,Huuma Shuriken Ranka 
+//3010,3,6,2,0,0x43,0,5,1,no,0,0x80,0,misc,0,	KO_MAKIBISHI,Makibishi
+3011,0,6,4,0,0x1,0,5,0,yes,0,0,0,none,0,	KO_MEIKYOUSISUI,Meikyo Shisui
+3012,0,6,4,0,0x1,0,5,0,no,0,0,1,none,7,		KO_ZANZOU,Zanzou
+3013,5,6,1,0,0x1,0,5,0,no,0,0,0,none,0,		KO_KYOUGAKU,Kyougaku
+3014,5,6,1,0,0x1,0,5,0,no,0,0,0,none,0,		KO_JYUSATSU,Jyusatsu
+3015,0,6,4,3,0x1,0,1,1,no,0,0,0,none,0,		KO_KAHU_ENTEN,Kahu Enten
+3016,0,6,4,1,0x1,0,1,1,no,0,0,0,none,0,		KO_HYOUHU_HUBUKI,Hyouhu Hubuki
+3017,0,6,4,4,0x1,0,1,1,no,0,0,0,none,0,		KO_KAZEHU_SEIRAN,Kazehu Seiran
+3018,0,6,4,2,0x1,0,1,1,no,0,0,0,none,0,		KO_DOHU_KOUKAI,Dohu Koukai	
 
 8001,9,6,4,0,0x1,0,5,1,no,0,0,0,magic,0,	HLIF_HEAL,Healing Touch
 8002,0,6,4,0,0x3,-1,5,1,no,0,0,0,none,0,	HLIF_AVOID,Avoid

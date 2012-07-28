@@ -87,7 +87,7 @@
 428,0x86,    ,  0, 1, 100,enemy, 0x000	//SG_SUN_WARM
 429,0x86,    ,  0, 1, 100,enemy, 0x000	//SG_MOON_WARM
 430,0x86,    ,  0, 1, 100,enemy, 0x000	//SG_STAR_WARM
-484,0xb8,    ,  2, 0,1000,enemy, 0x808	//HW_GRAVITATION
+484,0xb8,    ,  2, 0, 500,enemy, 0x808	//HW_GRAVITATION
 488,0xb9,    ,  3, 0,  -1,all,   0x200	//CG_HERMODE
 516,0x86,    ,  3, 0, 100,enemy, 0x000	//GS_DESPERADO
 521,0xbe,    ,  0, 1,1000,enemy, 0x000	//GS_GROUNDDRIFT
@@ -95,6 +95,7 @@
 527,0xbc,    , -1, 0,2000,enemy, 0x018	//NJ_TATAMIGAESHI
 535,0xbd,    , -1, 0,  20,enemy, 0x010	//NJ_KAENSIN
 538,0xbb,    ,  1:1:1:2:2:2:3:3:3:4,0,-1,all,0x010	//NJ_SUITON
+541,0x86,    ,  0, 3:3:4:4:5, 100,enemy, 0x018	//NJ_RAIGEKISAI
 670,0xc7,    ,  1, 4:7:10:13:16:19:22:25:28:31,1000,all,0x008	//NPC_EVILLAND
 
 2044,0xca,    ,  0, 3,1000,all,   0x018	//AB_EPICLESIS
@@ -151,6 +152,8 @@
 
 3006,0x86,    ,  0, 2, 100,enemy, 0x018	//KO_BAKURETSU
 3008,0x86,    ,  0, 2, 100,enemy, 0x018	//KO_MUCHANAGE
+3009,0x86,    ,  0, 3, 500,enemy, 0x018	//KO_HUUMARANKA
+//3010,0xfc,    ,  0, 2,1000,enemy, 0x022	//KO_MAKIBISHI
 
 8020,0xf5,    ,  0, 3,2300:2100:1900:1700:1500,enemy,   0x018	//MH_POISON_MIST
 8033,0x7e,    ,  0, 0,  -1,all,   0x003	//MH_STEINWAND 

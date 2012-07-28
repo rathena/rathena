@@ -736,6 +736,8 @@ int clif_skill_itemlistwindow( struct map_session_data *sd, int skill_id, int sk
 void clif_elemental_info(struct map_session_data *sd);
 void clif_elemental_updatestatus(struct map_session_data *sd, int type);
 
+void clif_talisman(struct map_session_data *sd, short type);
+
 /**
  * Color Table
  **/

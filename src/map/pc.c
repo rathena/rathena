@@ -878,6 +878,8 @@ int pc_isequip(struct map_session_data *sd,int n)
 			return 0;
 		if(item->equip & EQP_ACC && sd->sc.data[SC__STRIPACCESSORY])
 			return 0;
+		if(item->equip && sd->sc.data[SC_KYOUGAKU])
+			return 0;
 
 		if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_SUPERNOVICE) {
 			//Spirit of Super Novice equip bonuses. [Skotlex]
@@ -6382,6 +6384,9 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	if ( sd && sd->spiritball )
 		pc_delspiritball(sd,sd->spiritball,0);
 
+	for(i = 1; i < 5; i++)
+		pc_del_talisman(sd, sd->talisman[i], i);
+
 	if (src)
 	switch (src->type) {
 	case BL_MOB:
@@ -8237,6 +8242,12 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 		return 0;
 	}
 
+	if( !(flag&2) && sd->sc.count && sd->sc.data[SC_KYOUGAKU] )
+	{
+		clif_unequipitemack(sd,n,0,0);
+		return 0;
+	}
+
 	if(battle_config.battle_log)
 		ShowInfo("unequip %d %x:%x\n",n,pc_equippoint(sd,n),sd->status.inventory[n].equip);
 
@@ -8846,6 +8857,106 @@ bool pc_should_log_commands(struct map_session_data *sd)
 	return pc_group_should_log_commands(pc_get_group_id(sd));
 }
 
+static int pc_talisman_timer(int tid, unsigned int tick, int id, intptr_t data)
+{
+	struct map_session_data *sd;
+	int i, type;
+
+	if( (sd=(struct map_session_data *)map_id2sd(id)) == NULL || sd->bl.type!=BL_PC )
+		return 1;
+
+	ARR_FIND(1, 5, type, sd->talisman[type] > 0);
+
+	if( sd->talisman[type] <= 0 )
+	{
+		ShowError("pc_talisman_timer: %d talisman's available. (aid=%d cid=%d tid=%d)\n", sd->talisman[type], sd->status.account_id, sd->status.char_id, tid);
+		sd->talisman[type] = 0;
+		return 0;
+	}
+
+	ARR_FIND(0, sd->talisman[type], i, sd->talisman_timer[type][i] == tid);
+	if( i == sd->talisman[type] )
+	{
+		ShowError("pc_talisman_timer: timer not found (aid=%d cid=%d tid=%d)\n", sd->status.account_id, sd->status.char_id, tid);
+		return 0;
+	}
+
+	sd->talisman[type]--;
+	if( i != sd->talisman[type] )
+		memmove(sd->talisman_timer[type]+i, sd->talisman_timer[type]+i+1, (sd->talisman[type]-i)*sizeof(int));
+	sd->talisman_timer[type][sd->talisman[type]] = INVALID_TIMER;
+
+	clif_talisman(sd, type);
+
+	return 0;
+}
+
+int pc_add_talisman(struct map_session_data *sd,int interval,int max,int type)
+{
+	int tid, i;
+
+	nullpo_ret(sd);
+
+	if(max > 10)
+		max = 10;
+	if(sd->talisman[type] < 0)
+		sd->talisman[type] = 0;
+
+	if( sd->talisman[type] && sd->talisman[type] >= max )
+	{
+		if(sd->talisman_timer[type][0] != INVALID_TIMER)
+			delete_timer(sd->talisman_timer[type][0],pc_talisman_timer);
+		sd->talisman[type]--;
+		if( sd->talisman[type] != 0 )
+			memmove(sd->talisman_timer[type]+0, sd->talisman_timer[type]+1, (sd->talisman[type])*sizeof(int));
+		sd->talisman_timer[type][sd->talisman[type]] = INVALID_TIMER;
+	}
+
+	tid = add_timer(gettick()+interval, pc_talisman_timer, sd->bl.id, 0);
+	ARR_FIND(0, sd->talisman[type], i, sd->talisman_timer[type][i] == INVALID_TIMER || DIFF_TICK(get_timer(tid)->tick, get_timer(sd->talisman_timer[type][i])->tick) < 0);
+	if( i != sd->talisman[type] )
+		memmove(sd->talisman_timer[type]+i+1, sd->talisman_timer[type]+i, (sd->talisman[type]-i)*sizeof(int));
+	sd->talisman_timer[type][i] = tid;
+	sd->talisman[type]++;
+
+	clif_talisman(sd, type);
+	return 0;
+}
+
+int pc_del_talisman(struct map_session_data *sd,int count,int type)
+{
+	int i;
+
+	nullpo_ret(sd);
+
+	if( sd->talisman[type] <= 0 ) {
+		sd->talisman[type] = 0;
+		return 0;
+	}
+
+	if( count <= 0 )
+		return 0;
+	if( count > sd->talisman[type] )
+		count = sd->talisman[type];
+	sd->talisman[type] -= count;
+	if( count > 10 )
+		count = 10;
+
+	for(i = 0; i < count; i++) {
+		if(sd->talisman_timer[type][i] != INVALID_TIMER) {
+			delete_timer(sd->talisman_timer[type][i],pc_talisman_timer);
+			sd->talisman_timer[type][i] = INVALID_TIMER;
+		}
+	}
+	for(i = count; i < 10; i++) {
+		sd->talisman_timer[type][i-count] = sd->talisman_timer[type][i];
+		sd->talisman_timer[type][i] = INVALID_TIMER;
+	}
+
+	clif_talisman(sd, type);
+	return 0;
+}
+
 int pc_split_str(char *str,char **val,int num)
 {
 	int i;
@@ -9262,6 +9373,7 @@ int do_init_pc(void) {
 	add_timer_func_list(pc_spiritball_timer, "pc_spiritball_timer");
 	add_timer_func_list(pc_follow_timer, "pc_follow_timer");
 	add_timer_func_list(pc_endautobonus, "pc_endautobonus");
+	add_timer_func_list(pc_talisman_timer, "pc_talisman_timer");
 
 	add_timer(gettick() + autosave_interval, pc_autosave, 0, 0);
 

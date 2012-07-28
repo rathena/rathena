@@ -36,7 +36,7 @@
 #define MOB_CLONE_END MAX_MOB_DB
 
 //Used to determine default enemy type of mobs (for use in eachinrange calls)
-#define DEFAULT_ENEMY_TYPE(md) (md->special_state.ai?BL_CHAR:BL_PC|BL_HOM|BL_MER)
+#define DEFAULT_ENEMY_TYPE(md) (md->special_state.ai?BL_CHAR:BL_MOB|BL_PC|BL_HOM|BL_MER)
 
 //Externals for the status effects. [Epoque]
 extern const int mob_manuk[8];
@@ -121,11 +121,12 @@ struct mob_data {
 	char name[NAME_LENGTH];
 	struct {
 		unsigned int size : 2; //Small/Big monsters.
-		unsigned int ai : 2; //Special ai for summoned monsters.
+		unsigned int ai : 3; //Special ai for summoned monsters.
 							//0: Normal mob.
 							//1: Standard summon, attacks mobs.
 							//2: Alchemist Marine Sphere
 							//3: Alchemist Summon Flora
+							//4: Summon Zanzou
 		unsigned int clone : 1;/* is clone? 1:0 */
 	} special_state; //Special mob information that does not needs to be zero'ed on mob respawn.
 	struct {

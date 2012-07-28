@@ -953,6 +953,10 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 #ifdef RENEWAL
 		sc_start(bl,SC_RAID,100,7,5000);
+		break;
+
+	case RG_BACKSTAP:
+		sc_start(bl,SC_STUN,(5+2*skilllv),skilllv,skill_get_time(skillid,skilllv));
 #endif
 		break;
 
@@ -1344,6 +1348,9 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 	case KO_JYUMONJIKIRI: // needs more info
 		sc_start(bl,SC_JYUMONJIKIRI,25,skilllv,skill_get_time(skillid,skilllv));
+		break;
+	case KO_MAKIBISHI:
+		sc_start(bl, SC_STUN, 100, skilllv, skill_get_time2(skillid,skilllv)); 
 		break;
 	}
 
@@ -3663,6 +3670,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case MH_LAVA_SLIDE:
 	case KO_HAPPOKUNAI:
 	case KO_HUUMARANKA:
+	case KO_MUCHANAGE:
+	case KO_BAKURETSU:
 		if( flag&1 ) {//Recursive invocation
 			// skill_area_temp[0] holds number of targets in area
 			// skill_area_temp[1] holds the id of the original target
@@ -5163,7 +5172,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case SR_CRESCENTELBOW:
 	case SR_LIGHTNINGWALK:
 	case SR_GENTLETOUCH_ENERGYGAIN:
-	case GN_CARTBOOST:			
+	case GN_CARTBOOST:	
+	case KO_MEIKYOUSISUI:
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		break;
@@ -8660,7 +8670,57 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			}
 		}
 		break;
-			
+
+	case KO_KAHU_ENTEN:
+	case KO_HYOUHU_HUBUKI:
+	case KO_KAZEHU_SEIRAN:
+	case KO_DOHU_KOUKAI:
+		if(sd) {
+			int ttype = skill_get_ele(skillid, skilllv);
+			clif_skill_nodamage(src, bl, skillid, skilllv, 1);
+			pc_add_talisman(sd, skill_get_time(skillid, skilllv), 10, ttype);
+		}
+		break;
+
+	case KO_ZANZOU:
+		if(sd){
+			struct mob_data *md;
+
+			md = mob_once_spawn_sub(src, src->m, src->x, src->y, status_get_name(src), 2308, "");
+			if( md )
+			{
+				md->master_id = src->id;
+				md->special_state.ai = 4;
+				if( md->deletetimer != INVALID_TIMER )
+					delete_timer(md->deletetimer, mob_timer_delete);
+				md->deletetimer = add_timer (gettick() + skill_get_time(skillid, skilllv), mob_timer_delete, md->bl.id, 0);
+				mob_spawn( md );
+				pc_setinvincibletimer(sd,500);// unlock target lock
+				clif_skill_nodamage(src,bl,skillid,skilllv,1);
+				skill_blown(src,bl,skill_get_blewcount(skillid,skilllv),unit_getdir(bl),0);
+			}
+		}
+		break;	
+
+	case KO_KYOUGAKU:
+		if( dstsd && tsc && !tsc->data[type] && rand()%100 < tstatus->int_/2 ){
+			clif_skill_nodamage(src,bl,skillid,skilllv,
+				sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
+		}else if( sd )
+			clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
+		break;
+
+	case KO_JYUSATSU:
+		if( dstsd && tsc && !tsc->data[type] && rand()%100 < tstatus->int_/2 ){
+			clif_skill_nodamage(src,bl,skillid,skilllv,
+				status_change_start(bl,type,10000,skilllv,0,0,0,skill_get_time(skillid,skilllv),1));
+			status_zap(bl, tstatus->max_hp*skilllv*5/100 , 0);
+			if( status_get_lv(bl) <= status_get_lv(src) )
+				status_change_start(bl,SC_COMA,10,skilllv,0,src->id,0,0,0);
+		}else if( sd )
+			clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
+		break;
+
 	default:
 		if( skillid >= HM_SKILLBASE && skillid <= HM_SKILLBASE + MAX_HOMUNSKILL ) {
 			if( src->type == BL_HOM && ((TBL_HOM*)src)->master->fd )
@@ -9383,6 +9443,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	case KO_HUUMARANKA:
 	case KO_MUCHANAGE:
 	case KO_BAKURETSU:
+	//case KO_MAKIBISHI:
 		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 	case GS_GROUNDDRIFT: //Ammo should be deleted right away.
 		skill_unitsetting(src,skillid,skilllv,x,y,0);
@@ -10961,8 +11022,6 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 				default:
 					skill_attack(skill_get_type(sg->skill_id),ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			}
-			if( skill_get_unit_interval(sg->skill_id) >= skill_get_time(sg->skill_id,sg->skill_lv) )
-				sg->unit_id = UNT_USED_TRAPS;
 			break;
 
 		case UNT_FIREPILLAR_WAITING:
@@ -11050,6 +11109,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		case UNT_FLASHER:
 		case UNT_FREEZINGTRAP:
 		case UNT_FIREPILLAR_ACTIVE:
+		case UNT_MAKIBISHI:
 			map_foreachinrange(skill_trap_splash,&src->bl, skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag, &src->bl,tick);
 			if (sg->unit_id != UNT_FIREPILLAR_ACTIVE)
 				clif_changetraplook(&src->bl, sg->unit_id==UNT_LANDMINE?UNT_FIREPILLAR_ACTIVE:UNT_USED_TRAPS);
@@ -11817,7 +11877,7 @@ static int skill_check_condition_mob_master_sub (struct block_list *bl, va_list 
 	skill=va_arg(ap,int);
 	c=va_arg(ap,int *);
 
-	if( md->master_id != src_id || md->special_state.ai != (unsigned)(skill == AM_SPHEREMINE?2:3) )
+	if( md->master_id != src_id || md->special_state.ai != (unsigned)(skill == AM_SPHEREMINE?2:skill == KO_ZANZOU?4:3) )
 		return 0; //Non alchemist summoned mobs have nothing to do here.
 
 	if(md->class_==mob_class)
@@ -12460,7 +12520,20 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 				clif_skill_fail(sd,skill,USESKILL_FAIL_LEVEL,0);
 				return 0;
 			}
-			break;			
+			break;	
+		case KO_KAHU_ENTEN:
+		case KO_HYOUHU_HUBUKI:
+		case KO_KAZEHU_SEIRAN:
+		case KO_DOHU_KOUKAI:
+			{ 
+				int ttype = skill_get_ele(skill, lv);
+				ARR_FIND(1, 5, i, sd->talisman[i] > 0 && i != ttype);
+				if( (i < 5 && i != ttype) || sd->talisman[ttype] >= 10 ){
+					clif_skill_fail(sd, skill, USESKILL_FAIL_LEVEL, 0);
+					return 0;
+				}
+			}
+			break;
 	}
 
 	switch(require.state) {
@@ -12719,6 +12792,17 @@ int skill_check_condition_castend(struct map_session_data* sd, short skill, shor
 					clif_skill_fail(sd , skill, USESKILL_FAIL_LEVEL, 0);
 					return 0;
 				}
+			}
+		}
+		break;
+	case KO_ZANZOU:
+		{
+			int c = 0;
+			i = map_foreachinmap(skill_check_condition_mob_master_sub, sd->bl.m, BL_MOB, sd->bl.id, 2308, skill, &c);
+			if( c >= skill_get_maxcount(skill,lv) || c != i)
+			{
+				clif_skill_fail(sd , skill, USESKILL_FAIL_LEVEL, 0);
+				return 0;
 			}
 		}
 		break;

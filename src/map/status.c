@@ -286,7 +286,10 @@ void initChangeTables(void) {
 	set_sc( NPC_HALLUCINATION    , SC_HALLUCINATION   , SI_HALLUCINATION   , SCB_NONE );
 	add_sc( NPC_REBIRTH          , SC_REBIRTH         );
 	add_sc( RG_RAID              , SC_STUN            );
+#ifdef RENEWAL
 	add_sc( RG_RAID              , SC_RAID            );
+	add_sc( RG_BACKSTAP          , SC_STUN            );
+#endif
 	set_sc( RG_STRIPWEAPON       , SC_STRIPWEAPON     , SI_STRIPWEAPON     , SCB_WATK );
 	set_sc( RG_STRIPSHIELD       , SC_STRIPSHIELD     , SI_STRIPSHIELD     , SCB_DEF );
 	set_sc( RG_STRIPARMOR        , SC_STRIPARMOR      , SI_STRIPARMOR      , SCB_VIT );
@@ -705,9 +708,14 @@ void initChangeTables(void) {
 	set_sc( EL_UPHEAVAL        , SC_UPHEAVAL_OPTION      , SI_UPHEAVAL_OPTION      , SCB_NONE );
 	set_sc( EL_TIDAL_WEAPON    , SC_TIDAL_WEAPON_OPTION  , SI_TIDAL_WEAPON_OPTION  , SCB_ALL );
 	set_sc( EL_ROCK_CRUSHER    , SC_ROCK_CRUSHER         , SI_ROCK_CRUSHER         , SCB_DEF );
-	set_sc( EL_ROCK_CRUSHER_ATK, SC_ROCK_CRUSHER_ATK     , SI_ROCK_CRUSHER_ATK     , SCB_SPEED );	
+	set_sc( EL_ROCK_CRUSHER_ATK, SC_ROCK_CRUSHER_ATK     , SI_ROCK_CRUSHER_ATK     , SCB_SPEED );
+
 	add_sc( KO_YAMIKUMO			, SC_HIDING		  );
 	set_sc( KO_JYUMONJIKIRI		, SC_JYUMONJIKIRI		 , SI_KO_JYUMONJIKIRI	   , SCB_NONE );
+	add_sc( KO_MAKIBISHI	    , SC_STUN		  );
+	set_sc( KO_MEIKYOUSISUI		, SC_MEIKYOUSISUI		 , SI_MEIKYOUSISUI		   , SCB_NONE );
+	set_sc( KO_KYOUGAKU			, SC_KYOUGAKU			 , SI_KYOUGAKU			   , SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK );
+	add_sc( KO_JYUSATSU			, SC_CURSE		  );
 	
 	add_sc( MH_STAHL_HORN		 , SC_STUN            );
 	set_sc( MH_ANGRIFFS_MODUS	 , SC_ANGRIFFS_MODUS  , SI_ANGRIFFS_MODUS	, SCB_BATK|SCB_WATK|SCB_DEF|SCB_FLEE );
@@ -985,7 +993,8 @@ void initChangeTables(void) {
 	StatusChangeStateTable[SC_CRYSTALIZE]          |= SCS_NOMOVE|SCS_NOMOVECOND;
 	StatusChangeStateTable[SC_NETHERWORLD]         |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_CAMOUFLAGE]          |= SCS_NOMOVE|SCS_NOMOVECOND;
-	
+	StatusChangeStateTable[SC_MEIKYOUSISUI]		   |= SCS_NOMOVE;
+		
 	/* StatusChangeState (SCS_) NOPICKUPITEMS */
 	StatusChangeStateTable[SC_HIDING]              |= SCS_NOPICKITEM;
 	StatusChangeStateTable[SC_CLOAKING]            |= SCS_NOPICKITEM;
@@ -1895,7 +1904,7 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 #ifdef RENEWAL // renewal formulas
 	status->hit += level + status->dex + status->luk/3 + 175; //base level + ( every 1 dex = +1 hit ) + (every 3 luk = +1 hit) + 175
 	status->flee += level + status->agi + status->luk/5 + 100; //base level + ( every 1 agi = +1 flee ) + (every 5 luk = +1 flee) + 100
-	status->def2 += (int)(((float)level + status->vit)/2 + ((float)status->agi/5)); //base level + (every 2 agi = +1 def) + (every 5 agi = +1 def)
+	status->def2 += (int)(((float)level + status->vit)/2 + ((float)status->agi/5)); //base level + (every 2 vit = +1 def) + (every 5 agi = +1 def)
 	status->mdef2 += (int)(status->int_ + ((float)level/4) + ((float)status->dex/5) + ((float)status->vit/5)); //(every 4 base level = +1 mdef) + (every 1 int = +1 mdef) + (every 5 dex = +1 mdef) + (every 5 vit = +1 mdef)
 #else
 	status->hit += level + status->dex;
@@ -2009,6 +2018,8 @@ int status_calc_mob_(struct mob_data* md, bool first)
 		{	// different levels of HP according to skill level
 			if (ud->skillid == AM_SPHEREMINE) {
 				status->max_hp = 2000 + 400*ud->skilllv;
+			} else if(ud->skillid == KO_ZANZOU){
+				status->max_hp = 3000 + 3000 * ud->skilllv;
 			} else { //AM_CANNIBALIZE
 				status->max_hp = 1500 + 200*ud->skilllv + 10*status_get_lv(mbl);
 				status->mode|= MD_CANATTACK|MD_AGGRESSIVE;
@@ -4054,6 +4065,8 @@ static unsigned short status_calc_str(struct block_list *bl, struct status_chang
 		str += sc->data[SC_INSPIRATION]->val3;
 	if(sc->data[SC_STOMACHACHE])
 		str -= sc->data[SC_STOMACHACHE]->val1;
+	if(sc->data[SC_KYOUGAKU])
+		str -= sc->data[SC_KYOUGAKU]->val2;
 
 	return (unsigned short)cap_value(str,0,USHRT_MAX);
 }
@@ -4103,7 +4116,8 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
 		agi += sc->data[SC_INSPIRATION]->val3;
 	if(sc->data[SC_STOMACHACHE])
 		agi -= sc->data[SC_STOMACHACHE]->val1;
-
+	if(sc->data[SC_KYOUGAKU])
+		agi -= sc->data[SC_KYOUGAKU]->val2;
 
 	return (unsigned short)cap_value(agi,0,USHRT_MAX);
 }
@@ -4145,6 +4159,8 @@ static unsigned short status_calc_vit(struct block_list *bl, struct status_chang
 		vit += sc->data[SC_INSPIRATION]->val3;
 	if(sc->data[SC_STOMACHACHE])
 		vit -= sc->data[SC_STOMACHACHE]->val1;
+	if(sc->data[SC_KYOUGAKU])
+		vit -= sc->data[SC_KYOUGAKU]->val2;
 
 	return (unsigned short)cap_value(vit,0,USHRT_MAX);
 }
@@ -4196,6 +4212,8 @@ static unsigned short status_calc_int(struct block_list *bl, struct status_chang
 		int_ += sc->data[SC_INSPIRATION]->val3;
 	if(sc->data[SC_STOMACHACHE])
 		int_ -= sc->data[SC_STOMACHACHE]->val1;
+	if(sc->data[SC_KYOUGAKU])
+		int_ -= sc->data[SC_KYOUGAKU]->val2;
 
 	return (unsigned short)cap_value(int_,0,USHRT_MAX);
 }
@@ -4247,6 +4265,8 @@ static unsigned short status_calc_dex(struct block_list *bl, struct status_chang
 		dex += sc->data[SC_INSPIRATION]->val3;
 	if(sc->data[SC_STOMACHACHE])
 		dex -= sc->data[SC_STOMACHACHE]->val1;
+	if(sc->data[SC_KYOUGAKU])
+		dex -= sc->data[SC_KYOUGAKU]->val2;
 
 	return (unsigned short)cap_value(dex,0,USHRT_MAX);
 }
@@ -4290,7 +4310,8 @@ static unsigned short status_calc_luk(struct block_list *bl, struct status_chang
 		luk -= sc->data[SC_STOMACHACHE]->val1;
 	if(sc->data[SC_BANANA_BOMB])
 		luk -= luk * sc->data[SC_BANANA_BOMB]->val1 / 100;
-
+	if(sc->data[SC_KYOUGAKU])
+		luk -= sc->data[SC_KYOUGAKU]->val2;
 
 	return (unsigned short)cap_value(luk,0,USHRT_MAX);
 }
@@ -4736,8 +4757,13 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 		return 0;
 	if(sc->data[SC_SUN_COMFORT])
 		def2 += sc->data[SC_SUN_COMFORT]->val2;
+
 	if(sc->data[SC_ANGELUS])
+#ifdef RENEWAL //in renewal only the VIT stat bonus is boosted by angelus
+		def2 += status_get_vit(bl) / 2 * sc->data[SC_ANGELUS]->val2/100;
+#else
 		def2 += def2 * sc->data[SC_ANGELUS]->val2/100;
+#endif
 	if(sc->data[SC_CONCENTRATION])
 		def2 -= def2 * sc->data[SC_CONCENTRATION]->val4/100;
 	if(sc->data[SC_POISON])
@@ -6063,6 +6089,9 @@ int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int ti
 	case SC_MANDRAGORA:
 		sc_def = (status->vit+status->luk)/5;
 		break;
+	case SC_KYOUGAKU:
+		tick -= 30*status->int_;
+		break;
 	default:
 		//Effect that cannot be reduced? Likely a buff.
 		if (!(rnd()%10000 < rate))
@@ -6695,6 +6724,14 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		break;
 	case SC_FIGHTINGSPIRIT:
 		status_change_end(bl, type, INVALID_TIMER); // Remove previous one.
+		break;
+	case SC_MARSHOFABYSS:
+		status_change_end(bl, SC_INCAGI, INVALID_TIMER);
+		status_change_end(bl, SC_WINDWALK, INVALID_TIMER);
+		status_change_end(bl, SC_ASPDPOTION0, INVALID_TIMER);
+		status_change_end(bl, SC_ASPDPOTION1, INVALID_TIMER);
+		status_change_end(bl, SC_ASPDPOTION2, INVALID_TIMER);
+		status_change_end(bl, SC_ASPDPOTION3, INVALID_TIMER);
 		break;
 	case SC_SWINGDANCE:
 	case SC_SYMPHONYOFLOVER:
@@ -7847,6 +7884,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			break;
 		case SC_ELECTRICSHOCKER:
 		case SC_CRYSTALIZE:
+		case SC_MEIKYOUSISUI:
 			val4 = tick / 1000;
 			if( val4 < 1 )
 				val4 = 1;
@@ -8219,6 +8257,10 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val4 = tick / 10000;
 			tick_time = 10000; // [GodLesZ] tick time
 			break;
+		case SC_KYOUGAKU:
+			val2 = 2*val1 + rand()%val1;
+			clif_status_change(bl,SI_ACTIVE_MONSTER_TRANSFORM,1,0,1002,0,0); // Temporarily shows Poring need official [malufett]
+			break;
 
 		default:
 			if( calc_flag == SCB_NONE && StatusSkillChangeTable[type] == 0 && StatusIconChangeTable[type] == 0 )
@@ -8275,6 +8317,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_CURSEDCIRCLE_TARGET:
 		case SC_FEAR:
 		case SC_NETHERWORLD:
+		case SC_MEIKYOUSISUI:
 			unit_stop_walking(bl,1);
 		break;
 		case SC_HIDING:
@@ -9138,6 +9181,10 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 					sc->bs_counter--;
 				}
 			}
+			break;
+		case SC_KYOUGAKU:
+			clif_status_load(bl, SI_KYOUGAKU, 0); // Avoid client crash
+			clif_status_load(bl, SI_ACTIVE_MONSTER_TRANSFORM, 0);
 			break;
 		}
 
@@ -10142,6 +10189,14 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		/* they only end by status_change_end */
 		sc_timer_next(600000 + tick, status_change_timer, bl->id, data);
 		return 0;
+	case SC_MEIKYOUSISUI:
+		if( --(sce->val4) > 0 )
+		{ 
+			status_heal(bl, status->max_hp * (sce->val1+1) / 100, status->max_sp * sce->val1 / 100, 0);
+			sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
+			return 0;
+		}
+		break;
 	}
 
 	// default for all non-handled control paths is to end the status

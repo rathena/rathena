@@ -2231,6 +2231,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 		case BL_PC:
 		{
 			struct map_session_data *sd = (struct map_session_data*)bl;
+			int i;
 
 			if( status_isdead(bl) )
 				pc_setrestartvalue(sd,2);
@@ -2253,6 +2254,8 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			pc_cleareventtimer(sd);
 			pc_inventory_rental_clear(sd);
 			pc_delspiritball(sd,sd->spiritball,1);
+			for(i = 1; i < 5; i++)
+				pc_del_talisman(sd, sd->talisman[i], i);
 
 			if( sd->reg ) {	//Double logout already freed pointer fix... [Skotlex]
 				aFree(sd->reg);
