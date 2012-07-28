@@ -85,8 +85,8 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 			} else {
 				jobchange Job_Merchant;
 			}
-			set job_merchant_q,0;
-			set job_merchant_q2,0;
+			set MERCNT_Q,0;
+			set MERCNT_Q2,0;
 			getitem 1381,1; //N_Battle_Axe
 			mes "[Guildsman Mahnsoo]";
 			mes "Congratulations again for being a member of the merchant guild and one of our colleagues. I expect your active participation from now on!";
@@ -169,7 +169,7 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 }
 
 alberta_in,28,29,2	script	Merchant Guildsman	83,{
-	if (job_merchant_q == 0 || job_merchant_q == 1 || job_merchant_q == 2) {
+	if (MERCNT_Q == 0 || MERCNT_Q == 1 || MERCNT_Q == 2) {
 		mes "[Union Staff Kay]";
 		mes "I am sorry, but we don't make deliveries anymore.";
 		mes "Didn't Chief Mahnsoo tell you?";
@@ -186,7 +186,7 @@ alberta_in,28,29,2	script	Merchant Guildsman	83,{
 }
 
 morocc_in,140,102,4	script	Student#mer	86,{
-	if (job_merchant_q == 4 || job_merchant_q == 3) {
+	if (MERCNT_Q == 4 || MERCNT_Q == 3) {
 		mes "[Dyer's Student]";
 		mes "I am sorry, but the Merchant Guild no longer makes deliveries to us anymore.";
 		close;
@@ -203,7 +203,7 @@ morocc_in,140,102,4	script	Student#mer	86,{
 }
 
 geffen_in,155,122,4	script	Guild Staff	47,{
-	if (job_merchant_q == 4 || job_merchant_q == 3) {
+	if (MERCNT_Q == 4 || MERCNT_Q == 3) {
 		mes "[Guild Staff]";
 		mes "I am sorry, but the Merchant Guild no longer makes deliveries to us anymore.";
 		close;

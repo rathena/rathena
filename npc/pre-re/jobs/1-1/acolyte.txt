@@ -96,7 +96,7 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 		} else {
 			jobchange Job_Acolyte;
 		}
-		set job_acolyte_q,0;
+		set ACO_Q,0;
 		getitem 1545,1; //N_Mace
 		mes "[Father Mareusis]";
 		mes "Always remember to be thankful to God, who is taking care of us all the time.";
@@ -126,7 +126,7 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 
 prt_fild03,365,255,2	script	Ascetic#aco	89,{
 	if (Class == Job_Novice) {
-		if (job_acolyte_q == 6) {
+		if (ACO_Q== 6) {
 			mes "[Father Rubalkabara]";
 			mes "Please take care. They should know that you've met me by the time you arrive at the Prontera Sanctuary.";
 			next;
@@ -134,8 +134,8 @@ prt_fild03,365,255,2	script	Ascetic#aco	89,{
 			mes "I've sent a carrier pigeon with a message. I hope it will arrive there safely...";
 			close;
 		}
-		if (job_acolyte_q != 0) {
-			if (job_acolyte_q == 2) {
+		if (ACO_Q!= 0) {
+			if (ACO_Q== 2) {
 				mes "[Father Rubalkabara]";
 				mes "Oh...? You must be the one who aspires to become an Acolyte. I've already received news from the Sanctuary that you might be coming.";
 				next;
@@ -157,7 +157,7 @@ prt_fild03,365,255,2	script	Ascetic#aco	89,{
 				mes "[Father Rubalkabara]";
 				mes "Farewell.";
 				savepoint "prt_fild03",361,255;
-				set job_acolyte_q,6;
+				set ACO_Q,6;
 				close;
 			}
 			mes "[Father Rubalkabara]";
@@ -180,8 +180,8 @@ prt_fild03,365,255,2	script	Ascetic#aco	89,{
 		close;
 	}
 	if (Class == Job_Baby_Acolyte || Class == Job_Acolyte) {
-		if (job_priest_q != 0) {
-			if (job_priest_q == 1) {
+		if (PRST_Q != 0) {
+			if (PRST_Q == 1) {
 				mes "[Father Rubalkabara]";
 				mes "Ah yes, so you're the young Acolyte who wishes to become a Priest.";
 				next;
@@ -194,10 +194,10 @@ prt_fild03,365,255,2	script	Ascetic#aco	89,{
 				mes "[Father Rubalkabara]";
 				mes "Well then, please head to your next destination for your pilgrimage. Be safe in your travels.";
 				savepoint "prt_fild03",361,255;
-				set job_priest_q,2;
+				set PRST_Q,2;
 				close;
 			}
-			if (job_priest_q == 2) {
+			if (PRST_Q == 2) {
 				mes "[Father Rubalkabara]";
 				mes "Please be hurry to the next destination for your pilgrimage. I hope you become a Priest soon.";
 				close;
@@ -229,7 +229,7 @@ prt_fild03,365,255,2	script	Ascetic#aco	89,{
 
 moc_fild07,41,355,4	script	Ascetic#2	95,{
 	if (Class == Job_Novice) {
-		if (job_acolyte_q == 6) {
+		if (ACO_Q== 6) {
 			mes "[Mother Marthilda]";
 			mes "I will send a carrier pigeon to the Prontera Sanctuary. When you return, the Priest there should already have received my message.";
 			next;
@@ -237,8 +237,8 @@ moc_fild07,41,355,4	script	Ascetic#2	95,{
 			mes "I will pray to God, and hope that you become an Acolyte soon.";
 			close;
 		}
-		if (job_acolyte_q != 0) {
-			if (job_acolyte_q == 3) {
+		if (ACO_Q!= 0) {
+			if (ACO_Q== 3) {
 				mes "[Mother Marthilda]";
 				mes "Ah, you must be one of the Acolyte applicants. I sincerely welcome you.";
 				next;
@@ -251,7 +251,7 @@ moc_fild07,41,355,4	script	Ascetic#2	95,{
 				mes "[Mother Marthilda]";
 				mes "Please return to the Prontera Sanctuary and speak to the Priest in charge.";
 				savepoint "moc_fild07",35,355;
-				set job_acolyte_q,7;
+				set ACO_Q,7;
 				close;
 			}
 			mes "[Mother Marthilda]";
@@ -278,8 +278,8 @@ moc_fild07,41,355,4	script	Ascetic#2	95,{
 		close;
 	}
 	if (Class == Job_Baby_Acolyte || Class == Job_Acolyte) {
-		if (job_priest_q != 0) {
-			if (job_priest_q == 1) {
+		if (PRST_Q != 0) {
+			if (PRST_Q == 1) {
 				mes "[Mother Marthilda]";
 				mes "Hmm...";
 				mes "It seems you're";
@@ -293,7 +293,7 @@ moc_fild07,41,355,4	script	Ascetic#2	95,{
 				mes "Perhaps you should ask Bishop Paul or Sister Cecilia once again. Well, may God be with you...";
 				close;
 			}
-			if (job_priest_q == 2) {
+			if (PRST_Q == 2) {
 				mes "[Mother Marthilda]";
 				mes "Ah, are you";
 				mes "a Priest trainee...?";
@@ -312,10 +312,10 @@ moc_fild07,41,355,4	script	Ascetic#2	95,{
 				mes "God for safety";
 				mes "on your journey.";
 				savepoint "moc_fild07",35,355;
-				set job_priest_q,3;
+				set PRST_Q,3;
 				close;
 			}
-			if (job_priest_q == 3) {
+			if (PRST_Q == 3) {
 				mes "[Mother Marthilda]";
 				mes "Please leave soon, and";
 				mes "continue your training.";
@@ -346,7 +346,7 @@ moc_fild07,41,355,4	script	Ascetic#2	95,{
 
 prt_fild00,208,218,6	script	Ascetic#3	98,{
 	if (Class == Job_Novice) {
-		if (job_acolyte_q == 8) {
+		if (ACO_Q== 8) {
 			mes "[Father Yosuke]";
 			mes "What?";
 			next;
@@ -354,8 +354,8 @@ prt_fild00,208,218,6	script	Ascetic#3	98,{
 			mes "Have you any more business with me?! You don't! Go back to the Sanctuary now!";
 			close;
 		}
-		if (job_acolyte_q != 0) {
-			if (job_acolyte_q == 4) {
+		if (ACO_Q!= 0) {
+			if (ACO_Q== 4) {
 				mes "[Father Yosuke]";
 				mes "Hey.";
 				mes "Whatever you are,";
@@ -376,7 +376,7 @@ prt_fild00,208,218,6	script	Ascetic#3	98,{
 				mes "[Father Yosuke]";
 				mes "Now go back to the Santuary and finish becoming an Acolyte, kid.";
 				savepoint "prt_fild00",206,230;
-				set job_acolyte_q,8;
+				set ACO_Q,8;
 				close;
 			}
 			mes "[Father Yosuke]";
@@ -401,8 +401,8 @@ prt_fild00,208,218,6	script	Ascetic#3	98,{
 		close;
 	}
 	if (Class == Job_Baby_Acolyte || Class == Job_Acolyte) {
-		if (job_priest_q != 0) {
-			if (job_priest_q == 1) {
+		if (PRST_Q != 0) {
+			if (PRST_Q == 1) {
 				mes "[Father Yosuke]";
 				mes "Hmm...";
 				mes "A Priest trainee, eh?";
@@ -415,7 +415,7 @@ prt_fild00,208,218,6	script	Ascetic#3	98,{
 				mes "Now, go back to Church, kid.";
 				close;
 			}
-			if (job_priest_q == 2) {
+			if (PRST_Q == 2) {
 				mes "[Father Yosuke]";
 				mes "Hmm...";
 				mes "A Priest trainee, eh?";
@@ -427,7 +427,7 @@ prt_fild00,208,218,6	script	Ascetic#3	98,{
 				mes "But that's your own fault. Go back to Church.";
 				close;
 			}
-			if (job_priest_q == 3) {
+			if (PRST_Q == 3) {
 				mes "[Father Yosuke]";
 				mes "Hmm.";
 				mes "A Priest";
@@ -446,10 +446,10 @@ prt_fild00,208,218,6	script	Ascetic#3	98,{
 				mes "your trials is now";
 				mes "completed.";
 				savepoint "prt_fild00",206,230;
-				set job_priest_q,4;
+				set PRST_Q,4;
 				close;
 			}
-			if (job_priest_q == 4) {
+			if (PRST_Q == 4) {
 				mes "[Father Yosuke]";
 				mes "I told you to go back to church.";
 				mes "Or do you want to live with me here for the rest of your life...?";
