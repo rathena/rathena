@@ -2055,8 +2055,7 @@ void mob_log_damage(struct mob_data *md, struct block_list *src, int damage)
 //Call when a mob has received damage.
 void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 {
-	if (damage > 0)
-	{	//Store total damage...
+	if (damage > 0) { //Store total damage...
 		if (UINT_MAX - (unsigned int)damage > md->tdmg)
 			md->tdmg+=damage;
 		else if (md->tdmg == UINT_MAX)
@@ -2065,8 +2064,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 			damage = (int)(UINT_MAX - md->tdmg);
 			md->tdmg = UINT_MAX;
 		}
-		if (md->state.aggressive)
-		{	//No longer aggressive, change to retaliate AI.
+		if (md->state.aggressive) { //No longer aggressive, change to retaliate AI.
 			md->state.aggressive = 0;
 			if(md->state.skillstate== MSS_ANGRY)
 				md->state.skillstate = MSS_BERSERK;
@@ -2085,8 +2083,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 	if (!src)
 		return;
 	
-	if(md->special_state.ai==2/* && md->master_id == src->id*/)
-	{	//LOne WOlf explained that ANYONE can trigger the marine countdown skill. [Skotlex]
+	if( md->special_state.ai == 2 ) {//LOne WOlf explained that ANYONE can trigger the marine countdown skill. [Skotlex]
 		md->state.alchemist = 1;
 		mobskill_use(md, gettick(), MSC_ALCHEMIST);
 	}
@@ -2135,11 +2132,12 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 	if(src && src->type == BL_MOB)
 		mob_unlocktarget((struct mob_data *)src,tick);
-
-	if( sd )
-	{
-		if( sd->mission_mobid == md->class_)
-		{ //TK_MISSION [Skotlex]
+	
+	/* clear previous target otherwise we'll respawn aiming at the same dude */
+	md->attacked_id = 0;
+	
+	if( sd ) {
+		if( sd->mission_mobid == md->class_) { //TK_MISSION [Skotlex]
 			if( ++sd->mission_count >= 100 && (temp = mob_get_random_id(0, 0xE, sd->status.base_level)) )
 			{
 				pc_addfame(sd, 1);
@@ -2152,8 +2150,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		}
 		if( sd->status.party_id )
 			map_foreachinrange(quest_update_objective_sub,&md->bl,AREA_SIZE,BL_PC,sd->status.party_id,md->class_);
-		else
-		if( sd->avail_quests )
+		else if( sd->avail_quests )
 			quest_update_objective(sd, md->class_);
 	}
 

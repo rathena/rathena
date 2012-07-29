@@ -1204,8 +1204,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 			status_change_end(target, SC_SATURDAYNIGHTFEVER, INVALID_TIMER);
 	}
 
-	switch (target->type)
-	{
+	switch (target->type) {
 		case BL_PC:  pc_damage((TBL_PC*)target,src,hp,sp); break;
 		case BL_MOB: mob_damage((TBL_MOB*)target, src, hp); break;
 		case BL_HOM: merc_damage((TBL_HOM*)target,src,hp,sp); break;
@@ -1213,8 +1212,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		case BL_ELEM: elemental_damage((TBL_ELEM*)target,src,hp,sp); break;
 	}
 
-	if( target->type == BL_PC && ((TBL_PC*)target)->disguise && src )
-	{// stop walking when attacked in disguise to prevent walk-delay bug
+	if( src && target->type == BL_PC && ((TBL_PC*)target)->disguise ) {// stop walking when attacked in disguise to prevent walk-delay bug
 		unit_stop_walking( target, 1 );
 	}
 
