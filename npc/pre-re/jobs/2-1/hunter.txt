@@ -31,7 +31,7 @@ in_hunter,99,99,4	script	Hunter Info	727,{
 	close;
 }
 
-pay_fild10,148,252,3	script	Job Change Location Change Notice#hugel	857,{
+pay_fild10,148,252,3	script	Hunter Info#hugel	857,{
 	mes "============ Notice ============";
 	mes "We would like to inform that the Hunter Job Change Location";
 	mes "has been moved to ^ff0000Hugel^000000 in the Schwaltzvalt Republic.";
