@@ -16154,7 +16154,7 @@ void clif_parse_SkillSelectMenu(int fd, struct map_session_data *sd) {
  *------------------------------------------*/
 void clif_talisman(struct map_session_data *sd,short type)
 {
-	unsigned char buf[8];
+	unsigned char buf[10];
 
 	nullpo_retv(sd);
 
