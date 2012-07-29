@@ -351,18 +351,23 @@ int battle_attr_fix(struct block_list *src, struct block_list *target, int damag
 				status_change_end(target, SC_CRYSTALIZE, INVALID_TIMER);
 		}
 	}
-	if( src->type == BL_PC || target->type == BL_PC ){
+	if( src->type == BL_PC ){
 		struct map_session_data *sd = BL_CAST(BL_PC, src);
-		struct map_session_data *tsd = BL_CAST(BL_PC, target);
-		int s, t;
+		int s;
 
 		ARR_FIND(1, 6, s, sd->talisman[s] > 0);
-		ARR_FIND(1, 6, t, tsd->talisman[t] > 0);
 
 		if( s < 5 && atk_elem == s )
 			ratio += sd->talisman[s] * 2; // +2% custom value
+	}
+	if( target->type == BL_PC ) {
+		struct map_session_data *tsd = BL_CAST(BL_PC, target);
+		int t;
+		
+		ARR_FIND(1, 6, t, tsd->talisman[t] > 0);
+		
 		if( t < 5 && atk_elem == t )
-			damage -= damage * tsd->talisman[t] * 3 / 100; // -3% custom value
+			damage -= damage * tsd->talisman[t] * 3 / 100; // -3% custom value		
 	}
 	return damage*ratio/100;
 }
