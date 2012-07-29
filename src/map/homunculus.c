@@ -371,7 +371,7 @@ int hom_mutate(struct homun_data *hd, int homun_id)
 	m_class = hom_class2mapid(hd->homunculus.class_);
 	m_id    = hom_class2mapid(homun_id);
 	
-	if( !m_class&HOM_EVO || !m_id&HOM_S ) {
+	if( !(m_class&HOM_EVO) || !(m_id&HOM_S) ) {
 		clif_emotion(&hd->bl, E_SWT);
 		return 0;
 	}

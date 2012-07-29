@@ -3234,7 +3234,9 @@ static signed short status_calc_mdef2(struct block_list *,struct status_change *
 static unsigned short status_calc_speed(struct block_list *,struct status_change *,int);
 static short status_calc_aspd_rate(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_dmotion(struct block_list *bl, struct status_change *sc, int dmotion);
+#ifdef RENEWAL_ASPD
 static short status_calc_aspd(struct block_list *bl, struct status_change *sc, short flag);
+#endif
 static unsigned int status_calc_maxhp(struct block_list *,struct status_change *,unsigned int);
 static unsigned int status_calc_maxsp(struct block_list *,struct status_change *,unsigned int);
 static unsigned char status_calc_element(struct block_list *bl, struct status_change *sc, int element);
@@ -5058,6 +5060,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 	return (short)cap_value(speed,10,USHRT_MAX);
 }
 
+#ifdef RENEWAL_ASPD
 // flag&1 - fixed value [malufett]
 // flag&2 - percentage value
 static short status_calc_aspd(struct block_list *bl, struct status_change *sc, short flag)
@@ -5181,6 +5184,7 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, s
 
 	return ( flag&1? (skills1 + pots) : skills2 );
 }
+#endif
 
 /// Calculates an object's ASPD modifier (alters the base amotion value).
 /// Note that the scale of aspd_rate is 1000 = 100%.
