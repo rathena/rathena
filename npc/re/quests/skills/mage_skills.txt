@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //= 1.6 Fixed a typo in job check. (Bugreport:1531) [L0ne_W0lf]
 //= 1.7 Updated to latest available official file. [Masao]
+//= 1.8 Fixed JobLevel requirements. [Euphy]
 //============================================================
 
 geffen_in,151,119,4	script	Great Wizard	64,{
@@ -21,7 +22,7 @@ geffen_in,151,119,4	script	Great Wizard	64,{
 	mes "Look into yourself to discover";
 	mes "your hidden abilities !";
 	next;
-	switch (select(" About mage's hidden ability :About skill ^3355FF' Energy Coat '^000000 :End conversation")) {
+	switch (select("About mage's hidden ability :About skill ^3355FF' Energy Coat '^000000 :End conversation")) {
 	case 1:
 		mes "[BLIZZARDRISS]";
 		mes "For many years";
@@ -92,7 +93,7 @@ geffen_in,151,119,4	script	Great Wizard	64,{
 			mes "I have nothing more to teach you ...";
 			close;
 		}
-		if ((countitem(746) > 2) && (countitem(730) > 0) && (countitem(935) > 4) && (countitem(943) > 0) && (JobLevel > 34) && (BaseClass == Job_Mage)) {
+		if ((countitem(746) > 2) && (countitem(730) > 0) && (countitem(935) > 4) && (countitem(943) > 0) && (JobLevel > 34 || (BaseJob == Job_Wizard || BaseJob == Job_Sage)) && (BaseClass == Job_Mage)) {
 			mes "[BLIZZARDRISS]";
 			mes "Okay, I have received your request.";
 			mes "I will now awaken your hidden energies . .";
@@ -138,7 +139,7 @@ geffen_in,151,119,4	script	Great Wizard	64,{
 		mes "Didn't you listen to my explanation ? !";
 		mes "You have not prepared fully";
 		mes "for me to assist you.";
-		mes "Check that you have me all the requirements";
+		mes "Check that you have all the requirements.";
 		next;
 		mes "[BLIZZARDRISS]";
 		mes "If you need me to explain";

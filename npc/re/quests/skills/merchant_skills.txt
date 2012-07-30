@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
-//= 1.6
+//= 1.7
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -12,6 +12,7 @@
 //===== Additional Comments: =================================
 //= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //= 1.6 Updated to latest available official file. [Masao]
+//= 1.7 Fixed JobLevel requirements. [Euphy]
 //============================================================
 
 alberta,83,96,5	script	Necko	98,7,7,{
@@ -61,7 +62,7 @@ alberta,83,96,5	script	Necko	98,7,7,{
 			mes "Kyukwakakakakakakakakakaka!";
 			close;
 		}
-		else if ((countitem(722) > 6) && (countitem(532) > 0) && (countitem(921) > 49) && (JobLevel >= 15)) {
+		else if ((countitem(722) > 6) && (countitem(532) > 0) && (countitem(921) > 49) && (JobLevel >= 15 || (BaseJob == Job_Blacksmith || BaseJob == Job_Alchemist))) {
 			mes "[Necko]";
 			mes "Oh! You!";
 			mes "You are qualified to learn how to shout!";
@@ -200,7 +201,7 @@ alberta,119,221,6	script	Charlron	107,{
 			mes "Be healthy~";
 			close;
 		}
-		else if (JobLevel >= 30) {
+		else if (JobLevel >= 30|| (BaseJob == Job_Blacksmith || BaseJob == Job_Alchemist)) {
 			mes "[Charlron]";
 			mes "Nice to see you fellow merchant";
 			mes "If I remember correctly,";
@@ -347,7 +348,7 @@ alberta,232,103,6	script	Gershaun	57,{
 			mes "Here! Hurry!";
 			close;
 		}
-		else if ((BaseClass == Job_Merchant) && (JobLevel >= 35)) {
+		else if (JobLevel >= 35 || (BaseJob == Job_Blacksmith || BaseJob == Job_Alchemist)) {
 			mes "[Gershaun]";
 			mes "Ooh. You have a firm body";
 			mes "for a merchant. You must be";

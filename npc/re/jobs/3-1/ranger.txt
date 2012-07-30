@@ -4,7 +4,7 @@
 //= Masao
 //= Credits: Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= Any rAthena SVN
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= part until M_DESERT_WOLF_B Mercenary is fully working.
 //= 1.3 Fixed waves not being announced and counted [Elias]
 //= 1.3a Little beauty fix, changed break; to next; . [Masao]
+//= 1.4 Some optimization. [Euphy]
 //============================================================
 
 tur_dun01,156,36,5	script	Survival Instructor#jr01	59,{
@@ -35,13 +36,10 @@ tur_dun01,156,36,5	script	Survival Instructor#jr01	59,{
 			mes "The monsters here are a";
 			mes "little tough so be careful.";
 			next;
-			switch(select("I came here to become a Ranger.:I just came to look around."))
+			if(select("I came here to become a Ranger.:I just came to look around.") == 2)
 			{
-			case 1:
-				break;
-			case 2:
 				mes "[Survival Instructor, Rescue]";
-				mes "Oh ya.?";
+				mes "Oh ya?";
 				mes "The weather is really great. Shall we take a picture to commemorate it?";
 				next;
 				mes "[Survival Instructor, Rescue]";
@@ -206,17 +204,14 @@ tur_dun01,156,36,5	script	Survival Instructor#jr01	59,{
 				mes "Remember that you don't have any other equipment on, so be careful of the monsters.";
 				mes "Ready to start?";
 				next;
-				switch(select("Wait a second:Yes, I'm ready"))
+				if(select("Wait a second:Yes, I'm ready") == 1)
 				{
-				case 1:
 					mes "[Survival Instructor, Rescue]";
 					mes "What kind of preparation can be so long.";
 					next;
 					mes "[Survival Instructor, Rescue]";
 					mes "Come again when you are absolutely ready.";
 					close;
-				case 2:
-					break;
 				}
 				mes "[Survival Instructor, Rescue]";
 				mes "Well, then let's start.";
@@ -264,17 +259,14 @@ tur_dun01,156,36,5	script	Survival Instructor#jr01	59,{
 				mes "As you don't have any equipment on, be careful of the monsters in the field.";
 				mes "Well, shall we start?";
 				next;
-				switch(select("Wait a minute:I will start"))
+				if(select("Wait a minute:I will start") == 1)
 				{
-				case 1:
 					mes "[Survival Instructor, Rescue]";
 					mes "What kind of preparation can be so long.";
 					next;
 					mes "[Survival Instructor, Rescue]";
 					mes "Come again when you are absolutely ready.";
 					close;
-				case 2:
-					break;
 				}
 				mes "[Survival Instructor, Rescue]";
 				mes "Okay, let's start.";
@@ -401,9 +393,8 @@ tur_dun01,91,169,3	script	Test Instructor#jr02	732,{
 			mes "[Test Instructor, Teardrop]";
 			mes "That you are coming and going bugs me so, would you please stop?!";
 			next;
-			switch(select("Ranger practical test building?:I came for the test."))
+			if(select("Ranger practical test building?:I came for the test.") == 1)
 			{
-			case 1:
 				mes "[Test Instructor, Teardrop]";
 				mes "What, what are you...?";
 				next;
@@ -413,8 +404,6 @@ tur_dun01,91,169,3	script	Test Instructor#jr02	732,{
 				mes "[Test Instructor, Teardrop]";
 				mes "How could you be a Ranger if you can't even recognize what's in front of you? Get out of here!";
 				close;
-			case 2:
-				break;
 			}
 			mes "[Test Instructor, Teardrop]";
 			mes "Ho, having come this far, it means you've passed the first survival test.";
@@ -821,14 +810,11 @@ tur_dun01,91,169,3	script	Test Instructor#jr02	732,{
 			mes "Because you've disappeared suddenly, the Ranger Master was looking for you.";
 			mes "Dou you want to go to him now?";
 			next;
-			switch(select("Don't go:Go"))
+			if(select("Don't go:Go") == 1)
 			{
-			case 1:
 				mes "[Test Instructor, Teardrop]";
 				mes "Are you busy with something else?";
 				close;
-			case 2:
-				break;
 			}
 			mes "[Test Instructor, Teardrop]";
 			mes "Then I'll send you, please be well.";
@@ -912,11 +898,8 @@ job3_rang01,30,44,3	script	Test Waiting Room#jr_03	88,{
 		mes "Please think about it again.";
 		mes "If you give up here, your job change request will be cancelled. Do you really want to give up the job change to a Ranger?";
 		next;
-		switch(select("No, I'll continue with the test:I give up the Ranger job change"))
+		if(select("No, I'll continue with the test:I give up the Ranger job change") == 2)
 		{
-		case 1:
-			break;
-		case 2:
 			mes "[Staff DTS]";
 			mes "You don't have as many guts as I thought.";
 			nude;
@@ -1063,6 +1046,10 @@ OnInit:
 
 OnEnable:
 	set $@job_rang_point01,0;
+	set $@job_rang_text01,0;
+	setarray .text$[1],
+		"First","Second","Third","Fourth","Fifth","Sixth","Seventh","Eighth","Ninth","Tenth","Eleventh",
+		"Twelfth","Thirteenth","Fourteenth","Fifteenth","Sixteenth","Seventeenth","Eighteenth","Nineteenth","Last";
 	enablenpc "First Test Timer#jr_05";
 	initnpctimer;
 	end;
@@ -1072,204 +1059,53 @@ OnDisable:
 	disablenpc "First Test Timer#jr_05";
 	end;
 
-OnTimer3000:
-	mapannounce "job3_rang02","Test Supervisor, Notice : First Wave! Kill the Poring!",bc_map;
-	donpcevent "Correct Monster Summon::OnStart";
-	end;
-
 OnTimer8000:
-	donpcevent "Correct Monster Summon::OnReset";
-	donpcevent "False Monster Summon::OnReset";
-	end;
-
-OnTimer10000:
-	mapannounce "job3_rang02","Test Supervisor, Notice : Second Wave! Kill the Poring!",bc_map;
-	donpcevent "Correct Monster Summon::OnStart";
-	end;
-
 OnTimer15000:
-	donpcevent "Correct Monster Summon::OnReset";
-	donpcevent "False Monster Summon::OnReset";
-	end;
-
-OnTimer17000:
-	mapannounce "job3_rang02","Test Supervisor, Notice : Third Wave! Kill the Poring!",bc_map;
-	donpcevent "Correct Monster Summon::OnStart";
-	end;
-
 OnTimer22000:
-	donpcevent "Correct Monster Summon::OnReset";
-	donpcevent "False Monster Summon::OnReset";
-	end;
-
-OnTimer24000:
-	mapannounce "job3_rang02","Test Supervisor, Notice : Fourth Wave! Kill the Poring!",bc_map;
-	donpcevent "Correct Monster Summon::OnStart";
-	end;
-
 OnTimer29000:
-	donpcevent "Correct Monster Summon::OnReset";
-	donpcevent "False Monster Summon::OnReset";
-	end;
-
-OnTimer31000:
-	mapannounce "job3_rang02","Test Supervisor, Notice : Fifth Wave! Kill the Poring!",bc_map;
-	donpcevent "Correct Monster Summon::OnStart";
-	end;
-
 OnTimer36000:
-	donpcevent "Correct Monster Summon::OnReset";
-	donpcevent "False Monster Summon::OnReset";
-	end;
-
-OnTimer38000:
-	mapannounce "job3_rang02","Test Supervisor, Notice : Sixth Wave! Kill the Poring!",bc_map;
-	donpcevent "Correct Monster Summon::OnStart";
-	end;
-
 OnTimer43000:
-	donpcevent "Correct Monster Summon::OnReset";
-	donpcevent "False Monster Summon::OnReset";
-	end;
-
-OnTimer45000:
-	mapannounce "job3_rang02","Test Supervisor, Notice : Seventh Wave! Kill the Poring!",bc_map;
-	donpcevent "Correct Monster Summon::OnStart";
-	end;
-
 OnTimer50000:
-	donpcevent "Correct Monster Summon::OnReset";
-	donpcevent "False Monster Summon::OnReset";
-	end;
-
-OnTimer52000:
-	mapannounce "job3_rang02","Test Supervisor, Notice : Eight Wave! Kill the Poring!",bc_map;
-	donpcevent "Correct Monster Summon::OnStart";
-	end;
-
 OnTimer57000:
-	donpcevent "Correct Monster Summon::OnReset";
-	donpcevent "False Monster Summon::OnReset";
-	end;
-
-OnTimer59000:
-	mapannounce "job3_rang02","Test Supervisor, Notice : Nineth Wave! Kill the Poring!",bc_map;
-	donpcevent "Correct Monster Summon::OnStart";
-	end;
-
 OnTimer64000:
-	donpcevent "Correct Monster Summon::OnReset";
-	donpcevent "False Monster Summon::OnReset";
-	end;
-
-OnTimer66000:
-	mapannounce "job3_rang02","Test Supervisor, Notice : Tenth Wave! Kill the Poring!",bc_map;
-	donpcevent "Correct Monster Summon::OnStart";
-	end;
-
 OnTimer71000:
-	donpcevent "Correct Monster Summon::OnReset";
-	donpcevent "False Monster Summon::OnReset";
-	end;
-
-OnTimer73000:
-	mapannounce "job3_rang02","Test Supervisor, Notice : Eleventh Wave! Kill the Poring!",bc_map;
-	donpcevent "Correct Monster Summon::OnStart";
-	end;
-
 OnTimer78000:
-	donpcevent "Correct Monster Summon::OnReset";
-	donpcevent "False Monster Summon::OnReset";
-	end;
-
-OnTimer80000:
-	mapannounce "job3_rang02","Test Supervisor, Notice : Twelfth Wave! Kill the Poring!",bc_map;
-	donpcevent "Correct Monster Summon::OnStart";
-	end;
-
 OnTimer85000:
-	donpcevent "Correct Monster Summon::OnReset";
-	donpcevent "False Monster Summon::OnReset";
-	end;
-
-OnTimer87000:
-	mapannounce "job3_rang02","Test Supervisor, Notice : Thirteenth Wave! Kill the Poring!",bc_map;
-	donpcevent "Correct Monster Summon::OnStart";
-	end;
-
 OnTimer92000:
-	donpcevent "Correct Monster Summon::OnReset";
-	donpcevent "False Monster Summon::OnReset";
-	end;
-
-OnTimer94000:
-	mapannounce "job3_rang02","Test Supervisor, Notice : Fourteenth Wave! Kill the Poring!",bc_map;
-	donpcevent "Correct Monster Summon::OnStart";
-	end;
-
 OnTimer99000:
-	donpcevent "Correct Monster Summon::OnReset";
-	donpcevent "False Monster Summon::OnReset";
-	end;
-
-OnTimer101000:
-	mapannounce "job3_rang02","Test Supervisor, Notice : Fifteenth Wave! Kill the Poring!",bc_map;
-	donpcevent "Correct Monster Summon::OnStart";
-	end;
-
 OnTimer106000:
-	donpcevent "Correct Monster Summon::OnReset";
-	donpcevent "False Monster Summon::OnReset";
-	end;
-
-OnTimer108000:
-	mapannounce "job3_rang02","Test Supervisor, Notice : Sixteenth Wave! Kill the Poring!",bc_map;
-	donpcevent "Correct Monster Summon::OnStart";
-	end;
-
 OnTimer113000:
-	donpcevent "Correct Monster Summon::OnReset";
-	donpcevent "False Monster Summon::OnReset";
-	end;
-
-OnTimer115000:
-	mapannounce "job3_rang02","Test Supervisor, Notice : Seventeenth Wave! Kill the Poring!",bc_map;
-	donpcevent "Correct Monster Summon::OnStart";
-	end;
-
 OnTimer120000:
-	donpcevent "Correct Monster Summon::OnReset";
-	donpcevent "False Monster Summon::OnReset";
-	end;
-
-OnTimer122000:
-	mapannounce "job3_rang02","Test Supervisor, Notice : Eighteenth Wave! Kill the Poring!",bc_map;
-	donpcevent "Correct Monster Summon::OnStart";
-	end;
-
 OnTimer127000:
-	donpcevent "Correct Monster Summon::OnReset";
-	donpcevent "False Monster Summon::OnReset";
-	end;
-
-OnTimer129000:
-	mapannounce "job3_rang02","Test Supervisor, Notice : Nineteenth Wave! Kill the Poring!",bc_map;
-	donpcevent "Correct Monster Summon::OnStart";
-	end;
-
 OnTimer134000:
-	donpcevent "Correct Monster Summon::OnReset";
-	donpcevent "False Monster Summon::OnReset";
-	end;
-
-OnTimer136000:
-	mapannounce "job3_rang02","Test Supervisor, Notice : Last Wave! Kill the Poring!",bc_map;
-	donpcevent "Correct Monster Summon::OnStart";
-	end;
-
 OnTimer141000:
 	donpcevent "Correct Monster Summon::OnReset";
 	donpcevent "False Monster Summon::OnReset";
+	end;
+
+OnTimer3000:
+OnTimer10000:
+OnTimer17000:
+OnTimer24000:
+OnTimer31000:
+OnTimer38000:
+OnTimer45000:
+OnTimer52000:
+OnTimer59000:
+OnTimer66000:
+OnTimer73000:
+OnTimer80000:
+OnTimer87000:
+OnTimer94000:
+OnTimer101000:
+OnTimer108000:
+OnTimer115000:
+OnTimer122000:
+OnTimer129000:
+OnTimer136000:
+	set $@job_rang_text01,$@job_rang_text01+1;
+	mapannounce "job3_rang02","Test Supervisor, Notice : "+.text$[$@job_rang_text01]+" Wave! Kill the Poring!",bc_map;
+	donpcevent "Correct Monster Summon::OnStart";
 	end;
 
 OnTimer143000:
@@ -1309,6 +1145,7 @@ OnTimer154000:
 OnTimer157000:
 	mapwarp "job3_rang02","tur_dun01",93,165;
 	set $@job_rang_point01,0;
+	set $@job_rang_text01,0;
 	stopnpctimer;
 	donpcevent "Test Supervisor#jr_04::OnDisable";
 	donpcevent "Practical Test::OnEnable";
@@ -1323,135 +1160,13 @@ OnDisable:
 	end;
 
 OnStart:
-	set .@job_ranger_pattern01,rand(1,32);
-	if (.@job_ranger_pattern01 == 1)
-	{
-		donpcevent "False Monster Summon::OnOne";
-		monster "job3_rang02",35,58,"Poring",1002,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 2)
-	{
-		donpcevent "False Monster Summon::OnOne";
-		monster "job3_rang02",35,58,"Poring",1031,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 3)
-	{
-		donpcevent "False Monster Summon::OnOne";
-		monster "job3_rang02",35,58,"Poring",1242,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 4)
-	{
-		donpcevent "False Monster Summon::OnOne";
-		monster "job3_rang02",35,58,"Poring",1113,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 5)
-	{
-		donpcevent "False Monster Summon::OnTwo";
-		monster "job3_rang02",44,58,"Poring",1002,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 6)
-	{
-		donpcevent "False Monster Summon::OnTwo";
-		monster "job3_rang02",44,58,"Poring",1031,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 7)
-	{
-		donpcevent "False Monster Summon::OnTwo";
-		monster "job3_rang02",44,58,"Poring",1242,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 8)
-	{
-		donpcevent "False Monster Summon::OnTwo";
-		monster "job3_rang02",44,58,"Poring",1113,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 9)
-	{
-		donpcevent "False Monster Summon::OnThree";
-		monster "job3_rang02",54,58,"Poring",1002,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 10)
-	{
-		donpcevent "False Monster Summon::OnThree";
-		monster "job3_rang02",54,58,"Poring",1031,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 11)
-	{
-		donpcevent "False Monster Summon::OnThree";
-		monster "job3_rang02",54,58,"Poring",1242,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 12)
-	{
-		donpcevent "False Monster Summon::OnThree";
-		monster "job3_rang02",54,58,"Poring",1113,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 13)
-	{
-		donpcevent "False Monster Summon::OnFour";
-		monster "job3_rang02",35,49,"Poring",1002,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 14)
-	{
-		donpcevent "False Monster Summon::OnFour";
-		monster "job3_rang02",35,49,"Poring",1031,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 15)
-	{
-		donpcevent "False Monster Summon::OnFour";
-		monster "job3_rang02",35,49,"Poring",1242,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 16)
-	{
-		donpcevent "False Monster Summon::OnFour";
-		monster "job3_rang02",35,49,"Poring",1113,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 17)
-	{
-		donpcevent "False Monster Summon::OnFive";
-		monster "job3_rang02",54,49,"Poring",1002,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 18)
-	{
-		donpcevent "False Monster Summon::OnFive";
-		monster "job3_rang02",54,49,"Poring",1031,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 19)
-	{
-		donpcevent "False Monster Summon::OnFive";
-		monster "job3_rang02",54,49,"Poring",1242,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 20)
-	{
-		donpcevent "False Monster Summon::OnFive";
-		monster "job3_rang02",54,49,"Poring",1031,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 21)
-	{
-		donpcevent "False Monster Summon::OnSix";
-		monster "job3_rang02",35,39,"Poring",1002,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 22)
-	{
-		donpcevent "False Monster Summon::OnSix";
-		monster "job3_rang02",35,39,"Poring",1031,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 23)
-	{
-		donpcevent "False Monster Summon::OnSix";
-		monster "job3_rang02",35,39,"Poring",1242,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 24)
-	{
-		donpcevent "False Monster Summon::OnSix";
-		monster "job3_rang02",35,39,"Poring",1113,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 25)
-	{
-		donpcevent "False Monster Summon::OnSeven";
-		monster "job3_rang02",44,39,"Poring",1002,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 26)
-	{
-		donpcevent "False Monster Summon::OnSeven";
-		monster "job3_rang02",44,39,"Poring",1031,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 27)
-	{
-		donpcevent "False Monster Summon::OnSeven";
-		monster "job3_rang02",44,39,"Poring",1242,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 28)
-	{
-		donpcevent "False Monster Summon::OnSeven";
-		monster "job3_rang02",44,39,"Poring",1113,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 29)
-	{
-		donpcevent "False Monster Summon::OnEight";
-		monster "job3_rang02",54,39,"Poring",1002,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 30)
-	{
-		donpcevent "False Monster Summon::OnEight";
-		monster "job3_rang02",54,39,"Poring",1031,1,"Correct Monster Summon::OnMyMobDead";
-	}else if (.@job_ranger_pattern01 == 31)
-	{
-		donpcevent "False Monster Summon::OnEight";
-		monster "job3_rang02",54,39,"Poring",1242,1,"Correct Monster Summon::OnMyMobDead";
-	}else {
-		donpcevent "False Monster Summon::OnEight";
-		monster "job3_rang02",54,39,"Poring",1113,1,"Correct Monster Summon::OnMyMobDead";
-	}
+	setarray .@job_ranger_n01$[0],"OnOne","OnTwo","OnThree","OnFour","OnFive","OnSix","OnSeven","OnEight";
+	setarray .@job_ranger_lx01[0],35,44,54,35,54,35,44,54;
+	setarray .@job_ranger_ly01[0],58,58,58,49,49,39,39,39;
+	setarray .@job_ranger_lm01[0],1002,1031,1242,1113;
+	set .@i, rand(8);
+	donpcevent "False Monster Summon::"+.@job_ranger_n01$[.@i];
+	monster "job3_rang02",.@job_ranger_lx01[.@i],.@job_ranger_ly01[.@i],"Poring",.@job_ranger_lm01[rand(4)],1,"Correct Monster Summon::OnMyMobDead";
 	end;
 
 OnReset:
@@ -1670,7 +1385,7 @@ OnTimer209000:
 	end;
 
 OnTimer210000:
-	mapannounce "job3_rang02","Test Supervisor, Caution : Ugh.. What are you doing? Your time is up!",bc_map;
+	mapannounce "job3_rang02","Test Supervisor, Caution : Ugh... What are you doing? Your time is up!",bc_map;
 	end;
 
 OnTimer213000:
@@ -1953,305 +1668,39 @@ OnTimer9000:
 
 OnTimer12000:
 	mapannounce "job3_rang02","Test Supervisor, Freeze : The 'Egg Bombs' will spawn 20 times! Each time you successfully dismantle one, you get 1 point! If you get 10 ore more points, you pass the preactical test, so go for it! Then I'll start!!!!!",bc_map;
+	set .n,14;
 	end;
 
 OnTimer15000:
-	set .@rand,rand(1,3);
-	if (.@rand == 1)
-	{
-		donpcevent "Egg Bomb#job_ranger14::OnEnable";
-	}else if (.@rand == 2)
-	{
-		donpcevent "Egg Bomb#job_ranger15::OnEnable";
-	}else 
-	{
-		donpcevent "Egg Bomb#job_ranger16::OnEnable";
-	}
-	end;
-
 OnTimer20000:
-	set .@rand,rand(1,3);
-	if (.@rand == 1)
-	{
-		donpcevent "Egg Bomb#job_ranger17::OnEnable";
-	}else if (.@rand == 2)
-	{
-		donpcevent "Egg Bomb#job_ranger18::OnEnable";
-	}else
-	{
-		donpcevent "Egg Bomb#job_ranger19::OnEnable";
-	}
-	end;
-
 OnTimer25000:
-	set .@rand,rand(1,3);
-	if (.@rand == 1)
-	{
-		donpcevent "Egg Bomb#job_ranger20::OnEnable";
-	}else if (.@rand == 2)
-	{
-		donpcevent "Egg Bomb#job_ranger21::OnEnable";
-	}else
-	{
-		donpcevent "Egg Bomb#job_ranger22::OnEnable";
-	}
-	end;
-
 OnTimer30000:
-	set .@rand,rand(1,3);
-	if (.@rand == 1)
-	{
-		donpcevent "Egg Bomb#job_ranger23::OnEnable";
-	}else if (.@rand == 2)
-	{
-		donpcevent "Egg Bomb#job_ranger24::OnEnable";
-	}else
-	{
-		donpcevent "Egg Bomb#job_ranger25::OnEnable";
-	}
-	end;
-
 OnTimer35000:
-	set .@rand,rand(1,3);
-	if (.@rand == 1)
-	{
-		donpcevent "Egg Bomb#job_ranger26::OnEnable";
-	}else if (.@rand == 2)
-	{
-		donpcevent "Egg Bomb#job_ranger27::OnEnable";
-	}else
-	{
-		donpcevent "Egg Bomb#job_ranger28::OnEnable";
-	}
-	end;
-
 OnTimer40000:
-	set .@rand,rand(1,3);
-	if (.@rand == 1)
-	{
-		donpcevent "Egg Bomb#job_ranger14::OnEnable";
-	}else if (.@rand == 2)
-	{
-		donpcevent "Egg Bomb#job_ranger15::OnEnable";
-	}else
-	{
-		donpcevent "Egg Bomb#job_ranger16::OnEnable";
-	}
-	end;
-
 OnTimer45000:
-	set .@rand,rand(1,3);
-	if (.@rand == 1)
-	{
-		donpcevent "Egg Bomb#job_ranger17::OnEnable";
-	}else if (.@rand == 2)
-	{
-		donpcevent "Egg Bomb#job_ranger18::OnEnable";
-	}else
-	{
-		donpcevent "Egg Bomb#job_ranger19::OnEnable";
-	}
-	end;
-
 OnTimer50000:
-	set .@rand,rand(1,3);
-	if (.@rand == 1)
-	{
-		donpcevent "Egg Bomb#job_ranger20::OnEnable";
-	}else if (.@rand == 2)
-	{
-		donpcevent "Egg Bomb#job_ranger21::OnEnable";
-	}else
-	{
-		donpcevent "Egg Bomb#job_ranger22::OnEnable";
-	}
-	end;
-
 OnTimer55000:
-	set .@rand,rand(1,3);
-	if (.@rand == 1)
-	{
-		donpcevent "Egg Bomb#job_ranger23::OnEnable";
-	}else if (.@rand == 2)
-	{
-		donpcevent "Egg Bomb#job_ranger24::OnEnable";
-	}else
-	{
-		donpcevent "Egg Bomb#job_ranger25::OnEnable";
-	}
-	end;
-
 OnTimer60000:
-	set .@rand,rand(1,3);
-	if (.@rand == 1)
-	{
-		donpcevent "Egg Bomb#job_ranger26::OnEnable";
-	}else if (.@rand == 2)
-	{
-		donpcevent "Egg Bomb#job_ranger27::OnEnable";
-	}else
-	{
-		donpcevent "Egg Bomb#job_ranger28::OnEnable";
-	}
-	end;
-
 OnTimer65000:
-	set .@rand,rand(1,3);
-	if (.@rand == 1)
-	{
-		donpcevent "Egg Bomb#job_ranger14::OnEnable";
-	}else if (.@rand == 2)
-	{
-		donpcevent "Egg Bomb#job_ranger15::OnEnable";
-	}else
-	{
-		donpcevent "Egg Bomb#job_ranger16::OnEnable";
-	}
-	end;
-
 OnTimer70000:
-	set .@rand,rand(1,3);
-	if (.@rand == 1)
-	{
-		donpcevent "Egg Bomb#job_ranger17::OnEnable";
-	}else if (.@rand == 2)
-	{
-		donpcevent "Egg Bomb#job_ranger18::OnEnable";
-	}else
-	{
-		donpcevent "Egg Bomb#job_ranger19::OnEnable";
-	}
-	end;
-
 OnTimer75000:
-	set .@rand,rand(1,3);
-	if (.@rand == 1)
-	{
-		donpcevent "Egg Bomb#job_ranger20::OnEnable";
-	}else if (.@rand == 2)
-	{
-		donpcevent "Egg Bomb#job_ranger21::OnEnable";
-	}else
-	{
-		donpcevent "Egg Bomb#job_ranger22::OnEnable";
-	}
-	end;
-
 OnTimer80000:
-	set .@rand,rand(1,3);
-	if (.@rand == 1)
-	{
-		donpcevent "Egg Bomb#job_ranger23::OnEnable";
-	}else if (.@rand == 2)
-	{
-		donpcevent "Egg Bomb#job_ranger24::OnEnable";
-	}else
-	{
-		donpcevent "Egg Bomb#job_ranger25::OnEnable";
-	}
-	end;
-
 OnTimer85000:
-	set .@rand,rand(1,3);
-	if (.@rand == 1)
-	{
-		donpcevent "Egg Bomb#job_ranger26::OnEnable";
-	}else if (.@rand == 2)
-	{
-		donpcevent "Egg Bomb#job_ranger27::OnEnable";
-	}else
-	{
-		donpcevent "Egg Bomb#job_ranger28::OnEnable";
-	}
-	end;
-
 OnTimer90000:
-	set .@rand,rand(1,3);
-	if (.@rand == 1)
-	{
-		donpcevent "Egg Bomb#job_ranger14::OnEnable";
-	}else if (.@rand == 2)
-	{
-		donpcevent "Egg Bomb#job_ranger15::OnEnable";
-	}else
-	{
-		donpcevent "Egg Bomb#job_ranger16::OnEnable";
-	}
-	end;
-
 OnTimer95000:
-	set .@rand,rand(1,3);
-	if (.@rand == 1)
-	{
-		donpcevent "Egg Bomb#job_ranger17::OnEnable";
-	}else if (.@rand == 2)
-	{
-		donpcevent "Egg Bomb#job_ranger18::OnEnable";
-	}else
-	{
-		donpcevent "Egg Bomb#job_ranger19::OnEnable";
-	}
-	end;
-
 OnTimer100000:
-	set .@rand,rand(1,3);
-	if (.@rand == 1)
-	{
-		donpcevent "Egg Bomb#job_ranger20::OnEnable";
-	}else if (.@rand == 2)
-	{
-		donpcevent "Egg Bomb#job_ranger21::OnEnable";
-	}else
-	{
-		donpcevent "Egg Bomb#job_ranger22::OnEnable";
-	}
-	end;
-
 OnTimer105000:
-	set .@rand,rand(1,3);
-	if (.@rand == 1)
-	{
-		donpcevent "Egg Bomb#job_ranger23::OnEnable";
-	}else if (.@rand == 2)
-	{
-		donpcevent "Egg Bomb#job_ranger24::OnEnable";
-	}else
-	{
-		donpcevent "Egg Bomb#job_ranger25::OnEnable";
-	}
-	end;
-
 OnTimer110000:
-	set .@rand,rand(1,3);
-	if (.@rand == 1)
-	{
-		donpcevent "Egg Bomb#job_ranger26::OnEnable";
-	}else if (.@rand == 2)
-	{
-		donpcevent "Egg Bomb#job_ranger27::OnEnable";
-	}else
-	{
-		donpcevent "Egg Bomb#job_ranger28::OnEnable";
-	}
+	donpcevent "Egg Bomb#job_ranger"+(.n+rand(3))+"::OnEnable";
+	if (.n == 26) set .n,14;
+	else set .n, .n+3;
 	end;
 
 OnTimer113000:
 	mapannounce "job3_rang02","Test Supervisor, Freeze : The test is ooooooooooooooveeeeerrr!!!!!!!!!!!!!!!!!!!!!!!!!!",bc_map;
-	donpcevent "Egg Bomb#job_ranger14::OnDisable";
-	donpcevent "Egg Bomb#job_ranger15::OnDisable";
-	donpcevent "Egg Bomb#job_ranger16::OnDisable";
-	donpcevent "Egg Bomb#job_ranger17::OnDisable";
-	donpcevent "Egg Bomb#job_ranger18::OnDisable";
-	donpcevent "Egg Bomb#job_ranger19::OnDisable";
-	donpcevent "Egg Bomb#job_ranger20::OnDisable";
-	donpcevent "Egg Bomb#job_ranger21::OnDisable";
-	donpcevent "Egg Bomb#job_ranger22::OnDisable";
-	donpcevent "Egg Bomb#job_ranger23::OnDisable";
-	donpcevent "Egg Bomb#job_ranger24::OnDisable";
-	donpcevent "Egg Bomb#job_ranger25::OnDisable";
-	donpcevent "Egg Bomb#job_ranger26::OnDisable";
-	donpcevent "Egg Bomb#job_ranger27::OnDisable";
-	donpcevent "Egg Bomb#job_ranger28::OnDisable";
+	for(set .@i,14; .@i<29; set .@i,.@i+1)
+		donpcevent "Egg Bomb#job_ranger"+.@i+"::OnDisable";
+	set .n,0;
 	end;
 
 OnTimer116000:
@@ -2994,44 +2443,16 @@ job3_rang01,90,43,3	script	Ranger Master#jr_29	832,{
 		mes "Okay, before you really change the job into a ranger, I'll ask you on more time.";
 		mes "Do you really want to become a ranger?";
 		next;
-		switch(select("No:Yes!"))
+		if(select("No:Yes!") == 1)
 		{
-		case 1:
 			mes "[Ranger Master, Neveragain]";
 			mes "Umm? That's not the answer that I was waiting for...";
 			next;
 			mes "[Ranger Master, Neveragain]";
 			mes "Even after passing through all the rough practical tests, you don't want to become a ranger... are you sure?";
 			close;
-		case 2:
-			break;
 		}
-		if(Class == Job_Baby_Hunter){
-			mes "[Ranger Master, Neveragain]";
-			mes "Your firm answer seems very trustworthy!";
-			next;
-			nude;
-			if (countitem(1703) > 0)
-			{
-				mes "[Ranger Master, Neveragain]";
-				mes "From now on be active as a splendid Ranger!";
-				mes "I wish you luck in your future!";
-				delitem 1703,1;
-				set job_ranger01,7;
-				completequest 8262;
-				jobchange Job_Baby_Ranger;
-				getitem 5748,1;
-				getitem 2795,1;
-				getitem 6124,1;
-				close;
-			}
-			mes "[Ranger Master, Neveragain]";
-			mes "...However,";
-			mes "You have to return your test items.";
-			mes "What did you do with your testing Bow?";
-			close;
-		}
-		else if (Class == Job_Hunter)
+		if (Class == Job_Hunter || Class == Job_Sniper || Job_Baby_Hunter)
 		{
 			mes "[Ranger Master, Neveragain]";
 			mes "Your firm answer seems very trustworthy!";
@@ -3045,32 +2466,7 @@ job3_rang01,90,43,3	script	Ranger Master#jr_29	832,{
 				delitem 1703,1;
 				set job_ranger01,7;
 				completequest 8262;
-				jobchange Job_Ranger;
-				getitem 5748,1;
-				getitem 2795,1;
-				getitem 6124,1;
-				close;
-			}
-			mes "[Ranger Master, Neveragain]";
-			mes "...However,";
-			mes "You have to return your test items.";
-			mes "What did you do with your testing Bow?";
-			close;
-		}else if (Class == Job_Sniper)
-		{
-			mes "[Ranger Master, Neveragain]";
-			mes "Your firm answer seems very trustworthy!";
-			next;
-			nude;
-			if (countitem(1703) > 0)
-			{
-				mes "[Ranger Master, Neveragain]";
-				mes "From now on be active as a splendid Ranger!";
-				mes "I wish you luck in your future!";
-				delitem 1703,1;
-				set job_ranger01,7;
-				completequest 8262;
-				jobchange Job_Ranger_T;
+				jobchange roclass(eaclass()|EAJL_THIRD);
 				getitem 5748,1;
 				getitem 2795,1;
 				getitem 6124,1;
@@ -3104,15 +2500,13 @@ job3_rang01,90,43,3	script	Ranger Master#jr_29	832,{
 			warp "alberta",117,57;
 			end;
 		}
-	}else if (job_ranger01 > 6)
-	{
+	}else{
 		mes "[Ranger Master, Neveragain]";
 		mes "Hey, you look great.";
 		mes "What are you doing here?";
 		next;
-		switch(select("I just came by:Please let me be out"))
+		if(select("I just came by:Please let me be out") == 1)
 		{
-		case 1:
 			mes "[Ranger Master, Neveragain]";
 			mes "Well, there's nothing to see and you came.";
 			next;
@@ -3120,8 +2514,6 @@ job3_rang01,90,43,3	script	Ranger Master#jr_29	832,{
 			mes "Take a rest as long as you want.";
 			mes "It's the place where you can have a tea easily.";
 			close;
-		case 2:
-			break;
 		}
 		mes "[Ranger Master, Neveragain]";
 		mes "It was good to see you.";
@@ -3130,29 +2522,6 @@ job3_rang01,90,43,3	script	Ranger Master#jr_29	832,{
 		warp "alberta",117,57;
 		end;
 	}
-	mes "[Ranger Master, Neveragain]";
-	mes "Hey, you look great.";
-	mes "What are you doing here?";
-	next;
-	switch(select("I just came by:Please let me be out"))
-	{
-		case 1:
-			mes "[Ranger Master, Neveragain]";
-			mes "Well, there's nothing to see and you came.";
-			next;
-			mes "[Ranger Master, Neveragain]";
-			mes "Take a rest as long as you want.";
-			mes "It's the place where you can have a tea easily.";
-			close;
-		case 2:
-			break;
-	}
-	mes "[Ranger Master, Neveragain]";
-	mes "It was good to see you.";
-	mes "Don't lose the dignity as a Ranger wherever you go.";
-	close2;
-	warp "alberta",117,57;
-	end;
 }
 
 job3_rang01,58,1,0	script	Test#job_ranger	88,{
@@ -3195,21 +2564,8 @@ job3_rang01,58,1,0	script	Test#job_ranger	88,{
 		case 8:
 			mes "3rd Test has been Disabled";
 			donpcevent "Third Test Timer#jr_12::OnDisable";
-			donpcevent "Egg Bomb#job_ranger14::OnDisable";
-			donpcevent "Egg Bomb#job_ranger15::OnDisable";
-			donpcevent "Egg Bomb#job_ranger16::OnDisable";
-			donpcevent "Egg Bomb#job_ranger17::OnDisable";
-			donpcevent "Egg Bomb#job_ranger18::OnDisable";
-			donpcevent "Egg Bomb#job_ranger19::OnDisable";
-			donpcevent "Egg Bomb#job_ranger20::OnDisable";
-			donpcevent "Egg Bomb#job_ranger21::OnDisable";
-			donpcevent "Egg Bomb#job_ranger22::OnDisable";
-			donpcevent "Egg Bomb#job_ranger23::OnDisable";
-			donpcevent "Egg Bomb#job_ranger24::OnDisable";
-			donpcevent "Egg Bomb#job_ranger25::OnDisable";
-			donpcevent "Egg Bomb#job_ranger26::OnDisable";
-			donpcevent "Egg Bomb#job_ranger27::OnDisable";
-			donpcevent "Egg Bomb#job_ranger28::OnDisable";
+			for(set .@i,14; .@i<29; set .@i,.@i+1)
+				donpcevent "Egg Bomb#job_ranger"+.@i+"::OnDisable";
 			close;
 		case 9:
 			close;

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -12,6 +12,7 @@
 //===== Additional Comments: =================================
 //= 1.6 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //= 1.7 Updated to latest available official file. [Masao]
+//= 1.8 Fixed JobLevel requirements. [Euphy]
 //============================================================
 
 izlude_in,175,130,2	script	Knight De Thomas	98,4,4,{
@@ -90,13 +91,13 @@ izlude_in,175,130,2	script	Knight De Thomas	98,4,4,{
 		next;
 		switch (select("Yes.:No, I'm not ready yet.")) {
 		case 1:
-			if ((JobLevel > 34) && (countitem(713) > 199) && (countitem(1058) > 0)) {
+			if ((JobLevel > 34 || (BaseJob == Job_Knight || BaseJob == Job_Crusader)) && (countitem(713) > 199) && (countitem(1058) > 0)) {
 				mes "[De Thomas]";
 				mes "Let's see.....";
 				next;
 				mes "[De Thomas]";
 				mes "Ok! I shall now teach you...";
-				mes "..The Body Movin' skill!";
+				mes "...The Body Movin' skill!";
 				next;
 				delitem 713,200; //Empty_Bottle
 				delitem 1058,1; //Wing_Of_Moth
@@ -110,12 +111,12 @@ izlude_in,175,130,2	script	Knight De Thomas	98,4,4,{
 				mes "[De Thomas]";
 				mes "Oh yeah, I won't be needing your";
 				mes "armor so you can keep it.";
-				mes "..Good luck now!";
+				mes "Good luck now!";
 				close;
 			}
-			else if (JobLevel < 35) {
+			else if (JobLevel < 35 && (BaseJob != Job_Knight && BaseJob != Job_Crusader)) {
 				mes "[De Thomas]";
-				mes "Wait a second your Job level isn't above ^00880035^000000!";
+				mes "Wait a second, your Job level isn't above ^00880035^000000!";
 				mes "Come back when it is.";
 				close;
 			}
@@ -150,7 +151,7 @@ izlude_in,175,130,2	script	Knight De Thomas	98,4,4,{
 
 prt_in,75,88,5	script	Leon Von Frich	85,3,3,{
 
-	if ((BaseClass == Job_Swordman) && (JobLevel >= 25)) {
+	if ((BaseClass == Job_Swordman) && (JobLevel >= 25 || (BaseJob == Job_Knight || BaseJob == Job_Crusader))) {
 		if (getskilllv("SM_FATALBLOW") == 1) {
 			mes "[Leon]";
 			mes "Eh?";
@@ -313,7 +314,7 @@ prt_in,94,57,3	script	Juan	85,4,4,{
 			mes "You can do it.";
 			close;
 		}
-		else if (JobLevel < 10) {
+		else if (JobLevel < 10 && (BaseJob != Job_Knight && BaseJob != Job_Crusader)) {
 			mes "[?]";
 			mes "What are you?";
 			mes "Eh, still a beginner.";
@@ -321,13 +322,13 @@ prt_in,94,57,3	script	Juan	85,4,4,{
 			mes "before coming back.";
 			close;
 		}
-		else if ((JobLevel > 10) && (JobLevel < 30)) {
+		else if (JobLevel < 30 && (BaseJob != Job_Knight && BaseJob != Job_Crusader)) {
 			mes "[Juan]";
 			mes "Oh, nice to meet you.";
 			mes "You can be on your way. (smiley~)";
 			close;
 		}
-		else if ((countitem(924) > 34) && (countitem(958) > 9) && (countitem(957) > 9) && (countitem(518) > 9) && (JobLevel >= 30)) {
+		else if ((countitem(924) > 34) && (countitem(958) > 9) && (countitem(957) > 9) && (countitem(518) > 9)) {
 			mes "[Juan]";
 			mes "Ooh. Young swordsman!";
 			mes "You are ready to learn the";
@@ -336,7 +337,7 @@ prt_in,94,57,3	script	Juan	85,4,4,{
 			switch (select("Hoho, I would like to learn it now.:What is that?")) {
 			case 1:
 				mes "[Juan]";
-				mes "Ok. Then..";
+				mes "Ok. Then...";
 				next;
 				delitem 924,35; //Powder_Of_Butterfly
 				delitem 958,10; //Horrendous_Mouth
