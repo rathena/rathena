@@ -15347,22 +15347,27 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 	}
 	if( skill_id == RK_RUNEMASTERY ) {
 		int temp_qty, skill_lv = pc_checkskill(sd,skill_id);
+		data = itemdb_search(nameid);
+		
 		if( skill_lv == 10 ) temp_qty = 1 + rnd()%3;
 		else if( skill_lv > 5 ) temp_qty = 1 + rnd()%2;
 		else temp_qty = 1;
-		for( i = 0; i < MAX_INVENTORY; i++ ) {
-			if( sd->status.inventory[i].nameid == nameid ) {
-				if( sd->status.inventory[i].amount >= MAX_RUNE ) {
-					clif_msgtable(sd->fd,0x61b);
-					return 0;
-				} else {
-					/**
-					 * the amount fits, say we got temp_qty 4 and 19 runes, we trim temp_qty to 1.
-					 **/
-					if( temp_qty + sd->status.inventory[i].amount >= MAX_RUNE )
-						temp_qty = MAX_RUNE - sd->status.inventory[i].amount;
+		
+		if (data->stack.inventory) {
+			for( i = 0; i < MAX_INVENTORY; i++ ) {
+				if( sd->status.inventory[i].nameid == nameid ) {
+					if( sd->status.inventory[i].amount >= data->stack.amount ) {
+						clif_msgtable(sd->fd,0x61b);
+						return 0;
+					} else {
+						/**
+						 * the amount fits, say we got temp_qty 4 and 19 runes, we trim temp_qty to 1.
+						 **/
+						if( temp_qty + sd->status.inventory[i].amount >= data->stack.amount )
+							temp_qty = data->stack.amount - sd->status.inventory[i].amount;
+					}
+					break;
 				}
-				break;
 			}
 		}
 		qty = temp_qty;

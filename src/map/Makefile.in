@@ -27,7 +27,7 @@ MAP_H = map.h chrif.h clif.h pc.h status.h npc.h \
 	log.h mail.h date.h unit.h homunculus.h mercenary.h quest.h instance.h mapreg.h \
 	buyingstore.h searchstore.h duel.h pc_groups.h \
 	../config/core.h ../config/renewal.h ../config/secure.h ../config/const.h \
-	../config/classes/general.h ../config/classes/swordsman.h elemental.h
+	../config/classes/general.h elemental.h
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)

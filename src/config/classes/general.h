@@ -19,6 +19,5 @@
 /**
  * No settings past this point
  **/
-#include "swordsman.h"
 
 #endif // _CONFIG_GENERAL_H_
