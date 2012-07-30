@@ -356,7 +356,6 @@
     <ClInclude Include="..\src\config\renewal.h" />
     <ClInclude Include="..\src\config\secure.h" />
     <ClInclude Include="..\src\config\classes\general.h" />
-    <ClInclude Include="..\src\config\classes\swordsman.h" />
     <ClInclude Include="..\src\common\conf.h">
       <Filter>common</Filter>
     </ClInclude>
