@@ -1,9 +1,9 @@
 //===== rAthena Script ======================================= 
-//= Gemstone trader
+//= Gemstone Trader
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //= 1.1 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 1.2 Updated input with min/max values. [L0ne_W0lf]
 //=	Added a checkweight. 
+//= 1.3 Fixed checks. [Euphy]
 //============================================================ 
 
 payon,173,238,5	script	Jade#pay	754,{
@@ -60,13 +61,7 @@ S_TradeGems:
 		case 1:
 			delitem getarg(0),.@gems * 2;
 			getitem getarg(1),.@gems;
-			mes "[Jade]";
-			mes "There you go.";
-			mes "Feel free to come";
-			mes "back any time.";
-			mes "Hm, what's that look for?";
-			mes "Is there something on my face?";
-			close;
+			break;
 		case 2:
 			mes "[Jade]";
 			mes "So how many";
@@ -91,27 +86,31 @@ S_TradeGems:
 					mes "than 100, remember...?";
 					next;
 				}
-				else {
-					break;
+				else if (.@gems < .@input) {
+					// Custom dialogue
+					mes "[Jade]";
+					mes "Errm...";
+					mes "You don't have that";
+					mes "many gems to trade...";
+					next;
 				}
+				else break;
 			}
-
-			if (.@gems > .@input) {
-				delitem getarg(0),.@input * 2;
-				getitem getarg(1),.@input;
-				mes "[Jade]";
-				mes "There you go.";
-				mes "Feel free to come";
-				mes "back any time.";
-				mes "Hm, what's that look for?";
-				mes "Is there something on my face?";
-			}
-			close;
+			delitem getarg(0),.@input * 2;
+			getitem getarg(1),.@input;
+			break;
 		case 3:
 			mes "[Jade]";
 			mes "Sure, no problem.";
 			mes "Come back any time.";
 			close;
 		}
+		mes "[Jade]";
+		mes "There you go.";
+		mes "Feel free to come";
+		mes "back any time.";
+		mes "Hm, what's that look for?";
+		mes "Is there something on my face?";
+		close;
 	}
 }
