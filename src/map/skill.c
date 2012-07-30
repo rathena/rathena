@@ -15307,6 +15307,7 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 	int i,sc,ele,idx,equip,wlv,make_per,flag = 0, firstQty = qty;
 	int num = -1; // exclude the recipe
 	struct status_data *status;
+	struct item_data* data;
 
 	nullpo_ret(sd);
 	status = status_get_status_data(&sd->bl);
