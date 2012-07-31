@@ -7,6 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Additional Comments: =================================  
+//= Note: This script requires PCRE to run properly.
 //= 5.0 Last update by GmOcean.
 //= 5.1 Cleaned and standardized, mostly. [Euphy]
 //============================================================
@@ -120,7 +121,6 @@ OnInit:
 	set $@Wait,0;
 	set $@Winner,0;
 	set $@ResetCounter,0;
-	set $Points,$Points;
 	if (!$Rounds) set $Rounds,10;
 	else set $Rounds,$Rounds;
 	if (!$Prize) set $Prize,512;

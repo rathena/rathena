@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================
 //= 1.0 First Version.
 //= 1.1 Some little optimization here and there. [Masao]
+//= 1.2 Added checkquest confirmation for -1. [Euphy]
 //============================================================
 
 moc_para01,42,38,3	script	Mission [56 - 70]	857,{
@@ -33,7 +34,7 @@ moc_para01,42,38,3	script	Mission [56 - 70]	857,{
 		case 1:
 			switch (select("What is this Bandage?:Dangerous Alligators.:That wasn't a mermaid...:My country is calling me!")) {
 			case 1:
-				if (checkquest(3250) == 0) {
+				if (checkquest(3250) <= 0) {
 					mes "This mission is assigned by the Rekenber corporation from Lighthalzen. Below are the details.";
 					next;
 					mes "Rekenber corporation is about to launch a new project called 'Green Medical Center'. For the first product of the project, we are preparing well-being Bandages.";
@@ -134,7 +135,7 @@ moc_para01,42,38,3	script	Mission [56 - 70]	857,{
 				}
 				close;
 			case 2:
-				if (checkquest(3251) == 0) {
+				if (checkquest(3251) <= 0) {
 					mes "This mission is assigned by the Comodo cooperative society. Below are the details.";
 					next;
 					mes "Alligators have gone wild these days, they attack women and drunken people who hang out near the beach.";
@@ -228,7 +229,7 @@ moc_para01,42,38,3	script	Mission [56 - 70]	857,{
 				}
 				close;
 			case 3:
-				if (checkquest(3252) == 0) {
+				if (checkquest(3252) <= 0) {
 					mes "This mission is assigned by an unknown client from Izlude.";
 					next;
 					mes "I have admired the beach of Izlude, ever since I was born.";
@@ -346,7 +347,7 @@ moc_para01,42,38,3	script	Mission [56 - 70]	857,{
 				}
 				close;
 			case 4:
-				if (checkquest(3254) == 0) {
+				if (checkquest(3254) <= 0) {
 					mes "This mission is assigned by the government officer of the Rune-Midgarts Kingdom.";
 					next;
 					mes "To prevent a flood in Prontera, we decided to build a huge dam to regulate the water supply.";
@@ -449,7 +450,7 @@ moc_para01,42,38,3	script	Mission [56 - 70]	857,{
 		case 2:
 			switch (select("Hunt Wild Boar:Preparing the Summer:A Woman's Grudge:Special ingredients:Puppet Master's Agony")) {
 			case 1:
-				if (checkquest(3255) == 0) {
+				if (checkquest(3255) <= 0) {
 					mes "This mission is assigned by the Payon town hall.";
 					next;
 					mes "Wild animals are always annoyances to farmers.";
@@ -557,7 +558,7 @@ moc_para01,42,38,3	script	Mission [56 - 70]	857,{
 				}
 				close;
 			case 2:
-				if (checkquest(3256) == 0) {
+				if (checkquest(3256) <= 0) {
 					mes "This mission is assigned by the Morroc blacksmith Aragham.";
 					next;
 					mes "Hello~~~~, Adventurers! This is Aragham, the hottest blacksmith in Morroc!";
@@ -678,7 +679,7 @@ moc_para01,42,38,3	script	Mission [56 - 70]	857,{
 				}
 				close;
 			case 3:
-				if (checkquest(3257) == 0) {
+				if (checkquest(3257) <= 0) {
 					mes "This mission is assigned by an inventor Dorian from Izlude.";
 					next;
 					mes "Have you heard the story that if women have a grudge on their mind, it will bring natural disasters.";
@@ -798,7 +799,7 @@ moc_para01,42,38,3	script	Mission [56 - 70]	857,{
 				}
 				close;
 			case 4:
-				if (checkquest(3258) == 0) {
+				if (checkquest(3258) <= 0) {
 					mes "This mission is assigned by Wallah from Payon.";
 					next;
 					mes "Hello, adventurer. How are you? How is your health?";
@@ -907,7 +908,7 @@ moc_para01,42,38,3	script	Mission [56 - 70]	857,{
 				}
 				close;
 			case 5:
-				if (checkquest(12217) == 0) {
+				if (checkquest(12217) <= 0) {
 					mes "This mission is assigned by puppet master Woonute from Geffen.";
 					next;
 					mes "You know being a puppet master is kind of a hard job to satisfy people.";
@@ -1019,7 +1020,7 @@ moc_para01,42,38,3	script	Mission [56 - 70]	857,{
 		case 3:
 			switch (select("Tiresome Flies:Dangerous Munak:Make the World green:Magic Wand")) {
 			case 1:
-				if (checkquest(3260) == 0) {
+				if (checkquest(3260) <= 0) {
 					mes "This mission is assigned by an exterminator from Prontera.";
 					next;
 					mes "As the weather gets warmer, insects multiply more and more. It is already out of control.";
@@ -1111,7 +1112,7 @@ moc_para01,42,38,3	script	Mission [56 - 70]	857,{
 				}
 				close;
 			case 2:
-				if (checkquest(3261) == 0) {
+				if (checkquest(3261) <= 0) {
 					mes "This mission is assigned by Cheese Dongja from Payon.";
 					next;
 					mes "Have you heard about Munak?";
@@ -1213,7 +1214,7 @@ moc_para01,42,38,3	script	Mission [56 - 70]	857,{
 				}
 				close;
 			case 3:
-				if (checkquest(3262) == 0) {
+				if (checkquest(3262) <= 0) {
 					mes "This mission is assigned by a gem dealer, Ibraham from Morroc.";
 					next;
 					mes "A small beautiful flower in the barren desert... What an incredible scene it would be!";
@@ -1322,7 +1323,7 @@ moc_para01,42,38,3	script	Mission [56 - 70]	857,{
 				}
 				close;
 			case 4:
-				if (checkquest(3263) == 0) {
+				if (checkquest(3263) <= 0) {
 					mes "This mission is assigned by the Payon blacksmith Antonio.";
 					next;
 					mes "Magic wand! Have you heard about it? It is an incredible wand!";
