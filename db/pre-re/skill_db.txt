@@ -1026,7 +1026,11 @@
 3015,0,6,4,3,0x1,0,1,1,no,0,0,0,none,0,		KO_KAHU_ENTEN,Kahu Enten
 3016,0,6,4,1,0x1,0,1,1,no,0,0,0,none,0,		KO_HYOUHU_HUBUKI,Hyouhu Hubuki
 3017,0,6,4,4,0x1,0,1,1,no,0,0,0,none,0,		KO_KAZEHU_SEIRAN,Kazehu Seiran
-3018,0,6,4,2,0x1,0,1,1,no,0,0,0,none,0,		KO_DOHU_KOUKAI,Dohu Koukai
+3018,0,6,4,2,0x1,0,1,1,no,0,0,0,none,0,		KO_DOHU_KOUKAI,Dohu Koukai	
+3019,11,6,1,0,0,0,5,0,no,0,0,0,weapon,0,	KO_KAIHOU,Technique Kaihou
+3020,7,6,2,0,0,0,1,3,yes,0,0,0,magic,0,		KO_ZENKAI,Zenkai
+3021,5:6:7:8:9,6,16,0,0x1,0,5,1,no,0,0,0,none,0,	KO_GENWAKU,Genwaku
+3022,0,6,4,0,0x1,0,5,0,no,0,0,0,none,0,		KO_IZAYOI,Izayoi
 
 8001,9,6,4,0,0x1,0,5,1,no,0,0,0,magic,0,	HLIF_HEAL,Healing Touch
 8002,0,6,4,0,0x3,-1,5,1,no,0,0,0,none,0,	HLIF_AVOID,Avoid

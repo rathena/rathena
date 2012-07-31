@@ -3437,6 +3437,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case MH_STAHL_HORN:
 	case KO_JYUMONJIKIRI:
 	case KO_SETSUDAN:
+	case KO_KAIHOU:
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
 	break;
 
@@ -8721,6 +8722,29 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
 		break;
 
+	case KO_GENWAKU:
+		{
+			int x = src->x, y = src->y;
+			if (unit_movepos(src,bl->x,bl->y,0,0)) {
+				clif_skill_nodamage(src,src,skillid,skilllv,1);
+				clif_slide(src,bl->x,bl->y) ;
+				sc_start(src,SC_CONFUSION,80,skilllv,skill_get_time(skillid,skilllv));
+				if (unit_movepos(bl,x,y,0,0))
+				{
+					clif_skill_damage(bl,bl,tick, status_get_amotion(src), 0, -30000, 1, skillid, -1, 6);
+					clif_slide(bl,x,y) ;
+					sc_start(bl,SC_CONFUSION,80,skilllv,skill_get_time(skillid,skilllv));
+				}
+			}
+		}
+		break;
+
+	case KO_IZAYOI:
+		clif_skill_nodamage(src,bl,skillid,skilllv,
+			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
+		clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skillid, skilllv, 6);
+		break;
+
 	default:
 		if( skillid >= HM_SKILLBASE && skillid <= HM_SKILLBASE + MAX_HOMUNSKILL ) {
 			if( src->type == BL_HOM && ((TBL_HOM*)src)->master->fd )
@@ -9443,6 +9467,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	case KO_HUUMARANKA:
 	case KO_MUCHANAGE:
 	case KO_BAKURETSU:
+	case KO_ZENKAI:
 	//case KO_MAKIBISHI:
 		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 	case GS_GROUNDDRIFT: //Ammo should be deleted right away.
@@ -10481,7 +10506,19 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 		if( flag&1 )
 			limit = 3000;
 		val3 = (x<<16)|y;
-		break;			
+		break;	
+	case KO_ZENKAI:
+		if( sd ){
+			ARR_FIND(1, 6, i, sd->talisman[i] > 0);
+			if( i < 5 ){
+				val1 = sd->talisman[i]; // no. of aura
+				val2 = i; // aura type
+				limit += val1 * 1000;
+				subunt = i - 1;
+				pc_del_talisman(sd, sd->talisman[i], i);
+			}
+		}
+		break;
 	}
 
 	nullpo_retr(NULL, group=skill_initunitgroup(src,layout->count,skillid,skilllv,skill_get_unit_id(skillid,flag&1)+subunt, limit, interval));
@@ -11459,8 +11496,36 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		case UNT_FIRE_MANTLE:
 			if( battle_check_target(&src->bl, bl, BCT_ENEMY) )
 				skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
-			break;			
+			break;	
 
+		case UNT_ZENKAI_WATER:
+		case UNT_ZENKAI_GROUND:
+		case UNT_ZENKAI_FIRE:
+		case UNT_ZENKAI_WIND:
+			if( battle_check_target(&src->bl,bl,BCT_ENEMY) > 0 ){
+				switch( sg->unit_id ){
+					case UNT_ZENKAI_WATER:
+						sc_start(bl, SC_CRYSTALIZE, sg->val1*5, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv)); 
+						sc_start(bl, SC_FREEZE, sg->val1*5, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv)); 
+						sc_start(bl, SC_FREEZING, sg->val1*5, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv)); 
+						break;
+					case UNT_ZENKAI_GROUND:
+						sc_start(bl, SC_STONE, sg->val1*5, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv)); 
+						sc_start(bl, SC_POISON, sg->val1*5, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv)); 
+						break;
+					case UNT_ZENKAI_FIRE:
+						sc_start(bl, SC_BURNING, sg->val1*5, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv)); 
+						break;
+					case UNT_ZENKAI_WIND:
+						sc_start(bl, SC_SILENCE, sg->val1*5, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv)); 
+						sc_start(bl, SC_SLEEP, sg->val1*5, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv)); 
+						sc_start(bl, SC_DEEPSLEEP, sg->val1*5, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv)); 
+						break;
+				}
+			}else
+				sc_start2(bl,type,100,sg->val1,sg->val2,skill_get_time2(sg->skill_id, sg->skill_lv));
+			break;
+	
 	}
 
 	if (bl->type == BL_MOB && ss != bl)
@@ -12534,6 +12599,14 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 				}
 			}
 			break;
+		case KO_KAIHOU:
+		case KO_ZENKAI:
+			ARR_FIND(1, 6, i, sd->talisman[i] > 0);
+			if( i > 4 ) { 
+				clif_skill_fail(sd,skill,USESKILL_FAIL_LEVEL,0);
+				return 0;
+			}
+			break;
 	}
 
 	switch(require.state) {
@@ -13244,6 +13317,8 @@ int skill_castfix_sc (struct block_list *bl, int time, int skill_id, int skill_l
 		}
 		if (sc->data[SC_POEMBRAGI])
 			time -= time * sc->data[SC_POEMBRAGI]->val2 / 100;
+		if (sc->data[SC_IZAYOI])
+			time -= time * 50 / 100;
 #ifdef RENEWAL_CAST
 		if( sc->data[SC__LAZINESS] )
 			fixed += fixed * sc->data[SC__LAZINESS]->val2 / 100;
@@ -13254,6 +13329,8 @@ int skill_castfix_sc (struct block_list *bl, int time, int skill_id, int skill_l
 			fixed -= fixed * sc->data[SC_SECRAMENT]->val2 / 100;
 		if( sc->data[SC_MANDRAGORA] && (skill_id >= SM_BASH && skill_id <= RETURN_TO_ELDICASTES) )
 			fixed += 2000;
+		if (sc->data[SC_IZAYOI]  && (skill_id >= NJ_TOBIDOUGU && skill_id <= NJ_ISSEN))
+			fixed = 0;
 #endif
 	}
 #ifdef RENEWAL_CAST
