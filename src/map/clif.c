@@ -16180,14 +16180,18 @@ void clif_parse_MoveItem(int fd, struct map_session_data *sd) {
 		return;
 	}
 	
-	index = RFIFOW(fd,2)-2; 
+	index = RFIFOW(fd,2)-2;
+	
 	if (index < 0 || index >= MAX_INVENTORY)
 		return;
-	if ( sd->status.inventory[index].favorite )
-			sd->status.inventory[index].favorite = 0;
-		else
-			sd->status.inventory[index].favorite = 1;
-
+	
+	if ( sd->status.inventory[index].favorite && RFIFOB(fd, 4) == 1 )
+		sd->status.inventory[index].favorite = 0;
+	else if( RFIFOB(fd, 4) == 0 )
+		sd->status.inventory[index].favorite = 1;
+	else
+		return;/* nothing to do. */
+	
 	clif_favorite_item(sd, index);
 #endif
 }
@@ -16213,7 +16217,7 @@ void clif_snap( struct block_list *bl, short x, short y ) {
 	WBUFW(buf,6) = x;
 	WBUFW(buf,8) = y;
 	
-	clif_send(buf,packet_len(0x8d2),bl,AREA);
+	//clif_send(buf,packet_len(0x8d2),bl,AREA);
 }
 
 /*==========================================
