@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= MasterOfMuppets
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 8+
 //===== Description: =========================================
@@ -12,8 +12,8 @@
 //= 1.0 A few warps.  [MasterOfMuppets]
 //= 1.1 A few more warps. [MasterOfMuppets]
 //= 1.2 Completed the warps [MasterOfMuppets]
-//= 1.3 Added Renewal Changes. [Kisuka]
 //= 1.3 Correct AEGIS Warps. [Kisuka]
+//= 1.4 Added Renewal Changes. [Kisuka]
 //============================================================
 
 cmd_in01,17,34,0	warp	sign01	1,1,comodo,187,164

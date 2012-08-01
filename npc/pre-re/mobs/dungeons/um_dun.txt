@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.4
 //===== Compatible With: =====================================
-//= Any rAthena Version; RO Ep6+
+//= Any Athena Version
 //===== Additional Comments: =================================
 //= 1.2 Official kRO 10.1 spawns [Playtester]
 //= 1.3 Some 11.1 spawn updates [Playtester]

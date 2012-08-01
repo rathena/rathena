@@ -25,5 +25,5 @@ jawaii,276,163,20,30	monster	Shellfish	1074,2,4200000,2400000,0
 jawaii_in,128,121,1,4	monster	Red Mushroom	1085,1,3000000,1200000,0
 jawaii_in,124,76,1,1	monster	Black Mushroom	1084,1,3600000,1200000,0
 jawaii_in,72,74,5,1	monster	Black Mushroom	1084,2,3000000,1200000,0
-jawaii_in,73,117,4,4	monster	Thief Bug Egg	1048,1,5400000,3000000,0
-jawaii_in,83,117,5,5	monster	Thief Bug Egg	1048,1,4800000,2400000,0
+jawaii_in,73,117,4,4	monster	Thief Bug	1051,1,5400000,3000000,0
+jawaii_in,83,117,5,5	monster	Thief Bug	1051,1,4800000,2400000,0

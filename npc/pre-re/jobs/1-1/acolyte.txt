@@ -1,17 +1,35 @@
 //===== rAthena Script ======================================= 
-//= Renewal Acolyte Job Change
+//= Acolyte Job Quest
 //===== By: ================================================== 
-//= Kisuka
+//= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= Job Change to Acolyte Class
+//= [Aegis Conversion]
+//= Job quest for Acolyte classes
 //===== Additional Comments: ================================= 
-//= 1.0 First Version. [Kisuka]
-//= 1.1 Added back the npcs used for the priest quest.
+//= v1.0 Fully working.
+//= v1.1 Added function calls for Priest Quest.
+//= v1.2 Fixed Marthilda, Yosuke bugs. [Lupus]
+//= v1.2a Added instant job change for High Novice [Lupus]
+//= v1.3 Added Baby Class support [Lupus]
+//= v1.4 Optimised and moved first checker to Jfunc1-1 [massdriller]
+//= 1.5 Now saves/restores all quest skills [Lupus]
+//= 1.6 Merged back JFunc [Lupus]
+//= 1.7 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//=	No longer uses function "F_ToHigh"
+//=	Proper dialog for Priest job quest is unused (for now.)
+//= 1.7a Functions now make use of proper priest quest dialog [L0ne_W0lf]
+//= 1.8 Removed an Unnecessary "set job_acolyte_q,0;" [Samuray22]
+//= 1.8a More bug fixes care of Crashy. [L0ne_W0lf]
+//= 1.9 Changed Marthilda to Mathilda. [L0ne_W0llf]
+//= 2.0 Fixed High Acolytesnot being given holy light. [L0ne_W0lf]
+//= 2.1 Added Quest Log commands. [L0ne_W0lf]
+//= 2.2 Fixed an issue with completequest by adding checkquest. [Kisuka]
 //============================================================ 
+
 prt_church,184,41,4	script	Cleric#aco	60,{
 	if (Upper == 1) {
 		if (ADVJOB == Job_High_Priest || ADVJOB == Job_Champion) {
@@ -44,12 +62,14 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 				mes "[Father Mareusis]";
 				mes "Now, venture forth and seek those who need your help. May God light your path.";
 				close;
-			}else{
+			}
+			else {
 				mes "[Father Mareusis]";
 				mes "Now, venture forth to seek people who need your help. May God enlighten your way.";
 				close;
 			}
-		}else{
+		}
+		else {
 			mes "[Father Mareusis]";
 			mes "I sense that you have endured a past life experience. You must have learned many things before entering Valhalla.";
 			next;
@@ -61,50 +81,166 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 	mes "[Father Mareusis]";
 	mes "What is it that you seek?";
 	next;
-	switch(select("Change your job to acolyte.:Ask the requirements to be an acolyte.:Quit it.")) {
+	switch(select("Father, I want to be a Acolyte.:Acolyte Requirements.:Just looking around.")) {
 	case 1:
-		if(Class != Job_Novice) {
-			mes "[Father Mareusis]";
-			if(Class == Job_Acolyte) {
-				mes "Are you feeling okay today? I can tell by your attire that you are already an Acolyte. You're not joking around, are you?";
-			}else{
-				mes "I'm sorry but it seems you already have your own job, aren't you?";
-			}
+		mes "[Father Mareusis]";
+		if (BaseJob == Job_Acolyte) {
+			mes "Are you feeling okay today? I can tell by your attire that you are already an Acolyte. You're not joking around, are you?";
 			close;
-		}else{
-			mes "[Father Mareusis]";
-			mes "Do you truly wish to become a servant of God?";
-			mes "Let's see whether you are ready for it or not... Hmm...";
+		}
+		else if (BaseJob != Job_Novice) {
+			mes "I'm sorry, but we can only accept Novices as applicants for the job change to Acolyte.";
+			close;
+		}
+		if (job_acolyte_q == 0) {
+			mes "Do you truly";
+			mes "wish to become";
+			mes "a servant of God?";
 			next;
-			if (getskilllv("NV_BASIC") < 9) {
+			if (select("Yes Father, I do.:Nope, I lied.") == 1) {
 				mes "[Father Mareusis]";
-				mes "Oh my?! You haven't accomplished the basic practice yet?! You have a long way to go! Come again after increasing your job level!";
+				mes "Good. I accept " + strcharinfo(0) + "'s will to become an Acolyte. You understand that you must do penance before you can become a servant of God, right?";
+				next;
+				mes "[Father Mareusis]";
+				mes "Well, I will";
+				mes "give you a mission...";
+				switch(rand(3)) {
+				default:
+					set job_acolyte_q,2;
+					mes "Please visit ^000077Father Rubalkabara^000000, a member of the Prontera Parish, and return here. He has been practicing asceticism in the ^000077Relics NorthEast of Prontera City^000000.";
+					setquest 1001;
+					break;
+				case 1:
+					set job_acolyte_q,3;
+					mes "Please visit ^000077Mother Mathilda^000000 and then return to me. She has been practicing asceticism near ^000077Morroc Town, SouthWest of Prontera City^000000.";
+					setquest 1002;
+					break;
+				case 2:
+					set job_acolyte_q,4;
+					mes "Please visit ^000077Father Yosuke^000000 and return here. He has been practicing asceticism around ^000077a bridge somewhere NorthWest of Prontera^000000.";
+					setquest 1003;
+					break;
+				}
+				next;
+				mes "[Father Mareusis]";
+				mes "May the grace of God light your path and guide you during your journey of penance.";
 				close;
 			}
 			mes "[Father Mareusis]";
-			mes "Hmm... your job level is enough...";
-			mes "Good. Now I will give you the qualification to become an Acolyte.";
-			next;
-			mes "[Father Mareusis]";
-			mes "Always remember to be thankful to God, who takes care of us all the time. In chaos and times of difficulty, face your hardships with unwavering faith.";
-			jobchange Job_Acolyte;
-			getitem 1545,1;	// N_Mace
-			next;
-			mes "[Father Mareusis]";
-			mes "Lastly, I want to sincerely congratulate you on persevering through your trial of penance.";
+			mes "You lied?";
+			mes "It is good that you";
+			mes "have confessed your";
+			mes "wrongdoing. Go in";
+			mes "peace, my son.";
 			close;
 		}
+		mes "Oh, you've come back. Let me check and see if you are ready to serve God. Let's see...";
+		next;
+		mes "[Father Mareusis]";
+		if (getskilllv("NV_BASIC") < 9) {
+			mes "Good Lord! Haven't you accomplished the Basic Training yet?! It's important that you finish that!";
+			next;
+			mes "[Father Mareusis]";
+			mes "You should have trained more! Go back and make sure you reach Novice Job Level 9 and learn all of the Basic Skills!";
+			close;
+		}
+		if (job_acolyte_q < 5) {
+			mes "Oh? I can't find your name on the Registration List.";
+			next;
+			switch(job_acolyte_q) {
+			case 2:
+				mes "[Father Mareusis]";
+				mes "Please visit ^000077Father Rubalkabara^000000, a member of the Prontera Parish, and return here.";
+				next;
+				mes "[Father Mareusis]";
+				mes "He has been practicing asceticism in the ^000077Relics at the NorthEast of Prontera City^000000.";
+				break;
+			case 3:
+				mes "[Father Mareusis]";
+				mes "Please Visit ^000077Mother Mathilda^000000 and return here to me.";
+				next;
+				mes "[Father Mareusis]";
+				mes "She has been practicing asceticism near ^000077Morroc Town, located SouthWest of Prontera City^000000.";
+				break;
+			case 4:
+				mes "[Father Mareusis]";
+				mes "Please visit ^000077 Father Yosuke ^000000 and return here to me.";
+				next;
+				mes "[Father Mareusis]";
+				mes "He has been practicing asceticism near a ^000077bridge somewhere to the NorthWest of Prontera^000000.";
+				break;
+			}
+			next;
+			mes "[Father Mareusis]";
+			mes "May the grace of God brighten your path and guide you on your journey of penance.";
+			close;
+		}
+		mes "Hmm...";
+		mes "Your name is on the list and you've proven your qualification.";
+		next;
+		mes "[Father Mareusis]";
+		mes "I am proud to say that you are now ready to become an Acolyte!";
+		next;
+		skill 143,0,0;
+		callfunc "Job_Change",Job_Acolyte;
+		callfunc "F_ClearJobVar";
+		if(checkquest(1001) != -1) {
+			completequest 1001;
+		}
+		else if(checkquest(1002) != -1) {
+			completequest 1002;
+		}
+		else {
+			completequest 1003;
+		}
+		mes "[Father Mareusis]";
+		mes "Always remember to be thankful to God, who is taking care of us all the time.";
+		next;
+		mes "[Father Mareusis]";
+		mes "Always use your gifts to serve Him by helping others. In chaos and times of difficulty, face your hardships with unwavering faith.";
+		next;
+		mes "[Father Mareusis]";
+		mes "Lastly, I want to sincerely congratulate you on persevering through your trial of penance.";
+		close;
 	case 2:
 		mes "[Father Mareusis]";
-		mes "Do you wish to become an Acolyte?";
-		mes "Then, you must fulfill the following requirements thinking those are the practices given by God.";
+		mes "Do you wish to become an Acolyte? You must fulfill two requirements.";
 		next;
 		mes "[Father Mareusis]";
-		mes "First, you have to reach at least Novice Job Level 9 and learn all of the Basic Skills.";
-		mes "This is the most basic thing to do, so you need to regard it as the way of training yourself.";
+		mes "First, you have to reach at least Novice Job Level 9 and learn all of the Basic Skills. Second, you will be given a trial of penance to overcome.";
 		next;
 		mes "[Father Mareusis]";
-		mes "When you think you fulfilled this requirement, then come back to me again. Then you will have a holy job in which you can spread God's will.";
+		if (job_acolyte_q != 0) {
+			switch(job_acolyte_q) {
+			case 2:
+				mes "For your trial, please visit ^000077Father Rubalkabara ^000000 and then return here to me.";
+				next;
+				mes "[Father Mareusis]";
+				mes "He is practicing asceticism in the ^000077Relics at the NorthEast of Prontera City^000000.";
+				break;
+			case 3:
+				mes "For your trial, please visit ^000077Mother Mathilda^000000 and return here to me.";
+				next;
+				mes "[Father Mareusis]";
+				mes "She has been practicing asceticism near ^000077Morroc, located to the SouthWest of Prontera City^000000.";
+				break;
+			default:
+				mes "For your trial, please visit ^000077Father Yosuke^000000 and return here to me.";
+				next;
+				mes "[Father Mareusis]";
+				mes "He has been practicing asceticism around a bridge somewhere ^000077NorthWest of Prontera^000000.";
+				break;
+			}
+			next;
+			mes "[Father Mareusis]";
+			mes "May the grace of God light your path and guide you on your journey of penance.";
+		}
+		else {
+			mes "The destination for this trial will be decided once you fill the application form.";
+		}
+		next;
+		mes "[Father Mareusis]";
+		mes "Please come back after fulfilling the two requirements I've asked of you. As long as your desire to serve God and others is sincere, you will be able to make it.";
 		close;
 	case 3:
 		close;
