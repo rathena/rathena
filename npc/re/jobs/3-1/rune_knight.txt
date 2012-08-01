@@ -3728,7 +3728,7 @@ OnMyMobDead:
 	end;
 }
 
-job3_rune01,92,62,3	script	Kafra Employee	114,{
+job3_rune01,92,62,3	script	Kafra Employee#job3	114,{
 	cutin "kafra_04",2;
 	mes "[Kafra Employee]";
 	mes "Hello. Kafra Service are always with you.";

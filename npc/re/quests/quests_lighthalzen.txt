@@ -12,4 +12,4 @@
 //= 1.0 Updated to match the new Izlude Map. [Masao]
 //============================================================ 
 
-izlude,171,73,6	duplicate(Scamp)	Scamp	853
+izlude,171,73,6	duplicate(Scamp)	Scamp#2	853
