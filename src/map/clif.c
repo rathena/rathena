@@ -16217,7 +16217,7 @@ void clif_snap( struct block_list *bl, short x, short y ) {
 	WBUFW(buf,6) = x;
 	WBUFW(buf,8) = y;
 	
-	//clif_send(buf,packet_len(0x8d2),bl,AREA);
+	clif_send(buf,packet_len(0x8d2),bl,AREA);
 }
 
 /*==========================================
