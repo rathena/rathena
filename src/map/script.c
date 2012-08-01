@@ -9593,7 +9593,7 @@ BUILDIN_FUNC(homunculus_mutate)
 		m_class = hom_class2mapid(sd->hd->homunculus.class_);
 		m_id    = hom_class2mapid(homun_id);
 		
-		if ( m_class&HOM_EVO && m_id&HOM_S && sd->hd->homunculus.level >= 99 )
+		if ( m_class != -1 && m_id != -1 && m_class&HOM_EVO && m_id&HOM_S && sd->hd->homunculus.level >= 99 )
 			hom_mutate(sd->hd, homun_id);
 		else
 			clif_emotion(&sd->hd->bl, E_SWT);
