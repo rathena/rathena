@@ -11980,20 +11980,21 @@ BUILDIN_FUNC(specialeffect2)
  *------------------------------------------*/
 BUILDIN_FUNC(nude)
 {
-	TBL_PC *sd=script_rid2sd(st);
-	int i,calcflag=0;
+	TBL_PC *sd = script_rid2sd(st);
+	int i, calcflag = 0;
 
-	if(sd==NULL)
+	if( sd == NULL )
 		return 0;
 
-	for(i=0;i<11;i++)
-		if(sd->equip_index[i] >= 0) {
-			if(!calcflag)
-				calcflag=1;
-			pc_unequipitem(sd,sd->equip_index[i],2);
+	for( i = 0 ; i < EQI_MAX; i++ ) {
+		if( sd->equip_index[ i ] >= 0 ) {
+			if( !calcflag )
+				calcflag = 1;
+			pc_unequipitem( sd , sd->equip_index[ i ] , 2);
 		}
+	}
 
-	if(calcflag)
+	if( calcflag )
 		status_calc_pc(sd,0);
 
 	return 0;
