@@ -40,7 +40,7 @@ moc_ruins,118,99,5	script	Roberto	88,{
 			mes " ";
 			mes "You are...";
 			next;
-			if ((countitem(907) > 19) && (countitem(921) > 6) && (countitem(906) > 40) && (countitem(1019) > 12) && (countitem(501) > 0) && (BaseClass == Job_Archer) && (JobLevel >= 30)) {
+			if ((countitem(907) > 19) && (countitem(921) > 6) && (countitem(906) > 40) && (countitem(1019) > 12) && (countitem(501) > 0)) {
 				mes "[Roberto]";
 				mes "You brought them!";
 				mes "Thank you very much.";
@@ -120,12 +120,7 @@ moc_ruins,118,99,5	script	Roberto	88,{
 				close;
 			case 2:
 				mes "[Roberto]";
-				if (Sex > 1) {
-					mes "...hey miss.";
-				}
-				else {
-					mes "...hey mister.";
-				}
+				mes "...hey "+((Sex)?"mister":"miss")+".";
 				mes "...be careful at night.";
 				close;
 			}

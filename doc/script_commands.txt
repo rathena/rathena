@@ -2109,49 +2109,6 @@ array, shifting all the elements beyond this towards the beginning.
 
 ---------------------------------------
 
-*bindatcmd "command","<NPC object name>::<event label>"{,<atcommand level>,<charcommand level>};
-*bindatcmd("command","<NPC object name>::<event label>"{,<atcommand level>,<charcommand level>});
-
-This command will bind a NPC event label to an atcommand. Upon execution of
-the atcommand, the user will invoke the NPC event label.
-
-Example:
-When a user types the command "@test", an angel effect will be shown.
-
--	script	atcmd_example	-1,{
-OnInit:
-	bindatcmd("test","atcmd_example::OnAtcommand");
-	end;
-OnAtcommand:
-	specialeffect2 338;
-	end;
-}
-
----------------------------------------
-
-*unbindatcmd "command";
-*unbindatcmd("command");
-
-This command will unbind a NPC event label from an atcommand.
-
----------------------------------------
-
-*useatcmd "command";
-*useatcmd("command");
-
-This command will execute a custom atcommand on the attached RID from a script.
-Whether invoked by a script or command, an array .@atcmd_parameters$[] will be
-filled with the given parameters, starting with an index of 0.
-
-Example:
-   @test Testing Command
-
-The following array values will be generated:
-   .@atcmd_parameters$[0] = "Testing"
-   .@atcmd_parameters$[1] = "Command"
-
----------------------------------------
-
 ======================================
 |2.- Information-retrieving commands.|
 ======================================
@@ -6512,6 +6469,49 @@ Example(s):
 
 //this would do the same as above, but now doesn't need a player attached by default.
 	charCommand "#option 0 0 0 Roy";
+
+---------------------------------------
+
+*bindatcmd "command","<NPC object name>::<event label>"{,<atcommand level>,<charcommand level>};
+*bindatcmd("command","<NPC object name>::<event label>"{,<atcommand level>,<charcommand level>});
+
+This command will bind a NPC event label to an atcommand. Upon execution of
+the atcommand, the user will invoke the NPC event label.
+
+Example:
+When a user types the command "@test", an angel effect will be shown.
+
+-	script	atcmd_example	-1,{
+OnInit:
+	bindatcmd("test","atcmd_example::OnAtcommand");
+	end;
+OnAtcommand:
+	specialeffect2 338;
+	end;
+}
+
+---------------------------------------
+
+*unbindatcmd "command";
+*unbindatcmd("command");
+
+This command will unbind a NPC event label from an atcommand.
+
+---------------------------------------
+
+*useatcmd "command";
+*useatcmd("command");
+
+This command will execute a custom atcommand on the attached RID from a script.
+Whether invoked by a script or command, an array .@atcmd_parameters$[] will be
+filled with the given parameters, starting with an index of 0.
+
+Example:
+   @test Testing Command
+
+The following array values will be generated:
+   .@atcmd_parameters$[0] = "Testing"
+   .@atcmd_parameters$[1] = "Command"
 
 ---------------------------------------
 
