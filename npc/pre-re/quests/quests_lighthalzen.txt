@@ -12,4 +12,4 @@
 //= 1.0 First version.
 //============================================================ 
 
-izlude,186,57,5	duplicate(Scamp)	Scamp	853
+izlude,186,57,5	duplicate(Scamp)	Scamp#2	853
