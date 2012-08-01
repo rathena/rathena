@@ -738,6 +738,8 @@ void clif_elemental_updatestatus(struct map_session_data *sd, int type);
 
 void clif_talisman(struct map_session_data *sd, short type);
 
+void clif_snap( struct block_list *bl, short x, short y );
+
 /**
  * Color Table
  **/

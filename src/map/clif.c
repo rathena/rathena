@@ -16096,7 +16096,7 @@ int clif_status_load_notick(struct block_list *bl,int type,int flag,int val1, in
 	WBUFL(buf,17) = val2;
 	WBUFL(buf,21) = val3;
 
-	clif_send(buf,packet_len(WBUFW(buf,0)),bl,AREA);
+	clif_send(buf,packet_len(0x043f),bl,AREA);
 	return 0;
 }
 //Notifies FD of ID's type
@@ -16174,14 +16174,16 @@ void clif_talisman(struct map_session_data *sd,short type)
 void clif_parse_MoveItem(int fd, struct map_session_data *sd) {
 #if PACKETVER >= 20111122
 	int index;
-		
+	
+	/* can't move while dead. */
 	if(pc_isdead(sd)) {
 		return;
 	}
+	
 	index = RFIFOW(fd,2)-2; 
 	if (index < 0 || index >= MAX_INVENTORY)
 		return;
-	if (sd->status.inventory[index].favorite && sd->status.inventory[index].favorite == 1)
+	if ( sd->status.inventory[index].favorite )
 			sd->status.inventory[index].favorite = 0;
 		else
 			sd->status.inventory[index].favorite = 1;
@@ -16201,6 +16203,17 @@ void clif_favorite_item(struct map_session_data* sd, unsigned short index) {
 	WFIFOW(fd,2) = index+2;
 	WFIFOL(fd,4) = (sd->status.inventory[index].favorite == 1) ? 0 : 1;
 	WFIFOSET(fd,packet_len(0x908));
+}
+
+void clif_snap( struct block_list *bl, short x, short y ) {
+	unsigned char buf[10];
+
+	WBUFW(buf,0) = 0x8d2;
+	WBUFL(buf,2) = bl->id;
+	WBUFW(buf,6) = x;
+	WBUFW(buf,8) = y;
+	
+	clif_send(buf,packet_len(0x8d2),bl,AREA);
 }
 
 /*==========================================
@@ -16590,7 +16603,7 @@ static int packetdb_readdb(void)
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	//#0x08C0
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 10,
-		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		0,  0, 10,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	//#0x0900

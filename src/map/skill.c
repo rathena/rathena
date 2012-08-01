@@ -9543,14 +9543,17 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 
 	case MO_BODYRELOCATION:
 		if (unit_movepos(src, x, y, 1, 1)) {
+#if PACKETVER >= 20111005
+			clif_snap(src, src->x, src->y);
+#else
 			clif_skill_poseffect(src,skillid,skilllv,src->x,src->y,tick);
-//			clif_slide(src, src->x, src->y); //Poseffect is the one that makes the char snap on the client...
-			if (sd) skill_blockpc_start (sd, MO_EXTREMITYFIST, 2000);
+#endif
+			if (sd)
+				skill_blockpc_start (sd, MO_EXTREMITYFIST, 2000);
 		}
 		break;
 	case NJ_SHADOWJUMP:
-		if( !map_flag_gvg(src->m) && !map[src->m].flag.battleground )
-		{	//You don't move on GVG grounds.
+		if( !map_flag_gvg(src->m) && !map[src->m].flag.battleground ) { //You don't move on GVG grounds.
 			unit_movepos(src, x, y, 1, 0);
 			clif_slide(src,x,y);
 		}

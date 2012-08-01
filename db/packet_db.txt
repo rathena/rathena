@@ -1645,6 +1645,7 @@ packet_ver: 27
 0x088a,6,getcharnamerequest,2
 0x0838,6,solvecharname,2
 0x0439,8,useitem,2:4
+0x08d2,10
 
 // 2011-11-02aRagexe
 packet_ver: 28
