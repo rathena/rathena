@@ -402,10 +402,12 @@ function	script	F_KafTele	{
 		if (@wrpD$[@num] == "Al De Baran") warp "aldebaran",168,112;
 		if (@wrpD$[@num] == "Aldebaran") warp "aldebaran",168,112;
 		if (@wrpD$[@num] == "Comodo") warp "comodo", 209, 143;
-		if(checkre(0)
-			if (@wrpD$[@num] == "Izlude") warp "izlude", 128, 98;
-		else
-			if (@wrpD$[@num] == "Izlude") warp "izlude", 91, 105;
+		if (@wrpD$[@num] == "Izlude") {
+			if(checkre(0))
+				warp "izlude", 128, 98;
+			else
+				warp "izlude", 91, 105;
+		}
 		if (@wrpD$[@num] == "Geffen") warp "geffen", 120, 39;
 		if (@wrpD$[@num] == "Morroc") warp "morocc", 156, 46;
 		if (@wrpD$[@num] == "Payon") warp "payon", 161, 58;
