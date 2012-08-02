@@ -124,7 +124,7 @@ OnClock0001:
 	set .@Treasure,GetCastleData("arug_cas01",2)/5+4;
 	if (.@Treasure) {
 		monster "arug_cas01",251,369,"Treasure Chest",1943,1,"Manager#aru01_02::OnTreasureDied";
-		monster "arug_cas01",251,369,"Treasure Chest",1324,1,"Manager#aru01_02::OnTreasureDied";
+		monster "arug_cas01",252,369,"Treasure Chest",1324,1,"Manager#aru01_02::OnTreasureDied";
 		monster "arug_cas01",253,369,"Treasure Chest",1943,1,"Manager#aru01_02::OnTreasureDied";
 		monster "arug_cas01",254,369,"Treasure Chest",1324,1,"Manager#aru01_02::OnTreasureDied";
 		if (.@Treasure < 5) end;
