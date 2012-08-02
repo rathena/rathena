@@ -14,22 +14,22 @@
 //= 1.1 Reverted back and optimized. [Daegaladh]
 //============================================================ 
 
--       script  Gld_Trea_Protect::Gld_Trea_Protect      -1,{
+-	script	Gld_Trea_Protect::Gld_Trea_Protect	-1,{
 
 OnTouch:
 	// Store the Guild ID of castle occupant.
 	set .@GID, getcastledata(strnpcinfo(2),1);
-        if (strcharinfo(0) != getguildmaster(.@GID)) {
-                if (compare(strnpcinfo(2),"aldeg"))
-                        warp "aldebaran",143,112;
-                else if (compare(strnpcinfo(2),"gefg"))
-                        warp "geffen",120,38;
-                else if (compare(strnpcinfo(2),"payg"))
-                        warp "payon",100,100;
-                else if (compare(strnpcinfo(2),"prtg"))
-                        warp "prontera",119,64;
-        }
-        end;
+		if (strcharinfo(0) != getguildmaster(.@GID)) {
+			if (compare(strnpcinfo(2),"aldeg"))
+				warp "aldebaran",143,112;
+			else if (compare(strnpcinfo(2),"gefg"))
+				warp "geffen",120,38;
+			else if (compare(strnpcinfo(2),"payg"))
+				warp "payon",100,100;
+			else if (compare(strnpcinfo(2),"prtg"))
+				warp "prontera",119,64;
+		}
+	end;
 }
 
 prtg_cas01,11,208,0	duplicate(Gld_Trea_Protect)	ban_warp#prtg_cas01	-1,6,6
