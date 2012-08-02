@@ -633,7 +633,8 @@ typedef enum sc_type {
 	SC_KYOMU,
 	SC_KAGEMUSYA,
 	SC_ZANGETSU,
-	SC_OBOROGENSOU,
+	SC_GENSOU,
+	SC_AKAITSUKI,
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;

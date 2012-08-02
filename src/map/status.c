@@ -718,6 +718,12 @@ void initChangeTables(void) {
 	add_sc( KO_JYUSATSU			, SC_CURSE		  );
 	set_sc( KO_ZENKAI			, SC_ZENKAI				 , SI_ZENKAI			   , SCB_NONE );
 	set_sc( KO_IZAYOI			, SC_IZAYOI				 , SI_IZAYOI			   , SCB_MATK );
+	set_sc( KG_KYOMU			, SC_KYOMU				 , SI_KYOMU				   , SCB_NONE );
+	set_sc( KG_KAGEMUSYA		, SC_KAGEMUSYA			 , SI_KAGEMUSYA			   , SCB_NONE );
+	set_sc( KG_KAGEHUMI			, SC_KAGEHUMI			 , SI_KG_KAGEHUMI		   , SCB_NONE );
+	set_sc( OB_ZANGETSU			, SC_ZANGETSU			 , SI_ZANGETSU			   , SCB_MATK|SCB_BATK );
+	set_sc_with_vfx( OB_AKAITSUKI		, SC_AKAITSUKI			 , SI_AKAITSUKI			   , SCB_NONE );
+	set_sc( OB_OBOROGENSOU		, SC_GENSOU				 , SI_GENSOU			   , SCB_NONE );
 	
 	add_sc( MH_STAHL_HORN		 , SC_STUN            );
 	set_sc( MH_ANGRIFFS_MODUS	 , SC_ANGRIFFS_MODUS  , SI_ANGRIFFS_MODUS	, SCB_BATK|SCB_WATK|SCB_DEF|SCB_FLEE );
@@ -996,6 +1002,7 @@ void initChangeTables(void) {
 	StatusChangeStateTable[SC_NETHERWORLD]         |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_CAMOUFLAGE]          |= SCS_NOMOVE|SCS_NOMOVECOND;
 	StatusChangeStateTable[SC_MEIKYOUSISUI]		   |= SCS_NOMOVE;
+	StatusChangeStateTable[SC_KAGEHUMI]            |= SCS_NOMOVE;
 		
 	/* StatusChangeState (SCS_) NOPICKUPITEMS */
 	StatusChangeStateTable[SC_HIDING]              |= SCS_NOPICKITEM;
@@ -1186,6 +1193,8 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 				status_change_end(target, SC_DANCING, INVALID_TIMER);
 			if(sc->data[SC_CLOAKINGEXCEED] && --(sc->data[SC_CLOAKINGEXCEED]->val2) <= 0)
 				status_change_end(target, SC_CLOAKINGEXCEED, INVALID_TIMER);
+			if(sc->data[SC_KAGEMUSYA] && --(sc->data[SC_KAGEMUSYA]->val3) <= 0)
+				status_change_end(target, SC_KAGEMUSYA, INVALID_TIMER);
 		}
 		unit_skillcastcancel(target, 2);
 	}
@@ -1611,7 +1620,8 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 				sc->cant.cast ||
 				(sc->data[SC_MARIONETTE] && skill_num != CG_MARIONETTE) || //Only skill you can use is marionette again to cancel it
 				(sc->data[SC_MARIONETTE2] && skill_num == CG_MARIONETTE) || //Cannot use marionette if you are being buffed by another
-				(sc->data[SC_STASIS] && skill_stasis_check(src, sc->data[SC_STASIS]->val2, skill_num))
+				(sc->data[SC_STASIS] && skill_block_check(src, SC_STASIS, skill_num)) ||
+				(sc->data[SC_KAGEHUMI] && skill_block_check(src, SC_KAGEHUMI, skill_num))
 			))
 				return 0;
 
@@ -4381,7 +4391,9 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 	// renewal EDP increases your base atk by atk x skill level
 	if( sc->data[SC_EDP] )
 		batk = batk * sc->data[SC_EDP]->val1;
-#endif
+#endif	
+	if( sc->data[SC_ZANGETSU] )
+		batk += batk * sc->data[SC_ZANGETSU]->val2 / 100;
 	return (unsigned short)cap_value(batk,0,USHRT_MAX);
 }
 
@@ -4506,6 +4518,8 @@ static unsigned short status_calc_matk(struct block_list *bl, struct status_chan
 		matk += 70;	
 	if(sc->data[SC_IZAYOI])
 		matk += 50 * sc->data[SC_IZAYOI]->val1;
+	if( sc->data[SC_ZANGETSU] )
+		matk += matk * sc->data[SC_ZANGETSU]->val2 / 100;
 
 	return (unsigned short)cap_value(matk,0,USHRT_MAX);
 }
@@ -8268,9 +8282,20 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val2 = 2*val1 + rand()%val1;
 			clif_status_change(bl,SI_ACTIVE_MONSTER_TRANSFORM,1,0,1002,0,0); // Temporarily shows Poring need official [malufett]
 			break;
+		case SC_KAGEMUSYA:
+			val3 = val1 * 2;
 		case SC_IZAYOI:
 			val2 = tick/1000;
 			tick_time = 1000;
+			break;
+		case SC_ZANGETSU:
+			val2 = status_get_lv(bl) / 2 + 50;
+			break;
+		case SC_GENSOU:
+			if( rand()%100 < 50) // needs more info
+				status_zap(bl, 500, 500);
+			else
+				status_heal(bl, 500, 500, 0);
 			break;
 		default:
 			if( calc_flag == SCB_NONE && StatusSkillChangeTable[type] == 0 && StatusIconChangeTable[type] == 0 )
@@ -9880,7 +9905,10 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 	case SC_RENOVATIO:
 		if( --(sce->val4) >= 0 )
 		{
-			status_heal(bl, status->max_hp * 3 / 100, 0, 2);
+			int heal = status->max_hp * 3 / 100;
+			if( sc && sc->data[SC_AKAITSUKI] && heal )
+				heal = ~heal + 1;
+			status_heal(bl, heal, 0, 2);
 			sc_timer_next(5000 + tick, status_change_timer, bl->id, data);
 			return 0;
 		}

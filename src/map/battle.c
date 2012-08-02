@@ -1456,9 +1456,10 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 
 	if( sd && !skill_num ) {	//Check for double attack.
 		if( ( ( skill_lv = pc_checkskill(sd,TF_DOUBLE) ) > 0 && sd->weapontype1 == W_DAGGER )
-			|| ( sd->bonus.double_rate > 0 && sd->weapontype1 != W_FIST ) ) //Will fail bare-handed 
+			|| ( sd->bonus.double_rate > 0 && sd->weapontype1 != W_FIST ) //Will fail bare-handed 
+			|| ( sc && sc->data[SC_KAGEMUSYA] && sd->weapontype1 != W_FIST )) // Need confirmation
 		{	//Success chance is not added, the higher one is used [Skotlex]
-			if( rnd()%100 < ( 5*skill_lv > sd->bonus.double_rate ? 5*skill_lv : sd->bonus.double_rate ) )
+			if( rnd()%100 < ( 5*skill_lv > sd->bonus.double_rate ? 5*skill_lv : sc && sc->data[SC_KAGEMUSYA]?sc->data[SC_KAGEMUSYA]->val1*3:sd->bonus.double_rate ) )
 			{
 				wd.div_ = skill_get_num(TF_DOUBLE,skill_lv?skill_lv:1);
 				wd.type = 0x08;
@@ -4441,6 +4442,10 @@ int battle_calc_return_damage(struct block_list* bl, struct block_list *src, int
 			if (rdamage < 1) rdamage = 1;
 		}
 	}
+
+	if( sc && sc->data[SC_KYOMU] ) // Nullify reflecting ability
+		rdamage = 0;
+
 	return rdamage;
 }
 

@@ -959,6 +959,8 @@ int mob_spawn (struct mob_data *md)
 	md->attacked_id = 0;
 	md->target_id = 0;
 	md->move_fail_count = 0;
+	md->ud.state.attack_continue = 0;
+	md->ud.target_to = 0;
 	if( md->spawn_timer != INVALID_TIMER )
 	{
 		delete_timer(md->spawn_timer, mob_delayspawn);
@@ -2132,10 +2134,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 	if(src && src->type == BL_MOB)
 		mob_unlocktarget((struct mob_data *)src,tick);
-	
-	/* clear previous target otherwise we'll respawn aiming at the same dude */
-	md->attacked_id = 0;
-	
+		
 	if( sd ) {
 		if( sd->mission_mobid == md->class_) { //TK_MISSION [Skotlex]
 			if( ++sd->mission_count >= 100 && (temp = mob_get_random_id(0, 0xE, sd->status.base_level)) )
