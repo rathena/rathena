@@ -11,12 +11,12 @@
 #include "../common/utils.h"
 #include "../common/ers.h"
 
-#include "skill.h"
 #include "map.h"
 #include "path.h"
 #include "clif.h"
 #include "pc.h"
 #include "status.h"
+#include "skill.h"
 #include "pet.h"
 #include "homunculus.h"
 #include "mercenary.h"

@@ -7,7 +7,7 @@
 #include "../common/db.h"
 #include "../common/malloc.h"
 #include "../common/random.h"
-#include "unit.h"
+
 #include "map.h"
 #include "path.h"
 #include "pc.h"
@@ -23,6 +23,7 @@
 #include "npc.h"
 #include "guild.h"
 #include "status.h"
+#include "unit.h"
 #include "battle.h"
 #include "battleground.h"
 #include "chat.h"
