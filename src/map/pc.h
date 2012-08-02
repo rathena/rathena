@@ -551,12 +551,13 @@ enum equip_pos {
 #define EQP_ARMS (EQP_HAND_R|EQP_HAND_L)
 #define EQP_HELM (EQP_HEAD_LOW|EQP_HEAD_MID|EQP_HEAD_TOP)
 #define EQP_ACC (EQP_ACC_L|EQP_ACC_R)
+#define EQP_COSTUME (EQP_COSTUME_HEAD_TOP|EQP_COSTUME_HEAD_MID|EQP_COSTUME_HEAD_LOW)
 
 /// Equip positions that use a visible sprite
 #if PACKETVER < 20110111
 	#define EQP_VISIBLE EQP_HELM
-#else
-	#define EQP_VISIBLE (EQP_HELM|EQP_GARMENT)
+#else	
+	#define EQP_VISIBLE (EQP_HELM|EQP_GARMENT|EQP_COSTUME)
 #endif
 
 //Equip indexes constants. (eg: sd->equip_index[EQI_AMMO] returns the index
