@@ -895,6 +895,8 @@ job_duncer,95,93,4	script	Bijou#da	101,{
 // Waiting Room
 //============================================================ 
 job_duncer,32,154,1	script	Waiting Room#dance	66,{
+	end;
+
 OnInit:
 	waitingroom "Waiting Room",20,"Waiting Room#dance::OnStartArena",1;
 	enablewaitingroomevent;

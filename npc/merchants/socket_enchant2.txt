@@ -380,7 +380,7 @@
 
 payon,236,199,3	duplicate(SocketEnchant2)	Leablem#pay	86
 lighthalzen,96,137,3	duplicate(SocketEnchant2)	Leablem#lhz	86
-prontera,244,169,5	duplicate(SocketEnchant2)	Leablem#prt	86
+prt_in,22,60,6	duplicate(SocketEnchant2)	Leablem#prt	86
 moc_ruins,154,86,3	duplicate(SocketEnchant2)	Leablem#moc	86
 
 function	script	Func_Socket2	{

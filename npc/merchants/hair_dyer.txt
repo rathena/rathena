@@ -88,8 +88,8 @@ prt_in,243,168,4	script	Jovovich	91,{
 						switch(.@headpalette) {
 						case 1: callsub S_NoDye,976,"yellow"; break;
 						case 2: callsub S_NoDye,978,"violet"; break;
-						case 3: callsub S_NoDye,979,"orange"; break;
-						case 4: callsub S_NoDye,980,"green"; break;
+						case 3: callsub S_NoDye,980,"orange"; break;
+						case 4: callsub S_NoDye,979,"green"; break;
 						case 5: callsub S_NoDye,981,"blue"; break;
 						case 6: callsub S_NoDye,982,"white"; break;
 						case 7: callsub S_NoDye,983,"black"; break;
@@ -104,8 +104,8 @@ prt_in,243,168,4	script	Jovovich	91,{
 						switch(.@headpalette) {
 						case 1: delitem 976,1; break; //Lemon_Dyestuffs
 						case 2: delitem 978,1; break; //Violet_Dyestuffs
-						case 3: delitem 979,1; break; //Orange_Dyestuffs
-						case 4: delitem 980,1; break; //Darkgreen_Dyestuffs
+						case 3: delitem 980,1; break; //Orange_Dyestuffs
+						case 4: delitem 979,1; break; //Darkgreen_Dyestuffs
 						case 5: delitem 981,1; break; //Cobaltblue_Dyestuffs
 						case 6: delitem 982,1; break; //White_Dyestuffs
 						case 7: delitem 983,1; break; //Black_Dyestuffs

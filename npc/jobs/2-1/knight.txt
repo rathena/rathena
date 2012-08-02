@@ -1223,6 +1223,8 @@ job_knt,89,106,4	script	Knight Windsor#knt	733,{
 }
 
 job_knt,89,106,4	script	Windsor Benedict#knt	733,{
+	end;
+
 OnInit:
 	disablenpc "Windsor Benedict#knt";
 	waitingroom "Waiting Room",20,"Windsor Benedict#knt::OnStartArena",1;
