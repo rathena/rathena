@@ -1052,8 +1052,7 @@ static void parse_nextline(bool first, const char* p)
 /// Parse a variable assignment using the direct equals operator
 /// @param p script position where the function should run from
 /// @return NULL if not a variable assignment, the new position otherwise
-const char* parse_variable(const char* p)
-{
+const char* parse_variable(const char* p) {
 	int i, j, word;
 	c_op type = C_NOP;
 	const char *p2 = NULL;
@@ -1063,21 +1062,17 @@ const char* parse_variable(const char* p)
 	p = skip_word(p);
 	p = skip_space(p);
 
-	if( p == NULL )
-	{// end of the line or invalid buffer
+	if( p == NULL ) {// end of the line or invalid buffer
 		return NULL;
 	}
 
-	if( *p == '[' )
-	{// array variable so process the array as appropriate
-		for( p2 = p, i = 0, j = 1; p; ++ i )
-		{
+	if( *p == '[' ) {// array variable so process the array as appropriate
+		for( p2 = p, i = 0, j = 1; p; ++ i ) {
 			if( *p ++ == ']' && --(j) == 0 ) break;
 			if( *p == '[' ) ++ j;
 		}
 
-		if( !(p = skip_space(p)) )
-		{// end of line or invalid characters remaining
+		if( !(p = skip_space(p)) ) {// end of line or invalid characters remaining
 			disp_error_message("Missing right expression or closing bracket for variable.", p);
 		}
 	}
@@ -1102,29 +1097,24 @@ const char* parse_variable(const char* p)
 		return NULL;
 	}
 
-	switch( type )
-	{
-		case C_EQ:
-		{// incremental modifier
+	switch( type ) {
+		case C_EQ: {// incremental modifier
 			p = skip_space( &p[1] );
 		}
 		break;
 
 		case C_L_SHIFT:
-		case C_R_SHIFT:
-		{// left or right shift modifier
+		case C_R_SHIFT: {// left or right shift modifier
 			p = skip_space( &p[3] );
 		}
 		break;
 
-		default:
-		{// normal incremental command
+		default: {// normal incremental command
 			p = skip_space( &p[2] );
 		}
 	}
 
-	if( p == NULL )
-	{// end of line or invalid buffer
+	if( p == NULL ) {// end of line or invalid buffer
 		return NULL;
 	}
 	
@@ -1148,8 +1138,7 @@ const char* parse_variable(const char* p)
 		disp_error_message("Cannot modify a variable which has the same name as a function or label.", p);
 	}
 
-	if( p2 )
-	{// process the variable index
+	if( p2 ) {// process the variable index
 		const char* p3 = NULL;
 
 		// push the getelementofarray method into the stack
@@ -1161,29 +1150,22 @@ const char* parse_variable(const char* p)
 		p3 = parse_subexpr(p2 + 1, 1);
 		p3 = skip_space(p3);
 
-		if( *p3 != ']' )
-		{// closing parenthesis is required for this script
+		if( *p3 != ']' ) {// closing parenthesis is required for this script
 			disp_error_message("Missing closing ']' parenthesis for the variable assignment.", p3);
 		}
 
 		// push the closing function stack operator onto the stack
 		add_scriptc(C_FUNC);
 		p3 ++;
-	}
-	else
-	{// simply push the variable or value onto the stack
+	} else {// simply push the variable or value onto the stack
 		add_scriptl(word);
 	}
 	
-	add_scriptc(C_REF);
-
-	if( type == C_ADD_PP || type == C_SUB_PP )
-	{// incremental operator for the method
+	if( type == C_ADD_PP || type == C_SUB_PP ) {// incremental operator for the method
+		add_scriptc(C_REF);
 		add_scripti(1);
 		add_scriptc(type == C_ADD_PP ? C_ADD : C_SUB);
-	}
-	else
-	{// process the value as an expression
+	} else {// process the value as an expression
 		p = parse_subexpr(p, -1);
 
 		if( type != C_EQ )
@@ -3220,10 +3202,10 @@ void op_2(struct script_state *st, int op)
 	left = script_getdatatop(st, -2);
 	right = script_getdatatop(st, -1);
 
-	if (st->op2ref)
-	{
-		if (data_isreference(left))
+	if (st->op2ref) {
+		if (data_isreference(left)) {
 			leftref = *left;
+		}
 
 		st->op2ref = 0;
 	}
@@ -3392,7 +3374,7 @@ static void script_check_buildin_argtype(struct script_state* st, int func)
 				case 'l':
 					if( !data_islabel(data) && !data_isfunclabel(data) )
 					{// label
-						ShowWarning("Unexpected type for argument %d. Expected label.\n", idx-1);
+						ShowWarning("Unexpected type for argument %d. Expected label, got %s\n", idx-1,script_op2name(data->type));
 						script_reportdata(data);
 						invalid++;
 					}
