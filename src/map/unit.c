@@ -613,7 +613,10 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
 	if( checkpath && (map_getcell(bl->m,dst_x,dst_y,CELL_CHKNOPASS) || !path_search(NULL,bl->m,bl->x,bl->y,dst_x,dst_y,easy,CELL_CHKNOREACH)) )
 		return 0; // unreachable
 
-	dir = map_calc_dir(bl, dst_x,dst_y);
+	ud->to_x = dst_x;
+	ud->to_y = dst_y;
+
+	dir = map_calc_dir(bl, dst_x, dst_y);
 	ud->dir = dir;
 
 	dx = dst_x - bl->x;
@@ -701,6 +704,9 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
 		{
 			unit_stop_walking(bl, 0);
 		}
+
+		sd->ud.to_x = nx;
+		sd->ud.to_y = ny;
 
 		dx = nx-bl->x;
 		dy = ny-bl->y;
