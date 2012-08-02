@@ -223,17 +223,17 @@ const char* get_svn_revision(void)
  *	CORE : Display title
  *  ASCII By CalciumKid 1/12/2011
  *--------------------------------------*/
-static void display_title(void)
-{
+static void display_title(void) {
 	//ClearScreen(); // clear screen and go up/left (0, 0 position in text)
+	
 	ShowMessage("\n");
 	ShowMessage(""CL_PASS"        "CL_BOLD"                                                              "CL_PASS""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_PASS"          "CL_BT_WHITE"            rAthena Development Team presents            "CL_PASS""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_PASS"        "CL_BOLD"              ____  ___   __  __                              "CL_PASS""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_PASS"        "CL_BOLD"             / __ \\/   | / /_/ /_  ___  ____  ____ _          "CL_PASS""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_PASS"        "CL_BOLD"            / /_/ / /| |/ __/ __ \\/ _ \\/ __ \\/ __ `/          "CL_PASS""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_PASS"        "CL_BOLD"           / _, _/ ___ / /_/ / / /  __/ / / / /_/ /           "CL_PASS""CL_CLL""CL_NORMAL"\n");
-	ShowMessage(""CL_PASS"        "CL_BOLD"          /_/ |_/_/  |_\\__/_/ /_/\\___/_/ /_/\\___,_/           "CL_PASS""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_PASS"          "CL_BT_WHITE"              rAthena Development Team presents            "CL_PASS""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_PASS"        "CL_BOLD"                   ___   __  __                              "CL_PASS""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_PASS"        "CL_BOLD"             _____/   | / /_/ /_  ___  ____  ____ _          "CL_PASS""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_PASS"        "CL_BOLD"            / ___/ /| |/ __/ __ \\/ _ \\/ __ \\/ __ `/          "CL_PASS""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_PASS"        "CL_BOLD"           / /  / ___ / /_/ / / /  __/ / / / /_/ /           "CL_PASS""CL_CLL""CL_NORMAL"\n");
+	ShowMessage(""CL_PASS"        "CL_BOLD"          /_/  /_/  |_\\__/_/ /_/\\___/_/ /_/\\__,_/           "CL_PASS""CL_CLL""CL_NORMAL"\n");
 	ShowMessage(""CL_PASS"        "CL_BOLD"                                                              "CL_PASS""CL_CLL""CL_NORMAL"\n");  
 	ShowMessage(""CL_PASS"          "CL_GREEN"                http://rathena.org/board/                "CL_PASS""CL_CLL""CL_NORMAL"\n");
 	ShowMessage(""CL_PASS"        "CL_BOLD"                                                              "CL_PASS""CL_CLL""CL_NORMAL"\n"); 
