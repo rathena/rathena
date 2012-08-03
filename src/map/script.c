@@ -4261,7 +4261,21 @@ BUILDIN_FUNC(menu)
 		}
 		st->state = RERUNLINE;
 		sd->state.menu_or_input = 1;
-		clif_scriptmenu(sd, st->oid, StringBuf_Value(&buf));
+		
+		/**
+		 * menus beyond this length crash the client (see bugreport:6402)
+		 **/
+		if( StringBuf_Length(&buf) >= 2047 ) {
+			struct npc_data * nd = map_id2nd(st->oid);
+			char* menu;
+			CREATE(menu, char, 2048);
+			safestrncpy(menu, StringBuf_Value(&buf), 2047);
+			ShowWarning("NPC Menu too long! (source:%s / length:%d)\n",nd?nd->name:"Unknown",StringBuf_Length(&buf));
+			clif_scriptmenu(sd, st->oid, menu);
+			aFree(menu);
+		} else
+			clif_scriptmenu(sd, st->oid, StringBuf_Value(&buf));
+		
 		StringBuf_Destroy(&buf);
 
 		if( sd->npc_menu >= 0xff )
@@ -4331,44 +4345,51 @@ BUILDIN_FUNC(select)
 	if( sd == NULL )
 		return 0;
 
-	if( sd->state.menu_or_input == 0 )
-	{
+	if( sd->state.menu_or_input == 0 ) {
 		struct StringBuf buf;
 
 		StringBuf_Init(&buf);
 		sd->npc_menu = 0;
-		for( i = 2; i <= script_lastdata(st); ++i )
-		{
+		for( i = 2; i <= script_lastdata(st); ++i ) {
 			text = script_getstr(st, i);
+			
 			if( sd->npc_menu > 0 )
 				StringBuf_AppendStr(&buf, ":");
+
 			StringBuf_AppendStr(&buf, text);
 			sd->npc_menu += menu_countoptions(text, 0, NULL);
 		}
 
 		st->state = RERUNLINE;
 		sd->state.menu_or_input = 1;
-		clif_scriptmenu(sd, st->oid, StringBuf_Value(&buf));
+		
+		/**
+		 * menus beyond this length crash the client (see bugreport:6402)
+		 **/
+		if( StringBuf_Length(&buf) >= 2047 ) {
+			struct npc_data * nd = map_id2nd(st->oid);
+			char* menu;
+			CREATE(menu, char, 2048);
+			safestrncpy(menu, StringBuf_Value(&buf), 2047);
+			ShowWarning("NPC Menu too long! (source:%s / length:%d)\n",nd?nd->name:"Unknown",StringBuf_Length(&buf));
+			clif_scriptmenu(sd, st->oid, menu);
+			aFree(menu);
+		} else
+			clif_scriptmenu(sd, st->oid, StringBuf_Value(&buf));
 		StringBuf_Destroy(&buf);
 
-		if( sd->npc_menu >= 0xff )
-		{
+		if( sd->npc_menu >= 0xff ) {
 			ShowWarning("buildin_select: Too many options specified (current=%d, max=254).\n", sd->npc_menu);
 			script_reportsrc(st);
 		}
-	}
-	else if( sd->npc_menu == 0xff )
-	{// Cancel was pressed
+	} else if( sd->npc_menu == 0xff ) {// Cancel was pressed
 		sd->state.menu_or_input = 0;
 		st->state = END;
-	}
-	else
-	{// return selected option
+	} else {// return selected option
 		int menu = 0;
 
 		sd->state.menu_or_input = 0;
-		for( i = 2; i <= script_lastdata(st); ++i )
-		{
+		for( i = 2; i <= script_lastdata(st); ++i ) {
 			text = script_getstr(st, i);
 			sd->npc_menu -= menu_countoptions(text, sd->npc_menu, &menu);
 			if( sd->npc_menu <= 0 )
@@ -4416,7 +4437,20 @@ BUILDIN_FUNC(prompt)
 
 		st->state = RERUNLINE;
 		sd->state.menu_or_input = 1;
-		clif_scriptmenu(sd, st->oid, StringBuf_Value(&buf));
+		
+		/**
+		 * menus beyond this length crash the client (see bugreport:6402)
+		 **/
+		if( StringBuf_Length(&buf) >= 2047 ) {
+			struct npc_data * nd = map_id2nd(st->oid);
+			char* menu;
+			CREATE(menu, char, 2048);
+			safestrncpy(menu, StringBuf_Value(&buf), 2047);
+			ShowWarning("NPC Menu too long! (source:%s / length:%d)\n",nd?nd->name:"Unknown",StringBuf_Length(&buf));
+			clif_scriptmenu(sd, st->oid, menu);
+			aFree(menu);
+		} else
+			clif_scriptmenu(sd, st->oid, StringBuf_Value(&buf));
 		StringBuf_Destroy(&buf);
 
 		if( sd->npc_menu >= 0xff )
