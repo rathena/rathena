@@ -984,7 +984,7 @@ int mob_spawn (struct mob_data *md)
 	md->tdmg = 0;
 	
 	if (md->lootitem)
-		memset(md->lootitem, 0, sizeof(md->lootitem));
+		memset(md->lootitem, 0, sizeof(*md->lootitem));
 	
 	md->lootitem_count = 0;
 
