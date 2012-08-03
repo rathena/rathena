@@ -5481,6 +5481,9 @@ the invoking NPC's actions, such as using an emotion or talking.
 Whichever of the both NPCs is talked to, both will show a random emotion at the
 same time. 
 
+As of r16564, command now returns 1 or 0 on success and failure.
+A debug message also shows on the console when no events are triggered.
+
 ---------------------------------------
 
 *cmdothernpc "<npc name>","<command>";
