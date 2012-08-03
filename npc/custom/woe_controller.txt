@@ -1,9 +1,11 @@
 //===== rAthena Script =======================================
-//= WOE Controller
+//= Euphy's WOE Controller
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.3a
+//= 1.3b
+//===== Compatible With: =====================================
+//= rAthena SVN r16571+
 //===== Description: =========================================
 //= A controller for War of Emperium designed for
 //= simplicity and ease of use.
@@ -38,7 +40,7 @@ OnInit:
 		"aldeg_cas01","aldeg_cas02","aldeg_cas03","aldeg_cas04","aldeg_cas05",
 		"arug_cas01","arug_cas02","arug_cas03","arug_cas04","arug_cas05",
 		"schg_cas01","schg_cas02","schg_cas03","schg_cas04","schg_cas05";
-	setarray .EndLabel$[0],"aru01","aru02","aru03","aru04","aru05","sch01","sch02","sch03","sch04","sch05";
+	setarray .EndLabel$[0],"ar01","ar02","ar03","ar04","ar05","sc01","sc02","sc03","sc04","sc05";
 	setarray .Days$[0],"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday";
 	setarray .Regions$[0],"Prontera","Payon","Geffen","Aldebaran","Arunafeltz","Schwaltzvalt";
 	setarray .Map$[0],"prt_gld","pay_gld","gef_fild13","alde_gld","aru_gld","sch_gld";
@@ -83,7 +85,7 @@ OnMinute00:
 							donpcevent "Agit#"+.Castles$[.@j]+"::OnAgitEnd";
 							killmonster .Castles$[.@j], "Agit#"+.Castles$[.@j]+"::OnAgitBreak";
 						} else {
-							donpcevent "Manager#"+.Castles$[.@j]+"_02::OnAgitEnd2";
+							donpcevent "Manager#"+.Castles$[.@j]+"::OnAgitEnd2";
 							killmonster .Castles$[.@j], "Steward#"+.EndLabel$[.@j-20]+"::OnStartArena"; } } }
 				break; } }
 	set .Init,0;
