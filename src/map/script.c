@@ -8601,7 +8601,12 @@ BUILDIN_FUNC(donpcevent)
 {
 	const char* event = script_getstr(st,2);
 	check_event(st, event);
-	npc_event_do(event);
+	if( !npc_event_do(event) ) {
+		struct npc_data * nd = map_id2nd(st->oid);
+		ShowDebug("NPCEvent '%s' not found! (source: %s)\n",event,nd?nd->name:"Unknown");
+		script_pushint(st, 0);
+	} else
+		script_pushint(st, 1);
 	return 0;
 }
 
