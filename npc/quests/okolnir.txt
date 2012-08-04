@@ -8,7 +8,7 @@
 //= rAthena SVN
 //===== Description: ========================================= 
 //= [Official Conversion]
-//= God Item SE Creation scipt (Asprika)
+//= God Item SE Creation scipt (Asprika & Brynhild)
 //===== Additional Comments: ================================= 
 //= 0.x Previous author: L0ne_W0lf
 //= 1.0 Merged Okolnir. [Joseph]
@@ -18,7 +18,7 @@ function	script	F_Okolnir	{
 	if (compare(strnpcinfo(0),"main")) end;
 	set .@sub$,(compare(strnpcinfo(4),"cas"))?(substr(strnpcinfo(4),0,2))+(substr(strnpcinfo(4),8,9)):substr(strnpcinfo(4),5,9);
 	return .@sub$;
-}	
+}
 
 -	script	Guide#gq_main	-1,{
 	set .@sub$, callfunc("F_Okolnir");
@@ -179,7 +179,16 @@ que_qsch05,345,23,0	warp	Gate02#gq_sch05	1,1,schg_cas05,369,306
 			mes "Mourning in this virtual realm, Okolnir.";
 			mes "On behalf of the humanbeings who defeated God here.";
 			next;
-			if ((countitem(7835)) && (countitem(7836)) && (countitem(7837)) && (countitem(7838)) && (countitem(2513)) && (countitem(7291) > 9) && (countitem(7293) > 9) && (countitem(7063) > 99) && (countitem(985) > 19)) {
+			if (compare(.@sub$,"aru")) {
+				setarray .@n, 7835,1,7836,1,7837,1,7838,1,2513,1,7291,10,7293,10,7063,100,985,20;
+			} else {
+				setarray .@n, 7830,1,7831,1,7832,1,7833,1,7834,1,2357,1,7510,100,969,10,985,20;
+			}
+			for (set .@i, 0; .@i < getarraysize(.@n); set .@i, .@i + 1) {
+				if (countitem(.@n[.@i]) >= .@n[.@i+1])
+				set .@check, .@check + 1;
+			}
+			if (.@check >= 9) {
 				cutin "wish_maiden11",1;
 				mes "[Wish Maiden]";
 				mes "Are you ready to endure the trials to get the Goddess' glory?";
@@ -271,14 +280,27 @@ que_qsch05,345,23,0	warp	Gate02#gq_sch05	1,1,schg_cas05,369,306
 				mes "You must bring several items to enter Okolnir.";
 				next;
 				mes "[Wish Maiden]";
-				mes "Dusk Glow";
-				mes "Dawn Essence";
-				mes "Cold Moonlight";
-				mes "Hazy Starlight.";
-				next;
-				mes "[Wish Maiden]";
-				mes "Please bring those four things, 10 Agate, 10 Rose Quartz, and 20 Elunium,";
-				mes "a Heavenly Maiden's Robe, as well as 100 Soft feathers.";
+				if (compare(.@sub$,"aru")) {
+					mes "Dusk Glow";
+					mes "Dawn Essence";
+					mes "Cold Moonlight";
+					mes "Hazy Starlight.";
+					next;
+					mes "[Wish Maiden]";
+					mes "Please bring those four things, 10 Agate, 10 Rose Quartz, and 20 Elunium,";
+					mes "a Heavenly Maiden's Robe, as well as 100 Soft feathers.";
+				} else {
+					mes "Goddess Tear";
+					mes "Valkyrie's Token";
+					mes "Brynhild Armor Piece";
+					mes "Hero Remains";
+					mes "Valkyrie Armor";
+					mes "Andvari's Ring.";
+					next;
+					mes "[Wish Maiden]";
+					mes "You must bring those six things, 10 Gold, and 20 Elunium.";
+					mes "Many Valhala's Flowers are also required as an offering.";				
+				}
 				next;
 				mes "[Wish Maiden]";
 				mes "Once all of those are prepared, the gate will open.";
@@ -2124,7 +2146,18 @@ que_qsch05,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#sch05_boss	193
 	set .@GID, GetCastleData(.@t$,1);
 	if (getcharid(2) == .@GID) {
 		if (strcharinfo(0) == getguildmaster(.@GID)) {
-			if ((countitem(7835)) && (countitem(7836)) && (countitem(7837)) && (countitem(7838)) && (countitem(2513)) && (countitem(7291) > 9) && (countitem(7293) > 9) && (countitem(7063) > 99) && (countitem(985) > 19)) {
+			if (compare(.@sub$,"aru")) {
+				setarray .@n, 7835,1,7836,1,7837,1,7838,1,2513,1,7291,10,7293,10,7063,100,985,20;
+				set .@rwd, 2541;
+			} else {
+				setarray .@n, 7830,1,7831,1,7832,1,7833,1,7834,1,2357,1,7510,100,969,10,985,20;
+				set .@rwd, 2383;
+			}
+			for (set .@i, 0; .@i < getarraysize(.@n); set .@i, .@i + 2) {
+				if (countitem(.@n[.@i]) >= .@n[.@i+1])
+				set .@check, .@check + 1;
+			}
+			if (.@check >= 9) {
 				cutin "wish_maiden12",1;
 				mes "[Wish Maiden]";
 				mes "As I declared, I will give the Goddess' shine to you.";
@@ -2144,18 +2177,11 @@ que_qsch05,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#sch05_boss	193
 				mes "[Wish Maiden]";
 				mes "I will open the gate for you to come back here.";
 				mes "...Okolnir won't last forever...";
-				delitem 7835,1; //Dusk_Glow
-				delitem 7836,1; //Dawn_Essence
-				delitem 7837,1; //Cold_Moonlight
-				delitem 7838,1; //Hazy_Starlight
-				delitem 2513,1; //Celestial_Robe
-				delitem 7063,100; //Soft_Feather
-				delitem 7291,10; //Agate
-				delitem 7293,10; //Rose_Quartz
-				delitem 985,20; //Elunium
-				getitem 2541,1; //Asprika
-				getitem 7840,1; //Valkyrie_Gift
-				announce "["+ strcharinfo(0) +"], of guild ["+ GetGuildName(.@GID) +"] has brought a Asprika into this world.",bc_all,"0x70dbdb";
+				for (set .@i, 0; .@i < getarraysize(.@n); set .@i, .@i + 2)
+					delitem .@n[.@i],.@n[.@i+1];
+				getitem .@rwd,1;
+				getitem 7840,1;
+				announce "["+ strcharinfo(0) +"], of guild ["+ GetGuildName(.@GID) +"] has brought a "+getitemname(.@rwd)+" into this world.",bc_all,"0x70dbdb";
 				close2;
 				cutin "wish_maiden11",255;
 				disablenpc "Wish Maiden#"+.@sub$+"_gift";
@@ -2165,7 +2191,7 @@ que_qsch05,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#sch05_boss	193
 			else {
 				cutin "wish_maiden13",1;
 				mes "[Wish Maiden]";
-				mes "As I declared, you are worthy of holding the Asprika.";
+				mes "As I declared, you are worthy of holding the "+getitemname(.@rwd)+".";
 				mes "However, you do not have the requirements on you...";
 				next;
 				mes "[Wish Maiden]";
@@ -2540,7 +2566,6 @@ que_qaru05,170,187,0,0	monster	Garden Watcher	1933,1,600000,0,0
 que_qaru05,194,180,0,0	monster	Garden Watcher	1933,1,1200000,0,0
 que_qaru05,214,181,0,0	monster	Garden Watcher	1933,1,600000,0,0
 que_qaru05,243,199,0,0	monster	Garden Watcher	1933,1,1200000,0,0
-
 que_qsch01,116,313,0,0	monster	Garden Keeper	1932,1,180000,0,0
 que_qsch01,120,285,0,0	monster	Garden Keeper	1932,1,180000,0,0
 que_qsch01,117,236,0,0	monster	Garden Keeper	1932,1,180000,0,0
