@@ -16,7 +16,7 @@
 //============================================================ 
 
 valkyrie,44,42,5	script	High Priest#Valkyrie	60,{
-	if (ADVJOB == 0 || Upper != 1) {
+	if (FJOB == 0 || Upper != 1) {
 		set .@karma_d,rand(1,10);
 		if (.@karma_d > 4) {
 			mes "[High Priest]";
@@ -32,7 +32,7 @@ valkyrie,44,42,5	script	High Priest#Valkyrie	60,{
 		mes "us from the forces of evil...";
 		close;
 	}
-	else if (ADVJOB == Job_High_Priest && Class == Job_Acolyte_High && JobLevel > 39) {
+	if ((FJOB == Job_Arch_Bishop) && (Class == Job_Acolyte_High) && (JobLevel > 39)) {
 		mes "[High Priest]";
 		mes "Our world is in";
 		mes "need of people of";
@@ -59,7 +59,7 @@ valkyrie,44,42,5	script	High Priest#Valkyrie	60,{
 			close;
 		}
 		jobchange Job_High_Priest;
-		set ADVJOB,0;
+		set FJOB,0;
 		mes "[High Priest]";
 		mes "Congratulations.";
 		mes "As a High Priest,";

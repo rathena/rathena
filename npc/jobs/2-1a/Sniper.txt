@@ -16,7 +16,7 @@
 //============================================================ 
 
 valkyrie,44,55,5	script	Sniper#Valkyrie	727,{
-	if (ADVJOB == 0 || Upper != 1) {
+	if (FJOB == 0 || Upper != 1) {
 		set .@karma_d,rand(1,10);
 		if (.@karma_d > 4) {
 			mes "[Sniper]";
@@ -33,7 +33,7 @@ valkyrie,44,55,5	script	Sniper#Valkyrie	727,{
 		mes "of battling.";
 		close;
 	}
-	else if (ADVJOB == Job_Sniper && Class == Job_Archer_High && JobLevel > 39) {
+	if ((FJOB == Job_Ranger) && (Class == Job_Archer_High) && (JobLevel > 39)) {
 		mes "[Sniper]";
 		mes "The world is in";
 		mes "need of mighty Bowmen";
@@ -59,7 +59,7 @@ valkyrie,44,55,5	script	Sniper#Valkyrie	727,{
 			close;
 		}
 		jobchange Job_Sniper;
-		set ADVJOB,0;
+		set FJOB,0;
 		mes "[Sniper]";
 		mes "Congratulations!";
 		mes "As a Sniper, I hope";

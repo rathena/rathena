@@ -16,7 +16,7 @@
 //============================================================ 
 
 valkyrie,53,58,3	script	Stalker#Valkyrie	747,{
-	if (ADVJOB == 0 || Upper != 1) {
+	if (FJOB == 0 || Upper != 1) {
 		set .@karma_d,rand(1,10);
 		if (.@karma_d > 4) {
 			mes "[Stalker]";
@@ -41,7 +41,7 @@ valkyrie,53,58,3	script	Stalker#Valkyrie	747,{
 		mes "they need me.";
 		close;
 	}
-	else if (ADVJOB == Job_Stalker && Class == Job_Thief_High && JobLevel > 39) {
+	if ((FJOB == Job_Shadow_Chaser) && (Class == Job_Thief_High) && (JobLevel > 39)) {
 		mes "[Stalker]";
 		mes "This world needs";
 		mes "more heroes who are";
@@ -69,7 +69,7 @@ valkyrie,53,58,3	script	Stalker#Valkyrie	747,{
 			close;
 		}
 		jobchange Job_Stalker;
-		set ADVJOB,0;
+		set FJOB,0;
 		mes "[Stalker]";
 		mes "Congratulations!";
 		mes "As a Stalker, I hope";

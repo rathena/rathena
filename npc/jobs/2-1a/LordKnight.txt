@@ -16,7 +16,7 @@
 //============================================================ 
 
 valkyrie,44,39,5	script	Lord Knight#Valkyrie	56,{
-	if (ADVJOB == 0 || Upper != 1) {
+	if (FJOB == 0 || Upper != 1) {
 		set .@karma_d,rand(1,10);
 		if (.@karma_d > 4) {
 			mes "[Lord Knight]";
@@ -36,7 +36,7 @@ valkyrie,44,39,5	script	Lord Knight#Valkyrie	56,{
 		mes "well being of our comrades.";
 		close;
 	}
-	else if (ADVJOB == Job_Lord_Knight && Class == Job_Swordman_High && JobLevel > 39) {
+	if ((FJOB == Job_Rune_Knight) && (Class == Job_Swordman_High) && (JobLevel > 39)) {
 		mes "[Lord Knight]";
 		mes "Your time has come!";
 		mes "The world still needs you.";
@@ -61,7 +61,7 @@ valkyrie,44,39,5	script	Lord Knight#Valkyrie	56,{
 			close;
 		}
 		jobchange Job_Lord_Knight;
-		set ADVJOB,0;
+		set FJOB,0;
 		mes "[Lord Knight]";
 		mes "Congratulations!";
 		mes "As a Lord Knight,";

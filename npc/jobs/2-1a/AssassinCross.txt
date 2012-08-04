@@ -16,7 +16,7 @@
 //============================================================ 
 
 valkyrie,44,58,5	script	Assassin Cross#Valkyrie	725,{
-	if (ADVJOB == 0 || Upper != 1) {
+	if (FJOB == 0 || Upper != 1) {
 		set .@karma_d,rand(1,10);
 		if (.@karma_d > 4) {
 			mes "[Assassin Cross]";
@@ -43,7 +43,7 @@ valkyrie,44,58,5	script	Assassin Cross#Valkyrie	725,{
 		mes "Nobody...";
 		close;
 	}
-	else if (ADVJOB == Job_Assassin_Cross && Class == Job_Thief_High && JobLevel > 39) {
+	if ((FJOB == Job_Guillotine_Cross) && (Class == Job_Thief_High) && (JobLevel > 39)) {
 		mes "[Assassin Cross]";
 		mes "The time has come.";
 		mes "The world needs you...";
@@ -79,7 +79,7 @@ valkyrie,44,58,5	script	Assassin Cross#Valkyrie	725,{
 			close;
 		}
 		jobchange Job_Assassin_Cross;
-		set ADVJOB,0;
+		set FJOB,0;
 		mes "[Assassin Cross]";
 		mes "Congratulations.";
 		mes "As an Assassin Cross,";

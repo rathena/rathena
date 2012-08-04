@@ -16,7 +16,7 @@
 //============================================================ 
 
 valkyrie,44,50,5	script	MasterSmith#Valkyrie	731,{
-	if (ADVJOB == 0 || Upper != 1) {
+	if (FJOB == 0 || Upper != 1) {
 		set .@karma_d,rand(1,10);
 		if (.@karma_d > 4) {
 			mes "[MasterSmith]";
@@ -40,7 +40,7 @@ valkyrie,44,50,5	script	MasterSmith#Valkyrie	731,{
 		mes "crafting...";
 		close;
 	}
-	else if (ADVJOB == Job_WhiteSmith && Class == Job_Merchant_High && JobLevel > 39) {
+	if ((FJOB == Job_Mechanic) && (Class == Job_Merchant_High) && (JobLevel > 39)) {
 		mes "[MasterSmith]";
 		mes "The time has come!";
 		mes "Our world needs brave,";
@@ -65,7 +65,7 @@ valkyrie,44,50,5	script	MasterSmith#Valkyrie	731,{
 			close;
 		}
 		jobchange Job_Whitesmith;
-		set ADVJOB,0;
+		set FJOB,0;
 		mes "[MasterSmith]";
 		mes "Congratulations!";
 		mes "As a MasterSmith,";

@@ -16,7 +16,7 @@
 //============================================================ 
 
 valkyrie,44,47,5	script	High Wizard#Valkyrie	735,{
-	if (ADVJOB == 0 ||  Upper != 1) {
+	if (FJOB == 0 ||  Upper != 1) {
 		set .@karma_d,rand(1,10);
 		if (.@karma_d > 4) {
 			mes "[High Wizard]";
@@ -38,7 +38,7 @@ valkyrie,44,47,5	script	High Wizard#Valkyrie	735,{
 		mes "was placed in the wrong hands?!";
 		close;
 	}
-	else if (ADVJOB == Job_High_Wizard && Class == Job_Mage_High && JobLevel > 39) {
+	if ((FJOB == Job_Warlock) && (Class == Job_Mage_High) && (JobLevel > 39)) {
 		mes "[High Wizard]";
 		mes "It is time.";
 		mes "And Rune-Midgard has";
@@ -62,8 +62,8 @@ valkyrie,44,47,5	script	High Wizard#Valkyrie	735,{
 			mes "all of your remaining Skill Points before returning to me.";
 			close;
 		}
-		jobchange Job_high_Wizard;
-		set ADVJOB,0;
+		jobchange Job_High_Wizard;
+		set FJOB,0;
 		mes "[High Wizard]";
 		mes "Congratulations.";
 		mes "As a High Wizard,";
