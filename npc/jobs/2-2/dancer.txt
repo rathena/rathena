@@ -124,7 +124,7 @@ job_duncer,43,93,4	script	Aile	724,{
 		cutin "",255;
 		end;
 	}
-	if ((DANC_Q == 0) && (Sex == 0) && (Class == Job_Archer)) {
+	if ((DANC_Q == 0) && (Sex == 0) && (Class == Job_Baby_Archer || Class == Job_Archer)) {
 		cutin "job_dancer_eir01",2;
 		mes "[Aile]";
 		mes "Welcome~!";

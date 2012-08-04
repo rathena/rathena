@@ -26,7 +26,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		close;
 	}
 	if ((Class != Job_Baby_Mage) && (Class != Job_Mage)) {
-		if (Class == Job_Wizard) {
+		if (Class == Job_Baby_Wizard || Class == Job_Wizard) {
 			if (Sex == 1) {
 				mes "[Catherine]";
 				mes "Since you're already a Wizard, you don't have any more business with me...?";

@@ -470,7 +470,7 @@ in_rogue,363,122,4	script	Rogue Guildsman	747,{
 			close;
 		}
 	}
-	if (Class == Job_Assassin) {
+	if (Class == Job_Baby_Assassin || Class == Job_Assassin) {
 		mes "[Rogue Guildsman]";
 		mes "Huh...?";
 		mes "What's an Assassin doin' here? Uh, you haven't been assigned to kill someone in the Rogue Guild, are you?";

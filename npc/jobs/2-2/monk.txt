@@ -68,7 +68,7 @@ prt_monk,59,247,1	script	Guarding Monk	120,6,2,{
 			set MONK_Q,1;
 			close;
 		case 2:
-			if ((Class == Job_Acolyte) && (JobLevel > 39)) {
+			if ((Class == Job_Baby_Acolyte || Class == Job_Acolyte) && (JobLevel > 39)) {
 				mes "[Tohobu]";
 				mes "Hmm you seem as though you have been training for this...";
 				mes "That is good. Go see our sensei Moohae. Speak with him.";
@@ -77,7 +77,7 @@ prt_monk,59,247,1	script	Guarding Monk	120,6,2,{
 				setquest 3016;
 				close;
 			}
-			if ((Class == Job_Acolyte) && (JobLevel < 40)) {
+			if ((Class == Job_Baby_Acolyte || Class == Job_Acolyte) && (JobLevel < 40)) {
 				mes "[Tohobu]";
 				mes "Hmm, you do not seem ready to become a monk.";
 				mes "To become a monk you must be,";

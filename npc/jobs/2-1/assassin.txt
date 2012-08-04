@@ -2115,7 +2115,7 @@ OnTouch:
 		close;
 	}
 	savepoint "moc_ruins",79,99;
-	if ((ASSIN_Q == 7) && (Class == Job_Thief)) {
+	if ((ASSIN_Q == 7) && (Class == Job_Baby_Thief || Class == Job_Thief)) {
 		set ASSIN_Q,8;
 		mes "[Guildmaster]";
 		mes "Welcome.";

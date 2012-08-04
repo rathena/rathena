@@ -3104,7 +3104,7 @@ yuno_in03,32,102,1	script	Biology Professor	755,{
 
 yuno_in03,244,31,3	script	Physics Professor	120,{
 	if ((Class != Job_Baby_Mage) && (Class != Job_Mage)) {
-		if (Class ==Job_Baby_Sage || Class == Job_Sage) {
+		if (Class == Job_Baby_Sage || Class == Job_Sage) {
 			mes "[Aebecee George]";
 			mes "Tee hee, hello there! What brings you here again, sweetie?";
 			mes "Oh, I see... you're just excited because you finally became a Sage? Tee hee~";
