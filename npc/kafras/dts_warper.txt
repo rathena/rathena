@@ -1180,7 +1180,7 @@ sec_in02,17,160,4	script	Vote Globalvar Girl#yuno	864,{
 	mes "Lady Christy!";
 	next;
 	input .@input,0,9000;
-	if (input == 1854) {
+	if (.@input == 1854) {
 		mes "[Christy's Maid]";
 		mes "I am Lady Christy's Maid.";
 		next;
