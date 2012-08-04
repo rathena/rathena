@@ -184,7 +184,6 @@ moc_ruins,91,150,0	script	Ponka-Hontas	93,{
 	mes "Would you like a Solution? Then please give me 50 Zeny and at least 1 Empty Testtube.";
 	next;
 	if (select("Alright, Deal.:Nah, forget it.") == 1) {
-	case 1:
 		mes "[Mage Guildsman]";
 		if (Zeny < 50) {
 			mes "I'm sorry, but you don't have enough money to cover the 50 Zeny fee.";
