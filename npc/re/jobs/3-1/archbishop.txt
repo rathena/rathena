@@ -4,7 +4,7 @@
 //= L0ne_W0lf
 //= Credits: Gepard
 //===== Current Version: =====================================
-//= 1.5
+//= 1.5b
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -18,6 +18,7 @@
 //= 1.4 Fixed Job_Archbishop/Job_Archbishop_T typos. [Euphy]
 //= 1.5 Redone the whole Script. [Masao]
 //= 1.5a Fixed little typo in Baby Priest & Baby Arch Bishop checks. [Masao]
+//= 1.5b More small fixes. [Euphy]
 //============================================================
 
 prt_church,103,88,3	script	Praying Minister#arch	60,{
@@ -803,11 +804,6 @@ OnInit:
 
 job3_arch01,29,34,3	script	Valkyrie#arch	403,{
 
-	if(checkweight(1201,2) == 1){
-		//Custom translation
-		mes "- bags must be emptied before they can proceed. -";
-		close;
-	}
 	if ((BaseLevel != 99) && (JobLevel < 50)) {
 		warp "odin_tem02",282,263;
 		end;
@@ -821,15 +817,7 @@ job3_arch01,29,34,3	script	Valkyrie#arch	403,{
 		mes "You can't progress without using all your skill points. Please use all of your skill points before progressing~";
 		close;
 	}
-	if (checkweight(1201,4) == 0) {
-		mes "- Wait a moment! -";
-		mes "- Currently you are carrying -";
-		mes "- too many items with you. -";
-		mes "- Please come back after -";
-		mes "- you put some items into Kafra Storage. -";
-		close;
-	}
-	if ((MaxWeight - Weight) < 2000) {
+	if (checkweight(1201,4) == 0 || (MaxWeight - Weight) < 2000) {
 		mes "- Wait a moment! -";
 		mes "- Currently you are carrying -";
 		mes "- too many items with you. -";
@@ -841,9 +829,8 @@ job3_arch01,29,34,3	script	Valkyrie#arch	403,{
 		warp "odin_tem02",282,263;
 	}
 	if (Class != Job_Arch_Bishop || Class != Job_Arch_Bishop_T || Class != Job_Baby_Bishop) {
-		if (job_arch < 5) {
+		if (job_arch < 5)
 			warp "odin_tem02",282,263;
-		}
 		if (job_arch == 5) {
 			mes "[Valkyrie]";
 			mes "In the heavens the sound of pipes spread out, but a bird that can't fly crawls and finally is crushed to pieces on the ground.";
@@ -889,10 +876,7 @@ job3_arch01,29,34,3	script	Valkyrie#arch	403,{
 			mes "[Valkyrie Anguhilde]";
 			mes "Human, answer me. Are you here to sincerely help me?";
 			next;
-			switch (select("Yes:No")) {
-			case 1:
-				break;
-			case 2:
+			if(select("Yes:No") == 2) {
 				mes "[Valkyrie Anguhilde]";
 				mes "I knew that I couldn't trust a human!";
 				close2;
