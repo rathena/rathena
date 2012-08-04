@@ -57,12 +57,6 @@ OnInit:
 	end;
 
 OnTouch:
-    if ( zeny < 1000 ) {
-        mapannounce "que_bingo","Eukran: Oh it looks like "+strcharinfo(0)+" doesn't have enough money. I'm sorry but I must cancel the game~",1,0xFFAB54;
-        setnpctimer 201999,"start#bingo"; // manual reset
-        end;
-    }
-	set Zeny,Zeny -1000;
 	set @bingo_a1$,0;
 	set @bingo_a2$,0;
 	set @bingo_a3$,0;
@@ -171,6 +165,7 @@ OnTimer203000:
 	end;
 
 OnTimer204000:
+	areawarp "que_bingo",44,115,54,126,"que_bingo",40,121;
 	disablenpc "out3#bingo";
 	set $hu_bingoa,0;
 	set $hu_bingob,0;
@@ -422,11 +417,7 @@ OnTimer445000:
 OnTimer460000:
 	mapannounce "que_bingo","Eukran: I'm sorry, but this game has ended without a winner. Thanks for playing, everyone~",1,0xFFAB54;
 	donpcevent "1a#bingo::OnInit";
-	donpcevent "player1#bingo::OnOut";
-	donpcevent "player2#bingo::OnOut";
-	donpcevent "player3#bingo::OnOut";
-	donpcevent "player4#bingo::OnOut";
-	donpcevent "player5#bingo::OnOut";
+	areawarp "que_bingo",44,115,54,126,"que_bingo",40,121;
 	set $hu_bingoa,0;
 	donpcevent "Bingo Waiting Room::OnStart";
 	end;
@@ -875,9 +866,9 @@ OnTimer5000:
 	disablenpc "end1c#bingo";
 	disablenpc "end1d#bingo";
 	disablenpc "end1e#bingo";
+	areawarp "que_bingo",44,115,54,126,"que_bingo",40,121;
 	set $hu_bingoa,0;
 	donpcevent "Bingo Waiting Room::OnStart";
-	areawarp "que_bingo",69,108,30,135,"hugel",59,207;
 	end;
 }
 

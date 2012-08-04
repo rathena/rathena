@@ -17,7 +17,7 @@ arena_room,147,42,1	script	lvl 80s Waiting Room	124,{
 	end;
 
 OnInit:
-	waitingroom "Individual : lvl 80 or higher",50,"lvl 80s Waiting Room::OnStartArena",1,1000,80;
+	waitingroom "Individual; Level 80 to 99",50,"lvl 80s Waiting Room::OnStartArena",1,1000,80,99;
 	enablewaitingroomevent;
 	end;
 
@@ -34,29 +34,29 @@ Onstart:
 
 force_4-1,99,20,4	script	Octus#arena	124,{
 	end;
-	
+
 OnInit:
 	set $@mapcount80, 0;
 	end;
-	
+
 Onstart:
 	initnpctimer;
 	set $arena_min80st,gettime(2);
 	set $arena_sec80st,gettime(1);
 	end;
-	
+
 OnTimer3000:
 	mapannounce "force_4-1","Good day, my name is Octus, the guide of Time Force Battle for lvl 80s!",0;
 	end;
-	
+
 OnTimer4000:
 	mapannounce "force_4-1","Remember your right decision will save a lot of your time!",0;
 	end;
-	
+
 OnTimer8000:
 	mapannounce "force_4-1","In order to complete this battle course, you must start from the far left of this room to the clock wise direction. Please move to the far left side. You have 7 minutes from now.",0;
 	end;
-	
+
 OnTimer60000:
 	set $@mapcount80, getmapusers ("force_4-1");
 	if ($@mapcount80 == 0) {
@@ -64,7 +64,7 @@ OnTimer60000:
 	}
 	mapannounce "force_4-1","Remaining Time : 7 minutes ",0;
 	end;
-	
+
 OnTimer120000:
 	 set $@mapcount80, getmapusers ("force_4-1");
 	if ($@mapcount80 == 0) {
@@ -72,7 +72,7 @@ OnTimer120000:
 	}
 	mapannounce "force_4-1","Remaining Time : 6 minutes ",0;
 	end;
-	
+
 OnTimer180000:
 	 set $@mapcount80, getmapusers ("force_4-1");
 	if ($@mapcount80 == 0) {
@@ -103,7 +103,7 @@ OnTimer360000:
 	}
 	mapannounce "force_4-1","Remaining Time : 2 minutes ",0;
 	end;
-	
+
 OnTimer420000:
 	 set $@mapcount80, getmapusers ("force_4-1");
 	if ($@mapcount80 == 0) {
@@ -111,11 +111,11 @@ OnTimer420000:
 	}
 	mapannounce "force_4-1","Remaining Time : 1 minute ",0;
 	end;
-	
+
 OnTimer480000:
 	mapannounce "force_4-1","Your time is over. I hope you had a good time~",0;
 	end;
-	
+
 OnTimer485000:
 OnTimer486000:
 OnTimer487000:
@@ -128,12 +128,12 @@ OnTimer493000:
 OnTimer494000:
 	mapwarp "force_4-1","prt_are_in",178,190,0,0;
 	end;
-	
+
 OnTimer495000:
 	mapwarp "force_4-1","prt_are_in",178,190,0,0;
 	donpcevent "Octus#arena::Onfailclearstage";
 	end;
-	
+
 Ontimeroff:
 	stopnpctimer;
 	end;
@@ -146,130 +146,130 @@ Onfailclearstage:
 	donpcevent "alloff#80::Onon";
 	donpcevent "lvl 80s Waiting Room::Onstart";
 	end;
-	
+
 On01_start:
 	mapannounce "force_4-1","In order to clear this battle, you must kill all Nightmares!",0;
 	end;
-	
+
 On01_end:
 	mapannounce "force_4-1","A door to the north room has opened!",0;
 	end;
-	
+
 On02_start:
 	mapannounce "force_4-1","In order to clear this battle, you must kill all monsters!",0;
 	end;
-	
+
 On02_end:
 	mapannounce "force_4-1","A door to the north room has opened!",0;
 	end;
-	
+
 On03_start:
 	mapannounce "force_4-1","In order to clear this battle, you must kill all Assaulters!",0;
 	end;
-	
+
 On03_end:
 	mapannounce "force_4-1","Clear! A door to the east room has opened!",0;
 	end;
-	
+
 On04_start:
 	mapannounce "force_4-1","In order to clear this battle, you must kill all Nine Tails!",0;
 	end;
-	
+
 On04_end:
 	mapannounce "force_4-1","A door to the east room has opened!",0;
 	end;
-	
+
 On05_start:
 	mapannounce "force_4-1","In order to clear this battle, you must kill all Walking Petites!",0;
 	end;
-	
+
 On05_end:
 	mapannounce "force_4-1","Clear! A door to the south room has opened!",0;
 	end;
-	
+
 On06_start:
 	mapannounce "force_4-1","In order to clear this battle, kill all monsters in this room!",0;
 	end;
-	
+
 On06_end:
 	mapannounce "force_4-1","A door to the south room has opened!",0;
 	end;
-	
+
 On07_start:
 	mapannounce "force_4-1","In order to clear this battle, kill all Fur-Seals while dodging Mermen!",0;
 	end;
-	
+
 On07_end:
 	mapannounce "force_4-1","Clear! A door to the west room has opened!",0;
 	end;
-	
+
 On08_start:
 	mapannounce "force_4-1","Please escape to the north exit!",0;
 	end;
-	
+
 On09_start:
 	mapannounce "force_4-1","In order to clear this battle, you must defeat an Ancient Mummy!",0;
 	end;
-	
+
 On09_end:
 	mapannounce "force_4-1","Boss Clear! - A door at the north has opened. Thank you. ",0;
 	end;
 
 }
 
-force_4-1,10,56,4	script	arena#80	139,{
+-	script	arena#80	-1,{
 
 Onreset_01:
 	donpcevent "force_01ex#80::Onreset";
 	donpcevent "force_02start#80::Onon";
 	enablenpc "force_01_02#80";
 	end;
-	
+
 Onreset_02:
 	donpcevent "force_02mob#80::Onreset";
 	donpcevent "force_03start#80::Onon";
 	enablenpc "force_02_03#80";
 	end;
-	
+
 Onreset_03:
 	enablenpc "force_03_04#80";
 	donpcevent "force_04start#80::Onon";
 	donpcevent "force_03ex#80::Onreset";
 	end;
-	
+
 Onreset_04:
 	enablenpc "force_04_05#80";
 	donpcevent "force_05start#80::Onon";
 	donpcevent "force_04ex#80::Onreset";
 	end;
-	
+
 Onreset_05:
 	enablenpc "force_05_06#80";
 	donpcevent "force_06start#80::Onon";
 	donpcevent "force_05ex#80::Onreset";
 	end;
-	
+
 Onreset_06:
 	enablenpc "force_06_07#80";
 	donpcevent "force_07start#80::Onon";
 	donpcevent "force_06ex#80::Onreset";
 	end;
-	
+
 Onreset_07:
 	enablenpc "force_07_08#80";
 	donpcevent "force_07ex#80::Onreset";
 	donpcevent "force_08start#80::Onon";
 	end;
-	
+
 Onreset_08:
 	donpcevent "force_09start#80::Onon";
 	enablenpc "force_08_09#80";
 	end;
-	
+
 Onreset_09:
 	enablenpc "force_exit#80";
 	end;
-	
+
 Onstart:
 	disablenpc "force_01_02#80";
 	disablenpc "force_02_03#80";
@@ -302,7 +302,7 @@ Onstart:
 	donpcevent "force_01start#80::Onon";
 	donpcevent "Octus#arena::Onstart";
 	end;
-	
+
 Onreset_all:
 	donpcevent "force_01mob#80::Onreset";
 	donpcevent "force_02mob#80::Onreset";
@@ -415,19 +415,19 @@ OnTouch:
 
 }
 
-force_4-1,1,1,1	script	force_01start#80	-1,{
+-	script	force_01start#80	-1,{
 Onon:
 	donpcevent "force_01mob#80::Onon";
 end;
 
 }
 
-force_4-1,10,56,4	script	force_01ex#80	139,{
+-	script	force_01ex#80	-1,{
 
 Onreset:
 	killmonster "force_4-1","force_01ex#80::OnMobEx";
 	end;
-	
+
 Onsummonmob1:
 	monster "force_4-1",11,25,"Hunter Fly",1422,1,"force_01ex#80::OnMobEx";
 	monster "force_4-1",22,22,"Hunter Fly",1422,1,"force_01ex#80::OnMobEx";
@@ -441,7 +441,7 @@ OnMobEx:
 
 }
 
-force_4-1,10,56,4	script	force_01mob#80	139,{
+-	script	force_01mob#80	-1,{
 
 Onon:
 	monster "force_4-1",35,13,"Nightmare",1427,1,"force_01mob#80::OnMobDeath";
@@ -466,19 +466,19 @@ OnMobDeath:
 	end;
 }
 
-force_4-1,1,1,1	script	force_02start#80	-1,{
+-	script	force_02start#80	-1,{
 
 Onon:
 	donpcevent "force_02mob#80::Onon";
 	end;
 }
 
-force_4-1,10,56,4	script	force_02mob#80	139,{
+-	script	force_02mob#80	-1,{
 
 Onreset:
 	killmonster "force_4-1","force_02mob#80::OnMobDeath";
 	end;
-	
+
 Onon:
 	monster "force_4-1",24,80,"Marionette",1459,1,"force_02mob#80::OnMobDeath";
 	monster "force_4-1",23,110,"Marionette",1459,1,"force_02mob#80::OnMobDeath";
@@ -507,19 +507,19 @@ OnMobDeath:
 	end;
 }
 
-force_4-1,1,1,1	script	force_03start#80	-1,{
+-	script	force_03start#80	-1,{
 
 Onon:
 	donpcevent "force_03mob#80::Onon";
 	end;
 }
 
-force_4-1,10,56,4	script	force_03ex#80	139,{
+-	script	force_03ex#80	-1,{
 
 Onreset:
 	killmonster "force_4-1","force_03ex#80::OnMobEx";
 	end;
-	
+
 Onsummonmob_03:
 	monster "force_4-1",26,173,"Clock Tower Keeper",1527,1,"force_03ex#80::OnMobEx";
 	monster "force_4-1",21,173,"Marionette",1459,1,"force_03ex#80::OnMobEx";
@@ -535,7 +535,7 @@ OnMobEx:
 	end;
 }
 
-force_4-1,20,56,4	script	force_03mob#80	139,{
+-	script	force_03mob#80	-1,{
 
 Onon:
 	donpcevent "force_03ex#80::Onsummonmob_03";
@@ -558,7 +558,7 @@ OnMobDeath:
 	end;
 }
 
-force_4-1,1,1,1	script	force_04start#80	-1,{
+-	script	force_04start#80	-1,{
 
 Onon:
 	donpcevent "force_04mob#80::Onon";
@@ -566,12 +566,12 @@ end;
 
 }
 
-force_4-1,10,56,4	script	force_04ex#80	139,{
+-	script	force_04ex#80	-1,{
 
 Onreset:
 	killmonster "force_4-1","force_04ex#80::OnMobEx";
 	end;
-	
+
 Onsummonmob_04:
 	monster "force_4-1",99,174,"Archer Skeleton",1420,1,"force_04ex#80::OnMobEx";
 	monster "force_4-1",101,174,"Archer Skeleton",1420,1,"force_04ex#80::OnMobEx";
@@ -589,7 +589,7 @@ OnMobEx:
 
 }
 
-force_4-1,22,56,4	script	force_04mob#80	139,{
+-	script	force_04mob#80	-1,{
 
 Onon:
 	donpcevent "force_04ex#80::Onsummonmob_04";
@@ -602,7 +602,7 @@ Onon:
 Onreset:
 	killmonster "force_4-1","force_04mob#80::OnMobDeath";
 	end;
-	
+
 OnMobDeath:
 	set $force_04_80,$force_04_80 -1;
 	if ($force_04_80 < 1) {
@@ -612,19 +612,19 @@ OnMobDeath:
 	end;
 }
 
-force_4-1,1,1,1	script	force_05start#80	-1,{
+-	script	force_05start#80	-1,{
 
 Onon:
 	donpcevent "force_05mob#80::Onon";
 	end;
 }
 
-force_4-1,10,56,4	script	force_05ex#80	139,{
+-	script	force_05ex#80	-1,{
 
 Onreset:
 	killmonster "force_4-1","force_05ex#80::OnMobEx";
 	end;
-	
+
 Onsummonmob_05:
 	monster "force_4-1",168,190,"Petite",1466,1,"force_05ex#80::OnMobEx";
 	monster "force_4-1",173,166,"Petite",1466,1,"force_05ex#80::OnMobEx";
@@ -636,7 +636,7 @@ OnMobEx:
 	end;
 }
 
-force_4-1,24,56,4	script	force_05mob#80	139,{
+-	script	force_05mob#80	-1,{
 
 Onon:
 	monster "force_4-1",164,174,"Petite",1465,1,"force_05mob#80::OnMobDeath";
@@ -661,14 +661,14 @@ OnMobDeath:
 
 }
 
-force_4-1,1,1,1	script	force_06start#80	-1,{
+-	script	force_06start#80	-1,{
 
 Onon:
 	donpcevent "force_06mob#80::Onon";
 	end;
 }
 
-force_4-1,18,56,4	script	force_06mob#80	139,{
+-	script	force_06mob#80	-1,{
 
 Onon:
 	monster "force_4-1",173,118,"Baphomet Jr.",1431,1,"force_06mob#80::OnMobDeath";
@@ -695,19 +695,19 @@ OnMobDeath:
 	end;
 }
 
-force_4-1,1,1,1	script	force_07start#80	-1,{
+-	script	force_07start#80	-1,{
 
 Onon:
 	donpcevent "force_07mob#80::Onon";
 	end;
 }
 
-force_4-1,12,56,4	script	force_07ex#80	139,{
+-	script	force_07ex#80	-1,{
 
 Onreset:
 	killmonster "force_4-1","force_07ex#80::OnMobEx";
 	end;
-	
+
 Onsummonmob_07:
 	monster "force_4-1",160,34,"Merman",1451,1,"force_07ex#80::OnMobEx";
 	monster "force_4-1",163,27,"Merman",1451,1,"force_07ex#80::OnMobEx";
@@ -718,7 +718,7 @@ OnMobEx:
 	end;
 }
 
-force_4-1,18,56,4	script	force_07mob#80	139,{
+-	script	force_07mob#80	-1,{
 
 Onon:
 	donpcevent "force_07ex#80::Onsummonmob_07";
@@ -741,33 +741,33 @@ OnMobDeath:
 	end;
 }
 
-force_4-1,1,1,1	script	force_08start#80	-1,{
+-	script	force_08start#80	-1,{
 
 Onon:
 	donpcevent "force_08ex#80::Onon";
 	end;
 }
 
-force_4-1,18,56,4	script	force_08ex#80	139,{
+-	script	force_08ex#80	-1,{
 
 Onon:
 	donpcevent "arena#80::Onreset_08";
 	end;
 }
 
-force_4-1,1,1,1	script	force_09start#80	-1,{
+-	script	force_09start#80	-1,{
 
 Onon:
 	donpcevent "force_09mob#80::Onon";
 	end;
 }
 
-force_4-1,10,56,4	script	force_09ex#80	139,{
+-	script	force_09ex#80	-1,{
 
 Onreset:
 	killmonster "force_4-1","force_09ex#80::OnMobEx";
 	end;
-	
+
 Onsummonmob_09:
 	monster "force_4-1",91,99,"Argos",1430,1,"force_09ex#80::OnMobEx";
 	monster "force_4-1",95,105,"Argos",1430,1,"force_09ex#80::OnMobEx";
@@ -780,18 +780,18 @@ OnMobEx:
 	end;
 }
 
-force_4-1,16,56,4	script	force_09mob#80	139,{
+-	script	force_09mob#80	-1,{
 
 Onon:
 	monster "force_4-1",99,99,"Ancient Mummy",1522,1,"force_09mob#80::OnMobDeath";
 	donpcevent "force_09ex#80::Onsummonmob_09";
 	set $force_09_80,1;
 	end;
-	
+
 Onreset:
 	killmonster "force_4-1","force_09mob#80::OnMobDeath";
 	end;
-	
+
 OnMobDeath:
 	set $force_09_80,$force_09_80 -1;
 	if ($force_09_80 < 1) {
@@ -960,7 +960,7 @@ prt_are_in,77,187,3	script	Staff#80-2	67,{
 	}
 }
 
-prt_are_in,14,195,3	script	#arn_timer_80	139,{
+-	script	#arn_timer_80	-1,{
 
 Onon:
 	initnpctimer;
@@ -985,21 +985,21 @@ OnTimer60000:
 	donpcevent "alloff#80::Onon";
 	donpcevent "lvl 80s Waiting Room::Onstart";
 	end;
-	
+
 Onstop:
 	stopnpctimer;
 	end;
 
 }
 
-prt_are_in,1,1,1	script	arn_warp_80	-1,{
+-	script	arn_warp_80	-1,{
 
 Onout:
-	areawarp "prt_are_in",66,195,81,180,"arena_room",100,75;
+	areawarp "prt_are_in",66,195,81,178,"arena_room",100,75;
 	end;
 }
 
-force_4-1,10,55,4	script	cast#80	139,{
+-	script	cast#80	-1,{
 Ontimeover1:
 	mapannounce "force_4-1","Arena will be reactivated due to an error occurred during battle.",0,0xFFCE00;
 	end;
@@ -1014,7 +1014,7 @@ Onnomal2:
 	end;
 }
 
-force_4-1,100,60,3	script	alloff#80	139,{
+-	script	alloff#80	-1,{
 
 Onon:
 	mapwarp "force_4-1","prt_are_in",126,190,0,0;

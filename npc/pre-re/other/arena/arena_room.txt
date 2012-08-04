@@ -40,7 +40,7 @@ L_Menu:
 			mes "There are the NPCs for Player Mode Stages from 12 o'clock direction to the reversed clock direction.";
 			mes "While you're waiting in a chat room, you will be automatically guided to an arena room by the waiting order.";
 			break;
-		
+
 		case 2:
 			mes "[Vendigos]";
 			mes "Let me explain about the ^3131FFArena Point^000000.";
@@ -74,22 +74,22 @@ L_Menu:
 	mes "[Vendigos]";
 	mes "Is there anything I can help you more?";
 	goto L_Menu;
-	
+
 Onlinerec_50:
 	mapannounce "arena_room",""+$arena_50topn$+" has renewed the top record in the Arena Time Force Battle level 50. Congratulations!",0;
 	end;
-	
+
 Onlinerec_60:
 	mapannounce "arena_room",""+$arena_60topn$+" has renewed the top record in the Arena Time Force Battle level 60. Congratulations!",0;
 	end;
-	
+
 Onlinerec_70:
 	mapannounce "arena_room",""+$arena_70topn$+" has renewed the top record in the Arena Time Force Battle level 70. Congratulations!",0;
 	end;
 Onlinerec_80:
 	mapannounce "arena_room",""+$arena_80topn$+" has renewed the top record in the Arena Time Force Battle level 80. Congratulations!",0;
 	end;
-	
+
 Onlinerec_pt:
 	mapannounce "arena_room","Party "+$arena_pttopn$+" has renewed the top record in the Arena Time Force Battle. Congratulations!",0;
 	end;
@@ -471,13 +471,13 @@ sec_in02,72,180,3	script	Arena Manager#arena	802,{
 						mes "[Arena Manager]";
 						mes "The arena stage has been successfuly reactivated.";
 						close;
-					
+
 					case 2:
 						mes "[Arena Manager]";
 						mes "Command has been canceled.";
 						close;
 				}
-				
+
 			case 2:
 				mes "[Arena Manager]";
 				mes "== Caution ==";
@@ -499,7 +499,7 @@ sec_in02,72,180,3	script	Arena Manager#arena	802,{
 							case 1:
 								mes "[Arena Manager]";
 								mes "Please enter 0 to cancel.";
-								mes "If not, please enter a value for minutes first and then seconds..";
+								mes "If not, please enter a value for minutes first and then seconds.";
 								next;
 								input .@arenamin;
 								set $top_50min,.@arenamin;
@@ -511,7 +511,7 @@ sec_in02,72,180,3	script	Arena Manager#arena	802,{
 							case 2:
 								mes "[Arena Manager]";
 								mes "Please enter 0 to cancel.";
-								mes "If not, please enter a value for minutes first and then seconds..";
+								mes "If not, please enter a value for minutes first and then seconds.";
 								next;
 								input .@arenamin;
 								set $top_60min,.@arenamin;
@@ -523,7 +523,7 @@ sec_in02,72,180,3	script	Arena Manager#arena	802,{
 							case 3:
 								mes "[Arena Manager]";
 								mes "Please enter 0 to cancel.";
-								mes "If not, please enter a value for minutes first and then seconds..";
+								mes "If not, please enter a value for minutes first and then seconds.";
 								next;
 								input .@arenamin;
 								set $top_70min,.@arenamin;
@@ -535,7 +535,7 @@ sec_in02,72,180,3	script	Arena Manager#arena	802,{
 							case 4:
 								mes "[Arena Manager]";
 								mes "Please enter 0 to cancel.";
-								mes "If not, please enter a value for minutes first and then seconds..";
+								mes "If not, please enter a value for minutes first and then seconds.";
 								next;
 								input .@arenamin;
 								set $top_80min,.@arenamin;
@@ -547,7 +547,7 @@ sec_in02,72,180,3	script	Arena Manager#arena	802,{
 							case 5:
 								mes "[Arena Manager]";
 								mes "Please enter 0 to cancel.";
-								mes "If not, please enter a value for minutes first and then seconds..";
+								mes "If not, please enter a value for minutes first and then seconds.";
 								next;
 								input .@arenamin;
 								set $top_ptmin,.@arenamin;
@@ -586,13 +586,13 @@ sec_in02,79,171,3	script	Reward Manager#arena	802,{
 				mes "[Reward Manager]";
 				mes "You have canceled the command.";
 				close;
-		
+
 			case 2:
 				mes "[Reward Manager]";
 				mes "NPC has been hidden";
 				disablenpc "Teleporter#arena";
 				close;
-				
+
 			case 3:
 				mes "[Reward Manager]";
 				mes "NPC has been enabled.";
@@ -666,7 +666,7 @@ prt_are_in,98,14,3	script	Givu#arena	728,{
 				case 9: callfunc "Func_Are_Rew",617,1,300;
 				case 10: callfunc "Func_Are_Rew",616,1,1000;
 			}
-			
+
 		case 2:
 			mes "[Givu]";
 			mes "Would you like to exchange your arena points with experience points?";
@@ -678,7 +678,7 @@ prt_are_in,98,14,3	script	Givu#arena	728,{
 					mes "[Givu]";
 					mes "You have canceled your request.";
 					close;
-				
+
 				case 2:
 					if(arena_point < 40)
 					{
@@ -688,10 +688,10 @@ prt_are_in,98,14,3	script	Givu#arena	728,{
 						close;
 					}
 					set arena_point,arena_point -40;
-					if(BaseLevel < 70) getexp 300,0;
-					else if(BaseLevel < 80) getexp 900,0;
-					else if(BaseLevel < 90) getexp 1000,0;
-					else if(BaseLevel < 151) getexp 3000,0;
+					if(BaseLevel < 70) getexp 3000,0;
+					else if(BaseLevel < 80) getexp 9000,0;
+					else if(BaseLevel < 90) getexp 10000,0;
+					else if(BaseLevel < 100) getexp 30000,0;
 					mes "[Givu]";
 					mes "You have gained experience points. Thank you.";
 					close;
@@ -777,7 +777,7 @@ prt_are_in,98,14,3	script	Givu#arena	728,{
 							close;
 					}
 			}
-			
+
 		case 4:
 			mes "[Givu]";
 			mes "Let me check "+strcharinfo(0)+"'s current arena points.";
@@ -794,7 +794,7 @@ OnInit:
 
 prt_are_in,1,1,5	script	#arena_1039	1039,{
 	end;
-	
+
 OnInit:
 	disablenpc "#arena_6969";
 	disablenpc "#arena_ss_2";
@@ -844,36 +844,36 @@ prt_are_in,1,1,5	duplicate(#arena_1039)	#arena_1251	1251
 prt_are_in,1,1,5	duplicate(#arena_1039)	#arena_1159	1159
 prt_are_in,1,1,5	duplicate(#arena_1039)	#arena_7777	811
 
-prt_are_in,130,30,3	script	npctime#arena	139,{
+-	script	npctime#arena	-1,{
 
 OnStop:
 	stopnpctimer;
 	end;
-	
+
 OnStart:
 	initnpctimer;
 	end;
-	
+
 OnTimer2000:
 	mapannounce "prt_are_in","Givu : You should keep time with popping emotion icons~",1,0xFFCE00;
 	end;
-	
+
 OnTimer5000:
 	mapannounce "prt_are_in","Emoticon : /lv",1,0xFFCE00;
 	end;
-	
+
 OnTimer7000:
 	mapannounce "prt_are_in"," 3 ",1,0xFFCE00;
 	end;
-	
+
 OnTimer8000:
 	mapannounce "prt_are_in"," 2 ",1,0xFFCE00;
 	end;
-	
+
 OnTimer9000:
 	mapannounce "prt_are_in"," 1 ",1,0xFFCE00;
 	end;
-	
+
 OnTimer10000:
 	mapannounce "prt_are_in"," ",1,0xFFCE00;
 	donpcevent "#arena_"+$@arenapic+"::OnHeart";
@@ -884,23 +884,23 @@ OnTimer10000:
 		donpcevent "#arena_ss_4::OnHeart";
 	}
 	end;
-	
+
 OnTimer15000:
 	mapannounce "prt_are_in","Emoticon : /gawi",1,0xFFCE00;
 	end;
-	
+
 OnTimer17000:
 	mapannounce "prt_are_in"," 3 ",1,0xFFCE00;
 	end;
-	
+
 OnTimer18000:
 	mapannounce "prt_are_in"," 2 ",1,0xFFCE00;
 	end;
-	
+
 OnTimer19000:
 	mapannounce "prt_are_in"," 1 ",1,0xFFCE00;
 	end;
-	
+
 OnTimer20000:
 	mapannounce "prt_are_in"," ",1,0xFFCE00;
 	donpcevent "#arena_"+$@arenapic+"::OnSci";
@@ -911,23 +911,23 @@ OnTimer20000:
 		donpcevent "#arena_ss_4::OnSci";
 	}
 	end;
-	
+
 OnTimer25000:
 	mapannounce "prt_are_in","Emoticon : /no1",1,0xFFCE00;
 	end;
-	
+
 OnTimer27000:
 	mapannounce "prt_are_in"," 3 ",1,0xFFCE00;
 	end;
-	
+
 OnTimer28000:
 	mapannounce "prt_are_in"," 2 ",1,0xFFCE00;
 	end;
-	
+
 OnTimer29000:
 	mapannounce "prt_are_in"," 1 ",1,0xFFCE00;
 	end;
-	
+
 OnTimer30000:
 	mapannounce "prt_are_in"," ",1,0xFFCE00;
 	donpcevent "#arena_"+$@arenapic+"::OnBest";
@@ -938,23 +938,23 @@ OnTimer30000:
 		donpcevent "#arena_ss_4::OnBest";
 	}
 	end;
-	
+
 OnTimer35000:
 	mapannounce "prt_are_in","Emoticon : /huk",1,0xFFCE00;
 	end;
-	
+
 OnTimer37000:
 	mapannounce "prt_are_in"," 3 ",1,0xFFCE00;
 	end;
-	
+
 OnTimer38000:
 	mapannounce "prt_are_in"," 2 ",1,0xFFCE00;
 	end;
-	
+
 OnTimer39000:
 	mapannounce "prt_are_in"," 1 ",1,0xFFCE00;
 	end;
-	
+
 OnTimer40000:
 	mapannounce "prt_are_in"," ",1,0xFFCE00;
 	donpcevent "#arena_"+$@arenapic+"::OnOmg";
@@ -965,23 +965,23 @@ OnTimer40000:
 		donpcevent "#arena_ss_4::OnOmg";
 	}
 	end;
-	
+
 OnTimer45000:
 	mapannounce "prt_are_in","Emoticon : /gg",1,0xFFCE00;
 	end;
-	
+
 OnTimer47000:
 	mapannounce "prt_are_in"," 3 ",1,0xFFCE00;
 	end;
-	
+
 OnTimer48000:
 	mapannounce "prt_are_in"," 2 ",1,0xFFCE00;
 	end;
-	
+
 OnTimer49000:
 	mapannounce "prt_are_in"," 1 ",1,0xFFCE00;
 	end;
-	
+
 OnTimer50000:
 	mapannounce "prt_are_in"," ",1,0xFFCE00;
 	donpcevent "#arena_"+$@arenapic+"::OnKik";
@@ -992,11 +992,11 @@ OnTimer50000:
 		donpcevent "#arena_ss_4::OnKik";
 	}
 	end;
-	
+
 OnTimer55000:
 	mapannounce "prt_are_in","Emoticon : /kis",1,0xFFCE00;
 	end;
-	
+
 OnTimer57000:
 	mapannounce "prt_are_in"," 3 ",1,0xFFCE00;
 	end;
@@ -1004,11 +1004,11 @@ OnTimer57000:
 OnTimer58000:
 	mapannounce "prt_are_in"," 2 ",1,0xFFCE00;
 	end;
-	
+
 OnTimer59000:
 	mapannounce "prt_are_in"," 1 ",1,0xFFCE00;
 	end;
-	
+
 OnTimer60000:
 	mapannounce "prt_are_in"," ",1,0xFFCE00;
 	donpcevent "#arena_"+$@arenapic+"::OnKis";
@@ -1019,7 +1019,7 @@ OnTimer60000:
 		donpcevent "#arena_ss_4::OnKis";
 	}
 	end;
-	
+
 OnTimer62000:
 	mapannounce "prt_are_in","Time is over. Thank you for using my services.",1,0xFFCE00;
 	movenpc "#arena_"+$@arenapic+"",1,1;
@@ -1077,7 +1077,7 @@ sec_in02,76,176,5	script	Live Broadcast#arena	802,{
 }
 
 function	script	Func_Are_Rew	{
-				
+
 	mes "[Givu]";
 	mes "Would you like to exchange your arena points with "+getitemname(getarg(0))+"?";
 	mes "You can exchange ^3131FF"+getarg(2)+" arena points with "+getarg(1)+" "+getitemname(getarg(0))+"^000000.";
@@ -1089,7 +1089,7 @@ function	script	Func_Are_Rew	{
 		mes "[Givu]";
 		mes "You have canceled your request.";
 		close;
-	
+
 	}
 	else if(.@reward > 1500)
 	{
@@ -1109,125 +1109,4 @@ function	script	Func_Are_Rew	{
 	mes "[Givu]";
 	mes "Thank you, please come again.";
 	close;
-}
-
-arena_room,63,126,0	script	LevelCheck#50	139,5,5,{
-
-OnTouch:
-	if(BaseLevel < 50 || BaseLevel > 69)
-	{
-		mes "[Helper Pat]";
-		mes "I'm sorry but that place is";
-		mes "only available to people from";
-		mes "level ^FF000050^000000 to ^FF000069^000000. I'm afraid you";
-		mes "have to leave immediately.";
-		mes "Please proceed to your proper";
-		mes "arenas. Have fun !";
-		close2;
-		warp "arena_room",100,75;
-	}
-	else if(Zeny < 1000)
-	{
-		mes "[Helper Pat]";
-		mes "Oh! That's too bad!";
-		mes "You have the required level";
-		mes "to attempt this arena but";
-		mes "it costs 1000 zeny to enter.";
-		mes "Please come back when you'll";
-		mes "have them!";
-		close2;
-		warp "arena_room",100,75;
-	}
-	end;
-}
-
-arena_room,49,87,0	script	LevelCheck#60	139,5,5,{
-
-OnTouch:
-	if(BaseLevel < 60 || BaseLevel > 79)
-	{
-		mes "[Helper Ben]";
-		mes "I'm sorry but that place is";
-		mes "only available to people from";
-		mes "level ^FF000060^000000 to ^FF000079^000000. I'm afraid you";
-		mes "have to leave immediately.";
-		mes "Please proceed to your proper";
-		mes "arenas. Have fun !";
-		close2;
-		warp "arena_room",100,75;
-	}
-	else if(Zeny < 1000)
-	{
-		mes "[Helper Ben]";
-		mes "Oh! That's too bad!";
-		mes "You have the required level";
-		mes "to attempt this arena but";
-		mes "it costs 1000 zeny to enter.";
-		mes "Please come back when you'll";
-		mes "have them!";
-		close2;
-		warp "arena_room",100,75;
-	}
-	end;
-}
-
-arena_room,63,53,0	script	LevelCheck#70	139,5,5,{
-
-OnTouch:
-	if(BaseLevel < 70 || BaseLevel > 89)
-	{
-		mes "[Helper Vicious]";
-		mes "I'm sorry but that place is";
-		mes "only available to people from";
-		mes "level ^FF000070^000000 to ^FF000089^000000. I'm afraid you";
-		mes "have to leave immediately.";
-		mes "Please proceed to your proper";
-		mes "arenas. Have fun !";
-		close2;
-		warp "arena_room",100,75;
-	}
-	else if(Zeny < 1000)
-	{
-		mes "[Helper Vicious]";
-		mes "Oh! That's too bad!";
-		mes "You have the required level";
-		mes "to attempt this arena but";
-		mes "it costs 1000 zeny to enter.";
-		mes "Please come back when you'll";
-		mes "have them!";
-		close2;
-		warp "arena_room",100,75;
-	}
-	end;
-}
-
-arena_room,136,53,0	script	LevelCheck#80	139,5,5,{
-
-OnTouch:
-	if(BaseLevel < 80)
-	{
-		mes "[Helper Epin]";
-		mes "I'm sorry but that place is";
-		mes "only available to people from";
-		mes "level ^FF000080^000000 to ^FF000099^000000. I'm afraid you";
-		mes "have to leave immediately.";
-		mes "Please proceed to your proper";
-		mes "arenas. Have fun !";
-		close2;
-		warp "arena_room",100,75;
-	}
-	else if(Zeny < 1000)
-	{
-		mes "[Helper Epin]";
-		mes "Oh! That's too bad!";
-		mes "You have the required level";
-		mes "to attempt this arena but";
-		mes "it costs 1000 zeny to enter.";
-		mes "Please come back when you'll";
-		mes "have them!";
-		close2;
-		warp "arena_room",100,75;
-	}
-	end;
-
 }

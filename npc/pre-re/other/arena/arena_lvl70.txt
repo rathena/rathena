@@ -17,7 +17,7 @@ arena_room,52,42,7	script	lvl 70s Waiting Room	124,{
 	end;
 
 OnInit:
-	waitingroom "Individual : lvl 70 or higher",50,"lvl 70s Waiting Room::OnStartArena",1,1000,70;
+	waitingroom "Individual; Level 70 to 89",50,"lvl 70s Waiting Room::OnStartArena",1,1000,70,89;
 	enablewaitingroomevent;
 	end;
 
@@ -34,29 +34,29 @@ Onstart:
 
 force_3-1,99,20,4	script	Cadillac#arena	124,{
 	end;
-	
+
 OnInit:
 	set $@mapcount70, 0;
 	end;
-	
+
 Onstart:
 	initnpctimer;
 	set $arena_min70st,gettime(2);
 	set $arena_sec70st,gettime(1);
 	end;
-	
+
 OnTimer3000:
 	mapannounce "force_3-1","Good day, my name is Cadillac, the guide of Time Force Battle for lvl 70s!",0;
 	end;
-	
+
 OnTimer4000:
 	mapannounce "force_3-1","Remember your right decision will save a lot of your time!",0;
 	end;
-	
+
 OnTimer7000:
 	mapannounce "force_3-1","In order to complete this battle course, you must start from the far left of this room to the clock wise direction. Please move to the far left side. You have 7 minutes from now.",0;
 	end;
-	
+
 OnTimer60000:
 	set $@mapcount70, getmapusers ("force_3-1");
 	if ($@mapcount70 == 0) {
@@ -64,7 +64,7 @@ OnTimer60000:
 	}
 	mapannounce "force_3-1","Remaining Time : 6 minutes ",0;
 	end;
-	
+
 OnTimer120000:
 	 set $@mapcount70, getmapusers ("force_3-1");
 	if ($@mapcount70 == 0) {
@@ -72,7 +72,7 @@ OnTimer120000:
 	}
 	mapannounce "force_3-1","Remaining Time : 5 minutes ",0;
 	end;
-	
+
 OnTimer180000:
 	 set $@mapcount70, getmapusers ("force_3-1");
 	if ($@mapcount70 == 0) {
@@ -103,11 +103,11 @@ OnTimer360000:
 	}
 	mapannounce "force_3-1","Remaining Time : 1 minute ",0;
 	end;
-	
+
 OnTimer420000:
 	mapannounce "force_3-1","Your time is over. I hope you had a good time~",0;
 	end;
-	
+
 OnTimer425000:
 OnTimer426000:
 OnTimer427000:
@@ -120,12 +120,12 @@ OnTimer433000:
 OnTimer434000:
 	mapwarp "force_3-1","prt_are_in",126,87,0,0;
 	end;
-	
+
 OnTimer435000:
 	mapwarp "force_3-1","prt_are_in",126,87,0,0;
 	donpcevent "Cadillac#arena::Onfailclearstage";
 	end;
-	
+
 Ontimeroff:
 	stopnpctimer;
 	end;
@@ -138,130 +138,130 @@ Onfailclearstage:
 	donpcevent "alloff#70::Onon";
 	donpcevent "lvl 70s Waiting Room::Onstart";
 	end;
-	
+
 On01_start:
 	mapannounce "force_3-1","In order to clear this battle, you must kill all Kobolds!",0;
 	end;
-	
+
 On01_end:
 	mapannounce "force_3-1","A door to the north room has opened!",0;
 	end;
-	
+
 On02_start:
 	mapannounce "force_3-1","In order to clear this battle, you must kill all Horongs and escape!",0;
 	end;
-	
+
 On02_end:
 	mapannounce "force_3-1","A door to the north room has opened!",0;
 	end;
-	
+
 On03_start:
 	mapannounce "force_3-1","In order to clear this battle, you must kill all monsters except Enchanted Peach Trees!",0;
 	end;
-	
+
 On03_end:
 	mapannounce "force_3-1","Clear! A door to the east room has opened!",0;
 	end;
-	
+
 On04_start:
 	mapannounce "force_3-1","In order to clear this battle, you must kill all Stem Worms while dodging Bathories!",0;
 	end;
-	
+
 On04_end:
 	mapannounce "force_3-1","A door to the east room has opened!",0;
 	end;
-	
+
 On05_start:
 	mapannounce "force_3-1","In order to clear this battle, you must kill all Argiopes!",0;
 	end;
-	
+
 On05_end:
 	mapannounce "force_3-1","Clear! A door to the south room has opened!",0;
 	end;
-	
+
 On06_start:
 	mapannounce "force_3-1","In order to clear this battle, you must kill all Hammer Goblins!",0;
 	end;
-	
+
 On06_end:
 	mapannounce "force_3-1","A door to the south room has opened!",0;
 	end;
-	
+
 On07_start:
 	mapannounce "force_3-1","In order to clear this battle, you must kill an Alice in the center!",0;
 	end;
-	
+
 On07_end:
 	mapannounce "force_3-1","Clear! A door to the west room has opened!",0;
 	end;
-	
+
 On08_start:
 	mapannounce "force_3-1","Please escape to the north exit!",0;
 	end;
-	
+
 On09_start:
 	mapannounce "force_3-1","In order to clear this battle, you must kill a Kobold Leader and all Kobolds!",0;
 	end;
-	
+
 On09_end:
 	mapannounce "force_3-1","Boss Clear! - A door at the north has opened. Thank you. ",0;
 	end;
 
 }
 
-force_3-1,10,56,4	script	arena#70	139,{
+-	script	arena#70	-1,{
 
 Onreset_01:
 	donpcevent "force_01ex#70::Onreset";
 	donpcevent "force_02start#70::Onon";
 	enablenpc "force_01_02#70";
 	end;
-	
+
 Onreset_02:
 	donpcevent "force_02ex#70::Onreset";
 	donpcevent "force_03start#70::Onon";
 	enablenpc "force_02_03#70";
 	end;
-	
+
 Onreset_03:
 	enablenpc "force_03_04#70";
 	donpcevent "force_04start#70::Onon";
 	donpcevent "force_03ex#70::Onreset";
 	end;
-	
+
 Onreset_04:
 	enablenpc "force_04_05#70";
 	donpcevent "force_05start#70::Onon";
 	donpcevent "force_04ex#70::Onreset";
 	end;
-	
+
 Onreset_05:
 	enablenpc "force_05_06#70";
 	donpcevent "force_06start#70::Onon";
 	donpcevent "force_05ex#70::Onreset";
 	end;
-	
+
 Onreset_06:
 	enablenpc "force_06_07#70";
 	donpcevent "force_07start#70::Onon";
 	donpcevent "force_06ex#70::Onreset";
 	end;
-	
+
 Onreset_07:
 	enablenpc "force_07_08#70";
 	donpcevent "force_07ex#70::Onreset";
 	donpcevent "force_08start#70::Onon";
 	end;
-	
+
 Onreset_08:
 	donpcevent "force_09start#70::Onon";
 	enablenpc "force_08_09#70";
 	end;
-	
+
 Onreset_09:
 	enablenpc "force_exit#70";
 	end;
-	
+
 Onstart:
 	disablenpc "force_01_02#70";
 	disablenpc "force_02_03#70";
@@ -296,7 +296,7 @@ Onstart:
 	donpcevent "force_01start#70::Onon";
 	donpcevent "Cadillac#arena::Onstart";
 	end;
-	
+
 Onreset_all:
 	donpcevent "force_01mob#70::Onreset";
 	donpcevent "force_02mob#70::Onreset";
@@ -411,14 +411,14 @@ OnTouch:
 
 }
 
-force_3-1,1,1,1	script	force_01start#70	-1,{
+-	script	force_01start#70	-1,{
 Onon:
 	donpcevent "force_01mob#70::Onon";
 end;
 
 }
 
-force_3-1,10,56,4	script	force_01mob#70	139,{
+-	script	force_01mob#70	-1,{
 
 Onon:
 	monster "force_3-1",25,36,"Kobold",1545,1,"force_01mob#70::OnMobDeath";
@@ -442,19 +442,19 @@ OnMobDeath:
 	end;
 }
 
-force_3-1,1,1,1	script	force_02start#70	-1,{
+-	script	force_02start#70	-1,{
 
 Onon:
 	donpcevent "force_02mob#70::Onon";
 	end;
 }
 
-force_3-1,10,56,4	script	force_02ex#70	139,{
+-	script	force_02ex#70	-1,{
 
 Onreset:
 	killmonster "force_3-1","force_02ex#70::OnMobEx";
 	end;
-	
+
 Onsummonmob2:
 	monster "force_3-1",21,78,"Archer Skeleton",1420,1,"force_02ex#70::OnMobEx";
 	monster "force_3-1",22,93,"Archer Skeleton",1420,1,"force_02ex#70::OnMobEx";
@@ -474,12 +474,12 @@ OnMobEx:
 	end;
 }
 
-force_3-1,10,56,4	script	force_02mob#70	139,{
+-	script	force_02mob#70	-1,{
 
 Onreset:
 	killmonster "force_3-1","force_02mob#70::OnMobDeath";
 	end;
-	
+
 Onon:
 	monster "force_3-1",25,79,"Horong",1578,1,"force_02mob#70::OnMobDeath";
 	monster "force_3-1",29,114,"Horong",1578,1,"force_02mob#70::OnMobDeath";
@@ -496,19 +496,19 @@ OnMobDeath:
 	end;
 }
 
-force_3-1,1,1,1	script	force_03start#70	-1,{
+-	script	force_03start#70	-1,{
 
 Onon:
 	donpcevent "force_03mob#70::Onon";
 	end;
 }
 
-force_3-1,10,56,4	script	force_03ex#70	139,{
+-	script	force_03ex#70	-1,{
 
 Onreset:
 	killmonster "force_3-1","force_03ex#70::OnMobEx";
 	end;
-	
+
 Onsummonmob_03:
 	monster "force_3-1",10,170,"Enchanted Peach Tree",1550,1,"force_03ex#70::OnMobEx";
 	monster "force_3-1",26,180,"Enchanted Peach Tree",1550,1,"force_03ex#70::OnMobEx";
@@ -518,7 +518,7 @@ OnMobEx:
 	end;
 }
 
-force_3-1,20,56,4	script	force_03mob#70	139,{
+-	script	force_03mob#70	-1,{
 
 Onon:
 	donpcevent "force_03ex#70::Onsummonmob_03";
@@ -542,7 +542,7 @@ OnMobDeath:
 	end;
 }
 
-force_3-1,1,1,1	script	force_04start#70	-1,{
+-	script	force_04start#70	-1,{
 
 Onon:
 	donpcevent "force_04mob#70::Onon";
@@ -550,12 +550,12 @@ end;
 
 }
 
-force_3-1,10,56,4	script	force_04ex#70	139,{
+-	script	force_04ex#70	-1,{
 
 Onreset:
 	killmonster "force_3-1","force_04ex#70::OnMobEx";
 	end;
-	
+
 Onsummonmob_04:
 	monster "force_3-1",94,179,"Bathory",1525,1,"force_04ex#70::OnMobEx";
 	monster "force_3-1",110,179,"Bathory",1525,1,"force_04ex#70::OnMobEx";
@@ -570,7 +570,7 @@ OnMobEx:
 
 }
 
-force_3-1,22,56,4	script	force_04mob#70	139,{
+-	script	force_04mob#70	-1,{
 
 Onon:
 	donpcevent "force_04ex#70::Onsummonmob_04";
@@ -582,7 +582,7 @@ Onon:
 Onreset:
 	killmonster "force_3-1","force_04mob#70::OnMobDeath";
 	end;
-	
+
 OnMobDeath:
 	set $force_04_70,$force_04_70 -1;
 	if ($force_04_70 < 1) {
@@ -592,19 +592,19 @@ OnMobDeath:
 	end;
 }
 
-force_3-1,1,1,1	script	force_05start#70	-1,{
+-	script	force_05start#70	-1,{
 
 Onon:
 	donpcevent "force_05mob#70::Onon";
 	end;
 }
 
-force_3-1,10,56,4	script	force_05ex#70	139,{
+-	script	force_05ex#70	-1,{
 
 Onreset:
 	killmonster "force_3-1","force_05ex#70::OnMobEx";
 	end;
-	
+
 Onsummonmob_05:
 	set $@randmonster70,rand(1,2);
 	switch($@randmonster70) {
@@ -621,7 +621,7 @@ OnMobEx:
 	end;
 }
 
-force_3-1,24,56,4	script	force_05mob#70	139,{
+-	script	force_05mob#70	-1,{
 
 Onon:
 	monster "force_3-1",164,183,"Argiope",1429,1,"force_05mob#70::OnMobDeath";
@@ -647,19 +647,19 @@ OnMobDeath:
 
 }
 
-force_3-1,1,1,1	script	force_06start#70	-1,{
+-	script	force_06start#70	-1,{
 
 Onon:
 	donpcevent "force_06mob#70::Onon";
 	end;
 }
 
-force_3-1,10,56,4	script	force_06ex#70	139,{
+-	script	force_06ex#70	-1,{
 
 Onreset:
 	killmonster "force_3-1","force_06ex#70::OnMobEx";
 	end;
-	
+
 Onsummonmob_06:
 	monster "force_3-1",176,99,"Goblin",1534,1,"force_06ex#70::OnMobEx";
 	monster "force_3-1",170,86,"Goblin",1535,1,"force_06ex#70::OnMobEx";
@@ -677,7 +677,7 @@ OnMobEx:
 	end;
 }
 
-force_3-1,18,56,4	script	force_06mob#70	139,{
+-	script	force_06mob#70	-1,{
 
 Onon:
 	donpcevent "force_06ex#70::Onsummonmob_06";
@@ -702,19 +702,19 @@ OnMobDeath:
 	end;
 }
 
-force_3-1,1,1,1	script	force_07start#70	-1,{
+-	script	force_07start#70	-1,{
 
 Onon:
 	donpcevent "force_07mob#70::Onon";
 	end;
 }
 
-force_3-1,12,56,4	script	force_07ex#70	139,{
+-	script	force_07ex#70	-1,{
 
 Onreset:
 	killmonster "force_3-1","force_07ex#70::OnMobEx";
 	end;
-	
+
 Onsummonmob_07:
 	monster "force_3-1",168,26,"Nightmare",1427,1,"force_07ex#70::OnMobEx";
 	monster "force_3-1",186,23,"Nightmare",1427,1,"force_07ex#70::OnMobEx";
@@ -735,7 +735,7 @@ OnMobEx:
 	end;
 }
 
-force_3-1,18,56,4	script	force_07mob#70	139,{
+-	script	force_07mob#70	-1,{
 
 Onon:
 	donpcevent "force_07ex#70::Onsummonmob_07";
@@ -756,33 +756,33 @@ OnMobDeath:
 	end;
 }
 
-force_3-1,1,1,1	script	force_08start#70	-1,{
+-	script	force_08start#70	-1,{
 
 Onon:
 	donpcevent "force_08ex#70::Onon";
 	end;
 }
 
-force_3-1,18,56,4	script	force_08ex#70	139,{
+-	script	force_08ex#70	-1,{
 
 Onon:
 	donpcevent "arena#70::Onreset_08";
 	end;
 }
 
-force_3-1,1,1,1	script	force_09start#70	-1,{
+-	script	force_09start#70	-1,{
 
 Onon:
 	donpcevent "force_09mob#70::Onon";
 	end;
 }
 
-force_3-1,10,56,4	script	force_09ex#70	139,{
+-	script	force_09ex#70	-1,{
 
 Onreset:
 	killmonster "force_3-1","force_09ex#70::OnMobEx";
 	end;
-	
+
 Onsummonmob_09:
 	monster "force_3-1",93,100,"Familiar",1419,1,"force_09ex#70::OnMobEx";
 	monster "force_3-1",94,100,"Familiar",1419,1,"force_09ex#70::OnMobEx";
@@ -804,7 +804,7 @@ OnMobEx:
 	end;
 }
 
-force_3-1,16,56,4	script	force_09mob#70	139,{
+-	script	force_09mob#70	-1,{
 
 Onon:
 	monster "force_3-1",99,99,"Kobold Leader",1548,1,"force_09mob#70::OnMobDeath";
@@ -814,11 +814,11 @@ Onon:
 	donpcevent "force_09ex#70::Onsummonmob_09";
 	set $force_09_70,4;
 	end;
-	
+
 Onreset:
 	killmonster "force_3-1","force_09mob#70::OnMobDeath";
 	end;
-	
+
 OnMobDeath:
 	set $force_09_70,$force_09_70 -1;
 	if ($force_09_70 < 1) {
@@ -987,7 +987,7 @@ prt_are_in,25,84,3	script	Staff#70-2	67,{
 	}
 }
 
-prt_are_in,14,195,3	script	#arn_timer_70	139,{
+-	script	#arn_timer_70	-1,{
 
 Onon:
 	initnpctimer;
@@ -1012,21 +1012,21 @@ OnTimer60000:
 	donpcevent "alloff#70::Onon";
 	donpcevent "lvl 70s Waiting Room::Onstart";
 	end;
-	
+
 Onstop:
 	stopnpctimer;
 	end;
 
 }
 
-prt_are_in,1,1,1	script	arn_warp_70	-1,{
+-	script	arn_warp_70	-1,{
 
 Onout:
-	areawarp "prt_are_in",14,91,29,76,"arena_room",100,75;
+	areawarp "prt_are_in",14,91,29,74,"arena_room",100,75;
 	end;
 }
 
-force_3-1,10,55,4	script	cast#70	139,{
+-	script	cast#70	-1,{
 Ontimeover1:
 	mapannounce "force_3-1","Arena will be reactivated due to an error occurred during battle.",0,0xFFCE00;
 	end;
@@ -1041,7 +1041,7 @@ Onnomal2:
 	end;
 }
 
-force_3-1,100,60,3	script	alloff#70	139,{
+-	script	alloff#70	-1,{
 
 Onon:
 	mapwarp "force_3-1","prt_are_in",126,190,0,0;

@@ -60,7 +60,7 @@ OnTouch:
 	end;
 }
 
-force_5-1,61,147,3	script	arena_aco1	-1,{
+-	script	arena_aco1	-1,{
 Onstart:
 	donpcevent "Trocco#aco1::OnEnable";
 	end;
@@ -111,7 +111,7 @@ Onreset_09:
 	end;
 }
 
-force_5-1,80,60,3	script	Trocco#aco1	-1,{
+-	script	Trocco#aco1	-1,{
 OnEnable:
 	initnpctimer;
 	set $@arn_1,gettimetick(2);
@@ -279,7 +279,7 @@ OnTouch:
 	end;
 }
 
-force_5-1,10,56,4	script	force_01mob#aco	111,{
+-	script	force_01mob#aco	-1,{
 OnEnable:
 	donpcevent "Trocco#aco1::On01_start";
 	monster "force_5-1",22,29,"Red Plant",1078,1,"force_01mob#aco::OnMyMobDead";
@@ -309,7 +309,7 @@ OnTouch:
 	end;
 }
 
-force_5-1,10,57,4	script	force_02mob#aco	111,{
+-	script	force_02mob#aco	-1,{
 OnEnable:
 	donpcevent "Trocco#aco1::On02_start";
 	areamonster "force_5-1",22,69,29,130,"Drops",1572,20,"force_02mob#aco::OnMyMobDead";
@@ -334,7 +334,7 @@ OnTouch:
 	disablenpc "force_03start#aco";
 }
 
-force_5-1,10,58,4	script	force_03mob#aco	111,{
+-	script	force_03mob#aco	-1,{
 OnEnable:
 	donpcevent "Trocco#aco1::On03_start";
 	areamonster "force_5-1",9,157,41,190,"Zombie",1394,10,"force_03mob#aco::OnMyMobDead";
@@ -368,7 +368,7 @@ OnTouch:
 	end;
 }
 
-force_5-1,10,59,4	script	force_05mob#aco	111,{
+-	script	force_05mob#aco	-1,{
 OnEnable:
 	donpcevent "Trocco#aco1::On05_start";
 	areamonster "force_5-1",159,157,187,190,"Orc Zombie",1463,8,"force_05mob#aco::OnMyMobDead";
@@ -394,7 +394,7 @@ OnTouch:
 	end;
 }
 
-force_5-1,10,60,4	script	force_06mob#aco	111,{
+-	script	force_06mob#aco	-1,{
 OnEnable:
 	donpcevent "Trocco#aco1::On06_start";
 	monster "force_5-1",170,124,"Hydra",1579,1,"force_06mob#aco::OnMyMobDead";
@@ -430,7 +430,7 @@ OnTouch:
 	disablenpc "force_07start#aco";
 }
 
-force_5-1,10,61,4	script	force_07mob#aco	111,{
+-	script	force_07mob#aco	-1,{
 OnEnable:
 	donpcevent "Trocco#aco1::On07_start";
 	monster "force_5-1",170,32,"Archer Skeleton",1420,1,"force_07mob#aco::OnMyMobDead";
@@ -469,7 +469,7 @@ OnTouch:
 	end;
 }
 
-force_5-1,10,62,4	script	force_09mob#aco	111,{
+-	script	force_09mob#aco	-1,{
 OnEnable:
 	monster "force_5-1",rand(88,111),rand(89,110),"Zombie Prisoner",1480,1,"force_09mob#aco::OnMyMobDead";
 	monster "force_5-1",rand(88,111),rand(89,110),"Skel Prisoner",1479,1,"force_09mob#aco::OnMyMobDead";
@@ -489,7 +489,7 @@ OnMyMobDead:
 	end;
 }
 
-force_5-1,61,148,3	script	arena_aco2	111,{
+-	script	arena_aco2	-1,{
 Onstart:
 	donpcevent "Trocco#aco2::OnEnable";
 	end;
@@ -539,7 +539,7 @@ Onreset_09:
 	enablenpc "force_exit#aco";
 }
 
-force_5-1,80,65,3	script	Trocco#aco2	111,{
+-	script	Trocco#aco2	-1,{
 OnEnable:
 	initnpctimer;
 	set $@arn_1,gettimetick(2);
@@ -715,7 +715,7 @@ OnTouch:
 	end;
 }
 
-force_5-1,10,56,4	script	force_01mob#pri	111,{
+-	script	force_01mob#pri	-1,{
 OnEnable:
 	donpcevent "Trocco#aco2::On01_start";
 	areamonster "force_5-1",13,9,38,41,"Zombie",1394,10,"force_01mob#pri::OnMyMobDead";
@@ -745,7 +745,7 @@ OnTouch:
 	end;
 }
 
-force_5-1,10,57,4	script	force_02mob#pri	111,{
+-	script	force_02mob#pri	-1,{
 OnOn1:
 	donpcevent "Trocco#aco2::On02_start";
 	areamonster "force_5-1",22,69,29,130,"Orc Skeleton",1462,5,"force_02mob#pri::OnMyMobDead";
@@ -775,7 +775,7 @@ OnTouch:
 	end;
 }
 
-force_5-1,10,58,4	script	force_03mob#pri	111,{
+-	script	force_03mob#pri	-1,{
 OnEnable:
 	donpcevent "Trocco#aco2::On03_start";
 	areamonster "force_5-1",14,163,37,185,"Red Plant",1078,5,"force_03mob#pri::OnMyMobDead";
@@ -805,7 +805,7 @@ OnTouch:
 	end;
 }
 
-force_5-1,10,59,4	script	force_04mob#pri	111,{
+-	script	force_04mob#pri	-1,{
 OnOn1:
 	donpcevent "Trocco#aco2::On04_start";
 	monster "force_5-1",rand(71,130),rand(170,178),"Evil Druid",1435,1,"force_04mob#pri::OnMyMobDead";
@@ -847,7 +847,7 @@ OnTouch:
 	end;
 }
 
-force_5-1,10,60,4	script	force_05ex#pri	111,{
+-	script	force_05ex#pri	-1,{
 OnOn1:
 	areamonster "force_5-1",161,159,187,190,"Hydra",1579,10,"force_05ex#pri::OnMyMobDead";
 	end;
@@ -864,7 +864,7 @@ OnMyMobDead:
 	end;
 }
 
-force_5-1,10,61,4	script	force_05mob#pri	111,{
+-	script	force_05mob#pri	-1,{
 OnEnable:
 	donpcevent "Trocco#aco2::On05_start";
 	areamonster "force_5-1",161,159,187,190,"Gargoyle",1597,4,"force_05mob#pri::OnMyMobDead";
@@ -899,7 +899,7 @@ OnTouch:
 	end;
 }
 
-force_5-1,10,62,4	script	force_06ex#pri	111,{
+-	script	force_06ex#pri	-1,{
 OnEnable:
 	areamonster "force_5-1",170,67,178,131,"Permeter",1314,5,"force_06ex#pri::OnMyMobDead";
 	end;
@@ -912,7 +912,7 @@ OnMyMobDead:
 	end;
 }
 
-force_5-1,10,63,4	script	force_06mob#pri	111,{
+-	script	force_06mob#pri	-1,{
 OnOn1:
 	donpcevent "Trocco#aco2::On06_start";
 	monster "force_5-1",rand(170,178),rand(67,131),"Khalitzburg",1438,1,"force_06mob#pri::OnMyMobDead";
@@ -948,7 +948,7 @@ OnTouch:
 	end;
 }
 
-force_5-1,10,64,4	script	force_07mob#pri	111,{
+-	script	force_07mob#pri	-1,{
 OnEnable:
 	donpcevent "Trocco#aco2::On07_start";
 	monster "force_5-1",rand(160,188),rand(9,42),"Ancient Mummy",1522,1,"force_07mob#pri::OnMyMobDead";
@@ -993,7 +993,7 @@ OnTouch:
 	end;
 }
 
-force_5-1,10,65,4	script	force_09mob#pri	111,{
+-	script	force_09mob#pri	-1,{
 OnOn1:
 	monster "force_5-1",rand(88,111),rand(89,110),"Mimic",1474,1,"force_09mob#pri::OnMyMobDead";
 	end;
@@ -1502,7 +1502,7 @@ prt_are_in,25,31,3	script	Staff#aco-2	67,{
 	}
 }
 
-prt_are_in,14,195,3	script	#arn_timer_aco	111,{
+-	script	#arn_timer_aco	-1,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -1550,7 +1550,7 @@ OnTouch:
 	end;
 }
 
-force_5-1,120,50,3	script	timer_aco2	111,{
+-	script	timer_aco2	-1,{
 OnEnable:
 	initnpctimer;
 	end;
@@ -1560,7 +1560,7 @@ Onstop:
 	end;
 }
 
-force_5-1,61,149,3	script	allkill#aco	111,{
+-	script	allkill#aco	-1,{
 OnEnable:
 	donpcevent "force_01mob#aco::Onreset";
 	donpcevent "force_02mob#aco::Onreset";
@@ -1686,7 +1686,7 @@ OnInit:
 	end;
 }
 
-arena_room,97,130,3	script	#Vendigos	111,{
+-	script	#Vendigos	-1,{
 Onlinerec_aco:
 	mapannounce "arena_room","Vendigos: "+$arn_acotopn$+" has made a new record in the Arena Time Force Battle - Acolyte Mode. Congratulations!",bc_map,"0xFFFF00";
 	end;

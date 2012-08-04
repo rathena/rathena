@@ -18,9 +18,9 @@
 
 arena_room,162,88,3	script	Ponox	124,{
 	end;
-	
+
 OnInit:
-	waitingroom "Time Force Battle - Last Party !",11,"Ponox::OnStartArena",5;
+	waitingroom "Party Mode - 5 Member Parties",11,"Ponox::OnStartArena",5,0,10,99;
 	enablewaitingroomevent;
 	end;
 
@@ -60,7 +60,7 @@ prt_are_in,76,87,3	script	Helper#party	 67,4,4,{
 				mes "I see.";
 				mes "However, please remember you have only a limited amount of time.";
 				close;
-		
+
 			case 2:
 				mes "[Helper Iriff]";
 				mes "Thank you, let me start a battle.";
@@ -78,7 +78,7 @@ prt_are_in,76,87,3	script	Helper#party	 67,4,4,{
 OnEnter:
 	enablenpc "Helper#party";
 	end;
-	
+
 OnStop:
 	disablenpc "Helper#party";
 	end;
@@ -88,12 +88,12 @@ OnInit:
 	end;
 }
 
-prt_are_in,73,78,0	script	toarena#party	139,20,20,{
+prt_are_in,73,78,0	script	toarena#party	-1,20,20,{
 
 OnInit:
 	disablenpc "toarena#party";
 	end;
-	
+
 OnTouch:
 	if(Zeny < 1000) warp "arena_room",100,75;
 	else
@@ -103,27 +103,27 @@ OnTouch:
 		donpcevent "toout#party::OnStop";
 		warp "force_1-2",99,26;
 	}
-	
+
 OnEnter:
 	enablenpc "toarena#party";
 	end;
 }
 
-prt_are_in,73,79,0	script	toout#party	139,20,20,{
+prt_are_in,73,79,0	script	toout#party	-1,20,20,{
 
 OnInit:
 	disablenpc "toout#party";
 	end;
-	
+
 OnTimer:
 	initnpctimer;
 	end;
-	
+
 OnTimer60000:
 	set $arn_partywait,0;
 	enablenpc "toout#party";
 	end;
-	
+
 OnTimer70000:
 	donpcevent "toout#party::OnStop";
 	donpcevent "Ponox::Onstart";
@@ -143,7 +143,7 @@ OnStop:
 	end;
 }
 
-prt_are_in,73,74,0	script	arena_out	139,1,1,{
+prt_are_in,73,74,0	script	arena_out	-1,1,1,{
 
 OnTouch:
 	set $arn_partywait,0;
@@ -162,16 +162,16 @@ OnStart:
 	set $arena_minptst,gettime(2);
 	set $arena_secptst,gettime(1);
 	end;
-	
+
 OnTimer2000:
 	mapannounce "force_1-2","Good day, my name is Slipslowrun! I am here to assist you in the party arena battles!",bc_all;
 	donpcevent "arena_compass::OnStart";
 	end;
-	
+
 OnTimer3000:
 	mapannounce "force_1-2","The goal of the party arena is eliminating every monster in each room.",bc_all;
 	end;
-	
+
 OnTimer4000:
 	mapannounce "force_1-2","There is no order to enter one among 3 rooms at 3 direction. But remember you will eliminate all monsters in a room in order to procceed to the next step.",bc_all;
 	end;
@@ -179,7 +179,7 @@ OnTimer4000:
 OnTimer5000:
 	mapannounce "force_1-2","You have 10 minutes from now. I expect you will do your best! ",bc_all;
 	end;
-	
+
 OnTimer60000:
 	if(!getmapusers("force_1-2")) donpcevent "Slipslowrun#party::OnFail";
 	mapannounce "force_1-2","Remaining Time : 9 minutes ",bc_all;
@@ -194,7 +194,7 @@ OnTimer180000:
 	if(!getmapusers("force_1-2")) donpcevent "Slipslowrun#party::OnFail";
 	mapannounce "force_1-2","Remaining Time : 7 minutes ",bc_all;
 	end;
-	
+
 OnTimer240000:
 	if(!getmapusers("force_1-2")) donpcevent "Slipslowrun#party::OnFail";
 	mapannounce "force_1-2","Remaining Time : 6 minutes ",bc_all;
@@ -228,12 +228,12 @@ OnTimer540000:
 OnTimer600000:
 	mapannounce "force_1-2","Time is over! Please make sure you do not leave anything behind you before you leave .",bc_all;
 	end;
-	
+
 OnTimer605000:
 	donpcevent "arena_p::OnReset";
 	mapwarp "force_1-2","prt_are_in",177,138;
 	end;
-	
+
 OnTimer606000:
 OnTimer607000:
 OnTimer608000:
@@ -244,12 +244,12 @@ OnTimer612000:
 OnTimer613000:
 	mapwarp "force_1-2","prt_are_in",177,138;
 	end;
-	
+
 OnTimer614000:
 	mapwarp "force_1-2","prt_are_in",177,138;
 	donpcevent "Slipslowrun#party::OnFail";
 	end;
-	
+
 OnFail:
 	donpcevent "Slipslowrun#party::OnTimeoff";
 	mapwarp "force_1-2","prt_are_in",177,138;
@@ -257,7 +257,7 @@ OnFail:
 	donpcevent "alloff#party::OnInit";
 	donpcevent "Ponox::Onstart";
 	end;
-	
+
 OnTimeoff:
 	stopnpctimer;
 	end;
@@ -305,17 +305,17 @@ On07_end:
 On08_end:
 	mapannounce "force_1-2","A door to the west hall has opened~",bc_all;
 	end;
-	
+
 On09_end:
 	mapannounce "force_1-2","A west exit has opened!",bc_all;
 	end;
-	
+
 On10_end:
 	mapannounce "force_1-2","Boss stage cleared! An exit at the east has opened! Thank you.",bc_all;
 	end;
 }
 
-force_1-2,62,104,4	script	arena_p	111,1,1,{
+-	script	arena_p	-1,{
 
 OnStart:
 	mapwarp "force_1-2","prt_are_in",177,138;
@@ -360,43 +360,43 @@ OnStart:
 	set $arn_partyc,0;
 	set $arn_partywait,0;
 	end;
-	
+
 On04_start:
 	enablenpc "force_03_04";
 	enablenpc "force_04start#party";
 	end;
-	
+
 On06_start:
 	enablenpc "force_05_06";
 	enablenpc "force_06start#party";
 	end;
-	
+
 On07_start:
 	enablenpc "force_06_07";
 	enablenpc "force_07start#party";
 	end;
-	
+
 On08_start:
 	enablenpc "force_07_08";
 	enablenpc "force_08start#party";
 	end;
-	
+
 On09_start:
 	enablenpc "force_08_09";
 	enablenpc "force_09start#party";
 	end;
-	
+
 On10_start:
 	enablenpc "force_09_10";
 	enablenpc "force_10start#party";
 	end;
-	
+
 Onexit:
 	enablenpc "force_10_09";
 	enablenpc "force_09_exit";
 	enablenpc "force_exit#party";
 	end;
-	
+
 OnReset:
 	donpcevent "force_01mob#party::OnReset";
 	donpcevent "force_02mob#party::OnReset";
@@ -536,7 +536,7 @@ OnTouch:
 	end;
 }
 
-force_1-2,36,26,0	script	force_01start#party	139,1,1,{
+force_1-2,36,26,0	script	force_01start#party	-1,1,1,{
 
 OnTouch:
 	donpcevent "force_01mob#party::Onon";
@@ -544,7 +544,7 @@ OnTouch:
 	end;
 }
 
-force_1-2,63,104,1	script	force_01mob#party	111,{
+-	script	force_01mob#party	-1,{
 
 Onon:
 	monster "force_1-2",15,35,"Penomena",1441,1,"force_01mob#party::OnMobDeath";
@@ -575,7 +575,7 @@ Onon:
 	monster "force_1-2",33,30,"Incubus",1580,1,"force_01mob#party::OnMobDeath";
 	set $force_01_pt,26;
 	end;
-	
+
 OnReset:
 	killmonster "force_1-2","force_01mob#party::OnMobDeath";
 	end;
@@ -597,7 +597,7 @@ OnMobDeath:
 	end;
 }
 
-force_1-2,162,26,0	script	force_02start#party	139,1,1,{
+force_1-2,162,26,0	script	force_02start#party	-1,1,1,{
 
 OnTouch:
 	donpcevent "force_02mob#party::Onon";
@@ -605,7 +605,7 @@ OnTouch:
 	end;
 }
 
-force_1-2,63,103,1	script	force_02mob#party	111,{
+-	script	force_02mob#party	-1,{
 
 Onon:
 	monster "force_1-2",163,36,"Penomena",1441,1,"force_02mob#party::OnMobDeath";
@@ -640,11 +640,11 @@ Onon:
 	monster "force_1-2",181,25,"Arclouse",1477,1,"force_02mob#party::OnMobDeath";
 	set $force_02_pt,30;
 	end;
-	
+
 OnReset:
 	killmonster "force_1-2","force_02mob#party::OnMobDeath";
 	end;
-	
+
 OnMobDeath:
 	set $force_02_pt,$force_02_pt -1;
 	if($force_02_pt < 1)
@@ -662,7 +662,7 @@ OnMobDeath:
 	end;
 }
 
-force_1-2,99,66,0	script	force_03start#party	139,1,1,{
+force_1-2,99,66,0	script	force_03start#party	-1,1,1,{
 
 OnTouch:
 	donpcevent "force_03mob#party::Onon";
@@ -670,7 +670,7 @@ OnTouch:
 	end;
 }
 
-force_1-2,63,102,1	script	force_03mob#party	111,{
+-	script	force_03mob#party	-1,{
 
 Onon:
 	monster "force_1-2",89,81,"Merman",1451,1,"force_03mob#party::OnMobDeath";
@@ -701,11 +701,11 @@ Onon:
 	monster "force_1-2",108,69,"Wanderer",1490,1,"force_03mob#party::OnMobDeath";
 	set $force_03_pt,26;
 	end;
-	
+
 OnReset:
 	killmonster "force_1-2","force_03mob#party::OnMobDeath";
 	end;
-	
+
 OnMobDeath:
 	set $force_03_pt,$force_03_pt -1;
 	if($force_03_pt < 1)
@@ -723,7 +723,7 @@ OnMobDeath:
 	end;
 }
 
-force_1-2,162,78,0	script	force_04start#party	139,3,3,{
+force_1-2,162,78,0	script	force_04start#party	-1,3,3,{
 
 OnTouch:
 	donpcevent "force_04mob#party::Onon";
@@ -731,7 +731,7 @@ OnTouch:
 	end;
 }
 
-force_1-2,63,101,1	script	force_04mob#party	111,{
+-	script	force_04mob#party	-1,{
 
 Onon:
 	monster "force_1-2",174,78,"Penomena",1441,1,"force_04mob#party::OnMobDeath";
@@ -758,11 +758,11 @@ Onon:
 	monster "force_1-2",177,72,"Assaulter",1364,1,"force_04mob#party::OnMobDeath";
 	set $force_04_pt,22;
 	end;
-	
+
 OnReset:
 	killmonster "force_1-2","force_04mob#party::OnMobDeath";
 	end;
-	
+
 OnMobDeath:
 	set $force_04_pt,$force_04_pt -1;
 	if($force_04_pt < 1)
@@ -775,7 +775,7 @@ OnMobDeath:
 	end;
 }
 
-force_1-2,36,77,0	script	force_05start#party	139,1,1,{
+force_1-2,36,77,0	script	force_05start#party	-1,1,1,{
 
 OnTouch:
 	donpcevent "force_05mob#party::Onon";
@@ -783,7 +783,7 @@ OnTouch:
 	end;
 }
 
-force_1-2,63,100,1	script	force_05mob#party	111,{
+-	script	force_05mob#party	-1,{
 
 Onon:
 	monster "force_1-2",25,68,"Penomena",1441,1,"force_05mob#party::OnMobDeath";
@@ -812,11 +812,11 @@ Onon:
 	monster "force_1-2",24,71,"Cramp",1570,1,"force_05mob#party::OnMobDeath";
 	set $force_05_pt,24;
 	end;
-	
+
 OnReset:
 	killmonster "force_1-2","force_05mob#party::OnMobDeath";
 	end;
-	
+
 OnMobDeath:
 	set $force_05_pt,$force_05_pt -1;
 	if($force_05_pt < 1)
@@ -827,7 +827,7 @@ OnMobDeath:
 	end;
 }
 
-force_1-2,26,118,0	script	force_06start#party	139,1,1,{
+force_1-2,26,118,0	script	force_06start#party	-1,1,1,{
 
 OnTouch:
 	donpcevent "force_06mob#party::Onon";
@@ -835,7 +835,7 @@ OnTouch:
 	end;
 }
 
-force_1-2,63,99,1	script	force_06mob#party	111,{
+-	script	force_06mob#party	-1,{
 
 Onon:
 	monster "force_1-2",19,135,"Cloud Hermit",1531,1,"force_06mob#party::OnMobDeath";
@@ -862,11 +862,11 @@ Onon:
 	monster "force_1-2",16,120,"Wicked Nymph",1564,1,"force_06mob#party::OnMobDeath";
 	set $force_06_pt,22;
 	end;
-	
+
 OnReset:
 	killmonster "force_1-2","force_06mob#party::OnMobDeath";
 	end;
-	
+
 OnMobDeath:
 	set $force_06_pt,$force_06_pt -1;
 	if($force_06_pt < 1)
@@ -878,7 +878,7 @@ OnMobDeath:
 	end;
 }
 
-force_1-2,92,124,0	script	force_07start#party	139,1,1,{
+force_1-2,92,124,0	script	force_07start#party	-1,1,1,{
 
 OnTouch:
 	donpcevent "force_07mob#party::Onon";
@@ -886,7 +886,7 @@ OnTouch:
 	end;
 }
 
-force_1-2,63,98,1	script	force_07mob#party	111,{
+-	script	force_07mob#party	-1,{
 
 Onon:
 	monster "force_1-2",104,134,"Greatest General",1541,1,"force_07mob#party::OnMobDeath";
@@ -903,11 +903,11 @@ Onon:
 	monster "force_1-2",108,140,"Chimera",1456,1,"force_07mob#party::OnMobDeath";
 	set $force_07_pt,12;
 	end;
-	
+
 OnReset:
 	killmonster "force_1-2","force_07mob#party::OnMobDeath";
 	end;
-	
+
 OnMobDeath:
 	set $force_07_pt,$force_07_pt -1;
 	if($force_07_pt < 1)
@@ -919,7 +919,7 @@ OnMobDeath:
 	end;
 }
 
-force_1-2,173,118,0	script	force_08start#party	139,1,1,{
+force_1-2,173,118,0	script	force_08start#party	-1,1,1,{
 
 OnTouch:
 	donpcevent "force_08mob#party::Onon";
@@ -927,7 +927,7 @@ OnTouch:
 	end;
 }
 
-force_1-2,63,97,1	script	force_08mob#party	111,{
+-	script	force_08mob#party	-1,{
 
 Onon:
 	monster "force_1-2",172,154,"Khalitzburg",1438,1,"force_08mob#party::OnMobDeath";
@@ -966,11 +966,11 @@ Onon:
 		set $force_08_pt,$force_08_pt +1;
 	}
 	end;
-	
+
 OnReset:
 	killmonster "force_1-2","force_08mob#party::OnMobDeath";
 	end;
-	
+
 OnMobDeath:
 	set $force_08_pt,$force_08_pt -1;
 	if($force_08_pt < 1)
@@ -982,7 +982,7 @@ OnMobDeath:
 	end;
 }
 
-force_1-2,133,178,0	script	force_09start#party	139,1,1,{
+force_1-2,133,178,0	script	force_09start#party	-1,1,1,{
 
 OnTouch:
 	donpcevent "force_09mob#party::Onon";
@@ -990,7 +990,7 @@ OnTouch:
 	end;
 }
 
-force_1-2,63,97,1	script	force_09mob#party	111,{
+-	script	force_09mob#party	-1,{
 
 Onon:
 	monster "force_1-2",86,180,"Elder",1573,1,"force_09mob#party::OnMobDeath";
@@ -1010,11 +1010,11 @@ Onon:
 	monster "force_1-2",122,177,"Anolian",1488,1,"force_09mob#party::OnMobDeath";
 	set $force_09_pt,15;
 	end;
-	
+
 OnReset:
 	killmonster "force_1-2","force_09mob#party::OnMobDeath";
 	end;
-	
+
 OnMobDeath:
 	set $force_09_pt,$force_09_pt -1;
 	if($force_09_pt < 1)
@@ -1026,7 +1026,7 @@ OnMobDeath:
 	end;
 }
 
-force_1-2,29,178,0	script	force_10start#party	139,1,1,{
+force_1-2,29,178,0	script	force_10start#party	-1,1,1,{
 
 OnTouch:
 	donpcevent "force_10mob-1#party::Onon1";
@@ -1034,7 +1034,7 @@ OnTouch:
 	end;
 }
 
-force_1-2,63,95,1	script	force_10mob-1#party	111,{
+-	script	force_10mob-1#party	-1,{
 
 Onon1:
 	switch(rand(1,2))
@@ -1042,25 +1042,25 @@ Onon1:
 		case 1:
 			monster "force_1-2",16,179,"Evil Snake Lord",1529,1,"force_10mob-1#party::OnMobDeath";
 			break;
-			
+
 		case 2:
 			monster "force_1-2",24,179,"Dracula",1530,1,"force_10mob-1#party::OnMobDeath";
 			break;
 	}
 	set $force_10_1_pt,1;
 	end;
-	
+
 OnReset:
 	killmonster "force_1-2","force_10mob-1#party::OnMobDeath";
 	end;
-	
+
 OnMobDeath:
 	set $force_10_1_pt,$force_10_1_pt -1;
 	if($force_10_1_pt < 1) donpcevent "force_10mob-2#party::Onon2";
 	end;
 }
 
-force_1-2,63,96,1	script	force_10mob-2#party	111,{
+-	script	force_10mob-2#party	-1,{
 
 Onon2:
 	monster "force_1-2",16,179,"Samurai Spector",1542,1,"force_10mob-2#party::OnMobDeath";
@@ -1071,11 +1071,11 @@ Onon2:
 	monster "force_1-2",16,179,"Shinobi",1560,1,"force_10mob-2#party::OnMobDeath";
 	set $force_10_2_pt,6;
 	end;
-	
+
 OnReset:
 	killmonster "force_1-2","force_10mob-2#party::OnMobDeath";
 	end;
-	
+
 OnMobDeath:
 	set $force_10_2_pt,$force_10_2_pt -1;
 	if($force_10_2_pt < 1)
@@ -1087,7 +1087,7 @@ OnMobDeath:
 	end;
 }
 
-force_1-2,59,178,0	script	force_exit#party	139,1,1,{
+force_1-2,59,178,0	script	force_exit#party	-1,1,1,{
 
 OnTouch:
 	donpcevent "force_exitmob#party::Onon-1";
@@ -1095,7 +1095,7 @@ OnTouch:
 	end;
 }
 
-force_1-2,63,94,1	script	force_exitmob#party	111,{
+-	script	force_exitmob#party	-1,{
 
 Onon:
 	monster "force_1-2",95,177,"Farewell",1393,1,"force_exitmob#party::OnMobDeath";
@@ -1128,7 +1128,7 @@ Onon:
 	monster "force_1-2",95,177,"Book[3]",1478,1,"force_exitmob#party::OnMobDeath";
 	monster "force_1-2",95,177,"Exchange Diary",1478,1,"force_exitmob#party::OnMobDeath";
 	end;
-	
+
 OnReset:
 	killmonster "force_1-2","force_exitmob#party::OnMobDeath";
 	end;
@@ -1275,12 +1275,12 @@ prt_are_in,77,135,3	script	Staff#party-2	67,{
 							mes "Your record has been entered.";
 							next;
 							break;
-							
+
 						case 2:
 							mes "[Staff]";
 							mes "Please take your time and think up a nice name.";
 							close;
-						
+
 					}
 					break;
 
@@ -1288,9 +1288,9 @@ prt_are_in,77,135,3	script	Staff#party-2	67,{
 					mes "[Staff]";
 					mes "Please take your time and think up a nice name.";
 					close;
-				
+
 			}
-			
+
 
 		}
 		if (arena_point > 29900) {
@@ -1335,7 +1335,7 @@ prt_are_in,77,135,3	script	Staff#party-2	67,{
 
 }
 
-prt_are_in,66,143,3	script	#arn_timer_pt	139,{
+-	script	#arn_timer_pt	-1,{
 
 OnEnter:
 	initnpctimer;
@@ -1366,14 +1366,14 @@ Onstop:
 	end; 
 }
 
-prt_are_in,1,1,1	script	arn_warp_pt	-1,{
+-	script	arn_warp_pt	-1,{
 
 Onout:
-	areawarp "prt_are_in",66,143,81,128,"arena_room",100,75;
+	areawarp "prt_are_in",66,143,81,126,"arena_room",100,75;
 	end;
 }
 
-force_1-2,62,104,4	script	cast#pt	139,{
+-	script	cast#pt	-1,{
 
 Ontimeover1:
 	mapannounce "force_2-1","Arena will be reactivated due to an error occurred during battle.",0,0xFFCE00;
@@ -1392,7 +1392,7 @@ Ontimeover2:
 	end;
 }
 
-force_1-2,100,60,3	script	alloff#pt	139,{
+-	script	alloff#pt	-1,{
 
 Onon:
 	mapwarp "force_1-2","prt_are_in",126,139,0,0;
