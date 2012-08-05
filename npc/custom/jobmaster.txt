@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= rAthena SVN r16114+
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================  
 //= 1.1 Fixed reset on Baby job change. [Euphy]
 //= 1.2 Added Expanded Super Novice support and initial Kagerou/Oboro support. [Euphy]
+//= 1.3 Kagerou/Oboro added. [Euphy]
 //============================================================
 
 prontera,153,193,6	script	Job Master	123,{
@@ -51,8 +52,7 @@ function Job_Menu; function A_An;
 			mes "[Job Master]"; } }
 	set .@j1, roclass(.@eac|EAJL_2_1); set .@j2,roclass(.@eac|EAJL_2_2);
 	if ((.@eac&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE) setarray .@exp[0],roclass(.@eac|EAJL_THIRD),99;
-	// Kagerou & Oboro pending skill completion.
-	// if (Class == Job_Ninja) setarray .@exp[0],.@j1,70;
+	if (Class == Job_Ninja) setarray .@exp[0],.@j1,70;
 	if (.@exp[0] && .ThirdClass) {
 		if (BaseLevel < .Rebirth[0] || JobLevel < .@exp[1]) {
 			set .@blvl, .Rebirth[0]-BaseLevel; set .@jlvl, .@exp[1]-JobLevel;

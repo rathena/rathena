@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.5
+//= 2.5a
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -42,6 +42,7 @@
 //= 2.3 Updated to match the new Izlude Map. [Masao]
 //= 2.4 More optimization (-32kb). [Euphy]
 //= 2.5 Yet more optimization (-22kb). [Euphy]
+//= 2.5a Minor fixes. [Euphy]
 //============================================================ 
 
 // Onward to the New World
@@ -248,58 +249,56 @@ prt_castle,83,67,5	script	Recruiter for the Brave	109,{
 		mes "You are definitely brave enough to venture to this new land.";
 		mes "I will now appoint you to detect and have adventures in Ash-Vacuum.";
 		next;
-		switch(select("Ash-Vacuum?")) {
-		case 1:
-			mes "[Recruiter]";
-			mes "Hm. That's the code name of the place where you will have your adventure. Frankly, we don't know exactly what it is, but we call it 'Ash-Vacuum'.";
-			next;
-			mes "[Recruiter]";
-			mes "Believe it or not,";
-			mes "it's definitely true.";
-			mes "So listen carefully.";
-			mes "Please.";
-			next;
-			mes "[Recruiter]";
-			mes "Ash-Vacuum... is a living place... that's totally different from where we are living now.";
-			next;
-			mes "[Recruiter]";
-			mes "It's an unknown place.";
-			mes "We don't know what's there,";
-			mes "or who is living there.";
-			mes "It's beyond our guess.";
-			mes "Nobody knows.";
-			next;
-			mes "[Recruiter]";
-			mes "Only the brave, like you, deserve to go there. There will be many dangerous things around you, but you must explore it on behalf of Rune Midgard.";
-			next;
-			mes "[Recruiter]";
-			mes "Hmm......";
-			next;
-			mes "[Recruiter]";
-			mes "Anyway, I am sure that there are many opportunities for fame and fortune there...";
-			next;
-			mes "[Recruiter]";
-			mes "First, you should go to ^FF0000Lighthalzen^000000 to register for the United Midgard Alliance. I believe they are meeting at the Rekenber Corporation Headquarters...";
-			next;
-			mes "[Recruiter]";
-			mes "You can get a detailed guide, better than me, there. Go there and find him...";
-			next;
-			mes "[Recruiter]";
-			mes "I've done what I can. Go there, and get to it!";
-			next;
-			mes "[Recruiter]";
-			mes "Remember, go to ^FF0000Lighthalzen^000000, then follow the directions of the guide there.";
-			next;
-			changequest 10064,10065;
-			set ep13_ryu,9;
-			getexp 66000,21000;
-			mes "[Recruiter]";
-			mes "Just go there!";
-			mes "And listen carefully";
-			mes "about your mission!";
-			mes "I'm done here...";
-			close;
-		}
+		select("Ash-Vacuum?");
+		mes "[Recruiter]";
+		mes "Hm. That's the code name of the place where you will have your adventure. Frankly, we don't know exactly what it is, but we call it 'Ash-Vacuum'.";
+		next;
+		mes "[Recruiter]";
+		mes "Believe it or not,";
+		mes "it's definitely true.";
+		mes "So listen carefully.";
+		mes "Please.";
+		next;
+		mes "[Recruiter]";
+		mes "Ash-Vacuum... is a living place... that's totally different from where we are living now.";
+		next;
+		mes "[Recruiter]";
+		mes "It's an unknown place.";
+		mes "We don't know what's there,";
+		mes "or who is living there.";
+		mes "It's beyond our guess.";
+		mes "Nobody knows.";
+		next;
+		mes "[Recruiter]";
+		mes "Only the brave, like you, deserve to go there. There will be many dangerous things around you, but you must explore it on behalf of Rune Midgard.";
+		next;
+		mes "[Recruiter]";
+		mes "Hmm......";
+		next;
+		mes "[Recruiter]";
+		mes "Anyway, I am sure that there are many opportunities for fame and fortune there...";
+		next;
+		mes "[Recruiter]";
+		mes "First, you should go to ^FF0000Lighthalzen^000000 to register for the United Midgard Alliance. I believe they are meeting at the Rekenber Corporation Headquarters...";
+		next;
+		mes "[Recruiter]";
+		mes "You can get a detailed guide, better than me, there. Go there and find him...";
+		next;
+		mes "[Recruiter]";
+		mes "I've done what I can. Go there, and get to it!";
+		next;
+		mes "[Recruiter]";
+		mes "Remember, go to ^FF0000Lighthalzen^000000, then follow the directions of the guide there.";
+		next;
+		changequest 10064,10065;
+		set ep13_ryu,9;
+		getexp 66000,21000;
+		mes "[Recruiter]";
+		mes "Just go there!";
+		mes "And listen carefully";
+		mes "about your mission!";
+		mes "I'm done here...";
+		close;
 	}
 	if (ep13_ryu > 0) {
 		mes "[Recruiter]";
@@ -437,38 +436,36 @@ aldebaran,127,138,3	script	Promotional Staff#alde	100,{
 		mes "[Promotional Staff]";
 		mes "Hey, you're a well-versed person, right? Are you interested in my story?";
 		next;
-		switch(select("I have something for you.")) {
-		case 1:
-			mes "[Promotional Staff]";
-			mes "For me??";
-			mes "I hate annoying stuff.";
-			next;
-			mes "[Promotional Staff]";
-			mes "Ahh... I sensed that I would get your request.";
-			mes "The recruiter sent you here to get tested?";
-			mes "Hmm.";
-			next;
-			mes "[Promotional Staff]";
-			mes "Ah! They always push me,";
-			mes "to suffer from so much work";
-			mes "I live a hard life!";
-			next;
-			mes "[Promotional Staff]";
-			mes "My job is testing if you are strong and brave enough for this adventure.";
-			mes "What a bother!";
-			next;
-			mes "[Promotional Staff]";
-			mes "I will accept you if you bring me ^FF0000300 Jellopy^000000.";
-			mes "I believe that you can bring them to me.";
-			mes "Are you ready?";
-			next;
-			changequest 10057,10058;
-			set ep13_ryu,2;
-			mes "[Promotional Staff]";
-			mes "Just go ahead and hunt monsters, or whatever and collect 300 jellopies.";
-			mes "Then we can go forward.";
-			close;
-		}
+		select("I have something for you.");
+		mes "[Promotional Staff]";
+		mes "For me??";
+		mes "I hate annoying stuff.";
+		next;
+		mes "[Promotional Staff]";
+		mes "Ahh... I sensed that I would get your request.";
+		mes "The recruiter sent you here to get tested?";
+		mes "Hmm.";
+		next;
+		mes "[Promotional Staff]";
+		mes "Ah! They always push me,";
+		mes "to suffer from so much work";
+		mes "I live a hard life!";
+		next;
+		mes "[Promotional Staff]";
+		mes "My job is testing if you are strong and brave enough for this adventure.";
+		mes "What a bother!";
+		next;
+		mes "[Promotional Staff]";
+		mes "I will accept you if you bring me ^FF0000300 Jellopy^000000.";
+		mes "I believe that you can bring them to me.";
+		mes "Are you ready?";
+		next;
+		changequest 10057,10058;
+		set ep13_ryu,2;
+		mes "[Promotional Staff]";
+		mes "Just go ahead and hunt monsters, or whatever and collect 300 jellopies.";
+		mes "Then we can go forward.";
+		close;
 	}
 	mes "[Promotional Staff]";
 	mes "We want the adventurers who are super curious and extremely brave. Join us for a wonderful adventure!";
@@ -608,29 +605,27 @@ geffen,90,67,3	script	Promotional Staff#gef	100,{
 		mes "[Promotional Staff]";
 		mes "Hey, you're a knowledgeable person, right? Are you interested in my story?";
 		next;
-		switch(select("The Staff in Aldebaran sent me.")) {
-		case 1:
-			mes "[Promotional Staff]";
-			mes "Oh he did?";
-			next;
-			mes "[Promotional Staff]";
-			mes "Ok, I guess that it's time for the second part of your test.";
-			next;
-			mes "[Promotional Staff]";
-			mes "I need you to gather some stones for me.";
-			next;
-			mes "[Promotional Staff]";
-			mes "I will accept you if you bring ^FF00001 Emerald^000000.";
-			mes "Are you ready?";
-			next;
-			changequest 10059,10060;
-			set ep13_ryu,4;
-			mes "[Promotional Staff]";
-			mes "Just bring me ^ff00001 Emerald^000000.";
-			mes "That isn't hard for you right?";
-			mes "Then we can go forward.";
-			close;
-		}
+		select("The Staff in Aldebaran sent me.");
+		mes "[Promotional Staff]";
+		mes "Oh he did?";
+		next;
+		mes "[Promotional Staff]";
+		mes "Ok, I guess that it's time for the second part of your test.";
+		next;
+		mes "[Promotional Staff]";
+		mes "I need you to gather some stones for me.";
+		next;
+		mes "[Promotional Staff]";
+		mes "I will accept you if you bring ^FF00001 Emerald^000000.";
+		mes "Are you ready?";
+		next;
+		changequest 10059,10060;
+		set ep13_ryu,4;
+		mes "[Promotional Staff]";
+		mes "Just bring me ^ff00001 Emerald^000000.";
+		mes "That isn't hard for you right?";
+		mes "Then we can go forward.";
+		close;
 	}
 	mes "[Promotional Staff]";
 	mes "We want adventurers who are super curious and extremely brave. Join us for a wonderful adventure!";
@@ -753,62 +748,60 @@ izlude,101,173,6	script	Promotional Staff#iz	100,{
 		mes "[Promotional Staff]";
 		mes "Hey, you're a knowledgeable adventurer. Are you interested in my story?";
 		next;
-		switch(select("I have something for you.")) {
-		case 1:
+		select("I have something for you.");
+		mes "[Promotional Staff]";
+		mes "Um, you're the one sent to be tested, correct? You are in the right place. I'm the Promotional Staff in Izlude.";
+		next;
+		mes "[Promotional Staff]";
+		mes "I guess you're qualified enough to go... I think no more testing is needed.";
+		next;
+		mes "[Promotional Staff]";
+		mes "Let me see...";
+		next;
+		if (BaseLevel > 69) {
 			mes "[Promotional Staff]";
-			mes "Um, you're the one sent to be tested, correct? You are in the right place. I'm the Promotional Staff in Izlude.";
+			mes "I think you're good enough!";
+			mes "No more testing!!";
+			mes "Ok! You pass!";
 			next;
 			mes "[Promotional Staff]";
-			mes "I guess you're qualified enough to go... I think no more testing is needed.";
+			mes "We have quite high expectations to meet.";
+			mes "Though the new place is dangerous,";
+			mes "no need to check thoroughly right now.";
 			next;
 			mes "[Promotional Staff]";
-			mes "Let me see...";
+			mes "It's not a hell-hole!";
+			mes "Ukk...";
 			next;
-			if (BaseLevel > 69) {
-				mes "[Promotional Staff]";
-				mes "I think you're good enough!";
-				mes "No more testing!!";
-				mes "Ok! You pass!";
-				next;
-				mes "[Promotional Staff]";
-				mes "We have quite high expectations to meet.";
-				mes "Though the new place is dangerous,";
-				mes "no need to check thoroughly right now.";
-				next;
-				mes "[Promotional Staff]";
-				mes "It's not a hell-hole!";
-				mes "Ukk...";
-				next;
-				mes "[Promotional Staff]";
-				mes "Anyway, just go back to the recruiter.";
-				mes "I will forward to him that you passed all the steps.";
-				mes "Good job, friend!";
-				next;
-				changequest 10062,10064;
-				set ep13_ryu,8;
-				mes "[Promotional Staff]";
-				mes "May Freya bless you,";
-				mes "for your great future!";
-				close;
-			}
-			else {
-				mes "[Promotional Staff]";
-				mes "Hmm...";
-				next;
-				mes "[Promotional Staff]";
-				mes "You don't look that strong.";
-				mes "Nothing but skin and bones!";
-				mes "Not reliable.";
-				mes "I can't let you pass.";
-				next;
-				changequest 10062,10063;
-				set ep13_ryu,7;
-				mes "[Promotional Staff]";
-				mes "Please level up a little more. I";
-				mes "can't accept that you're strong";
-				mes "enough. Sorry.";
-				close;
-			}
+			mes "[Promotional Staff]";
+			mes "Anyway, just go back to the recruiter.";
+			mes "I will forward to him that you passed all the steps.";
+			mes "Good job, friend!";
+			next;
+			changequest 10062,10064;
+			set ep13_ryu,8;
+			mes "[Promotional Staff]";
+			mes "May Freya bless you,";
+			mes "for your great future!";
+			close;
+		}
+		else {
+			mes "[Promotional Staff]";
+			mes "Hmm...";
+			next;
+			mes "[Promotional Staff]";
+			mes "You don't look that strong.";
+			mes "Nothing but skin and bones!";
+			mes "Not reliable.";
+			mes "I can't let you pass.";
+			next;
+			changequest 10062,10063;
+			set ep13_ryu,7;
+			mes "[Promotional Staff]";
+			mes "Please level up a little more. I";
+			mes "can't accept that you're strong";
+			mes "enough. Sorry.";
+			close;
 		}
 	}
 	mes "[Promotional Staff]";
@@ -1135,23 +1128,21 @@ lhz_in01,132,259,5	script	Sikaiz#1	868,{
 		mes "[Sikaiz]";
 		mes "So, what do you want to know more of? You already know about the Ash-Vacuum. Is there anything else you'd like me to tell you?";
 		next;
-		switch(select("The three kingdoms...")) {
-		case 1:
-			mes "[Sikaiz]";
-			mes "Ah, I need to tell you about the alliance, but first, may I ask something?";
-			next;
-			mes "[Sikaiz]";
-			mes "I need to report its status to the managers in Rune-Midgarts. I can't do it right now. May I ask you a favor?";
-			next;
-			mes "[Sikaiz]";
-			mes "It's not that difficult. Just tell them to prepare for the trip to the Dimensional Rift. It's quite easy, isn't it?";
-			next;
-			changequest 10067,10068;
-			set ep13_ryu,12;
-			mes "[Sikaiz]";
-			mes "We're running out of time, so I will answer you when you come back. Ok?";
-			close;
-		}
+		select("The three kingdoms...");
+		mes "[Sikaiz]";
+		mes "Ah, I need to tell you about the alliance, but first, may I ask something?";
+		next;
+		mes "[Sikaiz]";
+		mes "I need to report its status to the managers in Rune-Midgarts. I can't do it right now. May I ask you a favor?";
+		next;
+		mes "[Sikaiz]";
+		mes "It's not that difficult. Just tell them to prepare for the trip to the Dimensional Rift. It's quite easy, isn't it?";
+		next;
+		changequest 10067,10068;
+		set ep13_ryu,12;
+		mes "[Sikaiz]";
+		mes "We're running out of time, so I will answer you when you come back. Ok?";
+		close;
 	}
 	if (ep13_ryu == 10) {
 		mes "[Sikaiz]";
@@ -1169,66 +1160,64 @@ lhz_in01,132,259,5	script	Sikaiz#1	868,{
 		mes "[Sikaiz]";
 		mes "The registration is also important now, but I will tell you about our status here. May I begin?";
 		next;
-		switch(select("Sure.")) {
-		case 1:
-			mes "[Sikaiz]";
-			mes "Ok. Let me tell you about the Ash-Vacuum. It's quite a long story. So please bear with me.";
-			next;
-			mes "[Sikaiz]";
-			mes "^FF0000Ash-Vacuum^000000....";
-			mes "This isn't the world of mortals.";
-			mes "Then what is it...";
-			mes "Nobody knows.";
-			next;
-			mes "[Sikaiz]";
-			mes "Now, we only know that there are living beings there, and that they are not approachable by everyone.";
-			next;
-			mes "[Sikaiz]";
-			mes "The name, 'Ash-Vacuum', is so we can identify it easily.";
-			next;
-			mes "[Sikaiz]";
-			mes "You're probably wondering how we got there...";
-			mes "The answer lies with Satan Morroc.";
-			next;
-			mes "[Sikaiz]";
-			mes "Can you imagine?";
-			mes "Why did Satan Morroc";
-			mes "run away from there???";
-			mes "That's the important thing.";
-			next;
-			mes "[Sikaiz]";
-			mes "He made a gate to run away, by himself. It's very unlike him.";
-			next;
-			mes "[Sikaiz]";
-			mes "But he did make some mistakes. He left an opened gate. Nobody knows if it was intentional... or maybe...";
-			next;
-			mes "[Sikaiz]";
-			mes "We call the dimensional rift:";
-			mes "Time-Gap of Dimension.";
-			mes "Who knows what secrets lie in that world beyond.";
-			next;
-			mes "[Sikaiz]";
-			mes "So we've inspected it.";
-			mes "And there's not much info to get from it. We can't guess if it's from the past... or the future... Even WE don't know where it is.";
-			next;
-			mes "[Sikaiz]";
-			mes "That's the place!";
-			mes "Ash-Vacuum!";
-			mes "We are all in this together!";
-			next;
-			mes "[Sikaiz]";
-			mes "Is that enough?";
-			mes "Though I am the head of the Alliance, I don't know much else about it. That's why we are all here. To do some research.";
-			next;
-			mes "[Sikaiz]";
-			mes "Anyway, I told you about Ash-Vacuum. What I know about it all. Though you still don't know much about it, that's all I can tell you.";
-			next;
-			changequest 10066,10067;
-			set ep13_ryu,11;
-			mes "[Sikaiz]";
-			mes "If you have any other questions, you can still ask me...";
-			close;
-		}
+		select("Sure.");
+		mes "[Sikaiz]";
+		mes "Ok. Let me tell you about the Ash-Vacuum. It's quite a long story. So please bear with me.";
+		next;
+		mes "[Sikaiz]";
+		mes "^FF0000Ash-Vacuum^000000....";
+		mes "This isn't the world of mortals.";
+		mes "Then what is it...";
+		mes "Nobody knows.";
+		next;
+		mes "[Sikaiz]";
+		mes "Now, we only know that there are living beings there, and that they are not approachable by everyone.";
+		next;
+		mes "[Sikaiz]";
+		mes "The name, 'Ash-Vacuum', is so we can identify it easily.";
+		next;
+		mes "[Sikaiz]";
+		mes "You're probably wondering how we got there...";
+		mes "The answer lies with Satan Morroc.";
+		next;
+		mes "[Sikaiz]";
+		mes "Can you imagine?";
+		mes "Why did Satan Morroc";
+		mes "run away from there???";
+		mes "That's the important thing.";
+		next;
+		mes "[Sikaiz]";
+		mes "He made a gate to run away, by himself. It's very unlike him.";
+		next;
+		mes "[Sikaiz]";
+		mes "But he did make some mistakes. He left an opened gate. Nobody knows if it was intentional... or maybe...";
+		next;
+		mes "[Sikaiz]";
+		mes "We call the dimensional rift:";
+		mes "Time-Gap of Dimension.";
+		mes "Who knows what secrets lie in that world beyond.";
+		next;
+		mes "[Sikaiz]";
+		mes "So we've inspected it.";
+		mes "And there's not much info to get from it. We can't guess if it's from the past... or the future... Even WE don't know where it is.";
+		next;
+		mes "[Sikaiz]";
+		mes "That's the place!";
+		mes "Ash-Vacuum!";
+		mes "We are all in this together!";
+		next;
+		mes "[Sikaiz]";
+		mes "Is that enough?";
+		mes "Though I am the head of the Alliance, I don't know much else about it. That's why we are all here. To do some research.";
+		next;
+		mes "[Sikaiz]";
+		mes "Anyway, I told you about Ash-Vacuum. What I know about it all. Though you still don't know much about it, that's all I can tell you.";
+		next;
+		changequest 10066,10067;
+		set ep13_ryu,11;
+		mes "[Sikaiz]";
+		mes "If you have any other questions, you can still ask me...";
+		close;
 	}
 	if (ep13_ryu == 9) {
 		mes "- The man standing in front -";
@@ -1253,8 +1242,8 @@ lhz_in01,132,259,5	script	Sikaiz#1	868,{
 		next;
 		changequest 10065,10066;
 		set ep13_ryu,10;
-		mes "-The speech has ended.-";
-		mes "-Let's move on.-";
+		mes "- The speech has ended. -";
+		mes "- Let's move on. -";
 		close;
 	}
 	mes "[Sikaiz]";
@@ -5963,13 +5952,10 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 			mes "[Ryosen]";
 			mes "Whatever... Could you deliver this document to the Schwartzvalt and Arunafeltz researchers?";
 			next;
-			switch(select("Why me?:Alright.")) {
-			case 1:
+			if(select("Why me?:Alright.") == 1) {
 				mes "[Ryosen]";
 				mes "... Eh? Didn't you come to help us?";
 				close;
-			case 2:
-				break;
 			}
 			mes "[Ryosen]";
 			mes "Whew~ Very good.";
@@ -6365,16 +6351,13 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 				mes "[Ryosen]";
 				mes "Are you really, honestly, positively sure you want to exchange them for my cake?";
 				next;
-				switch(select("No way.:Yeah... I'll exchange.")) {
-				case 1:
+				if(select("No way.:Yeah... I'll exchange.") == 1) {
 					mes "[Ryosen]";
 					mes "Ahhh...";
 					next;
 					mes "[Ryosen]";
 					mes "Come back any time if you change your mind.";
 					close;
-				case 2:
-					break;
 				}
 				mes "[Ryosen]";
 				mes "I don't need it!";
@@ -6439,13 +6422,10 @@ mid_camp,247,255,1	script	Hue#ep131_rhea02	868,{
 				mes "[Hue]";
 				mes "You can't just come and go around as you please here. This is a restricted area.";
 				next;
-				switch(select("Sorry...:I came to show you this.")) {
-				case 1:
+				if(select("Sorry...:I came to show you this.") == 1) {
 					mes "[Hue]";
 					mes "You're just helpless, aren't you?";
 					close;
-				case 2:
-					break;
 				}
 				mes "[Hue]";
 				mes "What's that?";
@@ -6502,13 +6482,10 @@ mid_camp,247,255,1	script	Hue#ep131_rhea02	868,{
 				mes "[Hue]";
 				mes "Well, thank you for entertaining me. You should tell Ryosen that.";
 				next;
-				switch(select("Ok, I will.:Please sign the invitation.")) {
-				case 1:
+				if(select("Ok, I will.:Please sign the invitation.") == 1) {
 					mes "[Hue]";
 					mes "Well, you should also tell him that I think he's very talented in settin up comedy. Hahaha.";
 					close;
-				case 2:
-					break;
 				}
 				mes "[Hue]";
 				mes "... Sign this thing???";
@@ -6770,16 +6747,13 @@ mid_camp,247,255,1	script	Hue#ep131_rhea02	868,{
 				mes "[Hue]";
 				mes "Are you sure you want to exchange this for my Pineapple Jubilee?";
 				next;
-				switch(select("No way.:sure.")) {
-				case 1:
+				if(select("No way.:Sure.") == 1) {
 					mes "[Hue]";
 					mes "Ahhhhh...";
 					next;
 					mes "[Hue]";
 					mes "Come back any time if you change your mind.";
 					close;
-				case 2:
-					break;
 				}
 				mes "[Hue]";
 				mes "Thank you so much.";
@@ -8396,7 +8370,7 @@ mid_camp,72,94,4	script	Fluffy Gyaruk	421,{
 	else if (ep13_yong1 == 3) {
 		mes "[Fluffy Gyaruk]";
 		mes "We offer one service to new customers.";
-		mes "If you want to us emore services, you must fo some things for us.";
+		mes "If you want to use more services, you must do some things for us.";
 		next;
 		select("What kind of things?");
 		mes "[Fluffy Gyaruk]";
@@ -12763,11 +12737,11 @@ mid_camp,256,272,3	script	Defaria#moc2	897,{
 			next;
 			mes "[Defaria]";
 			mes "Make it a nice, neat pile, please.";
-			mes "..Oh, you forgot to put the sweet potatoes on top.";
+			mes "Oh, you forgot to put the sweet potatoes on top.";
 			mes "Yes, good. That's perfect.";
 			next;
 			mes "[Defaria]";
-			mes "..Hopefully I can make a fire with your nice logs....";
+			mes "Hopefully I can make a fire with your nice logs....";
 			specialeffect EF_BEGINSPELL2;
 			next;
 			specialeffect EF_FIREWALL,AREA,"Wet Firewood#moc2";
@@ -12796,11 +12770,11 @@ mid_camp,256,272,3	script	Defaria#moc2	897,{
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Didn't you forget something?";
-		mes ".. Dandelion? I wanted you to tell me what you knew.";
+		mes "... Dandelion? I wanted you to tell me what you knew.";
 		mes "I was hoping you'd remember something about Dandelion.";
 		next;
 		mes "[Defaria]";
-		mes "..So,";
+		mes "So,";
 		mes "do you want me to confirm";
 		mes "if Dandelion is really supported by Arunafeltz?";
 		next;
@@ -13796,7 +13770,7 @@ que_job01,84,17,3	script	Rin#moc_room2_1	885,{
 			case 1:
 				cutin "moc2_rin01",2;
 				mes "[Rin]";
-				mes "I'm sorry, but I'm not yet fully recovered....5.....I need to speak slowly. Please bear with me.";
+				mes "I'm sorry, but I'm not yet fully recovered... I need to speak slowly. Please bear with me.";
 				next;
 				break;
 			case 2:
