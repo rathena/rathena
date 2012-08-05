@@ -5,7 +5,7 @@
 //= Darlskies, Darkchild, Syrus22, Lupus, kobra_k88 (2.0)
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 6.3
+//= 6.4
 //===== Compatible With: ===================================== 
 //= rAthena 1.0
 //===== Description: =========================================
@@ -58,6 +58,7 @@
 //= 6.1 Added menu for Turbo Track Kafra Staff. [L0ne_W0lf]
 //= 6.2 Updated/Fixed warp cords. [Kisuka]
 //= 6.3 #kafra_code is now stored as is. [brianluau]
+//= 6.4 Removed unofficial Guide function. [Daegaladh]
 //============================================================ 
 
 
@@ -138,19 +139,19 @@ function	script	F_Kafra	{
 
 		// No Teleport (Common)
 		case 3: 
-			setarray @K_Menu0$[0],"Save","Use Storage","Rent a Pushcart","Guide","Check Other Information","Cancel";
+			setarray @K_Menu0$[0],"Save","Use Storage","Rent a Pushcart","Check Other Information","Cancel";
 			break;
 
 		// Case 4 is Einbroch no tele message.
 
 		// No save, or teleport. (Common)
 		case 5:
-			setarray @K_Menu0$[0],"Use Storage","Rent a Pushcart","Check Other Information","Guide","Cancel";
+			setarray @K_Menu0$[0],"Use Storage","Rent a Pushcart","Check Other Information","Cancel";
 			break;
 
 		// Storage and Check Other Information only.
 		case 6:
-			setarray @K_Menu0$[0],"Use Storage","Guide","Check Other Information","Cancel";
+			setarray @K_Menu0$[0],"Use Storage","Check Other Information","Cancel";
 			break;
 
 		// Save, Storage, and Pushcart only (Kafra Warehouse)
@@ -165,7 +166,7 @@ function	script	F_Kafra	{
 
 		// Common Kafra Employee
 		default:
-			setarray @K_Menu0$[0],"Save","Use Storage","Use Teleport Service","Rent a Pushcart","Guide","Check Other Information","Cancel";
+			setarray @K_Menu0$[0],"Save","Use Storage","Use Teleport Service","Rent a Pushcart","Check Other Information","Cancel";
 			break;
 	}
 
@@ -232,11 +233,6 @@ function	script	F_Kafra	{
 		}
 		if (@K_Menu0$[@num] == "Rent a Pushcart"){
 			if(callfunc("F_KafCart",getarg(0),getarg(4)) == 1) next;
-			goto M_Menu;
-		}
-		if (@K_Menu0$[@num] == "Guide"){
-			callfunc "F_KafGuide";
-			next;
 			goto M_Menu;
 		}
 		if (@K_Menu0$[@num] == "Check Other Information"){
@@ -471,14 +467,6 @@ function	script	F_KafCart	{
 
 M_End:
 	return 0;
-}
-
-
-// Pass Function ===============================================================
-function	script	F_KafGuide	{
-	mes "[Kafra Employee]";
-	mes "WIP...";
-	return;
 }
 
 // Special Reserve Points Function ===========================================
