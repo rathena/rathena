@@ -853,7 +853,6 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				} else {
 					jobchange Job_Bard;
 				}
-				set FJOB,Job_Minstrel;
 				mes "[Lalo]";
 				mes "Very well! Hope you sing happy enjoyable songs.";
 				mes "Live like the wind and the clouds!";
@@ -1297,7 +1296,6 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			} else {
 				jobchange Job_Bard;
 			}
-			set FJOB,Job_Minstrel;
 			mes "[Lalo]";
 			mes "Very well! Hope you sing happy enjoyable songs.";
 			mes "Live like the wind and the clouds!";
@@ -1341,7 +1339,6 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			} else {
 				jobchange Job_Bard;
 			}
-			set FJOB,Job_Minstrel;
 			mes "[Lalo]";
 			mes "Good job. I will make you a job change souvenir with this.";
 			mes "Wait just a moment.";
@@ -1369,7 +1366,6 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			} else {
 				jobchange Job_Bard;
 			}
-			set FJOB,Job_Minstrel;
 			mes "[Lalo]";
 			mes "Good job. I will make you a job change souvenir with this.";
 			mes "Wait just a moment.";
@@ -1397,7 +1393,6 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			} else {
 				jobchange Job_Bard;
 			}
-			set FJOB,Job_Minstrel;
 			mes "[Lalo]";
 			mes "Good job. I will make you a job change souvenir with this.";
 			mes "Wait just a moment.";
@@ -1425,7 +1420,6 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				} else {
 					jobchange Job_Bard;
 				}
-				set FJOB,Job_Minstrel;
 				mes "[Lalo]";
 				mes "Good job. I will make you a job change souvenir with this.";
 				mes "Wait just a moment.";
@@ -1451,7 +1445,6 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			} else {
 				jobchange Job_Bard;
 			}
-			set FJOB,Job_Minstrel;
 			mes "[Lalo]";
 			mes "Good job. I will make you a job change souvenir with this.";
 			mes "Wait just a moment.";
@@ -1500,7 +1493,6 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			} else {
 				jobchange Job_Bard;
 			}
-			set FJOB,Job_Minstrel;
 			completequest 3004;
 			mes "[Lalo]";
 			mes "Wonderful! Sing happy enjoyable songs.";

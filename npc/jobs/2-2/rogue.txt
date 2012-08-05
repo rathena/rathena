@@ -153,7 +153,6 @@ in_rogue,363,122,4	script	Rogue Guildsman	747,{
 				} else {
 					jobchange Job_Rogue;
 				}
-				set FJOB,Job_Shadow_Chaser;
 				changequest 2026,2027;
 				completequest 2027;
 				next;
@@ -188,7 +187,6 @@ in_rogue,363,122,4	script	Rogue Guildsman	747,{
 				} else {
 					jobchange Job_Rogue;
 				}
-				set FJOB,Job_Shadow_Chaser;
 				changequest 2026,2027;
 				completequest 2027;
 				next;

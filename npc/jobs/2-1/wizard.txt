@@ -420,7 +420,6 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		} else {
 			jobchange Job_Wizard;
 		}
-		set FJOB,Job_Warlock;
 		completequest 9018;
 		mes "[Catherine]";
 		mes "Since you're a Wizard now, act like a Wizard, got it?";

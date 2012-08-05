@@ -935,7 +935,6 @@ job_duncer,95,93,4	script	Bijou	101,{
 		} else {
 			jobchange Job_Dancer;
 		}
-		set FJOB,Job_Wanderer;
 		completequest 7006;
 		mes "Ooh...!";
 		mes "You look great";

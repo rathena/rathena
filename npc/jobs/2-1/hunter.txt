@@ -158,7 +158,6 @@ hu_in01,386,373,4	script	Hunter Guildsman#hnt	727,{
 				} else {
 					jobchange Job_Hunter;
 				}
-				set FJOB,Job_Ranger;
 				completequest 4013;
 				next;
 				mes "[Hunter Sherin]";

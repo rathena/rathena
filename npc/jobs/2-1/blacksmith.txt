@@ -219,7 +219,6 @@ ein_in01,18,28,4	script	Guildsman#BLS	731,{
 			} else {
 				jobchange Job_Blacksmith;
 			}
-			set FJOB,Job_Mechanic;
 			mes "[Altiregen]";
 			mes "Always remember that we are creators, and artists over metals. Be wary that you do not fall into the pitfalls of selfishness";
 			mes "and greed.";

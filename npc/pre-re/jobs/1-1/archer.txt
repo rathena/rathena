@@ -14,7 +14,7 @@
 //============================================================ 
 payon_in02,64,71,4	script	Archer Guildsman	85,{
 	if (Upper == 1) {
-		if ((Class == Job_Novice_High) && (FJOB == Job_Ranger || FJOB == Job_Minstrel || FJOB == Job_Wanderer)) {
+		if ((Class == Job_Novice_High) && (ADVJOB == Job_Sniper || ADVJOB == Job_Clown || ADVJOB == Job_Gypsy)) {
 			mes "[Archer Guildsman]";
 			mes "Hey, I know you.";
 			next;
@@ -76,7 +76,7 @@ payon_in02,64,71,4	script	Archer Guildsman	85,{
 				mes "extremely high concentration,";
 				mes "so we do not accept ";
 				mes "those who have little patience.";
-				close2;
+				close;
 			}
 			mes "[Archer Guildsman]";
 			mes "You seem to have learned the basic skills..";

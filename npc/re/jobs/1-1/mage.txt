@@ -14,7 +14,7 @@
 //============================================================ 
 geffen_in,164,124,4	script	Mage Guildsman	123,{
 	if (Upper == 1) {
-		if (FJOB == Job_Warlock || FJOB == Job_Sorcerer) {
+		if ((Class == Job_Novice_High) && (ADVJOB == Job_High_Wizard || ADVJOB == Job_Professor)) {
 			if (Class == Job_Novice_High) {
 				mes "[Mage Guildsman]";
 				mes "Whoa, long time no see! But weren't you supposed to be dead?";

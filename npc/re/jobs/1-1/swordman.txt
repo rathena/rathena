@@ -14,7 +14,7 @@
 //============================================================ 
 izlude_in,74,172,4	script	Swordman	119,{
 	if (Upper == 1) {
-		if ((Class == Job_Novice_High) && (FJOB == Job_Rune_Knight || FJOB == Job_Royal_Guard)) {
+		if ((Class == Job_Novice_High) && (ADVJOB == Job_Lord_Knight || ADVJOB == Job_Paladin)) {
 			mes "[Swordman Guildsman]";
 			mes "It...";
 			mes "Can't be...";
@@ -85,7 +85,7 @@ izlude_in,74,172,4	script	Swordman	119,{
 		if (Class == Job_Baby || Class == Job_Novice) {
 			if (getskilllv("NV_BASIC") < 9) {
 				mes "[Swordman Guildsman]";
-				mes "I'm sorry to tell you this but to be a Swordman, you must reach at least ^4d4dffJob Level 10^000000.";
+				mes "I'm sorry to tell you this but to be a Swordman, you must reach at least ^4d4dffJOB Level 10^000000.";
 				mes "and ^4d4dffBasic Skill Level 9^000000.";
 				next;
 				mes "[Swordman Guildsman]";
@@ -109,7 +109,6 @@ izlude_in,74,172,4	script	Swordman	119,{
 				} else {
 					jobchange Job_Swordman;
 				}
-				set job_sword_q,0;
 				getitem 13415,1; //N_Falchion
 				mes "[Swordman Guildsman]";
 				mes "Congratulations again for becomming a Swordman and I hope that you participate in many activities for the revival of our guild.";
@@ -121,7 +120,7 @@ izlude_in,74,172,4	script	Swordman	119,{
 				close;
 			}
 		}
-		if (Class == Job_Baby_Swordman || Class == Job_Swordman || Class == Job_Swordman) {
+		if (Class == Job_Baby_Swordman || Class == Job_Swordman) {
 			mes "[Swordman Guildsman]";
 			mes "You are already an excellent Swordman, aren't you?";
 			mes "Just devote yourself to be a great Swordman.";

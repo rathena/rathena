@@ -624,7 +624,6 @@ prt_in,88,101,4	script	Chivalry Captain	56,{
 		} else {
 			jobchange Job_Knight;
 		}
-		set FJOB,Job_Rune_Knight;
 		mes "[Captain Herman]";
 		mes "I hereby declare";
 		mes "you a member of";

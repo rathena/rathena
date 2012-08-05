@@ -14,7 +14,7 @@
 //============================================================ 
 alberta_in,53,43,6	script	Merchant#mer	86,{
 	if (Upper == 1) {
-		if ((Class == Job_Novice_High) && (FJOB == Job_Mechanic || FJOB == Job_Genetic)) {
+		if ((Class == Job_Novice_High) && (ADVJOB == Job_Whitesmith || ADVJOB == Job_Creator)) {
 			mes "[Chief Mahnsoo]";
 			mes "Long time no see!";
 			mes "Hey, you didn't quit";
@@ -70,7 +70,7 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 				next;
 				mes "[Guildsman Mahnsoo]";
 				mes "Don't you think we need to learn some basic skills although we just deal with money?";
-				close2;
+				close;
 			}
 			mes "[Guildsman Mahnsoo]";
 			mes "Good, I think you're fully ready for it seeing that your basic skill level is fulfilled.";
@@ -169,7 +169,7 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 }
 
 alberta_in,28,29,2	script	Merchant Guildsman	83,{
-	if (MERCNT_Q == 0 || MERCNT_Q == 1 || MERCNT_Q == 2) {
+	if ((MERCNT_Q >= 0) && (MERCNT_Q <= 2)) {
 		mes "[Union Staff Kay]";
 		mes "I am sorry, but we don't make deliveries anymore.";
 		mes "Didn't Chief Mahnsoo tell you?";

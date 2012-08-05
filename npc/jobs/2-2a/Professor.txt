@@ -16,7 +16,7 @@
 //============================================================ 
 
 valkyrie,53,47,3	script	Scholar#Valkyrie	743,{
-	if (FJOB == 0 || Upper != 1) {
+	if (ADVJOB == 0 || Upper != 1) {
 		set .@karma_d,rand(1,10);
 		if (.@karma_d > 4) {
 			mes "[Scholar]";
@@ -40,7 +40,7 @@ valkyrie,53,47,3	script	Scholar#Valkyrie	743,{
 		mes "process of learning...";
 		close;
 	}
-	if ((FJOB == Job_Sorcerer) && (Class == Job_Mage_High) && (JobLevel > 39)) {
+	if ((ADVJOB == Job_Professor) && (Class == Job_Mage_High) && (JobLevel > 39)) {
 		mes "[Scholar]";
 		mes "Rune-Midgard doesn't";
 		mes "have enough Scholars to";
@@ -68,7 +68,7 @@ valkyrie,53,47,3	script	Scholar#Valkyrie	743,{
 			close;
 		}
 		jobchange Job_Professor;
-		set FJOB,0;
+		set ADVJOB,0;
 		mes "[Scholar]";
 		mes "Congratulations!";
 		mes "As a Professor, I hope";

@@ -16,7 +16,7 @@
 //============================================================ 
 
 valkyrie,53,39,3	script	Paladin#Valkyrie	752,{
-	if (FJOB == 0 || Upper != 1) {
+	if (ADVJOB == 0 || Upper != 1) {
 		set .@karma_d,rand(1,10);
 		if (.@karma_d > 4) {
 			mes "[Paladin]";
@@ -33,7 +33,7 @@ valkyrie,53,39,3	script	Paladin#Valkyrie	752,{
 		mes "always brighten our path!";
 		close;
 	}
-	if ((FJOB == Job_Royal_Guard) && (Class == Job_Swordman_High) && (JobLevel > 39)) {
+	if ((ADVJOB == Job_Paladin) && (Class == Job_Swordman_High) && (JobLevel > 39)) {
 		mes "[Paladin]";
 		mes "The Holy War will";
 		mes "be upon us before we";
@@ -61,7 +61,7 @@ valkyrie,53,39,3	script	Paladin#Valkyrie	752,{
 			close;
 		}
 		jobchange Job_Paladin;
-		set FJOB,0;
+		set ADVJOB,0;
 		mes "[Paladin]";
 		mes "Congratulations.";
 		mes "As a Paladin, I hope";

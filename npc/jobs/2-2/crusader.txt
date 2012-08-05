@@ -372,7 +372,6 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 			} else {
 				jobchange Job_Crusader;
 			}
-			set FJOB,Job_Royal_Guard;
 			mes "[Michael Halig]";
 			mes "Behold...!";
 			mes "You are now a Crusader!";
@@ -409,7 +408,6 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 		} else {
 			jobchange Job_Crusader;
 		}
-		set FJOB,Job_Royal_Guard;
 		mes "[Michael Halig]";
 		mes "Behold...!";
 		mes "You are now a Crusader!";

@@ -2214,7 +2214,6 @@ alde_alche,101,184,4	script	Master Alchemist	122,{
 			} else {
 				jobchange Job_Alchemist;
 			}
-			set FJOB,Job_Genetic;
 			mes "[Vincent Carsciallo]";
 			mes "Henceforth, you are";
 			mes "now a member of our";
@@ -2248,7 +2247,6 @@ alde_alche,101,184,4	script	Master Alchemist	122,{
 		} else {
 			jobchange Job_Alchemist;
 		}
-		set FJOB,Job_Genetic;
 		mes "[Vincent Carsciallo]";
 		mes "Henceforth, you are";
 		mes "now a member of our";

@@ -18,7 +18,7 @@
 //============================================================ 
 
 valkyrie,53,54,3	script	Minstrel#Valkyrie	741,{
-	if (FJOB == 0 || Upper != 1) {
+	if (ADVJOB == 0 || Upper != 1) {
 		set .@karma_d,rand(1,10);
 		if (.@karma_d > 4) {
 			mes "[Minstrel]";
@@ -32,7 +32,7 @@ valkyrie,53,54,3	script	Minstrel#Valkyrie	741,{
 		mes "Sha la la la la~";
 		close;
 	}
-	if ((FJOB == Job_Minstrell) && (Class == Job_Archer_High) && (JobLevel > 39)) {
+	if ((ADVJOB == Job_Clown) &&( Class == Job_Archer_High) && (JobLevel > 39)) {
 		mes "[Minstrel]";
 		mes "The dreary world";
 		mes "of mortals is in need";
@@ -60,7 +60,7 @@ valkyrie,53,54,3	script	Minstrel#Valkyrie	741,{
 			close;
 		}
 		jobchange Job_Clown;
-		set FJOB,0;
+		set ADVJOB,0;
 		mes "[Minstrel]";
 		mes "Congratulations!";
 		mes "As a Minstrel, your";

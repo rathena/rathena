@@ -16,7 +16,7 @@
 //============================================================ 
 
 valkyrie,53,50,3	script	Biochemist#Valkyrie	122,{
-	if (FJOB == 0 || Upper != 1) {
+	if (ADVJOB == 0 || Upper != 1) {
 		set .@karma_d,rand(1,10);
 		if (.@karma_d > 4) {
 			mes "[Biochemist]";
@@ -40,7 +40,7 @@ valkyrie,53,50,3	script	Biochemist#Valkyrie	122,{
 		mes "a place in Valhalla...";
 		close;
 	}
-	if ((FJOB == Job_Genetic) && (Class == Job_Merchant_High) && (JobLevel > 39)) {
+	if ((ADVJOB == Job_Creator) && (Class == Job_Merchant_High) && (JobLevel > 39)) {
 		mes "[Biochemist]";
 		mes "Yes...";
 		mes "It's about time.";
@@ -65,7 +65,7 @@ valkyrie,53,50,3	script	Biochemist#Valkyrie	122,{
 			close;
 		}
 		jobchange Job_Creator;
-		set FJOB,0;
+		set ADVJOB,0;
 		mes "[Biochemist]";
 		mes "Congratulations!";
 		mes "As a Biochemist,";

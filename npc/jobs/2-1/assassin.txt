@@ -110,7 +110,6 @@ in_moc_16,19,33,1	script	Guildsman	55,{
 		} else {
 			jobchange Job_Assassin;
 		}
-		set FJOB,Job_Guillotine_Cross;
 		changequest 8007,8008;
 		completequest 8008;
 		mes "[Assassin Expert 'Huey']";

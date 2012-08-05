@@ -170,7 +170,6 @@ yuno_in02,38,61,5	script	Dean of the Academy	743,{
 			} else {
 				jobchange Job_Sage;
 			}
-			set FJOB,Job_Sorcerer;
 			completequest 2052;
 			mes "[Kayron Grik]";
 			mes "Congratulations! You have now become a Sage.";

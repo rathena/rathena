@@ -512,7 +512,6 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 		} else {
 			jobchange Job_Priest;
 		}
-		set FJOB,Job_Arch_Bishop;
 		changequest 8015,8016;
 		mes "[Bishop Paul]";
 		mes "Now you are born again as a Priest. I congratulate you, and hope you will greatly help other people for the rest of your life.";

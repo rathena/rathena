@@ -925,7 +925,6 @@ monk_in,99,58,1	script	Sensei Moohae	60,{
 			} else {
 				jobchange Job_Monk;
 			}
-			set FJOB,Job_Sura;
 			mes "[Sensei Moohae]";
 			mes "....You are a monk.";
 			next;

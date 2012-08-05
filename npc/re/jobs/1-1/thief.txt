@@ -14,7 +14,7 @@
 //============================================================ 
 moc_prydb1,39,129,2	script	Thief Guildsman	69,{
 	if (Upper == 1) {
-		if (FJOB == Job_Guillotine_Cross || FJOB == Job_Shadow_Chaser) {
+		if ((Class == Job_Novice_High) && (ADVJOB == Job_Assassin_Cross || ADVJOB == Job_Stalker)) {
 			if (Class == Job_Novice_High) {
 				mes "[Thief Guildsman]";
 				mes "Huh? Do I know you? It's creepy that you seem so familiar. You don't have a twin, do you?";
