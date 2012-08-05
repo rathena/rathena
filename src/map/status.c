@@ -4035,6 +4035,10 @@ static unsigned short status_calc_str(struct block_list *bl, struct status_chang
 	if(!sc || !sc->count)
 		return cap_value(str,0,USHRT_MAX);
 
+	if(sc->data[SC_HARMONIZE]) {
+		str -= sc->data[SC_HARMONIZE]->val2;
+		return (unsigned short)cap_value(str,0,USHRT_MAX);
+	}
 	if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH && str < 50)
 		return 50;
 	if(sc->data[SC_INCALLSTATUS])
@@ -4069,8 +4073,6 @@ static unsigned short status_calc_str(struct block_list *bl, struct status_chang
 		str += ((sc->data[SC_MARIONETTE2]->val3)>>16)&0xFF;
 	if(sc->data[SC_GIANTGROWTH])
 		str += 30;
-	if(sc->data[SC_HARMONIZE])
-		str += sc->data[SC_HARMONIZE]->val2;
 	if(sc->data[SC_SAVAGE_STEAK])
 		str += sc->data[SC_SAVAGE_STEAK]->val1;
 	if(sc->data[SC_INSPIRATION])
@@ -4088,6 +4090,10 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
 	if(!sc || !sc->count)
 		return cap_value(agi,0,USHRT_MAX);
 
+	if(sc->data[SC_HARMONIZE]) {
+		agi -= sc->data[SC_HARMONIZE]->val2;
+		return (unsigned short)cap_value(agi,0,USHRT_MAX);
+	}
 	if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH && agi < 50)
 		return 50;
 	if(sc->data[SC_CONCENTRATE] && !sc->data[SC_QUAGMIRE])
@@ -4120,8 +4126,6 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
 		agi += ((sc->data[SC_MARIONETTE2]->val3)>>8)&0xFF;
 	if(sc->data[SC_ADORAMUS])
 		agi -= sc->data[SC_ADORAMUS]->val2;
-	if(sc->data[SC_HARMONIZE])
-		agi += sc->data[SC_HARMONIZE]->val2;
 	if(sc->data[SC_DROCERA_HERB_STEAMED])
 		agi += sc->data[SC_DROCERA_HERB_STEAMED]->val1;
 	if(sc->data[SC_INSPIRATION])
@@ -4139,6 +4143,10 @@ static unsigned short status_calc_vit(struct block_list *bl, struct status_chang
 	if(!sc || !sc->count)
 		return cap_value(vit,0,USHRT_MAX);
 
+	if(sc->data[SC_HARMONIZE]) {
+		vit -= sc->data[SC_HARMONIZE]->val2;
+		return (unsigned short)cap_value(vit,0,USHRT_MAX);
+	}
 	if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH && vit < 50)
 		return 50;
 	if(sc->data[SC_INCALLSTATUS])
@@ -4163,8 +4171,6 @@ static unsigned short status_calc_vit(struct block_list *bl, struct status_chang
 		vit += sc->data[SC_MARIONETTE2]->val3&0xFF;
 	if(sc->data[SC_LAUDAAGNUS])
 		vit += 4 + sc->data[SC_LAUDAAGNUS]->val1;
-	if(sc->data[SC_HARMONIZE])
-		vit += sc->data[SC_HARMONIZE]->val2;
 	if(sc->data[SC_MINOR_BBQ])
 		vit += sc->data[SC_MINOR_BBQ]->val1;
 	if(sc->data[SC_INSPIRATION])
@@ -4182,6 +4188,10 @@ static unsigned short status_calc_int(struct block_list *bl, struct status_chang
 	if(!sc || !sc->count)
 		return cap_value(int_,0,USHRT_MAX);
 
+	if(sc->data[SC_HARMONIZE]) {
+		int_ -= sc->data[SC_HARMONIZE]->val2;
+		return (unsigned short)cap_value(int_,0,USHRT_MAX);
+	}
 	if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH && int_ < 50)
 		return 50;
 	if(sc->data[SC_INCALLSTATUS])
@@ -4216,8 +4226,6 @@ static unsigned short status_calc_int(struct block_list *bl, struct status_chang
 		int_ -= 5 + 5 * sc->data[SC_MANDRAGORA]->val1;
 	if(sc->data[SC__STRIPACCESSORY])
 		int_ -= int_ * sc->data[SC__STRIPACCESSORY]->val2 / 100;
-	if(sc->data[SC_HARMONIZE])
-		int_ += sc->data[SC_HARMONIZE]->val2;
 	if(sc->data[SC_COCKTAIL_WARG_BLOOD])
 		int_ += sc->data[SC_COCKTAIL_WARG_BLOOD]->val1;
 	if(sc->data[SC_INSPIRATION])
@@ -4235,6 +4243,10 @@ static unsigned short status_calc_dex(struct block_list *bl, struct status_chang
 	if(!sc || !sc->count)
 		return cap_value(dex,0,USHRT_MAX);
 
+	if(sc->data[SC_HARMONIZE]) {
+		dex -= sc->data[SC_HARMONIZE]->val2;
+		return (unsigned short)cap_value(dex,0,USHRT_MAX);
+	}
 	if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH && dex < 50)
 		return 50;
 	if(sc->data[SC_CONCENTRATE] && !sc->data[SC_QUAGMIRE])
@@ -4269,8 +4281,6 @@ static unsigned short status_calc_dex(struct block_list *bl, struct status_chang
 		dex += ((sc->data[SC_MARIONETTE2]->val4)>>8)&0xFF;
 	if(sc->data[SC__STRIPACCESSORY])
 		dex -= dex * sc->data[SC__STRIPACCESSORY]->val2 / 100;
-	if(sc->data[SC_HARMONIZE])
-		dex += sc->data[SC_HARMONIZE]->val2;
 	if(sc->data[SC_SIROMA_ICE_TEA])
 		dex += sc->data[SC_SIROMA_ICE_TEA]->val1;
 	if(sc->data[SC_INSPIRATION])
@@ -4288,6 +4298,10 @@ static unsigned short status_calc_luk(struct block_list *bl, struct status_chang
 	if(!sc || !sc->count)
 		return cap_value(luk,0,USHRT_MAX);
 
+	if(sc->data[SC_HARMONIZE]) {
+		luk -= sc->data[SC_HARMONIZE]->val2;
+		return (unsigned short)cap_value(luk,0,USHRT_MAX);
+	}
 	if(sc->data[SC_CURSE])
 		return 0;
 	if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH && luk < 50)
@@ -4312,8 +4326,6 @@ static unsigned short status_calc_luk(struct block_list *bl, struct status_chang
 		luk += 4 + sc->data[SC_LAUDARAMUS]->val1;
 	if(sc->data[SC__STRIPACCESSORY])
 		luk -= luk * sc->data[SC__STRIPACCESSORY]->val2 / 100;
-	if(sc->data[SC_HARMONIZE])
-		luk += sc->data[SC_HARMONIZE]->val2;
 	if(sc->data[SC_PUTTI_TAILS_NOODLES])
 		luk += sc->data[SC_PUTTI_TAILS_NOODLES]->val1;
 	if(sc->data[SC_INSPIRATION])
@@ -8017,7 +8029,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val2 = 10 * val1;
 			break;
 		case SC_HARMONIZE:
-			val2 = 3 + 2 * val1;
+			val2 = 5 + 5 * val1;
 			break;
 		case SC_VOICEOFSIREN:
 			val4 = tick / 2000;

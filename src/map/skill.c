@@ -8267,7 +8267,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case MI_HARMONIZE:
-			clif_skill_nodamage(src, bl, skillid, skilllv,sc_start(bl, type, 100, skilllv, skill_get_time(skillid,skilllv)));
+		if( src != bl )
+			clif_skill_nodamage(src, src, skillid, skilllv, sc_start(src, type, 100, skilllv, skill_get_time(skillid,skilllv)));
+		clif_skill_nodamage(src, bl, skillid, skilllv, sc_start(bl, type, 100, skilllv, skill_get_time(skillid,skilllv)));
 		break;
 
 	case WM_DEADHILLHERE:
