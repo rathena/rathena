@@ -53,7 +53,7 @@ valkyrie,48,86,4	script	Valkyrie#	811,{
 		mes "Honor to the warriors!";
 		close;
 	}
-	if ((Baselevel > 98) && (JobLevel > 49) && (Class >= Job_Knight) && (Class <= Job_Crusader2)) {
+	if ((Baselevel > 98) && (JobLevel > 49) && ((Class >= Job_Knight) && (Class <= Job_Crusader2))) {
 		mes "[Valkyrie]";
 		mes "Welcome";
 		mes "to Valhalla,";
@@ -206,7 +206,7 @@ valkyrie,48,86,4	script	Valkyrie#	811,{
 }
 
 yuno_in02,88,164,5	script	Metheus Sylphe#Library	742,{
-	if ((Baselevel > 98) && (JobLevel > 49) && (Class >= Job_Knight) && (Class <= Job_Crusader2)) {
+	if ((Baselevel > 98) && (JobLevel > 49) && ((Class >= Job_Knight) && (Class <= Job_Crusader2))) {
 		if (valkyrie_Q == 0) {
 			mes "[Metheus Sylphe]";
 			mes "Welcome to the Library of the Schweicherbil Magic Academy.";
@@ -271,7 +271,7 @@ yuno_in02,93,207,1	script	Book of Ymir	111,{
 		warp "valkyrie",48,8;
 		end;
 	}
-	if ((Baselevel > 98) && (JobLevel > 49) && (Class >= Job_Knight) && (Class <= Job_Crusader2)) {
+	if ((Baselevel > 98) && (JobLevel > 49) && ((Class >= Job_Knight) && (Class <= Job_Crusader2))) {
 		if (valkyrie_Q != 0) {
 			mes "[The Book of Ymir]";
 			mes "...Therefore, ancient heroes were";
@@ -339,7 +339,7 @@ yuno_in02,93,207,1	script	Book of Ymir	111,{
 }
 
 yuno_in05,49,43,1	script	Heart of Ymir	111,{
-	if ((Baselevel > 98) && (JobLevel > 49) && (Class >= Job_Knight) && (Class <= Job_Crusader2)) {
+	if ((Baselevel > 98) && (JobLevel > 49) && ((Class >= Job_Knight) && (Class <= Job_Crusader2))) {
 		if (valkyrie_Q == 2) warp "valkyrie",48,8;
 	}
 	end;

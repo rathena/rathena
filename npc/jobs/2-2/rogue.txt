@@ -1122,6 +1122,7 @@ in_rogue,376,23,1	script	Mr. Smith	57,{
 }
 
 cmd_fild09,106,195,0	script	Warp#1	45,1,1,{
+	end;
 
 OnTouch:
 	if (ROGUE_Q < 8){
@@ -1217,6 +1218,7 @@ OnTouch:
 }
 
 cmd_fild09,335,143,0	script	Warp#2	45,1,1,{
+	end;
 
 OnTouch:
 	if (ROGUE_Q < 8){
@@ -1312,6 +1314,7 @@ OnTouch:
 }
 
 cmd_fild04,304,180,0	script	Warp#3	45,1,1,{
+	end;
 
 OnTouch:
 	if (ROGUE_Q < 8){
@@ -1459,6 +1462,7 @@ in_rogue,272,135,1	script	Hermanthorn Jr	85,{
 }
 
 in_rogue,270,130,0	script	he_to_rogue	45,1,1,{
+	end;
 
 OnTouch:
 	if (ROGUE_Q == 12) {
@@ -1502,6 +1506,7 @@ OnTouch:
 }
 
 in_rogue,200,389,0	script	gen_ro#1	139,3,3,{
+	end;
 
 OnTouch:
 	if (Class == Job_Baby_Thief || Class == Job_Thief) {
@@ -1521,6 +1526,7 @@ OnDisable:
 }
 
 in_rogue,100,389,0	script	gen_ro#2	139,3,3,{
+	end;
 
 OnTouch:
 	if (Class == Job_Baby_Thief || Class == Job_Thief) {
@@ -1537,6 +1543,7 @@ OnDisable:
 }
 
 in_rogue,150,389,0	script	gen_ro#3	139,3,3,{
+	end;
 
 OnTouch:
 	if (Class == Job_Baby_Thief || Class == Job_Thief) {
@@ -1554,6 +1561,7 @@ OnDisable:
 }
 
 in_rogue,250,389,0	script	gen_ro#4	139,3,3,{
+	end;
 
 OnTouch:
 	if (Class == Job_Baby_Thief || Class == Job_Thief) {
@@ -1570,6 +1578,7 @@ OnDisable:
 }
 
 in_rogue,9,389,0	script	oneway_to_gu	45,1,1,{
+	end;
 
 OnTouch:
 	donpcevent "gen_ro#4::OnDisable";
@@ -1838,6 +1847,7 @@ in_rogue,177,109,1	script	Antonio Junior	88,{
 in_rogue,161,103,0	warp	out#1	1,1,cmd_fild04,302,177
 
 in_rogue,370,320,0	script	quest_out	45,1,1,{
+	end;
 
 OnTouch:
 	set ROGUE_Q,16;
@@ -1847,6 +1857,7 @@ OnTouch:
 }
 
 in_rogue,15,184,0	script	mob_rogue#1	139,8,1,{
+	end;
 
 OnTouch:
 	if (Class == Job_Baby_Thief || Class == Job_Thief) {
@@ -1867,6 +1878,7 @@ OnReset:
 }
 
 in_rogue,15,273,0	script	mob_rogue#2	139,8,1,{
+	end;
 
 OnTouch:
 	if (Class == Job_Baby_Thief || Class == Job_Thief) {
@@ -1884,6 +1896,7 @@ OnReset:
 }
 
 in_rogue,15,333,0	script	mob_rogue#3	139,8,1,{
+	end;
 
 OnTouch:
 	if (Class == Job_Baby_Thief || Class == Job_Thief) {
@@ -1905,6 +1918,7 @@ OnReset:
 }
 
 in_rogue,39,341,0	script	mob_rogue#4	139,1,8,{
+	end;
 
 OnTouch:
 	if (Class == Job_Baby_Thief || Class == Job_Thief) {
@@ -1923,6 +1937,7 @@ OnReset:
 }
 
 in_rogue,102,334,0	script	mob_rogue#5	139,1,4,{
+	end;
 
 OnTouch:
 	if (Class == Job_Baby_Thief || Class == Job_Thief) {
@@ -1941,6 +1956,7 @@ OnReset:
 }
 
 in_rogue,58,309,0	script	mob_rogue#6	139,4,1,{
+	end;
 
 OnTouch:
 	if (Class == Job_Baby_Thief || Class == Job_Thief) {
@@ -1959,6 +1975,7 @@ OnReset:
 }
 
 in_rogue,101,264,0	script	mob_rogue#7	139,5,5,{
+	end;
 
 OnTouch:
 	if (Class == Job_Baby_Thief || Class == Job_Thief) {
@@ -1975,6 +1992,7 @@ OnReset:
 }
 
 in_rogue,140,312,0	script	mob_rogue#8	139,5,5,{
+	end;
 
 OnTouch:
 	if (Class == Job_Baby_Thief || Class == Job_Thief) {
@@ -1990,6 +2008,7 @@ OnReset:
 }
 
 in_rogue,139,246,0	script	mob_rogue#9	139,4,4,{
+	end;
 
 OnTouch:
 	if (Class == Job_Baby_Thief || Class == Job_Thief) {
@@ -2010,6 +2029,7 @@ OnReset:
 }
 
 in_rogue,197,249,0	script	mob_rogue#10	139,1,8,{
+	end;
 
 OnTouch:
 	if (Class == Job_Baby_Thief || Class == Job_Thief) {
@@ -2043,6 +2063,7 @@ OnReset:
 }
 
 in_rogue,96,205,0	script	mob_rogue#11	139,1,8,{
+	end;
 
 OnTouch:
 	if (Class == Job_Baby_Thief || Class == Job_Thief) {
@@ -2057,6 +2078,7 @@ OnTouch:
 }
 
 in_rogue,86,187,0	script	mob_rogue#12	139,1,8,{
+	end;
 
 OnTouch:
 	if (Class == Job_Baby_Thief || Class == Job_Thief) {
@@ -2073,6 +2095,7 @@ OnReset:
 }
 
 in_rogue,223,187,0	script	mob_rogue#13	139,1,8,{
+	end;
 
 OnTouch:
 	if (Class == Job_Baby_Thief || Class == Job_Thief) {
@@ -2091,6 +2114,7 @@ OnReset:
 }
 
 in_rogue,233,207,0	script	mob_rogue#14	139,8,3,{
+	end;
 
 OnTouch:
 	if (Class == Job_Baby_Thief || Class == Job_Thief) {
@@ -2102,6 +2126,7 @@ OnTouch:
 }
 
 in_rogue,244,319,0	script	mob_rogue#15	139,1,8,{
+	end;
 
 OnTouch:
 	if (Class == Job_Baby_Thief || Class == Job_Thief) {
@@ -2122,6 +2147,7 @@ OnReset:
 }
 
 in_rogue,334,319,0	script	mob_rogue#16	139,8,8,{
+	end;
 
 OnTouch:
 	if (Class == Job_Baby_Thief || Class == Job_Thief) {

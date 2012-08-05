@@ -1077,7 +1077,7 @@ prt_in,71,91,0	script	Sir Siracuse	65,{
 		mes "something to";
 		mes "ask me?";
 		next;
-		switch (select("Sir Andrew sent me to take your test.:Oh, nothing.") == 1) {
+		if (select("Sir Andrew sent me to take your test.:Oh, nothing.") == 1) {
 			mes "[Sir Siracuse]";
 			mes "I see, you've passed the first test. Very well, I'll make some time for you. Let me introduce myself. My name is James Siracuse.";
 			next;
@@ -1728,37 +1728,41 @@ job_knt,89,106,4	script	Windsor Benedict#knt	733,{
 	end;
 
 OnInit:
-	hideonnpc "Windsor Benedict#knt";
+	disablenpc "Windsor Benedict#knt";
 	waitingroom "Waiting Room",20,"Windsor Benedict#knt::OnStartArena",1;
 	enablewaitingroomevent;
 	end;
 
 OnStartArena:
+	killmonster "job_knt", "Knight1::OnMyMobDead";
+	killmonster "job_knt", "Knight2::OnMyMobDead";
+	killmonster "job_knt", "Knight3::OnMyMobDead";
 	warpwaitingpc "job_knt",43,146;
 	donpcevent "Knight1::OnEnable";
 	disablewaitingroomevent;
 	end;
 
-OnEnable:
+OnStart:
 	enablewaitingroomevent;
 	end;
 }
 
-job_knt,1,1,1	script	Knight1	66,{
-	end;
-
+-	script	Knight1	-1,{
 OnInit:
-	hideonnpc "Knight1";
+	disablenpc "Knight1";
 	end;
 
 OnEnable:
-	hideoffnpc "Knight1";
+	enablenpc "Knight1";
 	if (!checkre(0)) {
+		set .MyMobs,12;
 		monster "job_knt",39,150,"Dustiness",1114,1,"Knight1::OnMyMobDead";
 		monster "job_knt",47,150,"Dustiness",1114,1,"Knight1::OnMyMobDead";
 		monster "job_knt",39,142,"Dustiness",1114,1,"Knight1::OnMyMobDead";
 		monster "job_knt",47,142,"Dustiness",1114,1,"Knight1::OnMyMobDead";
 	}
+	else
+		set .MyMobs,8;
 	monster "job_knt",43,137,"Piere",1160,1,"Knight1::OnMyMobDead";
 	monster "job_knt",43,137,"Andre",1095,1,"Knight1::OnMyMobDead";
 	monster "job_knt",43,137,"Deniro",1105,1,"Knight1::OnMyMobDead";
@@ -1770,25 +1774,22 @@ OnEnable:
 	initnpctimer;
 	end;
 
-OnReset:
-	killmonster "job_knt","Knight1::OnMyMobDead";
-	end;
-
 OnDisable:
-	hideonnpc "Knight1";
+	killmonster "job_knt", "Knight1::OnMyMobDead";
+	disablenpc "Knight1";
 	end;
 
 OnMyMobDead:
-	if (mobcount ("job_knt","Knight1::OnMyMobDead") < 1) {
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
 		mes "[Sir Windsor]";
 		mes "...";
-		close2;
+		next;
 		mes "[Sir Windsor]";
 		mes "...On to";
 		mes "the next level.";
 		close2;
 		warp "job_knt",43,52;
-		donpcevent "Knight1::OnReset";
 		donpcevent "Knight1::OnDisable";
 		donpcevent "Knight2::OnEnable";
 		stopnpctimer;
@@ -1796,55 +1797,31 @@ OnMyMobDead:
 	end;
 
 OnTimer180000:
-	donpcevent "Knight1::OnReset";
+	donpcevent "Knight1::OnDisable";
 	end;
 
 OnTimer181000:
-	donpcevent "Out1::OnEnable";
+	areawarp "job_knt", 24, 126, 63, 165, "prt_in",80,100;
 	end;
 
 OnTimer182000:
-	donpcevent "Out1::OnDisable";
+	stopnpctimer;
 	donpcevent "Knight1::OnDisable";
-	donpcevent "Windsor Benedict#knt::OnEnable";
+	donpcevent "Windsor Benedict#knt::OnStart";
 	end;
 }
 
-job_knt,43,146,0	script	Out1	139,22,22,{
-
-OnTouch:
-	warp "prt_in",80,100;
-	end;
-
+// Test 2 part 2
+//==========================================================
+-	script	Knight2	-1,{
 OnInit:
-	hideonnpc "Out1";
+	disablenpc "Knight2";
 	end;
 
 OnEnable:
-	hideoffnpc "Out1";
-	end;
-
-OnDisable:
-	hideonnpc "Out1";
-	end;
-}
-
-job_knt,1,2,1	script	Knight2	66,{
-	end;
-
-OnInit:
-	hideonnpc "Knight2";
-	end;
-
-OnEnable:
-	hideoffnpc "Knight2";
-	monster "job_knt",53,52,"Frilldora",1119,1,"Knight2::OnMyMobDead";
-	monster "job_knt",34,52,"Frilldora",1119,1,"Knight2::OnMyMobDead";
-	monster "job_knt",58,52,"Drainliar",1111,1,"Knight2::OnMyMobDead";
-	monster "job_knt",58,52,"Drainliar",1111,1,"Knight2::OnMyMobDead";
-	monster "job_knt",29,52,"Drainliar",1111,1,"Knight2::OnMyMobDead";
-	monster "job_knt",29,52,"Drainliar",1111,1,"Knight2::OnMyMobDead";
+	enablenpc "Knight2";
 	if (!checkre(0)) {
+		set .MyMobs,12;
 		monster "job_knt",43,42,"Desert Wolf",1106,1,"Knight2::OnMyMobDead";
 		monster "job_knt",43,62,"Desert Wolf",1106,1,"Knight2::OnMyMobDead";
 		monster "job_knt",60,68,"Anacondaq",1030,1,"Knight2::OnMyMobDead";
@@ -1852,27 +1829,32 @@ OnEnable:
 		monster "job_knt",60,35,"Anacondaq",1030,1,"Knight2::OnMyMobDead";
 		monster "job_knt",27,35,"Anacondaq",1030,1,"Knight2::OnMyMobDead";
 	}
+	else
+		set .MyMobs,6;
+	monster "job_knt",53,52,"Frilldora",1119,1,"Knight2::OnMyMobDead";
+	monster "job_knt",34,52,"Frilldora",1119,1,"Knight2::OnMyMobDead";
+	monster "job_knt",58,52,"Drainliar",1111,1,"Knight2::OnMyMobDead";
+	monster "job_knt",58,52,"Drainliar",1111,1,"Knight2::OnMyMobDead";
+	monster "job_knt",29,52,"Drainliar",1111,1,"Knight2::OnMyMobDead";
+	monster "job_knt",29,52,"Drainliar",1111,1,"Knight2::OnMyMobDead";
 	initnpctimer;
 	end;
 
-OnReset:
-	killmonster "job_knt","Knight2::OnMyMobDead";
-	end;
-
 OnDisable:
-	hideonnpc "Knight2";
+	killmonster "job_knt", "Knight2::OnMyMobDead";
+	disablenpc "Knight2";
 	end;
 
 OnMyMobDead:
-	if (mobcount ("job_knt","Knight2::OnMyMobDead") < 1) {
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
 		mes "[Sir Windsor]";
 		mes "...Hmm.";
-		close2;
+		next;
 		mes "[Sir Windsor]";
 		mes "...One stage left.";
 		close2;
 		warp "job_knt",143,152;
-		donpcevent "Knight2::OnReset";
 		donpcevent "Knight2::OnDisable";
 		donpcevent "Knight3::OnEnable";
 		stopnpctimer;
@@ -1880,120 +1862,85 @@ OnMyMobDead:
 	end;
 
 OnTimer180000:
-	donpcevent "Knight2::OnReset";
+	donpcevent "Knight2::OnDisable";
 	end;
 
 OnTimer181000:
-	donpcevent "Out2::OnEnable";
+	areawarp "job_knt", 24, 32, 63, 71, "prt_in",80,100;
 	end;
 
 OnTimer182000:
-	donpcevent "Out2::OnDisable";
+	stopnpctimer;
 	donpcevent "Knight2::OnDisable";
-	donpcevent "Windsor Benedict#knt::OnEnable";
+	donpcevent "Windsor Benedict#knt::OnStart";
 	end;
 }
 
-job_knt,43,52,0	script	Out2	139,22,22,{
-
-OnTouch:
-	warp "prt_in",80,100;
-	end;
-
+// Test 2 part 3
+//==========================================================
+-	script	Knight3	-1,{
 OnInit:
-	hideonnpc "Out2";
+	disablenpc "Knight3";
 	end;
 
 OnEnable:
-	hideoffnpc "Out2";
-	end;
-
-OnDisable:
-	hideonnpc "Out2";
-	end;
-}
-
-job_knt,1,3,1	script	Knight3	66,{
-	end;
-
-OnInit:
-	hideonnpc "Knight3";
-	end;
-
-OnEnable:
-	hideoffnpc "Knight3";
+	enablenpc "Knight3";
+	if (!checkre(0)) {
+		set .MyMobs,7;
+		monster "job_knt",147,167,"Goblin Archer",1258,1,"Knight3::OnMyMobDead";
+		monster "job_knt",136,158,"Steam Goblin",1280,1,"Knight3::OnMyMobDead";
+	}
+	else
+		set .MyMobs,5;
 	monster "job_knt",136,152,"Goblin",1122,1,"Knight3::OnMyMobDead";
 	monster "job_knt",150,152,"Goblin",1123,1,"Knight3::OnMyMobDead";
 	monster "job_knt",143,145,"Goblin",1124,1,"Knight3::OnMyMobDead";
 	monster "job_knt",143,167,"Goblin",1125,1,"Knight3::OnMyMobDead";
 	monster "job_knt",139,167,"Goblin",1126,1,"Knight3::OnMyMobDead";
-	if (!checkre(0)){
-		monster "job_knt",147,167,"Goblin Archer",1258,1,"Knight3::OnMyMobDead";
-		monster "job_knt",136,158,"Steam Goblin",1280,1,"Knight3::OnMyMobDead";
-	}
 	initnpctimer;
 	end;
 
-OnReset:
-	killmonster "job_knt","Knight3::OnMyMobDead";
-	end;
-
 OnDisable:
-	hideonnpc "Knight3";
+	killmonster "job_knt", "Knight3::OnMyMobDead";
+	disablenpc "Knight3";
 	end;
 
 OnMyMobDead:
-	if (mobcount ("job_knt","Knight3::OnMyMobDead") < 1) {
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
 		mes "[Sir Windsor]";
 		mes "...";
-		close2;
+		next;
 		mes "[Sir Windsor]";
 		mes "...Very good.";
-		close2;
+		next;
 		mes "[Sir Windsor]";
 		mes "...Go talk to";
 		mes "Amy Beatrice now.";
 		close2;
 		set KNIGHT_Q,8;
+		if(checkquest(9007) == -1) {
+			changequest 9006,9007;
+		}
 		warp "prt_in",80,100;
-		donpcevent "Knight3::OnReset";
 		donpcevent "Knight3::OnDisable";
-		donpcevent "Windsor Benedict#knt::OnEnable";
+		donpcevent "Windsor Benedict#knt::OnStart";
 		stopnpctimer;
 	}
 	end;
 
 OnTimer180000:
-	donpcevent "Knight3::OnReset";
+	donpcevent "Knight3::OnDisable";
 	end;
 
 OnTimer181000:
-	donpcevent "Out3::OnEnable";
+	areawarp "job_knt", 124, 132, 163, 171, "prt_in",80,100;
 	end;
 
 OnTimer182000:
-	donpcevent "Out3::OnDisable";
+	stopnpctimer;
 	donpcevent "Knight3::OnDisable";
-	donpcevent "Windsor Benedict#knt::OnEnable";
-	end;
-}
-
-job_knt,143,152,0	script	Out3	139,22,22,{
-
-OnTouch:
-	warp "prt_in",80,100;
-	end;
-
-OnInit:
-	hideonnpc "Out3";
-	end;
-
-OnEnable:
-	hideoffnpc "Out3";
-	end;
-
-OnDisable:
-	hideonnpc "Out3";
+	donpcevent "Windsor Benedict#knt::OnStart";
 	end;
 }
 
@@ -2982,28 +2929,8 @@ OnTimer60150:
 	end;
 
 OnInit:
-	hideoffnpc "Timer#knt";
-	monster "job_knt",141,57,"Poring",1002,1,"Timer#knt::OnMyMobDead";
-	monster "job_knt",145,57,"Poring",1002,1,"Timer#knt::OnMyMobDead";
-	monster "job_knt",143,55,"Poring",1002,1,"Timer#knt::OnMyMobDead";
-	monster "job_knt",143,59,"Poring",1002,1,"Timer#knt::OnMyMobDead";
-	monster "job_knt",141,55,"Lunatic",1063,1,"Timer#knt::OnMyMobDead";
-	monster "job_knt",141,59,"Lunatic",1063,1,"Timer#knt::OnMyMobDead";
-	monster "job_knt",145,55,"Lunatic",1063,1,"Timer#knt::OnMyMobDead";
-	monster "job_knt",145,59,"Lunatic",1063,1,"Timer#knt::OnMyMobDead";
-	monster "job_knt",139,57,"Chonchon",1011,1,"Timer#knt::OnMyMobDead";
-	monster "job_knt",147,57,"Chonchon",1011,1,"Timer#knt::OnMyMobDead";
-	monster "job_knt",143,53,"Chonchon",1011,1,"Timer#knt::OnMyMobDead";
-	monster "job_knt",143,61,"Chonchon",1011,1,"Timer#knt::OnMyMobDead";
-	monster "job_knt",167,54,"Mushroom",1182,1,"Timer#knt::OnMyMobDead";
-	monster "job_knt",167,57,"Mushroom",1182,1,"Timer#knt::OnMyMobDead";
-	monster "job_knt",120,54,"Mushroom",1182,1,"Timer#knt::OnMyMobDead";
-	monster "job_knt",120,57,"Mushroom",1182,1,"Timer#knt::OnMyMobDead";
-	initnpctimer;
-	end;
-
 OnEnable:
-	hideoffnpc "Timer#knt";
+	enablenpc "Timer#knt";
 	monster "job_knt",141,57,"Poring",1002,1,"Timer#knt::OnMyMobDead";
 	monster "job_knt",145,57,"Poring",1002,1,"Timer#knt::OnMyMobDead";
 	monster "job_knt",143,55,"Poring",1002,1,"Timer#knt::OnMyMobDead";
@@ -3016,10 +2943,11 @@ OnEnable:
 	monster "job_knt",147,57,"Chonchon",1011,1,"Timer#knt::OnMyMobDead";
 	monster "job_knt",143,53,"Chonchon",1011,1,"Timer#knt::OnMyMobDead";
 	monster "job_knt",143,61,"Chonchon",1011,1,"Timer#knt::OnMyMobDead";
-	monster "job_knt",167,54,"Mushroom",1182,1,"Timer#knt::OnMyMobDead";
-	monster "job_knt",167,57,"Mushroom",1182,1,"Timer#knt::OnMyMobDead";
-	monster "job_knt",120,54,"Mushroom",1182,1,"Timer#knt::OnMyMobDead";
-	monster "job_knt",120,57,"Mushroom",1182,1,"Timer#knt::OnMyMobDead";
+	//These monsters were out of bounds. Adjusted to put them in bounds.
+	monster "job_knt",165,54,"Mushroom",1182,1,"Timer#knt::OnMyMobDead";
+	monster "job_knt",165,57,"Mushroom",1182,1,"Timer#knt::OnMyMobDead";
+	monster "job_knt",122,54,"Mushroom",1182,1,"Timer#knt::OnMyMobDead";
+	monster "job_knt",122,57,"Mushroom",1182,1,"Timer#knt::OnMyMobDead";
 	initnpctimer;
 	end;
 
@@ -3037,6 +2965,7 @@ OnMyMobDead:
 }
 
 job_knt,143,57,0	script	Warp#knt	139,22,22,{
+	end;
 
 OnTouch:
 	set KNIGHT_Q,12;
@@ -3045,22 +2974,22 @@ OnTouch:
 	end;
 
 OnInit:
-	hideonnpc "Warp#knt";
+	disablenpc "Warp#knt";
 	end;
 
 OnEnable:
-	hideoffnpc "Warp#knt";
+	enablenpc "Warp#knt";
 	end;
 
 OnDisable:
-	hideonnpc "Warp#knt";
+	disablenpc "Warp#knt";
 	end;
 }
 
 prt_in,87,92,4	script	Sir Gray	119,{
-	if ((Class != Job_Baby_Swordman) && (Class != Job_Swordman)) {
-		if (Class == Job_Baby_Knight || Class == Job_Knight) {
-			mes "[Sir Gray]";
+	mes "[Sir Gray]";
+	if (BaseJob != Job_Swordman) {
+		if (BaseJob == Job_Knight) {
 			mes "The glint of light";
 			mes "that shines off this blade cannot be put into words. This is the weapon every Knight must have.";
 			next;
@@ -3070,10 +2999,10 @@ prt_in,87,92,4	script	Sir Gray	119,{
 			mes "Every Knight";
 			mes "would want one!";
 			next;
-			switch (select("About ^3355FFClaymore^000000:Buy Claymore:End Conversation")) {
+			switch(select("About ^3355FFClaymore^000000:Buy Claymore:End Conversation")) {
 			case 1:
 				mes "[Sir Gray]";
-				mes "Claymore, one of the best among the famous swords you can attain in Rune-Midgarts Prontera!! Its value is priceless when considered by a Knight.";
+				mes "Claymore, one of the best among the famous swords you can attain in Rune-Midgarts's Prontera!! Its value is priceless when considered by a Knight.";
 				next;
 				mes "[Sir Gray]";
 				mes "Now, the Prontera Chivalry is making these fabulous Claymores. For Knights, they are only ^3355FF74,000^000000 Zeny.";
@@ -3083,7 +3012,8 @@ prt_in,87,92,4	script	Sir Gray	119,{
 				mes "1 ^3355FFSteel^000000 because of the Claymore's characteristics. If you like, I can create one for you. For the honor of the Prontera Chivalry!";
 				close;
 			case 2:
-				if ((MaxWeight - Weight) < 1800) {
+				set .@now_weight,MaxWeight-Weight;
+				if (.@now_weight < 1800) {
 					mes "[Sir Gray]";
 					mes "Oh no...";
 					mes "It seems that you are carrying too many things. You don't have enough space for a heavy Claymore in your inventory.";
@@ -3094,85 +3024,85 @@ prt_in,87,92,4	script	Sir Gray	119,{
 					mes "your items first.";
 					close;
 				}
-				if ((Zeny > 73999) && (countitem(999) > 0) && (Class == Job_Baby_Knight || Class == Job_Knight || Class == Job_Baby_Swordman || Class == Job_Swordman)) {
+				else {
+					if ((Zeny > 73999) && (countitem(999) > 0) && (BaseJob == Job_Knight)) {
+						mes "[Sir Gray]";
+						mes "You are ready!";
+						mes "You must know the";
+						mes "true value of";
+						mes "a Claymore!";
+						mes "I shall make";
+						mes "it right now!!";
+						next;
+						mes "[Sir Gray]";
+						mes "The basics of";
+						mes "making the Claymore";
+						mes "is easy. Watch~!";
+						next;
+						mes "^3355FF*Stir Stir*^000000";
+						mes "^3355FF*Ooncha Ooncha*^000000";
+						next;
+						mes "[Sir Gray]";
+						mes "Okay, it's ready!";
+						mes "Every Knight's pride:";
+						mes "a fine ^3355FFClaymore^000000.";
+						mes "You attained a reliable item.";
+						mes "It'll be a good companion on your adventures.";
+						delitem 999,1; //Steel
+						set Zeny, Zeny - 74000;
+						getitem 1163,1; //Claymore
+						close;
+					}
 					mes "[Sir Gray]";
-					mes "You are ready!";
-					mes "You must know the";
-					mes "true value of";
-					mes "a Claymore!";
-					mes "I shall make";
-					mes "it right now!!";
+					mes "I realize you may really want a Claymore, but I can't make it without the materials.";
+					mes "^3355FF74,000 zeny^000000 and ^3355FF1 Steel!^000000.";
 					next;
 					mes "[Sir Gray]";
-					mes "The basics of";
-					mes "making the Claymore";
-					mes "is easy. Watch~!";
-					next;
-					mes "^3355FF*Stir Stir*^000000";
-					mes "^3355FF*Ooncha Ooncha*^000000";
-					next;
-					mes "[Sir Gray]";
-					mes "Okay, it's ready!";
-					mes "Every Knight's pride:";
-					mes "a fine ^3355FFClaymore^000000.";
-					mes "You attained a reliable item.";
-					mes "It'll be a good companion on your adventures.";
-					delitem 999,1; //Steel
-					set Zeny, Zeny - 74000;
-					getitem 1163,1; //Claymore
+					mes "Come back when";
+					mes "you have everything";
+					mes "ready. I shall be";
+					mes "waiting...";
 					close;
 				}
-				mes "[Sir Gray]";
-				mes "I realize you may really want a Claymore, but I can't make it without the materials.";
-				mes "^3355FF74,000 zeny^000000 and ^3355FF1 Steel!^000000.";
-				next;
-				mes "[Sir Gray]";
-				mes "Come back when";
-				mes "you have everything";
-				mes "ready. I shall be";
-				mes "waiting...";
-				close;
 			case 3:
 				mes "[Sir Gray]";
 				mes "Any Knight should be able to wield a Claymore as if it were an extension of their body. I used to look forward to brandishing my Claymore in battle...";
 				close;
 			}
-			if (Class == Job_Baby || Class == Job_Novice) {
-				mes "[Sir Gray]";
-				mes "Believe it";
-				mes "or not, I was";
-				mes "once a Novice";
-				mes "as well.";
-				next;
-				mes "[Sir Gray]";
-				mes "I never really planned to become a Knight, but I did decide to become a strong person. Somehow, along my journeys, I ended up joining the Prontera Chivalry. Ha ha ha!";
-				close;
-			}
-			mes "[Sir Gray]";
-			mes "Young one,";
-			mes "use your time";
-			mes "wisely.";
+		}
+		else if (BaseClass == Job_Novice) {
+			mes "Believe it";
+			mes "or not, I was";
+			mes "once a Novice";
+			mes "as well.";
 			next;
 			mes "[Sir Gray]";
-			mes "No point in";
-			mes "harboring regret";
-			mes "once time has passed.";
+			mes "I never really planned to become a Knight, but I did decide to become a strong person. Somehow, along my journeys, I ended up joining the Prontera Chivalry. Ha ha ha!";
 			close;
 		}
-		if (KNIGHT_Q == 0) {
-			mes "[Sir Gray]";
-			mes "Young one,";
-			mes "use your time";
-			mes "wisely.";
-			next;
-			mes "[Sir Gray]";
-			mes "No point in";
-			mes "harboring regret";
-			mes "once time has passed.";
-			close;
-		}
+		mes "Young one,";
+		mes "use your time";
+		mes "wisely.";
+		next;
+		mes "[Sir Gray]";
+		mes "No point in";
+		mes "harboring regret";
+		mes "once time has passed.";
+		close;
+	}
+	if (KNIGHT_Q == 0) {
+		mes "Young one,";
+		mes "use your time";
+		mes "wisely.";
+		next;
+		mes "[Sir Gray]";
+		mes "No point in";
+		mes "harboring regret";
+		mes "once time has passed.";
+		close;
+	}
+	else if ((KNIGHT_Q == 12) || (KNIGHT_Q == 13)) {
 		if (KNIGHT_Q == 12) {
-			mes "[Sir Gray]";
 			mes "Oh...";
 			mes "A young Swordman.";
 			mes "Yes, what can";
@@ -3185,7 +3115,6 @@ prt_in,87,92,4	script	Sir Gray	119,{
 				mes "everyone else's";
 				mes "test?";
 				next;
-				set @knight_t, 0;
 				mes "[Sir Gray]";
 				mes "Then shall";
 				mes "we begin mine?";
@@ -3203,287 +3132,14 @@ prt_in,87,92,4	script	Sir Gray	119,{
 				mes "decide to become";
 				mes "a Knight?";
 				next;
-				switch (select("To become stronger...:To help my guild...:Because I'm unsatisfied with myself right now...")) {
-				case 1:
-					mes "[Sir Gray]";
-					mes "To become stronger, you say?";
-					mes "Yes, Knights are indeed strong.";
-					mes "But why gain strength?";
-					next;
-					mes "[Sir Gray]";
-					mes "Is it to show off to others? To attain fame? Or do you have a diferent reason? What do you think is so good about gaining strength as a Knight?";
-					next;
-					switch (select("Gain wealth and fame.:I can protect myself.:I can protect others.")) {
-					case 1:
-						set @knight_t, @knight_t + 10;
-						mes "[Sir Gray]";
-						mes "Of course, wealth and fame have their place in the world. But we as Knights must live for higher virtues.";
-						next;
-						break;
-					case 2:
-						mes "[Sir Gray]";
-						mes "Good thinking. You must first be able to protect yourself in order to protect others. To this end, you must constantly train, and never give in to laziness.";
-						next;
-						break;
-					case 3:
-						mes "[Sir Gray]";
-						mes "Ah, a wonderful idea. A Knight's strength must be used to protect the weak and defend righteousness.";
-						next;
-						mes "[Sir Gray]";
-						mes "Sadly, there are a few Knights who shame us by forgetting the ideals that should be basic to Knighthood...";
-						next;
-						break;
-					}
-				case 2:
-					mes "[Sir Gray]";
-					mes "Ah, to help your guild, or maybe even your party. Our wise and benevolent King Tristram the 3rd gave us these golden words...";
-					next;
-					mes "[Sir Gray]";
-					mes "^8B7500Beyond the calm river, lies a dangerous waterfall. Therefore, you must always be prepared for everything...^000000";
-					next;
-					mes "[Sir Gray]";
-					mes "So how do you";
-					mes "think you can";
-					mes "help your guild?";
-					next;
-					switch (select("My guild needs me.:I can help gather funds for my guild.:I can protect my guild members.")) {
-					case 1:
-						mes "[Sir Gray]";
-						mes "Anyone, anywhere in this world,";
-						mes "has a place where they are needed. Never neglect someone in need, even if he is not a guild member.";
-						next;
-						break;
-					case 2:
-						set @knight_t, @knight_t + 10;
-						mes "[Sir Gray]";
-						mes "Of course wealth is important.";
-						mes "But we Knights must live for higher virtues.";
-						next;
-						break;
-					case 3:
-						mes "[Sir Gray]";
-						mes "Ah, a wonderful idea. A Knight's strength must be used to protect the weak and defend righteousness.";
-						next;
-						mes "[Sir Gray]";
-						mes "Sadly, there are a few Knights who shame us by forgetting the ideals that should be basic to Knighthood...";
-						next;
-						break;
-					}
-				case 3:
-					set @knight_t, @knight_t + 5;
-					mes "[Sir Gray]";
-					mes "Satisfaction, you say.";
-					mes "It seems like you are";
-					mes "already a fine Swordman.";
-					mes "Is there a particular reason you wish to be a Knight?";
-					next;
-					mes "[Sir Gray]";
-					mes "I don't know about";
-					mes "Swordmen, but Knights do not allow self-indulgence. There are those so obsessed with gaining strength that they cannot control themselves.";
-					next;
-					mes "[Sir Gray]";
-					mes "So...";
-					mes "What part of yourself";
-					mes "are you not satisfied";
-					mes "with right now?";
-					next;
-					switch (select("Skills.:Goal.:Appearance.")) {
-					case 1:
-						set @knight_t, @knight_t + 5;
-						mes "[Sir Gray]";
-						mes "Skill is something you gain with experience as a Knight. It cannot be your highest goal. Otherwise, you'll never be satisfied as a Knight.";
-						next;
-						break;
-					case 2:
-						set @knight_t, @knight_t - 5;
-						mes "[Sir Gray]";
-						mes "I see...";
-						mes "Always having a goal is very important. You may be full of ideas upon becoming a Knight, but that may change with time.";
-						next;
-						break;
-					case 3:
-						set @knight_t, @knight_t + 5;
-						mes "[Sir Gray]";
-						mes "Oh no...";
-						mes "What you see isn't what really counts. A Swordman may be stronger than a Knight, and even Knight may grow weak if he becomes lazy.";
-						next;
-						break;
-					}
-				}
+			}
+			else {
 				mes "[Sir Gray]";
-				mes "I understand your thoughts,";
-				mes "but there are those who wish to";
-				mes "become Knights without thinking.";
-				next;
-				mes "[Sir Gray]";
-				mes "Those are the ones who instigate problems and shame the honor of Knights, bringing irreversible results.";
-				next;
-				mes "[Sir Gray]";
-				mes "The same goes for you as well. Once you become a Knight, you can never become a Swordman again. The duties and responsibilities of a Knight will always be with you.";
-				next;
-				mes "[Sir Gray]";
-				mes "If you become a Knight right away, what are you going to do first?";
-				next;
-				switch (select("I am going to go straight to battle.:There are those waiting for me.:I will learn more about Knights.")) {
-				case 1:
-					mes "[Sir Gray]";
-					mes "Battle...?";
-					mes "And then?";
-					next;
-					switch (select("I will grow within a short period of time.:I would like to test my ability as a Knight.:I would like to go to more challenging places.")) {
-					case 1:
-						set @knight_t, @knight_t + 10;
-						mes "[Sir Gray]";
-						mes "Don't be in too much of a hurry to become strong. Even if you become";
-						mes "a Knight, you are still yourself.";
-						next;
-						break;
-					case 2:
-						mes "[Sir Gray]";
-						mes "Testing yourself is a good thing. It's okay to be happy about how you change, but don't forget about the true qualities of being a Knight.";
-						next;
-						break;
-					case 3:
-						mes "[Sir Gray]";
-						mes "Even if you become a Knight, you are not changing your inner self. No need to overwork yourself.";
-						mes "Relax and take things step by step.";
-						next;
-						break;
-					}
-				case 2:
-					mes "[Sir Gray]";
-					mes "Who is";
-					mes "waiting for you?";
-					next;
-					switch (select("My friends.:My Guild members.:My Lover.")) {
-					case 1:
-						mes "[Sir Gray]";
-						mes "I see, they would share in the joy of your achievements. Don't ever lose your kind heart, and always give help to your friends.";
-						next;
-						break;
-					case 2:
-						mes "[Sir Gray]";
-						mes "Those who would share in your happiness and hardship. As a Knight, you must always protect them.";
-						next;
-						break;
-					case 3:
-						mes "[Sir Gray]";
-						mes "Oh, youth!";
-						mes "Becoming a Knight";
-						mes "for your beloved!";
-						if (Sex == 1) {
-							mes "Always protect her...";
-							mes "Even at the sacrifice";
-							mes "of your own life!";
-						}
-						else {
-							mes "Always protect him...";
-							mes "Even at the sacrifice";
-							mes "of your own life!";
-						}
-						next;
-						mes "[Sir Gray]";
-						mes "Also...";
-						mes "Love them forever.";
-						mes "Sincere affection";
-						mes "is hard to find.";
-						next;
-						break;
-					}
-				case 3:
-					mes "[Sir Gray]";
-					mes "Good attitude...";
-					mes "What do you plan";
-					mes "on learning?";
-					next;
-					switch (select("Comfortable places for Knights to go...:The different paths of a Knight...:Ways to get more money as a Knight...")) {
-					case 1:
-						set @knight_t, @knight_t + 5;
-						mes "[Sir Gray]";
-						mes "There are many places that are comfortable or uncomfortable in this world. However Knights must";
-						mes "be able to survive anywhere.";
-						next;
-						break;
-					case 2:
-						mes "[Sir Gray]";
-						mes "There are many similar Knights outside in the world. Think of them as your seniors and ask many questions.";
-						next;
-						break;
-					case 3:
-						set @knight_t, @knight_t + 15;
-						mes "[Sir Gray]";
-						mes "Oh no. Do you hold wealth as a priority of being a Knight? We're not meant to be that way. Come again when you have thought";
-						mes "more about it...";
-						next;
-						break;
-					}
-				}
-				mes "[Sir Gray]";
-				mes "Oh no, we've been";
-				mes "talking too much...";
-				mes "I apologize for";
-				mes "keeping you here";
-				mes "for so long.";
-				next;
-				if (@knight_t == 0) {
-					set KNIGHT_Q,14;
-					mes "[Sir Gray]";
-					mes "I enjoyed talking with you. You remind me of myself as a young recruit. Shall we talk to the captain and decide on your";
-					mes "job change?";
-					next;
-					mes "[Sir Gray]";
-					mes "Don't worry too";
-					mes "much, I have a very";
-					mes "high opinion of you.";
-					mes "Now, go~";
-					close;
-				}
-				if (@knight_t == 5) {
-					set KNIGHT_Q,14;
-					mes "[Sir Gray]";
-					mes "I enjoyed speaking with you. You can think about the principles of Knighthood more once you become a Knight.";
-					next;
-					mes "[Sir Gray]";
-					mes "Then, shall we go to the captain and decide on your job change? Don't worry too much. You are good enough to be a Knight!";
-					close;
-				}
-				if (@knight_t == 10) {
-					set KNIGHT_Q,14;
-					mes "[Sir Gray]";
-					mes "I enjoyed talking with you. Although, there were some";
-					mes "things that bothered me...";
-					next;
-					mes "[Sir Gray]";
-					mes "You should go";
-					mes "to the captain";
-					mes "so we can decide";
-					mes "on your job change.";
-					next;
-					mes "[Sir Gray]";
-					mes "Don't worry too much, coming to take my test means the others have acknowledged you as well.";
-					mes "Go now...!";
-					close;
-				}
-				set KNIGHT_Q,13;
-				mes "[Sir Gray]";
-				mes "Conversing";
-				mes "with young ones";
-				mes "is always enjoyable...";
-				next;
-				mes "[Sir Gray]";
-				mes "But it seems as though your dream is elsewhere, or that your focus is hazy. Spend more time as a Swordman, and come back";
-				mes "to me later.";
-				next;
-				mes "[Sir Gray]";
-				mes "If you truly wish to become a Knight, you must change your outlook first. Then, we shall see.";
+				mes "Take care!";
 				close;
 			}
-			mes "[Sir Gray]";
-			mes "Take care!";
-			close;
 		}
-		if (KNIGHT_Q == 13) {
-			mes "[Sir Gray]";
+		else if (KNIGHT_Q == 13) {
 			mes "Ah, you again.";
 			mes "What brings you";
 			mes "to me?";
@@ -3494,7 +3150,6 @@ prt_in,87,92,4	script	Sir Gray	119,{
 				mes "I wonder if you";
 				mes "truly have...";
 				next;
-				set @knight_t, 0;
 				mes "[Sir Gray]";
 				mes "Then...";
 				mes "Like last time,";
@@ -3506,303 +3161,306 @@ prt_in,87,92,4	script	Sir Gray	119,{
 				mes "decide to become";
 				mes "a Knight?";
 				next;
-				switch (select("To become stronger...:To help my guild...:Because I'm unsatisfied with myself right now...")) {
-				case 1:
-					mes "[Sir Gray]";
-					mes "To become stronger, you say?";
-					mes "Yes, Knights are indeed strong.";
-					mes "But why gain strength?";
-					next;
-					mes "[Sir Gray]";
-					mes "Is it to show off to others?";
-					mes "To attain fame? Or do you have a diferent reason? What do you think is so good about gaining strength as a Knight?";
-					next;
-					switch (select("Gain wealth and fame.:I can protect myself.:I can protect others.")) {
-					case 1:
-						set @knight_t, @knight_t + 10;
-						mes "[Sir Gray]";
-						mes "Of course, wealth and fame have their place in the world. But we as Knights must live for higher virtues.";
-						next;
-						break;
-					case 2:
-						mes "[Sir Gray]";
-						mes "Good thinking. You must first be able to protect yourself in order to protect others. To this end, you must constantly train, and never give in to laziness.";
-						next;
-						break;
-					case 3:
-						mes "[Sir Gray]";
-						mes "Ah, a wonderful idea. A Knight's strength must be used to protect the weak and defend righteousness.";
-						next;
-						mes "[Sir Gray]";
-						mes "Sadly, there are a few Knights who shame us by forgetting the ideals that should be basic to Knighthood...";
-						next;
-						break;
-					}
-				case 2:
-					mes "[Sir Gray]";
-					mes "Ah, to help your guild, or maybe even your party. Our wise and benevolent King Tristram the 3rd gave us these golden words...";
-					next;
-					mes "[Sir Gray]";
-					mes "^8B7500Beyond the calm river, lies a dangerous waterfall. Therefore, you must always be prepared for everything...^000000";
-					next;
-					mes "[Sir Gray]";
-					mes "So how do you";
-					mes "think you can";
-					mes "help your guild?";
-					next;
-					switch (select("My guild needs me.:I can help gather funds for my guild.:I can protect my guild members.")) {
-					case 1:
-						mes "[Sir Gray]";
-						mes "Anyone, anywhere in this world,";
-						mes "has a place where they are needed. Never neglect someone in need, even if he is not a guild member.";
-						next;
-						break;
-					case 2:
-						set @knight_t, @knight_t + 10;
-						mes "[Sir Gray]";
-						mes "Of course wealth is important.";
-						mes "But we Knights must live for higher virtues.";
-						next;
-						break;
-					case 3:
-						mes "[Sir Gray]";
-						mes "Ah, a wonderful idea. A Knight's strength must be used to protect the weak and defend righteousness.";
-						next;
-						mes "[Sir Gray]";
-						mes "Sadly, there are a few Knights who shame us by forgetting the ideals that should be basic to Knighthood...";
-						next;
-						break;
-					}
-				case 3:
-					set @knight_t, @knight_t + 5;
-					mes "[Sir Gray]";
-					mes "Satisfaction, you say.";
-					mes "It seems like you are";
-					mes "already a fine Swordman.";
-					mes "Is there a particular reason you wish to be a Knight?";
-					next;
-					mes "[Sir Gray]";
-					mes "I don't know about";
-					mes "Swordmen but Knights do not allow self-indulgence. There are those so obsessed with gaining strength that they cannot control themselves.";
-					next;
-					mes "[Sir Gray]";
-					mes "So...";
-					mes "What part of yourself";
-					mes "are you not satisfied";
-					mes "with right now?";
-					next;
-					switch (select("Skills.:Goal.:Appearance.")) {
-					case 1:
-						set @knight_t, @knight_t + 5;
-						mes "[Sir Gray]";
-						mes "Skill is something you gain with experience as a Knight. It cannot be your highest goal. Otherwise, you'll never be satisfied as a Knight.";
-						next;
-						break;
-					case 2:
-						set @knight_t, @knight_t - 5;
-						mes "[Sir Gray]";
-						mes "I see...";
-						mes "Always having a goal is very important. You may be full of ideas upon becoming a Knight, but that may change with time.";
-						next;
-						break;
-					case 3:
-						set @knight_t, @knight_t + 5;
-						mes "[Sir Gray]";
-						mes "Oh no...";
-						mes "What you see isn't what really counts. A Swordman may be stronger than a Knight, and even Knight may grow weak if he becomes lazy.";
-						next;
-						break;
-					}
-				}
+			}
+			else {
 				mes "[Sir Gray]";
-				mes "I understand your thoughts,";
-				mes "but there are those who wish to";
-				mes "become Knights without thinking.";
-				next;
-				mes "[Sir Gray]";
-				mes "Those are the ones who instigate problems and shame the honor of Knights, bringing irreversible results.";
-				next;
-				mes "[Sir Gray]";
-				mes "The same goes for you as well. Once you become a Knight, you can never become a Swordman again. The duties and responsibilities of a Knight will always be with you.";
-				next;
-				mes "[Sir Gray]";
-				mes "If you become a Knight right away, what are you going to do first?";
-				next;
-				switch (select("I am going to go straight to battle.:There are those waiting for me.:I will learn more about Knights.")) {
-				case 1:
-					mes "[Sir Gray]";
-					mes "Battle...?";
-					mes "And then?";
-					next;
-					switch (select("I will grow within a short period of time.:I would like to test my ability as a Knight.:I would like to go to more challenging places.")) {
-					case 1:
-						set @knight_t, @knight_t + 10;
-						mes "[Sir Gray]";
-						mes "Don't be in too much of a hurry to become strong. Even if you become";
-						mes "a Knight, you are still yourself.";
-						next;
-						break;
-					case 2:
-						mes "[Sir Gray]";
-						mes "Testing yourself is a good thing. It's okay to be happy about how you change, but don't forget about the true qualities of being a Knight.";
-						next;
-						break;
-					case 3:
-						mes "[Sir Gray]";
-						mes "Even if you become a Knight, you are not changing your inner self. No need to overwork yourself.";
-						mes "Relax and take things step by step.";
-						next;
-						break;
-					}
-				case 2:
-					mes "[Sir Gray]";
-					mes "Who is";
-					mes "waiting for you?";
-					next;
-					switch (select("My friends.:My Guild members.:My Lover.")) {
-					case 1:
-						mes "[Sir Gray]";
-						mes "I see, they would share in the joy of your achievements. Don't ever lose your kind heart, and always give help to your friends.";
-						next;
-						break;
-					case 2:
-						mes "[Sir Gray]";
-						mes "Those who would share in your happiness and hardship. As a Knight, you must always protect them.";
-						next;
-						break;
-					case 3:
-						mes "[Sir Gray]";
-						mes "Oh, youth!";
-						mes "Becoming a Knight";
-						mes "for your beloved!";
-						if (Sex == 1) {
-							mes "Always protect her...";
-							mes "Even at the sacrifice";
-							mes "of your own life!";
-						}
-						else {
-							mes "Always protect him...";
-							mes "Even at the sacrifice";
-							mes "of your own life!";
-						}
-						next;
-						mes "[Sir Gray]";
-						mes "Also...";
-						mes "Love them forever.";
-						mes "Sincere affection";
-						mes "is hard to find.";
-						next;
-						break;
-					}
-				case 3:
-					mes "[Sir Gray]";
-					mes "Good attitude...";
-					mes "What do you plan";
-					mes "on learning?";
-					next;
-					switch (select("Comfortable places for Knights to go...:The different paths of a Knight...:Ways to get more money as a Knight...")) {
-					case 1:
-						set @knight_t, @knight_t + 5;
-						mes "[Sir Gray]";
-						mes "There are many places that are comfortable or uncomfortable in this world. However Knights must";
-						mes "be able to survive anywhere.";
-						next;
-						break;
-					case 2:
-						mes "[Sir Gray]";
-						mes "There are many similar Knights outside in the world. Think of them as your seniors and ask many questions.";
-						next;
-						break;
-					case 3:
-						set @knight_t, @knight_t + 15;
-						mes "[Sir Gray]";
-						mes "Oh no. Do you hold wealth as a priority of being a Knight? We're not meant to be that way. Come again when you have thought";
-						mes "more about it...";
-						next;
-						break;
-					}
-				}
-				mes "[Sir Gray]";
-				mes "Oh no, we've been";
-				mes "talking too much...";
-				mes "I apologize for";
-				mes "keeping you here";
-				mes "for so long.";
-				next;
-				if (@knight_t == 0) {
-					set KNIGHT_Q,14;
-					mes "[Sir Gray]";
-					mes "I enjoyed talking with you. You remind me of myself as a young recruit. Shall we talk to the captain and decide on your";
-					mes "job change?";
-					next;
-					mes "[Sir Gray]";
-					mes "Don't worry too";
-					mes "much, I have a very";
-					mes "high opinion of you.";
-					mes "Now, go~";
-					close2;
-				}
-				if (@knight_t == 5) {
-					set KNIGHT_Q,14;
-					mes "[Sir Gray]";
-					mes "I enjoyed speaking with you. You can think about the principles of Knighthood more once you become a Knight.";
-					next;
-					mes "[Sir Gray]";
-					mes "Then, shall we go to the captain and decide on your job change? Don't worry too much. You are good enough to be a Knight!";
-					close;
-				}
-				if (@knight_t == 10) {
-					set KNIGHT_Q,14;
-					mes "[Sir Gray]";
-					mes "I enjoyed talking with you. Although, there were some";
-					mes "things that bothered me...";
-					next;
-					mes "[Sir Gray]";
-					mes "You should go";
-					mes "to the captain";
-					mes "so we can decide";
-					mes "on your job change.";
-					next;
-					mes "[Sir Gray]";
-					mes "Don't worry too much, coming to take my test means the others have acknowledged you as well.";
-					mes "Go now...!";
-					close;
-				}
-				set KNIGHT_Q,13;
-				mes "[Sir Gray]";
-				mes "Conversing";
-				mes "with young ones";
-				mes "is always enjoyable...";
-				next;
-				mes "[Sir Gray]";
-				mes "But it seems as though your dream is elsewhere, or that your focus is hazy. Spend more time as a Swordman, and come back";
-				mes "to me later.";
-				next;
-				mes "[Sir Gray]";
-				mes "If you truly wish to become a Knight, you must change your outlook first. Then, we shall see.";
+				mes "Take care!";
+				mes "Health is";
+				mes "every man's";
+				mes "treasure!";
 				close;
 			}
-			mes "[Sir Gray]";
-			mes "Take care!";
-			mes "Health is";
-			mes "every man's";
-			mes "treasure!";
-			close;
 		}
-		if (KNIGHT_Q == 14) {
+		switch(select("To become stronger...:To help my guild...:Because I'm unsatisfied with myself right now...")) {
+		case 1:
 			mes "[Sir Gray]";
-			mes "I told you";
-			mes "to go to";
-			mes "the captain.";
+			mes "To become stronger, you say?";
+			mes "Yes, Knights are indeed strong.";
+			mes "But why gain strength?";
 			next;
 			mes "[Sir Gray]";
-			mes "Everyone will";
-			mes "carefully make";
-			mes "their decision,";
-			mes "so go now!";
-			close;
+			mes "Is it to show off to others? To attain fame? Or do you have a diferent reason? What do you think is so good about gaining strength as a Knight?";
+			next;
+			switch(select("Gain wealth and fame.:I can protect myself.:I can protect others.")) {
+			case 1:
+				set .@knight_t,.@knight_t+10;
+				mes "[Sir Gray]";
+				mes "Of course, wealth and fame have their place in the world. But we as Knights must live for higher virtues.";
+				next;
+				break;
+			case 2:
+				mes "[Sir Gray]";
+				mes "Good thinking. You must first be able to protect yourself in order to protect others. To this end, you must constantly train, and never give in to laziness.";
+				next;
+				break;
+			case 3:
+				mes "[Sir Gray]";
+				mes "Ah, a wonderful idea. A Knight's strength must be used to protect the weak and defend righteousness.";
+				next;
+				mes "[Sir Gray]";
+				mes "Sadly, there are a few Knights who shame us by forgetting the ideals that should be basic to Knighthood...";
+				next;
+				break;
+			}
+			break;
+		case 2:
+			mes "[Sir Gray]";
+			mes "Ah, to help your guild, or maybe even your party. Our wise and benevolent King Tristram the 3rd gave us these golden words...";
+			next;
+			mes "[Sir Gray]";
+			mes "^8B7500Beyond the calm river, lies a dangerous waterfall. Therefore, you must always be prepared for everything...^000000";
+			next;
+			mes "[Sir Gray]";
+			mes "So how do you";
+			mes "think you can";
+			mes "help your guild?";
+			next;
+			switch(select("My guild needs me.:I can help gather funds for my guild.:I can protect my guild members.")) {
+			case 1:
+				mes "[Sir Gray]";
+				mes "Anyone, anywhere in this world,";
+				mes "has a place where they are needed. Never neglect someone in need, even if he is not a guild member.";
+				next;
+				break;
+			case 2:
+				set .@knight_t,.@knight_t+10;
+				mes "[Sir Gray]";
+				mes "Of course wealth is important.";
+				mes "But we Knights must live for higher virtues.";
+				next;
+				break;
+			case 3:
+				mes "[Sir Gray]";
+				mes "Ah, a wonderful idea. A Knight's strength must be used to protect the weak and defend righteousness.";
+				next;
+				mes "[Sir Gray]";
+				mes "Sadly, there are a few Knights who shame us by forgetting the ideals that should be basic to Knighthood...";
+				next;
+				break;
+			}
+			break;
+		case 3:
+			set .@knight_t,.@knight_t+5;
+			mes "[Sir Gray]";
+			mes "Satisfaction, you say.";
+			mes "It seems like you are";
+			mes "already a fine Swordman.";
+			mes "Is there a particular reason you wish to be a Knight?";
+			next;
+			mes "[Sir Gray]";
+			mes "I don't know about";
+			mes "Swordmen, but Knights do not allow self-indulgence. There are those so obsessed with gaining strength that they cannot control themselves.";
+			next;
+			mes "[Sir Gray]";
+			mes "So...";
+			mes "What part of yourself";
+			mes "are you not satisfied";
+			mes "with right now?";
+			next;
+			switch(select("Skills.:Goal.:Appearance.")) {
+			case 1:
+				set .@knight_t,.@knight_t+5;
+				mes "[Sir Gray]";
+				mes "Skill is something you gain with experience as a Knight. It cannot be your highest goal. Otherwise, you'll never be satisfied as a Knight.";
+				next;
+				break;
+			case 2:
+				set .@knight_t,.@knight_t-5;
+				mes "[Sir Gray]";
+				mes "I see...";
+				mes "Always having a goal is very important. You may be full of ideas upon becoming a Knight, but that may change with time.";
+				next;
+				break;
+			case 3:
+				set .@knight_t,.@knight_t+5;
+				mes "[Sir Gray]";
+				mes "Oh no...";
+				mes "What you see isn't what really counts. A Swordman may be stronger than a Knight, and even Knight may grow weak if he becomes lazy.";
+				next;
+				break;
+			}
+			break;
 		}
 		mes "[Sir Gray]";
+		mes "I understand your thoughts,";
+		mes "but there are those who wish to";
+		mes "become Knights without thinking.";
+		next;
+		mes "[Sir Gray]";
+		mes "Those are the ones who instigate problems and shame the honor of Knights, bringing irreversible results.";
+		next;
+		mes "[Sir Gray]";
+		mes "The same goes for you as well. Once you become a Knight, you can never become a Swordman again. The duties and responsibilities of a Knight will always be with you.";
+		next;
+		mes "[Sir Gray]";
+		mes "If you become a Knight right away, what are you going to do first?";
+		next;
+		switch(select("I am going to go straight to battle.:There are those waiting for me.:I will learn more about Knights.")) {
+		case 1:
+			mes "[Sir Gray]";
+			mes "Battle...?";
+			mes "And then?";
+			next;
+			switch(select("I will grow within a short period of time.:I would like to test my ability as a Knight.:I would like to go to more challenging places.")) {
+			case 1:
+				set .@knight_t,.@knight_t+10;
+				mes "[Sir Gray]";
+				mes "Don't be in too much of a hurry to become strong. Even if you become";
+				mes "a Knight, you are still yourself.";
+				next;
+				break;
+			case 2:
+				mes "[Sir Gray]";
+				mes "Testing yourself is a good thing. It's okay to be happy about how you change, but don't forget about the true qualities of being a Knight.";
+				next;
+				break;
+			case 3:
+				mes "[Sir Gray]";
+				mes "Even if you become a Knight, you are not changing your inner self. No need to overwork yourself.";
+				mes "Relax and take things step by step.";
+				next;
+				break;
+			}
+			break;
+		case 2:
+			mes "[Sir Gray]";
+			mes "Who is";
+			mes "waiting for you?";
+			next;
+			switch(select("My friends.:My Guild members.:My Lover.")) {
+			case 1:
+				mes "[Sir Gray]";
+				mes "I see, they would share in the joy of your achievements. Don't ever lose your kind heart, and always give help to your friends.";
+				next;
+				break;
+			case 2:
+				mes "[Sir Gray]";
+				mes "Those who would share in your happiness and hardship. As a Knight, you must always protect them.";
+				next;
+				break;
+			case 3:
+				mes "[Sir Gray]";
+				mes "Oh, youth!";
+				mes "Becoming a Knight";
+				mes "for your beloved!";
+				mes "Always protect "+((Sex)?"her":"him")+"...";
+				mes "Even at the sacrifice";
+				mes "of your own life!";
+				next;
+				mes "[Sir Gray]";
+				mes "Also...";
+				mes "Love them forever.";
+				mes "Sincere affection";
+				mes "is hard to find.";
+				next;
+				break;
+			}
+			break;
+		case 3:
+			mes "[Sir Gray]";
+			mes "Good attitude...";
+			mes "What do you plan";
+			mes "on learning?";
+			next;
+			switch(select("Comfortable places for Knights to go...:The different paths of a Knight...:Ways to get more money as a Knight...")) {
+			case 1:
+				set .@knight_t,.@knight_t+5;
+				mes "[Sir Gray]";
+				mes "There are many places that are comfortable or uncomfortable in this world. However Knights must";
+				mes "be able to survive anywhere.";
+				next;
+				break;
+			case 2:
+				mes "[Sir Gray]";
+				mes "There are many similar Knights outside in the world. Think of them as your seniors and ask many questions.";
+				next;
+				break;
+			case 3:
+				set .@knight_t,.@knight_t+15;
+				mes "[Sir Gray]";
+				mes "Oh no. Do you hold wealth as a priority of being a Knight? We're not meant to be that way. Come again when you have thought";
+				mes "more about it...";
+				next;
+				break;
+			}
+			break;
+		}
+		mes "[Sir Gray]";
+		mes "Oh no, we've been";
+		mes "talking too much...";
+		mes "I apologize for";
+		mes "keeping you here";
+		mes "for so long.";
+		next;
+		if (.@knight_t == 0) {
+			set KNIGHT_Q,14;
+			mes "[Sir Gray]";
+			mes "I enjoyed talking with you. You remind me of myself as a young recruit. Shall we talk to the captain and decide on your";
+			mes "job change?";
+			next;
+			mes "[Sir Gray]";
+			mes "Don't worry too";
+			mes "much, I have a very";
+			mes "high opinion of you.";
+			mes "Now, go~";
+			close;
+		}
+		else if (.@knight_t == 5) {
+			set KNIGHT_Q,14;
+			mes "[Sir Gray]";
+			mes "I enjoyed speaking with you. You can think about the principles of Knighthood more once you become a Knight.";
+			next;
+			mes "[Sir Gray]";
+			mes "Then, shall we go to the captain and decide on your job change? Don't worry too much. You are good enough to be a Knight!";
+			close;
+		}
+		else if (.@knight_t == 10) {
+			set KNIGHT_Q,14;
+			changequest 9011,9012;
+			mes "[Sir Gray]";
+			mes "I enjoyed talking with you. Although, there were some";
+			mes "things that bothered me...";
+			next;
+			mes "[Sir Gray]";
+			mes "You should go";
+			mes "to the captain";
+			mes "so we can decide";
+			mes "on your job change.";
+			next;
+			mes "[Sir Gray]";
+			mes "Don't worry too much, coming to take my test means the others have acknowledged you as well.";
+			mes "Go now...!";
+			close;
+		}
+		else {
+			set KNIGHT_Q,13;
+			mes "[Sir Gray]";
+			mes "Conversing";
+			mes "with young ones";
+			mes "is always enjoyable...";
+			next;
+			mes "[Sir Gray]";
+			mes "But it seems as though your dream is elsewhere, or that your focus is hazy. Spend more time as a Swordman, and come back";
+			mes "to me later.";
+			next;
+			mes "[Sir Gray]";
+			mes "If you truly wish to become a Knight, you must change your outlook first. Then, we shall see.";
+			close;
+		}
+	}
+	else if (KNIGHT_Q == 14) {
+		mes "I told you";
+		mes "to go to";
+		mes "the captain.";
+		next;
+		mes "[Sir Gray]";
+		mes "Everyone will";
+		mes "carefully make";
+		mes "their decision,";
+		mes "so go now!";
+		close;
+	}
+	else {
 		mes "Oh...";
 		mes "A young Swordman.";
 		mes "What can I do for you?";

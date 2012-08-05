@@ -757,7 +757,7 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 			mes "[Sister Cecilia]";
 			mes "Aw...? How could you give me that kind of answer? I assume you're not ready to be a Priest yet...";
 			next;
-			set PRIEST_Q, 8;
+			set PRIEST_Q,8;
 			mes "[Sister Cecilia]";
 			mes "You should reflect a little more on the teachings of holiness and come back later. You can't be a Priest if your spirit is weak.";
 			close;
@@ -769,7 +769,7 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 			mes "[Sister Cecilia]";
 			mes "Aw...? God won't grant you the power of holiness if your goals aren't just and pure. Meditate on your motivations for a while, and then come back to me.";
 			next;
-			set PRIEST_Q, 8;
+			set PRIEST_Q,8;
 			mes "[Sister Cecilia]";
 			mes "Think about the qualities that make Priests people of respect. You can't be a Priest if your spirit is not in accordance with God.";
 			close;
@@ -781,7 +781,7 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 			mes "[Sister Cecilia]";
 			mes "No, no. You've got the wrong idea. God authorizes us to use his power to support his children. You must help people in danger: it is your obligation.";
 			next;
-			set PRIEST_Q, 8;
+			set PRIEST_Q,8;
 			mes "[Sister Cecilia]";
 			mes "Go and observe the adventurers that are fighting for peace in this world. They will teach you what you must do in order to help them.";
 			close;
@@ -793,7 +793,7 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 			mes "[Sister Cecilia]";
 			mes "How can you say no...? That's one of the basic principles of Priesthood. You must value the welfare of others over your own safety.";
 			next;
-			set PRIEST_Q, 8;
+			set PRIEST_Q,8;
 			mes "[Sister Cecilia]";
 			mes "Go and think about the value of suffering and the meaning of sacrifice. When you think you understand more about helping those in need, come back to me.";
 			close;
@@ -805,7 +805,7 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 			mes "[Sister Cecilia]";
 			mes "No no no... You've got it wrong. Even though your purpose is to spread God's message, no one will eagerly accept what you say when you spam text.";
 			next;
-			set PRIEST_Q, 8;
+			set PRIEST_Q,8;
 			mes "[Sister Cecilia]";
 			mes "Remember...";
 			mes "You must be a moral person, and display maturity and respect to other players. This kind of attitude applies for all classes,";
@@ -819,7 +819,7 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 			mes "[Sister Cecilia]";
 			mes "No, you won't. Luring many monsters does more harm than good. There is no exception. That behavior is totally unacceptable.";
 			next;
-			set PRIEST_Q, 8;
+			set PRIEST_Q,8;
 			mes "[Sister Cecilia]";
 			mes "Even if it looks like you are aiding your party members, such action results in bad karma. Please reflect on that for a while.";
 			close;
@@ -953,7 +953,7 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 		mes "[Sister Cecilia]";
 		mes "Will you lure many monsters to help your party members level up?";
 		next;
-		switch (select("Yes.:No.") == 1) {
+		if (select("Yes.:No.") == 1) {
 			mes "[Sister Cecilia]";
 			mes "No, you won't. Luring many monsters does more harm than good. There is no exception. That behavior is totally unacceptable.";
 			next;
@@ -982,7 +982,7 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 		mes "You have demonstrated your devotion to God. Will you swear to adhere to his teachings for the rest of your days?";
 		next;
 		if (select("I do.:No.") == 1) {
-			set PRIEST_Q, 9;
+			set PRIEST_Q,9;
 			mes "[Sister Cecilia]";
 			mes "Now, you have completed your oath of Priesthood and accomplished all three trials required to become a Priest.";
 			next;
@@ -1015,15 +1015,13 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 }
 
 job_prist,24,187,4	script	Peter S. Alberto	110,{
-	if (Class == Job_Baby_Priest || Class == Job_Priest) {
-		mes "[Father Peter]";
+	mes "[Father Peter]";
+	if (BaseJob == Job_Priest) {
 		mes "Welcome!";
-		if (Sex == 1) {
-			mes "Brother " + strcharinfo(0) + "!";
-		}
-		else {
-			mes "Sister " + strcharinfo(0) + "!";
-		}
+		if (sex)
+			mes "Brother "+ strcharinfo(0) +"!";
+		else
+			mes "Sister "+ strcharinfo(0) +"!";
 		mes "So good to see you again!";
 		next;
 		mes "[Father Peter]";
@@ -1039,7 +1037,7 @@ job_prist,24,187,4	script	Peter S. Alberto	110,{
 		mes "So...";
 		mes "Are you gonna help him right now?";
 		next;
-		switch (select("Yes, I am.:Give me a minute.:I changed my mind.")) {
+		switch(select("Yes, I am.:Give me a minute.:I changed my mind.")) {
 		case 1:
 			mes "[Father Peter]";
 			mes "Go for it! As your Acolyte enters, the test will begin. Now, I will send you to the testing area.";
@@ -1064,7 +1062,6 @@ job_prist,24,187,4	script	Peter S. Alberto	110,{
 		}
 	}
 	if (PRIEST_Q == 5) {
-		mes "[Father Peter]";
 		mes "Welcome~!";
 		mes "I congratulate you";
 		mes "for passing the first trail.";
@@ -1082,7 +1079,7 @@ job_prist,24,187,4	script	Peter S. Alberto	110,{
 		mes "[Father Peter]";
 		mes "Anyway, let me give you a brief explanation of the spiritual training. Are you familiar with what the spiritual training is for Priests?";
 		next;
-		switch (select("Yes, I do.:Sorry...")) {
+		switch(select("Yes, I do.:Sorry...")) {
 		case 1:
 			mes "[Father Peter]";
 			mes "Haha, I like you! But it never hurts to have too much information. The more well informed you are, the more easily you'll pass the test!";
@@ -1110,7 +1107,7 @@ job_prist,24,187,4	script	Peter S. Alberto	110,{
 		mes "[Father Peter]";
 		mes "If you are close to a Priest, you'd better ask him to assist you during this trial. Now, are you ready?";
 		next;
-		switch (select("I'm ready.:Please hold on.:I want to go back.")) {
+		switch(select("I'm ready.:Please hold on.:I want to go back.")) {
 		case 1:
 			mes "[Father Peter]";
 			mes "Now, let the spiritual training begin. It's simple. Just kill them all. Show no mercy to the creatures of darkness!";
@@ -1119,8 +1116,9 @@ job_prist,24,187,4	script	Peter S. Alberto	110,{
 			mes "Now...";
 			mes "Go for it!";
 			close2;
+			changequest 8011,8012;
 			warp "job_prist",24,44;
-			donpcevent "Zombie_Generator::OnEnable";
+			donpcevent "Zombie_Generator#prst::OnEnable";
 			donpcevent "Peter S. Alberto::OnDisable";
 			donpcevent "Peter S. Alberto#2::OnEnable";
 			end;
@@ -1144,8 +1142,7 @@ job_prist,24,187,4	script	Peter S. Alberto	110,{
 			end;
 		}
 	}
-	if (PRIEST_Q == 6) {
-		mes "[Father Peter]";
+	else if (PRIEST_Q == 6) {
 		mes "Are you ready this time?";
 		mes "Complete this trial quickly,";
 		mes "and become a Priest!";
@@ -1153,7 +1150,7 @@ job_prist,24,187,4	script	Peter S. Alberto	110,{
 		mes "[Father Peter]";
 		mes "Are you ready then?";
 		next;
-		switch (select("I'm ready.:Please hold on.:I want to go back.")) {
+		switch(select("I'm ready.:Please hold on.:I want to go back.")) {
 		case 1:
 			mes "[Father Peter]";
 			mes "Now, let the spiritual training begin. For the glory of God, for peace on earth, and goodwill towards all men...";
@@ -1163,8 +1160,11 @@ job_prist,24,187,4	script	Peter S. Alberto	110,{
 			mes "Kill those";
 			mes "misbegotten creatures!";
 			close2;
+			if(checkquest(8012) == -1) {
+				changequest 8011,8012;
+			}
 			warp "job_prist",24,44;
-			donpcevent "Zombie_Generator::OnEnable";
+			donpcevent "Zombie_Generator#prst::OnEnable";
 			donpcevent "Peter S. Alberto::OnDisable";
 			donpcevent "Peter S. Alberto#2::OnEnable";
 			end;
@@ -1186,31 +1186,30 @@ job_prist,24,187,4	script	Peter S. Alberto	110,{
 			end;
 		}
 	}
-	mes "[Father Peter]";
-	mes "Go back!";
-	close2;
-	warp "prontera",234,318;
-	end;
+	else {
+		mes "Go back!";
+		close2;
+		warp "prontera",234,318;
+		end;
+	}
 
 OnEnable:
-	hideoffnpc "Peter S. Alberto";
+	enablenpc "Peter S. Alberto";
 	end;
 
 OnDisable:
-	hideonnpc "Peter S. Alberto";
+	disablenpc "Peter S. Alberto";
 	end;
 }
 
 job_prist,23,187,1	script	Peter S. Alberto#2	110,{
-	if (Class == Job_Baby_Priest || Class == Job_Priest) {
-		mes "[Father Peter]";
+	mes "[Father Peter]";
+	if (BaseJob == Job_Priest) {
 		mes "Welcome!";
-		if (Sex == 1) {
-			mes "Brother " + strcharinfo(0) + "!";
-		}
-		else {
-			mes "Sister " + strcharinfo(0) + "!";
-		}
+		if (sex)
+			mes "Brother "+ strcharinfo(0) +"!";
+		else
+			mes "Sister "+ strcharinfo(0) +"!";
 		mes "So good to see you!";
 		next;
 		mes "[Father Peter]";
@@ -1224,46 +1223,43 @@ job_prist,23,187,1	script	Peter S. Alberto#2	110,{
 		close;
 	}
 	if (PRIEST_Q == 5) {
-		mes "[Father Peter]";
 		mes "Please hold on for a while. Another acolyte is in the training ground right now.";
 		next;
 		mes "[Father Peter]";
 		mes "If you want to take the test, please wait a while and talk to me again.";
 		close;
 	}
-	if (PRIEST_Q == 6) {
-		mes "[Father Peter]";
+	else if (PRIEST_Q == 6) {
 		mes "Please hold on for a while. Another acolyte is in the training ground right now.";
 		next;
 		mes "[Father Peter]";
 		mes "If you want to take the test, please wait a while and talk to me again.";
 		close;
 	}
-	mes "[Father Peter]";
-	mes "Peace...";
-	mes "Be with you.";
-	close2;
-	warp "prontera",234,318;
-	end;
+	else {
+		mes "Peace...";
+		mes "Be with you.";
+		close2;
+		warp "prontera",234,318;
+		end;
+	}
 
 OnInit:
-	hideonnpc "Peter S. Alberto#2";
+	disablenpc "Peter S. Alberto#2";
 	end;
 
 OnEnable:
-	hideoffnpc "Peter S. Alberto#2";
+	enablenpc "Peter S. Alberto#2";
 	end;
 
 OnDisable:
-	hideonnpc "Peter S. Alberto#2";
+	disablenpc "Peter S. Alberto#2";
 	end;
 }
 
-job_prist,1,1,1	script	Zombie_Generator	110,{
-	end;
-
+-	script	Zombie_Generator#prst	110,{
 OnInit:
-	hideonnpc "Zombie_Generator";
+	disablenpc "Zombie_Generator#prst";
 	end;
 
 OnEnable:
@@ -1275,63 +1271,50 @@ OnEnable:
 	initnpctimer;
 	end;
 
-OnM1:
-	monster "job_prist",24,52,"Theft",1015,1,"Zombie_Generator::OnMyMobDead";
-	monster "job_prist",18,52,"Want of Virtue",1015,1,"Zombie_Generator::OnMyMobDead";
-	monster "job_prist",30,52,"Jealousy",1015,1,"Zombie_Generator::OnMyMobDead";
+Onm1:
+	set .MyMobs,13;
+	monster "job_prist",24,52,"Theft",1015,1,"Z_C#prst::OnMyMobDead";
+	monster "job_prist",18,52,"Want of Virtue",1015,1,"Z_C#prst::OnMyMobDead";
+	monster "job_prist",30,52,"Jealousy",1015,1,"Z_C#prst::OnMyMobDead";
 	end;
 
-OnM2:
-	monster "job_prist",21,62,"Fury",1015,1,"Zombie_Generator::OnMyMobDead";
-	monster "job_prist",27,62,"Envy",1015,1,"Zombie_Generator::OnMyMobDead";
+Onm2:
+	monster "job_prist",21,62,"Fury",1015,1,"Z_C#prst::OnMyMobDead";
+	monster "job_prist",27,62,"Envy",1015,1,"Z_C#prst::OnMyMobDead";
 	end;
 
-OnM3:
-	monster "job_prist",24,72,"Arrogance",1015,1,"Zombie_Generator::OnMyMobDead";
-	monster "job_prist",18,72,"Lewdness",1015,1,"Zombie_Generator::OnMyMobDead";
-	monster "job_prist",30,72,"Sloth",1015,1,"Zombie_Generator::OnMyMobDead";
+Onm3:
+	monster "job_prist",24,72,"Arrogance",1015,1,"Z_C#prst::OnMyMobDead";
+	monster "job_prist",18,72,"Lewdness",1015,1,"Z_C#prst::OnMyMobDead";
+	monster "job_prist",30,72,"Sloth",1015,1,"Z_C#prst::OnMyMobDead";
 	end;
 
-OnM4:
-	monster "job_prist",21,82,"Gluttony",1015,1,"Zombie_Generator::OnMyMobDead";
-	monster "job_prist",27,82,"Greed",1015,1,"Zombie_Generator::OnMyMobDead";
+Onm4:
+	monster "job_prist",21,82,"Gluttony",1015,1,"Z_C#prst::OnMyMobDead";
+	monster "job_prist",27,82,"Greed",1015,1,"Z_C#prst::OnMyMobDead";
 	end;
 
-OnM5:
-	monster "job_prist",24,92,"Despair",1015,1,"Zombie_Generator::OnMyMobDead";
-	monster "job_prist",18,92,"Distrust",1015,1,"Zombie_Generator::OnMyMobDead";
-	monster "job_prist",30,92,"Fear",1015,1,"Zombie_Generator::OnMyMobDead";
-	end;
-
-OnMyMobDead:
-	if (mobcount ("job_prist","Zombie_Generator::OnMyMobDead") < 1) {
-		donpcevent "prst1_2::OnEnable";
-	}
+Onm5:
+	monster "job_prist",24,92,"Despair",1015,1,"Z_C#prst::OnMyMobDead";
+	monster "job_prist",18,92,"Distrust",1015,1,"Z_C#prst::OnMyMobDead";
+	monster "job_prist",30,92,"Fear",1015,1,"Z_C#prst::OnMyMobDead";
 	end;
 
 OnDisable:
-	hideonnpc "Zombie_Generator";
-	end;
-
-OnReset:
-	killmonster "job_prist","Zombie_Generator::OnMyMobDead";
+	disablenpc "Zombie_Generator#prst";
+	killmonsterall "job_prist";
 	end;
 
 OnTimer300000:
-	donpcevent "Zombieo::OnEnable";
+	areawarp "job_prist",8,34,39,109,"prontera",234,318;
 	end;
 
 OnTimer300500:
-	donpcevent "Zombie_Generator::OnReset";
-	end;
-
-OnTimer301000:
-	donpcevent "Zombieo::OnDisable";
-	donpcevent "prst1_2::OnDisable";
+	donpcevent "Zombie_Generator#prst::OnDisable";
 	end;
 
 OnTimer301500:
-	donpcevent "Zombie_Generator::OnDisable";
+	donpcevent "Zombie_Generator#prst::OnDisable";
 	donpcevent "Peter S. Alberto#2::OnDisable";
 	donpcevent "Peter S. Alberto::OnEnable";
 	end;
@@ -1341,10 +1324,17 @@ OnTimer302000:
 	end;
 }
 
-job_prist,24,44,0	script	Zombie Info	139,1,1,{
+-	script	Z_C#prst	-1,{
+	end;
 
+OnMyMobDead:
+	set getvariableofnpc(.MyMobs,"Zombie_Generator#prst"),getvariableofnpc(.MyMobs,"Zombie_Generator#prst") - 1;
+	end;
+}
+
+job_prist,24,44,0	script	Zombie Info	-1,1,1,{
 OnTouch:
-	if (Class == Job_Baby_Priest || Class == Job_Priest) {
+	if (BaseJob == Job_Priest) {
 		mes "[Father Peter]";
 		mes "When the Priest applicant enters, 5 minutes will be given to complete this trial. Proceed slowly and help your Acolyte.";
 		next;
@@ -1358,7 +1348,7 @@ OnTouch:
 		mes "5 minutes. Best of luck~";
 		close;
 	}
-	if (Class == Job_Baby_Acolyte || Class == Job_Acolyte) {
+	else if (BaseJob == Job_Acolyte){
 		mes "[Father Peter]";
 		mes "I will give you exactly 5 minutes! You must proceed slowly and eliminate the Zombies.";
 		next;
@@ -1369,248 +1359,120 @@ OnTouch:
 	end;
 }
 
-job_prist,24,74,0	script	Zombieo	139,14,40,{
-
-OnTouch:
-	warp "prontera",234,318;
-	end;
-
+job_prist,24,52,0	script	Zombie1_1	-1,14,1,{
 OnInit:
-	hideonnpc "Zombieo";
+	disablenpc "Zombie1_1";
 	end;
-
-OnEnable:
-	hideoffnpc "Zombieo";
-	end;
-
-OnDisable:
-	hideonnpc "Zombieo";
-	end;
-}
-
-job_prist,24,52,0	script	Zombie1_1	139,14,1,{
 
 OnTouch:
-	if (Class == Job_Baby_Acolyte || Class == Job_Acolyte) {
-		donpcevent "Zombie_Generator::OnM1";
+	if (BaseJob == Job_Acolyte) {
+		donpcevent "Zombie_Generator#prst::Onm1";
 		donpcevent "Zombie1_1::OnDisable";
 	}
 	end;
 
-OnInit:
-	hideonnpc "Zombie1_1";
-	end;
-
 OnEnable:
-	hideoffnpc "Zombie1_1";
-	hideoffnpc "Zombie1_2";
-	hideoffnpc "Zombie1_3";
+	enablenpc "Zombie1_1";
 	end;
 
 OnDisable:
-	hideonnpc "Zombie1_1";
-	hideonnpc "Zombie1_2";
-	hideonnpc "Zombie1_3";
+	disablenpc "Zombie1_1";
 	end;
 }
 
-job_prist,18,52,0	script	Zombie1_2	139,1,1,{
-	end;
-
+job_prist,21,62,0	script	Zombie2_1	-1,17,1,{
 OnInit:
-	hideonnpc "Zombie1_2";
+	disablenpc "Zombie2_1";
 	end;
-}
-
-job_prist,30,52,0	script	Zombie1_3	139,1,1,{
-	end;
-
-OnInit:
-	hideonnpc "Zombie1_3";
-	end;
-}
-
-job_prist,21,62,0	script	Zombie2_1	139,17,1,{
 
 OnTouch:
-	if (Class == Job_Baby_Acolyte || Class == Job_Acolyte) {
-		donpcevent "Zombie_Generator::OnM2";
+	if (BaseJob == Job_Acolyte) {
+		donpcevent "Zombie_Generator#prst::Onm2";
 		donpcevent "Zombie2_1::OnDisable";
 	}
 	end;
 
-OnInit:
-	hideonnpc "Zombie2_1";
-	end;
-
 OnEnable:
-	hideoffnpc "Zombie2_1";
-	hideoffnpc "Zombie2_2";
+	enablenpc "Zombie2_1";
 	end;
 
 OnDisable:
-	hideonnpc "Zombie2_1";
-	hideonnpc "Zombie2_2";
+	disablenpc "Zombie2_1";
 	end;
 }
 
-job_prist,27,62,0	script	Zombie2_2	139,1,1,{
-	end;
-
+job_prist,24,72,0	script	Zombie3_1	-1,14,1,{
 OnInit:
-	hideonnpc "Zombie2_2";
+	disablenpc "Zombie3_1";
 	end;
-}
-
-job_prist,24,72,0	script	Zombie3_1	139,14,1,{
 
 OnTouch:
-	if (Class == Job_Baby_Acolyte || Class == Job_Acolyte) {
-		donpcevent "Zombie_Generator::OnM3";
+	if (BaseJob == Job_Acolyte) {
+		donpcevent "Zombie_Generator#prst::Onm3";
 		donpcevent "Zombie3_1::OnDisable";
 	}
 	end;
 
-OnInit:
-	hideonnpc "Zombie3_1";
-	end;
-
 OnEnable:
-	hideoffnpc "Zombie3_1";
-	hideoffnpc "Zombie3_2";
-	hideoffnpc "Zombie3_3";
+	enablenpc "Zombie3_1";
 	end;
 
 OnDisable:
-	hideonnpc "Zombie3_1";
-	hideonnpc "Zombie3_2";
-	hideonnpc "Zombie3_3";
+	disablenpc "Zombie3_1";
 	end;
 }
 
-job_prist,18,72,0	script	Zombie3_2	139,1,1,{
-	end;
-
+job_prist,21,82,0	script	Zombie4_1	-1,17,1,{
 OnInit:
-	hideonnpc "Zombie3_2";
+	disablenpc "Zombie4_1";
 	end;
-}
-
-job_prist,30,72,0	script	Zombie3_3	139,1,1,{
-	end;
-
-OnInit:
-	hideonnpc "Zombie3_3";
-	end;
-
-}
-
-job_prist,21,82,0	script	Zombie4_1	139,17,1,{
 
 OnTouch:
-	if (Class == Job_Baby_Acolyte || Class == Job_Acolyte) {
-		donpcevent "Zombie_Generator::OnM4";
+	if (BaseJob == Job_Acolyte) {
+		donpcevent "Zombie_Generator#prst::Onm4";
 		donpcevent "Zombie4_1::OnDisable";
 	}
 	end;
 
-OnInit:
-	hideonnpc "Zombie4_1";
-	end;
-
 OnEnable:
-	hideoffnpc "Zombie4_1";
-	hideoffnpc "Zombie4_2";
+	enablenpc "Zombie4_1";
 	end;
 
 OnDisable:
-	hideonnpc "Zombie4_1";
-	hideonnpc "Zombie4_2";
-	end;
+	disablenpc "Zombie4_1";
 }
 
-job_prist,27,82,0	script	Zombie4_2	139,1,1,{
-	end;
-
+job_prist,24,92,0	script	Zombie5_1	-1,14,1,{
 OnInit:
-	hideonnpc "Zombie4_2";
+	disablenpc "Zombie5_1";
 	end;
-}
-
-job_prist,24,92,0	script	Zombie5_1	139,14,1,{
 
 OnTouch:
-	if (Class == Job_Baby_Acolyte || Class == Job_Acolyte) {
-		donpcevent "Zombie_Generator::OnM5";
+	if (BaseJob == Job_Acolyte) {
+		donpcevent "Zombie_Generator#prst::Onm5";
 		donpcevent "Zombie5_1::OnDisable";
 	}
 	end;
 
-OnInit:
-	hideonnpc "Zombie5_1";
-	end;
-
 OnEnable:
-	hideoffnpc "Zombie5_1";
-	hideoffnpc "Zombie5_2";
-	hideoffnpc "Zombie5_3";
+	enablenpc "Zombie5_1";
 	end;
 
 OnDisable:
-	hideonnpc "Zombie5_1";
-	hideonnpc "Zombie5_2";
-	hideonnpc "Zombie5_3";
-	end;
+	disablenpc "Zombie5_1";
 }
 
-job_prist,18,92,0	script	Zombie5_2	139,1,1,{
-	end;
-
-OnInit:
-	hideonnpc "Zombie5_2";
-	end;
-}
-
-job_prist,30,92,0	script	Zombie5_3	139,1,1,{
-	end;
-
-OnInit:
-	hideonnpc "Zombie5_3";
-	end;
-}
-
-job_prist,24,109,0	script	prst1_1	45,4,3,{
-
+job_prist,24,109,4	script	prst1_1	45,3,3,{
 OnTouch:
-	if (Class == Job_Baby_Priest || Class == Job_Priest) {
+	set .@mobs,getvariableofnpc(.MyMobs,"Zombie_Generator#prst");
+	if (BaseJob == Job_Priest) warp "job_prist",168,17;
+	else if (BaseClass == Job_Acolyte && .@mobs < 1) {
 		warp "job_prist",168,17;
-	}
-	end;
-}
-
-job_prist,24,109,0	script	prst1_2	139,4,3,{
-
-OnTouch:
-	if (Class == Job_Baby_Acolyte || Class == Job_Acolyte) {
-		warp "job_prist",168,17;
-		donpcevent "Zombie_Generator::OnReset";
+		donpcevent "Zombie_Generator#prst::OnDisable";
 		donpcevent "Peter S. Alberto#2::OnDisable";
 		donpcevent "Peter S. Alberto::OnEnable";
-		donpcevent "prst1_2::OnDisable";
-		donpcevent "Zombie_Generator::OnDisable";
+		donpcevent "Zombie_Generator#prst::OnDisable";
 	}
-	end;
-
-OnInit:
-	hideonnpc "prst1_2";
-	end;
-
-OnEnable:
-	hideoffnpc "prst1_2";
-	end;
-
-OnDisable:
-	hideonnpc "prst1_2";
 	end;
 }
 
@@ -1925,7 +1787,7 @@ job_prist,1,2,1	script	Mummy_Generator	110,1,1,{
 	end;
 
 OnInit:
-	hideonnpc "Mummy_Generator";
+	disablenpc "Mummy_Generator";
 	end;
 
 OnEnable:
@@ -1950,7 +1812,7 @@ OnM3:
 	end;
 
 OnDisable:
-	hideonnpc "Mummy_Generator";
+	disablenpc "Mummy_Generator";
 	end;
 
 OnReset:
@@ -1968,17 +1830,17 @@ OnTouch:
 	end;
 
 OnInit:
-	hideonnpc "Mummy1_1";
+	disablenpc "Mummy1_1";
 	end;
 
 OnEnable:
-	hideoffnpc "Mummy1_1";
-	hideoffnpc "Mummy1_2";
+	enablenpc "Mummy1_1";
+	enablenpc "Mummy1_2";
 	end;
 
 OnDisable:
-	hideonnpc "Mummy1_1";
-	hideonnpc "Mummy1_2";
+	disablenpc "Mummy1_1";
+	disablenpc "Mummy1_2";
 	end;
 }
 
@@ -1986,7 +1848,7 @@ job_prist,105,55,0	script	Mummy1_2	139,1,1,{
 	end;
 
 OnInit:
-	hideonnpc "Mummy1_2";
+	disablenpc "Mummy1_2";
 	end;
 }
 
@@ -2000,17 +1862,17 @@ OnTouch:
 	end;
 
 OnInit:
-	hideonnpc "Mummy2_1";
+	disablenpc "Mummy2_1";
 	end;
 
 OnEnable:
-	hideoffnpc "Mummy2_1";
-	hideoffnpc "Mummy2_2";
+	enablenpc "Mummy2_1";
+	enablenpc "Mummy2_2";
 	end;
 
 OnDisable:
-	hideonnpc "Mummy2_1";
-	hideonnpc "Mummy2_2";
+	disablenpc "Mummy2_1";
+	disablenpc "Mummy2_2";
 	end;
 }
 
@@ -2018,7 +1880,7 @@ job_prist,105,70,0	script	Mummy2_2	139,1,1,{
 	end;
 
 OnInit:
-	hideonnpc "Mummy2_2";
+	disablenpc "Mummy2_2";
 	end;
 }
 
@@ -2032,17 +1894,17 @@ OnTouch:
 	end;
 
 OnInit:
-	hideonnpc "Mummy3_1";
+	disablenpc "Mummy3_1";
 	end;
 
 OnEnable:
-	hideoffnpc "Mummy3_1";
-	hideoffnpc "Mummy3_2";
+	enablenpc "Mummy3_1";
+	enablenpc "Mummy3_2";
 	end;
 
 OnDisable:
-	hideonnpc "Mummy3_1";
-	hideonnpc "Mummy3_2";
+	disablenpc "Mummy3_1";
+	disablenpc "Mummy3_2";
 	end;
 }
 
@@ -2050,7 +1912,7 @@ job_prist,105,85,0	script	Mummy3_2	139,1,1,{
 	end;
 
 OnInit:
-	hideonnpc "Mummy3_2";
+	disablenpc "Mummy3_2";
 	end;
 }
 

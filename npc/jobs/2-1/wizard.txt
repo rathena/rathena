@@ -629,6 +629,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 			if (select("Lightning Bolt:Fire Bolt:Cold Bolt:Sight") == 1) {
 				set @wizard_t, @wizard_t + 10;
 			}
+			next;
 		}
 		if (.@wizard_m2 == 2) {
 			mes "[Raulel]";
@@ -691,6 +692,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 			if (select("Drake:Megalodon:Deviace:Khalitzburg") == 3) {
 				set @wizard_t, @wizard_t + 10;
 			}
+			next;
 		}
 		else {
 			mes "[Raulel]";
@@ -753,6 +755,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 			if (select("Marduk Card:Magnolia Card:Willow Card:Maya Card") == 2) {
 				set @wizard_t, @wizard_t + 10;
 			}
+			next;
 		}
 		mes "[Raulel]";
 		mes "Hmmm...Good job, you finished answering all the questions, go buy yourself some potions or something, thats IF you have the Zeny. Hahahahahahahah~";
@@ -797,7 +800,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 		mes "[Raulel]";
 		mes "If you miss one single question, then just give up. You wouldn't have any talent in being a Wizard! ~Hahahahaha";
 		next;
-		if (select("Because of you, I want to live as a normal Mage now.:I would like to continue with the tests.")) {
+		if (select("Because of you, I want to live as a normal Mage now.:I would like to continue with the tests.") == 1) {
 			mes "[Raulel]";
 			mes "Hahahaha~ Surprising, comming from you, that's a very wise choice...*cough* *cough*";
 			mes "If i were you, i would never, ever dream of becoming a Wizard again. Gre...Greaa...*sneeze* Greater Magic wasn't meant for humans to use.";
@@ -885,6 +888,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 			if (select("Lightning Bolt:Fire Bolt:Cold Bolt:Sight") == 1) {
 				set @wizard_t, @wizard_t + 10;
 			}
+			next;
 		}
 		if (.@wizard_m2 == 2) {
 			mes "[Raulel]";
@@ -947,6 +951,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 			if (select("Drake:Megalodon:Deviace:Khalitzburg") == 3) {
 				set @wizard_t, @wizard_t + 10;
 			}
+			next;
 		}
 		else {
 			mes "[Raulel]";
@@ -1009,6 +1014,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 			if (select("Marduk Card:Magnolia Card:Willow Card:Maya Card") == 2) {
 				set @wizard_t, @wizard_t + 10;
 			}
+			next;
 		}
 		mes "[Raulel]";
 		mes "Good job, you finished answered all the questions... Go buy yourself some potions or something if you have the Zeny. Haha...";
@@ -1309,60 +1315,61 @@ job_wiz,50,165,4	script	Arena Assistant	700,{
 	close;
 }
 
-job_wiz,50,165,2	script	Waiting Room#wzrd	111,{
-	end;
-
+job_wiz,50,165,4	script	Waiting Room#wiz	700,{
 OnInit:
 	waitingroom "Waiting Room",20,"Waiting Room#wiz::OnStartArena",1;
 	enablewaitingroomevent;
 	end;
 
 OnStartArena:
+	killmonsterall "job_wiz";
 	warpwaitingpc "job_wiz",114,169;
 	donpcevent "Room of Water::OnEnable";
+	disablenpc "Waiting Room#wiz";
 	disablewaitingroomevent;
 	end;
 
-OnEnable:
+OnStart:
 	enablewaitingroomevent;
 	end;
 }
 
+// Water Room (Test 2 part 1)
+//==========================================================
 job_wiz,1,1,1	script	Room of Water	66,{
-	end;
-
 OnInit:
-	hideonnpc "Room of Water";
+	disablenpc "Room of Water";
 	end;
 
 OnEnable:
-	hideoffnpc "Room of Water";
+	enablenpc "Room of Water";
+	if (!checkre(0)) {
+		set .MyMobs,8;
+		monster "job_wiz",129,170,"Obeaune",1044,1,"Room of Water::OnMyMobDead";
+	}
+	else
+		set .MyMobs,7;
 	monster "job_wiz",109,174,"Phen",1158,1,"Room of Water::OnMyMobDead";
-	monster "job_wiz",118,174,"Clam",1074,1,"Room of Water::OnMyMobDead";
+	monster "job_wiz",118,174,"Shellfish",1074,1,"Room of Water::OnMyMobDead";
 	monster "job_wiz",109,165,"Vadon",1066,1,"Room of Water::OnMyMobDead";
 	monster "job_wiz",118,165,"Cornutus",1067,1,"Room of Water::OnMyMobDead";
 	monster "job_wiz",101,157,"Marina",1141,1,"Room of Water::OnMyMobDead";
 	monster "job_wiz",126,157,"Marin",1242,1,"Room of Water::OnMyMobDead";
 	monster "job_wiz",98,170,"Magnolia",1138,1,"Room of Water::OnMyMobDead";
-	if(!checkre(0)){
-		monster "job_wiz",129,170,"Obeaune",1044,1,"Room of Water::OnMyMobDead";
-	}
 	initnpctimer;
 	end;
 
-OnReset:
-	killmonster "job_wiz","Room of Water::OnMyMobDead";
-	end;
-
 OnDisable:
-	hideonnpc "Room of Water";
+	killmonsterall "job_wiz";
+	disablenpc "Room of Water";
 	end;
 
 OnMyMobDead:
-	if (mobcount ("job_wiz","Room of Water::OnMyMobDead") < 1) {
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
 		set WIZ_Q2,WIZ_Q2+1;
-		mapannounce "job_wiz","" + strcharinfo(0) + " has succeeded in eliminating the monsters.",bc_map;
-		donpcevent "Room of Water#DK::OnEnable";
+		mapannounce "job_wiz",strcharinfo(0)+" has succeeded in eliminating the monsters.",bc_map;
+		donpcevent "Room of Water#Door::OnEnable";
 		stopnpctimer;
 	}
 	end;
@@ -1405,11 +1412,11 @@ OnTimer173000:
 
 OnTimer183000:
 	mapannounce "job_wiz","Time is up.",bc_map;
-	donpcevent "Room of Water::OnReset";
+	donpcevent "Room of Water::OnDisable";
 	end;
 
 OnTimer184000:
-	donpcevent "Room of Water#Failed::OnEnable";
+	enablenpc "Room of Water#Failed";
 	end;
 
 OnTimer185000:
@@ -1417,45 +1424,41 @@ OnTimer185000:
 	end;
 
 OnTimer186000:
-	donpcevent "Room of Water#Failed::OnDisable";
+	disablenpc "Room of Water#Failed";
 	donpcevent "Room of Water::OnDisable";
-	donpcevent "Waiting Room::OnEnable";
+	donpcevent "Waiting Room#wiz::OnStart";
 	end;
 }
 
-job_wiz,1,2,1	script	Room of Water#DK	66,{
-	end;
-
+job_wiz,1,2,1	script	Room of Water#Door	66,{
 OnInit:
-	hideonnpc "Room of Water#DK";
+	disablenpc "Room of Water#Door";
 	end;
 
 OnEnable:
-	hideoffnpc "Room of Water#DK";
-	donpcevent "Room of Water::OnReset";
+	enablenpc "Room of Water#Door";
 	donpcevent "Room of Water::OnDisable";
-	monster "job_wiz",114,169,"Marine Sphere",1142,1,"Room of Water#DK::OnMyMobDead";
-	monster "job_wiz",112,169,"Hydra",1068,1,"Room of Water#DK::OnMyMobDead";
-	monster "job_wiz",116,169,"Hydra",1068,1,"Room of Water#DK::OnMyMobDead";
-	monster "job_wiz",114,171,"Hydra",1068,1,"Room of Water#DK::OnMyMobDead";
-	monster "job_wiz",114,167,"Hydra",1068,1,"Room of Water#DK::OnMyMobDead";
+	set .MyMobs,5;
+	monster "job_wiz",114,169,"Marine Sphere",1142,1,"Room of Water#Door::OnMyMobDead";
+	monster "job_wiz",112,169,"Hydra",1068,1,"Room of Water#Door::OnMyMobDead";
+	monster "job_wiz",116,169,"Hydra",1068,1,"Room of Water#Door::OnMyMobDead";
+	monster "job_wiz",114,171,"Hydra",1068,1,"Room of Water#Door::OnMyMobDead";
+	monster "job_wiz",114,167,"Hydra",1068,1,"Room of Water#Door::OnMyMobDead";
 	initnpctimer;
 	end;
 
-OnReset:
-	killmonster "job_wiz","Room of Water#DK::OnMyMobDead";
-	end;
-
 OnDisable:
-	hideonnpc "Room of Water#DK";
+	killmonsterall "job_wiz";
+	disablenpc "Room of Water#Door";
 	end;
 
 OnMyMobDead:
-	if (mobcount ("job_wiz","Room of Water#DK::OnMyMobDead") < 1) {
-		mapannounce "job_wiz","" + strcharinfo(0) + " has succeeded in eliminating the monsters.",bc_map;
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		mapannounce "job_wiz",strcharinfo(0)+" has succeeded in eliminating the monsters.",bc_map;
+		percentheal 100,100;
 		warp "job_wiz",116,97;
-		donpcevent "Room of Water#DK::OnReset";
-		donpcevent "Room of Water#DK::OnDisable";
+		donpcevent "Room of Water#Door::OnDisable";
 		donpcevent "Room of Earth::OnEnable";
 		stopnpctimer;
 	}
@@ -1475,11 +1478,11 @@ OnTimer50000:
 
 OnTimer60000:
 	mapannounce "job_wiz","Time is up.",bc_map;
-	donpcevent "Room of Water#DK::OnReset";
+	donpcevent "Room of Water#Door::OnDisable";
 	end;
 
 OnTimer61000:
-	donpcevent "Room of Water#Failed::OnEnable";
+	enablenpc "Room of Water#Failed";
 	end;
 
 OnTimer62000:
@@ -1487,50 +1490,43 @@ OnTimer62000:
 	end;
 
 OnTimer63000:
-	donpcevent "Room of Water#Failed::OnDisable";
-	donpcevent "Room of Water#DK::OnDisable";
-	donpcevent "Waiting Room::OnEnable";
+	disablenpc "Room of Water#Failed";
+	donpcevent "Room of Water#Door::OnDisable";
+	donpcevent "Waiting Room#wiz::OnStart";
 	end;
 }
 
-job_wiz,114,169,0	script	Room of Water#Failed	139,16,16,{
+job_wiz,114,169,0	script	Room of Water#Failed	-1,16,16,{
+OnInit:
+	disablenpc "Room of Water#Failed";
+	end;
 
 OnTouch:
-	mapannounce "job_wiz","" + strcharinfo(0) + " has not succeeded.",bc_map;
+	mapannounce "job_wiz",strcharinfo(0)+" has not succeeded.",bc_map;
 	warp "geffen",120,110;
-	end;
-
-OnInit:
-	hideonnpc "Room of Water#Failed";
-	end;
-
-OnEnable:
-	hideoffnpc "Room of Water#Failed";
-	end;
-
-OnDisable:
-	hideonnpc "Room of Water#Failed";
 	end;
 }
 
-job_wiz,1,3,1	script	Room of Earth	66,1,1,{
-	end;
-
+// Earth Room (Test 2 part 2)
+//==========================================================
+job_wiz,1,3,1	script	Room of Earth	66,{
 OnInit:
-	hideonnpc "Room of Earth";
+	disablenpc "Room of Earth";
 	end;
 
 OnEnable:
-	hideoffnpc "Room of Earth";
-	percentheal 100,100;
-	monster "job_wiz",111,102,"Yoyo",1057,1,"Room of Earth::OnMyMobDead";
-	monster "job_wiz",120,102,"Deniro",1105,1,"Room of Earth::OnMyMobDead";
-	monster "job_wiz",111,102,"Caramel",1103,1,"Room of Earth::OnMyMobDead";
-	if (!checkre(0)){
+	enablenpc "Room of Earth";
+	if (!checkre(0)) {
+		set .MyMobs,10;
 		monster "job_wiz",120,102,"Hode",1127,1,"Room of Earth::OnMyMobDead";
 		monster "job_wiz",111,93,"Savage",1166,1,"Room of Earth::OnMyMobDead";
 		monster "job_wiz",127,86,"Mantis",1139,1,"Room of Earth::OnMyMobDead";
 	}
+	else
+		set .MyMobs,7;
+	monster "job_wiz",111,102,"Yoyo",1057,1,"Room of Earth::OnMyMobDead";
+	monster "job_wiz",120,102,"Deniro",1105,1,"Room of Earth::OnMyMobDead";
+	monster "job_wiz",111,102,"Caramel",1103,1,"Room of Earth::OnMyMobDead";
 	monster "job_wiz",120,93,"Giearth",1121,1,"Room of Earth::OnMyMobDead";
 	monster "job_wiz",107,98,"Bigfoot",1060,1,"Room of Earth::OnMyMobDead";
 	monster "job_wiz",124,98,"Orc Warrior",1023,1,"Room of Earth::OnMyMobDead";
@@ -1538,18 +1534,16 @@ OnEnable:
 	initnpctimer;
 	end;
 
-OnReset:
-	killmonster "job_wiz","Room of Earth::OnMyMobDead";
-	end;
-
 OnDisable:
-	hideonnpc "Room of Earth";
+	killmonsterall "job_wiz";
+	disablenpc "Room of Earth";
 	end;
 
 OnMyMobDead:
-	if (mobcount ("job_wiz","Room of Earth::OnMyMobDead") < 1) {
-		mapannounce "job_wiz","" + strcharinfo(0) + " has succeeded in eliminating the monsters.",bc_map;
-		donpcevent "Room of Earth#DK::OnEnable";
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		mapannounce "job_wiz",strcharinfo(0) + " has succeeded in eliminating the monsters.",bc_map;
+		donpcevent "Room of Earth#Door::OnEnable";
 		stopnpctimer;
 	}
 	end;
@@ -1592,11 +1586,11 @@ OnTimer173000:
 
 OnTimer183000:
 	mapannounce "job_wiz","Time is up.",bc_map;
-	donpcevent "Room of Earth::OnReset";
+	donpcevent "Room of Earth::OnDisable";
 	end;
 
 OnTimer184000:
-	donpcevent "Room of Earth#Failed::OnEnable";
+	enablenpc "Room of Earth#Failed";
 	end;
 
 OnTimer185000:
@@ -1604,50 +1598,47 @@ OnTimer185000:
 	end;
 
 OnTimer186000:
-	donpcevent "Room of Earth#Failed::OnDisable";
+	disablenpc "Room of Earth#Failed";
 	donpcevent "Room of Earth::OnDisable";
-	donpcevent "Waiting Room::OnEnable";
+	donpcevent "Waiting Room#wiz::OnStart";
 	end;
 }
 
-job_wiz,1,4,1	script	Room of Earth#DK	66,{
-	end;
-
+job_wiz,1,4,1	script	Room of Earth#Door	66,{
 OnInit:
-	hideonnpc "Room of Earth#DK";
+	disablenpc "Room of Earth#Door";
 	end;
 
 OnEnable:
-	hideoffnpc "Room of Earth#DK";
-	donpcevent "Room of Earth::OnReset";
+	enablenpc "Room of Earth#Door";
 	donpcevent "Room of Earth::OnDisable";
-	if (!checkre(0)){
-		monster "job_wiz",116,97,"Flora",1118,1,"Room of Earth#DK::OnMyMobDead";
+	if (!checkre(0)) {
+		set .MyMobs,7;
+		monster "job_wiz",116,97,"Flora",1118,1,"Room of Earth#Door::OnMyMobDead";
 	}
-	monster "job_wiz",114,95,"Mandragora",1020,1,"Room of Earth#DK::OnMyMobDead";
-	monster "job_wiz",118,95,"Mandragora",1020,1,"Room of Earth#DK::OnMyMobDead";
-	monster "job_wiz",114,99,"Mandragora",1020,1,"Room of Earth#DK::OnMyMobDead";
-	monster "job_wiz",118,99,"Mandragora",1020,1,"Room of Earth#DK::OnMyMobDead";
-	monster "job_wiz",116,94,"Mandragora",1020,1,"Room of Earth#DK::OnMyMobDead";
-	monster "job_wiz",116,100,"Mandragora",1020,1,"Room of Earth#DK::OnMyMobDead";
+	else
+		set .MyMobs,6;
+	monster "job_wiz",114,95,"Mandragora",1020,1,"Room of Earth#Door::OnMyMobDead";
+	monster "job_wiz",118,95,"Mandragora",1020,1,"Room of Earth#Door::OnMyMobDead";
+	monster "job_wiz",114,99,"Mandragora",1020,1,"Room of Earth#Door::OnMyMobDead";
+	monster "job_wiz",118,99,"Mandragora",1020,1,"Room of Earth#Door::OnMyMobDead";
+	monster "job_wiz",116,94,"Mandragora",1020,1,"Room of Earth#Door::OnMyMobDead";
+	monster "job_wiz",116,100,"Mandragora",1020,1,"Room of Earth#Door::OnMyMobDead";
 	initnpctimer;
 	end;
 
-OnReset:
-	killmonster "job_wiz","Room of Earth#DK::OnMyMobDead";
-	end;
-
 OnDisable:
-	hideonnpc "Room of Earth#DK";
+	killmonsterall "job_wiz";
+	disablenpc "Room of Earth#Door";
 	end;
 
 OnMyMobDead:
-	if (mobcount ("job_wiz","Room of Earth#DK::OnMyMobDead") < 1) {
-		mapannounce "job_wiz","" + strcharinfo(0) + " has succeeded in eliminating the monster.",bc_map;
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		mapannounce "job_wiz",strcharinfo(0) + " has succeeded in eliminating the monster.",bc_map;
 		percentheal 100,100;
 		warp "job_wiz",46,99;
-		donpcevent "Room of Earth#DK::OnReset";
-		donpcevent "Room of Earth#DK::OnDisable";
+		donpcevent "Room of Earth#Door::OnDisable";
 		donpcevent "Room of Fire::OnEnable";
 		stopnpctimer;
 	}
@@ -1667,7 +1658,7 @@ OnTimer50000:
 
 OnTimer60000:
 	mapannounce "job_wiz","End time.",bc_map;
-	donpcevent "Room of Earth#DK::OnReset";
+	donpcevent "Room of Earth#Door::OnDisable";
 	end;
 
 OnTimer61000:
@@ -1679,67 +1670,58 @@ OnTimer62000:
 	end;
 
 OnTimer63000:
-	donpcevent "Room of Earth#Failed::OnDisable";
-	donpcevent "Room of Earth#DK::OnDisable";
-	donpcevent "Waiting Room::OnEnable";
+	disablenpc "Room of Earth#Failed";
+	donpcevent "Room of Earth#Door::OnDisable";
+	donpcevent "Waiting Room#wiz::OnStart";
 	end;
 }
 
-job_wiz,116,97,0	script	Room of Earth#Failed	139,16,16,{
+job_wiz,116,97,0	script	Room of Earth#Failed	-1,16,16,{
+OnInit:
+	disablenpc "Room of Earth#Failed";
+	end;
 
 OnTouch:
-	mapannounce "job_wiz","" + strcharinfo(0) + " has not succeeded.",bc_map;
+	mapannounce "job_wiz",strcharinfo(0) + " has not succeeded.",bc_map;
 	warp "geffen",120,110;
-	end;
-
-OnInit:
-	hideonnpc "Room of Earth#Failed";
-	end;
-
-OnEnable:
-	hideoffnpc "Room of Earth#Failed";
-	end;
-
-OnDisable:
-	hideonnpc "Room of Earth#Failed";
 	end;
 }
 
+// Fire Room (Test 2 part 3)
+//==========================================================
 job_wiz,1,5,1	script	Room of Fire	66,{
-	end;
-
 OnInit:
-	hideonnpc "Room of Fire";
+	disablenpc "Room of Fire";
 	end;
 
 OnEnable:
-	hideoffnpc "Room of Fire";
-	percentheal 100,100;
-	if (!checkre(0)){
+	enablenpc "Room of Fire";
+	if (!checkre(0)) {
+		set .MyMobs,8;
 		monster "job_wiz",58,110,"Zerom",1178,1,"Room of Fire::OnMyMobDead";
 		monster "job_wiz",54,89,"Desert Wolf",1106,1,"Room of Fire::OnMyMobDead";
 	}
+	else
+		set .MyMobs,6;
 	monster "job_wiz",33,110,"Goblin",1123,1,"Room of Fire::OnMyMobDead";
 	monster "job_wiz",40,103,"Scorpion",1001,1,"Room of Fire::OnMyMobDead";
 	monster "job_wiz",51,103,"Frilldora",1119,1,"Room of Fire::OnMyMobDead";
-	monster "job_wiz",40,92,"Peco Peco",1019,1,"Room of Fire::OnMyMobDead";
+	monster "job_wiz",40,92,"PecoPeco",1019,1,"Room of Fire::OnMyMobDead";
 	monster "job_wiz",51,92,"Elder Willow",1033,1,"Room of Fire::OnMyMobDead";
 	monster "job_wiz",37,89,"Metaller",1058,1,"Room of Fire::OnMyMobDead";
 	initnpctimer;
 	end;
 
-OnReset:
-	killmonster "job_wiz","Room of Fire::OnMyMobDead";
-	end;
-
 OnDisable:
-	hideonnpc "Room of Fire";
+	killmonsterall "job_wiz";
+	disablenpc "Room of Fire";
 	end;
 
 OnMyMobDead:
-	if (mobcount ("job_wiz","Room of Fire::OnMyMobDead") < 1) {
-		mapannounce "job_wiz","" + strcharinfo(0) + " has succeeded in eliminating the monsters.",bc_map;
-		donpcevent "Room of Fire#Door Keeper::OnEnable";
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		mapannounce "job_wiz",strcharinfo(0) + " has succeeded in eliminating the monsters.",bc_map;
+		donpcevent "Room of Fire#Door::OnEnable";
 		stopnpctimer;
 	}
 	end;
@@ -1782,7 +1764,7 @@ OnTimer173000:
 
 OnTimer183000:
 	mapannounce "job_wiz","Time is up.",bc_map;
-	donpcevent "Room of Fire::OnReset";
+	donpcevent "Room of Fire::OnDisable";
 	end;
 
 OnTimer184000:
@@ -1794,47 +1776,46 @@ OnTimer185000:
 	end;
 
 OnTimer186000:
-	donpcevent "Room of Fire#Failed::OnDisable";
+	disablenpc "Room of Fire#Failed";
 	donpcevent "Room of Fire::OnDisable";
-	donpcevent "Waiting Room::OnEnable";
+	donpcevent "Waiting Room#wiz::OnStart";
 	end;
 }
 
-job_wiz,1,6,1	script	Room of Fire#Door Keeper	66,{
-	end;
-
+job_wiz,1,6,1	script	Room of Fire#Door	66,{
 OnInit:
-	hideonnpc "Room of Fire#Door Keeper";
+	disablenpc "Room of Fire#Door";
 	end;
 
 OnEnable:
-	hideoffnpc "Room of Fire#Door Keeper";
-	donpcevent "Room of Fire::OnReset";
+	enablenpc "Room of Fire#Door";
 	donpcevent "Room of Fire::OnDisable";
-	if (checkre(0)){
-		monster "job_wiz",44,99,"Greatest General",1277,1,"Room of Fire#Door Keeper::OnMyMobDead";
+	set .MyMobs,3;
+	monster "job_wiz",44,99,"Greatest General",1277,1,"Room of Fire#Door::OnMyMobDead";
+	if (checkre(0)) {
+		monster "job_wiz",43,99,"Greatest General",1277,1,"Room of Fire#Door::OnMyMobDead";
+		monster "job_wiz",45,99,"Greatest General",1277,1,"Room of Fire#Door::OnMyMobDead";
 	}
-	monster "job_wiz",43,99,"Horong",1129,1,"Room of Fire#Door Keeper::OnMyMobDead";
-	monster "job_wiz",45,99,"Horong",1129,1,"Room of Fire#Door Keeper::OnMyMobDead";
+	else {
+		monster "job_wiz",43,99,"Horong",1129,1,"Room of Fire#Door::OnMyMobDead";
+		monster "job_wiz",45,99,"Horong",1129,1,"Room of Fire#Door::OnMyMobDead";
+	}
 	initnpctimer;
 	end;
 
-OnReset:
-	killmonster "job_wiz","Room of Fire#Door Keeper::OnMyMobDead";
-	end;
-
 OnDisable:
-	hideonnpc "Room of Fire#Door Keeper";
+	killmonsterall "job_wiz";
+	disablenpc "Room of Fire#Door";
 	end;
 
 OnMyMobDead:
-	if (mobcount ("job_wiz","Room of Fire#Door Keeper::OnMyMobDead") < 1) {
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
 		mapannounce "job_wiz","Congratulations, " + strcharinfo(0) + ". You have passed the job change test.",bc_map;
 		set WIZ_Q,7;
 		changequest 9017,9018;
-		donpcevent "Room of Fire#Door Keeper::OnReset";
-		donpcevent "Room of Fire#Door Keeper::OnDisable";
-		donpcevent "Test Helper::OnEnable";
+		donpcevent "Room of Fire#Door::OnDisable";
+		donpcevent "Test Helper#wiz::OnEnable";
 		stopnpctimer;
 	}
 	end;
@@ -1861,11 +1842,11 @@ OnTimer110000:
 
 OnTimer120000:
 	mapannounce "job_wiz","Time is up.",bc_map;
-	donpcevent "Room of Fire#Door Keeper::OnReset";
+	donpcevent "Room of Fire#Door::OnDisable";
 	end;
 
 OnTimer121000:
-	donpcevent "Room of Fire#Failed::OnEnable";
+	enablenpc "Room of Fire#Failed";
 	end;
 
 OnTimer122000:
@@ -1873,57 +1854,26 @@ OnTimer122000:
 	end;
 
 OnTimer123000:
-	donpcevent "Room of Fire#Failed::OnDisable";
-	donpcevent "Room of Fire#Door Keeper::OnDisable";
-	donpcevent "Waiting Room::OnEnable";
-	end;
+	disablenpc "Room of Fire#Failed";
+	donpcevent "Room of Fire#Door::OnDisable";
+	donpcevent "Waiting Room#wiz::OnStart";
 }
 
-job_wiz,46,99,0	script	Room of Fire#Failed	139,16,16,{
-	end;
-
+job_wiz,46,99,0	script	Room of Fire#Failed	-1,16,16,{
 OnInit:
-	hideonnpc "Room of Fire#Failed";
+	disablenpc "Room of Fire#Failed";
 	end;
 
 OnTouch:
 	warp "geffen",120,110;
 	end;
-
-OnEnable:
-	hideoffnpc "Room of Fire#Failed";
-	end;
-
-OnDisable:
-	hideonnpc "Room of Fire#Failed";
-	end;
 }
 
-job_wiz,46,99,0	script	Succeed	139,16,16,{
+job_wiz,1,7,1	script	Test Helper#wiz	66,{
 	end;
 
 OnInit:
-	hideonnpc "Succeed";
-	end;
-
-OnTouch:
-	warp "gef_tower",110,30;
-	end;
-
-OnEnable:
-	hideoffnpc "Succeed";
-	end;
-
-OnDisable:
-	hideonnpc "Succeed";
-	end;
-}
-
-job_wiz,1,7,1	script	Test Helper	66,1,1,{
-	end;
-
-OnInit:
-	hideonnpc "Test Helper";
+	disablenpc "Test Helper#wiz";
 	end;
 
 OnEnable:
@@ -1931,7 +1881,7 @@ OnEnable:
 	end;
 
 OnDisable:
-	hideonnpc "Test Helper";
+	disablenpc "Test Helper#wiz";
 	end;
 
 OnTimer2000:
@@ -1943,11 +1893,7 @@ OnTimer4000:
 	end;
 
 OnTimer5000:
-	donpcevent "Succeed::OnEnable";
-	end;
-
-OnTimer6000:
-	donpcevent "Succeed::OnDisable";
+	areawarp "job_wiz",33,82,57,113,"gef_tower",110,30;
 	end;
 
 OnTimer7000:
@@ -1955,8 +1901,8 @@ OnTimer7000:
 	end;
 
 OnTimer9000:
-	donpcevent "Test Helper::OnDisable";
-	donpcevent "Waiting Room::OnEnable";
+	donpcevent "Test Helper#wiz::OnDisable";
+	donpcevent "Waiting Room#wiz::OnStart";
 	stopnpctimer;
 	end;
 }

@@ -1447,7 +1447,7 @@ OnTimer301000:
 	end;
 
 OnInit:
-	hideoffnpc "Summoner#1";
+	enablenpc "Summoner#1";
 	monster "job_cru",94,45,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
 	monster "job_cru",94,55,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
 	monster "job_cru",94,65,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
@@ -1464,7 +1464,7 @@ OnInit:
 	end;
 
 OnEnable:
-	hideoffnpc "Summoner#1";
+	enablenpc "Summoner#1";
 	monster "job_cru",94,45,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
 	monster "job_cru",94,55,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
 	monster "job_cru",94,65,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
@@ -1485,7 +1485,7 @@ OnReset:
 	end;
 
 OnDisable:
-	hideonnpc "Summoner#1";
+	disablenpc "Summoner#1";
 	end;
 
 OnMyMobDead:
@@ -1510,7 +1510,7 @@ OnTimer346000:
 	end;
 
 OnInit:
-	hideoffnpc "Summoner#2";
+	enablenpc "Summoner#2";
 	monster "job_cru",98,50,"Flora",1118,1,"Summoner#2::OnMyMobDead";
 	monster "job_cru",92,60,"Flora",1118,1,"Summoner#2::OnMyMobDead";
 	monster "job_cru",104,60,"Flora",1118,1,"Summoner#2::OnMyMobDead";
@@ -1522,7 +1522,7 @@ OnInit:
 	end;
 
 OnEnable:
-	hideoffnpc "Summoner#2";
+	enablenpc "Summoner#2";
 	monster "job_cru",98,50,"Flora",1118,1,"Summoner#2::OnMyMobDead";
 	monster "job_cru",92,60,"Flora",1118,1,"Summoner#2::OnMyMobDead";
 	monster "job_cru",104,60,"Flora",1118,1,"Summoner#2::OnMyMobDead";
@@ -1538,7 +1538,7 @@ OnReset:
 	end;
 
 OnDisable:
-	hideonnpc "Summoner#2";
+	disablenpc "Summoner#2";
 	end;
 
 OnMyMobDead:
@@ -1563,7 +1563,7 @@ OnTimer346000:
 	end;
 
 OnInit:
-	hideoffnpc "Summoner#3";
+	enablenpc "Summoner#3";
 	monster "job_cru",92,50,"Greatest General",1277,1,"Summoner#3::OnMyMobDead";
 	monster "job_cru",104,50,"Greatest General",1277,1,"Summoner#3::OnMyMobDead";
 	monster "job_cru",98,60,"Greatest General",1277,1,"Summoner#3::OnMyMobDead";
@@ -1576,7 +1576,7 @@ OnInit:
 	end;
 
 OnEnable:
-	hideoffnpc "Summoner#3";
+	enablenpc "Summoner#3";
 	monster "job_cru",90,50,"Greatest General",1277,1,"Summoner#3::OnMyMobDead";
 	monster "job_cru",105,50,"Greatest General",1277,1,"Summoner#3::OnMyMobDead";
 	monster "job_cru",98,60,"Greatest General",1277,1,"Summoner#3::OnMyMobDead";
@@ -1593,7 +1593,7 @@ OnReset:
 	end;
 
 OnDisable:
-	hideonnpc "Summoner#3";
+	disablenpc "Summoner#3";
 	end;
 
 OnMyMobDead:
@@ -1618,7 +1618,7 @@ OnTimer186000:
 	end;
 
 OnInit:
-	hideoffnpc "Summoner#4";
+	enablenpc "Summoner#4";
 	monster "job_cru",98,50,"Familiar",1005,1,"Summoner#4::OnMyMobDead";
 	monster "job_cru",98,55,"Familiar",1005,1,"Summoner#4::OnMyMobDead";
 	monster "job_cru",98,60,"Familiar",1005,1,"Summoner#4::OnMyMobDead";
@@ -1634,7 +1634,7 @@ OnInit:
 	end;
 
 OnEnable:
-	hideoffnpc "Summoner#4";
+	enablenpc "Summoner#4";
 	monster "job_cru",98,50,"Familiar",1005,1,"Summoner#4::OnMyMobDead";
 	monster "job_cru",98,55,"Familiar",1005,1,"Summoner#4::OnMyMobDead";
 	monster "job_cru",98,60,"Familiar",1005,1,"Summoner#4::OnMyMobDead";
@@ -1654,7 +1654,7 @@ OnReset:
 	end;
 
 OnDisable:
-	hideonnpc "Summoner#4";
+	disablenpc "Summoner#4";
 	end;
 
 OnMyMobDead:
@@ -1663,6 +1663,7 @@ OnMyMobDead:
 }
 
 job_cru,98,105,0	script	Summoner#5	45,4,3,{
+	end;
 
 OnTouch:
 	set CRUS_Q,6;
@@ -1691,7 +1692,7 @@ job_cru,24,187,2	script	Waiting Room#1	700,{
 	end;
 
 OnInit:
-	hideonnpc "Waiting Room#1";
+	disablenpc "Waiting Room#1";
 	waitingroom "Waiting Room",20,"Waiting Room#1::OnStartArena",1;
 	enablewaitingroomevent;
 	end;
@@ -1708,6 +1709,7 @@ OnEnable:
 }
 
 job_cru,168,17,0	script	Zombie Guide	139,2,2,{
+	end;
 
 OnTouch:
 	mes "[Bliant Piyord]";
@@ -1728,11 +1730,11 @@ job_cru,2,1,1	script	Monster Summon#0	110,1,1,{
 	end;
 
 OnInit:
-	hideonnpc "Monster Summon#0";
+	disablenpc "Monster Summon#0";
 	end;
 
 OnEnable:
-	hideoffnpc "Monster Summon#0";
+	enablenpc "Monster Summon#0";
 	donpcevent "Monster Summon#1::OnEnable";
 	donpcevent "Monster Summon#2::OnEnable";
 	donpcevent "Monster Summon#3::OnEnable";
@@ -1767,7 +1769,7 @@ OnMyMobDead:
 	end;
 
 OnDisable:
-	hideonnpc "Monster Summon#0";
+	disablenpc "Monster Summon#0";
 	end;
 
 OnReset:
@@ -1776,6 +1778,7 @@ OnReset:
 }
 
 job_cru,168,45,0	script	Monster Summon#1	139,15,1,{
+	end;
 
 OnTouch:
 	donpcevent "Monster Summon#0::OnM1";
@@ -1783,19 +1786,20 @@ OnTouch:
 	end;
 
 OnInit:
-	hideonnpc "Monster Summon#1";
+	disablenpc "Monster Summon#1";
 	end;
 
 OnEnable:
-	hideoffnpc "Monster Summon#1";
+	enablenpc "Monster Summon#1";
 	end;
 
 OnDisable:
-	hideonnpc "Monster Summon#1";
+	disablenpc "Monster Summon#1";
 	end;
 }
 
 job_cru,168,80,0	script	Monster Summon#2	139,15,1,{
+	end;
 
 OnTouch:
 	donpcevent "Monster Summon#0::OnM2";
@@ -1803,19 +1807,20 @@ OnTouch:
 	end;
 
 OnInit:
-	hideonnpc "Monster Summon#2";
+	disablenpc "Monster Summon#2";
 	end;
 
 OnEnable:
-	hideoffnpc "Monster Summon#2";
+	enablenpc "Monster Summon#2";
 	end;
 
 OnDisable:
-	hideonnpc "Monster Summon#2";
+	disablenpc "Monster Summon#2";
 	end;
 }
 
 job_cru,168,115,0	script	Monster Summon#3	139,15,1,{
+	end;
 
 OnTouch:
 	monster "job_cru",168,110,"Archer Skeleton",1016,1;
@@ -1824,19 +1829,20 @@ OnTouch:
 	end;
 
 OnInit:
-	hideonnpc "Monster Summon#3";
+	disablenpc "Monster Summon#3";
 	end;
 
 OnEnable:
-	hideoffnpc "Monster Summon#3";
+	enablenpc "Monster Summon#3";
 	end;
 
 OnDisable:
-	hideonnpc "Monster Summon#3";
+	disablenpc "Monster Summon#3";
 	end;
 }
 
 job_cru,168,150,0	script	Monster Summon#4	139,15,1,{
+	end;
 
 OnTouch:
 	monster "job_cru",168,150,"Ghoul",1036,1;
@@ -1844,7 +1850,7 @@ OnTouch:
 	end;
 
 OnInit:
-	hideonnpc "Monster Summon#4";
+	disablenpc "Monster Summon#4";
 	end;
 
 OnMyMobDead:
@@ -1852,7 +1858,7 @@ OnMyMobDead:
 	end;
 
 OnEnable:
-	hideoffnpc "Monster Summon#4";
+	enablenpc "Monster Summon#4";
 	end;
 
 OnReset:
@@ -1860,11 +1866,12 @@ OnReset:
 	end;
 
 OnDisable:
-	hideonnpc "Monster Summon#4";
+	disablenpc "Monster Summon#4";
 	end;
 }
 
 job_cru,168,180,0	script	Monster Summon#5	45,4,3,{
+	end;
 
 OnTouch:
 	warp "prt_castle",35,147;
@@ -1877,15 +1884,15 @@ OnTouch:
 	end;
 
 OnInit:
-	hideonnpc "Monster Summon#5";
+	disablenpc "Monster Summon#5";
 	end;
 
 OnEnable:
-	hideoffnpc "Monster Summon#5";
+	enablenpc "Monster Summon#5";
 	end;
 
 OnDisable:
-	hideonnpc "Monster Summon#5";
+	disablenpc "Monster Summon#5";
 	end;
 }
 
@@ -1922,16 +1929,16 @@ OnTimer243000:
 	end;
 
 OnInit:
-	hideonnpc "Monster Summon#6";
+	disablenpc "Monster Summon#6";
 	end;
 
 OnEnable:
-	hideoffnpc "Monster Summon#6";
+	enablenpc "Monster Summon#6";
 	initnpctimer;
 	end;
 
 OnDisable:
-	hideonnpc "Monster Summon#6";
+	disablenpc "Monster Summon#6";
 	end;
 
 OnStop:
@@ -1940,39 +1947,41 @@ OnStop:
 }
 
 job_cru,168,110,0	script	Monster Summon#7	139,14,82,{
+	end;
 
 OnTouch:
 	warp "prontera",234,318;
 	end;
 
 OnInit:
-	hideonnpc "Monster Summon#7";
+	disablenpc "Monster Summon#7";
 	end;
 
 OnEnable:
-	hideoffnpc "Monster Summon#7";
+	enablenpc "Monster Summon#7";
 	end;
 
 OnDisable:
-	hideonnpc "Monster Summon#7";
+	disablenpc "Monster Summon#7";
 	end;
 }
 
 job_cru,168,17,0	script	Monster Summon#8	139,14,5,{
+	end;
 
 OnTouch:
 	warp "prontera",234,318;
 	end;
 
 OnInit:
-	hideonnpc "Monster Summon#8";
+	disablenpc "Monster Summon#8";
 	end;
 
 OnEnable:
-	hideoffnpc "Monster Summon#8";
+	enablenpc "Monster Summon#8";
 	end;
 
 OnDisable:
-	hideonnpc "Monster Summon#8";
+	disablenpc "Monster Summon#8";
 	end;
 }

@@ -686,8 +686,7 @@ OnTouch:
 		mes "I am not necessarily cruel. Before we proceed, is there anything you wish to know?";
 		next;
 	}
-	set ASSIN_Q3,0;
-	while (1) {
+	while(ASSIN_Q3 < 3) {
 		switch (select("...Skills?:...Stats?:Hmpf, I know it all.")) {
 		case 1:
 			mes "[The Anonymous One]";
@@ -773,11 +772,10 @@ OnTouch:
 				set ASSIN_Q3,3;
 				changequest 8001,8002;
 				next;
-				break;
 			} else {
 				set ASSIN_Q3,3;
 				changequest 8001,8002;
-				break;
+				next;
 			}
 			break;
 		}
@@ -959,7 +957,7 @@ OnTouch:
 			mes "[The Anonymous One]";
 			mes "6. Choose the correct specialty of the Assassin class.";
 			next;
-			select("Excellent singing talent:Excellent reading talent:Excellent dancing talent:Excellent dodge ability");
+			if(select("Excellent singing talent:Excellent reading talent:Excellent dancing talent:Excellent dodge ability") == 4);
 			set @assassin_t,@assassin_t + 10;
 			mes "[The Anonymous One]";
 			mes "7. Choose the maximum AGI bonus an Assassin can get at job level 50.";
@@ -1312,7 +1310,7 @@ OnInit:
 OnStartArena:
 	warpwaitingpc "in_moc_16",66,151;
 	attachrid($@warpwaitingpc[0]);
-	if(ASSIN_Q2<5) {
+	if(ASSIN_Q3 < 5) {
 		warpchar "in_moc_16",20,145,getcharid(0);
 		end;
 	}
@@ -1412,11 +1410,11 @@ in_moc_16,1,1,0	script	Beholder#ASNTEST	139,{
 	end;
 
 OnInit:
-	hideonnpc "Beholder#ASNTEST";
+	disablenpc "Beholder#ASNTEST";
 	end;
 
 OnEnable:
-	hideoffnpc "Beholder#ASNTEST";
+	enablenpc "Beholder#ASNTEST";
 	monster "in_moc_16",62,161,"Job change target",1002,1,"Beholder#ASNTEST::OnMyMobDead";
 	monster "in_moc_16",85,169,"Job change target",1063,1,"Beholder#ASNTEST::OnMyMobDead";
 	monster "in_moc_16",88,152,"Job change target",1002,1,"Beholder#ASNTEST::OnMyMobDead";
@@ -1455,7 +1453,7 @@ OnMyMobDead:
 	end;
 
 OnDisable:
-	hideonnpc "Beholder#ASNTEST";
+	disablenpc "Beholder#ASNTEST";
 	end;
 
 OnTimer1000:
@@ -1538,16 +1536,16 @@ OnTouch:
 	end;
 
 OnInit:
-	hideonnpc "backers#ASN";
+	disablenpc "backers#ASN";
 	end;
 
 OnEnable:
 	donpcevent "job_asn_test::OnDisable";
-	hideoffnpc "backers#ASN";
+	enablenpc "backers#ASN";
 	end;
 
 OnDisable:
-	hideonnpc "backers#ASN";
+	disablenpc "backers#ASN";
 	end;
 }
 
@@ -1563,7 +1561,7 @@ in_moc_16,2,1,0	script	Beholder#ASNTEST2	139,{
 	end;
 
 OnInit:
-	hideonnpc "Beholder#ASNTEST2";
+	disablenpc "Beholder#ASNTEST2";
 	end;
 
 OnReset:
@@ -1571,11 +1569,11 @@ OnReset:
 	end;
 
 OnDisable:
-	hideonnpc "Beholder#ASNTEST2";
+	disablenpc "Beholder#ASNTEST2";
 	end;
 
 OnEnable:
-	hideoffnpc "Beholder#ASNTEST2";
+	enablenpc "Beholder#ASNTEST2";
 	monster "in_moc_16",62,161,"Job change creature",1063,1,"Beholder#ASNTEST2::OnMyMobDead";
 	monster "in_moc_16",85,169,"Job change creature",1031,1,"Beholder#ASNTEST2::OnMyMobDead";
 	monster "in_moc_16",79,174,"Job change creature",1113,1,"Beholder#ASNTEST2::OnMyMobDead";
@@ -1636,177 +1634,177 @@ OnTouch:
 	end;
 
 OnEnable:
-	hideoffnpc "01_1";
-	hideoffnpc "01_2";
-	hideoffnpc "01_3";
-	hideoffnpc "01_4";
-	hideoffnpc "02_1";
-	hideoffnpc "02_2";
-	hideoffnpc "02_3";
-	hideoffnpc "02_4";
-	hideoffnpc "03_1";
-	hideoffnpc "03_2";
-	hideoffnpc "03_3";
-	hideoffnpc "03_4";
-	hideoffnpc "04_1";
-	hideoffnpc "04_2";
-	hideoffnpc "04_3";
-	hideoffnpc "04_4";
-	hideoffnpc "05_1";
-	hideoffnpc "05_2";
-	hideoffnpc "05_3";
-	hideoffnpc "05_4";
-	hideoffnpc "06_1";
-	hideoffnpc "06_2";
-	hideoffnpc "06_3";
-	hideoffnpc "06_4";
-	hideoffnpc "07_1";
-	hideoffnpc "07_2";
-	hideoffnpc "07_3";
-	hideoffnpc "07_4";
-	hideoffnpc "08_1";
-	hideoffnpc "08_2";
-	hideoffnpc "08_3";
-	hideoffnpc "08_4";
-	hideoffnpc "09_1";
-	hideoffnpc "09_2";
-	hideoffnpc "09_3";
-	hideoffnpc "09_4";
-	hideoffnpc "10_1";
-	hideoffnpc "10_2";
-	hideoffnpc "10_3";
-	hideoffnpc "10_4";
-	hideoffnpc "10_5";
-	hideoffnpc "10_6";
-	hideoffnpc "10_7";
-	hideoffnpc "10_8";
-	hideoffnpc "11_1";
-	hideoffnpc "11_2";
-	hideoffnpc "11_3";
-	hideoffnpc "11_4";
-	hideoffnpc "12_1";
-	hideoffnpc "12_2";
-	hideoffnpc "12_3";
-	hideoffnpc "12_4";
-	hideoffnpc "13_1";
-	hideoffnpc "13_2";
-	hideoffnpc "13_3";
-	hideoffnpc "13_4";
-	hideoffnpc "14_1";
-	hideoffnpc "14_2";
-	hideoffnpc "14_3";
-	hideoffnpc "14_4";
-	hideoffnpc "14_5";
-	hideoffnpc "14_6";
-	hideoffnpc "14_7";
-	hideoffnpc "14_8";
-	hideoffnpc "14_9";
-	hideoffnpc "14_10";
-	hideoffnpc "14_11";
-	hideoffnpc "14_12";
-	hideoffnpc "15_1";
-	hideoffnpc "15_2";
-	hideoffnpc "15_3";
-	hideoffnpc "15_4";
-	hideoffnpc "16_1";
-	hideoffnpc "16_2";
-	hideoffnpc "16_3";
-	hideoffnpc "16_4";
-	hideoffnpc "17_1";
-	hideoffnpc "17_2";
-	hideoffnpc "17_3";
-	hideoffnpc "17_4";
-	hideoffnpc "18_1";
-	hideoffnpc "18_2";
-	hideoffnpc "18_3";
-	hideoffnpc "18_4";
+	enablenpc "01_1";
+	enablenpc "01_2";
+	enablenpc "01_3";
+	enablenpc "01_4";
+	enablenpc "02_1";
+	enablenpc "02_2";
+	enablenpc "02_3";
+	enablenpc "02_4";
+	enablenpc "03_1";
+	enablenpc "03_2";
+	enablenpc "03_3";
+	enablenpc "03_4";
+	enablenpc "04_1";
+	enablenpc "04_2";
+	enablenpc "04_3";
+	enablenpc "04_4";
+	enablenpc "05_1";
+	enablenpc "05_2";
+	enablenpc "05_3";
+	enablenpc "05_4";
+	enablenpc "06_1";
+	enablenpc "06_2";
+	enablenpc "06_3";
+	enablenpc "06_4";
+	enablenpc "07_1";
+	enablenpc "07_2";
+	enablenpc "07_3";
+	enablenpc "07_4";
+	enablenpc "08_1";
+	enablenpc "08_2";
+	enablenpc "08_3";
+	enablenpc "08_4";
+	enablenpc "09_1";
+	enablenpc "09_2";
+	enablenpc "09_3";
+	enablenpc "09_4";
+	enablenpc "10_1";
+	enablenpc "10_2";
+	enablenpc "10_3";
+	enablenpc "10_4";
+	enablenpc "10_5";
+	enablenpc "10_6";
+	enablenpc "10_7";
+	enablenpc "10_8";
+	enablenpc "11_1";
+	enablenpc "11_2";
+	enablenpc "11_3";
+	enablenpc "11_4";
+	enablenpc "12_1";
+	enablenpc "12_2";
+	enablenpc "12_3";
+	enablenpc "12_4";
+	enablenpc "13_1";
+	enablenpc "13_2";
+	enablenpc "13_3";
+	enablenpc "13_4";
+	enablenpc "14_1";
+	enablenpc "14_2";
+	enablenpc "14_3";
+	enablenpc "14_4";
+	enablenpc "14_5";
+	enablenpc "14_6";
+	enablenpc "14_7";
+	enablenpc "14_8";
+	enablenpc "14_9";
+	enablenpc "14_10";
+	enablenpc "14_11";
+	enablenpc "14_12";
+	enablenpc "15_1";
+	enablenpc "15_2";
+	enablenpc "15_3";
+	enablenpc "15_4";
+	enablenpc "16_1";
+	enablenpc "16_2";
+	enablenpc "16_3";
+	enablenpc "16_4";
+	enablenpc "17_1";
+	enablenpc "17_2";
+	enablenpc "17_3";
+	enablenpc "17_4";
+	enablenpc "18_1";
+	enablenpc "18_2";
+	enablenpc "18_3";
+	enablenpc "18_4";
 	end;
 
 OnDisable:
-	hideonnpc "01_1";
-	hideonnpc "01_2";
-	hideonnpc "01_3";
-	hideonnpc "01_4";
-	hideonnpc "02_1";
-	hideonnpc "02_2";
-	hideonnpc "02_3";
-	hideonnpc "02_4";
-	hideonnpc "03_1";
-	hideonnpc "03_2";
-	hideonnpc "03_3";
-	hideonnpc "03_4";
-	hideonnpc "04_1";
-	hideonnpc "04_2";
-	hideonnpc "04_3";
-	hideonnpc "04_4";
-	hideonnpc "05_1";
-	hideonnpc "05_2";
-	hideonnpc "05_3";
-	hideonnpc "05_4";
-	hideonnpc "06_1";
-	hideonnpc "06_2";
-	hideonnpc "06_3";
-	hideonnpc "06_4";
-	hideonnpc "07_1";
-	hideonnpc "07_2";
-	hideonnpc "07_3";
-	hideonnpc "07_4";
-	hideonnpc "08_1";
-	hideonnpc "08_2";
-	hideonnpc "08_3";
-	hideonnpc "08_4";
-	hideonnpc "09_1";
-	hideonnpc "09_2";
-	hideonnpc "09_3";
-	hideonnpc "09_4";
-	hideonnpc "10_1";
-	hideonnpc "10_2";
-	hideonnpc "10_3";
-	hideonnpc "10_4";
-	hideonnpc "10_5";
-	hideonnpc "10_6";
-	hideonnpc "10_7";
-	hideonnpc "10_8";
-	hideonnpc "11_1";
-	hideonnpc "11_2";
-	hideonnpc "11_3";
-	hideonnpc "11_4";
-	hideonnpc "12_1";
-	hideonnpc "12_2";
-	hideonnpc "12_3";
-	hideonnpc "12_4";
-	hideonnpc "13_1";
-	hideonnpc "13_2";
-	hideonnpc "13_3";
-	hideonnpc "13_4";
-	hideonnpc "14_1";
-	hideonnpc "14_2";
-	hideonnpc "14_3";
-	hideonnpc "14_4";
-	hideonnpc "14_5";
-	hideonnpc "14_6";
-	hideonnpc "14_7";
-	hideonnpc "14_8";
-	hideonnpc "14_9";
-	hideonnpc "14_10";
-	hideonnpc "14_11";
-	hideonnpc "14_12";
-	hideonnpc "15_1";
-	hideonnpc "15_2";
-	hideonnpc "15_3";
-	hideonnpc "15_4";
-	hideonnpc "16_1";
-	hideonnpc "16_2";
-	hideonnpc "16_3";
-	hideonnpc "16_4";
-	hideonnpc "17_1";
-	hideonnpc "17_2";
-	hideonnpc "17_3";
-	hideonnpc "17_4";
-	hideonnpc "18_1";
-	hideonnpc "18_2";
-	hideonnpc "18_3";
-	hideonnpc "18_4";
+	disablenpc "01_1";
+	disablenpc "01_2";
+	disablenpc "01_3";
+	disablenpc "01_4";
+	disablenpc "02_1";
+	disablenpc "02_2";
+	disablenpc "02_3";
+	disablenpc "02_4";
+	disablenpc "03_1";
+	disablenpc "03_2";
+	disablenpc "03_3";
+	disablenpc "03_4";
+	disablenpc "04_1";
+	disablenpc "04_2";
+	disablenpc "04_3";
+	disablenpc "04_4";
+	disablenpc "05_1";
+	disablenpc "05_2";
+	disablenpc "05_3";
+	disablenpc "05_4";
+	disablenpc "06_1";
+	disablenpc "06_2";
+	disablenpc "06_3";
+	disablenpc "06_4";
+	disablenpc "07_1";
+	disablenpc "07_2";
+	disablenpc "07_3";
+	disablenpc "07_4";
+	disablenpc "08_1";
+	disablenpc "08_2";
+	disablenpc "08_3";
+	disablenpc "08_4";
+	disablenpc "09_1";
+	disablenpc "09_2";
+	disablenpc "09_3";
+	disablenpc "09_4";
+	disablenpc "10_1";
+	disablenpc "10_2";
+	disablenpc "10_3";
+	disablenpc "10_4";
+	disablenpc "10_5";
+	disablenpc "10_6";
+	disablenpc "10_7";
+	disablenpc "10_8";
+	disablenpc "11_1";
+	disablenpc "11_2";
+	disablenpc "11_3";
+	disablenpc "11_4";
+	disablenpc "12_1";
+	disablenpc "12_2";
+	disablenpc "12_3";
+	disablenpc "12_4";
+	disablenpc "13_1";
+	disablenpc "13_2";
+	disablenpc "13_3";
+	disablenpc "13_4";
+	disablenpc "14_1";
+	disablenpc "14_2";
+	disablenpc "14_3";
+	disablenpc "14_4";
+	disablenpc "14_5";
+	disablenpc "14_6";
+	disablenpc "14_7";
+	disablenpc "14_8";
+	disablenpc "14_9";
+	disablenpc "14_10";
+	disablenpc "14_11";
+	disablenpc "14_12";
+	disablenpc "15_1";
+	disablenpc "15_2";
+	disablenpc "15_3";
+	disablenpc "15_4";
+	disablenpc "16_1";
+	disablenpc "16_2";
+	disablenpc "16_3";
+	disablenpc "16_4";
+	disablenpc "17_1";
+	disablenpc "17_2";
+	disablenpc "17_3";
+	disablenpc "17_4";
+	disablenpc "18_1";
+	disablenpc "18_2";
+	disablenpc "18_3";
+	disablenpc "18_4";
 	end;
 }
 
@@ -1911,15 +1909,15 @@ OnTouch:
 
 OnEnable:
 	mapannounce "in_moc_16","The door to the next room, at coordinates 87 137, has opened.",bc_map;
-	hideoffnpc "Keeper of the Door#ASN";
+	enablenpc "Keeper of the Door#ASN";
 	end;
 
 OnDisable:
-	hideonnpc "Keeper of the Door#ASN";
+	disablenpc "Keeper of the Door#ASN";
 	end;
 
 OnInit:
-	hideonnpc "Keeper of the Door#ASN";
+	disablenpc "Keeper of the Door#ASN";
 	end;
 }
 
@@ -1953,33 +1951,31 @@ OnTouch:
 		mes "It looks like you're having a tough time. You're either trying too hard, or not trying hard";
 		mes "enough, kid.";
 		next;
-		switch (select("I'm gonna try it again!:I... I quit!")) {
-		case 1:
+		if (select("I'm gonna try it again!:I... I quit!") == 1) {
 			mes "[Thomas]";
 			mes "Hmm. Well, okay.";
 			mes "Good luck out there.";
 			close;
-		case 2:
-			mes "[Thomas]";
-			mes "Huh...";
-			mes "Quit the test, eh? Well, I guess you don't wanna waste any more of our time.";
-			next;
-			mes "[Thomas]";
-			mes "Oh hey, don't forget to save your respawn point in town.";
-			close2;
-			mapannounce "in_moc_16"," " + strcharinfo(0) + " got scared and quit the test...Who's Next?!",bc_map;
-			donpcevent "Standby Room#ASNTEST::OnReset";
-			set ASSIN_Q,0;
-			set ASSIN_Q2,0;
-			set ASSIN_Q3,0;
-			erasequest 8000;
-			erasequest 8001;
-			erasequest 8002;
-			erasequest 8003;
-			erasequest 8004;
-			savepoint "in_moc_16",18,14;
-			warp "in_moc_16",18,14;
 		}
+		mes "[Thomas]";
+		mes "Huh...";
+		mes "Quit the test, eh? Well, I guess you don't wanna waste any more of our time.";
+		next;
+		mes "[Thomas]";
+		mes "Oh hey, don't forget to save your respawn point in town.";
+		close2;
+		mapannounce "in_moc_16"," " + strcharinfo(0) + " got scared and quit the test...Who's Next?!",bc_map;
+		donpcevent "Standby Room#ASNTEST::OnReset";
+		set ASSIN_Q,0;
+		set ASSIN_Q2,0;
+		set ASSIN_Q3,0;
+		erasequest 8000;
+		erasequest 8001;
+		erasequest 8002;
+		erasequest 8003;
+		erasequest 8004;
+		savepoint "in_moc_16",18,14;
+		warp "in_moc_16",18,14;
 	} else {
 		mes "[Thomas]";
 		mes "Hey, I'm Thomas. I'm in charge of testing your use of the hiding skill. Think you're up to it?";
@@ -2160,7 +2156,7 @@ OnTouch:
 				mes "[Guildmaster]";
 				mes "Being an Assassin means";
 				mes "to abandon the ego.";
-				next;
+				break;
 			case 2:
 				set ASSIN_Q,9;
 				mes "[Guildmaster]";
@@ -2170,7 +2166,7 @@ OnTouch:
 				mes "Being an Assassin means";
 				mes "to abandon such worldly";
 				mes "attachments...";
-				next;
+				break;
 			case 3:
 				set ASSIN_Q,10;
 				mes "[Guildmaster]";
@@ -2181,7 +2177,7 @@ OnTouch:
 				next;
 				mes "[Guildmaster]";
 				mes "In a way, being an Assassin is to live life in loneliness...";
-				next;
+				break;
 			}
 		case 2:
 			mes "[Guildmaster]";
@@ -2211,12 +2207,12 @@ OnTouch:
 				next;
 				mes "[Guildmaster]";
 				mes "But, as I told you before, we have comrades. I recommend having at least one comrade to back up you when you're on a mission.";
-				next;
+				break;
 			case 2:
 				set ASSIN_Q,12;
 				mes "[Guildmaster]";
 				mes "Well, I can't deny it, we do need money to make a living. But don't you think we should pursue something even more important than money?";
-				next;
+				break;
 			case 3:
 				set ASSIN_Q,13;
 				mes "[Guildmaster]";
@@ -2228,7 +2224,7 @@ OnTouch:
 				mes "[Guildmaster]";
 				mes "Don't forget...";
 				mes "Assassins don't toy around. We are not into a style or trend, and we never will be.";
-				next;
+				break;
 			}
 		case 3:
 			mes "[Guildmaster]";
@@ -2247,7 +2243,7 @@ OnTouch:
 				next;
 				mes "[Guildmaster]";
 				mes "You won't be satisfied in becoming an Assassin if you think this...";
-				next;
+				break;
 			case 2:
 				set ASSIN_Q,15;
 				mes "[Guildmaster]";
@@ -2260,7 +2256,7 @@ OnTouch:
 				mes "It's to bad I had to kill him before he was level 52... ^666666*Sigh*^000000 Oh well.";
 				next;
 				mes "I'm a bit worried about you. I hope you realize that once you become an Assassin, there's no turning back...";
-				next;
+				break;
 			case 3:
 				set ASSIN_Q,16;
 				mes "[Guildmaster]";
@@ -2269,7 +2265,7 @@ OnTouch:
 				next;
 				mes "[Guildmaster]";
 				mes "I hope you're not a hypocrite. Spiritual discipline is the best way for you to survive.";
-				next;
+				break;
 			}
 		}
 		set @assassin_sangdam,0;
@@ -2297,7 +2293,7 @@ OnTouch:
 				mes "[Guildmaster]";
 				mes "Don't act recklessly...";
 				mes "Being an Assassin never makes you a different person. And don't rely on chance.";
-				next;
+				break;
 			case 2:
 				set @assassin_sangdam,@assassin_sangdam + 5;
 				mes "[Guildmaster]";
@@ -2305,7 +2301,7 @@ OnTouch:
 				next;
 				mes "[Guildmaster]";
 				mes "In the meantime, I hope you won't forget the Assassin mentality.";
-				next;
+				break;
 			case 3:
 				set @assassin_sangdam,@assassin_sangdam + 0;
 				mes "[Guildmaster]";
@@ -2315,7 +2311,7 @@ OnTouch:
 				mes "[Guildmaster]";
 				mes "Don't force yourself too much.";
 				mes "Take your time and travel wisely.";
-				next;
+				break;
 			}
 		case 2:
 			mes "[Guildmaster]";
@@ -2328,7 +2324,7 @@ OnTouch:
 				mes "[Guildmaster]";
 				mes "I see...";
 				mes "Appreciate them for caring about you, even when you're alone.";
-				next;
+				break;
 			case 2:
 				set @assassin_sangdam,@assassin_sangdam + 5;
 				mes "[Guildmaster]";
@@ -2337,7 +2333,7 @@ OnTouch:
 				next;
 				mes "[Guildmaster]";
 				mes "As an Assassin, find a job that you can do for them without them knowing..";
-				next;
+				break;
 			case 3:
 				set @assassin_sangdam,@assassin_sangdam + 0;
 				mes "[Guildmaster]";
@@ -2353,7 +2349,7 @@ OnTouch:
 				next;
 				mes "[Guildmaster]";
 				mes "Love your beloved forever, even if you can't openly express it. Sometimes, life doesn't allow you to find true love more than once.";
-				next;
+				break;
 			}
 		case 3:
 			mes "[Guildmaster]";
@@ -2368,7 +2364,7 @@ OnTouch:
 				mes "[Guildmaster]";
 				mes "You must know how to";
 				mes "survive in any situation.";
-				next;
+				break;
 			case 2:
 				set @assassin_sangdam,@assassin_sangdam + 0;
 				mes "[Guildmaster]";
@@ -2376,7 +2372,7 @@ OnTouch:
 				next;
 				mes "[Guildmaster]";
 				mes "I hope you will become an excellent Assassin. And when you reach a certain level, you must guide newbies as your trainers have.";
-				next;
+				break;
 			case 3:
 				set @assassin_sangdam,@assassin_sangdam + 10;
 				mes "[Guildmaster]";
@@ -2385,7 +2381,7 @@ OnTouch:
 				next;
 				mes "[Guildmaster]";
 				mes "People of that nature are unwelcome. If such is your goal, you may wish to reconsider your job...";
-				next;
+				break;
 			}
 		}
 		mes "[Guildmaster]";
@@ -2525,7 +2521,7 @@ OnTouch:
 				mes "A Jur...";
 				mes "Good choice. There you are. I hope it will serve you well.";
 				getitem 1251,1; //Jur_
-				next;
+				break;
 			case 2:
 				mes "[Guildmaster]";
 				mes "A Katar...";
@@ -2534,19 +2530,20 @@ OnTouch:
 				mes "I know it will";
 				mes "serve you well.";
 				getitem 1253,1; //Katar_
-				next;
+				break;
 			case 3:
 				mes "[Guildmaster]";
 				mes "I see. You want to use both hands. Here, take your Main Gauche.";
 				getitem 1208,1; //Main_Gauche_
-				next;
+				break;
 			case 4:
 				mes "[Guildmaster]";
 				mes "A Gladius...";
 				mes "It used to rule over the Assassin weapon market. Please take care of my gladius.";
 				getitem 1220,1; //Gladius_
-				next;
+				break;
 			}
+			next;
 		} else {
 			mes "[Guildmaster]";
 			mes "Well, I talked too much.";
@@ -2730,15 +2727,15 @@ in_moc_16,156,87,1	script	[Huey]	55,1,1,{
 	end;
 
 OnInit:
-	hideonnpc "[Huey]";
+	disablenpc "[Huey]";
 	end;
 
 OnDisable:
-	hideonnpc "[Huey]";
+	disablenpc "[Huey]";
 	end;
 
 OnEnable:
-	hideoffnpc "[Huey]";
+	enablenpc "[Huey]";
 	end;
 }
 
@@ -2746,15 +2743,15 @@ in_moc_16,156,85,1	script	[Khai]	730,1,1,{
 	end;
 
 OnInit:
-	hideonnpc "[Khai]";
+	disablenpc "[Khai]";
 	end;
 
 OnDisable:
-	hideonnpc "[Khai]";
+	disablenpc "[Khai]";
 	end;
 
 OnEnable:
-	hideoffnpc "[Khai]";
+	enablenpc "[Khai]";
 	end;
 }
 
@@ -2762,15 +2759,15 @@ in_moc_16,156,83,1	script	[The Anonymous One]	106,1,1,{
 	end;
 
 OnInit:
-	hideonnpc "[The Anonymous One]";
+	disablenpc "[The Anonymous One]";
 	end;
 
 OnDisable:
-	hideonnpc "[The Anonymous One]";
+	disablenpc "[The Anonymous One]";
 	end;
 
 OnEnable:
-	hideoffnpc "[The Anonymous One]";
+	enablenpc "[The Anonymous One]";
 	end;
 }
 
@@ -2778,15 +2775,15 @@ in_moc_16,156,81,2	script	[Barcardi]	725,1,1,{
 	end;
 
 OnInit:
-	hideonnpc "[Barcardi]";
+	disablenpc "[Barcardi]";
 	end;
 
 OnDisable:
-	hideonnpc "[Barcardi]";
+	disablenpc "[Barcardi]";
 	end;
 
 OnEnable:
-	hideoffnpc "[Barcardi]";
+	enablenpc "[Barcardi]";
 	end;
 }
 
@@ -2794,15 +2791,15 @@ in_moc_16,156,79,1	script	[Beholder]	118,1,1,{
 	end;
 
 OnInit:
-	hideonnpc "[Beholder]";
+	disablenpc "[Beholder]";
 	end;
 
 OnDisable:
-	hideonnpc "[Beholder]";
+	disablenpc "[Beholder]";
 	end;
 
 OnEnable:
-	hideoffnpc "[Beholder]";
+	enablenpc "[Beholder]";
 	end;
 }
 
@@ -2810,15 +2807,15 @@ in_moc_16,156,77,1	script	[Thomas]	118,1,1,{
 	end;
 
 OnInit:
-	hideonnpc "[Thomas]";
+	disablenpc "[Thomas]";
 	end;
 
 OnDisable:
-	hideonnpc "[Thomas]";
+	disablenpc "[Thomas]";
 	end;
 
 OnEnable:
-	hideoffnpc "[Thomas]";
+	enablenpc "[Thomas]";
 	end;
 }
 
@@ -2826,14 +2823,14 @@ in_moc_16,156,75,1	script	[Gayle Maroubitz]	55,1,1,{
 	end;
 
 OnInit:
-	hideonnpc "[Gayle Maroubitz]";
+	disablenpc "[Gayle Maroubitz]";
 	end;
 
 OnDisable:
-	hideonnpc "[Gayle Maroubitz]";
+	disablenpc "[Gayle Maroubitz]";
 	end;
 
 OnEnable:
-	hideoffnpc "[Gayle Maroubitz]";
+	enablenpc "[Gayle Maroubitz]";
 	end;
 }

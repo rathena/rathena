@@ -3188,6 +3188,7 @@ monk_test,82,85,1	script	Proctor	95,{
 }
 
 monk_test,144,277,0	script	mob_monk#1_1	139,1,1,{
+	end;
 
 OnTouch:
 	monster "monk_test",144,277,"Zombie",1015,1;
@@ -3202,6 +3203,7 @@ OnReset:
 }
 
 monk_test,134,291,0	script	mob_monk#1_2	139,1,1,{
+	end;
 
 OnTouch:
 	monster "monk_test",134,291,"Zombie",1015,1;
@@ -3216,6 +3218,7 @@ OnReset:
 }
 
 monk_test,157,284,0	script	mob_monk#1_3	139,1,1,{
+	end;
 
 OnTouch:
 	monster "monk_test",157,284,"Mummy",1041,1;
@@ -3227,6 +3230,7 @@ OnReset:
 }
 
 monk_test,156,261,0	script	mob_monk#1_4	139,1,1,{
+	end;
 
 OnTouch:
 	monster "monk_test",156,261,"Mummy",1041,1;
@@ -3238,6 +3242,7 @@ OnReset:
 }
 
 monk_test,149,268,0	script	mob_monk#1_5	139,1,1,{
+	end;
 
 OnTouch:
 	monster "monk_test",149,268,"Zombie",1015,1;
@@ -3253,6 +3258,7 @@ OnReset:
 }
 
 monk_test,166,278,0	script	exit_monk#1	45,1,1,{
+	end;
 
 OnTouch:
 	mes "[Proctor]";
@@ -3301,6 +3307,7 @@ monk_test,88,91,1	script	Proctor#mk	52,{
 }
 
 monk_test,140,181,0	script	mob_monk#2_1	139,1,1,{
+	end;
 
 OnTouch:
 	monster "monk_test",140,181,"Zombie",1015,1;
@@ -3315,6 +3322,7 @@ OnReset:
 }
 
 monk_test,150,164,0	script	mob_monk#2_2	139,1,1,{
+	end;
 
 OnTouch:
 	monster "monk_test",150,164,"Zombie",1015,1;
@@ -3329,6 +3337,7 @@ OnReset:
 }
 
 monk_test,158,192,0	script	mob_monk#2_3	139,1,1,{
+	end;
 
 OnTouch:
 	monster "monk_test",158,192,"Mummy",1041,1;
@@ -3340,6 +3349,7 @@ OnReset:
 }
 
 monk_test,165,186,0	script	mob_monk#2_4	139,1,1,{
+	end;
 
 OnTouch:
 	monster "monk_test",165,186,"Mummy",1041,1;
@@ -3351,6 +3361,7 @@ OnReset:
 }
 
 monk_test,162,182,0	script	mob_monk#2_5	139,1,1,{
+	end;
 
 OnTouch:
 	monster "monk_test",162,182,"Zombie",1015,1;
@@ -3366,6 +3377,7 @@ OnReset:
 }
 
 monk_test,166,178,0	script	exit_monk#2	45,1,1,{
+	end;
 
 OnTouch:
 	mes "[Proctor]";
@@ -3414,6 +3426,7 @@ monk_test,95,85,1	script	Proctor#btl#3	79,{
 }
 
 monk_test,249,277,0	script	mob_monk#3_1	139,1,1,{
+	end;
 
 OnTouch:
 	monster "monk_test",249,277,"Zombie",1015,1;
@@ -3428,6 +3441,7 @@ OnReset:
 }
 
 monk_test,231,296,0	script	mob_monk#3_2	139,1,1,{
+	end;
 
 OnTouch:
 	monster "monk_test",231,296,"Zombie",1015,1;
@@ -3442,6 +3456,7 @@ OnReset:
 }
 
 monk_test,264,292,0	script	mob_monk#3_3	139,1,1,{
+	end;
 
 OnTouch:
 	monster "monk_test",264,292,"Mummy",1041,1;
@@ -3453,6 +3468,7 @@ OnReset:
 }
 
 monk_test,252,284,0	script	mob_monk#3_4	139,1,1,{
+	end;
 
 OnTouch:
 	monster "monk_test",252,284,"Mummy",1041,1;
@@ -3464,6 +3480,7 @@ OnReset:
 }
 
 monk_test,257,285,0	script	mob_monk#3_5	139,1,1,{
+	end;
 
 OnTouch:
 	monster "monk_test",257,285,"Zombie",1015,1;
@@ -3480,6 +3497,7 @@ OnReset:
 }
 
 monk_test,270,278,0	script	exit_monk#3	45,1,1,{
+	end;
 
 OnTouch:
 	mes "[Proctor]";

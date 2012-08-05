@@ -1303,6 +1303,7 @@ OnTimer89000:
 }
 
 job_duncer,69,110,0	script	dance#return	139,1,4,{
+	end;
 
 OnTouch:
 	mapannounce "job_duncer","Good! Well done! Go back to Bijou!",bc_map;
@@ -1312,18 +1313,19 @@ OnTouch:
 	end;
 
 OnDisable:
-	hideonnpc "dance#return";
+	disablenpc "dance#return";
 	donpcevent "dance#return#2::OnDisable";
 	donpcevent "dance#return#3::OnDisable";
 	end;
 
 OnEnable:
-	hideoffnpc "dance#return";
+	enablenpc "dance#return";
 	donpcevent "dance#return#2::OnEnable";
 	end;
 }
 
 job_duncer,66,110,0	script	dance#return#2	139,1,1,{
+	end;
 
 OnTouch:
 	set DANC_Q,9;
@@ -1332,16 +1334,17 @@ OnTouch:
 	end;
 
 OnDisable:
-	hideonnpc "dance#return#2";
+	disablenpc "dance#return#2";
 	end;
 
 OnEnable:
-	hideoffnpc "dance#return#2";
+	enablenpc "dance#return#2";
 	donpcevent "dance#return#3::OnEnable";
 	end;
 }
 
 job_duncer,72,110,0	script	dance#return#3	139,1,1,{
+	end;
 
 OnTouch:
 	set DANC_Q,9;
@@ -1350,16 +1353,17 @@ OnTouch:
 	end;
 
 OnDisable:
-	hideonnpc "dance#return#3";
+	disablenpc "dance#return#3";
 	end;
 
 OnEnable:
-	hideoffnpc "dance#return#3";
+	enablenpc "dance#return#3";
 	donpcevent "Waiting Room#dance::OnReset";
 	end;
 }
 
 job_duncer,69,113,0	script	dance#up	139,1,1,{
+	end;
 
 OnTouch:
 	donpcevent "Backdancer#1::OnHuk";
@@ -1370,15 +1374,16 @@ OnTouch:
 	end;
 
 OnDisable:
-	hideonnpc "dance#up";
+	disablenpc "dance#up";
 	end;
 
 OnEnable:
-	hideoffnpc "dance#up";
+	enablenpc "dance#up";
 	end;
 }
 
 job_duncer,69,107,0	script	dance#down	139,1,1,{
+	end;
 
 OnTouch:
 	donpcevent "Backdancer#1::OnHuk";
@@ -1389,15 +1394,16 @@ OnTouch:
 	end;
 
 OnDisable:
-	hideonnpc "dance#down";
+	disablenpc "dance#down";
 	end;
 
 OnEnable:
-	hideoffnpc "dance#down";
+	enablenpc "dance#down";
 	end;
 }
 
 job_duncer,66,110,0	script	dance#left	139,1,1,{
+	end;
 
 OnTouch:
 	donpcevent "Backdancer#1::OnHuk";
@@ -1408,15 +1414,16 @@ OnTouch:
 	end;
 
 OnDisable:
-	hideonnpc "dance#left";
+	disablenpc "dance#left";
 	end;
 
 OnEnable:
-	hideoffnpc "dance#left";
+	enablenpc "dance#left";
 	end;
 }
 
 job_duncer,72,110,0	script	dance#right	139,1,1,{
+	end;
 
 OnTouch:
 	donpcevent "Backdancer#1::OnHuk";
@@ -1427,15 +1434,16 @@ OnTouch:
 	end;
 
 OnDisable:
-	hideonnpc "dance#right";
+	disablenpc "dance#right";
 	end;
 
 OnEnable:
-	hideoffnpc "dance#right";
+	enablenpc "dance#right";
 	end;
 }
 
 job_duncer,69,110,0	script	dance#cen	139,1,1,{
+	end;
 
 OnTouch:
 	donpcevent "Backdancer#1::OnHuk";
@@ -1446,11 +1454,11 @@ OnTouch:
 	end;
 
 OnDisable:
-	hideonnpc "dance#cen";
+	disablenpc "dance#cen";
 	end;
 
 OnEnable:
-	hideoffnpc "dance#cen";
+	enablenpc "dance#cen";
 	end;
 }
 

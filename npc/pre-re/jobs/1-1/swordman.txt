@@ -85,7 +85,7 @@ izlude_in,74,172,4	script	Swordman	119,{
 		if (Class == Job_Baby || Class == Job_Novice) {
 			if (getskilllv("NV_BASIC") < 9) {
 				mes "[Swordman Guildsman]";
-				mes "I'm sorry to tell you this but to be a Swordman, you must reach at least ^4d4dffJOB Level 10^000000.";
+				mes "I'm sorry to tell you this but to be a Swordman, you must reach at least ^4d4dffJob Level 10^000000.";
 				mes "and ^4d4dffBasic Skill Level 9^000000.";
 				next;
 				mes "[Swordman Guildsman]";

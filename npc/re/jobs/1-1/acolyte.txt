@@ -15,7 +15,7 @@
 //============================================================ 
 prt_church,184,41,4	script	Cleric#aco	60,{
 	if (Upper == 1) {
-		if (ADVJOB == Job_High_Priest || ADVJOB == Job_Champion) {
+		if ((Class == Job_Novice_High) && (ADVJOB == Job_High_Priest || ADVJOB == Job_Champion)) {
 			if (Class == Job_Novice_High) {
 				mes "[Father Mareusis]";
 				mes "Ah, I sense you have endured";

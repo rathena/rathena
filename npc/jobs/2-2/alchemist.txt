@@ -2364,8 +2364,9 @@ alde_alche,145,19,1	script	Chief Researcher	57,{
 			if (select("partisan:partizan:pato:paros:pack") == 2) {
 				set @alch_q, @alch_q + 10;
 			}
+			next;
 		}
-		else if (.@alche_puz == 2) {
+		if (.@alche_puz == 2) {
 			mes "m p d i c f a r o g n k w a s";
 			next;
 			set @alch_q, 0;
@@ -2387,6 +2388,7 @@ alde_alche,145,19,1	script	Chief Researcher	57,{
 			if (select("forgemerchant:potionmerchant:dcmerchant:vendingmerchant:battlemerchant") == 2) {
 				set @alch_q, @alch_q + 10;
 			}
+			next;
 		}
 		else {
 			mes "s m i e x b w u n e t a g l r";
@@ -2410,6 +2412,7 @@ alde_alche,145,19,1	script	Chief Researcher	57,{
 			if (select("forgemerchant:potionmerchant:dcmerchant:vendingmerchant:battlemerchant") == 2) {
 				set @alch_q, @alch_q + 10;
 			}
+			next;
 		}
 		mes "[Nicholas Flamel]";
 		mes "Ah, you finished.";
