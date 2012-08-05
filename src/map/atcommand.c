@@ -1967,7 +1967,11 @@ ACMD_FUNC(go)
 		{ MAP_GEFFEN,      119,  59 }, //  2=Geffen
 		{ MAP_PAYON,       162, 233 }, //  3=Payon
 		{ MAP_ALBERTA,     192, 147 }, //  4=Alberta
+#ifdef RENEWAL
+		{ MAP_IZLUDE,      128, 146 }, //  5=Izlude (Renewal)
+#else
 		{ MAP_IZLUDE,      128, 114 }, //  5=Izlude
+#endif
 		{ MAP_ALDEBARAN,   140, 131 }, //  6=Al de Baran
 		{ MAP_LUTIE,       147, 134 }, //  7=Lutie
 		{ MAP_COMODO,      209, 143 }, //  8=Comodo
@@ -1988,16 +1992,16 @@ ACMD_FUNC(go)
 		{ MAP_RACHEL,      130, 110 }, // 23=Rachel
 		{ MAP_VEINS,       216, 123 }, // 24=Veins
 		{ MAP_MOSCOVIA,    223, 184 }, // 25=Moscovia
-		{ MAP_MIDCAMP,    180, 240 }, // 26=Midgard Camp
+		{ MAP_MIDCAMP,     180, 240 }, // 26=Midgard Camp
 		{ MAP_MANUK,       282, 138 }, // 27=Manuk
 		{ MAP_SPLENDIDE,   197, 176 }, // 28=Splendide
 		{ MAP_BRASILIS,    182, 239 }, // 29=Brasilis
-		{ MAP_DICASTES,   198, 187 }, // 30=El Dicastes
-		{ MAP_MORA,   44, 151 }, // 31=Mora
-		{ MAP_DEWATA,   200, 180 }, // 32=Dewata
-		{ MAP_MALANGDO,   140, 114 }, // 33=Malangdo Island
-		{ MAP_MALAYA,   242, 211 }, // 34=Malaya Port
-		{ MAP_ECLAGE,   110, 39 }, // 35=Eclage
+		{ MAP_DICASTES,    198, 187 }, // 30=El Dicastes
+		{ MAP_MORA,         44, 151 }, // 31=Mora
+		{ MAP_DEWATA,      200, 180 }, // 32=Dewata
+		{ MAP_MALANGDO,    140, 114 }, // 33=Malangdo Island
+		{ MAP_MALAYA,      242, 211 }, // 34=Malaya Port
+		{ MAP_ECLAGE,      110,  39 }, // 35=Eclage
 	};
  
 	nullpo_retr(-1, sd);
