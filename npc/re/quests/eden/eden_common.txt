@@ -264,7 +264,7 @@ OnTouch:
 		case 17: warp "morocc",156,93; end;
 		case 18: warp "comodo",209,143; end;
 		case 19: warp "umbala",99,155; end;
-		case 20: warp "veins",215,115; end;
+		case 20: warp "veins",216,123; end;
 		case 21: warp "lighthalzen",158,92; end;
 		case 22: warp "einbroch",245,210; end;
 		case 23: warp "hugel",95,145; end;

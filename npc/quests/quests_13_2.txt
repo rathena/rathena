@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 2.4
+//= 2.4a
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -42,6 +42,7 @@
 //= 2.2 Added a missing close. (bugreport:4520) [L0ne_W0lf]
 //= 2.3 Fixed EF_Wind not showing. (bugreport:5149) [Masao]
 //= 2.4 Optimized (6000+ lines reduced!). [Euphy]
+//= 2.4a Fixed an invisible NPC clashing with a warp portal. [Euphy]
 //============================================================ 
 
 // Cat Hand Addition.
@@ -5376,7 +5377,7 @@ OnTimer60000:
 	end;
 }
 
-ve_fild03,351,219,0	script	#ve_find_1	-1,5,5,{
+ve_fild03,351,219,0	script	#ve_find_1	-1,3,3,{
 	end;
 
 OnTouch:
