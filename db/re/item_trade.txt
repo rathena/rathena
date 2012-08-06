@@ -154,7 +154,7 @@
 7558,475,100	// Invitation Ticket
 7559,475,100	// Key to the Secret Garden
 2670,475,100	// Ring of Longing
-2358,73,100		// Angel's Dress
+2358,73,100	// Angel's Dress
 
 // India Father's Day Event items
 5154,475,100	// Father's Sunglasses
@@ -253,7 +253,7 @@
 
 // USA 4th Anniversary Event Items
 5305,475,100	// Pirate Dagger
-5373,73,100		// Dark Randgris Helm
+5373,73,100	// Dark Randgris Helm
 7773,499,100	// Wat Badge
 7875,467,100	// Pirate Treasure
 
@@ -294,7 +294,6 @@
 7794,475,100	// The Crow of Destiny
 
 // Russian Golden Apple Event Items
-//5322,475,100	// Kerchief
 7793,475,100	// Golden Apple
 7800,475,100	// Golden Charm Apple
 
@@ -665,9 +664,9 @@
 2760,507,100	// Bloody Ring
 2761,507,100	// Satanic Ring
 2762,507,100	// Dragon Ring
-5098,73,100		// Tiger Mask
-5210,73,100		// Flapping Angel Wing
-5226,73,100		// Mini Propeller
+5098,73,100	// Tiger Mask
+5210,73,100	// Flapping Angel Wing
+5226,73,100	// Mini Propeller
 5227,475,100	// Red Deviruchi Hat
 5228,475,100	// Gray Deviruchi Hat
 5229,475,100	// Brown Deviruchi Hat
@@ -684,38 +683,38 @@
 5240,475,100	// Brown Mage Hat
 5241,475,100	// Blue Mage Hat
 5242,475,100	// Yellow Mage Hat
-5263,73,100		// Pagdayaw
+5263,73,100	// Pagdayaw
 5265,507,100	// Apple of Archer
 5266,507,100	// Bunny Band
 5267,507,100	// Sakkat
 5268,507,100	// Grand Circlet
-5277,73,100		// Yellow Bandana
-5283,73,100		// Chick Hat
-5286,73,100		// Pecopeco Hairband
-5288,73,100		// Red Glasses
-5293,73,100		// Ramen Hat
-5294,73,100		// Whisper Mask
-5313,73,100		// Diadem
-5314,73,100		// Hockey Mask
-5315,73,100		// Observer
-5324,73,100		// Little Angel Doll
-5372,73,100		// Koneko Hat
-5374,73,100		// Gigantic Majestic Goat
-5375,73,100		// Orc Hero Headdress
-5376,73,100		// Flying Evil Wing
-5377,73,100		// Gentleman's Pipe
-5378,73,100		// Bunny Top Hat
-5380,73,100		// Fish Head Hat
-5381,73,100		// Santa Poring Hat
-5382,73,100		// Bell Ribbon
+5277,73,100	// Yellow Bandana
+5283,73,100	// Chick Hat
+5286,73,100	// Pecopeco Hairband
+5288,73,100	// Red Glasses
+5293,73,100	// Ramen Hat
+5294,73,100	// Whisper Mask
+5313,73,100	// Diadem
+5314,73,100	// Hockey Mask
+5315,73,100	// Observer
+5324,73,100	// Little Angel Doll
+5372,73,100	// Koneko Hat
+5374,73,100	// Gigantic Majestic Goat
+5375,73,100	// Orc Hero Headdress
+5376,73,100	// Flying Evil Wing
+5377,73,100	// Gentleman's Pipe
+5378,73,100	// Bunny Top Hat
+5380,73,100	// Fish Head Hat
+5381,73,100	// Santa Poring Hat
+5382,73,100	// Bell Ribbon
 5391,507,100	// Toast
-5420,73,100		// Mask Of Ifrit
-5421,73,100		// Ears Of Ifrit
+5420,73,100	// Mask Of Ifrit
+5421,73,100	// Ears Of Ifrit
 5462,457,100	// Spiked Scarf
 5463,457,100	// Rainbow Scarf
 5502,457,100	// Necromancer's Hood
-5503,73,100		// Magic Rabit Hat
-5505,73,100		// Asara Fairy Hat
+5503,73,100	// Magic Rabit Hat
+5505,73,100	// Asara Fairy Hat
 5529,457,100	// Satanic Bone Helm
 5596,507,100	// 4Leaf Clover In Mouth
 5597,507,100	// Bubble Gum In Mouth
@@ -724,7 +723,7 @@
 7619,475,100	// Enriched Elunium
 7620,475,100	// Enriched Oridecon
 7621,475,100	// Token Of Siegfried
-7622,73,100		// Hairstyle Coupon
+7622,73,100	// Hairstyle Coupon
 7766,475,100	// Bok Choy
 7767,475,100	// Green Maiden's Cake
 7776,475,100	// Gym Pass
@@ -732,7 +731,7 @@
 7822,475,100	// Whole Barbecue
 7823,475,100	// Meat Veg Skewer
 7824,475,100	// Spirit Liquor
-7945,73,100		// Universal Amulet
+7945,73,100	// Universal Amulet
 12202,475,100	// Steamed Tongue
 12203,475,100	// Steamed Scorpion
 12204,475,100	// Dragon Breath Cocktail
@@ -1444,60 +1443,60 @@
 2449,475,100	// Variant Shoes
 2551,475,100	// Crest of the Rider
 2552,475,100	// Mithril Magic Manteau
-2777,65,100		// Shaman Ring
-2778,65,100		// Shaman Earrings
-2779,65,100		// Dark Knight Belt
-2780,65,100		// Dark Knight Glove
-2781,65,100		// Aumdura's Benefit
+2777,65,100	// Shaman Ring
+2778,65,100	// Shaman Earrings
+2779,65,100	// Dark Knight Belt
+2780,65,100	// Dark Knight Glove
+2781,65,100	// Aumdura's Benefit
 2782,475,100	// Ring of the Ancient Wise King
 2785,475,100	// Orlean's Gloves
-5100,73,100		// Sales Banner
-5103,73,100		// Sunflower Hairpin
-5133,73,100		// Sheep Hat
-5206,73,100		// Romantic White Flower
-5215,73,100		// Evolved Angel Wing
-5216,73,100		// Evolved Evil Wing
-5217,73,100		// Evolved Majestic Goat
-5218,73,100		// Evolved Bunny Band
-5219,73,100		// Evolved Drooping Cat
-5220,73,100		// Evolved Pipe
-5221,73,100		// Evolved Pair of Red Ribbon
-5222,73,100		// Evolved Blue Fish
-5223,73,100		// Evolved Big Golden Bell
-5224,73,100		// Evolved Orc Hero Helm
-5243,73,100		// Shafka
-5256,73,100		// Valkyrie Feather Band
-5257,73,100		// Soul Ring
-5278,73,100		// Yellow Ribbon
-5284,73,100		// Water Lily Crown
-5285,73,100		// Vane Hairpin
-5287,73,100		// Vacation Hat
-5289,73,100		// Vanilmirth Hat
-5291,73,100		// Kettle Hat
-5292,73,100		// Dragon Skull
+5100,73,100	// Sales Banner
+5103,73,100	// Sunflower Hairpin
+5133,73,100	// Sheep Hat
+5206,73,100	// Romantic White Flower
+5215,73,100	// Evolved Angel Wing
+5216,73,100	// Evolved Evil Wing
+5217,73,100	// Evolved Majestic Goat
+5218,73,100	// Evolved Bunny Band
+5219,73,100	// Evolved Drooping Cat
+5220,73,100	// Evolved Pipe
+5221,73,100	// Evolved Pair of Red Ribbon
+5222,73,100	// Evolved Blue Fish
+5223,73,100	// Evolved Big Golden Bell
+5224,73,100	// Evolved Orc Hero Helm
+5243,73,100	// Shafka
+5256,73,100	// Valkyrie Feather Band
+5257,73,100	// Soul Ring
+5278,73,100	// Yellow Ribbon
+5284,73,100	// Water Lily Crown
+5285,73,100	// Vane Hairpin
+5287,73,100	// Vacation Hat
+5289,73,100	// Vanilmirth Hat
+5291,73,100	// Kettle Hat
+5292,73,100	// Dragon Skull
 
 
 5306,507,100	// Freya's Crown
-5307,73,100		// Carmen Miranda's Hat
-5308,73,100		// Brazil National Flag Hat
-5310,73,100		// Shining Electric Bulb Hairband
-5311,73,100		// Large Hisbiscus
-5312,73,100		// Ayothaya King's Hat
+5307,73,100	// Carmen Miranda's Hat
+5308,73,100	// Brazil National Flag Hat
+5310,73,100	// Shining Electric Bulb Hairband
+5311,73,100	// Large Hisbiscus
+5312,73,100	// Ayothaya King's Hat
 5322,475,100	// Kerchief
-5358,73,100		// Peco Ears
-5367,73,100		// Hyegun Hat
+5358,73,100	// Peco Ears
+5367,73,100	// Hyegun Hat
 5385,457,100	// Yoyo Hat
-5388,73,100		// Snake Head Hat
-5397,73,100		// Scuba Gear
-5401,73,100		// Black Frame Glasses
-5402,73,100		// Mischievous Fairy
-5404,73,100		// Blue Ribbon
-5405,73,100		// Filir Hat
+5388,73,100	// Snake Head Hat
+5397,73,100	// Scuba Gear
+5401,73,100	// Black Frame Glasses
+5402,73,100	// Mischievous Fairy
+5404,73,100	// Blue Ribbon
+5405,73,100	// Filir Hat
 5406,467,100	// Academy Freshman Hat
 5407,467,100	// Academy Completion Hat
-5423,73,100		// I Love China
-5429,73,100		// Bogy Cap
-5430,65,100		// Torch Cap
+5423,73,100	// I Love China
+5429,73,100	// Bogy Cap
+5430,65,100	// Torch Cap
 5450,475,100	// Solar Hat
 5460,499,100	// Evolved Dragon Skull Hat
 5461,499,100	// Evolved Whisper Mask
@@ -1507,69 +1506,69 @@
 5491,457,100	// Bandit Hat
 5496,457,100	// Dice Hat
 5497,457,100	// King Tiger Doll Hat
-5498,73,100		// Wandering Wolf Helm
-5499,73,100		// Pizza Hat
-5304,73,100		// Cap Of Blindness
+5498,73,100	// Wandering Wolf Helm
+5499,73,100	// Pizza Hat
+5304,73,100	// Cap Of Blindness
 5318,467,100	// Poring Party Hat
 5333,457,100	// Radio Antenna
-5336,73,100		// Guildsman Recruiter Hat
-5337,73,100		// Party Recruiter Hat
+5336,73,100	// Guildsman Recruiter Hat
+5337,73,100	// Party Recruiter Hat
 5338,507,100	// Bf Recruiter Hat
 5339,507,100	// Friend Recruiter Hat
 5346,507,100	// Gf Recruiter Hat
-5352,73,100		// Poporing Cap
+5352,73,100	// Poporing Cap
 5356,384,100	// Festival Pumpkin Hat
-5359,73,100		// Ship Captain Hat
-5360,73,100		// Hyuke's Black Cat Ears
-5361,73,100		// Gangster Scarf
-5362,73,100		// Ninja Scroll
-5371,73,100		// Judge Hat
-5383,73,100		// Hunter's Cap
-5387,73,100		// Neko Mimi Kafra
-5389,73,100		// Angel Spirit
-5395,73,100		// Striped Hat
-5403,73,100		// Fish In Mouth
+5359,73,100	// Ship Captain Hat
+5360,73,100	// Hyuke's Black Cat Ears
+5361,73,100	// Gangster Scarf
+5362,73,100	// Ninja Scroll
+5371,73,100	// Judge Hat
+5383,73,100	// Hunter's Cap
+5387,73,100	// Neko Mimi Kafra
+5389,73,100	// Angel Spirit
+5395,73,100	// Striped Hat
+5403,73,100	// Fish In Mouth
 5428,475,100	// RWC Anniversary Bread Envelope
 5451,475,100	// RWC 2008 Dragon Helm Gold
 5452,475,100	// RWC 2008 Dragon Helm Silver
 5453,475,100	// RWC 2008 Dragon Helm Copper
-5457,73,100		// Moon Rabbit Hat
-5476,73,100		// Grand Peco Hairband
-5479,65,100		// Shaman's Hair Decoration
-5480,65,100		// Bijofnil Wings
-5481,65,100		// Hermode Cap
-5482,65,100		// Dark Knight Mask
-5483,65,100		// Odin Mask
+5457,73,100	// Moon Rabbit Hat
+5476,73,100	// Grand Peco Hairband
+5479,65,100	// Shaman's Hair Decoration
+5480,65,100	// Bijofnil Wings
+5481,65,100	// Hermode Cap
+5482,65,100	// Dark Knight Mask
+5483,65,100	// Odin Mask
 5492,507,100	// Student Cap
 5493,507,100	// Ulle's Cap
 5494,507,100	// Sphinx Hat
-5495,73,100		// Power Of Thor
-5508,73,100		// Shark Hat
-5509,73,100		// Sting hat
-5511,73,100		// Samambaia
+5495,73,100	// Power Of Thor
+5508,73,100	// Shark Hat
+5509,73,100	// Sting hat
+5511,73,100	// Samambaia
 5521,507,100	// Angry Mouth
-5527,73,100		// Lunatic Hat
-5532,73,100		// Pirate Dagger
+5527,73,100	// Lunatic Hat
+5532,73,100	// Pirate Dagger
 5536,507,100	// Spare Card
 5544,467,100	// Time Keeper Hat
-5545,73,100		// Aries Diadem
-5546,73,100		// Aries Crown
-5549,73,100		// Taurus Diadem
-5550,73,100		// Taurus Crown
-5554,73,100		// Octopus Hat
-5555,73,100		// Leaf Cat Hat
-5567,73,100		// Bright Fury
-5569,73,100		// Gemini Diadem
-5570,73,100		// Gemini Crown
-5574,73,100		// Well-Chewed Pencil
-5577,65,100		// Dark Knight Mask
-5579,73,100		// Wanderer's Sakkat
-5584,73,100		// Majestic Evil Horns
+5545,73,100	// Aries Diadem
+5546,73,100	// Aries Crown
+5549,73,100	// Taurus Diadem
+5550,73,100	// Taurus Crown
+5554,73,100	// Octopus Hat
+5555,73,100	// Leaf Cat Hat
+5567,73,100	// Bright Fury
+5569,73,100	// Gemini Diadem
+5570,73,100	// Gemini Crown
+5574,73,100	// Well-Chewed Pencil
+5577,65,100	// Dark Knight Mask
+5579,73,100	// Wanderer's Sakkat
+5584,73,100	// Majestic Evil Horns
 5587,499,100	// Mosquito Coil
-5654,73,100		// Holy Marching Hat
-5667,73,100		// Skull Hood
+5654,73,100	// Holy Marching Hat
+5667,73,100	// Skull Hood
 5668,499,100	// Weird Pumpkin Hat
-5738,73,100		// Snowman Hat
+5738,73,100	// Snowman Hat
 5741,499,100	// Eternal Egg Shell
 5786,475,100	// Ancient Elven Ear
 5796,507,100	// Cheer Scarf
@@ -1680,14 +1679,14 @@
 7928,507,100	// Brazil National Flag
 7929,507,100	// Gold Coin
 7930,507,100	// Devil's Cattle Ring
-7944,73,100		// Sealed Box
+7944,73,100	// Sealed Box
 7949,499,100	// Woven Wool
 7951,507,100	// Golden Tulip Flower
 7952,507,100	// Gift Of Lomi Ross
 7953,507,100	// Gift Of Juliet
 7954,499,100	// Summer Festival Ticket
-7959,65,100		// Ancient Gold Coin
-7960,65,100		// Ancient Silver Coin
+7959,65,100	// Ancient Gold Coin
+7960,65,100	// Ancient Silver Coin
 7961,499,100	// Weapon Exchange
 7962,499,100	// Treasure Map1
 7963,499,100	// Treasure Map2
@@ -1750,60 +1749,28 @@
 18500,507,100	// Cheer Scarf6
 18501,507,100	// Cheer Scarf8
 18502,507,100	// Cheer Scarf10
-5306,507,100	// Freya's Crown
-5307,73,100		// Carmen Miranda's Hat
-5308,73,100		// Brazil National Flag Hat
-5310,73,100		// Shining Electric Bulb Hairband
-5311,73,100		// Large Hisbiscus
-5312,73,100		// Ayothaya King's Hat
-5322,475,100	// Kerchief
-5358,73,100		// Peco Ears
-5367,73,100		// Hyegun Hat
-5385,457,100	// Yoyo Hat
-5388,73,100		// Snake Head Hat
-5397,73,100		// Scuba Gear
-5401,73,100		// Black Frame Glasses
-5402,73,100		// Mischievous Fairy
-5404,73,100		// Blue Ribbon
-5405,73,100		// Filir Hat
-5406,467,100	// Academy Freshman Hat
-5407,467,100	// Academy Completion Hat
-5423,73,100		// I Love China
-5429,73,100		// Bogy Cap
-5430,65,100		// Torch Cap
-5450,475,100	// Solar Hat
-5460,499,100	// Evolved Dragon Skull Hat
-5461,499,100	// Evolved Whisper Mask
-5464,507,100	// Zaha Doll Hat
-5478,457,100	// Classic Hat
-5490,457,100	// Anubis Helm
-5491,457,100	// Bandit Hat
-5496,457,100	// Dice Hat
-5497,457,100	// King Tiger Doll Hat
-5498,73,100		// Wandering Wolf Helm
-5499,73,100		// Pizza Hat
-5500,73,100		// Icecream Hat
+5500,73,100	// Icecream Hat
 5501,457,100	// Pirate's Pride
-5504,73,100		// Wedding Weil
-5519,73,100		// Peacock Feather
-5526,73,100		// Tanigumi Girl Doll
+5504,73,100	// Wedding Weil
+5519,73,100	// Peacock Feather
+5526,73,100	// Tanigumi Girl Doll
 5528,457,100	// Frog King Hat
-5530,73,100		// Raven Cap
-5537,73,100		// Kwati Hat
-5538,73,100		// Tucan Hat
-5539,73,100		// Jaguar Hat
-5547,73,100		// RJC Katusa Flower
-5548,73,100		// Scarlet Rose
-5557,73,100		// Wild Rose Hat
-5564,73,100		// Crown of Deceit
+5530,73,100	// Raven Cap
+5537,73,100	// Kwati Hat
+5538,73,100	// Tucan Hat
+5539,73,100	// Jaguar Hat
+5547,73,100	// RJC Katusa Flower
+5548,73,100	// Scarlet Rose
+5557,73,100	// Wild Rose Hat
+5564,73,100	// Crown of Deceit
 5565,507,100	// Dragon Arhat Mask
 5566,507,100	// Tiger Arhat Mask
-5581,73,100		// Cancer Diadem
-5582,73,100		// Cancer Crown
+5581,73,100	// Cancer Diadem
+5582,73,100	// Cancer Crown
 5603,475,100	// RTC First Place
 5604,475,100	// RTC Second Place
 5605,475,100	// RTC Third Place
-5770,73,100		// Splash Hat
+5770,73,100	// Splash Hat
 5818,507,100	// Carnival Hat
 5819,507,100	// Carnival Circlet
 5821,507,100	// Gold Tulip Hairpin
@@ -1893,9 +1860,9 @@
 2816,507,100	// Radar Ring
 2817,507,100	// Radar Ring
 2818,507,100	// Radar Ring
-2825,65,100		// Shaman Earrings
-2826,65,100		// Dark Knight Belt
-2827,65,100		// Dark Knight Glove
+2825,65,100	// Shaman Earrings
+2826,65,100	// Dark Knight Belt
+2827,65,100	// Dark Knight Glove
 2843,507,100	// Gold Trickle
 13049,65,100	// Lacma
 13052,499,100	// Tourist Dagger
