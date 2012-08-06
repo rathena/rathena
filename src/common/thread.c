@@ -271,7 +271,7 @@ int rathread_get_tid(){
 	#ifdef WIN32
 		return (int)GetCurrentThreadId();
 	#else
-		return (int)pthread_self();
+		return (intptr_t)pthread_self();
 	#endif
 	
 #endif

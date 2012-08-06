@@ -136,8 +136,13 @@ void log_branch(struct map_session_data* sd)
 	if( !log_config.branch )
 		return;
 
-	if( log_config.sql_logs )
-	{
+	if( log_config.sql_logs ) {
+#ifdef BETA_THREAD_TEST
+		char entry[512];
+		int e_length = 0;
+		e_length = sprintf(entry, LOG_QUERY " INTO `%s` (`branch_date`, `account_id`, `char_id`, `char_name`, `map`) VALUES (NOW(), '%d', '%d', '%s', '%s')", log_config.log_branch, sd->status.account_id, sd->status.char_id, sd->status.name, mapindex_id2name(sd->mapindex));
+		queryThread_log(entry,e_length);
+#else
 		SqlStmt* stmt;
 		stmt = SqlStmt_Malloc(logmysql_handle);
 		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, LOG_QUERY " INTO `%s` (`branch_date`, `account_id`, `char_id`, `char_name`, `map`) VALUES (NOW(), '%d', '%d', ?, '%s')", log_config.log_branch, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex) )
@@ -149,6 +154,7 @@ void log_branch(struct map_session_data* sd)
 			return;
 		}
 		SqlStmt_Free(stmt);
+#endif
 	}
 	else
 	{
@@ -179,12 +185,20 @@ void log_pick(int id, int m, e_log_pick_type type, int amount, struct item* itm)
 
 	if( log_config.sql_logs )
 	{
+#ifdef BETA_THREAD_TEST
+		char entry[512];
+		int e_length = 0;
+		e_length = sprintf(entry, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`) VALUES (NOW(), '%d', '%c', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s')",
+				log_config.log_pick, id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], map[m].name?map[m].name:"" );
+		queryThread_log(entry,e_length);
+#else
 		if( SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`) VALUES (NOW(), '%d', '%c', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s')",
 			log_config.log_pick, id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], map[m].name?map[m].name:"") )
 		{
 			Sql_ShowDebug(logmysql_handle);
 			return;
 		}
+#endif
 	}
 	else
 	{
@@ -226,12 +240,20 @@ void log_zeny(struct map_session_data* sd, e_log_pick_type type, struct map_sess
 
 	if( log_config.sql_logs )
 	{
+#ifdef BETA_THREAD_TEST
+		char entry[512];
+		int e_length = 0;
+		e_length = sprintf(entry,  LOG_QUERY " INTO `%s` (`time`, `char_id`, `src_id`, `type`, `amount`, `map`) VALUES (NOW(), '%d', '%d', '%c', '%d', '%s')",
+				log_config.log_zeny, sd->status.char_id, src_sd->status.char_id, log_picktype2char(type), amount, mapindex_id2name(sd->mapindex));
+		queryThread_log(entry,e_length);
+#else
 		if( SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `src_id`, `type`, `amount`, `map`) VALUES (NOW(), '%d', '%d', '%c', '%d', '%s')",
 			log_config.log_zeny, sd->status.char_id, src_sd->status.char_id, log_picktype2char(type), amount, mapindex_id2name(sd->mapindex)) )
 		{
 			Sql_ShowDebug(logmysql_handle);
 			return;
 		}
+#endif
 	}
 	else
 	{
@@ -259,12 +281,20 @@ void log_mvpdrop(struct map_session_data* sd, int monster_id, int* log_mvp)
 
 	if( log_config.sql_logs )
 	{
+#ifdef BETA_THREAD_TEST
+		char entry[512];
+		int e_length = 0;
+		e_length = sprintf(entry,  LOG_QUERY " INTO `%s` (`mvp_date`, `kill_char_id`, `monster_id`, `prize`, `mvpexp`, `map`) VALUES (NOW(), '%d', '%d', '%d', '%d', '%s') ",
+						   log_config.log_mvpdrop, sd->status.char_id, monster_id, log_mvp[0], log_mvp[1], mapindex_id2name(sd->mapindex));
+		queryThread_log(entry,e_length);
+#else		
 		if( SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`mvp_date`, `kill_char_id`, `monster_id`, `prize`, `mvpexp`, `map`) VALUES (NOW(), '%d', '%d', '%d', '%d', '%s') ",
 			log_config.log_mvpdrop, sd->status.char_id, monster_id, log_mvp[0], log_mvp[1], mapindex_id2name(sd->mapindex)) )
 		{
 			Sql_ShowDebug(logmysql_handle);
 			return;
 		}
+#endif
 	}
 	else
 	{
@@ -293,6 +323,12 @@ void log_atcommand(struct map_session_data* sd, const char* message)
 
 	if( log_config.sql_logs )
 	{
+#ifdef BETA_THREAD_TEST
+		char entry[512];
+		int e_length = 0;
+		e_length = sprintf(entry,  LOG_QUERY " INTO `%s` (`atcommand_date`, `account_id`, `char_id`, `char_name`, `map`, `command`) VALUES (NOW(), '%d', '%d', '%s', '%s', '%s')", log_config.log_gm, sd->status.account_id, sd->status.char_id, sd->status.name ,mapindex_id2name(sd->mapindex), message);
+		queryThread_log(entry,e_length);
+#else				
 		SqlStmt* stmt;
 
 		stmt = SqlStmt_Malloc(logmysql_handle);
@@ -306,6 +342,7 @@ void log_atcommand(struct map_session_data* sd, const char* message)
 			return;
 		}
 		SqlStmt_Free(stmt);
+#endif
 	}
 	else
 	{
@@ -333,6 +370,12 @@ void log_npc(struct map_session_data* sd, const char* message)
 
 	if( log_config.sql_logs )
 	{
+#ifdef BETA_THREAD_TEST
+		char entry[512];
+		int e_length = 0;
+		e_length = sprintf(entry, LOG_QUERY " INTO `%s` (`npc_date`, `account_id`, `char_id`, `char_name`, `map`, `mes`) VALUES (NOW(), '%d', '%d', '%s', '%s', '%s')", log_config.log_npc, sd->status.account_id, sd->status.char_id, sd->status.name, mapindex_id2name(sd->mapindex), message );
+		queryThread_log(entry,e_length);
+#else						
 		SqlStmt* stmt;
 		stmt = SqlStmt_Malloc(logmysql_handle);
 		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, LOG_QUERY " INTO `%s` (`npc_date`, `account_id`, `char_id`, `char_name`, `map`, `mes`) VALUES (NOW(), '%d', '%d', ?, '%s', ?)", log_config.log_npc, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex) )
@@ -345,6 +388,7 @@ void log_npc(struct map_session_data* sd, const char* message)
 			return;
 		}
 		SqlStmt_Free(stmt);
+#endif
 	}
 	else
 	{
@@ -375,8 +419,13 @@ void log_chat(e_log_chat_type type, int type_id, int src_charid, int src_accid, 
 		return;
 	}
 
-	if( log_config.sql_logs )
-	{
+	if( log_config.sql_logs ) {
+#ifdef BETA_THREAD_TEST
+		char entry[512];
+		int e_length = 0;
+		e_length = sprintf(entry, LOG_QUERY " INTO `%s` (`time`, `type`, `type_id`, `src_charid`, `src_accountid`, `src_map`, `src_map_x`, `src_map_y`, `dst_charname`, `message`) VALUES (NOW(), '%c', '%d', '%d', '%d', '%s', '%d', '%d', '%s', '%s')", log_config.log_chat, log_chattype2char(type), type_id, src_charid, src_accid, map, x, y, dst_charname, message );
+		queryThread_log(entry,e_length);
+#else		
 		SqlStmt* stmt;
 
 		stmt = SqlStmt_Malloc(logmysql_handle);
@@ -390,6 +439,7 @@ void log_chat(e_log_chat_type type, int type_id, int src_charid, int src_accid, 
 			return;
 		}
 		SqlStmt_Free(stmt);
+#endif
 	}
 	else
 	{

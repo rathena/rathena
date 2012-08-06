@@ -3502,19 +3502,20 @@ int map_sql_close(void)
 	ShowStatus("Close Map DB Connection....\n");
 	Sql_Free(mmysql_handle);
 	mmysql_handle = NULL;
-
+#ifndef BETA_THREAD_TEST
 	if (log_config.sql_logs)
 	{
 		ShowStatus("Close Log DB Connection....\n");
 		Sql_Free(logmysql_handle);
 		logmysql_handle = NULL;
 	}
-
+#endif
 	return 0;
 }
 
 int log_sql_init(void)
 {
+#ifndef BETA_THREAD_TEST
 	// log db connection
 	logmysql_handle = Sql_Malloc();
 
@@ -3526,7 +3527,7 @@ int log_sql_init(void)
 	if( strlen(default_codepage) > 0 )
 		if ( SQL_ERROR == Sql_SetEncoding(logmysql_handle, default_codepage) )
 			Sql_ShowDebug(logmysql_handle);
-
+#endif
 	return 0;
 }
 

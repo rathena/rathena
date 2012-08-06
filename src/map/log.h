@@ -79,4 +79,11 @@ extern struct Log_Config
 }
 log_config;
 
+#ifdef BETA_THREAD_TEST
+	struct {
+		char** entry;
+		int count;
+	} logThreadData;
+#endif
+
 #endif /* _LOG_H_ */

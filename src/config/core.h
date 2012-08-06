@@ -31,6 +31,11 @@
 /// your map-server using more resources while this is active, comment the line
 #define SCRIPT_CALLFUNC_CHECK
 
+/// uncomment to enable query_sql script command and mysql logs to function on it's own thread
+/// be aware this feature is under tests and you should use at your own risk, we however
+/// welcome any feedback you may have regarding this feature, please send us all bug reports.
+//#define BETA_THREAD_TEST
+
 //Uncomment to enable the Cell Stack Limit mod.
 //It's only config is the battle_config cell_stack_limit.
 //Only chars affected are those defined in BL_CHAR (mobs and players currently)
