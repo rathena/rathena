@@ -109,8 +109,7 @@ moc_para01,27,35,5	script	Secretary Lime Evenor	952,{
 			mes "[Lime Evenor]";
 			mes "Do you want to register some missions that you want us to do?";
 			next;
-			switch (select("Yes, I want to register.:No, I don't.")) {
-			case 1:
+			if(select("Yes, I want to register.:No, I don't.") == 1) {
 				mes "[Lime Evenor]";
 				mes "Alrigh. Please write down your name on it.";
 				input .@input$;
@@ -161,9 +160,6 @@ moc_para01,27,35,5	script	Secretary Lime Evenor	952,{
 				mes "Missions are fully booked. You have to wait for an spot to clear up.";
 				mes "Please kindly wait until your turn.";
 				next;
-				break;
-			case 2:
-				break;
 			}
 			break;
 		case 4:

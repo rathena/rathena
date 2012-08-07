@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Reddozen; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.8a
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -26,6 +26,7 @@
 //= 1.6b Corrected a "donpcevent" missing a ":". (bugreport:962) [Samuray22]
 //= 1.7 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 1.8 Renamed the variable cooking to cooking_q [ultramage]
+//= 1.8a Minor cleaning. [Euphy]
 //============================================================ 
 
 prt_castle,43,30,3	script	Charles Orleans#cook	878,{
@@ -1156,109 +1157,59 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 				goto L_End;
 			}
 			else {
-				if (.@old_book == 1) {
-					if (countitem(7472) < 1) {
-						mes "[Charles Orleans]";
-						mes "Wait, wait...";
-						mes "Why don't you have";
-						mes "the book that you said";
-						mes "that you'd return to me?";
-						mes "Find it first, and then I can";
-						mes "lend another cookbook to you.";
-						goto L_End;
-					}
-					cutin "orleans_2",0;
+				if (countitem(7471+.@old_book) < 1) {
 					mes "[Charles Orleans]";
+					mes "Wait, wait...";
+					mes "Why don't you have";
+					mes "the book that you said";
+					mes "that you'd return to me?";
+					mes "Find it first, and then I can";
+					mes "lend another cookbook to you.";
+					goto L_End;
+				}
+				cutin "orleans_2",0;
+				mes "[Charles Orleans]";
+				switch(.@old_book == 1) {
+				case 1:
 					mes "Ah, so you're done";
 					mes "with the Level 1 Cookbook.";
 					mes "That's good, that means you're";
 					mes "ready to graduate from the most";
 					mes "basic of basics. From now on,";
 					mes "the recipes will be harder...";
-					next;
-				}
-				else if (.@old_book == 2) {
-					if (countitem(7473) < 1) {
-						mes "[Charles Orleans]";
-						mes "Wait, wait...";
-						mes "Why don't you have";
-						mes "the book that you said";
-						mes "that you'd return to me?";
-						mes "Find it first, and then I can";
-						mes "lend another cookbook to you.";
-						goto L_End;
-					}
-					cutin "orleans_2",0;
-					mes "[Charles Orleans]";
+					break;
+				case 2:
 					mes "Ah, so what did you";
 					mes "think of the recipes in";
 					mes "the Level 2 Cookbook?";
 					mes "Homestyle cooking may be";
 					mes "simple, but it should never";
 					mes "be neglected by chefs.";
-					next;
-				}
-				else if (.@old_book == 3) {
-					if (countitem(7474) < 1) {
-						mes "[Charles Orleans]";
-						mes "Wait, wait...";
-						mes "Why don't you have";
-						mes "the book that you said";
-						mes "that you'd return to me?";
-						mes "Find it first, and then I can";
-						mes "lend another cookbook to you.";
-						goto L_End;
-					}
-					cutin "orleans_2",0;
-					mes "[Charles Orleans]";
+					break;
+				case 3:
 					mes "Ah, done with the Level 3";
 					mes "Cookbook already? The recipes";
 					mes "in there are really good when you're cooking romantic dinners.";
 					mes "They'll come in handy someday,";
 					mes "if you know what I mean.";
-					next;
-				}
-				else if (.@old_book == 4) {
-					if (countitem(7475) < 1) {
-						mes "[Charles Orleans]";
-						mes "Wait, wait...";
-						mes "Why don't you have";
-						mes "the book that you said";
-						mes "that you'd return to me?";
-						mes "Find it first, and then I can";
-						mes "lend another cookbook to you.";
-						goto L_End;
-					}
-					cutin "orleans_2",0;
-					mes "[Charles Orleans]";
+					break;
+				case 4:
 					mes "So you've finished the";
 					mes "Level 4 Cookbook. That's";
 					mes "no small feat! You've got to";
 					mes "use very strange ingredients";
 					mes "to create delicious cuisine!";
-					next;
-				}
-				else if (.@old_book == 5) {
-					if (countitem(7476) < 1) {
-						mes "[Charles Orleans]";
-						mes "Wait, wait...";
-						mes "Why don't you have";
-						mes "the book that you said";
-						mes "that you'd return to me?";
-						mes "Find it first, and then I can";
-						mes "lend another cookbook to you.";
-						goto L_End;
-					}
-					cutin "orleans_2",0;
-					mes "[Charles Orleans]";
+					break;
+				case 5:
 					mes "You're done with the";
 					mes "Level 5 Cookbook? Good";
 					mes "work: most beginners don't";
 					mes "even get this far. I suppose";
 					mes "you'll want to review some";
 					mes "of the easier recipes now~";
-					next;
+					break;
 				}
+				next;
 			}
 			cutin "orleans_1",0;
 			mes "[Charles Orleans]";
