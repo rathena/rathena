@@ -995,7 +995,6 @@ void initChangeTables(void) {
 	StatusChangeStateTable[SC_THORNSTRAP]          |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_MAGNETICFIELD]       |= SCS_NOMOVE;
 	StatusChangeStateTable[SC__MANHOLE]            |= SCS_NOMOVE;
-	StatusChangeStateTable[SC_VACUUM_EXTREME]      |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_CURSEDCIRCLE_ATKER]  |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_CURSEDCIRCLE_TARGET] |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_CRYSTALIZE]          |= SCS_NOMOVE|SCS_NOMOVECOND;
@@ -3801,6 +3800,10 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			if(status->aspd_rate != 1000) // absolute percentage modifier
 				amotion = ( 200 - (200-amotion/10) * status->aspd_rate / 1000 ) * 10;
 #endif			
+			//fixed value added
+			if( sc && sc->data[SC_FIGHTINGSPIRIT] && sc->data[SC_FIGHTINGSPIRIT]->val2 )
+				amotion -= (sd?pc_checkskill(sd, RK_RUNEMASTERY):10) / 10 * 40;
+
 			status->amotion = cap_value(amotion,((sd->class_&JOBL_THIRD) ? battle_config.max_third_aspd : battle_config.max_aspd),2000);
 			
 			status->adelay = 2*status->amotion;
@@ -5183,8 +5186,6 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, s
 		skills2 -= 30;
 	if( sc->data[SC_HALLUCINATIONWALK_POSTDELAY] )
 		skills2 -= 50;
-	if( sc->data[SC_FIGHTINGSPIRIT] && sc->data[SC_FIGHTINGSPIRIT]->val2 )
-		skills2 += 4;
 	if( sc->data[SC_PARALYSE] )
 		skills2 -= 10;
 	if( sc->data[SC__BODYPAINT] )
@@ -6114,9 +6115,6 @@ int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int ti
 		break;
 	case SC_CRYSTALIZE:
 		tick -= (1000*(status->vit/10))+(status_get_lv(bl)/50);
-		break;
-	case SC_VACUUM_EXTREME:
-		tick -= 50*status->str;
 		break;
 	case SC_MANDRAGORA:
 		sc_def = (status->vit+status->luk)/5;
@@ -8015,6 +8013,11 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val4 = tick / 1000;
 			tick_time = 1000; // [GodLesZ] tick time
 			break;
+		case SC_VACUUM_EXTREME:
+			tick -= (status->str / 20) * 1000;
+			val4 = val3 = tick / 100;
+			tick_time = 100; // [GodLesZ] tick time
+			break;
 		case SC_SWINGDANCE:
 			val2 = 4 * val1; // Walk speed and aspd reduction.
 			break;
@@ -8359,7 +8362,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC__MANHOLE:
 		case SC_CRYSTALIZE:
 		case SC_WHITEIMPRISON:
-		case SC_VACUUM_EXTREME:
 		case SC_CURSEDCIRCLE_ATKER:
 		case SC_CURSEDCIRCLE_TARGET:
 		case SC_FEAR:
@@ -9229,6 +9231,9 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				}
 			}
 			break;
+		case SC_VACUUM_EXTREME:
+			if(sc && sc->cant.move > 0) sc->cant.move--;
+			break;
 		case SC_KYOUGAKU:
 			clif_status_load(bl, SI_KYOUGAKU, 0); // Avoid client crash
 			clif_status_load(bl, SI_ACTIVE_MONSTER_TRANSFORM, 0);
@@ -10030,7 +10035,16 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			return 0;
 		}
 		break;
-
+	case SC_VACUUM_EXTREME:
+		if( --(sce->val4) >= 0 ){
+			if( !unit_is_walking(bl) && !sce->val2 ){
+				sc->cant.move++;
+				sce->val2 = 1;
+			}
+			sc_timer_next(100 + tick, status_change_timer, bl->id, data);
+			return 0;
+		}
+		break;
 	case SC_BLOODSUCKER:
 		if( --(sce->val4) >= 0 ) {
 			struct block_list *src = map_id2bl(sce->val2);
