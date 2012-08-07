@@ -986,7 +986,6 @@ void initChangeTables(void) {
 	StatusChangeStateTable[SC_STOP]                |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_CLOSECONFINE]        |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_CLOSECONFINE2]       |= SCS_NOMOVE;
-	StatusChangeStateTable[SC_CLOAKING]            |= SCS_NOMOVE|SCS_NOMOVECOND;
 	StatusChangeStateTable[SC_MADNESSCANCEL]       |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_GRAVITATION]         |= SCS_NOMOVE|SCS_NOMOVECOND;
 	StatusChangeStateTable[SC_WHITEIMPRISON]       |= SCS_NOMOVE;
@@ -3449,8 +3448,6 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum sc
 				     (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)	// cannot move while gospel is in effect
 				  || (sc->data[SC_BASILICA] && sc->data[SC_BASILICA]->val4 == bl->id) // Basilica caster cannot move
 				  || (sc->data[SC_GRAVITATION] && sc->data[SC_GRAVITATION]->val3 == BCT_SELF)
-				  || (sc->data[SC_CLOAKING] && //Need wall at level 1-2
-							sc->data[SC_CLOAKING]->val1 < 3 && !(sc->data[SC_CLOAKING]->val4&1))
 				  || (sc->data[SC_CRYSTALIZE] && bl->type != BL_MOB)
 				  || (sc->data[SC_CAMOUFLAGE] && sc->data[SC_CAMOUFLAGE]->val1 < 3 
 							&& !(sc->data[SC_CAMOUFLAGE]->val3&1))

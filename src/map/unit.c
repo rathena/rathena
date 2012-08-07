@@ -925,6 +925,8 @@ int unit_can_move(struct block_list *bl)
 																	(sc->data[SC_DANCING]->val1&0xFFFF) == CG_MOONLIT ||
 																	(sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE
 																	) )
+			|| (sc->data[SC_CLOAKING] && //Need wall at level 1-2
+				sc->data[SC_CLOAKING]->val1 < 3 && !(sc->data[SC_CLOAKING]->val4&1))
 			)
 			return 0;
 		
