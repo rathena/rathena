@@ -7325,6 +7325,37 @@ BUILDIN_FUNC(repair)
 }
 
 /*==========================================
+ * repairall
+ *------------------------------------------*/
+BUILDIN_FUNC(repairall)
+{
+	int i, repaircounter = 0;
+	TBL_PC *sd;
+
+	sd = script_rid2sd(st);
+	if(sd == NULL)
+		return 0;
+
+	for(i = 0; i < MAX_INVENTORY; i++)
+	{
+		if(sd->status.inventory[i].nameid && sd->status.inventory[i].attribute)
+		{
+			sd->status.inventory[i].attribute = 0;
+			clif_produceeffect(sd,0,sd->status.inventory[i].nameid);
+			repaircounter++;
+		}
+	}
+
+	if(repaircounter)
+	{
+		clif_misceffect(&sd->bl, 3);
+		clif_equiplist(sd);
+	}
+
+	return 0;
+}
+
+/*==========================================
  * 装備チェック
  *------------------------------------------*/
 BUILDIN_FUNC(getequipisequiped)
@@ -13913,9 +13944,8 @@ BUILDIN_FUNC(replacestr)
 	}
 
 	if(script_hasdata(st, 6)) {
-		if(script_isint(st,6))
-			count = script_getnum(st, 6);
-		else {
+		count = script_getnum(st, 6);
+		if(!count) {
 			ShowError("script:replacestr: Invalid count value. Expected int got string\n");
 			st->state = END;
 			return 1;
@@ -16947,6 +16977,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getequipname,"i"),
 	BUILDIN_DEF(getbrokenid,"i"), // [Valaris]
 	BUILDIN_DEF(repair,"i"), // [Valaris]
+	BUILDIN_DEF(repairall,""),
 	BUILDIN_DEF(getequipisequiped,"i"),
 	BUILDIN_DEF(getequipisenableref,"i"),
 	BUILDIN_DEF(getequipisidentify,"i"),
