@@ -8,7 +8,7 @@
 //= rAthena SVN
 //===== Description: ========================================= 
 //= [Official Conversion]
-//= God Item SE Creation scipt (Asprika & Brynhild)
+//= God Item SE Creation script (Asprika & Brynhild)
 //===== Additional Comments: ================================= 
 //= 0.x Previous author: L0ne_W0lf
 //= 1.0 Merged Okolnir. [Joseph]

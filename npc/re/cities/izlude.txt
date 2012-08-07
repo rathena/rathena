@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Masao
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First Version. Still missing many new NPC's and
 //= their dialogues. [Masao]
+//= 1.1 Added bullet NPC duplicates. [Euphy]
 //============================================================
 
 izlude,197,205,1	duplicate(Sailor_izlude)	Sailor#izlude	100
@@ -22,6 +23,8 @@ izlude,141,185,4	duplicate(Kylick_izlude)	Kylick#izlude	97
 izlude,56,156,2	duplicate(Red_izlude)	Red#izlude	85
 izlude,58,156,2	duplicate(Cebalis_izlude)	Cebalis#izlude	98
 izlude,165,156,2	duplicate(Soldier_izlude)	Soldier#izlude	105
+izlude,158,130,3	duplicate(bdt)	Bullet Dealer Tony#iz	86
+izlude,155,132,3	duplicate(mdk)	Magazine Dealer Kenny	83
 
 izlude,147,131,6	script	Blacksmith#izlude	726,{
 	end;

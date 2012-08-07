@@ -12,7 +12,7 @@
 //= Misc. Message Boards for:
 //=  - Prontera
 //=  - Morroc
-//-  - Geffen
+//=  - Geffen
 //=  - Al De Baran
 //=  - Izlude
 //=  - Alberta
@@ -23,7 +23,7 @@
 //= 1.4 Rescripted to Aegis 10.3 standard. [L0ne_W0lf]
 //= 1.5 Removed a duplicate related to the Sign Quest. [SinSloth]
 //= 1.5 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
-//= 1.6 COmmented out conflicting npcs. (bugreport:4093) [L0ne_W0lf]
+//= 1.6 Commented out conflicting npcs. (bugreport:4093) [L0ne_W0lf]
 //============================================================
 
 // Prontera

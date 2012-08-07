@@ -400,6 +400,7 @@ CREATE TABLE IF NOT EXISTS `inventory` (
   `card2` smallint(11) NOT NULL default '0',
   `card3` smallint(11) NOT NULL default '0',
   `expire_time` int(11) unsigned NOT NULL default '0',
+  `favorite` tinyint(3) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `char_id` (`char_id`)
 ) ENGINE=MyISAM;

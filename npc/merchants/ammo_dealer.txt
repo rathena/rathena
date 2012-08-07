@@ -16,6 +16,7 @@
 //= 1.3 Fixed [Playtester] Optimized. Got rid of @vars [Lupus]
 //= 1.4 Updated to match AEGIS script. [Kisuka]
 //= 1.5 Updated to match AEGIS script again. [Masao]
+//= 1.6 Moved Izlude duplicate to pre-re/re paths. [Euphy]
 //============================================================
 
 alberta,118,160,3	script	Bullet Dealer Tony#alb::bdt	86,{
@@ -122,5 +123,3 @@ function	script	Bullet_Trade	{
 		close;
 	}
 }
-
-izlude,171,133,3	duplicate(bdt)	Bullet Dealer Tony#iz	86
