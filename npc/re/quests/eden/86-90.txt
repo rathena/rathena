@@ -33,7 +33,7 @@ moc_para01,48,175,3	script	Mission [86 - 90]	857,{
 	if (BaseLevel > 90) {
 		setarray .@Exp[0],76000,82000,82000,72000,76000,72000,117000,82000,120000,72000,72000,72000,86000,80000;
 		setarray .@Mob$[0],"Dragon Tail","Spring Rabbit","Pest","Bathory","Alarm","Baba Yaga","Hyegun","Antique Firelock","Zipper Bear","Earth Petite","Rafflesia","Venomous","Pitman","Yellow Novus";
-		for(set .@i,0; .@i<16; set .@i,.@i+1)
+		for(set .@i,0; .@i<14; set .@i,.@i+1)
 			if (checkquest(4167+.@i,HUNTING) == 2) {
 				mes "You hunted all 30 "+.@Mob$[.@i]+".";
 				mes "Thank you very much.";

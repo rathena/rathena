@@ -3,16 +3,18 @@
 //===== By: ==================================================
 //= PKGINGO (1.0)
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 6+
 //===== Description: =========================================
 //= Warp Points for Yggdrasil Tree
 //===== Additional Comments: =================================
 //= Extracted from Vidar -> Athena
+//= 1.1 Moved Umbala warp to this file.
 //============================================================
 
 //Umbala Entrance
+umbala,106,285,0	warp	um_dun1-1	1,1,um_dun01,42,30
 um_dun02,125,163,0	warp	nwarp1	1,1,yggdrasil01,40,63
 
 //Niflheim Exit

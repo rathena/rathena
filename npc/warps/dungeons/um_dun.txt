@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Darkchild (1.0vA); Athena (1.0vB)
 //===== Current Version: =====================================
-//= 1.3 (Akaru)
+//= 1.4 (Akaru)
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 6+
 //===== Description: =========================================
@@ -12,9 +12,10 @@
 //===== Additional Comments: =================================
 //= 1.2 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 1.3 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.4 Commented out warp from Umbala, should be pre-re only. [Euphy]
 //============================================================
 
-umbala,106,285,0	warp	um_dun1-1	1,1,um_dun01,42,30
+//umbala,106,285,0	warp	um_dun1-1	1,1,um_dun01,42,30
 um_dun01,42,27,0	warp	um_dun1-2	1,1,umbala,109,284
 um_dun01,149,198,0	warp	um_dun2-1	1,1,um_dun02,52,22
 um_dun02,55,19,0	warp	um_dun2-2	1,1,um_dun01,152,198
