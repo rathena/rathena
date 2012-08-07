@@ -1169,7 +1169,7 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 				}
 				cutin "orleans_2",0;
 				mes "[Charles Orleans]";
-				switch(.@old_book == 1) {
+				switch(.@old_book) {
 				case 1:
 					mes "Ah, so you're done";
 					mes "with the Level 1 Cookbook.";

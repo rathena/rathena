@@ -23,7 +23,7 @@ moc_para01,38,38,3	script	Mission [26 - 40]	857,{
 	mes "- Many missions are -";
 	mes "- on the bulletin board. -";
 	next;
-	if ((BaseLevel < 26) && (BaseLevel > 40)) {
+	if ((BaseLevel < 26) || (BaseLevel > 40)) {
 		mes "Your level is not qualified. You can not use the bulletin board.";
 		close;
 	}
