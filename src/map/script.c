@@ -13945,7 +13945,7 @@ BUILDIN_FUNC(replacestr)
 
 	if(script_hasdata(st, 6)) {
 		count = script_getnum(st, 6);
-		if(!count) {
+		if(count == 0) {
 			ShowError("script:replacestr: Invalid count value. Expected int got string\n");
 			st->state = END;
 			return 1;
