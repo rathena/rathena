@@ -1,4 +1,4 @@
-﻿//===== rAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Nameless Island Quests
 //===== By: ================================================== 
 //= L0ne_W0lf
@@ -1929,7 +1929,7 @@ nameless_n,259,218,3	script	Larjes#Boat1	97,{
 		close;
 	}
 	mes "[Larjes]";
-	mes "�Did you still want to";
+	mes "Did you still want to";
 	mes "investigate the island?";
 	next;
 	if(select("No:yes")==1) {

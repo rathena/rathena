@@ -1,4 +1,4 @@
-﻿//===== rAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= Moscovia Quests
 //===== By: ================================================== 
 //= Kisuka
@@ -15898,7 +15898,7 @@ mosk_dun02,57,220,0	script	House Ghost Jar#rus43	111,{
 				mes "One! Two! Three!!";
 				next;
 				if (.@rucard_game01 == 1) {
-					cutin "����ī��",4;
+					cutin "Poring_Card.bmp",4;
 					emotion 0;
 					emotion 5,1;
 					next;
@@ -15909,16 +15909,12 @@ mosk_dun02,57,220,0	script	House Ghost Jar#rus43	111,{
 					set .@ruuser_score01,.@ruuser_score01+1;
 					cutin "",255;
 					next;
-				}else{
-					if (.@rucard_game01 == 1) {
-						cutin "����ī��",4;
-					}
-					else if (.@rucard_game01 == 2) {
-						cutin "������ī��",4;
-					}
-					else if (.@rucard_game01 == 3) {
-						cutin "���Ʈ��ī��",4;
-					}
+				}
+				else {
+					if (.@rucard_game01 == 2)
+						cutin "¿£Á©¸µÄ«µå.bmp",4;
+					else
+						cutin "°í½ºÆ®¸µÄ«µå.bmp",4;
 					emotion 0;
 					emotion 23,1;
 					next;
@@ -15939,7 +15935,7 @@ mosk_dun02,57,220,0	script	House Ghost Jar#rus43	111,{
 				mes "One! Two! Three!!";
 				next;
 				if (.@rucard_game01 == 2) {
-					cutin "������ī��",4;
+					cutin "¿£Á©¸µÄ«µå.bmp",4;
 					emotion 0;
 					emotion 5,1;
 					next;
@@ -15950,16 +15946,12 @@ mosk_dun02,57,220,0	script	House Ghost Jar#rus43	111,{
 					set .@ruuser_score01,.@ruuser_score01+1;
 					cutin "",255;
 					next;
-				}else{
-					if (.@rucard_game01 == 1) {
-						cutin "����ī��",4;
-					}
-					else if (.@rucard_game01 == 2) {
-						cutin "������ī��",4;
-					}
-					else if (.@rucard_game01 == 3) {
-						cutin "���Ʈ��ī��",4;
-					}
+				}
+				else{
+					if (.@rucard_game01 == 1)
+						cutin "Poring_Card.bmp",4;
+					else
+						cutin "°í½ºÆ®¸µÄ«µå.bmp",4;
 					emotion 0;
 					emotion 23,1;
 					next;
@@ -15980,7 +15972,7 @@ mosk_dun02,57,220,0	script	House Ghost Jar#rus43	111,{
 				mes "One! Two! Three!!";
 				next;
 				if (.@rucard_game01 == 3) {
-					cutin "���Ʈ��ī��",4;
+					cutin "°í½ºÆ®¸µÄ«µå.bmp",4;
 					emotion 0;
 					emotion 5,1;
 					next;
@@ -15992,15 +15984,10 @@ mosk_dun02,57,220,0	script	House Ghost Jar#rus43	111,{
 					cutin "",255;
 					next;
 				}else{
-					if (.@rucard_game01 == 1) {
-						cutin "����ī��",4;
-					}
-					else if (.@rucard_game01 == 2) {
-						cutin "������ī��",4;
-					}
-					else if (.@rucard_game01 == 3) {
-						cutin "���Ʈ��ī��",4;
-					}
+					if (.@rucard_game01 == 1)
+						cutin "Poring_Card.bmp",4;
+					else
+						cutin "¿£Á©¸µÄ«µå.bmp",4;
 					emotion 0;
 					emotion 23,1;
 					next;

@@ -1,4 +1,4 @@
-﻿//===== rAthena Script ======================================= 
+//===== rAthena Script ======================================= 
 //= The Sign Quest
 //===== By: ================================================== 
 //= SinSloth(Most of the NPCs), MasterOfMuppets(Some of the NPCs + bug fixes) & Kargha(The quiz NPCs)
@@ -3069,7 +3069,7 @@ OnTouch:
 
 //prt_maze02,25,161,0	script	#music	-1,7,7,{
 //OnTouch:
-//	soundeffect "effect\\������ ��ؽ�.wav",1;
+//	soundeffect "effect\\¼®¾çÀÇ ¾î½Ø½Å.wav",1;
 //	end;
 //}
 
@@ -12090,7 +12090,7 @@ gl_dun02,140,72,0	script	Mysterious Energy#7	111,{
 	}
 }
 
-// Angrboda's Seal 8 ���� small 119 182
+// Angrboda's Seal 8 very small 119 182
 gl_dun02,119,182,0	script	Mysterious Energy#8	111,{
 	callfunc "F_UpdateSignVars";
 	set .@crash_s,rand(1,1000);
