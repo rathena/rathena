@@ -4489,6 +4489,14 @@ who made it, can answer why is it so.
 
 ---------------------------------------
 
+*repairall;
+
+This command repairs all broken equipment in the attached player's inventory.
+A repair effect will be shown if any items are repaired, else the command will
+end silently.
+
+---------------------------------------
+
 *successrefitem <equipment slot>;
 
 This command will refine an item in the specified equipment slot of the invoking 
@@ -4537,14 +4545,14 @@ character's specified equipment slot. For a full list of possible equipment
 slots see 'getequipid'.
 
 If an item occupies several equipment slots, it will get unequipped from all of 
-them. (Which is a good thing.)
+them.
 
 ---------------------------------------
 
 *clearitem;
 
 This command will destroy all items the invoking character has in their 
-inventory. (that includes equipped items) It will not affect anything else, like 
+inventory (including equipped items). It will not affect anything else, like 
 storage or cart.
 
 ---------------------------------------
