@@ -1,23 +1,5 @@
 //===== Athena Doc ========================================
 //= Client Effects List
-//===== By ================================================
-//= Valaris, Spira, Au{R}oN, Tharis, HiddenDragon
-//===== Version ===========================================
-//= 2.2
-//=========================================================
-//= 1.0 - Formatted to the standard
-//= 1.1 - New Effects, up to 2007/05/07 Sakexe. [Au{R}oN]
-//= 1.2 - New Effects, up to 2007/07/12 Sakexe. [Au{R}oN]
-//= 1.3 - New Effects, up to 2007/08/01 Sakexe. [Au{R}oN]
-//= 1.4 - New Effects, up to 2007/09/11 Sakexe. [Au{R}oN]
-//= 1.5 - New Effects, up to 2007/10/02 Sakexe. [Au{R}oN]
-//= 1.6 - New Effects, up to 2008/01/02 Sakexe. [Au{R}oN]
-//= 1.7 - New Effects, up to 2008/03/26 Sakexe. [Au{R}oN]
-//= 1.8 - Corrected several effect descriptions. [L0ne_W0lf]
-//= 1.9 - New Effects, up to 2008/05/28 Sakexe. [Au{R}oN]
-//= 2.0 - New Effects, up to 2008/07/15 Sakexe. [Au{R}oN]
-//= 2.1 - New Effects, up to 2008/08/06a Sakexe. [Au{R}oN]
-//= 2.2 - New Effects, up to 2009/01/21a Sakexe. [Au{R}oN]
 //===== Description =======================================
 //= A list of client-side effects sorted by their ID
 //=========================================================
@@ -28,7 +10,7 @@ Each list entry contains a number and a short description of the effect.
 You can produce these effects ingame by doing "@effect <number> 22" (22=self).
 It's also possible to attach effects to item/npc scripts by using 'misceffect'.
 
-number	description
+Number	Description
 ------	-----------
 0.	Regular Hit
 1.	Bash
@@ -760,6 +742,232 @@ number	description
 727.	A Comet from the SKy (Probably something related Warlock)
 728.	A Little Flare that Remain on the Player for some second (Probably something related Warlock)
 729.	Effect like Close Confine (Probably something related Warlock)
-730.	Little Explosion (Probably something related Warlock)
-731.	An effect like Mob's Skill Scream (Probably something related a 3th classes)
-732+.	No More Effects From 2009/01/21a Sakexe.
+730.	Small, cartoony explosion
+731.	Blinking, expanding circle
+732.	Spike from the ground
+733.	Fluffy Ball flying by
+734.	Lightning effect
+735.	(Nothing)
+736.	(Nothing)
+737.	(Nothing)
+738.	(Nothing)
+739.	Small pod appearing
+740.	Different small pod
+741.	Different small pod
+742.	Different small pod
+743.	Different small pod
+744.	Some kind of transparency
+745.	Crosshairs
+746.	Fireshots from above
+747.	Falling white feathers
+748.	Falling blue feathers
+749.	Shields
+750.	Blue sparkles
+751.	Shots from a direction
+752.	Some blinking filter
+753.	Sparkles
+754.	Green Warp
+755.	Spinning symbol
+756.	Berserk Potion
+757.	Stargate-like wormhole animation
+758.	Buff with number zooming out (1)
+759.	Buff with number zooming out (2)
+760.	Buff with number zooming out (3)
+761.	Buff with number zooming out (4)
+762.	Buff with number zooming out (5)
+763.	Buff with number zooming out (6)
+764.	Buff with number zooming out (7)
+765.	Buff with number zooming out (8)
+766.	Buff with number zooming out (9)
+767.	Buff with number zooming out (10)
+768.	Blinking
+769.	Knifes flying around
+770.	Strip sound
+771.	Poison sound
+772.	Poison particles
+773.	Expanding purple aura
+774.	Flying axe
+775.	Spin
+776.	Half-automatic gunshots
+777.	Faded light from the ground [S]
+778.	Expanding white aura
+779.	Faded light from the ground [S]
+780.	Expanding red aura [S]
+781.	Purple chains [S]
+782.	All-around shield [S]
+783.	Yellow shaft of light
+784.	White shaft of light
+785.	Upward flying wrenches
+786.	Symbol with bleeping sound [S]
+787.	(Nothing)
+788.	Green haired voodoo skull
+789.	Two Ancillas
+790.	Flame symbol
+791.	Two ice shots
+792.	Upward streaming white particles
+793.	Same, but more brief
+794.	Laser scan
+795.	Axe Crashdown
+796.	Spinning blue triangles
+797.	Stapo
+798.	(Nothing)
+799.	Expanding blue [S]
+800.	Red light shots from the ground
+801.	Ice Spikes from the ground
+802.	White Wall from the ground [S]
+803.	(Nothing)
+804.	Earth shaking [S]
+805.	Blinking aura [S]
+806.	Flying by as fast as a rocket
+807.	Kidnapping sound
+808.	(Nothing)
+809.	Shadowy filter [S]
+810.	Damp thud sound [S]
+811.	Beams of blue light
+812.	Black expanding aura
+813.	Mask (-_-)
+814.	Mask (ç_ç)
+815.	Mask (°_°)
+816.	Mask (°.,°)
+817.	Mask (>:D)
+818.	Mask (D:)
+819.	(Nothing)
+820.	Strip sound
+821.	Waterfall
+822.	Spinning blue aura
+823.	in-the-manhole effect
+824.	Some filter
+825.	Spinning blue aura with shaft
+826.	Expanding black casting anim.
+827.	Spinning fiery aura
+828.	Spinning red aura
+829.	Spinning flame fan aura
+830.	Blue casting anim. [S]
+831.	Blue cone [S]
+832.	Flying away water sphere
+833.	(Nothing)
+834.	Light shooting away circlish
+835.	Fastness yellow-reddish
+836.	Fastness yellow-pinkish
+837.	Casting [S]
+838.	Watery aura
+839.	[Client Error]
+840.	Red cone
+841.	Green cone
+842.	Yellow cone
+843.	White cone
+844.	Purple cone
+845.	light-bluish turquoise cone
+846.	(Nothing)
+847.	Light rays upwards (white/red)
+848.	Light rays upwards (white/blue)
+849.	(Nothing)
+850.	(Nothing)
+851.	Green mushy-foggy stuff (dull)
+852.	Green mushy-foggy stuff (bright)
+853.	Bright green flower area
+854.	Blue beam of light with notes
+855.	(Nothing)
+856.	Distorted note (reddish beige)
+857.	Falling down lightning shots
+858.	Red beam of light with notes
+859.	Holograph of text (blue)
+860.	Distorted note (blue)
+861.	Stargate-wormhole stuff (bright green)
+862.	Holograph of text (red)
+863.	Sparp spears of light
+864.	Colourful light shots
+865.	Stargate-wormhole stuff (purple/blue)
+866.	Ghostly wolfes
+867.	Stargate-wormhole stuff (bright yellow)
+868.	Ghostly Violies
+869.	Strip sound [S]
+870.	Ghostly Succubuses of fire
+871.	Stargate-wormhole stuff (bright red)
+872.	Ghostly reddish Mineral
+873.	Stargate-wormhole stuff (bright purple)
+874.	Ghostly Reptile thing
+875.	Stargate-wormhole stuff (bright turquoise)
+876.	Turquoise Garm
+877.	Stargate-wormhole stuff (white)
+878.	Ghostly Miyabi Ningyo
+879.	Fire explosion thing
+880.	Bluish castish cone
+881.	Blue aura
+882.	Whirl of fireflies (red)
+883.	Transparent gren tree
+884.	Green beam
+885.	Blue light beams
+886.	Blue castish cone
+887.	Wavy sparks
+888.	Star-directed lightning
+889.	Fast light beams
+890.	Rotation
+891.	Magic shots [S]
+892.	Fastness with hitting sound[S]
+893.	Blue-white light passing by
+894.	(Nothing)
+895.	Big wheel of flat light beams
+896.	Still sun shaped lightning aura
+897.	Animated sun shaped lightning aura
+898.	Animated, curvy sun shaped lightning aura
+899.	White/red light shots from below
+900.	Animated, slow curvy sun shaped lightning aura
+901.	Explosion
+902.	Floating bedtable texture
+903.	Castish flamey cone
+904.	Yellow/pink lights passing by
+905.	Expanding circle
+906.	Shield falling down with a thud [S]
+907.	Chainy, metalish sound [S]
+908.	Yellow storm of fireflies
+909.	Red storm of fireflies [S]
+910.	Blue storm of fireflies [S]
+911.	Green castish animation [S]
+912.	Green, organic looking fog cloud
+913.	Magic projectiles
+914.	(Nothing)
+915.	A field of green Digdas
+916.	Angry, demonic flames
+917.	More angry, demonic flames
+918.	Another set of angry, demonic flames
+919.	Ghostly, snapping plant
+920.	Flame
+921.	Whirlwind
+922.	Radar-ishly appearing cloudily looking snow-knots
+923.	Expanding circle of red/blue explosion clouds
+924.	Poisoning animation
+925.	Some filter
+926.	Lightning cloud
+927.	Speary roots from below
+928.	Ice cloud projectiles
+929.	Field of monster-alike flames
+930.	Falling spears with a thud [S]
+931.	(Nothing)
+932.	Firefly
+933.	[Client Crash]
+934.	White, castishly expanding cone
+935.	Green magic projectile
+936.	Red, castishly expanding cone
+937.	Yellow, castishly expanding cone
+938.	Dark-red, castishly expanding cone
+939.	Blue, conish aura
+940.	Snow flake
+941.	Explosion of red, demonic fire
+942.	Expanding, white dome
+943.	Green, fluffy projectile
+944.	Falling gems
+945.	(Nothing)
+946.	Floating lights
+947.	Blue lightning sphere
+948.	Two blue lightning spheres
+949.	Flat, spinning diamond
+950.	Circling, planetlike spheres
+951.	Three lightning spheres
+952.	Flat, spinning gem and two lightning spheres
+953.	Spinning, planetlike spheres
+954.	Two lightblue glowing spheres
+955.	Three spinning flame spheres
+956.	Flame
+957.	Spinning planetlike sphere
+958.	Two flames
