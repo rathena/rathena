@@ -50,8 +50,8 @@ aldeg_cas03,225,269,0	duplicate(Gld_Trea_Protect)	ban_warp#aldeg_cas03	-1,8,8
 aldeg_cas04,84,13,0	duplicate(Gld_Trea_Protect)	ban_warp#aldeg_cas04	-1,8,8
 aldeg_cas05,62,12,0	duplicate(Gld_Trea_Protect)	ban_warp#aldeg_cas05	-1,8,8
 
-gefg_cas01,154,112,0	duplicate(Gld_Trea_Protect)	ban_warp#aldeg_cas01	-1,6,6
-gefg_cas02,140,116,0	duplicate(Gld_Trea_Protect)	ban_warp#aldeg_cas02	-1,6,6
-gefg_cas03,271,290,0	duplicate(Gld_Trea_Protect)	ban_warp#aldeg_cas03	-1,6,6
-gefg_cas04,116,119,0	duplicate(Gld_Trea_Protect)	ban_warp#aldeg_cas04	-1,6,6
-gefg_cas05,144,110,0	duplicate(Gld_Trea_Protect)	ban_warp#aldeg_cas05	-1,6,6
+gefg_cas01,154,112,0	duplicate(Gld_Trea_Protect)	ban_warp#gefg_cas01	-1,6,6
+gefg_cas02,140,116,0	duplicate(Gld_Trea_Protect)	ban_warp#gefg_cas02	-1,6,6
+gefg_cas03,271,290,0	duplicate(Gld_Trea_Protect)	ban_warp#gefg_cas03	-1,6,6
+gefg_cas04,116,119,0	duplicate(Gld_Trea_Protect)	ban_warp#gefg_cas04	-1,6,6
+gefg_cas05,144,110,0	duplicate(Gld_Trea_Protect)	ban_warp#gefg_cas05	-1,6,6
