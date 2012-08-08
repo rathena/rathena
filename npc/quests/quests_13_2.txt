@@ -1,4 +1,4 @@
-//===== rAthena Script =======================================
+﻿//===== rAthena Script =======================================
 //= Collection of episode 13.2 quests.
 //===== By: ==================================================
 //= L0ne_W0lf
@@ -389,21 +389,22 @@ function Catwarp {
 		mes "[Cat Hand Agent]";
 		mes "Don't play with money.";
 		close; }
+	close2;
 	set Zeny, Zeny-getarg(0);
 	switch(getarg(1)) {
-		case 1: warp "alberta",117,56; close;
-		case 2: warp "prontera",116,72; close;
-		case 3: warp "izlude",91,105; close;
-		case 4: warp "geffen",120,39; close;
-		case 5: warp "payon",161,58; close;
-		case 6: warp "morocc",156,46; close;
-		case 7: warp "aldebaran",168,112; close;
-		case 8: warp "yuno",158,125; close;
-		case 9: warp "einbroch",158,301; close;
-		case 10: warp "lighthalzen",163,64; close;
-		case 11: warp "spl_fild02",32,225; close;
-		case 12: warp "man_fild02",129,61; close;
-		case 13: warp "mid_camp",62,127; close;
+		case 1: warp "alberta",117,56; end;
+		case 2: warp "prontera",116,72; end;
+		case 3: warp "izlude",91,105; end;
+		case 4: warp "geffen",120,39; end;
+		case 5: warp "payon",161,58; end;
+		case 6: warp "morocc",156,46; end;
+		case 7: warp "aldebaran",168,112; end;
+		case 8: warp "yuno",158,125; end;
+		case 9: warp "einbroch",158,301; end;
+		case 10: warp "lighthalzen",163,64; end;
+		case 11: warp "spl_fild02",32,225; end;
+		case 12: warp "man_fild02",129,61; end;
+		case 13: warp "mid_camp",62,127; end;
 	}
 }
 }

@@ -1828,9 +1828,9 @@ moc_fild22b,230,197,5	script	Munkenro#2	967,{
 			mes "(I remember you're strong-willed.)";
 			mes "(Though I am guilty,)";
 			mes "(I will do my best.)";
-			next;
+			close2;
 			warp "mid_camp",210,291;
-			close;
+			end;
 		case 2:
 			mes "[Munkenro]";
 			mes "Go prepare.";
@@ -1886,7 +1886,7 @@ moc_fild22b,230,197,5	script	Munkenro#2	967,{
 			mes "If you are too late,";
 			mes "it will be considered as a failure, so come back soon.";
 			donpcevent "Head of the Alliance#moo::OnEnable";
-			changequest 10077,10078;
+			if (checkquest(10078) == -1) changequest 10077,10078;
 			set ep13_ryu,22;
 			close;
 		case 2:
@@ -8280,20 +8280,21 @@ function Catwarp {
 		mes "[Cat Hand Agent]";
 		mes "Don't play with money.";
 		close; }
+	close2;
 	set Zeny, Zeny-getarg(0);
 	switch(getarg(1)) {
-		case 1: warp "alberta",117,56; close;
-		case 2: warp "prontera",116,72; close;
-		case 3: warp "izlude",91,105; close;
-		case 4: warp "geffen",120,39; close;
-		case 5: warp "payon",161,58; close;
-		case 6: warp "morocc",156,46; close;
-		case 7: warp "aldebaran",168,112; close;
-		case 8: warp "yuno",158,125; close;
-		case 9: warp "einbroch",158,301; close;
-		case 10: warp "lighthalzen",163,64; close;
-		case 11: warp "spl_fild02",32,225; close;
-		case 12: warp "man_fild02",129,61; close;
+		case 1: warp "alberta",117,56; end;
+		case 2: warp "prontera",116,72; end;
+		case 3: warp "izlude",91,105; end;
+		case 4: warp "geffen",120,39; end;
+		case 5: warp "payon",161,58; end;
+		case 6: warp "morocc",156,46; end;
+		case 7: warp "aldebaran",168,112; end;
+		case 8: warp "yuno",158,125; end;
+		case 9: warp "einbroch",158,301; end;
+		case 10: warp "lighthalzen",163,64; end;
+		case 11: warp "spl_fild02",32,225; end;
+		case 12: warp "man_fild02",129,61; end;
 	}
 }
 }
@@ -9846,19 +9847,19 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 							close;
 						}
 						else if ((countitem(11016) == 1) && (.@ep13_edq_wrong == 7)) {
+							delitem 6040,10; //Some_Of_Report
 							mes "[Staff Officer Abidal]";
 							mes "Thank you for your hard work. We were able to restore one volume of the report.";
 							next;
 							mes "[Staff Officer Abidal]";
 							mes "Unfortunately, this is the fourth volume of the report which we've restored already. I'm sorry, but we need to find pages for the rest of the volumes.";
-							delitem 6040,10; //Some_Of_Report
 							close;
 						}
 						else {
 							mes "[Staff Officer Abidal]";
+							delitem 6040,10; //Some_Of_Report
 							mes "I'm sorry, but you've brought pages from different volumes of the report, I was unable to put them in order.";
 							next;
-							delitem 6040,10; //Some_Of_Report
 							mes "[Staff Officer Abidal]";
 							mes "I'm sorry, but please go try to find pages that can be bound into one volume.";
 							close;
