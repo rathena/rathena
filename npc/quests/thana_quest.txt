@@ -1155,7 +1155,7 @@ L_Retry:
 					close;
 				}
 			}
-			if ((@retry > 0) && (@retry < 5)) {
+			if (@retry > 4) {
 				mes "[Screen]";
 				mes "*Beeeeep*";
 				mes "Unauthorized";
@@ -1167,7 +1167,15 @@ L_Retry:
 				mes "in sequence total: ^FF0000"+@strike+"^000000";
 				mes " ";
 				mes "Correct number total: ^FF0000"+@ball+"^000000";
-				goto L_Retry;
+				next;
+				mes "[Screen]";
+				mes "Correct number";
+				mes "authorization";
+				mes "sequence was...";
+				mes "^ff0000"+@yagu100+"^000000, ^ff0000"+@yagu10+"^000000, ^ff0000"+@yagu1+"^000000";
+				mes "Authorization number";
+				mes "will change upon retry.";
+				close;
 			}
 			mes "[Screen]";
 			mes "*Beeeeep*";
@@ -1180,15 +1188,7 @@ L_Retry:
 			mes "in sequence total: ^FF0000"+@strike+"^000000";
 			mes " ";
 			mes "Correct number total: ^FF0000"+@ball+"^000000";
-			next;
-			mes "[Screen]";
-			mes "Correct number";
-			mes "authorization";
-			mes "sequence was...";
-			mes "^ff0000"+@yagu100+"^000000, ^ff0000"+@yagu10+"^000000, ^ff0000"+@yagu1+"^000000";
-			mes "Authorization number";
-			mes "will change upon retry.";
-			close;
+			goto L_Retry;
 		}
 	}
 	mes "^3355FFThis device is currently";

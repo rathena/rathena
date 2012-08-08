@@ -42,7 +42,6 @@ niflheim,224,243,3	script	Alreg#nif	795,{
 	next;
 	mes "^FF3355*Crunch* Crunch*^000000";
 	if (nif_esc == 0 && (MISC_QUEST & 32) == 0) {
-		set piano_root,rand(1,2);
 		percentheal -60,0;
 		next;
 		mes "["+ strcharinfo(0) +"]";
@@ -240,7 +239,7 @@ OnTouch:
 		mes "you could play music...^000000";
 		close;
 	}
-	if (nif_esc == 11) {
+	if (nif_esc == 11 && countitem(7184) > 5) {
 		set nif_esc,12;
 		delitem 7184,6; //Piano_Keyboard
 		mes "^3355FFYou took the keys you've found";

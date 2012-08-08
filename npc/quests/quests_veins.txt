@@ -262,7 +262,7 @@ ve_fild05,257,130,4	script	Wincing Old Man#ve	945,{
 		set veins_stone,5;
 		close;
 	}
-	else if (veins_stone < 7) {
+	else if (veins_stone > 4 && veins_stone < 7) {
 		mes "[Zabaroo]";
 		mes "Thanks again for your help!";
 		mes "What did Absar call this";
@@ -400,7 +400,7 @@ ve_in,169,310,6	script	Strange Old Man#ve	121,{
 		close;
 	}
 	else if (veins_stone == 2) {
-		if (countitem(999) > 4 && countitem(7561) > 1 && countitem(1033) > 4) {
+		if (countitem(999) > 4 && countitem(1033) > 4 && countitem(7561) > 1) {
 			mes "[Absar]";
 			mes "Good, you finally";
 			mes "brought everthing.";
@@ -467,7 +467,7 @@ ve_in,169,310,6	script	Strange Old Man#ve	121,{
 }
 
 ve_in02,37,28,4	script	Factory Manager	898,{
-	if (veins_stone < 5) {
+	if (veins_stone && veins_stone < 5) {
 		mes "[Mirhen]";
 		mes "Hey, employees only beyond this point!";
 		mes "Geez, don't we have a sigh that says that?";
@@ -4151,7 +4151,7 @@ veins,227,127,5	script	Ivory	940,{
 		close;
 	}
 	else if (rachel_camel == 6) {
-		if ((countitem(519) > 9) && (countitem(511) > 99) && (countitem(909) > 49) && (countitem(713) > 4)) {
+		if ((countitem(511) > 99) && (countitem(909) > 49) && (countitem(519) > 9) && (countitem(713) > 4)) {
 			mes "[Organic Soap Maker Ivory]";
 			mes "Oh, great! You brought";
 			mes "everything! Now... It's";
@@ -4793,7 +4793,7 @@ ve_fild07,235,42,3	script	Silk Sand Camel	938,{
 		close;
 	}
 	else if (rachel_camel > 11 && rachel_camel < 17) {
-		if (countitem(519) > 1 && countitem(511) > 19 && countitem(909) > 9 && countitem(713) > 0) {
+		if (countitem(511) > 19 && countitem(909) > 9 && countitem(519) > 1 && countitem(713) > 0) {
 			mes "^3355FFThe camel can smell";
 			mes "that you have food for";
 			mes "it, and started salivating.";
@@ -5153,7 +5153,7 @@ ra_temin,87,133,1	script	Rachel Guard#vol1	934,5,2,{
 		disablenpc "Rachel Guard#vol1";
 		end;
 	}
-	else if ((aru_vol> 2) && (aru_vol < 5)) {
+	else if ((aru_vol > 2) && (aru_vol < 5)) {
 		mes "[Guard Karlum]";
 		mes "Hey! Lamir told me that";
 		mes "she didn't want to see";
@@ -5217,7 +5217,7 @@ OnTouch:
 }
 
 ra_temin,115,140,1	script	Flower Vase#vol	111,{
-	if ((aru_vol> 2) && (aru_vol < 5)) {
+	if ((aru_vol > 2) && (aru_vol < 5)) {
 		mes "^3355FFYou find a giant";
 		mes "vase full of beautiful";
 		mes "flowers that look freshly";
@@ -6923,7 +6923,7 @@ thor_camp,159,74,3	script	Colonel Vito#3	946,{
 
 thor_camp,141,62,0	script	#vol_study1::VeinsWarp	-1,3,3,{
 OnTouch:
-	if ((aru_vol >= 14 && aru_vol <= 16) || (aru_vol == 19)) {
+	if ((aru_vol > 13 && aru_vol < 17) || (aru_vol == 19)) {
 		warp "thor_camp",156,67;
 	}
 	end;

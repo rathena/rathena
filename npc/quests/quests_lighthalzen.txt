@@ -11737,6 +11737,7 @@ OnInit:
 	end;
 
 OnEnter:
+	initnpctimer;
 	enablenpc "#packidentity";
 	end;
 
@@ -11757,8 +11758,15 @@ OnTouch:
 		close2;
 		donpcevent "Man#Lyozien::OnEnter";
 		donpcevent "#packidentity::OnInit";
+		stopnpctimer;
 		end;
 	}
+
+OnTimer120000:
+	donpcevent "Man#Lyozien::OnEnter";
+	donpcevent "#packidentity::OnInit";
+	stopnpctimer;
+	end;
 }
 
 lhz_in01,187,247,3	script	#flashback1	139,2,2,{

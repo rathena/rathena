@@ -1,4 +1,4 @@
-//===== rAthena Script ======================================= 
+﻿//===== rAthena Script ======================================= 
 //= Nameless Island Quests
 //===== By: ================================================== 
 //= L0ne_W0lf
@@ -7525,7 +7525,7 @@ payon,244,62,3	script	Moonho Ahn	897,{
 						else if (((.@input$ == "Odd") && (.@number == 2)) || ((.@input$ == "Even") && (.@number == 1))) {
 							set .@number_false_3,.@number_false_3+1;
 							mes "[Moonho Ahn]";
-							mes "Well, it's ^0000FF+.@input+^000000.";
+							mes "Well, it's ^0000FF"+.@input+"^000000.";
 							mes "Looks like I won.";
 							next;
 							if ((.@number_right_3 < 2) && (.@number_false_3 <2)) {

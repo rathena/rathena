@@ -521,8 +521,8 @@ OnTouch:
 // Juno Toast Sales Girl.
 //----------------------------------------------------------------------------
 yuno,217,114,6	script	Little Kid#kh	96,{
+	mes "[Cezu]"; 
 	if (KielHyreQuest < 6) {
-		mes "[Cezu]"; 
 		mes "Fresh, crunchy toast!";
 		mes "If you want some, come";
 		mes "and get some tooooast~";
@@ -530,7 +530,6 @@ yuno,217,114,6	script	Little Kid#kh	96,{
 	}
 	else if (KielHyreQuest == 6) {
 		if (KHToastGirlEnd < 1) {
-			mes "[Cezu]"; 
 			mes "Fresh, crunchy toast!";
 			mes "If you want some, come";
 			mes "and get some tooooast~";
@@ -580,7 +579,6 @@ yuno,217,114,6	script	Little Kid#kh	96,{
 			}
 		}
 		else if (KHToastGirlEnd == 1) {
-			mes "[Cezu]";
 			mes "Would you please go to";
 			mes "the Lighthalzen Windmill";
 			mes "and tell them that Cezu needs";
@@ -590,7 +588,6 @@ yuno,217,114,6	script	Little Kid#kh	96,{
 			close;
 		}
 		else if (KHToastGirlEnd == 2) {
-			mes "[Cezu]";
 			mes "Hey, you're back with the";
 			mes "ingredients! Thank you so";
 			mes "much, I really needed these!";
@@ -603,14 +600,12 @@ yuno,217,114,6	script	Little Kid#kh	96,{
 			close;
 		}
 	}
-	else if ((KielHyreQuest >= 6) || (KHToastGirlEnd == 3)) {
-		//KHToastGirlEnd no longer needed-- deleting.
-		set KHToastGirlEnd,0;
-		mes "[Cezu]";
-		mes "Hot, fresh and";
-		mes "cruuuunchy toast!";
-		mes "Come and get some!";
-		close;
+	//KHToastGirlEnd no longer needed-- deleting.
+	if (KielHyreQuest > 6) set KHToastGirlEnd,0;
+	mes "Hot, fresh and";
+	mes "cruuuunchy toast!";
+	mes "Come and get some!";
+	close;
 	}
 }
 

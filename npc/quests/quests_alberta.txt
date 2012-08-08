@@ -2348,8 +2348,7 @@ alberta_in,131,95,5	script	Iromo#ep3_2	706,{
 		next;
 		mes "-Silent pause-";
 		next;
-		set name,PcName;
-		mes "-" + name + " starts to speak-";
+		mes "-"+strcharinfo(0)+" starts to speak-";
 		mes "-And tells him of the journeys-";
 		mes "-Adventures, joy, sorrow, and loss-";
 		mes "-One by one to the boy-";
@@ -2726,8 +2725,10 @@ alberta_in,131,95,5	script	Iromo#ep3_2	706,{
 		mes "that grows outside of the village.";
 		mes "I can stand it.";
 		next;
-		set ep13_2_hiki,2;
-		changequest 10079,10080;
+		if (ep13_2_hiki == 1) {
+			set ep13_2_hiki,2;
+			changequest 10079,10080;
+		}
 		mes "[Iromo]";
 		mes "But, I can have other food";
 		mes "instead of the outside food.";
@@ -2840,7 +2841,7 @@ alberta_in,120,93,3	script	Iromo's Mother#ep3_2	53,{
 	mes "But, somehow...";
 	mes "he doesn't go out anymore.";
 	next;
-	if (BaseLevel > 40) {
+	if (BaseLevel > 40 && checkquest(10079) == -1) {
 		set ep13_2_hiki,1;
 		setquest 10079;
 	}
@@ -2948,7 +2949,7 @@ alberta,45,106,5	script	Little Boy#ep3_2	706,{
 	}
 	if (ep13_2_hiki == 3) {
 		mes "[Little Boy]";
-		mes "I am hugry. We don't have";
+		mes "I am hungry. We don't have";
 		mes "much snack bar in this village.";
 		next;
 		mes "[Little Boy]";
@@ -2980,7 +2981,7 @@ alberta,45,106,5	script	Little Boy#ep3_2	706,{
 		close;
 	}
 	mes "[Little Boy]";
-	mes "I am hugry. We don't have";
+	mes "I am hungry. We don't have";
 	mes "much snack bar in this village.";
 	next;
 	mes "[Little Boy]";

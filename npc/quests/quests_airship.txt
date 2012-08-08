@@ -3050,8 +3050,7 @@ OnTimer120000:
 ein_in01,261,35,0	script	lab03#heart	139,1,1,{
 
 OnTouch:
-	if(lhz_heart == 9)
-	{
+	if(lhz_heart == 9) {
 		mes "[Security System]";
 		mes "^FF0000Unauthorized person";
 		mes "detected. Password";
@@ -3059,8 +3058,7 @@ OnTouch:
 		mes "Access denied.^000000";
 		close;
 	}
-	else if(lhz_heart == 10)
-	{
+	else if(lhz_heart == 10) {
 		mes "[Security System]";
 		mes "^FF0000Enter the 3 digit password.";
 		mes "You will be allowed 5 tries";
@@ -3075,153 +3073,160 @@ OnTouch:
 		mes "not enter any number";
 		mes "more than once. Make";
 		mes "sure the password is 3 digits.";
+		set @retry,0;
 		next;
-L_Recode:
-		set @thanacode1,rand(1,9);
-		set @thanacode2,rand(1,9);
-		set @thanacode3,rand(1,9);
-		if((@thanacode1 == @thanacode2) || (@thanacode1 == @thanacode3) || (@thanacode2 == @thanacode3)) goto L_Recode;
-L_Input:
-		input @thanainput;
-		if((@thanainput < 100) || (@thanainput > 999))
-		{
-			mes "[Security System]";
-			mes "^FF0000Error.";
-			mes "The password entered";
-			mes "exceeds the number digit";
-			mes "limit. You must only enter";
-			mes "3 digit passwords.^000000";
-			close;
+		while (1) {
+			set @yagu100,rand(1,9);
+			set @yagu10,rand(1,9);
+			set @yagu1,rand(1,9);
+			if (((@yagu100 != @yagu10) && (@yagu100 != @yagu1)) && (@yagu10 != @yagu1)) {
+				break;
+			}
 		}
-		set @thanainput1,@thanainput / 100;
-		set @thanainput2,(@thanainput % 100) / 10;
-		set @thanainput3,@thanainput % 10;
-		if ((@thanainput1 == 0) || (@thanainput2 == 0) || (@thanainput3 == 0))
-		{
+		while (1) {
+			while (1) {
+L_Retry:
+				next;
+				input @input;
+				if (@input < 100 || @input > 999) {
+					mes "[Security System]";
+					mes "^FF0000Error.";
+					mes "The password entered";
+					mes "exceeds the number digit";
+					mes "limit. You must only enter";
+					mes "3 digit passwords.^000000";
+					close;
+				}
+				set @input100,@input / 100;
+				set @input10,(@input % 100) / 10;
+				if (((@input100 > 0) && (@input10 > 0)) && ((@input % 10) > 0)) {
+					if ((@input100 != @input10) && (@input100 != (@input % 10)) && (@input10 != (@input % 10))) {
+						break;
+					}
+					mes "[Security System]";
+					mes "^FF0000Error.";
+					mes "You cannot enter the";
+					mes "number 0, or use any";
+					mes "other number more than";
+					mes "once. Please try again.^000000";
+					next;
+				}
+			}
+			set @retry,@retry+1;
 			mes "[Security System]";
-			mes "^FF0000Error.";
-			mes "You cannot enter the";
-			mes "number 0, or use any";
-			mes "other number more than";
-			mes "once. Please try again.^000000";
+			mes "^ff0000"+strcharinfo(0)+"^000000";
+			mes "has entered the following:";
+			mes "^0000ff"+@yagu100+"^000000 - ^0000ff"+@yagu10+"^000000 - ^0000ff"+@yagu1+"^000000.";
+			mes "Please wait for authorization to complete.";
 			next;
-			goto L_Input;
-		}
-		mes "[Security System]";
-		mes "^ff0000"+strcharinfo(0)+"^000000";
-		mes "has entered the following:";
-		mes "^0000ff"+@thanainput1+"^000000 - ^0000ff"+@thanainput2+"^000000 - ^0000ff"+@thanainput3+"^000000. Please wait for";
-		mes "authorization to complete.";
-		set @thanatry,@thanatry +1;
-		next;
-		set @strike,0;
-		set @ball,0;
-		if(@thanainput1 == @thanacode1) set @strike,@strike +1;
-		if(@thanainput2 == @thanacode2) set @strike,@strike +1;
-		if(@thanainput3 == @thanacode3) set @strike,@strike +1;
-		if((@thanainput1 == @thanacode2) || (@thanainput1 == @thanacode3)) set @ball,@ball +1;
-		if((@thanainput2 == @thanacode1) || (@thanainput2 == @thanacode3)) set @ball,@ball +1;
-		if((@thanainput3 == @thanacode1) || (@thanainput3 == @thanacode2)) set @ball,@ball +1;
-		if(@strike == 3)
-		{
-			mes "[Security System]";
-			mes "Authorization complete.";
-			mes "Archive access granted.";
-			next;
-			mes "^3355FFThe archive door opens,";
-			mes "revealing a series of";
-			mes "filed documents. Out";
-			mes "of all of them, one of the";
-			mes "files grabs your attention.^000000";
-			next;
-			mes "Varmunt Project No. 3";
-			mes "Security Level : Grade 1-C";
+			set @strike,0;
+			set @ball,0;
+			if (@yagu100 == @input100) set @strike,@strike+1;
+			if (@yagu10 == @input10) set @strike,@strike+1;
+			if (@yagu1 == (@input % 10)) set @strike,@strike+1;
+			if ((@yagu100 == @input10) || (@yagu100 == (@input % 10))) set .@ball,.@ball+1;
+			if ((@yagu10 == @input100) || (@yagu10 == (@input % 10))) set @ball,@ball+1;
+			if ((@yagu1 == @input100) || (@yagu1 == @input10)) set @ball,@ball+1;
+			if (@strike == 3) {
+				mes "[Security System]";
+				mes "Authorization complete.";
+				mes "Archive access granted.";
+				next;
+				mes "^3355FFThe archive door opens,";
+				mes "revealing a series of";
+				mes "filed documents. Out";
+				mes "of all of them, one of the";
+				mes "files grabs your attention.^000000";
+				next;
+				mes "Varmunt Project No. 3";
+				mes "Security Level : Grade 1-C";
+				mes " ";
+				mes "Caution: Only project members";
+				mes "of the Ymir Heart Synthesization project are authorized to view";
+				mes "this classified document.";
+				next;
+				mes "Varmunt Project No. 3";
+				mes "Security Level : Grade 1-C";
+				mes " ";
+				mes "All others found reading";
+				mes "this document are subject";
+				mes "to punishment or dismissal.";
+				next;
+				mes "^3355FFYou perceive the sound of";
+				mes "footsteps and quickly try to";
+				mes "return the document to its";
+				mes "original place. However,";
+				mes "the person that has come";
+				mes "to the archive has already";
+				mes "seen you holding the file.^000000";
+				next;
+				donpcevent "Ferlock#lab::OnEnter";
+				mes "[Ferlock]";
+				mes "Excuse me, but are";
+				mes "you an employee here?";
+				mes "I've come to pick up a";
+				mes "new Rune Stone for the";
+				mes "Airship. Wait, wait...";
+				mes "You look familiar...";
+				next;
+				emotion e_omg,0,"Ferlock#lab";
+				mes "[Ferlock]";
+				mes "That's right, aren't you the";
+				mes "one who brought me my";
+				mes "brother's letter? Yeah, you";
+				mes "were asking me about the";
+				mes "Airship's flight mechanics.";
+				mes "So you're not an employee...";
+				next;
+				mes "[Ferlock]";
+				mes "Boy, you must be more than";
+				mes "curious to be looking up that";
+				mes "information in a restricted";
+				mes "area. But don't worry, you";
+				mes "must have your reasons,";
+				mes "so I won't call the guards.";
+				next;
+				mes "[Ferlock]";
+				mes "Still, you better get out";
+				mes "of here. The guards patrol";
+				mes "this place regularly, so you're";
+				mes "almost sure to get caught. Hmm,";
+				mes "come and see me later at the";
+				mes "Airship, alright? Now hurry!";
+				close2;
+				donpcevent "Ferlock#lab::OnInit";
+				changequest 8042,8043;
+				set lhz_heart,11;
+				end;
+			}
+			mes "[Password Checker]";
 			mes " ";
-			mes "Caution: Only project members";
-			mes "of the Ymir Heart Synthesization project are authorized to view";
-			mes "this classified document.";
+			mes "^333333Total of correct numbers";
+			mes "in correct sequence: ^ff0000"+@strike+"^333333";
+			mes "Total of correct numbers misplaced: ^ff0000"+@ball+"^333333.";
+			mes "Please use these results";
+			mes "to make a more accurate guess.^000000";
 			next;
-			mes "Varmunt Project No. 3";
-			mes "Security Level : Grade 1-C";
-			mes " ";
-			mes "All others found reading";
-			mes "this document are subject";
-			mes "to punishment or dismissal.";
-			next;
-			mes "^3355FFYou perceive the sound of";
-			mes "footsteps and quickly try to";
-			mes "return the document to its";
-			mes "original place. However,";
-			mes "the person that has come";
-			mes "to the archive has already";
-			mes "seen you holding the file.^000000";
-			next;
-			donpcevent "Ferlock#lab::OnEnter";
-			mes "[Ferlock]";
-			mes "Excuse me, but are";
-			mes "you an employee here?";
-			mes "I've come to pick up a";
-			mes "new Rune Stone for the";
-			mes "Airship. Wait, wait...";
-			mes "You look familiar...";
-			next;
-			emotion e_omg,0,"Ferlock#lab";
-			mes "[Ferlock]";
-			mes "That's right, aren't you the";
-			mes "one who brought me my";
-			mes "brother's letter? Yeah, you";
-			mes "were asking me about the";
-			mes "Airship's flight mechanics.";
-			mes "So you're not an employee...";
-			next;
-			mes "[Ferlock]";
-			mes "Boy, you must be more than";
-			mes "curious to be looking up that";
-			mes "information in a restricted";
-			mes "area. But don't worry, you";
-			mes "must have your reasons,";
-			mes "so I won't call the guards.";
-			next;
-			mes "[Ferlock]";
-			mes "Still, you better get out";
-			mes "of here. The guards patrol";
-			mes "this place regularly, so you're";
-			mes "almost sure to get caught. Hmm,";
-			mes "come and see me later at the";
-			mes "Airship, alright? Now hurry!";
-			close2;
-			donpcevent "Ferlock#lab::OnInit";
-			changequest 8042,8043;
-			set lhz_heart,11;
-			end;
-		}
-		mes "[Password Checker]";
-		mes " ";
-		mes "^333333Total of correct numbers";
-		mes "in correct sequence: ^ff0000"+@strike+"^333333";
-		mes "Total of correct numbers misplaced: ^ff0000"+@ball+"^333333.";
-		mes "Please use these results";
-		mes "to make a more accurate guess.^000000";
-		next;
-		if(@thanatry > 4)
-		{
+			if (@retry > 4) {
+				mes "[Security System]";
+				mes "^FF0000The correct password";
+				mes "for this session was";
+				mes "^000000"+@yagu100+"^FF0000 - ^000000"+@yagu10+"^000000 - ^000000"+@yagu1+"^FF0000.";
+				mes "Password will now be reset.^000000";
+				close;
+			}
 			mes "[Security System]";
-			mes "^FF0000The correct password";
-			mes "for this session was";
-			mes "^000000"+@thanacode1+"^FF0000 - ^000000"+@thanacode2+"^000000 - ^000000"+@thanacode3+"^FF0000. Password";
-			mes "will now be reset.^000000";
-			set @thanatry,0;
-			close;
+			mes "Beeeeep!";
+			mes "Incorrect password.";
+			mes " ";
+			switch (@retry) {
+				case 1: mes "Initialing 2nd attempt...^000000"; break;
+				case 2: mes "Initialing 3rd attempt...^000000"; break;
+				case 3: mes "Initialing 4th attempt...^000000"; break;
+				case 4: mes "Initialing final attempt...^000000"; break;
+			}
+			goto L_Retry;
 		}
-		mes "[Security System]";
-		mes "Beeeeep!";
-		mes "Incorrect password.";
-		mes " ";
-		if(@thanatry == 1) mes "Initialing 2nd attempt...^000000";
-		if(@thanatry == 2) mes "Initialing 3rd attempt...^000000";
-		if(@thanatry == 3) mes "Initialing 4th attempt...^000000";
-		if(@thanatry == 4) mes "Initialing final attempt...^000000";
-		next;
-		goto L_Input;
 	}
+	end;
 }

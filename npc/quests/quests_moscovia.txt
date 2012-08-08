@@ -1,4 +1,4 @@
-//===== rAthena Script ======================================= 
+﻿//===== rAthena Script ======================================= 
 //= Moscovia Quests
 //===== By: ================================================== 
 //= Kisuka
@@ -8315,8 +8315,8 @@ mosk_in,215,46,5	script	Baba Yaga, the Horrible	970,{
 		mes "If you do this, what the villagers want";
 		mes "will be happening,";
 		mes "forever.";
-		set mos_nowinter,19;
 		getitem 7765,1;
+		set mos_nowinter,19;
 		close;
 	}
 	else if (mos_nowinter == 19) {
