@@ -1882,12 +1882,12 @@ moc_fild22b,230,197,5	script	Munkenro#2	967,{
 			mes "[Munkenro]";
 			mes "Ok, just have a good adventure.";
 			next;
+			set ep13_ryu,22;
+			changequest 10077,10078; 
+			donpcevent "Head of the Alliance#moo::OnEnable"; 
 			mes "[Munkenro]";
 			mes "If you are too late,";
 			mes "it will be considered as a failure, so come back soon.";
-			donpcevent "Head of the Alliance#moo::OnEnable";
-			if (checkquest(10078) == -1) changequest 10077,10078;
-			set ep13_ryu,22;
 			close;
 		case 2:
 			mes "[Munkenro]";
