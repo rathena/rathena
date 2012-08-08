@@ -299,26 +299,25 @@ function	script	F_KafTele	{
 		set Zeny, Zeny - @wrpP[.@j];
 		set RESRVPTS, RESRVPTS + (@wrpP[.@j]/16);
 	}
-	if (@wrpD$[.@j] == "Alberta") warp "alberta", 117, 56;
+	cutin "", 255;
 	if (@wrpD$[.@j] == "Al De Baran") warp "aldebaran",168,112;
-	if (@wrpD$[.@j] == "Aldebaran") warp "aldebaran",168,112;
-	if (@wrpD$[.@j] == "Comodo") warp "comodo", 209, 143;
-	if (@wrpD$[.@j] == "Izlude") {
+	else if (@wrpD$[.@j] == "Alberta") warp "alberta", 117, 56;
+	else if (@wrpD$[.@j] == "Comodo") warp "comodo", 209, 143;
+	else if (@wrpD$[.@j] == "Comodo Pharos Beacon") warp "cmd_fild07", 127, 134;
+	else if (@wrpD$[.@j] == "Geffen") warp "geffen", 120, 39;
+	else if (@wrpD$[.@j] == "Izlude") {
 		if (checkre(0))
 			warp "izlude", 128, 98;
 		else
 			warp "izlude", 91, 105;
 	}
-	if (@wrpD$[.@j] == "Geffen") warp "geffen", 120, 39;
-	if (@wrpD$[.@j] == "Morroc") warp "morocc", 156, 46;
-	if (@wrpD$[.@j] == "Payon") warp "payon", 161, 58;
-	if (@wrpD$[.@j] == "Prontera") warp "prontera", 116, 72;
-	if (@wrpD$[.@j] == "Mjolnir Dead Pit") warp "mjolnir_02", 99, 351;
-	if (@wrpD$[.@j] == "Comodo Pharos Beacon") warp "cmd_fild07", 127, 134;
-	if (@wrpD$[.@j] == "Orc Dungeon") warp "gef_fild10", 52, 326;
-	if (@wrpD$[.@j] == "Umbala") warp "umbala", 100, 154;
-	if (@wrpD$[.@j] == "Juno") warp "yuno", 158, 125;
-	cutin "", 255;
+	else if (@wrpD$[.@j] == "Juno") warp "yuno", 158, 125;
+	else if (@wrpD$[.@j] == "Mjolnir Dead Pit") warp "mjolnir_02", 99, 351;
+	else if (@wrpD$[.@j] == "Morroc") warp "morocc", 156, 46;
+	else if (@wrpD$[.@j] == "Orc Dungeon") warp "gef_fild10", 52, 326;
+	else if (@wrpD$[.@j] == "Payon") warp "payon", 161, 58;
+	else if (@wrpD$[.@j] == "Prontera") warp "prontera", 116, 72;
+	else if (@wrpD$[.@j] == "Umbala") warp "umbala", 100, 154;
 	end;
 }
 
