@@ -606,7 +606,6 @@ yuno,217,114,6	script	Little Kid#kh	96,{
 	mes "cruuuunchy toast!";
 	mes "Come and get some!";
 	close;
-	}
 }
 
 //----------------------------------------------------------------------------
