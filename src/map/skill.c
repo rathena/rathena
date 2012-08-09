@@ -8760,7 +8760,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				if (unit_movepos(bl,x,y,0,0))
 				{
 					clif_skill_damage(bl,bl,tick, status_get_amotion(src), 0, -30000, 1, skillid, -1, 6);
-					if( sd && pc_issit(sd))
+					if( bl->type == BL_PC && pc_issit((TBL_PC*)bl))
 						clif_sitting(bl); //Avoid sitting sync problem
 					clif_slide(bl,x,y) ;
 					sc_start(bl,SC_CONFUSION,80,skilllv,skill_get_time(skillid,skilllv));

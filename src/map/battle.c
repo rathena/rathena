@@ -4810,12 +4810,42 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			sd->status.skill[sc->data[SC__AUTOSHADOWSPELL]->val1].id != 0 && sd->status.skill[sc->data[SC__AUTOSHADOWSPELL]->val1].flag == SKILL_FLAG_PLAGIARIZED )
 		{
 			int r_skill = sd->status.skill[sc->data[SC__AUTOSHADOWSPELL]->val1].id,
-				r_lv = sc->data[SC__AUTOSHADOWSPELL]->val2;
+				r_lv = sc->data[SC__AUTOSHADOWSPELL]->val2, type;
 
 			if (r_skill != AL_HOLYLIGHT && r_skill != PR_MAGNUS) {
+				if( (type = skill_get_casttype(r_skill)) == CAST_GROUND ) {
+					int maxcount = 0;
+
+					if( !(BL_PC&battle_config.skill_reiteration) &&
+						skill_get_unit_flag(r_skill)&UF_NOREITERATION )
+							type = -1;
+
+					if( BL_PC&battle_config.skill_nofootset &&
+						skill_get_unit_flag(r_skill)&UF_NOFOOTSET )
+							type = -1;
+
+					if( BL_PC&battle_config.land_skill_limit &&
+						(maxcount = skill_get_maxcount(r_skill, r_lv)) > 0
+					  ) {
+						int v;
+						for(v=0;v<MAX_SKILLUNITGROUP && sd->ud.skillunit[v] && maxcount;v++) {
+							if(sd->ud.skillunit[v]->skill_id == r_skill)
+								maxcount--;
+						}
+						if( maxcount == 0 )
+							type = -1;
+					}
+
+					if( type != CAST_GROUND ){
+							clif_skill_fail(sd,r_skill,USESKILL_FAIL_LEVEL,0);
+							map_freeblock_unlock();
+							return wd.dmg_lv;
+					}
+				}
+
 				sd->state.autocast = 1;
 				skill_consume_requirement(sd,r_skill,r_lv,3);
-				switch( skill_get_casttype(r_skill) ) {
+				switch( type ) {
 				case CAST_GROUND:
 					skill_castend_pos2(src, target->x, target->y, r_skill, r_lv, tick, flag);
 					break;
