@@ -14216,22 +14216,18 @@ int buildin_query_sql_sub(struct script_state* st, Sql* handle)
 	const char* query;
 	struct script_data* data;
 	const char* name;
-	int max_rows = SCRIPT_MAX_ARRAYSIZE;// maximum number of rows
+	int max_rows = SCRIPT_MAX_ARRAYSIZE; // maximum number of rows
 	int num_vars;
 	int num_cols;
 
 	// check target variables
-	for( i = 3; script_hasdata(st,i); ++i )
-	{
+	for( i = 3; script_hasdata(st,i); ++i ) {
 		data = script_getdata(st, i);
-		if( data_isreference(data) && reference_tovariable(data) )
-		{// it's a variable
+		if( data_isreference(data) ) { // it's a variable
 			name = reference_getname(data);
-			if( not_server_variable(*name) && sd == NULL )
-			{// requires a player
+			if( not_server_variable(*name) && sd == NULL ) { // requires a player
 				sd = script_rid2sd(st);
-				if( sd == NULL )
-				{// no player attached
+				if( sd == NULL ) { // no player attached
 					script_reportdata(data);
 					st->state = END;
 					return 1;
@@ -14239,9 +14235,7 @@ int buildin_query_sql_sub(struct script_state* st, Sql* handle)
 			}
 			if( not_array_variable(*name) )
 				max_rows = 1;// not an array, limit to one row
-		}
-		else
-		{
+		} else {
 			ShowError("script:query_sql: not a variable\n");
 			script_reportdata(data);
 			st->state = END;
@@ -14253,15 +14247,13 @@ int buildin_query_sql_sub(struct script_state* st, Sql* handle)
 	// Execute the query
 	query = script_getstr(st,2);
 
-	if( SQL_ERROR == Sql_QueryStr(handle, query) )
-	{
+	if( SQL_ERROR == Sql_QueryStr(handle, query) ) {
 		Sql_ShowDebug(handle);
 		script_pushint(st, 0);
 		return 1;
 	}
 
-	if( Sql_NumRows(handle) == 0 )
-	{// No data received
+	if( Sql_NumRows(handle) == 0 ) { // No data received
 		Sql_FreeResult(handle);
 		script_pushint(st, 0);
 		return 0;
@@ -14269,22 +14261,17 @@ int buildin_query_sql_sub(struct script_state* st, Sql* handle)
 
 	// Count the number of columns to store
 	num_cols = Sql_NumColumns(handle);
-	if( num_vars < num_cols )
-	{
+	if( num_vars < num_cols ) {
 		ShowWarning("script:query_sql: Too many columns, discarding last %u columns.\n", (unsigned int)(num_cols-num_vars));
 		script_reportsrc(st);
-	}
-	else if( num_vars > num_cols )
-	{
+	} else if( num_vars > num_cols ) {
 		ShowWarning("script:query_sql: Too many variables (%u extra).\n", (unsigned int)(num_vars-num_cols));
 		script_reportsrc(st);
 	}
 
 	// Store data
-	for( i = 0; i < max_rows && SQL_SUCCESS == Sql_NextRow(handle); ++i )
-	{
-		for( j = 0; j < num_vars; ++j )
-		{
+	for( i = 0; i < max_rows && SQL_SUCCESS == Sql_NextRow(handle); ++i ) {
+		for( j = 0; j < num_vars; ++j ) {
 			char* str = NULL;
 
 			if( j < num_cols )
@@ -14298,8 +14285,7 @@ int buildin_query_sql_sub(struct script_state* st, Sql* handle)
 				setd_sub(st, sd, name, i, (void *)__64BPRTSIZE((str?atoi(str):0)), reference_getref(data));
 		}
 	}
-	if( i == max_rows && max_rows < Sql_NumRows(handle) )
-	{
+	if( i == max_rows && max_rows < Sql_NumRows(handle) ) {
 		ShowWarning("script:query_sql: Only %d/%u rows have been stored.\n", max_rows, (unsigned int)Sql_NumRows(handle));
 		script_reportsrc(st);
 	}
