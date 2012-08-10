@@ -11018,8 +11018,7 @@ BUILDIN_FUNC(getequipcardcnt)
 /// Removes all cards from the item found in the specified equipment slot of the invoking character,
 /// and give them to the character. If any cards were removed in this manner, it will also show a success effect.
 /// successremovecards <slot>;
-BUILDIN_FUNC(successremovecards)
-{
+BUILDIN_FUNC(successremovecards) {
 	int i=-1,j,c,cardflag=0;
 
 	TBL_PC* sd = script_rid2sd(st);
@@ -11035,18 +11034,14 @@ BUILDIN_FUNC(successremovecards)
 	if(itemdb_isspecial(sd->status.inventory[i].card[0])) 
 		return 0;
 
-	for( c = sd->inventory_data[i]->slot - 1; c >= 0; --c )
-	{
-		if( sd->status.inventory[i].card[c] && itemdb_type(sd->status.inventory[i].card[c]) == IT_CARD )
-		{// extract this card from the item
+	for( c = sd->inventory_data[i]->slot - 1; c >= 0; --c ) {
+		if( sd->status.inventory[i].card[c] && itemdb_type(sd->status.inventory[i].card[c]) == IT_CARD ) {// extract this card from the item
 			int flag;
 			struct item item_tmp;
+			memset(&item_tmp,0,sizeof(item_tmp));
 			cardflag = 1;
-			item_tmp.id=0,item_tmp.nameid=sd->status.inventory[i].card[c];
-			item_tmp.equip=0,item_tmp.identify=1,item_tmp.refine=0;
-			item_tmp.attribute=0,item_tmp.expire_time=0;
-			for (j = 0; j < MAX_SLOTS; j++)
-				item_tmp.card[j]=0;
+			item_tmp.nameid   = sd->status.inventory[i].card[c];
+			item_tmp.identify = 1;
 
 			if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){	// 持てないならドロップ
 				clif_additem(sd,0,0,flag);
@@ -11055,15 +11050,17 @@ BUILDIN_FUNC(successremovecards)
 		}
 	}
 
-	if(cardflag == 1)
-	{	// カードを取り除いたアイテム所得
+	if(cardflag == 1) {// カードを取り除いたアイテム所得
 		int flag;
 		struct item item_tmp;
-		item_tmp.id=0,item_tmp.nameid=sd->status.inventory[i].nameid;
-		item_tmp.equip=0,item_tmp.identify=1,item_tmp.refine=sd->status.inventory[i].refine;
-		item_tmp.attribute=sd->status.inventory[i].attribute,item_tmp.expire_time=sd->status.inventory[i].expire_time;
-		for (j = 0; j < sd->inventory_data[i]->slot; j++)
-			item_tmp.card[j]=0;
+		memset(&item_tmp,0,sizeof(item_tmp));
+		
+		item_tmp.nameid      = sd->status.inventory[i].nameid;
+		item_tmp.identify    = 1;
+		item_tmp.refine      = sd->status.inventory[i].refine;
+		item_tmp.attribute   = sd->status.inventory[i].attribute;
+		item_tmp.expire_time = sd->status.inventory[i].expire_time;
+
 		for (j = sd->inventory_data[i]->slot; j < MAX_SLOTS; j++)
 			item_tmp.card[j]=sd->status.inventory[i].card[j];
 
@@ -11084,8 +11081,7 @@ BUILDIN_FUNC(successremovecards)
 /// <type>=1 : will keep the item, but destroy the cards.
 /// <type>=2 : will keep the cards, but destroy the item.
 /// <type>=? : will just display the failure effect.
-BUILDIN_FUNC(failedremovecards)
-{
+BUILDIN_FUNC(failedremovecards) {
 	int i=-1,j,c,cardflag=0;
 
 	TBL_PC* sd = script_rid2sd(st);
@@ -11101,21 +11097,18 @@ BUILDIN_FUNC(failedremovecards)
 	if(itemdb_isspecial(sd->status.inventory[i].card[0]))
 		return 0;
 
-	for( c = sd->inventory_data[i]->slot - 1; c >= 0; --c )
-	{
-		if( sd->status.inventory[i].card[c] && itemdb_type(sd->status.inventory[i].card[c]) == IT_CARD )
-		{
+	for( c = sd->inventory_data[i]->slot - 1; c >= 0; --c ) {
+		if( sd->status.inventory[i].card[c] && itemdb_type(sd->status.inventory[i].card[c]) == IT_CARD ) {
 			cardflag = 1;
 
-			if(typefail == 2)
-			{// add cards to inventory, clear 
+			if(typefail == 2) {// add cards to inventory, clear 
 				int flag;
 				struct item item_tmp;
-				item_tmp.id=0,item_tmp.nameid=sd->status.inventory[i].card[c];
-				item_tmp.equip=0,item_tmp.identify=1,item_tmp.refine=0;
-				item_tmp.attribute=0,item_tmp.expire_time=0;
-				for (j = 0; j < MAX_SLOTS; j++)
-					item_tmp.card[j]=0;
+				
+				memset(&item_tmp,0,sizeof(item_tmp));
+				
+				item_tmp.nameid   = sd->status.inventory[i].card[c];
+				item_tmp.identify = 1;
 
 				if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){
 					clif_additem(sd,0,0,flag);
@@ -11125,22 +11118,25 @@ BUILDIN_FUNC(failedremovecards)
 		}
 	}
 
-	if(cardflag == 1)
-	{
+	if(cardflag == 1) {
 		if(typefail == 0 || typefail == 2){	// 武具損失
 			pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
 		}
 		if(typefail == 1){	// カードのみ損失（武具を返す）
 			int flag;
 			struct item item_tmp;
-			item_tmp.id=0,item_tmp.nameid=sd->status.inventory[i].nameid;
-			item_tmp.equip=0,item_tmp.identify=1,item_tmp.refine=sd->status.inventory[i].refine;
-			item_tmp.attribute=sd->status.inventory[i].attribute,item_tmp.expire_time=sd->status.inventory[i].expire_time;
+			
+			memset(&item_tmp,0,sizeof(item_tmp));
+			
+			item_tmp.nameid      = sd->status.inventory[i].nameid;
+			item_tmp.identify    = 1;
+			item_tmp.refine      = sd->status.inventory[i].refine;
+			item_tmp.attribute   = sd->status.inventory[i].attribute;
+			item_tmp.expire_time = sd->status.inventory[i].expire_time;
 
-			for (j = 0; j < sd->inventory_data[i]->slot; j++)
-				item_tmp.card[j]=0;
 			for (j = sd->inventory_data[i]->slot; j < MAX_SLOTS; j++)
 				item_tmp.card[j]=sd->status.inventory[i].card[j];
+			
 			pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
 
 			if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){
