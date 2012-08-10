@@ -33,7 +33,7 @@ valkyrie,44,55,5	script	Sniper#Valkyrie	727,{
 		mes "of battling.";
 		close;
 	}
-	if ((ADVJOB == Job_Sniper) && (Class == Job_Archer_High) && (JobLevel > 39)) {
+	else if (ADVJOB == Job_Sniper && Class == Job_Archer_High && JobLevel > 39) {
 		mes "[Sniper]";
 		mes "The world is in";
 		mes "need of mighty Bowmen";

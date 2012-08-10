@@ -3,20 +3,21 @@
 //===== By: ================================================== 
 //= Kisuka
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.0
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
 //= Job Change to Archer Class
 //===== Additional Comments: ================================= 
 //= 1.0 First Version. [Kisuka]
-//= 1.1 Added Baby job change support. [Masao]
 //============================================================ 
-payon_in02,64,71,4	script	Archer Guildsman	85,{
+payon_in02,64,71,4	script	Archer Guildsman#archer	85,{
 	if (Upper == 1) {
-		if ((Class == Job_Novice_High) && (ADVJOB == Job_Sniper || ADVJOB == Job_Clown || ADVJOB == Job_Gypsy)) {
+		if (Class == Job_Novice_High && (ADVJOB == Job_Sniper || ADVJOB == Job_Clown || ADVJOB == Job_Gypsy)) {
 			mes "[Archer Guildsman]";
 			mes "Hey, I know you.";
+			mes "You took this test";
+			mes "before, didn't you?";
 			next;
 			mes "[Archer Guildsman]";
 			mes "Ah, you must have been";
@@ -37,7 +38,7 @@ payon_in02,64,71,4	script	Archer Guildsman	85,{
 			mes "need to say anything else.";
 			mes "I know you'll make a great Archer...";
 			next;
-			skill 143,0,1;
+			skill 143,0,0;
 			jobchange Job_Archer_high;
 			skill 147,1,0;
 			skill 148,1,0;
@@ -45,93 +46,80 @@ payon_in02,64,71,4	script	Archer Guildsman	85,{
 			mes "Although there's no special";
 			mes "reward for you this time, I hope you understand. Take care of yourself.";
 			close;
+		}else{
+			mes "[Archer Guildsman]";
+			mes "Oh...?";
+			mes "Hey, what are";
+			mes "you doing here...?";
+			next;
+			mes "[Archer Guildsman]";
+			mes "I can tell that you're not cut out to be an Archer. It sort of feels like you're meant to do";
+			mes "something else...";
+			close;
 		}
-		mes "[Archer Guildsman]";
-		mes "Oh...?";
-		mes "Hey, what are";
-		mes "you doing here...?";
-		next;
-		mes "[Archer Guildsman]";
-		mes "I can tell that you're not cut out to be an Archer. It sort of feels like you're meant to do";
-		mes "something else...";
-		close;
 	}
 	mes "[Archer Guildsman]";
 	mes "Nice to meet you. How may I help you?";
 	next;
-	switch (select("I want to be an Archer.:I need the requirements, please.:Nothing, thanks.")) {
+	switch(select("I want to be an Archer.:I need the requirements, please.:Nothing, thanks.")) {
 	case 1:
-		if (Class == Job_Baby || Class == Job_Novice) {
+		if(Class != Job_Novice) {
 			mes "[Archer Guildsman]";
-			mes "You are..." + strcharinfo(0) + " right?";
+			if(Class == Job_Archer) {
+				mes "Haha, you are kidding me..";
+			}else{
+				mes "I feel sorry but only Novices can change their job.";
+				mes "You already have your own decent job, don't you?";
+			}
+			close;
+		}else{
+			mes "[Archer Guildsman]";
+			mes "You are... "+strcharinfo(0)+". right?";
 			next;
 			if (getskilllv("NV_BASIC") < 9) {
 				mes "[Archer Guildsman]";
-				mes "Well, you don't have the right skill level. ";
-				mes "Your job level must be at least ^4d4dff10^000000";
-				mes "and your Basic Skill level should reach ^4d4dfflevel 9^000000";
+				mes "Well, you're not at the right skill level.";
+				mes "Your job level must be at least ^4A4AFF10^000000 and your Basic Skill level should reach ^4A4AFFlevel 9";
 				next;
 				mes "[Archer Guildsman]";
-				mes "Because an Archer needs";
-				mes "extremely high concentration,";
-				mes "so we do not accept ";
-				mes "those who have little patience.";
+				mes "Because an Archer needs extremely high concentration, so we do not accept those who have little patience.";
 				close;
 			}
 			mes "[Archer Guildsman]";
-			mes "You seem to have learned the basic skills..";
-			mes "....Hm~~ you are now ready to become an Archer. I will take the step right away.";
+			mes "Your Basic Skill is now enough..";
+			mes "....Hm~~ so you are now ready to be an Archer. I will take the step right away.";
 			next;
-			skill 143,0,1;
-			if(Class == Job_Baby){
-				jobchange Job_Baby_Archer;
-			} else {
-				jobchange Job_Archer;
-			}
 			mes "[Archer Guildsman]";
 			mes "Congratulations! You are now an Archer! Also, we hope that you actively participate in many programs for the revival of the Archer Guild.";
 			mes "Ah, items have arrived from the Production Department. Here, take these! These are all yours!";
-			getitem 1742,1; //N_Composite_Bow
-			getitem 12004,1; //Arrow_Container
-			getitem 12009,1; //Silver_Arrow_Container
-			getitem 12008,1; //Fire_Arrow_Container
+			jobchange Job_Archer;
+			getitem 1742,1;	// N_Composite_Bow
+			getitem 12004,1;	// Arrow_Container
+			getitem 12009,1;	// Silver_Arrow_Container
+			getitem 12008,1;	// Fire_Arrow_Container
 			next;
 			mes "[Archer Guildsman]";
-			mes "Having a bow and arrows, now you've become a real Archer.";
-			mes "If you open the arrow quiver, there will be arrows in it that you can equip.";
-			mes "Well, I expect to hear good news from you. It's time to say goodbye. Bye.";
+			mes "Having a bow and arrows, now you became a real Archer.";
+			mes "If you open the arrow container, there are arrows in it and then you can equip them.";
+			mes "Well, I expect to hear better news from you. It's time to say goodbye.";
+			mes "Bye.";
 			close;
 		}
-		if (Class == Job_Baby_Archer || Class == Job_Archer || Class == Job_Archer_High) {
-			mes "[Archer Guildsman]";
-			mes "Haha, you are kidding me..";
-			close;
-		}
-		mes "[Archer Guildsman]";
-		mes "Wait a second. You've chosen a different job already. You don't need to know this~";
-		close;
 	case 2:
 		mes "[Archer Guildsman]";
 		mes "An Archer has skills using a bow and has various talents.";
 		mes "The greatest ability of an Archer is attacking enemies from a long distance.";
 		next;
 		mes "[Archer Guildsman]";
-		mes "Although an Archer has weaker HP,";
-		mes "he or she can shoot enemies";
-		mes "at a long range,";
+		mes "Although an Archer has weaker HP, he or she can shoot enemies at a long range,";
 		mes "so an Archer is safer in a real battle.";
 		next;
 		mes "[Archer Guildsman]";
-		mes "Although an Archer in Ragnarok has lower HP,";
-		mes "he or she has high accuracy and attack rate";
-		mes "so that the archer can kill monsters";
-		mes "before they get close to an Archer.";
+		mes "Although an Archer in Ragnarok has lower HP, he or she has high accuracy and attack rate so that the archer can kill monsters before they get close to an Archer.";
 		next;
 		mes "[Archer Guildsman]";
-		mes "^8E2323An Archer can change";
-		mes "^8E2323jobs to a Hunter.";
-		mes "^8E2323Other than Hunter, if you are a man, you can change your job to Bard";
-		mes "^8E2323and if you are a woman, you can change your job to Dancer.^000000";
+		mes "^8C2121An Archer can change jobs to a Hunter.^000000";
+		mes "^8C2121Other than Hunter, if you are a man, you can change your job to Bard and if you are a woman, you can change your job to Dancer.^000000";
 		close;
 	case 3:
 		mes "[Archer Guildsman]";

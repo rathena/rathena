@@ -41,7 +41,7 @@ valkyrie,53,58,3	script	Stalker#Valkyrie	747,{
 		mes "they need me.";
 		close;
 	}
-	if ((ADVJOB == Job_Stalker) && (Class == Job_Thief_High) && (JobLevel > 39)) {
+	else if (ADVJOB == Job_Stalker && Class == Job_Thief_High && JobLevel > 39) {
 		mes "[Stalker]";
 		mes "This world needs";
 		mes "more heroes who are";

@@ -33,7 +33,7 @@ valkyrie,53,56,3	script	Gypsy#Valkyrie	101,{
 		mes "For me, it's a way of life~";
 		close;
 	}
-	if ((ADVJOB == Job_Gypsy) && (Class == Job_Archer_High) && (JobLevel > 39)) {
+	else if (ADVJOB == Job_Gypsy && Class == Job_Archer_High && JobLevel > 39) {
 		mes "[Gypsy]";
 		mes "The land of Rune-Midgard";
 		mes "is in need of talented women";

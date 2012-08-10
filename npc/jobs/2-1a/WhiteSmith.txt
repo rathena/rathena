@@ -40,7 +40,7 @@ valkyrie,44,50,5	script	MasterSmith#Valkyrie	731,{
 		mes "crafting...";
 		close;
 	}
-	if ((ADVJOB == Job_WhiteSmith) && (Class == Job_Merchant_High) && (JobLevel > 39)) {
+	else if (ADVJOB == Job_WhiteSmith && Class == Job_Merchant_High && JobLevel > 39) {
 		mes "[MasterSmith]";
 		mes "The time has come!";
 		mes "Our world needs brave,";

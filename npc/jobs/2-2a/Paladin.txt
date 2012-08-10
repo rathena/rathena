@@ -33,7 +33,7 @@ valkyrie,53,39,3	script	Paladin#Valkyrie	752,{
 		mes "always brighten our path!";
 		close;
 	}
-	if ((ADVJOB == Job_Paladin) && (Class == Job_Swordman_High) && (JobLevel > 39)) {
+	else if (ADVJOB == Job_Paladin && Class == Job_Swordman_High && JobLevel > 39) {
 		mes "[Paladin]";
 		mes "The Holy War will";
 		mes "be upon us before we";

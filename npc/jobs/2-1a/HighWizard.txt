@@ -38,7 +38,7 @@ valkyrie,44,47,5	script	High Wizard#Valkyrie	735,{
 		mes "was placed in the wrong hands?!";
 		close;
 	}
-	if ((ADVJOB == Job_High_Wizard) && (Class == Job_Mage_High) && (JobLevel > 39)) {
+	else if (ADVJOB == Job_High_Wizard && Class == Job_Mage_High && JobLevel > 39) {
 		mes "[High Wizard]";
 		mes "It is time.";
 		mes "And Rune-Midgard has";
@@ -62,7 +62,7 @@ valkyrie,44,47,5	script	High Wizard#Valkyrie	735,{
 			mes "all of your remaining Skill Points before returning to me.";
 			close;
 		}
-		jobchange Job_High_Wizard;
+		jobchange Job_high_Wizard;
 		set ADVJOB,0;
 		mes "[High Wizard]";
 		mes "Congratulations.";

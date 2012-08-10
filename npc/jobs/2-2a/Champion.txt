@@ -38,7 +38,7 @@ valkyrie,53,42,3	script	Champion#Valkyrie	52,{
 		mes "so much in life...";
 		close;
 	}
-	if ((ADVJOB == Job_Champion) && (Class == Job_Acolyte_High) && (JobLevel > 39)) {
+	else if (ADVJOB == Job_Champion && Class == Job_Acolyte_High && JobLevel > 39) {
 		mes "[Champion]";
 		mes "It's time.";
 		mes "Time for great heroes";

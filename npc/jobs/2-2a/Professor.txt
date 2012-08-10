@@ -40,7 +40,7 @@ valkyrie,53,47,3	script	Scholar#Valkyrie	743,{
 		mes "process of learning...";
 		close;
 	}
-	if ((ADVJOB == Job_Professor) && (Class == Job_Mage_High) && (JobLevel > 39)) {
+	else if (ADVJOB == Job_Professor && Class == Job_Mage_High && JobLevel > 39) {
 		mes "[Scholar]";
 		mes "Rune-Midgard doesn't";
 		mes "have enough Scholars to";
@@ -90,3 +90,4 @@ valkyrie,53,47,3	script	Scholar#Valkyrie	743,{
 	mes "Honor to the warriors!";
 	close;
 }
+

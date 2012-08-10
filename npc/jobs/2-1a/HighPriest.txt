@@ -32,7 +32,7 @@ valkyrie,44,42,5	script	High Priest#Valkyrie	60,{
 		mes "us from the forces of evil...";
 		close;
 	}
-	if ((ADVJOB == Job_High_Priest) && (Class == Job_Acolyte_High) && (JobLevel > 39)) {
+	else if (ADVJOB == Job_High_Priest && Class == Job_Acolyte_High && JobLevel > 39) {
 		mes "[High Priest]";
 		mes "Our world is in";
 		mes "need of people of";

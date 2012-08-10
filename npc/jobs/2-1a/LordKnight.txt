@@ -36,7 +36,7 @@ valkyrie,44,39,5	script	Lord Knight#Valkyrie	56,{
 		mes "well being of our comrades.";
 		close;
 	}
-	if ((ADVJOB == Job_Lord_Knight) && (Class == Job_Swordman_High) && (JobLevel > 39)) {
+	else if (ADVJOB == Job_Lord_Knight && Class == Job_Swordman_High && JobLevel > 39) {
 		mes "[Lord Knight]";
 		mes "Your time has come!";
 		mes "The world still needs you.";

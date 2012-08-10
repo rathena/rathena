@@ -1,44 +1,63 @@
 //===== rAthena Script ======================================= 
-// Piest Job change Quest
+//= Priest Quest
 //===== By: ================================================== 
-//= Masao
-//= Credits: Muad_Dib
+//= Translated By: Pgro Team (OwNaGe)(Aegis)
+//= Converted by: kobra_k88.
+//= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 1.0
+//= 2.6
 //===== Compatible With: ===================================== 
-//= Any rAthena SVN
+//= rAthena  SVN
 //===== Description: ========================================= 
-//= [Translated from the Official]
-//= Job change Quest from Acolyte -> Priest.
+//= [Aegis Conversion]
+//= Job Change quest for Priest class.
 //===== Additional Comments: ================================= 
-//= 1.0 Updated to latest available official file. [Masao]
-//============================================================ 
+//= Fully working.  Changed the way Priests enter the test room to help Acos.
+//= Must use this with the included Acolyte quest to work properely.
+//= 1.3 Added Baby Class support, fixed 3 wrong constants bugs [Lupus]
+//= 1.5 Fixed possible EXP abuse [Lupus]
+//= 1.6 Added a func which prevent advanced classes passing
+//= 2nd Job Quests again. It also guides adv classes where
+//= to go. [Lupus]
+//= 2.0 Changed numbers to constants. [Vicious]
+//= 2.1 Merged JFunc [Lupus]
+//= 2.1a Fixed typo [KarLaeda]
+//= 2.2 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 2.3 Several bugfixes with the help of Barron-Monster. [L0ne_W0lf]
+//= 2.3a More bug fixes. [L0ne_W0lf]
+//= 2.4 Changed Marthilda to Mathilda. [L0ne_W0llf]
+//= 2.4a Deleted unused variables. [Samuray22]
+//= 2.4b Corrected a Typo error ";;". [Samuray22]
+//= 2.5 Added Quest Log commands. [Kisuka]
+//= 2.6 Removed the need for use of 'goto.' [L0ne_W0lf]
+//==========================================================
 
 prt_church,16,41,4	script	High Bishop#prst	60,{
-	if (Upper == 1) {
-		mes "[Bishop Paul]";
-		mes "Hm...?";
-		mes "Ah, I sense that you are a warrior that has been to Valhalla. You who have been reborn... We are here to look after you.";
-		next;
-		mes "[Bishop Paul]";
-		mes "Do not let evil conquer your soul. You have enough courage and power to overcome the hardest situation. May God bless you...";
-		close;
+	// Uncomment the following 'if' statement to allow High Priests to assist Acolytes with the job change quest.
+	// Officially High Priests are blocked from helping by an indiscriminate check if you are a transcended character.
+	//if (Class == Job_High_Priest) set .@AllowHPAssist,1;
+	if (Upper == 1 && .@AllowHPAssist != 1) {
+			mes "[Bishop Paul]";
+			mes "Hm...?";
+			mes "Ah, I sense that you are a warrior that has been to Valhalla. You who have been reborn... We are here to look after you.";
+			next;
+			mes "[Bishop Paul]";
+			mes "Do not let evil conquer your soul. You have enough courage and power to overcome the hardest situation. May God bless you...";
+			close;
 	}
-	if ((Class != Job_Baby_Acolyte) && (Class != Job_Acolyte)) {
-		if (Class == Job_Baby_Priest || Class == Job_Priest || Class == Job_High_Priest) {
+	if (BaseJob != Job_Acolyte) {
+		if (BaseJob == Job_Priest) {
 			mes "[Bishop Paul]";
 			mes "Ah...";
-			if (Sex == 1) {
+			if (sex)
 				mes "It is good to see you again, Brother " + strcharinfo(0) + ". Once again, God's grace has caused our paths to cross.";
-			}
-			else {
+			else
 				mes "It is good to see you once again, Sister " + strcharinfo(0) + ". The grace of God has brought you once more before me.";
-			}
 			next;
 			mes "[Bishop Paul]";
 			mes "I'm pleased to see that you are continuing to lead the children of God on the right path. Is there anything I can help you with today?";
 			next;
-			switch (select("How is your health?:I want to help this Acolyte.:Father, I need your help.")) {
+			switch(select("How is your health?:I want to help this Acolyte.:Father, I need your help.")) {
 			case 1:
 				mes "[Bishop Paul]";
 				mes "Thank you for your concern. I'm doing fine and am in good health. Please give my regards to your brothers and sisters.";
@@ -84,33 +103,30 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 				mes "[Bishop Paul]";
 				mes "You must be strong. Have faith, as you are loved by God. I pray the wounds of the body are healed soon...";
 				next;
+				percentheal 90,0;
 				mes "[Bishop Paul]";
 				mes "God, please look after your poor children. Help them overcome their hardships and difficulties. Refresh their spirits...";
 				next;
-				percentheal 90,90;
+				percentheal 0,90;
 				mes "[Bishop Paul]";
 				mes "I hope my invocation has eased your pain. Now please go forth and spread God's message. May God be with you...";
 				close;
 			}
 		}
-		if (Class == Job_Baby || Class == Job_Novice) {
-			if (Sex == 1) {
-				mes "[Bishop Paul]";
-				mes "May God be";
+		else if (BaseClass == Job_Novice) {
+			mes "[Bishop Paul]";
+			mes "May God be";
+			if (sex)
 				mes "with you, brother.";
-			}
-			else {
-				mes "[Bishop Paul]";
-				mes "May God be";
+			else
 				mes "with you, sister.";
-			}
 			next;
 			mes "[Bishop Paul]";
 			mes "You are in";
 			mes "the Sanctuary.";
 			mes "What brings you here?";
 			next;
-			switch (select("I want to be an Acolyte.:I want to be a Priest.:Nothing, really.")) {
+			switch(select("I want to be an Acolyte.:I want to be a Priest.:Nothing, really.")) {
 			case 1:
 				mes "[Bishop Paul]";
 				mes "Oh I see...";
@@ -131,22 +147,18 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 			close;
 		}
 		else {
-			if (Sex == 1) {
-				mes "[Bishop Paul]";
-				mes "May God be";
+			mes "[Bishop Paul]";
+			mes "May God be";
+			if (sex)
 				mes "with you, brother.";
-			}
-			else {
-				mes "[Bishop Paul]";
-				mes "May God be";
+			else
 				mes "with you, sister.";
-			}
 			next;
 			mes "[Bishop Paul]";
 			mes "What brings you here";
 			mes "to Prontera Sanctuary?";
 			next;
-			switch (select("Information about Priests.:Nothing.")) {
+			switch(select("Information about Priests.:Nothing.")) {
 			case 1:
 				mes "[Bishop Paul]";
 				mes "Priests have the authority to perform and administer religious rites.";
@@ -190,21 +202,17 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 		}
 	}
 	if (PRIEST_Q == 0) {
-		if (Sex == 1) {
-			mes "[Bishop Paul]";
-			mes "May God bless";
+		mes "[Bishop Paul]";
+		mes "May God bless";
+		if (sex)
 			mes "you, Brother.";
-			mes "What brings";
-			mes "you to me?";
-		} else {
-			mes "[Bishop Paul]";
-			mes "May God bless";
+		else
 			mes "you, Sister.";
-			mes "What brings";
-			mes "you to me?";
-		}
+		mes "What brings";
+		mes "you to me?";
 		next;
-		if (select("I want to be a Priest.:How are you, Father?") == 1) {
+		switch(select("I want to be a Priest.:How are you, Father?")) {
+		case 1:
 			mes "[Bishop Paul]";
 			mes "I see. So you wish to be a Priest. God will be delighted by your decision and will bless you.";
 			next;
@@ -227,21 +235,19 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 					mes "There are still things that you must learn as an Acolyte. However, I look forward to meeting you again very soon.";
 					close;
 				}
-				if (SkillPoint != 0) {
+				if (SkillPoint) {
 					mes "[Bishop Paul]";
 					mes "You have skill points left.";
 					mes "I strongly recommend that you use all of these skill points before you apply for the Priest job change test.";
 					close;
 				}
-				set PRIEST_Q, 1;
+				set PRIEST_Q,1;
 				setquest 8009;
-				if (Sex == 1) {
 					mes "[Bishop Paul]";
+				if (sex)
 					mes "Now I will explain the Three Trials of Priesthood. These tribulations will bring you much suffering, but I hope you can complete them, Brother " + strcharinfo(0) + ".";
-				} else {
-					mes "[Bishop Paul]";
+				else
 					mes "Now I will explain the Three Trials of Priesthood. These tribulations will bring you much suffering, but I hope you can complete them, Sister " + strcharinfo(0) + ".";
-				}
 				next;
 				mes "[Bishop Paul]";
 				mes "For the First Trial, you will make a pilgrimage, and visit three acscetic Priests in a specific order.";
@@ -265,7 +271,7 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 					mes "[Bishop Paul]";
 					mes "I have no doubt that you will do a good job by yourself. However, it will be easier with the aid of a Brother or Sister that has already become a Priest.";
 					next;
-					set PRIEST_Q, 5;
+					set PRIEST_Q,5;
 					changequest 8009,8011;
 					mes "[Bishop Paul]";
 					mes "Well, are you ready for the Spiritual Training?";
@@ -307,35 +313,35 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 				mes "[Bishop Paul]";
 				mes "May God";
 				mes "bless you...";
+				changequest 8009,8010;
 				close;
 			}
 			mes "[Bishop Paul]";
 			mes "Please take your time.";
 			mes "You are always welcomed.";
 			mes "May God bless you...";
-			changequest 8009,8010;
+			close;
+		case 2:
+			mes "[Bishop Paul]";
+			mes "I see...";
+			mes "I am doing fine";
+			mes "and am in good health.";
+			mes "Thank you for asking.";
+			next;
+			mes "[Bishop Paul]";
+			if (sex)
+				mes "I hope you will continue to go on your mission as God's servant, brother.";
+			else
+				mes "I hope you will continue to go on your mission as God's servant, sister.";
+			next;
+			mes "[Bishop Paul]";
+			mes "Hopefully, our paths";
+			mes "will cross again.";
+			mes "May God bless you...";
 			close;
 		}
-		mes "[Bishop Paul]";
-		mes "I see...";
-		mes "I am doing fine";
-		mes "and am in good health.";
-		mes "Thank you for asking.";
-		next;
-		mes "[Bishop Paul]";
-		if (Sex == 1) {
-			mes "I hope you will continue to go on your mission as God's servant, brother.";
-		} else {
-			mes "I hope you will continue to go on your mission as God's servant, sister.";
-		}
-		next;
-		mes "[Bishop Paul]";
-		mes "Hopefully, our paths";
-		mes "will cross again.";
-		mes "May God bless you...";
-		close;
 	}
-	if (PRIEST_Q == 1) {
+	else if (PRIEST_Q == 1) {
 		mes "[Bishop Paul]";
 		mes "May I ask you the reason you're still here? You didn't forget your pilgrimage, did you?";
 		next;
@@ -369,7 +375,7 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 		mes "Well then, I shall pray for your safe journey. May God bless you...";
 		close;
 	}
-	if (PRIEST_Q == 2) {
+	else if (PRIEST_Q == 2) {
 		mes "[Bishop Paul]";
 		mes "I see you have returned from your meeting with Father Rubalkabara. How is he doing? I am worried about his health, since he's been there all alone... ";
 		next;
@@ -377,7 +383,7 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 		mes "For your next quest, you should meet Sister Mathilda. I shall be awaiting your safe return.";
 		close;
 	}
-	if (PRIEST_Q == 3) {
+	else if (PRIEST_Q == 3) {
 		mes "[Bishop Paul]";
 		mes "I see that you have returned from your journey to meet Sister Mathilda. She has been meditating in the hot, dry desert for a long time.";
 		next;
@@ -385,8 +391,9 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 		mes "Finally, it is now time for you to meet Father Yosuke. He is doing penance somewhere around a field Northwest of Prontera. Please seek him out, and then return here to me.";
 		close;
 	}
-	if (PRIEST_Q == 4) {
-		set PRIEST_Q, 5;
+	else if (PRIEST_Q == 4) {
+		set PRIEST_Q,5;
+		changequest 8010,8011;
 		mes "[Bishop Paul]";
 		mes "You've accomplished";
 		mes "your pilgrimage.";
@@ -403,7 +410,6 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 		mes "the spiritual training?";
 		next;
 		if (select("I'm ready.:Give me a minute.") == 1) {
-			changequest 8010,8011;
 			mes "[Bishop Paul]";
 			mes "Good. I will send you to the training ground. When you get there, please speak to Brother Peter who is in charge of the training.";
 			next;
@@ -418,12 +424,11 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 		mes "overcome your fears...";
 		close;
 	}
-	if (PRIEST_Q == 5) {
+	else if (PRIEST_Q == 5) {
 		mes "[Bishop Paul]";
 		mes "You seem confident about the spiritual training. Shall we begin?";
 		next;
 		if (select("I'm ready.:Give me a minute.") == 1) {
-			changequest 8010,8011;
 			mes "[Bishop Paul]";
 			mes "Good. I will send you to the training ground. When you get there, please speak to Brother Peter who is in charge of the training.";
 			next;
@@ -438,7 +443,7 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 		mes "overcome your fears...";
 		close;
 	}
-	if (PRIEST_Q == 6) {
+	else if (PRIEST_Q == 6) {
 		mes "[Bishop Paul]";
 		mes "You look tired and exhausted. However, you must endure even more suffering once you become a Priest.";
 		next;
@@ -446,7 +451,6 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 		mes "Please endure these trials for the sake of your dream. Why don't you challenge the spiritual training again?";
 		next;
 		if (select("I'll try again.:Give me a minute.") == 1) {
-			changequest 8010,8011;
 			mes "[Bishop Paul]";
 			mes "Good. I will send you to the training ground. Please ask for help from Brother Peter.";
 			next;
@@ -461,7 +465,7 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 		mes "overcome your fears...";
 		close;
 	}
-	if (PRIEST_Q == 7) {
+	else if (PRIEST_Q == 7) {
 		mes "[Bishop Paul]";
 		mes "I am glad that you've done well with the spiritual training. Congratulations. You are now qualified to be called a Priest.";
 		next;
@@ -477,7 +481,7 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 		mes "waiting for you.";
 		close;
 	}
-	if (PRIEST_Q == 8) {
+	else if (PRIEST_Q == 8) {
 		mes "[Bishop Paul]";
 		mes "Hmm? You haven't made your oath yet...? Without the conviction of an oath to God, you may be tempted by evil at anytime.";
 		next;
@@ -485,8 +489,8 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 		mes "You should go to sister Cecilia and promise your devotion to God. Return here with honor, and listen to the voice of God that speaks quietly in your heart.";
 		close;
 	}
-	if (PRIEST_Q == 9) {
-		if (SkillPoint != 0) {
+	else if (PRIEST_Q == 9) {
+		if (SkillPoint) {
 			mes "[Bishop Paul]";
 			mes "You have remaining skills points. Please use these skill points to upgrade your skills, and then return to me.";
 			close;
@@ -496,63 +500,52 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 		next;
 		mes "[Bishop Paul]";
 		mes "God, grant your power to your servant standing before you.";
-		if (Sex == 1) {
+		changequest 8015,8016;
+		if (sex)
 			mes "Let him send your message throughout the ends of the earth.";
-		}
-		else {
+		else
 			mes "Let her send your message throughout the ends of the earth.";
-		}
 		next;
 		mes "[Bishop Paul]";
 		mes "Make this servant of yours an instrument of your miraculous works...";
 		next;
-		set PRIEST_Q,0;
-		if(Class == Job_Baby_Acolyte){
-			jobchange Job_Baby_Priest;
-		} else {
-			jobchange Job_Priest;
-		}
-		changequest 8015,8016;
+		set .@joblvl,JobLevel;
+		completequest 8016;
+		callfunc "Job_Change",Job_Priest;
+		callfunc "F_ClearJobVar";		// clears all job variables for the current player
 		mes "[Bishop Paul]";
 		mes "Now you are born again as a Priest. I congratulate you, and hope you will greatly help other people for the rest of your life.";
 		next;
-		if (JobLevel == 50) {
-			getitem 1551,1; //Bible
-		} else {
-			getitem 1550,1; //Book
-		}
 		mes "[Bishop Paul]";
-		mes "And...";
-		mes "This book is for you. I hope it will aid you in spreading God's message on earth.";
+		if (.@joblvl < 50) {
+			getitem 1550,1; //Book
+			mes "This book is for you. I hope it will aid you in spreading God's message on earth.";
+		}
+		else {
+			getitem 1551,1; //Bible
+			mes "In commemoration of your job change, I am giving you a bible. This will lighten your way to the path of righteousness.";
+		}
 		next;
 		mes "[Bishop Paul]";
 		mes "You've shown great effort, and have made admirable progress in your personal quest for holiness. Please lead your life as a sincere Priest...";
-		completequest 8016;
 		close;
 	}
 }
 
 prt_church,27,24,1	script	Sister Cecilia	79,{
-	if ((Class != Job_Baby_Acolyte) && (Class != Job_Acolyte)) {
-		if (Class == Job_Baby_Priest || Class == Job_Priest) {
-			if (Sex == 1) {
-				mes "[Sister Cecilia]";
+	mes "[Sister Cecilia]";
+	if (BaseJob != Job_Acolyte) {
+		if (BaseJob == Job_Priest) {
+			if (sex)
 				mes "May god bless you, brother. It brings my heart joy to see that you working hard to carry out the will of God.";
-			}
-			else {
-				mes "[Sister Cecilia]";
+			else
 				mes "May god bless you, sister. It brings my heart joy to see that you working hard to carry out the will of God.";
-			}
 		}
-		if (Class == Job_Baby || Class == Job_Novice) {
-			if (Sex == 1) {
-				mes "[Sister Cecilia]";
+		else if (Class == Job_Novice) {
+			if (sex)
 				mes "May god bless you, brother.";
-			}
-			else {
-				mes "[Sister Cecilia]";
+			else
 				mes "May god bless you, sister.";
-			}
 			mes "Prontera parish welcomes you.";
 			next;
 			mes "[Sister Cecilia]";
@@ -571,54 +564,46 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 			mes "But please...";
 			mes "Take your time, and decide what job will be the best for you.";
 		}
-		if (Sex == 1) {
-			mes "[Sister Cecilia]";
-			mes "May god bless you, brother.";
-		} else {
-			mes "[Sister Cecilia]";
-			mes "May god bless you, sister.";
-		}
-		mes "Welcome to Prontera parish. How may I help you?";
-		next;
-		switch (select("Tell me more about Priests.:Nothing.")) {
-		case 1:
-			mes "[Sister Cecilia]";
-			mes "Messengers of God are usually known as Priests. After becoming an Acolyte, you can train with the goal of becoming a Priest.";
+		else {
+			if (sex)
+				mes "May god bless you, brother.";
+			else
+				mes "May god bless you, sister.";
+			mes "Welcome to Prontera parish. How may I help you?";
 			next;
-			mes "[Sister Cecilia]";
-			mes "Servants of God are prohibited to use weapons based on blades. For us, the meaning of battle with monsters is not in the killing, but in the enlightening of their souls.";
-			if (Class == Job_Baby_Acolyte || Class == Job_Acolyte) {
+			if (select("Tell me more about Priests.:Nothing.") == 1) {
+				mes "[Sister Cecilia]";
+				mes "Messengers of God are usually known as Priests. After becoming an Acolyte, you can train with the goal of becoming a Priest.";
 				next;
 				mes "[Sister Cecilia]";
-				mes "Well, it will be better that you meet Priests for yourself and speak with them. If you are ready to become a Priest, speak with Bishop Paul in this room.";
-				next;
-				mes "[Sister Cecilia]";
-				mes "I believe he can give you specific requirement information about the Priest class. Yes, I think it's a good idea.";
-				next;
+				mes "Servants of God are prohibited to use weapons based on blades. For us, the meaning of battle with monsters is not in the killing, but in the enlightening of their souls.";
+				if (BaseJob == Job_Acolyte) {
+					next;
+					mes "[Sister Cecilia]";
+					mes "Well, it will be better that you meet Priests for yourself and speak with them. If you are ready to become a Priest, speak with Bishop Paul in this room.";
+					next;
+					mes "[Sister Cecilia]";
+					mes "I believe he can give you specific requirement information about the Priest class. Yes, I think it's a good idea.";
+				}
+				close;
 			}
-			break;
-		case 2:
 			mes "[Sister Cecilia]";
 			mes "I see. Well, feel free to relax and make yourself at home. Nowhere on earth is safer than the Prontera Sanctuary.";
-			break;
+			next;
+			mes "[Sister Cecilia]";
+			mes "May God bless you...";
+			close;
 		}
-		next;
-		mes "[Sister Cecilia]";
-		mes "May God bless you...";
-		close;
 	}
 	if (PRIEST_Q == 0) {
-		if (Sex == 1) {
-			mes "[Sister Cecilia]";
+		if (sex)
 			mes "May God bless you, brother.";
-		}
-		else {
-			mes "[Sister Cecilia]";
+		else
 			mes "May God bless you, sister.";
-		}
 		mes "May I ask what brings you here?";
 		next;
-		if (select("I wish to become a Priest.:Nothing.") == 1) {
+		switch(select("I wish to become a Priest.:Nothing.")) {
+		case 1:
 			mes "[Sister Cecilia]";
 			mes "I see. You've devoted yourself to God. Many Acolytes wish to become Priests to continue on their personal journey towards holiness.";
 			next;
@@ -637,13 +622,13 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 			mes "[Sister Cecilia]";
 			mes "If you experience a problem during any of your trials, feel free to visit me. I will help you as much as I can.";
 			close;
+		case 2:
+			mes "[Sister Cecilia]";
+			mes "Make yourself at home. I insist that you recover and take a rest in this Sanctuary. May God bless you...";
+			close;
 		}
-		mes "[Sister Cecilia]";
-		mes "Make yourself at home. I insist that you recover and take a rest in this Sanctuary. May God bless you...";
-		close;
 	}
-	if (PRIEST_Q == 1) {
-		mes "[Sister Cecilia]";
+	else if (PRIEST_Q == 1) {
 		mes "Ah, you've started your pilgrimage. Please do your best to accomplish this first trial.";
 		next;
 		mes "[Sister Cecilia]";
@@ -665,8 +650,7 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 		mes "Well then, have a good journey. Please don't give up to short lived tribulations, and I hope that you accomplish your goals.";
 		close;
 	}
-	if (PRIEST_Q == 2) {
-		mes "[Sister Cecilia]";
+	else if (PRIEST_Q == 2) {
 		mes "Oh, you've met Father Rubalkabara. Now it's time for you to visit Sister Mathilda. She is near a town named Morroc.";
 		next;
 		mes "[Sister Cecilia]";
@@ -679,8 +663,7 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 		mes "But I believe this is God's will, and that this is the work he has intended me to do as his servant. Have a safe journey, and come back safely.";
 		close;
 	}
-	if (PRIEST_Q == 3) {
-		mes "[Sister Cecilia]";
+	else if (PRIEST_Q == 3) {
 		mes "Now, the final Priest that you must meet is Father Yosuke. I've heard that he is training near a lake located Northwest of Prontera.";
 		next;
 		mes "[Sister Cecilia]";
@@ -690,25 +673,21 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 		mes "Although there are still two trials awaiting you, I have faith that you will be able to accomplish your goal of becoming a Priest...";
 		close;
 	}
-	if (PRIEST_Q == 4) {
-		mes "[Sister Cecilia]";
+	else if (PRIEST_Q == 4) {
 		mes "Welcome. You demonstrated great effort to accomplish your first trial. Now, speak to Bishop Paul so that you can begin your next trial on your path to Priesthood.";
 		next;
 		mes "[Sister Cecilia]";
-		if (Sex == 1) {
-			mes "Brother " + strcharinfo(0) + "...";
-		}
-		else {
-			mes "Sister " + strcharinfo(0) + "...";
-		}
+		if (sex)
+			mes "Brother "+ strcharinfo(0) +"...";
+		else
+			mes "Sister "+ strcharinfo(0) +"...";
 		mes "The spiritual training is much more difficult than the pilgrimage, but I believe in you.";
 		next;
 		mes "[Sister Cecilia]";
 		mes "I hope that you find someone who has already become a Priest to help during the spiritual training. Good luck, and have faith.";
 		close;
 	}
-	if (PRIEST_Q == 5) {
-		mes "[Sister Cecilia]";
+	else if (PRIEST_Q == 5) {
 		mes "Oh, you haven't finished the spiritual training yet?";
 		next;
 		mes "[Sister Cecilia]";
@@ -718,8 +697,7 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 		mes "Please speak to Father Peter in the test hall for more details. He is a close friend of Bishop Paul and may give you some useful tips for the spiritual training.";
 		close;
 	}
-	if (PRIEST_Q == 6) {
-		mes "[Sister Cecilia]";
+	else if (PRIEST_Q == 6) {
 		mes "Yes, I understand that you've been through a really difficult situation. However, do not give up and succumb to temptation. You must be able to resist evil to become a Priest.";
 		next;
 		mes "[Sister Cecilia]";
@@ -729,27 +707,33 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 		mes "May God give you guidance and protection. When you complete your training, please come back to me.";
 		close;
 	}
-	if (PRIEST_Q == 7) {
-		mes "[Sister Cecilia]";
-		mes "Welcome! I'm so glad to see you've come back! Now, there is one last trial left for you to complete.";
-		changequest 8013,8014;
+	else if (PRIEST_Q == 7 || PRIEST_Q == 8) {
+		if (PRIEST_Q == 7) {
+			if(checkquest(8014) == -1) {
+				changequest 8013,8014;
+			}
+			mes "Welcome! I'm so glad to see you've come back! Now, there is one last trial left for you to complete.";
+		}
+		else if (PRIEST_Q == 8) {
+			mes "...";
+			next;
+			mes "[Sister Cecilia]";
+			mes "Welcome back.";
+			mes "I hope that you've reflected on what you've said last time, and that you now have the attitude to become a Priest.";
+		}
 		next;
 		mes "[Sister Cecilia]";
-		if (Sex == 1) {
-			mes "Brother " + strcharinfo(0) + "...";
-		}
-		else {
-			mes "Sister " + strcharinfo(0) + "...";
-		}
+		if (sex)
+			mes "Brother "+ strcharinfo(0) +"...";
+		else
+			mes "Sister "+ strcharinfo(0) +"...";
 		mes "We will now begin your formal oath for the Priesthood. Make yourself comfortable, and just answer with your heart.";
 		next;
 		mes "[Sister Cecilia]";
-		if (Sex == 1) {
-			mes "Brother " + strcharinfo(0) + ",";
-		}
-		else {
-			mes "Sister " + strcharinfo(0) + ",";
-		}
+		if (sex)
+			mes "Brother "+ strcharinfo(0) +",";
+		else
+			mes "Sister "+ strcharinfo(0) +",";
 		mes "Are you willing";
 		mes "to give your life to God?";
 		next;
@@ -837,17 +821,14 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 			close;
 		}
 		mes "[Sister Cecilia]";
-		if (Sex == 1) {
-			mes "Brother " + strcharinfo(0) + "...";
-		}
-		else {
-			mes "Sister " + strcharinfo(0) + "...";
-		}
+		if (sex)
+			mes "Brother "+ strcharinfo(0) +"...";
+		else
+			mes "Sister "+ strcharinfo(0) +"...";
 		mes "You have demonstrated your devotion to God. Will you swear to adhere to his teachings for the rest of your days?";
 		next;
 		if (select("I do.:No.") == 1) {
 			set PRIEST_Q,9;
-			changequest 8014,8015;
 			mes "[Sister Cecilia]";
 			mes "Now, you have completed your oath of Priesthood and accomplished all three trials required to become a Priest.";
 			next;
@@ -863,148 +844,14 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 		mes "......";
 		next;
 		set PRIEST_Q,8;
+		changequest 8014,8015;
 		mes "[Sister Cecilia]";
 		mes "You've come so far...";
 		mes "Why would you want";
 		mes "to throw this all away...?";
 		close;
 	}
-	if (PRIEST_Q == 8) {
-		mes "[Sister Cecilia]";
-		mes "...";
-		next;
-		mes "[Sister Cecilia]";
-		mes "Welcome back.";
-		mes "I hope that you've reflected on what you've said last time, and that you now have the attitude to become a Priest.";
-		next;
-		mes "[Sister Cecilia]";
-		if (Sex == 1) {
-			mes "Brother " + strcharinfo(0) + "...";
-		}
-		else {
-			mes "Sister " + strcharinfo(0) + "...";
-		}
-		mes "We will now begin your formal oath for the Priesthood. This time, listen closely to your heart...";
-		next;
-		mes "[Sister Cecilia]";
-		if (Sex == 1) {
-			mes "Brother " + strcharinfo(0) + ",";
-		}
-		else {
-			mes "Sister " + strcharinfo(0) + ",";
-		}
-		mes "Are you willing";
-		mes "to give your life to God?";
-		next;
-		if (select("Yes.:No!") == 2) {
-			mes "[Sister Cecilia]";
-			mes "Aw...? How could you give me that kind of answer? I assume you're not ready to be a Priest yet...";
-			next;
-			mes "[Sister Cecilia]";
-			mes "You should reflect a little more on the teachings of holiness and come back later. You can't be a Priest if your spirit is weak.";
-			close;
-		}
-		mes "[Sister Cecilia]";
-		mes "Will you take advantage of the holy abilities given by God for selfish, destructive or greedy ends?";
-		next;
-		if (select("Yes.:No.") == 1) {
-			mes "[Sister Cecilia]";
-			mes "Aw...? God won't grant you the power of holiness if your goals aren't just and pure. Meditate on your motivations for a while, and then come back to me.";
-			next;
-			mes "[Sister Cecilia]";
-			mes "Think about the qualities that make Priests people of respect. You can't be a Priest if your spirit is not in accordance with God.";
-			close;
-		}
-		mes "[Sister Cecilia]";
-		mes "Will you help aid others, even complete strangers, in battles by easing their suffering?";
-		next;
-		if (select("Yes.:No.") == 2) {
-			mes "[Sister Cecilia]";
-			mes "No, no. You've got the wrong idea. God authorizes us to use his power to support his children. You must help people in danger: it is your obligation.";
-			next;
-			mes "[Sister Cecilia]";
-			mes "Go and observe the adventurers that are fighting for peace in this world. They will teach you what you must do in order to help them.";
-			close;
-		}
-		mes "[Sister Cecilia]";
-		mes "Are you willing to sacrifice yourself for the sake of others?";
-		next;
-		if (select("Yes.:No.") == 2) {
-			mes "[Sister Cecilia]";
-			mes "How can you say no...? That's one of the basic principles of Priesthood. You must value the welfare of others over your own safety.";
-			next;
-			mes "[Sister Cecilia]";
-			mes "Go and think about the value of suffering and the meaning of sacrifice. When you think you understand more about helping those in need, come back to me.";
-			close;
-		}
-		mes "[Sister Cecilia]";
-		mes "Will you repeatly say the same phrase in public in order to send God's message to his children?";
-		next;
-		if (select("Yes.:No.") == 1) {
-			mes "[Sister Cecilia]";
-			mes "No no no... You've got it wrong. Even though your purpose is to spread God's message, no one will eagerly accept what you say when you spam text.";
-			next;
-			mes "[Sister Cecilia]";
-			mes "Remember...";
-			mes "You must be a moral person, and display maturity and respect to other players. This kind of attitude applies for all classes,";
-			mes "I believe.";
-			close;
-		}
-		mes "[Sister Cecilia]";
-		mes "Will you lure many monsters to help your party members level up?";
-		next;
-		if (select("Yes.:No.") == 1) {
-			mes "[Sister Cecilia]";
-			mes "No, you won't. Luring many monsters does more harm than good. There is no exception. That behavior is totally unacceptable.";
-			next;
-			mes "[Sister Cecilia]";
-			mes "Even if it looks like you are aiding your party members, such action results in bad karma. Please reflect on that for a while.";
-			close;
-		}
-		mes "[Sister Cecilia]";
-		mes "Will you follow God, no matter what it takes, even if he demands you to kill yourself?";
-		next;
-		if (select("Yes.:No.") == 2) {
-			mes "[Sister Cecilia]";
-			mes "With that spirit, you can't be a Priest. If it is God's will to sacrifice yourself for a good purpose, you must carry out God's will as his servant.";
-			next;
-			mes "[Sister Cecilia]";
-			mes "Besides, God has also given Priests the resurrection power. Think about the meaning of life and death again, and then come back to me.";
-			close;
-		}
-		mes "[Sister Cecilia]";
-		if (Sex == 1) {
-			mes "Brother " + strcharinfo(0) + "...";
-		}
-		else {
-			mes "Sister " + strcharinfo(0) + "...";
-		}
-		mes "You have demonstrated your devotion to God. Will you swear to adhere to his teachings for the rest of your days?";
-		next;
-		if (select("I do.:No.") == 1) {
-			set PRIEST_Q,9;
-			mes "[Sister Cecilia]";
-			mes "Now, you have completed your oath of Priesthood and accomplished all three trials required to become a Priest.";
-			next;
-			mes "[Sister Cecilia]";
-			mes "Now go to Bishop Paul. And remember, we are all brothers and sisters in the eyes of God. Peace be with you...";
-			close;
-		}
-		mes "[Sister Cecilia]";
-		mes "...";
-		next;
-		mes "[Sister Cecilia]";
-		mes "...";
-		mes "......";
-		next;
-		mes "[Sister Cecilia]";
-		mes "You've come so far...";
-		mes "Why would you want";
-		mes "to throw this all away...?";
-		close;
-	}
-	if (PRIEST_Q == 9) {
-		mes "[Sister Cecilia]";
+	else if (PRIEST_Q == 9) {
 		mes "Congratulations.";
 		mes "You've completed all three trials required for the Priesthood. Bishop Paul is now waiting for you.";
 		next;
@@ -1014,6 +861,8 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 	}
 }
 
+// 2nd Test
+//==========================================================
 job_prist,24,187,4	script	Peter S. Alberto	110,{
 	mes "[Father Peter]";
 	if (BaseJob == Job_Priest) {
@@ -1476,10 +1325,11 @@ OnTouch:
 	end;
 }
 
-job_prist,168,45,4	script	Deviruchi#prst	1928,8,1,{
-
+// 3rd Test
+//==========================================================
+job_prist,168,45,4	script	Deviruchi#prst	1109,8,1,{
 OnTouch:
-	if (Class == Job_Baby_Priest || Class == Job_Priest) {
+	if (BaseJob == Job_Priest) {
 		mes "[Deviruchi]";
 		mes "Whaaaaat...?";
 		mes "What are you";
@@ -1497,7 +1347,7 @@ OnTouch:
 		mes "Alright, alright, for old time's sake, I'll let you pass me. But only this once. But I better not catch you again! This is evil turf, you hear?!";
 		close;
 	}
-	if (Class == Job_Baby_Acolyte || Class == Job_Acolyte) {
+	if (BaseClass == Job_Acolyte) {
 		mes "[Deviruchi]";
 		mes "Why...";
 		mes "Hello little Aco.";
@@ -1528,6 +1378,7 @@ OnTouch:
 			mes "[Deviruchi]";
 			mes "BWAHAHAHAHAHAH!";
 			mes "GET THE JOKE!?";
+			close2;
 			warp "c_tower2",168,33;
 			end;
 		}
@@ -1577,10 +1428,9 @@ OnTouch:
 	end;
 }
 
-job_prist,168,80,4	script	Doppelganger#prst	1966,8,1,{
-
+job_prist,168,80,4	script	Doppelganger#prst	1046,8,1,{
 OnTouch:
-	if (Class == Job_Baby_Priest || Class == Job_Priest) {
+	if (BaseJob == Job_Priest) {
 		mes "[Doppelganger]";
 		mes "What are you doing here? You've already made your choice, there's no going back... Priest.";
 		next;
@@ -1588,7 +1438,7 @@ OnTouch:
 		mes "Besides, this is none of your business. Whether or not this Acolyte becomes a Priest isn't up to you. Now get out of here, before I get violent.";
 		close;
 	}
-	if (Class == Job_Baby_Acolyte || Class == Job_Acolyte) {
+	else if (BaseClass == Job_Acolyte) {
 		mes "[Doppelganger]";
 		mes "Hold on there, Acolyte.";
 		mes "I'm not like Deviruchi,";
@@ -1623,16 +1473,16 @@ OnTouch:
 		mes "Just don't become a Priest. I won't ask you more than once. Then you can choose a better job... perhaps a Swordman like me.";
 		next;
 		if (select("I don't want to be a Priest!:I'll never listen to you!") == 1) {
-				mes "[Doppelganger]";
-				mes "Excellent choice. Now, never return to this place. I shall return your job to Novice as you wish.";
-				next;
-				mes "[Doppelganger]";
-				mes "Now go!!";
-				mes "Never step into";
-				mes "the light again!";
-				close2;
-				warp "gef_dun02",210,177;
-				end;
+			mes "[Doppelganger]";
+			mes "Excellent choice. Now, never return to this place. I shall return your job to Novice as you wish.";
+			next;
+			mes "[Doppelganger]";
+			mes "Now go!!";
+			mes "Never step into";
+			mes "the light again!";
+			close2;
+			warp "gef_dun02",210,177;
+			end;
 		}
 		mes "[Doppelganger]";
 		mes "Hmpf. I admire";
@@ -1645,22 +1495,20 @@ OnTouch:
 		mes "I assure you... You won't be happy at all to see me.";
 		close;
 	}
-	end;
 }
 
 job_prist,168,115,4	script	Dark Lord#prst	1272,8,1,{
-
 OnTouch:
-	if (Class == Job_Baby_Priest || Class == Job_Priest) {
+	if (BaseJob == Job_Priest) {
 		mes "[Dark Lord]";
 		mes "^330033All is doom, darkness and despair! Those who love you will betray you, and all that will be left is grieving and fury!^000000";
 		next;
 		mes "[Dark Lord]";
 		mes "^330033To choose to become a servant of God is to choose eternal pain!";
 		mes "I shall personally see to that, mortal.^000000";
-		close2;
+		close;
 	}
-	if (Class == Job_Baby_Acolyte || Class == Job_Acolyte) {
+	else if (BaseClass == Job_Acolyte) {
 		mes "[Dark Lord]";
 		mes "^330033Halt, human.";
 		mes "Who has granted";
@@ -1704,13 +1552,11 @@ OnTouch:
 		mes "Mark my words...^000000";
 		close;
 	}
-	end;
 }
 
 job_prist,168,150,4	script	Baphomet#prst	736,8,1,{
-
 OnTouch:
-	if (Class == Job_Baby_Priest || Class == Job_Priest) {
+	if (BaseJob == Job_Priest) {
 		mes "[Baphomet]";
 		mes "I hate";
 		mes "Priests...";
@@ -1719,12 +1565,12 @@ OnTouch:
 		mes "I don't have any business with you, servant of God. Just pass through.";
 		close;
 	}
-	if (Class == Job_Baby_Acolyte || Class == Job_Acolyte) {
+	else if (BaseClass == Job_Acolyte) {
 		mes "[Baphomet]";
 		mes "Greetings.";
 		next;
 		mes "[Baphomet]";
-		mes "..." + strcharinfo(0) + ".";
+		mes "..."+ strcharinfo(0) +".";
 		next;
 		mes "[Baphomet]";
 		mes "Yes, human,";
@@ -1768,24 +1614,21 @@ OnTouch:
 		mes "I shall be preparing my troops for you. The day will come when I shall enjoy watching you writhe in agony as my fiends slowly devour you.";
 		close;
 	}
-	end;
 }
 
-job_prist,168,180,0	script	prst2_1	45,4,3,{
-	
+job_prist,168,180,4	script	prst2_1	45,3,3,{
 OnTouch:
-	if (Class == Job_Baby_Priest || Class == Job_Priest) {
-		warp "job_prist",98,40;
-	} else if (Class == Job_Baby_Acolyte || Class == Job_Acolyte) {
+	if (BaseJob == Job_Priest) warp "job_prist",98,40;
+	else if (BaseClass == Job_Acolyte) {
 		warp "job_prist",98,40;
 		donpcevent "Mummy_Generator::OnEnable";
 	}
 	end;
 }
 
+// 4th Test
+//==========================================================
 job_prist,1,2,1	script	Mummy_Generator	110,1,1,{
-	end;
-
 OnInit:
 	disablenpc "Mummy_Generator";
 	end;
@@ -1796,137 +1639,244 @@ OnEnable:
 	donpcevent "Mummy3_1::OnEnable";
 	end;
 
-OnM1:
+Onm1:
 	monster "job_prist",90,55,"Khamoz",1041,1;
 	monster "job_prist",105,55,"Amocsis",1041,1;
 	end;
 
-OnM2:
+Onm2:
 	monster "job_prist",90,70,"Mentuhoteph",1041,1;
 	monster "job_prist",105,70,"Akenaten",1041,1;
 	end;
 
-OnM3:
+Onm3:
 	monster "job_prist",90,85,"Mehnes",1041,1;
 	monster "job_prist",105,85,"Snepheru",1041,1;
 	end;
 
 OnDisable:
 	disablenpc "Mummy_Generator";
-	end;
-
-OnReset:
-	killmonster "job_prist","Mummy_Generator::OnMyMobDead";
+	killmonsterall "job_prist";
 	end;
 }
 
-job_prist,90,55,0	script	Mummy1_1	139,15,1,{
+job_prist,90,55,0	script	Mummy1_1	-1,15,1,{
+OnInit:
+	disablenpc "Mummy1_1";
+	end;
 
 OnTouch:
-	if (Class == Job_Baby_Acolyte || Class == Job_Acolyte) {
-		donpcevent "Mummy_Generator::OnM1";
+	if (BaseJob == Job_Acolyte) {
+		donpcevent "Mummy_Generator::Onm1";
 		donpcevent "Mummy1_1::OnDisable";
 	}
 	end;
 
-OnInit:
-	disablenpc "Mummy1_1";
-	end;
-
 OnEnable:
 	enablenpc "Mummy1_1";
-	enablenpc "Mummy1_2";
 	end;
 
 OnDisable:
 	disablenpc "Mummy1_1";
-	disablenpc "Mummy1_2";
 	end;
 }
 
-job_prist,105,55,0	script	Mummy1_2	139,1,1,{
-	end;
-
+job_prist,90,70,0	script	Mummy2_1	-1,15,1,{
 OnInit:
-	disablenpc "Mummy1_2";
+	disablenpc "Mummy2_1";
 	end;
-}
-
-job_prist,90,70,0	script	Mummy2_1	139,15,1,{
 
 OnTouch:
-	if (Class == Job_Baby_Acolyte || Class == Job_Acolyte) {
-		donpcevent "Mummy_Generator::OnM2";
+	if (BaseJob == Job_Acolyte) {
+		donpcevent "Mummy_Generator::Onm2";
 		donpcevent "Mummy2_1::OnDisable";
 	}
 	end;
 
-OnInit:
-	disablenpc "Mummy2_1";
-	end;
-
 OnEnable:
 	enablenpc "Mummy2_1";
-	enablenpc "Mummy2_2";
 	end;
 
 OnDisable:
 	disablenpc "Mummy2_1";
-	disablenpc "Mummy2_2";
 	end;
 }
 
-job_prist,105,70,0	script	Mummy2_2	139,1,1,{
-	end;
-
+job_prist,90,85,0	script	Mummy3_1	-1,15,1,{
 OnInit:
-	disablenpc "Mummy2_2";
+	disablenpc "Mummy3_1";
 	end;
-}
-
-job_prist,90,85,0	script	Mummy3_1	139,15,1,{
 
 OnTouch:
-	if (Class == Job_Baby_Acolyte || Class == Job_Acolyte) {
-		donpcevent "Mummy_Generator::OnM3";
+	if (BaseJob == Job_Acolyte) {
+		donpcevent "Mummy_Generator::Onm3";
 		donpcevent "Mummy3_1::OnDisable";
 	}
 	end;
 
-OnInit:
-	disablenpc "Mummy3_1";
-	end;
-
 OnEnable:
 	enablenpc "Mummy3_1";
-	enablenpc "Mummy3_2";
 	end;
 
 OnDisable:
 	disablenpc "Mummy3_1";
-	disablenpc "Mummy3_2";
 	end;
 }
 
-job_prist,105,85,0	script	Mummy3_2	139,1,1,{
-	end;
-
-OnInit:
-	disablenpc "Mummy3_2";
-	end;
-}
-
-job_prist,98,105,0	script	prst3_1	45,4,3,{
-
+job_prist,98,105,4	script	prst3_1	45,3,3,{
 OnTouch:
-	if (Class == Job_Baby_Priest || Class == Job_Priest) {
+	if (BaseJob == Job_Priest) {
 		warp "prt_church",15,36;
-	} else if (Class == Job_Baby_Acolyte || Class == Job_Acolyte) {
-		changequest 8012,8013;
+		end; 
+	}
+	else if (BaseClass == Job_Acolyte) {
 		set PRIEST_Q,7;
+		if(checkquest(8012) != -1) {
+			changequest 8012,8013;
+		}
 		warp "prt_church",16,37;
-		donpcevent "Mummy_Generator::OnReset";
 		donpcevent "Mummy_Generator::OnDisable";
 	}
 	end;
 }
+
+// Functions
+//==========================================================
+function	script	F_FatherRub	{
+	if (PRIEST_Q != 0) {
+		if (PRIEST_Q == 1) {
+			mes "Ah yes, so you're the young Acolyte who wishes to become a Priest.";
+			next;
+			mes "[Father Rubalkabara]";
+			mes "I've received the message from Bishop Paul. Since you made the pilgrimage, I hope you accomplish your goal of becoming a Priest.";
+			next;
+			mes "[Father Rubalkabara]";
+			mes "Also, if you have a chance, please visit this abbey again. It's a sacred place for our Church.";
+			next;
+			mes "[Father Rubalkabara]";
+			mes "Well then, please head to your next destination for your pilgrimage. Be safe in your travels.";
+			close2;
+			savepoint "prt_fild03",361,255;
+			set PRIEST_Q,2;
+			end;
+		}
+		else if (PRIEST_Q == 2) {
+			mes "Please be hurry to the next destination for your pilgrimage. I hope you become a Priest soon.";
+			close;
+		}
+		mes "May I ask why you have returned? Please go back and continue your religious practice.";
+		close;
+	}
+	mes "I have no idea what brought you here, but please excuse me.";
+	close;
+}
+
+function	script	F_MotherMart	{
+	if (PRIEST_Q != 0) {
+		if (PRIEST_Q == 1) {
+			mes "Hmm...";
+			mes "It seems you're";
+			mes "training to become";
+			mes "a Priest.";
+			next;
+			mes "[Mother Mathilda]";
+			mes "However, at this point in your pilgrimage, I am not the person that you should be visiting.";
+			next;
+			mes "[Mother Mathilda]";
+			mes "Perhaps you should ask Bishop Paul or Sister Cecilia once again. Well, may God be with you...";
+			close;
+		}
+		else if (PRIEST_Q == 2) {
+			mes "Ah, are you";
+			mes "a Priest trainee...?";
+			mes "Welcome!";
+			next;
+			mes "[Mother Mathilda]";
+			mes "We Priests are obliged to spread the message of God to";
+			mes "the peoples of the Earth.";
+			next;
+			mes "[Mother Mathilda]";
+			mes "After you become a Priest, your travels may take you to the Morroc Pyramids. I hope that you may release the Undead there from the evil to which they are bound.";
+			next;
+			mes "[Mother Mathilda]";
+			mes "Well then...";
+			mes "I shall pray to";
+			mes "God for safety";
+			mes "on your journey.";
+			close2;
+			savepoint "moc_fild07",35,355;
+			set PRIEST_Q,3;
+			end;
+		}
+		else if (PRIEST_Q == 3) {
+			mes "Please leave soon, and";
+			mes "continue your training.";
+			close;
+		}
+		mes "May I ask you the reason you came back? Please continue your training.";
+		close;
+	}
+	mes "May God";
+	mes "be with you...";
+	close;
+}
+
+function	script	F_FatherYos	{
+	if (PRIEST_Q != 0) {
+		if (PRIEST_Q == 1) {
+			mes "Hmm...";
+			mes "A Priest trainee, eh?";
+			next;
+			mes "[Father Yosuke]";
+			mes "Well, you got the wrong person. If you're supposed to meet up with me at all, it'd be later.";
+			next;
+			mes "[Father Yosuke]";
+			mes "But that's your own fault.";
+			mes "Now, go back to Church, kid.";
+			close;
+		}
+		else if (PRIEST_Q == 2) {
+			mes "Hmm...";
+			mes "A Priest trainee, eh?";
+			next;
+			mes "[Father Yosuke]";
+			mes "Well, you got the wrong person. If you're supposed to meet up with me at all, it'd be later.";
+			next;
+			mes "[Father Yosuke]";
+			mes "But that's your own fault. Go back to Church.";
+			close;
+		}
+		else if (PRIEST_Q == 3) {
+			mes "Hmm.";
+			mes "A Priest";
+			mes "trainee, eh? ";
+			mes "Welcome.";
+			next;
+			mes "[Father Yosuke]";
+			mes "I won't say";
+			mes "anything more.";
+			mes "Just devote your";
+			mes "life to God.";
+			next;
+			mes "[Father Yosuke]";
+			mes "Now go back to church.";
+			mes "Hereby, the first of";
+			mes "your trials is now";
+			mes "completed.";
+			close2;
+			savepoint "prt_fild00",206,230;
+			set PRIEST_Q,4;
+			end;
+		}
+		else if (PRIEST_Q == 4) {
+			mes "I told you to go back to church.";
+			mes "Or do you want to live with me here for the rest of your life...?";
+			close;
+		}
+		mes "Just go be a Priest. This isn't a playground for kids.";
+		close;
+	}
+	mes "...Acolyte, you don't have any business with me here.";
+	close;
+}
+

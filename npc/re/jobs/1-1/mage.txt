@@ -3,18 +3,17 @@
 //===== By: ================================================== 
 //= Kisuka
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.0
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
 //= Job Change to Mage Class
 //===== Additional Comments: ================================= 
 //= 1.0 First Version. [Kisuka]
-//= 1.1 Added Baby job change support. [Masao]
 //============================================================ 
-geffen_in,164,124,4	script	Mage Guildsman	123,{
+geffen_in,164,124,4	script	Mage Guildsman#mage	123,{
 	if (Upper == 1) {
-		if ((Class == Job_Novice_High) && (ADVJOB == Job_High_Wizard || ADVJOB == Job_Professor)) {
+		if (ADVJOB == Job_High_Wizard || ADVJOB == Job_Professor) {
 			if (Class == Job_Novice_High) {
 				mes "[Mage Guildsman]";
 				mes "Whoa, long time no see! But weren't you supposed to be dead?";
@@ -39,260 +38,94 @@ geffen_in,164,124,4	script	Mage Guildsman	123,{
 				mes "[Mage Guildsman]";
 				mes "Wow, for some reason, you look way better than you did before. Anyway, I believe you will do a better job being a Mage as well.";
 				close;
+			}else{
+				mes "[Mage Guildsman]";
+				mes "Is there anything more I can help you with? If not, why don't you go test your skills? The world is waiting for you~!";
+				close;
 			}
+		}else{
 			mes "[Mage Guildsman]";
-			mes "Is there anything more I can help you with? If not, why don't you go test your skills? The world is waiting for you~!";
+			mes "What, are you interested in the Mage guild? I didn't want to tell you this, but you don't belong here.";
+			next;
+			mes "[Mage Guildsman]";
+			mes "I am not sure why you're still standing in front of me, but I can tell that you're not meant to be a Mage.";
 			close;
 		}
-		mes "[Mage Guildsman]";
-		mes "What, are you interested in the Mage guild? I didn't want to tell you this, but you don't belong here.";
-		next;
-		mes "[Mage Guildsman]";
-		mes "I am not sure why you're still standing in front of me, but I can tell that you're not meant to be a Mage.";
-		close;
 	}
-	if (Class == Job_Baby_Mage || Class == Job_Mage) {
+	if(Class != Job_Novice) {
 		mes "[Mage Guildsman]";
-		mes "Hey, haven't you realized? You're aleady a Mage, silly!";
-		next;
-		mes "[Mage Guildsman]";
-		mes "One of these days you'll realize the power inside of you when you can make Fire with your mind!";
+		if(Class == Job_Mage) {
+			mes "Hey, haven't you realized? You're already a Mage, silly!";
+			mes "One of these days you'll realize the power inside of you when you can make Fire with your mind!";
+		}else{
+			mes "Hey~ C'mon. Quit playing games. You can't be a Mage because you already have another Job.";
+		}
 		close;
-	}
-	if ((Class != Job_Baby_Mage) && (Class != Job_Mage) && (Class != Job_Novice)) {
-		mes "[Mage Guildsman]";
-		mes "Hey~ C'mon. Quit playing games. You can't be a Mage because you already have another Job.";
-		close;
-	}
-	if (Class == Job_Baby || Class == Job_Novice) {
+	}else{
 		mes "[Mage Guildsman]";
 		mes "Hey?";
 		next;
-		switch (select("I want to be a Mage.:Tell me the Requirements.:Pretty much nothing.")) {
+		switch(select("I want to be a Mage:What are the requirements to be a Mage?:Nothing, thanks.")) {
 		case 1:
 			mes "[Mage Guildsman]";
-			mes "Wanna be a Mage, eh?";
+			mes "Wanna be a Mage? Eh...";
 			next;
 			mes "[Mage Guildsman]";
-			if (Sex == 1) {
+			if (Sex) {
 				mes "Hey, look at you! You're kinda cute~! Not my type though...";
-			}
-			else {
+			}else{
 				mes "Oooh, you're such a hot babe~!";
 				mes "I like girls like you~";
 			}
 			mes "Right, you said that you wanna be a Mage?";
 			next;
-			if (select("I want to be a Mage.:Pretty much nothing.") == 1) {
-				if (getskilllv("NV_BASIC") < 9) {
-					mes "[Mage Guildman]";
-					mes "Oh, what a bummer. You haven't met the requirements yet.";
-					next;
-					mes "[Mage Guildman]";
-					mes "Go back and reach Novice Job level 9 first. Don't forget that you also have to learn all of the Basic Skills before you come back.";
-					close;
-				}
+			if(select("I want to be a Mage.:Nothing, thanks.") == 2) {
 				mes "[Mage Guildsman]";
-				mes "Okay. Sign right there. Oh, you're very good at spelling.";
-				mes "So your name is... " + strcharinfo(0) + ".";
-				next;
-				mes "[Mage Guildsman]";
-				mes "Hmm I can see that you've worked very hard on your own.";
-				mes "Good! Always sticking to the basics is the best! I will transform you right away.";
-				next;
-				mes "[Mage Guildsman]";
-				mes "*Ahem*";
-				mes "Congratulations!";
-				mes "You are now a Mage!";
-				next;
-				skill 143,0,1;
-				if(Class == Job_Baby){
-					jobchange Job_Baby_Mage;
-				} else {
-					jobchange Job_Mage;
-				}
-				getitem 1639,1; //N_Rod
-				set Zeny, Zeny + 50;
-				mes "[Mage Guildsman]";
-				mes "'Welcome to My World~'";
-				mes "Heh heh, I just wanted to say that. You know, it's a quote from a well-known movie~";
-				next;
-				mes "[Mage Guildsman]";
-				mes "Now that you're a Mage just like us, let's be friends, okay?";
+				mes "Whaaaaat~?! Right after you tell me that you wanna become a Mage, you change your mind?! Be a bit more decisive!";
 				close;
 			}
 			mes "[Mage Guildsman]";
-			mes "Whaaaaat~?! Right after you tell me that you wanna become a Mage, you change your mind?! Be a bit more decisive!";
+			if (getskilllv("NV_BASIC") < 9) {
+				mes "Oh, man your Basic Skill Level doesn't reach enough to be a Mage.";
+				mes "Go back and level up your Basic Skill.";
+				close;
+			}
+			mes "Alright.. sign the application form.... Wow~ you have good handwriting! Ahh, okay. That's enough.";
+			mes "You are... "+strcharinfo(0)+".";
+			next;
+			mes "[Mage Guildsman]";
+			mes "Hmm I can see that you've tried hard in your own way. Though it seems to be a little clumsy, but well I think it's okay!";
+			mes "Good! Always sticking to the basics is the best! I will transform you right away.";
+			next;
+			mes "[Mage Guildsman]";
+			mes "Hahh..! You are now a Mage, one of our colleagues!";
+			mes "We welcome you to the Mage Guild, our new friend!";
+			next;
+			mes "[Mage Guildsman]";
+			mes "'Welcome to the Mage Guild~'";
+			mes "Congratulations on becoming a member of the Mage Guild! Go for it!";
+			callfunc "Job_Change",Job_Mage;
+			getitem	1639,1; // N_Rod
 			close;
 		case 2:
 			mes "[Mage Guildsman]";
 			mes "Wanna be a Mage, eh?";
-			if (Sex == 1) {
-				mes "For a cutie like you, I'd be happy to explain the requirements!";
-			}
-			else {
-				mes "I'd be happy to explain the requirements for a pretty girl like you!";
-			}
+			mes "I'd be happy to explain the requirements for a pretty girl like you!";
 			next;
 			mes "[Mage Guildsman]";
-			mes "First of all, you have to reach Novice Job Level 10 and learn all of the Basic Skills. ";
+			mes "First of all, you have to reach Novice Job Level 10 and learn all of the Basic Skills.";
 			next;
 			mes "[Mage Guildsman]";
-			mes "In the past, there was a complicated potion mixing test. Because of that hard test, we slowly started to lose aplicants.";
-			mes "So, we decided to accept all aplicants who have the basic requirements.";
+			mes "In the past, there was a complicated potion making test. Because of that, we'd lost an aplicant slowly.";
+			mes "So, we decided to accept all aplicants who meet the basic requirements.";
 			next;
 			mes "[Mage Guildsman]";
-			mes "Let me know when you are ready to become a Mage, alright?";
+			mes "Don't hesitate. Just be a magician!";
 			close;
 		case 3:
 			mes "[Mage Guildsman]";
 			mes "Nothing...?";
 			close;
 		}
-	}
-}
-
-geffen_in,164,112,4	script	Mixing machine	111,{
-	mes "- Out of Order !! -";
-	close;
-}
-
-pay_arche,122,100,0	script	Dollshoi	88,{
-	mes "[Mage Guildsman]";
-	mes "You want a Solution? Hmm, give me 50 Zeny and at least 1 Empty Test Tube.";
-	next;
-	if (select("Alright, Deal.:Nah, forget it.") == 1) {
-		mes "[Mage Guildsman]";
-		if (Zeny < 50) {
-			mes "Hey! You don't have enough money to cover my 50 Zeny charge.";
-			close;
-		}
-		if (countitem(1092) == 0) {
-			mes "You can't carry solutions without a bottle! Bring me an Empty Test Tube.";
-			close;
-		}
-		delitem 1092,1; //Empty_Cylinder
-		set Zeny, Zeny - 50;
-		getitem 1089,1; //Payon_Potion
-		close;
-	}
-	close;
-}
-
-moc_ruins,91,150,0	script	Ponka-Hontas	93,{
-	mes "[Mage Guildsman]";
-	mes "Would you like a Solution? Then please give me 50 Zeny and at least 1 Empty Testtube.";
-	next;
-	if (select("Alright, Deal.:Nah, forget it.") == 1) {
-		mes "[Mage Guildsman]";
-		if (Zeny < 50) {
-			mes "I'm sorry, but you don't have enough money to cover the 50 Zeny fee.";
-			close;
-		}
-		if (countitem(1092) == 0) {
-			mes "You can't carry liquids without using a bottle. Bring an Empty Test Tube the next time you see me.";
-			close;
-		}
-		delitem 1092,1; //Empty_Cylinder
-		set Zeny, Zeny - 50;
-		getitem 1088,1; //Morocc_Potion
-		close;
-	}
-	close;
-}
-
-geffen_in,177,112,4	script	Bookshelf	111,{
-	mes "[Guide Book]";
-	mes "This Guide Book is the property of the Geffen Mage Association. Please handle with care.";
-	next;
-	switch (select("Solution No. 1.:Solution No. 2.:Solution No. 3.:Solution No. 4.:Close.")) {
-	case 1:
-		mes "[Mage Test Solution No. 1]";
-		mes "* Ingredients List *";
-		mes "2 Jellopy";
-		mes "3 Fluff";
-		mes "1 Milk";
-		next;
-		mes "[Mage Test Solution No. 1]";
-		mes "* Solvent Agent *";
-		mes "Payon Solution";
-		mes "Where to Find:";
-		mes "A small spring in Payon, the Archer Village.";
-		next;
-		mes "[Mage Test Solution No. 1]";
-		mes "* Magic Power Serial Code *";
-		mes "8472";
-		next;
-		mes "[Mage Test Solution No. 1]";
-		mes "* Catalyst *";
-		mes "Yellow Gemstone";
-		mes "(Provided by";
-		mes "Mixing Machine)";
-		close;
-	case 2:
-		mes "[Mage Test Solution No. 2]";
-		mes "* Ingredients List *";
-		mes "3 Jellopy";
-		mes "1 Fluff";
-		mes "1 Milk";
-		next;
-		mes "[Mage Test Solution No. 2]";
-		mes "* Solvent Agent *";
-		mes "None";
-		next;
-		mes "[Mage Test Solution No. 2]";
-		mes "* Magic Power Serial Code *";
-		mes "3735";
-		next;
-		mes "[Mage Test Solution No. 2]";
-		mes "* Catalyst *";
-		mes "Red Gemstone";
-		mes "(Provided by";
-		mes "Mixing Machine)";
-		close;
-	case 3:
-		mes "[Mage Test Solution No. 3]";
-		mes "* Ingredients List *";
-		mes "6 Jellopy";
-		mes "1 Fluff";
-		next;
-		mes "[Mage Test Solution No. 3]";
-		mes "* Solvent Agent *";
-		mes "Payon Solution";
-		mes "Where to Find:";
-		mes "A small spring in Payon, the Archer Village.";
-		next;
-		mes "[Mage Test Solution No. 3]";
-		mes "* Magic Power Serial Code *";
-		mes "2750";
-		next;
-		mes "[Mage Test Solution No. 3]";
-		mes "* Catalyst *";
-		mes "Blue Gemstone";
-		mes "(Provided by";
-		mes "Mixing Machine)";
-		close;
-	case 4:
-		mes "[Mage Test Solution No. 4]";
-		mes "* Ingredients List *";
-		mes "2 Jellopy";
-		mes "3 Fluff";
-		next;
-		mes "[Mage Test Solution No. 4]";
-		mes "* Solvent Agent *";
-		mes "Morroc Solution";
-		mes "Where to Find:";
-		mes "A small spring near entrance of pyramid in Morroc.";
-		next;
-		mes "[Mage Test Solution No. 4]";
-		mes "* Magic Power Serial Code *";
-		mes "5429";
-		next;
-		mes "[Mage Test Solution No. 4]";
-		mes "* Catalyst *";
-		mes "1 carat Diamond";
-		mes "(Provided by";
-		mes "Mixing Machine)";
-		close;
 	}
 }

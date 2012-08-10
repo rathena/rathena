@@ -1,25 +1,29 @@
 //===== rAthena Script ======================================= 
-// Monk Job change Quest
-//===== By: ================================================== 
-//= Masao
-//= Credits: Muad_Dib
+//= Monk Job Quest
+//===== By: ==================================================
+//= Dino9021, Edited / Translated by Celest
 //===== Current Version: ===================================== 
-//= 1.0
+//= 2.5
 //===== Compatible With: ===================================== 
-//= Any rAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
-//= [Translated from the Official]
-//= Job change Quest from Acolyte -> Monk.
+//= [Aegis Conversion]
+//= Job quest for Monk classes
 //===== Additional Comments: ================================= 
-//= 1.0 Updated to latest available official file. [Masao]
+//= 2.2 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//=	No longer uses function "F_BlockHigh"
+//= 2.3 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 2.3a Deleted unused variables. [Samuray22]
+//= 2.4 Added Quest Log commands. [Kisuka]
+//= 2.5 Removed the need for use of 'goto.' [L0ne_W0lf]
 //============================================================ 
 
-prt_monk,59,247,1	script	Guarding Monk	120,6,2,{
+prt_monk,59,247,1	script	Guarding Monk#mk	120,6,2,{
 	if (Upper == 1) {
 		mes "[Tohobu]";
-		mes "Hmm? What business do you have";
-		mes "here? If you wish to enter this";
-		mes "sacred area, you must give me your name and job level!";
+		mes "Hmm? What business do you have here?";
+		mes "If you wish to enter this sacred area,";
+		mes "you must give me your name and job level!";
 		next;
 		mes "[Tohobu]";
 		mes "....Eh?";
@@ -33,7 +37,7 @@ prt_monk,59,247,1	script	Guarding Monk	120,6,2,{
 		mes "It is odd...I never misunderstand people...oh, well. Have a good day.";
 		close;
 	}
-	if ((Class == Job_Baby_Acolyte || Class == Job_Acolyte) && (MONK_Q == 0)) {
+	if (BaseJob == Job_Acolyte && MONK_Q == 0) {
 		mes "[Tohobu]";
 		mes "Hmm? What business do you have here?";
 		mes "If you wish to enter this sacred area,";
@@ -58,7 +62,7 @@ prt_monk,59,247,1	script	Guarding Monk	120,6,2,{
 		mes "Very well... why have you come here";
 		mes "" + strcharinfo(0) + "?";
 		next;
-		switch (select("To visit and learn about monks.:I wish to become a monk...:I'm tired and need to rest...")) {
+		switch(select("To visit and learn about monks.:I wish to become a monk...:I'm tired and need to rest...")) {
 		case 1:
 			mes "[Tohobu]";
 			mes "I see...";
@@ -68,7 +72,7 @@ prt_monk,59,247,1	script	Guarding Monk	120,6,2,{
 			set MONK_Q,1;
 			close;
 		case 2:
-			if ((Class == Job_Baby_Acolyte || Class == Job_Acolyte) && (JobLevel > 39)) {
+			if (BaseJob == Job_Acolyte && JobLevel > 39) {
 				mes "[Tohobu]";
 				mes "Hmm you seem as though you have been training for this...";
 				mes "That is good. Go see our sensei Moohae. Speak with him.";
@@ -77,7 +81,7 @@ prt_monk,59,247,1	script	Guarding Monk	120,6,2,{
 				setquest 3016;
 				close;
 			}
-			if ((Class == Job_Baby_Acolyte || Class == Job_Acolyte) && (JobLevel < 40)) {
+			else if (BaseJob == Job_Acolyte && JobLevel < 40) {
 				mes "[Tohobu]";
 				mes "Hmm, you do not seem ready to become a monk.";
 				mes "To become a monk you must be,";
@@ -95,9 +99,11 @@ prt_monk,59,247,1	script	Guarding Monk	120,6,2,{
 				set MONK_Q,1;
 				close;
 			}
-			mes "[Tohobu]";
-			mes "Hahahha that was a good joke!";
-			close;
+			else {
+				mes "[Tohobu]";
+				mes "Hahahha that was a good joke!";
+				close;
+			}
 		case 3:
 			mes "[Tohobu]";
 			mes "Yes, we all need to take a rest once in a while...";
@@ -114,169 +120,177 @@ prt_monk,59,247,1	script	Guarding Monk	120,6,2,{
 			close;
 		}
 	}
-	if ((MONK_Q == 1) && (Class == Job_Baby_Acolyte || Class == Job_Acolyte)) {
-		mes "[Tohobu]";
-		mes "What do you think? Did your visit reveal anything to your spirit?";
-		next;
-		switch (select("No...:I wish to become a monk.:I need to rest...")) {
-		case 1:
+	else {
+		if (MONK_Q == 1 && BaseJob == Job_Acolyte) {
 			mes "[Tohobu]";
-			mes "I see, there is no shame in that.";
-			mes "I hope that your experience here with";
-			mes "our brothers has helped you become one";
-			mes "step closer to true enlightenment.";
-			set MONK_Q,1;
-			close;
-		case 2:
-			if ((Class == Job_Baby_Acolyte || Class == Job_Acolyte) && (JobLevel > 39)) {
+			mes "What do you think? Did your visit reveal anything to your spirit?";
+			next;
+			switch(select("No...:I wish to become a monk.:I need to rest...")) {
+			case 1:
 				mes "[Tohobu]";
-				mes "Hmm you seem as though you have been training for this...";
-				mes "That is good. Go see our sensei Moohae. Speak with him.";
-				mes "He will help you start your training.";
-				set MONK_Q,2;
-				setquest 3016;
+				mes "I see, there is no shame in that.";
+				mes "I hope that your experience here with";
+				mes "our brothers has helped you become one";
+				mes "step closer to true enlightenment.";
+				set MONK_Q,1;
 				close;
-			}
-			if ((Class == Job_Baby_Acolyte || Class == Job_Acolyte) && (JobLevel < 40)) {
+			case 2:
+				if (BaseJob == Job_Acolyte && JobLevel > 39) {
+					mes "[Tohobu]";
+					mes "Hmm you seem as though you have been training for this...";
+					mes "That is good. Go see our sensei Moohae. Speak with him.";
+					mes "He will help you start your training.";
+					set MONK_Q,2;
+					setquest 3016;
+					close;
+				}
+				else if (BaseJob == Job_Acolyte && JobLevel < 40) {
+					mes "[Tohobu]";
+					mes "Hmm, you do not seem ready to become a monk.";
+					mes "To become a monk you must be,";
+					mes "at least a job level 40 Acolyte.";
+					mes "If not, you are not yet ready to become a monk.";
+					next;
+					mes "[Tohobu]";
+					mes "Come back to me when you have trained more on your own";
+					mes "and I will let you know if you are ready.";
+					next;
+					mes "[Tohobu]";
+					mes "I hope that you will soon join us in our";
+					mes "path to inner peace and enlightenment.";
+					mes "I'll be waiting here for you.";
+					set MONK_Q,1;
+					close;
+				}
+				else {
+					mes "[Tohobu]";
+					mes "Hahahha that was a good joke!";
+					close;
+				}
+			case 3:
 				mes "[Tohobu]";
-				mes "Hmm, you do not seem ready to become a monk.";
-				mes "To become a monk you must be,";
-				mes "at least a job level 40 Acolyte.";
-				mes "If not, you are not yet ready to become a monk.";
+				mes "Yes, we all need to take a rest once in a while...";
+				mes "It is a good idea not to stress your self.";
+				mes "Come in and make yourself comfortable.";
+				mes "Rest as long as you need to.";
 				next;
 				mes "[Tohobu]";
-				mes "Come back to me when you have trained more on your own";
-				mes "and I will let you know if you are ready.";
-				next;
-				mes "[Tohobu]";
-				mes "I hope that you will soon join us in our";
-				mes "path to inner peace and enlightenment.";
-				mes "I'll be waiting here for you.";
+				mes "I hope that you become energized";
+				mes "when observing our brothers in their";
+				mes "pursuit of spiritual enlightenment.";
+				mes "I hope you reach it too.";
 				set MONK_Q,1;
 				close;
 			}
+		}
+		if (MONK_Q == 0) {
 			mes "[Tohobu]";
-			mes "Hahahha that was a good joke!";
-			close;
-		case 3:
-			mes "[Tohobu]";
-			mes "Yes, we all need to take a rest once in a while...";
-			mes "It is a good idea not to stress your self.";
-			mes "Come in and make yourself comfortable.";
-			mes "Rest as long as you need to.";
+			mes "Hmm? What business do you have here?";
+			mes "If you wish to enter this sacred area,";
+			mes "You must give me your name, job level, and level!";
 			next;
 			mes "[Tohobu]";
-			mes "I hope that you become energized";
-			mes "when observing our brothers in their";
-			mes "pursuit of spiritual enlightenment.";
-			mes "I hope you reach it too.";
-			set MONK_Q,1;
-			close;
-		}
-	}
-	if (MONK_Q == 0) {
-		mes "[Tohobu]";
-		mes "Hmm? What business do you have here?";
-		mes "If you wish to enter this sacred area,";
-		mes "You must give me your name, job level, and level!";
-		next;
-		mes "[Tohobu]";
-		mes "Now, please tell me your name as well as your job level!";
-		next;
-		if (select("Ignore.:Tell him.") == 1) {
-			mes "[Tohobu]";
-			mes "To ignore another is disrespectful, get out!";
-			close2;
-			warp "prt_fild03",357,256;
-			end;
-		}
-		mes "[Tohobu]";
-		mes "Hmm... " + strcharinfo(0) + " is your name?";
-		mes "...did I say it right?";
-		mes "Okay, and your job level is " + JobLevel + " correct?";
-		next;
-		mes "[Tohobu]";
-		mes "Okay, Now, why have you come here";
-		mes "" + strcharinfo(0) + "?";
-		next;
-		switch (select("To visit and learn about monks.:I wish to become a monk...:I'm tired and need to rest...")) {
-		case 1:
-			mes "[Tohobu]";
-			mes "I see...";
-			mes "We monks live our lives for God and spiritual enlightenment.";
-			mes "We improve our bodies as well as our minds to reach true inner peace.";
-			mes "May you find your inner peace as well.";
-			set MONK_Q,1;
-			close;
-		case 2:
-			if ((Class == Job_Baby_Acolyte || Class == Job_Acolyte) && (JobLevel > 39)) {
+			mes "Now, please tell me your name as well as your job level!";
+			next;
+			if (select("Ignore.:Tell him.") == 1) {
 				mes "[Tohobu]";
-				mes "Hmm you seem as though you have been training for this...";
-				mes "That is good. Go see our sensei Moohae, speak with him";
-				mes "and he will help you start new training.";
-				set MONK_Q,2;
-				setquest 3016;
-				close;
+				mes "To ignore another is disrespectful, get out!";
+				close2;
+				warp "prt_fild03",357,256;
+				end;
 			}
-			if ((Class == Job_Baby_Acolyte || Class == Job_Acolyte) && (JobLevel < 40)) {
+			mes "[Tohobu]";
+			mes "Hmm... " + strcharinfo(0) + " is your name?";
+			mes "...did I say it right?";
+			mes "Okay, and your job level is " + JobLevel + " correct?";
+			next;
+			mes "[Tohobu]";
+			mes "Okay, Now, why have you come here";
+			mes "" + strcharinfo(0) + "?";
+			next;
+			switch(select("To visit and learn about monks.:I wish to become a monk...:I'm tired and need to rest...")) {
+			case 1:
 				mes "[Tohobu]";
-				mes "Hmm, you do not seem ready to become a monk.";
-				mes "To become a monk you must be,";
-				mes "at least a job level 40 Acolyte.";
-				mes "If not, you are not yet ready to become a monk.";
+				mes "I see...";
+				mes "We monks live our lives for God and spiritual enlightenment.";
+				mes "We improve our bodies as well as our minds to reach true inner peace.";
+				mes "May you find your inner peace as well.";
+				set MONK_Q,1;
+				close;
+			case 2:
+				if (BaseJob == Job_Acolyte && JobLevel > 39) {
+					mes "[Tohobu]";
+					mes "Hmm you seem as though you have been training for this...";
+					mes "That is good. Go see our sensei Moohae, speak with him";
+					mes "and he will help you start new training.";
+					set MONK_Q,2;
+					setquest 3016;
+					close;
+				}
+				else if (BaseJob == Job_Acolyte && JobLevel < 40) {
+					mes "[Tohobu]";
+					mes "Hmm, you do not seem ready to become a monk.";
+					mes "To become a monk you must be,";
+					mes "at least a job level 40 Acolyte.";
+					mes "If not, you are not yet ready to become a monk.";
+					next;
+					mes "[Tohobu]";
+					mes "Come back to me when you have trained more on your own";
+					mes "and I will let you know if you are ready.";
+					next;
+					mes "[Tohobu]";
+					mes "I hope that you will soon join us in our";
+					mes "path to inner peace and enlightenment.";
+					mes "I'll be waiting here for you.";
+					set MONK_Q,1;
+					close;
+				}
+				else {
+					mes "[Tohobu]";
+					mes "Hahahha that was a good joke!";
+					close;
+				}
+			case 3:
+				mes "[Tohobu]";
+				mes "Yes, we all need to take a rest once in a while...";
+				mes "It is a good idea not to stress your self.";
+				mes "Come in and make yourself comfortable.";
+				mes "Rest as long as you need to.";
 				next;
 				mes "[Tohobu]";
-				mes "Come back to me when you have trained more on your own";
-				mes "and I will let you know if you are ready.";
-				next;
-				mes "[Tohobu]";
-				mes "I hope that you will soon join us in our";
-				mes "path to inner peace and enlightenment.";
-				mes "I'll be waiting here for you.";
+				mes "I hope that you become energized";
+				mes "when observing our brothers in their";
+				mes "pursuit of spiritual enlightenment.";
+				mes "I hope you reach it too.";
 				set MONK_Q,1;
 				close;
 			}
+		}
+		else if (MONK_Q == 1) {
 			mes "[Tohobu]";
-			mes "Hahahha that was a good joke!";
+			mes "Listen carefully on your journey.";
+			mes "There is much to learn.";
 			close;
-		case 3:
+		}
+		else if (BaseJob == Job_Acolyte && MONK_Q == 2) {
 			mes "[Tohobu]";
-			mes "Yes, we all need to take a rest once in a while...";
-			mes "It is a good idea not to stress your self.";
-			mes "Come in and make yourself comfortable.";
-			mes "Rest as long as you need to.";
-			next;
+			mes "Hmm... would you like to meet sensei Moohae?";
+			mes "He is in the south east area in 'The Hall of Monks'.";
+			close;
+		}
+		else if (BaseJob == Job_Acolyte && MONK_Q > 2) {
 			mes "[Tohobu]";
-			mes "I hope that you become energized";
-			mes "when observing our brothers in their";
-			mes "pursuit of spiritual enlightenment.";
-			mes "I hope you reach it too.";
-			set MONK_Q,1;
+			mes "I hope you do well in your training and I look forward to seeing you again.";
+			close;
+		}
+		else {
+			mes "[Tohobu]";
+			mes "Welcome to the central chamber of our Church.";
+			mes "Please, try not to disturb the other monks.";
+			mes "Even if you are a monk yourself.";
 			close;
 		}
 	}
-	if (MONK_Q == 1) {
-		mes "[Tohobu]";
-		mes "Listen carefully on your journey.";
-		mes "There is much to learn.";
-		close;
-	}
-	if ((Class == Job_Baby_Acolyte || Class == Job_Acolyte) && (MONK_Q == 2)) {
-		mes "[Tohobu]";
-		mes "Hmm... would you like to meet sensei Moohae?";
-		mes "He is in the south east area in 'The Hall of Monks'.";
-		close;
-	}
-	if ((Class == Job_Baby_Acolyte || Class == Job_Acolyte) && (MONK_Q > 2)) {
-		mes "[Tohobu]";
-		mes "I hope you do well in your training and I look forward to seeing you again.";
-		close;
-	}
-	mes "[Tohobu]";
-	mes "Welcome to the central chamber of our Church.";
-	mes "Please, try not to disturb the other monks.";
-	mes "Even if you are a monk yourself.";
-	close;
 
 OnTouch:
 	if (MONK_Q == 0) {
@@ -295,13 +309,13 @@ OnTouch:
 		mes "You may learn something...";
 		close;
 	}
-	if ((Class == Job_Baby_Acolyte || Class == Job_Acolyte) && (MONK_Q == 2)) {
+	if (BaseJob == Job_Acolyte && MONK_Q == 2) {
 		mes "[Tohobu]";
 		mes "Hmm.....you wish to see our sensei Moohae?";
 		mes "He is in the south east section of this building.";
 		close;
 	}
-	if ((Class == Job_Baby_Acolyte || Class == Job_Acolyte) && (MONK_Q > 2)) {
+	if (BaseJob == Job_Acolyte && MONK_Q > 2) {
 		mes "[Tohobu]";
 		mes "I look forward to seeing you become a monk and joining us.";
 		close;
@@ -309,24 +323,18 @@ OnTouch:
 	end;
 }
 
-monk_in,99,58,1	script	Sensei Moohae	60,{
-	if (Upper == 1) {
-		mes "[Sensei Moohae]";
-		mes "I hope you find god here in the nature ...!!";
-		mes "Come here and relax a little, you who have been here before.";
-		close;
-	}
+monk_in,99,58,1	script	Sensei Moohae#mk	60,{
 	mes "[Sensei Moohae]";
 	mes "Greetings, you seem to be on a pure path.";
 	mes "Come in, come in, what can I do for you today?";
 	next;
-	if (SkillPoint != 0) {
+	if (SkillPoint) {
 		mes "[Sensei Moohae]";
 		mes "If you have free skill points, you will lose them during a job change.";
 		mes "Make sure to use any skill points you have.";
 		close;
 	}
-	if ((Class == Job_Baby_Acolyte || Class == Job_Acolyte) && (MONK_Q == 2) && (JobLevel > 39)) {
+	if (BaseJob == Job_Acolyte && MONK_Q == 2 && JobLevel > 39) {
 		mes "[Sensei Moohae]";
 		mes "I sense a fighting spirit, do you wish to become a monk? ";
 		next;
@@ -339,11 +347,10 @@ monk_in,99,58,1	script	Sensei Moohae	60,{
 		}
 		mes "[Sensei Moohae]";
 		mes "There are still those who wish to follow the old ways.";
-		if (Sex == 1) {
+		if (Sex)
 			mes "A strong young man. I am pleased of your will to join us.";
-		} else {
+		else
 			mes "Such a delicate flower. I am pleased to see your will to join us.";
-		}
 		next;
 		mes "[Sensei Moohae]";
 		mes "Oh, you are the new pupil that wishes to join us...";
@@ -372,125 +379,32 @@ monk_in,99,58,1	script	Sensei Moohae	60,{
 		mes "[Sensei Moohae]";
 		mes "Let us start with a simple task.";
 		next;
-		set .@item_need,rand(1,7);
-		if (.@item_need == 1) {
-			mes "[Sensei Moohae]";
-			mes "5 Sticky Mucus,";
-			mes "10 Earthworm Peeling,";
-			mes "20 Green Herb.";
-			mes "Find these items and return to me.";
-			set MONK_Q,3;
-			changequest 3016,3017;
-			next;
-			mes "[Sensei Moohae]";
-			mes "Why the face? This is a test of your abilities.";
-			next;
-			mes "[Sensei Moohae]";
-			mes "If you are unable to return with these items, you are not yet ready to become a monk.";
-			mes "Be sure to collect all the items I listed.";
-			mes "May God be with you.";
-			close;
-		}
-		if (.@item_need == 2) {
-			mes "[Sensei Moohae]";
-			mes "20 Yoyo Tail,";
-			mes "5 Iron Ore,";
-			mes "3 Blue Herb.";
-			mes "Find these items and return to me.";
-			set MONK_Q,4;
-			changequest 3016,3018;
-			next;
-			mes "[Sensei Moohae]";
-			mes "What's wrong? This is a test of your abilities.";
-			next;
-			mes "[Sensei Moohae]";
-			mes "If you are unable to return with these items, you are not yet ready to become a monk.";
-			mes "Be sure to collect all the items I listed.";
-			mes "May God be with you.";
-			close;
-		}
-		if (.@item_need == 3) {
-			mes "[Sensei Moohae]";
-			mes "30 Stem,";
-			mes "5 Jellopy,";
-			mes "10 Worm Peelings.";
-			mes "Find these items and return to me.";
-			set MONK_Q,5;
-			changequest 3016,3019;
-			next;
-			mes "[Sensei Moohae]";
-			mes "You do understand don't you? This is a test of your abilities.";
-			next;
-			mes "[Sensei Moohae]";
-			mes "If you are unable to return with these items, you are not yet ready to become a monk.";
-			mes "Be sure to collect all the items I listed.";
-			mes "May God be with you.";
-			close;
-		}
-		if (.@item_need == 4) {
-			mes "[Sensei Moohae]";
-			mes "5 Solid Shell,";
-			mes "20 Shell,";
-			mes "5 Zargon.";
-			mes "Find these items and return to me";
-			set MONK_Q,6;
-			changequest 3016,3020;
-			next;
-			mes "[Sensei Moohae]";
-			mes "Don't look at me like that. This is a test of your abilities.";
-			next;
-			mes "[Sensei Moohae]";
-			mes "If you are unable to return with these items, you are not yet ready to become a monk.";
-			mes "Be sure to collect all the items I listed.";
-			mes "May God be with you.";
-			close;
-		}
-		if (.@item_need == 5) {
-			mes "[Sensei Moohae]";
-			mes "5 Cyfar,";
-			mes "10 White Herb,";
-			mes "10 Yellow Herb.";
-			mes "Find these items and return to me";
-			set MONK_Q,7;
-			changequest 3016,3021;
-			next;
-			mes "[Sensei Moohae]";
-			mes "You don't seem concerned, this is a test of your abilities You should take this seriously.";
-			next;
-			mes "[Sensei Moohae]";
-			mes "If you are unable to return with these items, you are not yet ready to become a monk.";
-			mes "Be sure to collect all the items I listed.";
-			mes "May God be with you.";
-			close;
-		}
-		if (.@item_need == 6) {
-			mes "[Sensei Moohae]";
-			mes "10 Tooth of Bat,";
-			mes "5 Bear's Footskin,";
-			mes "20 Poison Spore.";
-			mes "Find these items and return to me";
-			set MONK_Q,8;
-			changequest 3016,3022;
-			next;
-			mes "[Sensei Moohae]";
-			mes "It is a test of your abilities so make sure you acquire these on your own.";
-			next;
-			mes "[Sensei Moohae]";
-			mes "If you are unable to return with these items, you are not yet ready to become a monk.";
-			mes "Be sure to collect all the items I listed.";
-			mes "May God be with you.";
-			close;
+		switch(rand(1,7)) {
+		case 1: setarray .@items[0], 938,5, 1055,10, 511,20, 3; changequest 3016,3017; break;
+		case 2: setarray .@items[0], 942,20, 1002,5, 510,3, 4; changequest 3016,3018; break;
+		case 3: setarray .@items[0], 905,30, 909,5, 955,10, 5; changequest 3016,3019; break;
+		case 4: setarray .@items[0], 943,5, 935,20, 912,5, 6; changequest 3016,3020; break;
+		case 5: setarray .@items[0], 7053,5, 509,10, 508,10, 7; changequest 3016,3021; break;
+		case 6: setarray .@items[0], 913,10, 948,4, 7033,20, 8; changequest 3016,3022; break;
+		case 7: setarray .@items[0], 1027,5, 1025,20, 1042,10, 9; changequest 3016,3023; break;
 		}
 		mes "[Sensei Moohae]";
-		mes "5 Porcupine Quill.";
-		mes "20 Cobweb,";
-		mes "10 Bug Leg.";
-		mes "Find these items and return to me";
-		set MONK_Q,9;
-		changequest 3016,3023;
+		mes .@items[1]+" "+getitemname(.@items[0])+",";
+		mes .@items[3]+" "+getitemname(.@items[2])+",";
+		mes .@items[5]+" "+getitemname(.@items[4])+".";
+		mes "Find these items and return to me.";
+		set MONK_Q,.@items[6];
 		next;
 		mes "[Sensei Moohae]";
-		mes "Don't be concerned, I believe you can do it. This is only to test your abilities.";
+		switch (.@items[6]) {
+		case 3: mes "Why the face? This is a test of your abilities."; break; 
+		case 4: mes "What's wrong? This is a test of your abilities."; break; 
+		case 5: mes "You do understand don't you? This is a test of your abilities."; break; 
+		case 6: mes "Don't look at me like that. This is a test of your abilities."; break; 
+		case 7: mes "You don't seem concerned, this is a test of your abilities You should take this seriously."; break; 
+		case 8: mes "It is a test of your abilities so make sure you acquire these on your own."; break; 
+		case 9: mes "Don't be concerned, I believe you can do it. This is only to test your abilities."; break; 
+		}
 		next;
 		mes "[Sensei Moohae]";
 		mes "If you are unable to return with these items, you are not yet ready to become a monk.";
@@ -498,11 +412,11 @@ monk_in,99,58,1	script	Sensei Moohae	60,{
 		mes "May God be with you.";
 		close;
 	}
-	if (MONK_Q == 3) {
+	else if (MONK_Q == 3) {
 		mes "[Sensei Moohae]";
 		mes "You are back, did you bring what I asked?";
 		next;
-		if ((countitem(938) > 4) && (countitem(1055) > 9) && (countitem(511) > 19)) {
+		if (countitem(938) > 4 && countitem(1055) > 9 && countitem(511) > 19) {
 			mes "[Sensei Moohae]";
 			mes "Well done, you found all the items.";
 			mes "I will tell this to the elders.";
@@ -518,20 +432,22 @@ monk_in,99,58,1	script	Sensei Moohae	60,{
 			mes "He is in the north west.";
 			close;
 		}
-		mes "[Sensei Moohae]";
-		mes "How can you think to be done?";
-		mes "You do not have what I asked for!";
-		mes "5 Sticky Mucus,";
-		mes "10 Earthworm Peeling,";
-		mes "20 Green Herb.";
-		mes "These are the items I require, go find them all.";
-		close;
+		else {
+			mes "[Sensei Moohae]";
+			mes "How can you think to be done?";
+			mes "You do not have what I asked for!";
+			mes "5 Sticky Mucus,";
+			mes "10 Earthworm Peeling,";
+			mes "20 Green Herb.";
+			mes "These are the items I require, go find them all.";
+			close;
+		}
 	}
-	if (MONK_Q == 4) {
+	else if (MONK_Q == 4) {
 		mes "[Sensei Moohae]";
 		mes "...eh?";
 		next;
-		if ((countitem(942) > 19) && (countitem(1002) > 4) && (countitem(510) > 2)) {
+		if (countitem(942) > 19 && countitem(1002) > 4 && countitem(510) > 2) {
 			mes "[Sensei Moohae]";
 			mes "Very good, you found all the items.";
 			mes "I will tell this to the elders.";
@@ -547,20 +463,22 @@ monk_in,99,58,1	script	Sensei Moohae	60,{
 			mes "He is in the north west.";
 			close;
 		}
-		mes "[Sensei Moohae]";
-		mes "Why did you return?";
-		mes "You do not have what I asked for!";
-		mes "20 Yoyo Tail,";
-		mes "5 Iron Ore,";
-		mes "3 Blue Herb.";
-		mes "These are the items I require, go find them all.";
-		close;
+		else {
+			mes "[Sensei Moohae]";
+			mes "Why did you return?";
+			mes "You do not have what I asked for!";
+			mes "20 Yoyo Tail,";
+			mes "5 Iron Ore,";
+			mes "3 Blue Herb.";
+			mes "These are the items I require, go find them all.";
+			close;
+		}
 	}
-	if (MONK_Q == 5) {
+	else if (MONK_Q == 5) {
 		mes "[Sensei Moohae]";
 		mes "Hmm?";
 		next;
-		if ((countitem(905) > 29) && (countitem(909) > 4) && (countitem(955) > 9)) {
+		if (countitem(905) > 29 && countitem(909) > 4 && countitem(955) > 9) {
 			mes "[Sensei Moohae]";
 			mes "See, that wasn't so bad you real found all the items.";
 			mes "I will tell this to the elders.";
@@ -576,20 +494,22 @@ monk_in,99,58,1	script	Sensei Moohae	60,{
 			mes "He is in the north west.";
 			close;
 		}
-		mes "[Sensei Moohae]";
-		mes "How can you think to be done?";
-		mes "You do not have what I asked for!";
-		mes "30 Stem,";
-		mes "5 Jellopy";
-		mes "10 Worm Peelings";
-		mes "These are the items I require, go find them all.";
-		close;
+		else {
+			mes "[Sensei Moohae]";
+			mes "How can you think to be done?";
+			mes "You do not have what I asked for!";
+			mes "30 Stem,";
+			mes "5 Jellopy";
+			mes "10 Worm Peelings";
+			mes "These are the items I require, go find them all.";
+			close;
+		}
 	}
-	if (MONK_Q == 6) {
+	else if (MONK_Q == 6) {
 		mes "[Sensei Moohae]";
 		mes "I have been waiting for you.";
 		next;
-		if ((countitem(943) > 4) && (countitem(935) > 19) && (countitem(912) > 4)) {
+		if (countitem(943) > 4 && countitem(935) > 19 && countitem(912) > 4) {
 			mes "[Sensei Moohae]";
 			mes "Impressive, you really found all the items.";
 			mes "I will tell this to the elders.";
@@ -605,20 +525,22 @@ monk_in,99,58,1	script	Sensei Moohae	60,{
 			mes "He is in the north west.";
 			close;
 		}
-		mes "[Sensei Moohae]";
-		mes "How can you think to be done?";
-		mes "You do not have what I asked for!";
-		mes "5 Solid Shell,";
-		mes "20 Shell,";
-		mes "5 Zargon.";
-		mes "These are the items I require, go find them all.";
-		close;
+		else {
+			mes "[Sensei Moohae]";
+			mes "How can you think to be done?";
+			mes "You do not have what I asked for!";
+			mes "5 Solid Shell,";
+			mes "20 Shell,";
+			mes "5 Zargon.";
+			mes "These are the items I require, go find them all.";
+			close;
+		}
 	}
-	if (MONK_Q == 7) {
+	else if (MONK_Q == 7) {
 		mes "[Sensei Moohae]";
 		mes "Hello again. Back so soon?";
 		next;
-		if ((countitem(7053) > 4) && (countitem(509) > 9) && (countitem(508) > 9)) {
+		if (countitem(7053) > 4 && countitem(509) > 9 && countitem(508) > 9) {
 			mes "[Sensei Moohae]";
 			mes "Very nice, you found all the items.";
 			mes "I will tell this to the elders.";
@@ -634,20 +556,22 @@ monk_in,99,58,1	script	Sensei Moohae	60,{
 			mes "He is in the north west.";
 			close;
 		}
-		mes "[Sensei Moohae]";
-		mes "Where are the items...?";
-		mes "You do not have what I asked for!";
-		mes "5 Cyfar,";
-		mes "10 White Herb,";
-		mes "10 Yellow Herb.";
-		mes "These are the items I require, go find them all.";
-		close;
+		else {
+			mes "[Sensei Moohae]";
+			mes "Where are the items...?";
+			mes "You do not have what I asked for!";
+			mes "5 Cyfar,";
+			mes "10 White Herb,";
+			mes "10 Yellow Herb.";
+			mes "These are the items I require, go find them all.";
+			close;
+		}
 	}
-	if (MONK_Q == 8) {
+	else if (MONK_Q == 8) {
 		mes "[Sensei Moohae]";
 		mes "Hmm?";
 		next;
-		if ((countitem(913) > 9) && (countitem(948) > 4) && (countitem(7033) > 19)) {
+		if (countitem(913) > 9 && countitem(948) > 4 && countitem(7033) > 19) {
 			mes "[Sensei Moohae]";
 			mes "Excellent, all the items I asked for.";
 			mes "I will tell this to the elders.";
@@ -663,20 +587,22 @@ monk_in,99,58,1	script	Sensei Moohae	60,{
 			mes "He is in the north west.";
 			close;
 		}
-		mes "[Sensei Moohae]";
-		mes "How can you think to be done?";
-		mes "You do not have what I asked for!";
-		mes "10 Tooth of Bat,";
-		mes "5 Bear's Foot skin";
-		mes "20 Poison Spore";
-		mes "These are the items I require, go find them all.";
-		close;
+		else {
+			mes "[Sensei Moohae]";
+			mes "How can you think to be done?";
+			mes "You do not have what I asked for!";
+			mes "10 Tooth of Bat,";
+			mes "5 Bear's Foot skin";
+			mes "20 Poison Spore";
+			mes "These are the items I require, go find them all.";
+			close;
+		}
 	}
-	if (MONK_Q == 9) {
+	else if (MONK_Q == 9) {
 		mes "[Sensei Moohae]";
 		mes "Welcome back.";
 		next;
-		if ((countitem(1027) > 4) && (countitem(1025) > 19) && (countitem(1042) > 9)) {
+		if (countitem(1027) > 4 && countitem(1025) > 19 && countitem(1042) > 9) {
 			mes "[Sensei Moohae]";
 			mes "Wow, you found all the items!!";
 			mes "I will tell this to the elders.";
@@ -692,48 +618,49 @@ monk_in,99,58,1	script	Sensei Moohae	60,{
 			mes "He is in the north west.";
 			close;
 		}
-		mes "[Sensei Moohae]";
-		mes "How can you think to be done?";
-		mes "You do not have what I asked for!";
-		mes "5 Porcupine Quill,";
-		mes "20 Cobweb,";
-		mes "10 Bug Leg.";
-		mes "These are the items I require, go find them all.";
-		close;
+		else {
+			mes "[Sensei Moohae]";
+			mes "How can you think to be done?";
+			mes "You do not have what I asked for!";
+			mes "5 Porcupine Quill,";
+			mes "20 Cobweb,";
+			mes "10 Bug Leg.";
+			mes "These are the items I require, go find them all.";
+			close;
+		}
 	}
-	if ((MONK_Q > 9) && (MONK_Q < 14)) {
+	else if (MONK_Q > 9 && MONK_Q < 14) {
 		mes "[Sensei Moohae]";
 		mes "I told you already.";
 		mes "Go find ^CC0000Touha^000000.";
 		mes "He is a little north west of here.";
 		close;
 	}
-	if ((MONK_Q > 13) && (MONK_Q < 26)) {
+	else if (MONK_Q > 13 && MONK_Q < 26) {
 		mes "[Sensei Moohae]";
 		mes "Oh, are you still in the process of training?";
 		mes "Hurry and finish!";
 		close;
 	}
-	if ((MONK_Q > 25) && (MONK_Q < 27)) {
+	else if (MONK_Q > 25 && MONK_Q < 27) {
 		mes "[Sensei Moohae]";
 		mes "I hear good things coming from your training.";
 		mes "Good luck and work hard. You will do great things as a monk.";
 		close;
 	}
-	if ((MONK_Q == 27) && (Class == Job_Baby_Acolyte || Class == Job_Acolyte)) {
+	else if (MONK_Q == 27 && BaseJob == Job_Acolyte) {
 		mes "[Sensei Moohae]";
 		mes ".......Hmmm.....";
 		mes "Go to Tomoon, get a special potion from him. It will look like a green potion, but it isn't. Bring it to me...";
 		close;
 	}
-	if ((MONK_Q == 28) && (Class == Job_Baby_Acolyte || Class == Job_Acolyte)) {
+	else if (MONK_Q == 28 && BaseJob == Job_Acolyte) {
 		if (countitem(506) > 0) {
 			mes "[Sensei Moohae]";
 			mes "Do you still have the medicine you were supposed to bring?";
 			mes "You must drink that green potion to strengthen yourself for becoming a monk.";
-			close;
 		}
-		if (countitem(506) == 0) {
+		else if (countitem(506) == 0) {
 			mes "[Sensei Moohae]";
 			mes "Have you finished the task? Good, so you do have what it takes to become a monk.";
 			mes "You didn't throw away the precious potion did you?";
@@ -746,7 +673,7 @@ monk_in,99,58,1	script	Sensei Moohae	60,{
 			mes "But first, answer me these questions.";
 			mes "Do you dedicate the remainder of your life to the pursuit of purity?";
 			next;
-			switch (select("Yes.:No.") == 2) {
+			if (select("Yes.:No.") == 2) {
 				mes "[Sensei Moohae]";
 				mes "....with that kind of reply...";
 				mes "Have you not enough heart to become a monk?";
@@ -801,7 +728,7 @@ monk_in,99,58,1	script	Sensei Moohae	60,{
 			mes "[Sensei Moohae]";
 			mes "Will you assist your comrades by gathering monsters to follow you?";
 			next;
-			if (select("Yes.:No.")  == 2) {
+			if (select("Yes.:No.") == 1) {
 				mes "[Sensei Moohae]";
 				mes "That is not acceptable. Purposely taunting monsters to follow you can be very dangerous and harmful to others. This is not the way of a monk.";
 				mes "... that behavior is regarded as careless and is not tolerated.";
@@ -846,12 +773,10 @@ monk_in,99,58,1	script	Sensei Moohae	60,{
 				next;
 				mes "[Sensei Moohae]";
 				mes "Then your training isn't completed.";
-				if (Sex == 1) {
+				if (Sex)
 					mes "You will not be accepted as a monk my boy.";
-				}
-				else {
+				else
 					mes "You will not be accepted as a monk little girl.";
-				}
 				next;
 				mes "[Sensei Moohae]";
 				mes "In light of this, your training will start again from the beginning....";
@@ -860,29 +785,25 @@ monk_in,99,58,1	script	Sensei Moohae	60,{
 				mes "Come back later when you're ready...";
 				next;
 				mes "[Sensei Moohae]";
-				if (Sex == 1) {
+				if (Sex)
 					mes "I hope that you are able to realize what you are to become soon my boy...";
-				}
-				else {
+				else
 					mes "I hope that you are able to realize what you are to become soon my girl...";
-				}
 				close;
 			}
 			mes "[Sensei Moohae]";
 			mes "Then your training is complete...";
 			mes "Please come closer.";
-			if (Sex == 1) {
+			if (Sex)
 				mes "We welcome you brother, in our holy battle against evil!";
-			} else {
+			else
 				mes "We welcome you sister, in our holy battle against evil!";
-			}
 			next;
 			mes "[Sensei Moohae]";
-			if (Sex == 1) {
+			if (Sex)
 				mes "My brother, your oath has been heard by all around us.";
-			} else {
+			else
 				mes "My sister, your oath has been heard by all around us.";
-			}
 			next;
 			mes "[Sensei Moohae]";
 			mes "I will now perform the ultimate techniques upon your body...";
@@ -896,10 +817,10 @@ monk_in,99,58,1	script	Sensei Moohae	60,{
 			mes "[Sensei Moohae]";
 			mes "And relax your body.......";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "["+ strcharinfo(0) +"]";
 			mes "^00CCCC- You breathe in deeply -^000000";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "["+ strcharinfo(0) +"]";
 			mes "^CC0000- You feel fingers poking you all over your body with swiftness -^000000";
 			next;
 			mes "[Sensei Moohae]";
@@ -920,11 +841,10 @@ monk_in,99,58,1	script	Sensei Moohae	60,{
 			mes "[Sensei Moohae]";
 			mes "....and see life through the eyes of a monk.";
 			next;
-			if(Class == Job_Baby_Acolyte){
-				jobchange Job_Baby_Monk;
-			} else {
-				jobchange Job_Monk;
-			}
+			set .@jlevel,JobLevel;
+			completequest 3032;
+			callfunc "Job_Change",Job_Monk;
+			callfunc "F_ClearJobVar";
 			mes "[Sensei Moohae]";
 			mes "....You are a monk.";
 			next;
@@ -947,24 +867,21 @@ monk_in,99,58,1	script	Sensei Moohae	60,{
 			mes "[Sensei Moohae]";
 			mes "Now...you may leave where the wind may take you.";
 			mes "Oh and I have a gift for you before you leave.";
-			completequest 3032;
-			if (JobLevel > 49) {
+			if (.@jlevel == 50)
 				getitem 1804,1; //Knuckle_Duster_
-			}
-			else {
+			else
 				getitem 1801,1; //Waghnakh
-			}
-			close;
 		}
+		close;
 	}
-	if (Class == Job_Baby_Acolyte || Class == Job_Acolyte) {
+	else if (BaseJob == Job_Acolyte) {
 		mes "[Sensei Moohae]";
 		mes "You are...an acolyte..?";
 		mes "If you seek consultation, go to the Sanctuary in Prontera. This place is for Monks, not for you.";
 		mes "Unless you intend to become a monk....please leave.";
 		close;
 	}
-	if (Class == Job_Baby_Monk || Class == Job_Monk) {
+	else if (BaseJob == Job_Monk) {
 		mes "[Sensei Moohae]";
 		mes "How's your practice going?";
 		mes "I hope you are still training and keeping your vows.";
@@ -978,117 +895,121 @@ monk_in,99,58,1	script	Sensei Moohae	60,{
 		mes "do not let any evil taint your pure heart.";
 		close;
 	}
-	mes "[Sensei Moohae]";
-	mes "If you seek consultation, go to the Sanctuary in Prontera.";
-	mes "We do not have anything of interest to you here, please leave and do not disturb the other monks.";
-	close;
+	else {
+		mes "[Sensei Moohae]";
+		mes "If you seek consultation, go to the Sanctuary in Prontera.";
+		mes "We do not have anything of interest to you here, please leave and do not disturb the other monks.";
+		close;
+	}
 }
 
-prt_monk,251,255,1	script	Touha	79,{
-	if (MONK_Q == 10) {
-		mes "[Touha]";
-		mes "What brings you to me.";
-		mes "Do you wish to share a conversation with me?";
-		next;
-		mes "[Touha]";
-		mes "Oh, I see. You're on the monk in training.";
-		mes "You already possess a similar spirit as a monk's.";
-		next;
-		mes "[Touha]";
-		mes "By the looks of you, it seems, you";
-		mes "have already visited Sensei Moohae. Good.";
-		next;
-		mes "[Touha]";
-		mes "Let me inform you about certain things you must know as a monk.";
-		mes "Then I will help you to strengthen your body so that you can bear your next training.";
-		next;
-		mes "[Touha]";
-		mes "Calm your mind.";
-		mes "Relax your body...are you ready?";
-		next;
-		if (select("Yes.:No.") == 2) {
+prt_monk,251,255,1	script	Touha#mk	79,{
+	if (MONK_Q >= 10 && MONK_Q < 14) {
+		if (MONK_Q == 10) {
 			mes "[Touha]";
-			mes "Please come back when you're ready.";
-			close;
-		}
-		mes "[Touha]";
-		mes "Ok...then.";
-		next;
-		mes "[Touha]";
-		mes "Please repeat after me.";
-		next;
-		set .@poem, rand(1,3);
-		if (.@poem == 1) {
-			set MONK_Q,11;
+			mes "What brings you to me.";
+			mes "Do you wish to share a conversation with me?";
+			next;
+			mes "[Touha]";
+			mes "Oh, I see. You're on the monk in training.";
+			mes "You already possess a similar spirit as a monk's.";
+			next;
+			mes "[Touha]";
+			mes "By the looks of you, it seems, you";
+			mes "have already visited Sensei Moohae. Good.";
+			next;
+			mes "[Touha]";
+			mes "Let me inform you about certain things you must know as a monk.";
+			mes "Then I will help you to strengthen your body so that you can bear your next training.";
+			next;
+			mes "[Touha]";
+			mes "Calm your mind.";
+			mes "Relax your body...are you ready?";
+			next;
+			if (select("Yes.:No.") == 2) {
+				mes "[Touha]";
+				mes "Please come back when you're ready.";
+				close;
+			}
+			mes "[Touha]";
+			mes "Ok...then.";
+			next;
+			mes "[Touha]";
+			mes "Please repeat after me.";
+			next;
 			changequest 3024,3025;
-			mes "[Touha]";
-			mes "I seek the path";
-			next;
-			mes "[Touha]";
-			mes "of enlightenment.";
-			next;
-			mes "[Touha]";
-			mes "We monks";
-			next;
-			mes "[Touha]";
-			mes "shall hold true";
-			next;
-			mes "[Touha]";
-			mes "to what we believe";
-			next;
-			mes "[Touha]";
-			mes "and will help protect others";
-			next;
-			mes "[Touha]";
-			mes "through the teachings";
-			next;
-			mes "[Touha]";
-			mes "we learn through our lives.";
-			next;
-			mes "[Touha]";
-			mes "In nomine Patris, et Filii";
-			next;
-			mes "[Touha]";
-			mes "et Spiritus Sancti.";
-			next;
-		}
-		if (.@poem == 2) {
-			set MONK_Q,12;
-			changequest 3024,3025;
-			mes "[Touha]";
-			mes "I commit myself to";
-			next;
-			mes "[Touha]";
-			mes "veritas and aequitas.";
-			next;
-			mes "[Touha]";
-			mes "I will follow my path";
-			next;
-			mes "[Touha]";
-			mes "to enlightenment and purity.";
-			next;
-			mes "[Touha]";
-			mes "I will protect my";
-			next;
-			mes "[Touha]";
-			mes "brothers with my life.";
-			next;
-			mes "[Touha]";
-			mes "Evil shall never be";
-			next;
-			mes "[Touha]";
-			mes "victorious while I breathe.";
-			next;
-			mes "[Touha]";
-			mes "In nomine Patris, et Filii";
-			next;
-			mes "[Touha]";
-			mes "et Spiritus Sancti.";
-			next;
 		}
 		else {
+			mes "[Touha]";
+			mes "Now, pay attention this time...";
+			next;
+		}
+		mes "[Touha]";
+		set .@rand,rand(1,3);
+		if ((.@rand == 1) || (MONK_Q == 11)) {
+			set MONK_Q,11;
+			mes "I seek the path";
+			next;
+			mes "[Touha]";
+			mes "of enlightenment.";
+			next;
+			mes "[Touha]";
+			mes "We monks";
+			next;
+			mes "[Touha]";
+			mes "shall hold true";
+			next;
+			mes "[Touha]";
+			mes "to what we believe";
+			next;
+			mes "[Touha]";
+			mes "and will help protect others";
+			next;
+			mes "[Touha]";
+			mes "through the teachings";
+			next;
+			mes "[Touha]";
+			mes "we learn through our lives.";
+			next;
+			mes "[Touha]";
+			mes "In nomine Patris, et Filii";
+			next;
+			mes "[Touha]";
+			mes "et Spiritus Sancti.";
+		}
+		else if ((.@rand == 2) || (MONK_Q == 12)) {
+			set MONK_Q,12;
+			mes "I commit myself to";
+			next;
+			mes "[Touha]";
+			mes "veritas and aequitas.";
+			next;
+			mes "[Touha]";
+			mes "I will follow my path";
+			next;
+			mes "[Touha]";
+			mes "to enlightenment and purity.";
+			next;
+			mes "[Touha]";
+			mes "I will protect my";
+			next;
+			mes "[Touha]";
+			mes "brothers with my life.";
+			next;
+			mes "[Touha]";
+			mes "Evil shall never be";
+			next;
+			mes "[Touha]";
+			mes "victorious while I breathe.";
+			next;
+			mes "[Touha]";
+			mes "In nomine Patris, et Filii";
+			next;
+			mes "[Touha]";
+			mes "et Spiritus Sancti.";
+		}
+		else if ((.@rand == 3) || (MONK_Q == 13)) {
 			set MONK_Q,13;
-			mes "[Touha]";
 			mes "And shepherds we shall be,";
 			next;
 			mes "[Touha]";
@@ -1117,50 +1038,16 @@ prt_monk,251,255,1	script	Touha	79,{
 			next;
 			mes "[Touha]";
 			mes "et Spiritus Sancti.";
-			next;
 		}
-		mes "[Touha]";
-		mes "Ok, that is all. Now repeat what I have spoken.";
-		set @monk_t,0;
-		if (MONK_Q == 11) {
+		next;
+		if (MONK_Q == 10) {
 			mes "[Touha]";
-			mes "I seek the path";
-			next;
-			mes "[Touha]";
-			mes "of enlightenment.";
-			next;
-			mes "[Touha]";
-			mes "We monks";
-			next;
-			mes "[Touha]";
-			mes "shall hold true";
-			next;
-			mes "[Touha]";
-			mes "to what we believe";
-			next;
-			mes "[Touha]";
-			mes "and will help protect others";
-			next;
-			mes "[Touha]";
-			mes "through the teachings";
-			next;
-			mes "[Touha]";
-			mes "we learn through our lives.";
-			next;
-			mes "[Touha]";
-			mes "In nomine Patris, et Filii";
-			next;
-			mes "[Touha]";
-			mes "et Spiritus Sancti.";
-			next;
-			mes "[Touha]";
-			mes "Ok, that is the end.";
-			set @monk_t,0;
-			next;
-			mes "[Touha]";
+			mes "Ok, that is all. Now repeat what I have spoken.";
 			mes "" + strcharinfo(0) + ", your turn.";
 			next;
-			switch (select("shall hold true:We monks:and will help protect others:through the teachings:In nomine Patris, et Filii:to what we believe:I seek the path:we learn through our lives.:et Spiritus Sancti.:of enlightenment.")) {
+		}
+		if (MONK_Q == 11) {
+			switch(select("shall hold true:We monks:and will help protect others:through the teachings:In nomine Patris, et Filii:to what we believe:I seek the path:we learn through our lives.:et Spiritus Sancti.:of enlightenment.")) {
 			case 1:
 				mes "[" + strcharinfo(0) + "]";
 				mes "shall hold true";
@@ -1186,7 +1073,7 @@ prt_monk,251,255,1	script	Touha	79,{
 				mes "to what we believe";
 				break;
 			case 7:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "[" + strcharinfo(0) + "]";
 				mes "I seek the path";
 				break;
@@ -1203,25 +1090,25 @@ prt_monk,251,255,1	script	Touha	79,{
 				mes "of enlightenment.";
 				break;
 			}
-			switch (select("We monks:In nomine Patris, et Filii:I seek the path:shall hold true:of enlightenment.:and will help protect others:we learn through our lives.:through the teachings:to what we believe:et Spiritus Sancti.")) {
+			switch(select("We monks:In nomine Patris, et Filii:I seek the path:shall hold true:of enlightenment.:and will help protect others:we learn through our lives.:through the teachings:to what we believe:et Spiritus Sancti.")) {
 			case 1: mes "We monks"; break;
 			case 2: mes "In nomine Patris, et Filii"; break;
 			case 3: mes "I seek the path"; break;
 			case 4: mes "shall hold true"; break;
 			case 5:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "of enlightenment.";
 				break;
-			case 6: mes "and will help protect others"; break;
+			case 6: mes "and will help protect others";  break;
 			case 7: mes "we learn through our lives."; break;
 			case 8: mes "through the teachings"; break;
 			case 9: mes "to what we believe"; break;
 			case 10: mes "et Spiritus Sancti."; break;
 			}
-			switch (select("to what we believe:We monks:I seek the path:shall hold true:of enlightenment.:we learn through our lives.:In nomine Patris, et Filii:and will help protect others:through the teachings:et Spiritus Sancti.")) {
+			switch(select("to what we believe:We monks:I seek the path:shall hold true:of enlightenment.:we learn through our lives.:In nomine Patris, et Filii:and will help protect others:through the teachings:et Spiritus Sancti.")) {
 			case 1: mes "to what we believe"; break;
 			case 2:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "We monks";
 				break;
 			case 3: mes "I seek the path"; break;
@@ -1233,13 +1120,14 @@ prt_monk,251,255,1	script	Touha	79,{
 			case 9: mes "through the teachings"; break;
 			case 10: mes "et Spiritus Sancti."; break;
 			}
-			switch (select("shall hold true:I seek the path:We monks:In nomine Patris, et Filii:of enlightenment.:et Spiritus Sancti.:to what we believe:we learn through our lives.:and will help protect others:through the teachings")) {
+			switch(select("shall hold true:I seek the path:We monks:In nomine Patris, et Filii:of enlightenment.:et Spiritus Sancti.:to what we believe:we learn through our lives.:and will help protect others:through the teachings")) {
 			case 1:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "shall hold true";
 				break;
 			case 2: mes "I seek the path"; break;
-			case 3: mes "We monks"; break;
+			case 3: mes "We monks";
+				break;
 			case 4: mes "In nomine Patris, et Filii"; break;
 			case 5: mes "of enlightenment."; break;
 			case 6: mes "et Spiritus Sancti."; break;
@@ -1248,7 +1136,7 @@ prt_monk,251,255,1	script	Touha	79,{
 			case 9: mes "and will help protect others"; break;
 			case 10: mes "through the teachings"; break;
 			}
-			switch (select("of enlightenment.:I seek the path:We monks:shall hold true:and will help protect others:through the teachings:we learn through our lives.:In nomine Patris, et Filii:to what we believe:et Spiritus Sancti.")) {
+			switch(select("of enlightenment.:I seek the path:We monks:shall hold true:and will help protect others:through the teachings:we learn through our lives.:In nomine Patris, et Filii:to what we believe:et Spiritus Sancti.")) {
 			case 1: mes "of enlightenment."; break;
 			case 2: mes "I seek the path"; break;
 			case 3: mes "We monks"; break;
@@ -1258,16 +1146,16 @@ prt_monk,251,255,1	script	Touha	79,{
 			case 7: mes "we learn through our lives."; break;
 			case 8: mes "In nomine Patris, et Filii"; break;
 			case 9:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "to what we believe";
 				break;
 			case 10: mes "et Spiritus Sancti."; break;
 			}
-			switch (select("I seek the path:through the teachings:and will help protect others:of enlightenment.:shall hold true:et Spiritus Sancti.:In nomine Patris, et Filii:to what we believe:We monks:we learn through our lives.")) {
+			switch(select("I seek the path:through the teachings:and will help protect others:of enlightenment.:shall hold true:et Spiritus Sancti.:In nomine Patris, et Filii:to what we believe:We monks:we learn through our lives.")) {
 			case 1: mes "I seek the path"; break;
 			case 2: mes "through the teachings"; break;
 			case 3:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "and will help protect others";
 				break;
 			case 4: mes "of enlightenment."; break;
@@ -1278,7 +1166,7 @@ prt_monk,251,255,1	script	Touha	79,{
 			case 9: mes "We monks"; break;
 			case 10: mes "we learn through our lives."; break;
 			}
-			switch (select("we learn through our lives.:In nomine Patris, et Filii:et Spiritus Sancti.:I seek the path:of enlightenment.:to what we believe:We monks:shall hold true:and will help protect others:through the teachings")) {
+			switch(select("we learn through our lives.:In nomine Patris, et Filii:et Spiritus Sancti.:I seek the path:of enlightenment.:to what we believe:We monks:shall hold true:and will help protect others:through the teachings")) {
 			case 1: mes "we learn through our lives."; break;
 			case 2: mes "In nomine Patris, et Filii"; break;
 			case 3: mes "et Spiritus Sancti."; break;
@@ -1289,13 +1177,13 @@ prt_monk,251,255,1	script	Touha	79,{
 			case 8: mes "shall hold true"; break;
 			case 9: mes "and will help protect others"; break;
 			case 10:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "through the teachings";
 				break;
 			}
-			switch (select("we learn through our lives.:In nomine Patris, et Filii:through the teachings:I seek the path:We monks:shall hold true:to what we believe:and will help protect others:of enlightenment.:et Spiritus Sancti.")) {
+			switch(select("we learn through our lives.:In nomine Patris, et Filii:through the teachings:I seek the path:We monks:shall hold true:to what we believe:and will help protect others:of enlightenment.:et Spiritus Sancti.")) {
 			case 1:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "we learn through our lives.";
 				break;
 			case 2: mes "In nomine Patris, et Filii"; break;
@@ -1308,7 +1196,7 @@ prt_monk,251,255,1	script	Touha	79,{
 			case 9: mes "of enlightenment."; break;
 			case 10: mes "et Spiritus Sancti."; break;
 			}
-			switch (select("I seek the path:of enlightenment.:We monks:shall hold true:to what we believe:et Spiritus Sancti.:and will help protect others:through the teachings:we learn through our lives.:In nomine Patris, et Filii")) {
+			switch(select("I seek the path:of enlightenment.:We monks:shall hold true:to what we believe:et Spiritus Sancti.:and will help protect others:through the teachings:we learn through our lives.:In nomine Patris, et Filii")) {
 			case 1: mes "I seek the path"; break;
 			case 2: mes "of enlightenment."; break;
 			case 3: mes "We monks"; break;
@@ -1319,11 +1207,11 @@ prt_monk,251,255,1	script	Touha	79,{
 			case 8: mes "through the teachings"; break;
 			case 9: mes "we learn through our lives."; break;
 			case 10:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "In nomine Patris, et Filii";
 				break;
 			}
-			switch (select("I seek the path:of enlightenment.:We monks:shall hold true:to what we believe:and will help protect others:through the teachings:we learn through our lives.:In nomine Patris, et Filii:et Spiritus Sancti.")) {
+			switch(select("I seek the path:of enlightenment.:We monks:shall hold true:to what we believe:and will help protect others:through the teachings:we learn through our lives.:In nomine Patris, et Filii:et Spiritus Sancti.")) {
 			case 1: mes "I seek the path"; break;
 			case 2: mes "of enlightenment."; break;
 			case 3: mes "We monks"; break;
@@ -1334,50 +1222,13 @@ prt_monk,251,255,1	script	Touha	79,{
 			case 8: mes "we learn through our lives."; break;
 			case 9: mes "In nomine Patris, et Filii"; break;
 			case 10:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "et Spiritus Sancti.";
 				break;
 			}
 		}
-		if (MONK_Q == 12) {
-			mes "[Touha]";
-			mes "I commit myself to";
-			next;
-			mes "[Touha]";
-			mes "veritas and aequitas.";
-			next;
-			mes "[Touha]";
-			mes "I will follow my path";
-			next;
-			mes "[Touha]";
-			mes "to enlightenment and purity.";
-			next;
-			mes "[Touha]";
-			mes "I will protect my";
-			next;
-			mes "[Touha]";
-			mes "brothers with my life.";
-			next;
-			mes "[Touha]";
-			mes "Evil shall never be";
-			next;
-			mes "[Touha]";
-			mes "victorious while I breathe.";
-			next;
-			mes "[Touha]";
-			mes "In nomine Patris, et Filii";
-			next;
-			mes "[Touha]";
-			mes "et Spiritus Sancti.";
-			next;
-			mes "[Touha]";
-			mes "That's it... were you paying attention?.";
-			set @monk_t,0;
-			next;
-			mes "[Touha]";
-			mes "" + strcharinfo(0) + ", your turn.";
-			next;
-			switch (select("I will follow my path:veritas and aequitas.:to enlightenment and purity.:I commit myself to:I will protect my:victorious while I breathe.:brothers with my life.:Evil shall never be:In nomine Patris, et Filii:et Spiritus Sancti.")) {
+		else if (MONK_Q == 12) {
+			switch(select("I will follow my path:veritas and aequitas.:to enlightenment and purity.:I commit myself to:I will protect my:victorious while I breathe.:brothers with my life.:Evil shall never be:In nomine Patris, et Filii:et Spiritus Sancti.")) {
 			case 1:
 				mes "[" + strcharinfo(0) + "]";
 				mes "I will follow my path";
@@ -1392,7 +1243,7 @@ prt_monk,251,255,1	script	Touha	79,{
 				break;
 			case 4:
 				mes "[" + strcharinfo(0) + "]";
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "I commit myself to";
 				break;
 			case 5:
@@ -1420,7 +1271,7 @@ prt_monk,251,255,1	script	Touha	79,{
 				mes "et Spiritus Sancti.";
 				break;
 			}
-			switch (select("I will follow my path:I will protect my:brothers with my life.:to enlightenment and purity.:Evil shall never be:victorious while I breathe.:et Spiritus Sancti.:I commit myself to:veritas and aequitas.:In nomine Patris, et Filii")) {
+			switch(select("I will follow my path:I will protect my:brothers with my life.:to enlightenment and purity.:Evil shall never be:victorious while I breathe.:et Spiritus Sancti.:I commit myself to:veritas and aequitas.:In nomine Patris, et Filii")) {
 			case 1: mes "I will follow my path"; break;
 			case 2: mes "I will protect my"; break;
 			case 3: mes "brothers with my life."; break;
@@ -1430,14 +1281,14 @@ prt_monk,251,255,1	script	Touha	79,{
 			case 7: mes "et Spiritus Sancti."; break;
 			case 8: mes "I commit myself to"; break;
 			case 9:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "veritas and aequitas.";
 				break;
 			case 10: mes "In nomine Patris, et Filii"; break;
 			}
-			switch (select("I will follow my path:veritas and aequitas.:I commit myself to:et Spiritus Sancti.:Evil shall never be:to enlightenment and purity.:In nomine Patris, et Filii:I will protect my:brothers with my life.:victorious while I breathe.")) {
+			switch(select("I will follow my path:veritas and aequitas.:I commit myself to:et Spiritus Sancti.:Evil shall never be:to enlightenment and purity.:In nomine Patris, et Filii:I will protect my:brothers with my life.:victorious while I breathe.")) {
 			case 1:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "I will follow my path";
 				break;
 			case 2: mes "veritas and aequitas."; break;
@@ -1450,14 +1301,14 @@ prt_monk,251,255,1	script	Touha	79,{
 			case 9: mes "brothers with my life."; break;
 			case 10: mes "victorious while I breathe."; break;
 			}
-			switch (select("veritas and aequitas.:Evil shall never be:I will follow my path:I will protect my:victorious while I breathe.:to enlightenment and purity.:brothers with my life.:In nomine Patris, et Filii:et Spiritus Sancti.:I commit myself to")) {
+			switch(select("veritas and aequitas.:Evil shall never be:I will follow my path:I will protect my:victorious while I breathe.:to enlightenment and purity.:brothers with my life.:In nomine Patris, et Filii:et Spiritus Sancti.:I commit myself to")) {
 			case 1: mes "veritas and aequitas."; break;
 			case 2: mes "Evil shall never be"; break;
 			case 3: mes "I will follow my path"; break;
 			case 4: mes "I will protect my"; break;
 			case 5: mes "victorious while I breathe."; break;
 			case 6:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "to enlightenment and purity.";
 				break;
 			case 7: mes "brothers with my life."; break;
@@ -1465,7 +1316,7 @@ prt_monk,251,255,1	script	Touha	79,{
 			case 9: mes "et Spiritus Sancti."; break;
 			case 10: mes "I commit myself to"; break;
 			}
-			switch (select("victorious while I breathe.:I commit myself to:to enlightenment and purity.:brothers with my life.:Evil shall never be:In nomine Patris, et Filii:et Spiritus Sancti.:I will follow my path:veritas and aequitas.:I will protect my")) {
+			switch(select("victorious while I breathe.:I commit myself to:to enlightenment and purity.:brothers with my life.:Evil shall never be:In nomine Patris, et Filii:et Spiritus Sancti.:I will follow my path:veritas and aequitas.:I will protect my")) {
 			case 1: mes "victorious while I breathe."; break;
 			case 2: mes "I commit myself to"; break;
 			case 3: mes "to enlightenment and purity."; break;
@@ -1476,19 +1327,17 @@ prt_monk,251,255,1	script	Touha	79,{
 			case 8: mes "I will follow my path"; break;
 			case 9: mes "veritas and aequitas."; break;
 			case 10:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "I will protect my";
 				break;
 			}
-			switch (select("to enlightenment and purity.:I will follow my path:veritas and aequitas.:I commit myself to:brothers with my life.:I will protect my:victorious while I breathe.:Evil shall never be:et Spiritus Sancti.:In nomine Patris, et Filii")) {
-			case 1:
-				mes "to enlightenment and purity.";
-				break;
+			switch(select("to enlightenment and purity.:I will follow my path:veritas and aequitas.:I commit myself to:brothers with my life.:I will protect my:victorious while I breathe.:Evil shall never be:et Spiritus Sancti.:In nomine Patris, et Filii")) {
+			case 1: mes "to enlightenment and purity."; break;
 			case 2: mes "I will follow my path"; break;
 			case 3: mes "veritas and aequitas."; break;
 			case 4: mes "I commit myself to"; break;
 			case 5:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "brothers with my life.";
 				break;
 			case 6: mes "I will protect my"; break;
@@ -1497,10 +1346,10 @@ prt_monk,251,255,1	script	Touha	79,{
 			case 9: mes "et Spiritus Sancti."; break;
 			case 10: mes "In nomine Patris, et Filii"; break;
 			}
-			switch (select("veritas and aequitas.:Evil shall never be:brothers with my life.:victorious while I breathe.:I will follow my path:to enlightenment and purity.:I will protect my:In nomine Patris, et Filii:et Spiritus Sancti.:I commit myself to")) {
+			switch(select("veritas and aequitas.:Evil shall never be:brothers with my life.:victorious while I breathe.:I will follow my path:to enlightenment and purity.:I will protect my:In nomine Patris, et Filii:et Spiritus Sancti.:I commit myself to")) {
 			case 1: mes "veritas and aequitas."; break;
 			case 2:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "Evil shall never be";
 				break;
 			case 3: mes "brothers with my life."; break;
@@ -1512,9 +1361,9 @@ prt_monk,251,255,1	script	Touha	79,{
 			case 9: mes "et Spiritus Sancti."; break;
 			case 10: mes "I commit myself to"; break;
 			}
-			switch (select("victorious while I breathe.:to enlightenment and purity.:I will protect my:veritas and aequitas.:brothers with my life.:I will follow my path:Evil shall never be:In nomine Patris, et Filii:I commit myself to:et Spiritus Sancti.")) {
+			switch(select("victorious while I breathe.:to enlightenment and purity.:I will protect my:veritas and aequitas.:brothers with my life.:I will follow my path:Evil shall never be:In nomine Patris, et Filii:I commit myself to:et Spiritus Sancti.")) {
 			case 1:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "victorious while I breathe.";
 				break;
 			case 2: mes "to enlightenment and purity."; break;
@@ -1527,7 +1376,7 @@ prt_monk,251,255,1	script	Touha	79,{
 			case 9: mes "I commit myself to"; break;
 			case 10: mes "et Spiritus Sancti."; break;
 			}
-			switch (select("I commit myself to:I will follow my path:veritas and aequitas.:I will protect my:to enlightenment and purity.:brothers with my life.:Evil shall never be:In nomine Patris, et Filii:victorious while I breathe.:et Spiritus Sancti.")) {
+			switch(select("I commit myself to:I will follow my path:veritas and aequitas.:I will protect my:to enlightenment and purity.:brothers with my life.:Evil shall never be:In nomine Patris, et Filii:victorious while I breathe.:et Spiritus Sancti.")) {
 			case 1: mes "I commit myself to"; break;
 			case 2: mes "I will follow my path"; break;
 			case 3: mes "veritas and aequitas."; break;
@@ -1536,13 +1385,13 @@ prt_monk,251,255,1	script	Touha	79,{
 			case 6: mes "brothers with my life."; break;
 			case 7: mes "Evil shall never be"; break;
 			case 8:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "In nomine Patris, et Filii";
 				break;
 			case 9: mes "victorious while I breathe."; break;
 			case 10: mes "et Spiritus Sancti."; break;
 			}
-			switch (select("I commit myself to:veritas and aequitas.:I will follow my path:to enlightenment and purity.:I will protect my:brothers with my life.:Evil shall never be:victorious while I breathe.:In nomine Patris, et Filii:et Spiritus Sancti.")) {
+			switch(select("I commit myself to:veritas and aequitas.:I will follow my path:to enlightenment and purity.:I will protect my:brothers with my life.:Evil shall never be:victorious while I breathe.:In nomine Patris, et Filii:et Spiritus Sancti.")) {
 			case 1: mes "I commit myself to"; break;
 			case 2: mes "veritas and aequitas."; break;
 			case 3: mes "I will follow my path"; break;
@@ -1553,57 +1402,20 @@ prt_monk,251,255,1	script	Touha	79,{
 			case 8: mes "victorious while I breathe."; break;
 			case 9: mes "In nomine Patris, et Filii"; break;
 			case 10:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "et Spiritus Sancti.";
 				break;
 			}
 		}
-		if (MONK_Q == 13) {
-			mes "[Touha]";
-			mes "And shepherds we shall be,";
-			next;
-			mes "[Touha]";
-			mes "for thee my lord for thee.";
-			next;
-			mes "[Touha]";
-			mes "Power hath descended forth";
-			next;
-			mes "[Touha]";
-			mes "from the hand";
-			next;
-			mes "[Touha]";
-			mes "so our feet may swiftly carry";
-			next;
-			mes "[Touha]";
-			mes "out thy command. And we shall";
-			next;
-			mes "[Touha]";
-			mes "flow a river forth to thee and";
-			next;
-			mes "[Touha]";
-			mes "teeming with souls shall it ever be";
-			next;
-			mes "[Touha]";
-			mes "In nomine Patris, et Filii";
-			next;
-			mes "[Touha]";
-			mes "et Spiritus Sancti.";
-			next;
-			mes "[Touha]";
-			mes "I hope you were paying attention this time. This is a sacred family prayer.";
-			set @monk_t,0;
-			next;
-			mes "[Touha]";
-			mes "Now repeat it " + strcharinfo(0) + ".";
-			next;
-			switch (select("for thee my lord for thee.:And shepherds we shall be,:Power hath descended forth:so our feet may swiftly carry:from the hand:flow a river forth to thee and:out thy command. And we shall:teeming with souls shall it ever be:et Spiritus Sancti.:In nomine Patris, et Filii")) {
+		else if (MONK_Q == 13) {
+			switch(select("for thee my lord for thee.:And shepherds we shall be,:Power hath descended forth:out thy command. And we shall:from the hand:flow a river forth to thee and:so our feet may swiftly carry:teeming with souls shall it ever be:et Spiritus Sancti.:In nomine Patris, et Filii")) {
 			case 1:
 				mes "[" + strcharinfo(0) + "]";
 				mes "for thee my lord for thee.";
 				break;
 			case 2:
 				mes "[" + strcharinfo(0) + "]";
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "And shepherds we shall be,";
 				break;
 			case 3:
@@ -1612,7 +1424,7 @@ prt_monk,251,255,1	script	Touha	79,{
 				break;
 			case 4:
 				mes "[" + strcharinfo(0) + "]";
-				mes "so our feet may swiftly carry";
+				mes "out thy command. And we shall";
 				break;
 			case 5:
 				mes "[" + strcharinfo(0) + "]";
@@ -1624,7 +1436,7 @@ prt_monk,251,255,1	script	Touha	79,{
 				break;
 			case 7:
 				mes "[" + strcharinfo(0) + "]";
-				mes "out thy command. And we shall";
+				mes "so our feet may swiftly carry";
 				break;
 			case 8:
 				mes "[" + strcharinfo(0) + "]";
@@ -1639,7 +1451,7 @@ prt_monk,251,255,1	script	Touha	79,{
 				mes "In nomine Patris, et Filii";
 				break;
 			}
-			switch (select("teeming with souls shall it ever be:flow a river forth to thee and:so our feet may swiftly carry:In nomine Patris, et Filii:et Spiritus Sancti.:Power hath descended forth:And shepherds we shall be,:for thee my lord for thee.:from the hand:out thy command. And we shall")) {
+			switch(select("teeming with souls shall it ever be:flow a river forth to thee and:so our feet may swiftly carry:In nomine Patris, et Filii:et Spiritus Sancti.:Power hath descended forth:And shepherds we shall be,:for thee my lord for thee.:from the hand:out thy command. And we shall")) {
 			case 1: mes "teeming with souls shall it ever be"; break;
 			case 2: mes "flow a river forth to thee and"; break;
 			case 3: mes "so our feet may swiftly carry"; break;
@@ -1648,58 +1460,58 @@ prt_monk,251,255,1	script	Touha	79,{
 			case 6: mes "Power hath descended forth"; break;
 			case 7: mes "And shepherds we shall be,"; break;
 			case 8:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "for thee my lord for thee.";
 				break;
 			case 9: mes "from the hand"; break;
 			case 10: mes "out thy command. And we shall"; break;
 			}
-			switch (select("And shepherds we shall be,:for thee my lord for thee.:Power hath descended forth:from the hand:teeming with souls shall it ever be:et Spiritus Sancti.:In nomine Patris, et Filii:out thy command. And we shall:so our feet may swiftly carry:flow a river forth to thee and")) {
+			switch(select("And shepherds we shall be,:for thee my lord for thee.:Power hath descended forth:from the hand:teeming with souls shall it ever be:et Spiritus Sancti.:In nomine Patris, et Filii:so our feet may swiftly carry:out thy command. And we shall:flow a river forth to thee and")) {
 			case 1: mes "And shepherds we shall be,"; break;
 			case 2: mes "for thee my lord for thee."; break;
 			case 3:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "Power hath descended forth";
 				break;
 			case 4: mes "from the hand"; break;
 			case 5: mes "teeming with souls shall it ever be"; break;
 			case 6: mes "et Spiritus Sancti."; break;
 			case 7: mes "In nomine Patris, et Filii"; break;
-			case 8: mes "out thy command. And we shall"; break;
-			case 9: mes "so our feet may swiftly carry"; break;
+			case 8: mes "so our feet may swiftly carry"; break;
+			case 9: mes "out thy command. And we shall"; break;
 			case 10: mes "flow a river forth to thee and"; break;
 			}
-			switch (select("for thee my lord for thee.:And shepherds we shall be,:Power hath descended forth:out thy command. And we shall:from the hand:flow a river forth to thee and:so our feet may swiftly carry:In nomine Patris, et Filii:teeming with souls shall it ever be:et Spiritus Sancti.")) {
+			switch(select("for thee my lord for thee.:And shepherds we shall be,:Power hath descended forth:so our feet may swiftly carry:from the hand:flow a river forth to thee and:out thy command. And we shall:In nomine Patris, et Filii:teeming with souls shall it ever be:et Spiritus Sancti.")) {
 			case 1: mes "for thee my lord for thee."; break;
 			case 2: mes "And shepherds we shall be,"; break;
 			case 3: mes "Power hath descended forth"; break;
-			case 4: mes "out thy command. And we shall"; break;
+			case 4: mes "so our feet may swiftly carry"; break;
 			case 5:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "from the hand";
 				break;
 			case 6: mes "flow a river forth to thee and"; break;
-			case 7: mes "so our feet may swiftly carry"; break;
+			case 7: mes "out thy command. And we shall"; break;
 			case 8: mes "In nomine Patris, et Filii"; break;
 			case 9: mes "teeming with souls shall it ever be"; break;
 			case 10: mes "et Spiritus Sancti."; break;
 			}
-			switch (select("And shepherds we shall be,:for thee my lord for thee.:Power hath descended forth:so our feet may swiftly carry:from the hand:out thy command. And we shall:flow a river forth to thee and:In nomine Patris, et Filii:teeming with souls shall it ever be:et Spiritus Sancti.")) {
+			switch(select("And shepherds we shall be,:for thee my lord for thee.:Power hath descended forth:so our feet may swiftly carry:from the hand:so our feet may swiftly carry:flow a river forth to thee and:In nomine Patris, et Filii:teeming with souls shall it ever be:et Spiritus Sancti.")) {
 			case 1: mes "And shepherds we shall be,"; break;
 			case 2: mes "for thee my lord for thee."; break;
 			case 3: mes "Power hath descended forth"; break;
 			case 4:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "so our feet may swiftly carry";
 				break;
 			case 5: mes "from the hand"; break;
-			case 6: mes "out thy command. And we shall"; break;
+			case 6: mes "so our feet may swiftly carry"; break;
 			case 7: mes "flow a river forth to thee and"; break;
 			case 8: mes "In nomine Patris, et Filii"; break;
 			case 9: mes "teeming with souls shall it ever be"; break;
 			case 10: mes "et Spiritus Sancti."; break;
 			}
-			switch (select("for thee my lord for thee.:Power hath descended forth:And shepherds we shall be,:from the hand:so our feet may swiftly carry:flow a river forth to thee and:out thy command. And we shall:teeming with souls shall it ever be:In nomine Patris, et Filii:et Spiritus Sancti.")) {
+			switch(select("for thee my lord for thee.:Power hath descended forth:And shepherds we shall be,:from the hand:so our feet may swiftly carry:flow a river forth to thee and:out thy command. And we shall:teeming with souls shall it ever be:In nomine Patris, et Filii:et Spiritus Sancti.")) {
 			case 1: mes "for thee my lord for thee."; break;
 			case 2: mes "Power hath descended forth"; break;
 			case 3: mes "And shepherds we shall be,"; break;
@@ -1707,18 +1519,18 @@ prt_monk,251,255,1	script	Touha	79,{
 			case 5: mes "so our feet may swiftly carry"; break;
 			case 6: mes "flow a river forth to thee and"; break;
 			case 7:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "out thy command. And we shall";
 				break;
 			case 8: mes "teeming with souls shall it ever be"; break;
 			case 9: mes "In nomine Patris, et Filii"; break;
 			case 10: mes "et Spiritus Sancti."; break;
 			}
-			switch (select("for thee my lord for thee.:teeming with souls shall it ever be:flow a river forth to thee and:In nomine Patris, et Filii:et Spiritus Sancti.:Power hath descended forth:And shepherds we shall be,:so our feet may swiftly carry:from the hand:out thy command. And we shall")) {
+			switch(select("for thee my lord for thee.:teeming with souls shall it ever be:flow a river forth to thee and:In nomine Patris, et Filii:et Spiritus Sancti.:Power hath descended forth:And shepherds we shall be,:so our feet may swiftly carry:from the hand:out thy command. And we shall")) {
 			case 1: mes "for thee my lord for thee."; break;
 			case 2: mes "teeming with souls shall it ever be"; break;
 			case 3:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "flow a river forth to thee and";
 				break;
 			case 4: mes "In nomine Patris, et Filii"; break;
@@ -1729,9 +1541,9 @@ prt_monk,251,255,1	script	Touha	79,{
 			case 9: mes "from the hand"; break;
 			case 10: mes "out thy command. And we shall"; break;
 			}
-			switch (select("teeming with souls shall it ever be:In nomine Patris, et Filii:And shepherds we shall be,:for thee my lord for thee.:Power hath descended forth:from the hand:out thy command. And we shall:so our feet may swiftly carry:flow a river forth to thee and:et Spiritus Sancti.")) {
+			switch(select("teeming with souls shall it ever be:In nomine Patris, et Filii:And shepherds we shall be,:for thee my lord for thee.:Power hath descended forth:from the hand:so our feet may swiftly carry:out thy command. And we shall:flow a river forth to thee and:et Spiritus Sancti.")) {
 			case 1:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "teeming with souls shall it ever be";
 				break;
 			case 2: mes "In nomine Patris, et Filii"; break;
@@ -1739,17 +1551,17 @@ prt_monk,251,255,1	script	Touha	79,{
 			case 4: mes "for thee my lord for thee."; break;
 			case 5: mes "Power hath descended forth"; break;
 			case 6: mes "from the hand"; break;
-			case 7: mes "out thy command. And we shall"; break;
-			case 8: mes "so our feet may swiftly carry"; break;
+			case 7: mes "so our feet may swiftly carry"; break;
+			case 8: mes "out thy command. And we shall"; break;
 			case 9: mes "flow a river forth to thee and"; break;
 			case 10: mes "et Spiritus Sancti."; break;
 			}
-			switch (select("Power hath descended forth:for thee my lord for thee.:And shepherds we shall be,:In nomine Patris, et Filii:so our feet may swiftly carry:from the hand:teeming with souls shall it ever be:flow a river forth to thee and:out thy command. And we shall:et Spiritus Sancti.")) {
+			switch(select("Power hath descended forth:for thee my lord for thee.:And shepherds we shall be,:In nomine Patris, et Filii:so our feet may swiftly carry:from the hand:teeming with souls shall it ever be:flow a river forth to thee and:out thy command. And we shall:et Spiritus Sancti.")) {
 			case 1: mes "Power hath descended forth"; break;
 			case 2: mes "for thee my lord for thee."; break;
 			case 3: mes "And shepherds we shall be,"; break;
 			case 4:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "In nomine Patris, et Filii";
 				break;
 			case 5: mes "so our feet may swiftly carry"; break;
@@ -1759,25 +1571,25 @@ prt_monk,251,255,1	script	Touha	79,{
 			case 9: mes "out thy command. And we shall"; break;
 			case 10: mes "et Spiritus Sancti."; break;
 			}
-			switch (select("And shepherds we shall be,:for thee my lord for thee.:Power hath descended forth:from the hand:so our feet may swiftly carry:out thy command. And we shall:flow a river forth to thee and:teeming with souls shall it ever be:In nomine Patris, et Filii:et Spiritus Sancti.")) {
+			switch(select("And shepherds we shall be,:for thee my lord for thee.:Power hath descended forth:from the hand:out thy command. And we shall:so our feet may swiftly carry:flow a river forth to thee and:teeming with souls shall it ever be:In nomine Patris, et Filii:et Spiritus Sancti.")) {
 			case 1: mes "And shepherds we shall be,"; break;
 			case 2: mes "for thee my lord for thee."; break;
 			case 3: mes "Power hath descended forth"; break;
 			case 4: mes "from the hand"; break;
-			case 5: mes "so our feet may swiftly carry"; break;
-			case 6: mes "out thy command. And we shall"; break;
+			case 5: mes "out thy command. And we shall"; break;
+			case 6: mes "so our feet may swiftly carry"; break;
 			case 7: mes "flow a river forth to thee and"; break;
 			case 8: mes "teeming with souls shall it ever be"; break;
 			case 9: mes "In nomine Patris, et Filii"; break;
 			case 10:
-				set @monk_t,@monk_t + 10;
+				set .@monk_t,.@monk_t+10;
 				mes "et Spiritus Sancti.";
 				break;
 			}
 		}
 		next;
 		mes "[Touha]";
-		mes "I can see you really tried this time.";
+		mes "...";
 		next;
 		mes "[Touha]";
 		mes "Hmm...";
@@ -1812,728 +1624,23 @@ prt_monk,251,255,1	script	Touha	79,{
 			mes "Don't forget, his name is ^CC0000Boohae^000000.";
 			close;
 		}
-		mes "[Touha]";
-		mes "I see you did not pay attention.. If you wish to become a monk, you must take this seriously.";
-		next;
-		mes "[Touha]";
-		mes "Perhaps the path of a monk is too difficult for you?";
-		mes "You must take this seriously if you wish to continue...";
-		next;
-		mes "[Touha]";
-		mes "I will give you another chance.";
-		next;
-		mes "[Touha]";
-		mes "If you cannot pay attention and repeat what I ask you to, I will not allow you to continue your training here..";
-		close;
-	}
-	if ((MONK_Q > 10) && (MONK_Q < 14)) {
-		mes "[Touha]";
-		mes "Now, pay attention this time...";
-		if (MONK_Q == 11) {
+		else {
 			mes "[Touha]";
-			mes "I seek the path";
+			mes "I see you did not pay attention.. If you wish to become a monk, you must take this seriously.";
 			next;
 			mes "[Touha]";
-			mes "of enlightenment.";
+			mes "Perhaps the path of a monk is too difficult for you?";
+			mes "You must take this seriously if you wish to continue...";
 			next;
 			mes "[Touha]";
-			mes "We monks";
+			mes "I will give you another chance.";
 			next;
 			mes "[Touha]";
-			mes "shall hold true";
-			next;
-			mes "[Touha]";
-			mes "to what we believe";
-			next;
-			mes "[Touha]";
-			mes "and will help protect others";
-			next;
-			mes "[Touha]";
-			mes "through the teachings";
-			next;
-			mes "[Touha]";
-			mes "we learn through our lives.";
-			next;
-			mes "[Touha]";
-			mes "In nomine Patris, et Filii";
-			next;
-			mes "[Touha]";
-			mes "et Spiritus Sancti.";
-			next;
-			mes "[Touha]";
-			mes "Ok, that is the end.";
-			set @monk_t,0;
-			next;
-			mes "[Touha]";
-			mes "" + strcharinfo(0) + ", your turn.";
-			next;
-			switch (select("shall hold true:We monks:and will help protect others:through the teachings:In nomine Patris, et Filii:to what we believe:I seek the path:we learn through our lives.:et Spiritus Sancti.:of enlightenment.")) {
-			case 1:
-				mes "[" + strcharinfo(0) + "]";
-				mes "shall hold true";
-				break;
-			case 2:
-				mes "[" + strcharinfo(0) + "]";
-				mes "We monks";
-				break;
-			case 3:
-				mes "[" + strcharinfo(0) + "]";
-				mes "and will help protect others";
-				break;
-			case 4:
-				mes "[" + strcharinfo(0) + "]";
-				mes "through the teachings";
-				break;
-			case 5:
-				mes "[" + strcharinfo(0) + "]";
-				mes "In nomine Patris, et Filii";
-				break;
-			case 6:
-				mes "[" + strcharinfo(0) + "]";
-				mes "to what we believe";
-				break;
-			case 7:
-				set @monk_t,@monk_t + 10;
-				mes "[" + strcharinfo(0) + "]";
-				mes "I seek the path";
-				break;
-			case 8:
-				mes "[" + strcharinfo(0) + "]";
-				mes "we learn through our lives.";
-				break;
-			case 9:
-				mes "[" + strcharinfo(0) + "]";
-				mes "et Spiritus Sancti.";
-				break;
-			case 10:
-				mes "[" + strcharinfo(0) + "]";
-				mes "of enlightenment.";
-				break;
-			}
-			switch (select("We monks:In nomine Patris, et Filii:I seek the path:shall hold true:of enlightenment.:and will help protect others:we learn through our lives.:through the teachings:to what we believe:et Spiritus Sancti.")) {
-			case 1: mes "We monks"; break;
-			case 2: mes "In nomine Patris, et Filii"; break;
-			case 3: mes "I seek the path"; break;
-			case 4: mes "shall hold true"; break;
-			case 5:
-				set @monk_t,@monk_t + 10;
-				mes "of enlightenment.";
-				break;
-			case 6: mes "and will help protect others"; break;
-			case 7: mes "we learn through our lives."; break;
-			case 8: mes "through the teachings"; break;
-			case 9: mes "to what we believe"; break;
-			case 10: mes "et Spiritus Sancti."; break;
-			}
-			switch (select("to what we believe:We monks:I seek the path:shall hold true:of enlightenment.:we learn through our lives.:In nomine Patris, et Filii:and will help protect others:through the teachings:et Spiritus Sancti.")) {
-			case 1: mes "to what we believe"; break;
-			case 2:
-				set @monk_t,@monk_t + 10;
-				mes "We monks";
-				break;
-			case 3: mes "I seek the path"; break;
-			case 4: mes "shall hold true"; break;
-			case 5: mes "of enlightenment."; break;
-			case 6: mes "we learn through our lives."; break;
-			case 7: mes "In nomine Patris, et Filii"; break;
-			case 8: mes "and will help protect others"; break;
-			case 9: mes "through the teachings"; break;
-			case 10: mes "et Spiritus Sancti."; break;
-			}
-			switch (select("shall hold true:I seek the path:We monks:In nomine Patris, et Filii:of enlightenment.:et Spiritus Sancti.:to what we believe:we learn through our lives.:and will help protect others:through the teachings")) {
-			case 1:
-				set @monk_t,@monk_t + 10;
-				mes "shall hold true";
-				break;
-			case 2: mes "I seek the path"; break;
-			case 3: mes "We monks"; break;
-			case 4: mes "In nomine Patris, et Filii"; break;
-			case 5: mes "of enlightenment."; break;
-			case 6: mes "et Spiritus Sancti."; break;
-			case 7: mes "to what we believe"; break;
-			case 8: mes "we learn through our lives."; break;
-			case 9: mes "and will help protect others"; break;
-			case 10: mes "through the teachings"; break;
-			}
-			switch (select("of enlightenment.:I seek the path:We monks:shall hold true:and will help protect others:through the teachings:we learn through our lives.:In nomine Patris, et Filii:to what we believe:et Spiritus Sancti.")) {
-			case 1: mes "of enlightenment."; break;
-			case 2: mes "I seek the path"; break;
-			case 3: mes "We monks"; break;
-			case 4: mes "shall hold true"; break;
-			case 5: mes "and will help protect others"; break;
-			case 6: mes "through the teachings"; break;
-			case 7: mes "we learn through our lives."; break;
-			case 8: mes "In nomine Patris, et Filii"; break;
-			case 9:
-				set @monk_t,@monk_t + 10;
-				mes "to what we believe";
-				break;
-			case 10: mes "et Spiritus Sancti."; break;
-			}
-			switch (select("I seek the path:through the teachings:and will help protect others:of enlightenment.:shall hold true:et Spiritus Sancti.:In nomine Patris, et Filii:to what we believe:We monks:we learn through our lives.")) {
-			case 1: mes "I seek the path"; break;
-			case 2: mes "through the teachings"; break;
-			case 3:
-				set @monk_t,@monk_t + 10;
-				mes "and will help protect others";
-				break;
-			case 4: mes "of enlightenment."; break;
-			case 5: mes "shall hold true"; break;
-			case 6: mes "et Spiritus Sancti."; break;
-			case 7: mes "In nomine Patris, et Filii"; break;
-			case 8: mes "to what we believe"; break;
-			case 9: mes "We monks"; break;
-			case 10: mes "we learn through our lives."; break;
-			}
-			switch (select("we learn through our lives.:In nomine Patris, et Filii:et Spiritus Sancti.:I seek the path:of enlightenment.:to what we believe:We monks:shall hold true:and will help protect others:through the teachings")) {
-			case 1: mes "we learn through our lives."; break;
-			case 2: mes "In nomine Patris, et Filii"; break;
-			case 3: mes "et Spiritus Sancti."; break;
-			case 4: mes "I seek the path"; break;
-			case 5: mes "of enlightenment."; break;
-			case 6: mes "to what we believe"; break;
-			case 7: mes "We monks"; break;
-			case 8: mes "shall hold true"; break;
-			case 9: mes "and will help protect others"; break;
-			case 10:
-				set @monk_t,@monk_t + 10;
-				mes "through the teachings";
-				break;
-			}
-			switch (select("we learn through our lives.:In nomine Patris, et Filii:through the teachings:I seek the path:We monks:shall hold true:to what we believe:and will help protect others:of enlightenment.:et Spiritus Sancti.")) {
-			case 1:
-				set @monk_t,@monk_t + 10;
-				mes "we learn through our lives.";
-				break;
-			case 2: mes "In nomine Patris, et Filii"; break;
-			case 3: mes "through the teachings"; break;
-			case 4: mes "I seek the path"; break;
-			case 5: mes "We monks"; break;
-			case 6: mes "shall hold true"; break;
-			case 7: mes "to what we believe"; break;
-			case 8: mes "and will help protect others"; break;
-			case 9: mes "of enlightenment."; break;
-			case 10: mes "et Spiritus Sancti."; break;
-			}
-			switch (select("I seek the path:of enlightenment.:We monks:shall hold true:to what we believe:et Spiritus Sancti.:and will help protect others:through the teachings:we learn through our lives.:In nomine Patris, et Filii")) {
-			case 1: mes "I seek the path"; break;
-			case 2: mes "of enlightenment."; break;
-			case 3: mes "We monks"; break;
-			case 4: mes "shall hold true"; break;
-			case 5: mes "to what we believe"; break;
-			case 6: mes "et Spiritus Sancti."; break;
-			case 7: mes "and will help protect others"; break;
-			case 8: mes "through the teachings"; break;
-			case 9: mes "we learn through our lives."; break;
-			case 10:
-				set @monk_t,@monk_t + 10;
-				mes "In nomine Patris, et Filii";
-				break;
-			}
-			switch (select("I seek the path:of enlightenment.:We monks:shall hold true:to what we believe:and will help protect others:through the teachings:we learn through our lives.:In nomine Patris, et Filii:et Spiritus Sancti.")) {
-			case 1: mes "I seek the path"; break;
-			case 2: mes "of enlightenment."; break;
-			case 3: mes "We monks"; break;
-			case 4: mes "shall hold true"; break;
-			case 5: mes "to what we believe"; break;
-			case 6: mes "and will help protect others"; break;
-			case 7: mes "through the teachings"; break;
-			case 8: mes "we learn through our lives."; break;
-			case 9: mes "In nomine Patris, et Filii"; break;
-			case 10:
-				set @monk_t,@monk_t + 10;
-				mes "et Spiritus Sancti.";
-				break;
-			}
-		}
-		if (MONK_Q == 12) {
-			mes "[Touha]";
-			mes "I commit myself to";
-			next;
-			mes "[Touha]";
-			mes "veritas and aequitas.";
-			next;
-			mes "[Touha]";
-			mes "I will follow my path";
-			next;
-			mes "[Touha]";
-			mes "to enlightenment and purity.";
-			next;
-			mes "[Touha]";
-			mes "I will protect my";
-			next;
-			mes "[Touha]";
-			mes "brothers with my life.";
-			next;
-			mes "[Touha]";
-			mes "Evil shall never be";
-			next;
-			mes "[Touha]";
-			mes "victorious while I breathe.";
-			next;
-			mes "[Touha]";
-			mes "In nomine Patris, et Filii";
-			next;
-			mes "[Touha]";
-			mes "et Spiritus Sancti.";
-			next;
-			mes "[Touha]";
-			mes "That's it... were you paying attention?.";
-			set @monk_t,0;
-			next;
-			mes "[Touha]";
-			mes "" + strcharinfo(0) + ", your turn.";
-			next;
-			switch (select("I will follow my path:veritas and aequitas.:to enlightenment and purity.:I commit myself to:I will protect my:victorious while I breathe.:brothers with my life.:Evil shall never be:In nomine Patris, et Filii:et Spiritus Sancti.")) {
-			case 1:
-				mes "[" + strcharinfo(0) + "]";
-				mes "I will follow my path";
-				break;
-			case 2:
-				mes "[" + strcharinfo(0) + "]";
-				mes "veritas and aequitas.";
-				break;
-			case 3:
-				mes "[" + strcharinfo(0) + "]";
-				mes "to enlightenment and purity.";
-				break;
-			case 4:
-				mes "[" + strcharinfo(0) + "]";
-				set @monk_t,@monk_t + 10;
-				mes "I commit myself to";
-				break;
-			case 5:
-				mes "[" + strcharinfo(0) + "]";
-				mes "I will protect my";
-				break;
-			case 6:
-				mes "[" + strcharinfo(0) + "]";
-				mes "victorious while I breathe.";
-				break;
-			case 7:
-				mes "[" + strcharinfo(0) + "]";
-				mes "brothers with my life.";
-				break;
-			case 8:
-				mes "[" + strcharinfo(0) + "]";
-				mes "Evil shall never be";
-				break;
-			case 9:
-				mes "[" + strcharinfo(0) + "]";
-				mes "In nomine Patris, et Filii";
-				break;
-			case 10:
-				mes "[" + strcharinfo(0) + "]";
-				mes "et Spiritus Sancti.";
-				break;
-			}
-			switch (select("I will follow my path:I will protect my:brothers with my life.:to enlightenment and purity.:Evil shall never be:victorious while I breathe.:et Spiritus Sancti.:I commit myself to:veritas and aequitas.:In nomine Patris, et Filii")) {
-			case 1: mes "I will follow my path"; break;
-			case 2: mes "I will protect my"; break;
-			case 3: mes "brothers with my life."; break;
-			case 4: mes "to enlightenment and purity."; break;
-			case 5: mes "Evil shall never be"; break;
-			case 6: mes "victorious while I breathe."; break;
-			case 7: mes "et Spiritus Sancti."; break;
-			case 8: mes "I commit myself to"; break;
-			case 9:
-				set @monk_t,@monk_t + 10;
-				mes "veritas and aequitas.";
-				break;
-			case 10: mes "In nomine Patris, et Filii"; break;
-			}
-			switch (select("I will follow my path:veritas and aequitas.:I commit myself to:et Spiritus Sancti.:Evil shall never be:to enlightenment and purity.:In nomine Patris, et Filii:I will protect my:brothers with my life.:victorious while I breathe.")) {
-			case 1:
-				set @monk_t,@monk_t + 10;
-				mes "I will follow my path";
-				break;
-			case 2: mes "veritas and aequitas."; break;
-			case 3: mes "I commit myself to"; break;
-			case 4: mes "et Spiritus Sancti."; break;
-			case 5: mes "Evil shall never be"; break;
-			case 6: mes "to enlightenment and purity."; break;
-			case 7: mes "In nomine Patris, et Filii"; break;
-			case 8: mes "I will protect my"; break;
-			case 9: mes "brothers with my life."; break;
-			case 10: mes "victorious while I breathe."; break;
-			}
-			switch (select("veritas and aequitas.:Evil shall never be:I will follow my path:I will protect my:victorious while I breathe.:to enlightenment and purity.:brothers with my life.:In nomine Patris, et Filii:et Spiritus Sancti.:I commit myself to")) {
-			case 1: mes "veritas and aequitas."; break;
-			case 2: mes "Evil shall never be"; break;
-			case 3: mes "I will follow my path"; break;
-			case 4: mes "I will protect my"; break;
-			case 5: mes "victorious while I breathe."; break;
-			case 6:
-				set @monk_t,@monk_t + 10;
-				mes "to enlightenment and purity.";
-				break;
-			case 7: mes "brothers with my life."; break;
-			case 8: mes "In nomine Patris, et Filii"; break;
-			case 9: mes "et Spiritus Sancti."; break;
-			case 10: mes "I commit myself to"; break;
-			}
-			switch (select("victorious while I breathe.:I commit myself to:to enlightenment and purity.:brothers with my life.:Evil shall never be:In nomine Patris, et Filii:et Spiritus Sancti.:I will follow my path:veritas and aequitas.:I will protect my")) {
-			case 1: mes "victorious while I breathe."; break;
-			case 2: mes "I commit myself to"; break;
-			case 3: mes "to enlightenment and purity."; break;
-			case 4: mes "brothers with my life."; break;
-			case 5: mes "Evil shall never be"; break;
-			case 6: mes "In nomine Patris, et Filii"; break;
-			case 7: mes "et Spiritus Sancti."; break;
-			case 8: mes "I will follow my path"; break;
-			case 9: mes "veritas and aequitas."; break;
-			case 10:
-				set @monk_t,@monk_t + 10;
-				mes "I will protect my";
-				break;
-			}
-			switch (select("to enlightenment and purity.:I will follow my path:veritas and aequitas.:I commit myself to:brothers with my life.:I will protect my:victorious while I breathe.:Evil shall never be:et Spiritus Sancti.:In nomine Patris, et Filii")) {
-			case 1:
-				mes "to enlightenment and purity.";
-				break;
-			case 2: mes "I will follow my path"; break;
-			case 3: mes "veritas and aequitas."; break;
-			case 4: mes "I commit myself to"; break;
-			case 5:
-				set @monk_t,@monk_t + 10;
-				mes "brothers with my life.";
-				break;
-			case 6: mes "I will protect my"; break;
-			case 7: mes "victorious while I breathe."; break;
-			case 8: mes "Evil shall never be"; break;
-			case 9: mes "et Spiritus Sancti."; break;
-			case 10: mes "In nomine Patris, et Filii"; break;
-			}
-			switch (select("veritas and aequitas.:Evil shall never be:brothers with my life.:victorious while I breathe.:I will follow my path:to enlightenment and purity.:I will protect my:In nomine Patris, et Filii:et Spiritus Sancti.:I commit myself to")) {
-			case 1: mes "veritas and aequitas."; break;
-			case 2:
-				set @monk_t,@monk_t + 10;
-				mes "Evil shall never be";
-				break;
-			case 3: mes "brothers with my life."; break;
-			case 4: mes "victorious while I breathe."; break;
-			case 5: mes "I will follow my path"; break;
-			case 6: mes "to enlightenment and purity."; break;
-			case 7: mes "I will protect my"; break;
-			case 8: mes "In nomine Patris, et Filii"; break;
-			case 9: mes "et Spiritus Sancti."; break;
-			case 10: mes "I commit myself to"; break;
-			}
-			switch (select("victorious while I breathe.:to enlightenment and purity.:I will protect my:veritas and aequitas.:brothers with my life.:I will follow my path:Evil shall never be:In nomine Patris, et Filii:I commit myself to:et Spiritus Sancti.")) {
-			case 1:
-				set @monk_t,@monk_t + 10;
-				mes "victorious while I breathe.";
-				break;
-			case 2: mes "to enlightenment and purity."; break;
-			case 3: mes "I will protect my"; break;
-			case 4: mes "veritas and aequitas."; break;
-			case 5: mes "brothers with my life."; break;
-			case 6: mes "I will follow my path"; break;
-			case 7: mes "Evil shall never be"; break;
-			case 8: mes "In nomine Patris, et Filii"; break;
-			case 9: mes "I commit myself to"; break;
-			case 10: mes "et Spiritus Sancti."; break;
-			}
-			switch (select("I commit myself to:I will follow my path:veritas and aequitas.:I will protect my:to enlightenment and purity.:brothers with my life.:Evil shall never be:In nomine Patris, et Filii:victorious while I breathe.:et Spiritus Sancti.")) {
-			case 1: mes "I commit myself to"; break;
-			case 2: mes "I will follow my path"; break;
-			case 3: mes "veritas and aequitas."; break;
-			case 4: mes "I will protect my"; break;
-			case 5: mes "to enlightenment and purity."; break;
-			case 6: mes "brothers with my life."; break;
-			case 7: mes "Evil shall never be"; break;
-			case 8:
-				set @monk_t,@monk_t + 10;
-				mes "In nomine Patris, et Filii";
-				break;
-			case 9: mes "victorious while I breathe."; break;
-			case 10: mes "et Spiritus Sancti."; break;
-			}
-			switch (select("I commit myself to:veritas and aequitas.:I will follow my path:to enlightenment and purity.:I will protect my:brothers with my life.:Evil shall never be:victorious while I breathe.:In nomine Patris, et Filii:et Spiritus Sancti.")) {
-			case 1: mes "I commit myself to"; break;
-			case 2: mes "veritas and aequitas."; break;
-			case 3: mes "I will follow my path"; break;
-			case 4: mes "to enlightenment and purity."; break;
-			case 5: mes "I will protect my"; break;
-			case 6: mes "brothers with my life."; break;
-			case 7: mes "Evil shall never be"; break;
-			case 8: mes "victorious while I breathe."; break;
-			case 9: mes "In nomine Patris, et Filii"; break;
-			case 10:
-				set @monk_t,@monk_t + 10;
-				mes "et Spiritus Sancti.";
-				break;
-			}
-		}
-		if (MONK_Q == 13) {
-			mes "[Touha]";
-			mes "And shepherds we shall be,";
-			next;
-			mes "[Touha]";
-			mes "for thee my lord for thee.";
-			next;
-			mes "[Touha]";
-			mes "Power hath descended forth";
-			next;
-			mes "[Touha]";
-			mes "from the hand";
-			next;
-			mes "[Touha]";
-			mes "so our feet may swiftly carry";
-			next;
-			mes "[Touha]";
-			mes "out thy command. And we shall";
-			next;
-			mes "[Touha]";
-			mes "flow a river forth to thee and";
-			next;
-			mes "[Touha]";
-			mes "teeming with souls shall it ever be";
-			next;
-			mes "[Touha]";
-			mes "In nomine Patris, et Filii";
-			next;
-			mes "[Touha]";
-			mes "et Spiritus Sancti.";
-			next;
-			mes "[Touha]";
-			mes "I hope you were paying attention this time. This is a sacred family prayer.";
-			set @monk_t,0;
-			next;
-			mes "[Touha]";
-			mes "Now repeat it " + strcharinfo(0) + ".";
-			next;
-			switch (select("for thee my lord for thee.:And shepherds we shall be,:Power hath descended forth:so our feet may swiftly carry:from the hand:flow a river forth to thee and:out thy command. And we shall:teeming with souls shall it ever be:et Spiritus Sancti.:In nomine Patris, et Filii")) {
-			case 1:
-				mes "[" + strcharinfo(0) + "]";
-				mes "for thee my lord for thee.";
-				break;
-			case 2:
-				mes "[" + strcharinfo(0) + "]";
-				set @monk_t,@monk_t + 10;
-				mes "And shepherds we shall be,";
-				break;
-			case 3:
-				mes "[" + strcharinfo(0) + "]";
-				mes "Power hath descended forth";
-				break;
-			case 4:
-				mes "[" + strcharinfo(0) + "]";
-				mes "so our feet may swiftly carry";
-				break;
-			case 5:
-				mes "[" + strcharinfo(0) + "]";
-				mes "from the hand";
-				break;
-			case 6:
-				mes "[" + strcharinfo(0) + "]";
-				mes "flow a river forth to thee and";
-				break;
-			case 7:
-				mes "[" + strcharinfo(0) + "]";
-				mes "out thy command. And we shall";
-				break;
-			case 8:
-				mes "[" + strcharinfo(0) + "]";
-				mes "teeming with souls shall it ever be";
-				break;
-			case 9:
-				mes "[" + strcharinfo(0) + "]";
-				mes "et Spiritus Sancti.";
-				break;
-			case 10:
-				mes "[" + strcharinfo(0) + "]";
-				mes "In nomine Patris, et Filii";
-				break;
-			}
-			switch (select("teeming with souls shall it ever be:flow a river forth to thee and:so our feet may swiftly carry:In nomine Patris, et Filii:et Spiritus Sancti.:Power hath descended forth:And shepherds we shall be,:for thee my lord for thee.:from the hand:out thy command. And we shall")) {
-			case 1: mes "teeming with souls shall it ever be"; break;
-			case 2: mes "flow a river forth to thee and"; break;
-			case 3: mes "so our feet may swiftly carry"; break;
-			case 4: mes "In nomine Patris, et Filii"; break;
-			case 5: mes "et Spiritus Sancti."; break;
-			case 6: mes "Power hath descended forth"; break;
-			case 7: mes "And shepherds we shall be,"; break;
-			case 8:
-				set @monk_t,@monk_t + 10;
-				mes "for thee my lord for thee.";
-				break;
-			case 9: mes "from the hand"; break;
-			case 10: mes "out thy command. And we shall"; break;
-			}
-			switch (select("And shepherds we shall be,:for thee my lord for thee.:Power hath descended forth:from the hand:teeming with souls shall it ever be:et Spiritus Sancti.:In nomine Patris, et Filii:out thy command. And we shall:so our feet may swiftly carry:flow a river forth to thee and")) {
-			case 1: mes "And shepherds we shall be,"; break;
-			case 2: mes "for thee my lord for thee."; break;
-			case 3:
-				set @monk_t,@monk_t + 10;
-				mes "Power hath descended forth";
-				break;
-			case 4: mes "from the hand"; break;
-			case 5: mes "teeming with souls shall it ever be"; break;
-			case 6: mes "et Spiritus Sancti."; break;
-			case 7: mes "In nomine Patris, et Filii"; break;
-			case 8: mes "out thy command. And we shall"; break;
-			case 9: mes "so our feet may swiftly carry"; break;
-			case 10: mes "flow a river forth to thee and"; break;
-			}
-			switch (select("for thee my lord for thee.:And shepherds we shall be,:Power hath descended forth:out thy command. And we shall:from the hand:flow a river forth to thee and:so our feet may swiftly carry:In nomine Patris, et Filii:teeming with souls shall it ever be:et Spiritus Sancti.")) {
-			case 1: mes "for thee my lord for thee."; break;
-			case 2: mes "And shepherds we shall be,"; break;
-			case 3: mes "Power hath descended forth"; break;
-			case 4: mes "out thy command. And we shall"; break;
-			case 5:
-				set @monk_t,@monk_t + 10;
-				mes "from the hand";
-				break;
-			case 6: mes "flow a river forth to thee and"; break;
-			case 7: mes "so our feet may swiftly carry"; break;
-			case 8: mes "In nomine Patris, et Filii"; break;
-			case 9: mes "teeming with souls shall it ever be"; break;
-			case 10: mes "et Spiritus Sancti."; break;
-			}
-			switch (select("And shepherds we shall be,:for thee my lord for thee.:Power hath descended forth:so our feet may swiftly carry:from the hand:out thy command. And we shall:flow a river forth to thee and:In nomine Patris, et Filii:teeming with souls shall it ever be:et Spiritus Sancti.")) {
-			case 1: mes "And shepherds we shall be,"; break;
-			case 2: mes "for thee my lord for thee."; break;
-			case 3: mes "Power hath descended forth"; break;
-			case 4:
-				set @monk_t,@monk_t + 10;
-				mes "so our feet may swiftly carry";
-				break;
-			case 5: mes "from the hand"; break;
-			case 6: mes "out thy command. And we shall"; break;
-			case 7: mes "flow a river forth to thee and"; break;
-			case 8: mes "In nomine Patris, et Filii"; break;
-			case 9: mes "teeming with souls shall it ever be"; break;
-			case 10: mes "et Spiritus Sancti."; break;
-			}
-			switch (select("for thee my lord for thee.:Power hath descended forth:And shepherds we shall be,:from the hand:so our feet may swiftly carry:flow a river forth to thee and:out thy command. And we shall:teeming with souls shall it ever be:In nomine Patris, et Filii:et Spiritus Sancti.")) {
-			case 1: mes "for thee my lord for thee."; break;
-			case 2: mes "Power hath descended forth"; break;
-			case 3: mes "And shepherds we shall be,"; break;
-			case 4: mes "from the hand"; break;
-			case 5: mes "so our feet may swiftly carry"; break;
-			case 6: mes "flow a river forth to thee and"; break;
-			case 7:
-				set @monk_t,@monk_t + 10;
-				mes "out thy command. And we shall";
-				break;
-			case 8: mes "teeming with souls shall it ever be"; break;
-			case 9: mes "In nomine Patris, et Filii"; break;
-			case 10: mes "et Spiritus Sancti."; break;
-			}
-			switch (select("for thee my lord for thee.:teeming with souls shall it ever be:flow a river forth to thee and:In nomine Patris, et Filii:et Spiritus Sancti.:Power hath descended forth:And shepherds we shall be,:so our feet may swiftly carry:from the hand:out thy command. And we shall")) {
-			case 1: mes "for thee my lord for thee."; break;
-			case 2: mes "teeming with souls shall it ever be"; break;
-			case 3:
-				set @monk_t,@monk_t + 10;
-				mes "flow a river forth to thee and";
-				break;
-			case 4: mes "In nomine Patris, et Filii"; break;
-			case 5: mes "et Spiritus Sancti."; break;
-			case 6: mes "Power hath descended forth"; break;
-			case 7: mes "And shepherds we shall be,"; break;
-			case 8: mes "so our feet may swiftly carry"; break;
-			case 9: mes "from the hand"; break;
-			case 10: mes "out thy command. And we shall"; break;
-			}
-			switch (select("teeming with souls shall it ever be:In nomine Patris, et Filii:And shepherds we shall be,:for thee my lord for thee.:Power hath descended forth:from the hand:out thy command. And we shall:so our feet may swiftly carry:flow a river forth to thee and:et Spiritus Sancti.")) {
-			case 1:
-				set @monk_t,@monk_t + 10;
-				mes "teeming with souls shall it ever be";
-				break;
-			case 2: mes "In nomine Patris, et Filii"; break;
-			case 3: mes "And shepherds we shall be,"; break;
-			case 4: mes "for thee my lord for thee."; break;
-			case 5: mes "Power hath descended forth"; break;
-			case 6: mes "from the hand"; break;
-			case 7: mes "out thy command. And we shall"; break;
-			case 8: mes "so our feet may swiftly carry"; break;
-			case 9: mes "flow a river forth to thee and"; break;
-			case 10: mes "et Spiritus Sancti."; break;
-			}
-			switch (select("Power hath descended forth:for thee my lord for thee.:And shepherds we shall be,:In nomine Patris, et Filii:so our feet may swiftly carry:from the hand:teeming with souls shall it ever be:flow a river forth to thee and:out thy command. And we shall:et Spiritus Sancti.")) {
-			case 1: mes "Power hath descended forth"; break;
-			case 2: mes "for thee my lord for thee."; break;
-			case 3: mes "And shepherds we shall be,"; break;
-			case 4:
-				set @monk_t,@monk_t + 10;
-				mes "In nomine Patris, et Filii";
-				break;
-			case 5: mes "so our feet may swiftly carry"; break;
-			case 6: mes "from the hand"; break;
-			case 7: mes "teeming with souls shall it ever be"; break;
-			case 8: mes "flow a river forth to thee and"; break;
-			case 9: mes "out thy command. And we shall"; break;
-			case 10: mes "et Spiritus Sancti."; break;
-			}
-			switch (select("And shepherds we shall be,:for thee my lord for thee.:Power hath descended forth:from the hand:so our feet may swiftly carry:out thy command. And we shall:flow a river forth to thee and:teeming with souls shall it ever be:In nomine Patris, et Filii:et Spiritus Sancti.")) {
-			case 1: mes "And shepherds we shall be,"; break;
-			case 2: mes "for thee my lord for thee."; break;
-			case 3: mes "Power hath descended forth"; break;
-			case 4: mes "from the hand"; break;
-			case 5: mes "so our feet may swiftly carry"; break;
-			case 6: mes "out thy command. And we shall"; break;
-			case 7: mes "flow a river forth to thee and"; break;
-			case 8: mes "teeming with souls shall it ever be"; break;
-			case 9: mes "In nomine Patris, et Filii"; break;
-			case 10:
-				set @monk_t,@monk_t + 10;
-				mes "et Spiritus Sancti.";
-				break;
-			}
-		}
-		next;
-		mes "[Touha]";
-		mes "I can see you really tried this time.";
-		next;
-		mes "[Touha]";
-		mes "Hmm...";
-		next;
-		if (.@monk_t > 90) {
-			set MONK_Q,14;
-			changequest 3025,3026;
-			mes "[Touha]";
-			mes "...well done, that was perfect. You pay attention well...";
-			next;
-			mes "[Touha]";
-			mes "However, now is not the time to relax. Your path is still long ahead of you.";
-			next;
-			mes "[Touha]";
-			mes "Now as I promised, I will help strengthen your body.";
-			next;
-			mes "Focus your mind and do not move.";
-			next;
-			mes "^33CCFFYou feel wind all around your body.^000000";
-			next;
-			mes "^33CCFFAn energy within you grows.^000000";
-			next;
-			mes "[Touha]";
-			mes "I feel what grows within you.";
-			mes "You may now continue on...";
-			next;
-			mes "[Touha]";
-			mes "...the next course will be with Boohae.";
-			next;
-			mes "[Touha]";
-			mes "I wish you well on your journey.";
-			mes "Don't forget, his name is ^CC0000Boohae^000000.";
+			mes "If you cannot pay attention and repeat what I ask you to, I will not allow you to continue your training here..";
 			close;
 		}
-		mes "[Touha]";
-		mes "I see you did not pay attention.. If you wish to become a monk, you must take this seriously.";
-		next;
-		mes "[Touha]";
-		mes "Perhaps the path of a monk is too difficult for you?";
-		mes "You must take this seriously if you wish to continue...";
-		next;
-		mes "[Touha]";
-		mes "I will give you yet another chance.";
-		next;
-		mes "[Touha]";
-		mes "If you cannot pay attention and repeat what I ask you to, I will not allow you to continue your training here..";
-		close;
 	}
-	if (MONK_Q == 14) {
+	else if (MONK_Q == 14) {
 		mes "[Touha]";
 		mes "Hmm... did you forget who to visit?";
 		next;
@@ -2548,33 +1655,35 @@ prt_monk,251,255,1	script	Touha	79,{
 		mes "... go visit Boohae.";
 		close;
 	}
-	if ((MONK_Q > 14) && (Class == Job_Baby_Acolyte || Class == Job_Acolyte)) {
+	else if (MONK_Q > 14 && BaseJob == Job_Acolyte) {
 		mes "[Touha]";
 		mes "...do your best for the final test.";
 		close;
 	}
-	mes "[Touha]";
-	mes "Never shall innocent blood be shed.";
-	next;
-	mes "[Touha]";
-	mes "Yet the blood of the wicked shall flow like a river.";
-	next;
-	mes "[Touha]";
-	mes "We shall spread our blackened wings and be the vengeful striking hammer of god.";
-	next;
-	mes "[Touha]";
-	mes "We shall flow a river forth to thee, and teeming with souls shall it ever be.";
-	next;
-	mes "[Touha]";
-	mes "In nomine Patris, et Filii, et Spiritus Sancti.";
-	next;
-	mes "[Touha]";
-	mes "...You don't have to be afraid of me...";
-	close;
+	else {
+		mes "[Touha]";
+		mes "Never shall innocent blood be shed.";
+		next;
+		mes "[Touha]";
+		mes "Yet the blood of the wicked shall flow like a river.";
+		next;
+		mes "[Touha]";
+		mes "We shall spread our blackened wings and be the vengeful striking hammer of god.";
+		next;
+		mes "[Touha]";
+		mes "We shall flow a river forth to thee, and teeming with souls shall it ever be.";
+		next;
+		mes "[Touha]";
+		mes "In nomine Patris, et Filii, et Spiritus Sancti.";
+		next;
+		mes "[Touha]";
+		mes "...You don't have to be afraid of me...";
+		close;
+	}
 }
 
-prt_monk,57,179,1	script	Boohae	110,{
-	if ((MONK_Q == 14) && (Class == Job_Baby_Acolyte || Class == Job_Acolyte)) {
+prt_monk,57,179,1	script	Boohae#mk	110,{
+	if (MONK_Q == 14 && BaseJob == Job_Acolyte) {
 		mes "[Boohae]";
 		mes "...";
 		next;
@@ -2619,7 +1728,7 @@ prt_monk,57,179,1	script	Boohae	110,{
 		mes "[Boohae]";
 		mes "What did you do with Touha?";
 		next;
-		switch (select("Umm... well...ah..:We recited a holy pledge.:He diagnosed my physical status.")) {
+		switch(select("Umm... well...ah..:We recited a holy pledge.:He diagnosed my physical status.")) {
 		case 1:
 			mes "[Boohae]";
 			mes "You are not ready if you";
@@ -2631,7 +1740,7 @@ prt_monk,57,179,1	script	Boohae	110,{
 			mes "... I see...";
 			mes "Didn't he do anything for you?";
 			next;
-			switch (select("Umm... well...ah..:He diagnosed my physical status.:He taught me about being a monk.:He modified my body.")) {
+			switch(select("Umm... well...ah..:He diagnosed my physical status.:He taught me about being a monk.:He modified my body.")) {
 			case 1:
 				mes "[Boohae]";
 				mes "You are not ready if you";
@@ -2653,7 +1762,9 @@ prt_monk,57,179,1	script	Boohae	110,{
 				mes "Very well, you seem to realize your body has something new inside.";
 				mes "Well then, we shall move on to the next step...";
 				next;
+				break;
 			}
+			break;
 		case 3:
 			mes "[Boohae]";
 			mes "...You interrupted me to tell me that...?";
@@ -2721,18 +1832,20 @@ prt_monk,57,179,1	script	Boohae	110,{
 		mes "'Tomoon' is staying in a deepest place inside a building near this abbey.";
 		close;
 	}
-	if ((MONK_Q > 17) && (MONK_Q < 24)) {
+	if (MONK_Q > 17 && MONK_Q < 24) {
 		mes "[Boohae]";
 		mes "...........";
 		next;
 		mes "-He seems to be in meditation.-";
 		close;
 	}
-	mes "[Boohae]";
-	mes "Hmmmm....!!";
-	next;
-	mes "-He seems to be in meditation.-";
-	close;
+	else {
+		mes "[Boohae]";
+		mes "Hmmmm....!!";
+		next;
+		mes "-He seems to be in meditation.-";
+		close;
+	}
 }
 
 prt_monk,199,169,3	script	Door Keeper#mk	746,{
@@ -2748,7 +1861,7 @@ prt_monk,199,169,3	script	Door Keeper#mk	746,{
 		mes "Boohae... tends to hide in some quite places, so you might not be able to find him. For instance... a corner...";
 		close;
 	}
-	if ((MONK_Q > 14) && (MONK_Q < 25)) {
+	else if (MONK_Q > 14 && MONK_Q < 25) {
 		mes "[Keeper Chorip]";
 		mes "Is your name " + strcharinfo(0) + "?";
 		next;
@@ -2761,15 +1874,15 @@ prt_monk,199,169,3	script	Door Keeper#mk	746,{
 		mes "Yeah right, I know who you are... get in there... your test is ready.";
 		close;
 	}
-	mes "[Keeper Chorip]";
-	mes "...please be quiet inside.";
-	close;
+	else {
+		mes "[Keeper Chorip]";
+		mes "...please be quiet inside.";
+		close;
+	}
 }
 
-prt_monk,192,172,0	warp	monktotest	1,1,monk_test,329,50
-
-monk_test,329,61,3	script	Bashu	753,{
-	if ((MONK_Q > 14) && (MONK_Q < 25)) {
+monk_test,329,61,3	script	Bashu#mk	753,{
+	if (MONK_Q > 14 && MONK_Q < 25) {
 		if (MONK_Q == 15) {
 			mes "[Bashu]";
 			mes "So, which test do you want to do...?";
@@ -2778,7 +1891,7 @@ monk_test,329,61,3	script	Bashu	753,{
 			mes "From what I've heard, you chose the mushroom test...";
 			mes "Oh well, it's still your choice.";
 		}
-		if (MONK_Q == 16) {
+		else if (MONK_Q == 16) {
 			mes "[Bashu]";
 			mes "Which test hall do you wish to enter?";
 			next;
@@ -2790,12 +1903,13 @@ monk_test,329,61,3	script	Bashu	753,{
 			mes "[Bashu]";
 			mes "Which test hall do you wish to enter?";
 			mes "You can choose which one you want.";
+			next;
 		}
 		next;
 		if (select("Tolerance - Gathering Mushrooms:Self-Control - Marathon") == 1) {
 			mes "You have decided to take the test of tolerance by ^FF0000gathering mushrooms^000000.";
 			close2;
-			warp "MONK_Q",226,175;
+			warp "job_monk",226,175;
 			end;
 		}
 		mes "You have decided to take the test of self control by taking a ^FF0000marathon^000000.";
@@ -2803,20 +1917,22 @@ monk_test,329,61,3	script	Bashu	753,{
 		warp "monk_test",386,387;
 		end;
 	}
-	mes "[Bashu]";
-	mes "Welcome... this place is a training place for monks, Saint Capitolina Abbey.";
-	mes "When you go inside....you will meet Tomoon the oldest monk who succeeds to the predecessors,";
-	next;
-	mes "[Bashu]";
-	mes "Please be advised and do not touch anything.";
-	mes "And please avoid talking loud in front of Tomoon.";
-	next;
-	mes "[Bashu]";
-	mes "I hope you will have a great time in here.";
-	close;
+	else {
+		mes "[Bashu]";
+		mes "Welcome... this place is a training place for monks, Saint Capitolina Abbey.";
+		mes "When you go inside....you will meet Tomoon the oldest monk who succeeds to the predecessors,";
+		next;
+		mes "[Bashu]";
+		mes "Please be advised and do not touch anything.";
+		mes "And please avoid talking loud in front of Tomoon.";
+		next;
+		mes "[Bashu]";
+		mes "I hope you will have a great time in here.";
+		close;
+	}
 }
 
-monk_test,386,388,4	script	Apprentice Monk	110,{
+monk_test,386,388,4	script	Apprentice Monk#mk	110,{
 	mes "[Monk Apprentice]";
 	mes "W... welcome!";
 	mes "Th... this place is for testing the tolerance of monk candidates!";
@@ -2838,9 +1954,10 @@ monk_test,386,388,4	script	Apprentice Monk	110,{
 	if (select("Quit.:Keep running.") == 1) {
 		mes "[Monk Apprentice]";
 		mes "" + strcharinfo(0) + "...q.q..q. .quit! ...the marathon!! Y...you do not have what it takes to be a m... monk!";
+		mapannounce "monk_test","" + strcharinfo(0) + "...q.q..q. .quit! ...the marathon!! Y...you do not have what it takes to be a m... monk!",bc_map;
 		close2;
 		set MONK_Q,15;
-		mapannounce "monk_test","" + strcharinfo(0) + "...q.q..q. .quit! ...the marathon!! Y...you do not have what it takes to be a m... monk!",bc_map;
+		changequest 3028,3027;
 		warp "prt_monk",194,168;
 		end;
 	}
@@ -2851,134 +1968,86 @@ monk_test,386,388,4	script	Apprentice Monk	110,{
 }
 
 monk_test,387,350,0	script	Supervisor#race_monk	45,2,2,{
-	end;
-
 OnTouch:
-	if (MONK_Q == 15) {
-		set MONK_Q,16;
+	if (MONK_Q >= 15 && MONK_Q <= 23) {
+		set MONK_Q,MONK_Q+1;
 		warp "monk_test",385,388;
 		end;
 	}
-	if (MONK_Q == 16) {
-		set MONK_Q,17;
-		warp "monk_test",385,388;
-		end;
-	}
-	if (MONK_Q == 17) {
-		set MONK_Q,18;
-		warp "monk_test",385,388;
-		end;
-	}
-	if (MONK_Q == 18) {
-		set MONK_Q,19;
-		warp "monk_test",385,388;
-		end;
-	}
-	if (MONK_Q == 19) {
-		set MONK_Q,20;
-		warp "monk_test",385,388;
-		end;
-	}
-	if (MONK_Q == 20) {
-		set MONK_Q,21;
-		warp "monk_test",385,388;
-		end;
-	}
-	if (MONK_Q == 21) {
-		set MONK_Q,22;
-		warp "monk_test",385,388;
-		end;
-	}
-	if (MONK_Q == 22) {
-		set MONK_Q,23;
-		warp "monk_test",385,388;
-		end;
-	}
-	if (MONK_Q == 23) {
-		set MONK_Q,24;
-		warp "monk_test",385,388;
-		end;
-	}
-	if (MONK_Q == 24) {
+	else if (MONK_Q == 24) {
 		set MONK_Q,25;
+		changequest 3028,3029;
 		mapannounce "monk_test","Now! This is the last lap!! If you make it you need to go visit Tomoon for the next test!",bc_map;
 		warp "monk_test",385,388;
 		end;
 	}
-	if (MONK_Q == 25) {
+	else if (MONK_Q == 25) {
 		mes "[Supervisor]";
 		mes "Now...you may go visit Tomoon.";
 		mes "Tomoon is in the deepest room inside a building near this abbey.";
-		mapannounce "monk_test","Congratulations! " + strcharinfo(0) + "!! You completed the marathon!",bc_map;
-		changequest 3028,3029;
+		mapannounce "monk_test","Congratulations!" + strcharinfo(0) +"!! You completed the marathon!",bc_map;
 		close2;
 		warp "prt_monk",194,168;
 		end;
 	}
-	end;
 }
 
--	script	Trap#t_monk1::MonkTrap	-1,{
-	end;
-
+monk_test,82,384,0	script	Trap#t_monk1_1::MonkTrap	-1,{
 OnTouch:
-	mapannounce "monk_test","" + strcharinfo(0) + ", you're trapped. You will be returned.",bc_map;
+	mapannounce "monk_test",""+ strcharinfo(0) + ", you're trapped. You will be returned.",bc_map;
 	warp "monk_test",387,387;
 	end;
 }
 
-monk_test,82,384,0	duplicate(MonkTrap)	Trap#t_monk1_1	139
-monk_test,83,384,0	duplicate(MonkTrap)	Trap#t_monk1_2	139
-monk_test,82,385,0	duplicate(MonkTrap)	Trap#t_monk1_3	139
-monk_test,83,385,0	duplicate(MonkTrap)	Trap#t_monk1_4	139
-monk_test,38,388,0	duplicate(MonkTrap)	Trap#t_monk2_1	139,0,1
-monk_test,39,388,0	duplicate(MonkTrap)	Trap#t_monk2_2	139,0,1
-monk_test,38,386,0	duplicate(MonkTrap)	Trap#t_monk2_3	139
-monk_test,39,386,0	duplicate(MonkTrap)	Trap#t_monk2_4	139
-monk_test,11,158,0	duplicate(MonkTrap)	Trap#t_monk3_1	139,1,0
-monk_test,11,159,0	duplicate(MonkTrap)	Trap#t_monk3_2	139,1,0
-monk_test,13,159,0	duplicate(MonkTrap)	Trap#t_monk3_3	139
-monk_test,13,158,0	duplicate(MonkTrap)	Trap#t_monk3_4	139
-monk_test,11,30,0	duplicate(MonkTrap)	Trap#t_monk4_1	139,3,0
-monk_test,11,31,0	duplicate(MonkTrap)	Trap#t_monk4_2	139,3,0
-monk_test,15,30,0	duplicate(MonkTrap)	Trap#t_monk4_3	139
-monk_test,15,31,0	duplicate(MonkTrap)	Trap#t_monk4_4	139
-monk_test,70,12,0	duplicate(MonkTrap)	Trap#t_monk5_1	139,0,1
-monk_test,71,12,0	duplicate(MonkTrap)	Trap#t_monk5_2	139,0,1
-monk_test,70,10,0	duplicate(MonkTrap)	Trap#t_monk5_3	139
-monk_test,71,10,0	duplicate(MonkTrap)	Trap#t_monk5_4	139
-monk_test,186,11,0	duplicate(MonkTrap)	Trap#t_monk6_1	139,2,3
-monk_test,189,11,0	duplicate(MonkTrap)	Trap#t_monk6_2	139,0,3
-monk_test,387,43,0	duplicate(MonkTrap)	Trap#t_monk7_1	139,1,0
-monk_test,387,42,0	duplicate(MonkTrap)	Trap#t_monk7_2	139,1,0
-monk_test,389,43,0	duplicate(MonkTrap)	Trap#t_monk7_3	139
-monk_test,389,42,0	duplicate(MonkTrap)	Trap#t_monk7_4	139
+monk_test,83,384,0	duplicate(MonkTrap)	Trap#t_monk1_2	-1
+monk_test,82,385,0	duplicate(MonkTrap)	Trap#t_monk1_3	-1
+monk_test,83,385,0	duplicate(MonkTrap)	Trap#t_monk1_4	-1
+monk_test,38,388,0	duplicate(MonkTrap)	Trap#t_monk2_1	-1,0,1
+monk_test,39,388,0	duplicate(MonkTrap)	Trap#t_monk2_2	-1,0,1
+monk_test,38,386,0	duplicate(MonkTrap)	Trap#t_monk2_3	-1
+monk_test,39,386,0	duplicate(MonkTrap)	Trap#t_monk2_4	-1
+monk_test,11,158,0	duplicate(MonkTrap)	Trap#t_monk3_1	-1,1,0
+monk_test,11,159,0	duplicate(MonkTrap)	Trap#t_monk3_2	-1,1,0
+monk_test,13,159,0	duplicate(MonkTrap)	Trap#t_monk3_3	-1
+monk_test,13,158,0	duplicate(MonkTrap)	Trap#t_monk3_4	-1
+monk_test,11,30,0	duplicate(MonkTrap)	Trap#t_monk4_1	-1,3,0
+monk_test,11,31,0	duplicate(MonkTrap)	Trap#t_monk4_2	-1,3,0
+monk_test,15,30,0	duplicate(MonkTrap)	Trap#t_monk4_3	-1
+monk_test,15,31,0	duplicate(MonkTrap)	Trap#t_monk4_4	-1
+monk_test,70,12,0	duplicate(MonkTrap)	Trap#t_monk5_1	-1,0,1
+monk_test,71,12,0	duplicate(MonkTrap)	Trap#t_monk5_2	-1,0,1
+monk_test,70,10,0	duplicate(MonkTrap)	Trap#t_monk5_3	-1
+monk_test,71,10,0	duplicate(MonkTrap)	Trap#t_monk5_4	-1
+monk_test,186,11,0	duplicate(MonkTrap)	Trap#t_monk6_1	-1,2,3
+monk_test,189,11,0	duplicate(MonkTrap)	Trap#t_monk6_2	-1,0,3
+monk_test,387,43,0	duplicate(MonkTrap)	Trap#t_monk7_1	-1,1,0
+monk_test,387,42,0	duplicate(MonkTrap)	Trap#t_monk7_2	-1,1,0
+monk_test,389,43,0	duplicate(MonkTrap)	Trap#t_monk7_3	-1
+monk_test,389,42,0	duplicate(MonkTrap)	Trap#t_monk7_4	-1
 
-job_monk,0,0,0	monster	Thief Mushroom	1182,70,0,0,0
-job_monk,0,0,0	monster	Thief Bug	1051,20,0,0,0
-
-job_monk,225,180,1	script	Hyunmoo	89,{
-	if ((countitem(1069) > 0 || countitem(1070) > 0) && ((countitem(1069) < 30) && (countitem(1070) < 30))) {
+job_monk,225,180,1	script	Hyunmoo#mk	89,{
+	if ((countitem(1069) > 0 || countitem(1070) > 0) && (countitem(1069) < 30 || countitem(1070) < 30)) {
 		mes "[Hyunmoo]";
 		mes "You didn't bring enough mushrooms... go get some more.";
 		next;
 		mes "[Hyunmoo]";
 		mes "Or is it you want to quit... do you want to quit?";
 		next;
-		switch (select("No.:Yes.") == 1) {
+		switch(select("No.:Yes.") == 1) {
 			mes "[Hyunmoo]";
 			mes "Then move!";
 			close;
 		}
 		mes "[Hyunmoo]";
 		mes ".....I figured as much....you don't have a spirit.";
+		mapannounce "job_monk","" + strcharinfo(0) + ", has quit his testing to become a monk.",bc_map;
 		close2;
 		set MONK_Q,16;
-		mapannounce "job_monk","" + strcharinfo(0) + ", has quit his testing to become a monk.",bc_map;
+		changequest 3027,3028;
 		warp "prt_monk",194,168;
 		end;
 	}
-	if ((MONK_Q > 14) && (MONK_Q < 25) && ((countitem(1069) == 0) || (countitem(1070) == 0))) {
+	else if (MONK_Q > 14 && MONK_Q < 25 && (countitem(1069) == 0 || countitem(1070)  == 0)) {
 		mes "[Hyunmoo]";
 		mes "Nice to meet you. My name is Hyunmoo. I am in charge of the mushroom test.";
 		next;
@@ -3017,13 +2086,14 @@ job_monk,225,180,1	script	Hyunmoo	89,{
 		mapannounce "job_monk","" + strcharinfo(0) + ", has quit his testing to become a monk.",bc_map;
 		delitem 1069,countitem(1069); //Mushroom_Of_Thief_1
 		delitem 1070,countitem(1070); //Mushroom_Of_Thief_2
-		set MONK_Q,16;
 		close2;
 		mapannounce "job_monk","" + strcharinfo(0) + ", has quit his training to become a monk.",bc_map;
 		warp "prt_monk",194,168;
+		set MONK_Q,16;
+		changequest 3027,3028;
 		end;
 	}
-	if ((MONK_Q > 14) && (MONK_Q < 25) && (countitem(1069) > 29 || countitem(1070) > 29)) {
+	else if (MONK_Q > 14 && MONK_Q < 25 && (countitem(1069) > 29 || countitem(1070) > 29)) {
 		mes "[Hyunmoo]";
 		mes "...hmm... not bad.";
 		mes "Ok, you passed.";
@@ -3039,7 +2109,7 @@ job_monk,225,180,1	script	Hyunmoo	89,{
 		warp "prt_monk",194,168;
 		end;
 	}
-	if (MONK_Q > 24) {
+	else if (MONK_Q > 24) {
 		mes "[Hyunmoo]";
 		mes "Didn't I tell you to go meet ^FF0000Tomoon^000000? Or do you want to pick some more mushrooms?";
 		mes "Tomoon is staying in the deepest room inside a building near this abbey.";
@@ -3047,7 +2117,7 @@ job_monk,225,180,1	script	Hyunmoo	89,{
 	}
 }
 
-prt_monk,225,180,1	script	Hyunmoo#2	89,{
+prt_monk,225,180,1	script	Hyunmoo#mk2	89,{
 	if (MONK_Q < 25) {
 		mes "[Hyunmoo]";
 		mes "As I see vegetables growing, I feel myself growing within.";
@@ -3064,29 +2134,31 @@ prt_monk,225,180,1	script	Hyunmoo#2	89,{
 		mes "Don't forget to thank them as you go by for their hard work.";
 		close;
 	}
-	if ((MONK_Q > 24) && (Class == Job_Acolyte)) {
+	else if (MONK_Q > 24 && BaseJob == Job_Acolyte) {
 		mes "[Hyunmoo]";
 		mes "Didn't I tell you to go meet Tomoon? Or do you want to pick more mushrooms?";
 		mes "Tomoon is staying in the deepest room inside a building near this abbey.";
 		close;
 	}
-	mes "[Hyunmoo]";
-	mes "As I see vegetables growing, I feel myself growing within.";
-	next;
-	mes "[Hyunmoo]";
-	mes "As I see other monks working hard on growing vegetables,";
-	mes "it warms my heart to see others enjoying gardening as I do.";
-	next;
-	mes "[Hyunmoo]";
-	mes "To be honest with you, I think gardening is the greatest thing ever...";
-	mes "We should give thanks to the brothers who prepare our food for us through their hard work.";
-	next;
-	mes "[Hyunmoo]";
-	mes "Don't forget to thank them as you go by for their hard work.";
-	close;
+	else {
+		mes "[Hyunmoo]";
+		mes "As I see vegetables growing, I feel myself growing within.";
+		next;
+		mes "[Hyunmoo]";
+		mes "As I see other monks working hard on growing vegetables,";
+		mes "it warms my heart to see others enjoying gardening as I do.";
+		next;
+		mes "[Hyunmoo]";
+		mes "To be honest with you, I think gardening is the greatest thing ever...";
+		mes "We should give thanks to the brothers who prepare our food for us through their hard work.";
+		next;
+		mes "[Hyunmoo]";
+		mes "Don't forget to thank them as you go by for their hard work.";
+		close;
+	}
 }
 
-monk_test,319,139,1	script	Tomoon	52,{
+monk_test,319,139,1	script	Tomoon#mk	52,{
 	if (MONK_Q == 25) {
 		mes "[Tomoon]";
 		mes "Welcome young one.";
@@ -3116,7 +2188,7 @@ monk_test,319,139,1	script	Tomoon	52,{
 		warp "monk_test",88,74;
 		end;
 	}
-	if (MONK_Q == 26) {
+	else if (MONK_Q == 26) {
 		mes "[Tomoon]";
 		mes "Hmm... you failed?";
 		mes "Cheer up! Failure is but a process to success!";
@@ -3125,7 +2197,7 @@ monk_test,319,139,1	script	Tomoon	52,{
 		warp "monk_test",88,74;
 		end;
 	}
-	if (MONK_Q == 27) {
+	else if (MONK_Q == 27) {
 		mes "[Tomoon]";
 		mes "Excellent job!!";
 		mes "I knew you'd make it through!";
@@ -3138,28 +2210,30 @@ monk_test,319,139,1	script	Tomoon	52,{
 		changequest 3031,3032;
 		close;
 	}
-	if (MONK_Q == 28) {
+	else if (MONK_Q == 28) {
 		mes "[Tomoon]";
 		mes "I already told you, go back to sensei Moohae!!!";
 		close;
 	}
-	mes "[Tomoon]";
-	mes "....be quiet.";
-	mes ".....";
-	next;
-	mes "[Tomoon]";
-	mes "I will not allow anyone to cause any trouble in this abbey.";
-	next;
-	mes "[Tomoon]";
-	mes "You'd better not be thinking about causing any trouble.";
-	close2;
+	else {
+		mes "[Tomoon]";
+		mes "....be quiet.";
+		mes ".....";
+		next;
+		mes "[Tomoon]";
+		mes "I will not allow anyone to cause any trouble in this abbey.";
+		next;
+		mes "[Tomoon]";
+		mes "You'd better not be thinking about causing any trouble.";
+		close;
+	}
 }
 
-monk_test,82,85,1	script	Proctor	95,{
+monk_test,82,85,1	script	Proctor#mk	95,{
 	mes "[Proctor]";
 	mes "So, are you ready to undergo the spiritual training?";
 	next;
-	switch (select("Yes!:No.:What do I have to do?")) {
+	switch(select("Yes!:No.:What do I have to do?")) {
 	case 1:
 		mes "[Proctor]";
 		mes "Alright! I wish you luck. If you get lost and can't find a way out, simply log out and log back in.";
@@ -3187,9 +2261,7 @@ monk_test,82,85,1	script	Proctor	95,{
 	}
 }
 
-monk_test,144,277,0	script	mob_monk#1_1	139,1,1,{
-	end;
-
+monk_test,144,277,0	script	mob_monk#1_1	-1,1,1,{
 OnTouch:
 	monster "monk_test",144,277,"Zombie",1015,1;
 	monster "monk_test",144,277,"Zombie",1015,1;
@@ -3197,14 +2269,12 @@ OnTouch:
 	monster "monk_test",144,277,"Zombie",1015,1;
 	end;
 
-OnReset:
-	killmonster "monk_test","mob_monk#1_1::OnMyMobDead";
+OnDisable:
+	killmonsterall "monk_test";
 	end;
 }
 
-monk_test,134,291,0	script	mob_monk#1_2	139,1,1,{
-	end;
-
+monk_test,134,291,0	script	mob_monk#1_2	-1,1,1,{
 OnTouch:
 	monster "monk_test",134,291,"Zombie",1015,1;
 	monster "monk_test",134,291,"Zombie",1015,1;
@@ -3212,38 +2282,32 @@ OnTouch:
 	monster "monk_test",134,291,"Zombie",1015,1;
 	end;
 
-OnReset:
-	killmonster "monk_test","mob_monk#1_2::OnMyMobDead";
+OnDisable:
+	killmonsterall "monk_test";
 	end;
 }
 
-monk_test,157,284,0	script	mob_monk#1_3	139,1,1,{
-	end;
-
+monk_test,157,284,0	script	mob_monk#1_3	-1,1,1,{
 OnTouch:
 	monster "monk_test",157,284,"Mummy",1041,1;
 	end;
 
-OnReset:
-	killmonster "monk_test","mob_monk#1_3::OnMyMobDead";
+OnDisable:
+	killmonsterall "monk_test";
 	end;
 }
 
-monk_test,156,261,0	script	mob_monk#1_4	139,1,1,{
-	end;
-
+monk_test,156,261,0	script	mob_monk#1_4	-1,1,1,{
 OnTouch:
 	monster "monk_test",156,261,"Mummy",1041,1;
 	end;
 
-OnReset:
-	killmonster "monk_test","mob_monk#1_4::OnMyMobDead";
+OnDisable:
+	killmonsterall "monk_test";
 	end;
 }
 
-monk_test,149,268,0	script	mob_monk#1_5	139,1,1,{
-	end;
-
+monk_test,149,268,0	script	mob_monk#1_5	-1,1,1,{
 OnTouch:
 	monster "monk_test",149,268,"Zombie",1015,1;
 	monster "monk_test",149,268,"Zombie",1015,1;
@@ -3252,33 +2316,31 @@ OnTouch:
 	monster "monk_test",149,268,"Zombie",1015,1;
 	end;
 
-OnReset:
-	killmonster "monk_test","mob_monk#1_5::OnMyMobDead";
+OnDisable:
+	killmonsterall "monk_test";
 	end;
 }
 
 monk_test,166,278,0	script	exit_monk#1	45,1,1,{
-	end;
-
 OnTouch:
 	mes "[Proctor]";
 	mes "You did well. Please return to Tomoon, he's waiting for you.";
 	set MONK_Q,27;
-	donpcevent "mob_monk#1_5::OnReset";
-	donpcevent "mob_monk#1_4::OnReset";
-	donpcevent "mob_monk#1_3::OnReset";
-	donpcevent "mob_monk#1_2::OnReset";
-	donpcevent "mob_monk#1_1::OnReset";
+	donpcevent "mob_monk#1_5::OnDisable";
+	donpcevent "mob_monk#1_4::OnDisable";
+	donpcevent "mob_monk#1_3::OnDisable";
+	donpcevent "mob_monk#1_2::OnDisable";
+	donpcevent "mob_monk#1_1::OnDisable";
 	close2;
 	warp "prt_monk",196,168;
 	end;
 }
 
-monk_test,88,91,1	script	Proctor#mk	52,{
+monk_test,88,91,1	script	Proctor#mk2	52,{
 	mes "[Proctor]";
 	mes "So, are you ready to undergo this spiritual training?";
 	next;
-	switch (select("Yes!:No.:Check the caution for the test.")) {
+	switch(select("Yes!:No.:Check the caution for the test.")) {
 	case 1:
 		mes "[Proctor]";
 		mes "Alright! I wish you luck. If you get lost and can't find a way out, simply log out and log back in.";
@@ -3306,9 +2368,7 @@ monk_test,88,91,1	script	Proctor#mk	52,{
 	}
 }
 
-monk_test,140,181,0	script	mob_monk#2_1	139,1,1,{
-	end;
-
+monk_test,140,181,0	script	mob_monk#2_1	-1,1,1,{
 OnTouch:
 	monster "monk_test",140,181,"Zombie",1015,1;
 	monster "monk_test",140,181,"Zombie",1015,1;
@@ -3316,14 +2376,12 @@ OnTouch:
 	monster "monk_test",140,181,"Zombie",1015,1;
 	end;
 
-OnReset:
-	killmonster "monk_test","mob_monk#2_1::OnMyMobDead";
+OnDisable:
+	killmonsterall "monk_test";
 	end;
 }
 
-monk_test,150,164,0	script	mob_monk#2_2	139,1,1,{
-	end;
-
+monk_test,150,164,0	script	mob_monk#2_2	-1,1,1,{
 OnTouch:
 	monster "monk_test",150,164,"Zombie",1015,1;
 	monster "monk_test",150,164,"Zombie",1015,1;
@@ -3331,38 +2389,32 @@ OnTouch:
 	monster "monk_test",150,164,"Zombie",1015,1;
 	end;
 
-OnReset:
-	killmonster "monk_test","mob_monk#2_2::OnMyMobDead";
+OnDisable:
+	killmonsterall "monk_test";
 	end;
 }
 
-monk_test,158,192,0	script	mob_monk#2_3	139,1,1,{
-	end;
-
+monk_test,158,192,0	script	mob_monk#2_3	-1,1,1,{
 OnTouch:
 	monster "monk_test",158,192,"Mummy",1041,1;
 	end;
 
-OnReset:
-	killmonster "monk_test","mob_monk#2_3::OnMyMobDead";
+OnDisable:
+	killmonsterall "monk_test";
 	end;
 }
 
-monk_test,165,186,0	script	mob_monk#2_4	139,1,1,{
-	end;
-
+monk_test,165,186,0	script	mob_monk#2_4	-1,1,1,{
 OnTouch:
 	monster "monk_test",165,186,"Mummy",1041,1;
 	end;
 
-OnReset:
-	killmonster "monk_test","mob_monk#2_4::OnMyMobDead";
+OnDisable:
+	killmonsterall "monk_test";
 	end;
 }
 
-monk_test,162,182,0	script	mob_monk#2_5	139,1,1,{
-	end;
-
+monk_test,162,182,0	script	mob_monk#2_5	-1,1,1,{
 OnTouch:
 	monster "monk_test",162,182,"Zombie",1015,1;
 	monster "monk_test",162,182,"Zombie",1015,1;
@@ -3371,23 +2423,21 @@ OnTouch:
 	monster "monk_test",162,182,"Zombie",1015,1;
 	end;
 
-OnReset:
-	killmonster "monk_test","mob_monk#2_5::OnMyMobDead";
+OnDisable:
+	killmonsterall "monk_test";
 	end;
 }
 
 monk_test,166,178,0	script	exit_monk#2	45,1,1,{
-	end;
-
 OnTouch:
 	mes "[Proctor]";
 	mes "You did well. Please return to Tomoon, he's waiting for you.";
 	set MONK_Q,27;
-	donpcevent "mob_monk#2_5::OnReset";
-	donpcevent "mob_monk#2_4::OnReset";
-	donpcevent "mob_monk#2_3::OnReset";
-	donpcevent "mob_monk#2_2::OnReset";
-	donpcevent "mob_monk#2_1::OnReset";
+	donpcevent "mob_monk#2_5::OnDisable";
+	donpcevent "mob_monk#2_4::OnDisable";
+	donpcevent "mob_monk#2_3::OnDisable";
+	donpcevent "mob_monk#2_2::OnDisable";
+	donpcevent "mob_monk#2_1::OnDisable";
 	close2;
 	warp "prt_monk",196,168;
 	end;
@@ -3397,7 +2447,7 @@ monk_test,95,85,1	script	Proctor#btl#3	79,{
 	mes "[Proctor]";
 	mes "So, are you ready to undergo this spiritual training?";
 	next;
-	switch (select("Yes!:No.:Check the caution for the test.")) {
+	switch(select("Yes!:No.:Check the caution for the test.")) {
 	case 1:
 		mes "[Proctor]";
 		mes "Alright! I wish you luck. If you get lost and can't find a way out, simply log out and log back in.";
@@ -3425,9 +2475,7 @@ monk_test,95,85,1	script	Proctor#btl#3	79,{
 	}
 }
 
-monk_test,249,277,0	script	mob_monk#3_1	139,1,1,{
-	end;
-
+monk_test,249,277,0	script	mob_monk#3_1	-1,1,1,{
 OnTouch:
 	monster "monk_test",249,277,"Zombie",1015,1;
 	monster "monk_test",249,277,"Zombie",1015,1;
@@ -3435,14 +2483,11 @@ OnTouch:
 	monster "monk_test",249,277,"Zombie",1015,1;
 	end;
 
-OnReset:
-	killmonster "monk_test","mob_monk#3_1::OnMyMobDead";
-	end;
+OnDisable:
+	killmonsterall "monk_test";
 }
 
-monk_test,231,296,0	script	mob_monk#3_2	139,1,1,{
-	end;
-
+monk_test,231,296,0	script	mob_monk#3_2	-1,1,1,{
 OnTouch:
 	monster "monk_test",231,296,"Zombie",1015,1;
 	monster "monk_test",231,296,"Zombie",1015,1;
@@ -3450,38 +2495,32 @@ OnTouch:
 	monster "monk_test",231,296,"Zombie",1015,1;
 	end;
 
-OnReset:
-	killmonster "monk_test","mob_monk#3_2::OnMyMobDead";
+OnDisable:
+	killmonsterall "monk_test";
 	end;
 }
 
-monk_test,264,292,0	script	mob_monk#3_3	139,1,1,{
-	end;
-
+monk_test,264,292,0	script	mob_monk#3_3	-1,1,1,{
 OnTouch:
 	monster "monk_test",264,292,"Mummy",1041,1;
 	end;
 
-OnReset:
-	killmonster "monk_test","mob_monk#3_3::OnMyMobDead";
+OnDisable:
+	killmonsterall "monk_test";
 	end;
 }
 
-monk_test,252,284,0	script	mob_monk#3_4	139,1,1,{
-	end;
-
+monk_test,252,284,0	script	mob_monk#3_4	-1,1,1,{
 OnTouch:
 	monster "monk_test",252,284,"Mummy",1041,1;
 	end;
 
-OnReset:
-	killmonster "monk_test","mob_monk#3_4::OnMyMobDead";
+OnDisable:
+	killmonsterall "monk_test";
 	end;
 }
 
-monk_test,257,285,0	script	mob_monk#3_5	139,1,1,{
-	end;
-
+monk_test,257,285,0	script	mob_monk#3_5	-1,1,1,{
 OnTouch:
 	monster "monk_test",257,285,"Zombie",1015,1;
 	monster "monk_test",257,285,"Zombie",1015,1;
@@ -3491,88 +2530,99 @@ OnTouch:
 	monster "monk_test",257,285,"Zombie",1015,1;
 	end;
 
-OnReset:
-	killmonster "monk_test","mob_monk#3_5::OnMyMobDead";
+OnDisable:
+	killmonsterall "monk_test";
 	end;
 }
 
 monk_test,270,278,0	script	exit_monk#3	45,1,1,{
-	end;
-
 OnTouch:
 	mes "[Proctor]";
 	mes "You did well. Please return to Tomoon, he's waiting for you.";
 	set MONK_Q,27;
-	donpcevent "mob_monk#3_5::OnReset";
-	donpcevent "mob_monk#3_4::OnReset";
-	donpcevent "mob_monk#3_3::OnReset";
-	donpcevent "mob_monk#3_2::OnReset";
-	donpcevent "mob_monk#3_1::OnReset";
+	donpcevent "mob_monk#3_5::OnDisable";
+	donpcevent "mob_monk#3_4::OnDisable";
+	donpcevent "mob_monk#3_3::OnDisable";
+	donpcevent "mob_monk#3_2::OnDisable";
+	donpcevent "mob_monk#3_1::OnDisable";
 	close2;
 	warp "prt_monk",196,168;
 	end;
 }
 
-monk_test,3,3,0	script	resetter#monk	139,{
-	end;
-
+monk_test,3,3,0	script	resetter#monk	-1,{
 OnTimer500000:
-	donpcevent "mob_monk#1_1::OnReset";
-	donpcevent "mob_monk#1_2::OnReset";
-	donpcevent "mob_monk#1_3::OnReset";
-	donpcevent "mob_monk#1_4::OnReset";
-	donpcevent "mob_monk#1_5::OnReset";
-	donpcevent "mob_monk#2_1::OnReset";
-	donpcevent "mob_monk#2_2::OnReset";
-	donpcevent "mob_monk#2_3::OnReset";
-	donpcevent "mob_monk#2_4::OnReset";
-	donpcevent "mob_monk#2_5::OnReset";
-	donpcevent "mob_monk#3_1::OnReset";
-	donpcevent "mob_monk#3_2::OnReset";
-	donpcevent "mob_monk#3_3::OnReset";
-	donpcevent "mob_monk#3_4::OnReset";
-	donpcevent "mob_monk#3_5::OnReset";
+	donpcevent "mob_monk#1_1::OnDisable";
+	donpcevent "mob_monk#1_2::OnDisable";
+	donpcevent "mob_monk#1_3::OnDisable";
+	donpcevent "mob_monk#1_4::OnDisable";
+	donpcevent "mob_monk#1_5::OnDisable";
+	donpcevent "mob_monk#2_1::OnDisable";
+	donpcevent "mob_monk#2_2::OnDisable";
+	donpcevent "mob_monk#2_3::OnDisable";
+	donpcevent "mob_monk#2_4::OnDisable";
+	donpcevent "mob_monk#2_5::OnDisable";
+	donpcevent "mob_monk#3_1::OnDisable";
+	donpcevent "mob_monk#3_2::OnDisable";
+	donpcevent "mob_monk#3_3::OnDisable";
+	donpcevent "mob_monk#3_4::OnDisable";
+	donpcevent "mob_monk#3_5::OnDisable";
 	initnpctimer;
 	end;
 
+
+OnInit:
 OnEnable:
 	initnpctimer;
 	end;
-
-OnInit:
-	donpcevent "resetter#monk::OnEnable";
-	end;
 }
-
-monk_test,329,47,0	warp	test_to_prtmonk	1,1,prt_monk,193,166
-monk_test,329,76,0	warp	way_to_stair	1,1,monk_test,259,118
-monk_test,259,115,0	warp	stair_to_#1	1,1,monk_test,329,71
-monk_test,272,125,0	warp	way_to_last	1,1,monk_test,301,127
-monk_test,298,127,0	warp	last_to_st	1,1,monk_test,268,125
 
 monk_test,137,338,1	script	switchreset#monkmonk	79,{
-
-	if(getgmlevel() == 99){
-		mes "Grrrr...";
-		mes "All monsters in the monk job chance place have been reset.";
-		mes "Timer's activated.";
-		donpcevent "mob_monk#1_1::OnReset";
-		donpcevent "mob_monk#1_2::OnReset";
-		donpcevent "mob_monk#1_3::OnReset";
-		donpcevent "mob_monk#1_4::OnReset";
-		donpcevent "mob_monk#1_5::OnReset";
-		donpcevent "mob_monk#2_1::OnReset";
-		donpcevent "mob_monk#2_2::OnReset";
-		donpcevent "mob_monk#2_3::OnReset";
-		donpcevent "mob_monk#2_4::OnReset";
-		donpcevent "mob_monk#2_5::OnReset";
-		donpcevent "mob_monk#3_1::OnReset";
-		donpcevent "mob_monk#3_2::OnReset";
-		donpcevent "mob_monk#3_3::OnReset";
-		donpcevent "mob_monk#3_4::OnReset";
-		donpcevent "mob_monk#3_5::OnReset";
-		donpcevent "resetter#monk::OnEnable";
-		close;
-	}
-	end;
+	mes "Grrrr...";
+	mes "All monsters in the monk job chance place have been reset.";
+	mes "Timer's activated.";
+	donpcevent "mob_monk#1_1::OnDisable";
+	donpcevent "mob_monk#1_2::OnDisable";
+	donpcevent "mob_monk#1_3::OnDisable";
+	donpcevent "mob_monk#1_4::OnDisable";
+	donpcevent "mob_monk#1_5::OnDisable";
+	donpcevent "mob_monk#2_1::OnDisable";
+	donpcevent "mob_monk#2_2::OnDisable";
+	donpcevent "mob_monk#2_3::OnDisable";
+	donpcevent "mob_monk#2_4::OnDisable";
+	donpcevent "mob_monk#2_5::OnDisable";
+	donpcevent "mob_monk#3_1::OnDisable";
+	donpcevent "mob_monk#3_2::OnDisable";
+	donpcevent "mob_monk#3_3::OnDisable";
+	donpcevent "mob_monk#3_4::OnDisable";
+	donpcevent "mob_monk#3_5::OnDisable";
+	donpcevent "resetter#monk::OnEnable";
+	close;
 }
+
+//============================================================ 
+// Monsters of Mushroom Collecting
+//============================================================ 
+job_monk,0,0,0,0	monster	Thief Mushroom	1182,70,0,0,0
+job_monk,0,0,0,0	monster	Thief Bug Larva	1051,20,0,0,0
+
+//============================================================ 
+// mapflag
+//============================================================ 
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.1 Fixed missing '";'. Now it's loading fine [Lupus]
+//= 1.1+ Edited/Translated 5% [Celest]
+//= 1.2 Made Poetry Quiz passable, Fixed Marathon Part [Lupus]
+//= 1.3 Added Baby Class Support [Lupus]
+//= 1.5 Fixed possible EXP abuse [Lupus]
+//= 1.6 Added a func which prevent advanced classes passing
+//= 2nd Job Quests again. It also guides adv classes where
+//= to go. [Lupus] 1.7 Fixed warps19/20 [Yor]
+//= 1.8 Fixed bugs. Fixed Green Potion exploit. Getting rid of Jfunc mess [Lupus]
+//= 1.9 Added a missing check in Fuhai and fixed a LOT of Engrish. [Zephiris]
+//= 1.9b Fixed another bug in Fuhai. [Zephiris]
+//= 2.0 Changed numbers to constants. [Vicious]
+//= 2.1 Removed Duplicates [Silent]

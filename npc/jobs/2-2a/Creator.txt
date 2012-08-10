@@ -40,7 +40,7 @@ valkyrie,53,50,3	script	Biochemist#Valkyrie	122,{
 		mes "a place in Valhalla...";
 		close;
 	}
-	if ((ADVJOB == Job_Creator) && (Class == Job_Merchant_High) && (JobLevel > 39)) {
+	else if (ADVJOB == Job_Creator && Class == Job_Merchant_High && JobLevel > 39) {
 		mes "[Biochemist]";
 		mes "Yes...";
 		mes "It's about time.";
@@ -74,60 +74,63 @@ valkyrie,53,50,3	script	Biochemist#Valkyrie	122,{
 		mes "right purposes.";
 		close;
 	}
-	if ((Class == Job_Creator) && (MISC_QUEST & 64) && (getskilllv("AM_BIOETHICS") == 0)) {
-		mes "[Biochemist]";
-		mes "Ah, have you come to";
-		mes "retrieve the memories";
-		mes "lost to you? Yes, you";
-		mes "must be here for the";
-		mes "secrets of life that";
-		mes "were once yours...";
-		next;
-		if (select("Yes:No") == 1) {
+	else {
+		if (Class == Job_Creator && MISC_QUEST & 64 && getskilllv("AM_BIOETHICS") == 0) {
 			mes "[Biochemist]";
-			mes "Close your eyes and";
-			mes "put your mind at rest.";
-			mes "We will return to your";
-			mes "past to recollect the";
-			mes "fragments of your lost";
-			mes "memories.";
+			mes "Ah, have you come to";
+			mes "retrieve the memories";
+			mes "lost to you? Yes, you";
+			mes "must be here for the";
+			mes "secrets of life that";
+			mes "were once yours...";
 			next;
+			if (select("Yes:No") == 1) {
+				mes "[Biochemist]";
+				mes "Close your eyes and";
+				mes "put your mind at rest.";
+				mes "We will return to your";
+				mes "past to recollect the";
+				mes "fragments of your lost";
+				mes "memories.";
+				next;
+				mes "[Biochemist]";
+				mes "When you open your eyes,";
+				mes "you will clearly remember";
+				mes "the secret of life. You will";
+				mes "also remember the weight of";
+				mes "responsibility in using these";
+				mes "secrets for the right ends...";
+				next;
+				skill 238,1,0;
+				mes "[Biochemist]";
+				mes "Open your eyes...";
+				mes "Now that you have";
+				mes "remembered how to";
+				mes "create artificial life, I only";
+				mes "ask that you treat all of your";
+				mes "creations with respect.";
+				close;
+			}
 			mes "[Biochemist]";
-			mes "When you open your eyes,";
-			mes "you will clearly remember";
-			mes "the secret of life. You will";
-			mes "also remember the weight of";
-			mes "responsibility in using these";
-			mes "secrets for the right ends...";
-			next;
-			skill 238,1,0;
-			mes "[Biochemist]";
-			mes "Open your eyes...";
-			mes "Now that you have";
-			mes "remembered how to";
-			mes "create artificial life, I only";
-			mes "ask that you treat all of your";
-			mes "creations with respect.";
+			mes "If you wish to";
+			mes "retrieve your lost";
+			mes "memories, please";
+			mes "come back to me.";
+			mes "The secret to creating";
+			mes "life is no trifling thing...";
 			close;
 		}
 		mes "[Biochemist]";
-		mes "If you wish to";
-		mes "retrieve your lost";
-		mes "memories, please";
-		mes "come back to me.";
-		mes "The secret to creating";
-		mes "life is no trifling thing...";
+		mes "Welcome";
+		mes "to Valhalla,";
+		mes "the Hall of Honor.";
+		next;
+		mes "[Biochemist]";
+		mes "Please make";
+		mes "yourself comfortable";
+		mes "while you are here.";
+		mes "Honor to the warriors!";
 		close;
 	}
-	mes "[Biochemist]";
-	mes "Welcome";
-	mes "to Valhalla,";
-	mes "the Hall of Honor.";
-	next;
-	mes "[Biochemist]";
-	mes "Please make";
-	mes "yourself comfortable";
-	mes "while you are here.";
-	mes "Honor to the warriors!";
-	close;
 }
+

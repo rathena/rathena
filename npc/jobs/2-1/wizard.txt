@@ -1,17 +1,31 @@
 //===== rAthena Script ======================================= 
-// Wizard Job change Quest
+//= Wizard Job Quest
 //===== By: ================================================== 
-//= Masao
-//= Credits: Muad_Dib
+//= (Aegis) Translated by yoshiki, converted by kobra_k88
+//= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 1.0
+//= 3.2
 //===== Compatible With: ===================================== 
-//= Any rAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
-//= [Translated from the Official]
-//= Job change Quest from Mage -> Wizard.
+//= [Aegis Conversion]
+//= Job Change quest for Wizard class.
 //===== Additional Comments: ================================= 
-//= 1.0 Updated to latest available official file. [Masao]
+//= 2.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 2.5 Several bugfixes with the help of Barron-Monster. [L0ne_W0lf]
+//= 2.5a More bugfixes care of Barron-Monster. [L0ne_W0lf]
+//= 2.5b Fixed tests calling on a non-existant label in "Room of x#Failed" npcs. [L0ne_W0lf]
+//= 2.5c Bug fixes. Cleaned up some NPCs slightly. [L0ne_W0lf]
+//= 2.6 Fixed Water Room not warping on time-up. [L0ne_W0lf]
+//= 2.7 Now uses enable and disable waitingroomevent. [L0ne_W0lf]
+//= 	Other minor fixes to various NPCs.
+//= 2.7a Added end; :D (bugreport:2038) [Yommy]
+//= 2.8 Fixed donpcevent to doevent. (bugreport:2311) [SoulBlaker]
+//= 2.9 Reverted the change of donpcevent to doevent. [L0ne_W0lf]
+//=     Was probably cuased by a warp BEFORE a percentheal
+//= 3.0 Added Quest Log commands. [Kisuka]
+//= 3.1 Removed the need for use of 'goto.' [L0ne_W0lf]
+//= 3.2 Modified the quest to renewal. [Vali] (Thanks to Muad_Dib for the necessary info).
 //============================================================ 
 
 gef_tower,111,37,4	script	Wizard Guildsman	70,{
@@ -25,27 +39,20 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		mes "Congratulations and good luck with your life!";
 		close;
 	}
-	if ((Class != Job_Baby_Mage) && (Class != Job_Mage)) {
-		if (Class == Job_Baby_Wizard || Class == Job_Wizard) {
-			if (Sex == 1) {
-				mes "[Catherine]";
-				mes "Since you're already a Wizard, you don't have any more business with me...?";
-				mes "Now, excuse me.";
-				next;
-				mes "[Catherine]";
+	if (BaseJob != Job_Mage) {
+		if (BaseJob == Job_Wizard) {
+			mes "[Catherine]";
+			mes "Since you're already a Wizard, you don't have any more business with me...?";
+			mes "Now, excuse me.";
+			next;
+			mes "[Catherine]";
+			if (sex)
 				mes "Well, If you intended to ask me on a date... I appreciate it...hohoho.";
-			}
-			else {
-				mes "[Catherine]";
-				mes "Since you're already a Wizard, you don't have any more business with me...";
-				mes "Now, excuse me.";
-				next;
-				mes "[Catherine]";
+			else
 				mes "Well, if you fix me up with a cute guy... I'd appreciate it...hohoho!.";
-			}
 			close;
 		}
-		if (Class == Job_Baby || Class == Job_Novice) {
+		else if (BaseClass == Job_Novice) {
 			mes "[Wizard Guildsman]";
 			mes "Oh my goodness, it's a novice~ ain't you the cutest little thing.";
 			mes "By the way honey, this place is for Wizards.";
@@ -102,7 +109,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 					mes "When I deem you're qualified, I will accept your application.";
 					close;
 				}
-				if (SkillPoint != 0) {
+				if (SkillPoint) {
 					mes "[Catherine]";
 					mes "Umm... You're well qualified, but you have some unused skill points left.";
 					mes "You'd better learn more skills before applying again.";
@@ -146,23 +153,23 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 				mes "The first test is collecting magic items.";
 				mes "The important part is that you must gather these items on your own.";
 				next;
-				set .@wizard_m1, rand(1,2);
+				set wizard_m1,rand(1,2);
 				mes "[Catherine]";
 				mes "The items you must collect are...";
-				if (.@wizard_m1 == 1) {
+				if (rand(1)) {
 					set WIZ_Q,1;
+					setquest 9013;
 					mes "^3355FFRed Gemstone^000000 10 each,";
 					mes "^3355FFBlue Gemstone^000000 10 each,";
 					mes "^3355FFYellow Gemstone^000000 10 each,";
-					setquest 9013;
 				}
 				else {
 					set WIZ_Q,2;
+					setquest 9014;
 					mes "^3355FFCrystal Blue^000000 5 each,";
 					mes "^3355FFGreen Live^000000 5 each,";
 					mes "^3355FFRed Blood^000000 5 each,";
 					mes "^3355FFWind of Verdure^000000 5 each,";
-					setquest 9014;
 				}
 				mes "...is it too hard? No, any would be Wizard should be able to at least get these items.";
 				next;
@@ -181,12 +188,12 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		mes "You have no business here, hope you don't mind, now off you go!";
 		close;
 	}
-	if (WIZ_Q == 1) {
+	else if (WIZ_Q == 1) {
 		mes "[Catherine]";
 		mes "Let me see, did you get all the items?";
 		mes "Then let's check...";
 		next;
-		if ((countitem(716) > 9) && (countitem(717) > 9) && (countitem(715) > 9)) {
+		if (countitem(716) > 9 && countitem(717) > 9 && countitem(715) > 9) {
 			mes "[Catherine]";
 			mes "Perfect! You got all the items. I like!~";
 			mes "These items will be put to great use in our guild. ~Hehehee.";
@@ -196,7 +203,6 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 			delitem 715,10; //Yellow_Gemstone
 			set WIZ_Q,3;
 			changequest 9013,9015;
-			changequest 9014,9015;
 			mes "[Catherine]";
 			mes "Good for you! You passed the first test.";
 			mes "But there are still two more left, so don't get too relaxed.";
@@ -220,12 +226,12 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		mes "Don't forget this time, and bring all the items, ok?...";
 		close;
 	}
-	if (WIZ_Q == 2) {
+	else if (WIZ_Q == 2) {
 		mes "[Catherine]";
 		mes "Did you get all the items?";
 		mes "Let's see... Do you have the right ones?...";
 		next;
-		if ((countitem(991) > 4) && (countitem(993) > 4) && (countitem(990) > 4) && (countitem(992) > 4)) {
+		if (countitem(991) > 4 && countitem(993) > 4 && countitem(990) > 4 && countitem(992) > 4) {
 			mes "[Catherine]";
 			mes "Perfect! Good job...I'm satisfied! ~Hehe";
 			mes "Our guild greatly appreciates these items and will use them wisely.";
@@ -235,7 +241,6 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 			delitem 990,5; //Boody_Red
 			delitem 992,5; //Wind_Of_Verdure
 			set WIZ_Q,3;
-			changequest 9013,9015;
 			changequest 9014,9015;
 			mes "[Catherine]";
 			mes "Good. You've passed the first test now.";
@@ -261,7 +266,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		mes "Don't forget them this time and gather the correct ones, ok? See you soon...";
 		close;
 	}
-	if (WIZ_Q == 3) {
+	else if (WIZ_Q == 3) {
 		mes "[Catherine]";
 		mes "What is it? You didn't go talk to the guy in the corner?";
 		mes "You can't become a Wizard by just brining the items I requested, no no, that just wont do...";
@@ -271,7 +276,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		mes "I'll be waiting, so go now.";
 		close;
 	}
-	if (WIZ_Q == 4) {
+	else if (WIZ_Q == 4) {
 		mes "[Catherine]";
 		mes "*sigh*...Poor thing, what a pity.";
 		mes "How can you think of trying to become a Wizard when you can't even answer those simple questions?";
@@ -280,7 +285,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		mes "Let's see... Should I give you some hints as your senior?";
 		mes "But I'm a bit thirsty, so give me 1 Apple Juice, and we got a deal. ~Hehehe";
 		next;
-		switch (select("Give me some hints, please.:I want to try again on my own!")) {
+		switch(select("Give me some hints, please.:I want to try again on my own!")) {
 		case 1:
 			if (countitem(531) > 0) {
 				delitem 531,1; //Apple_Juice
@@ -342,7 +347,6 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 			mes "[Catherine]";
 			mes "Yeah, you get the most satisfaction when you solve things on your own.";
 			mes "Go finish the rest of the tests with that spirit!";
-			break;
 		}
 		next;
 		mes "[Catherine]";
@@ -350,7 +354,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		mes "Hurry, he's waiting for you!";
 		close;
 	}
-	if (WIZ_Q == 5) {
+	else if (WIZ_Q == 5) {
 		mes "[Catherine]";
 		mes "Tehehehe~ I was listening all along.";
 		mes "Well done in answering all those questions. I want to give something, like a present...";
@@ -364,18 +368,17 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		mes "He's waiting for you!";
 		close;
 	}
-	if (WIZ_Q == 6) {
+	else if (WIZ_Q == 6) {
 		mes "[Catherine]";
 		mes "Eh, did you leave in the middle of the test?";
 		mes "You...*sigh*...I didn't think you would do such a dishonorable thing.";
 		next;
-		if (Sex == 1) {
-			mes "[Catherine]";
+		mes "[Catherine]";
+		if (sex) {
 			mes "Granted you're a mage, but how could a guy be so weak?!";
 			mes "Well, at least your alive still. Go back and try harder this time. ~tehehehe";
 		}
 		else {
-			mes "[Catherine]";
 			mes "Don't pretend to be weak just because you're a girl. Look at me! I did it, and so can you. You can't ask for sympathy.";
 			mes "You came all this way to become a Wizard! Now come on, you can do it!!";
 			next;
@@ -389,7 +392,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		mes "He's waiting!";
 		close;
 	}
-	if (WIZ_Q == 7) {
+	else if (WIZ_Q == 7) {
 		if (JobLevel < 40) {
 			set WIZ_Q,0;
 			mes "[Catherine]";
@@ -401,7 +404,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 			mes "When the time comes, I will welcome you with open arms.";
 			close;
 		}
-		if (SkillPoint != 0) {
+		if (SkillPoint) {
 			mes "[Catherine]";
 			mes "Are you done with all the tests? Oh drats, it seems like you still have some skill points left.";
 			mes "Learn some other skills with your remaining points, and then come talk to me again.";
@@ -414,13 +417,9 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		mes "[Catherine]";
 		mes "Well, no need to wait, I congratulate you. I hearby deem you Wizard.";
 		next;
-		set WIZ_Q,0;
-		if(Class == Job_Baby_Mage){
-			jobchange Job_Baby_Wizard;
-		} else {
-			jobchange Job_Wizard;
-		}
 		completequest 9018;
+		callfunc "Job_Change",Job_Wizard;
+		callfunc "F_ClearJobVar";		// clears all job variables for the current player
 		mes "[Catherine]";
 		mes "Since you're a Wizard now, act like a Wizard, got it?";
 		mes "Us wizards have to be careful since we possess the ultimate power of magic.";
@@ -449,23 +448,21 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 }
 
 gef_tower,102,24,2	script	Gloomy Wizard	735,{
-	if ((Class != Job_Baby_Mage) && (Class != Job_Mage)) {
-		if (Class == Job_Baby_Wizard || Class == Job_Wizard) {
+	if (BaseJob != Job_Mage) {
+		if (BaseJob == Job_Wizard) {
 			mes "[Raulel]";
 			mes "*Cough* *cough* what do you want?";
 			mes "If you are a person that uses magic, then you need to make sure you are well informed about it.";
 			next;
-			if (Sex == 1) {
-				mes "[Raulel]";
-				mes "Don't live dishonestly, or impolitely, or else one day you'll be caught in a spell you can't control, and BOOM, your dead!";
+			mes "[Raulel]";
+			mes "Don't live dishonestly, or impolitely, or else one day you'll be caught in a spell you can't control, and BOOM, your dead!";
+			if (sex == 1) {
 				mes "If you don't want that to happen, then learn how to use spells properly!";
 				next;
 				mes "[Raulel]";
 				mes "You may live life crippled if you get obsessed with the love of Greater Magic. ~haha";
 			}
 			else {
-				mes "[Raulel]";
-				mes "Don't live dishonestly, or impolitely, or else one day you'll be caught in a spell you can't control, and BOOM, your dead!";
 				mes "So learn how to use magic properly, or you would just be better off giving up on using magic.";
 				next;
 				mes "[Raulel]";
@@ -474,7 +471,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 			}
 			close;
 		}
-		if (Class == Job_Baby_Priest || Class == Job_Priest) {
+		else if (BaseJob == Job_Priest) {
 			mes "[Raulel]";
 			mes "Go away, one who works for the Church!";
 			mes "Magic repels Holy power, jeez...your messing up my aura.";
@@ -484,7 +481,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 			mes "Don't come any closer, just leave!";
 			close;
 		}
-		if (Class == Job_Baby || Class == Job_Novice) {
+		else if (BaseClass == Job_Novice) {
 			mes "[Raulel]";
 			mes "Why did a little one like you come here?!";
 			mes "Get lost! ~Hahahahaha";
@@ -507,7 +504,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 		mes "Go away! Get lost!";
 		close;
 	}
-	if (WIZ_Q == 1) {
+	else if (WIZ_Q == 1 || WIZ_Q  == 2) {
 		mes "[Raulel]";
 		mes "Hahahaha~ You're the one that wants to become a Wizard?!";
 		next;
@@ -518,251 +515,284 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 		mes "*Cough* *cough* Let's see how well you live as a Wizard. ~Hahahahhaha";
 		close;
 	}
-	if (WIZ_Q == 2) {
-		mes "[Raulel]";
-		mes "Hahahaha~ You're the one that wants to become a Wizard?!";
-		next;
-		mes "[Raulel]";
-		mes "*sneeze* If you just lived as you were, all you'd have to do was hunt a little and live the easy life...";
-		next;
-		mes "[Raulel]";
-		mes "*Cough* *cough* Let's see how well you live as a Wizard. ~Hahahahhaha";
-		close;
-	}
-	if (WIZ_Q == 3) {
-		mes "[Raulel]";
-		mes "*Cough* *cough*...You must've passed the first test.";
-		mes "Ok, I'm the Wizard in charge of your testing from now on. My name is 'Raulel Asparagus'.";
-		next;
-		mes "[Raulel]";
-		mes "*sneeze* It's not too late yet, wouldn't you rather just go back to town and enjoy the peaceful life?";
-		next;
-		mes "[Raulel]";
-		mes "Hahahaha~ You don't know how dangerous it is...to deal with Greater Magic.";
-		next;
-		if (select("I want to live as a normal Mage.:I would like to continue with the tests.") == 1) {
+	else if ((WIZ_Q == 3) || (WIZ_Q == 4)) {
+		if (WIZ_Q == 3) {
 			mes "[Raulel]";
-			mes "Hahaha~ *sneeze* Good choice...*cough* *cough*~";
-			mes "Best not to even dream about life as a Wizard. Graa...Greaa...*sneeze* Greater Magic wasn't meant for humans to use!";
+			mes "*Cough* *cough*...You must've passed the first test.";
+			mes "Ok, I'm the Wizard in charge of your testing from now on. My name is 'Raulel Asparagus'.";
 			next;
 			mes "[Raulel]";
-			mes "Leave the top of this tower quietly and don't ever look back.";
-			mes "Just live peacefully with the powers that you have right now.";
-			close;
+			mes "*sneeze* It's not too late yet, wouldn't you rather just go back to town and enjoy the peaceful life?";
+			next;
+			mes "[Raulel]";
+			mes "Hahahaha~ You don't know how dangerous it is...to deal with Greater Magic.";
+			next;
+			if (select("I want to live as a normal Mage.:I would like to continue with the tests.") == 1) {
+				mes "[Raulel]";
+				mes "Hahaha~ *sneeze* Good choice...*cough* *cough*~";
+				mes "Best not to even dream about life as a Wizard. Graa...Greaa...*sneeze* Greater Magic wasn't meant for humans to use!";
+				next;
+				mes "[Raulel]";
+				mes "Leave the top of this tower quietly and don't ever look back.";
+				mes "Just live peacefully with the powers that you have right now.";
+				close;
+			}
+			mes "[Raulel]";
+			mes "*sneeze* Hahahaha~ Now there's a foolish one here!";
+			mes "Well then, let's see how good you are. *cough* I want to see this with my own two eyes!";
+			next;
+			mes "[Raulel]";
+			mes "*sneeze* Then let's begin the test!";
+			mes "If you don't answer them all correctly, you fail. Hahahahahahahahaha~";
+			next;
+			mes "[Raulel]";
+			mes "I'll give you 10 questions so give me the right answers.";
+			mes "If you get something wrong, I won't tell you what it is!";
+			if(checkquest(9016) == -1) {
+				changequest 9015,9016;
+			}
+			next;
+			mes "[Raulel]";
+			mes "*Cough* *cough* Then here go the questions!";
 		}
-		mes "[Raulel]";
-		mes "*sneeze* Hahahaha~ Now there's a foolish one here!";
-		mes "Well then, let's see how good you are. *cough* I want to see this with my own two eyes!";
+		else if (WIZ_Q == 4) {
+			mes "[Raulel]";
+			mes "Hahahaha~ Are you that desperate? *sneeze* What a pain in the arse...";
+			next;
+			mes "[Raulel]";
+			mes "Since you don't want to settle for a stable and peaceful life, I'll give you another chance...";
+			next;
+			mes "[Raulel]";
+			mes "If you miss one single question, then just give up. You wouldn't have any talent in being a Wizard! ~Hahahahaha";
+			next;
+			if (select("Because of you, I want to live as a normal Mage now.:I would like to continue with the tests.") == 1) {
+				mes "[Raulel]";
+				mes "Hahahaha~ Surprising, comming from you, that's a very wise choice...*cough* *cough*";
+				mes "If i were you, i would never, ever dream of becoming a Wizard again. Gre...Greaa...*sneeze* Greater Magic wasn't meant for humans to use.";
+				next;
+				mes "[Raulel]";
+				mes "Just leave the top of this tower quietly and never look back.";
+				mes "Live peacefully with the powers that you have right now.";
+				close;
+			}
+			mes "[Raulel]";
+			mes "Hahahahahahaha~ Now there's a foolish one right here!";
+			mes "Well then, let's see just how good you can be! *sneeze* I want to see this with my own two eyes.";
+			next;
+			mes "[Raulel]";
+			mes "Then let's begin the test!";
+		}
 		next;
-		mes "[Raulel]";
-		mes "*sneeze* Then let's begin the test!";
-		mes "If you don't answer them all correctly, you fail. Hahahahahahahahaha~";
-		changequest 9015,9016;
-		next;
-		mes "[Raulel]";
-		mes "I'll give you 10 questions so give me the right answers.";
-		mes "If you get something wrong, I won't tell you what it is!";
-		next;
-		set .@wizard_m2,rand(1,3);
-		set @wizard_t,0;
-		mes "[Raulel]";
-		mes "*Cough* *cough* Then here go the questions!";
-		next;
-		if (.@wizard_m2 == 1) {
+		switch(rand(1,3)) {
+		case 1:
 			mes "[Raulel]";
 			mes "1. Which of the following is not necessary to learn Fire Wall?";
 			next;
-			if (select("Fire Bolt Lv 4:Fire Ball Lv 5:Sight Lv 1:Napalm Beat Lv 4") == 4) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("Fire Bolt Lv 4:Fire Ball Lv 5:Sight Lv 1:Napalm Beat Lv 4") == 4)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "2. Regaurdless of the previous attribute, what does the monster's attribute change to when you cast Frost Diver on it?";
+			mes "2. Regaurdless of it's previous attribute, What does the monster's attribute change to when you cast Frost Diver on it?";
 			next;
-			if (select("Water:Earth:Fire:Wind") == 1) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("Water:Earth:Fire:Wind") == 1)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "3. When you master Napalm Beat, what is the ratio of the increase in MATK using the spell?";
+			mes "3. When you completely master Napalm Beat, what is the ratio of the increased MATK using that spell?";
 			next;
-			if (select("1.6 times:1.7 times:2 times:20 times") == 2) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("1.6 times:1.7 times:2 times:20 times") == 2)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
 			mes "4. What item do you need when casting Stone Curse?";
 			next;
-			if (select("Red Blood:Blue Gemstone:Yellow Gemstone:Red Gemstone") == 4) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("Red Blood:Blue Gemstone:Yellow Gemstone:Red Gemstone") == 4)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
 			mes "5. Which of the following is not required to master Safety Wall?";
 			next;
-			if (select("Napalm Beat Lv 4:Soul Strike Lv 5:Increase SP Recovery Lv 6:Safety Wall Lv 7") == 3) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("Napalm Beat Lv 4:Soul Strike Lv 5:Increase SP Recovery Lv 6:Safety Wall Lv 7") == 3)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
 			mes "6. Without the INT bonus, what amount of SP is recovered every 10 seconds when you have learned Increase SP Recovery Lv 7?";
 			next;
-			if (select("14:21:28:35") == 2) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("14:21:28:35") == 2)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "7. Using the skill Energy Coat, when you have 50% of your SP remaining, how much SP is used when hit, and what percentage is damage reduced by?";
+			mes "7. Using Energy Coat, when you have 50% of your SP remaining, how much SP is used when hit, and what percentage is damage reduced by?";
 			next;
-			if (select("Damage 18% SP1.5%:Damage 18% SP2%:Damage 24% SP1.5%:Damage 24% SP2%") == 2) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("Damage 18% SP1.5%:Damage 18% SP2%:Damage 24% SP1.5%:Damage 24% SP2%") == 2)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "8. How much SP is consumed, and how many times can you avoid attacks when using Safety Wall Lv 6?";
+			mes "8. How much SP is consumed and how many times can you avoid attacks when using Safety Wall Lv 6?";
 			next;
-			if (select("SP 40, 6 times:SP 35, 6 times:SP 40, 7 times:SP 35, 7 times") == 3) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("SP 40, 6 times:SP 35, 6 times:SP 40, 7 times:SP 35, 7 times") == 3)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
 			mes "9. How much SP is needed when using Lv 10 Thunderstorm?";
 			next;
-			if (select("84:74:64:54") == 2) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("84:74:64:54") == 2)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "10. Which skill is most useful for training in the Byalan Dungeon?";
+			mes "10. Which skill is most useful training in the Byalan Dungeon?";
 			next;
-			if (select("Lightning Bolt:Fire Bolt:Cold Bolt:Sight") == 1) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			next;
-		}
-		if (.@wizard_m2 == 2) {
+			if (select("Lightning Bolt:Fire Bolt:Cold Bolt:Sight") == 1)
+				set .@wizard_t,.@wizard_t+10;
+			break;
+		case 2:
 			mes "[Raulel]";
 			mes "1. Which monster can you obtain a slotted Guard from?";
 			next;
-			if (select("Thief Bug:Peco Peco:Pupa:Kobold (Hammer)") == 3) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("Thief Bug:PecoPeco:Pupa:Kobold (Hammer)") == 3)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
 			mes "2. Which of the following is the easiest monster for a low level Mage to hunt?";
 			next;
-			if (select("Flora:Giearth:Golem:Myst") == 1) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("Flora:Giearth:Golem:Myst") == 1)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
 			mes "3. Which monster will not be affected by Stone Curse?";
 			next;
-			if (select("Elder Willow:Evil Druid:Magnolia:Marc") == 2) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("Elder Willow:Evil Druid:Magnolia:Marc") == 2)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
 			mes "4. When attacking a Lv 3 water attribute monster with a wind attribute weapon, what is the damage percentage?";
 			next;
-			if (select("125%:150%:175%:200%") == 4) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("125%:150%:175%:200%") == 4)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
 			mes "5. If a Baby Desert Wolf and a Familiar fought, which one would win?";
 			next;
-			if (select("Baby Desert Wolf:Familiar:Neither:I don't know") == 1) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("Baby Desert Wolf:Familiar:Neither:I don't know") == 1)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
 			mes "6. Which of the following cannot be a Cute Pet?";
 			next;
-			if (select("Poporing:Roda Frog:Smokie:Poison Spore") == 2) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("Poporing:Roda Frog:Smokie:Poison Spore") == 2)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
 			mes "7. Choose the monster that is weak against a fire attribute attack.";
 			next;
-			if (select("Dagger Goblin:Mace Goblin:Morningstar Goblin:Hammer Goblin") == 4) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("Dagger Goblin:Mace Goblin:Morningstar Goblin:Hammer Goblin") == 4)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "8. Which of the following monsters has the highest defense?";
+			mes "8. Which of the following has the highest defense?";
 			next;
-			if (select("Horn:Chonchon:Andre:Caramel") == 4) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("Horn:Chonchon:Andre:Caramel") == 4)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "9. Choose the monster that's a different species.";
+			mes "9. Choose the monster that's of a different species.";
 			next;
-			if (select("Poring:Mastering:Ghostring:Spore") == 3) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("Poring:Mastering:Ghostring:Spore") == 3)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
 			mes "10. Which of the following is not an Undead monster?";
 			next;
-			if (select("Drake:Megalodon:Deviace:Khalitzburg") == 3) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			next;
-		}
-		else {
+			if (select("Drake:Megalodon:Deviace:Khalitzburg") == 3)
+				set .@wizard_t,.@wizard_t+10;
+			break;
+		case 3:
 			mes "[Raulel]";
 			mes "1. Which stat is the most important for a Mage?";
 			next;
-			if (select("INT:AGI:DEX:VIT") == 1) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("INT:AGI:DEX:VIT") == 1)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
 			mes "2. Which attribute does not have a 'Bolt' type attack?";
 			next;
-			if (select("Water:Earth:Fire:Wind") == 2) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("Water:Earth:Fire:Wind") == 2)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
 			mes "3. Choose the one that does not relate to a Mage.";
 			next;
-			if (select("Weak physical strength.:Attacks at a distance.:Good at selling stuff.:Magic Defense is high.") == 3) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("Weak physical strength.:Attacks at a distance.:Good at selling stuff.:Magic Defense is high.") == 3)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
-			mes "4. Which town is the home of the Mages?";
+			mes "4. Which town is the home of Mages?";
 			next;
-			if (select("Prontera:Morroc:Alberta:Geffen") == 4) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("Prontera:Morroc:Alberta:Geffen") == 4)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
 			mes "5. Which of the following cards has nothing to do with INT?";
 			next;
-			if (select("Andre Egg Card:Soldier Andre Card:Baby Desert Wolf Card:Elder Willow Card") == 2) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("Andre Egg Card:Soldier Andre Card:Baby Desert Wolf Card:Elder Willow Card") == 2)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
 			mes "6. What is the Mage good at compared to other job classes?";
 			next;
-			if (select("Exceptional Vocal Ability:Exceptional Acting Ability:Exceptional Dance Skills:Exceptional Magic Skills") == 4) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("Exceptional Vocal Ability:Exceptional Acting Ability:Exceptional Dance Skills:Exceptional Magic Skills") == 4)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
 			mes "7. What is the INT bonus at Job Lv 40 for a Mage?";
 			next;
-			if (select("8:7:6:5") == 4) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("8:7:6:5") == 4)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
 			mes "8. Which item can a Mage not equip?";
 			next;
-			if (select("Knife:Boys Cap:Sandle:Eye of Dullahan") == 2) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("Knife:Boys Cap:Sandle:Eye of Dullahan") == 2)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
 			mes "9. Which of the following is the catalyst when making the Mage test solution 3?";
 			next;
-			if (select("Blue Gemstone:Red Gemstone:Yellow Gemstone:Red Blood") == 1) {
-				set @wizard_t, @wizard_t + 10;
-			}
+			if (select("Blue Gemstone:Red Gemstone:Yellow Gemstone:Red Blood") == 1)
+				set .@wizard_t,.@wizard_t+10;
 			mes "[Raulel]";
 			mes "10. Which card is irrelevant to magic?";
 			next;
-			if (select("Marduk Card:Magnolia Card:Willow Card:Maya Card") == 2) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			next;
+			if (select("Marduk Card:Magnolia Card:Willow Card:Maya Card") == 2)
+				set .@wizard_t,.@wizard_t+10;
 		}
 		mes "[Raulel]";
+		if (WIZ_Q == 4) {
+			mes "Good job, you finished answered all the questions... Go buy yourself some potions or something if you have the Zeny. Haha...";
+			next;
+			mes "[Raulel]";
+			mes "Your score is... " + .@wizard_t + "points.....";
+			if (.@wizard_t == 100) {
+				set WIZ_Q,5;
+				changequest 9016,9017;
+				mes "Hahahahahahah~ Well done, you passed the second test.";
+				mes "It wasn't done in one try like mine was, but I'll let you slide...";
+				next;
+				mes "[Raulel]";
+				mes "*sneeze* Don't relax just yet, there's still the matter of the third and final test.";
+				mes "I advise you to rest a bit while the final test is prepared. Your gonna need it. Hahahahaha~";
+				close;
+			}
+			else if (.@wizard_t == 90) {
+				set WIZ_Q,5;
+				changequest 9016,9017;
+				mes "Hahaha~ Since you only missed one problem, you passed the second test.";
+				mes "It wasn't done in one try like mine was, but I'll let you slide...";
+				next;
+				mes "[Raulel]";
+				mes "*sneeze* Don't relax just yet, there's still the matter of the third and final test.";
+				mes "I advise you to rest a bit while the final test is prepared. Your gonna need it. Hahahahaha~";
+				close;
+			}
+			else if (.@wizard_t == 80) {
+				set WIZ_Q,5;
+				changequest 9016,9017;
+				mes "Sheez... You didn't do very well, but you passed the second test.";
+				mes "It wasn't done in one try like mine was, but I'll let you slide...";
+				next;
+				mes "[Raulel]";
+				mes "*sneeze* Don't relax just yet, there's still the matter of the third and final test.";
+				mes "I advise you to rest a bit while the final test is prepared. Your gonna need it. Hahahahaha~";
+				close;
+			}
+			else {
+				mes "You failed. Go study some more!";
+				next;
+				mes "[Raulel]";
+				mes "*cough* *cough* Did you really think you could become a Wizard with such a mediocre level like yours?";
+				mes "Get lost! If you were a Wizard right now, the monsters that I fight, would eat you up in no time!";
+				close;
+			}
+		}
 		mes "Hmmm...Good job, you finished answering all the questions, go buy yourself some potions or something, thats IF you have the Zeny. Hahahahahahahah~";
 		next;
 		mes "[Raulel]";
-		mes "Your score is... " + @wizard_t + " points!";
-		if (@wizard_t == 100) {
+		mes "Your score is... " + .@wizard_t + " points!";
+		if (.@wizard_t == 100) {
 			set WIZ_Q,5;
 			changequest 9016,9017;
 			mes "*cough* *Cough* Well done, you passed the second test.";
@@ -772,7 +802,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 			mes "*sneeze* I advise you to rest a bit while the final test is prepared...Hahahahah~";
 			close;
 		}
-		if (@wizard_t == 90) {
+		else if (.@wizard_t == 90) {
 			set WIZ_Q,5;
 			changequest 9016,9017;
 			mes "Hahahaha~ I'll let you slide by since you only missed one problem. You passed the second test.";
@@ -782,286 +812,17 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 			mes "*sneeze* I advise you to rest a bit while the final test is prepared...Hahahahah~";
 			close;
 		}
-		set WIZ_Q,4;
-		mes "You failed. I will let you come back again...after you've learned more relating to the type of questions I've asked you.";
-		next;
-		mes "[Raulel]";
-		mes "Tisk...not enough, not enough! Did you really think you could become a Wizard with the little bit of knowledge you have?";
-		mes "Get lost! If you were a Wizard right now, the monsters I deal with would eat you up in no time!";
-		close;
-	}
-	if (WIZ_Q == 4) {
-		mes "[Raulel]";
-		mes "Hahahaha~ Are you that desperate? *sneeze* What a pain in the arse...";
-		next;
-		mes "[Raulel]";
-		mes "Since you don't want to settle for a stable and peaceful life, I'll give you another chance...";
-		next;
-		mes "[Raulel]";
-		mes "If you miss one single question, then just give up. You wouldn't have any talent in being a Wizard! ~Hahahahaha";
-		next;
-		if (select("Because of you, I want to live as a normal Mage now.:I would like to continue with the tests.") == 1) {
-			mes "[Raulel]";
-			mes "Hahahaha~ Surprising, comming from you, that's a very wise choice...*cough* *cough*";
-			mes "If i were you, i would never, ever dream of becoming a Wizard again. Gre...Greaa...*sneeze* Greater Magic wasn't meant for humans to use.";
-			next;
-			mes "[Raulel]";
-			mes "Just leave the top of this tower quietly and never look back.";
-			mes "Live peacefully with the powers that you have right now.";
-			close;
-		}
-		mes "[Raulel]";
-		mes "Hahahahahahaha~ Now there's a foolish one right here!";
-		mes "Well then, let's see just how good you can be! *sneeze* I want to see this with my own two eyes.";
-		next;
-		mes "[Raulel]";
-		mes "Then let's begin the test!";
-		mes "If you don't answer all of them correctly, you fail... ~Hahahahahha";
-		next;
-		mes "[Raulel]";
-		mes "I'll give you 10 questions so give me the correct answers.";
-		mes "If you get something wrong, I won't tell you what it is!";
-		next;
-		set .@wizard_m2,rand(1,3);
-		set @wizard_t,0;
-		mes "[Raulel]";
-		mes "*Cough* *cough* Then here go the questions.";
-		next;
-		if (.@wizard_m2 == 1) {
-			mes "[Raulel]";
-			mes "1. Which of the following is not necessary to learn Fire Wall?";
-			next;
-			if (select("Fire Bolt Lv 4:Fire Ball Lv 5:Sight Lv 1:Napalm Beat Lv 4") == 4) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "2. Regaurdless of the previous attribute, what does the monster's attribute change to when you cast Frost Diver on it?";
-			next;
-			if (select("Water:Earth:Fire:Wind") == 1) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "3. When you master Napalm Beat, what is the ratio of the increase in MATK using the spell?";
-			next;
-			if (select("1.6 times:1.7 times:2 times:20 times") == 2) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "4. What item do you need when casting Stone Curse?";
-			next;
-			if (select("Red Blood:Blue Gemstone:Yellow Gemstone:Red Gemstone") == 4) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "5. Which of the following is not required to master Safety Wall?";
-			next;
-			if (select("Napalm Beat Lv 4:Soul Strike Lv 5:Increase SP Recovery Lv 6:Safety Wall Lv 7") == 3) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "6. Without the INT bonus, what amount of SP is recovered every 10 seconds when you have learned Increase SP Recovery Lv 7?";
-			next;
-			if (select("14:21:28:35") == 2) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "7. Using the skill Energy Coat, when you have 50% of your SP remaining, how much SP is used when hit, and what percentage is damage reduced by?";
-			next;
-			if (select("Damage 18% SP1.5%:Damage 18% SP2%:Damage 24% SP1.5%:Damage 24% SP2%") == 2) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "8. How much SP is consumed, and how many times can you avoid attacks when using Safety Wall Lv 6?";
-			next;
-			if (select("SP 40, 6 times:SP 35, 6 times:SP 40, 7 times:SP 35, 7 times") == 3) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "9. How much SP is needed when using Lv 10 Thunderstorm?";
-			next;
-			if (select("84:74:64:54") == 2) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "10. Which skill is most useful for training in the Byalan Dungeon?";
-			next;
-			if (select("Lightning Bolt:Fire Bolt:Cold Bolt:Sight") == 1) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			next;
-		}
-		if (.@wizard_m2 == 2) {
-			mes "[Raulel]";
-			mes "1. Which monster can you obtain a slotted Guard from?";
-			next;
-			if (select("Thief Bug:Peco Peco:Pupa:Kobold (Hammer)") == 3) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "2. Which of the following is the easiest monster for a low level Mage to hunt?";
-			next;
-			if (select("Flora:Giearth:Golem:Myst") == 1) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "3. Which monster will not be affected by Stone Curse?";
-			next;
-			if (select("Elder Willow:Evil Druid:Magnolia:Marc") == 2) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "4. When attacking a Lv 3 water attribute monster with a wind attribute weapon, what is the damage percentage?";
-			next;
-			if (select("125%:150%:175%:200%") == 4) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "5. If a Baby Desert Wolf and a Familiar fought, which one would win?";
-			next;
-			if (select("Baby Desert Wolf:Familiar:Neither:I don't know") == 1) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "6. Which of the following cannot be a Cute Pet?";
-			next;
-			if (select("Poporing:Roda Frog:Smokie:Poison Spore") == 2) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "7. Choose the monster that is weak against a fire attribute attack.";
-			next;
-			if (select("Dagger Goblin:Mace Goblin:Morningstar Goblin:Hammer Goblin") == 4) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "8. Which of the following monsters has the highest defense?";
-			next;
-			if (select("Horn:Chonchon:Andre:Caramel") == 4) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "9. Choose the monster that's a different species.";
-			next;
-			if (select("Poring:Mastering:Ghostring:Spore") == 3) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "10. Which of the following is not an Undead monster?";
-			next;
-			if (select("Drake:Megalodon:Deviace:Khalitzburg") == 3) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			next;
-		}
 		else {
-			mes "[Raulel]";
-			mes "1. Which stat is the most important for a Mage?";
-			next;
-			if (select("INT:AGI:DEX:VIT") == 1) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "2. Which attribute does not have a 'Bolt' type attack?";
-			next;
-			if (select("Water:Earth:Fire:Wind") == 2) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "3. Choose the one that does not relate to a Mage.";
-			next;
-			if (select("Weak physical strength.:Attacks at a distance.:Good at selling stuff.:Magic Defense is high.") == 3) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "4. Which town is the home of the Mages?";
-			next;
-			if (select("Prontera:Morroc:Alberta:Geffen") == 4) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "5. Which of the following cards has nothing to do with INT?";
-			next;
-			if (select("Andre Egg Card:Soldier Andre Card:Baby Desert Wolf Card:Elder Willow Card") == 2) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "6. What is the Mage good at compared to other job classes?";
-			next;
-			if (select("Exceptional Vocal Ability:Exceptional Acting Ability:Exceptional Dance Skills:Exceptional Magic Skills") == 4) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "7. What is the INT bonus at Job Lv 40 for a Mage?";
-			next;
-			if (select("8:7:6:5") == 4) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "8. Which item can a Mage not equip?";
-			next;
-			if (select("Knife:Boys Cap:Sandle:Eye of Dullahan") == 2) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "9. Which of the following is the catalyst when making the Mage test solution 3?";
-			next;
-			if (select("Blue Gemstone:Red Gemstone:Yellow Gemstone:Red Blood") == 1) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			mes "[Raulel]";
-			mes "10. Which card is irrelevant to magic?";
-			next;
-			if (select("Marduk Card:Magnolia Card:Willow Card:Maya Card") == 2) {
-				set @wizard_t, @wizard_t + 10;
-			}
-			next;
-		}
-		mes "[Raulel]";
-		mes "Good job, you finished answered all the questions... Go buy yourself some potions or something if you have the Zeny. Haha...";
-		next;
-		mes "[Raulel]";
-		mes "Your score is... " + @wizard_t + "points.....";
-		if (@wizard_t == 100) {
-			changequest 9016,9017;
-			set WIZ_Q,5;
-			mes "Hahahahahahah~ Well done, you passed the second test.";
-			mes "It wasn't done in one try like mine was, but I'll let you slide...";
+			set WIZ_Q,4;
+			mes "You failed. I will let you come back again...after you've learned more relating to the type of questions I've asked you.";
 			next;
 			mes "[Raulel]";
-			mes "*sneeze* Don't relax just yet, there's still the matter of the third and final test.";
-			mes "I advise you to rest a bit while the final test is prepared. Your gonna need it. Hahahahaha~";
+			mes "Tisk...not enough, not enough! Did you really think you could become a Wizard with the little bit of knowledge you have?";
+			mes "Get lost! If you were a Wizard right now, the monsters I deal with would eat you up in no time!";
 			close;
 		}
-		if (@wizard_t == 90) {
-			set WIZ_Q,5;
-			changequest 9016,9017;
-			mes "Hahaha~ Since you only missed one problem, you passed the second test.";
-			mes "It wasn't done in one try like mine was, but I'll let you slide...";
-			next;
-			mes "[Raulel]";
-			mes "*sneeze* Don't relax just yet, there's still the matter of the third and final test.";
-			mes "I advise you to rest a bit while the final test is prepared. Your gonna need it. Hahahahaha~";
-			close;
-		}
-		if (@wizard_t == 80) {
-			set WIZ_Q,5;
-			changequest 9016,9017;
-			mes "Sheez... You didn't do very well, but you passed the second test.";
-			mes "It wasn't done in one try like mine was, but I'll let you slide...";
-			next;
-			mes "[Raulel]";
-			mes "*sneeze* Don't relax just yet, there's still the matter of the third and final test.";
-			mes "I advise you to rest a bit while the final test is prepared. Your gonna need it. Hahahahaha~";
-			close;
-		}
-		mes "You failed. Go study some more!";
-		next;
-		mes "[Raulel]";
-		mes "*cough* *cough* Did you really think you could become a Wizard with such a mediocre level like yours?";
-		mes "Get lost! If you were a Wizard right now, the monsters that I fight, would eat you up in no time!";
-		close;
 	}
-	if (WIZ_Q == 5) {
+	else if (WIZ_Q == 5) {
 		mes "[Raulel]";
 		mes "Ok, hope you got plenty of rest. Hahahahahah~";
 		mes "Then let's begin the last test.";
@@ -1125,7 +886,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 		warp "geffen",120,110;
 		end;
 	}
-	if (WIZ_Q == 6) {
+	else if (WIZ_Q == 6) {
 		if (WIZ_Q2 == 6) {
 			mes "[Raulel]";
 			mes "Hahahahahaha~ I've never seen anyone so...sooo...*sneeze* tenacious as you.";
@@ -1143,7 +904,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 			warp "job_wiz",57,154;
 			end;
 		}
-		if (WIZ_Q2 > 6) {
+		else if (WIZ_Q2 > 6) {
 			mes "[Raulel]";
 			mes "Oh! So you're back? Hahahahaha~";
 			mes "*Cough* Cough* Do you want to take the test again? Or did you bring the ^3355FFWorn Out Scroll^000000?";
@@ -1165,14 +926,12 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 				next;
 				set WIZ_Q2,0;
 				set WIZ_Q,7;
-				changequest 9017,9018;
 				mes "[Raulel]";
 				mes "Even though your not Grade A Wizard material, I can tell your serious about wanting the Greater Magic. I'll tell Catherine that you passed. Hahahahahahahahah~";
 				mes "You went through a lot of trouble here, and that is the true purpose for us selecting Wizards. Only those who will devote themselves to the art will ever become Wizards. Good luck to you. Become much Stronger. Hahahahahaha~";
 				close;
 			}
 		}
-		set @wizard_t,0;
 		mes "[Raulel]";
 		mes "*sneeze* What? You want to take the test again?";
 		mes "Geez...you already failed the battle test! Hahahahahahahaha~ So you like magic that much, eh?";
@@ -1187,43 +946,38 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 		mes "[Raulel]";
 		mes "1. Choose the monster with a different attribute than the others.";
 		next;
-		if (select("Mantis:Cornutus:Giearth:Caramel") == 2) {
-			set @wizard_t, @wizard_t + 20;
-		}
+		if (select("Mantis:Cornutus:Giearth:Caramel") == 2)
+			set .@wizard_t,.@wizard_t+20;
 		mes "[Raulel]";
 		mes "2. Choose the monster that is not a looting one.";
 		next;
-		if (select("Yoyo:Magnolia:Metaller:Zerom") == 4) {
-			set @wizard_t, @wizard_t + 20;
-		}
+		if (select("Yoyo:Magnolia:Metaller:Zerom") == 4)
+			set .@wizard_t,.@wizard_t+20;
 		mes "[Raulel]";
 		mes "3. Which of these monsters does not recognize casting?";
 		next;
-		if (select("Marina:Vitata:Scorpion:Giearth") == 1) {
-			set @wizard_t, @wizard_t + 20;
-		}
+		if (select("Marina:Vitata:Scorpion:Giearth") == 1)
+			set .@wizard_t,.@wizard_t+20;
 		mes "[Raulel]";
 		mes "4. Choose the spell that would be efficient against a Marine Sphere.";
 		next;
-		if (select("Cold Bolt:Fire Bolt:Lightning Bolt:Stone Curse") == 3) {
-			set @wizard_t, @wizard_t + 20;
-		}
+		if (select("Cold Bolt:Fire Bolt:Lightning Bolt:Stone Curse") == 3)
+			set .@wizard_t,.@wizard_t+20;
 		mes "[Raulel]";
 		mes "5. Choose the monster that can move.";
 		next;
-		if (select("Hydra:Madragora:Greatest General:Frilldora") == 4) {
-			set @wizard_t, @wizard_t + 20;
-		}
+		if (select("Hydra:Madragora:Greatest General:Frilldora") == 4)
+			set .@wizard_t,.@wizard_t+20;
 		mes "[Raulel]";
 		mes "*pfft* Do it right, so I don't have to ask again.";
 		next;
 		mes "[Raulel]";
-		mes "You got " + @wizard_t + " points.";
-		if (@wizard_t == 100) {
+		mes "You got " + .@wizard_t + " points.";
+		if (.@wizard_t == 100) {
 			mes "Hahahahahaha~ *Cough* *cough* If you can answer all these questions correctly, how is it you can't do well in battles??";
 			next;
 		}
-		else if (@wizard_t == 80) {
+		else if (.@wizard_t == 80) {
 			mes "Eh, soso...";
 			mes "I'll let you retake the test.";
 			next;
@@ -1288,7 +1042,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 		warp "geffen",120,110;
 		end;
 	}
-	if (WIZ_Q == 7) {
+	else if (WIZ_Q == 7) {
 		mes "[Raulel]";
 		mes "You shouldn't have any more business with me as far as I'm concerned.";
 		mes "But, since your so darned persistent, I'll let you take the test again. Hahahahaha~";
@@ -1907,19 +1661,19 @@ OnTimer9000:
 	end;
 }
 
-gef_tower,107,36,4	script	White Dog	81,{
-	if ((Class != Job_Baby_Mage) && (Class != Job_Mage)) {
-		if (Class == Job_Baby_Wizard || Class == Job_Wizard) {
+gef_tower,107,36,4	script	White Dog#wiz	81,{
+	if (BaseJob != Job_Mage) {
+		if (BaseJob == Job_Wizard) {
 			mes "[Maria]";
 			mes "Instead of sticking around here, wouldn't it be better to go out and test how strong you've become?";
 			next;
 			mes "[Maria]";
 			mes "Don't forget that Wizards grow and improve in power each and every day.";
 			close2;
-			cutin "",255;
+			cutin "job_wizard_maria01",255;
 			end;
 		}
-		if (Class == Job_Baby || Class == Job_Novice) {
+		else if (BaseClass == Job_Novice) {
 			mes "[Dog]";
 			mes "What? Kiddo!";
 			mes "Is a Dog talking so amusing to you?";
@@ -1935,7 +1689,7 @@ gef_tower,107,36,4	script	White Dog	81,{
 		mes "*Bark* Get lost!";
 		mes "I don't have time for people like you!";
 		close2;
-		cutin "",255;
+		cutin "job_wizard_maria02",255;
 		end;
 	}
 	if (WIZ_Q == 0) {
@@ -1949,7 +1703,7 @@ gef_tower,107,36,4	script	White Dog	81,{
 		mes "[Dog]";
 		mes "Also, if you would like to know anything about the job change process, I can explain.";
 		next;
-		switch (select(".......:A Dog is talking to me...")) {
+		switch(select(".......:A Dog is talking to me...")) {
 		case 1:
 			mes "[Dog]";
 			mes "...*bark*...? What is it?? Why are you looking at me like that?!";
@@ -2010,7 +1764,7 @@ gef_tower,107,36,4	script	White Dog	81,{
 		mes "I can tell you more about the job change process, but I can't hold back a busy person now can I?";
 		mes "What do you think? Should I explain some about whats in store for Mages that wish to become Wizards?";
 		next;
-		switch (select("Yes, please! I would like that.:No, it's ok.:A talking dog...")) {
+		switch(select("Yes, please! I would like that.:No, it's ok.:A talking dog...")) {
 		case 1:
 			cutin "job_wizard_maria01",2;
 			mes "[Maria]";
@@ -2045,11 +1799,16 @@ gef_tower,107,36,4	script	White Dog	81,{
 			next;
 			mes "[Maria]";
 			mes "It's better to just try it yourself than to listen to my descriptions.";
-			close;
+			close2;
+			cutin "job_wizard_maria01",255;
+			warp "gef_dun00",116,102;
+			end;
 		case 2:
 			mes "[Maria]";
 			mes "Really? Ok, then go apply and do your best.";
-			close;
+			close2;
+			cutin "job_wizard_maria01",255;
+			end;
 		case 3:
 			cutin "job_wizard_maria02",2;
 			mes "[Maria]";
@@ -2058,12 +1817,12 @@ gef_tower,107,36,4	script	White Dog	81,{
 			mes "[Maria]";
 			mes "Dang it! I hope you FAIL!! Go get lost!!";
 			close2;
-			cutin "",255;
+			cutin "job_wizard_maria01",255;
 			warp "gef_dun00",116,102;
 			end;
 		}
 	}
-	if (WIZ_Q == 1) {
+	else if (WIZ_Q == 1) {
 		cutin "job_wizard_maria01",2;
 		mes "[Maria]";
 		mes "You seem lost...";
@@ -2083,7 +1842,7 @@ gef_tower,107,36,4	script	White Dog	81,{
 		next;
 		mes "[Maria]";
 		mes "Yellow Gemstones are easy to find in the desert.";
-		mes "Condors, Pickies, and sometimes monsters like Golems drop them.";
+		mes "Condors, Picky's, and sometimes monsters like Golem's drop them.";
 		next;
 		mes "[Maria]";
 		mes "And...*woof* to get Blue Gemstones. Try going to the Byalan Dungeons.";
@@ -2097,10 +1856,10 @@ gef_tower,107,36,4	script	White Dog	81,{
 		mes "Anyways, try your best.";
 		mes "This is the basics of being a Wizard.";
 		close2;
-		cutin "",255;
+		cutin "job_wizard_maria01",255;
 		end;
 	}
-	if (WIZ_Q == 2) {
+	else if (WIZ_Q == 2) {
 		cutin "job_wizard_maria01",2;
 		mes "[Maria]";
 		mes "You seem lost...";
@@ -2134,19 +1893,19 @@ gef_tower,107,36,4	script	White Dog	81,{
 		mes "But anyways, always try your best.";
 		mes "It's the basics of being a Wizard.";
 		close2;
-		cutin "",255;
+		cutin "job_wizard_maria01",255;
 		end;
 	}
-	if (WIZ_Q == 3) {
+	else if (WIZ_Q == 3) {
 		cutin "job_wizard_maria01",2;
 		mes "[Maria]";
 		mes "Don't be too relieved just after the first test.";
 		mes "Try your best, as you still have two more tests to go.";
 		close2;
-		cutin "",255;
+		cutin "job_wizard_maria01",255;
 		end;
 	}
-	if (WIZ_Q == 4) {
+	else if (WIZ_Q == 4) {
 		cutin "job_wizard_maria01",2;
 		mes "[Maria]";
 		mes "ZzzzZzzzZzzz...";
@@ -2155,10 +1914,10 @@ gef_tower,107,36,4	script	White Dog	81,{
 		mes "[Maria]";
 		mes "*wimper*...Blizadris...you suck...Zzz...";
 		close2;
-		cutin "",255;
+		cutin "job_wizard_maria02",255;
 		end;
 	}
-	if (WIZ_Q == 5) {
+	else if (WIZ_Q == 5) {
 		cutin "job_wizard_maria01",2;
 		mes "[Maria]";
 		mes "Oh, you're doing well aren't you?";
@@ -2167,10 +1926,10 @@ gef_tower,107,36,4	script	White Dog	81,{
 		mes "Well, try your best to the very end.";
 		mes "Laurel is waiting.";
 		close2;
-		cutin "",255;
+		cutin "job_wizard_maria01",255;
 		end;
 	}
-	if (WIZ_Q == 6) {
+	else if (WIZ_Q == 6) {
 		cutin "job_wizard_maria01",2;
 		mes "[Maria]";
 		mes "*BARK*...you gave up?";
@@ -2188,10 +1947,10 @@ gef_tower,107,36,4	script	White Dog	81,{
 		mes "*Grrr* Anyways, continue the test.";
 		mes "Don't have a weak mind, *woof* and go back! *Bark* *Bark* Right this moment! *BARK*";
 		close2;
-		cutin "",255;
+		cutin "job_wizard_maria01",255;
 		end;
 	}
-	if (WIZ_Q == 7) {
+	else if (WIZ_Q == 7) {
 		cutin "job_wizard_maria01",2;
 		mes "[Maria]";
 		mes "As I thought, I knew you'd be able to do it, I could smell it in yah! *Woof*";
@@ -2200,7 +1959,27 @@ gef_tower,107,36,4	script	White Dog	81,{
 		mes "[Maria]";
 		mes "Congratulations. Always give your best at everything, no matter what.";
 		close2;
-		cutin "",255;
+		cutin "job_wizard_maria01",255;
 		end;
 	}
 }
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.1 Now using the initnpctimer command, donpcevent,
+//= and new waitingroom event commands.  No more addtimer spamming.
+//= No longer have to talk to the npc to take the test.  Just enter the chat room.
+//= 1.2 Changed global variable names to unique ones.
+//= 1.2a Rollback from the wrong Kashy's fix
+//= 1.2b Fixed issue with duplicating monsters thx to Bison.[kobra_k88]
+//= 1.2c changed one Horong to Frilldora (now 3rd room contains 1 agressive mob.)
+//= 1.2d more simplified fire room - removed agressive Desert Wolf [Lupus]
+//= 1.3 Added Baby Class support. 1.5 Fixed possible EXP abuse [Lupus]
+//= 1.6 Added a func which prevent advanced classes passing
+//= 2nd Job Quests again. It also guides adv classes where to go. [Lupus]
+//= 1.7 Replaced 2 Hodes with 2 Horong's (according to the official guide) [Lupus]
+//= 1.8 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
+//= 2.1 Changed numbers to constants. [Vicious]
+//= 2.2 Merged back JFunc [Lupus] 2.2a Removed extra MES, added missing NEXT
+//= 2.3 Bigfoot monster summon corrected [Zairik]

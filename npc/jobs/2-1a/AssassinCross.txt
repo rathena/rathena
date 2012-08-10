@@ -43,7 +43,7 @@ valkyrie,44,58,5	script	Assassin Cross#Valkyrie	725,{
 		mes "Nobody...";
 		close;
 	}
-	if ((ADVJOB == Job_Assassin_Cross) && (Class == Job_Thief_High) && (JobLevel > 39)) {
+	else if (ADVJOB == Job_Assassin_Cross && Class == Job_Thief_High && JobLevel > 39) {
 		mes "[Assassin Cross]";
 		mes "The time has come.";
 		mes "The world needs you...";

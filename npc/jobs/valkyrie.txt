@@ -53,7 +53,7 @@ valkyrie,48,86,4	script	Valkyrie#	811,{
 		mes "Honor to the warriors!";
 		close;
 	}
-	if ((Baselevel > 98) && (JobLevel > 49) && ((Class >= Job_Knight) && (Class <= Job_Crusader2))) {
+	else if (Baselevel > 98 && JobLevel > 49 && Class >= Job_Knight && Class <= Job_Crusader2) {
 		mes "[Valkyrie]";
 		mes "Welcome";
 		mes "to Valhalla,";
@@ -84,129 +84,133 @@ valkyrie,48,86,4	script	Valkyrie#	811,{
 			warp "yuno_in02",93,205;
 			end;
 		}
-		mes "[Valkyrie]";
-		mes "I see you've already";
-		mes "released yourself from";
-		mes "all worldy attachments,";
-		mes ""+ strcharinfo(0) +".";
-		next;
-		mes "[Valkyrie]";
-		mes "That's an admirable attitude for an adventurer such as yourself. Honor comes when you abandon all personal desires for the sake of mankind.";
-		next;
-		if (SkillPoint) {
+		else {
 			mes "[Valkyrie]";
-			mes "Hmm... I sense that you have";
-			mes "some lingering attachment or";
-			mes "unfinished business in your";
-			mes "current life. Take care of that,";
-			mes "and bring closure to your present life.";
+			mes "I see you've already";
+			mes "released yourself from";
+			mes "all worldy attachments,";
+			mes ""+ strcharinfo(0) +".";
+			next;
+			mes "[Valkyrie]";
+			mes "That's an admirable attitude for an adventurer such as yourself. Honor comes when you abandon all personal desires for the sake of mankind.";
+			next;
+			if (SkillPoint) {
+				mes "[Valkyrie]";
+				mes "Hmm... I sense that you have";
+				mes "some lingering attachment or";
+				mes "unfinished business in your";
+				mes "current life. Take care of that,";
+				mes "and bring closure to your present life.";
+				close2;
+				warp "yuno_in02",93,205;
+				end;
+			}
+			mes "[Valkyrie]";
+			mes "Now, let me remove all";
+			mes "of your present memories...";
+			mes "However, you will be able to";
+			mes "remember the most honorable";
+			mes "moments of this life.";
+			next;
+			mes "[Valkyrie]";
+			mes "With one,";
+			mes "I will ask the";
+			mes "goddess Urd to remove";
+			mes "all of your present";
+			mes "memories.";
+			next;
+			mes "[Valkyrie]";
+			mes "With two,";
+			mes "I will ask the";
+			mes "goddess Verdandi to keep";
+			mes "and record the most honorable moments of your present life.";
+			next;
+			mes "[Valkyrie]";
+			mes "With three,";
+			mes "I will ask the";
+			mes "goddess Skuld to";
+			mes "guide you to your";
+			mes "next life.";
+			next;
+			mes "[Valkyrie]";
+			mes "One...";
+			callfunc "F_ClearJobVar";
+			next;
+			mes "[Valkyrie]";
+			mes "One...";
+			mes "Two......";
+			next;
+			mes "[Valkyrie]";
+			mes "One...";
+			mes "Two......";
+			mes "And Three.";
+			set ADVJOB, Class+Job_Novice_High; //memo the target 3rd Job ID
+			if(ADVJOB == Job_Lord_Knight2) set ADVJOB,Job_Lord_Knight;
+			if(ADVJOB == Job_Paladin2) set ADVJOB,Job_Paladin;
+			jobchange Job_Novice_High;
+			resetlvl(1);
+			set MISC_QUEST,MISC_QUEST | 1024; //<-reset Skill Reset Event
+			skill 142,1,0;
+			skill 143,1,0;
+			completequest 1000;
+			next;
+			mes "[Valkyrie]";
+			mes "Congratulations.";
+			mes "You are now reborn";
+			mes "into a brand new life.";
+			mes "Please take these small gifts";
+			mes "in preparation for your new adventures.";
+			getitem 1202,1; //Knife_
+			getitem 2302,1; //Cotton_Shirt_
+			next;
+			mes "[Valkyrie]";
+			mes "I wish that the release the goddess Urd has granted you proves to be a blessing. I hope that the memories Verdandi has recorded will always honor you.";
+			next;
+			mes "[Valkyrie]";
+			mes "And I pray that the new life to which the goddess Skuld will guide you will be even more honorable than your last.";
 			close2;
-			warp "yuno_in02",93,205;
+			switch (ADVJOB) {
+			case 4008:
+			case 4015:
+				warp "izlude",94,103; break;
+			case 4009:
+			case 4016:
+				warp "prontera",273,354; break;
+			case 4010:
+			case 4017:
+				warp "geffen",120,60; break;
+			case 4011:
+			case 4019:
+				warp "alberta",116,57; break;
+			case 4012:
+			case 4020:
+			case 4021:
+				warp "payon",69,100; break;
+			case 4013:
+			case 4018:
+				warp "morocc",154,50; break;
+			default:
+				warp "yuno_in02",93,205; break;
+			}
 			end;
 		}
+	}
+	else {
 		mes "[Valkyrie]";
-		mes "Now, let me remove all";
-		mes "of your present memories...";
-		mes "However, you will be able to";
-		mes "remember the most honorable";
-		mes "moments of this life.";
+		mes "Welcome";
+		mes "to Valhalla,";
+		mes "the Hall of Honor.";
 		next;
 		mes "[Valkyrie]";
-		mes "With one,";
-		mes "I will ask the";
-		mes "goddess Urd to remove";
-		mes "all of your present";
-		mes "memories.";
-		next;
-		mes "[Valkyrie]";
-		mes "With two,";
-		mes "I will ask the";
-		mes "goddess Verdandi to keep";
-		mes "and record the most honorable moments of your present life.";
-		next;
-		mes "[Valkyrie]";
-		mes "With three,";
-		mes "I will ask the";
-		mes "goddess Skuld to";
-		mes "guide you to your";
-		mes "next life.";
-		next;
-		mes "[Valkyrie]";
-		mes "One...";
-		callfunc "F_ClearJobVar";
-		next;
-		mes "[Valkyrie]";
-		mes "One...";
-		mes "Two......";
-		next;
-		mes "[Valkyrie]";
-		mes "One...";
-		mes "Two......";
-		mes "And Three.";
-		set ADVJOB, Class+Job_Novice_High; //memo the target 3rd Job ID
-		if(ADVJOB == Job_Lord_Knight2) set ADVJOB,Job_Lord_Knight;
-		if(ADVJOB == Job_Paladin2) set ADVJOB,Job_Paladin;
-		jobchange Job_Novice_High;
-		resetlvl(1);
-		set MISC_QUEST,MISC_QUEST | 1024; //<-reset Skill Reset Event
-		skill 142,1,0;
-		skill 143,1,0;
-		completequest 1000;
-		next;
-		mes "[Valkyrie]";
-		mes "Congratulations.";
-		mes "You are now reborn";
-		mes "into a brand new life.";
-		mes "Please take these small gifts";
-		mes "in preparation for your new adventures.";
-		getitem 1202,1; //Knife_
-		getitem 2302,1; //Cotton_Shirt_
-		next;
-		mes "[Valkyrie]";
-		mes "I wish that the release the goddess Urd has granted you proves to be a blessing. I hope that the memories Verdandi has recorded will always honor you.";
-		next;
-		mes "[Valkyrie]";
-		mes "And I pray that the new life to which the goddess Skuld will guide you will be even more honorable than your last.";
+		mes "Unfortunately, you have not yet been invited here. I ask you to leave immediately. Honor to the warriors!";
 		close2;
-		switch (ADVJOB) {
-		case 4008:
-		case 4015:
-			warp "izlude",94,103; break;
-		case 4009:
-		case 4016:
-			warp "prontera",273,354; break;
-		case 4010:
-		case 4017:
-			warp "geffen",120,60; break;
-		case 4011:
-		case 4019:
-			warp "alberta",116,57; break;
-		case 4012:
-		case 4020:
-		case 4021:
-			warp "payon",69,100; break;
-		case 4013:
-		case 4018:
-			warp "morocc",154,50; break;
-		default:
-			warp "yuno_in02",93,205; break;
-		}
+		warp "yuno_in02",93,205;
 		end;
 	}
-	mes "[Valkyrie]";
-	mes "Welcome";
-	mes "to Valhalla,";
-	mes "the Hall of Honor.";
-	next;
-	mes "[Valkyrie]";
-	mes "Unfortunately, you have not yet been invited here. I ask you to leave immediately. Honor to the warriors!";
-	close2;
-	warp "yuno_in02",93,205;
-	end;
 }
 
 yuno_in02,88,164,5	script	Metheus Sylphe#Library	742,{
-	if ((Baselevel > 98) && (JobLevel > 49) && ((Class >= Job_Knight) && (Class <= Job_Crusader2))) {
+	if (Baselevel > 98 && JobLevel > 49 && Class >= Job_Knight && Class <= Job_Crusader2) {
 		if (valkyrie_Q == 0) {
 			mes "[Metheus Sylphe]";
 			mes "Welcome to the Library of the Schweicherbil Magic Academy.";
@@ -271,7 +275,7 @@ yuno_in02,93,207,1	script	Book of Ymir	111,{
 		warp "valkyrie",48,8;
 		end;
 	}
-	if ((Baselevel > 98) && (JobLevel > 49) && ((Class >= Job_Knight) && (Class <= Job_Crusader2))) {
+	else if (Baselevel > 98 && JobLevel > 49 && Class >= Job_Knight && Class <= Job_Crusader2) {
 		if (valkyrie_Q != 0) {
 			mes "[The Book of Ymir]";
 			mes "...Therefore, ancient heroes were";
@@ -339,7 +343,7 @@ yuno_in02,93,207,1	script	Book of Ymir	111,{
 }
 
 yuno_in05,49,43,1	script	Heart of Ymir	111,{
-	if ((Baselevel > 98) && (JobLevel > 49) && ((Class >= Job_Knight) && (Class <= Job_Crusader2))) {
+	if (Baselevel > 98 && JobLevel > 49 && Class >= Job_Knight && Class <= Job_Crusader2) {
 		if (valkyrie_Q == 2) warp "valkyrie",48,8;
 	}
 	end;
@@ -361,22 +365,23 @@ valkyrie,44,33,5	script	Teleporter	124,{
 		mes "..........";
 		close;
 	}
-	mes "[Teleporter]";
-	mes "Honorable one,";
-	mes "which place do you wish to go?";
-	next;
-	switch(select("Prontera:Morroc:Payon:Geffen:Alberta:Izlude:Al De Baran:Comodo:Juno")) {
-	case 1: callsub S_Warpchar,"prontera",116,72;
-	case 2: callsub S_Warpchar,"morocc",156,46;
-	case 3: callsub S_Warpchar,"payon",69,100;
-	case 4: callsub S_Warpchar,"geffen",120,39;
-	case 5: callsub S_Warpchar,"alberta",117,56;
-	case 6: callsub S_Warpchar,"izlude",94,103;
-	case 7: callsub S_Warpchar,"aldebaran",91,105;
-	case 8: callsub S_Warpchar,"comodo",209,143;
-	case 9: callsub S_Warpchar,"yuno",328,101;
+	else {
+		mes "[Teleporter]";
+		mes "Honorable one,";
+		mes "which place do you wish to go?";
+		next;
+		switch(select("Prontera:Morroc:Payon:Geffen:Alberta:Izlude:Al De Baran:Comodo:Juno")) {
+		case 1: callsub S_Warpchar,"prontera",116,72;
+		case 2: callsub S_Warpchar,"morocc",156,46;
+		case 3: callsub S_Warpchar,"payon",69,100;
+		case 4: callsub S_Warpchar,"geffen",120,39;
+		case 5: callsub S_Warpchar,"alberta",117,56;
+		case 6: callsub S_Warpchar,"izlude",94,103;
+		case 7: callsub S_Warpchar,"aldebaran",91,105;
+		case 8: callsub S_Warpchar,"comodo",209,143;
+		case 9: callsub S_Warpchar,"yuno",328,101;
+		}
 	}
-
 S_WarpChar:
 	mes "[Teleporter]";
 	mes "Have a nice trip.";
@@ -390,3 +395,4 @@ S_WarpChar:
 //============================================================ 
 valkyrie,48,73,0	warp	valk01#1	1,1,valkyrie,48,64
 valkyrie,48,66,0	warp	valk01#2	1,1,valkyrie,48,75
+

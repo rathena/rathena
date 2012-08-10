@@ -1,21 +1,33 @@
 //===== rAthena Script ======================================= 
-// Bard Job change Quest
-//===== By: ================================================== 
-//= Masao
-//= Credits: Muad_Dib
+//= Bard Job Quest
+//===== By: ==================================================
+//= Muad_Dib(The Prometheus Project), Lupus, Samuray22
 //===== Current Version: ===================================== 
-//= 1.0
+//= 2.6
 //===== Compatible With: ===================================== 
-//= Any rAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
-//= [Translated from the Official]
-//= Job change Quest from Archer[M] -> Bard.
-//===== Additional Comments: ================================= 
-//= 1.0 Updated to latest available official file. [Masao]
-//============================================================ 
+//= [Aegis Conversion]
+//= Job quest for Bard class
+//===== Additional Comments: =================================
+//= 2.1b Updated to the Official One. [Samuray22]
+//= 2.2 Fixed BUG when baby classes weren't able to get a job,
+//=	- fixed bug with final prize [Lupus] HAVE TO CHANE ALL ITEMS to numeric IDs
+//= 2.3 Updated NPC dialogs and cutins using Aegis 10.3 files. [L0ne_W0lf]
+//=	- Fixed error with the present checking. (Lupus beat me to committing)
+//=	- Changed the reward checking to use callsub (fixed the flow of the script)
+//=	- Optimized and changed the flow of things slightly.
+//=	- Temporary character variables "@" are now ".@"
+//=	- Fixed some indentation.
+//=	- Changed item names to item IDs
+//= 2.4 Fixed hang up on bard quest. ($kiN.) [L0ne_W0lf]
+//= 2.5 Added Quest Log commands. [Kisuka]
+//= 2.6 Removed the need for use of 'goto.' [L0ne_W0lf]
+//============================================================
 
-comodo,226,123,5	script	Roaming Bard	741,{
-	if (Upper == 1) {
+//=============== Ayealo ============================
+comodo,226,123,5	script	Wandering Bard	741,{
+	if(Upper == 1) {
 		mes "[Lalo]";
 		mes "Chosen ones who are destined to become Gods";
 		mes "are so many in this era";
@@ -28,11 +40,11 @@ comodo,226,123,5	script	Roaming Bard	741,{
 		mes "Tell them they are wasting their time...";
 		mes "Tell them they forget the most important goal of the life...";
 		close2;
-		cutin "",255;
+		cutin "job_bard_aiolo01",255;
 		end;
 	}
-	if ((Class != Job_Baby_Archer) && (Class != Job_Archer)) {
-		if (Class == Job_Baby_Bard || Class == Job_Bard) {
+	else if(BaseJob != Job_Archer) {
+		if(BaseJob == Job_Bard) {
 			mes "[Lalo]";
 			mes "Ooh hey! How's your singing these days?";
 			mes "I wonder if your voice got any better.";
@@ -44,11 +56,8 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			mes "[Lalo]";
 			mes "Never forget to have a positive attitude and the meaning of joy.";
 			mes "Our songs are supposed to deliver happiness and joy to everyone.";
-			close2;
-			cutin "",255;
-			end;
 		}
-		if (Class == Job_Baby || Class == Job_Novice) {
+		else if(Class == Job_Novice) {
 			cutin "job_bard_aiolo01",2;
 			mes "[Lalo]";
 			mes "The sadness that overcomes my heart.. ";
@@ -64,51 +73,43 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			mes "[Lalo]";
 			mes "Heh... try asking someone else.";
 			mes "I'm trying to compose a new song.";
-			close2;
-			cutin "",255;
-			end;
-		}
-		cutin "job_bard_aiolo01",2;
-		mes "[Lalo]";
-		mes "Lalala, lalala. Beautiful Comodo.";
-		mes "Always full of happy moments~";
-		next;
-		mes "[Lalo]";
-		if (Sex == 1) {
-			mes "Forget about your worries~";
-			mes "And enjoy everything~";
 		}
 		else {
-			mes "Cute lady, shall we dance~";
+			cutin "job_bard_aiolo01",2;
+			mes "[Lalo]";
+			mes "Lalala, lalala. Beautiful Comodo.";
+			mes "Always full of happy moments~";
+			next;
+			mes "[Lalo]";
+			if (sex) {
+				mes "Forget about your worries~";
+				mes "And enjoy everything~";
+			}
+			else mes "Cute lady, shall we dance~";
+			mes "Youth never repeats itself~";
 		}
-		mes "Youth never repeats itself~";
 		close2;
-		cutin "",255;
+		cutin "job_bard_aiolo01",255;
 		end;
 	}
-	if (BARD_Q == 0) {
+	else if(BARD_Q == 0) {
 		cutin "job_bard_aiolo01",2;
 		mes "[Lalo]";
-		if (Sex == 1) {
-			mes "Hi! Delightful Archer.";
-		}
-		else {
-			mes "Hello! Beautiful Archer Lady.";
-		}
+		if (sex) mes "Hi! Delightful Archer.";
+		else mes "Hello! Beautiful Archer Lady.";
 		mes "How can a wanderer like me help you?";
 		next;
-		switch (select("You have a nice voice.:Could you sing for me, please?:Nothing.")) {
+		switch(select("You have a nice voice.:Could you sing for me, please?:Nothing.")) {
 		case 1:
 			mes "[Lalo]";
 			mes "Hahaha! Of course!";
-			mes "If you sing with a happy heart, your voice always gets better.";
+			mes "if you sing with a happy heart, your voice always gets better.";
 			next;
 			mes "[Lalo]";
 			mes "But, to Bards your voice is your life.";
 			mes "Sometimes your voice will go, but you must be careful.";
-			close2;
-			cutin "",255;
-			end;
+			break;
+
 		case 2:
 			mes "[Lalo]";
 			mes "A song... let's see.";
@@ -145,31 +146,30 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			next;
 			if (select("Yes, it was very nice.:No, not really...") == 1) {
 				mes "[Lalo]";
-				mes "Thanks! If you enjoyed my song, it makes me happy, too.";
+				mes "Thanks! if you enjoyed my song, it makes me happy, too.";
 				next;
-				if ((Sex == 1) && (JobLevel > 39)) {
+				if (Sex == 1 && JobLevel > 39) {
 					mes "[Lalo]";
 					mes "It would be nice if more people went around and sang...";
 					mes "Well, it's quite ok as it is now... hmmhmm.";
 					set BARD_Q,1;
 					setquest 3000;
 					close2;
-					cutin "",255;
+					cutin "job_bard_aiolo01",255;
 					end;
 				}
 				mes "[Lalo]";
-				mes "If you ever want to hear my song again, just ask.";
+				mes "if you ever want to hear my song again, just ask.";
 				close2;
-				cutin "",255;
+				cutin "job_bard_aiolo01",255;
 				end;
 			}
 			cutin "job_bard_aiolo02",2;
 			mes "[Lalo]";
 			mes "Hmm... Did I lose my senses, I'll have to try harder.";
 			mes "Anyways.. Thanks for listening.";
-			close2;
-			cutin "",255;
-			end;
+			break;
+
 		case 3:
 			cutin "job_bard_aiolo02",2;
 			mes "[Lalo]";
@@ -179,18 +179,19 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			mes "[Lalo]";
 			mes "Hunting is good... but you can't forget to relax once in a while.";
 			mes "Youth is short and won't come again once it passes by..";
-			close2;
-			cutin "",255;
-			end;
+			break;
 		}
+		close2;
+		cutin "job_bard_aiolo02",255;
+		end;
 	}
-	if (BARD_Q == 1) {
+	else if(BARD_Q == 1) {
 		cutin "job_bard_aiolo01",2;
 		mes "[Lalo]";
 		mes "Hey there Archer fellow.";
 		mes "How can a wanderer like me help you?";
 		next;
-		switch (select("You have a nice voice.:Could you sing for me, please?:Nothing.")) {
+		switch(select("You have a nice voice.:Could you sing for me, please?:Nothing.")) {
 		case 1:
 			mes "[Lalo]";
 			mes "Hoho, your voice is rather nice as well?";
@@ -211,7 +212,7 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				set BARD_Q,2;
 				changequest 3000,3001;
 				close2;
-				cutin "",255;
+				cutin "job_bard_aiolo01",255;
 				end;
 			}
 			mes "[Lalo]";
@@ -221,9 +222,8 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			mes "[Lalo]";
 			mes "You have plenty of talent.";
 			mes "Come again if you change your mind.";
-			close2;
-			cutin "",255;
-			end;
+			break;
+
 		case 2:
 			mes "[Lalo]";
 			mes "Hmm... seems like you have some singing talents?";
@@ -232,9 +232,8 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			mes "[Lalo]";
 			mes "Try enjoying your life as a Bard.";
 			mes "You go from town to town, singing to the people. Doesn't it sound great?";
-			close2;
-			cutin "",255;
-			end;
+			break;
+
 		case 3:
 			mes "[Lalo]";
 			mes "Hmm... I'm not sure what's what, but enjoy life.";
@@ -242,30 +241,30 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			next;
 			mes "[Lalo]";
 			mes "Well then~ Have a great time~";
-			close2;
-			cutin "",255;
-			end;
+			break;
 		}
+		close2;
+		cutin "job_bard_aiolo01",255;
+		end;
 	}
-	if (BARD_Q == 2) {
+	else if(BARD_Q == 2) {
 		cutin "job_bard_aiolo01",2;
 		mes "[Lalo]";
 		mes "Welcome! Archer friend.";
 		mes "Did you bring a Flower? Let me see.";
 		next;
+		mes "[Lalo]";
+		//Good Flowers
 		if (countitem(629) > 0) {
-			mes "[Lalo]";
 			mes "Ooh! It's a Singing Flower!";
 			mes "It's full of my memories...";
 			next;
-			delitem 629,1; //Singing_Flower
+			delitem 629,1; //Singing Flower
 			mes "[Lalo]";
 			mes "My friend Tchaikovsky used to like it.";
 			mes "I wonder what he's doing now...";
-			next;
 		}
-		if (countitem(703) > 0) {
-			mes "[Lalo]";
+		else if(countitem(703) > 0) {
 			mes "Aah... the cute Hinelle...";
 			mes "It doesn't have a scent but it's a very moderate cute flower.";
 			next;
@@ -273,10 +272,8 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			mes "[Lalo]";
 			mes "The leaves gave me strength when I used to fall.";
 			mes "I really like this flower, thank you.";
-			next;
 		}
-		else if (countitem(704) > 0) {
-			mes "[Lalo]";
+		else if(countitem(704) > 0) {
 			mes "Aloe... This is a rare flower.";
 			mes "How'd you get it? Rather skilled, eh?";
 			next;
@@ -284,10 +281,8 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			mes "[Lalo]";
 			mes "The leaves are good and Aloe Vera is delicious, too..";
 			mes "but it's defnitely the most beautiful when it's a flower.";
-			next;
 		}
-		if (countitem(708) > 0) {
-			mes "[Lalo]";
+		else if(countitem(708) > 0) {
 			mes "Ment... You can forget about all your hardships with one of these.";
 			mes "Nice to see it in such a long time!";
 			next;
@@ -295,10 +290,8 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			mes "[Lalo]";
 			mes "I heard you can make Anodyne with it...";
 			mes "But that would be a slight waste.. thanks!";
-			next;
 		}
-		if (countitem(709) > 0) {
-			mes "[Lalo]";
+		else if(countitem(709) > 0) {
 			mes "Ooh, isn't this an Izidor?";
 			mes "It's a dangerous yet beautiful flower...";
 			next;
@@ -306,10 +299,8 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			mes "[Lalo]";
 			mes "The deep purple charms a person.. ";
 			mes "Thank you, I really like this flower.";
-			next;
 		}
-		if (countitem(748) > 0) {
-			mes "[Lalo]";
+		else if(countitem(748) > 0) {
 			mes "Ooh, a Witherless Rose. The strong flower that doesn't wither.";
 			mes "Great to give to a girlfriend.";
 			next;
@@ -317,10 +308,8 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			mes "[Lalo]";
 			mes "I wonder if it would be ok for a wanderer like me to accept it.";
 			mes "Haha, it should be ok.. right?";
-			next;
 		}
-		if (countitem(749) > 0) {
-			mes "[Lalo]";
+		else if(countitem(749) > 0 ) {
 			mes "Frozen Rose... you can't really call this a flower,";
 			mes "But it is still beautiful... a clear Rose.";
 			next;
@@ -328,10 +317,8 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			mes "[Lalo]";
 			mes "You can call it a flower even though it doesn't have a scent anymore.";
 			mes "Then I'll greatly take this.";
-			next;
 		}
-		if (countitem(710) > 0) {
-			mes "[Lalo]";
+		else if(countitem(710) > 0) {
 			mes "Oh, isn't this an Illusion Flower!?";
 			mes "Wow, how did you obtain such a rare flower!!";
 			next;
@@ -339,11 +326,10 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			mes "[Lalo]";
 			mes "Than you very much, aah... I feel like heaven is in front of my eyes.";
 			mes "What a wonderful feeling! I'm really happy!";
-			next;
 		}
-		if (countitem(712) > 0) {
+		//Bad Flowers
+		else if(countitem(712) > 0) {
 			cutin "job_bard_aiolo02",2;
-			mes "[Lalo]";
 			mes "Eh? This is just a normal flower.";
 			mes "I like it... but it's not enough.";
 			next;
@@ -351,11 +337,10 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			mes "You can get this flower from the girl in Prontera.";
 			mes "Please bring me a different flower.";
 			close2;
-			cutin "",255;
+			cutin "job_bard_aiolo02",255;
 			end;
 		}
-		if (countitem(744) > 0) {
-			mes "[Lalo]";
+		else if(countitem(744) > 0) {
 			mes "Oh no, you brought a Bouquet?";
 			mes "You can't bring me something like this.";
 			next;
@@ -363,12 +348,11 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			mes "Go give this to a graduating Sage or something.";
 			mes "Since it's great as that kind of gift... Bring a different flower.";
 			close2;
-			cutin "",255;
+			cutin "job_bard_aiolo01",255;
 			end;
 		}
-		if (countitem(745) > 0) {
+		else if(countitem(745) > 0) {
 			cutin "job_bard_aiolo02",2;
-			mes "[Lalo]";
 			mes "Oy oy... did you go to a wedding or something?";
 			mes "What do you expect a guy to do with a Wedding Bouquet?";
 			next;
@@ -376,11 +360,10 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			mes "It's not me. Go give it to a lady or something.";
 			mes "This isn't the type of flower I wanted.";
 			close2;
-			cutin "",255;
+			cutin "job_bard_aiolo02",255;
 			end;
 		}
-		if (countitem(2207) > 0) {
-			mes "[Lalo]";
+		else if(countitem(2207) > 0) {
 			mes "Mmm... a Fancy Flower.";
 			mes "It's nice... but this isn't good enough.";
 			next;
@@ -388,25 +371,23 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			mes "I like flowers that have a scent and are beautiful.";
 			mes "I don't like fake flowers that go on top of heads.";
 			close2;
-			cutin "",255;
+			cutin "job_bard_aiolo01",255;
 			end;
 		}
-		if (countitem(1032) > 0) {
+		else if(countitem(1032) > 0) {
 			cutin "job_bard_aiolo02",2;
-			mes "[Lalo]";
 			mes "...Agh, why'd you bring such a hideous thing?";
 			mes "Are you thinking at all?";
 			next;
 			mes "[Lalo]";
-			mes "If you were trying to be funny, it was a good attempt...";
+			mes "if you were trying to be funny, it was a good attempt...";
 			mes "but bring a normal flower now.";
 			close2;
-			cutin "",255;
+			cutin "job_bard_aiolo02",255;
 			end;
 		}
 		else {
 			cutin "job_bard_aiolo02",2;
-			mes "[Lalo]";
 			mes "Hmm? What... you didnt' bring anything.";
 			mes "Didn't I ask you to bring a flower?";
 			next;
@@ -414,9 +395,10 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			mes "Well... if you want to learn on your own, then so be it.";
 			mes "Anyone can just go out and sing.";
 			close2;
-			cutin "",255;
+			cutin "job_bard_aiolo02",255;
 			end;
 		}
+		next;
 		cutin "job_bard_aiolo01",2;
 		mes "[Lalo]";
 		mes "As I promised, I'll help you become a Bard.";
@@ -427,39 +409,74 @@ comodo,226,123,5	script	Roaming Bard	741,{
 		mes "You must also keep up with all the things going on in different villages...";
 		next;
 		mes "[Lalo]";
-		mes "There' s a talking snowman in a town called Lutie.";
+		mes "There's a talking snowman in a town called Lutie.";
 		mes "Go there and bring back a present.";
 		next;
 		set BARD_Q,3;
 		changequest 3001,3002;
-		set BARD_Q2,1;
+		set xmas_npc,1;
 		mes "[Lalo]";
-		mes "If you become friends with ^008800Jack Frost^000000, you will receive something.";
+		mes "if you become friends with ^008800Jack Frost^000000, you will receive something.";
 		mes "And also talk to the townspeople while you're at it...";
 		close2;
-		cutin "",255;
+		cutin "job_bard_aiolo01",255;
 		end;
 	}
-	if (BARD_Q == 3) {
-		if (BARD_Q2 > 10) {
+	else if ((BARD_Q >= 3) || (BARD_Q <= 5)) {
+		if (BARD_Q == 3) {
+			if(xmas_npc > 10) { //this var is set in LUTIE.TXT
+				cutin "job_bard_aiolo01",2;
+				mes "[Lalo]";
+				mes "How was the trip? Did you meet a lot of people?";
+				mes "You should have been able to learn something more important than a gift.";
+				next;
+				mes "[Lalo]";
+				mes "Then, do you want to try singing...?";
+				mes "I'll sing a short melody...";
+				mes "and you try after.";
+				if(checkquest(3003) == -1) {
+					changequest 3002,3003;
+				}
+				next;
+				mes "[Lalo]";
+				mes "Here I go.";
+				mes "Ehem *clears throat*";
+				mes "1, 2, 3, 4";
+				next;
+			}
+			else {
+				cutin "job_bard_aiolo01",2;
+				set xmas_npc,1;
+				mes "[Lalo]";
+				mes "Eh, you still haven't become his friend?";
+				mes "Talking will not be enough.";
+				next;
+				mes "[Lalo]";
+				mes "if you become friends with ^008800Jack Frost^000000, you will receive something.";
+				mes "And talk with the village people, too...";
+				close2;
+				cutin "job_bard_aiolo01",255;
+				end;
+			}
+		}
+		else if (BARD_Q == 4) {
 			cutin "job_bard_aiolo01",2;
 			mes "[Lalo]";
-			mes "How was the trip? Did you meet a lot of people?";
-			mes "You should have been able to learn something more important than a gift.";
-			next;
-			changequest 3002,3003;
-			mes "[Lalo]";
-			mes "Then, do you want to try singing...?";
-			mes "I'll sing a short melody...";
-			mes "and you try after.";
+			mes "Hmm... this time you can do better, right?";
+			mes "Let's try again, you can do it.";
 			next;
 			mes "[Lalo]";
-			mes "Here I go.";
-			mes "Ehem *clears throat*";
+			mes "I'll sing one part...";
+			mes "and you try it after.";
+			next;
+			mes "[Lalo]";
+			mes "Here we go.";
+			mes "*Ehem*";
 			mes "1, 2, 3, 4";
 			next;
+		}
+		if (BARD_Q != 5) {
 			set .@bard_s, rand(1,5);
-			set @w_point, 0;
 			if (.@bard_s == 1) {
 				mes "^3377FFThere was a man^000000";
 				mes "who was said to be immortal.";
@@ -468,10 +485,10 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "The evil giant Papner,";
 				mes "Turned into a dragon and ate him.";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "There was a man") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "There was a man") 
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFThere was a man";
 				mes "who was said to be immortal.^000000";
 				mes "His name Jichfreid,";
@@ -479,10 +496,10 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "The evil giant Papner,";
 				mes "Turned into a dragon and ate him.";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "who was said to be immortal.") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "who was said to be immortal.")
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFThere was a man";
 				mes "who was said to be immortal.";
 				mes "His name Jichfreid,^000000";
@@ -490,10 +507,10 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "The evil giant Papner,";
 				mes "Turned into a dragon and ate him.";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "His name Jichfreid,") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "His name Jichfreid,")
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFThere was a man";
 				mes "who was said to be immortal.";
 				mes "His name Jichfreid,";
@@ -501,10 +518,10 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "The evil giant Papner,";
 				mes "Turned into a dragon and ate him.";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "Son of the hero Jichmunt.") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "Son of the hero Jichmunt.")
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFThere was a man";
 				mes "who was said to be immortal.";
 				mes "His name Jichfreid,";
@@ -512,10 +529,10 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "The evil giant Papner,^000000";
 				mes "Turned into a dragon and ate him.";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "The evil giant Papner,") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "The evil giant Papner,")
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFThere was a man";
 				mes "who was said to be immortal.";
 				mes "His name Jichfreid,";
@@ -523,12 +540,11 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "The evil giant Papner,";
 				mes "Turned into a dragon and ate him.^000000";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "Turned into a dragon and ate him.") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "Turned into a dragon and ate him.")
+					set .@w_point,.@w_point+1;
 			}
-			if (.@bard_s == 2) {
+			else if (.@bard_s == 2) {
 				mes "^3377FFA Merchant without money or equipment,^000000";
 				mes "a Merchant that couldn't sell anything.";
 				mes "But he was too proud to beg.";
@@ -536,10 +552,10 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "At first he only sold Red Potions.";
 				mes "Some say he sold Sweet Potatoes, too.";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "A Merchant without money or equipment,") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "A Merchant without money or equipment,")
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFA Merchant without money or equipment,";
 				mes "a Merchant that couldn't sell anything.^000000";
 				mes "But he was too proud to beg.";
@@ -547,10 +563,10 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "At first he only sold Red Potions.";
 				mes "Some say he sold Sweet Potatoes, too.";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "a Merchant that couldn't sell anything.") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "a Merchant that couldn't sell anything.")
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFA Merchant without money or equipment,";
 				mes "a Merchant that couldn't sell anything.";
 				mes "But he was too proud to beg.^000000";
@@ -558,10 +574,10 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "At first he only sold Red Potions.";
 				mes "Some say he sold Sweet Potatoes, too.";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "But he was too proud to beg.") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "But he was too proud to beg.")
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFA Merchant without money or equipment,";
 				mes "a Merchant that couldn't sell anything.";
 				mes "But he was too proud to beg.";
@@ -569,10 +585,10 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "At first he only sold Red Potions.";
 				mes "Some say he sold Sweet Potatoes, too.";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "So he gathered some money selling items.") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "So he gathered some money selling items.")
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFA Merchant without money or equipment,";
 				mes "a Merchant that couldn't sell anything.";
 				mes "But he was too proud to beg.";
@@ -580,10 +596,10 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "At first he only sold Red Potions.^000000";
 				mes "Some say he sold Sweet Potatoes, too.";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "At first he only sold Red Potions.") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "At first he only sold Red Potions.")
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFA Merchant without money or equipment,";
 				mes "a Merchant that couldn't sell anything.";
 				mes "But he was too proud to beg.";
@@ -591,91 +607,89 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "At first he only sold Red Potions.";
 				mes "Some say he sold Sweet Potatoes, too.^000000";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "Some say he sold Sweet Potatoes, too.") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "Some say he sold Sweet Potatoes, too.")
+					set .@w_point,.@w_point+1;
 			}
-			if (.@bard_s == 3) {
+			else if (.@bard_s == 3) {
 				mes "^3377FFAll Gods never age.^000000";
-				mes "The ever so beautiful Goddess Eden,";
+				mes "The ever so Beautiful Goddess Eden,";
 				mes "Beautiful and graceful Goddess Eden,";
 				mes "Odin's daughter-in-law and Bragi's wife.";
 				mes "Her sweet apples in her basket,";
 				mes "All thanks to her sweet apples.";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "All Gods never age.") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "All Gods never age.")
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFAll Gods never age.";
-				mes "The ever so beautiful Goddess Eden,^000000";
+				mes "The ever so Beautiful Goddess Eden,^000000";
 				mes "Beautiful and graceful Goddess Eden,";
 				mes "Odin's daughter-in-law and Bragi's wife.";
 				mes "Her sweet apples in her basket,";
 				mes "All thanks to her sweet apples.";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "The ever so beautiful Goddess Eden,") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "The ever so Beautiful Goddess Eden,")
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFAll Gods never age.";
-				mes "The ever so beautiful Goddess Eden,";
+				mes "The ever so Beautiful Goddess Eden,";
 				mes "Beautiful and graceful Goddess Eden,^000000";
 				mes "Odin's daughter-in-law and Bragi's wife.";
 				mes "Her sweet apples in her basket,";
 				mes "All thanks to her sweet apples.";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "Beautiful and graceful Goddess Eden,") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "Beautiful and graceful Goddess Eden,")
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFAll Gods never age.";
-				mes "The ever so beautiful Goddess Eden,";
+				mes "The ever so Beautiful Goddess Eden,";
 				mes "Beautiful and graceful Goddess Eden,";
 				mes "Odin's daughter-in-law and Bragi's wife.^000000";
 				mes "Her sweet apples in her basket,";
 				mes "All thanks to her sweet apples.";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "Odin's daughter-in-law and Bragi's wife.") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "Odin's daughter-in-law and Bragi's wife.")
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFAll Gods never age.";
-				mes "The ever so beautiful Goddess Eden,";
+				mes "The ever so Beautiful Goddess Eden,";
 				mes "Beautiful and graceful Goddess Eden,";
 				mes "Odin's daughter-in-law and Bragi's wife.";
 				mes "Her sweet apples in her basket,^000000";
 				mes "All thanks to her sweet apples.";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "Her sweet apples in her basket,") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "Her sweet apples in her basket,")
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFAll Gods never age.";
-				mes "The ever so beautiful Goddess Eden,";
+				mes "The ever so Beautiful Goddess Eden,";
 				mes "Beautiful and graceful Goddess Eden,";
 				mes "Odin's daughter-in-law and Bragi's wife.";
 				mes "Her sweet apples in her basket,";
 				mes "All thanks to her sweet apples.^000000";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "All thanks to her sweet apples.") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "All thanks to her sweet apples.")
+					set .@w_point,.@w_point+1;
 			}
-			if (.@bard_s == 4) {
-				mes "^3377FFBragi, Bragi,z^000000";
+			else if (.@bard_s == 4) {
+				mes "^3377FFBragi, Bragi,^000000";
 				mes "Forever call the poets name.";
 				mes "My songs are his breath,";
 				mes "My mind is his will,";
 				mes "All wandering poets are his people,";
 				mes "And all praise shall go to him.";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "Bragi, Bragi,") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "Bragi, Bragi,")
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFBragi, Bragi,";
 				mes "Forever call the poets name.^000000";
 				mes "My songs are his breath,";
@@ -683,10 +697,10 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "All wandering poets are his people,";
 				mes "And all praise shall go to him.";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "Forever call the poets name.") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "Forever call the poets name.")
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFBragi, Bragi,";
 				mes "Forever call the poets name.";
 				mes "My songs are his breath,^000000";
@@ -694,10 +708,10 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "All wandering poets are his people,";
 				mes "And all praise shall go to him.";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "My songs are his breath,") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "My songs are his breath,")
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFBragi, Bragi,";
 				mes "Forever call the poets name.";
 				mes "My songs are his breath,";
@@ -705,10 +719,10 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "All wandering poets are his people,";
 				mes "And all praise shall go to him.";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "My mind is his will,") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "My mind is his will,")
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFBragi, Bragi,";
 				mes "Forever call the poets name.";
 				mes "My songs are his breath,";
@@ -716,10 +730,10 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "All wandering poets are his people,^000000";
 				mes "And all praise shall go to him.";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != " All wandering poets are his people,") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "All wandering poets are his people,")
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFBragi, Bragi,";
 				mes "Forever call the poets name.";
 				mes "My songs are his breath,";
@@ -727,10 +741,9 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "All wandering poets are his people,";
 				mes "And all praise shall go to him.^000000";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "And all praise shall go to him.") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "And all praise shall go to him.")
+					set .@w_point,.@w_point+1;
 			}
 			else {
 				mes "^3377FFLouder, louder, louder.^000000";
@@ -740,10 +753,10 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "Let the castle walls ring.";
 				mes "This day will never come again!";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "Louder, louder, louder.") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "Louder, louder, louder.")
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFLouder, louder, louder.";
 				mes "Give strength to the warriors!^000000";
 				mes "Shake the sky and roar through the land.";
@@ -751,10 +764,10 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "Let the castle walls ring.";
 				mes "This day will never come again!";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "Give strength to the warriors!") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "Give strength to the warriors!")
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFLouder, louder, louder.";
 				mes "Give strength to the warriors!";
 				mes "Shake the sky and roar through the land.^000000";
@@ -762,10 +775,10 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "Let the castle walls ring.";
 				mes "This day will never come again!";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "Shake the sky and roar through the land.") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "Shake the sky and roar through the land.")
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFLouder, louder, louder.";
 				mes "Give strength to the warriors!";
 				mes "Shake the sky and roar through the land.";
@@ -773,10 +786,10 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "Let the castle walls ring.";
 				mes "This day will never come again!";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "Make my heart pound again!") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "Make my heart pound again!")
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFLouder, louder, louder.";
 				mes "Give strength to the warriors!";
 				mes "Shake the sky and roar through the land.";
@@ -784,10 +797,10 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "Let the castle walls ring.^000000";
 				mes "This day will never come again!";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "Let the castle walls ring.") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "Let the castle walls ring.")
+					set .@w_point,.@w_point+1;
+
 				mes "^3377FFLouder, louder, louder.";
 				mes "Give strength to the warriors!";
 				mes "Shake the sky and roar through the land.";
@@ -795,12 +808,12 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "Let the castle walls ring.";
 				mes "This day will never come again!^000000";
 				next;
-				input .@inputstr$;
-				if (.@inputstr$ != "This day will never come again!") {
-					set @w_point, @w_point + 1;
-				}
+				input .@Song$;
+				if (.@Song$ != "This day will never come again!")
+					set .@w_point,.@w_point+1;
 			}
-			if (@w_point > 0) {
+
+			if (.@w_point) {
 				cutin "job_bard_aiolo02",2;
 				mes "[Lalo]";
 				mes "Oy, You got the lyrics wrong!";
@@ -810,14 +823,13 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "Your pronunciation is very unclear.";
 				mes "Do a better job next time.";
 				close2;
-				cutin "",255;
+				cutin "job_bard_aiolo02",255;
 				end;
 			}
 			mes "[Lalo]";
 			mes "..........";
 			next;
 			set BARD_Q,5;
-			changequest 3003,3004;
 			mes "[Lalo]";
 			mes "Wonderful! Finished it in one try!";
 			mes "You can become a great Bard. ";
@@ -830,452 +842,10 @@ comodo,226,123,5	script	Roaming Bard	741,{
 			mes "Do you want to just change jobs now?";
 			mes "Or do you want a present.";
 			next;
-			if (select("Just change my job please.:I'd be thankful for a present.") == 1) {
-				if (SkillPoint != 0) {
-					changequest 3003,3004;
-					cutin "job_bard_aiolo01",2;
-					mes "[Lalo]";
-					mes "Ah... Everything is good, but you still have some skill points left.";
-					mes "Go learn the rest of the skills and come back.";
-					next;
-					mes "[Lalo]";
-					mes "And I am going to give you a small present...";
-					mes "So bring some trunks.";
-					mes "It doesn't matter what kind, as long as they are 60 of the same kind...";
-					close2;
-					cutin "",255;
-					end;
-				}
-				completequest 3004;
-				set BARD_Q,0;
-				if(Class == Job_Baby_Archer){
-					jobchange Job_Baby_Bard;
-				} else {
-					jobchange Job_Bard;
-				}
-				mes "[Lalo]";
-				mes "Very well! Hope you sing happy enjoyable songs.";
-				mes "Live like the wind and the clouds!";
-				next;
-				mes "[Lalo]";
-				mes "See you again next time!";
-				close2;
-				cutin "",255;
-				end;
-			}
-			changequest 3003,3004;
-			mes "[Lalo]";
-			mes "Hmm... very well, bring some trunks.";
-			mes "It doesn't matter what kind, as long as they are 60 of the same kind...";
-			next;
-			mes "[Lalo]";
-			mes "I will give you a gift once you bring them.";
-			mes "Have a safe trip.";
-			close2;
-			cutin "",255;
-			end;
+			set .@selection,select("Just change my job please.:I'd be thankful for a present.");
 		}
-		cutin "job_bard_aiolo01",2;
-		set BARD_Q2,1;
-		mes "[Lalo]";
-		mes "Eh, you still haven't become his friend?";
-		mes "Talking will not be enough.";
-		next;
-		mes "[Lalo]";
-		mes "If you become friends with ^008800Jack Frost^000000, you will receive something.";
-		mes "And talk with the village people, too...";
-		close2;
-		cutin "",255;
-		end;
-	}
-	if (BARD_Q == 4) {
-		cutin "job_bard_aiolo01",2;
-		mes "[Lalo]";
-		mes "Hmm... this time you can do better, right?";
-		mes "Let's try again, you can do it.";
-		next;
-		mes "[Lalo]";
-		mes "I'll sing one part...";
-		mes "and you try it after.";
-		next;
-		mes "[Lalo]";
-		mes "Here we go.";
-		mes "*Ehem*";
-		mes "1, 2, 3, 4";
-		next;
-		set .@bard_s,rand(1,5);
-		set @w_point,0;
-		if (.@bard_s == 1) {
-			mes "^3377FFThere was a man^000000";
-			mes "who was said to be immortal.";
-			mes "His name Jichfreid,";
-			mes "Son of the hero Jichmunt.";
-			mes "The evil giant Papner,";
-			mes "Turned into a dragon and ate him.";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "There was a man") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFThere was a man";
-			mes "who was said to be immortal.^000000";
-			mes "His name Jichfreid,";
-			mes "Son of the hero Jichmunt.";
-			mes "The evil giant Papner,";
-			mes "Turned into a dragon and ate him.";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "who was said to be immortal.") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFThere was a man";
-			mes "who was said to be immortal.";
-			mes "His name Jichfreid,^000000";
-			mes "Son of the hero Jichmunt.";
-			mes "The evil giant Papner,";
-			mes "Turned into a dragon and ate him.";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "His name Jichfreid,") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFThere was a man";
-			mes "who was said to be immortal.";
-			mes "His name Jichfreid,";
-			mes "Son of the hero Jichmunt.^000000";
-			mes "The evil giant Papner,";
-			mes "Turned into a dragon and ate him.";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "Son of the hero Jichmunt.") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFThere was a man";
-			mes "who was said to be immortal.";
-			mes "His name Jichfreid,";
-			mes "Son of the hero Jichmunt.";
-			mes "The evil giant Papner,^000000";
-			mes "Turned into a dragon and ate him.";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "The evil giant Papner,") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFThere was a man";
-			mes "who was said to be immortal.";
-			mes "His name Jichfreid,";
-			mes "Son of the hero Jichmunt.";
-			mes "The evil giant Papner,";
-			mes "Turned into a dragon and ate him.^000000";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "Turned into a dragon and ate him.") {
-				set @w_point, @w_point + 1;
-			}
-		}
-		if (.@bard_s == 2) {
-			mes "^3377FFA Merchant without money or equipment,^000000";
-			mes "a Merchant that couldn't sell anything.";
-			mes "But he was too proud to beg.";
-			mes "So he gathered some money selling items.";
-			mes "At first he only sold Red Potions.";
-			mes "Some say he sold Sweet Potatoes, too.";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "A Merchant without money or equipment,") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFA Merchant without money or equipment,";
-			mes "a Merchant that couldn't sell anything.^000000";
-			mes "But he was too proud to beg.";
-			mes "So he gathered some money selling items.";
-			mes "At first he only sold Red Potions.";
-			mes "Some say he sold Sweet Potatoes, too.";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "a Merchant that couldn't sell anything.") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFA Merchant without money or equipment,";
-			mes "a Merchant that couldn't sell anything.";
-			mes "But he was too proud to beg.^000000";
-			mes "So he gathered some money selling items.";
-			mes "At first he only sold Red Potions.";
-			mes "Some say he sold Sweet Potatoes, too.";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "But he was too proud to beg.") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFA Merchant without money or equipment,";
-			mes "a Merchant that couldn't sell anything.";
-			mes "But he was too proud to beg.";
-			mes "So he gathered some money selling items.^000000";
-			mes "At first he only sold Red Potions.";
-			mes "Some say he sold Sweet Potatoes, too.";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "So he gathered some money selling items.") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFA Merchant without money or equipment,";
-			mes "a Merchant that couldn't sell anything.";
-			mes "But he was too proud to beg.";
-			mes "So he gathered some money selling items.";
-			mes "At first he only sold Red Potions.^000000";
-			mes "Some say he sold Sweet Potatoes, too.";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "At first he only sold Red Potions.") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFA Merchant without money or equipment,";
-			mes "a Merchant that couldn't sell anything.";
-			mes "But he was too proud to beg.";
-			mes "So he gathered some money selling items.";
-			mes "At first he only sold Red Potions.";
-			mes "Some say he sold Sweet Potatoes, too.^000000";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "Some say he sold Sweet Potatoes, too.") {
-				set @w_point, @w_point + 1;
-			}
-		}
-		if (.@bard_s == 3) {
-			mes "^3377FFAll Gods never age.^000000";
-			mes "The ever so beautiful Goddess Eden,";
-			mes "Beautiful and graceful Goddess Eden,";
-			mes "Odin's daughter-in-law and Bragi's wife.";
-			mes "Her sweet apples in her basket,";
-			mes "All thanks to her sweet apples.";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "All Gods never age.") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFAll Gods never age.";
-			mes "The ever so beautiful Goddess Eden,^000000";
-			mes "Beautiful and graceful Goddess Eden,";
-			mes "Odin's daughter-in-law and Bragi's wife.";
-			mes "Her sweet apples in her basket,";
-			mes "All thanks to her sweet apples.";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "The ever so beautiful Goddess Eden,") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFAll Gods never age.";
-			mes "The ever so beautiful Goddess Eden,";
-			mes "Beautiful and graceful Goddess Eden,^000000";
-			mes "Odin's daughter-in-law and Bragi's wife.";
-			mes "Her sweet apples in her basket,";
-			mes "All thanks to her sweet apples.";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "Beautiful and graceful Goddess Eden,") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFAll Gods never age.";
-			mes "The ever so beautiful Goddess Eden,";
-			mes "Beautiful and graceful Goddess Eden,";
-			mes "Odin's daughter-in-law and Bragi's wife.^000000";
-			mes "Her sweet apples in her basket,";
-			mes "All thanks to her sweet apples.";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "Odin's daughter-in-law and Bragi's wife.") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFAll Gods never age.";
-			mes "The ever so beautiful Goddess Eden,";
-			mes "Beautiful and graceful Goddess Eden,";
-			mes "Odin's daughter-in-law and Bragi's wife.";
-			mes "Her sweet apples in her basket,^000000";
-			mes "All thanks to her sweet apples.";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "Her sweet apples in her basket,") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFAll Gods never age.";
-			mes "The ever so beautiful Goddess Eden,";
-			mes "Beautiful and graceful Goddess Eden,";
-			mes "Odin's daughter-in-law and Bragi's wife.";
-			mes "Her sweet apples in her basket,";
-			mes "All thanks to her sweet apples.^000000";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "All thanks to her sweet apples.") {
-				set @w_point, @w_point + 1;
-			}
-		}
-		if (.@bard_s == 4) {
-			mes "^3377FFBragi, Bragi,z^000000";
-			mes "Forever call the poets name.";
-			mes "My songs are his breath,";
-			mes "My mind is his will,";
-			mes "All wandering poets are his people,";
-			mes "And all praise shall go to him.";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "Bragi, Bragi,") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFBragi, Bragi,";
-			mes "Forever call the poets name.^000000";
-			mes "My songs are his breath,";
-			mes "My mind is his will,";
-			mes "All wandering poets are his people,";
-			mes "And all praise shall go to him.";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "Forever call the poets name.") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFBragi, Bragi,";
-			mes "Forever call the poets name.";
-			mes "My songs are his breath,^000000";
-			mes "My mind is his will,";
-			mes "All wandering poets are his people,";
-			mes "And all praise shall go to him.";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "My songs are his breath,") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFBragi, Bragi,";
-			mes "Forever call the poets name.";
-			mes "My songs are his breath,";
-			mes "My mind is his will,^000000";
-			mes "All wandering poets are his people,";
-			mes "And all praise shall go to him.";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "My mind is his will,") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFBragi, Bragi,";
-			mes "Forever call the poets name.";
-			mes "My songs are his breath,";
-			mes "My mind is his will,";
-			mes "All wandering poets are his people,^000000";
-			mes "And all praise shall go to him.";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != " All wandering poets are his people,") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFBragi, Bragi,";
-			mes "Forever call the poets name.";
-			mes "My songs are his breath,";
-			mes "My mind is his will,";
-			mes "All wandering poets are his people,";
-			mes "And all praise shall go to him.^000000";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "And all praise shall go to him.") {
-				set @w_point, @w_point + 1;
-			}
-		}
-		else {
-			mes "^3377FFLouder, louder, louder.^000000";
-			mes "Give strength to the warriors!";
-			mes "Shake the sky and roar through the land.";
-			mes "Make my heart pound again!";
-			mes "Let the castle walls ring.";
-			mes "This day will never come again!";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "Louder, louder, louder.") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFLouder, louder, louder.";
-			mes "Give strength to the warriors!^000000";
-			mes "Shake the sky and roar through the land.";
-			mes "Make my heart pound again!";
-			mes "Let the castle walls ring.";
-			mes "This day will never come again!";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "Give strength to the warriors!") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFLouder, louder, louder.";
-			mes "Give strength to the warriors!";
-			mes "Shake the sky and roar through the land.^000000";
-			mes "Make my heart pound again!";
-			mes "Let the castle walls ring.";
-			mes "This day will never come again!";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "Shake the sky and roar through the land.") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFLouder, louder, louder.";
-			mes "Give strength to the warriors!";
-			mes "Shake the sky and roar through the land.";
-			mes "Make my heart pound again!^000000";
-			mes "Let the castle walls ring.";
-			mes "This day will never come again!";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "Make my heart pound again!") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFLouder, louder, louder.";
-			mes "Give strength to the warriors!";
-			mes "Shake the sky and roar through the land.";
-			mes "Make my heart pound again!";
-			mes "Let the castle walls ring.^000000";
-			mes "This day will never come again!";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "Let the castle walls ring.") {
-				set @w_point, @w_point + 1;
-			}
-			mes "^3377FFLouder, louder, louder.";
-			mes "Give strength to the warriors!";
-			mes "Shake the sky and roar through the land.";
-			mes "Make my heart pound again!";
-			mes "Let the castle walls ring.";
-			mes "This day will never come again!^000000";
-			next;
-			input .@inputstr$;
-			if (.@inputstr$ != "This day will never come again!") {
-				set @w_point, @w_point + 1;
-			}
-		}
-		if (@w_point > 0) {
-			mes "[Lalo]";
-			mes "Oy, You got the lyrics wrong!";
-			mes "Can't you even sing along..?";
-			next;
-			mes "[Lalo]";
-			mes "Your pronunciation is very unclear.";
-			mes "Do a better job next time.";
-			close2;
-			cutin "",255;
-			end;
-		}
-		mes "[Lalo]";
-		mes "..........";
-		next;
-		set BARD_Q,5;
-		changequest 3003,3004;
-		mes "[Lalo]";
-		mes "Wonderful! Although it was not in one try!";
-		mes "Good enough to become a good Bard";
-		next;
-		mes "[Lalo]";
-		mes "Mmm... So you will not become a Bard.";
-		mes "But I want to give you a souvenir...";
-		next;
-		mes "[Lalo]";
-		mes "Do you want to just change jobs now?";
-		mes "Or do you want a present.";
-		next;
-		if (select("Just change my job please.:I'd be thankful for a present.") == 1) {
-			if (SkillPoint != 0) {
+		if ((.@selection == 1) || (BARD_Q == 5)) {
+			if(SkillPoint) {
 				cutin "job_bard_aiolo01",2;
 				mes "[Lalo]";
 				mes "Ah... Everything is good, but you still have some skill points left.";
@@ -1286,240 +856,96 @@ comodo,226,123,5	script	Roaming Bard	741,{
 				mes "So bring some trunks.";
 				mes "It doesn't matter what kind, as long as they are 60 of the same kind...";
 				close2;
-				cutin "",255;
+				cutin "job_bard_aiolo01",255;
 				end;
 			}
-			completequest 3004;
-			set BARD_Q,0;
-			if(Class == Job_Baby_Archer){
-				jobchange Job_Baby_Bard;
-			} else {
-				jobchange Job_Bard;
+			else {
+				switch(BARD_Q) {
+				case 5:
+					if(countitem(1019) > 59) callsub S_ChangeJob,1019,1901;
+					else if(countitem(1068) > 59) callsub S_ChangeJob,1068,1903;
+					else if(countitem(1067) > 59) callsub S_ChangeJob,1067,1903;
+					else if(countitem(1066) > 59) {
+						if(JobLevel > 49) callsub S_ChangeJob,1066,1910;
+						else callsub S_ChangeJob,1066,1905;
+					}
+					cutin "job_bard_aiolo01",2;
+					mes "[Lalo]";
+					mes "Mmm? Seems like you haven't prepared all trunks the yet? ";
+					mes "Do you want to just change jobs anyways?";
+					next;
+					if (select("Yes, just change my job already.:No, I'll go prepare them.") == 2)
+						break;
+				default:
+					completequest 3003;
+					callfunc "Job_Change",Job_Bard;
+					callfunc "F_ClearJobVar";		//clears all job variables for the current player
+					mes "[Lalo]";
+					mes "Very well! Hope you sing happy enjoyable songs.";
+					mes "Live like the wind and the clouds!";
+					next;
+					mes "[Lalo]";
+					mes "See you again next time!";
+					close2;
+					cutin "job_bard_aiolo01",255;
+					end;
+				}
 			}
-			mes "[Lalo]";
-			mes "Very well! Hope you sing happy enjoyable songs.";
-			mes "Live like the wind and the clouds!";
-			next;
-			mes "[Lalo]";
-			mes "See you again next time!";
-			close2;
-			cutin "",255;
-			end;
 		}
+		changequest 3003,3004;
 		mes "[Lalo]";
-		mes "Hmm... very well, bring some ^3355FFtrunks^000000.";
-		mes "It doesn't matter what kind, as long as they are 60 of the same sort...";
+		mes "Hmm... very well, bring some trunks.";
+		mes "It doesn't matter what kind, as long as they are 60 of the same kind...";
 		next;
 		mes "[Lalo]";
 		mes "I will give you a gift once you bring them.";
 		mes "Have a safe trip.";
 		close2;
-		cutin "",255;
-		end;
-	}
-	if (BARD_Q == 5) {
-		if (SkillPoint != 0) {
-			cutin "job_bard_aiolo01",2;
-			changequest 3003,3004;
-			mes "[Lalo]";
-			mes "Ah... Everything is good, but you still have some skill points left.";
-			mes "Go learn the rest of the skills and come back.";
-			next;
-			mes "[Lalo]";
-			mes "And I am going to give you a small present...";
-			mes "So don't forget the trunks.";
-			mes "It doesn't matter what kind, as long as they are 60 of the same sort...";
-			close2;
-			cutin "",255;
-			end;
-		}
-		if (countitem(1019) > 59) {
-			if(Class == Job_Baby_Archer){
-				jobchange Job_Baby_Bard;
-			} else {
-				jobchange Job_Bard;
-			}
-			mes "[Lalo]";
-			mes "Good job. I will make you a job change souvenir with this.";
-			mes "Wait just a moment.";
-			next;
-			mes "[Lalo]";
-			mes "^3355FFScrape Scrape Tang Tang^000000";
-			mes "^3355FFSqueak Squeak Scratch Scratch^000000";
-			next;
-			delitem 1019,60; //Wooden_Block
-			getitem 1901,1; //Violin
-			completequest 3004;
-			mes "[Lalo]";
-			mes "Here you go, a souvenir. It is useful when you sing.";
-			mes "Hope you sing happy songs.";
-			next;
-			mes "[Lalo]";
-			mes "See you next time!";
-			close2;
-			cutin "",255;
-			end;
-		}
-		if (countitem(1068) > 59) {
-			if(Class == Job_Baby_Archer){
-				jobchange Job_Baby_Bard;
-			} else {
-				jobchange Job_Bard;
-			}
-			mes "[Lalo]";
-			mes "Good job. I will make you a job change souvenir with this.";
-			mes "Wait just a moment.";
-			next;
-			mes "[Lalo]";
-			mes "^3355FFScrape Scrape Tang Tang^000000";
-			mes "^3355FFSqueak Squeak Scratch Scratch^000000";
-			next;
-			delitem 1068,60; //Tree_Of_Archer_3
-			getitem 1903,1; //Mandolin
-			completequest 3004;
-			mes "[Lalo]";
-			mes "Here you go, a souvenir. It is useful when you sing.";
-			mes "Hope you sing happy songs.";
-			next;
-			mes "[Lalo]";
-			mes "See you next time!";
-			close2;
-			cutin "",255;
-			end;
-		}
-		if (countitem(1067) > 59) {
-			if(Class == Job_Baby_Archer){
-				jobchange Job_Baby_Bard;
-			} else {
-				jobchange Job_Bard;
-			}
-			mes "[Lalo]";
-			mes "Good job. I will make you a job change souvenir with this.";
-			mes "Wait just a moment.";
-			next;
-			mes "[Lalo]";
-			mes "^3355FFScrape Scrape Tang Tang^000000";
-			mes "^3355FFSqueak Squeak Scratch Scratch^000000";
-			next;
-			delitem 1067,60; //Tree_Of_Archer_2
-			getitem 1903,1; //Mandolin
-			mes "[Lalo]";
-			mes "Here you go, a souvenir. It is useful when you sing.";
-			mes "Hope you sing happy songs.";
-			next;
-			mes "[Lalo]";
-			mes "See you next time!";
-			close2;
-			cutin "",255;
-			end;
-		}
-		if (countitem(1066) > 59) {
-			if (JobLevel > 49) {
-				if(Class == Job_Baby_Archer){
-					jobchange Job_Baby_Bard;
-				} else {
-					jobchange Job_Bard;
-				}
-				mes "[Lalo]";
-				mes "Good job. I will make you a job change souvenir with this.";
-				mes "Wait just a moment.";
-				next;
-				mes "[Lalo]";
-				mes "^3355FFScrape Scrape Tang Tang^000000";
-				mes "^3355FFSqueak Squeak Scratch Scratch^000000";
-				next;
-				delitem 1066,60; //Tree_Of_Archer_1
-				getitem 1910,1; //Harp_
-				completequest 3004;
-				mes "[Lalo]";
-				mes "Here you go, a souvenir. It is useful when you sing.";
-				mes "Hope you sing happy songs.";
-				next;
-				mes "[Lalo]";
-				mes "See you next time!";
-				close2;
-				cutin "",255;
-			}
-			if(Class == Job_Baby_Archer){
-				jobchange Job_Baby_Bard;
-			} else {
-				jobchange Job_Bard;
-			}
-			mes "[Lalo]";
-			mes "Good job. I will make you a job change souvenir with this.";
-			mes "Wait just a moment.";
-			next;
-			mes "[Lalo]";
-			mes "^3355FFScrape Scrape Tang Tang^000000";
-			mes "^3355FFSqueak Squeak Scratch Scratch^000000";
-			next;
-			delitem 1066,60; //Tree_Of_Archer_1
-			getitem 1905,1; //Lute
-			completequest 3004;
-			mes "[Lalo]";
-			mes "Here you go, a souvenir. It is useful when you sing.";
-			mes "Hope you sing happy songs.";
-			next;
-			mes "[Lalo]";
-			mes "See you next time!";
-			close2;
-			cutin "",255;
-			end;
-		}
-		cutin "job_bard_aiolo01",2;
-		mes "[Lalo]";
-		mes "Mmm? Seems like you haven't prepared all trunks the yet? ";
-		mes "Do you want to just change jobs anyways?";
-		next;
-		if (select("Yes, just change my job already.:No, I'll go prepare them.") == 1) {
-			if (SkillPoint != 0) {
-				cutin "job_bard_aiolo01",2;
-				changequest 3003,3004;
-				mes "[Lalo]";
-				mes "Ah... it's all good, but you still have some skill points left.";
-				mes "Let me know when you've used them all.";
-				next;
-				mes "[Lalo]";
-				mes "Oh, and also I have a souvenir for you, too... ";
-				mes "So bring back some trunks.";
-				mes "Doesn't matter what kind, just 60 of the same sort...";
-				close2;
-				cutin "",255;
-				end;
-			}
-			set BARD_Q,0;
-			if(Class == Job_Baby_Archer){
-				jobchange Job_Baby_Bard;
-			} else {
-				jobchange Job_Bard;
-			}
-			completequest 3004;
-			mes "[Lalo]";
-			mes "Wonderful! Sing happy enjoyable songs.";
-			mes "Live like the winds and clouds!";
-			next;
-			mes "[Lalo]";
-			mes "See you again next time!";
-			close2;
-			cutin "",255;
-			end;
-		}
-		cutin "job_bard_aiolo01",2;
-		mes "[Lalo]";
-		mes "Hmm... ok, bring some ^3355FFtrunks^000000.";
-		mes "Doesn't matter what kind, as long as they are 60 of the same sort.";
-		next;
-		mes "[Lalo]";
-		mes "I'll give you a present if you bring them.";
-		mes "Then see you soon.";
-		close2;
-		cutin "",255;
+		cutin "job_bard_aiolo01",255;
 		end;
 	}
 	cutin "job_bard_aiolo01",2;
 	mes "[Lalo]";
 	mes "Whee~ whee~ whee~";
 	close2;
-	cutin "",255;
+	cutin "job_bard_aiolo01",255;
 	end;
+
+S_ChangeJob:
+		completequest 3004;
+		callfunc "Job_Change",Job_Bard;
+		callfunc "F_ClearJobVar";
+		mes "[Lalo]";
+		mes "Good job. I will make you a job change souvenir with this.";
+		mes "Wait just a moment.";
+		next;
+		mes "[Lalo]";
+		mes "^3355FFScrape Scrape Tang Tang^000000";
+		mes "^3355FFSqueak Squeak Scratch Scratch^000000";
+		delitem getarg(0),60;
+		getitem getarg(1),1;
+		next;
+		mes "[Lalo]";
+		mes "Here you go, a souvenir. It is useful when you sing.";
+		mes "Hope you sing happy songs.";
+		next;
+		mes "[Lalo]";
+		mes "See you next time!";
+		close2;
+		cutin "job_bard_aiolo01",255;
+		end;
 }
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 07/06/05 : Added 1st Version. [Muad_Dib]
+//= Converted to rAthena format by Dr.Evil
+//= Info about gifts and other info --> http://www.ragnainfo.net/forums/viewtopic.php?t=51467&start=0 
+//= 1.1 Optimized, changed some stuff, fixed some bugs [Lupus]
+//= 1.1a minor song test fix [Lupus]
+//= 1.2 Fixed wrong item ID, added missing commands [Lupus]
+//= 1.3 Updated flower sub-quest according to official [Lupus]
+//= 1.4 Changed priority for the gifts. Now you can win the 1st
+//= prize, too. Added Izidor flower [Lupus]
+//= 2.0 Changed numbers to constants. [Vicious]
