@@ -1,12 +1,12 @@
-//===== rAthena Script ================
+//===== rAthena Script ======================================= 
 //= Kafras in Dungeons and Fields
-//===== By: ============================
+//===== By: ==================================================
 //= rAthena Dev Team
-//===== Current Version: =======================
+//===== Current Version: ===================================== 
 //= 2.7a
-//===== Compatible With: ============================
-//= rAthena 1.0
-//===== Description: ============================================
+//===== Compatible With: ===================================== 
+//= rAthena SVN
+//===== Description: =========================================
 //= Description of argument settings for callfunc "F_Kafra".
 //=  arg(0): When set at 0 the default Kafra message is displayed.
 //=    When set to 1 the Niflhiem Kafra message is displayed.
@@ -15,7 +15,7 @@
 //=  arg(2): Set to 1 to disable info menu.  Otherwise set to 0.
 //=  arg(3): Cost of Storage service
 //=  arg(4): Cost of Rent a Pushcart service
-//===== Additional Comments: =================================
+//===== Additional Comments: ================================= 
 //= v1.1 Now using functions. Added teleport service for Orc Dungeon
 //= and Coal Mine Kafras.
 //= v2.1 Fixed bug with Merc job quest kafra.[Lupus]
@@ -31,11 +31,10 @@
 //=	Removed Ant Hell Kafra Employees.
 //= 2.7 Merchant quest in the Biliban kafra. (Barron-Monster) [L0ne_W0lf]
 //= 2.7a Corrected a problem with Dobuel "Welcome Message". (bugreport:783) [Samuray22]
-//===============================================================
+//============================================================ 
 
-//<============================= Byalan Island ============================>\\
+// Byalan Island ----------------------------------------------------------
 izlu2dun,106,58,8	script	Kafra Employee::kaf_izlu2dun	115,{
-
 	cutin "kafra_03",2;
 	if(BaseJob==Job_Novice && job_merchant_q2>0) callfunc "F_MercKafra";  //F_MercKafra found in merchant.txt
 	mes "[Kafra Employee]";
@@ -51,8 +50,7 @@ izlu2dun,106,58,8	script	Kafra Employee::kaf_izlu2dun	115,{
 		callfunc "F_KafEnd",0,1,"at Byalan Island";
 }
 
-
-//<============================ Culvert Sewers ============================>\\
+// Culvert Sewers ---------------------------------------------------------
 prt_fild05,290,224,3	script	Kafra Employee::prt_fild05	114,{
 	cutin "kafra_04",2;
 	mes "[Kafra Employee]";
@@ -69,8 +67,7 @@ prt_fild05,290,224,3	script	Kafra Employee::prt_fild05	114,{
 		callfunc "F_KafEnd",0,1, "at the Prontera Culverts";
 }
 
-
-//<=========================== Coal Mine (Dead Pitt) =======================>\\
+// Coal Mine (Dead Pitt) --------------------------------------------------
 mjolnir_02,83,362,4	script	Kafra Employee::kaf_mjolnir_02	116,{
 	cutin "kafra_02",2;
 	mes "[Kafra Employee]";
@@ -86,8 +83,7 @@ mjolnir_02,83,362,4	script	Kafra Employee::kaf_mjolnir_02	116,{
 		callfunc "F_KafEnd",0,1,"at Mjolnir Dead Pit";
 }
 
-
-//<=============================== Morroc Ruins ============================>\\
+// Morroc Ruins -----------------------------------------------------------
 moc_ruins,59,157,5	script	Kafra Employee::moc_ruins	114,{
 	cutin "kafra_04",2;
 	mes "[Kafra Employee]";
@@ -104,8 +100,7 @@ moc_ruins,59,157,5	script	Kafra Employee::moc_ruins	114,{
 		callfunc "F_KafEnd",0,1," at the Pyramids";
 }
 
-
-//<================================ Orc Dungeon ============================>\\
+// Orc Dungeon ------------------------------------------------------------
 gef_fild10,73,340,5	script	Kafra Employee::kaf_gef_fild10	116,{
 	cutin "kafra_02",2;
 	mes "[Kafra Employee]";
@@ -121,7 +116,7 @@ gef_fild10,73,340,5	script	Kafra Employee::kaf_gef_fild10	116,{
 		callfunc "F_KafEnd",0,1,"at the Orc Dungeon";
 }
 
-//<============================== Treasure Island ==========================>\\
+// Treasure Island --------------------------------------------------------
 alb2trea,59,69,5	script	Kafra Employee::kaf_alb2trea	117,{
 	cutin "kafra_01",2;
 	mes "[Kafra Employee]";

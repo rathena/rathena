@@ -1,12 +1,12 @@
-//===== rAthena Script ===========
+//===== rAthena Script ======================================= 
 //= New Kafras
-//===== By: =========================
+//===== By: ================================================== 
 //= rAthena Dev Team
-//===== Current Version: ===================
+//===== Current Version: ===================================== 
 //= 3.2
-//===== Compatible With: =====================
-//= rAthena 1.0
-//===== Description: ============================================
+//===== Compatible With: ===================================== 
+//= rAthena SVN
+//===== Description: =========================================
 //= Description of argument settings for callfunc "F_Kafra".
 //=  arg(0): When set at 0 the default Kafra message is displayed.
 //=    When set to 1 the Niflhiem Kafra message is displayed.
@@ -15,7 +15,7 @@
 //=  arg(2): Set to 1 to disable info menu.  Otherwise set to 0.
 //=  arg(3): Cost of Storage service
 //=  arg(4): Cost of Rent a Pushcart service
-//===== Additional Comments: ==============================================
+//===== Additional Comments: ================================= 
 //= v1.1 Now using functions
 //= v2.1 Added Niflheim Kafra by Dizzy
 //= v2.1b Minor changes to function calls.  Using arguments.
@@ -34,9 +34,9 @@
 //=	Added unique Kafra Welcome messages.
 //= 3.1 Fixed one of Einbroch (east) kafras not displaying a name, bugreport:857 [Brainstorm]
 //= 3.2 Changed Umbala Kafra Position to official. [Masao]
-//==========================================================================
+//============================================================ 
 
-// Amatsu ------------------------------------------------------------------
+// Amatsu -----------------------------------------------------------------
 amatsu,102,149,4	script	Kafra Employee::kaf_amatsu	116,{
 	cutin "kafra_02",2;
 	mes "[Kafra Employee]";
@@ -52,7 +52,7 @@ amatsu,102,149,4	script	Kafra Employee::kaf_amatsu	116,{
 		callfunc "F_KafEnd",0,1,"in the city of Amatsu";
 }
 
-// Ayothaya ----------------------------------------------------------------
+// Ayothaya ---------------------------------------------------------------
 ayothaya,212,169,5	script	Kafra Employee::kaf_ayothaya	116,{
 	cutin "kafra_02",2;
 	mes "[Kafra Employee]";
@@ -68,8 +68,7 @@ ayothaya,212,169,5	script	Kafra Employee::kaf_ayothaya	116,{
 		callfunc "F_KafEnd",0,1,"in the city of Ayotaya";
 }
 
-// Einbech -----------------------------------------------------------------
-
+// Einbech ----------------------------------------------------------------
 einbech,181,132,5	script	Kafra Employee#ein3::kaf_einbech	860,{
 	cutin "kafra_08",2;
 	mes "[Kafra Employee]";
@@ -84,7 +83,7 @@ einbech,181,132,5	script	Kafra Employee#ein3::kaf_einbech	860,{
 		callfunc "F_KafEnd",0,1,"in the town of Einbech";
 }
 
-// Einbroch (North-East) ---------------------------------------------------
+// Einbroch (North-East) --------------------------------------------------
 einbroch,242,205,5	script	Kafra Employee#ein2::kaf_einbroch	860,{
 	cutin "kafra_08",2;
 	mes "[Kafra Employee]";
@@ -100,7 +99,7 @@ einbroch,242,205,5	script	Kafra Employee#ein2::kaf_einbroch	860,{
 		callfunc "F_KafEnd",0,1,"in the city of Einbroch";
 }
 
-// Einbroch (East) ---------------------------------------------------------
+// Einbroch (East) --------------------------------------------------------
 einbroch,59,203,6	script	Kafra Employee#ein1::kaf_einbroch2	861,{
 	cutin "kafra_09",2;
 	mes "[Kafra Employee]";
@@ -116,7 +115,7 @@ einbroch,59,203,6	script	Kafra Employee#ein1::kaf_einbroch2	861,{
 		callfunc "F_KafEnd",0,1,"in the city of Einbroch";
 }
 
-// Gonryun -----------------------------------------------------------------
+// Gonryun ----------------------------------------------------------------
 gonryun,159,122,4	script	Kafra Employee::kaf_gonryun	116,{
 	cutin "kafra_02",2;
 	mes "[Kafra Employee]";
@@ -132,9 +131,8 @@ gonryun,159,122,4	script	Kafra Employee::kaf_gonryun	116,{
 		callfunc "F_KafEnd",0,1,"in the city of Kunlun";
 }
 
-// Lighthalzen--------------------------------------------------------------
-
-//Outside the hotel
+// Lighthalzen-------------------------------------------------------------
+// Outside Hotel
 lighthalzen,164,100,4	script	Kafra Employee::kaf_lighthalzen	860,{
 	cutin "kafra_08",2;
 	mes "[Kafra Employee]";
@@ -165,7 +163,7 @@ lighthalzen,191,320,4	script	Kafra Employee::kaf_lighthalzen2	861,{
 		callfunc "F_KafEnd",0,1,"in the city of Lighthalzen";
 }
 
-//Inside the hotel
+// Inside Hotel
 lhz_in02,237,284,4	script	Kafra Employee::kaf_lhz_in02	861,{
 	cutin "kafra_09",2;
 	mes "[Kafra Employee]";
@@ -180,7 +178,7 @@ lhz_in02,237,284,4	script	Kafra Employee::kaf_lhz_in02	861,{
 		callfunc "F_KafEnd",0,1,"in the city of Lighthalzen";
 }
 
-// Louyang -----------------------------------------------------------------
+// Louyang ----------------------------------------------------------------
 louyang,210,104,5	script	Kafra Employee::kaf_louyang	117,{
 	cutin "kafra_01",2;
 	mes "[Kafra Employee]";
@@ -196,7 +194,7 @@ louyang,210,104,5	script	Kafra Employee::kaf_louyang	117,{
 		callfunc "F_KafEnd",0,1,"in the city of Louyang";
 }
 
-// Umbala Kafra ------------------------------------------------------------
+// Umbala -----------------------------------------------------------------
 umbala,87,160,4	script	Kafra Employee::kaf_umbala	721,{
 	cutin "kafra_07",2;
 	cleararray @wrpC$[0],"",getarraysize(@wrpC$);

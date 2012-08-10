@@ -1,12 +1,12 @@
-//===== rAthena Script =======================================
+//===== rAthena Script ======================================= 
 //= Al De Baran Kafras
-//===== By: ============================
+//===== By: ================================================== 
 //= rAthena Dev Team
-//===== Current Version: =======================
+//===== Current Version: ===================================== 
 //= 2.3a
-//===== Compatible With: ============================
-//= rAthena 1.0
-//===== Description: ============================================
+//===== Compatible With: ===================================== 
+//= rAthena SVN
+//===== Description: =========================================
 //= Description of argument settings for callfunc "F_Kafra".
 //=  arg(0): When set at 0 the default Kafra message is displayed.
 //=    When set to 1 the Niflhiem Kafra message is displayed.
@@ -15,7 +15,7 @@
 //=  arg(2): Set to 1 to disable info menu.  Otherwise set to 0.
 //=  arg(3): Cost of Storage service
 //=  arg(4): Cost of Rent a Pushcart service
-//===== Additional Comments: ==========================================
+//===== Additional Comments: ================================= 
 //= v1.1 Now using functions :)
 //= v2.1b Minor changes to function calls. Using arguments.
 //= This version uses arrays .[kobra_k88]
@@ -25,9 +25,9 @@
 //=	Added unique Kafra Welcome message.
 //=	Changed "Yuno" to "Juno"
 //= 2.3a Added "callfunc("F_CheckKafCode")" when you open storage. (bugreport:515) [Samuray22]
-//=====================================================================
+//============================================================ 
 
-// Kafra Main Office (Kafra Leilah) ------------------------------------
+// Kafra Main Office (Kafra Leilah) ---------------------------------------
 aldeba_in,96,181,4	script	Kafra Service	113,{
 	cutin "kafra_05",2;
 	mes "[Kafra Leilah]";
@@ -114,7 +114,7 @@ aldeba_in,96,181,4	script	Kafra Service	113,{
 	end;
 }
 
-// Central --------------------------------------------------
+// Central ----------------------------------------------------------------
 aldebaran,143,119,4	script	Kafra Employee::kaf_aldebaran	113,{
 	cutin "kafra_05",2;
 	cleararray @wrpC$[0],"",getarraysize(@wrpC$);

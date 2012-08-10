@@ -1,12 +1,12 @@
-//===== rAthena Script =======================================
+//===== rAthena Script ======================================= 
 //= Geffen Kafras
-//===== By: =========================
+//===== By: ================================================== 
 //= rAthena Dev Team
-//===== Current Version: ===================
+//===== Current Version: ===================================== 
 //= 2.5
-//===== Compatible With: =====================
-//= rAthena 1.0
-//===== Description: ============================================
+//===== Compatible With: ===================================== 
+//= rAthena SVN
+//===== Description: =========================================
 //= Description of argument settings for callfunc "F_Kafra".
 //=  arg(0): When set at 0 the default Kafra message is displayed.
 //=    When set to 1 the Niflhiem Kafra message is displayed.
@@ -15,7 +15,7 @@
 //=  arg(2): Set to 1 to disable info menu.  Otherwise set to 0.
 //=  arg(3): Cost of Storage service
 //=  arg(4): Cost of Rent a Pushcart service
-//===== Additional Comments: ==========================================
+//===== Additional Comments: ================================= 
 //= v1.1 Now using functions :)
 //= v2.1b Minor changes to function calls. Using arguments.
 //= This version uses arrays .[kobra_k88]
@@ -25,10 +25,9 @@
 //=	Added unique Kafra Welcome messages.
 //=	Removed North and West Kafra
 //= 2.5 Fixed Kafra NPC names. [L0ne_W0lf]
-//=====================================================================
+//============================================================ 
 
-
-// South =====================================
+// South ------------------------------------------------------------------
 geffen,120,62,0	script	Kafra Employee::kaf_geffen	115,{
 	cutin "kafra_03",2;
 	callfunc "F_KafSetGef";
@@ -44,7 +43,7 @@ geffen,120,62,0	script	Kafra Employee::kaf_geffen	115,{
 		callfunc "F_KafEnd",0,1,"in the city of Geffen";
 }
 
-// East ==============================================
+// East -------------------------------------------------------------------
 geffen,203,123,2	script	Kafra Employee::geffen2	114,{
 	cutin "kafra_04",2;
 	callfunc "F_KafSetGef";
@@ -62,8 +61,7 @@ geffen,203,123,2	script	Kafra Employee::geffen2	114,{
 		callfunc "F_KafEnd",0,1,"in the city of Geffen";
 }
 
-
-// Function: Sets variables for Geffen Kafras -------------------
+// Function: Sets variables for Geffen Kafras -----------------------------
 function	script	F_KafSetGef	{
 	cleararray @wrpC$[0],"",getarraysize(@wrpC$);
 	setarray @wrpD$[0], "Prontera", "Al De Baran", "Orc Dungeon", "Mjolnir Dead Pit";

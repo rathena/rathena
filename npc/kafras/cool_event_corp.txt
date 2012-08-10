@@ -5,7 +5,7 @@
 //===== Current Version: ===================================== 
 //= 1.5
 //===== Compatible With: ===================================== 
-//= rAthena
+//= rAthena SVN
 //===== Description: ========================================= 
 //= Cool Event Corp. Staff (Save, Storage & Pushcart Service)
 //= in Arunafeltz Region.
