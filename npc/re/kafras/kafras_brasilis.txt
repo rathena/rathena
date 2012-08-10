@@ -1,12 +1,12 @@
-//===== rAthena Script =======================================
+//===== rAthena Script ======================================= 
 //= Brasilis Kafra
-//===== By: =========================
+//===== By: ================================================== 
 //= L0ne_W0lf
-//===== Current Version: ===================
+//===== Current Version: ===================================== 
 //= 1.2
-//===== Compatible With: =====================
+//===== Compatible With: ===================================== 
 //= rAthena 1.0
-//===== Description: ============================================
+//===== Description: =========================================
 //= Description of argument settings for callfunc "F_Kafra".
 //=  arg(0): When set at 0 the default Kafra message is displayed.
 //=    When set to 1 the Niflhiem Kafra message is displayed.
@@ -15,11 +15,11 @@
 //=  arg(2): Set to 1 to disable info menu.  Otherwise set to 0.
 //=  arg(3): Cost of Storage service
 //=  arg(4): Cost of Rent a Pushcart service
-//===== Additional Comments: ==========================================
+//===== Additional Comments: ================================= 
 //= 1.0 First version.
 //= 1.1 Updated save point coordinates.
 //= 1.2 Removed custom text. [Daegaladh]
-//=====================================================================
+//============================================================ 
 
 brasilis,197,221,4	script	Kafra Employee::kaf_bra	117,{
 	cutin "kafra_01",2;

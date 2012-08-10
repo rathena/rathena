@@ -15,7 +15,7 @@
 //= 1.2 - Fixed Something by Muad Dib
 //= 1.3 - Fixed up For eA by Darkchild
 //= 1.4 - Fixed some wrong item names [Lupus]
-//= 1.5 � Spell Checked [massdriller]
+//= 1.5 - Spell Checked [massdriller]
 //= 1.6 - Fixed item names, added a chance to get to Niflheim via Jumping Bungy Area [Lupus]
 //= 1.7 - Fixed bugs and exploits [Lupus]
 //= 1.8 - Warps you to Niff with 1HP [Lance]

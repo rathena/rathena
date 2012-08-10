@@ -412,7 +412,7 @@ gonryun,169,71,3	script	Guidev#gon	770,{
 // Old changelog
 //============================================================ 
 // May be missing npc's and dialogue.
-//= 1.1 Fixed Typo�s [Nexon]
+//= 1.1 Fixed Typos [Nexon]
 //= 1.2 Removed Duplicates [Silent]
 //= 1.3 Max NPC Name is 23 [Toms]
 //= 1.3a Removed temp NPC plugs due Broken Sword quest [Lupus]

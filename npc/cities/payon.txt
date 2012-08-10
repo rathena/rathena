@@ -16,7 +16,7 @@
 //= 1.5b - Used Dino9021's script for the Gemstone exchanger [DracoRPG]
 //= 1.5b1 fixed Gemstone Exchanger NPC [Lupus]
 //= 1.5b2 added adv.classes/baby classes support [Lupus]
-//= 1.6 Fixed typo�s [Nexon]
+//= 1.6 Fixed typos [Nexon]
 //= 1.7 Fixed bugs and exploits V__V [Lupus]
 //= 1.8 Removed Duplicates [Silent]
 //= 1.9 Fixed missing next;'s [Evera]
