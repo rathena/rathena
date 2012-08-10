@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -12,6 +12,7 @@
 //===== Additional Comments: =================================
 //= 0.x Previous authors: L0ne_W0lf, Zephyrus, Brian.
 //= 1.0 If anything breaks, blame Maki. [Euphy]
+//= 1.1 Fixed an incorrect label execution. [Euphy]
 //============================================================
 
 // Core, triggers all other events
@@ -99,7 +100,7 @@ OnReset:
 	for(set .@i,1; .@i<4; set .@i,.@i+1)
 		donpcevent "Control Device0"+.@i+"#"+.@str$+"::OnDisable";
 	for(set .@i,0; .@i<4; set .@i,.@i+1)
-		donpcevent "RL"+.@i+"#"+strnpcinfo(2)+"::OnEnable";
+		donpcevent "RL"+.@i+"#"+strnpcinfo(2)+"::OnDisable";
 	if (agitcheck2())
 		setarray getd("$agit_"+substr(strnpcinfo(2),0,1)+substr(strnpcinfo(2),8,9)+"[0]"),0,0,1,1,1,0;
 	end;
