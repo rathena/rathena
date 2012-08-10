@@ -16,7 +16,7 @@
 veins,210,345,5	script	Veins Guide#veins01::GuideVeins	934,{
 	mes "[Veins Guide]";
 	mes "Thank you for coming through the rough sand storms. Welcome to ^8B4513Veins^000000, the Canyon Village.";
-	mes "If this is the first time for you to use the guide services, why don't you check the \"Notice\" menu first?";
+	mes "If this is the first time for you to use the guide services, why don't you check the "Notice" menu first?";
 	next;
 	while (1) {
 		switch(select("[ Temple ]:[ Inn ]:[ Pub ]:[ Weapon Shop ]:[ Tool Shop ]:[ Airport ]:[ Geological Research Institute ]:[ Cool Event Corp. Staff ]:Remove Marks from Mini-Map:Cancel")) {

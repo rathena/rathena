@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= Repetable Quests for Players between Baselevel 55 - 71 .
+//= Repetable Quests for Players between Baselevel 56 - 70.
 //===== Additional Comments: =================================
 //= 1.0 First Version.
 //= 1.1 Some little optimization here and there. [Masao]

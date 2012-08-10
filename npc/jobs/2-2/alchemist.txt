@@ -164,7 +164,7 @@ alde_alche,27,185,5	script	Alchemist Guildsman	744,{
 				mes "Please sign";
 				mes "the application.";
 				next;
-				menu "",-;
+				select(strcharinfo(0));
 				mes "[Parmy Gianino]";
 				mes "Good, good. Now, if you have";
 				mes "the Zeny for your application fee ready, I will tell you which items you will need to bring. Now, pay attention.";

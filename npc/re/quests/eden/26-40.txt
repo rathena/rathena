@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= Repetable Quests for Players between Baselevel 25 - 41 .
+//= Repetable Quests for Players between Baselevel 26 - 40.
 //===== Additional Comments: =================================
 //= 1.0 First Version.
 //= 1.1 Some little optimization here and there. [Masao]
@@ -15,7 +15,7 @@
 //============================================================
 
 moc_para01,38,38,3	script	Mission [26 - 40]	857,{
-	if (countitem(6219) != 1) {
+	if (countitem(6219) < 1) {
 		mes "You are not a qualified member. You can not use the bulletin board.";
 		close;
 	}

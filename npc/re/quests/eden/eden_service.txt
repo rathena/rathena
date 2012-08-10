@@ -17,7 +17,7 @@
 	mes "It is a Goods Storage Cabinet.";
 	mes "A message is written on a piece of paper.";
 	next;
-	mes "+ Cabinet  is exclusively +";
+	mes "+ Cabinet is exclusively +";
 	mes "+ for the Eden group +";
 	mes "If you want to use this";
 	mes "cabinet please check";
@@ -30,12 +30,12 @@
 	mes "3.Cabinet fee is";
 	mes "  ^4d4dff500 zeny^000000!";
 	next;
-    if (countitem(6219) > 0) {
+	if (countitem(6219) > 0) {
 		mes "You need to insert zeny to use the cabinet.";
 		mes "Cost : 500 Zeny ";
 		mes "Would you like to use it?";
 		next;
-		switch (select("Use the Cabinet.:Cancel.")) {
+		switch(select("Use the Cabinet.:Cancel.")) {
 			case 1:
 				if (Zeny > 499) {
 					if (getskilllv("NV_BASIC") < 6) {
