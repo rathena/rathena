@@ -13750,7 +13750,7 @@ void skill_repairweapon (struct map_session_data *sd, int idx)
 		return;
 	}
 
-	if ( sd->inventory_data[idx]->type == IT_WEAPON)
+	if ( target_sd->inventory_data[idx]->type == IT_WEAPON)
 		material = materials [itemdb_wlv(item->nameid)-1]; // Lv1/2/3/4 weapons consume 1 Iron Ore/Iron/Steel/Rough Oridecon
 	else
 		material = materials [2]; // Armors consume 1 Steel
