@@ -5817,7 +5817,7 @@ void clif_item_identified(struct map_session_data *sd,int idx,int flag)
 
 /// Presents a list of items that can be repaired (ZC_REPAIRITEMLIST).
 /// 01fc <packet len>.W { <index>.W <name id>.W <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W }*
-void clif_item_repair_list(struct map_session_data *sd,struct map_session_data *dstsd)
+void clif_item_repair_list(struct map_session_data *sd,struct map_session_data *dstsd, int lv)
 {
 	int i,c;
 	int fd;
@@ -5844,6 +5844,7 @@ void clif_item_repair_list(struct map_session_data *sd,struct map_session_data *
 		WFIFOSET(fd,WFIFOW(fd,2));
 		sd->menuskill_id = BS_REPAIRWEAPON;
 		sd->menuskill_val = dstsd->bl.id;
+		sd->menuskill_val2 = lv;
 	}else
 		clif_skill_fail(sd,sd->ud.skillid,USESKILL_FAIL_LEVEL,0);
 }
