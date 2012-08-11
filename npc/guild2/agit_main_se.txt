@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -13,6 +13,7 @@
 //= 0.x Previous authors: L0ne_W0lf, Zephyrus, Brian.
 //= 1.0 If anything breaks, blame Maki. [Euphy]
 //= 1.1 Fixed an incorrect label execution. [Euphy]
+//= 1.2 Hopefully fixed a processing error. [Euphy]
 //============================================================
 
 // Core, triggers all other events
@@ -578,7 +579,7 @@ OnTreasureDied:
 	}
 
 OnStop:
-	stopnpctimer;
+	awake strnpcinfo(0);
 	end;
 
 OnStartArena:
@@ -600,19 +601,17 @@ OnStartArena:
 	// Disable Kafra
 	disablenpc "Kafra Employee#"+strnpcinfo(2);
 
-	announce "The ["+getguildname(.@GID)+"] conquered the ["+.@region$+" "+charat(strnpcinfo(2),3)+"] stronghold of "+getcastlename(strnpcinfo(4)),bc_all|bc_woe;
+	announce "The ["+getguildname(.@GID)+"] guild conquered the ["+.@region$+" "+charat(strnpcinfo(2),3)+"] stronghold of "+getcastlename(strnpcinfo(4))+"!",bc_all|bc_woe;
 	mapannounce strnpcinfo(4),"The emperium has been shattered!",bc_map,"0x00FF00",FW_NORMAL,20,0,40;
 	donpcevent "Manager#"+strnpcinfo(4)+"::OnReset";
-	if (agitcheck2()) initnpctimer;
-	else stopnpctimer;
 	maprespawnguildid strnpcinfo(4),getcastledata(strnpcinfo(4),1),2;
 	donpcevent "Manager#"+strnpcinfo(4)+"::OnRecvCastle2";
 	donpcevent "::OnRecvCastle"+strnpcinfo(2);
-	end;
-
-OnTimer10000:
-	donpcevent "Manager#"+strnpcinfo(4)+"::OnChange";
-	mapannounce strnpcinfo(4),"Rebuild this stronghold's Guardian Stones and Fortress Gates to secure your guild's new aquisition!",bc_map,"0x00FF00",FW_NORMAL,20,0,40;
+	sleep 10000;
+	if (agitcheck2()) {
+		donpcevent "Manager#"+strnpcinfo(4)+"::OnChange";
+		mapannounce strnpcinfo(4),"Rebuild this stronghold's Guardian Stones and Fortress Gates to secure your guild's new aquisition!",bc_map,"0x00FF00",FW_NORMAL,20,0,40;
+	}
 	end;
 }
 
