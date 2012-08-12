@@ -1192,8 +1192,10 @@ const char* parse_variable(const char* p) {
 		add_scriptl(word);
 	}
 	
-	if( type == C_ADD_PP || type == C_SUB_PP ) {// incremental operator for the method
+	if( type != C_EQ )
 		add_scriptc(C_REF);
+	
+	if( type == C_ADD_PP || type == C_SUB_PP ) {// incremental operator for the method
 		add_scripti(1);
 		add_scriptc(type == C_ADD_PP ? C_ADD : C_SUB);
 	} else {// process the value as an expression
@@ -3398,7 +3400,7 @@ static void script_check_buildin_argtype(struct script_state* st, int func)
 				case 'r':
 					if( !data_isreference(data) )
 					{// variables
-						ShowWarning("Unexpected type for argument %d. Expected variable.\n", idx-1);
+						ShowWarning("Unexpected type for argument %d. Expected variable, got %s.\n", idx-1,script_op2name(data->type));
 						script_reportdata(data);
 						invalid++;
 					}
