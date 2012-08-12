@@ -583,13 +583,13 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 			mes "Let's see!!";
 			mes "One! Two! Three!";
 			if (.@SantaCardNpc == 1) {
-				cutin "����ī��",4;
+				cutin "Æ÷¸µÄ«µå",4;
 			}
 			else if (.@SantaCardNpc == 2) {
-				cutin "������ī��",4;
+				cutin "¿£Á©¸µÄ«µå",4;
 			}
 			else if (.@SantaCardNpc == 3) {
-				cutin "���Ʈ��ī��",4;
+				cutin "°í½ºÆ®¸µÄ«µå",4;
 			}
 			next;
 			set .@SantaCardTurn,.@SantaCardTurn+1;
