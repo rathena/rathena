@@ -3,11 +3,11 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.9
+//= 2.0
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Endless Tower Memorial Dungeon
 //= Consists of 101 floors.
 //===== Additional Comments: ================================= 
@@ -31,6 +31,7 @@
 //=     only 1@tower -> 5@tower (bugreport:4983)
 //= 1.9 Added 'instance_check_party' command to the script for proper checking if
 //=		the invoking party meets the requirements to join the Memorial Dungeon.
+//= 2.0 Fixed broken else/if chaining. [Joseph]
 //============================================================ 
 
 alberta,214,77,6	script	Captain Janssen	709,{
@@ -238,8 +239,7 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 					mes "Party Name:"+.@p_name$+"";
 					mes "Party Leader:"+.@p_reader$+"";
 					mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
-				}
-				else {
+				} else {
 					mes "^0000ff"+.@md_name$+"^000000 - Try to reserve";
 					mes "After making a reservation, you have to talk to NPC behind and select the menu 'Enter the Dungeon' to enter the dungeon.";
 					// 1,2,3,4,5,6
@@ -283,16 +283,14 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 				if (has_instance("1@tower") == "") {
 					mes "The memorial dungeon " + .@md_name$ + " does not exist.";
 					mes "The party leader did not generate the dungeon yet.";
-				}
-				if((party_instance_id != 0) && (party_instance_id != getcharid(1))) {
+				} else if((party_instance_id != 0) && (party_instance_id != getcharid(1))) {
 					mes "Due to the tower's aftereffects, you cannot enter the dungeon right now, " + .@dun_h + "hours " + .@dun_m + "minutes " + .@dun_s + "seconds left to enter the next dungeon.";
 					next;
 					mes "It is dangerous here. Let me move you to Alberta.";
 					close2;
 					warp "alberta",223,36;
 					end;
-				}
-				else {
+				} else {
 					mapannounce "e_tower", .@p_name2$ + " of the party, " + .@p_name$ + ", is entering the dungeon, " + .@md_name$ + ".",bc_map,"0x00ff99",FW_NORMAL,12;
 					set party_instance_id,getcharid(1);
 					set etower_timer,gettimetick(2);
@@ -311,23 +309,20 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 				break;
 			}
 			close;
-		}
-		else {
+		} else {
 			switch(select(.@md_name$ + " Enter the dungeon:Return to Alberta:Cancel")) {
 			case 1:
 				if (has_instance("1@tower") == "") {
 					mes "The memorial dungeon " + .@md_name$ + " does not exist.";
 					mes "The party leader did not generate the dungeon yet.";
-				}
-				if((party_instance_id != 0) && (party_instance_id != getcharid(1))) {
+				} else if((party_instance_id != 0) && (party_instance_id != getcharid(1))) {
 					mes "Due to the tower's aftereffects, you cannot enter the dungeon right now, " + .@dun_h + "hours " + .@dun_m + "minutes " + .@dun_s + "seconds left to enter the next dungeon.";
 					next;
 					mes "It is dangerous here. Let me move you to Alberta.";
 					close2;
 					warp "alberta",223,36;
 					end;
-				}
-				else {
+				} else {
 					mapannounce "e_tower", .@p_name2$ + " of the party, " + .@p_name$ + ", is entering the dungeon, " + .@md_name$ + ".",bc_map,"0x00ff99",FW_NORMAL,12;
 					set party_instance_id,getcharid(1);
 					set etower_timer,gettimetick(2);
@@ -347,8 +342,7 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 			}
 			close;
 		}
-	}
-	else if ((.@etower_timer >= 0) && (.@etower_timer2 < 2)) {
+	} else if ((.@etower_timer >= 0) && (.@etower_timer2 < 2)) {
 		mes "If you have the dungeon generated already, you can enter it. ";
 		next;
 		switch(select(.@md_name$ + " Enter the dungeon:Return to Alberta:Cancel")) {
@@ -356,16 +350,14 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 			if (has_instance("1@tower") == "") {
 				mes "The memorial dungeon " + .@md_name$ + " does not exist.";
 				mes "The party leader did not generate the dungeon yet.";
-			}
-			if((party_instance_id != 0) && (party_instance_id != getcharid(1))) {
+			} else if((party_instance_id != 0) && (party_instance_id != getcharid(1))) {
 				mes "Due to the tower's aftereffects, you cannot enter the dungeon right now, " + .@dun_h + "hours " + .@dun_m + "minutes " + .@dun_s + "seconds left to enter the next dungeon.";
 				next;
 				mes "It is dangerous here. Let me move you to Alberta.";
 				close2;
 				warp "alberta",223,36;
 				end;
-			}
-			else {
+			} else {
 				mapannounce "e_tower", .@p_name2$ + " of the party, " + .@p_name$ + ", is entering the dungeon, " + .@md_name$ + ".",bc_map,"0x00ff99",FW_NORMAL,12;
 				set party_instance_id,getcharid(1);
 				warp "1@tower",52,354;
@@ -381,16 +373,14 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 			break;
 		}
 		close;
-	}
-	else if ((.@etower_timer >= 0) && (.@etower_timer < 2) && (.@etower_timer2 == 2)) {
+	} else if ((.@etower_timer >= 0) && (.@etower_timer < 2) && (.@etower_timer2 == 2)) {
 		mes "Due to the tower's aftereffects, you cannot enter the dungeon right now, " + .@dun_h + "hours " + .@dun_m + "minutes " + .@dun_s + "seconds left to enter the next dungeon.";
 		next;
 		mes "It is dangerous here. Let me move you to Alberta.";
 		close2;
 		warp "alberta",223,36;
 		end;
-	}
-	else {
+	} else {
 		set etower_timer,0;
 		erasequest 60200;
 		erasequest 60201;

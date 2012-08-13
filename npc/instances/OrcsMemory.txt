@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Relive the memory of an orc.
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [L0ne_W0lf]
