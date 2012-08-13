@@ -511,31 +511,31 @@ is a file you should read, since it also allows you to replace lots of numbered
 arguments for many commands with easier to read text. The special variables most 
 commonly used are all permanent character-based variables:
 
-StatusPoint - Amount of status points remaining.
-BaseLevel   - Current base level
-SkillPoint  - Amount of skill points remaining
-Class       - Current job
-Upper       - 1 if the character is an advanced job class.
-Zeny        - Current amount of Zeny
-Sex         - Character's gender, 0 if female, 1 if male.
-Weight      - The weight the character currently carries.
-MaxWeight   - The maximum weight the character can carry.
-JobLevel    - Character's job level
-BaseExp     - The amount of base experience points the character has.
-              Notice that it's zero (or close) if the character just got a level.
-JobExp      - Same for job levels
-NextBaseExp - Amount of experience points needed to reach the next base level.
-NextJobExp  - Same for job levels.
+Zeny        - Amount of Zeny.
 Hp          - Current amount of hit points.
 MaxHp       - Maximum amount of hit points.
 Sp          - Current spell points.
-MaxSp       - Maximum amount of spell points
-BaseClass	- This will return the starter Class of the invoking Character.
-			  For example: If you're an Knight this would return Swordsman,
-			  or if you're an Bard it will return Archer.
-BaseJob     - This is sneaky, apparently meant for baby class support.
-              This will supposedly equal Job_Acolyte regardless of whether the 
-              character is an acolyte or a baby acolyte, for example.
+MaxSp       - Maximum amount of spell points.
+StatusPoint - Amount of status points remaining.
+SkillPoint  - Amount of skill points remaining.
+BaseLevel   - Character's base level.
+JobLevel    - Character's job level.
+BaseExp     - Amount of base experience points.
+JobExp      - Amount of job experience points.
+NextBaseExp - Amount of base experience points needed to reach the next level.
+NextJobExp  - Amount of job experience points needed to reach the next level.
+Weight      - Amount of weight the character currently carries.
+MaxWeight   - Maximum weight the character can carry.
+Sex         - 0 if female, 1 if male.
+Class       - Character's job.
+Upper       - 0 if the character is a normal class, 1 if advanced, 2 if baby.
+BaseClass   - The character's 1-1 'normal' job, regardless of Upper value.
+              For example, this will return Job_Acolyte for Acolyte, Priest/Monk,
+              High Priest/Champion, and Arch Bishop/Sura. If the character has not
+              reached a 1-1 class, it will return Job_Novice.
+BaseJob     - The character's 'normal' job, regardless of Upper value.
+              For example, this will return Job_Acolyte for Acolyte,
+              Baby Acolyte, and High Acolyte.
 Karma       - The character's karma. Karma system is not fully functional, but 
               this doesn't mean this doesn't work at all. Not tested.
 Manner      - The character's manner rating. Becomes negative if the player 
