@@ -2602,7 +2602,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 	if( !rebirth ) {
 	
-		if(pcdb_checkid(md->vd->class_)) {	//Player mobs are not removed automatically by the client.
+		if( pcdb_checkid(md->vd->class_) ) {//Player mobs are not removed automatically by the client.
+			/* first we set them dead, then we delay the outsight effect */
+			clif_clearunit_area(&md->bl,CLR_DEAD);
 			clif_clearunit_delayed(&md->bl, CLR_OUTSIGHT,tick+3000);
 		} else
 			/**
@@ -2610,7 +2612,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			 * For example, this delay allows it to display soul drain effect
 			 **/
 			clif_clearunit_delayed(&md->bl, CLR_DEAD, tick+250);
-		
+
 	}
 
 	if(!md->spawn) //Tell status_damage to remove it from memory.
