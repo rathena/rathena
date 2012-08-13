@@ -3080,7 +3080,7 @@
 5500,Icecream_Hat,Icecream Hat,5,0,,300,,6,,0,0xFFFFFFFF,7,2,256,,30,1,488,{ bonus bMdef, 3; skill "MG_FROSTDIVER", 3; },{},{}
 5501,Pirate's_Pride,Pirate's Pride,5,0,,100,,6,,0,0xFFFFFFFF,7,2,256,,10,0,496,{ bonus2 bAddRace2, 6, 5; bonus2 bSubRace2, 6, 5; },{},{}
 5502,Necromencer's_Hood,Necromancer's Hood,5,0,,500,,2,,0,0xFFFFFFFF,7,2,768,,1,1,491,{ bonus5 bAutoSpellWhenHit,"NPC_DARKSTRIKE",5,5,BF_WEAPON|BF_MAGIC,1; },{},{}
-5503,Rabbit_Magic_Hat,Magic Rabit Hat,5,0,,800,,2,,0,0xFFFFFFFF,7,2,256,,0,1,497,{ bonus bDex,2; bonus bAgi,2; bonus bMdef,1; bonus bMaxSP,50; bonus3 bAutoSpellWhenHit,"MG_FIREBOLT",1,10; bonus3 bAutoSpellWhenHit,"MG_COLDBOLT",1,10; bonus3 bAutoSpellWhenHit,"MG_LIGHTNINGBOLT",1,10; },{},{}
+5503,Rabbit_Magic_Hat,Magic Rabit Hat,5,0,,800,,2,,0,0xFFFFFFFF,7,2,256,,0,1,497,{ bonus bDex,2; bonus bAgi,2; bonus bMdef,1; bonus bMaxSP,50; bonus3 bAutoSpellWhenHit,"MG_FIREBOLT",1,20; bonus3 bAutoSpellWhenHit,"MG_COLDBOLT",1,20; bonus3 bAutoSpellWhenHit,"MG_LIGHTNINGBOLT",1,20; },{},{}
 5504,China_Wedding_Veil,Wedding Weil,5,20,,500,,5,,0,0xFFFFFFFF,7,2,768,,70,1,489,{ bonus bMdef, 10; },{},{}
 5505,Asara_Fairy_Hat,Asara Fairy Hat,5,0,,500,,2,,0,0xFFFFFFFF,7,2,768,,50,1,492,{ skill "DC_DONTFORGETME",1; bonus bDex,2; bonus bLuk,2; },{},{}
 5506,Blue_Pajamas_Hat,Blue Night Cap,5,0,,100,,4,,0,0xFFFFFFFF,7,2,256,,0,1,501,{ bonus bBaseAtk, 5; bonus bMatkRate, 5; },{},{}
