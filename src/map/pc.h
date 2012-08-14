@@ -924,4 +924,6 @@ int pc_load_combo(struct map_session_data *sd);
 int pc_add_talisman(struct map_session_data *sd,int interval,int max,int type);
 int pc_del_talisman(struct map_session_data *sd,int count,int type);
 
+void pc_baselevelchanged(struct map_session_data *sd);
+
 #endif /* _PC_H_ */

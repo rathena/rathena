@@ -1584,6 +1584,7 @@ ACMD_FUNC(baselevelup)
 	clif_updatestatus(sd, SP_BASEEXP);
 	clif_updatestatus(sd, SP_NEXTBASEEXP);
 	status_calc_pc(sd, 0);
+	pc_baselevelchanged(sd);
 	if(sd->status.party_id)
 		party_send_levelup(sd);
 	return 0;

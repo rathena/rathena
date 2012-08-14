@@ -5421,12 +5421,12 @@ int pc_follow(struct map_session_data *sd,int target_id)
 	return 0;
 }
 
-int pc_checkbaselevelup(struct map_session_data *sd)
-{
+int pc_checkbaselevelup(struct map_session_data *sd) {
 	unsigned int next = pc_nextbaseexp(sd);
 
 	if (!next || sd->status.base_exp < next)
 		return 0;
+	
 	do {
 		sd->status.base_exp -= next;
 		//Kyoki pointed out that the max overcarry exp is the exp needed for the previous level -1. [Skotlex]
@@ -5449,8 +5449,7 @@ int pc_checkbaselevelup(struct map_session_data *sd)
 	status_calc_pc(sd,0);
 	status_percent_heal(&sd->bl,100,100);
 
-	if((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE)
-	{
+	if((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE) {
 		sc_start(&sd->bl,status_skill2sc(PR_KYRIE),100,1,skill_get_time(PR_KYRIE,1));
 		sc_start(&sd->bl,status_skill2sc(PR_IMPOSITIO),100,1,skill_get_time(PR_IMPOSITIO,1));
 		sc_start(&sd->bl,status_skill2sc(PR_MAGNIFICAT),100,1,skill_get_time(PR_MAGNIFICAT,1));
@@ -5458,9 +5457,7 @@ int pc_checkbaselevelup(struct map_session_data *sd)
 		sc_start(&sd->bl,status_skill2sc(PR_SUFFRAGIUM),100,1,skill_get_time(PR_SUFFRAGIUM,1));
 		if (sd->state.snovice_dead_flag)
 			sd->state.snovice_dead_flag = 0; //Reenable steelbody resurrection on dead.
-	} else
-	if( (sd->class_&MAPID_BASEMASK) == MAPID_TAEKWON )
-	{
+	} else if( (sd->class_&MAPID_BASEMASK) == MAPID_TAEKWON ) {
 		sc_start(&sd->bl,status_skill2sc(AL_INCAGI),100,10,600000);
 		sc_start(&sd->bl,status_skill2sc(AL_BLESSING),100,10,600000);
 	}
@@ -5469,9 +5466,23 @@ int pc_checkbaselevelup(struct map_session_data *sd)
 
 	if(sd->status.party_id)
 		party_send_levelup(sd);
+	
+	pc_baselevelchanged(sd);
 	return 1;
 }
 
+void pc_baselevelchanged(struct map_session_data *sd) {
+#ifdef RENEWAL
+	int i;
+	for( i = 0; i < EQI_MAX; i++ ) {
+		if( sd->equip_index[i] >= 0 ) {
+			if( sd->inventory_data[ sd->equip_index[i] ]->elvmax && sd->status.base_level > (unsigned int)sd->inventory_data[ sd->equip_index[i] ]->elvmax )
+				pc_unequipitem(sd, sd->equip_index[i], 3);
+		}
+	}
+#endif
+
+}
 int pc_checkjoblevelup(struct map_session_data *sd)
 {
 	unsigned int next = pc_nextjobexp(sd);
