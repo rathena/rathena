@@ -105,7 +105,8 @@ struct item_data {
 	int wlv;
 	int view_id;
 #ifdef RENEWAL
-	int matk;//[RRInd] -- used in RE for matk
+	int matk;
+	int elvmax;/* maximum level for this item */
 #endif
 
 	int delay;

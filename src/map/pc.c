@@ -849,6 +849,10 @@ int pc_isequip(struct map_session_data *sd,int n)
 		return 0;
 	if(item->elv && sd->status.base_level < (unsigned int)item->elv)
 		return 0;
+#ifdef RENEWAL
+	if(item->elvmax && sd->status.base_level > (unsigned int)item->elvmax)
+		return 0;
+#endif
 	if(item->sex != 2 && sd->status.sex != item->sex)
 		return 0;
 	if(!map_flag_vs(sd->bl.m) && ((item->flag.no_equip&1) || !pc_isAllowedCardOn(sd,item->slot,n,1)))
@@ -4067,6 +4071,11 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 	//Required level check
 	if(item->elv && sd->status.base_level < (unsigned int)item->elv)
 		return 0;
+	
+#ifdef RENEWAL
+	if(item->elvmax && sd->status.base_level > (unsigned int)item->elvmax)
+		return 0;
+#endif
 
 	//Not equipable by class. [Skotlex]
 	if (!(

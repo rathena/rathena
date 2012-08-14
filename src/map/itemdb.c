@@ -1039,7 +1039,11 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 	}
 
 	id->wlv = cap_value(atoi(str[15]), REFINE_TYPE_ARMOR, REFINE_TYPE_MAX);
+#ifdef RENEWAL
+	itemdb_re_split_atoi(str[16],&id->elv,&id->elvmax);
+#else
 	id->elv = atoi(str[16]);
+#endif
 	id->flag.no_refine = atoi(str[17]) ? 0 : 1; //FIXME: verify this
 	id->look = atoi(str[18]);
 
