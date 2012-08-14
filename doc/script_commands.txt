@@ -3465,12 +3465,20 @@ bird and 0 if they aren't.
 
 ---------------------------------------
 
-*setdragon {<flag>};
+*setdragon {<color>};
+*checkdragon()
 
-If <flag> is 0 this command will remove the mount from the character.
-Otherwise it gives the invoking character a dragon mount, which is
-checked using checkriding().
-Note: the character needs to have the skill KN_RIDING to gain a mount
+The 'setdragon' function toggles mounting a dragon for the invoking character.
+It will return 1 if successful, 0 otherwise.
+
+If the character can mount a dragon, the <color> options are:
+ 1 - Green Dragon (default when omitted)
+ 2 - Brown Dragon
+ 3 - Gray Dragon
+ 4 - Blue Dragon
+ 5 - Red Dragon
+
+Note: the character must be a Rune Knight and have the skill RK_DRAGONTRAINING to gain a mount
 
 The accompanying function will return 1 if the invoking character is riding a 
 dragon and 0 if they aren't.
@@ -3491,11 +3499,13 @@ Mado and 0 if they don't.
 *setmounting;
 *ismounting()
 
-Gives the invoking character a cash mount.  Unlike the other mount
-commands, it cannot be used to remove a cash mount.
+The 'setmounting' function toggles cash mount for the invoking character.
+It will return 1 if successful, 0 otherwise.
+
+Note: Character must not be mounting a non-cash mount (eg. dragon, peco, wug, etc.)
 
 The accompanying function will return 1 if the invoking character has a
-mount and 0 if they don't.
+cash mount and 0 if they don't.
 
 ---------------------------------------
 
