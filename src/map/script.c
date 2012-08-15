@@ -13331,19 +13331,17 @@ BUILDIN_FUNC(charislower)
 //=======================================================
 // charat <str>, <index>
 //-------------------------------------------------------
-BUILDIN_FUNC(charat)
-{
+BUILDIN_FUNC(charat) {
 	const char *str = script_getstr(st,2);
 	int pos = script_getnum(st,3);
-	char *output;
-
-	output = (char*)aMalloc(2*sizeof(char));
-	output[0] = '\0';
-
-	if(str && pos >= 0 && (unsigned int)pos < strlen(str))
-		sprintf(output, "%c", str[pos]);
-
-	script_pushstr(st, output);
+	
+	if( pos >= 0 && (unsigned int)pos < strlen(str) ) {
+		char output[2];
+		output[0] = str[pos];
+		output[1] = '\0';
+		script_pushstrcopy(st, output);
+	} else
+		script_pushconststr(st, "");
 	return 0;
 }
 
