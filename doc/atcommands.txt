@@ -210,3 +210,6 @@ mutearea: Mutes every player on screen (admin command)
 battleignore: Makes you immune to attacks (monsters/players/skills cannot target/hit you, admin command)
 snow, clouds, clouds2, fog, fireworks, sakura, leaves: Weather effects
 clearweather: Stop all weather effects
+disguiseguild, undisguiseguild: (Un)disguises all online characters of a guild. (At least one member of that guild must be on.)
+sizeall: Changes the size of all players
+sizeguild: Changes the size of all online characters of a guild. (At least one member of that guild must be on.)

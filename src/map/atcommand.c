@@ -5039,6 +5039,54 @@ ACMD_FUNC(disguiseall)
 }
 
 /*==========================================
+ * DisguiseGuild
+ *------------------------------------------*/
+ACMD_FUNC(disguiseguild)
+{
+	int id = 0, i;
+	char monster[NAME_LENGTH], guild[NAME_LENGTH];
+	struct map_session_data *pl_sd;
+	struct guild *g;
+
+	memset(monster, '\0', sizeof(monster));
+	memset(guild, '\0', sizeof(guild));
+
+	if( !message || !*message || sscanf(message, "%23[^,], %23[^\r\n]", monster, guild) < 2 ) {
+		clif_displaymessage(fd, "Please enter a mob name/id and guild name/id (usage: @disguiseguild <mob name/id>, <guild name/id>).");
+		return -1;
+	}
+
+	if( (id = atoi(monster)) > 0 ) {
+		if( !mobdb_checkid(id) && !npcdb_checkid(id) )
+			id = 0;
+	} else {
+		if( (id = mobdb_searchname(monster)) == 0 ) {
+			struct npc_data* nd = npc_name2id(monster);
+			if( nd != NULL )
+				id = nd->class_;
+		}
+	}
+
+	if( id == 0 ) {
+		clif_displaymessage(fd, msg_txt(123));	// Monster/NPC name/id hasn't been found.
+		return -1;
+	}
+
+	if( (g = guild_searchname(guild)) == NULL && (g = guild_search(atoi(guild))) == NULL ) {
+		clif_displaymessage(fd, msg_txt(94)); // Incorrect name/ID, or no one from the guild is online.
+		return -1;
+	}
+
+	for( i = 0; i < g->max_member; i++ )
+		if( (pl_sd = g->member[i].sd) && !pc_isriding(pl_sd) )
+			pc_disguise(pl_sd, id);
+
+	clif_displaymessage(fd, msg_txt(122)); // Disguise applied.
+	return 0;
+}
+
+
+/*==========================================
  * @undisguise by [Yor]
  *------------------------------------------*/
 ACMD_FUNC(undisguise)
@@ -5069,6 +5117,38 @@ ACMD_FUNC(undisguiseall)
 		if( pl_sd->disguise )
 			pc_disguise(pl_sd, 0);
 	mapit_free(iter);
+
+	clif_displaymessage(fd, msg_txt(124)); // Undisguise applied.
+
+	return 0;
+}
+
+/*==========================================
+ * UndisguiseGuild
+ *------------------------------------------*/
+ACMD_FUNC(undisguiseguild)
+{
+	char guild_name[NAME_LENGTH];
+	struct map_session_data *pl_sd;
+	struct guild *g;
+	int i;
+	nullpo_retr(-1, sd);
+	
+	memset(guild_name, '\0', sizeof(guild_name));
+	
+	if(!message || !*message || sscanf(message, "%23[^\n]", guild_name) < 1) {
+		clif_displaymessage(fd, "Please enter guild name/id (usage: @undisguiseguild <guild name/id>).");
+		return -1;
+	}
+
+	if( (g = guild_searchname(guild_name)) == NULL && (g = guild_search(atoi(message))) == NULL ) {
+		clif_displaymessage(fd, msg_txt(94)); // Incorrect name/ID, or no one from the guild is online.
+		return -1;
+	}
+	
+	for(i = 0; i < g->max_member; i++)
+		if( (pl_sd = g->member[i].sd) && pl_sd->disguise )
+			pc_disguise(pl_sd, 0);
 
 	clif_displaymessage(fd, msg_txt(124)); // Undisguise applied.
 
@@ -7459,24 +7539,94 @@ ACMD_FUNC(me)
  *------------------------------------------*/
 ACMD_FUNC(size)
 {
-	int size=0;
-
+	int size = 0;
 	nullpo_retr(-1, sd);
 
-	size = atoi(message);
+	size = cap_value(atoi(message),0,2);
+	
 	if(sd->state.size) {
-		sd->state.size=0;
+		sd->state.size = 0;
 		pc_setpos(sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_TELEPORT);
 	}
 
-	if(size==1) {
-		sd->state.size=1;
+	sd->state.size = size;
+	if( size == 1 )
 		clif_specialeffect(&sd->bl,420,AREA);
-	} else if(size==2) {
-		sd->state.size=2;
+	else if( size == 2 )
 		clif_specialeffect(&sd->bl,422,AREA);
+
+	clif_displaymessage(fd, "Size change applied.");
+	return 0;
+}
+
+ACMD_FUNC(sizeall)
+{
+	int size;
+	struct map_session_data *pl_sd;
+	struct s_mapiterator* iter;
+
+	size = atoi(message);
+	size = cap_value(size,0,2);
+
+	iter = mapit_getallusers();
+	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) ) {
+		if( pl_sd->state.size != size ) {
+			if( pl_sd->state.size ) {
+				pl_sd->state.size = 0;
+				pc_setpos(pl_sd, pl_sd->mapindex, pl_sd->bl.x, pl_sd->bl.y, CLR_TELEPORT);
+			}
+
+			pl_sd->state.size = size;
+			if( size == 1 )
+				clif_specialeffect(&pl_sd->bl,420,AREA);
+			else if( size == 2 )
+				clif_specialeffect(&pl_sd->bl,422,AREA);
+		}
+	}
+	mapit_free(iter);
+
+	clif_displaymessage(fd, "Size change applied.");
+	return 0;
+}
+
+ACMD_FUNC(sizeguild)
+{
+	int size = 0, i;
+	char guild[NAME_LENGTH];
+	struct map_session_data *pl_sd;
+	struct guild *g;
+	nullpo_retr(-1, sd);
+	
+	memset(guild, '\0', sizeof(guild));
+	
+	if( !message || !*message || sscanf(message, "%d %23[^\n]", &size, guild) < 2 ) {
+		clif_displaymessage(fd, "Please enter guild name/id (usage: @sizeguild <size> <guild name/id>).");
+		return -1;
 	}
 
+	if( (g = guild_searchname(guild)) == NULL && (g = guild_search(atoi(guild))) == NULL ) {
+		clif_displaymessage(fd, msg_txt(94)); // Incorrect name/ID, or no one from the guild is online.
+		return -1;
+	}
+	
+	size = cap_value(size,0,2);
+	
+	for( i = 0; i < g->max_member; i++ ) {
+		if( (pl_sd = g->member[i].sd) && pl_sd->state.size != size ) {
+			if( pl_sd->state.size ) {
+				pl_sd->state.size = 0;
+				pc_setpos(pl_sd, pl_sd->mapindex, pl_sd->bl.x, pl_sd->bl.y, CLR_TELEPORT);
+			}
+
+			pl_sd->state.size = size;
+			if( size == 1 )
+				clif_specialeffect(&pl_sd->bl,420,AREA);
+			else if( size == 2 )
+				clif_specialeffect(&pl_sd->bl,422,AREA);
+		}
+	}
+
+	clif_displaymessage(fd, "Size change applied.");
 	return 0;
 }
 
@@ -8872,6 +9022,10 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(font),
 		ACMD_DEF(accinfo),
 		ACMD_DEF(set),
+		ACMD_DEF(undisguiseguild),
+		ACMD_DEF(disguiseguild),
+		ACMD_DEF(sizeall),
+		ACMD_DEF(sizeguild),
 		/**
 		 * For Testing Purposes, not going to be here after we're done.
 		 **/
