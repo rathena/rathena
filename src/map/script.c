@@ -5008,43 +5008,73 @@ BUILDIN_FUNC(warp)
  *------------------------------------------*/
 static int buildin_areawarp_sub(struct block_list *bl,va_list ap)
 {
-	int x,y;
-	unsigned int map;
-	map=va_arg(ap, unsigned int);
-	x=va_arg(ap,int);
-	y=va_arg(ap,int);
-	if(map == 0)
+	int x2,y2,x3,y3;
+	unsigned int index;
+	
+	index = va_arg(ap,unsigned int);
+	x2 = va_arg(ap,int);
+	y2 = va_arg(ap,int);
+	x3 = va_arg(ap,int);
+	y3 = va_arg(ap,int);
+	
+	if(index == 0)
 		pc_randomwarp((TBL_PC *)bl,CLR_TELEPORT);
+	else if(x3 && y3) {
+		int max, tx, ty, j = 0;
+		
+		// choose a suitable max number of attempts
+		if( (max = (y3-y2+1)*(x3-x2+1)*3) > 1000 )
+			max = 1000;
+		
+		// find a suitable map cell
+		do {
+			tx = rnd()%(x3-x2+1)+x2;
+			ty = rnd()%(y3-y2+1)+y2;
+			j++;
+		} while( map_getcell(index,tx,ty,CELL_CHKNOPASS) && j < max );
+		
+		pc_setpos((TBL_PC *)bl,index,tx,ty,CLR_OUTSIGHT);
+	}
 	else
-		pc_setpos((TBL_PC *)bl,map,x,y,CLR_OUTSIGHT);
+		pc_setpos((TBL_PC *)bl,index,x2,y2,CLR_OUTSIGHT);
 	return 0;
 }
 BUILDIN_FUNC(areawarp)
 {
-	int x,y,m;
+	int m, x0,y0,x1,y1, x2,y2,x3=0,y3=0;
 	unsigned int index;
 	const char *str;
 	const char *mapname;
-	int x0,y0,x1,y1;
 
-	mapname=script_getstr(st,2);
-	x0=script_getnum(st,3);
-	y0=script_getnum(st,4);
-	x1=script_getnum(st,5);
-	y1=script_getnum(st,6);
-	str=script_getstr(st,7);
-	x=script_getnum(st,8);
-	y=script_getnum(st,9);
+	mapname = script_getstr(st,2);
+	x0  = script_getnum(st,3);
+	y0  = script_getnum(st,4);
+	x1  = script_getnum(st,5);
+	y1  = script_getnum(st,6);
+	str = script_getstr(st,7);
+	x2  = script_getnum(st,8);
+	y2  = script_getnum(st,9);
+	
+	if( script_hasdata(st,10) && script_hasdata(st,11) ) { // Warp area to area
+		if( (x3 = script_getnum(st,10)) < 0 || (y3 = script_getnum(st,11)) < 0 ){
+			x3 = 0;
+			y3 = 0;
+		} else if( x3 && y3 ) {
+			// normalize x3/y3 coordinates
+			if( x3 < x2 ) swap(x3,x2);
+			if( y3 < y2 ) swap(y3,y2);
+		}
+	}
 
-	if( (m=map_mapname2mapid(mapname))< 0)
+	if( (m = map_mapname2mapid(mapname)) < 0 )
 		return 0;
 
-	if(strcmp(str,"Random")==0)
+	if( strcmp(str,"Random") == 0 )
 		index = 0;
-	else if(!(index=mapindex_name2id(str)))
+	else if( !(index=mapindex_name2id(str)) )
 		return 0;
 
-	map_foreachinarea(buildin_areawarp_sub, m,x0,y0,x1,y1,BL_PC, index,x,y);
+	map_foreachinarea(buildin_areawarp_sub, m,x0,y0,x1,y1, BL_PC, index,x2,y2,x3,y3);
 	return 0;
 }
 
@@ -16914,7 +16944,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(jobname,"i"),
 	BUILDIN_DEF(input,"r??"),
 	BUILDIN_DEF(warp,"sii"),
-	BUILDIN_DEF(areawarp,"siiiisii"),
+	BUILDIN_DEF(areawarp,"siiiisii??"),
 	BUILDIN_DEF(warpchar,"siii"), // [LuzZza]
 	BUILDIN_DEF(warpparty,"siii?"), // [Fredzilla] [Paradox924X]
 	BUILDIN_DEF(warpguild,"siii"), // [Fredzilla]
