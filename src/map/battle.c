@@ -2630,7 +2630,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			// FIX ME: Should Rolling Cutter be affected by EDP?
 				switch(skill_num){
 					case AS_SPLASHER:       case AS_VENOMKNIFE:
-					case AS_GRIMTOOTH:	case GC_ROLLINGCUTTER:
+					case AS_GRIMTOOTH:      case GC_ROLLINGCUTTER:
 					break;
 #ifndef RENEWAL_EDP
 					case ASC_BREAKER:       case ASC_METEORASSAULT: break;
@@ -2640,10 +2640,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					case GC_COUNTERSLASH:
 					case GC_CROSSIMPACT:
 						ATK_RATE(50); // only modifier is halved but still benefit with the damage bonus
-						break;
 #endif
 					default:
-						ATK_ADDRATE(sc->data[SC_EDP]->val3); 
+						ATK_ADDRATE(sc->data[SC_EDP]->val3);
 				}
 			}
 		}
@@ -5060,7 +5059,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 						state |= BCT_ENEMY;
 						strip_enemy = 0;
 						break;
-					default:						
+					default:
 						if(su->group->skill_id == WM_REVERBERATION || su->group->skill_id == WM_POEMOFNETHERWORLD){
 							state |= BCT_ENEMY;
 							strip_enemy = 0;
@@ -5078,7 +5077,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		//Valid targets with no special checks here.
 		case BL_MER:
 		case BL_HOM:
-		case BL_ELEM:			
+		case BL_ELEM:
 			break;
 		//All else not specified is an invalid target.
 		default:

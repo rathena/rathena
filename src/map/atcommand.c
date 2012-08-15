@@ -2085,11 +2085,9 @@ ACMD_FUNC(go)
 	           strncmp(map_name, "prison", 3) == 0 ||
 	           strncmp(map_name, "jails", 3) == 0) {
 		town = 16;
-	} else if (strncmp(map_name, "jawaii", 3) == 0 ||
-	           strncmp(map_name, "jawai", 3) == 0) {
+	} else if (strncmp(map_name, "jawaii", 3) == 0) {
 		town = 17;
-	} else if (strncmp(map_name, "ayothaya", 3) == 0 ||
-	           strncmp(map_name, "ayotaya", 3) == 0) {
+	} else if (strncmp(map_name, "ayothaya", 3) == 0) {
 		town = 18;
 	} else if (strncmp(map_name, "einbroch", 5) == 0 ||
 	           strncmp(map_name, "ainbroch", 5) == 0) {
@@ -2120,9 +2118,9 @@ ACMD_FUNC(go)
 		town = 31;
 	} else if (strncmp(map_name, "dewata", 3) == 0) {
 		town = 32;
-	} else if (strncmp(map_name, "malangdo", 3) == 0) {
+	} else if (strncmp(map_name, "malangdo", 5) == 0) {
 		town = 33;
-	} else if (strncmp(map_name, "malaya", 3) == 0) {
+	} else if (strncmp(map_name, "malaya", 5) == 0) {
 		town = 34;
 	} else if (strncmp(map_name, "eclage", 3) == 0) {
 		town = 35;
