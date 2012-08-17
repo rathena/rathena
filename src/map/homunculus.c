@@ -183,6 +183,8 @@ int merc_hom_calc_skilltree(struct homun_data *hd)
 		if (f)
 			hd->homunculus.hskill[id-HM_SKILLBASE].id = id ;
 	}
+	if( hd->master )
+		clif_homskillinfoblock(hd->master);
 	return 0;
 }
 
