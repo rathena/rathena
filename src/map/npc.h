@@ -40,6 +40,7 @@ struct npc_data {
 	unsigned size : 2;
 
 	void* chatdb; // pointer to a npc_parse struct (see npc_chat.c)
+	char* path;/* path dir */
 	enum npc_subtype subtype;
 	int src_id;
 	union {
@@ -169,10 +170,12 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
  * For the Secure NPC Timeout option (check config/Secure.h) [RR]
  **/
 #if SECURE_NPCTIMEOUT
-int npc_rr_secure_timeout_timer(int tid, unsigned int tick, int id, intptr_t data);
+	int npc_rr_secure_timeout_timer(int tid, unsigned int tick, int id, intptr_t data);
 #endif
 
 // @commands (script-based)
 int npc_do_atcmd_event(struct map_session_data* sd, const char* command, const char* message, const char* eventname);
+
+bool npc_unloadfile( const char* path );
 
 #endif /* _NPC_H_ */

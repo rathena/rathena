@@ -8780,6 +8780,80 @@ ACMD_FUNC(reloadquestdb) {
 	clif_displaymessage(fd, "Quest DB has been reloaded");
 	return 0;
 }
+ACMD_FUNC(addperm) {
+	int perm_size = ARRAYLENGTH(pc_g_permission_name);
+	bool add = (strcmpi(command+1, "addperm") == 0) ? true : false;
+	int i;
+	
+	if( !message || !*message ) {
+		sprintf(atcmd_output,  "Usage: %s <permission_name>",command);
+		clif_displaymessage(fd, atcmd_output);
+		clif_displaymessage(fd, "-- Permission List");
+		for( i = 0; i < perm_size; i++ ) {
+			sprintf(atcmd_output,"- %s",pc_g_permission_name[i].name);
+			clif_displaymessage(fd, atcmd_output);
+		}
+		return -1;
+	}
+	
+	ARR_FIND(0, perm_size, i, strcmpi(pc_g_permission_name[i].name, message) == 0);
+
+	if( i == perm_size ) {
+		sprintf(atcmd_output,"'%s' is not a known permission",message);
+		clif_displaymessage(fd, atcmd_output);
+		clif_displaymessage(fd, "-- Permission List");
+		for( i = 0; i < perm_size; i++ ) {
+			sprintf(atcmd_output,"- %s",pc_g_permission_name[i].name);
+			clif_displaymessage(fd, atcmd_output);
+		}
+		return -1;
+	}
+	
+	if( add && (sd->permissions&pc_g_permission_name[i].permission) ) {
+		sprintf(atcmd_output,  "User '%s' already possesses the '%s' permission",sd->status.name,pc_g_permission_name[i].name);
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	} else if ( !add && !(sd->permissions&pc_g_permission_name[i].permission) ) {
+		sprintf(atcmd_output,  "User '%s' doesn't possess the '%s' permission",sd->status.name,pc_g_permission_name[i].name);
+		clif_displaymessage(fd, atcmd_output);
+		sprintf(atcmd_output,"-- User '%s' Permissions",sd->status.name);
+		clif_displaymessage(fd, atcmd_output);
+		for( i = 0; i < perm_size; i++ ) {
+			if( sd->permissions&pc_g_permission_name[i].permission ) {
+				sprintf(atcmd_output,"- %s",pc_g_permission_name[i].name);
+				clif_displaymessage(fd, atcmd_output);
+			}
+		}
+		
+		return -1;		
+	}
+	
+	if( add )
+		sd->permissions |= pc_g_permission_name[i].permission;
+	else
+		sd->permissions &=~ pc_g_permission_name[i].permission;
+
+
+	sprintf(atcmd_output, "User '%s' permissions were updated successfully, be aware the changes are temporary.",sd->status.name);
+	clif_displaymessage(fd, atcmd_output);
+	
+	return 0;
+}
+ACMD_FUNC(unloadnpcfile) {
+	
+	if( !message || !*message ) {
+		clif_displaymessage(fd, "Usage: @unloadnpcfile <file name>");
+		return -1;
+	}
+	
+	if( npc_unloadfile(message) )
+		clif_displaymessage(fd, "File unloaded, be aware mapflags and monsters spawned directly are not removed");
+	else {
+		clif_displaymessage(fd, "File not found");
+		return -1;
+	}
+	return 0;
+}
 /**
  * Fills the reference of available commands in atcommand DBMap
  **/
@@ -9030,6 +9104,9 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(disguiseguild),
 		ACMD_DEF(sizeall),
 		ACMD_DEF(sizeguild),
+		ACMD_DEF(addperm),
+		ACMD_DEF2("rmvperm", addperm),
+		ACMD_DEF(unloadnpcfile),
 		/**
 		 * For Testing Purposes, not going to be here after we're done.
 		 **/

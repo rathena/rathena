@@ -18,6 +18,7 @@
 #include "vending.h" // struct s_vending
 #include "mob.h"
 #include "log.h"
+#include "pc_groups.h"
 
 #define MAX_PC_BONUS 10
 #define MAX_PC_SKILL_REQUIRE 5
@@ -578,30 +579,6 @@ enum equip_index {
 	EQI_COSTUME_LOW,
 	EQI_AMMO,
 	EQI_MAX
-};
-
-enum e_pc_permission {
-	PC_PERM_NONE                = 0,
-	PC_PERM_TRADE               = 0x00001,
-	PC_PERM_PARTY               = 0x00002,
-	PC_PERM_ALL_SKILL           = 0x00004,
-	PC_PERM_USE_ALL_EQUIPMENT   = 0x00008,
-	PC_PERM_SKILL_UNCONDITIONAL = 0x00010,
-	PC_PERM_JOIN_ALL_CHAT       = 0x00020,
-	PC_PERM_NO_CHAT_KICK        = 0x00040,
-	PC_PERM_HIDE_SESSION        = 0x00080,
-	PC_PERM_WHO_DISPLAY_AID     = 0x00100,
-	PC_PERM_RECEIVE_HACK_INFO   = 0x00200,
-	PC_PERM_WARP_ANYWHERE       = 0x00400,
-	PC_PERM_VIEW_HPMETER        = 0x00800,
-	PC_PERM_VIEW_EQUIPMENT      = 0x01000,
-	PC_PERM_USE_CHECK           = 0x02000,
-	PC_PERM_USE_CHANGEMAPTYPE   = 0x04000,
-	PC_PERM_USE_ALL_COMMANDS    = 0x08000,
-	PC_PERM_RECEIVE_REQUESTS    = 0x10000,
-	PC_PERM_SHOW_BOSS			= 0x20000,
-	PC_PERM_DISABLE_PVM			= 0x40000,
-	PC_PERM_DISABLE_PVP			= 0x80000,
 };
 
 #define pc_setdead(sd)        ( (sd)->state.dead_sit = (sd)->vd.dead_sit = 1 )

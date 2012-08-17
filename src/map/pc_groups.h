@@ -20,4 +20,54 @@ void do_init_pc_groups(void);
 void do_final_pc_groups(void);
 void pc_groups_reload(void);
 
+enum e_pc_permission {
+	PC_PERM_NONE                = 0,
+	PC_PERM_TRADE               = 0x00001,
+	PC_PERM_PARTY               = 0x00002,
+	PC_PERM_ALL_SKILL           = 0x00004,
+	PC_PERM_USE_ALL_EQUIPMENT   = 0x00008,
+	PC_PERM_SKILL_UNCONDITIONAL = 0x00010,
+	PC_PERM_JOIN_ALL_CHAT       = 0x00020,
+	PC_PERM_NO_CHAT_KICK        = 0x00040,
+	PC_PERM_HIDE_SESSION        = 0x00080,
+	PC_PERM_WHO_DISPLAY_AID     = 0x00100,
+	PC_PERM_RECEIVE_HACK_INFO   = 0x00200,
+	PC_PERM_WARP_ANYWHERE       = 0x00400,
+	PC_PERM_VIEW_HPMETER        = 0x00800,
+	PC_PERM_VIEW_EQUIPMENT      = 0x01000,
+	PC_PERM_USE_CHECK           = 0x02000,
+	PC_PERM_USE_CHANGEMAPTYPE   = 0x04000,
+	PC_PERM_USE_ALL_COMMANDS    = 0x08000,
+	PC_PERM_RECEIVE_REQUESTS    = 0x10000,
+	PC_PERM_SHOW_BOSS			= 0x20000,
+	PC_PERM_DISABLE_PVM			= 0x40000,
+	PC_PERM_DISABLE_PVP			= 0x80000,
+};
+
+static const struct {
+	const char *name;
+	unsigned int permission;
+} pc_g_permission_name[] = {
+	{ "can_trade", PC_PERM_TRADE },
+	{ "can_party", PC_PERM_PARTY },
+	{ "all_skill", PC_PERM_ALL_SKILL },
+	{ "all_equipment", PC_PERM_USE_ALL_EQUIPMENT },
+	{ "skill_unconditional", PC_PERM_SKILL_UNCONDITIONAL },
+	{ "join_chat", PC_PERM_JOIN_ALL_CHAT },
+	{ "kick_chat", PC_PERM_NO_CHAT_KICK },
+	{ "hide_session", PC_PERM_HIDE_SESSION },
+	{ "who_display_aid", PC_PERM_WHO_DISPLAY_AID },
+	{ "hack_info", PC_PERM_RECEIVE_HACK_INFO },
+	{ "any_warp", PC_PERM_WARP_ANYWHERE },
+	{ "view_hpmeter", PC_PERM_VIEW_HPMETER },
+	{ "view_equipment", PC_PERM_VIEW_EQUIPMENT },
+	{ "use_check", PC_PERM_USE_CHECK },
+	{ "use_changemaptype", PC_PERM_USE_CHANGEMAPTYPE },
+	{ "all_commands", PC_PERM_USE_ALL_COMMANDS },
+	{ "receive_requests", PC_PERM_RECEIVE_REQUESTS },
+	{ "show_bossmobs", PC_PERM_SHOW_BOSS },
+	{ "disable_pvm", PC_PERM_DISABLE_PVM },
+	{ "disable_pvp", PC_PERM_DISABLE_PVP },
+};
+
 #endif // _PC_GROUPS_H_

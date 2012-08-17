@@ -38,32 +38,6 @@ static config_t pc_group_config;
 static DBMap* pc_group_db; // id -> GroupSettings
 static DBMap* pc_groupname_db; // name -> GroupSettings
 
-static const struct {
-	const char *name;
-	int permission;
-} permission_name[] = {
-	{ "can_trade", PC_PERM_TRADE },
-	{ "can_party", PC_PERM_PARTY },
-	{ "all_skill", PC_PERM_ALL_SKILL },
-	{ "all_equipment", PC_PERM_USE_ALL_EQUIPMENT },
-	{ "skill_unconditional", PC_PERM_SKILL_UNCONDITIONAL },
-	{ "join_chat", PC_PERM_JOIN_ALL_CHAT },
-	{ "kick_chat", PC_PERM_NO_CHAT_KICK },
-	{ "hide_session", PC_PERM_HIDE_SESSION },
-	{ "who_display_aid", PC_PERM_WHO_DISPLAY_AID },
-	{ "hack_info", PC_PERM_RECEIVE_HACK_INFO },
-	{ "any_warp", PC_PERM_WARP_ANYWHERE },
-	{ "view_hpmeter", PC_PERM_VIEW_HPMETER },
-	{ "view_equipment", PC_PERM_VIEW_EQUIPMENT },
-	{ "use_check", PC_PERM_USE_CHECK },
-	{ "use_changemaptype", PC_PERM_USE_CHANGEMAPTYPE },
-	{ "all_commands", PC_PERM_USE_ALL_COMMANDS },
-	{ "receive_requests", PC_PERM_RECEIVE_REQUESTS },
-	{ "show_bossmobs", PC_PERM_SHOW_BOSS },
-	{ "disable_pvm", PC_PERM_DISABLE_PVM },
-	{ "disable_pvp", PC_PERM_DISABLE_PVP },
-};
-
 /**
  * @retval NULL if not found
  * @private
@@ -199,8 +173,8 @@ static void read_config(void)
 				const char *name = config_setting_name(permission);
 				int j;
 
-				ARR_FIND(0, ARRAYLENGTH(permission_name), j, strcmp(permission_name[j].name, name) == 0);
-				if (j == ARRAYLENGTH(permission_name)) {
+				ARR_FIND(0, ARRAYLENGTH(pc_g_permission_name), j, strcmp(pc_g_permission_name[j].name, name) == 0);
+				if (j == ARRAYLENGTH(pc_g_permission_name)) {
 					ShowConfigWarning(permission, "pc_groups:read_config: non-existent permission name '%s', removing...", name);
 					config_setting_remove(permissions, name);
 					--i;
@@ -291,8 +265,8 @@ static void read_config(void)
 
 				if (val == 0) // does not have this permission
 					continue;
-				ARR_FIND(0, ARRAYLENGTH(permission_name), j, strcmp(permission_name[j].name, name) == 0);
-				group_settings->e_permissions |= permission_name[j].permission;
+				ARR_FIND(0, ARRAYLENGTH(pc_g_permission_name), j, strcmp(pc_g_permission_name[j].name, name) == 0);
+				group_settings->e_permissions |= pc_g_permission_name[j].permission;
 			}
 		}
 		dbi_destroy(iter);

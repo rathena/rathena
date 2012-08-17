@@ -1749,6 +1749,9 @@ int npc_unload(struct npc_data* nd, bool single) {
 	npc_chat_finalize(nd); // deallocate npc PCRE data structures
 #endif
 
+	if( nd->path )
+		aFree(nd->path);
+	
 	if( (nd->subtype == SHOP || nd->subtype == CASHSHOP) && nd->src_id == 0) //src check for duplicate shops [Orcao]
 		aFree(nd->u.shop.shop_item);
 	else if( nd->subtype == SCRIPT ) {
@@ -1892,16 +1895,12 @@ static void npc_parsename(struct npc_data* nd, const char* name, const char* sta
 
 	// parse name
 	p = strstr(name,"::");
-	if( p )
-	{// <Display name>::<Unique name>
+	if( p ) { // <Display name>::<Unique name>
 		size_t len = p-name;
-		if( len > NAME_LENGTH )
-		{
+		if( len > NAME_LENGTH ) {
 			ShowWarning("npc_parsename: Display name of '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (unsigned int)len, filepath, strline(buffer,start-buffer), NAME_LENGTH);
 			safestrncpy(nd->name, name, sizeof(nd->name));
-		}
-		else
-		{
+		} else {
 			memcpy(nd->name, name, len);
 			memset(nd->name+len, 0, sizeof(nd->name)-len);
 		}
@@ -1909,9 +1908,7 @@ static void npc_parsename(struct npc_data* nd, const char* name, const char* sta
 		if( len > NAME_LENGTH )
 			ShowWarning("npc_parsename: Unique name of '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (unsigned int)len, filepath, strline(buffer,start-buffer), NAME_LENGTH);
 		safestrncpy(nd->exname, p+2, sizeof(nd->exname));
-	}
-	else
-	{// <Display name>
+	} else {// <Display name>
 		size_t len = strlen(name);
 		if( len > NAME_LENGTH )
 			ShowWarning("npc_parsename: Name '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (unsigned int)len, filepath, strline(buffer,start-buffer), NAME_LENGTH);
@@ -1919,15 +1916,13 @@ static void npc_parsename(struct npc_data* nd, const char* name, const char* sta
 		safestrncpy(nd->exname, name, sizeof(nd->exname));
 	}
 
-	if( *nd->exname == '\0' || strstr(nd->exname,"::") != NULL )
-	{// invalid
+	if( *nd->exname == '\0' || strstr(nd->exname,"::") != NULL ) {// invalid
 		snprintf(newname, ARRAYLENGTH(newname), "0_%d_%d_%d", nd->bl.m, nd->bl.x, nd->bl.y);
 		ShowWarning("npc_parsename: Invalid unique name in file '%s', line'%d'. Renaming '%s' to '%s'.\n", filepath, strline(buffer,start-buffer), nd->exname, newname);
 		safestrncpy(nd->exname, newname, sizeof(nd->exname));
 	}
 
-	if( (dnd=npc_name2id(nd->exname)) != NULL )
-	{// duplicate unique name, generate new one
+	if( (dnd=npc_name2id(nd->exname)) != NULL ) {// duplicate unique name, generate new one
 		char this_mapname[32];
 		char other_mapname[32];
 		int i = 0;
@@ -1947,6 +1942,9 @@ static void npc_parsename(struct npc_data* nd, const char* name, const char* sta
 		ShowDebug("other npc:\n   display name '%s'\n   unique name '%s'\n   map=%s, x=%d, y=%d\n", dnd->name, dnd->exname, other_mapname, dnd->bl.x, dnd->bl.y);
 		safestrncpy(nd->exname, newname, sizeof(nd->exname));
 	}
+	
+	CREATE(nd->path, char, strlen(filepath)+1);
+	safestrncpy(nd->path, filepath, strlen(filepath)+1);
 }
 
 struct npc_data* npc_add_warp(short from_mapid, short from_x, short from_y, short xs, short ys, unsigned short to_mapindex, short to_x, short to_y)
@@ -3588,6 +3586,22 @@ int npc_reload(void) {
 	}
 	return 0;
 }
+bool npc_unloadfile( const char* path ) {
+	DBIterator * iter = db_iterator(npcname_db);
+	struct npc_data* nd = NULL;
+	bool found = false;
+	
+	for( nd = dbi_first(iter); dbi_exists(iter); nd = dbi_next(iter) ) {
+		if( nd->path && strcasecmp(nd->path,path) == 0 ) {
+			found = true;
+			npc_unload(nd, true);
+		}
+	}
+	
+	dbi_destroy(iter);
+	
+	return found;
+}
 void do_clear_npc(void) {
 	db_clear(npcname_db);
 	db_clear(ev_db);
@@ -3657,6 +3671,7 @@ int do_init_npc(void)
 	npcname_db = strdb_alloc(DB_OPT_BASE,NAME_LENGTH);
 
 	timer_event_ers = ers_new(sizeof(struct timer_event_data));
+	
 	// process all npc files
 	ShowStatus("Loading NPCs...\r");
 	for( file = npc_src_files; file != NULL; file = file->next ) {
