@@ -679,7 +679,7 @@ dic_in01,25,190,0	script	Mysterious Documents	844,{
 		mes "I better not forget to equip my ring.";
 		close;
 	}
-	if (ep13_3_invite < 6) {
+	if (ep13_3_invite < 5) {
 		mes "When you approach the documents, an Evil Giant that looks like the archive manager tries to call Guard Galton. You should get out of here quickly.";
 		close;
 	}

@@ -107,7 +107,7 @@ yuno,179,174,4	script	Gomer	851,{
 			delitem 999,50; // Steel
 			delitem 7325,30; // Flexible Tube
 			delitem 1415,1; // Brocca
-			getitem 1549,1; // Pile Bunker	
+			getitem 1549,1; // Pile Bunker
 			getitem 1360,1; // Two-handed Axe [1]
 			close;
 		}
