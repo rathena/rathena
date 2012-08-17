@@ -11,8 +11,8 @@
 //============================================================
 
 -	duplicate(Manager#template)	Manager#arug_cas05	-1
--	duplicate(Manager#template)	gard1#arug_cas05	-1
--	duplicate(Manager#template)	gard2#arug_cas05	-1
+-	duplicate(gard#template)	gard1#arug_cas05	-1
+-	duplicate(gard#template)	gard2#arug_cas05	-1
 -	duplicate(df#template)	df1#arug_cas05	-1
 -	duplicate(df#template)	df2#arug_cas05	-1
 -	duplicate(RL#template)	RL0#arug_cas05	-1
