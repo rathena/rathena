@@ -576,8 +576,8 @@ bSPVanishRate	2042
 bMagicSPGainValue	2043
 bMagicHPGainValue	2044
 bAddClassDropItem	2045
-bWeaponMatk	2046
-bMatk	2047
+bEquipmentMatk	2046
+bIntMatk	2047
 bSPGainRaceAttack	2048
 bHPGainRaceAttack	2049
 bSkillUseSPrate	2050
