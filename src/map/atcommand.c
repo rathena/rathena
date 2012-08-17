@@ -42,6 +42,7 @@
 #include "trade.h"
 #include "unit.h"
 #include "mapreg.h"
+#include "quest.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8774,7 +8775,11 @@ ACMD_FUNC(set) {
 	
 	return 0;
 }
-
+ACMD_FUNC(reloadquestdb) {
+	do_reload_quest();
+	clif_displaymessage(fd, "Quest DB has been reloaded");
+	return 0;
+}
 /**
  * Fills the reference of available commands in atcommand DBMap
  **/
@@ -9020,6 +9025,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(font),
 		ACMD_DEF(accinfo),
 		ACMD_DEF(set),
+		ACMD_DEF(reloadquestdb),
 		ACMD_DEF(undisguiseguild),
 		ACMD_DEF(disguiseguild),
 		ACMD_DEF(sizeall),

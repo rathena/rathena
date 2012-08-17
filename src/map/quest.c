@@ -206,18 +206,15 @@ int quest_update_objective_sub(struct block_list *bl, va_list ap)
 }
 
 
-void quest_update_objective(TBL_PC * sd, int mob)
-{
+void quest_update_objective(TBL_PC * sd, int mob) {
 	int i,j;
 
-	for( i = 0; i < sd->avail_quests; i++ )
-	{
+	for( i = 0; i < sd->avail_quests; i++ ) {
 		if( sd->quest_log[i].state != Q_ACTIVE )
 			continue;
 
 		for( j = 0; j < MAX_QUEST_OBJECTIVES; j++ )
-			if( quest_db[sd->quest_index[i]].mob[j] == mob && sd->quest_log[i].count[j] < quest_db[sd->quest_index[i]].count[j] ) 
-			{
+			if( quest_db[sd->quest_index[i]].mob[j] == mob && sd->quest_log[i].count[j] < quest_db[sd->quest_index[i]].count[j] )  {
 				sd->quest_log[i].count[j]++;
 				sd->save_quest = true;
 				clif_quest_update_objective(sd,&sd->quest_log[i],sd->quest_index[i]);
@@ -225,14 +222,12 @@ void quest_update_objective(TBL_PC * sd, int mob)
 	}
 }
 
-int quest_update_status(TBL_PC * sd, int quest_id, quest_state status)
-{
+int quest_update_status(TBL_PC * sd, int quest_id, quest_state status) {
 	int i;
 
 	//Only status of active and inactive quests can be updated. Completed quests can't (for now). [Inkfish]
 	ARR_FIND(0, sd->avail_quests, i, sd->quest_log[i].quest_id == quest_id);
-	if(i == sd->avail_quests)
-	{
+	if(i == sd->avail_quests) {
 		ShowError("quest_update_status: Character %d doesn't have quest %d.\n", sd->status.char_id, quest_id);
 		return -1;
 	}
@@ -240,14 +235,12 @@ int quest_update_status(TBL_PC * sd, int quest_id, quest_state status)
 	sd->quest_log[i].state = status;
 	sd->save_quest = true;
 
-	if( status < Q_COMPLETE )
-	{
+	if( status < Q_COMPLETE ) {
 		clif_quest_update_status(sd, quest_id, (bool)status);
 		return 0;
 	}
 
-	if( i != (--sd->avail_quests) )
-	{
+	if( i != (--sd->avail_quests) ) {
 		struct quest tmp_quest;
 		memcpy(&tmp_quest, &sd->quest_log[i],sizeof(struct quest));
 		memcpy(&sd->quest_log[i], &sd->quest_log[sd->avail_quests],sizeof(struct quest));
@@ -262,43 +255,39 @@ int quest_update_status(TBL_PC * sd, int quest_id, quest_state status)
 	return 0;
 }
 
-int quest_check(TBL_PC * sd, int quest_id, quest_check_type type)
-{
+int quest_check(TBL_PC * sd, int quest_id, quest_check_type type) {
 	int i;
 
 	ARR_FIND(0, sd->num_quests, i, sd->quest_log[i].quest_id == quest_id);
-	if(i == sd->num_quests)
+	if( i == sd->num_quests )
 		return -1;
 
-	switch( type )
-	{
-	case HAVEQUEST:
-		return sd->quest_log[i].state;
-	case PLAYTIME:
-		return (sd->quest_log[i].time < (unsigned int)time(NULL) ? 2 : sd->quest_log[i].state == Q_COMPLETE ? 1 : 0);
-	case HUNTING:
-		{
-			if( sd->quest_log[i].state == 0 || sd->quest_log[i].state == 1 ) {
-				int j;
-				ARR_FIND(0, MAX_QUEST_OBJECTIVES, j, sd->quest_log[i].count[j] < quest_db[sd->quest_index[i]].count[j]);
-				if( j == MAX_QUEST_OBJECTIVES )
-					return 2;
-				if( sd->quest_log[i].time < (unsigned int)time(NULL) )
-					return 1;
-				return 0;
-			} else
-				return 0;
-		}
-	default:
-		ShowError("quest_check_quest: Unknown parameter %d",type);
-		break;
+	switch( type ) {
+		case HAVEQUEST:
+			return sd->quest_log[i].state;
+		case PLAYTIME:
+			return (sd->quest_log[i].time < (unsigned int)time(NULL) ? 2 : sd->quest_log[i].state == Q_COMPLETE ? 1 : 0);
+		case HUNTING: {
+				if( sd->quest_log[i].state == 0 || sd->quest_log[i].state == 1 ) {
+					int j;
+					ARR_FIND(0, MAX_QUEST_OBJECTIVES, j, sd->quest_log[i].count[j] < quest_db[sd->quest_index[i]].count[j]);
+					if( j == MAX_QUEST_OBJECTIVES )
+						return 2;
+					if( sd->quest_log[i].time < (unsigned int)time(NULL) )
+						return 1;
+					return 0;
+				} else
+					return 0;
+			}
+		default:
+			ShowError("quest_check_quest: Unknown parameter %d",type);
+			break;
 	}
 
 	return -1;
 }
 
-int quest_read_db(void)
-{
+int quest_read_db(void) {
 	FILE *fp;
 	char line[1024];
 	int i,j,k = 0;
@@ -310,28 +299,26 @@ int quest_read_db(void)
 		return -1;
 	}
 	
-	while(fgets(line, sizeof(line), fp))
-	{
+	while(fgets(line, sizeof(line), fp)) {
+		
 		if (k == MAX_QUEST_DB) {
 			ShowError("quest_read_db: Too many entries specified in %s/quest_db.txt!\n", db_path);
 			break;
 		}
+		
 		if(line[0]=='/' && line[1]=='/')
 			continue;
 		memset(str,0,sizeof(str));
 
-		for( j = 0, p = line; j < 8;j++ )
-		{
-			if((np=strchr(p,','))!=NULL)
-			{
+		for( j = 0, p = line; j < 8; j++ ) {
+			if( ( np = strchr(p,',') ) != NULL ) {
 				str[j] = p;
 				*np = 0;
 				p = np + 1;
 			}
 			else if (str[0] == NULL)
 				continue;
-			else
-			{
+			else {
 				ShowError("quest_read_db: insufficient columns in line %s\n", line);
 				continue;
 			}
@@ -343,16 +330,17 @@ int quest_read_db(void)
 
 		quest_db[k].id = atoi(str[0]);
 		quest_db[k].time = atoi(str[1]);
-		for( i = 0; i < MAX_QUEST_OBJECTIVES; i++ )
-		{
+		
+		for( i = 0; i < MAX_QUEST_OBJECTIVES; i++ ) {
 			quest_db[k].mob[i] = atoi(str[2*i+2]);
 			quest_db[k].count[i] = atoi(str[2*i+3]);
 
 			if( !quest_db[k].mob[i] || !quest_db[k].count[i] )
 				break;
 		}
+		
 		quest_db[k].num_objectives = i;
-		//memcpy(quest_db[k].name, str[8], sizeof(str[8]));
+
 		k++;
 	}
 	fclose(fp);
@@ -360,7 +348,11 @@ int quest_read_db(void)
 	return 0;
 }
 
-void do_init_quest(void)
-{
+void do_init_quest(void) {
+	quest_read_db();
+}
+
+void do_reload_quest(void) {
+	memset(&quest_db, 0, sizeof(quest_db));
 	quest_read_db();
 }

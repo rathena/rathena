@@ -29,5 +29,6 @@ int quest_check(TBL_PC * sd, int quest_id, quest_check_type type);
 int quest_search_db(int quest_id);
 
 void do_init_quest();
+void do_reload_quest(void);
 
 #endif
