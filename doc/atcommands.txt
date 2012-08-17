@@ -194,16 +194,17 @@ displaystatus: Displays a status change without really applying it (debug functi
 displayskill: Displays the animation of a skill without really using it (debug function).
 mapinfo: Shows information about the map.
 mapflag: Set Map Flags
-reloaditemdb: Re-load item database (admin command)
-reloadmobdb: Re-load monsters database (admin command)
-reloadskilldb: Re-load skills database (admin command)
-reloadscript: Re-load scripts (admin command)
+reloaditemdb: Reload item database (admin command)
+reloadmobdb: Reload monsters database (admin command)
+reloadskilldb: Reload skills database (admin command)
+reloadquestdb: Reload quest dtabase (admin command)
+reloadscript: Reload scripts (admin command)
 setbattleflag: Change a battle_config flag without rebooting server
-reloadatcommand: Re-load atcommand config (admin command)
-reloadbattleconf: Re-load battle config (admin command) Note that some player config settings won't take effect until relog (display exp, display zeny, display skill delay fail, ...)
-reloadstatusdb: Re-load status database (admin command)
-reloadpcdb: Re-load player info database (admin command)
-reloadmotd: Re-load the Message of the Day (admin command)
+reloadatcommand: Reload atcommand config (admin command)
+reloadbattleconf: Reload battle config (admin command) Note that some player config settings won't take effect until relog (display exp, display zeny, display skill delay fail, ...)
+reloadstatusdb: Reload status database (admin command)
+reloadpcdb: Reload player info database (admin command)
+reloadmotd: Reload the Message of the Day (admin command)
 adjgroup: Changes the group of another character (lasts until relog)
 disguiseall, undisguiseall: [Un]Disguise All Players (admin command)
 mutearea: Mutes every player on screen (admin command)
