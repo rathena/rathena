@@ -2903,7 +2903,7 @@ job3_rune01,114,50,3	script	Rune Knight Velpino	468,{
 	close;
 }
 
-job3_rune02,38,40,0	script	#RK Test Hidden Portal 1	139,10,10,{
+job3_rune02,38,40,0	script	#RK Test Hidden Portal 1	139,15,15,{
 	end;
 
 OnInit:
