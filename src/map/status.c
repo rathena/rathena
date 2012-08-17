@@ -6824,6 +6824,12 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		if( type != SC_GT_CHANGE )
 			status_change_end(bl, SC_GT_CHANGE, INVALID_TIMER);
 		break;
+	case SC_INVINCIBLE:
+		status_change_end(bl, SC_INVINCIBLEOFF, INVALID_TIMER);
+		break;
+	case SC_INVINCIBLEOFF:
+		status_change_end(bl, SC_INVINCIBLE, INVALID_TIMER);
+		break;
 	}
 
 	//Check for overlapping fails

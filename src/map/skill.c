@@ -5170,15 +5170,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case NPC_MAGICMIRROR:
 	case ST_PRESERVE:
 	case NPC_INVINCIBLE:
-		/* if invincible, end the SC for off state */
-		if(skillid == NPC_INVINCIBLE)
-			status_change_end(bl, SC_INVINCIBLEOFF, INVALID_TIMER);
-
-		/* if invincible off, end the SC for on state */
-    case NPC_INVINCIBLEOFF:
-		if(skillid == NPC_INVINCIBLEOFF)
-			status_change_end(bl, SC_INVINCIBLE, INVALID_TIMER);
-
+	case NPC_INVINCIBLEOFF:
 	case RK_DEATHBOUND:
 	case AB_RENOVATIO:
 	case AB_EXPIATIO:
