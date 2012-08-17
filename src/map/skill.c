@@ -7162,15 +7162,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case GS_CRACKER:
-		if (!dstsd)	// according to latest patch, should not work on players [Reddozen]
+		/* per official standards, this skill works on players and mobs. */
+		if (sd && (dstsd || dstmd))
 		{
 			i =65 -5*distance_bl(src,bl); //Base rate
 			if (i < 30) i = 30;
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			sc_start(bl,SC_STUN, i,skilllv,skill_get_time2(skillid,skilllv));
 		}
-		else if (sd)
-			clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
 		break;
 
 	case AM_CALLHOMUN:	//[orn]
