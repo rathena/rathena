@@ -157,32 +157,53 @@ int merc_hom_delete(struct homun_data *hd, int emote)
 
 int merc_hom_calc_skilltree(struct homun_data *hd)
 {
-	int i,id=0 ;
-	int j,f=1;
-	int c=0;
+	int i, id = 0;
+	int j, f = 1;
+	int c = 0;
 
 	nullpo_ret(hd);
+	/* load previous homunculus form skills first. */
+	if( hd->homunculus.prev_class != 0 ) {
+		c = hd->homunculus.prev_class - HM_CLASS_BASE;
+		
+		for( i = 0; i < MAX_SKILL_TREE && ( id = hskill_tree[c][i].id ) > 0; i++ ) {
+			if( hd->homunculus.hskill[ id - HM_SKILLBASE ].id )
+				continue; //Skill already known.
+			if(!battle_config.skillfree) {
+				for( j = 0; j < MAX_PC_SKILL_REQUIRE; j++ ) {
+					if( hskill_tree[c][i].need[j].id &&
+					   merc_hom_checkskill(hd,hskill_tree[c][i].need[j].id) < hskill_tree[c][i].need[j].lv ) {
+						f = 0;
+						break;
+					}
+				}
+			}
+			if ( f )
+				hd->homunculus.hskill[id-HM_SKILLBASE].id = id;
+		}
+		
+		f = 1;
+		id = c = 0;
+	}
+	
 	c = hd->homunculus.class_ - HM_CLASS_BASE;
 	
-	for(i=0;i < MAX_SKILL_TREE && (id = hskill_tree[c][i].id) > 0;i++)
-	{
-		if(hd->homunculus.hskill[id-HM_SKILLBASE].id)
+	for( i = 0; i < MAX_SKILL_TREE && ( id = hskill_tree[c][i].id ) > 0; i++ ) {
+		if( hd->homunculus.hskill[ id - HM_SKILLBASE ].id )
 			continue; //Skill already known.
-		if(!battle_config.skillfree)
-		{
-			for(j=0;j<MAX_PC_SKILL_REQUIRE;j++)
-			{
+		if(!battle_config.skillfree) {
+			for( j = 0; j < MAX_PC_SKILL_REQUIRE; j++ ) {
 				if( hskill_tree[c][i].need[j].id &&
-					merc_hom_checkskill(hd,hskill_tree[c][i].need[j].id) < hskill_tree[c][i].need[j].lv) 
-				{
-					f=0;
+					merc_hom_checkskill(hd,hskill_tree[c][i].need[j].id) < hskill_tree[c][i].need[j].lv ) {
+					f = 0;
 					break;
 				}
 			}
 		}
-		if (f)
-			hd->homunculus.hskill[id-HM_SKILLBASE].id = id ;
+		if ( f )
+			hd->homunculus.hskill[id-HM_SKILLBASE].id = id;
 	}
+	
 	if( hd->master )
 		clif_homskillinfoblock(hd->master);
 	return 0;
@@ -370,7 +391,7 @@ int hom_mutate(struct homun_data *hd, int homun_id)
 {
 	struct s_homunculus *hom;
 	struct map_session_data *sd;
-	int m_class, m_id;
+	int m_class, m_id, prev_class = 0;
 	nullpo_ret(hd);
 
 	m_class = hom_class2mapid(hd->homunculus.class_);
@@ -385,6 +406,8 @@ int hom_mutate(struct homun_data *hd, int homun_id)
 	if (!sd)
 		return 0;
 
+	prev_class = hd->homunculus.class_;
+	
 	if (!merc_hom_change_class(hd, homun_id)) {
 		ShowError("hom_mutate: Can't evolve homunc from %d to %d", hd->homunculus.class_, homun_id);
 		return 0;
@@ -397,10 +420,12 @@ int hom_mutate(struct homun_data *hd, int homun_id)
 	clif_emotion(&sd->bl, E_NO1);
 	clif_specialeffect(&hd->bl,568,AREA);
 
+	
 	//status_Calc flag&1 will make current HP/SP be reloaded from hom structure
 	hom = &hd->homunculus;
 	hom->hp = hd->battle_status.hp;
 	hom->sp = hd->battle_status.sp;
+	hom->prev_class = prev_class;
 	status_calc_homunculus(hd,1);
 
 	if (!(battle_config.hom_setting&0x2))

@@ -274,6 +274,7 @@ struct s_homunculus {	//[orn]
 	int hom_id;
 	int char_id;
 	short class_;
+	short prev_class;
 	int hp,max_hp,sp,max_sp;
 	unsigned int intimacy;	//[orn]
 	short hunger;
