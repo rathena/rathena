@@ -351,6 +351,7 @@ CREATE TABLE IF NOT EXISTS `homunculus` (
   `homun_id` int(11) NOT NULL auto_increment,
   `char_id` int(11) NOT NULL,
   `class` mediumint(9) unsigned NOT NULL default '0',
+  `prev_class` mediumint(9) NOT NULL default '0',
   `name` varchar(24) NOT NULL default '',
   `level` smallint(4) NOT NULL default '0',
   `exp` int(12) NOT NULL default '0',
