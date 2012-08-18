@@ -3574,9 +3574,8 @@ The renewal feature to check is determined by type.
  2 - RENEWAL_DROP (renewal drop rate algorithms)
  3 - RENEWAL_EXP (renewal exp rate algorithms)
  4 - RENEWAL_LVDMG (renewal level modifier on damage)
- 5 - RENEWAL_CAST_VMIN (renewal cast time variable cast requirement)
- 6 - RENEWAL_EDP (renewal enchant deadly poison algorithm)
- 7 - RENEWAL_ASPD (renewal ASPD)
+ 5 - RENEWAL_EDP (renewal enchant deadly poison algorithm)
+ 6 - RENEWAL_ASPD (renewal ASPD)
 
 ---------------------------------------
 \\

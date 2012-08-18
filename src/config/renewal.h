@@ -49,13 +49,6 @@
 // leave this line to enable renewal base level modifier on skill damage (selected skills only)
 #define RENEWAL_LVDMG
 
-/// renewal cast time variable cast requirement
-///
-/// this is the value required for no variable cast-time with stats.
-/// formula: (DEX * 2) + INT
-/// default: 530
-#define RENEWAL_CAST_VMIN 530
-
 /// renewal enchant deadly poison algorithm
 ///
 /// leave this line to enable the renewed EDP algorithm

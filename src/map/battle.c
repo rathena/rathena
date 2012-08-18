@@ -1587,6 +1587,10 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 
 		if(sd && flag.arrow)
 			hitrate += sd->bonus.arrow_hit;
+#ifdef RENEWAL
+		if( sd ) //in Renewal hit bonus from Vultures Eye is not anymore shown in status window
+			hitrate += pc_checkskill(sd,AC_VULTURE);
+#endif
 		if(skill_num)
 			switch(skill_num)
 		{	//Hit skill modifiers
@@ -4258,6 +4262,10 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			}
 
 			hitrate+= sstatus->hit - flee;
+#ifdef RENEWAL
+			if( sd ) //in Renewal hit bonus from Vultures Eye is not anymore shown in status window
+				hitrate += pc_checkskill(sd,AC_VULTURE);
+#endif
 			hitrate = cap_value(hitrate, battle_config.min_hitrate, battle_config.max_hitrate);
 
 			if(rnd()%100 < hitrate)
@@ -4675,6 +4683,12 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				pc_addspiritball(sd,
 								 skill_get_time(MO_CALLSPIRITS, sc->data[SC_GT_ENERGYGAIN]->val1),
 								 sc->data[SC_GT_ENERGYGAIN]->val1);
+		}
+		if( tsc && tsc->data[SC_GT_ENERGYGAIN] ) {
+			if( tsd && rnd()%100 < 10 + 5 * tsc->data[SC_GT_ENERGYGAIN]->val1)
+				pc_addspiritball(tsd,
+								 skill_get_time(MO_CALLSPIRITS, tsc->data[SC_GT_ENERGYGAIN]->val1),
+								 tsc->data[SC_GT_ENERGYGAIN]->val1);
 		}
 
 	}
@@ -5577,6 +5591,7 @@ static const struct _battle_data {
 	{ "max_cloth_color",                    &battle_config.max_cloth_color,                 4,      0,      INT_MAX,        },
 	{ "pet_hair_style",                     &battle_config.pet_hair_style,                  100,    0,      INT_MAX,        },
 	{ "castrate_dex_scale",                 &battle_config.castrate_dex_scale,              150,    1,      INT_MAX,        },
+	{ "vcast_stat_scale",					&battle_config.vcast_stat_scale,			    530,    1,      INT_MAX,        },
 	{ "area_size",                          &battle_config.area_size,                       14,     0,      INT_MAX,        },
 	{ "zeny_from_mobs",                     &battle_config.zeny_from_mobs,                  0,      0,      1,              },
 	{ "mobs_level_up",                      &battle_config.mobs_level_up,                   0,      0,      1,              },

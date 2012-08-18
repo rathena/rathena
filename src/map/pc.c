@@ -2599,11 +2599,11 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		break;
 	case SP_FIXCASTRATE:
 		if(sd->state.lr_flag != 2)
-			sd->fixcastrate+=val;
+			sd->bonus.fixcastrate -= val;
 		break;
 	case SP_VARCASTRATE:
 		if(sd->state.lr_flag != 2)
-			sd->varcastrate+=val;
+			sd->bonus.varcastrate -= val;
 		break;
 	default:
 		ShowWarning("pc_bonus: unknown type %d %d !\n",type,val);
@@ -3133,6 +3133,22 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		else {
 			sd->skillvarcast[i].id = type2;
 			sd->skillvarcast[i].val = val;
+		}
+		break;
+	case SP_VARCASTRATE:
+		if(sd->state.lr_flag == 2)
+			break;
+		ARR_FIND(0, ARRAYLENGTH(sd->skillcast), i, sd->skillcast[i].id == 0 || sd->skillcast[i].id == type2);
+		if (i == ARRAYLENGTH(sd->skillcast))
+		{	
+			ShowDebug("run_script: bonus2 bVariableCastrate reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n",ARRAYLENGTH(sd->skillcast), type2, val);
+			break;
+		}
+		if(sd->skillcast[i].id == type2)
+			sd->skillcast[i].val -= val;
+		else {
+			sd->skillcast[i].id = type2;
+			sd->skillcast[i].val -= val;
 		}
 		break;
 	case SP_SKILL_USE_SP: //bonus2 bSkillUseSP,n,x;

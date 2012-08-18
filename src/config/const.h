@@ -13,28 +13,6 @@
  */
 
 /**
- * "Constants"
- **/
-#ifdef RENEWAL_CAST
-
-	#ifndef RENEWAL
-		#error RENEWAL_CAST requires RENEWAL enabled
-	#endif
-
-	#define CONST_CASTRATE_SCALE RENEWAL_CAST_VMIN
-	/**
-	 * Cast Rate Formula: (DEX x 2)+INT
-	 **/
-	#define CONST_CASTRATE_CALC ((status_get_dex(bl)*2)+status_get_int(bl))
-#else
-	#define CONST_CASTRATE_SCALE battle_config.castrate_dex_scale
-	/**
-	 * Cast Rate Formula: (DEX)
-	 **/
-	#define CONST_CASTRATE_CALC (status_get_dex(bl))
-#endif
-
-/**
  * "Sane Checks" to save you from compiling with cool bugs 
  **/
 #if SECURE_NPCTIMEOUT_INTERVAL <= 0
@@ -108,6 +86,13 @@
 	#define MAX_CARTS 5
 #endif
 
+// Renewal variable cast time reduction
+#ifdef RENEWAL_CAST
+	#define VARCAST_REDUCTION(val){ \
+		if( (varcast_r += val) != 0 && varcast_r >= 0 ) \
+			time = time * (1 - (float)min(val, 100) / 100); \
+	}
+#endif
 /**
  * End of File
  **/

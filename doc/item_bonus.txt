@@ -429,7 +429,9 @@ bonus2 bSPGainRaceAttack,x,n;		Heals n SP when attacking x Race on every hit
 bonus2 bSkillUseSPrate,s,x;		Reduces SP consumption of skill s by x%. (supports skill names.)
 bonus2 bSkillUseSP,s,x;			Reduces SP consumption of skill s by x. (supports skill names.)
 bonus2 bSkillCooldown,s,x;		Increases cooldown of skill s by x milliseconds. (supports skill names.)
-bonus2 bSkillFixedCast,s,x;		Increases fixed cast time of skill s by x milliseconds. (supports skill names.)
-bonus2 bSkillVariableCast,s,x;		Increases variable cast time of skill s by x milliseconds. (supports skill names.) [Pending!]
+
 bonus bFixedCastrate,x;			Increases fixed cast time of skills by x%.
-bonus bVariableCastrate,x;		Increases variable cast time of skills x%. [Pending!]
+bonus bVariableCastrate,x;		Increases variable cast time of skills by x%.
+bonus2 bSkillFixedCast,s,x;		Increases fixed cast time of skill s by x milliseconds. (supports skill names.)
+bonus2 bSkillVariableCast,s,x;		Increases variable cast time of skill s by x milliseconds. (supports skill names.)
+bonus2 bVariableCastrate,s,x;		Increases variable cast time of skill s by x%. (supports skill names.)

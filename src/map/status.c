@@ -2315,8 +2315,6 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	sd->critical_rate = sd->hit_rate = sd->flee_rate = sd->flee2_rate = 100;
 	sd->def_rate = sd->def2_rate = sd->mdef_rate = sd->mdef2_rate = 100;
 	sd->regen.state.block = 0;
-	sd->fixcastrate=100;
-	sd->varcastrate=100;
 
 	// zeroed arrays, order follows the order in pc.h.
 	// add new arrays to the end of zeroed area in pc.h (see comments) and size here. [zzo]
@@ -2836,7 +2834,9 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	if((skill=pc_checkskill(sd,BS_WEAPONRESEARCH))>0)
 		status->hit += skill*2;
 	if((skill=pc_checkskill(sd,AC_VULTURE))>0){
+#ifndef RENEWAL
 		status->hit += skill;
+#endif
 		if(sd->status.weapon == W_BOW)
 			status->rhw.range += skill;
 	}
@@ -2978,10 +2978,6 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		sd->hprecov_rate = 0;
 	if(sd->sprecov_rate < 0)
 		sd->sprecov_rate = 0;
-	if(sd->fixcastrate < 0)
-		sd->fixcastrate = 0;
-	if(sd->varcastrate < 0)
-		sd->varcastrate = 0;
 
 	// Anti-element and anti-race
 	if((skill=pc_checkskill(sd,CR_TRUST))>0)
@@ -7853,7 +7849,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_PYREXIA:
 			status_change_start(bl,SC_BLIND,10000,val1,0,0,0,30000,11); // Blind status that last for 30 seconds
 			val4 = tick / 3000;
-			tick_time = 4000; // [GodLesZ] tick time
+			tick_time = 3000; // [GodLesZ] tick time
 			break;
 		case SC_LEECHESEND:
 			val4 = tick / 1000;
@@ -10488,13 +10484,10 @@ int status_change_spread( struct block_list *src, struct block_list *bl ) {
 		switch( i ) {				
 			//Debuffs that can be spreaded.
 			// NOTE: We'll add/delte SCs when we are able to confirm it.
-			case SC_POISON:
 			case SC_CURSE:
 			case SC_SILENCE:
 			case SC_CONFUSION:
 			case SC_BLIND:
-			case SC_BLEEDING:
-			case SC_DPOISON:
 			case SC_NOCHAT:
 			case SC_HALLUCINATION:
 			case SC_SIGNUMCRUCIS:
@@ -10511,16 +10504,9 @@ int status_change_spread( struct block_list *src, struct block_list *bl ) {
 			//case SC__STRIPACCESSORY:
 			case SC_BITE:
 			case SC_FREEZING:
-			case SC_BURNING:
-			case SC_FEAR:
-			case SC_PYREXIA:
-			case SC_PARALYSE:
-			case SC_DEATHHURT:
-			case SC_MAGICMUSHROOM:
 			case SC_VENOMBLEED:
-			case SC_TOXIN:
-			case SC_OBLIVIONCURSE:
-			case SC_LEECHESEND:
+			case SC_DEATHHURT:
+			case SC_PARALYSE:
 				if( sc->data[i]->timer != INVALID_TIMER ) {
 					timer = get_timer(sc->data[i]->timer);
 					if (timer == NULL || timer->func != status_change_timer || DIFF_TICK(timer->tick,tick) < 0)
@@ -10528,16 +10514,41 @@ int status_change_spread( struct block_list *src, struct block_list *bl ) {
 					data.tick = DIFF_TICK(timer->tick,tick);
 				} else
 					data.tick = INVALID_TIMER;
-				data.val1 = sc->data[i]->val1;
-				data.val2 = sc->data[i]->val2;
-				data.val3 = sc->data[i]->val3;
-				data.val4 = sc->data[i]->val4;
-				status_change_start(bl,i,10000,data.val1,data.val2,data.val3,data.val4,data.tick,1|2|8);
-				flag = 1;
+				break;
+			// Special cases
+			case SC_POISON:
+			case SC_DPOISON:
+				data.tick = sc->data[i]->val3 * 1000;
+				break;
+			case SC_FEAR:
+			case SC_LEECHESEND:
+				data.tick = sc->data[i]->val4 * 1000;
+				break;
+			case SC_BURNING:
+				data.tick = sc->data[i]->val4 * 2000;
+				break;
+			case SC_PYREXIA:
+			case SC_OBLIVIONCURSE:
+				data.tick = sc->data[i]->val4 * 3000;
+				break;
+			case SC_MAGICMUSHROOM:
+				data.tick = sc->data[i]->val4 * 4000;
+				break;
+			case SC_TOXIN:
+			case SC_BLEEDING:
+				data.tick = sc->data[i]->val4 * 10000;
 				break;
 			default:
 					continue;
 				break;
+		}
+		if( i ){
+			data.val1 = sc->data[i]->val1;
+			data.val2 = sc->data[i]->val2;
+			data.val3 = sc->data[i]->val3;
+			data.val4 = sc->data[i]->val4;
+			status_change_start(bl,(sc_type)i,10000,data.val1,data.val2,data.val3,data.val4,data.tick,1|2|8);
+			flag = 1;
 		}
 	}
 	

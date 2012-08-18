@@ -7718,6 +7718,7 @@ BUILDIN_FUNC(bonus)
 		case SP_SKILL_COOLDOWN:
 		case SP_SKILL_FIXEDCAST:
 		case SP_SKILL_VARIABLECAST:
+		case SP_VARCASTRATE:
 		case SP_SKILL_USE_SP:
 			// these bonuses support skill names
 			val1 = ( script_isstring(st,3) ? skill_name2id(script_getstr(st,3)) : script_getnum(st,3) );
@@ -16886,20 +16887,13 @@ BUILDIN_FUNC(checkre)
 			#endif
 			break;
 		case 5:
-			#ifdef RENEWAL_CAST_VMIN
-				script_pushint(st, 1);
-			#else
-				script_pushint(st, 0);
-			#endif
-			break;
-		case 6:
 			#ifdef RENEWAL_EDP
 				script_pushint(st, 1);
 			#else
 				script_pushint(st, 0);
 			#endif
 			break;
-		case 7:
+		case 6:
 			#ifdef RENEWAL_ASPD
 				script_pushint(st, 1);
 			#else
