@@ -1820,7 +1820,7 @@ int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 		offset += 4;
 	#endif
 	#if PACKETVER >= 20111025
-		WBUFL(buf,136) = 0;  // unknown purpose (0 = disabled, otherwise displays "Add-Ons" sidebar)
+		WBUFL(buf,136) = ( p->rename > 0 ) ? 1 : 0;  // (0 = disabled, otherwise displays "Add-Ons" sidebar)
 		offset += 4;
 	#endif
 #endif
