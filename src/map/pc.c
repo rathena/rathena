@@ -395,18 +395,17 @@ unsigned char pc_famerank(int char_id, int job)
 	return 0;
 }
 
-int pc_setrestartvalue(struct map_session_data *sd,int type)
-{
+int pc_setrestartvalue(struct map_session_data *sd,int type) {
 	struct status_data *status, *b_status;
 	nullpo_ret(sd);
 
 	b_status = &sd->base_status;
 	status = &sd->battle_status;
 
-	if (type&1)
-	{	//Normal resurrection
+	if (type&1) {	//Normal resurrection
 		status->hp = 1; //Otherwise status_heal may fail if dead.
-		status_heal(&sd->bl, b_status->hp, b_status->sp>status->sp?b_status->sp-status->sp:0, 1);
+		status_heal(&sd->bl, b_status->hp, 0, 1);
+		status_set_sp(&sd->bl, b_status->sp, 1);
 	} else { //Just for saving on the char-server (with values as if respawned)
 		sd->status.hp = b_status->hp;
 		sd->status.sp = (status->sp < b_status->sp)?b_status->sp:status->sp;
