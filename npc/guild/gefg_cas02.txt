@@ -118,7 +118,7 @@ gefg_cas02,145,114,0	script	#lever_G02	111,{
 
 // Guild Dungeon Switch
 //============================================================
-gefg_cas02,167,40,0	duplicate(gdlever)	#gefg_cas2	111
+gefg_cas02,167,40,0	duplicate(gdlever)	#gefg_cas02	111
 
 // Guild Treasure Spawns
 //============================================================

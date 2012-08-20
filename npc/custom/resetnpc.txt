@@ -33,7 +33,8 @@ prontera,150,193,4	script	Reset Girl	124,{
 		mes "[Reset Girl]";
 		if (Zeny < .@ResetSkill) {
 			mes "Sorry, you don't have enough Zeny.";
-			close; }
+			close;
+		}
 		set Zeny, Zeny-.@ResetSkill;
 		sc_end SC_ALL;
 		ResetSkill;
@@ -43,7 +44,8 @@ prontera,150,193,4	script	Reset Girl	124,{
 		mes "[Reset Girl]";
 		if (Zeny < .@ResetStat) {
 			mes "Sorry, you don't have enough Zeny.";
-			close; }
+			close;
+		}
 		set Zeny, Zeny-.@ResetStat;
 		ResetStatus;
 		mes "There you go!";
@@ -52,7 +54,8 @@ prontera,150,193,4	script	Reset Girl	124,{
 		mes "[Reset Girl]";
 		if (Zeny < .@ResetBoth) {
 			mes "Sorry, you don't have enough Zeny.";
-			close; }
+			close;
+		}
 		set Zeny, Zeny-.@ResetBoth;
 		sc_end SC_ALL;
 		ResetSkill;

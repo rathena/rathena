@@ -28,8 +28,8 @@ prontera,128,200,6	script	Platinum Skill NPC	94,{
 	if (select("Yes Please:No") == 2) {
 		mes "[Platinum Skill NPC]";
 		mes "Have a nice day... >.>";
-		close; }
-
+		close;
+	}
 	skill 142,1,0;
 	switch(BaseClass) {
 		case 0: if (Class !=23) skill 143,1,0; break;
@@ -39,8 +39,9 @@ prontera,128,200,6	script	Platinum Skill NPC	94,{
 		case 4: skill 156,1,0; break;
 		case 5: skill 153,1,0; skill 154,1,0; skill 155,1,0; break;
 		case 6: skill 149,1,0; skill 150,1,0; skill 151,1,0; skill 152,1,0; break;
-		default: break; }
-	switch(roclass(eaclass()&EAJ_UPPERMASK)) {
+		default: break;
+	}
+	switch(BaseJob) {
 		case 7: skill 1001,1,0; break;
 		case 8: skill 1014,1,0; break;
 		case 9: skill 1006,1,0; break;
@@ -54,8 +55,8 @@ prontera,128,200,6	script	Platinum Skill NPC	94,{
 		case 18: skill 238,1,0; break;
 		case 19: skill 1010,1,0; break;
 		case 20: skill 1011,1,0; break;
-		default: break; }
-
+		default: break;
+	}
 	mes "[Platinum Skill NPC]";
 	mes "There you go!";
 	close;
