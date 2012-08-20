@@ -383,7 +383,7 @@ beach_dun2,119,92,4	script	Fishing Novice#sp2	567,{
 		mes "[Nodor]";
 		mes "Have you visited already?";
 		next;
-		select("How much money shoud I give?");
+		select("How much money should I give?");
 		mes "[Nodor]";
 		mes "Oh, you didn't go there yet?";
 		mes "Give him a little, ya~";
