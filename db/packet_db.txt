@@ -1756,6 +1756,7 @@ packet_ver: 30
 0x0908,5
 0x08D7,28,battlegroundreg,2:4 //Added to prevent disconnections
 0x08CF,10 //Amulet spirits
+0x0977,14 //Monster HP Bar
 
 //Add new packets here
 //packet_ver: 31

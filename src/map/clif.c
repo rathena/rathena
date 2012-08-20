@@ -16221,6 +16221,19 @@ void clif_snap( struct block_list *bl, short x, short y ) {
 	clif_send(buf,packet_len(0x8d2),bl,AREA);
 }
 
+void clif_monster_hp_bar( struct mob_data* md, int fd ) {
+#if PACKETVER >= 20120404	
+	WFIFOHEAD(fd,packet_len(0x977));
+	
+	WFIFOW(fd,0)  = 0x977;
+	WFIFOL(fd,2)  = md->bl.id;
+	WFIFOL(fd,6)  = md->status.hp;
+	WFIFOL(fd,10) = md->status.max_hp;
+	
+	WFIFOSET(fd,packet_len(0x977));
+#endif
+}
+
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/
@@ -16615,7 +16628,13 @@ static int packetdb_readdb(void)
 		0,  0,  0,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,	
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	//#0x0940
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		0,  0,  0,  0,  0,  0,  0, 14,  0,  0,  0,  0,  0,  0,  0,  0,
+
 	};
 	struct {
 		void (*func)(int, struct map_session_data *);
