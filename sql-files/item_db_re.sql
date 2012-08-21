@@ -1468,7 +1468,7 @@ REPLACE INTO `item_db_re` VALUES (2406,'Boots_','Boots',5,18000,NULL,600,NULL,16
 REPLACE INTO `item_db_re` VALUES (2407,'Chrystal_Pumps','Crystal Pumps',5,20,NULL,100,NULL,5,NULL,NULL,0xFFFFFFFE,7,NULL,64,NULL,NULL,1,0,'bonus bMdef,10; bonus bLuk,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2408,'Cuffs','Shackles',5,5000,NULL,3000,NULL,15,NULL,NULL,0xFFFFFFFF,7,2,64,NULL,NULL,1,0,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2409,'Spiky_Heel','High Heels',5,8500,NULL,600,NULL,4,NULL,NULL,0xFFFFFFFE,7,2,64,NULL,NULL,1,0,'bonus bMdef,5;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (2410,'Sleipnir','Sleipnir',5,20,NULL,3500,NULL,40,NULL,NULL,0xFFFFFFFF,7,2,64,NULL,'94',NULL,0,'bonus bMdef,10; bonus bMaxHPrate,20; bonus bMaxSPrate,20; bonus bSPrecovRate,15; bonus bSpeedRate,25;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2410,'Sleipnir','Sleipnir',5,20,NULL,3500,NULL,40,NULL,NULL,0xFFFFFFFF,7,2,64,NULL,'94',NULL,0,'bonus bMdef,10; bonus bMaxHPrate,20; bonus bMaxSPrate,20; bonus bSPrecovRate,25; bonus bSpeedRate,25; bonus bInt,25;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2411,'Grave','Greaves',5,48000,NULL,750,NULL,27,NULL,NULL,0x00004080,7,2,64,NULL,'65',1,0,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2412,'Grave_','Greaves',5,54000,NULL,750,NULL,15,NULL,1,0x00004080,7,2,64,NULL,'65',1,0,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2413,'Safty_Boots','Safety Boots',5,34000,NULL,350,NULL,6,NULL,NULL,0x00004082,7,2,64,NULL,'30',NULL,0,NULL,NULL,NULL);

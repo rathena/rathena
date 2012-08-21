@@ -1437,7 +1437,7 @@
 2407,Chrystal_Pumps,Crystal Pumps,5,20,,100,,5,,0,0xFFFFFFFE,7,0,64,,0,1,0,{ bonus bMdef,10; bonus bLuk,5; },{},{}
 2408,Cuffs,Shackles,5,5000,,3000,,15,,0,0xFFFFFFFF,7,2,64,,0,1,0,{},{},{}
 2409,Spiky_Heel,High Heels,5,8500,,600,,4,,0,0xFFFFFFFE,7,2,64,,0,1,0,{ bonus bMdef,5; },{},{}
-2410,Sleipnir,Sleipnir,5,20,,3500,,40,,0,0xFFFFFFFF,7,2,64,,94,0,0,{ bonus bMdef,10; bonus bMaxHPrate,20; bonus bMaxSPrate,20; bonus bSPrecovRate,15; bonus bSpeedRate,25; },{},{}
+2410,Sleipnir,Sleipnir,5,20,,3500,,40,,0,0xFFFFFFFF,7,2,64,,94,0,0,{ bonus bMdef,10; bonus bMaxHPrate,20; bonus bMaxSPrate,20; bonus bSPrecovRate,25; bonus bSpeedRate,25; bonus bInt,25; },{},{}
 2411,Grave,Greaves,5,48000,,750,,27,,0,0x00004080,7,2,64,,65,1,0,{},{},{}
 2412,Grave_,Greaves,5,54000,,750,,15,,1,0x00004080,7,2,64,,65,1,0,{},{},{}
 2413,Safty_Boots,Safety Boots,5,34000,,350,,6,,0,0x00004082,7,2,64,,30,0,0,{},{},{}
