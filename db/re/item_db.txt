@@ -1881,7 +1881,7 @@
 2865,Seal_Of_Cathedral,Seal Of Cathedral,5,20,,0,,0,,0,0x00000100,7,2,136,,110,0,0,{ bonus bInt,2; bonus bHealPower,2; },{},{}
 2866,Ring_Of_Archbishop,Ring Of Archbishop,5,20,,0,,0,,0,0x00000100,7,2,136,,110,0,0,{ bonus bDex,2; bonus bHealPower,2; },{},{}
 //
-2883,Urj_Seal,Urj Seal,5,20,,200,,4,,1,0x00000080,8,2,136,,100,0,0,{ bonus bMaxHPrate,2; },{},{}
+2883,Urj_Seal,Urj Seal,5,20,,200,,4,,1,0x00000080,8,2,136,,100,0,0,{ bonus bMaxHPrate,2; bonus2 bSkillUseSP,"LK_SPIRALPIERCE",5; bonus2 bSkillUseSP,"RK_HUNDREDSPEAR",5; },{},{}
 2884,Pertz_Seal,Pertz Seal,5,20,,200,,3,,1,0x00000080,8,2,136,,100,0,0,{ bonus bBaseAtk,20; bonus bMaxSP,20; },{},{}
 //2885,
 2886,Sabath_Seal,Sabath Seal,5,20,,100,,0,,0,0x00001000,7,2,136,,100,0,0,{ bonus bCritical,3; },{},{}

@@ -1912,7 +1912,7 @@ REPLACE INTO `item_db_re` VALUES (2864,'Light_Of_Cure','Liht Of Cure',5,20,NULL,
 REPLACE INTO `item_db_re` VALUES (2865,'Seal_Of_Cathedral','Seal Of Cathedral',5,20,NULL,0,NULL,NULL,NULL,NULL,0x00000100,7,2,136,NULL,'110',NULL,0,'bonus bInt,2; bonus bHealPower,2;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2866,'Ring_Of_Archbishop','Ring Of Archbishop',5,20,NULL,0,NULL,NULL,NULL,NULL,0x00000100,7,2,136,NULL,'110',NULL,0,'bonus bDex,2; bonus bHealPower,2;',NULL,NULL);
 #
-REPLACE INTO `item_db_re` VALUES (2883,'Urj_Seal','Urj Seal',5,20,NULL,200,NULL,4,NULL,1,0x00000080,8,2,136,NULL,'100',NULL,0,'bonus bMaxHPrate,2;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2883,'Urj_Seal','Urj Seal',5,20,NULL,200,NULL,4,NULL,1,0x00000080,8,2,136,NULL,'100',NULL,0,'bonus bMaxHPrate,2; bonus2 bSkillUseSP,"LK_SPIRALPIERCE",5; bonus2 bSkillUseSP,"RK_HUNDREDSPEAR",5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2884,'Pertz_Seal','Pertz Seal',5,20,NULL,200,NULL,3,NULL,1,0x00000080,8,2,136,NULL,'100',NULL,0,'bonus bBaseAtk,20; bonus bMaxSP,20;',NULL,NULL);
 #2885,
 REPLACE INTO `item_db_re` VALUES (2886,'Sabath_Seal','Sabath Seal',5,20,NULL,100,NULL,NULL,NULL,NULL,0x00001000,7,2,136,NULL,'100',NULL,0,'bonus bCritical,3;',NULL,NULL);
