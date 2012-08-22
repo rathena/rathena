@@ -1675,7 +1675,8 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 	tsc = status_get_sc(target);
 	
 	if(tsc && tsc->count) {
-		if( tsc->data[SC_INVINCIBLE] )
+		/* attacks in invincible are capped to 1 damage and handled in batte.c; allow spell break and eske for sealed shrine GDB when in INVINCIBLE state. */
+		if( tsc->data[SC_INVINCIBLE] && !tsc->data[SC_INVINCIBLEOFF] && skill_num && !(skill_num&(SA_SPELLBREAKER|SL_SKE)) )
 			return 0;
 		if(!skill_num && tsc->data[SC_TRICKDEAD])
 			return 0;
