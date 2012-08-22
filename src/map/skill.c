@@ -2638,7 +2638,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 				( (devo_flag) ? bl:d_bl), gettick(), 0, 0, damage, 0, 0, 0);
 			status_fix_damage(
 				( (devo_flag) ? bl:NULL), 
-				( (devo_flag) ? bl:d_bl), damage, 0, 0);
+				( (devo_flag) ? bl:d_bl), damage, 0);
 		}
 		else {
 			status_change_end(bl, SC_DEVOTION, INVALID_TIMER);
