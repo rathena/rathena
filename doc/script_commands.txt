@@ -4977,6 +4977,8 @@ Rate is the trigger rate of the script (1000 = 100%).
 
 Duration is the time that the bonus will last for since the script has triggered.
 
+Skill ID/skill name the skill which will be used as trigger to start the bonus. (autobonus3)
+
 The optional argument 'flag' is used to classify the type of attack where the script
 can trigger (it shares the same flags as the bAutoSpell bonus script):
 
