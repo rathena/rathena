@@ -11234,7 +11234,7 @@ BUILDIN_FUNC(mapwarp)	// Added by RoVeRT
 			}
 			break;
 		default:
-			map_foreachinmap(buildin_areawarp_sub,m,BL_PC,index,x,y);
+			map_foreachinmap(buildin_areawarp_sub,m,BL_PC,index,x,y,0,0);
 			break;
 	}
 
