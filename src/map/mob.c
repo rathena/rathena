@@ -2387,8 +2387,11 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			if (sd && sd->sc.data[SC_ITEMBOOST]) // now rig the drop rate to never be over 90% unless it is originally >90%.
 				drop_rate = max(drop_rate,cap_value((int)(0.5+drop_rate*(sd->sc.data[SC_ITEMBOOST]->val1)/100.),0,9000));
 #ifdef RENEWAL_DROP
-			if(drop_modifier != 100 && !md->db->mexp)
+			if(drop_modifier != 100 && !md->db->mexp) {
 				drop_rate = drop_rate * drop_modifier / 100;
+				if( drop_rate < 1 )
+					drop_rate = 1;
+			}
 #endif
 			// attempt to drop the item
 			if (rnd() % 10000 >= drop_rate)
