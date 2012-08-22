@@ -4510,7 +4510,7 @@ moc_para01,111,83,3	script	Toren	813,{
 				callsub L_Select,
 					1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int", //P.Staff III
 					16014,"Mace","One-handed, 172 Atk", //P.Mace III
-					1583,"Book: One-handed, 135 Atk, 110 Matk"; //P.Book I
+					1583,"Book","One-handed, 135 Atk, 110 Matk"; //P.Book I
 			}
 			else if (BaseJob == Job_Monk) {
 				mes "Monk Class gets a choice of weapons, would you like to have a knuckle, mace or a staff?";
