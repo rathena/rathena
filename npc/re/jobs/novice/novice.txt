@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Kisuka
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -13,6 +13,7 @@
 //= 1.0 First version. [Kisuka]
 //= 1.1 Updated warps, savepoints, NPC locations. [Kisuka]
 //= 1.2 Cleaning. [Euphy]
+//= 1.3 Fixed Eden Group Officer's level requirement. [Joseph]
 //============================================================
 
 //============================================================================
@@ -1852,7 +1853,7 @@ new_5-3,121,41,4	duplicate(NvBruce)	Bruce#nv5	57
 // Eden Group Officer (Real Combat Training)
 //============================================================================
 -	script	Eden Group Officer#nv::NvEdn	-1,{
-	if(BaseLevel < 11) {
+	if(BaseLevel < 10) {
 		mes "[Eden Group Officer]";
 		mes "Hello, I am a representative of the Eden Group.";
 		mes "We are here to assist adventurers in Rune Midgard.";
@@ -1887,49 +1888,29 @@ new_5-3,121,41,4	duplicate(NvBruce)	Bruce#nv5	57
 				mes "[Eden Group Officer]";
 				mes "Prontera, the Capital city of the Rune-Midgarts Kingdom.";
 				mes "Take care and may Freya bless you on your journey.";
-				close2;
-				callfunc "F_NvErase",1;
-				savepoint "prontera",122,77;
-				warp "prontera",121,76;
-				end;
+				callsub S_Warp,"prontera",121,77,121,76;
 			case 2:
 				mes "[Eden Group Officer]";
 				mes "The desert city of Morocc was recently destroyed.";
 				mes "I will send you to the camp where the survivors are.";
-				close2;
-				callfunc "F_NvErase",1;
-				savepoint "moc_ruins",71,157;
-				warp "moc_ruins",70,158;
-				end;
+				callsub S_Warp,"moc_ruins",71,157,70,158;
 			case 3:
 				mes "[Eden Group Officer]";
 				mes "Just north of Payon you'll find the Archer Village.";
 				mes "Good luck on your journeys.";
-				close2;
-				callfunc "F_NvErase",1;
-				savepoint "payon",167,68;
-				warp "payon",172,111;
-				end;
+				callsub S_Warp,"payon",167,68,172,111;
 			case 4:
 				mes "[Eden Group Officer]";
 				mes "Alberta, the Port City.";
 				mes "It's the main hub of all trades.";
 				mes "If you want to travel to other civilizations, Alberta is the only outlet.";
-				close2;
-				callfunc "F_NvErase",1;
-				savepoint "alberta",115,57;
-				warp "alberta",116,58;
-				end;
+				callsub S_Warp,"alberta",115,57,116,58;
 			case 5:
 				mes "[Eden Group Officer]";
 				mes "Geffen, is known as the Magical City of Rune Midgard.";
 				mes "I will send you near the Fountains.";
 				mes "Goddess Freya bless you.";
-				close2;
-				callfunc "F_NvErase",1;
-				savepoint "geffen",118,36;
-				warp "geffen",128,66;
-				end;
+				callsub S_Warp,"geffen",118,36,128,66;
 			case 6:
 				mes "[Eden Group Officer]";
 				mes "If you're still not sure what job you want, talk to the Job Guides for more help.";
@@ -1961,6 +1942,13 @@ new_5-3,121,41,4	duplicate(NvBruce)	Bruce#nv5	57
 			close;
 		}
 	}
+
+S_Warp:
+	close2;
+	callfunc "F_NvErase",1;
+	savepoint getarg(0),getarg(1),getarg(2);
+	warp getarg(0),getarg(3),getarg(4);
+	end;
 	
 OnTouch:
 	emotion e_gasp;
