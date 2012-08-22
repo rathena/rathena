@@ -1,22 +1,22 @@
 //===== rAthena Script ======================================= 
-// Genetic Job change Quest
+// Genetic Job Change Quest
 //===== By: ================================================== 
 //= Masao
 //= Credits: Muad_Dib & Aeomin
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
-//= Any rAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
-//= [AEGIS Conversion]
+//= [Official Conversion]
 //= Job change Quest from Alchemist / Creator -> Genetic.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
 //= 1.1 Fixed Scatter Stuff NPC's - [JayPee].
+//= 1.2 Updated dialogue. Credits to Muad_Dib. [Joseph]
 //============================================================
 
 alde_alche,35,186,5	script	Alchemist Union Member	805,{
-
 	if ((BaseLevel == 99) && (JobLevel > 49)){
 		if (Class == Job_Alchemist || Class == Job_Creator || Job_Baby_Alchemist){
 			if (SkillPoint == 0){
@@ -34,37 +34,35 @@ alde_alche,35,186,5	script	Alchemist Union Member	805,{
 					mes "Geneticists are the ones who have reached their peak potential in the world of Alchemy. They are the ones who currently spearhead alchemy throughout all of Rune-Midgart.";
 					next;
 					mes "[Alchemist Union Member]";
-					mes "I see you have a certain level of experience in this area. Perhaps you would like to meet other geneticists?";
+					mes "It looks like you are an expert in this field, how about meeting other geneticists?";
 					next;
 					mes "[Alchemist Union Member]";
-					mes "Just recently, an research paper from a geneticist caused a sensation.";
-					mes "Someone experienced like yourself, would understand her research, and would be able to discuss it with her, right?";
+					mes "Not long ago there was a Geneticist who announced a sensational new life studying research.";
+					mes "You are very knowledgeable. Do you think you might understand her work?";
 					next;
 					mes "[Alchemist Union Member]";
-					mes "Maybe her research results can be of benefit to your research, and with some luck you could become a geneticist too!";;
+					mes "Her study may help you gain the knowledge to help you make a Geneticist!";;
 					next;
 					mes "[Alchemist Union Member]";
-					mes "What do you think? Would you like to meet this geneticist?";
+					mes "How's that sound? Do you want to meet a Geneticist?";
 					next;
-					switch(select("Meet with her.:Don't meet with her.")){
-					case 1:
+					if(select("Of course, I want to meet a Geneticist.:I don't want to meet a Geneticist.") == 1){
 						mes "[Alchemist Union Member]";
 						mes "Wise choice!";
 						mes "The infamous geneticist 'Devries'.";
 						next;
 						mes "[Alchemist Union Member]";
-						mes "You can find her in the Alchemy Lab at the western part of Lighthalzen. There is also another geneticist studying weaponry there, you might want to pay her a visit too.";
+						mes "You can find her in the Alchemy Lab at the western part of Lighthalzen. There is also another geneticist studying weaponry there, you might want to pay her a visit as well.";
 						set job_gen,1;
 						setquest 2215;
 						close;
-					case 2:
-						mes "[Alchemist Union Member]";
-						mes "Aren't you interested in the study of life?";
-						close;
 					}
+					mes "[Alchemist Union Member]";
+					mes "Aren't you interested in the study of life?";
+					close;
 				}
 				mes "[Alchemist Union Member]";
-				mes "The geneticist causing academic sensation is studying at the Alchemy Lab in the western part of Lighthalzen.";
+				mes "The infamous Geneticist is studying at the Alchemy Lab in the western part of Lighthalzen.";
 				mes "If you are interested, go meet with her.";
 				close;
 			}
@@ -83,241 +81,242 @@ alde_alche,35,186,5	script	Alchemist Union Member	805,{
 	mes "We call the members of our new union ^3131FF'Geneticists'^000000.";
 	next;
 	mes "[Alchemist Union Member]";
-	mes "Geneticists are the ones who have reached their peak potential in the world of Alchemy. They are the ones who currently spearhead alchemy throughout all of Rune-Midgart.";
+	mes "Geneticists are the ones who have reached their peak potential in the world of Alchemy. They are the ones who currently spearhead alchemy throughout all of Rune-Midgard.";
 	close;
 }
 
 job3_gen01,25,58,3	script	Devries#gen	865,{
-
 	if (SkillPoint == 0){
 		if (job_gen == 1){
 			mes "[Devries]";
-			mes "Argh. The bloodsucking plant sample C is withering again.";
+			mes "Oh! The bloodsucking plant sample C is withering again.";
 			mes "Should I change the ingredient of the growth care?";
 			mes "Hey please cheer up soon!";
 			next;
 			mes "[Devries]";
-			mes "Eh? This is the first time we meet, right?";
-			mes "Looking at your clothing, could you be a fellow alchemist?";
+			mes "Oh? A stranger?";
+			mes "Your look tells me that you are doing Alchemy as well right?";
 			next;
 			mes "[Devries]";
-			mes "Recently the number of young alchemists is increasing, but very few have the passion to study and do research!";
+			mes "People say the number of alchemists is increasing nowadays though there aren't may who study this field properly!";
 			next;
 			mes "[Devries]";
-			mes "Take a look at this, this bomb is very powerful! But my Poison Spores are more beautiful! I have lots of goodies!";
+			mes "They're all too worried about saying things like, ''Look at my bomb damage!'' or ''isn't my homunculus prettier?''";
 			next;
 			mes "[Devries]";
-			mes "Although the Alchemist Union said that they support their researchers, but all of my hard work only got me this 'Easy to Plant Mushroom'!";
+			mes "The Alchemist Union was saying they'd support the researchers but actually what you get from the studying is just 'Spores Which Can Be Easily Raised'!";
 			next;
 			mes "[Devries]";
-			mes "Somehow mushrooms spread over the entire lab! I even find spores all over my house!";
+			mes "Thanks to that, there are spores everywhere in my lab! There are spores everywhere!";
 			next;
-			menu "You have a weird accent.",-;
+			select("Why do you talk like that?");
 			mes "[Devries]";
-			mes "I am from Rune-Midgart!";
-			mes "Have you ever been to the Rune-Midgarts Kingdom? Everyone in Rune-Midgart speaks like this.";
+			mes "'Cause I'm from Rune-Midgart!";
+			mes "Have you ever been to Rune-Midgart? Everyone in Rune-Midgart speaks like this.";
 			next;
-			switch(select("Really?!:I'm from Rune-Midgart too.")){
-			case 1:
+			if(select("Impossible?!:I'm also from Rune-Midgart.") == 1){
 				mes "[Devries]";
-				mes "Really?";
+				mes "Impossible?";
 				mes "Do you come from a Rune-Midgart village?";
-				mes "My village is very big, everyone there speaks with this accent.";
+				mes "My village is very big, everyone there speaks like this.";
 				next;
-				break;
-			case 2:
+			} else {
 				emotion e_lv;
 				mes "[Devries]";
-				mes "Ah! No wonder you look so familiar.";
-				mes "I am happy to meet a fellow Rune-Midgartian here in the Schwartzvalt Republic!";
+				mes "Really! That's why I felt some kind of familiar atmosphere around you.";
+				mes "Meeting a hometown person in Schwaltzvalt, it's my pleasure to meet you!";
 				next;
-				break;
 			}
-			mes "- Bang Bang Bang -";
+			mes "- Thump!! -";
 			next;
 			emotion e_ag;
 			mes "[Devries]";
-			mes "Aaaghh! It's that woman again!";
+			mes "Ughhhhh! That woman started again!";
 			next;
-			menu "What is that noise?",-;
+			select("What's that sound?");
 			mes "[Devries]";
-			mes "That's my classmate, Demi Calberine. That noise is from her experiments.";
-			mes "Demi is an mini cannon specialist, she always makes a lot of noise.";
+			mes "That's the sound of an experiment being carried out by my roommate, Demi Calberine..";
+			mes "Demi's a fire shell technician so she's always noisy like that.";
 			next;
 			emotion e_sob;
 			mes "[Devries]";
-			mes "Look!";
-			mes "My mushrooms and plants are scared!";
-			mes "I can't even concentrate on my research. This is so annoying!!";
+			mes "Look at that!";
+			mes "My spores and plants are all freaked out!";
+			mes "I can't do my work with those noisy sounds. It gives me so much stress!!";
 			next;
-			mes "- Kala Kala -";
-			next;
-			mes "[Devries]";
-			mes "Whenever I am in a bad mood, I need to eat some of Orleans cookies.";
+			mes "- Munch Crunch -";
 			next;
 			mes "[Devries]";
-			mes "It's a luxury cookie from Prontera. When I put one in my mouth it reminds me of Asgard.";
-			mes "When I finish eating a delicious cookie, the noise from Demi Calberine just goes away.";
+			mes "When I don't feel good, I savor Mr. Orlean's handmade cookies little by little.";
 			next;
 			mes "[Devries]";
-			mes "Would you like one?";
-			mes "Aw, I already ate the last one.";
+			mes "It's a high-quality cookie that I got from Prontera. When I get one bite, it seems like I'm floating to Asgard.";
+			mes "The softness of the sweet cookie drowns out the clashing sounds from Demi Calberine.";
 			next;
 			mes "[Devries]";
-			mes "But that's okay! I have a few boxes in my room on the second floor.";
-			mes "Because of the temptation, I've bought a large amount, hehehe.";
+			mes "Wanna try one?";
+			mes "Ah, I've eaten all of it.";
 			next;
-			mes "- Ke Ke Ke Ke Ke Ke Ke -";
+			mes "[Devries]";
+			mes "But it's okay! On the 2nd floor of my room, there are boxes of those!";
+			mes "I couldn't stop buying it all in bulk. Ho ho ho.";
+			next;
+			mes "- Zooooooooooooooooing -";
 			specialeffect EF_ENDURE;
 			next;
 			specialeffect EF_REPAIRWEAPON;
-			mes "- Ke Ke Ke Ke! Ke Ke Ke Ke Ke Ke!!! -";
+			mes "- (Screeching Sounds)!!! -";
+			mes "- (Screeching)!!! -";
 			next;
 			specialeffect EF_CRASHEARTH;
-			mes "- Bang! Bang!! Bang!!! Bang!!!! -";
+			mes "- Bump! Bump! Bump! -";
 			next;
 			mes "[Devries]";
 			mes "..................";
 			next;
 			mes "[Devries]";
-			mes "Ooooh uh";
-			mes "Eh Aaaaahhh!!!";
+			mes "Yoooooooooooow";
+			mes "Yipeeeeeeeeee!!!";
 			next;
 			mes "[Devries]";
-			mes "Demi!!!!! Demi!!!!";
+			mes "Demiiiiiiiiiiiiiiiiiiiiiiii!!!";
+			mes "Demiiiiiiiiiiiiiiiiiiiii!!!";
 			next;
-			mes "- It looks like you need to calm Devries down. -";
+			mes "- For now it seems that I -";
+			mes "- need to calm down Devries. -";
 			set job_gen,2;
 			close;
 		}else if (job_gen == 2){
 			mes "[Devries]";
-			mes "Uh Aaaaaaah!!!!";
-			mes "Demi!!!!! Demi!!!!";
+			mes "Yipeeeeeeeeee!!!";
+			mes "Demiiiiii!!!";
+			mes "Demiiiiiiiii!!!";
 			next;
-			mes "- It looks like you need to calm Devries down. -";
+			mes "- Hmm -";
+			mes "- What'll make her calm. -";
 			close;
 		}else if (job_gen == 3){
 			mes "[Devries]";
-			mes "Uh Aaaaaahhhh!!!!";
-			mes "Demi!!!!! Demi!!!!";
+			mes "Yipeeeeeeeeee!!!";
+			mes "Demiiiiii!!!";
+			mes "Demiiiiiiiii!!!";
 			next;
-			menu "Give the cookies to Devries.",-;
-			mes "- Devries took the cookies and started eating like a hungry wolf. -";
+			select("Hand Devries a cookie.");
+			mes "- Devries quickly snatches -";
+			mes "- away the cookie and stuffs -";
+			mes "- it all in her mouth. -";
 			next;
-			mes "- Ka Ka Ka -";
-			mes "- Ka Ka Ka -";
-			mes "- Ka Ka Ka -";
+			mes "- Crunch Crunch Crunch -";
+			mes "- Crunch Crunch Crunch -";
+			mes "- Crunch Crunch Crunch -";
 			next;
 			mes "[Devries]";
-			mes "Ah,";
-			mes "The sweet butter taste,";
-			mes "really calms me down.";
+			mes "Ah, The sweet buttery taste remains at the end of my tongue.";
+			mes "This really gives me peace of mind.";
 			next;
 			emotion e_rice;
 			mes "[Devries]";
-			mes "Demi works very persistent today too.";
-			mes "Hehehe, what a hard working colleague.";
+			mes "Demi is studying hard today as well";
+			mes "Huhuhu. She's really a hard worker.";
 			next;
-			mes "- As expected, the cookie works really well. -";
+			mes "- That cookie changed her mood quick. -";
 			emotion e_no1;
 			next;
 			mes "[Devries]";
-			mes "You also like alchemy, which has brought you here, right?";
+			mes "You came here with a love for Alchemy?";
 			next;
 			mes "[Devries]";
-			mes "Oh, right, I haven't introduced myself.";
+			mes "Oh wait, We haven't introduced ourselves yet.";
 			mes "My name is Devries.";
-			mes "I'm interested in new and special life.";
+			mes "I'm very interested in making living things that show new and peculiar growth.";
 			next;
 			mes "[Devries]";
 			mes "What's your name, young alchemist?";
 			next;
-			menu "I am "+strcharinfo(0)+".",-;
+			select("I'm "+strcharinfo(0)+".");
 			mes "[Devries]";
 			mes "Oh, "+strcharinfo(0)+".";
-			mes "What an interesting name. Nice to meet you.";
+			mes "That's a very unusual name. Pleased to meet you.";
 			next;
 			mes "[Devries]";
-			mes "But I am terrible with names...... Is it okay if I call you Bubbles?";
+			mes "But I can't memorize the name well.";
+			mes "So I'll just call you <Popo>. Would that be ok?";
 			next;
+			select("I uhh..");
 			mes "[Devries]";
-			mes "Bubbles, have you heard of my research?";
-			mes "You did read my research paper before you came here, right?";
+			mes "Great...";
+			mes "Popo, have you heard of my research?";
+			mes "You came here because of that, am I right?";
 			next;
-			switch(select("No.:Yes, I did.")){
-			case 1:
+			if(select("No.:Yes.") == 1){
 				mes "[Devries]";
-				mes "Ah, it's written all over your face.";
-				mes "Don't be shy.";
-				break;
-			case 2:
+				mes "Well, it's all over your face.";
+				mes "You don't have to be shy.";
+			} else {
 				mes "[Devries]";
-				mes "Am I right?";
-				mes "It's easy to communicate with people from the same place.";
-				break;
+				mes "That's right huh?";
+				mes "Well, as I expected, there really is something that makes homeland people get each other";
 			}
 			next;
 			mes "[Devries]";
-			mes "Now, you used the method I mentioned earlier to calm me down.";
+			mes "When you saw me in that feverish state, you remembered what I said before and that calmed me down.";
 			next;
 			mes "[Devries]";
-			mes "I'm very satisfied with how you paid attention to details.";
-			mes "You have the quality to become a geneticist.";
+			mes "I like the way you manage yourself and take care to remember small details.";
+			mes "You have the talent to become a Geneticist.";
 			next;
 			mes "[Devries]";
-			mes "^FF0000After becoming a geneticist, you can no longer study alchemy or bio-chemistry.^000000";
-			mes "If you accept, you may take the test.";
+			mes "^FF0000If you become a Geneticist, you can't take the Alchemist's or Biochemist study course that you haven't investigated before.^000000";
+			mes "If that's all right for you, how about giving it a shot right now?.";
 			next;
-			switch(select("Maybe later.:I want to become a Geneticist!")){
-			case 1:
+			if(select("I'll try later.:I want to become a Geneticist!") == 1){
 				mes "[Devries]";
-				mes "Okay then.";
-				mes "Even though your knowledge is not that great as that of geneticists, a fundamental knowledge is also important.";
-				mes "Bubbles, come back to me once you've finished your studies.";
+				mes "Alright.";
+				mes "Even though your knowledge is not that great as that of Geneticists, a fundamental knowledge is also important.";
+				mes "Popo, come back to me once you've finished your studies.";
 				set job_gen,4;
 				close;
-			case 2:
-				mes "[Devries]";
-				mes "Good!";
-				mes "Let's do our best together!";
-				set job_gen,5;
-				close;
 			}
+			mes "[Devries]";
+			mes "Good!";
+			mes "Let's do it!";
+			set job_gen,5;
+			close;
 		}else if (job_gen == 4){
 			mes "[Devries]";
-			mes "Bubbles!";
-			mes "Are you prepared to take the test?";
+			mes "Popo!";
+			mes "Are you ready to give it a shot?";
 			next;
-			switch(select("Not yet.:Yes!")){
-			case 1:
+			if(select("No.:Yes!") == 1){
 				mes "[Devries]";
-				mes "You have to try hard! There is no shortcut when obtaining knowledge!";
-				close;
-			case 2:
-				mes "[Devries]";
-				mes "Very good!";
-				mes "Let's do our best together!";
-				set job_gen,5;
+				mes "You have to do your best! There is no easy way when looking for knowledge!";
 				close;
 			}
+			mes "[Devries]";
+			mes "Very good!";
+			mes "Let's do it!";
+			set job_gen,5;
+			close;
 		}else if (job_gen == 5){
 			mes "[Devries]";
-			mes "Bubbles, what do you think of plants?";
-			mes "Do you like plants? Which one are you interested in?";
+			mes "What do you think of plants, Popo";
+			mes "Do you like plants? What kind of plants are you interested in?";
 			next;
-			mes "- Bang Bang Bang Bang -";
+			mes "- Boom, Boom, Boom -";
 			next;
 			emotion e_swt2;
 			mes "[Devries]";
-			mes "Ah, Demi Calberine is doing it again?";
-			mes "Hopefully she fails again......Demi...must...not succeed...";
+			mes "Ah, please tell me Demi Calberine is not starting again?";
+			mes "Please let my expectation be wrong ... Please... Demi, please...";
 			next;
 			mes "[Devries]";
-			mes "Where was I?";
-			mes "Oh, right. In alchemy, plants are very important.";
-			mes "Alchemists would make Geographers and Hydra's grow fast, and they would help them when in a battle...";
+			mes "Where did I stop talking";
+			mes "Oh, right. Plants are very important in Alchemy.";
 			next;
-			mes "- Bang!! Bang!! Bang!! Bang!! -";
+			mes "[Devries]";
+			mes "Alchemy can make Flora's and Geographers grow immensely fast, so they can help in battle, like those Alchemists...";
+			next;
+			mes "- Boom!! Boom!! Boom!! Boom!! -";
 			next;
 			emotion e_hmm;
 			mes "[Devries]";
@@ -325,18 +324,18 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 			next;
 			emotion e_hmm;
 			mes "[Devries]";
-			mes "Like technologies, plants are easily to...";
+			mes "Techniques, plants are relatively easy to...";
 			next;
-			mes "- Bang!!!! -";
+			mes "- Boom!!!!!! -";
 			next;
 			emotion e_hmm;
 			mes "[Devries]";
-			mes "...sexual reproduction...";
+			mes "Crossbreed...";
 			next;
-			mes "- Bang!!!! -";
-			mes "- Ke Ke Ke Ke Ke Ke!! -";
-			mes "- Bang Bang Bang Bang Bang!!!! -";
-			mes "- Bang!! Bang!! Bang!! Bang!! -";
+			mes "- Pop!!!!!! -";
+			mes "- Keeeeeeeeeeeeeh!!!! -";
+			mes "- Boooooooooooooom!!!! -";
+			mes "- Boom!! Boom!! Boom!! -";
 			next;
 			emotion e_hmm;
 			mes "[Devries]";
@@ -344,214 +343,164 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 			next;
 			emotion e_hmm;
 			mes "[Devries]";
-			mes "Bubbles.";
+			mes "Popo.";
 			next;
 			emotion e_hmm;
 			mes "[Devries]";
-			mes "To become a geneticist, you must pass the test";
+			mes "I'll give you the test to become a Geneticist.";
 			next;
 			mes "[Devries]";
-			mes "It's called the 'Perfect Soundproof System'!";
-			mes "You must use plants and experiment samples on the 1st floor of the lab. Release me from Demi Calberine's scary noise.";
+			mes "The subject is <The Perfect Soundproof System>!";
+			mes "Please think of a way to save me from Demi Calberine's noise, using plants and experimental equipment that are here on the 1st floor of the lab.";
 			next;
 			mes "[Devries]";
-			mes "Okay then, let's get started!";
+			mes "Well, you better get started!";
 			set job_gen,6;
 			close;
 		}else if (job_gen == 6){
 			mes "[Devries]";
-			mes "It's called the 'Perfect Soundproof System'!";
-			mes "You must use plants and experiment samples on the 1st floor of the lab. Release me from Demi Calberine's scary noise.";
+			mes "The subject is <The Perfect Soundproof System>!";
+			mes "Please think of a way to save me from Demi Calbereine's noise, using plants and experimental equipment that are here on the 1st floor of the lab.";
 			next;
 			mes "[Devries]";
-			mes "There are some related guides in the cabinet that you may use.";
-			mes "Okay then, let's get started!";
+			mes "There are some guides in the cabinet that you may use.";
+			mes "Well, you better get started!";
 			close;
 		}else if ((job_gen > 6) && (job_gen < 60)){
 			mes "[Devries]";
 			mes "Is there a problem?";
 			next;
-			switch(select("Nothing.:The experiment failed.")){
-			case 1:
+			if(select("Nothing.:The experiment failed.") == 1){
 				mes "[Devries]";
 				mes "Better get started, or I'll start to scream!!!";
 				close;
-			case 2:
-				mes "[Devries]";
-				mes "Why not redo the experiment?";
-				mes "Why are you asking me these things?";
-				set job_gen,7;
-				if (checkquest(2209) == 1){
-					erasequest 2209;
-				}
-				if (checkquest(2210) == 1){
-					erasequest 2210;
-				}
-				if (checkquest(2211) == 1){
-					erasequest 2211;
-				}
-				if (checkquest(2212) == 1){
-					erasequest 2212;
-				}
-				if (checkquest(2213) == 1){
-					erasequest 2213;
-				}
-				if (checkquest(2214) == 1){
-					erasequest 2214;
-				}
-				close;
 			}
+			mes "[Devries]";
+			mes "Why not start over?";
+			mes "Why are you asking me such things?";
+			set job_gen,7;
+			if (checkquest(2209) == 1) erasequest 2209;
+			if (checkquest(2210) == 1) erasequest 2210;
+			if (checkquest(2211) == 1) erasequest 2211;
+			if (checkquest(2212) == 1) erasequest 2212;
+			if (checkquest(2213) == 1) erasequest 2213;
+			if (checkquest(2214) == 1) erasequest 2214;
+			close;
 		}else if (job_gen == 60 || job_gen == 61){
-			mes "- Bang Bang Bang Ke Ke Ke Ke -";
+			mes "- Zing Zing Zigi Zigi -";
 			next;
-			mes "- Bang Bang Bangg Bang Bang Bang -";
-			next;
-			mes "[Devries]";
-			mes "What is Demi Calberine doing?";
-			mes "That is really loud.";
+			mes "- Zing Zing Zigi Zigi -";
 			next;
 			mes "[Devries]";
-			mes "Did you finish the experiment, Bubbles?";
-			mes "Show me the seed.";
+			mes "What the hell is Demi Calberine doing?";
+			mes "That's really a noisy one.";
+			next;
+			mes "[Devries]";
+			mes "Your study is done, Popo?";
+			mes "Give me those seeds.";
 			next;
 			if ((countitem(6273) == 0) && (countitem(6272) == 0)){
 				mes "[Devries]";
 				mes "What is this?";
-				mes "How can you claim success when you have a unfinished experiment?";
-				mes "Hurry up and redo the experiment.";
+				mes "How can you say you're done with your study?";
+				mes "Hurry up and start over.";
 				set job_gen,7;
-				if (checkquest(2209) == 1){
-					erasequest 2209;
-				}
-				if (checkquest(2210) == 1){
-					erasequest 2210;
-				}
-				if (checkquest(2211) == 1){
-					erasequest 2211;
-				}
-				if (checkquest(2212) == 1){
-					erasequest 2212;
-				}
-				if (checkquest(2213) == 1){
-					erasequest 2213;
-				}
-				if (checkquest(2214) == 1){
-					erasequest 2214;
-				}
+				if (checkquest(2209) == 1) erasequest 2209;
+				if (checkquest(2210) == 1) erasequest 2210;
+				if (checkquest(2211) == 1) erasequest 2211;
+				if (checkquest(2212) == 1) erasequest 2212;
+				if (checkquest(2213) == 1) erasequest 2213;
+				if (checkquest(2214) == 1) erasequest 2214;
 				close;
 			}
 			mes "[Devries]";
-			mes "Show me the seed you created.";
-			mes "What will it be?";
+			mes "Well, I'll take a look at the seeds Popo made.";
+			mes "What's the result?";
 			next;
 			mes "[Devries]";
-			mes "Put the seed in the Super Cultivator, adjust the temperature...";
+			mes "When you put a seed in a Super Cultivator, and adjust the temperature...";
 			next;
 			mes "[Devries]";
-			mes "Ah!";
+			mes "Damn!";
 			next;
 			if (job_gen == 60){
 				specialeffect EF_FLASHER;
 				specialeffect EF_PHARMACY_OK;
 				mes "[Devries]";
-				mes "Bubbles, look at this!";
-				mes "What a fascination plant!";
+				mes "Popo, look at that!";
+				mes "That's really a mysterious plant!";
 				next;
 				mes "[Devries]";
-				mes "Spike vines are everywhere in the culture machine!";
-				mes "These vines are very high concentrated and hard, like a brick wall!";
+				mes "The inside of the Cultivator is now full of thorny stems!";
+				mes "It's as if the stems are making a wall and growing very sturdily and those are getting tangled!";
 				next;
 				mes "[Devries]";
-				mes "This is it, Bubbles!";
-				mes "The properties of this plant can be used for varying things!";
+				mes "This is it, Popo!";
+				mes "This plant's properties can be used for many applications!";
 				next;
 				mes "[Devries]";
-				mes "Great, Bubbles.";
-				mes "I thought you would have a decent result, but it came out better then I expected!";
+				mes "This is really great, Popo.";
+				mes "I knew that you were knowledgeable but your ability is more than that!";
 				next;
 				mes "[Devries]";
-				mes "I need to submit your experiment result to the Alchemist Union.";
-				mes "I will write a letter, stating that Bubbles is terrific, and has the qualifications to become a geneticist.";
+				mes "I will tell the outcome to the Alchemist Union.";
+				mes "I will send a recommendation letter saying that your ability is really great and that you could be a brilliant member.";
 				next;
 				mes "[Devries]";
-				mes "The union's reply might take a while, can you wait for it?";
-				mes "In the meantime, go meet Demi Calberine upstairs.";
+				mes "Getting an answer from the Union will take some time, so could you next; a moment?";
+				mes "Why don't you go up to Demi Calberine?";
 				next;
 				mes "[Devries]";
-				mes "She is a fellow geneticist, specializing in mini cannons.";
+				mes "She is a fellow Geneticist, specializing in mini cannons.";
 				mes "Go take a look at her experiment results.";
 				mes "Could you give this message to her? Tell her to conduct her experiments quietly.";
 				delitem 6273,1;
 				set job_gen,62;
 				changequest 2215,2216;
-				if (checkquest(2209) == 1){
-					erasequest 2209;
-				}
-				if (checkquest(2210) == 1){
-					erasequest 2210;
-				}
-				if (checkquest(2211) == 1){
-					erasequest 2211;
-				}
-				if (checkquest(2212) == 1){
-					erasequest 2212;
-				}
-				if (checkquest(2213) == 1){
-					erasequest 2213;
-				}
-				if (checkquest(2214) == 1){
-					erasequest 2214;
-				}
+				if (checkquest(2209) == 1) erasequest 2209;
+				if (checkquest(2210) == 1) erasequest 2210;
+				if (checkquest(2211) == 1) erasequest 2211;
+				if (checkquest(2212) == 1) erasequest 2212;
+				if (checkquest(2213) == 1) erasequest 2213;
+				if (checkquest(2214) == 1) erasequest 2214;
 				close;
 			}
 				specialeffect EF_SPELLBREAKER;
 				specialeffect EF_PHARMACY_FAIL;
 				mes "[Devries]";
-				mes "Uh oh! You failed, Bubbles";
-				mes "it did not grow at all, it's withered already.";
-				mes "Go and redo the experiment!";
+				mes "Uh oh! You failed, Popo.";
+				mes "It didn't grow at all, it's withered already.";
+				mes "Go and start over!";
 				delitem 6272,1;
 				set job_gen,7;
-				if (checkquest(2209) == 1){
-					erasequest 2209;
-				}
-				if (checkquest(2210) == 1){
-					erasequest 2210;
-				}
-				if (checkquest(2211) == 1){
-					erasequest 2211;
-				}
-				if (checkquest(2212) == 1){
-					erasequest 2212;
-				}
-				if (checkquest(2213) == 1){
-					erasequest 2213;
-				}
-				if (checkquest(2214) == 1){
-					erasequest 2214;
-				}
+				if (checkquest(2209) == 1) erasequest 2209;
+				if (checkquest(2210) == 1) erasequest 2210;
+				if (checkquest(2211) == 1) erasequest 2211;
+				if (checkquest(2212) == 1) erasequest 2212;
+				if (checkquest(2213) == 1) erasequest 2213;
+				if (checkquest(2214) == 1) erasequest 2214;
 				close;
 		}else if ((job_gen > 61) && (job_gen < 76)){
 			if (checkquest(2223,2) == 2){
 				mes "[Devries]";
-				mes "Ah, hold on.";
-				mes "It looks like the mail has already arrived.";
+				mes "Oh, next; a second.";
+				mes "It seems that the mail's has arrived.";
 				set job_gen,76;
 				completequest 2223;
 				close;
 			}
 			mes "[Devries]";
-			mes "Whilst waiting for the Union's reply, go see Demi Calberine's experiment results.";
+			mes "Why don't you go up to Demi Calberine whilst waiting for an answer from the Union?";
 			close;
 		}else if (job_gen == 76){
 			mes "[Devries]";
-			mes "Bubbles!";
-			mes "Good news!";
+			mes "Popo!";
+			mes "I've got good news for you!";
 			next;
 			if ((Class == Job_Alchemist || Class == Job_Creator || Job_Baby_Alchemist) && ((JobLevel > 49) && (SkillPoint == 0) && (BaseLevel > 98))){
 				if (checkcart() == 0){
 					mes "[Devries]";
-					mes "Put that heavy and dirty cart away. On such a happy moment, that thing will just ruin it.";
+					mes "First take off that heavy and dirty cart, that doesn't suit you on this happy moment.";
 					close;
 				}
 				if(checkweight(1201,1) == 0){
@@ -563,34 +512,36 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 					close;
 				}
 				mes "[Devries]";
-				mes "The letter from the Alchemist Union has arrived.";
-				mes "Let me read it to you, Bubbles!";
+				mes "A letter has arrived from the Alchemist Union.";
+				mes "I'll read it to you, Popo!";
 				next;
-				mes "<Dear geneticist Devries:>";
-				mes "<We recently heard of your activities, many have heard of your news.>";
+				mes "<Dearest Miss Devries,>";
+				mes "<We are very aware of the brilliant activities you've shown lately.>";
+				next;
+				mes "<Miss. Devries>";
+				mes "This guy is also from my hometown.";
+				next;
+				mes "<I heard very good news that your research results are taking the step of commercial use.>";
+				mes "<I'm sure it will be a great inspiration for other Alchemists.>";
+				next;
+				mes "<Come to think of it, you've attached a paper?>";
+				mes "<It was a new plant which makes plants grow super-fast, discovered by an Alchemist named, "+strcharinfo(0)+">";
+				next;
+				mes "<Myself and many other Alchemists from the Alchemist union are taking great interest in this.>";
+				next;
+				mes "<We are looking forward to more volumes of study papers and outcomes, especially from other Geneticists who've heard this news.>";
+				next;
+				mes "<Miss. Devries>";
+				mes "<I think that "+strcharinfo(0)+" has enough ability and talent to be a Geneticist.>";
+				next;
+				mes "<Please tell "+strcharinfo(0)+" as soon as possible that we are expecting remarkable activities as a Geneticist from now on.>";
+				next;
+				mes "<The Alchemist Union is very proud of Miss Devries, Miss Demi Calberine and "+strcharinfo(0)+" who are excellent talented people.>";
+				mes "<We hope that you yield good fruits in the future as well.>";
 				next;
 				mes "[Devries]";
-				mes "This is from my hometown.";
-				next;
-				mes "<Many have heard of your experiment results and they have already been put into commercial use, we are very happy about this.>";
-				mes "<This will certainly help the field of alchemy.>";
-				next;
-				mes "<You also attached a research paper.>";
-				mes "<Including a experiment from an alchemist named "+strcharinfo(0)+". A new fast growing plant type that is as hard as a brick wall.>";
-				mes "Myself and other Alchemist Union Members studied this paper, and found it to be very interesting.>";
-				next;
-				mes "<Other geneticists are also interested in the use of this plant, we hope to see some related research papers in the near future.>";
-				next;
-				mes "<Devries>";
-				mes "<We think "+strcharinfo(0)+" has the qualifications to become a geneticist.>";
-				mes "<Please let him know, that we hope that he keeps up his outstanding work after becoming a geneticist.>";
-				next;
-				mes "<The Alchemist Union is proud of having talented people like Ms. Devries, Ms. Demi Calberine, and "+strcharinfo(0)+".>";
-				mes "<We highly anticipate the results of your next experiment.>";
-				next;
-				mes "[Devries]";
-				mes "Congratulations, Bubbles";
-				mes "From now on, you are a Geneticist!!";
+				mes "Congratulations, Popo!";
+				mes "You are a Geneticist from now on!!";
 				if(Class == Job_Baby_Alchemist){
 					jobchange Job_Baby_Genetic;
 				}
@@ -604,13 +555,13 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 				getitem 2795,1;
 				next;
 				mes "[Devries]";
-				mes "Just like in the Union's letter, I'm also looking forward to your future research.";
-				mes "Let's work hard! Strive to become the best geneticist!";
+				mes "Just like the word from the Union, I'm also looking forward to your awesome activities.";
+				mes "Let's try hard together! To become the best Geneticist!";
 				close;
 			}
 		}else if (job_gen == 77){
 			mes "[Devries]";
-			mes "Bubbles, want to join my Love Orleans club? It's a club for those that love cookies. Of course, we don't think of doing weird things with Charles Orleans.";
+			mes "Popo, do you want to join my Love Orleans club? It's a club for those that love cookies. Of course, we don't think of doing weird things with Charles Orleans.";
 			close;
 		}
 		mes "[Devries]";
@@ -618,28 +569,25 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 		close;;
 	}
 	mes "[Devries]";
-	mes "Am I that beautiful to you? Or why are you staring at me like that?";
+	mes "Am I that pretty to you? Why are you staring at me like that?";
 	close;
 }
 
 job3_gen01,83,72,3	script	Delivery Box#generic	111,{
-
 	mes "- There's a big box. -";
 	if (job_gen == 2){
 		next;
-		switch(select("Open it.:Check the address.:Do nothing.")){
+		switch(select("Open the box.:Check the address.:Do nothing.")){
 		case 1:
-			mes "- The box contains 6 bag of cookies -";
+			mes "- There are several cookie bags which are packed carefully in the box. -";
 			next;
-			switch(select("Take the cookies.:Do nothing.")){
-			case 1:
-				mes "- You took a bag of cookies from the box -";
+			if(select("Take out a cookie bag.:Do nothing.") == 1){
+				mes "- You've taken out a cookie bag out of the box. -";
 				set job_gen,3;
 				close;
-			case 2:
-				mes "You do nothing.";
-				close;
 			}
+			mes "You do nothing.";
+			close;
 		case 2:
 			mes "[From: Rune-Midgarts Kingdom, Prontera, Charles Orleans]";
 			mes "[Recipient: Schwaltzvalt Republic, Lighthalzen, Devries]";
@@ -653,11 +601,10 @@ job3_gen01,83,72,3	script	Delivery Box#generic	111,{
 }
 
 job3_gen01,12,56,3	script	Plant Guide#generic	111,{
-
 	mes "<The Easiest Alchemy in the World>";
 	mes "Written by Bob Ross.";
 	next;
-	switch(select("Animals:Plants:Minerals:Etc.")){
+	switch(select("Animals:Plants:Minerals:Etc")){
 	case 1:
 		mes "...Using animals in alchemy can easily be practiced by anyone.";
 		mes "You can put the animals that you want to use on the white tray, imagine the goal you want to make and then practice the alchemy.";
@@ -692,22 +639,19 @@ job3_gen01,12,56,3	script	Plant Guide#generic	111,{
 }
 
 job3_gen01,36,55,3	script	Bigibigi Grass#gen	844,{
-
 	if (job_gen == 7){
 		if (checkquest(2209) == -1 || checkquest(2209) == 0){
 			mes "- The size is quite big to be normal grass so it's called Bigibigi Grass. -";
 			next;
-			switch(select("Use as experiment sample.:Leave it alone.")){
-			case 1:
-				mes "- You have obtained Bigibigi Grass. -";
+			if(select("Use it as a material.:Do not use.") == 1){
+				mes "- You've acquired Bigibigi Grass. -";
 				setquest 2209;
 				close;
-			case 2:
-				mes "- This plant doesn't look suitable as an experiment sample. -";
-				close;
 			}
+			mes "- This plant doesn't look suitable as an experiment sample. -";
+			close;
 		}
-		mes "- You already have Bigibigi Grass. -";
+		mes "- You've already acquired Bigibigi Grass. -";
 		close;
 	}else if (job_gen == 6){
 		mes "Information related to this plant can be found in the Plant Guide in the cabinet.";
@@ -718,22 +662,19 @@ job3_gen01,36,55,3	script	Bigibigi Grass#gen	844,{
 }
 
 job3_gen01,36,45,3	script	Muka Tree#gen	844,{
-
 	if (job_gen == 7){
 		if (checkquest(2210) == -1 || checkquest(2210) == 0){
 			mes "- This is the Muka Tree which protects its delicate inside with sharp thorns. -";
 			next;
-			switch(select("Use as experiment sample.:Leave it alone.")){
-			case 1:
-				mes "- You have obtained some parts of Muka Tree.-";
+			if(select("Use it as a material.:Do not use.") == 1){
+				mes "- You've acquired some of the Muka Tree.-";
 				setquest 2210;
 				close;
-			case 2:
-				mes "- This plant doesn't look suitable as an experiment sample. -";
-				close;
 			}
+			mes "- This plant doesn't look suitable as an experiment sample. -";
+			close;
 		}
-		mes "- You already have Muka Tree. -";
+		mes "- You've already acquired Muka Tree. -";
 		close;
 	}else if (job_gen == 6){
 		mes "Information related to this plant can be found in the Plant Guide in the cabinet.";
@@ -744,22 +685,19 @@ job3_gen01,36,45,3	script	Muka Tree#gen	844,{
 }
 
 job3_gen01,42,55,3	script	Bogi Vine#gen	844,{
-
 	if (job_gen == 7){
 		if (checkquest(2211) == -1 || checkquest(2211) == 0){
 			mes "- This is a Bogi Vine which has a very fast growth speed. -";
 			next;
-			switch(select("Use as experiment sample.:Leave it alone.")){
-			case 1:
-				mes "- You have obtained some parts of Bogi Vine. -";
+			if(select("Use it as a material.:Do not use.") == 1){
+				mes "- You've acquired some of the Bogi Vine. -";
 				setquest 2211;
 				close;
-			case 2:
-				mes "- This plant doesn't look suitable as an experiment sample. -";
-				close;
 			}
+			mes "- This plant doesn't look suited to be used as a material. -";
+			close;
 		}
-		mes "- You already have Bogi Vine. -";
+		mes "- You've already acquired Bogi Vine. -";
 		close;
 	}else if (job_gen == 6){
 		mes "Information related to this plant can be found in the Plant Guide in the cabinet.";
@@ -770,22 +708,19 @@ job3_gen01,42,55,3	script	Bogi Vine#gen	844,{
 }
 
 job3_gen01,30,58,3	script	Aolatura#gen	844,{
-
 	if (job_gen == 7){
 		if (checkquest(2212) == -1 || checkquest(2212) == 0){
 			mes "- This is known to blossom then thousand flowers as it only blooms once per lifetime. -";
 			next;
-			switch(select("Use as experiment sample.:Leave it alone.")){
-			case 1:
-				mes "- You have obtained Aolatura. -";
+			if(select("Use it as a material.:Do not use.") == 1){
+				mes "- You've acquired Aolatura. -";
 				setquest 2212;
 				close;
-			case 2:
-				mes "- This plant doesn't look suitable as an experiment sample. -";
-				close;
 			}
+			mes "- This plant doesn't look suitable as an experiment sample. -";
+			close;
 		}
-		mes "- You already have Aolatura. -";
+		mes "- You've already acquired Aolatura. -";
 		close;
 	}else if (job_gen == 6){
 		mes "Information related to this plant can be found in the Plant Guide in the cabinet.";
@@ -796,22 +731,19 @@ job3_gen01,30,58,3	script	Aolatura#gen	844,{
 }
 
 job3_gen01,30,63,3	script	Congra#gen	844,{
-
 	if (job_gen == 7){
 		if (checkquest(2213) == -1 || checkquest(2213) == 0){
 			mes "- It's a plant that has a big and solid stem with enormous leaves. -";
 			next;
-			switch(select("Use as experiment sample.:Leave it alone.")){
-			case 1:
-				mes "- You have obtained Congra. -";
+			if(select("Use it as a material.:Do not use.") == 1){
+				mes "- You've acquired Congra. -";
 				setquest 2213;
 				close;
-			case 2:
-				mes "- This plant doesn't look suitable as an experiment sample. -";
-				close;
 			}
+			mes "- This plant doesn't look suitable as an experiment sample. -";
+			close;
 		}
-		mes "- You already have Congra. -";
+		mes "- You've already acquired Congra. -";
 		close;
 	}else if (job_gen == 6){
 		mes "Information related to this plant can be found in the Plant Guide in the cabinet.";
@@ -822,22 +754,19 @@ job3_gen01,30,63,3	script	Congra#gen	844,{
 }
 
 job3_gen01,32,38,3	script	Sticky Grass#gen	844,{
-
 	if (job_gen == 7){
 		if (checkquest(2214) == -1 || checkquest(2214) == 0){
 			mes "- I may not know the name but it's sticky and can stick to just about anything. -";
 			next;
-			switch(select("Use as experiment sample.:Leave it alone.")){
-			case 1:
-				mes "- You have obtained Sticky Grass -";
+			if(select("Use it as a material.:Do not use.") == 1){
+				mes "- You've acquired Sticky Grass -";
 				setquest 2214;
 				close;
-			case 2:
-				mes "- This plant doesn't look suitable as an experiment sample. -";
-				close;
 			}
+			mes "- This plant doesn't look suitable as an experiment sample. -";
+			close;
 		}
-		mes "- You already have Sticky Grass -";
+		mes "- You've already acquired Sticky Grass -";
 		close;
 	}else if (job_gen == 6){
 		mes "Information related to this plant can be found in the Plant Guide in the cabinet.";
@@ -848,91 +777,45 @@ job3_gen01,32,38,3	script	Sticky Grass#gen	844,{
 }
 
 job3_gen01,7,50,3	script	Testing Table#gen	844,{
-
 	if (job_gen == 7){
-		mes "- This is a testing table with a lot of tools. I think I can study the combinations here with plants. -";
+		mes "- This is a testing table with a lot of equipemnt. I think I can study the combinations here with plants. -";
 		next;
-		switch(select("Conduct experiment.:Don't conduct experiment.")){
-		case 1:
+		if(select("Conduct an experiment.:Do not conduct an experiment.") == 1){
 			if ((checkquest(2209) == -1 || checkquest(2209) == 0) && (checkquest(2210) == -1 || checkquest(2210) == 0) && (checkquest(2211) == -1 || checkquest(2211) == 0) && (checkquest(2212) == -1 || checkquest(2212) == 0) && (checkquest(2213) == -1 || checkquest(2213) == 0) && (checkquest(2214) == -1 || checkquest(2214) == 0)){
 				mes "["+strcharinfo(0)+"]";
-				mes "Hmm, I need to bring a plant sample to experiment with.";
+				mes "Hmm, I need to gather plant materials first.";
 				close;
 			}
-			mes "What do you want to do with the prepared plant sample?";
+			mes "What shall I do with these plant materials?";
 			next;
-			switch(select("Break:Crush:Smash")){
-			case 1:
-				break;
-			case 2:
-				break;
-			case 3:
-				break;
-			}
+			select("Break.:Smash into little pieces.:Crush.");
 			while(1){
-				if (.@fortune == 7){
-					break;
-				}else{
-					mes "What next?";
-					next;
-					set .@rand,rand(1,2);
-					if (.@rand == 1){
-						switch(select("Burn into Ashes.:Dip in distilled Water.:Cook it with Steam.")){
-						case 1:
-							break;
-						case 2:
-							break;
-						case 3:
-							break;
-						}
-					}
-					switch(select("Put it into a Testing Flask and Shake.:Cool it down.:Warm it up.")){
-					case 1:
-						break;
-					case 2:
-						break;
-					case 3:
-						break;
-					}
-					set .@fortune,rand(1,7);
-				}
+				if (.@fortune == 7) break;
+				mes "What shall I do now?";
+				next;
+				set .@rand,rand(1,2);
+				if (rand(1,2) == 1) select("Burn into Ashes.:Dip innto distilled water.:Steam.");
+				else select("Put it into a Testing Flask and Shake.:Freeze.:Heat.");
+				set .@fortune,rand(1,7);
 			}
-			mes "What next?";
+			mes "What shall I do now?";
 			next;
-			menu "Inject it into a Testing Seed.",-;
+			select("Inject it into a testing seed.");
 			mes "Which Seed do you want to use?";
 			next;
-			switch(select("Testing Seed Type A:Testing Seed Type B:Testing Seed Type C:Testing Seed Type D")){
-			case 1:
-				break;
-			case 2:
-				break;
-			case 3:
-				break;
-			case 4:
-				break;
-			}
-			mes "Put the seed into the prepared sample.";
+			select("Testing Seed - Type A:Testing Seed - Type B:Testing Seed - Type C:Testing Seed Type - D");
+			mes "I've put the prepared materials into the chosen testing seed.";
 			next;
 			mes "["+strcharinfo(0)+"]";
-			mes "Okay, now I need to bring this seed to Devries!";
+			mes "Good. Now I can let Miss Devries take a look at this seed!";
 			if ((checkquest(2209) == -1 || checkquest(2209) == 0) && (checkquest(2210) == -1 || checkquest(2210) == 0) && (checkquest(2211) == -1 || checkquest(2211) == 0)){
 				set job_gen,61;
 				getitem 6272,1;
 				close;
 			}
-			if (checkquest(2209) == 1){
-				set job_gen,job_gen+10;
-			}
-			if (checkquest(2210) == 1){
-				set job_gen,job_gen+10;
-			}
-			if (checkquest(2211) == 1){
-				set job_gen,job_gen+10;
-			}
+			if (checkquest(2209) == 1 || checkquest(2210) == 1 || checkquest(2211) == 1) set job_gen,job_gen+10;
 			set .@score,job_gen + JobLevel - 20;
-			set .@result,rand(1,100);
-			if (.@result < .@score){
+			if (rand(1,100) < .@score){
 				set job_gen,60;
 				getitem 6273,1;
 				close;
@@ -940,190 +823,173 @@ job3_gen01,7,50,3	script	Testing Table#gen	844,{
 			set job_gen,61;
 			getitem 6272,1;
 			close;
-		case 2:
-			mes "- It's not the time to start the experiment yet. -";
-			close;
 		}
+		mes "- It's not the time to start an experiment. -";
+		close;
 	}else if ((job_gen > 7) && (job_gen < 60)){
-		mes "- It looks like there is a problem with the experiment. I better redo the experiment. -";
+		mes "- It looks like the experiment has failed. I better start over. -";
 		set job_gen,7;
-		if (countitem(6273) > 0){
-			delitem 6273,1;
-		}
-		if (countitem(6272) > 0){
-			delitem 6272,1;
-		}
-		if (checkquest(2209) == 1){
-			erasequest 2209;
-		}
-		if (checkquest(2210) == 1){
-			erasequest 2210;
-		}
-		if (checkquest(2211) == 1){
-			erasequest 2211;
-		}
-		if (checkquest(2212) == 1){
-			erasequest 2212;
-		}
-		if (checkquest(2213) == 1){
-			erasequest 2213;
-		}
-		if (checkquest(2214) == 1){
-			erasequest 2214;
-		}
+		if (countitem(6273) > 0) delitem 6273,1;
+		if (countitem(6272) > 0) delitem 6272,1;
+		if (checkquest(2209) == 1) erasequest 2209;
+		if (checkquest(2210) == 1) erasequest 2210;
+		if (checkquest(2211) == 1) erasequest 2211;
+		if (checkquest(2212) == 1) erasequest 2212;
+		if (checkquest(2213) == 1) erasequest 2213;
+		if (checkquest(2214) == 1) erasequest 2214;
 		close;
 	}else if (job_gen == 60 || job_gen == 61){
-		mes "- It looks like I only need to bring the created seed to Devries now. -";
+		mes "- It looks like I need to let Miss Devries take a look at this seed!";
 		close;
 	}
-	mes "- This is a testing table with a lot of tools. I think I can study the combinations here with plants. -";
+	mes "- This is a testing table with a lot of equipment. I think I can study the combinations here with plants. -";
 	close;
 }
 
 //npc "job3_gen01" "Super Cultivator#gen" CLEAR_NPC 21 67 3 0 0
 
 job3_gen01,91,48,3	script	Demi Calberine#gen	982,{
-
 	if (job_gen < 62){
 		mes "[Demi Calberine]";
 		mes "Hmm~ Where'd that bolt go?";
 		close;
 	}else if (job_gen == 62){
 		mes "[Demi Calberine]";
-		mes "I want to sit on a blue cart~";
-		mes "And make a beautiful picture of me with my cannon~";
-		mes "With my love~";
-		mes "Shot forever~?";
+		mes "Oh that blue cart~";
+		mes "Load picture-like cannon~";
+		mes "With my lovely darling~";
+		mes "Wanna shoot cannon foereva~~";
 		next;
 		mes "[Demi Calberine]";
-		mes "Hmm~ Where'd that bolt go?";
-		mes "Why aren't their enough bolts? Didn't I just order a bunch yesterday?";
+		mes "Er~ Where's the bolt?";
+		mes "Why aren't their enough screws? Didn't I order new ones just recently?";
 		next;
-		menu "Hi",-;
+		select("Hello~?");
 		mes "[Demi Calberine]";
-		mes "Huh~?";
-		mes "What...who are you?";
-		next;
-		mes "[Demi Calberine]";
-		mes "Ah, no, this is not the time to talk!";
-		mes "Uh! Come help me!";
+		mes "Oh, my~?";
+		mes "When did you.. Who are you?";
 		next;
 		mes "[Demi Calberine]";
-		mes "A customer ordered a cart with a mini cannon that I have to finish today, but I can't find the parts!";
+		mes "Oh, my god!";
+		mes "Hey! Please help me!";
 		next;
 		mes "[Demi Calberine]";
-		mes "Er Ah~I think they fell somewhere around here...";
-		mes "I only need 12 pieces! I need to work on other parts as well... Please help me find them!";
+		mes "I need to complete and ordered mini cannon today, but I can't find the parts!";
+		next;
+		mes "[Demi Calberine]";
+		mes "Ugh~ I think they dropped around here somewhere.";
+		mes "I only need 12! I need to put the other parts together first.. Please could you help me?!";
 		changequest 2216,2217;
 		set job_gen,63;
 		close;
 	}else if ((job_gen > 62) && (job_gen < 74)){
 		mes "[Demi Calberine]";
 		mes "Ah, oh no, oh no~~~";
-		mes "Did you find the missing pieces yet? No, not yet? You promised, please hurry up!";
+		mes "Did you find the parts? No, not yet? You promised, please hurry up!";
 		close;
 	}else if (job_gen == 74){
 		mes "[Demi Calberine]";
-		mes "This cart is low on power, maybe if install this here...";
+		mes "With this cart, the firepower won't do well, then let's put it in this way...";
 		next;
-		menu "I found the pieces.",-;
+		select("I've got the parts.");
 		mes "[Demi Calberine]";
-		mes "Ah, you scared me!";
-		mes "Why do you like to scare people???";
-		mes "Are these my missing bolts?";
-		mes "Where did you find them?";
+		mes "Oh, gosh!";
+		mes "You scared me to death!!";
+		mes "Oh, are these my lost screws and bolts?";
+		mes "Where did you find these?";
 		next;
-		menu "Didn't you ask me to go find them?",-;
+		select("You asked me to find them!");
 		mes "[Demi Calberine]";
-		mes "Oh? Oh?";
-		mes "Really? Hehehehehe.";
-		mes "Must be my bad memory.";
-		next;
-		mes "[Demi Calberine]";
-		mes "Wait a minute.";
-		mes "Now that I have these pieces, I should be able to finish it now.";
-		next;
-		mes "- Ke Ke Ke Ke -";
+		mes "Oh?, really?";
+		mes "Did I? Hohohohoho.";
+		mes "I don't even know where my mind is.";
 		next;
 		mes "[Demi Calberine]";
-		mes "Very good, the mini cannon is installed on the cart...let's take it for a test shall we?";
+		mes "Please next; a moment.";
+		mes "I will be done quickly with these.";
 		next;
-		mes "- Chi... -";
-		next;
-		mes "- Bang! Bang! Bang! Bang! -";
+		mes "- Snap Snap Snap -";
 		next;
 		mes "[Demi Calberine]";
-		mes "Good! Success!";
-		mes "Phew, thanks to you, I was able to finish this on time.";
+		mes "Okay, I've connected the cannon to the cart... Now shall we test the performance?";
+		next;
+		mes "- Sizlle... -";
+		next;
+		mes "- Pop! Pop! Pop! Pop! -";
+		next;
+		mes "[Demi Calberine]";
+		mes "Great! Success!";
+		mes "Whew. You've been a lot of help to me.";
 		mes "Thank you very much.";
 		next;
 		mes "[Demi Calberine]";
-		mes "Ah, what's do you need";
-		mes "Do you want to make a custom order or something?";
+		mes "Oh, by the way what made you come here?";
+		mes "Did you come here to order something";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "I'm a geneticist apprentice.";
-		mes "I heard Demi Calberine was obsessed with mini cannons.";
+		mes "I'm a Geneticist applicant.";
+		mes "I heard that you were very knowledgeable about portable mini cannons and stuff.";
 		next;
 		mes "[Demi Calberine]";
-		mes "Yes, I can make many types of mini cannons.";
-		mes "Recently a lot of people want me to modify their carts, I installed new features such as mini cannons.";
+		mes "Yep, I deal with many kinds of cannons.";
+		mes "Nowadays, there are those who want to remodel their carts, so I've been installing several additional functions such as mini cannons to their carts.";
 		next;
 		mes "["+strcharinfo(0)+"]";
-		mes "Cart modification?";
+		mes "Cart remodeling?";
 		next;
 		mes "[Demi Calberine]";
-		mes "Yes, when you are going downhill, don't you want to sit on the cart and slide down?";
-		mes "Don't you feel bored dragging the cart everywhere?";
+		mes "Yes, didn't you want to race out when you went downhill?";
+		mes "Or haven't you ever thought that it was so boring dragging around that plain old cart?";
 		next;
 		mes "[Demi Calberine]";
-		mes "The cart is no longer just for item storage.";
-		mes "Installing a mini cannon on the cart, will help you attack your enemies, and increases your power.";
+		mes "Carts are no longer just a wagon for storage.";
+		mes "You could hang a cannon on a cart to make it help you boost your attack power.";
 		next;
 		mes "[Demi Calberine]";
-		mes "Devries below seems to be conducting playhouse like experiments.";
-		mes "I cannot understand why experiments like that are so popular, tsk.";
+		mes "Miss Devries seems to be studying childish experiments downstairs.";
+		mes "I don't understand why those research papers get so popular.";
 		emotion e_rice;
 		next;
 		mes "[Demi Calberine]";
-		mes "Please look at this mini cannon.";
-		mes "As big as the size of my palm, it's the smallest and lightest cannon in the world.";
-		mes "Don't you think it's cute? Eh~";
+		mes "See this mini-mini cannon.";
+		mes "This is the smallest and the lightest cannon in the world.";
+		mes "This is what I made but isn't this so cute? Yipee~";
 		emotion e_awsm;
 		next;
-		menu "Can my cart be modified too?",-;
+		select("Can I get my cart remodeled?");
 		mes "[Demi Calberine]";
-		mes "Sorry, only geneticists can have their carts modified.";
-		mes "This is a rule from the Alchemy Union, I have no choice in the matter.";
-		next;
-		mes "[Demi Calberine]";
-		mes "But don't be disappointed.";
-		mes "Just become a geneticist? Hehehe.";
+		mes "Unfortunately, the cart remodeling is only allowed for Geneticists.";
+		mes "It's a rule from the Alchemist Union, so I can't help it.";
 		next;
 		mes "[Demi Calberine]";
-		mes "And not all carts can be modified.";
-		mes "They have to meet a certain standard.";
+		mes "But don't get disappointed.";
+		mes "You can be a Geneticist too!";
+		mes "Hohoho.";
 		next;
 		mes "[Demi Calberine]";
-		mes "Before becoming a geneticist, please practice your Cart Revolution skill.";
-		mes "You need your muscles and cart movement to be in perfect balance.";
+		mes "And what's more, you can't so the cart remodeling to just any cart.";
+		mes "It can only be done on quality certified carts that've been polished for a long time.";
 		next;
 		mes "[Demi Calberine]";
-		mes "If you want, ^FF0000I can show you a nice area to practise in.^000000";
-		mes "^FF0000Though I don't like her^000000, it is a nice place, hehe.";
+		mes "You should practice your cart skills whenever you have time until you become a Geneticist.";
+		mes "Till your muscles are dealing with your cart in powerful harmony and your cart moves beautifully,";
 		next;
 		mes "[Demi Calberine]";
-		mes "With this oppurtunity, you just need to have fun practising your Cart Revolution skill.";
-		mes "Use your cart to kill ^FF0000100 Poison Spores^000000, watch your fatique, and familiarize yourself with the cart.";
+		mes "If you want, ^FF0000I'll show you a good training spot.^000000";
+		mes "^FF0000TDevries won't like it much^000000, but it's the best place. Haha.";
 		next;
 		mes "[Demi Calberine]";
-		mes "Okay, I need to start work on the next order.";
-		mes "If you want to practice, come back here.";
-		mes "I will help to modify your cart anytime.";
+		mes "How about you swing your cart around as practice?";
+		mes "When you swing your cart at least ^FF0000100^000000 times, you can get rid of stress and the cart will be polished up enough.";
 		next;
-		mes "- KaBoom -";
+		mes "[Demi Calberine]";
+		mes "Well, I need to get to work for the next order.";
+		mes "Come and find me whenever you need training.";
+		mes "I'll help you out whenever you need your cart remodeled.";
 		next;
-		mes "- What happened? The floor seems to have disappeared. -";
+		mes "- Rattle -";
+		next;
+		mes "- What's this? I feel like the floor is missing somewhere. -";
 		set job_gen,75;
 		changequest 2217,2223;
 		close2;
@@ -1132,30 +998,28 @@ job3_gen01,91,48,3	script	Demi Calberine#gen	982,{
 	}else if (job_gen == 75){
 		if (checkquest(2223,2) == 2){
 			mes "[Demi Calberine]";
-			mes "It looks like Devries found out that I put you into her mushroom cage.";
-			mes "Just look at her face, nice. Such anger.";
+			mes "It seem Miss Devries found out that I put you in her spore pen.";
+			mes "It's funny when you look at her face. After you've killed all those spores.";
 			close;
 		}
 		mes "[Demi Calberine]";
-		mes "Er ah, didn't you finish practising?";
-		mes "Do you want to enter the mushroom cage?";
+			mes "Sigh, haven't you finished practicing?";
+			mes "Do you want to enter the spore pen?";
 		next;
-		switch(select("Yes:No")){
-		case 1:
+		if(select("Yes.:No.") == 1){
 			mes "[Demi Calberine]";
-			mes "have fun swinging your cart around~";
+			mes "Have fun swinging your cart around~";
 			close2;
 			warp "job3_gen01",23,32;
 			end;
-		case 2:
-			mes "[Demi Calberine]";
-			mes "Hm, too bad. I want to see Devries's angry face.";
-			close;
 		}
+		mes "[Demi Calberine]";
+		mes "What a shame! I wanted to see Miss Devries's angry face.";
+		close;
 	}else if (job_gen > 75){
 		mes "[Demi Calberine]";
-		mes "It looks like Devries found out that I put you into her mushroom cage.";
-		mes "Just look at her face, nice. Such anger.";
+		mes "It seem Miss Devries found out that I put you in her spore pen.";
+		mes "It's funny when you look at her face. After you've killed all those spores.";
 		close;
 	}
 	mes "[Demi Calberine]";
@@ -1165,7 +1029,7 @@ job3_gen01,91,48,3	script	Demi Calberine#gen	982,{
 
 job3_gen01,84,45,3	script	Scattered Stuff#gen1	111,{
 	goto OnDetails;
-end;
+	end;
 
 OnInit:
 	enablenpc "Scattered Stuff#gen1";
@@ -1173,15 +1037,15 @@ OnInit:
 	
 OnDetails:
 	if ((job_gen > 62) && (job_gen < 74)){
-		mes "- There is stuff scattered everywhere, what a mess in the lab. -";
+		mes "- There are so many scattered things on the floor that the lab is in chaos -";
 		next;
-		mes "- You found some small pieces of metal. -";
+		mes "- You found a little metal fragment. -";
 		set job_gen,job_gen+1;
 		disablenpc "Scattered Stuff#gen1";
 		initnpctimer;
 		close;
 	}else if (job_gen == 74){
-		mes "- You have collected all the parts. -";
+		mes "- I think I've gathered all of the parts. -";
 		close;
 	}
 	end;
@@ -1194,7 +1058,7 @@ OnTimer7000:
 
 job3_gen01,77,41,3	script	Scattered Stuff#gen2	111,{
 	goto OnDetails;
-end;
+	end;
 
 OnInit:
 	enablenpc "Scattered Stuff#gen2";
@@ -1202,15 +1066,15 @@ OnInit:
 
 OnDetails:
 	if ((job_gen > 62) && (job_gen < 74)){
-		mes "- There is stuff scattered everywhere, what a mess in the lab. -";
+		mes "- There are so many scattered things on the floor that the lab is in chaos -";
 		next;
-		mes "- You found some small pieces of metal. -";
+		mes "- You found a little metal fragment. -";
 		set job_gen,job_gen+1;
 		disablenpc "Scattered Stuff#gen2";
 		initnpctimer;
 		close;
 	}else if (job_gen == 74){
-		mes "- You have collected all the parts. -";
+		mes "- I think I've gathered all of the parts. -";
 		close;
 	}
 	end;
@@ -1223,7 +1087,7 @@ OnTimer7000:
 
 job3_gen01,78,57,3	script	Scattered Stuff#gen3	111,{
 	goto OnDetails;
-end;
+	end;
 
 OnInit:
 	enablenpc "Scattered Stuff#gen3";
@@ -1231,15 +1095,15 @@ OnInit:
 
 OnDetails:
 	if ((job_gen > 62) && (job_gen < 74)){
-		mes "- There is stuff scattered everywhere, what a mess in the lab. -";
+		mes "- There are so many scattered things on the floor that the lab is in chaos -";
 		next;
-		mes "- You found some small pieces of metal. -";
+		mes "- You found a little metal fragment. -";
 		set job_gen,job_gen+1;
 		disablenpc "Scattered Stuff#gen3";
 		initnpctimer;
 		close;
 	}else if (job_gen == 74){
-		mes "- You have collected all the parts. -";
+		mes "- I think I've gathered all of the parts. -";
 		close;
 	}
 	end;
@@ -1252,7 +1116,7 @@ OnTimer7000:
 
 job3_gen01,89,59,3	script	Scattered Stuff#gen4	111,{
 	goto OnDetails;
-end;
+	end;
 
 OnInit:
 	enablenpc "Scattered Stuff#gen4";
@@ -1260,15 +1124,15 @@ OnInit:
 
 OnDetails:	
 	if ((job_gen > 62) && (job_gen < 74)){
-		mes "- There is stuff scattered everywhere, what a mess in the lab. -";
+		mes "- There are so many scattered things on the floor that the lab is in chaos -";
 		next;
-		mes "- You found some small pieces of metal. -";
+		mes "- You found a little metal fragment. -";
 		set job_gen,job_gen+1;
 		disablenpc "Scattered Stuff#gen4";
 		initnpctimer;
 		close;
 	}else if (job_gen == 74){
-		mes "- You have collected all the parts. -";
+		mes "- I think I've gathered all of the parts. -";
 		close;
 	}
 	end;
@@ -1281,7 +1145,7 @@ OnTimer7000:
 
 job3_gen01,90,51,3	script	Scattered Stuff#gen5	111,{
 	goto OnDetails;
-end;
+	end;
 
 OnInit:
 	enablenpc "Scattered Stuff#gen5";
@@ -1289,15 +1153,15 @@ OnInit:
 
 OnDetails:
 	if ((job_gen > 62) && (job_gen < 74)){
-		mes "- There is stuff scattered everywhere, what a mess in the lab. -";
+		mes "- There are so many scattered things on the floor that the lab is in chaos -";
 		next;
-		mes "- You found some small pieces of metal. -";
+		mes "- You found a little metal fragment. -";
 		set job_gen,job_gen+1;
 		disablenpc "Scattered Stuff#gen5";
 		initnpctimer;
 		close;
 	}else if (job_gen == 74){
-		mes "- You have collected all the parts. -";
+		mes "- I think I've gathered all of the parts. -";
 		close;
 	}
 	end;
@@ -1318,15 +1182,15 @@ OnInit:
 
 OnDetails:
 	if ((job_gen > 62) && (job_gen < 74)){
-		mes "- There is stuff scattered everywhere, what a mess in the lab. -";
+		mes "- There are so many scattered things on the floor that the lab is in chaos -";
 		next;
-		mes "- You found some small pieces of metal. -";
+		mes "- You found a little metal fragment. -";
 		set job_gen,job_gen+1;
 		disablenpc "Scattered Stuff#gen6";
 		initnpctimer;
 		close;
 	}else if (job_gen == 74){
-		mes "- You have collected all the parts. -";
+		mes "- I think I've gathered all of the parts. -";
 		close;
 	}
 	end;
@@ -1339,7 +1203,7 @@ OnTimer7000:
 
 job3_gen01,74,45,3	script	Scattered Stuff#gen7	111,{
 	goto OnDetails;
-end;
+	end;
 
 OnInit:
 	enablenpc "Scattered Stuff#gen7";
@@ -1347,15 +1211,15 @@ OnInit:
 
 OnDetails:
 	if ((job_gen > 62) & (job_gen < 74)){
-		mes "- There is stuff scattered everywhere, what a mess in the lab. -";
+		mes "- There are so many scattered things on the floor that the lab is in chaos -";
 		next;
-		mes "- You found some small pieces of metal. -";
+		mes "- You found a little metal fragment. -";
 		set job_gen,job_gen+1;
 		disablenpc "Scattered Stuff#gen7";
 		initnpctimer;
 		close;
 	}else if (job_gen == 74){
-		mes "- You have collected all the parts. -";
+		mes "- I think I've gathered all of the parts. -";
 		close;
 	}
 	end;
@@ -1367,85 +1231,73 @@ OnTimer7000:
 }
 
 job3_gen01,18,39,3	script	Warning#gen	837,{
-
 	mes "= Warning =";
 	mes "If you bully my spores, I'll scream!!!";
 	if (job_gen > 74){
 		next;
-		switch(select("Get out of the cage.:Stay here.")){
-		case 1:
-			mes "- I better get out before Devries catches me. -";
+		if(select("Get out of the pen.:Stay still.") == 1){
+			mes "- I'd better get out before I get caught by Miss Devries. -";
 			close2;
 			warp "job3_gen01",21,38;
 			end;
-		case 2:
-			mes "- Action cancelled. -";
-			close;
 		}
+		mes "- I decide to stay still. -";
+		close;
 	}
 	close;
 }
 
 job3_gen01,80,12,1	script	Stacked Magazines#gen	111,{
-
 	mes "- 'Monthly Bang!' magazines are piled up in disorder. -";
 	close;
 }
 
 job3_gen01,83,20,1	script	Bed#gen	111,{
-
 	mes "- A checker patterned blanket set which looks like it was picked carefully is too good for this dirty bed. -";
 	close;
 }
 
 job3_gen01,85,25,1	script	Opened Book#gen	111,{
-
 	mes "< Do you want to have my pretty room? Do you have enough zeny? Is there enough room? Run to the Lighthalzen Department Store right away and get the most high-end wall papers and interior accessories! >";
 	next;
-	mes "< Luxurious candles that'll lighten up your room, a huge golden mirror that every lady owns, you can not miss any of them! >";
+	mes "< Luxurious candles that'll lighten up your room, a huge golden mirror that every lady owns, you cannot miss any of them! >";
 	close;
 }
 
 job3_gen01,81,81,0	script	dbroom	139,2,2,{
-
 OnTouch:
 	mes "- It's a room that looks like a storehouse, thanks to so many parcels piled up in the room. -";
 	close;
 }
 
 job3_gen01,7,59,0	script	from1to2gen	45,1,1,{
-
 OnTouch:
 	warp "job3_gen01",72,52;
 	end;
 }
 
 job3_gen01,71,56,0	script	#from2to1gen	45,1,1,{
-
 OnTouch:
 	warp "job3_gen01",11,60;
 	end;
 }
 
 lighthalzen,52,132,0	script	lighttogen	45,1,1,{
-
 OnTouch:
 	warp "job3_gen01",45,50;
 	end;
 }
 
 job3_gen01,49,49,0	script	gentolight	45,1,1,{
-
 OnTouch:
 	warp "lighthalzen",54,132;
 	end;
 }
 
 job3_gen01,24,32,0	script	Devries Vision	139,2,2,{
-
 OnTouch:
 	if (checkquest(2223,2) == 2){
-		mapannounce "job3_gen01","Devries: Huh? Did a cat got through the mushroom cage?",bc_map;
+		mapannounce "job3_gen01","Devries: Whoa? Was there a lost kitty in the spore pen?",bc_map;
 		warp "job3_gen01",21,38;
 	}
 	end;
