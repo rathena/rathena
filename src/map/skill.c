@@ -2616,8 +2616,29 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce->val2] == bl->id)
 			) && check_distance_bl(bl, d_bl, sce->val3) )
 		{
-			clif_damage(d_bl, d_bl, gettick(), 0, 0, damage, 0, 0, 0);
-			status_fix_damage(NULL, d_bl, damage, 0);
+			/**
+			 * Check for devotion and change targetted dmg.
+			 * [d_bl = paladin; bl = player; src = source of dmg]
+			 **/
+			bool devo_flag = false; /* false = paladin devoing; true = player */
+			if ( src )
+			{
+				struct status_change *tsc;
+				tsc = status_get_sc(src);
+
+				/* Per official standards, following skills should reflect at the bl */
+				if( (tsc->data[SC_KAITE] && attack_type == BF_MAGIC) ||
+					(tsc->data[SC_REFLECTDAMAGE] && attack_type != BF_MAGIC)
+				  )
+					devo_flag = true;
+			}
+
+			clif_damage(
+				( (devo_flag) ? bl:d_bl), 
+				( (devo_flag) ? bl:d_bl), gettick(), 0, 0, damage, 0, 0, 0);
+			status_fix_damage(
+				( (devo_flag) ? bl:NULL), 
+				( (devo_flag) ? bl:d_bl), damage, 0, 0);
 		}
 		else {
 			status_change_end(bl, SC_DEVOTION, INVALID_TIMER);
