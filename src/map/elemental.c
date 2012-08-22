@@ -605,14 +605,14 @@ static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_
 		target = map_id2bl(ed->ud.target);
 		
 		if( !target )
-			map_foreachinrange(elemental_ai_sub_timer_activesearch, &ed->bl, ed->db->range2, BL_CHAR, ed, &target, status_get_mode(&ed->bl));
+			map_foreachinrange(elemental_ai_sub_timer_activesearch, &ed->bl, view_range, BL_CHAR, ed, &target, status_get_mode(&ed->bl));
 		
 		if( !target ) { //No targets available.
 			elemental_unlocktarget(ed);
 			return 1;
 		}
 		
-		if( battle_check_range(&ed->bl,target,ed->db->range2) && rnd()%100 < 2 ) { // 2% chance to cast attack skill.
+		if( battle_check_range(&ed->bl,target,view_range) && rnd()%100 < 2 ) { // 2% chance to cast attack skill.
 			if(	elemental_action(ed,target,tick) )
 				return 1;
 		}
@@ -786,7 +786,6 @@ int read_elemental_skilldb(void) {
 		skillmode = atoi(str[3]);
 		if( skillmode < EL_SKILLMODE_PASIVE || skillmode > EL_SKILLMODE_AGGRESSIVE ) {
 			ShowError("read_elemental_skilldb : Skillmode out of range, line %d.\n",k);
-			skillmode = EL_SKILLMODE_PASIVE;
 			continue;
 		}
 		ARR_FIND( 0, MAX_ELESKILLTREE, i, db->skill[i].id == 0 || db->skill[i].id == skillid );

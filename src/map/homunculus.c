@@ -183,7 +183,6 @@ int merc_hom_calc_skilltree(struct homun_data *hd)
 		}
 		
 		f = 1;
-		id = c = 0;
 	}
 	
 	c = hd->homunculus.class_ - HM_CLASS_BASE;

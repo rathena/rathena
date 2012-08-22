@@ -1928,7 +1928,7 @@ int skill_break_equip (struct block_list *bl, unsigned short where, int rate, in
 			j = sd->equip_index[i];
 			if (j < 0 || sd->status.inventory[j].attribute == 1 || !sd->inventory_data[j])
 				continue;
-			flag = 0;
+
 			switch(i) {
 				case EQI_HEAD_TOP: //Upper Head
 					flag = (where&EQP_HELM);
@@ -7383,7 +7383,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			i = skill_get_splash(skillid,skilllv);
 			if( skillid == LG_EARTHDRIVE ) {
 				int dummy = 1;
-				map_foreachinarea(skill_cell_overlap, src->m, src->x-i, src->y-i, src->x+i, src->y+i, BL_SKILL, LG_EARTHDRIVE, &dummy, src);
+				map_foreachinarea(skill_cell_overlap, src->m, src->x-i, src->y-i, src->x+i, src->y+i, BL_SKILL, LG_EARTHDRIVE, src);
 			}
 			map_foreachinrange(skill_area_sub, bl,i,BL_CHAR,
 				src,skillid,skilllv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
@@ -7760,8 +7760,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		if( status_isimmune(bl) || !tsc )
 			break;
 
-		if( flag&1 )
-		{
+		if( flag&1 ) {
 			if( bl->id == skill_area_temp[1] )
 				break; // Already work on this target
 
@@ -7769,24 +7768,18 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				status_change_end(bl,SC_STONE,INVALID_TIMER);
 			else
 				status_change_start(bl,SC_STONE,10000,skilllv,0,0,1000,(8+2*skilllv)*1000,2);
-		}
-		else
-		{
+		} else {
 			int rate = 40 + 8 * skilllv + ( sd? sd->status.job_level : 50 ) / 4;
 			// IroWiki says Rate should be reduced by target stats, but currently unknown
-			if( rnd()%100 < rate )
-			{ // Success on First Target
-				rate = 0;
+			if( rnd()%100 < rate ) { // Success on First Target
 				if( !tsc->data[SC_STONE] )
 					rate = status_change_start(bl,SC_STONE,10000,skilllv,0,0,1000,(8+2*skilllv)*1000,2);
-				else
-				{
+				else {
 					rate = 1;
 					status_change_end(bl,SC_STONE,INVALID_TIMER);
 				}
 
-				if( rate )
-				{
+				if( rate ) {
 					skill_area_temp[1] = bl->id;
 					map_foreachinrange(skill_area_sub,bl,skill_get_splash(skillid,skilllv),BL_CHAR,src,skillid,skilllv,tick,flag|BCT_ENEMY|1,skill_castend_nodamage_id);
 				}
@@ -9740,7 +9733,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 			int dummy = 1;
 			clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
 			i = skill_get_splash(skillid, skilllv);
-			map_foreachinarea(skill_cell_overlap, src->m, x-i, y-i, x+i, y+i, BL_SKILL, HW_GANBANTEIN, &dummy, src);
+			map_foreachinarea(skill_cell_overlap, src->m, x-i, y-i, x+i, y+i, BL_SKILL, HW_GANBANTEIN, src);
 		} else {
 			if (sd) clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
 			return 1;
@@ -10738,7 +10731,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 		}
 
 		if( range <= 0 )
-			map_foreachincell(skill_cell_overlap,src->m,ux,uy,BL_SKILL,skillid,&alive, src);
+			map_foreachincell(skill_cell_overlap,src->m,ux,uy,BL_SKILL,skillid, src);
 		if( !alive )
 			continue;
 
@@ -10867,7 +10860,6 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 				sg->val1 = (count<<16)|working;
 				
 				pc_setpos(sd,m,x,y,CLR_TELEPORT);
-				sg = src->group; // avoid dangling pointer (pc_setpos can cause deletion of 'sg')
 			}
 		} else if(bl->type == BL_MOB && battle_config.mob_warp&2) {
 			int m = map_mapindex2mapid(sg->val3);
@@ -11212,17 +11204,15 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 
 		case UNT_ELECTRICSHOCKER:
 			if( bl->id != ss->id ) {
-				int sec = skill_get_time2(sg->skill_id, sg->skill_lv);
 				if( status_get_mode(bl)&MD_BOSS )
 					break;
-				if( status_change_start(bl,type,10000,sg->skill_lv,sg->group_id,0,0,sec, 8) ) {
-					const struct TimerData* td = tsc->data[type]?get_timer(tsc->data[type]->timer):NULL;
-					if( td ) 
-						sec = DIFF_TICK(td->tick, tick);
+				if( status_change_start(bl,type,10000,sg->skill_lv,sg->group_id,0,0,skill_get_time2(sg->skill_id, sg->skill_lv), 8) ) {
+
 					map_moveblock(bl, src->bl.x, src->bl.y, tick);
 					clif_fixpos(bl);
-				} else
-					sec = 3000; //Couldn't trap it?
+				
+				}
+				
 				map_foreachinrange(skill_trap_splash, &src->bl, skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag, &src->bl, tick);
 				sg->unit_id = UNT_USED_TRAPS; //Changed ID so it does not invoke a for each in area again.
 			}			
@@ -12994,17 +12984,13 @@ int skill_check_condition_castend(struct map_session_data* sd, short skill, shor
 			if( skill == NC_MAGICDECOY )
 				mob_class = 2043;
 
-			if( battle_config.land_skill_limit && maxcount > 0 && ( battle_config.land_skill_limit&BL_PC ) )
-			{
-				if( skill == NC_MAGICDECOY )
-				{
+			if( battle_config.land_skill_limit && maxcount > 0 && ( battle_config.land_skill_limit&BL_PC ) ) {
+				if( skill == NC_MAGICDECOY ) {
 					for( j = mob_class; j <= 2046; j++ )
-						i = map_foreachinmap(skill_check_condition_mob_master_sub, sd->bl.m, BL_MOB, sd->bl.id, j, skill, &c);
-				}
-				else
-					i = map_foreachinmap(skill_check_condition_mob_master_sub, sd->bl.m, BL_MOB, sd->bl.id, mob_class, skill, &c);
-				if( c >= maxcount )
-				{
+						map_foreachinmap(skill_check_condition_mob_master_sub, sd->bl.m, BL_MOB, sd->bl.id, j, skill, &c);
+				} else
+					map_foreachinmap(skill_check_condition_mob_master_sub, sd->bl.m, BL_MOB, sd->bl.id, mob_class, skill, &c);
+				if( c >= maxcount ) {
 					clif_skill_fail(sd , skill, USESKILL_FAIL_LEVEL, 0);
 					return 0;
 				}
@@ -13382,37 +13368,41 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, short 
 /*==========================================
  * Does cast-time reductions based on dex, item bonuses and config setting
  *------------------------------------------*/
-int skill_castfix (struct block_list *bl, int skill_id, int skill_lv)
-{
+int skill_castfix (struct block_list *bl, int skill_id, int skill_lv) {
 	int time = skill_get_cast(skill_id, skill_lv);
-	struct map_session_data *sd;
 
 	nullpo_ret(bl);
-	sd = BL_CAST(BL_PC, bl);
 #ifndef RENEWAL_CAST
-	// calculate base cast time (reduced by dex)
-	if( !(skill_get_castnodex(skill_id, skill_lv)&1) ) {
-		int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
-		if( scale > 0 )	// not instant cast
-			time = time * scale / battle_config.castrate_dex_scale;
-		else
-			return 0;	// instant cast
-	}
-
-	// calculate cast time reduced by item/card bonuses
-	if( !(skill_get_castnodex(skill_id, skill_lv)&4) && sd )
 	{
-		int i;
-		if( sd->castrate != 100 )
-			time = time * sd->castrate / 100;
-		for( i = 0; i < ARRAYLENGTH(sd->skillcast) && sd->skillcast[i].id; i++ )
+		struct map_session_data *sd;
+
+		sd = BL_CAST(BL_PC, bl);
+
+		// calculate base cast time (reduced by dex)
+		if( !(skill_get_castnodex(skill_id, skill_lv)&1) ) {
+			int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
+			if( scale > 0 )	// not instant cast
+				time = time * scale / battle_config.castrate_dex_scale;
+			else
+				return 0;	// instant cast
+		}
+
+		// calculate cast time reduced by item/card bonuses
+		if( !(skill_get_castnodex(skill_id, skill_lv)&4) && sd )
 		{
-			if( sd->skillcast[i].id == skill_id )
+			int i;
+			if( sd->castrate != 100 )
+				time = time * sd->castrate / 100;
+			for( i = 0; i < ARRAYLENGTH(sd->skillcast) && sd->skillcast[i].id; i++ )
 			{
-				time+= time * sd->skillcast[i].val / 100;
-				break;
+				if( sd->skillcast[i].id == skill_id )
+				{
+					time+= time * sd->skillcast[i].val / 100;
+					break;
+				}
 			}
 		}
+		
 	}
 #endif
 	// config cast time multiplier
@@ -14328,27 +14318,22 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 	int skillid;
 	int *alive;
 	struct skill_unit *unit;
-	struct block_list *src;
 
 	skillid = va_arg(ap,int);
 	alive = va_arg(ap,int *);
-	src = va_arg(ap,struct block_list *);
 	unit = (struct skill_unit *)bl;
 
 	if (unit == NULL || unit->group == NULL || (*alive) == 0)
 		return 0;
 
-	switch (skillid)
-	{
+	switch (skillid) {
 		case SA_LANDPROTECTOR:
-			if( unit->group->skill_id == SA_LANDPROTECTOR )
-			{	//Check for offensive Land Protector to delete both. [Skotlex]
+			if( unit->group->skill_id == SA_LANDPROTECTOR ) {//Check for offensive Land Protector to delete both. [Skotlex]
 				(*alive) = 0;
 				skill_delunit(unit);
 				return 1;
 			}
-			if( !(skill_get_inf2(unit->group->skill_id)&(INF2_SONG_DANCE|INF2_TRAP)) )
-			{	//It deletes everything except songs/dances and traps
+			if( !(skill_get_inf2(unit->group->skill_id)&(INF2_SONG_DANCE|INF2_TRAP)) ) { //It deletes everything except songs/dances and traps
 				skill_delunit(unit);
 				return 1;
 			}
@@ -14383,8 +14368,7 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 */
 			break;
 		case PF_FOGWALL:
-			switch(unit->group->skill_id)
-			{
+			switch(unit->group->skill_id) {
 				case SA_VOLCANO: //Can't be placed on top of these
 				case SA_VIOLENTGALE:
 					(*alive) = 0;
@@ -14405,9 +14389,7 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 			break;
 	}
 
-	if (unit->group->skill_id == SA_LANDPROTECTOR &&
-		!(skill_get_inf2(skillid)&(INF2_SONG_DANCE|INF2_TRAP)))
-	{	//It deletes everything except songs/dances/traps
+	if (unit->group->skill_id == SA_LANDPROTECTOR && !(skill_get_inf2(skillid)&(INF2_SONG_DANCE|INF2_TRAP))) {	//It deletes everything except songs/dances/traps
 		(*alive) = 0;
 		return 1;
 	}

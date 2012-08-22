@@ -647,20 +647,17 @@ void chrif_authok(int fd)
 }
 
 // client authentication failed
-void chrif_authfail(int fd)
-{
+void chrif_authfail(int fd) {/* HELLO WORLD. ip in RFIFOL 15 is not being used (but is available) */
 	int account_id;
 	int char_id;
 	uint32 login_id1;
 	char sex;
-	uint32 ip;
 	struct auth_node* node;
 
 	account_id = RFIFOL(fd,2);
 	char_id    = RFIFOL(fd,6);
 	login_id1  = RFIFOL(fd,10);
 	sex        = RFIFOB(fd,14);
-	ip         = ntohl(RFIFOL(fd,15));
 
 	node = chrif_search(account_id);
 	if( node != NULL &&

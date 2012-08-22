@@ -2406,14 +2406,14 @@ ACMD_FUNC(produce)
 		return -1;
 	}
 
-	item_id = 0;
-	if ((item_data = itemdb_searchname(item_name)) == NULL &&
-	    (item_data = itemdb_exists(atoi(item_name))) == NULL)
-	{
+	if ( (item_data = itemdb_searchname(item_name)) == NULL &&
+		 (item_data = itemdb_exists(atoi(item_name))) == NULL ) {
 		clif_displaymessage(fd, msg_txt(170)); //This item is not an equipment.
 		return -1;
 	}
+	
 	item_id = item_data->nameid;
+	
 	if (itemdb_isequip2(item_data)) {
 		if (attribute < MIN_ATTRIBUTE || attribute > MAX_ATTRIBUTE)
 			attribute = ATTRIBUTE_NORMAL;

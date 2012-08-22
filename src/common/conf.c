@@ -66,11 +66,11 @@ void config_setting_copy_elem(config_setting_t *parent, const config_setting_t *
 		set = config_setting_set_int64_elem(parent, -1, config_setting_get_int64(src));
 		config_setting_set_format(set, src->format);   
 	} else if (CONFIG_TYPE_FLOAT == config_setting_type(src)) {
-		set = config_setting_set_float_elem(parent, -1, config_setting_get_float(src));
+		config_setting_set_float_elem(parent, -1, config_setting_get_float(src));
 	} else if (CONFIG_TYPE_STRING == config_setting_type(src)) {
-		set = config_setting_set_string_elem(parent, -1, config_setting_get_string(src));
+		config_setting_set_string_elem(parent, -1, config_setting_get_string(src));
 	} else if (CONFIG_TYPE_BOOL == config_setting_type(src)) {
-		set = config_setting_set_bool_elem(parent, -1, config_setting_get_bool(src));
+		config_setting_set_bool_elem(parent, -1, config_setting_get_bool(src));
 	}
 }
 

@@ -1189,16 +1189,13 @@ static int mob_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 	return 0;
 }
 
-static int mob_warpchase_sub(struct block_list *bl,va_list ap)
-{
-	struct mob_data* md;
+static int mob_warpchase_sub(struct block_list *bl,va_list ap) {
 	struct block_list *target;
 	struct npc_data **target_nd;
 	struct npc_data *nd;
 	int *min_distance;
 	int cur_distance;
 
-	md=va_arg(ap,struct mob_data *);
 	target= va_arg(ap, struct block_list*);
 	target_nd= va_arg(ap, struct npc_data**);
 	min_distance= va_arg(ap, int*);
@@ -1410,7 +1407,7 @@ int mob_warpchase(struct mob_data *md, struct block_list *target)
 
 	//Search for warps within mob's viewing range.
 	map_foreachinrange (mob_warpchase_sub, &md->bl,
-		md->db->range2, BL_NPC, md, target, &warp, &distance);
+		md->db->range2, BL_NPC, target, &warp, &distance);
 
 	if (warp && unit_walktobl(&md->bl, &warp->bl, 1, 1))
 		return 1;
@@ -3903,20 +3900,17 @@ static int mob_read_sqldb(void)
 	const char* mob_db_name[] = { mob_db_db, mob_db2_db };
 	int fi;
 	
-	for( fi = 0; fi < ARRAYLENGTH(mob_db_name); ++fi )
-	{
+	for( fi = 0; fi < ARRAYLENGTH(mob_db_name); ++fi ) {
 		uint32 lines = 0, count = 0;
 		
 		// retrieve all rows from the mob database
-		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", mob_db_name[fi]) )
-		{
+		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", mob_db_name[fi]) ) {
 			Sql_ShowDebug(mmysql_handle);
 			continue;
 		}
 		
 		// process rows one by one
-		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) )
-		{
+		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {
 			// wrap the result into a TXT-compatible format
 			char line[1024];
 			char* str[31+2*MAX_MVP_DROP+2*MAX_MOB_DROP];
@@ -3945,7 +3939,6 @@ static int mob_read_sqldb(void)
 		Sql_FreeResult(mmysql_handle);
 		
 		ShowStatus("Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, mob_db_name[fi]);
-		count = 0;
 	}
 	return 0;
 }
@@ -4476,27 +4469,23 @@ static int mob_read_sqlskilldb(void)
 	const char* mob_skill_db_name[] = { mob_skill_db_db, mob_skill_db2_db };
 	int fi;
 	
-	if( battle_config.mob_skill_rate == 0 )
-	{
+	if( battle_config.mob_skill_rate == 0 ) {
 		ShowStatus("Mob skill use disabled. Not reading mob skills.\n");
 		return 0;
 	}
 
 
-	for( fi = 0; fi < ARRAYLENGTH(mob_skill_db_name); ++fi )
-	{
+	for( fi = 0; fi < ARRAYLENGTH(mob_skill_db_name); ++fi ) {
 		uint32 lines = 0, count = 0;
 		
 		// retrieve all rows from the mob skill database
-		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", mob_skill_db_name[fi]) )
-		{
+		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", mob_skill_db_name[fi]) ) {
 			Sql_ShowDebug(mmysql_handle);
 			continue;
 		}
 		
 		// process rows one by one
-		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) )
-		{
+		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {
 			// wrap the result into a TXT-compatible format
 			char* str[19];
 			char* dummy = "";
@@ -4518,7 +4507,6 @@ static int mob_read_sqlskilldb(void)
 		Sql_FreeResult(mmysql_handle);
 		
 		ShowStatus("Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, mob_skill_db_name[fi]);
-		count = 0;
 	}
 	return 0;
 }

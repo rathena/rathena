@@ -3413,7 +3413,7 @@ void char_delete2_cancel_ack(int fd, int char_id, uint32 result)
 
 static void char_delete2_req(int fd, struct char_session_data* sd)
 {// CH: <0827>.W <char id>.L
-	int char_id, i, guild_id, party_id;
+	int char_id, i;
 	char* data;
 	time_t delete_date;
 
@@ -3426,19 +3426,16 @@ static void char_delete2_req(int fd, struct char_session_data* sd)
 		return;
 	}
 
-	if( SQL_SUCCESS != Sql_Query(sql_handle, "SELECT `guild_id`,`party_id`,`delete_date` FROM `%s` WHERE `char_id`='%d'", char_db, char_id) || SQL_SUCCESS != Sql_NextRow(sql_handle) )
+	if( SQL_SUCCESS != Sql_Query(sql_handle, "SELECT `delete_date` FROM `%s` WHERE `char_id`='%d'", char_db, char_id) || SQL_SUCCESS != Sql_NextRow(sql_handle) )
 	{
 		Sql_ShowDebug(sql_handle);
 		char_delete2_ack(fd, char_id, 3, 0);
 		return;
 	}
 	
-	Sql_GetData(sql_handle, 0, &data, NULL); guild_id = atoi(data);
-	Sql_GetData(sql_handle, 1, &data, NULL); party_id = atoi(data);
-	Sql_GetData(sql_handle, 2, &data, NULL); delete_date = strtoul(data, NULL, 10);
+	Sql_GetData(sql_handle, 0, &data, NULL); delete_date = strtoul(data, NULL, 10);
 	
-	if( delete_date )
-	{// character already queued for deletion
+	if( delete_date ) {// character already queued for deletion
 		char_delete2_ack(fd, char_id, 0, 0);
 		return;
 	}

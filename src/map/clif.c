@@ -3054,8 +3054,8 @@ void clif_changelook(struct block_list *bl,int type,int val)
 						val = sd->inventory_data[n]->view_id;
 					else
 						val = sd->status.inventory[n].nameid;
-					}
-				val = 0;
+				} else
+					val = 0;
 			}
 #endif
 			//Shoes? No packet uses this....
@@ -10047,14 +10047,14 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 /// /b /nb (CZ_BROADCAST).
 /// Request to broadcast a message on whole server.
 /// 0099 <packet len>.W <text>.?B 00
-void clif_parse_Broadcast(int fd, struct map_session_data* sd)
-{
+void clif_parse_Broadcast(int fd, struct map_session_data* sd) {
 	char command[CHAT_SIZE_MAX+11];
 	char* msg = (char*)RFIFOP(fd,4);
 	unsigned int len = RFIFOW(fd,2)-4;
 
 	// as the length varies depending on the command used, just block unreasonably long strings
-	len = mes_len_check(msg, len, CHAT_SIZE_MAX);
+	mes_len_check(msg, len, CHAT_SIZE_MAX);
+	
 	sprintf(command, "%ckami %s", atcommand_symbol, msg);
 	is_atcommand(fd, sd, command, 1);
 }
@@ -11248,7 +11248,7 @@ void clif_parse_LocalBroadcast(int fd, struct map_session_data* sd)
 	unsigned int len = RFIFOW(fd,2)-4;
 	
 	// as the length varies depending on the command used, just block unreasonably long strings
-	len = mes_len_check(msg, len, CHAT_SIZE_MAX);
+	mes_len_check(msg, len, CHAT_SIZE_MAX);
 
 	sprintf(command, "%clkami %s", atcommand_symbol, msg);
 	is_atcommand(fd, sd, command, 1);
@@ -12919,11 +12919,11 @@ void clif_parse_FriendsListAdd(int fd, struct map_session_data *sd)
 void clif_parse_FriendsListReply(int fd, struct map_session_data *sd)
 {
 	struct map_session_data *f_sd;
-	int char_id, account_id;
+	int account_id;
 	char reply;
 
 	account_id = RFIFOL(fd,2);
-	char_id = RFIFOL(fd,6);
+	//char_id = RFIFOL(fd,6);
 #if PACKETVER < 6
 	reply = RFIFOB(fd,10);
 #else

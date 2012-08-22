@@ -1538,9 +1538,8 @@ static unsigned int db_obj_vgetall(DBMap* self, DBData **buf, unsigned int max, 
 		// Match in the order: current node, left tree, right tree
 		node = db->ht[i];
 		while (node) {
-			parent = node->parent;
-			if (!(node->deleted))
-			{
+
+			if (!(node->deleted)) {
 				va_list argscopy;
 				va_copy(argscopy, args);
 				if (match(node->key, node->data, argscopy) == 0) {
@@ -1550,14 +1549,17 @@ static unsigned int db_obj_vgetall(DBMap* self, DBData **buf, unsigned int max, 
 				}
 				va_end(argscopy);
 			}
+			
 			if (node->left) {
 				node = node->left;
 				continue;
 			}
+			
 			if (node->right) {
 				node = node->right;
 				continue;
 			}
+			
 			while (node) {
 				parent = node->parent;
 				if (parent && parent->right && parent->left == node) {
@@ -1566,6 +1568,7 @@ static unsigned int db_obj_vgetall(DBMap* self, DBData **buf, unsigned int max, 
 				}
 				node = parent;
 			}
+
 		}
 	}
 	db_free_unlock(db);
@@ -1923,9 +1926,7 @@ static int db_obj_vforeach(DBMap* self, DBApply func, va_list args)
 		// Apply func in the order: current node, left node, right node
 		node = db->ht[i];
 		while (node) {
-			parent = node->parent;
-			if (!(node->deleted))
-			{
+			if (!(node->deleted)) {
 				va_list argscopy;
 				va_copy(argscopy, args);
 				sum += func(node->key, &node->data, argscopy);

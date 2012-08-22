@@ -378,11 +378,10 @@ const char * geoip_countryname[253] = {"Unknown","Asia/Pacific Region","Europe",
 unsigned char *geoip_cache;
 void geoip_readdb(void){
 	struct stat bufa;
-	size_t fileReadCount;
 	FILE *db=fopen("./db/GeoIP.dat","r");
 	fstat(fileno(db), &bufa);
 	geoip_cache = (unsigned char *) malloc(sizeof(unsigned char) * bufa.st_size);
-	fileReadCount = fread(geoip_cache, sizeof(unsigned char), bufa.st_size, db);
+	(void)fread(geoip_cache, sizeof(unsigned char), bufa.st_size, db);
 	fclose(db);
 	ShowStatus("Finished Reading "CL_GREEN"GeoIP"CL_RESET" Database.\n");
 }
@@ -392,7 +391,7 @@ const char* geoip_getcountry(uint32 ipnum){
 	int depth;
 	unsigned int x;
 	unsigned char stack_buffer[6];
-	const unsigned char *buf = stack_buffer;
+	const unsigned char *buf;
 	unsigned int offset = 0;
 		
 	for (depth = 31; depth >= 0; depth--) {
