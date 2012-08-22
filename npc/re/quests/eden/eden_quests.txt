@@ -4529,7 +4529,7 @@ moc_para01,111,83,3	script	Toren	813,{
 				mes "Sage Class gets a choice of weapons, would you like to have a staff, book or a dagger?";
 				callsub L_Select,
 					1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int", //P.Staff III
-					1583,"Book: One-handed, 135 Atk, 110 Matk", //P.Book I
+					1583,"Book","One-handed, 135 Atk, 110 Matk", //P.Book I
 					13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
 			}
 			else if (BaseClass == Job_Mage || Class == Job_Soul_Linker) {
@@ -4827,7 +4827,7 @@ moc_para01,112,79,3	script	Weapons Expert	851,{
 					callsub L_Select,
 						1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int", //P.Staff III
 						16014,"Mace","One-handed, 172 Atk", //P.Mace III
-						1583,"Book: One-handed, 135 Atk, 110 Matk"; //P.Book I
+						1583,"Book","One-handed, 135 Atk, 110 Matk"; //P.Book I
 				}
 				else if (BaseJob == Job_Monk) {
 					mes "Monk Class gets a choice of weapons, would you like to have a knuckle, mace or a staff?";
@@ -4846,7 +4846,7 @@ moc_para01,112,79,3	script	Weapons Expert	851,{
 					mes "Sage Class gets a choice of weapons, would you like to have a staff, book or a dagger?";
 					callsub L_Select,
 						1658,"Staff","One-handed, 60 Atk, 170 Matk, 4 Int", //P.Staff III
-						1583,"Book: One-handed, 135 Atk, 110 Matk", //P.Book I
+						1583,"Book","One-handed, 135 Atk, 110 Matk", //P.Book I
 						13066,"Dagger","One-handed, 165 Atk, 80 Matk"; //P.Dagger III
 				}
 				else if (BaseClass == Job_Mage || Class == Job_Soul_Linker) {

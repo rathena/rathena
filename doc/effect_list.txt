@@ -731,22 +731,22 @@ Number	Description
 716.	The same of 715 (Probably something related Arch Bishop)
 717.	Something like Angelus (Probably something related Arch Bishop)
 718.	Judex (Visual Effect)
-719.	Light Infiltration from the Sky (Probably something related Warlock)
+719.	Renovatio (light beam)
 720.	Some sound and effect of Soul Destroyer but Yellow (Probably something related Warlock)
-721.	Big Lightning from the SKy (Probably something related Warlock)
-722.	Bug Fire Explosion (Probably something related Warlock)
+721.	Big Lightning from the Sky (Probably something related Warlock)
+722.	Ignition Break (big explosion)
 723.	Noise Sound (Probably something related Warlock)
 724.	Client Crash :P
 725.	Status Recovery Sound and Wind movement on the ground (Probably something related Arch Bishop)
-726.	Big Blue Vapor Area (Probably something related Warlock)
-727.	A Comet from the SKy (Probably something related Warlock)
+726.	Frost Misty (blue vapor and bubbles)
+727.	Comet
 728.	A Little Flare that Remain on the Player for some second (Probably something related Warlock)
-729.	Effect like Close Confine (Probably something related Warlock)
+729.	Marsh of Abyss (like Close Confine)
 730.	Small, cartoony explosion
-731.	Blinking, expanding circle
+731.	Dragon Howling (blinking, expanding circle)
 732.	Spike from the ground
 733.	Fluffy Ball flying by
-734.	Lightning effect
+734.	Chain Lightning
 735.	(Nothing)
 736.	(Nothing)
 737.	(Nothing)
@@ -756,44 +756,44 @@ Number	Description
 741.	Different small pod
 742.	Different small pod
 743.	Different small pod
-744.	Some kind of transparency
-745.	Crosshairs
-746.	Fireshots from above
+744.	Camouflage
+745.	Aimed Bolt (crosshairs)
+746.	Arrow Storm
 747.	Falling white feathers
 748.	Falling blue feathers
 749.	Shields
-750.	Blue sparkles
+750.	Detonator (blue sparkles)
 751.	Shots from a direction
 752.	Some blinking filter
 753.	Sparkles
 754.	Green Warp
-755.	Spinning symbol
-756.	Berserk Potion
+755.	Oratio (spinning blue symbol)
+756.	Enchant Blade (like Berserk Potion)
 757.	Stargate-like wormhole animation
-758.	Buff with number zooming out (1)
-759.	Buff with number zooming out (2)
-760.	Buff with number zooming out (3)
-761.	Buff with number zooming out (4)
-762.	Buff with number zooming out (5)
-763.	Buff with number zooming out (6)
-764.	Buff with number zooming out (7)
-765.	Buff with number zooming out (8)
-766.	Buff with number zooming out (9)
-767.	Buff with number zooming out (10)
+758.	Rolling Cutter (1)
+759.	Rolling Cutter (2)
+760.	Rolling Cutter (3)
+761.	Rolling Cutter (4)
+762.	Rolling Cutter (5)
+763.	Rolling Cutter (6)
+764.	Rolling Cutter (7)
+765.	Rolling Cutter (8)
+766.	Rolling Cutter (9)
+767.	Rolling Cutter (10)
 768.	Blinking
-769.	Knifes flying around
+769.	Cross Ripper Slasher (flying knives)
 770.	Strip sound
 771.	Poison sound
 772.	Poison particles
-773.	Expanding purple aura
-774.	Flying axe
+773.	Expanding purple aura (part of Phantom Menace)
+774.	Axe Boomerang
 775.	Spin
 776.	Half-automatic gunshots
 777.	Faded light from the ground [S]
 778.	Expanding white aura
 779.	Faded light from the ground [S]
-780.	Expanding red aura [S]
-781.	Purple chains [S]
+780.	Expanding red aura (from Infrared Scan)
+781.	Magnetic Field (purple chains)
 782.	All-around shield [S]
 783.	Yellow shaft of light
 784.	White shaft of light
@@ -806,45 +806,45 @@ Number	Description
 791.	Two ice shots
 792.	Upward streaming white particles
 793.	Same, but more brief
-794.	Laser scan
+794.	Infrared Scan (red lasers)
 795.	Axe Crashdown
 796.	Spinning blue triangles
 797.	Stapo
 798.	(Nothing)
 799.	Expanding blue [S]
-800.	Red light shots from the ground
-801.	Ice Spikes from the ground
-802.	White Wall from the ground [S]
+800.	Hell Inferno (red lights)
+801.	Jack Frost unit (ice spikes)
+802.	White Imprison
 803.	(Nothing)
 804.	Earth shaking [S]
-805.	Blinking aura [S]
+805.	Tetra Vortex cast animation (blinking colors)
 806.	Flying by as fast as a rocket
 807.	Kidnapping sound
 808.	(Nothing)
 809.	Shadowy filter [S]
 810.	Damp thud sound [S]
-811.	Beams of blue light
+811.	Body Painting
 812.	Black expanding aura
-813.	Mask (-_-)
-814.	Mask (ç_ç)
-815.	Mask (°_°)
-816.	Mask (°.,°)
-817.	Mask (>:D)
-818.	Mask (D:)
+813.	Masquerade - Enervation
+814.	Masquerade - Groomy
+815.	Masquerade - Ignorance
+816.	Masquerade - Laziness
+817.	Masquerade - Unlucky
+818.	Masquerade - Weakness
 819.	(Nothing)
 820.	Strip sound
 821.	Waterfall
-822.	Spinning blue aura
+822.	Dimension Door (spinning blue aura)
 823.	in-the-manhole effect
 824.	Some filter
-825.	Spinning blue aura with shaft
+825.	Dimension Door (aura + blue light)
 826.	Expanding black casting anim.
-827.	Spinning fiery aura
-828.	Spinning red aura
-829.	Spinning flame fan aura
-830.	Blue casting anim. [S]
+827.	Chaos Panic (spinning brown aura)
+828.	Maelstrom (spinning pink aura)
+829.	Bloody Lust (spinning red aura)
+830.	Blue aura (Arch Bishop cast animation)
 831.	Blue cone [S]
-832.	Flying away water sphere
+832.	Sonic Wave
 833.	(Nothing)
 834.	Light shooting away circlish
 835.	Fastness yellow-reddish
@@ -868,39 +868,39 @@ Number	Description
 853.	Bright green flower area
 854.	Blue beam of light with notes
 855.	(Nothing)
-856.	Distorted note (reddish beige)
-857.	Falling down lightning shots
-858.	Red beam of light with notes
+856.	Reverberation (red eighth notes)
+857.	Severe Rainstorm (falling red and blue beams)
+858.	Deep Sleep Lullaby (two red beams and music notes)
 859.	Holograph of text (blue)
 860.	Distorted note (blue)
-861.	Stargate-wormhole stuff (bright green)
-862.	Holograph of text (red)
-863.	Sparp spears of light
-864.	Colourful light shots
-865.	Stargate-wormhole stuff (purple/blue)
-866.	Ghostly wolfes
-867.	Stargate-wormhole stuff (bright yellow)
-868.	Ghostly Violies
+861.	Green aura (from Circle of Life's Melody)
+862.	Randomize Spell (holograph of text)
+863.	Dominion Impulse (two spears of light)
+864.	Gloomy Day (colorful lines)
+865.	Blue aura (from Song of Mana)
+866.	Dance with a Warg (Wargs)
+867.	Yellow aura (from Dance with a Warg)
+868.	Song of Mana (Violies)
 869.	Strip sound [S]
 870.	Ghostly Succubuses of fire
-871.	Stargate-wormhole stuff (bright red)
-872.	Ghostly reddish Mineral
+871.	Red aura (from Lerad's Dew)
+872.	Lerad's Dew (Minerals)
 873.	Stargate-wormhole stuff (bright purple)
-874.	Ghostly Reptile thing
+874.	Melody of Sink (Ktullanuxes)
 875.	Stargate-wormhole stuff (bright turquoise)
-876.	Turquoise Garm
+876.	Warcry of Beyond (Garms)
 877.	Stargate-wormhole stuff (white)
-878.	Ghostly Miyabi Ningyo
-879.	Fire explosion thing
+878.	Unlimited Humming Voice (Miyabi Ningyos)
+879.	Siren's Voice (heart-like)
 880.	Bluish castish cone
 881.	Blue aura
 882.	Whirl of fireflies (red)
-883.	Transparent gren tree
+883.	Epiclesis (transparent green tree)
 884.	Green beam
 885.	Blue light beams
 886.	Blue castish cone
 887.	Wavy sparks
-888.	Star-directed lightning
+888.	Earth Shaker (same as 432)
 889.	Fast light beams
 890.	Rotation
 891.	Magic shots [S]
@@ -918,31 +918,31 @@ Number	Description
 903.	Castish flamey cone
 904.	Yellow/pink lights passing by
 905.	Expanding circle
-906.	Shield falling down with a thud [S]
+906.	Shield Press (falling shield)
 907.	Chainy, metalish sound [S]
-908.	Yellow storm of fireflies
-909.	Red storm of fireflies [S]
-910.	Blue storm of fireflies [S]
+908.	Prestige (sphere of yellow particles)
+909.	Banding (sphere of red particles)
+910.	Inspiration (sphere of blue particles)
 911.	Green castish animation [S]
-912.	Green, organic looking fog cloud
+912.	Wall of Thorns unit (green fog cloud)
 913.	Magic projectiles
 914.	(Nothing)
-915.	A field of green Digdas
-916.	Angry, demonic flames
+915.	Crazy Weed
+916.	Demonic Fire
 917.	More angry, demonic flames
-918.	Another set of angry, demonic flames
-919.	Ghostly, snapping plant
-920.	Flame
-921.	Whirlwind
-922.	Radar-ishly appearing cloudily looking snow-knots
-923.	Expanding circle of red/blue explosion clouds
+918.	Fire Insignia (demonic flames)
+919.	Hell's Plant (green snapping plant)
+920.	Fire Walk unit
+921.	Vacuum Extreme (whirlwind)
+922.	Psychic Wave
+923.	Poison Buster
 924.	Poisoning animation
 925.	Some filter
 926.	Lightning cloud
-927.	Speary roots from below
+927.	Earth Grave (speary roots)
 928.	Ice cloud projectiles
-929.	Field of monster-alike flames
-930.	Falling spears with a thud [S]
+929.	Warmer (field of flames)
+930.	Varetyr Spear (falling spear)
 931.	(Nothing)
 932.	Firefly
 933.	[Client Crash]
@@ -971,3 +971,12 @@ Number	Description
 956.	Flame
 957.	Spinning planetlike sphere
 958.	Two flames
+959.	Purple flame
+960.	Small yellow explosion
+961.	Cartoony whirlwind
+962.	Rising fire
+963.	Dark filter (like Stone Curse)
+964.	Same as 920
+965.	Small white explosion
+966.	Bone crack
+967.	Another little explosion
