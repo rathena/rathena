@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Gennosuke Kouga
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First version.
 //= 1.1 Standardized. [Euphy]
+//= 1.2 Fixed Zeny check. [Joseph]
 //============================================================
 
 dewata,181,88,6	script	Young Man#dewata	536,{
@@ -914,7 +915,7 @@ dewata,89,191,0	script	Small Shrine#A::DewShrine	111,{
 			mes "How much you want to donate?";
 			next;
 			input .@donate,0,100000;
-			if (.@donate < 1000) {
+			if (Zeny < .@donate) {
 				mes "- Cancelled. -";
 				close; }
 			mes "- What do you wish for? -";
