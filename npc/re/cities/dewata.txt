@@ -914,7 +914,7 @@ dewata,89,191,0	script	Small Shrine#A::DewShrine	111,{
 			mes "^FF00001,000 ~ 100,000 Zeny^000000";
 			mes "How much you want to donate?";
 			next;
-			input .@donate,0,100000;
+			input .@donate,1000,100000;
 			if (Zeny < .@donate) {
 				mes "- Cancelled. -";
 				close; }
