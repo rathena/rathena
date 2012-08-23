@@ -390,7 +390,6 @@ void geoip_readdb(void){
 const char* geoip_getcountry(uint32 ipnum){
 	int depth;
 	unsigned int x;
-	unsigned char stack_buffer[6];
 	const unsigned char *buf;
 	unsigned int offset = 0;
 		
