@@ -49,7 +49,10 @@
 //	    anybad (any type of state change) / stone / freeze / stun / sleep /
 //	    poison / curse / silence / confusion / blind / hiding / sight (unhidden)
 //
-// Note: if a negative MobID is provided, the skill will be treated as 'global' and added for all mobs.
+// Note: if a negative MobID is provided, the skill will be treated as 'global':
+//	-1: added for all boss types.
+//	-2: added for all normal types.
+//	-4: added for all mobs.
 
 1001,Scorpion@NPC_FIREATTACK,attack,186,1,2000,0,5000,yes,target,always,0,,,,,,,
 1001,Scorpion@NPC_POISON,attack,176,3,500,800,5000,no,target,always,0,,,,,,,

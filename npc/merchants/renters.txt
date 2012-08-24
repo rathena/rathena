@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88, mod by Lupus
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -23,6 +23,7 @@
 //= 1.9 Enabled Gryphon Renter NPC and added Mado Gear NPC. [Masao]
 //= 2.0 Fixed problems with third classes and new mounts. [Euphy]
 //= 2.1 Moved some renters to a separate renewal file. [Daegaladh]
+//= 2.2 Added warg checks. [Euphy]
 //============================================================ 
 
 // PecoPeco Breeder (for Knights)-------------------------------------------
@@ -158,6 +159,12 @@ hu_in01,381,304,5	script	Falcon Breeder#hnt	105,{
 
 	mes "[Falcon Breeder]";
 	if (BaseJob == Job_Hunter) {
+		if (checkoption(Option_Wug) || checkoption(Option_Wugrider)) {
+			mes "Um...";
+			mes "You can't rent a Falcon";
+			mes "untill you dismiss your warg first!";
+			close;
+		}
 		mes "Do you need a Falcon?";
 		mes "You can rent your own";
 		mes "trusty bird of prey for a";
@@ -165,6 +172,13 @@ hu_in01,381,304,5	script	Falcon Breeder#hnt	105,{
 		next;
 		switch(select("Rent Falcon:Cancel")) {
 		case 1:
+			if (checkoption(Option_Wug) || checkoption(Option_Wugrider)) {
+				mes "[Falcon Breeder]";
+				mes "Um...";
+				mes "You can't rent a Falcon";
+				mes "untill you dismiss your warg first!";
+				close;
+			}
 			if (zeny < .@price) {
 				mes "[Falcon Breeder]";
 				mes "What is this?";
