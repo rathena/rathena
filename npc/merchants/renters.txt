@@ -162,7 +162,7 @@ hu_in01,381,304,5	script	Falcon Breeder#hnt	105,{
 		if (checkoption(Option_Wug) || checkoption(Option_Wugrider)) {
 			mes "Um...";
 			mes "You can't rent a Falcon";
-			mes "untill you dismiss your warg first!";
+			mes "until you dismiss your warg first!";
 			close;
 		}
 		mes "Do you need a Falcon?";
@@ -176,7 +176,7 @@ hu_in01,381,304,5	script	Falcon Breeder#hnt	105,{
 				mes "[Falcon Breeder]";
 				mes "Um...";
 				mes "You can't rent a Falcon";
-				mes "untill you dismiss your warg first!";
+				mes "until you dismiss your warg first!";
 				close;
 			}
 			if (zeny < .@price) {

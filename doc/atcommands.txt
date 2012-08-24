@@ -181,6 +181,7 @@ hidenpc: Hides a NPC.
 shownpc: Unhides a NPC.
 loadnpc: Loads an NPC script by path.
 unloadnpc: Unloads a NPC.
+unloadnpcfile: Unloads all NPCs in a file.
 npcmove: Move a NPC.
 skillon: Turn skills on for a map
 skilloff: Turn skills off for a map
@@ -205,7 +206,8 @@ reloadbattleconf: Reload battle config (admin command) Note that some player con
 reloadstatusdb: Reload status database (admin command)
 reloadpcdb: Reload player info database (admin command)
 reloadmotd: Reload the Message of the Day (admin command)
-adjgroup: Changes the group of another character (lasts until relog)
+adjgroup: Changes the group of a character (lasts until relog)
+addperm, rmvperm: Changes the permissions of a character (lasts until relog)
 disguiseall, undisguiseall: [Un]Disguise All Players (admin command)
 mutearea: Mutes every player on screen (admin command)
 battleignore: Makes you immune to attacks (monsters/players/skills cannot target/hit you, admin command)

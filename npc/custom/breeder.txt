@@ -15,7 +15,7 @@ prontera,124,201,1	script	Universal Rental NPC	726,{
 		message strcharinfo(0),"You must first remove your mount.";
 		close; }
 	else if ((eaclass()&EAJ_THIRDMASK==EAJ_RANGER) && !countitem(6124)) {
-		if (!checkfalcon() && getskilllv("HT_FALCON") && !checkwug()) {
+		if (!checkfalcon() && getskilllv("HT_FALCON") && !checkoption(Option_Wug) && !checkoption(Option_Wugrider)) {
 			if(select(" ~ Falcon: ~ Warg")==1) setfalcon;
 			else getitem 6124,1; }
 		else getitem 6124,1; }
@@ -25,7 +25,7 @@ prontera,124,201,1	script	Universal Rental NPC	726,{
 			else setmadogear; }
 		else setcart; }
 	else if (!checkcart() && getskilllv("MC_PUSHCART")) setcart;
-	else if (!checkfalcon() && getskilllv("HT_FALCON") && !checkwug()) setfalcon;
+	else if (!checkfalcon() && getskilllv("HT_FALCON") && !checkoption(Option_Wug) && !checkoption(Option_Wugrider)) setfalcon;
 	else if (!checkriding() && getskilllv("KN_RIDING")) {
 		if (eaclass()&EAJ_THIRDMASK==EAJ_RUNE_KNIGHT) setdragon;
 		else setriding; }
