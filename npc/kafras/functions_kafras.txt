@@ -5,7 +5,7 @@
 //= Darlskies, Darkchild, Syrus22, Lupus, kobra_k88 (2.0)
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 6.5
+//= 6.6
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: =========================================
@@ -60,6 +60,7 @@
 //= 6.3 #kafra_code is now stored as is. [brianluau]
 //= 6.4 Removed unofficial Guide function. [Daegaladh]
 //= 6.5 Optimized. [Joseph]
+//= 6.6 Added Warp Points / View Points Function. [Joseph]
 //============================================================ 
 
 //=== Main Function ========================================================
@@ -186,7 +187,9 @@ function	script	F_Kafra	{
 	}
 }
 
-// === Storage Function ============================================================
+//===================================================
+// Storage Function
+//===================================================
 function	script	F_KafStor	{
 	// Unable to access Guild Storage (Busy)
 	if(getarg(0) == 1){
@@ -271,7 +274,9 @@ function	script	F_KafStor	{
 	end;
 }
 
-// === Teleport Function ==================================================
+//===================================================
+// Teleport Function
+//===================================================
 function	script	F_KafTele	{
 	mes "[Kafra Employee]";
 	mes "Please choose";
@@ -305,12 +310,7 @@ function	script	F_KafTele	{
 	else if (@wrpD$[.@j] == "Comodo") warp "comodo", 209, 143;
 	else if (@wrpD$[.@j] == "Comodo Pharos Beacon") warp "cmd_fild07", 127, 134;
 	else if (@wrpD$[.@j] == "Geffen") warp "geffen", 120, 39;
-	else if (@wrpD$[.@j] == "Izlude") {
-		if (checkre(0))
-			warp "izlude", 128, 98;
-		else
-			warp "izlude", 91, 105;
-	}
+	else if (@wrpD$[.@j] == "Izlude") { if (checkre(0)) warp "izlude", 128, 98; else warp "izlude", 91, 105; }
 	else if (@wrpD$[.@j] == "Juno") warp "yuno", 158, 125;
 	else if (@wrpD$[.@j] == "Mjolnir Dead Pit") warp "mjolnir_02", 99, 351;
 	else if (@wrpD$[.@j] == "Morroc") warp "morocc", 156, 46;
@@ -322,7 +322,9 @@ function	script	F_KafTele	{
 }
 
 
-// === Cart Function ========================================================
+//===================================================
+// Cart Function
+//===================================================
 function	script	F_KafCart	{
 	// Ensure that the class wanting to rent a pushcart is a merchant
 	if(baseClass != Job_Merchant){
@@ -369,7 +371,9 @@ function	script	F_KafCart	{
 	return 1;
 }
 
-// === Special Reserve Points Function =================================================================================
+//===================================================
+// Special Reserve Points Function
+//===================================================
 function	script	F_KafInfo	{
 	// Uncomment next line to block Kafra Storage Protection
 	//	set .@block, 1;
@@ -435,7 +439,9 @@ function	script	F_KafEnd	{
 	end;
 }
 
-// === Check Storage Password Function ===
+//===================================================
+// Check Storage Password Function
+//===================================================
 function	script	F_CheckKafCode	{
 	if(!#kafra_code) return;
 	mes "Enter your storage password:";
@@ -491,7 +497,6 @@ function	script	F_SetKafCode	{
 					break;
 				}
 				set Zeny,Zeny-1000;
-				//set RESRVPTS, RESRVPTS + (1000/50);	//hardcoded password doesn't add pts
 				if(@code == #kafra_code) {
 					set #kafra_code,0;
 					mes "You've successfully cleared your storage password.";
@@ -536,7 +541,6 @@ S_SET:
 		return;
 	}
 	set Zeny,Zeny-5000;
-	// set RESRVPTS, RESRVPTS + (5000/50);	//hardcoded password doesn't add pts
 	set #kafra_code,@code;
 	mes "You've protected your storage with a secret password.";
 	mes "Thank you for using "+getarg(1)+".";
@@ -544,7 +548,9 @@ S_SET:
 	return;
 }
 
-// === Basic Password Validation Function ====================
+//===================================================
+// Basic Password Validation Function
+//===================================================
 function	script	F_EntKafCode	{
 	mes "Enter a number 1000~10000000:";
 	set @code_,0;
@@ -563,3 +569,62 @@ function	script	F_EntKafCode	{
 	}
 	return @code_;
 }
+
+//===================================================
+// Warp Points / View Points Function
+//===================================================
+function	script	F_KafSet	{
+	cleararray @wrpC$[0],"",getarraysize(@wrpC$);
+	cleararray @wrpD$[0],"",getarraysize(@wrpD$);
+	cleararray @wrpP$[0],"",getarraysize(@wrpP$);
+	cleararray @viewpX[0],"",getarraysize(@viewpX);
+	cleararray @viewpY[0],"",getarraysize(@viewpY);
+	if (strnpcinfo(4) == "prontera") {
+		setarray @wrpD$[0], "Izlude", "Geffen", "Payon", "Morroc", "Orc Dungeon", "Alberta";
+		setarray @wrpP[0], 600, 1200, 1200, 1200, 1200, 1800;
+		setarray @viewpX[0], 151, 29, 282, 152;
+		setarray @viewpY[0], 29, 207, 200, 326;
+	} else if (strnpcinfo(4) == "alberta") {
+		setarray @wrpP[0], 1200, 1800, 1800;
+		setarray @wrpD$[0], "Payon", "Morroc", "Prontera";
+		setarray @viewpX[0], 28, 113, 0, 0;
+		setarray @viewpY[0], 229, 60, 0, 0;
+	} else if (strnpcinfo(4) == "aldebaran") {
+		setarray @wrpP[0], 1200, 1200, 1800, 1700;
+		setarray @wrpD$[0], "Geffen", "Juno" , "Izlude", "Mjolnir Dead Pit";
+	} else if (strnpcinfo(4) == "comodo" ) {
+		setarray @wrpD$[0], "Morroc", "Comodo Pharos Beacon", "Umbala";
+		setarray @wrpP[0], 1800, 1200, 1800;
+	} else if (strnpcinfo(4) == "cmd_fild07") {
+		setarray @wrpD$[0], "Comodo", "Morroc";
+		setarray @wrpP[0], 1200, 1200;
+	} else if (strnpcinfo(4) == "geffen") {
+		setarray @wrpD$[0], "Prontera", "Al De Baran", "Orc Dungeon", "Mjolnir Dead Pit";
+		setarray @wrpP[0], 1200, 1200, 1200, 1700;
+		setarray @viewpX[0], 120, 203;
+		setarray @viewpY[0], 62, 123;
+	} else if (strnpcinfo(4) == "izlude") {
+		setarray @wrpD$[0], "Geffen", "Payon", "Morroc", "Al De Baran";
+		setarray @wrpP[0], 1200, 1200, 1200, 1800;
+	} else if (strnpcinfo(4) == "morocc") {
+		setarray @wrpD$[0], "Prontera", "Payon", "Alberta", "Comodo", "Comodo Pharos Beacon";
+		setarray @wrpP[0], 1200, 1200, 1800, 1800, 1200;
+		setarray @viewpX[0], 156, 163, 28, 292;
+		setarray @viewpY[0], 97, 260, 167, 211;
+	} else if (strnpcinfo(4) == "umbala") {
+		setarray @wrpD$[0], "Comodo";
+		setarray @wrpP[0], 1800;
+	} else if (strnpcinfo(4) == "payon") {
+		setarray @wrpD$[0], "Prontera", "Alberta", "Morroc";
+		setarray @wrpP[0], 1200, 1200, 1200;
+	} else if (strnpcinfo(4) == "yuno") {
+		setarray @wrpD$[0], "Al De Baran";
+		setarray @wrpP[0], 1200;
+		setarray @viewpX[0], 328, 278, 153, 0;
+		setarray @viewpY[0], 108, 221, 187, 0;
+	}
+	for (set .@i, 0; .@i < getarraysize(@wrpD$); set .@i, .@i + 1)
+		setd "@wrpC$["+.@i+"]",getd("@wrpD$["+.@i+"]")+" -> "+getd("@wrpP["+.@i+"]");
+	setd "@wrpC$["+getarraysize(@wrpC$)+"]","Cancel";
+	return;
+}		

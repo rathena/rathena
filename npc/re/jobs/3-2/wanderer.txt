@@ -3,15 +3,15 @@
 //===== By: ================================================== 
 //= Muad_Dib, Meyraw
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
-//= Any rAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= Official Script
 //= Job change Quest from Dancer / Gypsy -> Wanderer.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
-//= 2.0 Updated dialogue to be more official / accurate. Huge thanks to Muad_Dib! [Masao]
+//= 1.1 Updated dialogue to be more official / accurate. Huge thanks to Muad_Dib! [Masao]
 //============================================================
 
 xmas,162,209,5	script	Aspiring Wanderer, Soy	714,{
@@ -38,9 +38,7 @@ xmas,162,209,5	script	Aspiring Wanderer, Soy	714,{
 		mes "[Mimi]";
 		mes "But I understand you.";
 		mes "Many people are looking forward to meeting the best Wanderer in the world.";
-		if ((Class != Job_Baby_Dancer) && (Class != Job_Dancer) && (Class != Job_Gypsy) && (BaseLevel != 99)) {
-			close;
-		}
+		if (Class != Job_Baby_Dancer && Class != Job_Dancer && Class != Job_Gypsy && BaseLevel != 99) close;
 		next;
 		select("Dancer Kim?:Wanderer?");
 		emotion e_omg;

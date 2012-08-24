@@ -1,10 +1,10 @@
 //===== rAthena Script ======================================= 
-// Shadow Chaser Job change Quest
+// Shadow Chaser Job Change Quest
 //===== By: ================================================== 
 //= ultragunner
 //= Credits: Oshinoke
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
 //= 1.1 Standardized. [Euphy]
+//= 1.2 Updated dialogue. [Joseph]
 //============================================================
 
 morocc,156,70,3	script	Girl#H-1	93,{
@@ -806,9 +807,10 @@ L_icedun:
 		mes "I would look for it...";
 		close;
 	} else if (job_sha == 27) {
-		// Is this correct?
+		// Custom Translation
 		mes "[Paul]";
-		mes "Kkkkkkkkkkkkkkkk!";
+		mes "Hohohohehehehahaha.";
+		mes "Ouch! my stomach hurts.";
 		next;
 		mes "[Paul]";
 		mes "Now I almost guessed what would happen later...";
@@ -1449,7 +1451,8 @@ job3_sha01,25,28,5	script	????#H-23	844,{
 		}
 	}
 	// Custom Translation
-	mes "You don't have to stay in here.";
+	mes "The box engraved with mysterious pattern.";
+	mes "When you push the box, it opens a door leading outside.";
 	close2;
 	warp "ice_dun02",209,219;
 	end;
