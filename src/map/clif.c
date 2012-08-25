@@ -4139,6 +4139,14 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 				clif_specialeffect_single(bl,423,sd->fd);
 			else if(md->special_state.size==SZ_MEDIUM)
 				clif_specialeffect_single(bl,421,sd->fd);
+#if PACKETVER >= 20120404
+			if( !(md->status.mode&MD_BOSS) ){
+				int i;
+				for(i = 0; i < DAMAGELOG_SIZE; i++)// must show hp bar to all char who already hit the mob.
+					if( md->dmglog[i].id == sd->status.char_id )
+						clif_monster_hp_bar(md, sd->fd);
+			}
+#endif
 		}
 		break;
 	case BL_PET:
