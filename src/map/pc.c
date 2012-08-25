@@ -5824,7 +5824,7 @@ int pc_statusup(struct map_session_data* sd, int type)
 /// @param val The stat increase amount.
 int pc_statusup2(struct map_session_data* sd, int type, int val)
 {
-	int max, need;
+	int max;
 	nullpo_ret(sd);
 
 	if( type < SP_STR || type > SP_LUK )
@@ -5833,8 +5833,6 @@ int pc_statusup2(struct map_session_data* sd, int type, int val)
 		return 1;
 	}
 
-	need = pc_need_status_point(sd,type,1);
-
 	// set new value
 	max = pc_maxparameter(sd);
 	val = pc_setstat(sd, type, cap_value(pc_getstat(sd,type) + val, 1, max));
@@ -5842,7 +5840,7 @@ int pc_statusup2(struct map_session_data* sd, int type, int val)
 	status_calc_pc(sd,0);
 
 	// update increase cost indicator
-	if( need != pc_need_status_point(sd,type,1) )
+	if( pc_need_status_point(sd, type, val) != pc_need_status_point(sd,type,1) )
 		clif_updatestatus(sd, SP_USTR + type-SP_STR);
 
 	// update stat value
