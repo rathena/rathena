@@ -506,7 +506,7 @@ int skillnotok (int skillid, struct map_session_data *sd)
 		(map_flag_gvg(m) && skill_get_nocast (skillid) & 4) ||
 		(map[m].flag.battleground && skill_get_nocast (skillid) & 8) ||
 		(map[m].flag.restricted && map[m].zone && skill_get_nocast (skillid) & (8*map[m].zone)) ){
-			clif_msgtable(sd->fd,0x536); // This skill cannot be used within this area
+			clif_msg(sd, 0x536); // This skill cannot be used within this area
 			return 1;
 	}
 
@@ -5445,8 +5445,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case MO_CALLSPIRITS:
 		if(sd) {
+			int limit = skilllv;
+			if( sd->sc.data[SC_RAISINGDRAGON] )
+				limit += sd->sc.data[SC_RAISINGDRAGON]->val1;
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			pc_addspiritball(sd,skill_get_time(skillid,skilllv),skilllv);
+			pc_addspiritball(sd,skill_get_time(skillid,skilllv),limit);
 		}
 		break;
 
@@ -12238,6 +12241,8 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 			}
 			break;
 		case MO_CALLSPIRITS:
+			if(sc && sc->data[SC_RAISINGDRAGON])
+				lv += sc->data[SC_RAISINGDRAGON]->val1;
 			if(sd->spiritball >= lv) {
 				clif_skill_fail(sd,skill,USESKILL_FAIL_LEVEL,0);
 				return 0;
