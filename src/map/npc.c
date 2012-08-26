@@ -1969,7 +1969,7 @@ static void npc_parsename(struct npc_data* nd, const char* name, const char* sta
 			CREATE(npd->path, char, strlen(filepath)+1);
 			safestrncpy(npd->path, filepath, strlen(filepath)+1);
 			
-			npd->references = 1;
+			npd->references = 0;
 		}
 		
 		nd->path = npd->path;
