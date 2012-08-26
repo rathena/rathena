@@ -3,11 +3,11 @@
 //===== By: =======================================================
 //= DZeroX, Darkchild, Neouni
 //===== Current Version: ==========================================
-//= 2.2
+//= 2.3
 //===== Compatible With: ==========================================
 //= rAthena SVN
 //===== Description: ==============================================
-//= Warper that works only after locations are unlocked
+//= Warper that works only after locations are unlocked.
 //===== Additional Comments: ======================================
 //= 1.0 - NPCs created
 //= 1.1 - Add Dungeons by sturm
@@ -38,10 +38,9 @@
 // - fixed syntax problems
 // - fixed missing pyramid gats in @DGat$ array
 // - removed the culver level 5 that didn't exist
-// and caused quite alot of problems (i didn't check while converting)
-//-1.7 - Readability of Dungeon menu building increased [Neouni]
+//= 1.7 - Readability of Dungeon menu building increased [Neouni]
 // - Thanatos Tower & Louyang Dungeon added
-//-1.8 - changed around unlock variables [Neouni]
+//= 1.8 - changed around unlock variables [Neouni]
 // - Moved warp variables to mark what you have unlocked to an binary array in login based permanent variable
 // (warp variables are saved in login database, so all charservers have these unlocked)
 // - Town Warp unlock array max 21/(unknown max) items used instead of max account #variables 32 !
@@ -49,42 +48,30 @@
 // - (max login ##variables = 16, i used 3)
 // - old variables are cleared on next save
 // - Extra Variable clear added for every character, just in case (request by Terces)
-//-1.8a - Show ammount of users on map [Neouni]
-// - Default = off, enable in GM menu
-// - Requested by escoteiro
-//-1.8b - Small typo fixed in stampcard script [Neouni]
-// - Reported by escoteiro
-//-1.9 - Making it more edit friendly [Neouni]
+//= 1.8a - Show amount of users on map [Neouni]
+//= 1.8b - Small typo fixed in stampcard script [Neouni]
+//= 1.9 - Making it more edit friendly [Neouni]
 // - Made Dungeon warp arrays more readable & editable (QWS_Darray)
 // - Made town warp arrays more readable & editable (QWS_Tarray)
-//-2.0 - Special Warp menu added [Neouni]
+//= 2.0 - Special Warp menu added [Neouni]
 // - when all towns and dungeons are collected a new option on the main menu will show
 // - it will only show when you setup the mapname of the warp !
-// - requested by escoteiro
-// - several bugs fixed
-//-2.0a - Dungeon Level Limit & Split dungeon fees
+//= 2.0a - Dungeon Level Limit & Split dungeon fees
 // - Limits dungeon based on Depth, access special setup menu thru GM-Menu
 // - Dungeon fees split up based on  Basic , Advanced & Overseas
 // - Old Dungeon fee system removed, all dungeon fees now set to 0
-//-2.0b
-// - Special warpname menu option name bug fixed
-//-2.1 Updated names to fall within retrictions. [L0ne_W0lf]
-//-2.2 #kafra_code is now stored as is. [brianluau]
+//= 2.0b - Special warpname menu option name bug fixed
+//= 2.1 - Updated names to fall within retrictions. [L0ne_W0lf]
+//= 2.2 - #kafra_code is now stored as is. [brianluau]
+//= 2.3 - Addednew town maps, cleanup, and removed pre-1.8 backwards fix. [Euphy]
 //=================================================================
 
 //========================Function=&=Script========================
 
-
 function	script	Q_Warpra	{
-// Quick hack for backwards compatibility pre 1.8
-if (##QWS_UP < 18) callfunc "QWS_BackComp";
-// Extra clear variables because marker is saved on all char servers and variables can be on multiple servers
-if (QWS_ExtraVARClear < 18) callfunc "Extra_Variable_Clear";
-
 	mes "[Warpra]";
 	mes "Hello,";
-	mes "I can warp you to any town or dungeon, but you need to unlock them first.";
-	mes "To unlock them, you have to visit us.";
+	mes "I can warp you to any town or dungeon, but you need to unlock them first by visiting us.";
 	mes "What do you need?";
 	
 	if(getarg(0) == 0) callfunc "QWS_MMarray",0;
@@ -93,280 +80,175 @@ if (QWS_ExtraVARClear < 18) callfunc "Extra_Variable_Clear";
 	set @MMenu,select(@Mmenulist$[0],@Mmenulist$[1],@Mmenulist$[2],@Mmenulist$[3],@Mmenulist$[4],@Mmenulist$[5],@Mmenulist$[6],@Mmenulist$[7],@Mmenulist$[8],@Mmenulist$[9],@Mmenulist$[10],@Mmenulist$[11]);
 
 	switch(@Mmenuref[@MMenu-1]+1){
-	case 1:
-	goto GM_Menu;
+	case 1: goto GM_Menu;
 	case 2:
-	warp $QW_SP_WarpMap$, $QW_SP_WarpX, $QW_SP_WarpY;
-	close2;
-	debugmes "Please check your special warp menu settings on the Warpra";
-	end;
-	case 3:
-	goto L_town;
-	case 4:
-	goto L_dungeon;
-	case 5:
-	goto L_FewWarps;
-	case 6:
-	goto L_NoUnlock;
-	case 7:
-	goto L_heal_Full;
-	case 8:
-	goto L_heal_Part;
-	case 9:
-	goto L_Storage;
-	case 10:
-	goto L_GStorage;
+		warp $QW_SP_WarpMap$, $QW_SP_WarpX, $QW_SP_WarpY;
+		close2;
+		debugmes "Please check your special warp menu settings on the Warpra.";
+		end;
+	case 3: goto L_town;
+	case 4: goto L_dungeon;
+	case 5: goto L_FewWarps;
+	case 6: goto L_NoUnlock;
+	case 7: goto L_heal_Full;
+	case 8: goto L_heal_Part;
+	case 9: goto L_Storage;
+	case 10: goto L_GStorage;
 	case 11:
-	goto L_end;
 	default:
-	goto L_end;
-}
+		goto L_end;
+	}
 
 //=====================GM-Menu=Functions===========================
 
 GM_Menu:
-next;
-//----------------Town-Warp
-	if ($QW_TW_OFF == 0) mes "Town warping = ^00FF00 On ^000000";
-	if ($QW_TW_OFF == 1) mes "Town warping = ^FF0000 Off ^000000";
-//----------------Dungeon-Warp
-	if ($QW_DW_OFF == 0) mes "Dungeon warping = ^00FF00 On ^000000";
-	if ($QW_DW_OFF == 1) mes "Dungeon warping = ^FF0000 Off ^000000";
-//----------------Dungeon-Depth-Limit
-	if ($QW_DL == 1) mes "Dungeon Depth limit is ^00FF00 On ^000000";
-	if ($QW_DL == 0) mes "Dungeon Depth limit is ^FF0000 Off ^000000";
+	next;
+	mes "Town warping = "+(($QW_TW_OFF)?"^FF0000 Off":"^00FF00 On")+"^000000";
+	mes "Dungeon warping = "+(($QW_DW_OFF)?"^FF0000 Off":"^00FF00 On")+"^000000";
+	mes "Dungeon Depth limit is "+(($QW_DL)?"^00FF00 On":"^FF0000 Off")+"^000000";
 	mes "If on Dungeon Depth limit is set to ^0000FF"+$QW_DDL+"^000000";
-//----------------ShowMapUsers
-	if ($QW_MapUserShow == 1) mes "Show Map Users = ^00FF00 On ^000000";
-	if ($QW_MapUserShow == 0) mes "Show Map Users = ^FF0000 Off ^000000";
-//----------------Healfull
-	if ($QW_HF == 1) mes "Healing full = ^00FF00 On ^000000";
-//----------------Healpart
-	if ($QW_HP == 1) mes "Healing partly = ^00FF00 On ^000000";
-	if (($QW_HF == 0)&&($QW_HP == 0)) mes "Healing = ^FF0000 Off ^000000";
-//----------------Storage
-	if ($QW_Stor == 1) mes "Storage = ^00FF00 On ^000000";
-	if ($QW_Stor == 0) mes "Storage = ^FF0000 Off ^000000";
-//----------------GuildStorage
-	if ($QW_GStor == 1) mes "Guild Storage = ^00FF00 On ^000000";
-	if ($QW_GStor == 0) mes "Guild Storage = ^FF0000 Off ^000000";
-//----------------KafraPoints
-	if ($QW_KPoint == 1) mes "Kafra points collect = ^00FF00 On ^000000";
-	if ($QW_KPoint == 0) mes "Kafra points collect = ^FF0000 Off ^000000";
-//----------------GMmenu
+	mes "Show Map Users = "+(($QW_MapUserShow)?"^00FF00 On":"^FF0000 Off")+"^000000";
+
+	if ($QW_HF) mes "Healing full = ^00FF00 On ^000000";
+	if ($QW_HP) mes "Healing partly = ^00FF00 On ^000000";
+	if (!$QW_HF && !$QW_HP) mes "Healing = ^FF0000 Off ^000000";
+
+	mes "Storage = "+(($QW_Stor)?"^00FF00 On":"^FF0000 Off")+"^000000";
+	mes "Guild Storage = "+(($QW_GStor)?"^00FF00 On":"^FF0000 Off")+"^000000";
+	mes "Kafra points collect = "+(($QW_KPoint)?"^00FF00 On":"^FF0000 Off")+"^000000";
+
 	switch(select("Town Warping","Dungeon Warping","Dungeon Level Limit","Show Map Users","Healing full","Healing partly","Storage","Guild Storage","Kafra points collect","Set Prices","Special Warp","Exit")) {
-
-// Using callsub and a small check to not make 1 part of the script set it on and the other turning it off again
-
-case 1:
-	if ($QW_TW_OFF == 0) {
-		set $QW_TW_OFF,1;
+	case 1: set $QW_TW_OFF,($QW_TW_OFF)?0:1; goto GM_Menu;
+	case 2: set $QW_DW_OFF,($QW_DW_OFF)?0:1; goto GM_Menu;
+	case 3: goto DungeonLevelLimit;
+	case 4: set $QW_MapUserShow,($QW_MapUserShow)?0:1; goto GM_Menu;
+	case 5:
+		if ($QW_HF == 0) {
+			set $QW_HF,1;
+			set $QW_HP,0;
+		}
+		else set $QW_HF,0;
 		goto GM_Menu;
-	} else
-		set $QW_TW_OFF,0;
+	case 6:
+		if ($QW_HP == 0) {
+			set $QW_HP,1;
+			set $QW_HF,0;
+		}
+		else set $QW_HP,0;
 		goto GM_Menu;
-case 2:
-	if ($QW_DW_OFF == 0) {
-		set $QW_DW_OFF,1;
-		goto GM_Menu;
-	} else
-		set $QW_DW_OFF,0;
-		goto GM_Menu;
-case 3:
-	goto DungeonLevelLimit;
-case 4:
-	if ($QW_MapUserShow == 0) {
-		set $QW_MapUserShow,1;
-		goto GM_Menu;
-	} else
-		set $QW_MapUserShow,0;
-		goto GM_Menu;
-case 5:
-	if ($QW_HF == 0) {
-		set $QW_HF,1;
-		set $QW_HP,0;
-		goto GM_Menu;
-	} else
-		set $QW_HF,0;
-		goto GM_Menu;
-case 6:
-	if ($QW_HP == 0) {
-		set $QW_HP,1;
-		set $QW_HF,0;
-		goto GM_Menu;
-	} else
-	set $QW_HP,0;
-	goto GM_Menu;
-case 7:
-	if ($QW_Stor == 0) {
-		set $QW_Stor,1;
-		goto GM_Menu;
-	} else
-	set $QW_Stor,0;
-	goto GM_Menu;
-case 8:
-	if ($QW_GStor == 0) {
-		set $QW_GStor,1;
-		goto GM_Menu;
-	} else
-	set $QW_GStor,0;
-	goto GM_Menu;
-case 9:
-	if ($QW_KPoint == 0) {
-		set $QW_KPoint,1;
-		goto GM_Menu;
-	} else
-	set $QW_KPoint,0;
-	goto GM_Menu;
-case 10:
-	goto Setprice;
-case 11:
-	goto SpecialWarpMenu;
-default:
-	close;
-	end;
-}
-
+	case 7: set $QW_Stor,($QW_Stor)?0:1; goto GM_Menu;
+	case 8: set $QW_GStor,($QW_GStor)?0:1; goto GM_Menu;
+	case 9: set $QW_KPoint,($QW_KPoint)?0:1; goto GM_Menu;
+	case 10: goto Setprice;
+	case 11: goto SpecialWarpMenu;
+	default:
+		close;
+		end;
+	}
 
 //======================GM-Menu=Pricing============================
 
 Setprice:
 	if ($QW_DW_FEE != 0) set $QW_DW_FEE,0;
 	next;
-	mes "Scroll thru the list to see all the options";
-//----------------Warp-Basic-Price
-	if ($QW_BW_PRICE != 0) mes "Basic - Warps are = ^00FF00 "+$QW_BW_PRICE+" ^000000";
-	if ($QW_BW_PRICE == 0) mes "Basic - Warps are = ^FF0000 Free ^000000";
-//----------------Warp-Advanced-Price
-	if ($QW_AW_PRICE != 0) mes "Advanced - Warps are = ^00FF00 "+$QW_AW_PRICE+" ^000000";
-	if ($QW_AW_PRICE == 0) mes "Advanced - Warps are = ^FF0000 Free ^000000";
-//----------------Warp-Oversea-Price
-	if ($QW_OW_PRICE != 0) mes "Overseas - Warps are = ^00FF00 "+$QW_OW_PRICE+" ^000000";
-	if ($QW_OW_PRICE == 0) mes "Overseas - Warps are = ^FF0000 Free ^000000";
-//----------------Basic-Dungeon-Level-Warp-Fee
-	if ($QW_BW_FEE != 0) mes "Basic Dungeon level warp fee = ^00FF00 "+$QW_BW_FEE+" ^000000 zeny per level";
-	if ($QW_BW_FEE == 0) mes "Basic Dungeon level warp fee = ^FF0000 NO ^000000 zeny per level";
-//----------------Advanced-Dungeon-Level-Warp-Fee
-	if ($QW_AW_FEE != 0) mes "Advanced Dungeon level warp fee = ^00FF00 "+$QW_AW_FEE+" ^000000 zeny per level";
-	if ($QW_AW_FEE == 0) mes "Advanced Dungeon level warp fee = ^FF0000 NO ^000000 zeny per level";
-//----------------Overseas-Dungeon-Level-Warp-Fee
-	if ($QW_OW_FEE != 0) mes "Overseas Dungeon level warp fee = ^00FF00 "+$QW_OW_FEE+" ^000000 zeny per level";
-	if ($QW_OW_FEE == 0) mes "Overseas Dungeon level warp fee = ^FF0000 NO ^000000 zeny per level";
-//----------------Heal-Full
-	if ($QW_HF_PRICE != 0) mes "Full Healing = ^00FF00 "+$QW_HF_PRICE+" ^000000";
-	if ($QW_HF_PRICE == 0) mes "Full Healing = ^FF0000 Free ^000000";
-//----------------Heal-Part
-	if ($QW_HP_H_PRICE != 0) mes "^FF0000HP ^000000Part Healing = ^00FF00 "+$QW_HP_H_PRICE+" ^000000 a point";
-	if ($QW_HP_H_PRICE == 0) mes "^FF0000HP ^000000Part Healing = ^FF0000 Free ^000000";
-	if ($QW_HP_S_PRICE != 0) mes "^0000FFSP ^000000Part Healing = ^00FF00 "+$QW_HP_S_PRICE+" ^000000 a point";
-	if ($QW_HP_S_PRICE == 0) mes "^0000FFSP ^000000Part Healing = ^FF0000 Free ^000000";
-//----------------Storage
-	if (($QW_S_PRICE != 0)&&($QW_S_PRICE != 60)) mes "Storage = ^00FF00 "+$QW_S_PRICE+" ^000000";
-	if ($QW_S_PRICE == 0) mes "Storage = ^FF0000 Free ^000000";
+	mes "Scroll through the list to see all the options.";
+
+	mes "Basic - Warps are = "+(($QW_BW_PRICE)?"^00FF00"+$QW_BW_PRICE:"^FF0000Free")+"^000000";
+	mes "Advanced - Warps are = "+(($QW_AW_PRICE)?"^00FF00"+$QW_AW_PRICE:"^FF0000Free")+"^000000";
+	mes "Overseas - Warps are = "+(($QW_OW_PRICE)?"^00FF00"+$QW_OW_PRICE:"^FF0000Free")+"^000000";
+
+	mes "Basic Dungeon level warp fee = "+(($QW_BW_FEE)?"^00FF00"+$QW_BW_FEE:"^FF0000NO")+"^000000 zeny per level";
+	mes "Advanced Dungeon level warp fee = "+(($QW_AW_FEE)?"^00FF00"+$QW_AW_FEE:"^FF0000NO")+"^000000 zeny per level";
+	mes "Overseas Dungeon level warp fee = "+(($QW_OW_FEE)?"^00FF00"+$QW_OW_FEE:"^FF0000NO")+"^000000 zeny per level";
+
+	mes "Full Healing = "+(($QW_HF_PRICE)?"^00FF00"+$QW_HF_PRICE:"^FF0000Free")+"^000000";
+	mes "^FF0000HP ^000000Part Healing = "+(($QW_HP_H_PRICE)?"^00FF00"+$QW_HP_H_PRICE+"^000000 a point":"^FF0000Free^000000");
+	mes "^FF0000SP ^000000Part Healing = "+(($QW_HP_S_PRICE)?"^00FF00"+$QW_HP_S_PRICE+"^000000 a point":"^FF0000Free^000000");
+
+	if ($QW_S_PRICE && $QW_S_PRICE != 60) mes "Storage = ^00FF00 "+$QW_S_PRICE+" ^000000";
+	if (!$QW_S_PRICE) mes "Storage = ^FF0000 Free ^000000";
 	if ($QW_S_PRICE == 60) mes "Storage = ^0000FF Kafra Mode ^000000";
-//----------------Guild-Storage
-	if ($QW_GS_PRICE != 0) mes "Guild Storage = ^00FF00 "+$QW_GS_PRICE+" ^000000";
-	if ($QW_GS_PRICE == 0) mes "Guild Storage = ^FF0000 Free ^000000";
+	mes "Guild Storage = "+(($QW_GS_PRICE)?"^00FF00"+$QW_GS_PRICE:"^FF0000Free")+"^000000";
 	
 	switch(select("Basic - Warps","Advanced - Warps","Overseas - Warps","Basic Dungeon warp fee","Advanced Dungeon warp fee","Overseas Dungeon warp fee","Full Healing","Part Healing","Storage","Guild Storage","Back","Exit")) {
-
-case 1:
-	next;
-	if ($QW_BW_PRICE != 0) mes "Basic - Warps are = ^00FF00 "+$QW_BW_PRICE+" ^000000";
-	if ($QW_BW_PRICE == 0) mes "Basic - Warps are = ^FF0000 Free ^000000";
-	mes "Basic - Warps are starter towns and related dungeons";
-	input $QW_BW_PRICE;
-	goto Setprice;
-
-case 2:
-	next;
-	if ($QW_AW_PRICE != 0) mes "Advanced - Warps are = ^00FF00 "+$QW_AW_PRICE+" ^000000";
-	if ($QW_AW_PRICE == 0) mes "Advanced - Warps are = ^FF0000 Free ^000000";
-	mes "Advanced - Warps are towns and dungeons on the same island but not close to any starter town";
-	input $QW_AW_PRICE;
-	goto Setprice;
-
-case 3:
-	next;
-	if ($QW_OW_PRICE != 0) mes "Overseas - Warps are = ^00FF00 "+$QW_OW_PRICE+" ^000000";
-	if ($QW_OW_PRICE == 0) mes "Overseas - Warps are = ^FF0000 Free ^000000";
-	mes "Overseas - Warps are towns and dungeons overseas reachable by boat from alberta";
-	input $QW_OW_PRICE;
-	goto Setprice;
-
-case 4:
-	next;
-	if ($QW_BW_FEE != 0) mes "Basic Dungeon level warp fee = ^00FF00 "+$QW_BW_FEE+" ^000000 zeny per level";
-	if ($QW_BW_FEE == 0) mes "Basic Dungeon level warp fee = ^FF0000 NO ^000000 zeny per level";
-	mes "Basic - Warps are starter town related dungeons";
-	mes "Dungeon warp fees are calculated by maps away from entrance of the dungeon times Dungeon warp fee";
-	mes "These costs are on top of the regular Warp costs";
-	input $QW_BW_FEE;
-	goto Setprice;
-
-case 5:
-	next;
-	if ($QW_AW_FEE != 0) mes "Advanced Dungeon level warp fee = ^00FF00 "+$QW_AW_FEE+" ^000000 zeny per level";
-	if ($QW_AW_FEE == 0) mes "Advanced Dungeon level warp fee = ^FF0000 NO ^000000 zeny per level";
-	mes "Advanced - Warps are dungeons not close to any starter town";
-	mes "Dungeon warp fees are calculated by maps away from entrance of the dungeon times Dungeon warp fee";
-	mes "These costs are on top of the regular Warp costs";
-	input $QW_AW_FEE;
-	goto Setprice;
-
-case 6:
-	next;
-	if ($QW_OW_FEE != 0) mes "Overseas Dungeon level warp fee = ^00FF00 "+$QW_OW_FEE+" ^000000 zeny per level";
-	if ($QW_OW_FEE == 0) mes "Overseas Dungeon level warp fee = ^FF0000 NO ^000000 zeny per level";
-	mes "Overseas - Warps are dungeons related to towns overseas reachable by boat from alberta";
-	mes "Dungeon warp fees are calculated by maps away from entrance of the dungeon times Dungeon warp fee";
-	mes "These costs are on top of the regular Warp costs";
-	input $QW_OW_FEE;
-	goto Setprice;
-
-case 7:
-	next;
-	if ($QW_HF_PRICE != 0) mes "Full Healing = ^00FF00 "+$QW_HF_PRICE+" ^000000";
-	if ($QW_HF_PRICE == 0) mes "Full Healing = ^FF0000 Free ^000000";
-	mes "Instant full healing 1 price";
-	input $QW_HF_PRICE;
-	goto Setprice;
-
-case 8:
-	next;
-	if ($QW_HP_H_PRICE != 0) mes "^FF0000HP ^000000Part Healing = ^00FF00 "+$QW_HP_H_PRICE+" ^000000 a point";
-	if ($QW_HP_H_PRICE == 0) mes "^FF0000HP ^000000Part Healing = ^FF0000 Free ^000000";
-	if ($QW_HP_S_PRICE != 0) mes "^0000FFSP ^000000Part Healing = ^00FF00 "+$QW_HP_S_PRICE+" ^000000 a point";
-	if ($QW_HP_S_PRICE == 0) mes "^0000FFSP ^000000Part Healing = ^FF0000 Free ^000000";
-	mes "Healing price per 1 HP";
-	mes "Healing price per 1 SP";
-	mes "2 inputs, first HP then SP";
-	input $QW_HP_H_PRICE;
-	input $QW_HP_S_PRICE;
-	goto Setprice;
-
-case 9:
-	next;
-	if (($QW_S_PRICE != 0)&&($QW_S_PRICE != 60)) mes "Storage = ^00FF00 "+$QW_S_PRICE+" ^000000";
-	if ($QW_S_PRICE == 0) mes "Storage = ^FF0000 Free ^000000";
-	if ($QW_S_PRICE == 60) mes "Storage = ^0000FF Kafra Mode ^000000";
-	mes "Storage cost, if set to 60 Kafra pricing will be handled";
-	input $QW_S_PRICE;
-	goto Setprice;
-
-case 10:
-	next;
-	if ($QW_GS_PRICE != 0) mes "Guild Storage = ^00FF00 "+$QW_GS_PRICE+" ^000000";
-	if ($QW_GS_PRICE == 0) mes "Guild Storage = ^FF0000 Free ^000000";
-	mes "Guild Storage, free on Guild Kafras";
-	input $QW_GS_PRICE;
-	goto Setprice;
-case 11:
-	goto GM_Menu;
-default:
-	close;
-	end;
-}
+	case 1:
+		next;
+		mes "Basic - Warps are = "+(($QW_BW_PRICE)?"^00FF00"+$QW_BW_PRICE:"^FF0000Free")+"^000000";
+		mes "Basic - Warps are starter towns and related dungeons.";
+		input $QW_BW_PRICE;
+		goto Setprice;
+	case 2:
+		next;
+		mes "Advanced - Warps are = "+(($QW_AW_PRICE)?"^00FF00"+$QW_AW_PRICE:"^FF0000Free")+"^000000";
+		mes "Advanced - Warps are towns and dungeons on the same island but not close to any starter town.";
+		input $QW_AW_PRICE;
+		goto Setprice;
+	case 3:
+		next;
+		mes "Overseas - Warps are = "+(($QW_OW_PRICE)?"^00FF00"+$QW_OW_PRICE:"^FF0000Free")+"^000000";
+		mes "Overseas - Warps are towns and dungeons overseas reachable by boat from Alberta.";
+		input $QW_OW_PRICE;
+		goto Setprice;
+	case 4:
+		next;
+		mes "Basic Dungeon level warp fee = "+(($QW_BW_FEE)?"^00FF00"+$QW_BW_FEE:"^FF0000NO")+"^000000 zeny per level";
+		mes "Basic - Warps are starter town related dungeons.";
+		mes "Dungeon warp fees are calculated by maps away from entrance of the dungeon times Dungeon warp fee.";
+		mes "These costs are on top of the regular Warp costs.";
+		input $QW_BW_FEE;
+		goto Setprice;
+	case 5:
+		next;
+		mes "Advanced Dungeon level warp fee = "+(($QW_AW_FEE)?"^00FF00"+$QW_AW_FEE:"^FF0000NO")+"^000000 zeny per level";
+		mes "Advanced - Warps are dungeons not close to any starter town.";
+		mes "Dungeon warp fees are calculated by maps away from entrance of the dungeon times Dungeon warp fee.";
+		mes "These costs are on top of the regular Warp costs.";
+		input $QW_AW_FEE;
+		goto Setprice;
+	case 6:
+		next;
+		mes "Overseas Dungeon level warp fee = "+(($QW_OW_FEE)?"^00FF00"+$QW_OW_FEE:"^FF0000NO")+"^000000 zeny per level";
+		mes "Overseas - Warps are dungeons related to towns overseas reachable by boat from Alberta.";
+		mes "Dungeon warp fees are calculated by maps away from entrance of the dungeon times Dungeon warp fee.";
+		mes "These costs are on top of the regular Warp costs.";
+		input $QW_OW_FEE;
+		goto Setprice;
+	case 7:
+		next;
+		mes "Full Healing = "+(($QW_HF_PRICE)?"^00FF00"+$QW_HF_PRICE:"^FF0000Free")+"^000000";
+		mes "Instant full healing 1 price.";
+		input $QW_HF_PRICE;
+		goto Setprice;
+	case 8:
+		next;
+		mes "^FF0000HP ^000000Part Healing = "+(($QW_HP_H_PRICE)?"^00FF00"+$QW_HP_H_PRICE+"^000000 a point":"^FF0000Free^000000");
+		mes "^FF0000SP ^000000Part Healing = "+(($QW_HP_S_PRICE)?"^00FF00"+$QW_HP_S_PRICE+"^000000 a point":"^FF0000Free^000000");
+		mes "Healing price per 1 HP.";
+		mes "Healing price per 1 SP.";
+		mes "2 inputs, first HP then SP.";
+		input $QW_HP_H_PRICE;
+		input $QW_HP_S_PRICE;
+		goto Setprice;
+	case 9:
+		next;
+		if ($QW_S_PRICE && $QW_S_PRICE != 60) mes "Storage = ^00FF00 "+$QW_S_PRICE+" ^000000";
+		if (!$QW_S_PRICE) mes "Storage = ^FF0000 Free ^000000";
+		if ($QW_S_PRICE == 60) mes "Storage = ^0000FF Kafra Mode ^000000";
+		mes "Storage cost, if set to 60 Kafra pricing will be handled.";
+		input $QW_S_PRICE;
+		goto Setprice;
+	case 10:
+		next;
+		mes "Guild Storage = "+(($QW_GS_PRICE)?"^00FF00"+$QW_GS_PRICE:"^FF0000Free")+"^000000";
+		mes "Guild Storage, free on Guild Kafras.";
+		input $QW_GS_PRICE;
+		goto Setprice;
+	case 11:
+		goto GM_Menu;
+	default:
+		close;
+		end;
+	}
 
 //======================Special=Warp=Menu==========================
 
@@ -381,80 +263,72 @@ SpecialWarpMenu:
 	if ($QW_SP_WarpMap$ != "") mes "map is currently set to ^0000FF"+$QW_SP_WarpMap$+"^000000 and Special Warp menu is on";
 	mes "coords are set to ^0000FF"+$QW_SP_WarpX+","+$QW_SP_WarpY+"^000000";
 	switch(select("Set Special Warp name to show in menu", "Set WarpMap","Set Coords","Go Back to GM_Menu","Exit")){
-
-case 1:
-	next;
-	mes "set the name to show in the menu as option";
-	input $QW_SP_Warpname$;
-	goto SpecialWarpMenu;
-case 2:
-	next;
-	mes "set the map in the ^0000FFmapname^000000 format";
-	mes "when this warpmap is set the option for players will show once they meet the requirments";
-	mes "to disable Special Warp Menu option clear this !";
-	input $QW_SP_WarpMap$;
-	goto SpecialWarpMenu;
-case 3:
-	next;
-	mes "First input = Xcoord";
-	mes "Second input = Ycoord";
-	input $QW_SP_WarpX;
-	input $QW_SP_WarpY;
-	goto SpecialWarpMenu;
-case 4:
-	goto GM_Menu;
-default:
-	close;
-	end;
-}
+	case 1:
+		next;
+		mes "Set the name to show in the menu as option.";
+		input $QW_SP_Warpname$;
+		goto SpecialWarpMenu;
+	case 2:
+		next;
+		mes "Set the map in the ^0000FFmapname^000000 format.";
+		mes "When this warpmap is set the option for players will show once they meet the requirments.";
+		mes "To disable Special Warp Menu option, clear this!";
+		input $QW_SP_WarpMap$;
+		goto SpecialWarpMenu;
+	case 3:
+		next;
+		mes "First input = Xcoord";
+		mes "Second input = Ycoord";
+		input $QW_SP_WarpX;
+		input $QW_SP_WarpY;
+		goto SpecialWarpMenu;
+	case 4:
+		goto GM_Menu;
+	default:
+		close;
+		end;
+	}
 
 //======================Dungeon=Level=Limit========================
+
 DungeonLevelLimit:
 	next;
-	if ($QW_DL == 1) mes "Dungeon Depth limit is ^00FF00 On ^000000";
-	if ($QW_DL == 0) mes "Dungeon Depth limit is ^FF0000 Off ^000000";
+	mes "Dungeon Depth limit is "+(($QW_DL)?"^00FF00On":"^FF0000Off")+"^000000";
 	mes "If^00FF00 On ^000000Dungeon Depth limit is set to ^0000FF"+$QW_DDL+"^000000";
-	
-	switch(select("Toggle Dungeon Depth Limit", "Set Dungeon Depth Limit","Go Back to GM_Menu","Exit")){
 
-case 1:
-	if ($QW_DL == 0) {
-		set $QW_DL,1;
+	switch(select("Toggle Dungeon Depth Limit","Set Dungeon Depth Limit","Go Back to GM_Menu","Exit")){
+	case 1: set $QW_DL,($QW_DL)?0:1; goto DungeonLevelLimit;
+	case 2:
+		next;
+		mes "Set limit of Dungeon Depth 0 = entrance";
+		mes "Depth 1 is a map connected to 0 and so on";
+		mes "Shortest Route to map counts as depth";
+		input $QW_DDL;
 		goto DungeonLevelLimit;
-	} else
-		set $QW_DL,0;
-		goto DungeonLevelLimit;
-case 2:
-	next;
-	mes "set limit of Dungeon Depth 0 = entrance";
-	mes "Depth 1 is a map connected to 0 and so on";
-	mes "Shortest Route to map counts as depth";
-	input $QW_DDL;
-	goto DungeonLevelLimit;
-case 3:
-	goto GM_Menu;
-default:
-	close;
-	end;
-}
+	case 3: goto GM_Menu;
+	default:
+		close;
+		end;
+	}
 
 //===========================Towns=================================
 
 L_town:
 	callfunc "QWS_Tarray";
-
-// Expected maximum is set to 25 items, if you add  more options add more ",@Tmenulist$[xx]"
-
-	set @TWMenu,select(@Tmenulist$[0],@Tmenulist$[1],@Tmenulist$[2],@Tmenulist$[3],@Tmenulist$[4],@Tmenulist$[5],@Tmenulist$[6],@Tmenulist$[7],@Tmenulist$[8],@Tmenulist$[9],@Tmenulist$[10],@Tmenulist$[11],@Tmenulist$[12],@Tmenulist$[13],@Tmenulist$[14],@Tmenulist$[15],@Tmenulist$[16],@Tmenulist$[17],@Tmenulist$[18],@Tmenulist$[19],@Tmenulist$[20],@Tmenulist$[21],@Tmenulist$[22],@Tmenulist$[23],@Tmenulist$[24]);
+	freeloop(1);
+	set .@menu$,"";
+	for(set .@i,0; .@i<35; set .@i,.@i+1)	// Expected maximum is 35
+		set .@menu$,.@menu$+@Tmenulist$[.@i]+":";
+	freeloop(0);
+	set @TWMenu,select(.@menu$);
 
 	if (@Tmenuref[@TWMenu-1] == 57005) goto L_end; // 57005='dead' in hex
 
 	if(Zeny<@pTprice[@Tmenuref[@TWMenu-1]]) callsub L_Short_on_zeny,0;
-
 	set Zeny, Zeny-@pTprice[@Tmenuref[@TWMenu-1]];
 	if ($QW_KPoint == 1) set RESRVPTS, RESRVPTS + (@pTprice[@Tmenuref[@TWMenu-1]]/16);
 	warp @pTmap$[@Tmenuref[@TWMenu-1]],@pTXcoords[@Tmenuref[@TWMenu-1]],@pTYcoords[@Tmenuref[@TWMenu-1]];
-	close2;		// this part safegaurds against errors/typos
+	close2;
 	set Zeny, Zeny+@pTprice[@Tmenuref[@TWMenu-1]];
 	end;
 
@@ -462,10 +336,12 @@ L_town:
 
 L_dungeon:
 	callfunc "QWS_Darray";
-	
-// Expected maximum is set to 35 items, if you add  more options add more ",@Dmenulist$[xx]"
-
-	set @DWMenu,select(@Dmenulist$[0],@Dmenulist$[1],@Dmenulist$[2],@Dmenulist$[3],@Dmenulist$[4],@Dmenulist$[5],@Dmenulist$[6],@Dmenulist$[7],@Dmenulist$[8],@Dmenulist$[9],@Dmenulist$[10],@Dmenulist$[11],@Dmenulist$[12],@Dmenulist$[13],@Dmenulist$[14],@Dmenulist$[15],@Dmenulist$[16],@Dmenulist$[17],@Dmenulist$[18],@Dmenulist$[19],@Dmenulist$[20],@Dmenulist$[21],@Dmenulist$[22],@Dmenulist$[23],@Dmenulist$[24],@Dmenulist$[25],@Dmenulist$[26],@Dmenulist$[27],@Dmenulist$[28],@Dmenulist$[29],@Dmenulist$[30],@Dmenulist$[31],@Dmenulist$[32],@Dmenulist$[33],@Dmenulist$[34]);
+	freeloop(1);
+	set .@menu$,"";
+	for(set .@i,0; .@i<35; set .@i,.@i+1)	// Expected maximum is 35
+		set .@menu$,.@menu$+@Dmenulist$[.@i]+":";
+	freeloop(0);
+	set @DWMenu,select(.@menu$);
 
 	if (@Dmenuref[@DWMenu-1] == 57005) goto L_end; // 57005='dead' in hex
 	set @DwarpMenu, (@Dmenuref[@DWMenu-1]);
@@ -473,10 +349,13 @@ L_dungeon:
 
 	next;
 	mes "[Warpra]";
-	mes "Please select where you want to go";
-
-// Expected maximum is set to 18 items, if you have dungeons with more levels add more ",@DWLmenulist$[xx]"
-	set @DWLMenu,select(@DWLmenulist$[0], @DWLmenulist$[1], @DWLmenulist$[2], @DWLmenulist$[3], @DWLmenulist$[4], @DWLmenulist$[5], @DWLmenulist$[6], @DWLmenulist$[7], @DWLmenulist$[8], @DWLmenulist$[9], @DWLmenulist$[10], @DWLmenulist$[11], @DWLmenulist$[12], @DWLmenulist$[13], @DWLmenulist$[14], @DWLmenulist$[15], @DWLmenulist$[16], @DWLmenulist$[17]);
+	mes "Please select where you want to go:";
+	freeloop(1);
+	set .@menu$,"";
+	for(set .@i,0; .@i<18; set .@i,.@i+1)	// Expected maximum is 18
+		set .@menu$,.@menu$+@DWLmenulist$[.@i]+":";
+	freeloop(0);
+	set @DWLMenu,select(.@menu$);
 
 	if (@DWLmenuref[@DWLMenu-1] == 57005) goto L_end; // 57005='dead' in hex
 
@@ -484,11 +363,10 @@ L_dungeon:
 	set @warpprice, @pDprice[@Dmenuref[@DWMenu-1]]+(getd(@pDfee$[@Dmenuref[@DWMenu-1]])*(@DDepth[@Darrayref]));
 
 	if(Zeny<@warpprice) callsub L_Short_on_zeny,1;
-
 	set Zeny, Zeny-(@warpprice);
 	if ($QW_KPoint == 1) set RESRVPTS, RESRVPTS + (@warpprice/16);
 	warp @DGat$[@Darrayref],@DXcoords[@Darrayref],@DYcoords[@Darrayref];
-	close2;		// this part safegaurds against errors/typos
+	close2;
 	set Zeny, Zeny+@pTprice[@Tmenuref[@DWMenu-1]];
 	end;
 
@@ -501,7 +379,7 @@ L_heal_Full:
 	if ($QW_KPoint == 1) set RESRVPTS, RESRVPTS + (@healfee/500);
 	next;
 	mes "[Warpra]";
-	mes "Close this window and I will Heal you.";
+	mes "Close this window and I will heal you.";
 	close2;
 	percentheal 100,100;
 	end;
@@ -541,38 +419,36 @@ PHeal:
 
 Zeny_Short_Both:
 	mes "[Warpra]";
-	mes "choose another option, you can afford both.";
-	mes "I can heal as much as you can afford too.";
+	mes "Choose another option, you can afford both.";
+	mes "I can heal as much as you can afford, too.";
 	if (select("OK","Exit") == 2) goto L_end;
 	goto PHeal;
 
 Zeny_short_HP:
 	mes "[Warpra]";
-	mes "do you want me to partly heal your HP ?";
+	mes "Do you want me to partly heal your HP?";
 	if (select("Yes","No") == 2) goto L_end;
 	set @Hp, Zeny/$QW_HP_H_PRICE;
     	set @HpPrice, @Hp*$QW_HP_H_PRICE;
-    	if (@Hp == 1) mes "your not worth the effort";
+    	if (@Sp == 1) mes "You're not worth the effort.";
     	if (@Hp == 1) goto L_end;
     	set Zeny, Zeny-@HpPrice;
 	heal @Hp,0;
 	close;
 	end;
-    	
-	
+
 Zeny_short_SP:
 	mes "[Warpra]";
-	mes "do you want me to partly heal your SP ?";
+	mes "Do you want me to partly heal your SP?";
 	if (select("Yes","No") == 2) goto L_end;
 	set @Sp, Zeny/$QW_HP_S_PRICE;
     	set @SpPrice, @Sp*$QW_HP_S_PRICE;
-    	if (@Sp == 1) mes "your not worth the effort";
+    	if (@Sp == 1) mes "You're not worth the effort.";
     	if (@Sp == 1) goto L_end;
     	set Zeny, Zeny-@SpPrice;
 	heal 0,@Sp;
 	close;
 	end;
-
 
 //=============================Storage=============================
 
@@ -587,26 +463,21 @@ L_Storage:
 	if ($QW_KPoint == 1) set RESRVPTS, RESRVPTS + (@fee/5);
 
 	mes "[Warpra]";
-	mes "Close this window and i will open your storage.";
-
-	callsub F_CheckKafCode;	//check your storage password thru kafra coding, if set
-
+	if(#kafra_code) {
+		mes "Enter your storage password:";
+		set @code_,0;
+		input @code_;
+		if(@code_ != #kafra_code) {
+			dispbottom "Wrong storage password.";
+			close;
+		}
+		set @kafcode_try,0;
+		set @code_,0;
+	}
+	mes "Close this window and I will open your storage.";
 	close2;
 	openstorage;
 	end;
-
-F_CheckKafCode:
-	if(#kafra_code==0) return;
-	mes "Enter your storage password:";
-	set @code_,0;
-	input @code_;
-	if(@code_ != #kafra_code) {
-		dispbottom "Wrong storage password.";
-		close;
-	}
-	set @kafcode_try,0;
-	set @code_,0;
-	return;
 
 L_StorageJBlow:
 	mes "[Warpra]";
@@ -614,22 +485,21 @@ L_StorageJBlow:
 	return;
 
 L_GStorage:
-	if(@GID==0) goto L_NoGuild;
-	if(Zeny<$QW_GS_PRICE) callsub L_Short_on_zeny,3;
+	if (!@GID) {
+		next;
+		mes "[Warpra]";
+		mes "You are not a part of a guild I can't help you.";
+		close;
+		end;
+	}
+	if (Zeny<$QW_GS_PRICE) callsub L_Short_on_zeny,3;
 	set Zeny, Zeny-$QW_GS_PRICE;
 	if ($QW_KPoint == 1) set RESRVPTS, RESRVPTS + ($QW_GS_PRICE/5);
 	next;
 	mes "[Warpra]";
-	mes "Close this window and i will open the ^5533FF" + GetGuildName(@GID) + "^000000 storage.";
+	mes "Close this window and I will open the ^5533FF" + GetGuildName(@GID) + "^000000 storage.";
 	close2;
 	guildopenstorage;
-	end;
-
-L_NoGuild:
-	next;
-	mes "[Warpra]";
-	mes "You are not a part of a guild I can't help you.";
-	close;
 	end;
 	
 L_end:
@@ -639,21 +509,19 @@ L_end:
 //============================Few=Warp=============================
 L_FewWarps:
 	next;
-	mes "[Warpra ]";
+	mes "[Warpra]";
 	mes "You need to unlock locations before they come available to you.";
 	mes "To unlock a location talk to my colleagues all over the world.";
-	mes "Each account got it's own stamp card.";
-	mes "Want me to check what stamps you have collected so far ?.";
+	mes "Each account has its own stamp card.";
+	mes "Want me to check what stamps you have collected so far?";
 	if (select("Yes","No")==1) callsub stampcard;
 	close;
 	end;
 
-
 //============================No=Unlock============================
-
 L_NoUnlock:
 	next;
-	mes "[Warpra ]";
+	mes "[Warpra]";
 	mes "I don't unlock this location, my assistant deeper in the dungeon will unlock this place.";
 	close;
 	end;
@@ -661,11 +529,13 @@ L_NoUnlock:
 //=========================Short=On=Zeny===========================
 L_Short_on_zeny:
 	next;
-	if (getarg(0) == 0) mes "you don't seem to have "+@pTprice[@Tmenuref[@TWMenu-1]]+" zeny, to pay for the warp fee to "+@pTmenuitems$[@Tmenuref[@TWMenu-1]]+"";
-	if (getarg(0) == 1) mes "you don't seem to have "+@warpprice+" zeny, to pay for the warp fee to "+@DLevelName$[@DWLmenuref[@DWLMenu-1]]+" at "+@pDmenuitems$[@Dmenuref[@DWMenu-1]]+"";
-	if (getarg(0) == 2) mes "you don't seem to have "+@fee+" zeny, to pay for the storage fee";
-	if (getarg(0) == 3) mes "you don't seem to have "+$QW_GS_PRICE+" zeny, to pay for the guild storage fee";
-	if (getarg(0) == 4) mes "you don't seem to have "+@healfee+" zeny, to pay for your healing";
+	switch(getarg(0)) {
+	case 0: mes "You don't seem to have "+@pTprice[@Tmenuref[@TWMenu-1]]+" zeny to pay for the warp to "+@pTmenuitems$[@Tmenuref[@TWMenu-1]]+"."; break;
+	case 1: mes "You don't seem to have "+@warpprice+" zeny to pay for the warp to "+@DLevelName$[@DWLmenuref[@DWLMenu-1]]+" at "+@pDmenuitems$[@Dmenuref[@DWMenu-1]]+"."; break;
+	case 2: mes "You don't seem to have "+@fee+" zeny to pay the storage fee."; break;
+	case 3: mes "You don't seem to have "+$QW_GS_PRICE+" zeny to pay the guild storage fee."; break;
+	case 4: mes "You don't seem to have "+@healfee+" zeny to pay for your healing."; break;
+	}
 	close;
 	end;
 	
@@ -673,38 +543,31 @@ L_Short_on_zeny:
 stampcard:
 // Counting of the ammount of places you have unlocked
 	next;
-	mes "Let me check what Towns you have";
-
+	mes "Let me check what Towns you have.";
 	callfunc "QWS_TownStamps";
-
-	mes "you collected^00FF00 "+@Tstamp+" of "+@MaxTstamp+" ^000000Towns.";
-	if (@Tstamp == 15) mes "They say there is an island you can only get to when married";
+	mes "You collected^00FF00 "+@Tstamp+" of "+@MaxTstamp+" ^000000Towns.";
+	if (@Tstamp == 15) mes "They say there is an island you can only get to when married...";
 	if (@Tstamp == 15) emotion 18;
 	next;
-	
-	mes "Let me check what dungeons you have";
-
+	mes "Let me check what dungeons you have.";
 	callfunc "QWS_DungeonStamps";
-
-	mes "you collected^00FF00 "+@Dstamp+" of "+@MaxDstamp+" ^000000Dungeons";
-	mes "To unlock a dungeon, search for my colleague.";
-	mes "You can usually find them near the middle or end of the dungeon";
+	mes "You collected^00FF00 "+@Dstamp+" of "+@MaxDstamp+" ^000000Dungeons.";
+	mes "To unlock a dungeon, search for my colleagues.";
+	mes "You can usually find them near the middle or end of the dungeon.";
 	return;
 }
 
 function	script	QWS_TownStamps	{
 	set @Tstamp,0;
-	set @MaxTstamp,21; //maximum number of towns
+	set @MaxTstamp,30; //maximum number of towns
 	set @binvalue,1;
 	set @Tstamploop,0;
 	do {
-	if ((@binvalue & ##QWS_T_Unlock) == @binvalue) set @Tstamp,@Tstamp+1;
-
-	set @binvalue, @binvalue *2;
-	set @Tstamploop, @Tstamploop + 1;
-
-}while (@Tstamploop < @MaxTstamp);
-return;
+		if ((@binvalue & ##QWS_T_Unlock) == @binvalue) set @Tstamp,@Tstamp+1;
+		set @binvalue, @binvalue *2;
+		set @Tstamploop, @Tstamploop + 1;
+	} while (@Tstamploop < @MaxTstamp);
+	return;
 }
 
 function	script	QWS_DungeonStamps	{
@@ -713,47 +576,51 @@ function	script	QWS_DungeonStamps	{
 	set @binvalue,1;
 	set @Dstamploop,0;
 	do {
-	if ((@binvalue & ##QWS_D_Unlock) == @binvalue) set @Dstamp,@Dstamp+1;
-
-	set @binvalue, @binvalue *2;
-	set @Dstamploop, @Dstamploop + 1;
-
-}while (@Dstamploop < @MaxDstamp);
-return;
+		if ((@binvalue & ##QWS_D_Unlock) == @binvalue) set @Dstamp,@Dstamp+1;
+		set @binvalue, @binvalue *2;
+		set @Dstamploop, @Dstamploop + 1;
+	} while (@Dstamploop < @MaxDstamp);
+	return;
 }
 
 //======================Main=Menu=Array============================
 
 function	script	QWS_MMarray	{
 
-// Currently 9 items
+	// Currently 9 items
+	setarray @pMmenuitems$[0], "GameMaster Menu", $QW_SP_Warpname$, "Warp to Towns", "Warp to Dungeons", "Why so few warps?", "Why don't you unlock this location?", "Heal", "Heal", "Storage", "Guild Storage", "Cancel";
+	set @Mi,0; // loop counter
+	set @Mj,0; // menu line counter
 
-	setarray @pMmenuitems$[0], "GameMaster Menu", $QW_SP_Warpname$, "Warp to Towns", "Warp to Dungeons", "Why so few Warps ?", "Why don't you Unlock this location ?", "Heal", "Heal", "Storage", "Guild Storage", "Cancel";
-	set @Mi,0; // That's our loop counter.
-	set @Mj,0; // That's the menu lines counter.
 //----------------GameMaster-Menu
-	if (getgmlevel()>= 80) set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
-	if (getgmlevel()>= 80) set @Mmenuref[@Mj],@Mi;
-	if (getgmlevel()>= 80) set @Mj,@Mj+1;
+	if (getgmlevel()>= 80) {
+		set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
+		set @Mmenuref[@Mj],@Mi;
+		set @Mj,@Mj+1;
+	}
 	set @Mi,@Mi+1;
 //----------------Special-Warp
 	callfunc "QWS_TownStamps";
 	callfunc "QWS_DungeonStamps";
 	if (@Tstamp == @MaxTstamp)&&(@Dstamp == @MaxDstamp)&&($QW_SP_WarpMap$ != "") {
-	set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
-	set @Mmenuref[@Mj],@Mi;
-	set @Mj,@Mj+1;
+		set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
+		set @Mmenuref[@Mj],@Mi;
+		set @Mj,@Mj+1;
 	}
 	set @Mi,@Mi+1;
 //----------------Town-Warp
-	if ($QW_TW_OFF == 0) set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
-	if ($QW_TW_OFF == 0) set @Mmenuref[@Mj],@Mi;
-	if ($QW_TW_OFF == 0) set @Mj,@Mj+1;
+	if ($QW_TW_OFF == 0) {
+		set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
+		set @Mmenuref[@Mj],@Mi;
+		set @Mj,@Mj+1;
+	}
 	set @Mi,@Mi+1;
 //----------------Dungeon-Warp
-	if ($QW_DW_OFF == 0) set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
-	if ($QW_DW_OFF == 0) set @Mmenuref[@Mj],@Mi;
-	if ($QW_DW_OFF == 0) set @Mj,@Mj+1;
+	if ($QW_DW_OFF == 0) {
+		set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
+		set @Mmenuref[@Mj],@Mi;
+		set @Mj,@Mj+1;
+	}
 	set @Mi,@Mi+1;
 //----------------Why-So-Few-Warps
 	set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
@@ -761,74 +628,71 @@ function	script	QWS_MMarray	{
 	set @Mj,@Mj+1;
 	set @Mi,@Mi+1;
 //----------------No-Unlock
-	if (getarg(0) == 1) set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
-	if (getarg(0) == 1) set @Mmenuref[@Mj],@Mi;
-	if (getarg(0) == 1) set @Mj,@Mj+1;
+	if (getarg(0) == 1) {
+		set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
+		set @Mmenuref[@Mj],@Mi;
+		set @Mj,@Mj+1;
+	}
 	set @Mi,@Mi+1;
 //----------------Healfull
-	if ($QW_HF == 1) set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
-	if ($QW_HF == 1) set @Mmenuref[@Mj],@Mi;
-	if ($QW_HF == 1) set @Mj,@Mj+1;
+	if ($QW_HF == 1) {
+		set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
+		set @Mmenuref[@Mj],@Mi;
+		set @Mj,@Mj+1;
+	}
 	set @Mi,@Mi+1;
 //----------------Healpart
-	if ($QW_HP == 1) set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
-	if ($QW_HP == 1) set @Mmenuref[@Mj],@Mi;
-	if ($QW_HP == 1) set @Mj,@Mj+1;
+	if ($QW_HP == 1) {
+		set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
+		set @Mmenuref[@Mj],@Mi;
+		set @Mj,@Mj+1;
+	}
 	set @Mi,@Mi+1;
 //----------------Storage
-	if ($QW_Stor == 1) set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
-	if ($QW_Stor == 1) set @Mmenuref[@Mj],@Mi;
-	if ($QW_Stor == 1) set @Mj,@Mj+1;
+	if ($QW_Stor == 1) {
+		set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
+		set @Mmenuref[@Mj],@Mi;
+		set @Mj,@Mj+1;
+	}
 	set @Mi,@Mi+1;
 //----------------GuildStorage
-	if ($QW_GStor == 1) set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
-	if ($QW_GStor == 1) set @Mmenuref[@Mj],@Mi;
-	if ($QW_GStor == 1) set @Mj,@Mj+1;
+	if ($QW_GStor == 1) {
+		set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
+		set @Mmenuref[@Mj],@Mi;
+		set @Mj,@Mj+1;
+	}
 	set @Mi,@Mi+1;
 //----------------Cancel
 	set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
 	set @Mmenuref[@Mj],@Mi;
 	return;
-	}
-
-
+}
 
 //======================Town=Menu=Array============================
-
-//----------------Prontera // I do this to find back sections quickly altho almost the same name is a line below it now
-//	setarray @pTmenuitems$[@Ti], "Prontera"; // Name of Town shown in Town select Menu
-//	setarray @pTprice[@Ti], $QW_BW_PRICE; // warp prices (Basic ($QW_BW_PRICE), Advanced ($QW_AW_PRICE), Overseas $QW_OW_PRICE)
+// Adding a town:
+//	setarray @pTmenuitems$[@Ti], "Prontera";// Name of Town shown in Town select Menu
+//	setarray @pTprice[@Ti], $QW_BW_PRICE;	// Warp prices: Basic ($QW_BW_PRICE), Advanced ($QW_AW_PRICE), Overseas ($QW_OW_PRICE)
 //
-//	setarray @pTmap$[@Ti], "prontera"; // mapfilename of town
-//	setarray @pTXcoords[@Ti], 156; // X warp coords
-//	setarray @pTYcoords[@Ti], 187; // Y warp coords
+//	setarray @pTmap$[@Ti], "prontera";	// Map name
+//	setarray @pTXcoords[@Ti], 156;		// X warp coords
+//	setarray @pTYcoords[@Ti], 187;		// Y warp coords
 //
-//	QWS_Make_Town_Menu XXX;
+//	QWS_Make_Town_Menu 0;	// Use a free number (last used is 30, Eclage)
 //
-// the full wap commands send out by this script for these example would be
-//warp example_01 123 123
-//
-//  use the same XXX number as you used when making your own town warpra
-//  Read below how
-//
-// example:
-//
-//syntax:
-//mapname,xcoord,ycoord,directionfacing	script	Name of NPC	NPC-ID,{
-//
-// Full example using fake map & coords
-//
-//example_01,213,213,4	script	Warpra	112,{
-//	callfunc "QWS_Town_Warpra",XXX,"A FAKE TOWN FOR EXAMPLE";
-//	close;
+// Adding a warpra:
+//	map,x,y,facing	script	Warpra#example	113,{
+//		callfunc "QWS_Town_Warpra",<town number>,"Your Town";
+//		close;
 //	}
-// use a free number for XXX, last used is 20, for Yuno
+//	Town number is the same as "QWS_Make_Town_Menu".
+//==================================================================
 
 function	script	QWS_Tarray	{
 	function QWS_Make_Town_Menu;
 
-	set @Ti,0; // That's our loop counter.
-	set @Tj,0; // That's the menu lines counter.
+	set @Ti,0; // loop counter
+	set @Tj,0; // menu lines counter
+
 //----------------Prontera
 	setarray @pTmenuitems$[@Ti], "Prontera";
 	setarray @pTprice[@Ti], $QW_BW_PRICE;
@@ -874,6 +738,15 @@ function	script	QWS_Tarray	{
 	setarray @pTYcoords[@Ti], 57;
 
 	QWS_Make_Town_Menu 4;
+//----------------Brasilis:
+	setarray @pTmenuitems$[@Ti], "Brasilis";
+	setarray @pTprice[@Ti], $QW_OW_PRICE;
+
+	setarray @pTmap$[@Ti], "brasilis";
+	setarray @pTXcoords[@Ti], 195;
+	setarray @pTYcoords[@Ti], 220;
+
+	QWS_Make_Town_Menu 21;
 //----------------Comodo:
 	setarray @pTmenuitems$[@Ti], "Comodo";
 	setarray @pTprice[@Ti], $QW_AW_PRICE;
@@ -883,6 +756,24 @@ function	script	QWS_Tarray	{
 	setarray @pTYcoords[@Ti], 161;
 
 	QWS_Make_Town_Menu 5;
+//----------------Dewata:
+	setarray @pTmenuitems$[@Ti], "Dewata";
+	setarray @pTprice[@Ti], $QW_OW_PRICE;
+
+	setarray @pTmap$[@Ti], "dewata";
+	setarray @pTXcoords[@Ti], 199;
+	setarray @pTYcoords[@Ti], 179;
+
+	QWS_Make_Town_Menu 29;
+//----------------Eclage:
+	setarray @pTmenuitems$[@Ti], "Eclage";
+	setarray @pTprice[@Ti], $QW_OW_PRICE;
+
+	setarray @pTmap$[@Ti], "eclage";
+	setarray @pTXcoords[@Ti], 111;
+	setarray @pTYcoords[@Ti], 39;
+
+	QWS_Make_Town_Menu 30;
 //----------------Einbech:
 	setarray @pTmenuitems$[@Ti], "Einbech";
 	setarray @pTprice[@Ti], $QW_AW_PRICE;
@@ -901,6 +792,15 @@ function	script	QWS_Tarray	{
 	setarray @pTYcoords[@Ti], 191;
 
 	QWS_Make_Town_Menu 7;
+//----------------El Dicastes:
+	setarray @pTmenuitems$[@Ti], "El Dicastes";
+	setarray @pTprice[@Ti], $QW_OW_PRICE;
+
+	setarray @pTmap$[@Ti], "dicastes01";
+	setarray @pTXcoords[@Ti], 197;
+	setarray @pTYcoords[@Ti], 187;
+
+	QWS_Make_Town_Menu 22;
 //----------------Geffen:
 	setarray @pTmenuitems$[@Ti], "Geffen";
 	setarray @pTprice[@Ti], $QW_BW_PRICE;
@@ -973,6 +873,24 @@ function	script	QWS_Tarray	{
 	setarray @pTYcoords[@Ti], 131;
 
 	QWS_Make_Town_Menu 15;
+//----------------Manuk
+	setarray @pTmenuitems$[@Ti], "Manuk";
+	setarray @pTprice[@Ti], $QW_OW_PRICE;
+
+	setarray @pTmap$[@Ti], "manuk";
+	setarray @pTXcoords[@Ti], 260;
+	setarray @pTYcoords[@Ti], 175;
+
+	QWS_Make_Town_Menu 23;
+//----------------Mora
+	setarray @pTmenuitems$[@Ti], "Mora";
+	setarray @pTprice[@Ti], $QW_OW_PRICE;
+
+	setarray @pTmap$[@Ti], "mora";
+	setarray @pTXcoords[@Ti], 111;
+	setarray @pTYcoords[@Ti], 97;
+
+	QWS_Make_Town_Menu 24;
 //----------------Morroc:
 	setarray @pTmenuitems$[@Ti], "Morroc";
 	setarray @pTprice[@Ti], $QW_BW_PRICE;
@@ -982,6 +900,15 @@ function	script	QWS_Tarray	{
 	setarray @pTYcoords[@Ti], 93;
 
 	QWS_Make_Town_Menu 16;
+//----------------Moscovia
+	setarray @pTmenuitems$[@Ti], "Moscovia";
+	setarray @pTprice[@Ti], $QW_OW_PRICE;
+
+	setarray @pTmap$[@Ti], "moscovia";
+	setarray @pTXcoords[@Ti], 219;
+	setarray @pTYcoords[@Ti], 193;
+
+	QWS_Make_Town_Menu 25;
 //----------------Niflheim:
 	setarray @pTmenuitems$[@Ti], "Niflheim";
 	setarray @pTprice[@Ti], $QW_AW_PRICE;
@@ -1000,6 +927,24 @@ function	script	QWS_Tarray	{
 	setarray @pTYcoords[@Ti], 75;
 
 	QWS_Make_Town_Menu 18;
+//----------------Rachel
+	setarray @pTmenuitems$[@Ti], "Rachel";
+	setarray @pTprice[@Ti], $QW_AW_PRICE;
+
+	setarray @pTmap$[@Ti], "rachel";
+	setarray @pTXcoords[@Ti], 130;
+	setarray @pTYcoords[@Ti], 111;
+
+	QWS_Make_Town_Menu 26;
+//----------------Splendide
+	setarray @pTmenuitems$[@Ti], "Splendide";
+	setarray @pTprice[@Ti], $QW_OW_PRICE;
+
+	setarray @pTmap$[@Ti], "splendide";
+	setarray @pTXcoords[@Ti], 200;
+	setarray @pTYcoords[@Ti], 153;
+
+	QWS_Make_Town_Menu 27;
 //----------------Umbala:
 	setarray @pTmenuitems$[@Ti], "Umbala";
 	setarray @pTprice[@Ti], $QW_AW_PRICE;
@@ -1009,6 +954,15 @@ function	script	QWS_Tarray	{
 	setarray @pTYcoords[@Ti], 130;
 
 	QWS_Make_Town_Menu 19;
+//----------------Veins
+	setarray @pTmenuitems$[@Ti], "Veins";
+	setarray @pTprice[@Ti], $QW_OW_PRICE;
+
+	setarray @pTmap$[@Ti], "veins";
+	setarray @pTXcoords[@Ti], 216;
+	setarray @pTYcoords[@Ti], 123;
+
+	QWS_Make_Town_Menu 28;
 //----------------Yuno:
 	setarray @pTmenuitems$[@Ti], "Yuno";
 	setarray @pTprice[@Ti], $QW_AW_PRICE;
@@ -1040,8 +994,8 @@ function	QWS_Make_Town_Menu	{
 // check marker and make menu item
 menu_item:
 	if ((@temptownmenubin & ##QWS_T_Unlock) != @temptownmenubin) {
-	set @Ti,@Ti+1;
-	return;
+		set @Ti,@Ti+1;
+		return;
 	}
 	if (@pTprice[@Ti] != 0)&&($QW_MapUserShow == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti]+" -> "+@pTprice[@Ti];
 	if (@pTprice[@Ti] == 0)&&($QW_MapUserShow == 0) set @Tmenulist$[@Tj], @pTmenuitems$[@Ti];
@@ -1051,49 +1005,31 @@ menu_item:
 	set @Tj,@Tj+1;
 	set @Ti,@Ti+1;
 	return;
-
 }
 }
 
 //====================Dungeon=Menu=Arrays==========================
-
-//----------------A FAKE DUNGEON FOR EXAMPLE // I do this to find back sections quickly altho almost the same name is a line below it now
-//	setarray @pDmenuitems$[@Di], "Fake Dungeon"; // Name of Dungeon shown in Dungeon select Menu
-//	setarray @pDprice[@Di], $QW_BW_PRICE; // warp prices (Basic ($QW_BW_PRICE), Advanced ($QW_AW_PRICE), Overseas $QW_OW_PRICE)
-//	setarray @pDfee$[@Di], "$QW_BW_FEE"; // Identifyer for the Dungeon fee caluclation (Basic ("$QW_BW_FEE"), Advanced ("$QW_AW_FEE"), Overseas ("$QW_OW_FEE")) please use setting in relation with option above (Don't forget "")
-//	setarray @DLevels[@Di], 2; //number of levels in dungeon (very important if set to high will shift all leveldata!!)
+// Adding a dungeon:
+//	setarray @pDmenuitems$[@Di], "Abyss Lake";	// Name of Dungeon shown in Dungeon select Menu
+//	setarray @pDprice[@Di], $QW_AW_PRICE;		// Warp prices: Basic ($QW_BW_PRICE), Advanced ($QW_AW_PRICE), Overseas ($QW_OW_PRICE)
+//	setarray @pDfee$[@Di], "$QW_AW_FEE";		// Identifier for fee caluclation: Basic ("$QW_BW_FEE"), Advanced ("$QW_AW_FEE"), Overseas ("$QW_OW_FEE")
+//	setarray @DLevels[@Di], 3;			// Number of levels in dungeon
 //
-//	setarray @DGat$[@Dref], "example_01", "example_02"; // mapfilename of dungeon level
-//	setarray @DLevelName$[@Dref], "Example Level 1", "Example Level 2"; // level name shown in dungeon level select
-//	setarray @DXcoords[@Dref], 123, 234; // X warp coords
-//	setarray @DYcoords[@Dref], 123, 234;// Y warp coords
-//	setarray @DDepth[@Dref], 0, 1; // relative depth to entrance to calculate extra warp fee
+//	setarray @DGat$[@Dref], "abyss_01", "abyss_02", "abyss_03";	// Map names of dungeon levels
+//	setarray @DLevelName$[@Dref], "Level 1", "Level 2", "Level 3";	// Name of dungeon levels shown in Menu
+//	setarray @DXcoords[@Dref], 265, 275, 116;			// X warp coords
+//	setarray @DYcoords[@Dref], 273, 270, 27;			// Y warp coords
+//	setarray @DDepth[@Dref], 0, 1, 2;				// Relative depth to entrance, to calculate extra warp fee
 //
-//	QWS_Make_Dungeon_Menu XXX
+//	QWS_Make_Dungeon_Menu 0;	// Use a free number (last used is 28, Kiel Dungeon)
 //
-// the full wap commands send out by this scripts for these examples would be
-// for Example Level 1:
-//warp example_01 123 123
-//
-// for Example Level 2:
-//warp example_02 234 234
-//
-//  use the same XXX number as you used when making your own dungeon unlocker (Warpra Helper) inside the dungeon
-//  (usually half way near a warp to next level)
-//  Read below how
-//
-// example:
-//
-//syntax:
-//mapname,xcoord,ycoord,directionfacing	script	Name of NPC	NPC-ID,{
-//
-// Full example using fake map & coords
-//
-//example_01,213,213,4	script	Warpra Helper	112,{
-//	callfunc "QWS_Dungeon_Warpra",XXX,"A FAKE DUNGEON FOR EXAMPLE";
-//	close;
+// Adding a warpra:
+//	map,x,y,facing	script	Warpra Helper#example	112,{
+//		callfunc "QWS_Dungeon_Warpra",<dungeon number>,"Your Dungeon";
+//		close;
 //	}
-// use a free number for XXX, last used is 28, for Kiel Dungeon
+//	Dungeon number is the same as "QWS_Make_Dungeon_Menu".
+//==================================================================
 
 function	script	QWS_Darray	{
 	function QWS_Make_Dungeon_Menu;
@@ -1101,6 +1037,7 @@ function	script	QWS_Darray	{
 	set @Di,0;
 	set @Dj,0;
 	set @Dref,0;
+
 //----------------ABYSS LAKE
 	setarray @pDmenuitems$[@Di], "Abyss Lake";
 	setarray @pDprice[@Di], $QW_AW_PRICE;
@@ -1529,10 +1466,10 @@ function	QWS_Make_Dungeon_Menu	{
 // check marker and make menu item
 menu_item:
 	if ((@tempdungeonmenubin & ##QWS_D_Unlock) != @tempdungeonmenubin) {
-	setarray @DLocRef[@Di], @Dref;
-	set @Dref, @Dref+@DLevels[@Di];
-	set @Di,@Di+1;
-	return;
+		setarray @DLocRef[@Di], @Dref;
+		set @Dref, @Dref+@DLevels[@Di];
+		set @Di,@Di+1;
+		return;
 	}
 	if ($QW_MapUserShow == 1) {
 		set @tempmapusers,0;
@@ -1540,15 +1477,15 @@ menu_item:
 		do {
 			set @tempmapusers,(getmapusers(@DGat$[@Dref+@mapusersloop]) + @tempmapusers);
 			set @mapusersloop, (@mapusersloop + 1);
-		}while (@DLevels[@Di] > @mapusersloop);
-	if (@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" ["+@tempmapusers+"] -> "+@pDprice[@Di];
-	if (@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" ["+@tempmapusers+"]";
-	set @Dmenuref[@Dj],@Di;
-	set @Dj,@Dj+1;
-	setarray @DLocRef[@Di], @Dref;
-	set @Dref, @Dref+@DLevels[@Di];
-	set @Di,@Di+1;
-	return;
+		} while (@DLevels[@Di] > @mapusersloop);
+		if (@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" ["+@tempmapusers+"] -> "+@pDprice[@Di];
+		if (@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" ["+@tempmapusers+"]";
+		set @Dmenuref[@Dj],@Di;
+		set @Dj,@Dj+1;
+		setarray @DLocRef[@Di], @Dref;
+		set @Dref, @Dref+@DLevels[@Di];
+		set @Di,@Di+1;
+		return;
 	}
 	if (@pDprice[@Di] != 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di]+" -> "+@pDprice[@Di];
 	if (@pDprice[@Di] == 0) set @Dmenulist$[@Dj], @pDmenuitems$[@Di];
@@ -1558,218 +1495,31 @@ menu_item:
 	set @Dref, @Dref+@DLevels[@Di];
 	set @Di,@Di+1;
 	return;
-
 }
 }
 
 function	script	QWS_DLarray	{
 //----------------Start building Menu
-	set @DWref,@DLocRef[@DwarpMenu]; // That's our reference to the arrays with leveldata.
-	set @DWi,0;  // That's our loop counter.
-	set @DWj,0; // That's the menu lines counter.
+	set @DWref,@DLocRef[@DwarpMenu]; // reference to the arrays with leveldata
+	set @DWi,0;  // loop counter
+	set @DWj,0; // menu lines counter
 	cleararray @DWLmenulist$[0],"",20; // Clearing the array to get rid off ghost items in menu
 	do {
 		if ($QW_DL == 0)||($QW_DDL >= @DDepth[@DWref]) {
-			
 			set @warpprice, (@pDprice[@DwarpMenu]+ (getd(@pDfee$[@DwarpMenu])*@DDepth[@DWref]));
-
 			if (@warpprice != 0)&&($QW_MapUserShow == 0) set @DWLmenulist$[@DWj], @DLevelName$[@DWref]+" -> "+@warpprice;
 			if (@warpprice == 0)&&($QW_MapUserShow == 0) set @DWLmenulist$[@DWj], @DLevelName$[@DWref];
 			if (@warpprice != 0)&&($QW_MapUserShow == 1) set @DWLmenulist$[@DWj], @DLevelName$[@DWref]+" ["+getmapusers(@DGat$[@DWref])+"] -> "+@warpprice;
 			if (@warpprice == 0)&&($QW_MapUserShow == 1) set @DWLmenulist$[@DWj], @DLevelName$[@DWref]+" ["+getmapusers(@DGat$[@DWref])+"]";
 			set @DWLmenuref[@DWj],@DWref;
-		
-		set @DWj,@DWj+1;
+			set @DWj,@DWj+1;
 		}
 		set @DWref, @DWref+1;
 		set @DWi,@DWi+1;
-	}while	(@DWi < @DLevels[@DwarpMenu]);
+	} while (@DWi < @DLevels[@DwarpMenu]);
 	set @DWLmenulist$[@DWj], "Exit";
 	set @DWLmenuref[@DWj],57005; // 57005='dead' in hex
 	return;
-	}
-	
-
-//=================Backwards=Compatibility=Pre=1.8=================
-
-function	script	QWS_BackComp	{
-// reference where i put the towns: "Prontera"[0], "Alberta"[1], "Aldebaran"[2], "Amatsu"[3], "Ayothaya"[4], "Comodo"[5], "Einbech"[6], "Einbroch"[7], "Geffen"[8], "Gonryun"[9], "Hugel"[10], "Izlude"[11], "Jawaii"[12], "Lighthalzen"[13], "Louyang"[14], "Lutie"[15], "Morroc"[16], "Niflheim"[17], "Payon"[18], "Umbala"[19], "Yuno"[20];
-// reference where i put the dungeons: "Abyss Lake"[0], "Amatsu Dungeon"[1], "Ant Hell Dungeon"[2], "Ayotaya Dungeon"[3], "Byalan Dungeon"[4], "Clock Tower Dungeon"[5], "Coal Mine Dungeon"[6], "Culvert Dungeon"[7], "Einbech Dungeon"[8], "Gefenia Dungeon"[9], "Geffen Dungeon"[10], "Glast Heim Dungeon"[11], "Gonryun Dungeon"[12], "Hidden Dungeon"[13], "Juperos Cave"[14], "Lighthalzen Bio Lab"[15], "Louyang Dungeon"[16], "Magma Dungeon"[17], "Odin Temple"[18], "Orc Dungeon"[19], "Payon Dungeon"[20], "Pyramids Dungeon"[21], "Sphinx Dungeon"[22], "Sunken Ship Dungeon"[23], "Thanatos Tower"[24], "Toy Factory Dungeon"[25], "Turtle Island Dungeon"[26], "Umbala Dungeon"[27], "Kiel Dungeon[28];
-// also clears variables so that the account file variables can be used for something else variable 0 = variable delete on next save
-
-// Towns
-	set @towntemp,0;
-	if (#prontera != 0) set @towntemp,@towntemp + 1;
-	if (#alberta != 0) set @towntemp,@towntemp + 2;
-	if (#aldebaran != 0) set @towntemp,@towntemp + 4;
-	if (#amatsu != 0) set @towntemp,@towntemp + 8;
-	if (#ayotaya != 0) set @towntemp,@towntemp + 16;
-	if (#comodo != 0) set @towntemp,@towntemp + 32;
-	if (#einbech != 0) set @towntemp,@towntemp + 64;
-	if (#einbroch != 0) set @towntemp,@towntemp + 128;
-	if (#geffen != 0) set @towntemp,@towntemp + 256;
-	if (#gonryun != 0) set @towntemp,@towntemp + 512;
-	if (#hugel != 0) set @towntemp,@towntemp + 1024;
-	if (#izlude != 0) set @towntemp,@towntemp + 2048;
-	if (#jawaii != 0) set @towntemp,@towntemp + 4096;
-	if (#lighthalzen != 0) set @towntemp,@towntemp + 8192;
-	if (#louyang != 0) set @towntemp,@towntemp + 16384;
-	if (#xmas != 0) set @towntemp,@towntemp + 32768;
-	if (#morocc != 0) set @towntemp,@towntemp + 65536;
-	if (#niflheim != 0) set @towntemp,@towntemp + 131072;
-	if (#payon != 0) set @towntemp,@towntemp + 262144;
-	if (#umbala != 0) set @towntemp,@towntemp + 524288;
-	if (#yuno != 0) set @towntemp,@towntemp + 1048576;
-// Clear Town variables
-	set #prontera,0;
-	set #alberta,0;
-	set #aldebaran,0;
-	set #amatsu,0;
-	set #ayotaya,0;
-	set #comodo,0;
-	set #einbech,0;
-	set #einbroch,0;
-	set #geffen,0;
-	set #gonryun,0;
-	set #hugel,0;
-	set #izlude,0;
-	set #jawaii,0;
-	set #lighthalzen,0;
-	set #louyang,0;
-	set #xmas,0;
-	set #morocc,0;
-	set #niflheim,0;
-	set #payon,0;
-	set #umbala,0;
-	set #yuno,0;
-// set Town warp unlock variable
-set ##QWS_T_Unlock, (##QWS_T_Unlock | @towntemp);
- //because multiple account servers now stack on 1 variable i used a 'or' to stack them
-// Dungeons
-	set @dungeontemp,0;
-	if (#abyss != 0) set @dungeontemp,@dungeontemp + 1;
-	if (#ama_dun != 0) set @dungeontemp,@dungeontemp + 2;
-	if (#anthell != 0) set @dungeontemp,@dungeontemp + 4;
-	if (#ayotaya_dun != 0) set @dungeontemp,@dungeontemp + 8;
-	if (#iz_dun != 0) set @dungeontemp,@dungeontemp + 16;
-	if (#c_tower != 0) set @dungeontemp,@dungeontemp + 32;
-	if (#mjo_dun != 0) set @dungeontemp,@dungeontemp + 64;
-	if (#prt_sewb != 0) set @dungeontemp,@dungeontemp + 128;
-	if (#einbech_dun != 0) set @dungeontemp,@dungeontemp + 256;
-	if (#gefenia != 0) set @dungeontemp,@dungeontemp + 512;
-	if (#gef_dun != 0) set @dungeontemp,@dungeontemp + 1024;
-	if (#gl_dun != 0) set @dungeontemp,@dungeontemp + 2048;
-	if (#gon_dun != 0) set @dungeontemp,@dungeontemp + 4096;
-	if (#hid_dun != 0) set @dungeontemp,@dungeontemp + 8192;
-	if (#juperos != 0) set @dungeontemp,@dungeontemp + 16384;
-	if (#lighthalzen_dun != 0) set @dungeontemp,@dungeontemp + 32768;
-	if (#louyang_dun != 0) set @dungeontemp,@dungeontemp + 65536;
-	if (#mag_dun != 0) set @dungeontemp,@dungeontemp + 131072;
-	if (#odintemple != 0) set @dungeontemp,@dungeontemp + 262144;
-	if (#orcsdun != 0) set @dungeontemp,@dungeontemp + 524288;
-	if (#pay_dun != 0) set @dungeontemp,@dungeontemp + 1048576;
-	if (#moc_pryd != 0) set @dungeontemp,@dungeontemp + 2097152;
-	if (#in_sphinx != 0) set @dungeontemp,@dungeontemp + 4194304;
-	if (#treasure != 0) set @dungeontemp,@dungeontemp + 8388608;
-	if (#thanatos_tower != 0) set @dungeontemp,@dungeontemp + 16777216;
-	if (#xmas_dun != 0) set @dungeontemp,@dungeontemp + 33554432;
-	if (#tur_dun != 0) set @dungeontemp,@dungeontemp + 67108864;
-	if (#um_dun != 0) set @dungeontemp,@dungeontemp + 134217728;
-// Clear Dungeon variables
-	set #abyss,0;
-	set #ama_dun,0;
-	set #anthell,0;
-	set #ayotaya_dun,0;
-	set #iz_dun,0;
-	set #c_tower,0;
-	set #mjo_dun,0;
-	set #prt_sewb,0;
-	set #einbech_dun,0;
-	set #gefenia,0;
-	set #gef_dun,0;
-	set #gl_dun,0;
-	set #gon_dun,0;
-	set #hid_dun,0;
-	set #juperos,0;
-	set #lighthalzen_dun,0;
-	set #louyang_dun,0;
-	set #mag_dun,0;
-	set #odintemple,0;
-	set #orcsdun,0;
-	set #pay_dun,0;
-	set #moc_pryd,0;
-	set #in_sphinx,0;
-	set #treasure,0;
-	set #thanatos_tower,0;
-	set #xmas_dun,0;
-	set #tur_dun,0;
-	set #um_dun,0;
-// set Town warp unlock variable
-set ##QWS_D_Unlock, (##QWS_D_Unlock | @dungeontemp);
-//mark that this character has done the upgrade to 1.8
-set ##QWS_UP,18;
-return;
-}
-
-
-//===================Extra=Variable=Clear=Pre=1.8==================
-function	script	Extra_Variable_Clear	{
-// Clear Town variables
-	set #prontera,0;
-	set #alberta,0;
-	set #aldebaran,0;
-	set #amatsu,0;
-	set #ayotaya,0;
-	set #comodo,0;
-	set #einbech,0;
-	set #einbroch,0;
-	set #geffen,0;
-	set #gonryun,0;
-	set #hugel,0;
-	set #izlude,0;
-	set #jawaii,0;
-	set #lighthalzen,0;
-	set #louyang,0;
-	set #xmas,0;
-	set #morocc,0;
-	set #niflheim,0;
-	set #payon,0;
-	set #umbala,0;
-	set #yuno,0;
-
-// Clear Dungeon variables
-	set #abyss,0;
-	set #ama_dun,0;
-	set #anthell,0;
-	set #ayotaya_dun,0;
-	set #iz_dun,0;
-	set #c_tower,0;
-	set #mjo_dun,0;
-	set #prt_sewb,0;
-	set #einbech_dun,0;
-	set #gefenia,0;
-	set #gef_dun,0;
-	set #gl_dun,0;
-	set #gon_dun,0;
-	set #hid_dun,0;
-	set #juperos,0;
-	set #lighthalzen_dun,0;
-	set #louyang_dun,0;
-	set #mag_dun,0;
-	set #odintemple,0;
-	set #orcsdun,0;
-	set #pay_dun,0;
-	set #moc_pryd,0;
-	set #in_sphinx,0;
-	set #treasure,0;
-	set #thanatos_tower,0;
-	set #xmas_dun,0;
-	set #tur_dun,0;
-	set #um_dun,0;
-
-// as the account based variables are limited just run this on every character to save some variables
-set QWS_ExtraVARClear,18;
-return;
 }
 
 //================Dungeon=Warpras=That=Only=Unlock=================
@@ -1783,12 +1533,12 @@ function	script	QWS_Dungeon_Warpra	{
 		mes getarg(1)+" unlocked!";
 		QWS_D_setbin(getarg(0));
 		return;
-	} else if (QWS_D_getbin(getarg(0)) == 1){
+	} else if (QWS_D_getbin(getarg(0)) == 1) {
 		mes "[Warpra]";
-		mes "Sorry I can only unlock this location.";
+		mes "Sorry, I can only unlock this location.";
 	} else
-		debugmes "QWS_Dungeon_Warpra error, improper syntax ?";
-		return;
+		debugmes "QWS_Dungeon_Warpra error, improper syntax?";
+	return;
 
 
 function	QWS_D_setbin	{
@@ -1809,8 +1559,8 @@ function	QWS_D_getbin	{
 	if (getarg(0) == 0) goto binget;
 	set @temploopgetbin,0;
 	do {
-	set @tempgetbindata, @tempgetbindata * 2;
-	set @temploopgetbin, @temploopgetbin + 1;
+		set @tempgetbindata, @tempgetbindata * 2;
+		set @temploopgetbin, @temploopgetbin + 1;
 	} while (getarg(0) > @temploopgetbin);
 binget:
 	if ((@tempgetbindata & ##QWS_D_Unlock) == @tempgetbindata) return 1;
@@ -1829,20 +1579,19 @@ function	script	QWS_Town_Warpra	{
 		mes getarg(1)+" unlocked!";
 		QWS_T_setbin(getarg(0));
 		return;
-	} else if (QWS_T_getbin(getarg(0)) == 1){
-callfunc "Q_Warpra",0;
+	} else if (QWS_T_getbin(getarg(0)) == 1) {
+		callfunc "Q_Warpra",0;
 	} else
 		debugmes "QWS_Town_Warpra error, improper syntax ?";
-		return;
-
+	return;
 
 function	QWS_T_setbin	{
 	set @tempsetbindata,1;
 	if (getarg(0) == 0) goto binset;
 	set @temploopsetbin,0;
 	do {
-	set @tempsetbindata, @tempsetbindata * 2;
-	set @temploopsetbin, @temploopsetbin + 1;
+		set @tempsetbindata, @tempsetbindata * 2;
+		set @temploopsetbin, @temploopsetbin + 1;
 	} while (getarg(0) > @temploopsetbin);
 binset:
 	set ##QWS_T_Unlock,(##QWS_T_Unlock | @tempsetbindata);
@@ -1854,8 +1603,8 @@ function	QWS_T_getbin	{
 	if (getarg(0) == 0) goto binget;
 	set @temploopgetbin,0;
 	do {
-	set @tempgetbindata, @tempgetbindata * 2;
-	set @temploopgetbin, @temploopgetbin + 1;
+		set @tempgetbindata, @tempgetbindata * 2;
+		set @temploopgetbin, @temploopgetbin + 1;
 	} while (getarg(0) > @temploopgetbin);
 binget:
 	if ((@tempgetbindata & ##QWS_T_Unlock) == @tempgetbindata) return 1;
@@ -1864,274 +1613,80 @@ binget:
 }
 //============================Warpras==============================
 
-alb2trea,73,101,4	script	Warpra#1	113,{
-	callfunc "Q_Warpra",1;
-}
-ama_fild01,178,325,1	script	Warpra#2	113,{
-	callfunc "Q_Warpra",1;
-}
-gef_fild10,71,339,4	script	Warpra#3	113,{
-	callfunc "Q_Warpra",1;
-}
-izlu2dun,104,82,4	script	Warpra#4	113,{
-	callfunc "Q_Warpra",1;
-}
-mjolnir_02,85,363,4	script	Warpra#5	113,{
-	callfunc "Q_Warpra",1;
-}
-moc_fild04,207,331,4	script	Warpra#6	113,{
-	callfunc "Q_Warpra",1;
-}
-moc_fild19,106,97,4	script	Warpra#7	113,{
-	callfunc "Q_Warpra",1;
-}
-moc_ruins,64,166,4	script	Warpra#8	113,{
-	callfunc "Q_Warpra",1;
-}
-niflheim,197,192,3	script	Warpra#9	113,{
-	callfunc "Q_Warpra",1;
-}
-pay_arche,39,135,4	script	Warpra#10	113,{
-	callfunc "Q_Warpra",1;
-}
-prt_fild05,273,215,4	script	Warpra#11	113,{
-	callfunc "Q_Warpra",1;
-}
-tur_dun01,148,239,4	script	Warpra#12	113,{
-	callfunc "Q_Warpra",1;
-}
-valkyrie,48,35,8	script	Warpra#13	113,{
-	callfunc "Q_Warpra",1;
-}
-yuno_fild03,37,135,4	script	Warpra#14	113,{
-	callfunc "Q_Warpra",1;
-}
+-	script	Warpra#0	-1,{ callfunc "Q_Warpra",1; }
+alb2trea,73,101,4	duplicate(Warpra#0)	Warpra#1	113
+ama_fild01,178,325,1	duplicate(Warpra#0)	Warpra#2	113
+gef_fild10,71,339,4	duplicate(Warpra#0)	Warpra#3	113
+izlu2dun,104,82,4	duplicate(Warpra#0)	Warpra#4	113
+mjolnir_02,85,363,4	duplicate(Warpra#0)	Warpra#5	113
+moc_fild04,207,331,4	duplicate(Warpra#0)	Warpra#6	113
+moc_fild19,106,97,4	duplicate(Warpra#0)	Warpra#7	113
+moc_ruins,64,166,4	duplicate(Warpra#0)	Warpra#8	113
+niflheim,197,192,3	duplicate(Warpra#0)	Warpra#9	113
+pay_arche,39,135,4	duplicate(Warpra#0)	Warpra#10	113
+prt_fild05,273,215,4	duplicate(Warpra#0)	Warpra#11	113
+tur_dun01,148,239,4	duplicate(Warpra#0)	Warpra#12	113
+valkyrie,48,35,8	duplicate(Warpra#0)	Warpra#13	113
+yuno_fild03,37,135,4	duplicate(Warpra#0)	Warpra#14	113
 
-alberta,32,240,4	script	Warpra#15	113,{
-	callfunc "QWS_Town_Warpra",1,"Alberta Town";
-	close;
-}
-aldebaran,146,118,4	script	Warpra#16	113,{
-	callfunc "QWS_Town_Warpra",2,"Aldebaran Town";
-	close;
-}
-ayothaya,216,171,5	script	Warpra#17	113,{
-	callfunc "QWS_Town_Warpra",4,"Ayotaya Town";
-	close;
-}
-amatsu,193,81,1	script	Warpra#18	113,{
-	callfunc "QWS_Town_Warpra",3,"Amatsu Town";
-	close;
-}
-comodo,195,158,4	script	Warpra#19	113,{
-	callfunc "QWS_Town_Warpra",5,"Comodo Town";
-	close;
-}
-einbroch,229,196,5	script	Warpra#20	113,{
-	callfunc "QWS_Town_Warpra",7,"Einbroch Town";
-	close;
-}
-einbech,173,131,5	script	Warpra#21	113,{
-	callfunc "QWS_Town_Warpra",6,"Einbech Town";
-	close;
-}
-geffen,116,66,4	script	Warpra#22	113,{
-	callfunc "QWS_Town_Warpra",8,"Geffen Town";
-	close;
-}
-gonryun,152,130,4	script	Warpra#23	113,{
-	callfunc "QWS_Town_Warpra",9,"Gonryun Town";
-	close;
-}
-hugel,90,127,5	script	Warpra#24	113,{
-	callfunc "QWS_Town_Warpra",10,"Hugel Town";
-	close;
-}
-jawaii,107,182,5	script	Warpra#25	113,{
-	callfunc "QWS_Town_Warpra",12,"Jawaii Town";
-	close;
-}
-izlude,132,116,4	script	Warpra#26	113,{
-	callfunc "QWS_Town_Warpra",11,"Izlude Town";
-	close;
-}
-lighthalzen,153,100,5	script	Warpra#27	113,{
-	callfunc "QWS_Town_Warpra",13,"Lighthalzen Town";
-	close;
-}
-louyang,211,106,4	script	Warpra#28	113,{
-	callfunc "QWS_Town_Warpra",14,"Louyang Town";
-	close;
-}
-morocc,157,95,4	script	Warpra#29	113,{
-	callfunc "QWS_Town_Warpra",16,"Morroc Town";
-	close;
-}
-nif_fild01,319,77,1	script	Warpra#30	113,{
-	callfunc "QWS_Town_Warpra",17,"Niflheim Town";
-	close;
-}
-payon,183,110,4	script	Warpra#31	113,{
-	callfunc "QWS_Town_Warpra",18,"Payon Town";
-	close;
-}
-prontera,147,172,5	script	Warpra#32	113,{
-	callfunc "QWS_Town_Warpra",0,"Prontera Town";
-	close;
-}
-umbala,133,130,4	script	Warpra#33	113,{
-	callfunc "QWS_Town_Warpra",19,"Umbala Town";
-	close;
-}
-xmas,151,136,4	script	Warpra#34	113,{
-	callfunc "QWS_Town_Warpra",15,"Lutie Town";
-	close;
-}
-yuno,138,162,4	script	Warpra#35	113,{
-	callfunc "QWS_Town_Warpra",20,"Yuno Town";
-	close;
-}
+alberta,32,240,4	script	Warpra#15	113,{ callfunc "QWS_Town_Warpra",1,"Alberta Town"; close; }
+aldebaran,146,118,4	script	Warpra#16	113,{ callfunc "QWS_Town_Warpra",2,"Aldebaran Town"; close; }
+ayothaya,216,171,5	script	Warpra#17	113,{ callfunc "QWS_Town_Warpra",4,"Ayotaya Town"; close; }
+amatsu,193,81,1	script	Warpra#18	113,{ callfunc "QWS_Town_Warpra",3,"Amatsu Town"; close; }
+comodo,195,158,4	script	Warpra#19	113,{ callfunc "QWS_Town_Warpra",5,"Comodo Town"; close; }
+einbroch,229,196,5	script	Warpra#20	113,{ callfunc "QWS_Town_Warpra",7,"Einbroch Town"; close; }
+einbech,173,131,5	script	Warpra#21	113,{ callfunc "QWS_Town_Warpra",6,"Einbech Town"; close; }
+geffen,116,66,4	script	Warpra#22	113,{ callfunc "QWS_Town_Warpra",8,"Geffen Town"; close; }
+gonryun,152,130,4	script	Warpra#23	113,{ callfunc "QWS_Town_Warpra",9,"Gonryun Town"; close; }
+hugel,90,127,5	script	Warpra#24	113,{ callfunc "QWS_Town_Warpra",10,"Hugel Town"; close; }
+jawaii,107,182,5	script	Warpra#25	113,{ callfunc "QWS_Town_Warpra",12,"Jawaii Town"; close; }
+izlude,132,116,4	script	Warpra#26	113,{ callfunc "QWS_Town_Warpra",11,"Izlude Town"; close; }
+lighthalzen,153,100,5	script	Warpra#27	113,{ callfunc "QWS_Town_Warpra",13,"Lighthalzen Town"; close; }
+louyang,211,106,4	script	Warpra#28	113,{ callfunc "QWS_Town_Warpra",14,"Louyang Town"; close; }
+morocc,157,95,4	script	Warpra#29	113,{ callfunc "QWS_Town_Warpra",16,"Morroc Town"; close; }
+nif_fild01,319,77,1	script	Warpra#30	113,{ callfunc "QWS_Town_Warpra",17,"Niflheim Town"; close; }
+payon,183,110,4	script	Warpra#31	113,{ callfunc "QWS_Town_Warpra",18,"Payon Town"; close; }
+prontera,147,172,5	script	Warpra#32	113,{ callfunc "QWS_Town_Warpra",0,"Prontera Town"; close; }
+umbala,133,130,4	script	Warpra#33	113,{ callfunc "QWS_Town_Warpra",19,"Umbala Town"; close; }
+xmas,151,136,4	script	Warpra#34	113,{ callfunc "QWS_Town_Warpra",15,"Lutie Town"; close; }
+yuno,138,162,4	script	Warpra#35	113,{ callfunc "QWS_Town_Warpra",20,"Yuno Town"; close; }
+brasilis,201,222,4	script	Warpra#36	113,{ callfunc "QWS_Town_Warpra",21,"Brasilis Town"; close; }
+dicastes01,194,194,6	script	Warpra#37	113,{ callfunc "QWS_Town_Warpra",22,"El Dicastes Town"; close; }
+manuk,262,177,4	script	Warpra#38	113,{ callfunc "QWS_Town_Warpra",23,"Manuk Town"; close; }
+mora,110,100,4	script	Warpra#39	113,{ callfunc "QWS_Town_Warpra",24,"Mora Town"; close; }
+moscovia,216,196,6	script	Warpra#40	113,{ callfunc "QWS_Town_Warpra",25,"Moscovia Town"; close; }
+rachel,135,116,4	script	Warpra#41	113,{ callfunc "QWS_Town_Warpra",26,"Rachel Town"; close; }
+splendide,205,153,4	script	Warpra#42	113,{ callfunc "QWS_Town_Warpra",27,"Splendide Town"; close; }
+veins,214,123,4	script	Warpra#43	113,{ callfunc "QWS_Town_Warpra",28,"Veins Town"; close; }
+dewata,194,178,6	script	Warpra#44	113,{ callfunc "QWS_Town_Warpra",29,"Dewata Town"; close; }
+eclage,107,37,4	script	Warpra#45	113,{ callfunc "QWS_Town_Warpra",30,"Eclage Town"; close; }
 
-abyss_02,274,266,1	script	Warpra#36	113,{
-	callfunc "QWS_Dungeon_Warpra",0,"Abyss Lake";
-	close;
-}
-
-ama_dun02,192,118,5	script	Warpra Helper#1	112,{
-	callfunc "QWS_Dungeon_Warpra",1,"Amatsu Dungeon";
-	close;
-}
-
-anthell02,170,165,3	script	Warpra Helper#2	112,{
-	callfunc "QWS_Dungeon_Warpra",2,"Ant Hell Dungeon";
-	close;
-}
-
-ayo_dun02,258,193,5	script	Warpra Helper#3	112,{
-	callfunc "QWS_Dungeon_Warpra",3,"Ayotaya Dungeon";
-	close;
-}
-
-ein_dun02,292,282,1	script	Warpra Helper#4	112,{
-	callfunc "QWS_Dungeon_Warpra",8,"Einbech Dungeon";
-	close;
-}
-
-iz_dun03,202,47,2	script	Warpra Helper#5	112,{
-	callfunc "QWS_Dungeon_Warpra",4,"Byalan Dungeon";
-	close;
-}
-
-c_tower3,129,106,4	script	Warpra Helper#6	112,{
-	callfunc "QWS_Dungeon_Warpra",5,"Clock Tower Dungeon";
-	close;
-}
-
-mjo_dun02,39,25,4	script	Warpra Helper#7	112,{
-	callfunc "QWS_Dungeon_Warpra",6,"Coal Mine Dungeon";
-	close;
-}
-
-prt_sewb2,176,30,3	script	Warpra Helper#8	112,{
-	callfunc "QWS_Dungeon_Warpra",7,"Culvert Dungeon";
-	close;
-}
-
-gefenia03,137,34,0	script	Warpra Helper#9	112,{
-	callfunc "QWS_Dungeon_Warpra",9,"Gefenia Dungeon";
-	close;
-}
-
-gef_dun02,218,61,2	script	Warpra Helper#10	112,{
-	callfunc "QWS_Dungeon_Warpra",10,"Gefen Dungeon";
-	close;
-}
-
-glast_01,371,308,3	script	Warpra Helper#11	112,{
-	callfunc "QWS_Dungeon_Warpra",11,"Glast Heim Dungeon";
-	close;
-}
-
-gon_dun01,167,273,4	script	Warpra Helper#12	112,{
-	callfunc "QWS_Dungeon_Warpra",12,"Gonryun Dungeon";
-	close;
-}
-
-juperos_02,127,154,5	script	Warpra Helper#13	112,{
-	callfunc "QWS_Dungeon_Warpra",14,"Juperos Cave";
-	close;
-}
-
-kh_dun01,14,224,3	script	Warpra Helper#14	112,{
-	callfunc "QWS_Dungeon_Warpra",28,"Kiel Dungeon";
-	close;
-}
-
-lhz_dun02,156,151,5	script	Warpra Helper#15	112,{
-	callfunc "QWS_Dungeon_Warpra",15,"Lighthalzen Bio Lab";
-	close;
-}
-
-lou_dun02,168,264,4	script	Warpra Helper#16	112,{
-	callfunc "QWS_Dungeon_Warpra",16,"Louyang Dungeon";
-	close;
-}
-
-mag_dun02,46,41,3	script	Warpra Helper#17	112,{
-	callfunc "QWS_Dungeon_Warpra",17,"Magma Dungeon";
-	close;
-}
-
-odin_tem01,115,148,3	script	Warpra Helper#18	112,{
-	callfunc "QWS_Dungeon_Warpra",18,"Odin Temple";
-	close;
-}
-
-orcsdun01,185,11,3	script	Warpra Helper#19	112,{
-	callfunc "QWS_Dungeon_Warpra",19,"Orc Dungeon";
-	close;
-}
-
-pay_dun03,162,143,3	script	Warpra Helper#20	112,{
-	callfunc "QWS_Dungeon_Warpra",20,"Payon Dungeon";
-	close;
-}
-
-moc_pryd02,101,95,3	script	Warpra Helper#21	112,{
-	callfunc "QWS_Dungeon_Warpra",21,"Pyramides Dungeon";
-	close;
-}
-
-in_sphinx2,274,268,1	script	Warpra Helper#22	112,{
-	callfunc "QWS_Dungeon_Warpra",22,"Sphinx Dungeon";
-	close;
-}
-
-tha_t07,111,162,3	script	Warpra Helper#23	112,{
-	callfunc "QWS_Dungeon_Warpra",24,"Thanatos Tower";
-	close;
-}
-
-treasure02,104,40,3	script	Warpra Helper#24	112,{
-	callfunc "QWS_Dungeon_Warpra",23,"Sunken Ship Dungeon";
-	close;
-}
-
-xmas_dun02,124,131,3	script	Warpra Helper#25	112,{
-	callfunc "QWS_Dungeon_Warpra",25,"Toy Factory Dungeon";
-	close;
-}
-
-um_dun02,44,28,3	script	Warpra Helper#26	112,{
-	callfunc "QWS_Dungeon_Warpra",27,"Umbala Dungeon";
-	close;
-}
-
-tur_dun02,162,23,3	script	Warpra Helper#27	112,{
-	callfunc "QWS_Dungeon_Warpra",26,"Turtle Island Dungeon";
-	close;
-}
-prt_maze02,102,69,4	script	Warpra Helper#28	112,{
-	callfunc "QWS_Dungeon_Warpra",13,"Hidden Dungeon";
-	close;
-}
+abyss_02,274,266,1	script	Warpra Helper#0	112,{ callfunc "QWS_Dungeon_Warpra",0,"Abyss Lake"; close; }
+ama_dun02,192,118,5	script	Warpra Helper#1	112,{ callfunc "QWS_Dungeon_Warpra",1,"Amatsu Dungeon"; close; }
+anthell02,170,165,3	script	Warpra Helper#2	112,{ callfunc "QWS_Dungeon_Warpra",2,"Ant Hell Dungeon"; close; }
+ayo_dun02,258,193,5	script	Warpra Helper#3	112,{ callfunc "QWS_Dungeon_Warpra",3,"Ayotaya Dungeon"; close; }
+ein_dun02,292,282,1	script	Warpra Helper#4	112,{ callfunc "QWS_Dungeon_Warpra",8,"Einbech Dungeon"; close; }
+iz_dun03,202,47,2	script	Warpra Helper#5	112,{ callfunc "QWS_Dungeon_Warpra",4,"Byalan Dungeon"; close; }
+c_tower3,129,106,4	script	Warpra Helper#6	112,{ callfunc "QWS_Dungeon_Warpra",5,"Clock Tower Dungeon"; close; }
+mjo_dun02,39,25,4	script	Warpra Helper#7	112,{ callfunc "QWS_Dungeon_Warpra",6,"Coal Mine Dungeon"; close; }
+prt_sewb2,176,30,3	script	Warpra Helper#8	112,{ callfunc "QWS_Dungeon_Warpra",7,"Culvert Dungeon"; close; }
+gefenia03,137,34,0	script	Warpra Helper#9	112,{ callfunc "QWS_Dungeon_Warpra",9,"Gefenia Dungeon"; close; }
+gef_dun02,218,61,2	script	Warpra Helper#10	112,{ callfunc "QWS_Dungeon_Warpra",10,"Gefen Dungeon"; close; }
+glast_01,371,308,3	script	Warpra Helper#11	112,{ callfunc "QWS_Dungeon_Warpra",11,"Glast Heim Dungeon"; close; }
+gon_dun01,167,273,4	script	Warpra Helper#12	112,{ callfunc "QWS_Dungeon_Warpra",12,"Gonryun Dungeon"; close; }
+juperos_02,127,154,5	script	Warpra Helper#13	112,{ callfunc "QWS_Dungeon_Warpra",14,"Juperos Cave"; close; }
+kh_dun01,14,224,3	script	Warpra Helper#14	112,{ callfunc "QWS_Dungeon_Warpra",28,"Kiel Dungeon"; close; }
+lhz_dun02,156,151,5	script	Warpra Helper#15	112,{ callfunc "QWS_Dungeon_Warpra",15,"Lighthalzen Bio Lab"; close; }
+lou_dun02,168,264,4	script	Warpra Helper#16	112,{ callfunc "QWS_Dungeon_Warpra",16,"Louyang Dungeon"; close; }
+mag_dun02,46,41,3	script	Warpra Helper#17	112,{ callfunc "QWS_Dungeon_Warpra",17,"Magma Dungeon"; close; }
+odin_tem01,115,148,3	script	Warpra Helper#18	112,{ callfunc "QWS_Dungeon_Warpra",18,"Odin Temple"; close; }
+orcsdun01,185,11,3	script	Warpra Helper#19	112,{ callfunc "QWS_Dungeon_Warpra",19,"Orc Dungeon"; close; }
+pay_dun03,162,143,3	script	Warpra Helper#20	112,{ callfunc "QWS_Dungeon_Warpra",20,"Payon Dungeon"; close; }
+moc_pryd02,101,95,3	script	Warpra Helper#21	112,{ callfunc "QWS_Dungeon_Warpra",21,"Pyramides Dungeon"; close; }
+in_sphinx2,274,268,1	script	Warpra Helper#22	112,{ callfunc "QWS_Dungeon_Warpra",22,"Sphinx Dungeon"; close; }
+tha_t07,111,162,3	script	Warpra Helper#23	112,{ callfunc "QWS_Dungeon_Warpra",24,"Thanatos Tower"; close; }
+treasure02,104,40,3	script	Warpra Helper#24	112,{ callfunc "QWS_Dungeon_Warpra",23,"Sunken Ship Dungeon"; close; }
+xmas_dun02,124,131,3	script	Warpra Helper#25	112,{ callfunc "QWS_Dungeon_Warpra",25,"Toy Factory Dungeon"; close; }
+um_dun02,44,28,3	script	Warpra Helper#26	112,{ callfunc "QWS_Dungeon_Warpra",27,"Umbala Dungeon"; close; }
+tur_dun02,162,23,3	script	Warpra Helper#27	112,{ callfunc "QWS_Dungeon_Warpra",26,"Turtle Island Dungeon"; close; }
+prt_maze02,102,69,4	script	Warpra Helper#28	112,{ callfunc "QWS_Dungeon_Warpra",13,"Hidden Dungeon"; close; }
