@@ -7985,7 +7985,9 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC__WEAKNESS:
 			val2 = 10 * val1;
 			val_flag |= 1|2;
-			skill_strip_equip(bl,EQP_WEAPON|EQP_SHIELD,100,val1,tick);
+			// bypasses coating protection and MADO 
+			sc_start(bl,SC_STRIPWEAPON,100,val1,tick);
+			sc_start(bl,SC_STRIPSHIELD,100,val1,tick);
 			break;
 		case SC__BLOODYLUST:
 			val_flag |= 1|2;
