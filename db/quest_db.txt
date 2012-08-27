@@ -1,7 +1,8 @@
 // Quest Database
 //
-// Structure of Database :
+// Structure of Database:
 // Quest ID,Time Limit,Target1,Val1,Target2,Val2,Target3,Val3,Quest Title
+
 1000,0,0,0,0,0,0,0,"Transcend"
 1001,0,0,0,0,0,0,0,"Job Change to Acolyte"
 1002,0,0,0,0,0,0,0,"Job Change to Acolyte"

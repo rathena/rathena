@@ -1,60 +1,57 @@
-// Custom mob skills
-//MOB_ID, a unused dummy character sequence (for information only), STATE, SKILL_ID, SKILL_LV,
-// rate (10000 = 100%), casttime, delay, cancelable, a target, a condition type, a condition value,
-// a value 1, a value 2, a value 3, a value 4, a value 5, emotion, chat
-//Example
-//1001,Poring@TF_POISON,attack,52,3,100,1500,10000,no,target,always,0,,,,,7
+// Custom Mob Skill Database
 //
-//rate refers to the chance of the skill being casted when the condition is fulfilled.
-//delay is the time in milliseconds that has to be pass before recasting the same skill.
+// Structure of Database:
+// MobID,Dummy value (info only),State,SkillID,SkillLv,Rate,CastTime,Delay,Cancelable,Target,Condition type,Condition value,val1,val2,val3,val4,val5,Emotion,Chat
 //
-//STATE:
-// any / idle (in standby) / walk (in movement) / dead (on killed) / loot /
-// attack / angry (like attack, except player has not attacked mob yet) /
-// chase (following target, after being attacked) / follow (following
-// target, without being attacked)
+// RATE: the chance of the skill being casted when the condition is fulfilled (10000 = 100%).
+// DELAY: the time (in milliseconds) before attempting to recast the same skill.
 //
-//target: The target of the skill can be: target (when a PC is targetted) / self / friend / master
-// (the following are for ground-skills, a random target tile is selected from
-// the specified area):
-// around1 (3x3 area around self) / around2 (5x5 area around self) /
-// around3 (7x7 area around self) / around4 (9x9 area around self) /
-// around5 (3x3 area around target) / around6 (5x5 area around target) /
-// around7 (7x7 area around target) / around8 (9x9 area around target) /
-// around (11x11 area around self)
+// STATE:
+//	any (except dead) / idle (in standby) / walk (in movement) / dead (on killed) /
+//	loot /attack / angry (like attack, except player has not attacked mob yet) /
+//	chase (following target, after being attacked) / follow (following target,
+//	without being attacked) / anytarget (attack+angry+chase+follow)
 //
-//conditions: (condition type) (value which specifies a condition value)
-//	always			uncondtional
-//	myhpltmaxrate		when the mob's hp drops to a certain %
-//	mystatuson		If the mob has any abnormalities in status (condition value),
-//	mystatusoff		If the mob has ended any abnormalities in status (condition value),
-//	friendhpltmaxrate	when the mobs' friend's hp drops to a certain %
-//	friendstatuson		If the friend has any abnormalities in status (condition value),
-//	friendstatusoff		If the friend has ended any abnormalities in status (condition value),
-//	attackpcgt		Attack PC becomes more than the  number of specification
-//	attackpcge		Attack PC becomes equal or more than the number of specification.
-//	slavelt			when the number of slaves is lower than the original number of specification.
-//	slavele			when the number of slaves is lower or equal than the original number of specification.
-//	closedattacked		when melee attacked (close range attack)
-//	longrangeattacked	when long ranged attacked (like bows and far range weapons)
-//	skillused		when a skill is used on the mob
-//	afterskill		after the mob used certain skill.
-//	casttargeted		when a target is in cast range.
-//	rudeattacked		when a target is rude attacked
+// TARGET:
+//	target (current target) / self / friend / master / randomtarget (any enemy within skill's range)
 //
-// The character's state which can be specified to be a condition value by the statuson/statusoff system
-//	anybad		any type of state change
-//	stone		condition of being in stone state
-//	freeze		condition of being in frozen state
-//	stun		condition of being in stunned state
-//	sleep		condition of being in sleep state
-//	poison		condition of being in poisoned state
-//	curse		condition of being in cursed state
-//	silence		condition of being in silenced state
-//	confusion		condition of being in confusion state
-//	blind		condition of being in blind state
-//	hiding		condition of being in hidden state
-//	sight		condition of being in unhidden state
+//	The following are for ground-skills, a random target tile is selected from the specified area:
+//	    around1 (3x3 area around self) / around2 (5x5 area around self) /
+//	    around3 (7x7 area around self) / around4 (9x9 area around self) /
+//	    around5 (3x3 area around target) / around6 (5x5 area around target) /
+//	    around7 (7x7 area around target) / around8 (9x9 area around target) /
+//	    around = around4
+//
+// CONDITION:
+//	always			Unconditional (no condition value).
+//	onspawn			When mob spawns/respawns (no condition value).
+//	myhpltmaxrate		When mob's HP drops to the specified %.
+//	myhpinrate		When mob's HP is in a certain % range (condition value = lower bound, val1 = upper bound).
+//	mystatuson		If mob has the specified abnormality in status.
+//	mystatusoff		If mob has ended the specified abnormality in status.
+//	friendhpltmaxrate	When mob's friend's HP drops to the specified %.
+//	friendhpinrate		When mob's friend's HP is in a certain % range (condition value = lower bound, val1 = upper bound).
+//	friendstatuson		If friend has the specified abnormality in status.
+//	friendstatusoff		If friend has ended the specified abnormality in status.
+//	attackpcgt		When attack PCs become greater than specified number.
+//	attackpcge		When attack PCs become greater than or equal to the specified number.
+//	slavelt			When number of slaves is less than the original specified number.
+//	slavele			When number of slaves is less than or equal to the original specified number.
+//	closedattacked		When close range melee attacked (no condition value).
+//	longrangeattacked	When long range attacked, ex. bows, guns, ranged skills (no condition value).
+//	skillused		When the specified skill is used on the mob.
+//	afterskill		After mob casts the specified skill.
+//	casttargeted		When a target is in cast range (no condition value).
+//	rudeattacked		When mob is rude attacked (no condition value).
+//
+//	Status abnormalities specified through the statuson/statusoff system:
+//	    anybad (any type of state change) / stone / freeze / stun / sleep /
+//	    poison / curse / silence / confusion / blind / hiding / sight (unhidden)
+//
+// Note: if a negative MobID is provided, the skill will be treated as 'global':
+//	-1: added for all boss types.
+//	-2: added for all normal types.
+//	-4: added for all mobs.
 
 // rAthena Dev Team
 //1900,Valaris@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,,

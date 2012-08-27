@@ -1,6 +1,8 @@
-// Improvise DB.
+// Improvise Database
 // Database for skills that can be summoned trough Randomize Spell/Improvised Song (Minstrel/Wanderer Skill).
-// Format: SkillID,Rate
+//
+// Structure of Database:
+// SkillID,Rate
 
 // Mage Skills
 10,5000	// Sight

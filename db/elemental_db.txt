@@ -1,4 +1,8 @@
-//ID,Sprite_Name,Name,LV,HP,SP,Range1,ATK1,ATK2,DEF,MDEF,STR,AGI,VIT,INT,DEX,LUK,Range2,Range3,Scale,Race,Element,Speed,aDelay,aMotion,dMotion
+// Elemental Summons Database
+//
+// Structure of Database:
+// ID,Sprite_Name,Name,LV,HP,SP,Range1,ATK1,ATK2,DEF,MDEF,STR,AGI,VIT,INT,DEX,LUK,Range2,Range3,Scale,Race,Element,Speed,aDelay,aMotion,dMotion
+
 // Monster Elementals
 2114,EL_AGNI_S,Agni,100,5000,1,1,100,100,10,10,1,1,1,1,1,1,5,12,0,0,83,200,504,1020,360
 2115,EL_AGNI_M,Agni,100,7500,1,1,250,250,25,25,1,1,1,1,1,1,5,12,1,0,83,200,504,1020,360

@@ -1,6 +1,10 @@
-//ElementalID,SkillID,SkillLevel,ReqMode
-//Spirit Modes (1 = Passive, 2 = Defensive, 4 = Agressive)
+// Elemental Summons Skill Database
 //
+// Structure of Database:
+// ElementalID,SkillID,SkillLevel,ReqMode
+//
+// Spirit Modes: 1 = Passive, 2 = Defensive, 4 = Aggressive
+
 // EL_AGNI_S
 2114,8413,1,1	//EL_PYROTECHNIC,Pyrotechnic
 2114,8401,1,2	//EL_CIRCLE_OF_FIRE,Circle of Fire

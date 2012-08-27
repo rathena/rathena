@@ -1,4 +1,8 @@
-//MercenryID,SkillID,SkillLevel
+// Mercenary Skill Database
+//
+// Structure of Database:
+// MercenryID,SkillID,SkillLevel
+
 // Archer Mercenaries Level 1-10.
 // MER_ARCHER01
 6017,8207,2	//MA_DOUBLE
@@ -38,6 +42,7 @@
 6026,8215,5	//MA_SHARPSHOOTING
 6026,8223,5	//MER_QUICKEN
 6026,8233,1	//MER_AUTOBERSERK
+
 // Lancer Mercenaries Level 1-10.
 // MER_LANCER01
 6027,8216,1	//ML_PIERCE
@@ -74,6 +79,7 @@
 6036,8220,10	//ML_AUTOGUARD
 6036,8221,3	//ML_DEVOTION
 6036,8218,5	//ML_SPIRALPIERCE
+
 // Swordman Mercenaries Level 1-10.
 // MER_SWORDMAN01
 6037,8201,1	//MS_BASH
@@ -113,6 +119,7 @@
 6046,8203,10	//MS_BOWLINGABASH
 6046,8201,10	//MS_BASH
 6046,8206,1	//MS_BERSERK
+
 // Monster Mercenaries
 // MIMIC
 1191,8233,1	//MER_AUTOBERSERK

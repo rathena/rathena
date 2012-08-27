@@ -1,5 +1,5 @@
 // Magic Mushroom DB.
-// Database for skills that are randomly used trough Magic Mushroom status change.
+// Database for skills that are randomly used through Magic Mushroom status change.
 // Format: SkillID
 
 7	//SM_MAGNUM

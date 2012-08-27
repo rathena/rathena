@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.5a
+//= 2.6
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -43,6 +43,7 @@
 //= 2.4 More optimization (-32kb). [Euphy]
 //= 2.5 Yet more optimization (-22kb). [Euphy]
 //= 2.5a Minor fixes. [Euphy]
+//= 2.6 Disabled "Ash Vacuum Warper" as it's no longer in iRO. [Euphy]
 //============================================================ 
 
 // Onward to the New World
@@ -14905,6 +14906,7 @@ que_dan02,102,42,3	script	Disfigured Corpse#moc2	457,{
 	close;
 }
 
+/*
 //Mid Camp Warper (gogoash), Translated from the Official [Slim]
 prontera,161,192,5	script	Ash Vacuum Warper	707,{
 	mes "[Warp Soldier]";
@@ -14934,3 +14936,4 @@ prontera,161,192,5	script	Ash Vacuum Warper	707,{
 	}
 	end;
 }
+*/

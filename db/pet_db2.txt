@@ -1,4 +1,4 @@
-// Pet Additional Database - Custom Pets
+// Pet Additional Database
 //
 // Structure of Database:
 // MobID,Name,JName,LureID,EggID,EquipID,FoodID,Fullness,HungryDelay,R_Hungry,R_Full,Intimate,Die,Capture,Speed,S_Performance,talk_convert_class,attack_rate,defence_attack_rate,change_target_rate,pet_script,loyal_script

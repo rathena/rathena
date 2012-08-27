@@ -1,4 +1,4 @@
-// Items Additional Database - Custom Items go here
+// Items Additional Database
 //
 // Structure of Database:
 // ID,Name,Name,Type,Price,Sell,Weight,ATK,DEF,Range,Slot,Job,Upper,Gender,Loc,wLV,eLV,Refineable,View,{ Script },{ OnEquip_Script },{ OnUnequip_Script }

@@ -7,22 +7,18 @@ variables. You can store up to 31 boolean value into a single
 variable. [Lupus]
 --------------------------------------------------------------
 
-
 --------------------------------------------------------------
 Variable: MISC_QUEST
-
 
 Quest: 		Juice Maker Quest
 Info:		How to make juices. This bit keeps final state of the quest.
 How to set: 	set MISC_QUEST,MISC_QUEST | 1;
 How to check: 	if(MISC_QUEST & 1){}
 
-
 Quest: 		Tempestra Quest
 Info:		Has you given a potion to Temperstra or not.
 How to set: 	set MISC_QUEST,MISC_QUEST | 2;
 How to check: 	if(MISC_QUEST & 2){}
-
 
 Quest: 		Morgenstein Quest
 Info:		How to make Mixture & Counteragent. Also subquest for Alchemist Job
@@ -30,12 +26,10 @@ Info:		How to make Mixture & Counteragent. Also subquest for Alchemist Job
 How to set: 	set MISC_QUEST,MISC_QUEST | 4;
 How to check: 	if(MISC_QUEST & 4){}
 
-
 Quest: 		Prontera Culvert Quest
 Info:		Could you enter the Prontera Culvert or not.
 How to set: 	set MISC_QUEST,MISC_QUEST | 8;
 How to check: 	if(MISC_QUEST & 8){}
-
 
 Quest: 		Edgar's Offer
 Info:		Cheap ticket from Izlude to Alberta.
@@ -111,7 +105,6 @@ How to check: 	if(MISC_QUEST & 65536){}
 
 --------------------------------------------------------------
 Variable: MISC_QUEST2
-
 
 Quest: 		?
 Info:		?

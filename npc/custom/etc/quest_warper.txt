@@ -430,7 +430,7 @@ Zeny_short_HP:
 	if (select("Yes","No") == 2) goto L_end;
 	set @Hp, Zeny/$QW_HP_H_PRICE;
     	set @HpPrice, @Hp*$QW_HP_H_PRICE;
-    	if (@Sp == 1) mes "You're not worth the effort.";
+    	if (@Hp == 1) mes "You're not worth the effort.";
     	if (@Hp == 1) goto L_end;
     	set Zeny, Zeny-@HpPrice;
 	heal @Hp,0;

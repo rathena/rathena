@@ -14,7 +14,7 @@ This piece of code to allows characters to execute events in NPCs by whispering
 them up to ten parameters. The NPC must have an "OnWhisperGlobal" label, or an
 "event not found" error will result.
 
-	NPC:<NPC Name> 	<String>{#String 2{#...{#String 10}}}
+	NPC:<NPC Name>		<String>{#String 2{#...{#String 10}}}
 	
 The whispered strings are separated by the "#" character, and are each stored
 into separate temporary character string variables:
@@ -31,11 +31,10 @@ You whisper an NPC "NPCCommander" in-game with the following instructions:
 The parameters are passed on to the "OnWhisperGlobal" label of the NPC, and can
 be processed accordingly:
 
-	-	script	NPCCommander	-1,{
-	OnWhisperGlobal:
-		// The following code will inform player "Lordalfa" that he has been
-		// reported for killstealing.
-		if (@whispervar0$ == "Report")
-			message @whispervar2$,"You have been reported for "+@whispervar1$+".";
-		end;
-	}
+-	script	NPCCommander	-1,{
+OnWhisperGlobal:
+	// Inform player "Lordalfa" that he has been reported for killstealing.
+	if (@whispervar0$ == "Report")
+		message @whispervar2$,"You have been reported for "+@whispervar1$+".";
+	end;
+}
