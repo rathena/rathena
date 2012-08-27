@@ -758,6 +758,9 @@ int read_elemental_skilldb(void) {
 		k++;
 		if( line[0] == '/' && line[1] == '/' )
 			continue;
+
+		if( line[0] == '\0' || line[0] == '\n' || line[0] == '\r')
+			continue; 
 		
 		i = 0;
 		p = strtok(line, ",");
