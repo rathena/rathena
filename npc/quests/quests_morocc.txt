@@ -2806,7 +2806,7 @@ yuno_in04,100,5,3	script	Hot Bestseller Corner	111,{
 		mes "^FF0000-- BEEP --^000000";
 		next;
 		mes "^660000You were about to pull out the book, complaining and grumbling, when suddenly it felt as if your brain exploded. You black out...^000000";
-		close;
+		close2;
 		specialeffect2 EF_BASH3D2;
 		warp "que_ba",247,33;
 		end;
