@@ -5247,12 +5247,17 @@ void clif_skill_produce_mix_list(struct map_session_data *sd, int skillid , int 
 
 	if(sd->menuskill_id == skillid)
 		return; //Avoid resending the menu twice or more times...
+	if( skillid == GC_CREATENEWPOISON )
+		skillid = GC_RESEARCHNEWPOISON;
+
 	fd=sd->fd;
 	WFIFOHEAD(fd, MAX_SKILL_PRODUCE_DB * 8 + 8);
 	WFIFOW(fd, 0)=0x18d;
 
 	for(i=0,c=0;i<MAX_SKILL_PRODUCE_DB;i++){
-		if( skill_can_produce_mix(sd,skill_produce_db[i].nameid,trigger, 1) ){
+		if( skill_can_produce_mix(sd,skill_produce_db[i].nameid, trigger, 1) &&
+			( ( skillid > 0 && skill_produce_db[i].req_skill == skillid ) || skillid < 0 )
+			){
 			if((view = itemdb_viewid(skill_produce_db[i].nameid)) > 0)
 				WFIFOW(fd,c*8+ 4)= view;
 			else
@@ -10980,7 +10985,7 @@ void clif_parse_ProduceMix(int fd,struct map_session_data *sd)
 		case -1:
 		case AM_PHARMACY:
 		case RK_RUNEMASTERY:
-		case GC_CREATENEWPOISON:
+		case GC_RESEARCHNEWPOISON:
 			break;
 		default:
 			return;

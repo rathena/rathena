@@ -446,129 +446,157 @@
 //==============================================
 // Genetic Foods And Potions  (LV= 26 -> 29)
 //==============================================
-//----- Change Material ---- ItemLV=26 --------- [Igniz]
-//-- Phracon [8] <-- GN_CHANGEMATERIAL Lv1, 40 Spawn, 40 Glass Bead
-1010,26,2494,1,908,40,746,40
-//-- Detrmindexta [5] <-- GN_CHANGEMATERIAL Lv1, 40 Chrysalis, 10 Clam Flesh
-971,26,2494,1,915,40,966,10
-//-- Detonator [7] <-- GN_CHANGEMATERIAL Lv1, 45 Manacles, 25 Feather of Birds
-1051,26,2494,1,1098,45,916,25
-//-- Maneater Roots [4] <-- GN_CHANGEMATERIAL Lv1, 25 Talon, 20 Zenorc's Fang
-1033,26,2494,1,917,25,1044,20
-//-- Mixture [4] <-- GN_CHANGEMATERIAL Lv1, 15 Venom Canine, 30 Powder of Butterfly
-974,26,2494,1,937,15,924,30
-//-- Grit [8] <-- GN_CHANGEMATERIAL Lv1, 35 Crystal Mirror, 50 Mantis Scythe
-1056,26,2494,1,747,35,1031,50
-//-- Witch Starsand [2] <-- GN_CHANGEMATERIAL Lv1, 10 Insect Feeler, 15 Chung Jah
-1061,26,2494,1,928,10,735,15
-//-- Hinalle [4] <-- GN_CHANGEMATERIAL Lv1, 45 Bouquet, 40 Mole Whiskers
-703,26,2494,1,744,45,1017,40
-//-- Coal [1] <-- GN_CHANGEMATERIAL Lv1, 1 Guard [0]
-1003,26,2494,1,2101,1
-//-- Steel [10] <-- GN_CHANGEMATERIAL Lv1, 1 Tsurugi [1]
-999,26,2494,1,1119,1
-//-- Soft Silk [2] <-- GN_CHANGEMATERIAL Lv1, 10 Fabric
-7166,26,2494,1,1059,10
-//-- Fabric [5] <-- GN_CHANGEMATERIAL Lv1, 2 Soft Silk
-1059,26,2494,1,7166,2
-//-- Cigarette [1] <-- GN_CHANGEMATERIAL Lv1, 1 Orcish Axe
-2267,26,2494,1,1309,1
-//-- Wind of Verdure [1] <-- GN_CHANGEMATERIAL Lv1, 100 Ice Cubic
-992,26,2494,1,7066,100
-//-- Heroic Emblem [5] <-- GN_CHANGEMATERIAL Lv1, 5 Tree Root, 45 Mole Claw
-968,26,2494,1,902,5,1018,45
-//-- Tiger's footskin [2] <-- GN_CHANGEMATERIAL Lv1, 5 Pointed Scale, 20 China
-1030,26,2494,1,906,5,736,20
-//-- Necklace of Oblivion [6] <-- GN_CHANGEMATERIAL Lv1, 25 Racoon Doll, 35 Moth Dust
-1008,26,2494,1,754,25,1057,35
-//-- Reins [8] <-- GN_CHANGEMATERIAL Lv1, 30 Chonchon Doll, 50 Puppet
-1064,26,2494,1,742,30,740,50
-//-- Hand of God [4] <-- GN_CHANGEMATERIAL Lv1, 10 Scorpion Tail, 30 Jack o' Pumpkin
-1009,26,2494,1,904,10,1062,30
-//-- Alcohol [9] <-- GN_CHANGEMATERIAL Lv1, 50 Orcish Voucher, 40 Skel-Bone
-970,26,2494,1,931,50,932,40
-//-- Soft Feather [1~3] <-- GN_CHANGEMATERIAL Lv1, 30 Feather, 30 Feather of Birds
-7063,26,2494,1,949,30,916,30
-//-- Counteragent [4] <-- GN_CHANGEMATERIAL Lv1, 15 Evil Horn, 30 Memento
-973,26,2494,1,923,15,934,30
-//-- Little Evil Horn [1] <-- GN_CHANGEMATERIAL Lv1, 5 Stone Heart, 10 Resin
-1038,26,2494,1,953,5,907,10
-//-- Scorpion Nipper [5] <-- GN_CHANGEMATERIAL Lv1, 40 Worm Peeling, 5 Yoyo Doll
-1046,26,2494,1,955,40,753,5
-//-- Cultish Masque [8] <-- GN_CHANGEMATERIAL Lv1, 45 Grasshopper's Leg, 35 Yoyo Tail
+//----- Change Material ---- ItemLV=26 ---------
+//-- Sacred Masque <-- GN_CHANGEMATERIAL Lv1, 45 Grasshopper's Leg, 35 Yoyo Tail
 1045,26,2494,1,940,45,942,35
-//-- Black Hair [4~6] <-- GN_CHANGEMATERIAL Lv1, 40 Pencil Case, 5 Tiger Skin
+//-- Long Hair <-- GN_CHANGEMATERIAL Lv1, 40 Pencil Case, 5 Tiger's Skin
 1020,26,2494,1,738,40,1029,5
-//-- Lantern [3] <-- GN_CHANGEMATERIAL Lv1, 10 Solid Shell, 30 Maneater's Blossom
-1041,26,2494,1,943,10,1032,30
-//-- Acorn [4] <-- GN_CHANGEMATERIAL Lv1, 30 Cactus Needle, 10 Snail's Shell
+//-- Phracon <-- GN_CHANGEMATERIAL Lv1, 45 Spawn, 40 Glass Bead
+1010,26,2494,1,908,45,746,40
+//-- Lantern <-- GN_CHANGEMATERIAL Lv1, 10 Solid Shell, 20 Blossom Of Maneater
+1041,26,2494,1,943,10,1032,20
+//-- Acorn <-- GN_CHANGEMATERIAL Lv1, 30 Cactus Needle, 10 Snail's Shell
 1026,26,2494,1,952,30,946,10
-//-- Horrendous Mouth [9] <-- GN_CHANGEMATERIAL Lv1, 45 Stem, 45 Dragon Scale
+//-- Frozen Heart <-- GN_CHANGEMATERIAL Lv1, 25 Raccoondog Doll, 35 Moth Dust
+1008,26,2494,1,754,25,1057,35
+//-- Horrendous Mouth <-- GN_CHANGEMATERIAL Lv1, 45 Stem, 45 Dragon Scale
 958,26,2494,1,905,45,1036,45
-//-- Elder Pixie's Moustache [8~12] <-- GN_CHANGEMATERIAL Lv1, 35 Bee Sting, 45 Little Evil Wing
+//-- Detrimindexta <-- GN_CHANGEMATERIAL Lv1, 40 Chrysalis, 10 Flesh Of Clam
+971,26,2494,1,915,40,966,10
+//-- Detonator <-- GN_CHANGEMATERIAL Lv1, 45 Nose Ring, 25 Feather Of Birds
+1051,26,2494,1,941,45,916,25
+//-- Tweezer <-- GN_CHANGEMATERIAL Lv1, 40 Worm Peelings, 5 Monkey Doll
+1046,26,2494,1,955,40,753,5
+//-- Petite DiablOfs Horn <-- GN_CHANGEMATERIAL Lv1, 5 Stone Heart, 10 Resin
+1038,26,2494,1,953,5,907,10
+//-- Root Of Maneater <-- GN_CHANGEMATERIAL Lv1, 25 Talon, 20 Tooth Of 
+1033,26,2494,1,917,25,1044,20
+//-- Conch <-- GN_CHANGEMATERIAL Lv1, 5 Gill, 25 Immortal Heart
+961,26,2494,1,956,5,929,25
+//-- Rotten Scale <-- GN_CHANGEMATERIAL Lv1, 20 Shell, 50 Thin N' Long Tongue
+959,26,2494,1,935,20,1015,50
+//-- Elder Pixie's Beard <-- GN_CHANGEMATERIAL Lv1, 35 Bee Sting, 45 Petite DiablOfs Wing
 1040,26,2494,1,939,35,1039,45
-//-- Frill [3] <-- GN_CHANGEMATERIAL Lv1, 20 Snake Scale, 15 Karvodailnirol
+//-- Lizard Scruff <-- GN_CHANGEMATERIAL Lv1, 20 Scale Of Snakes, 15 Karvodailnirol
 1012,26,2494,1,926,20,972,15
-//-- Squid Ink [4] <-- GN_CHANGEMATERIAL Lv1, 20 Bear's Footskin, 25 Black Laddle
+//-- Emveretarcon <-- GN_CHANGEMATERIAL Lv1, 5 Heart Of Mermaid, 40 Grasshopper Doll
+1011,26,2494,1,950,5,752,40
+//-- Chinese Ink <-- GN_CHANGEMATERIAL Lv1, 20 Bear's Foot, 25 Black Ladle
 1024,26,2494,1,948,20,737,25
-//-- Cobweb [8] <-- GN_CHANGEMATERIAL Lv1, 50 Fin, 35 Horrendous Hair
+//-- Spiderweb <-- GN_CHANGEMATERIAL Lv1, 50 Fin, 35 Slender Snake
 1025,26,2494,1,951,50,1048,35
-//-- Trunk [2] <-- GN_CHANGEMATERIAL Lv1, 10 Rotten Bandage, 10 Single Cell
+//-- Reins <-- GN_CHANGEMATERIAL Lv1, 30 Chonchon Doll, 50 Stuffed Doll
+1064,26,2494,1,742,30,740,50
+//-- Wooden Block <-- GN_CHANGEMATERIAL Lv1, 10 Rotten Bandage, 10 Single Cell
 1019,26,2494,1,930,10,1052,10
-//-- Tentacle [4~6] <-- GN_CHANGEMATERIAL Lv1, 40 Decayed Nail, 5 Mane
+//-- Tentacle <-- GN_CHANGEMATERIAL Lv1, 40 Decayed Nail, 5 Wild Boar's Mane
 962,26,2494,1,957,40,1028,5
-//-- Rainbow Shell [9~13] <-- GN_CHANGEMATERIAL Lv1, 50 Horn, 45 Zargon
+//-- Mixture <-- GN_CHANGEMATERIAL Lv1, 15 Posionous Canine, 30 Powder Of Butterfly
+974,26,2494,1,937,15,924,30
+//-- Colorful Shell <-- GN_CHANGEMATERIAL Lv1, 50 Horn, 45 Zargon
 1013,26,2494,1,947,50,912,45
-//-- Moth Wings [5] <-- GN_CHANGEMATERIAL Lv1, 20 Frozen Rose, 30 Reptile Tongue
+//-- Wing Of Moth <-- GN_CHANGEMATERIAL Lv1, 20 Frozen Rose, 30 Reptile Tongue
 1058,26,2494,1,749,20,903,30
-//-- Nipper [6~9] <-- GN_CHANGEMATERIAL Lv1, 25 Sticky Mucus, 45 Earthworm Peeling
-960,26,2494,1,938,25,1055,45
-//-- Turtle Shell [4] <-- GN_CHANGEMATERIAL Lv1, 5 Fluff, 40 Poring Doll
+//-- Nipper <-- GN_CHANGEMATERIAL Lv1, 25 Sticky Mucus, 40 Earthworm Peeling
+960,26,2494,1,938,25,1055,40
+//-- Turtle Shell <-- GN_CHANGEMATERIAL Lv1, 5 Fluff, 40 Poring Doll
 967,26,2494,1,914,5,741,40
-//-- Orc Claw [6] <-- GN_CHANGEMATERIAL Lv1, 50 Raccoon Leaf, 10 Garlet
+//-- Nail Of Orc <-- GN_CHANGEMATERIAL Lv1, 50 Raccoon Leaf, 10 Garlet
 1043,26,2494,1,945,50,910,10
-//-- Dragon Canine [8~12] <-- GN_CHANGEMATERIAL Lv1, 50 Osiris Doll, 35 Sticky Webfoot
+//-- Dragon Canine <-- GN_CHANGEMATERIAL Lv1, 50 Osiris Doll, 35 Sticky Webfoot
 1035,26,2494,1,751,50,918,35
-//-- Skirt of Virgin [6] <-- GN_CHANGEMATERIAL Lv1, 30 Scale Shell, 35 Dead Medusa
+//-- Skirt Of Virgin <-- GN_CHANGEMATERIAL Lv1, 30 Scales Shell, 35 Head Of Medusa
 1049,26,2494,1,936,30,1047,35
-//-- Dragon Tail [6] <-- GN_CHANGEMATERIAL Lv1, 25 Tooth of Bat, 35 Fang
+//-- Dragon Train <-- GN_CHANGEMATERIAL Lv1, 25 Tooth Of Bat, 35 Sharpened Cuspid
 1037,26,2494,1,913,25,1063,35
-//-- Dokebi Horn [4] <-- GN_CHANGEMATERIAL Lv1, 15 Shining Scale, 25 Ancient Lips
-1021,26,2494,1,954,15,1053,25
-//-- Nine Tails [2~3] <-- GN_CHANGEMATERIAL Lv1, 10 Animal Skin, 15 Rouge
+//-- Dokkaebi Horn <-- GN_CHANGEMATERIAL Lv1, 15 Shining Scales, 25 Lip Of Ancient Fish
+1021,26,2494,1,954,15,1054,25
+//-- Grit <-- GN_CHANGEMATERIAL Lv1, 35 Crystal Mirror, 50 Limb Of Mantis
+1056,26,2494,1,747,35,1031,50
+//-- Sharp Scale <-- GN_CHANGEMATERIAL Lv1, 10 Horseshoe, 20 Clam Shell
+963,26,2494,1,944,10,965,20
+//-- Short Leg <-- GN_CHANGEMATERIAL Lv1, 20 Claw Of Wolves, 45 Scell
+1042,26,2494,1,920,20,911,45
+//-- Starsand Of Witch <-- GN_CHANGEMATERIAL Lv1, 10 Insect Feeler, 15 Blue Porcelain
+1061,26,2494,1,928,10,735,15
+//-- Fox Tail <-- GN_CHANGEMATERIAL Lv1, 10 Animal's Skin, 15 Rouge
 1022,26,2494,1,919,10,739,15
-//-- Blue Hair [15] <-- GN_CHANGEMATERIAL Lv1, 45 Jellopy, 20 Wedding Bouquet
+//-- Cobold Hair <-- GN_CHANGEMATERIAL Lv1, 45 Jellopy, 20 Wedding Bouquet
 1034,26,2494,1,909,45,745,20
-//-- Ant Jaw [4~6] <-- GN_CHANGEMATERIAL Lv1, 20 Spore Doll, 20 Witherless Rose
+//-- Jaws Of Ant <-- GN_CHANGEMATERIAL Lv1, 20 Spore Doll, 20 Witherless Rose
 1014,26,2494,1,743,20,748,20
-//-- Crab Shell [8] <-- GN_CHANGEMATERIAL Lv1, 50 Baphomet doll, 30 Fish Tail
+//-- Voucher Of Orcish Hero <-- GN_CHANGEMATERIAL Lv1, 5 Tree Root, 45 Nail Of Mole
+968,26,2494,1,902,5,1018,45
+//-- Sacred Marks <-- GN_CHANGEMATERIAL Lv1, 10 Scorpion's Tail, 30 Pumpkin Head
+1009,26,2494,1,904,10,1062,30
+//-- Alchol <-- GN_CHANGEMATERIAL Lv1, 50 Orcish Voucher, 40 Skel Bone
+970,26,2494,1,931,50,932,40
+//-- Crap Shell <-- GN_CHANGEMATERIAL Lv1, 50 Baphomet Doll, 30 Fish Tail
 964,26,2494,1,750,50,1023,30
-//-- Tendon [3] <-- GN_CHANGEMATERIAL Lv1, 25 Orc's Fang, 5 Feather
+//-- Tendon <-- GN_CHANGEMATERIAL Lv1, 25 Orcish Cuspid, 5 Feather
 1050,26,2494,1,922,25,949,5
-//-- Ancient Tooth [6~9] <-- GN_CHANGEMATERIAL Lv1, 35 Bill of Birds, 30 Fabric
+//-- Tiger Footskin <-- GN_CHANGEMATERIAL Lv1, 5 Pointed Scale, 20 White Platter
+1030,26,2494,1,906,5,736,20
+//-- Hinalle <-- GN_CHANGEMATERIAL Lv1, 45 Bunch Of Flowers, 40 Moustache Of Mole
+703,26,2494,1,744,45,1017,40
+//-- Counteragent <-- GN_CHANGEMATERIAL Lv1, 15 Evil Horn, 30 Mementos
+973,26,2494,1,923,15,934,30
+//-- Tooth Of Ancient Fish <-- GN_CHANGEMATERIAL Lv1, 35 Bill Of Birds, 30 Transparent Cloth
 1053,26,2494,1,925,35,1059,30
-//-- Rat Tail [7~10] <-- GN_CHANGEMATERIAL Lv1, 35 Mushroom Spore, 40 Golden Hair
+//-- Rat Tail <-- GN_CHANGEMATERIAL Lv1, 35 Mushroom Spore, 40 Golden Hair
 1016,26,2494,1,921,35,1060,40
-//-- Crystal Blue [1~3] <-- GN_CHANGEMATERIAL Lv1, 100 Wolf Claw
+//-- Coal <-- GN_CHANGEMATERIAL Lv1, 1 Guard
+1003,26,2494,1,2101,1
+//-- Steel <-- GN_CHANGEMATERIAL Lv1, 1 Tsurugi
+999,26,2494,1,1119,1
+//-- Cigar <-- GN_CHANGEMATERIAL Lv1, 1 Orcish Axe
+2267,26,2494,1,1304,1
+//-- Bone Wand <-- GN_CHANGEMATERIAL Lv1, 100 Clattering Skull, 100 Broken Farming Utensil
+1615,26,2494,1,7752,100,7753,100
+//-- Cigar <-- GN_CHANGEMATERIAL Lv1, 1 Orcish Axe, 100 Orcish Voucher
+2267,26,2494,1,1304,1,931,100
+//-- Starsand Of Witch <-- GN_CHANGEMATERIAL Lv1, 100 Moth Dust, 100 Scell
+1061,26,2494,1,1057,100,911,100
+//-- Soft Feather <-- GN_CHANGEMATERIAL Lv1, 30 Feather, 30 Feather Of Birds
+7063,26,2494,1,949,30,916,30
+//-- Wind Of Verdure <-- GN_CHANGEMATERIAL Lv1, 100 Ice Piece
+992,26,2494,1,7066,100
+//-- Crystal Blue <-- GN_CHANGEMATERIAL Lv1, 100 Claw Of Wolves
 991,26,2494,1,920,100
-// Throwable HP Increase Potion (Small) [10] <-- GN_CHANGEMATERIAL Lv1, 10 'Throwing Bottle', 10 HP Potions (Small)
+//-- Soft Silk Cloth <-- GN_CHANGEMATERIAL Lv1, 10 Transparent Cloth
+7166,26,2494,1,1059,10
+//-- Transparent Cloth <-- GN_CHANGEMATERIAL Lv1, 2 Soft Silk Cloth
+1059,26,2494,1,7166,2
+//-- Boost500 To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Empty Potion, 10 Boost500, 10 Flexible String
+13269,26,2494,1,1093,10,12417,10,7200,10
+//-- Full SwingK To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Empty Potion, 10 Full SwingK, 10 Flexible String
+13270,26,2494,1,1093,10,12418,10,7200,10
+//-- Mana Plus To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Empty Potion, 10 Mana Plus, 10 Flexible String
+13271,26,2494,1,1093,10,12419,10,7200,10
+//-- Cure Free To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Empty Potion, 10 Cure Free, 10 Flexible String
+13272,26,2494,1,1093,10,12475,10,7200,10
+//-- Stamina Up M To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Empty Potion, 10 Stamina Up M, 10 Flexible String
+13273,26,2494,1,1093,10,12420,10,7200,10
+//-- Digestive F To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Empty Potion, 10 Digestive F, 10 Flexible String
+13274,26,2494,1,1093,10,12421,10,7200,10
+//-- HP Inc PotS To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Bottle To Throw, 10 HP Increase PotionS
 13275,26,2494,1,6297,10,12422,10
-// Throwable HP Increase Potion (Medium) [10] <-- GN_CHANGEMATERIAL Lv1, 10 'Throwing Bottle', 10 HP Potions (Medium)
+//-- HP Inc PotM To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Bottle To Throw, 10 HP Increase PotionM
 13276,26,2494,1,6297,10,12423,10
-// Throwable HP Increase Potion (Large) [10] <-- GN_CHANGEMATERIAL Lv1, 10 'Throwing Bottle', 10 HP Potions (Large)
+//-- HP Inc PotL To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Bottle To Throw, 10 HP Increase PotionL
 13277,26,2494,1,6297,10,12424,10
-// Throwable SP Increase Potion (Small) [10] <-- GN_CHANGEMATERIAL Lv1, 10 'Throwing Bottle', 10 SP Potions (Small)
+//-- SP Inc PotS To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Bottle To Throw, 10 SP Increase PotionS
 13278,26,2494,1,6297,10,12425,10
-// Throwable SP Increase Potion (Medium) [10] <-- GN_CHANGEMATERIAL Lv1, 10 'Throwing Bottle', 10 SP Potions (Medium)
+//-- SP Inc PotM To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Bottle To Throw, 10 SP Increase PotionM
 13279,26,2494,1,6297,10,12426,10
-// Throwable SP Increase Potion (Large) [10] <-- GN_CHANGEMATERIAL Lv1, 10 'Throwing Bottle', 10 SP Potions (Large)
+//-- SP Inc PotL To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Bottle To Throw, 10 SP Increase PotionL
 13280,26,2494,1,6297,10,12427,10
-// Enrich Celermine Juice Throw [10] <-- GN_CHANGEMATERIAL Lv1, 10 'Throwing Bottle', 10 Enrich Celermine Juice
-13283,26,2494,1,6297,10,12437,10
-// Vitata500 Throw [10] <-- GN_CHANGEMATERIAL Lv1, 10 'Throwing Bottle', 10 Vitata500
-13282,26,2494,1,6297,10,12436,10
-// Enriched White PotionZ Throw [10] <-- GN_CHANGEMATERIAL Lv1, 10 'Throwing Bottle', 10 Enriched White PotionZ
+//-- En White PotZ To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Bottle To Throw, 10 Enrich White PotionZ
 13281,26,2494,1,6297,10,12428,10
+//-- Vitata500 To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Bottle To Throw, 10 Vitata500
+13282,26,2494,1,6297,10,12436,10
+//-- En Cel Juice To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Bottle To Throw, 10 Enrich Celermine Juice
+13283,26,2494,1,6297,10,12437,10
 //==============================================
 
 //---- Mix Cooking --- ItemLV=27 ---------------

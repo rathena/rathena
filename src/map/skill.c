@@ -96,6 +96,13 @@ struct s_skill_improvise_db {
 };
 struct s_skill_improvise_db skill_improvise_db[MAX_SKILL_IMPROVISE_DB];
 bool skill_reproduce_db[MAX_SKILL_DB];
+struct s_skill_changematerial_db {
+	int itemid;
+	short rate;
+	int qty[5];
+	short qty_rate[5];
+};
+struct s_skill_changematerial_db skill_changematerial_db[MAX_SKILL_PRODUCE_DB];
 
 //Warlock
 struct s_skill_spellbook_db {
@@ -8604,7 +8611,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		if( flag&1 ) {
 			if ( clif_skill_nodamage(bl, src, skillid, skilllv,
 									 sc_start(bl, type, 25 + 10 * skilllv, skilllv, skill_get_time(skillid, skilllv))) )
-				status_zap(bl, 0, status_get_max_sp(bl) / 100 * 25 + 5 * skilllv);
+				status_zap(bl, 0, status_get_max_sp(bl) * (25 + 5 * skilllv) / 100);
 		} else
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), BL_CHAR,
 							   src, skillid, skilllv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
@@ -8643,28 +8650,18 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 		
 	case GN_MIX_COOKING:
-		if( sd ) {
-			clif_cooking_list(sd,27,skillid,(skilllv == 2) ? 10 : 1,6);
-			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		}
-		break;
-		
 	case GN_MAKEBOMB:
-		if( sd ) {
-			clif_cooking_list(sd,28,skillid,(skilllv==2) ? 10 : 1,5);
-			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		}
-		break;
-		
 	case GN_S_PHARMACY:
 		if( sd ) {
+			int qty = 1;
 			sd->skillid_old = skillid;
 			sd->skilllv_old = skilllv;
-			clif_cooking_list(sd,29,skillid,1,6);
+			if( skillid != GN_S_PHARMACY && skilllv > 1 )
+				qty = 10;
+			clif_cooking_list(sd,(skillid - GN_MIX_COOKING) + 27,skillid,qty,skillid==GN_MAKEBOMB?5:6);
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		}
 		break;
-		
 	case EL_CIRCLE_OF_FIRE:
 	case EL_PYROTECHNIC:
 	case EL_HEATER:
@@ -15516,9 +15513,12 @@ int skill_can_produce_mix (struct map_session_data *sd, int nameid, int trigger,
 			if((j=skill_produce_db[i].req_skill)>0 &&
 				pc_checkskill(sd,j) < skill_produce_db[i].req_skill_lv)
 					continue; // must iterate again to check other skills that produce it. [malufett]
+			if( j > 0 && sd->skillid_old > 0 && sd->skillid_old != j )
+				continue; // special case
 			break;
 		}
 	}
+	sd->skillid_old = sd->skilllv_old = 0;
 	if( i >= MAX_SKILL_PRODUCE_DB )
 		return 0;
 
@@ -15565,13 +15565,18 @@ int skill_can_produce_mix (struct map_session_data *sd, int nameid, int trigger,
 int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, int slot1, int slot2, int slot3, int qty)
 {
 	int slot[3];
-	int i,sc,ele,idx,equip,wlv,make_per,flag = 0, firstQty = qty;
+	int i,sc,ele,idx,equip,wlv,make_per,flag = 0,skilllv = 0;
 	int num = -1; // exclude the recipe
 	struct status_data *status;
 	struct item_data* data;
 
 	nullpo_ret(sd);
 	status = status_get_status_data(&sd->bl);
+
+	if( sd->skillid_old == skill_id )
+		skilllv = sd->skilllv_old;
+	else
+		sd->skillid_old = skill_id;
 
 	if( !(idx=skill_can_produce_mix(sd,nameid,-1, qty)) )
 		return 0;
@@ -15607,6 +15612,7 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 			ele=ele_table[slot[i]-994];
 		}
 	}
+
 	if( skill_id == RK_RUNEMASTERY ) {
 		int temp_qty, skill_lv = pc_checkskill(sd,skill_id);
 		data = itemdb_search(nameid);
@@ -15752,83 +15758,100 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 				make_per = 3000 + 500 * pc_checkskill(sd,GC_RESEARCHNEWPOISON);
 				qty = 1+rnd()%pc_checkskill(sd,GC_RESEARCHNEWPOISON);
 				break;
-			case GN_MIX_COOKING:
-				make_per = 3000; //As I can see this is not affectd by dex or int
+			case GN_CHANGEMATERIAL: 
+				for(i=0; i<MAX_SKILL_PRODUCE_DB; i++)
+					if( skill_changematerial_db[i].itemid == nameid ){
+						make_per = skill_changematerial_db[i].rate * 10;
+						break;
+					}
+				break;	
+			case GN_S_PHARMACY:
+				{
+					int difficulty = 0;
+					
+					difficulty = (620 - 20 * skilllv);// (620 - 20 * Skill Level)
+
+					make_per = status->int_ + status->dex/2 + status->luk + sd->status.job_level + (30+rnd()%120) + // (Caster’s INT) + (Caster’s DEX / 2) + (Caster’s LUK) + (Caster’s Job Level) + Random number between (30 ~ 150) +
+								(sd->status.base_level-100) + pc_checkskill(sd, AM_LEARNINGPOTION) + pc_checkskill(sd, CR_FULLPROTECTION)*(4+rnd()%6); // (Caster’s Base Level - 100) + (Potion Research x 5) + (Full Chemical Protection Skill Level) x (Random number between 4 ~ 10)
+					
+					switch(nameid){// difficulty factor
+						case 12422:	case 12425:	
+						case 12428:
+							difficulty += 10;
+							break;
+						case 6212:	case 12426:
+							difficulty += 15;
+							break;
+						case 13264:	case 12423:	
+						case 12427:	case 12436:
+							difficulty += 20;
+							break;
+						case 6210:	case 6211:	
+						case 12437:
+							difficulty += 30;
+							break;
+						case 12424:	case 12475:
+							difficulty += 40;
+							break;
+					}
+
+					if( make_per >= 400 && make_per > difficulty)
+						qty = 10;
+					else if( make_per >= 300 && make_per > difficulty)
+						qty = 7;
+					else if( make_per >= 100 && make_per > difficulty)
+						qty = 6;
+					else if( make_per >= 1 && make_per > difficulty)
+						qty = 5;
+					else
+						qty = 4;
+					make_per = 10000;
+				}
 				break;
 			case GN_MAKEBOMB:
-				// 	TODO: find a proper chance.
-				make_per = (5000 + 50*status->dex + 30*status->luk); //Custom rate value.
-				break;
-			case GN_CHANGEMATERIAL: // [Igniz]
-				switch( nameid ) {
-					case 1010: case 1056: case 1064: case 1045:
-					case 1025: case 964:
-						qty *= 8; break;
-					case 971:  case 1059: case 968:  case 1046:
-					case 1058:
-						qty *= 5; break;
-					case 1051:
-						qty *= 7; break;
-					case 1033: case 974:  case 703:  case 1009:
-					case 973:  case 1026: case 1024: case 967:
-					case 1021:
-						qty *= 4; break;
-					case 1061: case 7166: case 1030: case 1019:
-						qty *= 2; break;
-					case 1003: case 2267: case 992:  case 1038:
-						qty *= 1; break;
-					case 1008: case 1043: case 1049: case 1037:
-						qty *= 6; break;
-					case 970:  case 958:
-						qty *= 9; break;
-					case 1041: case 1012: case 1050:
-						qty *= 3; break;
-					case 1034:
-						qty *= 15; break;
-					case 7063: case 991:
-						qty *= 1 + rand()%3; break;
-					case 1020: case 962:  case 1014:
-						qty *= 4 + rand()%3; break;
-					case 1040: case 1035:
-						qty *= 8 + rand()%5; break;
-					case 1013:
-						qty *= 9 + rand()%5; break;
-					case 960: case 1053:
-						qty *= 6 + rand()%4; break;
-					case 1022:
-						qty *= 2 + rand()%2; break;
-					case 1016:
-						qty *= 7 + rand()%4; break;
-						// Throwable potions
-					case 13275: case 13276: case 13277: case 13278:
-					case 13279: case 13280: case 13281: case 13282:
-					case 13283: case 999:
-						qty *= 10;
-						break;
+			case GN_MIX_COOKING:
+				{
+					int difficulty = 30 + rnd()%120; // Random number between (30 ~ 150)
+				
+					make_per = sd->status.job_level / 4 + status->luk / 2 + status->dex / 3; // (Caster’s Job Level / 4) + (Caster’s LUK / 2) + (Caster’s DEX / 3)
+					qty = ~(5 + rnd()%5) + 1;
+
+					switch(nameid){// difficulty factor
+						case 13260:
+							difficulty += 5;
+							break;
+						case 13261:	case 13262:
+							difficulty += 10;
+							break;
+						case 12429:	case 12430:	case 12431:
+						case 12432:	case 12433:	case 12434:
+						case 13263:
+							difficulty += 15;
+							break;
+						case 13264:	
+							difficulty += 20;
+							break;
+					}
+
+					if( make_per >= 30 && make_per > difficulty)
+						qty = 10 + rnd()%2;
+					else if( make_per >= 10 && make_per > difficulty)
+						qty = 10;
+					else if( make_per == 10 && make_per > difficulty)
+						qty = 8;
+					else if( (make_per >= 50 || make_per < 30) && make_per < difficulty)
+						;// Food/Bomb creation fails.
+					else if( make_per >= 30 && make_per < difficulty)
+						qty = 5;
+		
+					if( qty < 0 || (skilllv == 1 && make_per < difficulty)){
+						qty = ~qty + 1;
+						make_per = 0;
+					}else
+						make_per = 10000;
+					qty = (skilllv > 1 ? qty : 1);
 				}
-				make_per = 100000; //100% success rate.
 				break;
-			case GN_S_PHARMACY:
-				// Note: This is not the chosen skill level but the highest available. Need confirmation/fix.
-				switch( sd->skilllv_old ) {
-					case 6:
-					case 7:
-					case 8:
-						qty = 3;
-						break;				//3 items to make at once.
-					case 9:
-						qty = 3 + rnd()%3;
-						break;					//3~5 items to make at once.
-					case 10:
-						qty = 4 + rnd()%3;
-						break;					//4~6 items to make at once.
-					default:
-						qty = 2;
-						break; //2 item to make at once.
-				}
-				make_per = 100000; //100% success rate.
-				sd->skillid_old = sd->skilllv_old = 0;
-				break;				
 			default:
 				if (sd->menuskill_id ==	AM_PHARMACY &&
 					sd->menuskill_val > 10 && sd->menuskill_val <= 20)
@@ -15894,10 +15917,7 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 				case AM_PHARMACY:
 				case AM_TWILIGHT1:
 				case AM_TWILIGHT2:
-				case AM_TWILIGHT3:
-				case GN_MIX_COOKING:
-				case GN_MAKEBOMB:
-				case GN_S_PHARMACY:					
+				case AM_TWILIGHT3:			
 					flag = battle_config.produce_item_name_input&0x2;
 					break;
 				case AL_HOLYWATER:
@@ -15934,44 +15954,41 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 		} else {
 			int fame = 0;
 			tmp_item.amount = 0;
-			if( skill_id == GN_MIX_COOKING && firstQty > 1 ) {// Mix Cooking level 2.
-			// Success. As I see the chance as level 2 is global, not indiviual.
-				if( rnd()%10000 < make_per )
-					tmp_item.amount = 5 + rnd()%5;
-			} else {
-				for (i=0; i< qty; i++) {	//Apply quantity modifiers.
-					if (rnd()%10000 < make_per || qty == 1) { //Success
-						tmp_item.amount++;
-						if(nameid < 545 || nameid > 547)
-							continue;
-						if( skill_id != AM_PHARMACY &&
-							skill_id != AM_TWILIGHT1 &&
-							skill_id != AM_TWILIGHT2 &&
-							skill_id != AM_TWILIGHT3 &&
-							skill_id != GN_MIX_COOKING &&
-							skill_id != GN_MAKEBOMB &&
-							skill_id != GN_S_PHARMACY )
-							continue;
-						//Add fame as needed.
-						switch(++sd->potion_success_counter) {
-							case 3:
-								fame+=1; // Success to prepare 3 Condensed Potions in a row
-								break;
-							case 5:
-								fame+=3; // Success to prepare 5 Condensed Potions in a row
-								break;
-							case 7:
-								fame+=10; // Success to prepare 7 Condensed Potions in a row
-								break;
-							case 10:
-								fame+=50; // Success to prepare 10 Condensed Potions in a row
-								sd->potion_success_counter = 0;
-								break;
-						}
-					} else //Failure
-						sd->potion_success_counter = 0;
+
+			for (i=0; i< qty; i++) {	//Apply quantity modifiers.
+				if( (skill_id == GN_MIX_COOKING || skill_id == GN_MAKEBOMB || skill_id == GN_S_PHARMACY) && make_per > 1){
+					tmp_item.amount = qty;
+					break;
 				}
+				if (rnd()%10000 < make_per || qty == 1) { //Success
+					tmp_item.amount++;
+					if(nameid < 545 || nameid > 547)
+						continue;
+					if( skill_id != AM_PHARMACY &&
+						skill_id != AM_TWILIGHT1 &&
+						skill_id != AM_TWILIGHT2 &&
+						skill_id != AM_TWILIGHT3 )
+						continue;
+					//Add fame as needed.
+					switch(++sd->potion_success_counter) {
+						case 3:
+							fame+=1; // Success to prepare 3 Condensed Potions in a row
+							break;
+						case 5:
+							fame+=3; // Success to prepare 5 Condensed Potions in a row
+							break;
+						case 7:
+							fame+=10; // Success to prepare 7 Condensed Potions in a row
+							break;
+						case 10:
+							fame+=50; // Success to prepare 10 Condensed Potions in a row
+							sd->potion_success_counter = 0;
+							break;
+					}
+				} else //Failure
+					sd->potion_success_counter = 0;
 			}
+
 			if (fame)
 				pc_addfame(sd,fame);
 			//Visual effects and the like.
@@ -15994,13 +16011,7 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 				case GC_CREATENEWPOISON:
 					clif_produceeffect(sd,2,nameid);
 					clif_misceffect(&sd->bl,5);
-					break;
-				case GN_MAKEBOMB:
-				case GN_MIX_COOKING:
-					clif_msg_skill(sd,skill_id,0x627);
-					break;
-				case GN_S_PHARMACY:
-					break;	// No effects here.					
+					break;	
 				default: //Those that don't require a skill?
 					if( skill_produce_db[idx].itemlv > 10 && skill_produce_db[idx].itemlv <= 20)
 					{ //Cooking items.
@@ -16011,11 +16022,33 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 					break;
 			}
 		}
-		if (tmp_item.amount) { //Success
+		if ( skill_id == GN_CHANGEMATERIAL && tmp_item.amount) { //Success
+			int j, k = 0;
+			for(i=0; i<MAX_SKILL_PRODUCE_DB; i++)
+				if( skill_changematerial_db[i].itemid == nameid ){
+					for(j=0; j<5; j++){
+						if( rnd()%1000 < skill_changematerial_db[i].qty_rate[j] ){
+							tmp_item.amount = qty * skill_changematerial_db[i].qty[j];
+							if((flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
+								clif_additem(sd,0,0,flag);
+								map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
+							}
+							k++;
+						}
+					}
+					break;
+				}
+			if( k ){
+				clif_msg_skill(sd,skill_id,0x627);	
+				return 1;
+			}
+		} else if (tmp_item.amount) { //Success
 			if((flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
 				clif_additem(sd,0,0,flag);
 				map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 			}
+			if( skill_id == GN_MIX_COOKING || skill_id == GN_MAKEBOMB || skill_id ==  GN_S_PHARMACY )
+				clif_msg_skill(sd,skill_id,0x627);	
 			return 1;
 		}
 	}
@@ -16052,15 +16085,15 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 				break;
 			case GN_MIX_COOKING: {
 					struct item tmp_item;
-					const int products[5][2] = {{13265,6500},{13266,4000},{13267,3000},{13268,500},{12435,500}};
+					const int compensation[5] = {13265, 13266, 13267, 12435, 13268};
+					int rate = rnd()%500;
 					memset(&tmp_item,0,sizeof(tmp_item));
-					tmp_item.nameid = nameid;
-					do {
-						i = rnd()%5;
-						tmp_item.nameid = products[i][0];
-					}
-					while( rnd()%10000 >= products[i][1] );
-					tmp_item.amount = (firstQty > 1 )? 5 + rnd()%5 : 1; // When it fails it gives a random amount of items.
+					if( rate < 50) i = 4;
+					else if( rate < 100) i = 2+rnd()%1;
+					else if( rate < 250 ) i = 1;
+					else if( rate < 500 ) i = 0;
+					tmp_item.nameid = compensation[i];
+					tmp_item.amount = qty;
 					tmp_item.identify = 1;
 					if( pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE) ) {
 						clif_additem(sd,0,0,flag);
@@ -16069,9 +16102,9 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 					clif_msg_skill(sd,skill_id,0x628);
 				}
 				break;
-			case GN_S_PHARMACY:
-				break;	// No effects here.
 			case GN_MAKEBOMB:
+			case GN_S_PHARMACY:
+			case GN_CHANGEMATERIAL:
 				clif_msg_skill(sd,skill_id,0x628);
 				break;				
 			default:
@@ -16375,8 +16408,12 @@ int skill_changematerial(struct map_session_data *sd, int n, unsigned short *ite
 							int idx = item_list[k*2+0]-2;
 							nameid = sd->status.inventory[idx].nameid;
 							amount = item_list[k*2+1];
-							
-							if( nameid == skill_produce_db[i].mat_id[j] && (amount-p*skill_produce_db[i].mat_amount[j]) >= skill_produce_db[i].mat_amount[j] )
+							if( nameid > 0 && sd->status.inventory[idx].identify == 0 ){
+								clif_msg_skill(sd,GN_CHANGEMATERIAL,0x62D);
+								return 0;
+							}
+							if( nameid == skill_produce_db[i].mat_id[j] && (amount-p*skill_produce_db[i].mat_amount[j]) >= skill_produce_db[i].mat_amount[j]
+								&& (amount-p*skill_produce_db[i].mat_amount[j])%skill_produce_db[i].mat_amount[j] == 0 ) // must be in exact amount
 								c++; // match
 						}
 					}
@@ -16392,7 +16429,10 @@ int skill_changematerial(struct map_session_data *sd, int n, unsigned short *ite
 			}
 		}
 	}
-	
+
+	if( p == 0)
+		clif_msg_skill(sd,GN_CHANGEMATERIAL,0x623);
+
 	return 0;
 }
 /**
@@ -17416,6 +17456,39 @@ static bool skill_parse_row_abradb(char* split[], int columns, int current)
 	return true;
 }
 
+static bool skill_parse_row_changematerialdb(char* split[], int columns, int current)
+{// SkillID
+	int i = atoi(split[0]);
+	short j = atoi(split[1]);
+	int x,y;
+
+	for(x=0; x<MAX_SKILL_PRODUCE_DB; x++){
+		if( skill_produce_db[x].nameid == i )
+			if( skill_produce_db[x].req_skill == GN_CHANGEMATERIAL )
+				break;
+	}
+
+	if( x >= MAX_SKILL_PRODUCE_DB ){
+		ShowError("changematerial_db: Not supported item ID(%d) for Change Material. \n", i);
+		return false;
+	}
+
+	if( current >= MAX_SKILL_PRODUCE_DB ) {
+		ShowError("skill_changematerial_db: Maximum amount of entries reached (%d), increase MAX_SKILL_PRODUCE_DB\n",MAX_SKILL_PRODUCE_DB);
+	}
+
+	skill_changematerial_db[current].itemid = i;
+	skill_changematerial_db[current].rate = j;
+
+	for( x = 2, y = 0; x+1 < columns && split[x] && split[x+1] && y < 5; x += 2, y++ )
+	{
+		skill_changematerial_db[current].qty[y] = atoi(split[x]);
+		skill_changematerial_db[current].qty_rate[y] = atoi(split[x+1]);
+	}
+
+	return true;
+}
+
 static void skill_readdb(void)
 {
 	// init skill db structures
@@ -17427,6 +17500,7 @@ static void skill_readdb(void)
 	memset(skill_spellbook_db,0,sizeof(skill_spellbook_db));
 	memset(skill_magicmushroom_db,0,sizeof(skill_magicmushroom_db));
 	memset(skill_reproduce_db,0,sizeof(skill_reproduce_db));
+	memset(skill_changematerial_db,0,sizeof(skill_changematerial_db));
 
 	// load skill databases
 	safestrncpy(skill_db[0].name, "UNKNOWN_SKILL", sizeof(skill_db[0].name));
@@ -17450,6 +17524,7 @@ static void skill_readdb(void)
 	sv_readdb(db_path, "magicmushroom_db.txt"  , ',',   1,  1, MAX_SKILL_MAGICMUSHROOM_DB, skill_parse_row_magicmushroomdb);
 	sv_readdb(db_path, "skill_reproduce_db.txt", ',',   1,  1, MAX_SKILL_DB, skill_parse_row_reproducedb);
 	sv_readdb(db_path, "skill_improvise_db.txt"      , ',',   2,  2, MAX_SKILL_IMPROVISE_DB, skill_parse_row_improvisedb);
+	sv_readdb(db_path, "skill_changematerial_db.txt"      , ',',   4,  4+2*5, MAX_SKILL_PRODUCE_DB, skill_parse_row_changematerialdb);
 
 }
 
