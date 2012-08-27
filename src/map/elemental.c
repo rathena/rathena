@@ -671,6 +671,9 @@ int read_elementaldb(void) {
 		if( line[0] == '/' && line[1] == '/' )
 			continue;
 		
+		if( line[0] == '\0' || line[0] == '\n' || line[0] == '\r')
+			continue;
+		
 		i = 0;
 		p = strtok(line, ",");
 		while( p != NULL && i < 26 ) {
