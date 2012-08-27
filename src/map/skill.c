@@ -15565,7 +15565,7 @@ int skill_can_produce_mix (struct map_session_data *sd, int nameid, int trigger,
 int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, int slot1, int slot2, int slot3, int qty)
 {
 	int slot[3];
-	int i,sc,ele,idx,equip,wlv,make_per,flag = 0,skilllv = 0;
+	int i,sc,ele,idx,equip,wlv,make_per = 0,flag = 0,skilllv = 0;
 	int num = -1; // exclude the recipe
 	struct status_data *status;
 	struct item_data* data;
