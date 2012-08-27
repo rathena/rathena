@@ -12,7 +12,7 @@
 //= - Normal (Non-PVP) - 4/8/16 Person
 //= - Expert (PVP) - 4/8/16 Person
 //===== Additional Comments: =================================
-//= 0.x	Previous authors: L0ne_W0lf, Kisuka, Elias
+//= 0.x Previous authors: L0ne_W0lf, Kisuka, Elias
 //= 1.0 Merged Turbo Track. [Joseph]
 //============================================================
 

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Gennosuke Kouga
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -18,7 +18,8 @@
 //= 1.2a Small bug fix. [Euphy]
 //= 1.3 Temporarly disabled Izlude Fish Tail?#33 NPC because of
 //= 	the new Izlude Town Map. [Masao]
-//= 1.4	Fixed minor typos. [Joseph]
+//= 1.4 Fixed minor typos. [Joseph]
+//= 1.5 Removed "Mysterious Documents" duplicated in magic_books. [Euphy]
 //============================================================
 
 // Entrance
@@ -217,12 +218,9 @@ function	script	eldicastes_dv	{
 	close;
 }
 
-dic_dun01,284,102,5	script	Dirty Vigilante#ep13_3_	450,{
-	callfunc "eldicastes_dv",1; }
-dic_dun01,294,106,4	script	Vigilante#ep13_3_23	492,{
-	callfunc "eldicastes_dv",2; }
-dic_dun01,286,104,5	script	Vigilante#ep13_3_24	450,{
-	callfunc "eldicastes_dv",2; }
+dic_dun01,284,102,5	script	Dirty Vigilante#ep13_3_	450,{ callfunc "eldicastes_dv",1; }
+dic_dun01,294,106,4	script	Vigilante#ep13_3_23	492,{ callfunc "eldicastes_dv",2; }
+dic_dun01,286,104,5	script	Vigilante#ep13_3_24	450,{ callfunc "eldicastes_dv",2; }
 
 dic_dun01,28,212,0	script	Vigilante#ep13_3_26	45,1,1,{
 	mes "[Vigilante]";
@@ -851,126 +849,56 @@ function	script	unknown_d	{
 	close;
 }
 
-cmd_fild08,324,163,0	script	Stone Heart?#33	844,{
-	callfunc "unknown_d",12215,953; }
-moc_fild01,169,62,0	script	Cactus Needle?#33	844,{
-	callfunc "unknown_d",12214,952; }
-prt_fild02,280,328,0	script	Carrot?#33	844,{
-	callfunc "unknown_d",12213,515; }
-prt_fild02,97,209,0	script	Red Herb?#33	844,{
-	callfunc "unknown_d",12212,507; }
-prt_fild02,142,116,0	script	Feather?#33	844,{
-	callfunc "unknown_d",12211,949; }
-pay_fild07,269,164,0	script	Bear's Footskin?#33	844,{
-	callfunc "unknown_d",12210,948; }
-prt_fild03,284,190,0	script	Raccoon Leaf?#33	844,{
-	callfunc "unknown_d",12207,945; }
-prt_fild03,262,201,0	script	Yam?#33	844,{
-	callfunc "unknown_d",12206,549; }
-prt_fild03,226,170,0	script	Solid Shell?#33	844,{
-	callfunc "unknown_d",12205,943; }
-prt_fild03,180,163,0	script	Yoyo Tail?#33	844,{
-	callfunc "unknown_d",12204,942; }
-prt_fild03,64,35,0	script	Royal Jelly?#33	844,{
-	callfunc "unknown_d",12203,526; }
-prt_fild07,76,122,0	script	Grasshopper's Leg?#33	844,{
-	callfunc "unknown_d",12202,940; }
-mjolnir_09,99,100,0	script	Bee Sting?#33	844,{
-	callfunc "unknown_d",12201,939; }
-prt_fild02,102,97,0	script	Sticky Mucus?#33	844,{
-	callfunc "unknown_d",12200,938; }
-mjolnir_04,162,168,0	script	Venom Canine?#33	844,{
-	callfunc "unknown_d",12199,937; }
-mjolnir_04,191,154,0	script	Scale Shell?#33	844,{
-	callfunc "unknown_d",12198,936; }
-iz_dun01,191,92,0	script	Shell?#33	844,{
-	callfunc "unknown_d",12197,935; }
-iz_dun01,210,77,0	script	Tentacle?#33	844,{
-	callfunc "unknown_d",12196,962; }
-moc_pryd02,36,75,0	script	Decayed Nail?#33	844,{
-	callfunc "unknown_d",12194,957; }
-moc_pryd02,134,112,0	script	Rotten Bandage?#33	844,{
-	callfunc "unknown_d",12193,930; }
-iz_dun02,112,96,0	script	Immortal Heart?#33	844,{
-	callfunc "unknown_d",12192,929; }
-pay_fild07,126,49,0	script	Insect Feeler?#33	844,{
-	callfunc "unknown_d",12191,928; }
-pay_fild06,306,233,0	script	Snake Scale?#33	844,{
-	callfunc "unknown_d",12190,926; }
-moc_fild11,237,273,0	script	Bill of Birds?#33	844,{
-	callfunc "unknown_d",12189,925; }
-c_tower2,170,9,0	script	Evil Horn?#33	844,{
-	callfunc "unknown_d",12187,923; }
-pay_fild08,188,153,0	script	Mushroom Spore?#33	844,{
-	callfunc "unknown_d",12185,921; }
-moc_fild03,175,201,0	script	Wolf Claw?#33	844,{
-	callfunc "unknown_d",12184,920; }
-mjolnir_08,108,99,0	script	Animal Skin?#33	844,{
-	callfunc "unknown_d",12183,919; }
-prt_fild04,315,245,0	script	Sticky Webfoot?#33	844,{
-	callfunc "unknown_d",12182,918; }
-moc_fild12,116,122,0	script	Talon?#33	844,{
-	callfunc "unknown_d",12181,917; }
-moc_fild07,201,360,0	script	Feather of Birds?#33	844,{
-	callfunc "unknown_d",12180,916; }
-prt_fild06,127,85,0	script	Chrysalis?#33	844,{
-	callfunc "unknown_d",12179,915; }
-prt_fild06,182,290,0	script	Fluff?#33	844,{
-	callfunc "unknown_d",12178,914; }
-mjo_dun01,222,226,0	script	Tooth of Bat?#33	844,{
-	callfunc "unknown_d",12177,913; }
-iz_dun03,155,165,0	script	Gill?#33	844,{
-	callfunc "unknown_d",12176,956; }
-prt_fild05,303,169,0	script	Worm Peeling?#33	844,{
-	callfunc "unknown_d",12175,955; }
-/*izlude,132,136,0	script	Fish Tail?#33	844,{
-	callfunc "unknown_d",12174,1023; }
-*/
-pay_fild01,152,171,0	script	Resin?#33	844,{
-	callfunc "unknown_d",12171,907; }
-pay_fild02,105,113,0	script	Pointed Scale?#33	844,{
-	callfunc "unknown_d",12170,906; }
-pay_fild02,177,108,0	script	Stem?#33	844,{
-	callfunc "unknown_d",12169,905; }
-pay_fild03,144,95,0	script	Tree Root?#33	844,{
-	callfunc "unknown_d",12166,902; }
-prt_fild08,299,332,0	script	Jellopy?#33	844,{
-	callfunc "unknown_d",12173,909; }
-prt_fild09,352,241,0	script	Scorpion Tail?#33	844,{
-	callfunc "unknown_d",12168,904; }
-prt_fild09,371,255,0	script	Reptile Tongue?#33	844,{
-	callfunc "unknown_d",12167,903; }
-prt_fild03,366,237,0	script	Horn?#33	844,{
-	callfunc "unknown_d",12209,947; }
-moc_pryd02,148,184,0	script	Horrendous Mouths?#33	844,{
-	callfunc "unknown_d",12195,958; }
-gef_fild03,251,109,0	script	Orc's Fangs?#33	844,{
-	callfunc "unknown_d",12186,922; }
-gef_fild01,104,111,0	script	Spawn?#33	844,{
-	callfunc "unknown_d",12172,908; }
-gef_fild09,67,46,0	script	Snail's Shell#33	844,{
-	callfunc "unknown_d",12208,946; }
-gef_fild05,111,96,0	script	Powder of Butterfly?#33	844,{
-	callfunc "unknown_d",12188,924; }
-
-dic_in01,25,190,0	script	Mysterious Documents#00	844,{
-	if (isequipped(2782)) {
-		if (ep13_3_invite == 5) {
-			if (checkquest(12165,PLAYTIME) == 2) {
-				mes "You don't feel as nauseous anymore. It should be safe to proceed now.";
-				erasequest 12165;
-				close;
-			} else if (checkquest(12165,PLAYTIME) != -1) {
-				mes "The documents are making you feel nauseous. You should come back later after your stomach settles.";
-				close; }
-			mes "The documents in this container aren't legible. It's not use trying to read them.";
-			close; }
-		mes "- When you approach the documents,";
-		mes "an Evil Giant that looks like the archive manager tries to call Guard Galton. You should get out of here quickly. -";
-		close; }
-	mes "¡ö¡ø¡ó ¢£ ¡ö¡ñ¡ï ¡ù ¡ð¢²¢£";
-	close;
-}
+cmd_fild08,324,163,0	script	Stone Heart?#33	844,{ callfunc "unknown_d",12215,953; }
+moc_fild01,169,62,0	script	Cactus Needle?#33	844,{ callfunc "unknown_d",12214,952; }
+prt_fild02,280,328,0	script	Carrot?#33	844,{ callfunc "unknown_d",12213,515; }
+prt_fild02,97,209,0	script	Red Herb?#33	844,{ callfunc "unknown_d",12212,507; }
+prt_fild02,142,116,0	script	Feather?#33	844,{ callfunc "unknown_d",12211,949; }
+pay_fild07,269,164,0	script	Bear's Footskin?#33	844,{ callfunc "unknown_d",12210,948; }
+prt_fild03,284,190,0	script	Raccoon Leaf?#33	844,{ callfunc "unknown_d",12207,945; }
+prt_fild03,262,201,0	script	Yam?#33	844,{ callfunc "unknown_d",12206,549; }
+prt_fild03,226,170,0	script	Solid Shell?#33	844,{ callfunc "unknown_d",12205,943; }
+prt_fild03,180,163,0	script	Yoyo Tail?#33	844,{ callfunc "unknown_d",12204,942; }
+prt_fild03,64,35,0	script	Royal Jelly?#33	844,{ callfunc "unknown_d",12203,526; }
+prt_fild07,76,122,0	script	Grasshopper's Leg?#33	844,{ callfunc "unknown_d",12202,940; }
+mjolnir_09,99,100,0	script	Bee Sting?#33	844,{ callfunc "unknown_d",12201,939; }
+prt_fild02,102,97,0	script	Sticky Mucus?#33	844,{ callfunc "unknown_d",12200,938; }
+mjolnir_04,162,168,0	script	Venom Canine?#33	844,{ callfunc "unknown_d",12199,937; }
+mjolnir_04,191,154,0	script	Scale Shell?#33	844,{ callfunc "unknown_d",12198,936; }
+iz_dun01,191,92,0	script	Shell?#33	844,{ callfunc "unknown_d",12197,935; }
+iz_dun01,210,77,0	script	Tentacle?#33	844,{ callfunc "unknown_d",12196,962; }
+moc_pryd02,36,75,0	script	Decayed Nail?#33	844,{ callfunc "unknown_d",12194,957; }
+moc_pryd02,134,112,0	script	Rotten Bandage?#33	844,{ callfunc "unknown_d",12193,930; }
+iz_dun02,112,96,0	script	Immortal Heart?#33	844,{ callfunc "unknown_d",12192,929; }
+pay_fild07,126,49,0	script	Insect Feeler?#33	844,{ callfunc "unknown_d",12191,928; }
+pay_fild06,306,233,0	script	Snake Scale?#33	844,{ callfunc "unknown_d",12190,926; }
+moc_fild11,237,273,0	script	Bill of Birds?#33	844,{ callfunc "unknown_d",12189,925; }
+c_tower2,170,9,0	script	Evil Horn?#33	844,{ callfunc "unknown_d",12187,923; }
+pay_fild08,188,153,0	script	Mushroom Spore?#33	844,{ callfunc "unknown_d",12185,921; }
+moc_fild03,175,201,0	script	Wolf Claw?#33	844,{ callfunc "unknown_d",12184,920; }
+mjolnir_08,108,99,0	script	Animal Skin?#33	844,{ callfunc "unknown_d",12183,919; }
+prt_fild04,315,245,0	script	Sticky Webfoot?#33	844,{ callfunc "unknown_d",12182,918; }
+moc_fild12,116,122,0	script	Talon?#33	844,{ callfunc "unknown_d",12181,917; }
+moc_fild07,201,360,0	script	Feather of Birds?#33	844,{ callfunc "unknown_d",12180,916; }
+prt_fild06,127,85,0	script	Chrysalis?#33	844,{ callfunc "unknown_d",12179,915; }
+prt_fild06,182,290,0	script	Fluff?#33	844,{ callfunc "unknown_d",12178,914; }
+mjo_dun01,222,226,0	script	Tooth of Bat?#33	844,{ callfunc "unknown_d",12177,913; }
+iz_dun03,155,165,0	script	Gill?#33	844,{ callfunc "unknown_d",12176,956; }
+prt_fild05,303,169,0	script	Worm Peeling?#33	844,{ callfunc "unknown_d",12175,955; }
+//izlude,132,136,0	script	Fish Tail?#33	844,{ callfunc "unknown_d",12174,1023; }
+pay_fild01,152,171,0	script	Resin?#33	844,{ callfunc "unknown_d",12171,907; }
+pay_fild02,105,113,0	script	Pointed Scale?#33	844,{ callfunc "unknown_d",12170,906; }
+pay_fild02,177,108,0	script	Stem?#33	844,{ callfunc "unknown_d",12169,905; }
+pay_fild03,144,95,0	script	Tree Root?#33	844,{ callfunc "unknown_d",12166,902; }
+prt_fild08,299,332,0	script	Jellopy?#33	844,{ callfunc "unknown_d",12173,909; }
+prt_fild09,352,241,0	script	Scorpion Tail?#33	844,{ callfunc "unknown_d",12168,904; }
+prt_fild09,371,255,0	script	Reptile Tongue?#33	844,{ callfunc "unknown_d",12167,903; }
+prt_fild03,366,237,0	script	Horn?#33	844,{ callfunc "unknown_d",12209,947; }
+moc_pryd02,148,184,0	script	Horrendous Mouths?#33	844,{ callfunc "unknown_d",12195,958; }
+gef_fild03,251,109,0	script	Orc's Fangs?#33	844,{ callfunc "unknown_d",12186,922; }
+gef_fild01,104,111,0	script	Spawn?#33	844,{ callfunc "unknown_d",12172,908; }
+gef_fild09,67,46,0	script	Snail's Shell#33	844,{ callfunc "unknown_d",12208,946; }
+gef_fild05,111,96,0	script	Powder of Butterfly?#33	844,{ callfunc "unknown_d",12188,924; }
 
 dic_in01,137,225,5	script	Diel Guard#ep133_19	450,{
 	mes "[Diel Guard]";

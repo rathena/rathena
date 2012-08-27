@@ -8,7 +8,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis COnversion]
+//= [Aegis Conversion]
 //= Official Divorce script.
 //= Added isloggedin() check, even though Aegis doesn't do it;
 //= should be able to divorce even when the spouse is not online.

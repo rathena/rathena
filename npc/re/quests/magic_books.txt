@@ -693,7 +693,7 @@ dic_in01,25,190,0	script	Mysterious Documents	844,{
 		close;
 	}
 	if ((BaseLevel < 140) || (getskilllv(2217) < 1) && (getskilllv(2213) < 1)) {
-		mes "The documents in this container aren't legible. It's not use trying to read them.";
+		mes "The documents in this container aren't legible. It's no use trying to read them.";
 		close;
 	}
 	specialeffect2 EF_DISPELL;
