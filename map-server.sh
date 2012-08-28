@@ -8,7 +8,7 @@ if [ -f .stopserver ] ; then
 echo server marked down >> servlog.txt
 else
 echo restarting server at time at `date +"%m-%d-%H:%M-%S"`>> startlog.txt
-./map-server
+./map-server_sql
 fi
 
 sleep 5
