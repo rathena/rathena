@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -13,6 +13,7 @@
 //= 1.1 Some little optimization here and there. [Masao]
 //= 1.2 Added checkquest confirmation for -1. [Euphy]
 //= 1.3 Fixed Puppet Master's Agony Quest (12217 -> 3259). [Joseph]
+//= 1.4 Fixed invalid check (Magic Wand Quest). [Joseph]
 //============================================================
 
 moc_para01,42,38,3	script	Mission [56 - 70]	857,{
@@ -1005,41 +1006,6 @@ moc_para01,42,38,3	script	Mission [56 - 70]	857,{
 						close;
 					}
 				}
-				if (checkquest(3262) == 2) {
-					mes "This mission is assigned by a gem dealer, Ibraham from Morroc.";
-					next;
-					mes "A small beautiful flower in the barren desert... What an incredible scene it would be!";
-					next;
-					mes "Planting flowers can make the world green and it will be so pretty everywhere.";
-					next;
-					mes "I plan to plant strong flowers in the Morroc desert so the soil gets better.";
-					next;
-					mes "I need 40 Maneater Blossom from Flora, I know Maneater Blossom is an ugly flower, but still it is a plant.";
-					next;
-					mes "I hope you can hunt Flora and get me 40 Maneater Blossoms. You are making the world green! Be proud!";
-					next;
-					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
-					next;
-					mes "-- Morroc Ibraham --";
-					next;
-					mes " ";
-					next;
-					switch (select("Accept the mission.:Do not accept the mission.")) {
-					case 1:
-						if ((BaseLevel > 54) && (BaseLevel < 71)) {
-							setquest 3262;
-							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
-							next;
-							mes "This mission doesn't have time limits.";
-							close;
-						}
-						mes "These missions are not fit for my level. I should look for other missions.";
-						close;
-					case 2:
-						close;
-					}
-				}
-				close;
 			case 4:
 				if (checkquest(3263) <= 0) {
 					mes "This mission is assigned by the Payon blacksmith Antonio.";
@@ -1052,7 +1018,7 @@ moc_para01,42,38,3	script	Mission [56 - 70]	857,{
 					next;
 					mes "To make the wand, I need some special materials.";
 					next;
-					mes "Please bring me 30 Dokebi Horns and 30 Trunks. If you do so, I will lend you my magic wand once. Haha, good deal?";
+					mes "Please bring me 30 Dokebi Horns and 30 Bamboo Cut. If you do so, I will lend you my magic wand once. Haha, good deal?";
 					next;
 					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
 					next;
@@ -1075,7 +1041,7 @@ moc_para01,42,38,3	script	Mission [56 - 70]	857,{
 						close;
 					}
 				}
-				if ((checkquest(3263) == 1) && (countitem(1021) < 30) && (countitem(7150) < 30)) {
+				if ((checkquest(3263) == 1) && ((countitem(1021) < 30) || (countitem(7150) < 30))) {
 					mes "You have an on-going mission. Would you like to check the details?";
 					next;
 					switch (select("Check the details.:Cancel.")) {
@@ -1090,7 +1056,7 @@ moc_para01,42,38,3	script	Mission [56 - 70]	857,{
 						next;
 						mes "To make the wand, I need some special materials.";
 						next;
-						mes "Please bring me 30 Dokebi Horns and 30 Trunks. If you do so, I will lend you my magic wand once. Haha, good deal?";
+						mes "Please bring me 30 Dokebi Horns and 30 Bamboo Cut. If you do so, I will lend you my magic wand once. Haha, good deal?";
 						next;
 						mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
 						next;
@@ -1115,41 +1081,6 @@ moc_para01,42,38,3	script	Mission [56 - 70]	857,{
 						close;
 					}
 				}
-				if (checkquest(3263) == 2) {
-					mes "This mission is assigned by the Payon blacksmith Antonio.";
-					next;
-					mes "Magic wand! Have you heard about it? It is an incredible wand!";
-					next;
-					mes "If you say the magic words and swing the wand, it will make your wishes come true.";
-					next;
-					mes "So, I decided to make it by myself. Then I will be rich and powerful~! Haha!!";
-					next;
-					mes "To make the wand, I need some special materials.";
-					next;
-					mes "Please bring me 30 Dokebi Horns and 30 Trunks. If you do so, I will lend you my magic wand once. Haha, good deal?";
-					next;
-					mes "Please confirm it to us after you complete the mission, then we will give you proper rewards.";
-					next;
-					mes "-- Payon blacksmith Antonio --";
-					next;
-					mes " ";
-					next;
-					switch (select("Accept the mission.:Do not accept the mission.")) {
-					case 1:
-						if ((BaseLevel > 54) && (BaseLevel < 71)) {
-							setquest 3263;
-							mes "I have successfully accepted the mission. I have to come back and confirm my work after I complete the mission.";
-							next;
-							mes "This mission doesn't have time limits.";
-							close;
-						}
-						mes "These missions are not fit for my level. I should look for other missions.";
-						close;
-					case 2:
-						close;
-					}
-				}
-				close;
 			}
 		}
 	}
