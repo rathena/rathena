@@ -81,8 +81,6 @@ static struct {
 	int class_[350];
 } summon[MAX_RANDOMMONSTER];
 
-#define CLASSCHANGE_BOSS_NUM 21
-
 //Defines the Manuk/Splendide mob groups for the status reductions [Epoque]
 const int mob_manuk[8] = { 1986, 1987, 1988, 1989, 1990, 1997, 1998, 1999 };
 const int mob_splendide[5] = { 1991, 1992, 1993, 1994, 1995 };
@@ -131,12 +129,12 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 {
 	struct npc_data *nd;
 
-	if (md->tomb_npc != NULL)
+	if ( md->tomb_nid )
 		mvptomb_destroy(md);
 
 	CREATE(nd, struct npc_data, 1);
 
-	nd->bl.id = npc_get_new_npc_id();
+	nd->bl.id = md->tomb_nid = npc_get_new_npc_id();
 	
     nd->ud.dir = md->ud.dir;
 	nd->bl.m = md->bl.m;
@@ -165,14 +163,12 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
     unit_dataset(&nd->bl);
     clif_spawn(&nd->bl);
 
-	md->tomb_npc = nd;
 }
 
-void mvptomb_destroy(struct mob_data *md)
-{
-	struct npc_data *nd = md->tomb_npc;
+void mvptomb_destroy(struct mob_data *md) {
+	struct npc_data *nd;
 
-	if (nd) {
+	if ( (nd = map_id2nd(md->tomb_nid)) ) {
 		int m, i;
 
 		m = nd->bl.m;
@@ -193,7 +189,7 @@ void mvptomb_destroy(struct mob_data *md)
 		aFree(nd);
 	}
 
-	md->tomb_npc = NULL;
+	md->tomb_nid = 0;
 }
 
 /*==========================================
@@ -993,7 +989,7 @@ int mob_spawn (struct mob_data *md)
 		md->sc.option = md->db->option;
 
 	// MvP tomb [GreenBox]
-	if (md->tomb_npc)
+	if ( md->tomb_nid )
 		mvptomb_destroy(md);
 
 	map_addblock(&md->bl);
@@ -4591,14 +4587,12 @@ static void mob_load(void)
 	sv_readdb(db_path, DBPATH"mob_race2_db.txt", ',', 2, 20, -1, &mob_readdb_race2);
 }
 
-void mob_reload(void)
-{
+void mob_reload(void) {
 	int i;
 
 	//Mob skills need to be cleared before re-reading them. [Skotlex]
 	for (i = 0; i < MAX_MOB_DB; i++)
-		if (mob_db_data[i])
-		{
+		if (mob_db_data[i]) {
 			memset(&mob_db_data[i]->skill,0,sizeof(mob_db_data[i]->skill));
 			mob_db_data[i]->maxskill=0;
 		}

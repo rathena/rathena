@@ -2403,7 +2403,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			}
 			if( mob_is_clone(md->class_) )
 				mob_clone_delete(md);
-			if( md->tomb_npc )
+			if( md->tomb_nid )
 				mvptomb_destroy(md);
 			break;
 		}
