@@ -3,11 +3,11 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Collection of Veins Quests 
 //= Stone Quest:
 //= - Help an Old Man with his job.
@@ -43,7 +43,8 @@
 //= 1.9 Added quest log entries for:
 //=     - Siblings Quest
 //=     - Thor Volcano Base Quest
-//= 2.0 Removed lvel requirement. (bugreport:4678) [L0ne_W0lf]
+//= 2.0 Removed level requirement. (bugreport:4678) [L0ne_W0lf]
+//= 2.1 Added missing changequest (3071-3076). [Joseph]
 //============================================================ 
 
 // Stone Quest
@@ -146,46 +147,46 @@ ve_fild05,257,130,4	script	Wincing Old Man#ve	945,{
 				mes "Let's at least give it a try.";
 				next;
 				switch(select("What's with these stones?:Where's the old man?:Nothing.")) {
-				case 1:
-					mes "[Zabaroo]";
-					mes "Well, we use these dark";
-					mes "stones because they're";
-					mes "pretty and easy to process.";
-					mes "They're sort of a specialty";
-					mes "of this town. I get paid to";
-					mes "harvest these handy rocks.";
-					next;
-					mes "[Zabaroo]";
-					mes "We can sell these to tourists,";
-					mes "and we even have a factory";
-					mes "that uses these stones.";
-					mes "Still, it's not like the";
-					mes "townspeople are getting";
-					mes "rich off these stones.";
-					next;
-					mes "[Zabaroo]";
-					mes "All of us are still";
-					mes "barely making a living...";
-					next;
-					break;
-				case 2:
-					mes "[Zabaroo]";
-					mes "Absar? He's inside";
-					mes "the Tool Shop. You";
-					mes "can't miss him... Just";
-					mes "look for the man with";
-					mes "the crazy eyes!";
-					next;
-					break;
-				case 3:
-					mes "[Zabaroo]";
-					mes "Thanks for your help.";
-					mes "If you can't find Absar";
-					mes "in the Tool Shop, then";
-					mes "you might want to stop";
-					mes "by the Tavern. A-auuugh!";
-					set veins_stone,1;
-					close;
+					case 1:
+						mes "[Zabaroo]";
+						mes "Well, we use these dark";
+						mes "stones because they're";
+						mes "pretty and easy to process.";
+						mes "They're sort of a specialty";
+						mes "of this town. I get paid to";
+						mes "harvest these handy rocks.";
+						next;
+						mes "[Zabaroo]";
+						mes "We can sell these to tourists,";
+						mes "and we even have a factory";
+						mes "that uses these stones.";
+						mes "Still, it's not like the";
+						mes "townspeople are getting";
+						mes "rich off these stones.";
+						next;
+						mes "[Zabaroo]";
+						mes "All of us are still";
+						mes "barely making a living...";
+						next;
+						break;
+					case 2:
+						mes "[Zabaroo]";
+						mes "Absar? He's inside";
+						mes "the Tool Shop. You";
+						mes "can't miss him... Just";
+						mes "look for the man with";
+						mes "the crazy eyes!";
+						next;
+						break;
+					case 3:
+						mes "[Zabaroo]";
+						mes "Thanks for your help.";
+						mes "If you can't find Absar";
+						mes "in the Tool Shop, then";
+						mes "you might want to stop";
+						mes "by the Tavern. A-auuugh!";
+						set veins_stone,1;
+						close;
 				}
 			}
 		}
@@ -648,48 +649,46 @@ prontera,202,122,0	script	Kid#sch	703,{
 		mes "He's got to be around here";
 		mes "somewhere, I think...";
 		next;
-		if (select("What's wrong?:...") == 1) {
+		select("What's wrong?:...");
+		mes "[Rooney]";
+		mes "Oh, it's just...";
+		mes "Some guy sent me on a";
+		mes "delivery errand, but I can't";
+		mes "find the recipient. He said";
+		mes "that I can't miss him, but";
+		mes "I still can't figure it out.";
+		next;
+		mes "[Rooney]";
+		mes "I should have asked for";
+		mes "the exact location. I mean,";
+		mes "if I don't find him, then I'll";
+		mes "never get paid for doing";
+		mes "this delivery. ^333333*Sigh*^000000";
+		next;
+		if (select("Sounds tough. Good luck!:Do you need any help?") == 1) {
 			mes "[Rooney]";
-			mes "Oh, it's just...";
-			mes "Some guy sent me on a";
-			mes "delivery errand, but I can't";
-			mes "find the recipient. He said";
-			mes "that I can't miss him, but";
-			mes "I still can't figure it out.";
-			next;
-			mes "[Rooney]";
-			mes "I should have asked for";
-			mes "the exact location. I mean,";
-			mes "if I don't find him, then I'll";
-			mes "never get paid for doing";
-			mes "this delivery. ^333333*Sigh*^000000";
-			next;
-			if (select("Sounds tough. Good luck!:Do you need any help?") == 1) {
-				mes "[Rooney]";
-				mes "Thanks. I think";
-				mes "I just might need it.";
-				mes "Where could this guy";
-				mes "be? If he's expecting";
-				mes "a delivery, he should";
-				mes "make himself easy to find...";
-				close;
-			}
-			mes "[Rooney]";
-			mes "Yeah, sure, it'd be great";
-			mes "if you could help me. Let's";
-			mes "see, I need to deliver this";
-			mes "letter to a bard named...";
-			mes "It was... Ah, ^FF0000Lasda Midar^000000!";
-			next;
-			mes "[Rooney]";
-			mes "I've looked everywhere";
-			mes "in town for someone that";
-			mes "looks like a Bard, but I'm";
-			mes "not having any luck. If you";
-			mes "find him, would you tell me?";
-			set que_sch,1;
+			mes "Thanks. I think";
+			mes "I just might need it.";
+			mes "Where could this guy";
+			mes "be? If he's expecting";
+			mes "a delivery, he should";
+			mes "make himself easy to find...";
 			close;
 		}
+		mes "[Rooney]";
+		mes "Yeah, sure, it'd be great";
+		mes "if you could help me. Let's";
+		mes "see, I need to deliver this";
+		mes "letter to a bard named...";
+		mes "It was... Ah, ^FF0000Lasda Midar^000000!";
+		next;
+		mes "[Rooney]";
+		mes "I've looked everywhere";
+		mes "in town for someone that";
+		mes "looks like a Bard, but I'm";
+		mes "not having any luck. If you";
+		mes "find him, would you tell me?";
+		set que_sch,1;
 		close;
 	}
 	else if (que_sch == 1) {
@@ -709,23 +708,21 @@ prontera,202,122,0	script	Kid#sch	703,{
 			mes "could that guy be?";
 			close;
 		}
-		else {
-			mes "[Rooney]";
-			mes "Wow, did you really";
-			mes "find Lasda Midar?";
-			mes "Why couldn't I find him?";
-			mes "Anyway, thank you so much";
-			mes "for your help. I thought I was";
-			mes "going to fail my delivery!";
-			next;
-			select("He asked me to give you this.");
-			mes "[Rooney]";
-			mes "Hey, alright! Thanks";
-			mes "for the cash! Heh heh~";
-			set zeny,zeny-100;
-			set que_sch,3;
-			close;
-		}
+		mes "[Rooney]";
+		mes "Wow, did you really";
+		mes "find Lasda Midar?";
+		mes "Why couldn't I find him?";
+		mes "Anyway, thank you so much";
+		mes "for your help. I thought I was";
+		mes "going to fail my delivery!";
+		next;
+		select("He asked me to give you this.");
+		mes "[Rooney]";
+		mes "Hey, alright! Thanks";
+		mes "for the cash! Heh heh~";
+		set zeny,zeny-100;
+		set que_sch,3;
+		close;
 	}
 	mes "[Rooney]";
 	mes "Nice day out, isn't it?";
@@ -761,8 +758,7 @@ prt_church,89,108,6	script	Bard#sch	741,{
 		mes "Ooooh... La la la-la~";
 		mes "Girls, girls, giiiirls...";
 		next;
-		switch(select("Excuse me...:......")) {
-		case 1:
+		if(select("Excuse me...:......") == 1) {
 			mes "[Lasda]";
 			mes "Why, what a glorious";
 			mes "day! I should sing a song";
@@ -770,67 +766,64 @@ prt_church,89,108,6	script	Bard#sch	741,{
 			mes "Ooooh... La la la-la~";
 			mes "Girls, girls, giiiirls...";
 			close;
-		case 2:
-			mes "[Lasda]";
-			mes "Girls, girls, giiiirls...";
-			mes "Making my heart";
-			mes "beat like... Like it's";
-			mes "going too fast. My heart's";
-			mes "racing... And you're at the";
-			mes "finish line--Love Champion!";
-			next;
-			mes "[Lasda]";
-			mes "Oh? Don't stare at me";
-			mes "like that, you're making";
-			mes "me blush. Did you need to";
-			mes "talk to me or something?.";
-			next;
-			switch(select("I'm sorry.:Are you ^ff0000Lasda Midar^000000?")) {
-			case 1:
-				mes "[Lasda]";
-				mes "Oh, that's alright.";
-				mes "...............................";
-				mes "Girl, I'll laugh at all your";
-				mes "jokes, and agree with yourv";
-				mes "politics~ You're hot! But";
-				mes "baby, you're dumb as bricks~";
-				close;
-			case 2:
-				mes "[Lasda]";
-				mes "Oh? Oh, yes, that's me.";
-				mes "How can I help you?";
-				next;
-				select("I'm here to deliver this to you.");
-				mes "[Lasda]";
-				mes "Ah! He must have finally";
-				mes "sent it. Would you please";
-				mes "give me a second? Let's see...";
-				next;
-				mes "^3355FFLasda opened the letter";
-				mes "and started reading it.^000000";
-				next;
-				mes "[Lasda]";
-				mes "Umm...";
-				mes "Oh, no...";
-				next;
-				mes "[Lasda]";
-				mes "Ah, I'm sorry for";
-				mes "making you wait.";
-				mes "Here, please give";
-				mes "this money to that";
-				mes "kid that was supposed";
-				mes "to come find me here.";
-				set que_sch,2;
-				set zeny,zeny+100;
-				next;
-				mes "[Lasda]";
-				mes "I'd like you to come";
-				mes "talk to me again later";
-				mes "if you have the time";
-				mes "See you around~";
-				close;
-			}
 		}
+		mes "[Lasda]";
+		mes "Girls, girls, giiiirls...";
+		mes "Making my heart";
+		mes "beat like... Like it's";
+		mes "going too fast. My heart's";
+		mes "racing... And you're at the";
+		mes "finish line--Love Champion!";
+		next;
+		mes "[Lasda]";
+		mes "Oh? Don't stare at me";
+		mes "like that, you're making";
+		mes "me blush. Did you need to";
+		mes "talk to me or something?.";
+		next;
+		if(select("I'm sorry.:Are you ^ff0000Lasda Midar^000000?") == 1) {
+			mes "[Lasda]";
+			mes "Oh, that's alright.";
+			mes "...............................";
+			mes "Girl, I'll laugh at all your";
+			mes "jokes, and agree with yourv";
+			mes "politics~ You're hot! But";
+			mes "baby, you're dumb as bricks~";
+			close;
+		}
+		mes "[Lasda]";
+		mes "Oh? Oh, yes, that's me.";
+		mes "How can I help you?";
+		next;
+		select("I'm here to deliver this to you.");
+		mes "[Lasda]";
+		mes "Ah! He must have finally";
+		mes "sent it. Would you please";
+		mes "give me a second? Let's see...";
+		next;
+		mes "^3355FFLasda opened the letter";
+		mes "and started reading it.^000000";
+		next;
+		mes "[Lasda]";
+		mes "Umm...";
+		mes "Oh, no...";
+		next;
+		mes "[Lasda]";
+		mes "Ah, I'm sorry for";
+		mes "making you wait.";
+		mes "Here, please give";
+		mes "this money to that";
+		mes "kid that was supposed";
+		mes "to come find me here.";
+		set que_sch,2;
+		set zeny,zeny+100;
+		next;
+		mes "[Lasda]";
+		mes "I'd like you to come";
+		mes "talk to me again later";
+		mes "if you have the time";
+		mes "See you around~";
+		close;
 	}
 	else if (que_sch == 2) {
 		mes "^3355FFLasda seems to be";
@@ -4842,12 +4835,14 @@ ve_fild07,235,42,3	script	Silk Sand Camel	938,{
 					mes "just 4 more lumps";
 					mes "of this nasty old dung.";
 					set rachel_camel, 13;
+					changequest 3071,3072;
 				}
 				else if (rachel_camel == 13) {
 					mes "Awesome! I got";
 					mes "2 glorious camel dung";
 					mes "lumps! Only 3 more to go!";
 					set rachel_camel, 14;
+					changequest 3072,3073;
 				}
 				else if (rachel_camel == 14) {
 					mes "Yes! Now I have";
@@ -4855,6 +4850,7 @@ ve_fild07,235,42,3	script	Silk Sand Camel	938,{
 					mes "Just 2 more... I'm more";
 					mes "than halfway done!";
 					set rachel_camel, 15;
+					changequest 3073,3074;
 				}
 				else if (rachel_camel == 15) {
 					mes "4 lumps of camel dung...";
@@ -4862,6 +4858,7 @@ ve_fild07,235,42,3	script	Silk Sand Camel	938,{
 					mes "better than I thought!";
 					mes "Only 1 more to go!";
 					set rachel_camel, 16;
+					changequest 3074,3075;
 				}
 				else if (rachel_camel == 16) {
 					mes "In my hands...";
@@ -4888,6 +4885,7 @@ ve_fild07,235,42,3	script	Silk Sand Camel	938,{
 					mes "^3355FFIt's time for you to";
 					mes "return to Mr. Saraman.^000000";
 					set rachel_camel, 17;
+					changequest 3075,3076;
 				}
 				delitem 519,2; //Milk
 				delitem 511,20; //Green_Herb
