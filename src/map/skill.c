@@ -7393,7 +7393,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			i = skill_get_splash(skillid,skilllv);
 			if( skillid == LG_EARTHDRIVE ) {
 				int dummy = 1;
-				map_foreachinarea(skill_cell_overlap, src->m, src->x-i, src->y-i, src->x+i, src->y+i, BL_SKILL, LG_EARTHDRIVE, src);
+				map_foreachinarea(skill_cell_overlap, src->m, src->x-i, src->y-i, src->x+i, src->y+i, BL_SKILL, LG_EARTHDRIVE, &dummy, src);
 			}
 			map_foreachinrange(skill_area_sub, bl,i,BL_CHAR,
 				src,skillid,skilllv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
@@ -9733,7 +9733,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 			int dummy = 1;
 			clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
 			i = skill_get_splash(skillid, skilllv);
-			map_foreachinarea(skill_cell_overlap, src->m, x-i, y-i, x+i, y+i, BL_SKILL, HW_GANBANTEIN, src);
+			map_foreachinarea(skill_cell_overlap, src->m, x-i, y-i, x+i, y+i, BL_SKILL, HW_GANBANTEIN, &dummy, src);
 		} else {
 			if (sd) clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
 			return 1;
@@ -10731,7 +10731,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 		}
 
 		if( range <= 0 )
-			map_foreachincell(skill_cell_overlap,src->m,ux,uy,BL_SKILL,skillid, src);
+			map_foreachincell(skill_cell_overlap,src->m,ux,uy,BL_SKILL,skillid, &alive, src);
 		if( !alive )
 			continue;
 
