@@ -16390,7 +16390,7 @@ int skill_elementalanalysis(struct map_session_data* sd, int n, int skill_lv, un
 }
 
 int skill_changematerial(struct map_session_data *sd, int n, unsigned short *item_list) {
-	int i, j, k, c, p, nameid, amount;
+	int i, j, k, c, p = 0, nameid, amount;
 	
 	nullpo_ret(sd);
 	nullpo_ret(item_list);

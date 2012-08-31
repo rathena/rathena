@@ -10002,6 +10002,11 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 		if(!sd->state.mainchat)
 			clif_displaymessage(fd, msg_txt(388)); // You should enable main chat with "@main on" command.
 		else {
+			if ( battle_config.min_chat_delay ) {
+				if( DIFF_TICK(sd->cantalk_tick, gettick()) > 0 )
+					return;
+				sd->cantalk_tick = gettick() + battle_config.min_chat_delay;
+			}
 			// send the main message using inter-server system
 			intif_main_message( sd, message );
 		}
