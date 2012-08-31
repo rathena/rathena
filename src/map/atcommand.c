@@ -1594,7 +1594,8 @@ ACMD_FUNC(help)
 	}
 	
 	if (!config_setting_lookup_string(help, command_name, &text)) {
-		clif_displaymessage(fd, msg_txt(988)); // There is no help for this command_name.
+		sprintf(atcmd_output, msg_txt(988), atcommand_symbol, command_name); // There is no help for %c%s.
+		clif_displaymessage(fd, atcmd_output);
 		atcommand_get_suggestions(sd, command_name, true);
 		return -1;
 	}
