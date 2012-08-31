@@ -1,5 +1,15 @@
-TODO: With such short descriptions, it's duplicated 'conf/help.txt' 
-Consider explaining commands in detail, similar to 'doc/script_commands.txt'
+//===== rAthena Documentation ================================
+//= Atcommand List
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 20120824
+//===== Description: =========================================
+//= 
+//===== Additional Comments: =================================
+//= TODO: With such short descriptions, it's duplicated 'conf/help.txt' 
+//= Consider explaining commands in detail, similar to 'doc/script_commands.txt'
+//============================================================
 
 commands: Displays a list of @ commands available to the player.
 charcommands: Displays a list of # commands available to the player.

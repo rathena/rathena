@@ -1,15 +1,12 @@
-//===== Athena Doc ========================================
+//===== rAthena Documentation ================================
 //= Packet Structure Notation
-//===== By ================================================
+//===== By: ==================================================
 //= Ai4rei
-//===== Version ===========================================
-//= 1.1
-//=========================================================
-//= 1.0 - Initial version.
-//= 1.1 - Added examples.
-//===== Description =======================================
+//===== Current Version: =====================================
+//= 20120810
+//===== Description: =========================================
 //= Explanation how packets are and should be documented.
-//=========================================================
+//============================================================
 
 This document specifies how packets are and should be documented, to
 keep packet structure comments consistent in the entire codebase. It

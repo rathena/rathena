@@ -1,16 +1,16 @@
-//===== Athena Doc ========================================
+//===== rAthena Documentation ================================
 //= rAthena Map Cache Builder and Format Documentation
-//===== By ================================================
+//===== By: ==================================================
 //= DracoRPG
-//===== Version ===========================================
+//===== Current Version: =====================================
 //= 1.0
-//=========================================================
+//===== Description: =========================================
+//= A complete manual for rAthena's map cache generator as 
+//= well as a reference on the map cache format used.
+//===== Additional Comments: =================================
 //= 0.1 - Short howto for the initial builder version
 //= 1.0 - Complete manual covering the improved version
-//===== Description =======================================
-//= A complete manual for rAthena's map cache generator
-//= as well as a reference on the map cache format used
-//=========================================================
+//============================================================
 
 Preface:
 -------------------------------------------------------------------------------

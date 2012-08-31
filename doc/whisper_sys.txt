@@ -1,17 +1,15 @@
-//===== Athena Doc ========================================
+//===== rAthena Documentation ================================
 //= NPC Whisper System
-//===== By ================================================
-//= lordalfa, Massdriller
-//===== Version ===========================================
-//= 1.1
-//=========================================================
-//= 1.1 - Cleanup. [Euphy]
-//===== Description =======================================
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 20120826
+//===== Description: =========================================
 //= A description of rAthena's NPC whispering system.
-//=========================================================
+//============================================================
 
-This piece of code to allows characters to execute events in NPCs by whispering
-them up to ten parameters. The NPC must have an "OnWhisperGlobal" label, or an
+This piece of code to allows characters to execute events in NPCs by whispering 
+them up to ten parameters. The NPC must have an "OnWhisperGlobal" label, or an 
 "event not found" error will result.
 
 	NPC:<NPC Name>		<String>{#String 2{#...{#String 10}}}

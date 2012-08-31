@@ -1,4 +1,12 @@
-These are possible permissions of player groups, configured in conf/groups.conf.
+//===== rAthena Documentation ================================
+//= Permission List
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 20120718
+//===== Description: =========================================
+//= permissions of player groups, configured in /conf/groups.conf
+//============================================================
 
 can_trade : Ability to trade or otherwise distribute items (drop, storage, vending etc)
 can_party : Ability to join parties.
@@ -11,8 +19,8 @@ hide_session : Hides player session from being displayed by @commands.
 who_display_aid : Ability to see GMs and Account/Char IDs in the @who command.
 hack_info : Ability to receive all informations about any player that try to hack, spoof a name, etc.
 any_warp : Ability to bypass nowarp, nowarpto, noteleport and nomemo mapflags.
-          This option is mainly used in commands which modify a character's
-          map/coordinates (like @memo, @mapmove, @go, @jump, etc...).
+           This option is mainly used in commands which modify a character's
+           map/coordinates (like @memo, @mapmove, @go, @jump, etc...).
 view_hpmeter : Ability to see HP bar of every player.
 view_equipment : Ability to view players equipment regardless of their setting.
 use_check : Ability to use client command /check (display character status).

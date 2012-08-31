@@ -1,6 +1,12 @@
-(FIXME: Someone give this file better formatting)
-
-- Explanation of the item_db.txt file and structure.
+//===== rAthena Documentation ================================
+//= Item Database
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 20120420
+//===== Description: =========================================
+//= Explanation of the item_db.txt file and structure.
+//============================================================
 
 ID: Item id
 
