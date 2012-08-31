@@ -1389,7 +1389,7 @@ ACMD_FUNC(heal)
 ACMD_FUNC(item)
 {
 	char item_name[100];
-	int number = 0, item_id, flag;
+	int number = 0, item_id, flag = 0;
 	struct item item_tmp;
 	struct item_data *item_data;
 	int get_count, i;
@@ -1449,7 +1449,7 @@ ACMD_FUNC(item2)
 	int item_id, number = 0;
 	int identify = 0, refine = 0, attr = 0;
 	int c1 = 0, c2 = 0, c3 = 0, c4 = 0;
-	int flag;
+	int flag = 0;
 	int loop, get_count, i;
 	nullpo_retr(-1, sd);
 
