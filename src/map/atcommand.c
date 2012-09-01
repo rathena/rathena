@@ -173,15 +173,18 @@ void do_final_msg(void)
  * @param name the name of the command to retrieve help information for
  * @return the string associated with the command, or NULL
  */
-static const char* atcommand_help_string(const char* name)
+static const char* atcommand_help_string(const char* command)
 {
 	const char* str = NULL;
 	config_setting_t* info;
 
-	if( *name == atcommand_symbol || *name == charcommand_symbol )
+	if( *command == atcommand_symbol || *command == charcommand_symbol )
 	{// remove the prefix symbol for the raw name of the command
-		name ++;
+		command ++;
 	}
+
+	// convert alias to the real command name
+	command = atcommand_checkalias(command);
 
 	// attept to find the first default help command
 	info = config_lookup(&atcommand_config, "help");
@@ -191,7 +194,7 @@ static const char* atcommand_help_string(const char* name)
 		return NULL;
 	}
 	
-	if( !config_setting_lookup_string( info, name, &str ) )
+	if( !config_setting_lookup_string( info, command, &str ) )
 	{// failed to find the matching help string
 		return NULL;
 	}
@@ -991,6 +994,7 @@ ACMD_FUNC(jobchange)
 {
 	//FIXME: redundancy, potentially wrong code, should use job_name() or similar instead of hardcoding the table [ultramage]
 	int job = 0, upper = 0;
+	const char* text;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || sscanf(message, "%d %d", &job, &upper) < 1)
@@ -1137,13 +1141,9 @@ ACMD_FUNC(jobchange)
 			}
 		}
 
-		// TODO: convert this to use atcommand_help_string()
 		if (!found) {
-			int i;
-			for (i = 922; i <= 966; ++i)
-				clif_displaymessage(fd, msg_txt(i));
-			clif_displaymessage(fd, msg_txt(967)); // ---- Modes And Others ----
-			clif_displaymessage(fd, msg_txt(968)); // 22 Wedding   26 Christmas   27 Summer   4048 Star Gladiator (Union)
+			text = atcommand_help_string(command);
+			if (text) clif_displaymessage(fd, text);
 			return -1;
 		}
 	}
@@ -1163,12 +1163,8 @@ ACMD_FUNC(jobchange)
 			return -1;
 		}
 	} else {
-		// TODO: convert this to use atcommand_help_string()
-		int i;
-		for (i = 922; i <= 966; ++i)
-			clif_displaymessage(fd, msg_txt(i));
-		clif_displaymessage(fd, msg_txt(967)); // ---- Modes And Others ----
-		clif_displaymessage(fd, msg_txt(968)); // 22 Wedding   26 Christmas   27 Summer   4048 Star Gladiator (Union)
+		text = atcommand_help_string(command);
+		if (text) clif_displaymessage(fd, text);
 		return -1;
 	}
 
