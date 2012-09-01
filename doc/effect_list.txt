@@ -731,20 +731,20 @@ Number	Description
 712.	A Little Flame Sphere
 713.	A lot of Very Small and Yellow Sphere
 714.	(Nothing)
-715.	Something Like a Little Blue Basilica (Probably something related Arch Bishop)
-716.	The same of 715 (Probably something related Arch Bishop)
-717.	Something like Angelus (Probably something related Arch Bishop)
+715.	Little blue Basilica
+716.	Same as 715
+717.	Christmas Carol (copy of Angelus)
 718.	Judex (Visual Effect)
 719.	Renovatio (light beam)
-720.	Some sound and effect of Soul Destroyer but Yellow (Probably something related Warlock)
-721.	Big Lightning from the Sky (Probably something related Warlock)
+720.	Yellow version of Soul Breaker
+721.	Adoramus (lightning bolt)
 722.	Ignition Break (big explosion)
-723.	Noise Sound (Probably something related Warlock)
-724.	Client Crash :P
-725.	Status Recovery Sound and Wind movement on the ground (Probably something related Arch Bishop)
+723.	Noise Sound
+724.	Green version of Detecting
+725.	Detecting
 726.	Frost Misty (blue vapor and bubbles)
 727.	Comet
-728.	A Little Flare that Remain on the Player for some second (Probably something related Warlock)
+728.	Small fire (part of Hell Inferno)
 729.	Marsh of Abyss (like Close Confine)
 730.	Small, cartoony explosion
 731.	Dragon Howling (blinking, expanding circle)
@@ -770,7 +770,7 @@ Number	Description
 751.	Shots from a direction
 752.	Some blinking filter
 753.	Sparkles
-754.	Green Warp
+754.	Green warp portal (root of Epiclesis)
 755.	Oratio (spinning blue symbol)
 756.	Enchant Blade (like Berserk Potion)
 757.	Stargate-like wormhole animation
@@ -803,28 +803,28 @@ Number	Description
 784.	White shaft of light
 785.	Upward flying wrenches
 786.	Symbol with bleeping sound [S]
-787.	(Nothing)
-788.	Green haired voodoo skull
+787.	Flare Launcher (line of fire)
+788.	Venom Impress (green skull)
 789.	Two Ancillas
 790.	Flame symbol
 791.	Two ice shots
 792.	Upward streaming white particles
 793.	Same, but more brief
 794.	Infrared Scan (red lasers)
-795.	Axe Crashdown
+795.	Power Swing (axe crash)
 796.	Spinning blue triangles
 797.	Stapo
-798.	(Nothing)
-799.	Expanding blue [S]
+798.	Red triangles (like Intimidate)
+799.	Stasis (expanding blue mist) [S]
 800.	Hell Inferno (red lights)
 801.	Jack Frost unit (ice spikes)
 802.	White Imprison
-803.	(Nothing)
-804.	Earth shaking [S]
+803.	Recognized Spell
+804.	Tetra Vortex [S]
 805.	Tetra Vortex cast animation (blinking colors)
 806.	Flying by as fast as a rocket
 807.	Kidnapping sound
-808.	(Nothing)
+808.	Like Recognized Spell, but one symbol
 809.	Shadowy filter [S]
 810.	Damp thud sound [S]
 811.	Body Painting
@@ -836,7 +836,7 @@ Number	Description
 817.	Masquerade - Unlucky
 818.	Masquerade - Weakness
 819.	(Nothing)
-820.	Strip sound
+820.	Strip Accessory
 821.	Waterfall
 822.	Dimension Door (spinning blue aura)
 823.	in-the-manhole effect
@@ -863,8 +863,8 @@ Number	Description
 844.	Purple cone
 845.	light-bluish turquoise cone
 846.	(Nothing)
-847.	Light rays upwards (white/red)
-848.	Light rays upwards (white/blue)
+847.	Gloomy Day (white/red light rays)
+848.	Gloomy Day (white/blue light rays)
 849.	(Nothing)
 850.	(Nothing)
 851.	Green mushy-foggy stuff (dull)
@@ -942,7 +942,7 @@ Number	Description
 923.	Poison Buster
 924.	Poisoning animation
 925.	Some filter
-926.	Lightning cloud
+926.	Electric Walk unit
 927.	Earth Grave (speary roots)
 928.	Ice cloud projectiles
 929.	Warmer (field of flames)

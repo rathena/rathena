@@ -1803,7 +1803,7 @@ job3_rang02,251,49,3	script	Test Supervisor#jr_13	732,{
 				next;
 				mes "[Test Supervisor, Freeze]";
 				mes "Then, Good luck!";
-//				sc_start SC_STONE,120000,10; // Commented until the Mercenary M_DESERT_WOLF_B is working correctly.
+				sc_start SC_STONE,120000,10;
 				close2;
 				donpcevent "Test Supervisor#jr_13::OnDisable";
 				donpcevent "Third Test Timer#jr_12::OnEnable";
