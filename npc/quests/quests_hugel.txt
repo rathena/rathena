@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 2.1
 //===== Compatible With: =====================================
-//= rAthena
+//= rAthena SVN
 //===== Description: =========================================
 //= Quest NPC's related to Hugel
 //===== Additional Comments: =================================
@@ -27,10 +27,8 @@
 //=     - Juno Remedy Quest
 //============================================================
 
-//-------------------------------------------------------------------------
 // Medicine Quest
-//-------------------------------------------------------------------------
-
+//============================================================
 hu_in01,387,245,0	script	Allen Schuwell	849,2,2,{
 
 	if(BaseLevel > 49)
@@ -799,10 +797,8 @@ OnTimer4500:
 	
 }
 
-//-------------------------------------------------------------------------
 // Biological Weapon Quest
-//-------------------------------------------------------------------------
-
+//============================================================
 ein_in01,16,36,3	script	Morriphen	86,{
 
 	if(hg_bio == 0)
@@ -2057,10 +2053,8 @@ lhz_in03,193,28,3	script	Makkie	83,{
 	
 }
 
-//-------------------------------------------------------------------------
 // Rebellion Quest
-//-------------------------------------------------------------------------
-
+//============================================================
 hugel,70,137,5	script	Shede	879,{
 
 	cutin "siide1.bmp",2;
@@ -3500,14 +3494,14 @@ hu_in01,317,312,0	script	Book	111,{
 					mes "in creating a type of machine called ^FF0000Guardian^000000.";
 					mes "I have a bad feeling about that, so I decided to write a journal";
 					mes "starting from today and keep everything in record.";
-					mes "��";
+					mes " ";
 					mes "\"^FF0000Guardian^000000\" is an android";
 					mes "that was created based on the idea of \"^3131FFGiantes^000000\",";
 					mes "the giant tribe that was said to live in an ancient age.";
 					mes "It is memorized with various commands,";
 					mes "so it is said to handle difficult things for humans as protecting";
 					mes "important facilities and such.";
-					mes "��";
+					mes " ";
 					mes "However, those things are our job, the mercenary soldiers' job.";
 					mes "Mercenary soldier groups in many areas";
 					mes "are already agitated by the news of the Guardian creation.";
@@ -3543,7 +3537,7 @@ hu_in01,317,312,0	script	Book	111,{
 					mes "hard works. But it doesn't seem to be true.";
 					mes "To me, they are nothing but \"^FF0000weapons of mass destruction^000000\".";
 					mes "Perhaps, they might be intended to be that way from the beginning.";
-					mes "��";
+					mes " ";
 					mes "What is going to be next after we finish testing the machines?";
 					mes "No matter how bad other people criticize us for being greedy toward money,";
 					mes "we always take pride in what we are doing, and we always do our best.";
@@ -3551,7 +3545,7 @@ hu_in01,317,312,0	script	Book	111,{
 					mes "But, now, we are losing our place to the lifeless machines.";
 					mes "Many people have quit this job after the machines were introduced.";
 					mes "I must admit that I am also being shaken by the thought.";
-					mes "��";
+					mes " ";
 					mes "Bah, god damn you, Rekenber! You just have created the worst invention in history!";
 					next;
 					mes "...............................";
@@ -3579,7 +3573,7 @@ hu_in01,317,312,0	script	Book	111,{
 					mes "One of the guardians caused an error and brought havoc.";
 					mes "While we were terrified and didn't know what to do, that broken guardian";
 					mes "crushed the commander of 'Blade Canine Mercenary' to death.";
-					mes "��";
+					mes " ";
 					mes "I can't remember how we could regain control over the broken guardian.";
 					mes "My mind is still baffled for the fact that that machine actually killed an innocent guy as I was kind of worried about.";
 					mes "Many people were dispatched from Rekenber to investigate this matter, so hopefully they will figure out";
@@ -3601,17 +3595,17 @@ hu_in01,317,312,0	script	Book	111,{
 					mes "Rekenber must have bribed the upper management of our troops with money.";
 					mes "Otherwise, why would they want us to keep our mouth sealed about a such shocking incident?";
 					mes "We, angry mercenary soldiers burst into rage right after the morning session was over.";
-					mes "��";
+					mes " ";
 					mes "We went ahead and spread the story about the shocking incident to every mercenary troops.";
 					mes "And then we destroyed every guardian which we found in hangars.";
 					mes "The sounds of hammering metal and sirens were echoing everywhere, everywhere you went.";
-					mes "��";
+					mes " ";
 					mes "...We took refuge in a safe place out of our unit because of what happened.";
 					mes "We are planning to assert our social security to the public and inform the public with";
 					mes "the danger of the guardians and the negligence of the government and Rekenber toward the incident.";
 					mes "Our leader told us that he has sent out letters to every mercenary troop";
 					mes "to encourage them to participate in what we are trying to do.";
-					mes "��";
+					mes " ";
 					mes "I feel like...that I have just turn into a no-way-out.";
 					mes "I am facing my future with a deep sense of gloom.";
 					next;
@@ -3648,7 +3642,7 @@ hu_in01,317,312,0	script	Book	111,{
 					mes "But we were too weak to compete with their invincible guardians. We were literally swept away.";
 					mes "They were quicker than we expected in taking action, and lines and lines of guardians were coming after us.";
 					mes "There was nothing that we could do. We met with a disastrous defeat in the battle with guardians.";
-					mes "��";
+					mes " ";
 					mes "Everybody is still in shock, but we can't give up now.";
 					mes "I think that we are going to visit a house of a sage called \"Varmunt\" early in the morning.";
 					mes "I don't know why, but it seems that the sage is against the use of guardians.";
@@ -3695,13 +3689,13 @@ hu_in01,317,312,0	script	Book	111,{
 					mes "Although I didn't have a time to write a journal that time, the last fight in the Varmunt mansion turned out to be our miserable defeat...as I was worried.";
 					mes "I was told that Sage Varmunt disappeared after the fight, and all of his documents were taken by Rekenber.";
 					mes "I am afraid that they might create a more powerful version of the existing guardian by using his documents.";
-					mes "��";
+					mes " ";
 					mes "I lost one arm during the last fight, and I barely escaped to Hugel.";
 					mes "I feel so lucky to be in Hugel, because when I arrived, I was a total mess with only one arm,";
 					mes "but the people in this town did not ask me anything but welcomed me.";
 					mes " ";
 					mes "I have nowhere to go any longer. I am planning to live my life here as long as nothing happens soon.";
-					mes "��";
+					mes " ";
 					mes "My arm is throbbing with pain again. The history of mercenary soldiers ended, and I need to rest.";
 					mes "I hope that this will be the last page of my journal.";
 					if(hg_tre == 48) set hg_tre,49;
@@ -4607,10 +4601,8 @@ hu_in01,377,106,3	script	Pub Granny	892,{
 	close;
 }
 
-//-------------------------------------------------------------------------
 // Memory Quest
-//-------------------------------------------------------------------------
-
+//============================================================
 hugel,198,169,0	script	#HugelTree	139,2,2,{
 
 	if(BaseLevel > 49)
@@ -5379,10 +5371,8 @@ hugel,196,164,3	script	El Schatt	50,{
 
 }
 
-//-------------------------------------------------------------------------
-// Hide and Seek quest
-//-------------------------------------------------------------------------
-
+// Hide and Seek Quest
+//============================================================
 hugel,107,67,3	script	Torpy	706,{
 
 	if(BaseLevel > 49)
@@ -6033,10 +6023,8 @@ OnTimer60000:
 	
 }
 
-//-------------------------------------------------------------------------
-// Fish cake soup delivery
-//-------------------------------------------------------------------------
-
+// Fish Cake Soup Delivery Quest
+//============================================================
 hu_in01,15,372,3	script	Cellette Lavit	74,{
 
 	if(!hg_odeng)
@@ -6810,10 +6798,8 @@ hugel,102,161,3	script	Erjan	100,{
 	}
 }
 
-//-------------------------------------------------------------------------
 // Juno Remedy Quest
-//-------------------------------------------------------------------------
-
+//============================================================
 yuno,111,156,3	script	Euslan	90,{
 
 	if(BaseLevel < 60)
@@ -7614,10 +7600,8 @@ OnTouch:
 	}
 }
 
-//-------------------------------------------------------------------------
 // Cow Milking Quest
-//-------------------------------------------------------------------------
-
+//============================================================
 hugel,56,104,3	script	Kurupe	709,3,3,{
 
 	if(hg_milk == 1)
@@ -8467,10 +8451,8 @@ function	script	Func_MilkCow	{
 	close;
 }
 
-//-------------------------------------------------------------------------
-// Odin Temple Excavation quest
-//-------------------------------------------------------------------------
-
+// Odin Temple Excavation Quest
+//============================================================
 hugel,91,152,1	script	Sign	837,{
 
 	mes "**Recruitment Notice**";

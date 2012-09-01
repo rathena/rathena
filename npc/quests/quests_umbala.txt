@@ -10,18 +10,18 @@
 //= [Aegis Conversion]
 //= Umbalian Language Quest, Umbala Skeletal Gate Quest,
 //= Umbala Event, Create Essence/Dismantle Stone
-//	Phase1.Learning the Language
-//	1	(Elder)First discussion
-//	2	(Elder)Asking about learning the language
-//	3	(Elder)Final step (understanding NPC speech)
+//	Phase 1. Learning the Language
+//	  (Elder) First discussion
+//	  (Elder) Asking about learning the language
+//	  (Elder) Final step (understanding NPC speech)
 //	------------------------------------------
-//	Phase2.Create Essence/Dismantle Stone
-//	4	(Shaman)Get permission to speak with her from the chief
-//	5	(Elder)Ask about conditions needed to be fulfilled to get permission
-//	6	(Elder)Get permission
-//	7	(Shaman)Use the shaman to create essences and dismantle elemental stones.
+//	Phase 2. Create Essence/Dismantle Stone
+//	 (Shaman) Get permission to speak with her from the chief
+//	  (Elder) Ask about conditions needed to be fulfilled to get permission
+//	  (Elder) Get permission
+//	 (Shaman) Use the shaman to create essences and dismantle elemental stones.
 //= Umbala Domestic Dispute?
-//= - This quest is only avaliable if you ahve not done language quest.
+//= - This quest is only avaliable if you have not done language quest.
 //= - Variables in use: um_wind, MISC_QUEST (Bit 32768)
 //===== Additional Comments: ================================= 
 //= fixed by x[tsk], Lupus, PoW
@@ -39,9 +39,8 @@
 //= 2.2a Fixed weight check from previous update. [L0ne_w0lf]
 //============================================================ 
 
-//==============================================================================
-// Umbala Language Quest
-//==============================================================================
+// Umbalian Language Quest
+//============================================================
 um_in,39,122,5	script	Utan Chief	784,{
 	if (event_umbala == 0) {
 		mes "[Karkatan]";
@@ -363,9 +362,8 @@ um_in,39,122,5	script	Utan Chief	784,{
 	}
 }
 
-//=====================================================================
-//                    Create Essence/Dismantle Stone
-//=====================================================================
+// Create Essence/Dismantle Stone Quest
+//============================================================
 um_in,44,71,2	script	Utan Shaman	782,{
 	if (checkweight(908,600) == 0) {
 		mes "^3355FFWait a second!";
@@ -981,9 +979,7 @@ umbala,221,193,1	script	#Skulldoor	111,{
 	}
 }
 
-
-//============================================================ 
-// Umbala Domestic Dispute
+// Umbala Domestic Dispute Quest
 //============================================================ 
 um_in,139,48,5	script	Phrenetan	783,{
 	if (event_umbala >= 3) {

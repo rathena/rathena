@@ -79,8 +79,8 @@
 //= 4.7 Fixed missing label. (bugreport:4654) [L0ne_W0lf]
 //============================================================ 
 
-// Gangster Alert [Aegis Conversion]
-//------------------------------------------------------------
+// Gangster Alert [Official Conversion]
+//============================================================
 lighthalzen,1,1,0	script	Law Enforcement	-1,{
 	end;
 
@@ -236,10 +236,8 @@ lighthalzen,294,223,7	script	Guard#lhz02	868,{
 	}
 }
 
+// Cube Room Quest
 //============================================================
-// Cube Room
-//============================================================
-
 lighthalzen,341,224,3	script	Fishbone	868,{
 	// Retain prior position in quest.
 	if (piciburn) {
@@ -1759,10 +1757,8 @@ OnTouch:
 	close;
 }
 
-//============================================================
 // Lighthalzen Pickpocket Mini-Quest
 //============================================================
-
 lighthalzen,240,216,4	script	Suspicious Guy#lhz_01	870,2,2,{
 	end;
 
@@ -2086,10 +2082,8 @@ OnTouch:
 	}
 }
 
-//==============================================================
-// Friendship
-//==============================================================
-
+// Friendship Quest
+//============================================================
 lhz_in02,201,210,5	script	Digotz	869,{
 	if (BaseLevel < 50) {
 		mes "[Digotz]";
@@ -3403,8 +3397,8 @@ yuno_in04,168,117,3	script	Book#lhz	111,{
 	close;
 }
 
-///Cursed Spirit Quest
-
+// Cursed Spirit Quest
+//============================================================
 lhz_dun01,147,106,0	script	#kiz01-1	-1,3,3,{
 OnTouch_:
 	if (countitem(7345) > 0 ) {
@@ -6371,8 +6365,8 @@ lhz_in01,269,114,3	script	A File#li-1	111,{
 	close;
 }
 
-// President Quest aka. Schwartzvalt Trilogy Quest
-
+// President Quest, a.k.a. Schwartzvalt Triology Quest
+//============================================================
 lighthalzen,179,170,4	script	Ordinary Man	98,{
 
 	if(!lhz_boss)
@@ -10339,7 +10333,7 @@ lhz_in02,19,274,2	script	Maintenance Guy	851,{
 }
 
 // Rekenber Job Quest
-
+//============================================================
 lhz_in01,174,258,3	script	Young Man#reken	868,{
 
 	if(lhz_rekenber > 21)

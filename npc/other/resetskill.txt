@@ -14,6 +14,7 @@
 //===== Additional Comments: =================================
 //= 1.0 First version. [L0ne_W0lf]
 //============================================================
+
 prontera,146,232,4	script	Hypnotist#2	124,{
 	mes "[Hypnotist]";
 	mes "Greetings, adventurer.";

@@ -5,10 +5,10 @@
 //===== Current Version: =====================================
 //= 20120718
 //===== Description: =========================================
-//= permissions of player groups, configured in /conf/groups.conf
+//= Player group permissions, configured in /conf/groups.conf.
 //============================================================
 
-can_trade : Ability to trade or otherwise distribute items (drop, storage, vending etc)
+can_trade : Ability to trade or otherwise distribute items (drop, storage, vending etc...).
 can_party : Ability to join parties.
 all_skill : Ability to use all skills.
 all_equipment : Ability to equip anything (can cause client errors).
@@ -25,8 +25,8 @@ view_hpmeter : Ability to see HP bar of every player.
 view_equipment : Ability to view players equipment regardless of their setting.
 use_check : Ability to use client command /check (display character status).
 use_changemaptype : Ability to use client command /changemaptype.
-all_commands: Ability to use ALL atcommands/charcommands.
-receive_requests: Ability to receive @requests.
-show_bossmobs: Ability to see boss mobs with @showmobs.
-disable_pvm: Ability to disable Player v.s. Monster.
-disable_pvp: Ability to disable Player v.s. Player.
+all_commands : Ability to use all atcommands and charcommands.
+receive_requests : Ability to receive @requests.
+show_bossmobs : Ability to see boss mobs with @showmobs.
+disable_pvm : Ability to disable Player vs. Monster.
+disable_pvp : Ability to disable Player vs. Player.

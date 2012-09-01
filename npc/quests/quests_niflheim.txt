@@ -28,9 +28,8 @@
 //=     Clicking will do nothing, you have to still "touch" the npc. 
 //============================================================ 
 
-//=============================================================
-//Piano Quest
-//=============================================================
+// Piano Quest
+//============================================================
 niflheim,224,243,3	script	Alreg#nif	795,{
 	if (nif_piano) set nif_piano,0;
 	mes "[Alreg]";
@@ -114,12 +113,8 @@ nif_in,105,81,3	script	Crayu#nif	794,{
 			mes "favorite guests. Here's a";
 			mes "little reward for you.";
 			next;
-			if (nif_esc == 1) {
-				set nif_esc,3;
-			}
-			else {
-				set nif_esc,6;
-			}
+			if (nif_esc == 1) set nif_esc,3;
+			else set nif_esc,6;
 			getitem 7184,1; //Piano_Keyboard
 			mes "[Crayu]";
 			mes "Lastly, I hope you will show your";
@@ -190,12 +185,10 @@ OnTouch:
 		next;
 		mes "^3355FFWould you like to pick it up?^000000";
 		if (select("Yes:No") == 1) {
-			if (nif_esc < 10) {
+			if (nif_esc < 10)
 				set nif_esc,nif_esc+2;
-			}
-			else if (nif_esc == 10) {
+			else if (nif_esc == 10)
 				set nif_esc,11;
-			}
 			getitem 7184,1; //Piano_Keyboard
 		}
 		close;
@@ -301,9 +294,8 @@ nif_in,188,168,3	script	Witch#nif	792,{
 	end;
 }
 
-//=============================================================
 // Message Delivery Quest
-//=============================================================
+//============================================================
 prt_in,161,20,3	script	Erious#nif	92,{
 	if (MISC_QUEST & 16384) {
 		mes "[Erious]";
@@ -578,12 +570,7 @@ umbala,215,181,3	script	Billik	733,{
 niflheim,153,215,3	script	Feylin	794,{
 	if (nif_revive == 2) {
 		mes "[Feylin]";
-		if (Sex == 1) {
-			mes "Poor guy...";
-		}
-		else {
-			mes "Poor girl...";
-		}
+		mes "Poor "+((Sex)?"guy":"girl")+"...";
 		mes "Dying at such a young age...";
 		mes "I am always sorry to see the";
 		mes "young pass away.";

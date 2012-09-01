@@ -13,7 +13,6 @@
 //= Converted to rAthena format by Dr.Evil
 //============================================================
 
-
 alberta,188,64,4	script	Sugar	91,{
 	set @maplenum,0;
 	set @mapleItemID,0;

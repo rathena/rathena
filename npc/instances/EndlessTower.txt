@@ -467,6 +467,7 @@ e_tower,151,185,4	script	Purification Stone#et2	844,{
 */
 
 // Floors 1-25
+//============================================================
 1@tower,50,360,0	script	Immortal Brazier#	844,{
 	mes "- A Message is Engraved on the Brazier -";
 	mes "The one who scatters the ashes of the darkness in this place shall become one step closer to Nacht Sieger, the Hegemon King of the Darkness...";
@@ -1343,6 +1344,7 @@ OnTouch_:
 */
 
 // Floors 26-50
+//============================================================
 2@tower,29,365,2	script	Immortal Furnace#1	844,{
 	end;
 
@@ -2176,6 +2178,7 @@ OnTouch_:
 */
 
 // Floors 51-75
+//============================================================
 3@tower,29,365,2	script	Immortal Furnace#2	844,{
 	end;
 
@@ -3021,6 +3024,7 @@ OnTouch_:
 */
 
 // Floors 76-99
+//============================================================
 4@tower,29,365,2	script	Immortal Furnace#3	844,{
 	end;
 
@@ -3877,6 +3881,7 @@ OnTouch_:
 */
 
 // Floor 100
+//============================================================
 5@tower,106,109,2	script	Lucid Crystal#102	844,{
 	if (in_102tower < 10) {
 		mes "^0000ffA mysterious voice echoes through the room as you touch the lucid crystal radiating a strong light.^000000";
@@ -4066,6 +4071,7 @@ OnEnable:
 } */
 
 // Floor 101
+//============================================================
 6@tower,45,89,2	script	Spring of Life#1	844,{
 	set .@pc_hp,MaxHp-Hp;
 	set .@pc_sp,MaxSp-Sp;

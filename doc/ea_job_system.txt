@@ -1,15 +1,12 @@
 //===== rAthena Documentation ================================
-//= *Athena Job System
+//= eAthena Job System
 //===== By: ==================================================
 //= Skotlex
 //===== Current Version: =====================================
-//= 0.2
+//= 20120610
 //===== Description: =========================================
 //= A reference description of eA's inner job system (for use 
-//= on scripts through the eaclass and roclass script commands)
-//===== Additional Comments: =================================
-//= 0.1 - First release, explained as well as I could.
-//= 0.2 - Added info on third jobs. [Euphy]
+//= in scripts through the eaclass and roclass script commands).
 //============================================================
 
 Preface:
@@ -69,7 +66,7 @@ The next step is to either become a 2-1 or a 2-2 job:
 
 Getting out the rebirth versions of a swordman:
 
-	EAJ_SWORDMAN|EAJL_UPPER	-> EAJ_SWORDMAN_HIGH
+	EAJ_SWORDMAN|EAJL_UPPER 		-> EAJ_SWORDMAN_HIGH
 	EAJ_SWORDMAN|EAJL_2_1|EAJL_UPPER	-> EAJ_LORD_KNIGHT
 	EAJ_SWORDMAN|EAJL_2_2|EAJL_UPPER	-> EAJ_PALADIN
 

@@ -36,7 +36,7 @@
 //============================================================ 
 
 // Metto Quest
-
+//============================================================
 yuno_in03,26,39,3	script	Metto#juno	709,{
 	mes "[Metto]";
 	if (metto_q == 0) {
@@ -424,7 +424,8 @@ yuno_in03,178,43,0	script	CiCi#juno	121,{
 	}
 }
 
-// Alechmist Brothers
+// Alchemist Brothers Quest
+//============================================================
 yuno_in01,103,157,3	script	Bain#juno	98,{
 	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute !! -";

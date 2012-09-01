@@ -24,6 +24,7 @@
 //============================================================
 
 // Marco Bassinio (Chocolate/Chocolate Box maker)
+//============================================================
 prontera,164,174,4	script	Trader#Val09	58,{
 	mes "[Marco Bassinio]";
 	mes "Hey, folks! Here's something you don't see everyday!";
@@ -160,6 +161,7 @@ prontera,164,174,4	script	Trader#Val09	58,{
 }
 
 // Packs Trader (Sells Wrapping Paper, Lace, and Box)
+//============================================================
 prontera,147,171,5	script	Packs Trader#Val09	58,{
 	mes "[Packs Trader]";
 	mes "Hello.";
@@ -303,6 +305,7 @@ prontera,147,171,5	script	Packs Trader#Val09	58,{
 }
 
 // Event Ring Maker (Makes ring for players)
+//============================================================
 prontera,154,185,5	script	Event Ring Maker#Val09	721,{
 	if (BaseLevel < 75) {
 		mes "[Event Ring Maker]";
@@ -396,6 +399,7 @@ prontera,154,185,5	script	Event Ring Maker#Val09	721,{
 }
 
 // Valentine Vote Manager (Registers votes)
+//============================================================
 prontera,157,185,4	script	Valentine Vote Manager#v	113,{
 	mes "[Valentine Vote Manager]";
 	mes "Hello, I'm the Valentine's Vote Manager.";
@@ -516,6 +520,7 @@ prontera,157,185,4	script	Valentine Vote Manager#v	113,{
 }
 
 // Charles Orleans (Makes Home-Made Chocolates)
+//============================================================
 prt_castle,42,35,3	script	Dessert Manager#Val09	47,{
 	if (Sex) {
 		mes "[Charles Orleans]";

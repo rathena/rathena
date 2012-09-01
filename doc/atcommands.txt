@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 20120824
 //===== Description: =========================================
-//= 
+//= List of available atcommands and their functions.
 //===== Additional Comments: =================================
 //= TODO: With such short descriptions, it's duplicated 'conf/help.txt' 
 //= Consider explaining commands in detail, similar to 'doc/script_commands.txt'

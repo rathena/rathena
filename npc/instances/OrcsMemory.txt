@@ -33,6 +33,7 @@
 //============================================================ 
 
 // Entrance
+//============================================================
 gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 
 	set .@party_id,getcharid(1);
@@ -252,6 +253,7 @@ gef_fild10,238,202,6	script	Mad Scientist#orc	865,{
 }
 
 // Orc's Memory Floor 1
+//============================================================
 1@orcs,180,30,0	script	#Resurrect Monsters1	844,{
 	end;
 
@@ -662,6 +664,7 @@ OnMyMobDead3:
 }
 
 // Orc's Memory Floor 2
+//============================================================
 2@orcs,36,171,0	script	#2Resurrect Monsters1	844,{
 	end;
 

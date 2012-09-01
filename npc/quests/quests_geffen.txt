@@ -16,9 +16,8 @@
 //= 1.4 Updated welding mask and headset quests. [L0ne_W0lf]
 //============================================================ 
 
-//==============================================================================================//
-// 					Blacksmith: 'Welding Mask' Quest
-//==============================================================================================//
+// Blacksmith: 'Welding Mask' Quest
+//============================================================
 geffen_in,144,166,4	script	Blacksmith	63,{
 	mes "[Blacksmith]";
 	mes "You've never heard of me? Why, I'm the Veteran Blacksmith of this land. I've spent 30 years in this hot and bloody hellfire, bending steel to my iron will!";
@@ -83,11 +82,8 @@ geffen_in,144,166,4	script	Blacksmith	63,{
 	}
 }
 
-
-
-//=============================================================================================//
-//					Eric: Headset Quest
-//=============================================================================================//
+// Eric: 'Headset' Quest
+//============================================================
 geffen_in,30,71,4	script	Eric	83,{
 	mes "[Eric]";
 	mes "Please listen";
@@ -136,11 +132,11 @@ geffen_in,30,71,4	script	Eric	83,{
 		close;
 	case 3:
 		if ((countitem(999) > 39) && (countitem(984) > 0) && (countitem(970) > 0) && (countitem(1003) > 0)) {
-			delitem 999,40;  //Steel
-			delitem 984,1;  //Oridecon
-			delitem 970,1;  //Alchol
-			delitem 1003,1;  //Coal
-			getitem 5001,1; // Headset
+			delitem 999,40; //Steel
+			delitem 984,1; //Oridecon
+			delitem 970,1; //Alchol
+			delitem 1003,1; //Coal
+			getitem 5001,1; //Headset
 			mes "*Tap! Tap! Tap!*";
 			next;
 			mes "[Eric]";

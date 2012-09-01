@@ -17,6 +17,7 @@
 //============================================================
 
 // Core, triggers all other events
+//============================================================
 -	script	Manager#template	-1,{
 OnAgitInit2:
 OnRecvCastle2:
@@ -185,6 +186,7 @@ OnTreasureDied:
 }
 
 // Guild Manager
+//============================================================
 -	script	Steward#template	-1,{
 	set .@GID, getcastledata(strnpcinfo(4),1);
 	if (!.@GID) {
@@ -616,6 +618,7 @@ OnStartArena:
 }
 
 // Castle Guardians
+//============================================================
 -	script	Guardian#template	-1,{
 	set .@GID, getcastledata(strnpcinfo(4),1);
 	set .@n$, "["+strnpcinfo(1)+"]";
@@ -815,6 +818,7 @@ OnInit:
 }
 
 // Guild Kafras
+//============================================================
 -	script	Kafra#template	-1,{
 	cutin "kafra_01",2;
 	set .@GID, getcastledata(strnpcinfo(4),1);
@@ -927,6 +931,7 @@ OnInit:
 }
 
 // Guardian Stones (2)
+//============================================================
 -	script	Guardian Stone#template	-1,{
 	set .@GID, getcastledata(strnpcinfo(4),1);
 	set .@num, atoi(charat(strnpcinfo(1),0));
@@ -1079,6 +1084,7 @@ OnEnable:
 }
 
 // Control Devices (3)
+//============================================================
 -	script	Control#template	-1,{
 	set .@GID, getcastledata(strnpcinfo(4),1);
 	set .@num, atoi(charat(strnpcinfo(1),15));
@@ -1321,6 +1327,7 @@ OnEnable:
 }
 
 // Guardian Summoners (2)
+//============================================================
 -	script	gard#template	-1,{
 OnEnable:
 	// .@x[i],.@y[i]: Normal coordinates, #0-21.
@@ -1440,6 +1447,7 @@ OnReset:
 }
 
 // Guardian Stone Summoners (2)
+//============================================================
 -	script	df#template	-1,{
 OnEnable:
 	if (compare(strnpcinfo(2),"arug")) {
@@ -1487,6 +1495,7 @@ OnTimer300000:
 }
 
 // Barrier Summoners (4)
+//============================================================
 -	script	RL#template	-1,{
 OnEnable:
 	set .@num, atoi(charat(strnpcinfo(1),2));
@@ -1662,6 +1671,7 @@ OnDisable:
 }
 
 // Link Flags (function)
+//============================================================
 function	script	LinkFlag	{
 	if (!getcharid(2) || getcharid(2) != getcastledata(strnpcinfo(4),1)) end;
 	if (getarg(0) == "Convenience Facility") {
@@ -1697,6 +1707,7 @@ function	script	LinkFlag	{
 }
 
 // Return Flags (function)
+//============================================================
 function	script	ReturnFlag	{
 	set .@str$, (compare(strnpcinfo(4),"aru"))?"Arunafeltz":"Schwaltzvalt";
 	set .@GID, getcastledata(getarg(0),1);
@@ -1748,6 +1759,7 @@ function	script	ReturnFlag	{
 }
 
 // Treasure Room Switches
+//============================================================
 -	script	Switch#template	-1,{
 	mes " ";
 	mes "^3355FFWill you pull";
@@ -1769,6 +1781,7 @@ function	script	ReturnFlag	{
 }
 
 // Guild Dungeon Warps
+//============================================================
 -	script	Sunflower#template	-1,{
 	if (getcharid(2) == getcastledata(strnpcinfo(4),1)) {
 		mes "- It's an amazingly huge sunflower; as big as a human! ... You feel something mysterious emanating from the flower. -";

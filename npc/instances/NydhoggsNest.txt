@@ -1642,6 +1642,7 @@ OnTouch_:
 }
 
 // First floor
+//============================================================
 1@nyd,213,277,5	script	Murdered Yggdrasilid#1F	437,5,5,{
 	if ('ins_nyd2 == 0) {
 		mes "When a faint light enters your heart, a voice sounds in your head.";
@@ -1911,6 +1912,7 @@ OnInstanceInit:
 }
 
 // Second Floor
+//============================================================
 2@nyd,200,14,0	script	nyd_2f_enter	-1,6,6,{
 OnTouch_:
 	donpcevent instance_npcname("nyd_2f_enter_broad", instance_id())+"::OnEnable";

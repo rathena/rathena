@@ -9,7 +9,6 @@
 //===== Description: ========================================= 
 //= Pretend Murder, Ear Muffs, Oxygen, Derivuchi Cap, Helm of Angel Quests.
 //===== Additional Comments: ================================= 
-//= Fully working
 //= 1.1 Helm of Angel bug fixed [Lupus]
 //= 1.2 Fixed skirt of virgin [Lupus]
 //= 1.3 Fixed exploits [Lupus]
@@ -20,11 +19,8 @@
 //= 1.7 Updated headgear quests. [L0ne_W0lf]
 //============================================================ 
 
-
-
-//==========================================================================================//
-//				Pretend Murdered quest
-//==========================================================================================//
+// 'Pretend Murdered' Quest
+//============================================================
 payon_in01,99,72,4	script	Granny	103,{
 	if (checkweight(908,1) == 0) {
 		mes "^3355FFWait a second! Right now, you're carrying too many items with you. Please come back after putting some of your things into Kafra Storage.^000000";
@@ -75,9 +71,8 @@ payon_in01,99,72,4	script	Granny	103,{
 	}
 }
 
-//========================================================================================//
-//					Ear Muffs Quest
-//========================================================================================//
+// 'Ear Muffs' Quest
+//============================================================
 payon_in01,18,10,4	script	Mystic Lady	76,{
 	mes "[Mystic Lady]";
 	mes "My family has produced and sold the special Winter product ^3355FFEar Muffs^000000 for many years. We just moved here, but the weather is always warm so we can hardly make a living.";
@@ -124,9 +119,8 @@ payon_in01,18,10,4	script	Mystic Lady	76,{
 	}
 }
 
-//========================================================================================//
-//					Oxygen Mask Quest
-//========================================================================================//
+// 'Oxygen Mask' Quest
+//============================================================
 payon_in02,25,71,4	script	Boy	86,{
 	if (countitem(701) > 4) {
 		mes "[Young Man]";
@@ -220,9 +214,8 @@ payon_in02,25,71,4	script	Boy	86,{
 	}
 }
 
-//========================================================================================//
-//			Derivuchi Cap(Hat of Petite Diablo), Helm of Angel
-//========================================================================================//
+// 'Helm of Angel' and 'Deviruchi Cap' Quest
+//============================================================
 payon_in01,56,12,7	script	Young man#12	89,{
 	mes "[Young man]";
 	mes "...What is it?";
@@ -232,7 +225,7 @@ payon_in01,56,12,7	script	Young man#12	89,{
 		mes "[Young man]";
 		mes "Huh? So you already know what I specialize in, eh? I suppose there's no need for the usual secrecy. Tell me what you want.";
 		next;
-		switch(select("Helm of Angel.:Deviruchi cap.:I will come next time.")) {
+		switch(select("Helm of Angel.:Deviruchi Cap.:I will come next time.")) {
 		case 1:
 			mes "[Young man]";
 			mes "1 Helm (with slot).";

@@ -6,7 +6,7 @@
 //= 20110124
 //===== Description: =========================================
 //= List of script instructions used in item bonuses,
-//= mainly bonus/bonus2/bonus3/bonus4/bonus5 arguments
+//= mainly bonus/bonus2/bonus3/bonus4/bonus5 arguments.
 //============================================================
 
 skill i,n;				Gives skill #i at level n (supports skill names)

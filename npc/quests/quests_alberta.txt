@@ -35,11 +35,8 @@
 //= 2.4 Updated 'Doll Quest' to match AEGIS script. [Kisuka]
 //============================================================ 
 
-
-
-//=======================================================================================================//
-//						Doll Quest
-//=======================================================================================================//
+// Doll Quest
+//============================================================
 alberta,117,135,0	script	Elin	96,{
 	if (checkweight(1201,1) == 0) {
 		mes "[Elin]";
@@ -391,10 +388,8 @@ alberta,117,135,0	script	Elin	96,{
 	}
 }
 
-
-//=======================================================================================================//
-//						Boy's Cap' Quest
-//=======================================================================================================//
+// 'Boy's Cap' Quest
+//============================================================
 alberta_in,28,145,4	script	Grampa	120,{
 	mes "[Grampa]";
 	mes "*Gasp*...";
@@ -471,9 +466,8 @@ alberta_in,28,145,4	script	Grampa	120,{
 	}
 }
 
-//=======================================================================================================//
-//						Antlers Quest 
-//=======================================================================================================//
+// 'Antlers' Quest
+//============================================================
 alberta_in,122,53,4	script	Cherokee	47,{
 	mes "[Cherokee]";
 	mes "Hey there~!";
@@ -518,9 +512,8 @@ alberta_in,122,53,4	script	Cherokee	47,{
 	}
 }
 
-//=======================================================================================================//
-//			Bao Bao, Cresent Hairpin, Fashionbale Glasses, Heart Hairpin
-//=======================================================================================================//
+// 'Bao Bao', 'Crescent Hairpin', 'Fashionable Glasses', 'Heart Hairpin' Quest
+//============================================================
 alberta,120,53,1	script	Stylish Merchant#new30	51,{
 	if ((countitem(10007) > 0) && (countitem(968) > 49)) {
 		mes "[Zic]";
@@ -652,9 +645,8 @@ alberta,120,53,1	script	Stylish Merchant#new30	51,{
 	}
 }
 
-//=======================================================================================================//
-//				Hat of Sun God, Sunday Hat, Mage Hat, Magician Hat
-//=======================================================================================================//
+// 'Hat of the Sun God', 'Sunday Hat', 'Mage Hat', 'Magician Hat' Quest
+//============================================================
 alberta,136,79,1	script	Hat store girl#new30	71,{
 	mes "[Tempestra]";
 	mes "Ah, such a cool breeze. It's good to visit the seashore. I think it was the right choice to come here to take a break from my business.";
@@ -954,15 +946,14 @@ alberta,136,79,1	script	Hat store girl#new30	71,{
 	}
 }
 
-//=======================================================================================================//
-//						Turtle Quest
-//=======================================================================================================//
+// Turtle Quest
+//============================================================
 alberta,91,70,4	script	Kinsey#tur	89,{
 	mes "[Kinsey]";
 	mes "What does a man have to do to get a stiff drink around here? I mean, there are absolutely no good bars in Alberta!";
 	next;
 	mes "[Kinsey]";
-	mes " Well, the alcohol in the pub here is second rate, but I gotta admit, it's got a great atmosphere.";
+	mes "Well, the alcohol in the pub here is second rate, but I gotta admit, it's got a great atmosphere.";
 	next;
 	mes "[Kinsey]";
 	mes "In fact, this old man is always there, telling stories about Turtle Island! But we're not sure if he's been there, or if he's just that drunk.";

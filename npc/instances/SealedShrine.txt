@@ -26,6 +26,7 @@
 //============================================================ 
 
 // Sealed Catacomb Entrance
+//============================================================
 monk_test,309,146,3	script	Friar Patrick#edq	412,{
 	if (checkquest(3040)>=0) erasequest 3040;
 	cutin "ins_cata_pri_n",2;
@@ -480,6 +481,7 @@ prt_monk,261,91,3	script	Rust Blackhand#edq	826,{
 }
 
 // Sealed Shrine Interior
+//============================================================
 1@cata,1,2,0	script	ins_baphomet_lotto	-1,{
 OnEnable:
 	switch(rand(1,13)) {
@@ -730,7 +732,8 @@ OnMyMobDead:
 	end;
 }
 
-//===================== soul of hero near the north grave ========================
+// Soul of hero near the north grave
+//============================================================
 1@cata,141,221,0	script	Gravestone#	844,3,3,{
 	set .@party_id,getcharid(1);
 	if ('ins_baphomet == 0) {
@@ -1049,7 +1052,8 @@ OnTouch:
 	}
 }
 
-//===================== TO 2F Warp ========================
+// To 2F Warp
+//============================================================
 1@cata,281,12,0	script	ins_bapho_to_2f	45,1,1,{
 
 OnTouch:

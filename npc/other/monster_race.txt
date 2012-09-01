@@ -25,7 +25,6 @@
 //= 	Fixed Medal Distributor (Dual Race) disappears accordingly. [Joseph] 
 //============================================================
 
-//============================================================
 // Monstrer Race - Single Monster Race
 //============================================================
 hugel,51,61,0	script	#race_timer1-1	-1,{
@@ -996,7 +995,6 @@ p_track01,55,28,0	duplicate(Tire_1)	Tire6#4	-1,0,0
 p_track01,51,28,0	duplicate(Tire_1)	Tire6#5	-1,0,0
 p_track01,47,28,0	duplicate(Tire_1)	Tire6#6	-1,0,0
 
-//============================================================
 // Monstrer Race - Dual Monster Race
 //============================================================
 hugel,47,56,0	script	#race_timer2-1	-1,{
@@ -2037,8 +2035,7 @@ p_track02,55,28,0	duplicate(Tire_1)	Tire#race02_6_4	-1,0,0
 p_track02,51,28,0	duplicate(Tire_1)	Tire#race02_6_5	-1,0,0
 p_track02,47,28,0	duplicate(Tire_1)	Tire#race02_6_6	-1,0,0
 
-//============================================================
-// NPCs for Redeeming Price Medals (Einbroch and Hugel)
+// NPCs for Redeeming Prize Medals (Einbroch and Hugel)
 //============================================================
 ein_in01,85,208,5	script	Ei'felle#repay01	854,{
 	if (!ein_medal01) {
@@ -2769,7 +2766,6 @@ hugel,71,83,4	script	Wayne	900,{
 	}
 }
 
-//============================================================
 // Monstrer Race Affiliated NPCs
 //============================================================
 airplane,246,47,1	script	Eocatt#decoy01	878,{

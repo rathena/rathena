@@ -21,6 +21,7 @@
 //============================================================
 
 // Pumpkin Mojo quest (Event 1)
+//============================================================
 prontera,162,69,5	script	Gloomy Jack#06_hw	1130,2,2,{
 	end;
 
@@ -485,6 +486,7 @@ nif_in,19,32,3	script	Deviruchi#06_hw	738,{
 }
 
 // Creation of Pumpkin Pie (Event 2)
+//============================================================
 nif_fild01,165,115,3	script	Chicken Masta#06_hw	794,{
 	set .@now_weight,MaxWeight-Weight;
 	if (.@now_weight < 2000 || checkweight(1201,1) == 0) {
@@ -909,6 +911,7 @@ pay_dun03,157,131,3	duplicate(HwChicken2)	Chicken#06_hw_p40	800
 pay_dun03,158,131,3	duplicate(HwChicken3)	Chicken#06_hw_p41	800
 
 // Payon Field chickens
+//============================================================
 pay_fild08,1,1,0	script	#06_hw_timer02	-1,{
 OnInit:
 	disablenpc "Chicken#06_hw_pf01";
@@ -1080,7 +1083,8 @@ morocc,159,143,3	duplicate(HWFamiDup)	Familiar#06_hw03	799
 geffen,120,188,3	duplicate(HWFamiDup)	Familiar#06_hw04	799
 alberta,80,171,3	duplicate(HWFamiDup)	Familiar#06_hw05	799
 
-//Event Lude Monster Spawns
+// Event Lude Monster Spawns
+//============================================================
 ra_fild01,0,0,0,0	monster	Lude	1812,3,0,0,0
 ra_fild02,0,0,0,0	monster	Lude	1812,3,0,0,0
 ra_fild03,0,0,0,0	monster	Lude	1812,3,0,0,0

@@ -18,8 +18,8 @@
 //= 1.1 Fixed some issues, revamped the whole script. [Kisuka]
 //============================================================
 
-// ============== Caroller - Music Box ================
-// =====================================================
+// Caroller - Music Box
+//============================================================
 prontera,226,306,4	script	Caroller#iROxmas08	79,{
 	if (iROxmas08carol < 1 || iROxmas08carol == 3) {
 		if (iROxmas08carol == 3) {
@@ -434,8 +434,8 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 	}
 }
 
-// ============= Santa Claus - Card Game ===============
-// =====================================================
+// Santa Claus - Card Game
+//============================================================
 -	script	Santa Claus#iROxmas08::08santa	718,{
 	mes "[Santa Claus]";
 	mes "Wow! Were you naughty or nice this year?";
@@ -715,9 +715,8 @@ alberta,117,66,4	duplicate(08santa)	Santa Claus#0803	718
 geffen,119,70,4	duplicate(08santa)	Santa Claus#0804	718
 morocc,158,104,4	duplicate(08santa)	Santa Claus#0805	718
 
-
-// ============= Louise Kim - Santa Suit ===============
-// =====================================================
+// Louise Kim - Santa Suit
+//============================================================
 xmas_in,89,92,4	script	Louise Kim#iROxmas08	714,{
 	mes "[Louise Kim]";
 	mes "I always thought about how boring Santa Claus is wearing a too boring costume.";
@@ -856,7 +855,8 @@ xmas_in,89,92,4	script	Louise Kim#iROxmas08	714,{
 	}
 }
 
-//XMAS MOBS
+// Monsters
+//============================================================
 prt_fild00,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
 prt_fild00,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
 prt_fild00,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0

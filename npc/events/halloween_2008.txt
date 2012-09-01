@@ -20,17 +20,17 @@
 payon,162,176,4	script	Halloween Magician#iRO08	704,{
 	
 	if(Hallow08 < 1) {
-			mes "[Halloween Magician]";
-			mes "Kkkkkkkkk!";
-			mes "I have a special event this Halloween that tests your luck and agility.";
-			mes "Are you interested?";
-			next;
-			mes "[Halloween Magician]";
-			mes "Come on! Don't be a wuss!";
-			mes "If you collect enough tickets you can get good prizes!";
-			mes "So what do you say?";
-			next;
-			goto MainMenu;
+		mes "[Halloween Magician]";
+		mes "Kkkkkkkkk!";
+		mes "I have a special event this Halloween that tests your luck and agility.";
+		mes "Are you interested?";
+		next;
+		mes "[Halloween Magician]";
+		mes "Come on! Don't be a wuss!";
+		mes "If you collect enough tickets you can get good prizes!";
+		mes "So what do you say?";
+		next;
+		goto MainMenu;
 	}
 
 	if (Hallow08Kill == 1) {
@@ -237,12 +237,9 @@ payon,162,176,4	script	Halloween Magician#iRO08	704,{
 			goto MainMenu;
 		}
 }
-	
-// --------------- MapFlags ---------------
-
 
 evt_zombie,16,142,1	script	zombiewarp001	45,2,2,{
-	OnTouch:
+OnTouch:
 	if (@Hallow08Warp == 1) {
 		set Hallow08Kill,2;
 		specialeffect 16;
@@ -252,7 +249,7 @@ evt_zombie,16,142,1	script	zombiewarp001	45,2,2,{
 }
 
 evt_zombie,122,27,1	script	zombiewarp002	45,2,2,{
-	OnTouch:
+OnTouch:
 	if (@Hallow08Warp == 2) {
 		set Hallow08Kill,2;
 		specialeffect 16;
@@ -262,7 +259,7 @@ evt_zombie,122,27,1	script	zombiewarp002	45,2,2,{
 }
 
 evt_zombie,267,89,1	script	zombiewarp003	45,2,2,{
-	OnTouch:
+OnTouch:
 	if (@Hallow08Warp == 3) {
 		set Hallow08Kill,2;
 		specialeffect 16;
