@@ -36,7 +36,6 @@
 //packet_db_ver: 25
 packet_db_ver: default
 
-//packet_db_ver: 23
 packet_ver: 5
 0x0064,55
 0x0065,17
