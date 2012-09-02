@@ -441,7 +441,7 @@ dic_in01,51,270,6	script	Supply Dept. 1 Manager#	449,{
 			if (checkquest(12161) == -1) {
 				mes "So you didn't get any requests yet. Pura will have piles of requests and might give you one. Try meeting him.";
 				close;
-			} else if (checkquest(12163,PLAYTIME) == 2) {
+			} else if (checkquest(12161,PLAYTIME) == 2) {
 				mes "I erased all records related with the previous request. Go to meet Pura.";
 				que_dic(12117,12118,12119,12120,12121,12122,12123,12124,12125,12126);
 				erasequest 12161;
