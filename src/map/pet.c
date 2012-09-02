@@ -1349,8 +1349,8 @@ int do_init_pet(void)
 {
 	read_petdb();
 
-	item_drop_ers = ers_new(sizeof(struct item_drop));
-	item_drop_list_ers = ers_new(sizeof(struct item_drop_list));
+	item_drop_ers = ers_new(sizeof(struct item_drop),"pet.c::item_drop_ers",ERS_OPT_NONE);
+	item_drop_list_ers = ers_new(sizeof(struct item_drop_list),"pet.c::item_drop_list_ers",ERS_OPT_NONE);
 	
 	add_timer_func_list(pet_hungry,"pet_hungry");
 	add_timer_func_list(pet_ai_hard,"pet_ai_hard");

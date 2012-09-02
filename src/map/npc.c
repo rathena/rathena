@@ -3734,7 +3734,7 @@ int do_init_npc(void)
 	npcname_db = strdb_alloc(DB_OPT_BASE,NAME_LENGTH);
 	npc_path_db = strdb_alloc(DB_OPT_BASE|DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA,80);
 	
-	timer_event_ers = ers_new(sizeof(struct timer_event_data));
+	timer_event_ers = ers_new(sizeof(struct timer_event_data),"clif.c::timer_event_ers",ERS_OPT_NONE);
 	
 	// process all npc files
 	ShowStatus("Loading NPCs...\r");

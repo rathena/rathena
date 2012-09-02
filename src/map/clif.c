@@ -11,6 +11,7 @@
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
 #include "../common/utils.h"
+#include "../common/ers.h"
 
 #include "map.h"
 #include "chrif.h"
@@ -47,6 +48,9 @@
 #include <string.h>
 #include <stdarg.h>
 #include <time.h>
+
+/* for clif_clearunit_delayed */
+static struct eri *delay_clearunit_ers;
 
 //#define DUMP_UNKNOWN_PACKET
 //#define DUMP_INVALID_PACKET
@@ -103,18 +107,15 @@ static inline void RBUFPOS(const uint8* p, unsigned short pos, short* x, short* 
 {
 	p += pos;
 
-	if( x )
-	{
+	if( x ) {
 		x[0] = ( ( p[0] & 0xff ) << 2 ) | ( p[1] >> 6 );
 	}
 
-	if( y )
-	{
+	if( y ) {
 		y[0] = ( ( p[1] & 0x3f ) << 4 ) | ( p[2] >> 4 );
 	}
 
-	if( dir )
-	{
+	if( dir ) {
 		dir[0] = ( p[2] & 0x0f );
 	}
 }
@@ -124,33 +125,27 @@ static inline void RBUFPOS2(const uint8* p, unsigned short pos, short* x0, short
 {
 	p += pos;
 
-	if( x0 )
-	{
+	if( x0 ) {
 		x0[0] = ( ( p[0] & 0xff ) << 2 ) | ( p[1] >> 6 );
 	}
 
-	if( y0 )
-	{
+	if( y0 ) {
 		y0[0] = ( ( p[1] & 0x3f ) << 4 ) | ( p[2] >> 4 );
 	}
 
-	if( x1 )
-	{
+	if( x1 ) {
 		x1[0] = ( ( p[2] & 0x0f ) << 6 ) | ( p[3] >> 2 );
 	}
 
-	if( y1 )
-	{
+	if( y1 ) {
 		y1[0] = ( ( p[3] & 0x03 ) << 8 ) | ( p[4] >> 0 );
 	}
 
-	if( sx0 )
-	{
+	if( sx0 ) {
 		sx0[0] = ( p[5] & 0xf0 ) >> 4;
 	}
 
-	if( sy0 )
-	{
+	if( sy0 ) {
 		sy0[0] = ( p[5] & 0x0f ) >> 0;
 	}
 }
@@ -848,13 +843,12 @@ static int clif_clearunit_delayed_sub(int tid, unsigned int tick, int id, intptr
 {
 	struct block_list *bl = (struct block_list *)data;
 	clif_clearunit_area(bl, (clr_type) id);
-	aFree(bl);
+	ers_free(delay_clearunit_ers,bl);
 	return 0;
 }
 void clif_clearunit_delayed(struct block_list* bl, clr_type type, unsigned int tick)
 {
-	struct block_list *tbl;
-	tbl = (struct block_list*)aMalloc(sizeof (struct block_list));
+	struct block_list *tbl = ers_alloc(delay_clearunit_ers, struct block_list);
 	memcpy (tbl, bl, sizeof (struct block_list));
 	add_timer(tick, clif_clearunit_delayed_sub, (int)type, (intptr_t)tbl);
 }
@@ -17031,5 +17025,11 @@ int do_init_clif(void) {
 	add_timer_func_list(clif_clearunit_delayed_sub, "clif_clearunit_delayed_sub");
 	add_timer_func_list(clif_delayquit, "clif_delayquit");
 
+	delay_clearunit_ers = ers_new(sizeof(struct block_list),"clif.c::delay_clearunit_ers",ERS_OPT_CLEAR);
+	
 	return 0;
+}
+
+void do_final_clif(void) {
+	ers_destroy(delay_clearunit_ers);
 }

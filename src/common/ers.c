@@ -139,6 +139,16 @@ typedef struct ers_impl {
 	 */
 	size_t size;
 
+	/**
+	 * Reference to this instance of the table
+	 */
+	char *name;
+	
+	/**
+	 * Options used by this instance
+	 */
+	enum ERSOptions options;
+	
 } *ERS_impl;
 
 /**
@@ -195,8 +205,8 @@ static void *ers_obj_alloc_entry(ERS self)
 	} else { // allocate a new block
 		if (obj->num == obj->max) { // expand the block array
 			if (obj->max == UINT32_MAX) { // No more space for blocks
-				ShowFatalError("ers::alloc : maximum number of blocks reached, increase ERS_BLOCK_ENTRIES.\n"
-						"exiting the program...\n");
+				ShowFatalError("ers::alloc : maximum number of blocks reached, increase ERS_BLOCK_ENTRIES. (by %s)\n"
+						"exiting the program...\n",obj->name);
 				exit(EXIT_FAILURE);
 			}
 			obj->max = (obj->max*4)+3; // left shift bits '11' - overflow won't happen
@@ -229,7 +239,7 @@ static void ers_obj_free_entry(ERS self, void *entry)
 		ShowError("ers::free : NULL object, aborting entry freeing.\n");
 		return;
 	} else if (entry == NULL) {
-		ShowError("ers::free : NULL entry, nothing to free.\n");
+		ShowError("ers::free : NULL entry in obj '%s', nothing to free.\n",obj->name);
 		return;
 	}
 
@@ -311,15 +321,16 @@ static void ers_obj_destroy(ERS self)
 		}
 	}
 	if (count) { // missing entries
-		ShowWarning("ers::destroy : %u entries missing (possible double free), continuing destruction (entry size=%u).\n",
-				count, obj->size);
+		if( !(obj->options&ERS_OPT_CLEAR) )
+			ShowWarning("ers::destroy : %u entries missing in '%s' (possible double free), continuing destruction (entry size=%u).\n",
+				count, obj->name, obj->size);
 	} else if (reuse) { // extra entries
 		while (reuse && count != UINT32_MAX) {
 			count++;
 			reuse = reuse->next;
 		}
-		ShowWarning("ers::destroy : %u extra entries found, continuing destruction (entry size=%u).\n",
-				count, obj->size);
+		ShowWarning("ers::destroy : %u extra entries found in '%s', continuing destruction (entry size=%u).\n",
+				count, obj->name, obj->size);
 	}
 	// destroy the entry manager
 	if (obj->max) {
@@ -350,8 +361,7 @@ static void ers_obj_destroy(ERS self)
  * @see #ers_root
  * @see #ers_num
  */
-ERS ers_new(uint32 size)
-{
+ERS ers_new(uint32 size, char *name, enum ERSOptions options) {
 	ERS_impl obj;
 	uint32 i;
 
@@ -376,8 +386,8 @@ ERS ers_new(uint32 size)
 	}
 	// create a new manager to handle the entry size
 	if (ers_num == ERS_ROOT_SIZE) {
-		ShowFatalError("ers_alloc: too many root objects, increase ERS_ROOT_SIZE.\n"
-				"exiting the program...\n");
+		ShowFatalError("ers_alloc: too many root objects, increase ERS_ROOT_SIZE. (by %s)\n"
+				"exiting the program...\n",name);
 		exit(EXIT_FAILURE);
 	}
 	obj = (ERS_impl)aMalloc(sizeof(struct ers_impl));
@@ -395,6 +405,9 @@ ERS ers_new(uint32 size)
 	obj->destroy = 1;
 	// Properties
 	obj->size = size;
+	obj->options = options;
+	// Info
+	obj->name = name;
 	ers_root[ers_num++] = obj;
 	return &obj->vtable;
 }
@@ -460,7 +473,7 @@ void ers_report(void)
 			reuse = reuse->next;
 		}
 		// Entry manager report
-		ShowMessage(CL_BOLD"[Entry manager #%u report]\n"CL_NORMAL, i);
+		ShowMessage(CL_BOLD"[Entry manager '%s' #%u report]\n"CL_NORMAL, obj->name, i);
 		ShowMessage("\tinstances          : %u\n", obj->destroy);
 		ShowMessage("\tentry size         : %u\n", obj->size);
 		ShowMessage("\tblock array size   : %u\n", obj->max);

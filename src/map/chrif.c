@@ -1598,7 +1598,7 @@ int do_final_chrif(void)
 int do_init_chrif(void)
 {
 	auth_db = idb_alloc(DB_OPT_BASE);
-	auth_db_ers = ers_new(sizeof(struct auth_node));
+	auth_db_ers = ers_new(sizeof(struct auth_node),"chrif.c::auth_db_ers",ERS_OPT_NONE);
 
 	add_timer_func_list(check_connect_char_server, "check_connect_char_server");
 	add_timer_func_list(ping_char_server, "ping_char_server");

@@ -70,6 +70,11 @@
 #	define ERS_ALIGNED 1
 #endif /* not ERS_ALIGN_ENTRY */
 
+enum ERSOptions {
+	ERS_OPT_NONE           = 0,
+	ERS_OPT_CLEAR          = 1,/* silently clears any entries left in the manager upon destruction */
+};
+
 /**
  * Public interface of the entry manager.
  * @param alloc Allocate an entry from this manager
@@ -121,7 +126,7 @@ typedef struct eri {
 #	define ers_entry_size(obj) (size_t)0
 #	define ers_destroy(obj)
 // Disable the public functions
-#	define ers_new(size) NULL
+#	define ers_new(size,name) NULL
 #	define ers_report()
 #	define ers_force_destroy_all()
 #else /* not DISABLE_ERS */
@@ -142,7 +147,7 @@ typedef struct eri {
  * @param The requested size of the entry in bytes
  * @return Interface of the object
  */
-ERS ers_new(uint32 size);
+ERS ers_new(uint32 size, char *name, enum ERSOptions options);
 
 /**
  * Print a report about the current state of the Entry Reusage System.

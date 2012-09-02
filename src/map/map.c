@@ -3633,6 +3633,7 @@ void do_final(void)
 	do_final_atcommand();
 	do_final_battle();
 	do_final_chrif();
+	do_final_clif();
 	do_final_npc();
 	do_final_script();
 	do_final_instance();

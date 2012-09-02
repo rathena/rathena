@@ -10939,7 +10939,7 @@ int do_init_status(void)
 	status_readdb();
 	status_calc_sigma();
 	natural_heal_prev_tick = gettick();
-	sc_data_ers = ers_new(sizeof(struct status_change_entry));
+	sc_data_ers = ers_new(sizeof(struct status_change_entry),"status.c::sc_data_ers",ERS_OPT_NONE);
 	add_timer_interval(natural_heal_prev_tick + NATURAL_HEAL_INTERVAL, status_natural_heal_timer, 0, 0, NATURAL_HEAL_INTERVAL);
 	return 0;
 }

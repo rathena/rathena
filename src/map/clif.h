@@ -639,6 +639,7 @@ void clif_displayexp(struct map_session_data *sd, unsigned int exp, char type, b
 
 int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target type);
 int do_init_clif(void);
+void do_final_clif(void);
 
 // MAIL SYSTEM
 void clif_Mail_window(int fd, int flag);

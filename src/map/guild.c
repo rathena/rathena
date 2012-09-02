@@ -1990,7 +1990,7 @@ void do_init_guild(void)
 	castle_db=idb_alloc(DB_OPT_BASE);
 	guild_expcache_db=idb_alloc(DB_OPT_BASE);
 	guild_infoevent_db=idb_alloc(DB_OPT_BASE);
-	expcache_ers = ers_new(sizeof(struct guild_expcache)); 
+	expcache_ers = ers_new(sizeof(struct guild_expcache),"guild.c::expcache_ers",ERS_OPT_NONE);
 
 	sv_readdb(db_path, "castle_db.txt", ',', 4, 5, -1, &guild_read_castledb);
 
