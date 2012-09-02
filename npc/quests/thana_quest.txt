@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= [Ishizu-chan]
 //===== Current Version: =====================================
-//= 2.6
+//= 2.7
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -29,6 +29,7 @@
 //= 2.5 Cleaning. [Euphy]
 //= 2.5a Fixed an incorrect variable. [Euphy]
 //= 2.6 Merged identical timer labels. [Euphy]
+//= 2.7 Fixed hidden warp (2nd floor) still warp players. [Joseph]
 //============================================================
 
 hu_fild01,140,163,5	script	Tower Keeper	852,3,3,{
@@ -889,7 +890,7 @@ tha_t02,227,163,0	script	3rdf_warp#tt	45,1,1,{
 	end;
 
 OnInit:
-	hideonnpc "3rdf_warp#tt";
+	disablenpc "3rdf_warp#tt";
 	end;
 	
 OnTouch:
@@ -898,13 +899,13 @@ OnTouch:
 	end;
 
 OnEnable:
-	hideoffnpc "3rdf_warp#tt";
+	enablenpc "3rdf_warp#tt";
 	initnpctimer;
 	end;
 
 OnTimer30000:
 	stopnpctimer;
-	hideonnpc "3rdf_warp#tt";
+	disablenpc "3rdf_warp#tt";
 	end;
 }
 
