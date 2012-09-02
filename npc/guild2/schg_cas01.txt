@@ -46,7 +46,7 @@ schg_cas01,207,95,0	duplicate(LF_sc01_1)	Himinn#LF_sc01_2	111
 schg_cas01,111,46,4	script	Himinn#LF_sc01_3::LF_sc01_2	722,{
 	callfunc "LinkFlag","Emperium Center",120,290;
 	end;
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastleSc01:
 	FlagEmblem GetCastleData("schg_cas01",1);
 	end;
@@ -66,7 +66,7 @@ schg_cas01,144,247,0	duplicate(LF_sc01_1)	Himinn#LF_sc01_14	111
 sch_gld,290,90,0	script	Himinn#flag_sc01_1::Sc01_Flag	722,{
 	callfunc "ReturnFlag","schg_cas01",1;
 	end;
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastlesc01:
 	FlagEmblem GetCastleData("schg_cas01",1);
 	end;

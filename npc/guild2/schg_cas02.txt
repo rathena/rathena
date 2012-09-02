@@ -58,7 +58,7 @@ schg_cas02,235,207,0	duplicate(LF_sc02_1)	Andlangr#LF_sc02_15	111
 sch_gld,296,247,4	script	Andlangr#flag_sc02_1::Sc02_Flag	722,{
 	callfunc "ReturnFlag","schg_cas02",1;
 	end;
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastlesc02:
 	FlagEmblem GetCastleData("schg_cas02",1);
 	end;

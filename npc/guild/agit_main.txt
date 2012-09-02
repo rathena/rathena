@@ -279,7 +279,6 @@ OnRecvCastle:
 		end;
 	}
 	else {
-OnInterIfInitOnce:
 		// Otherwise place the guild emblem on flags.
 		if (strnpcinfo(2) == "aldeg_cas01") { donpcevent "::OnRecvCastleA01"; }
 		else if (strnpcinfo(2) == "aldeg_cas02") { donpcevent "::OnRecvCastleA02"; }

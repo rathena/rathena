@@ -46,7 +46,7 @@ arug_cas01,103,186,0	duplicate(LF_ar01_1)	Mardol#LF_ar01_2	111
 arug_cas01,92,126,4	script	Mardol#LF_ar01_3::LF_ar01_2	111,{
 	callfunc "LinkFlag","Emperium Center",67,193;
 	end;
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastleAr01:
 	FlagEmblem GetCastleData("arug_cas01",1);
 	end;
@@ -67,7 +67,7 @@ arug_cas01,233,140,4	duplicate(LF_ar01_2)	Mardol#LF_ar01_14	722
 aru_gld,164,270,4	script	Mardol#flag_Ar01_1::Ar01_Flag	722,{
 	callfunc "ReturnFlag","arug_cas01",1;
 	end;
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastleAr01:
 	FlagEmblem GetCastleData("arug_cas01",1);
 	end;

@@ -16,7 +16,7 @@
 yuno,109,167,5	script	Himinn	722,{
 	end;
 
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastlesc01:
 	FlagEmblem GetCastleData("schg_cas01",1);
 	end;
@@ -25,7 +25,7 @@ OnRecvCastlesc01:
 yuno,110,171,5	script	Andlangr	722,{
 	end;
 
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastlesc02:
 	FlagEmblem GetCastleData("schg_cas02",1);
 	end;
@@ -34,7 +34,7 @@ OnRecvCastlesc02:
 yuno,111,175,5	script	Viblainn	722,{
 	end;
 
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastlesc03:
 	FlagEmblem GetCastleData("schg_cas03",1);
 	end;
@@ -43,7 +43,7 @@ OnRecvCastlesc03:
 yuno,112,179,5	script	Hljod	722,{
 	end;
 
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastlesc04:
 	FlagEmblem GetCastleData("schg_cas04",1);
 	end;
@@ -52,7 +52,7 @@ OnRecvCastlesc04:
 yuno,114,183,5	script	Skidbladnir	722,{
 	end;
 
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastlesc05:
 	FlagEmblem GetCastleData("schg_cas05",1);
 	end;
@@ -62,7 +62,7 @@ OnRecvCastlesc05:
 rachel,124,120,3	script	Mardol	722,{
 	end;
 
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastlear01:
 	FlagEmblem GetCastleData("arug_cas01",1);
 	end;
@@ -71,7 +71,7 @@ OnRecvCastlear01:
 rachel,136,120,5	script	Cyr	722,{
 	end;
 
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastlear02:
 	FlagEmblem GetCastleData("arug_cas02",1);
 	end;
@@ -80,7 +80,7 @@ OnRecvCastlear02:
 rachel,138,126,6	script	Horn	722,{
 	end;
 
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastlear03:
 	FlagEmblem GetCastleData("arug_cas03",1);
 	end;
@@ -89,7 +89,7 @@ OnRecvCastlear03:
 rachel,135,131,7	script	Gefn	722,{
 	end;
 
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastlear04:
 	FlagEmblem GetCastleData("arug_cas04",1);
 	end;
@@ -98,7 +98,7 @@ OnRecvCastlear04:
 rachel,124,130,1	script	Banadis	722,{
 	end;
 
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastlear05:
 	FlagEmblem GetCastleData("arug_cas05",1);
 	end;

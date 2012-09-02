@@ -46,7 +46,7 @@ schg_cas04,207,95,0	duplicate(LF_sc04_1)	Hljod#LF_sc04_2	111
 schg_cas04,111,46,4	script	Hljod#LF_sc04_3::LF_sc04_2	722,{
 	callfunc "LinkFlag","Emperium Center",120,290;
 	end;
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastlesc04:
 	FlagEmblem GetCastleData("schg_cas04",1);
 	end;
@@ -66,7 +66,7 @@ schg_cas04,144,247,0	duplicate(LF_sc04_1)	Hljod#LF_sc04_14	111
 sch_gld,134,97,4	script	Hljod#flag_sc04_1::sc04_Flag	722,{
 	callfunc "ReturnFlag","schg_cas04",1;
 	end;
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastlesc04:
 	FlagEmblem GetCastleData("schg_cas04",1);
 	end;

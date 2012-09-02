@@ -54,7 +54,7 @@ arug_cas05,134,260,0	duplicate(LF_ar05_01)	Banadis#LF_ar05_08	111
 arug_cas05,148,103,4	script	Banadis#LF_ar05_10::LF_ar05_02	722,{
 	callfunc "LinkFlag","Emperium Center",121,318;
 	end;
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastlear05:
 	FlagEmblem GetCastleData("arug_cas05",1);
 	end;
@@ -66,7 +66,7 @@ arug_cas05,214,51,1	duplicate(LF_ar05_02)	Banadis#LF_ar05_13	722
 aru_gld,289,103,6	script	Banadis#flag_ar05_1::ar05_Flag	722,{
 	callfunc "ReturnFlag","arug_cas05",1;
 	end;
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastlear05:
 	FlagEmblem GetCastleData("arug_cas05",1);
 	end;
@@ -75,7 +75,7 @@ aru_gld,289,112,6	duplicate(ar05_Flag)	Banadis#flag_ar05_2	722
 aru_gld,350,98,6	script	Banadis#flag_ar05_3::ar05_Flag2	722,{
 	callfunc "ReturnFlag","arug_cas05",0;
 	end;
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastlear05:
 	FlagEmblem GetCastleData("arug_cas05",1);
 	end;

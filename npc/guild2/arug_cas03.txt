@@ -54,7 +54,7 @@ arug_cas03,134,260,0	duplicate(LF_ar03_01)	Horn#LF_ar03_08	111
 arug_cas03,148,103,4	script	Horn#LF_ar03_10::LF_ar03_02	722,{
 	callfunc "LinkFlag","Emperium Center",121,318;
 	end;
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastleAr03:
 	FlagEmblem GetCastleData("arug_cas03",1);
 	end;
@@ -66,7 +66,7 @@ arug_cas03,214,51,1	duplicate(LF_ar03_02)	Horn#LF_ar03_13	722
 aru_gld,60,174,0	script	Horn#flag_Ar03_1::Ar03_Flag	722,{
 	callfunc "ReturnFlag","arug_cas03",1;
 	end;
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastleAr03:
 	FlagEmblem GetCastleData("arug_cas03",1);
 	end;

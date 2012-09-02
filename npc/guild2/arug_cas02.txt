@@ -54,7 +54,7 @@ arug_cas02,271,190,0	duplicate(LF_ar02_1)	Cyr#LF_ar02_12	111
 arug_cas02,129,178,4	script	Cyr#LF_ar02_13::LF_ar02_2	722,{
 	callfunc "LinkFlag","Emperium Center",43,256;
 	end;
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastleAr02:
 	FlagEmblem GetCastleData("arug_cas02",1);
 	end;
@@ -66,7 +66,7 @@ arug_cas02,147,38,4	duplicate(LF_ar02_2)	Cyr#LF_ar02_16	722
 aru_gld,80,41,6	script	Cyr#flag_Ar02_1::Ar02_Flag	722,{
 	callfunc "ReturnFlag","arug_cas02",1;
 	end;
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastleAr02:
 	FlagEmblem GetCastleData("arug_cas02",1);
 	end;
@@ -75,7 +75,7 @@ aru_gld,80,52,6	duplicate(Ar02_Flag)	Cyr#flag_Ar02_2	722
 aru_gld,120,83,5	script	Cyr#flag_Ar02_3	722,{
 	callfunc "ReturnFlag","arug_cas02",0;
 	end;
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastleAr02:
 	FlagEmblem GetCastleData("arug_cas02",1);
 	end;

@@ -54,7 +54,7 @@ schg_cas03,266,197,0	duplicate(LF_sc03_1)	Vidblainn#LF_sc03_10	111
 schg_cas03,283,206,2	script	Vidblainn#LF_sc03_11::LF_sc03_2	722,{
 	callfunc "LinkFlag","Emperium Center",308,202;
 	end;
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastlesc03:
 	FlagEmblem GetCastleData("schg_cas03",1);
 	end;
@@ -66,7 +66,7 @@ schg_cas03,343,323,2	duplicate(LF_sc03_2)	Vidblainn#LF_sc03_14	722
 sch_gld,91,191,0	script	Vidblainn#flag_sc03_1::Sc03_Flag	722,{
 	callfunc "ReturnFlag","schg_cas03",1;
 	end;
-OnInterIfInitOnce:
+OnAgitInit2:
 OnRecvCastlesc03:
 	FlagEmblem GetCastleData("schg_cas03",1);
 	end;
