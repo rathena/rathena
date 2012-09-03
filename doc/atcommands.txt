@@ -9,220 +9,1445 @@
 //===== Additional Comments: =================================
 //= TODO: With such short descriptions, it's duplicated 'conf/help.txt' 
 //= Consider explaining commands in detail, similar to 'doc/script_commands.txt'
+//=
+//= This file describes the usage of in-game commands and
+//= assumes that 'conf/atcommand_athena.conf' has the following:
+//= atcommand_symbol : "@"
+//= charcommand_symbol: "#"
+//=
+//= To search this file for commands, add an @ to
+//= the beginning of your command.
+//= Example: @rates
+//= If you search for the string 'rates' on its own, you will have
+//= multiple search results, and only a selection of them may
+//= refer to the actual command.
 //============================================================
 
-commands: Displays a list of @ commands available to the player.
-charcommands: Displays a list of # commands available to the player.
-rates: Displays the server rates.
-uptime: Show server uptime since last map server restart.
-showdelay: Shows/Hides the "there is a delay after a skill" message.
-exp: Displays current levels and % progress.
-email: To change your (own) email. Note: this command doesn't check email itself, but check structure of the email (xxx@xxx).
-monsterinfo: Show Monster info (rates, stats, drops, MVP stuff).
-iteminfo: Show Item info (type, price, etc).
-whodrops: Show who drops an item (mobs with highest drop rate).
-refresh: Syncs the player's position on the client with the one stored on the server.
-time: Give server time.
-version: Displays SVN version of the server.
-petrename: Enables you to rename your pet.
-party: Organize a new party, with you as the party leader.
-storage: Opens your Kafra storage wherever you are.
-mail: Opens your mailbox.
-auction: Opens auctions window.
-where: Locate someone on a map, returns your coordinates if the person isn't on.
-duel, invite, accept, reject, leave: Duel organizing commands.
-main: Main chat.
-noask: Autorejecting Deals/Invites.
-jailtime: Displays remaining jail time.
-hominfo, homstats: Homunculus commands for players
-noks: Kill Steal Protection.
-font: Set Font.
-showexp: Displays/Hides Experience gained messages.
-showzeny: Displays/Hides Zeny gained messages.
-go: Warps you to predefined locations in major cities.
-autoloot: Enables/disables autolooting from killed mobs.
-alootid: Enables/disables autolooting an item.
-autotrade: Allows you continue vending offline.
-changegm: Change Guild Master of your Guild.
-changeleader: Change the leader of your party.
-partyoption: Change the party exp- and item share rules.
-pettalk: Command what the player's pet will say.
-homtalk: Command what the player's homunculus will say.
-mobsearch: Locates and displays the position of a certain mob on the current map.
-showmobs: Locates and displays the position of a certain mob on your mini-map.
-whereis: Prints out in which maps a monster normally spawns at (does not count script-invoked mobs).
-feelreset: Resets a Star Gladiator's marked maps
-help: Displays help about commands.
-goto: Warp yourself to a person.
-gmotd: Displays the motd file to all players.
-follow: Follow a player (including warping to them).
-request: Sends a request to all connected GMs (via the gm whisper system).
-kick: Disconnects a user from the server.
-model: Changes your appearance.
-mount: To get a peco to (un)ride.
-who: Returns list of logged in characters with their position.
-who2: Returns list of logged in characters with their job.
-who3: Returns list of logged in characters with their party/guild.
-whomap: Returns list of logged in characters with their position in a specifical map.
-whomap2: Returns list of logged in characters with their job in a specifical map.
-whomap3: Returns list of logged in characters with their party/guild in a specifical map.
-whogm: Displays GMs online. For those who are higher GM level than yourself, only the name is shown, for the rest, it displays the same info of @who+@who2+who3.
-disguise: Change your appearence to other players to a mob.
-undisguise: Restore your normal appearance.
-me: Displays the text as a normal message with the format "*name message*" instead of "name : message" (Like the /me command in IRC).
-fakename: Changes your name to your choice temporarily.
-size: Changes your size.
-npctalk: Can command what other npcs (by name) can say.
-broadcast: Broadcast to the whole server.
-localbroadcast: Broadcast to the map you are on.
-kami: Broadcast (with or without name).
-kamib: Same as kami but with blue color.
-kamic: Same as kami but you can choose the color (uses different packet).
-gvgon: Enables GvG on a map.
-gvgoff: Turns GvG (Guild vs. Guild) off on a map
-allowks: Activate/Deactivate kill steal protection on a map.
-heal: Modifies your HP/SP.
-hide: GM Hide (total invisibility to characters and monsters)
-job: Changes your job to one you specify.
-jump: Enables you to to jump randomly on a map (that you are already on).
-load: Warps you to your last save point
-tonpc: Warps you to a specific npc.
-memo: Saves a warp point.
-option: Set your character display options. (Visual effects of your character)
-petfriendly: Sets the level of intemecy of your pet.
-pethungry: Sets hunger level of your pet.
-pvpoff: Turns PvP (Person vs. Person) off on a map.
-pvpon: Enables PvP on a map.
-questskill: Permanently adds a quest skill.
-lostskill: Permanently removes a quest skill
-speed: Sets the speed you can walk/attack at. Default is 150.
-spiritball: Summons spirit spheres around you.
-warp: Warp yourself to a certain map, at (x,y) coordinates (2 same commands) + also /mm or /mapmove.
-dye: Changes clothes color.
-hairstyle: Changes hair style.
-haircolor: Changes hair color.
-itemreset: Deletes all your items.
-reset: Does a skill/stat reset.
-users: Displays distribution of players on the server per map (% on each map which has players.)
-cleanmap: Deletes floor items in sight range.
-killmonster2: Kill all monsters in map (without drops).
-save: Sets spawn point (aka save point).
-effect: Do some visual effect on a character.
-misceffect: Do some visual effect on a character (misceffect)
-identify: Magnifier.
-dropall: Drop all items.
-storeall: Store all items.
-killable: Allow other players to hit you out of PvP.
-skillid: Look up a skill by name.
-useskill: Use a skill by id.
-skilltree: What skills are required to get this skill.
-marry, divorce: Marriage commands.
-adopt: Adopt a novice into a family.
-sound: Play a Sound!
-storagelist: Displays a player's storage.
-cartlist: Displays a player's cart contents.
-itemlist: Displays a player's inventory.
-stats: Displays player's stats.
-guild: Creates a new guild, with you as the guildmaster.
-gstorage: Brings up your guild storage wherever you are.
-monster: Spawns a monster, and a certain amount.
-monstersmall: Spawns a smaller sized version of a monster.
-monsterbig: Spawns a larger sized version of a monster.
-summon: Spawns mobs that treat you as their master (they disappear after some time).
-clone: It will spawn a supportive clone of the given player.
-slaveclone: It will spawn a supportive clone of the given player that follows the creator around.
-evilclone: It will spawn an aggresive clone of the given player.
-cash: Add or Remove Cash Points
-points: Add or Remove Kafra Points
-agitstart: Starts Guild Wars
-agitend: Ends Guild Wars
-alive: Resurects yourself.
-blvl: Raises your base level by specified amount
-jlvl: Raises your job level by specified amount
-changesex: Changes the sex of yourself
-glvl: Raises your guild level by specified amount
-idsearch: Find an itemID based on item name
-item: Creates an item of your choosing, either Item ID or Name
-item2: Creates a complete item (card, etc...) of your choosing, either Item ID or Name.
-delitem: Deletes an item of your choosing, either Item ID or Name.
-kill: Kills player.
-killmonster: Kill all monsters in map (with drops)
-makeegg: Creates yourself a pet egg.
-hatch: Hatches an egg.
-nuke: Instantly kills player whose name is entered and deals insane damage to everything around.
-killer: Enable hitting a player even when not in PvP
-produce: Creates weapon of desired element.
-recall: Warps a character to you.
-refine: Refines all weapons in your items list.
-repairall: Will repair all broken items in inventory.
-str, agi, vit, int, dex, luk: Change Status of your character.
-allskill: Gives all skills
-allstats: Sets stats to maximum
-stpoint: Gives you stat points.
-skpoint: Gives you skill points of desired amount.
-guildrecall: Warps all online character of a guild to you. (at least one member of that guild must be on.)
-partyrecall: Warps all online character of a party to you. (at least one party member must be online.)
-guildspy: Allows you to spy on any Guilds Guild chat. (at least one member of that guild must be on.) NOTE: map server needs to be configured to enable spying to use this command (enable_spy: yes)
-partyspy: Allows you to spy on any party's party chat. (at least one party member must be online.) NOTE: map server needs to be configured to enable spying to use this command (enable_spy: yes)
-zeny: Gives you zeny (or subtracts, if amount is negative).
-block: Block a player indefinitely.
-unblock: Unblock a player.
-ban: Ban a player for a limited time.
-unban: Unban a player.
-jail: To send specified character in jails.
-unjail: To discharge a jailed character.
-jailfor: Timed jailing.
-addwarp: Create a static warp portal that lasts until the next reboot.
-trade: Open a trade window with any player.
-changelook: Changes the player's appearance (headgear).
-hlvl, homevolve, makehomun, homfriendly, homhungry: Homunculus commands for GMs.
-homshuffle: Re-calculates stats, as if the homun was sent back to level 1 and re-leveled.
-agitstart2, agitend2: WoE 2 start/stop commands.
-streset: Resets player stats
-skreset: Resets player skills
-day: Set the server to day.
-night: Set the server to night.
-doom: Kills everyone on the server.
-doommap: Kills everyone on the map you are on.
-recallall: Recalls Everyone To Your Coordinates
-raisemap: Revives all players on the map.
-raise: Revives all players on the server.
-hidenpc: Hides a NPC.
-shownpc: Unhides a NPC.
-loadnpc: Loads an NPC script by path.
-unloadnpc: Unloads a NPC.
-unloadnpcfile: Unloads all NPCs in a file.
-npcmove: Move a NPC.
-skillon: Turn skills on for a map
-skilloff: Turn skills off for a map
-mute: Mute a player (prevents talking, usage of skills and commands)
-unmute: Unmute a player
-kickall: Disconnect all users from the server.
-mapexit: Closes Map-Server.
-send: Used for testing packet sends from the client (debug function).
-gat: Give information about terrain/area (debug function).
-displaystatus: Displays a status change without really applying it (debug function).
-displayskill: Displays the animation of a skill without really using it (debug function).
-mapinfo: Shows information about the map.
-mapflag: Set Map Flags
-reloaditemdb: Reload item database (admin command)
-reloadmobdb: Reload monsters database (admin command)
-reloadskilldb: Reload skills database (admin command)
-reloadquestdb: Reload quest dtabase (admin command)
-reloadscript: Reload scripts (admin command)
-setbattleflag: Change a battle_config flag without rebooting server
-reloadatcommand: Reload atcommand config (admin command)
-reloadbattleconf: Reload battle config (admin command) Note that some player config settings won't take effect until relog (display exp, display zeny, display skill delay fail, ...)
-reloadstatusdb: Reload status database (admin command)
-reloadpcdb: Reload player info database (admin command)
-reloadmotd: Reload the Message of the Day (admin command)
-adjgroup: Changes the group of a character (lasts until relog)
-addperm, rmvperm: Changes the permissions of a character (lasts until relog)
-disguiseall, undisguiseall: [Un]Disguise All Players (admin command)
-mutearea: Mutes every player on screen (admin command)
-battleignore: Makes you immune to attacks (monsters/players/skills cannot target/hit you, admin command)
-snow, clouds, clouds2, fog, fireworks, sakura, leaves: Weather effects
-clearweather: Stop all weather effects
-disguiseguild, undisguiseguild: (Un)disguises all online characters of a guild. (At least one member of that guild must be on.)
-sizeall: Changes the size of all players
-sizeguild: Changes the size of all online characters of a guild. (At least one member of that guild must be on.)
+
+@commands
+
+Displays a list of @ commands available to the player.
+
+
+---------------------------------------
+@charcommands
+
+Displays a list of # (char)commands available to the player.
+
+
+---------------------------------------
+@rates
+
+Displays the server rates.
+
+Output Example:
+Experience rates: Base 1.00x / Job 1.00x
+Normal Drop Rates: Common 1.00x / Healing 1.00x / Usable 1.00x Equipment 1.00x / Card 1.00x
+Boss Drop Rates:  Common 1.00x / Healing 1.00x / Usable 1.00x Equipment 1.00x / Card 1.00x
+Other Drop Rates: MvP 1.00x / Card-Based 1.00x / Treasure 1.00x
+
+
+---------------------------------------
+@uptime
+
+Show server uptime since last map server restart.
+
+Output Example:
+Server Uptime: 3 days, 8 hours, 6 minutes, 4 seconds.
+
+
+---------------------------------------
+@showdelay
+
+Shows/Hides the "Cannot use the skills" message.
+
+Output Example:
+Skill delay failures are shown now.
+-- or -- 
+Skill delay failures won't be shown.
+
+If @showdelay is toggled, for skill 89 (Storm Gust), the chat window will display in red:
+[Storm Gust] Cannot use the skills.
+
+If @showdelay is toggled, for skill 85 (Lord of Vermilion), the chat window will display in red:
+[Lord of Vermilion] Cannot use the skills.
+
+
+---------------------------------------
+@exp
+
+Displays current levels and % progress.
+
+Output Example:
+Base Level: 13 (3.323%) | Job Level: 10 (0.000%)
+
+
+---------------------------------------
+@email <current@email.tld> <new@email.tld>
+
+To change your (own) email. 
+Note: This command doesn't validate the email address itself, but checks the structure of the email (xxx@xxx).
+
+Example:
+In this example, my current email is a@a.com and i want to change it to b@b.com
+
+@email a@b.com b@b.com
+This returns a fail message: Invalid email. If you have default e-mail, type a@a.com.
+
+@email a@a.com b@b
+Returns success message: Information sent to login-server via char-server.
+
+
+---------------------------------------
+@monsterinfo <ID/Name>
+
+Show Monster info (rates, stats, drops, MVP stuff).
+
+Example:
+@monsterinfo Poring
+
+Output:
+Monster: 'Poring'/'Poring'/'PORING' (1002)
+Lv: 1 HP:60 Base EXP:27 Job EXP:20 HIT:103 FLEE:183
+DEF:2 MDEF:5 STR:6 AGI:1 VIT:1 INT:1 DEX:6 LUK:5
+ATK:8~9 Range:1~10~12 Size:Medium Race:Plant Element:Water (Lv:1)
+Drops:
+ - Jellopy 70.00% - Knife[4] 1.00% etc.. etc...
+ 
+
+---------------------------------------
+@iteminfo <ID/Name>
+
+Show Item info (type, price, etc).
+
+Example:
+@iteminfo Jellopy
+
+Output:
+Item: 'Jellopy'/'Jellopy'[0] (909) Type: Etc. | Extra Effect: None
+NPC Buy:6z, Sell:3z | Weight: 1.0
+- Maximal monsters drop change: 75.00%
+
+
+---------------------------------------
+@whodrops <ID/Name>
+
+Show who drops an item (mobs with highest drop rate).
+ 
+
+---------------------------------------
+@refresh
+
+Syncronizes the player's position on the client with the one stored on the server.
+ 
+
+---------------------------------------
+@time
+
+Displays the local server time, along with day/night information.
+ 
+
+---------------------------------------
+@version
+
+Displays SVN version of the server.
+ 
+
+---------------------------------------
+@petrename
+
+If have not already renamed your pet, you can do this on the Pet window.
+
+If you have already renamed your pet, use @petrename which will allow you to use
+the rename option on the Pet window again.
+ 
+
+---------------------------------------
+@party <party_name>
+
+Organize a new party, with you as the party leader.
+ 
+
+---------------------------------------
+@storage
+
+Opens your Kafra storage wherever you are.
+ 
+
+---------------------------------------
+@mail
+
+Opens your mailbox.
+ 
+
+---------------------------------------
+@auction
+
+Opens auction window.
+ 
+
+---------------------------------------
+@where
+
+Locate someone on a map, returns your coordinates if the person isn't on.
+ 
+
+---------------------------------------
+@duel, invite, accept, reject, leave:
+
+Duel organizing commands. Duel aspects can be modified in:
+/conf/battle/misc.conf
+ 
+
+---------------------------------------
+@main {<message>}
+
+Using without a message will enable/disable main chat from appearing in the client chat window.
+Adding a message after @main will forward the message to main chat.
+ 
+
+---------------------------------------
+@noask
+
+Toggles automatic rejection of deals and invites.
+ 
+
+---------------------------------------
+@jailtime
+
+Displays remaining jail time. If a GM used @jail <player> then the chat window
+will display "You have been jailed indefinitley."
+ 
+
+---------------------------------------
+@hominfo, homstats: Homunculus commands for players
+ 
+
+---------------------------------------
+@noks
+
+Enables Kill Steal Protection.
+ 
+
+---------------------------------------
+@font <ID>
+
+Sets Font using values 1 to 9. 0 will return to default font.
+ 
+
+---------------------------------------
+@showexp
+
+Toggles the display of Experience gained messages. Using again will turn this feature off.
+
+
+---------------------------------------
+@showzeny
+
+Toggles the display of Zeny gained messages.
+Configuration for zeny being dropped by mobs is in /conf/battle/monster.conf
+// Zeny from mobs
+zeny_from_mobs: no
+
+
+---------------------------------------
+@go <Location ID>
+
+Warps you to predefined locations in major cities. If no ID is given, all @go'able maps will
+be displayed in the chat window. Locations and coordinates are stored in the command itself:
+/src/map/atcommand.c
+ 
+
+---------------------------------------
+@autoloot {<%>}
+
+Enables/disables autolooting from killed mobs. If a percentage is given, only items with
+a drop rate of <%> will be autolooted.
+ 
+
+---------------------------------------
+@alootid <Item ID/reset>
+
+Enables/disables autolooting a particular item. Using "reset" instead of an Item ID will
+clear the autoloot item list.
+ 
+
+---------------------------------------
+@autotrade
+
+Allows you continue vending offline. This will log you out of your character, but will
+leave your character to vend until map server is restarted, until you login to that account
+again, or until there are no more items left in the vending list.
+ 
+
+---------------------------------------
+@changegm <guild_member_name>
+
+Change Guild Master of your Guild to another member. You must be the Guild Master
+to use this command.
+ 
+
+---------------------------------------
+@changeleader <party_member_name>
+
+Change the leader of your party to another member. You must be the party leader
+to use this command.
+
+
+---------------------------------------
+@partyoption <pickup share: yes/no> <item distribution: yes/no>
+
+Change the party exp share and item share rules.
+ 
+
+---------------------------------------
+@pettalk <message>
+
+Command what the player's pet will say.
+ 
+
+---------------------------------------
+@homtalk <message>
+
+Command what the player's homunculus will say.
+ 
+
+---------------------------------------
+@mobsearch <Monster Name>
+
+Locates and displays the position of a certain mob on the current map.
+
+Output Example:
+1[155:184] Poring
+2[154:188] Poring
+3[127:146] Poring
+ 
+
+---------------------------------------
+@showmobs <Monster ID/Name>
+
+Locates and displays the position of a certain mob on your mini-map. This
+shows up as a small white cross (+).
+ 
+
+---------------------------------------
+@whereis
+
+Prints out in which maps a monster normally spawns at (does not count script-invoked mobs).
+ 
+
+---------------------------------------
+@feelreset
+
+Resets a Star Gladiator's marked maps.
+ 
+
+---------------------------------------
+@help <command>
+
+Displays help about the given command.
+ 
+
+---------------------------------------
+@goto <Char Name/ID>
+
+Warp yourself to a player.
+ 
+
+---------------------------------------
+@gmotd
+
+Displays the motd file to all players.
+ 
+
+---------------------------------------
+@follow <Char Name>
+
+Follow a player. Command will warp you to them if the target isn't on the same map as you.
+ 
+
+---------------------------------------
+@request <message>
+
+Sends a message to all connected GMs (via the gm whisper system).
+ 
+
+---------------------------------------
+@kick <Char ID/Name>
+
+Disconnects a user from the server.
+ 
+
+---------------------------------------
+@model <hair: 0-27> <hair color: 0-8> <clothes color: 0-4>
+
+Basically, changes your appearance based on the given parameters.
+ 
+
+---------------------------------------
+@mount
+
+Toggles mounting/unmounting a peco.
+ 
+
+---------------------------------------
+@who
+
+Returns list of logged in characters with their position.
+ 
+
+---------------------------------------
+@who2
+
+Returns list of logged in characters with their job.
+ 
+
+---------------------------------------
+@who3
+
+Returns list of logged in characters with their party/guild.
+ 
+
+---------------------------------------
+@whomap
+
+Returns list of logged in characters with their position in a specifical map.
+ 
+
+---------------------------------------
+@whomap2
+
+Returns list of logged in characters with their job in a specifical map.
+ 
+
+---------------------------------------
+@whomap3
+
+Returns list of logged in characters with their party/guild in a specifical map.
+ 
+
+---------------------------------------
+@whogm
+
+Displays GMs online. For those who are higher GM level than yourself, only the name is shown, for the rest, it displays the same info of @who+@who2+who3.
+ 
+
+---------------------------------------
+@disguise <Name/ID>
+
+Change your appearence to other players to a mob.
+ 
+
+---------------------------------------
+@undisguise
+
+Restore your normal appearance.
+ 
+
+---------------------------------------
+@me <message>
+
+Displays the text as a normal message with the format "*name message*" instead
+of "name : message" (Like the /me command in IRC).
+ 
+
+---------------------------------------
+@fakename <text string>
+
+Changes your name to your choice temporarily.
+ 
+
+---------------------------------------
+@size <0-2>
+
+Changes your size.
+0 = Normal
+1 = Small
+2 = Large 
+
+---------------------------------------
+@npctalk <NPC Name> <message>
+
+Can command what other npcs (by name) can say. Displays the message above their head
+like the npctalk script command.
+ 
+
+---------------------------------------
+@broadcast <message>
+
+Broadcast to the whole server, prefixed with the name of the character that used it.
+ 
+
+---------------------------------------
+@localbroadcast <message>
+
+Broadcast to the map you're on, prefixed with the name of the character that used it.
+
+---------------------------------------
+@kami <message>
+
+Broadcast (with or without name).
+ 
+
+---------------------------------------
+@kamib <message>
+
+Same as kami but with blue color.
+ 
+
+---------------------------------------
+@kamic <color> <message>
+
+Same as kami but you can choose the color (uses different packet). The color is a
+hexadecimal value i.e. FF0000 for red, 0000FF for blue.
+
+Example:
+@kamic FF0000 This message is in red.
+ 
+
+---------------------------------------
+@gvgon
+
+Enables GvG on a map.
+ 
+
+---------------------------------------
+@gvgoff
+
+Turns GvG (Guild vs. Guild) off on a map.
+ 
+
+---------------------------------------
+@allowks
+
+Toggles Activate/Deactivate kill steal protection on a map.
+ 
+
+---------------------------------------
+@heal
+
+Fully heals the characters HP and SP. 
+ 
+
+---------------------------------------
+@hide
+
+Toggles GM Hide (total invisibility to characters and monsters).
+ 
+
+---------------------------------------
+@job <Job ID/Name>
+
+Changes your job to the one you specify. If no job ID, or name is specified, the
+client will output the list of jobs available through the @job command.
+
+Jobs 22 (Wedding), 26 (Summer) and 27 (Christmas) are not available via @job.
+
+
+---------------------------------------
+@jump
+
+Warps your character to a random set of coordinates on the current map.
+ 
+
+---------------------------------------
+@load
+
+Warps you to your last save point.
+ 
+
+---------------------------------------
+@tonpc <NPC Name>
+
+Warps you to a specific npc.
+ 
+
+---------------------------------------
+@memo <0-2>
+
+Saves a warp point. If a number is not specified, the command will output
+all currently saved locations. Location "void" means no warp point is saved
+to that number.
+ 
+
+---------------------------------------
+@option <param 1>{ <param 2>{ <param 3>}}
+
+Set your characters display options. (Visual effects of your character)
+If no parameter is specified, the full list of options are output to the chat window.
+ 
+
+---------------------------------------
+@petfriendly <0-1000>
+
+Sets the intimacy level of your pet, with 1000 being "Loyal".
+ 
+
+---------------------------------------
+@pethungry <0-100>
+
+Sets the hunger level of your pet, with 100 being "Stuffed".
+ 
+
+---------------------------------------
+@pvpoff
+
+Turns PvP (Person vs. Person) off on a map.
+ 
+
+---------------------------------------
+@pvpon
+
+Enables PvP on a map.
+ 
+
+---------------------------------------
+@questskill <Skill ID>
+
+Permanently adds the specified quest skill. If the skill ID is not specified, a list of skills
+are output to the chat window, grouped by Job.
+ 
+
+---------------------------------------
+@lostskill <Skill ID>
+
+Permanently removes the specified quest skill.
+ 
+
+---------------------------------------
+@speed <0-1000>
+
+Sets the speed you can walk/attack at. Default is 150, 0 is fastest, 1000 is slowest.
+ 
+
+---------------------------------------
+@spiritball <0-100>
+
+Summons X amount of spirit spheres around you.
+ 
+
+---------------------------------------
+@warp <map>{ <x> <y>}
+
+Warp yourself to a certain map, at (x,y) coordinates (2 same commands) + also /mm or /mapmove.
+ 
+
+---------------------------------------
+@dye <number>
+
+Changes clothes color. The min/max of this is set in /conf/battle/client.conf
+min_cloth_color: 0 
+max_cloth_color: 4 <--
+ 
+
+---------------------------------------
+@hairstyle <number>
+
+Changes hair style. The min/max of this is set in /conf/battle/client.conf
+min_hair_style: 0
+max_hair_style: 27 <--
+ 
+
+---------------------------------------
+@haircolor <number>
+
+Changes clothes color. The min/max of this is set in /conf/battle/client.conf
+min_hair_color: 0
+max_hair_color: 8 <--
+
+
+---------------------------------------
+@itemreset
+
+Deletes all your items.
+ 
+
+---------------------------------------
+@reset
+
+Performs a skill/stat reset.
+ 
+
+---------------------------------------
+@users
+
+Displays distribution of players on the server per map (% on each map which has players.)
+
+Output Example :
+prontera: 1 (50%)
+prt_fild01: 1 (50%)
+all: 2
+
+---------------------------------------
+@cleanmap
+
+Deletes floor items in sight range.
+ 
+
+---------------------------------------
+@killmonster2
+
+Kill all monsters in the current map (without drops).
+ 
+
+---------------------------------------
+@save
+
+Sets spawn point (aka save point).
+ 
+
+---------------------------------------
+@effect <Effect ID>
+
+Creates a visual effect on a character. The list of valid IDs can
+be found in /db/const.txt
+ 
+
+---------------------------------------
+@misceffect
+
+Original Desc: Do some visual effect on a character (misceffect)
+
+More info needed.
+ 
+
+---------------------------------------
+@identify
+
+Magnifier.
+ 
+
+---------------------------------------
+@dropall
+
+Drop all your items onto the floor.
+ 
+
+---------------------------------------
+@storeall
+
+Store all your items direclty into the Kafra Storage.
+ 
+
+---------------------------------------
+@killable
+
+Allow other players to hit you out of PvP.
+ 
+
+---------------------------------------
+@skillid <Skill Name>
+
+Look up a skill by name.
+ 
+
+---------------------------------------
+@useskill <Skill ID> <Skill Level> <Target>
+
+Use a skill by id.
+
+Example:
+To cast a level 5 Heal on Char2, you would use
+@useskill 28 5 Char2
+
+
+---------------------------------------
+@skilltree <Skill ID> <Target>
+
+Lists requirements to obtain the specified skill on the target character.
+ 
+
+---------------------------------------
+@marry <"Char 1"> <"Char 2">
+@divorce <Char 1>
+
+Marriage commands.. Self-explainatory.
+ 
+
+---------------------------------------
+@adopt <Father> <Mother> <Child>
+
+Adopt a novice into a family.
+ 
+
+---------------------------------------
+@sound <filename>
+
+Play a Sound!
+ 
+
+---------------------------------------
+@storagelist <Char Name>
+
+Displays the contents of another player's storage.
+ 
+
+---------------------------------------
+@cartlist <Char Name>
+
+Displays a player's cart contents.
+ 
+
+---------------------------------------
+@itemlist
+
+Displays a player's inventory.
+ 
+
+---------------------------------------
+@stats
+
+Displays the stats of the specified player in the chat bar.
+ 
+
+---------------------------------------
+@guild <Guild Name>
+
+Creates a new guild, with you as the guildmaster.
+ 
+
+---------------------------------------
+@gstorage
+
+Brings up your guild storage wherever you are.
+ 
+
+---------------------------------------
+@monster <Monster ID/Name>{ <amount>}
+
+Spawns the specified monster. If an amount is given, a specified number of
+the specified monster will be spawned.
+ 
+
+---------------------------------------
+@monstersmall <Monster ID/Name>
+
+Spawns a smaller sized version of a monster.
+ 
+
+---------------------------------------
+@monsterbig <Monster ID/Name>
+
+Spawns a larger sized version of a monster.
+ 
+
+---------------------------------------
+@summon <Monster ID/Name>{ <duration>}
+
+Spawns mobs that treat you as their master. If a duration is specified, they will
+stay with you until the duration has ended.
+ 
+
+---------------------------------------
+@clone <Char Name/ID>
+
+It will spawn a supportive clone of the given player.
+ 
+
+---------------------------------------
+@slaveclone <Char Name/ID>
+
+It will spawn a supportive clone of the given player that follows the creator around.
+ 
+
+---------------------------------------
+@evilclone <Char Name/ID>
+
+It will spawn an aggresive clone of the given player.
+ 
+
+---------------------------------------
+@cash <amount>
+
+Add or Remove Cash Points on your account.
+ 
+
+---------------------------------------
+@points <amount>
+
+Add or Remove Kafra Points on your account.
+ 
+
+---------------------------------------
+@agitstart
+
+Starts War of Emperium and scripts that have the OnAgitStart label.
+ 
+
+---------------------------------------
+@agitend
+
+Ends War of Emperium.
+ 
+
+---------------------------------------
+@alive
+
+Resurects yourself.
+ 
+
+---------------------------------------
+@blvl <amount>
+
+Raises your base level by specified amount.
+ 
+
+---------------------------------------
+@jlvl <amount>
+
+Raises your job level by specified amount.
+ 
+
+---------------------------------------
+@changesex
+
+Toggles genders. Changes the gender of your account from Male to Female and vice vercer.
+ 
+
+---------------------------------------
+@glvl <amount>
+
+Raises your guild level by specified amount.
+ 
+
+---------------------------------------
+@idsearch <Item Name>
+
+Find an Item ID based on Item Name.
+ 
+
+---------------------------------------
+@item <Item ID/Name>{ <amount>}
+
+Creates an item based on either Item ID or Name. 
+ 
+
+---------------------------------------
+@item2: Creates a complete item (card, etc...) of your choosing, either Item ID or Name.
+ 
+
+---------------------------------------
+@delitem: Deletes an item of your choosing, either Item ID or Name.
+ 
+
+---------------------------------------
+@kill <Char Name>
+
+Kills the specified player.
+ 
+
+---------------------------------------
+@killmonster
+
+Kills all monsters on current map (with drops).
+ 
+
+---------------------------------------
+@makeegg <Egg ID>
+
+Creates a Pet Egg based on the given ID.
+ 
+
+---------------------------------------
+@hatch
+
+Opens the Hatch window. Emulates using a Pet Incubator.
+ 
+
+---------------------------------------
+@nuke <Char Name>
+
+Instantly kills player whose name is entered and deals splash damage.
+ 
+
+---------------------------------------
+@killer
+
+Enables hitting players when not in PvP.
+ 
+
+---------------------------------------
+@produce <Equip ID/Name> <Element> <# of Very's>
+
+Creates weapon of desired element.
+
+Example:
+@produce 1602 1 2
+Will craft an item called "Very Very Strong Char's Ice Rod".
+ 
+
+---------------------------------------
+@recall <Char Name>
+
+Warps a character to you.
+ 
+
+---------------------------------------
+@refine <Equip Position> <+/- amount>
+
+Refines any weapon/armor that you currently have equiped.
+ 
+
+---------------------------------------
+@repairall
+
+Will repair all broken items in inventory.
+ 
+
+---------------------------------------
+@str, agi, vit, int, dex, luk <+/- amount>
+
+Change Status of your character.
+ 
+
+---------------------------------------
+@allskill
+
+Gives your character all skills in their current skill tree.
+ 
+
+---------------------------------------
+@allstats
+
+Sets stats to maximum (99 in most servers).
+ 
+
+---------------------------------------
+@stpoint <+/- amount>
+
+Gives you stat points.
+ 
+
+---------------------------------------
+@skpoint <+/- amount>
+
+Gives you skill points of desired amount.
+ 
+
+---------------------------------------
+@guildrecall <Guild Name>
+
+Warps all online characters of a guild to you. (at least one member of that guild must be on.)
+ 
+
+---------------------------------------
+@partyrecall <Party Name>
+
+Warps all online characters of a party to you. (at least one party member must be online.)
+ 
+
+---------------------------------------
+@guildspy <Guild Name>
+
+Allows you to spy on any Guilds Guild chat. (at least one member of that guild must be on.)
+NOTE: map server needs to be configured to enable spying to use this command (enable_spy: yes)
+ 
+
+---------------------------------------
+@partyspy <Party Name>
+
+Allows you to spy on any party's party chat. (at least one party member must be online.)
+NOTE: map server needs to be configured to enable spying to use this command (enable_spy: yes)
+ 
+
+---------------------------------------
+@zeny <+/- amount>
+
+Gives you zeny (or subtracts, if amount is negative).
+ 
+
+---------------------------------------
+@block <Char Name>
+
+Block a player from logging in indefinitely.
+ 
+
+---------------------------------------
+@unblock <Char Name>
+
+Unblocks a player.
+ 
+
+---------------------------------------
+@ban <time> <Char Name>
+
+Ban a player for a limited time.
+Time elements: y/a, m, d/j, h, mn, s
+
+Example:
+@ban +2d Char2
+This would ban Char2's account for 2 days.
+
+
+---------------------------------------
+@unban <Char Name>
+
+Unbans a player.
+ 
+
+---------------------------------------
+@jail <Char Name>
+
+To send specified character in jails.
+ 
+
+---------------------------------------
+@unjail <Char Name>
+
+To discharge a jailed character.
+ 
+
+---------------------------------------
+@jailfor <time> <Char Name>
+
+Timed jailing.
+ 
+
+---------------------------------------
+@addwarp <map> <x> <y>
+
+Create a static warp portal that lasts until the next reboot. When used, the
+new warp will have a name that is only displayed once in the chat window.
+
+Example:
+Current location: prontera 162 192
+@addwarp prontera 50 50
+"New warp NPC 'warp_4_170_198' created."
+ 
+
+---------------------------------------
+@trade <Char Name>
+
+Opens the trade window with the specified player.
+ 
+
+---------------------------------------
+@changelook: Changes the player's appearance (headgear).
+ 
+
+---------------------------------------
+@hlvl, homevolve, makehomun, homfriendly, homhungry: Homunculus commands for GMs.
+ 
+
+---------------------------------------
+@homshuffle
+
+Re-calculates stats, as if the homun was sent back to level 1 and re-leveled.
+ 
+
+---------------------------------------
+@agitstart2, agitend2
+
+Same as regular WoE commands.
+ 
+
+---------------------------------------
+@streset
+
+Resets player stats.
+ 
+
+---------------------------------------
+@skreset
+
+Resets player skills.
+ 
+
+---------------------------------------
+@day
+
+Set the server to day.
+ 
+
+---------------------------------------
+@night
+
+Set the server to night.
+ 
+
+---------------------------------------
+@doom
+
+Kills everyone on the server.
+ 
+
+---------------------------------------
+@doommap
+
+Kills everyone on the map you are on.
+ 
+
+---------------------------------------
+@recallall
+
+Recalls all connected characters to your coordinates.
+ 
+
+---------------------------------------
+@raisemap
+
+Revives all players on the map.
+ 
+
+---------------------------------------
+@raise
+
+Revives all players on the server.
+ 
+
+---------------------------------------
+@hidenpc, @shownpc <NPC Name>
+
+Toggles the visibility of an NPC's sprite.
+ 
+
+---------------------------------------
+@shownpc: Unhides a NPC.
+ 
+
+---------------------------------------
+@loadnpc <path>
+
+Loads an NPC script by path.
+ 
+
+---------------------------------------
+@unloadnpc <NPC Name>
+
+Unloads an NPC.
+ 
+
+---------------------------------------
+@unloadnpcfile <path>
+
+Unloads all NPCs in a file.
+
+Example:
+@unloadnpcfile npc/custom/jobmaster.txt
+ 
+
+---------------------------------------
+@npcmove: Move a NPC.
+ 
+
+---------------------------------------
+@skillon/@skilloff
+
+Toggles skill usage on a map.
+ 
+
+---------------------------------------
+@mute <time> <Char Name>
+
+Mute a player (prevents talking, usage of skills and commands)
+ 
+
+---------------------------------------
+@unmute <Char Name>
+
+Unmutes the specified player.
+ 
+
+---------------------------------------
+@kickall
+
+Disconnect all users from the server.
+ 
+
+---------------------------------------
+@mapexit
+
+Sends quit signal to Map-Server which causes a gracefull close and saves unsaved data.
+This will also send a packet to clients causing them to close.
+ 
+
+---------------------------------------
+@send <Hex Number>{ <value>}
+
+Used for testing packet sends from the client (debug function).
+Value: <type=B(default),W,L><number> or S<length>"<string>"
+
+---------------------------------------
+@gat
+
+Give information about terrain/area (debug function).
+
+Output Example: 
+prontera (x= 165, y= 202) 00 00 00 00 00
+prontera (x= 165, y= 201) 01 00 00 00 00
+prontera (x= 165, y= 200) 01 00 00 00 00
+prontera (x= 165, y= 199) 01 00 00 00 00
+prontera (x= 165, y= 198) 01 00 00 00 00
+
+---------------------------------------
+@displaystatus <status type> <flag> <tick> {<val1> {<val2> {<val3>}}}
+
+Displays a status change without really applying it (debug function).
+ 
+
+---------------------------------------
+@displayskill <Skill ID>{ <Skill Level>}
+
+Displays the animation of a skill without really using it (debug function).
+ 
+
+---------------------------------------
+@mapinfo
+
+Displays information about the map.
+
+Example:
+------ Map Info ------
+Map Name: prontera | Players In Map: 1 | NPCs In Map: 127 | Chats In Map: 0
+------ Map Flags ------
+Town Map
+Autotrade Enabled
+PvP Flags: 
+GvG Flags: 
+Teleport Flags: 
+No Exp Penalty: On | No Zeny Penalty: On
+Weather Flags: Displays Night | 
+Other Flags: NoBranch | Reset | 
+Other Flags: 
+ 
+
+---------------------------------------
+@mapflag <flag> <0/1>
+
+Set Map Flags based on current map. Mapflags can be found in /conf/mapflag
+
+0 = Off
+1 = On
+ 
+
+---------------------------------------
+@reloaditemdb
+
+Reload item database.
+ 
+
+---------------------------------------
+@reloadmobdb
+
+Reload monsters database.
+ 
+
+---------------------------------------
+@reloadskilldb
+
+Reload skills database.
+ 
+
+---------------------------------------
+@reloadquestdb
+
+Reload quest dtabase.
+ 
+
+---------------------------------------
+@reloadscript
+
+Reload scripts.
+ 
+
+---------------------------------------
+@setbattleflag <flag> <value>
+
+Change a battle_config flag without rebooting server.
+ 
+
+---------------------------------------
+@reloadatcommand
+
+Reload atcommand config.
+ 
+
+---------------------------------------
+@reloadbattleconf
+
+Reload battle config. Note that some player config settings won't take
+effect until relog (display exp, display zeny, display skill delay fail, ...)
+ 
+
+---------------------------------------
+@reloadstatusdb
+
+Reload status database.
+ 
+
+---------------------------------------
+@reloadpcdb
+
+Reload player info database.
+ 
+
+---------------------------------------
+@reloadmotd
+
+Reload the Message of the Day.
+ 
+
+---------------------------------------
+@adjgroup <Group ID>
+
+Changes the group of a character (lasts until relog). The groups are
+specified in /conf/groups.conf
+ 
+
+---------------------------------------
+@addperm, rmvperm <Permission Name>
+
+Changes the permissions of a character (lasts until relog).
+ 
+
+---------------------------------------
+@disguiseall, undisguiseall <Monster Name/ID>
+
+(Un)Disguise All Players.
+ 
+
+---------------------------------------
+@mutearea <time>
+
+Mutes every player on screen based on specified number of minutes.
+ 
+
+---------------------------------------
+@battleignore
+
+Makes you immune to attacks (monsters/players/skills cannot target/hit you.
+ 
+
+---------------------------------------
+@snow, clouds, clouds2, fog, fireworks, sakura, leaves
+
+Toggles weather effects. Turning them off may require a map change or an @refresh
+for the effect to stop client-side.
+ 
+
+---------------------------------------
+@clearweather
+
+Stop all weather effects. May require a map change or an @refresh for the effect
+to stop client-side.
+ 
+
+---------------------------------------
+@disguiseguild, undisguiseguild <Monster Name/ID> <Guild Name/ID>
+
+(Un)disguises all online characters of a guild. (At least one member of that guild must be on.)
+ 
+
+---------------------------------------
+@sizeall <0-2>
+
+Changes the size of all players. 0 resets back to normal.
+
+
+---------------------------------------
+@sizeguild <size> <Guild Name>
+
+Changes the size of all online characters of a guild. (At least one member of that guild must be on.)
+ 
+
+---------------------------------------
