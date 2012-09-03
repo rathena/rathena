@@ -1,0 +1,44 @@
+// Before installing an NPC like the one below, you would
+// need to add the quest to /db/quest_db.txt - e.g:
+// 9000,0,1002,3,0,0,0,0,"3 Splats Please!"
+
+
+prontera,90,95,1	script	Jelly	123,{
+set .@n$, "["+strnpcinfo(1)+"]";
+if(checkquest(9000) == -1) goto  L_Start;
+if(checkquest(9000,HUNTING) == 2) goto  L_Reward;
+if(checkquest(9000) == 2) goto  L_Done;
+
+L_Start:
+	mes .@n$;
+	mes "Hey there! Would you help me?";
+	next;
+		switch(select("I'd rather not:What's up?")){
+		case 1:
+		mes .@n$;
+			mes "I didn't want your help anyway!";
+			close;
+			
+		case 2:
+		mes .@n$;
+			mes "Those Porings are weirding me out.";
+			mes "Would you kill 3 for me?";
+			setquest 9000;  // Adds the quest to your Quest Window.
+			close;
+			}
+		}
+	close;
+	
+L_Reward:
+	mes .@n$;
+	mes "Awesome! Than you =)";
+	getexp 10000,0;
+	dispbottom "You have been rewarded with 10,000 Base Exp.";
+	completequest 9000;
+	close;
+		
+L_Done:
+	mes .@n$;
+	mes "Thanks again for doing that for me =)";
+	close;
+}

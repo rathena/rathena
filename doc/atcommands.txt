@@ -1122,7 +1122,9 @@ Opens the trade window with the specified player.
  
 
 ---------------------------------------
-@changelook: Changes the player's appearance (headgear).
+@changelook <ID>
+
+Changes the player's appearance (headgear).
  
 
 ---------------------------------------
@@ -1202,19 +1204,20 @@ Toggles the visibility of an NPC's sprite.
  
 
 ---------------------------------------
-@shownpc: Unhides a NPC.
- 
-
----------------------------------------
 @loadnpc <path>
 
 Loads an NPC script by path.
- 
+
+Example:
+@loadnpc npc/custom/jobmaster.txt
 
 ---------------------------------------
 @unloadnpc <NPC Name>
 
 Unloads an NPC.
+
+Example:
+@unloadnpc Job Master
  
 
 ---------------------------------------

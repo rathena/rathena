@@ -36,3 +36,35 @@ OnWhisperGlobal:
 		message @whispervar2$,"You have been reported for "+@whispervar1$+".";
 	end;
 }
+
+The Whisper System is also useful for hidden event handler NPCs (NPCs that don't
+have a sprite on a map for you to click). E.g:
+
+OnWhisperGlobal:
+if (getgmlevel()<80) goto L_NotGM;
+if (@whispervar0$ == "event1") goto L_Event1;
+if (@whispervar0$ == "event2") goto L_Event2;
+if (@whispervar0$ == "event3") goto L_Event3;
+
+// If the string sent to this NPC doesn't contain any of the above:
+else goto L_NoVar;
+end;
+
+L_NotGM:
+	dispbottom	"NPC : You do not have sufficient access to whisper in my ear.";
+	end;
+
+L_NoVar:
+	dispbottom "NPC : Sorry, i do not recognise that command.";
+	end;
+
+L_Event1:
+	if (@whispervar1$ == "start"){
+		// Execute scripts to start Event1
+	}
+	if (@whispervar1$ == "stop"){
+		//Execute scripts to forcefully stop Event1
+	}
+
+
+

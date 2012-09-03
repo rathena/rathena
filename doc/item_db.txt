@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20120420
+//= 20120904
 //===== Description: =========================================
 //= Explanation of the item_db.txt file and structure.
 //============================================================
@@ -143,8 +143,8 @@ View: For normal items, defines a replacement view-sprite for the item (eg:
 		5: Grenades
 		6: Shuriken
 		7: Kunai
-		7: Cannonballs
-		7: Throwable Items (Sling Item)
+		8: Cannonballs
+		9: Throwable Items (Sling Item)
 
 Script: Script to execute when the item is used/equipped.
 
