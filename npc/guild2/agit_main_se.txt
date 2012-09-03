@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -14,6 +14,7 @@
 //= 1.0 If anything breaks, blame Maki. [Euphy]
 //= 1.1 Fixed an incorrect label execution. [Euphy]
 //= 1.2 Hopefully fixed a processing error. [Euphy]
+//= 1.3 Fixed barricade issue in schg_cas02. [Cookie]
 //============================================================
 
 // Core, triggers all other events
@@ -1593,7 +1594,7 @@ OnEnable:
 			if (strnpcinfo(2) == "schg_cas02") {
 				setarray .@wall[0],230,213,6,0,1;
 				setarray .@x[0],231,231,231,232,232,232;
-				setarray .@y[0],214,216,218,213,215,217;
+				setarray .@y[0],213,215,217,213,215,217;
 			}
 			else if (strnpcinfo(2) == "schg_cas03") {
 				setarray .@wall[0],200,230,8,0,1;
