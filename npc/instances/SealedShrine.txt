@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.9
+//= 2.0
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -23,6 +23,7 @@
 //= 1.8 Added 'instance_check_party' command to the script for proper checking if
 //=		the invoking party meets the requirements to join the Memorial Dungeon.
 //= 1.9 Fixed broken else/if chaining. [Joseph]
+//= 2.0 Some optimization. [Euphy]
 //============================================================ 
 
 // Sealed Catacomb Entrance
@@ -1055,7 +1056,6 @@ OnTouch:
 // To 2F Warp
 //============================================================
 1@cata,281,12,0	script	ins_bapho_to_2f	45,1,1,{
-
 OnTouch:
 	if (countitem(6002) > 0) {
 		delitem 6002,countitem(6002); //Token_Of_Apostle
@@ -1070,7 +1070,9 @@ OnTouch:
 	}
 }
 
-1@cata,86,214,0	script	Gravestone#1F_1T	844,{
+// Gravestones
+//============================================================
+-	script	Gravestone#SS1	-1,{
 	if ('ins_baphomet == 1) {
 		getitem 6003,1; //Soul_Pendant
 		set 'ins_baphomet,2;
@@ -1085,268 +1087,41 @@ OnTouch:
 		close;
 	}
 }
+1@cata,86,214,0	duplicate(Gravestone#SS1)	Gravestone#1F_1T	844
+1@cata,200,209,0	duplicate(Gravestone#SS1)	Gravestone#1F_2T	844
+1@cata,230,195,0	duplicate(Gravestone#SS1)	Gravestone#1F_3T	844
+1@cata,118,182,0	duplicate(Gravestone#SS1)	Gravestone#1F_4T	844
+1@cata,193,182,0	duplicate(Gravestone#SS1)	Gravestone#1F_5T	844
+1@cata,253,156,0	duplicate(Gravestone#SS1)	Gravestone#1F_6T	844
+1@cata,88,154,0	duplicate(Gravestone#SS1)	Gravestone#1F_7T	844
+1@cata,127,116,0	duplicate(Gravestone#SS1)	Gravestone#1F_8T	844
+1@cata,90,98,0	duplicate(Gravestone#SS1)	Gravestone#1F_9T	844
+1@cata,188,84,0	duplicate(Gravestone#SS1)	Gravestone#1F_10T	844
+1@cata,244,42,0	duplicate(Gravestone#SS1)	Gravestone#1F_11T	844
+1@cata,127,32,0	duplicate(Gravestone#SS1)	Gravestone#1F_12T	844
+1@cata,267,30,0	duplicate(Gravestone#SS1)	Gravestone#1F_13T	844
 
-1@cata,86,214,0	script	Gravestone#1F_1F	844,{
-	mes "I can only feel gloom from this Gravestone.";
-	close;
-	end;
-}
-
-1@cata,200,209,0	script	Gravestone#1F_2T	844,{
-	if ('ins_baphomet == 1) {
-		getitem 6003,1; //Soul_Pendant
-		set 'ins_baphomet,2;
-		mes "A small object is shining under a leaning grave.";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "I think this is the pendant...";
-		close;
-	}
-	else {
-		mes "I can only feel gloom from this Gravestone.";
-		close;
-	}
-}
-
-1@cata,200,209,0	script	Gravestone#1F_2F	844,{
+-	script	Gravestone#SS2	-1,{
 	mes "I can only feel gloom from this Gravestone.";
 	close;
 }
+1@cata,86,214,0	duplicate(Gravestone#SS2)	Gravestone#1F_1F	844
+1@cata,200,209,0	duplicate(Gravestone#SS2)	Gravestone#1F_2F	844
+1@cata,230,195,0	duplicate(Gravestone#SS2)	Gravestone#1F_3F	844
+1@cata,118,182,0	duplicate(Gravestone#SS2)	Gravestone#1F_4F	844
+1@cata,193,182,0	duplicate(Gravestone#SS2)	Gravestone#1F_5F	844
+1@cata,253,156,0	duplicate(Gravestone#SS2)	Gravestone#1F_6F	844
+1@cata,88,154,0	duplicate(Gravestone#SS2)	Gravestone#1F_7F	844
+1@cata,127,116,0	duplicate(Gravestone#SS2)	Gravestone#1F_8F	844
+1@cata,90,98,0	duplicate(Gravestone#SS2)	Gravestone#1F_9F	844
+1@cata,188,84,0	duplicate(Gravestone#SS2)	Gravestone#1F_10F	844
+1@cata,244,42,0	duplicate(Gravestone#SS2)	Gravestone#1F_11F	844
+1@cata,127,32,0	duplicate(Gravestone#SS2)	Gravestone#1F_12F	844
+1@cata,267,30,0	duplicate(Gravestone#SS2)	Gravestone#1F_13F	844
 
-1@cata,230,195,0	script	Gravestone#1F_3T	844,{
-	if ('ins_baphomet == 1) {
-		getitem 6003,1; //Soul_Pendant
-		set 'ins_baphomet,2;
-		mes "A small object is shining under a leaning grave.";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "I think this is the pendant...";
-		close;
-	}
-	else {
-		mes "I can only feel gloom from this Gravestone.";
-		close;
-	}
-}
-
-1@cata,230,195,0	script	Gravestone#1F_3F	844,{
-	mes "I can only feel gloom from this Gravestone.";
-	close;
-}
-
-1@cata,118,182,0	script	Gravestone#1F_4T	844,{
-	if ('ins_baphomet == 1) {
-		getitem 6003,1; //Soul_Pendant
-		set 'ins_baphomet,2;
-		mes "A small object is shining under a leaning grave.";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "I think this is the pendant...";
-		close;
-	}
-	else {
-		mes "I can only feel gloom from this Gravestone.";
-		close;
-	}
-}
-
-1@cata,118,182,0	script	Gravestone#1F_4F	844,{
-	mes "I can only feel gloom from this Gravestone.";
-	close;
-}
-
-1@cata,193,182,0	script	Gravestone#1F_5T	844,{
-	if ('ins_baphomet == 1) {
-		getitem 6003,1; //Soul_Pendant
-		set 'ins_baphomet,2;
-		mes "A small object is shining under a leaning grave.";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "I think this is the pendant...";
-		close;
-	}
-	else {
-		mes "I can only feel gloom from this Gravestone.";
-		close;
-	}
-}
-
-1@cata,193,182,0	script	Gravestone#1F_5F	844,{
-	mes "I can only feel gloom from this Gravestone.";
-	close;
-}
-
-1@cata,253,156,0	script	Gravestone#1F_6T	844,{
-	if ('ins_baphomet == 1) {
-		getitem 6003,1; //Soul_Pendant
-		set 'ins_baphomet,2;
-		mes "A small object is shining under a leaning grave.";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "I think this is the pendant...";
-		close;
-	}
-	else {
-		mes "I can only feel gloom from this Gravestone.";
-		close;
-	}
-}
-
-1@cata,253,156,0	script	Gravestone#1F_6F	844,{
-	mes "I can only feel gloom from this Gravestone.";
-	close;
-}
-
-1@cata,88,154,0	script	Gravestone#1F_7T	844,{
-	if ('ins_baphomet == 1) {
-		getitem 6003,1; //Soul_Pendant
-		set 'ins_baphomet,2;
-		mes "A small object is shining under a leaning grave.";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "I think this is the pendant...";
-		close;
-	}
-	else {
-		mes "I can only feel gloom from this Gravestone.";
-		close;
-	}
-}
-
-1@cata,88,154,0	script	Gravestone#1F_7F	844,{
-	mes "I can only feel gloom from this Gravestone.";
-	close;
-}
-
-1@cata,127,116,0	script	Gravestone#1F_8T	844,{
-	if ('ins_baphomet == 1) {
-		getitem 6003,1; //Soul_Pendant
-		set 'ins_baphomet,2;
-		mes "A small object is shining under a leaning grave.";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "I think this is the pendant...";
-		close;
-	}
-	else {
-		mes "I can only feel gloom from this Gravestone.";
-		close;
-	}
-}
-
-1@cata,127,116,0	script	Gravestone#1F_8F	844,{
-	mes "I can only feel gloom from this Gravestone.";
-	close;
-}
-
-1@cata,90,98,0	script	Gravestone#1F_9T	844,{
-	if ('ins_baphomet == 1) {
-		getitem 6003,1; //Soul_Pendant
-		set 'ins_baphomet,2;
-		mes "A small object is shining under a leaning grave.";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "I think this is the pendant...";
-		close;
-	}
-	else {
-		mes "I can only feel gloom from this Gravestone.";
-		close;
-	}
-}
-
-1@cata,90,98,0	script	Gravestone#1F_9F	844,{
-	mes "I can only feel gloom from this Gravestone.";
-	close;
-	end;
-}
-
-1@cata,188,84,0	script	Gravestone#1F_10T	844,{
-	if ('ins_baphomet == 1) {
-		getitem 6003,1; //Soul_Pendant
-		set 'ins_baphomet,2;
-		mes "A small object is shining under a leaning grave.";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "I think this is the pendant...";
-		close;
-	}
-	else {
-		mes "I can only feel gloom from this Gravestone.";
-		close;
-	}
-}
-
-1@cata,188,84,0	script	Gravestone#1F_10F	844,{
-	mes "I can only feel gloom from this Gravestone.";
-	close;
-	end;
-}
-
-1@cata,244,42,0	script	Gravestone#1F_11T	844,{
-	if ('ins_baphomet == 1) {
-		getitem 6003,1; //Soul_Pendant
-		set 'ins_baphomet,2;
-		mes "A small object is shining under a leaning grave.";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "I think this is the pendant...";
-		close;
-	}
-	else {
-		mes "I can only feel gloom from this Gravestone.";
-		close;
-	}
-}
-
-1@cata,244,42,0	script	Gravestone#1F_11F	844,{
-	mes "I can only feel gloom from this Gravestone.";
-	close;
-}
-
-1@cata,127,32,0	script	Gravestone#1F_12T	844,{
-	if ('ins_baphomet == 1) {
-		getitem 6003,1; //Soul_Pendant
-		set 'ins_baphomet,2;
-		mes "A small object is shining under a leaning grave.";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "I think this is the pendant...";
-		close;
-	}
-	else {
-		mes "I can only feel gloom from this Gravestone.";
-		close;
-	}
-}
-
-1@cata,127,32,0	script	Gravestone#1F_12F	844,{
-	mes "I can only feel gloom from this Gravestone.";
-	close;
-}
-
-1@cata,267,30,0	script	Gravestone#1F_13T	844,{
-	if ('ins_baphomet == 1) {
-		getitem 6003,1; //Soul_Pendant
-		set 'ins_baphomet,2;
-		mes "A small object is shining under a leaning grave.";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "I think this is the pendant...";
-		close;
-	}
-	else {
-		mes "I can only feel gloom from this Gravestone.";
-		close;
-	}
-}
-
-1@cata,267,30,0	script	Gravestone#1F_13F	844,{
-	mes "I can only feel gloom from this Gravestone.";
-	close;
-}
-
-1@cata,267,210,0	script	Bobbing Torch#1	844,{
+// Bobbing Torches
+//============================================================
+-	script	Bobbing Torch#SS	-1,{
 	set .@party_id,getcharid(1);
 	if (getpartyleader(.@party_id,2) == getcharid(0)) {
 		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
@@ -1357,7 +1132,7 @@ OnTouch:
 			specialeffect2 EF_HOLYHIT;
 			getitem 6001,1; //Essence_Of_Fire
 			mes "The symbol of inheritor shines. Then a small crystal falls into my hand from the torch.";
-			disablenpc instance_npcname("Bobbing Torch#1", instance_id());
+			disablenpc instance_npcname(strnpcinfo(0), instance_id());
 			close;
 		}
 		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
@@ -1379,380 +1154,18 @@ OnTouch:
 		close;
 	}
 }
-
-1@cata,85,182,0	script	Bobbing Torch#2	844,{
-	set .@party_id,getcharid(1);
-	if (getpartyleader(.@party_id,2) == getcharid(0)) {
-		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
-			mes "A huge torch appearing as if it can burn everything is bobbing up and down in front of me.";
-			next;
-			mes "The grand appearance and heat of the fire makes me step back... But I pluck up my courage and reach out to pick up the torch.";
-			next;
-			specialeffect2 EF_HOLYHIT;
-			getitem 6001,1; //Essence_Of_Fire
-			mes "The symbol of inheritor shines. Then a small crystal falls into my hand from the torch.";
-			disablenpc instance_npcname("Bobbing Torch#2", instance_id());
-			close;
-		}
-		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
-			mes "You have 10 Essence of Fire already, so you don't need to collect any more.";
-			close;
-		}
-		else {
-			mes "You don't need to collect Essence of Fire anymore.";
-			close;
-		}
-	}
-	else {
-		mes "A huge torch appearing as if it can burn everything is bobbing up and down in front of me..";
-		next;
-		mes "[Unknown Voice]";
-		mes "You are not a inheritor of faith. Do not desecrate the Essence of Fire with your disrespectful hands.";
-		specialeffect2 EF_FIRESPLASHHIT;
-		percentheal -50,0;
-		close;
-	}
-}
-
-1@cata,267,154,0	script	Bobbing Torch#3	844,{
-	set .@party_id,getcharid(1);
-	if (getpartyleader(.@party_id,2) == getcharid(0)) {
-		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
-			mes "A huge torch appearing as if it can burn everything is bobbing up and down in front of me.";
-			next;
-			mes "The grand appearance and heat of the fire makes me step back... But I pluck up my courage and reach out to pick up the torch.";
-			next;
-			specialeffect2 EF_HOLYHIT;
-			getitem 6001,1; //Essence_Of_Fire
-			mes "The symbol of inheritor shines. Then a small crystal falls into my hand from the torch.";
-			disablenpc instance_npcname("Bobbing Torch#3", instance_id());
-			close;
-		}
-		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
-			mes "You have 10 Essence of Fire already, so you don't need to collect any more.";
-			close;
-		}
-		else {
-			mes "You don't need to collect Essence of Fire anymore.";
-			close;
-		}
-	}
-	else {
-		mes "A huge torch appearing as if it can burn everything is bobbing up and down in front of me..";
-		next;
-		mes "[Unknown Voice]";
-		mes "You are not a inheritor of faith. Do not desecrate the Essence of Fire with your disrespectful hands.";
-		specialeffect2 EF_FIRESPLASHHIT;
-		percentheal -50,0;
-		close;
-	}
-}
-
-1@cata,157,139,0	script	Bobbing Torch#4	844,{
-	set .@party_id,getcharid(1);
-	if (getpartyleader(.@party_id,2) == getcharid(0)) {
-		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
-			mes "A huge torch appearing as if it can burn everything is bobbing up and down in front of me.";
-			next;
-			mes "The grand appearance and heat of the fire makes me step back... But I pluck up my courage and reach out to pick up the torch.";
-			next;
-			specialeffect2 EF_HOLYHIT;
-			getitem 6001,1; //Essence_Of_Fire
-			mes "The symbol of inheritor shines. Then a small crystal falls into my hand from the torch.";
-			disablenpc instance_npcname("Bobbing Torch#4", instance_id());
-			close;
-		}
-		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
-			mes "You have 10 Essence of Fire already, so you don't need to collect any more.";
-			close;
-		}
-		else {
-			mes "You don't need to collect Essence of Fire anymore.";
-			close;
-		}
-	}
-	else {
-		mes "A huge torch appearing as if it can burn everything is bobbing up and down in front of me..";
-		next;
-		mes "[Unknown Voice]";
-		mes "You are not a inheritor of faith. Do not desecrate the Essence of Fire with your disrespectful hands.";
-		specialeffect2 EF_FIRESPLASHHIT;
-		percentheal -50,0;
-		close;
-	}
-}
-
-1@cata,193,138,0	script	Bobbing Torch#5	844,{
-	set .@party_id,getcharid(1);
-	if (getpartyleader(.@party_id,2) == getcharid(0)) {
-		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
-			mes "A huge torch appearing as if it can burn everything is bobbing up and down in front of me.";
-			next;
-			mes "The grand appearance and heat of the fire makes me step back... But I pluck up my courage and reach out to pick up the torch.";
-			next;
-			specialeffect2 EF_HOLYHIT;
-			getitem 6001,1; //Essence_Of_Fire
-			mes "The symbol of inheritor shines. Then a small crystal falls into my hand from the torch.";
-			disablenpc instance_npcname("Bobbing Torch#5", instance_id());
-			close;
-		}
-		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
-			mes "You have 10 Essence of Fire already, so you don't need to collect any more.";
-			close;
-		}
-		else {
-			mes "You don't need to collect Essence of Fire anymore.";
-			close;
-		}
-	}
-	else {
-		mes "A huge torch appearing as if it can burn everything is bobbing up and down in front of me..";
-		next;
-		mes "[Unknown Voice]";
-		mes "You are not a inheritor of faith. Do not desecrate the Essence of Fire with your disrespectful hands.";
-		specialeffect2 EF_FIRESPLASHHIT;
-		percentheal -50,0;
-		close;
-	}
-}
-
-1@cata,193,102,0	script	Bobbing Torch#6	844,{
-	set .@party_id,getcharid(1);
-	if (getpartyleader(.@party_id,2) == getcharid(0)) {
-		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
-			mes "A huge torch appearing as if it can burn everything is bobbing up and down in front of me.";
-			next;
-			mes "The grand appearance and heat of the fire makes me step back... But I pluck up my courage and reach out to pick up the torch.";
-			next;
-			specialeffect2 EF_HOLYHIT;
-			getitem 6001,1; //Essence_Of_Fire
-			mes "The symbol of inheritor shines. Then a small crystal falls into my hand from the torch.";
-			disablenpc instance_npcname("Bobbing Torch#6", instance_id());
-			close;
-		}
-		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
-			mes "You have 10 Essence of Fire already, so you don't need to collect any more.";
-			close;
-		}
-		else {
-			mes "You don't need to collect Essence of Fire anymore.";
-			close;
-		}
-	}
-	else {
-		mes "A huge torch appearing as if it can burn everything is bobbing up and down in front of me..";
-		next;
-		mes "[Unknown Voice]";
-		mes "You are not a inheritor of faith. Do not desecrate the Essence of Fire with your disrespectful hands.";
-		specialeffect2 EF_FIRESPLASHHIT;
-		percentheal -50,0;
-		close;
-	}
-}
-
-1@cata,157,102,0	script	Bobbing Torch#7	844,{
-	set .@party_id,getcharid(1);
-	if (getpartyleader(.@party_id,2) == getcharid(0)) {
-		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
-			mes "A huge torch appearing as if it can burn everything is bobbing up and down in front of me.";
-			next;
-			mes "The grand appearance and heat of the fire makes me step back... But I pluck up my courage and reach out to pick up the torch.";
-			next;
-			specialeffect2 EF_HOLYHIT;
-			getitem 6001,1; //Essence_Of_Fire
-			mes "The symbol of inheritor shines. Then a small crystal falls into my hand from the torch.";
-			disablenpc instance_npcname("Bobbing Torch#7", instance_id());
-			close;
-		}
-		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
-			mes "You have 10 Essence of Fire already, so you don't need to collect any more.";
-			close;
-		}
-		else {
-			mes "You don't need to collect Essence of Fire anymore.";
-			close;
-		}
-	}
-	else {
-		mes "A huge torch appearing as if it can burn everything is bobbing up and down in front of me..";
-		next;
-		mes "[Unknown Voice]";
-		mes "You are not a inheritor of faith. Do not desecrate the Essence of Fire with your disrespectful hands.";
-		specialeffect2 EF_FIRESPLASHHIT;
-		percentheal -50,0;
-		close;
-	}
-}
-
-1@cata,113,112,0	script	Bobbing Torch#8	844,{
-	set .@party_id,getcharid(1);
-	if (getpartyleader(.@party_id,2) == getcharid(0)) {
-		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
-			mes "A huge torch appearing as if it can burn everything is bobbing up and down in front of me.";
-			next;
-			mes "The grand appearance and heat of the fire makes me step back... But I pluck up my courage and reach out to pick up the torch.";
-			next;
-			specialeffect2 EF_HOLYHIT;
-			getitem 6001,1; //Essence_Of_Fire
-			mes "The symbol of inheritor shines. Then a small crystal falls into my hand from the torch.";
-			disablenpc instance_npcname("Bobbing Torch#8", instance_id());
-			close;
-		}
-		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
-			mes "You have 10 Essence of Fire already, so you don't need to collect any more.";
-			close;
-		}
-		else {
-			mes "You don't need to collect Essence of Fire anymore.";
-			close;
-		}
-	}
-	else {
-		mes "A huge torch appearing as if it can burn everything is bobbing up and down in front of me..";
-		next;
-		mes "[Unknown Voice]";
-		mes "You are not a inheritor of faith. Do not desecrate the Essence of Fire with your disrespectful hands.";
-		specialeffect2 EF_FIRESPLASHHIT;
-		percentheal -50,0;
-		close;
-	}
-}
-
-1@cata,253,56,0	script	Bobbing Torch#9	844,{
-	set .@party_id,getcharid(1);
-	if (getpartyleader(.@party_id,2) == getcharid(0)) {
-		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
-			mes "A huge torch appearing as if it can burn everything is bobbing up and down in front of me.";
-			next;
-			mes "The grand appearance and heat of the fire makes me step back... But I pluck up my courage and reach out to pick up the torch.";
-			next;
-			specialeffect2 EF_HOLYHIT;
-			getitem 6001,1; //Essence_Of_Fire
-			mes "The symbol of inheritor shines. Then a small crystal falls into my hand from the torch.";
-			disablenpc instance_npcname("Bobbing Torch#9", instance_id());
-			close;
-		}
-		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
-			mes "You have 10 Essence of Fire already, so you don't need to collect any more.";
-			close;
-		}
-		else {
-			mes "You don't need to collect Essence of Fire anymore.";
-			close;
-		}
-	}
-	else {
-		mes "A huge torch appearing as if it can burn everything is bobbing up and down in front of me..";
-		next;
-		mes "[Unknown Voice]";
-		mes "You are not a inheritor of faith. Do not desecrate the Essence of Fire with your disrespectful hands.";
-		specialeffect2 EF_FIRESPLASHHIT;
-		percentheal -50,0;
-		close;
-	}
-}
-
-1@cata,239,56,0	script	Bobbing Torch#10	844,{
-	set .@party_id,getcharid(1);
-	if (getpartyleader(.@party_id,2) == getcharid(0)) {
-		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
-			mes "A huge torch appearing as if it can burn everything is bobbing up and down in front of me.";
-			next;
-			mes "The grand appearance and heat of the fire makes me step back... But I pluck up my courage and reach out to pick up the torch.";
-			next;
-			specialeffect2 EF_HOLYHIT;
-			getitem 6001,1; //Essence_Of_Fire
-			mes "The symbol of inheritor shines. Then a small crystal falls into my hand from the torch.";
-			disablenpc instance_npcname("Bobbing Torch#10", instance_id());
-			close;
-		}
-		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
-			mes "You have 10 Essence of Fire already, so you don't need to collect any more.";
-			close;
-		}
-		else {
-			mes "You don't need to collect Essence of Fire anymore.";
-			close;
-		}
-	}
-	else {
-		mes "A huge torch appearing as if it can burn everything is bobbing up and down in front of me..";
-		next;
-		mes "[Unknown Voice]";
-		mes "You are not a inheritor of faith. Do not desecrate the Essence of Fire with your disrespectful hands.";
-		specialeffect2 EF_FIRESPLASHHIT;
-		percentheal -50,0;
-		close;
-	}
-}
-
-1@cata,71,42,0	script	Bobbing Torch#11	844,{
-	set .@party_id,getcharid(1);
-	if (getpartyleader(.@party_id,2) == getcharid(0)) {
-		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
-			mes "A huge torch appearing as if it can burn everything is bobbing up and down in front of me.";
-			next;
-			mes "The grand appearance and heat of the fire makes me step back... But I pluck up my courage and reach out to pick up the torch.";
-			next;
-			specialeffect2 EF_HOLYHIT;
-			getitem 6001,1; //Essence_Of_Fire
-			mes "The symbol of inheritor shines. Then a small crystal falls into my hand from the torch.";
-			disablenpc instance_npcname("Bobbing Torch#11", instance_id());
-			close;
-		}
-		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
-			mes "You have 10 Essence of Fire already, so you don't need to collect any more.";
-			close;
-		}
-		else {
-			mes "You don't need to collect Essence of Fire anymore.";
-			close;
-		}
-	}
-	else {
-		mes "A huge torch appearing as if it can burn everything is bobbing up and down in front of me..";
-		next;
-		mes "[Unknown Voice]";
-		mes "You are not a inheritor of faith. Do not desecrate the Essence of Fire with your disrespectful hands.";
-		specialeffect2 EF_FIRESPLASHHIT;
-		percentheal -50,0;
-		close;
-	}
-}
-
-1@cata,155,14,0	script	Bobbing Torch#12	844,{
-	set .@party_id,getcharid(1);
-	if (getpartyleader(.@party_id,2) == getcharid(0)) {
-		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
-			mes "A huge torch appearing as if it can burn everything is bobbing up and down in front of me.";
-			next;
-			mes "Its grand appearance and heat of the fire makes me step back... But I pluck up my courage and reach out to pick up the torch.";
-			next;
-			specialeffect2 EF_HOLYHIT;
-			getitem 6001,1; //Essence_Of_Fire
-			mes "The symbol of inheritor shines. Then a small crystal falls into my hand from the torch.";
-			disablenpc instance_npcname("Bobbing Torch#12", instance_id());
-			close;
-		}
-		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
-			mes "You have 10 Essence of Fire already, so you don't need to collect any more.";
-			close;
-		}
-		else {
-			mes "You don't need to collect Essence of Fire anymore.";
-			close;
-		}
-	}
-	else {
-		mes "A huge torch appearing as if it can burn everything is bobbing up and down in front of me..";
-		next;
-		mes "[Unknown Voice]";
-		mes "You are not a inheritor of faith. Do not desecrate the Essence of Fire with your disrespectful hands.";
-		specialeffect2 EF_FIRESPLASHHIT;
-		percentheal -50,0;
-		close;
-	}
-}
+1@cata,267,210,0	duplicate(Bobbing Torch#SS)	Bobbing Torch#1	844
+1@cata,85,182,0	duplicate(Bobbing Torch#SS)	Bobbing Torch#2	844
+1@cata,267,154,0	duplicate(Bobbing Torch#SS)	Bobbing Torch#3	844
+1@cata,157,139,0	duplicate(Bobbing Torch#SS)	Bobbing Torch#4	844
+1@cata,193,138,0	duplicate(Bobbing Torch#SS)	Bobbing Torch#5	844
+1@cata,193,102,0	duplicate(Bobbing Torch#SS)	Bobbing Torch#6	844
+1@cata,157,102,0	duplicate(Bobbing Torch#SS)	Bobbing Torch#7	844
+1@cata,113,112,0	duplicate(Bobbing Torch#SS)	Bobbing Torch#8	844
+1@cata,253,56,0	duplicate(Bobbing Torch#SS)	Bobbing Torch#9	844
+1@cata,239,56,0	duplicate(Bobbing Torch#SS)	Bobbing Torch#10	844
+1@cata,71,42,0	duplicate(Bobbing Torch#SS)	Bobbing Torch#11	844
+1@cata,155,14,0	duplicate(Bobbing Torch#SS)	Bobbing Torch#12	844
 
 1@cata,1,1,0	script	ins_baphomet_1f_timer	-1,{
 OnEnable:
@@ -1896,200 +1309,39 @@ OnTouch:
 	end;
 }
 
-2@cata,79,81,0	script	Magical Seal#0	844,{
+// Magical Seals
+//============================================================
+-	script	Magical Seal#SS	-1,{
 	set .@seal_check,checkquest(3041,PLAYTIME);
-	if (.@seal_check == -1) {
-		specialeffect EF_LEXDIVINA;
-		disablenpc instance_npcname("Magical Seal#0", instance_id());
-		areamobuseskill "2@cata",79,81,10,1929,686,1,0,0,26,0;
-		percentheal -50,0;
-		sc_start Eff_Stone,20000,0;
-		setquest 3041;
-		instance_announce 0, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
-		mes "I can feel the power of the altar came back by adding magical power.";
-		next;
-		mes "But you can't use your magic for 3 minutes because you used your SP on the altar.";
-		close;
-	}
-	else if (.@seal_check == 0 || .@seal_check == 1) {
+	if (.@seal_check == 0 || .@seal_check == 1) {
 		specialeffect2 EF_SILENCEATTACK;
 		percentheal -50,0;
 		sc_start Eff_Stone,30000,0;
 		mes "Your SP has not recovered yet. You lost your SP on the altar, but it seems the power of the seal has returned.";
 		close;
 	}
-	else if (.@seal_check == 2) {
-		erasequest 3041;
-		specialeffect EF_LEXDIVINA;
-		disablenpc instance_npcname("Magical Seal#0", instance_id());
-		areamobuseskill "2@cata",79,81,10,1929,686,1,0,0,26,0;
-		percentheal -50,0;
-		sc_start Eff_Stone,20000,0;
-		setquest 3041;
-		instance_announce 0, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
-		mes "I can feel the power of the altar came back by adding magical power.";
-		next;
-		mes "But you can't use your magic for 3 minutes because you used your SP on the altar.";
-		close;
-	}
-	end;
+	if (.@seal_check == 2) erasequest 3041;
+	specialeffect EF_LEXDIVINA;
+	disablenpc instance_npcname(strnpcinfo(0), instance_id());
+	if (strnpcinfo(2) == "0") areamobuseskill "2@cata",79,81,10,1929,686,1,0,0,26,0;
+	else if (strnpcinfo(2) == "2") areamobuseskill "2@cata",123,109,10,1929,686,1,0,0,26,0;
+	else if (strnpcinfo(2) == "4") areamobuseskill "2@cata",123,22,10,1929,686,1,0,0,26,0;
+	else if (strnpcinfo(2) == "8") areamobuseskill "2@cata",35,21,10,1929,686,1,0,0,26,0;
+	else if (strnpcinfo(2) == "10") areamobuseskill "2@cata",35,109,10,1929,686,1,0,0,26,0;
+	percentheal -50,0;
+	sc_start Eff_Stone,20000,0;
+	setquest 3041;
+	instance_announce 0, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
+	mes "I can feel the power of the altar came back by adding magical power.";
+	next;
+	mes "But you can't use your magic for 3 minutes because you used your SP on the altar.";
+	close;
 }
-
-2@cata,123,109,0	script	Magical Seal#2	844,{
-	set .@seal_check,checkquest(3041,PLAYTIME);
-	if (.@seal_check == -1) {
-		specialeffect EF_LEXDIVINA;
-		disablenpc instance_npcname("Magical Seal#2", instance_id());
-		areamobuseskill "2@cata",123,109,10,1929,686,1,0,0,26,0;
-		percentheal -50,0;
-		sc_start Eff_Stone,20000,0;
-		setquest 3041;
-		instance_announce 0, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
-		mes "I can feel the power of the altar came back by adding magical power.";
-		next;
-		mes "But you can't use your magic for 3 minutes because you used your SP on the altar.";
-		close;
-	}
-	else if (.@seal_check == 0 || .@seal_check == 1) {
-		specialeffect2 EF_SILENCEATTACK;
-		percentheal -50,0;
-		sc_start Eff_Stone,30000,0;
-		mes "Your SP has not recovered yet. You lost your SP on the altar, but it seems the power of the seal has returned.";
-		close;
-	}
-	else if (.@seal_check == 2) {
-		erasequest 3041;
-		specialeffect EF_LEXDIVINA;
-		disablenpc instance_npcname("Magical Seal#2", instance_id());
-		areamobuseskill "2@cata",123,109,10,1929,686,1,0,0,26,0;
-		percentheal -50,0;
-		sc_start Eff_Stone,20000,0;
-		setquest 3041;
-		instance_announce 0, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
-		mes "I can feel the power of the altar came back by adding magical power.";
-		next;
-		mes "But you can't use your magic for 3 minutes because you used your SP on the altar.";
-		close;
-	}
-	end;
-}
-
-2@cata,123,22,0	script	Magical Seal#4	844,{
-	set .@seal_check,checkquest(3041,PLAYTIME);
-	if (.@seal_check == -1) {
-		specialeffect EF_LEXDIVINA;
-		disablenpc instance_npcname("Magical Seal#4", instance_id());
-		areamobuseskill "2@cata",123,22,10,1929,686,1,0,0,26,0;
-		percentheal -50,0;
-		sc_start Eff_Stone,20000,0;
-		setquest 3041;
-		instance_announce 0, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
-		mes "I can feel the power of the altar came back by adding magical power.";
-		next;
-		mes "But you can't use your magic for 3 minutes because you used your SP on the altar.";
-		close;
-	}
-	else if (.@seal_check == 0 || .@seal_check == 1) {
-		specialeffect2 EF_SILENCEATTACK;
-		percentheal -50,0;
-		sc_start Eff_Stone,30000,0;
-		mes "Your SP has not recovered yet. You lost your SP on the altar, but it seems the power of the seal has returned.";
-		close;
-	}
-	else if (.@seal_check == 2) {
-		erasequest 3041;
-		specialeffect EF_LEXDIVINA;
-		disablenpc instance_npcname("Magical Seal#4", instance_id());
-		areamobuseskill "2@cata",123,22,10,1929,686,1,0,0,26,0;
-		percentheal -50,0;
-		sc_start Eff_Stone,20000,0;
-		setquest 3041;
-		instance_announce 0, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
-		mes "I can feel the power of the altar came back by adding magical power.";
-		next;
-		mes "But you can't use your magic for 3 minutes because you used your SP on the altar.";
-		close;
-	}
-	end;
-}
-
-2@cata,35,21,0	script	Magical Seal#8	844,{
-	set .@seal_check,checkquest(3041,PLAYTIME);
-	if (.@seal_check == -1) {
-		specialeffect EF_LEXDIVINA;
-		disablenpc instance_npcname("Magical Seal#8", instance_id());
-		areamobuseskill "2@cata",35,21,10,1929,686,1,0,0,26,0;
-		percentheal -50,0;
-		sc_start Eff_Stone,20000,0;
-		setquest 3041;
-		instance_announce 0, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
-		mes "I can feel the power of the altar came back by adding magical power.";
-		next;
-		mes "But you can't use your magic for 3 minutes because you used your SP on the altar.";
-		close;
-	}
-	else if (.@seal_check == 0 || .@seal_check == 1) {
-		specialeffect2 EF_SILENCEATTACK;
-		percentheal -50,0;
-		sc_start Eff_Stone,30000,0;
-		mes "Your SP has not recovered yet. You lost your SP on the altar, but it seems the power of the seal has returned.";
-		close;
-	}
-	else if (.@seal_check == 2) {
-		erasequest 3041;
-		specialeffect EF_LEXDIVINA;
-		disablenpc instance_npcname("Magical Seal#8", instance_id());
-		areamobuseskill "2@cata",35,21,10,1929,686,1,0,0,26,0;
-		percentheal -50,0;
-		sc_start Eff_Stone,20000,0;
-		setquest 3041;
-		instance_announce 0, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
-		mes "I can feel the power of the altar came back by adding magical power.";
-		next;
-		mes "But you can't use your magic for 3 minutes because you used your SP on the altar.";
-		close;
-	}
-	end;
-}
-
-2@cata,35,109,0	script	Magical Seal#10	844,{
-	set .@seal_check,checkquest(3041,PLAYTIME);
-	if (.@seal_check == -1) {
-		specialeffect EF_LEXDIVINA;
-		disablenpc instance_npcname("Magical Seal#10", instance_id());
-		areamobuseskill "2@cata",35,109,10,1929,686,1,0,0,26,0;
-		percentheal -50,0;
-		sc_start Eff_Stone,20000,0;
-		setquest 3041;
-		instance_announce 0, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
-		mes "I can feel the power of the altar came back by adding magical power.";
-		next;
-		mes "But you can't use your magic for 3 minutes because you used your SP on the altar.";
-		close;
-	}
-	else if (.@seal_check == 0 || .@seal_check == 1) {
-		specialeffect2 EF_SILENCEATTACK;
-		percentheal -50,0;
-		sc_start Eff_Stone,30000,0;
-		mes "Your SP has not recovered yet. You lost your SP on the altar, but it seems the power of the seal has returned.";
-		close;
-	}
-	else if (.@seal_check == 2) {
-		erasequest 3041;
-		specialeffect EF_LEXDIVINA;
-		disablenpc instance_npcname("Magical Seal#10", instance_id());
-		areamobuseskill "2@cata",35,109,10,1929,686,1,0,0,26,0;
-		percentheal -50,0;
-		sc_start Eff_Stone,20000,0;
-		setquest 3041;
-		instance_announce 0, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
-		mes "I can feel the power of the altar came back by adding magical power.";
-		next;
-		mes "But you can't use your magic for 3 minutes because you used your SP on the altar.";
-		close;
-	}
-	end;
-}
+2@cata,79,81,0	duplicate(Magical Seal#SS)	Magical Seal#0	844
+2@cata,123,109,0	duplicate(Magical Seal#SS)	Magical Seal#2	844
+2@cata,123,22,0	duplicate(Magical Seal#SS)	Magical Seal#4	844
+2@cata,35,21,0	duplicate(Magical Seal#SS)	Magical Seal#8	844
+2@cata,35,109,0	duplicate(Magical Seal#SS)	Magical Seal#10	844
 
 2@cata,79,65,0	script	The Main Altar#ss	844,{
 	set .@party_id,getcharid(1);
@@ -2107,12 +1359,6 @@ OnTouch:
 		set 'ins_baphomet,6;
 		donpcevent instance_npcname("ins_2f_hero_broad", instance_id())+"::OnEnable";
 		disablenpc instance_npcname("The Main Altar#ss", instance_id());
-		close;
-	}
-	else if (('ins_baphomet == 5) && (getpartyleader(.@party_id,2) != getcharid(0))) {
-		mes "An evil power, too terrible to describe, lies under the great altar radiating a violet color.";
-		next;
-		mes "Complicated Magical Rune letters blink rapidly, attempting to suppress the dreadful power within.";
 		close;
 	}
 	else {
