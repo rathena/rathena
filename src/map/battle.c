@@ -1997,6 +1997,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					ATK_ADD(weight * skill_lv)
 					skillratio += 50*skill_lv;
 				}
+				break;
 #endif
 				case ASC_METEORASSAULT:
 					skillratio += 40*skill_lv-60;
@@ -2448,7 +2449,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					// ATK [( Skill Level x 50 ) + ( Cart Weight / ( 150 - Caster’s Base STR ))] + ( Cart Remodeling Skill Level x 50 )] %
 					skillratio = 50 * skill_lv;
 					if( sd && sd->cart_weight)
-						 skillratio += sd->cart_weight/10 / (150-sstatus->str) + pc_checkskill(sd, GN_REMODELING_CART) * 50;
+						 skillratio += sd->cart_weight/10 / max(150-sstatus->str,1) + pc_checkskill(sd, GN_REMODELING_CART) * 50;
 					break;
 				case GN_CARTCANNON:
 					// ATK [{( Cart Remodeling Skill Level x 50 ) x ( INT / 40 )} + ( Cart Cannon Skill Level x 60 )] %
@@ -5050,7 +5051,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 					case MS_MAGNUM:
 					case RA_DETONATOR:
 					case RA_SENSITIVEKEEN:
-					case GN_CRAZYWEED:
+					case GN_CRAZYWEED_ATK:
 					case RK_STORMBLAST:
 					case RK_PHANTOMTHRUST:
 					case SR_RAMPAGEBLASTER:

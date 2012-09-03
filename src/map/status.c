@@ -312,7 +312,7 @@ void initChangeTables(void) {
 	add_sc( MO_BLADESTOP         , SC_BLADESTOP_WAIT  );
 	add_sc( MO_BLADESTOP         , SC_BLADESTOP       );
 	set_sc( MO_EXPLOSIONSPIRITS  , SC_EXPLOSIONSPIRITS, SI_EXPLOSIONSPIRITS, SCB_CRI|SCB_REGEN );
-	set_sc( MO_EXTREMITYFIST     , SC_EXTREMITYFIST   , SI_BLANK           , SCB_REGEN );
+	set_sc( MO_EXTREMITYFIST     , SC_EXTREMITYFIST   , SI_EXTREMITYFIST           , SCB_REGEN );
 	add_sc( SA_MAGICROD          , SC_MAGICROD        );
 	set_sc( SA_AUTOSPELL         , SC_AUTOSPELL       , SI_AUTOSPELL       , SCB_NONE );
 	set_sc( SA_FLAMELAUNCHER     , SC_FIREWEAPON      , SI_FIREWEAPON      , SCB_ATK_ELE );
@@ -9209,7 +9209,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				}
 			break;
 		case SC_CURSEDCIRCLE_ATKER:
-			if( sce->val3 ) // used the default area size cause there is a chance the caster could knock back and can't clear the target.
+			if( sce->val2 ) // used the default area size cause there is a chance the caster could knock back and can't clear the target.
 				map_foreachinrange(status_change_timer_sub, bl, battle_config.area_size,BL_CHAR, bl, sce, SC_CURSEDCIRCLE_TARGET, gettick()); 
 			break;
 		case SC_RAISINGDRAGON:
@@ -9224,8 +9224,15 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				}
 			}
 			break;
-		case SC_CURSEDCIRCLE_TARGET:		
-			clif_bladestop(bl, sce->val2, 0);
+		case SC_CURSEDCIRCLE_TARGET:
+			{
+				struct block_list *src = map_id2bl(sce->val2);
+				struct status_change *sc = status_get_sc(src);
+				if( sc && sc->data[SC_CURSEDCIRCLE_ATKER] && --(sc->data[SC_CURSEDCIRCLE_ATKER]->val2) == 0 ){
+					status_change_end(src, SC_CURSEDCIRCLE_ATKER, INVALID_TIMER);
+					clif_bladestop(bl, sce->val2, 0);
+				}
+			}
 			break;
 		case SC_BLOODSUCKER:
 			if( sce->val2 ){
@@ -10345,6 +10352,7 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 		break;
 	case SC_CURSEDCIRCLE_TARGET:
 		if( tsc && tsc->data[SC_CURSEDCIRCLE_TARGET] && tsc->data[SC_CURSEDCIRCLE_TARGET]->val2 == src->id ) {
+			clif_bladestop(bl, tsc->data[SC_CURSEDCIRCLE_TARGET]->val2, 0);
 			status_change_end(bl, type, INVALID_TIMER);
 		}
 		break;

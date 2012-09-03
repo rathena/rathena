@@ -983,8 +983,8 @@
 2480,11,6,1,0,0x1,0,5,1,yes,0,0,3,misc,0,		GN_BLOOD_SUCKER,Blood Sucker //CHECK Data says its a magic attack. Hmmmm....
 2481,11,6,1,-1,0x2,1:2:3:4:5,5,1,yes,0,0,0,weapon,0,	GN_SPORE_EXPLOSION,Spore Explosion //CHECK Data says its element is set to neutral. Need to confirm.
 2482,11,6,16,0,0,0,5,1,yes,0,0,1,weapon,2,	GN_WALLOFTHORN,Wall of Thorns
-2483,11,6,2,0,0x3,4,10,1,yes,0,0,0,weapon,0,	GN_CRAZYWEED,Crazy Weed
-2484,0,6,2,2,0x2,2,10,1,no,0,0,0,weapon,0,	GN_CRAZYWEED_ATK,Crazy Weed Attack
+2483,11,6,2,0,0x3,4,10,1,yes,0,0x2000,0,weapon,0,	GN_CRAZYWEED,Crazy Weed
+2484,0,6,2,2,0x2,3,10,1,no,0,0x2000,0,weapon,0,	GN_CRAZYWEED_ATK,Crazy Weed Attack
 2485,9,6,2,3,0,0,5,1,yes,0,0,0,magic,0,		GN_DEMONIC_FIRE,Demonic Fire
 2486,9,6,2,0,0,0,5,1,yes,0,0,0,none,0,		GN_FIRE_EXPANSION,Fire Expansion //CHECK FIX ME!!!! Level 1 is reducing the damage. Should increase it by 50%
 2487,9,6,2,0,0,0,1,1,no,0,0,0,none,0,		GN_FIRE_EXPANSION_SMOKE_POWDER,Fire Expansion Smoke Powder
