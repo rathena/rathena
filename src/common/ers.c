@@ -57,16 +57,13 @@ struct ers_list
 	struct ers_list *Next;
 };
 
-typedef struct
+typedef struct ers_cache
 {
 	// Allocated object size, including ers_list size
 	unsigned int ObjectSize;
 
 	// Number of ers_instances referencing this
 	int ReferenceCount;
-
-	// Our index in the ERS_Root array
-	unsigned int Index;
 
 	// Reuse linked list
 	struct ers_list *ReuseList;
@@ -82,6 +79,9 @@ typedef struct
 	
 	// Used objects count
 	unsigned int Used;
+
+	// Linked list
+	struct ers_cache *Next, *Prev;
 } ers_cache_t;
 
 typedef struct
@@ -104,16 +104,15 @@ typedef struct
 
 
 // Array containing a pointer for all ers_cache structures
-static ers_cache_t *ERS_Root[ERS_ROOT_SIZE];
+static ers_cache_t *CacheList;
 
 static ers_cache_t *ers_find_cache(unsigned int size)
 {
-	int i;
 	ers_cache_t *cache;
 
-	for (i = 0; i < ERS_ROOT_SIZE; i++)
-		if (ERS_Root[i] != NULL && ERS_Root[i]->ObjectSize == size)
-			return ERS_Root[i];
+	for (cache = CacheList; cache; cache = cache->Next)
+		if (cache->ObjectSize == size)
+			return cache;
 
 	CREATE(cache, ers_cache_t, 1);
 	cache->ObjectSize = size;
@@ -123,35 +122,35 @@ static ers_cache_t *ers_find_cache(unsigned int size)
 	cache->Free = 0;
 	cache->Used = 0;
 	cache->Max = 0;
-
-	for (i = 0; i < ERS_ROOT_SIZE; i++)
+	
+	if (CacheList == NULL)
 	{
-		if (ERS_Root[i] == NULL)
-		{
-			ERS_Root[i] = cache;
-			cache->Index = i;
-			break;
-		}
+		CacheList = cache;
 	}
-
-	if (i >= ERS_ROOT_SIZE)
+	else
 	{
-		ShowFatalError("ers_new: too many root objects, increase ERS_ROOT_SIZE.\n"
-				"exiting the program...\n");
-		exit(EXIT_FAILURE);
+		CacheList->Next = cache;
+		cache->Prev = CacheList;
 	}
 
 	return cache;
 }
 
-static void ers_free_cache(ers_cache_t *cache)
+static void ers_free_cache(ers_cache_t *cache, bool remove)
 {
 	unsigned int i;
 
 	for (i = 0; i < cache->Used; i++)
 		aFree(cache->Blocks[i]);
-	
-	ERS_Root[cache->Index] = NULL;
+
+	if (cache->Prev)
+		cache->Prev->Next = cache->Next;
+
+	if (cache->Next)
+		cache->Next->Prev = cache->Prev;
+
+	if (CacheList == cache)
+		CacheList = cache->Next;
 
 	aFree(cache->Blocks);
 	aFree(cache);
@@ -247,7 +246,7 @@ static void ers_obj_destroy(ERS self)
 			ShowWarning("Memory leak detected at ERS '%s', %d objects not freed.\n", instance->Name, instance->Count);
 
 	if (--instance->Cache->ReferenceCount <= 0)
-		ers_free_cache(instance->Cache);
+		ers_free_cache(instance->Cache, true);
 
 	aFree(instance);
 }
@@ -284,11 +283,10 @@ void ers_report(void)
 
 void ers_force_destroy_all(void)
 {
-	int i;
-
-	for (i = 0; i < ERS_ROOT_SIZE; i++)
-		if (ERS_Root[i] != NULL)
-			ers_free_cache(ERS_Root[i]);
+	ers_cache_t *cache;
+	
+	for (cache = CacheList; cache; cache = cache->Next)
+			ers_free_cache(cache, false);
 }
 
 #endif
