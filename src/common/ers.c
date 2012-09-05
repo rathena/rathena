@@ -128,8 +128,10 @@ static ers_cache_t *ers_find_cache(unsigned int size)
 	}
 	else
 	{
-		CacheList->Next = cache;
-		cache->Prev = CacheList;
+		cache->Next = CacheList;
+		cache->Next->Prev = cache;
+		CacheList = cache;
+		CacheList->Prev = NULL;
 	}
 
 	return cache;
@@ -142,13 +144,12 @@ static void ers_free_cache(ers_cache_t *cache, bool remove)
 	for (i = 0; i < cache->Used; i++)
 		aFree(cache->Blocks[i]);
 
-	if (cache->Prev)
-		cache->Prev->Next = cache->Next;
-
 	if (cache->Next)
 		cache->Next->Prev = cache->Prev;
 
-	if (CacheList == cache)
+	if (cache->Prev)
+		cache->Prev->Next = cache->Next;
+	else
 		CacheList = cache->Next;
 
 	aFree(cache->Blocks);
