@@ -16,20 +16,20 @@
 prontera,146,91,5	script	Pandit chacha#child07	61,{
 	if(BaseLevel > 50) {
 		mes "[Pandit chacha]";
-		mes "Hahaha.";
+		mes "Hahaha~";
 		mes "It is special day, comes only one time in a year.";
 		mes "If you see little adventurers around you send to me~";
 		mes "I will give the special gift.";
 		close;
 	} else if(BaseLevel < 20) {
 		mes "[Pandit chacha]";
-		mes "Hahaha.";
+		mes "Hahaha~";
 		mes "You are a baby adventurer not little adventurer.";
 		mes "When you more grow up, come back again. hahaha.";
 		close;
 	} else if(oversea_event9 < 1) {
 		mes "[Pandit chacha]";
-		mes "Hahaha.";
+		mes "Hahaha~";
 		mes "Welcome, little adventurers!";
 		mes "Today is special day, isn't it~?";
 		mes "I would like to give the small gift to little adventurer...";
@@ -42,13 +42,13 @@ prontera,146,91,5	script	Pandit chacha#child07	61,{
 			mes "Whenever come back again if you want it...";
 			close;
 		}
-			set oversea_event9,1;
-			getitem 11705,10; //Children's Potion
-			mes "[Pandit chacha]";
-			mes "Look. This is a child Potion.";
-			mes "The weight is just 1 but recover much HP.";
-			mes "If you want to get more, bring the 1 Wedding Bouquet and 1 Witherless Rose.";
-			close;
+		set oversea_event9,1;
+		getitem 11705,10; //Children's Potion
+		mes "[Pandit chacha]";
+		mes "Look. This is a child Potion.";
+		mes "The weight is just 1 but recover much HP.";
+		mes "If you want to get more, bring the 1 Wedding Bouquet and 1 Witherless Rose.";
+		close;
 	} else if(oversea_event9 == 1) {
 		if(countitem(745) > 0 && countitem(748) > 0) {
 			mes "[Pandit chacha]";
@@ -62,25 +62,25 @@ prontera,146,91,5	script	Pandit chacha#child07	61,{
 				mes "If you are not prepared yet, call me when you ready.";
 				close;
 			}
-				mes "[Pandit chacha]";
-				mes "Hahaha.";
-				mes "Oh~ you get it.";
-				mes "Here, I will exchange to the 50 child potion.";
-				mes "Once you get this 50 child potion, I won't give any more.";
-				close2;
-				delitem 745,1; //Wedding Bouquet
-				delitem 748,1; //Witherless Rose
-				set oversea_event9,2;
-				getitem 11705,50; //Children's Potion
-				end;
-		}
 			mes "[Pandit chacha]";
-			mes "Little adventurers, you should bring the 1 Wedding Bouquet and 1 Witherless Rose.";
-			mes "If you bring these stuffs I will exchange them for child Potion. ";
-			close;
+			mes "Hahaha~";
+			mes "Oh~ you get it.";
+			mes "Here, I will exchange to the 50 child potion.";
+			mes "Once you get this 50 child potion, I won't give any more.";
+			close2;
+			delitem 745,1; //Wedding Bouquet
+			delitem 748,1; //Witherless Rose
+			set oversea_event9,2;
+			getitem 11705,50; //Children's Potion
+			end;
+		}
+		mes "[Pandit chacha]";
+		mes "Little adventurers, you should bring the 1 Wedding Bouquet and 1 Witherless Rose.";
+		mes "If you bring these stuffs I will exchange them for child Potion. ";
+		close;
 	}
-                mes "[Pandit chacha]";
-		mes "Hahaha.";
-		mes "Are you enjoying children week~? ";
-                close;
+	mes "[Pandit chacha]";
+	mes "Hahaha~";
+	mes "Are you enjoying children week~?";
+	close;
 }

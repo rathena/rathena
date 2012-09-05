@@ -26,7 +26,6 @@
 
 comodo,170,137,7	script	La Ed#um	84,{
 	end;
-
 }
 
 comodo,171,137,1	script	Haith#um	92,{

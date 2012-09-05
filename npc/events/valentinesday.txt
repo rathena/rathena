@@ -15,7 +15,8 @@
 //= 1.1 Cleaning. [Euphy]
 //============================================================
 
-// Stephen - Valentine Event Chocolate seller ------------------
+// Stephen - Valentine Event Chocolate seller
+//============================================================
 alberta,26,243,4	script	Stephen	58,{
 	mes "[Stephen]";
 	mes "Guess what I've got?";
@@ -58,7 +59,8 @@ alberta,26,243,4	script	Stephen	58,{
 	close;
 }
 
-// Jainie -- Gives information about Valentine Event ------------------------
+// Jainie -- Gives information about Valentine Event
+//============================================================
 alberta,29,243,4	script	Jainie	53,{
 	mes "[Jainie]";
 	mes "You know what? The chocolate that my boyfriend sells are from me!";
@@ -81,7 +83,8 @@ alberta,29,243,4	script	Jainie	53,{
 	close;
 }
 
-// Carl Orleans -- Valentine Event Chocolate maker ------------------
+// Carl Orleans -- Valentine Event Chocolate maker
+//============================================================
 prt_castle,54,34,4	script	Carl Orleans	47,{
 	mes "[Carl Orleans]";
 	mes "Yes?";

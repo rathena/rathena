@@ -14,9 +14,6 @@
 //= 1.1 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================
 
-// Prontera
-//============================================================
-
 prt_in,168,56,4	script	Monster Encyclopedia#prt	111,{
 	mes "^FF0000[Monster Encyclopedia]^000000";
 	mes "This is a Monster Encyclopedia";

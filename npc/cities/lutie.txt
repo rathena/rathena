@@ -68,7 +68,6 @@ aldebaran,223,222,4	script	Mr. Claus	718,{
 	}
 }
 
-
 // Inside Lutie
 //============================================================
 xmas_in,100,96,4	script	Santa Claus	718,{

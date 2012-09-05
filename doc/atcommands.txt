@@ -179,7 +179,7 @@ Toggles weather effects on your map.
 
 @clearweather
 
-Stop all weather effects. May require a map change or @refresh
+Stops all weather effects. May require a map change or @refresh
 for the effect to stop client-side.
 
 ---------------------------------------
@@ -265,7 +265,7 @@ Other Flags:
 
 @gat
 
-Give information about terrain/area (debug function).
+Gives information about terrain/area (debug function).
 
 Output Example: 
 prontera (x= 165, y= 202) 00 00 00 00 00
@@ -347,7 +347,7 @@ Output Example:
 
 @idsearch <item name>
 
-Find an item ID based on the provided name.
+Looks up an item by name (or part of a name).
 
 ---------------------------------------
 
@@ -367,7 +367,7 @@ This does not include mobs summoned by scripts.
 
 @skillid <skill name>
 
-Look up a skill by name (or part of a name).
+Looks up a skill by name (or part of a name).
 
 ---------------------------------------
 
@@ -493,14 +493,14 @@ all: 2
 
 @where <player_name>
 
-Locate a player on a map. The player must be online.
+Locates a player on a map. The player must be online.
 
 ---------------------------------------
 
 @jailtime
 
 Displays remaining jail time.
-If the @jail was used, the chat window will display "You have been jailed indefinitely".
+If @jail was used, the chat window will display "You have been jailed indefinitely".
 
 ---------------------------------------
 
@@ -689,7 +689,7 @@ Warps to a random coordinate on the current map.
 
 @go {<location name/ID>}
 
-Warps you to predefined locations in major cities.
+Warps to predefined locations in major cities.
 If no ID is given, all available maps will be displayed in the chat window.
 Locations and coordinates are stored in '/src/map/atcommand.c'.
 
@@ -699,20 +699,16 @@ Locations and coordinates are stored in '/src/map/atcommand.c'.
 /mm <map> {<x> <y>}
 /mapmove <map> {<x> <y>}
 
-Warps to a specified map.
+Warps to the specified map.
 If no coordinates are entered, a random location will be chosen.
 
 ---------------------------------------
 
 @goto <player name/ID>
-
-Warp yourself to a player.
-
----------------------------------------
-
 @follow <player name>
 
-Warps to the specified player and follows their movements.
+Warps to the specified player.
+Aditionally, @follow will track the player's movements until turned off.
 
 ---------------------------------------
 
@@ -811,7 +807,7 @@ Default is 150 (0 is fastest, 1000 is slowest).
 
 @spiritball <0-100>
 
-Summons X amount of spirit spheres around you.
+Summons the specified amount of spirit spheres around you.
 
 ---------------------------------------
 
@@ -1056,14 +1052,14 @@ If a time is not specified (jailfor), the player will be jailed indefinitely.
 @kick <player name/ID>
 @kickall
 
-Disconnects a user (or all users) from the server.
+Disconnects a user or all users from the server.
 
 ---------------------------------------
 
 @ban <+/- time> <player name>
 @unban <player name>
 
-Ban (or unban) a player for a limited time.
+Bans or unbans a player for a limited time.
 Time elements: y/a, m, d/j, h, mn, s
 
 Example:
@@ -1075,7 +1071,7 @@ Example:
 @block <player name>
 @unblock <player name>
 
-Block or unblock a player from logging in indefinitely.
+Blocks or unblocks a player from logging in indefinitely.
 
 ---------------------------------------
 
@@ -1118,7 +1114,7 @@ Reloads the specified configuration file.
 
 @setbattleflag <flag> <value>
 
-Change a battle_config flag without rebooting the server.
+Changes a battle_config flag without rebooting the server.
 
 ---------------------------------------
 

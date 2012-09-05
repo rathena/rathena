@@ -21,7 +21,7 @@
 //============================================================
 
 // Headgear Quest - Pumpkin Hat
-// ============================
+//============================================================
 prontera,152,192,5	script	Pumpkin Hat Researcher	712,{
 	if(BaseLevel < 45) {
 		mes "[Pumpkin Hat Researcher]";
@@ -95,7 +95,7 @@ prontera,152,192,5	script	Pumpkin Hat Researcher	712,{
 }
 
 // Buffs - Trick or Treaters
-// =========================
+//============================================================
 -	script	Trick or Treater::09Treats	706,2,2,{
 OnTouch:
 	hideoffnpc strnpcinfo(3);
@@ -221,7 +221,7 @@ prontera,134,125,5	duplicate(09Treats)	Trick or Treater#iRO7	706,2,2
 prontera,220,72,5	duplicate(09Treats)	Trick or Treater#iRO8	706,2,2
 
 // Monster Summoning - Halloween Wizard
-// ====================================
+//============================================================
 -	script	Halloween Wizard#iRO09::09HallowWiz	737,{
 	mes "[Halloween Wizard]";
 	mes "...";

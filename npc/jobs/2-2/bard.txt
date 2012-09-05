@@ -25,7 +25,8 @@
 //= 2.6 Removed the need for use of 'goto.' [L0ne_W0lf]
 //============================================================
 
-//=============== Ayealo ============================
+// Ayealo
+//============================================================
 comodo,226,123,5	script	Wandering Bard	741,{
 	if(Upper == 1) {
 		mes "[Lalo]";
@@ -912,28 +913,28 @@ comodo,226,123,5	script	Wandering Bard	741,{
 	end;
 
 S_ChangeJob:
-		completequest 3004;
-		callfunc "Job_Change",Job_Bard;
-		callfunc "F_ClearJobVar";
-		mes "[Lalo]";
-		mes "Good job. I will make you a job change souvenir with this.";
-		mes "Wait just a moment.";
-		next;
-		mes "[Lalo]";
-		mes "^3355FFScrape Scrape Tang Tang^000000";
-		mes "^3355FFSqueak Squeak Scratch Scratch^000000";
-		delitem getarg(0),60;
-		getitem getarg(1),1;
-		next;
-		mes "[Lalo]";
-		mes "Here you go, a souvenir. It is useful when you sing.";
-		mes "Hope you sing happy songs.";
-		next;
-		mes "[Lalo]";
-		mes "See you next time!";
-		close2;
-		cutin "job_bard_aiolo01",255;
-		end;
+	completequest 3004;
+	callfunc "Job_Change",Job_Bard;
+	callfunc "F_ClearJobVar";
+	mes "[Lalo]";
+	mes "Good job. I will make you a job change souvenir with this.";
+	mes "Wait just a moment.";
+	next;
+	mes "[Lalo]";
+	mes "^3355FFScrape Scrape Tang Tang^000000";
+	mes "^3355FFSqueak Squeak Scratch Scratch^000000";
+	delitem getarg(0),60;
+	getitem getarg(1),1;
+	next;
+	mes "[Lalo]";
+	mes "Here you go, a souvenir. It is useful when you sing.";
+	mes "Hope you sing happy songs.";
+	next;
+	mes "[Lalo]";
+	mes "See you next time!";
+	close2;
+	cutin "job_bard_aiolo01",255;
+	end;
 }
 
 //============================================================ 

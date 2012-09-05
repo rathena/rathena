@@ -23,9 +23,6 @@
 //= 1.6c Corrected a bad delitem. (bugreport:763) [Samuray22]
 //============================================================
 
-
-//===================== Garrison =====================================================
-
 que_ng,182,85,3	script	Garrison	109,{
 
 	if(BaseJob != Job_Gunslinger)

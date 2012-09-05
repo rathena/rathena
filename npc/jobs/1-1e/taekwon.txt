@@ -16,7 +16,6 @@
 //= 1.4 Removed use of 'goto', and fixed some indentation. [L0ne_W0lf]
 //============================================================ 
 
-
 payon,157,141,5	script	Phoenix#TKJobChange	753,{
 	if(Upper == 2) {
 		mes "[Phoenix]";

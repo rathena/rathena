@@ -13,6 +13,7 @@
 //============================================================ 
 
 // Dragon Breeder on the Rune Knight job change map, couldn't find NPC on iRO.
+//============================================================
 job3_rune01,88,62,5	script	Dragon Breeder	105,{
 	mes "[Dragon Breeder]";
 	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
@@ -50,6 +51,7 @@ job3_rune01,88,62,5	script	Dragon Breeder	105,{
 }
 
 // Dragon/Gryphon Master
+//============================================================
 prontera,130,213,5	script	Riding Creature Master	105,{
 	mes "[Riding Creature Master]";
 	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
@@ -114,6 +116,7 @@ prontera,130,213,5	script	Riding Creature Master	105,{
 }
 
 // Peco removing NPC
+//============================================================
 prontera,125,208,5	script	Peco Peco Remover	105,{
 	mes "[Soldier]";
 	mes "If you're unable to dismount from a Peco Peco";
@@ -144,6 +147,7 @@ prontera,125,208,5	script	Peco Peco Remover	105,{
 }
 
 // Magic Gear Renter
+//============================================================
 prontera,163,178,4	script	Magic Gear Master	105,{
 	mes "[Magic Gear Master]";
 	if (Class == Job_Mechanic || Class == Job_Mechanic_T || Class == Job_Baby_Mechanic) {

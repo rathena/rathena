@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= In Memory of Heroes (iRO Memorial Day 2008)
+//= In Memory of Heroes
 //===== By: ==================================================
 //= Kisuka
 //===== Current Version: =====================================
@@ -7,15 +7,15 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//
+//= iRO Memorial Day (2008)
 //===== Additional Comments: =================================
 //= 1.0 First version. [Kisuka]
 //= 1.1 Many Many Fixes. [Kisuka]
 //= 1.2 Some changes. [Kisuka]
 //============================================================
 
-// ================== Lauds ======================
-// ===============================================
+// Lauds
+//============================================================
 prontera,182,214,4	script	Lauds#Memorial	58,{
 	if(Memorial08 < 1) {
 		mes "[Mad Sago Lauds]";
@@ -194,8 +194,8 @@ prontera,182,214,4	script	Lauds#Memorial	58,{
 	}
 }
 		
-// ============== Memorial Plaque ================
-// ===============================================
+// Memorial Plaque
+//============================================================
 prontera,153,286,4	script	Memorial Plaque#Memorial	857,{
 	if(Memorial08 < 8) {
 		mes "[" + strcharinfo(0) + "]";
@@ -251,9 +251,8 @@ prontera,153,286,4	script	Memorial Plaque#Memorial	857,{
 		close;
 }
 
-
-// ==================== Grast ====================
-// ===============================================
+// Grast
+//============================================================
 prontera,150,270,4	script	Grast#Memorial	900,{
 	if(Memorial08 < 3) {
 		mes "[Grast]";

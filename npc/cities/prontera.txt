@@ -30,13 +30,9 @@ prontera,160,330,0	script	Guard#pront::prtguard	105,{
 	mes "Welcome to Prontera.";
 	close;
 }
-
 prontera,223,99,1	duplicate(prtguard)	Guard#2pront	105
-
 prontera,229,104,5	duplicate(prtguard)	Guard#3pront	105
-
 prontera,47,339,5	duplicate(prtguard)	Guard#4pront	105
-
 
 prontera,101,288,3	script	Shuger#pront	98,{
 	mes "[Shuger]";
