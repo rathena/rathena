@@ -9322,6 +9322,10 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		    (*command == charcommand_symbol && info->char_groups[sd->group_pos] == 0) ) {
 			return false;
 		}
+		if( pc_isdead(sd) && pc_has_permission(sd,PC_PERM_DISABLE_CMD_DEAD) ) {
+			clif_displaymessage(fd, msg_txt(1393)); // You can't use commands while dead
+			return true;
+		}
 	}
 
 	// Check if target is valid only if confirmed that player can use command.
