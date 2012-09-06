@@ -1,1 +1,0 @@
-ALTER TABLE `login` ADD `birthdate` DATE NOT NULL DEFAULT '0000-00-00';
