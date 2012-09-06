@@ -4378,12 +4378,24 @@ Check 'getitem2' to understand the arguments of the function.
 *groupranditem <group id>;
 
 Returns the item_id of a random item picked from the group specified. The
-different groups and their group number are specified in db/item_group_db.txt
+different groups and their group number are specified in db/(pre-)re/item_group_db.txt
 
 When used in conjunction with other functions, you can get a random item. For
 example, for a random pet lure:
 
 getitem groupranditem(15),1;
+
+---------------------------------------
+
+*getrandgroupitem <group id>,<quantity>;
+
+Similar to the above example, this command allows players to obtain the specified
+quantity of a random item from the group "<group id>". The different groups and 
+their group number are specified in db/(pre-)re/item_group_db.txt
+
+For example, obtaining three of the same random item from Old Blue Box:
+
+getrandgroupitem(1,3);
 
 ---------------------------------------
 
