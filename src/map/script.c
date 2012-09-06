@@ -16916,6 +16916,49 @@ BUILDIN_FUNC(checkre)
 	return 0;
 }
 
+/* getrandgroupitem <group_id>,<quantity> */
+BUILDIN_FUNC(getrandgroupitem) {
+	TBL_PC* sd;
+	int i, get_count = 0, flag, nameid, group = script_getnum(st, 2), qty = script_getnum(st,3);
+	struct item item_tmp;
+	
+	if( !( sd = script_rid2sd(st) ) )
+		return 0;
+	
+	if( qty <= 0 ) {
+		ShowError("getrandgroupitem: qty is <= 0!\n");
+		return 1;
+	}
+	if( (nameid = itemdb_searchrandomid(group)) == UNKNOWN_ITEM_ID ) {
+		return 1;/* itemdb_searchrandomid will already scream a error */
+	}
+	
+	memset(&item_tmp,0,sizeof(item_tmp));
+	
+	item_tmp.nameid   = nameid;
+	item_tmp.identify = itemdb_isidentified(nameid);
+	
+	//Check if it's stackable.
+	if (!itemdb_isstackable(nameid))
+		get_count = 1;
+	else
+		get_count = qty;
+	
+	for (i = 0; i < qty; i += get_count) {
+		// if not pet egg
+		if (!pet_create_egg(sd, nameid)) {
+			if ((flag = pc_additem(sd, &item_tmp, get_count, LOG_TYPE_SCRIPT))) {
+				clif_additem(sd, 0, 0, flag);
+				if( pc_candrop(sd,&item_tmp) )
+					map_addflooritem(&item_tmp,get_count,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
+			}
+		}
+	}
+	
+	return 0;
+}
+
+
 // declarations that were supposed to be exported from npc_chat.c
 #ifdef PCRE_SUPPORT
 BUILDIN_FUNC(defpattern);
@@ -17353,6 +17396,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(is_function,"s"),
 	BUILDIN_DEF(get_revision,""),
 	BUILDIN_DEF(freeloop,"i"),
+	BUILDIN_DEF(getrandgroupitem, "ii"),
 	/**
 	 * @commands (script based)
 	 **/
