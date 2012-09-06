@@ -8559,8 +8559,8 @@ ACMD_FUNC(charcommands)
 	atcommand_commands_sub(sd, fd, COMMAND_CHARCOMMAND);
 	return 0;
 }
-
-ACMD_FUNC(new_mount) {
+/* for new mounts */
+ACMD_FUNC(mount2) {
 
 	clif_displaymessage(sd->fd,msg_txt(1362)); // NOTICE: If you crash with mount your LUA is outdated.
 	if( !(sd->sc.option&OPTION_MOUNTING) ) {
@@ -8778,6 +8778,46 @@ ACMD_FUNC(unloadnpcfile) {
 		return -1;
 	}
 	return 0;
+}
+ACMD_FUNC(cart) {
+#define MC_CART_MDFY(x) \
+	sd->status.skill[MC_PUSHCART].id = x?MC_PUSHCART:0; \
+	sd->status.skill[MC_PUSHCART].lv = x?1:0; \
+	sd->status.skill[MC_PUSHCART].flag = x?1:0;
+
+	int val = atoi(message);
+	bool need_skill = pc_checkskill(sd, MC_PUSHCART) ? false : true;
+	
+	if( !message || !*message || val < 0 || val > MAX_CARTS ) {
+		sprintf(atcmd_output, msg_txt(1390),command,MAX_CARTS); // Unknown Cart (usage: %s <0-%d>).
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+
+	if( val == 0 && !pc_iscarton(sd) ) {
+		clif_displaymessage(fd, msg_txt(1391)); // You do not possess a cart to be removed
+		return -1;
+	}
+	
+	if( need_skill ) {
+		MC_CART_MDFY(1);
+	}
+	
+	if( pc_setcart(sd, val) ) {
+		if( need_skill ) {
+			MC_CART_MDFY(0);
+		}
+		return -1;/* @cart failed */
+	}
+	
+	if( need_skill ) {
+		MC_CART_MDFY(0);
+	}
+	
+	clif_displaymessage(fd, msg_txt(1392)); // Cart Added
+	
+	return 0;
+	#undef MC_CART_MDFY
 }
 /**
  * Fills the reference of available commands in atcommand DBMap
@@ -9032,10 +9072,8 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(addperm),
 		ACMD_DEF2("rmvperm", addperm),
 		ACMD_DEF(unloadnpcfile),
-		/**
-		 * For Testing Purposes, not going to be here after we're done.
-		 **/
-		ACMD_DEF2("newmount", new_mount),
+		ACMD_DEF(cart),
+		ACMD_DEF(mount2)
 	};
 	AtCommandInfo* atcommand;
 	int i;
