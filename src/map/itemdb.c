@@ -1194,37 +1194,36 @@ static int itemdb_readdb(void)
 /*======================================
  * item_db table reading
  *======================================*/
-static int itemdb_read_sqldb(void)
-{
-#ifdef RENEWAL
-	const char* item_db_name[] = { item_db_db, item_db_re_db, item_db2_db };
-#else
-	const char* item_db_name[] = { item_db_db, item_db2_db };
-#endif
+static int itemdb_read_sqldb(void) {
+
+	const char* item_db_name[] = {
+								#ifdef RENEWAL
+									item_db_re_db,
+								#else
+									item_db_db,
+								#endif
+									item_db2_db };
 	int fi;
 	
-	for( fi = 0; fi < ARRAYLENGTH(item_db_name); ++fi )
-	{
+	for( fi = 0; fi < ARRAYLENGTH(item_db_name); ++fi ) {
 		uint32 lines = 0, count = 0;
 
 		// retrieve all rows from the item database
-		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", item_db_name[fi]) )
-		{
+		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", item_db_name[fi]) ) {
 			Sql_ShowDebug(mmysql_handle);
 			continue;
 		}
 
 		// process rows one by one
-		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) )
-		{// wrap the result into a TXT-compatible format
+		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {// wrap the result into a TXT-compatible format
 			char* str[22];
 			char* dummy = "";
 			int i;
 			++lines;
-			for( i = 0; i < 22; ++i )
-			{
+			for( i = 0; i < 22; ++i ) {
 				Sql_GetData(mmysql_handle, i, &str[i], NULL);
-				if( str[i] == NULL ) str[i] = dummy; // get rid of NULL columns
+				if( str[i] == NULL )
+					str[i] = dummy; // get rid of NULL columns
 			}
 
 			if (!itemdb_parse_dbrow(str, item_db_name[fi], lines, SCRIPT_IGNORE_EXTERNAL_BRACKETS))
