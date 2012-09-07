@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Morroc Town NPCs
 //===== Additional Comments: ================================= 
 //= Fully working
@@ -296,7 +296,7 @@ moc_ruins,118,82,1	script	Little Boy#moc	706,{
 
 moc_ruins,121,116,4	script	Picky Lady#moc	66,{
 	mes "[Syvia]";
-	mes "The fields of Rune-Midgard are infested with wild and dangerous monsters..But, you've got to admit a bunch of them are soooo cute!.";
+	mes "The fields of Rune-Midgard are infested with wild and dangerous monsters..But, you've got to admit a bunch of them are soooo cute!";
 	mes "You know, like how Spore sticks out its tongue after you kill it..";
 	next;
 	mes "[Syvia]";
