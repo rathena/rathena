@@ -457,7 +457,7 @@ int elemental_change_mode(struct elemental_data *ed, int mode) {
 	return 1;
 }
 
-void elemental_damage(struct elemental_data *ed, struct block_list *src, int hp, int sp) {
+void elemental_damage(struct elemental_data *ed, int hp, int sp) {
 	if( hp )
 		clif_elemental_updatestatus(ed->master, SP_HP);
 	if( sp )

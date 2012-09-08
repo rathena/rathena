@@ -1216,9 +1216,9 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 	switch (target->type) {
 		case BL_PC:  pc_damage((TBL_PC*)target,src,hp,sp); break;
 		case BL_MOB: mob_damage((TBL_MOB*)target, src, hp); break;
-		case BL_HOM: merc_damage((TBL_HOM*)target,src,hp,sp); break;
-		case BL_MER: mercenary_damage((TBL_MER*)target,src,hp,sp); break;
-		case BL_ELEM: elemental_damage((TBL_ELEM*)target,src,hp,sp); break;
+		case BL_HOM: merc_damage((TBL_HOM*)target); break;
+		case BL_MER: mercenary_damage((TBL_MER*)target,hp,sp); break;
+		case BL_ELEM: elemental_damage((TBL_ELEM*)target,hp,sp); break;
 	}
 
 	if( src && target->type == BL_PC && ((TBL_PC*)target)->disguise ) {// stop walking when attacked in disguise to prevent walk-delay bug
@@ -1379,7 +1379,7 @@ int status_heal(struct block_list *bl,int hp,int sp, int flag)
 	switch(bl->type) {
 	case BL_PC:  pc_heal((TBL_PC*)bl,hp,sp,flag&2?1:0); break;
 	case BL_MOB: mob_heal((TBL_MOB*)bl,hp); break;
-	case BL_HOM: merc_hom_heal((TBL_HOM*)bl,hp,sp); break;
+	case BL_HOM: merc_hom_heal((TBL_HOM*)bl); break;
 	case BL_MER: mercenary_heal((TBL_MER*)bl,hp,sp); break;
 	case BL_ELEM: elemental_heal((TBL_ELEM*)bl,hp,sp); break;
 	}
