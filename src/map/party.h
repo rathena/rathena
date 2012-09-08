@@ -92,7 +92,7 @@ void party_booking_update(struct map_session_data *sd, short* job);
 void party_booking_search(struct map_session_data *sd, short level, short mapid, short job, unsigned long lastindex, short resultcount);
 bool party_booking_delete(struct map_session_data *sd);
 
-#ifdef RENEWAL
+#ifdef RENEWAL_EXP
 void party_renewal_exp_mod(unsigned int *base_exp, unsigned int *job_exp, int lvl, int moblvl);
 #endif
 #ifdef RENEWAL_DROP
