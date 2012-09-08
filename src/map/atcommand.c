@@ -8819,6 +8819,7 @@ ACMD_FUNC(cart) {
 	return 0;
 	#undef MC_CART_MDFY
 }
+
 /**
  * Fills the reference of available commands in atcommand DBMap
  **/
@@ -9255,6 +9256,15 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 			else if ( z == 2 ) {
 				sprintf(atcmd_msg, "%s", command);
 				break;
+			}
+			
+			if( !pc_get_group_level(sd) ) {
+				if( x >= 1 || y >= 1 ) { /* we have command */
+					info = get_atcommandinfo_byname(atcommand_checkalias(command + 1));
+					if( !info || info->char_groups[sd->group_pos] == 0 ) /* if we can't use or doesn't exist: don't even display the command failed message */
+							return false;
+				} else
+					return false;/* display as normal message */
 			}
 		
 			sprintf(output, msg_txt(1388), charcommand_symbol); // Charcommand failed (usage: %c<command> <char name> <parameters>).
