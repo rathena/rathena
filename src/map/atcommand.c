@@ -3173,12 +3173,9 @@ ACMD_FUNC(doommap)
 /*==========================================
  *
  *------------------------------------------*/
-static void atcommand_raise_sub(struct map_session_data* sd)
-{
-	if(pc_isdead(sd))
-		status_revive(&sd->bl, 100, 100);
-	else
-		status_percent_heal(&sd->bl, 100, 100);
+static void atcommand_raise_sub(struct map_session_data* sd) {
+	
+	status_revive(&sd->bl, 100, 100);
 	
 	clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,4,1);
 	clif_displaymessage(sd->fd, msg_txt(63)); // Mercy has been shown.
@@ -3196,7 +3193,8 @@ ACMD_FUNC(raise)
 
 	iter = mapit_getallusers();
 	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
-		atcommand_raise_sub(pl_sd);
+		if( pc_isdead(pl_sd) )
+			atcommand_raise_sub(pl_sd);
 	mapit_free(iter);
 
 	clif_displaymessage(fd, msg_txt(64)); // Mercy has been granted.
@@ -3216,7 +3214,7 @@ ACMD_FUNC(raisemap)
 
 	iter = mapit_getallusers();
 	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
-		if (sd->bl.m == pl_sd->bl.m)
+		if (sd->bl.m == pl_sd->bl.m && pc_isdead(pl_sd) )
 			atcommand_raise_sub(pl_sd);
 	mapit_free(iter);
 
