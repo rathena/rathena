@@ -41,12 +41,13 @@ pvp_y_room,77,85,4	script	Guild Battle Guide	105,{
 	mes "of Team "+.@j+". Are you ready";
 	mes "to be transported there now?";
 	next;
-	if(select("Yes:No")==2) {
+	if(select("Yes:No") == 2) {
 		mes "[Guild Battle Guide]";
 		mes "Alright, I hope to";
 		mes "see you again on";
 		mes "the PvP fields!";
-		close; }
+		close;
+	}
 	mes "[Guild Battle Guide]";
 	mes "Great! Have a good time~";
 	close2;

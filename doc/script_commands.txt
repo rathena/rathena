@@ -7386,10 +7386,10 @@ and max are optional parameters and doesn't need to be set. You will find below 
 little List for an explenation of what those values are for.
 
 Values:
-Party ID : Party ID of the invoking character. [Required Parameter]
-amount : Amount of needed Partymembers for the Instance. [Optional Parameter]
-min : Minimum Level needed to join the Instance. [Optional Parameter]
-max : Maxium Level allowed to join the Instance. [Optional Parameter]
+Party ID: Party ID of the invoking character. [Required Parameter]
+amount: Amount of needed Partymembers for the Instance. [Optional Parameter]
+min: Minimum Level needed to join the Instance. [Optional Parameter]
+max: Maxium Level allowed to join the Instance. [Optional Parameter]
 
 If no amount is given the Memorial Dungeon will of course at least need 1 Player to enter.
 If no min Level requirement is given, the Player has at least to be Level 1 to enter the Memorial Dungeon.
@@ -7400,22 +7400,22 @@ but one of them is offline, the other Player won't be able to join the Memorial 
 
 Also, here are some examples of how this Command will work inside a script:
 
-if(instance_check_party(getcharid(1),2,2,149)){
+if (instance_check_party(getcharid(1),2,2,149)) {
 	mes "Ok, your party is complete and meets the Memorial Dungeons requirement.",
-	mes	"Members have a Baselevel between 1 and 150 and there are at least 2 Players inside the Party.";
+	mes "Members have a Baselevel between 1 and 150 and there are at least 2 Players inside the Party.";
 	close;
-}else{
+} else {
 	mes "Sorry, but it seems like your Party does not meet the Memorial Dungeon requirements.";
 	close;
 }
 
 You also can use set .@party_id,getcharid(1); for example to save the Players Party ID.
 
-if(instance_check_party(.@party_id,2,2,149)){
+if (instance_check_party(.@party_id,2,2,149)) {
 	mes "Ok, your party is complete and meets the Memorial Dungeons requirement.",
-	mes	"Members have a Baselevel between 1 and 150 and there are at least 2 Players inside the Party.";
+	mes "Members have a Baselevel between 1 and 150 and there are at least 2 Players inside the Party.";
 	close;
-}else{
+} else {
 	mes "Sorry, but it seems like your Party does not meet the Memorial Dungeon requirements.";
 	close;
 }

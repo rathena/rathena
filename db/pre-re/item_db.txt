@@ -2618,9 +2618,9 @@
 5448,Solo_Play_Box1,Soloplay Box1,5,,,300,,0,,1,0xFFFFFFFF,7,2,769,,0,1,449,{},{},{}
 5449,Solo_Play_Box2,Soloplay Box2,5,,,300,,0,,1,0xFFFFFFFF,7,2,769,,0,1,450,{},{},{}
 5450,Sun_Cap,Solar Hat,5,20,,1000,,0,,0,0xFFFFFFFE,7,2,256,,20,1,451,{},{},{}
-5451,Dragonhelm_Gold,RWC 2008 Dragon Helm Gold,5,20,,2500,,7,,0,0xFFFFFFFF,7,2,256,,1,0,452,{ bonus bAspdRate,10; bonus bAllStats,3; bonus2 bAddRace,RC_DemiHuman,5; },{},{}
-5452,Dragonhelm_Silver,RWC 2008 Dragon Helm Silver,5,20,,2500,,5,,0,0xFFFFFFFF,7,2,256,,1,0,453,{ bonus bAspdRate,7; bonus bAllStats,2; bonus2 bAddRace,RC_DemiHuman,3; },{},{}
-5453,Dragonhelm_Copper,RWC 2008 Dragon Helm Copper,5,20,,2500,,0,,0,0xFFFFFFFF,7,2,256,,1,0,454,{ bonus bAspdRate,5; bonus bAllStats,2; bonus2 bAddRace,RC_DemiHuman,1; },{},{}
+5451,Dragonhelm_Gold,RWC 2008 Dragon Helm Gold,5,20,,2500,,7,,1,0xFFFFFFFF,7,2,256,,1,0,452,{ bonus bAspdRate,10; bonus bAllStats,3; bonus2 bAddRace,RC_DemiHuman,5; },{},{}
+5452,Dragonhelm_Silver,RWC 2008 Dragon Helm Silver,5,20,,2500,,5,,1,0xFFFFFFFF,7,2,256,,1,0,453,{ bonus bAspdRate,7; bonus bAllStats,2; bonus2 bAddRace,RC_DemiHuman,3; },{},{}
+5453,Dragonhelm_Copper,RWC 2008 Dragon Helm Copper,5,20,,2500,,0,,1,0xFFFFFFFF,7,2,256,,1,0,454,{ bonus bAspdRate,5; bonus bAllStats,2; bonus2 bAddRace,RC_DemiHuman,1; },{},{}
 5454,Dog_Cap_,Puppy Hat,5,20,,500,,3,,1,0xFFFFFFFF,7,2,256,,0,1,234,{ bonus bStr,1; bonus bInt,1; autobonus "{ bonus bCritical,100; }",10,3000,BF_WEAPON,"{ specialeffect2 EF_ENHANCE; }"; autobonus "{ bonus bIgnoreMdefRate,100; }",10,3000,BF_MAGIC,"{ specialeffect2 EF_MAGICALATTHIT; }"; },{},{}
 5455,Geographer_Band_,Decorative Geographer,5,20,,500,,1,,1,0xFFFFFFFF,7,2,256,,0,1,238,{ bonus bInt,1; bonus3 bAutoSpell,"AL_HEAL",5,50; bonus3 bAutoSpellWhenHit,"AL_HEAL",5,30; },{},{}
 5456,Vacation_Hat_,Summer Hat,5,20,,200,,0,,1,0xFFFFFFFF,7,2,256,,0,1,315,{ bonus bVit,5; bonus bHPrecovRate,20; bonus bSPrecovRate,15; },{},{}

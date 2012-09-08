@@ -22,7 +22,7 @@ dicastes01,194,159,5	script	Excited Galten#a	492,{
 		mes "As long as we have him,";
 		mes "it will only be a matter of time before Sapha";
 		mes "will rule this land.";
-		close;	 }
+		close; }
 	mes "¡ø¢²¢£ ¡Ð ¡ò¡ð¡ð";
 	mes "¡÷¡ø¡ñ ¡ü ¡ü";
 	mes "¡ù¢²¢³ ¢²";
