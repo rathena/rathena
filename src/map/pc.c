@@ -6666,14 +6666,20 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	return 1;
 }
 
-void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp)
-{
+void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp) {
 	if(hp) clif_updatestatus(sd,SP_HP);
 	if(sp) clif_updatestatus(sd,SP_SP);
 
 	pc_setstand(sd);
 	if(battle_config.pc_invincible_time > 0)
 		pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
+	
+	if( sd->state.gmaster_flag ) {
+		guild_guildaura_refresh(sd,GD_LEADERSHIP,guild_checkskill(sd->state.gmaster_flag,GD_LEADERSHIP));
+		guild_guildaura_refresh(sd,GD_GLORYWOUNDS,guild_checkskill(sd->state.gmaster_flag,GD_GLORYWOUNDS));
+		guild_guildaura_refresh(sd,GD_SOULCOLD,guild_checkskill(sd->state.gmaster_flag,GD_SOULCOLD));
+		guild_guildaura_refresh(sd,GD_HAWKEYES,guild_checkskill(sd->state.gmaster_flag,GD_HAWKEYES));
+	}
 }
 // script? ˜A
 //
