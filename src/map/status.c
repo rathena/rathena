@@ -968,8 +968,8 @@ void initChangeTables(void) {
 	StatusChangeFlagTable[SC_EXTRACT_SALAMINE_JUICE] |= SCB_ASPD;	
 
 #ifdef RENEWAL_EDP
-	// renewal EDP increases your atk and weapon atk
-	StatusChangeFlagTable[SC_EDP] |= SCB_BATK|SCB_WATK;
+	// renewal EDP increases your weapon atk
+	StatusChangeFlagTable[SC_EDP] |= SCB_WATK;
 #endif
 	
 	if( !battle_config.display_hallucination ) //Disable Hallucination.
@@ -4399,11 +4399,6 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 		batk += 70;
 	if(sc->data[SC_ANGRIFFS_MODUS])
 		batk += batk * sc->data[SC_ANGRIFFS_MODUS]->val2/100;
-#ifdef RENEWAL_EDP
-	// renewal EDP increases your base atk by atk x skill level
-	if( sc->data[SC_EDP] )
-		batk = batk * sc->data[SC_EDP]->val1;
-#endif	
 	if( sc->data[SC_ZANGETSU] )
 		batk += batk * sc->data[SC_ZANGETSU]->val2 / 100;
 	return (unsigned short)cap_value(batk,0,USHRT_MAX);
@@ -4487,9 +4482,8 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 	if(sc->data[SC_ANGRIFFS_MODUS])
 		watk += watk * sc->data[SC_ANGRIFFS_MODUS]->val2/100;
 #ifdef RENEWAL_EDP
-	// renewal EDP increases your weapon atk by watk x Skill Level - 1
-	if( sc->data[SC_EDP] && sc->data[SC_EDP]->val1 > 1 )
-		watk = watk * (sc->data[SC_EDP]->val1 - 1);
+	if( sc->data[SC_EDP] )
+		watk = watk * (100 + sc->data[SC_EDP]->val1 * 80) / 100;
 #endif
 
 	return (unsigned short)cap_value(watk,0,USHRT_MAX);
@@ -6983,7 +6977,9 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			break;
 		case SC_EDP:	// [Celest]
 			val2 = val1 + 2; //Chance to Poison enemies.
+#ifndef RENEWAL_EDP
 			val3 = 50*(val1+1); //Damage increase (+50 +50*lv%)
+#endif
 			if( sd )//[Ind] - iROwiki says each level increases its duration by 3 seconds
 				tick += pc_checkskill(sd,GC_RESEARCHNEWPOISON)*3000;
 			break;

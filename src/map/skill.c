@@ -10839,7 +10839,7 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 		break;
 
 	case UNT_QUAGMIRE:
-		if(!sce)
+		if( !sce && battle_check_target(&sg->unit->bl,bl,sg->target_flag) > 0 )
 			sc_start4(bl,type,100,sg->skill_lv,sg->group_id,0,0,sg->limit);
 		break;
 
