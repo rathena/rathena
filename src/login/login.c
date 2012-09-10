@@ -1067,6 +1067,41 @@ int mmo_auth(struct login_session_data* sd)
 		ShowNotice("Connection refused (account: %s, pass: %s, state: %d, ip: %s)\n", sd->userid, sd->passwd, acc.state, ip);
 		return acc.state - 1;
 	}
+	
+	if( login_config.client_hash_check )
+	{
+		struct client_hash_node *node = login_config.client_hash_nodes;
+		bool match = false;
+
+		if( !sd->has_client_hash )
+		{
+			ShowNotice("Client doesn't sent client hash (account: %s, pass: %s, ip: %s)\n", sd->userid, sd->passwd, acc.state, ip);
+			return 5;
+		}
+
+		while( node ) 
+		{
+			if( node->group_id <= acc.group_id && memcmp(node->hash, sd->client_hash, 16) == 0 )
+			{
+				match = true;
+				break;
+			}
+
+			node = node->next;
+		}
+
+		if( !match )
+		{
+			char smd5[33];
+			int i;
+
+			for( i = 0; i < 16; i++ )
+				sprintf(&smd5[i * 2], "%02x", sd->client_hash[i]);
+
+			ShowNotice("Invalid client hash (account: %s, pass: %s, sent md5: %d, ip: %s)\n", sd->userid, sd->passwd, smd5, ip);
+			return 5;
+		}
+	}
 
 	ShowNotice("Authentication accepted (account: %s, id: %d, ip: %s)\n", sd->userid, acc.account_id, ip);
 
@@ -1338,6 +1373,10 @@ int parse_login(int fd)
 		case 0x0204: // S 0204 <md5 hash>.16B (kRO 2004-05-31aSakexe langtype 0 and 6)
 			if (RFIFOREST(fd) < 18)
 				return 0;
+
+			sd->has_client_hash = 1;
+			memcpy(sd->client_hash, RFIFOP(fd, 2), 16);
+
 			RFIFOSKIP(fd,18);
 		break;
 
@@ -1556,6 +1595,9 @@ void login_set_defaults()
 	login_config.use_dnsbl = false;
 	safestrncpy(login_config.dnsbl_servs, "", sizeof(login_config.dnsbl_servs));
 	safestrncpy(login_config.account_engine, "auto", sizeof(login_config.account_engine));
+
+	login_config.client_hash_check = 0;
+	login_config.client_hash_nodes = NULL;
 }
 
 //-----------------------------------
@@ -1631,6 +1673,32 @@ int login_config_read(const char* cfgName)
 			login_config.ipban_cleanup_interval = (unsigned int)atoi(w2);
 		else if(!strcmpi(w1, "ip_sync_interval"))
 			login_config.ip_sync_interval = (unsigned int)1000*60*atoi(w2); //w2 comes in minutes.
+		else if(!strcmpi(w1, "client_hash_check"))
+			login_config.client_hash_check = config_switch(w2);
+		else if(!strcmpi(w1, "client_hash")) {
+			int group = 0;
+			char md5[33];
+			int i;
+
+			if (sscanf(w2, "%d, %32s", &group, md5) == 2) {
+				struct client_hash_node *nnode;
+				CREATE(nnode, struct client_hash_node, 1);
+
+				for (i = 0; i < 32; i += 2) {
+					char buf[3];
+
+					memcpy(buf, &md5[i], 2);
+					buf[2] = 0;
+
+					sscanf(buf, "%x", &nnode->hash[i / 2]);
+				}
+
+				nnode->group_id = group;
+				nnode->next = login_config.client_hash_nodes;
+
+				login_config.client_hash_nodes = nnode;
+			}
+		}
 		else if(!strcmpi(w1, "import"))
 			login_config_read(w2);
 		else
