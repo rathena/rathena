@@ -536,10 +536,8 @@ int npc_timerevent(int tid, unsigned int tick, int id, intptr_t data)
 		if( sd )
 			sd->npc_timer_id = INVALID_TIMER;
 		else
-		{
 			nd->u.scr.timerid = INVALID_TIMER;
-			nd->u.scr.timertick = 0; // NPC timer stopped
-		}
+		
 		ers_free(timer_event_ers, ted);
 	}
 
@@ -567,14 +565,8 @@ int npc_timerevent_start(struct npc_data* nd, int rid)
 		
 	nullpo_ret(nd);
 
-	// No need to start because of no events
-	if( nd->u.scr.timeramount == 0 )
-		return 0;
-
 	// Check if there is an OnTimer Event
 	ARR_FIND( 0, nd->u.scr.timeramount, j, nd->u.scr.timer_event[j].timer > nd->u.scr.timer );
-	if( j >= nd->u.scr.timeramount ) // No need to start because of no events left to trigger
-		return 0;
 
 	if( nd->u.scr.rid > 0 && !(sd = map_id2sd(nd->u.scr.rid)) )
 	{ // Failed to attach timer to this player.
@@ -588,24 +580,31 @@ int npc_timerevent_start(struct npc_data* nd, int rid)
 		if( sd->npc_timer_id != INVALID_TIMER )
 			return 0;
 	}
-	else if( nd->u.scr.timerid != INVALID_TIMER )
+	else if( nd->u.scr.timerid != INVALID_TIMER || nd->u.scr.timertick )
 		return 0;
-
-	// Arrange for the next event
-	ted = ers_alloc(timer_event_ers, struct timer_event_data);
-	ted->next = j; // Set event index
-	ted->time = nd->u.scr.timer_event[j].timer;
-	next = nd->u.scr.timer_event[j].timer - nd->u.scr.timer;
-	if( sd )
+	
+	if (j < nd->u.scr.timeramount)
 	{
-		ted->rid = sd->bl.id; // Attach only the player if attachplayerrid was used.
-		sd->npc_timer_id = add_timer(tick+next,npc_timerevent,nd->bl.id,(intptr_t)ted);
+		// Arrange for the next event
+		ted = ers_alloc(timer_event_ers, struct timer_event_data);
+		ted->next = j; // Set event index
+		ted->time = nd->u.scr.timer_event[j].timer;
+		next = nd->u.scr.timer_event[j].timer - nd->u.scr.timer;
+		if( sd )
+		{
+			ted->rid = sd->bl.id; // Attach only the player if attachplayerrid was used.
+			sd->npc_timer_id = add_timer(tick+next,npc_timerevent,nd->bl.id,(intptr_t)ted);
+		}
+		else
+		{
+			ted->rid = 0;
+			nd->u.scr.timertick = tick; // Set when timer is started
+			nd->u.scr.timerid = add_timer(tick+next,npc_timerevent,nd->bl.id,(intptr_t)ted);
+		}
 	}
-	else
+	else if (!sd)
 	{
-		ted->rid = 0;
-		nd->u.scr.timertick = tick; // Set when timer is started
-		nd->u.scr.timerid = add_timer(tick+next,npc_timerevent,nd->bl.id,(intptr_t)ted);
+		nd->u.scr.timertick = tick; 
 	}
 
 	return 0;
@@ -628,17 +627,20 @@ int npc_timerevent_stop(struct npc_data* nd)
 	}
 	
 	tid = sd?&sd->npc_timer_id:&nd->u.scr.timerid;
-	if( *tid == INVALID_TIMER ) // Nothing to stop
+	if( *tid == INVALID_TIMER && (sd || !nd->u.scr.timertick) ) // Nothing to stop
 		return 0;
 
 	// Delete timer
-	td = get_timer(*tid);
-	if( td && td->data ) 
-		ers_free(timer_event_ers, (void*)td->data);
-	delete_timer(*tid,npc_timerevent);
-	*tid = INVALID_TIMER;
+	if ( *tid != INVALID_TIMER )
+	{
+		td = get_timer(*tid);
+		if( td && td->data )
+			ers_free(timer_event_ers, (void*)td->data);
+		delete_timer(*tid,npc_timerevent);
+		*tid = INVALID_TIMER;
+	}
 
-	if( !sd )
+	if( !sd && nd->u.scr.timertick )
 	{
 		nd->u.scr.timer += DIFF_TICK(gettick(),nd->u.scr.timertick); // Set 'timer' to the time that has passed since the beginning of the timers
 		nd->u.scr.timertick = 0; // Set 'tick' to zero so that we know it's off.
