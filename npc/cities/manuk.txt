@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 1.0 First Version.
 //= 1.1 Added more town NPCs
 //= 1.2 Added more town NPCs
+//= 1.3 Enabled an NPC
 //============================================================
 
 // cat_enhance
@@ -63,14 +64,13 @@ manuk,107,233,5	script	Soldier#ep13_3	454,{
 }
 
 // ep13_2_hiki
-/*
 manuk,100,100,3	script	Piom	454,{
 	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
 		mes "[Piom]";
-		mes "�?����?�������?�����Fairy��";
-		mes "??���?�����Fairy��";
-		mes "�?������?j��?�������";
-		mes "?�?��?�����?�?";
+		mes "You are... tiny. But you don't seem like a Fairy.";
+		mes "As long as you are not a damned Fairy,";
+		mes "then you are not our foe!";
+		mes "In this world, there are only friends or foe!";
 		close;
 	}
 	else {
@@ -82,7 +82,6 @@ manuk,100,100,3	script	Piom	454,{
 		close;
 	}
 }
-*/
 
 manuk,188,216,3	script	Benknee#ep13_2_1	449,{
 	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
