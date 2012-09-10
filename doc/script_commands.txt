@@ -6118,13 +6118,18 @@ Example(s):
 
 ---------------------------------------
 
-*mapwarp "<from map>","<to map>",<x>,<y>;
+*mapwarp "<from map>","<to map>",<x>,<y>,<type>,<ID for Type>;
 
+type: 0=everyone, 1=guild, 2=party
 This command will collect all characters located on the From map and warp them 
 wholesale to the same point on the To map, or randomly distribute them there if 
 the coordinates are zero. "Random" is understood as a special To map name and 
 will mean randomly shuffling everyone on the same map.
 
+Example:
+
+// Will warp all members of guild with ID 63 on map prontera to map alberta
+	mapwarp "prontera","alberta",150,150,1,63;
 ---------------------------------------
 \\
 5,2.- Guild-related Commands

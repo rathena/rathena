@@ -12,7 +12,7 @@ There are 2 main commands that determine WoE times:
 OnClock<time>: and gettime(<type>).
 
 OnClock<time> triggers when <time> is reached.
-The format is HHMM, with H = hour, M = minute.
+The format is HHMM, where H = hour, M = minute.
 OnClock2350: would run at 23:50, server time.
 
 gettime(<type>) is a function that checks for certain
@@ -54,14 +54,14 @@ The first gettime() is checking for a type 4, the day of the week, and it's
 comparing it to the one desired, which is 2 (Tuesday). The function will
 return either 1 (true) or 0 (false).
 
-The second gettime is checking for a type 3, the hour, and it's comparing
-it to 21. If the first part is greater or equal (>=) than the second,
-the comparation will return 1.
+The second gettime is checking type 3, the hour, and it's comparing
+it to 21. If the first part is greater than or equal to (>=) the second part,
+the comparison will return 1.
 
 The third and last gettime is checking again for the hour, but the time has to be less
-than the said time (in this case, 23).
+than the specified time (in this case, 23).
 
-Now, look at the parentheses. Parentheses are very important when making comparations
+Now, look at the parentheses. Parentheses are very important when making comparisons
 and conditions. Check the order of these. I'll place dummy characters for this example:
 
 	if ((X && (Y && Z)) goto L_Start;
@@ -90,7 +90,7 @@ to see if it's in WoE time, hence why the hours have to be checked.
 
 -------------------------------------------------------------------------------
 
-Now a example of how to set the WoE so it starts on Monday, at 4 pm and ends up at 10 pm:
+An example of how to set the WoE so it starts on Monday, at 4 pm and ends up at 10 pm:
 
 	OnClock1600: // 16:00 = 4 pm
 	OnClock2200: // 22:00 = 10 pm
