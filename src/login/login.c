@@ -1751,6 +1751,14 @@ static AccountDB* get_account_engine(void)
 void do_final(void)
 {
 	int i;
+	struct client_hash_node *hn = login_config.client_hash_nodes;
+
+	while (hn)
+	{
+		struct client_hash_node *tmp = hn;
+		hn = hn->next;
+		aFree(tmp);
+	}
 
 	login_log(0, "login server", 100, "login server shutdown");
 	ShowStatus("Terminating...\n");
