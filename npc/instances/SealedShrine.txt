@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -24,12 +24,12 @@
 //=		the invoking party meets the requirements to join the Memorial Dungeon.
 //= 1.9 Fixed broken else/if chaining. [Joseph]
 //= 2.0 Some optimization. [Euphy]
+//= 2.1 Fixed quest being removed before the 12 hours cool down. [Joseph]
 //============================================================ 
 
 // Sealed Catacomb Entrance
 //============================================================
 monk_test,309,146,3	script	Friar Patrick#edq	412,{
-	if (checkquest(3040)>=0) erasequest 3040;
 	cutin "ins_cata_pri_n",2;
 	mes "[Friar Patrick]";
 	mes "The peace of this world cannot last forever... The hands of Evil are reaching into the world again...";
