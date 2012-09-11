@@ -978,7 +978,7 @@ int mmo_auth_new(const char* userid, const char* pass, const char sex, const cha
 //-----------------------------------------------------
 // Check/authentication of a connection
 //-----------------------------------------------------
-int mmo_auth(struct login_session_data* sd)
+int mmo_auth(struct login_session_data* sd, bool isServer)
 {
 	struct mmo_account acc;
 	int len;
@@ -1068,7 +1068,7 @@ int mmo_auth(struct login_session_data* sd)
 		return acc.state - 1;
 	}
 	
-	if( login_config.client_hash_check )
+	if( login_config.client_hash_check && !isServer )
 	{
 		struct client_hash_node *node = login_config.client_hash_nodes;
 		bool match = false;
@@ -1470,7 +1470,7 @@ int parse_login(int fd)
 				return 0;
 			}
 
-			result = mmo_auth(sd);
+			result = mmo_auth(sd, false);
 
 			if( result == -1 )
 				login_auth_ok(sd);
@@ -1522,7 +1522,7 @@ int parse_login(int fd)
 			sprintf(message, "charserver - %s@%u.%u.%u.%u:%u", server_name, CONVIP(server_ip), server_port);
 			login_log(session[fd]->client_addr, sd->userid, 100, message);
 
-			result = mmo_auth(sd);
+			result = mmo_auth(sd, true);
 			if( runflag == LOGINSERVER_ST_RUNNING &&
 				result == -1 &&
 				sd->sex == 'S' &&
@@ -1686,11 +1686,13 @@ int login_config_read(const char* cfgName)
 
 				for (i = 0; i < 32; i += 2) {
 					char buf[3];
+					unsigned int byte;
 
 					memcpy(buf, &md5[i], 2);
 					buf[2] = 0;
 
-					sscanf(buf, "%x", &nnode->hash[i / 2]);
+					sscanf(buf, "%x", &byte);
+					nnode->hash[i / 2] = (uint8)(byte & 0xFF);
 				}
 
 				nnode->group_id = group;
