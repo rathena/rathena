@@ -1700,7 +1700,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 
 	switch(skillid){
 	case MO_EXTREMITYFIST:
-		sc_start(src,status_skill2sc(skillid),100,skilllv,skill_get_time2(skillid,skilllv));
+		sc_start(src,SC_EXTREMITYFIST,100,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 	case GS_FULLBUSTER:
 		sc_start(src,SC_BLIND,2*skilllv,skilllv,skill_get_time2(skillid,skilllv));
@@ -3634,6 +3634,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		{
 			status_change_end(src, SC_EXPLOSIONSPIRITS, INVALID_TIMER);
 			status_change_end(src, SC_BLADESTOP, INVALID_TIMER);
+#ifdef RENEWAL
+			sc_start(src,SC_EXTREMITYFIST2,100,skilllv,skill_get_time(skillid,skilllv));
+#endif
 		}
 		//Client expects you to move to target regardless of distance
 		{
@@ -17497,7 +17500,11 @@ static void skill_readdb(void)
 
 	sv_readdb(db_path, DBPATH"skill_db.txt"          , ',',  17, 17, MAX_SKILL_DB, skill_parse_row_skilldb);
 	sv_readdb(db_path, DBPATH"skill_require_db.txt"  , ',',  32, 32, MAX_SKILL_DB, skill_parse_row_requiredb);
-	sv_readdb(db_path, DBPATH"skill_cast_db.txt"     , ',',   7,  8, MAX_SKILL_DB, skill_parse_row_castdb);
+#ifdef RENEWAL
+	sv_readdb(db_path, "re/skill_cast_db.txt"     , ',',   8,  8, MAX_SKILL_DB, skill_parse_row_castdb);
+#else
+	sv_readdb(db_path, "re-pre/skill_cast_db.txt"     , ',',   7,  7, MAX_SKILL_DB, skill_parse_row_castdb);
+#endif
 	sv_readdb(db_path, DBPATH"skill_castnodex_db.txt", ',',   2,  3, MAX_SKILL_DB, skill_parse_row_castnodexdb);
 	sv_readdb(db_path, DBPATH"skill_unit_db.txt"     , ',',   8,  8, MAX_SKILL_DB, skill_parse_row_unitdb);
 

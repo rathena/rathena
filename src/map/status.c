@@ -312,7 +312,10 @@ void initChangeTables(void) {
 	add_sc( MO_BLADESTOP         , SC_BLADESTOP_WAIT  );
 	add_sc( MO_BLADESTOP         , SC_BLADESTOP       );
 	set_sc( MO_EXPLOSIONSPIRITS  , SC_EXPLOSIONSPIRITS, SI_EXPLOSIONSPIRITS, SCB_CRI|SCB_REGEN );
-	set_sc( MO_EXTREMITYFIST     , SC_EXTREMITYFIST   , SI_EXTREMITYFIST           , SCB_REGEN );
+	set_sc( MO_EXTREMITYFIST     , SC_EXTREMITYFIST   , SI_BLANK           , SCB_REGEN );
+#ifdef RENEWAL
+	set_sc( MO_EXTREMITYFIST     , SC_EXTREMITYFIST2   , SI_EXTREMITYFIST   , SCB_NONE );
+#endif
 	add_sc( SA_MAGICROD          , SC_MAGICROD        );
 	set_sc( SA_AUTOSPELL         , SC_AUTOSPELL       , SI_AUTOSPELL       , SCB_NONE );
 	set_sc( SA_FLAMELAUNCHER     , SC_FIREWEAPON      , SI_FIREWEAPON      , SCB_ATK_ELE );
@@ -6079,8 +6082,11 @@ int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int ti
 		rate -= (status_get_lv(bl) / 5 + status->vit / 4 + status->agi / 10)*100; // Lineal Reduction of Rate
 		break;
 	case SC_WHITEIMPRISON:
-		rate -= (status_get_lv(bl) / 5 + status->vit / 4 + status->agi / 10)*100; 
-		if( tick != 5000) // not applied on caster
+		if( tick == 5000 ) // 100% on caster
+			break;
+		if( bl->type == BL_PC )
+			tick -= (status_get_lv(bl) / 5 + status->vit / 4 + status->agi / 10)*100; 
+		else
 			tick -= (status->vit + status->luk) / 20 * 1000; 
 		break;
 	case SC_BURNING:

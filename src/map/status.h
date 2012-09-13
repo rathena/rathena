@@ -635,6 +635,9 @@ typedef enum sc_type {
 	SC_ZANGETSU,
 	SC_GENSOU,
 	SC_AKAITSUKI,
+#ifdef RENEWAL	
+	SC_EXTREMITYFIST2,
+#endif
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 } sc_type;
