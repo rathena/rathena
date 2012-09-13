@@ -718,7 +718,7 @@ OnTimer140000:
 	mapannounce "airplane_01","Welcome to Juno. Have a safe trip.",bc_map,"0x70dbdb";
 	end;
 OnTimer150000:
-	mapannounce "airplane_01","We are currently in Juno. The Airship will leave shorty.",bc_map,"0x70dbdb";
+	mapannounce "airplane_01","We are currently in Juno. The Airship will leave shortly.",bc_map,"0x70dbdb";
 	end;
 OnTimer160000:
 	donpcevent "#AirshipWarp-3::OnHide";
