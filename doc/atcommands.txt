@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20120904
+//= 20120915
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
@@ -1018,13 +1018,13 @@ Additionally, @killmonster2 will prevent the monsters from dropping items (excep
 
 ---------------------------------------
 
-@kill <player name>
+@kill
 @nuke <player name>
 @doommap
 @doom
 
 Kill commands.
-@kill will kill the specified player.
+@kill will kill the attached player.
 @nuke will kill the specified player and deal area splash damage.
 @doommap will kill all players on the map.
 @doom will kill all players on the server.
