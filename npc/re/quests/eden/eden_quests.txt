@@ -4551,8 +4551,7 @@ moc_para01,111,83,3	script	Toren	813,{
 			getitem 2571,1; //Paradise Mantle II
 			getitem 2473,1; //Paradise Boots IV
 			getitem 15031,1; //Paradise Uniform IV
-			if (para_suv02 == 5 || para_suv02 == 7 || para_suv02 == 9 || para_suv02 == 11 || para_suv02 == 13)
-				set para_suv02, para_suv02+1;
+			set para_suv02,14;
 			if (para_suv01 > 40)
 				set para_suv01, para_suv01+1;
 			if (Class == Job_Taekwon) {

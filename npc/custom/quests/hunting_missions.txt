@@ -246,7 +246,7 @@ OnBuyItem:
 	close;
 
 OnNPCKillEvent:
-	if (!#Mission_Count) end;
+	if (!#Mission_Count || !Mission1) end;
 	for(set .@i,0; .@i<.Quests; set .@i,.@i+1) {
 		if (strmobinfo(1,killedrid) == strmobinfo(1,getd("Mission"+.@i))) {
 			if (getd("Mission"+.@i+"_") < #Mission_Count) {
