@@ -1220,6 +1220,7 @@ int inter_parse_frommap(int fd)
 	case 0x3005: mapif_parse_RegistryRequest(fd); break;
 	case 0x3006: mapif_parse_NameChangeRequest(fd); break;
 	case 0x3007: mapif_parse_accinfo(fd); break;
+	/* 0x3008 is used by the report stuff */
 	default:
 		if(  inter_party_parse_frommap(fd)
 		  || inter_guild_parse_frommap(fd)

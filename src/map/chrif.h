@@ -57,10 +57,9 @@ int chrif_char_online(struct map_session_data *sd);
 int chrif_changesex(struct map_session_data *sd);
 int chrif_chardisconnect(struct map_session_data *sd);
 int chrif_divorce(int partner_id1, int partner_id2);
-/**
- * rAthena
- **/
+
 int chrif_removefriend(int char_id, int friend_id);
+void chrif_send_report(char* buf, int len);
 
 int do_final_chrif(void);
 int do_init_chrif(void);

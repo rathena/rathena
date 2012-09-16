@@ -112,7 +112,7 @@ extern bool session_isActive(int fd);
 // Function prototype declaration
 
 int make_listen_bind(uint32 ip, uint16 port);
-int make_connection(uint32 ip, uint16 port);
+int make_connection(uint32 ip, uint16 port, bool silent);
 int realloc_fifo(int fd, unsigned int rfifo_size, unsigned int wfifo_size);
 int realloc_writefifo(int fd, size_t addition);
 int WFIFOSET(int fd, size_t len);

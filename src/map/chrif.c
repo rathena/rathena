@@ -1523,7 +1523,7 @@ static int check_connect_char_server(int tid, unsigned int tick, int id, intptr_
 		}
 
 		chrif_state = 0;
-		char_fd = make_connection(char_ip, char_port);
+		char_fd = make_connection(char_ip, char_port,false);
 		if (char_fd == -1)
 		{	//Attempt to connect later. [Skotlex]
 			return 0;
@@ -1560,6 +1560,20 @@ int chrif_removefriend(int char_id, int friend_id) {
 	WFIFOSET(char_fd,10);
 	
 	return 0;
+}
+
+void chrif_send_report(char* buf, int len) {
+#ifndef STATS_OPT_OUT
+	WFIFOHEAD(char_fd,len + 2);
+	
+	WFIFOW(char_fd,0) = 0x3008;
+	
+	memcpy(WFIFOP(char_fd,2), buf, len);
+	
+	WFIFOSET(char_fd,len + 2);
+	
+	flush_fifo(char_fd); /* ensure it's sent now. */
+#endif
 }
 
 /**

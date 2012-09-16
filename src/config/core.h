@@ -8,20 +8,16 @@
  * For detailed guidance on these check http://rathena.org/wiki/SRC/config/
  **/
 
-/**
- * Max number of items on @autolootid list
- **/
+/// Max number of items on @autolootid list
 #define AUTOLOOTITEM_SIZE 10
 
-/**
- * The maximum number of atcommand suggestions
- **/
+/// The maximum number of atcommand suggestions
 #define MAX_SUGGESTIONS 10
 
-//Comment to disable the official walk path
-// -- The official walkpath disables users from taking non-clear walk paths,
-// -- e.g. if they want to get around an obstacle they have to walk around it,
-// -- while with OFFICIAL_WALKPATH disabled if they click to walk around a obstacle the server will do it automatically
+/// Comment to disable the official walk path
+/// The official walkpath disables users from taking non-clear walk paths,
+/// e.g. if they want to get around an obstacle they have to walk around it,
+/// while with OFFICIAL_WALKPATH disabled if they click to walk around a obstacle the server will do it automatically
 #define OFFICIAL_WALKPATH
 
 /// leave this line uncommented to enable callfunc checks when processing scripts.
@@ -31,21 +27,25 @@
 /// your map-server using more resources while this is active, comment the line
 #define SCRIPT_CALLFUNC_CHECK
 
+/// Uncomment to disable rAthena's anonymous stat report
+/// We kindly ask you to consider keeping it enabled, it helps us improve rAthena.
+//#define STATS_OPT_OUT
+
 /// uncomment to enable query_sql script command and mysql logs to function on it's own thread
 /// be aware this feature is under tests and you should use at your own risk, we however
 /// welcome any feedback you may have regarding this feature, please send us all bug reports.
 //#define BETA_THREAD_TEST
 
-//Uncomment to enable the Cell Stack Limit mod.
-//It's only config is the battle_config cell_stack_limit.
-//Only chars affected are those defined in BL_CHAR (mobs and players currently)
+/// Uncomment to enable the Cell Stack Limit mod.
+/// It's only config is the battle_config cell_stack_limit.
+/// Only chars affected are those defined in BL_CHAR (mobs and players currently)
 //#define CELL_NOSTACK
 
-//Uncomment to enable circular area checks.
-//By default, all range checks in Aegis are of Square shapes, so a weapon range
-//  of 10 allows you to attack from anywhere within a 21x21 area.
-//Enabling this changes such checks to circular checks, which is more realistic,
-//  but is not the official behaviour.
+/// Uncomment to enable circular area checks.
+/// By default, all range checks in Aegis are of Square shapes, so a weapon range
+/// - of 10 allows you to attack from anywhere within a 21x21 area.
+/// Enabling this changes such checks to circular checks, which is more realistic,
+/// - but is not the official behaviour.
 //#define CIRCULAR_AREA
 
 /**
