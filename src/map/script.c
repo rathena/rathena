@@ -9084,6 +9084,7 @@ BUILDIN_FUNC(initnpctimer)
 		nd->u.scr.rid = sd->bl.id;
 	}
 
+	nd->u.scr.timertick = 0;
 	npc_settimerevent_tick(nd,0);
 	npc_timerevent_start(nd, st->rid);
 	return 0;
