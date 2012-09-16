@@ -1957,20 +1957,18 @@ ACMD_FUNC(go)
 	// try to identify the map name
 	if (strncmp(map_name, "prontera", 3) == 0) {
 		town = 0;
-	} else if (strncmp(map_name, "morocc", 3) == 0) {
+	} else if (strncmp(map_name, "morocc", 3) == 0 ||
+	           strncmp(map_name, "morroc", 3) == 0) {
 		town = 1;
 	} else if (strncmp(map_name, "geffen", 3) == 0) {
 		town = 2;
-	} else if (strncmp(map_name, "payon", 3) == 0 ||
-	           strncmp(map_name, "paion", 3) == 0) {
+	} else if (strncmp(map_name, "payon", 3) == 0) {
 		town = 3;
 	} else if (strncmp(map_name, "alberta", 3) == 0) {
 		town = 4;
-	} else if (strncmp(map_name, "izlude", 3) == 0 ||
-	           strncmp(map_name, "islude", 3) == 0) {
+	} else if (strncmp(map_name, "izlude", 3) == 0) {
 		town = 5;
-	} else if (strncmp(map_name, "aldebaran", 3) == 0 ||
-	           strcmp(map_name,  "al") == 0) {
+	} else if (strncmp(map_name, "aldebaran", 3) == 0) {
 		town = 6;
 	} else if (strncmp(map_name, "lutie", 3) == 0 ||
 	           strcmp(map_name,  "christmas") == 0 ||
@@ -1979,11 +1977,13 @@ ACMD_FUNC(go)
 		town = 7;
 	} else if (strncmp(map_name, "comodo", 3) == 0) {
 		town = 8;
-	} else if (strncmp(map_name, "yuno", 3) == 0) {
+	} else if (strncmp(map_name, "juno", 3) == 0 ||
+	           strncmp(map_name, "yuno", 3) == 0) {
 		town = 9;
 	} else if (strncmp(map_name, "amatsu", 3) == 0) {
 		town = 10;
-	} else if (strncmp(map_name, "gonryun", 3) == 0) {
+	} else if (strncmp(map_name, "kunlun", 3) == 0 ||
+	           strncmp(map_name, "gonryun", 3) == 0) {
 		town = 11;
 	} else if (strncmp(map_name, "umbala", 3) == 0) {
 		town = 12;
@@ -1993,22 +1993,21 @@ ACMD_FUNC(go)
 		town = 14;
 	} else if (strncmp(map_name, "new_1-1", 3) == 0 ||
 	           strncmp(map_name, "startpoint", 3) == 0 ||
-	           strncmp(map_name, "begining", 3) == 0) {
+	           strncmp(map_name, "beginning", 3) == 0) {
 		town = 15;
 	} else if (strncmp(map_name, "sec_pri", 3) == 0 ||
 	           strncmp(map_name, "prison", 3) == 0 ||
-	           strncmp(map_name, "jails", 3) == 0) {
+	           strncmp(map_name, "jail", 3) == 0) {
 		town = 16;
 	} else if (strncmp(map_name, "jawaii", 3) == 0) {
 		town = 17;
 	} else if (strncmp(map_name, "ayothaya", 3) == 0) {
 		town = 18;
-	} else if (strncmp(map_name, "einbroch", 5) == 0 ||
-	           strncmp(map_name, "ainbroch", 5) == 0) {
+	} else if (strncmp(map_name, "einbroch", 5) == 0) {
 		town = 19;
 	} else if (strncmp(map_name, "lighthalzen", 3) == 0) {
 		town = 20;
-	} else if (strncmp(map_name, "einbech", 3) == 0) {
+	} else if (strncmp(map_name, "einbech", 5) == 0) {
 		town = 21;
 	} else if (strncmp(map_name, "hugel", 3) == 0) {
 		town = 22;
@@ -2018,7 +2017,8 @@ ACMD_FUNC(go)
 		town = 24;
 	} else if (strncmp(map_name, "moscovia", 3) == 0) {
 		town = 25;
-	} else if (strncmp(map_name, "mid_camp", 3) == 0) {
+	} else if (strncmp(map_name, "mid_camp", 3) == 0 ||
+	           strncmp(map_name, "midgard", 3) == 0) {
 		town = 26;
 	} else if (strncmp(map_name, "manuk", 3) == 0) {
 		town = 27;
