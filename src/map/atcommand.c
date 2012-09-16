@@ -1957,8 +1957,7 @@ ACMD_FUNC(go)
 	// try to identify the map name
 	if (strncmp(map_name, "prontera", 3) == 0) {
 		town = 0;
-	} else if (strncmp(map_name, "morocc", 3) == 0 ||
-	           strncmp(map_name, "morroc", 3) == 0) {
+	} else if (strncmp(map_name, "morocc", 3) == 0) {
 		town = 1;
 	} else if (strncmp(map_name, "geffen", 3) == 0) {
 		town = 2;
@@ -2017,8 +2016,7 @@ ACMD_FUNC(go)
 		town = 24;
 	} else if (strncmp(map_name, "moscovia", 3) == 0) {
 		town = 25;
-	} else if (strncmp(map_name, "mid_camp", 3) == 0 ||
-	           strncmp(map_name, "midgard", 3) == 0) {
+	} else if (strncmp(map_name, "mid_camp", 3) == 0) {
 		town = 26;
 	} else if (strncmp(map_name, "manuk", 3) == 0) {
 		town = 27;
