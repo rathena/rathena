@@ -62,7 +62,7 @@ payon,157,141,5	script	Phoenix#TKJobChange	753,{
 		mes "I know that the answer";
 		mes "will come in time...";
 		next;
-		if (Class != Job_Novice && TK_Q != 0) {
+		if (Class != Job_Novice) {
 			mes "[Phoenix]";
 			mes "Noble adventurer:";
 			mes "if you know anyone who";

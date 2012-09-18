@@ -1,5 +1,5 @@
 //===== rAthena Script ======================================= 
-//= Priest Quest
+//= Priest Job Quest
 //===== By: ================================================== 
 //= Translated By: Pgro Team (OwNaGe)(Aegis)
 //= Converted by: kobra_k88.
@@ -7,7 +7,7 @@
 //===== Current Version: ===================================== 
 //= 2.6
 //===== Compatible With: ===================================== 
-//= rAthena  SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Job Change quest for Priest class.
@@ -829,6 +829,7 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 		next;
 		if (select("I do.:No.") == 1) {
 			set PRIEST_Q,9;
+			changequest 8014,8015;
 			mes "[Sister Cecilia]";
 			mes "Now, you have completed your oath of Priesthood and accomplished all three trials required to become a Priest.";
 			next;
@@ -844,7 +845,6 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 		mes "......";
 		next;
 		set PRIEST_Q,8;
-		changequest 8014,8015;
 		mes "[Sister Cecilia]";
 		mes "You've come so far...";
 		mes "Why would you want";
