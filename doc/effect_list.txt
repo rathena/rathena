@@ -739,14 +739,14 @@ Number	Description
 720.	Yellow version of Soul Breaker
 721.	Adoramus (lightning bolt)
 722.	Ignition Break (big explosion)
-723.	Noise Sound
+723.	Hundred Spear (sound effect)
 724.	Green version of Detecting
-725.	Detecting
+725.	Oratorio (like Detecting)
 726.	Frost Misty (blue vapor and bubbles)
-727.	Comet
+727.	Crimson Rock
 728.	Small fire (part of Hell Inferno)
 729.	Marsh of Abyss (like Close Confine)
-730.	Small, cartoony explosion
+730.	Small, cartoony explosion (part of Soul Expansion)
 731.	Dragon Howling (blinking, expanding circle)
 732.	Spike from the ground
 733.	Fluffy Ball flying by
@@ -755,35 +755,35 @@ Number	Description
 736.	(Nothing)
 737.	(Nothing)
 738.	(Nothing)
-739.	Small pod appearing
-740.	Different small pod
-741.	Different small pod
-742.	Different small pod
-743.	Different small pod
+739.	Old Magenta Trap
+740.	Old Cobald Trap
+741.	Old Maize Trap
+742.	Old Verdure Trap
+743.	White Ranger Trap
 744.	Camouflage
 745.	Aimed Bolt (crosshairs)
 746.	Arrow Storm
 747.	Falling white feathers
 748.	Falling blue feathers
-749.	Shields
+749.	Millennium Shield
 750.	Detonator (blue sparkles)
-751.	Shots from a direction
-752.	Some blinking filter
-753.	Sparkles
+751.	Releasing summoned warlock spheres
+752.	Like Energy Coat, but not as dark
+753.	Clearance
 754.	Green warp portal (root of Epiclesis)
 755.	Oratio (spinning blue symbol)
 756.	Enchant Blade (like Berserk Potion)
-757.	Stargate-like wormhole animation
-758.	Rolling Cutter (1)
-759.	Rolling Cutter (2)
-760.	Rolling Cutter (3)
-761.	Rolling Cutter (4)
-762.	Rolling Cutter (5)
-763.	Rolling Cutter (6)
-764.	Rolling Cutter (7)
-765.	Rolling Cutter (8)
-766.	Rolling Cutter (9)
-767.	Rolling Cutter (10)
+757.	Third Class Aura (Middle)
+758.	Rolling Cutter - Spin Count 1
+759.	Rolling Cutter - Spin Count 2
+760.	Rolling Cutter - Spin Count 3
+761.	Rolling Cutter - Spin Count 4
+762.	Rolling Cutter - Spin Count 5
+763.	Rolling Cutter - Spin Count 6
+764.	Rolling Cutter - Spin Count 7
+765.	Rolling Cutter - Spin Count 8
+766.	Rolling Cutter - Spin Count 9
+767.	Rolling Cutter - Spin Count 10
 768.	Blinking
 769.	Cross Ripper Slasher (flying knives)
 770.	Strip sound
@@ -791,10 +791,10 @@ Number	Description
 772.	Poison particles
 773.	Expanding purple aura (part of Phantom Menace)
 774.	Axe Boomerang
-775.	Spin
-776.	Half-automatic gunshots
+775.	Spinning character sprite
+776.	Like Desperado sound effect
 777.	Faded light from the ground [S]
-778.	Expanding white aura
+778.	Expanding white aura (like Clearance)
 779.	Faded light from the ground [S]
 780.	Expanding red aura (from Infrared Scan)
 781.	Magnetic Field (purple chains)
@@ -805,8 +805,8 @@ Number	Description
 786.	Symbol with bleeping sound [S]
 787.	Flare Launcher (line of fire)
 788.	Venom Impress (green skull)
-789.	Two Ancillas
-790.	Flame symbol
+789.	Freezing Status Effect (two ancillas)
+790.	Burning Status Effect (flame symbol)
 791.	Two ice shots
 792.	Upward streaming white particles
 793.	Same, but more brief
