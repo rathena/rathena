@@ -1,0 +1,44 @@
+//===== rAthena Documentation ================================
+//= Login Server's MD5 Hash Check
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 20120921
+//===== Description: =========================================
+//= This file outlines how the built-in MD5 Hash Check is
+//= used and steps enable it.
+//============================================================
+
+In revision r16771, the login server received an update that allows it to perform
+a server-side check of the client to find out it's MD5 hash. This update is an
+effort towards ensuring that a user has either:
+a.) not been tampered with the client
+b.) using the client specific to that particular server
+
+At present, we know that the client can only send the correct MD5 hash to the server
+when using particular server types, so a diff is required to ensure that any client
+can send the hash. A link to the required diff plugin for WeeDiffGen can be found at:
+http://rathena.org/board/topic/70841-r16771-client-md5-hash-check/
+
+Check conf/login_athena.conf for instruction on how to enable it.
+
+In conf/login_athena.conf you will find the following:
+// Client MD5 hash check
+// Check client hash?
+client_hash_check: off
+
+This setting simply accepts on or off.
+
+
+// Put your client hashes here, a player can login into the server using
+// a hash with a group_id equal or lower the account group_id
+// Format: group_id, hash
+// Examples:
+client_hash: 0, 113e195e6c051bb1cfb12a644bb084c5
+client_hash: 99, cb1ea78023d337c38e8ba5124e2338ae
+
+Once enabled, you would use those lines to configure this feature (or even as an example).
+The group_id can be any of the groups in conf/groups.conf and can be particularly useful
+if, for example, you wanted to restrict normal players from dual-clienting and use a lower
+number for chat flooding, but wanted to allow dual-clienting and 255 lines before the chat
+flood kicks in for your GMs.
