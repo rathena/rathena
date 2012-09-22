@@ -1957,7 +1957,8 @@ ACMD_FUNC(go)
 	// try to identify the map name
 	if (strncmp(map_name, "prontera", 3) == 0) {
 		town = 0;
-	} else if (strncmp(map_name, "morocc", 3) == 0) {
+	} else if (strncmp(map_name, "morocc", 4) == 0 ||
+				strncmp(map_name, "morroc", 4) ==0) {
 		town = 1;
 	} else if (strncmp(map_name, "geffen", 3) == 0) {
 		town = 2;
@@ -2026,7 +2027,7 @@ ACMD_FUNC(go)
 		town = 29;
 	} else if (strncmp(map_name, "dicastes01", 3) == 0) {
 		town = 30;
-	} else if (strncmp(map_name, "mora", 3) == 0) {
+	} else if (strncmp(map_name, "mora") == 0) {
 		town = 31;
 	} else if (strncmp(map_name, "dewata", 3) == 0) {
 		town = 32;
