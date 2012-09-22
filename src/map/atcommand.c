@@ -2027,7 +2027,7 @@ ACMD_FUNC(go)
 		town = 29;
 	} else if (strncmp(map_name, "dicastes01", 3) == 0) {
 		town = 30;
-	} else if (strncmp(map_name, "mora") == 0) {
+	} else if (strncmp(map_name, "mora", 4) == 0) {
 		town = 31;
 	} else if (strncmp(map_name, "dewata", 3) == 0) {
 		town = 32;
