@@ -7048,7 +7048,7 @@ REPLACE INTO `item_db_re` VALUES (15010,'Para_Team_Uniform2','Eden Team Uniform 
 REPLACE INTO `item_db_re` VALUES (15011,'Para_Team_Uniform3','Eden Team Uniform III',5,NULL,NULL,0,NULL,58,NULL,NULL,0xFFFFFFFF,7,2,16,NULL,'40',NULL,0,'bonus bMaxHP,300; bonus bMaxSP,30; bonus bMdef,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (15012,'Puente_Robe','Puente Robe',5,12000,NULL,400,NULL,42,NULL,1,0xFFFFFFFF,7,2,16,NULL,'22',1,0,'/* bonus bFixedCastrate,-3; */ bonus bHealPower,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (15013,'Claire_Suits','Claire Suits',5,28000,NULL,2800,NULL,58,NULL,1,0xFFFFFFFE,2,2,16,NULL,'22',1,0,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (15014,'Ebone_Armor','Ebon Armor',5,40000,NULL,4500,NULL,93,NULL,1,0x000FDF80,8,2,16,NULL,'100',1,0,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (15014,'Ebone_Armor','Ebon Armor',5,40000,NULL,4500,NULL,93,NULL,1,0x00004080,8,2,16,NULL,'100',1,0,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (15015,'Upg_Adv_Suit','Upg Adv Suit',5,20,NULL,150,NULL,25,NULL,1,0xFFFFFFFF,7,2,16,NULL,'1',1,0,'bonus bMaxHPRate,3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (15016,'Upg_Coat','Upg Coat',5,20,NULL,600,NULL,47,NULL,1,0xFFFFFFFE,7,2,16,NULL,'1',1,0,'bonus bMaxHPRate,3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (15017,'Upg_Saint_Robe','Upg Saint Robe',5,20,NULL,300,NULL,55,NULL,1,0x00048530,7,2,16,NULL,'1',1,0,'bonus bMdef,5; bonus bMaxHPRate,3;',NULL,NULL);
