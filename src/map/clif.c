@@ -11860,9 +11860,11 @@ void clif_parse_OpenVending(int fd, struct map_session_data* sd)
 		clif_displaymessage (sd->fd, msg_txt(204)); // "You can't open a shop on this cell."
 		return;
 	}
-    
+
 	if( vending_checknearnpc(&sd->bl) ) {
-		clif_displaymessage(sd->fd, msg_txt(662));
+		char output[150];
+		sprintf(output, msg_txt(662), battle_config.min_npc_vending_distance);
+		clif_displaymessage(sd->fd, output);
 		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
 		return;
 	}
