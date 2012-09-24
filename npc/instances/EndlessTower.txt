@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.0
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -32,7 +32,6 @@
 //= 1.9 Added 'instance_check_party' command to the script for proper checking if
 //=		the invoking party meets the requirements to join the Memorial Dungeon.
 //= 2.0 Fixed broken else/if chaining. [Joseph]
-//= 2.1 Fixed OnTouch label typo. [Joseph]
 //============================================================ 
 
 alberta,214,77,6	script	Captain Janssen	709,{
@@ -553,7 +552,7 @@ OnEnable:
 	areamonster "1@tower",93,351,103,387,"Baby Desert Wolf",1107,10,instance_npcname("1FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "1@tower",136,354;
 	end;
 
@@ -586,7 +585,7 @@ OnEnable:
 	areamonster "1@tower",181,351,191,387,"Skeleton",1076,5,instance_npcname("2FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "1@tower",224,354;
 	end;
 
@@ -619,7 +618,7 @@ OnEnable:
 	areamonster "1@tower",267,351,277,387,"Hornet",1004,5,instance_npcname("3FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "1@tower",310,354;
 	end;
 
@@ -651,7 +650,7 @@ OnEnable:
 	areamonster "1@tower",352,351,362,387,"Thief Bug Egg",1048,5,instance_npcname("4FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "1@tower",395,354;
 	end;
 
@@ -682,7 +681,7 @@ OnEnable:
 	areamonster "1@tower",9,267,19,303,"Pupa",1008,5,instance_npcname("5FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "1@tower",52,270;
 	end;
 
@@ -713,7 +712,7 @@ OnEnable:
 	areamonster "1@tower",93,267,103,303,"Farmiliar",1005,15,instance_npcname("6FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "1@tower",136,270;
 	end;
 
@@ -742,7 +741,7 @@ OnEnable:
 	areamonster "1@tower",181,267,191,303,"Cruiser",1248,15,instance_npcname("7FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "1@tower",224,270;
 	end;
 
@@ -772,7 +771,7 @@ OnEnable:
 	areamonster "1@tower",267,267,277,303,"Stapo",1784,10,instance_npcname("8FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "1@tower",310,270;
 	end;
 
@@ -802,7 +801,7 @@ OnEnable:
 	areamonster "1@tower",352,267,362,303,"Hornet",1004,20,instance_npcname("9FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "1@tower",395,270;
 	end;
 
@@ -833,7 +832,7 @@ OnEnable:
 	areamonster "1@tower",9,180,19,216,"Rafflesia",1162,5,instance_npcname("10FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "1@tower",52,183;
 	end;
 
@@ -862,7 +861,7 @@ OnEnable:
 	areamonster "1@tower",93,180,103,216,"Punk",1199,25,instance_npcname("11FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "1@tower",136,183;
 	end;
 
@@ -892,7 +891,7 @@ OnEnable:
 	areamonster "1@tower",181,180,191,216,"Munak",1026,10,instance_npcname("12FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "1@tower",224,183;
 	end;
 
@@ -924,7 +923,7 @@ OnEnable:
 	areamonster "1@tower",267,180,277,216,"Orc Baby",1686,5,instance_npcname("13FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "1@tower",310,183;
 	end;
 
@@ -957,7 +956,7 @@ OnEnable:
 	areamonster "1@tower",352,180,362,216,"Ant Egg",1097,5,instance_npcname("14FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 
 	warp "1@tower",395,183;
 	end;
@@ -989,7 +988,7 @@ OnEnable:
 	areamonster "1@tower",9,96,19,132,"Archer Skeleton",1016,10,instance_npcname("15FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "1@tower",52,99;
 	end;
 
@@ -1020,7 +1019,7 @@ OnEnable:
 	areamonster "1@tower",93,96,103,132,"Hill Wind",1629,5,instance_npcname("16FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "1@tower",136,99;
 	end;
 
@@ -1049,7 +1048,7 @@ OnEnable:
 	areamonster "1@tower",181,96,191,132,"Tarou",1175,15,instance_npcname("17FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "1@tower",224,99;
 	end;
 
@@ -1080,7 +1079,7 @@ OnEnable:
 	areamonster "1@tower",267,96,277,132,"Phen",1158,10,instance_npcname("18FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "1@tower",310,99;
 	end;
 
@@ -1109,7 +1108,7 @@ OnEnable:
 	areamonster "1@tower",352,96,362,132,"Pirate Skeleton",1071,50,instance_npcname("19FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "1@tower",395,99;
 	end;
 
@@ -1141,7 +1140,7 @@ OnEnable:
 	areamonster "1@tower",9,9,19,45,"Plasma",1694,5,instance_npcname("20FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "1@tower",52,12;
 	end;
 
@@ -1174,7 +1173,7 @@ OnEnable:
 	areamonster "1@tower",93,9,103,45,"Rafflesia",1162,10,instance_npcname("21FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "1@tower",136,12;
 	end;
 
@@ -1206,7 +1205,7 @@ OnEnable:
 	areamonster "1@tower",181,9,191,45,"Hydra",1068,5,instance_npcname("22FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "1@tower",224,12;
 	end;
 
@@ -1236,7 +1235,7 @@ OnEnable:
 	areamonster "1@tower",267,9,277,45,"Jakk",1130,10,instance_npcname("23FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "1@tower",310,12;
 	end;
 
@@ -1266,7 +1265,7 @@ OnEnable:
 	areamonster "1@tower",352,9,362,45,"Nine Tail",1180,15,instance_npcname("24FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "1@tower",395,12;
 	end;
 
@@ -1294,7 +1293,7 @@ OnEnable:
 	initnpctimer;
 	end;
 
-OnTouch:
+OnTouch_:
 	getitem 6000,1; //Dark_Ashes
 	warp "2@tower",52,354;
 	end;
@@ -1317,7 +1316,7 @@ OnEnable:
 	enablenpc instance_npcname("25FGate102tower-2", instance_id());
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",52,354;
 	end;
 }
@@ -1386,7 +1385,7 @@ OnEnable:
 	areamonster "2@tower",93,351,103,387,"Goblin",1126,5,instance_npcname("26FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",136,354;
 	end;
 
@@ -1417,7 +1416,7 @@ OnEnable:
 	areamonster "2@tower",181,351,191,387,"Kukre",1070,10,instance_npcname("27FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",224,354;
 	end;
 
@@ -1450,7 +1449,7 @@ OnEnable:
 	areamonster "2@tower",267,351,277,387,"Whisper",1179,10,instance_npcname("28FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",310,354;
 	end;
 
@@ -1479,7 +1478,7 @@ OnEnable:
 	areamonster "2@tower",352,351,362,387,"Evil Nymph",1416,30,instance_npcname("29FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",395,354;
 	end;
 
@@ -1510,7 +1509,7 @@ OnEnable:
 	areamonster "2@tower",9,267,19,303,"Scorpion",1001,5,instance_npcname("30FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",52,270;
 	end;
 
@@ -1544,7 +1543,7 @@ OnEnable:
 	areamonster "2@tower",93,267,103,303,"Goblin",1126,5,instance_npcname("31FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",136,270;
 	end;
 
@@ -1576,7 +1575,7 @@ OnEnable:
 	areamonster "2@tower",181,267,191,303,"Kobold",1135,5,instance_npcname("32FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",224,270;
 	end;
 
@@ -1606,7 +1605,7 @@ OnEnable:
 	areamonster "2@tower",267,267,277,303,"Giant Whisper",1186,10,instance_npcname("33FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",310,270;
 	end;
 
@@ -1638,7 +1637,7 @@ OnEnable:
 	areamonster "2@tower",352,267,362,303,"Permeter",1314,10,instance_npcname("34FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",395,270;
 	end;
 
@@ -1668,7 +1667,7 @@ OnEnable:
 	areamonster "2@tower",9,180,19,216,"Alligator",1271,10,instance_npcname("35FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",52,183;
 	end;
 
@@ -1698,7 +1697,7 @@ OnEnable:
 	areamonster "2@tower",93,180,103,216,"Alarm",1193,30,instance_npcname("36FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",136,183;
 	end;
 
@@ -1727,7 +1726,7 @@ OnEnable:
 	areamonster "2@tower",181,180,191,216,"Rideword",1195,25,instance_npcname("37FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",224,183;
 	end;
 
@@ -1759,7 +1758,7 @@ OnEnable:
 	areamonster "2@tower",267,180,277,216,"Jin Guai",1517,5,instance_npcname("38FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",310,183;
 	end;
 
@@ -1792,7 +1791,7 @@ OnEnable:
 	areamonster "2@tower",352,180,362,216,"Karakasa",1400,5,instance_npcname("39FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",395,183;
 	end;
 
@@ -1820,7 +1819,7 @@ OnEnable:
 	areamonster "2@tower",9,96,19,132,"Kraben",1587,50,instance_npcname("40FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",52,99;
 	end;
 
@@ -1852,7 +1851,7 @@ OnEnable:
 	areamonster "2@tower",93,96,103,132,"Hode",1127,5,instance_npcname("41FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",136,99;
 	end;
 
@@ -1883,7 +1882,7 @@ OnEnable:
 	areamonster "2@tower",181,96,191,132,"Boa",1025,5,instance_npcname("42FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",224,99;
 	end;
 
@@ -1915,7 +1914,7 @@ OnEnable:
 	areamonster "2@tower",267,96,277,132,"Savage Babe",1167,10,instance_npcname("43FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",310,99;
 	end;
 
@@ -1946,7 +1945,7 @@ OnEnable:
 	areamonster "2@tower",352,96,362,132,"Mummy",1041,20,instance_npcname("44FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",395,99;
 	end;
 
@@ -1975,7 +1974,7 @@ OnEnable:
 	areamonster "2@tower",9,9,19,45,"Beholder",1633,20,instance_npcname("45FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",52,12;
 	end;
 
@@ -2006,7 +2005,7 @@ OnEnable:
 	areamonster "2@tower",93,9,103,45,"Petite",1155,10,instance_npcname("46FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",136,12;
 	end;
 
@@ -2036,7 +2035,7 @@ OnEnable:
 	areamonster "2@tower",181,9,191,45,"Ancient Mimic",1699,10,instance_npcname("47FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",224,12;
 	end;
 
@@ -2068,7 +2067,7 @@ OnEnable:
 	areamonster "2@tower",267,9,277,45,"Bigfoot",1060,5,instance_npcname("48FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",310,12;
 	end;
 
@@ -2100,7 +2099,7 @@ OnEnable:
 	areamonster "2@tower",352,9,362,45,"Matyr",1146,10,instance_npcname("49FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "2@tower",395,12;
 	end;
 
@@ -2128,7 +2127,7 @@ OnEnable:
 	initnpctimer;
 	end;
 
-OnTouch:
+OnTouch_:
 	getitem 6000,1; //Dark_Ashes
 	warp "3@tower",52,354;
 	end;
@@ -2151,7 +2150,7 @@ OnEnable:
 	enablenpc instance_npcname("50FGate102tower-2", instance_id());
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",52,354;
 	end;
 }
@@ -2218,7 +2217,7 @@ OnEnable:
 	areamonster "3@tower",93,351,103,387,"Hill Wind",1629,5,instance_npcname("51FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",136,354;
 	end;
 
@@ -2247,7 +2246,7 @@ OnEnable:
 	areamonster "3@tower",181,351,191,387,"Shinobi",1401,30,instance_npcname("52FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",224,354;
 	end;
 
@@ -2277,7 +2276,7 @@ OnEnable:
 	areamonster "3@tower",267,351,277,387,"Miyabi Doll",1404,10,instance_npcname("53FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",310,354;
 	end;
 
@@ -2308,7 +2307,7 @@ OnEnable:
 	areamonster "3@tower",352,351,362,387,"Sidewinder",1037,15,instance_npcname("54FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",395,354;
 	end;
 
@@ -2340,7 +2339,7 @@ OnEnable:
 	areamonster "3@tower",9,267,19,303,"Gazeti",1778,10,instance_npcname("55FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",52,270;
 	end;
 
@@ -2376,7 +2375,7 @@ OnEnable:
 	areamonster "3@tower",93,267,103,303,"Drops",1113,5,instance_npcname("56FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",136,270;
 	end;
 
@@ -2408,7 +2407,7 @@ OnEnable:
 	areamonster "3@tower",181,267,191,303,"Injustice",1257,5,instance_npcname("57FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",224,270;
 	end;
 
@@ -2438,7 +2437,7 @@ OnEnable:
 	areamonster "3@tower",267,267,277,303,"Mystcase",1249,10,instance_npcname("58FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",310,270;
 	end;
 
@@ -2473,7 +2472,7 @@ OnEnable:
 	areamonster "3@tower",352,267,362,303,"Egnigem Cenia",1652,10,instance_npcname("59FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",395,270;
 	end;
 
@@ -2506,7 +2505,7 @@ OnEnable:
 	areamonster "3@tower",9,180,19,216,"Vanberk",1771,5,instance_npcname("60FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",52,183;
 	end;
 
@@ -2534,7 +2533,7 @@ OnEnable:
 	areamonster "3@tower",93,180,103,216,"Wanderer",1208,35,instance_npcname("61FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",136,183;
 	end;
 
@@ -2566,7 +2565,7 @@ OnEnable:
 	areamonster "3@tower",181,180,191,216,"Zombie",1015,5,instance_npcname("62FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",224,183;
 	end;
 
@@ -2599,7 +2598,7 @@ OnEnable:
 	areamonster "3@tower",267,180,277,216,"Giant Hornet",1303,2,instance_npcname("63FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",310,183;
 	end;
 
@@ -2628,7 +2627,7 @@ OnEnable:
 	areamonster "3@tower",352,180,362,216,"Galion",1783,20,instance_npcname("64FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",395,183;
 	end;
 
@@ -2658,7 +2657,7 @@ OnEnable:
 	areamonster "3@tower",9,96,19,132,"Injustice",1257,10,instance_npcname("65FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",52,99;
 	end;
 
@@ -2690,7 +2689,7 @@ OnEnable:
 	areamonster "3@tower",93,96,103,132,"Petite",1156,5,instance_npcname("66FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",136,99;
 	end;
 
@@ -2722,7 +2721,7 @@ OnEnable:
 	areamonster "3@tower",181,96,191,132,"Golem",1040,5,instance_npcname("67FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",224,99;
 	end;
 
@@ -2754,7 +2753,7 @@ OnEnable:
 	areamonster "3@tower",267,96,277,132,"False Angel",1371,10,instance_npcname("68FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",310,99;
 	end;
 
@@ -2784,7 +2783,7 @@ OnEnable:
 	areamonster "3@tower",352,96,362,132,"Orc Baby",1686,20,instance_npcname("69FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",395,99;
 	end;
 
@@ -2815,7 +2814,7 @@ OnEnable:
 	areamonster "3@tower",9,9,19,45,"Nightmare",1061,5,instance_npcname("70FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",52,12;
 	end;
 
@@ -2846,7 +2845,7 @@ OnEnable:
 	areamonster "3@tower",93,9,103,45,"Enchanted Peach Tree",1410,10,instance_npcname("71FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",136,12;
 	end;
 
@@ -2879,7 +2878,7 @@ OnEnable:
 	areamonster "3@tower",181,9,191,45,"Green Maiden",1631,10,instance_npcname("72FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",224,12;
 	end;
 
@@ -2915,7 +2914,7 @@ OnEnable:
 	areamonster "3@tower",267,9,277,45,"Venatu",1676,6,instance_npcname("73FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",310,12;
 	end;
 
@@ -2946,7 +2945,7 @@ OnEnable:
 	areamonster "3@tower",352,9,362,45,"Dark Illusion",1302,10,instance_npcname("74FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "3@tower",395,12;
 	end;
 
@@ -2974,7 +2973,7 @@ OnEnable:
 	initnpctimer;
 	end;
 
-OnTouch:
+OnTouch_:
 	getitem 6000,1; //Dark_Ashes
 	warp "4@tower",52,354;
 	end;
@@ -2997,7 +2996,7 @@ OnEnable:
 	enablenpc instance_npcname("75FGate102tower-2", instance_id());
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "4@tower",52,354;
 	end;
 }
@@ -3063,7 +3062,7 @@ OnEnable:
 	areamonster "4@tower",93,351,103,387,"Wind Ghost",1263,10,instance_npcname("76FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "4@tower",136,354;
 	end;
 
@@ -3095,7 +3094,7 @@ OnEnable:
 	areamonster "4@tower",181,351,191,387,"Raydric",1163,20,instance_npcname("77FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "4@tower",224,354;
 	end;
 
@@ -3127,7 +3126,7 @@ OnEnable:
 	areamonster "4@tower",267,351,277,387,"Petite",1155,5,instance_npcname("78FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "4@tower",310,354;
 	end;
 
@@ -3156,7 +3155,7 @@ OnEnable:
 	areamonster "4@tower",352,351,362,387,"Necromancer",1870,15,instance_npcname("79FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "4@tower",395,354;
 	end;
 
@@ -3186,7 +3185,7 @@ OnEnable:
 	areamonster "4@tower",9,267,19,303,"Executioner",1205,20,instance_npcname("80FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "4@tower",52,270;
 	end;
 
@@ -3218,7 +3217,7 @@ OnEnable:
 	areamonster "4@tower",93,267,103,303,"Injustice",1257,10,instance_npcname("81FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "4@tower",136,270;
 	end;
 
@@ -3249,7 +3248,7 @@ OnEnable:
 	areamonster "4@tower",181,267,191,303,"Chimera",1283,10,instance_npcname("82FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "4@tower",224,270;
 	end;
 
@@ -3281,7 +3280,7 @@ OnEnable:
 	areamonster "4@tower",267,267,277,303,"Incubus",1374,10,instance_npcname("83FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "4@tower",310,270;
 	end;
 
@@ -3309,7 +3308,7 @@ OnEnable:
 	areamonster "4@tower",352,267,362,303,"Ifrit",1832,1,instance_npcname("84FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "4@tower",395,270;
 	end;
 
@@ -3340,7 +3339,7 @@ OnEnable:
 	areamonster "4@tower",9,180,19,216,"Majoruros",1310,10,instance_npcname("85FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "4@tower",52,183;
 	end;
 
@@ -3371,7 +3370,7 @@ OnEnable:
 	areamonster "4@tower",93,180,103,216,"Gajomart",1309,10,instance_npcname("86FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "4@tower",136,183;
 	end;
 
@@ -3403,7 +3402,7 @@ OnEnable:
 	areamonster "4@tower",181,180,191,216,"Khalitzburg",1132,10,instance_npcname("87FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "4@tower",224,183;
 	end;
 
@@ -3434,7 +3433,7 @@ OnEnable:
 	areamonster "4@tower",267,180,277,216,"Dolor of Thanatos",1707,6,instance_npcname("88FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "4@tower",310,183;
 	end;
 
@@ -3465,7 +3464,7 @@ OnEnable:
 	areamonster "4@tower",352,180,362,216,"False Angel",1371,10,instance_npcname("89FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "4@tower",395,183;
 	end;
 
@@ -3495,7 +3494,7 @@ OnEnable:
 	areamonster "4@tower",9,96,19,132,"Kavac",1656,30,instance_npcname("90FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "4@tower",52,99;
 	end;
 
@@ -3527,7 +3526,7 @@ OnEnable:
 	areamonster "4@tower",93,96,103,132,"Marduk",1140,10,instance_npcname("91FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "4@tower",136,99;
 	end;
 
@@ -3558,7 +3557,7 @@ OnEnable:
 	areamonster "4@tower",181,96,191,132,"Wanderer",1208,10,instance_npcname("92FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "4@tower",224,99;
 	end;
 
@@ -3587,7 +3586,7 @@ OnEnable:
 	areamonster "4@tower",267,96,277,132,"Bow Master",1830,15,instance_npcname("93FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "4@tower",310,99;
 	end;
 
@@ -3619,7 +3618,7 @@ OnEnable:
 	areamonster "4@tower",352,96,362,132,"Chonchon",1011,5,instance_npcname("94FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "4@tower",395,99;
 	end;
 
@@ -3649,7 +3648,7 @@ OnEnable:
 	areamonster "4@tower",9,9,19,45,"Skeggiold",1754,10,instance_npcname("95FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "4@tower",52,12;
 	end;
 
@@ -3680,7 +3679,7 @@ OnEnable:
 	areamonster "4@tower",93,9,103,45,"Incarnation of Morroc",1921,5,instance_npcname("96FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "4@tower",136,12;
 	end;
 
@@ -3713,7 +3712,7 @@ OnEnable:
 	areamonster "4@tower",181,9,191,45,"Cecil Damon",1638,2,instance_npcname("97FGate102tower", instance_id())+"::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "4@tower",224,12;
 	end;
 
@@ -3803,7 +3802,7 @@ OnEnable:
 	}
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "4@tower",309,12;
 	end;
 
@@ -3831,7 +3830,7 @@ OnEnable:
 	initnpctimer;
 	end;
 
-OnTouch:
+OnTouch_:
 	getitem 6000,1; //Dark_Ashes
 	warp "5@tower",101,72;
 	end;
@@ -3854,7 +3853,7 @@ OnEnable:
 	enablenpc instance_npcname("99FGate102tower-2", instance_id());
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "5@tower",101,72;
 	end;
 }
