@@ -784,8 +784,8 @@
 2240,0,6,4,0,0,0,1,1,no,0,0,0,none,0,		RA_WUGMASTERY,Warg Mastery
 2241,0,6,4,0,0,0,3,1,no,0,0,0,none,0,		RA_WUGRIDER,Warg Rider
 2242,0,6,4,-1,0x2,1,1,0,no,0,0,0,weapon,0,	RA_WUGDASH,Warg Dash
-2243,9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,	RA_WUGSTRIKE,Warg Strike
-2244,9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,	RA_WUGBITE,Warg Bite
+2243,9,6,1,0,0,0,5,1,no,0,0,0,weapon,0,	RA_WUGSTRIKE,Warg Strike
+2244,9,6,1,0,0,0,5,1,no,0,0,0,weapon,0,	RA_WUGBITE,Warg Bite
 2245,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		RA_TOOTHOFWUG,Tooth of Warg
 2246,0,6,4,0,0x2,3:4:5:6:7,5,1,no,0,0,0,weapon,0,	RA_SENSITIVEKEEN,Sensitive Keen
 2247,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,		RA_CAMOUFLAGE,Camouflage
