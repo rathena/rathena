@@ -10515,7 +10515,20 @@ BUILDIN_FUNC(getmapflag)
 
 	return 0;
 }
-
+/* pvp timer handling */
+static int script_mapflag_pvp_sub(struct block_list *bl,va_list ap) {
+	TBL_PC* sd = (TBL_PC*)bl;
+	if (sd->pvp_timer == INVALID_TIMER) {
+		sd->pvp_timer = add_timer(gettick() + 200, pc_calc_pvprank_timer, sd->bl.id, 0);
+		sd->pvp_rank = 0;
+		sd->pvp_lastusers = 0;
+		sd->pvp_point = 5;
+		sd->pvp_won = 0;
+		sd->pvp_lost = 0;
+	}
+	clif_map_property(sd, MAPPROPERTY_FREEPVPZONE);
+	return 0;
+}
 BUILDIN_FUNC(setmapflag)
 {
 	int m,i;
@@ -10536,10 +10549,18 @@ BUILDIN_FUNC(setmapflag)
 			case MF_NOBRANCH:			map[m].flag.nobranch = 1; break;
 			case MF_NOPENALTY:			map[m].flag.noexppenalty = 1; map[m].flag.nozenypenalty = 1; break;
 			case MF_NOZENYPENALTY:		map[m].flag.nozenypenalty = 1; break;
-			case MF_PVP:				map[m].flag.pvp = 1; break;
+			case MF_PVP:
+				map[m].flag.pvp = 1;
+				if( !battle_config.pk_mode ) {
+					map_foreachinmap(script_mapflag_pvp_sub,m,BL_PC);
+				}
+				break;
 			case MF_PVP_NOPARTY:		map[m].flag.pvp_noparty = 1; break;
 			case MF_PVP_NOGUILD:		map[m].flag.pvp_noguild = 1; break;
-			case MF_GVG:				map[m].flag.gvg = 1; break;
+			case MF_GVG:
+				map[m].flag.gvg = 1;
+				clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
+				break;
 			case MF_GVG_NOPARTY:		map[m].flag.gvg_noparty = 1; break;
 			case MF_NOTRADE:			map[m].flag.notrade = 1; break;
 			case MF_NOSKILL:			map[m].flag.noskill = 1; break;
@@ -10614,10 +10635,16 @@ BUILDIN_FUNC(removemapflag)
 			case MF_NOBRANCH:			map[m].flag.nobranch = 0; break;
 			case MF_NOPENALTY:			map[m].flag.noexppenalty = 0; map[m].flag.nozenypenalty = 0; break;
 			case MF_NOZENYPENALTY:		map[m].flag.nozenypenalty = 0; break;
-			case MF_PVP:				map[m].flag.pvp = 0; break;
+			case MF_PVP:
+				map[m].flag.pvp = 0;
+				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
+				break;
 			case MF_PVP_NOPARTY:		map[m].flag.pvp_noparty = 0; break;
 			case MF_PVP_NOGUILD:		map[m].flag.pvp_noguild = 0; break;
-			case MF_GVG:				map[m].flag.gvg = 0; break;
+			case MF_GVG:
+				map[m].flag.gvg = 0;
+				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
+				break;
 			case MF_GVG_NOPARTY:		map[m].flag.gvg_noparty = 0; break;
 			case MF_NOTRADE:			map[m].flag.notrade = 0; break;
 			case MF_NOSKILL:			map[m].flag.noskill = 0; break;
