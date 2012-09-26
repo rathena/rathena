@@ -3529,7 +3529,7 @@
 6091,Dark_Red_Scale,Dark Red Scale,3,200000,,10,,,,,,,,,,,,,{},{},{}
 6092,Singing_Crystal_Piece,Piece Of Singing Crystal,3,0,,10,,,,,,,,,,,,,{},{},{}
 6093,Egg_Of_Draco,Draco's Egg,3,0,,0,,,,,,,,,,,,,{},{},{}
-//6094,Traditional_Cookie,Traditional Sweets,3,20,,10,,,,,,,,,,,,,{},{},{}
+6094,Traditional_Cookie,Traditional Sweets,3,20,,10,,,,,,,,,,,,,{},{},{}
 6095,Flavored_Alcohol,Flavored Alcohol,3,1000,,10,,,,,,,,,,,,,{},{},{}
 6096,Fish_With_Blue_Back,Fish With Blue Back,3,20,,10,,,,,,,,,,,,,{},{},{}
 6097,Pumpkin_Pie_,Pumpkin Pie,3,20,,10,,,,,,,,,,,,,{},{},{}
