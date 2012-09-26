@@ -4492,7 +4492,7 @@ dic_in01,165,104,1	script	Frede#13_3_in	454,{
 		mes "Zzz...Zzz...";
 		close; }
 	mes "[Frede]";
-	mes "¢¤¡ô¡ø ¢³ ¡÷¡û¡;
+	mes "¢¤¡ô¡ø ¢³ ¡÷¡û¡";
 	mes "¡û¡ö ¡õ";
 	close;
 }
@@ -5980,7 +5980,7 @@ dic_in01,42,264,3	script	Adventurer Clerk#ep133_	453,{
 	mes "- Cannot communicate with him. -";
 	close;
 }
-
+}
 // Enchantment NPCs
 //============================================================
 
