@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Gennosuke Kouga
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -20,6 +20,7 @@
 //= 	the new Izlude Town Map. [Masao]
 //= 1.4 Fixed minor typos. [Joseph]
 //= 1.5 Removed "Mysterious Documents" duplicated in magic_books. [Euphy]
+//= 1.6 Fixed missing checks for quest: Sapha's Visit. [Joseph]
 //============================================================
 
 // Entrance
@@ -4491,7 +4492,7 @@ dic_in01,165,104,1	script	Frede#13_3_in	454,{
 		mes "Zzz...Zzz...";
 		close; }
 	mes "[Frede]";
-	mes "¢¤¡ô¡ø ¢³ ¡÷¡û¡";
+	mes "¢¤¡ô¡ø ¢³ ¡÷¡û?;
 	mes "¡û¡ö ¡õ";
 	close;
 }
@@ -5153,7 +5154,8 @@ mid_camp,220,246,5	script	Expedition Guard Ben	930,{
 		next;
 		mes "[Ben]";
 		mes "I can also visit the Sapha if I work well here, can't I?";
-		close; }
+		close; 
+	}
 	mes "Hmm. Hey, Maha,";
 	mes "what do you think?";
 	mes "Why do you think he is here?";
@@ -5203,7 +5205,8 @@ mid_camp,220,246,5	script	Expedition Guard Ben	930,{
 		mes "[Ben]";
 		mes "We might be able to get some information if we go to the command center now.";
 		mes "Try finding ^8D38C9Aello^000000.";
-		close; }
+		close; 
+	}
 	mes "[Ben]";
 	mes "Huh? Did you hear us?";
 	mes "Nothing really or maybe something...";
@@ -5231,7 +5234,8 @@ mid_camp,223,246,4	script	Expedition Guard Maha	868,{
 		mes "[Maha]";
 		mes "But I do think the Sapha race is overly kind, almost unnaturally.";
 		mes "Guess it'll be fine.";
-		close; }
+		close; 
+	}
 	mes "[Ben]";
 	mes "Hmm. Hey, Maha,";
 	mes "what do you think?";
@@ -5282,7 +5286,8 @@ mid_camp,223,246,4	script	Expedition Guard Maha	868,{
 		mes "[Ben]";
 		mes "We might be able to get some information if we go to the command center now.";
 		mes "Try finding ^8D38C9Aello^000000.";
-		close; }
+		close; 
+	}
 	mes "[Ben]";
 	mes "Huh? Did you hear us?";
 	mes "Nothing really or maybe something...";
@@ -5310,7 +5315,8 @@ mid_campin,93,114,3	script	Guard Aello#ep13_3_03	967,{
 	if (ep13_3_invite >= 2) {
 		mes "I knew I could count on you.";
 		mes "You're activities will help us tremendously in expanding our territory.";
-		close; }
+		close; 
+	}
 	if (checkquest(7182) >= 0) {
 		mes "It's the room at the right on the second floor.";
 		mes "There is a guard in front of the room.";
@@ -5319,7 +5325,8 @@ mid_campin,93,114,3	script	Guard Aello#ep13_3_03	967,{
 		mes "[Aello]";
 		mes "Try not to give unnecessary information";
 		mes "and avoid any small talk.";
-		close; }
+		close; 
+	}
 	mes "Ah, you. Good timing.";
 	mes "I have something urgent to tell you.";
 	next;
@@ -5350,14 +5357,16 @@ mid_campin,111,120,3	script	Soldier#ep13_3_04	852,{
 		mes "You're back.";
 		mes "Are you acquainted with the Sapha messenger now?";
 		mes "We have high expectations from you.";
-		goto warpnow; }
+		goto warpnow; 
+	}
 	mes "Sorry, but this room is currently restricted from visitors.";
 	next;
 	if(select("I have authorization:Is that so.")==2) {
 		mes "[Soldier]";
 		mes "You can't enter without Aello's permission.";
 		mes "No exceptions.";
-		close; }
+		close; 
+	}
 	mes "[Soldier]";
 	mes "You do?";
 	mes "What is your name?";
@@ -5365,7 +5374,8 @@ mid_campin,111,120,3	script	Soldier#ep13_3_04	852,{
 		mes ""+strcharinfo(0)+"?";
 		mes "I never heard your name before!";
 		mes "So, please leave.";
-		close; }
+		close; 
+	}
 	mes "Thank you.";
 	mes "So you are "+strcharinfo(0)+"?";
 	next;
@@ -5490,7 +5500,8 @@ switch(getarg(0)) {
 			mes "[Vyhannus]";
 			mes "Amazing.";
 			mes "Like with Hound, that ring you humans made...";
-			mes "is like a ring of wisdom."; }
+			mes "is like a ring of wisdom."; 
+		}
 		else {
 			mes "[Hound]";
 			mes "What are you saying?";
@@ -5503,7 +5514,8 @@ switch(getarg(0)) {
 			next;
 			mes "[Vyhannus]";
 			mes "Shall we skip to the point?";
-			mes "The reason why I am here..."; }
+			mes "The reason why I am here..."; 
+		}
 		next;
 		enablenpc "Hibba Agip#ep13_3_07";	
 		mes "[Someone's voice]";
@@ -5609,7 +5621,8 @@ mid_campin,168,125,3	script	Hound#ep13_3_06	997,{
 				mes "[Hound]";
 				mes "And don't forget what the captain said.";
 				mes "Inspector Doha is in the next room.";
-				close; }
+				close; 
+			}
 			callfunc "eldicastes_c",2;
 		} else if (ep13_3_invite >= 4) {
 			mes "[Hound]";
@@ -5620,8 +5633,11 @@ mid_campin,168,125,3	script	Hound#ep13_3_06	997,{
 			mes "[Hound]";
 			mes "I have to take care of Vyhannus here.";
 			mes "We might see the day when Saphas like Vyhannus will be living with us on our continent.";
-			close; }
-		callfunc "eldicastes_c",3; }
+			close; 
+		} else if (ep13_3_invite == 1) {
+			callfunc "eldicastes_c",3;
+		}
+	}
 	callfunc "eldicastes_c",4;
 }
 
@@ -5640,7 +5656,8 @@ mid_campin,168,128,3	script	Sapha from Manuk	451,{
 				mes "be a little scary.";
 				mes "But I'm sure you will reach the";
 				mes "end of it since you are strong.";
-				close; }
+				close; 
+			}
 			callfunc "eldicastes_c",2;
 		} else if (ep13_3_invite == 4) {
 			mes "[Vyhannus]";
@@ -5676,14 +5693,17 @@ mid_campin,168,128,3	script	Sapha from Manuk	451,{
 			next;
 			mes "[Vyhannus]";
 			mes "That is it.";
-			close; }
-		mes "[Sapha]";
-		mes "- This person look like the Sapha messenger from Manuk. -";
-		mes "You just stand there without";
-		mes "knowing what he says, so the";
-		mes "expedition guard next to you starts to talk. -";
-		next;	
-		callfunc "eldicastes_c",3; }
+			close; 
+		} else if (ep13_3_invite == 1) {
+			mes "[Sapha]";
+			mes "- This person look like the Sapha messenger from Manuk. -";
+			mes "You just stand there without";
+			mes "knowing what he says, so the";
+			mes "expedition guard next to you starts to talk. -";
+			next;	
+			callfunc "eldicastes_c",3;
+		}
+	}
 	mes "[Sapha]";
 	mes "¢¤¡ð¡ú? ¢£ ¡ù¡ð...";
 	mes "¡ï¡ò¡Ð ¢¤ ?";
@@ -5715,7 +5735,8 @@ man_in01,315,52,3	script	Guard Captain Avalanche	450,{
 			mes "I hope that the";
 			mes "Light of El Dicastes";
 			mes "will show you the way.";
-			close; }
+			close; 
+		}
 		if (ep13_3_invite == 5) {
 			mes "Oh.. You have the Light of El Dicastes.";
 			mes "It would be helpful for your travel.";
@@ -5727,48 +5748,52 @@ man_in01,315,52,3	script	Guard Captain Avalanche	450,{
 			mes "[Guard Captain Avalanche]";
 			mes "Always take care of yourself at all times.";
 			mes "Haha.. but then you humans are very strong.";
-			close; }
-		mes "You are human.";
-		mes "What do you want here?";
-		next;
-		select("I've come with Vyhannus's invitation.");
-		mes "[Guard Captain Avalanche]";
-		mes "Ah. Jarute Vyhannus.";
-		mes "I though it would be better for";
-		mes "him to take a guard with him.";
-		next;
-		mes "[Guard Captain Avalanche]";
-		mes "I guess Vyhannus";
-		mes "trusts you humans.";
-		mes "I'm fine as long as";
-		mes "Vyhannus approved you.";
-		next;
-		mes "[Guard Captain Avalanche]";
-		mes "I authorize you to pass through to El Dicastes.";
-		mes "There is a tunnel that leads to the city outside of this building which goes down by the east mountain range of this village.";
-		next;
-		mes "[Guard Captain Avalanche]";
-		mes "That tunnel is the only way to the capital city. There is no other route because Kamidal mountain is so huge.";
-		next;
-		mes "[Guard Captain Avalanche]";
-		mes "The tunnel is well maintained. There was a time when part of the tunnel, which connects";
-		mes "with the lowest cave of the mountain, collapsed and reports of wild monsters was received.";
-		next;
-		mes "[Guard Captain Avalanche]";
-		mes "So I recommend that";
-		mes "you move in a group.";
-		mes "It is dangerous and";
-		mes "can be a long journey.";
-		mes "That is all I have to say for now.";
-		next;
-		mes "[Guard Captain Avalanche]";
-		mes "Please let me know any news about the capital city when you come back.";
-		changequest 7183,7184;
-		set ep13_3_invite,4;
-		close; }
-	mes "¢¤¡ð¡ú? ¢£ ¡ù¡ð...";
-	mes "¡ï¡ò¡Ð ¢¤ ?";
-	mes "¡ñ¡ï..?";
+			close; 
+		}
+		if (ep13_3_invite == 3) {
+			mes "You are human.";
+			mes "What do you want here?";
+			next;
+			select("I've come with Vyhannus's invitation.");
+			mes "[Guard Captain Avalanche]";
+			mes "Ah. Jarute Vyhannus.";
+			mes "I though it would be better for";
+			mes "him to take a guard with him.";
+			next;
+			mes "[Guard Captain Avalanche]";
+			mes "I guess Vyhannus";
+			mes "trusts you humans.";
+			mes "I'm fine as long as";
+			mes "Vyhannus approved you.";
+			next;
+			mes "[Guard Captain Avalanche]";
+			mes "I authorize you to pass through to El Dicastes.";
+			mes "There is a tunnel that leads to the city outside of this building which goes down by the east mountain range of this village.";
+			next;
+			mes "[Guard Captain Avalanche]";
+			mes "That tunnel is the only way to the capital city. There is no other route because Kamidal mountain is so huge.";
+			next;
+			mes "[Guard Captain Avalanche]";
+			mes "The tunnel is well maintained. There was a time when part of the tunnel, which connects";
+			mes "with the lowest cave of the mountain, collapsed and reports of wild monsters was received.";
+			next;
+			mes "[Guard Captain Avalanche]";
+			mes "So I recommend that";
+			mes "you move in a group.";
+			mes "It is dangerous and";
+			mes "can be a long journey.";
+			mes "That is all I have to say for now.";
+			next;
+			mes "[Guard Captain Avalanche]";
+			mes "Please let me know any news about the capital city when you come back.";
+			changequest 7183,7184;
+			set ep13_3_invite,4;
+			close; 
+		}
+	}
+	mes "??????? ?? ????...";
+	mes "?????? ?? ?";
+	mes "????..?";
 	close;	
 }
 
@@ -5785,7 +5810,8 @@ dic_in01,42,264,3	script	Adventurer Clerk#ep133_	453,{
 						mes "Strange.";
 						mes "Aren't you already registered?";
 						mes "I see your name in the records.";
-						close; }
+						close; 
+					}
 					mes "[Clerk Rhawyne]";
 					mes "Do you want to register";
 					mes "as an adventurer?";
@@ -5814,7 +5840,8 @@ dic_in01,42,264,3	script	Adventurer Clerk#ep133_	453,{
 					mes "There is a special place for humans located beneath the residential area of Pioms.";
 					mes "It is called in your language...";
 					mes "a pub. Hope you get to visit there.";
-					close; }
+					close; 
+				}
 				mes "[Clerk Rhawyne]";
 				mes "Hmm... You don't have Ravail's invitation? What are you doing here?";
 				close;
@@ -5827,7 +5854,8 @@ dic_in01,42,264,3	script	Adventurer Clerk#ep133_	453,{
 					if(select("I want to meet the minister.:Nothing particular.")==2) {
 						mes "[Clerk Rhawyne]";
 						mes "What are you curious about today?";
-						close; }
+						close; 
+					}
 					mes "[Clerk Rhawyne]";
 					mes "You want to meet the minister?";
 					mes "Which minister?";
@@ -5842,7 +5870,8 @@ dic_in01,42,264,3	script	Adventurer Clerk#ep133_	453,{
 						mes "[Clerk Rhawyne]";
 						mes "You are difficult.";
 						mes "Unlike other Saphas, ministers are very busy.";
-						close; }
+						close; 
+					}
 					if (countitem(6304) > 2) {
 						mes "[Clerk Rhawyne]";
 						mes "You've really collected 3 Sapha Certification already.";
@@ -5858,7 +5887,8 @@ dic_in01,42,264,3	script	Adventurer Clerk#ep133_	453,{
 						set ep13_3_secret,7;
 						delitem 6304,3;
 						changequest 7197,7198;
-						close; }
+						close; 
+					}
 					mes "[Clerk Rhawyne]";
 					mes "You need 3 Sapha Certification to meet Ahat.";
 					mes "You know what a Sapha Certification is, right?";
@@ -5867,7 +5897,8 @@ dic_in01,42,264,3	script	Adventurer Clerk#ep133_	453,{
 				} else if (checkquest(7198) >= 0) {
 					mes "Ahat is on the same floor as high minister Ravail.";
 					mes "Take the elevator up to the Administrative Office and then you will be guided in front of the separate elevator.";
-					close; }
+					close; 
+				}
 				mes "What are you curious about today?";
 				next;
 				switch(select("About official requests:About the Adventurer's pub:Ahat?:Sapha Certification?:End conversation.")) {
@@ -5937,12 +5968,11 @@ dic_in01,42,264,3	script	Adventurer Clerk#ep133_	453,{
 						mes "[Clerk Rhawyne]";
 						mes "Please feel free to ask questions when you need help.";
 						close;
-					}
+				}
 			case 3:
 				mes "[Clerk Rhawyne]";
 				mes "Please feel free to ask questions when you need help.";
 				close;
-			}
 		}
 	mes "¡ð¡ñ¡ô ¡õ ¡ü¢±¢³ ¡ö ¡ò...?";
 	mes "¢¤¡ö¡ø ... ¢³ ¡÷¢£¡ü ¡ø ¡Ð¡õ¡û...";
