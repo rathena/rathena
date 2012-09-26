@@ -399,7 +399,7 @@ Number	Description
 380.	Magic Crasher
 381.	Blue Starburst (Unknown use)
 382.	(Nothing)
-383.	Healt Conversion
+383.	Health Conversion
 384.	Soul Change (Sound Effect)
 385.	Soul Change (Visual Effect)
 386.	True Sight
@@ -619,7 +619,7 @@ Number	Description
 600.	Throw Venom Knife
 601.	Sight Blaster
 602.	Close Confine (Grab Effect)
-603.	Like 50
+603.	Spinning fire ball (like 50, but smaller)
 604.	Close Confine (Ground Effect)
 605.	(Nothing)
 606.	Pang Voice (Visual Effect)
@@ -687,8 +687,8 @@ Number	Description
 668.	Dragonfear
 669.	Wide Bleeding
 670.	Dragon fear (Visual Effect)
-671.	The Japan Earth Symbol (Like 'Seven Wind LV 1' but is in the Ground)
-672.	The Japan Wind Symbol (Like 'Seven Wind LV 2' but is in the Ground)
+671.	The Japan Earth Symbol (like 'Seven Wind Lv1', but on the ground)
+672.	The Japan Wind Symbol (like 'Seven Wind Lv2', but on the ground)
 673.	Map turns Blue (like Soul Link)
 674.	Evil Land Cell
 675.	Like Parrying/Kyrie Eleison barrier but Yellow with small Cross in every barrier piece
@@ -724,7 +724,7 @@ Number	Description
 705.	Client Error (mobile_ef01.str)
 706.	Client Error (mobile_ef03.str)
 707.	Client Crash :P
-708.	A Perfect Copy of Storm Gust Effect (Effect 89)
+708.	Storm Gust (same as 89)
 709.	A Firework that split in 4 mini fireworks
 710.	A Sphere like Effect 701 but Green, and a bit more larger
 711.	A big violet wall

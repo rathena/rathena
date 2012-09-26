@@ -4492,7 +4492,7 @@ dic_in01,165,104,1	script	Frede#13_3_in	454,{
 		mes "Zzz...Zzz...";
 		close; }
 	mes "[Frede]";
-	mes "¢¤¡ô¡ø ¢³ ¡÷¡û?;
+	mes "¢¤¡ô¡ø ¢³ ¡÷¡û¡;
 	mes "¡û¡ö ¡õ";
 	close;
 }
@@ -5791,9 +5791,9 @@ man_in01,315,52,3	script	Guard Captain Avalanche	450,{
 			close; 
 		}
 	}
-	mes "??????? ?? ????...";
-	mes "?????? ?? ?";
-	mes "????..?";
+	mes "¢¤¡ð¡ú? ¢£ ¡ù¡ð...";
+	mes "¡ï¡ò¡Ð ¢¤ ?";
+	mes "¡ñ¡ï..?";
 	close;	
 }
 

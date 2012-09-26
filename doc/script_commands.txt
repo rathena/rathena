@@ -6638,7 +6638,7 @@ by default.
 set number in this case will deactivate all pattern sets defined.
 
 'deletepset' will delete a pattern set from memory, so you can create a new 
-pattern set in it's place.
+pattern set in its place.
 
 Using regular expressions is high wizardry. But with this high wizardry comes 
 unparalleled power of text manipulation. For an explanation of what a regular 
