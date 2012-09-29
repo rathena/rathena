@@ -307,10 +307,14 @@ typedef char bool;
 
 #if defined(WIN32)
 #define PATHSEP '\\'
+#define PATHSEP_STR "\\"
 #elif defined(__APPLE__)
+// FIXME Mac OS X is unix based, is this still correct?
 #define PATHSEP ':'
+#define PATHSEP_STR ":"
 #else
 #define PATHSEP '/'
+#define PATHSEP_STR "/"
 #endif
 
 //////////////////////////////////////////////////////////////////////////
@@ -363,6 +367,16 @@ typedef char bool;
 #define va_copy(dst, src) ((void) memcpy(&(dst), &(src), sizeof(va_list)))
 #endif
 #endif
+
+
+//////////////////////////////////////////////////////////////////////////
+// Use the preprocessor to 'stringify' stuff (concert to a string).
+// example:
+//   #define TESTE blabla
+//   QUOTE(TESTE) -> "TESTE"
+//   EXPAND_AND_QUOTE(TESTE) -> "blabla"
+#define QUOTE(x) #x
+#define EXPAND_AND_QUOTE(x) QUOTE(x)
 
 
 //////////////////////////////////////////////////////////////////////////
