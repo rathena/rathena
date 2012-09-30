@@ -40,24 +40,23 @@ int attr_fix_table[4][ELE_MAX][ELE_MAX];
 struct Battle_Config battle_config;
 static struct eri *delay_damage_ers; //For battle delay damage structures.
 
-int battle_getcurrentskill(struct block_list *bl)
-{	//Returns the current/last skill in use by this bl.
+int battle_getcurrentskill(struct block_list *bl) { //Returns the current/last skill in use by this bl.
 	struct unit_data *ud;
 
-	if( bl->type == BL_SKILL )
-	{
+	if( bl->type == BL_SKILL ) {
 		struct skill_unit * su = (struct skill_unit*)bl;
 		return su->group?su->group->skill_id:0;
 	}
+	
 	ud = unit_bl2ud(bl);
+	
 	return ud?ud->skillid:0;
 }
 
 /*==========================================
  * Get random targetting enemy
  *------------------------------------------*/
-static int battle_gettargeted_sub(struct block_list *bl, va_list ap)
-{
+static int battle_gettargeted_sub(struct block_list *bl, va_list ap) {
 	struct block_list **bl_list;
 	struct unit_data *ud;
 	int target_id;
@@ -69,38 +68,40 @@ static int battle_gettargeted_sub(struct block_list *bl, va_list ap)
 
 	if (bl->id == target_id)
 		return 0;
-	if (*c >= 23)
+	
+	if (*c >= 24)
 		return 0;
-
-	ud = unit_bl2ud(bl);
-	if (!ud) return 0;
+	
+	if ( !(ud = unit_bl2ud(bl)) )
+		return 0;
 
 	if (ud->target == target_id || ud->skilltarget == target_id) {
 		bl_list[(*c)++] = bl;
 		return 1;
 	}
+	
 	return 0;
 }
 
-struct block_list* battle_gettargeted(struct block_list *target)
-{
+struct block_list* battle_gettargeted(struct block_list *target) {
 	struct block_list *bl_list[24];
 	int c = 0;
 	nullpo_retr(NULL, target);
 
 	memset(bl_list, 0, sizeof(bl_list));
 	map_foreachinrange(battle_gettargeted_sub, target, AREA_SIZE, BL_CHAR, bl_list, &c, target->id);
-	if (c == 0 || c > 23)
+	if ( c == 0 )
 		return NULL;
+	if( c > 24 )
+		c = 24;
 	return bl_list[rnd()%c];
 }
 
 
 //Returns the id of the current targetted character of the passed bl. [Skotlex]
-int battle_gettarget(struct block_list* bl)
-{
-	switch (bl->type)
-	{
+int battle_gettarget(struct block_list* bl) {
+	
+	switch (bl->type) {
 		case BL_PC:  return ((struct map_session_data*)bl)->ud.target;
 		case BL_MOB: return ((struct mob_data*)bl)->target_id;
 		case BL_PET: return ((struct pet_data*)bl)->target_id;
@@ -108,11 +109,11 @@ int battle_gettarget(struct block_list* bl)
 		case BL_MER: return ((struct mercenary_data*)bl)->ud.target;
 		case BL_ELEM: return ((struct elemental_data*)bl)->ud.target;
 	}
+	
 	return 0;
 }
 
-static int battle_getenemy_sub(struct block_list *bl, va_list ap)
-{
+static int battle_getenemy_sub(struct block_list *bl, va_list ap) {
 	struct block_list **bl_list;
 	struct block_list *target;
 	int *c;
@@ -123,32 +124,38 @@ static int battle_getenemy_sub(struct block_list *bl, va_list ap)
 
 	if (bl->id == target->id)
 		return 0;
-	if (*c >= 23)
+	
+	if (*c >= 24)
 		return 0;
+	
 	if (status_isdead(bl))
 		return 0;
+	
 	if (battle_check_target(target, bl, BCT_ENEMY) > 0) {
 		bl_list[(*c)++] = bl;
 		return 1;
 	}
+	
 	return 0;
 }
 
 // Picks a random enemy of the given type (BL_PC, BL_CHAR, etc) within the range given. [Skotlex]
-struct block_list* battle_getenemy(struct block_list *target, int type, int range)
-{
+struct block_list* battle_getenemy(struct block_list *target, int type, int range) {
 	struct block_list *bl_list[24];
 	int c = 0;
+	
 	memset(bl_list, 0, sizeof(bl_list));
 	map_foreachinrange(battle_getenemy_sub, target, range, type, bl_list, &c, target);
-	if (c == 0 )
+	
+	if ( c == 0 )
 		return NULL;
-	if( c >= 24 )
-		c = 23;
+	
+	if( c > 24 )
+		c = 24;
+	
 	return bl_list[rnd()%c];
 }
-static int battle_getenemyarea_sub(struct block_list *bl, va_list ap)
-{
+static int battle_getenemyarea_sub(struct block_list *bl, va_list ap) {
 	struct block_list **bl_list, *src;
 	int *c, ignore_id;
 
@@ -159,29 +166,34 @@ static int battle_getenemyarea_sub(struct block_list *bl, va_list ap)
 
 	if( bl->id == src->id || bl->id == ignore_id )
 		return 0; // Ignores Caster and a possible pre-target
+	
 	if( *c >= 23 )
 		return 0;
+	
 	if( status_isdead(bl) )
 		return 0;
-	if( battle_check_target(src, bl, BCT_ENEMY) > 0 )
-	{ // Is Enemy!...
+	
+	if( battle_check_target(src, bl, BCT_ENEMY) > 0 ) {// Is Enemy!...
 		bl_list[(*c)++] = bl;
 		return 1;
 	}
+	
 	return 0;
 }
 
 // Pick a random enemy
-struct block_list* battle_getenemyarea(struct block_list *src, int x, int y, int range, int type, int ignore_id)
-{
+struct block_list* battle_getenemyarea(struct block_list *src, int x, int y, int range, int type, int ignore_id) {
 	struct block_list *bl_list[24];
 	int c = 0;
+	
 	memset(bl_list, 0, sizeof(bl_list));
 	map_foreachinarea(battle_getenemyarea_sub, src->m, x - range, y - range, x + range, y + range, type, bl_list, &c, src, ignore_id);
+	
 	if( c == 0 )
 		return NULL;
 	if( c >= 24 )
 		c = 23;
+	
 	return bl_list[rnd()%c];
 }
 
@@ -212,7 +224,7 @@ int battle_delay_damage_sub(int tid, unsigned int tick, int id, intptr_t data) {
 			
 		src = map_id2bl(dat->src_id);
 		
-		if( src && target && target->m == src->m &&
+		if( src && target->m == src->m &&
 			(target->type != BL_PC || ((TBL_PC*)target)->invincible_timer == INVALID_TIMER) &&
 			check_distance_bl(src, target, dat->distance) ) //Check to see if you haven't teleported. [Skotlex]
 		{
@@ -223,7 +235,7 @@ int battle_delay_damage_sub(int tid, unsigned int tick, int id, intptr_t data) {
 			if( dat->dmg_lv > ATK_BLOCK && dat->attack_type )
 				skill_counter_additional_effect(src,target,dat->skill_id,dat->skill_lv,dat->attack_type,tick);
 			map_freeblock_unlock();
-		} else if( target && !src && dat->skill_id == CR_REFLECTSHIELD ) {
+		} else if( !src && dat->skill_id == CR_REFLECTSHIELD ) {
 			/**
 			 * it was monster reflected damage, and the monster died, we pass the damage to the character as expected
 			 **/
