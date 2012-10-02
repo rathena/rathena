@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib, Meyraw
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
 //= 1.1 Updated dialogue to be more official / accurate. Huge thanks to Muad_Dib! [Masao]
+//= 1.2 Fixed an endless loop in dialogue.
 //============================================================
 
 xmas,162,209,5	script	Aspiring Wanderer, Soy	714,{
@@ -198,6 +199,7 @@ xmas,132,143,5	script	Performance Manager#wnd	713,{
 		mes "But I'm so overwhelmed that I might go crazy. Ahhhh~~!";
 		next;
 		while (1) {
+			set .@loop,0;
 			switch (select("Sorry, I don't care.:What's the matter?:Why are you telling me this?")) {
 			case 1:
 				mes "[Performance Manager]";
@@ -211,7 +213,7 @@ xmas,132,143,5	script	Performance Manager#wnd	713,{
 				mes "Those people don't feel any responsibility..";
 				mes "We're all expecting them and I've promoted them a lot.";
 				next;
-				break;
+				set .@loop,1;
 				break;
 			case 3:
 				emotion e_ag;
@@ -221,8 +223,10 @@ xmas,132,143,5	script	Performance Manager#wnd	713,{
 				next;
 				break;
 			}
+			if (.@loop) break;
 		}
 		while (1) {
+			set .@loop,0;
 			switch (select("Is there a problem?:Who do you mean?:It has nothing to do with me.")) {
 			case 1:
 				mes "[Performance Manager]";
@@ -236,7 +240,7 @@ xmas,132,143,5	script	Performance Manager#wnd	713,{
 				mes "Swing swing, dangling dangling!!";
 				mes "This is awful.";
 				next;
-				break;
+				set .@loop,1;
 				break;
 			case 2:
 				mes "[Performance Manager]";
@@ -251,8 +255,10 @@ xmas,132,143,5	script	Performance Manager#wnd	713,{
 				mes "This is too much!";
 				close;
 			}
+			if (.@loop) break;
 		}
 		while (1) {
+			set .@loop,0;
 			switch (select("Are you afraid of people?:The performers caused trouble?:Ignore him.")) {
 			case 1:
 				mes "[Performance Manager]";
@@ -272,13 +278,14 @@ xmas,132,143,5	script	Performance Manager#wnd	713,{
 				mes "Besides the money I spent for promoting and setting up the stage..";
 				mes "How can I handle all the angry people?";
 				next;
-				break;
+				set .@loop,1;
 				break;
 			case 3:
 				mes "[Performance Manager]";
 				mes "Hey, where are you going!";
 				close;
 			}
+			if (.@loop) break;
 		}
 		mes "[" + strcharinfo(0) + "]";
 		mes "I see that you are worried that the performance is going down the drain.";
@@ -296,7 +303,7 @@ xmas,132,143,5	script	Performance Manager#wnd	713,{
 		mes "[" + strcharinfo(0) + "]";
 		mes "It's because...";
 		input .@inputstr$;
-		mes "^3131FaF" + .@inputstr$ + "^000000";
+		mes "^3131FF" + .@inputstr$ + "^000000";
 		mes "......";
 		next;
 		emotion e_ag;
@@ -569,7 +576,7 @@ comodo,140,86,5	script	Cheerless Maestro	479,{
 			mes "Is there no way for my dream to be true now? Sob sob...";
 			next;
 			mes "[Guitar Song]";
-			mes "Huh huh! No, that is not..";
+			mes "Huh huh! No, that is not...";
 			next;
 			emotion e_sob,1;
 			mes "[" + strcharinfo(0) + "]";
