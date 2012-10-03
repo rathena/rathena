@@ -96,6 +96,8 @@
 538,0xbb,    ,  1:1:1:2:2:2:3:3:3:4,0,-1,all,0x010	//NJ_SUITON
 670,0xc7,    ,  1, 4:7:10:13:16:19:22:25:28:31,1000,all,0x008	//NPC_EVILLAND
 
+//706,0xfd,    ,  0, 0,1000,all, 0x000	//NPC_VENOMFOG
+
 2044,0xca,    ,  0, 3,1000,all,   0x018	//AB_EPICLESIS
 
 2032,0xe1,    ,  2, 0,1000,enemy, 0x018	//GC_POISONSMOKE

@@ -11602,7 +11602,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			break;	
 
 		case UNT_ZENKAI_WATER:
-		case UNT_ZENKAI_GROUND:
+		case UNT_ZENKAI_LAND:
 		case UNT_ZENKAI_FIRE:
 		case UNT_ZENKAI_WIND:
 			if( battle_check_target(&src->bl,bl,BCT_ENEMY) > 0 ){
@@ -11612,7 +11612,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 						sc_start(bl, SC_FREEZE, sg->val1*5, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv)); 
 						sc_start(bl, SC_FREEZING, sg->val1*5, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv)); 
 						break;
-					case UNT_ZENKAI_GROUND:
+					case UNT_ZENKAI_LAND:
 						sc_start(bl, SC_STONE, sg->val1*5, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv)); 
 						sc_start(bl, SC_POISON, sg->val1*5, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv)); 
 						break;
