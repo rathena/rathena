@@ -1,33 +1,25 @@
-//===== By: ================================================== 
+//===== rAthena Script =======================================
+//= Sample: Getequipcardid
+//===== By: ==================================================
 //= Lupus
-//= Shows your HAT's slots IDs
-//= Use it for some checks... e.g.
-//= 			is your EQUPPED weapon has FIRE property?
-//= 			is your EQUPPED item produced?
+//===== Current Version: =====================================
+//= 20121003
+//===== Description: ========================================= 
+//= Demonstrates the 'getequipcardid' command.
 //============================================================
 
 prontera,155,177,4	script	Check My Hat	810,{
 	mes "Checking your head...";
-	set @ref,0;
-
-	if (getequipisequiped(1)) goto L_CHECK1;
+	if (getequipisequiped(1)) {
+		set @id,getequipid(1);
+		set @ref,getequiprefinerycnt(1);
+		mes "Your hat is... "+getitemname(@id)+"...";
+		if(@ref) mes "It has been refined "+@ref+" times.";
+		mes "Card Slot 0:"+getequipcardid(1,0)+" 1:"+getequipcardid(1,1);
+		mes "Card Slot 2:"+getequipcardid(1,2)+" 3:"+getequipcardid(1,3);
+		close;
+	}
 	mes "Nothing?";
 	emotion e_hmm;
-	close;
-
-L_CHECK1:
-	set @id,getequipid(1);
-	if(getequipisidentify(1)) goto L_CHECK2;
-	mes "How can you wear not identified hats?";
-	npctalk "You're a cheater!";
-	emotion e_wah;
-	close;
-
-L_CHECK2:
-	set @ref,getequiprefinerycnt(1);
-	mes "Your hat is... "+getitemname(@id)+"...";
-	if(@ref)mes "It has been refined "+@ref+" times.";
-	mes "Card Slot 0:"+getequipcardid(1,0)+" 1:"+getequipcardid(1,1);
-	mes "Card Slot 2:"+getequipcardid(1,2)+" 3:"+getequipcardid(1,3);
 	close;
 }

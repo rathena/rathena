@@ -1,14 +1,16 @@
-//
-// This sample script tests:
-// * how npc-variables work with duplicated npcs
-// * how the trigger area is applied to duplicates
-//
-// Outcome (r11216 trunk):
-// * the variables are _shared_ between all duplicates
-// * each duplicate knows its own map coordinates
-// * 'OnInit' loads the middle poring last, for some reason
-// * duplicates always override the source npc's trigger area (even 0x0)
-//
+//===== rAthena Script =======================================
+//= Sample: Duplicate Test
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 20070915
+//===== Description: ========================================= 
+//= An example of how duplicate NPCs are handled:
+//=  NPC variables are shared between all duplicates.
+//=  Each duplicate knows its own map coordinates.
+//=  Duplicates always override the source NPC's trigger area (even 0x0).
+//=  'OnInit' loads the middle Poring last, for some reason.
+//============================================================
 
 -	script	Test Script	-1,1,1,{
 	mes "Hi.";

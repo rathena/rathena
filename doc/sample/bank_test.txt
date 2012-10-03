@@ -1,4 +1,13 @@
-// Bank Test
+//===== rAthena Script =======================================
+//= Sample: Bank Test
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 20070315
+//===== Description: ========================================= 
+//= Contains commands needed for a basic bank.
+//============================================================
+
 prontera,162,188,1	script	Bank Test	112,{
 	cutin "kafra_06",2;
 

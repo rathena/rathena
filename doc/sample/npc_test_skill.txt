@@ -1,4 +1,12 @@
-// Giving skills to characters via an NPC
+//===== rAthena Script =======================================
+//= Sample: Skill
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 20121003
+//===== Description: ========================================= 
+//= Demonstrates the 'skill' command.
+//============================================================
 
 // skill <skill id>,<level>{,<flag>};
 //	flag=0 Grants the skill permanently
@@ -9,16 +17,17 @@
 
 prontera,157,182,0	script	Skills	116,{
 	mes "What skill would you like?";
-	menu "First Aid",L_GETSKILL142,"Play Dead",L_GETSKILL143,"Heal",L_GETSKILL28,"None",L_YAME;
-L_GETSKILL142:
-	skill 142,1,0; // Permanently gives player level 1 First Aid
-	close;
-L_GETSKILL143:
-	skill 143,1,0; // Permanently gives player level 1 Play Dead
-	close;
-L_GETSKILL28:
-	skill 28,3,1; // Temporarily gives player level 3 Heal
-	close;
-L_YAME:
-	close;
+	switch(select("First Aid:Play Dead:Heal:None")) {
+	case 1:
+		skill 142,1,0;	// Permanently gives player level 1 First Aid
+		close;
+	case 2:
+		skill 143,1,0;	// Permanently gives player level 1 Play Dead
+		close;
+	case 3:
+		skill 28,3,1;	// Temporarily gives player level 3 Heal
+		close;
+	case 4:
+		close;
+	}
 }

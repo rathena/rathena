@@ -1,4 +1,4 @@
-﻿//id,range,hit,inf,element,nk,splash,max,list_num,castcancel,cast_defence_rate,inf2,maxcount,skill_type,blow_count,name,description
+//id,range,hit,inf,element,nk,splash,max,list_num,castcancel,cast_defence_rate,inf2,maxcount,skill_type,blow_count,name,description
 // 01 ID
 // 02 range (combo skills do not check for range when used,
 //           if range is < 5, the skill is considered melee-range)

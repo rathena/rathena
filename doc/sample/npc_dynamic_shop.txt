@@ -1,86 +1,95 @@
--	shop	dyn_shop1	-1,501:50
+//===== rAthena Script =======================================
+//= Sample: Dynamic Shop
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 20101219
+//===== Description: ========================================= 
+//= Contains commands needed for a dynamic shop.
+//============================================================
+
+// Dummy shop to insert items into:
+-	shop	dyn_shop1	-1,501:50.
 
 prontera,181,200,4	script	Dynamic Shop	123,{
-callshop "dyn_shop1",0;
-npcshopattach "dyn_shop1";
-end;
+	callshop "dyn_shop1",0;
+	npcshopattach "dyn_shop1";
+	end;
 
 OnSellItem:
-for(set @i, 0; @i < getarraysize(@sold_nameid); set @i, @i + 1){
-	if(countitem(@sold_nameid[@i]) < @sold_quantity[@i] || @sold_quantity[@i] <= 0){
-		mes "omgh4x!";
-		close;
-	}
-	if(@sold_nameid[@i] == 501){
-		delitem 501, @sold_quantity[@i];
-		set $@rpotsleft, $@rpotsleft + @sold_quantity[@i];
-		set Zeny, Zeny + @sold_quantity[@i]*20;
-	} else {
-		if(@sold_nameid[@i] == 502){
-			delitem 502, @sold_quantity[@i];
-			set $@opotsleft, $@opotsleft + @sold_quantity[@i];
-			set Zeny, Zeny + @sold_quantity[@i]*100;
-		} else {
-			mes "Sorry, I don't need your items.";
+	for(set @i, 0; @i < getarraysize(@sold_nameid); set @i, @i + 1){
+		if(countitem(@sold_nameid[@i]) < @sold_quantity[@i] || @sold_quantity[@i] <= 0){
+			mes "omgh4x!";
 			close;
+		} else if(@sold_nameid[@i] == 501){
+			delitem 501, @sold_quantity[@i];
+			set $@rpotsleft, $@rpotsleft + @sold_quantity[@i];
+			set Zeny, Zeny + @sold_quantity[@i]*20;
+		} else {
+			if(@sold_nameid[@i] == 502){
+				delitem 502, @sold_quantity[@i];
+				set $@opotsleft, $@opotsleft + @sold_quantity[@i];
+				set Zeny, Zeny + @sold_quantity[@i]*100;
+			} else {
+				mes "Sorry, I don't need your items.";
+				close;
+			}
 		}
 	}
-}
-deletearray @sold_quantity, getarraysize(@sold_quantity);
-deletearray @sold_nameid, getarraysize(@sold_nameid);
-mes "Deal completed.";
-close;
+	deletearray @sold_quantity, getarraysize(@sold_quantity);
+	deletearray @sold_nameid, getarraysize(@sold_nameid);
+	mes "Deal completed.";
+	close;
 
 OnBuyItem:
-for(set @i, 0; @i < getarraysize(@bought_nameid); set @i, @i + 1){
-	if(@bought_quantity[@i] <= 0){
-		mes "omgh4x!";
-		close;
-	}
-	if(@bought_nameid[@i] == 501){
-		if(@bought_quantity[@i] > $@rpotsleft){
-			if($@rpotsleft > 0){
-				set @bought_quantity[@i], $@rpotsleft;
+	for(set @i, 0; @i < getarraysize(@bought_nameid); set @i, @i + 1){
+		if(@bought_quantity[@i] <= 0){
+			mes "omgh4x!";
+			close;
+		} else if(@bought_nameid[@i] == 501){
+			if(@bought_quantity[@i] > $@rpotsleft){
+				if($@rpotsleft > 0){
+					set @bought_quantity[@i], $@rpotsleft;
+				} else {
+					mes "We are out of red potions!";
+					close;
+				}
+			}
+			if(Zeny >= 40*@bought_quantity[@i]){
+				set Zeny, Zeny - 40*@bought_quantity[@i];
+				getitem 501, @bought_quantity[@i];
+				set $@rpotsleft, $@rpotsleft - @bought_quantity[@i];
 			} else {
-				mes "We are out of red potions!";
+				mes "You have insufficient cash.";
+				close;
+			}
+		} else {
+			if(@bought_quantity[@i] > $@opotsleft){
+				if($@opotsleft > 0){
+					set @bought_quantity[@i], $@opotsleft;
+				} else {
+					mes "We are out of orange potions!";
+					close;
+				}
+			}
+			if(Zeny >= 200*@bought_quantity[@i]){
+				set Zeny, Zeny - 200*@bought_quantity[@i];
+				getitem 502, @bought_quantity[@i];
+				set $@opotsleft, $@opotsleft - @bought_quantity[@i];
+			} else {
+				mes "You have insufficient cash.";
 				close;
 			}
 		}
-		if(Zeny >= 40*@bought_quantity[@i]){
-			set Zeny, Zeny - 40*@bought_quantity[@i];
-			getitem 501, @bought_quantity[@i];
-			set $@rpotsleft, $@rpotsleft - @bought_quantity[@i];
-		} else {
-			mes "You have insufficient cash.";
-			close;
-		}
-	} else {
-		if(@bought_quantity[@i] > $@opotsleft){
-			if($@opotsleft > 0){
-				set @bought_quantity[@i], $@opotsleft;
-			} else {
-				mes "We are out of orange potions!";
-				close;
-			}
-		}
-		if(Zeny >= 200*@bought_quantity[@i]){
-			set Zeny, Zeny - 200*@bought_quantity[@i];
-			getitem 502, @bought_quantity[@i];
-			set $@opotsleft, $@opotsleft - @bought_quantity[@i];
-		} else {
-			mes "You have insufficient cash.";
-			close;
-		}
 	}
-}
-deletearray @bought_quantity, getarraysize(@bought_quantity);
-deletearray @bought_nameid, getarraysize(@bought_nameid);
-mes "Trade done.";
-close;
+	deletearray @bought_quantity, getarraysize(@bought_quantity);
+	deletearray @bought_nameid, getarraysize(@bought_nameid);
+	mes "Trade done.";
+	close;
 
 OnInit:
-npcshopitem "dyn_shop1", 501,40,502,200;
-set $@rpotsleft, 10;
-set $@opotsleft, 10;
-end;
+	npcshopitem "dyn_shop1", 501,40,502,200;
+	set $@rpotsleft, 10;
+	set $@opotsleft, 10;
+	end;
 }

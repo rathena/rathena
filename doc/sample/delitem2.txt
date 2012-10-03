@@ -1,20 +1,30 @@
-prontera,160,182,5	script	Deleter2	51,{
-	mes "Input item ID";
+//===== rAthena Script =======================================
+//= Sample: Delitem2
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 20070315
+//===== Description: ========================================= 
+//= Demonstrates the 'delitem2' command.
+//============================================================
+
+prontera,160,182,5	script	Delitem2	51,{
+	mes "Item ID?";
 	next;
 	input @nameid;
 	mes "Amount?";
 	next;
 	input @amount;
-	mes "Identified?";
+	mes "Identified? (0:no, 1:yes)";
 	next;
 	input @iden;
-	mes "How many times refined?";
+	mes "Refined how many times?";
 	next;
 	input @ref;
-	mes "Attribute?";
+	mes "Attribute? (0:normal, 1:broken)";
 	next;
 	input @attr;
-	mes "4 cards (one after another):";
+	mes "4 cards (one after another)...";
 	next;
 	input @c1;
 	input @c2;
@@ -24,6 +34,6 @@ prontera,160,182,5	script	Deleter2	51,{
 	mes "delitem2 "+@nameid+","+@amount+","+@iden+","+@ref+","+@attr+","+@c1+","+@c2+","+@c3+","+@c4;
 	next;
 	delitem2 @nameid,@amount,@iden,@ref,@attr,@c1,@c2,@c3,@c4;
-	mes "And here is the moment when Your item should disappear :P";
+	mes "And here is the moment when your item should disappear! :P";
 	close;
 }

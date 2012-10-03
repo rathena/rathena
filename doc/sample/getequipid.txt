@@ -1,23 +1,16 @@
 //===== rAthena Script =======================================
-//= Sample: Attached NPC Timers
+//= Sample: Getequipid
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
 //= 20121003
 //===== Description: ========================================= 
-//= Demonstrates attached NPC timer commands.
+//= Demonstrates the 'getequipid' command.
 //============================================================
 
-prontera,156,183,0	script	NPCtimerTest::npctimerX0000	116,{
-	mes "What would you like to know?";
-	select("Tell me my level.");
-	mes "I need time to think...";
-	initnpctimer;
-	attachnpctimer;
-	close;
-
-OnTimer5000:
-	mes "Ah, your level is " + readparam(11) + "!";
-	detachnpctimer;
+prontera,161,181,6	script	GetEquipID Sample	105,{
+	mes "[GetEquipID Sample]";
+	for(set .@i,1; .@i<11; set .@i,.@i+1)
+		mes "GetEquipID(" + .@i + ") : " + getequipid(1);
 	close;
 }

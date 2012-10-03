@@ -908,8 +908,7 @@ OnPCLogoutEvent:
 OnPCBaseLvUpEvent:
 OnPCJobLvUpEvent:
 
-It's pretty obvious when these four special labels will be invoked. For more
-information, see 'doc/sample/PCLoginEvent.txt'
+It's pretty obvious when these four special labels will be invoked.
 
 OnPCDieEvent:
 

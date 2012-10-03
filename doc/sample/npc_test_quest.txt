@@ -1,3 +1,13 @@
+//===== rAthena Script =======================================
+//= Sample: Quest Test
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 20120904
+//===== Description: ========================================= 
+//= Demonstrates quest commands.
+//============================================================
+
 // Before installing an NPC like the one below, you would
 // need to add the quest to /db/quest_db.txt - e.g:
 // 9000,0,1002,3,0,0,0,0,"3 Splats Please!"

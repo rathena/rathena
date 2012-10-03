@@ -1,15 +1,24 @@
-// Some Test Example
+//===== rAthena Script =======================================
+//= Sample: String Test
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 20070315
+//===== Description: ========================================= 
+//= An example of string comparisons.
+//============================================================
+
 prontera,164,188,1	script	sTrInG2compare	112,{
 	set @str$, "StRiNg1";
 	mes "sTrInG2 isn't equal to " + @str$ ;
 	mes "Our Var is equal to " + @str$ + " ...OK?";
 	next;
-	mes "Comparision eqOK：" + (@str$=="StRiNg1");
-	mes "Comparision eqNG：" + (@str$=="sTrInG2");
-	mes "Comparision neOK：" + (@str$!="00000");
-	mes "Comparision neNG：" + (@str$!="StRiNg1");
-	mes "Comparision gtOK：" + ("aab">"aaa");
-	mes "Comparision ltNG：" + ("aab"<"aaa");
+	mes "Comparison eqOK：" + (@str$=="StRiNg1");
+	mes "Comparison eqNG：" + (@str$=="sTrInG2");
+	mes "Comparison neOK：" + (@str$!="00000");
+	mes "Comparison neNG：" + (@str$!="StRiNg1");
+	mes "Comparison gtOK：" + ("aab">"aaa");
+	mes "Comparison ltNG：" + ("aab"<"aaa");
 	next;
 	input @str2$;
 	mes "You've entered '" + @str2$ + "' string.";

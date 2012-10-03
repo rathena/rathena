@@ -1,18 +1,17 @@
 //===== rAthena Script =======================================
-//= Sample: Class Constants
+//= Sample: Checkoption
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20110123
+//= 20070315
 //===== Description: ========================================= 
-//= Outputs the values of class constants.
+//= Demonstrates the 'checkoption' command.
 //============================================================
 
-prontera,155,177,1	script	Tell Me	725,{
-	mes "[Tell Me]";
-	mes "Class: " + Class;
-	mes "BaseClass: " + BaseClass;
-	mes "BaseJob: " + BaseJob;
-	mes "Upper: " + Upper;
+prontera,156,89,6	script	test_checkoption	117,{
+	mes "Please enter a value of type!";
+	input @value;
+	if(checkoption(@value) == 1) mes "True!";
+	else if(checkoption(@value) == 0) mes "False!";
 	close;
 }

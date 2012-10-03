@@ -1,4 +1,13 @@
-/* Guild Warehouse Service Test-Script 
+//===== rAthena Script =======================================
+//= Sample: Guild Storage Test
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 20070315
+//===== Description: ========================================= 
+//= Contains commands needed for a guild warehouse NPC.
+//============================================================
+
 prontera,165,188,4	script	Guild Warehouse	112,{
 	cutin "kafra_06",2;
 
@@ -28,41 +37,6 @@ GS_EXIT2:
 GS_EXIT3:
 	mes "[Guild Warehouser]";
 	mes "Come back whenever you want.";
-
-GS_EXIT4:
-	cutin "kafra_06",255;
-	close;
-}
-*/
-
-// カプラギルド倉庫サービス	テストスクリプト
-prontera,165,188,4	script	ギルド倉庫カプラ	112,{
-	cutin "kafra_06",2;
-
-	mes"[ギルド倉庫カプラ]";
-	mes "カプラギルド倉庫サービスです。";
-	mes "毎度ご利用ありがとうございます♪";
-	mes "テスト用なので金は貰いません。";
-	next;
-	menu "ギルド倉庫を利用する",GS_OPEN,"やっぱやめる",GS_EXIT3;
-
-GS_OPEN:
-	set @flag,guildopenstorage(0);
-	if(@flag == 1) goto GS_EXIT1;
-	if(@flag == 2) goto GS_EXIT2;
-	goto GS_EXIT4;
-
-GS_EXIT1:
-	mes "ギルドメンバーが倉庫を使用中です。";
-	mes "しばらく待ってから利用してください。";
-	goto GS_EXIT4;
-
-GS_EXIT2:
-	mes "ギルドに所属してない方は利用することができません。";
-	goto GS_EXIT4;
-
-GS_EXIT3:
-	mes "またのご利用をお待ちしています♪";
 
 GS_EXIT4:
 	cutin "kafra_06",255;

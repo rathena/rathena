@@ -1,24 +1,32 @@
-//by Jbain
+//===== rAthena Script =======================================
+//= Sample: Mapflag Test
+//===== By: ==================================================
+//= Jbain
+//===== Current Version: =====================================
+//= 20121003
+//===== Description: ========================================= 
+//= Demonstrates mapflag commands.
+//============================================================
 
 prontera,165,145,0	script	EXPflagtest	123,{
-	mes "[Yo man]";
-	mes "Setup the map rates";
-	menu "Job EXP",L_job,"Base  EXP",L_base,"PVP ON",L_pvp,"Reset all flags",-;
-
-	removemapflag "prontera",MF_BEXP;
-	removemapflag "prontera",MF_JEXP;
-	removemapflag "prontera",MF_PVP;
-	close;
-
-L_job:
-	input @rate;
-	setmapflag "prontera",MF_JEXP,@rate;
-	close;
-L_base:
-	input @rate;
-	setmapflag "prontera",MF_BEXP,@rate;
-	close;
-L_pvp:
-	setmapflag "prontera",MF_PVP;
-	close;
+	mes "[EXPflagtest]";
+	mes "Set up the map rates:";
+	switch(select("Job EXP:Base EXP:PVP on:Reset all flags")) {
+	case 1:
+		input .@rate;
+		setmapflag "prontera",MF_JEXP,.@rate;
+		close;
+	case 2:
+		input .@rate;
+		setmapflag "prontera",MF_BEXP,.@rate;
+		close;
+	case 3:
+		setmapflag "prontera",MF_PVP;
+		close;
+	case 4:
+		removemapflag "prontera",MF_BEXP;
+		removemapflag "prontera",MF_JEXP;
+		removemapflag "prontera",MF_PVP;
+		close;
+	}
 }
