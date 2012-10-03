@@ -9928,14 +9928,13 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 	if( !clif_process_message(sd, 1, &target, &namelen, &message, &messagelen) )
 		return;
 
-	if (is_atcommand(fd, sd, message, 1)  )
+	if ( is_atcommand(fd, sd, message, 1) )
 		return;
 
 	if (sd->sc.data[SC_BERSERK] || (sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCHAT))
 		return;
 
-	if (battle_config.min_chat_delay)
-	{	//[Skotlex]
+	if (battle_config.min_chat_delay) { //[Skotlex]
 		if (DIFF_TICK(sd->cantalk_tick, gettick()) > 0) {
 			return;
 		}
@@ -9952,8 +9951,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 	{
 		char* str = target+4; //Skip the NPC: string part.
 		struct npc_data* npc;
-		if ((npc = npc_name2id(str)))
-		{
+		if ((npc = npc_name2id(str))) {
 			char split_data[NUM_WHISPER_VAR][CHAT_SIZE_MAX];
 			char *split;
 			char output[256];
@@ -9962,11 +9960,9 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 			// skip codepage indicator, if detected
 			if( str[0] == '|' && strlen(str) >= 4 )
 				str += 3;
-			for( i = 0; i < NUM_WHISPER_VAR; ++i )
-			{// Splits the message using '#' as separators
+			for( i = 0; i < NUM_WHISPER_VAR; ++i ) {// Splits the message using '#' as separators
 				split = strchr(str,'#');
-				if( split == NULL )
-				{	// use the remaining string
+				if( split == NULL ) { // use the remaining string
 					safestrncpy(split_data[i], str, ARRAYLENGTH(split_data[i]));
 					for( ++i; i < NUM_WHISPER_VAR; ++i )
 						split_data[i][0] = '\0';
@@ -9977,8 +9973,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 				str = split+1;
 			}
 			
-			for( i = 0; i < NUM_WHISPER_VAR; ++i )
-			{
+			for( i = 0; i < NUM_WHISPER_VAR; ++i ) {
 				sprintf(output, "@whispervar%d$", i);
 				set_var(sd,output,(char *) split_data[i]);
 			}
@@ -9988,19 +9983,10 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 
 			return;
 		}
-	}
-	
-	// Main chat [LuzZza]
-	if(strcmpi(target, main_chat_nick) == 0)
-	{
+	} else if(strcmpi(target, main_chat_nick) == 0) { // Main chat [LuzZza]
 		if(!sd->state.mainchat)
 			clif_displaymessage(fd, msg_txt(388)); // You should enable main chat with "@main on" command.
 		else {
-			if ( battle_config.min_chat_delay ) {
-				if( DIFF_TICK(sd->cantalk_tick, gettick()) > 0 )
-					return;
-				sd->cantalk_tick = gettick() + battle_config.min_chat_delay;
-			}
 			// send the main message using inter-server system
 			intif_main_message( sd, message );
 		}
@@ -10011,8 +9997,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 	// searching destination character
 	dstsd = map_nick2sd(target);
 
-	if (dstsd == NULL || strcmp(dstsd->status.name, target) != 0)
-	{
+	if (dstsd == NULL || strcmp(dstsd->status.name, target) != 0) {
 		// player is not on this map-server
 		// At this point, don't send wisp/page if it's not exactly the same name, because (example)
 		// if there are 'Test' player on an other map-server and 'test' player on this map-server,
@@ -10023,31 +10008,29 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 	}
 	
 	// if player ignores everyone
-	if (dstsd->state.ignoreAll)
-	{
+	if (dstsd->state.ignoreAll) {
 		if (dstsd->sc.option & OPTION_INVISIBLE && pc_get_group_level(sd) < pc_get_group_level(dstsd))
 			clif_wis_end(fd, 1); // 1: target character is not loged in
 		else
 			clif_wis_end(fd, 3); // 3: everyone ignored by target
 		return;
 	}
-	// if player ignores the source character
-	ARR_FIND(0, MAX_IGNORE_LIST, i, dstsd->ignore[i].name[0] == '\0' || strcmp(dstsd->ignore[i].name, sd->status.name) == 0);
-	if(i < MAX_IGNORE_LIST && dstsd->ignore[i].name[0] != '\0')
-	{	// source char present in ignore list
-		clif_wis_end(fd, 2); // 2: ignored by target
-		return;
-	}
 	
 	// if player is autotrading
-	if( dstsd->state.autotrade == 1 )
-	{
+	if( dstsd->state.autotrade == 1 ) {
 		char output[256];
 		sprintf(output, "%s is in autotrade mode and cannot receive whispered messages.", dstsd->status.name);
 		clif_wis_message(fd, wisp_server_name, output, strlen(output) + 1);
 		return;
 	}
 	
+	// if player ignores the source character
+	ARR_FIND(0, MAX_IGNORE_LIST, i, dstsd->ignore[i].name[0] == '\0' || strcmp(dstsd->ignore[i].name, sd->status.name) == 0);
+	if(i < MAX_IGNORE_LIST && dstsd->ignore[i].name[0] != '\0') { // source char present in ignore list
+		clif_wis_end(fd, 2); // 2: ignored by target
+		return;
+	}
+		
 	// notify sender of success
 	clif_wis_end(fd, 0); // 0: success to send wisper
 
