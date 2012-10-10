@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena dev team
 //===== Current Version: =====================================
-//= 1.3
+//= 1.3a
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -15,10 +15,11 @@
 //= 1.1 Officialized script [Playtester]
 //= 1.2a Optimized/cleaned up a bit [ultramage]
 //= 1.3 Updated to match AEGIS script. [Kisuka]
+//= 1.3a Kagerou/Oboro support (BaseJob -> BaseClass) [Euphy]
 //============================================================
 
 que_ng,72,29,3	script	Kunai Merchant Kashin	83,{
-	if(BaseJob == Job_Ninja) {
+	if(BaseClass == Job_Ninja) {
 		mes "[Kashin]";
 		mes "I am Kashin, distributor";
 		mes "of Kunai for Ninjas. Take";

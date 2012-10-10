@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Playtester
 //===== Current Version: =====================================
-//= 1.2
+//= 1.2a
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -12,12 +12,12 @@
 //= 1.0 Ninja Arm Guards only yet [Playtester]
 //= 1.1 Added Kaibara [Playtester]
 //= 1.2 Added Tetsu [Playtester]
-//  (original NPC Taitsu was made by Auron)
+//= 1.2a Kagerou/Oboro support (BaseJob -> BaseClass) [Euphy]
 //============================================================
 
 que_ng,28,50,3	script	Boshuu	709,{
 
-	if (BaseJob != Job_Ninja){
+	if (BaseClass != Job_Ninja){
 		mes "[Boshuu]";
 		mes "I'm the best craftsman out of what people call the Three Craftsmen of Ninja Tools.";
 		mes "They call me Murata Boshuu.";
@@ -364,7 +364,7 @@ que_ng,28,50,3	script	Boshuu	709,{
 
 que_ng,28,45,3	script	Basshu	86,{
 
-	if(BaseJob != Job_Ninja){
+	if(BaseClass != Job_Ninja){
 		mes "[Basshu]";
 		mes "I am one of the brothers of the three brothers in charge of crafting shields in the east named Murata Basshu";
 		next;
@@ -715,7 +715,7 @@ que_ng,28,45,3	script	Basshu	86,{
 
 que_ng,27,18,3	script	Toshu	709,{
 	
-	if(BaseJob != Job_Ninja){
+	if(BaseClass != Job_Ninja){
 		mes "[Toshu]";
 		mes "How are you~";
 		mes "My young friend~";
@@ -847,7 +847,7 @@ que_ng,27,18,3	script	Toshu	709,{
 
 que_ng,72,34,3	script	Craftsman Kaibara	847,{
 
-	if (BaseJob != Job_Ninja){
+	if (BaseClass != Job_Ninja){
 		mes "[Kaibara]";
 		mes "I am a Craftsman called Kaibara";
 		mes "I create weapons for Ninjas.";
@@ -1127,7 +1127,7 @@ que_ng,72,34,3	script	Craftsman Kaibara	847,{
 que_ng,22,62,3	script	Tetsu	709,{
 
 	mes "[Tetsu]";
-	if(BaseJob != Job_Ninja){
+	if(BaseClass != Job_Ninja){
 		mes "I'm The Craftman of Fuuma Ninjas called Tetsu.";
 		next;
 		mes "[Tetsu]";
