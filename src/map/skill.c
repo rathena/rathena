@@ -12889,8 +12889,8 @@ int skill_check_condition_castend(struct map_session_data* sd, short skill, shor
 	if( lv <= 0 || sd->chatID )
 		return 0;
 
-	if( pc_has_permission(sd, PC_PERM_SKILL_UNCONDITIONAL) && sd->skillitem != skill )
-	{	//GMs don't override the skillItem check, otherwise they can use items without them being consumed! [Skotlex]
+	if( pc_has_permission(sd, PC_PERM_SKILL_UNCONDITIONAL) && sd->skillitem != skill ) {
+		//GMs don't override the skillItem check, otherwise they can use items without them being consumed! [Skotlex]
 		sd->state.arrow_atk = skill_get_ammotype(skill)?1:0; //Need to do arrow state check.
 		sd->spiritball_old = sd->spiritball; //Need to do Spiritball check.
 		return 1;
@@ -12920,70 +12920,65 @@ int skill_check_condition_castend(struct map_session_data* sd, short skill, shor
 	if( sd->skillitem == skill ) // Casting finished (Item skill or Hocus-Pocus)
 		return 1;
 
-	if( pc_is90overweight(sd) )
-	{
+	if( pc_is90overweight(sd) ) {
 		clif_skill_fail(sd,skill,USESKILL_FAIL_WEIGHTOVER,0);
 		return 0;
 	}
 
 	// perform skill-specific checks (and actions)
-	switch( skill )
-	{
-	case PR_BENEDICTIO:
-		skill_check_pc_partner(sd, skill, &lv, 1, 1);
-		break;
-	case AM_CANNIBALIZE:
-	case AM_SPHEREMINE:
-	{
-		int c=0;
-		int summons[5] = { 1589, 1579, 1575, 1555, 1590 };
-		//int summons[5] = { 1020, 1068, 1118, 1500, 1368 };
-		int maxcount = (skill==AM_CANNIBALIZE)? 6-lv : skill_get_maxcount(skill,lv);
-		int mob_class = (skill==AM_CANNIBALIZE)? summons[lv-1] :1142;
-		if(battle_config.land_skill_limit && maxcount>0 && (battle_config.land_skill_limit&BL_PC)) {
-			i = map_foreachinmap(skill_check_condition_mob_master_sub ,sd->bl.m, BL_MOB, sd->bl.id, mob_class, skill, &c);
-			if(c >= maxcount ||
-				(skill==AM_CANNIBALIZE && c != i && battle_config.summon_flora&2))
-			{	//Fails when: exceed max limit. There are other plant types already out.
-				clif_skill_fail(sd,skill,USESKILL_FAIL_LEVEL,0);
-				return 0;
+	switch( skill ) {
+		case PR_BENEDICTIO:
+			skill_check_pc_partner(sd, skill, &lv, 1, 1);
+			break;
+		case AM_CANNIBALIZE:
+		case AM_SPHEREMINE: {
+			int c=0;
+			int summons[5] = { 1589, 1579, 1575, 1555, 1590 };
+			//int summons[5] = { 1020, 1068, 1118, 1500, 1368 };
+			int maxcount = (skill==AM_CANNIBALIZE)? 6-lv : skill_get_maxcount(skill,lv);
+			int mob_class = (skill==AM_CANNIBALIZE)? summons[lv-1] :1142;
+			if(battle_config.land_skill_limit && maxcount>0 && (battle_config.land_skill_limit&BL_PC)) {
+				i = map_foreachinmap(skill_check_condition_mob_master_sub ,sd->bl.m, BL_MOB, sd->bl.id, mob_class, skill, &c);
+				if(c >= maxcount ||
+					(skill==AM_CANNIBALIZE && c != i && battle_config.summon_flora&2))
+				{	//Fails when: exceed max limit. There are other plant types already out.
+					clif_skill_fail(sd,skill,USESKILL_FAIL_LEVEL,0);
+					return 0;
+				}
 			}
+			break;
 		}
-		break;
-	}
-	case NC_SILVERSNIPER:
-	case NC_MAGICDECOY:
-		{
-			int c = 0, j;
-			int maxcount = skill_get_maxcount(skill,lv);
-			int mob_class = 2042;
-			if( skill == NC_MAGICDECOY )
-				mob_class = 2043;
+		case NC_SILVERSNIPER:
+		case NC_MAGICDECOY: {
+				int c = 0, j;
+				int maxcount = skill_get_maxcount(skill,lv);
+				int mob_class = 2042;
+				if( skill == NC_MAGICDECOY )
+					mob_class = 2043;
 
-			if( battle_config.land_skill_limit && maxcount > 0 && ( battle_config.land_skill_limit&BL_PC ) ) {
-				if( skill == NC_MAGICDECOY ) {
-					for( j = mob_class; j <= 2046; j++ )
-						map_foreachinmap(skill_check_condition_mob_master_sub, sd->bl.m, BL_MOB, sd->bl.id, j, skill, &c);
-				} else
-					map_foreachinmap(skill_check_condition_mob_master_sub, sd->bl.m, BL_MOB, sd->bl.id, mob_class, skill, &c);
-				if( c >= maxcount ) {
+				if( battle_config.land_skill_limit && maxcount > 0 && ( battle_config.land_skill_limit&BL_PC ) ) {
+					if( skill == NC_MAGICDECOY ) {
+						for( j = mob_class; j <= 2046; j++ )
+							map_foreachinmap(skill_check_condition_mob_master_sub, sd->bl.m, BL_MOB, sd->bl.id, j, skill, &c);
+					} else
+						map_foreachinmap(skill_check_condition_mob_master_sub, sd->bl.m, BL_MOB, sd->bl.id, mob_class, skill, &c);
+					if( c >= maxcount ) {
+						clif_skill_fail(sd , skill, USESKILL_FAIL_LEVEL, 0);
+						return 0;
+					}
+				}
+			}
+			break;
+		case KO_ZANZOU: {
+				int c = 0;
+				i = map_foreachinmap(skill_check_condition_mob_master_sub, sd->bl.m, BL_MOB, sd->bl.id, 2308, skill, &c);
+				if( c >= skill_get_maxcount(skill,lv) || c != i)
+				{
 					clif_skill_fail(sd , skill, USESKILL_FAIL_LEVEL, 0);
 					return 0;
 				}
 			}
-		}
-		break;
-	case KO_ZANZOU:
-		{
-			int c = 0;
-			i = map_foreachinmap(skill_check_condition_mob_master_sub, sd->bl.m, BL_MOB, sd->bl.id, 2308, skill, &c);
-			if( c >= skill_get_maxcount(skill,lv) || c != i)
-			{
-				clif_skill_fail(sd , skill, USESKILL_FAIL_LEVEL, 0);
-				return 0;
-			}
-		}
-		break;
+			break;
 	}
 
 	status = &sd->battle_status;
@@ -12995,6 +12990,11 @@ int skill_check_condition_castend(struct map_session_data* sd, short skill, shor
 		return 0;
 	}
 
+	if( require.weapon && !pc_check_weapontype(sd,require.weapon) ) {
+		clif_skill_fail(sd,skill,USESKILL_FAIL_THIS_WEAPON,0);
+		return 0;
+	}
+	
 	if( require.ammo ) { //Skill requires stuff equipped in the arrow slot.
 		if((i=sd->equip_index[EQI_AMMO]) < 0 || !sd->inventory_data[i] ) {
 			clif_arrow_fail(sd,0);
@@ -13008,8 +13008,7 @@ int skill_check_condition_castend(struct map_session_data* sd, short skill, shor
 			clif_colormes(sd,COLOR_RED,e_msg);
 			return 0;
 		}
-		if (!(require.ammo&1<<sd->inventory_data[i]->look))
-		{	//Ammo type check. Send the "wrong weapon type" message
+		if (!(require.ammo&1<<sd->inventory_data[i]->look)) { //Ammo type check. Send the "wrong weapon type" message
 			//which is the closest we have to wrong ammo type. [Skotlex]
 			clif_arrow_fail(sd,0); //Haplo suggested we just send the equip-arrows message instead. [Skotlex]
 			//clif_skill_fail(sd,skill,USESKILL_FAIL_THIS_WEAPON,0);
@@ -13017,8 +13016,7 @@ int skill_check_condition_castend(struct map_session_data* sd, short skill, shor
 		}
 	}
 
-	for( i = 0; i < MAX_SKILL_ITEM_REQUIRE; ++i )
-	{
+	for( i = 0; i < MAX_SKILL_ITEM_REQUIRE; ++i ) {
 		if( !require.itemid[i] )
 			continue;
 		index[i] = pc_search_inventory(sd,require.itemid[i]);
