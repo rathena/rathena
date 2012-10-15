@@ -5,11 +5,11 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 3.2
+//= 3.3
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Job Change quest for Knight class.
 //===== Additional Comments: ================================= 
 //= 1.0 Fully working.  Please comment out any pre-existing warps for the
@@ -39,6 +39,7 @@
 //= 3.0 Removed the need for use of 'goto.' [L0ne_W0lf]
 //= 3.1 Modified the quest to renewal. [Vali] (Thanks to Muad_Dib for the necessary info).
 //= 3.2 More Renewal updates and some optimization. [Euphy]
+//= 3.3 Fixed missing changequest. [Joseph]
 //============================================================ 
 
 prt_in,88,101,4	script	Chivalry Captain#knt	56,{
@@ -2409,6 +2410,7 @@ prt_in,87,92,4	script	Sir Gray#knt	119,{
 		next;
 		if (.@knight_t == 0) {
 			set KNIGHT_Q,14;
+			changequest 9011,9012;
 			mes "[Sir Gray]";
 			mes "I enjoyed talking with you. You remind me of myself as a young recruit. Shall we talk to the captain and decide on your";
 			mes "job change?";
@@ -2422,6 +2424,7 @@ prt_in,87,92,4	script	Sir Gray#knt	119,{
 		}
 		else if (.@knight_t == 5) {
 			set KNIGHT_Q,14;
+			changequest 9011,9012;
 			mes "[Sir Gray]";
 			mes "I enjoyed speaking with you. You can think about the principles of Knighthood more once you become a Knight.";
 			next;
