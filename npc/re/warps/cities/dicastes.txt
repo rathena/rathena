@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Chilly
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================
 //= 1.0 First Version.
 //= 1.1 Added Elevators.
+//= 1.2 Removed a warp. [Joseph] 
 //============================================================
 
 // Town Warps
@@ -28,9 +29,8 @@ dicastes01,198,353,0	warp	eldicastes0011	1,1,dicastes02,120,81
 dicastes02,120,77,0	warp	eldicastes0012	1,1,dicastes01,198,349
 dicastes02,120,237,0	warp	eldicastes0013	1,1,dic_in01,45,247
 dic_in01,45,244,0	warp	eldicastes0014	1,1,dicastes02,120,234
-dic_in01,138,226,0	warp	eldicastes0015	1,1,dic_in01,242,177
-dic_in01,242,180,0	warp	eldicastes0016	1,1,dic_in01,138,223
-dic_in01,300,248,0	warp	eldicastes0017	1,1,dic_in01,262,191
+dic_in01,242,180,0	warp	eldicastes0015	1,1,dic_in01,138,223
+dic_in01,300,248,0	warp	eldicastes0016	1,1,dic_in01,262,191
 
 // Elevators
 dic_in01,46,288,4	script	Elevator#01	111,{
