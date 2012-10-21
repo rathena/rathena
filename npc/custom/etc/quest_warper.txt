@@ -63,7 +63,7 @@
 //= 2.0b - Special warpname menu option name bug fixed
 //= 2.1 - Updated names to fall within retrictions. [L0ne_W0lf]
 //= 2.2 - #kafra_code is now stored as is. [brianluau]
-//= 2.3 - Addednew town maps, cleanup, and removed pre-1.8 backwards fix. [Euphy]
+//= 2.3 - Added new town maps, cleanup, and removed pre-1.8 backwards fix. [Euphy]
 //=================================================================
 
 //========================Function=&=Script========================

@@ -140,7 +140,7 @@ Get_Platinum:
 		case 5: skill 153,1,0; skill 154,1,0; skill 155,1,0; break;
 		case 6: skill 149,1,0; skill 150,1,0; skill 151,1,0; skill 152,1,0; break;
 		default: break; }
-	switch(roclass(eaclass()&EAJ_UPPERMASK)) {
+	switch(BaseJob) {
 		case 7: skill 1001,1,0; break;
 		case 8: skill 1014,1,0; break;
 		case 9: skill 1006,1,0; break;
