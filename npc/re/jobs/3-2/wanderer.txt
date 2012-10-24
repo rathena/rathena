@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib, Meyraw
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 1.0 First Version.
 //= 1.1 Updated dialogue to be more official / accurate. Huge thanks to Muad_Dib! [Masao]
 //= 1.2 Fixed an endless loop in dialogue.
+//= 1.3 Fixed a typo and added checkquest. [Joseph]
 //============================================================
 
 xmas,162,209,5	script	Aspiring Wanderer, Soy	714,{
@@ -887,7 +888,7 @@ hu_fild05,342,130,5	script	Dancer Kim#fild	879,{
 		close;
 	}
 	if (job_wan == 7) {
-		if (checkquest(2221,PLAYTIME) == 1) {
+		if (checkquest(2221,PLAYTIME) == 0 || checkquest(2221,PLAYTIME) == 1) {
 			if (checkquest(2221,HUNTING) == 2) {
 				mes "[Dancer Kim]";
 				mes "Whew!";
@@ -933,7 +934,7 @@ hu_fild05,342,130,5	script	Dancer Kim#fild	879,{
 			mes "But I'm sure I have a better chance to win.";
 			close;
 		}
-		if (checkquest(2221,PLAYIME) == 2) {
+		if (checkquest(2221,PLAYTIME) == 2) {
 			mes "[Dancer Kim]";
 			mes "Oh, you came back to me.";
 			mes "I'm so tired. I don't give up halfway. It's a good exercise for me. I will have to give up Nollio to another Wanderer, it's all over....";
