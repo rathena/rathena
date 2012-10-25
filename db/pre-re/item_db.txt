@@ -5683,7 +5683,7 @@
 13691,Freyja_Overcoat_Box,Freya's Clothes Box,18,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 2369,604800; },{},{}
 13692,Freyja_Boots_Box,Freya's Boots Box,18,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 2428,604800; },{},{}
 13693,Freyja_Cape_Box,Freya's Manteau Box,18,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 2533,604800; },{},{}
-13694,Freyja_Crown_Box,Freya's Crown Box,18,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5306,1,604800; },{},{}
+13694,Freyja_Crown_Box,Freya's Crown Box,18,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 5306,604800; },{},{}
 13695,Battle_Manual25_Box,Field Manual 25% Box,18,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14532,10; },{},{}
 13696,Battle_Manual100_Box,Field Manual 100% Box,18,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14533,10; },{},{}
 13697,J_Blessing10_Box,Blessing Scroll 10 Box,18,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12215,10; },{},{}
