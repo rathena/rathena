@@ -2105,9 +2105,9 @@ REPLACE INTO `item_db` VALUES (4445,'Luciola_Vespa_Card','Luciola Vespa Card',6,
 REPLACE INTO `item_db` VALUES (4447,'Centipede_Card','Centipede Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,NULL,NULL,'bonus2 bSubEle,Ele_Poison,20; bonus2 bAddEle,Ele_Poison,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4448,'Cornus_Card','Cornus Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,NULL,NULL,'bonus2 bSubEle,Ele_Holy,20; bonus2 bAddEle,Ele_Holy,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4449,'Dark_Shadow_Card','Dark Shadow Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,NULL,NULL,'bonus2 bSubEle,Ele_Dark,20; bonus2 bAddEle,Ele_Dark,5;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (4450,'Banshee_Master_Card','Banshee Master Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,'bonus bInt,1; bonus bIntMatk,10;,NULL,NULL);
-REPLACE INTO `item_db` VALUES (4451,'Entweihen_Card','Entweihen Crothen Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,'bonus bIntMatk,100;,NULL,NULL);
-REPLACE INTO `item_db` VALUES (4452,'Centipede_Larva_Card','Centipede Larva Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus bInt,1; bonus bIntMatk,3;,NULL,NULL);
+REPLACE INTO `item_db` VALUES (4450,'Banshee_Master_Card','Banshee Master Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,'bonus bInt,1; bonus bIntMatk,10;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (4451,'Entweihen_Card','Entweihen Crothen Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,'bonus bIntMatk,100;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (4452,'Centipede_Larva_Card','Centipede Larva Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus bInt,1; bonus bIntMatk,3;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4453,'Hilsrion_Card','Hillsrion Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus bBaseAtk,25;',NULL,NULL);
 # Armor Enchant System
 # ===================================================================
