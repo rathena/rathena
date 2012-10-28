@@ -5485,7 +5485,7 @@ static const struct _battle_data {
 	{ "max_aspd",                           &battle_config.max_aspd,                        190,    100,    199,            },
 	{ "max_third_aspd",                     &battle_config.max_third_aspd,                  193,    100,    199,            },
 	{ "max_walk_speed",                     &battle_config.max_walk_speed,                  300,    100,    100*DEFAULT_WALK_SPEED, },
-	{ "max_lv",                             &battle_config.max_lv,                          99,     0,      MAX_LEVEL,		},
+	{ "max_lv",                             &battle_config.max_lv,                          99,     0,      MAX_LEVEL,      },
 	{ "aura_lv",                            &battle_config.aura_lv,                         99,     0,      INT_MAX,        },
 	{ "max_hp",                             &battle_config.max_hp,                          32500,  100,    1000000000,     },
 	{ "max_sp",                             &battle_config.max_sp,                          32500,  100,    1000000000,     },
@@ -5559,7 +5559,7 @@ static const struct _battle_data {
 	{ "buyer_name",                         &battle_config.buyer_name,                      1,      0,      1,              },
 	{ "skill_wall_check",                   &battle_config.skill_wall_check,                1,      0,      1,              },
 	{ "cell_stack_limit",                   &battle_config.cell_stack_limit,                1,      1,      255,            },
-	{ "dancing_weaponswitch_fix",			&battle_config.dancing_weaponswitch_fix,		1,      0,      1,              },
+	{ "dancing_weaponswitch_fix",           &battle_config.dancing_weaponswitch_fix,        1,      0,      1,              },
 
 // eAthena additions
 	{ "item_logarithmic_drops",             &battle_config.logarithmic_drops,               0,      0,      1,              },
@@ -5618,7 +5618,7 @@ static const struct _battle_data {
 	{ "max_cloth_color",                    &battle_config.max_cloth_color,                 4,      0,      INT_MAX,        },
 	{ "pet_hair_style",                     &battle_config.pet_hair_style,                  100,    0,      INT_MAX,        },
 	{ "castrate_dex_scale",                 &battle_config.castrate_dex_scale,              150,    1,      INT_MAX,        },
-	{ "vcast_stat_scale",					&battle_config.vcast_stat_scale,			    530,    1,      INT_MAX,        },
+	{ "vcast_stat_scale",                   &battle_config.vcast_stat_scale,                530,    1,      INT_MAX,        },
 	{ "area_size",                          &battle_config.area_size,                       14,     0,      INT_MAX,        },
 	{ "zeny_from_mobs",                     &battle_config.zeny_from_mobs,                  0,      0,      1,              },
 	{ "mobs_level_up",                      &battle_config.mobs_level_up,                   0,      0,      1,              },
@@ -5731,11 +5731,11 @@ static const struct _battle_data {
 	{ "max_third_parameter",                &battle_config.max_third_parameter,             120,    10,     10000,          },
 	{ "max_baby_third_parameter",           &battle_config.max_baby_third_parameter,        108,    10,     10000,          },
 	{ "atcommand_max_stat_bypass",          &battle_config.atcommand_max_stat_bypass,       0,      0,      100,            },          
-	{ "skill_amotion_leniency",             &battle_config.skill_amotion_leniency,          90,     0,      100				},
-	{ "mvp_tomb_enabled",					&battle_config.mvp_tomb_enabled,				1,      0,      1				},
-	{ "feature.atcommand_suggestions",		&battle_config.atcommand_suggestions_enabled,	0,      0,      1				},
-	{ "min_npc_vending_distance",           &battle_config.min_npc_vending_distance,		3,		0,		100				},
-	{ "atcommand_mobinfo_type",				&battle_config.atcommand_mobinfo_type,			0,		0,		1				},
+	{ "skill_amotion_leniency",             &battle_config.skill_amotion_leniency,          90,     0,      100             },
+	{ "mvp_tomb_enabled",                   &battle_config.mvp_tomb_enabled,                1,      0,      1               },
+	{ "feature.atcommand_suggestions",      &battle_config.atcommand_suggestions_enabled,   0,      0,      1               },
+	{ "min_npc_vending_distance",           &battle_config.min_npc_vending_distance,        3,      0,      100             },
+	{ "atcommand_mobinfo_type",             &battle_config.atcommand_mobinfo_type,          0,      0,      1               },
 	{ "homunculus_max_level",               &battle_config.hom_max_level,                   99,     0,      MAX_LEVEL,      },
 	{ "homunculus_S_max_level",             &battle_config.hom_S_max_level,                 150,    0,      MAX_LEVEL,      },
 };
@@ -5850,7 +5850,7 @@ void rAthena_report(char* date, char *time_c) {
 	safestrncpy((char*)WBUFP(buf,6 + 12), time_c, 9);
 	safestrncpy((char*)WBUFP(buf,6 + 12 + 9), timestring, 24);
 	
-	WBUFL(buf,6 + 12 + 9 + 24)         = rev;	
+	WBUFL(buf,6 + 12 + 9 + 24)         = rev;
 	WBUFL(buf,6 + 12 + 9 + 24 + 4)     = map_getusers();
 	
 	WBUFL(buf,6 + 12 + 9 + 24 + 4 + 4) = config;
@@ -5859,8 +5859,8 @@ void rAthena_report(char* date, char *time_c) {
 	for( i = 0; i < bd_size; i++ ) {
 		safestrncpy((char*)WBUFP(buf,6 + 12 + 9+ 24  + 4 + 4 + 4 + 4 + ( i * ( BFLAG_LENGTH + 4 ) ) ), battle_data[i].str, 35);
 		WBUFL(buf,6 + 12 + 9 + 24 + 4 + 4 + 4 + 4 + BFLAG_LENGTH + ( i * ( BFLAG_LENGTH + 4 )  )  ) = *battle_data[i].val;
-	}	
-		
+	}
+	
 	chrif_send_report(buf,  6 + 12 + 9 + 24 + 4 + 4 + 4 + 4 + ( bd_size * ( BFLAG_LENGTH + 4 ) ) );
 	
 	aFree(buf);
@@ -5919,13 +5919,13 @@ void battle_adjust_conf()
 	battle_config.max_walk_speed = 100*DEFAULT_WALK_SPEED/battle_config.max_walk_speed;
 	battle_config.max_cart_weight *= 10;
 	
-	if(battle_config.max_def > 100 && !battle_config.weapon_defense_type)	 // added by [Skotlex]
+	if(battle_config.max_def > 100 && !battle_config.weapon_defense_type) // added by [Skotlex]
 		battle_config.max_def = 100;
 
 	if(battle_config.min_hitrate > battle_config.max_hitrate)
 		battle_config.min_hitrate = battle_config.max_hitrate;
 		
-	if(battle_config.pet_max_atk1 > battle_config.pet_max_atk2)	//Skotlex
+	if(battle_config.pet_max_atk1 > battle_config.pet_max_atk2) //Skotlex
 		battle_config.pet_max_atk1 = battle_config.pet_max_atk2;
 	
 	if (battle_config.day_duration && battle_config.day_duration < 60000) // added by [Yor]
