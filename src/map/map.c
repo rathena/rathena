@@ -182,9 +182,6 @@ int map_usercount(void)
 	return pc_db->size(pc_db);
 }
 
-//
-// block�폜�̈��S���m��?��
-//
 
 /*==========================================
  * Attempt to free a map blocklist
@@ -204,7 +201,7 @@ int map_freeblock (struct block_list *bl)
 	return block_free_lock;
 }
 /*==========================================
- * block��free����sI�ɋ֎~����
+ * Lock blocklist, (prevent map_freeblock usage)
  *------------------------------------------*/
 int map_freeblock_lock (void)
 {
@@ -212,9 +209,7 @@ int map_freeblock_lock (void)
 }
 
 /*==========================================
- * block��free�̃��b�N����������
- * ���̂Ƃ��A���b�N�����S�ɂȂ��Ȃ��
- * �o�b�t�@�ɂ��܂��Ă���block��S���폜
+ * Remove the lock on map_bl
  *------------------------------------------*/
 int map_freeblock_unlock (void)
 {
@@ -234,11 +229,8 @@ int map_freeblock_unlock (void)
 	return block_free_lock;
 }
 
-// map_freeblock_lock() ���Ă�� map_freeblock_unlock() ���Ă΂Ȃ�
-// �֐����������̂ŁA���I��block_free_lock�����Z�b�g����悤�ɂ���B
-// ���̊֐��́Ado_timer() �̃g�b�v���x������Ă΂��̂ŁA
-// block_free_lock �𒼐ڂ������Ă��x�ᖳ���͂��B
-
+// Timer fonction to check if there some remaining lock and remove them if so.
+// Called each 1s
 int map_freeblock_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	if (block_free_lock > 0) {
@@ -341,7 +333,7 @@ int map_delblock(struct block_list* bl)
     // blocklist (2ways chainlist)
 	if (bl->prev == NULL) {
 		if (bl->next != NULL) {
-			// prev��NULL��next��NULL�łȂ��̂͗L���Ă͂Ȃ�Ȃ�
+			// can't delete block (already at the begining of the chain)
 			ShowError("map_delblock error : bl->next!=NULL\n");
 		}
 		return 0;
@@ -356,7 +348,6 @@ int map_delblock(struct block_list* bl)
 	if (bl->next)
 		bl->next->prev = bl->prev;
 	if (bl->prev == &bl_head) {
-		// ���X�g�̓��Ȃ̂ŁAmap[]��block_list���X�V����
 		if (bl->type == BL_MOB) {
 			map[bl->m].block_mob[pos] = bl->next;
 		} else {
@@ -423,7 +414,7 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 
 		if( bl->type == BL_PC && ((TBL_PC*)bl)->shadowform_id ) {//Shadow Form Target Moving
 			struct block_list *d_bl;
-			if( (d_bl = map_id2bl(((TBL_PC*)bl)->shadowform_id)) == NULL || bl->m != d_bl->m || !check_distance_bl(bl,d_bl,skill_get_range(SC_SHADOWFORM,1)) ) {
+			if( (d_bl = map_id2bl(((TBL_PC*)bl)->shadowform_id)) == NULL || bl->m != d_bl->m || !check_distance_bl(bl,d_bl,10) ) {
 				if( d_bl )
 					status_change_end(d_bl,SC__SHADOWFORM,INVALID_TIMER);
 				((TBL_PC*)bl)->shadowform_id = 0;
@@ -448,7 +439,7 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 				
 				if( sc->data[SC__SHADOWFORM] ) {//Shadow Form Caster Moving
 					struct block_list *d_bl;
-					if( (d_bl = map_id2bl(sc->data[SC__SHADOWFORM]->val2)) == NULL || bl->m != d_bl->m || !check_distance_bl(bl,d_bl,skill_get_range(SC_SHADOWFORM,1)) )
+					if( (d_bl = map_id2bl(sc->data[SC__SHADOWFORM]->val2)) == NULL || bl->m != d_bl->m || !check_distance_bl(bl,d_bl,10) )
 						status_change_end(bl,SC__SHADOWFORM,INVALID_TIMER);	
 				}
 				
@@ -588,10 +579,10 @@ int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_lis
 	if(bl_list_count>=BL_LIST_MAX)
 		ShowWarning("map_foreachinrange: block count too many!\n");
 
-	map_freeblock_lock();	// ����������̉����֎~����
+	map_freeblock_lock();
 
 	for(i=blockcount;i<bl_list_count;i++)
-		if(bl_list[i]->prev)	// �L?���ǂ����`�F�b�N
+		if(bl_list[i]->prev)	//apply on all targets listed
 		{
 			va_list ap;
 			va_start(ap, type);
@@ -599,7 +590,7 @@ int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_lis
 			va_end(ap);
 		}
 
-	map_freeblock_unlock();	// ����������
+	map_freeblock_unlock();
 
 	bl_list_count = blockcount;
 	return returnCount;	//[Skotlex]
@@ -660,10 +651,10 @@ int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block
 	if(bl_list_count>=BL_LIST_MAX)
 			ShowWarning("map_foreachinrange: block count too many!\n");
 
-	map_freeblock_lock();	// ����������̉����֎~����
+	map_freeblock_lock();
 
 	for(i=blockcount;i<bl_list_count;i++)
-		if(bl_list[i]->prev)	// �L?���ǂ����`�F�b�N
+		if(bl_list[i]->prev)
 		{
 			va_list ap;
 			va_start(ap, type);
@@ -671,16 +662,16 @@ int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block
 			va_end(ap);
 		}
 
-	map_freeblock_unlock();	// ����������
+	map_freeblock_unlock();
 
 	bl_list_count = blockcount;
 	return returnCount;	//[Skotlex]
 }
 
 /*==========================================
- * map m (x0,y0)-(x1,y1)?�̑Sobj��?����
- * func���Ă�
- * type!=0 �Ȃ炻�̎�ނ̂�
+ * range = map m (x0,y0)-(x1,y1)
+ * Apply *func with ... arguments for the range.
+ * @type = BL_PC/BL_MOB etc.. 
  *------------------------------------------*/
 int map_foreachinarea(int (*func)(struct block_list*,va_list), int m, int x0, int y0, int x1, int y1, int type, ...)
 {
@@ -725,10 +716,10 @@ int map_foreachinarea(int (*func)(struct block_list*,va_list), int m, int x0, in
 	if(bl_list_count>=BL_LIST_MAX)
 		ShowWarning("map_foreachinarea: block count too many!\n");
 
-	map_freeblock_lock();	// ����������̉����֎~����
+	map_freeblock_lock();
 
 	for(i=blockcount;i<bl_list_count;i++)
-		if(bl_list[i]->prev)	// �L?���ǂ����`�F�b�N
+		if(bl_list[i]->prev)
 		{
 			va_list ap;
 			va_start(ap, type);
@@ -736,7 +727,7 @@ int map_foreachinarea(int (*func)(struct block_list*,va_list), int m, int x0, in
 			va_end(ap);
 		}
 
-	map_freeblock_unlock();	// ����������
+	map_freeblock_unlock();
 
 	bl_list_count = blockcount;
 	return returnCount;	//[Skotlex]
@@ -791,10 +782,10 @@ int map_forcountinrange(int (*func)(struct block_list*,va_list), struct block_li
 	if(bl_list_count>=BL_LIST_MAX)
 		ShowWarning("map_forcountinrange: block count too many!\n");
 
-	map_freeblock_lock();	// ����������̉����֎~����
+	map_freeblock_lock();
 
 	for(i=blockcount;i<bl_list_count;i++)
-		if(bl_list[i]->prev)	// �L?���ǂ����`�F�b�N
+		if(bl_list[i]->prev)
 		{
 			va_list ap;
 			va_start(ap, type);
@@ -804,7 +795,7 @@ int map_forcountinrange(int (*func)(struct block_list*,va_list), struct block_li
 				break;
 		}
 
-	map_freeblock_unlock();	// ����������
+	map_freeblock_unlock();
 
 	bl_list_count = blockcount;
 	return returnCount;	//[Skotlex]
@@ -852,10 +843,10 @@ int map_forcountinarea(int (*func)(struct block_list*,va_list), int m, int x0, i
 	if(bl_list_count>=BL_LIST_MAX)
 		ShowWarning("map_foreachinarea: block count too many!\n");
 
-	map_freeblock_lock();	// ����������̉����֎~����
+	map_freeblock_lock();
 
 	for(i=blockcount;i<bl_list_count;i++)
-		if(bl_list[i]->prev)	// �L?���ǂ����`�F�b�N
+		if(bl_list[i]->prev)
 		{
 			va_list ap;
 			va_start(ap, type);
@@ -865,7 +856,7 @@ int map_forcountinarea(int (*func)(struct block_list*,va_list), int m, int x0, i
 				break;
 		}
 
-	map_freeblock_unlock();	// ����������
+	map_freeblock_unlock();
 
 	bl_list_count = blockcount;
 	return returnCount;	//[Skotlex]
@@ -1036,10 +1027,10 @@ int map_foreachincell(int (*func)(struct block_list*,va_list), int m, int x, int
 	if(bl_list_count>=BL_LIST_MAX)
 		ShowWarning("map_foreachincell: block count too many!\n");
 
-	map_freeblock_lock();	// ����������̉����֎~����
+	map_freeblock_lock();
 
 	for(i=blockcount;i<bl_list_count;i++)
-		if(bl_list[i]->prev)	// �L?���ǂ����`�F�b�N
+		if(bl_list[i]->prev)
 		{
 			va_list ap;
 			va_start(ap, type);
@@ -1047,7 +1038,7 @@ int map_foreachincell(int (*func)(struct block_list*,va_list), int m, int x, int
 			va_end(ap);
 		}
 
-	map_freeblock_unlock();	// ����������
+	map_freeblock_unlock();
 
 	bl_list_count = blockcount;
 	return returnCount;
@@ -1273,10 +1264,10 @@ int map_foreachinmap(int (*func)(struct block_list*,va_list), int m, int type,..
 	if(bl_list_count>=BL_LIST_MAX)
 		ShowWarning("map_foreachinmap: block count too many!\n");
 
-	map_freeblock_lock();	// ����������̉����֎~����
+	map_freeblock_lock();
 
 	for(i=blockcount;i<bl_list_count;i++)
-		if(bl_list[i]->prev)	// �L?���ǂ����`�F�b�N
+		if(bl_list[i]->prev)
 		{
 			va_list ap;
 			va_start(ap, type);
@@ -1284,7 +1275,7 @@ int map_foreachinmap(int (*func)(struct block_list*,va_list), int m, int type,..
 			va_end(ap);
 		}
 
-	map_freeblock_unlock();	// ����������
+	map_freeblock_unlock();
 
 	bl_list_count = blockcount;
 	return returnCount;
@@ -1323,12 +1314,8 @@ int map_get_new_object_id(void)
 }
 
 /*==========================================
- * ���A�C�e��������
- *
- * data==0�̎b�timer�ŏ������� * data!=0�̎b͏E�����ŏ������bƂ��ē�??
- *
- * ��҂́Amap_clearflooritem(id)��
- * map.h?��#define���Ă���
+ * Timered fonction to clear the floor (remove remaining item)
+ * Called each flooritem_lifetime ms
  *------------------------------------------*/
 int map_clearflooritem_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
@@ -1781,7 +1768,7 @@ int map_quit(struct map_session_data *sd) {
 }
 
 /*==========================================
- * id��?��PC��T���B���Ȃ����NULL
+ * Lookup, id to session (player,mob,npc,homon,merc..)
  *------------------------------------------*/
 struct map_session_data * map_id2sd(int id)
 {

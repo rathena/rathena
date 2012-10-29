@@ -826,7 +826,7 @@ int chrif_changesex(struct map_session_data *sd)
 static void chrif_char_ask_name_answer(int acc, const char* player_name, uint16 type, uint16 answer)
 {
 	struct map_session_data* sd;
-	const char* action;
+	char action[25];
 	char output[256];
 	
 	sd = map_id2sd(acc);
