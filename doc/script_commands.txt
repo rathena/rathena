@@ -2362,7 +2362,7 @@ Example 2: check party count (with a 'next' pause), before warping to event
 	getpartymember getcharid(1), 1;
 	getpartymember getcharid(1), 2;
 	
-	if ( $@partymembercount < .register_num ) {
+	if ( $@partymembercount != .register_num ) {
 		mes "Please form a party of "+ .register_num +" to continue";
 		close;
 	}
