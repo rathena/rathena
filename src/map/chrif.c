@@ -835,11 +835,11 @@ static void chrif_char_ask_name_answer(int acc, const char* player_name, uint16 
 		return;
 	}
 
-        if(type>0 && type<=5)
-            sprintf(action,msg_txt(427+type)); //block|ban|unblock|unban|change the sex of
-        else
-            sprintf(action,"???");
-                
+	if(type>0 && type<=5)
+		action = msg_txt(427+type); //block|ban|unblock|unban|change the sex of
+	else
+		action = "???";
+
 	switch( answer ) {
 	case 0 : sprintf(output, msg_txt(424), action, NAME_LENGTH, player_name); break;
 	case 1 : sprintf(output, msg_txt(425), NAME_LENGTH, player_name); break;
