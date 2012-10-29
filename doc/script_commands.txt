@@ -2334,28 +2334,78 @@ call remain, and you will get 5+2 members, of which the last 2 don't belong to
 the new guy's party. $@partymembercount will always contain the correct number, 
 (5) unlike 'getarraysize()' which will return 7 in this case.
 
-Example:
+Example 1: list party member names
 
-   // get the character's party ID
-       getpartymember(getcharid(1));
+	// get the party member names
+	getpartymember getcharid(1),0;
+	
+	// It's a good idea to copy the global temporary $@partymember***** 
+	// variables to your own scope variables because if you have pauses in this 
+	// script (sleep, sleep2, next, close2, input, menu, select, or prompt), 
+	// another player could click this NPC, trigger 'getpartymember', and 
+	// overwrite the $@partymember***** variables.
+	set .@count, $@partymembercount;
+	copyarray .@name$[0], $@partymembername$[0], $@partymembercount;
+	
+	// list the party member names
+	for (set .@i,0; .@i < .@count; set .@i, .@i+1) {
+		mes (.@i +1) + ". ^0000FF" + .@name$[.@i] + "^000000";
+	}
+	close;
 
-   // immediately copy $@partymembercount value to a new variable, since
-   // you don't know when 'getpartymember' will get called again for someone 
-   // else's party, overwriting your global array.
-       set @partymembercount,$@partymembercount;
 
-   // copy $@partymembername array to a new array
-       copyarray @partymembername$[0],$@partymembername$[0],@partymembercount;
+Example 2: check party count (with a 'next' pause), before warping to event
 
-   //list the party members in NPC dialog
-       set @count,0;
-   L_DisplayMember:
-       if(@count == @partymembercount) goto L_DisplayMemberEnd;
-       mes (@count + 1) + ". ^0000FF" + @partymembername$[@count] + "^000000";
-       set @count,@count+1;
-       goto L_DisplayMember;
-   L_DisplayMemberEnd:
-       close;
+	set .register_num, 5; // How many party members are required?
+	
+	// get the charID and accountID of character's party members
+	getpartymember getcharid(1), 1;
+	getpartymember getcharid(1), 2;
+	
+	if ( $@partymembercount < .register_num ) {
+		mes "Please form a party of "+ .register_num +" to continue";
+		close;
+	}
+	
+	// loop through both and use 'isloggedin' to count online party members
+	for ( set .@i, 0; .@i < $@partymembercount; set .@i, .@i +1 )
+		if ( isloggedin( $@partymemberaid[.@i], $@partymembercid[.@i] ) )
+			set .@count_online, .@count_online +1 ;
+	// We search accountID & charID because a single party can have multiple 
+	// characters from the same account. Without searching through the charID, 
+	// if a player has 2 characters from the same account inside the party but 
+	// only 1 char online, it would count their online char twice.
+	
+	if ( .@count_online != .register_num ) {
+		mes "All your party members must be online to continue";
+		close;
+	}
+	
+	// copy the array to prevent players cheating the system
+	copyarray .@partymembercid, $@partymembercid, .register_num;
+	
+	mes "Are you ready ?";
+	next; // careful here
+	select "Yes";
+	
+	// When a script hits a next, menu, sleep or input that pauses the script, 
+	// players can invite or /leave and make changes in their party. To prevent 
+	// this, we call getpartymember again and compare with the original values.
+	
+	getpartymember getcharid(1), 1;
+	if ( $@partymembercount != .register_num ) {
+		mes "You've made changes to your party !";
+		close;
+	}
+	for ( set .@i, 0; .@i < $@partymembercount; set .@i, .@i +1 ) {
+		if ( .@partymembercid[.@i] != $@partymembercid[.@i] ) {
+			mes "You've made changes to your party !";
+			close;
+		}
+	}
+	
+	// Finally, it's safe to start the event!
+	warpparty "event_map", 0,0, getcharid(1);
 
 ---------------------------------------
 
