@@ -45,7 +45,7 @@ static void push_heap_path(int *heap,struct tmp_path *tp,int index)
 
 /*==========================================
  * heap update (helper function)
- * move toward the root Because cost has decreased
+ * Move toward the root because cost has decreased.
  *------------------------------------------*/
 static void update_heap_path(int *heap,struct tmp_path *tp,int index)
 {

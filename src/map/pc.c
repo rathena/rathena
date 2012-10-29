@@ -834,10 +834,8 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 }
 
 /*=================================================
- * Can the player equip the item at index n in inventory
- * return
- *	0 = no
- *	1 = yes
+ * Checks if the player can equip the item at index n in inventory.
+ * Returns 0 (no) or 1 (yes).
  *------------------------------------------------*/
 int pc_isequip(struct map_session_data *sd,int n)
 {
@@ -1277,7 +1275,7 @@ static int pc_calc_skillpoint(struct map_session_data* sd)
 
 
 /*==========================================
- * Calculation of Skills lvls
+ * Calculation of skill level.
  *------------------------------------------*/
 int pc_calc_skilltree(struct map_session_data *sd)
 {
@@ -3744,8 +3742,8 @@ int pc_search_inventory(struct map_session_data *sd,int item_id)
 }
 
 /*==========================================
- * Attempt tp add a new item in inventory
- * return
+ * Attempt to add a new item to inventory.
+ * Return:
         0 = success
         1 = invalid itemid not found or negative amount
         2 = overweight
@@ -3836,9 +3834,9 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount,e_l
 }
 
 /*==========================================
- * Remove an item at index n from inventory by amount
- * return
- *	0 = succes
+ * Remove an item at index n from inventory by amount.
+ * Return:
+ *	0 = success
  *	1 = invalid itemid or negative amount
  *------------------------------------------*/
 int pc_delitem(struct map_session_data *sd,int n,int amount,int type, short reason, e_log_pick_type log_type)
@@ -3867,8 +3865,8 @@ int pc_delitem(struct map_session_data *sd,int n,int amount,int type, short reas
 }
 
 /*==========================================
- * Attempt to drop an item
- * return
+ * Attempt to drop an item.
+ * Return:
  *	0 = fail
  *	1 = success
  *------------------------------------------*/
@@ -3911,8 +3909,8 @@ int pc_dropitem(struct map_session_data *sd,int n,int amount)
 }
 
 /*==========================================
- * Attempt to pickup an item
- * return
+ * Attempt to pick up an item.
+ * Return:
  *	0 = fail
  *	1 = success
  *------------------------------------------*/
@@ -3982,8 +3980,8 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 }
 
 /*==========================================
- * Can we use the item  ?
- * Return
+ * Check if item is usable.
+ * Return:
  *	0 = no
  *	1 = yes
  *------------------------------------------*/
@@ -4147,8 +4145,8 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 }
 
 /*==========================================
- * Last checks et use item
- * return
+ * Last checks to use an item.
+ * Return:
  *	0 = fail
  *	1 = success
  *------------------------------------------*/
@@ -4273,8 +4271,8 @@ int pc_useitem(struct map_session_data *sd,int n)
 }
 
 /*==========================================
- * Add item on cart for given index
- * return
+ * Add item on cart for given index.
+ * Return:
  *	0 = success
  *	1 = fail
  *------------------------------------------*/
@@ -4342,8 +4340,8 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 }
 
 /*==========================================
- * Delete item on cart for given index
- * return
+ * Delete item on cart for given index.
+ * Return:
  *	0 = success
  *	1 = fail
  *------------------------------------------*/
@@ -4372,8 +4370,8 @@ int pc_cart_delitem(struct map_session_data *sd,int n,int amount,int type,e_log_
 }
 
 /*==========================================
- * Transfert item from inventory to cart
- * return
+ * Transfer item from inventory to cart.
+ * Return:
  *	0 = fail
  *	1 = succes
  *------------------------------------------*/
@@ -4398,8 +4396,8 @@ int pc_putitemtocart(struct map_session_data *sd,int idx,int amount)
 }
 
 /*==========================================
- * Get number of item on cart
- * return
+ * Get number of item in cart.
+ * Return:
         -1 = itemid not found or no amount found
         x = remaining itemid on cart after get
  *------------------------------------------*/
@@ -4417,8 +4415,8 @@ int pc_cartitem_amount(struct map_session_data* sd, int idx, int amount)
 }
 
 /*==========================================
- * Retrieve an item at index idx from cart
- * return
+ * Retrieve an item at index idx from cart.
+ * Return:
  *	0 = player not found or (FIXME) succes (from pc_cart_delitem)
  *	1 = failure
  *------------------------------------------*/
@@ -4466,8 +4464,8 @@ int pc_show_steal(struct block_list *bl,va_list ap)
 	return 0;
 }
 /*==========================================
- * Stole an item from bl (mob)
- * return
+ * Steal an item from bl (mob).
+ * Return:
  *	0 = fail
  *	1 = succes
  *------------------------------------------*/
@@ -4753,11 +4751,11 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 }
 
 /*==========================================
- * Warp player sd to random location on current map
- * may fail if no Cell walkable found (1000 attempt)
- * return
- *	0 = fail or FIXME succes (from pc_setpos)
- *  x(1|2) = fail
+ * Warp player sd to random location on current map.
+ * May fail if no walkable cell found (1000 attempts).
+ * Return:
+ *	0 = fail or FIXME success (from pc_setpos)
+ *	x(1|2) = fail
  *------------------------------------------*/
 int pc_randomwarp(struct map_session_data *sd, clr_type type)
 {
@@ -4768,7 +4766,7 @@ int pc_randomwarp(struct map_session_data *sd, clr_type type)
 
 	m=sd->bl.m;
 
-	if (map[sd->bl.m].flag.noteleport) //Teleport forbiden
+	if (map[sd->bl.m].flag.noteleport) //Teleport forbidden
 		return 0;
 
 	do{
@@ -5717,7 +5715,7 @@ unsigned int pc_maxjoblv(struct map_session_data *sd)
  * base level exp lookup.
  *------------------------------------------*/
 
-///How much bexp do player need for next level
+//Base exp needed for next level.
 unsigned int pc_nextbaseexp(struct map_session_data *sd)
 {
 	nullpo_ret(sd);
@@ -5728,7 +5726,7 @@ unsigned int pc_nextbaseexp(struct map_session_data *sd)
 	return exp_table[pc_class2idx(sd->status.class_)][0][sd->status.base_level-1];
 }
 
-///How much bexp do player need for this level
+//Base exp needed for this level.
 unsigned int pc_thisbaseexp(struct map_session_data *sd)
 {
 	if(sd->status.base_level>pc_maxbaselv(sd) || sd->status.base_level<=1)
@@ -5740,12 +5738,12 @@ unsigned int pc_thisbaseexp(struct map_session_data *sd)
 
 /*==========================================
  * job level exp lookup
- * return
+ * Return:
  *	0 = not found
  *	x = exp for level
  *------------------------------------------*/
 
-///How much jexp do player need for next level
+//Job exp needed for next level.
 unsigned int pc_nextjobexp(struct map_session_data *sd)
 {
 	nullpo_ret(sd);
@@ -5755,7 +5753,7 @@ unsigned int pc_nextjobexp(struct map_session_data *sd)
 	return exp_table[pc_class2idx(sd->status.class_)][1][sd->status.job_level-1];
 }
 
-///How much jexp do player need for next level
+//Job exp needed for this level.
 unsigned int pc_thisjobexp(struct map_session_data *sd)
 {
 	if(sd->status.job_level>pc_maxjoblv(sd) || sd->status.job_level<=1)
@@ -6423,7 +6421,7 @@ void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int h
 }
 
 /*==========================================
- * Invoked when a player have negative current hp
+ * Invoked when a player has negative current hp
  *------------------------------------------*/
 int pc_dead(struct map_session_data *sd,struct block_list *src)
 {
@@ -6974,8 +6972,8 @@ void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, int ty
 
 /*==========================================
  * HP/SP Recovery
- * Heal player hp nad/or sp linearly
- * Calculate bonus by status
+ * Heal player hp and/or sp linearly.
+ * Calculate bonus by status.
  *------------------------------------------*/
 int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
 {
@@ -7080,7 +7078,7 @@ int pc_percentheal(struct map_session_data *sd,int hp,int sp)
 }
 
 /*==========================================
- * Called when player changing job
+ * Called when player changes job
  * Rewrote to make it tidider [Celest]
  *------------------------------------------*/
 int pc_jobchange(struct map_session_data *sd,int job, int upper)
@@ -8648,8 +8646,8 @@ int pc_calc_pvprank_timer(int tid, unsigned int tick, int id, intptr_t data)
 
 /*==========================================
  * Checking if sd is married
- * Return
- *	partner_id = yes,
+ * Return:
+ *	partner_id = yes
  *	0 = no
  *------------------------------------------*/
 int pc_ismarried(struct map_session_data *sd)
@@ -8663,7 +8661,7 @@ int pc_ismarried(struct map_session_data *sd)
 }
 /*==========================================
  * Marry player sd to player dstsd
- * return
+ * Return:
  *	-1 = fail
  *	0 = success
  *------------------------------------------*/
@@ -8680,7 +8678,7 @@ int pc_marriage(struct map_session_data *sd,struct map_session_data *dstsd)
 
 /*==========================================
  * Divorce sd from its partner
- * return
+ * Return:
  *	-1 = fail
  *	0 = success
  *------------------------------------------*/
@@ -9167,7 +9165,7 @@ int pc_split_atoui(char* str, unsigned int* val, char sep, int max)
 
 /*==========================================
  * sub DB reading.
- * fonction used to read  skill_tree.txt
+ * Function used to read skill_tree.txt
  *------------------------------------------*/
 static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 {

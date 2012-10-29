@@ -136,7 +136,7 @@ int itemdb_searchname_array(struct item_data** data, int size, const char *str)
 
 
 /*==========================================
- * Return a  random item id from group. (take in account % chance giving/tot group) 
+ * Return a random item id from group. (takes into account % chance giving/tot group) 
  *------------------------------------------*/
 int itemdb_searchrandomid(int group)
 {
@@ -586,7 +586,7 @@ static void itemdb_read_itemgroup(void)
 }
 
 /*==========================================
- * Read item forbiden by mapflag (can't equip item)
+ * Read item forbidden by mapflag (can't equip item)
  *------------------------------------------*/
 static bool itemdb_read_noequip(char* str[], int columns, int current)
 {// <nameid>,<mode>

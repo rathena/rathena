@@ -138,7 +138,7 @@ int npc_ontouch2_event(struct map_session_data *sd, struct npc_data *nd)
 }
 
 /*==========================================
- * sub fonction of npc_enable,  Run OnTouch event when enabled
+ * Sub-function of npc_enable, runs OnTouch event when enabled
  *------------------------------------------*/
 int npc_enable_sub(struct block_list *bl, va_list ap)
 {
@@ -206,7 +206,7 @@ int npc_enable(const char* name, int flag)
 }
 
 /*==========================================
- * NPC lookup (get npc_data trough npcname)
+ * NPC lookup (get npc_data through npcname)
  *------------------------------------------*/
 struct npc_data* npc_name2id(const char* name)
 {
@@ -846,7 +846,7 @@ int npc_touch_areanpc_sub(struct block_list *bl, va_list ap)
 
 /*==========================================
  * Chk if sd is still touching his assigned npc.
- * if not then it unsets it and searches for another player in range
+ * If not, it unsets it and searches for another player in range.
  *------------------------------------------*/
 int npc_touchnext_areanpc(struct map_session_data* sd, bool leavemap)
 {
@@ -1062,10 +1062,8 @@ int npc_check_areanpc(int flag, int m, int x, int y, int range)
 }
 
 /*==========================================
- * Chk if player not too far to acces the npc
- * return
- * npc_data : succes
- * NULL : fail	 
+ * Chk if player not too far to access the npc.
+ * Returns npc_data (success) or NULL (fail).
  *------------------------------------------*/
 struct npc_data* npc_checknear(struct map_session_data* sd, struct block_list* bl)
 {
@@ -1134,7 +1132,7 @@ void run_tomb(struct map_session_data* sd, struct npc_data* nd)
 
 /*==========================================
  * NPC 1st call when clicking on npc
- * Do specific action for npc type (openshop, run scripts...) 
+ * Do specific action for NPC type (openshop, run scripts...) 
  *------------------------------------------*/
 int npc_click(struct map_session_data* sd, struct npc_data* nd)
 {
@@ -1753,8 +1751,8 @@ static int npc_unload_ev(DBKey key, DBData *data, va_list ap)
 	return 0;
 }
 
-//Chk if npc match src_id then unload
-//Sub fonction used to found duplicate
+//Chk if npc matches src_id, then unload.
+//Sub-function used to find duplicates.
 static int npc_unload_dup_sub(struct npc_data* nd, va_list args)
 {
 	int src_id;
@@ -1771,8 +1769,8 @@ void npc_unload_duplicates(struct npc_data* nd)
 	map_foreachnpc(npc_unload_dup_sub,nd->bl.id);
 }
 
-//Remove an npc from map and db
-//single is to free name (for duplicate one I suppose)
+//Removes an npc from map and db.
+//Single is to free name (for duplicates).
 int npc_unload(struct npc_data* nd, bool single) {
 	nullpo_ret(nd);
 
@@ -3350,7 +3348,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 	return strchr(start,'\n');// continue
 }
 
-//Read file and create npc/func/mapflag/monster.. accordly
+//Read file and create npc/func/mapflag/monster... accordingly.
 //@runOnInit should we exec OnInit when it's done ?
 void npc_parsesrcfile(const char* filepath, bool runOnInit)
 {

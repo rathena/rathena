@@ -393,7 +393,7 @@ int guild_create(struct map_session_data *sd, const char *name)
 	return 1;
 }
 
-//Whether or not to create guilde
+//Whether or not to create guild
 int guild_created(int account_id,int guild_id)
 {
 	struct map_session_data *sd=map_id2sd(account_id);
@@ -744,7 +744,7 @@ int guild_member_added(int guild_id,int account_id,int char_id,int flag)
 		return 0;
 	}
 
-    //if all ok adding player to guild
+    //if all ok add player to guild
 	sd->status.guild_id = g->guild_id;
 	sd->guild_emblem_id = g->emblem_id;
 	//Packets which were sent in the previous 'guild_sent' implementation.
@@ -1033,7 +1033,7 @@ int guild_change_position(int guild_id,int idx,
 }
 
 /*====================================================
- * Notification of member has changed his guild tiltle
+ * Notification of member has changed his guild title
  *---------------------------------------------------*/
 int guild_position_changed(int guild_id,int idx,struct guild_position *p)
 {
@@ -1184,7 +1184,7 @@ static DBData create_expcache(DBKey key, va_list args)
 }
 
 /*====================================================
- * return Taxed experience from player sd to guild
+ * Return taxed experience from player sd to guild
  *---------------------------------------------------*/
 unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp)
 {
@@ -1218,7 +1218,7 @@ unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp)
 }
 
 /*====================================================
- * Player sd  pay a tribue experience exp to his guild
+ * Player sd pay a tribute experience to his guild
  * Add this experience to guild exp
  * [Celest]
  *---------------------------------------------------*/
@@ -1314,10 +1314,10 @@ void guild_guildaura_refresh(struct map_session_data *sd, int skill_num, int ski
 }
 
 /*====================================================
- * Count number of relation the guild have
- * flag :
- *		0 = allied
- *		1 = ennemy
+ * Count number of relations the guild has.
+ * Flag:
+ *	0 = allied
+ *	1 = enemy
  *---------------------------------------------------*/
 int guild_get_alliance_count(struct guild *g,int flag)
 {
@@ -1343,11 +1343,11 @@ void guild_block_skill(struct map_session_data *sd, int time)
 }
 
 /*====================================================
- * Check relation between guild_id1 and guild_id2
- * flag :
- *		0 = allied
- *		1 = ennemy
- * return true if yes
+ * Check relation between guild_id1 and guild_id2.
+ * Flag:
+ *	0 = allied
+ *	1 = enemy
+ * Returns true if yes.
  *---------------------------------------------------*/
 int guild_check_alliance(int guild_id1, int guild_id2, int flag)
 {
@@ -1363,7 +1363,7 @@ int guild_check_alliance(int guild_id1, int guild_id2, int flag)
 }
 
 /*====================================================
- * Player sd, asking player tsd an alliance between there 2 guild
+ * Player sd, asking player tsd an alliance between their 2 guilds
  *---------------------------------------------------*/
 int guild_reqalliance(struct map_session_data *sd,struct map_session_data *tsd)
 {
@@ -1421,7 +1421,7 @@ int guild_reqalliance(struct map_session_data *sd,struct map_session_data *tsd)
 }
 
 /*====================================================
- * Player sd, awsser to player tsd (account_id) for an alliance request
+ * Player sd, answer to player tsd (account_id) for an alliance request
  *---------------------------------------------------*/
 int guild_reply_reqalliance(struct map_session_data *sd,int account_id,int flag)
 {
@@ -1498,7 +1498,7 @@ int guild_delalliance(struct map_session_data *sd,int guild_id,int flag)
 }
 
 /*====================================================
- * Player sd, asking player tsd a formal ennemy relation between there 2 guild
+ * Player sd, asking player tsd a formal enemy relation between their 2 guilds
  *---------------------------------------------------*/
 int guild_opposition(struct map_session_data *sd,struct map_session_data *tsd)
 {
@@ -1541,7 +1541,7 @@ int guild_opposition(struct map_session_data *sd,struct map_session_data *tsd)
 }
 
 /*====================================================
- * Notification of a relationship between 2 guild
+ * Notification of a relationship between 2 guilds
  *---------------------------------------------------*/
 int guild_allianceack(int guild_id1,int guild_id2,int account_id1,int account_id2,int flag,const char *name1,const char *name2)
 {
@@ -1604,7 +1604,7 @@ int guild_allianceack(int guild_id1,int guild_id2,int account_id1,int account_id
     if ((flag & 0x0f) == 0) { // alliance notification
 		if( sd[1]!=NULL )
 			clif_guild_allianceack(sd[1],2);
-    } else if ((flag & 0x0f) == 1) { // ennemy notification
+    } else if ((flag & 0x0f) == 1) { // enemy notification
 		if( sd[0]!=NULL )
 			clif_guild_oppositionack(sd[0],0);
 	}
@@ -1923,7 +1923,7 @@ void guild_castle_reconnect(int castle_id, int index, int value)
 	}
 }
 
-// Loadcastle data then invoque OnAgitInit* on last
+// Load castle data then invoke OnAgitInit* on last
 int guild_castledataloadack(int len, struct guild_castle *gc)
 {
 	int i;

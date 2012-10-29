@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.2a
+//= 1.2b
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: =========================================
@@ -124,8 +124,8 @@ Mission_Status:
 	for(set .@i,0; .@i<.Quests; set .@i,.@i+1) {
 		set .@j[.@i], getd("Mission"+.@i);
 		set .@j[.Quests], .@j[.Quests]+strmobinfo(3,.@j[.@i]);
-		set .@j[.Quests+1], .@j[.Quests+1]+strmobinfo(6,.@j[.@i]);
-		set .@j[.Quests+2], .@j[.Quests+2]+strmobinfo(7,.@j[.@i]);
+		set .@j[.Quests+1], .@j[.Quests+1]+(strmobinfo(6,.@j[.@i])/(getbattleflag("base_exp_rate")/100)*.Modifier[0]);
+		set .@j[.Quests+2], .@j[.Quests+2]+(strmobinfo(7,.@j[.@i])/(getbattleflag("job_exp_rate")/100)*.Modifier[1]);
 		mes " > "+Chk(getd("Mission"+.@i+"_"),#Mission_Count)+strmobinfo(1,.@j[.@i])+" ("+getd("Mission"+.@i+"_")+"/"+#Mission_Count+")^000000";
 	}
 
@@ -133,7 +133,7 @@ Mission_Status:
 	set .@Mission_Points, 3+(.@j[.Quests]/.Quests/6);
 	set .@Base_Exp, #Mission_Count*.@j[.Quests+1]/5;
 	set .@Job_Exp, #Mission_Count*.@j[.Quests+2]/5;
-	set .@Zeny, #Mission_Count*.Quests*.@j[.@i]*.Multiplier;
+	set .@Zeny, #Mission_Count*.Quests*.@j[.@i]*.Modifier[2];
 
 	next;
 	mes "[Hunting Missions]";
@@ -152,7 +152,8 @@ Mission_Status:
 	specialeffect2 EF_ANGEL;
 	specialeffect2 EF_TRUESIGHT;
 	set #Mission_Points, #Mission_Points+.@Mission_Points;
-	getexp .@Base_Exp,.@Job_Exp;
+	set BaseExp, BaseExp+.@Base_Exp;
+	set JobExp, JobExp+.@Job_Exp;
 	set Zeny, Zeny+.@Zeny;
 	for(set .@i,0; .@i<.Quests; set .@i,.@i+1) {
 		setd "Mission"+.@i,0;
@@ -259,11 +260,12 @@ OnNPCKillEvent:
 
 OnInit:
 	set .Delay,12;		// Quest delay, in hours (0 to disable).
-	set .Quests,4;		// Number of subquests per quest (increases rewards).
+	set .Quests,4;		// Number of subquests per mission (increases rewards).
 	set .Party,3;		// Party options: 0 (exclude party kills), 1 (include party kills), 2 (same map only), 3 (screen area only)
-	set .Multiplier,60;	// Multiplier for Zeny reward calculation.
 	setarray .Count[0],	// Min and max monsters per subquest (increases rewards).
 		40,70;
+	setarray .Modifier[0],	// Multipliers for Base Exp, Job Exp, and Zeny rewards.
+		getbattleflag("base_exp_rate")/100,getbattleflag("job_exp_rate")/100,60;
 	setarray .Shop[0],	// Reward items: <ID>,<point cost> (about 10~20 points per hunt).
 		512,1,513,1,514,1,538,5,539,5,558,10,561,10;
 

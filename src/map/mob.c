@@ -2834,7 +2834,7 @@ int mob_warpslave(struct block_list *bl, int range)
 }
 
 /*==========================================
- *  Count slave sub, curently chking if mob master is the given id
+ *  Counts slave sub, curently checking if mob master is the given ID.
  *------------------------------------------*/
 int mob_countslave_sub(struct block_list *bl,va_list ap)
 {
@@ -2849,7 +2849,7 @@ int mob_countslave_sub(struct block_list *bl,va_list ap)
 }
 
 /*==========================================
- * Cout how many slave a mob got on map
+ * Counts the number of slaves a mob has on the map.
  *------------------------------------------*/
 int mob_countslave(struct block_list *bl)
 {
@@ -2955,8 +2955,8 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 }
 
 /*==========================================
- * MOBskill lookup (get skillindex trough skillid)
- * return -1 if not found
+ * MOBskill lookup (get skillindex through skillid)
+ * Returns -1 if not found.
  *------------------------------------------*/
 int mob_skillid2skillidx(int class_,int skillid)
 {

@@ -229,7 +229,7 @@ int map_freeblock_unlock (void)
 	return block_free_lock;
 }
 
-// Timer fonction to check if there some remaining lock and remove them if so.
+// Timer function to check if there some remaining lock and remove them if so.
 // Called each 1s
 int map_freeblock_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
@@ -1314,7 +1314,7 @@ int map_get_new_object_id(void)
 }
 
 /*==========================================
- * Timered fonction to clear the floor (remove remaining item)
+ * Timered function to clear the floor (remove remaining item)
  * Called each flooritem_lifetime ms
  *------------------------------------------*/
 int map_clearflooritem_timer(int tid, unsigned int tick, int id, intptr_t data)
