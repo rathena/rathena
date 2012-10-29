@@ -1151,7 +1151,7 @@ ACMD_FUNC(jobchange)
 	if (job == 13 || job == 21 || job == 22 || job == 26 || job == 27 || job == 4014 || job == 4022 || job == 4036 || job == 4044 || job == 4048
 		 || (job >= JOB_RUNE_KNIGHT2 && job <= JOB_MECHANIC_T2) || (job >= JOB_BABY_RUNE2 && job <= JOB_BABY_MECHANIC2)
 	) // Deny direct transformation into dummy jobs
-		{clif_displaymessage(fd, "You can not change to this job by command.");
+		{clif_displaymessage(fd, msg_txt(923)); //"You can not change to this job by command."
 		return 0;}
 
 	if (pcdb_checkid(job))
@@ -5196,7 +5196,7 @@ ACMD_FUNC(killer)
 	if(sd->state.killer)
 		clif_displaymessage(fd, msg_txt(241));
 	else {
-		clif_displaymessage(fd, msg_txt(287));
+		clif_displaymessage(fd, msg_txt(292));
 		pc_stop_attack(sd);
 	}
 	return 0;
@@ -7461,17 +7461,17 @@ ACMD_FUNC(size)
 	int size = 0;
 	nullpo_retr(-1, sd);
 
-	size = cap_value(atoi(message),0,2);
+	size = cap_value(atoi(message),SZ_SMALL,SZ_BIG);
 	
 	if(sd->state.size) {
-		sd->state.size = 0;
+		sd->state.size = SZ_SMALL;
 		pc_setpos(sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_TELEPORT);
 	}
 
 	sd->state.size = size;
-	if( size == 1 )
+	if( size == SZ_MEDIUM )
 		clif_specialeffect(&sd->bl,420,AREA);
-	else if( size == 2 )
+	else if( size == SZ_BIG )
 		clif_specialeffect(&sd->bl,422,AREA);
 
 	clif_displaymessage(fd, msg_txt(1303)); // Size change applied.
@@ -7491,14 +7491,14 @@ ACMD_FUNC(sizeall)
 	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) ) {
 		if( pl_sd->state.size != size ) {
 			if( pl_sd->state.size ) {
-				pl_sd->state.size = 0;
+				pl_sd->state.size = SZ_SMALL;
 				pc_setpos(pl_sd, pl_sd->mapindex, pl_sd->bl.x, pl_sd->bl.y, CLR_TELEPORT);
 			}
 
 			pl_sd->state.size = size;
-			if( size == 1 )
+			if( size == SZ_MEDIUM )
 				clif_specialeffect(&pl_sd->bl,420,AREA);
-			else if( size == 2 )
+			else if( size == SZ_BIG )
 				clif_specialeffect(&pl_sd->bl,422,AREA);
 		}
 	}
@@ -7528,19 +7528,19 @@ ACMD_FUNC(sizeguild)
 		return -1;
 	}
 	
-	size = cap_value(size,0,2);
+	size = cap_value(size,SZ_SMALL,SZ_BIG);
 	
 	for( i = 0; i < g->max_member; i++ ) {
 		if( (pl_sd = g->member[i].sd) && pl_sd->state.size != size ) {
 			if( pl_sd->state.size ) {
-				pl_sd->state.size = 0;
+				pl_sd->state.size = SZ_SMALL;
 				pc_setpos(pl_sd, pl_sd->mapindex, pl_sd->bl.x, pl_sd->bl.y, CLR_TELEPORT);
 			}
 
 			pl_sd->state.size = size;
-			if( size == 1 )
+			if( size == SZ_MEDIUM )
 				clif_specialeffect(&pl_sd->bl,420,AREA);
-			else if( size == 2 )
+			else if( size == SZ_BIG )
 				clif_specialeffect(&pl_sd->bl,422,AREA);
 		}
 	}

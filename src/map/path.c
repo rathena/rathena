@@ -45,7 +45,7 @@ static void push_heap_path(int *heap,struct tmp_path *tp,int index)
 
 /*==========================================
  * heap update (helper function)
- * costが減ったので根の方へ移動
+ * move toward the root Because cost has decreased
  *------------------------------------------*/
 static void update_heap_path(int *heap,struct tmp_path *tp,int index)
 {
@@ -147,8 +147,7 @@ static int add_path(int *heap,struct tmp_path *tp,int x,int y,int dist,int befor
 
 /*==========================================
  * Find the closest reachable cell, 'count' cells away from (x0,y0) in direction (dx,dy).
- * 
- * 吹き飛ばしたあとの座標を所得
+ * Income after the coordinates of the blow
  *------------------------------------------*/
 int path_blownpos(int m,int x0,int y0,int dx,int dy,int count)
 {
@@ -343,7 +342,7 @@ bool path_search(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1,int
 	tp[i].flag=0;
 	heap[0]=0;
 	push_heap_path(heap,tp,calc_index(x0,y0));
-	xs = md->xs-1; // あらかじめ１減算しておく
+    xs = md->xs - 1; // Place by subtracting a pre-
 	ys = md->ys-1;
 
 	for(;;)
@@ -361,10 +360,10 @@ bool path_search(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1,int
 		if(x==x1 && y==y1)
 			break;
 
-		// dc[0] : y++ の時のコスト増分
-		// dc[1] : x-- の時のコスト増分
-		// dc[2] : y-- の時のコスト増分
-		// dc[3] : x++ の時のコスト増分
+		// dc[0] : y++ Incremental cost at the time
+		// dc[1] : x-- 
+		// dc[2] : y-- 
+		// dc[3] : x++ 
 
 		if(y < ys && !map_getcellp(md,x  ,y+1,cell)) {
 			f |= 1; dc[0] = (y >= y1 ? 20 : 0);

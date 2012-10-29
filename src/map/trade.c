@@ -510,7 +510,7 @@ void trade_tradecancel(struct map_session_data *sd)
 }
 
 /*==========================================
- * Žæˆø‹–‘ø(trade‰Ÿ‚µ)
+ * lock sd and tsd trade data, execute the trade, clear, then save players
  *------------------------------------------*/
 void trade_tradecommit(struct map_session_data *sd)
 {

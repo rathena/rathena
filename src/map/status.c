@@ -66,7 +66,7 @@ static struct {
 	int randombonus_max[MAX_REFINE]; // cumulative maximum random bonus damage
 } refine_info[REFINE_TYPE_MAX];
 
-static int atkmods[3][MAX_WEAPON_TYPE];	// •ŠíATKƒTƒCƒYC³(size_fix.txt)
+static int atkmods[3][MAX_WEAPON_TYPE];	//ATK weapon modification for size (size_fix.txt)
 static char job_bonus[CLASS_COUNT][MAX_LEVEL];
 
 static struct eri *sc_data_ers; //For sc_data entries
@@ -2059,7 +2059,7 @@ int status_calc_mob_(struct mob_data* md, bool first)
 
 	if (flag&2)
 	{	// change for sized monsters [Valaris]
-		if (md->special_state.size==1) {
+		if (md->special_state.size==SZ_MEDIUM) {
 			status->max_hp>>=1;
 			status->max_sp>>=1;
 			if (!status->max_hp) status->max_hp = 1;
@@ -2078,7 +2078,7 @@ int status_calc_mob_(struct mob_data* md, bool first)
 			if (!status->int_) status->int_ = 1;
 			if (!status->dex) status->dex = 1;
 			if (!status->luk) status->luk = 1;
-		} else if (md->special_state.size==2) {
+		} else if (md->special_state.size==SZ_BIG) {
 			status->max_hp<<=1;
 			status->max_sp<<=1;
 			status->hp=status->max_hp;
@@ -2280,7 +2280,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	b_max_weight = sd->max_weight;
 	b_cart_weight_max = sd->cart_weight_max;
 
-	pc_calc_skilltree(sd);	// ƒXƒLƒ‹ƒcƒŠ?‚ÌŒvZ
+	pc_calc_skilltree(sd);	// ï¿½Xï¿½Lï¿½ï¿½ï¿½cï¿½ï¿½?ï¿½ÌŒvï¿½Z
 
 	sd->max_weight = max_weight_base[pc_class2idx(sd->status.class_)]+sd->status.str*300;
 
@@ -5555,8 +5555,8 @@ const char* status_get_name(struct block_list *bl) {
 }
 
 /*==========================================
- * ‘ÎÛ‚ÌClass‚ğ•Ô‚·(”Ä—p)
- * –ß‚è‚Í®”‚Å0ˆÈã
+ * ï¿½ÎÛ‚ï¿½Classï¿½ï¿½Ô‚ï¿½(ï¿½Ä—p)
+ * ï¿½ß‚ï¿½Íï¿½ï¿½ï¿½ï¿½ï¿½0ï¿½Èï¿½
  *------------------------------------------*/
 int status_get_class(struct block_list *bl) {
 	nullpo_ret(bl);
@@ -5572,8 +5572,8 @@ int status_get_class(struct block_list *bl) {
 	return 0;
 }
 /*==========================================
- * ‘ÎÛ‚ÌƒŒƒxƒ‹‚ğ•Ô‚·(”Ä—p)
- * –ß‚è‚Í®”‚Å0ˆÈã
+ * ï¿½ÎÛ‚Ìƒï¿½ï¿½xï¿½ï¿½ï¿½ï¿½Ô‚ï¿½(ï¿½Ä—p)
+ * ï¿½ß‚ï¿½Íï¿½ï¿½ï¿½ï¿½ï¿½0ï¿½Èï¿½
  *------------------------------------------*/
 int status_get_lv(struct block_list *bl) {
 	nullpo_ret(bl);
@@ -7196,7 +7196,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			status_zap(bl, diff, 0);
 		}
 		// fall through
-		case SC_POISON:				/* “Å */
+		case SC_POISON:				/* ï¿½ï¿½ */
 		val3 = tick/1000; //Damage iterations
 		if(val3 < 1) val3 = 1;
 		tick_time = 1000; // [GodLesZ] tick time
@@ -7269,7 +7269,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			else
 				val4 |= battle_config.monster_cloak_check_type&7;
 			break;
-		case SC_SIGHT:			/* ƒTƒCƒg/ƒ‹ƒAƒt */
+		case SC_SIGHT:			/* ï¿½Tï¿½Cï¿½g/ï¿½ï¿½ï¿½Aï¿½t */
 		case SC_RUWACH:
 		case SC_SIGHTBLASTER:
 			val3 = skill_get_splash(val2, val1); //Val2 should bring the skill-id.
@@ -8179,9 +8179,9 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_GT_CHANGE:
 			{// take note there is no def increase as skill desc says. [malufett]
 				struct block_list * src;
-				val3 = status->agi * val1 / 60; // ASPD increase: [(Target’s AGI x Skill Level) / 60] %
+				val3 = status->agi * val1 / 60; // ASPD increase: [(Targetï¿½s AGI x Skill Level) / 60] %
 				if( (src = map_id2bl(val2)) )
-					val4 = ( 200/status_get_int(src) ) * val1;// MDEF decrease: MDEF [(200 / Caster’s INT) x Skill Level]
+					val4 = ( 200/status_get_int(src) ) * val1;// MDEF decrease: MDEF [(200 / Casterï¿½s INT) x Skill Level]
 			}
 			break;
 		case SC_GT_REVITALIZE:
@@ -8189,7 +8189,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 				struct block_list * src;
 				val3 = val1 * 30 + 150; // Natural HP recovery increase: [(Skill Level x 30) + 50] %
 				if( (src = map_id2bl(val2)) ) // the stat def is not shown in the status window and it is process differently
-					val4 = ( status_get_vit(src)/4 ) * val1; // STAT DEF increase: [(Caster’s VIT / 4) x Skill Level]
+					val4 = ( status_get_vit(src)/4 ) * val1; // STAT DEF increase: [(Casterï¿½s VIT / 4) x Skill Level]
 			}
 			break;
 		case SC_PYROTECHNIC_OPTION:
@@ -8679,7 +8679,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	return 1;
 }
 /*==========================================
- * ƒXƒe[ƒ^ƒXˆÙí‘S‰ğœ
+ * ï¿½Xï¿½eï¿½[ï¿½^ï¿½Xï¿½Ùï¿½Sï¿½ï¿½ï¿½ï¿½
  * type:
  * 0 - ???
  * 1 - ???
@@ -8778,7 +8778,7 @@ int status_change_clear(struct block_list* bl, int type)
 }
 
 /*==========================================
- * ƒXƒe[ƒ^ƒXˆÙíI—¹
+ * ï¿½Xï¿½eï¿½[ï¿½^ï¿½Xï¿½Ùï¿½Iï¿½ï¿½
  *------------------------------------------*/
 int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const char* file, int line)
 {
@@ -9475,7 +9475,7 @@ int kaahi_heal_timer(int tid, unsigned int tick, int id, intptr_t data)
 }
 
 /*==========================================
- * ƒXƒe[ƒ^ƒXˆÙíI—¹ƒ^ƒCƒ}[
+ * ï¿½Xï¿½eï¿½[ï¿½^ï¿½Xï¿½Ùï¿½Iï¿½ï¿½ï¿½^ï¿½Cï¿½}ï¿½[
  *------------------------------------------*/
 int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
@@ -9681,7 +9681,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		}
 		break;
 
-	case SC_DANCING: //ƒ_ƒ“ƒXƒXƒLƒ‹‚ÌŠÔSPÁ”ï
+	case SC_DANCING: //ï¿½_ï¿½ï¿½ï¿½Xï¿½Xï¿½Lï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½SPï¿½ï¿½ï¿½ï¿½
 		{
 			int s = 0;
 			int sp = 1;
@@ -10293,7 +10293,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 }
 
 /*==========================================
- * ƒXƒe[ƒ^ƒXˆÙíƒ^ƒCƒ}[”ÍˆÍˆ—
+ * ï¿½Xï¿½eï¿½[ï¿½^ï¿½Xï¿½Ùï¿½^ï¿½Cï¿½}ï¿½[ï¿½ÍˆÍï¿½ï¿½ï¿½
  *------------------------------------------*/
 int status_change_timer_sub(struct block_list* bl, va_list ap)
 {
@@ -10310,7 +10310,7 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 	tsc = status_get_sc(bl);
 
 	switch( type ) {
-	case SC_SIGHT:	/* ƒTƒCƒg */
+	case SC_SIGHT:	/* ï¿½Tï¿½Cï¿½g */
 		if( tsc && tsc->data[SC__SHADOWFORM] && (sce && sce->val4 >0 && sce->val4%2000 == 0) && // for every 2 seconds do the checking
 			rnd()%100 < 100-tsc->data[SC__SHADOWFORM]->val1*10 ) // [100 - (Skill Level x 10)] %
 				status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
@@ -10321,7 +10321,7 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 		status_change_end(bl, SC_CAMOUFLAGE, INVALID_TIMER);
 		status_change_end(bl, SC__INVISIBILITY, INVALID_TIMER);
 		break;
-	case SC_RUWACH:	/* ƒ‹ƒAƒt */
+	case SC_RUWACH:	/* ï¿½ï¿½ï¿½Aï¿½t */
 		if (tsc && (tsc->data[SC_HIDING] || tsc->data[SC_CLOAKING] ||
 				tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_CLOAKINGEXCEED] ||
 					tsc->data[SC__INVISIBILITY])) {
@@ -10888,6 +10888,13 @@ static bool status_readdb_refine(char* fields[], int columns, int current)
 	return true;
 }
 
+/*
+* Read status db
+* job1.txt
+* job2.txt
+* size_fixe.txt
+* refine_db.txt
+*/
 int status_readdb(void)
 {
 	int i, j;
@@ -10895,13 +10902,13 @@ int status_readdb(void)
 	// initialize databases to default
 	//
 
-	// job_db1.txt
+	// reset job_db1.txt data
 	memset(max_weight_base, 0, sizeof(max_weight_base));
 	memset(hp_coefficient, 0, sizeof(hp_coefficient));
 	memset(hp_coefficient2, 0, sizeof(hp_coefficient2));
 	memset(sp_coefficient, 0, sizeof(sp_coefficient));
 	memset(aspd_base, 0, sizeof(aspd_base));
-	// job_db2.txt
+	// reset job_db2.txt data
 	memset(job_bonus,0,sizeof(job_bonus)); // Job-specific stats bonus
 
 	// size_fix.txt
@@ -10937,7 +10944,7 @@ int status_readdb(void)
 }
 
 /*==========================================
- * ƒXƒLƒ‹ŠÖŒW‰Šú‰»ˆ—
+ * Status db init and destroy.
  *------------------------------------------*/
 int do_init_status(void)
 {

@@ -536,15 +536,15 @@ struct fame_list {
 	char name[NAME_LENGTH];
 };
 
-enum {
-	GBI_EXP	=1,		// ギルドのEXP
-	GBI_GUILDLV,		// ギルドのLv
-	GBI_SKILLPOINT,		// ギルドのスキルポイント
-	GBI_SKILLLV,		// ギルドスキルLv
+enum { //Change Guild Infos 
+	GBI_EXP	=1,		// Guild Experience (EXP)
+	GBI_GUILDLV,		// Guild level
+	GBI_SKILLPOINT,		// Guild skillpoints
+	GBI_SKILLLV,		// Guild skilllv ?? seem unused
 };
 
-enum {
-	GMI_POSITION	=0,		// メンバーの役職変更
+enum { //Change Member Infos
+	GMI_POSITION	=0,		
 	GMI_EXP,
 	GMI_HAIR,
 	GMI_HAIR_COLOR,

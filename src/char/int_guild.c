@@ -1142,7 +1142,7 @@ int mapif_guild_castle_dataload(int fd, int sz, int *castle_ids)
 // Packet received from map server
 
 
-// ギルド作成要求
+// Guild creation request
 int mapif_parse_CreateGuild(int fd,int account_id,char *name,struct guild_member *master)
 {
 	struct guild *g;
@@ -1837,11 +1837,13 @@ int mapif_parse_GuildMasterChange(int fd, int guild_id, const char* name, int le
 	return mapif_guild_master_changed(g, g->member[0].account_id, g->member[0].char_id);
 }
 
-// map server からの通信
-// ・１パケットのみ解析すること
-// ・パケット長データはinter.cにセットしておくこと
-// ・パケット長チェックや、RFIFOSKIPは呼び出し元で行われるので行ってはならない
-// ・エラーなら0(false)、そうでないなら1(true)をかえさなければならない
+// Communication from the map server
+// - Can analyzed only one by one packet
+// Data packet length that you set to inter.c
+//- Shouldn't do checking and packet length, RFIFOSKIP is done by the caller
+// Must Return
+//	1 : ok
+//  0 : error
 int inter_guild_parse_frommap(int fd)
 {
 	RFIFOHEAD(fd);
@@ -1871,7 +1873,7 @@ int inter_guild_parse_frommap(int fd)
 	return 1;
 }
 
-// サーバーから脱退要求（キャラ削除用）
+//Leave request from the server (for deleting character from guild)
 int inter_guild_leave(int guild_id, int account_id, int char_id)
 {
 	return mapif_parse_GuildLeave(-1, guild_id, account_id, char_id, 0, "** Character Deleted **");

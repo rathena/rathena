@@ -137,7 +137,7 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 		return 0;
 	}
 	ud->walktimer = INVALID_TIMER;
-	if( bl->prev == NULL ) return 0; // block_list から抜けているので移動停止する
+	if (bl->prev == NULL) return 0; // Stop moved because it is missing from the block_list
 
 	if(ud->walkpath.path_pos>=ud->walkpath.path_len)
 		return 0;
@@ -156,8 +156,7 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	if(map_getcell(bl->m,x+dx,y+dy,CELL_CHKNOPASS))
 		return unit_walktoxy_sub(bl);
 	
-	// バシリカ判定
-
+	//Refresh view for all those we lose sight
 	map_foreachinmovearea(clif_outsight, bl, AREA_SIZE, dx, dy, sd?BL_ALL:BL_PC, bl);
 
 	x += dx;
@@ -347,8 +346,8 @@ int unit_walktoxy( struct block_list *bl, short x, short y, int flag)
 		map_random_dir(bl, &ud->to_x, &ud->to_y);
 
 	if(ud->walktimer != INVALID_TIMER) {
-		// 現在歩いている最中の目的地変更なのでマス目の中心に来た時に
-		// timer関数からunit_walktoxy_subを呼ぶようにする
+		// When you come to the center of the grid because the change of destination while you're walking right now
+		// Call a function from a timer unit_walktoxy_sub
 		ud->state.change_walk_target = 1;
 		return 1;
 	}
@@ -1023,7 +1022,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 
 	nullpo_ret(src);
 	if(status_isdead(src))
-		return 0; // 死んでいないか
+		return 0; //Do not continue source is dead
 
 	sd = BL_CAST(BL_PC, src);
 	ud = unit_bl2ud(src);
@@ -1112,7 +1111,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 		return 0;
 
 	tstatus = status_get_status_data(target);
-	//直前のスキル状況の記録
+	// Record the status of the previous skill)
 	if(sd) {
 		switch(skill_num){
 		case SA_CASTCANCEL:
@@ -1362,7 +1361,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 
 	nullpo_ret(src);
 
-	if(!src->prev) return 0; // map 上に存在するか
+	if (!src->prev) return 0; // not on the map
 	if(status_isdead(src)) return 0;
 
 	sd = BL_CAST(BL_PC, src);
@@ -1399,7 +1398,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 		return 0;
 	}
 
-	/* 射程と障害物チェック */
+    /* Check range and obstacle */
 	bl.type = BL_NUL;
 	bl.m = src->m;
 	bl.x = skill_x;
@@ -1522,8 +1521,8 @@ int unit_unattackable(struct block_list *bl)
 }
 
 /*==========================================
- * 攻撃要求
- * typeが1なら継続攻撃
+ * Attack request
+ * If type is an ongoing attack
  *------------------------------------------*/
 int unit_attack(struct block_list *src,int target_id,int continuous)
 {
@@ -1604,7 +1603,7 @@ bool unit_can_reach_pos(struct block_list *bl,int x,int y, int easy)
 {
 	nullpo_retr(false, bl);
 
-	if( bl->x==x && bl->y==y )	// 同じマス
+	if (bl->x == x && bl->y == y) //Same place
 		return true;
 
 	return path_search(NULL,bl->m,bl->x,bl->y,x,y,easy,CELL_CHKNOREACH);
@@ -1648,7 +1647,7 @@ bool unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, 
 	return path_search(NULL,bl->m,bl->x,bl->y,tbl->x-dx,tbl->y-dy,easy,CELL_CHKNOREACH);
 }
 /*==========================================
- * Calculates position of Pet/Mercenary/Homunculus
+ * Calculates position of Pet/Mercenary/Homunculus/Elemental
  *------------------------------------------*/
 int	unit_calc_pos(struct block_list *bl, int tx, int ty, int dir)
 {
@@ -1706,7 +1705,7 @@ int	unit_calc_pos(struct block_list *bl, int tx, int ty, int dir)
 }
 
 /*==========================================
- * PCの攻撃 (timer関数)
+ * Continuous Attack (function timer)
  *------------------------------------------*/
 static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int tick)
 {
@@ -1908,7 +1907,7 @@ int unit_skillcastcancel(struct block_list *bl,int type)
 	return 1;
 }
 
-// unit_data の初期化処理
+// unit_data initialization process
 void unit_dataset(struct block_list *bl)
 {
 	struct unit_data *ud;
@@ -1949,7 +1948,7 @@ int unit_fixdamage(struct block_list *src,struct block_list *target,unsigned int
 }
 
 /*==========================================
- * 見た目のサイズを変更する
+ * To change the size of the char (player or mob only)
  *------------------------------------------*/
 int unit_changeviewsize(struct block_list *bl,short size)
 {

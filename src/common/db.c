@@ -2743,7 +2743,7 @@ void* linkdb_search( struct linkdb_node** head, void *key)
 	while( node ) {
 		if( node->key == key ) {
 			if( node->prev && n > 5 ) {
-				// ˆ—Œø—¦‰ü‘P‚Ìˆ×‚Éhead‚ÉˆÚ“®‚³‚¹‚é
+				//Moving the head in order to improve processing efficiency
 				if(node->prev) node->prev->next = node->next;
 				if(node->next) node->next->prev = node->prev;
 				node->next = *head;
@@ -2790,7 +2790,7 @@ void linkdb_replace( struct linkdb_node** head, void *key, void *data )
 	while( node ) {
 		if( node->key == key ) {
 			if( node->prev && n > 5 ) {
-				// ˆ—Œø—¦‰ü‘P‚Ìˆ×‚Éhead‚ÉˆÚ“®‚³‚¹‚é
+				//Moving the head in order to improve processing efficiency
 				if(node->prev) node->prev->next = node->next;
 				if(node->next) node->next->prev = node->prev;
 				node->next = *head;
@@ -2804,7 +2804,7 @@ void linkdb_replace( struct linkdb_node** head, void *key, void *data )
 		node = node->next;
 		n++;
 	}
-	// Œ©‚Â‚©‚ç‚È‚¢‚Ì‚Å‘}“ü
+	//Insert because it can not find
 	linkdb_insert( head, key, data );
 }
 

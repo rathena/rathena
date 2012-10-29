@@ -1259,7 +1259,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		else if( dstmd && !is_boss(bl) )
 			sc_start(bl, SC_STUN, 100, skilllv, 1000 + 1000 * (rnd() %3));
 		break;
-	case SR_GENTLETOUCH_QUIET:  //  [(Skill Level x 5) + (Caster’s DEX + Caster’s Base Level) / 10]
+	case SR_GENTLETOUCH_QUIET:  //  [(Skill Level x 5) + (Casterï¿½s DEX + Casterï¿½s Base Level) / 10]
 		sc_start(bl, SC_SILENCE, 5 * skilllv + (sstatus->dex + status_get_lv(src)) / 10, skilllv, skill_get_time(skillid, skilllv));
 		break;
 	case SR_EARTHSHAKER:
@@ -1323,7 +1323,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 					sc_start(bl, SC_MELON_BOMB, 100, skilllv, skill_get_time(GN_SLINGITEM, skilllv));	// Reduces ASPD and moviment speed
 					break;
 				case 13264:
-					sc_start(bl, SC_BANANA_BOMB, 100, skilllv, skill_get_time(GN_SLINGITEM, skilllv));	// Reduces LUK À?Needed confirm it, may be it's bugged in kRORE?
+					sc_start(bl, SC_BANANA_BOMB, 100, skilllv, skill_get_time(GN_SLINGITEM, skilllv));	// Reduces LUK ï¿½?Needed confirm it, may be it's bugged in kRORE?
 					sc_start(bl, SC_BANANA_BOMB_SITDOWN, 75, skilllv, skill_get_time(GN_SLINGITEM_RANGEMELEEATK,skilllv)); // Sitdown for 3 seconds.
 					break;
 			}
@@ -2739,12 +2739,12 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 }
 
 /*==========================================
- * ƒXƒLƒ‹”Í??U?—p(map_foreachinarea‚©‚çŒÄ‚Î‚ê‚é)
- * flag‚É‚Â‚¢‚Ä?F16?i?‚ðŠm”F
+ * ï¿½Xï¿½Lï¿½ï¿½ï¿½ï¿½??U?ï¿½p(map_foreachinareaï¿½ï¿½ï¿½ï¿½Ä‚Î‚ï¿½ï¿½)
+ * flagï¿½É‚Â‚ï¿½ï¿½ï¿½?F16?i?ï¿½ï¿½ï¿½mï¿½F
  * MSB <- 00fTffff ->LSB
- *	T	=ƒ^?ƒQƒbƒg‘I?—p(BCT_*)
- *  ffff=Ž©—R‚ÉŽg—p‰Â”\
- *  0	=—\–ñ?B0‚ÉŒÅ’è
+ *	T	=ï¿½^?ï¿½Qï¿½bï¿½gï¿½I?ï¿½p(BCT_*)
+ *  ffff=ï¿½ï¿½ï¿½Rï¿½ÉŽgï¿½pï¿½Â”\
+ *  0	=ï¿½\ï¿½ï¿½?B0ï¿½ÉŒÅ’ï¿½
  *------------------------------------------*/
 typedef int (*SkillFunc)(struct block_list *, struct block_list *, int, int, unsigned int, int);
 int skill_area_sub (struct block_list *bl, va_list ap)
@@ -5959,7 +5959,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				break;
 			}
 			if(!battle_config.duel_allow_teleport && sd->duel_group && skilllv <= 2) { // duel restriction [LuzZza]
-				clif_displaymessage(sd->fd, "Duel: Can't use teleport in duel.");
+                                char output[128]; sprintf(output, msg_txt(365), skill_get_name(AL_TELEPORT));
+				clif_displaymessage(sd->fd, output); //"Duel: Can't use %s in duel."
 				break;
 			}
 
@@ -7861,7 +7862,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case RA_WUGDASH:
 		if( tsce ) {
-			clif_skill_nodamage(src,bl,skillid,skilllv,status_change_end(bl, type, -1));
+			clif_skill_nodamage(src,bl,skillid,skilllv,status_change_end(bl, type, INVALID_TIMER));
 			map_freeblock_unlock();
 			return 0;
 		}
@@ -12208,7 +12209,8 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 			break;
 		case AL_WARP:
 			if(!battle_config.duel_allow_teleport && sd->duel_group) { // duel restriction [LuzZza]
-				clif_displaymessage(sd->fd, "Duel: Can't use warp in duel.");
+                                char output[128]; sprintf(output, msg_txt(365), skill_get_name(AL_WARP));
+				clif_displaymessage(sd->fd, output); //"Duel: Can't use %s in duel."
 				return 0;
 			}
 			break;
@@ -13402,12 +13404,12 @@ int skill_castfix_sc (struct block_list *bl, int time)
 			time += time * sc->data[SC_SLOWCAST]->val2 / 100;
 		if (sc->data[SC_SUFFRAGIUM]) {
 			time -= time * sc->data[SC_SUFFRAGIUM]->val2 / 100;
-			status_change_end(bl, SC_SUFFRAGIUM, -1);
+			status_change_end(bl, SC_SUFFRAGIUM, INVALID_TIMER);
 		}
 		if (sc->data[SC_MEMORIZE]) {
 			time>>=1;
 			if ((--sc->data[SC_MEMORIZE]->val2) <= 0)
-				status_change_end(bl, SC_MEMORIZE, -1);
+				status_change_end(bl, SC_MEMORIZE, INVALID_TIMER);
 		}
 		if (sc->data[SC_POEMBRAGI])
 			time -= time * sc->data[SC_POEMBRAGI]->val2 / 100;		
@@ -15762,8 +15764,8 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 					
 					difficulty = (620 - 20 * skilllv);// (620 - 20 * Skill Level)
 
-					make_per = status->int_ + status->dex/2 + status->luk + sd->status.job_level + (30+rnd()%120) + // (Caster’s INT) + (Caster’s DEX / 2) + (Caster’s LUK) + (Caster’s Job Level) + Random number between (30 ~ 150) +
-								(sd->status.base_level-100) + pc_checkskill(sd, AM_LEARNINGPOTION) + pc_checkskill(sd, CR_FULLPROTECTION)*(4+rnd()%6); // (Caster’s Base Level - 100) + (Potion Research x 5) + (Full Chemical Protection Skill Level) x (Random number between 4 ~ 10)
+					make_per = status->int_ + status->dex/2 + status->luk + sd->status.job_level + (30+rnd()%120) + // (Casterï¿½s INT) + (Casterï¿½s DEX / 2) + (Casterï¿½s LUK) + (Casterï¿½s Job Level) + Random number between (30 ~ 150) +
+								(sd->status.base_level-100) + pc_checkskill(sd, AM_LEARNINGPOTION) + pc_checkskill(sd, CR_FULLPROTECTION)*(4+rnd()%6); // (Casterï¿½s Base Level - 100) + (Potion Research x 5) + (Full Chemical Protection Skill Level) x (Random number between 4 ~ 10)
 					
 					switch(nameid){// difficulty factor
 						case 12422:	case 12425:	
@@ -15804,7 +15806,7 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 				{
 					int difficulty = 30 + rnd()%120; // Random number between (30 ~ 150)
 				
-					make_per = sd->status.job_level / 4 + status->luk / 2 + status->dex / 3; // (Caster’s Job Level / 4) + (Caster’s LUK / 2) + (Caster’s DEX / 3)
+					make_per = sd->status.job_level / 4 + status->luk / 2 + status->dex / 3; // (Casterï¿½s Job Level / 4) + (Casterï¿½s LUK / 2) + (Casterï¿½s DEX / 3)
 					qty = ~(5 + rnd()%5) + 1;
 
 					switch(nameid){// difficulty factor

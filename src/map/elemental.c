@@ -101,7 +101,7 @@ int elemental_save(struct elemental_data *ed) {
 	return 1;
 }
 
-static int elemental_summon_end(int tid, unsigned int tick, int id, intptr data) {
+static int elemental_summon_end(int tid, unsigned int tick, int id, intptr_t data) {
 	struct map_session_data *sd;
 	struct elemental_data *ed;
 	
@@ -643,7 +643,7 @@ static int elemental_ai_sub_foreachclient(struct map_session_data *sd, va_list a
 	return 0;
 }
 
-static int elemental_ai_timer(int tid, unsigned int tick, int id, intptr data) {
+static int elemental_ai_timer(int tid, unsigned int tick, int id, intptr_t data) {
 	map_foreachpc(elemental_ai_sub_foreachclient,tick);
 	
 	return 0;

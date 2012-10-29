@@ -2834,7 +2834,7 @@ int mob_warpslave(struct block_list *bl, int range)
 }
 
 /*==========================================
- * ‰æ–Ê“à‚Ìæ‚èŠª‚«‚Ì”ŒvZ—p(foreachinarea)
+ *  Count slave sub, curently chking if mob master is the given id
  *------------------------------------------*/
 int mob_countslave_sub(struct block_list *bl,va_list ap)
 {
@@ -2849,7 +2849,7 @@ int mob_countslave_sub(struct block_list *bl,va_list ap)
 }
 
 /*==========================================
- * ‰æ–Ê“à‚Ìæ‚èŠª‚«‚Ì”ŒvZ
+ * Cout how many slave a mob got on map
  *------------------------------------------*/
 int mob_countslave(struct block_list *bl)
 {
@@ -2955,7 +2955,8 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 }
 
 /*==========================================
- *MOBskill‚©‚çŠY“–skillid‚Ìskillidx‚ğ•Ô‚·
+ * MOBskill lookup (get skillindex trough skillid)
+ * return -1 if not found
  *------------------------------------------*/
 int mob_skillid2skillidx(int class_,int skillid)
 {
@@ -3965,7 +3966,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current)
 
 	class_=atoi(str[0]);
 
-	if(mob_db(class_) == mob_dummy)	// ’l‚ªˆÙí‚È‚çˆ—‚µ‚È‚¢B
+	if(mob_db(class_) == mob_dummy)	// invalid class (probably undefined in db)
 	{
 		ShowWarning("mob_readdb_mobavail: Unknown mob id %d.\n", class_);
 		return false;

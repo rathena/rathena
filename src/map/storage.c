@@ -27,7 +27,7 @@
 static DBMap* guild_storage_db; // int guild_id -> struct guild_storage*
 
 /*==========================================
- * 倉庫内アイテムソート
+ * Sort items in the warehouse
  *------------------------------------------*/
 static int storage_comp_item(const void *_i1, const void *_i2)
 {
@@ -43,6 +43,7 @@ static int storage_comp_item(const void *_i1, const void *_i2)
 	return i1->nameid - i2->nameid;
 }
 
+//Sort item by storage_comp_item (nameid)
 static void storage_sortitem(struct item* items, unsigned int size)
 {
 	nullpo_retv(items);
@@ -54,9 +55,9 @@ static void storage_sortitem(struct item* items, unsigned int size)
 }
 
 /*==========================================
- * 初期化とか
+ * Init/Terminate
  *------------------------------------------*/
-int do_init_storage(void) // map.c::do_init()から呼ばれる
+int do_init_storage(void) // Called from map.c::do_init()
 {
 	guild_storage_db=idb_alloc(DB_OPT_RELEASE_DATA);
 	return 1;
@@ -110,7 +111,9 @@ int storage_storageopen(struct map_session_data *sd)
 	return 0;
 }
 
-// helper function
+/* helper function
+ * checking if 2 item structure are identique
+ */
 int compare_item(struct item *a, struct item *b)
 {
 	if( a->nameid == b->nameid &&
@@ -202,6 +205,10 @@ int storage_delitem(struct map_session_data* sd, int n, int amount)
 
 /*==========================================
  * Add an item to the storage from the inventory.
+ * @index : inventory idx
+ * return
+ *	0 : fail
+ *	1 : success
  *------------------------------------------*/
 int storage_storageadd(struct map_session_data* sd, int index, int amount)
 {
@@ -226,7 +233,11 @@ int storage_storageadd(struct map_session_data* sd, int index, int amount)
 }
 
 /*==========================================
- * Retrieve an item from the storage.
+ * Retrieve an item from the storage into inventory
+ * @index : storage idx
+ * return
+ *	0 : fail
+ *	1 : success
  *------------------------------------------*/
 int storage_storageget(struct map_session_data* sd, int index, int amount)
 {
@@ -251,6 +262,10 @@ int storage_storageget(struct map_session_data* sd, int index, int amount)
 
 /*==========================================
  * Move an item from cart to storage.
+ * @index : cart inventory index
+ * return
+ *	0 : fail
+ *	1 : success
  *------------------------------------------*/
 int storage_storageaddfromcart(struct map_session_data* sd, int index, int amount)
 {
@@ -275,7 +290,11 @@ int storage_storageaddfromcart(struct map_session_data* sd, int index, int amoun
 }
 
 /*==========================================
- * Get from Storage to the Cart
+ * Get from Storage to the Cart inventory
+ * @index : storage index
+ * return
+ *	0 : fail
+ *	1 : success
  *------------------------------------------*/
 int storage_storagegettocart(struct map_session_data* sd, int index, int amount)
 {
@@ -344,8 +363,9 @@ struct guild_storage *guild2storage(int guild_id)
 	return gs;
 }
 
+//For just locating a storage without creating one. [Skotlex]
 struct guild_storage *guild2storage2(int guild_id)
-{	//For just locating a storage without creating one. [Skotlex]
+{	
 	return (struct guild_storage*)idb_get(guild_storage_db,guild_id);
 }
 
@@ -355,6 +375,13 @@ int guild_storage_delete(int guild_id)
 	return 0;
 }
 
+/*==========================================
+* Attempt to open guild storage for sd
+* return
+* 	0 : success (open or req to create a new one)
+* 	1 : fail
+*	2 : no guild for sd
+ *------------------------------------------*/
 int storage_guild_storageopen(struct map_session_data* sd)
 {
 	struct guild_storage *gstor;
@@ -387,6 +414,12 @@ int storage_guild_storageopen(struct map_session_data* sd)
 	return 0;
 }
 
+/*==========================================
+* Attempt to add an item in guild storage, then refresh it
+* return
+* 	0 : success
+* 	1 : fail
+ *------------------------------------------*/
 int guild_storage_additem(struct map_session_data* sd, struct guild_storage* stor, struct item* item_data, int amount)
 {
 	struct item_data *data;
@@ -439,6 +472,12 @@ int guild_storage_additem(struct map_session_data* sd, struct guild_storage* sto
 	return 0;
 }
 
+/*==========================================
+* Attempt to delete an item in guild storage, then refresh it
+* return
+* 	0 : success
+* 	1 : fail
+ *------------------------------------------*/
 int guild_storage_delitem(struct map_session_data* sd, struct guild_storage* stor, int n, int amount)
 {
 	nullpo_retr(1, sd);
@@ -458,6 +497,13 @@ int guild_storage_delitem(struct map_session_data* sd, struct guild_storage* sto
 	return 0;
 }
 
+/*==========================================
+* Attempt to add an item in guild storage from inventory, then refresh it
+* @index : inventory idx
+* return
+* 	0 : fail
+* 	1 : succes
+ *------------------------------------------*/
 int storage_guild_storageadd(struct map_session_data* sd, int index, int amount)
 {
 	struct guild_storage *stor;
@@ -483,6 +529,13 @@ int storage_guild_storageadd(struct map_session_data* sd, int index, int amount)
 	return 1;
 }
 
+/*==========================================
+* Attempt to retrieve an item from guild storage to inventory, then refresh it
+* @index : storage idx
+* return
+* 	0 : fail
+* 	1 : succes
+ *------------------------------------------*/
 int storage_guild_storageget(struct map_session_data* sd, int index, int amount)
 {
 	struct guild_storage *stor;
@@ -505,13 +558,20 @@ int storage_guild_storageget(struct map_session_data* sd, int index, int amount)
 
 	if((flag = pc_additem(sd,&stor->items[index],amount,LOG_TYPE_GSTORAGE)) == 0)
 		guild_storage_delitem(sd,stor,index,amount);
-	else
+	else //inform fail
 		clif_additem(sd,0,0,flag);
 //	log_fromstorage(sd, index, 1);
 
 	return 0;
 }
 
+/*==========================================
+* Attempt to add an item in guild storage from cart, then refresh it
+* @index : cart inventory idx
+* return
+* 	0 : fail
+* 	1 : succes
+ *------------------------------------------*/
 int storage_guild_storageaddfromcart(struct map_session_data* sd, int index, int amount)
 {
 	struct guild_storage *stor;
@@ -537,6 +597,13 @@ int storage_guild_storageaddfromcart(struct map_session_data* sd, int index, int
 	return 1;
 }
 
+/*==========================================
+* Attempt to retrieve an item from guild storage to cart, then refresh it
+* @index : storage idx
+* return
+* 	0 : fail
+* 	1 : succes
+ *------------------------------------------*/
 int storage_guild_storagegettocart(struct map_session_data* sd, int index, int amount)
 {
 	struct guild_storage *stor;
@@ -562,6 +629,12 @@ int storage_guild_storagegettocart(struct map_session_data* sd, int index, int a
 	return 1;
 }
 
+/*==========================================
+* Request to save guild storage
+* return
+* 	0 : fail (no storage)
+* 	1 : succes
+ *------------------------------------------*/
 int storage_guild_storagesave(int account_id, int guild_id, int flag)
 {
 	struct guild_storage *stor = guild2storage2(guild_id);
@@ -577,6 +650,12 @@ int storage_guild_storagesave(int account_id, int guild_id, int flag)
 	return 0;
 }
 
+/*==========================================
+* ACK save of guild storage
+* return
+* 	0 : fail (no storage)
+* 	1 : succes
+ *------------------------------------------*/
 int storage_guild_storagesaved(int guild_id)
 {
 	struct guild_storage *stor;
@@ -591,6 +670,7 @@ int storage_guild_storagesaved(int guild_id)
 	return 0;
 }
 
+//Close storage for sd and save it
 int storage_guild_storageclose(struct map_session_data* sd)
 {
 	struct guild_storage *stor;

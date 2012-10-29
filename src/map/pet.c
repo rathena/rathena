@@ -1031,7 +1031,7 @@ int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd)
 	memset(pd->loot->item,0,pd->loot->max * sizeof(struct item));
 	pd->loot->count = 0;
 	pd->loot->weight = 0;
-	pd->ud.canact_tick = gettick()+10000;	//	10*1000msの間拾わない
+	pd->ud.canact_tick = gettick()+10000;	//prevent picked up during 10*1000ms
 
 	if (dlist->item)
 		add_timer(gettick()+540,pet_delay_item_drop,0,(intptr_t)dlist);
@@ -1195,7 +1195,9 @@ int pet_skill_support_timer(int tid, unsigned int tick, int id, intptr_t data)
 }
 
 /*==========================================
- *ペットデータ読み込み
+ * Pet read db data
+ * pet_db.txt
+ * pet_db2.txt
  *------------------------------------------*/ 
 int read_petdb()
 {
@@ -1343,7 +1345,7 @@ int read_petdb()
 }
 
 /*==========================================
- * スキル関係初期化処理
+ * Initialization process relationship skills
  *------------------------------------------*/
 int do_init_pet(void)
 {

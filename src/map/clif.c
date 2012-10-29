@@ -191,7 +191,10 @@ int map_fd;
 static int clif_parse (int fd);
 
 /*==========================================
- * mapŽI‚ÌipÝ’è
+ * mapï¿½Iï¿½ï¿½ipï¿½Ý’ï¿½
+ *------------------------------------------*/
+/*==========================================
+ * Ip setting of map-server
  *------------------------------------------*/
 int clif_setip(const char* ip)
 {
@@ -1357,9 +1360,9 @@ int clif_spawn(struct block_list *bl)
 			int i;
 			if (sd->spiritball > 0)
 				clif_spiritball(sd);
-			if(sd->state.size==2) // tiny/big players [Valaris]
+			if(sd->state.size==SZ_BIG) // tiny/big players [Valaris]
 				clif_specialeffect(bl,423,AREA);
-			else if(sd->state.size==1)
+			else if(sd->state.size==SZ_MEDIUM)
 				clif_specialeffect(bl,421,AREA);
 			if( sd->bg_id && map[sd->bl.m].flag.battleground )
 				clif_sendbgemblem_area(sd);
@@ -1384,9 +1387,9 @@ int clif_spawn(struct block_list *bl)
 	case BL_MOB:
 		{
 			TBL_MOB *md = ((TBL_MOB*)bl);
-			if(md->special_state.size==2) // tiny/big mobs [Valaris]
+			if(md->special_state.size==SZ_BIG) // tiny/big mobs [Valaris]
 				clif_specialeffect(&md->bl,423,AREA);
-			else if(md->special_state.size==1)
+			else if(md->special_state.size==SZ_MEDIUM)
 				clif_specialeffect(&md->bl,421,AREA);
 		}
 		break;
@@ -1587,18 +1590,18 @@ static void clif_move2(struct block_list *bl, struct view_data *vd, struct unit_
 		{
 			TBL_PC *sd = ((TBL_PC*)bl);
 //			clif_movepc(sd);
-			if(sd->state.size==2) // tiny/big players [Valaris]
+			if(sd->state.size==SZ_BIG) // tiny/big players [Valaris]
 				clif_specialeffect(&sd->bl,423,AREA);
-			else if(sd->state.size==1)
+			else if(sd->state.size==SZ_MEDIUM)
 				clif_specialeffect(&sd->bl,421,AREA);
 		}
 		break;
 	case BL_MOB:
 		{
 			TBL_MOB *md = ((TBL_MOB*)bl);
-			if(md->special_state.size==2) // tiny/big mobs [Valaris]
+			if(md->special_state.size==SZ_BIG) // tiny/big mobs [Valaris]
 				clif_specialeffect(&md->bl,423,AREA);
-			else if(md->special_state.size==1)
+			else if(md->special_state.size==SZ_MEDIUM)
 				clif_specialeffect(&md->bl,421,AREA);
 		}
 		break;
@@ -3211,7 +3214,7 @@ void clif_arrowequip(struct map_session_data *sd,int val)
 	fd=sd->fd;
 	WFIFOHEAD(fd, packet_len(0x013c));
 	WFIFOW(fd,0)=0x013c;
-	WFIFOW(fd,2)=val+2;//–î‚ÌƒAƒCƒeƒ€ID
+	WFIFOW(fd,2)=val+2; //Item ID of the arrow
 	WFIFOSET(fd,packet_len(0x013c));
 }
 
@@ -4101,9 +4104,9 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 		{
 			TBL_PC* tsd = (TBL_PC*)bl;
 			clif_getareachar_pc(sd, tsd);
-			if(tsd->state.size==2) // tiny/big players [Valaris]
+			if(tsd->state.size==SZ_BIG) // tiny/big players [Valaris]
 				clif_specialeffect_single(bl,423,sd->fd);
-			else if(tsd->state.size==1)
+			else if(tsd->state.size==SZ_MEDIUM)
 				clif_specialeffect_single(bl,421,sd->fd);
 			if( tsd->bg_id && map[tsd->bl.m].flag.battleground )
 				clif_sendbgemblem_single(sd->fd,tsd);
@@ -11901,22 +11904,22 @@ void clif_parse_GuildRequestInfo(int fd, struct map_session_data *sd)
 
 	switch( RFIFOL(fd,2) )
 	{
-	case 0:	// ƒMƒ‹ƒhŠî–{î•ñA“¯–¿“G‘Îî•ñ
+	case 0:	// ï¿½Mï¿½ï¿½ï¿½hï¿½ï¿½{ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½Gï¿½Îï¿½ï¿½
 		clif_guild_basicinfo(sd);
 		clif_guild_allianceinfo(sd);
 		break;
-	case 1:	// ƒƒ“ƒo[ƒŠƒXƒgA–ðE–¼ƒŠƒXƒg
+	case 1:	// ï¿½ï¿½ï¿½ï¿½ï¿½oï¿½[ï¿½ï¿½ï¿½Xï¿½gï¿½Aï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½g
 		clif_guild_positionnamelist(sd);
 		clif_guild_memberlist(sd);
 		break;
-	case 2:	// –ðE–¼ƒŠƒXƒgA–ðEî•ñƒŠƒXƒg
+	case 2:	// ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½gï¿½Aï¿½ï¿½Eï¿½ï¿½ñƒŠƒXï¿½g
 		clif_guild_positionnamelist(sd);
 		clif_guild_positioninfolist(sd);
 		break;
-	case 3:	// ƒXƒLƒ‹ƒŠƒXƒg
+	case 3:	// ï¿½Xï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½g
 		clif_guild_skillinfo(sd);
 		break;
-	case 4:	// ’Ç•úƒŠƒXƒg
+	case 4:	// ï¿½Ç•ï¿½Xï¿½g
 		clif_guild_expulsionlist(sd);
 		break;
 	default:
@@ -12072,7 +12075,7 @@ void clif_parse_GuildLeave(int fd,struct map_session_data *sd)
 	}
 	if( sd->bg_id )
 	{
-		clif_displaymessage(fd, "You can't leave battleground guilds.");
+		clif_displaymessage(fd, msg_txt(670)); //"You can't leave battleground guilds."
 		return;
 	}
 
@@ -12889,7 +12892,7 @@ void clif_parse_FriendsListAdd(int fd, struct map_session_data *sd)
 	// Friend already exists
 	for (i = 0; i < MAX_FRIENDS && sd->status.friends[i].char_id != 0; i++) {
 		if (sd->status.friends[i].char_id == f_sd->status.char_id) {
-			clif_displaymessage(fd, "Friend already exists.");
+			clif_displaymessage(fd, msg_txt(671)); //"Friend already exists."
 			return;
 		}
 	}
@@ -12992,7 +12995,7 @@ void clif_parse_FriendsListRemove(int fd, struct map_session_data *sd)
 		(sd->status.friends[i].char_id != char_id || sd->status.friends[i].account_id != account_id); i++);
 
 	if (i == MAX_FRIENDS) {
-		clif_displaymessage(fd, "Name not found in list.");
+		clif_displaymessage(fd, msg_txt(672)); //"Name not found in list."
 		return;
 	}
 
@@ -13017,7 +13020,7 @@ void clif_parse_FriendsListRemove(int fd, struct map_session_data *sd)
 
 	} else { //friend not online -- ask char server to delete from his friendlist
 		if(chrif_removefriend(char_id,sd->status.char_id)) { // char-server offline, abort
-			clif_displaymessage(fd, "This action can't be performed at the moment. Please try again later.");
+			clif_displaymessage(fd, msg_txt(673)); //"This action can't be performed at the moment. Please try again later."
 			return;
 		}
 	}
@@ -13030,7 +13033,7 @@ void clif_parse_FriendsListRemove(int fd, struct map_session_data *sd)
 		memcpy(&sd->status.friends[j-1], &sd->status.friends[j], sizeof(sd->status.friends[0]));
 
 	memset(&sd->status.friends[MAX_FRIENDS-1], 0, sizeof(sd->status.friends[MAX_FRIENDS-1]));
-	clif_displaymessage(fd, "Friend removed");
+	clif_displaymessage(fd, msg_txt(674)); //"Friend removed"
 
 	WFIFOHEAD(fd,packet_len(0x20a));
 	WFIFOW(fd,0) = 0x20a;
@@ -13840,7 +13843,7 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 
 	if( DIFF_TICK(sd->cansendmail_tick, gettick()) > 0 )
 	{
-		clif_displaymessage(sd->fd,"Cannot send mails too fast!!.");
+		clif_displaymessage(sd->fd,msg_txt(675)); //"Cannot send mails too fast!!."
 		clif_Mail_send(fd, true); // fail
 		return;
 	}
@@ -16042,7 +16045,7 @@ int clif_autoshadowspell_list(struct map_session_data *sd) {
 		sd->menuskill_id = SC_AUTOSHADOWSPELL;
 		sd->menuskill_val = c;
 	} else {
-		status_change_end(&sd->bl,SC_STOP,-1);
+		status_change_end(&sd->bl,SC_STOP,INVALID_TIMER);
 		clif_skill_fail(sd,SC_AUTOSHADOWSPELL,USESKILL_FAIL_IMITATION_SKILL_NONE,0);
 	}
 
@@ -16416,7 +16419,7 @@ static int packetdb_readdb(void)
 #endif
 #if PACKETVER < 2
 	    3, 28, 19, 11,  3, -1,  9,  5, 52, 51, 56, 58, 41,  2,  6,  6,
-#elif PACKETVER < 20071106	// 78-7b ‹T“‡ˆÈ~ lv99ƒGƒtƒFƒNƒg—p
+#elif PACKETVER < 20071106	// 78-7b ï¿½Tï¿½ï¿½ï¿½È~ lv99ï¿½Gï¿½tï¿½Fï¿½Nï¿½gï¿½p
 	    3, 28, 19, 11,  3, -1,  9,  5, 54, 53, 58, 60, 41,  2,  6,  6,
 #elif PACKETVER <= 20081217 // change in 0x78 and 0x7c
 	    3, 28, 19, 11,  3, -1,  9,  5, 55, 53, 58, 60, 42,  2,  6,  6,
@@ -16451,7 +16454,7 @@ static int packetdb_readdb(void)
 	    6,  3,106, 10, 10, 34,  0,  6,  8,  4,  4,  4, 29, -1, 10,  6,
 #if PACKETVER < 1
 	   90, 86, 24,  6, 30,102,  8,  4,  8,  4, 14, 10, -1,  6,  2,  6,
-#else	// 196 comodoˆÈ~ ó‘Ô•\Ž¦ƒAƒCƒRƒ“—p
+#else	// 196 comodoï¿½È~ ï¿½ï¿½Ô•\ï¿½ï¿½ï¿½Aï¿½Cï¿½Rï¿½ï¿½ï¿½p
 	   90, 86, 24,  6, 30,102,  9,  4,  8,  4, 14, 10, -1,  6,  2,  6,
 #endif
 #if PACKETVER < 20081126

@@ -10,9 +10,9 @@ struct map_session_data;
 struct s_search_store_search;
 
 struct s_vending {
-	short index;
-	short amount;
-	unsigned int value;
+	short index; //cart index (return item data)
+	short amount; //amout of the item for vending
+	unsigned int value; //at wich price
 };
 
 void vending_closevending(struct map_session_data* sd);

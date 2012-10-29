@@ -730,7 +730,7 @@ int chrif_charselectreq(struct map_session_data* sd, uint32 s_ip)
 }
 
 /*==========================================
- * キャラ名問い合わせ
+ * Search Char trough id on char serv
  *------------------------------------------*/
 int chrif_searchcharid(int char_id)
 {
@@ -803,7 +803,7 @@ int chrif_changesex(struct map_session_data *sd)
 	WFIFOW(char_fd,30) = 5;
 	WFIFOSET(char_fd,44);
 
-	clif_displaymessage(sd->fd, "Need disconnection to perform change-sex request...");
+	clif_displaymessage(sd->fd, msg_txt(410)); //"Need disconnection to perform change-sex request..."
 
 	if (sd->fd)
 		clif_authfail_fd(sd->fd, 15);
@@ -835,20 +835,16 @@ static void chrif_char_ask_name_answer(int acc, const char* player_name, uint16 
 		return;
 	}
 
-	switch( type ) {
-	case 1 : action = "block"; break;
-	case 2 : action = "ban"; break;
-	case 3 : action = "unblock"; break;
-	case 4 : action = "unban"; break;
-	case 5 : action = "change the sex of"; break;
-	default: action = "???"; break;
-	}
-	
+        if(type>0 && type<=5)
+            sprintf(action,msg_txt(427+type)); //block|ban|unblock|unban|change the sex of
+        else
+            sprintf(action,"???");
+                
 	switch( answer ) {
-	case 0 : sprintf(output, "Login-server has been asked to %s the player '%.*s'.", action, NAME_LENGTH, player_name); break;
-	case 1 : sprintf(output, "The player '%.*s' doesn't exist.", NAME_LENGTH, player_name); break;
-	case 2 : sprintf(output, "Your GM level don't authorise you to %s the player '%.*s'.", action, NAME_LENGTH, player_name); break;
-	case 3 : sprintf(output, "Login-server is offline. Impossible to %s the player '%.*s'.", action, NAME_LENGTH, player_name); break;
+	case 0 : sprintf(output, msg_txt(424), action, NAME_LENGTH, player_name); break;
+	case 1 : sprintf(output, msg_txt(425), NAME_LENGTH, player_name); break;
+	case 2 : sprintf(output, msg_txt(426), action, NAME_LENGTH, player_name); break;
+	case 3 : sprintf(output, msg_txt(427), action, NAME_LENGTH, player_name); break;
 	default: output[0] = '\0'; break;
 	}
 	
@@ -856,7 +852,7 @@ static void chrif_char_ask_name_answer(int acc, const char* player_name, uint16 
 }
 
 /*==========================================
- * 性別変化終了 (modified by Yor)
+ * Request char server to change sex of char (modified by Yor)
  *------------------------------------------*/
 int chrif_changedsex(int fd)
 {
@@ -902,7 +898,7 @@ int chrif_changedsex(int fd)
 		// save character
 		sd->login_id1++; // change identify, because if player come back in char within the 5 seconds, he can change its characters
 							  // do same modify in login-server for the account, but no in char-server (it ask again login_id1 to login, and don't remember it)
-		clif_displaymessage(sd->fd, "Your sex has been changed (need disconnection by the server)...");
+		clif_displaymessage(sd->fd, msg_txt(411)); //"Your sex has been changed (need disconnection by the server)..."
 		set_eof(sd->fd); // forced to disconnect for the change
 		map_quit(sd); // Remove leftovers (e.g. autotrading) [Paradox924X]
 	}
@@ -1003,26 +999,20 @@ int chrif_accountban(int fd)
 	sd->login_id1++; // change identify, because if player come back in char within the 5 seconds, he can change its characters
 	if (RFIFOB(fd,6) == 0) // 0: change of statut, 1: ban
 	{ 
-		switch (RFIFOL(fd,7)) { // status or final date of a banishment
-		case 1: clif_displaymessage(sd->fd, "Your account has 'Unregistered'."); break;
-		case 2: clif_displaymessage(sd->fd, "Your account has an 'Incorrect Password'..."); break;
-		case 3: clif_displaymessage(sd->fd, "Your account has expired."); break;
-		case 4: clif_displaymessage(sd->fd, "Your account has been rejected from server."); break;
-		case 5: clif_displaymessage(sd->fd, "Your account has been blocked by the GM Team."); break;
-		case 6: clif_displaymessage(sd->fd, "Your Game's EXE file is not the latest version."); break;
-		case 7: clif_displaymessage(sd->fd, "Your account has been prohibited to log in."); break;
-		case 8: clif_displaymessage(sd->fd, "Server is jammed due to over populated."); break;
-		case 9: clif_displaymessage(sd->fd, "Your account has not more authorised."); break;
-		case 100: clif_displaymessage(sd->fd, "Your account has been totally erased."); break;
-		default:  clif_displaymessage(sd->fd, "Your account has not more authorised."); break;
-		}
+                int ret_status = RFIFOL(fd,7); // status or final date of a banishment
+                if(0<ret_status && ret_status<=9)
+                    clif_displaymessage(sd->fd, msg_txt(411+ret_status));
+                else if(ret_status==100)
+                    clif_displaymessage(sd->fd, msg_txt(421));
+                else    
+                    clif_displaymessage(sd->fd, msg_txt(420)); //"Your account has not more authorised." 
 	}
 	else if (RFIFOB(fd,6) == 1) // 0: change of statut, 1: ban
 	{ 
 		time_t timestamp;
 		char tmpstr[2048];
 		timestamp = (time_t)RFIFOL(fd,7); // status or final date of a banishment
-		strcpy(tmpstr, "Your account has been banished until ");
+		strcpy(tmpstr, msg_txt(423)); //"Your account has been banished until "
 		strftime(tmpstr + strlen(tmpstr), 24, "%d-%m-%Y %H:%M:%S", localtime(&timestamp));
 		clif_displaymessage(sd->fd, tmpstr);
 	}
@@ -1399,10 +1389,10 @@ int chrif_parse(int fd)
 		cmd = RFIFOW(fd,0);
 		if (cmd < 0x2af8 || cmd >= 0x2af8 + ARRAYLENGTH(packet_len_table) || packet_len_table[cmd-0x2af8] == 0)
 		{
-			int r = intif_parse(fd); // intifに渡す
+			int r = intif_parse(fd); // Passed on to the intif
 
-			if (r == 1) continue;	// intifで処理した
-			if (r == 2) return 0;	// intifで処理したが、データが足りない
+			if (r == 1) continue;	// Treated in intif 
+			if (r == 2) return 0;	// Didn't have enough data (len==-1)
 
 			ShowWarning("chrif_parse: session #%d, intif_parse failed (unrecognized command 0x%.4x).\n", fd, cmd);
 			set_eof(fd);
@@ -1478,8 +1468,8 @@ int send_usercount_tochar(int tid, unsigned int tick, int id, intptr_t data)
 }
 
 /*==========================================
- * timer関数
- * 今このmap鯖に繋がっているクライアント人数をchar鯖へ送る
+ * timerFunction
+ * Send to char the number of client connected to map
  *------------------------------------------*/
 int send_users_tochar(void)
 {
@@ -1508,8 +1498,8 @@ int send_users_tochar(void)
 }
 
 /*==========================================
- * timer関数
- * char鯖との接続を確認し、もし切れていたら再度接続する
+ * timerFunction
+  * Chk the connection to char server, (if it down)
  *------------------------------------------*/
 static int check_connect_char_server(int tid, unsigned int tick, int id, intptr_t data)
 {
@@ -1591,7 +1581,7 @@ int auth_db_final(DBKey key, DBData *data, va_list ap)
 }
 
 /*==========================================
- * 終了
+ * Destructor
  *------------------------------------------*/
 int do_final_chrif(void)
 {

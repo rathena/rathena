@@ -46,11 +46,11 @@ static const int packet_len_table[]={
 	-1,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3890  Homunculus [albator]
 };
 
-extern int char_fd;		// inter serverのfdはchar_fdを使う
-#define inter_fd char_fd	// エイリアス
+extern int char_fd; // inter server Fd used for char_fd
+#define inter_fd char_fd	// alias
 
 //-----------------------------------------------------------------
-// inter serverへの送信
+// Send to inter server 
 
 int CheckForCharServer(void)
 {
@@ -136,7 +136,7 @@ int intif_rename(struct map_session_data *sd, int type, char *name)
 	return 0;
 }
 
-// GMメッセージを送信
+// GM Send a message
 int intif_broadcast(const char* mes, int len, int type)
 {
 	int lp = type ? 4 : 0;
@@ -386,7 +386,7 @@ int intif_send_guild_storage(int account_id,struct guild_storage *gstor)
 	return 0;
 }
 
-// パーティ作成要求
+// Party creation request
 int intif_create_party(struct party_member *member,char *name,int item,int item2)
 {
 	if (CheckForCharServer())
@@ -403,7 +403,8 @@ int intif_create_party(struct party_member *member,char *name,int item,int item2
 	WFIFOSET(inter_fd,WFIFOW(inter_fd, 2));
 	return 0;
 }
-// パーティ情報要求
+
+// Party information request
 int intif_request_partyinfo(int party_id, int char_id)
 {
 	if (CheckForCharServer())
@@ -415,7 +416,8 @@ int intif_request_partyinfo(int party_id, int char_id)
 	WFIFOSET(inter_fd,10);
 	return 0;
 }
-// パーティ追加要求
+
+// Request to add a member to party 
 int intif_party_addmember(int party_id,struct party_member *member)
 {
 	if (CheckForCharServer())
@@ -428,7 +430,8 @@ int intif_party_addmember(int party_id,struct party_member *member)
 	WFIFOSET(inter_fd,WFIFOW(inter_fd, 2));
 	return 1;
 }
-// パーティ設定変更
+
+// Request to change party configuration (exp,item share)
 int intif_party_changeoption(int party_id,int account_id,int exp,int item)
 {
 	if (CheckForCharServer())
@@ -442,7 +445,8 @@ int intif_party_changeoption(int party_id,int account_id,int exp,int item)
 	WFIFOSET(inter_fd,14);
 	return 0;
 }
-// パーティ脱退要求
+
+// Request to leave party
 int intif_party_leave(int party_id,int account_id, int char_id)
 {
 	if (CheckForCharServer())
@@ -455,7 +459,8 @@ int intif_party_leave(int party_id,int account_id, int char_id)
 	WFIFOSET(inter_fd,14);
 	return 0;
 }
-// パーティ移動要求
+
+// Request keeping party for new map ?? 
 int intif_party_changemap(struct map_session_data *sd,int online)
 {
 	int m, mapindex;
@@ -481,7 +486,8 @@ int intif_party_changemap(struct map_session_data *sd,int online)
 	WFIFOSET(inter_fd,19);
 	return 1;
 }
-// パーティー解散要求
+
+// Request breaking party 
 int intif_break_party(int party_id)
 {
 	if (CheckForCharServer())
@@ -492,7 +498,8 @@ int intif_break_party(int party_id)
 	WFIFOSET(inter_fd,6);
 	return 0;
 }
-// パーティ会話送信
+
+// Sending party chat
 int intif_party_message(int party_id,int account_id,const char *mes,int len)
 {
 	if (CheckForCharServer())
@@ -511,6 +518,7 @@ int intif_party_message(int party_id,int account_id,const char *mes,int len)
 	return 0;
 }
 
+// Request a new leader for party
 int intif_party_leaderchange(int party_id,int account_id,int char_id)
 {
 	if (CheckForCharServer())
@@ -524,8 +532,7 @@ int intif_party_leaderchange(int party_id,int account_id,int char_id)
 	return 0;
 }
 
-
-// ギルド作成要求
+// Request a Guild creation
 int intif_guild_create(const char *name,const struct guild_member *master)
 {
 	if (CheckForCharServer())
@@ -541,7 +548,8 @@ int intif_guild_create(const char *name,const struct guild_member *master)
 	WFIFOSET(inter_fd,WFIFOW(inter_fd,2));
 	return 0;
 }
-// ギルド情報要求
+
+// Request Guild information
 int intif_guild_request_info(int guild_id)
 {
 	if (CheckForCharServer())
@@ -552,7 +560,8 @@ int intif_guild_request_info(int guild_id)
 	WFIFOSET(inter_fd,6);
 	return 0;
 }
-// ギルドメンバ追加要求
+
+// Request to add member to the guild
 int intif_guild_addmember(int guild_id,struct guild_member *m)
 {
 	if (CheckForCharServer())
@@ -566,6 +575,7 @@ int intif_guild_addmember(int guild_id,struct guild_member *m)
 	return 0;
 }
 
+// Request a new leader for guild
 int intif_guild_change_gm(int guild_id, const char* name, int len)
 {
 	if (CheckForCharServer())
@@ -579,7 +589,7 @@ int intif_guild_change_gm(int guild_id, const char* name, int len)
 	return 0;
 }
 
-// ギルドメンバ脱退/追放要求
+// Request to leave guild
 int intif_guild_leave(int guild_id,int account_id,int char_id,int flag,const char *mes)
 {
 	if (CheckForCharServer())
@@ -594,7 +604,8 @@ int intif_guild_leave(int guild_id,int account_id,int char_id,int flag,const cha
 	WFIFOSET(inter_fd,55);
 	return 0;
 }
-// ギルドメンバのオンライン状況/Lv更新要求
+
+//Update request / Lv online status of the guild members
 int intif_guild_memberinfoshort(int guild_id,int account_id,int char_id,int online,int lv,int class_)
 {
 	if (CheckForCharServer())
@@ -610,7 +621,8 @@ int intif_guild_memberinfoshort(int guild_id,int account_id,int char_id,int onli
 	WFIFOSET(inter_fd,19);
 	return 0;
 }
-// ギルド解散通知
+
+//Guild disbanded notification
 int intif_guild_break(int guild_id)
 {
 	if (CheckForCharServer())
@@ -621,7 +633,8 @@ int intif_guild_break(int guild_id)
 	WFIFOSET(inter_fd,6);
 	return 0;
 }
-// ギルド会話送信
+
+// Send a guild message
 int intif_guild_message(int guild_id,int account_id,const char *mes,int len)
 {
 	if (CheckForCharServer())
@@ -640,7 +653,8 @@ int intif_guild_message(int guild_id,int account_id,const char *mes,int len)
 
 	return 0;
 }
-// ギルド基本情報変更要求
+
+// Request a change of Guild basic information
 int intif_guild_change_basicinfo(int guild_id,int type,const void *data,int len)
 {
 	if (CheckForCharServer())
@@ -654,7 +668,8 @@ int intif_guild_change_basicinfo(int guild_id,int type,const void *data,int len)
 	WFIFOSET(inter_fd,len+10);
 	return 0;
 }
-// ギルドメンバ情報変更要求
+
+// Request a change of Guild member information
 int intif_guild_change_memberinfo(int guild_id,int account_id,int char_id,
 	int type,const void *data,int len)
 {
@@ -671,7 +686,8 @@ int intif_guild_change_memberinfo(int guild_id,int account_id,int char_id,
 	WFIFOSET(inter_fd,len+18);
 	return 0;
 }
-// ギルド役職変更要求
+
+// Request a change of Guild title 
 int intif_guild_position(int guild_id,int idx,struct guild_position *p)
 {
 	if (CheckForCharServer())
@@ -685,7 +701,8 @@ int intif_guild_position(int guild_id,int idx,struct guild_position *p)
 	WFIFOSET(inter_fd,WFIFOW(inter_fd,2));
 	return 0;
 }
-// ギルドスキルアップ要求
+
+// Request an update of Guildskill skillnum 
 int intif_guild_skillup(int guild_id, int skill_num, int account_id, int max)
 {
 	if( CheckForCharServer() )
@@ -699,7 +716,8 @@ int intif_guild_skillup(int guild_id, int skill_num, int account_id, int max)
 	WFIFOSET(inter_fd, 18);
 	return 0;
 }
-// ギルド同盟/敵対要求
+
+// Request a new guild relationship
 int intif_guild_alliance(int guild_id1,int guild_id2,int account_id1,int account_id2,int flag)
 {
 	if (CheckForCharServer())
@@ -714,7 +732,8 @@ int intif_guild_alliance(int guild_id1,int guild_id2,int account_id1,int account
 	WFIFOSET(inter_fd,19);
 	return 0;
 }
-// ギルド告知変更要求
+
+// Request to change guild notice
 int intif_guild_notice(int guild_id,const char *mes1,const char *mes2)
 {
 	if (CheckForCharServer())
@@ -727,7 +746,8 @@ int intif_guild_notice(int guild_id,const char *mes1,const char *mes2)
 	WFIFOSET(inter_fd,186);
 	return 0;
 }
-// ギルドエンブレム変更要求
+
+// Request to change guild emblem
 int intif_guild_emblem(int guild_id,int len,const char *data)
 {
 	if (CheckForCharServer())
@@ -761,7 +781,8 @@ int intif_guild_castle_dataload(int num, int *castle_ids)
 	return 1;
 }
 
-//ギルド城占領ギルド変更要求
+
+// Request change castle guild owner and save data
 int intif_guild_castle_datasave(int castle_id,int index, int value)
 {
 	if (CheckForCharServer())
@@ -868,7 +889,7 @@ int intif_parse_WisMessage(int fd)
 	}
 	//Success to send whisper.
 	clif_wis_message(sd->fd, wisp_source, (char*)RFIFOP(fd,56),RFIFOW(fd,2)-56);
-	intif_wis_replay(id,0);   // 送信成功
+	intif_wis_replay(id,0);   // succes
 	return 0;
 }
 
@@ -925,7 +946,7 @@ int mapif_parse_WisToGM(int fd)
 	return 0;
 }
 
-// アカウント変数通知
+// Request player registre
 int intif_parse_Registers(int fd)
 {
 	int j,p,len,max, flag;
@@ -1017,13 +1038,15 @@ int intif_parse_LoadGuildStorage(int fd)
 	storage_guild_storageopen(sd);
 	return 0;
 }
+
+// ACK guild_storage saved
 int intif_parse_SaveGuildStorage(int fd)
 {
 	storage_guild_storagesaved(/*RFIFOL(fd,2), */RFIFOL(fd,6));
 	return 0;
 }
 
-// パーティ作成可否
+// ACK party creation
 int intif_parse_PartyCreated(int fd)
 {
 	if(battle_config.etc_log)
@@ -1031,7 +1054,8 @@ int intif_parse_PartyCreated(int fd)
 	party_created(RFIFOL(fd,2), RFIFOL(fd,6),RFIFOB(fd,10),RFIFOL(fd,11), (char *)RFIFOP(fd,15));
 	return 0;
 }
-// パーティ情報
+
+// Receive party info
 int intif_parse_PartyInfo(int fd)
 {
 	if( RFIFOW(fd,2) == 12 ){
@@ -1045,7 +1069,8 @@ int intif_parse_PartyInfo(int fd)
 	party_recv_info((struct party *)RFIFOP(fd,8), RFIFOL(fd,4));
 	return 0;
 }
-// パーティ追加通知
+
+// ACK adding party member
 int intif_parse_PartyMemberAdded(int fd)
 {
 	if(battle_config.etc_log)
@@ -1053,13 +1078,15 @@ int intif_parse_PartyMemberAdded(int fd)
 	party_member_added(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10), RFIFOB(fd, 14));
 	return 0;
 }
-// パーティ設定変更通知
+
+// ACK changing party option
 int intif_parse_PartyOptionChanged(int fd)
 {
 	party_optionchanged(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOW(fd,10),RFIFOW(fd,12),RFIFOB(fd,14));
 	return 0;
 }
-// パーティ脱退通知
+
+// ACK member leaving party
 int intif_parse_PartyMemberWithdraw(int fd)
 {
 	if(battle_config.etc_log)
@@ -1067,32 +1094,36 @@ int intif_parse_PartyMemberWithdraw(int fd)
 	party_member_withdraw(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10));
 	return 0;
 }
-// パーティ解散通知
+
+// ACK party break
 int intif_parse_PartyBroken(int fd)
 {
 	party_broken(RFIFOL(fd,2));
 	return 0;
 }
-// パーティ移動通知
+
+// ACK party on new map
 int intif_parse_PartyMove(int fd)
 {
 	party_recv_movemap(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),RFIFOW(fd,14),RFIFOB(fd,16),RFIFOW(fd,17));
 	return 0;
 }
-// パーティメッセージ
+
+// ACK party messages
 int intif_parse_PartyMessage(int fd)
 {
 	party_recv_message(RFIFOL(fd,4),RFIFOL(fd,8),(char *) RFIFOP(fd,12),RFIFOW(fd,2)-12);
 	return 0;
 }
 
-// ギルド作成可否
+// ACK guild creation
 int intif_parse_GuildCreated(int fd)
 {
 	guild_created(RFIFOL(fd,2),RFIFOL(fd,6));
 	return 0;
 }
-// ギルド情報
+
+// ACK guild infos
 int intif_parse_GuildInfo(int fd)
 {
 	if(RFIFOW(fd,2) == 8) {
@@ -1105,7 +1136,8 @@ int intif_parse_GuildInfo(int fd)
 	guild_recv_info((struct guild *)RFIFOP(fd,4));
 	return 0;
 }
-// ギルドメンバ追加通知
+
+// ACK adding guild member
 int intif_parse_GuildMemberAdded(int fd)
 {
 	if(battle_config.etc_log)
@@ -1113,20 +1145,22 @@ int intif_parse_GuildMemberAdded(int fd)
 	guild_member_added(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),RFIFOB(fd,14));
 	return 0;
 }
-// ギルドメンバ脱退/追放通知
+
+// ACK member leaving guild
 int intif_parse_GuildMemberWithdraw(int fd)
 {
 	guild_member_withdraw(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),RFIFOB(fd,14),(char *)RFIFOP(fd,55),(char *)RFIFOP(fd,15));
 	return 0;
 }
 
-// ギルドメンバオンライン状態/Lv変更通知
+// ACK guild member basic info
 int intif_parse_GuildMemberInfoShort(int fd)
 {
 	guild_recv_memberinfoshort(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),RFIFOB(fd,14),RFIFOW(fd,15),RFIFOW(fd,17));
 	return 0;
 }
-// ギルド解散通知
+
+// ACK guild break
 int intif_parse_GuildBroken(int fd)
 {
 	guild_broken(RFIFOL(fd,2),RFIFOB(fd,6));
@@ -1189,7 +1223,7 @@ int intif_parse_GuildMemberInfoChanged(int fd)
 	return 0;
 }
 
-// ギルド役職変更通知
+// ACK change of guild title
 int intif_parse_GuildPosition(int fd)
 {
 	if( RFIFOW(fd,2)!=sizeof(struct guild_position)+12 )
@@ -1197,54 +1231,62 @@ int intif_parse_GuildPosition(int fd)
 	guild_position_changed(RFIFOL(fd,4),RFIFOL(fd,8),(struct guild_position *)RFIFOP(fd,12));
 	return 0;
 }
-// ギルドスキル割り振り通知
+
+// ACK change of guild skill update
 int intif_parse_GuildSkillUp(int fd)
 {
 	guild_skillupack(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10));
 	return 0;
 }
-// ギルド同盟/敵対通知
+
+// ACK change of guild relationship
 int intif_parse_GuildAlliance(int fd)
 {
 	guild_allianceack(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),RFIFOL(fd,14),RFIFOB(fd,18),(char *) RFIFOP(fd,19),(char *) RFIFOP(fd,43));
 	return 0;
 }
-// ギルド告知変更通知
+
+// ACK change of guild notice
 int intif_parse_GuildNotice(int fd)
 {
 	guild_notice_changed(RFIFOL(fd,2),(char *) RFIFOP(fd,6),(char *) RFIFOP(fd,66));
 	return 0;
 }
-// ギルドエンブレム変更通知
+
+// ACK change of guild emblem
 int intif_parse_GuildEmblem(int fd)
 {
 	guild_emblem_changed(RFIFOW(fd,2)-12,RFIFOL(fd,4),RFIFOL(fd,8), (char *)RFIFOP(fd,12));
 	return 0;
 }
-// ギルド会話受信
+
+// ACK guild message
 int intif_parse_GuildMessage(int fd)
 {
 	guild_recv_message(RFIFOL(fd,4),RFIFOL(fd,8),(char *) RFIFOP(fd,12),RFIFOW(fd,2)-12);
 	return 0;
 }
-// ギルド城データ要求返信
+
+// Reply guild castle data request
 int intif_parse_GuildCastleDataLoad(int fd)
 {
 	return guild_castledataloadack(RFIFOW(fd,2), (struct guild_castle *)RFIFOP(fd,4));
 }
 
+// ACK change of guildmaster
 int intif_parse_GuildMasterChanged(int fd)
 {
 	return guild_gm_changed(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10));
 }
 
-// pet
+// Request pet creation
 int intif_parse_CreatePet(int fd)
 {
 	pet_get_egg(RFIFOL(fd,2),RFIFOL(fd,7),RFIFOB(fd,6));
 	return 0;
 }
 
+// ACK pet data
 int intif_parse_RecvPetData(int fd)
 {
 	struct s_pet p;
@@ -1261,6 +1303,8 @@ int intif_parse_RecvPetData(int fd)
 
 	return 0;
 }
+
+// ACK pet save data
 int intif_parse_SavePetOk(int fd)
 {
 	if(RFIFOB(fd,6) == 1)
@@ -1269,6 +1313,7 @@ int intif_parse_SavePetOk(int fd)
 	return 0;
 }
 
+// ACK deleting pet
 int intif_parse_DeletePetOk(int fd)
 {
 	if(RFIFOB(fd,2) == 1)
@@ -1277,6 +1322,7 @@ int intif_parse_DeletePetOk(int fd)
 	return 0;
 }
 
+// ACK changing name resquest, players,pets,hommon
 int intif_parse_ChangeNameOk(int fd)
 {
 	struct map_session_data *sd = NULL;
@@ -2112,19 +2158,19 @@ void intif_parse_MessageToFD(int fd) {
 }
 
 //-----------------------------------------------------------------
-// inter serverからの通信
-// エラーがあれば0(false)を返すこと
-// パケットが処理できれば1,パケット長が足りなければ2を返すこと
+// Communication from the inter server
+// Return a 0 (false) if there were any errors.
+// 1, 2 if there are not enough to return the length of the packet if the packet processing
 int intif_parse(int fd)
 {
 	int packet_len, cmd;
 	cmd = RFIFOW(fd,0);
-	// パケットのID確認
+    // Verify ID of the packet
 	if(cmd<0x3800 || cmd>=0x3800+(sizeof(packet_len_table)/sizeof(packet_len_table[0])) ||
 	   packet_len_table[cmd-0x3800]==0){
 	   	return 0;
 	}
-	// パケットの長さ確認
+    // Check the length of the packet
 	packet_len = packet_len_table[cmd-0x3800];
 	if(packet_len==-1){
 		if(RFIFOREST(fd)<4)
@@ -2134,7 +2180,7 @@ int intif_parse(int fd)
 	if((int)RFIFOREST(fd)<packet_len){
 		return 2;
 	}
-	// 処理分岐
+    // Processing branch
 	switch(cmd){
 	case 0x3800:
 		if (RFIFOL(fd,4) == 0xFF000000) //Normal announce.
@@ -2217,7 +2263,7 @@ int intif_parse(int fd)
 		ShowError("intif_parse : unknown packet %d %x\n",fd,RFIFOW(fd,0));
 		return 0;
 	}
-	// パケット読み飛ばし
+    // Skip packet
 	RFIFOSKIP(fd,packet_len);
 	return 1;
 }

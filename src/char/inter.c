@@ -28,8 +28,8 @@
 #include <sys/stat.h> // for stat/lstat/fstat - [Dekamaster/Ultimate GM Tool]
 
 
-#define WISDATA_TTL (60*1000)	// Wisデータの生存時間(60秒)
-#define WISDELLIST_MAX 256			// Wisデータ削除リストの要素数
+#define WISDATA_TTL (60*1000)	//Wis data Time To Live (60 seconds)
+#define WISDELLIST_MAX 256		// Number of elements in the list Delete data Wis
 
 
 Sql* sql_handle = NULL;
@@ -1203,11 +1203,11 @@ int inter_parse_frommap(int fd)
 	int cmd;
 	int len = 0;
 	cmd = RFIFOW(fd,0);
-	// inter鯖管轄かを調べる
+	// Check is valid packet entry
 	if(cmd < 0x3000 || cmd >= 0x3000 + ARRAYLENGTH(inter_recv_packet_length) || inter_recv_packet_length[cmd - 0x3000] == 0)
 		return 0;
 
-	// パケット長を調べる
+	// Check packet length
 	if((len = inter_check_length(fd, inter_recv_packet_length[cmd - 0x3000])) == 0)
 		return 2;
 

@@ -25,7 +25,7 @@ static struct item_group itemgroup_db[MAX_ITEMGROUP];
 struct item_data dummy_item; //This is the default dummy item used for non-existant items. [Skotlex]
 
 /**
- * 名前で検索用
+ * Search for item name 
  * name = item alias, so we should find items aliases first. if not found then look for "jname" (full name)
  * @see DBApply
  */
@@ -51,7 +51,7 @@ static int itemdb_searchname_sub(DBKey key, DBData *data, va_list ap)
 }
 
 /*==========================================
- * 名前で検索
+ * Return item data from item name. (lookup) 
  *------------------------------------------*/
 struct item_data* itemdb_searchname(const char *str)
 {
@@ -136,7 +136,7 @@ int itemdb_searchname_array(struct item_data** data, int size, const char *str)
 
 
 /*==========================================
- * 箱系アイテム検索
+ * Return a  random item id from group. (take in account % chance giving/tot group) 
  *------------------------------------------*/
 int itemdb_searchrandomid(int group)
 {
@@ -480,7 +480,8 @@ int itemdb_isidentified(int nameid)
 }
 
 /*==========================================
- * アイテム使用可能フラグのオーバーライド
+ * Search by name for the override flags available items
+ * (Give item another sprite)
  *------------------------------------------*/
 static bool itemdb_read_itemavail(char* str[], int columns, int current)
 {// <nameid>,<sprite>
@@ -585,7 +586,7 @@ static void itemdb_read_itemgroup(void)
 }
 
 /*==========================================
- * 装備制限ファイル読み出し
+ * Read item forbiden by mapflag (can't equip item)
  *------------------------------------------*/
 static bool itemdb_read_noequip(char* str[], int columns, int current)
 {// <nameid>,<mode>
@@ -1075,7 +1076,8 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 }
 
 /*==========================================
- * アイテムデータベースの読み込み
+ * Reading item from item db
+ * item_db2 overwriting item_db
  *------------------------------------------*/
 static int itemdb_readdb(void)
 {

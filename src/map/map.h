@@ -610,15 +610,16 @@ extern char charhelp_txt[];
 
 extern char wisp_server_name[];
 
-// 鯖全体情報
+// users
 void map_setusers(int);
 int map_getusers(void);
 int map_usercount(void);
-// block削除関連
+
+// blocklist lock
 int map_freeblock(struct block_list *bl);
 int map_freeblock_lock(void);
 int map_freeblock_unlock(void);
-// block関連
+// blocklist manipulation
 int map_addblock(struct block_list* bl);
 int map_delblock(struct block_list* bl);
 int map_moveblock(struct block_list *, int, int, unsigned int);
@@ -631,10 +632,10 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 int map_foreachincell(int (*func)(struct block_list*,va_list), int m, int x, int y, int type, ...);
 int map_foreachinpath(int (*func)(struct block_list*,va_list), int m, int x0, int y0, int x1, int y1, int range, int length, int type, ...);
 int map_foreachinmap(int (*func)(struct block_list*,va_list), int m, int type, ...);
-//block関連に追加
+//blocklist nb in one cell
 int map_count_oncell(int m,int x,int y,int type);
 struct skill_unit *map_find_skill_unit_oncell(struct block_list *,int x,int y,int skill_id,struct skill_unit *, int flag);
-// 一時的object関連
+// search and creation
 int map_get_new_object_id(void);
 int map_search_freecell(struct block_list *src, int m, short *x, short *y, int rx, int ry, int flag);
 //
@@ -642,13 +643,13 @@ int map_quit(struct map_session_data *);
 // npc
 bool map_addnpc(int,struct npc_data *);
 
-// 床アイテム関連
+// map item
 int map_clearflooritem_timer(int tid, unsigned int tick, int id, intptr_t data);
 int map_removemobs_timer(int tid, unsigned int tick, int id, intptr_t data);
 #define map_clearflooritem(id) map_clearflooritem_timer(0,0,id,1)
 int map_addflooritem(struct item *item_data,int amount,int m,int x,int y,int first_charid,int second_charid,int third_charid,int flags);
 
-// キャラid＝＞キャラ名 変換関連
+// player to map session
 void map_addnickdb(int charid, const char* nick);
 void map_delnickdb(int charid, const char* nick);
 void map_reqnickdb(struct map_session_data* sd,int charid);
