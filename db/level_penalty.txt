@@ -1,0 +1,56 @@
+// Experience & Drop Rate Modifier Database
+//
+// Structure of Database:
+// Type,Race,Level difference,Rate
+//
+// TYPE:
+//   1=experience, 2=item drop
+// RACE:
+//   0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect,
+//   5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 
+//   10=Boss monsters, 11=Normal monsters
+//
+// Note: RENEWAL_DROP and/or RENEWAL_EXP must be enabled.
+
+// EXP modifiers due to level difference
+1,11,16,40
+1,11,15,115
+1,11,14,120
+1,11,13,125
+1,11,12,130
+1,11,11,135
+1,11,10,140
+1,11,9,135
+1,11,8,130
+1,11,7,125
+1,11,6,120
+1,11,5,115
+1,11,4,110
+1,11,3,105
+1,11,0,100
+1,11,11,100
+1,11,-6,95
+1,11,-11,90
+1,11,-16,85
+1,11,-21,60
+1,11,-26,35
+1,11,-31,10
+
+// Boss Type
+1,10,0,100
+
+// Drop rate modifiers due to level difference
+2,11,16,50
+2,11,13,60
+2,11,10,70
+2,11,7,80
+2,11,4,90
+2,11,0,100
+2,11,-4,90
+2,11,-7,80
+2,11,-10,70
+2,11,-13,60
+2,11,-16,50
+
+// Boss Type
+2,10,0,100

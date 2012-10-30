@@ -6752,10 +6752,7 @@ ACMD_FUNC(mobinfo)
 			if (mob->dropitem[i].nameid <= 0 || mob->dropitem[i].p < 1 || (item_data = itemdb_exists(mob->dropitem[i].nameid)) == NULL)
 				continue;
 			droprate = mob->dropitem[i].p;
-#ifdef RENEWAL_DROP
-			if( battle_config.atcommand_mobinfo_type )
-				droprate = droprate * party_renewal_drop_mod(sd->status.base_level - mob->lv) / 100;
-#endif
+
 			if (item_data->slot)
 				sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->jname, item_data->slot, (float)droprate / 100);
 			else

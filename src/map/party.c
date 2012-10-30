@@ -905,66 +905,13 @@ int party_send_xy_clear(struct party_data *p)
 	}
 	return 0;
 }
-#ifdef RENEWAL_DROP
-/**
- * Renewal Drop Modifier
- **/
-int party_renewal_drop_mod(int diff) {
-	if( diff >= -10 && diff <= 5 )
-		return 100;//no change.
-	if( diff > 0 ) {
-		if( diff > 5 && diff < 10 )
-			return 90;
-		if( diff > 9 && diff < 15 )
-			return 75;
-		if( diff > 14 && diff < 30 )
-			return 60;
-	} else {
-		if( diff <= -10 && diff <= -14 )
-			return 75;//75%
-	}
-	//other chances: 50%
-	return 50;
-}
-#endif
-#ifdef RENEWAL_EXP
-/**
- * Renewal Experience Earning Mode
- **/
-void party_renewal_exp_mod(unsigned int *base_exp, unsigned int *job_exp, int lvl, int moblvl) {
-	int diff = lvl - moblvl, boost = 0;
-	//-2 ~ +5: 100%
-	if( diff >= -2 && diff <= 5 )
-		return;//we don't change anything, it's 100% boost
-	//-3 ~ -10: +5% boost for each
-	if( diff >= -10 && diff <= -3 )
-		boost = 100 + (( -diff * 5 ) - 15 );
-	// 40% boost if difference is <= -10
-	else if ( diff <= -10 )
-		boost = 40;
-	else {
-		boost = ( diff > 5 && diff < 11 ) ? 95 :
-				( diff > 10 && diff < 16 ) ? 90 :
-				( diff > 15 && diff < 21 ) ? 85 :
-				( diff > 20 && diff < 26 ) ? 60 :
-				( diff > 25 && diff < 31 ) ? 35 :
-				10;
-	}
-	if( *base_exp )
-		*base_exp = (unsigned int)cap_value(*base_exp * boost / 100, 1, UINT_MAX);
-	if( *job_exp )
-		*job_exp  = (unsigned int)cap_value(*job_exp  * boost / 100, 1, UINT_MAX);
-	return;
-}
-#endif
+
 // exp share and added zeny share [Valaris]
 int party_exp_share(struct party_data* p, struct block_list* src, unsigned int base_exp, unsigned int job_exp, int zeny)
 {
 	struct map_session_data* sd[MAX_PARTY];
 	unsigned int i, c;
-#ifdef RENEWAL_EXP
-	int src_lvl = status_get_lv(src);
-#endif
+
 	nullpo_ret(p);
 
 	// count the number of players eligible for exp sharing
@@ -993,13 +940,14 @@ int party_exp_share(struct party_data* p, struct block_list* src, unsigned int b
 
 	for (i = 0; i < c; i++) {
 #ifdef RENEWAL_EXP
-		unsigned int b_exp = base_exp, j_exp = job_exp;
-		if( !(src && src->type == BL_MOB && ((TBL_MOB*)src)->db->mexp) )
-			party_renewal_exp_mod(&b_exp,&j_exp,sd[i]->status.base_level,src_lvl);
-		pc_gainexp(sd[i], src, b_exp, j_exp, false);
-#else
-		pc_gainexp(sd[i], src, base_exp, job_exp, false);
+		if( !(src && src->type == BL_MOB && ((TBL_MOB*)src)->db->mexp) ){
+			int rate = pc_level_penalty_mod(sd[i], (TBL_MOB*)src, 1);
+			base_exp = (unsigned int)cap_value(base_exp * rate / 100, 1, UINT_MAX);
+			job_exp = (unsigned int)cap_value(job_exp * rate / 100, 1, UINT_MAX);
+		}
 #endif
+		pc_gainexp(sd[i], src, base_exp, job_exp, false);
+
 		if (zeny) // zeny from mobs [Valaris]
 			pc_getzeny(sd[i],zeny);
 	}

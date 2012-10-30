@@ -51,6 +51,9 @@
 static unsigned int exp_table[CLASS_COUNT][2][MAX_LEVEL];
 static unsigned int max_level[CLASS_COUNT][2];
 static unsigned int statp[MAX_LEVEL+1];
+#if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
+static unsigned int level_penalty[3][RC_MAX][MAX_LEVEL*2+1];
+#endif
 
 // h-files are for declarations, not for implementations... [Shinomori]
 struct skill_tree_entry skill_tree[CLASS_COUNT][MAX_SKILL_TREE];
@@ -85,7 +88,6 @@ struct item_cd {
 	unsigned int tick[MAX_ITEMDELAYS];//tick
 	short nameid[MAX_ITEMDELAYS];//skill id
 };
-
 
 //Converts a class to its array index for CLASS_COUNT defined arrays.
 //Note that it does not do a validity check for speed purposes, where parsing
@@ -9105,7 +9107,42 @@ int pc_del_talisman(struct map_session_data *sd,int count,int type)
 	clif_talisman(sd, type);
 	return 0;
 }
+#if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
+/*==========================================
+ * Renewal EXP/Itemdrop rate modifier base on level penalty
+ * 1=exp 2=itemdrop
+ *------------------------------------------*/
+int pc_level_penalty_mod(struct map_session_data *sd, struct mob_data *md, int type)
+{
+	int diff, rate = 100, i;
 
+	nullpo_ret(sd);
+	nullpo_ret(md);
+
+	diff = md->level - sd->status.base_level;
+
+	if( diff < 0 )
+		diff = MAX_LEVEL + ( ~diff + 1 );
+
+	for(i=0; i<RC_MAX; i++){
+		int tmp;
+
+		if( md->status.race != i ){
+			if( md->status.mode&MD_BOSS && i < RC_BOSS )
+				i = RC_BOSS;
+			else if( i <= RC_BOSS )
+				continue;
+		}
+		
+		if( (tmp=level_penalty[type][i][diff]) > 0 ){
+			rate = tmp;
+			break;
+		}
+	}
+
+	return rate;
+}
+#endif
 int pc_split_str(char *str,char **val,int num)
 {
 	int i;
