@@ -2020,7 +2020,7 @@ int pc_bonus_subele(struct map_session_data* sd, unsigned char ele, short rate, 
 }
 
 /*==========================================
- * ? ���i�ɂ��\�͓��̃{?�i�X�ݒ�
+ * ? ???i????\????~{??i?X???
  *------------------------------------------*/
 int pc_bonus(struct map_session_data *sd,int type,int val)
 {
@@ -2618,7 +2618,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 }
 
 /*==========================================
- * ? ���i�ɂ��\�͓��̃{?�i�X�ݒ�
+ * ? ???i????\????~{??i?X???
  *------------------------------------------*/
 int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 {
@@ -4861,13 +4861,13 @@ int pc_checkskill(struct map_session_data *sd,int skill_id)
 }
 
 /*==========================================
- * ����?�X�ɂ��X�L����??�`�F�b�N
- * ��?�F
- *   struct map_session_data *sd	�Z�b�V�����f?�^
- *   int nameid						?���iID
- * �Ԃ�l�F
- *   0		?�X�Ȃ�
- *   -1		�X�L��������
+ * ??????X????X?L???????`?F?b?N
+ * ????F
+ *   struct map_session_data *sd	?Z?b?V?????f??^
+ *   int nameid						????iID
+ * ???l?F
+ *   0		??X???
+ *   -1		?X?L????????
  *------------------------------------------*/
 int pc_checkallowskill(struct map_session_data *sd)
 {
@@ -7492,7 +7492,7 @@ int pc_setcart(struct map_session_data *sd,int type) {
 int pc_setfalcon(TBL_PC* sd, int flag)
 {
 	if( flag ){
-		if( pc_checkskill(sd,HT_FALCON)>0 )	// �t�@���R���}�X�^��?�X�L������
+		if( pc_checkskill(sd,HT_FALCON)>0 )	// ?t?@???R???}?X?^????X?L??????
 			pc_setoption(sd,sd->sc.option|OPTION_FALCON);
 	} else if( pc_isfalcon(sd) ){
 		pc_setoption(sd,sd->sc.option&~OPTION_FALCON); // remove falcon
@@ -7507,7 +7507,7 @@ int pc_setfalcon(TBL_PC* sd, int flag)
 int pc_setriding(TBL_PC* sd, int flag)
 {
 	if( flag ){
-		if( pc_checkskill(sd,KN_RIDING) > 0 ) // ���C�f�B���O�X�L������
+		if( pc_checkskill(sd,KN_RIDING) > 0 ) // ???C?f?B???O?X?L??????
 			pc_setoption(sd, sd->sc.option|OPTION_RIDING);
 	} else if( pc_isriding(sd) ){
 			pc_setoption(sd, sd->sc.option&~OPTION_RIDING);
@@ -9251,6 +9251,35 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 	}
 	return true;
 }
+#if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
+static bool pc_readdb_levelpenalty(char* fields[], int columns, int current)
+{
+	int type, race, diff;
+
+	type = atoi(fields[0]);	
+	race = atoi(fields[1]);
+	diff = atoi(fields[2]);
+
+	if( type != 1 && type != 2 ){
+		ShowWarning("pc_readdb_levelpenalty: Invalid type %d specified.\n", type);
+		return false;
+	}
+
+	if( race < 0 && race > RC_MAX ){
+		ShowWarning("pc_readdb_levelpenalty: Invalid race %d specified.\n", race);
+		return false;
+	}
+
+	diff = min(diff, MAX_LEVEL);
+
+	if( diff < 0 )
+		diff = min(MAX_LEVEL + ( ~(diff) + 1 ), MAX_LEVEL*2);
+
+	level_penalty[type][race][diff] = atoi(fields[3]);
+
+	return true;
+}
+#endif
 
 /*==========================================
  * pc DB reading.
@@ -9260,7 +9289,7 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
  *------------------------------------------*/
 int pc_readdb(void)
 {
-	int i,j,k;
+	int i,j,k,tmp=0;
 	FILE *fp;
 	char line[24000],*p;
 
@@ -9352,6 +9381,23 @@ int pc_readdb(void)
 	// Reset and read skilltree
 	memset(skill_tree,0,sizeof(skill_tree));
 	sv_readdb(db_path, DBPATH"skill_tree.txt", ',', 3+MAX_PC_SKILL_REQUIRE*2, 4+MAX_PC_SKILL_REQUIRE*2, -1, &pc_readdb_skilltree);
+
+#if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
+	sv_readdb(db_path, "level_penalty.txt", ',', 4, 4, -1, &pc_readdb_levelpenalty);
+	for( k=1; k < 3; k++ ){ // fill in the blanks
+		for( j = 0; j < RC_MAX; j++ ){
+			tmp = 0;
+			for( i = 0; i < MAX_LEVEL*2; i++ ){
+				if( i == MAX_LEVEL+1 )
+					tmp = level_penalty[k][j][0];// reset
+				if( level_penalty[k][j][i] > 0 )
+					tmp = level_penalty[k][j][i];
+				else
+					level_penalty[k][j][i] = tmp;
+			}
+		}
+	}
+#endif
 
 	// Reset then read attr_fix
 	for(i=0;i<4;i++)
