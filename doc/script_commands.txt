@@ -3359,32 +3359,30 @@ capacity, and 0 otherwise. It is important to see if a player can carry the
 items you expect to give them, failing to do that may open your script up to 
 abuse or create some very unfair errors.
 
-This function, in addition to checking to see if the player is capable of
-holding a set amount of items, also ensures the player has room in their
+This function, in addition to checking to see if the player is capable of 
+holding a set amount of items, also ensures the player has room in their 
 inventory for the item(s) they will be receiving.
 
 Like 'getitem', this function will also accept an 'english name' from the 
 database as an argument.
 
-    checkweight(502,10) // 10 apples
-
-        if (checkweight(502,10) == 0 ) goto L_OverWeight;
-        getitem 502,10;
-        close;
-    L_OverWeight:
-        mes "Sorry you cannot hold this amount of apples";
-        close;
+	if (checkweight(512,10)) {
+		getitem 512,10;
+	} else {
+		mes "Sorry you cannot hold this amount of apples";
+	}
+	close;
 
 Or to put this another way:
 
-        if (checkweight("APPLE",10)) goto L_Getapples;
-        mes "Sorry you cannot hold this amount of apples";
-        close;
-    L_Getapples:
-        getitem 502,10;
-        close;
+	if (checkweight("Apple",10) == 0) {
+		mes "Sorry you cannot hold this amount of apples";
+	} else {
+		getitem 512,10;
+	}
+	close;
 
-Both these examples have the same effect.
+Both examples have the same effect.
 
 ---------------------------------------
 
