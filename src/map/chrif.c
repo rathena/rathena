@@ -1363,7 +1363,9 @@ void chrif_keepalive(int fd) {
 	WFIFOW(fd,0) = 0x2b23;
 	WFIFOSET(fd,2);
 }
-
+void chrif_keepalive_ack(int fd) {
+	session[fd]->flag.ping = 0;/* reset ping state, we received a packet */
+}
 /*==========================================
  *
  *------------------------------------------*/
@@ -1382,6 +1384,14 @@ int chrif_parse(int fd) {
 		char_fd = -1;
 		chrif_on_disconnect();
 		return 0;
+	} else if ( session[fd]->flag.ping ) {/* we've reached stall time */
+		if( DIFF_TICK(last_tick, session[fd]->rdata_tick) > (stall_time * 2) ) {/* we can't wait any longer */
+			set_eof(fd);
+			return 0;
+		} else if( session[fd]->flag.ping != 2 ) { /* we haven't sent ping out yet */
+			chrif_keepalive(fd);
+			session[fd]->flag.ping = 2;
+		}
 	}
 
 	while ( RFIFOREST(fd) >= 2 ) {
@@ -1428,7 +1438,7 @@ int chrif_parse(int fd) {
 			case 0x2b20: chrif_removemap(fd); break;
 			case 0x2b21: chrif_save_ack(fd); break;
 			case 0x2b22: chrif_updatefamelist_ack(fd); break;
-			case 0x2b24: /* chrif_keepalive_ack(fd) */ break;
+			case 0x2b24: chrif_keepalive_ack(fd); break;
 			case 0x2b25: chrif_deadopt(RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10)); break;
 			case 0x2b27: chrif_authfail(fd); break;
 			default:
@@ -1440,12 +1450,6 @@ int chrif_parse(int fd) {
 			RFIFOSKIP(fd, packet_len);
 	}
 
-	return 0;
-}
-
-int ping_char_server(int tid, unsigned int tick, int id, intptr_t data) {
-	chrif_check(-1);
-	chrif_keepalive(char_fd);
 	return 0;
 }
 
@@ -1604,14 +1608,10 @@ int do_init_chrif(void) {
 	auth_db_ers = ers_new(sizeof(struct auth_node),"chrif.c::auth_db_ers",ERS_OPT_NONE);
 
 	add_timer_func_list(check_connect_char_server, "check_connect_char_server");
-	add_timer_func_list(ping_char_server, "ping_char_server");
 	add_timer_func_list(auth_db_cleanup, "auth_db_cleanup");
 
 	// establish map-char connection if not present
 	add_timer_interval(gettick() + 1000, check_connect_char_server, 0, 0, 10 * 1000);
-
-	// keep the map-char connection alive
-	add_timer_interval(gettick() + 1000, ping_char_server, 0, 0, ((int)stall_time-2) * 1000);
 
 	// wipe stale data for timed-out client connection requests
 	add_timer_interval(gettick() + 1000, auth_db_cleanup, 0, 0, 30 * 1000);
