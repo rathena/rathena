@@ -670,10 +670,10 @@ void initChangeTables(void) {
 	set_sc( SO_WARMER            , SC_WARMER          , SI_WARMER          , SCB_NONE );
 	set_sc( SO_VACUUM_EXTREME    , SC_VACUUM_EXTREME  , SI_VACUUM_EXTREME  , SCB_NONE );
 	set_sc( SO_ARRULLO           , SC_DEEPSLEEP       , SI_DEEPSLEEP       , SCB_NONE );
-	set_sc( SO_FIRE_INSIGNIA     , SC_FIRE_INSIGNIA   , SI_FIRE_INSIGNIA   , SCB_MATK );
-	set_sc( SO_WATER_INSIGNIA    , SC_WATER_INSIGNIA  , SI_WATER_INSIGNIA  , SCB_NONE );
-	set_sc( SO_WIND_INSIGNIA     , SC_WIND_INSIGNIA   , SI_WIND_INSIGNIA   , SCB_NONE );
-	set_sc( SO_EARTH_INSIGNIA    , SC_EARTH_INSIGNIA  , SI_EARTH_INSIGNIA  , SCB_MDEF|SCB_DEF|SCB_MAXHP|SCB_MAXSP|SCB_WATK );	
+	set_sc( SO_FIRE_INSIGNIA     , SC_FIRE_INSIGNIA   , SI_FIRE_INSIGNIA   , SCB_MATK | SCB_BATK | SCB_WATK | SCB_ATK_ELE | SCB_REGEN );
+	set_sc( SO_WATER_INSIGNIA    , SC_WATER_INSIGNIA  , SI_WATER_INSIGNIA  , SCB_WATK | SCB_ATK_ELE | SCB_REGEN );
+	set_sc( SO_WIND_INSIGNIA     , SC_WIND_INSIGNIA   , SI_WIND_INSIGNIA   , SCB_WATK | SCB_ATK_ELE | SCB_REGEN );
+	set_sc( SO_EARTH_INSIGNIA    , SC_EARTH_INSIGNIA  , SI_EARTH_INSIGNIA  , SCB_MDEF|SCB_DEF|SCB_MAXHP|SCB_MAXSP|SCB_WATK | SCB_ATK_ELE | SCB_REGEN );	
 	/**
 	 * Genetic
 	 **/
@@ -3433,6 +3433,11 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 		regen->hp = cap_value(regen->hp*sc->data[SC_GT_REVITALIZE]->val3/100, 1, SHRT_MAX);
 		regen->state.walk= 1;
 	}
+	 if ((sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 1) //if insignia lvl 1
+	        || (sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 1)
+	        || (sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 1)
+	        || (sc->data[SC_WIND_INSIGNIA] && sc->data[SC_WIND_INSIGNIA]->val1 == 1))
+	    regen->rate.hp *= 2;
 
 }
 void status_calc_state( struct block_list *bl, struct status_change *sc, enum scs_flag flag, bool start ) {
@@ -5283,9 +5288,7 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 
 		if(sc->data[SC_BERSERK])
 			aspd_rate -= 300;
-		else
-
-		if(sc->data[SC_MADNESSCANCEL])
+		else if(sc->data[SC_MADNESSCANCEL])
 			aspd_rate -= 200;
 	}
 
@@ -5496,21 +5499,16 @@ unsigned char status_calc_attack_element(struct block_list *bl, struct status_ch
 	if(sc->data[SC_ENCHANTARMS])
 		return sc->data[SC_ENCHANTARMS]->val2;
 	if(sc->data[SC_WATERWEAPON]
-	|| sc->data[SC_TIDAL_WEAPON_OPTION]
-	|| sc->data[SC_TIDAL_WEAPON]
-	|| (sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 2) )
+                || (sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 2) )
 		return ELE_WATER;
-	if(sc->data[SC_EARTHWEAPON] || (sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 2) )
+	if(sc->data[SC_EARTHWEAPON] 
+                || (sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 2) )
 		return ELE_EARTH;
-	if(sc->data[SC_FIREWEAPON] || (sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 2) )
+	if(sc->data[SC_FIREWEAPON] 
+                || (sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 2) )
 		return ELE_FIRE;
-	if(sc->data[SC_WINDWEAPON] || (sc->data[SC_WIND_INSIGNIA] && sc->data[SC_WIND_INSIGNIA]->val1 == 2) )
-		return ELE_WIND;
-	if(sc->data[SC_EARTHWEAPON])
-		return ELE_EARTH;
-	if(sc->data[SC_FIREWEAPON])
-		return ELE_FIRE;
-	if(sc->data[SC_WINDWEAPON])
+	if(sc->data[SC_WINDWEAPON] 
+                || (sc->data[SC_WIND_INSIGNIA] && sc->data[SC_WIND_INSIGNIA]->val1 == 2) )
 		return ELE_WIND;
 	if(sc->data[SC_ENCPOISON])
 		return ELE_POISON;
@@ -6378,7 +6376,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	case SC_INCREASEAGI:
 		 if(sd && pc_issit(sd)){ 
 			 pc_setstand(sd);
-			 clif_status_load(&sd->bl,SI_SIT,0);
 		 }
 	
 	case SC_CONCENTRATE:
@@ -6572,6 +6569,9 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 				if(sc->data[i])	return 0;
 		}
 	break;
+        case SC_INTRAVISION:
+            if(sd && sd->special_state.intravision) return 0; //we already have the status by maya P
+            break;
 	}
 
 	//Check for BOSS resistances
@@ -10118,7 +10118,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 
 	
 	case SC_SATURDAYNIGHTFEVER:
-		// 1% HP/SP drain every 3 seconds [Jobbie]
+		// 1% HP/SP drain every val4 seconds [Jobbie]
 		if( --(sce->val3) >= 0 )
 		{
 			int hp = status->hp / 100;

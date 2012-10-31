@@ -352,34 +352,38 @@ int battle_attr_fix(struct block_list *src, struct block_list *target, int damag
 	}
 	if( tsc && tsc->count ) { //since an atk can only have one type let's optimise this a bit
 		switch(atk_elem){
-			case ELE_FIRE:
-				if (tsc->data[SC_SPIDERWEB]) {
-					tsc->data[SC_SPIDERWEB]->val1 = 0; // free to move now
-					if( tsc->data[SC_SPIDERWEB]->val2-- > 0 )
-						damage <<= 1; // double damage
-					if( tsc->data[SC_SPIDERWEB]->val2 == 0 )
-						status_change_end(target, SC_SPIDERWEB, INVALID_TIMER);
-				}
-				if( tsc->data[SC_THORNSTRAP])
-					status_change_end(target, SC_THORNSTRAP, INVALID_TIMER);
-				if( tsc->data[SC_FIRE_CLOAK_OPTION])
-					damage -= damage * tsc->data[SC_FIRE_CLOAK_OPTION]->val2 / 100;
-				if( tsc->data[SC_CRYSTALIZE] && target->type != BL_MOB){
-					status_change_end(target, SC_CRYSTALIZE, INVALID_TIMER);
-				}
-				break;
-			case ELE_HOLY:
-				if( tsc->data[SC_ORATIO])
-					ratio += tsc->data[SC_ORATIO]->val1 * 2;
-				break;
-			case ELE_POISON:
-				if( tsc->data[SC_VENOMIMPRESS])
-					ratio += tsc->data[SC_VENOMIMPRESS]->val2;
-				break;	
-			case ELE_WIND:
-				if( tsc->data[SC_CRYSTALIZE] && target->type != BL_MOB)
-					damage = damage * 150 / 100;
-				break;			
+                case ELE_FIRE:
+                        if( tsc->data[SC_SPIDERWEB]) {
+                                tsc->data[SC_SPIDERWEB]->val1 = 0; // free to move now
+                                if( tsc->data[SC_SPIDERWEB]->val2-- > 0 )
+                                        damage <<= 1; // double damage
+                                if( tsc->data[SC_SPIDERWEB]->val2 == 0 )
+                                        status_change_end(target, SC_SPIDERWEB, INVALID_TIMER);
+                        }
+                        if( tsc->data[SC_THORNSTRAP])
+                                status_change_end(target, SC_THORNSTRAP, INVALID_TIMER);
+                        if( tsc->data[SC_FIRE_CLOAK_OPTION])
+                                damage -= damage * tsc->data[SC_FIRE_CLOAK_OPTION]->val2 / 100;
+                        if( tsc->data[SC_CRYSTALIZE] && target->type != BL_MOB)
+                                status_change_end(target, SC_CRYSTALIZE, INVALID_TIMER);
+                        if( tsc->data[SC_EARTH_INSIGNIA]) damage += damage/2;
+                        break;
+                case ELE_HOLY:
+                        if( tsc->data[SC_ORATIO]) ratio += tsc->data[SC_ORATIO]->val1 * 2;
+                        break;
+                case ELE_POISON:
+                        if( tsc->data[SC_VENOMIMPRESS]) ratio += tsc->data[SC_VENOMIMPRESS]->val2;
+                        break;	
+                case ELE_WIND:
+                        if( tsc->data[SC_CRYSTALIZE] && target->type != BL_MOB) damage += damage/2;
+                        if( tsc->data[SC_WATER_INSIGNIA]) damage += damage/2;
+                        break;
+                case ELE_WATER:
+                        if( tsc->data[SC_FIRE_INSIGNIA]) damage += damage/2;
+                        break;
+                case ELE_EARTH:        
+                        if( tsc->data[SC_WIND_INSIGNIA]) damage += damage/2;
+                        break;
 		}			
 	} //end tsc check
 	if( src && src->type == BL_PC ){
