@@ -116,7 +116,7 @@ int other_mapserver_count=0; //Holds count of how many other map servers are onl
 
 
 /// Resets all the data.
-inline void chrif_reset(void) {
+void chrif_reset(void) {
 	// TODO kick everyone out and reset everything [FlavioJS]
 	exit(EXIT_FAILURE);
 }
@@ -218,17 +218,17 @@ bool chrif_auth_finished(TBL_PC* sd) {
 	return false;
 }
 // sets char-server's user id
-inline void chrif_setuserid(char *id) {
+void chrif_setuserid(char *id) {
 	memcpy(userid, id, NAME_LENGTH);
 }
 
 // sets char-server's password
-inline void chrif_setpasswd(char *pwd) {
+void chrif_setpasswd(char *pwd) {
 	memcpy(passwd, pwd, NAME_LENGTH);
 }
 
 // security check, prints warning if using default password
-inline void chrif_checkdefaultlogin(void) {
+void chrif_checkdefaultlogin(void) {
 	if (strcmp(userid, "s1")==0 && strcmp(passwd, "p1")==0) {
 		ShowWarning("Using the default user/password s1/p1 is NOT RECOMMENDED.\n");
 		ShowNotice("Please edit your 'login' table to create a proper inter-server user/password (gender 'S')\n");
@@ -254,12 +254,12 @@ int chrif_setip(const char* ip) {
 }
 
 // sets char-server's port number
-inline void chrif_setport(uint16 port) {
+void chrif_setport(uint16 port) {
 	char_port = port;
 }
 
 // says whether the char-server is connected or not
-inline int chrif_isconnected(void) {
+int chrif_isconnected(void) {
 	return (char_fd > 0 && session[char_fd] != NULL && chrif_state == 2);
 }
 
@@ -389,7 +389,7 @@ int chrif_removemap(int fd) {
 }
 
 // received after a character has been "final saved" on the char-server
-static inline void chrif_save_ack(int fd) {
+static void chrif_save_ack(int fd) {
 	chrif_auth_delete(RFIFOL(fd,2), RFIFOL(fd,6), ST_LOGOUT);
 	chrif_check_shutdown();
 }
@@ -1358,7 +1358,7 @@ void chrif_update_ip(int fd) {
 }
 
 // pings the charserver
-inline void chrif_keepalive(int fd) {
+void chrif_keepalive(int fd) {
 	WFIFOHEAD(fd,2);
 	WFIFOW(fd,0) = 0x2b23;
 	WFIFOSET(fd,2);
@@ -1545,7 +1545,7 @@ int chrif_removefriend(int char_id, int friend_id) {
 	return 0;
 }
 
-inline void chrif_send_report(char* buf, int len) {
+void chrif_send_report(char* buf, int len) {
 
 #ifndef STATS_OPT_OUT
 	WFIFOHEAD(char_fd,len + 2);
