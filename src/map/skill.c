@@ -16331,7 +16331,7 @@ int skill_spellbook (struct map_session_data *sd, int nameid) {
 
 	return 1;
 }
-int skill_select_menu(struct map_session_data *sd,int flag,int skill_id) {
+int skill_select_menu(struct map_session_data *sd,int skill_id) {
 	int id, lv, prob, aslvl = 0;
 	nullpo_ret(sd);
 	

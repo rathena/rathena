@@ -16136,6 +16136,7 @@ void clif_msgtable_num(int fd, int line, int num) {
 }
 /*==========================================
  * used by SC_AUTOSHADOWSPELL
+ * RFIFOL(fd,2) - flag (currently not used)
  *------------------------------------------*/
 void clif_parse_SkillSelectMenu(int fd, struct map_session_data *sd) {
 	
@@ -16147,7 +16148,9 @@ void clif_parse_SkillSelectMenu(int fd, struct map_session_data *sd) {
 		clif_menuskill_clear(sd);
 		return;
 	}
-	skill_select_menu(sd,RFIFOL(fd,2),RFIFOW(fd,6));
+	
+	skill_select_menu(sd,RFIFOW(fd,6));
+	
 	clif_menuskill_clear(sd);
 }
 /*==========================================
