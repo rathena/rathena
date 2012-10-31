@@ -419,19 +419,21 @@ const char* geoip_getcountry(uint32 ipnum){
 void inter_to_fd(int fd, int u_fd, int aid, char* msg, ...) {
 	char msg_out[512];
 	va_list ap;
+	int len = 1;/* yes we start at 1 */
 	
 	va_start(ap,msg);
-	vsprintf(msg_out, msg, ap);
+		len += vsnprintf(msg_out, 512, msg, ap);
 	va_end(ap);
-	
-	WFIFOHEAD(fd,522);
+		
+	WFIFOHEAD(fd,12 + len);
 	
 	WFIFOW(fd,0) = 0x3807;
-	WFIFOL(fd,2) = u_fd;
-	WFIFOL(fd,6) = aid;
-	safestrncpy((char*)WFIFOP(fd,10), msg_out, 512);
+	WFIFOW(fd,2) = 12 + (unsigned short)len;
+	WFIFOL(fd,4) = u_fd;
+	WFIFOL(fd,8) = aid;
+	safestrncpy((char*)WFIFOP(fd,12), msg_out, len);
 	
-	WFIFOSET(fd,522);
+	WFIFOSET(fd,12 + len);
 	
 	return;
 }

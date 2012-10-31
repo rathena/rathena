@@ -34,7 +34,7 @@
 
 
 static const int packet_len_table[]={
-	-1,-1,27,-1, -1, 0,37, 522,  0, 0, 0, 0,  0, 0,  0, 0, //0x3800-0x380f
+	-1,-1,27,-1, -1, 0,37,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3800-0x380f
 	 0, 0, 0, 0,  0, 0, 0, 0, -1,11, 0, 0,  0, 0,  0, 0, //0x3810
 	39,-1,15,15, 14,19, 7,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3820
 	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1, //0x3830
@@ -2140,15 +2140,15 @@ void intif_request_accinfo( int u_fd, int aid, int group_id, char* query ) {
 }
 	
 void intif_parse_MessageToFD(int fd) {
-	int u_fd = RFIFOL(fd,2);	
+	int u_fd = RFIFOL(fd,4);
 
 	if( session[u_fd] && session[u_fd]->session_data ) {
-		int aid = RFIFOL(fd,6);
+		int aid = RFIFOL(fd,8);
 		struct map_session_data * sd = session[u_fd]->session_data;
 		/* matching e.g. previous fd owner didn't dc during request or is still the same */
 		if( sd->bl.id == aid ) {
 			char msg[512];
-			safestrncpy(msg, (char*)RFIFOP(fd,10), 512);
+			safestrncpy(msg, (char*)RFIFOP(fd,12), RFIFOW(fd,2) - 12);
 			clif_displaymessage(u_fd,msg);
 		}
 	
