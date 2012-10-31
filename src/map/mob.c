@@ -2326,7 +2326,10 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		struct item_data* it = NULL;
 		int drop_rate;
 #ifdef RENEWAL_DROP
-		int drop_modifier = pc_level_penalty_mod(mvp_sd?mvp_sd:second_sd?second_sd:third_sd, md, 2);
+		int drop_modifier = mvp_sd    ? pc_level_penalty_mod(mvp_sd, md, 2)   :
+							second_sd ? pc_level_penalty_mod(second_sd, md, 2):
+							third_sd  ? pc_level_penalty_mod(third_sd, md, 2) :
+							100;/* no player was attached, we dont use any modifier (100 = rates are not touched) */
 #endif
 		dlist->m = md->bl.m;
 		dlist->x = md->bl.x;
