@@ -16340,8 +16340,8 @@ int skill_select_menu(struct map_session_data *sd,int flag,int skill_id) {
 		status_change_end(&sd->bl,SC_STOP,INVALID_TIMER);
 	}
 
-	if( (id = sd->status.skill[skill_id].id) == 0 || sd->status.skill[skill_id].flag != SKILL_FLAG_PLAGIARIZED ||
-				skill_id >= GS_GLITTERING || skill_get_type(skill_id) != BF_MAGIC ) {
+	if( skill_id >= GS_GLITTERING || skill_get_type(skill_id) != BF_MAGIC ||
+		(id = sd->status.skill[skill_id].id) == 0 || sd->status.skill[skill_id].flag != SKILL_FLAG_PLAGIARIZED ) {
 		clif_skill_fail(sd,SC_AUTOSHADOWSPELL,0,0);
 		return 0;
 	}
