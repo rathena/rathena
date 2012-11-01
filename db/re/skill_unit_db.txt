@@ -15,6 +15,7 @@
 //      0x200(UF_ENSEMBLE)	Ensemble skill
 //      0x400(UF_SONG)		Song skill
 //      0x800(UF_DUALMODE)	Spell has effects both at an interval and when you step in/out
+//	0x2000(UF_RANGEDSINGLEUNIT)	Layout hack, use layout range propriety but only display center.
 // 	Example: 0x006 = 0x002+0x004 -> Cannot be stacked nor cast near targets
 //
 // Notes:
@@ -121,9 +122,9 @@
 
 2299,0xcc,    ,  0, 1,1000,all,   0x006	//SC_MANHOLE
 2300,0xcd,    ,  0, 1,1000,all,   0x006	//SC_DIMENSIONDOOR
-2301,0xce,    ,  0, 2,  -1,enemy,   0x00E	//SC_CHAOSPANIC
+2301,0xce,    ,  2, 0,  -1,enemy,   0x200E	//SC_CHAOSPANIC
 2302,0xcf,    ,  0, 2,  -1,enemy,   0x002	//SC_MAELSTROM
-2303,0xd0,    ,  0, 2,  -1,enemy,   0x018	//SC_BLOODYLUST
+2303,0xd0,    ,  3, 0,  -1,all,   0x2018	//SC_BLOODYLUST
 2304,0xd1,    ,  0, 2,  -1,enemy, 0x000	//SC_FEINTBOMB
 
 2319,0xec,    ,  0, 3,5000,all,   0x000	//LG_BANDING
@@ -140,10 +141,10 @@
 2450,0xe0,    ,  3, 0, 500,enemy, 0x010	//SO_CLOUD_KILL
 2452,0xe4,    ,  0, 3,3000,all,   0x010	//SO_WARMER
 2453,0xeb,    ,  0, 1:1:2:2:3,1000,enemy,0x010	//SO_VACUUM_EXTREME
-2465,0xf1,    ,  0, 2,1000,all,   0x010	//SO_FIRE_INSIGNIA
-2466,0xf2,    ,  0, 2,1000,all,   0x010	//SO_WATER_INSIGNIA
-2467,0xf3,    ,  0, 2,1000,all,   0x010	//SO_WIND_INSIGNIA
-2468,0xf4,    ,  0, 2,1000,all,   0x010	//SO_EARTH_INSIGNIA
+2465,0xf1,    ,  0, 1,1000,all,   0x010	//SO_FIRE_INSIGNIA
+2466,0xf2,    ,  0, 1,1000,all,   0x010	//SO_WATER_INSIGNIA
+2467,0xf3,    ,  0, 1,1000,all,   0x010	//SO_WIND_INSIGNIA
+2468,0xf4,    ,  0, 1,1000,all,   0x010	//SO_EARTH_INSIGNIA
 
 2479,0xe5,    ,  0, 1,1000,enemy, 0x000	//GN_THORNS_TRAP
 2482,0xe6,0x7f, -1, 1,  -1,all,   0x000	//GN_WALLOFTHORN

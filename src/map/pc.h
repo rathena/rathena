@@ -215,6 +215,7 @@ struct map_session_data {
 	unsigned int canskill_tick; // used to prevent abuse from no-delay ACT files
 	unsigned int cansendmail_tick; // [Mail System Flood Protection]
 	unsigned int ks_floodprotect_tick; // [Kill Steal Protection]
+    unsigned int bloodylust_tick; // bloodylust player timer [out/in re full-heal protection]
 	
 	struct {
 		short nameid;
