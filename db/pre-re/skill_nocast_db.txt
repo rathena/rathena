@@ -86,6 +86,7 @@
 
 //mixed
 488,3	//CG_HERMODE
+3013,3	//KO_KYOUGAKU
 
 //Clone Forbidden/pointless skills
 77,16	//PR_TURNUNDEAD

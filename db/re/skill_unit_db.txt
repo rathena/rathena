@@ -158,7 +158,7 @@
 3008,0x86,    ,  0, 2, 100,enemy, 0x018	//KO_MUCHANAGE
 3009,0x86,    ,  0, 3, 500,enemy, 0x018	//KO_HUUMARANKA
 3020,0xf8,    ,  0, 3, 100,all, 0x018	//KO_ZENKAI
-//3010,0xfc,    ,  0, 2,1000,enemy, 0x022	//KO_MAKIBISHI
+3010,0xfc,    ,  0, 1,1000,enemy, 0x020	//KO_MAKIBISHI
 
 8020,0xf5,    ,  0, 3,2300:2100:1900:1700:1500,enemy,   0x018	//MH_POISON_MIST
 8033,0x7e,    ,  0, 0,  -1,all,   0x003	//MH_STEINWAND 

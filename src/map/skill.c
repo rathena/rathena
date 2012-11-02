@@ -819,8 +819,6 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			if((sce=sc->data[SC_EDP]))
 				sc_start4(bl,SC_DPOISON,sce->val2, sce->val1,src->id,0,0,
 					skill_get_time2(ASC_EDP,sce->val1));
-			// Cancels on normal attack but benefits with the bonuses
-			status_change_end(src,SC_CAMOUFLAGE, INVALID_TIMER);
 		}
 	}
 	break;
@@ -4422,9 +4420,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 
 	case SR_EARTHSHAKER:
 		if( flag&1 ) { //by default cloaking skills are remove by aoe skills so no more checking/removing except hiding and cloaking exceed.
+			skill_attack(BF_WEAPON, src, src, bl, skillid, skilllv, tick, flag);
 			status_change_end(bl, SC_HIDING, INVALID_TIMER);
 			status_change_end(bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
-			skill_attack(BF_WEAPON, src, src, bl, skillid, skilllv, tick, flag);
 		} else{
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), splash_target(src), src, skillid, skilllv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 			clif_skill_damage(src, src, tick, status_get_amotion(src), 0, -30000, 1, skillid, skilllv, 6);
@@ -4543,7 +4541,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 					skill_castend_damage_id);
 				flag|=1; //Set flag to 1 so ammo is not double-consumed. [Skotlex]
 			}
-			status_change_end(src,SC_CAMOUFLAGE, INVALID_TIMER);
 		}
 		break;
 
@@ -8747,7 +8744,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case KO_JYUSATSU:
-		if( dstsd && tsc && !tsc->data[type] && rand()%100 < tstatus->int_/2 ){
+		if( dstsd && tsc && !tsc->data[type] &&
+			rand()%100 < ((45+5*skilllv) + skilllv*5 - status_get_int(bl)/2) ){//[(Base chance of success) + (Skill Level x 5) - (int / 2)]%.
 			clif_skill_nodamage(src,bl,skillid,skilllv,
 				status_change_start(bl,type,10000,skilllv,0,0,0,skill_get_time(skillid,skilllv),1));
 			status_zap(bl, tstatus->max_hp*skilllv*5/100 , 0);
@@ -8760,6 +8758,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case KO_GENWAKU:
 		if ( !map_flag_gvg(src->m) && ( dstsd || dstmd ) && battle_check_target(src,bl,BCT_ENEMY) > 0 ) {
 			int x = src->x, y = src->y;
+
+			if( sd && rnd()%100 > ((45+5*skilllv) - status_get_int(bl)/10) ){//[(Base chance of success) - (Intelligence Objectives / 10)]%.
+				clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
+				break;
+			}
+
 			if (unit_movepos(src,bl->x,bl->y,0,0)) {
 				clif_skill_nodamage(src,src,skillid,skilllv,1);
 				clif_slide(src,bl->x,bl->y) ;
@@ -9539,7 +9543,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	case KO_MUCHANAGE:
 	case KO_BAKURETSU:
 	case KO_ZENKAI:
-	//case KO_MAKIBISHI:
 		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 	case GS_GROUNDDRIFT: //Ammo should be deleted right away.
 		skill_unitsetting(src,skillid,skilllv,x,y,0);
@@ -10000,6 +10003,14 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
             flag |= 33;
             skill_unitsetting(src, skillid, skilllv, x, y, 0);
             break;
+
+	case KO_MAKIBISHI:
+		for( i = 0; i < (skilllv+2); i++ ) {
+			x = src->x - 1 + rnd()%3;
+			y = src->y - 1 + rnd()%3;
+			skill_unitsetting(src,skillid,skilllv,x,y,0); 
+		}
+		break;
 	default:
 		if( skillid >= HM_SKILLBASE && skillid <= HM_SKILLBASE + MAX_HOMUNSKILL ) {
 			if( src->type == BL_HOM && ((TBL_HOM*)src)->master->fd )
@@ -11252,7 +11263,6 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		case UNT_FLASHER:
 		case UNT_FREEZINGTRAP:
 		case UNT_FIREPILLAR_ACTIVE:
-		case UNT_MAKIBISHI:
 			map_foreachinrange(skill_trap_splash,&src->bl, skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag, &src->bl,tick);
 			if (sg->unit_id != UNT_FIREPILLAR_ACTIVE)
 				clif_changetraplook(&src->bl, sg->unit_id==UNT_LANDMINE?UNT_FIREPILLAR_ACTIVE:UNT_USED_TRAPS);
@@ -11677,6 +11687,11 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 				sc_start2(bl,type,100,sg->val1,sg->val2,skill_get_time2(sg->skill_id, sg->skill_lv));
 			break;
 
+		case UNT_MAKIBISHI:
+			skill_attack(BF_MISC, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
+			sg->limit = DIFF_TICK(tick, sg->tick);
+			sg->unit_id = UNT_USED_TRAPS;
+			break;
 	}
 
 	if (bl->type == BL_MOB && ss != bl)

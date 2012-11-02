@@ -155,7 +155,7 @@
 3008,0x86,    ,  0, 2, 100,enemy, 0x018	//KO_MUCHANAGE
 3009,0x86,    ,  0, 3, 500,enemy, 0x018	//KO_HUUMARANKA
 3020,0xf8,    ,  0, 3, 100,all, 0x018	//KO_ZENKAI
-//3010,0xfc,    ,  0, 2,1000,enemy, 0x022	//KO_MAKIBISHI
+3010,0xfc,    ,  0, 1,1000,enemy, 0x020	//KO_MAKIBISHI
 
 8208,0x86,    ,  0, 2,1000,enemy, 0x080	//MA_SHOWER
 8209,0x90,    ,  0, 1,1000,enemy, 0x006	//MA_SKIDTRAP

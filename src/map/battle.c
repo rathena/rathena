@@ -3320,6 +3320,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				ATK_ADD( ( sc->data[SC_ENCHANTBLADE]->val1*20+100 ) * status_get_lv(src) / 150 + status_get_int(src) );
 			}
 		}
+		status_change_end(src,SC_CAMOUFLAGE, INVALID_TIMER);
 	}
 	if( skill_num == LG_RAYOFGENESIS ) {
 		struct Damage md = battle_calc_magic_attack(src, target, skill_num, skill_lv, wflag);
