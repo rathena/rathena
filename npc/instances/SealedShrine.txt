@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -25,6 +25,7 @@
 //= 1.9 Fixed broken else/if chaining. [Joseph]
 //= 2.0 Some optimization. [Euphy]
 //= 2.1 Fixed quest being removed before the 12 hours cool down. [Joseph]
+//= 2.2 Removed extra setquest (quest id:3040).	[Joseph]
 //============================================================ 
 
 // Sealed Catacomb Entrance
@@ -1373,8 +1374,6 @@ OnTouch:
 2@cata,80,63,4	script	Ancient Hero's Soul#2F	411,{
 	cutin "ins_cata_champ_s",2;
 	if (checkquest(3041)>=0) erasequest 3041;
-	if (checkquest(3040)>=0) erasequest 3040;
-	setquest 3040;
 	mes "[Ancient Hero's Soul]";
 	mes "Good job, my descendants... You've finished the long-cherished task that me and my bretheren could not complete.";
 	next;
@@ -1459,7 +1458,6 @@ OnDisable:
 OnMyMobDead:
 	if (mobcount("2@cata",instance_npcname("control_baphomet", instance_id())+"::OnMyMobDead") < 1) {
 		set 'ins_baphomet,7;
-		setquest 3040;
 		erasequest 3041;
 		instance_announce 0, "Baphomet : No! Nonono! How dare these weaklings defeat me!... No!!...",bc_map,"0xdb7093";
 		enablenpc instance_npcname("Ancient Hero's Soul#2F", instance_id());
