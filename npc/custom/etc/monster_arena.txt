@@ -766,11 +766,7 @@ gon_test,72,87,5	duplicate(SummonPad)	Summon Pad 3	111,2,2
 
 
 // Skill Disabler //
-gon_test,57,99,5	script	Skill Disable	111,3,3,{
-	atcommand strcharinfo(0) + "@skilloff";
-	disablenpc "Skill Disable";
-	end;
-}
+gon_test	mapflag	noskill
 
 // Duel Arena //
 gon_test,58,103,5	script	Duel Master#01	92,{

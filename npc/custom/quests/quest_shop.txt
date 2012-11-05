@@ -102,13 +102,13 @@ OnBuyItem:
 			specialeffect2 699;
 			close;
 		case 2:
-			set @qe3, getlook(3);
-			set @qe4, getlook(4);
-			set @qe5, getlook(5);
+			set @qe3, getlook(LOOK_HEAD_BOTTOM);
+			set @qe4, getlook(LOOK_HEAD_TOP);
+			set @qe5, getlook(LOOK_HEAD_MID);
 			set @qe6,1;
-			if (@qe1&1) atcommand "@changelook 3 "+@qe2;
-			if (@qe1&256) atcommand "@changelook 1 "+@qe2;
-			if (@qe1&512) atcommand "@changelook 2 "+@qe2;
+			if (@qe1&1) changelook LOOK_HEAD_BOTTOM, @qe2;
+			if (@qe1&256) changelook LOOK_HEAD_TOP, @qe2;
+			if (@qe1&512) changelook LOOK_HEAD_MID, @qe2;
 			break;
 		case 3:
 			close;
@@ -116,9 +116,9 @@ OnBuyItem:
 	}
 OnEnd:
 	if (@qe6) {
-		atcommand "@changelook 3 "+@qe3;
-		atcommand "@changelook 1 "+@qe4;
-		atcommand "@changelook 2 "+@qe5;
+		changelook LOOK_HEAD_BOTTOM, @qe3;
+		changelook LOOK_HEAD_TOP, @qe4;
+		changelook LOOK_HEAD_MID, @qe5;
 	}
 	for(set .@i,0; .@i<7; set .@i,.@i+1)
 		setd "@qe"+.@i,0;

@@ -100,7 +100,7 @@ M_Kill:
 	mes "Your attack succeeded but only ^FF0000" + #ninjasr + "^000000 Ninjas survived.";
 
 	atcommand strcharinfo(0) + "@kill "+@name$;
-	announce @name$+" has been assassinated by " + strcharinfo(0) +"'s Ninjas.",8;
+	announce @name$+" has been assassinated by " + strcharinfo(0) +"'s Ninjas.",bc_npc;
 	close;
 
 	// FAILED ATTACK //
