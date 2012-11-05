@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 // Samuray22
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -27,6 +27,7 @@
 //= 1.8 Added quest log entries for:
 //=     - Airship Ticket Quest
 //=     - How the Airship Works
+//= 1.9 Fixed missing checks for How the Airship Works quest. [Joseph]
 //============================================================ 
 
 //=======================================================================================================//
@@ -1673,7 +1674,7 @@ airplane_01,238,154,3	script	Airship Captain#01	873,{
 			select("Um? Only that? There's no more?");
 			mes "[Tarlock]";
 			mes "Ha ha ha!";
-			mes "I explained it roughtly to";
+			mes "I explained it roughly to";
 			mes "make it easier to understand";
 			mes "by you. Still, you aren't";
 			mes "pleased? I said it in plain";
@@ -1730,7 +1731,7 @@ airplane_01,238,154,3	script	Airship Captain#01	873,{
 			close2;
 			cutin "",255;
 			end;
-		} else {
+		} else if (lght_air == 2 || lght_air == 3) {
 			mes "[Tarlock]";
 			mes "Hahahah! Don't worry, I'll";
 			mes "tell you know this Airship";
