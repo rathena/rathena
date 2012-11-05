@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Keale
 //===== Current Version: =====================================
-//= 1.2
+//= 1.2a
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -15,6 +15,7 @@
 //= 1.0 First release.
 //= 1.1 Using 'switch rand' instead.
 //= 1.2 Cleaned and standardized. [Euphy]
+//= 1.2a Switched 'atcommand' to 'unitskilluseid'.
 //============================================================
 
 prontera,156,219,4	script	Cluckers	800,{
@@ -24,20 +25,20 @@ prontera,156,219,4	script	Cluckers	800,{
 	if (.startcluck) {
 		specialeffect2 2;
 		switch(rand(15)) {
-			case 0: npctalk "CLUUUUUUCK!!!"; atcommand "@nuke "+strcharinfo(0); emotion 23; break;
+			case 0: npctalk "CLUUUUUUCK!!!"; unitskilluseid getcharid(3),"NPC_SELFDESTRUCTION",1; emotion 23; break;
 			case 1: npctalk "Cluuuuuck!~"; break;
-			case 2: atcommand "@nuke "+strcharinfo(0); break;
+			case 2: unitskilluseid getcharid(3),"NPC_SELFDESTRUCTION",1; break;
 			case 3: sc_start SC_Freeze,10000,0; break;
-			case 4: npctalk "CLUUUUUUUUUCK!!!"; atcommand "@nuke "+strcharinfo(0); emotion 23; break;
+			case 4: npctalk "CLUUUUUUUUUCK!!!"; unitskilluseid getcharid(3),"NPC_SELFDESTRUCTION",1; emotion 23; break;
 			case 5: sc_start SC_Sleep,10000,0; break;
 			case 6: sc_start SC_Stone,10000,0; emotion 29; break;
-			case 7: npctalk "CLUUUUUUCK!!!"; atcommand "@nuke "+strcharinfo(0); emotion 23; break;
-			case 8: npctalk "Cluck! CLUUUCK!!"; atcommand "@nuke "+strcharinfo(0); emotion 23; break;
+			case 7: npctalk "CLUUUUUUCK!!!"; unitskilluseid getcharid(3),"NPC_SELFDESTRUCTION",1; emotion 23; break;
+			case 8: npctalk "Cluck! CLUUUCK!!"; unitskilluseid getcharid(3),"NPC_SELFDESTRUCTION",1; emotion 23; break;
 			case 9: sc_start SC_Stun,10000,0; break;
 			case 10: sc_start SC_Sleep,10000,0; emotion 29; break;
 			case 11: npctalk "Cluck! Cluck!"; break;
 			case 12: sc_start SC_Stun,10000,0; break;
-			case 13: atcommand "@nuke "+strcharinfo(0); break;
+			case 13: unitskilluseid getcharid(3),"NPC_SELFDESTRUCTION",1; break;
 			default:
 				if (rand(50) < 4) {
 					npctalk "WOOF!...........";
@@ -47,7 +48,7 @@ prontera,156,219,4	script	Cluckers	800,{
 					set .startcluck,0;
 				} else {
 					npctalk "Cluck! CLUUUCK!!";
-					atcommand "@nuke "+strcharinfo(0);
+					unitskilluseid getcharid(3),"NPC_SELFDESTRUCTION",1;
 				}
 				break;
 		}
