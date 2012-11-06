@@ -12,7 +12,7 @@
 Preface:
 -------------------------------------------------------------------------------
 
-Since SVN revision ~10000, the map-server does not know how to read RO client files anymore. It reads maps from a
+Since SVN revision ~10000, the map-server no longer knows how to read GRFs directly. It reads maps from a
 "map cache" file that contains all and only the useful data about the maps. A map cache containing every official
 kRO Sakray map currently supported by rAthena is provided as a default.
 If you have custom maps or want to minimize the size of your map cache because your server does not load all of them
@@ -26,8 +26,9 @@ or using the "mapcache" project under Visual Studio. Named "mapcache", the execu
 The map cache builder needs 3 file paths : one is a list of GRFs and/or data directory containing the maps, the second
 is the list of maps to add to the map cache, and the last one is the path of the map cache to generate. Default values for
 those paths are "tools/mapcache/grf_files.txt", "db/map_index.txt" and "db/map_cache.dat".
-The list of GRF and/or data directory must follow the format and indication of the default file: as many "grf:" entries as
-you wish and optionally one only "data_dir:" entry with trailing backslash included. // comments are supported as usual.
+
+The list of GRFs and/or data directory must follow the format and indication of the default file: as many "grf:" entries as
+you wish and optionally only one "data_dir:" entry with trailing backslash included. // comments are supported as usual.
 In fact, any file with one map name per line can be used as a map list, that's why the map index list is used as a default:
 we are sure it contains every map supported by the server. Anything after the map name is ignored, // comments are supported
 and if the first word on the line is "map:" then the second word is used as the map name instead: that allows using
@@ -54,7 +55,7 @@ Map cache format reference:
 The file is written as little-endian, even on big-endian systems, for cross-compatibility reasons. Appropriate conversions
 are done when generating it, so don't worry about it.
 The first 6 bytes are a main header:
-<unsigned long> file size
+<unsigned int> file size
 <unsigned short> number of maps
 Then maps are stored one right after another:
 <12-characters-long string> map name
