@@ -25,7 +25,10 @@ The source code for the map cache builder is located in src/tool/. It can be bui
 or using the "mapcache" project under Visual Studio. Named "mapcache", the executable will be in your rAthena main folder.
 The map cache builder needs 3 file paths : one is a list of GRFs and/or data directory containing the maps, the second
 is the list of maps to add to the map cache, and the last one is the path of the map cache to generate. Default values for
-those paths are "tools/mapcache/grf_files.txt", "db/map_index.txt" and "db/map_cache.dat".
+those paths are "tools/mapcache/grf_files.txt", "db/map_index.txt" and "db/(pre-)re/map_cache.dat".
+
+As of r16867, the mapcache within SVN can be located in db/pre-re/ and db/re/. This is due to renewal and pre-renewal modes
+having slightly different maps. When building your cache, you should ensure you're pointing the tool to the correct location.
 
 The list of GRFs and/or data directory must follow the format and indication of the default file: as many "grf:" entries as
 you wish and optionally only one "data_dir:" entry with trailing backslash included. // comments are supported as usual.
