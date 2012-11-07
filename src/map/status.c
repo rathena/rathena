@@ -8085,7 +8085,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_GLOOMYDAY:
 			val2 = 20 + 5 * val1; // Flee reduction.
 			val3 = 15 + 5 * val1; // ASPD reduction.
-			if( rand()%100 < val1 ){ // (Skill Lv) %
+			if( sd && rand()%100 < val1 ){ // (Skill Lv) %
 				val4 = 1; // reduce walk speed by half.
 				if( pc_isriding(sd) ) pc_setriding(sd, 0);
 				if( pc_isridingdragon(sd) ) pc_setoption(sd, sd->sc.option&~OPTION_DRAGON);
