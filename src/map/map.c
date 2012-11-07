@@ -148,7 +148,6 @@ struct map_cache_map_info {
 	int32 len;
 };
 
-char map_cache_file[256]="db/map_cache.dat";
 char db_path[256] = "db";
 char motd_txt[256] = "conf/motd.txt";
 char help_txt[256] = "conf/help.txt";
@@ -3052,19 +3051,19 @@ int map_readallmaps (void)
 
 	if( enable_grf )
 		ShowStatus("Loading maps (using GRF files)...\n");
-	else
-	{
-		ShowStatus("Loading maps (using %s as map cache)...\n", map_cache_file);
-		if( (fp = fopen(map_cache_file, "rb")) == NULL )
-		{
-			ShowFatalError("Unable to open map cache file "CL_WHITE"%s"CL_RESET"\n", map_cache_file);
+	else {
+		char mapcachefilepath[254];
+		sprintf(mapcachefilepath,"%s/%s%s",db_path,DBPATH,"map_cache.dat");
+		ShowStatus("Loading maps (using %s as map cache)...\n", mapcachefilepath);
+		if( (fp = fopen(mapcachefilepath, "rb")) == NULL ) {
+			ShowFatalError("Unable to open map cache file "CL_WHITE"%s"CL_RESET"\n", mapcachefilepath);
 			exit(EXIT_FAILURE); //No use launching server if maps can't be read.
 		}
 
 		// Init mapcache data.. [Shinryo]
 		map_cache_buffer = map_init_mapcache(fp);
 		if(!map_cache_buffer) {
-			ShowFatalError("Failed to initialize mapcache data (%s)..\n", map_cache_file);
+			ShowFatalError("Failed to initialize mapcache data (%s)..\n", mapcachefilepath);
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -3306,8 +3305,6 @@ int map_config_read(char *cfgName)
 			strcpy(help2_txt, w2);
 		else if (strcmpi(w1, "charhelp_txt") == 0)
 			strcpy(charhelp_txt, w2);
-		else if(strcmpi(w1,"map_cache_file") == 0)
-			strncpy(map_cache_file,w2,255);
 		else if(strcmpi(w1,"db_path") == 0)
 			strncpy(db_path,w2,255);
 		else if (strcmpi(w1, "console") == 0) {
