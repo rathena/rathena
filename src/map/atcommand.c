@@ -7632,7 +7632,7 @@ ACMD_FUNC(mapflag) {
 		checkflag(restricted);			checkflag(nodrop);				checkflag(novending);	checkflag(loadevent);
 		checkflag(nochat);				checkflag(partylock);			checkflag(guildlock);	checkflag(src4instance);
 		clif_displaymessage(sd->fd," ");
-		clif_displaymessage(sd->fd,msg_txt(1312)); // Usage: "@mapflag monster_teleport 1" (0=Off | 1=On)
+		clif_displaymessage(sd->fd,msg_txt(1312)); // Usage: "@mapflag monster_noteleport 1" (0=Off | 1=On)
 		clif_displaymessage(sd->fd,msg_txt(1313)); // Type "@mapflag available" to list the available mapflags.
 		return 1;
 	}
@@ -7652,7 +7652,7 @@ ACMD_FUNC(mapflag) {
 	setflag(nochat);			setflag(partylock);			setflag(guildlock);			setflag(src4instance);
 
 	clif_displaymessage(sd->fd,msg_txt(1314)); // Invalid flag name or flag.
-	clif_displaymessage(sd->fd,msg_txt(1312)); // Usage: "@mapflag monster_teleport 1" (0=Off | 1=On)
+	clif_displaymessage(sd->fd,msg_txt(1312)); // Usage: "@mapflag monster_noteleport 1" (0=Off | 1=On)
 	clif_displaymessage(sd->fd,msg_txt(1315)); // Available Flags:
 	clif_displaymessage(sd->fd,"----------------------------------");
 	clif_displaymessage(sd->fd,"town, autotrade, allowks, nomemo, noteleport, noreturn, monster_noteleport, nosave,");
