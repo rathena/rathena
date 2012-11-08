@@ -1,144 +1,137 @@
-//==============Mora Citizen============
 //===== rAthena Script ======================================= 
 //= Mora Village
 //===== By: ================================================== 
 //= SuperHulk
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1a
 //===== Compatible With: ===================================== 
-//= rAthena/eAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
-//= Villageois de Mora.
-//= 1.1 Villagers of Mora.
+//= Mora Town Script
 //===== Additional Comments: ================================= 
-//= 1.0 Première version. [SuperHulk]
-//= 1.1 Translations to English [Flaid]
+//= 1.0 First version. [SuperHulk]
+//= 1.1 Translations to English. [Flaid]
+//= 1.1a Standardized. [Euphy]
 //============================================================ 
 
-//==============Mora Citizen============
-mora,185,163,5	script	Mora citizen#1	516,{
-	mes "[Gary Scholar]";
-	mes "Hello traveler,";
-	mes "i'm Gary, the expert about enchantments";
-	mes "in this area.";
+mora,185,163,5	script	Mora Citizen#1	516,{
+	mes "[Scholar Gary]";
+	mes "Hello, traveler!";
+	mes "I'm Gary, the expert about enchantments in this area.";
 	mes "What do you want to know?";
 	next;
-	menu "Fundamentals of enchantment",M_0, "Nothing, bye.",M_End;
-
-	M_0:
-		mes "[Gary Scholar]";
-		mes "Ahh, I see that you are interested";
+	switch(select("Fundamentals of enchantment.:Nothing.")) {
+	case 1:
+		mes "[Scholar Gary]";
+		mes "Ah, I see that you are interested";
 		mes "in enchantments!";
-		mes "Alright, here's the basics!!";
-		mes "After this you should understand the mysteries";
-		mes "of our enchantements!";
+		mes "Alright, here are the basics!!";
+		mes "After this you should understand";
+		mes "the mysteries of our enchantments!";
 		next;
-		mes "[Gary Scholar]";
-		mes "First of all you must know";
-		mes "this is magic";
-		mes "not exact science.";
+		mes "[Scholar Gary]";
+		mes "First of all, you must know";
+		mes "that this is magic, not an";
+		mes "exact science.";
 		next;
-		mes "[Gary Scholar]";
-		mes "You don't really know what can happen.";
-		mes "You can be lucky or unlucky";
-		mes "and get a more or less";
-		mes "powerful enchantment.";
+		mes "[Scholar Gary]";
+		mes "You don't really know what will";
+		mes "happen. You can be lucky or";
+		mes "unlucky, and get a more or";
+		mes "less powerful enchantment.";
 		next;
-		mes "[Gary Scholar]";
-		mes "You can aswell miss the magic!";
+		mes "[Scholar Gary]";
+		mes "You can miss the magic, too!";
 		mes "If this happens while your equip";
 		mes "is being enchanted, you'll lose it";
-		mes "all previous enchantments, all cards and the refine!";
+		mes "all previous enchantments, cards, and the refine!";
 		next;
-		mes "[Gary Scholar]";
+		mes "[Scholar Gary]";
 		mes "There is also a risk of";
 		mes "breaking your equipment";
 		mes "while trying to enchant";
 		mes "your equip with a second enchantment!";
 		next;
-		mes "[Gary Scholar]";
-		mes "Each attempt to enchant";
-		mes "will cost you";
-		mes "1 Mora coin and 100,000 zeny.";
-		mes "If you don't know yet,";
-		mes "the money made with this service";
-		mes "goes straight to the people of Mora!";
+		mes "[Scholar Gary]";
+		mes "Each attempt to enchant will cost";
+		mes "you 1 Mora coin and 100,000 zeny.";
+		mes "If you don't know yet, the money";
+		mes "made with this service goes";
+		mes "straight to the people of Mora!";
 		next;
-		mes "[Gary Scholar]";
-		mes "That were the basics";
-		mes "Take it to your heart.";
-		mes "For more details you can always visit";
-		mes "my master";
+		mes "[Scholar Gary]";
+		mes "Those were the basics.";
+		mes "Take them to your heart.";
+		mes "For more details, you can";
+		mes "always visit my master,";
 		mes "Gougueulé Tonami!";
 		close;
-	
-	M_End:
-		mes "[Gary Scholar]";
-		mes "Goodbye and good luck!";
+	case 2:
+		mes "[Scholar Gary]";
+		mes "Goodbye, and good luck!";
 		close;
-
-	end;
+	}
 }
+
 mora,52,138,8	script	Mora Citizen#2	516,{
 	mes "[Valere]";
-	mes "Hello adventurer!";
-	mes "You look like you're lost, aren't you!?";
+	mes "Hello, adventurer!";
+	mes "You look like you're";
+	mes "lost, aren't you!?";
+	next;
+	mes "[Valere]";
 	mes "...";
-	mes "Ah okay, but you look like you want to enchant";
-	mes "your equipment!";
+	mes "Ah, okay.";
+	mes "But you look like you want to";
+	mes "enchant your equipment!";
 	next;
 	mes "[Valere]";
 	mes "I only need to know one thing";
-	mes "to tell you more about the";
-	mes "Mora equipment enchants!";
-	mes "So tell me,";
-	mes "What is your class?";
+	mes "before telling you more about";
+	mes "the Mora equipment enchants!";
+	mes "So tell me, what is your class?";
 	next;
-	menu "Warlock",M_0, "Arch Bishop",M_1, "Ranger",M_2, "Guillotine Cross",M_2, "Rune Knight",M_2, "Other",M_3, "Goodbye.",M_End;
-	
-	M_0:
+	switch(select("Warlock.:Arch Bishop.:Ranger.:Guillotine Cross.:Rune Knight.:Other.:Goodbye.")) {
+	case 1:
 		mes "[Valere]";
 		mes "Hmm, you should visit the";
-		mes "Artifact Crafter";
+		mes "Artifact Crafter.";
 		mes "That is our enchantment specialist";
 		mes "for Warlock equipment!";
 		close;
-	
-	M_1:
+	case 2:
 		mes "[Valere]";
 		mes "Hmm, you should visit the";
-		mes "Master of Relics";
+		mes "Master of Relics.";
 		mes "That is our enchantment specialist";
 		mes "for Arch Bishop equipment!";
 		close;
-	
-	M_2:
+	case 3:
+	case 4:
+	case 5:
 		mes "[Valere]";
 		mes "Hmm, you should visit the";
-		mes "Artifact Researcher";
+		mes "Artifact Researcher.";
 		mes "That is our enchantment specialist";
-		mes "for Ranger, Guillotine Cross";
+		mes "for Ranger, Guillotine Cross,";
 		mes "and Rune Knight equipment!";
 		close;
-		
-	M_3:
+	case 6:
 		mes "[Valere]";
-		mes "Hmm, there is Master Tailor";
+		mes "Hmm, there is the Master Tailor";
 		mes "who sells and enchants the 'Army Padding'.";
 		next;
 		mes "[Valere]";
-		mes "there's also the Pendant Crafter";
+		mes "There's also the Pendant Crafter";
 		mes "who enchants 'Pendant of Guardian'.";
 		next;
 		mes "[Valere]";
 		mes "And finally the Bulberry Westhood";
 		mes "who enchants 'Loki's muffler'.";
 		close;
-		
-	M_End:
+	case 7:
 		mes "[Valere]";
-		mes "Goodbye and good luck!";
+		mes "Goodbye, and good luck!";
 		close;
-
-end;
+	}
 }

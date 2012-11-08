@@ -3,9 +3,9 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.4b
+//= 1.4c
 //===== Compatible With: =====================================
-//= rAthena SVN r15340+
+//= rAthena SVN r16862+
 //===== Description: =========================================
 //= A dynamic quest shop based on Lunar's, with easier config.
 //= Includes support for multiple shops & cashpoints.
