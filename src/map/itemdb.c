@@ -1171,12 +1171,22 @@ static int itemdb_readdb(void)
 				continue;
 			}
 			str[21] = p;
-
-			p = strstr(p+1,"}");
-			if ( strchr(p,',') != NULL )
-			{
-				ShowError("itemdb_readdb: Extra columns in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
-				continue;
+			
+			if ( str[21][strlen(str[21])-2] != '}' ) {
+				/* lets count to ensure it's not something silly e.g. a extra space at line ending */
+				int v, lcurly = 0, rcurly = 0;
+				
+				for( v = 0; v < strlen(str[21]); v++ ) {
+					if( str[21][v] == '{' )
+						lcurly++;
+					else if ( str[21][v] == '}' )
+						rcurly++;
+				}
+				
+				if( lcurly != rcurly ) {
+					ShowError("itemdb_readdb: Mismatching curly braces in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
+					continue;
+				}
 			}
 
 			if (!itemdb_parse_dbrow(str, path, lines, 0))
