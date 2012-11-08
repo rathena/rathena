@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SuperHulk
 //===== Current Version: ===================================== 
-//= 1.1a
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //= 1.0 First version. [SuperHulk]
 //= 1.1 Translations to English. [Flaid]
 //= 1.1a Standardized. [Euphy]
+//= 1.2 Added new NPCs [Flaid]
 //============================================================ 
 
 mora,185,163,5	script	Mora Citizen#1	516,{
@@ -134,4 +135,172 @@ mora,52,138,8	script	Mora Citizen#2	516,{
 		mes "Goodbye, and good luck!";
 		close;
 	}
+}
+
+mora,160,123,5	script	Mora Citizen#3	517,{
+	mes "[Boudril]";
+	mes "Hey,";
+	mes "you seem to be so far from home!";
+	mes "Mora is a remote town";
+	mes "that's why we have our own currency here!";
+	next;
+	mes "[Boudril]";
+	mes "Beyond that, our community";
+	mes "developed this craft.";
+	mes "Items found here,";
+	mes "cannot be found anywhere else!";
+	close;
+}
+
+mora,105,100,3	script	Mora Citizen#4	518,{
+	mes "[Buisso]";
+	mes "Hello my friend,";
+	mes "what brings you to this place, so far from home?";
+	mes "Are you looking for challange?";
+	mes "You won't be disappointed here!";
+	next;
+	mes "[Buisso]";
+	mes "We are surrounded by the Bifrost";
+	mes "an area with monsters,";
+	mes "powerful and deceitful...";
+	mes "So cute but still dangerous.";
+	close;
+}
+
+mora,98,104,4	script	Mora Citizen#5	516,{
+	mes "[Malavida]";
+	mes "...";
+	mes "What!? I look depressed!?";
+	mes "It's normal living here!";
+	mes "My dream was to be like you!";
+	next;
+	mes "[Malavida]";
+	mes "Travel around the world,";
+	mes "chasing monsters,";
+	mes "hunt treasures all of the world...";
+	mes "You have the chance... Use it!";
+	close;
+}
+
+mora,102,107,6	script	Mora Citizen#6	517,{
+	mes "[Skape]";
+	mes "Have you tasted our dish?";
+	mes "The beef toast!?";
+	mes "What about this delicious beef";
+	mes "that only exists in the Bifrost?";
+	next;
+	mes "[Skape]";
+	mes "If you want to taste this dish";
+	mes "visit our chef.";
+	mes "He makes the best Mora toast beef!";
+	close;
+}
+
+mora,101,107,4	script	Mora Citizen#7	518,{
+	mes "[Wouadel Kami]";
+	mes "*Dances*";
+	mes "I'm a choreographer, but nobody understands me.";
+	mes "*doridori*";
+	mes "*bingbing*";
+	mes "*bangbang*";
+	close;
+}
+
+mora,103,100,6	script	Mora Citizen#8	518,{
+	mes "[Didier Lans]";
+	mes "Yooo gaba gaba!";
+	mes "Hello my dear, you've heard";
+	mes "about my teaching, isn't it that?";
+	mes "Do not hit your friends!";
+	mes "*makes small steps backwards*";
+	next;
+	mes "[Didier Lans]";
+	mes "Yooo gaba gaba!";
+	mes "Eat your vegetables.";
+	mes "*is the fool*";
+	mes "Be smart, be polite!";
+	mes "Yooo Gaba Gaba!";
+	close;
+}
+
+mora,184,169,3	script	Mora Citizen#9	516,{
+	mes "[Moussa Wi]";
+	mes "Bleh, I've been here";
+	mes "for too long.";
+	mes "Live with this dogs...";
+	mes "Nothing to do...";
+	mes "Hmmm, how about you take care of them?";
+	close;
+}
+
+mora,108,182,3	script	Mora Citizen#10	516,{
+	mes "[Yosou Keh]";
+	mes "Hello,";
+	mes "I am Yosou Keh!";
+	mes "I am a resident of Mora";
+	mes "The Bifrost is populated";
+	mes "by all these strong monsters...";
+	close;
+}
+
+mora,113,185,5	script	Mora Citizen#11	516,{
+	mes "[Ninkasi]";
+	mes "Hey dude.";
+	mes "How are you today dude?";
+	mes "What can I do for you dude?";
+	next;
+	switch(select("Why do you call me dude?:Goodbye.")) {
+	case 1:
+		mes "[Ninkasi]";
+		mes "Why not?";
+		mes "Calling others dude is my brand mark.";
+		mes "Be cool dude, relax yourself!";
+		mes "Enjoy your life dude!";
+		break;
+	case 2:
+		mes "[Ninkasi]";
+		mes "See you again, dude!";
+		break;
+	}
+	close;
+}
+
+mora,43,127,4	script	Mora Citizen#12	522,{
+	mes "[Glouti Vori]";
+	mes "Hmmm, I love this beef toast!";
+	mes "That's the only reason I am still here!";
+	mes "There's nothing better than Mora beef toast!";
+	close;
+}
+
+//===================================
+mora,35,119,7	script	South World Dealer	513,{
+	mes "[South World Dealer]";
+	mes "...";
+	close;
+}
+
+mora,139,102,4	script	Milvida	515,{
+	mes "[Milvida]";
+	mes "Welcome to Mora~ In the center of the city you can find all shops and some enchanters.";
+	next;
+	mes "[Milvida]";
+	mes "Northeast of the city is where you can find food here.";
+	close;
+}
+
+mora,55,124,2	script	Cat Traveler	495,{
+	mes "[Cat Traveler]";
+	mes "This city is like Malangdo on several aspects, don't you think?";
+	close;
+}
+
+mora,131,165,4	script	Bifrost resident#1	520,{
+	mes "[Bifrost resident]";
+	mes "Welcome to the workshop of the west clan.";
+	mes "If you want your Loki Muffler enchanted, please contact my boss, he makes miracles!";
+	next;
+	mes "[Bifrost resident]";
+	mes "P/S: On a side note, I think I am really cute... Don't you think?";
+	close;
 }
