@@ -15598,7 +15598,7 @@ void clif_buyingstore_update_item(struct map_session_data* sd, unsigned short na
 	WFIFOW(fd,0) = 0x81b;
 	WFIFOW(fd,2) = nameid;
 	WFIFOW(fd,4) = amount;  // amount of nameid received
-	WFIFOW(fd,6) = sd->buyingstore.zenylimit;
+	WFIFOL(fd,6) = sd->buyingstore.zenylimit;
 	WFIFOSET(fd,packet_len(0x81b));
 }
 
