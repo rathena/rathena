@@ -9407,6 +9407,19 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 }
 
 
+/// Server's tick (ZC_NOTIFY_TIME).
+/// 007f <time>.L
+void clif_notify_time(struct map_session_data* sd, unsigned long time)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0x7f));
+	WFIFOW(fd,0) = 0x7f;
+	WFIFOL(fd,2) = time;
+	WFIFOSET(fd,packet_len(0x7f));
+}
+
+
 /// Request for server's tick.
 /// 007e <client tick>.L (CZ_REQUEST_TIME)
 /// 0360 <client tick>.L (CZ_REQUEST_TIME2)
@@ -9415,12 +9428,7 @@ void clif_parse_TickSend(int fd, struct map_session_data *sd)
 {
 	sd->client_tick = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 
-	WFIFOHEAD(fd, packet_len(0x7f));
-	WFIFOW(fd,0)=0x7f;
-	WFIFOL(fd,2)=gettick();
-	WFIFOSET(fd,packet_len(0x7f));
-	// removed until the socket problems are fixed. [FlavioJS]
-	//flush_fifo(fd); // try to send immediatly so the client gets more accurate "pings"
+	clif_notify_time(sd, gettick());
 }
 
 
@@ -9542,25 +9550,38 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd)
 }
 
 
+/// Notification about the result of a disconnect request (ZC_ACK_REQ_DISCONNECT).
+/// 018b <result>.W
+/// result:
+///     0 = disconnect (quit)
+///     1 = cannot disconnect (wait 10 seconds)
+///     ? = ignored
+void clif_disconnect_ack(struct map_session_data* sd, short result)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0x18b));
+	WFIFOW(fd,0) = 0x18b;
+	WFIFOW(fd,2) = result;
+	WFIFOSET(fd,packet_len(0x18b));
+}
+
+
 /// Request to disconnect from server (CZ_REQ_DISCONNECT).
 /// 018a <type>.W
 /// type:
 ///     0 = quit
 void clif_parse_QuitGame(int fd, struct map_session_data *sd)
 {
-	WFIFOHEAD(fd,packet_len(0x18b));
-	WFIFOW(fd,0) = 0x18b;
-
 	/*	Rovert's prevent logout option fixed [Valaris]	*/
 	if( !sd->sc.data[SC_CLOAKING] && !sd->sc.data[SC_HIDING] && !sd->sc.data[SC_CHASEWALK] && !sd->sc.data[SC_CLOAKINGEXCEED] &&
 		(!battle_config.prevent_logout || DIFF_TICK(gettick(), sd->canlog_tick) > battle_config.prevent_logout) )
 	{
 		set_eof(fd);
-		WFIFOW(fd,2)=0;
+		clif_disconnect_ack(sd, 0);
 	} else {
-		WFIFOW(fd,2)=1;
+		clif_disconnect_ack(sd, 1);
 	}
-	WFIFOSET(fd,packet_len(0x18b));
 }
 
 
@@ -9770,15 +9791,25 @@ void clif_parse_Emotion(int fd, struct map_session_data *sd)
 }
 
 
+/// Amount of currently online players, reply to /w /who (ZC_USER_COUNT).
+/// 00c2 <count>.L
+void clif_user_count(struct map_session_data* sd, int count)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0xc2));
+	WFIFOW(fd,0) = 0xc2;
+	WFIFOL(fd,2) = count;
+	WFIFOSET(fd,packet_len(0xc2));
+}
+
+
 /// /w /who (CZ_REQ_USER_COUNT).
 /// Request to display amount of currently connected players.
 /// 00c1
 void clif_parse_HowManyConnections(int fd, struct map_session_data *sd)
 {
-	WFIFOHEAD(fd,packet_len(0xc2));
-	WFIFOW(fd,0) = 0xc2;
-	WFIFOL(fd,2) = map_getusers();
-	WFIFOSET(fd,packet_len(0xc2));
+	clif_user_count(sd, map_getusers());
 }
 
 
@@ -9907,11 +9938,7 @@ void clif_parse_Restart(int fd, struct map_session_data *sd)
 		{	//Send to char-server for character selection.
 			chrif_charselectreq(sd, session[fd]->client_addr);
 		} else {
-			WFIFOHEAD(fd,packet_len(0x18b));
-			WFIFOW(fd,0)=0x18b;
-			WFIFOW(fd,2)=1;
-
-			WFIFOSET(fd,packet_len(0x018b));
+			clif_disconnect_ack(sd, 1);
 		}
 		break;
 	}
@@ -10275,14 +10302,26 @@ void clif_parse_NpcBuySellSelected(int fd,struct map_session_data *sd)
 }
 
 
+/// Notification about the result of a purchase attempt from an NPC shop (ZC_PC_PURCHASE_RESULT).
+/// 00ca <result>.B
+/// result:
+///     0 = "The deal has successfully completed."
+///     1 = "You do not have enough zeny."
+///     2 = "You are over your Weight Limit."
+///     3 = "Out of the maximum capacity, you have too many items."
+void clif_npc_buy_result(struct map_session_data* sd, unsigned char result)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0xca));
+	WFIFOW(fd,0) = 0xca;
+	WFIFOB(fd,2) = result;
+	WFIFOSET(fd,packet_len(0xca));
+}
+
+
 /// Request to buy chosen items from npc shop (CZ_PC_PURCHASE_ITEMLIST).
 /// 00c8 <packet len>.W { <amount>.W <name id>.W }*
-///
-/// R 00ca <result>.b
-/// result = 00 -> "The deal has successfully completed."
-/// result = 01 -> "You do not have enough zeny."
-/// result = 02 -> "You are over your Weight Limit."
-/// result = 03 -> "Out of the maximum capacity, you have too many items."
 void clif_parse_NpcBuyListSend(int fd, struct map_session_data* sd)
 {
 	int n = (RFIFOW(fd,2)-4) /4;
@@ -10296,19 +10335,28 @@ void clif_parse_NpcBuyListSend(int fd, struct map_session_data* sd)
 
 	sd->npc_shopid = 0; //Clear shop data.
 
-	WFIFOHEAD(fd,packet_len(0xca));
-	WFIFOW(fd,0) = 0xca;
+	clif_npc_buy_result(sd, result);
+}
+
+
+/// Notification about the result of a sell attempt to an NPC shop (ZC_PC_SELL_RESULT).
+/// 00cb <result>.B
+/// result:
+///     0 = "The deal has successfully completed."
+///     1 = "The deal has failed."
+void clif_npc_sell_result(struct map_session_data* sd, unsigned char result)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0xcb));
+	WFIFOW(fd,0) = 0xcb;
 	WFIFOB(fd,2) = result;
-	WFIFOSET(fd,packet_len(0xca));
+	WFIFOSET(fd,packet_len(0xcb));
 }
 
 
 /// Request to sell chosen items to npc shop (CZ_PC_SELL_ITEMLIST).
 /// 00c9 <packet len>.W { <index>.W <amount>.W }*
-///
-/// S 00cb <result>.B
-/// result = 00 -> "The deal has successfully completed."
-/// result = 01 -> "The deal has failed."
 void clif_parse_NpcSellListSend(int fd,struct map_session_data *sd)
 {
 	int fail=0,n;
@@ -10324,10 +10372,7 @@ void clif_parse_NpcSellListSend(int fd,struct map_session_data *sd)
 
 	sd->npc_shopid = 0; //Clear shop data.
 
-	WFIFOHEAD(fd,packet_len(0xcb));
-	WFIFOW(fd,0)=0xcb;
-	WFIFOB(fd,2)=fail;
-	WFIFOSET(fd,packet_len(0xcb));
+	clif_npc_sell_result(sd, fail);
 }
 
 
@@ -12540,22 +12585,28 @@ void clif_parse_GMRc(int fd, struct map_session_data* sd)
 }
 
 
-/// GM requesting account name (for right-click gm menu) (CZ_REQ_ACCOUNTNAME).
-/// 01df <account id>.L
 /// Result of request to resolve account name (ZC_ACK_ACCOUNTNAME).
 /// 01e0 <account id>.L <account name>.24B
-void clif_parse_GMReqAccountName(int fd, struct map_session_data *sd)
+void clif_account_name(struct map_session_data* sd, int account_id, const char* accname)
 {
-	int tid;
-	tid = RFIFOL(fd,2);
-
-	//TODO: find out if this works for any player or only for authorized GMs
+	int fd = sd->fd;
 
 	WFIFOHEAD(fd,packet_len(0x1e0));
 	WFIFOW(fd,0) = 0x1e0;
-	WFIFOL(fd,2) = tid;
-	safestrncpy((char*)WFIFOP(fd,6), "", 24); // insert account name here >_<
-	WFIFOSET(fd, packet_len(0x1e0));
+	WFIFOL(fd,2) = account_id;
+	safestrncpy((char*)WFIFOP(fd,6), accname, NAME_LENGTH);
+	WFIFOSET(fd,packet_len(0x1e0));
+}
+
+
+/// GM requesting account name (for right-click gm menu) (CZ_REQ_ACCOUNTNAME).
+/// 01df <account id>.L
+void clif_parse_GMReqAccountName(int fd, struct map_session_data *sd)
+{
+	int account_id = RFIFOL(fd,2);
+
+	//TODO: find out if this works for any player or only for authorized GMs
+	clif_account_name(sd, account_id, ""); // insert account name here >_<
 }
 
 
@@ -12598,16 +12649,10 @@ void clif_parse_PMIgnore(int fd, struct map_session_data* sd)
 	nick[NAME_LENGTH-1] = '\0'; // to be sure that the player name has at most 23 characters
 	type = RFIFOB(fd,26);
 
-	// FIXME: Use clif_wisexin.
-	WFIFOHEAD(fd,packet_len(0xd1));
-	WFIFOW(fd,0) = 0x0d1;
-	WFIFOB(fd,2) = type;
-
 	if( type == 0 )
 	{	// Add name to ignore list (block)
 		if (strcmp(wisp_server_name, nick) == 0) {
-			WFIFOB(fd,3) = 1; // fail
-			WFIFOSET(fd, packet_len(0x0d1));
+			clif_wisexin(sd, type, 1); // fail
 			return;
 		}
 
@@ -12615,22 +12660,17 @@ void clif_parse_PMIgnore(int fd, struct map_session_data* sd)
 		ARR_FIND( 0, MAX_IGNORE_LIST, i, sd->ignore[i].name[0] == '\0' || strcmp(sd->ignore[i].name, nick) == 0 );
 		if( i == MAX_IGNORE_LIST )
 		{// no space for new entry
-			WFIFOB(fd,3) = 2; // fail
-			WFIFOSET(fd, packet_len(0x0d1));
+			clif_wisexin(sd, type, 2); // too many blocks
 			return;
 		}
 		if( sd->ignore[i].name[0] != '\0' )
 		{// name already exists
-			WFIFOB(fd,3) = 0; // Aegis reports success.
-			WFIFOSET(fd, packet_len(0x0d1));
+			clif_wisexin(sd, type, 0); // Aegis reports success.
 			return;
 		}
 
 		//Insert in position i
 		safestrncpy(sd->ignore[i].name, nick, NAME_LENGTH);
-
-		WFIFOB(fd,3) = 0; // success
-		WFIFOSET(fd, packet_len(0x0d1));
 	}
 	else
 	{	// Remove name from ignore list (unblock)
@@ -12639,18 +12679,16 @@ void clif_parse_PMIgnore(int fd, struct map_session_data* sd)
 		ARR_FIND( 0, MAX_IGNORE_LIST, i, sd->ignore[i].name[0] == '\0' || strcmp(sd->ignore[i].name, nick) == 0 );
 		if( i == MAX_IGNORE_LIST || sd->ignore[i].name[i] == '\0' )
 		{ //Not found
-			WFIFOB(fd,3) = 1; // fail
-			WFIFOSET(fd, packet_len(0x0d1));
+			clif_wisexin(sd, type, 1); // fail
 			return;
 		}
 		// move everything one place down to overwrite removed entry
 		memmove(sd->ignore[i].name, sd->ignore[i+1].name, (MAX_IGNORE_LIST-i-1)*sizeof(sd->ignore[0].name));
 		// wipe last entry
 		memset(sd->ignore[MAX_IGNORE_LIST-1].name, 0, sizeof(sd->ignore[0].name));
-
-		WFIFOB(fd,3) = 0; // success
-		WFIFOSET(fd, packet_len(0x0d1));
 	}
+
+	clif_wisexin(sd, type, 0); // success
 }
 
 
@@ -12662,37 +12700,53 @@ void clif_parse_PMIgnore(int fd, struct map_session_data* sd)
 ///     1 = (/inall) allow all speech
 void clif_parse_PMIgnoreAll(int fd, struct map_session_data *sd)
 {
-	// FIXME: Use clif_wisall.
-	WFIFOHEAD(fd,packet_len(0xd2));
-	WFIFOW(fd,0) = 0x0d2;
-	WFIFOB(fd,2) = RFIFOB(fd,2);
+	int type = RFIFOB(fd,2), flag;
 
-	if( RFIFOB(fd,2) == 0 )
+	if( type == 0 )
 	{// Deny all
 		if( sd->state.ignoreAll ) {
-			WFIFOB(fd,3) = 1; // fail
+			flag = 1; // fail
 		} else {
 			sd->state.ignoreAll = 1;
-			WFIFOB(fd,3) = 0; // success
+			flag = 0; // success
 		}
 	}
 	else
 	{//Unblock everyone
 		if( sd->state.ignoreAll ) {
 			sd->state.ignoreAll = 0;
-			WFIFOB(fd,3) = 0; // success
+			flag = 0; // success
 		} else {
 			if (sd->ignore[0].name[0] != '\0')
 			{  //Wipe the ignore list.
 				memset(sd->ignore, 0, sizeof(sd->ignore));
-				WFIFOB(fd,3) = 0; // success
+				flag = 0; // success
 			} else {
-				WFIFOB(fd,3) = 1; // fail
+				flag = 1; // fail
 			}
 		}
 	}
 
-	WFIFOSET(fd, packet_len(0x0d2));
+	clif_wisall(sd, type, flag);
+}
+
+
+/// Whisper ignore list (ZC_WHISPER_LIST).
+/// 00d4 <packet len>.W { <char name>.24B }*
+void clif_PMIgnoreList(struct map_session_data* sd)
+{
+	int i, fd = sd->fd;
+
+	WFIFOHEAD(fd,4+ARRAYLENGTH(sd->ignore)*NAME_LENGTH);
+	WFIFOW(fd,0) = 0xd4;
+
+	for( i = 0; i < ARRAYLENGTH(sd->ignore) && sd->ignore[i].name[0]; i++ )
+	{
+		memcpy(WFIFOP(fd,4+i*NAME_LENGTH), sd->ignore[i].name, NAME_LENGTH);
+	}
+
+	WFIFOW(fd,2) = 4+i*NAME_LENGTH;
+	WFIFOSET(fd,WFIFOW(fd,2));
 }
 
 
@@ -12700,16 +12754,7 @@ void clif_parse_PMIgnoreAll(int fd, struct map_session_data *sd)
 /// 00d3
 void clif_parse_PMIgnoreList(int fd,struct map_session_data *sd)
 {
-	int i;
-
-	WFIFOHEAD(fd, 4 + (NAME_LENGTH * MAX_IGNORE_LIST));
-	WFIFOW(fd,0) = 0xd4;
-
-	for(i = 0; i < MAX_IGNORE_LIST && sd->ignore[i].name[0] != '\0'; i++)
-		memcpy(WFIFOP(fd, 4 + i * NAME_LENGTH),sd->ignore[i].name, NAME_LENGTH);
-
-	WFIFOW(fd,2) = 4 + i * NAME_LENGTH;
-	WFIFOSET(fd, WFIFOW(fd,2));
+	clif_PMIgnoreList(sd);
 }
 
 
@@ -12856,12 +12901,27 @@ void clif_friendslist_reqack(struct map_session_data *sd, struct map_session_dat
 }
 
 
+/// Asks a player for permission to be added as friend (ZC_REQ_ADD_FRIENDS).
+/// 0207 <req account id>.L <req char id>.L <req char name>.24B
+void clif_friendlist_req(struct map_session_data* sd, int account_id, int char_id, const char* name)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,packet_len(0x207));
+	WFIFOW(fd,0) = 0x207;
+	WFIFOL(fd,2) = account_id;
+	WFIFOL(fd,6) = char_id;
+	memcpy(WFIFOP(fd,10), name, NAME_LENGTH);
+	WFIFOSET(fd,packet_len(0x207));
+}
+
+
 /// Request to add a player as friend (CZ_ADD_FRIENDS).
 /// 0202 <name>.24B
 void clif_parse_FriendsListAdd(int fd, struct map_session_data *sd)
 {
 	struct map_session_data *f_sd;
-	int i, f_fd;
+	int i;
 
 	f_sd = map_nick2sd((char*)RFIFOP(fd,2));
 
@@ -12901,13 +12961,7 @@ void clif_parse_FriendsListAdd(int fd, struct map_session_data *sd)
 	f_sd->friend_req = sd->status.char_id;
 	sd->friend_req   = f_sd->status.char_id;
 
-	f_fd = f_sd->fd;
-	WFIFOHEAD(f_fd,packet_len(0x207));
-	WFIFOW(f_fd,0) = 0x207;
-	WFIFOL(f_fd,2) = sd->status.account_id;
-	WFIFOL(f_fd,6) = sd->status.char_id;
-	memcpy(WFIFOP(f_fd,10), sd->status.name, NAME_LENGTH);
-	WFIFOSET(f_fd, packet_len(0x207));
+	clif_friendlist_req(f_sd, sd->status.account_id, sd->status.char_id, sd->status.name);
 }
 
 
@@ -13044,12 +13098,12 @@ void clif_parse_FriendsListRemove(int fd, struct map_session_data *sd)
 }
 
 
-/// /pvpinfo (CZ_REQ_PVPPOINT).
-/// 020f <char id>.L <account id>.L
 /// /pvpinfo list (ZC_ACK_PVPPOINT).
 /// 0210 <char id>.L <account id>.L <win point>.L <lose point>.L <point>.L
-void clif_parse_PVPInfo(int fd,struct map_session_data *sd)
+void clif_PVPInfo(struct map_session_data* sd)
 {
+	int fd = sd->fd;
+
 	WFIFOHEAD(fd,packet_len(0x210));
 	WFIFOW(fd,0) = 0x210;
 	WFIFOL(fd,2) = sd->status.char_id;
@@ -13061,13 +13115,20 @@ void clif_parse_PVPInfo(int fd,struct map_session_data *sd)
 }
 
 
-/// /blacksmith (CZ_BLACKSMITH_RANK).
-/// 0217
+/// /pvpinfo (CZ_REQ_PVPPOINT).
+/// 020f <char id>.L <account id>.L
+void clif_parse_PVPInfo(int fd,struct map_session_data *sd)
+{
+	// TODO: Is there a way to use this on an another player (char/acc id)?
+	clif_PVPInfo(sd);
+}
+
+
 /// /blacksmith list (ZC_BLACKSMITH_RANK).
 /// 0219 { <name>.24B }*10 { <point>.L }*10
-void clif_parse_Blacksmith(int fd,struct map_session_data *sd)
+void clif_blacksmith(struct map_session_data* sd)
 {
-	int i;
+	int i, fd = sd->fd;
 	const char* name;
 
 	WFIFOHEAD(fd,packet_len(0x219));
@@ -13094,11 +13155,20 @@ void clif_parse_Blacksmith(int fd,struct map_session_data *sd)
 }
 
 
+/// /blacksmith (CZ_BLACKSMITH_RANK).
+/// 0217
+void clif_parse_Blacksmith(int fd,struct map_session_data *sd)
+{
+	clif_blacksmith(sd);
+}
+
+
 /// Notification about backsmith points (ZC_BLACKSMITH_POINT).
 /// 021b <points>.L <total points>.L
 void clif_fame_blacksmith(struct map_session_data *sd, int points)
 {
 	int fd = sd->fd;
+
 	WFIFOHEAD(fd,packet_len(0x21b));
 	WFIFOW(fd,0) = 0x21b;
 	WFIFOL(fd,2) = points;
@@ -13107,13 +13177,11 @@ void clif_fame_blacksmith(struct map_session_data *sd, int points)
 }
 
 
-/// /alchemist (CZ_ALCHEMIST_RANK).
-/// 0218
 /// /alchemist list (ZC_ALCHEMIST_RANK).
 /// 021a { <name>.24B }*10 { <point>.L }*10
-void clif_parse_Alchemist(int fd,struct map_session_data *sd)
+void clif_alchemist(struct map_session_data* sd)
 {
-	int i;
+	int i, fd = sd->fd;
 	const char* name;
 
 	WFIFOHEAD(fd,packet_len(0x21a));
@@ -13140,11 +13208,20 @@ void clif_parse_Alchemist(int fd,struct map_session_data *sd)
 }
 
 
+/// /alchemist (CZ_ALCHEMIST_RANK).
+/// 0218
+void clif_parse_Alchemist(int fd,struct map_session_data *sd)
+{
+	clif_alchemist(sd);
+}
+
+
 /// Notification about alchemist points (ZC_ALCHEMIST_POINT).
 /// 021c <points>.L <total points>.L
 void clif_fame_alchemist(struct map_session_data *sd, int points)
 {
 	int fd = sd->fd;
+
 	WFIFOHEAD(fd,packet_len(0x21c));
 	WFIFOW(fd,0) = 0x21c;
 	WFIFOL(fd,2) = points;
@@ -13153,13 +13230,11 @@ void clif_fame_alchemist(struct map_session_data *sd, int points)
 }
 
 
-/// /taekwon (CZ_TAEKWON_RANK).
-/// 0225
 /// /taekwon list (ZC_TAEKWON_RANK).
 /// 0226 { <name>.24B }*10 { <point>.L }*10
-void clif_parse_Taekwon(int fd,struct map_session_data *sd)
+void clif_taekwon(struct map_session_data* sd)
 {
-	int i;
+	int i, fd = sd->fd;
 	const char* name;
 
 	WFIFOHEAD(fd,packet_len(0x226));
@@ -13185,11 +13260,20 @@ void clif_parse_Taekwon(int fd,struct map_session_data *sd)
 }
 
 
+/// /taekwon (CZ_TAEKWON_RANK).
+/// 0225
+void clif_parse_Taekwon(int fd,struct map_session_data *sd)
+{
+	clif_taekwon(sd);
+}
+
+
 /// Notification about taekwon points (ZC_TAEKWON_POINT).
 /// 0224 <points>.L <total points>.L
 void clif_fame_taekwon(struct map_session_data *sd, int points)
 {
 	int fd = sd->fd;
+
 	WFIFOHEAD(fd,packet_len(0x224));
 	WFIFOW(fd,0) = 0x224;
 	WFIFOL(fd,2) = points;
@@ -13198,13 +13282,11 @@ void clif_fame_taekwon(struct map_session_data *sd, int points)
 }
 
 
-/// /pk (CZ_KILLER_RANK).
-/// 0237
 /// /pk list (ZC_KILLER_RANK).
 /// 0238 { <name>.24B }*10 { <point>.L }*10
-void clif_parse_RankingPk(int fd,struct map_session_data *sd)
+void clif_ranking_pk(struct map_session_data* sd)
 {
-	int i;
+	int i, fd = sd->fd;
 
 	WFIFOHEAD(fd,packet_len(0x238));
 	WFIFOW(fd,0) = 0x238;
@@ -13213,6 +13295,14 @@ void clif_parse_RankingPk(int fd,struct map_session_data *sd)
 		WFIFOL(fd,i*4+242) = 0;
 	}
 	WFIFOSET(fd, packet_len(0x238));
+}
+
+
+/// /pk (CZ_KILLER_RANK).
+/// 0237
+void clif_parse_RankingPk(int fd,struct map_session_data *sd)
+{
+	clif_ranking_pk(sd);
 }
 
 
