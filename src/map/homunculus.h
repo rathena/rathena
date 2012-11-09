@@ -80,7 +80,7 @@ int merc_hom_recv_data(int account_id, struct s_homunculus *sh, int flag); //alb
 struct view_data* merc_get_hom_viewdata(int class_);
 int hom_class2mapid(int hom_class);
 void merc_damage(struct homun_data *hd);
-int merc_hom_dead(struct homun_data *hd, struct block_list *src);
+int merc_hom_dead(struct homun_data *hd);
 void merc_hom_skillup(struct homun_data *hd,int skillnum);
 int merc_hom_calc_skilltree(struct homun_data *hd);
 int merc_hom_checkskill(struct homun_data *hd,int skill_id);

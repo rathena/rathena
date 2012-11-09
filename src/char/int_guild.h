@@ -34,8 +34,4 @@ int inter_guild_charname_changed(int guild_id,int account_id, int char_id, char 
 int inter_guild_CharOnline(int char_id, int guild_id);
 int inter_guild_CharOffline(int char_id, int guild_id);
 
-//For the TXT->SQL converter.
-int inter_guild_tosql(struct guild *g,int flag);
-int inter_guildcastle_tosql(struct guild_castle *gc);
-
 #endif /* _INT_GUILD_SQL_H_ */

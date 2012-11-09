@@ -457,13 +457,6 @@ int elemental_change_mode(struct elemental_data *ed, int mode) {
 	return 1;
 }
 
-void elemental_damage(struct elemental_data *ed, int hp, int sp) {
-	if( hp )
-		clif_elemental_updatestatus(ed->master, SP_HP);
-	if( sp )
-		clif_elemental_updatestatus(ed->master, SP_SP);
-}
-
 void elemental_heal(struct elemental_data *ed, int hp, int sp) {
 	if( hp )
 		clif_elemental_updatestatus(ed->master, SP_HP);
@@ -471,7 +464,7 @@ void elemental_heal(struct elemental_data *ed, int hp, int sp) {
 		clif_elemental_updatestatus(ed->master, SP_SP);
 }
 
-int elemental_dead(struct elemental_data *ed, struct block_list *src) {
+int elemental_dead(struct elemental_data *ed) {
 	elemental_delete(ed, 1);
 	return 0;
 }
@@ -645,7 +638,6 @@ static int elemental_ai_sub_foreachclient(struct map_session_data *sd, va_list a
 
 static int elemental_ai_timer(int tid, unsigned int tick, int id, intptr_t data) {
 	map_foreachpc(elemental_ai_sub_foreachclient,tick);
-	
 	return 0;
 }
 

@@ -85,7 +85,7 @@ void merc_damage(struct homun_data *hd) {
 	clif_hominfo(hd->master,hd,0);
 }
 
-int merc_hom_dead(struct homun_data *hd, struct block_list *src)
+int merc_hom_dead(struct homun_data *hd)
 {
 	//There's no intimacy penalties on death (from Tharis)
 	struct map_session_data *sd = hd->master;

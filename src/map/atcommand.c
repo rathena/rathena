@@ -2179,12 +2179,11 @@ static int atkillmonster_sub(struct block_list *bl, va_list ap)
 	return 1;
 }
 
-void atcommand_killmonster_sub(const int fd, struct map_session_data* sd, const char* message, const int drop)
+ACMD_FUNC(killmonster)
 {
-	int map_id;
+	int map_id, drop_flag;
 	char map_name[MAP_NAME_LENGTH_EXT];
-
-	if (!sd) return;
+	nullpo_retr(-1, sd);
 
 	memset(map_name, '\0', sizeof(map_name));
 
@@ -2194,26 +2193,13 @@ void atcommand_killmonster_sub(const int fd, struct map_session_data* sd, const 
 		if ((map_id = map_mapname2mapid(map_name)) < 0)
 			map_id = sd->bl.m;
 	}
+	
+	drop_flag = strcmp(command+1, "killmonster2");
 
-	map_foreachinmap(atkillmonster_sub, map_id, BL_MOB, drop);
+	map_foreachinmap(atkillmonster_sub, map_id, BL_MOB, -drop_flag);
 
 	clif_displaymessage(fd, msg_txt(165)); // All monsters killed!
 
-	return;
-}
-
-ACMD_FUNC(killmonster)
-{
-	atcommand_killmonster_sub(fd, sd, message, 1);
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------*/
-ACMD_FUNC(killmonster2)
-{
-	atcommand_killmonster_sub(fd, sd, message, 0);
 	return 0;
 }
 
@@ -8866,7 +8852,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("monstersmall", monster),
 		ACMD_DEF2("monsterbig", monster),
 		ACMD_DEF(killmonster),
-		ACMD_DEF(killmonster2),
+		ACMD_DEF2("killmonster2", killmonster),
 		ACMD_DEF(refine),
 		ACMD_DEF(produce),
 		ACMD_DEF(memo),

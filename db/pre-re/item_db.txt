@@ -1888,7 +1888,7 @@
 4260,Wootan_Shooter_Card,Wootan Shooter Card,6,20,,10,,,,,,,,769,,,,,{ bonus bDef,1; bonus2 bResEff,Eff_Confusion,2000; },{},{}
 4261,Wootan_Fighter_Card,Wootan Fighter Card,6,20,,10,,,,,,,,769,,,,,{ bonus bDef,1; bonus2 bResEff,Eff_Bleeding,2000; },{},{}
 4262,Evil_Cloud_Hermit_Card,Cloud Hermit Card,6,20,,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12029,RC_Plant,100; },{},{}
-4263,Incant_Samurai_Card,Samurai Spector Card,6,20,,10,,,,,,,,2,,,,,{ bonus bIgnoreDefRace,RC_NonBoss; bonus bHPrecovRate,-100; bonus2 bHPLossRate,666,10000; },{},{ heal -999,0; }
+4263,Incant_Samurai_Card,Samurai Spector Card,6,20,,10,,,,,,,,2,,,,,{ bonus bIgnoreDefRace,RC_NonBoss; bonus bHPrecovRate,-100; bonus2 bHPLossRate,666,10000; },{},{ if( (Hp <= 999) && !getmapflag(strcharinfo(3),6) && !getmapflag(strcharinfo(3),7) && !getmapflag(strcharinfo(3),8) ) { heal (1 - Hp), 0; } else { heal -999, 0; } }
 4264,Wind_Ghost_Card,Wind Ghost Card,6,20,,10,,,,,,,,136,,,,,{ bonus3 bAutoSpell,"WZ_JUPITEL",3+7*(getskilllv("WZ_JUPITEL")==10),20; },{},{}
 4265,Li_Me_Mang_Ryang_Card,Jing Guai Card,6,20,,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12033,RC_Angel,100; },{},{}
 4266,Eclipse_Card,Eclipse Card,6,20,,10,,,,,,,,4,,,,,{ bonus bVit,1; },{},{}

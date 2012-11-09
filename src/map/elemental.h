@@ -67,9 +67,8 @@ int elemental_save(struct elemental_data *ed);
 int elemental_change_mode_ack(struct elemental_data *ed, int mode);
 int elemental_change_mode(struct elemental_data *ed, int mode);
 
-void elemental_damage(struct elemental_data *ed, int hp, int sp);
 void elemental_heal(struct elemental_data *ed, int hp, int sp);
-int elemental_dead(struct elemental_data *ed, struct block_list *src);
+int elemental_dead(struct elemental_data *ed);
 
 int elemental_delete(struct elemental_data *ed, int reply);
 void elemental_summon_stop(struct elemental_data *ed);

@@ -5230,8 +5230,10 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 
 			if( !md->special_state.ai )
 			{ //Normal mobs
-				if( (target->type == BL_MOB && t_bl->type == BL_PC && ((TBL_MOB*)target)->special_state.ai < 4) ||
-					( t_bl->type == BL_MOB && !((TBL_MOB*)t_bl)->special_state.ai ) )
+				if(
+					( target->type == BL_MOB && t_bl->type == BL_PC && ( ((TBL_MOB*)target)->special_state.ai != 4 && ((TBL_MOB*)target)->special_state.ai != 1 ) ) ||
+					( t_bl->type == BL_MOB && !((TBL_MOB*)t_bl)->special_state.ai )
+				  )
 					state |= BCT_PARTY; //Normal mobs with no ai are friends.
 				else
 					state |= BCT_ENEMY; //However, all else are enemies.

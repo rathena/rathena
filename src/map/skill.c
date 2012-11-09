@@ -11902,8 +11902,8 @@ static int skill_unit_effect (struct block_list* bl, va_list ap)
 	skill_id = group->skill_id;
 
 	//Target-type check.
-	if( !(group->bl_flag&bl->type && battle_check_target(&unit->bl,bl,group->target_flag)>0) && (flag&4) ) {
-		if( group->state.song_dance&0x1 || (group->src_id == bl->id && group->state.song_dance&0x2) )
+	if( !(group->bl_flag&bl->type && battle_check_target(&unit->bl,bl,group->target_flag)>0) ) {
+		if( flag&4 && ((group->src_id == bl->id && group->state.song_dance&0x2) || skill_get_inf2(skill_id)&INF2_SONG_DANCE) )
 			skill_unit_onleft(skill_id, bl, tick);//Ensemble check to terminate it.
 	} else {
 		if( flag&1 )

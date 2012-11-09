@@ -344,14 +344,6 @@ int merc_data_received(struct s_mercenary *merc, bool flag)
 	return 1;
 }
 
-void mercenary_damage(struct mercenary_data *md, int hp, int sp)
-{
-	if( hp )
-		clif_mercenary_updatestatus(md->master, SP_HP);
-	if( sp )
-		clif_mercenary_updatestatus(md->master, SP_SP);
-}
-
 void mercenary_heal(struct mercenary_data *md, int hp, int sp)
 {
 	if( hp )
@@ -360,7 +352,7 @@ void mercenary_heal(struct mercenary_data *md, int hp, int sp)
 		clif_mercenary_updatestatus(md->master, SP_SP);
 }
 
-int mercenary_dead(struct mercenary_data *md, struct block_list *src)
+int mercenary_dead(struct mercenary_data *md)
 {
 	merc_delete(md, 1);
 	return 0;

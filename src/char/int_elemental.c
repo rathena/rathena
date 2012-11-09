@@ -90,8 +90,6 @@ bool mapif_elemental_delete(int ele_id) {
 	return true;
 }
 
-#ifndef TXT_SQL_CONVERT
-
 static void mapif_elemental_send(int fd, struct s_elemental *ele, unsigned char flag) {
 	int size = sizeof(struct s_elemental) + 5;
 	
@@ -161,4 +159,3 @@ int inter_elemental_parse_frommap(int fd) {
 	}
 	return 1;
 }
-#endif //TXT_SQL_CONVERT
