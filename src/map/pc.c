@@ -4660,9 +4660,8 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 			sd->regen.state.gc = 0;
 		// make sure vending is allowed here
 		if (sd->state.vending && map[m].flag.novending) {
-				clif_displaymessage (sd->fd, msg_txt(276)); // "You can't open a shop on this map"
-				vending_closevending(sd);
-			}
+			clif_displaymessage (sd->fd, msg_txt(276)); // "You can't open a shop on this map"
+			vending_closevending(sd);
 		}
 	}
 
