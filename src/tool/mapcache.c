@@ -258,7 +258,7 @@ int do_init(int argc, char** argv)
 
 	/* setup pre-defined, #define-dependant */
 	sprintf(map_cache_file,"db/%s/map_cache.dat",
-#ifndef RENEWAL
+#ifdef RENEWAL
 			"re"
 #else
 			"pre-re"
