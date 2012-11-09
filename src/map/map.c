@@ -255,7 +255,7 @@ static struct block_list bl_head;
  * These pair of functions update the counter of how many objects
  * lie on a tile.
  *------------------------------------------*/
-void map_addblcell(struct block_list *bl)
+static void map_addblcell(struct block_list *bl)
 {
 	if( bl->m<0 || bl->x<0 || bl->x>=map[bl->m].xs || bl->y<0 || bl->y>=map[bl->m].ys || !(bl->type&BL_CHAR) )
 		return;
@@ -263,7 +263,7 @@ void map_addblcell(struct block_list *bl)
 	return;
 }
 
-void map_delblcell(struct block_list *bl)
+static void map_delblcell(struct block_list *bl)
 {
 	if( bl->m <0 || bl->x<0 || bl->x>=map[bl->m].xs || bl->y<0 || bl->y>=map[bl->m].ys || !(bl->type&BL_CHAR) )
 		return;
@@ -684,21 +684,16 @@ int map_foreachinarea(int (*func)(struct block_list*,va_list), int m, int x0, in
 		return 0;
 	if (x1 < x0)
 	{	//Swap range
-		bx = x0;
-		x0 = x1;
-		x1 = bx;
+		swap(x0, x1);
 	}
 	if (y1 < y0)
 	{
-		bx = y0;
-		y0 = y1;
-		y1 = bx;
+		swap(y0, y1);
 	}
-	if (x0 < 0) x0 = 0;
-	if (y0 < 0) y0 = 0;
-	if (x1 >= map[m].xs) x1 = map[m].xs-1;
-	if (y1 >= map[m].ys) y1 = map[m].ys-1;
-
+	x0 = max(x0, 0);
+	y0 = max(y0, 0);
+	x1 = min(x1, map[m].xs-1);
+	y1 = min(y1, map[m].ys-1);
 	if (type&~BL_MOB)
 		for(by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++)
 			for(bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++)
@@ -811,20 +806,16 @@ int map_forcountinarea(int (*func)(struct block_list*,va_list), int m, int x0, i
 		return 0;
 	if (x1 < x0)
 	{	//Swap range
-		bx = x0;
-		x0 = x1;
-		x1 = bx;
+		swap(x0, x1);
 	}
 	if (y1 < y0)
 	{
-		bx = y0;
-		y0 = y1;
-		y1 = bx;
+		swap(y0, y1);
 	}
-	if (x0 < 0) x0 = 0;
-	if (y0 < 0) y0 = 0;
-	if (x1 >= map[m].xs) x1 = map[m].xs-1;
-	if (y1 >= map[m].ys) y1 = map[m].ys-1;
+	x0 = max(x0, 0);
+	y0 = max(y0, 0);
+	x1 = min(x1, map[m].xs-1);
+	y1 = min(y1, map[m].ys-1);
 
 	if (type&~BL_MOB)
 		for(by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++)
@@ -886,15 +877,11 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 
 	if (x1 < x0)
 	{	//Swap range
-		bx = x0;
-		x0 = x1;
-		x1 = bx;
+		swap(x0, x1);
 	}
 	if (y1 < y0)
 	{
-		bx = y0;
-		y0 = y1;
-		y1 = bx;
+		swap(y0, y1);
 	}
 	if(dx==0 || dy==0){
 		//Movement along one axis only.
@@ -909,10 +896,10 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 			else //East
 				x1=x0+dx-1;
 		}
-		if(x0<0) x0=0;
-		if(y0<0) y0=0;
-		if(x1>=map[m].xs) x1=map[m].xs-1;
-		if(y1>=map[m].ys) y1=map[m].ys-1;
+		x0 = max(x0, 0);
+		y0 = max(y0, 0);
+		x1 = min(x1, map[m].xs-1);
+		y1 = min(y1, map[m].ys-1);
 		for(by=y0/BLOCK_SIZE;by<=y1/BLOCK_SIZE;by++){
 			for(bx=x0/BLOCK_SIZE;bx<=x1/BLOCK_SIZE;bx++){
 				if (type&~BL_MOB) {
@@ -938,10 +925,10 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 		}
 	}else{
 		// Diagonal movement
-		if(x0<0) x0=0;
-		if(y0<0) y0=0;
-		if(x1>=map[m].xs) x1=map[m].xs-1;
-		if(y1>=map[m].ys) y1=map[m].ys-1;
+		x0 = max(x0, 0);
+		y0 = max(y0, 0);
+		x1 = min(x1, map[m].xs-1);
+		y1 = min(y1, map[m].ys-1);
 		for(by=y0/BLOCK_SIZE;by<=y1/BLOCK_SIZE;by++){
 			for(bx=x0/BLOCK_SIZE;bx<=x1/BLOCK_SIZE;bx++){
 				if (type & ~BL_MOB) {
@@ -1129,21 +1116,17 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y
 	//The two fors assume mx0 < mx1 && my0 < my1
 	if (mx0 > mx1)
 	{
-		k = mx1;
-		mx1 = mx0;
-		mx0 = k;
+		swap(mx0, mx1);
 	}
 	if (my0 > my1)
 	{
-		k = my1;
-		my1 = my0;
-		my0 = k;
+		swap(my0, my1);
 	}
 
-	if (mx0 < 0) mx0 = 0;
-	if (my0 < 0) my0 = 0;
-	if (mx1 >= map[m].xs) mx1 = map[m].xs-1;
-	if (my1 >= map[m].ys) my1 = map[m].ys-1;
+	mx0 = max(mx0, 0);
+	my0 = max(my0, 0);
+	mx1 = min(mx1, map[m].xs-1);
+	my1 = min(my1, map[m].ys-1);
 
 	range*=range<<8; //Values are shifted later on for higher precision using int math.
 
