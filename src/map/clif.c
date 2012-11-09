@@ -5863,6 +5863,11 @@ void clif_item_repair_list(struct map_session_data *sd,struct map_session_data *
 
 /// Notifies the client about the result of a item repair request (ZC_ACK_ITEMREPAIR).
 /// 01fe <index>.W <result>.B
+/// index:
+///     ignored (inventory index)
+/// result:
+///     0 = Item repair success.
+///     1 = Item repair failure.
 void clif_item_repaireffect(struct map_session_data *sd,int idx,int flag)
 {
 	int fd;
