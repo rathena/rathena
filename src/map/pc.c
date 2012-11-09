@@ -4658,6 +4658,12 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 		bg_send_dot_remove(sd);
 		if (sd->regen.state.gc)
 			sd->regen.state.gc = 0;
+		// make sure vending is allowed here
+		if (sd->state.vending && map[m].flag.novending) {
+				clif_displaymessage (sd->fd, msg_txt(276)); // "You can't open a shop on this map"
+				vending_closevending(sd);
+			}
+		}
 	}
 
 	if( m < 0 )
@@ -4698,6 +4704,11 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 			x=rnd()%(map[m].xs-2)+1;
 			y=rnd()%(map[m].ys-2)+1;
 		} while(map_getcell(m,x,y,CELL_CHKNOPASS));
+	}
+
+	if (sd->state.vending && map_getcell(m,x,y,CELL_CHKNOVENDING)) {
+		clif_displaymessage (sd->fd, msg_txt(204)); // "You can't open a shop on this cell."
+		vending_closevending(sd);
 	}
 
 	if(sd->bl.prev != NULL){
