@@ -569,6 +569,7 @@ void clif_instance_leave(int fd);
 void clif_font(struct map_session_data *sd);
 
 // atcommand
+void clif_notify_chat(struct block_list* bl, const char* message, send_target target);
 void clif_displaymessage(const int fd, const char* mes);
 void clif_disp_onlyself(struct map_session_data *sd, const char *mes, int len);
 void clif_disp_message(struct block_list* src, const char* mes, int len, enum send_target target);

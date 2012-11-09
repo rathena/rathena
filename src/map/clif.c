@@ -5382,6 +5382,34 @@ void clif_status_change(struct block_list *bl,int type,int flag,int tick,int val
 }
 
 
+/// Notification about an another object's chat message (ZC_NOTIFY_CHAT).
+/// 008d <packet len>.W <id>.L <message>.?B
+void clif_notify_chat(struct block_list* bl, const char* message, send_target target)
+{
+	char buf[8+255+1];
+	size_t length;
+
+	if( !message[0] )
+	{// empty message
+		return;
+	}
+
+	length = strlen(message);
+
+	if( length > sizeof(buf)-8 )
+	{
+		ShowWarning("clif_notify_chat: Truncated message '%s' (len=%u, max=%u, id=%d, target=%d).\n", message, length, sizeof(buf)-8, bl ? bl->id : 0, target);
+		length = sizeof(buf)-8;
+	}
+
+	WBUFW(buf,0) = 0x8d;
+	WBUFW(buf,2) = 8+length;
+	WBUFL(buf,4) = bl ? bl->id : 0;
+	safestrncpy((char*)WBUFP(buf,8), message, length+1);
+	clif_send(buf, WBUFW(buf,2), bl, target);
+}
+
+
 /// Send message (modified by [Yor]) (ZC_NOTIFY_PLAYERCHAT).
 /// 008e <packet len>.W <message>.?B
 void clif_displaymessage(const int fd, const char* mes)
@@ -5440,27 +5468,7 @@ void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, e
  *------------------------------------------*/
 void clif_GlobalMessage(struct block_list* bl, const char* message)
 {
-	char buf[100];
-	int len;
-
-	nullpo_retv(bl);
-
-	if(!message)
-		return;
-
-	len = strlen(message)+1;
-
-	if( len > sizeof(buf)-8 )
-	{
-		ShowWarning("clif_GlobalMessage: Truncating too long message '%s' (len=%d).\n", message, len);
-		len = sizeof(buf)-8;
-	}
-
-	WBUFW(buf,0)=0x8d;
-	WBUFW(buf,2)=len+8;
-	WBUFL(buf,4)=bl->id;
-	safestrncpy((char *) WBUFP(buf,8),message,len);
-	clif_send((unsigned char *) buf,WBUFW(buf,2),bl,ALL_CLIENT);
+	clif_notify_chat(bl, message, ALL_CLIENT);
 }
 
 /*==========================================
@@ -5468,22 +5476,7 @@ void clif_GlobalMessage(struct block_list* bl, const char* message)
  *------------------------------------------*/
 void clif_MainChatMessage(const char* message)
 {
-	uint8 buf[200];
-	int len;
-
-	if(!message)
-		return;
-
-	len = strlen(message)+1;
-	if (len+8 > sizeof(buf)) {
-		ShowDebug("clif_MainChatMessage: Received message too long (len %d): %s\n", len, message);
-		len = sizeof(buf)-8;
-	}
-	WBUFW(buf,0)=0x8d;
-	WBUFW(buf,2)=len+8;
-	WBUFL(buf,4)=0;
-	safestrncpy((char *) WBUFP(buf,8),message,len);
-	clif_send(buf,WBUFW(buf,2),NULL,CHAT_MAINCHAT);
+	clif_notify_chat(NULL, message, CHAT_MAINCHAT);
 }
 
 
@@ -8206,27 +8199,10 @@ void clif_messagecolor(struct block_list* bl, unsigned long color, const char* m
 }
 
 
-/// Public chat message [Valaris] (ZC_NOTIFY_CHAT).
-/// 008d <packet len>.W <id>.L <message>.?B
+/// Public chat message [Valaris]
 void clif_message(struct block_list* bl, const char* msg)
 {
-	unsigned short msg_len = strlen(msg) + 1;
-	uint8 buf[256];
-	// TODO: Merge with other 0x8d functions.
-	nullpo_retv(bl);
-
-	if( msg_len > sizeof(buf)-8 )
-	{
-		ShowWarning("clif_message: Truncating too long message '%s' (len=%u).\n", msg, msg_len);
-		msg_len = sizeof(buf)-8;
-	}
-
-	WBUFW(buf,0) = 0x8d;
-	WBUFW(buf,2) = msg_len + 8;
-	WBUFL(buf,4) = bl->id;
-	safestrncpy((char*)WBUFP(buf,8), msg, msg_len);
-
-	clif_send(buf, WBUFW(buf,2), bl, AREA_CHAT_WOC);
+	clif_notify_chat(bl, msg, AREA_CHAT_WOC);
 }
 
 
@@ -8520,11 +8496,7 @@ void clif_disp_overhead(struct map_session_data *sd, const char* mes)
 		len_mes = sizeof(buf)-8; //Trunk it to avoid problems.
 	}
 	// send message to others
-	WBUFW(buf,0) = 0x8d;
-	WBUFW(buf,2) = len_mes + 8; // len of message + 8 (command+len+id)
-	WBUFL(buf,4) = sd->bl.id;
-	safestrncpy((char*)WBUFP(buf,8), mes, len_mes);
-	clif_send(buf, WBUFW(buf,2), &sd->bl, AREA_CHAT_WOC);
+	clif_notify_chat(&sd->bl, mes, AREA_CHAT_WOC);
 
 	// send back message to the speaker
 	WBUFW(buf,0) = 0x8e;
@@ -9669,14 +9641,8 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 		strcat(fakename, message);
 		textlen = strlen(fakename) + 1;
 	}
-	// send message to others (using the send buffer for temp. storage)
-	WFIFOHEAD(fd, 8 + textlen);
-	WFIFOW(fd,0) = 0x8d;
-	WFIFOW(fd,2) = 8 + textlen;
-	WFIFOL(fd,4) = sd->bl.id;
-	safestrncpy((char*)WFIFOP(fd,8), is_fake ? fakename : text, textlen);
-	//FIXME: chat has range of 9 only
-	clif_send(WFIFOP(fd,0), WFIFOW(fd,2), &sd->bl, sd->chatID ? CHAT_WOS : AREA_CHAT_WOC);
+	// send message to others
+	clif_notify_chat(&sd->bl, is_fake ? fakename : text, sd->chatID ? CHAT_WOS : AREA_CHAT_WOC);
 
 	// send back message to the speaker
 	if( is_fake ) {
