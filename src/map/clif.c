@@ -5461,25 +5461,6 @@ void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, e
 		aFree(buf);
 }
 
-
-/*==========================================
- * Displays a message on a 'bl' to all it's nearby clients
- * Used by npc_globalmessage
- *------------------------------------------*/
-void clif_GlobalMessage(struct block_list* bl, const char* message)
-{
-	clif_notify_chat(bl, message, ALL_CLIENT);
-}
-
-/*==========================================
- * Send main chat message [LuzZza]
- *------------------------------------------*/
-void clif_MainChatMessage(const char* message)
-{
-	clif_notify_chat(NULL, message, CHAT_MAINCHAT);
-}
-
-
 /// Send broadcast message with font formatting (ZC_BROADCAST2).
 /// 01c3 <packet len>.W <fontColor>.L <fontType>.W <fontSize>.W <fontAlign>.W <fontY>.W <message>.?B
 void clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target)
@@ -8197,14 +8178,6 @@ void clif_messagecolor(struct block_list* bl, unsigned long color, const char* m
 
 	clif_send(buf, WBUFW(buf,2), bl, AREA_CHAT_WOC);
 }
-
-
-/// Public chat message [Valaris]
-void clif_message(struct block_list* bl, const char* msg)
-{
-	clif_notify_chat(bl, msg, AREA_CHAT_WOC);
-}
-
 
 // refresh the client's screen, getting rid of any effects
 void clif_refresh(struct map_session_data *sd)

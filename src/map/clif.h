@@ -373,7 +373,6 @@ void clif_misceffect(struct block_list* bl,int type);	// area
 void clif_changeoption(struct block_list* bl);	// area
 void clif_changeoption2(struct block_list* bl);	// area
 void clif_useitemack(struct map_session_data *sd,int index,int amount,bool ok);	// self
-void clif_GlobalMessage(struct block_list* bl, const char* message);
 void clif_createchat(struct map_session_data* sd, int flag);	// self
 void clif_dispchat(struct chat_data* cd, int fd);	// area or fd
 void clif_joinchatfail(struct map_session_data *sd,int flag);	// self
@@ -574,7 +573,6 @@ void clif_displaymessage(const int fd, const char* mes);
 void clif_disp_onlyself(struct map_session_data *sd, const char *mes, int len);
 void clif_disp_message(struct block_list* src, const char* mes, int len, enum send_target target);
 void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, enum send_target target);
-void clif_MainChatMessage(const char* message); //luzza
 void clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target);
 void clif_heal(int fd,int type,int val);
 void clif_resurrection(struct block_list *bl,int type);
@@ -605,7 +603,6 @@ void clif_weather(int m); // [Valaris]
 void clif_specialeffect(struct block_list* bl, int type, enum send_target target); // special effects [Valaris]
 void clif_specialeffect_single(struct block_list* bl, int type, int fd);
 void clif_messagecolor(struct block_list* bl, unsigned long color, const char* msg); // Mob/Npc color talk [SnakeDrak]
-void clif_message(struct block_list* bl, const char* msg); // messages (from mobs/npcs) [Valaris]
 void clif_specialeffect_value(struct block_list* bl, int effect_id, int num, send_target target);
 
 void clif_GM_kickack(struct map_session_data *sd, int id);
@@ -769,5 +766,9 @@ unsigned long color_table[COLOR_MAX];
 int clif_colormes(struct map_session_data * sd, enum clif_colors color, const char* msg);
 
 #define clif_menuskill_clear(sd) (sd)->menuskill_id = (sd)->menuskill_val = (sd)->menuskill_val2 = 0;
+
+#define clif_GlobalMessage(bl,message) clif_notify_chat(bl, message, ALL_CLIENT)
+#define clif_MainChatMessage(message) clif_notify_chat(NULL, message, CHAT_MAINCHAT)
+#define clif_message(bl,msg) clif_notify_chat(bl, msg, AREA_CHAT_WOC)
 
 #endif /* _CLIF_H_ */
