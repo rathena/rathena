@@ -4899,7 +4899,7 @@
 12354,Buche_De_Noel,Buche De Noel,2,2,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect2 EF_ANGELUS; sc_start SC_INCMHPRATE,600000,3; sc_start SC_INCMSPRATE,600000,3; sc_start SC_INCHITRATE,600000,3; sc_start SC_INCCRI,600000,7; },{},{}
 12355,Xmas_Gift,Xmas Gift,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Xmas_Gift),1; },{},{}
 12356,Louise_Costume_Box,Louise Costume Box,2,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Louise_Costume_Box),1; },{},{}
-12357,Shiny_Wing_Gown,Shiny Wing Gown,2,20,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1002; },{},{}
+12357,Shiny_Wing_Gown,Shiny Wing Gown,2,20,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1630; },{},{}
 12358,Fan_Of_Wind,Fan Of Wind,2,20,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1513; },{},{}
 12359,Very_Soft_Plant,Very Soft Plant,2,20,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1586; },{},{}
 12360,Very_Red_Juice,Very Red Juice,2,20,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1505; },{},{}
