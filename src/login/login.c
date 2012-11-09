@@ -999,7 +999,7 @@ int mmo_auth(struct login_session_data* sd, bool isServer)
 
 		for( dnsbl_serv = strtok(login_config.dnsbl_servs,","); !matched && dnsbl_serv != NULL; dnsbl_serv = strtok(NULL,",") )
 		{
-			sprintf(ip_dnsbl, "%s.%s", r_ip, dnsbl_serv);
+			sprintf(ip_dnsbl, "%s.%s", r_ip, trim(dnsbl_serv));
 			if( host2ip(ip_dnsbl) )
 				matched = true;
 		}
