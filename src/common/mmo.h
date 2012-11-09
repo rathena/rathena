@@ -80,9 +80,9 @@
 #define MAX_FAME 1000000000
 #define MAX_CART 100
 #define MAX_SKILL 3100
-#define GLOBAL_REG_NUM 256
-#define ACCOUNT_REG_NUM 64
-#define ACCOUNT_REG2_NUM 16
+#define GLOBAL_REG_NUM 256   // max permanent character variables per char
+#define ACCOUNT_REG_NUM 64   // max permanent local account variables per account
+#define ACCOUNT_REG2_NUM 16  // max permanent global account variables per account
 //Should hold the max of GLOBAL/ACCOUNT/ACCOUNT2 (needed for some arrays that hold all three)
 #define MAX_REG_NUM 256
 #define DEFAULT_WALK_SPEED 150
