@@ -46,7 +46,6 @@ struct elemental_data {
 	
 	struct s_elemental_db *db;
 	struct s_elemental elemental;
-	char blockskill[MAX_SKILL];
 	
 	struct map_session_data *master;
 	int summon_timer;

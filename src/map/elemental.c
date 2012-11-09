@@ -484,10 +484,7 @@ int elemental_skillnotok(int skillid, struct elemental_data *ed) {
 	
 	if (i == 0)
 		return 1; // invalid skill id
-	
-	if( ed->blockskill[i] > 0 )
-		return 1;
-	
+		
 	return skillnotok(skillid, ed->master);
 }
 
