@@ -278,6 +278,10 @@
 				RelativePath="..\src\tool\mapcache.c"
 				>
 			</File>
+			<File
+				RelativePath="..\src\config\renewal.h"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>
