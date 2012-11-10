@@ -1536,11 +1536,16 @@ int npc_buylist(struct map_session_data* sd, int n, unsigned short* item_list)
 		int amount = item_list[i*2+0];
 		struct item item_tmp;
 
-		memset(&item_tmp,0,sizeof(item_tmp));
-		item_tmp.nameid = nameid;
-		item_tmp.identify = 1;
+		if (itemdb_type(nameid) == IT_PETEGG)
+			pet_create_egg(sd, nameid);
+		else
+		{
+			memset(&item_tmp,0,sizeof(item_tmp));
+			item_tmp.nameid = nameid;
+			item_tmp.identify = 1;
 
-		pc_additem(sd,&item_tmp,amount,LOG_TYPE_NPC);
+			pc_additem(sd,&item_tmp,amount,LOG_TYPE_NPC);
+		}
 	}
 
 	// custom merchant shop exp bonus
