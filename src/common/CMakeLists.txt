@@ -65,7 +65,6 @@ set( COMMON_BASE_HEADERS
 	"${COMMON_SOURCE_DIR}/des.h"
 	"${COMMON_SOURCE_DIR}/ers.h"
 	"${COMMON_SOURCE_DIR}/grfio.h"
-	"${COMMON_SOURCE_DIR}/lock.h"
 	"${COMMON_SOURCE_DIR}/malloc.h"
 	"${COMMON_SOURCE_DIR}/mapindex.h"
 	"${COMMON_SOURCE_DIR}/md5calc.h"

@@ -10,7 +10,6 @@
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
 #include "../common/md5calc.h"
-#include "../common/lock.h"
 #include "../common/nullpo.h"
 #include "../common/random.h"
 #include "../common/showmsg.h"
