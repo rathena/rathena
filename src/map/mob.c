@@ -2216,10 +2216,13 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		}
 
 		// change experience for different sized monsters [Valaris]
-		if(md->special_state.size==SZ_MEDIUM)
-			per /=2.;
-		else if(md->special_state.size==SZ_BIG)
-			per *=2.;
+		if (battle_config.mob_size_influence)
+		{
+			if (md->special_state.size == SZ_MEDIUM)
+				per /= 2.;
+			else if (md->special_state.size == SZ_BIG)
+				per *= 2.;
+		}
 
 		if( md->dmglog[i].flag == MDLF_PET )
 			per *= battle_config.pet_attack_exp_rate/100.;
@@ -2334,10 +2337,14 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 
 			// change drops depending on monsters size [Valaris]
-			if(md->special_state.size==SZ_MEDIUM && drop_rate >= 2)
-				drop_rate/=2;
-			else if(md->special_state.size==SZ_BIG)
-				drop_rate*=2;
+			if (battle_config.mob_size_influence)
+			{
+				if (md->special_state.size == SZ_MEDIUM && drop_rate >= 2)
+					drop_rate /= 2;
+				else if( md->special_state.size == SZ_BIG)
+					drop_rate *= 2;
+			}
+
 			if (src) {
 				//Drops affected by luk as a fixed increase [Valaris]
 				if (battle_config.drops_by_luk)
