@@ -3063,12 +3063,7 @@ int map_readallmaps (void)
 		}
 	}
 
-	// Mapcache reading is now fast enough, the progress info will just slow it down so don't use it anymore [Shinryo]
-	if(!enable_grf)
-		ShowStatus("Loading maps (%d)..\n", map_num);
-
-	for(i = 0; i < map_num; i++)
-	{
+	for(i = 0; i < map_num; i++) {
 		size_t size;
 
 		// show progress
