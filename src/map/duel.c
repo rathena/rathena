@@ -28,7 +28,6 @@ void duel_savetime(struct map_session_data* sd)
 	t = localtime(&timer);
 	
 	pc_setglobalreg(sd, "PC_LAST_DUEL_TIME", t->tm_mday*24*60 + t->tm_hour*60 + t->tm_min);
-	return;
 }
 
 int duel_checktime(struct map_session_data* sd)
@@ -57,7 +56,7 @@ static int duel_showinfo_sub(struct map_session_data* sd, va_list va)
 	return 1;
 }
 
-int duel_showinfo(const unsigned int did, struct map_session_data* sd)
+void duel_showinfo(const unsigned int did, struct map_session_data* sd)
 {
 	int p=0;
 	char output[256];
@@ -76,7 +75,6 @@ int duel_showinfo(const unsigned int did, struct map_session_data* sd)
 
 	clif_disp_onlyself(sd, output, strlen(output));
 	map_foreachpc(duel_showinfo_sub, sd, &p);
-	return 0;
 }
 
 int duel_create(struct map_session_data* sd, const unsigned int maxpl)
@@ -101,7 +99,7 @@ int duel_create(struct map_session_data* sd, const unsigned int maxpl)
 	return i;
 }
 
-int duel_invite(const unsigned int did, struct map_session_data* sd, struct map_session_data* target_sd)
+void duel_invite(const unsigned int did, struct map_session_data* sd, struct map_session_data* target_sd)
 {
 	char output[256];
 
@@ -115,7 +113,6 @@ int duel_invite(const unsigned int did, struct map_session_data* sd, struct map_
 	// "Blue -- Player %s invites you to PVP duel (@accept/@reject) --"
 	sprintf(output, msg_txt(374), sd->status.name);
 	clif_broadcast((struct block_list *)target_sd, output, strlen(output)+1, 0x10, SELF);
-	return 0;
 }
 
 static int duel_leave_sub(struct map_session_data* sd, va_list va)
@@ -126,7 +123,7 @@ static int duel_leave_sub(struct map_session_data* sd, va_list va)
 	return 0;
 }
 
-int duel_leave(const unsigned int did, struct map_session_data* sd)
+void duel_leave(const unsigned int did, struct map_session_data* sd)
 {
 	char output[256];
 	
@@ -144,10 +141,9 @@ int duel_leave(const unsigned int did, struct map_session_data* sd)
 	sd->duel_group = 0;
 	duel_savetime(sd);
 	clif_map_property(sd, MAPPROPERTY_NOTHING);
-	return 0;
 }
 
-int duel_accept(const unsigned int did, struct map_session_data* sd)
+void duel_accept(const unsigned int did, struct map_session_data* sd)
 {
 	char output[256];
 	
@@ -162,10 +158,9 @@ int duel_accept(const unsigned int did, struct map_session_data* sd)
 
 	clif_map_property(sd, MAPPROPERTY_FREEPVPZONE);
 	//clif_misceffect2(&sd->bl, 159);
-	return 0;
 }
 
-int duel_reject(const unsigned int did, struct map_session_data* sd)
+void duel_reject(const unsigned int did, struct map_session_data* sd)
 {
 	char output[256];
 	
@@ -175,15 +170,13 @@ int duel_reject(const unsigned int did, struct map_session_data* sd)
 	
 	duel_list[did].invites_count--;
 	sd->duel_invite = 0;
-	return 0;
 }
 
 void do_final_duel(void)
 {
 }
 
-int do_init_duel(void)
+void do_init_duel(void)
 {
 	memset(&duel_list[0], 0, sizeof(duel_list));
-	return 0;
 }

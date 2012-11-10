@@ -1969,41 +1969,37 @@ int guild_castledataloadack(int len, struct guild_castle *gc)
 /*====================================================
  * Start normal woe and triggers all npc OnAgitStart
  *---------------------------------------------------*/
-int guild_agit_start(void)
+void guild_agit_start(void)
 {	// Run All NPC_Event[OnAgitStart]
 	int c = npc_event_doall("OnAgitStart");
 	ShowStatus("NPC_Event:[OnAgitStart] Run (%d) Events by @AgitStart.\n",c);
-	return 0;
 }
 
 /*====================================================
  * End normal woe and triggers all npc OnAgitEnd
  *---------------------------------------------------*/
-int guild_agit_end(void)
+void guild_agit_end(void)
 {	// Run All NPC_Event[OnAgitEnd]
 	int c = npc_event_doall("OnAgitEnd");
 	ShowStatus("NPC_Event:[OnAgitEnd] Run (%d) Events by @AgitEnd.\n",c);
-	return 0;
 }
 
 /*====================================================
  * Start woe2 and triggers all npc OnAgitStart2
  *---------------------------------------------------*/
-int guild_agit2_start(void)
+void guild_agit2_start(void)
 {	// Run All NPC_Event[OnAgitStart2]
 	int c = npc_event_doall("OnAgitStart2");
 	ShowStatus("NPC_Event:[OnAgitStart2] Run (%d) Events by @AgitStart2.\n",c);
-	return 0;
 }
 
 /*====================================================
  * End woe2 and triggers all npc OnAgitEnd2
  *---------------------------------------------------*/
-int guild_agit2_end(void)
+void guild_agit2_end(void)
 {	// Run All NPC_Event[OnAgitEnd2]
 	int c = npc_event_doall("OnAgitEnd2");
 	ShowStatus("NPC_Event:[OnAgitEnd2] Run (%d) Events by @AgitEnd2.\n",c);
-	return 0;
 }
 
 // How many castles does this guild have?

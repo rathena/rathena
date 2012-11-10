@@ -95,11 +95,11 @@ int guild_castledatasave(int castle_id,int index,int value);
 int guild_castledataloadack(int len, struct guild_castle *gc);
 void guild_castle_reconnect(int castle_id, int index, int value);
 
-int guild_agit_start(void);
-int guild_agit_end(void);
+void guild_agit_start(void);
+void guild_agit_end(void);
 
-int guild_agit2_start(void);
-int guild_agit2_end(void);
+void guild_agit2_start(void);
+void guild_agit2_end(void);
 
 void guild_guildaura_refresh(struct map_session_data *sd, int skill_num, int skill_lv);
 
