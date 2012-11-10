@@ -90,7 +90,6 @@ set( COMMON_BASE_SOURCES
 	"${COMMON_SOURCE_DIR}/des.c"
 	"${COMMON_SOURCE_DIR}/ers.c"
 	"${COMMON_SOURCE_DIR}/grfio.c"
-	"${COMMON_SOURCE_DIR}/lock.c"
 	"${COMMON_SOURCE_DIR}/malloc.c"
 	"${COMMON_SOURCE_DIR}/mapindex.c"
 	"${COMMON_SOURCE_DIR}/md5calc.c"

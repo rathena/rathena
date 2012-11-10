@@ -279,14 +279,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\common\lock.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\lock.h"
-				>
-			</File>
-			<File
 				RelativePath="..\src\common\malloc.c"
 				>
 			</File>
