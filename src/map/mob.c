@@ -1629,7 +1629,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 			unit_set_walkdelay(&md->bl, tick, md->status.amotion, 1);
 		}
 		//Clear item.
-		map_clearflooritem (tbl->id);
+		map_clearflooritem (tbl);
 		mob_unlocktarget (md,tick);
 		return true;
 	}

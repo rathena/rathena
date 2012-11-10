@@ -271,7 +271,7 @@ int instance_cleanup_sub(struct block_list *bl, va_list ap) {
 			//There is no need for this, the pet is removed together with the player. [Skotlex]
 			break;
 		case BL_ITEM:
-			map_clearflooritem(bl->id);
+			map_clearflooritem(bl);
 			break;
 		case BL_SKILL:
 			skill_delunit((struct skill_unit *) bl);

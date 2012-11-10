@@ -658,7 +658,7 @@ bool map_addnpc(int,struct npc_data *);
 // map item
 int map_clearflooritem_timer(int tid, unsigned int tick, int id, intptr_t data);
 int map_removemobs_timer(int tid, unsigned int tick, int id, intptr_t data);
-#define map_clearflooritem(id) map_clearflooritem_timer(0,0,id,1)
+void map_clearflooritem(struct block_list* bl);
 int map_addflooritem(struct item *item_data,int amount,int m,int x,int y,int first_charid,int second_charid,int third_charid,int flags);
 
 // player to map session

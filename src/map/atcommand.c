@@ -6156,7 +6156,7 @@ ACMD_FUNC(mobsearch)
 static int atcommand_cleanmap_sub(struct block_list *bl, va_list ap)
 {
 	nullpo_ret(bl);
-	map_clearflooritem(bl->id);
+	map_clearflooritem(bl);
 
 	return 0;
 }

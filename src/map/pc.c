@@ -3977,7 +3977,7 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 	//Display pickup animation.
 	pc_stop_attack(sd);
 	clif_takeitem(&sd->bl,&fitem->bl);
-	map_clearflooritem(fitem->bl.id);
+	map_clearflooritem(&fitem->bl);
 	return 1;
 }
 
