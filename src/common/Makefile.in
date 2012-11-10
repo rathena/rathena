@@ -1,5 +1,5 @@
 
-COMMON_OBJ = obj_all/core.o obj_all/socket.o obj_all/timer.o obj_all/db.o obj_all/lock.o \
+COMMON_OBJ = obj_all/core.o obj_all/socket.o obj_all/timer.o obj_all/db.o \
 	obj_all/nullpo.o obj_all/malloc.o obj_all/showmsg.o obj_all/strlib.o obj_all/utils.o \
 	obj_all/grfio.o obj_all/mapindex.o obj_all/ers.o obj_all/md5calc.o \
 	obj_all/minicore.o obj_all/minisocket.o obj_all/minimalloc.o obj_all/random.o obj_all/des.o \
@@ -23,22 +23,18 @@ LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
-	ALL_DEPENDS=txt sql
+	ALL_DEPENDS=sql
 	SQL_DEPENDS=common common_sql
 else
-	ALL_TARGET=txt
 	SQL_DEPENDS=needs_mysql
 endif
-TXT_DEPENDS=common
 
 @SET_MAKE@
 
 #####################################################################
-.PHONY : all txt sql clean help
+.PHONY : all sql clean help
 
 all: $(ALL_DEPENDS)
-
-txt: $(TXT_DEPENDS)
 
 sql: $(SQL_DEPENDS)
 
@@ -47,8 +43,7 @@ clean:
 	@rm -rf *.o obj_all obj_sql
 
 help:
-	@echo "possible targets are 'txt' 'sql' 'all' 'clean' 'help'"
-	@echo "'txt'    - builds object files used in txt servers"
+	@echo "possible targets are 'sql' 'all' 'clean' 'help'"
 	@echo "'sql'    - builds object files used in sql servers"
 	@echo "'all'    - builds all above targets"
 	@echo "'clean'  - cleans builds and objects"
