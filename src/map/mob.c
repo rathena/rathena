@@ -240,34 +240,10 @@ int mob_parse_dataset(struct spawn_data *data)
 {
 	size_t len;
 
-	//FIXME: This implementation is not stable, npc scripts will stop working once MAX_MOB_DB changes value! [Skotlex]
-	if(data->class_ > 2*MAX_MOB_DB){ // large/tiny mobs [Valaris]
-		data->state.size=SZ_BIG;
-		data->class_ -= 2*MAX_MOB_DB;
-	} else if (data->class_ > MAX_MOB_DB) {
-		data->state.size=SZ_MEDIUM;
-		data->class_ -= MAX_MOB_DB;
-	}
-
 	if ((!mobdb_checkid(data->class_) && !mob_is_clone(data->class_)) || !data->num)
 		return 0;
 
-	if( npc_event_isspecial(data->eventname) )
-	{//Portable monster big/small implementation. [Skotlex]
-		int i = atoi(data->eventname);
-
-		if( i )
-		{
-			if( i&2 )
-				data->state.size = SZ_MEDIUM;
-			else if( i&4 )
-				data->state.size = SZ_BIG;
-			if( i&8 )
-				data->state.ai = 1;
-		}
-		data->eventname[0] = '\0'; //Clear event as it is not used.
-	}
-	else if( ( len = strlen(data->eventname) ) > 0 )
+	if( ( len = strlen(data->eventname) ) > 0 )
 	{
 		if( data->eventname[len-1] == '"' )
 			data->eventname[len-1] = '\0'; //Remove trailing quote.
@@ -442,7 +418,7 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 	return false;
 }
 
-struct mob_data *mob_once_spawn_sub(struct block_list *bl, int m, short x, short y, const char *mobname, int class_, const char *event)
+struct mob_data *mob_once_spawn_sub(struct block_list *bl, int m, short x, short y, const char *mobname, int class_, const char *event, unsigned int size, unsigned int ai)
 {
 	struct spawn_data data;
 
@@ -450,13 +426,16 @@ struct mob_data *mob_once_spawn_sub(struct block_list *bl, int m, short x, short
 	data.m = m;
 	data.num = 1;
 	data.class_ = class_;
+	data.state.size = size;
+	data.state.ai = ai;
+
 	if (mobname)
 		safestrncpy(data.name, mobname, sizeof(data.name));
 	else
-	if(battle_config.override_mob_names==1)
-		strcpy(data.name,"--en--");
-	else
-		strcpy(data.name,"--ja--");
+		if (battle_config.override_mob_names == 1)
+			strcpy(data.name, "--en--");
+		else
+			strcpy(data.name, "--ja--");
 
 	if (event)
 		safestrncpy(data.eventname, event, sizeof(data.eventname));
@@ -481,7 +460,7 @@ struct mob_data *mob_once_spawn_sub(struct block_list *bl, int m, short x, short
 /*==========================================
  * Spawn a single mob on the specified coordinates.
  *------------------------------------------*/
-int mob_once_spawn(struct map_session_data* sd, int m, short x, short y, const char* mobname, int class_, int amount, const char* event)
+int mob_once_spawn(struct map_session_data* sd, int m, short x, short y, const char* mobname, int class_, int amount, const char* event, unsigned int size, unsigned int ai)
 {
 	struct mob_data* md = NULL;
 	int count, lv;
@@ -489,22 +468,22 @@ int mob_once_spawn(struct map_session_data* sd, int m, short x, short y, const c
 	if (m < 0 || amount <= 0)
 		return 0; // invalid input
 
-	if(sd)
-		lv = sd->status.base_level;
-	else
-		lv = 255;
+	lv = (sd) ? sd->status.base_level : 255;
 
 	for (count = 0; count < amount; count++)
 	{
-		int c = ( class_ >= 0 ) ? class_ : mob_get_random_id(-class_-1, battle_config.random_monster_checklv?3:1, lv);
-		md = mob_once_spawn_sub(sd?&sd->bl:NULL, m, x, y, mobname, c, event);
+		int c = (class_ >= 0) ? class_ : mob_get_random_id(-class_ - 1, (battle_config.random_monster_checklv) ? 3 : 1, lv);
+		md = mob_once_spawn_sub((sd) ? &sd->bl : NULL, m, x, y, mobname, c, event, size, ai);
 
-		if (!md) continue;
+		if (!md)
+			continue;
 
-		if(class_ == MOBID_EMPERIUM) {
+		if (class_ == MOBID_EMPERIUM)
+		{
 			struct guild_castle* gc = guild_mapindex2gc(map[m].index);
-			struct guild* g = gc?guild_search(gc->guild_id):NULL;
-			if(gc) {
+			struct guild* g = (gc) ? guild_search(gc->guild_id) : NULL;
+			if (gc)
+			{
 				md->guardian_data = (struct guardian_data*)aCalloc(1, sizeof(struct guardian_data));
 				md->guardian_data->castle = gc;
 				md->guardian_data->number = MAX_GUARDIANS;
@@ -527,33 +506,35 @@ int mob_once_spawn(struct map_session_data* sd, int m, short x, short y, const c
 			sc_start4(&md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE|MD_CANATTACK|MD_CANMOVE|MD_ANGRY, 0, 60000);
 	}
 
-	return (md)?md->bl.id : 0; // id of last spawned mob
+	return (md) ? md->bl.id : 0; // id of last spawned mob
 }
 
 /*==========================================
  * Spawn mobs in the specified area.
  *------------------------------------------*/
-int mob_once_spawn_area(struct map_session_data* sd,int m,int x0,int y0,int x1,int y1,const char* mobname,int class_,int amount,const char* event)
+int mob_once_spawn_area(struct map_session_data* sd, int m, int x0, int y0, int x1, int y1, const char* mobname, int class_, int amount, const char* event, unsigned int size, unsigned int ai)
 {
-	int i,max,id=0;
-	int lx=-1,ly=-1;
+	int i, max, id = 0;
+	int lx = -1, ly = -1;
 
 	if (m < 0 || amount <= 0)
 		return 0; // invalid input
 
 	// normalize x/y coordinates
-	if( x0 > x1 ) swap(x0,x1);
-	if( y0 > y1 ) swap(y0,y1);
+	if (x0 > x1)
+		swap(x0, x1);
+	if (y0 > y1)
+		swap(y0, y1);
 
 	// choose a suitable max. number of attempts
-	max = (y1-y0+1)*(x1-x0+1)*3;
-	if( max > 1000 )
+	max = (y1 - y0 + 1)*(x1 - x0 + 1)*3;
+	if (max > 1000)
 		max = 1000;
 
 	// spawn mobs, one by one
-	for( i = 0; i < amount; i++)
+	for (i = 0; i < amount; i++)
 	{
-		int x,y;
+		int x, y;
 		int j = 0;
 
 		// find a suitable map cell
@@ -561,11 +542,11 @@ int mob_once_spawn_area(struct map_session_data* sd,int m,int x0,int y0,int x1,i
 			x = rnd()%(x1-x0+1)+x0;
 			y = rnd()%(y1-y0+1)+y0;
 			j++;
-		} while( map_getcell(m,x,y,CELL_CHKNOPASS) && j < max );
+		} while (map_getcell(m,x,y,CELL_CHKNOPASS) && j < max);
 
-		if( j == max )
+		if (j == max)
 		{// attempt to find an available cell failed
-			if( lx == -1 && ly == -1 )
+			if (lx == -1 && ly == -1)
 				return 0; // total failure
 
 			// fallback to last good x/y pair
@@ -577,7 +558,7 @@ int mob_once_spawn_area(struct map_session_data* sd,int m,int x0,int y0,int x1,i
 		lx = x;
 		ly = y;
 
-		id = mob_once_spawn(sd,m,x,y,mobname,class_,1,event);
+		id = mob_once_spawn(sd, m, x, y, mobname, class_, 1, event, size, ai);
 	}
 
 	return id; // id of last spawned mob
@@ -3508,14 +3489,14 @@ int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char
 	sd->fd = fd;
 
 	//Finally, spawn it.
-	md = mob_once_spawn_sub(&sd->bl, m, x, y, "--en--",class_,event);
+	md = mob_once_spawn_sub(&sd->bl, m, x, y, "--en--", class_, event, SZ_SMALL, AI_NONE);
 	if (!md) return 0; //Failed?
 
 	md->special_state.clone = 1;
 
 	if (master_id || flag || duration) { //Further manipulate crafted char.
 		if (flag&1) //Friendly Character
-			md->special_state.ai = 1;
+			md->special_state.ai = AI_ATTACK;
 		if (master_id) //Attach to Master
 			md->master_id = master_id;
 		if (duration) //Auto Delete after a while.

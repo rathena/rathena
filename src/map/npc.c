@@ -383,15 +383,6 @@ int npc_event_doall_id(const char* name, int rid)
 	return c;
 }
 
-
-/// Checks whether or not the event name is used as transport for
-/// special flags.
-bool npc_event_isspecial(const char* eventname)
-{
-	return (bool)( eventname && ISDIGIT(eventname[0]) && !strstr(eventname, "::") );
-}
-
-
 /*==========================================
  * Clock event execution
  * OnMinute/OnClock/OnHour/OnDay/OnDDHHMM

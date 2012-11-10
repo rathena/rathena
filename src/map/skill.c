@@ -4909,7 +4909,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 	case SA_SUMMONMONSTER:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		if (sd) mob_once_spawn(sd,src->m,src->x,src->y,"--ja--",-1,1,"");
+		if (sd) mob_once_spawn(sd, src->m, src->x, src->y," --ja--", -1, 1, "", SZ_SMALL, AI_NONE);
 		break;
 	case SA_LEVELUP:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
@@ -8725,11 +8725,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		if(sd){
 			struct mob_data *md;
 
-			md = mob_once_spawn_sub(src, src->m, src->x, src->y, status_get_name(src), 2308, "");
+			md = mob_once_spawn_sub(src, src->m, src->x, src->y, status_get_name(src), 2308, "", SZ_SMALL, AI_NONE);
 			if( md )
 			{
 				md->master_id = src->id;
-				md->special_state.ai = 4;
+				md->special_state.ai = AI_ZANZOU;
 				if( md->deletetimer != INVALID_TIMER )
 					delete_timer(md->deletetimer, mob_timer_delete);
 				md->deletetimer = add_timer (gettick() + skill_get_time(skillid, skilllv), mob_timer_delete, md->bl.id, 0);
@@ -9648,10 +9648,10 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 			struct mob_data *md;
 
 			// Correct info, don't change any of this! [celest]
-			md = mob_once_spawn_sub(src, src->m, x, y, status_get_name(src),class_,"");
+			md = mob_once_spawn_sub(src, src->m, x, y, status_get_name(src), class_, "", SZ_SMALL, AI_NONE);
 			if (md) {
 				md->master_id = src->id;
-				md->special_state.ai = skillid==AM_SPHEREMINE?2:3;
+				md->special_state.ai = (skillid == AM_SPHEREMINE) ? AI_SPHERE : AI_FLORA;
 				if( md->deletetimer != INVALID_TIMER )
 					delete_timer(md->deletetimer, mob_timer_delete);
 				md->deletetimer = add_timer (gettick() + skill_get_time(skillid,skilllv), mob_timer_delete, md->bl.id, 0);
@@ -9746,7 +9746,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 			if (rnd()%100 < 50) {
 				clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
 			} else {
-				TBL_MOB* md = mob_once_spawn_sub(src, src->m, x, y, "--ja--",(skilllv < 2 ? 1084+rnd()%2 : 1078+rnd()%6),"");
+				TBL_MOB* md = mob_once_spawn_sub(src, src->m, x, y, "--ja--",(skilllv < 2 ? 1084+rnd()%2 : 1078+rnd()%6),"", SZ_SMALL, AI_NONE);
 				int i;
 				if (!md) break;
 				if ((i = skill_get_time(skillid, skilllv)) > 0)
@@ -9886,11 +9886,11 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 			int class_ = 2042;
 			struct mob_data *md;
 
-			md = mob_once_spawn_sub(src, src->m, x, y, status_get_name(src), class_, "");
+			md = mob_once_spawn_sub(src, src->m, x, y, status_get_name(src), class_, "", SZ_SMALL, AI_NONE);
 			if( md )
 			{
 				md->master_id = src->id;
-				md->special_state.ai = 3;
+				md->special_state.ai = AI_FLORA;
 				if( md->deletetimer != INVALID_TIMER )
 					delete_timer(md->deletetimer, mob_timer_delete);
 				md->deletetimer = add_timer (gettick() + skill_get_time(skillid, skilllv), mob_timer_delete, md->bl.id, 0);
@@ -16325,10 +16325,10 @@ int skill_magicdecoy(struct map_session_data *sd, int nameid) {
 	class_ = (nameid == 990 || nameid == 991) ? 2043 + nameid - 990 : (nameid == 992) ? 2046 : 2045;
 
 
-	md =  mob_once_spawn_sub(&sd->bl, sd->bl.m, x, y, sd->status.name, class_, "");
+	md =  mob_once_spawn_sub(&sd->bl, sd->bl.m, x, y, sd->status.name, class_, "", SZ_SMALL, AI_NONE);
 	if( md ) {
 		md->master_id = sd->bl.id;
-		md->special_state.ai = 3;
+		md->special_state.ai = AI_FLORA;
 		if( md->deletetimer != INVALID_TIMER )
 			delete_timer(md->deletetimer, mob_timer_delete);
 		md->deletetimer = add_timer (gettick() + skill_get_time(NC_MAGICDECOY,skill), mob_timer_delete, md->bl.id, 0);

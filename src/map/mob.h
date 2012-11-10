@@ -69,6 +69,14 @@ enum size {
 	SZ_BIG,
 };
 
+enum ai {
+	AI_NONE = 0,
+	AI_ATTACK,
+	AI_SPHERE,
+	AI_FLORA,
+	AI_ZANZOU,
+};
+
 struct mob_skill {
 	enum MobSkillState state;
 	short skill_id,skill_lv;
@@ -184,7 +192,7 @@ struct mob_data {
 
 
 enum {
-	MST_TARGET =	0,
+	MST_TARGET	=	0,
 	MST_RANDOM,	//Random Target!
 	MST_SELF,
 	MST_FRIEND,
@@ -197,9 +205,9 @@ enum {
 	MST_AROUND2,
 	MST_AROUND3,
 	MST_AROUND4,
-	MST_AROUND			=	MST_AROUND4,
+	MST_AROUND	=	MST_AROUND4,
 
-	MSC_ALWAYS			=	0x0000,
+	MSC_ALWAYS	=	0x0000,
 	MSC_MYHPLTMAXRATE,
 	MSC_MYHPINRATE,
 	MSC_FRIENDHPLTMAXRATE,
@@ -215,7 +223,7 @@ enum {
 	MSC_CLOSEDATTACKED,
 	MSC_LONGRANGEATTACKED,
 	MSC_AFTERSKILL,
-	MSC_SKILLUSED	,
+	MSC_SKILLUSED,
 	MSC_CASTTARGETED,
 	MSC_RUDEATTACKED,
 	MSC_MASTERHPLTMAXRATE,
@@ -240,10 +248,15 @@ int mobdb_searchname(const char *str);
 int mobdb_searchname_array(struct mob_db** data, int size, const char *str);
 int mobdb_checkid(const int id);
 struct view_data* mob_get_viewdata(int class_);
+
 struct mob_data *mob_once_spawn_sub(struct block_list *bl, int m,
-	short x, short y, const char *mobname, int class_, const char *event);
-int mob_once_spawn(struct map_session_data* sd,int m,short x,short y,const char* mobname,int class_,int amount,const char* event);
-int mob_once_spawn_area(struct map_session_data* sd,int m,int x0,int y0,int x1,int y1,const char* mobname,int class_,int amount,const char* event);
+	short x, short y, const char *mobname, int class_, const char *event, unsigned int size, unsigned int ai);
+
+int mob_once_spawn(struct map_session_data* sd, int m, short x, short y,
+	const char* mobname, int class_, int amount, const char* event, unsigned int size, unsigned int ai);
+
+int mob_once_spawn_area(struct map_session_data* sd, int m,
+	int x0, int y0, int x1, int y1, const char* mobname, int class_, int amount, const char* event, unsigned int size, unsigned int ai);
 
 bool mob_ksprotected (struct block_list *src, struct block_list *target);
 

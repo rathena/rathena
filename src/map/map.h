@@ -319,22 +319,21 @@ struct block_list {
 // Expanded to specify all mob-related spawn data by [Skotlex]
 struct spawn_data {
 	short class_; //Class, used because a mob can change it's class
-	unsigned short m,x,y;	//Spawn information (map, point, spawn-area around point)
-	signed short xs,ys;
+	unsigned short m, x, y;	//Spawn information (map, point, spawn-area around point)
+	signed short xs, ys;
 	unsigned short num; //Number of mobs using this structure
-	unsigned short active; //Number of mobs that are already spawned (for mob_remove_damaged: no)
-	unsigned int delay1,delay2; //Spawn delay (fixed base + random variance)
+	unsigned short active;//Number of mobs that are already spawned (for mob_remove_damaged: no)
+	unsigned int delay1, delay2; //Spawn delay (fixed base + random variance)
 	struct {
-		unsigned int size :2; //Holds if mob has to be tiny/large
-		unsigned int ai :2;	//Holds if mob is special ai.
-		unsigned int dynamic :1; //Whether this data is indexed by a map's dynamic mob list
-		unsigned int boss : 1;
+		unsigned int size : 2; //Holds if mob has to be tiny/large
+		unsigned int ai : 4; //Special ai for summoned monsters.
+							 //0: Normal mob | 1: Standard summon, attacks mobs
+							 //2: Alchemist Marine Sphere | 3: Alchemist Summon Flora | 4: Summon Zanzou
+		unsigned int dynamic : 1; //Whether this data is indexed by a map's dynamic mob list
+		unsigned int boss : 1; //0: Non-boss monster | 1: Boss monster
 	} state;
-	char name[NAME_LENGTH],eventname[EVENT_NAME_LENGTH]; //Name/event
+	char name[NAME_LENGTH], eventname[EVENT_NAME_LENGTH]; //Name/event
 };
-
-
-
 
 struct flooritem_data {
 	struct block_list bl;

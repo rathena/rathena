@@ -5201,8 +5201,8 @@ Example(s):
 ==================================
 ---------------------------------------
 
-*monster     "<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>"};
-*areamonster "<map name>",<x1>,<y1>,<x2>,<y2>,"<name to show>",<mob id>,<amount>{,"<event label>"};
+*monster     "<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>",<size>,<ai>};
+*areamonster "<map name>",<x1>,<y1>,<x2>,<y2>,"<name to show>",<mob id>,<amount>{,"<event label>",<size>,<ai>};
 
 This command will spawn a monster on the specified coordinates on the specified 
 map. If the script is invoked by a character, a special map name, "this", will 
@@ -5224,11 +5224,17 @@ and upon the monster being killed, it will execute the script inside of the
 specified NPC object starting from the label given. The RID of the player 
 attached at this execution will be the RID of the killing character.
 
-The Event field can be used alternatively to specify other mob properties. Use
-2 to specify that the mob should be small, 4 for big monsters, and 8 for
-special ai mobs (which by default attack other monsters instead of players).
-You can add these, so using 10 will spawn small monsters that attack other
-mobs (if you specify both 2 and 4, the small version takes priority).
+<size> can be:
+	0 = medium (default)
+	1 = small
+	2 = big
+	
+<ai> can be:
+	0 = none (default)
+	1 = attack/friendly
+	2 = sphere (Alchemist skill)
+	3 = flora (Alchemist skill)
+	4 = zanzou (Kagerou/Oboro skill)
 
     monster "place",60,100,"Poring",1002,1,"NPCNAME::OnLabel";
 
