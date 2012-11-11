@@ -1238,6 +1238,7 @@ const char* parse_simpleexpr(const char *p)
 		++p;
 	} else if(ISDIGIT(*p) || ((*p=='-' || *p=='+') && ISDIGIT(p[1]))){
 		char *np;
+		while(*p == '0' && ISDIGIT(p[1])) p++;
 		i=strtoul(p,&np,0);
 		add_scripti(i);
 		p=np;
