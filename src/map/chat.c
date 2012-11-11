@@ -207,6 +207,10 @@ int chat_leavechat(struct map_session_data* sd, bool kicked)
 		map_deliddb(&cd->bl);
 		map_delblock(&cd->bl);
 		map_freeblock(&cd->bl);
+		
+		if (map_find_skill_unit_oncell(&sd->bl,sd->bl.x,sd->bl.y,AL_WARP,NULL,0) != NULL)
+			clif_changeoption(&sd->bl); // We tell the client that something has changed...	
+
 		return 1;
 	}
 
