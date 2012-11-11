@@ -7448,7 +7448,7 @@ int pc_setcart(struct map_session_data *sd,int type) {
 	if( type < 0 || type > MAX_CARTS )
 		return 1;// Never trust the values sent by the client! [Skotlex]
 
-	if( pc_checkskill(sd,MC_PUSHCART) <= 0 )
+	if( pc_checkskill(sd,MC_PUSHCART) <= 0 && type != 0 )
 		return 1;// Push cart is required
 
 	if( type == 0 && pc_iscarton(sd) )
