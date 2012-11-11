@@ -299,6 +299,7 @@ int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int li
 #define skill_delunitgroup(group) skill_delunitgroup_(group,__FILE__,__LINE__,__func__)
 int skill_clear_unitgroup(struct block_list *src);
 int skill_clear_group(struct block_list *bl, int flag);
+void ext_skill_unit_onplace(struct skill_unit *src, struct block_list *bl, unsigned int tick);
 
 int skill_unit_ondamaged(struct skill_unit *src,struct block_list *bl,int damage,unsigned int tick);
 

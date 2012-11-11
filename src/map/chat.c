@@ -13,6 +13,7 @@
 #include "map.h"
 #include "npc.h" // npc_event_do()
 #include "pc.h"
+#include "skill.h" // ext_skill_unit_onplace()
 #include "chat.h"
 
 #include <stdio.h>
@@ -202,14 +203,19 @@ int chat_leavechat(struct map_session_data* sd, bool kicked)
 
 
 	if( cd->users == 0 && cd->owner->type == BL_PC ) { // Delete empty chatroom
+		struct skill_unit* unit = NULL;
+		struct skill_unit_group* group = NULL;	
+
 		clif_clearchat(cd, 0);
 		db_destroy(cd->kick_list);
 		map_deliddb(&cd->bl);
 		map_delblock(&cd->bl);
 		map_freeblock(&cd->bl);
 		
-		if (map_find_skill_unit_oncell(&sd->bl,sd->bl.x,sd->bl.y,AL_WARP,NULL,0) != NULL)
-			clif_changeoption(&sd->bl); // We tell the client that something has changed...	
+		unit = map_find_skill_unit_oncell(&sd->bl, sd->bl.x, sd->bl.y, AL_WARP, NULL, 0);
+		group = (unit != NULL) ? unit->group : NULL;
+		if (group != NULL)
+			ext_skill_unit_onplace(unit, &sd->bl, group->tick);
 
 		return 1;
 	}

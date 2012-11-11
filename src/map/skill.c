@@ -10784,6 +10784,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 /*==========================================
  *
  *------------------------------------------*/
+void ext_skill_unit_onplace(struct skill_unit *src, struct block_list *bl, unsigned int tick){skill_unit_onplace(src, bl, tick);}
 static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned int tick)
 {
 	struct skill_unit_group *sg;
