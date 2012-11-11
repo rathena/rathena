@@ -1182,7 +1182,8 @@ set @i, getd("$pikachu");
 
 Returns a reference to a NPC variable (. prefix) from the target NPC.
 This can only be used to get . variables.
-Example(s):
+
+Examples:
 
 //This will return the value of .var, note that this can't be used, since the value isn't caught.
 	getvariableofnpc(.var,"TargetNPC");
@@ -1641,89 +1642,67 @@ result in error and termination of the script.
 ---------------------------------------
 
 *function <function name>;
-*<function name>;
+*<function name>{(<argument>,...<argument>)};
 *function <function name> {
 <code>
 }
 
-(Skotlex stop being so selfish and give us all the commands T~T! J/k lol :P)
-
-This works like callfunc. It's used for cleaner and fast scripting. Also they
-must be inside a script. They're not separated scripts and they work more like
-labels with arguments.
-
-Note it looks like the normal declaration
+This works like callfunc, and is used for cleaner and faster scripting. The function
+must be defined and used within a script, and works like a label with arguments.
 
 Usage:
 
-You first Declare the function with function <function name>;.
-
-Put the rest of your code. You can use then <function name>; to call the
-function. It can also return a value when used with parentheses.
-
-And at last, but inside the script itself, put the function <function name> {<code>}.
+    1. Declare the function.
+	function <function name>;
+    2. Call the function anywhere within the script.
+       It can also return a value when used with parentheses.
+	<function name>;
+    3. Define the function within the script.
+	<function name> {<code>}
 
 Example:
 
-prontera,154,189,4	script	Item seller	767,{
+prontera,154,189,4	script	Item Seller	767,{
+	/* Function declaration */
+	function SF_Selling;
 
-function SF_Selling;
-
-mes "I'll open this now if you have more than 50z and you are level 50 or bigger";
-next;
-
-if (Zeny > 50) && (BaseLevel > 50) {
-	mes "Welcome";
-	next;
-	SF_Selling;
-	close;
-} else
-
-set @needed,50-BaseLevel;
-mes "You either are Level "+BaseLevel+", thus you need "+@needed+" more levels";
-mes "to be able to use this NPC; or you don't have enough Zeny, so get some please";
-close;
-
-function SF_Selling {
-
-	mes "Would you like to buy a phracon for 50z?";
-	switch(select("Yes","No, thanks")) {
-
-	case 1:
-		mes "Ok, how many?";
-		input @quantity;
-		set @check,Zeny/50;
-		if (@quantity > @check) {
-			mes "Sorry but you can only have "+@check+" Phracons with "+Zeny;
-			close;
-		} else
-		next;
-		mes "here you have";
-		set Zeny,Zeny-@quantity*50;
-		getitem 1010,@quantity;
-		close;
-	case 2:
-		mes "Good bye then";
-		close;
-		}
+	if (Zeny > 50) {
+		mes "Welcome!";
+		/* Function call */
+		SF_Selling;
 	}
-	return;
+	else mes "You need 50z, sorry!";
+	close;
+
+	/* Function definition */
+	function SF_Selling {
+		mes "Would you like to buy a phracon for 50z?";
+		next;
+		if(select("Yes","No, thanks") == 1) {
+			set Zeny, Zeny-50;
+			getitem 1010,1;
+			mes "Thank you!";
+		}
+		return;
+	}
 }
 
 Example with parameters and return value:
 
 prontera,150,150,0	script	TestNPC	123,{
+	/* Function declaration */
 	function MyAdd;
 
 	mes "Enter two numbers.";
 	next;
 	input .@a;
 	input .@b;
+	/* Function call */
 	mes .@a+" + "+.@b+" = "+MyAdd(.@a,.@b);
 	close;
 
-	function MyAdd
-	{
+	/* Function definition */
+	function MyAdd {
 		return getarg(0)+getarg(1);
 	}
 }
@@ -1733,10 +1712,11 @@ prontera,150,150,0	script	TestNPC	123,{
 
 *is_function("<function name>")
 
-This command checks whether a function exists, returning 1 if function is found. 
-Otherwise, it will return 0.
+This command checks whether a function exists.
+It returns 1 if function is found, or 0 if it isn't.
 
 Example:
+
 	function	script	try	{
 		dothat;
 	}
@@ -2181,37 +2161,33 @@ Also useful when passing arrays to functions or accessing another npc's arrays:
 
 This function will return the basic stats of an invoking character, referred to 
 by the parameter number. Instead of a number, you can use a parameter name if it 
-is defined in "db/const.txt".
+is defined in 'db/const.txt'.
 
-For reference, in there these things are defined:
+For reference, these things are defined:
 
 StatusPoint, BaseLevel, SkillPoint, Class, Upper, Zeny, Sex, Weight, MaxWeight,
 JobLevel, BaseExp, JobExp, NextBaseExp, NextJobExp, Hp, MaxHp, Sp, MaxSp,
 BaseJob, Karma, Manner, bVit, bDex, bAgi, bStr, bInt, bLuk
 
 All of these also behave as variables, but don't expect to be able to just 'set' 
-all of them - some will not work for various internal reasons.
+them - some will not work for various internal reasons.
 
-    // This would return how many status points you haven't spent yet
-    readparam(9)
+Example 1:
 
-Using this particular information as a function call is not required. Just 
-putting
+    // Returns how many status points you haven't spent yet.
+    mes "Unused status points: "+readparam(9);
 
-    StatusPoint 
+Using this particular information as a function call is not required. Typing this
+will return the same result:
 
-will give you the same result, and some of these parameters work just like 
-variables (i.e. you can 'set Zeny,100' to make the character have 100 Zeny, 
-destroying whatever Zeny they had before, or 'set Zeny,Zeny+100' to give them 
-100 Zeny)
+    mes "Unused status points: "+StatusPoint;
 
-You can also use this command to get stat values:
+Example 2:
 
-    readparam(bVit)
-    if(readparam(bVit)<=77) goto L_End;
-    mes "Only people with over 77 Vit are reading this";
-L_End:
-    close;
+You can also use this command to get stat values.
+
+    if (readparam(bVit) > 77)
+        mes "Only people with over 77 Vit are reading this!";
 
 ---------------------------------------
 
@@ -2252,8 +2228,7 @@ to retrieve and can be one of the following:
 
     0 - Unit ID (GID)
 
-If an invalid type is given or the NPC does not exist, return value
-is 0.
+If an invalid type is given or the NPC does not exist, 0 is returned.
 
 ---------------------------------------
 
@@ -2261,9 +2236,10 @@ is 0.
 *getmotherid()
 *getfatherid()
 
-These functions return the characters (child/mother/father) ID
+These functions return the character ID of the attached player's child,
+mother, mother, or father, respectively. It returns 0 if no ID is found.
 
-    if (getmotherid()) mes "Oh... I know your mother's ID:"+getmotherid();
+    if (getmotherid()) mes "Your mother's ID is: "+getmotherid();
 
 ---------------------------------------
 
@@ -2558,7 +2534,6 @@ see 'getequipid'. Function originally used by the refining NPCs:
         mes "That's a fine hat you are wearing there...";
         close;
 
-
 ---------------------------------------
 
 *getequipisenableref(<equipment slot>)
@@ -2600,36 +2575,38 @@ This function returns the weapon level for the weapon equipped in the specified
 equipment slot on the invoking character. For a list of equipment slots see 
 'getequipid'.
 
-Only EQI_HAND_L and EQI_HAND_R normally make sense, since only weapons 
-have a weapon level. You can, however, probably, use this field for other 
-equippable custom items as a flag or something. 
+Only EQI_HAND_L and EQI_HAND_R normally make sense, since only weapons have
+a weapon level. You can, however, probably, use this field for other equippable
+custom items as a flag or something.
+
 If no item is equipped in this slot, or if it doesn't have a weapon level 
 according to the database, 0 will be returned.
 
+Examples:
+
+// Right hand can only contain a weapon.
     switch (getequipweaponlv(EQI_HAND_R)) {
-      case 1: mes "You are holding a lvl 1 weapon"; break;
-		case 2: mes "You are holding a lvl 2 weapon"; break;
-		case 3: mes "You are holding a lvl 3 weapon"; break;
-      case 4: mes "You are holding a lvl 4 weapon"; break;
-		case 5: mes "You are holding a lvl 5 weapon, hm, must be a custom design"; break;
-		default: mes "Seems you don't have a weapon on"; break;
-	 }
+      case 1: mes "You are holding a lvl 1 weapon."; break;
+      case 2: mes "You are holding a lvl 2 weapon."; break;
+      case 3: mes "You are holding a lvl 3 weapon."; break;
+      case 4: mes "You are holding a lvl 4 weapon."; break;
+      case 5: mes "You are holding a lvl 5 weapon, hm, must be a custom design..."; break;
+      default: mes "Seems you don't have a weapon on."; break;
+    }
 
-Or for the left hand, cause it can hold a weapon or a shield:
-
-        if(getequipid(EQI_HAND_R)==0) goto L_NothingEquiped;
-        switch (getequipweaponlv(EQI_HAND_L)) {
-          case 0: mes "You are holding a shield, so it doesnt have a level"; break;
-          case 1: mes "You are holding a lvl 1 weapon"; break;
-          case 2: mes "You are holding a lvl 2 weapon"; break;
-          case 3: mes "You are holding a lvl 3 weapon"; break;
-          case 4: mes "You are holding a lvl 4 weapon"; break;
-          case 5: mes "You are holding a lvl 5 weapon, hm, must be a custom design"; break;
-		  }
+// Left hand can hold either a weapon or shield.
+    if (getequipid(EQI_HAND_R) == 0) {
+        mes "Seems you have nothing equipped here.";
         close;
-    L_NothingEquiped:
-        mes "Seems you have nothing equipped";
-        close;
+    }
+    switch (getequipweaponlv(EQI_HAND_L)) {
+      case 0: mes "You are holding a shield, so it doesn't have a level."; break;
+      case 1: mes "You are holding a lvl 1 weapon."; break;
+      case 2: mes "You are holding a lvl 2 weapon."; break;
+      case 3: mes "You are holding a lvl 3 weapon."; break;
+      case 4: mes "You are holding a lvl 4 weapon."; break;
+      case 5: mes "You are holding a lvl 5 weapon, hm, must be a custom design..."; break;
+    }
 
 ---------------------------------------
 
@@ -2753,7 +2730,7 @@ and return the number of slots this kind of items has - 0 if they are not
 slotted. It will also be 0 for all non-equippable items, naturally, unless 
 someone messed up the item database. It will return -1 if there is no such item.
 
-Example(s):
+Example:
 
 //@slots now has the amount of slots of the item with ID 1205.
 	set @slots, getItemSlots(1205);
@@ -2782,18 +2759,10 @@ Check sample in doc/sample/getiteminfo.txt
 
 *getequipcardid(<equipment slot>,<card slot>)
 
-Returns value from equipped item slot in the indicated slot:
+Returns value from equipped item slot in the indicated slot (0, 1, 2, or 3).
 
-getequipcardid(num,slot)
-
-where:
-	num = equip position slot
-	slot = 0,1,2,3 (Card Slot N)
-
-This func returns CARD ID, 255,254,-255 (for card 0, if the item is produced) it's useful 
-when you want to check item cards or if it's signed. Useful for such quests as 
-"Sign this refined item with players name" etc;
-	Hat[0] +4 -> Player's Hat[0] +4
+This function returns CARD ID, 255,254,-255 (for card 0, if the item is produced).
+It's useful for when you want to check whether an item contains cards or if it's signed.
 
 ---------------------------------------
 //
@@ -3079,7 +3048,7 @@ recalculating guardians' HP.
 This function returns the level of the skill <skill id> of the guild <guild id>.
 If the guild does not have that skill, 0 is returned.
 If the guild does not exist, -1 is returned.
-Refer to 'db/skill_db.txt' for the full list of skills. (GD_* are guild skills)
+Refer to 'db/(pre-)re/skill_db.txt' for the full list of skills. (GD_* are guild skills)
 
 ---------------------------------------
 
@@ -3095,13 +3064,11 @@ the specified event as in a 'doevent' call.
 
 *getmapguildusers(<mapname>,<guild id>)
 
-Returns the amount of persons from the given guild that are on the given map.
-Example(s):
+Returns the amount of characters from the specified guild on the given map.
 
-//Will set the @persons variable to the amount of persons from the guild
-//which ID's = 10 and are at prontera.
+Example:
 
-	set @persons,getMapGuildUsers("prontera",10);
+mes "You have "+getMapGuildUsers("prontera",getcharid(2))+" guild members in Prontera.";
 
 ---------------------------------------
 //
@@ -3114,7 +3081,7 @@ Example(s):
 
 This function returns the level of the specified skill that the invoking 
 character has. If they don't have the skill, 0 will be returned. The full list 
-of character skills is available in 'db/skill_db.txt'.
+of character skills is available in 'db/(pre-)re/skill_db.txt'.
 
 There are two main uses for this function, it can check whether the character 
 has a skill or not, and it can tell you if the level is high enough.
@@ -3203,8 +3170,7 @@ PET_HUNGRY
 PET_INTIMATE
 
 Example:
-set @i, petstat(PET_CLASS);
-
+	set @i, petstat(PET_CLASS);
 
 ---------------------------------------
 
@@ -3576,7 +3542,7 @@ Return values for 'checkvending' are
 
 'checkchatting' returns 1 if they are in a chat room, 0 if they are not.
 
-Example(s):
+Examples:
 	//This will check if Aaron is vending, and if so, put a message in front
 	//of the attached player saying Aaron is vending.
 	if (checkvending("Aaron"))
@@ -3794,6 +3760,7 @@ Leader:       All party members are warped to the leader's position. The leader 
 If you specify a from_mapname, warpparty will only affect those on that map.
 
 Example:
+
 mes "[Party Warper]";
 mes "Here you go!";
 close2;
@@ -4152,7 +4119,7 @@ If <account ID> is not specified, items will be created in the invoking
 character inventory instead.
 
 In the first and most commonly used version of this command, items are 
-referred to by their database ID number found inside 'db/item_db.txt'.
+referred to by their database ID number found inside 'db/(pre-)re/item_db.txt'.
 
     getitem 502,10 // The person will receive 10 apples
     getitem 617,1  // The person will receive 1 Old Violet Box
@@ -4193,22 +4160,16 @@ This command will give an amount of specified items to the invoking character.
 If an optional account ID is specified, and the target character is currently 
 online, items will be created in their inventory instead. If they are not 
 online, nothing will happen. It works essentially the same as 'getitem' (it even 
-works for negative ID numbers the same way, which is kinda silly) but is a lot 
-more flexible, since it allows you to give the player an item altered with it's 
-specific properties. 
+works for negative ID numbers the same way) but is a lot more flexible.
 
 Those parameters that are different from 'getitem' are:
 
-identify    - Whether you want the item to be identified or not, 0 unidentified, 
-              1 identified.
+identify    - Whether you want the item to be identified (1) or not (0).
 refine      - For how many pluses will it be refined.
-              It will not let you refine an item higher than +10, if you 
-              specify more it'll still be 10.
-attribute   - Whether the item is broken (1) or not (0) and NOT an elemental 
-              attribute. 
+              It will not let you refine an item higher than the max refine.
+attribute   - Whether the item is broken (1) or not (0).
 card1,2,3,4 - If you want a card compound to it, place the card ID number into 
-              the specific card slot. Card ID numbers also found in 
-              'db/item_db.txt'
+              the specific card slot.
 
 Card1-card4 values are also used to store name information for named items, as 
 well as the elemental property of weapons and armor. You can create a named item 
@@ -4289,16 +4250,12 @@ this really cause.
 *getnameditem <item id>,<character name|character ID>;
 *getnameditem "<item name>",<character name|character ID>;
 
--Note: there's a total of 4 possible combinations of this command.
-E.g: item name and character name, or with character id, etc...
+Create an item signed with the given character's name. 
 
-Create a item signed with the given character's name. 
-This is the same as using the hard(ly) explained way with getitem2.
-
-The command returns 1 when the item is created successfully, or 0 when failed.
-Failure occurs when there is:
-- no player attached
-- Item name or ID is not valid
+The command returns 1 when the item is created successfully, or 0 if it fails.
+Failure occurs when:
+- There is no player attached.
+- Item name or ID is not valid.
 - The given character ID/name is offline.
 
 Example:
@@ -4333,7 +4290,7 @@ Note: 'delitem' in an NPC script can still remove rental items.
 This command will create an item lying around on a specified map in the 
 specified location.
 
- itemid   - Found in 'db/item_db.txt'
+ itemid   - Found in 'db/(pre-)re/item_db.txt'
  amount   - Amount you want produced
  map name - The map name
  X        - The X coordinate
@@ -4348,7 +4305,9 @@ If the map name is given as "this", the map the invoking character is on will be
 
 *searchitem <array name>,"<item name>";
 
-This command will fill the given array with the ID of items whose name matches the given one. It returns the number of items found. For performance reasons, the results array is limited to 10 items.
+This command will fill the given array with the ID of items whose name matches
+the given one. It returns the number of items found. For performance reasons,
+the results array is limited to 10 items.
 
 	mes "What item are you looking for?";
 	input @name$;
@@ -4365,7 +4324,7 @@ This command will fill the given array with the ID of items whose name matches t
 
 This command will take a specified amount of items from the invoking/target character. 
 As all the item commands, this one uses the ID of the item found inside 
-'db/item_db.txt'. The items are destroyed - there is no way an NPC can simply 
+'db/(pre-)re/item_db.txt'. The items are destroyed - there is no way an NPC can simply 
 own items and have an inventory of them, other as by destroying and recreating 
 them when needed.
 
@@ -4425,7 +4384,7 @@ Check 'getitem2' to understand the arguments of the function.
 *groupranditem <group id>;
 
 Returns the item_id of a random item picked from the group specified. The
-different groups and their group number are specified in db/(pre-)re/item_group_db.txt
+different groups and their group number are specified in 'db/(pre-)re/item_group_db.txt'.
 
 When used in conjunction with other functions, you can get a random item. For
 example, for a random pet lure:
@@ -4639,7 +4598,7 @@ this item in his/her inventory, while the autoequip function will
 equip the given item ID when this is looted. The option parameter of
 the autoequip is 1 or 0, 1 to turn it on, and 0 to turn it off.
 
-Example(s):
+Examples:
 
 //This will equip a 1104 (falchion) on the character if this is in the inventory.
 	equip 1104;
@@ -4771,7 +4730,7 @@ levels. This refers to the invoking character and will only work if the invoking
 character is a member of a guild AND it's guild master, otherwise no failure 
 message will be given and no error will occur, but nothing will happen - same 
 about the guild skill trying to exceed the possible maximum. The full list of 
-guild skills is available in 'db/skill_db.txt', these are all the GD_ skills at 
+guild skills is available in 'db/(pre-)re/skill_db.txt', these are all the GD_ skills at 
 the end.
 
 The flag parameter is currently not functional and it's a mystery of what it 
@@ -5000,7 +4959,7 @@ bLuk -  Luck
 This command will bump a specified stat of the invoking character up by the 
 specified amount permanently. The amount can be negative. See 'statusup'.
 
-    // This will decrease a character's Vit forever.
+// This will decrease a character's Vit forever.
     statusup bVit,-1;
 
 ---------------------------------------
@@ -5083,9 +5042,9 @@ These commands will give the invoking character a specified skill. This is also
 used for item scripts.
 
 Level is obvious. Skill id is the ID number of the skill in question as per 
-'db/skill_db.txt'. It is not known for certain whether this can be used to give 
+'db/(pre-)re/skill_db.txt'. It is not known for certain whether this can be used to give 
 a character a monster's skill, but you're welcome to try with the numbers given 
-in 'db/mob_skill_db.txt'.
+in 'db/(pre-)re/mob_skill_db.txt'.
 
 Flag is 0 if the skill is given permanently (will get written with the character 
 data) or 1 if it is temporary (will be lost eventually, this is meant for card 
@@ -5119,15 +5078,16 @@ The disguise lasts until 'undisguise' is issued or the player logs out.
 
 Example:
 
-disguise 1002; //Yay! You're a Poring!!!
+disguise 1002; // Disguise character as a Poring.
 next;
-undisguise; //Yay!!!! You're a human again!!
+undisguise; // Return to normal character sprite.
 
 ---------------------------------------
 \\
 4,3 Marriage-related commands
 \\
 ---------------------------------------
+
 *marriage("<spouse name>");
 
 This function will marry two characters, the invoking character and the one 
@@ -5171,7 +5131,7 @@ players, telling them they are now divorced.
 Makes a character follow or stop following someone. This command does the same as the @follow command.
 The main difference is that @follow can use character names, and this commands needs the Account ID for the target.
 
-Example(s):
+Examples:
 
 //This will make Aaron follow Bullah, when both of these characters are online.
 	PCFollow getCharID(3,"Aaron"),getCharID(3,"Bullah");
@@ -5186,7 +5146,7 @@ Example(s):
 Prevents the given ID from moving when the option != 0, 0 enables the ID to move again.
 ID should be able to be GID of a monster/NPC or AID from a character.
 
-Example(s):
+Examples:
 
 //prevents the current char from moving away;
 	pcblockmove getcharid(3),1;
@@ -5333,7 +5293,7 @@ command, simply use 1 for type. Any other number won't be recognized.
 *strmobinfo(<type>,<monster id>);
 
 This function will return information about a monster record in the database, as 
-per 'db/mob_db.txt'. Type is the kind of information returned. Valid types are:
+per 'db/(pre-)re/mob_db.txt'. Type is the kind of information returned. Valid types are:
 
  1 - 'english name' field in the database, a string.
  2 - 'japanese name' field in the database, a string.
@@ -5447,7 +5407,7 @@ the unit whose GID is given will start walking towards the map with the given ma
 When 2 arguments are passed, the given unit will walk to the given x,y coordinates on 
 the map where the unit currently is.
 
-Example(s):
+Examples:
 
 //Will move/walk the poring we made to the coordinates 150,150
 	unitwalk .GID,150,150;
@@ -5591,7 +5551,7 @@ complete the effect.
 
     // This will make everyone in the area see the NPC greet the character
     // who just invoked it.
-    npctalk "Hello "+strcharinfo(0)+" how are you";
+    npctalk "Hello "+strcharinfo(0)+", how are you?";
 
 ---------------------------------------
 
@@ -5603,8 +5563,6 @@ complete the effect.
 Changes the display name and/or display class of the target NPC.
 Returns 0 is successful, 1 if the NPC does not exist.
 Size is 0 = normal 1 = small 2 = big.
-
-Since trunk r11779
 
 ---------------------------------------
 \\
@@ -5731,10 +5689,12 @@ Example 1:
 Example 2:
 
     OnTimer15000:
-				npctalk "Another 15 seconds have passed.";
-        initnpctimer; // You have to use 'initnpctimer' instead of 'setnpctimer 0'.
-        							// This is equal to 'setnpctimer 0' + 'startnpctimer'.
-        							// Alternatively, you can also insert another 'OnTimer15001' label so that the timer won't stop.
+        npctalk "Another 15 seconds have passed.";
+
+        // You have to use 'initnpctimer' instead of 'setnpctimer 0'.
+        // This is equal to 'setnpctimer 0' + 'startnpctimer'.
+        // Alternatively, you can also insert another 'OnTimer15001' label so that the timer won't stop. */
+        initnpctimer;
         end;
        
     // This OnInit label will run when the script is loaded, so that the timer 
@@ -5747,15 +5707,14 @@ Example 2:
 Example 3:
 
     mes "[Man]";
-    mes "I have been waiting "+(getnpctimer(0)/1000)+" seconds for you";
-    // we divide the timer returned by 1000 cause it will be displayed in 
-    // milliseconds otherwise
+    mes "I have been waiting "+(getnpctimer(0)/1000)+" seconds for you.";
+    // We divide the timer returned by 1000 to convert milleseconds to seconds.
     close;
 
 Example 4:
 
     mes "[Man]";
-    mes "Ok I will let you have 30 sec more";
+    mes "Ok, I will let you have 30 more seconds...";
     close2;
     setnpctimer (getnpctimer(0)-30000);
     // Notice the 'close2'. If there were a 'next' there the timer would be 
@@ -5883,7 +5842,7 @@ For the options on callShop:
 	1 = The buy window
 	2 = The sell window
 	
-Example(s):
+Example:
 
 callshop "DaShop",1;	//Will call the shop named DaShop and opens the buy menu.
 
@@ -6103,7 +6062,7 @@ alternate respawn-upon-relogin point.
 It does not make a map impossible to make a save point on as you would normally 
 think, 'savepoint' will still work. It will, however, make the specified map 
 kick the reconnecting players off to the alternate map given to the coordinates 
- specified.
+specified.
 
 ---------------------------------------
 
@@ -6148,7 +6107,7 @@ This command checks the status of a given mapflag and returns the mapflag's stat
 Sets or gets the value of the given battle flag.
 Battle flags are the flags found in the battle/*.conf files and is also used in Lupus' variable rates script.
 
-Example(s):
+Examples:
 
 // Will set the base experience rate to 20x (2000%)
 	setBattleFlag "base_exp_rate",2000;
@@ -6164,7 +6123,7 @@ Creates a warp Portal as if a acolyte class character did it.
 The first x and y is the place of the warp portal on the map where the NPC is on
 The mapname and second x and y is the target area of the warp portal.
 
-Example(s):
+Examples:
 
 // Will create a warp portal on the NPC's map at 150,150 leading to prontera, coords 150,180.
 	warpportal 150,150,"prontera",150,180;
@@ -6314,7 +6273,7 @@ unnerving.
 Only a few NPC sprites have walking animations, and those that do, do not get 
 the animation invoked when moving the NPC, due to the problem in the NPC walking 
 code, which looks a bit silly. You might have better success by defining a job-
-sprite based sprite id in 'db/mob-avail.txt' with this.
+sprite based sprite id in 'db/mob_avail.txt' with this.
 
 ---------------------------------------
 
@@ -6327,10 +6286,9 @@ sometimes gives problems if the path isn't a straight line without objects),
 this command just moves the NPC. It basically warps out and in on the current 
 and given spot. Direction can be used to change the NPC's facing direction.
 
-Example(s):
+Example:
 
-// This will move Bugga from it's current position to the coordinates 100,20 
-// (if those coordinates are walkable (legit)).
+// This will move Bugga from to the coordinates 100,20 (if those coordinates are legit).
 	moveNPC "Bugga",100,20;
 	
 ---------------------------------------
@@ -6381,7 +6339,6 @@ This function returns a number ...
 
 rand(10)  would result in 0,1,2,3,4,5,6,7,8 or 9
 rand(0,9) would result in 0,1,2,3,4,5,6,7,8 or 9
-
 rand(2,5) would result in 2,3,4 or 5
 
 ---------------------------------------
@@ -6575,7 +6532,7 @@ the keyboard from a character that belonged to an account which had GM level 99.
 
 The commands can also run without an attached rid.
 
-Example(s):
+Example:
 
 //this would do the same as above, but now doesn't need a player attached by default.
 	charCommand "#option 0 0 0 Roy";
@@ -6589,6 +6546,7 @@ This command will bind a NPC event label to an atcommand. Upon execution of
 the atcommand, the user will invoke the NPC event label.
 
 Example:
+
 When a user types the command "@test", an angel effect will be shown.
 
 -	script	atcmd_example	-1,{
@@ -6645,17 +6603,15 @@ These two commands will switch the entire server between day and night mode
 respectively. If your server is set to cycle between day and night by
 configuration, it will eventually return to that cycle.
 
--%TAB%script%TAB%DayNight%TAB%-1,{
-	end;
+Example:
+
+-	script	DayNight	-1,{
 OnClock0600:
 	day;
 	end;
 OnInit:
 	// setting correct mode upon server start-up
-	if(gettime(3)>=6 && gettime(3)<18)
-	{
-		end;
-	}
+	if(gettime(3)>=6 && gettime(3)<18) end;
 OnClock1800:
 	night;
 	end;
@@ -6663,8 +6619,7 @@ OnClock1800:
 
 This script allows to emulate the day/night cycle as the server does, but also
 allows triggering additional effects upon change, like announces, gifts, etc.
-The day/night cycle set by configuration should be disabled, when this script is
-used.
+The day/night cycle set by configuration should be disabled when this script is used.
 
 ---------------------------------------
 
@@ -6779,9 +6734,9 @@ to query the server log tables.
 Converts the value to a string and escapes special characters so that it is safe to use in query_sql().
 Returns the escaped form of the given value.
 
-Example 1:
+Example:
 	set .@str$, "John's Laptop";
-	set .@esc_str$, escape_sql(.@name$);	// Escaped string: John\'s Laptop
+	set .@esc_str$, escape_sql(.@name$); // Escaped string: John\'s Laptop
 
 ---------------------------------------
 
@@ -6828,12 +6783,13 @@ These commands are used to convert strings to numbers. 'atoi' will interpret
 given string as a decimal number (base 10), while 'axtoi' interprets strings as
 hexadecimal numbers (base 16).
 
+Hexadecimal number set: {0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F}
+
 Example:
 
-	mes atoi("11"); 		// Will display 11 (can also be used to set a @var to 11)
-	set @var, axtoi("FF"); 	// Will set the @var to 255
-	mes axtoi("11"); 		// Will display 17 (1 = 1, 10 = 16, 
-							// hexadecimal number set: {0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F})
+set @var, atoi("11"); 	// Sets @var to 11
+set @var, axtoi("FF");	// Sets @var to 255
+mes axtoi("11");      	// Displays 17 (1 = 1, 10 = 16)
 
 ---------------------------------------
 
@@ -6842,7 +6798,7 @@ Example:
 This command returns 1 or 0 when the substring is in the main string (1) or not (0).
 This command is not case sensitive.
 
-Example(s):
+Examples:
 
 //dothis; will be executed ('Bloody Murderer' contains 'Blood').
 	if (compare("Bloody Murderer","Blood"))
@@ -7042,7 +6998,6 @@ Example:
 	countstr("test test test Test", "test"); //returns 3
 	countstr("cake Cake", "Cake", 0); //returns 2
 
-
 ---------------------------------------
 
 *setfont <font>;
@@ -7128,7 +7083,7 @@ when pet performance is activated.
 
 This will make the pet use a specified support skill on the owner whenever the 
 HP and SP are below the given percent values, with a specified delay time 
-between activations. The skill numbers are as per 'db/skill_db.txt'.
+between activations. The skill numbers are as per 'db/(pre-)re/skill_db.txt'.
 'petheal' works the same as 'petskillsupport' but has the skill ID hard-coded to 
 28 (Heal). This command is deprecated.
 It's not quite certain who's stats will be used for the skills cast, the 
@@ -7304,9 +7259,10 @@ Create an instance using the name "<instance name>" for the Party of <party id>.
 Most instance_* commands are used in conjunction with this command and depend
 on the ID this command returns.
 
-Example: 
+Example:
 	// Store the Party ID of the invoking character.
 	set .@party_id, getcharid(1);
+
 	// Attempt to create an instance using that party ID.
 	set .@id, instance_create("Endless Tower", .@party_id);
 	if (.@id == -1) { // Invalid type - not used anymore
@@ -7329,8 +7285,8 @@ Example:
 
 *instance_destroy {<instance id>};
 
-Destroys instance with the ID <instance id>. If no ID is specified, the instance,
-the script is attached to, is used. If the script is not attached to an instance,
+Destroys instance with the ID <instance id>. If no ID is specified, the instance
+the script is attached to is used. If the script is not attached to an instance,
 the instance of the currently attached player's party is used. If no player is
 currently attached, the command fails and causes the script to halt.
 
@@ -7349,7 +7305,7 @@ Returns the resulting map name on success or an empty string on failure.
 *instance_detachmap "<map name>"{,<instance id>};
 
 Detach the map "<map name>" to the instance with the <instance id>. If no ID is
-specified, the instance, the script is attached to, is used. If the script is not
+specified, the instance the script is attached to is used. If the script is not
 attached to an instance, the instance of the currently attached player's party is
 used. If no player is currently attached, the command fails and causes the script
 to halt.
@@ -7366,7 +7322,7 @@ source maps to the instanced maps.
 *instance_announce <instance id>,"<text>",<flag>{,<fontColor>{,<fontType>{,<fontSize>{,<fontAlign>{,<fontY>}}}}};
 
 Works like announce, but has the <instance id> parameter. If instance id is 0, the
-instance, the script is attached to, is used. If the script is not attached to an
+instance the script is attached to is used. If the script is not attached to an
 instance, the instance of the currently attached player's party is used. If no
 player is currently attached, the command fails and causes the script to halt.
 
@@ -7381,8 +7337,8 @@ Attaches the current script to the instance given by <instance id>.
 *instance_npcname("<npc name>"{,<instance id>});
 
 Retrieves the unique name given to a copy of an NPC given by "<npc name>" in an
-instance specified <instance id>. If no ID is specified, the instance, the script
-is attached to, is used. If the script is not attached to an instance, the
+instance specified <instance id>. If no ID is specified, the instance the script
+is attached to is used. If the script is not attached to an instance, the
 instance of the currently attached player's party is used. If no player is
 currently attached, the command fails and causes the script to halt.
 
@@ -7391,7 +7347,7 @@ currently attached, the command fails and causes the script to halt.
 *has_instance("<map name>"{,<instance id>});
 
 Checks whether or not the given map belongs to specified instance. If no ID is
-specified, the instance, the script is attached to, is used. If the script is not
+specified, the instance the script is attached to is used. If the script is not
 attached to an instance, the instance of the currently attached player's party
 is used. If no player is currently attached, the command fails and causes the
 script to halt.
@@ -7414,7 +7370,7 @@ Type:
 *instance_warpall "<map name>",<x>,<y>{,<instance id>};
 
 Warps all players in the instance <instance id> to <map name> at given
-coordinates. If no ID is specified, the instance, the script is attached to,
+coordinates. If no ID is specified, the instance the script is attached to
 is used. If the script is not attached to an instance, the instance of the
 currently attached player's party is used. If no player is currently attached,
 the command fails and causes the script to halt.
@@ -7424,7 +7380,7 @@ the command fails and causes the script to halt.
 *instance_set_timeout <alive timeout>,<idle timeout>{,<instance id>};
 
 Sets the timeout values for an instance given by <instance id>. If no ID is
-specified, the instance, the script is attached to, is used. If the script is
+specified, the instance the script is attached to is used. If the script is
 not attached to an instance, the instance of the currently attached player's
 party is used. If no player is currently attached, the command fails and causes
 the script to halt.
@@ -7437,57 +7393,23 @@ Both timeout values are in seconds.
 
 ---------------------------------------
 
-*instance_check_party <Party ID>{,<amount>{,<min>{,<max>}}};
+*instance_check_party(<party id>{,<amount>{,<min>{,<max>}}});
 
-Checks the Players Party if it meets the above set requirements.
+This function checks if a party meets certain requirements, returning 1 if all
+conditions are met and 0 otherwise. It will only check online characters.
 
-While the Party ID of the invoking character has to be set, the Values amount, min
-and max are optional parameters and doesn't need to be set. You will find below an
-little List for an explenation of what those values are for.
+amount - number of online party members (default is 1).
+min    - minimum level of all characters in the party (default is 1).
+max    - maximum level of all characters in the party (default is max level in conf).
 
-Values:
-Party ID: Party ID of the invoking character. [Required Parameter]
-amount: Amount of needed Partymembers for the Instance. [Optional Parameter]
-min: Minimum Level needed to join the Instance. [Optional Parameter]
-max: Maxium Level allowed to join the Instance. [Optional Parameter]
-
-If no amount is given the Memorial Dungeon will of course at least need 1 Player to enter.
-If no min Level requirement is given, the Player has at least to be Level 1 to enter the Memorial Dungeon.
-If no max Level requirement is given, every Player can enter which is not above your Max. Level setting in the configuration files of your Server.
-
-This Command will also check if every Player inside the Party of the invoking Character is online. So if 2 Players are inside a Party
-but one of them is offline, the other Player won't be able to join the Memorial Dungeon.
-
-Also, here are some examples of how this Command will work inside a script:
+Example:
 
 if (instance_check_party(getcharid(1),2,2,149)) {
-	mes "Ok, your party is complete and meets the Memorial Dungeons requirement.",
-	mes "Members have a Baselevel between 1 and 150 and there are at least 2 Players inside the Party.";
+	mes "Your party meets the Memorial Dungeon requirements.",
+	mes "All online members are between levels 1-150 and at least two are online.";
 	close;
 } else {
-	mes "Sorry, but it seems like your Party does not meet the Memorial Dungeon requirements.";
-	close;
-}
-
-You also can use set .@party_id,getcharid(1); for example to save the Players Party ID.
-
-if (instance_check_party(.@party_id,2,2,149)) {
-	mes "Ok, your party is complete and meets the Memorial Dungeons requirement.",
-	mes "Members have a Baselevel between 1 and 150 and there are at least 2 Players inside the Party.";
-	close;
-} else {
-	mes "Sorry, but it seems like your Party does not meet the Memorial Dungeon requirements.";
-	close;
-}
-
-And another way of checking could also be:
-
-if(!instance_check_party(getcharid(1),2,2,149)){
-	mes "Sorry, but it seems like your Party does not meet the Memorial Dungeon requirements.";
-	close;
-}else{
-	mes "Ok, your party is complete and meets the Memorial Dungeons requirement.",
-	mes	"Members have a Baselevel between 1 and 150 and there are at least 2 Players inside the Party.";
+	mes "Sorry, your party does not meet requirements.";
 	close;
 }
 
@@ -7701,9 +7623,9 @@ map within an specified rectangular area.
 
 *bg_updatescore "<mapname>",<Guillaume Score>,<Croix Score>;
 
-Only usable when the map is defined as type:
-mapflag	<mapname>	battleground	2
 This command will force the update of the displayed scoreboard.
+It is only usable when the map is defined as a Type 2 Battleground:
+mapflag	<mapname>	battleground	2
 
 ----------------------------------------
 
