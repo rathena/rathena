@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20120915
+//= 20121112
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
@@ -190,10 +190,11 @@ Sets a mapflag for the current map (1 = On, 0 = Off).
 
 ---------------------------------------
 
-@addwarp <map> <x> <y>
+@addwarp <map> <x> <y> {<npc name>}
 
 Creates a warp portal on the character's current coordinates that lasts until the next reboot.
-The name of the new warp portal will be displayed only once in the chat window.
+If no name is specified, the server will automatically assign a name for the warp portal.
+The name will be displayed only once in the chat window.
 
 Example:
 @addwarp prontera 50 50
@@ -721,7 +722,7 @@ Additionally, @recallall will recall the entire server.
 
 ---------------------------------------
 
-@tonpc <NPC Name>
+@tonpc <npc name>
 
 Warps to the specified npc.
 
@@ -903,9 +904,9 @@ Ressurection commands.
 
 ---------------------------------------
 
-@disguise <monster/NPC name/ID>
+@disguise <monster/npc name/ID>
 @undisguise
-@disguiseall <monster/NPC name/ID>
+@disguiseall <monster/npc name/ID>
 @undisguiseall
 
 Disguises or undisguises player as a monster/NPC sprite.
@@ -926,7 +927,7 @@ Toggles GM Hide (total invisibility to characters and monsters).
 
 ---------------------------------------
 
-@npctalk <NPC Name> <message>
+@npctalk <npc name> <message>
 
 Command what other npcs say.
 Displays the message above the NPC's head (like the 'npctalk' script command).
@@ -1133,14 +1134,14 @@ If no permission is given, a list of available permissions will be returned.
 
 ---------------------------------------
 
-@npcmove <x> <y> <npc_name>
+@npcmove <x> <y> <npc name>
 
 Moves an NPC to a specified coordinate on its map.
 
 ---------------------------------------
 
-@hidenpc <NPC Name>
-@shownpc <NPC Name>
+@hidenpc <npc name>
+@shownpc <npc name>
 
 Toggles the visibility of an NPC's sprite.
 
@@ -1155,7 +1156,7 @@ Example:
 
 ---------------------------------------
 
-@unloadnpc <NPC Name>
+@unloadnpc <npc name>
 
 Unloads an NPC.
 
@@ -1239,7 +1240,7 @@ Changes guild level by the specified amount.
 
 ---------------------------------------
 
-@disguiseguild <monster/NPC name/ID> <guild name/ID>
+@disguiseguild <monster/npc name/ID> <guild name/ID>
 @undisguiseguild
 
 Disguises or undisguises all online characters of a guild.
