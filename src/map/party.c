@@ -36,7 +36,7 @@ static unsigned long party_booking_nextid = 1;
 int party_send_xy_timer(int tid, unsigned int tick, int id, intptr_t data);
 
 /*==========================================
- * Fills the given party_member structure according to the sd provided. 
+ * Fills the given party_member structure according to the sd provided.
  * Used when creating/adding people to a party. [Skotlex]
  *------------------------------------------*/
 static void party_fill_member(struct party_member* member, struct map_session_data* sd, unsigned int leader)
@@ -254,7 +254,7 @@ int party_recv_info(struct party* sp, int char_id)
 	int added_count = 0;
 	int i;
 	int member_id;
-	
+
 	nullpo_ret(sp);
 
 	p = (struct party_data*)idb_get(party_db, sp->party_id);
@@ -336,7 +336,7 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 {
 	struct party_data *p;
 	int i;
-	
+
 	nullpo_ret(sd);
 
 	if( ( p = party_search(sd->status.party_id) ) == NULL )
@@ -357,7 +357,7 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 		clif_party_inviteack(sd, (tsd?tsd->status.name:""), 3);
 		return 0;
 	}
-	
+
 	// confirm whether the account has the ability to invite before checking the player
 	if( !pc_has_permission(sd, PC_PERM_PARTY) || (tsd && !pc_has_permission(tsd, PC_PERM_PARTY)) ) {
 		clif_displaymessage(sd->fd, msg_txt(81)); // "Your GM level doesn't authorize you to preform this action on the specified player."
@@ -386,7 +386,7 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 		clif_party_inviteack(sd,tsd->status.name,0);
 		return 0;
 	}
-		
+
 	tsd->party_invite=sd->status.party_id;
 	tsd->party_invite_account=sd->status.account_id;
 
@@ -588,7 +588,7 @@ int party_broken(int party_id)
 	p = party_search(party_id);
 	if( p == NULL )
 		return 0;
-		
+
 	if( p->instance_id )
 	{
 		instance[p->instance_id].party_id = 0;
@@ -650,7 +650,7 @@ bool party_changeleader(struct map_session_data *sd, struct map_session_data *ts
 	}
 
 	if( map[sd->bl.m].flag.partylock )
-	{               
+	{
 		clif_displaymessage(sd->fd, msg_txt(287));
 		return false;
 	}
@@ -714,7 +714,7 @@ int party_recv_movemap(int party_id,int account_id,int char_id, unsigned short m
 	m->lv = lv;
 	//Check if they still exist on this map server
 	p->data[i].sd = party_sd_check(party_id, account_id, char_id);
-	
+
 	clif_party_info(p,NULL);
 	return 0;
 }
@@ -741,7 +741,7 @@ void party_send_movemap(struct map_session_data *sd)
 
 	if (sd->fd) { // synchronize minimap positions with the rest of the party
 		for(i=0; i < MAX_PARTY; i++) {
-			if (p->data[i].sd && 
+			if (p->data[i].sd &&
 				p->data[i].sd != sd &&
 				p->data[i].sd->bl.m == sd->bl.m)
 			{
@@ -765,7 +765,7 @@ int party_send_logout(struct map_session_data *sd)
 
 	if(!sd->status.party_id)
 		return 0;
-	
+
 	intif_party_changemap(sd,0);
 	p=party_search(sd->status.party_id);
 	if(!p) return 0;
@@ -775,7 +775,7 @@ int party_send_logout(struct map_session_data *sd)
 		memset(&p->data[i], 0, sizeof(p->data[0]));
 	else
 		ShowError("party_send_logout: Failed to locate member %d:%d in party %d!\n", sd->status.account_id, sd->status.char_id, p->party.party_id);
-	
+
 	return 1;
 }
 
@@ -823,7 +823,7 @@ int party_skill_check(struct map_session_data *sd, int party_id, int skillid, in
 		default:
 			return 0; //Unknown case?
 	}
-	
+
 	for(i=0;i<MAX_PARTY;i++){
 		if ((p_sd = p->data[i].sd) == NULL)
 			continue;
@@ -949,7 +949,7 @@ int party_exp_share(struct party_data* p, struct block_list* src, unsigned int b
 		pc_gainexp(sd[i], src, base_exp, job_exp, false);
 
 		if (zeny) // zeny from mobs [Valaris]
-			pc_getzeny(sd[i],zeny);
+			pc_getzeny(sd[i],zeny,LOG_TYPE_OTHER,NULL);
 	}
 	return 0;
 }
@@ -973,7 +973,7 @@ int party_share_loot(struct party_data* p, struct map_session_data* sd, struct i
 
 				if( (psd = p->data[i].sd) == NULL || sd->bl.m != psd->bl.m || pc_isdead(psd) || (battle_config.idle_no_share && pc_isidle(psd)) )
 					continue;
-				
+
 				if (pc_additem(psd,item_data,item_data->amount,LOG_TYPE_PICKDROP_PLAYER))
 					continue; //Chosen char can't pick up loot.
 
@@ -1008,7 +1008,7 @@ int party_share_loot(struct party_data* p, struct map_session_data* sd, struct i
 		}
 	}
 
-	if (!target) { 
+	if (!target) {
 		target = sd; //Give it to the char that picked it up
 		if ((i=pc_additem(sd,item_data,item_data->amount,LOG_TYPE_PICKDROP_PLAYER)))
 			return i;
@@ -1036,7 +1036,7 @@ int party_sub_count(struct block_list *bl, va_list ap)
 
 	if (sd->state.autotrade)
 		return 0;
-	
+
 	if (battle_config.idle_no_share && pc_isidle(sd))
 		return 0;
 
@@ -1052,9 +1052,9 @@ int party_foreachsamemap(int (*func)(struct block_list*,va_list),struct map_sess
 	struct block_list *list[MAX_PARTY];
 	int blockcount=0;
 	int total = 0; //Return value.
-	
+
 	nullpo_ret(sd);
-	
+
 	if((p=party_search(sd->status.party_id))==NULL)
 		return 0;
 
@@ -1073,11 +1073,11 @@ int party_foreachsamemap(int (*func)(struct block_list*,va_list),struct map_sess
 			(psd->bl.x<x0 || psd->bl.y<y0 ||
 			 psd->bl.x>x1 || psd->bl.y>y1 ) )
 			continue;
-		list[blockcount++]=&psd->bl; 
+		list[blockcount++]=&psd->bl;
 	}
 
 	map_freeblock_lock();
-	
+
 	for(i=0;i<blockcount;i++)
 	{
 		va_list ap;
@@ -1120,7 +1120,7 @@ void party_booking_register(struct map_session_data *sd, short level, short mapi
 		clif_PartyBookingRegisterAck(sd, 2);
 		return;
 	}
-	
+
 	memcpy(pb_ad->charname,sd->status.name,NAME_LENGTH);
 	pb_ad->starttime = (int)time(NULL);
 	pb_ad->p_detail.level = level;
@@ -1141,10 +1141,10 @@ void party_booking_update(struct map_session_data *sd, short* job)
 	struct party_booking_ad_info *pb_ad;
 
 	pb_ad = (struct party_booking_ad_info*)idb_get(party_booking_db, sd->status.char_id);
-	
+
 	if( pb_ad == NULL )
 		return;
-	
+
 	pb_ad->starttime = (int)time(NULL);// Update time.
 
 	for(i=0;i<PARTY_BOOKING_JOBS;i++)
@@ -1162,9 +1162,9 @@ void party_booking_search(struct map_session_data *sd, short level, short mapid,
 	struct party_booking_ad_info* result_list[PARTY_BOOKING_RESULTS];
 	bool more_result = false;
 	DBIterator* iter = db_iterator(party_booking_db);
-	
+
 	memset(result_list, 0, sizeof(result_list));
-	
+
 	for( pb_ad = dbi_first(iter); dbi_exists(iter); pb_ad = dbi_next(iter) )
 	{
 		if (pb_ad->index < lastindex || (level && (pb_ad->p_detail.level < level-15 || pb_ad->p_detail.level > level)))

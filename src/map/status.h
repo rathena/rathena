@@ -613,10 +613,6 @@ typedef enum sc_type {
  * To increase the maximum value just add another status type before SC_MAXSPELLBOOK (ex. SC_SPELLBOOK7, SC_SPELLBOOK8 and so on)
  **/
 	SC_MAXSPELLBOOK,
-	/* homun-s */
-	SC_ANGRIFFS_MODUS,
-	SC_GOLDENE_FERSE,
-	SC_ERASER_CUTTER,
 	/* Max HP & SP */
 	SC_INCMHP,
 	SC_INCMSP,
@@ -635,6 +631,21 @@ typedef enum sc_type {
 	SC_ZANGETSU,
 	SC_GENSOU,
 	SC_AKAITSUKI,
+	
+	//homon S
+	SC_STYLE_CHANGE,        
+    SC_GOLDENE_FERSE,
+    SC_ANGRIFFS_MODUS,
+    SC_ERASER_CUTTER,
+    SC_OVERED_BOOST,        
+    SC_LIGHT_OF_REGENE,
+    SC_ASH,
+    SC_GRANITIC_ARMOR,
+    SC_MAGMA_FLOW,
+    SC_PYROCLASTIC,
+    SC_PARALYSIS,
+    SC_PAIN_KILLER,
+
 #ifdef RENEWAL	
 	SC_EXTREMITYFIST2,
 #endif

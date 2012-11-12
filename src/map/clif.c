@@ -1356,7 +1356,7 @@ int clif_spawn(struct block_list *bl)
 			TBL_PC *sd = ((TBL_PC*)bl);
 			int i;
 			if (sd->spiritball > 0)
-				clif_spiritball(sd);
+				clif_spiritball(&sd->bl);
 			if(sd->state.size==SZ_BIG) // tiny/big players [Valaris]
 				clif_specialeffect(bl,423,AREA);
 			else if(sd->state.size==SZ_MEDIUM)
@@ -5440,12 +5440,12 @@ void clif_GlobalMessage(struct block_list* bl, const char* message) {
 	char buf[100];
 	int len;
 	nullpo_retv(bl);
-	
+
 	if(!message)
 		return;
-	
+
 	len = strlen(message)+1;
-	
+
 	if( len > sizeof(buf)-8 ) {
 		ShowWarning("clif_GlobalMessage: Truncating too long message '%s' (len=%d).\n", message, len);
 		len = sizeof(buf)-8;
@@ -5465,7 +5465,7 @@ void clif_GlobalMessage(struct block_list* bl, const char* message) {
 void clif_MainChatMessage(const char* message) {
 	uint8 buf[200];
 	int len;
-	
+
 	if(!message)
 		return;
 
@@ -6896,20 +6896,27 @@ void clif_devotion(struct block_list *src, struct map_session_data *tsd)
 		clif_send(buf, packet_len(0x1cf), src, AREA);
 }
 
+/*==========================================
+ * Server tells clients nearby 'sd' (and himself) to display 'sd->spiritball' number of spiritballs on 'sd'
+ * Notifies clients in an area of an object's spirits.
+ * 01d0 <id>.L <amount>.W (ZC_SPIRITS)
+ * 01e1 <id>.L <amount>.W (ZC_SPIRITS2)
+ *------------------------------------------*/
+void clif_spiritball(struct block_list *bl) {
+    unsigned char buf[16];
+    TBL_PC *sd = BL_CAST(BL_PC,bl);
+    TBL_HOM *hd = BL_CAST(BL_HOM,bl);
 
-/// Notifies clients in an area of an object's spirits.
-/// 01d0 <id>.L <amount>.W (ZC_SPIRITS)
-/// 01e1 <id>.L <amount>.W (ZC_SPIRITS2)
-void clif_spiritball(struct map_session_data *sd)
-{
-	unsigned char buf[8];
+    nullpo_retv(bl);
 
-	nullpo_retv(sd);
-
-	WBUFW(buf,0)=0x1d0;
-	WBUFL(buf,2)=sd->bl.id;
-	WBUFW(buf,6)=sd->spiritball;
-	clif_send(buf,packet_len(0x1d0),&sd->bl,AREA);
+    WBUFW(buf, 0) = 0x1d0;
+    WBUFL(buf, 2) = bl->id;
+	WBUFW(buf, 6) = 0; //init to 0
+    switch(bl->type){
+        case BL_PC: WBUFW(buf, 6) = sd->spiritball; break;
+        case BL_HOM: WBUFW(buf, 6) = hd->spiritball; break;
+    }
+    clif_send(buf, packet_len(0x1d0), bl, AREA);
 }
 
 
@@ -8205,7 +8212,7 @@ void clif_message(struct block_list* bl, const char* msg) {
 	unsigned short msg_len = strlen(msg) + 1;
 	uint8 buf[256];
 	nullpo_retv(bl);
-	
+
 	if( msg_len > sizeof(buf)-8 ) {
 		ShowWarning("clif_message: Truncating too long message '%s' (len=%u).\n", msg, msg_len);
 		msg_len = sizeof(buf)-8;
@@ -8215,7 +8222,7 @@ void clif_message(struct block_list* bl, const char* msg) {
 	WBUFW(buf,2) = msg_len + 8;
 	WBUFL(buf,4) = bl->id;
 	safestrncpy((char*)WBUFP(buf,8), msg, msg_len);
-	
+
 	clif_send(buf, WBUFW(buf,2), bl, AREA_CHAT_WOC);
 }
 
@@ -14220,8 +14227,7 @@ void clif_parse_Auction_register(int fd, struct map_session_data *sd)
 		pc_delitem(sd, sd->auction.index, sd->auction.amount, 1, 6, LOG_TYPE_AUCTION);
 		sd->auction.amount = 0;
 
-		log_zeny(sd, LOG_TYPE_AUCTION, sd, -zeny);
-		pc_payzeny(sd, zeny);
+		pc_payzeny(sd, zeny, LOG_TYPE_AUCTION, NULL);
 	}
 }
 
@@ -14265,8 +14271,7 @@ void clif_parse_Auction_bid(int fd, struct map_session_data *sd)
 	else if ( CheckForCharServer() ) // char server is down (bugreport:1138)
 		clif_Auction_message(fd, 0); // You have failed to bid into the auction
 	else {
-		log_zeny(sd, LOG_TYPE_AUCTION, sd, -bid);
-		pc_payzeny(sd, bid);
+		pc_payzeny(sd, bid, LOG_TYPE_AUCTION, NULL);
 		intif_Auction_bid(sd->status.char_id, sd->status.name, auction_id, bid);
 	}
 }

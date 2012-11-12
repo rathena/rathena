@@ -366,17 +366,14 @@ void buyingstore_trade(struct map_session_data* sd, int account_id, unsigned int
 		ARR_FIND( 0, pl_sd->buyingstore.slots, listidx, pl_sd->buyingstore.items[listidx].nameid == nameid );
 		zeny = amount*pl_sd->buyingstore.items[listidx].price;
 
-		// log
-		log_zeny(sd, LOG_TYPE_BUYING_STORE, pl_sd, zeny);
-
 		// move item
 		pc_additem(pl_sd, &sd->status.inventory[index], amount, LOG_TYPE_BUYING_STORE);
 		pc_delitem(sd, index, amount, 1, 0, LOG_TYPE_BUYING_STORE);
 		pl_sd->buyingstore.items[listidx].amount-= amount;
 
 		// pay up
-		pc_payzeny(pl_sd, zeny);
-		pc_getzeny(sd, zeny);
+		pc_payzeny(pl_sd, zeny, LOG_TYPE_BUYING_STORE, sd);
+		pc_getzeny(sd, zeny, LOG_TYPE_BUYING_STORE, pl_sd);
 		pl_sd->buyingstore.zenylimit-= zeny;
 
 		// notify clients

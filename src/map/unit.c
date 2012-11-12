@@ -1249,6 +1249,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 	case RA_WUGDASH:
 		if (sc && sc->data[SC_WUGDASH])
 			casttime = -1;
+        break;
 	}
 	
 	// moved here to prevent Suffragium from ending if skill fails

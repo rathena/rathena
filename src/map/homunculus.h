@@ -45,6 +45,8 @@ struct homun_data {
 	int hungry_timer;	//[orn]
 	unsigned int exp_next;
 	char blockskill[MAX_SKILL];	// [orn]
+    
+    int spiritball; //for homun S [lighta]
 };
 
 #define HOM_EVO 0x100 //256
@@ -111,5 +113,8 @@ int merc_skill_tree_get_max(int id, int b_class);
 void merc_hom_init_timers(struct homun_data * hd);
 void merc_skill_reload(void);
 void merc_reload(void);
+
+int hom_addspiritball(TBL_HOM *hd, int max);
+int hom_delspiritball(TBL_HOM *hd, int count, int type);
 
 #endif /* _HOMUNCULUS_H_ */

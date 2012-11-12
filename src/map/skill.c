@@ -615,6 +615,22 @@ int skillnotok_hom(int skillid, struct homun_data *hd)
 
 	if (hd->blockskill[i] > 0)
 		return 1;
+	switch(skillid){
+	    case MH_LIGHT_OF_REGENE:
+		if(hd->homunculus.intimacy <= 750) //if not cordial
+		    return 1;
+		break;
+	    case MH_OVERED_BOOST:
+		if(hd->homunculus.hunger <= 1) //if we starving
+		    return 1;
+	    case MH_GOLDENE_FERSE: //can be used with angriff
+		if(hd->sc.data[SC_ANGRIFFS_MODUS])
+		    return 1;
+	    case MH_ANGRIFFS_MODUS:
+		if(hd->sc.data[SC_GOLDENE_FERSE])
+		    return 1;
+		break;
+	}
 
 	//Use master's criteria.
 	return skillnotok(skillid, hd->master);
@@ -796,17 +812,18 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 					sc_start(src,SC_COMBO, 15, TK_TURNKICK,
 						(2000 - 4*sstatus->agi - 2*sstatus->dex)))
 					; //Stance triggered
-				else if(sc->data[SC_READYCOUNTER])
-				{	//additional chance from SG_FRIEND [Komurka]
+                    else if (sc->data[SC_READYCOUNTER]) { //additional chance from SG_FRIEND [Komurka]
 					rate = 20;
 					if (sc->data[SC_SKILLRATE_UP] && sc->data[SC_SKILLRATE_UP]->val1 == TK_COUNTER) {
 						rate += rate*sc->data[SC_SKILLRATE_UP]->val2/100;
 						status_change_end(src, SC_SKILLRATE_UP, INVALID_TIMER);
 					}
-					sc_start4(src,SC_COMBO, rate, TK_COUNTER, bl->id,0,0,
+					sc_start2(src, SC_COMBO, rate, TK_COUNTER, bl->id,
 						(2000 - 4*sstatus->agi - 2*sstatus->dex));
 				}
 			}
+			if(sc && sc->data[SC_PYROCLASTIC] && (rnd() % 1000 <= sstatus->luk * 10 / 3 + 1) )
+				skill_castend_pos2(src, bl->x, bl->y, BS_HAMMERFALL,sc->data[SC_PYROCLASTIC]->val1, tick, 0);
 		}
 
 		if (sc) {
@@ -1350,17 +1367,20 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case EL_TYPOON_MIS:
 		sc_start(bl,SC_SILENCE,10*skilllv,skilllv,skill_get_time(skillid,skilllv));
 		break;
-	case MH_LAVA_SLIDE:
-		sc_start4(bl,SC_BURNING,10*skilllv,skilllv,1000,src->id,0,skill_get_time(skillid,skilllv));
-		break;
-	case MH_STAHL_HORN:
-		sc_start(bl,SC_STUN,(20 + 4 * skilllv),skilllv,skill_get_time2(skillid,skilllv));
-		break;
 	case KO_JYUMONJIKIRI: // needs more info
 		sc_start(bl,SC_JYUMONJIKIRI,25,skilllv,skill_get_time(skillid,skilllv));
 		break;
 	case KO_MAKIBISHI:
 		sc_start(bl, SC_STUN, 100, skilllv, skill_get_time2(skillid,skilllv));
+		break;
+	case MH_LAVA_SLIDE:
+		if (tsc && !tsc->data[SC_BURNING]) sc_start4(bl, SC_BURNING, 10 * skilllv, skilllv, 1000, src->id, 0, skill_get_time(skillid, skilllv));
+		break;
+	case MH_STAHL_HORN:
+		sc_start(bl, SC_STUN, (20 + 4 * (skilllv-1)), skilllv, skill_get_time(skillid, skilllv));
+		break;
+	case MH_NEEDLE_OF_PARALYZE:
+		sc_start(bl, SC_PARALYSIS, 40 + (5*skilllv), skilllv, skill_get_time(skillid, skilllv));
 		break;
 	}
 
@@ -2787,10 +2807,11 @@ static int skill_check_unit_range_sub (struct block_list *bl, va_list ap)
 	g_skillid = unit->group->skill_id;
 
 	switch (skillid) {
+		case MH_STEINWAND:
 		case MG_SAFETYWALL:
 		case AL_PNEUMA:
 		case SC_MAELSTROM:
-			if(g_skillid != MG_SAFETYWALL && g_skillid != AL_PNEUMA && g_skillid != SC_MAELSTROM)
+			if(g_skillid != MH_STEINWAND && g_skillid != MG_SAFETYWALL && g_skillid != AL_PNEUMA && g_skillid != SC_MAELSTROM)
 				return 0;
 			break;
 		case AL_WARP:
@@ -3483,7 +3504,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case WM_SEVERE_RAINSTORM_MELEE:
 	case WM_GREAT_ECHO:
 	case GN_SLINGITEM_RANGEMELEEATK:
-	case MH_STAHL_HORN:
 	case KO_JYUMONJIKIRI:
 	case KO_SETSUDAN:
 	case KO_KAIHOU:
@@ -3720,7 +3740,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case SO_VARETYR_SPEAR:
 	case GN_CART_TORNADO:
 	case GN_CARTCANNON:
-	case MH_LAVA_SLIDE:
 	case KO_HAPPOKUNAI:
 	case KO_HUUMARANKA:
 	case KO_MUCHANAGE:
@@ -4528,6 +4547,21 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		break;
 
 
+	//recursive homon skill
+	case MH_MAGMA_FLOW:
+	case MH_XENO_SLASHER:
+	case MH_HEILIGE_STANGE:
+		if(flag & 1)
+		    skill_attack(skill_get_type(skillid), src, src, bl, skillid, skilllv, tick, flag);
+		else {
+		    map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), splash_target(src), src, skillid, skilllv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
+		}
+		break;
+	case MH_STAHL_HORN:
+	case MH_NEEDLE_OF_PARALYZE:
+		skill_attack(BF_WEAPON, src, src, bl, skillid, skilllv, tick, flag);
+		break;
+
 	case 0:/* no skill - basic/normal attack */
 		if(sd) {
 			if (flag & 3){
@@ -4545,11 +4579,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	default:
-		if( skillid >= HM_SKILLBASE && skillid <= HM_SKILLBASE + MAX_HOMUNSKILL ) {
-			if( src->type == BL_HOM && ((TBL_HOM*)src)->master->fd )
-				clif_colormes(((TBL_HOM*)src)->master, COLOR_RED, "This skill is not yet supported");
-		} else /* temporary until all the homun-s skills are supported otherwise console would fill up with pointless warnings */
-			ShowWarning("skill_castend_damage_id: Unknown skill used:%d\n",skillid);
+		ShowWarning("skill_castend_damage_id: Unknown skill used:%d\n",skillid);
 		clif_skill_damage(src, bl, tick, status_get_amotion(src), tstatus->dmotion,
 			0, abs(skill_get_num(skillid, skilllv)),
 			skillid, skilllv, skill_get_hit(skillid));
@@ -4660,6 +4690,18 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			break;
 		case NPC_SMOKING: //Since it is a self skill, this one ends here rather than in damage_id. [Skotlex]
 			return skill_castend_damage_id (src, bl, skillid, skilllv, tick, flag);
+		case MH_STEINWAND: {
+			struct block_list *s_src = battle_get_master(src);
+			short ret;
+			if(!skill_check_unit_range(src, src->x, src->y, skillid, skilllv))  //prevent reiteration
+			    ret = skill_castend_pos2(src,src->x,src->y,skillid,skilllv,tick,flag); //cast on homon
+			if(s_src && !skill_check_unit_range(s_src, s_src->x, s_src->y, skillid, skilllv))
+			    ret |= skill_castend_pos2(s_src,s_src->x,s_src->y,skillid,skilllv,tick,flag); //cast on master
+			if (hd)
+			    skill_blockhomun_start(hd, skillid, skill_get_cooldown(skillid, skilllv));
+			return ret;
+		    }
+		    break;
 		default:
 			//Skill is actually ground placed.
 			if (src == bl && skill_get_unit_id(skillid,0))
@@ -4961,7 +5003,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 	case SA_FORTUNE:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		if(sd) pc_getzeny(sd,status_get_lv(bl)*100);
+		if(sd) pc_getzeny(sd,status_get_lv(bl)*100,LOG_TYPE_OTHER,NULL);
 		break;
 	case SA_TAMINGMONSTER:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
@@ -7213,12 +7255,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
 		}
 		break;
-	case MH_STAHL_HORN:
-		if (sd) {
-			if( skillid == MH_GOLDENE_FERSE )
-				clif_skill_fail(sd,skillid,USESKILL_FAIL_CONDITION,0);
-		}
-		break;
+
 	case HAMI_CASTLE:	//[orn]
 		if(rnd()%100 < 20*skilllv && src != bl)
 		{
@@ -7370,7 +7407,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 	case RK_IGNITIONBREAK:
 	case LG_EARTHDRIVE:
-	case MH_LAVA_SLIDE:
 			clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skillid, skilllv, 6);
 			i = skill_get_splash(skillid,skilllv);
 			if( skillid == LG_EARTHDRIVE ) {
@@ -8830,12 +8866,98 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), splash_target(src), src, skillid, skilllv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_nodamage_id);
 		}
 		break;
+
+       case MH_SILENT_BREEZE: {
+            struct status_change *ssc = status_get_sc(src);
+	    struct block_list *m_bl = battle_get_master(src);
+            const enum sc_type scs[] = {
+                    SC_MANDRAGORA, SC_HARMONIZE, SC_DEEPSLEEP, SC_VOICEOFSIREN, SC_SLEEP, SC_CONFUSION, SC_HALLUCINATION
+            };
+            int heal;
+            if(tsc){
+                for (i = 0; i < ARRAYLENGTH(scs); i++) {
+                    if (tsc->data[scs[i]]) status_change_end(bl, scs[i], INVALID_TIMER);
+                }
+                if (!tsc->data[SC_SILENCE]) //put inavoidable silence on target
+                        status_change_start(bl, SC_SILENCE, 100, skilllv, 0,0,0, skill_get_time(skillid, skilllv),1|2|8);
+	    }
+	    heal = status_get_matk_min(src)*4;
+            status_heal(bl, heal, 0, 7);
+
+	    //now inflict silence on everyone
+	    if(ssc && !ssc->data[SC_SILENCE]) //put inavoidable silence on homun
+		status_change_start(src, SC_SILENCE, 100, skilllv, 0,0,0, skill_get_time(skillid, skilllv),1|2|8);
+	    if(m_bl){
+		struct status_change *msc = status_get_sc(m_bl);
+		if(msc && !msc->data[SC_SILENCE]) //put inavoidable silence on master
+		    status_change_start(m_bl, SC_SILENCE, 100, skilllv, 0,0,0, skill_get_time(skillid, skilllv),1|2|8);
+	    }
+            if (hd)
+                skill_blockhomun_start(hd, skillid, skill_get_cooldown(skillid, skilllv));
+       }
+       break;
+       case MH_OVERED_BOOST:
+            if (hd){
+                struct block_list *s_bl = battle_get_master(src);
+                if(hd->homunculus.hunger>50) //reduce hunger
+                    hd->homunculus.hunger = hd->homunculus.hunger/2;
+                else
+                    hd->homunculus.hunger = min(1,hd->homunculus.hunger);
+                if(s_bl && s_bl->type==BL_PC){
+                    status_set_sp(s_bl,status_get_max_sp(s_bl)/2,0); //master drain 50% sp
+                    clif_send_homdata(((TBL_PC *)s_bl), SP_HUNGRY, hd->homunculus.hunger); //refresh hunger info
+                    sc_start(s_bl, type, 100, skilllv, skill_get_time(skillid, skilllv)); //gene bonus
+                }
+                sc_start(bl, type, 100, skilllv, skill_get_time(skillid, skilllv));
+		skill_blockhomun_start(hd, skillid, skill_get_cooldown(skillid, skilllv));
+            }
+            break;
+       case MH_GRANITIC_ARMOR:
+       case MH_PYROCLASTIC: {
+                struct block_list *s_bl = battle_get_master(src);
+                if(s_bl) sc_start2(s_bl, type, 100, skilllv, hd->homunculus.level, skill_get_time(skillid, skilllv)); //start on master
+                sc_start2(bl, type, 100, skilllv, hd->homunculus.level, skill_get_time(skillid, skilllv));
+		if (hd) skill_blockhomun_start(hd, skillid, skill_get_cooldown(skillid, skilllv));
+            }
+            break;
+
+        case MH_LIGHT_OF_REGENE:
+		if(hd){
+		    hd->homunculus.intimacy = 251; //change to neutral (can't be cast if < 750)
+		    if(sd) clif_send_homdata(sd, SP_INTIMATE, hd->homunculus.intimacy); //refresh intimacy info
+		}
+		//don't break need to start status and start block timer
+	case MH_STYLE_CHANGE:
+        case MH_MAGMA_FLOW:
+        case MH_PAIN_KILLER:
+           sc_start(bl, type, 100, skilllv, skill_get_time(skillid, skilllv));
+           if (hd)
+                skill_blockhomun_start(hd, skillid, skill_get_cooldown(skillid, skilllv));
+           break;
+        case MH_SUMMON_LEGION:
+            {
+                int summons[5] = {1004, 1303, 1303, 1994, 1994};
+                int qty[5] =     {3   , 3   , 4   , 4   , 5};
+                struct mob_data *md;
+                int i;
+
+                for(i=0; i<qty[skilllv - 1]; i++){ //easy way
+                    md = mob_once_spawn_sub(src, src->m, src->x, src->y, status_get_name(src), summons[skilllv - 1], "", SZ_SMALL, AI_ATTACK);
+                    if (md) {
+                        md->master_id =  src->id;
+                        if (md->deletetimer != INVALID_TIMER)
+                            delete_timer(md->deletetimer, mob_timer_delete);
+                        md->deletetimer = add_timer(gettick() + skill_get_time(skillid, skilllv), mob_timer_delete, md->bl.id, 0);
+                        mob_spawn(md); //Now it is ready for spawning.
+                        sc_start4(&md->bl, SC_MODECHANGE, 100, 1, 0, MD_ASSIST, 0, 60000);
+                    }
+                }
+		if (hd)
+			skill_blockhomun_start(hd, skillid, skill_get_cooldown(skillid, skilllv));
+            }
+            break;
 	default:
-		if( skillid >= HM_SKILLBASE && skillid <= HM_SKILLBASE + MAX_HOMUNSKILL ) {
-			if( src->type == BL_HOM && ((TBL_HOM*)src)->master->fd )
-				clif_colormes(((TBL_HOM*)src)->master, COLOR_RED, "This skill is not yet supported");
-		} else /* temporary until all the homun-s skills are supported otherwise console would fill up with pointless warnings */
-			ShowWarning("skill_castend_nodamage_id: Unknown skill used:%d\n",skillid);
+		ShowWarning("skill_castend_nodamage_id: Unknown skill used:%d\n",skillid);
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		map_freeblock_unlock();
 		return 1;
@@ -9548,11 +9670,15 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	case SO_WATER_INSIGNIA:
 	case SO_WIND_INSIGNIA:
 	case SO_EARTH_INSIGNIA:
-	case MH_POISON_MIST:
 	case KO_HUUMARANKA:
 	case KO_MUCHANAGE:
 	case KO_BAKURETSU:
 	case KO_ZENKAI:
+	case MH_LAVA_SLIDE:
+	case MH_VOLCANIC_ASH:
+	case MH_POISON_MIST:
+	case MH_STEINWAND:
+	case MH_XENO_SLASHER:
 		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 	case GS_GROUNDDRIFT: //Ammo should be deleted right away.
 		skill_unitsetting(src,skillid,skilllv,x,y,0);
@@ -10018,15 +10144,12 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 		for( i = 0; i < (skilllv+2); i++ ) {
 			x = src->x - 1 + rnd()%3;
 			y = src->y - 1 + rnd()%3;
-			skill_unitsetting(src,skillid,skilllv,x,y,0); 
+			skill_unitsetting(src,skillid,skilllv,x,y,0);
 		}
 		break;
+
 	default:
-		if( skillid >= HM_SKILLBASE && skillid <= HM_SKILLBASE + MAX_HOMUNSKILL ) {
-			if( src->type == BL_HOM && ((TBL_HOM*)src)->master->fd )
-				clif_colormes(((TBL_HOM*)src)->master, COLOR_RED, "This skill is not yet supported");
-		} else /* temporary until all the homun-s skills are supported otherwise console would fill up with pointless warnings */
-			ShowWarning("skill_castend_pos2: Unknown skill used:%d\n",skillid);
+		ShowWarning("skill_castend_pos2: Unknown skill used:%d\n",skillid);
 		return 1;
 	}
 
@@ -10335,6 +10458,9 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 	sc = status_get_sc(src);	// for traps, firewall and fogwall - celest
 
 	switch( skillid ) {
+	case MH_STEINWAND:
+	    val2 = 4 + skilllv; //nb of attack blocked
+	    break;
 	case MG_SAFETYWALL:
 	#ifdef RENEWAL
 		/**
@@ -10841,7 +10967,7 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 		break;
 	case UNT_SAFETYWALL:
 		if (!sce)
-			sc_start4(bl,type,100,sg->skill_lv,sg->group_id,sg->group_id,0,sg->limit);
+			sc_start4(bl,type,100,sg->skill_lv,sg->skill_id,sg->group_id,0,sg->limit);
 		break;
 
 	case UNT_PNEUMA:
@@ -10989,6 +11115,11 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 			break;	// iRO Wiki says that this skill don't affect to Boss monsters.
 		if( map_flag_vs(bl->m) || bl->id == src->bl.id || battle_check_target(&src->bl,bl, BCT_ENEMY) == 1 )
 			skill_attack(skill_get_type(sg->skill_id), ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
+		break;
+
+	case UNT_VOLCANIC_ASH:
+		if (!sce)
+		    sc_start(bl, SC_ASH, 50, sg->skill_lv, skill_get_time(MH_VOLCANIC_ASH, sg->skill_lv)); //50% chance
 		break;
 
 	case UNT_GD_LEADERSHIP:
@@ -11703,6 +11834,16 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			sg->limit = DIFF_TICK(tick, sg->tick);
 			sg->unit_id = UNT_USED_TRAPS;
 			break;
+
+		case UNT_LAVA_SLIDE:
+			skill_attack(BF_WEAPON, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
+			if(++sg->val1 > 4) //after 5 stop hit and destroy me
+				sg->limit = DIFF_TICK(tick, sg->tick);
+			break;
+		case UNT_POISON_MIST:
+			skill_attack(BF_MAGIC, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
+			status_change_start(bl, SC_BLIND, rnd() % 100 > sg->skill_lv * 10, sg->skill_lv, sg->skill_id, 0, 0, skill_get_time2(sg->skill_id, sg->skill_lv), 2|8);
+			break;
 	}
 
 	if (bl->type == BL_MOB && ss != bl)
@@ -11807,6 +11948,7 @@ static int skill_unit_onleft (int skill_id, struct block_list *bl, unsigned int 
 				//your own. Let's pray that scenario is pretty unlikely and noone will complain too much about it.
 				status_change_end(bl, SC_DANCING, INVALID_TIMER);
 			}
+		case MH_STEINWAND:
 		case MG_SAFETYWALL:
 		case AL_PNEUMA:
 		case SA_VOLCANO:
@@ -13139,7 +13281,7 @@ int skill_consume_requirement( struct map_session_data *sd, short skill, short l
 				req.zeny = 0; //Zeny is reduced on skill_attack.
 			if( sd->status.zeny < req.zeny )
 				req.zeny = sd->status.zeny;
-			pc_payzeny(sd,req.zeny);
+			pc_payzeny(sd,req.zeny,LOG_TYPE_OTHER,NULL); //@Need proper type
 		}
 	}
 
@@ -13489,6 +13631,8 @@ int skill_castfix_sc (struct block_list *bl, int time)
 	if (sc && sc->count) {
 		if (sc->data[SC_SLOWCAST])
 			time += time * sc->data[SC_SLOWCAST]->val2 / 100;
+        if (sc->data[SC_PARALYSIS])
+            time += sc->data[SC_PARALYSIS]->val3;
 		if (sc->data[SC_SUFFRAGIUM]) {
 			time -= time * sc->data[SC_SUFFRAGIUM]->val2 / 100;
 			status_change_end(bl, SC_SUFFRAGIUM, INVALID_TIMER);

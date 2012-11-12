@@ -367,6 +367,7 @@ int battle_attr_fix(struct block_list *src, struct block_list *target, int damag
                         if( tsc->data[SC_CRYSTALIZE] && target->type != BL_MOB)
                                 status_change_end(target, SC_CRYSTALIZE, INVALID_TIMER);
                         if( tsc->data[SC_EARTH_INSIGNIA]) damage += damage/2;
+						if( tsc->data[SC_ASH]) damage += damage/2; //150%
                         break;
                 case ELE_HOLY:
                         if( tsc->data[SC_ORATIO]) ratio += tsc->data[SC_ORATIO]->val1 * 2;
@@ -482,7 +483,14 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 		if( sc->data[SC_SAFETYWALL] && (flag&(BF_SHORT|BF_MAGIC))==BF_SHORT )
 		{
 			struct skill_unit_group* group = skill_id2group(sc->data[SC_SAFETYWALL]->val3);
+			int skill_id = sc->data[SC_SAFETYWALL]->val2;
 			if (group) {
+				if(skill_id == MH_STEINWAND){
+				    if (--group->val2<=0)
+					    skill_delunitgroup(group);
+				    d->dmg_lv = ATK_BLOCK;
+				    return 0;
+				}
 				/**
 				 * in RE, SW possesses a lifetime equal to 3 times the caster's health
 				 **/
@@ -730,6 +738,16 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 			//Reduction: 6% + 6% every 20%
 			damage -= damage * 6 * (1+per) / 100;
 		}
+		if(sc->data[SC_GRANITIC_ARMOR]){
+			damage -= damage * sc->data[SC_GRANITIC_ARMOR]->val2/100;
+		}
+		if(sc->data[SC_PAIN_KILLER]){
+			damage -= damage * sc->data[SC_PAIN_KILLER]->val3/100;
+		}
+		if((sce=sc->data[SC_MAGMA_FLOW]) && (rnd()%100 <= sce->val2) ){
+			skill_castend_damage_id(bl,src,MH_MAGMA_FLOW,sce->val1,gettick(),0);
+		}
+
 /**
  * In renewal steel body reduces all incoming damage by 1/10
  **/
@@ -787,6 +805,10 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 
 		if( sd && (sce = sc->data[SC_FORCEOFVANGUARD]) && flag&BF_WEAPON && rnd()%100 < sce->val2 )
 			pc_addspiritball(sd,skill_get_time(LG_FORCEOFVANGUARD,sce->val1),sce->val3);
+		if (sc->data[SC_STYLE_CHANGE] && rnd() % 100 < 50) {
+            TBL_HOM *hd = BL_CAST(BL_HOM,bl);
+            if (hd) hom_addspiritball(hd, 10); //add a sphere
+        }
 
 		if( sc->data[SC__DEADLYINFECT] && damage > 0 && rnd()%100 < 65 + 5 * sc->data[SC__DEADLYINFECT]->val1 )
 			status_change_spread(bl, src); // Deadly infect attacked side
@@ -846,6 +868,10 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 			sc_start(bl,sc->data[SC_POISONINGWEAPON]->val2,100,sc->data[SC_POISONINGWEAPON]->val1,skill_get_time2(GC_POISONINGWEAPON, 1));
 		if( sc->data[SC__DEADLYINFECT] && damage > 0 && rnd()%100 < 65 + 5 * sc->data[SC__DEADLYINFECT]->val1 )
 			status_change_spread(src, bl);
+        if (sc->data[SC_STYLE_CHANGE] && rnd() % 100 < 50) {
+            TBL_HOM *hd = BL_CAST(BL_HOM,bl);
+            if (hd) hom_addspiritball(hd, 10);
+        }
 	}
 
 	if (battle_config.pk_mode && sd && bl->type == BL_PC && damage && map[bl->m].flag.pvp)
@@ -1480,6 +1506,14 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			break;
 	}
 
+	if (!(nk & NK_NO_ELEFIX) && !n_ele)
+	    if (src->type == BL_HOM)
+		n_ele = true; //skill is "not elemental"
+	if (sc && sc->data[SC_GOLDENE_FERSE] && ((!skill_num && (rnd() % 100 < sc->data[SC_GOLDENE_FERSE]->val4)) || skill_num == MH_STAHL_HORN)) {
+	    s_ele = s_ele_ = ELE_HOLY;
+	    n_ele = false;
+	}
+
 	if(!skill_num)
   	{	//Skills ALWAYS use ONLY your right-hand weapon (tested on Aegis 10.2)
 		if (sd && sd->weapontype1 == 0 && sd->weapontype2 > 0)
@@ -1818,7 +1852,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				skillratio += sc->data[SC_OVERTHRUST]->val3;
 			if(sc->data[SC_MAXOVERTHRUST])
 				skillratio += sc->data[SC_MAXOVERTHRUST]->val2;
-			if(sc->data[SC_BERSERK] || sc->data[SC__BLOODYLUST])
+			if (sc->data[SC_BERSERK] || sc->data[SC_SATURDAYNIGHTFEVER] || sc->data[SC__BLOODYLUST])
 				skillratio += 100;
 			if(sc->data[SC_ZENKAI] && sstatus->rhw.ele == sc->data[SC_ZENKAI]->val2 )
 				skillratio += sc->data[SC_ZENKAI]->val1 * 2;
@@ -2564,11 +2598,17 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				case KO_BAKURETSU:
 					skillratio = 50 * skill_lv * (sd?pc_checkskill(sd,NJ_TOBIDOUGU):10);
 					break;
+				case MH_NEEDLE_OF_PARALYZE:
+					skillratio += 600 + 100 * skill_lv;
+					break;
 				case MH_STAHL_HORN:
-					skillratio += 500 + 100 * skill_lv;
+					skillratio += 400 + 100 * skill_lv;
 					break;
 				case MH_LAVA_SLIDE:
 					skillratio = 70 * skill_lv;
+					break;
+				case MH_MAGMA_FLOW:
+					skillratio += -100 + 100 * skill_lv;
 					break;
 			}
 
@@ -2686,6 +2726,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 						ATK_ADDRATE(sc->data[SC_EDP]->val3);
 				}
 			}
+			if(sc->data[SC_STYLE_CHANGE]){
+                TBL_HOM *hd = BL_CAST(BL_HOM,src);
+                if (hd) ATK_ADD(hd->spiritball * 3);
+            }
+
 		}
 
 		switch (skill_num) {
@@ -3890,10 +3935,19 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 1100;
 						break;
 					case MH_ERASER_CUTTER:
-						if (skill_lv >= 3)
-							skillratio += 800 + 200 * skill_lv ;
-						else
-							skillratio += 500 + 400 * skill_lv;
+						if(skill_lv%2) skillratio += 400; //600:800:1000
+						else skillratio += 700; //1000:1200
+						skillratio += 100 * skill_lv;
+						break;
+					case MH_XENO_SLASHER:
+					    if(skill_lv%2) skillratio += 350 + 50 * skill_lv; //500:600:700
+					    else skillratio += 400 + 100 * skill_lv; //700:900
+					    break;
+					case MH_HEILIGE_STANGE:
+					    skillratio += 400 + 250 * skill_lv;
+					    break;
+					case MH_POISON_MIST:
+					    skillratio += 100 * skill_lv;
 						break;
 				}
 
@@ -4403,7 +4457,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			if( sd ) {
 				if ( md.damage > sd->status.zeny )
 					md.damage = sd->status.zeny;
-				pc_payzeny(sd, md.damage);
+				pc_payzeny(sd, md.damage,LOG_TYPE_STEAL,NULL);
 			}
 		break;
 	}

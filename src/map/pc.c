@@ -171,7 +171,7 @@ static int pc_spiritball_timer(int tid, unsigned int tick, int id, intptr_t data
 		memmove(sd->spirit_timer+i, sd->spirit_timer+i+1, (sd->spiritball-i)*sizeof(int));
 	sd->spirit_timer[sd->spiritball] = INVALID_TIMER;
 
-	clif_spiritball(sd);
+	clif_spiritball(&sd->bl);
 
 	return 0;
 }
@@ -206,7 +206,7 @@ int pc_addspiritball(struct map_session_data *sd,int interval,int max)
 	if( (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD )
 		clif_millenniumshield(sd,sd->spiritball);
 	else
-		clif_spiritball(sd);
+		clif_spiritball(&sd->bl);
 
 	return 0;
 }
@@ -245,7 +245,7 @@ int pc_delspiritball(struct map_session_data *sd,int count,int type)
 		if( (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD )
 			clif_millenniumshield(sd,sd->spiritball);
 		else
-			clif_spiritball(sd);
+			clif_spiritball(&sd->bl);
 	}
 	return 0;
 }
@@ -3586,7 +3586,7 @@ int pc_inventoryblank(struct map_session_data *sd)
 /*==========================================
  * attempts to remove zeny from player (sd)
  *------------------------------------------*/
-int pc_payzeny(struct map_session_data *sd,int zeny)
+int pc_payzeny(struct map_session_data *sd,int zeny, enum e_log_pick_type type, struct map_session_data *tsd)
 {
 	nullpo_ret(sd);
 
@@ -3602,6 +3602,8 @@ int pc_payzeny(struct map_session_data *sd,int zeny)
 	sd->status.zeny -= zeny;
 	clif_updatestatus(sd,SP_ZENY);
 
+	if(!tsd) tsd = sd;
+	log_zeny(sd, type, tsd, -zeny);
 	if( zeny > 0 && sd->state.showzeny ) {
 		char output[255];
 		sprintf(output, "Removed %dz.", zeny);
@@ -3700,8 +3702,9 @@ void pc_getcash(struct map_session_data *sd, int cash, int points)
 
 /*==========================================
  * Attempts to give zeny to player (sd)
+ * tsd (optional) from who for log (if null take sd)
  *------------------------------------------*/
-int pc_getzeny(struct map_session_data *sd,int zeny)
+int pc_getzeny(struct map_session_data *sd,int zeny, enum e_log_pick_type type, struct map_session_data *tsd)
 {
 	nullpo_ret(sd);
 
@@ -3717,6 +3720,8 @@ int pc_getzeny(struct map_session_data *sd,int zeny)
 	sd->status.zeny += zeny;
 	clif_updatestatus(sd,SP_ZENY);
 
+	if(!sd) tsd = sd;
+	log_zeny(sd, type, tsd, zeny);
 	if( zeny > 0 && sd->state.showzeny ) {
 		char output[255];
 		sprintf(output, "Gained %dz.", zeny);
@@ -4569,8 +4574,7 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *target)
 	{
 		int amount = md->level*10 + rnd()%100;
 
-		log_zeny(sd, LOG_TYPE_STEAL, sd, amount);
-		pc_getzeny(sd, amount);
+		pc_getzeny(sd, amount, LOG_TYPE_STEAL, NULL);
 		md->state.steal_coin_flag = 1;
 		return 1;
 	}
@@ -6449,8 +6453,10 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			pet_unlocktarget(sd->pd);
 	}
 
-	if( sd->status.hom_id > 0 && battle_config.homunculus_auto_vapor )
-		merc_hom_vaporize(sd, 0);
+	if (sd->status.hom_id > 0){
+	    if(battle_config.homunculus_auto_vapor && sd->hd && !sd->hd->sc.data[SC_LIGHT_OF_REGENE])
+		    merc_hom_vaporize(sd, 0);
+	}
 
 	if( sd->md )
 		merc_delete(sd->md, 3); // Your mercenary soldier has ran away.
@@ -6646,7 +6652,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	  	{
 			base_penalty = (unsigned int)((double)sd->status.zeny * (double)battle_config.zeny_penalty / 10000.);
 			if(base_penalty)
-				pc_payzeny(sd, base_penalty);
+				pc_payzeny(sd, base_penalty, LOG_TYPE_OTHER, NULL); //@TODO that type suck
 		}
 	}
 

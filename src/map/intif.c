@@ -50,7 +50,7 @@ extern int char_fd; // inter server Fd used for char_fd
 #define inter_fd char_fd	// alias
 
 //-----------------------------------------------------------------
-// Send to inter server 
+// Send to inter server
 
 int CheckForCharServer(void)
 {
@@ -417,7 +417,7 @@ int intif_request_partyinfo(int party_id, int char_id)
 	return 0;
 }
 
-// Request to add a member to party 
+// Request to add a member to party
 int intif_party_addmember(int party_id,struct party_member *member)
 {
 	if (CheckForCharServer())
@@ -460,11 +460,11 @@ int intif_party_leave(int party_id,int account_id, int char_id)
 	return 0;
 }
 
-// Request keeping party for new map ?? 
+// Request keeping party for new map ??
 int intif_party_changemap(struct map_session_data *sd,int online)
 {
 	int m, mapindex;
-	
+
 	if (CheckForCharServer())
 		return 0;
 	if(!sd)
@@ -487,7 +487,7 @@ int intif_party_changemap(struct map_session_data *sd,int online)
 	return 1;
 }
 
-// Request breaking party 
+// Request breaking party
 int intif_break_party(int party_id)
 {
 	if (CheckForCharServer())
@@ -687,7 +687,7 @@ int intif_guild_change_memberinfo(int guild_id,int account_id,int char_id,
 	return 0;
 }
 
-// Request a change of Guild title 
+// Request a change of Guild title
 int intif_guild_position(int guild_id,int idx,struct guild_position *p)
 {
 	if (CheckForCharServer())
@@ -702,7 +702,7 @@ int intif_guild_position(int guild_id,int idx,struct guild_position *p)
 	return 0;
 }
 
-// Request an update of Guildskill skillnum 
+// Request an update of Guildskill skillnum
 int intif_guild_skillup(int guild_id, int skill_num, int account_id, int max)
 {
 	if( CheckForCharServer() )
@@ -857,7 +857,7 @@ int intif_homunculus_requestdelete(int homun_id)
 
 // Wisp/Page reception // rewritten by [Yor]
 int intif_parse_WisMessage(int fd)
-{ 
+{
 	struct map_session_data* sd;
 	char *wisp_source;
 	char name[NAME_LENGTH];
@@ -881,7 +881,7 @@ int intif_parse_WisMessage(int fd)
 		sd->ignore[i].name[0] != '\0' &&
 		strcmp(sd->ignore[i].name, wisp_source) != 0
 		; i++);
-	
+
 	if (i < MAX_IGNORE_LIST && sd->ignore[i].name[0] != '\0')
 	{	//Ignored
 		intif_wis_replay(id, 2);
@@ -913,7 +913,7 @@ static int mapif_parse_WisToGM_sub(struct map_session_data* sd,va_list va)
 	char *wisp_name;
 	char *message;
 	int len;
-	
+
 	if (!pc_has_permission(sd, permission))
 		return 0;
 	wisp_name = va_arg(va, char*);
@@ -1006,7 +1006,7 @@ int intif_parse_LoadGuildStorage(int fd)
 	struct guild_storage *gstor;
 	struct map_session_data *sd;
 	int guild_id;
-	
+
 	guild_id = RFIFOL(fd,8);
 	if(guild_id <= 0)
 		return 1;
@@ -1426,7 +1426,7 @@ int intif_parse_questlog(int fd)
 		sd->quest_index[i] = quest_search_db(sd->quest_log[i].quest_id);
 
 		if( sd->quest_index[i] < 0 )
-		{  
+		{
 			ShowError("intif_parse_questlog: quest %d not found in DB.\n",sd->quest_log[i].quest_id);
 			sd->avail_quests--;
 			sd->num_quests--;
@@ -1786,7 +1786,7 @@ static void intif_parse_Auction_results(int fd)
 int intif_Auction_register(struct auction_data *auction)
 {
 	int len = sizeof(struct auction_data) + 4;
-	
+
 	if( CheckForCharServer() )
 		return 0;
 
@@ -1795,7 +1795,7 @@ int intif_Auction_register(struct auction_data *auction)
 	WFIFOW(inter_fd,2) = len;
 	memcpy(WFIFOP(inter_fd,4), auction, sizeof(struct auction_data));
 	WFIFOSET(inter_fd,len);
-	
+
 	return 1;
 }
 
@@ -1827,8 +1827,7 @@ static void intif_parse_Auction_register(int fd)
 		clif_Auction_message(sd->fd, 4);
 		pc_additem(sd, &auction.item, auction.item.amount, LOG_TYPE_AUCTION);
 
-		log_zeny(sd, LOG_TYPE_AUCTION, sd, zeny);
-		pc_getzeny(sd, zeny);
+		pc_getzeny(sd, zeny, LOG_TYPE_AUCTION,NULL);
 	}
 }
 
@@ -1925,8 +1924,7 @@ static void intif_parse_Auction_bid(int fd)
 	clif_Auction_message(sd->fd, result);
 	if( bid > 0 )
 	{
-		log_zeny(sd, LOG_TYPE_AUCTION, sd, bid);
-		pc_getzeny(sd, bid);
+		pc_getzeny(sd, bid, LOG_TYPE_AUCTION,NULL);
 	}
 	if( result == 1 )
 	{ // To update the list, display your buy list
@@ -2041,10 +2039,10 @@ int intif_parse_mercenary_saved(int fd)
 int intif_elemental_create(struct s_elemental *ele)
 {
 	int size = sizeof(struct s_elemental) + 4;
-	
+
 	if( CheckForCharServer() )
 		return 0;
-	
+
 	WFIFOHEAD(inter_fd,size);
 	WFIFOW(inter_fd,0) = 0x307c;
 	WFIFOW(inter_fd,2) = size;
@@ -2062,7 +2060,7 @@ int intif_parse_elemental_received(int fd)
 			ShowError("intif: create elemental data size error %d != %d\n", sizeof(struct s_elemental), len);
 		return 0;
 	}
-	
+
 	elemental_data_received((struct s_elemental*)RFIFOP(fd,5), RFIFOB(fd,4));
 	return 0;
 }
@@ -2071,7 +2069,7 @@ int intif_elemental_request(int ele_id, int char_id)
 {
 	if (CheckForCharServer())
 		return 0;
-	
+
 	WFIFOHEAD(inter_fd,10);
 	WFIFOW(inter_fd,0) = 0x307d;
 	WFIFOL(inter_fd,2) = ele_id;
@@ -2084,7 +2082,7 @@ int intif_elemental_delete(int ele_id)
 {
 	if (CheckForCharServer())
 		return 0;
-	
+
 	WFIFOHEAD(inter_fd,6);
 	WFIFOW(inter_fd,0) = 0x307e;
 	WFIFOL(inter_fd,2) = ele_id;
@@ -2096,17 +2094,17 @@ int intif_parse_elemental_deleted(int fd)
 {
 	if( RFIFOB(fd,2) != 1 )
 		ShowError("Elemental data delete failure\n");
-	
+
 	return 0;
 }
 
 int intif_elemental_save(struct s_elemental *ele)
 {
 	int size = sizeof(struct s_elemental) + 4;
-	
+
 	if( CheckForCharServer() )
 		return 0;
-	
+
 	WFIFOHEAD(inter_fd,size);
 	WFIFOW(inter_fd,0) = 0x307f;
 	WFIFOW(inter_fd,2) = size;
@@ -2119,7 +2117,7 @@ int intif_parse_elemental_saved(int fd)
 {
 	if( RFIFOB(fd,2) != 1 )
 		ShowError("Elemental data save failure\n");
-	
+
 	return 0;
 }
 
@@ -2127,18 +2125,18 @@ void intif_request_accinfo( int u_fd, int aid, int group_id, char* query ) {
 
 
 	WFIFOHEAD(inter_fd,2 + 4 + 4 + 4 + NAME_LENGTH);
-	
+
 	WFIFOW(inter_fd,0) = 0x3007;
 	WFIFOL(inter_fd,2) = u_fd;
 	WFIFOL(inter_fd,6) = aid;
 	WFIFOL(inter_fd,10) = group_id;
 	safestrncpy(WFIFOP(inter_fd,14), query, NAME_LENGTH);
-	
+
 	WFIFOSET(inter_fd,2 + 4 + 4 + 4 + NAME_LENGTH);
-	
+
 	return;
 }
-	
+
 void intif_parse_MessageToFD(int fd) {
 	int u_fd = RFIFOL(fd,4);
 
@@ -2151,9 +2149,9 @@ void intif_parse_MessageToFD(int fd) {
 			safestrncpy(msg, (char*)RFIFOP(fd,12), RFIFOW(fd,2) - 12);
 			clif_displaymessage(u_fd,msg);
 		}
-	
+
 	}
-	
+
 	return;
 }
 
@@ -2250,7 +2248,7 @@ int intif_parse(int fd)
 	case 0x387c:	intif_parse_elemental_received(fd); break;
 	case 0x387d:	intif_parse_elemental_deleted(fd); break;
 	case 0x387e:	intif_parse_elemental_saved(fd); break;
-			
+
 	case 0x3880:	intif_parse_CreatePet(fd); break;
 	case 0x3881:	intif_parse_RecvPetData(fd); break;
 	case 0x3882:	intif_parse_SavePetOk(fd); break;

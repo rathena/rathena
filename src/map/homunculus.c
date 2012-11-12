@@ -81,6 +81,46 @@ int hom_class2mapid(int hom_class)
 	}
 }
 
+int hom_addspiritball(TBL_HOM *hd, int max) {
+    nullpo_ret(hd);
+
+    if (max > MAX_SKILL_LEVEL)
+        max = MAX_SKILL_LEVEL;
+    if (hd->spiritball < 0)
+        hd->spiritball = 0;
+
+    if (hd->spiritball && hd->spiritball >= max) {
+        hd->spiritball = max;    
+    }
+    else
+        hd->spiritball++;
+ 
+    clif_spiritball(&hd->bl);
+
+    return 0;
+}
+
+int hom_delspiritball(TBL_HOM *hd, int count, int type) {
+    nullpo_ret(hd);
+
+    if (hd->spiritball <= 0) {
+        hd->spiritball = 0;
+        return 0;
+    }
+    if (count <= 0)
+        return 0;
+    if (count > MAX_SKILL_LEVEL)
+        count = MAX_SKILL_LEVEL;
+    if (count > hd->spiritball)
+        count = hd->spiritball;
+    
+    hd->spiritball -= count;
+    if (!type)
+        clif_spiritball(&hd->bl);
+
+    return 0;
+}
+
 void merc_damage(struct homun_data *hd) {
 	clif_hominfo(hd->master,hd,0);
 }

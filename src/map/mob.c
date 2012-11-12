@@ -2290,7 +2290,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				}
 			}
 			if(zeny) // zeny from mobs [Valaris]
-				pc_getzeny(tmpsd[i], zeny);
+				pc_getzeny(tmpsd[i], zeny, LOG_TYPE_PICKDROP_MONSTER, NULL);
 		}
 	}
 
@@ -2430,7 +2430,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			if( sd->bonus.get_zeny_num && rnd()%100 < sd->bonus.get_zeny_rate ) {
 				i = sd->bonus.get_zeny_num > 0 ? sd->bonus.get_zeny_num : -md->level * sd->bonus.get_zeny_num;
 				if (!i) i = 1;
-				pc_getzeny(sd, 1+rnd()%i);
+				pc_getzeny(sd, 1+rnd()%i, LOG_TYPE_OTHER, NULL);
 			}
 		}
 
