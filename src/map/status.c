@@ -9412,6 +9412,9 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			clif_status_load(bl, SI_KYOUGAKU, 0); // Avoid client crash
 			clif_status_load(bl, SI_ACTIVE_MONSTER_TRANSFORM, 0);
 			break;
+		case SC_INTRAVISION:
+			calc_flag = SCB_ALL;/* required for overlapping */
+			break;
 		}
 
 	opt_flag = 1;
