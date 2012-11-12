@@ -881,9 +881,15 @@ int mob_setdelayspawn(struct mob_data *md)
 	return 0;
 }
 
-static int mob_count_sub(struct block_list *bl,va_list ap)
-{
-	return 1;
+int mob_count_sub(struct block_list *bl, va_list ap) {
+    int mobid[10], i;
+    ARR_FIND(0, 10, i, (mobid[i] = va_arg(ap, int)) == 0); //fetch till 0
+    if (mobid[0]) { //if there one let's check it otherwise go backward
+        TBL_MOB *md = BL_CAST(BL_MOB, bl);
+        ARR_FIND(0, 10, i, md->class_ == mobid[i]);
+        return (i < 10) ? 1 : 0;
+    }
+    return 1; //backward compatibility
 }
 
 /*==========================================

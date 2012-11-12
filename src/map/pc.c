@@ -2613,7 +2613,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 }
 
 /*==========================================
- * ? ???i????\????~{??i?X???
+ * Player bonus (type) with args type2 and val, called trough bonus2 (npc)
  *------------------------------------------*/
 int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 {
@@ -4864,13 +4864,10 @@ int pc_checkskill(struct map_session_data *sd,int skill_id)
 }
 
 /*==========================================
- * ??????X????X?L???????`?F?b?N
- * ????F
- *   struct map_session_data *sd	?Z?b?V?????f??^
- *   int nameid						????iID
- * ???l?F
- *   0		??X???
- *   -1		?X?L????????
+ * Chk if we still have the correct weapon to continue the skill (actually status)
+ * If not ending it
+ * Return
+ *	0 - No status found or all done
  *------------------------------------------*/
 int pc_checkallowskill(struct map_session_data *sd)
 {
@@ -4921,7 +4918,9 @@ int pc_checkallowskill(struct map_session_data *sd)
 
 /*==========================================
  * Return equiped itemid? on player sd at pos
- * if -1 mean nothing equiped
+ * Return
+ * -1 : mean nothing equiped
+ * idx : (this index could be used in inventory to found item_data)
  *------------------------------------------*/
 int pc_checkequip(struct map_session_data *sd,int pos)
 {
@@ -7497,7 +7496,7 @@ int pc_setcart(struct map_session_data *sd,int type) {
 int pc_setfalcon(TBL_PC* sd, int flag)
 {
 	if( flag ){
-		if( pc_checkskill(sd,HT_FALCON)>0 )	// ?t?@???R???}?X?^????X?L??????
+		if( pc_checkskill(sd,HT_FALCON)>0 )	// add falcon if he have the skill
 			pc_setoption(sd,sd->sc.option|OPTION_FALCON);
 	} else if( pc_isfalcon(sd) ){
 		pc_setoption(sd,sd->sc.option&~OPTION_FALCON); // remove falcon
@@ -7512,7 +7511,7 @@ int pc_setfalcon(TBL_PC* sd, int flag)
 int pc_setriding(TBL_PC* sd, int flag)
 {
 	if( flag ){
-		if( pc_checkskill(sd,KN_RIDING) > 0 ) // ???C?f?B???O?X?L??????
+		if( pc_checkskill(sd,KN_RIDING) > 0 ) // add peco
 			pc_setoption(sd, sd->sc.option|OPTION_RIDING);
 	} else if( pc_isriding(sd) ){
 			pc_setoption(sd, sd->sc.option&~OPTION_RIDING);
@@ -8949,7 +8948,7 @@ void pc_setstand(struct map_session_data *sd){
 	nullpo_retv(sd);
 
 	status_change_end(&sd->bl, SC_TENSIONRELAX, INVALID_TIMER);
-        clif_status_load(&sd->bl,SI_SIT,0);
+	clif_status_load(&sd->bl,SI_SIT,0);
 	//Reset sitting tick.
 	sd->ssregen.tick.hp = sd->ssregen.tick.sp = 0;
 	sd->state.dead_sit = sd->vd.dead_sit = 0;

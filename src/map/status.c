@@ -4561,7 +4561,7 @@ static unsigned short status_calc_matk(struct block_list *bl, struct status_chan
 	if(sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 3)
 		matk += 50;
 	if(sc->data[SC_ODINS_POWER])
-		matk += 70;
+		matk += 40 + 30 * sc->data[SC_ODINS_POWER]->val1; //70 lvl1, 100lvl2
 	if(sc->data[SC_IZAYOI])
 		matk += 50 * sc->data[SC_IZAYOI]->val1;
 	if( sc->data[SC_ZANGETSU] )
@@ -4923,10 +4923,10 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 		mdef -= mdef * sc->data[SC_GT_CHANGE]->val4 / 100;
 	if(sc->data[SC_WATER_BARRIER])
 		mdef += sc->data[SC_WATER_BARRIER]->val2;
+	if (sc->data[SC_ODINS_POWER])
+		mdef -= 20 * sc->data[SC_ODINS_POWER]->val1;
 	if(sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 3)
 		mdef += 50;
-	if(sc->data[SC_ODINS_POWER])
-		mdef -= 20;
 
 	return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
 }
@@ -6868,37 +6868,43 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	case SC_MOONLITSERENADE:
 	case SC_RUSHWINDMILL:
 	case SC_ECHOSONG:
-	case SC_HARMONIZE:
-	case SC_VOICEOFSIREN:
-	case SC_DEEPSLEEP:
-	case SC_SIRCLEOFNATURE:
-		if( sc->data[type] ) // Don't remove same sc.
-			break;
-		status_change_end(bl, SC_SWINGDANCE, INVALID_TIMER);
-		status_change_end(bl, SC_SYMPHONYOFLOVER, INVALID_TIMER);
-		status_change_end(bl, SC_MOONLITSERENADE, INVALID_TIMER);
-		status_change_end(bl, SC_RUSHWINDMILL, INVALID_TIMER);
-		status_change_end(bl, SC_ECHOSONG, INVALID_TIMER);
-		status_change_end(bl, SC_HARMONIZE, INVALID_TIMER);
-		status_change_end(bl, SC_VOICEOFSIREN, INVALID_TIMER);
-		status_change_end(bl, SC_DEEPSLEEP, INVALID_TIMER);
-		status_change_end(bl, SC_SIRCLEOFNATURE, INVALID_TIMER);
-			break;
-	case SC_SONGOFMANA:
-	case SC_DANCEWITHWUG:
-	case SC_LERADSDEW:
-	case SC_MELODYOFSINK:
-	case SC_BEYONDOFWARCRY:
-	case SC_UNLIMITEDHUMMINGVOICE:
-		if( sc->data[type] ) // Don't remove same sc.
-			break; //FIXME this is wrong as it'll prevent other being remove as well
-		status_change_end(bl, SC_SONGOFMANA, INVALID_TIMER);
-		status_change_end(bl, SC_DANCEWITHWUG, INVALID_TIMER);
-		status_change_end(bl, SC_LERADSDEW, INVALID_TIMER);
-		status_change_end(bl, SC_MELODYOFSINK, INVALID_TIMER);
-		status_change_end(bl, SC_BEYONDOFWARCRY, INVALID_TIMER);
-		status_change_end(bl, SC_UNLIMITEDHUMMINGVOICE, INVALID_TIMER);
-		break;
+        case SC_HARMONIZE: //group A doesn't overlap
+            if (type != SC_SWINGDANCE) status_change_end(bl, SC_SWINGDANCE, INVALID_TIMER);
+            if (type != SC_SYMPHONYOFLOVER) status_change_end(bl, SC_SYMPHONYOFLOVER, INVALID_TIMER);
+            if (type != SC_MOONLITSERENADE) status_change_end(bl, SC_MOONLITSERENADE, INVALID_TIMER);
+            if (type != SC_RUSHWINDMILL) status_change_end(bl, SC_RUSHWINDMILL, INVALID_TIMER);
+            if (type != SC_ECHOSONG) status_change_end(bl, SC_ECHOSONG, INVALID_TIMER);
+            if (type != SC_HARMONIZE) status_change_end(bl, SC_HARMONIZE, INVALID_TIMER);
+            break;
+        case SC_VOICEOFSIREN:
+        case SC_DEEPSLEEP:
+        case SC_GLOOMYDAY:
+        case SC_SONGOFMANA:
+        case SC_DANCEWITHWUG:
+        case SC_SATURDAYNIGHTFEVER:
+        case SC_LERADSDEW:
+        case SC_MELODYOFSINK:
+        case SC_BEYONDOFWARCRY:
+        case SC_UNLIMITEDHUMMINGVOICE: //group B
+            if (type != SC_VOICEOFSIREN) status_change_end(bl, SC_VOICEOFSIREN, INVALID_TIMER);
+            if (type != SC_DEEPSLEEP) status_change_end(bl, SC_DEEPSLEEP, INVALID_TIMER);
+            if (type != SC_LERADSDEW) status_change_end(bl, SC_LERADSDEW, INVALID_TIMER);
+            if (type != SC_MELODYOFSINK) status_change_end(bl, SC_MELODYOFSINK, INVALID_TIMER);
+            if (type != SC_BEYONDOFWARCRY) status_change_end(bl, SC_BEYONDOFWARCRY, INVALID_TIMER);
+            if (type != SC_UNLIMITEDHUMMINGVOICE) status_change_end(bl, SC_UNLIMITEDHUMMINGVOICE, INVALID_TIMER);
+            if (type != SC_GLOOMYDAY) {
+                status_change_end(bl, SC_GLOOMYDAY, INVALID_TIMER);
+                status_change_end(bl, SC_GLOOMYDAY_SK, INVALID_TIMER);
+            }
+            if (type != SC_SONGOFMANA) status_change_end(bl, SC_SONGOFMANA, INVALID_TIMER);
+            if (type != SC_DANCEWITHWUG) status_change_end(bl, SC_DANCEWITHWUG, INVALID_TIMER);
+            if (type != SC_SATURDAYNIGHTFEVER) {
+                if (sc->data[SC_SATURDAYNIGHTFEVER]) {
+                    sc->data[SC_SATURDAYNIGHTFEVER]->val2 = 0; //mark to not lose hp
+                    status_change_end(bl, SC_SATURDAYNIGHTFEVER, INVALID_TIMER);
+                }
+            }
+            break;
 	case SC_REFLECTSHIELD:
 		status_change_end(bl, SC_REFLECTDAMAGE, INVALID_TIMER);
 		break;

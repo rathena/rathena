@@ -717,7 +717,6 @@ bool                    mapit_exists(struct s_mapiterator* mapit);
 #define mapit_geteachnpc()  mapit_alloc(MAPIT_NORMAL,BL_NPC)
 #define mapit_geteachiddb() mapit_alloc(MAPIT_NORMAL,BL_ALL)
 
-// ���̑�
 int map_check_dir(int s_dir,int t_dir);
 unsigned char map_calc_dir( struct block_list *src,int x,int y);
 int map_random_dir(struct block_list *bl, short *x, short *y); // [Skotlex]

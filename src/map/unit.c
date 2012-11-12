@@ -1869,7 +1869,7 @@ int unit_skillcastcancel(struct block_list *bl,int type)
 			return 0;
 
 		if (sd && (sd->special_state.no_castcancel2 ||
-			(sd->special_state.no_castcancel && !map_flag_gvg(bl->m) && !map[bl->m].flag.battleground))) //fixed flags being read the wrong way around [blackhole89]
+                ((sd->sc.data[SC_UNLIMITEDHUMMINGVOICE] || sd->special_state.no_castcancel) && !map_flag_gvg(bl->m) && !map[bl->m].flag.battleground))) //fixed flags being read the wrong way around [blackhole89]
 			return 0;
 	}
 
@@ -2024,9 +2024,11 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		status_change_end(bl, SC_CHANGE, INVALID_TIMER);
 		status_change_end(bl, SC_STOP, INVALID_TIMER);
 		status_change_end(bl, SC_WUGDASH, INVALID_TIMER);
+		status_change_end(bl, SC_CAMOUFLAGE, INVALID_TIMER);
 		status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
 		status_change_end(bl, SC__MANHOLE, INVALID_TIMER);
-
+		status_change_end(bl, SC_VACUUM_EXTREME, INVALID_TIMER);
+		status_change_end(bl, SC_CURSEDCIRCLE_ATKER, INVALID_TIMER); //callme before warp
 	}
 
 	if (bl->type&(BL_CHAR|BL_PET)) {

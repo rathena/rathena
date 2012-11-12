@@ -2229,7 +2229,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 }
 
 /**
- * NPCのラベルデータコンバート
+ * NPC other label
  * Not sure, seem to add label in a chainlink
  * @see DBApply
  */

@@ -12847,6 +12847,15 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 			}
 			break;
 		case SR_CURSEDCIRCLE:
+			if (map_flag_gvg(sd->bl.m)) {
+			    if (map_foreachinrange(mob_count_sub, &sd->bl, skill_get_splash(skill, lv), BL_MOB,
+				    MOBID_EMPERIUM, MOBID_GUARIDAN_STONE1, MOBID_GUARIDAN_STONE2)) {
+				char output[128];
+				sprintf(output, "You're too close to a stone or emperium to do this skill");
+				clif_colormes(sd, COLOR_RED, output);
+				return 0;
+			    }
+			}
 			if( sd->spiritball > 0 )
 				sd->spiritball_old = require.spiritball = sd->spiritball;
 			else {
@@ -13374,6 +13383,8 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, short 
 	if( sc ) {
 		if( sc->data[SC__LAZINESS] )
 			req.sp += req.sp + sc->data[SC__LAZINESS]->val1 * 10;
+		if (sc->data[SC_UNLIMITEDHUMMINGVOICE])
+			req.sp += req.sp * sc->data[SC_UNLIMITEDHUMMINGVOICE]->val2 / 100;
 		if( sc->data[SC_RECOGNIZEDSPELL] )
 			req.sp += req.sp / 4;
 	}
