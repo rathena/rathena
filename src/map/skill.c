@@ -9709,9 +9709,9 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 		map_foreachinarea(skill_graffitiremover,src->m,x-i,y-i,x+i,y+i,BL_SKILL);
 		break;
 
-	case SO_CLOUD_KILL:
 	case SO_WARMER:
-		flag|=(skillid == SO_WARMER)?8:4;
+		flag|= 8;
+	case SO_CLOUD_KILL:
 		skill_unitsetting(src,skillid,skilllv,x,y,0);
 		break;
 
@@ -14420,10 +14420,6 @@ int skill_clear_group (struct block_list *bl, int flag)
 				if (flag&1)
 					group[count++]= ud->skillunit[i];
 				break;
-			case SO_CLOUD_KILL:
-				if( flag&4 )
-					group[count++]= ud->skillunit[i];
-				break;
 			case SO_WARMER:
 				if( flag&8 )
 					group[count++]= ud->skillunit[i];
@@ -14462,7 +14458,6 @@ struct skill_unit_group *skill_locate_element_field(struct block_list *bl)
 			case SA_LANDPROTECTOR:
 			case NJ_SUITON:
 			case SO_WARMER:
-			case SO_CLOUD_KILL:
 			case SC_BLOODYLUST:
 				return ud->skillunit[i];
 		}

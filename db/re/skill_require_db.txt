@@ -686,10 +686,10 @@
 2342,0,0,1,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0	//SR_CRESCENTELBOW_AUTOSPELL#Crescent Elbow Autospell#
 2343,0,0,11:12:13:14:15:16:17:18:19:20,0,-11:-12:-13:-14:-15:-16:-17:-18:-19:-20,0,99,0,0,none,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0	//SR_GATEOFHELL#Gate of Hell#
 2344,0,0,20:25:30:35:40,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0	//SR_GENTLETOUCH_QUIET#Gentle Touch - Quiet#
-2345,0,0,40:50:60:70:80,0,0,0,99,0,0,none,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0	//SR_GENTLETOUCH_CURE#Gentle Touch - Cure#
+2345,0,0,40:50:60:70:80,0,0,0,99,0,0,none,1:2:3:4:5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0	//SR_GENTLETOUCH_CURE#Gentle Touch - Cure#
 2346,0,0,40:50:60:70:80,-1:-2:-3:-4:-5,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0	//SR_GENTLETOUCH_ENERGYGAIN#Gentle Touch - Energy Gain#
-2347,0,0,40:50:60:70:80,-2:-4:-6:-8:-10,0,0,99,0,0,none,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0	//SR_GENTLETOUCH_CHANGE#Gentle Touch - Change#
-2348,0,0,40:50:60:70:80,0,0,0,99,0,0,none,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0	//SR_GENTLETOUCH_REVITALIZE#Gentle Touch - Revitalize#
+2347,0,0,40:50:60:70:80,-2:-4:-6:-8:-10,0,0,99,0,0,none,1:2:3:4:5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0	//SR_GENTLETOUCH_CHANGE#Gentle Touch - Change#
+2348,0,0,40:50:60:70:80,0,0,0,99,0,0,none,1:2:3:4:5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0	//SR_GENTLETOUCH_REVITALIZE#Gentle Touch - Revitalize#
 //More from SR Sura (but not following ID order)
 2517,0,0,40:45:50:55:60,0,0,0,99,0,0,none,1:2:3:4:5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0	//SR_HOWLINGOFLION#Howling of Lion# 
 2518,0,0,40:50:60:70:80,0,0,0,99,0,0,none,1:2:3:4:5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0	//SR_RIDEINLIGHTNING#Ride In Lightening#
