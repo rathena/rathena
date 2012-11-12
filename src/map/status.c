@@ -2380,7 +2380,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	memset (&sd->right_weapon.overrefine, 0, sizeof(sd->right_weapon) - sizeof(sd->right_weapon.atkmods));
 	memset (&sd->left_weapon.overrefine, 0, sizeof(sd->left_weapon) - sizeof(sd->left_weapon.atkmods));
 
-	if (sd->special_state.intravision) //Clear status change.
+	if (sd->special_state.intravision && !sd->sc.data[SC_INTRAVISION]) //Clear intravision as long as nothing else is using it
 		clif_status_load(&sd->bl, SI_INTRAVISION, 0);
 
 	memset(&sd->special_state,0,sizeof(sd->special_state));
@@ -6672,9 +6672,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		if (sc->data[SC_BERSERK] || sc->data[SC_INSPIRATION] || sc->data[SC__BLOODYLUST])
 			return 0;
 		break;
-        case SC_INTRAVISION:
-            if(sd && sd->special_state.intravision) return 0; //we already have the status by maya P
-            break;
 	}
 
 	//Check for BOSS resistances
