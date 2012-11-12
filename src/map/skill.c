@@ -4668,7 +4668,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		case HLIF_HEAL:	//[orn]
 			if (bl->type != BL_HOM) {
 				if (sd) clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0) ;
-	        break ;
+				break ;
 			}
  		case AL_HEAL:
 		case ALL_RESURRECTION:
@@ -5994,7 +5994,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				break;
 			}
 			if(!battle_config.duel_allow_teleport && sd->duel_group && skilllv <= 2) { // duel restriction [LuzZza]
-                                char output[128]; sprintf(output, msg_txt(365), skill_get_name(AL_TELEPORT));
+				char output[128]; sprintf(output, msg_txt(365), skill_get_name(AL_TELEPORT));
 				clif_displaymessage(sd->fd, output); //"Duel: Can't use %s in duel."
 				break;
 			}
@@ -8382,7 +8382,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			if( src->id != bl->id && battle_check_target(src,bl,BCT_ENEMY) > 0 )
 				status_fix_damage(src,bl,9999,clif_damage(src,bl,tick,0,0,9999,0,0,0));
 		} else if( sd ) {
-                        short chance = sstatus->int_/6 + sd->status.job_level/5 + skilllv*4;
+			short chance = sstatus->int_/6 + sd->status.job_level/5 + skilllv*4;
 			if( !sd->status.party_id || (rnd()%100 > chance)) {
 				clif_skill_fail(sd,skillid,USESKILL_FAIL_NEED_HELPER,0);
 				break;
@@ -9133,18 +9133,16 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 				if( ((TBL_MOB*)target)->class_ == MOBID_EMPERIUM )
 					break;
 			}
-			else
-			if (inf && battle_check_target(src, target, inf) <= 0){
+			else if (inf && battle_check_target(src, target, inf) <= 0){
 				if (sd) clif_skill_fail(sd,ud->skillid,USESKILL_FAIL_LEVEL,0);
 				break;
 			}
 
 			if(inf&BCT_ENEMY && (sc = status_get_sc(target)) &&
 				sc->data[SC_FOGWALL] &&
-				rnd()%100 < 75)
-		  	{	//Fogwall makes all offensive-type targetted skills fail at 75%
-				if (sd) clif_skill_fail(sd,ud->skillid,USESKILL_FAIL_LEVEL,0);
-				break;
+				rnd() % 100 < 75) { //Fogwall makes all offensive-type targetted skills fail at 75%
+					if (sd) clif_skill_fail(sd, ud->skillid, USESKILL_FAIL_LEVEL, 0);
+					break;
 			}
 		}
 
@@ -10976,19 +10974,19 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 		if (!sce)
 			sc_start4(bl,type,100,sg->skill_lv,sg->group_id,0,0,sg->limit);
 		break;
-        case UNT_BLOODYLUST:
-            if (sg->src_id == bl->id)
-                break; //Does not affect the caster.
-            if (!sce) {
-                TBL_PC *sd = BL_CAST(BL_PC, bl); //prevent fullheal exploit
-                if (sd && sd->bloodylust_tick && DIFF_TICK(gettick(), sd->bloodylust_tick) < skill_get_time2(SC_BLOODYLUST, 1))
-                    sc_start4(bl, type, 100, sg->skill_lv, 1, 0, 0, skill_get_time(LK_BERSERK, sg->skill_lv)); //do not refull heal
-                else {
-                    if (sd) sd->bloodylust_tick = gettick();
-                    sc_start4(bl, type, 100, sg->skill_lv, 0, 0, 0, skill_get_time(LK_BERSERK, sg->skill_lv));
-                }
-            }
-            break;
+	case UNT_BLOODYLUST:
+		if (sg->src_id == bl->id)
+			break; //Does not affect the caster.
+		if (!sce) {
+			TBL_PC *sd = BL_CAST(BL_PC, bl); //prevent fullheal exploit
+			if (sd && sd->bloodylust_tick && DIFF_TICK(gettick(), sd->bloodylust_tick) < skill_get_time2(SC_BLOODYLUST, 1))
+				sc_start4(bl, type, 100, sg->skill_lv, 1, 0, 0, skill_get_time(LK_BERSERK, sg->skill_lv)); //do not refull heal
+			else {
+				if (sd) sd->bloodylust_tick = gettick();
+					sc_start4(bl, type, 100, sg->skill_lv, 0, 0, 0, skill_get_time(LK_BERSERK, sg->skill_lv));
+			}
+		}
+		break;
 
 	case UNT_WARP_WAITING: {
 		int working = sg->val1&0xffff;
@@ -12428,7 +12426,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 			break;
 		case AL_WARP:
 			if(!battle_config.duel_allow_teleport && sd->duel_group) { // duel restriction [LuzZza]
-                                char output[128]; sprintf(output, msg_txt(365), skill_get_name(AL_WARP));
+				char output[128]; sprintf(output, msg_txt(365), skill_get_name(AL_WARP));
 				clif_displaymessage(sd->fd, output); //"Duel: Can't use %s in duel."
 				return 0;
 			}
@@ -13436,10 +13434,10 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, short 
 			case SO_SUMMON_AQUA:
 			case SO_SUMMON_VENTUS:
 			case SO_SUMMON_TERA:
-                        case SO_WATER_INSIGNIA:
-                        case SO_FIRE_INSIGNIA:
-                        case SO_WIND_INSIGNIA:
-                        case SO_EARTH_INSIGNIA:
+			case SO_WATER_INSIGNIA:
+			case SO_FIRE_INSIGNIA:
+			case SO_WIND_INSIGNIA:
+			case SO_EARTH_INSIGNIA:
 				if( i < 3 )
 					continue;
 				break;
@@ -13480,10 +13478,10 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, short 
 		case SO_SUMMON_AQUA:
 		case SO_SUMMON_VENTUS:
 		case SO_SUMMON_TERA:
-                case SO_WATER_INSIGNIA:
-                case SO_FIRE_INSIGNIA:
-                case SO_WIND_INSIGNIA:
-                case SO_EARTH_INSIGNIA:
+		case SO_WATER_INSIGNIA:
+		case SO_FIRE_INSIGNIA:
+		case SO_WIND_INSIGNIA:
+		case SO_EARTH_INSIGNIA:
 			req.itemid[lv-1] = skill_db[j].itemid[lv-1];
 			req.amount[lv-1] = skill_db[j].amount[lv-1];
 			break;
@@ -13708,8 +13706,8 @@ int skill_vfcastfix (struct block_list *bl, double time, int skill_id, int skill
 			VARCAST_REDUCTION(sc->data[SC_POEMBRAGI]->val2);
 		if (sc->data[SC_IZAYOI])
 			VARCAST_REDUCTION(50);
-                if (sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 3 && (skill_get_ele(skill_id, skill_lv) == ELE_WATER))
-                        VARCAST_REDUCTION(30); //Reduces 30% Variable Cast Time of Water spells.
+		if (sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 3 && (skill_get_ele(skill_id, skill_lv) == ELE_WATER))
+			VARCAST_REDUCTION(30); //Reduces 30% Variable Cast Time of Water spells.
 		// Fixed cast reduction bonuses
 		if( sc->data[SC__LAZINESS] )
 			fixcast_r = max(fixcast_r, sc->data[SC__LAZINESS]->val2);
@@ -13816,8 +13814,8 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 		if (sc && sc->count) {
 			if (sc->data[SC_POEMBRAGI])
 				time -= time * sc->data[SC_POEMBRAGI]->val3 / 100;
-                        if (sc->data[SC_WIND_INSIGNIA] && sc->data[SC_WIND_INSIGNIA]->val1 == 3 && (skill_get_ele(skill_id, skill_lv) == ELE_WIND))
-                                time /= 2; // After Delay of Wind element spells reduced by 50%.
+			if (sc->data[SC_WIND_INSIGNIA] && sc->data[SC_WIND_INSIGNIA]->val1 == 3 && (skill_get_ele(skill_id, skill_lv) == ELE_WIND))
+				time /= 2; // After Delay of Wind element spells reduced by 50%.
 		}
 
 	}
@@ -13829,8 +13827,8 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 		time = time * battle_config.delay_rate / 100;
 
 	//min delay
-        time = max(time, status_get_amotion(bl)); // Delay can never be below amotion [Playtester]
-        time = max(time, battle_config.min_skill_delay_limit);
+	time = max(time, status_get_amotion(bl)); // Delay can never be below amotion [Playtester]
+	time = max(time, battle_config.min_skill_delay_limit);
 
 //        ShowInfo("Delay delayfix = %d\n",time);
 	return time;
@@ -17445,7 +17443,7 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	else if( strcmpi(split[10],"mado")==0 ) skill_db[i].state = ST_MADO;
 	else if( strcmpi(split[10],"elementalspirit")==0 ) skill_db[i].state = ST_ELEMENTALSPIRIT;
 	else if (strcmpi(split[10], "poisonweapon") == 0) skill_db[i].state = ST_POISONINGWEAPON;
-        else if (strcmpi(split[10], "rollingcutter") == 0) skill_db[i].state = ST_ROLLINGCUTTER;
+	else if (strcmpi(split[10], "rollingcutter") == 0) skill_db[i].state = ST_ROLLINGCUTTER;
 
 	/**
 	 * Unknown or no state
@@ -17456,7 +17454,7 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	for( j = 0; j < MAX_SKILL_ITEM_REQUIRE; j++ ) {
 		skill_db[i].itemid[j] = atoi(split[12+ 2*j]);
 		skill_db[i].amount[j] = atoi(split[13+ 2*j]);
-        }
+	}
 
 	return true;
 }

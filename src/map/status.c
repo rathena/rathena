@@ -1309,7 +1309,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 			((TBL_MOB*)target)->state.rebirth = 1;
 
 		return hp+sp;
-	}
+    }
     if(target->type == BL_PC){
         TBL_PC *sd = BL_CAST(BL_PC,target);
         TBL_HOM *hd = sd->hd;
@@ -1321,7 +1321,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
         }
     }
     if (target->type == BL_MOB && sc && sc->data[SC_REBIRTH] && !((TBL_MOB*) target)->state.rebirth) {// Ensure the monster has not already rebirthed before doing so.
-		status_revive(target, sc->data[SC_REBIRTH]->val2, 0);
+        status_revive(target, sc->data[SC_REBIRTH]->val2, 0);
 		status_change_clear(target,0);
 		((TBL_MOB*)target)->state.rebirth = 1;
 
@@ -10443,7 +10443,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			sc_timer_next(1000+tick, status_change_timer, bl->id, data);
 			return 0;
 		}
-				break;
+		break;
 	case SC_ANGRIFFS_MODUS:
 		if(--(sce->val4) >= 0) { //drain hp/sp
 			if( !status_charge(bl,100,20) ) break;
