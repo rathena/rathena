@@ -45,7 +45,7 @@
 
 /// renewal level modifier on damage
 /// (disable by commenting the line)
-/// 
+///
 // leave this line to enable renewal base level modifier on skill damage (selected skills only)
 #define RENEWAL_LVDMG
 
@@ -60,7 +60,7 @@
 
 /// renewal ASPD [malufett]
 /// (disable by commenting the line)
-/// 
+///
 /// leave this line to enable renewal ASPD
 /// - shield penalty is applied
 /// - AGI has a greater factor in ASPD increase

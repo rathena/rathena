@@ -2533,7 +2533,10 @@ ACMD_FUNC(zeny)
 		clif_displaymessage(fd, msg_txt(1012)); // Please enter an amount (usage: @zeny <amount>).
 		return -1;
 	}
-	pc_getzeny(sd,zeny,LOG_TYPE_COMMAND,NULL);
+	if(zeny > 0)
+	    pc_getzeny(sd,zeny,LOG_TYPE_COMMAND,NULL);
+	else
+	    pc_payzeny(sd,zeny,LOG_TYPE_COMMAND,NULL);
 	return 0;
 }
 
