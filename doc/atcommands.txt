@@ -190,17 +190,17 @@ Sets a mapflag for the current map (1 = On, 0 = Off).
 
 ---------------------------------------
 
-@addwarp <map> <x> <y> {<npc name>}
+@addwarp <map> <x> <y> <npc name>
 
 Creates a warp portal on the character's current coordinates that lasts until the next reboot.
-If no name is specified, the server will automatically assign a name for the warp portal.
-The name will be displayed only once in the chat window.
+The name parameter is mandatory and if it already exists, the server will automagically assign a name,
+and it will be displayed only once in the chat window.
 
 Example:
-@addwarp prontera 50 50
+@addwarp prontera 50 50 my_warp_sample
 
 Output:
-New warp NPC 'warp_4_170_198' created.
+New warp NPC 'my_warp_sample' created.
 
 ---------------------------------------
 

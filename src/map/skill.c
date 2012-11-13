@@ -4692,7 +4692,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			return skill_castend_damage_id (src, bl, skillid, skilllv, tick, flag);
 		case MH_STEINWAND: {
 			struct block_list *s_src = battle_get_master(src);
-			short ret;
+			short ret = 0;
 			if(!skill_check_unit_range(src, src->x, src->y, skillid, skilllv))  //prevent reiteration
 			    ret = skill_castend_pos2(src,src->x,src->y,skillid,skilllv,tick,flag); //cast on homon
 			if(s_src && !skill_check_unit_range(s_src, s_src->x, s_src->y, skillid, skilllv))

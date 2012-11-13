@@ -2021,14 +2021,11 @@ struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short 
 	nd->bl.x = from_x;
 	nd->bl.y = from_y;
 	
-	if (name)
-	{
-		safestrncpy(nd->exname, name, ARRAYLENGTH(nd->exname));
-		if (npc_name2id(nd->exname) != NULL)
-			flag = 1;
-	}
+	safestrncpy(nd->exname, name, ARRAYLENGTH(nd->exname));
+	if (npc_name2id(nd->exname) != NULL)
+		flag = 1;
 	
-	if (name[0] == '\0' || flag == 1)
+	if (flag == 1)
 		snprintf(nd->exname, ARRAYLENGTH(nd->exname), "warp_%d_%d_%d", from_mapid, from_x, from_y);
 
 	for( i = 0; npc_name2id(nd->exname) != NULL; ++i )
