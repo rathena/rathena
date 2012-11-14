@@ -1827,7 +1827,7 @@ static void intif_parse_Auction_register(int fd)
 		clif_Auction_message(sd->fd, 4);
 		pc_additem(sd, &auction.item, auction.item.amount, LOG_TYPE_AUCTION);
 
-		pc_getzeny(sd, zeny, LOG_TYPE_AUCTION,NULL);
+		pc_getzeny(sd, zeny, LOG_TYPE_AUCTION, NULL);
 	}
 }
 

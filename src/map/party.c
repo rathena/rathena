@@ -949,7 +949,7 @@ int party_exp_share(struct party_data* p, struct block_list* src, unsigned int b
 		pc_gainexp(sd[i], src, base_exp, job_exp, false);
 
 		if (zeny) // zeny from mobs [Valaris]
-			pc_getzeny(sd[i],zeny,LOG_TYPE_OTHER,NULL);
+			pc_getzeny(sd[i],zeny,LOG_TYPE_PICKDROP_MONSTER,NULL);
 	}
 	return 0;
 }
