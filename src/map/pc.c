@@ -3621,7 +3621,7 @@ int pc_paycash(struct map_session_data *sd, int price, int points)
 {
 	char output[128];
 	int cash;
-	nullpo_retr(sd,-1);
+	nullpo_retr(-1,sd);
 
 	points = cap_value(points,-MAX_ZENY,MAX_ZENY); //prevent command UB
 	if( price < 0 || points < 0 )
@@ -3658,7 +3658,7 @@ int pc_paycash(struct map_session_data *sd, int price, int points)
 int pc_getcash(struct map_session_data *sd, int cash, int points)
 {
 	char output[128];
-	nullpo_retr(sd,-1);
+	nullpo_retr(-1,sd);
 
 	cash = cap_value(cash,-MAX_ZENY,MAX_ZENY); //prevent command UB
 	points = cap_value(points,-MAX_ZENY,MAX_ZENY); //prevent command UB
