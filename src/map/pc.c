@@ -3621,7 +3621,7 @@ int pc_paycash(struct map_session_data *sd, int price, int points)
 {
 	char output[128];
 	int cash;
-	nullpo_retv(sd);
+	nullpo_retr(sd,-1);
 
 	points = cap_value(points,-MAX_ZENY,MAX_ZENY); //prevent command UB
 	if( price < 0 || points < 0 )
@@ -3658,7 +3658,7 @@ int pc_paycash(struct map_session_data *sd, int price, int points)
 int pc_getcash(struct map_session_data *sd, int cash, int points)
 {
 	char output[128];
-	nullpo_retv(sd);
+	nullpo_retr(sd,-1);
 
 	cash = cap_value(cash,-MAX_ZENY,MAX_ZENY); //prevent command UB
 	points = cap_value(points,-MAX_ZENY,MAX_ZENY); //prevent command UB
@@ -7485,6 +7485,8 @@ int pc_setcart(struct map_session_data *sd,int type) {
 			clif_updatestatus(sd, SP_CARTINFO);
 			sc_start(&sd->bl, SC_PUSH_CART, 100, type, 0);
 			clif_status_load_notick(&sd->bl, SI_ON_PUSH_CART,   2 , type, 0, 0);
+			if( sd->sc.data[SC_PUSH_CART] )/* forcefully update */
+				sd->sc.data[SC_PUSH_CART]->val1 = type;
 			break;
 	}
 
