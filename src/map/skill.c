@@ -17782,9 +17782,16 @@ static void skill_readdb(void)
 
 }
 
-void skill_reload (void)
-{
+void skill_reload (void) {
+	struct s_mapiterator *iter;
+	struct map_session_data *sd;
 	skill_readdb();
+	/* lets update all players skill tree : so that if any skill modes were changed they're properly updated */
+	iter = mapit_getallusers();
+	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
+		clif_skillinfoblock(sd);
+	mapit_free(iter);
+	
 }
 
 /*==========================================
