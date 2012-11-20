@@ -1336,11 +1336,10 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 //==========================================================================================================
 int mmo_char_sql_init(void)
 {
-	ShowInfo("Begin Initializing.......\n");
 	char_db_= idb_alloc(DB_OPT_RELEASE_DATA);
 
 	if(char_per_account == 0){
-	  ShowStatus("Chars per Account: 'Unlimited'.......\n");
+		ShowStatus("Chars per Account: 'Unlimited'.......\n");
 	}else{
 		ShowStatus("Chars per Account: '%d'.......\n", char_per_account);
 	}
@@ -1353,8 +1352,6 @@ int mmo_char_sql_init(void)
 	// Force all users offline in sql when starting char-server
 	// (useful when servers crashs and don't clean the database)
 	set_all_offline_sql();
-
-	ShowInfo("Finished initilizing.......\n");
 
 	return 0;
 }
@@ -4357,10 +4354,7 @@ int char_lan_config_read(const char *lancfgName)
 		return 1;
 	}
 
-	ShowInfo("Reading the configuration file %s...\n", lancfgName);
-
-	while(fgets(line, sizeof(line), fp))
-	{
+	while(fgets(line, sizeof(line), fp)) {
 		line_num++;
 		if ((line[0] == '/' && line[1] == '/') || line[0] == '\n' || line[1] == '\n')
 			continue;
@@ -4392,7 +4386,8 @@ int char_lan_config_read(const char *lancfgName)
 		}
 	}
 
-	ShowStatus("Read information about %d subnetworks.\n", subnet_count);
+	if( subnet_count > 1 ) /* only useful if there is more than 1 */
+		ShowStatus("Read information about %d subnetworks.\n", subnet_count);
 
 	fclose(fp);
 	return 0;
@@ -4402,8 +4397,6 @@ void sql_config_read(const char* cfgName)
 {
 	char line[1024], w1[1024], w2[1024];
 	FILE* fp;
-
-	ShowInfo("Reading file %s...\n", cfgName);
 
 	if ((fp = fopen(cfgName, "r")) == NULL) {
 		ShowError("File not found: %s\n", cfgName);
@@ -4494,9 +4487,7 @@ int char_config_read(const char* cfgName)
 		return 1;
 	}
 
-	ShowInfo("Reading configuration file %s...\n", cfgName);
-	while(fgets(line, sizeof(line), fp))
-	{
+	while(fgets(line, sizeof(line), fp)) {
 		if (line[0] == '/' && line[1] == '/')
 			continue;
 
@@ -4508,8 +4499,9 @@ int char_config_read(const char* cfgName)
 		if(strcmpi(w1,"timestamp_format") == 0) {
 			safestrncpy(timestamp_format, w2, sizeof(timestamp_format));
 		} else if(strcmpi(w1,"console_silent")==0){
-			ShowInfo("Console Silent Setting: %d\n", atoi(w2));
 			msg_silent = atoi(w2);
+			if( msg_silent ) /* only bother if its actually enabled */
+				ShowInfo("Console Silent Setting: %d\n", atoi(w2));
 		} else if(strcmpi(w1,"stdout_with_ansisequence")==0){
 			stdout_with_ansisequence = config_switch(w2);
 		} else if (strcmpi(w1, "userid") == 0) {
@@ -4518,7 +4510,6 @@ int char_config_read(const char* cfgName)
 			safestrncpy(passwd, w2, sizeof(passwd));
 		} else if (strcmpi(w1, "server_name") == 0) {
 			safestrncpy(server_name, w2, sizeof(server_name));
-			ShowStatus("%s server has been initialized\n", w2);
 		} else if (strcmpi(w1, "wisp_server_name") == 0) {
 			if (strlen(w2) >= 4) {
 				safestrncpy(wisp_server_name, w2, sizeof(wisp_server_name));
@@ -4720,17 +4711,12 @@ int do_init(int argc, char **argv)
 		ShowNotice("And then change the user/password to use in conf/char_athena.conf (or conf/import/char_conf.txt)\n");
 	}
 
-	ShowInfo("Finished reading the char-server configuration.\n");
-
 	inter_init_sql((argc > 2) ? argv[2] : inter_cfgName); // inter server configuration
-	ShowInfo("Finished reading the inter-server configuration.\n");
 	
-	ShowInfo("Initializing char server.\n");
 	auth_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	online_char_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	mmo_char_sql_init();
 	char_read_fame_list(); //Read fame lists.
-	ShowInfo("char server initialized.\n");
 
 	if ((naddr_ != 0) && (!login_ip || !char_ip))
 	{
@@ -4772,24 +4758,18 @@ int do_init(int argc, char **argv)
 	
 	//Cleaning the tables for NULL entrys @ startup [Sirius]
 	//Chardb clean
-	ShowInfo("Cleaning the '%s' table...\n", char_db);
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '0'", char_db) )
 		Sql_ShowDebug(sql_handle);
 
 	//guilddb clean
-    ShowInfo("Cleaning the '%s' table...\n", guild_db);
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `guild_lv` = '0' AND `max_member` = '0' AND `exp` = '0' AND `next_exp` = '0' AND `average_lv` = '0'", guild_db) )
 		Sql_ShowDebug(sql_handle);
 
 	//guildmemberdb clean
-	ShowInfo("Cleaning the '%s' table...\n", guild_member_db);
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `guild_id` = '0' AND `account_id` = '0' AND `char_id` = '0'", guild_member_db) )
 		Sql_ShowDebug(sql_handle);
 
-	ShowInfo("End of char server initilization function.\n");
-
 	set_defaultparse(parse_char);
-	ShowInfo("open port %d.....\n",char_port);
 	char_fd = make_listen_bind(bind_ip, char_port);
 	ShowStatus("The char-server is "CL_GREEN"ready"CL_RESET" (Server is listening on the port %d).\n\n", char_port);
 	

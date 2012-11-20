@@ -324,8 +324,6 @@ int login_lan_config_read(const char *lancfgName)
 		return 1;
 	}
 
-	ShowInfo("Reading the configuration file %s...\n", lancfgName);
-
 	while(fgets(line, sizeof(line), fp))
 	{
 		line_num++;
@@ -354,7 +352,8 @@ int login_lan_config_read(const char *lancfgName)
 		}
 	}
 
-	ShowStatus("Read information about %d subnetworks.\n", subnet_count);
+	if( subnet_count > 1 ) /* only useful if there is more than 1 available */
+		ShowStatus("Read information about %d subnetworks.\n", subnet_count);
 
 	fclose(fp);
 	return 0;
@@ -1589,9 +1588,7 @@ int login_config_read(const char* cfgName)
 		ShowError("Configuration file (%s) not found.\n", cfgName);
 		return 1;
 	}
-	ShowInfo("Reading configuration file %s...\n", cfgName);
-	while(fgets(line, sizeof(line), fp))
-	{
+	while(fgets(line, sizeof(line), fp)) {
 		if (line[0] == '/' && line[1] == '/')
 			continue;
 
@@ -1603,8 +1600,9 @@ int login_config_read(const char* cfgName)
 		else if(!strcmpi(w1,"stdout_with_ansisequence"))
 			stdout_with_ansisequence = config_switch(w2);
 		else if(!strcmpi(w1,"console_silent")) {
-			ShowInfo("Console Silent Setting: %d\n", atoi(w2));
 			msg_silent = atoi(w2);
+			if( msg_silent ) /* only bother if we actually have this enabled */
+				ShowInfo("Console Silent Setting: %d\n", atoi(w2));
 		}
 		else if( !strcmpi(w1, "bind_ip") ) {
 			char ip_str[16];
@@ -1614,7 +1612,6 @@ int login_config_read(const char* cfgName)
 		}
 		else if( !strcmpi(w1, "login_port") ) {
 			login_config.login_port = (uint16)atoi(w2);
-			ShowStatus("set login_port : %s\n",w2);
 		}
 		else if(!strcmpi(w1, "log_login"))
 			login_config.log_login = (bool)config_switch(w2);
@@ -1854,17 +1851,12 @@ int do_init(int argc, char** argv)
 
 	// Account database init
 	accounts = get_account_engine();
-	if( accounts == NULL )
-	{
+	if( accounts == NULL ) {
 		ShowFatalError("do_init: account engine '%s' not found.\n", login_config.account_engine);
 		exit(EXIT_FAILURE);
-	}
-	else
-	{
-		ShowInfo("Using account engine '%s'.\n", login_config.account_engine);
+	} else {
 
-		if(!accounts->init(accounts))
-		{
+		if(!accounts->init(accounts)) {
 			ShowFatalError("do_init: Failed to initialize account engine '%s'.\n", login_config.account_engine);
 			exit(EXIT_FAILURE);
 		}

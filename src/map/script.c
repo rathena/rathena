@@ -3352,7 +3352,7 @@ static void script_check_buildin_argtype(struct script_state* st, int func)
 		}
 		else if( type == 0 )
 		{// more arguments than necessary ( should not happen, as it is checked before )
-			ShowWarning("Found more arguments than necessary.\n");
+			ShowWarning("Found more arguments than necessary. unexpected arg type %s\n",script_op2name(data->type));
 			invalid++;
 			break;
 		}
@@ -11029,23 +11029,24 @@ BUILDIN_FUNC(agitcheck2)
 BUILDIN_FUNC(flagemblem)
 {
 	TBL_NPC* nd;
-	int g_id=script_getnum(st,2);
+	int g_id = script_getnum(st,2);
 
 	if(g_id < 0) return 0;
 
 	nd = (TBL_NPC*)map_id2nd(st->oid);
-	if( nd == NULL )
-	{
+	if( nd == NULL ) {
 		ShowError("script:flagemblem: npc %d not found\n", st->oid);
-	}
-	else if( nd->subtype != SCRIPT )
-	{
+	} else if( nd->subtype != SCRIPT ) {
 		ShowError("script:flagemblem: unexpected subtype %d for npc %d '%s'\n", nd->subtype, st->oid, nd->exname);
-	}
-	else
-	{
+	} else {
+		bool changed = ( nd->u.scr.guild_id != g_id )?true:false;
 		nd->u.scr.guild_id = g_id;
 		clif_guild_emblem_area(&nd->bl);
+		/* guild flag caching */
+		if( g_id ) /* adding a id */
+			guild_flag_add(nd);
+		else if( changed ) /* removing a flag */
+			guild_flag_remove(nd);
 	}
 	return 0;
 }
