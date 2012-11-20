@@ -824,89 +824,69 @@ int _ShowMessage(enum msg_type flag, const char *string, ...)
 }
 
 // direct printf replacement
-int ShowMessage(const char *string, ...) {
-	int ret;
+void ShowMessage(const char *string, ...) {
 	va_list ap;
 	va_start(ap, string);
-	ret = _vShowMessage(MSG_NONE, string, ap);
+	_vShowMessage(MSG_NONE, string, ap);
 	va_end(ap);
-	return ret;
 }
-int ShowStatus(const char *string, ...) {
-	int ret;
+void ShowStatus(const char *string, ...) {
 	va_list ap;
 	va_start(ap, string);
-	ret = _vShowMessage(MSG_STATUS, string, ap);
+	_vShowMessage(MSG_STATUS, string, ap);
 	va_end(ap);
-	return ret;
 }
-int ShowSQL(const char *string, ...) {
-	int ret;
+void ShowSQL(const char *string, ...) {
 	va_list ap;
 	va_start(ap, string);
-	ret = _vShowMessage(MSG_SQL, string, ap);
+	_vShowMessage(MSG_SQL, string, ap);
 	va_end(ap);
-	return ret;
 }
-int ShowInfo(const char *string, ...) {
-	int ret;
+void ShowInfo(const char *string, ...) {
 	va_list ap;
 	va_start(ap, string);
-	ret = _vShowMessage(MSG_INFORMATION, string, ap);
+	_vShowMessage(MSG_INFORMATION, string, ap);
 	va_end(ap);
-	return ret;
 }
-int ShowNotice(const char *string, ...) {
-	int ret;
+void ShowNotice(const char *string, ...) {
 	va_list ap;
 	va_start(ap, string);
-	ret = _vShowMessage(MSG_NOTICE, string, ap);
+	_vShowMessage(MSG_NOTICE, string, ap);
 	va_end(ap);
-	return ret;
 }
-int ShowWarning(const char *string, ...) {
-	int ret;
+void ShowWarning(const char *string, ...) {
 	va_list ap;
 	va_start(ap, string);
-	ret = _vShowMessage(MSG_WARNING, string, ap);
+	_vShowMessage(MSG_WARNING, string, ap);
 	va_end(ap);
-	return ret;
 }
-int ShowConfigWarning(config_setting_t *config, const char *string, ...)
+void ShowConfigWarning(config_setting_t *config, const char *string, ...)
 {
 	StringBuf buf;
-	int ret;
 	va_list ap;
 	StringBuf_Init(&buf);
 	StringBuf_AppendStr(&buf, string);
 	StringBuf_Printf(&buf, " (%s:%d)\n", config_setting_source_file(config), config_setting_source_line(config));
 	va_start(ap, string);
-	ret = _vShowMessage(MSG_WARNING, StringBuf_Value(&buf), ap);
+	_vShowMessage(MSG_WARNING, StringBuf_Value(&buf), ap);
 	va_end(ap);
 	StringBuf_Destroy(&buf);
-	return ret;
 }
-int ShowDebug(const char *string, ...) {
-	int ret;
+void ShowDebug(const char *string, ...) {
 	va_list ap;
 	va_start(ap, string);
-	ret = _vShowMessage(MSG_DEBUG, string, ap);
+	_vShowMessage(MSG_DEBUG, string, ap);
 	va_end(ap);
-	return ret;
 }
-int ShowError(const char *string, ...) {
-	int ret;
+void ShowError(const char *string, ...) {
 	va_list ap;
 	va_start(ap, string);
-	ret = _vShowMessage(MSG_ERROR, string, ap);
+	_vShowMessage(MSG_ERROR, string, ap);
 	va_end(ap);
-	return ret;
 }
-int ShowFatalError(const char *string, ...) {
-	int ret;
+void ShowFatalError(const char *string, ...) {
 	va_list ap;
 	va_start(ap, string);
-	ret = _vShowMessage(MSG_FATALERROR, string, ap);
+	_vShowMessage(MSG_FATALERROR, string, ap);
 	va_end(ap);
-	return ret;
 }
