@@ -140,7 +140,7 @@ REPLACE INTO `item_db_re` VALUES (599,'Light_Orange_Pot','Light Orange Potion',0
 # ===================================================================
 REPLACE INTO `item_db_re` VALUES (601,'Wing_Of_Fly','Fly Wing',11,60,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'itemskill "AL_TELEPORT",1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (602,'Wing_Of_Butterfly','Butterfly Wing',11,300,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'itemskill "AL_TELEPORT",3;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (603,'Old_Blue_Box','Old Blue Box',2,10000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_BlueBox),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (603,'Old_Blue_Box','Old Blue Box',2,10000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_BlueBox),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (604,'Branch_Of_Dead_Tree','Dead Branch',2,50,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'monster "this",-1,-1,"--ja--",-1,1,"";',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (605,'Anodyne','Anodyne',11,2000,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'itemskill "SM_ENDURE",1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (606,'Aloebera','Aloevera',11,1500,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'itemskill "SM_SELFPROVOKE",1;',NULL,NULL);
@@ -153,8 +153,8 @@ REPLACE INTO `item_db_re` VALUES (612,'Portable_Furnace','Mini Furnace',2,150,NU
 REPLACE INTO `item_db_re` VALUES (613,'Iron_Hammer','Iron Hammer',2,1000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'produce 1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (614,'Golden_Hammer','Golden Hammer',2,3000,NULL,300,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'produce 2;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (615,'Oridecon_Hammer','Oridecon Hammer',2,5000,NULL,400,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'produce 3;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (616,'Old_Card_Album','Old Card Album',2,10000,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_CardAlbum),1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (617,'Old_Violet_Box','Old Purple Box',2,10000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_VioletBox),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (616,'Old_Card_Album','Old Card Album',2,10000,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_CardAlbum),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (617,'Old_Violet_Box','Old Purple Box',2,10000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_VioletBox),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (618,'Worn_Out_Scroll','Worn Out Scroll',2,50,NULL,20,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (619,'Unripe_Apple','Unripe Apple',2,1000,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'pet 1002;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (620,'Orange_Juice','Orange Juice',2,1500,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'pet 1113;',NULL,NULL);
@@ -181,7 +181,7 @@ REPLACE INTO `item_db_re` VALUES (640,'Shining_Stone','Shining Stone',2,3000,NUL
 REPLACE INTO `item_db_re` VALUES (641,'Contracts_In_Shadow','Contract in Shadow',2,100,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'pet 1109;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (642,'Book_Of_Devil','Book of the Devil',2,1800,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'pet 1101;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (643,'Pet_Incubator','Pet Incubator',2,3000,NULL,30,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'bpet;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (644,'Gift_Box','Gift Box',2,1000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_GiftBox),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (644,'Gift_Box','Gift Box',2,1000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_GiftBox),1;',NULL,NULL);
 
 #ASPD in RE they give a fixed +4/+6/+9 ASPD
 REPLACE INTO `item_db_re` VALUES (645,'Center_Potion','Concentration Potion',2,800,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_ASPDPOTION0,1800000,4;',NULL,NULL);
@@ -194,10 +194,10 @@ REPLACE INTO `item_db_re` VALUES (660,'Prohibition_Red_Candle','Forbidden Red Ca
 REPLACE INTO `item_db_re` VALUES (661,'Sway_Apron','Soft Apron',2,20000,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'pet 1275;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (662,'Inspector_Certificate','Authoritative Badge',2,1450,NULL,30,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_SpeedUp0,180000,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (663,'Korea_Rice_Cake','Korean Rice Cake',0,1,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'percentheal 10,0;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (664,'Gift_Box_1','Gift Box',2,1000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_GiftBox_1),1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (665,'Gift_Box_2','Gift Box',2,1000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_GiftBox_2),1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (666,'Gift_Box_3','Gift Box',2,1000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_GiftBox_3),1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (667,'Gift_Box_4','Gift Box',2,1000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_GiftBox_4),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (664,'Gift_Box_1','Gift Box',2,1000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_GiftBox_1),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (665,'Gift_Box_2','Gift Box',2,1000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_GiftBox_2),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (666,'Gift_Box_3','Gift Box',2,1000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_GiftBox_3),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (667,'Gift_Box_4','Gift Box',2,1000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_GiftBox_4),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (668,'Handsei','Red Envelope',2,NULL,NULL,20,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'set Zeny,Zeny+rand(1000,10000);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (669,'Rice_Cake_Soup','Tempting Rice-Cake Soup',0,500,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'percentheal -100,-100;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (670,'Gold_Coin_Moneybag','Bag of Gold Coins',3,100000,NULL,400,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
@@ -5099,10 +5099,10 @@ REPLACE INTO `item_db_re` VALUES (12019,'Holy_Egg','Holy Egg',11,2,NULL,150,NULL
 REPLACE INTO `item_db_re` VALUES (12020,'Water_Of_Darkness','Cursed Water',11,2,NULL,30,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'itemskill "ITEM_ENCHANTARMS",8;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12021,'Pork_Belly','Pork',0,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(70,99),0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12022,'Spareribs','Galbi',0,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(70,99),0;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12023,'Giftbox_China','Wrapped Box',2,1000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_GiftBoxChina),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12023,'Giftbox_China','Wrapped Box',2,1000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_GiftBoxChina),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12024,'Red_Pouch_Of_Surprise','Red Pouch',2,50,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'monster "this",-1,-1,"--ja--",-4,1,"";',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12025,'Egg_Boy','Dano Festival Egg',2,1000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_EggBoy),1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12026,'Egg_Girl','Dano Festival Egg',2,1000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_EggGirl),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12025,'Egg_Boy','Dano Festival Egg',2,1000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_EggBoy),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12026,'Egg_Girl','Dano Festival Egg',2,1000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_EggGirl),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12027,'Giggling_Box','Giggling Box',2,1000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'percentheal 9,0; if(rand(1000)<300) sc_start SC_Curse,30000,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12028,'Box_Of_Thunder','Box of Thunder',2,1000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_SpeedUp0,20000,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12029,'Gloomy_Box','Box of Gloom',11,1000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'itemskill "AC_CONCENTRATION",1;',NULL,NULL);
@@ -5114,7 +5114,7 @@ REPLACE INTO `item_db_re` VALUES (12034,'Painting_Box','Box of Panting',2,1000,N
 REPLACE INTO `item_db_re` VALUES (12035,'Lotto_Box01','Lotto Box 01',2,NULL,NULL,20,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem rand(7361,7370),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12036,'Lotto_Box02','Lotto Box 02',2,NULL,NULL,20,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem rand(7371,7380),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12037,'Lotto_Box03','Lotto Box 03',2,NULL,NULL,20,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem rand(7381,7390),1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12038,'Lotto_Box04','Lotto Box 04',2,NULL,NULL,20,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_LottoBox),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12038,'Lotto_Box04','Lotto Box 04',2,NULL,NULL,20,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_LottoBox),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12039,'Lotto_Box05','Lotto Box 05',2,NULL,NULL,20,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem rand(7542,7546),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12040,'Stone_Of_Intelligence_','Stone of Sage',2,100000,NULL,300,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'homevolution;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12041,'Str_Dish01','Fried Grasshopper Legs',0,2000,NULL,60,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_STRFOOD,1200000,1; percentheal 5,0;',NULL,NULL);
@@ -5180,14 +5180,14 @@ REPLACE INTO `item_db_re` VALUES (12100,'Luk_Dish10','Cooked Nine Tail\'s Tails'
 REPLACE INTO `item_db_re` VALUES (12101,'Citron','Citron',0,20,NULL,300,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12102,'Meat_Skewer','Grilled Skewer',0,20,NULL,300,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12103,'Bloody_Dead_Branch','Bloody Branch',2,10000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'monster "this",-1,-1,"--ja--",-3,1,"";',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12104,'Random_Quiver','Random Quiver',2,10000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_Quiver),1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12105,'Set_Of_Taiming_Item','Taming Gift Set',2,10000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_Taming),1; getitem groupranditem(IG_Taming),1; getitem groupranditem(IG_Taming),1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12106,'Accessory_Box','Jewelry Box',2,10000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_Accesory),1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12107,'Wrapped_Mask','Wrapped Mask',2,10000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_Mask),1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12108,'Bundle_Of_Magic_Scroll','Scroll Package',2,10000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_Scroll),1; getitem groupranditem(IG_Scroll),1; getitem groupranditem(IG_Scroll),1; getitem groupranditem(IG_Scroll),1; getitem groupranditem(IG_Scroll),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12104,'Random_Quiver','Random Quiver',2,10000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_Quiver),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12105,'Set_Of_Taiming_Item','Taming Gift Set',2,10000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_Taming),1; getrandgroupitem(IG_Taming),1; getrandgroupitem(IG_Taming),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12106,'Accessory_Box','Jewelry Box',2,10000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_Accesory),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12107,'Wrapped_Mask','Wrapped Mask',2,10000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_Mask),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12108,'Bundle_Of_Magic_Scroll','Scroll Package',2,10000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_Scroll),1; getrandgroupitem(IG_Scroll),1; getrandgroupitem(IG_Scroll),1; getrandgroupitem(IG_Scroll),1; getrandgroupitem(IG_Scroll),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12109,'Poring_Box','Poring Box',2,10000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'monster "this",-1,-1,"--ja--",-2,1,"";',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12110,'First_Aid_Kit','First Aid Kit',2,10000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_FirstAid),1; getitem groupranditem(IG_FirstAid),1; getitem groupranditem(IG_FirstAid),1; getitem groupranditem(IG_FirstAid),1; getitem groupranditem(IG_FirstAid),1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12111,'Food_Package','Bundle of Food',2,10000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_FoodBag),1; getitem groupranditem(IG_FoodBag),1; getitem groupranditem(IG_FoodBag),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12110,'First_Aid_Kit','First Aid Kit',2,10000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_FirstAid),1; getrandgroupitem(IG_FirstAid),1; getrandgroupitem(IG_FirstAid),1; getrandgroupitem(IG_FirstAid),1; getrandgroupitem(IG_FirstAid),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12111,'Food_Package','Bundle of Food',2,10000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_FoodBag),1; getrandgroupitem(IG_FoodBag),1; getrandgroupitem(IG_FoodBag),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12112,'Tropical_Sograt','Tropical Sograt',2,1000,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_Curse,10000,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12113,'Vermilion_The_Beach','Vermilion on the Beach',2,1000,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_Stun,10000,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12114,'Elemental_Fire','Elemental Converter',11,2,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'itemskill "ITEM_ENCHANTARMS",4;',NULL,NULL);
@@ -5206,7 +5206,7 @@ REPLACE INTO `item_db_re` VALUES (12126,'Indoor_Cooking_Kits','Home Cooking Kit'
 REPLACE INTO `item_db_re` VALUES (12127,'High_end_Cooking_Kits','Professional Cooking Kit',2,2000,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'cooking 13;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12128,'Imperial_Cooking_Kits','Royal Cooking Kit',2,5000,NULL,70,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'cooking 14;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12129,'Fantastic_Cooking_Kits','Fantastic Cooking Kit',2,10000,NULL,70,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'cooking 15;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12130,'Cookie_Bag','Cookie Bag',2,2,NULL,70,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_CookieBag),1; getitem groupranditem(IG_CookieBag),1; getitem groupranditem(IG_CookieBag),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12130,'Cookie_Bag','Cookie Bag',2,2,NULL,70,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_CookieBag),1; getrandgroupitem(IG_CookieBag),1; getrandgroupitem(IG_CookieBag),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12131,'Lucky_Potion','Lucky Potion',0,2,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12132,'Red_Bag','Santa\'s Bag',2,NULL,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_Xmas,600000,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12133,'Ice_Cream_','McDonald\'s Ice Cone',0,NULL,NULL,80,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'if(gettime(5)!=MDiceCone) { set MDiceCone,gettime(5); percentheal 50,50; }',NULL,NULL);
@@ -5262,15 +5262,15 @@ REPLACE INTO `item_db_re` VALUES (12182,'SpearMercenary_Scroll10','Spearman Scro
 REPLACE INTO `item_db_re` VALUES (12183,'Holy_Arrow_Quiver','Holy Arrow Quiver',2,2,NULL,250,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem 1772,500;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12184,'Mercenary_Red_Potion','Mercenary Red Potion',2,500,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'mercenary_heal 1000,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12185,'Mercenary_Blue_Potion','Mercenary Blue Potion',2,1000,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'mercenary_heal 0,100;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12186,'Red_Box','Old Red Box',2,50000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_RedBox),1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12187,'Green_Box','Old Green Box',2,50000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_GreenBox),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12186,'Red_Box','Old Red Box',2,50000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_RedBox),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12187,'Green_Box','Old Green Box',2,50000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_GreenBox),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12188,'Magical_Moon_Cake','Grace Moon Cake',0,20,NULL,300,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'percentheal 50,50;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12189,'Red_Box_','Old Red Box',2,50000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_RedBox_2),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12189,'Red_Box_','Old Red Box',2,50000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_RedBox_2),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12190,'Moon_Cake','Moon Cake',2,2,NULL,300,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12191,'Special_Moon_Cake','Special Moon Cake',2,2,NULL,500,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12192,'Pumpkin_Pie','Pumpkin Pie',0,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'percentheal 5,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12193,'Brezel','Pretzel',2,20,NULL,20,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12194,'Hometown_Gift','Hometown Gift',2,20,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_HometownGift),1; getitem groupranditem(IG_HometownGift),1; getitem groupranditem(IG_HometownGift),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12194,'Hometown_Gift','Hometown Gift',2,20,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_HometownGift),1; getrandgroupitem(IG_HometownGift),1; getrandgroupitem(IG_HometownGift),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12195,'Plain_Rice_Cake','Plain Rice Cake',0,20,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'percentheal 0,20;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12196,'Hearty_Rice_Cake','Hearty Rice Cake',0,20,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'percentheal 50,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12197,'Salty_Rice_Cake','Salty Rice Cake',0,20,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'percentheal 10,10;',NULL,NULL);
@@ -5314,15 +5314,15 @@ REPLACE INTO `item_db_re` VALUES (12236,'Choco_Tart','Chocolate Tart',11,20,NULL
 REPLACE INTO `item_db_re` VALUES (12237,'Choco_Lump','Junky Chocolate',2,NULL,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'percentheal 0,5; sc_start SC_Poison,18000,0; sc_start SC_Bleeding,18000,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12238,'New_Year_Rice_Cake_1','New Year Rice Cake',2,20,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'if(rand(1000)<100) sc_start SC_DPoison,10000,0; sc_start SC_Poison,50000,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12239,'New_Year_Rice_Cake_2','New Year Rice Cake',2,20,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'if(rand(1000)<100) sc_start SC_DPoison,10000,0; sc_start SC_Poison,50000,0;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12240,'Old_Yellow_Box','Old Yellow Box',2,20,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_YellowBox),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12240,'Old_Yellow_Box','Old Yellow Box',2,20,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_YellowBox),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12241,'M_Center_Potion','Mercenary Concentration Potion',2,800,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'mercenary_sc_start SC_ASPDPOTION0,1800000,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12242,'M_Awakening_Potion','Mercenary Awakening Potion',2,1500,NULL,150,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'mercenary_sc_start SC_ASPDPOTION1,1800000,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12243,'M_Berserk_Potion','Mercenary Berserk Potion',2,3000,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'mercenary_sc_start SC_ASPDPOTION2,1800000,0;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12244,'Old_Gift_Box','Old Gift Box',2,20,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_OldGiftBox),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12244,'Old_Gift_Box','Old Gift Box',2,20,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_OldGiftBox),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12245,'Green_Ale_US','Green Ale',0,5000,NULL,500,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'percentheal 100,0;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12246,'Magic_Card_Album','Mystical Card Album',2,10000,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_MagicCardAlbum),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12246,'Magic_Card_Album','Mystical Card Album',2,10000,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_MagicCardAlbum),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12247,'Halohalo','Halo-Halo',2,2,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,'20',NULL,NULL,'sc_start SC_INCALLSTATUS,600000,3;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12248,'Masquerade_Ball_Box','Fancy Ball Box',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_Masquerade),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12248,'Masquerade_Ball_Box','Fancy Ball Box',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_Masquerade),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12249,'Payroll_Of_Kafra_','Payment Statement for Kafra Employee',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12250,'Str_Dish10_M','Steamed Tongue',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_STRFOOD,3600000,10; percentheal 20,20;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12251,'Agi_Dish10_M','Steamed Desert Scorpions',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_AGIFOOD,3600000,10; percentheal 15,5;',NULL,NULL);
@@ -5355,12 +5355,12 @@ REPLACE INTO `item_db_re` VALUES (12277,'Disguise_Scroll','Disguise Scroll',2,2,
 REPLACE INTO `item_db_re` VALUES (12278,'Alice_Scroll','Alice Scroll',2,2,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'mercenary_create 2060,1800000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12279,'Undead_Element_Scroll','Undead Elemental Scroll',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start4 SC_ARMOR_RESIST,300000,20,20,20,20;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12280,'Holy_Element_Scroll','Holy Elemental Scroll',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'specialeffect2 EF_BENEDICTIO; sc_start SC_BENEDICTIO,300000,1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12281,'Tresure_Box_WoE','Event Treasure Box',2,20,NULL,150,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_Tresure_Box_WoE),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12281,'Tresure_Box_WoE','Event Treasure Box',2,20,NULL,150,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_Tresure_Box_WoE),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12282,'Internet_Cafe1','Internet Cafe1',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_INCALLSTATUS,5400000,3; sc_start SC_ATKPOTION,5400000,15; sc_start SC_MATKPOTION,5400000,15;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12283,'Internet_Cafe2','Internet Cafe2',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_INCSTR,5400000,8; sc_start SC_INCDEX,5400000,4; sc_start SC_INCAGI,5400000,6; sc_start SC_ATKPOTION,5400000,32; sc_start SC_INCFLEE,5400000,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12284,'Internet_Cafe3','Internet Cafe3',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_INCINT,5400000,8; sc_start SC_INCVIT,5400000,4; sc_start SC_INCDEX,5400000,6; sc_start SC_MATKPOTION,5400000,40;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12285,'Internet_Cafe4','Internet Cafe4',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_INCDEX,5400000,8; sc_start SC_INCLUK,5400000,4; sc_start SC_INCAGI,5400000,6; sc_start SC_ATKPOTION,5400000,24; sc_start SC_MATKPOTION,5400000,24;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12286,'Masquerade_Ball_Box2','Masquerade Ball Box2',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_Masquerade_2),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12286,'Masquerade_Ball_Box2','Masquerade Ball Box2',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_Masquerade_2),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12287,'Love_Angel','Love Angel Magic Powder',2,NULL,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'setfont 1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12288,'Squirrel','Squirrel Magic Powder',2,NULL,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'setfont 2;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12289,'Gogo','Gogo Magic Powder',2,NULL,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'setfont 3;',NULL,NULL);
@@ -5408,12 +5408,12 @@ REPLACE INTO `item_db_re` VALUES (12330,'Recall_FemaleGM','Summon Female GameMas
 REPLACE INTO `item_db_re` VALUES (12331,'Ginseng','Ginseng',0,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'percentheal 6,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12332,'Fruit_Juice','Fruit Juice',0,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'percentheal 0,6;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12333,'Ansila','Ancilla',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'percentheal 0,15;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12334,'Cherish_Box','Treasure Edition Helm Box',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_Cherish_Box),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12334,'Cherish_Box','Treasure Edition Helm Box',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_Cherish_Box),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12335,'Yummy_Skewered_Dish','Grilled Delicious Skewer',0,1000,NULL,350,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'percentheal 60,60;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12336,'Baked_Mushroom','Grilled Mushroom',0,500,NULL,300,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'percentheal 30,30;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12337,'Grilled_Sausage','Grilled Sausages',0,300,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'percentheal 20,20;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12338,'Grilled_Corn','Grilled Corn',2,100,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_INCSTR,180000,2; sc_start SC_INCINT,180000,2; sc_start SC_INCAGI,180000,2;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12339,'Cherish_Box_Ori','Treasure Edition Box',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_Cherish_Box_Ori),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12339,'Cherish_Box_Ori','Treasure Edition Box',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_Cherish_Box_Ori),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12340,'Mysterious_Rice_Powder','Chewy Rice Powder',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'pet 1815;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12341,'Special_Alloy_Trap_Box','Special Alloy Trap Box',2,30000,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem 7940,100;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12342,'Manuk\'s_Opportunity','Manuk\'s Opportunity',2,NULL,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'specialeffect2 EF_POTION_BERSERK; sc_start SC_MANU_ATK,600000,10;',NULL,NULL);
@@ -5429,8 +5429,8 @@ REPLACE INTO `item_db_re` VALUES (12351,'Shout_Megaphone','Scream Megaphone',11,
 REPLACE INTO `item_db_re` VALUES (12352,'Dun_Tele_Scroll3','Dungeon Teleport Scroll 3',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12353,'Tiny_Waterbottle','Small Bottle',2,800,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_WATERWEAPON,90000,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12354,'Buche_De_Noel','Buche De Noel',2,2,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'specialeffect2 EF_ANGELUS; sc_start SC_INCMHPRATE,600000,3; sc_start SC_INCMSPRATE,600000,3; sc_start SC_INCHITRATE,600000,3; sc_start SC_INCCRI,600000,7;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12355,'Xmas_Gift','Xmas Gift',2,2,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_Xmas_Gift),1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12356,'Louise_Costume_Box','Louise Costume Box',2,2,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_Louise_Costume_Box),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12355,'Xmas_Gift','Xmas Gift',2,2,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_Xmas_Gift),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12356,'Louise_Costume_Box','Louise Costume Box',2,2,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_Louise_Costume_Box),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12357,'Shiny_Wing_Gown','Shiny Wing Gown',2,20,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'pet 1630;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12358,'Fan_Of_Wind','Fan Of Wind',2,20,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'pet 1513;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12359,'Very_Soft_Plant','Very Soft Plant',2,20,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'pet 1586;',NULL,NULL);
@@ -5645,7 +5645,7 @@ REPLACE INTO `item_db_re` VALUES (12569,'Cheer_Scarf6_Box','Cheer Scarf6 Box',2,
 REPLACE INTO `item_db_re` VALUES (12570,'Cheer_Scarf8_Box','Cheer Scarf8 Box',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12571,'Cheer_Scarf10_Box','Cheer Scarf10 Box',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12572,'Cheer_Scarf10_Box2','Cheer Scarf10 Box2',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12573,'Fruit_Basket','Fruit Basket',2,20,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_Fruit_Basket),1; getitem groupranditem(IG_Fruit_Basket),1; getitem groupranditem(IG_Fruit_Basket),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12573,'Fruit_Basket','Fruit Basket',2,20,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_Fruit_Basket),1; getrandgroupitem(IG_Fruit_Basket),1; getrandgroupitem(IG_Fruit_Basket),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12574,'Mora_Berry','Mora Berry',2,NULL,NULL,20,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'itemheal 0,rand(50,65);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12575,'Arrow_Of_Elf_Cntr','Arrow Of Elf Cntr',2,500,NULL,250,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem 1773,500;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12576,'Hunting_Arrow_Cntr','Hunting Arrow Cntr',2,500,NULL,250,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem 1774,500;',NULL,NULL);
@@ -5659,17 +5659,17 @@ REPLACE INTO `item_db_re` VALUES (12591,'Vending_Search_Scroll3','Universal Cata
 REPLACE INTO `item_db_re` VALUES (12601,'Fresh_Watermelon_Juice','Fresh Watermelon Juice',0,20,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'percentheal 5,5;',NULL,NULL);
 #
 REPLACE INTO `item_db_re` VALUES (12612,'Old_Coin_Bag','Old Coin Bag',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12613,'Improved_Coin_Bag','Improved Coin Bag',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_Improved_Coin_Bag),1; getitem groupranditem(IG_Improved_Coin_Bag),1; getitem groupranditem(IG_Improved_Coin_Bag),1; getitem groupranditem(IG_Improved_Coin_Bag),1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12614,'Intermediate_Coin_Bag','Intermediate Coin Bag',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_Intermediate_Coin_Bag),1; getitem groupranditem(IG_Intermediate_Coin_Bag),1; getitem groupranditem(IG_Intermediate_Coin_Bag),1; getitem groupranditem(IG_Intermediate_Coin_Bag),1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12615,'Minor_Coin_Bag','Minor Coin Bag',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_Minor_Coin_Bag),1; getitem groupranditem(IG_Minor_Coin_Bag),1; getitem groupranditem(IG_Minor_Coin_Bag),1; getitem groupranditem(IG_Minor_Coin_Bag),1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12616,'S_Grade_Coin_Bag','S Grade Coin Bag',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_S_Grade_Coin_Bag),1; getitem groupranditem(IG_S_Grade_Coin_Bag),1; getitem groupranditem(IG_S_Grade_Coin_Bag),1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12617,'A_Grade_Coin_Bag','A Grade Coin Bag',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_A_Grade_Coin_Bag),1; getitem groupranditem(IG_A_Grade_Coin_Bag),1; getitem groupranditem(IG_A_Grade_Coin_Bag),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12613,'Improved_Coin_Bag','Improved Coin Bag',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_Improved_Coin_Bag),1; getrandgroupitem(IG_Improved_Coin_Bag),1; getrandgroupitem(IG_Improved_Coin_Bag),1; getrandgroupitem(IG_Improved_Coin_Bag),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12614,'Intermediate_Coin_Bag','Intermediate Coin Bag',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_Intermediate_Coin_Bag),1; getrandgroupitem(IG_Intermediate_Coin_Bag),1; getrandgroupitem(IG_Intermediate_Coin_Bag),1; getrandgroupitem(IG_Intermediate_Coin_Bag),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12615,'Minor_Coin_Bag','Minor Coin Bag',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_Minor_Coin_Bag),1; getrandgroupitem(IG_Minor_Coin_Bag),1; getrandgroupitem(IG_Minor_Coin_Bag),1; getrandgroupitem(IG_Minor_Coin_Bag),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12616,'S_Grade_Coin_Bag','S Grade Coin Bag',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_S_Grade_Coin_Bag),1; getrandgroupitem(IG_S_Grade_Coin_Bag),1; getrandgroupitem(IG_S_Grade_Coin_Bag),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12617,'A_Grade_Coin_Bag','A Grade Coin Bag',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_A_Grade_Coin_Bag),1; getrandgroupitem(IG_A_Grade_Coin_Bag),1; getrandgroupitem(IG_A_Grade_Coin_Bag),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12618,'B_Grade_Coin_Bag','B Grade Coin Bag',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12619,'C_Grade_Coin_Bag','C Grade Coin Bag',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12620,'D_Grade_Coin_Bag','D Grade Coin Bag',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12621,'E_Grade_Coin_Bag','E Grade Coin Bag',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12622,'Reins_Of_Mount','Reins Of Mount',11,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'setmounting();',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12623,'Advanced_Weapons_Box','Advanced Weapons Box',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_Advanced_Weapons_Box),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12623,'Advanced_Weapons_Box','Advanced Weapons Box',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_Advanced_Weapons_Box),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12624,'Delicious_Jelly','Delicious Jelly',0,20,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'percentheal 3,3;',NULL,NULL);
 #
 REPLACE INTO `item_db_re` VALUES (12636,'Malangdo_Canned_Specialties','Malangdo Canned Specialties',2,20,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'warp "malangdo",140,114;',NULL,NULL);
@@ -5682,7 +5682,7 @@ REPLACE INTO `item_db_re` VALUES (12647,'Sea_Ink','Sea Ink',2,20,NULL,30,NULL,NU
 REPLACE INTO `item_db_re` VALUES (12699,'Tikbalang_Belt','Tikbalang Belt',2,20,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,' pet 2313;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12700,'Upside_Down_Shirt','Upside Down Shirt',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'warp "malaya",242,211;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12701,'Old_Blue_Box_F','Old Blue Box',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12702,'Old_Bleu_Box','Old Navy Box',2,NULL,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_BleuBox),1; getitem groupranditem(IG_BleuBox),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12702,'Old_Bleu_Box','Old Navy Box',2,NULL,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_BleuBox),1; getrandgroupitem(IG_BleuBox),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12703,'Holy_Egg_2','Holy Egg',11,NULL,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12704,'Elixir_Of_Life','Elixir of Life',0,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,'85',NULL,NULL,'percentheal 100,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12705,'Noble_Nameplate','Noble Nameplate',2,NULL,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,'90',NULL,NULL,'sc_start SC_EXPBOOST,1800000,100;',NULL,NULL);
@@ -5694,7 +5694,7 @@ REPLACE INTO `item_db_re` VALUES (12710,'Guyak_Pudding','Guyak Pudding',2,NULL,N
 REPLACE INTO `item_db_re` VALUES (12711,'Pretzel','Pretzel',0,2,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(50,90),0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12712,'Green_Beer','Green Beer',2,2,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12713,'Monster_Extract','Monster Extract',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12714,'Easter_Scroll','Easter Scroll',2,1,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_Easter_Scroll),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12714,'Easter_Scroll','Easter Scroll',2,1,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_Easter_Scroll),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12715,'Black_Treasure_Box','Black Treasure Box',2,NULL,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12716,'Indian_Rice_Cake','Indian Rice Cake',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 # Guillotine Cross Poisons
@@ -7019,7 +7019,7 @@ REPLACE INTO `item_db_re` VALUES (14592,'Job_Manual50','JOB Battle Manual',2,NUL
 REPLACE INTO `item_db_re` VALUES (14593,'Magic_Power_Scroll','Mystical Amplification Scroll',11,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'itemskill "HW_MAGICPOWER",10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (14594,'Quagmire_Scroll','Quagmire Scroll',11,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'itemskill "WZ_QUAGMIRE",5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (14595,'Unsealed_Magic_Spell','Unsealed Magic Spell',2,NULL,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'warp "yuno_fild09",255,127;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (14596,'Pierre_Treasurebox','Pierre\'s Treasure Box',2,NULL,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem groupranditem(IG_Pierre_Treasurebox),1; getitem groupranditem(IG_Pierre_Treasurebox),1; getitem groupranditem(IG_Pierre_Treasurebox),1; getitem groupranditem(IG_Pierre_Treasurebox),1; getitem groupranditem(IG_Pierre_Treasurebox),1; getitem groupranditem(IG_Pierre_Treasurebox),1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (14596,'Pierre_Treasurebox','Pierre\'s Treasure Box',2,NULL,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (14597,'PhreeoniS','Phreeoni Scroll',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_ITEMSCRIPT,180000,4121;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (14598,'GhostringS','Ghostring Scroll',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_ITEMSCRIPT,60000,4047;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (14599,'Greed_Scroll_C','Greed Scroll',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
