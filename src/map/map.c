@@ -1208,7 +1208,7 @@ int map_foreachinmap(int (*func)(struct block_list*,va_list), int m, int type,..
 
 	if( type&BL_MOB )
 		for( b = 0; b < bsize; b++ )
-			for( bl = map[ m ].block[ b ]; bl != NULL; bl = bl->next )
+			for( bl = map[ m ].block_mob[ b ]; bl != NULL; bl = bl->next )
 				if( bl_list_count < BL_LIST_MAX )
 					bl_list[ bl_list_count++ ] = bl;
 
