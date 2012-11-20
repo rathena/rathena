@@ -1493,6 +1493,9 @@ int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int ag
 	|| (str + int_ != 10 || agi + luk != 10 || vit + dex != 10) ) // pairs
 #endif
 		return -2; // invalid input
+		
+	if (hair_style > 17 || hair_color > 8)
+		return -2;
 
 	// check the number of already existing chars in this account
 	if( char_per_account != 0 ) {

@@ -5458,14 +5458,13 @@ int pc_follow_timer(int tid, unsigned int tick, int id, intptr_t data)
 	}
 
 	sd->followtimer = INVALID_TIMER;
-	if (pc_isdead(sd))
-		return 0;
+	tbl = map_id2bl(sd->followtarget);
 
-	if ((tbl = map_id2bl(sd->followtarget)) == NULL)
+	if (tbl == NULL || pc_isdead(sd) || status_isdead(tbl))
+	{
+		pc_stop_following(sd);
 		return 0;
-
-	if(status_isdead(tbl))
-		return 0;
+	}
 
 	// either player or target is currently detached from map blocks (could be teleporting),
 	// but still connected to this map, so we'll just increment the timer and check back later
