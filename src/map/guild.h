@@ -100,6 +100,10 @@ void guild_agit_end(void);
 
 void guild_agit2_start(void);
 void guild_agit2_end(void);
+/* guild flag cachin */
+void guild_flag_add(struct npc_data *nd);
+void guild_flag_remove(struct npc_data *nd);
+void guild_flags_clear(void);
 
 void guild_guildaura_refresh(struct map_session_data *sd, int skill_num, int skill_lv);
 

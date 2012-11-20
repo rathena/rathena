@@ -1838,6 +1838,8 @@ int npc_unload(struct npc_data* nd, bool single) {
 				nd->u.scr.label_list_num = 0;
 			}
 		}
+		if( nd->u.scr.guild_id )
+			guild_flag_remove(nd);
 	}
 
 	script_stop_sleeptimers(nd->bl.id);
@@ -3594,6 +3596,9 @@ int npc_reload(void) {
 	struct s_mapiterator* iter;
 	struct block_list* bl;
 
+	/* clear guild flag cache */
+	guild_flags_clear();
+	
 	npc_clear_pathlist();
 
 	db_clear(npc_path_db);
