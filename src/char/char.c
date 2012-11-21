@@ -1338,11 +1338,7 @@ int mmo_char_sql_init(void)
 {
 	char_db_= idb_alloc(DB_OPT_RELEASE_DATA);
 
-	if (char_per_account == 0) {
-		ShowStatus("Characters per Account: 'Unlimited'.\n");
-	} else {
-		ShowStatus("Characters per Account: '%d'.\n", char_per_account);
-	}
+	ShowStatus("Characters per Account: '%d'.\n", char_per_account);
 
 	//the 'set offline' part is now in check_login_conn ...
 	//if the server connects to loginserver
@@ -4592,8 +4588,9 @@ int char_config_read(const char* cfgName)
 			safestrncpy(char_name_letters, w2, sizeof(char_name_letters));
 		} else if (strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]
 			char_per_account = atoi(w2);
-			if( char_per_account > MAX_CHARS ) {
-				ShowWarning("Max chars per account '%d' exceeded limit. Defaulting to '%d'.\n", char_per_account, MAX_CHARS);
+			if( char_per_account == 0 || char_per_account > MAX_CHARS ) {
+				if( char_per_account > MAX_CHARS )
+					ShowWarning("Max chars per account '%d' exceeded limit. Defaulting to '%d'.\n", char_per_account, MAX_CHARS);
 				char_per_account = MAX_CHARS;
 			}
 		} else if (strcmpi(w1, "char_del_level") == 0) { //disable/enable char deletion by its level condition [Lupus]
