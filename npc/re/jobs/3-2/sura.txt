@@ -4,18 +4,18 @@
 //= Masao
 //= Credits: Muad_Dib, Gepard
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= Any rAthena SVN
 //===== Description: ========================================= 
-//= [Translated from the Official]
+//= [Official Conversion]
 //= Job change Quest from Monk / Champion -> Sura.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
+//= 1.1 Removed disablenpc which causes players stucked in waitingroom. [Joseph]
 //============================================================
 
 ve_in,237,125,0	script	King Crab#job_shu	107,{
-
 	if (job_shu == 0){
 		if (Class == Job_Monk || Class == Job_Champion || Job_Baby_Monk){
 			if ((BaseLevel > 98) && (JobLevel > 49)){
@@ -174,7 +174,6 @@ ve_in,237,125,0	script	King Crab#job_shu	107,{
 }
 
 ve_in,241,128,4	script	Sludge Worm#job_shu	110,{
-
 	if (job_shu == 0){
 		if (Class == Job_Monk || Class == Job_Champion || Job_Baby_Monk){
 			if ((BaseLevel > 98) && (JobLevel > 49)){
@@ -333,7 +332,6 @@ ve_in,241,128,4	script	Sludge Worm#job_shu	110,{
 }
 
 ve_in,244,126,3	script	Waitress#job_shu	69,{
-
 	if (job_shu == 0){
 		mes "[Waitress]";
 		mes "Oh no~";
@@ -401,7 +399,6 @@ OnTimer600000:
 
 // Custom Translation NPC name
 ve_in,97,149,0	script	Sura Hotel	111,3,3,{
-
 OnTouch:
 	if (job_shu == 1){
 		mes "[???]";
@@ -459,7 +456,6 @@ OnTouch:
 }
 
 ve_in,98,159,0	script	Fighter#job_shu	484,{
-
 	if (job_shu < 2){
 		mes "[Fighter]";
 		mes "Ahhhh~ I'm so tired.";
@@ -622,7 +618,6 @@ ve_in,98,159,0	script	Fighter#job_shu	484,{
 }
 
 yuno_fild07,254,176,7	script	Buddy#job_shu	483,{
-
 	if (job_shu < 4){
 		mes "[Buddy]";
 		mes "Haaap!!! Haaaap!!! Whoo!! Haahhp!!!";
@@ -669,19 +664,17 @@ yuno_fild07,254,176,7	script	Buddy#job_shu	483,{
 		mes "Ah, long time no see, "+strcharinfo(0)+".";
 		mes "Are you here to meet my master?";
 		next;
-		switch(select("Yes:No")){
-		case 1:
+		if (select("Yes:No") == 1){
 			mes "[Buddy]";
 			mes "I'll take you right away.";
 			close2;
 			warp "sword_1-1",216,168;
 			end;
-		case 2:
-			mes "[Buddy]";
-			mes "Then, why are you here?";
-			mes "You are not here to see me, aren't you?";
-			close;
 		}
+		mes "[Buddy]";
+		mes "Then, why are you here?";
+		mes "You are not here to see me, aren't you?";
+		close;
 	}
 	mes "[Buddy]";
 	mes ""+strcharinfo(0)+"£¬Didn't you meet the master yet?";
@@ -696,10 +689,10 @@ yuno_fild07,254,176,7	script	Buddy#job_shu	483,{
 	end;
 }
 
-sword_1-1,223,243,4	script	Drawing Room	483,{
-
+sword_1-1,223,243,4	script	Drawing Room	111,{
+	end;
+	
 OnInit:
-	disablenpc "Drawing Room";
 	waitingroom "Drawing Room",20,"Drawing Room::OnStartArena",1;
 	enablewaitingroomevent;
 	end;
@@ -720,22 +713,19 @@ OnDisable:
 }
 
 sword_1-1,223,243,4	script	Buddy#job_shu reception	483,{
-
 	mes "[Buddy]";
 	mes "My master doesn't like noise, so please ^f57d7dwait in the living room silently.^000000";
 	next;
-	switch(select("Go to the living room.:Go outside.")){
-	case 1:
+	if (select("Go to the living room.:Go outside.") == 1){
 		mes "[Buddy]";
 		mes "Please wait in the living room at the upper side.";
 		close;
-	case 2:
-		mes "[Buddy]";
-		mes "Then, see you again.";
-		close2;
-		warp "yuno_fild07",255,178;
-		end;
 	}
+	mes "[Buddy]";
+	mes "Then, see you again.";
+	close2;
+	warp "yuno_fild07",255,178;
+	end;
 }
 
 sword_2-1,1,1,0	script	Buddy#Sura_Salon	66,{
@@ -863,7 +853,6 @@ OnTimer320000:
 }
 
 sword_2-1,223,205,7	script	Buddy#job_shuaneh	483,{
-
 	if (job_shu > 4){
 		mes "I'll show you the way. This way.";
 		close2;
@@ -911,13 +900,11 @@ OnDisable:
 }
 
 sword_1-1,222,169,5	script	Bruno#job_shu	484,{
-
 	if (job_shu > 4){
 		mes "[Bruno]";
 		mes "Hey~ "+strcharinfo(0)+", What's up?";
 		next;
-		switch(select("Let's have conversation.:Go outside.")){
-		case 1:
+		if (select("Let's have conversation.:Go outside.") == 1){
 			if (job_shu == 100){
 				mes "[Bruno]";
 				mes "My master?";
@@ -958,14 +945,13 @@ sword_1-1,222,169,5	script	Bruno#job_shu	484,{
 			mes "[Bruno]";
 			mes "We don't care about your age in our world!";
 			close;
-		case 2:
-			mes "[Bruno]";
-			mes "Come again whenever you want to~";
-			mes "I will show you the training course of the dead~";
-			close2;
-			warp "yuno_fild07",255,178;
-			end;
 		}
+		mes "[Bruno]";
+		mes "Come again whenever you want to~";
+		mes "I will show you the training course of the dead~";
+		close2;
+		warp "yuno_fild07",255,178;
+		end;
 	}
 	mes "[Bruno]";
 	// Custom Translation
@@ -978,7 +964,6 @@ sword_1-1,222,169,5	script	Bruno#job_shu	484,{
 }
 
 sword_1-1,223,167,2	script	Master#job_shu	483,{
-
 	if (job_shu > 4){
 		if (job_shu == 5){
 			mes "[Master]";
@@ -1140,7 +1125,6 @@ sword_1-1,223,167,2	script	Master#job_shu	483,{
 		if (countitem(6153) > 0){
 			delitem 6153,1;
 			getitem 5754,1;
-			close;
 		}
 		close;
 	}
@@ -1152,39 +1136,40 @@ sword_1-1,223,167,2	script	Master#job_shu	483,{
 	end;
 }
 
+/*
 // Custom Translation
 sword_2-1,1,2,0	script	Sura Job Switch	66,{
-
 	switch(select("Open Arena:Close Arena:Activate Drawing Room:Actvate Buddy:Activate Naigara:All Off:Cancel")){
-	case 1:
-		mes "Opening Arena";
-		donpcevent "Drawing Room::OnEnable";
-		close;
-	case 2:
-		mes "Closing Arena";
-		donpcevent "Drawing Room::OnDisable";
-		close;
-	case 3:
-		mes "Activating Drawing Room";
-		donpcevent "Buddy#Sura_Salon::OnEnable";
-		close;
-	case 4:
-		mes "Activating Buddy";
-		donpcevent "Buddy#job_shuaneh::OnEnable";
-		close;
-	case 5:
-		mes "Activating garajjom";
-		donpcevent "Sura_garajjom::OnEnable";
-		close;
-	case 6:
-		mes "Deactivating all.";
-		donpcevent "Drawing Room::OnDisable";
-		donpcevent "Buddy#Sura_Salon::OnReset";
-		donpcevent "Buddy#Sura_Salon::OnDisable";
-		donpcevent "Buddy#job_shuaneh::OnDisable";
-		donpcevent "Sura_garajjom::OnDisable";
-		close;
-	case 7:
-		close;
+		case 1:
+			mes "Opening Arena";
+			donpcevent "Drawing Room::OnEnable";
+			close;
+		case 2:
+			mes "Closing Arena";
+			donpcevent "Drawing Room::OnDisable";
+			close;
+		case 3:
+			mes "Activating Drawing Room";
+			donpcevent "Buddy#Sura_Salon::OnEnable";
+			close;
+		case 4:
+			mes "Activating Buddy";
+			donpcevent "Buddy#job_shuaneh::OnEnable";
+			close;
+		case 5:
+			mes "Activating garajjom";
+			donpcevent "Sura_garajjom::OnEnable";
+			close;
+		case 6:
+			mes "Deactivating all.";
+			donpcevent "Drawing Room::OnDisable";
+			donpcevent "Buddy#Sura_Salon::OnReset";
+			donpcevent "Buddy#Sura_Salon::OnDisable";
+			donpcevent "Buddy#job_shuaneh::OnDisable";
+			donpcevent "Sura_garajjom::OnDisable";
+			close;
+		case 7:
+			close;
 	}
 }
+*/
