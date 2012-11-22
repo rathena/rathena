@@ -3588,7 +3588,7 @@ int pc_inventoryblank(struct map_session_data *sd)
  *------------------------------------------*/
 int pc_payzeny(struct map_session_data *sd,int zeny, enum e_log_pick_type type, struct map_session_data *tsd)
 {
-	nullpo_ret(sd);
+	nullpo_retr(-1,sd);
 
 	zeny = cap_value(zeny,-MAX_ZENY,MAX_ZENY); //prevent command UB
 	if( zeny < 0 )
@@ -3716,7 +3716,7 @@ int pc_getcash(struct map_session_data *sd, int cash, int points)
  *------------------------------------------*/
 int pc_getzeny(struct map_session_data *sd,int zeny, enum e_log_pick_type type, struct map_session_data *tsd)
 {
-	nullpo_ret(sd);
+	nullpo_retr(-1,sd);
 
 	zeny = cap_value(zeny,-MAX_ZENY,MAX_ZENY); //prevent command UB
 	if( zeny < 0 )
@@ -3848,6 +3848,10 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount,e_l
 
 /*==========================================
  * Remove an item at index n from inventory by amount.
+ * Parameters :
+ * @type
+ *	1 : don't notify deletion
+ *	2 : don't notify weight change
  * Return:
  *	0 = success
  *	1 = invalid itemid or negative amount
@@ -4200,7 +4204,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 
 	/* Items with delayed consume are not meant to work while in mounts except reins of mount(12622) */
 	if( sd->inventory_data[n]->flag.delay_consume ) {
-		if( nameid != 12622 && sd->sc.option&OPTION_MOUNTING )
+		if( nameid != ITEMID_REINS_OF_MOUNT && sd->sc.option&OPTION_MOUNTING )
 			return 0;
 		else if( pc_issit(sd) )
 			return 0;
@@ -6661,7 +6665,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	  	{
 			base_penalty = (unsigned int)((double)sd->status.zeny * (double)battle_config.zeny_penalty / 10000.);
 			if(base_penalty)
-				pc_payzeny(sd, base_penalty, LOG_TYPE_OTHER, NULL); //@TODO that type suck
+				pc_payzeny(sd, base_penalty, LOG_TYPE_PICKDROP_PLAYER, NULL);
 		}
 	}
 
@@ -6871,7 +6875,7 @@ int pc_setparam(struct map_session_data *sd,int type,int val)
 	case SP_ZENY:
 		if( val < 0 )
 			return 0;// can't set negative zeny
-		log_zeny(sd, LOG_TYPE_NPC, sd, -(sd->status.zeny - cap_value(val, 0, MAX_ZENY)));
+		log_zeny(sd, LOG_TYPE_SCRIPT, sd, -(sd->status.zeny - cap_value(val, 0, MAX_ZENY)));
 		sd->status.zeny = cap_value(val, 0, MAX_ZENY);
 		break;
 	case SP_BASEEXP:

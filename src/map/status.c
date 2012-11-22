@@ -7471,10 +7471,10 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 				sc_start(bl,SC_BLEEDING,100,val1,skill_get_time2(status_sc2skill(type),val1));
 			break;
 
-		case SC__BLOODYLUST:
 		case SC_BERSERK:
 			if (!sc->data[SC_ENDURE] || !sc->data[SC_ENDURE]->val4)
 				sc_start4(bl, SC_ENDURE, 100,10,0,0,2, tick);
+		case SC__BLOODYLUST:
 			//HP healing is performing after the calc_status call.
 			//Val2 holds HP penalty
 			if (!val4) val4 = skill_get_time2(status_sc2skill(type),val1);
@@ -8609,10 +8609,10 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			sc->opt3 |= OPT3_AURABLADE;
 			opt_flag = 0;
 			break;
-//		case SC__BLOODYLUST:
 		case SC_BERSERK:
-			sc->opt3 |= OPT3_BERSERK;
 			opt_flag = 0;
+//		case SC__BLOODYLUST:
+			sc->opt3 |= OPT3_BERSERK;
 			break;
 //		case ???: // doesn't seem to do anything
 //			sc->opt3 |= OPT3_LIGHTBLADE;
@@ -9240,17 +9240,17 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			}
 			break;
 
-		case SC__BLOODYLUST:
 		case SC_BERSERK:
 		case SC_SATURDAYNIGHTFEVER:
 			//If val2 is removed, no HP penalty (dispelled?) [Skotlex]
-			if (status->hp > 100 && sce->val2 && type != SC__BLOODYLUST)
+			if (status->hp > 100 && sce->val2)
 				status_set_hp(bl, 100, 0);
 			if(sc->data[SC_ENDURE] && sc->data[SC_ENDURE]->val4 == 2)
 			{
 				sc->data[SC_ENDURE]->val4 = 0;
 				status_change_end(bl, SC_ENDURE, INVALID_TIMER);
 			}
+		case SC__BLOODYLUST:
 			sc_start4(bl, SC_REGENERATION, 100, 10,0,0,(RGN_HP|RGN_SP), skill_get_time(LK_BERSERK, sce->val1));
 			if( type == SC_SATURDAYNIGHTFEVER ) //Sit down force of Saturday Night Fever has the duration of only 3 seconds.
 				sc_start(bl,SC_SITDOWN_FORCE,100,sce->val1,skill_get_time2(WM_SATURDAY_NIGHT_FEVER,sce->val1));
@@ -9531,10 +9531,10 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		sc->opt3 &= ~OPT3_AURABLADE;
 		opt_flag = 0;
 		break;
-//	case SC__BLOODYLUST:
 	case SC_BERSERK:
-		sc->opt3 &= ~OPT3_BERSERK;
 		opt_flag = 0;
+//	case SC__BLOODYLUST:
+		sc->opt3 &= ~OPT3_BERSERK;
 		break;
 //	case ???: // doesn't seem to do anything
 //		sc->opt3 &= ~OPT3_LIGHTBLADE;

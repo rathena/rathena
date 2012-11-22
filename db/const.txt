@@ -658,6 +658,10 @@ RC2_Golem	4
 RC2_Guardian	5
 RC2_Ninja	6
 
+SizeSmall	0
+SizeMedium	1
+SizeLarge	2
+
 BF_WEAPON	0x0001
 BF_MAGIC	0x0002
 BF_MISC	0x0004

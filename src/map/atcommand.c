@@ -2526,7 +2526,7 @@ ACMD_FUNC(skillpoint)
  *------------------------------------------*/
 ACMD_FUNC(zeny)
 {
-	int zeny;
+	int zeny=0, ret=-1;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || (zeny = atoi(message)) == 0) {
@@ -2535,12 +2535,13 @@ ACMD_FUNC(zeny)
 	}
 
 	if(zeny > 0){
-	    if(pc_getzeny(sd,zeny,LOG_TYPE_COMMAND,NULL) == 1)
+	    if((ret=pc_getzeny(sd,zeny,LOG_TYPE_COMMAND,NULL)) == 1)
 		clif_displaymessage(fd, msg_txt(149)); // Unable to increase the number/value.
 	}
-	else if(pc_payzeny(sd,-zeny,LOG_TYPE_COMMAND,NULL) == 1){
+	else if((ret=pc_payzeny(sd,-zeny,LOG_TYPE_COMMAND,NULL)) == 1){
 	    clif_displaymessage(fd, msg_txt(41)); // Unable to decrease the number/value.
 	}
+	if(!ret) clif_displaymessage(fd, msg_txt(176)); //ret=0 mean cmd success
 	return 0;
 }
 

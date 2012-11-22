@@ -10179,8 +10179,8 @@ void clif_parse_UseItem(int fd, struct map_session_data *sd)
 	if (sd->npc_id) {
 		if (sd->npc_id != sd->npc_item_flag)
 			return;
-	} else
-	if (pc_istrading(sd))
+	}
+	else if (pc_istrading(sd))
 		return;
 
 	//Whether the item is used or not is irrelevant, the char ain't idle. [Skotlex]

@@ -122,7 +122,7 @@
 
 2299,0xcc,    ,  0, 1,1000,all,   0x006	//SC_MANHOLE
 2300,0xcd,    ,  0, 1,1000,all,   0x006	//SC_DIMENSIONDOOR
-2301,0xce,    ,  2, 0,  -1,enemy,   0x200E	//SC_CHAOSPANIC
+2301,0xce,    ,  2, 0,  -1,all,   0x200E	//SC_CHAOSPANIC
 2302,0xcf,    ,  0, 2,  -1,enemy,   0x002	//SC_MAELSTROM
 2303,0xd0,    ,  3, 0,  -1,all,   0x2018	//SC_BLOODYLUST
 2304,0xd1,    ,  0, 2,  -1,enemy, 0x000	//SC_FEINTBOMB
