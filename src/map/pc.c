@@ -6817,6 +6817,8 @@ int pc_readparam(struct map_session_data* sd,int type)
 	case SP_FAME:        val = sd->status.fame; break;
 	case SP_KILLERRID:   val = sd->killerrid; break;
 	case SP_KILLEDRID:   val = sd->killedrid; break;
+	case SP_CRITICAL:    val = sd->battle_status.cri/10; break;
+	case SP_ASPD:        val = (2000-sd->battle_status.amotion)/10; break;
 	}
 
 	return val;
