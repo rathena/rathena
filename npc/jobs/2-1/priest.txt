@@ -536,16 +536,9 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 	mes "[Sister Cecilia]";
 	if (BaseJob != Job_Acolyte) {
 		if (BaseJob == Job_Priest) {
-			if (sex)
-				mes "May god bless you, brother. It brings my heart joy to see that you working hard to carry out the will of God.";
-			else
-				mes "May god bless you, sister. It brings my heart joy to see that you working hard to carry out the will of God.";
-		}
-		else if (Class == Job_Novice) {
-			if (sex)
-				mes "May god bless you, brother.";
-			else
-				mes "May god bless you, sister.";
+			mes "May god bless you, "+ (Sex ? "brother":"sister") +". It brings my heart joy to see that you working hard to carry out the will of God.";
+		} else if (Class == Job_Novice) {
+			mes "May god bless you, "+ (Sex ? "brother":"sister") +".";
 			mes "Prontera parish welcomes you.";
 			next;
 			mes "[Sister Cecilia]";
@@ -563,12 +556,8 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 			mes "[Sister Cecilia]";
 			mes "But please...";
 			mes "Take your time, and decide what job will be the best for you.";
-		}
-		else {
-			if (sex)
-				mes "May god bless you, brother.";
-			else
-				mes "May god bless you, sister.";
+		} else {
+			mes "May god bless you, "+ (Sex ? "brother":"sister") +".";
 			mes "Welcome to Prontera parish. How may I help you?";
 			next;
 			if (select("Tell me more about Priests.:Nothing.") == 1) {
@@ -577,23 +566,15 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 				next;
 				mes "[Sister Cecilia]";
 				mes "Servants of God are prohibited to use weapons based on blades. For us, the meaning of battle with monsters is not in the killing, but in the enlightening of their souls.";
-				if (BaseJob == Job_Acolyte) {
-					next;
-					mes "[Sister Cecilia]";
-					mes "Well, it will be better that you meet Priests for yourself and speak with them. If you are ready to become a Priest, speak with Bishop Paul in this room.";
-					next;
-					mes "[Sister Cecilia]";
-					mes "I believe he can give you specific requirement information about the Priest class. Yes, I think it's a good idea.";
-				}
-				close;
+			} else {
+				mes "[Sister Cecilia]";
+				mes "I see. Well, feel free to relax and make yourself at home. Nowhere on earth is safer than the Prontera Sanctuary.";
+				next;
+				mes "[Sister Cecilia]";
+				mes "May God bless you...";
 			}
-			mes "[Sister Cecilia]";
-			mes "I see. Well, feel free to relax and make yourself at home. Nowhere on earth is safer than the Prontera Sanctuary.";
-			next;
-			mes "[Sister Cecilia]";
-			mes "May God bless you...";
-			close;
 		}
+		close;
 	}
 	if (PRIEST_Q == 0) {
 		if (sex)
