@@ -125,7 +125,7 @@ int read_map(char *name, struct map_data *m)
 	rsw = (unsigned char *)grfio_read(filename);
 
 	// Read water height
-	if (rsw) { 
+	if (rsw) {
 		water_height = (int)GetFloat(rsw+166);
 		aFree(rsw);
 	} else
@@ -176,8 +176,8 @@ void cache_map(char *name, struct map_data *m)
 	encode_zip(write_buf, &len, m->cells, m->xs*m->ys);
 
 	// Fill the map header
-	if (sizeof(name) > MAP_NAME_LENGTH) // It does not hurt to warn that there are maps with name longer than allowed.
-		ShowWarning ("Map name '%s' size '%d' is too long. Truncating to '%d'.\n", name, sizeof(name), MAP_NAME_LENGTH);
+	if (strlen(name) > MAP_NAME_LENGTH) // It does not hurt to warn that there are maps with name longer than allowed.
+		ShowWarning ("Map name '%s' size '%d' is too long. Truncating to '%d'.\n", name, strlen(name), MAP_NAME_LENGTH);
 	strncpy(info.name, name, MAP_NAME_LENGTH);
 	info.xs = MakeShortLE(m->xs);
 	info.ys = MakeShortLE(m->ys);
@@ -201,12 +201,11 @@ int find_map(char *name)
 {
 	int i;
 	struct map_info info;
-	size_t fileReadCount;
-	
+
 	fseek(map_cache_fp, sizeof(struct main_header), SEEK_SET);
 
 	for(i = 0; i < header.map_count; i++) {
-		fileReadCount = fread(&info, sizeof(info), 1, map_cache_fp);
+		if(fread(&info, sizeof(info), 1, map_cache_fp) != 1) printf("An error as occured in fread while reading map_cache\n");
 		if(strcmp(name, info.name) == 0) // Map found
 			return 1;
 		else // Map not found, jump to the beginning of the next map info header
@@ -266,7 +265,7 @@ int do_init(int argc, char** argv)
 			"pre-re"
 #endif
 			);
-	
+
 	// Process the command-line arguments
 	process_args(argc, argv);
 
@@ -305,8 +304,7 @@ int do_init(int argc, char** argv)
 		header.file_size = sizeof(struct main_header);
 		header.map_count = 0;
 	} else {
-		size_t fileReadCount;
-		fileReadCount = fread(&header, sizeof(struct main_header), 1, map_cache_fp);
+		if(fread(&header, sizeof(struct main_header), 1, map_cache_fp) != 1){ printf("An error as occured while reading map_cache_fp \n"); }
 		header.file_size = GetULong((unsigned char *)&(header.file_size));
 		header.map_count = GetUShort((unsigned char *)&(header.map_count));
 	}

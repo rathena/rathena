@@ -6125,9 +6125,8 @@ BUILDIN_FUNC(checkweight)
 		return 0;
 	}
 	nbargs = script_lastdata(st)+1;
-	ShowInfo("nb args = %d\n",nbargs);
 	if(nbargs%2){
-	    ShowError("buildin_checkweight: Invalid nb of args should be a multiple of 2.\n");  // returns string, regardless of what it was
+	    ShowError("buildin_checkweight: Invalid nb of args should be a multiple of 2.\n");
 	    script_pushint(st,0);
 	    return 1;
 	}
@@ -6216,7 +6215,7 @@ BUILDIN_FUNC(checkweight2)
 
         if( !data_isreference(data_it) || !data_isreference(data_nb))
         {
-                ShowError("script:checkweight3: parameter not a variable\n");
+                ShowError("script:checkweight2: parameter not a variable\n");
                 script_pushint(st,0);
                 return 1;// not a variable
         }
@@ -6229,12 +6228,12 @@ BUILDIN_FUNC(checkweight2)
 
         if( not_array_variable(*name_it) || not_array_variable(*name_nb))
         {
-                ShowError("script:checkweight3: illegal scope\n");
+                ShowError("script:checkweight2: illegal scope\n");
                 script_pushint(st,0);
                 return 1;// not supported
         }
         if(is_string_variable(name_it) || is_string_variable(name_nb)){
-                ShowError("script:checkweight3: illegal type, need int\n");
+                ShowError("script:checkweight2: illegal type, need int\n");
                 script_pushint(st,0);
                 return 1;// not supported
         }
@@ -6254,12 +6253,12 @@ BUILDIN_FUNC(checkweight2)
 	    if(fail) continue; //cpntonie to depop rest
 
             if(itemdb_exists(nameid) == NULL ){
-		ShowError("buildin_checkweight3: Invalid item '%d'.\n", nameid);
+		ShowError("buildin_checkweight2: Invalid item '%d'.\n", nameid);
 		fail=1;
 		continue;
             }
             if(amount < 0 ){
-                ShowError("buildin_checkweight3: Invalid amount '%d'.\n", amount);
+                ShowError("buildin_checkweight2: Invalid amount '%d'.\n", amount);
                 fail = 1;
 		continue;
             }
@@ -9967,7 +9966,7 @@ BUILDIN_FUNC(sc_end)
 
 		if (!sce)
 			return 0;
-			
+
 
 		switch (type)
 		{
@@ -9976,7 +9975,7 @@ BUILDIN_FUNC(sc_end)
 			case SC_NOCHAT:
 			case SC_PUSH_CART:
 				return 0;
-				
+
 			default:
 				break;
 		}

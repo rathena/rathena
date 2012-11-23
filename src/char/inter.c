@@ -75,7 +75,7 @@ const char* msg_txt(int msg_number) {
 	if (msg_number >= 0 && msg_number < MAX_JOB_NAMES &&
 	    msg_table[msg_number] != NULL && msg_table[msg_number][0] != '\0')
 		return msg_table[msg_number];
-	
+
 	return "Unknown";
 }
 
@@ -87,21 +87,21 @@ int msg_config_read(const char* cfgName) {
 	char line[1024], w1[1024], w2[1024];
 	FILE *fp;
 	static int called = 1;
-	
+
 	if ((fp = fopen(cfgName, "r")) == NULL) {
 		ShowError("Messages file not found: %s\n", cfgName);
 		return 1;
 	}
-	
+
 	if ((--called) == 0)
 		memset(msg_table, 0, sizeof(msg_table[0]) * MAX_JOB_NAMES);
-	
+
 	while(fgets(line, sizeof(line), fp) ) {
 		if (line[0] == '/' && line[1] == '/')
 			continue;
 		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) != 2)
 			continue;
-		
+
 		if (strcmpi(w1, "import") == 0)
 			msg_config_read(w2);
 		else {
@@ -117,9 +117,9 @@ int msg_config_read(const char* cfgName) {
 			}
 		}
 	}
-	
+
 	fclose(fp);
-	
+
 	return 0;
 }
 
@@ -142,7 +142,7 @@ const char* job_name(int class_) {
 		case JOB_MERCHANT:
 		case JOB_THIEF:
 			return msg_txt(550 - JOB_NOVICE+class_);
-			
+
 		case JOB_KNIGHT:
 		case JOB_PRIEST:
 		case JOB_WIZARD:
@@ -150,10 +150,10 @@ const char* job_name(int class_) {
 		case JOB_HUNTER:
 		case JOB_ASSASSIN:
 			return msg_txt(557 - JOB_KNIGHT+class_);
-			
+
 		case JOB_KNIGHT2:
 			return msg_txt(557);
-			
+
 		case JOB_CRUSADER:
 		case JOB_MONK:
 		case JOB_SAGE:
@@ -162,20 +162,20 @@ const char* job_name(int class_) {
 		case JOB_BARD:
 		case JOB_DANCER:
 			return msg_txt(563 - JOB_CRUSADER+class_);
-			
+
 		case JOB_CRUSADER2:
 			return msg_txt(563);
-			
+
 		case JOB_WEDDING:
 		case JOB_SUPER_NOVICE:
 		case JOB_GUNSLINGER:
 		case JOB_NINJA:
 		case JOB_XMAS:
 			return msg_txt(570 - JOB_WEDDING+class_);
-			
+
 		case JOB_SUMMER:
 			return msg_txt(621);
-			
+
 		case JOB_NOVICE_HIGH:
 		case JOB_SWORDMAN_HIGH:
 		case JOB_MAGE_HIGH:
@@ -184,7 +184,7 @@ const char* job_name(int class_) {
 		case JOB_MERCHANT_HIGH:
 		case JOB_THIEF_HIGH:
 			return msg_txt(575 - JOB_NOVICE_HIGH+class_);
-			
+
 		case JOB_LORD_KNIGHT:
 		case JOB_HIGH_PRIEST:
 		case JOB_HIGH_WIZARD:
@@ -192,10 +192,10 @@ const char* job_name(int class_) {
 		case JOB_SNIPER:
 		case JOB_ASSASSIN_CROSS:
 			return msg_txt(582 - JOB_LORD_KNIGHT+class_);
-			
+
 		case JOB_LORD_KNIGHT2:
 			return msg_txt(582);
-			
+
 		case JOB_PALADIN:
 		case JOB_CHAMPION:
 		case JOB_PROFESSOR:
@@ -204,10 +204,10 @@ const char* job_name(int class_) {
 		case JOB_CLOWN:
 		case JOB_GYPSY:
 			return msg_txt(588 - JOB_PALADIN + class_);
-			
+
 		case JOB_PALADIN2:
 			return msg_txt(588);
-			
+
 		case JOB_BABY:
 		case JOB_BABY_SWORDMAN:
 		case JOB_BABY_MAGE:
@@ -216,7 +216,7 @@ const char* job_name(int class_) {
 		case JOB_BABY_MERCHANT:
 		case JOB_BABY_THIEF:
 			return msg_txt(595 - JOB_BABY + class_);
-			
+
 		case JOB_BABY_KNIGHT:
 		case JOB_BABY_PRIEST:
 		case JOB_BABY_WIZARD:
@@ -224,10 +224,10 @@ const char* job_name(int class_) {
 		case JOB_BABY_HUNTER:
 		case JOB_BABY_ASSASSIN:
 			return msg_txt(602 - JOB_BABY_KNIGHT + class_);
-			
+
 		case JOB_BABY_KNIGHT2:
 			return msg_txt(602);
-			
+
 		case JOB_BABY_CRUSADER:
 		case JOB_BABY_MONK:
 		case JOB_BABY_SAGE:
@@ -236,13 +236,13 @@ const char* job_name(int class_) {
 		case JOB_BABY_BARD:
 		case JOB_BABY_DANCER:
 			return msg_txt(608 - JOB_BABY_CRUSADER + class_);
-			
+
 		case JOB_BABY_CRUSADER2:
 			return msg_txt(608);
-			
+
 		case JOB_SUPER_BABY:
 			return msg_txt(615);
-			
+
 		case JOB_TAEKWON:
 			return msg_txt(616);
 		case JOB_STAR_GLADIATOR:
@@ -250,12 +250,12 @@ const char* job_name(int class_) {
 			return msg_txt(617);
 		case JOB_SOUL_LINKER:
 			return msg_txt(618);
-			
+
 		case JOB_GANGSI:
 		case JOB_DEATH_KNIGHT:
 		case JOB_DARK_COLLECTOR:
 			return msg_txt(622 - JOB_GANGSI+class_);
-			
+
 		case JOB_RUNE_KNIGHT:
 		case JOB_WARLOCK:
 		case JOB_RANGER:
@@ -263,7 +263,7 @@ const char* job_name(int class_) {
 		case JOB_MECHANIC:
 		case JOB_GUILLOTINE_CROSS:
 			return msg_txt(625 - JOB_RUNE_KNIGHT+class_);
-			
+
 		case JOB_RUNE_KNIGHT_T:
 		case JOB_WARLOCK_T:
 		case JOB_RANGER_T:
@@ -271,7 +271,7 @@ const char* job_name(int class_) {
 		case JOB_MECHANIC_T:
 		case JOB_GUILLOTINE_CROSS_T:
 			return msg_txt(625 - JOB_RUNE_KNIGHT_T+class_);
-			
+
 		case JOB_ROYAL_GUARD:
 		case JOB_SORCERER:
 		case JOB_MINSTREL:
@@ -280,7 +280,7 @@ const char* job_name(int class_) {
 		case JOB_GENETIC:
 		case JOB_SHADOW_CHASER:
 			return msg_txt(631 - JOB_ROYAL_GUARD+class_);
-			
+
 		case JOB_ROYAL_GUARD_T:
 		case JOB_SORCERER_T:
 		case JOB_MINSTREL_T:
@@ -289,23 +289,23 @@ const char* job_name(int class_) {
 		case JOB_GENETIC_T:
 		case JOB_SHADOW_CHASER_T:
 			return msg_txt(631 - JOB_ROYAL_GUARD_T+class_);
-			
+
 		case JOB_RUNE_KNIGHT2:
 		case JOB_RUNE_KNIGHT_T2:
 			return msg_txt(625);
-			
+
 		case JOB_ROYAL_GUARD2:
 		case JOB_ROYAL_GUARD_T2:
 			return msg_txt(631);
-			
+
 		case JOB_RANGER2:
 		case JOB_RANGER_T2:
 			return msg_txt(627);
-			
+
 		case JOB_MECHANIC2:
 		case JOB_MECHANIC_T2:
 			return msg_txt(629);
-			
+
 		case JOB_BABY_RUNE:
 		case JOB_BABY_WARLOCK:
 		case JOB_BABY_RANGER:
@@ -320,27 +320,27 @@ const char* job_name(int class_) {
 		case JOB_BABY_GENETIC:
 		case JOB_BABY_CHASER:
 			return msg_txt(638 - JOB_BABY_RUNE+class_);
-			
+
 		case JOB_BABY_RUNE2:
 			return msg_txt(638);
-			
+
 		case JOB_BABY_GUARD2:
 			return msg_txt(644);
-			
+
 		case JOB_BABY_RANGER2:
 			return msg_txt(640);
-			
+
 		case JOB_BABY_MECHANIC2:
 			return msg_txt(642);
-			
+
 		case JOB_SUPER_NOVICE_E:
 		case JOB_SUPER_BABY_E:
 			return msg_txt(651 - JOB_SUPER_NOVICE_E+class_);
-			
+
 		case JOB_KAGEROU:
 		case JOB_OBORO:
 			return msg_txt(653 - JOB_KAGEROU+class_);
-			
+
 		default:
 			return msg_txt(655);
 	}
@@ -381,7 +381,7 @@ void geoip_readdb(void){
 	FILE *db=fopen("./db/GeoIP.dat","r");
 	fstat(fileno(db), &bufa);
 	geoip_cache = (unsigned char *) malloc(sizeof(unsigned char) * bufa.st_size);
-	(void)fread(geoip_cache, sizeof(unsigned char), bufa.st_size, db);
+	if(fread(geoip_cache, sizeof(unsigned char), bufa.st_size, db) != bufa.st_size) { ShowError("geoip_cache reading didn't read all elements"); }
 	fclose(db);
 	ShowStatus("Finished Reading "CL_GREEN"GeoIP"CL_RESET" Database.\n");
 }
@@ -392,7 +392,7 @@ const char* geoip_getcountry(uint32 ipnum){
 	unsigned int x;
 	const unsigned char *buf;
 	unsigned int offset = 0;
-		
+
 	for (depth = 31; depth >= 0; depth--) {
 		buf = geoip_cache + (long)6 *offset;
 		if (ipnum & (1 << depth)) {
@@ -420,21 +420,21 @@ void inter_to_fd(int fd, int u_fd, int aid, char* msg, ...) {
 	char msg_out[512];
 	va_list ap;
 	int len = 1;/* yes we start at 1 */
-	
+
 	va_start(ap,msg);
 		len += vsnprintf(msg_out, 512, msg, ap);
 	va_end(ap);
-		
+
 	WFIFOHEAD(fd,12 + len);
-	
+
 	WFIFOW(fd,0) = 0x3807;
 	WFIFOW(fd,2) = 12 + (unsigned short)len;
 	WFIFOL(fd,4) = u_fd;
 	WFIFOL(fd,8) = aid;
 	safestrncpy((char*)WFIFOP(fd,12), msg_out, len);
-	
+
 	WFIFOSET(fd,12 + len);
-	
+
 	return;
 }
 /* [Dekamaster/Nightroad] */
@@ -443,13 +443,13 @@ void mapif_parse_accinfo(int fd) {
 	char query[NAME_LENGTH], query_esq[NAME_LENGTH*2+1];
 	int account_id;
 	char *data;
-		
+
 	safestrncpy(query, (char*) RFIFOP(fd,14), NAME_LENGTH);
-	
+
 	Sql_EscapeString(sql_handle, query_esq, query);
-	
+
 	account_id = atoi(query);
-	
+
 	if (account_id < START_ACCOUNT_NUM) {	// is string
 		if ( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`name`,`class`,`base_level`,`job_level`,`online` FROM `char` WHERE `name` LIKE '%s' LIMIT 10", query_esq)
 				|| Sql_NumRows(sql_handle) == 0 ) {
@@ -472,14 +472,14 @@ void mapif_parse_accinfo(int fd) {
 					int class_;
 					short base_level, job_level, online;
 					char name[NAME_LENGTH];
-					
+
 					Sql_GetData(sql_handle, 0, &data, NULL); account_id = atoi(data);
 					Sql_GetData(sql_handle, 1, &data, NULL); safestrncpy(name, data, sizeof(name));
 					Sql_GetData(sql_handle, 2, &data, NULL); class_ = atoi(data);
 					Sql_GetData(sql_handle, 3, &data, NULL); base_level = atoi(data);
 					Sql_GetData(sql_handle, 4, &data, NULL); job_level = atoi(data);
 					Sql_GetData(sql_handle, 5, &data, NULL); online = atoi(data);
-					
+
 					inter_to_fd(fd, u_fd, aid, "[AID: %d] %s | %s | Level: %d/%d | %s", account_id, name, job_name(class_), base_level, job_level, online?"Online":"Offline");
 				}
 				Sql_FreeResult(sql_handle);
@@ -487,7 +487,7 @@ void mapif_parse_accinfo(int fd) {
 			}
 		}
 	}
-	
+
 	/* it will only get here if we have a single match */
 	if( account_id ) {
 		char userid[NAME_LENGTH], user_pass[NAME_LENGTH], email[40], last_ip[20], lastlogin[30];
@@ -512,40 +512,40 @@ void mapif_parse_accinfo(int fd) {
 			Sql_GetData(sql_handle, 6, &data, NULL); logincount = atoi(data);
 			Sql_GetData(sql_handle, 7, &data, NULL); state = atoi(data);
 		}
-			
+
 		Sql_FreeResult(sql_handle);
-		
+
 		if (level == -1)
 			return;
-		
+
 		inter_to_fd(fd, u_fd, aid, "-- Account %d --", account_id );
 		inter_to_fd(fd, u_fd, aid, "User: %s | GM Group: %d | State: %d", userid, level, state );
-		
+
 		if (level < castergroup) /* only show pass if your gm level is greater than the one you're searching for */
 			inter_to_fd(fd, u_fd, aid, "Password: %s", user_pass );
-		
+
 		inter_to_fd(fd, u_fd, aid, "Account e-mail: %s", email);
 		inter_to_fd(fd, u_fd, aid, "Last IP: %s (%s)", last_ip, geoip_getcountry(str2ip(last_ip)) );
 		inter_to_fd(fd, u_fd, aid, "This user has logged %d times, the last time were at %s", logincount, lastlogin );
 		inter_to_fd(fd, u_fd, aid, "-- Character Details --" );
-		
-		
+
+
 		if ( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`, `name`, `char_num`, `class`, `base_level`, `job_level`, `online` FROM `char` WHERE `account_id` = '%d' ORDER BY `char_num` LIMIT %d", account_id, MAX_CHARS)
 				|| Sql_NumRows(sql_handle) == 0 ) {
-		
+
 				if( Sql_NumRows(sql_handle) == 0 )
 					inter_to_fd(fd, u_fd, aid,"This account doesn't have characters.");
 				else {
 					inter_to_fd(fd, u_fd, aid,"An error occured, bother your admin about it.");
 					Sql_ShowDebug(sql_handle);
 				}
-			
+
 		} else {
 			while ( SQL_SUCCESS == Sql_NextRow(sql_handle) ) {
 				int char_id, class_;
 				short char_num, base_level, job_level, online;
 				char name[NAME_LENGTH];
-	
+
 				Sql_GetData(sql_handle, 0, &data, NULL); char_id = atoi(data);
 				Sql_GetData(sql_handle, 1, &data, NULL); safestrncpy(name, data, sizeof(name));
 				Sql_GetData(sql_handle, 2, &data, NULL); char_num = atoi(data);
@@ -553,13 +553,13 @@ void mapif_parse_accinfo(int fd) {
 				Sql_GetData(sql_handle, 4, &data, NULL); base_level = atoi(data);
 				Sql_GetData(sql_handle, 5, &data, NULL); job_level = atoi(data);
 				Sql_GetData(sql_handle, 6, &data, NULL); online = atoi(data);
-				
+
 				inter_to_fd(fd, u_fd, aid, "[Slot/CID: %d/%d] %s | %s | Level: %d/%d | %s", char_num, char_id, name, job_name(class_), base_level, job_level, online?"On":"Off");
 			}
 		}
 		Sql_FreeResult(sql_handle);
 	}
-	
+
 	return;
 }
 //--------------------------------------------------------
@@ -601,7 +601,7 @@ int inter_accreg_tosql(int account_id, int char_id, struct accreg* reg, int type
 
 	StringBuf_Init(&buf);
 	StringBuf_Printf(&buf, "INSERT INTO `%s` (`type`,`account_id`,`char_id`,`str`,`value`) VALUES ", reg_db);
-		
+
 	for( i = 0; i < reg->reg_num; ++i ) {
 		r = &reg->reg[i];
 		if( r->str[0] != '\0' && r->value[0] != '\0' ) {
@@ -809,9 +809,9 @@ void inter_final(void)
 	inter_elemental_sql_final();
 	inter_mail_sql_final();
 	inter_auction_sql_final();
-	
+
 	if (accreg_pt) aFree(accreg_pt);
-	
+
 	do_final_msg();
 	return;
 }
@@ -886,7 +886,7 @@ int mapif_account_reg_reply(int fd,int account_id,int char_id, int type)
 	struct accreg *reg=accreg_pt;
 	WFIFOHEAD(fd, 13 + 5000);
 	inter_accreg_fromsql(account_id,char_id,reg,type);
-	
+
 	WFIFOW(fd,0)=0x3804;
 	WFIFOL(fd,4)=account_id;
 	WFIFOL(fd,8)=char_id;
@@ -990,7 +990,7 @@ int mapif_parse_WisRequest(int fd)
 		ShowError("inter: Wis message doesn't exist.\n");
 		return 0;
 	}
-	
+
 	safestrncpy(name, (char*)RFIFOP(fd,28), NAME_LENGTH); //Received name may be too large and not contain \0! [Skotlex]
 
 	Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
@@ -1070,7 +1070,7 @@ int mapif_parse_WisReply(int fd)
 int mapif_parse_WisToGM(int fd)
 {
 	unsigned char buf[2048]; // 0x3003/0x3803 <packet_len>.w <wispname>.24B <min_gm_level>.w <message>.?B
-	
+
 	memcpy(WBUFP(buf,0), RFIFOP(fd,0), RFIFOW(fd,2));
 	WBUFW(buf, 0) = 0x3803;
 	mapif_sendall(buf, RFIFOW(fd,2));
@@ -1083,7 +1083,7 @@ int mapif_parse_Registry(int fd)
 {
 	int j,p,len, max;
 	struct accreg *reg=accreg_pt;
-	
+
 	memset(accreg_pt,0,sizeof(struct accreg));
 	switch (RFIFOB(fd, 12)) {
 	case 3: //Character registry

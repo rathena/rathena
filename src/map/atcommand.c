@@ -7931,7 +7931,11 @@ ACMD_FUNC(clone)
 	if (strcmpi(command+1, "clone") == 0)
 		flag = 1;
 	else if (strcmpi(command+1, "slaveclone") == 0) {
-	  	flag = 2;
+		flag = 2;
+		if(pc_isdead(sd)){
+		    clif_displaymessage(fd, msg_txt(129+flag*2));
+		    return 0;
+		}	  	
 		master = sd->bl.id;
 		if (battle_config.atc_slave_clone_limit
 			&& mob_countslave(&sd->bl) >= battle_config.atc_slave_clone_limit) {

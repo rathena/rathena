@@ -237,8 +237,8 @@ const char* get_svn_revision(void)
 			else
 			{
 				// Bin File format
-				fgets(line, sizeof(line), fp); // Get the name
-				fgets(line, sizeof(line), fp); // Get the entries kind
+				if ( fgets(line, sizeof(line), fp) == NULL ) { printf("Can't get bin name\n"); } // Get the name
+				if ( fgets(line, sizeof(line), fp) == NULL ) { printf("Can't get entries kind\n"); } // Get the entries kind
 				if(fgets(line, sizeof(line), fp)) // Get the rev numver
 				{
 					snprintf(svn_version_buffer, sizeof(svn_version_buffer), "%d", atoi(line));
@@ -263,7 +263,7 @@ const char* get_svn_revision(void)
  *--------------------------------------*/
 static void display_title(void) {
 	//ClearScreen(); // clear screen and go up/left (0, 0 position in text)
-	
+
 	ShowMessage("\n");
 	ShowMessage(""CL_PASS"     "CL_BOLD"                                                                 "CL_PASS""CL_CLL""CL_NORMAL"\n");
 	ShowMessage(""CL_PASS"       "CL_BT_WHITE"            rAthena Development Team presents                  "CL_PASS""CL_CLL""CL_NORMAL"\n");
@@ -345,7 +345,7 @@ int main (int argc, char **argv)
 	timer_final();
 	socket_final();
 	db_final();
-	mempool_final();	
+	mempool_final();
 	rathread_final();
 #endif
 
