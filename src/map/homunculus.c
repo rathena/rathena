@@ -40,7 +40,7 @@
 #include <math.h>
 
 struct s_homunculus_db homunculus_db[MAX_HOMUNCULUS_CLASS];	//[orn]
-struct skill_tree_entry hskill_tree[MAX_HOMUNCULUS_CLASS][MAX_SKILL_TREE];
+struct homun_skill_tree_entry hskill_tree[MAX_HOMUNCULUS_CLASS][MAX_SKILL_TREE];
 
 static int merc_hom_hungry(int tid, unsigned int tick, int id, intptr_t data);
 
@@ -194,7 +194,7 @@ int merc_hom_delete(struct homun_data *hd, int emote)
 	return unit_remove_map(&hd->bl,CLR_OUTSIGHT);
 }
 
-int merc_hom_calc_skilltree(struct homun_data *hd)
+int merc_hom_calc_skilltree(struct homun_data *hd, int flag_evolve)
 {
 	int i, id = 0;
 	int j, f = 1;
@@ -229,6 +229,9 @@ int merc_hom_calc_skilltree(struct homun_data *hd)
 	for( i = 0; i < MAX_SKILL_TREE && ( id = hskill_tree[c][i].id ) > 0; i++ ) {
 		if( hd->homunculus.hskill[ id - HM_SKILLBASE ].id )
 			continue; //Skill already known.
+		j = ( flag_evolve ) ? 10 : hd->homunculus.intimacy;
+		if( j < hskill_tree[c][i].intimacylv )
+			continue;
 		if(!battle_config.skillfree) {
 			for( j = 0; j < MAX_PC_SKILL_REQUIRE; j++ ) {
 				if( hskill_tree[c][i].need[j].id &&
@@ -368,7 +371,7 @@ int merc_hom_change_class(struct homun_data *hd, short class_)
 	hd->homunculusDB = &homunculus_db[i];
 	hd->homunculus.class_ = class_;
 	status_set_viewdata(&hd->bl, class_);
-	merc_hom_calc_skilltree(hd);
+	merc_hom_calc_skilltree(hd, 1);
 	return 1;
 }
 
@@ -1164,7 +1167,7 @@ int read_homunculusdb(void)
 }
 
 static bool read_homunculus_skilldb_sub(char* split[], int columns, int current)
-{// <hom class>,<skill id>,<max level>[,<job level>],<req id1>,<req lv1>,<req id2>,<req lv2>,<req id3>,<req lv3>,<req id4>,<req lv4>,<req id5>,<req lv5>
+{// <hom class>,<skill id>,<max level>[,<job level>],<req id1>,<req lv1>,<req id2>,<req lv2>,<req id3>,<req lv3>,<req id4>,<req lv4>,<req id5>,<req lv5>,<intimacy lv req>
 	int k, classid; 
 	int j;
 	int minJobLevelPresent = 0;
@@ -1199,6 +1202,8 @@ static bool read_homunculus_skilldb_sub(char* split[], int columns, int current)
 		hskill_tree[classid][j].need[k].id = atoi(split[3+k*2+minJobLevelPresent]);
 		hskill_tree[classid][j].need[k].lv = atoi(split[3+k*2+minJobLevelPresent+1]);
 	}
+	
+	hskill_tree[classid][j].intimacylv = atoi(split[13+minJobLevelPresent]);
 
 	return true;
 }
@@ -1206,7 +1211,7 @@ static bool read_homunculus_skilldb_sub(char* split[], int columns, int current)
 int read_homunculus_skilldb(void)
 {
 	memset(hskill_tree,0,sizeof(hskill_tree));
-	sv_readdb(db_path, "homun_skill_tree.txt", ',', 13, 14, -1, &read_homunculus_skilldb_sub);
+	sv_readdb(db_path, "homun_skill_tree.txt", ',', 13, 15, -1, &read_homunculus_skilldb_sub);
 
 	return 0;
 }

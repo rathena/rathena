@@ -49,6 +49,18 @@ struct homun_data {
     int spiritball; //for homun S [lighta]
 };
 
+#define MAX_HOM_SKILL_REQUIRE 5
+struct homun_skill_tree_entry {
+	short id;
+	unsigned char max;
+	unsigned char joblv;
+	short intimacylv;
+	struct {
+		short id;
+		unsigned char lv;
+	} need[MAX_HOM_SKILL_REQUIRE];
+}; // Celest
+
 #define HOM_EVO 0x100 //256
 #define HOM_S 0x200 //512
 
@@ -84,7 +96,7 @@ int hom_class2mapid(int hom_class);
 void merc_damage(struct homun_data *hd);
 int merc_hom_dead(struct homun_data *hd);
 void merc_hom_skillup(struct homun_data *hd,int skillnum);
-int merc_hom_calc_skilltree(struct homun_data *hd);
+int merc_hom_calc_skilltree(struct homun_data *hd, int flag_evolve);
 int merc_hom_checkskill(struct homun_data *hd,int skill_id);
 int merc_hom_gainexp(struct homun_data *hd,int exp);
 int merc_hom_levelup(struct homun_data *hd);
