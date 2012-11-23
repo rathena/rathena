@@ -1343,9 +1343,6 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		clif_clearunit_area(target,CLR_DEAD);
 		skill_unit_move(target,gettick(),4);
 		skill_cleartimerskill(target);
-		
-		if(target->type == BL_PC && ((TBL_PC*)target)->npc_id && flag == 1)
-			npc_event_dequeue((TBL_PC*)target);
 	}
 
 	return hp+sp;
