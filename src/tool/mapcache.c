@@ -176,6 +176,8 @@ void cache_map(char *name, struct map_data *m)
 	encode_zip(write_buf, &len, m->cells, m->xs*m->ys);
 
 	// Fill the map header
+	if (name > MAP_NAME_LENGTH) // It does not hurt to warn that there are maps with name longer than allowed.
+		ShowWarning ("Map name '%s' size '%d' is too long. Truncating to '%d'.\n", name, sizeof(name), MAP_NAME_LENGTH);
 	strncpy(info.name, name, MAP_NAME_LENGTH);
 	info.xs = MakeShortLE(m->xs);
 	info.ys = MakeShortLE(m->ys);
