@@ -9661,8 +9661,10 @@ BUILDIN_FUNC(getusersname)
 		if (pc_has_permission(pl_sd, PC_PERM_HIDE_SESSION) && pc_get_group_level(pl_sd) > group_level)
 			continue; // skip hidden sessions
 
+		/* Temporary fix for bugreport:1023.
+		 * Do not uncomment unless you want thousands of 'next' buttons.
 		if((disp_num++)%10==0)
-			clif_scriptnext(sd,st->oid);
+			clif_scriptnext(sd,st->oid);*/
 		clif_scriptmes(sd,st->oid,pl_sd->status.name);
 	}
 	mapit_free(iter);
@@ -9946,29 +9948,46 @@ BUILDIN_FUNC(sc_end)
 	struct block_list* bl;
 	int type;
 
-	type = script_getnum(st,2);
-	if( script_hasdata(st,3) )
-		bl = map_id2bl(script_getnum(st,3));
+	type = script_getnum(st, 2);
+	if (script_hasdata(st, 3))
+		bl = map_id2bl(script_getnum(st, 3));
 	else
 		bl = map_id2bl(st->rid);
 
-	if( potion_flag==1 && potion_target )
-	{//##TODO how does this work [FlavioJS]
+	if (potion_flag == 1 && potion_target) //##TODO how does this work [FlavioJS]
 		bl = map_id2bl(potion_target);
-	}
 
-	if( !bl ) return 0;
+	if (!bl)
+		return 0;
 
-	if( type >= 0 && type < SC_MAX )
+	if (type >= 0 && type < SC_MAX)
 	{
 		struct status_change *sc = status_get_sc(bl);
-		struct status_change_entry *sce = sc?sc->data[type]:NULL;
-		if (!sce) return 0;
+		struct status_change_entry *sce = sc ? sc->data[type] : NULL;
+
+		if (!sce)
+			return 0;
+			
+
+		switch (type)
+		{
+			case SC_WEIGHT50:
+			case SC_WEIGHT90:
+			case SC_NOCHAT:
+			case SC_PUSH_CART:
+				return 0;
+				
+			default:
+				break;
+		}
+
 		//This should help status_change_end force disabling the SC in case it has no limit.
 		sce->val1 = sce->val2 = sce->val3 = sce->val4 = 0;
 		status_change_end(bl, (sc_type)type, INVALID_TIMER);
-	} else
-		status_change_clear(bl, 2);// remove all effects
+	}
+	else
+		status_change_clear(bl, 3); // remove all effects
+
 	return 0;
 }
 

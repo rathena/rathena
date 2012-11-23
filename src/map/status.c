@@ -8841,6 +8841,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
  * 0 - PC killed -> Place here statuses that do not dispel on death.
  * 1 - If for some reason status_change_end decides to still keep the status when quitting.
  * 2 - Do clif
+ * 3 - Do not remove some permanent/time-independent effects
  *------------------------------------------*/
 int status_change_clear(struct block_list* bl, int type)
 {
@@ -8909,6 +8910,18 @@ int status_change_clear(struct block_list* bl, int type)
 		case SC_PUSH_CART:
 			continue;
 
+		}
+		
+		if( type == 3 )
+		{
+			switch (i)
+			{// TODO: This list may be incomplete
+				case SC_WEIGHT50:
+				case SC_WEIGHT90:
+				case SC_NOCHAT:
+				case SC_PUSH_CART:
+					continue;
+			}
 		}
 
 		status_change_end(bl, (sc_type)i, INVALID_TIMER);
