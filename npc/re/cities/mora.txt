@@ -307,14 +307,14 @@ mora,55,124,2	script	Cat Traveler	495,{
 }
 
 mora,131,165,4	script	Bifrost Resident#1	520,{
-	mes "[Bifrost resident]";
+	mes "[Bifrost Resident]";
 	mes "Welcome to the workshop";
 	mes "of the west clan. If you";
 	mes "want your Loki Muffler";
 	mes "enchanted, please contact";
 	mes "my boss. He makes miracles!";
 	next;
-	mes "[Bifrost resident]";
+	mes "[Bifrost Resident]";
 	mes "On a side note... I think I'm";
 	mes "really cute, don't you agree?";
 	close;

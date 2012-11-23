@@ -1,14 +1,14 @@
 //===== rAthena Script =======================================
-//= Sample: ChekWeight
+//= Sample: CheckWeight
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
 //= 20121113
 //===== Description: ========================================= 
-//= Demonstrates ChekWeight commands.
+//= Demonstrates 'checkweight' command.
 //============================================================
 
-new_1-1,56,106,5	script	ChkSpace	763,{
+prontera,161,181,6	script	ChkSpace	763,{
 
 function ChkResult;
 function FinalReport;

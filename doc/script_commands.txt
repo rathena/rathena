@@ -3316,39 +3316,41 @@ aren't. You can also pass the char_id to check for both account and char id.
 
 ---------------------------------------
 
-*checkweight(<item id>,<amount>)
-*checkweight("<item name>",<amount>)
+*checkweight(<item id>,<amount>{,<item id>,<amount>,<item id>,<amount>,...});
+*checkweight("<item name>",<amount>{,"<item name>",<amount>,"<item name>",<amount>,...});
+*checkweight2(<id_array>,<amount_array>);
 
-This function will compute and return 1 if the total weight of a specified 
+These functions will compute and return 1 if the total weight of the specified 
 number of specific items does not exceed the invoking character's carrying 
 capacity, and 0 otherwise. It is important to see if a player can carry the 
 items you expect to give them, failing to do that may open your script up to 
 abuse or create some very unfair errors.
 
-This function, in addition to checking to see if the player is capable of 
-holding a set amount of items, also ensures the player has room in their 
+The second function will check an array of items and amounts, and also
+returns 1 on success and 0 on failure.
+
+The functions, in addition to checking to see if the player is capable of 
+holding a set amount of items, also ensure the player has room in their 
 inventory for the item(s) they will be receiving.
 
 Like 'getitem', this function will also accept an 'english name' from the 
 database as an argument.
 
+Example 1:
+
 	if (checkweight(512,10)) {
 		getitem 512,10;
 	} else {
-		mes "Sorry you cannot hold this amount of apples";
+		mes "Sorry, you cannot hold this amount of apples!";
 	}
-	close;
 
-Or to put this another way:
+Example 2:
 
-	if (checkweight("Apple",10) == 0) {
-		mes "Sorry you cannot hold this amount of apples";
-	} else {
-		getitem 512,10;
+	setarray .@item[0],512,513,514;
+	setarray .@amount[0],10,5,5;
+	if (!checkweight(.@item,.@amount)) {
+		mes "Sorry, you cannot hold this amount of fruit!";
 	}
-	close;
-
-Both examples have the same effect.
 
 ---------------------------------------
 
