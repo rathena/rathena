@@ -16923,7 +16923,7 @@ BUILDIN_FUNC(getcharip)
 		else if (script_isint(st, 2) || script_getnum(st, 2))
 		{
 			id = script_getnum(st, 2);
-			sd = (sd = map_id2sd(id) ? map_id2sd(id) : map_charid2sd(id));
+			sd = (map_id2sd(id) ? map_id2sd(id) : map_charid2sd(id));
 		}
 	}
 	else
