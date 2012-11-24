@@ -1999,7 +1999,10 @@ int status_calc_mob_(struct mob_data* md, bool first)
 
 	if(first)
 	{	//Set basic level on respawn.
-		md->level = md->db->lv;
+		if (md->level > 0 && md->level <= MAX_LEVEL && md->level != md->db->lv)
+			;
+		else
+			md->level = md->db->lv;
 	}
 
 	//Check if we need custom base-status

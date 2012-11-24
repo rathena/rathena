@@ -2943,7 +2943,8 @@ void npc_parse_mob2(struct spawn_data* mob)
 static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
 	int num, class_, m,x,y,xs,ys, i,j;
-	char mapname[32];
+	int mob_lv = -1, ai = -1, size = -1;
+	char mapname[32], mobname[NAME_LENGTH];
 	struct spawn_data mob, *data;
 	struct mob_db* db;
 
@@ -2952,9 +2953,11 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	mob.state.boss = !strcmpi(w2,"boss_monster");
 
 	// w1=<map name>,<x>,<y>,<xs>,<ys>
-	// w4=<mob id>,<amount>,<delay1>,<delay2>,<event>
+	// w3=<mob name>{,<mob level>}
+	// w4=<mob id>,<amount>,<delay1>,<delay2>,<event>{,<mob size>,<mob ai>}
 	if( sscanf(w1, "%31[^,],%d,%d,%d,%d", mapname, &x, &y, &xs, &ys) < 3
-	||	sscanf(w4, "%d,%d,%u,%u,%127[^\t\r\n]", &class_, &num, &mob.delay1, &mob.delay2, mob.eventname) < 2 )
+	||	sscanf(w3, "%23[^,],%d", mobname, &mob_lv) < 1
+	||	sscanf(w4, "%d,%d,%u,%u,%127[^,],%d,%d[^\t\r\n]", &class_, &num, &mob.delay1, &mob.delay2, mob.eventname, &size, &ai) < 2 )
 	{
 		ShowError("npc_parse_mob: Invalid mob definition in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 		return strchr(start,'\n');// skip and continue
@@ -2987,6 +2990,24 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 		ShowError("npc_parse_mob: Invalid number of monsters %d, must be inside the range [1,1000] (file '%s', line '%d').\n", num, filepath, strline(buffer,start-buffer));
 		return strchr(start,'\n');// skip and continue
 	}
+	
+	if( (mob.state.size < 0 || mob.state.size > 2) && size != -1 )
+	{
+		ShowError("npc_parse_mob: Invalid size number %d for mob ID %d (file '%s', line '%d').\n", mob.state.size, class_, filepath, strline(buffer, start - buffer));
+		return strchr(start, '\n');
+	}
+	
+	if( (mob.state.ai < 0 || mob.state.ai > 4) && ai != -1 )
+	{
+		ShowError("npc_parse_mob: Invalid ai %d for mob ID %d (file '%s', line '%d').\n", mob.state.ai, class_, filepath, strline(buffer, start - buffer));
+		return strchr(start, '\n');
+	}
+	
+	if( (mob_lv == 0 || mob_lv > MAX_LEVEL) && mob_lv != -1 )
+	{
+		ShowError("npc_parse_mob: Invalid level %d for mob ID %d (file '%s', line '%d').\n", mob_lv, class_, filepath, strline(buffer, start - buffer));
+		return strchr(start, '\n');
+	}
 
 	mob.num = (unsigned short)num;
 	mob.active = 0;
@@ -2995,6 +3016,12 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	mob.y = (unsigned short)y;
 	mob.xs = (signed short)xs;
 	mob.ys = (signed short)ys;
+	if (mob_lv > 0 && mob_lv <= MAX_LEVEL)
+		mob.level = mob_lv;
+	if (size > 0 && size <= 2)
+		mob.state.size = size;
+	if (ai > 0 && ai <= 4)
+		mob.state.ai = ai;
 
 	if (mob.num > 1 && battle_config.mob_count_rate != 100) {
 		if ((mob.num = mob.num * battle_config.mob_count_rate / 100) < 1)
@@ -3018,7 +3045,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	else if (battle_config.override_mob_names==2)
 		strcpy(mob.name,"--ja--");
 	else
-		safestrncpy(mob.name, w3, sizeof(mob.name));
+		safestrncpy(mob.name, mobname, sizeof(mob.name));
 
 	//Verify dataset.
 	if( !mob_parse_dataset(&mob) )
