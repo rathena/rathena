@@ -403,7 +403,7 @@ void* grfio_reads(const char* fname, int* size)
 			declen = ftell(in);
 			fseek(in,0,SEEK_SET);
 			buf2 = (unsigned char *)aMalloc(declen+1);  // +1 for resnametable zero-termination
-			if(fread(buf2, 1, declen, in) != declen) printf("An error occured in fread grfio_reads, fname=%s \n",fname);
+			if(fread(buf2, 1, declen, in) != declen) ShowError("An error occured in fread grfio_reads, fname=%s \n",fname);
 			fclose(in);
 
 			if( size )
@@ -425,7 +425,7 @@ void* grfio_reads(const char* fname, int* size)
 			int fsize = entry->srclen_aligned;
 			unsigned char *buf = (unsigned char *)aMalloc(fsize);
 			fseek(in, entry->srcpos, 0);
-			if(fread(buf, 1, fsize, in) != fsize) printf("An error occured in fread in grfio_reads, grfname=%s\n",grfname);
+			if(fread(buf, 1, fsize, in) != fsize) ShowError("An error occured in fread in grfio_reads, grfname=%s\n",grfname);
 			fclose(in);
 
 			buf2 = (unsigned char *)aMalloc(entry->declen+1);  // +1 for resnametable zero-termination
