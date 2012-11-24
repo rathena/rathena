@@ -1182,7 +1182,7 @@ moc_fild11,180,253,5	script	Talking Dog#para03	972,{
 		mes "Oh, if you are tired I will help you.";
 		next;
 		mes "-When the dog barked, your HP and SP recovered.-";
-//		UseSkillToPC 28 10 99 60; // Use Skill On Player <Skill ID>,<Lvl>,<x>,<y>
+//		UseSkillToPC 28 10 99 60;
 		percentheal 100,100;
 		close;
 	}
@@ -1220,7 +1220,7 @@ moc_fild11,180,253,5	script	Talking Dog#para03	972,{
 		mes "Oh, if you are tired I will help you.";
 		next;
 		mes "-When the dog barked, your HP and SP recovered.-";
-//		UseSkillToPC 28 10 99 60; // Use Skill On Player <Skill ID>,<Lvl>,<x>,<y>
+//		UseSkillToPC 28 10 99 60;
 		percentheal 100,100;
 		close;
 	}
@@ -1276,7 +1276,7 @@ moc_fild11,180,253,5	script	Talking Dog#para03	972,{
 		mes "Oh, if you are tired I will help you.";
 		next;
 		mes "-When the dog barked, your HP and SP recovered.-";
-//		UseSkillToPC 28 10 99 60; // Use Skill On Player <Skill ID>,<Lvl>,<x>,<y>
+//		UseSkillToPC 28 10 99 60;
 		percentheal 100,100;
 		close;
 	}
@@ -1422,7 +1422,7 @@ prt_sewb1,131,262,3	script	Timid Cat#para04	422,{
 		mes "[Timid Cat]";
 		mes "Take care to check your map so you don't get lost.";
 		mes "It's a service meeow.";
-//		UseSkillToPC 28 10 99 60; // Use Skill On Player <Skill ID>,<Lvl>,<x>,<y>
+//		UseSkillToPC 28 10 99 60;
 		percentheal 0,100;
 		close;
 	}
@@ -1460,7 +1460,7 @@ prt_sewb1,131,262,3	script	Timid Cat#para04	422,{
 		mes "[Timid Cat]";
 		mes "I will help you a little.";
 		mes "Here, I have recovered your strengh meow..";
-//		UseSkillToPC 28 10 99 60; // Use Skill On Player <Skill ID>,<Lvl>,<x>,<y>
+//		UseSkillToPC 28 10 99 60;
 		percentheal 100,100;
 		close;
 	}
@@ -1495,7 +1495,7 @@ prt_sewb1,131,262,3	script	Timid Cat#para04	422,{
 		mes "It's the last course so cheer up.";
 		mes "I will help you a little.";
 		mes "Here, I have recovered your strengh meow..";
-//		UseSkillToPC 28 10 99 60; // Use Skill On Player <Skill ID>,<Lvl>,<x>,<y>
+//		UseSkillToPC 28 10 99 60;
 		percentheal 0,100;
 		close;
 	}
@@ -1607,7 +1607,7 @@ pay_arche,41,136,3	script	Eden Member Karl#para05	904,{
 		mes "[Karl]";
 		mes "Just in case I will recover all your energy.";
 		mes "It's the last step so be careful.";
-//		UseSkillToPC 28 10 99 60; // Use Skill On Player <Skill ID>,<Lvl>,<x>,<y>
+//		UseSkillToPC 28 10 99 60;
 		percentheal 100,100;
 		close;
 	}
@@ -1638,7 +1638,7 @@ pay_arche,41,136,3	script	Eden Member Karl#para05	904,{
 		mes "[Karl]";
 		mes "Just in case I will recover all your energy.";
 		mes "It's the last step so be careful.";
-//		UseSkillToPC 28 10 99 60; // Use Skill On Player <Skill ID>,<Lvl>,<x>,<y>
+//		UseSkillToPC 28 10 99 60;
 		percentheal 0,100;
 		close;
 	}
@@ -1761,7 +1761,7 @@ anthell01,29,264,5	script	Eden Member Cloud#para06	899,{
 		mes "What do you think of Ant Hell?";
 		mes "Can you stay longer?";
 		mes "Ok, I will recover your strengh so, keep going.";
-//		UseSkillToPC 28 10 99 60; // Use Skill On Player <Skill ID>,<Lvl>,<x>,<y>
+//		UseSkillToPC 28 10 99 60;
 		percentheal 100,100;
 		close;
 	}
@@ -1800,7 +1800,7 @@ anthell01,29,264,5	script	Eden Member Cloud#para06	899,{
 		mes "[Cloud]";
 		mes "See, to cheer you up I will heal you until you finish the training.";
 		mes "Chin up and cheer up.";
-//		UseSkillToPC 28 10 99 60; // Use Skill On Player <Skill ID>,<Lvl>,<x>,<y>
+//		UseSkillToPC 28 10 99 60;
 		percentheal 100,100;
 		close;
 	}
@@ -1828,7 +1828,7 @@ anthell01,29,264,5	script	Eden Member Cloud#para06	899,{
 		mes "[Cloud]";
 		mes "Just Vitata, isn't that an easy opponent?";
 		mes "If you see Maya just run away.";
-//		UseSkillToPC 28 10 99 60; // Use Skill On Player <Skill ID>,<Lvl>,<x>,<y>
+//		UseSkillToPC 28 10 99 60;
 		percentheal 100,100;
 		close;
 	}
@@ -1943,7 +1943,7 @@ in_orcs01,38,175,3	script	Eden Member Hooksha	803,{
 		mes "[Hooksha]";
 		mes "You look tired I will recover your health.";
 		mes "If you are in trouble just come back here to safety.";
-//		UseSkillToPC 28 10 99 60; // Use Skill On Player <Skill ID>,<Lvl>,<x>,<y>
+//		UseSkillToPC 28 10 99 60;
 		percentheal 100,100;
 		close;
 	}
@@ -1974,7 +1974,7 @@ in_orcs01,38,175,3	script	Eden Member Hooksha	803,{
 		mes "[Hooksha]";
 		mes "You look tired, I will recover your health.";
 		mes "If you are in trouble just come back here to safety.";
-//		UseSkillToPC 28 10 99 60; // Use Skill On Player <Skill ID>,<Lvl>,<x>,<y>
+//		UseSkillToPC 28 10 99 60;
 		percentheal 100,100;
 		close;
 	}
@@ -2000,7 +2000,7 @@ in_orcs01,38,175,3	script	Eden Member Hooksha	803,{
 		mes "[Hooksha]";
 		mes "You look tired, I will recover your health.";
 		mes "If you are in trouble just come back here to safety.";
-//		UseSkillToPC 28 10 99 60; // Use Skill On Player <Skill ID>,<Lvl>,<x>,<y>
+//		UseSkillToPC 28 10 99 60;
 		percentheal 100,100;
 		close;
 	}
@@ -2073,7 +2073,7 @@ in_orcs01,38,175,3	script	Eden Member Hooksha	803,{
 		mes "Can you stay longer?";
 		mes "You look tired, I will recover your health.";
 		mes "If you are in trouble just come back here to safety.";
-//		UseSkillToPC 28 10 99 60; // Use Skill On Player <Skill ID>,<Lvl>,<x>,<y>
+//		UseSkillToPC 28 10 99 60;
 		percentheal 100,100;
 		close;
 	}
@@ -2097,7 +2097,7 @@ in_orcs01,38,175,3	script	Eden Member Hooksha	803,{
 		mes "Can you stay longer?";
 		mes "You look tired I will recover your health.";
 		mes "If you are in trouble just come back here to safety.";
-//		UseSkillToPC 28 10 99 60; // Use Skill On Player <Skill ID>,<Lvl>,<x>,<y>
+//		UseSkillToPC 28 10 99 60;
 		percentheal 100,100;
 		close;
 	}
@@ -2201,7 +2201,7 @@ iz_dun04,43,46,3	script	Eden Member Callandiva	745,{
 		mes "Oh are you tired?";
 		mes "Mermans are not easy opponents.";
 		mes "I will help you recover so cheer up.";
-//		UseSkillToPC 28 10 99 60; // Use Skill On Player <Skill ID>,<Lvl>,<x>,<y>
+//		UseSkillToPC 28 10 99 60;
 		percentheal 0,100;
 		close;
 	}

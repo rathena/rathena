@@ -141,7 +141,7 @@ explanation, see 'setmapflag'.
 
 ** Create a permanent monster spawn:
 
-<map name>,<x>,<y>,<xs>,<ys>%TAB%monster%TAB%<monster name>%TAB%<mob id>,<amount>,<delay1>,<delay2>,<event>
+<map name>,<x>,<y>,<xs>,<ys>%TAB%monster%TAB%<monster name>%TAB%<mob id>,<amount>,<delay1>,<delay2>,<event>{,<mob size>,<mob ai>}
 
 Map name is the name of the map the monsters will spawn on. x,y are the
 coordinates where the mob should spawn. If xs and ys are non-zero, they
@@ -157,15 +157,6 @@ is given as "--ja--", the 'japanese name' field from the monster database is
 used, (which, in rAthena, actually contains an english name) if it's "--en--", 
 it's the 'english name' from the monster database (which contains an uppercase 
 name used to summon the monster with a GM command).
-
-If you add 20000 to the monster ID, the monster will be spawned in a 'big 
-version', (monster size class will increase) and if you add 10000, the 'tiny 
-version' of the monster will be created. However, this method is deprecated
-and not recommended, as the values to add can change at a later time (20000
-and 10000 actually stand for 2*MAX_MOB_DB and MAX_MOB_DB respectively, which
-is defined on mob.h, and can change in the future as more mobs are created).
-The recommended way to change a mob's size is to use the event-field (see
-below).
 
 Amount is the amount of monsters that will be spawned when this command is 
 executed, it is affected by spawn rates in 'battle_athena.conf'.
@@ -185,11 +176,12 @@ should start with "On". As with all events, if the NPC is an on-touch NPC, the
 player who triggers the script must be within 'trigger' range for the event to
 work.
 
-The Event field can be used alternatively to specify other mob properties. Use
-2 to specify that the mob should be small, 4 for big monsters, and 8 for
-special ai mobs (which by default attack other monsters instead of players).
-You can add these, so using 10 will spawn small monsters that attack other
-mobs (if you specify both 2 and 4, the small version takes priority).
+There are two optional fields for monster size and AI.  Size can be 0 (medium),
+1 (small), or 2 (big).  AI can be 0 (default), 1 (attack/friendly), 2 (sphere),
+3 (flora), or 4 (zanzou).
+
+Alternately, a monster spawned using 'boss_monster' instead of 'monster' is able
+to be detected on the map with the SC_BOSSMAPINFO status (used by Convex Mirror).
 
 ** NPC names
 
@@ -1151,30 +1143,34 @@ Returns the variable reference (since trunk r12870).
 
 *setd "<variable name>",<value>;
 
-Works almost identical as set, just that the variable name is identified as a string, 
-thus can be constructed dynamically.
+Works almost identically as set, except the variable name is identified as a string 
+and can thus be constructed dynamically.
+
 This command is equivalent to:
-set getd("variable name"),<value>;
+  set getd("variable name"),<value>;
 
-Example:
-set $var$, "Poring";
+Examples:
 
-setd "$var$", "Poporing";
-mes $var$; // Will return Poporing
+  setd ".@var$", "Poporing";
+  mes .@var$; // Displays "Poporing".
 
-setd "$" + $var$ + "123$", "Poporing is cool";
-mes $Poporing123$; // Will return Poporing is cool.
+  setd ".@" + $var$ + "123$", "Poporing is cool";
+  mes .@Poporing123$; // Displays "Poporing is cool".
 
 ---------------------------------------
 
 *getd("<variable name>")
 
 Returns a reference to a variable, the name can be constructed dynamically.
-Refer to setd for usage.
+Refer to 'setd' for usage.
 
-Example:
-set getd("$varRefence"), 1;
-set @i, getd("$pikachu");
+This can also be used to set an array dynamically:
+  setarray getd(".array[0]"), 1, 2, 3, 4, 5;
+
+Examples:
+
+  set getd("$varRefence"), 1;
+  set @i, getd("$" + "pikachu");
 
 ---------------------------------------
 
@@ -2194,7 +2190,7 @@ You can also use this command to get stat values.
 *getcharid(<type>{,"<character name>"})
 
 This function will return a unique ID number of the invoking character, or, if a 
-character name is specified, of that character.
+character name is specified, of that player.
 
 Type is the kind of associated ID number required:
 
@@ -2423,21 +2419,20 @@ Available information types are:
  1 - X coordinate
  2 - Y coordinate
 
- ---------------------------------------
+---------------------------------------
  
- *getcharip{(<Character Name/Account ID/Char ID>)}
+*getcharip({"<character name>"|<account id>|<char id>})
 
- This function will return the IP address of the currently attached player
- or the currently attached Character Name/Account ID/Character ID. This command
- returns a blank str if there is no player attached.
+This function will return the IP address of the invoking character, or, if a player
+is specified, of that character. A blank string is returned if no player is attached.
  
-Example 1: Sets the variable, @ip$, into the IP address of currently attached player.
- 
-	@ip$ = getcharip;
+Examples:
 
-Example 2: Sets the variable, @ip$, into the IP address of character "Silver".
+// Outputs IP address of attached player.
+	mes "Your IP: " + getcharip();
 
-	@ip$ = getcharip("Silver");
+// Outputs IP address of character "Silver".
+	mes "Silver's IP: " + getcharip("Silver");
  
 ---------------------------------------
 \\
@@ -5151,25 +5146,26 @@ The main difference is that @follow can use character names, and this commands n
 
 Examples:
 
-//This will make Aaron follow Bullah, when both of these characters are online.
+// This will make Aaron follow Bullah, when both of these characters are online.
 	PCFollow getCharID(3,"Aaron"),getCharID(3,"Bullah");
 	
-//Makes Aaron stop following whoever he is following.
+// Makes Aaron stop following whoever he is following.
 	PCStopFollow getCharID(3,"Aaron");
 	
 ---------------------------------------
 
 *pcblockmove <id>,<option>;
 
-Prevents the given ID from moving when the option != 0, 0 enables the ID to move again.
-ID should be able to be GID of a monster/NPC or AID from a character.
+Prevents the given ID from moving when the option != 0, and 0 enables the ID to
+move again. The ID can either be the GID of a monster/NPC or account ID of a
+character, and will run for the attached player if zero is supplied.
 
 Examples:
 
-//prevents the current char from moving away;
+// Prevents the current char from moving away.
 	pcblockmove getcharid(3),1;
 	
-//enables the current char to move again.
+// Enables the current char to move again.
 	pcblockmove getcharid(3),0;
 
 --------------------------------------- 
@@ -5961,7 +5957,7 @@ room reaching the given triggering amount.
 // the player will be able to wait until 7 players accumulate. Once this happens, 
 // it will cause the NPC "Bouncer" run the label "OnStart".
 
-    waitingroom "Disco - Waiting Room",8,"Bouncer::OnStart",8;
+    waitingroom "Disco - Waiting Room",8,"Bouncer::OnStart",7;
 
 // The NPC will have a box above its head, it will say "Party - Waiting Room" 
 // and will have 8 waiting slots. Clicking this will allow a player who has
@@ -5969,7 +5965,7 @@ room reaching the given triggering amount.
 // able to wait until 7 players accumulate. Once this happens, it will cause
 // the NPC "Bouncer" run the label "OnStart".
 
-    waitingroom "Party - Waiting Room",8,"Bouncer::OnStart",8,5000,50,99;
+    waitingroom "Party - Waiting Room",8,"Bouncer::OnStart",7,5000,50,99;
 
 Creating a waiting room does not stop the execution of the script and it will 
 continue to the next line.
