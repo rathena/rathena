@@ -13,6 +13,7 @@
 #include "../common/nullpo.h"
 #include "../common/random.h"
 #include "../common/showmsg.h"
+#include "../common/socket.h"	// usage: getcharip
 #include "../common/strlib.h"
 #include "../common/timer.h"
 #include "../common/utils.h"
@@ -16907,6 +16908,50 @@ BUILDIN_FUNC(getargcount) {
 	return 0;
 }
 /**
+ * getcharip(<account ID>/<character ID>/<character name>)
+ **/
+BUILDIN_FUNC(getcharip)
+{
+	struct map_session_data* sd = NULL;
+	int id = 0;
+
+	/* check if a character name is specified */
+	if( script_hasdata(st, 2) )
+	{
+		if (script_isstring(st, 2))
+			sd = map_nick2sd(script_getstr(st, 2));
+		else if (script_isint(st, 2) || script_getnum(st, 2))
+		{
+			id = script_getnum(st, 2);
+			sd = (sd = map_id2sd(id) ? map_id2sd(id) : map_charid2sd(id));
+		}
+	}
+	else
+		sd = script_rid2sd(st);
+
+	/* check for sd and IP */
+	if (!sd || !session[sd->fd]->client_addr)
+	{
+		script_pushconststr(st, "");
+		return 0;
+	}
+
+	/* return the client ip_addr converted for output */
+	if (sd && sd->fd && session[sd->fd])
+	{
+		/* initiliaze */
+		const char *ip_addr = NULL;
+		uint32 ip;
+		
+		/* set ip, ip_addr and convert to ip and push str */
+		ip = session[sd->fd]->client_addr;
+		ip_addr = ip2str(ip, NULL);
+		script_pushstrcopy(st, ip_addr);
+	}
+
+	return 0;
+}
+/**
  * is_function(<function name>) -> 1 if function exists, 0 otherwise
  **/
 BUILDIN_FUNC(is_function) {
@@ -17618,6 +17663,7 @@ struct script_function buildin_func[] = {
 	 * rAthena and beyond!
 	 **/
 	BUILDIN_DEF(getargcount,""),
+	BUILDIN_DEF(getcharip,"?"),
 	BUILDIN_DEF(is_function,"s"),
 	BUILDIN_DEF(get_revision,""),
 	BUILDIN_DEF(freeloop,"i"),
