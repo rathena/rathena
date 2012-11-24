@@ -2423,6 +2423,22 @@ Available information types are:
  1 - X coordinate
  2 - Y coordinate
 
+ ---------------------------------------
+ 
+ *getcharip{(<Character Name/Account ID/Char ID>)}
+
+ This function will return the IP address of the currently attached player
+ or the currently attached Character Name/Account ID/Character ID. This command
+ returns a blank str if there is no player attached.
+ 
+Example 1: Sets the variable, @ip$, into the IP address of currently attached player.
+ 
+	@ip$ = getcharip;
+
+Example 2: Sets the variable, @ip$, into the IP address of character "Silver".
+
+	@ip$ = getcharip("Silver");
+ 
 ---------------------------------------
 \\
 2,2 Item-related commands
