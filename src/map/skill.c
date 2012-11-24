@@ -10204,7 +10204,8 @@ int skill_castend_map (struct map_session_data *sd, short skill_num, const char 
 		(sd->sc.data[SC_STASIS] && skill_block_check(&sd->bl, SC_STASIS, skill_num)) ||
 		(sd->sc.data[SC_KAGEHUMI] && skill_block_check(&sd->bl, SC_KAGEHUMI, skill_num)) ||
 		sd->sc.data[SC_OBLIVIONCURSE] ||
-		sd->sc.data[SC__MANHOLE]
+		sd->sc.data[SC__MANHOLE] ||
+		(sd->sc.data[SC_ASH] && rnd()%2) //50% fail chance under ASH
 	 )) {
 		skill_failed(sd);
 		return 0;
@@ -11119,7 +11120,7 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 
 	case UNT_VOLCANIC_ASH:
 		if (!sce)
-		    sc_start(bl, SC_ASH, 50, sg->skill_lv, skill_get_time(MH_VOLCANIC_ASH, sg->skill_lv)); //50% chance
+		    sc_start(bl, SC_ASH, 100, sg->skill_lv, skill_get_time(MH_VOLCANIC_ASH, sg->skill_lv));
 		break;
 
 	case UNT_GD_LEADERSHIP:
