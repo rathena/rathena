@@ -4181,13 +4181,29 @@ int pc_useitem(struct map_session_data *sd,int n)
 	if( !pc_isUseitem(sd,n) )
 		return 0;
 
-	 //Prevent mass item usage. [Skotlex]
-	if( DIFF_TICK(sd->canuseitem_tick, tick) > 0 ||
-		(itemdb_iscashfood(sd->status.inventory[n].nameid) && DIFF_TICK(sd->canusecashfood_tick, tick) > 0)
-	)
+	// Store information for later use before it is lost (via pc_delitem) [Paradox924X]
+	nameid = sd->inventory_data[n]->nameid;
+
+	if (nameid != ITEMID_NAUTHIZ && sd->sc.opt1 > 0 && sd->sc.opt1 != OPT1_STONEWAIT && sd->sc.opt1 != OPT1_BURNING)
 		return 0;
 
-	if( sd->sc.count && (
+	if( sd->sc.count){
+	     if((nameid == ITEMID_NAUTHIZ) && ( //bugreport 6751
+		    sd->sc.data[SC_FREEZE] ||
+		    sd->sc.data[SC_STUN] ||
+		    sd->sc.data[SC_DEEPSLEEP] ||
+		    sd->sc.data[SC_STONE] ||
+		    sd->sc.data[SC_CRYSTALIZE]
+		    )
+		){
+			 sd->sc.opt1 = 0; //remove option and status to allow skill
+			 status_change_end(&sd->bl,SC_FREEZE,INVALID_TIMER);
+			 status_change_end(&sd->bl,SC_STUN,INVALID_TIMER);
+			 status_change_end(&sd->bl,SC_DEEPSLEEP,INVALID_TIMER);
+			 status_change_end(&sd->bl,SC_STONE,INVALID_TIMER);
+			 status_change_end(&sd->bl,SC_CRYSTALIZE,INVALID_TIMER);
+	     }  //let us continue
+	     else if(
 		sd->sc.data[SC_BERSERK] || sd->sc.data[SC__BLOODYLUST] ||
 		(sd->sc.data[SC_GRAVITATION] && sd->sc.data[SC_GRAVITATION]->val3 == BCT_SELF) ||
 		sd->sc.data[SC_TRICKDEAD] ||
@@ -4196,11 +4212,15 @@ int pc_useitem(struct map_session_data *sd,int n)
 		sd->sc.data[SC__MANHOLE] ||
 		sd->sc.data[SC_KAGEHUMI] ||
 		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOITEM)
-	))
+	    )
 		return 0;
+	}
 
-	// Store information for later use before it is lost (via pc_delitem) [Paradox924X]
-	nameid = sd->inventory_data[n]->nameid;
+	//Prevent mass item usage. [Skotlex]
+	if( DIFF_TICK(sd->canuseitem_tick, tick) > 0 ||
+		(itemdb_iscashfood(nameid) && DIFF_TICK(sd->canusecashfood_tick, tick) > 0)
+	)
+		return 0;
 
 	/* Items with delayed consume are not meant to work while in mounts except reins of mount(12622) */
 	if( sd->inventory_data[n]->flag.delay_consume ) {

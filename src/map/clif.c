@@ -1478,7 +1478,7 @@ void clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 void clif_send_homdata(struct map_session_data *sd, int state, int param)
 {	//[orn]
 	int fd = sd->fd;
-	
+
 	if ( (state == SP_INTIMATE) && (param >= 910) && (sd->hd->homunculus.class_ == sd->hd->homunculusDB->evo_class) )
 		merc_hom_calc_skilltree(sd->hd, 0);
 
@@ -10174,9 +10174,6 @@ void clif_parse_UseItem(int fd, struct map_session_data *sd)
 		clif_clearunit_area(&sd->bl, CLR_DEAD);
 		return;
 	}
-
-	if (sd->sc.opt1 > 0 && sd->sc.opt1 != OPT1_STONEWAIT && sd->sc.opt1 != OPT1_BURNING)
-		return;
 
 	//This flag enables you to use items while in an NPC. [Skotlex]
 	if (sd->npc_id) {

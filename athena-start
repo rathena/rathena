@@ -37,7 +37,7 @@ echo "Check complete."
 echo "Looks good, a nice Athena!"
 #EOF
 }
-    
+
 
 case $1 in
     'start')
@@ -45,13 +45,22 @@ case $1 in
         check_files
 
         exec ./${L_SRV}&
+	echo $! > .${L_SRV}.pid
         exec ./${C_SRV}&
+	echo $! > .${C_SRV}.pid
         exec ./${M_SRV}&
+	echo $! > .${M_SRV}.pid
 
         echo "Now Started Athena."
 ;;
     'stop')
-        ps ax | grep -E "${L_SRV}|${C_SRV}|${M_SRV}" | awk '{print $1}' | xargs kill
+	for i in .${L_SRV}.pid .${C_SRV}.pid .${M_SRV}.pid
+	    do
+		if [ -e ./$i ]; then
+		    kill $(cat $i)
+		    rm $i
+		fi
+	    done
 ;;
     'restart')
         $0 stop

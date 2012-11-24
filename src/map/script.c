@@ -9648,7 +9648,7 @@ BUILDIN_FUNC(getusers)
 BUILDIN_FUNC(getusersname)
 {
 	TBL_PC *sd, *pl_sd;
-	int disp_num=1, group_level = 0;
+	int /*disp_num=1,*/ group_level = 0;
 	struct s_mapiterator* iter;
 
 	sd = script_rid2sd(st);
@@ -10727,12 +10727,12 @@ BUILDIN_FUNC(setmapflag)
 {
 	int m,i;
 	const char *str;
-	const char *val=NULL;
+	int val=0;
 
 	str=script_getstr(st,2);
 	i=script_getnum(st,3);
 	if(script_hasdata(st,4)){
-		val=script_getstr(st,4);
+		val=script_getnum(st,4);
 	}
 	m = map_mapname2mapid(str);
 	if(m >= 0) {
@@ -10784,13 +10784,13 @@ BUILDIN_FUNC(setmapflag)
 			case MF_NOWARPTO:			map[m].flag.nowarpto = 1; break;
 			case MF_NIGHTMAREDROP:		map[m].flag.pvp_nightmaredrop = 1; break;
 			case MF_RESTRICTED:
-				map[m].zone |= 1<<((int)atoi(val)+1);
+				map[m].zone |= 1<<(val+1);
 				map[m].flag.restricted=1;
 				break;
-			case MF_NOCOMMAND:			map[m].nocommand = (!val || atoi(val) <= 0) ? 100 : atoi(val); break;
+			case MF_NOCOMMAND:			map[m].nocommand = (val <= 0) ? 100 : val; break;
 			case MF_NODROP:				map[m].flag.nodrop = 1; break;
-			case MF_JEXP:				map[m].jexp = (!val || atoi(val) < 0) ? 100 : atoi(val); break;
-			case MF_BEXP:				map[m].bexp = (!val || atoi(val) < 0) ? 100 : atoi(val); break;
+			case MF_JEXP:				map[m].jexp = (val <= 0) ? 100 : val; break;
+			case MF_BEXP:				map[m].bexp = (val <= 0) ? 100 : val; break;
 			case MF_NOVENDING:			map[m].flag.novending = 1; break;
 			case MF_LOADEVENT:			map[m].flag.loadevent = 1; break;
 			case MF_NOCHAT:				map[m].flag.nochat = 1; break;
@@ -10801,7 +10801,7 @@ BUILDIN_FUNC(setmapflag)
 			case MF_ALLOWKS:			map[m].flag.allowks = 1; break;
 			case MF_MONSTER_NOTELEPORT:	map[m].flag.monster_noteleport = 1; break;
 			case MF_PVP_NOCALCRANK:		map[m].flag.pvp_nocalcrank = 1; break;
-			case MF_BATTLEGROUND:		map[m].flag.battleground = (!val || atoi(val) < 0 || atoi(val) > 2) ? 1 : atoi(val); break;
+			case MF_BATTLEGROUND:		map[m].flag.battleground = (val <= 0 || val > 2) ? 1 : val; break;
 			case MF_RESET:				map[m].flag.reset = 1; break;
 		}
 	}
@@ -10813,12 +10813,12 @@ BUILDIN_FUNC(removemapflag)
 {
 	int m,i;
 	const char *str;
-	const char *val=NULL;
+	int val=0;
 
 	str=script_getstr(st,2);
 	i=script_getnum(st,3);
 	if(script_hasdata(st,4)){
-		val=script_getstr(st,4);
+		val=script_getnum(st,4);
 	}
 	m = map_mapname2mapid(str);
 	if(m >= 0) {
@@ -10868,7 +10868,7 @@ BUILDIN_FUNC(removemapflag)
 			case MF_NOWARPTO:			map[m].flag.nowarpto = 0; break;
 			case MF_NIGHTMAREDROP:		map[m].flag.pvp_nightmaredrop = 0; break;
 			case MF_RESTRICTED:
-				map[m].zone ^= 1<<((int)atoi(val)+1);
+				map[m].zone ^= 1<<(val+1);
 				if (map[m].zone == 0){
 					map[m].flag.restricted=0;
 				}
@@ -16942,7 +16942,7 @@ BUILDIN_FUNC(getcharip)
 		/* initiliaze */
 		const char *ip_addr = NULL;
 		uint32 ip;
-		
+
 		/* set ip, ip_addr and convert to ip and push str */
 		ip = session[sd->fd]->client_addr;
 		ip_addr = ip2str(ip, NULL);
