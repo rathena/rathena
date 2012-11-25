@@ -1821,7 +1821,7 @@ int skill_block_check(struct block_list *bl, enum sc_type type, int skillid);
 /**
  * Guilottine Cross
  **/
-#define MAX_SKILL_MAGICMUSHROOM_DB 22
+#define MAX_SKILL_MAGICMUSHROOM_DB 23
 struct s_skill_magicmushroom_db {
 	int skillid;
 };

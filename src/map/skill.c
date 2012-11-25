@@ -15998,7 +15998,7 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 			    {
 				int A = 100 * (51 + 2 * pc_checkskill(sd, skill_id));
 				int B = 100 * status->dex / 30 + 10 * (status->luk + sd->status.job_level);
-				int C = cap_value(sd->itemid,0,10000); //itemid depend on used rune ()
+				int C = 100 * cap_value(sd->itemid,0,100); //itemid depend on makerune()
 				int D = 0;
 				switch (nameid) { //rune rank it_diff 9 craftable rune
 				    case ITEMID_BERKANA:

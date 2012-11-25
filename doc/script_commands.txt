@@ -4494,9 +4494,21 @@ Valid dish levels are:
 19 - Level 9 Dish
 20 - Level 10 Dish
 
-Altough it's required to set a dish level, it doesn't matter if you set it to 1
+Although it's required to set a dish level, it doesn't matter if you set it to 1
 and you want to cook a level 10 dish, as long as you got the required incredients
 to cook the dish the command works.
+
+---------------------------------------
+
+*makerune <% success bonus>;
+
+This command will open a rune crafting window on the client connected to the
+invoking character. Since this command is officially used in rune ores, a bonus
+success rate must be specified (which adds to the base formula).
+
+You can see the full list of runes that can be produced in 'db/produce_db.txt'.
+The window will not be empty only if the invoking character can actually produce
+the items of that type and has the appropriate raw materials in their inventory.
 
 ---------------------------------------
 

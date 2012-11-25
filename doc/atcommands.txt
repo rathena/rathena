@@ -281,7 +281,7 @@ prontera (x= 165, y= 198) 01 00 00 00 00
 | 2. Database Commands |
 ========================
 
-@monsterinfo <mob name/ID>
+@mobinfo <mob name/ID>
 
 Displays monster information (rates, stats, drops, MVP data).
 
@@ -505,6 +505,25 @@ If @jail was used, the chat window will display "You have been jailed indefinite
 
 ---------------------------------------
 
+@accinfo <player name/account id>
+
+Searches for an account by ID or a character name, and outputs detailed information.
+To search partial names, "%" can be used as a wildcard.
+
+Example:
+@accinfo Test%
+
+Output:
+-- Account 2000001 --
+User: user123 | GM Group: 0 | State: 0
+Password: password123
+Account e-mail: a@a.com
+Last IP: 127.0.0.1 (Unknown)
+This user has logged 27 times, the last time were at 2012-11-24 17:29:07
+-- Character Details --
+[Slot/CID: 0/150001] Test1 | High Swordsman | Level: 99/50 | Off
+[Slot/CID: 1/150002] Test2 | Rune Knight | Level: 150/50 | On
+
 ======================
 | 4. Action Commands |
 ======================
@@ -705,7 +724,7 @@ If no coordinates are entered, a random location will be chosen.
 
 ---------------------------------------
 
-@goto <player name/ID>
+@jumpto <player name/ID>
 @follow <player name>
 
 Warps to the specified player.
@@ -791,7 +810,7 @@ Resets a Star Gladiator's marked maps.
 
 ---------------------------------------
 
-@job <job name/ID>
+@jobchange <job name/ID>
 
 Changes your job.
 If no job is given, a list of all available jobs will be returned.
@@ -914,7 +933,7 @@ Additionally, @disguiseall/@undisguiseall will disguise all online players.
 
 ---------------------------------------
 
-@battleignore
+@monsterignore
 
 Makes you immune to attacks (monsters/players/skills cannot target/hit you).
 
@@ -1228,7 +1247,7 @@ You must be the guildmaster to use this command.
 
 ---------------------------------------
 
-@gstorage
+@guildstorage
 
 Opens your guild storage.
 
@@ -1319,7 +1338,7 @@ Creates the specified homunculus.
 
 ---------------------------------------
 
-@homevolve
+@homevolution
 
 Evolves your homunculus, if possible.
 
@@ -1362,7 +1381,7 @@ Command what the player's homunculus will say.
 
 ---------------------------------------
 
-@hlvl <+/- amount>
+@homlevel <+/- amount>
 
 Changes homunculus level by the specified amount.
 

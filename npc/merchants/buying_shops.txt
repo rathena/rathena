@@ -1,105 +1,102 @@
 //===== rAthena Script =======================================
-//= Buying Shop Licenses
+//= Buying Shop Scripts
 //===== By: ==================================================
-//= Kisuka
+//= Kisuka, skyiing, Scriptor
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= Buying Shop Licenses
+//= Buying Shop licenses and catalogs.
 //===== Additional Comments: =================================
 //= 1.0 First version. [Kisuka]
+//= 1.1 Added Catalog Magician. [Euphy]
 //============================================================ 
 
 // Black Marketeer (Buy Licenses - Non-Merchant Classes)
 //============================================================ 
 que_job01,68,84,1	script	Black Marketeer#Buying	881,{
-	if(getskilllv("ALL_BUYING_STORE") == 1) {
+	if (getskilllv("ALL_BUYING_STORE") == 1) {
 		mes "[Mr. Jass]";
 		mes "Hey, you already made a contract with Hugh.";
 		mes "I don't have any business with you.";
 		close;
-	}else{
+	}
+	mes "[Mr. Jass]";
+	mes "You must need something badly to come to find me.";
+	mes "What do you want?";
+	next;
+	switch(select("Bulk Buyer Shop License:Who are you?:Nothing, nothing!")) {
+	case 1:
 		mes "[Mr. Jass]";
-		mes "You must need something badly to come to find me.";
-		mes "What do you want?";
+		mes "I knew it!";
+		mes "Sure, I can make it for you.";
+		mes "Mine looks just like the authentic one that Merchants get from that bastard Mr. Hugh!";
 		next;
-		switch(select("Bulk Buyer Shop License:Who are you?:Nothing, nothing!")) {
-		case 1:
+		mes "[Mr. Jass]";
+		mes "And my license is better 'cuz you don't need ta' learn any skills.";
+		mes "How many do you want?";
+		next;
+		mes "[Mr. Jass]";
+		mes "Just so you know, I can only make them in small quantities, up to 10 at a time.";
+		mes "It'll cost 500 zeny for each one.";
+		next;
+		while(1) {
+			input .@input;
 			mes "[Mr. Jass]";
-			mes "I knew it!";
-			mes "Sure, I can make it for you.";
-			mes "Mine looks just like the authentic one that Merchants get from that bastard Mr. Hugh!";
-			next;
-			mes "[Mr. Jass]";
-			mes "And my license is better 'cuz you don't need ta' learn any skills.";
-			mes "How many do you want?";
-			next;
-			mes "[Mr. Jass]";
-			mes "Just so you know, I can only make them in small quantities, up to 10 at a time.";
-			mes "It'll cost 500 zeny for each one.";
-			next;
-			while(1) {
-				input .@input;
-				mes "[Mr. Jass]";
-				if(.@input == 0) {
-					mes "Don't you need those licenses?";
-					close;
-				}
-				else if(.@input > 10) {
-					mes "I can only make up to 10 at a time, you know.";
+			if (.@input == 0) {
+				mes "Don't you need those licenses?";
+				close;
+			} else if (.@input > 10) {
+				mes "I can only make up to 10 at a time, you know.";
+				next;
+			} else {
+				mes "It'll cost "+(.@input*500)+" zeny.";
+				if (Zeny < (.@input*500)) {
+					mes "but you don't have enough money.";
 					next;
+					mes "[Mr. Jass]";
+					mes "Don't you know the basics of business? Everything has a price.";
+					mes "If you want something, you gotta pay for it.";
+				} else {
+					mes "Ha... Ha ha ha!";
+					mes "Mr. Hugh, I'll take over your license business. You'll see!";
+					mes "*Giggle Giggle*";
+					getitem 12548,.@input; //Shabby_Purchase_Street
+					set Zeny,Zeny-(.@input*500);
 				}
-				else {
-					mes "It'll cost "+(.@input*500)+" zeny.";
-					if(Zeny < (.@input*500)) {
-						mes "but you don't have enough money.";
-						next;
-						mes "[Mr. Jass]";
-						mes "Don't you know the basics of business? Everything has a price.";
-						mes "If you want something, you gotta pay for it.";
-					}else{
-						mes "Ha... Ha ha ha!";
-						mes "Mr. Hugh, I'll take over your license business. You'll see!";
-						mes "*Giggle Giggle*";
-						getitem 12548,.@input;	// Shabby_Purchase_Street
-						set Zeny,Zeny-(.@input*500);
-					}
-					close;
-				}
+				close;
 			}
-
-		case 2:
-			mes "[Mr. Jass]";
-			mes "I left my hometown a long time ago.";
-			mes "It's meaningless to ask who I am because all I've got left now is my hatred.";
-			next;
-			mes "[Mr. Jass]";
-			mes "...";
-			mes "Hugh is a corrupt merchant with no sense of business ethics.";
-			mes "My sole purpose in life is to destroy Hugh.";
-			next;
-			mes "[Mr. Jass]";
-			mes "Aw, I drank too much... (*Hic*)";
-			mes "That's just the alohol talking.";
-			mes "Please forget anything I said.";
-			close;
-		case 3:
-			mes "[Mr. Jass]";
-			mes "Alright, alright! You don't have to yell.";
-			mes "Just leave me alone if you've got no business with me.";
-			close;
 		}
+	case 2:
+		mes "[Mr. Jass]";
+		mes "I left my hometown a long time ago.";
+		mes "It's meaningless to ask who I am because all I've got left now is my hatred.";
+		next;
+		mes "[Mr. Jass]";
+		mes "...";
+		mes "Hugh is a corrupt merchant with no sense of business ethics.";
+		mes "My sole purpose in life is to destroy Hugh.";
+		next;
+		mes "[Mr. Jass]";
+		mes "Aw, I drank too much... (*Hic*)";
+		mes "That's just the alohol talking.";
+		mes "Please forget anything I said.";
+		close;
+	case 3:
+		mes "[Mr. Jass]";
+		mes "Alright, alright! You don't have to yell.";
+		mes "Just leave me alone if you've got no business with me.";
+		close;
 	}
 }
 
 // Purchasing Team (Learn Skill - Merchant Classes)
 //============================================================ 
 alberta_in,58,52,4	script	Purchasing Team#Buying	59,{
-	if(BaseClass == Job_Merchant && getskilllv("MC_VENDING") >= 1) {
-		if(getskilllv("ALL_BUYING_STORE") == 1) {
-			mes "[Mr. Hugh]";
+	mes "[Mr. Hugh]";
+	if (BaseClass == Job_Merchant && getskilllv("MC_VENDING") >= 1) {
+		if (getskilllv("ALL_BUYING_STORE") == 1) {
 			mes "I'm Hugh from the Purchasing Team.";
 			mes "How may I help you today?";
 			next;
@@ -116,29 +113,26 @@ alberta_in,58,52,4	script	Purchasing Team#Buying	59,{
 			while(1) {
 				input .@input;
 				mes "[Mr. Hugh]";
-				if(.@input == 0) {
+				if (.@input == 0) {
 					mes "You have cancelled the trade.";
 					mes "Have a good day.";
 					close;
-				}
-				if(.@input > 50) {
+				} else if (.@input > 50) {
 					mes "Please enter a value of 50 or less.";
 					next;
-				}
-				else{
+				} else {
 					mes "It'll cost "+(.@input*200)+" zeny for "+.@input+" licenses.";
-					if(Zeny < (.@input*200)) {
+					if (Zeny < (.@input*200)) {
 						mes "but you don't seem to have enough money.";
-					}else{
+					} else {
 						mes "Thank you for your patronage.";
-						getitem 6377,.@input;	// Buy_Stall_Permit
+						getitem 6377,.@input; //Buy_Stall_Permit
 						set Zeny,Zeny-(.@input*200);
 					}
 					close;
 				}
 			}
-		}else{
-			mes "[Mr. Hugh]";
+		} else {
 			mes "I'm Hugh from the Purchasing Team at the Alberta Merchant Guild.";
 			mes "You're...";
 			next;
@@ -204,11 +198,11 @@ alberta_in,58,52,4	script	Purchasing Team#Buying	59,{
 				close;
 			}
 			mes "[Mr. Hugh]";
-			if(Zeny < 10000) {
+			if (Zeny < 10000) {
 				mes "The registration fee is 10,000 zeny.";
 				mes "Please have the fee ready first.";
 				close;
-			}else{
+			} else {
 				mes "You've made a good decision.";
 				mes "Please give me the registration fee, and sign right here....";
 				next;
@@ -218,7 +212,7 @@ alberta_in,58,52,4	script	Purchasing Team#Buying	59,{
 				mes "I like your handwriting.";
 				mes "Okay, you're now approved to open the Bulk Buyer Shop.";
 				set Zeny,Zeny-10000;
-				getitem 6377,5;	// Buy_Stall_Permit
+				getitem 6377,5; //Buy_Stall_Permit
 				skill "ALL_BUYING_STORE",1,0;
 				next;
 				mes "[Mr. Hugh]";
@@ -236,13 +230,106 @@ alberta_in,58,52,4	script	Purchasing Team#Buying	59,{
 				close;
 			}
 		}
-	}else{
-		mes "[Mr. Hugh]";
-		mes "I'm Hugh from the Purchasing Team at the Alberta Merchant Guild.";
-		mes "I'd love to chat, but I'm too busy at the moment.";
+	}
+	mes "I'm Hugh from the Purchasing Team at the Alberta Merchant Guild.";
+	mes "I'd love to chat, but I'm too busy at the moment.";
+	next;
+	mes "[Mr. Hugh]";
+	mes "My time is solely dedicated to our customers in the Merchant industry.";
+	close;
+}
+
+// Catalog Magician
+//============================================================ 
+moc_para01,22,16,5	script	Catalog Magician#catal01	704,{
+	if (!checkweight(1201,2)) {
+		mes "- You have too many items. Please make space. -";
+		close;
+	}
+	set .@ticket_cost, 200;
+	mes "[Catalog Magician]";
+	mes "Look... the Magic Academy";
+	mes "in Geffen is now directly";
+	mes "selling the brand new";
+	mes "^007777Universal Catalog Silver^000000!";
+	next;
+	mes "He is looking at the words";
+	mes "written on his hand.";
+	mes "Seems like he's too busy";
+	mes "to look at you.";
+	next;
+	mes "[Catalog Magician]";
+	mes "A brand new catalog";
+	mes "has just come out!";
+	mes "You can check what";
+	mes "items can be traded";
+	mes "and what items are on";
+	mes "sale from the vendor.";
+	next;
+	mes "[Catalog Magician]";
+	mes "^007777Universal Catalog Silver^000000~";
+	mes "It costs only 200z each!";
+	mes "You can buy it up to 50";
+	mes "pieces at once!";
+	next;
+	switch(select("Buy ^007777Universal Catalog Silver^000000:I don't need it!:You don't look like a vendor...")) {
+	case 1:
+		mes "[Catalog Magician]";
+		mes "You... want all 50 pieces?";
+		mes "Or how many do you need?";
 		next;
-		mes "[Mr. Hugh]";
-		mes "My time is solely dedicated to our customers in the Merchant industry.";
+		while (1) {
+			input .@input;
+			mes "[Catalog Magician]";
+			if (.@input == 0) {
+				mes "Trade has been stopped!";
+				mes "I don't know what to do next...";
+				mes "What should I do?";
+				emotion e_swt2,1;
+				close;
+			} else if (.@input < 1 || .@input > 50) {
+				mes "It should be less than 50 pieces.";
+				next;
+			} else break;
+		}
+		set .@sell, .@ticket_cost * .@input;
+		mes "Total number of catalog(s) that";
+		mes "you're trying to purchase is";
+		mes .@input + " pieces and it costs " + .@sell + " z.";
+		if (Zeny < .@sell) {
+			mes "It seems you don't have enough money.";
+			mes "You can sell your equips";
+			mes "to make more money... if you want.";
+			close;
+		}
+		mes "Okie, here you go.";
+		set Zeny, Zeny - .@sell;
+		getitem 12580,.@input; //Vending_Search_Scroll
+		close;
+	case 2:
+		mes "[Catalog Magician]";
+		mes "Argh... you really need this";
+		mes "item... Do you want me to";
+		mes "explain again? I don't know";
+		mes "what to do next...";
+		mes "What should I do?";
+		emotion e_swt2,1;
+		close;
+	case 3:
+		mes "[Catalog Magician]";
+		mes "My real job is a magician.";
+		mes "I was going to ask the merchant";
+		mes "guild to sell them, but they were";
+		mes "trying use them as an appendix";
+		mes "into broom sales. That's why";
+		mes "I'm selling these by myself.";
+		next;
+		mes "[Catalog Magician]";
+		mes "There are many adventurers";
+		mes "here coming and going. I'm";
+		mes "pretty sure that I can sell them";
+		mes "all soon. Don't you think so?";
+		mes "So... let's start!! Buy more of them, please! PLEASE...!";
 		close;
 	}
 }

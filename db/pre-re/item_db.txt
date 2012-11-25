@@ -5161,11 +5161,11 @@
 12733,Runstone_Hagalas,Hagalaz Rune,11,100,,100,,,,,0xFFFFFFFF,8,2,,,,,,{ itemskill "RK_STONEHARDSKIN",1; },{},{}
 
 // Rune Knight Rune Ores
-12734,Runstone_Quality,Luxurious Rune,0,2,,100,,,,,0x00000080,8,2,,,,,,{ makerune 1; },{},{}
-12735,Runstone_Ancient,Ancient Rune,0,2,,100,,,,,0x00000080,8,2,,,,,,{ makerune 2; },{},{}
-12736,Runstone_Mystic,Mystic Rune,0,2,,100,,,,,0x00000080,8,2,,,,,,{ makerune 3; },{},{}
-12737,Runstone_Ordinary,General Rune,0,2,,100,,,,,0x00000080,8,2,,,,,,{ makerune 4; },{},{}
-12738,Runstone_Rare,Rare Rune,0,2,,100,,,,,0x00000080,8,2,,,,,,{ makerune 5; },{},{}
+12734,Runstone_Quality,Luxurious Rune,0,2,,100,,,,,0x00000080,8,2,,,,,,{ makerune 5; },{},{}
+12735,Runstone_Ancient,Ancient Rune,0,2,,100,,,,,0x00000080,8,2,,,,,,{ makerune 11; },{},{}
+12736,Runstone_Mystic,Mystic Rune,0,2,,100,,,,,0x00000080,8,2,,,,,,{ makerune 14; },{},{}
+12737,Runstone_Ordinary,General Rune,0,2,,100,,,,,0x00000080,8,2,,,,,,{ makerune 2; },{},{}
+12738,Runstone_Rare,Rare Rune,0,2,,100,,,,,0x00000080,8,2,,,,,,{ makerune 8; },{},{}
 
 12739,Snow_Flower,Snow Flowers,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12740,Inc_Str_Scroll,Amplification Scroll,2,1,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
