@@ -15995,8 +15995,35 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 			 * Rune Knight
 			 **/
 			case RK_RUNEMASTERY:
-				make_per = 5 * (sd->itemid + pc_checkskill(sd,skill_id)) * 100;
+			    {
+				int A = 100 * (51 + 2 * pc_checkskill(sd, skill_id));
+				int B = 100 * status->dex / 30 + 10 * (status->luk + sd->status.job_level);
+				int C = cap_value(sd->itemid,0,10000); //itemid depend on used rune ()
+				int D = 0;
+				switch (nameid) { //rune rank it_diff 9 craftable rune
+				    case ITEMID_BERKANA:
+					D = -2000;
+					break; //Rank S
+				    case ITEMID_NAUTHIZ:
+				    case ITEMID_URUZ:
+					D = -1500;
+					break; //Rank A
+				    case ITEMID_ISA:
+				    case ITEMID_WYRD:
+					D = -1000;
+					break; //Rank B
+				    case ITEMID_RAIDO:
+				    case ITEMID_THURISAZ:
+				    case ITEMID_HAGALAZ:
+				    case ITEMID_OTHILA:
+					D = -500;
+					break; //Rank C
+				    default: D = -1500;
+					break; //not specified =-15%
+				}
+				make_per = A + B + C + D;
 				break;
+			    }
 			/**
 			 * Guilotine Cross
 			 **/
