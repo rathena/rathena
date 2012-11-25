@@ -5,7 +5,7 @@
 case $1 in
     'script')
 	#find which script commands are missing from doc/script_commands.txt
-	echo "Missing scipt documentation for function :"
+	echo "Missing script documentation for function :"
 	awk '/BUILDIN_DEF\(.*\),/ {b=match($0,"BUILDIN_DEF(.*),");c=match($0,",");print substr($0,b+12,c-b-12);}' ../src/map/script.c | xargs -I{} sh -c '! grep -Lq {} ../doc/script_commands.txt && echo {}'
 	awk '/BUILDIN_DEF2\(.*\),/ {b=match($0,"BUILDIN_DEF2(.*),");c=match($0,",");d=match($0 ,"\",\"");print substr($0,c+2,d-c-2);}' ../src/map/script.c | xargs -I{} sh -c '! grep -Lq {} ../doc/script_commands.txt && echo {}'
 	;;

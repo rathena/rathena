@@ -13,7 +13,7 @@ ID: Item id
 AegisName: Server name to reference the item in scripts and lookups,
            should use no spaces.
 
-Name: Name in english for displaying as output for @ and script commands.
+Name: Name in English for displaying as output for @ and script commands.
 
 Type: 
 	0	Healing item.

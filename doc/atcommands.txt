@@ -64,7 +64,7 @@ Server Uptime: 3 days, 8 hours, 6 minutes, 4 seconds.
 
 @refresh
 
-Syncronizes the player's position on the client with the one stored on the server.
+Synchronizes the player's position on the client with the one stored on the server.
 
 ---------------------------------------
 
@@ -665,7 +665,7 @@ Drops all inventory and equipped items onto the floor.
 
 @storeall
 
-Places all inventory and equpiped items directly into your Kafra Storage.
+Places all inventory and equipped items directly into your Kafra Storage.
 
 ---------------------------------------
 
@@ -728,7 +728,7 @@ If no coordinates are entered, a random location will be chosen.
 @follow <player name>
 
 Warps to the specified player.
-Aditionally, @follow will track the player's movements until turned off.
+Additionally, @follow will track the player's movements until turned off.
 
 ---------------------------------------
 
@@ -916,7 +916,7 @@ Fully heals HP and SP.
 @raisemap
 @raise
 
-Ressurection commands.
+Resurrection commands.
 @alive will revive the attached player.
 @raisemap will revive all players on the map.
 @raise will revive all players on the server.
@@ -1019,11 +1019,13 @@ Except for /nb and /nlb, the message will be prefixed with the name of the attac
 @kami <message>
 @kamib <message>
 @kamic <color> <message>
+@lkami <message>
 
 Announces a message without a name prefix.
 @kami will broadcast in yellow text.
 @kamib will broadcast in blue text.
 @kamic will broadcast in the specified color (a hexadecimal value).
+@lkami will broadcast on the attached character's current map.
 
 Example:
 @kamic FF0000 This message is in red.
@@ -1332,7 +1334,7 @@ Sets the hunger level of your pet, with 100 being "Stuffed".
 | 9. Homunculus Commands |
 ==========================
 
-@makehomun <homunculus ID>
+@makehomun <Homunculus ID>
 
 Creates the specified homunculus.
 

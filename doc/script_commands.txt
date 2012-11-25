@@ -154,7 +154,7 @@ Monster name is the name the monsters will have on screen, and has no relation
 whatsoever to their names anywhere else. It's the mob id that counts, which 
 identifies monster record in 'mob_db.txt' database of monsters. If the mob name 
 is given as "--ja--", the 'japanese name' field from the monster database is 
-used, (which, in rAthena, actually contains an english name) if it's "--en--", 
+used, (which, in rAthena, actually contains an English name) if it's "--en--", 
 it's the 'english name' from the monster database (which contains an uppercase 
 name used to summon the monster with a GM command).
 
@@ -163,7 +163,7 @@ executed, it is affected by spawn rates in 'battle_athena.conf'.
 
 Delay1 and delay2 control monster respawn delays - the first one is the fixed
 base respawn time, and the second is random variance on top of the base time.
-Both values are given in miliseconds (1000 = 1 second).
+Both values are given in milliseconds (1000 = 1 second).
 Note that the server also enforces a minimum respawn delay of 5 seconds.
 
 You can specify a custom level to use for the mob different from the one of
@@ -361,7 +361,7 @@ through mobspawn (mob control commands) or the account ID of a character.
 Another way would be to right click on a mob, 
 NPC or char as GM sprited char to view the GID.
 
-This is mostly used for the new version of skill and the mob control commmands
+This is mostly used for the new version of skill and the mob control commands
 implemented (but NEVER documented by Lance. Shame on you...).
 
 Item and pet scripts
@@ -375,7 +375,7 @@ are executed once again to rebuild them. This also happens in several other
 situations (like upon login) but the full list is currently unknown.
 
 OnEquip_Script is a piece of script code run whenever the item is used by a character 
-by doubleclicking on it. OnUnequip_Script runs whenever the
+by double-clicking on it. OnUnequip_Script runs whenever the
 equipment is unequip by a character
 
 Not all script commands work properly in the item scripts. Where commands and 
@@ -1020,7 +1020,7 @@ that color:
     mes "This is ^FF0000 red ^000000 and this is ^00FF00 green, ^000000 so.";
     
 Notice that the text coloring is handled purely by the client. If you use non-
-english characters, the color codes might get screwed if they stick to letters 
+English characters, the color codes might get screwed if they stick to letters 
 with no intervening space. Separating them with spaces from the letters on 
 either side solves the problem.
 
@@ -1491,7 +1491,7 @@ Note:
 
  !! A user-defined function must be declared /before/ a script attempts to
  !! call it. That is to say, any functions should be placed above scripts or NPCs
- !! (or loaded in a seperate file first) before attempting to call them directly.
+ !! (or loaded in a separate file first) before attempting to call them directly.
 
 ---------------------------------------
 
@@ -1988,7 +1988,7 @@ Example:
 	for ( set .@i,0; .@i<.@bigloop; set .@i, .@i+1 ) {
 		dothis;
 		// will sleep the script for 1ms when detect an infinity loop to 
-		// let rathena do what it need to do (socket, timer, process, etc.)
+		// let rAthena do what it need to do (socket, timer, process, etc.)
 	}
 
 	freeloop(0); // disable
@@ -2509,7 +2509,7 @@ See 'getequipid' for a full list of valid equipment slots.
 *getitemname(<item id>)
 
 Given the database ID number of an item, this function will return the text 
-stored in the 'japanese name' field (which, in rAthena, stores an english name 
+stored in the 'japanese name' field (which, in rAthena, stores an English name 
 the players would normally see on screen.)
 
 ---------------------------------------
@@ -2634,7 +2634,7 @@ random change of a refine succeeding or failing and then going through with it
 (which is what the official NPC refinery scripts use it for)
 
 // This will find a random number from 0 - 99 and if that is equal to or more 
-// than the value recoverd by this command it will go to L_Fail
+// than the value recovered by this command it will go to L_Fail
     if (getequippercentrefinery(EQI_HAND_L)<=rand(100)) goto L_Fail;
 
 ---------------------------------------
@@ -4644,7 +4644,7 @@ a maximum of 5 slots by default.
 
 Example:
 
-	// Gives the player oppurtunity to buy 4 different kinds of items.
+	// Gives the player opportunity to buy 4 different kinds of items.
 	buyingstore 4;
 
 ---------------------------------------
@@ -5384,7 +5384,7 @@ invoking character. Monster name and mob id obey the same rules as the one given
 at the beginning of this document for permanent monster spawns with the
 exceptions mentioned when describing 'monster' command.
 
-The effect for the skill 'Call Homonuculus' will be displayed centered on the
+The effect for the skill 'Call Homunculus' will be displayed centered on the
 invoking character.
 
 Timeout is the time in milliseconds the summon lives, and is set default 
@@ -5734,7 +5734,7 @@ Example 3:
 
     mes "[Man]";
     mes "I have been waiting "+(getnpctimer(0)/1000)+" seconds for you.";
-    // We divide the timer returned by 1000 to convert milleseconds to seconds.
+    // We divide the timer returned by 1000 to convert milliseconds to seconds.
     close;
 
 Example 4:
