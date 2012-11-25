@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef	_TRADE_H_
-#define	_TRADE_H_
+#ifndef _TRADE_H_
+#define _TRADE_H_
 
 //#include "map.h"
 struct map_session_data;

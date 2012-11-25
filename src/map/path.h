@@ -9,14 +9,14 @@
 #define MAX_WALKPATH 32
 
 struct walkpath_data {
-	unsigned char path_len,path_pos;
-	unsigned char path[MAX_WALKPATH];
+    unsigned char path_len,path_pos;
+    unsigned char path[MAX_WALKPATH];
 };
 
 struct shootpath_data {
-	int rx,ry,len;
-	int x[MAX_WALKPATH];
-	int y[MAX_WALKPATH];
+    int rx,ry,len;
+    int x[MAX_WALKPATH];
+    int y[MAX_WALKPATH];
 };
 
 // calculates destination cell for knockback

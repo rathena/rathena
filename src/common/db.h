@@ -69,15 +69,15 @@
  * @see #db_custom_release(DBRelease)
  */
 typedef enum DBRelease {
-	DB_RELEASE_NOTHING = 0,
-	DB_RELEASE_KEY     = 1,
-	DB_RELEASE_DATA    = 2,
-	DB_RELEASE_BOTH    = 3
+    DB_RELEASE_NOTHING = 0,
+    DB_RELEASE_KEY     = 1,
+    DB_RELEASE_DATA    = 2,
+    DB_RELEASE_BOTH    = 3
 } DBRelease;
 
 /**
  * Supported types of database.
- * See {@link #db_fix_options(DBType,DBOptions)} for restrictions of the 
+ * See {@link #db_fix_options(DBType,DBOptions)} for restrictions of the
  * types of databases.
  * @param DB_INT Uses int's for keys
  * @param DB_UINT Uses unsigned int's for keys
@@ -93,22 +93,22 @@ typedef enum DBRelease {
  * @see #db_alloc(const char *,int,DBType,DBOptions,unsigned short)
  */
 typedef enum DBType {
-	DB_INT,
-	DB_UINT,
-	DB_STRING,
-	DB_ISTRING
+    DB_INT,
+    DB_UINT,
+    DB_STRING,
+    DB_ISTRING
 } DBType;
 
 /**
  * Bitfield of options that define the behaviour of the database.
- * See {@link #db_fix_options(DBType,DBOptions)} for restrictions of the 
+ * See {@link #db_fix_options(DBType,DBOptions)} for restrictions of the
  * types of databases.
  * @param DB_OPT_BASE Base options: does not duplicate keys, releases nothing
  *          and does not allow NULL keys or NULL data.
- * @param DB_OPT_DUP_KEY Duplicates the keys internally. If DB_OPT_RELEASE_KEY 
+ * @param DB_OPT_DUP_KEY Duplicates the keys internally. If DB_OPT_RELEASE_KEY
  *          is defined, the real key is freed as soon as the entry is added.
  * @param DB_OPT_RELEASE_KEY Releases the key.
- * @param DB_OPT_RELEASE_DATA Releases the data whenever an entry is removed 
+ * @param DB_OPT_RELEASE_DATA Releases the data whenever an entry is removed
  *          from the database.
  *          WARNING: for funtions that return the data (like DBMap::remove),
  *          a dangling pointer will be returned.
@@ -121,13 +121,13 @@ typedef enum DBType {
  * @see #db_alloc(const char *,int,DBType,DBOptions,unsigned short)
  */
 typedef enum DBOptions {
-	DB_OPT_BASE            = 0,
-	DB_OPT_DUP_KEY         = 1,
-	DB_OPT_RELEASE_KEY     = 2,
-	DB_OPT_RELEASE_DATA    = 4,
-	DB_OPT_RELEASE_BOTH    = 6,
-	DB_OPT_ALLOW_NULL_KEY  = 8,
-	DB_OPT_ALLOW_NULL_DATA = 16,
+    DB_OPT_BASE            = 0,
+    DB_OPT_DUP_KEY         = 1,
+    DB_OPT_RELEASE_KEY     = 2,
+    DB_OPT_RELEASE_DATA    = 4,
+    DB_OPT_RELEASE_BOTH    = 6,
+    DB_OPT_ALLOW_NULL_KEY  = 8,
+    DB_OPT_ALLOW_NULL_DATA = 16,
 } DBOptions;
 
 /**
@@ -142,9 +142,9 @@ typedef enum DBOptions {
  * @see DBMap#remove
  */
 typedef union DBKey {
-	int i;
-	unsigned int ui;
-	const char *str;
+    int i;
+    unsigned int ui;
+    const char *str;
 } DBKey;
 
 /**
@@ -156,9 +156,9 @@ typedef union DBKey {
  * @see #DBData
  */
 typedef enum DBDataType {
-	DB_DATA_INT,
-	DB_DATA_UINT,
-	DB_DATA_PTR
+    DB_DATA_INT,
+    DB_DATA_UINT,
+    DB_DATA_PTR
 } DBDataType;
 
 /**
@@ -171,16 +171,16 @@ typedef enum DBDataType {
  * @public
  */
 typedef struct DBData {
-	DBDataType type;
-	union {
-		int i;
-		unsigned int ui;
-		void *ptr;
-	} u;
+    DBDataType type;
+    union {
+        int i;
+        unsigned int ui;
+        void *ptr;
+    } u;
 } DBData;
 
 /**
- * Format of functions that create the data for the key when the entry doesn't 
+ * Format of functions that create the data for the key when the entry doesn't
  * exist in the database yet.
  * @param key Key of the database entry
  * @param args Extra arguments of the function
@@ -189,12 +189,12 @@ typedef struct DBData {
  * @see DBMap#vensure
  * @see DBMap#ensure
  */
-typedef DBData (*DBCreateData)(DBKey key, va_list args);
+typedef DBData(*DBCreateData)(DBKey key, va_list args);
 
 /**
- * Format of functions to be applied to an unspecified quantity of entries of 
+ * Format of functions to be applied to an unspecified quantity of entries of
  * a database.
- * Any function that applies this function to the database will return the sum 
+ * Any function that applies this function to the database will return the sum
  * of values returned by this function.
  * @param key Key of the database entry
  * @param data Data of the database entry
@@ -272,87 +272,86 @@ typedef struct DBMap DBMap;
  * Database iterator.
  * Supports forward iteration, backward iteration and removing entries from the database.
  * The iterator is initially positioned before the first entry of the database.
- * While the iterator exists the database is locked internally, so invoke 
+ * While the iterator exists the database is locked internally, so invoke
  * {@link DBIterator#destroy} as soon as possible.
  * @public
  * @see #DBMap
  */
-struct DBIterator
-{
+struct DBIterator {
 
-	/**
-	 * Fetches the first entry in the database.
-	 * Returns the data of the entry.
-	 * Puts the key in out_key, if out_key is not NULL.
-	 * @param self Iterator
-	 * @param out_key Key of the entry
-	 * @return Data of the entry
-	 * @protected
-	 */
-	DBData* (*first)(DBIterator* self, DBKey* out_key);
+    /**
+     * Fetches the first entry in the database.
+     * Returns the data of the entry.
+     * Puts the key in out_key, if out_key is not NULL.
+     * @param self Iterator
+     * @param out_key Key of the entry
+     * @return Data of the entry
+     * @protected
+     */
+    DBData *(*first)(DBIterator *self, DBKey *out_key);
 
-	/**
-	 * Fetches the last entry in the database.
-	 * Returns the data of the entry.
-	 * Puts the key in out_key, if out_key is not NULL.
-	 * @param self Iterator
-	 * @param out_key Key of the entry
-	 * @return Data of the entry
-	 * @protected
-	 */
-	DBData* (*last)(DBIterator* self, DBKey* out_key);
+    /**
+     * Fetches the last entry in the database.
+     * Returns the data of the entry.
+     * Puts the key in out_key, if out_key is not NULL.
+     * @param self Iterator
+     * @param out_key Key of the entry
+     * @return Data of the entry
+     * @protected
+     */
+    DBData *(*last)(DBIterator *self, DBKey *out_key);
 
-	/**
-	 * Fetches the next entry in the database.
-	 * Returns the data of the entry.
-	 * Puts the key in out_key, if out_key is not NULL.
-	 * @param self Iterator
-	 * @param out_key Key of the entry
-	 * @return Data of the entry
-	 * @protected
-	 */
-	DBData* (*next)(DBIterator* self, DBKey* out_key);
+    /**
+     * Fetches the next entry in the database.
+     * Returns the data of the entry.
+     * Puts the key in out_key, if out_key is not NULL.
+     * @param self Iterator
+     * @param out_key Key of the entry
+     * @return Data of the entry
+     * @protected
+     */
+    DBData *(*next)(DBIterator *self, DBKey *out_key);
 
-	/**
-	 * Fetches the previous entry in the database.
-	 * Returns the data of the entry.
-	 * Puts the key in out_key, if out_key is not NULL.
-	 * @param self Iterator
-	 * @param out_key Key of the entry
-	 * @return Data of the entry
-	 * @protected
-	 */
-	DBData* (*prev)(DBIterator* self, DBKey* out_key);
+    /**
+     * Fetches the previous entry in the database.
+     * Returns the data of the entry.
+     * Puts the key in out_key, if out_key is not NULL.
+     * @param self Iterator
+     * @param out_key Key of the entry
+     * @return Data of the entry
+     * @protected
+     */
+    DBData *(*prev)(DBIterator *self, DBKey *out_key);
 
-	/**
-	 * Returns true if the fetched entry exists.
-	 * The databases entries might have NULL data, so use this to to test if 
-	 * the iterator is done.
-	 * @param self Iterator
-	 * @return true is the entry exists
-	 * @protected
-	 */
-	bool (*exists)(DBIterator* self);
+    /**
+     * Returns true if the fetched entry exists.
+     * The databases entries might have NULL data, so use this to to test if
+     * the iterator is done.
+     * @param self Iterator
+     * @return true is the entry exists
+     * @protected
+     */
+    bool (*exists)(DBIterator *self);
 
-	/**
-	 * Removes the current entry from the database.
-	 * NOTE: {@link DBIterator#exists} will return false until another entry 
-	 *       is fetched
-	 * Puts data of the removed entry in out_data, if out_data is not NULL.
-	 * @param self Iterator
-	 * @param out_data Data of the removed entry.
-	 * @return 1 if entry was removed, 0 otherwise
-	 * @protected
-	 * @see DBMap#remove
-	 */
-	int (*remove)(DBIterator* self, DBData *out_data);
+    /**
+     * Removes the current entry from the database.
+     * NOTE: {@link DBIterator#exists} will return false until another entry
+     *       is fetched
+     * Puts data of the removed entry in out_data, if out_data is not NULL.
+     * @param self Iterator
+     * @param out_data Data of the removed entry.
+     * @return 1 if entry was removed, 0 otherwise
+     * @protected
+     * @see DBMap#remove
+     */
+    int (*remove)(DBIterator *self, DBData *out_data);
 
-	/**
-	 * Destroys this iterator and unlocks the database.
-	 * @param self Iterator
-	 * @protected
-	 */
-	void (*destroy)(DBIterator* self);
+    /**
+     * Destroys this iterator and unlocks the database.
+     * @param self Iterator
+     * @protected
+     */
+    void (*destroy)(DBIterator *self);
 
 };
 
@@ -364,235 +363,235 @@ struct DBIterator
  */
 struct DBMap {
 
-	/**
-	 * Returns a new iterator for this database.
-	 * The iterator keeps the database locked until it is destroyed.
-	 * The database will keep functioning normally but will only free internal 
-	 * memory when unlocked, so destroy the iterator as soon as possible.
-	 * @param self Database
-	 * @return New iterator
-	 * @protected
-	 */
-	DBIterator* (*iterator)(DBMap* self);
+    /**
+     * Returns a new iterator for this database.
+     * The iterator keeps the database locked until it is destroyed.
+     * The database will keep functioning normally but will only free internal
+     * memory when unlocked, so destroy the iterator as soon as possible.
+     * @param self Database
+     * @return New iterator
+     * @protected
+     */
+    DBIterator *(*iterator)(DBMap *self);
 
-	/**
-	 * Returns true if the entry exists.
-	 * @param self Database
-	 * @param key Key that identifies the entry
-	 * @return true is the entry exists
-	 * @protected
-	 */
-	bool (*exists)(DBMap* self, DBKey key);
+    /**
+     * Returns true if the entry exists.
+     * @param self Database
+     * @param key Key that identifies the entry
+     * @return true is the entry exists
+     * @protected
+     */
+    bool (*exists)(DBMap *self, DBKey key);
 
-	/**
-	 * Get the data of the entry identified by the key.
-	 * @param self Database
-	 * @param key Key that identifies the entry
-	 * @return Data of the entry or NULL if not found
-	 * @protected
-	 */
-	DBData* (*get)(DBMap* self, DBKey key);
+    /**
+     * Get the data of the entry identified by the key.
+     * @param self Database
+     * @param key Key that identifies the entry
+     * @return Data of the entry or NULL if not found
+     * @protected
+     */
+    DBData *(*get)(DBMap *self, DBKey key);
 
-	/**
-	 * Just calls {@link DBMap#vgetall}.
-	 * Get the data of the entries matched by <code>match</code>.
-	 * It puts a maximum of <code>max</code> entries into <code>buf</code>.
-	 * If <code>buf</code> is NULL, it only counts the matches.
-	 * Returns the number of entries that matched.
-	 * NOTE: if the value returned is greater than <code>max</code>, only the 
-	 * first <code>max</code> entries found are put into the buffer.
-	 * @param self Database
-	 * @param buf Buffer to put the data of the matched entries
-	 * @param max Maximum number of data entries to be put into buf
-	 * @param match Function that matches the database entries
-	 * @param ... Extra arguments for match
-	 * @return The number of entries that matched
-	 * @protected
-	 * @see DBMap#vgetall(DBMap*,void **,unsigned int,DBMatcher,va_list)
-	 */
-	unsigned int (*getall)(DBMap* self, DBData** buf, unsigned int max, DBMatcher match, ...);
+    /**
+     * Just calls {@link DBMap#vgetall}.
+     * Get the data of the entries matched by <code>match</code>.
+     * It puts a maximum of <code>max</code> entries into <code>buf</code>.
+     * If <code>buf</code> is NULL, it only counts the matches.
+     * Returns the number of entries that matched.
+     * NOTE: if the value returned is greater than <code>max</code>, only the
+     * first <code>max</code> entries found are put into the buffer.
+     * @param self Database
+     * @param buf Buffer to put the data of the matched entries
+     * @param max Maximum number of data entries to be put into buf
+     * @param match Function that matches the database entries
+     * @param ... Extra arguments for match
+     * @return The number of entries that matched
+     * @protected
+     * @see DBMap#vgetall(DBMap*,void **,unsigned int,DBMatcher,va_list)
+     */
+    unsigned int (*getall)(DBMap *self, DBData **buf, unsigned int max, DBMatcher match, ...);
 
-	/**
-	 * Get the data of the entries matched by <code>match</code>.
-	 * It puts a maximum of <code>max</code> entries into <code>buf</code>.
-	 * If <code>buf</code> is NULL, it only counts the matches.
-	 * Returns the number of entries that matched.
-	 * NOTE: if the value returned is greater than <code>max</code>, only the 
-	 * first <code>max</code> entries found are put into the buffer.
-	 * @param self Database
-	 * @param buf Buffer to put the data of the matched entries
-	 * @param max Maximum number of data entries to be put into buf
-	 * @param match Function that matches the database entries
-	 * @param ... Extra arguments for match
-	 * @return The number of entries that matched
-	 * @protected
-	 * @see DBMap#getall(DBMap*,void **,unsigned int,DBMatcher,...)
-	 */
-	unsigned int (*vgetall)(DBMap* self, DBData** buf, unsigned int max, DBMatcher match, va_list args);
+    /**
+     * Get the data of the entries matched by <code>match</code>.
+     * It puts a maximum of <code>max</code> entries into <code>buf</code>.
+     * If <code>buf</code> is NULL, it only counts the matches.
+     * Returns the number of entries that matched.
+     * NOTE: if the value returned is greater than <code>max</code>, only the
+     * first <code>max</code> entries found are put into the buffer.
+     * @param self Database
+     * @param buf Buffer to put the data of the matched entries
+     * @param max Maximum number of data entries to be put into buf
+     * @param match Function that matches the database entries
+     * @param ... Extra arguments for match
+     * @return The number of entries that matched
+     * @protected
+     * @see DBMap#getall(DBMap*,void **,unsigned int,DBMatcher,...)
+     */
+    unsigned int (*vgetall)(DBMap *self, DBData **buf, unsigned int max, DBMatcher match, va_list args);
 
-	/**
-	 * Just calls {@link DBMap#vensure}.
-	 * Get the data of the entry identified by the key.
-	 * If the entry does not exist, an entry is added with the data returned by 
-	 * <code>create</code>.
-	 * @param self Database
-	 * @param key Key that identifies the entry
-	 * @param create Function used to create the data if the entry doesn't exist
-	 * @param ... Extra arguments for create
-	 * @return Data of the entry
-	 * @protected
-	 * @see DBMap#vensure(DBMap*,DBKey,DBCreateData,va_list)
-	 */
-	DBData* (*ensure)(DBMap* self, DBKey key, DBCreateData create, ...);
+    /**
+     * Just calls {@link DBMap#vensure}.
+     * Get the data of the entry identified by the key.
+     * If the entry does not exist, an entry is added with the data returned by
+     * <code>create</code>.
+     * @param self Database
+     * @param key Key that identifies the entry
+     * @param create Function used to create the data if the entry doesn't exist
+     * @param ... Extra arguments for create
+     * @return Data of the entry
+     * @protected
+     * @see DBMap#vensure(DBMap*,DBKey,DBCreateData,va_list)
+     */
+    DBData *(*ensure)(DBMap *self, DBKey key, DBCreateData create, ...);
 
-	/**
-	 * Get the data of the entry identified by the key.
-	 * If the entry does not exist, an entry is added with the data returned by 
-	 * <code>create</code>.
-	 * @param self Database
-	 * @param key Key that identifies the entry
-	 * @param create Function used to create the data if the entry doesn't exist
-	 * @param args Extra arguments for create
-	 * @return Data of the entry
-	 * @protected
-	 * @see DBMap#ensure(DBMap*,DBKey,DBCreateData,...)
-	 */
-	DBData* (*vensure)(DBMap* self, DBKey key, DBCreateData create, va_list args);
+    /**
+     * Get the data of the entry identified by the key.
+     * If the entry does not exist, an entry is added with the data returned by
+     * <code>create</code>.
+     * @param self Database
+     * @param key Key that identifies the entry
+     * @param create Function used to create the data if the entry doesn't exist
+     * @param args Extra arguments for create
+     * @return Data of the entry
+     * @protected
+     * @see DBMap#ensure(DBMap*,DBKey,DBCreateData,...)
+     */
+    DBData *(*vensure)(DBMap *self, DBKey key, DBCreateData create, va_list args);
 
-	/**
-	 * Put the data identified by the key in the database.
-	 * Puts the previous data in out_data, if out_data is not NULL.
-	 * NOTE: Uses the new key, the old one is released.
-	 * @param self Database
-	 * @param key Key that identifies the data
-	 * @param data Data to be put in the database
-	 * @param out_data Previous data if the entry exists
-	 * @return 1 if if the entry already exists, 0 otherwise
-	 * @protected
-	 */
-	int (*put)(DBMap* self, DBKey key, DBData data, DBData *out_data);
+    /**
+     * Put the data identified by the key in the database.
+     * Puts the previous data in out_data, if out_data is not NULL.
+     * NOTE: Uses the new key, the old one is released.
+     * @param self Database
+     * @param key Key that identifies the data
+     * @param data Data to be put in the database
+     * @param out_data Previous data if the entry exists
+     * @return 1 if if the entry already exists, 0 otherwise
+     * @protected
+     */
+    int (*put)(DBMap *self, DBKey key, DBData data, DBData *out_data);
 
-	/**
-	 * Remove an entry from the database.
-	 * Puts the previous data in out_data, if out_data is not NULL.
-	 * NOTE: The key (of the database) is released.
-	 * @param self Database
-	 * @param key Key that identifies the entry
-	 * @param out_data Previous data if the entry exists
-	 * @return 1 if if the entry already exists, 0 otherwise
-	 * @protected
-	 */
-	int (*remove)(DBMap* self, DBKey key, DBData *out_data);
+    /**
+     * Remove an entry from the database.
+     * Puts the previous data in out_data, if out_data is not NULL.
+     * NOTE: The key (of the database) is released.
+     * @param self Database
+     * @param key Key that identifies the entry
+     * @param out_data Previous data if the entry exists
+     * @return 1 if if the entry already exists, 0 otherwise
+     * @protected
+     */
+    int (*remove)(DBMap *self, DBKey key, DBData *out_data);
 
-	/**
-	 * Just calls {@link DBMap#vforeach}.
-	 * Apply <code>func</code> to every entry in the database.
-	 * Returns the sum of values returned by func.
-	 * @param self Database
-	 * @param func Function to be applied
-	 * @param ... Extra arguments for func
-	 * @return Sum of the values returned by func
-	 * @protected
-	 * @see DBMap#vforeach(DBMap*,DBApply,va_list)
-	 */
-	int (*foreach)(DBMap* self, DBApply func, ...);
+    /**
+     * Just calls {@link DBMap#vforeach}.
+     * Apply <code>func</code> to every entry in the database.
+     * Returns the sum of values returned by func.
+     * @param self Database
+     * @param func Function to be applied
+     * @param ... Extra arguments for func
+     * @return Sum of the values returned by func
+     * @protected
+     * @see DBMap#vforeach(DBMap*,DBApply,va_list)
+     */
+    int (*foreach)(DBMap *self, DBApply func, ...);
 
-	/**
-	 * Apply <code>func</code> to every entry in the database.
-	 * Returns the sum of values returned by func.
-	 * @param self Database
-	 * @param func Function to be applied
-	 * @param args Extra arguments for func
-	 * @return Sum of the values returned by func
-	 * @protected
-	 * @see DBMap#foreach(DBMap*,DBApply,...)
-	 */
-	int (*vforeach)(DBMap* self, DBApply func, va_list args);
+    /**
+     * Apply <code>func</code> to every entry in the database.
+     * Returns the sum of values returned by func.
+     * @param self Database
+     * @param func Function to be applied
+     * @param args Extra arguments for func
+     * @return Sum of the values returned by func
+     * @protected
+     * @see DBMap#foreach(DBMap*,DBApply,...)
+     */
+    int (*vforeach)(DBMap *self, DBApply func, va_list args);
 
-	/**
-	 * Just calls {@link DBMap#vclear}.
-	 * Removes all entries from the database.
-	 * Before deleting an entry, func is applied to it.
-	 * Releases the key and the data.
-	 * Returns the sum of values returned by func, if it exists.
-	 * @param self Database
-	 * @param func Function to be applied to every entry before deleting
-	 * @param ... Extra arguments for func
-	 * @return Sum of values returned by func
-	 * @protected
-	 * @see DBMap#vclear(DBMap*,DBApply,va_list)
-	 */
-	int (*clear)(DBMap* self, DBApply func, ...);
+    /**
+     * Just calls {@link DBMap#vclear}.
+     * Removes all entries from the database.
+     * Before deleting an entry, func is applied to it.
+     * Releases the key and the data.
+     * Returns the sum of values returned by func, if it exists.
+     * @param self Database
+     * @param func Function to be applied to every entry before deleting
+     * @param ... Extra arguments for func
+     * @return Sum of values returned by func
+     * @protected
+     * @see DBMap#vclear(DBMap*,DBApply,va_list)
+     */
+    int (*clear)(DBMap *self, DBApply func, ...);
 
-	/**
-	 * Removes all entries from the database.
-	 * Before deleting an entry, func is applied to it.
-	 * Releases the key and the data.
-	 * Returns the sum of values returned by func, if it exists.
-	 * @param self Database
-	 * @param func Function to be applied to every entry before deleting
-	 * @param args Extra arguments for func
-	 * @return Sum of values returned by func
-	 * @protected
-	 * @see DBMap#clear(DBMap*,DBApply,...)
-	 */
-	int (*vclear)(DBMap* self, DBApply func, va_list args);
+    /**
+     * Removes all entries from the database.
+     * Before deleting an entry, func is applied to it.
+     * Releases the key and the data.
+     * Returns the sum of values returned by func, if it exists.
+     * @param self Database
+     * @param func Function to be applied to every entry before deleting
+     * @param args Extra arguments for func
+     * @return Sum of values returned by func
+     * @protected
+     * @see DBMap#clear(DBMap*,DBApply,...)
+     */
+    int (*vclear)(DBMap *self, DBApply func, va_list args);
 
-	/**
-	 * Just calls {@link DBMap#vdestroy}.
-	 * Finalize the database, feeing all the memory it uses.
-	 * Before deleting an entry, func is applied to it.
-	 * Releases the key and the data.
-	 * Returns the sum of values returned by func, if it exists.
-	 * NOTE: This locks the database globally. Any attempt to insert or remove 
-	 * a database entry will give an error and be aborted (except for clearing).
-	 * @param self Database
-	 * @param func Function to be applied to every entry before deleting
-	 * @param ... Extra arguments for func
-	 * @return Sum of values returned by func
-	 * @protected
-	 * @see DBMap#vdestroy(DBMap*,DBApply,va_list)
-	 */
-	int (*destroy)(DBMap* self, DBApply func, ...);
+    /**
+     * Just calls {@link DBMap#vdestroy}.
+     * Finalize the database, feeing all the memory it uses.
+     * Before deleting an entry, func is applied to it.
+     * Releases the key and the data.
+     * Returns the sum of values returned by func, if it exists.
+     * NOTE: This locks the database globally. Any attempt to insert or remove
+     * a database entry will give an error and be aborted (except for clearing).
+     * @param self Database
+     * @param func Function to be applied to every entry before deleting
+     * @param ... Extra arguments for func
+     * @return Sum of values returned by func
+     * @protected
+     * @see DBMap#vdestroy(DBMap*,DBApply,va_list)
+     */
+    int (*destroy)(DBMap *self, DBApply func, ...);
 
-	/**
-	 * Finalize the database, feeing all the memory it uses.
-	 * Before deleting an entry, func is applied to it.
-	 * Returns the sum of values returned by func, if it exists.
-	 * NOTE: This locks the database globally. Any attempt to insert or remove 
-	 * a database entry will give an error and be aborted (except for clearing).
-	 * @param self Database
-	 * @param func Function to be applied to every entry before deleting
-	 * @param args Extra arguments for func
-	 * @return Sum of values returned by func
-	 * @protected
-	 * @see DBMap#destroy(DBMap*,DBApply,...)
-	 */
-	int (*vdestroy)(DBMap* self, DBApply func, va_list args);
+    /**
+     * Finalize the database, feeing all the memory it uses.
+     * Before deleting an entry, func is applied to it.
+     * Returns the sum of values returned by func, if it exists.
+     * NOTE: This locks the database globally. Any attempt to insert or remove
+     * a database entry will give an error and be aborted (except for clearing).
+     * @param self Database
+     * @param func Function to be applied to every entry before deleting
+     * @param args Extra arguments for func
+     * @return Sum of values returned by func
+     * @protected
+     * @see DBMap#destroy(DBMap*,DBApply,...)
+     */
+    int (*vdestroy)(DBMap *self, DBApply func, va_list args);
 
-	/**
-	 * Return the size of the database (number of items in the database).
-	 * @param self Database
-	 * @return Size of the database
-	 * @protected
-	 */
-	unsigned int (*size)(DBMap* self);
+    /**
+     * Return the size of the database (number of items in the database).
+     * @param self Database
+     * @return Size of the database
+     * @protected
+     */
+    unsigned int (*size)(DBMap *self);
 
-	/**
-	 * Return the type of the database.
-	 * @param self Database
-	 * @return Type of the database
-	 * @protected
-	 */
-	DBType (*type)(DBMap* self);
+    /**
+     * Return the type of the database.
+     * @param self Database
+     * @return Type of the database
+     * @protected
+     */
+    DBType(*type)(DBMap *self);
 
-	/**
-	 * Return the options of the database.
-	 * @param self Database
-	 * @return Options of the database
-	 * @protected
-	 */
-	DBOptions (*options)(DBMap* self);
+    /**
+     * Return the options of the database.
+     * @param self Database
+     * @return Options of the database
+     * @protected
+     */
+    DBOptions(*options)(DBMap *self);
 
 };
 
@@ -727,7 +726,7 @@ DBComparator db_default_cmp(DBType type);
 DBHasher db_default_hash(DBType type);
 
 /**
- * Returns the default releaser for the specified type of database with the 
+ * Returns the default releaser for the specified type of database with the
  * specified options.
  * NOTE: the options are fixed by {@link #db_fix_options(DBType,DBOptions)}
  * before choosing the releaser
@@ -756,7 +755,7 @@ DBReleaser db_custom_release(DBRelease which);
 
 /**
  * Allocate a new database of the specified type.
- * It uses the default comparator, hasher and releaser of the specified 
+ * It uses the default comparator, hasher and releaser of the specified
  * database type and fixed options.
  * NOTE: the options are fixed by {@link #db_fix_options(DBType,DBOptions)}
  * before creating the database.
@@ -764,7 +763,7 @@ DBReleaser db_custom_release(DBRelease which);
  * @param line Line of the file where the database is being allocated
  * @param type Type of database
  * @param options Options of the database
- * @param maxlen Maximum length of the string to be used as key in string 
+ * @param maxlen Maximum length of the string to be used as key in string
  *          databases. If 0, the maximum number of maxlen is used (64K).
  * @return The interface of the database
  * @public
@@ -775,7 +774,7 @@ DBReleaser db_custom_release(DBRelease which);
  * @see #db_default_release(DBType,DBOptions)
  * @see #db_fix_options(DBType,DBOptions)
  */
-DBMap* db_alloc(const char *file, int line, DBType type, DBOptions options, unsigned short maxlen);
+DBMap *db_alloc(const char *file, int line, DBType type, DBOptions options, unsigned short maxlen);
 
 /**
  * Manual cast from 'int' to the union DBKey.
@@ -850,7 +849,7 @@ unsigned int db_data2ui(DBData *data);
  * @return Void* value of the data.
  * @public
  */
-void* db_data2ptr(DBData *data);
+void *db_data2ptr(DBData *data);
 
 /**
  * Initialize the database system.
@@ -869,20 +868,20 @@ void db_final(void);
 
 // Link DB System - From jAthena
 struct linkdb_node {
-	struct linkdb_node *next;
-	struct linkdb_node *prev;
-	void               *key;
-	void               *data;
+    struct linkdb_node *next;
+    struct linkdb_node *prev;
+    void               *key;
+    void               *data;
 };
 
-typedef void (*LinkDBFunc)(void* key, void* data, va_list args);
+typedef void (*LinkDBFunc)(void *key, void *data, va_list args);
 
-void  linkdb_insert ( struct linkdb_node** head, void *key, void* data); // 重複を考慮しない
-void  linkdb_replace( struct linkdb_node** head, void *key, void* data); // 重複を考慮する
-void* linkdb_search ( struct linkdb_node** head, void *key);
-void* linkdb_erase  ( struct linkdb_node** head, void *key);
-void  linkdb_final  ( struct linkdb_node** head );
-void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
+void  linkdb_insert(struct linkdb_node **head, void *key, void *data);   // 重複を考慮しない
+void  linkdb_replace(struct linkdb_node **head, void *key, void *data);  // 重複を考慮する
+void *linkdb_search(struct linkdb_node **head, void *key);
+void *linkdb_erase(struct linkdb_node **head, void *key);
+void  linkdb_final(struct linkdb_node **head);
+void  linkdb_foreach(struct linkdb_node **head, LinkDBFunc func, ...);
 
 
 
@@ -894,11 +893,11 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __var     Index variable
 /// @param __cmp     Expression that returns true when the target entry is found
 #define ARR_FIND(__start, __end, __var, __cmp) \
-	do{ \
-		for( (__var) = (__start); (__var) < (__end); ++(__var) ) \
-			if( __cmp ) \
-				break; \
-	}while(0)
+    do{ \
+        for( (__var) = (__start); (__var) < (__end); ++(__var) ) \
+            if( __cmp ) \
+                break; \
+    }while(0)
 
 
 
@@ -912,18 +911,18 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __arr    Array
 /// @param __type   Type of entry
 #define ARR_MOVE(__from, __to, __arr, __type) \
-	do{ \
-		if( (__from) != (__to) ) \
-		{ \
-			__type __backup__; \
-			memmove(&__backup__, (__arr)+(__from), sizeof(__type)); \
-			if( (__from) < (__to) ) \
-				memmove((__arr)+(__from), (__arr)+(__from)+1, ((__to)-(__from))*sizeof(__type)); \
-			else if( (__from) > (__to) ) \
-				memmove((__arr)+(__to)+1, (__arr)+(__to), ((__from)-(__to))*sizeof(__type)); \
-			memmove((__arr)+(__to), &__backup__, sizeof(__type)); \
-		} \
-	}while(0)
+    do{ \
+        if( (__from) != (__to) ) \
+        { \
+            __type __backup__; \
+            memmove(&__backup__, (__arr)+(__from), sizeof(__type)); \
+            if( (__from) < (__to) ) \
+                memmove((__arr)+(__from), (__arr)+(__from)+1, ((__to)-(__from))*sizeof(__type)); \
+            else if( (__from) > (__to) ) \
+                memmove((__arr)+(__to)+1, (__arr)+(__to), ((__from)-(__to))*sizeof(__type)); \
+            memmove((__arr)+(__to), &__backup__, sizeof(__type)); \
+        } \
+    }while(0)
 
 
 
@@ -935,12 +934,12 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __arr    Array
 /// @param __type   Type of entry
 #define ARR_MOVERIGHT(__from, __to, __arr, __type) \
-	do{ \
-		__type __backup__; \
-		memmove(&__backup__, (__arr)+(__from), sizeof(__type)); \
-		memmove((__arr)+(__from), (__arr)+(__from)+1, ((__to)-(__from))*sizeof(__type)); \
-		memmove((__arr)+(__to), &__backup__, sizeof(__type)); \
-	}while(0)
+    do{ \
+        __type __backup__; \
+        memmove(&__backup__, (__arr)+(__from), sizeof(__type)); \
+        memmove((__arr)+(__from), (__arr)+(__from)+1, ((__to)-(__from))*sizeof(__type)); \
+        memmove((__arr)+(__to), &__backup__, sizeof(__type)); \
+    }while(0)
 
 
 
@@ -952,12 +951,12 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __arr    Array
 /// @param __type   Type of entry
 #define ARR_MOVELEFT(__from, __to, __arr, __type) \
-	do{ \
-		__type __backup__; \
-		memmove(&__backup__, (__arr)+(__from), sizeof(__type)); \
-		memmove((__arr)+(__to)+1, (__arr)+(__to), ((__from)-(__to))*sizeof(__type)); \
-		memmove((__arr)+(__to), &__backup__, sizeof(__type)); \
-	}while(0)
+    do{ \
+        __type __backup__; \
+        memmove(&__backup__, (__arr)+(__from), sizeof(__type)); \
+        memmove((__arr)+(__to)+1, (__arr)+(__to), ((__from)-(__to))*sizeof(__type)); \
+        memmove((__arr)+(__to), &__backup__, sizeof(__type)); \
+    }while(0)
 
 
 
@@ -971,11 +970,11 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 ///
 /// @param __type Type of data
 #define VECTOR_DECL(__type) \
-	struct { \
-		size_t _max_; \
-		size_t _len_; \
-		__type* _data_; \
-	}
+    struct { \
+        size_t _max_; \
+        size_t _len_; \
+        __type* _data_; \
+    }
 
 
 
@@ -984,11 +983,11 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __name Structure name
 /// @param __type Type of data
 #define VECTOR_STRUCT_DECL(__name,__type) \
-	struct __name { \
-		size_t _max_; \
-		size_t _len_; \
-		__type* _data_; \
-	}
+    struct __name { \
+        size_t _max_; \
+        size_t _len_; \
+        __type* _data_; \
+    }
 
 
 
@@ -997,7 +996,7 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __type Type of data
 /// @param __var Variable name
 #define VECTOR_VAR(__type,__var) \
-	VECTOR_DECL(__type) __var = {0,0,NULL}
+    VECTOR_DECL(__type) __var = {0,0,NULL}
 
 
 
@@ -1006,7 +1005,7 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __name Structure name
 /// @param __var Variable name
 #define VECTOR_STRUCT_VAR(__name,__var) \
-	struct __name __var = {0,0,NULL}
+    struct __name __var = {0,0,NULL}
 
 
 
@@ -1014,7 +1013,7 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 ///
 /// @param __vec Vector
 #define VECTOR_INIT(__vec) \
-	memset(&(__vec), 0, sizeof(__vec))
+    memset(&(__vec), 0, sizeof(__vec))
 
 
 
@@ -1023,7 +1022,7 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __vec Vector
 /// @return Array of values
 #define VECTOR_DATA(__vec) \
-	( (__vec)._data_ )
+    ( (__vec)._data_ )
 
 
 
@@ -1032,7 +1031,7 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __vec Vector
 /// @return Length
 #define VECTOR_LENGTH(__vec) \
-	( (__vec)._len_ )
+    ( (__vec)._len_ )
 
 
 
@@ -1041,7 +1040,7 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __vec Vector
 /// @return Capacity
 #define VECTOR_CAPACITY(__vec) \
-	( (__vec)._max_ )
+    ( (__vec)._max_ )
 
 
 
@@ -1052,7 +1051,7 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __idx Index
 /// @return Value
 #define VECTOR_INDEX(__vec,__idx) \
-	( VECTOR_DATA(__vec)[__idx] )
+    ( VECTOR_DATA(__vec)[__idx] )
 
 
 
@@ -1062,7 +1061,7 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __vec Vector
 /// @return First value
 #define VECTOR_FIRST(__vec) \
-	( VECTOR_INDEX(__vec,0) )
+    ( VECTOR_INDEX(__vec,0) )
 
 
 
@@ -1072,7 +1071,7 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __vec Vector
 /// @return Last value
 #define VECTOR_LAST(__vec) \
-	( VECTOR_INDEX(__vec,VECTOR_LENGTH(__vec)-1) )
+    ( VECTOR_INDEX(__vec,VECTOR_LENGTH(__vec)-1) )
 
 
 
@@ -1082,27 +1081,27 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __vec Vector
 /// @param __n Size
 #define VECTOR_RESIZE(__vec,__n) \
-	do{ \
-		if( (__n) > VECTOR_CAPACITY(__vec) ) \
-		{ /* increase size */ \
-			if( VECTOR_CAPACITY(__vec) == 0 ) SET_POINTER(VECTOR_DATA(__vec), aMalloc((__n)*sizeof(VECTOR_FIRST(__vec)))); /* allocate new */ \
-			else SET_POINTER(VECTOR_DATA(__vec), aRealloc(VECTOR_DATA(__vec),(__n)*sizeof(VECTOR_FIRST(__vec)))); /* reallocate */ \
-			memset(VECTOR_DATA(__vec)+VECTOR_LENGTH(__vec), 0, (VECTOR_CAPACITY(__vec)-VECTOR_LENGTH(__vec))*sizeof(VECTOR_FIRST(__vec))); /* clear new data */ \
-			VECTOR_CAPACITY(__vec) = (__n); /* update capacity */ \
-		} \
-		else if( (__n) == 0 && VECTOR_CAPACITY(__vec) ) \
-		{ /* clear vector */ \
-			aFree(VECTOR_DATA(__vec)); VECTOR_DATA(__vec) = NULL; /* free data */ \
-			VECTOR_CAPACITY(__vec) = 0; /* clear capacity */ \
-			VECTOR_LENGTH(__vec) = 0; /* clear length */ \
-		} \
-		else if( (__n) < VECTOR_CAPACITY(__vec) ) \
-		{ /* reduce size */ \
-			SET_POINTER(VECTOR_DATA(__vec), aRealloc(VECTOR_DATA(__vec),(__n)*sizeof(VECTOR_FIRST(__vec)))); /* reallocate */ \
-			VECTOR_CAPACITY(__vec) = (__n); /* update capacity */ \
-			if( VECTOR_LENGTH(__vec) > (__n) ) VECTOR_LENGTH(__vec) = (__n); /* update length */ \
-		} \
-	}while(0)
+    do{ \
+        if( (__n) > VECTOR_CAPACITY(__vec) ) \
+        { /* increase size */ \
+            if( VECTOR_CAPACITY(__vec) == 0 ) SET_POINTER(VECTOR_DATA(__vec), aMalloc((__n)*sizeof(VECTOR_FIRST(__vec)))); /* allocate new */ \
+            else SET_POINTER(VECTOR_DATA(__vec), aRealloc(VECTOR_DATA(__vec),(__n)*sizeof(VECTOR_FIRST(__vec)))); /* reallocate */ \
+            memset(VECTOR_DATA(__vec)+VECTOR_LENGTH(__vec), 0, (VECTOR_CAPACITY(__vec)-VECTOR_LENGTH(__vec))*sizeof(VECTOR_FIRST(__vec))); /* clear new data */ \
+            VECTOR_CAPACITY(__vec) = (__n); /* update capacity */ \
+        } \
+        else if( (__n) == 0 && VECTOR_CAPACITY(__vec) ) \
+        { /* clear vector */ \
+            aFree(VECTOR_DATA(__vec)); VECTOR_DATA(__vec) = NULL; /* free data */ \
+            VECTOR_CAPACITY(__vec) = 0; /* clear capacity */ \
+            VECTOR_LENGTH(__vec) = 0; /* clear length */ \
+        } \
+        else if( (__n) < VECTOR_CAPACITY(__vec) ) \
+        { /* reduce size */ \
+            SET_POINTER(VECTOR_DATA(__vec), aRealloc(VECTOR_DATA(__vec),(__n)*sizeof(VECTOR_FIRST(__vec)))); /* reallocate */ \
+            VECTOR_CAPACITY(__vec) = (__n); /* update capacity */ \
+            if( VECTOR_LENGTH(__vec) > (__n) ) VECTOR_LENGTH(__vec) = (__n); /* update length */ \
+        } \
+    }while(0)
 
 
 
@@ -1113,11 +1112,11 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __n Empty positions
 /// @param __step Increase
 #define VECTOR_ENSURE(__vec,__n,__step) \
-	do{ \
-		size_t _empty_ = VECTOR_CAPACITY(__vec)-VECTOR_LENGTH(__vec); \
-		while( (__n) > _empty_ ) _empty_ += (__step); \
-		if( _empty_ != VECTOR_CAPACITY(__vec)-VECTOR_LENGTH(__vec) ) VECTOR_RESIZE(__vec,_empty_+VECTOR_LENGTH(__vec)); \
-	}while(0)
+    do{ \
+        size_t _empty_ = VECTOR_CAPACITY(__vec)-VECTOR_LENGTH(__vec); \
+        while( (__n) > _empty_ ) _empty_ += (__step); \
+        if( _empty_ != VECTOR_CAPACITY(__vec)-VECTOR_LENGTH(__vec) ) VECTOR_RESIZE(__vec,_empty_+VECTOR_LENGTH(__vec)); \
+    }while(0)
 
 
 
@@ -1127,12 +1126,12 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __vec Vector
 /// @param __idx Index
 #define VECTOR_INSERTZEROED(__vec,__idx) \
-	do{ \
-		if( (__idx) < VECTOR_LENGTH(__vec) ) /* move data */ \
-			memmove(&VECTOR_INDEX(__vec,(__idx)+1),&VECTOR_INDEX(__vec,__idx),(VECTOR_LENGTH(__vec)-(__idx))*sizeof(VECTOR_FIRST(__vec))); \
-		memset(&VECTOR_INDEX(__vec,__idx), 0, sizeof(VECTOR_INDEX(__vec,__idx))); /* set zeroed value */ \
-		++VECTOR_LENGTH(__vec); /* increase length */ \
-	}while(0)
+    do{ \
+        if( (__idx) < VECTOR_LENGTH(__vec) ) /* move data */ \
+            memmove(&VECTOR_INDEX(__vec,(__idx)+1),&VECTOR_INDEX(__vec,__idx),(VECTOR_LENGTH(__vec)-(__idx))*sizeof(VECTOR_FIRST(__vec))); \
+        memset(&VECTOR_INDEX(__vec,__idx), 0, sizeof(VECTOR_INDEX(__vec,__idx))); /* set zeroed value */ \
+        ++VECTOR_LENGTH(__vec); /* increase length */ \
+    }while(0)
 
 
 
@@ -1143,12 +1142,12 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __idx Index
 /// @param __val Value
 #define VECTOR_INSERT(__vec,__idx,__val) \
-	do{ \
-		if( (__idx) < VECTOR_LENGTH(__vec) ) /* move data */ \
-			memmove(&VECTOR_INDEX(__vec,(__idx)+1),&VECTOR_INDEX(__vec,__idx),(VECTOR_LENGTH(__vec)-(__idx))*sizeof(VECTOR_FIRST(__vec))); \
-		VECTOR_INDEX(__vec,__idx) = (__val); /* set value */ \
-		++VECTOR_LENGTH(__vec); /* increase length */ \
-	}while(0)
+    do{ \
+        if( (__idx) < VECTOR_LENGTH(__vec) ) /* move data */ \
+            memmove(&VECTOR_INDEX(__vec,(__idx)+1),&VECTOR_INDEX(__vec,__idx),(VECTOR_LENGTH(__vec)-(__idx))*sizeof(VECTOR_FIRST(__vec))); \
+        VECTOR_INDEX(__vec,__idx) = (__val); /* set value */ \
+        ++VECTOR_LENGTH(__vec); /* increase length */ \
+    }while(0)
 
 
 
@@ -1159,7 +1158,7 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __idx Index
 /// @param __val Value
 #define VECTOR_INSERTCOPY(__vec,__idx,__val) \
-	VECTOR_INSERTARRAY(__vec,__idx,&(__val),1)
+    VECTOR_INSERTARRAY(__vec,__idx,&(__val),1)
 
 
 
@@ -1171,12 +1170,12 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __pval Array of values
 /// @param __n Number of values
 #define VECTOR_INSERTARRAY(__vec,__idx,__pval,__n) \
-	do{ \
-		if( (__idx) < VECTOR_LENGTH(__vec) ) /* move data */ \
-			memmove(&VECTOR_INDEX(__vec,(__idx)+(__n)),&VECTOR_INDEX(__vec,__idx),(VECTOR_LENGTH(__vec)-(__idx))*sizeof(VECTOR_FIRST(__vec))); \
-		memcpy(&VECTOR_INDEX(__vec,__idx), (__pval), (__n)*sizeof(VECTOR_FIRST(__vec))); /* set values */ \
-		VECTOR_LENGTH(__vec) += (__n); /* increase length */ \
-	}while(0)
+    do{ \
+        if( (__idx) < VECTOR_LENGTH(__vec) ) /* move data */ \
+            memmove(&VECTOR_INDEX(__vec,(__idx)+(__n)),&VECTOR_INDEX(__vec,__idx),(VECTOR_LENGTH(__vec)-(__idx))*sizeof(VECTOR_FIRST(__vec))); \
+        memcpy(&VECTOR_INDEX(__vec,__idx), (__pval), (__n)*sizeof(VECTOR_FIRST(__vec))); /* set values */ \
+        VECTOR_LENGTH(__vec) += (__n); /* increase length */ \
+    }while(0)
 
 
 
@@ -1185,10 +1184,10 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 ///
 /// @param __vec Vector
 #define VECTOR_PUSHZEROED(__vec) \
-	do{ \
-		memset(&VECTOR_INDEX(__vec,VECTOR_LENGTH(__vec)), 0, sizeof(VECTOR_INDEX(__vec,VECTOR_LENGTH(__vec)))); /* set zeroed value */ \
-		++VECTOR_LENGTH(__vec); /* increase length */ \
-	}while(0)
+    do{ \
+        memset(&VECTOR_INDEX(__vec,VECTOR_LENGTH(__vec)), 0, sizeof(VECTOR_INDEX(__vec,VECTOR_LENGTH(__vec)))); /* set zeroed value */ \
+        ++VECTOR_LENGTH(__vec); /* increase length */ \
+    }while(0)
 
 
 /// Inserts a value in the end of the vector. (using the '=' operator)
@@ -1197,10 +1196,10 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __vec Vector
 /// @param __val Value
 #define VECTOR_PUSH(__vec,__val) \
-	do{ \
-		VECTOR_INDEX(__vec,VECTOR_LENGTH(__vec)) = (__val); /* set value */ \
-		++VECTOR_LENGTH(__vec); /* increase length */ \
-	}while(0)
+    do{ \
+        VECTOR_INDEX(__vec,VECTOR_LENGTH(__vec)) = (__val); /* set value */ \
+        ++VECTOR_LENGTH(__vec); /* increase length */ \
+    }while(0)
 
 
 
@@ -1210,7 +1209,7 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __vec Vector
 /// @param __val Value
 #define VECTOR_PUSHCOPY(__vec,__val) \
-	VECTOR_PUSHARRAY(__vec,&(__val),1)
+    VECTOR_PUSHARRAY(__vec,&(__val),1)
 
 
 
@@ -1221,10 +1220,10 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __pval Array of values
 /// @param __n Number of values
 #define VECTOR_PUSHARRAY(__vec,__pval,__n) \
-	do{ \
-		memcpy(&VECTOR_INDEX(__vec,VECTOR_LENGTH(__vec)), (__pval), (__n)*sizeof(VECTOR_FIRST(__vec))); /* set values */ \
-		VECTOR_LENGTH(__vec) += (__n); /* increase length */ \
-	}while(0)
+    do{ \
+        memcpy(&VECTOR_INDEX(__vec,VECTOR_LENGTH(__vec)), (__pval), (__n)*sizeof(VECTOR_FIRST(__vec))); /* set values */ \
+        VECTOR_LENGTH(__vec) += (__n); /* increase length */ \
+    }while(0)
 
 
 
@@ -1234,7 +1233,7 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __vec Vector
 /// @return Removed value
 #define VECTOR_POP(__vec) \
-	( VECTOR_INDEX(__vec,--VECTOR_LENGTH(__vec)) )
+    ( VECTOR_INDEX(__vec,--VECTOR_LENGTH(__vec)) )
 
 
 
@@ -1245,7 +1244,7 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __n Number of pops
 /// @return Last removed value
 #define VECTOR_POPN(__vec,__n) \
-	( VECTOR_INDEX(__vec,(VECTOR_LENGTH(__vec)-=(__n))) )
+    ( VECTOR_INDEX(__vec,(VECTOR_LENGTH(__vec)-=(__n))) )
 
 
 
@@ -1255,7 +1254,7 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __vec Vector
 /// @param __idx Index
 #define VECTOR_ERASE(__vec,__idx) \
-	VECTOR_ERASEN(__vec,__idx,1)
+    VECTOR_ERASEN(__vec,__idx,1)
 
 
 
@@ -1266,11 +1265,11 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __idx Index
 /// @param __n Number of values
 #define VECTOR_ERASEN(__vec,__idx,__n) \
-	do{ \
-		if( (__idx) < VECTOR_LENGTH(__vec)-(__n) ) /* move data */ \
-			memmove(&VECTOR_INDEX(__vec,__idx),&VECTOR_INDEX(__vec,(__idx)+(__n)),(VECTOR_LENGTH(__vec)-((__idx)+(__n)))*sizeof(VECTOR_FIRST(__vec))); \
-		VECTOR_LENGTH(__vec) -= (__n); /* decrease length */ \
-	}while(0)
+    do{ \
+        if( (__idx) < VECTOR_LENGTH(__vec)-(__n) ) /* move data */ \
+            memmove(&VECTOR_INDEX(__vec,__idx),&VECTOR_INDEX(__vec,(__idx)+(__n)),(VECTOR_LENGTH(__vec)-((__idx)+(__n)))*sizeof(VECTOR_FIRST(__vec))); \
+        VECTOR_LENGTH(__vec) -= (__n); /* decrease length */ \
+    }while(0)
 
 
 
@@ -1278,14 +1277,14 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 ///
 /// @param __vec Vector
 #define VECTOR_CLEAR(__vec) \
-	do{ \
-		if( VECTOR_CAPACITY(__vec) ) \
-		{ \
-			aFree(VECTOR_DATA(__vec)); VECTOR_DATA(__vec) = NULL; /* clear allocated array */ \
-			VECTOR_CAPACITY(__vec) = 0; /* clear capacity */ \
-			VECTOR_LENGTH(__vec) = 0; /* clear length */ \
-		} \
-	}while(0)
+    do{ \
+        if( VECTOR_CAPACITY(__vec) ) \
+        { \
+            aFree(VECTOR_DATA(__vec)); VECTOR_DATA(__vec) = NULL; /* clear allocated array */ \
+            VECTOR_CAPACITY(__vec) = 0; /* clear capacity */ \
+            VECTOR_LENGTH(__vec) = 0; /* clear length */ \
+        } \
+    }while(0)
 
 
 
@@ -1388,18 +1387,18 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __val Value
 /// @param __topcmp Comparator
 #define BHEAP_PUSH(__heap,__val,__topcmp) \
-	do{ \
-		size_t _i_ = VECTOR_LENGTH(__heap); \
-		VECTOR_PUSH(__heap,__val); /* insert at end */ \
-		while( _i_ ) \
-		{ /* restore heap property in parents */ \
-			size_t _parent_ = (_i_-1)/2; \
-			if( __topcmp(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i_)) < 0 ) \
-				break; /* done */ \
-			swap(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i_)); \
-			_i_ = _parent_; \
-		} \
-	}while(0)
+    do{ \
+        size_t _i_ = VECTOR_LENGTH(__heap); \
+        VECTOR_PUSH(__heap,__val); /* insert at end */ \
+        while( _i_ ) \
+        { /* restore heap property in parents */ \
+            size_t _parent_ = (_i_-1)/2; \
+            if( __topcmp(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i_)) < 0 ) \
+                break; /* done */ \
+            swap(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i_)); \
+            _i_ = _parent_; \
+        } \
+    }while(0)
 
 
 
@@ -1429,36 +1428,36 @@ void  linkdb_foreach( struct linkdb_node** head, LinkDBFunc func, ...  );
 /// @param __idx Index
 /// @param __topcmp Comparator
 #define BHEAP_POPINDEX(__heap,__idx,__topcmp) \
-	do{ \
-		size_t _i_ = __idx; \
-		VECTOR_INDEX(__heap,__idx) = VECTOR_POP(__heap); /* put last at index */ \
-		while( _i_ ) \
-		{ /* restore heap property in parents */ \
-			size_t _parent_ = (_i_-1)/2; \
-			if( __topcmp(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i_)) < 0 ) \
-				break; /* done */ \
-			swap(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i_)); \
-			_i_ = _parent_; \
-		} \
-		while( _i_ < VECTOR_LENGTH(__heap) ) \
-		{ /* restore heap property in childs */ \
-			size_t _lchild_ = _i_*2 + 1; \
-			size_t _rchild_ = _i_*2 + 2; \
-			if( (_lchild_ >= VECTOR_LENGTH(__heap) || __topcmp(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_lchild_)) <= 0) && \
-				(_rchild_ >= VECTOR_LENGTH(__heap) || __topcmp(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_rchild_)) <= 0) ) \
-				break; /* done */ \
-			else if( _rchild_ >= VECTOR_LENGTH(__heap) || __topcmp(VECTOR_INDEX(__heap,_lchild_),VECTOR_INDEX(__heap,_rchild_)) <= 0 ) \
-			{ /* left child */ \
-				swap(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_lchild_)); \
-				_i_ = _lchild_; \
-			} \
-			else \
-			{ /* right child */ \
-				swap(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_rchild_)); \
-				_i_ = _rchild_; \
-			} \
-		} \
-	}while(0)
+    do{ \
+        size_t _i_ = __idx; \
+        VECTOR_INDEX(__heap,__idx) = VECTOR_POP(__heap); /* put last at index */ \
+        while( _i_ ) \
+        { /* restore heap property in parents */ \
+            size_t _parent_ = (_i_-1)/2; \
+            if( __topcmp(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i_)) < 0 ) \
+                break; /* done */ \
+            swap(VECTOR_INDEX(__heap,_parent_),VECTOR_INDEX(__heap,_i_)); \
+            _i_ = _parent_; \
+        } \
+        while( _i_ < VECTOR_LENGTH(__heap) ) \
+        { /* restore heap property in childs */ \
+            size_t _lchild_ = _i_*2 + 1; \
+            size_t _rchild_ = _i_*2 + 2; \
+            if( (_lchild_ >= VECTOR_LENGTH(__heap) || __topcmp(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_lchild_)) <= 0) && \
+                (_rchild_ >= VECTOR_LENGTH(__heap) || __topcmp(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_rchild_)) <= 0) ) \
+                break; /* done */ \
+            else if( _rchild_ >= VECTOR_LENGTH(__heap) || __topcmp(VECTOR_INDEX(__heap,_lchild_),VECTOR_INDEX(__heap,_rchild_)) <= 0 ) \
+            { /* left child */ \
+                swap(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_lchild_)); \
+                _i_ = _lchild_; \
+            } \
+            else \
+            { /* right child */ \
+                swap(VECTOR_INDEX(__heap,_i_),VECTOR_INDEX(__heap,_rchild_)); \
+                _i_ = _rchild_; \
+            } \
+        } \
+    }while(0)
 
 
 

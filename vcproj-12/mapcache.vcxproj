@@ -82,6 +82,7 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -122,6 +123,7 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -145,7 +147,7 @@
     <ClInclude Include="..\src\common\strlib.h" />
     <ClInclude Include="..\src\common\utils.h" />
     <ClInclude Include="..\src\common\winapi.h" />
-	<ClInclude Include="..\src\config\renewal.h" />
+    <ClInclude Include="..\src\config\renewal.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

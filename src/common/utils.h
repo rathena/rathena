@@ -8,11 +8,11 @@
 #include <stdio.h> // FILE*
 
 // generate a hex dump of the first 'length' bytes of 'buffer'
-void WriteDump(FILE* fp, const void* buffer, size_t length);
-void ShowDump(const void* buffer, size_t length);
+void WriteDump(FILE *fp, const void *buffer, size_t length);
+void ShowDump(const void *buffer, size_t length);
 
-void findfile(const char *p, const char *pat, void (func)(const char*));
-bool exists(const char* filename);
+void findfile(const char *p, const char *pat, void (func)(const char *));
+bool exists(const char *filename);
 
 //Caps values to min/max
 #define cap_value(a, min, max) ((a >= max) ? max : (a <= min) ? min : a)

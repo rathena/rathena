@@ -6,11 +6,10 @@
 
 #include "../common/core.h" // CORE_ST_LAST
 
-enum E_CHARSERVER_ST
-{
-	CHARSERVER_ST_RUNNING = CORE_ST_LAST,
-	CHARSERVER_ST_SHUTDOWN,
-	CHARSERVER_ST_LAST
+enum E_CHARSERVER_ST {
+    CHARSERVER_ST_RUNNING = CORE_ST_LAST,
+    CHARSERVER_ST_SHUTDOWN,
+    CHARSERVER_ST_LAST
 };
 
 struct mmo_charstatus;
@@ -20,10 +19,10 @@ struct mmo_charstatus;
 #define DEFAULT_AUTOSAVE_INTERVAL 300*1000
 
 enum {
-	TABLE_INVENTORY,
-	TABLE_CART,
-	TABLE_STORAGE,
-	TABLE_GUILD_STORAGE,
+    TABLE_INVENTORY,
+    TABLE_CART,
+    TABLE_STORAGE,
+    TABLE_GUILD_STORAGE,
 };
 
 int memitemdata_to_sql(const struct item items[], int max, int id, int tableswitch);
@@ -37,7 +36,7 @@ int char_child(int parent_id, int child_id);
 int char_family(int pl1,int pl2,int pl3);
 
 int request_accreg2(int account_id, int char_id);
-int save_accreg2(unsigned char* buf, int len);
+int save_accreg2(unsigned char *buf, int len);
 
 extern int char_name_option;
 extern char char_name_letters[];

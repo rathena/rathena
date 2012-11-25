@@ -17,9 +17,9 @@ struct auction_data;
 
 int intif_parse(int fd);
 
-int intif_broadcast(const char* mes, int len, int type);
-int intif_broadcast2(const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY);
-int intif_main_message(struct map_session_data* sd, const char* message);
+int intif_broadcast(const char *mes, int len, int type);
+int intif_broadcast2(const char *mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY);
+int intif_main_message(struct map_session_data *sd, const char *message);
 
 int intif_wis_message(struct map_session_data *sd,char *nick,char *mes,int mes_len);
 int intif_wis_message_to_gm(char *Wisp_name, int permission, char *mes);
@@ -50,7 +50,7 @@ int intif_guild_leave(int guild_id, int account_id, int char_id, int flag, const
 int intif_guild_memberinfoshort(int guild_id, int account_id, int char_id, int online, int lv, int class_);
 int intif_guild_break(int guild_id);
 int intif_guild_message(int guild_id, int account_id, const char *mes, int len);
-int intif_guild_change_gm(int guild_id, const char* name, int len);
+int intif_guild_change_gm(int guild_id, const char *name, int len);
 int intif_guild_change_basicinfo(int guild_id, int type, const void *data, int len);
 int intif_guild_change_memberinfo(int guild_id, int account_id, int char_id, int type, const void *data, int len);
 int intif_guild_position(int guild_id, int idx, struct guild_position *p);
@@ -72,12 +72,12 @@ int intif_rename(struct map_session_data *sd, int type, char *name);
 #define intif_rename_hom(sd, name) intif_rename(sd, 2, name)
 int intif_homunculus_create(int account_id, struct s_homunculus *sh);
 int intif_homunculus_requestload(int account_id, int homun_id);
-int intif_homunculus_requestsave(int account_id, struct s_homunculus* sh);
+int intif_homunculus_requestsave(int account_id, struct s_homunculus *sh);
 int intif_homunculus_requestdelete(int homun_id);
 
 /******QUEST SYTEM*******/
-int intif_request_questlog(struct map_session_data * sd);
-int intif_quest_save(struct map_session_data * sd);
+int intif_request_questlog(struct map_session_data *sd);
+int intif_quest_save(struct map_session_data *sd);
 
 // MERCENARY SYSTEM
 int intif_mercenary_create(struct s_mercenary *merc);
@@ -93,11 +93,11 @@ int intif_Mail_delete(int char_id, int mail_id);
 int intif_Mail_return(int char_id, int mail_id);
 int intif_Mail_send(int account_id, struct mail_message *msg);
 // AUCTION SYSTEM
-int intif_Auction_requestlist(int char_id, short type, int price, const char* searchtext, short page);
+int intif_Auction_requestlist(int char_id, short type, int price, const char *searchtext, short page);
 int intif_Auction_register(struct auction_data *auction);
 int intif_Auction_cancel(int char_id, unsigned int auction_id);
 int intif_Auction_close(int char_id, unsigned int auction_id);
-int intif_Auction_bid(int char_id, const char* name, unsigned int auction_id, int bid);
+int intif_Auction_bid(int char_id, const char *name, unsigned int auction_id, int bid);
 // ELEMENTAL SYSTEM
 int intif_elemental_create(struct s_elemental *ele);
 int intif_elemental_request(int ele_id, int char_id);
@@ -105,7 +105,7 @@ int intif_elemental_delete(int ele_id);
 int intif_elemental_save(struct s_elemental *ele);
 
 /* @accinfo */
-void intif_request_accinfo( int u_fd, int aid, int group_id, char* query );
+void intif_request_accinfo(int u_fd, int aid, int group_id, char *query);
 
 int CheckForCharServer(void);
 
