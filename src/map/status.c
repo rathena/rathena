@@ -1619,7 +1619,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 
     if (sc && sc->count) {
 
-        if (sc->opt1 >0 && (sc->opt1 != OPT1_CRYSTALIZE && src->type != BL_MOB) && sc->opt1 != OPT1_BURNING && skill_num != SR_GENTLETOUCH_CURE) {   //Stuned/Frozen/etc
+        if (skill_num != RK_REFRESH && sc->opt1 >0 && (sc->opt1 != OPT1_CRYSTALIZE && src->type != BL_MOB) && sc->opt1 != OPT1_BURNING && skill_num != SR_GENTLETOUCH_CURE) {   //Stuned/Frozen/etc
             if (flag != 1) //Can't cast, casted stuff can't damage.
                 return 0;
             if (!(skill_get_inf(skill_num)&INF_GROUND_SKILL))
@@ -8599,6 +8599,7 @@ int status_change_start(struct block_list *bl,enum sc_type type,int rate,int val
             break;
         case SC_SLEEP:
         case SC_DEEPSLEEP:
+            opt_flag = 0;
             sc->opt1 = OPT1_SLEEP;
             break;
         case SC_BURNING:
