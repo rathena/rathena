@@ -4315,6 +4315,14 @@ If the map name is given as "this", the map the invoking character is on will be
 
 ---------------------------------------
 
+*cleanfloor "<map name>",<x1>,<y1>,<x2>,<y2>;
+*cleanmap "<map name>";
+
+These commands will clear all items lying on the ground on the specified map, either
+within the x1/y1-x2/y2 rectangle or across the entire map.
+
+---------------------------------------
+
 *searchitem <array name>,"<item name>";
 
 This command will fill the given array with the ID of items whose name matches

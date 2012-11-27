@@ -676,9 +676,10 @@ Deletes all inventory items (not equipped items).
 
 ---------------------------------------
 
+@cleanarea
 @cleanmap
 
-Deletes floor items in sight range.
+Deletes floor items in sight range or across the entire map.
 
 ---------------------------------------
 
