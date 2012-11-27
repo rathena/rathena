@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20121112
+//= 20121127
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
@@ -508,6 +508,7 @@ If @jail was used, the chat window will display "You have been jailed indefinite
 @accinfo <player name/account id>
 
 Searches for an account by ID or a character name, and outputs detailed information.
+Password will only be displayed for group levels lower than yours.
 To search partial names, "%" can be used as a wildcard.
 
 Example:

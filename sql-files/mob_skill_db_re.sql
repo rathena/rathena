@@ -1111,6 +1111,7 @@ REPLACE INTO `mob_skill_db` VALUES (1219,'Knight of Abyss@NPC_SUMMONSLAVE','idle
 REPLACE INTO `mob_skill_db` VALUES (1219,'Knight of Abyss@NPC_ARMORBRAKE','attack',344,10,500,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1219,'Knight of Abyss@CR_AUTOGUARD','chase',249,10,2000,0,300000,'yes','self','longrangeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1219,'Knight of Abyss@CR_AUTOGUARD','attack',249,10,500,0,300000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db` VALUES (1242,'Marin@NPC_EMOTION','loot',197,1,2000,0,5000,'yes','self','always','0',2,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1242,'Marin@MG_FROSTDIVER','attack',15,5,500,1000,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1242,'Marin@NPC_EMOTION','loot',197,1,2000,0,5000,'yes','self','always','0',2,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (1242,'Marin@NPC_WATERATTACK','attack',184,1,2000,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);

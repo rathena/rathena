@@ -4088,8 +4088,7 @@ sprites, which is essential for making custom headgear.
 Since a lot of people have different palettes for hair and clothes, it's 
 impossible to tell you what all the color numbers are. If you want a serious 
 example, there is a Stylist script inside the default rAthena installation that 
-you can look at, this may help you create a Stylist of your own: 
-'custom\dye.txt'
+you can look at: 'npc/custom/stylist.txt'
 
 ---------------------------------------
 
@@ -4114,8 +4113,8 @@ wall), the character is pushed only up to the obstacle.
 This command will return the SVN revision number that the server is
 currently running on.
 
-	if ( get_revision() >= 15000 )
-        mes "Welcome rAthena !";
+    if ( get_revision() >= 15000 )
+        mes "Welcome rAthena!";
 
 ---------------------------------------
 \\
@@ -4508,7 +4507,7 @@ success rate must be specified (which adds to the base formula).
 
 You can see the full list of runes that can be produced in 'db/produce_db.txt'.
 The window will not be empty only if the invoking character can actually produce
-the items of that type and has the appropriate raw materials in their inventory.
+a rune and has the appropriate raw materials in their inventory.
 
 ---------------------------------------
 
@@ -6558,18 +6557,18 @@ the keyboard from a character that belonged to an account which had GM level 99.
 
 The commands can also run without an attached rid.
 
-Example:
-
-//this would do the same as above, but now doesn't need a player attached by default.
-	charCommand "#option 0 0 0 Roy";
+    // This would do the same as above, but now
+    // it doesn't need a player attached by default.
+    charcommand "#option 0 0 0 Roy";
 
 ---------------------------------------
 
 *bindatcmd "command","<NPC object name>::<event label>"{,<atcommand level>,<charcommand level>};
 *bindatcmd("command","<NPC object name>::<event label>"{,<atcommand level>,<charcommand level>});
 
-This command will bind a NPC event label to an atcommand. Upon execution of
-the atcommand, the user will invoke the NPC event label.
+This command will bind a NPC event label to an atcommand. Upon execution of the
+atcommand, the user will invoke the NPC event label. An array .@atcmd_parameters$[]
+will be filled with the given parameters, starting with an index of 0.
 
 Example:
 
@@ -6733,10 +6732,13 @@ Example:
 
 ---------------------------------------
 
-*query_sql "your MySQL query", <array variable> {,<array variable>, ...};
-*query_logsql "your MySQL query", <array variable> {,<array variable>, ...};
+*query_sql("your MySQL query"{, <array variable>{, <array variable>{, ...}}});
+*query_logsql("your MySQL query"{, <array variable>{, <array variable>{, ...}}});
 
-Puts up to 128 rows of values into the arrays and returns the number of rows.
+Executes an SQL query. A 'select' query can fill array variables with up to 128 rows of values,
+and will return the number of rows (i.e. array size).
+
+Note that 'query_sql' runs on the main database while 'query_logsql' runs on the log database.
 
 Example:
 set @nb, query_sql("select name,fame from `char` ORDER BY fame DESC LIMIT 5", @name$, @fame);
@@ -6746,12 +6748,6 @@ mes "2."+@name$[1]+"("+@fame[1]+")";
 mes "3."+@name$[2]+"("+@fame[2]+")";
 mes "4."+@name$[3]+"("+@fame[3]+")";
 mes "5."+@name$[4]+"("+@fame[4]+")";
-
-Note: In the TXT version it doesn't fill the array and always return -1.
-Note: Use $ as suffix in the array to receive all data as text.
-Note: The difference between query_sql and query_logsql is that the latter
-uses the sql connection to the log database, and should be used when you want
-to query the server log tables.
 
 ---------------------------------------
 
