@@ -273,4 +273,15 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <Target Name="AfterBuild">
+    <Copy SourceFiles="..\conf\import-tmpl\battle_conf.txt" DestinationFolder="..\conf\import\" ContinueOnError="true" />
+    <Copy SourceFiles="..\conf\import-tmpl\char_conf.txt" DestinationFolder="..\conf\import\" ContinueOnError="true" />
+    <Copy SourceFiles="..\conf\import-tmpl\inter_conf.txt" DestinationFolder="..\conf\import\" ContinueOnError="true" />
+    <Copy SourceFiles="..\conf\import-tmpl\log_conf.txt" DestinationFolder="..\conf\import\" ContinueOnError="true" />	
+    <Copy SourceFiles="..\conf\import-tmpl\login_conf.txt" DestinationFolder="..\conf\import\" ContinueOnError="true" />
+    <Copy SourceFiles="..\conf\import-tmpl\map_conf.txt" DestinationFolder="..\conf\import\" ContinueOnError="true" />
+    <Copy SourceFiles="..\conf\import-tmpl\msg_conf.txt" DestinationFolder="..\conf\import\" ContinueOnError="true" />
+    <Copy SourceFiles="..\conf\import-tmpl\packet_conf.txt" DestinationFolder="..\conf\import\" ContinueOnError="true" />
+    <Copy SourceFiles="..\conf\import-tmpl\script_conf.txt" DestinationFolder="..\conf\import\" ContinueOnError="true" />
+  </Target>
 </Project>
