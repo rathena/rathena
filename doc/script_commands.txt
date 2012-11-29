@@ -6575,8 +6575,13 @@ The commands can also run without an attached rid.
 *bindatcmd("command","<NPC object name>::<event label>"{,<atcommand level>,<charcommand level>});
 
 This command will bind a NPC event label to an atcommand. Upon execution of the
-atcommand, the user will invoke the NPC event label. An array .@atcmd_parameters$[]
-will be filled with the given parameters, starting with an index of 0.
+atcommand, the user will invoke the NPC event label. Each atcommand is only allowed
+one binding. If you rebind, it will override the original binding.
+
+The following variables are created upon execution:
+    .@atcmd_command$: The atcmd used.
+    .@atcmd_numparameters: The number of parameters defined.
+    .@atcmd_parameters$[]: Array containing the given parameters, starting from an index of 0.
 
 Example:
 
@@ -6603,16 +6608,8 @@ This command will unbind a NPC event label from an atcommand.
 *useatcmd "command";
 *useatcmd("command");
 
-This command will execute a custom atcommand on the attached RID from a script.
-Whether invoked by a script or command, an array .@atcmd_parameters$[] will be
-filled with the given parameters, starting with an index of 0.
-
-Example:
-   @test Testing Command
-
-The following array values will be generated:
-   .@atcmd_parameters$[0] = "Testing"
-   .@atcmd_parameters$[1] = "Command"
+This command will execute an atcommand binding on the attached RID from a script.
+Variables will not be created when invoking scripts with this command.
 
 ---------------------------------------
 
