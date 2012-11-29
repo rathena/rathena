@@ -6397,7 +6397,7 @@ int status_change_start(struct block_list *bl,enum sc_type type,int rate,int val
             case SC_DEATHHURT:
             case SC_PYREXIA:
             case SC_OBLIVIONCURSE:
-                //case SC_LEECHESEND://Need confirm. If it protects against nearly every Guillotine poison, it should work on this too right? [Rytech]
+			case SC_LEECHESEND: //08/31/2011 - Class Balance Changes
             case SC_CRYSTALIZE:
             case SC_DEEPSLEEP:
             case SC_MANDRAGORA:
@@ -8599,7 +8599,8 @@ int status_change_start(struct block_list *bl,enum sc_type type,int rate,int val
             break;
         case SC_SLEEP:
         case SC_DEEPSLEEP:
-            opt_flag = 0;
+			if(type == SC_DEEPSLEEP)
+				opt_flag = 0;
             sc->opt1 = OPT1_SLEEP;
             break;
         case SC_BURNING:
@@ -10567,8 +10568,14 @@ int status_change_clear_buffs(struct block_list *bl, int type)
 
     if (type&2) //Debuffs
         for (i = SC_COMMON_MIN; i <= SC_COMMON_MAX; i++) {
-            status_change_end(bl, (sc_type)i, INVALID_TIMER);
+			if(sc->data[i])
+				status_change_end(bl, (sc_type)i, INVALID_TIMER);
         }
+	if(type&6) //Toxins
+		for (i = SC_TOXIN; i <= SC_LEECHESEND; ++i) {
+			if (sc->data[i])
+				status_change_end(bl, (sc_type)i, INVALID_TIMER);
+		}
 
     for (i = SC_COMMON_MAX+1; i < SC_MAX; i++) {
         if (!sc->data[i])
@@ -10630,10 +10637,21 @@ int status_change_clear_buffs(struct block_list *bl, int type)
                 continue;
 
                 //Debuffs that can be removed.
-            case SC_HALLUCINATION:
+			case SC_CRYSTALIZE:
+			case SC_DEEPSLEEP:
+			case SC_MANDRAGORA:
+			case SC_MARSHOFABYSS:
+				if(!(type&6))
+					continue;
+				break;
             case SC_QUAGMIRE:
-            case SC_SIGNUMCRUCIS:
             case SC_DECREASEAGI:
+			case SC_BURNING:
+				if(!(type&2))
+					continue;
+				break;
+			case SC_HALLUCINATION:
+			case SC_SIGNUMCRUCIS:
             case SC_SLOWDOWN:
             case SC_MINDBREAKER:
             case SC_WINKCHARM:
@@ -10646,11 +10664,10 @@ int status_change_clear_buffs(struct block_list *bl, int type)
             case SC_BITE:
             case SC_ADORAMUS:
             case SC_VACUUM_EXTREME:
-            case SC_BURNING:
             case SC_FEAR:
             case SC_MAGNETICFIELD:
             case SC_NETHERWORLD:
-                if (!(type&2))
+                if (!(type&2) || type == 6) //RK_Refresh is not supposed to remove these
                     continue;
                 break;
                 //The rest are buffs that can be removed.
