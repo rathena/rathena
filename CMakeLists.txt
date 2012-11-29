@@ -481,7 +481,6 @@ set( RUNTIME_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/map-server.sh"
 	"${CMAKE_CURRENT_SOURCE_DIR}/mapserv-sql.bat"
 	"${CMAKE_CURRENT_SOURCE_DIR}/pcre3.dll"
-	"${CMAKE_CURRENT_SOURCE_DIR}/readme.html"
 	"${CMAKE_CURRENT_SOURCE_DIR}/runserver-sql.bat"
 	"${CMAKE_CURRENT_SOURCE_DIR}/serv.bat"
 	"${CMAKE_CURRENT_SOURCE_DIR}/start"
