@@ -576,17 +576,17 @@ bSPVanishRate	2042
 bMagicSPGainValue	2043
 bMagicHPGainValue	2044
 bAddClassDropItem	2045
-bEquipmentMatk	2046
-bIntMatk	2047
-bSPGainRaceAttack	2048
-bHPGainRaceAttack	2049
-bSkillUseSPrate	2050
-bSkillCooldown	2051
-bSkillFixedCast	2052
-bSkillVariableCast	2053
-bFixedCastrate	2054
-bVariableCastrate	2055
-bSkillUseSP	2056
+bMatk	2046
+bSPGainRaceAttack	2047
+bHPGainRaceAttack	2048
+bSkillUseSPrate	2049
+bSkillCooldown	2050
+
+bSkillFixedCast	2051
+bSkillVariableCast	2052
+bFixedCastrate	2053
+bVariableCastrate	2054
+bSkillUseSP	2055
 
 EQI_HEAD_TOP	1
 EQI_ARMOR	2

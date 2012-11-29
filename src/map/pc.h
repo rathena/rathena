@@ -314,11 +314,11 @@ struct map_session_data {
         short sp_gain_value, hp_gain_value, magic_sp_gain_value, magic_hp_gain_value;
         short sp_vanish_rate;
         short sp_vanish_per;
-        short sp_weapon_matk,sp_base_matk;
         unsigned short unbreakable; // chance to prevent ANY equipment breaking [celest]
         unsigned short unbreakable_equip; //100% break resistance on certain equipment
         unsigned short unstripable_equip;
         int fixcastrate,varcastrate;
+		int ematk; // matk bonus from equipment
     } bonus;
 
     // zeroed vars end here.
@@ -645,6 +645,8 @@ enum equip_index {
 #define pc_rightside_def(sd) ((sd)->battle_status.def)
 #define pc_leftside_mdef(sd) ((sd)->battle_status.mdef2)
 #define pc_rightside_mdef(sd) ((sd)->battle_status.mdef)
+#define pc_leftside_matk(sd) (status_base_matk(status_get_status_data(&(sd)->bl), (sd)->status.base_level))
+#define pc_rightside_matk(sd) ((sd)->battle_status.rhw.matk+(sd)->bonus.ematk)
 #else
 #define pc_leftside_atk(sd) ((sd)->battle_status.batk + (sd)->battle_status.rhw.atk + (sd)->battle_status.lhw.atk)
 #define pc_rightside_atk(sd) ((sd)->battle_status.rhw.atk2 + (sd)->battle_status.lhw.atk2)
@@ -652,6 +654,8 @@ enum equip_index {
 #define pc_rightside_def(sd) ((sd)->battle_status.def2)
 #define pc_leftside_mdef(sd) ((sd)->battle_status.mdef)
 #define pc_rightside_mdef(sd) ( (sd)->battle_status.mdef2 - ((sd)->battle_status.vit>>1) )
+#define pc_leftside_matk(sd) ((sd)->battle_status.matk_min)
+#define pc_rightside_matk(sd) ((sd)->battle_status.matk_max)
 #endif
 
 int pc_class2idx(int class_);

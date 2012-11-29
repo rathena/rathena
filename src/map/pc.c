@@ -2533,14 +2533,10 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
             if (sd->state.lr_flag != 2)
                 sd->bonus.itemhealrate2 += val;
             break;
-        case SP_WEAPON_MATK:
-            if (sd->state.lr_flag != 2)
-                sd->bonus.sp_weapon_matk += val;
-            break;
-        case SP_BASE_MATK:
-            if (sd->state.lr_flag != 2)
-                sd->bonus.sp_base_matk += val;
-            break;
+		case SP_EMATK:
+           if(sd->state.lr_flag != 2)
+               sd->bonus.ematk += val;
+           break;
         case SP_FIXCASTRATE:
             if (sd->state.lr_flag != 2)
                 sd->bonus.fixcastrate -= val;
