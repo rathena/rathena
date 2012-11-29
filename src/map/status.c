@@ -10557,6 +10557,7 @@ int status_change_timer_sub(struct block_list *bl, va_list ap)
 /*==========================================
  * Clears buffs/debuffs of a character.
  * type&1 -> buffs, type&2 -> debuffs
+ * type&4 -> especific debuffs(implemented with refresh)
  *------------------------------------------*/
 int status_change_clear_buffs(struct block_list *bl, int type)
 {
@@ -10571,7 +10572,7 @@ int status_change_clear_buffs(struct block_list *bl, int type)
 			if(sc->data[i])
 				status_change_end(bl, (sc_type)i, INVALID_TIMER);
         }
-	if(type&6) //Toxins
+	if(type&4) //Toxins
 		for (i = SC_TOXIN; i <= SC_LEECHESEND; ++i) {
 			if (sc->data[i])
 				status_change_end(bl, (sc_type)i, INVALID_TIMER);
@@ -10641,7 +10642,7 @@ int status_change_clear_buffs(struct block_list *bl, int type)
 			case SC_DEEPSLEEP:
 			case SC_MANDRAGORA:
 			case SC_MARSHOFABYSS:
-				if(!(type&6))
+				if(!(type&4))
 					continue;
 				break;
             case SC_QUAGMIRE:
