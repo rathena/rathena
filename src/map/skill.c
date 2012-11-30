@@ -16611,6 +16611,12 @@ static void skill_toggle_magicpower(struct block_list *bl, short skillid)
         } else {
             sc->data[SC_MAGICPOWER]->val4 = 1;
             status_calc_bl(bl, status_sc2scb_flag(SC_MAGICPOWER));
+#ifndef RENEWAL
+			if(bl->type == BL_PC){// update current display.
+				clif_updatestatus(((TBL_PC *)bl),SP_MATK1);
+			    clif_updatestatus(((TBL_PC *)bl),SP_MATK2);
+			}
+#endif
         }
     }
 }

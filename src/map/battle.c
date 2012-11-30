@@ -502,7 +502,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 			}
 			break;
 		case BF_WEAPON:
-			if( sd && !(nk&NK_NO_CARDFIX_ATK) )
+			if( sd && !(nk&NK_NO_CARDFIX_ATK) && (left&2) )
 			{
 				short cardfix_ = 1000;
 				if(sd->state.arrow_atk)
@@ -550,7 +550,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 						if( tstatus->race != RC_DEMIHUMAN )
 							cardfix=cardfix*(100+sd->right_weapon.addrace[RC_NONDEMIHUMAN])/100;
 
-						if( left )
+						if( left&1 )
 						{
 							cardfix_=cardfix_*(100+sd->left_weapon.addrace[tstatus->race])/100;
 							if (!(nk&NK_NO_ELEFIX))	{
@@ -610,7 +610,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 					}
 				}
 
-				if( left )
+				if( left&1 )
 				{
 					for( i = 0; i < ARRAYLENGTH(sd->left_weapon.add_dmg) && sd->left_weapon.add_dmg[i].rate; i++ )
 					{
@@ -630,7 +630,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 					cardfix_ = cardfix_ * (100 + sd->sc.data[SC_EDP]->val1 * 60 ) / 100;
 				}
 #endif
-				if( left && cardfix_ != 1000 )
+				if( (left&1) && cardfix_ != 1000 )
 					damage = damage * cardfix_ / 1000;
 				else if( cardfix != 1000 )
 					damage = damage * cardfix / 1000;
@@ -649,7 +649,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 					ele_fix += tsd->subele2[i].rate;
 				}
 				cardfix=cardfix*(100-ele_fix)/100;
-				if( left && s_ele_ != s_ele )
+				if( left&1 && s_ele_ != s_ele )
 				{
 					int ele_fix_lh = tsd->subele[s_ele_];
 					for (i = 0; ARRAYLENGTH(tsd->subele2) > i && tsd->subele2[i].rate != 0; i++)
@@ -3311,9 +3311,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
         }
 
         //Card Fix, sd side
-        wd.damage = battle_calc_cardfix(BF_WEAPON, src, (tsd?NULL:target), nk, s_ele, s_ele_, wd.damage, 0, wd.flag);
+        wd.damage = battle_calc_cardfix(BF_WEAPON, src, target, nk, s_ele, s_ele_, wd.damage, 2, wd.flag);
         if( flag.lh )
-            wd.damage2 = battle_calc_cardfix(BF_WEAPON, src, (tsd?NULL:target), nk, s_ele, s_ele_, wd.damage2, 1, wd.flag);
+            wd.damage2 = battle_calc_cardfix(BF_WEAPON, src, target, nk, s_ele, s_ele_, wd.damage2, 3, wd.flag);
 
         if (skill_num == CR_SHIELDBOOMERANG || skill_num == PA_SHIELDCHAIN) {
             //Refine bonus applies after cards and elements.
@@ -3323,9 +3323,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
         }
     } //if (sd)
 
-    //Card Fix, tsd sid
+    //Card Fix, tsd side
     if(tsd)
-        wd.damage = battle_calc_cardfix(BF_WEAPON, (sd?NULL:src), target, nk, s_ele, s_ele_, wd.damage, flag.lh, wd.flag);
+        wd.damage = battle_calc_cardfix(BF_WEAPON, src, target, nk, s_ele, s_ele_, wd.damage, flag.lh, wd.flag);
 
     if (flag.infdef) {
         //Plants receive 1 damage when hit

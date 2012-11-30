@@ -654,8 +654,18 @@ enum equip_index {
 #define pc_rightside_def(sd) ((sd)->battle_status.def2)
 #define pc_leftside_mdef(sd) ((sd)->battle_status.mdef)
 #define pc_rightside_mdef(sd) ( (sd)->battle_status.mdef2 - ((sd)->battle_status.vit>>1) )
-#define pc_leftside_matk(sd) ((sd)->battle_status.matk_min)
-#define pc_rightside_matk(sd) ((sd)->battle_status.matk_max)
+#define pc_leftside_matk(sd) \
+    (\
+    ((sd)->sc.data[SC_MAGICPOWER] && (sd)->sc.data[SC_MAGICPOWER]->val4) \
+		?((sd)->battle_status.matk_min * 100 + 50) / ((sd)->sc.data[SC_MAGICPOWER]->val3+100) \
+        :(sd)->battle_status.matk_min \
+    )
+#define pc_rightside_matk(sd) \
+    (\
+    ((sd)->sc.data[SC_MAGICPOWER] && (sd)->sc.data[SC_MAGICPOWER]->val4) \
+		?((sd)->battle_status.matk_max * 100 + 50) / ((sd)->sc.data[SC_MAGICPOWER]->val3+100) \
+        :(sd)->battle_status.matk_max \
+    )
 #endif
 
 int pc_class2idx(int class_);

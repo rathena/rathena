@@ -3296,6 +3296,9 @@ static unsigned int status_calc_maxsp(struct block_list *,struct status_change *
 static unsigned char status_calc_element(struct block_list *bl, struct status_change *sc, int element);
 static unsigned char status_calc_element_lv(struct block_list *bl, struct status_change *sc, int lv);
 static unsigned short status_calc_mode(struct block_list *bl, struct status_change *sc, int mode);
+#ifdef RENEWAL
+static unsigned short status_calc_ematk(struct block_list *,struct status_change *,int);
+#endif
 
 //Calculates base regen values.
 void status_calc_regen(struct block_list *bl, struct status_data *status, struct regen_data *regen)
@@ -3786,10 +3789,14 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 		 **/
 		status->matk_min = status->matk_max = status_base_matk(status, status_get_lv(bl));
 		if( bl->type&BL_PC ){
+			//  Any +MATK you get from skills and cards, including cards in weapon, is added here.
 			if( sd->bonus.ematk > 0 ){
 				status->matk_max += sd->bonus.ematk;
 				status->matk_min += sd->bonus.ematk;
 			}
+            status->matk_min = status_calc_ematk(bl, sc, status->matk_min);
+            status->matk_max = status_calc_ematk(bl, sc, status->matk_max);
+			//This is the only portion in MATK that varies depending on the weapon level and refinement rate.
 			if( status->rhw.matk > 0 ){
 				int wMatk = status->rhw.matk;
 				int variance = wMatk * status->rhw.wlv / 10;
@@ -3807,7 +3814,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
         status->matk_max = status_calc_matk(bl, sc, status->matk_max);
 
         if ((bl->type&BL_HOM && battle_config.hom_setting&0x20)  //Hom Min Matk is always the same as Max Matk
-			|| ( sc && sc->data[SC_RECOGNIZEDSPELL] ))
+			|| sc->data[SC_RECOGNIZEDSPELL])
             status->matk_min = status->matk_max;
 
 #ifdef RENEWAL
@@ -4540,28 +4547,16 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 
     return (unsigned short)cap_value(watk,0,USHRT_MAX);
 }
-
-static unsigned short status_calc_matk(struct block_list *bl, struct status_change *sc, int matk)
+#ifdef RENEWAL
+static unsigned short status_calc_ematk(struct block_list *bl, struct status_change *sc, int matk)
 {
+	
     if (!sc || !sc->count)
         return cap_value(matk,0,USHRT_MAX);
-
     if (sc->data[SC_MATKPOTION])
         matk += sc->data[SC_MATKPOTION]->val1;
     if (sc->data[SC_MATKFOOD])
         matk += sc->data[SC_MATKFOOD]->val1;
-    if (sc->data[SC_MAGICPOWER] && sc->data[SC_MAGICPOWER]->val4)
-        matk += matk * sc->data[SC_MAGICPOWER]->val3/100;
-    if (sc->data[SC_MINDBREAKER])
-        matk += matk * sc->data[SC_MINDBREAKER]->val2/100;
-    if (sc->data[SC_INCMATKRATE])
-        matk += matk * sc->data[SC_INCMATKRATE]->val1/100;
-    if (sc->data[SC_MOONLITSERENADE])
-        matk += matk * sc->data[SC_MOONLITSERENADE]->val2/100;
-    if (sc->data[SC_MELODYOFSINK])
-        matk += matk * sc->data[SC_MELODYOFSINK]->val3/100;
-    if (sc->data[SC_BEYONDOFWARCRY])
-        matk -= matk * sc->data[SC_BEYONDOFWARCRY]->val3/100;
     if (sc->data[SC_MANA_PLUS])
         matk += sc->data[SC_MANA_PLUS]->val1;
     if (sc->data[SC_AQUAPLAY_OPTION])
@@ -4576,6 +4571,47 @@ static unsigned short status_calc_matk(struct block_list *bl, struct status_chan
         matk += 40 + 30 * sc->data[SC_ODINS_POWER]->val1; //70 lvl1, 100lvl2
     if (sc->data[SC_IZAYOI])
         matk += 50 * sc->data[SC_IZAYOI]->val1;
+
+    return (unsigned short)cap_value(matk,0,USHRT_MAX);
+}
+#endif
+static unsigned short status_calc_matk(struct block_list *bl, struct status_change *sc, int matk)
+{
+    if (!sc || !sc->count)
+        return cap_value(matk,0,USHRT_MAX);
+#ifndef RENEWAL
+	// take note fixed value first before % modifiers
+    if (sc->data[SC_MATKPOTION])
+        matk += sc->data[SC_MATKPOTION]->val1;
+    if (sc->data[SC_MATKFOOD])
+        matk += sc->data[SC_MATKFOOD]->val1;
+    if (sc->data[SC_MANA_PLUS])
+        matk += sc->data[SC_MANA_PLUS]->val1;
+    if (sc->data[SC_AQUAPLAY_OPTION])
+        matk += sc->data[SC_AQUAPLAY_OPTION]->val2;
+    if (sc->data[SC_CHILLY_AIR_OPTION])
+        matk += sc->data[SC_CHILLY_AIR_OPTION]->val2;
+    if (sc->data[SC_WATER_BARRIER])
+        matk -= sc->data[SC_WATER_BARRIER]->val3;
+    if (sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 3)
+        matk += 50;
+    if (sc->data[SC_ODINS_POWER])
+        matk += 40 + 30 * sc->data[SC_ODINS_POWER]->val1; //70 lvl1, 100lvl2
+    if (sc->data[SC_IZAYOI])
+        matk += 50 * sc->data[SC_IZAYOI]->val1;
+#endif
+    if (sc->data[SC_MAGICPOWER])
+        matk += matk * sc->data[SC_MAGICPOWER]->val3/100;
+    if (sc->data[SC_MINDBREAKER])
+        matk += matk * sc->data[SC_MINDBREAKER]->val2/100;
+    if (sc->data[SC_INCMATKRATE])
+        matk += matk * sc->data[SC_INCMATKRATE]->val1/100;
+    if (sc->data[SC_MOONLITSERENADE])
+        matk += matk * sc->data[SC_MOONLITSERENADE]->val2/100;
+    if (sc->data[SC_MELODYOFSINK])
+        matk += matk * sc->data[SC_MELODYOFSINK]->val3/100;
+    if (sc->data[SC_BEYONDOFWARCRY])
+        matk -= matk * sc->data[SC_BEYONDOFWARCRY]->val3/100;
     if (sc->data[SC_ZANGETSU])
         matk += matk * sc->data[SC_ZANGETSU]->val2 / 100;
 
@@ -6987,6 +7023,9 @@ int status_change_start(struct block_list *bl,enum sc_type type,int rate,int val
             break;
         case SC_INVINCIBLEOFF:
             status_change_end(bl, SC_INVINCIBLE, INVALID_TIMER);
+            break;
+        case SC_MAGICPOWER:
+			status_change_end(bl, type, INVALID_TIMER);
             break;
     }
 
