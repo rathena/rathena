@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Fix up by Jukka
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= rAthena SVN (Testet in Trunk 88xx)
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //= 1.3 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //= 1.4 Misc. updates. [L0ne_W0lf]
 //= 1.5 Adjusted EXP gains to Renewal values.
+//= 1.6 Fixed a wrong placed curly bracket. [Joseph]
 //============================================================ 
 
 
@@ -1540,21 +1541,21 @@ prt_monk,153,210,3	script	Cleope Verce	95,{
 				mes "young friend~";
 				close;
 			}
-			mes "Hmmm?";
-			mes "It looks like you've";
-			mes "learned quite a lot as";
-			mes "an Acolyte! I hate to admit it,";
-			mes "but you're too good for me to";
-			mes "call you a rookie anymore~";
-			close;
 		}
-		mes "Hello hello.";
-		mes "The sun is very";
-		mes "warm today, don't";
-		mes "think? Very pleasant";
-		mes "weather today...";
+		mes "Hmmm?";
+		mes "It looks like you've";
+		mes "learned quite a lot as";
+		mes "an Acolyte! I hate to admit it,";
+		mes "but you're too good for me to";
+		mes "call you a rookie anymore~";
 		close;
 	}
+	mes "Hello hello.";
+	mes "The sun is very";
+	mes "warm today, don't";
+	mes "think? Very pleasant";
+	mes "weather today...";
+	close;
 }
 //=================================================Range NPC====================================================  
 prt_monk,217,123,0	script	#tu_monk	139,10,10,{
