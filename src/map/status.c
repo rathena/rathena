@@ -1942,7 +1942,7 @@ static unsigned short status_base_atk(const struct block_list *bl, const struct 
     return cap_value(str, 0, USHRT_MAX);
 }
 
-#ifndef RENEWAL 
+#ifndef RENEWAL
 static inline unsigned short status_base_matk_min(const struct status_data* status){ return status->int_+(status->int_/7)*(status->int_/7); }
 static inline unsigned short status_base_matk_max(const struct status_data* status){ return status->int_+(status->int_/5)*(status->int_/5); }
 #else
@@ -3806,7 +3806,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
         status->matk_min = status_calc_matk(bl, sc, status->matk_min);
         status->matk_max = status_calc_matk(bl, sc, status->matk_max);
 
-        if (bl->type&BL_HOM && battle_config.hom_setting&0x20  //Hom Min Matk is always the same as Max Matk
+        if ((bl->type&BL_HOM && battle_config.hom_setting&0x20)  //Hom Min Matk is always the same as Max Matk
 			|| ( sc && sc->data[SC_RECOGNIZEDSPELL] ))
             status->matk_min = status->matk_max;
 
@@ -6210,7 +6210,7 @@ int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int ti
 			tick -= (status->int_ + status->luk) / 20 * 1000;
 			break;
 		case SC_STASIS:
-			//5 second (fixed) + { Stasis Skill level * 5 - (Target’s VIT + DEX) / 20 }
+			//5 second (fixed) + { Stasis Skill level * 5 - (Targetï¿½s VIT + DEX) / 20 }
 			tick -= (status->vit + status->dex) / 20 * 1000;
 			break;
         case SC_WHITEIMPRISON:
@@ -10555,7 +10555,7 @@ int status_change_timer_sub(struct block_list *bl, va_list ap)
 
 /*==========================================
  * Clears buffs/debuffs of a character.
- * type&1 -> buffs, type&2 -> debuffs 
+ * type&1 -> buffs, type&2 -> debuffs
  * type&4 -> especific debuffs(implemented with refresh)
  *------------------------------------------*/
 int status_change_clear_buffs(struct block_list *bl, int type)

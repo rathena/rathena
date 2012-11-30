@@ -1003,7 +1003,7 @@ ACMD_FUNC(jobchange)
 
     if (!message || !*message || sscanf(message, "%d %d", &job, &upper) < 1) {
         int i, found = 0;
-        
+
         for (i = JOB_NOVICE; i < JOB_MAX; ++i) {
             if (strncmpi(message, job_name(i), 16) == 0) {
                 job = i;
@@ -7410,7 +7410,7 @@ ACMD_FUNC(mapflag)
         clif_displaymessage(sd->fd,atcmd_output);\
         return 0;\
     }
-    unsigned char flag_name[100];
+    char flag_name[100];
     int flag=0,i;
     nullpo_retr(-1, sd);
     memset(flag_name, '\0', sizeof(flag_name));
