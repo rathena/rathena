@@ -1,44 +1,43 @@
 //===== rAthena Script ======================================= 
 //= Mechanic Jobchange Quest
 //===== By: ================================================== 
-//= Masao
+//= Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Jobchange Quest from Blacksmith / Whitesmith -> Mechanic.
 //===== Additional Comments: ================================= 
-//= v1.0 First Version.
-//= v1.1 Fixed the Door NPC - [JayPee].
+//= 1.0 First Version. [Masao]
+//= 1.1 Fixed the Door NPC [JayPee].
+//= 1.2 Updated script. [Euphy]
 //============================================================ 
 
 yuno,129,156,3	script	Chainheart	923,{
-
-	if(BaseLevel > 99)
-	{
-		mes "[Chainheart]";
+	mes "[Chainheart]";
+	if (BaseLevel > 99) {
 		mes "Living as a Mechanic is tough,";
 		mes "but I am happy that I can";
 		mes "always do what I want.";
 		close;
 	}
-	if(job__mechanic == 12)
-	{
-		mes "[Chainheart]";
+	if (job__mechanic == 12) {
 		mes "There's nothing to say specifically about Mechanics or magic machinery.";
 		mes "You would know more about it than anyone now.";
 		next;
 		mes "[Chainheart]";
 		mes "Continue to grow your knowledge by experiencing what the world has to offer.";
 		close;
-	}
-	if(job__mechanic == 11)
-	{
-		if((Class == Job_Blacksmith || Class == Job_Whitesmith || Job_Baby_Blacksmith) && (JobLevel > 49) && (SkillPoint == 0) && (BaseLevel > 98))
-		{
-			mes "[Chainheart]";
+	} else if (job__mechanic == 11) {
+		if (BaseJob == Job_Blacksmith && BaseLevel > 98 && JobLevel > 49 && SkillPoint == 0) {
+			if (ismounting()) {
+				mes "You are on a riding pet,";
+				mes "so you cannot change your job.";
+				mes "Please unequip your riding pet and try again!";
+				close;
+			}
 			mes "What is it? Is that you?";
 			mes "Oh wait, you look quite different than the last time I saw you.";
 			mes "Did something happen?";
@@ -64,7 +63,7 @@ yuno,129,156,3	script	Chainheart	923,{
 			mes "by actively participating.";
 			next;
 			mes "[Chainheart]";
-			mes "I like who you are and I think we need that kind of new blood for our Mechanics.";
+			mes "I like who you are and I think we need that kind of a new blood for our Mechanics.";
 			next;
 			mes "[Chainheart]";
 			mes "Science is seeking and studying things that can be proven logically.";
@@ -76,22 +75,14 @@ yuno,129,156,3	script	Chainheart	923,{
 			next;
 			set job__mechanic,12;
 			completequest 10101;
-			if(Sex == 1) {
+			if (Sex)
 				getitem 5749,1; //Driver_Band
-			} else {
+			else
 				getitem 5760,1; //Driver_Band_
-			}
 			getitem 2795,1; //Green_Apple_Ring
-			if(Class == Job_Baby_Blacksmith){
-				jobchange Job_Baby_Mechanic;
-			}
-			else if(Class == Job_Blacksmith) {
-				jobchange Job_Mechanic;
-			} else if(Class == Job_Whitesmith) {
-				jobchange Job_Mechanic_T;
-			}
+			jobchange roclass(eaclass()|EAJL_THIRD);
 			mes "[Chainheart]";
-			mes "Here is, a gift.";
+			mes "This is a gift that I give to you.";
 			mes "If you keep this well, one day";
 			mes "you'll be thankful to me.";
 			next;
@@ -102,13 +93,9 @@ yuno,129,156,3	script	Chainheart	923,{
 			mes "textbook, so let there be a silver lining in the future of Mechanics!";
 			close;
 		}
-		mes "[Chainheart]";
-		mes "If not what?";
+		mes "It seems something not enough?";
 		close;
-	}
-	if(job__mechanic >= 3)
-	{
-		mes "[Chainheart]";
+	} else if (job__mechanic >= 3) {
 		mes "By the way, Franklson is missing.";
 		mes "He said that he wanted to study";
 		mes "and then disappeared.";
@@ -121,14 +108,10 @@ yuno,129,156,3	script	Chainheart	923,{
 		mes "[Chainheart]";
 		mes "Anyway, farewell.";
 		close;
-	}
-	if(job__mechanic == 2)
-	{
-		mes "[Chainheart]";
+	} else if (job__mechanic == 2) {
 		mes "I think I've done all the explanations, is there anything else you want to know?";
 		next;
-		switch(select("I want to know more.:Nothing."))
-		{
+		switch(select("I want to know more.:Nothing.")) {
 		case 1:
 			mes "[Chainheart]";
 			mes "Um..? You want to know more about magic machinery. Is that it?";
@@ -160,7 +143,7 @@ yuno,129,156,3	script	Chainheart	923,{
 			next;
 			mes "[Chainheart]";
 			mes "Come to think of it...";
-			mes "Franklson developed";
+			mes "Franklson developed the";
 			mes "magic machinery on his own.";
 			mes "So why don't you go to";
 			mes "the Ruins of Juperos?";
@@ -184,10 +167,7 @@ yuno,129,156,3	script	Chainheart	923,{
 			mes "I thought that you had what it took to be a true Mechanic.";
 			close;
 		}
-	}
-	if(job__mechanic == 1)
-	{
-		mes "[Chainheart]";
+	} else if (job__mechanic == 1) {
 		mes "Ok let me catch my breath.";
 		mes "You must be interested in";
 		mes "magic machinery and the";
@@ -199,7 +179,7 @@ yuno,129,156,3	script	Chainheart	923,{
 		mes "The two haven't really been connected successfully together until now.";
 		next;
 		mes "[Chainheart]";
-		mes "If you use magic machinery, you really have to be familiar with the inner workings of machines.";
+		mes "If you use the magic machinery, you really have to be familiar with the inner workings of machines.";
 		next;
 		mes "[Chainheart]";
 		mes "It can be used effectively,";
@@ -235,11 +215,8 @@ yuno,129,156,3	script	Chainheart	923,{
 		mes "Anyway if you become one of us you can form your own definition and explanation of Mechanics yourself.";
 		close;
 	}
-	if (Class == Job_Blacksmith || Class == Job_Whitesmith || Class == Job_Baby_Blacksmith)
-	{
-		if ((JobLevel > 49) && (SkillPoint == 0) && (BaseLevel > 98))
-		{
-			mes "[Chainheart]";
+	if (BaseJob == Job_Blacksmith) {
+		if (BaseLevel > 98 && JobLevel > 49 && SkillPoint == 0) {
 			mes "At a glance, you, seem to be a very versatile person on dealing with various things.";
 			mes "You look quite skilled.";
 			mes "You can be the one.";
@@ -276,8 +253,7 @@ yuno,129,156,3	script	Chainheart	923,{
 			mes "please talk to me again.";
 			close;
 		}
-		mes "[Chainheart]";
-		mes "You, look like someone who has a great sense on dealing with stuff.";
+		mes "You look like someone who has a great sense on dealing with stuff.";
 		next;
 		mes "[Chainheart]";
 		mes "That power has been used on";
@@ -310,7 +286,6 @@ yuno,129,156,3	script	Chainheart	923,{
 		mes "I will guide you to the world of Mechanics.";
 		close;
 	}
-	mes "[Chainheart]";
 	mes "Living as a Mechanic is tough,";
 	mes "but I am happy that I can";
 	mes "always do what I want.";
@@ -321,28 +296,19 @@ yuno,129,156,3	script	Chainheart	923,{
 }
 
 jupe_cave,37,55,5	script	Scholar#Mechanic	883,{
-
-	if(checkweight(1201,1) == 4 || MaxWeight - Weight < 300)
-	{
-		mes "- Wait here!! -";
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 300) {
 		mes "- Your pack is too heavy. -";
-		mes "- Lighten your body first-";
-		mes "- and please try again.-";
+		mes "- Lighten your body first -";
+		mes "- and please try again. -";
 		close;
 	}
-
-	if(job__mechanic > 10)
-	{
-		mes "[Scholar]";
+	mes "[Scholar]";
+	if (job__mechanic > 10) {
 		mes "How was Juperos?";
 		mes "I am so scared that I still";
 		mes "cannot go there.";
 		close;
-	}
-
-	if(job__mechanic > 3)
-	{
-		mes "[Scholar]";
+	} else if (job__mechanic > 3) {
 		mes "^FF0000You won't be able to reach the destination by walking.";
 		mes "^FF0000Strong enemies are not the problem here, you just won't be able to get to the destination.";
 		mes "Please make yourself at home.^000000";
@@ -356,8 +322,7 @@ jupe_cave,37,55,5	script	Scholar#Mechanic	883,{
 		mes "to go to the midway point";
 		mes "at Juperos?";
 		next;
-		switch(select("I am ready!:Not yet"))
-		{
+		switch(select("I am ready!:Not yet")) {
 		case 1:
 			mes "[Scholar]";
 			mes "Uh... you are acting so firmly that I regret a little that I haven't gone there.";
@@ -384,76 +349,50 @@ jupe_cave,37,55,5	script	Scholar#Mechanic	883,{
 			close;
 		}
 	}
-	if(job__mechanic == 3)
-	{
-		mes "[Scholar]";
-		mes "I am a scholar who came here to research the ruins here in Juperos.";
-		next;
-		mes "[Scholar]";
-		mes "But... actually when";
-		mes "I try to go further";
-		mes "I get scared.";
-		mes "I can hardly go inside.";
-		mes "What can I do?";
-		next;
-		mes "[Scholar]";
-		mes "I heard a rumor that humans";
-		mes "aren't welcome inside there.";
-		mes "But it should be very useful to study the marvelous machines in there.";
-		next;
-		mes "[Scholar]";
-		mes "Umm? Are you also going to";
-		mes "Juperos to get something?";
-		mes "I have no courage to go in there.";
-		mes "Goodluck to you.";
-		next;
-		mes "[Scholar]";
-		mes "I know the way to get to";
-		mes "the midway point and I also have";
-		mes "all the stuff I need.";
-		mes "But I'm just too scared.";
-		next;
-		mes "[Scholar]";
-		mes "So if you want, I'll send you";
-		mes "to Juperos. Mr. Elder Scholar";
-		mes "has told me how to warp to";
-		mes "the midway point to Juperos.";
-		next;
-		set job__mechanic,4;
-		mes "[Scholar]";
-		mes "It is true that it becomes easy";
-		mes "but you can't help the fear";
-		mes "it's too bad. Anyway if you are";
-		mes "ready to go please tell me.";
-		close;
-	}
-	mes "[Scholar]";
 	mes "I am a scholar who came here to research the ruins here in Juperos.";
 	next;
 	mes "[Scholar]";
 	mes "But... actually when I try to go further";
-	mes "I'm scared. I can hardly go inside.";
+	mes "I get scared. I can hardly go inside.";
 	mes "What can I do?";
 	next;
 	mes "[Scholar]";
 	mes "I heard a rumor that humans aren't welcome inside there.";
 	mes "But it should be very useful to study the marvelous machines in there.";
+	if (job__mechanic != 3) close;
+	next;
+	mes "[Scholar]";
+	mes "Umm? Are you also going to Juperos to get something?";
+	mes "I have no courage to go in there.";
+	mes "Good luck to you.";
+	next;
+	mes "[Scholar]";
+	mes "I know the way to get to";
+	mes "the midway point and I also have";
+	mes "all the stuff I need. But I'm just too scared.";
+	next;
+	mes "[Scholar]";
+	mes "So if you want, I'll send you";
+	mes "to Juperos. Mr. Elder Scholar";
+	mes "has told me how to warp to";
+	mes "the midway point to Juperos.";
+	next;
+	set job__mechanic,4;
+	mes "[Scholar]";
+	mes "It is true that it becomes easy";
+	mes "but you can't help the fear";
+	mes "it's too bad. Anyway if you are";
+	mes "ready to go please tell me.";
 	close;
 }
 
 jupe_core2,149,273,3	script	Ghostfire#1	802,{
-
-	if(job__mechanic == 11)
-	{
-		mes "[?]";
+	mes "[?]";
+	if (job__mechanic == 11) {
 		mes "I've lost my body and all that's left is my spirit in this place.";
 		mes "I will live and die here in Juperos forever...";
 		close;
-	}
-
-	if(job__mechanic == 10)
-	{
-		mes "[?]";
+	} else if (job__mechanic == 10) {
 		mes "That appearance... Is it so? You also gained the knowledge.";
 		mes "When the future is full of possibilities...";
 		mes "An attitude of a pure child";
@@ -484,193 +423,161 @@ jupe_core2,149,273,3	script	Ghostfire#1	802,{
 		changequest 10100,10101;
 		warp "yuno",157,83;
 		end;
-	}
-	if(job__mechanic > 4)
-	{
-		mes "[?]";
+	} else if (job__mechanic > 4) {
 		mes "I've lost my body and all that's left is my spirit in this place.";
 		mes "I will live and die here in Juperos forever...";
 		close;
-	}
-	if (job__mechanic == 3 || job__mechanic == 4)
-	{
-		mes "[?]";
+	} else if (job__mechanic > 2) {
 		mes "Talented one.";
 		mes "Make sure there are";
 		mes "no enemies around.";
 		mes "If you focus on me,";
 		mes "you might get attacked.";
 		next;
-		switch(select("Well then, later.:Focus."))
-		{
-		case 1:
-			close;
-		case 2:
-			mes "[?]";
-			mes "I was once a human scholar.";
-			mes "I wanted to know the limitation of science that humankind didn't know of, so I learned a lot of things, studied and searched...";
-			next;
-			mes "[?]";
-			mes "That's when I discovered, the uncertain magical power.";
-			next;
-			mes "[?]";
-			mes "The thing with uncertain magic is that it is highly unstable and unpredictable.";
-			mes "During my studies I encountered a pocket of highly volatile magic.";
-			next;
-			mes "[?]";
-			mes "The only memories I have";
-			mes "are from that day forward.";
-			mes "I've been trapped here since.";
-			next;
-			mes "[?]";
-			mes "Juperos is all that I know now.";
-			mes "I'm going to die here.";
-			next;
-			mes "[?]";
-			mes "I don't know who you are...";
-			mes "I won't bother to know if you";
-			mes "want to gain some knowledge.";
-			mes "Find someone who cares.";
-			next;
+		if(select("Well then, later.:Focus.") == 1) close;
+		mes "[?]";
+		mes "I was once a human scholar.";
+		mes "I wanted to know the limitation of science that humankind didn't know of, so I learned a lot of things, studied,";
+		mes "and searched...";
+		next;
+		mes "[?]";
+		mes "That's when I discovered, the uncertain magical power.";
+		next;
+		mes "[?]";
+		mes "The thing, with uncertain magic is that it is highly unstable and unpredictable.";
+		mes "During my studies I encountered a pocket of highly volatile magic.";
+		next;
+		mes "[?]";
+		mes "The only memories I have are from that day forward.";
+		mes "I've been trapped here since.";
+		next;
+		mes "[?]";
+		mes "Juperos is all that I know now.";
+		mes "I'm going to die here.";
+		next;
+		mes "[?]";
+		mes "I don't know who you are...";
+		mes "I won't bother to know if you";
+		mes "want to gain some knowledge";
+		mes "find someone who cares.";
+		next;
+		if (job__mechanic == 3 || job__mechanic == 4)
 			changequest 10092,10094;
-			set job__mechanic,5;
-			mes "[?]";
-			mes "Knowledge isn't obtained from others. It is found through one's own efforts.";
-			mes "Find your own knowledge path.";
-			close;
-		}
+		set job__mechanic,5;
+		mes "[?]";
+		mes "Knowledge isn't obtained from others. It is found through one's own efforts.";
+		mes "Find your own knowledge path.";
+		close;
 	}
+	end;
 }
 
 jupe_core2,53,75,3	script	Ghostfire#2	802,{
-
-	if(job__mechanic > 5)
-	{
-		mes "[?]";
+	mes "[?]";
+	if (job__mechanic > 5) {
 		mes "Juperos... I...";
 		mes "Juperos... What I want";
 		mes "exists all in here...";
 		mes "The power of science...the paradise of machines...";
 		close;
-	}
-
-	if(job__mechanic == 5)
-	{
-		mes "[?]";
+	} else if (job__mechanic == 5) {
 		mes "Talented one.";
 		mes "Make sure there are";
 		mes "no enemies around.";
 		mes "If you focus on me,";
 		mes "you might get attacked.";
 		next;
-		switch(select("Well then, later:Focus"))
-		{
-		case 1:
-			close;
-		case 2:
-			mes "[?]";
-			mes "When I had a body";
-			mes "I wanted to prove the";
-			mes "excellence of science";
-			mes "to the ones who only believe";
-			mes "such occult things...";
-			next;
-			mes "[?]";
-			mes "I wanted to use the power of";
-			mes "magic as a reasonable form";
-			mes "which is visible. With stronger";
-			mes "results, I wanted to control";
-			mes "the power of magic by";
-			mes "using science....";
-			next;
-			mes "[?]";
-			mes "I wanted to show that science";
-			mes "is excellent to control magic";
-			mes "like the occult. I studied a lot";
-			mes "of things and agonized over";
-			mes "making science and magic";
-			mes "co-exist.";
-			next;
-			mes "[?]";
-			mes "My research led me here,";
-			mes "Juperos. In this place there";
-			mes "are many products of science";
-			mes "that could stimulate a scholar's";
-			mes "brain...";
-			next;
-			mes "[?]";
-			mes "I found that it was possible to join the power of magic with science.";
-			mes "Even if it wasn't perfect, it appealed enough to the other scholars...";
-			next;
-			mes "[?]";
-			mes "The recent events of the world have created a confusion so my research hasn't been shared with the rest of the world.";
-			next;
-			set job__mechanic,6;
-			changequest 10094,10095;
-			mes "[?]";
-			mes "So... I came back to Juperos to continue my investigation of science and magic.";
-			close;
-		}
+		if(select("Well then, later:Focus") == 1) close;
+		mes "[?]";
+		mes "When I had a body";
+		mes "I wanted to prove the";
+		mes "excellence of science";
+		mes "to the ones who only believe";
+		mes "such occult things...";
+		next;
+		mes "[?]";
+		mes "I wanted to use the power of";
+		mes "magic as a reasonable form";
+		mes "which is visible. With stronger";
+		mes "results, I wanted to control";
+		mes "the power of magic by";
+		mes "using science....";
+		next;
+		mes "[?]";
+		mes "I wanted to show that science";
+		mes "is excellent to control magic";
+		mes "like the occult. I studied a lot";
+		mes "of things and agonized over";
+		mes "making science and magic";
+		mes "co-exist.";
+		next;
+		mes "[?]";
+		mes "My research led me here,";
+		mes "Juperos. In this place there";
+		mes "are many products of science";
+		mes "that could stimulate a scholar's";
+		mes "brain...";
+		next;
+		mes "[?]";
+		mes "I found that it was possible to join the power of magic with science.";
+		mes "Even if it wasn't perfect, it appealed enough to the other scholars...";
+		next;
+		mes "[?]";
+		mes "The recent events of the world have created a confusion so my research hasn't been shared with the rest of the world.";
+		next;
+		set job__mechanic,6;
+		changequest 10094,10095;
+		mes "[?]";
+		mes "So... I came back to Juperos to continue my investigation of science and magic.";
+		close;
 	}
+	end;
 }
 
 jupe_core2,242,62,3	script	Ghostfire#3	802,{
-
-	if(job__mechanic > 6)
-	{
-		mes "[?]";
+	mes "[?]";
+	if (job__mechanic > 6) {
 		mes "I want to know more about the knowledge...";
 		mes "the features of humans...";
 		mes "The things to be done first and later...";
 		mes "The door of truth will later...";
 		close;
-	}
-
-	if(job__mechanic == 6)
-	{
-		mes "[?]";
+	} else if (job__mechanic == 6) {
 		mes "Talented one.";
 		mes "Make sure there are";
 		mes "no enemies around.";
 		mes "If you focus on me,";
 		mes "you might get attacked.";
 		next;
-		switch(select("Well then, later:Focus"))
-		{
-		case 1:
-			close;
-		case 2:
-			mes "[?]";
-			mes "I wasn't satisfied with my success so I came back here time and time again.";
-			next;
-			mes "[?]";
-			mes "When I stepped on a marker between 2 mechanical statues, the energy I had gathered and learned was absorbed.";
-			next;
-			mes "[?]";
-			mes "But, with that energy being absorbed, I began to gain knowledge that I never knew previously.";
-			next;
-			mes "[?]";
-			mes "But it came at a price. With the knowledge I started losing my humanity.";
-			mes "I lost my body and the only";
-			mes "thing I had was my spirit.";
-			next;
-			mes "[?]";
-			mes "I don't regret gaining the knowledge. All I wish is that I could have my body back.";
-			next;
-			set job__mechanic,7;
-			changequest 10095,10096;
-			mes "[?]";
-			mes "After I had poured my energy into the statue, I discovered that I could move my energy to different statues.";
-			close;
-		}
+		if(select("Well then, later:Focus") == 1) close;
+		mes "[?]";
+		mes "I wasn't satisfied with my success so I came back here time and time again.";
+		next;
+		mes "[?]";
+		mes "When I stepped on the foothold of this statue, the energy I had gathered and learned was absorbed.";
+		next;
+		mes "[?]";
+		mes "But, with that energy being absorbed, I began to gain knowledge that I never knew previously.";
+		next;
+		mes "[?]";
+		mes "But it came at a price. With the knowledge I started losing my humanity.";
+		mes "I lost my body and the only thing I had was my spirit.";
+		next;
+		mes "[?]";
+		mes "I don't regret gaining the knowledge. All I wish is that I could have my body back.";
+		next;
+		set job__mechanic,7;
+		changequest 10095,10096;
+		mes "[?]";
+		mes "After I had poured my energy into the statue, I figured that I could move my energy to different statues.";
+		close;
 	}
+	end;
 }
 
-jupe_core2,29,150,1	script	Foothold	139,1,1,{
-
+jupe_core2,29,150,0	script	#Foothold	139,1,1,{
 OnTouch:
-	if(job__mechanic == 8)
-	{
+	if (job__mechanic == 8) {
 		percentheal 0,-30;
 		mes "-Suddenly I feel power is-";
 		mes "-escaping my whole body-";
@@ -680,9 +587,7 @@ OnTouch:
 		mes "-it is the source of the-";
 		mes "-power drain.-";
 		close;
-	}
-	if(job__mechanic == 7)
-	{
+	} else if (job__mechanic == 7) {
 		percentheal -20,0;
 		mes "-Suddenly, an unidentified-";
 		mes "-voice is ringing in my head-";
@@ -691,181 +596,140 @@ OnTouch:
 		mes "-Handling machines-";
 		mes "-absorbing magic power-";
 		mes "-a sacrificial offering-";
-		mes "-the statue of a human-";
+		mes "-the statue of a human.-";
 		next;
 		set job__mechanic,8;
 		changequest 10096,10097;
 		mes "-Most certain of all is that-";
 		mes "-I started to feel the urge-";
-		mes "-to go to the door of truth-";
+		mes "-to go to the door of truth.-";
 		close;
-	}
-	if(job__mechanic > 2)
-	{
+	} else if (job__mechanic > 2) {
 		percentheal 0,-30;
 		mes "-Suddenly I feel power is-";
 		mes "-escaping from my body-";
 		mes "-What is happening?-";
 		close;
 	}
+	end;
 }
 
-jupe_core2,272,149,1	script	Foothold2	139,1,1,{
-
+jupe_core2,272,149,0	script	#Foothold2	139,1,1,{
 OnTouch:
-	if(job__mechanic == 9)
-	{
+	if (job__mechanic == 9) {
 		mes "-I had a feeling that power-";
 		mes "-has been draining out,-";
 		mes "-but now, I do not-";
 		mes "-feel anything.-";
 		next;
 		mes "-Go to the south of-";
-		mes "-the foothold quickly-";
+		mes "-the foothold quickly.-";
 		close;
-	}
-	if(job__mechanic == 8)
-	{
+	} else if (job__mechanic == 8) {
 		percentheal -20,-30;
 		mes "-Suddenly I feel power is-";
 		mes "-escaping from my body-";
 		mes "-What is happening?-";
 		next;
 		mes "-I feel my senses-";
-		mes "-are returning to me-";
+		mes "-are returning to me.-";
 		next;
-		donpcevent "Door::OnDoorOpen";
+		donpcevent "#Door::OnEnable";
 		changequest 10097,10098;
-		mes "-Walk to the Door of Truth-";
+		mes "-I think that I am becoming-";
+		mes "-the sacrificial offering.-";
 		close;
-	}
-	if(job__mechanic > 2)
-	{
+	} else if (job__mechanic > 2) {
 		percentheal 0,-30;
 		mes "-Suddenly I feel power is-";
 		mes "-escaping from my body-";
 		mes "-What is happening?-";
 		close;
 	}
+	end;
 }
 
-jupe_core2,288,142,3	script	Door	844,1,1,{
-end;
-
+jupe_core2,288,142,3	script	#Door	844,1,1,{
+	end;
 OnInit:
-	disablenpc "Door";
+	hideonnpc "#Door";
 	end;
-
-OnDoorClose:
-	disablenpc "Door";
+OnDisable:
+	hideonnpc "#Door";
 	end;
-
-OnDoorOpen:
-	enablenpc "Door";
+OnEnable:
+	hideoffnpc "#Door";
 	specialeffect EF_MAPPILLAR;
 	initnpctimer;
 	end;
-
 OnTimer180000:
-	donpcevent "Door::OnDoorClose";
+	donpcevent "#Door::OnDisable";
 	end;
-
 OnTouch:
-	if(job__mechanic == 8)
-	{
-		mes "-Once again a voice rings out-";
-		mes "-in my head. This time it is-";
-		mes "-different than before, it is a-";
-		mes "-voice of an impressive person-";
-		next;
-		mes "I know you came this far because you want the knowledge.";
-		mes "Humans are weak animals";
-		mes "and any sacrifice is a hard";
-		mes "decision for them to make.";
-		next;
-		mes "But you are lacking something to pass through this door of truth.";
-		mes "Through this door is knowledge above all human thinking.";
-		next;
-		mes "It won't harm a human's mind if it doesn't surpass your brain capacity.";
-		next;
-		mes "Try to put your body onto the foothold of knowledge at the south.";
-		next;
-		mes "If the knowledge suits you, you'll be able to obtain it without becoming a sacrificial offering.";
-		mes "If you are unqualified, you will lose your body as a sacrifice.";
-		next;
-		mes "When you are qualified, you will be able to pass through the door of truth.";
-		mes "Till that day, don't lose yourself.";
-		next;
-		mes "............";
-		next;
-		mes "-I can't hear any voices-";
-		mes "-anymore and I can't feel-";
-		mes "-anything in this place.-";
-		next;
-		mes "-As the ringing voice in my-";
-		mes "-head instructed, let's go to-";
-		mes "-the southern marker.-";
-		set job__mechanic,9;
-		changequest 10098,10099;
-		close2;
-		donpcevent "Door::OnDoorClose";
-		end;
-	}
-end;
+	mes "-Once again a voice rings out-";
+	mes "-in my head. This time it is-";
+	mes "-different than before, it is a-";
+	mes "-voice of an impressive person.-";
+	next;
+	mes "I know you came this far because you want the knowledge.";
+	mes "Humans are weak animals";
+	mes "and any sacrifice is a hard";
+	mes "decision for them to make.";
+	next;
+	mes "But you are lacking something to pass through this door of truth.";
+	mes "Through this door is knowledge above all human thinking.";
+	next;
+	mes "It won't harm a human's mind if it doesn't surpass your brain capacity.";
+	next;
+	mes "Try to put your body onto the foothold of knowledge at the south.";
+	next;
+	mes "If the knowledge suits you, you'll be able to obtain it without becoming a sacrificial offering.";
+	mes "If you are unqualified, you will lose your body as a sacrifice.";
+	next;
+	mes "When you are qualified, you will be able to pass through the door of truth.";
+	mes "Till that day, don't lose yourself.";
+	next;
+	mes "............";
+	next;
+	mes "-I can't hear any voices-";
+	mes "-anymore and I can't feel-";
+	mes "-anything in this place.-";
+	next;
+	mes "-As the ringing voice in my-";
+	mes "-head instructed, let's go to-";
+	mes "-the southern foothold.-";
+	close2;
+	set job__mechanic,9;
+	changequest 10098,10099;
+	donpcevent "#Door::OnDisable";
+	end;
 }
 
-jupe_core2,149,34,1	script	Acquiring Knowledge	139,1,0,{
-	end;
+jupe_core2,149,34,0	script	#Acquiring Knowledge	139,1,0,{
 OnTouch:
-	if(job__mechanic == 9)
-	{
+	if (job__mechanic == 9) {
 		mes "-The moment I stepped on-";
-		mes "-the marker the voice-";
+		mes "-the foothold the voice-";
 		mes "-didn't come into my brain-";
 		mes "-rather new knowledge-";
 		mes "-came in naturally.-";
 		next;
 		mes "-Almost instantaneously-";
 		mes "-you gained all of the-";
-		mes "knowledge that you need-";
+		mes "-knowledge that you need-";
 		mes "-to know about mechanics-";
 		mes "-and magic machinery.-";
 		next;
 		set job__mechanic,10;
 		changequest 10099,10100;
 		specialeffect EF_POTION_CON;
-		mes "-This amount of-";
-		mes "-knowledge is enough-";
+		mes "-This amount of knowledge-";
+		mes "-is enough. Let's get finished-";
 		mes "-and find a way out.-";
 		close;
 	}
-}
-
-jupe_core2,150,33,1	script	Acquiring Knowledge#2	139,1,0,{
 	end;
-OnTouch:
-	if(job__mechanic == 9)
-	{
-		mes "-The moment I stepped on-";
-		mes "-the marker the voice-";
-		mes "-didn't come into my brain-";
-		mes "-rather new knowledge-";
-		mes "-came in naturally.-";
-		next;
-		mes "-Almost instantaneously-";
-		mes "-you gained all of the-";
-		mes "knowledge that you need-";
-		mes "-to know about mechanics-";
-		mes "-and magic machinery.-";
-		next;
-		set job__mechanic,10;
-		changequest 10099,10100;
-		specialeffect EF_POTION_CON;
-		mes "-This amount of-";
-		mes "-knowledge is enough-";
-		mes "-and find a way out.-";
-		close;
-	}
 }
+jupe_core2,150,33,0	duplicate(#Acquiring Knowledge)	#Acquiring Knowledge2	139,1,0
 
 jupe_core2,0,0,0,0	monster	Dimik	1669,100,0,0,0

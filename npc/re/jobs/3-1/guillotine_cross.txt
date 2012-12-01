@@ -3709,17 +3709,6 @@ job3_guil01,148,53,3	script	Bercasell#3rdgc16	467,{
 								next;
 								mes "[Bercasell]";
 								mes "And... these are presents to celebrate your becoming a Guillotine Cross.";
-								//FIXME: Outdated?
-								/*
-								set Silent_Executer,Silent_Executer+1;
-								next;
-								mes "[Bercasell]";
-								mes "And... A ticket and a ring,";
-								mes "these are presents to celebrate your becoming a Guillotine Cross.";
-								next;
-								mes "[Bercasell]";
-								mes "Unfortunately, we don't have any new weapons to offer at this time.";
-								*/
 								close;
 							case 2:
 								mes "[Bercasell]";
@@ -3789,37 +3778,6 @@ job3_guil01,148,53,3	script	Bercasell#3rdgc16	467,{
 			close;
 		}
 	} else if (Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T || Class == Job_Baby_Cross) {
-		//FIXME: Outdated?
-		/*if (job_3rd_gc > 20 && job_3rd_gc < 25) {
-			if (countitem(6153) > 0) {
-				mes "Long time no see.";
-				mes "Are you doing well lately?";
-				next;
-				mes "[Bercasell]";
-				mes "Actually, supplies from the guild have just arrived.";
-				mes "It's been quite tough work to make new ones.";
-				next;
-				mes "[Bercasell]";
-				mes "There wll be any different in grade about lank by clearing mission. So do not worry.";
-				mes "I'm pretty sure that you made your mind.";
-				next;
-				mes "[Bercasell]";
-				mes "Death doesn't tell anything...";
-				delitem 6153,1; //Special_Exchange_Coupon
-				if (job_3rd_gc > 20 && job_3rd_gc < 25)
-					set job_3rd_gc, job_3rd_gc+4;
-				completequest 7100;
-				set Silent_Executer,Silent_Executer+1;
-				close;
-			} else {
-				mes "Actually, supplies from the guild have just arrived.";
-				mes "It's been quite tough work to make new ones.";
-				next;
-				mes "[Bercasell]";
-				mes "If you give me the exchange ticket I gave you before, I'll give you the supplies.";
-				close;
-			}
-		}*/
 		mes "Don't pursue only strength.";
 		mes "You'll get tired.";
 		mes "It's no better than living.";
