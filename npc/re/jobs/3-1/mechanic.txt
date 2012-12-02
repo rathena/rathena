@@ -652,13 +652,11 @@ OnTouch:
 jupe_core2,288,142,3	script	#Door	844,1,1,{
 	end;
 OnInit:
-	hideonnpc "#Door";
-	end;
 OnDisable:
-	hideonnpc "#Door";
+	disablenpc "#Door";
 	end;
 OnEnable:
-	hideoffnpc "#Door";
+	enablenpc "#Door";
 	specialeffect EF_MAPPILLAR;
 	initnpctimer;
 	end;

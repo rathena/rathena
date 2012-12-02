@@ -3,100 +3,21 @@
 //===== By: ================================================== 
 //= Muad_Dib, Meyraw
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= Official Script
+//= [Official Conversion]
 //= Job change Quest from Dancer / Gypsy -> Wanderer.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.
 //= 1.1 Updated dialogue to be more official / accurate. Huge thanks to Muad_Dib! [Masao]
 //= 1.2 Fixed an endless loop in dialogue.
 //= 1.3 Fixed a typo and added checkquest. [Joseph]
+//= 1.4 Updated script, optimized. [Euphy]
 //============================================================
 
 xmas,162,209,5	script	Aspiring Wanderer, Soy	714,{
-	if (job_wan == 0) {
-		mes "[Soy]";
-		mes "Mimi, what should I do?";
-		mes "My heart is beating so fast. Ahhh~";
-		next;
-		mes "[Mimi]";
-		mes "Why is you face so flushed? Ha ha ha.";
-		next;
-		mes "[Soy]";
-		mes "Don't make fun of me Mimi~";
-		mes "I have dreamed of being at Dancer Kim's stage for a very long time!";
-		emotion e_shy;
-		next;
-		mes "[Soy]";
-		mes "I might lose my senses if I really see her dancing like a beautiful angel sent from above.";
-		next;
-		mes "[Mimi]";
-		mes "Calm down, Soy.";
-		mes "You are going to faint even before the performance starts. Ha ha.";
-		next;
-		mes "[Mimi]";
-		mes "But I understand you.";
-		mes "Many people are looking forward to meeting the best Wanderer in the world.";
-		if (Class != Job_Baby_Dancer && Class != Job_Dancer && Class != Job_Gypsy && BaseLevel != 99) close;
-		next;
-		select("Dancer Kim?:Wanderer?");
-		emotion e_omg;
-		mes "[Soy]";
-		mes "What? You don't know the famous Wanderer, Dancer Kim?";
-		mes "Oh my, oh my!!!";
-		mes "You seem to know the art of dancing but how come you don't know her?";
-		mes "Oh, no!";
-		next;
-		mes "[Mimi]";
-		mes "A Wanderer is a knee-spirited person who wanders about the world with the wind and the stars.";
-		mes "Rhythm and Music accompany them wherever they go.";
-		next;
-		mes "[Mimi]";
-		mes "Dancer Kim is the most famous Wanderer who tours the world with the Maestro Guitar Dong as the team <Nollio>.";
-		next;
-		mes "[Mimi]";
-		mes "Soy and myself are Aspiring Wanderers, and there will be a performance of <Nollio> in this town soon, so we are eagerly looking forward to see it.";
-		next;
-		mes "[Soy]";
-		mes "If you are a true Dancer, you must be struck with her Dance!";
-		mes "Will I ever meet a Maestro like Guitar Song someday, Mimi?";
-		next;
-		emotion e_heh;
-		mes "[Mimi]";
-		mes "Just hang in there, Soy. Ha ha.";
-		next;
-		if (select("Where is the performance?:End the conversation.") == 1) {
-			mes "[Soy]";
-			mes "Right in front of the Christmas tree!";
-			mes "White snow, beautiful melody, and my captivating dance.";
-			mes "Don't you think it would be a great performance?";
-			set job_wan,1;
-			close;
-		}
-		mes "[Mimi]";
-		mes "If you are interested in becoming a Wanderer, just come back to me anytime. Although I'm not perfect, I will try my best to help you.";
-		close;
-	}
-	if (job_wan == 1) {
-		mes "[Soy]";
-		mes "The performance will be held in front of the Christmas tree here in Lutie.";
-		mes "I can't wait! Ah~ I'm losing my senses, Mimi.";
-		close;
-	}
-	if (job_wan == 10) {
-		mes "[Soy]";
-		mes "<Nollio> is the best!!";
-		close;
-	}
-	mes "[Soy]";
-	mes "I want to become an famous Wanderer too, Mimi.";
-	close;
-}
-
-xmas,163,209,3	script	Aspiring Wanderer, Mimi	714,{
 	if (job_wan == 0) {
 		mes "[Soy]";
 		mes "Mimi, what should I do?";
@@ -120,9 +41,7 @@ xmas,163,209,3	script	Aspiring Wanderer, Mimi	714,{
 		mes "[Mimi]";
 		mes "But I understand you.";
 		mes "Many people are looking forward to meeting the best Wanderer in the world.";
-		if ((Class != Job_Baby_Dancer) && (Class != Job_Dancer) && (Class != Job_Gypsy) && (BaseLevel != 99)) {
-			close;
-		}
+		if (BaseJob != Job_Dancer || BaseLevel < 99) close;
 		next;
 		select("Dancer Kim?:Wanderer?");
 		emotion e_omg,0,"Aspiring Wanderer, Soy";
@@ -133,7 +52,7 @@ xmas,163,209,3	script	Aspiring Wanderer, Mimi	714,{
 		mes "Oh, no!";
 		next;
 		mes "[Mimi]";
-		mes "A Wanderer is a knee-spirited person who wanders about the world with the wind and the stars.";
+		mes "A Wanderer is a free-spirited person who wanders about the world with the wind and the stars.";
 		mes "Rhythm and Music accompany them wherever they go.";
 		next;
 		mes "[Mimi]";
@@ -150,45 +69,56 @@ xmas,163,209,3	script	Aspiring Wanderer, Mimi	714,{
 		mes "[Mimi]";
 		mes "Just hang in there, Soy. Ha ha.";
 		next;
-		if (select("Where is the performance?:End the conversation.") == 1) {
+		switch(select("Where is the performance?:End the conversation.")) {
+		case 1:
 			mes "[Soy]";
 			mes "Right in front of the Christmas tree!";
 			mes "White snow, beautiful melody, and my captivating dance.";
 			mes "Don't you think it would be a great performance?";
-			set job_wan, 1;
+			set job_wan,1;
+			close;
+		case 2:
+			mes "[Mimi]";
+			mes "If you are interested in becoming a Wanderer, just come back to me anytime. Although I'm not perfect, I will try my best to help you.";
 			close;
 		}
-		mes "[Mimi]";
-		mes "If you are interested in becoming a Wanderer, just come back to me anytime. Although I'm not perfect, I will try my best to help you.";
+	} else if (job_wan == 1) {
+		if (strnpcinfo(0) == "Aspiring Wanderer, Soy") {
+			mes "[Soy]";
+			mes "The performance will be held in front of the Christmas tree here in Lutie.";
+			mes "I can't wait! Ah~ I'm losing my senses, Mimi.";
+		} else {
+			mes "[Mimi]";
+			mes "A Wanderer's dancing charm is higher than that of a dancer or gypsy, everyone will lose their souls when they see their performance.";
+			next;
+			mes "[Mimi]";
+			mes "I want to become a Wanderer, but I'm still a dancer.";
+			mes "But I think^3131FF it's better to learn Gypsy's unique skills first, and then become a Wanderer^000000. Soy can't wait to become a Wanderer.";
+		}
 		close;
-	}
-	if (job_wan == 1) {
-		mes "[Mimi]";
-		mes "A Wanderer's dancing charm is higher than that of a dancer or gypsy, everyone will lose their souls when they see their performance.";
-		next;
-		mes "[Mimi]";
-		mes "I want to become a Wanderer, but I'm still a dancer.";
-		mes "But I think^3131FF it's better to learn Gypsy's unique skills first, and then become a Wanderer^000000. Soy can't wait to become a Wanderer.";
-		close;
-	}
-	if (job_wan == 10) {
+	} else if (job_wan == 10) {
 		mes "[Soy]";
 		mes "<Nollio> is the best!!";
 		close;
-	}
-	mes "[Mimi]";
-	mes "Not sure if I'm greedy, but I need to learn all Dancer and Gypsy skills before I can become a Wanderer.";
-	close;
-}
-
-xmas,132,143,5	script	Performance Manager#wnd	713,{
-	if (job_wan == 0) {
-		mes "[Performance Manager]";
-		mes "Oh, what should I do?";
+	} else {
+		if (strnpcinfo(0) == "Aspiring Wanderer, Soy") {
+			mes "[Soy]";
+			mes "I want to become an famous Wanderer too, Mimi.";
+		} else {
+			mes "[Mimi]";
+			mes "Not sure if I'm greedy, but I need to learn all Dancer and Gypsy skills before I can become a Wanderer.";
+		}
 		close;
 	}
-	if (job_wan == 1) {
-		mes "[Performance Manager]";
+}
+xmas,163,209,3	duplicate(Aspiring Wanderer, Soy)	Aspiring Wanderer, Mimi	714
+
+xmas,132,143,5	script	Performance Manager#wnd	713,{
+	mes "[Performance Manager]";
+	if (job_wan == 0) {
+		mes "Oh, what should I do?";
+		close;
+	} else if (job_wan == 1) {
 		mes "Oh, what should I do?";
 		mes "Why did they do this?";
 		next;
@@ -201,10 +131,10 @@ xmas,132,143,5	script	Performance Manager#wnd	713,{
 		next;
 		while (1) {
 			set .@loop,0;
-			switch (select("Sorry, I don't care.:What's the matter?:Why are you telling me this?")) {
+			switch(select("Sorry, I don't care.:What's the matter?:Why are you telling me this?")) {
 			case 1:
 				mes "[Performance Manager]";
-				mes "Ah! What a harsh world!";
+				mes "That's a bit harsh don't you think?";
 				close;
 			case 2:
 				mes "[Performance Manager]";
@@ -228,7 +158,7 @@ xmas,132,143,5	script	Performance Manager#wnd	713,{
 		}
 		while (1) {
 			set .@loop,0;
-			switch (select("Is there a problem?:Who do you mean?:It has nothing to do with me.")) {
+			switch(select("Is there a problem?:Who do you mean?:It has nothing to do with me.")) {
 			case 1:
 				mes "[Performance Manager]";
 				mes "How could they do that?";
@@ -245,26 +175,26 @@ xmas,132,143,5	script	Performance Manager#wnd	713,{
 				break;
 			case 2:
 				mes "[Performance Manager]";
-				mes "<Nollio>!";
-				mes "Who else!";
-				mes "Do you know them?";
-				mes "They are the worst group in the world.";
+				mes "Who?!";
+				mes "It's <Nollio>!";
+				mes "You call that a question?";
+				mes "They are the worst people in the world.";
 				next;
 				break;
 			case 3:
 				mes "[Performance Manager]";
-				mes "This is too much!";
+				mes "What a heartless thing to say!";
 				close;
 			}
 			if (.@loop) break;
 		}
 		while (1) {
 			set .@loop,0;
-			switch (select("Are you afraid of people?:The performers caused trouble?:Ignore him.")) {
+			switch(select("Are you afraid of people?:The performers caused trouble?:Ignore him.")) {
 			case 1:
 				mes "[Performance Manager]";
-				mes "If it were you, wouldn't you be afraid?";
-				mes "I'm the performance manager! Do you know how much money it costs behind the scenes? I need to face the expectations of all those people!";
+				mes "Wouldn't you be afraid of all the eyes of people if you were me?";
+				mes "I am in charge of this performance! A lot of people are looking forward to see it and there are many sponsors who are supporting us! I'm so stressed.";
 				next;
 				break;
 			case 2:
@@ -318,7 +248,7 @@ xmas,132,143,5	script	Performance Manager#wnd	713,{
 		mes "[Performance Manager]";
 		mes "Hey! Can you please go out and find the Maestro Guitar Song?";
 		next;
-		switch (select("Ah, okay.:Why should I do that?:I won't!")) {
+		switch(select("Ah, okay.:Why should I do that?:I won't!")) {
 		case 1:
 			break;
 		case 2:
@@ -327,12 +257,12 @@ xmas,132,143,5	script	Performance Manager#wnd	713,{
 			mes "You're asking me why!?";
 			mes "Ahh, no.....";
 			mes "It's because you seem like a similar artist.";
-			mes "you also wanted to watch the performance, didn't you?";
+			mes "You also wanted to watch the performance, didn't you?";
 			next;
 			break;
 		case 3:
 			mes "[Performance Manager]";
-			mes "You are pushing my limits...";
+			mes "You are so cold-hearted....";
 			close;
 		}
 		mes "[Performance Manager]";
@@ -345,26 +275,19 @@ xmas,132,143,5	script	Performance Manager#wnd	713,{
 		set job_wan,2;
 		setquest 2218;
 		close;
-	}
-	if (job_wan == 2) {
-		mes "[Performance Manager]";
+	} else if (job_wan == 2) {
 		mes "I am not sure if Guitar Song is in Comodo, you should go there and find him!";
 		close;
-	}
-	if (job_wan == 9) {
-		mes "[Performance Manager]";
+	} else if (job_wan == 9) {
 		mes "They came back!!";
 		close;
-	}
-	if (job_wan == 10) {
-		mes "[Performance Manager]";
-		mes "Thanks to you, the performance was a success.";
-		mes "You really are a good friend!";
-		mes "As a token of my appreciation, I will hold a performance just for you when I get a chance.";
+	} else if (job_wan == 10) {
+		mes "Thanks to you, the performance was successful.";
+		mes "You are so competent!";
+		mes "In return, I will prepare the stage for you someday.";
 		close;
 	}
-	mes "[Performance Manager]";
-	mes "Ah~ What a mess, ah!";
+	mes "Ahhh, so distracting!";
 	close;
 }
 
@@ -379,8 +302,7 @@ comodo,140,86,5	script	Cheerless Maestro	479,{
 		mes "[Cheerless Maestro]";
 		mes "Whew...";
 		close;
-	}
-	if (job_wan == 2) {
+	} else if (job_wan == 2) {
 		mes "[Cheerless Maestro]";
 		mes "You can dance ~";
 		mes "You can do your work ~";
@@ -388,9 +310,9 @@ comodo,140,86,5	script	Cheerless Maestro	479,{
 		mes "I am the tambourine King ~";
 		next;
 		mes "- You found a Maestro -";
-		mes "- singing a weird song -";
+		mes "- singing a weird song. -";
 		next;
-		if (select("That's a weird song.:Ignore it.") == 2) {
+		if(select("That's a weird song.:Ignore it.") == 2) {
 			mes "- What a weird person, I better stay away. -";
 			close;
 		}
@@ -437,17 +359,16 @@ comodo,140,86,5	script	Cheerless Maestro	479,{
 		mes "Hey, I told you to stop talking about this matter....";
 		mes "I don't want to think about it. It just hurts my feelings.";
 		next;
-		mes "- Guitar Song is adamantly refusing to talk. What should I do to hear the story about<Nollio>? -";
+		mes "- Guitar Song is adamantly refusing to talk. What should I do to hear the story about <Nollio>? -";
 		set job_wan,3;
 		close;
-	}
-	if (job_wan == 3) {
+	} else if (job_wan == 3) {
 		mes "[" + strcharinfo(0) + "]";
 		mes "(Would it be possible for me to make him tell me what happened with Nollio?)";
 		next;
-		switch (select("Use Dazzler:Use Lullaby: Use Lucky Luck")) {
+		switch(select("Use Dazzler:Use Lullaby:Use Lucky Luck")) {
 		case 1:
-			if (getskilllv("DC_UGLYDANCE") == 5) {
+			if (getskilllv("DC_UGLYDANCE") == 5 || rand(100) >= 80) {
 				mes "- You get closer to Song's ear. -";
 				next;
 				mes "[" + strcharinfo(0) + "]";
@@ -458,7 +379,7 @@ comodo,140,86,5	script	Cheerless Maestro	479,{
 				specialeffect EF_STUNATTACK;
 				next;
 				mes "[Guitar Song]";
-				mes "Wh..what!! What are you doing?!?";
+				mes "Wh...what!! What are you doing?!?";
 				mes "You almost damaged my eardrum.";
 				emotion e_an;
 				next;
@@ -473,57 +394,27 @@ comodo,140,86,5	script	Cheerless Maestro	479,{
 				mes "So many people are supporting you with anticipation.";
 				mes "Would you break your promise and let people down? Not giving people any reason?";
 				next;
+			} else {
+				mes "[" + strcharinfo(0) + "]";
+				mes "Okay-";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "Aaaaahhh!!!!!";
+				next;
+				mes "[Guitar Song]";
+				mes "What... what are you doing?!! What's wrong with you!";
+				mes "Security!!!";
+				next;
+				mes "[Black-suit Guards]";
+				mes "Please stop this.";
+				close2;
+				warp "comodo",117,98;
+				end;
 			}
-			else {
-				set .@scream_dc,rand(1,100);
-				if (.@scream_dc > 80) {
-					mes "- You get closer to Song's ear. -";
-					next;
-					mes "[" + strcharinfo(0) + "]";
-					mes "Okay-";
-					next;
-					mes "[" + strcharinfo(0) + "]";
-					mes "Oi-!!!!!";
-					specialeffect EF_STUNATTACK;
-					next;
-					mes "[Guitar Song]";
-					mes "Wh..what!! What are you doing?!?";
-					mes "You almost damaged my eardrum.";
-					emotion e_an;
-					next;
-					mes "[" + strcharinfo(0) + "]";
-					mes "Hey, cheer up!!!";
-					next;
-					mes "[Guitar Song]";
-					mes "What are you talking about?";
-					next;
-					mes "[" + strcharinfo(0) + "]";
-					mes "You should know, people are addicted to your music?";
-					mes "So many people are supporting you with anticipation.";
-					mes "Would you break your promise and let people down? Not giving people any reason?";
-					next;
-				}
-				else {
-					mes "[" + strcharinfo(0) + "]";
-					mes "Okay-";
-					next;
-					mes "[" + strcharinfo(0) + "]";
-					mes "Aaaaahhh!!!!!";
-					next;
-					mes "[Guitar Song]";
-					mes "What.. what are you doing?!! What's wrong with you!";
-					mes "Security!!!";
-					next;
-					mes "[Black-suit Guards]";
-					mes "Please stop this.";
-					close2;
-					warp "comodo",117,98;
-					end;
-				}
-			}
+			break;
 		case 2:
 			if (getskilllv("BD_LULLABY") == 0) {
-				mes "- You can't use this skill, since you didn't learn it. -";
+				mes "- You cannot use this skill without learning it. -";
 				close;
 			}
 			mes "[" + strcharinfo(0) + "]";
@@ -531,7 +422,7 @@ comodo,140,86,5	script	Cheerless Maestro	479,{
 			close;
 		case 3:
 			if (getskilllv("DC_FORTUNEKISS") == 0) {
-				mes "- You can't use this skill, since you didn't learn it. -";
+				mes "- You cannot use this skill without learning it. -";
 				close;
 			}
 			emotion e_what,1;
@@ -596,6 +487,7 @@ comodo,140,86,5	script	Cheerless Maestro	479,{
 			mes "Then please tell me, I really love your music... but now I feel so blue...";
 			emotion e_what;
 			next;
+			break;
 		}
 		mes "[Guitar Song]";
 		mes "Oh, no! You know...";
@@ -640,14 +532,12 @@ comodo,140,86,5	script	Cheerless Maestro	479,{
 		mes "Who can dance to my music so wonderfully as she did?";
 		mes "Now my music and my life is history... (muttering).";
 		close;
-	}
-	if ((job_wan > 3) && (job_wan < 8)) {
+	} else if (job_wan > 3 && job_wan < 8) {
 		mes "[Guitar Song]";
 		mes "Dancer Kim is probably addicted to the monster races in Hugel again!";
 		mes "Back in the day when she was addicted to the monster races, who do you think got her out of it?";
 		close;
-	}
-	if (job_wan == 8) {
+	} else if (job_wan == 8) {
 		emotion e_gasp;
 		mes "- You tell him what happened in Hugel and ask him to go back to Lutie. -";
 		next;
@@ -658,10 +548,9 @@ comodo,140,86,5	script	Cheerless Maestro	479,{
 		next;
 		mes "[Guitar Song]";
 		mes "I'll go there right away and scold her.";
-		set job_wan, 9;
+		set job_wan,9;
 		close;
-	}
-	if (job_wan == 9) {
+	} else if (job_wan == 9) {
 		mes "[Guitar Song]";
 		mes "Okay, I will go to the Christmas tree in Lutie where the performance is supposed to be held.";
 		close;
@@ -676,8 +565,7 @@ hu_in01,305,251,5	script	Vacant Looking Lady#wnd	879,{
 		mes "[Vacant Looking Lady]";
 		mes "(blank...)";
 		close;
-	}
-	if (job_wan == 4) {
+	} else if (job_wan == 4) {
 		mes "[Vacant Looking Lady]";
 		mes "Sob... sob...";
 		next;
@@ -785,8 +673,7 @@ hu_in01,305,251,5	script	Vacant Looking Lady#wnd	879,{
 		mes "<Nollio> is over! Boo hoo hoo!";
 		set job_wan,5;
 		close;
-	}
-	if (job_wan == 5) {
+	} else if (job_wan == 5) {
 		emotion e_sob;
 		mes "[Vacant Looking Lady]";
 		mes "Not long ago, I was like a beautiful dove, but now I am just a fat chicken.";
@@ -794,7 +681,7 @@ hu_in01,305,251,5	script	Vacant Looking Lady#wnd	879,{
 		mes "I think the life of Wanderer Dancer Kim is over now.";
 		mes "Boo hoo hoo hoo!";
 		next;
-		switch (select("Hey, don't give up.:I feel sorry for you.") == 2) {
+		if(select("Hey, don't give up.:I feel sorry for you.") == 2) {
 			mes "[Dancer Kim]";
 			mes "My life cannot get out of abyss now......";
 			close;
@@ -816,7 +703,7 @@ hu_in01,305,251,5	script	Vacant Looking Lady#wnd	879,{
 		mes "But I get tired and give up easily.";
 		mes "I think I am going to give up.";
 		next;
-		if (select("Well, there's no other way.:Let?s work together.") == 1) {
+		if(select("Well, there's no other way.:Let's work together.") == 1) {
 			mes "[Dancer Kim]";
 			mes "No dreams and no hope...";
 			close;
@@ -846,13 +733,11 @@ hu_in01,305,251,5	script	Vacant Looking Lady#wnd	879,{
 		set job_wan,6;
 		changequest 2219,2220;
 		close;
-	}
-	if (job_wan == 6 || job_wan == 7) {
+	} else if (job_wan == 6 || job_wan == 7) {
 		mes "[Dancer Kim]";
 		mes "I'll meet you at Abyss Lake.";
 		close;
-	}
-	if (job_wan == 8) {
+	} else if (job_wan == 8) {
 		mes "[Dancer Kim]";
 		mes "Please tell Guitar Song to go to Lutie";
 		mes "I'll go there after I've packed my luggage!";
@@ -875,7 +760,7 @@ hu_fild05,342,130,5	script	Dancer Kim#fild	879,{
 		mes "You need to defeat 50 Yellow Novus!";
 		mes "Are you ready?";
 		next;
-		if (select("No.:Yes.") == 1) {
+		if(select("No.:Yes.") == 1) {
 			mes "[Dancer Kim]";
 			mes "Hurry up before I lose interest!";
 			close;
@@ -886,8 +771,7 @@ hu_fild05,342,130,5	script	Dancer Kim#fild	879,{
 		set job_wan,7;
 		changequest 2220,2221;
 		close;
-	}
-	if (job_wan == 7) {
+	} else if (job_wan == 7) {
 		if (checkquest(2221,PLAYTIME) == 0 || checkquest(2221,PLAYTIME) == 1) {
 			if (checkquest(2221,HUNTING) == 2) {
 				mes "[Dancer Kim]";
@@ -921,20 +805,20 @@ hu_fild05,342,130,5	script	Dancer Kim#fild	879,{
 				mes "Can you bring Guitar Song to Lutie?";
 				mes "Say that his partner is waiting for him.";
 				next;
-				select("No Problem!");
+				select("No problem!");
 				mes "[Dancer Kim]";
 				mes "You're a good person. I'm really happy that I met you.";
 				mes "Thank god for sending such a stubborn person to me!";
 				set job_wan,8;
 				changequest 2221,2222;
 				close;
+			} else {
+				mes "[Dancer Kim]";
+				mes "Does it look easy to you?";
+				mes "But I'm sure I have a better chance to win.";
+				close;
 			}
-			mes "[Dancer Kim]";
-			mes "Does it look easy to you?";
-			mes "But I'm sure I have a better chance to win.";
-			close;
-		}
-		if (checkquest(2221,PLAYTIME) == 2) {
+		} else if (checkquest(2221,PLAYTIME) == 2) {
 			mes "[Dancer Kim]";
 			mes "Oh, you came back to me.";
 			mes "I'm so tired. I don't give up halfway. It's a good exercise for me. I will have to give up Nollio to another Wanderer, it's all over....";
@@ -943,15 +827,15 @@ hu_fild05,342,130,5	script	Dancer Kim#fild	879,{
 			set job_wan,6;
 			changequest 2221,2220;
 			close;
+		} else {
+			mes "[Dancer Kim]";
+			mes "Huh...?";
+			set job_wan,6;
+			close;
 		}
+	} else if (job_wan == 8) {
 		mes "[Dancer Kim]";
-		mes "Huh...?";
-		set job_wan,6;
-		close;
-	}
-	if (job_wan == 8) {
-		mes "[Dancer Kim]";
-		mes "Please tell Song, I will be waiting him at the Christmas tree.";
+		mes "Please tell Song, I will be waiting for him at the Christmas tree.";
 		close;
 	}
 	mes "[Dancer Kim]";
@@ -960,24 +844,22 @@ hu_fild05,342,130,5	script	Dancer Kim#fild	879,{
 }
 
 -	script	#fildshout00::wandererjcq	-1,{
-	end;
-
 OnTouch:
 	if (job_wan == 7) {
-		set .@bc_rd,rand(1,3);
-		if (.@bc_rd == 1) {
-			mapannounce "hu_fild05","Dancer Kim: Hey, how did you get so fast? I've only got few myself...",bc_map,"0xffff00";
-		}
-		else if (.@bc_rd == 2) {
-			mapannounce "hu_fild05","Dancer Kim: Errrgghh! Hey Novus! I'm gonna get you~",bc_map,"0xffff00";
-		}
-		else {
-			mapannounce "hu_fild05","Dancer Kim: Oh, are you tired already? Is this my victory? Ho ho ho.",bc_map,"0xffff00";
+		switch(rand(3)) {
+		case 0:
+			mapannounce "hu_fild05","Dancer Kim: Hey, how did you get so fast? I've only got few myself...",bc_map,"0xffff00"; //FW_NORMAL 12 0 0
+			break;
+		case 1:
+			mapannounce "hu_fild05","Dancer Kim: Errrgghh! Hey Novus! I'm gonna get you~",bc_map,"0xffff00"; //FW_NORMAL 12 0 0
+			break;
+		case 2:
+			mapannounce "hu_fild05","Dancer Kim: Oh, are you tired already? Is this my victory? Ho ho ho.",bc_map,"0xffff00"; //FW_NORMAL 12 0 0
+			break;
 		}
 	}
 	end;
 }
-
 hu_fild05,81,111,0	duplicate(wandererjcq)	#fildshout01	139,20,20
 hu_fild05,193,98,0	duplicate(wandererjcq)	#fildshout02	139,20,20
 hu_fild05,252,74,0	duplicate(wandererjcq)	#fildshout03	139,20,20
@@ -990,8 +872,6 @@ hu_fild05,80,239,0	duplicate(wandererjcq)	#fildshout09	139,20,20
 hu_fild05,69,147,0	duplicate(wandererjcq)	#fildshout10	139,20,20
 
 xmas,148,131,0	script	#wandergogo	139,3,3,{
-	end;
-
 OnTouch:
 	if (job_wan == 9) {
 		enablenpc "Dancer Kim#xmas";
@@ -1008,16 +888,22 @@ OnTouch:
 
 xmas,147,135,5	script	Dancer Kim#xmas	485,{
 	if (job_wan == 9) {
-		if ((Class != Job_Baby_Dancer) && (Class != Job_Dancer) && (Class != Job_Gypsy) && (BaseLevel != 99) && (JobLevel < 50)) {
-			mes "- You don't meet the requirements. -";
+		if (BaseJob != Job_Dancer && BaseLevel < 99 && JobLevel < 50) {
+			mes "- You can't continue the quest because the condition for the quest is not appropriate. -";
 			close;
 		}
-		if (SkillPoint != 0) {
-			mes "- Please use up all your skill points. -";
+		if (SkillPoint) {
+			mes "- You can't continue the quest because you have remaining skill points. -";
 			close;
 		}
-		if (checkweight(1201,2) >= 2) {
-			mes "- You need more room in your inventory before you can continue. -";
+		if (checkweight(1201,2) == 0) {
+			mes "- You need to empty your inventory if you want to continue the quest. -";
+			close;
+		}
+		if (ismounting()) {
+			mes "[Dancer Kim]";
+			mes "Please get off of that creature you're riding on.";
+			mes "Then talk to me again.";
 			close;
 		}
 		mes "- <Nollio> is performing. -";
@@ -1094,15 +980,9 @@ xmas,147,135,5	script	Dancer Kim#xmas	485,{
 		mes "Introducing!";
 		next;
 		mes "[Dancer Kim]";
-		mapannounce "xmas","Dancer Kim: Introducing the rising Wanderer! " + strcharinfo(0) + "!",bc_map,"0xffff00";
+		mapannounce "xmas","Dancer Kim: Introducing the rising Wanderer! " + strcharinfo(0) + "!",bc_map,"0xffff00"; //FW_NORMAL 12 0 0
 		mes "This rising Wanderer star, " + strcharinfo(0) + "!";
-		if(Class == Job_Baby_Dancer) {
-			jobchange Job_Baby_Wanderer;
-		}else if (Class == Job_Dancer) {
-			jobchange Job_Wanderer;
-		} else {
-			jobchange Job_Wanderer_T;
-		}
+		jobchange roclass(eaclass()|EAJL_THIRD);
 		set job_wan,10;
 		getitem 2795,1; //Green_Apple_Ring
 		getitem 5758,1; //Dying_Swan
@@ -1137,64 +1017,21 @@ xmas,147,135,5	script	Dancer Kim#xmas	485,{
 		disablenpc "Mimi#xmas";
 		end;
 	}
-
 OnInit:
 	disablenpc "Dancer Kim#xmas";
 	end;
 }
 
-xmas,149,135,3	script	Guitar Song#xmas	479,{
+-	script	#wander_xmas	-1,{
 	end;
-
 OnInit:
-	disablenpc "Guitar Song#xmas";
+	disablenpc strnpcinfo(0);
 	end;
 }
-
-xmas,142,130,7	script	Spectator#xmas1	711,{
-	end;
-
-OnInit:
-	disablenpc "Spectator#xmas1";
-	end;
-}
-
-xmas,145,127,7	script	Spectator#xmas2	712,{
-	end;
-
-OnInit:
-	disablenpc "Spectator#xmas2";
-	end;
-}
-
-xmas,148,127,7	script	Soy#xmas	714,{
-	end;
-
-OnInit:
-	disablenpc "Soy#xmas";
-	end;
-}
-
-xmas,149,127,1	script	Mimi#xmas	714,{
-	end;
-
-OnInit:
-	disablenpc "Mimi#xmas";
-	end;
-}
-
-xmas,151,127,1	script	Spectator#xmas3	716,{
-	end;
-
-OnInit:
-	disablenpc "Spectator#xmas3";
-	end;
-}
-
-xmas,154,129,1	script	Spectator#xmas4	797,{
-	end;
-
-OnInit:
-	disablenpc "Spectator#xmas4";
-	end;
-}
+xmas,149,135,3	duplicate(#wander_xmas)	Guitar Song#xmas	479
+xmas,142,130,7	duplicate(#wander_xmas)	Spectator#xmas1	711
+xmas,145,127,7	duplicate(#wander_xmas)	Spectator#xmas2	712
+xmas,148,127,7	duplicate(#wander_xmas)	Soy#xmas	714
+xmas,149,127,1	duplicate(#wander_xmas)	Mimi#xmas	714
+xmas,151,127,1	duplicate(#wander_xmas)	Spectator#xmas3	716
+xmas,154,129,1	duplicate(#wander_xmas)	Spectator#xmas4	797
