@@ -2252,7 +2252,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		else
 			job_exp = (unsigned int)cap_value(md->db->job_exp * per * bonus/100. * map[m].jexp/100., 1, UINT_MAX);
 
-		if((temp = tmpsd[i]->status.party_id )>0 && !md->dmglog[i].flag == MDLF_HOMUN) //Homun-done damage (flag 1) is not given to party
+		if ((temp = tmpsd[i]->status.party_id)>0 /*&& !md->dmglog[i].flag == MDLF_HOMUN*/) { //Homun-done damage (flag 1) is given to party
 		{
 			int j;
 			for(j=0;j<pnum && pt[j].id!=temp;j++); //Locate party.
