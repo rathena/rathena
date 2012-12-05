@@ -463,7 +463,7 @@ void pc_inventory_rentals(struct map_session_data *sd)
 				pc_setoption(sd, sd->sc.option&~OPTION_MOUNTING);
 			}
 			clif_rental_expired(sd->fd, i, sd->status.inventory[i].nameid);
-			pc_delitem(sd, i, sd->status.inventory[i].amount, 1, 0, LOG_TYPE_OTHER);
+			pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0, LOG_TYPE_OTHER);
 		} else {
 			expire_tick = (unsigned int)(sd->status.inventory[i].expire_time - time(NULL)) * 1000;
 			clif_rental_time(sd->fd, sd->status.inventory[i].nameid, (int)(expire_tick / 1000));
