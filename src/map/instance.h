@@ -12,22 +12,22 @@
 typedef enum instance_state { INSTANCE_FREE, INSTANCE_IDLE, INSTANCE_BUSY } instance_state;
 
 struct s_instance {
-    char name[INSTANCE_NAME_LENGTH]; // Instance Name - required for clif functions.
-    instance_state state;
-    short instance_id;
-    int party_id;
+	char name[INSTANCE_NAME_LENGTH]; // Instance Name - required for clif functions.
+	instance_state state;
+	short instance_id;
+	int party_id;
 
-    int map[MAX_MAP_PER_INSTANCE];
-    int num_map;
-    int users;
+	int map[MAX_MAP_PER_INSTANCE];
+	int num_map;
+	int users;
 
-    struct DBMap *vars; // Instance Variable for scripts
+	struct DBMap* vars; // Instance Variable for scripts
+	
+	int progress_timer;
+	time_t progress_timeout;
 
-    int progress_timer;
-    time_t progress_timeout;
-
-    int idle_timer;
-    time_t idle_timeout, idle_timeoutval;
+	int idle_timer;
+	time_t idle_timeout, idle_timeoutval;
 };
 
 extern int instance_start;

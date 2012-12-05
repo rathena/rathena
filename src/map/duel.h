@@ -5,9 +5,9 @@
 #define _DUEL_H_
 
 struct duel {
-    int members_count;
-    int invites_count;
-    int max_players_limit;
+	int members_count;
+	int invites_count;
+	int max_players_limit;
 };
 
 #define MAX_DUEL 1024
@@ -15,13 +15,13 @@ extern struct duel duel_list[MAX_DUEL];
 extern int duel_count;
 
 //Duel functions // [LuzZza]
-int duel_create(struct map_session_data *sd, const unsigned int maxpl);
-void duel_invite(const unsigned int did, struct map_session_data *sd, struct map_session_data *target_sd);
-void duel_accept(const unsigned int did, struct map_session_data *sd);
-void duel_reject(const unsigned int did, struct map_session_data *sd);
-void duel_leave(const unsigned int did, struct map_session_data *sd);
-void duel_showinfo(const unsigned int did, struct map_session_data *sd);
-int duel_checktime(struct map_session_data *sd);
+int duel_create(struct map_session_data* sd, const unsigned int maxpl);
+void duel_invite(const unsigned int did, struct map_session_data* sd, struct map_session_data* target_sd);
+void duel_accept(const unsigned int did, struct map_session_data* sd);
+void duel_reject(const unsigned int did, struct map_session_data* sd);
+void duel_leave(const unsigned int did, struct map_session_data* sd);
+void duel_showinfo(const unsigned int did, struct map_session_data* sd);
+int duel_checktime(struct map_session_data* sd);
 
 void do_init_duel(void);
 void do_final_duel(void);

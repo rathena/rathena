@@ -33,31 +33,31 @@
 #undef LOG_MEMMGR
 #endif
 
-#   define aMalloc(n)       _mmalloc(n,ALC_MARK)
-#   define aCalloc(m,n)     _mcalloc(m,n,ALC_MARK)
-#   define aRealloc(p,n)    _mrealloc(p,n,ALC_MARK)
-#   define aStrdup(p)       _mstrdup(p,ALC_MARK)
-#   define aFree(p)         _mfree(p,ALC_MARK)
+#	define aMalloc(n)		_mmalloc(n,ALC_MARK)
+#	define aCalloc(m,n)		_mcalloc(m,n,ALC_MARK)
+#	define aRealloc(p,n)	_mrealloc(p,n,ALC_MARK)
+#	define aStrdup(p)		_mstrdup(p,ALC_MARK)
+#	define aFree(p)			_mfree(p,ALC_MARK)
 
-void *_mmalloc(size_t size, const char *file, int line, const char *func);
-void *_mcalloc(size_t num, size_t size, const char *file, int line, const char *func);
-void *_mrealloc(void *p, size_t size, const char *file, int line, const char *func);
-char *_mstrdup(const char *p, const char *file, int line, const char *func);
-void  _mfree(void *p, const char *file, int line, const char *func);
+	void* _mmalloc	(size_t size, const char *file, int line, const char *func);
+	void* _mcalloc	(size_t num, size_t size, const char *file, int line, const char *func);
+	void* _mrealloc	(void *p, size_t size, const char *file, int line, const char *func);
+	char* _mstrdup	(const char *p, const char *file, int line, const char *func);
+	void  _mfree	(void *p, const char *file, int line, const char *func);
 
 #else
 
-#   define aMalloc(n)       aMalloc_((n),ALC_MARK)
-#   define aCalloc(m,n)     aCalloc_((m),(n),ALC_MARK)
-#   define aRealloc(p,n)    aRealloc_(p,n,ALC_MARK)
-#   define aStrdup(p)       aStrdup_(p,ALC_MARK)
-#   define aFree(p)         aFree_(p,ALC_MARK)
+#	define aMalloc(n)		aMalloc_((n),ALC_MARK)
+#	define aCalloc(m,n)		aCalloc_((m),(n),ALC_MARK)
+#	define aRealloc(p,n)	aRealloc_(p,n,ALC_MARK)
+#	define aStrdup(p)		aStrdup_(p,ALC_MARK)
+#	define aFree(p)			aFree_(p,ALC_MARK)
 
-void *aMalloc_(size_t size, const char *file, int line, const char *func);
-void *aCalloc_(size_t num, size_t size, const char *file, int line, const char *func);
-void *aRealloc_(void *p, size_t size, const char *file, int line, const char *func);
-char *aStrdup_(const char *p, const char *file, int line, const char *func);
-void  aFree_(void *p, const char *file, int line, const char *func);
+	void* aMalloc_	(size_t size, const char *file, int line, const char *func);
+	void* aCalloc_	(size_t num, size_t size, const char *file, int line, const char *func);
+	void* aRealloc_	(void *p, size_t size, const char *file, int line, const char *func);
+	char* aStrdup_	(const char *p, const char *file, int line, const char *func);
+	void  aFree_	(void *p, const char *file, int line, const char *func);
 
 #endif
 
@@ -66,13 +66,13 @@ void  aFree_(void *p, const char *file, int line, const char *func);
 
 #ifdef __GNUC__ // GCC has variable length arrays
 
-#define CREATE_BUFFER(name, type, size) type name[size]
-#define DELETE_BUFFER(name)
+	#define CREATE_BUFFER(name, type, size) type name[size]
+	#define DELETE_BUFFER(name)
 
 #else // others don't, so we emulate them
 
-#define CREATE_BUFFER(name, type, size) type *name = (type *) aCalloc (size, sizeof(type))
-#define DELETE_BUFFER(name) aFree(name)
+	#define CREATE_BUFFER(name, type, size) type *name = (type *) aCalloc (size, sizeof(type))
+	#define DELETE_BUFFER(name) aFree(name)
 
 #endif
 
@@ -84,9 +84,9 @@ void  aFree_(void *p, const char *file, int line, const char *func);
 ////////////////////////////////////////////////
 
 void malloc_memory_check(void);
-bool malloc_verify_ptr(void *ptr);
-size_t malloc_usage(void);
-void malloc_init(void);
-void malloc_final(void);
+bool malloc_verify_ptr(void* ptr);
+size_t malloc_usage (void);
+void malloc_init (void);
+void malloc_final (void);
 
 #endif /* _MALLOC_H_ */

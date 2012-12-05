@@ -16,36 +16,36 @@ extern char atcommand_symbol;
 extern char charcommand_symbol;
 
 typedef enum {
-    COMMAND_ATCOMMAND = 1,
-    COMMAND_CHARCOMMAND = 2,
+	COMMAND_ATCOMMAND = 1,
+	COMMAND_CHARCOMMAND = 2,
 } AtCommandType;
 
-typedef int (*AtCommandFunc)(const int fd, struct map_session_data *sd, const char *command, const char *message);
+typedef int (*AtCommandFunc)(const int fd, struct map_session_data* sd, const char* command, const char* message);
 
-bool is_atcommand(const int fd, struct map_session_data *sd, const char *message, int type);
+bool is_atcommand(const int fd, struct map_session_data* sd, const char* message, int type);
 
 void do_init_atcommand(void);
 void do_final_atcommand(void);
-void atcommand_db_load_groups(int *group_ids);
+void atcommand_db_load_groups(int* group_ids);
 
-bool atcommand_exists(const char *name);
+bool atcommand_exists(const char* name);
 
-const char *msg_txt(int msg_number);
-int msg_config_read(const char *cfgName);
+const char* msg_txt(int msg_number);
+int msg_config_read(const char* cfgName);
 void do_final_msg(void);
 
 extern int atcmd_binding_count;
 
 // @commands (script based)
 struct atcmd_binding_data {
-    char command[50];
-    char npc_event[50];
-    int level;
-    int level2;
+	char command[50];
+	char npc_event[50];
+	int level;
+	int level2;
 };
 
-struct atcmd_binding_data **atcmd_binding;
+struct atcmd_binding_data** atcmd_binding;
 
-struct atcmd_binding_data *get_atcommandbind_byname(const char *name);
+struct atcmd_binding_data* get_atcommandbind_byname(const char* name);
 
 #endif /* _ATCOMMAND_H_ */

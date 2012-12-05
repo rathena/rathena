@@ -47,14 +47,14 @@ extern char mapindex_cfgfile[80];
 #define MAP_MALAYA "malaya"
 #define MAP_ECLAGE "eclage"
 
-const char *mapindex_getmapname(const char *string, char *output);
-const char *mapindex_getmapname_ext(const char *string, char *output);
-unsigned short mapindex_name2id(const char *);
-const char *mapindex_id2name(unsigned short);
+const char* mapindex_getmapname(const char* string, char* output);
+const char* mapindex_getmapname_ext(const char* string, char* output);
+unsigned short mapindex_name2id(const char*);
+const char* mapindex_id2name(unsigned short);
 void mapindex_init(void);
 void mapindex_final(void);
 
-int mapindex_addmap(int index, const char *name);
+int mapindex_addmap(int index, const char* name);
 int mapindex_removemap(int index);
 
 #endif /* _MAPINDEX_H_ */

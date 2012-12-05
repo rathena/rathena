@@ -11,7 +11,7 @@ int mail_removeitem(struct map_session_data *sd, short flag);
 int mail_removezeny(struct map_session_data *sd, short flag);
 unsigned char mail_setitem(struct map_session_data *sd, int idx, int amount);
 bool mail_setattachment(struct map_session_data *sd, struct mail_message *msg);
-void mail_getattachment(struct map_session_data *sd, int zeny, struct item *item);
+void mail_getattachment(struct map_session_data* sd, int zeny, struct item* item);
 int mail_openmail(struct map_session_data *sd);
 void mail_deliveryfail(struct map_session_data *sd, struct mail_message *msg);
 bool mail_invalid_operation(struct map_session_data *sd);

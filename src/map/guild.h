@@ -15,12 +15,12 @@ struct mob_data;
 
 //For quick linking to a guardian's info. [Skotlex]
 struct guardian_data {
-    int number; //0-MAX_GUARDIANS-1 = Guardians. MAX_GUARDIANS = Emperium.
-    int guild_id;
-    int emblem_id;
-    int guardup_lv; //Level of GD_GUARDUP skill.
-    char guild_name[NAME_LENGTH];
-    struct guild_castle *castle;
+	int number; //0-MAX_GUARDIANS-1 = Guardians. MAX_GUARDIANS = Emperium.
+	int guild_id;
+	int emblem_id;
+	int guardup_lv; //Level of GD_GUARDUP skill.
+	char guild_name[NAME_LENGTH];
+	struct guild_castle* castle;
 };
 
 int guild_skill_get_max(int id);
@@ -35,8 +35,8 @@ struct guild *guild_search(int guild_id);
 struct guild *guild_searchname(char *str);
 struct guild_castle *guild_castle_search(int gcid);
 
-struct guild_castle *guild_mapname2gc(const char *mapname);
-struct guild_castle *guild_mapindex2gc(short mapindex);
+struct guild_castle* guild_mapname2gc(const char* mapname);
+struct guild_castle* guild_mapindex2gc(short mapindex);
 
 struct map_session_data *guild_getavailablesd(struct guild *g);
 int guild_getindex(struct guild *g,int account_id,int char_id);
@@ -55,18 +55,18 @@ int guild_reply_invite(struct map_session_data *sd,int guild_id,int flag);
 void guild_member_joined(struct map_session_data *sd);
 int guild_member_added(int guild_id,int account_id,int char_id,int flag);
 int guild_leave(struct map_session_data *sd,int guild_id,
-                int account_id,int char_id,const char *mes);
+	int account_id,int char_id,const char *mes);
 int guild_member_withdraw(int guild_id,int account_id,int char_id,int flag,
-                          const char *name,const char *mes);
+	const char *name,const char *mes);
 int guild_expulsion(struct map_session_data *sd,int guild_id,
-                    int account_id,int char_id,const char *mes);
-int guild_skillup(struct map_session_data *sd, int skill_num);
+	int account_id,int char_id,const char *mes);
+int guild_skillup(struct map_session_data* sd, int skill_num);
 void guild_block_skill(struct map_session_data *sd, int time);
 int guild_reqalliance(struct map_session_data *sd,struct map_session_data *tsd);
 int guild_reply_reqalliance(struct map_session_data *sd,int account_id,int flag);
 int guild_alliance(int guild_id1,int guild_id2,int account_id1,int account_id2);
 int guild_allianceack(int guild_id1,int guild_id2,int account_id1,int account_id2,
-                      int flag,const char *name1,const char *name2);
+	int flag,const char *name1,const char *name2);
 int guild_delalliance(struct map_session_data *sd,int guild_id,int flag);
 int guild_opposition(struct map_session_data *sd,struct map_session_data *tsd);
 int guild_check_alliance(int guild_id1, int guild_id2, int flag);
