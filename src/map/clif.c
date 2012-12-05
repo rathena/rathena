@@ -5406,7 +5406,7 @@ void clif_displaymessage(const int fd, const char* mes)
 				WFIFOHEAD(fd, 5 + len);
 				WFIFOW(fd,0) = 0x8e;
 				WFIFOW(fd,2) = 5 + len; // 4 + len + NULL teminate
-				safestrncpy(WFIFOP(fd,4), line, len + 1);
+                safestrncpy((char *)WFIFOP(fd,4), line, len + 1);
 				WFIFOSET(fd, 5 + len);
 			}
 			line = strtok(NULL, "\n");
@@ -6502,7 +6502,7 @@ void clif_party_message(struct party_data* p, int account_id, const char* mes, i
 		WBUFW(buf,0)=0x109;
 		WBUFW(buf,2)=len+8;
 		WBUFL(buf,4)=account_id;
-		safestrncpy(WBUFP(buf,8), mes, len);
+        safestrncpy((char *)WBUFP(buf,8), mes, len);
 		clif_send(buf,len+8,&sd->bl,PARTY);
 	}
 }

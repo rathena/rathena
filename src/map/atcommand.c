@@ -7484,7 +7484,7 @@ ACMD_FUNC(mapflag) {
 		clif_displaymessage(sd->fd,atcmd_output);\
 		return 0;\
 	}
-	unsigned char flag_name[100];
+    char flag_name[100];
 	int flag=0,i;
 	nullpo_retr(-1, sd);
 	memset(flag_name, '\0', sizeof(flag_name));
