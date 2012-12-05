@@ -17240,13 +17240,16 @@ static int atcommand_cleanfloor_sub(struct block_list *bl, va_list ap)
 BUILDIN_FUNC(cleanmap)
 {
 	const char *map;
-	int m, index;
-	short x0, y0, x1, y1;
+    int m = -1, index = -1;
+    short x0 = 0, y0 = 0, x1 = 0, y1 = 0;
 
 	map = script_getstr(st, 2);
 	index = mapindex_name2id(map);
 	if (index)
 		m = map_mapindex2mapid(index);
+        
+    if (!m)
+        return 1;
 	
 	if ((script_lastdata(st) - 2) < 4) {
 		map_foreachinmap(atcommand_cleanfloor_sub, m, BL_ITEM);

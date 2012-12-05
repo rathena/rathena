@@ -992,149 +992,16 @@ ACMD_FUNC(hide)
  *------------------------------------------*/
 ACMD_FUNC(jobchange)
 {
-	//FIXME: redundancy, potentially wrong code, should use job_name() or similar instead of hardcoding the table [ultramage]
 	int job = 0, upper = 0;
 	const char* text;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || sscanf(message, "%d %d", &job, &upper) < 1)
-	{
+    if (!message || !*message || sscanf(message, "%d %d", &job, &upper) < 1) {
 		int i, found = 0;
-		const struct { char name[24]; int id; } jobs[] = {
-			{ "novice",            0 },
-			{ "swordman",          1 },
-			{ "swordsman",         1 },
-			{ "magician",          2 },
-			{ "mage",              2 },
-			{ "archer",            3 },
-			{ "acolyte",           4 },
-			{ "merchant",          5 },
-			{ "thief",             6 },
-			{ "knight",            7 },
-			{ "priest",            8 },
-			{ "priestess",         8 },
-			{ "wizard",            9 },
-			{ "blacksmith",       10 },
-			{ "hunter",           11 },
-			{ "assassin",         12 },
-			{ "crusader",         14 },
-			{ "monk",             15 },
-			{ "sage",             16 },
-			{ "rogue",            17 },
-			{ "alchemist",        18 },
-			{ "bard",             19 },
-			{ "dancer",           20 },
-			{ "super novice",     23 },
-			{ "supernovice",      23 },
-			{ "gunslinger",       24 },
-			{ "gunner",           24 },
-			{ "ninja",            25 },
-			{ "novice high",    4001 },
-			{ "high novice",    4001 },
-			{ "swordman high",  4002 },
-			{ "swordsman high", 4002 },
-			{ "magician high",  4003 },
-			{ "mage high",      4003 },
-			{ "archer high",    4004 },
-			{ "acolyte high",   4005 },
-			{ "merchant high",  4006 },
-			{ "thief high",     4007 },
-			{ "lord knight",    4008 },
-			{ "high priest",    4009 },
-			{ "high priestess", 4009 },
-			{ "high wizard",    4010 },
-			{ "whitesmith",     4011 },
-			{ "sniper",         4012 },
-			{ "assassin cross", 4013 },
-			{ "paladin",        4015 },
-			{ "champion",       4016 },
-			{ "professor",      4017 },
-			{ "stalker",        4018 },
-			{ "creator",        4019 },
-			{ "clown",          4020 },
-			{ "gypsy",          4021 },
-			{ "baby novice",    4023 },
-			{ "baby swordman",  4024 },
-			{ "baby swordsman", 4024 },
-			{ "baby magician",  4025 },
-			{ "baby mage",      4025 },
-			{ "baby archer",    4026 },
-			{ "baby acolyte",   4027 },
-			{ "baby merchant",  4028 },
-			{ "baby thief",     4029 },
-			{ "baby knight",    4030 },
-			{ "baby priest",    4031 },
-			{ "baby priestess", 4031 },
-			{ "baby wizard",    4032 },
-			{ "baby blacksmith",4033 },
-			{ "baby hunter",    4034 },
-			{ "baby assassin",  4035 },
-			{ "baby crusader",  4037 },
-			{ "baby monk",      4038 },
-			{ "baby sage",      4039 },
-			{ "baby rogue",     4040 },
-			{ "baby alchemist", 4041 },
-			{ "baby bard",      4042 },
-			{ "baby dancer",    4043 },
-			{ "super baby",     4045 },
-			{ "taekwon",        4046 },
-			{ "taekwon boy",    4046 },
-			{ "taekwon girl",   4046 },
-			{ "star gladiator", 4047 },
-			{ "soul linker",    4049 },
-			{ "gangsi",         4050 },
-			{ "bongun",         4050 },
-			{ "munak",          4050 },
-			{ "death knight",   4051 },
-			{ "dark collector", 4052 },
-			{ "rune knight",    4054 },
-			{ "warlock",        4055 },
-			{ "ranger",         4056 },
-			{ "arch bishop",    4057 },
-			{ "mechanic",       4058 },
-			{ "guillotine",     4059 },
-			{ "rune knight2",   4060 },
-			{ "warlock2",       4061 },
-			{ "ranger2",        4062 },
-			{ "arch bishop2",   4063 },
-			{ "mechanic2",      4064 },
-			{ "guillotine2",    4065 },
-			{ "royal guard",    4066 },
-			{ "sorcerer",       4067 },
-			{ "minstrel",       4068 },
-			{ "wanderer",       4069 },
-			{ "sura",           4070 },
-			{ "genetic",        4071 },
-			{ "shadow chaser",  4072 },
-			{ "royal guard2",   4073 },
-			{ "sorcerer2",      4074 },
-			{ "minstrel2",      4075 },
-			{ "wanderer2",      4076 },
-			{ "sura2",          4077 },
-			{ "genetic2",       4078 },
-			{ "shadow chaser2", 4079 },
-			{ "baby rune",      4096 },
-			{ "baby warlock",   4097 },
-			{ "baby ranger",    4098 },
-			{ "baby bishop",    4099 },
-			{ "baby mechanic",  4100 },
-			{ "baby cross",     4101 },
-			{ "baby guard",     4102 },
-			{ "baby sorcerer",  4103 },
-			{ "baby minstrel",  4104 },
-			{ "baby wanderer",  4105 },
-			{ "baby sura",      4106 },
-			{ "baby genetic",   4107 },
-			{ "baby chaser",    4108 },
-			{ "super novice e", 4190 },
-			{ "super baby e",   4191 },
-			{ "kagerou",        4211 },
-			{ "oboro",          4212 },
-		};
 
-		for (i=0; i < ARRAYLENGTH(jobs); i++) {
-			if (strncmpi(message, jobs[i].name, 16) == 0) {
-				job = jobs[i].id;
+        for (i = JOB_NOVICE; i < JOB_MAX; ++i) {
+            if (strncmpi(message, job_name(i), 16) == 0) {
+                job = i;
 				upper = 0;
 				found = 1;
 				break;
@@ -1143,12 +1010,14 @@ ACMD_FUNC(jobchange)
 
 		if (!found) {
 			text = atcommand_help_string(command);
-			if (text) clif_displaymessage(fd, text);
+            if (text)
+                clif_displaymessage(fd, text);
 			return -1;
 		}
 	}
 
-	if (job == 13 || job == 21 || job == 22 || job == 26 || job == 27 || job == 4014 || job == 4022 || job == 4036 || job == 4044 || job == 4048
+    if (job == JOB_KNIGHT2 || job == JOB_CRUSADER2 || job == JOB_WEDDING || job == JOB_XMAS || job == JOB_SUMMER
+        || job == JOB_LORD_KNIGHT2 || job == JOB_PALADIN2 || job == JOB_BABY_KNIGHT2 || job == JOB_BABY_CRUSADER2 || job == JOB_STAR_GLADIATOR2
 		 || (job >= JOB_RUNE_KNIGHT2 && job <= JOB_MECHANIC_T2) || (job >= JOB_BABY_RUNE2 && job <= JOB_BABY_MECHANIC2)
 	) // Deny direct transformation into dummy jobs
 		{clif_displaymessage(fd, msg_txt(923)); //"You can not change to this job by command."
@@ -1164,7 +1033,8 @@ ACMD_FUNC(jobchange)
 		}
 	} else {
 		text = atcommand_help_string(command);
-		if (text) clif_displaymessage(fd, text);
+        if (text)
+            clif_displaymessage(fd, text);
 		return -1;
 	}
 

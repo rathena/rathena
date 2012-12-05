@@ -5370,7 +5370,7 @@ const char* job_name(int class_)
 	case JOB_ARCH_BISHOP_T:
 	case JOB_MECHANIC_T:
 	case JOB_GUILLOTINE_CROSS_T:
-		return msg_txt(625 - JOB_RUNE_KNIGHT_T+class_);
+            return msg_txt(681 - JOB_RUNE_KNIGHT_T+class_);
 
 	case JOB_ROYAL_GUARD:
 	case JOB_SORCERER:
@@ -5388,7 +5388,7 @@ const char* job_name(int class_)
 	case JOB_SURA_T:
 	case JOB_GENETIC_T:
 	case JOB_SHADOW_CHASER_T:
-		return msg_txt(631 - JOB_ROYAL_GUARD_T+class_);
+            return msg_txt(687 - JOB_ROYAL_GUARD_T+class_);
 
 	case JOB_RUNE_KNIGHT2:
 	case JOB_RUNE_KNIGHT_T2:
