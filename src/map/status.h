@@ -1567,6 +1567,9 @@ struct weapon_atk {
 	unsigned short atk, atk2;
 	unsigned short range;
 	unsigned char ele;
+#ifdef RENEWAL
+	unsigned short matk, wlv;
+#endif
 };
 
 
@@ -1596,12 +1599,6 @@ struct status_data {
 
 	unsigned char
 		def_ele, ele_lv,
-#ifdef RENEWAL
-		/**
-		 * in RE weapon level is used in several areas, keeping it here saves performance
-		 **/
-		wlv,
-#endif
 		size, race;
 
 	struct weapon_atk rhw, lhw; //Right Hand/Left Hand Weapon.
@@ -1752,12 +1749,6 @@ unsigned char status_calc_attack_element(struct block_list *bl, struct status_ch
 #define status_get_race(bl) status_get_status_data(bl)->race
 #define status_get_size(bl) status_get_status_data(bl)->size
 #define status_get_mode(bl) status_get_status_data(bl)->mode
-#ifdef RENEWAL
-	/**
-	 * in RE weapon level is used in several areas, keeping it here saves performance
-	 **/
-	#define status_get_wlv(bl) status_get_status_data(bl)->wlv
-#endif
 int status_get_party_id(struct block_list *bl);
 int status_get_guild_id(struct block_list *bl);
 int status_get_emblem_id(struct block_list *bl);
@@ -1811,6 +1802,10 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 int status_check_visibility(struct block_list *src, struct block_list *target); //[Skotlex]
 
 int status_change_spread( struct block_list *src, struct block_list *bl );
+
+#ifdef RENEWAL
+unsigned short status_base_matk(const struct status_data* status, int level);
+#endif
 
 int status_readdb(void);
 int do_init_status(void);

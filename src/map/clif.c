@@ -2835,10 +2835,10 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 		WFIFOL(fd,4)=sd->battle_status.cri/10;
 		break;
 	case SP_MATK1:
-		WFIFOL(fd,4)=sd->battle_status.matk_max;
+            WFIFOL(fd,4)=pc_rightside_matk(sd);
 		break;
 	case SP_MATK2:
-		WFIFOL(fd,4)=sd->battle_status.matk_min;
+            WFIFOL(fd,4)=pc_leftside_matk(sd);
 		break;
 
 
@@ -3169,8 +3169,8 @@ void clif_initialstatus(struct map_session_data *sd)
 
 	WBUFW(buf,16) = pc_leftside_atk(sd);
 	WBUFW(buf,18) = pc_rightside_atk(sd);
-	WBUFW(buf,20) = sd->battle_status.matk_max;
-	WBUFW(buf,22) = sd->battle_status.matk_min;
+	WBUFW(buf,20) = pc_rightside_matk(sd);
+	WBUFW(buf,22) = pc_leftside_matk(sd);
 	WBUFW(buf,24) = pc_leftside_def(sd);
 	WBUFW(buf,26) = pc_rightside_def(sd);
 	WBUFW(buf,28) = pc_leftside_mdef(sd);

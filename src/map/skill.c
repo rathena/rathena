@@ -397,13 +397,11 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, int skill
 			if (skill_lv >= battle_config.max_heal_lv)
 				return battle_config.max_heal;
 		#ifdef RENEWAL
-			/**
-			 * Renewal Heal Formula (from Doddler)
-			 * TODO: whats that( 1+ %Modifier / 100 ) ? currently using 'x1' (100/100) until found out
-			 * - Min = ( [ ( BaseLvl + INT ) / 5 ] * 30 ) * (1+( %Modifier / 100)) * (HealLvl * 0.1) + StatusMATK + EquipMATK - [(WeaponMATK * WeaponLvl) / 10]
-			 * - Max = ( [ ( BaseLvl + INT ) / 5 ] * 30 ) * (1+( %Modifier / 100)) * (HealLvl * 0.1) + StatusMATK + EquipMATK + [(WeaponMATK * WeaponLvl) / 10]
-			 **/
-			hp = ( ( ( ( status_get_lv(src) + status_get_int(src) ) / 5 ) * 3 ) * skill_lv  + status_get_matk_min(src) + status_get_matk_max(src) - ( ( status_get_matk_max(src) * status_get_wlv(src) ) / 10 ) ) + rnd()%( ( ( ( status_get_lv(src) + status_get_int(src) ) / 5 ) * 3 ) * skill_lv + status_get_matk_min(src) + status_get_matk_max(src) + ( ( status_get_matk_max(src) * status_get_wlv(src) ) / 10 ) );
+            /**
+             * Renewal Heal Formula
+             * Formula: ( [(Base Level + INT) / 5] × 30 ) × (Heal Level / 10) × (Modifiers) + MATK
+             **/
+            hp = (status_get_lv(src) + status_get_int(src)) / 5 * 30  * skill_lv / 10;
 		#else
 			hp = ( status_get_lv(src) + status_get_int(src) ) / 8 * (4 + ( skill_id == AB_HIGHNESSHEAL ? ( sd ? pc_checkskill(sd,AL_HEAL) : 10 ) : skill_lv ) * 8);
 		#endif
@@ -434,7 +432,41 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, int skill
 		if( sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 2)
 			hp += hp / 10;
 	}
+ 
+#ifdef RENEWAL
+    // MATK part of the RE heal formula [malufett]
+    // Note: in this part matk bonuses from items or skills are not applied
+	switch( skill_id ) {
+		case BA_APPLEIDUN:	case PR_SANCTUARY:
+		case NPC_EVILLAND:	break;
+		default:
+			{
+				struct status_data *status = status_get_status_data(src);
+				int min, max, wMatk, variance;
 
+				min = max = status_base_matk(status, status_get_lv(src));
+				if( status->rhw.matk > 0 ){
+					wMatk = status->rhw.matk;
+					variance = wMatk * status->rhw.wlv / 10;
+					min += wMatk - variance;
+					max += wMatk + variance;
+				}
+
+				if( sc && sc->data[SC_RECOGNIZEDSPELL] )
+					min = max;
+
+				if( sd && sd->right_weapon.overrefine > 0 ){
+					min++;
+					max += sd->right_weapon.overrefine - 1;
+				}
+
+				if(max > min)
+					hp += min+rnd()%(max-min);
+				else
+					hp += min;
+			}
+	}
+#endif
 	return hp;
 }
 
@@ -8575,10 +8607,22 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case SO_EL_ACTION:
 		if( sd ) {
+				int duration = 3000;
 			if( !sd->ed )
 				break;
 			elemental_action(sd->ed, bl, tick);
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
+				switch(sd->ed->db->class_){
+					case 2115:case 2124:
+					case 2118:case 2121: 
+						duration = 6000;
+						break;
+					case 2116:case 2119:
+					case 2122:case 2125: 
+						duration = 9000;
+						break;
+				}
+				skill_blockpc_start(sd, skillid, duration);
 		}
 		break;
 
@@ -16481,6 +16525,12 @@ static void skill_toggle_magicpower(struct block_list *bl, short skillid)
 		{
 			sc->data[SC_MAGICPOWER]->val4 = 1;
 			status_calc_bl(bl, status_sc2scb_flag(SC_MAGICPOWER));
+#ifndef RENEWAL
+			if(bl->type == BL_PC){// update current display.
+				clif_updatestatus(((TBL_PC *)bl),SP_MATK1);
+			    clif_updatestatus(((TBL_PC *)bl),SP_MATK2);
+			}
+#endif
 		}
 	}
 }
