@@ -9243,6 +9243,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_spawn(&sd->md->bl);
 		clif_mercenary_info(sd);
 		clif_mercenary_skillblock(sd);
+		status_calc_bl(&sd->md->bl, SCB_SPEED); // Mercenary mimic their master's speed on each map change
 	}
 
 	if( sd->ed ) {
@@ -9252,6 +9253,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_elemental_updatestatus(sd,SP_HP);
 		clif_hpmeter_single(sd->fd,sd->ed->bl.id,sd->ed->battle_status.hp,sd->ed->battle_status.matk_max);
 		clif_elemental_updatestatus(sd,SP_SP);
+		status_calc_bl(&sd->ed->bl, SCB_SPEED); //Elemental mimic their master's speed on each map change
 	}
 
 	if(sd->state.connect_new) {
@@ -13967,6 +13969,10 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 	safestrncpy(msg.send_name, sd->status.name, NAME_LENGTH);
 	safestrncpy(msg.dest_name, (char*)RFIFOP(fd,4), NAME_LENGTH);
 	safestrncpy(msg.title, (char*)RFIFOP(fd,28), MAIL_TITLE_LENGTH);
+	
+	if (msg.title[0] == '\0') {
+		return; // Message has no length and somehow client verification was skipped.
+	}
 
 	if (body_len)
 		safestrncpy(msg.body, (char*)RFIFOP(fd,69), body_len + 1);
