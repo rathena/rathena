@@ -3692,7 +3692,7 @@ static void map_versionscreen(bool do_exit)
 	ShowInfo(CL_WHITE"rAthena SVN version: %s" CL_RESET"\n", get_svn_revision());
 	ShowInfo(CL_GREEN"Website/Forum:"CL_RESET"\thttp://rathena.org/\n");
 	ShowInfo(CL_GREEN"IRC Channel:"CL_RESET"\tirc://irc.rathena.net/#rathena\n");
-	ShowInfo("Open "CL_WHITE"readme.html"CL_RESET" for more information.\n");
+	ShowInfo("Open "CL_WHITE"readme.txt"CL_RESET" for more information.\n");
 	if( do_exit )
 		exit(EXIT_SUCCESS);
 }
