@@ -14135,7 +14135,7 @@ BUILDIN_FUNC(strpos) {
 	else
 		i = 0;
 
-	if ( strlen(needle) == 0 ) {
+	if (needle[0] == '\0') {
 		script_pushint(st, -1);
 		return 0;
 	}
@@ -17227,6 +17227,45 @@ BUILDIN_FUNC(getrandgroupitem) {
 	return 0;
 }
 
+/* cleanmap <map_name>;
+ * cleanfloor <map_name, <x0>, <y0>, <x1>, <y1>; */
+static int atcommand_cleanfloor_sub(struct block_list *bl, va_list ap)
+{
+	nullpo_ret(bl);
+	map_clearflooritem(bl);
+
+	return 0;
+}
+
+BUILDIN_FUNC(cleanmap)
+{
+	const char *map;
+	int m, index;
+	short x0, y0, x1, y1;
+
+	map = script_getstr(st, 2);
+	index = mapindex_name2id(map);
+	if (index)
+		m = map_mapindex2mapid(index);
+	
+	if ((script_lastdata(st) - 2) < 4) {
+		map_foreachinmap(atcommand_cleanfloor_sub, m, BL_ITEM);
+	} else {
+		x0 = script_getnum(st, 3);
+				y0 = script_getnum(st, 4);
+				x1 = script_getnum(st, 5);
+				y1 = script_getnum(st, 6);
+		if (x0 > 0 && y0 > 0 && x1 > 0 && y1 > 0) {
+			map_foreachinarea(atcommand_cleanfloor_sub, m, x0, y0, x1, y1, BL_ITEM);
+		} else {
+			ShowError("cleanarea: invalid coordinate defined!\n");
+			return 1;
+		}
+	}
+	
+	return 0;
+}
+
 
 // declarations that were supposed to be exported from npc_chat.c
 #ifdef PCRE_SUPPORT
@@ -17668,6 +17707,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(get_revision,""),
 	BUILDIN_DEF(freeloop,"i"),
 	BUILDIN_DEF(getrandgroupitem, "ii"),
+	BUILDIN_DEF(cleanmap, "s"),
+	BUILDIN_DEF2(cleanmap, "cleanarea", "siiii"),
 	/**
 	 * @commands (script based)
 	 **/

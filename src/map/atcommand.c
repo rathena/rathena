@@ -6148,8 +6148,9 @@ ACMD_FUNC(mobsearch)
 
 /*==========================================
  * @cleanmap - cleans items on the ground
+ * @cleanarea - cleans items on the ground within an specified area
  *------------------------------------------*/
-static int atcommand_cleanmap_sub(struct block_list *bl, va_list ap)
+static int atcommand_cleanfloor_sub(struct block_list *bl, va_list ap)
 {
 	nullpo_ret(bl);
 	map_clearflooritem(bl);
@@ -6159,10 +6160,25 @@ static int atcommand_cleanmap_sub(struct block_list *bl, va_list ap)
 
 ACMD_FUNC(cleanmap)
 {
-	map_foreachinarea(atcommand_cleanmap_sub, sd->bl.m,
-		sd->bl.x-AREA_SIZE*2, sd->bl.y-AREA_SIZE*2,
-		sd->bl.x+AREA_SIZE*2, sd->bl.y+AREA_SIZE*2,
-		BL_ITEM);
+	map_foreachinmap(atcommand_cleanfloor_sub, sd->bl.m, BL_ITEM);
+	clif_displaymessage(fd, msg_txt(1221)); // All dropped items have been cleaned up.
+	return 0;
+}
+
+ACMD_FUNC(cleanarea)
+{
+	int x0 = 0, y0 = 0, x1 = 0, y1 = 0;
+
+	if (!message || !*message || sscanf(message, "%d %d %d %d", &x0, &y0, &x1, &y1) < 1) {
+		map_foreachinarea(atcommand_cleanfloor_sub, sd->bl.m, sd->bl.x - (AREA_SIZE * 2), sd->bl.y - (AREA_SIZE * 2), sd->bl.x + (AREA_SIZE * 2), sd->bl.y + (AREA_SIZE * 2), BL_ITEM);
+	}
+	else if (sscanf(message, "%d %d %d %d", &x0, &y0, &x1, &y1) == 1) {
+		map_foreachinarea(atcommand_cleanfloor_sub, sd->bl.m, sd->bl.x - x0, sd->bl.y - x0, sd->bl.x + x0, sd->bl.y + x0, BL_ITEM);
+	}
+	else if (sscanf(message, "%d %d %d %d", &x0, &y0, &x1, &y1) == 4) {
+		map_foreachinarea(atcommand_cleanfloor_sub, sd->bl.m, x0, y0, x1, y1, BL_ITEM);
+	}
+
 	clif_displaymessage(fd, msg_txt(1221)); // All dropped items have been cleaned up.
 	return 0;
 }
@@ -8977,6 +8993,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(misceffect),
 		ACMD_DEF(mobsearch),
 		ACMD_DEF(cleanmap),
+		ACMD_DEF(cleanarea),
 		ACMD_DEF(npctalk),
 		ACMD_DEF(pettalk),
 		ACMD_DEF(users),
