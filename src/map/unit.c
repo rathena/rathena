@@ -1260,7 +1260,8 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 	casttime = skill_vfcastfix(src, casttime, skill_num, skill_lv);
 #endif
 
-	unit_stop_walking(src,1);// eventhough this is not how official works but this will do the trick. bugreport:6829
+	if(!ud->state.running) //need TK_RUN or WUGDASH handler to be done before that, see bugreport:6026
+		unit_stop_walking(src,1);// eventhough this is not how official works but this will do the trick. bugreport:6829
 	// in official this is triggered even if no cast time.
 	clif_skillcasting(src, src->id, target_id, 0,0, skill_num, skill_get_ele(skill_num, skill_lv), casttime);
 	if( casttime > 0 || temp )
