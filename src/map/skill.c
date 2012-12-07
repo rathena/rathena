@@ -2475,6 +2475,9 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	case HT_LANDMINE:
 		dmg.dmotion = clif_skill_damage(dsrc,bl,tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skillid, -1, type);
 		break;
+	case WZ_SIGHTBLASTER:
+		dmg.dmotion = clif_skill_damage(src,bl,tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skillid, flag&SD_LEVEL?-1:skilllv, 5);
+			break;
 	case AB_DUPLELIGHT_MELEE:
 	case AB_DUPLELIGHT_MAGIC:
 		dmg.amotion = 300;/* makes the damage value not overlap with previous damage (when displayed by the client) */
@@ -7151,7 +7154,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case SL_SWOO:
 		if (tsce) {
-			sc_start(src,SC_STUN,100,skilllv,10000);
+			if(sd)
+				clif_skill_fail(sd,skillid,USESKILL_FAIL_LEVEL,0);
+			status_change_start(src,SC_STUN,10000,skilllv,0,0,0,10000,8);
+			status_change_end(bl, SC_SWOO, INVALID_TIMER);
 			break;
 		}
 	case SL_SKA: // [marquis007]
