@@ -1557,6 +1557,7 @@
 12213,0,0,0,0,0,0,0,"Carrot Doc."
 12214,0,0,0,0,0,0,0,"Cactus Needle Doc."
 12215,0,0,0,0,0,0,0,"Stone Heart Doc."
+12216,21600,0,0,0,0,0,0,"Pouty Jahbong"
 12217,0,0,0,0,0,0,0,"Request - Traces of wild boar hunt"
 12218,0,0,0,0,0,0,0,"How to make lava elixir"
 12219,0,0,0,0,0,0,0,"How to creat flame elixir"

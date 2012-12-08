@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Contains Quests:
 //= Onward to the Other World
 //= - Will differ from iRO wiki's version as iRO changed it.
