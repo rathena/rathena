@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Job quest for Bard class
 //===== Additional Comments: =================================
 //= 2.1b Updated to the Official One. [Samuray22]

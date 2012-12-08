@@ -1,19 +1,19 @@
 //===== rAthena Script =======================================
 //= Thief Job Quest
 //===== By: ==================================================
-//= rAthena dev team
+//= rAthena Dev Team
 //===== Current Version: =====================================
 //= 1.8
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Job quest for Thief classes
 //===== Additional Comments: =================================
-//= Fully working
-//= v1.1 Added instant job change for High Novice [Lupus]
+//= 1.0 Fully working.
+//= 1.1 Added instant job change for High Novice [Lupus]
 //= 1.3 Added Baby Class support [Lupus]
-//= v1.4 Optimised and moved first checker to Jfunc1-1 [massdriller]
+//= 1.4 Optimised and moved first checker to Jfunc1-1 [massdriller]
 //= Fixed possible EXP abuse [Lupus]
 //= 1.5 Now saves/restores all quest skills [Lupus]
 //= 1.6 Merged back JFunc [Lupus] 1.6a typos

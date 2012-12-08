@@ -1,5 +1,5 @@
 //===== rAthena Script ======================================= 
-// Guillotine Cross Job Change Quest
+//= Guillotine Cross Job Quest
 //===== By: ================================================== 
 //= Muad_Dib
 //===== Current Version: ===================================== 

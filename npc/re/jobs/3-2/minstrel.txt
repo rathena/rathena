@@ -1,17 +1,16 @@
 //===== rAthena Script ======================================= 
-// Minstrel Job change Quest
+//= Minstrel Job Quest
 //===== By: ================================================== 
-//= Masao
-//= Credits: Muad_Dib
+//= Muad_Dib
 //===== Current Version: ===================================== 
 //= 1.2
 //===== Compatible With: ===================================== 
 //= Any rAthena SVN
 //===== Description: ========================================= 
-//= [Translated from the Official]
+//= [Official Conversion]
 //= Job change Quest from Bard / Clown -> Minstrel.
 //===== Additional Comments: ================================= 
-//= 1.0 First Version.
+//= 1.0 First Version. [Masao]
 //= 1.1 Fix the checking of requirements before job change to Minstel [JayPee]
 //= 1.2 Optimized. [Euphy]
 //============================================================

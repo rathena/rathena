@@ -1,5 +1,5 @@
 //===== rAthena Script ======================================= 
-//= Super Novice Script
+//= Super Novice Job Quest
 //===== By: ================================================== 
 //= Darkchild
 //===== Current Version: ===================================== 
@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN r15340+
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Super Novice Job Change Npc
 //= Super Novice Cart Rental Npc
 //= Some Other Useless Super Novice Npc

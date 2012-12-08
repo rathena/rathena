@@ -1,5 +1,5 @@
 //===== rAthena Script ======================================= 
-//= Renewal Thief Job Change
+//= Renewal Thief Job Quest
 //===== By: ================================================== 
 //= Kisuka
 //===== Current Version: ===================================== 

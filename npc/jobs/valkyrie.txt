@@ -9,7 +9,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Quest to become a Tranceded Class. (Advanced/Rebirthed)
 //===== Additional Comments: ================================= 
 //= 1.1 Made all into functions,additional checks,quest skills,now Valhallana can return you back. She also makes reborn process only when you got no Zeny/items (as in kRO) [Lupus]

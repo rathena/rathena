@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Arch Bishop Job change Quest
+//= Arch Bishop Job Quest
 //===== By: ==================================================
 //= L0ne_W0lf
 //= Credits: Gepard

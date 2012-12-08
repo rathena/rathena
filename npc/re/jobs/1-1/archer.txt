@@ -1,5 +1,5 @@
 //===== rAthena Script ======================================= 
-//= Renewal Archer Job Change
+//= Renewal Archer Job Quest
 //===== By: ================================================== 
 //= Kisuka
 //===== Current Version: ===================================== 

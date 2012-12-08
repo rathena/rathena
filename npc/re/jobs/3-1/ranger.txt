@@ -1,17 +1,16 @@
 //===== rAthena Script ======================================= 
-// Ranger Job change Quest
+//= Ranger Job Quest
 //===== By: ================================================== 
-//= Masao
-//= Credits: Muad_Dib
+//= Muad_Dib
 //===== Current Version: ===================================== 
 //= 1.4
 //===== Compatible With: ===================================== 
-//= Any rAthena SVN
+//= rAthena SVN
 //===== Description: ========================================= 
-//= [Translated from the Official]
+//= [Official Conversion]
 //= Job change Quest from Hunter / Sniper -> Ranger.
 //===== Additional Comments: ================================= 
-//= 1.0 First Version.
+//= 1.0 First Version. [Masao]
 //= 1.1 Updated SC_STONE duration from 2 Seconds to 2 Minutes
 //= and fixed Mercenary check.
 //= 1.2 Fixed first Quest so that when a false poring got killed

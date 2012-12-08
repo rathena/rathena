@@ -7,15 +7,14 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Job quest for Swordman classes
 //= Uses Job_sword1 as opposed to sword_1-1 -> sword_3-1.
 //= EXPLOITABLE in a sense because while the sword_x-1 maps
 //= are marked as "inside" by the client, job_sword1 is not.
 //= giving players FREE camera rotation while doing the job quest.
 //===== Additional Comments: ================================= 
-//= Fully working.  I have created a custom warp to get into the test room so disable
-//= the one in your warp script or scripts.  It is this warp: "izlude_in",40,170.
+//= 1.0 Fully working.
 //= 1.1 Added instant job change for High Novice [Lupus]
 //= 1.3 Added Baby Class support [Lupus]
 //= 1.4 Changed the timing system to initnpctimer, now you do get warnings about time

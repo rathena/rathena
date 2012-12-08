@@ -9,7 +9,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Job Change quest for Priest class.
 //===== Additional Comments: ================================= 
 //= Fully working.  Changed the way Priests enter the test room to help Acos.

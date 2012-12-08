@@ -2054,20 +2054,16 @@ OnInit:
 	end;
 OnEnable:
 	enablenpc "#gateto_thanatos";
-	initnpctimer;
-	end;
 OnOn2:
 	initnpctimer;
 	end;
 OnTouch:
 	set .@touch,1;
 OnTimer6000:
-	set .@boss_tt, $@thana_summon;
-	if ((.@boss_tt == 0) || (.@boss_tt == 6)) {
+	if (($@thana_summon == 0) || ($@thana_summon == 6)) {
 		disablenpc "#gateto_thanatos";
 		stopnpctimer;
-	}
-	else if (.@boss_tt == 5) {
+	} else if ($@thana_summon == 5) {
 		if (.@touch) warp "thana_boss",136,116;
 		else donpcevent "#gateto_thanatos::OnOn2";
 	}

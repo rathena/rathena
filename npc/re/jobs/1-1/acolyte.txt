@@ -1,5 +1,5 @@
 //===== rAthena Script ======================================= 
-//= Renewal Acolyte Job Change
+//= Renewal Acolyte Job Quest
 //===== By: ================================================== 
 //= Kisuka
 //===== Current Version: ===================================== 

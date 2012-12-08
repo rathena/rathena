@@ -9,7 +9,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Job Change quest for Hunter class.
 //===== Additional Comments: ================================= 
 //= 0.5 Fully working.

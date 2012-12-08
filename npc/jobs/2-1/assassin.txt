@@ -7,12 +7,12 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Job Change quest for Assassin class.
 //===== Additional Comments: ================================= 
-//= v1.0 Used some dialogue from the aegis Assassin script translated By: Pgro Team (OwNaGe)
+//= 1.0 Used some dialogue from the aegis Assassin script translated By: Pgro Team (OwNaGe)
 //= Also converted the booby traps from the aegis script.[kobra_k88]
-//= v1.1 Made adjustments to ontouch npcs to work with the new "ontouch" functionality.
+//= 1.1 Made adjustments to ontouch npcs to work with the new "ontouch" functionality.
 //= Fixed some duplicate npc names.  Added missing waitingroom triggers.
 //= Fixed warp in "TimerSin", was supposed to be an areawarp.
 //= For some reason sometimes the "Nameless One" would have message windows

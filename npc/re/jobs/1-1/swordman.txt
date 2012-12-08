@@ -1,5 +1,5 @@
 //===== rAthena Script ======================================= 
-//= Renewal Swordman Job Change
+//= Renewal Swordman Job Quest
 //===== By: ================================================== 
 //= Kisuka
 //===== Current Version: ===================================== 

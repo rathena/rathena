@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Job quest for Soul Linker class.
 //= [Vars Used]
 //= SOUL_Q = Job Change Phase. (Max 4)

@@ -7,15 +7,15 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Job quest for Acolyte classes
 //===== Additional Comments: ================================= 
-//= v1.0 Fully working.
-//= v1.1 Added function calls for Priest Quest.
-//= v1.2 Fixed Marthilda, Yosuke bugs. [Lupus]
-//= v1.2a Added instant job change for High Novice [Lupus]
-//= v1.3 Added Baby Class support [Lupus]
-//= v1.4 Optimised and moved first checker to Jfunc1-1 [massdriller]
+//= 1.0 Fully working.
+//= 1.1 Added function calls for Priest Quest.
+//= 1.2 Fixed Marthilda, Yosuke bugs. [Lupus]
+//= 1.2a Added instant job change for High Novice [Lupus]
+//= 1.3 Added Baby Class support [Lupus]
+//= 1.4 Optimised and moved first checker to Jfunc1-1 [massdriller]
 //= 1.5 Now saves/restores all quest skills [Lupus]
 //= 1.6 Merged back JFunc [Lupus]
 //= 1.7 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]

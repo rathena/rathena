@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Novice Training Grounds
 //===== Additional Comments: ================================= 
 //= 1.7D Added confirm character name thing on receptionist. [Kisuka]

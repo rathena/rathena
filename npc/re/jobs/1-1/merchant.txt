@@ -1,5 +1,5 @@
 //===== rAthena Script ======================================= 
-//= Renewal Merchant Job Change
+//= Renewal Merchant Job Quest
 //===== By: ================================================== 
 //= Kisuka
 //===== Current Version: ===================================== 

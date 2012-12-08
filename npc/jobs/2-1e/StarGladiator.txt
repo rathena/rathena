@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Job Change quest for Star Gladiator class.
 //===== Additional Comments: ================================= 
 //= 1.1 Updated to the Aegis Standards. [Samuray22]

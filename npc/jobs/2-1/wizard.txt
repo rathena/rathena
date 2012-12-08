@@ -8,7 +8,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Job Change quest for Wizard class.
 //===== Additional Comments: ================================= 
 //= 2.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]

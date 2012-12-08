@@ -1,5 +1,5 @@
 //===== rAthena Script ======================================= 
-//= Crusader Quest
+//= Crusader Job Quest
 //===== By: ================================================== 
 //= Made by: Black Dragon
 //= Converted by: Shin
@@ -8,7 +8,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Job quest for Crusader classes
 //===== Additional Comments: ================================= 
 //= 2.2 Updated All NPCs to the officials one [Samuray22]

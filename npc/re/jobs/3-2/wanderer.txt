@@ -1,5 +1,5 @@
 //===== rAthena Script ======================================= 
-// Wanderer Job change Quest
+//= Wanderer Job Quest
 //===== By: ================================================== 
 //= Muad_Dib, Meyraw
 //===== Current Version: ===================================== 

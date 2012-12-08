@@ -1,12 +1,12 @@
 //===== rAthena Script ======================================= 
-// Shadow Chaser Job Change Quest
+//= Shadow Chaser Job Quest
 //===== By: ================================================== 
 //= ultragunner
 //= Credits: Oshinoke
 //===== Current Version: ===================================== 
 //= 1.2
 //===== Compatible With: ===================================== 
-//= rAthena
+//= rAthena SVN
 //===== Description: ========================================= 
 //= Job change Quest from Rogue / Stalker -> Shadow Chaser.
 //= Based on Official pRO server
