@@ -877,6 +877,7 @@ int npc_touch_areanpc(struct map_session_data* sd, int m, int x, int y)
 	int xs,ys;
 	int f = 1;
 	int i;
+	int j, found_warp = 0;
 
 	nullpo_retr(1, sd);
 
@@ -920,6 +921,24 @@ int npc_touch_areanpc(struct map_session_data* sd, int m, int x, int y)
 			pc_setpos(sd,map[m].npc[i]->u.warp.mapindex,map[m].npc[i]->u.warp.x,map[m].npc[i]->u.warp.y,CLR_OUTSIGHT);
 			break;
 		case SCRIPT:
+			for (j = i; j < map[m].npc_num; j++) {
+				if (map[m].npc[j]->subtype != WARP) {
+					continue;
+				}
+
+				if ((sd->bl.x >= (map[m].npc[j]->bl.x - map[m].npc[j]->u.warp.xs) && sd->bl.x <= (map[m].npc[j]->bl.x + map[m].npc[j]->u.warp.xs)) &&
+					(sd->bl.y >= (map[m].npc[j]->bl.y - map[m].npc[j]->u.warp.ys) && sd->bl.y <= (map[m].npc[j]->bl.y + map[m].npc[j]->u.warp.ys))) {
+					if( pc_ishiding(sd) || (sd->sc.count && sd->sc.data[SC_CAMOUFLAGE]) )
+						break; // hidden chars cannot use warps
+					pc_setpos(sd,map[m].npc[j]->u.warp.mapindex,map[m].npc[j]->u.warp.x,map[m].npc[j]->u.warp.y,CLR_OUTSIGHT);
+					found_warp = 1;
+				}
+			}
+
+			if (found_warp > 0) {
+				break;
+			}
+
 			if( npc_ontouch_event(sd,map[m].npc[i]) > 0 && npc_ontouch2_event(sd,map[m].npc[i]) > 0 )
 			{ // failed to run OnTouch event, so just click the npc
 				struct unit_data *ud = unit_bl2ud(&sd->bl);
