@@ -12103,8 +12103,13 @@ static int skill_unit_effect (struct block_list* bl, va_list ap)
 
 	//Target-type check.
 	if( !(group->bl_flag&bl->type && battle_check_target(&unit->bl,bl,group->target_flag)>0) ) {
-		if( flag&4 && ((group->src_id == bl->id && group->state.song_dance&0x2) || skill_get_inf2(skill_id)&INF2_SONG_DANCE) )
+		if( flag&4 && group->src_id == bl->id && group->state.song_dance&0x2 ) {
 			skill_unit_onleft(skill_id, bl, tick);//Ensemble check to terminate it.
+		} else {
+			if ( flag&4 && skill_get_inf2(skill_id)&INF2_SONG_DANCE) { // Make a exception for song/dance skill
+				skill_unit_onleft(unit->val1, bl, tick); //TODO: fix skill_dance_switch
+			}
+		}
 	} else {
 		if( flag&1 )
 			skill_unit_onplace(unit,bl,tick);

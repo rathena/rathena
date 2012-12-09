@@ -3598,7 +3598,7 @@ static unsigned int mob_drop_adjust(int baserate, int rate_adjust, unsigned shor
 {
 	double rate = baserate;
 
-	if (battle_config.logarithmic_drops && rate_adjust > 0 && baserate > 0) //Logarithmic drops equation by Ishizu-Chan
+	if (battle_config.logarithmic_drops && rate_adjust > 0 && rate_adjust != 100 && baserate > 0) //Logarithmic drops equation by Ishizu-Chan
 		//Equation: Droprate(x,y) = x * (5 - log(x)) ^ (ln(y) / ln(5))
 		//x is the normal Droprate, y is the Modificator.
 		rate = rate * pow((5.0 - log10(rate)), (log(rate_adjust/100.) / log(5.0))) + 0.5;
