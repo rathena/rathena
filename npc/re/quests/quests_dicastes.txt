@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Gennosuke Kouga, Muad_Dib
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -23,11 +23,11 @@
 //= 1.5 Removed "Mysterious Documents" duplicated in magic_books. [Euphy]
 //= 1.6 Fixed missing checks for quest: Sapha's Visit. [Joseph]
 //= 1.7 Updated to match the official script. [Joseph]
+//= 1.8 Optimized and fixed invalid checkquest. [Joseph]
 //============================================================
 
 // Entrance
 //============================================================
-
 manuk,321,182,5	script	Entrance Manager#ep133	450,{
 	if (!isequipped(2782)) {
 		mes "[Average Galten]";
@@ -1002,15 +1002,13 @@ dic_in01,40,193,1	script	Papyrus#0001	453,{
 		mes "Ugh... feel dizzy from simply staring at the document. Will come back after cooling down";
 		close;
 	}
+	specialeffect2 235;
+	progressbar "ffff00",4;
 	set .@doc,rand(1,70);
 	if (.@doc > 50 && .@doc <= 60) {
-		specialeffect2 235;
-		progressbar "ffff00",4;
 		mes "No documents look out of the ordinary.";
 		close;
 	} else if (.@doc > 60 && .@doc <= 70) {
-		specialeffect2 235;
-		progressbar "ffff00",4;
 		mes "You suddenly feel nauseated. You feel like this won't go away any time soon. Finding the documents will have to wait.";
 		setquest 12165;
 		close; 
@@ -1067,8 +1065,6 @@ dic_in01,40,193,1	script	Papyrus#0001	453,{
 	else if (.@doc == 50) eldicastes_dp(12213,"Carrot","Red colored plant. Pub owner requests it all the time. Worth research.","");
 
 	function	eldicastes_dp	{
-		specialeffect2 235;
-		progressbar "ffff00",4;
 		if (checkquest(getarg(0)) >= 0) {
 			mes "You've found a document you already have.";
 			close;
@@ -1186,7 +1182,7 @@ dic_in01,138,225,3	script	Diel Guard#ep133_19	492,{
 		if (select("I have permission.:Go back.") == 1) {
 			mes "[Diel Guard]";
 			mes "Wait...";
-			mes "" + strcharinfo(0) + "......ah... I see your name on the list.";
+			mes strcharinfo(0) + "......ah... I see your name on the list.";
 			mes "I'm sorry.";
 			mes "Please go through.";
 			close2;
@@ -1205,7 +1201,7 @@ dic_in01,138,225,3	script	Diel Guard#ep133_19	492,{
 		mes "Ah, you are " + strcharinfo(0) + "..";
 		mes "I received an order from Ahat to let you through anytime.";
 		mes "Please go up.";
-		close;
+		close2;
 		warp "dic_in01",241,177;
 		end;
 	}
@@ -1542,119 +1538,110 @@ dic_in01,300,280,5	script	Minister Ahat#ep133_21	493,{
 		mes "[Soft Voice]";
 		mes "Who is the master?";
 		next;
-		while (1) {
-			if (.@ahtlove > 4) {
+		mes "- Ahat seems to be casting a powerful spell.";
+		mes "This might be his real ability. -";
+		next;
+		select("Stop that!:Demon go away!");
+		mes "[Ahat]";
+		mes ".. useless resistance...";
+		mes "But this is fun from time to time.";
+		mes "I can always cast a spell on you anytime.";
+		next;
+		mes "[Ahat]";
+		mes "Now.. hold up your head and look into my eyes..";
+		mes "....";
+		next;
+		while (.@ahtlove < 4) {
+			set .@ahtlove, .@ahtlove + 1;
+			mes "- Ahat tries to hypnotize you again.";
+			mes "He must have erased himself by doing this over and over again.-";
+			next;
+			if (.@ahtlove == 1) {
+				select("Overcome with willpower.");
 				mes "[Ahat]";
-				mes "You are resisting.";
-				mes "So you didn't just come here.";
-				mes "Let's see how much you can stand.";
+				mes "Amusing.";
+				mes "Don't you think, Cheshire?";
+				mes "Hahaha. Playing hard to get.. this will be fun..";
 				next;
-				mes "[Ahat]";
-				mes "Who is your master?";
-				next;
-				if (select("Pretend to be under the spell.:Well, you tell me") == 1) {
-					mes "- You start acting like you are hypnotized.";
-					mes "Ahat looks satisfied. -";
-					next;
-				}
-				else {
-					mes "[" + strcharinfo(0) + "]";
-					mes "You!!!";
-					mes "I'm in love!";
-					mes "I will die for you!";
-					next;
-					mes "- You start acting like you are hypnotized.-";
-					next;
-					mes "[Ahat]";
-					mes "........ ah, no.";
-					mes "No need to kill yourself";
-					mes "Now you are under my spell.";
-					mes "....";
-					next;
-				}
-				mes "[Ahat]";
-				mes "Who are you to me?";
-				next;
-				if (select("A foot stool!:Loyal servant.") == 1) {
-					mes "[Ahat]";
-					mes "I don't need a foot stool.";
-					mes "Let's talk after a minute.";
-					set ep13_3_secret, 15;
-					close2;
-				}
-				else {
-					mes "[Ahat]";
-					mes "I see.";
-					mes "You are my loyal servant.";
-					mes "My hands and feet.";
-					set ep13_3_secret, 15;
-					close2;
-				}
 			}
-			else if (.@ahtlove == 4) {
-				set .@ahtlove, .@ahtlove + 1;
-				mes "- Ahat tries to hypnotize you again.";
-				mes "He must have erased himself by doing this over and over again.-";
+			else if (.@ahtlove == 2) {
+				select("You close your eyes..");
+				mes "[Ahat]";
+				mes "No, no.. you mustn't close them.";
+				mes "Cheshire.";
 				next;
-				if (.@ahtlove == 1) {
-					select("Overcome with willpower.");
-					mes "[Ahat]";
-					mes "Amusing.";
-					mes "Don't you think, Cheshire?";
-					mes "Hahaha. Playing hard to get.. this will be fun..";
-					next;
-				}
-				else if (.@ahtlove == 2) {
-					select("You close your eyes..");
-					mes "[Ahat]";
-					mes "No, no.. you mustn't close them.";
-					mes "Cheshire.";
-					next;
-					mes "- As soon as the order was made";
-					mes "Ahat's aide comes to make you stare at Ahat.-";
-					next;
-				}
-				else if (.@ahtlove == 3) {
-					select("Try to sing a song.");
-					mes "[Ahat]";
-					mes "Humans are funny.";
-					mes "But you need to listen to me so I will make you quiet for awhile.";
-					next;
-					mes "[Ahat]";
-					mes "No use on resisting.";
-					mes "Just leave everything to me.";
-					next;
-				}
-				else {
-					select("Try to twist your body.");
-					mes "[Ahat]";
-					mes "Amusing.";
-					mes "Don't you think, Cheshire?";
-					mes "Hahaha. Playing hard to get.. this will be fun..";
-					next;
-					mes "[Ahat]";
-					mes "Stop that because you look pathetic.";
-					mes "Just relax and let loose for my spell.";
-					next;
-				}
+				mes "- As soon as the order was made";
+				mes "Ahat's aide comes to make you stare at Ahat.-";
+				next;
+			}
+			else if (.@ahtlove == 3) {
+				select("Try to sing a song.");
+				mes "[Ahat]";
+				mes "Humans are funny.";
+				mes "But you need to listen to me so I will make you quiet for awhile.";
+				next;
+				mes "[Ahat]";
+				mes "No use on resisting.";
+				mes "Just leave everything to me.";
+				next;
 			}
 			else {
-				set .@ahtlove, .@ahtlove + 1;
-				mes "- Ahat seems to be casting a powerful spell.";
-				mes "This might be his real ability. -";
-				next;
-				select("Stop that!:Demon go away!");
+				select("Try to twist your body.");
 				mes "[Ahat]";
-				mes ".. useless resistance...";
-				mes "But this is fun from time to time.";
-				mes "I can always cast a spell on you anytime.";
+				mes "Amusing.";
+				mes "Don't you think, Cheshire?";
+				mes "Hahaha. Playing hard to get.. this will be fun..";
 				next;
 				mes "[Ahat]";
-				mes "Now.. hold up your head and look into my eyes..";
-				mes "....";
+				mes "Stop that because you look pathetic.";
+				mes "Just relax and let loose for my spell.";
 				next;
 			}
 		}
+		mes "[Ahat]";
+		mes "You are resisting.";
+		mes "So you didn't just come here.";
+		mes "Let's see how much you can stand.";
+		next;
+		mes "[Ahat]";
+		mes "Who is your master?";
+		next;
+		if (select("Pretend to be under the spell.:Well, you tell me") == 1) {
+			mes "- You start acting like you are hypnotized.";
+			mes "Ahat looks satisfied. -";
+			next;
+		}
+		else {
+			mes "[" + strcharinfo(0) + "]";
+			mes "You!!!";
+			mes "I'm in love!";
+			mes "I will die for you!";
+			next;
+			mes "- You start acting like you are hypnotized.-";
+			next;
+			mes "[Ahat]";
+			mes "........ ah, no.";
+			mes "No need to kill yourself";
+			mes "Now you are under my spell.";
+			mes "....";
+			next;
+		}
+		mes "[Ahat]";
+		mes "Who are you to me?";
+		next;
+		if (select("A foot stool!:Loyal servant.") == 1) {
+			mes "[Ahat]";
+			mes "I don't need a foot stool.";
+			mes "Let's talk after a minute.";
+		}
+		else {
+			mes "[Ahat]";
+			mes "I see.";
+			mes "You are my loyal servant.";
+			mes "My hands and feet.";
+		}
+		set ep13_3_secret, 15;
+		close2;
 	}
 	else if (ep13_3_secret == 15) {
 		cutin (Sex?"ep13_ahat_f":"ep13_ahat_m"),2;
@@ -1826,14 +1813,14 @@ dic_in01,158,188,3	script	Jarute HesLanta#ep133_2	451,{
 		mes "Haha.. good luck.";
 		close;
 	}
-	else if (ep13_3_secret == 19 && ep13_3_secret == 20) {
+	else if (ep13_3_secret == 19 || ep13_3_secret == 20) {
 		if (ep13_3_secret == 19) {
 			mes "[HesLanta]";
 			mes "I'm sorry to bring you here suddenly.";
 			mes "But I wanted to check someone.";
 			next;
 			mes "[HesLanta]";
-			mes "Jarute.. what did Ahat look like to you?";
+			mes "Jarute.. What did Ahat look like to you?";
 			next;
 			set .@m, select("I don't understand your question.:My master.") - 1;
 			if (.@m) {
@@ -2020,8 +2007,8 @@ dic_in01,158,188,3	script	Jarute HesLanta#ep133_2	451,{
 		next;
 		mes "[HesLanta]";
 		mes "The power is focused on Ahat.";
-		next;
 		mes "When power should be spread out evenly throughout departments.";
+		next;
 		mes "[HesLanta]";
 		mes "That is how everyone can monitor and check each other...";
 		mes "and try their best and not stray to the wrong side of the road";
@@ -2169,7 +2156,6 @@ dic_in01,158,188,3	script	Jarute HesLanta#ep133_2	451,{
 				mes "And Ahat wants to eliminate...";
 				next;
 				if (select("Ahat himself.:Morroc because of the crack?") == 1) {
-					mes "[" + strcharinfo(0) + "]";
 					mes "[" + strcharinfo(0) + "]";
 					mes "Yes, Ahat might be a trace of himself.";
 					mes "Saphas want to hide something that is why they hired me";
@@ -3371,7 +3357,7 @@ mid_campin,168,170,3	script	Inspector Doha#ep133	59,{
 			mes "Me?";
 			mes "Are you the person the captain was speaking of?";
 			mes "What was the name...";
-			mes "" + strcharinfo(0) + "?";
+			mes strcharinfo(0) + "?";
 			next;
 			mes "[Doha]";
 			mes "Hmm.. I don't know why you were chosen but I guess they trusted you enough.";
@@ -3637,15 +3623,16 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 	}
 	cutin "ep13_shy",2;
 	mes "[Shay]";
-	set .@s_a_y, rand(1,5);
-	if (.@s_a_y == 1) mes ".. Burman Flone.";
-	else if (.@s_a_y == 2) mes "What?";
-	else if (.@s_a_y == 3) mes "Boring. What is it?";
-	else if (.@s_a_y == 4) mes "Sigh... Ready to order?";
-	else { 
-		mes "Another failure?.";
-		mes "I'm talking to myself. Don't bother.";
-		mes "What do you want?";
+	switch (rand(1,5)) {
+		Case 1: mes ".. Burman Flone."; break;
+		Case 2: mes "What?"; break;
+		Case 3: mes "Boring. What is it?"; break;
+		Case 4: mes "Sigh... Ready to order?"; break;
+		Case 5:
+			mes "Another failure?.";
+			mes "I'm talking to myself. Don't bother.";
+			mes "What do you want?";
+			break;
 	}
 	next;
 	switch (select("Order.:Talk.:Never mind.")) {
@@ -3660,9 +3647,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 				mes "Here.. ";
 				mes "......Hmmm...";
 				mes "Nah.";
-				close2;
-				cutin "",255;
-				end;
+				break;
 			}
 			setarray .@str$[1], "Tropical Sorgrat","Vermillion on the Beach.";
 			setarray .@item[1], 12112,12113;
@@ -3671,17 +3656,13 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 				mes "Here is your "+.@str$[@menu]+".";
 				set Zeny, Zeny - 2000;
 				getitem .@item[@menu],1; //Tropical_Sograt
-				close2;
-				cutin "",255;
-				end;
+				break;
 			}
 			mes "[Shay]";
 			mes .@str$[@menu]+" is 2000 Zeny.";
 			mes "What is it so expensive?";
 			mes "Then you try to bring it all the way here.";
-			close2;
-			cutin "",255;
-			end;
+			break;
 	case 2:
 		if (ep13_3_invite < 6) {
 			mes "[Shay]";
@@ -3692,17 +3673,13 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 			mes "To avoid conflicts apart from diplomatic trouble";
 			mes "it is always better to respect each sides agreement.";
 			mes "Don't you agree?";
-			close2;
-			cutin "",255;
-			end;
+			break;
 		}
 		else {
 			if (ep13_3_secret < 3) {
 				mes "[Shay]";
 				mes "Not that busy but I don't want to do it.";
-				close2;
-				cutin "",255;
-				end;
+				break;
 			}
 			else if (ep13_3_secret == 3) {
 				mes "[Shay]";
@@ -3752,9 +3729,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 						next;
 						mes "Shay suddenly has a lonely expression and sighs deeply about his situation.";
 						mes "Looks very tired.";
-						close2;
-						cutin "",255;
-						end;
+						break;
 					case 2:
 						mes "[Shay]";
 						mes "Sapha?";
@@ -3765,9 +3740,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 						mes "What are you asking me?";
 						mes "Just ask any Sapha passing by.";
 						mes "Ask 'what are you'.";
-						close2;
-						cutin "",255;
-						end;
+						break;
 					case 3:
 						mes "[Shay]";
 						mes "Other races?";
@@ -3790,9 +3763,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 							set ep13_3_secret, 4;
 							erasequest 7186;
 							setquest 7187;
-							close2;
-							cutin "",255;
-							end;
+							break;
 						}
 						mes "[Shay]";
 						mes "Butterfly wings? Are you talking about Rapine?";
@@ -3802,35 +3773,32 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 						mes "[Shay]";
 						mes "If you want to know about Rapine, go to Splendide.";
 						mes "They are rough and tough.";
-						close2;
-						cutin "",255;
-						end;
+						break;
 					case 4:
 						mes "[Shay]";
 						mes "What...";
 						mes "I'm not that busy but don't bother me too much.";
-						close2;
-						end;
+						break;
 				}
+				break;
 			}
 			else if (ep13_3_secret == 4) {
 				mes "[Shay]";
 				mes "What is it now?";
 				mes "Any luck?";
 				next;
-				set .@ward01$, "The Knits at the square are interested in Ahat.";
-				set .@ward02$, "I heard from Pioms that most of the Saphas are interested in the minister.";
-				set .@ward03$, "Galtens are interested in the Cat Merchant for their cat ears.";
-				setarray .@quest_id, 7188,7189,7190;
-				for (set .@size, getarraysize(.@quest_id); .@i < .@size; set .@i, .@i + 1)
-					if (checkquest(.@quest_id[.@i]) >= 0) set .@sealall, .@sealall + 1;
+				setarray .@ward$, 
+					"7188","The Knits at the square are interested in Ahat.",
+					"7189","I heard from Pioms that most of the Saphas are interested in the minister.",
+					"7190","Galtens are interested in the Cat Merchant for their cat ears.";
 				mes "[" + strcharinfo(0) + "]";
 				mes "I'm trying to organize the information I've collected.";
-				if (.@sealall == 0) mes "But what should I do with the collected information?";
-				else {
-					for (set .@i, 0; .@i < .@size; set .@i, .@i + 1)
-						if (checkquest(.@quest_id[.@i]) >= 0) mes getd(".@ward0"+(.@i+1));
-				}
+				for (set .@size, getarraysize(.@ward$); .@i < .@size; set .@i, .@i + 2)
+					if (checkquest(atoi(.@ward$[.@i])) >= 0) {
+						set .@sealall, .@sealall + 1;
+						mes .@ward$[.@i+1];
+					}
+				if (!.@sealall) mes "But what should I do with the collected information?";
 				next;
 				if (.@sealall < 3) {
 					mes "[" + strcharinfo(0) + "]";
@@ -3842,9 +3810,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 					mes "[Shay]";
 					mes "There are many Saphas working at the factory, drill hall, square and anywhere else.";
 					mes "There are the Cat Merchants outside of the castle, too.";
-					close2;
-					cutin "",255;
-					end;
+					break;
 				}
 				mes "[" + strcharinfo(0) + "]";
 				mes "Everybody";
@@ -3905,9 +3871,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 				erasequest 7189;
 				erasequest 7190;
 				changequest 7187,7191;
-				close2;
-				cutin "",255;
-				end;
+				break;
 			}
 			else if (ep13_3_secret > 4 && ep13_3_secret < 9) {
 				mes "[Shay]";
@@ -3918,9 +3882,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 				mes "[Shay]";
 				mes "BK is the one that holds information around there.";
 				mes "He will be able to help you.";
-				close2;
-				cutin "",255;
-				end;
+				break;
 			}
 			else if (ep13_3_secret == 9) {
 				mes "[Shay]";
@@ -3946,9 +3908,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 				mes "Bit sorrowful.";
 				set ep13_3_secret, 10;
 				changequest 7192,7193;
-				close2;
-				cutin "",255;
-				end;
+				break;
 			}
 			else if (ep13_3_secret == 10) {
 				mes "[Shay]";
@@ -3962,44 +3922,31 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 				mes "[Shay]";
 				mes "You'll find a crack northeast from El Dicastes.";
 				mes "Try investigating there.";
-				close2;
-				cutin "",255;
-				end;
+				break;
 			}
 			else if (ep13_3_secret == 11) {
-				if (countitem(6306) > 0) {
-					mes "[Shay]";
-					mes "Any luck?";
-					next;
-					mes "- You show the bloodstain you collected from near the crack.-";
-					erasequest 7194;
-					next;
+				mes "[Shay]";
+				mes "Any luck?";
+				next;
+				setarray .@quest, 7194,7195,7196;
+				setarray .@item, 6306,6305,6307;
+				setarray .@str$, "bloodstain","frozen piece of skin","strange magical stone fragment";
+				
+				for (set .@size, getarraysize(.@item); .@i < .@size; set .@i, .@i + 1) {
+					if (countitem(.@item[.@i])) {
+						mes "- You show the " + .@str$[.@i] + " you collected from near the crack.-";
+						set .@crack, 1;
+						next;
+						break;
+					}
 				}
-				else if (countitem(6305) > 0) {
-					mes "[Shay]";
-					mes "Any luck?";
-					next;
-					mes "- You show the frozen piece of skin collected near the crack.-";
-					erasequest 7195;
-					next;
-				}
-				else if (countitem(6307) > 0) {
-					mes "[Shay]";
-					mes "Any luck?";
-					next;
-					mes "- You show the strange magical stone fragment you collected from near the crack.-";
-					erasequest 7196;
-					next;
-				}
-				else {
+				if (!.@crack) {
 					mes "- You do not have the item needed for the quest. Case3";
 					mes "If your quest item was destroyed, request help from GM.-";
-					close2;
-					cutin "",255;
-					end;
+					break;
 				}
 				mes "[Shay]";
-				mes ".. I didn't except this.";
+				mes ".. I didn't expect this.";
 				mes "Then who is Ahat..?";
 				mes "...I smell something fishy.";
 				next;
@@ -4051,13 +3998,10 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 				mes "Meet Ahat by collecting exploit certifications.";
 				mes "And then find doubt what is the relationship between him and the crack.";
 				set ep13_3_secret, 12;
+				for (set .@i, 0; .@i < getarraysize(.@quest); set .@i, .@i + 1)
+					if (checkquest(.@quest[.@i]) >= 0) erasequest .@quest[.@i];
 				setquest 7197;
-				erasequest 7194;
-				erasequest 7195;
-				erasequest 7196;
-				close2;
-				cutin "",255;
-				end;
+				break;
 			}
 			else if (ep13_3_secret == 12) {
 				mes "[Shay]";
@@ -4067,9 +4011,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 				mes "[Shay]";
 				mes "Once you have your certifications, go make a request to meet the minister at the Adventurer's reception desk in Diel.";
 				mes "Rhawyne will help you.";
-				close2;
-				cutin "",255;
-				end;
+				break;
 			}
 			else if (ep13_3_secret == 13) {
 				mes "[Shay]";
@@ -4090,9 +4032,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 				mes "[Shay]";
 				mes "Wait till you taste it.";
 				mes "Now, get going.";
-				close2;
-				cutin "",255;
-				end;
+				break;
 			}
 			else if ((ep13_3_secret > 13) && (ep13_3_secret < 17)) {
 				mes "[Shay]";
@@ -4103,17 +4043,13 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 					mes "So.. how strange.";
 					mes "..was it bad or good?";
 					mes "No, that isn't important. Try to remember what you were there for.";
-					close2;
-					cutin "",255;
-					end;
+					break;
 				}
 				mes "[Shay]";
 				mes "Huh? Really?";
 				mes "You can tell the beauty even if the race is different.";
 				mes "Do you job instead of dreaming about his appearance.";
-				close2;
-				cutin "",255;
-				end;
+				break;
 			}
 			else if ((ep13_3_secret > 16) && (ep13_3_secret < 19)) {
 				mes "[Shay]";
@@ -4131,9 +4067,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 				mes "Funny how things come about.";
 				mes "But you really are talkative.";
 				mes "You are telling me everything. Tsk.";
-				close2;
-				cutin "",255;
-				end;
+				break;
 			}
 			else if (ep13_3_secret > 18 && ep13_3_secret < 22) {
 				mes "[Shay]";
@@ -4152,9 +4086,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 				mes "[Shay]";
 				mes "How about talking to the Jarute named HesLanta?";
 				mes "You don't have nothing to lose, anyway.";
-				close2;
-				cutin "",255;
-				end;
+				break;
 			}
 			else if (ep13_3_secret == 22) {
 				mes "[Shay]";
@@ -4173,9 +4105,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 					mes "I'm busy.";
 					mes "New ingredients are coming in today.";
 					mes "Go now.";
-					close2;
-					cutin "",255;
-					end;
+					break;
 				}
 				mes "[Shay]";
 				mes "If you are that grateful, each all my new cuisines till the last bite.";
@@ -4184,9 +4114,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 				mes "[Shay]";
 				mes "Huh? Get lost.";
 				mes "Ungrateful....";
-				close2;
-				cutin "",255;
-				end;
+				break;
 			}
 			set .@shysay, rand(1,3);
 			if (.@shysay == 1) {
@@ -4239,9 +4167,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 						next;
 						mes "Shay suddenly has a lonely expression and sighs deeply about his situation.";
 						mes "Looks very tired.";
-						close2;
-						cutin "",255;
-						end;
+						break;
 					case 2:
 						mes "[Shay]";
 						mes "Sapha?";
@@ -4252,17 +4178,14 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 						mes "What are you asking me?";
 						mes "Just ask any Sapha passing by.";
 						mes "Ask 'what are you'.";
-						close2;
-						cutin "",255;
-						end;
+						break;
 					case 3:
 						mes "[Shay]";
 						mes "What...";
 						mes "I'm not that busy but don't bother me too much.";
-						close2;
-						cutin "",255;
-						end;
+						break;
 				}
+				break;
 			}
 			else if (.@shysay == 2) {
 				mes "[Shay]";
@@ -4272,9 +4195,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 				next;
 				mes "[Shay]";
 				mes "Tsk.... boring.";
-				close2;
-				cutin "",255;
-				end;
+				break;
 			}
 			else {
 				mes "[Shay]";
@@ -4297,27 +4218,24 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 					mes "I see.";
 					mes "So...";
 					mes "Are you married?";
-					close2;
-					cutin "",255;
-					end;
+					break;
 				}
 				mes "[Shay]";
 				mes "You're alone, right?";
 				mes "....";
 				mes "Sorry.";
 				mes "We're in the same boat.";
-				close2;
-				cutin "",255;
-				end;
+				break;
 			}
 		}
 	case 3:
 		mes "[Shay]";
 		mes "Suit yourself.";
-		close2;
-		cutin "",255;
-		end;
+		break;
 	}
+	close2;
+	cutin "",255;
+	end;
 }
 
 dicastes01,207,210,5	script	Walking Knit#ep133_15	449,{
@@ -4345,7 +4263,7 @@ dicastes01,207,210,5	script	Walking Knit#ep133_15	449,{
 			mes "Ah, did you see the group of cats in front of the castle?";
 			mes "They are really soft and cuddly unlike us.";
 			next;
-			if (checkquest(7188) >= 0) {
+			if (checkquest(7188) >= -1) {
 				mes "[Knit]";
 				mes "And especially their ear and tail!!";
 				next;
@@ -4434,7 +4352,7 @@ dicastes01,112,248,5	script	Resting Piom#ep133_16	491,{
 		mes "Huh? You're... human!";
 		mes "Why are you here?";
 		next;
-		if (checkquest(7189) >= 0) {
+		if (checkquest(7189) >= -1) {
 			select("About a human with cat ears..");
 			mes "[Piom]";
 			mes "HAHAHAHA!!!";
@@ -4492,8 +4410,8 @@ dicastes01,112,248,5	script	Resting Piom#ep133_16	491,{
 }
 
 dicastes01,249,140,3	script	Training Galten#ep133_17	450,{
-	mes "[Training Galten]";
 	if (!isequipped(2782)) {
+		mes "[Galten]";
 		mes "¡ø¡ô¡ü ¡ø ¡ø¡ô¡ü";
 		mes "¡ø¡ô¡ü";
 		next;
@@ -4506,7 +4424,7 @@ dicastes01,249,140,3	script	Training Galten#ep133_17	450,{
 		mes "Hmm? Aren't you the outsider that came here awhile ago?";
 		mes "Have you come to see the training grounds?";
 		next;
-		if (checkquest(7190) >= 0) {
+		if (checkquest(7190) >= -1) {
 			select("About a human with cat ears..");
 			mes "[Galten]";
 			mes "Cat ears?";
@@ -4612,7 +4530,7 @@ dic_fild01,231,174,5	script	BK#ep133_18	496,{
 		mes "What did Shay tell you to do?-";
 		next;
 		input .@inputstr$;
-		if (compare(.@inputstr$,"Shay's special drink will be delivered")) {
+		if (.@inputstr$ == "Shay's special drink will be delivered" || .@inputstr$ == "Shay's special drink will be delivered.") {
 			mes "[" + strcharinfo(0) + "]";
 			mes "Hmm. If you don't cooperate,";
 			mes "Shay's special drink will be delivered.";
@@ -4815,276 +4733,63 @@ dic_fild01,231,174,5	script	BK#ep133_18	496,{
 	close;
 }
 
--	script	Rock Pile#ep133_	-1,{
+-	script	ep133_crack#main	-1,{
 	// if ((GetInventoryRemainCount 1301 3 == 2) || (GetInventoryRemainCount 1301 3 == 3)) {
 	if ((MaxWeight - Weight) < 1000) {
 		mes "- You can too many items to proceed with the quest. -";
 		close;
 	}
-	if (ep13_3_secret == 10) {
-		mes "There are many piles of rock around because of the unstable crustal movements.";
-		mes "This rock pile is also one of them.";
-		mes "Don't see anything suspicious.";
-		next;
-		if (select("Try to knock down the rock pile.:Study the pile closely.") == 1) {
-			mes "Knock down the pebbles that make up the pile of rocks and spread them out.";
-			donpcevent "Rock Pile#ep133_ef11::OnDisable";
-			close;
-		}
-		mes "You feel an evil energy from the small stone fragments.";
-		mes "Doesn't look natural but more like remnants from a powerful magic spell nearby.";
-		mes "You feel evil energy. Does this have anything to do with Ahat?";
-		mes "You collected a stone that emits strange energy.";
-		set ep13_3_secret, 11;
-		getitem 6307,1; //Suspicious_Magic_Stone
-		setquest 7194;
-		erasequest 7193;
-		donpcevent strnpcinfo(0)+"::OnDisable";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "Hmm.. I may need to discuss these with Shay.";
-		close;
-	}
-	else if (ep13_3_secret == 11) {
-		mes "[" + strcharinfo(0) + "]";
-		mes "This is where you picked up the strange magical stone.";
-		mes "Also feel a strange energy around.";
-		mes "Let's go back to the pub and talk with Shay.";
-		close;
-	}
-	else if (ep13_3_secret == 17) {
-		if (countitem(6307) < 10) {
-			mes "There are many piles of rock around because of the unstable crustal movements.";
-			mes "This is one of them.";
-			mes "You feel an evil energy from the small stone fragments.";
-			getitem 6307,1; //Suspicious_Magic_Stone
-			donpcevent strnpcinfo(0)+"::OnDisable";
-			next;
-			if (countitem(6307) == 10) {
-				mes "You collect stone fragments.";
-				mes "Collected enough for Cheshire but";
-				mes "you may need some more to report separately.";
-				setquest 7202;
-				close;
-			}
-			mes "You collect stone fragments.";
-			mes "Not enough was collected to fill Cheshire's request.";
-			close;
-		}
-		else if (countitem(6307) == 10) {
-			if (checkquest(7202) >= 0) {
-				mes "Need more stone fragments to report back to Doha at the expedition camp.";
-				mes "You collect another stone fragment that emits a strange magical force.";
-			}
-			else {
-				mes "Need more stone fragments to report back to Doha at the expedition camp.";
-				mes "You collect another stone fragment that emits a strange magical force.";
-				setquest 7202;
-			}
-			getitem 6307,1; //Suspicious_Magic_Stone
-			donpcevent strnpcinfo(0)+"::OnDisable";
-			close;
-		}
-		mes "No need to collect more.";
-	}
-	if (ep13_3_ahtdayq == 1) {
-		if (countitem(6307) < 10) {
-			mes "You feel an evil energy from the small stone fragments.";
-			mes "Collect the stone fragment and knock down and spread out the stone pile to make it look natural.";
-			getitem 6307,1; //Suspicious_Magic_Stone
-			donpcevent strnpcinfo(0)+"::OnDisable";
-			close;
-		}
-		mes "No need to collect more stone fragments.";
-		close;
-	}
-	mes "Found traces of something.";
-	mes "Was arranged neatly.";
-	close;
-OnEnable:
-	hideoffnpc strnpcinfo(0);
-	end;
-OnDisable:
-	hideonnpc strnpcinfo(0);
-	initnpctimer;
-	end;
-OnReset:
-	hideoffnpc strnpcinfo(0);
-	stopnpctimer;
-	end;
-OnTimer60000:
-OnTimer120000:
-OnTimer180000:
-OnTimer240000:
-	if (!rand(2)) {
-		hideoffnpc strnpcinfo(0);
-		stopnpctimer;
-	}
-	end;
-
-OnTimer300000:
-	hideoffnpc strnpcinfo(0);
-	stopnpctimer;
-	end;
-}
-dic_fild02,269,55,0	duplicate(Rock Pile#ep133_)	Rock Pile#ep133_ef1	844
-dic_fild02,236,29,0	duplicate(Rock Pile#ep133_)	Rock Pile#ep133_ef2	844
-dic_fild02,220,34,0	duplicate(Rock Pile#ep133_)	Rock Pile#ep133_ef3	844
-dic_fild02,228,55,0	duplicate(Rock Pile#ep133_)	Rock Pile#ep133_ef4	844
-dic_fild02,228,63,0	duplicate(Rock Pile#ep133_)	Rock Pile#ep133_ef5	844
-dic_fild02,210,75,0	duplicate(Rock Pile#ep133_)	Rock Pile#ep133_ef6	844
-dic_fild02,213,35,0	duplicate(Rock Pile#ep133_)	Rock Pile#ep133_ef7	844
-dic_fild02,171,49,0	duplicate(Rock Pile#ep133_)	Rock Pile#ep133_ef8	844
-dic_fild02,266,44,0	duplicate(Rock Pile#ep133_)	Rock Pile#ep133_ef9	844
-dic_fild02,174,79,0	duplicate(Rock Pile#ep133_)	Rock Pile#ep133_ef10	844
+	set .@n$, strnpcinfo(1);
+	setarray .@npc$, 	"Rock Pile",	"Dirt Pile",	"Split Earth";
+	setarray .@item, 	6307,			6306,			6305;
+	for (set .@size, getarraysize(.@npc$); .@i < .@size; set .@i, .@i + 1)
+		if (.@n$ == .@npc$[.@i]) set .@type, .@i;
 	
--	script	Dirt Pile#ep133_	-1,{
-	// if ((GetInventoryRemainCount 1301 3 == 2) || (GetInventoryRemainCount 1301 3 == 3)) {
-	if ((MaxWeight - Weight) < 1000) {
-		mes "- You can too many items to proceed with the quest. -";
-		close;
-	}
 	if (ep13_3_secret == 10) {
-		mes "There a several dirt piles nearby the crack.";
-		mes "This is one of them.";
-		mes "Don't see anything suspicious.";
-		next;
-		if (select("Stomp on it with your feet.:Poke around in the dirt pile.") == 1) {
-			mes "You step on the dug up dirt pile and make the ground flat.";
-			donpcevent strnpcinfo(0)+"::OnDisable";
-			close;
+		if (.@npc$[.@type] == "Rock Pile") {
+			mes "There are many piles of rock around because of the unstable crustal movements.";
+			mes "This rock pile is also one of them.";
+
 		}
-		mes "You poke around the dirt pile to find blood clotted in the dirt.";
-		mes "You feel evil energy. Does this have anything to do with Ahat?";
-		mes "You collect the clotted bloodstains.";
-		set ep13_3_secret, 11;
-		getitem 6306,1; //Solid_Bloodstain
-		setquest 7194;
-		erasequest 7193;
-		donpcevent strnpcinfo(0)+"::OnDisable";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "Hmm.. I may need to discuss these with Shay.";
-		close;
-	}
-	else if (ep13_3_secret == 11) {
-		mes "[" + strcharinfo(0) + "]";
-		mes "Collected Clotted Bloodstains from the dirt pile here.";
-		mes "Also feel a strange energy around.";
-		mes "Let's go back to the pub and talk with Shay.";
-		close;
-	}
-	else if (ep13_3_secret == 17) {
-		if (countitem(6306) < 10) {
+		else if (.@npc$[.@type] == "Dirt Pile") {
 			mes "There a several dirt piles nearby the crack.";
 			mes "This is one of them.";
-			mes "You find a clotted bloodstain beneath the dirt pile.";
-			getitem 6306,1; //Solid_Bloodstain
-			donpcevent strnpcinfo(0)+"::OnDisable";
-			next;
-			if (countitem(6306) == 10) {
-				mes "Collect bloodstains.";
-				mes "Collected enough for Cheshire but";
-				mes "you may need some more to report separately.";
-				setquest 7202;
-				close;
-			}
-			mes "Collect bloodstains.";
-			mes "Not enough was collected to fill Cheshire's request.";
-			close;
 		}
-		else if (countitem(6306) == 10) {
-			if (checkquest(7202) >= 0) {
-				mes "Need more bloodstains to report back to Doha at the expedition camp.";
-				mes "You collect another clotted bloodstain from a dirt pile.";
-			}
-			else {
-				mes "You've collected enough for Cheshire but need more to report back to Doha.";
-				mes "You collect another clotted bloodstain from a dirt pile.";
-				setquest 7202;
-			}
-			getitem 6306,1; //Solid_Bloodstain
-			donpcevent strnpcinfo(0)+"::OnDisable";
-			close;
+		else if (.@npc$[.@type] == "Split Earth") {
+			mes "Surface of the earth is split by the shock from the dimensional crack.";
+			mes "The split earth is solid and icy making it look like sharp blades.";
 		}
-		mes "No need to collect more bloodstains.";
-	}
-	if (ep13_3_ahtdayq == 1) {
-		if (countitem(6306) < 10) {
-			mes "You find a clotted bloodstain beneath the dirt pile.";
-			mes "You collect the clotted bloodstains and then step on the dirt pile to leave no trace.";
-			getitem 6306,1; //Solid_Bloodstain
-			donpcevent strnpcinfo(0)+"::OnDisable";
-			close;
-		}
-		mes "No need to collect more bloodstains.";
-		close;
-	}
-	mes "Found traces of something.";
-	mes "Was arranged neatly.";
-	close;
-OnEnable:
-	hideoffnpc strnpcinfo(0);
-	end;
-OnDisable:
-	hideonnpc strnpcinfo(0);
-	initnpctimer;
-	end;
-OnReset:
-	hideoffnpc strnpcinfo(0);
-	stopnpctimer;
-	end;
-OnTimer60000:
-OnTimer120000:
-OnTimer180000:
-OnTimer240000:
-	if (!rand(2)) {
-		hideoffnpc strnpcinfo(0);
-		stopnpctimer;
-	}
-	end;
-
-OnTimer300000:
-	hideoffnpc strnpcinfo(0);
-	stopnpctimer;
-	end;
-}
-
-dic_fild02,215,85,0	duplicate(Dirt Pile#ep133_)	Dirt Pile#ep133_ef1	844
-dic_fild02,207,41,0	duplicate(Dirt Pile#ep133_)	Dirt Pile#ep133_ef2	844
-dic_fild02,232,41,0	duplicate(Dirt Pile#ep133_)	Dirt Pile#ep133_ef3	844
-dic_fild02,245,68,0	duplicate(Dirt Pile#ep133_)	Dirt Pile#ep133_ef4	844
-dic_fild02,184,63,0	duplicate(Dirt Pile#ep133_)	Dirt Pile#ep133_ef5	844
-dic_fild02,207,94,0	duplicate(Dirt Pile#ep133_)	Dirt Pile#ep133_ef6	844
-dic_fild02,230,71,0	duplicate(Dirt Pile#ep133_)	Dirt Pile#ep133_ef7	844
-dic_fild02,188,50,0	duplicate(Dirt Pile#ep133_)	Dirt Pile#ep133_ef8	844
-dic_fild02,248,36,0	duplicate(Dirt Pile#ep133_)	Dirt Pile#ep133_ef9	844
-dic_fild02,206,115,0	duplicate(Dirt Pile#ep133_)	Dirt Pile#ep133_ef10	844	
-
--	script	Split Earth#ep133_	-1,{
-	// if ((GetInventoryRemainCount 1301 3 == 2) || (GetInventoryRemainCount 1301 3 == 3)) {
-	if ((MaxWeight - Weight) < 1000) {
-		mes "- You can too many items to proceed with the quest. -";
-		close;
-	}
-	if (ep13_3_secret == 10) {
-		mes "Surface of the earth is split by the shock from the dimensional crack.";
-		mes "The split earth is solid and icy making it look like sharp blades.";
 		mes "Don't see anything suspicious.";
 		next;
-		if (select("Stomp on it with your feet.:Poke around in the dirt pile.") == 1) {
-			mes "You step on the dry, split surface and make the ground flat.";
+		set .@menu$, (.@npc$[.@type] == "Rock Pile")? "Try to knock down the rock pile.:Study the pile closely." : "Stomp on it with your feet.:Poke around in the dirt pile.";
+		if (select(.@menu$) == 1) {
+			if (.@npc$[.@type] == "Rock Pile") mes "Knock down the pebbles that make up the pile of rocks and spread them out.";
+			else if (.@npc$[.@type] == "Dirt Pile") mes "You step on the dug up dirt pile and make the ground flat.";
+			else if (.@npc$[.@type] == "Split Earth") mes "You step on the dry, split surface and make the ground flat.";
 			donpcevent strnpcinfo(0)+"::OnDisable";
 			close;
 		}
-		mes "There is something stuck by the frost on the sharp, crack surface.";
-		mes "You take a closer look and see it looks like the skin of a creature that crawls on the ground.";
-		mes "You feel evil energy. Does this have anything to do with Ahat?";
-		mes "You collect the clotted bloodstains.";
+		if (.@npc$[.@type] == "Rock Pile") {
+			mes "You feel an evil energy from the small stone fragments.";
+			mes "Doesn't look natural but more like remnants from a powerful magic spell nearby.";
+			mes "You feel evil energy. Does this have anything to do with Ahat?";
+			mes "You collected a stone that emits strange energy.";
+		}
+		else if (.@npc$[.@type] == "Dirt Pile") {
+			mes "You poke around the dirt pile to find blood clotted in the dirt.";
+			mes "You feel evil energy. Does this have anything to do with Ahat?";
+			mes "You collect the clotted bloodstains.";
+		}
+		else if (.@npc$[.@type] == "Split Earth") {
+			mes "There is something stuck by the frost on the sharp, crack surface.";
+			mes "You take a closer look and see it looks like the skin of a creature that crawls on the ground.";
+			mes "You feel evil energy. Does this have anything to do with Ahat?";
+			mes "You collect the clotted bloodstains.";
+		}
 		set ep13_3_secret, 11;
-		getitem 6305,1; //Frozen_Skin_Piece
-		setquest 7194;
+		getitem .@item[.@type], 1;
 		erasequest 7193;
+		setquest 7194;		
 		donpcevent strnpcinfo(0)+"::OnDisable";
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -5093,55 +4798,85 @@ dic_fild02,206,115,0	duplicate(Dirt Pile#ep133_)	Dirt Pile#ep133_ef10	844
 	}
 	else if (ep13_3_secret == 11) {
 		mes "[" + strcharinfo(0) + "]";
-		mes "It is the place where the frozen skin was found.";
+		if (.@npc$[.@type] == "Rock Pile") mes "This is where you picked up the strange magical stone.";
+		else if (.@npc$[.@type] == "Dirt Pile") mes "Collected Clotted Bloodstains from the dirt pile here.";
+		else if (.@npc$[.@type] == "Split Earth") mes "It is the place where the frozen skin was found.";
 		mes "Also feel a strange energy around.";
 		mes "Let's go back to the pub and talk with Shay.";
 		close;
 	}
 	else if (ep13_3_secret == 17) {
-		if (countitem(6305) < 10) {
-			mes "Surface of the earth nearby the dimensional crack is split by some kind of impact.";
-			mes "This is one of them.";
-			mes "There is something stuck by the frost on the sharp, crack surface.";
-			getitem 6305,1; //Frozen_Skin_Piece
+		if (countitem(.@item[.@type]) < 10) {
+			if (.@npc$[.@type] == "Rock Pile") {
+				mes "There are many piles of rock around because of the unstable crustal movements.";
+				mes "This is one of them.";
+				mes "You feel an evil energy from the small stone fragments.";
+			}
+			else if (.@npc$[.@type] == "Dirt Pile") {
+				mes "There a several dirt piles nearby the crack.";
+				mes "This is one of them.";
+				mes "You find a clotted bloodstain beneath the dirt pile.";
+			}
+			else if (.@npc$[.@type] == "Split Earth") {
+				mes "Surface of the earth nearby the dimensional crack is split by some kind of impact.";
+				mes "This is one of them.";
+				mes "There is something stuck by the frost on the sharp, crack surface.";
+			}
+			getitem .@item[.@type], 1;
 			donpcevent strnpcinfo(0)+"::OnDisable";
 			next;
-			if (countitem(6305) == 10) {
-				mes "Collect a piece of skin.";
+			if (.@npc$[.@type] == "Rock Pile") mes "You collect stone fragments.";
+			else if (.@npc$[.@type] == "Dirt Pile") mes "Collect bloodstains.";
+			else if (.@npc$[.@type] == "Split Earth") mes "Collect a piece of skin.";
+			if (countitem(.@item[.@type]) == 10) {
 				mes "Collected enough for Cheshire but";
 				mes "you may need some more to report separately.";
-				setquest 7202;
+				if (checkquest(7202) == -1) setquest 7202;
 				close;
 			}
-			mes "Collect a piece of skin.";
 			mes "Not enough was collected to fill Cheshire's request.";
 			close;
 		}
-		else if (countitem(6305) == 10) {
+		else if (countitem(.@item[.@type]) == 10) {
 			if (checkquest(7202) >= 0) {
-				mes "Need more pieces of skin to report back to Doha at the expedition camp.";
-				mes "You collect another piece of skin frozen in the frost in the crack of the split earth.";
+				setarray .@str$, "stone fragments","bloodstains","pieces of skin";
+				mes "Need more " + .@str$[.@type] + " to report back to Doha at the expedition camp.";
 			}
 			else {
-				mes "You've collected enough pieces of skin for Cheshire but need more to report back to Doha.";
-				mes "You collect another piece of skin frozen in the frost in the crack of the split earth.";
+				if (.@npc$[.@type] == "Rock Pile") mes "Need more stone fragments to report back to Doha at the expedition camp.";
+				else if (.@npc$[.@type] == "Dirt Pile") mes "You've collected enough for Cheshire but need more to report back to Doha.";
+				else if (.@npc$[.@type] == "Split Earth") mes "You've collected enough pieces of skin for Cheshire but need more to report back to Doha.";
 				setquest 7202;
 			}
-			getitem 6305,1; //Frozen_Skin_Piece
+			if (.@npc$[.@type] == "Rock Pile") mes "You collect another stone fragment that emits a strange magical force.";
+			else if (.@npc$[.@type] == "Dirt Pile") mes "You collect another clotted bloodstain from a dirt pile.";
+			else if (.@npc$[.@type] == "Split Earth") mes "You collect another piece of skin frozen in the frost in the crack of the split earth.";	
+			getitem .@item[.@type], 1;
 			donpcevent strnpcinfo(0)+"::OnDisable";
 			close;
 		}
 		mes "No need to collect more.";
 	}
 	if (ep13_3_ahtdayq == 1) {
-		if (countitem(6305) < 10) {
-			mes "There is some kind of skin stuck by the frost on the sharp, crack surface.";
-			mes "You collect the frozen piece of skin and then step on the ground to leave no trace.";
-			getitem 6305,1; //Frozen_Skin_Piece
+		if (countitem(.@item[.@type]) < 10) {
+			if (.@npc$[.@type] == "Rock Pile") {
+				mes "You feel an evil energy from the small stone fragments.";
+				mes "Collect the stone fragment and knock down and spread out the stone pile to make it look natural.";
+			}
+			else if (.@npc$[.@type] == "Dirt Pile") {
+				mes "You find a clotted bloodstain beneath the dirt pile.";
+				mes "You collect the clotted bloodstains and then step on the dirt pile to leave no trace.";
+			}
+			else if (.@npc$[.@type] == "Split Earth") {
+				mes "There is some kind of skin stuck by the frost on the sharp, crack surface.";
+				mes "You collect the frozen piece of skin and then step on the ground to leave no trace.";
+			}
+			getitem .@item[.@type], 1;
 			donpcevent strnpcinfo(0)+"::OnDisable";
 			close;
 		}
-		mes "No need to collect more pieces of skin.";
+		setarray .@str$, "stone fragments","bloodstains","pieces of skin";
+		mes "No need to collect more " + .@str$[.@type] + ".";
 		close;
 	}
 	mes "Found traces of something.";
@@ -5167,25 +4902,45 @@ OnTimer240000:
 		stopnpctimer;
 	}
 	end;
+
 OnTimer300000:
 	hideoffnpc strnpcinfo(0);
 	stopnpctimer;
 	end;
 }
-dic_fild02,194,86,0	duplicate(Split Earth#ep133_)	Split Earth#ep133_ef1	844
-dic_fild02,240,51,0	duplicate(Split Earth#ep133_)	Split Earth#ep133_ef2	844
-dic_fild02,176,65,0	duplicate(Split Earth#ep133_)	Split Earth#ep133_ef3	844
-dic_fild02,254,45,0	duplicate(Split Earth#ep133_)	Split Earth#ep133_ef4	844
-dic_fild02,178,119,0	duplicate(Split Earth#ep133_)	Split Earth#ep133_ef5	844
-dic_fild02,200,81,0	duplicate(Split Earth#ep133_)	Split Earth#ep133_ef6	844
-dic_fild02,205,54,0	duplicate(Split Earth#ep133_)	Split Earth#ep133_ef7	844
-dic_fild02,224,74,0	duplicate(Split Earth#ep133_)	Split Earth#ep133_ef8	844
-dic_fild02,244,59,0	duplicate(Split Earth#ep133_)	Split Earth#ep133_ef9	844
-dic_fild02,249,43,0	duplicate(Split Earth#ep133_)	Split Earth#ep133_ef10	844
+dic_fild02,269,55,0	duplicate(ep133_crack#main)	Rock Pile#ep133_ef1	844
+dic_fild02,236,29,0	duplicate(ep133_crack#main)	Rock Pile#ep133_ef2	844
+dic_fild02,220,34,0	duplicate(ep133_crack#main)	Rock Pile#ep133_ef3	844
+dic_fild02,228,55,0	duplicate(ep133_crack#main)	Rock Pile#ep133_ef4	844
+dic_fild02,228,63,0	duplicate(ep133_crack#main)	Rock Pile#ep133_ef5	844
+dic_fild02,210,75,0	duplicate(ep133_crack#main)	Rock Pile#ep133_ef6	844
+dic_fild02,213,35,0	duplicate(ep133_crack#main)	Rock Pile#ep133_ef7	844
+dic_fild02,171,49,0	duplicate(ep133_crack#main)	Rock Pile#ep133_ef8	844
+dic_fild02,266,44,0	duplicate(ep133_crack#main)	Rock Pile#ep133_ef9	844
+dic_fild02,174,79,0	duplicate(ep133_crack#main)	Rock Pile#ep133_ef10	844
+dic_fild02,215,85,0	duplicate(ep133_crack#main)	Dirt Pile#ep133_ef1	844
+dic_fild02,207,41,0	duplicate(ep133_crack#main)	Dirt Pile#ep133_ef2	844
+dic_fild02,232,41,0	duplicate(ep133_crack#main)	Dirt Pile#ep133_ef3	844
+dic_fild02,245,68,0	duplicate(ep133_crack#main)	Dirt Pile#ep133_ef4	844
+dic_fild02,184,63,0	duplicate(ep133_crack#main)	Dirt Pile#ep133_ef5	844
+dic_fild02,207,94,0	duplicate(ep133_crack#main)	Dirt Pile#ep133_ef6	844
+dic_fild02,230,71,0	duplicate(ep133_crack#main)	Dirt Pile#ep133_ef7	844
+dic_fild02,188,50,0	duplicate(ep133_crack#main)	Dirt Pile#ep133_ef8	844
+dic_fild02,248,36,0	duplicate(ep133_crack#main)	Dirt Pile#ep133_ef9	844
+dic_fild02,206,115,0	duplicate(ep133_crack#main)	Dirt Pile#ep133_ef10	844	
+dic_fild02,194,86,0	duplicate(ep133_crack#main)	Split Earth#ep133_ef1	844
+dic_fild02,240,51,0	duplicate(ep133_crack#main)	Split Earth#ep133_ef2	844
+dic_fild02,176,65,0	duplicate(ep133_crack#main)	Split Earth#ep133_ef3	844
+dic_fild02,254,45,0	duplicate(ep133_crack#main)	Split Earth#ep133_ef4	844
+dic_fild02,178,119,0	duplicate(ep133_crack#main)	Split Earth#ep133_ef5	844
+dic_fild02,200,81,0	duplicate(ep133_crack#main)	Split Earth#ep133_ef6	844
+dic_fild02,205,54,0	duplicate(ep133_crack#main)	Split Earth#ep133_ef7	844
+dic_fild02,224,74,0	duplicate(ep133_crack#main)	Split Earth#ep133_ef8	844
+dic_fild02,244,59,0	duplicate(ep133_crack#main)	Split Earth#ep133_ef9	844
+dic_fild02,249,43,0	duplicate(ep133_crack#main)	Split Earth#ep133_ef10	844
 
 // Frede's Request
 //============================================================
-
 dicastes01,117,262,0	script	Frede#13_3	491,2,2,{
 	if (isequipped(2782)) {
 		if (ep13_3_invite <= 5) {
@@ -5847,10 +5602,7 @@ dic_dun01,235,243,0	script	John#13_3	454,{
 			mes "[John]";
 			mes "......";
 			next;
-			switch (select("You give Bradium to John.")) {
-			case 1:
-			break;
-			}
+			select("You give Bradium to John.");
 			mes "[" + strcharinfo(0) + "]";
 			mes "Frede asked me to give you this.";
 			next;
@@ -6246,16 +5998,13 @@ dic_in01,349,129,5	script	Bouy#13_3	449,{
 			close;
 		}
 		else if (ep13_3_bra == 7) {
-			if (checkquest(11175,PLAYTIME) >= 1) {
+			if (checkquest(11175,PLAYTIME) > 1) {
 				mes "[Bouy]";
 				mes "I did it!";
 				mes "I was a bit nervous because it has been a long time since I did manual work but I think I did a good job.";
 				mes "Please take these to them.";
 				set ep13_3_bra, 8;
-				if (checkquest(11175,PLAYTIME) == 2)
-					setquest 11176;
-				else
-					changequest 11175,11176;
+				changequest 11175,11176;
 				close;
 			}
 			mes "[Bouy]";
