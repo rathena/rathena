@@ -9,7 +9,7 @@
 
 #define MIN_ELETHINKTIME 100
 #define MIN_ELEDISTANCE 2
-#define MAX_ELEDISTANCE 6
+#define MAX_ELEDISTANCE 5
 
 #define EL_MODE_AGGRESSIVE (MD_CANMOVE|MD_AGGRESSIVE|MD_CANATTACK)
 #define EL_MODE_ASSIST (MD_CANMOVE|MD_ASSIST)
@@ -51,7 +51,7 @@ struct elemental_data {
 	int summon_timer;
 	int skill_timer;
 	
-	unsigned last_thinktime, last_linktime;
+	unsigned last_thinktime, last_linktime, last_spdrain_time;
 	short min_chase;
 	int target_id, attacked_id;
 };
@@ -80,6 +80,7 @@ int elemental_set_target( struct map_session_data *sd, struct block_list *bl );
 int elemental_clean_single_effect(struct elemental_data *ed, int skill_num);
 int elemental_clean_effect(struct elemental_data *ed);
 int elemental_action(struct elemental_data *ed, struct block_list *bl, unsigned int tick);
+struct skill_condition elemental_skill_get_requirements(int skill, int lv);
 
 #define elemental_stop_walking(ed, type) unit_stop_walking(&(ed)->bl, type)
 #define elemental_stop_attack(ed) unit_stop_attack(&(ed)->bl)

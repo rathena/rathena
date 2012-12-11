@@ -73,8 +73,56 @@ int elemental_create(struct map_session_data *sd, int class_, unsigned int lifet
 	ele.char_id = sd->status.char_id;
 	ele.class_ = class_;
 	ele.mode = EL_MODE_PASSIVE; // Initial mode
-	ele.hp = db->status.max_hp;
-	ele.sp = db->status.max_sp;
+	i = db->status.size+1; // summon level
+
+	//[(Caster’s Max HP/ 3 ) + (Caster’s INT x 10 )+ (Caster’s Job Level x 20 )] x [(Elemental Summon Level + 2) / 3]
+	ele.hp = ele.max_hp = (sd->battle_status.max_hp/3 + sd->battle_status.int_*10 + sd->status.job_level) * ((i + 2) / 3) * 5 * pc_checkskill(sd,SO_EL_SYMPATHY) / 100;
+	//Caster’s Max SP /4
+	ele.sp = ele.max_sp = sd->battle_status.max_sp/4 * 5 * pc_checkskill(sd,SO_EL_SYMPATHY) / 100;
+	//Caster’s [ Max SP / (18 / Elemental Summon Skill Level) 1- 100 ]
+	ele.atk = (sd->battle_status.max_sp / (18 / i)  * 1 - 100) + 25 * pc_checkskill(sd,SO_EL_SYMPATHY);
+	//Caster’s [ Max SP / (18 / Elemental Summon Skill Level) ]
+	ele.atk2 = sd->battle_status.max_sp / 18 + 25 * pc_checkskill(sd,SO_EL_SYMPATHY);
+	//Caster’s HIT + (Caster’s Base Level )
+	ele.hit = sd->battle_status.hit + sd->status.base_level;
+	//[Elemental Summon Skill Level x (Caster’s INT / 2 + Caster’s DEX / 4)]
+	ele.matk = i * (sd->battle_status.int_ / 2 + sd->battle_status.dex / 4) + 25 * pc_checkskill(sd,SO_EL_SYMPATHY);
+	//150 + [Caster’s DEX / 10] + [Elemental Summon Skill Level x 3 ]
+	ele.amotion = 150 + sd->battle_status.dex / 10 + i * 3;
+	//Caster’s DEF + (Caster’s Base Level / (5 – Elemental Summon Skill Level)
+	ele.def = sd->battle_status.def + sd->status.base_level / (5-i);
+	//Caster’s MDEF + (Caster’s INT / (5 - Elemental Summon Skill Level)
+	ele.mdef = sd->battle_status.mdef + sd->battle_status.int_ / (5-i);
+	//Caster’s FLEE + (Caster’s Base Level / (5 – Elemental Summon Skill Level)
+	ele.flee = sd->status.base_level / (5-i);
+	//Caster’s HIT + (Caster’s Base Level )
+	ele.hit = sd->battle_status.hit + sd->status.base_level;
+	
+	//per individual bonuses
+	switch(db->class_){
+	case 2114:	case 2115:
+	case 2116: //ATK + (Summon Agni Skill Level x 20) / HIT + (Summon Agni Skill Level x 10)
+		ele.atk += i * 20;
+		ele.atk2 += i * 20;
+		ele.hit += i * 10;
+		break;
+	case 2117:	case 2118:
+	case 2119: //MDEF + (Summon Aqua Skill Level x 10) / MATK + (Summon Aqua Skill Level x 20)
+		ele.mdef += i * 10;
+		ele.matk += i * 20;
+		break;
+	case 2120:	case 2121:
+	case 2122: //FLEE + (Summon Ventus Skill Level x 20) / MATK + (Summon Ventus Skill Level x 10)
+		ele.flee += i * 20;
+		ele.matk += i * 10;
+		break;
+	case 2123:	case 2124:
+	case 2125: //DEF + (Summon Tera Skill Level x 25) / ATK + (Summon Tera Skill Level x 5)
+		ele.def += i * 25;
+		ele.atk += i * 5;
+		ele.atk2 += i * 5;
+		break;
+	}
 	ele.life_time = lifetime;
 	
 	// Request Char Server to create this elemental
@@ -93,10 +141,19 @@ int elemental_get_lifetime(struct elemental_data *ed) {
 }
 
 int elemental_save(struct elemental_data *ed) {
+	ed->elemental.mode = ed->battle_status.mode;
 	ed->elemental.hp = ed->battle_status.hp;
 	ed->elemental.sp = ed->battle_status.sp;
+	ed->elemental.max_hp = ed->battle_status.max_hp;
+	ed->elemental.max_sp = ed->battle_status.max_sp;
+	ed->elemental.atk = ed->battle_status.rhw.atk;
+	ed->elemental.atk2 = ed->battle_status.rhw.atk2;
+	ed->elemental.matk = ed->battle_status.matk_min;
+	ed->elemental.def = ed->battle_status.def;
+	ed->elemental.mdef = ed->battle_status.mdef;
+	ed->elemental.flee = ed->battle_status.flee;
+	ed->elemental.hit = ed->battle_status.hit;
 	ed->elemental.life_time = elemental_get_lifetime(ed);
-	
 	intif_elemental_save(&ed->elemental);
 	return 1;
 }
@@ -192,9 +249,8 @@ int elemental_data_received(struct s_elemental *ele, bool flag) {
 		
 		map_addiddb(&ed->bl);
 		status_calc_elemental(ed,1);
-		ed->last_thinktime = gettick();
+		ed->last_spdrain_time = ed->last_thinktime = gettick();
 		ed->summon_timer = INVALID_TIMER;
-		ed->battle_status.mode = ele->mode = EL_MODE_PASSIVE; // Initial mode.
 		elemental_summon_init(ed);
 	} else {
 		memcpy(&sd->ed->elemental, ele, sizeof(struct s_elemental));
@@ -202,14 +258,13 @@ int elemental_data_received(struct s_elemental *ele, bool flag) {
 	}
 	
 	sd->status.ele_id = ele->elemental_id;
-	ed->battle_status.mode = ele->mode = EL_MODE_PASSIVE; // Initial mode.
 	
 	if( ed->bl.prev == NULL && sd->bl.prev != NULL ) {
 		map_addblock(&ed->bl);
 		clif_spawn(&ed->bl);
 		clif_elemental_info(sd);
 		clif_elemental_updatestatus(sd,SP_HP);
-		clif_hpmeter_single(sd->fd,ed->bl.id,ed->battle_status.hp,ed->battle_status.matk_max);
+		clif_hpmeter_single(sd->fd,ed->bl.id,ed->battle_status.hp,ed->battle_status.max_hp);
 		clif_elemental_updatestatus(sd,SP_SP);
 	}
 	
@@ -259,8 +314,6 @@ int elemental_clean_single_effect(struct elemental_data *ed, int skill_num) {
 				break;
 		}
 	}
-	if( skill_get_unit_id(skill_num,0) )
-		skill_clear_unitgroup(&ed->bl);
 	
 	return 1;
 }
@@ -292,9 +345,7 @@ int elemental_clean_effect(struct elemental_data *ed) {
 	status_change_end(&ed->bl, SC_UPHEAVAL, INVALID_TIMER);
 	status_change_end(&ed->bl, SC_CIRCLE_OF_FIRE, INVALID_TIMER);
 	status_change_end(&ed->bl, SC_TIDAL_WEAPON, INVALID_TIMER);
-	
-	skill_clear_unitgroup(&ed->bl);
-	
+		
 	if( (sd = ed->master) == NULL )
 		return 0;
 	
@@ -328,6 +379,7 @@ int elemental_clean_effect(struct elemental_data *ed) {
 }
 
 int elemental_action(struct elemental_data *ed, struct block_list *bl, unsigned int tick) {
+	struct skill_condition req;
 	short skillnum, skilllv;
 	int i;
 	
@@ -377,6 +429,20 @@ int elemental_action(struct elemental_data *ed, struct block_list *bl, unsigned 
 		return 1;
 		
 	}
+
+	req = elemental_skill_get_requirements(skillnum, skilllv);
+
+	if(req.hp || req.sp){
+		struct map_session_data *sd = BL_CAST(BL_PC, battle_get_master(&ed->bl));
+		if( sd ){
+			if( sd->skillid_old != SO_EL_ACTION && //regardless of remaining HP/SP it can be cast
+				(status_get_hp(&ed->bl) < req.hp || status_get_sp(&ed->bl) < req.sp) )
+				return 1;
+			else
+				status_zap(&ed->bl, req.hp, req.sp);
+		}
+	}
+
 	//Otherwise, just cast the skill.
 	if( skill_get_inf(skillnum) & INF_GROUND_SKILL )
 		unit_skilluse_pos(&ed->bl, bl->x, bl->y, skillnum, skilllv);
@@ -488,6 +554,24 @@ int elemental_skillnotok(int skillid, struct elemental_data *ed) {
 	return skillnotok(skillid, ed->master);
 }
 
+struct skill_condition elemental_skill_get_requirements(int skill, int lv){
+	struct skill_condition req;
+	int id = skill_get_index(skill);
+
+	memset(&req,0,sizeof(req));
+
+	if( id == 0 ) // invalid skill id
+  		return req;
+
+	if( lv < 1 || lv > MAX_SKILL_LEVEL )
+		return req;
+
+	req.hp = skill_db[id].hp[lv-1];
+	req.sp = skill_db[id].sp[lv-1];
+
+	return req;
+}
+
 int elemental_set_target( struct map_session_data *sd, struct block_list *bl ) {
 	struct elemental_data *ed = sd->ed;
 	
@@ -551,6 +635,30 @@ static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_
 	
 	if( ed->bl.prev == NULL || sd == NULL || sd->bl.prev == NULL )
 		return 0;
+
+	// Check if caster can sustain the summoned elemental
+	if( DIFF_TICK(tick,ed->last_spdrain_time) >= 10000 ){// Drain SP every 10 seconds
+		int sp = 5;
+
+		switch(ed->vd->class_){
+			case 2115:	case 2118:
+			case 2121:	case 2124:
+				sp = 8;
+				break;
+			case 2116:	case 2119:
+			case 2122:	case 2125:
+				sp = 11;
+				break;
+		}
+
+		if( status_get_sp(&sd->bl) < sp ){ // Can't sustain delete it. 
+			elemental_delete(sd->ed,0);
+			return 0;
+		}
+
+		status_zap(&sd->bl,0,sp);
+		ed->last_spdrain_time = tick;
+	}
 	
 	if( DIFF_TICK(tick,ed->last_thinktime) < MIN_ELETHINKTIME )
 		return 0;
@@ -687,7 +795,7 @@ int read_elementaldb(void) {
 		status->max_sp = atoi(str[5]);
 		status->rhw.range = atoi(str[6]);
 		status->rhw.atk = atoi(str[7]);
-		status->rhw.atk2 = status->rhw.atk + atoi(str[8]);
+		status->rhw.atk2 = atoi(str[8]);
 		status->def = atoi(str[9]);
 		status->mdef = atoi(str[10]);
 		status->str = atoi(str[11]);

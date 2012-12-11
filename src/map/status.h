@@ -1554,11 +1554,11 @@ enum scb_flag
 };
 
 //Define to determine who gets HP/SP consumed on doing skills/etc. [Skotlex]
-#define BL_CONSUME (BL_PC|BL_HOM|BL_MER)
+#define BL_CONSUME (BL_PC|BL_HOM|BL_MER|BL_ELEM)
 //Define to determine who has regen
-#define BL_REGEN (BL_PC|BL_HOM|BL_MER)
+#define BL_REGEN (BL_PC|BL_HOM|BL_MER|BL_ELEM)
 //Define to determine who will receive a clif_status_change packet for effects that require one to display correctly
-#define BL_SCEFFECT (BL_PC|BL_HOM|BL_MER|BL_MOB)
+#define BL_SCEFFECT (BL_PC|BL_HOM|BL_MER|BL_MOB|BL_ELEM)
 
 //Basic damage info of a weapon
 //Required because players have two of these, one in status_data

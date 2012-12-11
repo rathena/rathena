@@ -1250,6 +1250,23 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 		if (sc && sc->data[SC_WUGDASH])
 			casttime = -1;
         break;
+	case EL_WIND_SLASH:
+	case EL_HURRICANE:
+	case EL_TYPOON_MIS:
+	case EL_STONE_HAMMER:
+	case EL_ROCK_CRUSHER:
+	case EL_STONE_RAIN:
+	case EL_ICE_NEEDLE:
+	case EL_WATER_SCREW:
+	case EL_TIDAL_WEAPON:
+		if( src->type == BL_ELEM ){
+			sd = BL_CAST(BL_PC, battle_get_master(src));
+			if( sd && sd->skillid_old == SO_EL_ACTION ){
+				casttime = -1;
+				sd->skillid_old = 0;
+			}
+		}
+		break;
 	}
 
 	// moved here to prevent Suffragium from ending if skill fails
