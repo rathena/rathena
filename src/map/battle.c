@@ -1364,7 +1364,7 @@ static int battle_calc_drain(int damage, int rate, int per)
 	int diff = 0;
 
 	if (per && rnd()%1000 < rate) {
-		diff = (damage * per) / 100;
+		diff = ((int64)damage * per) / 100;
 		if (diff == 0) {
 			if (per > 0)
 				diff = 1;
@@ -1495,7 +1495,7 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
  */
 static int battle_calc_base_damage(struct status_data *status, struct weapon_atk *wa, struct status_change *sc, unsigned short t_size, struct map_session_data *sd, int flag)
 {
-	unsigned short atkmin=0, atkmax=0;
+	unsigned int atkmin=0, atkmax=0;
 	short type = 0;
 	int damage = 0;
 
@@ -2763,11 +2763,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
  					break;
 				case SR_TIGERCANNON:// ATK [((Caster consumed HP + SP) / 4) x Caster Base Level / 100] %
 					{
-						int hp = sstatus->max_hp * (10 + 2 * skill_lv) / 100,
-							sp = sstatus->max_sp * (6 + skill_lv) / 100;
-						skillratio = (hp+sp) / 4;
+						int hp = (int64)sstatus->max_hp * (10 + 2 * skill_lv) / 100,
+							sp = (int64)sstatus->max_sp * (6 + skill_lv) / 100;
+						skillratio = ((int64)hp+sp) / 4;
 						if( sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE ) // ATK [((Caster consumed HP + SP) / 2) x Caster Base Level / 100] %
-							skillratio = (hp+sp) / 2;
+							skillratio = ((int64)hp+sp) / 2;
 						RE_LVL_DMOD(100);
 					}
 						break;
@@ -2975,9 +2975,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				case SR_GATEOFHELL:
 					ATK_ADD (sstatus->max_hp - status_get_hp(src));
 					if(sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE){
-						ATK_ADD ( (sstatus->sp * (1 + skill_lv * 2 / 10)) + 10 * status_get_lv(src) );
+						ATK_ADD ( ((int64)sstatus->sp * (1 + skill_lv * 2 / 10)) + 10 * status_get_lv(src) );
 					}else{
-						ATK_ADD ( (sstatus->max_sp * (1 + skill_lv * 2 / 10)) + 40 * status_get_lv(src) );
+						ATK_ADD ( ((int64)sstatus->max_sp * (1 + skill_lv * 2 / 10)) + 40 * status_get_lv(src) );
 					}
 					break;
 				case SR_TIGERCANNON: // (Tiger Cannon skill level x 240) + (Target Base Level x 40)
@@ -3120,7 +3120,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		{	//Defense reduction
 			short vit_def;
 			defType def1 = status_get_def(target); //Don't use tstatus->def1 due to skill timer reductions.
-			short def2 = (short)tstatus->def2;
+			short def2 = tstatus->def2;
 
 			if( sd )
 			{
@@ -3195,14 +3195,14 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				 **/
 				if (def1 > 900) def1 = 900;
 				ATK_RATE2(
-					flag.idef ?100:(flag.pdef ?(int)(flag.pdef *(def1+vit_def)):(1+(900-def1)/9)),
-			 		flag.idef2?100:(flag.pdef2?(int)(flag.pdef2*(def1+vit_def)):(1+(900-def1)/9))
+					flag.idef ?100:(flag.pdef ? (flag.pdef*(def1+vit_def)) : (1+(900-def1)/9)),
+			 		flag.idef2?100:(flag.pdef2 ? (flag.pdef2*(def1+vit_def)) : (1+(900-def1)/9))
 				);
 			#else
 				if (def1 > 100) def1 = 100;
 				ATK_RATE2(
-					flag.idef ?100:(flag.pdef ?(int)(flag.pdef *(def1+vit_def)):(100-def1)),
-			 		flag.idef2?100:(flag.pdef2?(int)(flag.pdef2*(def1+vit_def)):(100-def1))
+					flag.idef ?100:(flag.pdef ? (flag.pdef*(def1+vit_def)) : (100-def1)),
+			 		flag.idef2?100:(flag.pdef2? (flag.pdef2*(def1+vit_def)) : (100-def1))
 				);
 			#endif
 			ATK_ADD2(
@@ -3474,7 +3474,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			int hp= sstatus->max_hp;
 			if (sd && tsd) {
 				hp = 8*hp/100;
-				if (100*sstatus->hp <= 20*sstatus->max_hp)
+				if (((int64)sstatus->hp * 100) <= ((int64)sstatus->max_hp * 20))
 					hp = sstatus->hp;
 			} else
 				hp = 2*hp/100; //2% hp loss per hit
@@ -3779,7 +3779,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case WZ_VERMILION:
 						{
-    						int interval = 0, per = interval , ratio = per;
+    						int interval = 0, per = interval, ratio = per;
     						while( (per++) < skill_lv ){
      							ratio += interval;
      							if(per%3==0) interval += 20;
@@ -4190,7 +4190,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	case HT_BLASTMINE:
 	case HT_CLAYMORETRAP:
 		md.damage = skill_lv * sstatus->dex * (3+status_get_lv(src)/100) * (1+sstatus->int_/35);
-		md.damage += (int64)md.damage * (rnd()%20-10) / 100;
+		md.damage += md.damage * (rnd()%20-10) / 100;
 		md.damage += 40 * (sd?pc_checkskill(sd,RA_RESEARCHTRAP):0);
 		break;
 #else
@@ -4221,7 +4221,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			damage_div_fix(md.damage, skill);
 
 			//Falcon Assault Modifier
-			md.damage=md.damage*(150+70*skill_lv)/100;
+			md.damage=(int64)md.damage*(150+70*skill_lv)/100;
 		}
 		break;
 	case TF_THROWSTONE:
@@ -4273,7 +4273,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		md.damage = sd?sd->status.job_level:status_get_lv(src);
 		break;
 	case HVAN_EXPLOSION:	//[orn]
-		md.damage = sstatus->max_hp * (50 + 50 * skill_lv) / 100 ;
+		md.damage = (int64)sstatus->max_hp * (50 + 50 * skill_lv) / 100 ;
 		break ;
 	case ASC_BREAKER:
 		md.damage = 500+rnd()%500 + 5*skill_lv * sstatus->int_;

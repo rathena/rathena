@@ -1102,7 +1102,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 	case PF_FOGWALL:
 		if (src != bl && !tsc->data[SC_DELUGE])
-			status_change_start(bl,SC_BLIND,10000,skilllv,0,0,0,skill_get_time2(skillid,skilllv),8);
+			sc_start(bl,SC_BLIND,100,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 
 	case LK_HEADCRUSH: //Headcrush has chance of causing Bleeding status, except on demon and undead element

@@ -1309,7 +1309,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 			((TBL_MOB*)target)->state.rebirth = 1;
 
 		return hp+sp;
-    }
+	}
     if(target->type == BL_PC){
         TBL_PC *sd = BL_CAST(BL_PC,target);
         TBL_HOM *hd = sd->hd;
@@ -1431,38 +1431,34 @@ int status_percent_change(struct block_list *src,struct block_list *target,signe
 
 	status = status_get_status_data(target);
 
-	//Change the equation when the values are high enough to discard the
-	//imprecision in exchange of overflow protection [Skotlex]
-	//Also add 100% checks since those are the most used cases where we don't
-	//want aproximation errors.
+
+	//It's safe now [MarkZD]
 	if (hp_rate > 99)
 		hp = status->hp;
 	else if (hp_rate > 0)
 		hp = status->hp>10000?
 			hp_rate*(status->hp/100):
-			(hp_rate*status->hp)/100;
+			((int64)hp_rate*status->hp)/100;
 	else if (hp_rate < -99)
 		hp = status->max_hp;
 	else if (hp_rate < 0)
 		hp = status->max_hp>10000?
 			(-hp_rate)*(status->max_hp/100):
-			(-hp_rate*status->max_hp)/100;
+			((int64)-hp_rate*status->max_hp)/100;
 	if (hp_rate && !hp)
 		hp = 1;
 
 	if (flag == 2 && hp >= status->hp)
 		hp = status->hp-1; //Must not kill target.
 
-	//Should be safe to not do overflow protection here, noone should have
-	//millions upon millions of SP
 	if (sp_rate > 99)
 		sp = status->sp;
 	else if (sp_rate > 0)
-		sp = (sp_rate*status->sp)/100;
+		sp = ((int64)sp_rate*status->sp)/100;
 	else if (sp_rate < -99)
 		sp = status->max_sp;
 	else if (sp_rate < 0)
-		sp = (-sp_rate)*status->max_sp/100;
+		sp = ((int64)-sp_rate)*status->max_sp/100;
 	if (sp_rate && !sp)
 		sp = 1;
 
@@ -1497,8 +1493,8 @@ int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per
 	if (status == &dummy_status)
 		return 0; //Invalid target.
 
-	hp = status->max_hp * per_hp/100;
-	sp = status->max_sp * per_sp/100;
+	hp = (int64)status->max_hp * per_hp/100;
+	sp = (int64)status->max_sp * per_sp/100;
 
 	if(hp > status->max_hp - status->hp)
 		hp = status->max_hp - status->hp;
@@ -2234,8 +2230,8 @@ static void status_calc_sigma(void)
 ///    f(x) = 35 + x*(A + B*C/D) + sum(i=2..x){ i*C/D }
 static unsigned int status_base_pc_maxhp(struct map_session_data* sd, struct status_data* status)
 {
-	unsigned int val = pc_class2idx(sd->status.class_);
-	val = 35 + sd->status.base_level*hp_coefficient2[val]/100 + hp_sigma_val[val][sd->status.base_level];
+	uint64 val = pc_class2idx(sd->status.class_);
+	val = 35 + sd->status.base_level*(int64)hp_coefficient2[val]/100 + hp_sigma_val[val][sd->status.base_level];
 
 	if((sd->class_&MAPID_UPPERMASK) == MAPID_NINJA || (sd->class_&MAPID_UPPERMASK) == MAPID_GUNSLINGER)
 		val += 100; //Since their HP can't be approximated well enough without this.
@@ -2250,14 +2246,14 @@ static unsigned int status_base_pc_maxhp(struct map_session_data* sd, struct sta
 		val += val * 25/100; //Trans classes get a 25% hp bonus
 	else if (sd->class_&JOBL_BABY)
 		val -= val * 30/100; //Baby classes get a 30% hp penalty
-	return val;
+	return (unsigned int)val;
 }
 
 static unsigned int status_base_pc_maxsp(struct map_session_data* sd, struct status_data *status)
 {
-	unsigned int val;
+	uint64 val;
 
-	val = 10 + sd->status.base_level*sp_coefficient[pc_class2idx(sd->status.class_)]/100;
+	val = 10 + sd->status.base_level*(int64)sp_coefficient[pc_class2idx(sd->status.class_)]/100;
 	val += val * status->int_/100;
 
 	if (sd->class_&JOBL_UPPER)
@@ -2267,7 +2263,7 @@ static unsigned int status_base_pc_maxsp(struct map_session_data* sd, struct sta
 	if ((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_famerank(sd->status.char_id, MAPID_TAEKWON))
 		val *= 3; //Triple max SP for top ranking Taekwons over level 90.
 
-	return val;
+	return (unsigned int)val;
 }
 
 //Calculates player data from scratch without counting SC adjustments.
@@ -2278,9 +2274,9 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	struct status_data *status; // pointer to the player's base status
 	const struct status_change *sc = &sd->sc;
 	struct s_skill b_skill[MAX_SKILL]; // previous skill tree
-	int b_weight, b_max_weight, b_cart_weight_max; // previous weight
-	int i,index;
-	int skill,refinedef=0;
+	int b_weight, b_max_weight, b_cart_weight_max, // previous weight
+	i, index, skill,refinedef=0;
+	int64 i64;
 
 	if (++calculating > 10) //Too many recursive calls!
 		return -1;
@@ -2717,7 +2713,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	//We hold the standard Max HP here to make it faster to recalculate on vit changes.
 	sd->status.max_hp = status_base_pc_maxhp(sd,status);
 	//This is done to handle underflows from negative Max HP bonuses
-	i = sd->status.max_hp + (int)status->max_hp;
+	i64 = sd->status.max_hp + (int)status->max_hp;
 	status->max_hp = cap_value(i, 0, INT_MAX);
 
 	// Absolute modifiers from passive skills
@@ -2728,9 +2724,9 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	if(sd->hprate < 0)
 		sd->hprate = 0;
 	if(sd->hprate!=100)
-		status->max_hp = status->max_hp * sd->hprate/100;
+		status->max_hp = (int64)status->max_hp * sd->hprate/100;
 	if(battle_config.hp_rate != 100)
-		status->max_hp = status->max_hp * battle_config.hp_rate/100;
+		status->max_hp = (int64)status->max_hp * battle_config.hp_rate/100;
 
 	if(status->max_hp > (unsigned int)battle_config.max_hp)
 		status->max_hp = battle_config.max_hp;
@@ -2742,16 +2738,16 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	// Basic MaxSP value
 	sd->status.max_sp = status_base_pc_maxsp(sd,status);
 	//This is done to handle underflows from negative Max SP bonuses
-	i = sd->status.max_sp + (int)status->max_sp;
+	i64 = sd->status.max_sp + (int)status->max_sp;
 	status->max_sp = cap_value(i, 0, INT_MAX);
 
 	// Absolute modifiers from passive skills
 	if((skill=pc_checkskill(sd,SL_KAINA))>0)
 		status->max_sp += 30*skill;
 	if((skill=pc_checkskill(sd,HP_MEDITATIO))>0)
-		status->max_sp += status->max_sp * skill/100;
+		status->max_sp += (int64)status->max_sp * skill/100;
 	if((skill=pc_checkskill(sd,HW_SOULDRAIN))>0)
-		status->max_sp += status->max_sp * 2*skill/100;
+		status->max_sp += (int64)status->max_sp * 2*skill/100;
 	if( (skill = pc_checkskill(sd,RA_RESEARCHTRAP)) > 0 )
 		status->max_sp += 200 + 20 * skill;
 	if( (skill = pc_checkskill(sd,WM_LESSON)) > 0 )
@@ -2762,9 +2758,9 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	if(sd->sprate < 0)
 		sd->sprate = 0;
 	if(sd->sprate!=100)
-		status->max_sp = status->max_sp * sd->sprate/100;
+		status->max_sp = (int64)status->max_sp * sd->sprate/100;
 	if(battle_config.sp_rate != 100)
-		status->max_sp = status->max_sp * battle_config.sp_rate/100;
+		status->max_sp = (int64)status->max_sp * battle_config.sp_rate/100;
 
 	if(status->max_sp > (unsigned int)battle_config.max_sp)
 		status->max_sp = battle_config.max_sp;
@@ -2781,13 +2777,13 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	} else {
 		if((sd->class_&MAPID_BASEMASK) == MAPID_NOVICE && !(sd->class_&JOBL_2)
 			&& battle_config.restart_hp_rate < 50)
-			status->hp=status->max_hp>>1;
+			status->hp = status->max_hp>>1;
 		else
-			status->hp=status->max_hp * battle_config.restart_hp_rate/100;
+			status->hp = (int64)status->max_hp * battle_config.restart_hp_rate/100;
 		if(!status->hp)
 			status->hp = 1;
 
-		status->sp = status->max_sp * battle_config.restart_sp_rate /100;
+		status->sp = (int64)status->max_sp * battle_config.restart_sp_rate /100;
 
 		if( !status->sp ) /* the minimum for the respawn setting is SP:1 */
 			status->sp = 1;
@@ -3217,7 +3213,7 @@ int status_calc_elemental_(struct elemental_data *ed, bool first) {
 		status->mdef += ele->mdef;
 		status->flee = ele->flee;
 		status->hit = ele->hit;
-		
+
 		memcpy(&ed->battle_status,status,sizeof(struct status_data));
 	} else {
 		status_calc_misc(&ed->bl, status, 0);
@@ -3251,7 +3247,7 @@ static unsigned short status_calc_dmotion(struct block_list *bl, struct status_c
 static short status_calc_aspd(struct block_list *bl, struct status_change *sc, short flag);
 #endif
 static short status_calc_fix_aspd(struct block_list *bl, struct status_change *sc, int);
-static unsigned int status_calc_maxhp(struct block_list *,struct status_change *,unsigned int);
+static unsigned int status_calc_maxhp(struct block_list *,struct status_change *,uint64);
 static unsigned int status_calc_maxsp(struct block_list *,struct status_change *,unsigned int);
 static unsigned char status_calc_element(struct block_list *bl, struct status_change *sc, int element);
 static unsigned char status_calc_element_lv(struct block_list *bl, struct status_change *sc, int lv);
@@ -5472,10 +5468,10 @@ static unsigned short status_calc_dmotion(struct block_list *bl, struct status_c
 	return (unsigned short)cap_value(dmotion,0,USHRT_MAX);
 }
 
-static unsigned int status_calc_maxhp(struct block_list *bl, struct status_change *sc, unsigned int maxhp)
+static unsigned int status_calc_maxhp(struct block_list *bl, struct status_change *sc, uint64 maxhp)
 {
 	if(!sc || !sc->count)
-		return cap_value(maxhp,1,UINT_MAX);
+		return (unsigned int)cap_value(maxhp,1,UINT_MAX);
 
 	if(sc->data[SC_INCMHPRATE])
 		maxhp += maxhp * sc->data[SC_INCMHPRATE]->val1/100;
@@ -5528,7 +5524,7 @@ static unsigned int status_calc_maxhp(struct block_list *bl, struct status_chang
 	if (sc->data[SC_GOLDENE_FERSE])
 		maxhp += maxhp * sc->data[SC_GOLDENE_FERSE]->val2 / 100;
 
-	return cap_value(maxhp,1,UINT_MAX);
+	return (unsigned int)cap_value(maxhp,1,UINT_MAX);
 }
 
 static unsigned int status_calc_maxsp(struct block_list *bl, struct status_change *sc, unsigned int maxsp)
@@ -7150,7 +7146,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val2 = val1*20; //SP gained
 			break;
 		case SC_KYRIE:
-			val2 = status->max_hp * (val1 * 2 + 10) / 100; //%Max HP to absorb
+			val2 = (int64)status->max_hp * (val1 * 2 + 10) / 100; //%Max HP to absorb
 			val3 = (val1 / 2 + 5); //Hits
 			break;
 		case SC_MAGICPOWER:
