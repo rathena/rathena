@@ -2714,7 +2714,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	sd->status.max_hp = status_base_pc_maxhp(sd,status);
 	//This is done to handle underflows from negative Max HP bonuses
 	i64 = sd->status.max_hp + (int)status->max_hp;
-	status->max_hp = cap_value(i, 0, INT_MAX);
+	status->max_hp = (unsigned int)cap_value(i64, 0, INT_MAX);
 
 	// Absolute modifiers from passive skills
 	if((skill=pc_checkskill(sd,CR_TRUST))>0)
@@ -2739,7 +2739,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	sd->status.max_sp = status_base_pc_maxsp(sd,status);
 	//This is done to handle underflows from negative Max SP bonuses
 	i64 = sd->status.max_sp + (int)status->max_sp;
-	status->max_sp = cap_value(i, 0, INT_MAX);
+	status->max_sp = (unsigned int)cap_value(i64, 0, INT_MAX);
 
 	// Absolute modifiers from passive skills
 	if((skill=pc_checkskill(sd,SL_KAINA))>0)
@@ -3247,7 +3247,7 @@ static unsigned short status_calc_dmotion(struct block_list *bl, struct status_c
 static short status_calc_aspd(struct block_list *bl, struct status_change *sc, short flag);
 #endif
 static short status_calc_fix_aspd(struct block_list *bl, struct status_change *sc, int);
-static unsigned int status_calc_maxhp(struct block_list *,struct status_change *,uint64);
+static unsigned int status_calc_maxhp(struct block_list *,struct status_change *, uint64);
 static unsigned int status_calc_maxsp(struct block_list *,struct status_change *,unsigned int);
 static unsigned char status_calc_element(struct block_list *bl, struct status_change *sc, int element);
 static unsigned char status_calc_element_lv(struct block_list *bl, struct status_change *sc, int lv);
