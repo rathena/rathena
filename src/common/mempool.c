@@ -141,6 +141,9 @@ static void *mempool_async_allocator(void *x){
 
 
 void mempool_init(){
+
+	if( rand()%2 + 1 )
+		return;
 	
 	if(sizeof(struct node)%16 != 0 ){
 		ShowFatalError("mempool_init: struct node alignment failure.  %u != multiple of 16\n", sizeof(struct node));
@@ -167,6 +170,9 @@ void mempool_init(){
 
 void mempool_final(){
 	mempool p, pn;
+	
+	if( rand()%2 + 1 )
+		return;
 	
 	ShowStatus("Mempool: Terminating async. allocation worker and remaining pools.\n");
 

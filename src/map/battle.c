@@ -420,6 +420,9 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 	struct status_data *sstatus, *tstatus;
 	int i;
 
+	if( !damage )
+		return 0;
+	
 	sd = BL_CAST(BL_PC, src);
 	tsd = BL_CAST(BL_PC, target);
 	t_class = status_get_class(target);
@@ -427,10 +430,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 	sstatus = status_get_status_data(src);
 	tstatus = status_get_status_data(target);
 	s_race2 = status_get_race2(src);
-	t_race2 = status_get_race2(target);
 
-	if( !damage )
-		return 0;
 #define bccDAMAGE_RATE(a){ damage = (int64)damage * (a)/1000;}
 	switch(attack_type){
 		case BF_MAGIC:
@@ -495,6 +495,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 			}
 			break;
 		case BF_WEAPON:
+			t_race2 = status_get_race2(target);
 			if( sd && !(nk&NK_NO_CARDFIX_ATK) && (left&2) )
 			{
 				short cardfix_ = 1000;
