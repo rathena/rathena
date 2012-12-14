@@ -76,17 +76,17 @@ int elemental_create(struct map_session_data *sd, int class_, unsigned int lifet
 	i = db->status.size+1; // summon level
 
 	//[(Caster’s Max HP/ 3 ) + (Caster’s INT x 10 )+ (Caster’s Job Level x 20 )] x [(Elemental Summon Level + 2) / 3]
-	ele.hp = ele.max_hp = (sd->battle_status.max_hp/3 + sd->battle_status.int_*10 + sd->status.job_level) * ((i + 2) / 3) * 5 * pc_checkskill(sd,SO_EL_SYMPATHY) / 100;
+	ele.hp = ele.max_hp = (sd->battle_status.max_hp/3 + sd->battle_status.int_*10 + sd->status.job_level) * ((i + 2) / 3);
 	//Caster’s Max SP /4
-	ele.sp = ele.max_sp = sd->battle_status.max_sp/4 * 5 * pc_checkskill(sd,SO_EL_SYMPATHY) / 100;
+	ele.sp = ele.max_sp = sd->battle_status.max_sp/4;
 	//Caster’s [ Max SP / (18 / Elemental Summon Skill Level) 1- 100 ]
-	ele.atk = (sd->battle_status.max_sp / (18 / i)  * 1 - 100) + 25 * pc_checkskill(sd,SO_EL_SYMPATHY);
+	ele.atk = (sd->battle_status.max_sp / (18 / i)  * 1 - 100);
 	//Caster’s [ Max SP / (18 / Elemental Summon Skill Level) ]
-	ele.atk2 = sd->battle_status.max_sp / 18 + 25 * pc_checkskill(sd,SO_EL_SYMPATHY);
+	ele.atk2 = sd->battle_status.max_sp / 18;
 	//Caster’s HIT + (Caster’s Base Level )
 	ele.hit = sd->battle_status.hit + sd->status.base_level;
 	//[Elemental Summon Skill Level x (Caster’s INT / 2 + Caster’s DEX / 4)]
-	ele.matk = i * (sd->battle_status.int_ / 2 + sd->battle_status.dex / 4) + 25 * pc_checkskill(sd,SO_EL_SYMPATHY);
+	ele.matk = i * (sd->battle_status.int_ / 2 + sd->battle_status.dex / 4);
 	//150 + [Caster’s DEX / 10] + [Elemental Summon Skill Level x 3 ]
 	ele.amotion = 150 + sd->battle_status.dex / 10 + i * 3;
 	//Caster’s DEF + (Caster’s Base Level / (5 – Elemental Summon Skill Level)
@@ -123,6 +123,15 @@ int elemental_create(struct map_session_data *sd, int class_, unsigned int lifet
 		ele.atk2 += i * 5;
 		break;
 	}
+
+	if( (i=pc_checkskill(sd,SO_EL_SYMPATHY)) > 0 ){
+		ele.hp = ele.max_hp = ele.max_hp * 5 * i / 100;
+		ele.sp = ele.max_sp = ele.max_sp * 5 * i / 100;
+		ele.atk += 25 * i;
+		ele.atk2 += 25 * i;
+		ele.matk += 25 * i;
+	}
+
 	ele.life_time = lifetime;
 	
 	// Request Char Server to create this elemental
