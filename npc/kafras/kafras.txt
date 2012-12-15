@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Joseph
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: =========================================
@@ -19,6 +19,7 @@
 //= 0.x Previous Authors: 
 //=     - L0ne_W0lf, kobra_k88, Samuray22, Evera, Lupus
 //= 1.0 Merged and cleaned up Kafras. [Joseph]
+//= 1.1 Added Izlude RE coordinates. [Euphy]
 //============================================================ 
 
 // Aldebaran
@@ -411,7 +412,10 @@ cmd_fild07,136,134,4	script	Kafra Employee::kaf_cmd_fild07	721,{
 	mes "are always on your side.";
 	mes "How may I assist you?";
 	callfunc "F_Kafra",5,0,1,40,820;
-	savepoint "izlude",94,103;
+	if (checkre(0))
+		savepoint "izlude",129,97;
+	else
+		savepoint "izlude",94,103;
 	callfunc "F_KafEnd",0,1,"in the city of Izlude";
 }
 

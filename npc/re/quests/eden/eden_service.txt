@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-// Eden Group Quests - Service NPCs
+//= Eden Group Quests - Service NPCs
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
