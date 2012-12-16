@@ -689,7 +689,7 @@
 2009,0,6,4,0,0x3,3:4:5:6:7,5,1,yes,0,0,0,weapon,0,	RK_DRAGONHOWLING,Dragon Howling
 2010,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		RK_RUNEMASTERY,Rune Mastery
 2011,0,6,4,0,0x1,0,1,1,yes,0,0,0,none,0,	RK_MILLENNIUMSHIELD,Millenium Shield
-2012,1,6,1,-1,0,0x8,1,1,yes,0,0,0,weapon,0,	RK_CRUSHSTRIKE,Crush Strike
+2012,1,6,4,-1,0,0x8,1,1,yes,0,0,0,weapon,0,	RK_CRUSHSTRIKE,Crush Strike
 2013,0,6,4,0,0x1,0,1,1,yes,0,0,0,none,0,	RK_REFRESH,Refresh
 2014,0,6,4,0,0x1,0,1,1,yes,0,0,0,none,0,	RK_GIANTGROWTH,Giant Growth
 2015,0,6,4,0,0x1,0,1,1,yes,0,0,0,none,0,	RK_STONEHARDSKIN,Stone Hard Skin
