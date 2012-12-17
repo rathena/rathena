@@ -5,7 +5,7 @@
 //= Darlskies, Darkchild, Syrus22, Lupus, kobra_k88 (2.0)
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 6.6
+//= 6.7
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: =========================================
@@ -61,6 +61,7 @@
 //= 6.4 Removed unofficial Guide function. [Daegaladh]
 //= 6.5 Optimized. [Joseph]
 //= 6.6 Added Warp Points / View Points Function. [Joseph]
+//= 6.7 Added Rune Knight Kafra. [Euphy]
 //============================================================ 
 
 //=== Main Function ========================================================
@@ -135,11 +136,13 @@ function	script	F_Kafra	{
 				// No save, or teleport. (Common)
 				case 5:	setarray @K_Menu0$[0],"Use Storage","Rent a Pushcart","Check Other Information","Cancel"; break;
 				// Storage and Check Other Information only.
-				case 6:	setarray @K_Menu0$[0],"Use Storage","Check Other Information","Cancel";	break;
+				case 6:	setarray @K_Menu0$[0],"Use Storage","Check Other Information","Cancel"; break;
 				// Save, Storage, and Pushcart only (Kafra Warehouse)
 				case 7:	setarray @K_Menu0$[0],"Save","Use Storage","Rent a Pushcart","Cancel"; break;
 				// Save, Storage, Other Check information. (Turbo track)
 				case 8: setarray @K_Menu0$[0],"Save","Use Storage","Check Other Information","Cancel"; break;
+				// No Save (Rune Knight)
+				case 9: setarray @K_Menu0$[0],"Use Storage","Rent a Pushcart","Use Teleport Service","Check Other Information","Cancel"; break;
 				// Default message (obsolete)
 				default: setarray @K_Menu0$[0],"Save","Use Storage","Use Teleport Service","Rent a Pushcart","Check Other Information","Cancel"; break;
 			}
@@ -327,7 +330,7 @@ function	script	F_KafTele	{
 //===================================================
 function	script	F_KafCart	{
 	// Ensure that the class wanting to rent a pushcart is a merchant
-	if(baseClass != Job_Merchant){
+	if(BaseClass != Job_Merchant){
 		mes "[Kafra Employee]";
 		mes "I'm sorry, but the";
 		mes "Pushcart rental service";
@@ -378,7 +381,8 @@ function	script	F_KafInfo	{
 	// Uncomment next line to block Kafra Storage Protection
 	//	set .@block, 1;
 		setarray .@m$, "Check Special Reserve Points.","Storage Password Service","Kafra Employee Locations","Cancel";
-		if (.@block) deletearray .@m$[1],1;
+		if (getarg(0) == 2) deletearray .@m$[1],2; // Rune Knight
+		else if (.@block) deletearray .@m$[1],1;
 	while (1) {
 		set .@j, select(implode(.@m$,":")) - 1;
 		if (.@m$[.@j] == "Check Special Reserve Points.") {
@@ -622,9 +626,12 @@ function	script	F_KafSet	{
 		setarray @wrpP[0], 1200;
 		setarray @viewpX[0], 328, 278, 153, 0;
 		setarray @viewpY[0], 108, 221, 187, 0;
+	} else if (strnpcinfo(4) == "job3_rune01") {
+		setarray @wrpD$[0], "Izlude", "Geffen", "Payon", "Morroc", "Alberta";
+		setarray @wrpP[0], 600, 1200, 1200, 1200, 1800;
 	}
 	for (set .@i, 0; .@i < getarraysize(@wrpD$); set .@i, .@i + 1)
 		setd "@wrpC$["+.@i+"]",getd("@wrpD$["+.@i+"]")+" -> "+getd("@wrpP["+.@i+"]");
 	setd "@wrpC$["+getarraysize(@wrpC$)+"]","Cancel";
 	return;
-}		
+}

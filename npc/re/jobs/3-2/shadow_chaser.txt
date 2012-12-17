@@ -264,11 +264,11 @@ L_Code:
 		next;
 		mes "[Urupa]";
 		mes "The numbers have to be paired.";
-		mes "3511543433!";
-		mes "35 11 54 34 33 break down into 5 pairs!";
+		mes "3511543433";
+		mes "35 11 54 34 33 breaks down into 5 pairs!";
 		next;
 		mes "[Urupa]";
-		mes "So the pairs mean.";
+		mes "So the pairs mean:";
 		mes "35 - P, 11 - A,";
 		mes "54 - Y, 34 - O, 33 - N.";
 		next;
@@ -555,7 +555,7 @@ L_Code:
 	next;
 	mes "[Graham]";
 	mes "Let's see. For example.";
-	mes "13 15 18 15 3 3 18 21 9 14 = ";
+	mes "13 15 18 15 3 3 18 21 9 14 =";
 	mes "M O R O C C R U I N";
 	next;
 	mes "[Graham]";
@@ -935,7 +935,7 @@ s_atelier,167,129,3	script	Manager#sc06_yuno	806,{
 	} else if (job_sha == 19) {
 		mes "[Haled]";
 		mes "What?";
-		mes "You want to walk with me?";
+		mes "You want to talk with me?";
 		mes "How about you just hand over that key to me?";
 		next;
 		callsub L_Code;
@@ -2153,9 +2153,9 @@ job3_sha01,73,80,0	script	????#keybox03	844,{
 						next;
 						break;
 					case 3:
-						mes "You shake it slowly";
-						mes "you can hear a noise";
-						mes "But nothing's coming out.";
+						mes "You shake it slowly.";
+						mes "You can hear a noise,";
+						mes "but nothing's coming out.";
 						next;
 						mes "["+strcharinfo(0)+"]";
 						mes "That's not it.";
@@ -2174,7 +2174,7 @@ job3_sha01,73,80,0	script	????#keybox03	844,{
 						mes "["+strcharinfo(0)+"]";
 						mes "What? A key again!";
 						mes "Haled will be disappointed.";
-						mes "I better to go back.";
+						mes "I better go back.";
 						set job_sha,25;
 						setquest 7176;
 						getitem 6268,1; //Mirth_Key

@@ -212,7 +212,7 @@
 2219,0,0,0,0,0,0,0,"Wanderer Job Change Quest"
 2220,0,0,0,0,0,0,0,"Wanderer Job Change Quest"
 2221,600,1718,50,0,0,0,0,"Wanderer Job Change Quest"
-2222,0,0,0,0,0,0,0,"Wanderer Job Change Quest
+2222,0,0,0,0,0,0,0,"Wanderer Job Change Quest"
 2223,0,1428,100,0,0,0,0,"Generic Job Change Quest"
 
 3000,0,0,0,0,0,0,0,"Job Change to Bard"
@@ -336,7 +336,7 @@
 3136,14400,0,0,0,0,0,0,"Nidhoggur's Nest Time Limit"
 
 3200,0,0,0,0,0,0,0,"Job changes to Rune knight - Recommendation for Rune knight"
-3201,0,0,0,0,0,0,0,"Job changes to Rune knight - Secret rendezvous of Rune knigh"
+3201,0,0,0,0,0,0,0,"Job changes to Rune knight - Secret rendezvous of Rune knight"
 3202,0,0,0,0,0,0,0,"Job changes to Rune knight - The first test"
 3203,0,0,0,0,0,0,0,"Job changes to Rune knight - The first test"
 3204,0,0,0,0,0,0,0,"Job changes to Rune knight - Pass the first test"
@@ -354,7 +354,7 @@
 3216,0,0,0,0,0,0,0,"Job changes to Rune knight - The final test"
 3217,0,0,0,0,0,0,0,"Job changes to Rune knight - The final test"
 3218,0,0,0,0,0,0,0,"Job changes to Rune knight - Pass the final test"
-3219,0,0,0,0,0,0,0,"Job changes to Rune knight - The end of all tes"
+3219,0,0,0,0,0,0,0,"Job changes to Rune knight - The end of all test"
 3220,600,0,0,0,0,0,0,"Job changes to Rune knight - Waiting time of test"
 
 3250,0,1041,30,0,0,0,0,"Request - What is this bandage for?"
