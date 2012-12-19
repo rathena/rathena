@@ -52,7 +52,7 @@
 
 #define ATCOMMAND_LENGTH 50
 #define ACMD_FUNC(x) static int atcommand_ ## x (const int fd, struct map_session_data* sd, const char* command, const char* message)
-#define MAX_MSG 1400
+#define MAX_MSG 1500
 
 
 typedef struct AtCommandInfo AtCommandInfo;
@@ -5258,6 +5258,86 @@ ACMD_FUNC(storeall)
 	return 0;
 }
 
+ACMD_FUNC(clearstorage)
+{
+	int i, j;
+	nullpo_retr(-1, sd);
+
+	if (sd->state.storage_flag == 1) {
+		clif_displaymessage(fd, msg_txt(250));
+		return -1;
+	}
+	
+	j = sd->status.storage.storage_amount;
+	for (i = 0; i < j; ++i) {
+		storage_delitem(sd, i, sd->status.storage.items[i].amount);
+	}
+	storage_storageclose(sd);
+	
+	clif_displaymessage(fd, msg_txt(1394)); // Your storage was cleaned.
+	return 0;
+}
+
+ACMD_FUNC(cleargstorage)
+{
+	int i, j;
+	struct guild *g;
+	struct guild_storage *gstorage;
+	nullpo_retr(-1, sd);
+	
+	g = guild_search(sd->status.guild_id);
+	
+	if (g == NULL) {
+		clif_displaymessage(fd, msg_txt(43));
+		return -1;
+	}
+	
+	if (sd->state.storage_flag == 1) {
+		clif_displaymessage(fd, msg_txt(250));
+		return -1;
+	}
+
+	if (sd->state.storage_flag == 2) {
+		clif_displaymessage(fd, msg_txt(251));
+		return -1;
+	}
+	
+	gstorage = guild2storage2(sd->status.guild_id);
+	if (gstorage == NULL) {// Doesn't have opened @gstorage yet, so we skip the deletion since *shouldn't* have any item there.
+		return -1;
+	}
+
+	j = gstorage->storage_amount;
+	gstorage->lock = 1; // Lock @gstorage: do not allow any item to be retrieved or stored from any guild member
+	for (i = 0; i < j; ++i) {
+		guild_storage_delitem(sd, gstorage, i, gstorage->items[i].amount);
+	}
+	storage_guild_storageclose(sd);
+	gstorage->lock = 0; // Cleaning done, release lock
+	
+	clif_displaymessage(fd, msg_txt(1395)); // Your guild storage was cleaned.
+	return 0;
+}
+
+ACMD_FUNC(clearcart)
+{
+	nullpo_retr(-1, sd);
+	
+	if (pc_iscarton(sd) == 0) {
+		clif_displaymessage(fd, msg_txt(1396)); // You do not have a cart to be cleaned.
+		return -1;
+	}
+	
+	if (sd->state.vending == 1) { //Somehow...
+		return -1;
+	}
+	
+	clif_clearcart(fd);
+	
+	clif_displaymessage(fd, msg_txt(1397)); // Your cart was cleaned.
+	return 0;
+}
+
 /*==========================================
  * @skillid by [MouseJstr]
  * lookup a skill by name
@@ -8739,6 +8819,10 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(item),
 		ACMD_DEF(item2),
 		ACMD_DEF(itemreset),
+		ACMD_DEF2("clearinventory", itemreset),
+		ACMD_DEF(clearstorage),
+		ACMD_DEF(cleargstorage),
+		ACMD_DEF(clearcart),
 		ACMD_DEF2("blvl", baselevelup),
 		ACMD_DEF2("jlvl", joblevelup),
 		ACMD_DEF(help),

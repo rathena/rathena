@@ -405,6 +405,9 @@ int storage_guild_storageopen(struct map_session_data* sd)
 	}
 	if(gstor->storage_status)
 		return 1;
+		
+	if( gstor->lock )
+		return 1;
 	
 	gstor->storage_status = 1;
 	sd->state.storage_flag = 2;
@@ -522,6 +525,11 @@ int storage_guild_storageadd(struct map_session_data* sd, int index, int amount)
 	
 	if( amount < 1 || amount > sd->status.inventory[index].amount )
 		return 0;
+		
+	if( stor->lock ) {
+		storage_guild_storageclose(sd);
+		return 0;
+	}
 
 	if(guild_storage_additem(sd,stor,&sd->status.inventory[index],amount)==0)
 		pc_delitem(sd,index,amount,0,4,LOG_TYPE_GSTORAGE);
@@ -555,6 +563,11 @@ int storage_guild_storageget(struct map_session_data* sd, int index, int amount)
 	
 	if(amount < 1 || amount > stor->items[index].amount)
 	  	return 0;
+		
+	if( stor->lock ) {
+		storage_guild_storageclose(sd);
+		return 0;
+	}
 
 	if((flag = pc_additem(sd,&stor->items[index],amount,LOG_TYPE_GSTORAGE)) == 0)
 		guild_storage_delitem(sd,stor,index,amount);

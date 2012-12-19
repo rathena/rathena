@@ -676,6 +676,19 @@ Deletes all inventory items (not equipped items).
 
 ---------------------------------------
 
+@clearstorage
+@cleargstorage
+
+Deletes all items in storage (or guild storage).
+
+---------------------------------------
+
+@clearcart
+
+Deletes all items in cart, but it will not remove the cart.
+
+---------------------------------------
+
 @cleanarea
 @cleanmap
 
