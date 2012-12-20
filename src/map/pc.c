@@ -2700,6 +2700,10 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag != 2)
 			sd->magic_addsize[type2]+=val;
 		break;
+	case SP_MAGIC_ATK_ELE:
+		if(sd->state.lr_flag != 2)
+			sd->magic_atk_ele[type2]+=val;
+		break;
 	case SP_ADD_DAMAGE_CLASS:
 		switch (sd->state.lr_flag) {
 		case 0: //Right hand

@@ -244,6 +244,7 @@ struct map_session_data {
 	int magic_addele[ELE_MAX];
 	int magic_addrace[RC_MAX];
 	int magic_addsize[3];
+	int magic_atk_ele[ELE_MAX]; 
 	int critaddrace[RC_MAX];
 	int expaddrace[RC_MAX];
 	int ignore_mdef[RC_MAX];

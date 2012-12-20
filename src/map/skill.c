@@ -2192,6 +2192,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	struct status_change *sc;
 	struct map_session_data *sd, *tsd;
 	int type,damage,rdamage=0;
+	int8 rmdamage=0;//magic reflected
 
 	if(skillid > 0 && skilllv <= 0) return 0;
 
@@ -2249,6 +2250,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		if( (dmg.damage || dmg.damage2) && (type = skill_magic_reflect(src, bl, src==dsrc)) )
 		{	//Magic reflection, switch caster/target
 			struct block_list *tbl = bl;
+			rmdamage = 1;
 			bl = src;
 			src = tbl;
 			sd = BL_CAST(BL_PC, src);
@@ -2271,6 +2273,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 					sc->data[SC_SPIRIT]->val4 = dsrc->id;
 				}
 			}
+
 		/**
 		 * Official Magic Reflection Behavior : damage reflected depends on gears caster wears, not target
 		 **/
@@ -2701,29 +2704,16 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce->val2] == bl->id)
 			) && check_distance_bl(bl, d_bl, sce->val3) )
 		{
-			/**
-			 * Check for devotion and change targetted dmg.
-			 * [d_bl = paladin; bl = player; src = source of dmg]
-			 **/
-			bool devo_flag = false; /* false = paladin devoing; true = player */
-			if ( src )
-			{
-				struct status_change *tsc;
-				tsc = status_get_sc(src);
-
-				/* Per official standards, following skills should reflect at the bl */
-				if( (tsc->data[SC_KAITE] && attack_type == BF_MAGIC) ||
-					(tsc->data[SC_REFLECTDAMAGE] && attack_type != BF_MAGIC)
-				  )
-					devo_flag = true;
+			if(!rmdamage){
+				clif_damage(d_bl,d_bl, gettick(), 0, 0, damage, 0, 0, 0);
+				status_fix_damage(NULL,d_bl, damage, 0);
 			}
-
-			clif_damage(
-				( (devo_flag) ? bl:d_bl),
-				( (devo_flag) ? bl:d_bl), gettick(), 0, 0, damage, 0, 0, 0);
-			status_fix_damage(
-				( (devo_flag) ? bl:NULL),
-				( (devo_flag) ? bl:d_bl), damage, 0);
+			else{//Reflected magics are done directly on the target not on paladin
+				//This check is only for magical skill.
+				//For BF_WEAPON skills types track var rdamage and function battle_calc_return_damage
+				clif_damage(bl,bl, gettick(), 0, 0, damage, 0, 0, 0);
+				status_fix_damage(bl,bl, damage, 0);
+			}
 		}
 		else {
 			status_change_end(bl, SC_DEVOTION, INVALID_TIMER);

@@ -587,6 +587,7 @@ bSkillVariableCast	2052
 bFixedCastrate	2053
 bVariableCastrate	2054
 bSkillUseSP	2055
+bMagicAtkEle 2056
 
 EQI_HEAD_TOP	1
 EQI_ARMOR	2

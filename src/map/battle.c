@@ -440,10 +440,11 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 					cardfix=cardfix*(100+sd->magic_addele[tstatus->def_ele])/100;
 				cardfix=cardfix*(100+sd->magic_addsize[tstatus->size])/100;
 				cardfix=cardfix*(100+sd->magic_addrace[is_boss(target)?RC_BOSS:RC_NONBOSS])/100;
+				cardfix=cardfix*(100+sd->magic_atk_ele[s_ele])/100;
 				for(i=0; i< ARRAYLENGTH(sd->add_mdmg) && sd->add_mdmg[i].rate;i++) {
 					if(sd->add_mdmg[i].class_ == t_class) {
 						cardfix=cardfix*(100+sd->add_mdmg[i].rate)/100;
-						continue;
+						break;
 					}
 				}
 				if (cardfix != 1000)
