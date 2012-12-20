@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20110124
+//= 20121219
 //===== Description: =========================================
 //= List of script instructions used in item bonuses,
 //= mainly bonus/bonus2/bonus3/bonus4/bonus5 arguments.
@@ -130,6 +130,9 @@ bonus2 bMagicAddEle,n,x; 		+x% magical damage against element n
 					n: 	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison,
 						6=Holy, 7=Dark, 8=Spirit, 9=Undead
 bonus2 bSubEle,n,x;			x% Damage reduction against element n.
+					n: 	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison,
+						6=Holy, 7=Dark, 8=Spirit, 9=Undead
+bonus2 bMagicAtkEle,n,x; 		Increases damage of n element magic by x%.
 					n: 	0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison,
 						6=Holy, 7=Dark, 8=Spirit, 9=Undead
 bonus2 bAddDamageClass,n,x;		+x% extra physical damage against monsters of class n

@@ -8819,7 +8819,6 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(item),
 		ACMD_DEF(item2),
 		ACMD_DEF(itemreset),
-		ACMD_DEF2("clearinventory", itemreset),
 		ACMD_DEF(clearstorage),
 		ACMD_DEF(cleargstorage),
 		ACMD_DEF(clearcart),

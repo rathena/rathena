@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20121127
+//= 20121219
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
@@ -685,7 +685,7 @@ Deletes all items in storage (or guild storage).
 
 @clearcart
 
-Deletes all items in cart, but it will not remove the cart.
+Deletes all items in cart, but does not remove the cart.
 
 ---------------------------------------
 

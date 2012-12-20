@@ -46,7 +46,7 @@ tur_dun01,156,36,5	script	Survival Instructor#jr01	59,{
 			}
 			mes "[Survival Instructor, Rescue]";
 			mes "Huh?";
-			mes "How did you come again and find me?";
+			mes "How did you find me?";
 			next;
 			mes "[Survival Instructor, Rescue]";
 			mes "Well, it's a passing mark that you recognize me... let me see.";
@@ -300,7 +300,8 @@ tur_dun01,156,36,5	script	Survival Instructor#jr01	59,{
 	next;
 	mes "[Survival Instructor, Rescue]";
 	mes "What's up?";
-	mes "The monsters here are a little tough so be careful.";
+	mes "The monsters here are a";
+	mes "little tough so be careful.";
 	close;
 }
 
