@@ -5321,6 +5321,7 @@ ACMD_FUNC(cleargstorage)
 
 ACMD_FUNC(clearcart)
 {
+	int i;
 	nullpo_retr(-1, sd);
 	
 	if (pc_iscarton(sd) == 0) {
@@ -5332,7 +5333,12 @@ ACMD_FUNC(clearcart)
 		return -1;
 	}
 	
+	for( i = 0; i < MAX_CART; i++ )
+		if(sd->status.cart[i].nameid > 0)
+			pc_cart_delitem(sd, i, sd->status.cart[i].amount, 1, LOG_TYPE_OTHER);
+	
 	clif_clearcart(fd);
+	clif_updatestatus(sd,SP_CARTINFO);
 	
 	clif_displaymessage(fd, msg_txt(1397)); // Your cart was cleaned.
 	return 0;

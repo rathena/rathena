@@ -1321,6 +1321,7 @@ int mob_unlocktarget(struct mob_data *md, unsigned int tick)
 	}
 	if (md->target_id) {
 		md->target_id=0;
+		md->ud.target_to = 0;
 		unit_set_target(&md->ud, 0);
 	}
 	return 0;

@@ -293,7 +293,6 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	else {	//Stopped walking. Update to_x and to_y to current location [Skotlex]
 		ud->to_x = bl->x;
 		ud->to_y = bl->y;
-		ud->target_to = 0;
 	}
 	return 0;
 }
