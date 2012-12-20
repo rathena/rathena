@@ -53,7 +53,7 @@
 2008:2468:2860:15026,{ bonus2 bMagicAtkEle,Ele_Water,40; bonus2 bMagicAtkEle,Ele_Wind,-30; bonus2 bSubEle,Ele_Wind,-50; }
 2009:2469:2861:15027,{ bonus2 bMagicAtkEle,Ele_Fire,40; bonus2 bMagicAtkEle,Ele_Water,-30; bonus2 bSubEle,Ele_Water,-50; }
 2010:2470:2862:15028,{ bonus2 bMagicAtkEle,Ele_Earth,40; bonus2 bMagicAtkEle,Ele_Fire,-30; bonus2 bSubEle,Ele_Fire,-50; }
-2011:2467:2859:15025,{ bonus2 bMagicAtkEle,Ele_Wind,60; bonus2 bMagicAtkEle,Ele_Earth,-60; bSubEle,Ele_Earth,-50; }
+2011:2467:2859:15025,{ bonus2 bMagicAtkEle,Ele_Wind,60; bonus2 bMagicAtkEle,Ele_Earth,-60; bonus2 bSubEle,Ele_Earth,-50; }
 2012:2468:2860:15026,{ bonus2 bMagicAtkEle,Ele_Water,60; bonus2 bMagicAtkEle,Ele_Wind,-60; bonus2 bSubEle,Ele_Wind,-50; }
 2013:2469:2861:15027,{ bonus2 bMagicAtkEle,Ele_Fire,60; bonus2 bMagicAtkEle,Ele_Water,-60; bonus2 bSubEle,Ele_Water,-50; }
 2014:2470:2862:15028,{ bonus2 bMagicAtkEle,Ele_Earth,60; bonus2 bMagicAtkEle,Ele_Fire,-60; bonus2 bSubEle,Ele_Fire,-50; }

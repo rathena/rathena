@@ -178,8 +178,8 @@ function Chk {
 	if (getarg(0) < getarg(1)) {
 		set @qe[0],1;
 		return "^FF0000";
-	}
-	else return "^00FF00";
+	} else
+		return "^00FF00";
 }
 
 function Slot {

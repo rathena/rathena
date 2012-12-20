@@ -29,7 +29,8 @@ alberta,240,47,5	script	Alberta Sailor#alberta	536,{
 		mes "[Alberta Sailor]";
 		mes "Let me know";
 		mes "when you're ready to travel~";
-		close; }
+		close;
+	}
 	mes "[Alberta Sailor]";
 	mes "Have a nice trip~";
 	close2;
@@ -45,7 +46,8 @@ dewata,230,49,5	script	Alberta Sailor#dewata	536,{
 		mes "[Alberta Sailor]";
 		mes "Have some more fun before you go!";
 		mes "^C35817Dewata^000000 Island still has more to offer.";
-		close; }
+		close;
+	}
 	mes "[Alberta Sailor]";
 	mes "I hope you had a lot of fun on your trip to ^C35817Dewata^000000 Island.";
 	close2;
@@ -99,7 +101,8 @@ dewata,235,56,4	script	Gatekeeper of Krakatau#1	534,{
 		mes "the tale of your adventures.";
 		changequest 9162,9163;
 		delitem 11533,1;
-		close; }
+		close;
+	}
 	if(select("Allow me through:I don't want to go in")==1) {
 		if(dewata_legend >= 5) {
 			mes "[Gatekeeper of Krakatau Volcano]";
@@ -114,13 +117,15 @@ dewata,235,56,4	script	Gatekeeper of Krakatau#1	534,{
 			mes "dangerous so please take care.";
 			close2;
 			warp "dew_dun01",289,160;
-			end; }
+			end;
+		}
 		mes "[Gatekeeper of Krakatau Volcano]";
 		mes "^C35817Krakatau Volcano^000000 is";
 		mes "a very dangerous area,";
 		mes "so I can't allow you in";
 		mes "unless you qualify for entry.";
-		close; }
+		close;
+	}
 	mes "[Gatekeeper of Krakatau Volcano]";
 	mes "You have choosen wisely.";
 	mes "^C35817Krakatau Volcano^000000 is";
@@ -137,7 +142,8 @@ dew_dun01,292,164,4	script	Gatekeeper of Krakatau#2	541,{
 		mes "^C35817Krakatau Volcano^000000 is";
 		mes "a dangerous place.";
 		mes "You should go back now.";
-		close; }
+		close;
+	}
 	close2;
 	warp "dewata",232,53;
 	end;
@@ -276,7 +282,8 @@ dewata,109,262,4	script	Memo#dew_drink	534,{
 			mes "any message. Lero actually";
 			mes "cares about him a lot...";
 			next;
-			changequest 5040,5041; }
+			changequest 5040,5041;
+		}
 		if (checkquest(5041) >= 0) {
 			mes "[Memo]";
 			mes "He might be troublesome,";
@@ -286,7 +293,8 @@ dewata,109,262,4	script	Memo#dew_drink	534,{
 			mes "[Memo]";
 			mes "If it is not, wait there and bring";
 			mes "^FF000030 Bottle of Oil^000000 to me.";
-			close; }
+			close;
+		}
 		if (checkquest(5042) >= 0 && countitem(6401) >= 30) {
 			mes "[Memo]";
 			mes "You brought the oil. Good job, and thank you.";
@@ -373,7 +381,8 @@ dewata,109,262,4	script	Memo#dew_drink	534,{
 				mes "I guess you are busy.";
 				mes "If possible, will you get the oil";
 				mes "from Lero? I appreciate it...";
-				close; }
+				close;
+			}
 			mes "[Memo]";
 			mes "Thank you, I know you're busy";
 			mes "and helping me can be a chore.";
@@ -431,8 +440,10 @@ dewata,109,262,4	script	Memo#dew_drink	534,{
 				delitem 6401,20;
 				getitem 11534,2;
 				erasequest 5051;
-				setquest 5044; }
-			close; }
+				setquest 5044;
+			}
+			close;
+		}
 		mes "[Memo]";
 		mes "So, what did Lero say?";
 		next;	
@@ -445,8 +456,9 @@ dewata,109,262,4	script	Memo#dew_drink	534,{
 		next;
 		mes "[Memo]";
 		mes "Find the best oil master. His name is ^0000FFLero^000000.";
-		close; }
-	if(rand(1,5)==1) {
+		close;
+	}
+	if(rand(1,5) == 1) {
 		mes "[Memo]";
 		mes "What should I do? I still don't";
 		mes "have any news from the Jaty tribe.";
@@ -507,7 +519,8 @@ dewata,109,262,4	script	Memo#dew_drink	534,{
 			mes "Hmm, I have no choice.";
 			mes "You don't care that others are in";
 			mes "trouble. What has this world come to?";
-			close; }
+			close;
+		}
 		mes "[Memo]";
 		mes "That's good to hear.";
 		mes "So since you are wandering here...";
@@ -576,34 +589,38 @@ dew_fild01,114,275,4	script	Lero#dew_drink	536,{
 			else if (checkquest(5050) >= 0)
 				mes "could you bring ^0000FF40 pieces of oil palm nuts^000000?";
 			next;
-		lerowait:
+		L_Wait:
 			if (checkquest(5046) >= 0 && countitem(6402) > 19) {
-				callsub lerocount,20;
+				callsub L_Count,20;
 				changequest 5046,5047;
 				close;
 			} else if (checkquest(5048) >= 0 && countitem(6402) > 29) {
-				callsub lerocount,30;
+				callsub L_Count,30;
 				changequest 5048,5049;
 				close;
 			} else if (checkquest(5050) >= 0 && countitem(6402) > 39) {
-				callsub lerocount,40;
+				callsub L_Count,40;
 				changequest 5050,5051;
-				close; }	
+				close;
+			}	
 			mes "[Lero]";
 			mes "Once you bring the oil palm nuts,";
 			mes "Mr. Memo will exchange them with oil.";
-			close; }
-		else if (checkquest(5046) >= 0 || checkquest(5048) >= 0 || checkquest(5050) >= 0) goto lerowait;
+			close;
+		}
+		else if (checkquest(5046) >= 0 || checkquest(5048) >= 0 || checkquest(5050) >= 0) goto L_Wait;
 		else if (checkquest(5047) >= 0 || checkquest(5049) >= 0 || checkquest(5051) >= 0) {
 			mes "[Lero]";
 			mes "As I told you before, it is heavier";
 			mes "than you might think, so be careful";
 			mes "when carrying this.";
-			close; }
+			close;
+		}
 		mes "[Lero]";
 		mes "What happened? I didn't get a memo";
 		mes "from Mr. Memo someone was coming.";
-		close; }
+		close;
+	}
 	if (checkquest(5035) >= 0) {
 		emotion e_an;
 		mes "[Lero]";
@@ -751,7 +768,8 @@ dew_fild01,114,275,4	script	Lero#dew_drink	536,{
 			mes "sorry for the delay.";
 			delitem 6402,60;
 			changequest 5039,5040;
-			close; }
+			close;
+		}
 		mes "[Lero]";
 		mes "Did you gather the nuts already?";
 		next;
@@ -799,7 +817,8 @@ dew_fild01,114,275,4	script	Lero#dew_drink	536,{
 		mes "Oh, tell Mr. Memo that I'm sorry";
 		mes "for the late delivery, and explain";
 		mes "that it wasn't my fault.";
-		close; }
+		close;
+	}
 	mes "[Lero]";
 	mes "What's going on with Poby...?";
 	mes "Why hasn't he come back...?";
@@ -807,7 +826,7 @@ dew_fild01,114,275,4	script	Lero#dew_drink	536,{
 	mes "- Seems like he is waitting for someone -";
 	close;
 
-lerocount:
+L_Count:
 	mes "[Lero]";
 	mes "One, two, three, four....";
 	next;
@@ -842,11 +861,13 @@ dew_fild01,259,48,4	script	Poby#dew_drink	538,{
 			mes "[Memo]";
 			mes "It might be dangerous, so you";
 			mes "must always wear a ^0000FFSafety Helmet^000000.";
-			close; }
+			close;
+		}
 		mes "[Poby]";
 		mes "I'm taking a walk because I think";
 		mes "it will make my back ache less.";
-		close; }
+		close;
+	}
 	if (checkquest(5036) >= 0) {
 		emotion e_swt2;
 		mes "[Poby]";
@@ -942,7 +963,8 @@ dew_fild01,259,48,4	script	Poby#dew_drink	538,{
 			mes "[Poby]";
 			mes "You've got all the fruits.";
 			mes "Bring them to Mr. Lero.";
-			close; }
+			close;
+		}
 		mes "[Poby]";
 		mes "It's easiest for beginners like";
 		mes "you to shake or kick the tree.";
@@ -978,7 +1000,8 @@ dew_in01,15,49,5	script	Tribal Chief Paiko#dew_	540,{
 			mes "You are wasting your time here.";
 			mes "There are many other attractions";
 			mes "around our village.";
-			close; }
+			close;
+		}
 		mes .@n$;	
 		mes "What do you mean?";
 		mes "You heard the story about the crown?";
@@ -1026,7 +1049,8 @@ dew_in01,15,49,5	script	Tribal Chief Paiko#dew_	540,{
 				mes "tinkling fireflies. -";
 				changequest 9155,9156;
 				delitem 6405,15;
-				close; }
+				close;
+			}
 			mes .@n$;
 			mes "It seems that you have yet to find";
 			mes "the materials to make the ^4AA02CJaty Crown^000000.";
@@ -1060,7 +1084,8 @@ dew_in01,15,49,5	script	Tribal Chief Paiko#dew_	540,{
 			mes "Ah, you should go see ^0000FFSage";
 			mes "Kasyapa^000000, who really wants to";
 			mes "reward you with something.";
-			close; }
+			close;
+		}
 		mes .@n$;
 		mes "I've been waiting for you.";
 		mes "According to ^0000FFSage Kasyapa^000000,";
@@ -1094,7 +1119,8 @@ dew_in01,15,49,5	script	Tribal Chief Paiko#dew_	540,{
 			mes "If you ever change";
 			mes "your mind, please come again.";
 			mes "I will be waiting.";
-			close; }
+			close;
+		}
 		mes .@n$;
 		mes "Many thanks to you, stranger";
 		mes "If Kasyapa trusts you, then I know";
@@ -1113,7 +1139,7 @@ dew_in01,15,49,5	script	Tribal Chief Paiko#dew_	540,{
 		close;
 	} else if(dewata_legend == 5) {
 		if (checkquest(9158) >= 0) {
-		chiefrequest:
+		L_Request:
 			mes .@n$;
 			mes "It seems that you haven't";
 			mes "delivered the ^4AA02CSatay^000000 yet.";
@@ -1122,67 +1148,68 @@ dew_in01,15,49,5	script	Tribal Chief Paiko#dew_	540,{
 			else if (checkquest(9162) >= 0) mes "Anything happened?";
 			else if (checkquest(9163) >= 0) mes "Anything go wrong?";
 			next;
-			switch( select("I ate them all.:Who do I deliver this to...?:Nothing.")) {
-				case 1:
-					if (checkquest(9158) >= 0 || checkquest(9160) >= 0) {
+			switch(select("I ate them all.:Who do I deliver this to...?:Nothing.")) {
+			case 1:
+				if (checkquest(9158) >= 0 || checkquest(9160) >= 0) {
 					mes .@n$;
 					mes "Huh... so you couldn't resist";
 					mes "yourself, eh?";
 					mes "Don't blame yourself too much. It";
 					mes "is difficult resist the ^4AA02CSatay^000000's";
-					mes "addicting aroma."; }
-					else if (checkquest(9162) >= 0 || checkquest(9164) >= 0) {
-						mes .@n$;
-						mes "I warned you not to give in";
-						mes "to the sweet smells of the ^4AA02CSatay^000000."; }	
+					mes "addicting aroma.";
+				} else if (checkquest(9162) >= 0 || checkquest(9164) >= 0) {
+					mes .@n$;
+					mes "I warned you not to give in";
+					mes "to the sweet smells of the ^4AA02CSatay^000000.";
+				}	
+				next;
+				mes .@n$;
+				mes "Our tribe is short on food";
+				mes "supplies so we can't give out more";
+				mes "of our ^4AA02CSatay^000000. But there's a rumor";
+				mes "that the restaurant owner in";
+				mes "Dewata Island is making and";
+				mes "selling their own ^4AA02CSatay^000000.";
+				next;
+				mes .@n$;
+				mes "It is not as tasty as our tribe's";
+				mes "recipe, but this is an urgent task.";
+				mes "Just find and deliver it.";
+				close;
+			case 2:
+				if (checkquest(9158) >= 0) {
+					mes .@n$;
+					mes "Our tribe warriors come to mind";
+					mes "to deliver the food to share ^4AA02CSatay^000000";
+					mes "with warriors in the village.";
+				} else if (checkquest(9160) >= 0) {
+					mes .@n$;
+					mes "The second person to deliver the";
+					mes "^4AA02CSatay^000000 to is someone who stays";
+					mes "across the river.";
 					next;
 					mes .@n$;
-					mes "Our tribe is short on food";
-					mes "supplies so we can't give out more";
-					mes "of our ^4AA02CSatay^000000. But there's a rumor";
-					mes "that the restaurant owner in";
-					mes "Dewata Island is making and";
-					mes "selling their own ^4AA02CSatay^000000.";
-					next;
+					mes "That is the ^0000FFTribe Manager^000000.";
+					mes "Please deliver it to him before it cools down.";
+				} else if (checkquest(9162) >= 0) {
 					mes .@n$;
-					mes "It is not as tasty as our tribe's";
-					mes "recipe, but this is an urgent task.";
-					mes "Just find and deliver it.";
-					close;
-				case 2:
-					if (checkquest(9158) >= 0) {
-						mes .@n$;
-						mes "Our tribe warriors come to mind";
-						mes "to deliver the food to share ^4AA02CSatay^000000";
-						mes "with warriors in the village.";
-					} else if (checkquest(9160) >= 0) {
-						mes .@n$;
-						mes "The second person to deliver the";
-						mes "^4AA02CSatay^000000 to is someone who stays";
-						mes "across the river.";
-						next;
-						mes .@n$;
-						mes "That is the ^0000FFTribe Manager^000000.";
-						mes "Please deliver it to him before it cools down.";
-					} else if (checkquest(9162) >= 0) {
-						mes .@n$;
-						mes "The third person to deliver the";
-						mes "^4AA02CSatay^000000 to is the ^0000FFGatekeeper";
-						mes "of Krakatau Volcano^000000.";
-						mes "Please deliver it to him before it cools down.";
-					} else if (checkquest(9164) >= 0) {
-						mes .@n$;
-						mes "The last person to deliver the";
-						mes "^4AA02CSatay^000000 to is the ^0000FFBorobudur";
-						mes "Temple Manager^000000, who is in";
-						mes "^C35817Dewata Island^000000.";
-						mes "Please deliver it to him before it cools down.";
-						close; }
-					close;
-				case 3:
+					mes "The third person to deliver the";
+					mes "^4AA02CSatay^000000 to is the ^0000FFGatekeeper";
+					mes "of Krakatau Volcano^000000.";
+					mes "Please deliver it to him before it cools down.";
+				} else if (checkquest(9164) >= 0) {
 					mes .@n$;
-					mes "Alright! Deliver it right now!";
-					close;
+					mes "The last person to deliver the";
+					mes "^4AA02CSatay^000000 to is the ^0000FFBorobudur";
+					mes "Temple Manager^000000, who is in";
+					mes "^C35817Dewata Island^000000.";
+					mes "Please deliver it to him before it cools down.";
+				}
+				close;
+			case 3:
+				mes .@n$;
+				mes "Alright! Deliver it right now!";
+				close;
 			}
 		} else if (checkquest(9159) >= 0) {
 			mes .@n$;
@@ -1202,8 +1229,9 @@ dew_in01,15,49,5	script	Tribal Chief Paiko#dew_	540,{
 			mes "able to share ^4AA02CSatay^000000 with our friends.";
 			changequest 9159,9160;
 			getitem 11533,2;
-			close; }
-		else if (checkquest(9160) >= 0) goto chiefrequest;
+			close;
+		}
+		else if (checkquest(9160) >= 0) goto L_Request;
 		else if (checkquest(9161) >= 0) {
 			mes .@n$;
 			mes "Oh, you delivered it already?";
@@ -1219,8 +1247,9 @@ dew_in01,15,49,5	script	Tribal Chief Paiko#dew_	540,{
 			mes "in to the smell and try not to eat the ^4AA02CSatay^000000.";
 			changequest 9161,9162;
 			getitem 11533,2;
-			close; }
-		else if (checkquest(9162) >= 0) goto chiefrequest;
+			close;
+		}
+		else if (checkquest(9162) >= 0) goto L_Request;
 		else if (checkquest(9163) >= 0) {
 			mes .@n$;
 			mes "Oh, you delivered it!";
@@ -1236,8 +1265,9 @@ dew_in01,15,49,5	script	Tribal Chief Paiko#dew_	540,{
 			mes "in to the smell and try not to eat the ^4AA02CSatay^000000.";
 			changequest 9163,9164;
 			getitem 11533,2;
-			close; }
-		else if (checkquest(9164) >= 0) goto chiefrequest;
+			close;
+		}
+		else if (checkquest(9164) >= 0) goto L_Request;
 		else if (checkquest(9165) >= 0) {
 			mes .@n$;
 			mes "Oh, you delivered it!";
@@ -1284,7 +1314,8 @@ dew_in01,15,49,5	script	Tribal Chief Paiko#dew_	540,{
 			erasequest 9165;
 			getitem 11533,5;
 			getitem 18520,1;
-			close; }
+			close;
+		}
 		mes .@n$;
 		mes "With your support I am not";
 		mes "worried about creating the";
@@ -1319,7 +1350,8 @@ dew_in01,15,49,5	script	Tribal Chief Paiko#dew_	540,{
 			mes "It's a little disappointing.";
 			mes "If you ever change your mind";
 			mes "come speak with me again.";
-			close; }
+			close;
+		}
 		mes .@n$;
 		mes "Oh!, I knew you'd help.";
 		mes "Our tribe's warriors come to my";
@@ -1347,7 +1379,8 @@ dew_in01,15,49,5	script	Tribal Chief Paiko#dew_	540,{
 		mes "is full of fortune and joy.";
 		mes "As Chief of the ^C35817Jaty Tribe^000000, I wish";
 		mes "you the best of luck!!";
-		close; }
+		close;
+	}
 	mes .@n$;
 	mes "I am the leader of this ^0000FFPaiko^000000 tribe.";
 	close;
@@ -1425,7 +1458,8 @@ dew_in01,22,48,3	script	Sage Kasyapa#dew_	541,{
 			set dewata_legend,5;
 			erasequest 9157;
 			getitem 6406,1;
-			close; }
+			close;
+		}
 		mes "[Sage Kasyapa]";
 		mes "I've been waiting for you.";
 		mes "Our tribe's leader has a favor";
@@ -1444,7 +1478,8 @@ dew_in01,22,48,3	script	Sage Kasyapa#dew_	541,{
 		mes "that, if you display this feather";
 		mes "you can get help from the tribe.";
 		mes "Anyway, I really thank you.";
-		close; }
+		close;
+	}
 	mes "[Sage Kasyapa]";
 	mes "Your earnest expression tells me";
 	mes "that you have something to say";
@@ -1456,7 +1491,8 @@ dew_in01,22,48,3	script	Sage Kasyapa#dew_	541,{
 		mes "Really?";
 		mes "It looked as if your eyes";
 		mes "wanted to say something.";
-		close; }
+		close;
+	}
 	mes "[Sage Kasyapa]";
 	mes "Oh, you heard about the crown, eh?";
 	mes "Ah, this old man's got loose lips.";
@@ -1490,7 +1526,8 @@ dew_in01,22,48,3	script	Sage Kasyapa#dew_	541,{
 	if (checkquest(5039) >= 0 || checkquest(5046) >= 0 || checkquest(5048) >= 0 ||  checkquest(5050) >= 0) {
 		if ((checkquest(5039) >= 0) && countitem(6402) > 59 || (checkquest(5046) >= 0 && countitem(6402) > 19) || (checkquest(5048) >= 0 && countitem(6402) > 29) || (checkquest(5050) >= 0 && countitem(6402) > 39)) {
 			mes "- The palm tree denies your greedy hands. -";
-			close; }
+			close;
+		}
 	mes "There's palm tree.";
 	mes "You can kick or shake it.";
 	mes "What do you want to do?";
@@ -1516,7 +1553,8 @@ dew_in01,22,48,3	script	Sage Kasyapa#dew_	541,{
 				} else if (.@pstone == 3) {
 					mes "As you shake the palm tree like";
 					mes "a crazed Alchemist...";
-					mes "a ^FF0000Stone^000000 falls out."; }
+					mes "a ^FF0000Stone^000000 falls out.";
+				}
 				getitem 7049,1;
 			} else if (.@palm_rand == 13 || .@palm_rand == 12) {
 				if(getequipid(EQI_HEAD_TOP) == 5009) {
@@ -1528,7 +1566,8 @@ dew_in01,22,48,3	script	Sage Kasyapa#dew_	541,{
 					specialeffect EF_BASH;
 					initnpctimer;
 					disablenpc "Palm Tree#"+strnpcinfo(2);
-					end; }	
+					end;
+				}	
 				mes "As you shake the palm tree with";
 				mes "wreckless abandon...";
 				mes "something smashes down on your";
@@ -1553,7 +1592,8 @@ dew_in01,22,48,3	script	Sage Kasyapa#dew_	541,{
 				} else if (.@pleaf == 3) {
 					mes "As you shake the palm tree";
 					mes "enough to move its branchs...";
-					mes "a ^FF0000Great Leaf^000000 falls out."; }
+					mes "a ^FF0000Great Leaf^000000 falls out.";
+				}
 				getitem 7198,1;
 			} else if (.@palm_rand >= 9 && .@palm_rand < 12) {
 				set .@pfruit,rand(1,6);
@@ -1580,7 +1620,8 @@ dew_in01,22,48,3	script	Sage Kasyapa#dew_	541,{
 				} else if (.@pfruit == 6) {
 					mes "As you shake the palm tree like";
 					mes "a crazed Alchemist...";
-					mes "an ^0000FFOil Palm Fruit^000000 falls out."; }
+					mes "an ^0000FFOil Palm Fruit^000000 falls out.";
+				}
 				getitem 6402,rand(1,5);
 			} else if (.@palm_rand > 13 && .@palm_rand < 17) {
 				set .@pworm,rand(1,3);
@@ -1595,7 +1636,8 @@ dew_in01,22,48,3	script	Sage Kasyapa#dew_	541,{
 				} else if (.@pworm == 3) {
 					mes "As you shake the palm tree with";
 					mes "all of your strength...";
-					mes "tons of ^FF0000Worm Peeling^000000 crashes down from the tree."; }	
+					mes "tons of ^FF0000Worm Peeling^000000 crashes down from the tree.";
+				}	
 				getitem 955,1;
 			} else if (.@palm_rand >= 17 && .@palm_rand <= 19) {
 				set .@pnothing,rand(1,3);
@@ -1640,7 +1682,8 @@ dew_in01,22,48,3	script	Sage Kasyapa#dew_	541,{
 				} else if (.@pstone == 3) {
 					mes "As you give the palm tree";
 					mes "a good'ole football punt...";
-					mes "a ^FF0000stone^000000 falls out."; }
+					mes "a ^FF0000stone^000000 falls out.";
+				}
 				getitem 7049,1;
 			} else if (.@palm_rand == 13 || .@palm_rand == 12) {
 				if(getequipid(EQI_HEAD_TOP) == 5009) {
@@ -1652,7 +1695,8 @@ dew_in01,22,48,3	script	Sage Kasyapa#dew_	541,{
 					specialeffect EF_BASH;
 					initnpctimer;
 					disablenpc "Palm Tree#"+strnpcinfo(2);
-					end; }
+					end;
+				}
 				mes "As you shake the palm tree with";
 				mes "wreckless abandon...";
 				mes "something smashes down on your";
@@ -1678,7 +1722,8 @@ dew_in01,22,48,3	script	Sage Kasyapa#dew_	541,{
 					mes "As you give the palm tree";
 					mes "a quick kick to it's";
 					mes "proverbial shin...";
-					mes "a ^FF0000Great Leaf^000000 falls out."; }	
+					mes "a ^FF0000Great Leaf^000000 falls out.";
+				}	
 				getitem 7198,1;
 			} else if (.@palm_rand >= 9 && .@palm_rand < 12) {
 				set .@pfruit,rand(1,6);
@@ -1710,7 +1755,8 @@ dew_in01,22,48,3	script	Sage Kasyapa#dew_	541,{
 				} else if (.@pfruit == 6) {
 					mes "As you give the palm tree";
 					mes "a good'ole football punt...";
-					mes "an ^0000FFOil Palm Fruit^000000 falls out."; }	
+					mes "an ^0000FFOil Palm Fruit^000000 falls out.";
+				}	
 				getitem 6402,rand(1,5);
 			} else if (.@palm_rand > 13 && .@palm_rand < 17) {
 				set .@pworm,rand(1,3);
@@ -1725,7 +1771,8 @@ dew_in01,22,48,3	script	Sage Kasyapa#dew_	541,{
 				} else if (.@pworm == 3) {
 					mes "As you give the palm tree";
 					mes "a chuck norris kick...";
-					mes "tons of ^FF0000Worm Peeling^000000 crashes down from the tree."; }	
+					mes "tons of ^FF0000Worm Peeling^000000 crashes down from the tree.";
+				}	
 				getitem 955,1;
 			} else if (.@palm_rand >= 17 && .@palm_rand <= 19) {
 				set .@pnothing,rand(1,3);
@@ -1741,7 +1788,8 @@ dew_in01,22,48,3	script	Sage Kasyapa#dew_	541,{
 				} else if (.@pnothing == 3) {
 					mes "As you give the palm tree";
 					mes "a thunderous kick...";
-					mes "but nothing happens."; }
+					mes "but nothing happens.";
+				}
 			}
 			close2;
 			specialeffect EF_BASH;
@@ -1751,7 +1799,8 @@ dew_in01,22,48,3	script	Sage Kasyapa#dew_	541,{
 		}
 	} else {
 		mes "- There's a palm tree facing the cool wind. -";
-		close; }
+		close;
+	}
 	end;
 
 OnTimer60000:
@@ -1806,7 +1855,8 @@ dew_fild01,206,156,0	duplicate(Palm Tree)	Palm Tree#drink40	844
 dew_fild01,57,273,0	script	#hideout	45,1,1,{
 	if(dewata_legend >= 1) {
 		warp "dew_in01",16,34;
-		end; }
+		end;
+	}
 	mes "- You hear a faint conversation going on inside -";
 	next;
 	mes "[Tribal Chief Paiko]";
@@ -1849,7 +1899,8 @@ dew_fild01,57,273,0	script	#hideout	45,1,1,{
 dew_in01,16,31,0	script	#hidein	45,1,1,{
 	if(dewata_legend != 3) {
 		warp "dew_fild01",60,273;
-		end; }
+		end;
+	}
 	mes "- Kasyapa and Chief Paiko begin";
 	mes "talking as you are about to";
 	mes "leave... -";
@@ -1934,7 +1985,8 @@ dew_fild01,127,240,4	script	Gatti#weapon	813,{
 			mes "Oh! And the Comodo Dragon is a very";
 			mes "powerful monster, so please be careful.";
 			changequest 5052,5053;
-			close; }
+			close;
+		}
 		mes "[Gatti]";
 		mes "Not yet, I guess. I'm asking around";
 		mes "everywhere, but I couldn't find a";
@@ -1957,14 +2009,16 @@ dew_fild01,127,240,4	script	Gatti#weapon	813,{
 			erasequest 5053;
 			set dewata_gatti,2;
 			delitem 6403,100;
-			close; }
+			close;
+		}
 		mes "[Gatti]";
 		mes "Please be careful. The Comodo";
 		mes "Dragon is very powerful monster.";
 		mes "And don't forget to bring me 100";
 		mes "Comodo Leather on your";
 		mes "way back.";
-		close; }	
+		close;
+	}	
 	if (dewata_gatti == 0) {
 		mes "[Gatti]";
 		mes "Hey there, young man~ Are you from here?";
@@ -1994,7 +2048,8 @@ dew_fild01,127,240,4	script	Gatti#weapon	813,{
 			next;
 			mes "- The old man starts to cry. -";
 			mes "- Feeling awkward, you quickly leave. -";
-			close; }
+			close;
+		}
 		mes "[Gatti]";
 		mes "This is Dewata Island? You're sure";
 		mes "this is Dewata Island?";
@@ -2155,7 +2210,8 @@ dew_fild01,127,240,4	script	Gatti#weapon	813,{
 				delitem 984,10;
 				delitem 6404,1;
 				erasequest 5054;
-				close; }
+				close;
+			}
 			mes "[Gatti]";
 			mes "Hmm... I need more of those.";
 			mes "If my ship didn't get wrecked.";
@@ -2170,7 +2226,8 @@ dew_fild01,127,240,4	script	Gatti#weapon	813,{
 			mes "[Gatti]";
 			mes "If you bring them all,";
 			mes "I'll make the best weapon ever.";
-			close; }
+			close;
+		}
 		select("Well... Gatti?");
 		mes "[Gatti]";
 		mes "Oh! Sorry, sorry! This leather is";
@@ -2226,174 +2283,178 @@ dew_fild01,127,240,4	script	Gatti#weapon	813,{
 		mes "So, how's the Keris that I made it for you?";
 		next;
 		switch(select("It's great!:I need another Keris.:Can I make it stronger?")) {
+		case 1:
+			mes "[Gatti]";
+			mes "Yes, yes of course it's great.";
+			mes "I made that weapon so it must be good.";
+			close;
+		case 2:
+			if (countitem(6404) == 1) {
+				if (countitem(6403)>69 && countitem(999)>19 && countitem(984)>9) {
+					mes "[Gatti]";
+					mes "You have all materials.";
+					mes "Wait just a little.";
+					next;
+					specialeffect EF_REFINEOK;
+					mes "[Gatti]";
+					mes "Here is the Keris! Ask me anytime.";
+					getitem 13067,1;
+					delitem 6404,1;
+					delitem 6403,70;
+					delitem 999,20;
+					delitem 984,10;
+					close;
+				}
+				mes "[Gatti]";
+				mes "You only have a Hilt. You'll need";
+				mes "to bring me 10 Oridecon, 20 Steel,";
+				mes "and 70 Comodo Leather.";
+				next;
+				mes "[Gatti]";
+				mes "If you bring them, I'll make a";
+				mes "brand new Keris.";
+				close;
+			} else if (countitem(6404) > 1) {
+				mes "[Gatti]";
+				mes "You already have 1 Hilt in your inventory. What do you need 1 more Hilt for?";
+				close;
+			} else if (countitem(6403)>49 && countitem(7201)) {
+				mes "[Gatti]";
+				mes "You bought the material for the";
+				mes "Hilt. I'll make it right away.";
+				next;
+				mes "[Gatti]";
+				mes "Put in here, and process it like this...";
+				next;
+				mes "[Gatti]";
+				mes "Here you go. I can make a Keris if";
+				mes "you bring me 10 Oridecon, 20 Steel,";
+				mes "and 70 Comodo Leather.";
+				getitem 6404,1;
+				delitem 6403,50;
+				delitem 7201,1;
+				close;
+			}
+			mes "[Gatti]";
+			mes "You want me to make one more";
+			mes "Keris for you? In that case I";
+			mes "need a Hilt, 50 Comodo Leather,";
+			mes "and 1 Log. These are what I need to make a Hilt.";
+			close;
+		case 3:
+			mes "[Gatti]";
+			mes "So, you want to enchant your";
+			mes "weapon? The weapon gets broken";
+			mes "from time to time during the";
+			mes "process, but it doesn't";
+			mes "happen that often.";
+			next;
+			mes "[Gatti]";
+			mes "In another case, the enchantment";
+			mes "may be applied to an item which";
+			mes "you didn't mean to enchant.";
+			mes "So just bring ^5555ffONE Weapon^000000";
+			mes "if you want the enchantment to be safe.";
+			next;
+			switch(select("Please enchant the weapon.","Things you need to know.","Maybe next time.")) {
 			case 1:
 				mes "[Gatti]";
-				mes "Yes, yes of course it's great.";
-				mes "I made that weapon so it must be good.";
+				mes "^FFA500To enchant your Weapon^000000:";
+				mes "- 100,000 Zeny";
+				mes "- ^FF0000Weapon will lose refines and cards^000000.";
+				next;
+				if (countitem(13067) > 1) {
+					mes "[Gatti]";
+					mes "Please come back with just ONE equipment to be enchanted.";
+					close;
+				}
+				mes "[Gatti]";
+				mes "You want to enchant your";
+				mes "^FF0000" + getitemname(13067) + "^000000?";
+				mes "The cost of this work is ^0000FF100,000^000000 Zeny.";
+				next;
+				if(select("Do it, please!:May be next time..")==2) close;
+				if (Zeny < 100000) {
+					mes "[Gatti]";
+					mes "I'd like to go ahead with this enchant attempt, but you're missing a few things.";
+					mes "You sure that you have enough Zeny.";
+					close;
+				}
+				delitem 13067,1;
+				set Zeny, Zeny-100000;
+				close2;
+				specialeffect2 EF_REPAIRWEAPON;
+				progressbar "FFFF00",3;
+				set .@Enchant_3,rand(4760,4802);
+				set .@Enchant_4,rand(4760,4802);
+				set .@ERate, rand(100);
+				if (.@ERate < 14) { // -- 14% Break chance
+					mes "[Gatti]";
+					mes "Wah! I am so sorry, but it failed.";
+					mes "However, I am completely innocent.";
+					mes "This is your luck, and it was destined by god, okay?";
+					mes "Don't be so disappointed, and try next time.";
+					next;
+					mes "[Gatti]";
+					mes "I wish you good luck next time!";
+					close;
+				}
+				getitem2 13067,1,1,0,0,0,0,.@Enchant_3,.@Enchant_4;
+				mes "[Gatti]";
+				mes "Great, your weapon received the enchant.";
+				mes "It looks pretty well done. Congratulations!";
+				next;
+				mes "[Gatti]";
+				mes "See you again, adventurer!";
 				close;
 			case 2:
-				if (countitem(6404) == 1) {
-					if (countitem(6403)>69 && countitem(999)>19 && countitem(984)>9) {
-						mes "[Gatti]";
-						mes "You have all materials.";
-						mes "Wait just a little.";
-						next;
-						specialeffect EF_REFINEOK;
-						mes "[Gatti]";
-						mes "Here is the Keris! Ask me anytime.";
-						getitem 13067,1;
-						delitem 6404,1;
-						delitem 6403,70;
-						delitem 999,20;
-						delitem 984,10;
-						close; }
-					mes "[Gatti]";
-					mes "You only have a Hilt. You'll need";
-					mes "to bring me 10 Oridecon, 20 Steel,";
-					mes "and 70 Comodo Leather.";
-					next;
-					mes "[Gatti]";
-					mes "If you bring them, I'll make a";
-					mes "brand new Keris.";
-					close;
-				} else if (countitem(6404) > 1) {
-					mes "[Gatti]";
-					mes "You already have 1 Hilt in your inventory. What do you need 1 more Hilt for?";
-					close;
-				} else if (countitem(6403)>49 && countitem(7201)) {
-					mes "[Gatti]";
-					mes "You bought the material for the";
-					mes "Hilt. I'll make it right away.";
-					next;
-					mes "[Gatti]";
-					mes "Put in here, and process it like this...";
-					next;
-					mes "[Gatti]";
-					mes "Here you go. I can make a Keris if";
-					mes "you bring me 10 Oridecon, 20 Steel,";
-					mes "and 70 Comodo Leather.";
-					getitem 6404,1;
-					delitem 6403,50;
-					delitem 7201,1;
-					close; }
 				mes "[Gatti]";
-				mes "You want me to make one more";
-				mes "Keris for you? In that case I";
-				mes "need a Hilt, 50 Comodo Leather,";
-				mes "and 1 Log. These are what I need to make a Hilt.";
+				mes "If you want to do it, I'll";
+				mes "have to tell you some cautionary";
+				mes "things before enchanting the";
+				mes "weapon.";
+				next;
+				mes "[Gatti]";
+				mes "I need 1 weapon of level";
+				mes "3 or 4, and maximum slot of 2.";
+				mes "And 100,000 Zeny too.";
+				mes "As you know, I don't have any";
+				mes "money right now because my";
+				mes "ship got wrecked.";
+				next;
+				mes "[Gatti]";
+				mes "If you have a weapon that is";
+				mes "refined or inserted with cards";
+				mes "in your inventory which you";
+				mes "don't want to enchant, it";
+				mes "could get destroyed.";
+				next;
+				mes "[Gatti]";
+				mes "Or its upgrades could get";
+				mes "changed during the";
+				mes "enchantment process.";
+				next;
+				mes "[Gatti]";
+				mes "If you don't want that to";
+				mes "happen, put the refined";
+				mes "weapon elsewhere before the enchantment.";
+				next;
+				mes "[Gatti]";
+				mes "Sometimes the enchantment";
+				mes "fails. The weapon doesn't get";
+				mes "destroyed every time you fail.";
+				mes "However, you should know that";
+				mes "the weapon gets destroyed from";
+				mes "time to time.";
 				close;
 			case 3:
 				mes "[Gatti]";
-				mes "So, you want to enchant your";
-				mes "weapon? The weapon gets broken";
-				mes "from time to time during the";
-				mes "process, but it doesn't";
-				mes "happen that often.";
-				next;
-				mes "[Gatti]";
-				mes "In another case, the enchantment";
-				mes "may be applied to an item which";
-				mes "you didn't mean to enchant.";
-				mes "So just bring ^5555ffONE Weapon^000000";
-				mes "if you want the enchantment to be safe.";
-				next;
-				switch(select("Please enchant the weapon.","Things you need to know.","Maybe next time.")) {
-					case 1:
-						mes "[Gatti]";
-						mes "^FFA500To enchant your Weapon^000000:";
-						mes "- 100,000 Zeny";
-						mes "- ^FF0000Weapon will lose refines and cards^000000.";
-						next;
-						if (countitem(13067) > 1) {
-							mes "[Gatti]";
-							mes "Please come back with just ONE equipment to be enchanted.";
-							close; }
-						mes "[Gatti]";
-						mes "You want to enchant your";
-						mes "^FF0000" + getitemname(13067) + "^000000?";
-						mes "The cost of this work is ^0000FF100,000^000000 Zeny.";
-						next;
-						if(select("Do it, please!:May be next time..")==2) close;
-						if (Zeny < 100000) {
-							mes "[Gatti]";
-							mes "I'd like to go ahead with this enchant attempt, but you're missing a few things.";
-							mes "You sure that you have enough Zeny.";
-							close; }
-						delitem 13067,1;
-						set Zeny, Zeny-100000;
-						close2;
-						specialeffect2 EF_REPAIRWEAPON;
-						progressbar "FFFF00",3;
-						set .@Enchant_3,rand(4760,4802);
-						set .@Enchant_4,rand(4760,4802);
-						set .@ERate, rand(100);
-						if (.@ERate < 14) { // -- 14% Break chance
-							mes "[Gatti]";
-							mes "Wah! I am so sorry, but it failed.";
-							mes "However, I am completely innocent.";
-							mes "This is your luck, and it was destined by god, okay?";
-							mes "Don't be so disappointed, and try next time.";
-							next;
-							mes "[Gatti]";
-							mes "I wish you good luck next time!";
-							close;
-						} else {
-							getitem2 13067,1,1,0,0,0,0,.@Enchant_3,.@Enchant_4;
-							mes "[Gatti]";
-							mes "Great, your weapon received the enchant.";
-							mes "It looks pretty well done. Congratulations!";
-							next;
-							mes "[Gatti]";
-							mes "See you again, adventurer!";
-							close; }
-					case 2:
-						mes "[Gatti]";
-						mes "If you want to do it, I'll";
-						mes "have to tell you some cautionary";
-						mes "things before enchanting the";
-						mes "weapon.";
-						next;
-						mes "[Gatti]";
-						mes "I need 1 weapon of level";
-						mes "3 or 4, and maximum slot of 2.";
-						mes "And 100,000 Zeny too.";
-						mes "As you know, I don't have any";
-						mes "money right now because my";
-						mes "ship got wrecked.";
-						next;
-						mes "[Gatti]";
-						mes "If you have a weapon that is";
-						mes "refined or inserted with cards";
-						mes "in your inventory which you";
-						mes "don't want to enchant, it";
-						mes "could get destroyed.";
-						next;
-						mes "[Gatti]";
-						mes "Or its upgrades could get";
-						mes "changed during the";
-						mes "enchantment process.";
-						next;
-						mes "[Gatti]";
-						mes "If you don't want that to";
-						mes "happen, put the refined";
-						mes "weapon elsewhere before the enchantment.";
-						next;
-						mes "[Gatti]";
-						mes "Sometimes the enchantment";
-						mes "fails. The weapon doesn't get";
-						mes "destroyed every time you fail.";
-						mes "However, you should know that";
-						mes "the weapon gets destroyed from";
-						mes "time to time.";
-						close;
-					case 3:
-						mes "[Gatti]";
-						mes "Whenever you want to enchant";
-						mes "weapon, just bring me the";
-						mes "weapon you want to enchant";
-						mes "and 100,000 Zeny.";
-						close;
-				}
+				mes "Whenever you want to enchant";
+				mes "weapon, just bring me the";
+				mes "weapon you want to enchant";
+				mes "and 100,000 Zeny.";
+				close;
 			}
 		}
+	}
 }
