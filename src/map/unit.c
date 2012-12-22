@@ -2077,7 +2077,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 				guild_reply_reqalliance(sd,sd->guild_alliance_account,0);
 			if(sd->menuskill_id)
 				sd->menuskill_id = sd->menuskill_val = 0;
-			if( sd->touching_id && !sd->state.warping ) // Only if the player isn't warping and there is a touching_id.
+			if( sd->touching_id )
 				npc_touchnext_areanpc(sd,true);
 
 			// Check if warping and not changing the map.

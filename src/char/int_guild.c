@@ -245,7 +245,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 					m->hair, m->hair_color, m->gender,
 					m->class_, m->lv, m->exp, m->exp_payper, m->online, m->position, esc_name) )
 					Sql_ShowDebug(sql_handle);
-				if (m->modified & GS_MEMBER_NEW)
+				if (m->modified&GS_MEMBER_NEW || new_guild == 1)
 				{
 					if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `guild_id` = '%d' WHERE `char_id` = '%d'",
 						char_db, g->guild_id, m->char_id) )
@@ -1185,7 +1185,7 @@ int mapif_parse_CreateGuild(int fd,int account_id,char *name,struct guild_member
 	g->guild_id= -1; //Request to create guild.
 
 	// Create the guild
-	if (!inter_guild_tosql(g,GS_BASIC|GS_POSITION|GS_SKILL)) {
+	if (!inter_guild_tosql(g,GS_BASIC|GS_POSITION|GS_SKILL|GS_MEMBER)) {
 		//Failed to Create guild....
 		ShowError("Failed to create Guild %s (Guild Master: %s)\n", g->name, g->master);
 		mapif_guild_created(fd,account_id,NULL);

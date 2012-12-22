@@ -830,6 +830,8 @@ int npc_touch_areanpc_sub(struct block_list *bl, va_list ap)
 	pc_id = va_arg(ap,int);
 	name = va_arg(ap,char*);
 
+	if( sd->state.warping )
+		return 0;
 	if( pc_ishiding(sd) )
 		return 0;
 	if( pc_id == sd->bl.id )
