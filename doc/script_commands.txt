@@ -4315,7 +4315,7 @@ If the map name is given as "this", the map the invoking character is on will be
 
 ---------------------------------------
 
-*cleanfloor "<map name>",<x1>,<y1>,<x2>,<y2>;
+*cleanarea "<map name>",<x1>,<y1>,<x2>,<y2>;
 *cleanmap "<map name>";
 
 These commands will clear all items lying on the ground on the specified map, either
@@ -5412,7 +5412,7 @@ If it doesn't work, the /swt emotion is shown.
 
 To evolve a homunculus, the invoking player must have a homunculus,
 the homunculus must not be the last evolution and
-the homunculus must have above 91000 intimacy with it's owner.
+the homunculus must have above 91000 intimacy with its owner.
 
 ---------------------------------------
 

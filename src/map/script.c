@@ -17227,7 +17227,7 @@ BUILDIN_FUNC(getrandgroupitem) {
 }
 
 /* cleanmap <map_name>;
- * cleanfloor <map_name, <x0>, <y0>, <x1>, <y1>; */
+ * cleanarea <map_name>, <x0>, <y0>, <x1>, <y1>; */
 static int atcommand_cleanfloor_sub(struct block_list *bl, va_list ap)
 {
 	nullpo_ret(bl);

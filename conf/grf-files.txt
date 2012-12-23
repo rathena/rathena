@@ -1,12 +1,12 @@
 //-----------------------------------------
-// GRF List
+// GRF Files
+// Add as many as needed.
 //-----------------------------------------
-// grf: C:\path\to\RO\data.grf
-// You may add more in this format
-// grf: <data file path>
+//grf: C:\Program Files\Gravity\RO\rdata.grf
+//grf: C:\Program Files\Gravity\RO\data.grf
 
-//------ Others ---------------------------
-
-// Data Directory (without the actual data\ though)
-// the below example would use C:\path\to\RO\data\
-//data_dir: C:\path\to\RO\
+//-----------------------------------------
+// Data Directory
+// Use the base folder, not the data\ path.
+//-----------------------------------------
+//data_dir: C:\Program Files\Gravity\RO\

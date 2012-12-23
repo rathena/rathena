@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20121219
+//= 20121223
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
@@ -63,8 +63,10 @@ Server Uptime: 3 days, 8 hours, 6 minutes, 4 seconds.
 ---------------------------------------
 
 @refresh
+@refreshall
 
 Synchronizes the player's position on the client with the one stored on the server.
+Additionally, @refreshall will refresh all online players.
 
 ---------------------------------------
 
@@ -999,12 +1001,6 @@ Marries or divorces two players.
 
 ---------------------------------------
 
-@adopt <father> <mother> <child>
-
-Adopts a Novice into a family.
-
----------------------------------------
-
 @request <message>
 
 Sends a message to all connected GMs (via the GM whisper system).
@@ -1257,6 +1253,13 @@ Creates a new guild, with the attached character as guildmaster.
 
 ---------------------------------------
 
+@breakguild
+
+Breaks the guild of the attached character.
+You must be the guildmaster to use this command.
+
+---------------------------------------
+
 @changegm <guild_member_name>
 
 Changes the guildmaster of your guild to another member.
@@ -1356,8 +1359,10 @@ Creates the specified homunculus.
 ---------------------------------------
 
 @homevolution
+@hommutate
 
-Evolves your homunculus, if possible.
+Evolves or mutates your homunculus, if possible.
+If it doesn't work, the /swt emotion is shown.
 
 ---------------------------------------
 
