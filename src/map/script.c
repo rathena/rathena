@@ -10117,7 +10117,6 @@ BUILDIN_FUNC(homunculus_evolution)
 BUILDIN_FUNC(homunculus_mutate)
 {
 	int homun_id, m_class, m_id;
-	int homun_array[5] = {6048,6049,6050,6051,6052};
 	TBL_PC *sd;
 
 	sd = script_rid2sd(st);
@@ -10127,7 +10126,7 @@ BUILDIN_FUNC(homunculus_mutate)
 	if(script_hasdata(st,2))
 		homun_id = script_getnum(st,2);
 	else
-		homun_id = homun_array[rnd() % 5];
+		homun_id = 6048 + (rnd() % 4);
 
 	if(merc_is_hom_active(sd->hd)) {
 		m_class = hom_class2mapid(sd->hd->homunculus.class_);

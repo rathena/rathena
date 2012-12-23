@@ -3308,6 +3308,37 @@ ACMD_FUNC(guild)
 	return 0;
 }
 
+ACMD_FUNC(breakguild)
+{
+	int ret = 0;
+	struct guild *g;
+	nullpo_retr(-1, sd);
+
+	if (sd->status.guild_id) { // Check if the player has a guild
+		g = guild_search(sd->status.guild_id); // Search the guild
+		if (g) { // Check if guild was found
+			if (sd->state.gmaster_flag) { // Check if player is guild master
+				ret = guild_break(sd, g->name); // Break guild
+				if (ret) { // Check if anything went wrong
+					return 0; // Guild was broken
+				} else {
+					return -1; // Something went wrong
+				}
+			} else { // Not guild master
+				clif_displaymessage(fd, msg_txt(1181)); // You need to be a Guild Master to use this command.
+				return -1;
+			}
+		} else { // Guild was not found. HOW?
+			clif_displaymessage(fd, msg_txt(252)); // You are not in a guild.
+			return -1;
+		}
+	} else { // Player does not have a guild
+		clif_displaymessage(fd, msg_txt(252)); // You are not in a guild.
+		return -1;
+	}
+	return 0;
+}
+
 /*==========================================
  *
  *------------------------------------------*/
@@ -6879,6 +6910,33 @@ ACMD_FUNC(homevolution)
 	return 0;
 }
 
+ACMD_FUNC(hommutate)
+{
+	int homun_id, m_class = 0, m_id;
+	nullpo_retr(-1, sd);
+
+	if (!merc_is_hom_active(sd->hd)) {
+		clif_displaymessage(fd, msg_txt(1254)); // You do not have a homunculus.
+		return -1;
+	}
+
+	if (!message || !*message) {
+		homun_id = 6048 + (rnd() % 4);
+	} else {
+		homun_id = atoi(message);
+	}
+
+	m_class = hom_class2mapid(sd->hd->homunculus.class_);
+	m_id	= hom_class2mapid(homun_id);
+
+	if (m_class != -1 && m_id != -1 && m_class&HOM_EVO && m_id&HOM_S && sd->hd->homunculus.level >= 99) {
+		hom_mutate(sd->hd, homun_id);
+	} else {
+		clif_emotion(&sd->hd->bl, E_SWT);
+	}
+	return 0;
+}
+
 /*==========================================
  * call choosen homunculus [orn]
  *------------------------------------------*/
@@ -8844,6 +8902,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(spiritball),
 		ACMD_DEF(party),
 		ACMD_DEF(guild),
+		ACMD_DEF(breakguild),
 		ACMD_DEF(agitstart),
 		ACMD_DEF(agitend),
 		ACMD_DEF(mapexit),
@@ -8974,6 +9033,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(request),
 		ACMD_DEF(homlevel),
 		ACMD_DEF(homevolution),
+		ACMD_DEF(hommutate),
 		ACMD_DEF(makehomun),
 		ACMD_DEF(homfriendly),
 		ACMD_DEF(homhungry),
