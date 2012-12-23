@@ -13763,7 +13763,7 @@ BUILDIN_FUNC(explode)
 	}
 
 	while(str[i] != '\0') {
-		if(str[i] == delimiter && start < 127) { //break at delimiter but ignore after reaching last array index
+		if(str[i] == delimiter && start < SCRIPT_MAX_ARRAYSIZE-1) { //break at delimiter but ignore after reaching last array index
 			temp[j] = '\0';
 			set_reg(st, sd, reference_uid(id, start++), name, (void*)temp, reference_getref(data));
 			j = 0;
