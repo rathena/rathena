@@ -6556,6 +6556,19 @@ ACMD_FUNC(refresh)
 	return 0;
 }
 
+ACMD_FUNC(refreshall)
+{
+	struct map_session_data* iter_sd;
+	struct s_mapiterator* iter;
+	nullpo_retr(-1, sd);
+
+	iter = mapit_getallusers();
+	for (iter_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); iter_sd = (TBL_PC*)mapit_next(iter))
+		clif_refresh(iter_sd);
+	mapit_free(iter);
+	return 0;
+}
+
 /*==========================================
  * @identify
  * => GM's magnifier.
@@ -7250,52 +7263,6 @@ ACMD_FUNC(whereis)
 			clif_displaymessage(fd, msg_txt(1290)); // This monster does not spawn normally.
 	}
 
-	return 0;
-}
-
-/*==========================================
- * @adopt by [Veider]
- * adopt a novice
- *------------------------------------------*/
-ACMD_FUNC(adopt)
-{
-	struct map_session_data *pl_sd1, *pl_sd2, *pl_sd3;
-	char player1[NAME_LENGTH], player2[NAME_LENGTH], player3[NAME_LENGTH];
-	char output[CHAT_SIZE_MAX];
-
-	nullpo_retr(-1, sd);
-
-	if (!message || !*message || sscanf(message, "%23[^,],%23[^,],%23[^\r\n]", player1, player2, player3) < 3) {
-		clif_displaymessage(fd, msg_txt(1291)); // Usage: @adopt <father>,<mother>,<child>
-		return -1;
-	}
-
-	if (battle_config.etc_log)
-		ShowInfo(msg_txt(1292),player1,player2,player3); // Adopting: --%s--%s--%s--\n
-
-	if((pl_sd1=map_nick2sd((char *) player1)) == NULL) {
-		sprintf(output, msg_txt(1293), player1); // Cannot find player %s online.
-		clif_displaymessage(fd, output);
-		return -1;
-	}
-
-	if((pl_sd2=map_nick2sd((char *) player2)) == NULL) {
-		sprintf(output, msg_txt(1293), player2); // Cannot find player %s online.
-		clif_displaymessage(fd, output);
-		return -1;
-	}
-
-	if((pl_sd3=map_nick2sd((char *) player3)) == NULL) {
-		sprintf(output, msg_txt(1293), player3); // Cannot find player %s online.
-		clif_displaymessage(fd, output);
-		return -1;
-	}
-
-	if( !pc_adoption(pl_sd1, pl_sd2, pl_sd3) ) {
-		return -1;
-	}
-
-	clif_displaymessage(fd, msg_txt(1294)); // They are family... wish them luck.
 	return 0;
 }
 
@@ -8952,6 +8919,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(changesex),
 		ACMD_DEF(mute),
 		ACMD_DEF(refresh),
+		ACMD_DEF(refreshall),
 		ACMD_DEF(identify),
 		ACMD_DEF(gmotd),
 		ACMD_DEF(misceffect),
@@ -8973,7 +8941,6 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("alootid", autolootitem),
 		ACMD_DEF(mobinfo),
 		ACMD_DEF(exp),
-		ACMD_DEF(adopt),
 		ACMD_DEF(version),
 		ACMD_DEF(mutearea),
 		ACMD_DEF(rates),
