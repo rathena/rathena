@@ -3,16 +3,16 @@
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= Quests for skills: Crazy Uproar, Change Cart, Cart
-//  Revolution
+//= Quests for skills: Crazy Uproar, Change Cart, Cart Revolution
 //===== Additional Comments: =================================
 //= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //= 1.6 Updated to latest available official file. [Masao]
 //= 1.7 Fixed JobLevel requirements. [Euphy]
+//= 1.8 Moved Alberta NPC to pre-re/re paths. [Euphy]
 //============================================================
 
 alberta,83,96,5	script	Necko	98,7,7,{
@@ -332,7 +332,7 @@ alberta,119,221,6	script	Charlron	107,{
 	close;
 }
 
-alberta,232,103,6	script	Gershaun	57,{
+-	script	::Gershaun_alberta	-1,{
 	if (BaseClass == Job_Merchant) {
 		if (getskilllv("MC_CARTREVOLUTION") == 1) {
 			mes "[Gershaun]";

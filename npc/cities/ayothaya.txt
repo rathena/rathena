@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= MasterOfMuppets
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -12,11 +12,12 @@
 //===== Additional Comments: ================================= 
 //= 1.6 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 1.7 Fixed character's anme bugs [Lupus]
+//= 1.8 Moved Alberta NPC to pre-re/re paths. [Euphy]
 //============================================================ 
 
 // Ayothaya Transportation NPC
 //============================================================ 
-alberta,246,29,3	script	Aibakthing#ayo	843,{
+-	script	::Aibakthing_ayothaya	-1,{
 	mes "[Aibakthing]";
 	mes "Hoo! Hah! Hoo! Hah!";
 	mes "Let me take you away to";
@@ -91,7 +92,10 @@ ayothaya,152,68,1	script	Aibakthing#ayo2	843,{
 		mes "[Aibakthing]";
 		mes "You will be welcome to come back whenever you please. I hope that we will see each other again sometime soon. Thank you~";
 		close2;
-		warp "alberta",238,22;
+		if (checkre(0))
+			warp "alberta",238,22;
+		else
+			warp "alberta",235,45;
 		end;
 	}
 	mes "[Aibakthing]";

@@ -1,9 +1,9 @@
 //===== rAthena Script ======================================= 
-//= Amatsu Script 
+//= Amatsu Town
 //===== By: ================================================== 
-//= Some people & rAthena Dev Team
+//= rAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -12,11 +12,12 @@
 //===== Additional Comments: ================================= 
 //= 1.3 Rescripted to Aegis 10.3 Standards. [L0ne_W0lf]
 //=	Moved elemental stone trader to 'elemental_trader.txt'
+//= 1.4 Moved Alberta NPC to pre-re/re paths. [Euphy]
 //============================================================
 
 // Amatsu Transportation
 //=====================================================
-alberta,246,74,3	script	Sea Captain#ama1	709,{
+-	script	::Sea_Captain_amatsu	-1,{
 	mes "[Walter Moers]";
 	mes "Hey, there.";
 	mes "Have you ever heard that there";
@@ -136,7 +137,10 @@ amatsu,194,79,5	script	Sea Captain#ama2	709,{
 		mes "so many things to talk about,";
 		mes "right? All aboard now.";
 		close2;
-		warp "alberta",244,72;
+		if (checkre(0))
+			warp "alberta",244,72;
+		else
+			warp "alberta",243,91;
 		end;
 	}
 	mes "[Walter Moers]";

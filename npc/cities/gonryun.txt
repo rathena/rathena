@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= x[tsk], KarLaeda
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.6
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -12,11 +12,12 @@
 //===== Additional Comments: ================================= 
 //= 1.5 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //=	Moved Lost Knife mini-quest to quest file.
+//= 1.6 Moved Alberta NPC to pre-re/re paths. [Euphy]
 //============================================================
 
 // Kunlun Transportation
 //============================================================ 
-alberta,246,62,3	script	Kunlun Envoy#gon	776,{
+-	script	::Kunlun_Envoy_gonryun	-1,{
 	mes "[Wa Bai Hu]";
 	mes "Good day~";
 	mes "Let me invite you all";
@@ -143,7 +144,10 @@ gon_fild01,255,79,7	script	Kunlun Envoy#gon2	776,{
 		mes "back. Now, let me guide you";
 		mes "back to Alberta.";
 		close2;
-		warp "alberta",244,60;
+		if (checkre(0))
+			warp "alberta",244,60;
+		else
+			warp "alberta",243,67;
 		end;
 	}
 	mes "[Wa Bai Hu]";

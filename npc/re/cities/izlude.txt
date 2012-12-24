@@ -7,10 +7,9 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= Izlude Town Renewal NPC's
+//= Izlude town NPCs.
 //===== Additional Comments: ================================= 
-//= 1.0 First Version. Still missing many new NPC's and
-//= their dialogues. [Masao]
+//= 1.0 First Version. Still missing many new NPCs and their dialogues. [Masao]
 //= 1.1 Added bullet NPC duplicates. [Euphy]
 //============================================================
 

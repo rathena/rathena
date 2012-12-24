@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Kisuka
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -11,11 +11,12 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First Version. [Kisuka]
 //= 1.1 Removed villagers (they are part of a quest). [Kisuka]
+//= 1.2 Moved Alberta NPC to pre-re/re paths. [Euphy]
 //============================================================
 
 // Moscovia Transportation
 //============================================================ 
-alberta,246,51,4	script	Moscovia P.R. Officer#1	960,{
+-	script	::PR_Officer_moscovia	-1,{
 	mes "[Moscovia P.R. Officer]";
 	mes "Moscovia! Do you know Moscovia?";
 	mes "the paradise spreading on the endless seas...";
@@ -108,7 +109,10 @@ moscovia,166,53,4	script	Moscovia P.R. Officer#2	960,{
 	mes "Please come and visit soon.";
 	mes "Ok then, Let's get going.";
 	close2;
-	warp "alberta",244,52;
+	if (checkre(0))
+		warp "alberta",244,52;
+	else
+		warp "alberta",243,67;
 	end;
 }
 

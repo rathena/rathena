@@ -8,7 +8,7 @@
 //= MasterOfMuppets (2.0)
 //= rAthena Dev Team
 //===== Current Version: ===================================== 
-//= 2.9
+//= 3.0
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -16,11 +16,12 @@
 //= Louyang Town Script
 //===== Additional Comments: ================================= 
 //= 2.9 Rescripted to Aegis 10.3 Standards. [L0ne_W0lf]
+//= 3.0 Moved Alberta NPC to pre-re/re paths. [Euphy]
 //============================================================
 
 // Louyang Transportaion
 //============================================================
-alberta,246,40,3	script	Girl#0lou	815,{
+-	script	::Girl_louyang	-1,{
 	mes "[Girl]";
 	mes "La la la la~";
 	mes "I feel so good today~";
@@ -108,7 +109,10 @@ lou_fild01,190,100,7	script	Girl#1lou	815,{
 		mes "see you again!";
 		mes "Bye bye!";
 		close2;
-		warp "alberta",236,40;
+		if (checkre(0))
+			warp "alberta",236,40;
+		else
+			warp "alberta",235,45;
 		end;
 	}
 	mes "[Girl]";
@@ -331,7 +335,7 @@ louyang,84,254,0	script	Exit#lou	111,{
 //= 2.0 - Completely rewrote the current scripts based on iRO.
 //        Added the 'Shouting Quest' and the 'Medicine Quest'
 //= 2.1 Optimized, made quest vars unique [Lupus]
-//= 2.1a minor fix, 2.1b Fixed Typo�s [Nexon]
+//= 2.1a minor fix, 2.1b Fixed Typos [Nexon]
 //= 2.2 Fixed exploits [Lupus]
 //= 2.2a Updated the color codes a little and fixed the shouting quest
 //=	 to broadcast green text.
@@ -344,7 +348,7 @@ louyang,84,254,0	script	Exit#lou	111,{
 //= 2.6a Updated a few names with new item_db.txt names [Evera]
 //= 2.7 Split quests to quests/quests_louyang.txt [Evera]
 //= 2.7a Minor optimizations before Louyang quests [Lupus]
-//= 2.7b Moved guides to the Guides folder. 2.7� more typos [Lupus]
+//= 2.7b Moved guides to the Guides folder. 2.7 more typos [Lupus]
 //= 2.8 Moved some quest-related NPCs to proper file. [SinSloth]
 //= 2.9 Rescripted to Aegis 10.3 Standards. [L0ne_W0lf]
 //============================================================

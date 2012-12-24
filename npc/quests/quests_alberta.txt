@@ -3,21 +3,19 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.4
+//= 2.5
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
+//= [Official Conversion]
 //= Dolls Quest
 //= Boy's Cap Quest
 //= Antlers Quest
 //= Bao Bao, Cresent Hairpin, Fashionbale Glasses, Heart Hairpin Quests
 //= Hat of Sun God, Sunday Hat, Mage Hat, Magician Hat Quests
-//= [Aegis conversion]
 //= Turtle Island Quests
-//= [Aegis Conversion]
 //= Alberta Boy
 //===== Additional Comments: ================================= 
-//= Fully working
 //= 1.1 Fixed Spore Doll exploit, Gramp's Tiger skin label bug
 //= 1.3 Fixed item ID 7031 -> 7013
 //= 1.4 Fixed a bug, Fixed Exploits, Optimized [Lupus]
@@ -33,6 +31,7 @@
 //= 2.2 Updated Gotan to be compliant with misc_quiest var. [L0ne_W0lf]
 //= 2.3 Updated heardgear Quest NPCs. [L0ne_W0lf]
 //= 2.4 Updated 'Doll Quest' to match AEGIS script. [Kisuka]
+//= 2.5 Moved Alberta NPC to pre-re/re paths. [Euphy]
 //============================================================ 
 
 // Doll Quest
@@ -1105,7 +1104,7 @@ alberta_in,23,104,4	script	Grandpa Turtle#tur	120,{
 	}
 }
 
-alberta,244,118,4	script	Sailor#tur	709,{
+-	script	::Sailor_alberta	-1,{
 	if (TURTLE || (MISC_QUEST & 65536)) {
 		mes "[Gotanblue]";
 		mes "Heh...";
@@ -1239,12 +1238,15 @@ tur_dun01,165,29,4	script	Sailor#tur2	709,{
 		mes "I certainly hope you've found what you were looking for. Alright, I guess there's always a time for an adventurer to return home...";
 		next;
 		mes "^3355FF* Choo Choo *^000000";
-		warp "alberta",238,112;
+		if (checkre(0))
+			warp "alberta",238,112;
+		else
+			warp "alberta",241,115;
 	}
 	close;
 }
 
-alberta,246,114,4	script	Turtle Island Scholar	121,{
+-	script	::Turtle_Scholar_alberta	-1,{
 	mes "[Jornadan Niliria]";
 	mes "Every single place";
 	mes "has its own unique";

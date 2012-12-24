@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -13,8 +13,10 @@
 //= 1.0 First version. Transportation and Basic NPCs.
 //= 1.1 Fixed Zeny not being removed for payment. [Kisuka]
 //= 1.2 Updated dialog, added Ice Cream Maker. [L0ne_W0lf]
+//= 1.3 Moved Alberta NPC to pre-re/re paths. [Euphy]
 //============================================================ 
 
+/* Pre-Renewal coordinates: alberta,247,115,3 */
 alberta,246,82,3	script	Crewman#bra2	100,{
 	mes "[Crewman]";
 	mes "Hey, have you heard of a place called Brasilis?";
@@ -55,7 +57,10 @@ brasilis,316,57,3	script	Crewman#bra1	100,{
 		mes "[Crewman]";
 		mes "I sure do miss home.";
 		close2;
-		warp "alberta",243,82;
+		if (checkre(0))
+			warp "alberta",243,82;
+		else
+			warp "alberta",244,115;
 		end;
 	case 2:
 		mes "[Crewman]";

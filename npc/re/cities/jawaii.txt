@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= Jawaii Town Npcs
+//= Jawaii town NPCs.
 //===== Additional Comments: =================================
 //= 1.0 First Version. Renewal coordinates by Masao.
 //============================================================
