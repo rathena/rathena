@@ -146,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `elemental` (
   `sp` int(12) NOT NULL default '1',
   `max_hp` mediumint(8) unsigned NOT NULL default '0',
   `max_sp` mediumint(6) unsigned NOT NULL default '0',
-  `atk` MEDIUMINT(6) unsigned NOT NULL default '0',
+  `atk1` MEDIUMINT(6) unsigned NOT NULL default '0',
   `atk2` MEDIUMINT(6) unsigned NOT NULL default '0',
   `matk` MEDIUMINT(6) unsigned NOT NULL default '0',
   `aspd` smallint(4) unsigned NOT NULL default '0',

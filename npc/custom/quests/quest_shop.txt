@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
 //= rAthena SVN r16862+
 //===== Description: =========================================
@@ -33,6 +33,7 @@ OnInit:
 	set .ShowSlot,1;	// Show item slots? (2: all equipment / 1: if slots > 0 / 0: never)
 	set .ShowID,0;  	// Show item IDs? (1: yes / 0: no)
 	set .ShowZeny,0;	// Show Zeny cost, if any? (1: yes / 0: no)
+	set .MaxStack,100;	// Max number of quest items purchased at one time.
 
 // -----------------------------------------------------------
 //  Points variable -- optional quest requirement.
@@ -87,6 +88,7 @@ OnMenu:
 			set .@menu$, .@menu$+.Shops$[@i[.@j]]+":";
 		set .@i, @i[select(.@menu$)-1];
 	}
+	deletearray @i[0],getarraysize(@i);
 	if (.Shops$[.@i] == "") {
 		message strcharinfo(0),"An error has occurred.";
 		end;
@@ -97,19 +99,21 @@ OnMenu:
 	end;
 
 OnBuyItem:
-	set .@q[0],@bought_nameid[0];
-	copyarray .@q[1],getd(".q_"+.@q[0]+"[0]"),getarraysize(getd(".q_"+.@q[0]));
-	if (!.@q[1]) {
-		message strcharinfo(0),"An error has occurred.";
+	// .@q[] : RewardID, BoughtAmt, RewardAmt, BaseAmt, ReqZeny, ReqPts, { ReqItem, ReqAmt, ... }
+	setarray .@q[0],@bought_nameid[0],((@bought_quantity[0] > .MaxStack)?.MaxStack:@bought_quantity[0]);
+	copyarray .@q[3],getd(".q_"+.@q[0]+"[0]"),getarraysize(getd(".q_"+.@q[0]));
+	set .@q[2],.@q[1]*.@q[3];
+	if (!.@q[2] || .@q[2] > 30000) {
+		message strcharinfo(0),"You can't purchase that many "+getitemname(.@q[0])+".";
 		end;
 	}
 	mes "[Quest Shop]";
-	mes "Reward: ^0055FF"+((.@q[1]>1)?.@q[1]+"x ":"")+Slot(.@q[0])+"^000000";
+	mes "Reward: ^0055FF"+((.@q[2] > 1)?.@q[2]+"x ":"")+Slot(.@q[0])+"^000000";
 	mes "Requirements:";
-	if (.@q[2]) mes " > "+Chk(Zeny,.@q[2])+.@q[2]+" Zeny^000000";
-	if (.@q[3]) mes " > "+Chk(getd(.Points$[0]),.@q[3])+.@q[3]+" "+.Points$[1]+" ("+getd(.Points$[0])+"/"+.@q[3]+")^000000";
-	if (.@q[4]) for(set .@i,4; .@i<getarraysize(.@q); set .@i,.@i+2)
-		mes " > "+Chk(countitem(.@q[.@i]),.@q[.@i+1])+((.ShowID)?"{"+.@q[.@i]+"} ":"")+Slot(.@q[.@i])+" ("+countitem(.@q[.@i])+"/"+.@q[.@i+1]+")^000000";
+	if (.@q[4]) mes " > "+Chk(Zeny,.@q[4]*.@q[1])+(.@q[4]*.@q[1])+" Zeny^000000";
+	if (.@q[5]) mes " > "+Chk(getd(.Points$[0]),.@q[5]*.@q[1])+(.@q[5]*.@q[1])+" "+.Points$[1]+" ("+getd(.Points$[0])+"/"+(.@q[5]*.@q[1])+")^000000";
+	if (.@q[6]) for(set .@i,6; .@i<getarraysize(.@q); set .@i,.@i+2)
+		mes " > "+Chk(countitem(.@q[.@i]),.@q[.@i+1]*.@q[1])+((.ShowID)?"{"+.@q[.@i]+"} ":"")+Slot(.@q[.@i])+" ("+countitem(.@q[.@i])+"/"+(.@q[.@i+1]*.@q[1])+")^000000";
 	next;
 	setarray @qe[1], getiteminfo(.@q[0],5), getiteminfo(.@q[0],11);
 	if (((@qe[1] & 1) || (@qe[1] & 256) || (@qe[1] & 512)) && @qe[2] > 0)
@@ -123,17 +127,17 @@ OnBuyItem:
 				mes "You're missing one or more quest requirements.";
 				close;
 			}
-			if (!checkweight(.@q[0],.@q[1])) {
+			if (!checkweight(.@q[0],.@q[2])) {
 				mes "[Quest Shop]";
-				mes "^FF0000You need "+(((.@q[1]*getiteminfo(.@q[0],6))+Weight-MaxWeight)/10)+" additional weight capacity to complete this trade.^000000";
+				mes "^FF0000You need "+(((.@q[2]*getiteminfo(.@q[0],6))+Weight-MaxWeight)/10)+" additional weight capacity to complete this trade.^000000";
 				close;
 			}
-			if (.@q[2]) set Zeny, Zeny-.@q[2];
-			if (.@q[3]) setd .Points$[0], getd(.Points$[0])-.@q[3];
-			if (.@q[4]) for(set .@i,4; .@i<getarraysize(.@q); set .@i,.@i+2)
-				delitem .@q[.@i],.@q[.@i+1];
-			getitem .@q[0],.@q[1];
-			if (.Announce) announce strcharinfo(0)+" has created "+A_An(getitemname(.@q[0]))+"!",0;
+			if (.@q[4]) set Zeny, Zeny-(.@q[4]*.@q[1]);
+			if (.@q[5]) setd .Points$[0], getd(.Points$[0])-(.@q[5]*.@q[1]);
+			if (.@q[6]) for(set .@i,6; .@i<getarraysize(.@q); set .@i,.@i+2)
+				delitem .@q[.@i],.@q[.@i+1]*.@q[1];
+			getitem .@q[0],.@q[2];
+			if (.Announce) announce strcharinfo(0)+" has created "+((.@q[2] > 1)?.@q[2]+"x "+getitemname(.@q[0]):A_An(getitemname(.@q[0])))+"!",0;
 			specialeffect2 699;
 			close;
 		case 2:
@@ -161,15 +165,15 @@ function Add {
 		debugmes "Quest reward #"+getarg(1)+" invalid (skipped).";
 		return;
 	}
-	for(set .@n,5; .@n<127; set .@n,.@n+2) {
-		if (!getarg(.@n,0)) break;
-		if (getitemname(getarg(.@n)) == "null") {
-			debugmes "Quest requirement #"+getarg(.@n)+" invalid (skipped).";
+	for(set .@i,2; .@i<getargcount(); set .@i,.@i+1)
+		set .@j[.@i-2],getarg(.@i);
+	for(set .@i,3; .@i<getarraysize(.@j); set .@i,.@i+2) {
+		if (getitemname(.@j[.@i]) == "null") {
+			debugmes "Quest requirement #"+.@j[.@i]+" invalid (skipped).";
 			return;
 		}
 	}
-	for(set .@i,2; .@i<.@n; set .@i,.@i+1)
-		set getd(".q_"+getarg(1)+"["+(.@i-2)+"]"), getarg(.@i);
+	copyarray getd(".q_"+getarg(1)+"[0]"),.@j[0],getarraysize(.@j);
 	npcshopadditem "qshop"+getarg(0),getarg(1),((.ShowZeny)?getarg(3):0);
 	return;
 }

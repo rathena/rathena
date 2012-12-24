@@ -1359,9 +1359,10 @@ Creates the specified homunculus.
 ---------------------------------------
 
 @homevolution
-@hommutate
+@hommutate {<Homunculus ID>}
 
 Evolves or mutates your homunculus, if possible.
+If no Homunculus ID is specified for @hommutate, a random ID is chosen.
 If it doesn't work, the /swt emotion is shown.
 
 ---------------------------------------
