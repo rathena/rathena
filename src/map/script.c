@@ -8442,7 +8442,7 @@ BUILDIN_FUNC(checkwug)
 	if( sd == NULL )
 		return 0;// no player attached, report source
 
-	if( pc_iswug(sd) )
+	if( pc_iswug(sd) || pc_isridingwug(sd) )
 		script_pushint(st, 1);
 	else
 		script_pushint(st, 0);
