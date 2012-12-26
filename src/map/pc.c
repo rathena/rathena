@@ -2600,10 +2600,12 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		if(sd->state.lr_flag != 2)
 			sd->bonus.fixcastrate -= val;
 		break;
+#ifdef RENEWAL_CAST
 	case SP_VARCASTRATE:
 		if(sd->state.lr_flag != 2)
 			sd->bonus.varcastrate -= val;
 		break;
+#endif
 	default:
 		ShowWarning("pc_bonus: unknown type %d %d !\n",type,val);
 		break;
@@ -3140,6 +3142,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->skillvarcast[i].val = val;
 		}
 		break;
+#ifdef RENEWAL_CAST
 	case SP_VARCASTRATE:
 		if(sd->state.lr_flag == 2)
 			break;
@@ -3156,6 +3159,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->skillcast[i].val -= val;
 		}
 		break;
+#endif
 	case SP_SKILL_USE_SP: //bonus2 bSkillUseSP,n,x;
 		if(sd->state.lr_flag == 2)
 			break;
