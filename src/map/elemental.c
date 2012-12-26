@@ -694,6 +694,8 @@ static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_
 	if( master_dist > AREA_SIZE ) {	// Master out of vision range.
 		elemental_unlocktarget(ed);
 		unit_warp(&ed->bl,sd->bl.m,sd->bl.x,sd->bl.y,CLR_TELEPORT);
+		clif_elemental_updatestatus(sd,SP_HP);
+		clif_elemental_updatestatus(sd,SP_SP);
 		return 0;
 	} else if( master_dist > MAX_ELEDISTANCE ) {	// Master too far, chase.
 		short x = sd->bl.x, y = sd->bl.y;
