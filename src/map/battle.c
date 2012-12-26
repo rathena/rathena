@@ -1143,7 +1143,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 					if( s_bl->type == BL_PC )
 						((TBL_PC*)s_bl)->shadowform_id = 0;
 				} else {
-					status_damage(src, s_bl, damage, 0, clif_damage(s_bl, s_bl, gettick(), 500, 500, damage, -1, 0, 0), 0);
+					status_damage(bl, s_bl, damage, 0, clif_damage(s_bl, s_bl, gettick(), 500, 500, damage, -1, 0, 0), 0);
 					return ATK_NONE;
 				}
 			}
@@ -2822,7 +2822,10 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					RE_LVL_DMOD(100);
 					break;
 				case WM_SEVERE_RAINSTORM_MELEE:
-					skillratio = 50 + 50 * skill_lv;
+					//ATK [{(Caster’s DEX + AGI) x (Skill Level / 5)} x Caster’s Base Level / 100] %
+					skillratio = (sstatus->dex + sstatus->agi) * (skill_lv * 2);
+					RE_LVL_DMOD(100);
+					skillratio /= 10;
 					break;
 				case WM_GREAT_ECHO:
 					skillratio += 800 + 100 * skill_lv;
@@ -3899,9 +3902,13 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case WM_METALICSOUND:
 						skillratio += 120 * skill_lv + 60 * ( sd? pc_checkskill(sd, WM_LESSON) : 10 ) - 100;
 						break;
-					case WM_SEVERE_RAINSTORM:
+					/*case WM_SEVERE_RAINSTORM:
 						skillratio += 50 * skill_lv;
 						break;
+						
+						WM_SEVERE_RAINSTORM just set a unit place,
+						refer to WM_SEVERE_RAINSTORM_MELEE to set the formula.
+					*/
 					case WM_REVERBERATION_MAGIC:
 						// MATK [{(Skill Level x 100) + 100} x Casters Base Level / 100] %
 						skillratio += 100 * (sd ? pc_checkskill(sd, WM_REVERBERATION) : 1);
