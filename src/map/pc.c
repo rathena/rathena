@@ -2175,6 +2175,9 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		val += (int)status->max_sp;
 		status->max_sp = (unsigned int)val;
 		break;
+#ifndef RENEWAL_CAST
+	case SP_VARCASTRATE:
+#endif
 	case SP_CASTRATE:
 		if(sd->state.lr_flag != 2)
 			sd->castrate+=val;
@@ -2948,7 +2951,9 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->skillblown[i].val = val;
 		}
 		break;
-
+#ifndef RENEWAL_CAST
+	case SP_VARCASTRATE:
+#endif
 	case SP_CASTRATE:
 		if(sd->state.lr_flag == 2)
 			break;
