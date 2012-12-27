@@ -4698,9 +4698,8 @@ void clif_deleteskill(struct map_session_data *sd, int id)
 	WFIFOW(fd,0) = 0x441;
 	WFIFOW(fd,2) = id;
 	WFIFOSET(fd,packet_len(0x441));
-#else
-	clif_skillinfoblock(sd);
 #endif
+	clif_skillinfoblock(sd);
 }
 
 
