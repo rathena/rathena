@@ -39,6 +39,10 @@ struct npc_data {
 
 	unsigned size : 2;
 
+	struct status_data status;
+	unsigned int level;
+	unsigned int stat_point;
+
 	void* chatdb; // pointer to a npc_parse struct (see npc_chat.c)
 	char* path;/* path dir */
 	enum npc_subtype subtype;

@@ -1786,6 +1786,7 @@ int status_change_clear_buffs(struct block_list* bl, int type);
 #define status_calc_homunculus(hd, first) status_calc_bl_(&(hd)->bl, SCB_ALL, first)
 #define status_calc_mercenary(md, first) status_calc_bl_(&(md)->bl, SCB_ALL, first)
 #define status_calc_elemental(ed, first) status_calc_bl_(&(ed)->bl, SCB_ALL, first)
+#define status_calc_npc(nd, first) status_calc_bl_(&(nd)->bl, SCB_ALL, first)
 
 void status_calc_bl_(struct block_list *bl, enum scb_flag flag, bool first);
 int status_calc_mob_(struct mob_data* md, bool first);

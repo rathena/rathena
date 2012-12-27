@@ -17254,9 +17254,9 @@ BUILDIN_FUNC(cleanmap)
 		map_foreachinmap(atcommand_cleanfloor_sub, m, BL_ITEM);
 	} else {
 		x0 = script_getnum(st, 3);
-				y0 = script_getnum(st, 4);
-				x1 = script_getnum(st, 5);
-				y1 = script_getnum(st, 6);
+		y0 = script_getnum(st, 4);
+		x1 = script_getnum(st, 5);
+		y1 = script_getnum(st, 6);
 		if (x0 > 0 && y0 > 0 && x1 > 0 && y1 > 0) {
 			map_foreachinarea(atcommand_cleanfloor_sub, m, x0, y0, x1, y1, BL_ITEM);
 		} else {
@@ -17267,7 +17267,54 @@ BUILDIN_FUNC(cleanmap)
 	
 	return 0;
 }
+/* Cast a skill on the attached player.
+ * useskilltopc <skill_id>, <skill_level>, <stat_point>, <npc_level>;
+ * useskilltopc "<skill_name>", <skill_level>, <stat_point>, <npc_level>; */
+BUILDIN_FUNC(useskilltopc)
+{
+	unsigned int skill_id;
+	unsigned short skill_level;
+	unsigned int stat_point;
+	unsigned int npc_level;
+	struct npc_data *nd;
+	struct map_session_data *sd;
 
+	skill_id	= script_isstring(st, 2) ? skill_name2id(script_getstr(st, 2)) : script_getnum(st, 2);
+	skill_level	= script_getnum(st, 3);
+	stat_point	= script_getnum(st, 4);
+	npc_level	= script_getnum(st, 5);
+	sd			= script_rid2sd(st);
+	nd			= (struct npc_data *)map_id2bl(sd->npc_id);
+
+	if (stat_point > battle_config.max_third_parameter) {
+		ShowError("useskilltopc: stat point exceeded maximum of %d.\n",battle_config.max_third_parameter );
+		return 1;
+	}
+	if (npc_level > MAX_LEVEL) {
+		ShowError("useskilltopc: level exceeded maximum of %d.\n", MAX_LEVEL);
+		return 1;
+	}
+	if (sd == NULL || nd == NULL) { //ain't possible, but I don't trust people.
+		return 1;
+	}
+
+	nd->level = npc_level;
+	nd->stat_point = stat_point;
+
+	if (!nd->status.hp) {
+		status_calc_npc(nd, true);
+	} else {
+		status_calc_npc(nd, false);
+	}
+
+	if (skill_get_inf(skill_id)&INF_GROUND_SKILL) {
+		unit_skilluse_pos(&nd->bl, sd->bl.x, sd->bl.y, skill_id, skill_level);
+	} else {
+		unit_skilluse_id(&nd->bl, sd->bl.id, skill_id, skill_level);
+	}
+
+	return 0;
+}
 
 // declarations that were supposed to be exported from npc_chat.c
 #ifdef PCRE_SUPPORT
@@ -17708,9 +17755,10 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(is_function,"s"),
 	BUILDIN_DEF(get_revision,""),
 	BUILDIN_DEF(freeloop,"i"),
-	BUILDIN_DEF(getrandgroupitem, "ii"),
-	BUILDIN_DEF(cleanmap, "s"),
-	BUILDIN_DEF2(cleanmap, "cleanarea", "siiii"),
+	BUILDIN_DEF(getrandgroupitem,"ii"),
+	BUILDIN_DEF(cleanmap,"s"),
+	BUILDIN_DEF2(cleanmap,"cleanarea","siiii"),
+	BUILDIN_DEF(useskilltopc,"viii"),
 	/**
 	 * @commands (script based)
 	 **/
