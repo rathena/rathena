@@ -3296,7 +3296,7 @@ static unsigned short status_calc_ematk(struct block_list *,struct status_change
 void status_calc_regen(struct block_list *bl, struct status_data *status, struct regen_data *regen)
 {
 	struct map_session_data *sd;
-	int val, skill;
+	int val, skill, reg_flag;
 
 	if( !(bl->type&BL_REGEN) || !regen )
 		return;
@@ -3307,7 +3307,9 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 	if( sd && sd->hprecov_rate != 100 )
 		val = val*sd->hprecov_rate/100;
 
-	regen->hp = cap_value(val, 1, SHRT_MAX);
+	reg_flag = bl->type == BL_PC ? 0 : 1;	
+		
+	regen->hp = cap_value(val, reg_flag, SHRT_MAX);
 
 	val = 1 + (status->int_/6) + (status->max_sp/100);
 	if( status->int_ >= 120 )
@@ -3316,7 +3318,7 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 	if( sd && sd->sprecov_rate != 100 )
 		val = val*sd->sprecov_rate/100;
 
-	regen->sp = cap_value(val, 1, SHRT_MAX);
+	regen->sp = cap_value(val, reg_flag, SHRT_MAX);
 
 	if( sd )
 	{
