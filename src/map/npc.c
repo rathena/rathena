@@ -3487,10 +3487,11 @@ void npc_parsesrcfile(const char* filepath, bool runOnInit)
 		if( strcmp(w1,"-") !=0 && strcasecmp(w1,"function") != 0 )
 		{// w1 = <map name>,<x>,<y>,<facing>
 			char mapname[MAP_NAME_LENGTH*2];
+			x = y = 0;
 			sscanf(w1,"%23[^,],%d,%d[^,]",mapname,&x,&y);
-			if( !mapindex_name2id(mapname) || (x < 0 || x >= map[map_mapname2mapid(mapname)].xs || y < 0 || y >= map[map_mapname2mapid(mapname)].ys) )
+			if( !mapindex_name2id(mapname) )
 			{// Incorrect map, we must skip the script info...
-				ShowError("npc_parsesrcfile: Unknown map '%s' or coordinates ('%d', '%d') in file '%s', line '%d'. Skipping line...\n", mapname, x, y, filepath, strline(buffer,p-buffer));
+				ShowError("npc_parsesrcfile: Unknown map '%s' in file '%s', line '%d'. Skipping line...\n", mapname, filepath, strline(buffer,p-buffer));
 				if( strcasecmp(w2,"script") == 0 && count > 3 )
 				{
 					if((p = npc_skip_script(p,buffer,filepath)) == NULL)
@@ -3504,6 +3505,18 @@ void npc_parsesrcfile(const char* filepath, bool runOnInit)
 			m = map_mapname2mapid(mapname);
 			if( m < 0 )
 			{// "mapname" is not assigned to this server, we must skip the script info...
+				if( strcasecmp(w2,"script") == 0 && count > 3 )
+				{
+					if((p = npc_skip_script(p,buffer,filepath)) == NULL)
+					{
+						break;
+					}
+				}
+				p = strchr(p,'\n');// next line
+				continue;
+			}
+			if (x < 0 || x >= map[m].xs || y < 0 || y >= map[m].ys) {
+				ShowError("npc_parsesrcfile: Unknown coordinates ('%d', '%d') for map '%s' in file '%s', line '%d'. Skipping line...\n", x, y, mapname, filepath, strline(buffer,p-buffer));
 				if( strcasecmp(w2,"script") == 0 && count > 3 )
 				{
 					if((p = npc_skip_script(p,buffer,filepath)) == NULL)
