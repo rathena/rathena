@@ -4,7 +4,7 @@
 //= Darkchild (1.1)
 //= Playtester (1.2)
 //===== Current Version: =====================================
-//= 2.9
+//= 2.9a
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -44,6 +44,7 @@
 //= 2.7 Removed Morroc Inns as per episode 12.1. [L0ne_W0lf]
 //= 2.8 Removed Moscovia Inn; Its in quests/quest_moscovia.txt [Kisuka]
 //= 2.9 Added switch menus, updated to match AEGIS scripts. [Kisuka]
+//= 2.9a Added 'npcskill' command. [Euphy]
 //============================================================
 
 
@@ -147,8 +148,7 @@ lhz_in02,230,284,4	script	Hotel Employee#01	86,{
 		close2;
 		warp "lhz_in02",219,150;
 		percentheal 100,100;
-		sc_start SC_BLESSING,240000,10;
-		skilleffect AL_BLESSING,0;
+		npcskill "AL_BLESSING",10,99,99;
 		end;
 	case 3:
 		mes "[Hotel Employee]";

@@ -17,7 +17,8 @@
 //= 1.4 Misc. updates. [L0ne_W0lf]
 //============================================================ 
 
-//=================================================Thief Trainer====================================================
+// Thief Trainer
+//============================================================
 moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 	mes "[Yierhan]";
 	if(Class == Job_Novice){
@@ -68,7 +69,6 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 				mes "Yeah, right now!";
 				mes "But if you're not ready for some reason, I guess I can wait.";
 				close;
-				break;
 			}
 			mes "[Yierhan]";
 			mes "Alright, first of all, Thieves use melee attacks. Well, most of us do. There are a few who like using long range Bows. But all of us are good at bein' fast!";
@@ -91,7 +91,6 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 				getexp 20,10;
 				specialeffect2 EF_HIT5;
 				close;
-				break;
 			case 2:
 				mes "[Yierhan]";
 				mes "Yeah, that's right! If you wanna increase your damage, you need";
@@ -108,7 +107,6 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 				getexp 40,20;
 				specialeffect2 EF_HIT5;
 				close;
-				break;
 			case 3:
 				mes "[Yierhan]";
 				mes "Say whaaat? ^23238EDEX^000000 affects";
@@ -124,7 +122,6 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 				getexp 20,10;
 				specialeffect2 EF_HIT5;
 				close;
-				break;
 			}
 		} else if(tu_thief01 == 1){
 			mes "Alright, enough about stats.";
@@ -350,7 +347,6 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 						getexp 30,10;
 					}
 					close;
-					break;
 				}
 			}
 		} else if(tu_thief01 == 4){
@@ -427,7 +423,6 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 						getexp 100,50;
 						specialeffect2 EF_HIT5;
 						close;
-						break;
 					case 2:
 						mes "[Yierhan]";
 						mes "Good!";
@@ -438,7 +433,6 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 						getexp 50,20;
 						specialeffect2 EF_HIT5;
 						close;
-						break;
 					}
 				} else {
 					switch(select("It was nice to meet you.:Nope.")) {
@@ -458,7 +452,6 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 						getexp 50,20;
 						specialeffect2 EF_HIT5;
 						close;
-						break;
 					case 2:
 						mes "[Yierhan]";
 						mes "Good!";
@@ -469,7 +462,6 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 						getexp 50,20;
 						specialeffect2 EF_HIT5;
 						close;
-						break;
 					}
 				}
 			}
@@ -552,7 +544,6 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 				mes "[Yierhan]";
 				mes "Ah, gotcha. Well, that's understandable. I mean, these things take time, you know?";
 				close;
-				break;
 			case 2:
 				mes "[Yierhan]";
 				mes "Yeah...?";
@@ -560,7 +551,6 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 				mes "I guess these kinds of things require patience. And thinking.";
 				mes "You know, things I'm horrible at.";
 				close;
-				break;
 			case 3:
 				mes "[Yierhan]";
 				mes "Alright...!";
@@ -599,7 +589,6 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 				set Zeny, Zeny + 5000;
 				getexp 800,300;
 				close;
-				break;
 			}
 		} else {
 			mes "[Yierhan]";
@@ -612,7 +601,7 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 			next;
 			mes "[Yierhan]";
 			mes "I just like telling people to follow their dreams. So do it. Life without anything to look forward to is pretty boring, doncha think?";
-			close2;
+			close;
 		}
 	} else if(Class == Job_Mage || Class == Job_Mage_High || Class == Job_Wizard || Class == Job_High_Wizard || Class == Job_Sage || Class == Job_Professor){
 		if(tu_magician01 < 7){
@@ -724,8 +713,7 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 				set tu_magician01, 27;
 				set Zeny, Zeny + 5000;
 				getexp 500,200;
-				close2;
-				break;
+				close;
 			}
 		} else {
 			mes "Just as I thought,";

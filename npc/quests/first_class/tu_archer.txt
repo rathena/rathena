@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Fix up by Jukka
 //===== Current Version: ===================================== 
-//= 1.9
+//= 1.9a
 //===== Compatible With: ===================================== 
 //= rAthena SVN (Testet in Trunk 88xx)
 //===== Description: ========================================= 
@@ -20,10 +20,11 @@
 //= 1.7 Added 10.3 dialog and moved Arpesto to hunter skill quest. [Kisuka]
 //= 1.8 Updated slightly, removed additional emotions from Reiden. [L0ne_W0lf]
 //= 1.9 Misc. updates. [L0ne_W0lf]
+//= 1.9a Added 'npcskill' command. [Euphy]
 //============================================================ 
 
-
-//=================================================Bard Jet====================================================
+// Bard Jet
+//============================================================
 payon_in02,67,65,3	script	Bard Jet#tu	51,{
 	mes "[Jet]";
 	mes "Every god never grows old";
@@ -158,7 +159,8 @@ payon_in02,67,65,3	script	Bard Jet#tu	51,{
 	close;
 }
 
-//=================================================Sign====================================================
+// Sign
+//============================================================
 pay_arche,127,154,4	script	Sign#arc	835,{
 	mes " ";
 	mes " Archer Job Change Office ---> ";
@@ -167,7 +169,8 @@ pay_arche,127,154,4	script	Sign#arc	835,{
 	close;
 }
 
-//=================================================Master Kavaruk====================================================
+// Master Kavaruk
+//============================================================
 payon_in02,54,13,3	script	Master Kavaruk	55,{
 	mes "[Master Kavaruk]";
 	mes "Hello, young one.";
@@ -366,7 +369,6 @@ payon_in02,54,13,3	script	Master Kavaruk	55,{
 				mes "extremely capable. I believe";
 				mes "that you can learn much from her.";
 				close;
-				break;
 			case 2:
 				mes "[Master Kavaruk]";
 				mes "Ah, I see. Well,";
@@ -375,7 +377,6 @@ payon_in02,54,13,3	script	Master Kavaruk	55,{
 				mes "ever change your mind, feel";
 				mes "free to come back.";
 				close;
-				break;
 			}
 		} else if(tu_archer01 == 1 || tu_archer01 == 2){
 			mes "Hmm...?";
@@ -411,7 +412,8 @@ payon_in02,54,13,3	script	Master Kavaruk	55,{
 	close;
 }
 
-//=================================================Reidin Corse====================================================
+// Reidin Corse
+//============================================================
 pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 	mes "[Reidin Corse]";
 	if(MaxWeight - Weight < 2000){
@@ -445,7 +447,6 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 				mes "to ask me? You had";
 				mes "that look, you know?";
 				close;
-				break;
 			}
 			mes "[Reidin Corse]";
 			mes "Fine. I'm an incredibly";
@@ -477,7 +478,6 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 				mes "back, I'll reconsider";
 				mes "teaching you.";
 				close;
-				break;
 			}
 			mes "[Reidin Corse]";
 			mes "Let's see...";
@@ -577,7 +577,6 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 							close2;
 							warp "morocc",156,46;
 							end;
-							break;
 						case 2:
 							mes "[Reidin Corse]";
 							mes "Hm...?";
@@ -586,9 +585,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 							mes "do whatever it is you";
 							mes "need to do...";
 							close;
-							break;
 						}
-						break;
 					case 2:
 						emotion e_an;
 						mes "[Reidin Corse]";
@@ -598,7 +595,6 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 						mes "you come here, you better";
 						mes "know Level 3 Owl's Eye!";
 						close;
-						break;
 					}
 
 				} else {
@@ -617,7 +613,6 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 				mes "teach you all my";
 				mes "archery secrets!";
 				close;
-				break;
 			}
 		} else if(tu_archer01 == 6){
 			set .@owl, getskilllv(43);
@@ -745,14 +740,12 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 					close2;
 					warp "geffen",120,39;
 					end;
-					break;
 				case 2:
 					mes "[Reidin Corse]";
 					mes "You still need";
 					mes "to get ready?";
 					mes "Hurry it up!";
 					close;
-					break;
 				}
 			} else {
 				mes "Eh?";
@@ -785,14 +778,12 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 					close2;
 					warp "geffen",120,39;
 					end;
-					break;
 				case 2:
 					mes "[Reidin Corse]";
 					mes "You still need";
 					mes "to get ready?";
 					mes "Hurry it up!";
 					close;
-					break;
 				}
 			} else {
 				mes "Ah, so you've learned";
@@ -1096,7 +1087,8 @@ pay_arche,103,165,5	script	Reidin Corse#tu	832,{
 	close;
 }
 
-//=================================================Seisner====================================================
+// Seisner
+//============================================================
 pay_arche,84,139,3	script	Seisner	727,{
 	specialeffect EF_HIT2,"#Target";
 	mes "[Seisner]";
@@ -1273,7 +1265,6 @@ pay_arche,84,139,3	script	Seisner	727,{
 				mes "[Seisner]";
 				mes "Someday, I'd like to become a great Archer and use my skills for the good of Rune-Midgard.";
 				close;
-				break;
 			}
 		}
 	} else if(tu_archer01 == 2){
@@ -1302,10 +1293,12 @@ pay_arche,84,139,3	script	Seisner	727,{
 	close;
 }
 
-//=================================================Target====================================================
+// Target
+//============================================================
 pay_arche,76,135,3	script	Target#Target	111,{ end; }	// empty NPC?? [Jukka]
 
-//=================================================Acolyte====================================================
+// Acolyte
+//============================================================
 pay_fild08,40,83,5	script	Acolyte#tu	95,{
 	mes "[Acolyte]";
 	if(tu_archer01 == 14){
@@ -1340,7 +1333,6 @@ pay_fild08,40,83,5	script	Acolyte#tu	95,{
 				mes "I''ll try my very best!";
 				set tu_archer01, 15;
 				close;
-				break;
 			case 2:
 				mes "[Acolyte]";
 				mes "Oh... Oh.";
@@ -1350,7 +1342,6 @@ pay_fild08,40,83,5	script	Acolyte#tu	95,{
 				mes "that's alright...";
 				emotion e_sob;
 				close;
-				break;
 			case 3:
 				mes "[Acolyte]";
 				mes "Eh?!";
@@ -1380,7 +1371,6 @@ pay_fild08,40,83,5	script	Acolyte#tu	95,{
 					set tu_archer01, 15;
 					close;
 				}
-				break;
 			}
 			end;
 		} else {
@@ -1393,32 +1383,21 @@ pay_fild08,40,83,5	script	Acolyte#tu	95,{
 			mes "Wait, I know...";
 			mes "Y-you're... ^666666*Yawn*^000000";
 			mes "So sleepy. Take this for now...";
-			set .@kurae_heal, rand(1,4);
-			if(.@kurae_heal == 1){
-				unitskilluseid getcharid(3),28,3;
-			} else if(.@kurae_heal == 2){
-				unitskilluseid getcharid(3),28,9;
-			} else if(.@kurae_heal == 3){
-				unitskilluseid getcharid(3),28,10;
-			} else if(.@kurae_heal == 4){
+			switch(rand(4)) {
+				case 0: npcskill "AL_HEAL",3,90,62; break;
+				case 1: npcskill "AL_HEAL",9,90,62; break;
+				case 2: npcskill "AL_HEAL",8,90,62; break;
+				case 3: break;
 			}
-
-			set .@kurae_agi, rand(1,3);
-			if(.@kurae_agi == 1){
-				unitskilluseid getcharid(3),29,0;
-			} else if(.@kurae_agi == 2){
-				unitskilluseid getcharid(3),29,5;
-			} else if(.@kurae_agi == 3){
-				unitskilluseid getcharid(3),29,10;
+			switch(rand(3)) {
+				case 0: npcskill "AL_INCAGI",1,0,0; break;
+				case 1: npcskill "AL_INCAGI",5,0,0; break;
+				case 2: npcskill "AL_INCAGI",10,0,0; break;
 			}
-
-			set .@kurae_bls, rand(1,3);
-			if(.@kurae_bls == 1){
-				unitskilluseid getcharid(3),34,0;
-			} else if(.@kurae_bls == 2){
-				unitskilluseid getcharid(3),34,5;
-			} else if(.@kurae_bls == 3){
-				unitskilluseid getcharid(3),34,10;
+			switch(rand(3)) {
+				case 0: npcskill "AL_BLESSING",1,0,0; break;
+				case 1: npcskill "AL_BLESSING",5,0,0; break;
+				case 2: npcskill "AL_BLESSING",10,0,0; break;
 			}
 			close;
 		}
@@ -1439,64 +1418,29 @@ pay_fild08,40,83,5	script	Acolyte#tu	95,{
 			mes "^666666Zzzz^000000--Oooh!";
 			mes "J-just take this before";
 			mes "I fall asleep again~! ^666666*Yawn*^000000";
-
-			set .@kurae_heal, rand(1,4);
-			if(.@kurae_heal == 1){
-				unitskilluseid getcharid(3),28,3;
-			} else if(.@kurae_heal == 2){
-				unitskilluseid getcharid(3),28,10;
-			} else if(.@kurae_heal == 3){
-				unitskilluseid getcharid(3),28,8;
-			}
-
-			set .@kurae_agi, rand(1,3);
-			if(.@kurae_agi == 1){
-				unitskilluseid getcharid(3),29,0;
-			} else if(.@kurae_agi == 2){
-				unitskilluseid getcharid(3),29,5;
-			} else if(.@kurae_agi == 3){
-				unitskilluseid getcharid(3),29,10;
-			}
-
-			set .@kurae_bls, rand(1,3);
-			if(.@kurae_bls == 1){
-				unitskilluseid getcharid(3),34,0;
-			} else if(.@kurae_bls == 2){
-				unitskilluseid getcharid(3),34,5;
-			} else if(.@kurae_bls == 3){
-				unitskilluseid getcharid(3),34,10;
-			}
-			close;
 		} else {
 			mes "Okay~!";
 			mes "Let me try";
 			mes "casting a spell";
 			mes "to help you! Yaa~p!";
-
-			set .@kurae_heal, rand(1,3);
-			if(.@kurae_heal == 1){
-				unitskilluseid getcharid(3),28,3;
-			} else if(.@kurae_heal == 2){
-				unitskilluseid getcharid(3),28,10;
-			} else if(.@kurae_heal == 3){
-				unitskilluseid getcharid(3),28,8;
-			}
-
-			set .@kurae_agi, rand(1,2);
-			if(.@kurae_agi == 1){
-				unitskilluseid getcharid(3),29,10;
-			} else if(.@kurae_agi == 2){
-				unitskilluseid getcharid(3),29,5;
-			}
-
-			set .@kurae_bls, rand(1,2);
-			if(.@kurae_bls == 1){
-				unitskilluseid getcharid(3),34,10;
-			} else if(.@kurae_bls == 2){
-				unitskilluseid getcharid(3),34,5;
-			}
-			close;
 		}
+		switch(rand(4)) {
+			case 0: npcskill "AL_HEAL",3,90,62; break;
+			case 1: npcskill "AL_HEAL",10,90,62; break;
+			case 2: npcskill "AL_HEAL",8,90,62; break;
+			case 3: break;
+		}
+		switch(rand(3)) {
+			case 0: npcskill "AL_INCAGI",1,0,0; break;
+			case 1: npcskill "AL_INCAGI",5,0,0; break;
+			case 2: npcskill "AL_INCAGI",10,0,0; break;
+		}
+		switch(rand(3)) {
+			case 0: npcskill "AL_BLESSING",1,0,0; break;
+			case 1: npcskill "AL_BLESSING",5,0,0; break;
+			case 2: npcskill "AL_BLESSING",10,0,0; break;
+		}
+		close;
 	}
 	mes "...";
 	mes "W-why does";
@@ -1507,7 +1451,8 @@ pay_fild08,40,83,5	script	Acolyte#tu	95,{
 	close;
 }
 
-//=================================================Alchemist Guildmember====================================================
+// Alchemist Guildmember
+//============================================================
 pay_arche,130,113,3	script	Alchemist Guildmember#tu	740,{
 	mes "[Alchemist Guildmember]";
 	if(tu_archer02 > 0){
@@ -1550,7 +1495,6 @@ pay_arche,130,113,3	script	Alchemist Guildmember#tu	740,{
 				}
 				set Zeny,Zeny+.@total_zeny;
 				close;
-				break;
 			case 2:
 				mes "[Alchemist Guildmember]";
 				mes "Seriously...";
@@ -1558,7 +1502,6 @@ pay_arche,130,113,3	script	Alchemist Guildmember#tu	740,{
 				mes "The Alchemist Guild really needs lots of new supplies to keep our Flora field running!";
 				emotion e_sob;
 				close;
-				break;
 			}
 		} else {
 			mes "I don't know if you've heard";
@@ -1582,7 +1525,8 @@ pay_arche,130,113,3	script	Alchemist Guildmember#tu	740,{
 	close;
 }
 
-//=================================================Arthail====================================================
+// Arthail
+//============================================================
 prontera,126,335,5	script	Arthail	51,{
 	mes "[Arthail]";
 	if(tu_archer02 < 3){
@@ -1724,8 +1668,7 @@ prontera,126,335,5	script	Arthail	51,{
 		mes "I'd better go check";
 		mes "this out on my own.";
 		set tu_archer02, 5;
-		close2;
-		end;
+		close;
 
 	} else if(tu_archer02 > 4 && tu_archer02 < 7){
 		mes "^333333Zzzzz...^000000";
@@ -1756,16 +1699,15 @@ prontera,126,335,5	script	Arthail	51,{
 		mes "have a song that";
 		mes "I can share with you.";
 		set tu_archer02, 9;
-		close2;
-		end;
+		close;
 	}
 	mes "...";
 	mes "......";
-	close2;
-	end;
+	close;
 }
 
-//=================================================New Guild Master====================================================
+// New Guild Master
+//============================================================
 prontera,167,281,3	script	New Guild Master#tu	753,{
 	mes "[New Guild Master]";
 	mes "Hearken, all";
@@ -1787,7 +1729,8 @@ prontera,167,281,3	script	New Guild Master#tu	753,{
 	close;
 }
 
-//=================================================Mage====================================================
+// Mage
+//============================================================
 prontera,144,301,5	script	Mage#tu	123,{
 	mes "[Mage]";
 	mes "Did you see that";
@@ -1814,7 +1757,8 @@ prontera,144,301,5	script	Mage#tu	123,{
 	close;
 }
 
-//=================================================Minister====================================================
+// Minister
+//============================================================
 prt_castle,76,165,6	script	Minister#tu	55,{
 	mes "[Minister]";
 	mes "The royal family";
@@ -1873,7 +1817,8 @@ prt_castle,76,165,6	script	Minister#tu	55,{
 	close;
 }
 
-//=================================================Range NPC====================================================
+// Range NPC
+//============================================================
 prt_castle,94,150,4	script	#sound_tu	139,6,6,{
 OnTouch_:
 	if(tu_archer02 == 6) {
@@ -1887,7 +1832,8 @@ OnTouch_:
 	end;
 }
 
-//=================================================Bishop Maugins====================================================
+// Bishop Maugins
+//============================================================
 monk_in,19,43,1	script	Bishop Maugins	60,{
 	mes "[Bishop Maugins]";
 	if(tu_archer02 == 7){
@@ -1922,8 +1868,8 @@ monk_in,19,43,1	script	Bishop Maugins	60,{
 		mes "Good luck on";
 		mes "your journeys,";
 		mes "brave adventurer.";
-		unitskilluseid getcharid(3),29,10;
-		unitskilluseid getcharid(3),34,10;
+		npcskill "AL_INCAGI",10,0,0;
+		npcskill "AL_BLESSING",10,0,0;
 		close;
 	}
 	mes "I'm sorry, but I have";

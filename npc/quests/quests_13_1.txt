@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.6
+//= 2.6a
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -44,6 +44,7 @@
 //= 2.5 Yet more optimization (-22kb). [Euphy]
 //= 2.5a Minor fixes. [Euphy]
 //= 2.6 Disabled "Ash Vacuum Warper" as it's no longer in iRO. [Euphy]
+//= 2.6a Added 'npcskill' command. [Euphy]
 //============================================================ 
 
 // Onward to the New World
@@ -8545,8 +8546,7 @@ mid_camp,69,144,0	script	Ferocious Gorurug	421,{
 			}
 		}
 		else if ((ep13_yong1 > 59) && (ep13_yong1 < 300)) {
-			skilleffect "AL_HEAL",816;
-			heal 816,0;
+			npcskill "AL_HEAL",8,50,50;
 			if (countitem(6039) > 9) {
 				mes "[Ferocious Gorurug]";
 				mes "You've brough Pieces of Fish!";

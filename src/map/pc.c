@@ -7231,6 +7231,17 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 	sd->class_ = (unsigned short)b_class;
 	sd->status.job_level=1;
 	sd->status.job_exp=0;
+
+	if (sd->status.base_level > pc_maxbaselv(sd)) {
+		sd->status.base_level = pc_maxbaselv(sd);
+		sd->status.base_exp=0;
+		pc_resetstate(sd);
+		clif_updatestatus(sd,SP_STATUSPOINT);
+		clif_updatestatus(sd,SP_BASELEVEL);
+		clif_updatestatus(sd,SP_BASEEXP);
+		clif_updatestatus(sd,SP_NEXTBASEEXP);
+	}
+
 	clif_updatestatus(sd,SP_JOBLEVEL);
 	clif_updatestatus(sd,SP_JOBEXP);
 	clif_updatestatus(sd,SP_NEXTJOBEXP);

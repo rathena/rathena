@@ -17268,9 +17268,9 @@ BUILDIN_FUNC(cleanmap)
 	return 0;
 }
 /* Cast a skill on the attached player.
- * useskilltopc <skill_id>, <skill_level>, <stat_point>, <npc_level>;
- * useskilltopc "<skill_name>", <skill_level>, <stat_point>, <npc_level>; */
-BUILDIN_FUNC(useskilltopc)
+ * npcskill <skill id>, <skill lvl>, <stat point>, <NPC level>;
+ * npcskill "<skill name>", <skill lvl>, <stat point>, <NPC level>; */
+BUILDIN_FUNC(npcskill)
 {
 	unsigned int skill_id;
 	unsigned short skill_level;
@@ -17287,11 +17287,11 @@ BUILDIN_FUNC(useskilltopc)
 	nd			= (struct npc_data *)map_id2bl(sd->npc_id);
 
 	if (stat_point > battle_config.max_third_parameter) {
-		ShowError("useskilltopc: stat point exceeded maximum of %d.\n",battle_config.max_third_parameter );
+		ShowError("npcskill: stat point exceeded maximum of %d.\n",battle_config.max_third_parameter );
 		return 1;
 	}
 	if (npc_level > MAX_LEVEL) {
-		ShowError("useskilltopc: level exceeded maximum of %d.\n", MAX_LEVEL);
+		ShowError("npcskill: level exceeded maximum of %d.\n", MAX_LEVEL);
 		return 1;
 	}
 	if (sd == NULL || nd == NULL) { //ain't possible, but I don't trust people.
@@ -17758,7 +17758,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getrandgroupitem,"ii"),
 	BUILDIN_DEF(cleanmap,"s"),
 	BUILDIN_DEF2(cleanmap,"cleanarea","siiii"),
-	BUILDIN_DEF(useskilltopc,"viii"),
+	BUILDIN_DEF(npcskill,"viii"),
 	/**
 	 * @commands (script based)
 	 **/

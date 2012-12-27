@@ -16,8 +16,8 @@
 //= 1.3 Misc. updates. [L0ne_W0lf]
 //============================================================ 
 
-
-//=================================================Guarnien====================================================
+// Guarnien
+//============================================================
 alberta_in,70,51,5	script	Guarnien	98,{
 	mes "[Guarnien]";
 	if(Class != Job_Merchant && Class != Job_Baby_Merchant){
@@ -48,7 +48,6 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "If you can be sincerely kind to everyone that you meet, you'll";
 		mes "have no problem.";
 		close;
-		break;
 	case 16:
 		mes "So...";
 		mes "How much have";
@@ -93,7 +92,6 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "the mood strikes you.";
 		mes "Good luck to you~";
 		close;
-		break;
 	case 15:
 		mes "I believe it's time";
 		mes "for my final lecture.";
@@ -140,7 +138,6 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			set tu_merchant, 17;
 			completequest 8239;
 			getexp 199,69;
-
 			next;
 		} else {
 			mes "[Guarnien]";
@@ -166,7 +163,6 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "the mood strikes you.";
 		mes "Good luck to you~";
 		close;
-		break;
 	case 14:
 		mes "So, have you";
 		mes "learned Push Cart up";
@@ -208,7 +204,6 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "Cart skill. I hope that helps.";
 			close;
 		}
-		break;
 	case 13:
 		mes "Now to talk about";
 		mes "^871F78Push Cart^000000. First off, you need to know Level 5 Increase Weight Limit before you can even learn the Push Cart skill.";
@@ -252,7 +247,6 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			erasequest 8237;
 			setquest 8238;
 			getexp 186,60;
-
 			next;
 			mes "[Guarnien]";
 			mes "Next time, I'll talk about the skill that sets Merchants apart from all the other classes: ^871F78Vending^000000. So don't miss it!";
@@ -267,7 +261,6 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			set tu_merchant, 14;
 			close;
 		}
-		break;
 	case 12:
 		mes "So...";
 		mes "How is it going";
@@ -312,7 +305,6 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "There's no rush, but I won't be able to lecture on anything until you finish this little task.";
 			close;
 		}
-		break;
 	case 11:
 		mes "Ah, ready to";
 		mes "learn already,";
@@ -365,7 +357,6 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "Do your best~";
 			close;
 		}
-		break;
 	case 10:
 		mes "Let me see those";
 		mes "Red Potions. Now,";
@@ -386,7 +377,6 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "Now, why don't you go to Prontera and try to buy 10 Red Potions from an NPC for the cheapest price again?";
 		set tu_merchant, rand(6,8);
 		close;
-		break;
 	case 9:
 		mes "Let me see those";
 		mes "Red Potions. Ah, it seems you researched the market and bought the cheapest ones! Great work!";
@@ -398,7 +388,6 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "Alright, next time, we'll talk about the skill that you can learn after knowing how to Discount:";
 		mes "^871F78Over Charge^000000.";
 		close;
-		break;
 	case 6:
 	case 7:
 	case 8:
@@ -412,7 +401,6 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "[Guarnien]";
 		mes "First, you'll probably want to research the market price for Red Potions. And always, be careful of scammers and cheats!";
 		close;
-		break;
 	case 5:
 		mes "Alright...";
 		mes "I've given it some thought and I've come up with a little challenge for you. Bring me... 10 Red Potions!";
@@ -433,7 +421,6 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		set tu_merchant, rand(6,8);
 		warp "prontera",155,46;
 		end;
-		break;
 	case 4:
 		mes "So, how is it going with learning the Discount skill? Like I always say, if you can't make a bargain, you can't be a Merchant!";
 		next;
@@ -467,7 +454,6 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "Well, you should be able to reach that goal soon. After all, it's one of the basics of being a Merchant!";
 			close;
 		}
-		break;
 	case 3:
 		mes "Ah, you're back!";
 		mes "Now, I was going";
@@ -525,7 +511,6 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			setquest 8232;
 			close;
 		}
-		break;
 	case 2:
 		mes "Ah, you've come back to learn more. Let's see, what was I going to tell you about... Right, Mammonite!";
 		next;
@@ -560,7 +545,6 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			setquest 8231;
 			close;
 		}
-		break;
 	case 1:
 		mes "So...";
 		mes "Did you learn the";
@@ -690,8 +674,9 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		close;
 	}
 }
-	
-//=================================================Sagle====================================================
+
+// Sagle
+//============================================================
 prontera,66,111,3	script	Sagle	82,{
 	mes "[Sagle]";
 	if(tu_merchant == 8){
@@ -731,7 +716,6 @@ prontera,66,111,3	script	Sagle	82,{
 				getitem 501,10; //Red_Potion
 				close;
 			}
-			break;
 		case 2:
 			mes "[Sagle]";
 			mes "Alright...";
@@ -740,7 +724,6 @@ prontera,66,111,3	script	Sagle	82,{
 			mes "these potions";
 			mes "are sold out!";
 			close;
-			break;
 		}
 	}
 	if(tu_merchant == 7){
@@ -781,7 +764,6 @@ prontera,66,111,3	script	Sagle	82,{
 				getitem 501,10; //Red_Potion
 				close;
 			}
-			break;
 		case 2:
 			mes "[Sagle]";
 			mes "Alright...";
@@ -790,7 +772,6 @@ prontera,66,111,3	script	Sagle	82,{
 			mes "these potions";
 			mes "are sold out!";
 			close;
-			break;
 		}
 	}
 	if(tu_merchant == 6){
@@ -830,7 +811,6 @@ prontera,66,111,3	script	Sagle	82,{
 				getitem 501,10; //Red_Potion
 				close;
 			}
-			break;
 		case 2:
 			mes "[Sagle]";
 			mes "Alright...";
@@ -839,7 +819,6 @@ prontera,66,111,3	script	Sagle	82,{
 			mes "these potions";
 			mes "are sold out!";
 			close;
-			break;
 		}
 	}
 	mes "It's on the tip";
@@ -855,7 +834,8 @@ prontera,66,111,3	script	Sagle	82,{
 	close;
 }
 
-//=================================================Kellion====================================================
+// Kellion
+//============================================================
 prontera,93,330,3	script	Kellion	97,{
 	mes "[Kellion]";
 	if(tu_merchant == 8){
@@ -888,7 +868,6 @@ prontera,93,330,3	script	Kellion	97,{
 				getitem 569,10; //Novice_Potion
 				close;
 			}
-			break;
 		case 2:
 			mes "[Kellion]";
 			mes "Well, I'm sorry";
@@ -896,7 +875,6 @@ prontera,93,330,3	script	Kellion	97,{
 			mes "I guess I'll see";
 			mes "you later.";
 			close;
-			break;
 		}
 	}
 	if(tu_merchant == 7){
@@ -929,7 +907,6 @@ prontera,93,330,3	script	Kellion	97,{
 				getitem 501,10; //Red_Potion
 				close;
 			}
-			break;
 		case 2:
 			mes "[Kellion]";
 			mes "Well, I'm sorry";
@@ -937,7 +914,6 @@ prontera,93,330,3	script	Kellion	97,{
 			mes "I guess I'll see";
 			mes "you later.";
 			close;
-			break;
 		}
 	}
 	if(tu_merchant == 6){
@@ -970,7 +946,6 @@ prontera,93,330,3	script	Kellion	97,{
 				getitem 501,10; //Red_Potion
 				close;
 			}
-			break;
 		case 2:
 			mes "[Kellion]";
 			mes "Well, I'm sorry";
@@ -978,7 +953,6 @@ prontera,93,330,3	script	Kellion	97,{
 			mes "I guess I'll see";
 			mes "you later.";
 			close;
-			break;
 		}
 	}
 	mes "Recently, I hear that something";
@@ -994,7 +968,8 @@ prontera,93,330,3	script	Kellion	97,{
 	close;
 }
 	
-//=================================================Aigie====================================================
+// Aigie
+//============================================================
 prt_in,169,11,3	script	Aigie	92,{
 	if(tu_merchant == 8){
 		mes "[Aigie]";
@@ -1031,7 +1006,6 @@ prt_in,169,11,3	script	Aigie	92,{
 				getitem 501,10; //Red_Potion
 				close;
 			}
-			break;
 		case 2:
 			mes "[Aigie]";
 			mes "I understand.";
@@ -1040,7 +1014,6 @@ prt_in,169,11,3	script	Aigie	92,{
 			mes "you a really good price.";
 			mes "^666666*Sniff Sniff*^000000";
 			close;
-			break;
 		}
 	}
 	if(tu_merchant == 7){
@@ -1078,7 +1051,6 @@ prt_in,169,11,3	script	Aigie	92,{
 				getitem 501,10; //Red_Potion
 				close;
 			}
-			break;
 		case 2:
 			mes "[Aigie]";
 			mes "I understand.";
@@ -1087,7 +1059,6 @@ prt_in,169,11,3	script	Aigie	92,{
 			mes "you a really good price.";
 			mes "^666666*Sniff Sniff*^000000";
 			close;
-			break;
 		}
 	}
 	if(tu_merchant == 6){
@@ -1125,7 +1096,6 @@ prt_in,169,11,3	script	Aigie	92,{
 				getitem 569,10; //Novice_Potion
 				close;
 			}
-			break;
 		case 2:
 			mes "[Aigie]";
 			mes "I understand.";
@@ -1134,7 +1104,6 @@ prt_in,169,11,3	script	Aigie	92,{
 			mes "you a really good price.";
 			mes "^666666*Sniff Sniff*^000000";
 			close;
-			break;
 		}
 	}
 	mes "[Aigie]";
@@ -1145,7 +1114,8 @@ prt_in,169,11,3	script	Aigie	92,{
 	close;
 }
 	
-//=================================================Jayon====================================================
+// Jayon
+//============================================================
 prontera,247,129,3	script	Jayon	85,{
 	if(tu_merchant == 8){
 		mes "[Jayon]";
@@ -1181,7 +1151,6 @@ prontera,247,129,3	script	Jayon	85,{
 				getitem 501,10; //Red_Potion
 				close;
 			}
-			break;
 		case 2:
 			mes "[Jayon]";
 			mes "Just looking";
@@ -1191,7 +1160,6 @@ prontera,247,129,3	script	Jayon	85,{
 			mes "advantage of a real";
 			mes "deal when you see one!";
 			close;
-			break;
 		}
 	}
 
@@ -1229,7 +1197,6 @@ prontera,247,129,3	script	Jayon	85,{
 				getitem 501,10; //Red_Potion
 				close;
 			}
-			break;
 		case 2:
 			mes "[Jayon]";
 			mes "Just looking";
@@ -1240,7 +1207,6 @@ prontera,247,129,3	script	Jayon	85,{
 			mes "deal when you see one!";
 			close2;
 			end;
-			break;
 		}
 	}
 
@@ -1278,7 +1244,6 @@ prontera,247,129,3	script	Jayon	85,{
 				getitem 501,10; //Red_Potion
 				close;
 			}
-			break;
 		case 2:
 			mes "[Jayon]";
 			mes "Just looking";
@@ -1288,7 +1253,6 @@ prontera,247,129,3	script	Jayon	85,{
 			mes "advantage of a real";
 			mes "deal when you see one!";
 			close;
-			break;
 		}
 	}
 
@@ -1302,7 +1266,8 @@ prontera,247,129,3	script	Jayon	85,{
 	close;
 }
 
-//=================================================Maos====================================================
+// Maos
+//============================================================
 prt_in,251,129,3	script	Maos	709,{
 	if(tu_merchant == 8){
 		mes "[Maos]";
@@ -1334,12 +1299,10 @@ prt_in,251,129,3	script	Maos	709,{
 				getitem 501,10; //Red_Potion
 				close;
 			}
-			break;
 		case 2:
 			mes "[Maos]";
 			mes "Well, I can't force you to buy these, but I'm telling you that you're passing up a real bargain!";
 			close;
-			break;
 		}
 	}
 	if(tu_merchant == 7){
@@ -1371,12 +1334,10 @@ prt_in,251,129,3	script	Maos	709,{
 				getitem 501,10; //Red_Potion
 				close;
 			}
-			break;
 		case 2:
 			mes "[Maos]";
 			mes "Well, I can't force you to buy these, but I'm telling you that you're passing up a real bargain!";
 			close;
-			break;
 		}
 	}
 	if(tu_merchant == 6){
@@ -1408,12 +1369,10 @@ prt_in,251,129,3	script	Maos	709,{
 				getitem 501,10; //Red_Potion
 				close;
 			}
-			break;
 		case 2:
 			mes "[Maos]";
 			mes "Well, I can't force you to buy these, but I'm telling you that you're passing up a real bargain!";
 			close;
-			break;
 		}
 	}
 	mes "[Maos]";

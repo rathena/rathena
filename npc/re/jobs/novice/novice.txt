@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Kisuka
 //===== Current Version: =====================================
-//= 1.4
+//= 1.4a
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -15,6 +15,7 @@
 //= 1.2 Cleaning. [Euphy]
 //= 1.3 Fixed Eden Group Officer's level requirement. [Joseph]
 //= 1.4 Fixed checkquest to check quest accordingly. [Joseph]
+//= 1.4a Added 'npcskill' command. [Euphy]
 //============================================================
 
 // Sprakki (Stard of Novice Training Ground, Outside Castle)
@@ -932,8 +933,7 @@ new_1-2,35,176,4	script	Soldier#nv	105,{
 		mes "Kill enough Porings.";
 		mes "Porings are easy to deal with, so cheer up.";
 		mes "Try again.";
-		percentheal 100,100;
-		skilleffect 28,9999;
+		npcskill "AL_HEAL",10,99,60;
 		close;
 	}
 	mes "[Brade]";
@@ -946,8 +946,7 @@ new_1-2,35,176,4	script	Soldier#nv	105,{
 	mes "[Brade]";
 	mes "Try using the job manuals to find out the characteristics of each job's skills.";
 	mes "I will restore your HP and SP... Keep it up.";
-	percentheal 100,100;
-	skilleffect 28,9999;
+	npcskill "AL_HEAL",10,99,60;
 	close;
 }
 

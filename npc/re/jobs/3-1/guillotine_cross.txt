@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.0a
 //===== Compatible With: ===================================== 
 //= rAthena SVN r16945+
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //= Job change Quest from Assassin / Assassin Cross -> Guillotine Cross.
 //===== Additional Comments: ================================= 
 //= 1.0 Adapted from original script. [Euphy]
+//= 1.0a Added 'npcskill' command. [Euphy]
 //============================================================
 
 que_job01,75,96,3	script	Guild Member#3rdgc01	997,{
@@ -2482,9 +2483,7 @@ OnTouch:
 	select("......");
 	mes "[A man with black clothes]";
 	mes "May the goddess bless you eternally...";
-//	UseSkillToPC 34 0 0 0
-	specialeffect2 EF_BLESSING;
-	sc_start SC_BLESSING,60000,1;
+	npcskill "AL_BLESSING",10,0,0;
 	next;
 	emotion e_gasp;
 	mes "[A man with black clothes]";

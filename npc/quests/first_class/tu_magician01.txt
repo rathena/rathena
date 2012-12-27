@@ -16,15 +16,15 @@
 //= 1.3 Misc. updates. [L0ne_W0lf]
 //============================================================ 
 
-
-//=================================================Sign====================================================
+// Sign
+//============================================================
 geffen,61,174,4	script	Sign#M	111,{
 	mes "- Mage Job Change -";
 	close;
 }
 
-
-//=================================================New Mage Manager====================================================
+// New Mage Manager
+//============================================================
 geffen,67,180,4	script	New Mage Manager#M	102,{
 	mes "[Mana]";
 	if(Class == Job_Novice){
@@ -129,9 +129,8 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 		mes "continue this later, okay?";
 		set tu_magician01, 1;
 		getexp BaseLevel*3,BaseLevel*2;
-		//misceffect EF_HIT5;
+		specialeffect2 EF_HIT5;
 		close;
-		break;
 	case 1:
 		mes "Are you ready";
 		mes "to continue our";
@@ -387,7 +386,6 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 					set tu_mana,0;
 				}
 				close;
-				break;
 			}
 		}
 		break;
@@ -469,9 +467,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 		set tu_magician01, 3;
 		getexp 40,20;
 		specialeffect2 EF_HIT5;
-
 		close;
-		break;
 	case 3:
 		mes "Ah, you're back?";
 		mes "Let's see if you gathered";
@@ -501,7 +497,6 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 			specialeffect2 EF_HIT5;
 			close;
 		}
-		break;
 	case 4:
 		mes "So...";
 		mes "Did you get";
@@ -530,7 +525,6 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 			specialeffect2 EF_HIT5;
 			close;
 		}
-		break;
 	case 5:
 		mes "Now I'll tell you";
 		mes "what I know about the";
@@ -735,7 +729,6 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 			}
 		}
 		close;
-		break;
 	case 6:
 		mes "Oh good, you're back.";
 		mes "Let me tell you about";
@@ -780,7 +773,6 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 			mes "and ask me later, okay?";
 			close;
 		}
-		break;
 	case 7:
 		mes "I don't know";
 		mes "what kind of work";
@@ -788,7 +780,6 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 		mes "for you, but hopefully";
 		mes "it won't be too difficult.";
 		close;
-		break;
 	case 27:
 		mes "Yierhan just sent me";
 		mes "a message, saying that";
@@ -821,7 +812,6 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 		set Zeny, Zeny + 3000;
 		getexp 300,100;
 		close;
-		break;
 	default:
 		if(tu_magician01 < 27){
 			mes "So...";

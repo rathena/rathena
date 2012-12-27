@@ -17,8 +17,8 @@
 //= 1.4 Misc. updates. [L0ne_W0lf]
 //============================================================ 
 
-
-//=================================================Shurank====================================================
+// Shurank
+//============================================================
 izlude_in,82,163,3	script	Shurank	733,{
 	mes "[Shurank]";
 	if(Class == Job_Novice || Class == Job_Baby){
@@ -80,7 +80,6 @@ izlude_in,82,163,3	script	Shurank	733,{
 		mes "To improve your skills,";
 		mes "you must explore this vast world and experience all sorts of battle situations. And always commit yourself to your training.";
 		close;
-		break;
 	case 22:
 		mes "This will be my";
 		mes "final lecture to you.";
@@ -167,7 +166,6 @@ izlude_in,82,163,3	script	Shurank	733,{
 		completequest 8228;
 		getitem 1113,1; //Scimiter
 		close;
-		break;
 	case 21:
 		mes "Ah, you've returned. I've just received a communique from";
 		mes "Dequ'ee. It seems you've been working very hard and that you've made the most of this experience.";
@@ -210,11 +208,9 @@ izlude_in,82,163,3	script	Shurank	733,{
 		mes "I'll be here when you're ready to learn more.";
 		set tu_swordman, 22;
 		close;
-		break;
 	case 13:
 		mes "You should leave as soon as possible to meet Dequ'ee in Geffen. You do remember where to find him, don't you?";
 		close;
-		break;
 	case 12:
 		mes "So how has your";
 		mes "training for the Endure";
@@ -246,7 +242,6 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "you to double your efforts!";
 			close;
 		}
-		break;
 	case 11:
 		mes "So have you";
 		mes "learned how to use";
@@ -306,7 +301,6 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "I recommend that you learn it as soon as you can. Endure is an invaluable skill for any Swordman to have!";
 			close;
 		}
-		break;
 	case 10:
 		mes "The time has come";
 		mes "for me to tell you";
@@ -379,7 +373,6 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "Hurry and meet with Dequ'ee and return to me when you complete whatever it is that he wishes for you to do.";
 			close;
 		}
-		break;
 	case 9:
 		mes "So have you been";
 		mes "learning more about";
@@ -416,7 +409,6 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "I can continue my lectures.";
 			close;
 		}
-		break;
 	case 8:
 		mes "Ah, you've returned.";
 		mes "So how has your training";
@@ -477,7 +469,6 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "Still haven't learned Provoke, eh? As a Swordman, I believe that it's important that you at least be able to use Provoke!";
 			close;
 		}
-		break;
 	case 7:
 		mes "Ah, you've returned. For a new Swordman, you are doing quite";
 		mes "well. So what is the message";
@@ -575,7 +566,6 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "Next time we speak, I will tell you what I know about the ^5D478BEndure^000000 skill. When you're ready to learn, come back to me.";
 			close;
 		}
-		break;
 	case 6:
 		mes "I wish for you to find a Knight named ^5D478BDequ'ee^000000 in ^5D478BGeffen^000000. Listen carefully, this is the message";
 		mes "I want you to give him.";
@@ -597,7 +587,6 @@ izlude_in,82,163,3	script	Shurank	733,{
 		next;
 		warp "gef_fild07",35,192;
 		close;
-		break;
 	case 5:
 		mes "Ah, you've returned. I know I said that I would teach you what I know about the Provoke skill, but...";
 		next;
@@ -626,7 +615,6 @@ izlude_in,82,163,3	script	Shurank	733,{
 		set tu_swordman, 6;
 		changequest 8215,8216;
 		close;
-		break;
 	case 4:
 		mes "Since you've mastered Bash,";
 		mes "I feel that you're ready to learn more about Swordman skills.";
@@ -683,7 +671,6 @@ izlude_in,82,163,3	script	Shurank	733,{
 		mes "[Shurank]";
 		mes "By now, I believe that you know enough about the Increase HP Recovery skill. Next time, I shall teach you what I know about the Provoke skill.";
 		close;
-		break;
 	case 3:
 		mes "If you want to be";
 		mes "able to use the full";
@@ -711,7 +698,6 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "use Bash quite well, but you are not a master of it yet. I encourage you to master Bash in order to unleash its true potential!";
 			close;
 		}
-		break;
 	case 2:
 		mes "I hope you've been";
 		mes "training yourself in using";
@@ -758,7 +744,6 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "use Bash quite well, but you are not a master of it yet. I encourage you to master Bash in order to unleash its true potential!";
 			close;
 		}
-		break;
 	case 1:
 		mes "Have you been learning";
 		mes "the art of using Bash? I fervently believe that the Bash skill is the essense of Swordmanship!";
@@ -839,7 +824,6 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "that skill!";
 			close;
 		}
-		break;
 	case 0:
 		mes "Ah, a comrade in arms.";
 		mes "Allow me to introduce myself. I am Shurank Chainlier, a Knight in the service of the Prontera Chivalry.";
@@ -933,14 +917,14 @@ izlude_in,82,163,3	script	Shurank	733,{
 			getitem 2503,1; //Muffler
 			close;
 		}
-		break;
 	}
 	mes "...";
 	mes "......";
 	close;
 }
 
-//=================================================Daqu'ee====================================================
+// Daqu'ee
+//============================================================
 geffen,154,143,3	script	Dequ'ee	734,{
 	if(BaseJob == Job_Novice){
 		mes "[Dequ'ee]";
@@ -1063,7 +1047,6 @@ geffen,154,143,3	script	Dequ'ee	734,{
 			mes "made up. You've got";
 			mes "to try it again!";
 			close;
-			break;
 		case 2:
 			mes "[Dequ'ee]";
 			mes "Bankley...?";
@@ -1084,7 +1067,6 @@ geffen,154,143,3	script	Dequ'ee	734,{
 			close2;
 			warp "moc_fild07",359,201;
 			end;
-			break;
 		case 3:
 			mes "[Dequ'ee]";
 			mes "Geil...?";
@@ -1094,7 +1076,6 @@ geffen,154,143,3	script	Dequ'ee	734,{
 			mes "made up. You've got";
 			mes "to try it again!";
 			close;
-			break;
 		case 4:
 			mes "[Dequ'ee]";
 			mes "Muetro...?";
@@ -1104,7 +1085,6 @@ geffen,154,143,3	script	Dequ'ee	734,{
 			mes "made up. You've got";
 			mes "to try it again!";
 			close;
-			break;
 		}
 	}
 	if(tu_swordman == 16){
@@ -1154,7 +1134,6 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "way it is now. Let's";
 					mes "try another combination.";
 					close;
-					break;
 				case 2:
 					mes "[Dequ'ee]";
 					mes "Muetro, Hans,";
@@ -1176,9 +1155,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "way it is now. Let's";
 					mes "try another combination.";
 					close;
-					break;
 				}
-				break;
 			case 2:
 				mes "[Dequ'ee]";
 				mes "Geil's...?";
@@ -1209,7 +1186,6 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "way it is now. Let's";
 					mes "try another combination.";
 					close;
-					break;
 				case 2:
 					mes "[Dequ'ee]";
 					mes "Muetro, Geil,";
@@ -1231,9 +1207,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "way it is now. Let's";
 					mes "try another combination.";
 					close;
-					break;
 				}
-				break;
 			case 3:
 				mes "[Dequ'ee]";
 				mes "Bankley's...?";
@@ -1264,7 +1238,6 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "way it is now. Let's";
 					mes "try another combination.";
 					close;
-					break;
 				case 2:
 					mes "[Dequ'ee]";
 					mes "Muetro, Bankley,";
@@ -1286,9 +1259,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "way it is now. Let's";
 					mes "try another combination.";
 					close;
-					break;
 				}
-				break;
 			}
 			break;
 		case 2:
@@ -1330,7 +1301,6 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "way it is now. Let's";
 					mes "try another combination.";
 					close;
-					break;
 				case 2:
 					mes "[Dequ'ee]";
 					mes "Hans, Muetro,";
@@ -1352,9 +1322,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "way it is now. Let's";
 					mes "try another combination.";
 					close;
-					break;
 				}
-				break;
 			case 2:
 				mes "[Dequ'ee]";
 				mes "Geil's...?";
@@ -1385,7 +1353,6 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "way it is now. Let's";
 					mes "try another combination.";
 					close;
-					break;
 				case 2:
 					mes "[Dequ'ee]";
 					mes "Hans, Geil,";
@@ -1407,9 +1374,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "way it is now. Let's";
 					mes "try another combination.";
 					close;
-					break;
 				}
-				break;
 			case 3:
 				mes "[Dequ'ee]";
 				mes "Bankley's...?";
@@ -1440,7 +1405,6 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "way it is now. Let's";
 					mes "try another combination.";
 					close;
-					break;
 				case 2:
 					mes "[Dequ'ee]";
 					mes "Hans, Bankley,";
@@ -1462,9 +1426,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "way it is now. Let's";
 					mes "try another combination.";
 					close;
-					break;
 				}
-				break;
 			}
 			break;
 		case 3:
@@ -1513,7 +1475,6 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "to formulate an algorithm!";
 					set tu_swordman, 17;
 					close;
-					break;
 				case 2:
 					mes "[Dequ'ee]";
 					mes "Geil, Muetro,";
@@ -1535,9 +1496,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "way it is now. Let's";
 					mes "try another combination.";
 					close;
-					break;
 				}
-				break;
 			case 2:
 				mes "[Dequ'ee]";
 				mes "Han's...?";
@@ -1568,7 +1527,6 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "way it is now. Let's";
 					mes "try another combination.";
 					close;
-					break;
 				case 2:
 					mes "[Dequ'ee]";
 					mes "Geil, Hans,";
@@ -1590,9 +1548,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "way it is now. Let's";
 					mes "try another combination.";
 					close;
-					break;
 				}
-				break;
 			case 3:
 				mes "[Dequ'ee]";
 				mes "Bankley's...?";
@@ -1623,7 +1579,6 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "way it is now. Let's";
 					mes "try another combination.";
 					close;
-					break;
 				case 2:
 					mes "[Dequ'ee]";
 					mes "Geil, Bankley,";
@@ -1645,9 +1600,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "way it is now. Let's";
 					mes "try another combination.";
 					close;
-					break;
 				}
-				break;
 			}
 			break;
 		case 4:
@@ -1689,7 +1642,6 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "way it is now. Let's";
 					mes "try another combination.";
 					close;
-					break;
 				case 2:
 					mes "[Dequ'ee]";
 					mes "Bankley, Muetro,";
@@ -1711,9 +1663,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "way it is now. Let's";
 					mes "try another combination.";
 					close;
-					break;
 				}
-				break;
 			case 2:
 				mes "[Dequ'ee]";
 				mes "Hans's...?";
@@ -1744,7 +1694,6 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "way it is now. Let's";
 					mes "try another combination.";
 					close;
-					break;
 				case 2:
 					mes "[Dequ'ee]";
 					mes "Bankley, Hans,";
@@ -1764,9 +1713,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "way it is now. Let's";
 					mes "try another combination.";
 					close;
-					break;
 				}
-				break;
 			case 3:
 				mes "[Dequ'ee]";
 				mes "Geil's...?";
@@ -1804,7 +1751,6 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "to formulate an algorithm!";
 					set tu_swordman, 18;
 					close;
-					break;
 				case 2:
 					mes "[Dequ'ee]";
 					mes "Bankley, Geil,";
@@ -1826,9 +1772,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "way it is now. Let's";
 					mes "try another combination.";
 					close;
-					break;
 				}
-				break;
 			}
 			break;
 		}
@@ -2044,7 +1988,6 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "be the message I'm supposed to receive from Shurack. I need his exact message or I can't send";
 					mes "a response...";
 					close;
-					break;
 				case 2:
 					mes "[" + strcharinfo(0) + "]";
 					mes "What are we";
@@ -2061,9 +2004,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "be the message I'm supposed to receive from Shurack. I need his exact message or I can't send";
 					mes "a response...";
 					close;
-					break;
 				}
-				break;
 			case 2:
 				mes "[" + strcharinfo(0) + "]";
 				mes "Did you figure out";
@@ -2087,7 +2028,6 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "be the message I'm supposed to receive from Shurack. I need his exact message or I can't send";
 					mes "a response...";
 					close;
-					break;
 				case 2:
 					mes "[" + strcharinfo(0) + "]";
 					mes "What are we";
@@ -2104,9 +2044,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "be the message I'm supposed to receive from Shurack. I need his exact message or I can't send";
 					mes "a response...";
 					close;
-					break;
 				}
-				break;
 			}
 			break;
 		case 2:
@@ -2141,7 +2079,6 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "be the message I'm supposed to receive from Shurack. I need his exact message or I can't send";
 					mes "a response...";
 					close;
-					break;
 				case 2:
 					mes "[" + strcharinfo(0) + "]";
 					mes "What are we";
@@ -2181,9 +2118,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					next;
 					warp "izlude",35,78;
 					close;
-					break;
 				}
-				break;
 			case 2:
 				mes "[" + strcharinfo(0) + "]";
 				mes "Did you figure out";
@@ -2209,7 +2144,6 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "be the message I'm supposed to receive from Shurack. I need his exact message or I can't send";
 					mes "a response...";
 					close;
-					break;
 				case 2:
 					mes "[" + strcharinfo(0) + "]";
 					mes "What are we";
@@ -2229,9 +2163,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 					mes "be the message I'm supposed to receive from Shurack. I need his exact message or I can't send";
 					mes "a response...";
 					close;
-					break;
 				}
-				break;
 			}
 			break;
 		}
@@ -2243,7 +2175,8 @@ geffen,154,143,3	script	Dequ'ee	734,{
 	close;
 }
 
-//=================================================Geil====================================================
+// Geil
+//============================================================
 morocc_in,51,101,3	script	Geil	89,{
 	mes "[Geil]";
 	if(tu_swordman == 15){
@@ -2293,7 +2226,8 @@ morocc_in,51,101,3	script	Geil	89,{
 	close;
 }
 
-//=================================================Meutro====================================================
+// Meutro
+//============================================================
 morocc,82,292,5	script	Muetro	84,{
 	mes "[Muetro]";
 	if(tu_swordman == 15){
@@ -2333,7 +2267,8 @@ morocc,82,292,5	script	Muetro	84,{
 	close;
 }
 
-//=================================================Hans====================================================
+// Hans
+//============================================================
 morocc,240,72,3	script	Hans	86,{
 	mes "[Hans]";
 	if(tu_swordman == 15){
@@ -2390,7 +2325,8 @@ morocc,240,72,3	script	Hans	86,{
 	close;
 }
 
-//=================================================Bankley====================================================
+// Bankley
+//============================================================
 morocc_in,12,156,3	script	Bankley	97,{
 	if(tu_swordman > 19){
 		mes "^3355FFBankley had a pitiable";
