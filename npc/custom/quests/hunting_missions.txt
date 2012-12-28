@@ -225,7 +225,7 @@ OnNPCKillEvent:
 	if (!getcharid(1) || !.Party) {
 		if (!#Mission_Count || !Mission0) end;
 		for (set .@i, 0; .@i<.Quests; set .@i,.@i+1) {
-			if (strmobinfo(1,killedrid) == strmobinfo(1,getd("Mission"+.@i))) {
+			if (""+strmobinfo(1,killedrid) == strmobinfo(1,getd("Mission"+.@i))) {
 				if (getd("Mission"+.@i+"_") < #Mission_Count) {
 					dispbottom "[Hunting Mission] Killed "+(set(getd("Mission"+.@i+"_"),getd("Mission"+.@i+"_")+1))+" of "+#Mission_Count+" "+strmobinfo(1,killedrid)+".";
 					end;
@@ -244,7 +244,7 @@ OnNPCKillEvent:
 					getmapxy(.@map2$,.@x2,.@y2,0);
 					if ((.@map1$ == .@map2$ || .Party == 1) && (distance(.@x1,.@y1,.@x2,.@y2) <= 30 || .Party < 3)) {
 						for(set .@j,0; .@j<.Quests; set .@j,.@j+1) {
-							if (strmobinfo(1,.@mob) == strmobinfo(1,getd("Mission"+.@j))) {
+							if (""+strmobinfo(1,.@mob) == strmobinfo(1,getd("Mission"+.@j))) {
 								if (getd("Mission"+.@j+"_") < #Mission_Count) {
 									dispbottom "[Hunting Mission] Killed "+(set(getd("Mission"+.@j+"_"),getd("Mission"+.@j+"_")+1))+" of "+#Mission_Count+" "+strmobinfo(1,.@mob)+".";
 									break;

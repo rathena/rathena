@@ -4,7 +4,7 @@
 //= Persian, Vicious_Pucca, aoa00, Evera, MasterOfMupppets,
 //= Lupus, Lord Gywall
 //===== Current Version: ===================================== 
-//= 4.7
+//= 4.8
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -77,6 +77,7 @@
 //= 4.6 Added quest log entries for:
 //=     - Cursed Spirit Quest
 //= 4.7 Fixed missing label. (bugreport:4654) [L0ne_W0lf]
+//= 4.8 Fixed Cursed Spirit Quest EXP reward. [Euphy]
 //============================================================ 
 
 // Gangster Alert [Official Conversion]
@@ -5269,13 +5270,13 @@ OnTouch_:
 		set lhz_curse,26;
 		changequest 2093,2094;
 		if (BaseLevel < 70)
-			getexp 80000,30000;
+			getexp 800000,300000;
 		else if ((BaseLevel > 69) && (BaseLevel < 80))
-			getexp 100000,50000;
+			getexp 1000000,500000;
 		else if ((BaseLevel > 79) && (BaseLevel < 90))
-			getexp 150000,80000;
-		else if ((BaseLevel > 89) && (BaseLevel < 151))
-			getexp 200000,100000;
+			getexp 1500000,800000;
+		else if (BaseLevel > 89)
+			getexp 2000000,1000000;
 	}
 	close;
 }
