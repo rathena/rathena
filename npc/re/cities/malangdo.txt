@@ -32,7 +32,7 @@ malangdo,147,117,3	script	Innkeeper#malang	554,{
 				mes "[Innkeeper]";
 				mes "Take a relaxation.";
 				emotion e_kis;
-				warp "malangdo", 140, 121;
+				warp "malangdo",140,121;
 				close;
 			}
 			mes "[Innkeeper]";

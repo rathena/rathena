@@ -19,7 +19,7 @@ malangdo,175,206,3	script	Gobonge#ml	561,{
 		mes "- Can't go next step due to having too many items. -";
 		close;
 	}
-	if (checkquest(1152,PLAYTIME) == 1) {
+	if (checkquest(1152,PLAYTIME) == 0) {
 		mes "[Gobonge]";
 		mes "Hmm, investigation is not enough.";
 		mes "We need go back to basic point.";
@@ -27,10 +27,10 @@ malangdo,175,206,3	script	Gobonge#ml	561,{
 		mes "I might be in pain of stomach";
 		mes "like usual.";
 		close;
-	} else if (checkquest(1152,PLAYTIME) == 2) {
+	} else if (checkquest(1152,PLAYTIME) == 1) {
 		erasequest 1152;
 		set malang_bad_guys,0;
-	} else if (checkquest(1152,PLAYTIME) == 3) {
+	} else if (checkquest(1152,PLAYTIME) == 2) {
 		completequest 1152;
 		erasequest 1152;
 		set malang_bad_guys,0;
@@ -138,9 +138,9 @@ malangdo,175,206,3	script	Gobonge#ml	561,{
 			mes "You can go now!";
 			erasequest 1151;
 			set malang_bad_guys,8;
-			getitem Malang_Sp_Can, 20; //Unknown_Item
-			delitem Bad_Can_Sack, 1; //Unknown_Item
-			delitem Bad_Can, 30; //Bad_Canned_Food
+			getitem 12636,20; //Malang_Sp_Can
+			delitem 6427,1; //Bad_Can_Sack
+			delitem 6426,30; //Bad_Can
 			close;
 		}
 		mes "[Gobonge]";
