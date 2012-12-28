@@ -17,7 +17,8 @@ prontera,170,180,1	script	Stylist#custom_stylist	122,{
 	setarray .@Styles[1],getbattleflag("max_cloth_color"),getbattleflag("max_hair_style"),getbattleflag("max_hair_color");
 	setarray .@Look[1],7,1,6;
 	set .@s, select(" ~ Cloth color: ~ Hairstyle: ~ Hair color");
-	set .@Revert, getlook(.@Look[.@s]); set .@Style,1;
+	set .@Revert, getlook(.@Look[.@s]);
+	set .@Style,1;
 	while(1) {
 		setlook .@Look[.@s], .@Style;
 		message strcharinfo(0),"This is style #"+.@Style+".";
@@ -29,6 +30,7 @@ prontera,170,180,1	script	Stylist#custom_stylist	122,{
 				input .@Style,0,.@Styles[.@s];
 				if (!.@Style) set .@Style, rand(1,.@Styles[.@s]);
 				break;
-			case 4: set .@Style, .@Revert; setlook .@Look[.@s], .@Revert; break; }
-	} end;
+			case 4: set .@Style, .@Revert; setlook .@Look[.@s], .@Revert; break;
+		}
+	}
 }

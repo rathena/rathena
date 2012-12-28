@@ -20,13 +20,16 @@ function Job_Menu; function A_An;
 	mes "[Job Master]";
 	if (Class > 4049) {
 		mes "No more jobs are available.";
-		close; }
+		close;
+	}
 	if (checkfalcon() || checkcart() || checkriding() || ismounting()) {
 		mes "Please remove your "+((checkfalcon())?"falcon":"")+((checkcart())?"cart":"")+((checkriding())?"Peco":"")+((ismounting())?"mount":"")+" before proceeding.";
-		close; }
+		close;
+	}
 	if (.SkillPointCheck && SkillPoint) {
 		mes "Please use all your skill points before proceeding.";
-		close; }
+		close;
+	}
 
 	set .@eac, eaclass();
 	set .@i, ((.ThirdClass)?roclass(.@eac&EAJ_UPPERMASK):Class);
@@ -34,12 +37,14 @@ function Job_Menu; function A_An;
 		if (BaseLevel < .Rebirth[0] || JobLevel < .Rebirth[1]) {
 			set .@blvl, .Rebirth[0]-BaseLevel; set .@jlvl, .Rebirth[1]-JobLevel;
 			mes "You need "+((.@blvl>0)?.@blvl+" more base levels "+((.@jlvl>0)?"/ ":""):"")+((.@jlvl>0)?.@jlvl+" more job levels ":"")+"to continue.";
-			close; }
+			close;
+		}
 		if (Class > 21) {
 			mes "Switch to third class?";
 			next;
 			Job_Menu(roclass(.@eac|EAJL_THIRD));
-			close; }
+			close;
+		}
 		while(1) {
 			mes "Select an option.";
 			next;
@@ -49,7 +54,9 @@ function Job_Menu; function A_An;
 			mes "Are you sure?";
 			next;
 			Job_Menu(((.@i==1)?4001:roclass(.@eac|EAJL_THIRD)));
-			mes "[Job Master]"; } }
+			mes "[Job Master]";
+		}
+	}
 	set .@j1, roclass(.@eac|EAJL_2_1); set .@j2,roclass(.@eac|EAJL_2_2);
 	if ((.@eac&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE) setarray .@exp[0],roclass(.@eac|EAJL_THIRD),99;
 	if (Class == Job_Ninja) setarray .@exp[0],.@j1,70;
@@ -57,28 +64,33 @@ function Job_Menu; function A_An;
 		if (BaseLevel < .Rebirth[0] || JobLevel < .@exp[1]) {
 			set .@blvl, .Rebirth[0]-BaseLevel; set .@jlvl, .@exp[1]-JobLevel;
 			mes "You need "+((.@blvl>0)?.@blvl+" more base levels "+((.@jlvl>0)?"/ ":""):"")+((.@jlvl>0)?.@jlvl+" more job levels ":"")+"to continue.";
-			close; }
+			close;
+		}
 		mes "Switch to "+jobname(.@exp[0])+"?";
 		next;
 		Job_Menu(.@exp[0]);
-		close; }
+		close;
+	}
 	if (.@eac&EAJL_2)
 		if (.@eac&(EAJL_UPPER|EAJL_BABY) || roclass(.@eac|EAJL_UPPER) == -1) {
 			mes "No more jobs are available.";
-			close; }
+			close;
+		}
 	if ((.@eac&EAJ_BASEMASK) == EAJ_NOVICE) {
 		if (JobLevel < .JobReq[0])
 			mes "A job level of "+.JobReq[0]+" is required to change into the 1st Class.";
 		else if (Class == 4001 && .LastJob && lastJob) {
 			mes "Switch classes now?";
 			next;
-			Job_Menu(roclass((eaclass(lastJob)&EAJ_BASEMASK)|EAJL_UPPER)); }
-		else switch(Class) {
+			Job_Menu(roclass((eaclass(lastJob)&EAJ_BASEMASK)|EAJL_UPPER));
+		} else switch(Class) {
 			case 0: Job_Menu(1,2,3,4,5,6,23,4046,24,25,4023);
 			case 4001: Job_Menu(4002,4003,4004,4005,4006,4007);
 			case 4023: Job_Menu(4024,4025,4026,4027,4028,4029,4045);
-			default: mes "An error has occurred."; break; }
-		close; }
+			default: mes "An error has occurred."; break;
+		}
+		close;
+	}
 	if (roclass(.@eac|EAJL_2_1) == -1 || roclass(.@eac|EAJL_2_2) == -1)
 		mes "No more jobs are available.";
 	else if (!(.@eac&EAJL_2) && JobLevel < .JobReq[1])
@@ -86,8 +98,9 @@ function Job_Menu; function A_An;
 	else if (.LastJob && lastJob && (.@eac&EAJL_UPPER)) {
 		mes "Switch classes now?";
 		next;
-		Job_Menu(lastJob+4001); }
-	else Job_Menu(.@j1,.@j2);
+		Job_Menu(lastJob+4001);
+	} else
+		Job_Menu(.@j1,.@j2);
 	close;
 
 function Job_Menu {
@@ -104,12 +117,14 @@ function Job_Menu {
 			if ((.@i == 23 || .@i == 4045) && BaseLevel < .SNovice) {
 				mes "[Job Master]";
 				mes "A base level of "+.SNovice+" is required to turn into a "+jobname(.@i)+".";
-				close; }
+				close;
+			}
 			mes "[Job Master]";
 			mes "Are you sure?";
-			next; }
-		else set .@i, getarg(0);
-		if (select(" ~ Change into ^0055FF"+jobname(.@i)+"^000000 class: ~ ^777777"+((getargcount() > 1)?"Go back":"Cancel")+"^000000")==1) {
+			next;
+		} else
+			set .@i, getarg(0);
+		if (select(" ~ Change into ^0055FF"+jobname(.@i)+"^000000 class: ~ ^777777"+((getargcount() > 1)?"Go back":"Cancel")+"^000000") == 1) {
 			mes "[Job Master]";
 			mes "You are now "+A_An(jobname(.@i))+"!";
 			if (.@i==4001 && .LastJob) set lastJob, Class;
@@ -117,17 +132,21 @@ function Job_Menu {
 			if (.@i==4001 || .@i==4023) resetlvl(1);
 			specialeffect2 338; specialeffect2 432;
 			if (.Platinum) callsub Get_Platinum;
-			close; }
+			close;
+		}
 		if (getargcount() == 1) return;
-		mes "[Job Master]"; }
-	end; }
+		mes "[Job Master]";
+	}
+	end;
+}
 
 function A_An {
 	setarray .@A$[0],"a","e","i","o","u";
 	set .@B$, "_"+getarg(0);
 	for(set .@i,0; .@i<5; set .@i,.@i+1)
 		if (compare(.@B$,"_"+.@A$[.@i])) return "an "+getarg(0);
-	return "a "+getarg(0); }
+	return "a "+getarg(0);
+}
 
 Get_Platinum:
 	skill 142,1,0;
@@ -139,7 +158,8 @@ Get_Platinum:
 		case 4: skill 156,1,0; break;
 		case 5: skill 153,1,0; skill 154,1,0; skill 155,1,0; break;
 		case 6: skill 149,1,0; skill 150,1,0; skill 151,1,0; skill 152,1,0; break;
-		default: break; }
+		default: break;
+	}
 	switch(BaseJob) {
 		case 7: skill 1001,1,0; break;
 		case 8: skill 1014,1,0; break;
@@ -154,7 +174,8 @@ Get_Platinum:
 		case 18: skill 238,1,0; break;
 		case 19: skill 1010,1,0; break;
 		case 20: skill 1011,1,0; break;
-		default: break; }
+		default: break;
+	}
 	return;
 
 OnInit:

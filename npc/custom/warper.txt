@@ -45,24 +45,29 @@ menu	"Last Warp ^777777["+lastwarp$+"]^000000",-,
 function Go {
 	warp getarg(0),getarg(1,0),getarg(2,0);
 	getmapxy(lastwarp$,lastwarpx,lastwarpy,0);
-	close; }
+	close;
+}
 function Disp {
 	set @menu$,"";
 	if(getarg(0)=="") {
 		set @menu$,getarg(1);
-		return; }
+		return;
+	}
 	for(set .@i,getarg(1); .@i<=getarg(2); set .@i,.@i+1)
 		set @menu$, @menu$+getarg(0)+" "+.@i+":";
-	return; }
+	return;
+}
 function Pick {
 	if(getarg(0)=="") {
 		set .@i, select(@menu$);
-		warp getarg(.@i),@c[.@i*2],@c[.@i*2+1]; }
-	else {
+		warp getarg(.@i),@c[.@i*2],@c[.@i*2+1];
+	} else {
 		set .@i, select(@menu$)-getarg(1,0);
-		warp getarg(0)+((.@i<10)?"0":"")+.@i,@c[.@i*2],@c[.@i*2+1]; }
+		warp getarg(0)+((.@i<10)?"0":"")+.@i,@c[.@i*2],@c[.@i*2+1];
+	}
 	getmapxy(lastwarp$,lastwarpx,lastwarpy,0);
-	close; }
+	close;
+}
 
 // --------------------------------------------------
 	Towns:

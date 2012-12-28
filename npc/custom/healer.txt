@@ -21,13 +21,13 @@
 	if (.@Price) {
 		message strcharinfo(0),"Healing costs "+.@Price+" Zeny.";
 		if (Zeny < .@Price) end;
-		if(select("^0055FFHeal^000000:^777777Cancel^000000")==2) close;
+		if(select("^0055FFHeal^000000:^777777Cancel^000000") == 2) close;
 		set Zeny, Zeny-.@Price;
 	}
 	specialeffect2 313; percentheal 100,100;
 	if (.@Buffs) {
-		specialeffect2 37; sc_start SC_INCREASEAGI,240000,10;
-		specialeffect2 42; sc_start SC_BLESSING,240000,10;
+		specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,240000,10;
+		specialeffect2 EF_BLESSING; sc_start SC_BLESSING,240000,10;
 	}
 	if (.@Delay) set @HD, gettimetick(2)+.@Delay;
 	close;

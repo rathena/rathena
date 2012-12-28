@@ -11647,7 +11647,10 @@ BUILDIN_FUNC(strmobinfo)
 
 	if(!mobdb_checkid(class_))
 	{
-		script_pushint(st,0);
+		if (num < 3) //requested a string
+			script_pushconststr(st,"");
+		else
+			script_pushint(st,0);
 		return 0;
 	}
 

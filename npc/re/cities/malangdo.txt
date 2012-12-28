@@ -1,0 +1,124 @@
+//===== rAthena Script ======================================= 
+//= Malangdo Town
+//===== By: ================================================== 
+//= Muad_Dib
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena SVN
+//===== Description: ========================================= 
+//= Malangdo Town Script
+//===== Additional Comments: ================================= 
+//= 1.0 First version. [Euphy]
+//============================================================
+
+// Town NPCs :: malang_tre
+//============================================================
+malangdo,147,117,3	script	Innkeeper#malang	554,{
+	mes "Can see a lazy cat standing on a chair.";
+	mes "Thought it is an Innkeeper, but do not looks like that having a business.";
+	next;
+	switch(select("Can I rest in hammock?:Want to store in inn.:Looks free at the moment.")) {
+	case 1:
+		mes "[Innkeeper]";
+		mes "You can use hammock as you want but give me ^FF00005 pieces of Malang Sp Can^000000, then will make you stress out.";
+		next;
+		switch(select("Give the can.:No need.")) {
+		case 1:
+			if (countitem(12636) > 4) {
+				delitem 12636,5; //Malang_Sp_Can
+				percentheal 100,100;
+				specialeffect EF_HEALSP;
+				mes "[Innkeeper]";
+				mes "Take a relaxation.";
+				emotion e_kis;
+				warp "malangdo", 140, 121;
+				close;
+			}
+			mes "[Innkeeper]";
+			mes "It looks like lack of cans.";
+			close;
+		case 2:
+			mes "[Innkeeper]";
+			mes "You are strong man than appearance.";
+			close;
+		}
+	case 2:
+		mes "[Innkeeper]";
+		mes "Storation is done. We should keep company haha.";
+		savepoint "malangdo",142,118;
+		close;
+	case 3:
+		mes "[Innkeeper]";
+		mes "A busy moment make you hurry and laziness makes you lazy.";
+		next;
+		mes "- Wonder if there is work time. -";
+		close;
+	}
+	close;
+}
+
+malangdo,151,120,3	script	Wandering Minstrel#mal	479,{
+	mes "[Wandering Minstrel]";
+	mes "I have a sleepy momnet whenever seeing that innkeeper. So comfortable...";
+	close;
+}
+
+malangdo,149,120,5	script	Wandering Wanderer#mal	485,5,1,{
+	mes "[Wandering Wanderer]";
+	mes "Cats living in here is so energetic.";
+	mes "And it makes me dance~";
+	close;
+OnTouch:
+	switch(rand(5)) {
+	case 0:
+		soundeffect "ring_of_nibelungen.wav",0;
+		break;
+	case 1:
+		soundeffect "dont_forget_me_not.wav",0;
+		break;
+	case 2:
+		soundeffect "humming.wav",0;
+		break;
+	case 3:
+		soundeffect "assassin_of_sunset.wav",0;
+		break;
+	case 4: 
+		emotion e_ho;
+		emotion e_ho,0,"Wandering Minstrel#mal";
+		break;
+	}
+	end;
+}
+
+malangdo,216,168,3	script	Cat Trainer#mal1	558,0,8,{
+	emotion e_awsm;
+	mes "[Cat Trainer]";
+	mes "Phh there is a tail and butt with soft and tender!";
+	mes "Can't stand, this is heaven~~!!";
+	next;
+	emotion e_gg;
+	mes "[Cat Trainer]";
+	mes "My hidden card ^FF0000<Silvervine Fruit>^000000 can make all cats in Meow Meow Island as my slaves~ haha!";
+	next;
+	select("^FF0000<Silvervine Fruit>^000000?");
+	mes "[Cat Trainer]";
+	mes "Silvervine Fruit is a rare item!";
+	mes "I can barely get it.";
+	mes "But every cat must love this one with no complaint.";
+	next;
+	select("Where can I get ^FF0000<Silvervine Fruit>^000000?");
+	mes "[Cat Trainer]";
+	mes "How do you get it that I could have it barely?";
+	mes "This can't be taken even with ^3131FFall the zeny in this world^000000!";
+	next;
+	emotion e_gg;
+	mes "[Cat Trainer]";
+	mes "Cats in Meow Meow Island is mine...! And it should be done haha~";
+	mes "^FF0000<Silvervine Fruit>^000000! I can be a king in Meow Meow Island~ ohhhh!!!";
+	close;
+OnTouch:
+	emotion e_flash;
+	end;
+}
+malangdo,164,203,3	duplicate(Cat Trainer#mal1)	Cat Trainer#mal2	853,5,8

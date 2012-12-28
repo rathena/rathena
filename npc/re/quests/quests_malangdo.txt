@@ -1,0 +1,825 @@
+//===== rAthena Script =======================================
+//= Malangdo Quest NPCs
+//===== By: ==================================================
+//= Muad_Dib
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= Quest NPCs related to Malangdo.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Euphy]
+//============================================================
+
+// Help the bad cats in danger :: mal_bad_guys
+//============================================================
+malangdo,175,206,3	script	Gobonge#ml	561,{
+	if (checkweight(1201,1) == 0) {
+		mes "- Can't go next step due to having too many items. -";
+		close;
+	}
+	if (checkquest(1152,PLAYTIME) == 1) {
+		mes "[Gobonge]";
+		mes "Hmm, investigation is not enough.";
+		mes "We need go back to basic point.";
+		mes "Come again tomorrow.";
+		mes "I might be in pain of stomach";
+		mes "like usual.";
+		close;
+	} else if (checkquest(1152,PLAYTIME) == 2) {
+		erasequest 1152;
+		set malang_bad_guys,0;
+	} else if (checkquest(1152,PLAYTIME) == 3) {
+		completequest 1152;
+		erasequest 1152;
+		set malang_bad_guys,0;
+	}
+	if (BaseLevel < 60) {
+		mes "[Gobonge]";
+		mes "Are you here to get help";
+		mes "or to get help?";
+		mes "You look so weak, haha...";
+		mes "Go and hunt more Porings!";
+		close;
+	}
+	if (malang_bad_guys == 0) {
+		mes "[Gobonge]";
+		mes "Will you listen my sorrow?";
+		next;
+		switch(select("Sure I will.:No, I won't.")) {
+		case 1:
+			mes "[Gobonge]";
+			mes "This is a sad story.";
+			mes "As usual, I unpacked the bag";
+			mes "to see strange cats";
+			mes "to show them.";
+			next;
+			mes "[Gobonge]";
+			mes "There were lots of cans.";
+			mes "I thougt it was new due to different shape";
+			mes "but it was bad cans!";
+			mes "I ate too much and";
+			mes "got in bed right away";
+			mes "so I can't do anything...";
+			next;
+			mes "[Gobonge]";
+			mes "And by the way, you have...";
+			mes "nice colthes.";
+			mes "I can't let you go,";
+			mes "that hurts me so badly!";
+			emotion e_sob;
+			next;
+			switch(select("You deserve the pain!:Need help?")) {
+			case 1:
+				mes "[Gobonge]";
+				mes "Yes you are!";
+				close;
+			case 2:
+				mes "[Gobonge]";
+				mes "You know what care is.";
+				mes "Please find the bad provider";
+				mes "and revenge our enemy!";
+				next;
+				switch(select("No, I don't want to!:Yes, I'll do it!")) {
+				case 1:
+					mes "[" + strcharinfo(0) + "]";
+					mes "For the peace in Malangdo,";
+					mes "just lay in bed forever.";
+					next;
+					mes "[Gobonge]";
+					mes "I will!";
+					mes "I will have your peace first once I get well!";
+					close;
+				case 2:
+					mes "[Gobonge]";
+					mes "Okay, you can do it?";
+					mes "The enemy must be near the dock";
+					mes "where we got the bundle.";
+					mes "We should get them to help";
+					mes "our cats' well-being!";
+					setquest 1145;
+					set malang_bad_guys,1;
+					close;
+				}
+			}
+		case 2:
+			mes "[Gobonge]";
+			mes "Why are you here!";
+			mes "If I am usual, I will engrave something";
+			mes "with your tear...";
+			mes "Let your bag be here instead!";
+			emotion e_sob;
+			close;
+		}
+	} else if (malang_bad_guys == 1) {
+		mes "[Gobonge]";
+		mes "The enemy must be near the dock";
+		mes "where we got the bundle.";
+		mes "We should get them to help";
+		mes "our cats' well-being!";
+		close;
+	} else if (malang_bad_guys > 1 && malang_bad_guys < 7) {
+		mes "[Gobonge]";
+		mes "I am so tired due to";
+		mes "lack of forbidden bad activity.";
+		close;
+	} else if (malang_bad_guys == 7) {
+		if (countitem(6426) > 29) {
+			mes "[Gobonge]";
+			mes "Was it from raccoon that made us pain in stomach?";
+			mes "Oh bad raccoon!";
+			mes "I feel stomachache again from this anger!";
+			mes "All right, I will show my power once";
+			mes "I can get out of bed.";
+			next;
+			mes "[Gobonge]";
+			mes "I need time to concentrate on my stomachache.";
+			mes "You can go now!";
+			erasequest 1151;
+			set malang_bad_guys,8;
+			getitem Malang_Sp_Can, 20; //Unknown_Item
+			delitem Bad_Can_Sack, 1; //Unknown_Item
+			delitem Bad_Can, 30; //Bad_Canned_Food
+			close;
+		}
+		mes "[Gobonge]";
+		mes "How do you know the source of bad can?";
+		mes "Do you have time to do slow at the moment?";
+		emotion e_sob;
+		close;
+	} else if (malang_bad_guys == 8) {
+		mes "[Gobonge]";
+		mes "The Patrol Leader wants to go back to";
+		mes "bad world as soon as possible.";
+		mes "I want you to go first to soothe him instead.";
+		mes "How about it?";
+		next;
+		switch(select("It's troublsome, I quit.:Sure I will!")) {
+		case 1:
+			mes "[Gobonge]";
+			mes "Haha, you think it is a bad word.";
+			mes "I want you to be one of our staffs.";
+			next;
+			mes "[Gobonge]";
+			mes "Sorry, but you should go now";
+			mes "so that I can concentrate on my stomachache.";
+			setquest 1152;
+			set malang_bad_guys,9;
+			close;
+		case 2:
+			mes "[Gobonge]";
+			mes "All right, then I will have time";
+			mes "to concentrate on my stomachache.";
+			setquest 1153;
+			set malang_bad_guys,10;
+			close;
+		}
+	} else if (malang_bad_guys == 9) {
+		mes "[Gobonge]";
+		mes "Hmm, investigation is not enough.";
+		mes "We need go back to basic point.";
+		mes "Come again tomorrow.";
+		mes "I might be in pain of stomach";
+		mes "like usual.";
+		close;
+	} else if (malang_bad_guys > 9 && malang_bad_guys < 12) {
+		mes "[Gobonge]";
+		mes "Go and have fun with the Patrol Leader!";
+		close;
+	} else if (malang_bad_guys == 12) {
+		mes "[Gobonge]";
+		mes "Instead of us, you did bad behavior.";
+		mes "Good to hear that?";
+		mes "This is what teacher see best pupil?";
+		emotion e_swt;
+		next;
+		mes "[Gobonge]";
+		mes "You deserve a reward!";
+		mes "I need to get some more rest,";
+		mes "so let's investigate tomorrow!";
+		erasequest 1155;
+		setquest 1152;
+		set malang_bad_guys,13;
+		getitem 6422,5; //Egrade_Coin
+		close;
+	} else if (malang_bad_guys == 13) {
+		mes "[Gobonge]";
+		mes "Come again tomorrow.";
+		mes "I might be in pain of stomach";
+		mes "like usual.";
+		close;
+	}
+OnEnable:
+	enablenpc "Gobonge#ml";
+	close;
+OnDisable:
+	disablenpc "Gobonge#ml";
+	close;
+}
+
+malangdo,181,205,3	script	Gobulee#ml1	547,{
+	mes "[Gobulee]";
+	mes "Why do you come now?";
+	mes "You should have come when we were healthy.";
+	mes "So, you want to me take out what you have?";
+	close;
+}
+
+malangdo,180,202,3	script	Gobyungee#ml1	547,{
+	mes "[Gobyungee]";
+	mes "I can't see other cats because";
+	mes "I could't have time to do bad behavior...";
+	close;
+}
+
+malangdo,186,201,3	script	Gosigee#ml1	547,{
+	mes "[Gosigee]";
+	mes "I am desperate for pill of stomachache,";
+	mes "cap is only thinking of finding out criminal";
+	mes "and to revenge!";
+	mes "...";
+	next;
+	mes "[Gosigee]";
+	mes "How can we follow him as a cap...!";
+	close;
+}
+
+malangdo,177,202,3	script	Gonanee#ml2	547,{
+	mes "[Gonanee]";
+	mes "We are only bad circle in Malangdo";
+	mes "and we are very proud.";
+	mes "Can't just lie in bed.";
+	close;
+}
+
+malangdo,183,202,3	script	Godoree#ml3	547,{
+	mes "[Godoree]";
+	mes "I saw unfamiliar cats around";
+	mes "the dock frequently.";
+	mes "Are they tourists?";
+	mes "We should check their pockets";
+	mes "once I get well...";
+	close;
+}
+
+malangdo,203,116,5	script	Suspious Dealer#ml	543,{
+	mes "On listening to the story for";
+	mes "a while, he pretends to be indifferent once hearing someone's noise.";
+	next;
+	mes "[Suspious Dealer]";
+	mes "Oh my body, too much pain...";
+	close;
+}
+
+malangdo,205,116,3	script	Very Suspious Dealer#ml1	543,{
+	mes "On listening to the story for";
+	mes "a while, he pretends to be indifferent once hearing someone's noise.";
+	next;
+	mes "[Very Suspious Dealer]";
+	mes "The weather is so dirty...";
+	close;
+}
+
+malangdo,197,120,5	script	Foolish Cat#ml	546,{
+	mes "[Foolish Cat]";
+	mes "If you stay here, you";
+	mes "can hear all they're saying.";
+	mes "Don't know exactly what, but";
+	mes "you do hear everything.";
+	mes "Hehehe...";
+	close;
+}
+
+malangdo,196,120,0	script	#ml1	-1,2,2,{
+OnTouch:
+	if (malang_bad_guys == 1 || malang_bad_guys == 2) {
+		mes "You hear a conversation between the Suspious Dealers.";
+		next;
+		mes "[Suspious Dealer]";
+		mes "Because unexpected robbery at that moment...";
+		mes "our great work has delayed.";
+		next;
+		mes "[Very Suspious Dealer]";
+		mes "Do not worry about the thing, I placed it near balloon bag where";
+		mes "Ship Navi is in the north, and I hid it perfectly.";
+		next;
+		mes "You need to check a place near north of balloon bag in ship Navi.";
+		if (malang_bad_guys == 1) {
+			erasequest 1145;
+			setquest 1146;
+			set malang_bad_guys,2;
+		}
+		close;
+	} else if (malang_bad_guys > 2 && malang_bad_guys < 8) {
+		mes "You still hear a suspicious conversation.";
+		next;
+		mes "[Suspious Dealer]";
+		mes "But near the balloon bag is still";
+		mes "worrying so much!";
+		next;
+		mes "[Very Suspious Dealer]";
+		mes "Oh how cowardly you are!";
+		mes "I hid it in ship Navi perfectly.";
+		mes "Relax!";
+		next;
+		mes "[Suspious Dealer]";
+		mes "The rest of part is in staffs.";
+		mes "We should believe.";
+		next;
+		mes "We need to investigate Navi first.";
+		mes "Let's see other guys in ship Navi.";
+		if (malang_bad_guys == 3) {
+			erasequest 1147;
+			setquest 1148;
+			set malang_bad_guys,4;
+		}
+		close;
+	} else if (malang_bad_guys > 7) {
+		mes "You still hear a suspicious conversation.";
+		next;
+		mes "[Suspious Dealer]";
+		mes "Star candy is still healthy,";
+		mes "what happens?";
+		next;
+		mes "[Very Suspious Dealer]";
+		mes "No way...";
+		mes "We should get more bad cans.";
+		close;
+	}
+	end;
+}
+
+malangdo,155,179,0	script	#ml2	-1,2,2,{
+OnTouch:
+	if (malang_bad_guys == 2 || malang_bad_guys == 3) {
+		mes "There's a memo.";
+		next;
+		mes "[Memo]";
+		mes "Here is not what we wanted, huh!";
+		next;
+		mes "...do listen the conversation of merchant.";
+		if (malang_bad_guys == 2) {
+			erasequest 1146;
+			setquest 1147;
+			set malang_bad_guys,3;
+		}
+		close;
+	}
+	end;
+}
+
+malangdo,171,163,3	script	Awfully Suspious Dealer	543,{
+	if (malang_bad_guys < 4) {
+		mes "[Awfully Suspious Dealer]";
+		mes "We quit our sales,";
+		mes "find the other merchant!";
+		close;
+	} else if (malang_bad_guys == 4) {
+		mes "[Awfully Suspious Dealer]";
+		mes "Bad cans?";
+		mes "Due to lots of work in here";
+		mes "can't have a short time to talk?";
+		next;
+		switch(select("Look suspicious?:I knew all things here!")) {
+		case 1:
+			mes "[Awfully Suspious Dealer]";
+			mes "I have a same boat with you!";
+			close;
+		case 2:
+			mes "[Awfully Suspious Dealer]";
+			mes "...";
+			mes "You searched the lounge of ship Navi?";
+			mes "...";
+			next;
+			mes "[Awfully Suspious Dealer]";
+			mes "It looks wrong place~";
+			mes "Go and do other things~!";
+			next;
+			mes "You need to search lounge of ship Navi?";
+			erasequest 1148;
+			setquest 1149;
+			set malang_bad_guys,5;
+			close;
+		}
+	} else if (malang_bad_guys == 5) {
+		mes "[Awfully Suspious Dealer]";
+		mes "A thought to search Gozangee around ship Navi";
+		mes "is like to ride a skill";
+		mes "with frying pan, it is idiot things.";
+		mes "I do not recommend.";
+		close;
+	} else if (malang_bad_guys == 6) {
+		if (countitem(6427) == 0) {
+			mes "[Awfully Suspious Dealer]";
+			mes "You searched the lounge of ship Navi?";
+			mes "But still nothing in hand.";
+			mes "I told you there's nothing.";
+			mes "...";
+			next;
+			mes "[Awfully Suspious Dealer]";
+			mes "...there must be something...";
+			close;
+		}
+		mes "[Awfully Suspious Dealer]";
+		mes "Oh! That's ^0000FFa sack of bad cans^000000, isn't it?";
+		mes "Where did you get it? Amazing!";
+		next;
+		switch(select("Do not pretend not to know!:Need to show them our general!")) {
+		case 1:
+			mes "[Awfully Suspious Dealer]";
+			mes "It just looks wonderful.";
+			mes "There's nothing more to have?";
+			emotion e_ho;
+			close;
+		case 2:
+			mes "[Awfully Suspious Dealer]";
+			mes "Relax!";
+			mes "Let's have smile and fun with only ours.";
+			next;
+			mes "[Awfully Suspious Dealer]";
+			mes "To be honest, I am a member of raccoon hurray team.";
+			mes "A homeless community of raccoons";
+			mes "became a black market group.";
+			mes "I will make headquater of raccoon hurray team here";
+			mes "after kick out group of cats.";
+			next;
+			switch(select("Are you the leader?:Let me clear the usage of bad can.:Can it be worked as you want?")) {
+			case 1:
+				mes "[Awfully Suspious Dealer]";
+				mes "This is thankful misunderstanding,";
+				mes "I am just little staff.";
+				mes "I don't know who the leader is.";
+				close;
+			case 2:
+				mes "[Awfully Suspious Dealer]";
+				mes "That is...";
+				mes "for food...";
+				mes "Don't ask me more, please!";
+				close;
+			case 3:
+				mes "[Awfully Suspious Dealer]";
+				mes "You look down out raccoon hurray team?";
+				mes "Look more! To my star candy who stands island";
+				mes "I will make them have stomachache";
+				mes "with lots of bad cans.";
+				mes "Aren't you expecting?";
+				next;
+				mes "[Awfully Suspious Dealer]";
+				mes "I can't make him eat with my hand,";
+				mes "to creature in shining coral area that is basic food of star candy";
+				mes "I am still feeding them with bad cans.";
+				mes "You must see amazing reaction, just wait!";
+				next;
+				mes "The situation is serious.";
+				mes "Once the cats figure out,";
+				mes "you might be confused.";
+				mes "Let's withdraw the bad cans first,";
+				mes "located in the shining coral area.";
+				erasequest 1150;
+				setquest 1151;
+				set malang_bad_guys,7;
+				close;
+			}
+		}
+	} else if (malang_bad_guys == 7) {
+		mes "[Awfully Suspious Dealer]";
+		mes "Plese forget what I have told you.";
+		mes "Please...";
+		mes "After you got 30 pcs of bad cans";
+		mes "in shining coral area";
+		mes "do not tell the cats";
+		mes "or report this fact!";
+		close;
+	}
+	mes "[Awfully Suspious Dealer]";
+	mes "So you reported all things?";
+	mes "...";
+	mes "Now it's time to live a new life";
+	mes "of group for hair tufts...";
+	close;
+}
+
+mal_in02,184,72,3	script	Gozangee#ml	547,{
+	mes "[Gozangee]";
+	mes "I have too much pain in my stomach...";
+	mes "Should endure myself!";
+	mes "...do bad activity...";
+	close;
+}
+
+mal_in02,184,77,0	script	#ml3	-1,2,2,{
+OnTouch:
+	if (checkweight(1201,1) == 0) {
+		mes "- You have too many items. -";
+		close;
+	}
+	if (malang_bad_guys == 4) {
+		mes "I came to...";
+		mes "know a thing that shouldn't be";
+		mes "appeared to anyone.";
+		mes "Just pretend that I didn't see this.";
+		close;
+	} else if (malang_bad_guys == 5) {
+		mes "This is...!";
+		mes "...";
+		next;
+		mes "A sack that carrying bad cans.";
+		next;
+		mes "Let's bring this to a guy who";
+		mes "is in Awfully Suspious Dealer in deck.";
+		erasequest 1149;
+		setquest 1150;
+		set malang_bad_guys,6;
+		getitem 6427,1; //Bad_Can_Sack
+		close;
+	} else if (malang_bad_guys == 6) {
+		mes "I saw a sack of bad cans.";
+		mes "located on the deck.";
+		mes "Let's bring this to a guy who";
+		mes "is in Awfully Suspious Dealer in deck.";
+		close;
+	}
+	end;
+}
+
+malangdo,125,147,3	script	Patrol Leader#ml	545,{
+	if (checkweight(1201,1) == 0) {
+		mes "- Can't go next step due to having too many items. -";
+		close;
+	}
+	if (malang_bad_guys < 10) {
+		mes "[Patrol Leader]";
+		mes "Be careful of distribution for";
+		mes "bad cans recently in here";
+		mes "so should be noticed.";
+		close;
+	} else if (malang_bad_guys == 10) {
+		mes "[Patrol Leader]";
+		mes "So you are going to do bad activity instead of";
+		mes "group of hair tufts lying in bed?";
+		mes "It's gonna be exciting!";
+		mes "So excited...";
+		next;
+		mes "[Patrol Leader]";
+		mes "Gobonge and his friends";
+		mes "liked to torment ^0000FFRed Eruma^000000 in shining";
+		mes "coral area more than anything.";
+		next;
+		mes "[Patrol Leader]";
+		mes "Report to me after tormenting 20 ^0000FFRed Eruma^000000";
+		mes "for a while.";
+		mes "I will scold you as Patrol Leader!";
+		next;
+		switch(select("What Patrol Leader do like this?:Cheer up!!")) {
+		case 1:
+			mes "[Patrol Leader]";
+			mes "This is what my flavor to do this!";
+			close;
+		case 2:
+			mes "[Patrol Leader]";
+			mes "I will expect various bad activities.";
+			erasequest 1153;
+			setquest 1154;
+			set malang_bad_guys,11;
+			close;
+		}
+	} else if (malang_bad_guys == 11) {
+		if (checkquest(1154,HUNTING) == 2) {
+			mes "[Patrol Leader]";
+			mes "Wow, you did to ^0000FFRed Eruma^000000 so badly!";
+			mes "I am impressed at your work.";
+			next;
+			mes "[Crime Prevention Staff]";
+			mes "Captain, we have work again, right?";
+			emotion e_sob;
+			emotion e_sob,0,"Crime Prevention Staff#ml";
+			next;
+			mes "[Patrol Leader]";
+			mes "Hide your tears and save your tears!";
+			mes "You should cry when having a clue for bad activity";
+			mes "at crime spot!";
+			emotion e_sob;
+			emotion e_sob,0,"Crime Prevention Staff#ml";
+			next;
+			mes "[Patrol Leader]";
+			mes "I will scold you once the investigation is over!";
+			mes "Visit Gobonge now.";
+			erasequest 1154;
+			setquest 1155;
+			set malang_bad_guys,12;
+			close;
+		}
+		mes "[Patrol Leader]";
+		mes "Inside of starry coral area,";
+		mes "report to me after tormenting 20 ^0000FFRed Eruma^000000";
+		mes "for a while.";
+		mes "I will scold you as Patrol Leader!";
+		close;
+	}
+	mes "[Patrol Leader]";
+	mes "I will scold you once the investigation";
+	mes "is over!";
+	mes "visit Gobonge now.";
+	close;
+}
+
+malangdo,129,146,3	script	Crime Prevention Staff	545,{
+	if (malang_bad_guys > 11) {
+		mes "[Crime Prevention Staff]";
+		mes "A work to do means happy things!";
+		mes "I ask you to do various bad activities!";
+		close;
+	}
+	mes "[Crime Prevention Staff]";
+	mes "A group of cats that";
+	mes "ate bad cans got";
+	mes "pain in stomache.";
+	mes "They are lying at the north";
+	mes "of place but still rolling with anger.";
+	next;
+	mes "[Crime Prevention Staff]";
+	mes "Haha... the village is becoming";
+	mes "peaceful and calm, but feels";
+	mes "somewhat empty. This is not";
+	mes "usual scene that we can have.";
+	mes "Let's see there?";
+	close;
+}
+
+/*
+malangdo,3,1,3	script	Guidance for quest#ml	543,{
+	input .@input,1,9999;
+	if (.@input != 1854) {
+		mes "[Helper]";
+		mes "What is this security code?";
+		mes "Go away!";
+		close;
+	}
+	mes "[Helper]";
+	mes "Choose now, hurry!";
+	next;
+	switch(select("NPC appear!:NPC walkout!:Reset setitem:30 pcs of bad cans:Just before collecting cans:Start quest for Patrol Leader")) {
+	case 1:
+		donpcevent "Gobonge#ml::OnEnable";
+		mes "[Helper]";
+		mes "First appearance!";
+		close;
+	case 2:
+		donpcevent "Gobonge#ml::OnDisable";
+		mes "[Helper]";
+		mes "Walk out!";
+		close;
+	case 3:
+		mes "[Helper]";
+		mes "Yap!";
+		set malang_bad_guys,0;
+		erasequest 1152;
+		close;
+	case 4:
+		mes "[Helper]";
+		mes "Owing?";
+		getitem 6426,30; //Bad_Can
+		close;
+	case 5:
+		mes "[Helper]";
+		mes "Yap!";
+		erasequest 1150;
+		setquest 1151;
+		set malang_bad_guys,7;
+		close;
+	case 6:
+		mes "[Helper]";
+		mes "Yap!";
+		set malang_bad_guys,10;
+		close;
+	}
+}
+*/
+
+// Pipielle :: mal_ppl
+//============================================================
+malangdo,137,200,6	script	Pipielle	549,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 1000) {
+		mes "You have too many items, please try again after reducing your weight.";
+		close;
+	}
+	if (BaseLevel < 60) {
+		mes "[Pipielle]";
+		mes "Wow this is nice weather, do you like this kind of weather too? I like it too but I need to my work now.";
+		next;
+		mes "[Pipielle]";
+		mes "I would ask for your help if you were a stronger advanturer...";
+		next;
+		mes "^770099This cat is working on something, she asks for help above LV60.^000000";
+		close;
+	}
+	set .@fish_ss1, "What are you doing??";
+	if (countitem(6451) > 29)
+		set .@fish_ss2, "I caught a lot of strange fishes!";
+	else {
+		set .@fish_num, 30-countitem(6451); //Unknown_Fish
+		set .@fish_ss2, "Remaining " + .@fish_num + " of ^bbbbbbUnidentified Fish are required.^000000";
+	}
+	if (ma_tomas == 100)
+		set .@fish_ss3, "I met a Admiral Thomas...";
+	mes "[Pipielle]";
+	mes "Would you come here and open your bag for me?";
+	next;
+	switch(select(.@fish_ss1,.@fish_ss2,.@fish_ss3)) {
+	case 1:
+		mes "[Pipielle]";
+		mes "There are many beautiful fishes around here. So I feel my heard beating when I standing here.";
+		next;
+		select("Of course, my heart will beat up too if I see delicious thing!");
+		mes "[Pipielle]";
+		mes "How come you only know about eating!! My heart don't beat up because of I see the delicious thing. Don't treat me the same as others.";
+		next;
+		mes "[Pipielle]";
+		mes "I used to study from scholar from uno same as human. And I am good at human language as well. Don't treat me same as others.";
+		next;
+		mes "[Pipielle]";
+		mes "I am a scholar who researches fish in here. It's little funny that cat research fish but it's true.";
+		next;
+		select("Are you originally a scholar?");
+		mes "[Pipielle]";
+		mes "Originally I used to mate of admiral Thomas. But our ship never to back to sea after we has arrived here.";
+		next;
+		mes "[Pipielle]";
+		mes "The mate from ship that never voyage is lonely.";
+		next;
+		mes "[Pipielle]";
+		mes "The scholar from Uno came here for research and he thought it is amazing thing that cat speaks human language. Therefore he started teach me.";
+		next;
+		select("But now everyone speaks human language.");
+		mes "[Pipielle]";
+		mes "Oh yes, there were only little cat speaks human language. That's why he treated me special.";
+		next;
+		mes "[Pipielle]";
+		mes "Anyways, now I collect specimens to be ichthyologist. I hope you can help me.";
+		next;
+		if(select("How can I help you?:I would say no.") == 2) {
+			mes "[Pipielle]";
+			mes "Oh, okay. If you change your mind, please come again.";
+			close;
+		}
+		mes "[Pipielle]";
+		mes "There is a Pouring who's eating all fishes in Octopus and Culvert dungeon.";
+		next;
+		mes "[Pipielle]";
+		mes "It used to not live there, but he might came here for winter, so could you collect the specimens unidentified fish after get rid of it.";
+		next;
+		mes "[Pipielle]";
+		mes "You can get identified fishes from Pouring, so please collect about 30 pieces.";
+		close;
+	case 2:
+		if (countitem(6451) > 29) {
+			//saveppl Unknown_Fish
+			delitem 6451,30; //Unknown_Fish
+			mes "[Pipielle]";
+			mes "Oh, thank you! I will take these specimens.";
+			next;
+			mes "[Pipielle]";
+			mes "I want to give you something, but last one is out of stock now so I will just write your name here.";
+			next;
+			mes "[Pipielle]";
+			mes "I can give you good new even from far distance, but it's only possible if I am really lucky...";
+			close;
+		}
+		mes "[Pipielle]";
+		mes "I'm sorry, but please collect 30 pieces of unidentified fishes specimens.";
+		close;
+	case 3:
+		mes "[Pipielle]";
+		mes "Oh, you have met admiral Thomas... how was it?";
+		next;
+		if(select("He looks gentle:He looks terrible") == 2) {
+			mes "[Pipielle]";
+			mes "Hmm...";
+			mes "Frankly speaking, I was a real fan of Admiral Thomas. Can you take a responsibility of your word?";
+			next;
+			if(select("Just kidding!:Oh yes, he was really terrible!") == 2) {
+				mes "[Pipielle]";
+				mes "Is he?";
+				mes "Okay, it really depends on personal taste...";
+				close;
+			}
+		}
+		mes "[Pipielle]";
+		mes "Is he?";
+		mes "I knew you would say so.";
+		next;
+		mes "[Pipielle]";
+		mes "Admiral Thomas is a legendary figure who has voyaged to this island with leading all of us. I think it was the most happiest moment in my life.";
+		next;
+		mes "[Pipielle]";
+		mes "Please help him a lot. There are not many people to trust. This is my personal request.";
+		next;
+		mes "[Pipielle]";
+		mes "And this is small gift for ask you to look after admiral Thomas.";
+		set ma_tomas,101;
+		getitem 6422,200; //Egrade_Coin
+		mes "^0000ffReceived 200 E Class Coins.^000000";
+		close;
+	}
+}
