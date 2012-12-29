@@ -25,6 +25,8 @@ struct s_homunculus_db {
 extern struct s_homunculus_db homunculus_db[MAX_HOMUNCULUS_CLASS];
 enum { HOMUNCULUS_CLASS, HOMUNCULUS_FOOD };
 
+enum { MH_MD_FIGHTING=1, MH_MD_GRAPPLING };
+
 enum {
 	SP_ACK      = 0x0,
 	SP_INTIMATE = 0x1,
@@ -45,8 +47,6 @@ struct homun_data {
 	int hungry_timer;	//[orn]
 	unsigned int exp_next;
 	char blockskill[MAX_SKILL];	// [orn]
-    
-    int spiritball; //for homun S [lighta]
 };
 
 #define MAX_HOM_SKILL_REQUIRE 5

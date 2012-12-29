@@ -51,7 +51,7 @@
 #endif
 
 //Remove/Comment this line to disable sc_data saving. [Skotlex]
-#define ENABLE_SC_SAVING 
+#define ENABLE_SC_SAVING
 //Remove/Comment this line to disable server-side hot-key saving support [Skotlex]
 //Note that newer clients no longer save hotkeys in the registry!
 #define HOTKEY_SAVING
@@ -176,7 +176,7 @@ enum item_types {
 	IT_AMMO,    //10
 	IT_DELAYCONSUME,//11
 	IT_CASH = 18,
-	IT_MAX 
+	IT_MAX
 };
 
 
@@ -292,6 +292,8 @@ struct s_homunculus {	//[orn]
 	int int_ ;
 	int dex ;
 	int luk ;
+
+	char spiritball; //for homun S [lighta]
 };
 
 struct s_mercenary {
@@ -416,7 +418,7 @@ struct auction_data {
 	char seller_name[NAME_LENGTH];
 	int buyer_id;
 	char buyer_name[NAME_LENGTH];
-	
+
 	struct item item;
 	// This data is required for searching, as itemdb is not read by char server
 	char item_name[ITEM_NAME_LENGTH];
@@ -539,7 +541,7 @@ struct fame_list {
 	char name[NAME_LENGTH];
 };
 
-enum { //Change Guild Infos 
+enum { //Change Guild Infos
 	GBI_EXP	=1,		// Guild Experience (EXP)
 	GBI_GUILDLV,		// Guild level
 	GBI_SKILLPOINT,		// Guild skillpoints
@@ -547,7 +549,7 @@ enum { //Change Guild Infos
 };
 
 enum { //Change Member Infos
-	GMI_POSITION	=0,		
+	GMI_POSITION	=0,
 	GMI_EXP,
 	GMI_HAIR,
 	GMI_HAIR_COLOR,

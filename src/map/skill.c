@@ -432,7 +432,7 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, int skill
 		if( sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 2)
 			hp += hp / 10;
 	}
- 
+
 #ifdef RENEWAL
     // MATK part of the RE heal formula [malufett]
     // Note: in this part matk bonuses from items or skills are not applied
@@ -4608,9 +4608,22 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		    map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), splash_target(src), src, skillid, skilllv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
 		}
 		break;
+
 	case MH_STAHL_HORN:
 	case MH_NEEDLE_OF_PARALYZE:
 		skill_attack(BF_WEAPON, src, src, bl, skillid, skilllv, tick, flag);
+		break;
+        case MH_TINDER_BREAKER:
+                if (unit_movepos(src, bl->x, bl->y, 1, 1)) {
+#if PACKETVER >= 20111005
+			clif_snap(src, bl->x, bl->y);
+#else
+			clif_skill_poseffect(src,skillid,skilllv,bl->x,bl->y,tick);
+#endif
+		}
+                clif_skill_nodamage(src,bl,skillid,skilllv,
+			sc_start4(bl,SC_CLOSECONFINE2,100,skilllv,src->id,0,0,skill_get_time(skillid,skilllv)));
+                skill_attack(BF_WEAPON, src, src, bl, skillid, skilllv, tick, flag);
 		break;
 
 	case 0:/* no skill - basic/normal attack */
@@ -8639,11 +8652,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 				switch(sd->ed->db->class_){
 					case 2115:case 2124:
-					case 2118:case 2121: 
+					case 2118:case 2121:
 						duration = 6000;
 						break;
 					case 2116:case 2119:
-					case 2122:case 2125: 
+					case 2122:case 2125:
 						duration = 9000;
 						break;
 				}
@@ -13139,6 +13152,16 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
                 return 0;
             }
             break;
+        case ST_MH_FIGHTING:
+            if (!(sc && sc->data[SC_STYLE_CHANGE] && sc->data[SC_STYLE_CHANGE]->val2 == MH_MD_FIGHTING)){
+                clif_skill_fail(sd,skill,USESKILL_FAIL_LEVEL,0);
+                return 0;
+            }
+        case ST_MH_GRAPPLING:
+            if (!(sc && sc->data[SC_STYLE_CHANGE] && sc->data[SC_STYLE_CHANGE]->val2 == MH_MD_GRAPPLING)){
+                clif_skill_fail(sd,skill,USESKILL_FAIL_LEVEL,0);
+                return 0;
+            }
 	}
 
 	if(require.mhp > 0 && get_percentage(status->hp, status->max_hp) > require.mhp) {
@@ -17576,6 +17599,8 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	else if( strcmpi(split[10],"elementalspirit")==0 ) skill_db[i].state = ST_ELEMENTALSPIRIT;
 	else if (strcmpi(split[10], "poisonweapon") == 0) skill_db[i].state = ST_POISONINGWEAPON;
 	else if (strcmpi(split[10], "rollingcutter") == 0) skill_db[i].state = ST_ROLLINGCUTTER;
+        else if (strcmpi(split[10], "mh_fighting") == 0) skill_db[i].state = ST_MH_FIGHTING;
+        else if (strcmpi(split[10], "mh_grappling") == 0) skill_db[i].state = ST_MH_GRAPPLING;
 
 	/**
 	 * Unknown or no state

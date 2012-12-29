@@ -6916,7 +6916,7 @@ void clif_spiritball(struct block_list *bl) {
 	WBUFW(buf, 6) = 0; //init to 0
     switch(bl->type){
         case BL_PC: WBUFW(buf, 6) = sd->spiritball; break;
-        case BL_HOM: WBUFW(buf, 6) = hd->spiritball; break;
+        case BL_HOM: WBUFW(buf, 6) = hd->homunculus.spiritball; break;
     }
     clif_send(buf, packet_len(0x1d0), bl, AREA);
 }
@@ -13968,7 +13968,7 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 	safestrncpy(msg.send_name, sd->status.name, NAME_LENGTH);
 	safestrncpy(msg.dest_name, (char*)RFIFOP(fd,4), NAME_LENGTH);
 	safestrncpy(msg.title, (char*)RFIFOP(fd,28), MAIL_TITLE_LENGTH);
-	
+
 	if (msg.title[0] == '\0') {
 		return; // Message has no length and somehow client verification was skipped.
 	}

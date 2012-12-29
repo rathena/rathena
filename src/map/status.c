@@ -509,6 +509,8 @@ void initChangeTables(void) {
 	set_sc(MH_PAIN_KILLER, SC_PAIN_KILLER, SI_PAIN_KILLER, SCB_ASPD);
 
 	add_sc(MH_STYLE_CHANGE, SC_STYLE_CHANGE);
+        set_sc( MH_TINDER_BREAKER      , SC_CLOSECONFINE2   , SI_CLOSECONFINE2   , SCB_NONE );
+	set_sc( MH_TINDER_BREAKER      , SC_CLOSECONFINE    , SI_CLOSECONFINE    , SCB_FLEE );
 
 
 	add_sc( MER_CRASH            , SC_STUN            );
@@ -4617,7 +4619,7 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 #ifdef RENEWAL
 static unsigned short status_calc_ematk(struct block_list *bl, struct status_change *sc, int matk)
 {
-	
+
     if (!sc || !sc->count)
         return cap_value(matk,0,USHRT_MAX);
     if (sc->data[SC_MATKPOTION])
@@ -8593,6 +8595,11 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			    if(sc->data[SC_PARALYSIS])
 				sc_start(bl, SC_ENDURE, 100, val1, tick); //start endure for same duration
 			    break;
+                        case SC_STYLE_CHANGE: //[Lighta] need real info
+                            tick = -1;
+                            if(val2 == MH_MD_FIGHTING) val2 = MH_MD_GRAPPLING;
+                            else val2 = MH_MD_FIGHTING; 
+                            break;
 		default:
 			if( calc_flag == SCB_NONE && StatusSkillChangeTable[type] == 0 && StatusIconChangeTable[type] == 0 )
 			{	//Status change with no calc, no icon, and no skill associated...?
@@ -9035,7 +9042,7 @@ int status_change_clear(struct block_list* bl, int type)
 			continue;
 
 		}
-		
+
 		if( type == 3 )
 		{
 			switch (i)
@@ -10681,7 +10688,7 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 /*==========================================
  * Clears buffs/debuffs of a character.
  * type&1 -> buffs, type&2 -> debuffs
- * type&4 -> especific debuffs(implemented with refresh) 
+ * type&4 -> especific debuffs(implemented with refresh)
  *------------------------------------------*/
 int status_change_clear_buffs (struct block_list* bl, int type)
 {

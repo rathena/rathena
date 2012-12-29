@@ -66,7 +66,7 @@ enum e_skill_inf2
 	INF2_GUILD_ONLY     = 0x0800,
 	INF2_NO_ENEMY       = 0x1000,
 	INF2_NOLP           = 0x2000, // Spells that can ignore Land Protector
-	INF2_CHORUS_SKILL	= 0x4000, // Chorus skill 
+	INF2_CHORUS_SKILL	= 0x4000, // Chorus skill
 };
 
 //Walk intervals at which chase-skills are attempted to be triggered.
@@ -402,6 +402,8 @@ enum {
 	ST_ELEMENTALSPIRIT,
 	ST_POISONINGWEAPON,
 	ST_ROLLINGCUTTER,
+	ST_MH_FIGHTING,
+	ST_MH_GRAPPLING,
 };
 
 enum e_skill {
@@ -1786,7 +1788,7 @@ enum {
 	UNT_ZENKAI_WIND,
 	UNT_MAKIBISHI,
 	UNT_VENOMFOG,
-	
+
 	/**
 	 * Guild Auras
 	 **/

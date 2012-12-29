@@ -1476,7 +1476,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 			if (!src->prev) return 0;
 		}
 	}
-	
+
 	unit_stop_walking(src,1);
 	// in official this is triggered even if no cast time.
 	clif_skillcasting(src, src->id, 0, skill_x, skill_y, skill_num, skill_get_ele(skill_num, skill_lv), casttime);
