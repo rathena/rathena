@@ -3282,7 +3282,9 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 				case CH_PALMSTRIKE:
 					{
 						struct status_change* tsc = status_get_sc(target);
-						if( tsc && tsc->option&OPTION_HIDE ){
+						struct status_change* sc = status_get_sc(src);
+						if( tsc && tsc->option&OPTION_HIDE ||
+							sc && sc->option&OPTION_HIDE ){
 							skill_blown(src,target,skill_get_blewcount(skl->skill_id, skl->skill_lv), -1, 0x0 );
 							break;
 						}

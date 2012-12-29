@@ -320,6 +320,7 @@ struct map_session_data {
 		unsigned short unstripable_equip;
 		int fixcastrate,varcastrate;
 		int ematk; // matk bonus from equipment
+//		int eatk; // atk bonus from equipment
 	} bonus;
 
 	// zeroed vars end here.

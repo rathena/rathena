@@ -2057,8 +2057,12 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		break;
 	case SP_BASE_ATK:
 		if(sd->state.lr_flag != 2) {
+//#ifdef RENEWAL
+//            sd->bonus.eatk += val;
+//#else
 			bonus = status->batk + val;
 			status->batk = cap_value(bonus, 0, USHRT_MAX);
+//#endif
 		}
 		break;
 	case SP_DEF1:
@@ -2592,7 +2596,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		if(sd->state.lr_flag != 2)
 			sd->bonus.itemhealrate2 += val;
 		break;
-		case SP_EMATK:
+	case SP_EMATK:
            if(sd->state.lr_flag != 2)
                sd->bonus.ematk += val;
            break;
