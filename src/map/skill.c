@@ -16914,10 +16914,10 @@ int skill_blockpc_start_(struct map_session_data *sd, uint16 skill_id, int tick,
 {
 	int oskill_id = skill_id;
 	struct skill_cd* cd = NULL;
+	uint16 idx = skill_get_index(skill_id);
 
 	nullpo_retr (-1, sd);
 
-	uint16 idx = skill_get_index(skill_id);
 	if (idx == 0)
 		return -1;
 
@@ -16960,9 +16960,10 @@ int skill_blockhomun_end(int tid, unsigned int tick, int id, intptr_t data)	//[o
 
 int skill_blockhomun_start(struct homun_data *hd, uint16 skill_id, int tick)	//[orn]
 {
+	uint16 idx = skill_get_index(skill_id);
 	nullpo_retr (-1, hd);
 
-	uint16 idx = skill_get_index(skill_id);
+
 	if (idx == 0)
 		return -1;
 
@@ -16986,9 +16987,9 @@ int skill_blockmerc_end(int tid, unsigned int tick, int id, intptr_t data)	//[or
 
 int skill_blockmerc_start(struct mercenary_data *md, uint16 skill_id, int tick)
 {
+	uint16 idx = skill_get_index(skill_id);
 	nullpo_retr (-1, md);
 
-	uint16 idx = skill_get_index(skill_id);
 	if (idx == 0)
 		return -1;
 	if( tick < 1 )

@@ -4540,7 +4540,8 @@ int battle_calc_return_damage(struct block_list* bl, struct block_list *src, int
 			}
 			if(sc->data[SC_DEATHBOUND] && skill_id != WS_CARTTERMINATION && !(src->type == BL_MOB && is_boss(src)) ) {
 				uint8 dir = map_calc_dir(bl,src->x,src->y),
-					t_dir = unit_getdir(bl), rd1 = 0;
+					t_dir = unit_getdir(bl);
+				int	rd1 = 0;
 
 				if( distance_bl(src,bl) <= 0 || !map_check_dir(dir,t_dir) ) {
 					rd1 = (int64)min(damage,status_get_max_hp(bl)) * sc->data[SC_DEATHBOUND]->val2 / 100; // Amplify damage.

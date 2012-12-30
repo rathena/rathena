@@ -490,7 +490,8 @@ struct mapcell
 
 struct iwall_data {
 	char wall_name[50];
-	short m, x, y, size, dir;
+	short m, x, y, size;
+	int8 dir;
 	bool shootable;
 };
 

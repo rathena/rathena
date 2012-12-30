@@ -14108,12 +14108,6 @@ BUILDIN_FUNC(sscanf){
         *(buf_p-len+1) = '*';
     }
 
-    // Passed more, than needed
-    if(arg<argc){
-        ShowWarning("buildin_sscanf: Unused arguments passed.\n");
-        script_reportsrc(st);
-    }
-
     script_pushint(st, arg);
     if(buf) aFree(buf);
     if(ref_str) aFree(ref_str);
