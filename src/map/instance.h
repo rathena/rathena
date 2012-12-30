@@ -22,7 +22,7 @@ struct s_instance {
 	int users;
 
 	struct DBMap* vars; // Instance Variable for scripts
-	
+
 	int progress_timer;
 	time_t progress_timeout;
 
@@ -35,9 +35,9 @@ extern struct s_instance instance[MAX_INSTANCE];
 
 int instance_create(int party_id, const char *name);
 int instance_add_map(const char *name, int instance_id, bool usebasename);
-void instance_del_map(int m);
-int instance_map2imap(int m, int instance_id);
-int instance_mapid2imapid(int m, int instance_id);
+void instance_del_map(int16 m);
+int instance_map2imap(int16 m, int instance_id);
+int instance_mapid2imapid(int16 m, int instance_id);
 void instance_destroy(int instance_id);
 void instance_init(int instance_id);
 

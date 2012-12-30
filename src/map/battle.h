@@ -33,9 +33,9 @@ struct block_list;
 
 // Damage Calculation
 
-struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct block_list *target,int skill_num,int skill_lv,int count);
+struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct block_list *target,uint16 skill_id,uint16 skill_lv,int count);
 
-int battle_calc_return_damage(struct block_list *bl, struct block_list *src, int *, int flag, int skillid);
+int battle_calc_return_damage(struct block_list *bl, struct block_list *src, int *, int flag, uint16 skill_id);
 
 void battle_drain(struct map_session_data *sd, struct block_list *tbl, int rdamage, int ldamage, int race, int boss);
 
@@ -44,9 +44,9 @@ int battle_attr_fix(struct block_list *src, struct block_list *target, int damag
 int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_list *target, int nk, int s_ele, int s_ele_, int damage, int left, int flag);
 
 // Final calculation Damage
-int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damage *d,int damage,int skill_num,int skill_lv);
-int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int damage,int div_,int skill_num,int skill_lv,int flag);
-int battle_calc_bg_damage(struct block_list *src,struct block_list *bl,int damage,int div_,int skill_num,int skill_lv,int flag);
+int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damage *d,int damage,uint16 skill_id,uint16 skill_lv);
+int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int damage,int div_,uint16 skill_id,uint16 skill_lv,int flag);
+int battle_calc_bg_damage(struct block_list *src,struct block_list *bl,int damage,int div_,uint16 skill_id,uint16 skill_lv,int flag);
 
 enum {	// Flag of the final calculation
 	BF_WEAPON	= 0x0001,
@@ -61,7 +61,7 @@ enum {	// Flag of the final calculation
 	BF_SKILLMASK= 0x0f00,
 };
 
-int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, int skill_id, int skill_lv, int damage, enum damage_lv dmg_lv, int ddelay);
+int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, uint16 skill_id, uint16 skill_lv, int damage, enum damage_lv dmg_lv, int ddelay);
 
 // Summary normal attack treatment (basic attack)
 enum damage_lv battle_weapon_attack( struct block_list *bl,struct block_list *target,unsigned int tick,int flag);
@@ -312,8 +312,8 @@ extern struct Battle_Config
 	int pk_level_range;
 
 	int manner_system; // end additions [Valaris]
-	int show_mob_info; 
-	
+	int show_mob_info;
+
 	int gx_allhit;
 	int gx_disptype;
 	int devotion_level_difference;
@@ -336,7 +336,7 @@ extern struct Battle_Config
 	int night_duration; // added by [Yor]
 	int ban_hack_trade; // added by [Yor]
 	int packet_ver_flag; // added by [Yor]
-	
+
 	int min_hair_style; // added by [MouseJstr]
 	int max_hair_style; // added by [MouseJstr]
 	int min_hair_color; // added by [MouseJstr]
@@ -349,7 +349,7 @@ extern struct Battle_Config
 	int area_size; // added by [MouseJstr]
 
 	int max_def, over_def_bonus; //added by [Skotlex]
-	
+
 	int zeny_from_mobs; // [Valaris]
 	int mobs_level_up; // [Valaris]
 	int mobs_level_up_exp_rate; // [Valaris]
@@ -404,7 +404,7 @@ extern struct Battle_Config
 	int duel_autoleave_when_die; // [LuzZza]
 	int duel_time_interval; // [LuzZza]
 	int duel_only_on_same_map; // [Toms]
-	
+
 	int skip_teleport_lv1_menu; // possibility to disable (skip) Teleport Lv1 menu, that have only two lines `Random` and `Cancel` [LuzZza]
 
 	int allow_skill_without_day; // [Komurka]
@@ -477,11 +477,11 @@ extern struct Battle_Config
 	int vcast_stat_scale;
 
 	int mvp_tomb_enabled;
-	
+
 	int atcommand_suggestions_enabled;
     int min_npc_vending_distance;
 	int atcommand_mobinfo_type;
-	
+
 	int mob_size_influence; // Enable modifications on earned experience, drop rates and monster status depending on monster size. [mkbu95]
 } battle_config;
 

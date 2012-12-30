@@ -384,7 +384,7 @@ int mercenary_kills(struct mercenary_data *md)
 	return 0;
 }
 
-int mercenary_checkskill(struct mercenary_data *md, int skill_id)
+int mercenary_checkskill(struct mercenary_data *md, uint16 skill_id)
 {
 	int i = skill_id - MC_SKILLBASE;
 
@@ -464,7 +464,7 @@ static bool read_mercenary_skilldb_sub(char* str[], int columns, int current)
 {// <merc id>,<skill id>,<skill level>
 	struct s_mercenary_db *db;
 	int i, class_;
-	int skillid, skilllv;
+	uint16 skill_id, skill_lv;
 
 	class_ = atoi(str[0]);
 	ARR_FIND(0, MAX_MERCENARY_CLASS, i, class_ == mercenary_db[i].class_);
@@ -474,19 +474,19 @@ static bool read_mercenary_skilldb_sub(char* str[], int columns, int current)
 		return false;
 	}
 	
-	skillid = atoi(str[1]);
-	if( skillid < MC_SKILLBASE || skillid >= MC_SKILLBASE + MAX_MERCSKILL )
+	skill_id = atoi(str[1]);
+	if( skill_id < MC_SKILLBASE || skill_id >= MC_SKILLBASE + MAX_MERCSKILL )
 	{
-		ShowError("read_mercenary_skilldb : Skill %d out of range.\n", skillid);
+		ShowError("read_mercenary_skilldb : Skill %d out of range.\n", skill_id);
 		return false;
 	}
 
 	db = &mercenary_db[i];
-	skilllv = atoi(str[2]);
+	skill_lv = atoi(str[2]);
 
-	i = skillid - MC_SKILLBASE;
-	db->skill[i].id = skillid;
-	db->skill[i].lv = skilllv;
+	i = skill_id - MC_SKILLBASE;
+	db->skill[i].id = skill_id;
+	db->skill[i].lv = skill_lv;
 
 	return true;
 }

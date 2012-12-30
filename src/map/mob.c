@@ -90,7 +90,7 @@ const int mob_splendide[5] = { 1991, 1992, 1993, 1994, 1995 };
  *------------------------------------------*/
 static int mob_makedummymobdb(int);
 static int mob_spawn_guardian_sub(int tid, unsigned int tick, int id, intptr_t data);
-int mob_skillid2skillidx(int class_,int skillid);
+int mob_skill_id2skill_idx(int class_,uint16 skill_id);
 
 /*==========================================
  * Mob is searched with a name.
@@ -169,7 +169,7 @@ void mvptomb_destroy(struct mob_data *md) {
 	struct npc_data *nd;
 
 	if ( (nd = map_id2nd(md->tomb_nid)) ) {
-		int m, i;
+		int16 m, i;
 
 		m = nd->bl.m;
 
@@ -285,7 +285,7 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 		md->lootitem = (struct item *)aCalloc(LOOTITEM_SIZE,sizeof(struct item));
 	md->spawn_timer = INVALID_TIMER;
 	md->deletetimer = INVALID_TIMER;
-	md->skillidx = -1;
+	md->skill_idx = -1;
 	status_set_viewdata(&md->bl, md->class_);
 	status_change_init(&md->bl);
 	unit_dataset(&md->bl);
@@ -420,7 +420,7 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 	return false;
 }
 
-struct mob_data *mob_once_spawn_sub(struct block_list *bl, int m, short x, short y, const char *mobname, int class_, const char *event, unsigned int size, unsigned int ai)
+struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int16 y, const char *mobname, int class_, const char *event, unsigned int size, unsigned int ai)
 {
 	struct spawn_data data;
 
@@ -462,7 +462,7 @@ struct mob_data *mob_once_spawn_sub(struct block_list *bl, int m, short x, short
 /*==========================================
  * Spawn a single mob on the specified coordinates.
  *------------------------------------------*/
-int mob_once_spawn(struct map_session_data* sd, int m, short x, short y, const char* mobname, int class_, int amount, const char* event, unsigned int size, unsigned int ai)
+int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y, const char* mobname, int class_, int amount, const char* event, unsigned int size, unsigned int ai)
 {
 	struct mob_data* md = NULL;
 	int count, lv;
@@ -514,7 +514,7 @@ int mob_once_spawn(struct map_session_data* sd, int m, short x, short y, const c
 /*==========================================
  * Spawn mobs in the specified area.
  *------------------------------------------*/
-int mob_once_spawn_area(struct map_session_data* sd, int m, int x0, int y0, int x1, int y1, const char* mobname, int class_, int amount, const char* event, unsigned int size, unsigned int ai)
+int mob_once_spawn_area(struct map_session_data* sd, int16 m, int16 x0, int16 y0, int16 x1, int16 y1, const char* mobname, int class_, int amount, const char* event, unsigned int size, unsigned int ai)
 {
 	int i, max, id = 0;
 	int lx = -1, ly = -1;
@@ -624,7 +624,7 @@ int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobnam
 	struct spawn_data data;
 	struct guild *g=NULL;
 	struct guild_castle *gc;
-	int m;
+	int16 m;
 	memset(&data, 0, sizeof(struct spawn_data));
 	data.num = 1;
 
@@ -727,7 +727,7 @@ int mob_spawn_bg(const char* mapname, short x, short y, const char* mobname, int
 {
 	struct mob_data *md = NULL;
 	struct spawn_data data;
-	int m;
+	int16 m;
 
 	if( (m = map_mapname2mapid(mapname)) < 0 )
 	{
@@ -2858,7 +2858,7 @@ int mob_countslave(struct block_list *bl)
 /*==========================================
  * Summons amount slaves contained in the value[5] array using round-robin. [adapted by Skotlex]
  *------------------------------------------*/
-int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
+int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id)
 {
 	struct mob_data *md;
 	struct spawn_data data;
@@ -2954,10 +2954,10 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 }
 
 /*==========================================
- * MOBskill lookup (get skillindex through skillid)
+ * MOBskill lookup (get skillindex through skill_id)
  * Returns -1 if not found.
  *------------------------------------------*/
-int mob_skillid2skillidx(int class_,int skillid)
+int mob_skill_id2skill_idx(int class_,uint16 skill_id)
 {
 	int i, max = mob_db(class_)->maxskill;
 	struct mob_skill *ms=mob_db(class_)->skill;
@@ -2965,7 +2965,7 @@ int mob_skillid2skillidx(int class_,int skillid)
 	if(ms==NULL)
 		return -1;
 
-	ARR_FIND( 0, max, i, ms[i].skill_id == skillid );
+	ARR_FIND( 0, max, i, ms[i].skill_id == skill_id );
 	return ( i < max ) ? i : -1;
 }
 
@@ -3159,7 +3159,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 				case MSC_ATTACKPCGE:	// attack pc >= num
 					flag = (unit_counttargeted(&md->bl) >= c2); break;
 				case MSC_AFTERSKILL:
-					flag = (md->ud.skillid == c2); break;
+					flag = (md->ud.skill_id == c2); break;
 				case MSC_RUDEATTACKED:
 					flag = (md->state.attacked_count >= RUDE_ATTACKED_COUNT);
 					if (flag) md->state.attacked_count = 0;	//Rude attacked count should be reset after the skill condition is met. Thanks to Komurka [Skotlex]
@@ -3217,7 +3217,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 					(ms[i].target-MST_AROUND5) +1;
 				map_search_freecell(&md->bl, md->bl.m, &x, &y, j, j, 3);
 			}
-			md->skillidx = i;
+			md->skill_idx = i;
 			map_freeblock_lock();
 			if( !battle_check_range(&md->bl,bl,skill_get_range2(&md->bl, ms[i].skill_id,ms[i].skill_lv)) ||
 				!unit_skilluse_pos2(&md->bl, x, y,ms[i].skill_id, ms[i].skill_lv,ms[i].casttime, ms[i].cancel) )
@@ -3255,7 +3255,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 			}
 			if (!bl) continue;
 
-			md->skillidx = i;
+			md->skill_idx = i;
 			map_freeblock_lock();
 			if( !battle_check_range(&md->bl,bl,skill_get_range2(&md->bl, ms[i].skill_id,ms[i].skill_lv)) ||
 				!unit_skilluse_id2(&md->bl, bl->id,ms[i].skill_id, ms[i].skill_lv,ms[i].casttime, ms[i].cancel) )
@@ -3284,7 +3284,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 		return 1;
 	}
 	//No skill was used.
-	md->skillidx = -1;
+	md->skill_idx = -1;
 	return 0;
 }
 /*==========================================
@@ -3335,7 +3335,7 @@ int mob_is_clone(int class_)
 //If mode is not passed, a default aggressive mode is used.
 //If master_id is passed, clone is attached to him.
 //Returns: ID of newly crafted copy.
-int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char *event, int master_id, int mode, int flag, unsigned int duration)
+int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, const char *event, int master_id, int mode, int flag, unsigned int duration)
 {
 	int class_;
 	int i,j,inf,skill_id, fd;

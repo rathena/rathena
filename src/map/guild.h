@@ -60,7 +60,7 @@ int guild_member_withdraw(int guild_id,int account_id,int char_id,int flag,
 	const char *name,const char *mes);
 int guild_expulsion(struct map_session_data *sd,int guild_id,
 	int account_id,int char_id,const char *mes);
-int guild_skillup(struct map_session_data* sd, int skill_num);
+int guild_skillup(struct map_session_data* sd, uint16 skill_id);
 void guild_block_skill(struct map_session_data *sd, int time);
 int guild_reqalliance(struct map_session_data *sd,struct map_session_data *tsd);
 int guild_reply_reqalliance(struct map_session_data *sd,int account_id,int flag);
@@ -84,7 +84,7 @@ int guild_emblem_changed(int len,int guild_id,int emblem_id,const char *data);
 int guild_send_message(struct map_session_data *sd,const char *mes,int len);
 int guild_recv_message(int guild_id,int account_id,const char *mes,int len);
 int guild_send_dot_remove(struct map_session_data *sd);
-int guild_skillupack(int guild_id,int skill_num,int account_id);
+int guild_skillupack(int guild_id,uint16 skill_id,int account_id);
 int guild_break(struct map_session_data *sd,char *name);
 int guild_broken(int guild_id,int flag);
 int guild_gm_change(int guild_id, struct map_session_data *sd);
@@ -105,7 +105,7 @@ void guild_flag_add(struct npc_data *nd);
 void guild_flag_remove(struct npc_data *nd);
 void guild_flags_clear(void);
 
-void guild_guildaura_refresh(struct map_session_data *sd, int skill_num, int skill_lv);
+void guild_guildaura_refresh(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 
 void do_final_guild(void);
 

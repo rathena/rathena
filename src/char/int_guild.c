@@ -1031,12 +1031,12 @@ int mapif_guild_memberinfochanged(int guild_id,int account_id,int char_id, int t
 }
 
 // ACK guild skill up
-int mapif_guild_skillupack(int guild_id,int skill_num,int account_id)
+int mapif_guild_skillupack(int guild_id,uint16 skill_id,int account_id)
 {
 	unsigned char buf[14];
 	WBUFW(buf, 0)=0x383c;
 	WBUFL(buf, 2)=guild_id;
-	WBUFL(buf, 6)=skill_num;
+	WBUFL(buf, 6)=skill_id;
 	WBUFL(buf,10)=account_id;
 	mapif_sendall(buf,14);
 	return 0;
@@ -1620,10 +1620,10 @@ int mapif_parse_GuildPosition(int fd,int guild_id,int idx,struct guild_position 
 }
 
 // Guild Skill UP
-int mapif_parse_GuildSkillUp(int fd,int guild_id,int skill_num,int account_id,int max)
+int mapif_parse_GuildSkillUp(int fd,int guild_id,uint16 skill_id,int account_id,int max)
 {
 	struct guild * g;
-	int idx = skill_num - GD_SKILLBASE;
+	int idx = skill_id - GD_SKILLBASE;
 
 	g = inter_guild_fromsql(guild_id);
 	if(g == NULL || idx < 0 || idx >= MAX_GUILDSKILL)
@@ -1635,7 +1635,7 @@ int mapif_parse_GuildSkillUp(int fd,int guild_id,int skill_num,int account_id,in
 		g->skill_point--;
 		if (!guild_calcinfo(g))
 			mapif_guild_info(-1,g);
-		mapif_guild_skillupack(guild_id,skill_num,account_id);
+		mapif_guild_skillupack(guild_id,skill_id,account_id);
 		g->save_flag |= (GS_LEVEL|GS_SKILL); // Change guild & guild_skill
 	}
 	return 0;

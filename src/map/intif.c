@@ -463,7 +463,7 @@ int intif_party_leave(int party_id,int account_id, int char_id)
 // Request keeping party for new map ??
 int intif_party_changemap(struct map_session_data *sd,int online)
 {
-	int m, mapindex;
+	int16 m, mapindex;
 
 	if (CheckForCharServer())
 		return 0;
@@ -702,15 +702,15 @@ int intif_guild_position(int guild_id,int idx,struct guild_position *p)
 	return 0;
 }
 
-// Request an update of Guildskill skillnum
-int intif_guild_skillup(int guild_id, int skill_num, int account_id, int max)
+// Request an update of Guildskill skill_id
+int intif_guild_skillup(int guild_id, uint16 skill_id, int account_id, int max)
 {
 	if( CheckForCharServer() )
 		return 0;
 	WFIFOHEAD(inter_fd, 18);
 	WFIFOW(inter_fd, 0)  = 0x303c;
 	WFIFOL(inter_fd, 2)  = guild_id;
-	WFIFOL(inter_fd, 6)  = skill_num;
+	WFIFOL(inter_fd, 6)  = skill_id;
 	WFIFOL(inter_fd, 10) = account_id;
 	WFIFOL(inter_fd, 14) = max;
 	WFIFOSET(inter_fd, 18);

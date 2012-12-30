@@ -85,7 +85,7 @@ enum {
 #define UNKNOWN_ITEM_ID 512
 
 struct item_data {
-	int nameid;
+	uint16 nameid;
 	char name[ITEM_NAME_LENGTH],jname[ITEM_NAME_LENGTH];
 	
 	//Do not add stuff between value_buy and view_id (see how getiteminfo works)

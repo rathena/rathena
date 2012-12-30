@@ -277,7 +277,7 @@ static int pc_check_banding( struct block_list *bl, va_list ap ) {
 
 	return 0;
 }
-int pc_banding(struct map_session_data *sd, short skill_lv) {
+int pc_banding(struct map_session_data *sd, uint16 skill_lv) {
 	int c;
 	int b_sd[MAX_PARTY]; // In case of a full Royal Guard party.
 	int i, j, hp, extra_hp = 0, tmp_qty = 0, tmp_hp;
@@ -3954,7 +3954,7 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 	nullpo_ret(sd);
 	nullpo_ret(fitem);
 
-	if(!check_distance_bl(&fitem->bl, &sd->bl, 2) && sd->ud.skillid!=BS_GREED)
+	if(!check_distance_bl(&fitem->bl, &sd->bl, 2) && sd->ud.skill_id!=BS_GREED)
 		return 0;	// Distance is too far
 
 	if (sd->status.party_id)
@@ -4502,7 +4502,7 @@ int pc_show_steal(struct block_list *bl,va_list ap)
  *	0 = fail
  *	1 = succes
  *------------------------------------------*/
-int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
+int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 {
 	int i,itemid,flag;
 	double rate;
@@ -4531,7 +4531,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 	}
 
 	// base skill success chance (percentual)
-	rate = (sd_status->dex - md_status->dex)/2 + lv*6 + 4;
+	rate = (sd_status->dex - md_status->dex)/2 + skill_lv*6 + 4;
 	rate += sd->bonus.add_steal_rate;
 
 	if( rate < 1 )
@@ -4622,7 +4622,7 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *target)
 int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y, clr_type clrtype)
 {
 	struct party_data *p;
-	int m;
+	int16 m;
 
 	nullpo_ret(sd);
 
@@ -4796,7 +4796,7 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 int pc_randomwarp(struct map_session_data *sd, clr_type type)
 {
 	int x,y,i=0;
-	int m;
+	int16 m;
 
 	nullpo_ret(sd);
 
@@ -4869,9 +4869,9 @@ int pc_memo(struct map_session_data* sd, int pos)
 // Skills
 //
 /*==========================================
- * Return player sd skilllv learned for given skill
+ * Return player sd skill_lv learned for given skill
  *------------------------------------------*/
-int pc_checkskill(struct map_session_data *sd,int skill_id)
+int pc_checkskill(struct map_session_data *sd,uint16 skill_id)
 {
 	if(sd == NULL) return 0;
 	if( skill_id >= GD_SKILLBASE && skill_id < GD_MAX )
@@ -5957,45 +5957,45 @@ int pc_statusup2(struct map_session_data* sd, int type, int val)
 }
 
 /*==========================================
- * Update skilllv for player sd
+ * Update skill_lv for player sd
  * Skill point allocation
  *------------------------------------------*/
-int pc_skillup(struct map_session_data *sd,int skill_num)
+int pc_skillup(struct map_session_data *sd,uint16 skill_id)
 {
 	nullpo_ret(sd);
 
-	if( skill_num >= GD_SKILLBASE && skill_num < GD_SKILLBASE+MAX_GUILDSKILL )
+	if( skill_id >= GD_SKILLBASE && skill_id < GD_SKILLBASE+MAX_GUILDSKILL )
 	{
-		guild_skillup(sd, skill_num);
+		guild_skillup(sd, skill_id);
 		return 0;
 	}
 
-	if( skill_num >= HM_SKILLBASE && skill_num < HM_SKILLBASE+MAX_HOMUNSKILL && sd->hd )
+	if( skill_id >= HM_SKILLBASE && skill_id < HM_SKILLBASE+MAX_HOMUNSKILL && sd->hd )
 	{
-		merc_hom_skillup(sd->hd, skill_num);
+		merc_hom_skillup(sd->hd, skill_id);
 		return 0;
 	}
 
-	if( skill_num < 0 || skill_num >= MAX_SKILL )
+	if( skill_id < 0 || skill_id >= MAX_SKILL )
 		return 0;
 
 	if( sd->status.skill_point > 0 &&
-		sd->status.skill[skill_num].id &&
-		sd->status.skill[skill_num].flag == SKILL_FLAG_PERMANENT && //Don't allow raising while you have granted skills. [Skotlex]
-		sd->status.skill[skill_num].lv < skill_tree_get_max(skill_num, sd->status.class_) )
+		sd->status.skill[skill_id].id &&
+		sd->status.skill[skill_id].flag == SKILL_FLAG_PERMANENT && //Don't allow raising while you have granted skills. [Skotlex]
+		sd->status.skill[skill_id].lv < skill_tree_get_max(skill_id, sd->status.class_) )
 	{
-		sd->status.skill[skill_num].lv++;
+		sd->status.skill[skill_id].lv++;
 		sd->status.skill_point--;
-		if( !skill_get_inf(skill_num) )
+		if( !skill_get_inf(skill_id) )
 			status_calc_pc(sd,0); // Only recalculate for passive skills.
 		else if( sd->status.skill_point == 0 && (sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_famerank(sd->status.char_id, MAPID_TAEKWON) )
 			pc_calc_skilltree(sd); // Required to grant all TK Ranger skills.
 		else
-			pc_check_skilltree(sd, skill_num); // Check if a new skill can Lvlup
+			pc_check_skilltree(sd, skill_id); // Check if a new skill can Lvlup
 
-		clif_skillup(sd,skill_num);
+		clif_skillup(sd,skill_id);
 		clif_updatestatus(sd,SP_SKILLPOINT);
-		if( skill_num == GN_REMODELING_CART ) /* cart weight info was updated by status_calc_pc */
+		if( skill_id == GN_REMODELING_CART ) /* cart weight info was updated by status_calc_pc */
 			clif_updatestatus(sd,SP_CARTINFO);
 		if (!pc_has_permission(sd, PC_PERM_ALL_SKILL)) // may skill everything at any time anyways, and this would cause a huge slowdown
 			clif_skillinfoblock(sd);
@@ -6357,12 +6357,12 @@ int pc_resethate(struct map_session_data* sd)
 	return 0;
 }
 
-int pc_skillatk_bonus(struct map_session_data *sd, int skill_num)
+int pc_skillatk_bonus(struct map_session_data *sd, uint16 skill_id)
 {
 	int i, bonus = 0;
 	nullpo_ret(sd);
 
-	ARR_FIND(0, ARRAYLENGTH(sd->skillatk), i, sd->skillatk[i].id == skill_num);
+	ARR_FIND(0, ARRAYLENGTH(sd->skillatk), i, sd->skillatk[i].id == skill_id);
 	if( i < ARRAYLENGTH(sd->skillatk) ) bonus = sd->skillatk[i].val;
 
 	if(sd->sc.data[SC_PYROTECHNIC_OPTION] || sd->sc.data[SC_AQUAPLAY_OPTION])
@@ -6371,11 +6371,11 @@ int pc_skillatk_bonus(struct map_session_data *sd, int skill_num)
 	return bonus;
 }
 
-int pc_skillheal_bonus(struct map_session_data *sd, int skill_num) {
+int pc_skillheal_bonus(struct map_session_data *sd, uint16 skill_id) {
 	int i, bonus = sd->bonus.add_heal_rate;
 
 	if( bonus ) {
-		switch( skill_num ) {
+		switch( skill_id ) {
 			case AL_HEAL:           if( !(battle_config.skill_add_heal_rate&1) ) bonus = 0; break;
 			case PR_SANCTUARY:      if( !(battle_config.skill_add_heal_rate&2) ) bonus = 0; break;
 			case AM_POTIONPITCHER:  if( !(battle_config.skill_add_heal_rate&4) ) bonus = 0; break;
@@ -6384,7 +6384,7 @@ int pc_skillheal_bonus(struct map_session_data *sd, int skill_num) {
 		}
 	}
 
-	ARR_FIND(0, ARRAYLENGTH(sd->skillheal), i, sd->skillheal[i].id == skill_num);
+	ARR_FIND(0, ARRAYLENGTH(sd->skillheal), i, sd->skillheal[i].id == skill_id);
 
 	if( i < ARRAYLENGTH(sd->skillheal) )
 		bonus += sd->skillheal[i].val;
@@ -6392,10 +6392,10 @@ int pc_skillheal_bonus(struct map_session_data *sd, int skill_num) {
 	return bonus;
 }
 
-int pc_skillheal2_bonus(struct map_session_data *sd, int skill_num) {
+int pc_skillheal2_bonus(struct map_session_data *sd, uint16 skill_id) {
 	int i, bonus = sd->bonus.add_heal2_rate;
 
-	ARR_FIND(0, ARRAYLENGTH(sd->skillheal2), i, sd->skillheal2[i].id == skill_num);
+	ARR_FIND(0, ARRAYLENGTH(sd->skillheal2), i, sd->skillheal2[i].id == skill_id);
 
 	if( i < ARRAYLENGTH(sd->skillheal2) )
 		bonus += sd->skillheal2[i].val;
@@ -6513,7 +6513,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		if( (bg = bg_team_search(sd->bg_id)) != NULL && bg->die_event[0] )
 			npc_event(sd, bg->die_event, 0);
 	}
-	
+
 	// Clear anything NPC-related when you die and was interacting with one.
 	if (sd->npc_id)
 	{
@@ -6525,7 +6525,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			sd->state.menu_or_input = 0;
 		if (sd->npc_menu)
 			sd->npc_menu = 0;
-		
+
 		sd->npc_id = 0;
 		if (sd->st && sd->st->state != END)
 			sd->st->state = END;
@@ -7263,12 +7263,12 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 	//Update skill tree.
 	pc_calc_skilltree(sd);
 	clif_skillinfoblock(sd);
-	
+
 	if (sd->ed)
 		elemental_delete(sd->ed, 0);
 	if (sd->state.vending)
 		vending_closevending(sd);
-	
+
 	map_foreachinmap(jobchange_killclone, sd->bl.m, BL_MOB, sd->bl.id);
 
 	//Remove peco/cart/falcon
@@ -9290,14 +9290,14 @@ int pc_split_atoui(char* str, unsigned int* val, char sep, int max)
  *------------------------------------------*/
 static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 {
-	unsigned char joblv = 0, skilllv;
-	unsigned short skillid;
+	unsigned char joblv = 0, skill_lv;
+	uint16 skill_id;
 	int idx, class_;
-	unsigned int i, offset = 3, skillidx;
+	unsigned int i, offset = 3, skill_idx;
 
 	class_  = atoi(fields[0]);
-	skillid = (unsigned short)atoi(fields[1]);
-	skilllv = (unsigned char)atoi(fields[2]);
+	skill_id = (uint16)atoi(fields[1]);
+	skill_lv = (unsigned char)atoi(fields[2]);
 
 	if(columns==4+MAX_PC_SKILL_REQUIRE*2)
 	{// job level requirement extra column
@@ -9313,25 +9313,25 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 	idx = pc_class2idx(class_);
 
 	//This is to avoid adding two lines for the same skill. [Skotlex]
-	ARR_FIND( 0, MAX_SKILL_TREE, skillidx, skill_tree[idx][skillidx].id == 0 || skill_tree[idx][skillidx].id == skillid );
-	if( skillidx == MAX_SKILL_TREE )
+	ARR_FIND( 0, MAX_SKILL_TREE, skill_idx, skill_tree[idx][skill_idx].id == 0 || skill_tree[idx][skill_idx].id == skill_id );
+	if( skill_idx == MAX_SKILL_TREE )
 	{
-		ShowWarning("pc_readdb_skilltree: Unable to load skill %hu into job %d's tree. Maximum number of skills per class has been reached.\n", skillid, class_);
+		ShowWarning("pc_readdb_skilltree: Unable to load skill %hu into job %d's tree. Maximum number of skills per class has been reached.\n", skill_id, class_);
 		return false;
 	}
-	else if(skill_tree[idx][skillidx].id)
+	else if(skill_tree[idx][skill_idx].id)
 	{
-		ShowNotice("pc_readdb_skilltree: Overwriting skill %hu for job class %d.\n", skillid, class_);
+		ShowNotice("pc_readdb_skilltree: Overwriting skill %hu for job class %d.\n", skill_id, class_);
 	}
 
-	skill_tree[idx][skillidx].id    = skillid;
-	skill_tree[idx][skillidx].max   = skilllv;
-	skill_tree[idx][skillidx].joblv = joblv;
+	skill_tree[idx][skill_idx].id    = skill_id;
+	skill_tree[idx][skill_idx].max   = skill_lv;
+	skill_tree[idx][skill_idx].joblv = joblv;
 
 	for(i = 0; i < MAX_PC_SKILL_REQUIRE; i++)
 	{
-		skill_tree[idx][skillidx].need[i].id = atoi(fields[i*2+offset]);
-		skill_tree[idx][skillidx].need[i].lv = atoi(fields[i*2+offset+1]);
+		skill_tree[idx][skill_idx].need[i].id = atoi(fields[i*2+offset]);
+		skill_tree[idx][skill_idx].need[i].lv = atoi(fields[i*2+offset+1]);
 	}
 	return true;
 }

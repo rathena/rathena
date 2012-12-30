@@ -98,12 +98,13 @@ int instance_create(int party_id, const char *name)
  *--------------------------------------*/
 int instance_add_map(const char *name, int instance_id, bool usebasename)
 {
-	int m = map_mapname2mapid(name), i, im = -1;
+	int16 m = map_mapname2mapid(name);
+	int i, im = -1;
 	size_t num_cell, size;
 
 	if( m < 0 )
 		return -1; // source map not found
-		
+
 	if( !instance_is_valid(instance_id) )
 	{
 		ShowError("instance_add_map: trying to attach '%s' map to non-existing instance %d.\n", name, instance_id);
@@ -171,7 +172,7 @@ int instance_add_map(const char *name, int instance_id, bool usebasename)
  * party_id : source party of this instance
  * type : result (0 = map id | 1 = instance id)
  *--------------------------------------*/
-int instance_map2imap(int m, int instance_id)
+int instance_map2imap(int16 m, int instance_id)
 {
  	int i;
 
@@ -179,7 +180,7 @@ int instance_map2imap(int m, int instance_id)
 	{
 		return -1;
 	}
-	
+
 	for( i = 0; i < instance[instance_id].num_map; i++ )
  	{
 		if( instance[instance_id].map[i] && map[instance[instance_id].map[i]].instance_src_map == m )
@@ -193,7 +194,7 @@ int instance_map2imap(int m, int instance_id)
  * instance_id : where to search
  * result : mapid of map "m" in this instance
  *--------------------------------------*/
-int instance_mapid2imapid(int m, int instance_id)
+int instance_mapid2imapid(int16 m, int instance_id)
 {
 	if( map[m].flag.src4instance == 0 )
 		return m; // not instances found for this map
@@ -216,7 +217,7 @@ int instance_mapid2imapid(int m, int instance_id)
 int instance_map_npcsub(struct block_list* bl, va_list args)
 {
 	struct npc_data* nd = (struct npc_data*)bl;
-	int m = va_arg(args, int); // Destination Map
+	int16 m = va_arg(args, int); // Destination Map
 
 	npc_duplicate4instance(nd, m);
 	return 1;
@@ -245,7 +246,7 @@ void instance_init(int instance_id)
  *--------------------------------------*/
 int instance_del_load(struct map_session_data* sd, va_list args)
 {
-	int m = va_arg(args,int);
+	int16 m = va_arg(args,int);
 	if( !sd || sd->bl.m != m )
 		return 0;
 
@@ -256,7 +257,7 @@ int instance_del_load(struct map_session_data* sd, va_list args)
 /* for npcs behave differently when being unloaded within a instance */
 int instance_cleanup_sub(struct block_list *bl, va_list ap) {
 	nullpo_ret(bl);
-	
+
 	switch(bl->type) {
 		case BL_PC:
 			map_quit((struct map_session_data *) bl);
@@ -277,14 +278,14 @@ int instance_cleanup_sub(struct block_list *bl, va_list ap) {
 			skill_delunit((struct skill_unit *) bl);
 			break;
 	}
-	
+
 	return 1;
 }
 
 /*--------------------------------------
  * Removes a simple instance map
  *--------------------------------------*/
-void instance_del_map(int m)
+void instance_del_map(int16 m)
 {
 	int i;
 	if( m <= 0 || !map[m].instance_id )
@@ -323,7 +324,7 @@ void instance_del_map(int m)
 
 	map_removemapdb(&map[m]);
 	memset(&map[m], 0x00, sizeof(map[0]));
-	
+
 	/* for it is default and makes it not try to delete a non-existent timer since we did not delete this entry. */
 	map[m].mob_delete_timer = INVALID_TIMER;
 }
@@ -421,7 +422,7 @@ void instance_set_timeout(int instance_id, unsigned int progress_timeout, unsign
 
 	if( !instance_is_valid(instance_id) )
 		return;
-		
+
 	if( instance[instance_id].progress_timer != INVALID_TIMER )
 		delete_timer( instance[instance_id].progress_timer, instance_destroy_timer);
 	if( instance[instance_id].idle_timer != INVALID_TIMER )
@@ -437,7 +438,7 @@ void instance_set_timeout(int instance_id, unsigned int progress_timeout, unsign
 		instance[instance_id].progress_timeout = 0;
 		instance[instance_id].progress_timer = INVALID_TIMER;
 	}
-		
+
 	if( idle_timeout )
 	{
 		instance[instance_id].idle_timeoutval = idle_timeout;
@@ -460,7 +461,7 @@ void instance_set_timeout(int instance_id, unsigned int progress_timeout, unsign
  *--------------------------------------*/
 void instance_check_kick(struct map_session_data *sd)
 {
-	int m = sd->bl.m;
+	int16 m = sd->bl.m;
 
 	clif_instance_leave(sd->fd);
 	if( map[m].instance_id )

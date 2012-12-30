@@ -23,7 +23,7 @@ struct unit_data {
 	short attacktarget_lv;
 	short to_x,to_y;
 	short skillx,skilly;
-	short skillid,skilllv;
+	uint16 skill_id,skill_lv;
 	int   skilltarget;
 	int   skilltimer;
 	int   target;
@@ -75,10 +75,10 @@ struct view_data {
 int unit_walktoxy( struct block_list *bl, short x, short y, int easy);
 int unit_walktobl( struct block_list *bl, struct block_list *target, int range, int easy);
 int unit_run(struct block_list *bl);
-int unit_calc_pos(struct block_list *bl, int tx, int ty, int dir);
+int unit_calc_pos(struct block_list *bl, int tx, int ty, uint8 dir);
 
 // 歩行停止
-// typeは以下の組み合わせ : 
+// typeは以下の組み合わせ :
 //     1: 位置情報の送信( この関数の後に位置情報を送信する場合は不要 )
 //     2: ダメージディレイ有り
 //     4: 不明(MOBのみ？)
@@ -105,12 +105,12 @@ int unit_attack(struct block_list *src,int target_id,int continuous);
 int unit_cancel_combo(struct block_list *bl);
 
 // スキル使用
-int unit_skilluse_id(struct block_list *src, int target_id, short skill_num, short skill_lv);
-int unit_skilluse_pos(struct block_list *src, short skill_x, short skill_y, short skill_num, short skill_lv);
+int unit_skilluse_id(struct block_list *src, int target_id, uint16 skill_id, uint16 skill_lv);
+int unit_skilluse_pos(struct block_list *src, short skill_x, short skill_y, uint16 skill_id, uint16 skill_lv);
 
 // スキル使用( 補正済みキャスト時間、キャンセル不可設定付き )
-int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, short skill_lv, int casttime, int castcancel);
-int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, short skill_num, short skill_lv, int casttime, int castcancel);
+int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, uint16 skill_lv, int casttime, int castcancel);
+int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, uint16 skill_id, uint16 skill_lv, int casttime, int castcancel);
 
 // 詠唱キャンセル
 int unit_skillcastcancel(struct block_list *bl,int type);

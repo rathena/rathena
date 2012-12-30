@@ -5036,7 +5036,7 @@ static int buildin_areawarp_sub(struct block_list *bl,va_list ap)
 }
 BUILDIN_FUNC(areawarp)
 {
-	int m, x0,y0,x1,y1, x2,y2,x3=0,y3=0;
+	int16 m, x0,y0,x1,y1, x2,y2,x3=0,y3=0;
 	unsigned int index;
 	const char *str;
 	const char *mapname;
@@ -8132,7 +8132,7 @@ BUILDIN_FUNC(getskilllv)
 BUILDIN_FUNC(getgdskilllv)
 {
 	int guild_id;
-	int skill_id;
+	uint16 skill_id;
 	struct guild* g;
 
 	guild_id = script_getnum(st,2);
@@ -8822,7 +8822,7 @@ BUILDIN_FUNC(monster)
 	unsigned int ai		= AI_NONE;
 
 	struct map_session_data* sd;
-	int m;
+	int16 m;
 
 	if (script_hasdata(st, 8))
 	{
@@ -8929,7 +8929,7 @@ BUILDIN_FUNC(areamonster)
 	unsigned int ai		= AI_NONE;
 
 	struct map_session_data* sd;
-	int m;
+	int16 m;
 
 	if (script_hasdata(st,10))
 	{
@@ -9016,7 +9016,7 @@ static int buildin_killmonster_sub(struct block_list *bl,va_list ap)
 BUILDIN_FUNC(killmonster)
 {
 	const char *mapname,*event;
-	int m,allflag=0;
+	int16 m,allflag=0;
 	mapname=script_getstr(st,2);
 	event=script_getstr(st,3);
 	if(strcmp(event,"All")==0)
@@ -9062,7 +9062,7 @@ static int buildin_killmonsterall_sub(struct block_list *bl,va_list ap)
 BUILDIN_FUNC(killmonsterall)
 {
 	const char *mapname;
-	int m;
+	int16 m;
 	mapname=script_getstr(st,2);
 
 	if( (m = map_mapname2mapid(mapname))<0 )
@@ -9568,7 +9568,7 @@ BUILDIN_FUNC(mapannounce)
 	int         fontSize  = script_hasdata(st,7) ? script_getnum(st,7) : 12;    // default fontSize
 	int         fontAlign = script_hasdata(st,8) ? script_getnum(st,8) : 0;     // default fontAlign
 	int         fontY     = script_hasdata(st,9) ? script_getnum(st,9) : 0;     // default fontY
-	int m;
+	int16 m;
 
 	if ((m = map_mapname2mapid(mapname)) < 0)
 		return 0;
@@ -9593,7 +9593,7 @@ BUILDIN_FUNC(areaannounce)
 	int         fontSize  = script_hasdata(st,11) ? script_getnum(st,11) : 12;    // default fontSize
 	int         fontAlign = script_hasdata(st,12) ? script_getnum(st,12) : 0;     // default fontAlign
 	int         fontY     = script_hasdata(st,13) ? script_getnum(st,13) : 0;     // default fontY
-	int m;
+	int16 m;
 
 	if ((m = map_mapname2mapid(mapname)) < 0)
 		return 0;
@@ -9677,7 +9677,8 @@ BUILDIN_FUNC(getusersname)
 BUILDIN_FUNC(getmapguildusers)
 {
 	const char *str;
-	int m, gid;
+	int16 m;
+	int gid;
 	int i=0,c=0;
 	struct guild *g = NULL;
 	str=script_getstr(st,2);
@@ -9704,7 +9705,7 @@ BUILDIN_FUNC(getmapguildusers)
 BUILDIN_FUNC(getmapusers)
 {
 	const char *str;
-	int m;
+	int16 m;
 	str=script_getstr(st,2);
 	if( (m=map_mapname2mapid(str))< 0){
 		script_pushint(st,-1);
@@ -9724,7 +9725,7 @@ static int buildin_getareausers_sub(struct block_list *bl,va_list ap)
 BUILDIN_FUNC(getareausers)
 {
 	const char *str;
-	int m,x0,y0,x1,y1,users=0;
+	int16 m,x0,y0,x1,y1,users=0; //doubt we can have more then 32k users on
 	str=script_getstr(st,2);
 	x0=script_getnum(st,3);
 	y0=script_getnum(st,4);
@@ -9756,7 +9757,8 @@ static int buildin_getareadropitem_sub(struct block_list *bl,va_list ap)
 BUILDIN_FUNC(getareadropitem)
 {
 	const char *str;
-	int m,x0,y0,x1,y1,item,amount=0;
+	int16 m,x0,y0,x1,y1;
+	int item,amount=0;
 	struct script_data *data;
 
 	str=script_getstr(st,2);
@@ -10616,7 +10618,7 @@ BUILDIN_FUNC(isloggedin)
  *------------------------------------------*/
 BUILDIN_FUNC(setmapflagnosave)
 {
-	int m,x,y;
+	int16 m,x,y;
 	unsigned short mapindex;
 	const char *str,*str2;
 
@@ -10639,7 +10641,7 @@ BUILDIN_FUNC(setmapflagnosave)
 
 BUILDIN_FUNC(getmapflag)
 {
-	int m,i;
+	int16 m,i;
 	const char *str;
 
 	str=script_getstr(st,2);
@@ -10724,7 +10726,7 @@ static int script_mapflag_pvp_sub(struct block_list *bl,va_list ap) {
 }
 BUILDIN_FUNC(setmapflag)
 {
-	int m,i;
+	int16 m,i;
 	const char *str;
 	int val=0;
 
@@ -10810,7 +10812,7 @@ BUILDIN_FUNC(setmapflag)
 
 BUILDIN_FUNC(removemapflag)
 {
-	int m,i;
+	int16 m,i;
 	const char *str;
 	int val=0;
 
@@ -10896,7 +10898,7 @@ BUILDIN_FUNC(removemapflag)
 
 BUILDIN_FUNC(pvpon)
 {
-	int m;
+	int16 m;
 	const char *str;
 	TBL_PC* sd = NULL;
 	struct s_mapiterator* iter;
@@ -10943,7 +10945,7 @@ static int buildin_pvpoff_sub(struct block_list *bl,va_list ap)
 
 BUILDIN_FUNC(pvpoff)
 {
-	int m;
+	int16 m;
 	const char *str;
 
 	str=script_getstr(st,2);
@@ -10963,7 +10965,7 @@ BUILDIN_FUNC(pvpoff)
 
 BUILDIN_FUNC(gvgon)
 {
-	int m;
+	int16 m;
 	const char *str;
 
 	str=script_getstr(st,2);
@@ -10977,7 +10979,7 @@ BUILDIN_FUNC(gvgon)
 }
 BUILDIN_FUNC(gvgoff)
 {
-	int m;
+	int16 m;
 	const char *str;
 
 	str=script_getstr(st,2);
@@ -11028,7 +11030,7 @@ BUILDIN_FUNC(emotion)
 
 static int buildin_maprespawnguildid_sub_pc(struct map_session_data* sd, va_list ap)
 {
-	int m=va_arg(ap,int);
+	int16 m=va_arg(ap,int);
 	int g_id=va_arg(ap,int);
 	int flag=va_arg(ap,int);
 
@@ -11059,7 +11061,7 @@ BUILDIN_FUNC(maprespawnguildid)
 	int g_id=script_getnum(st,3);
 	int flag=script_getnum(st,4);
 
-	int m=map_mapname2mapid(mapname);
+	int16 m=map_mapname2mapid(mapname);
 
 	if(m == -1)
 		return 0;
@@ -11477,7 +11479,7 @@ static int buildin_mobcount_sub(struct block_list *bl,va_list ap)	// Added by Ro
 BUILDIN_FUNC(mobcount)	// Added by RoVeRT
 {
 	const char *mapname,*event;
-	int m;
+	int16 m;
 	mapname=script_getstr(st,2);
 	event=script_getstr(st,3);
 
@@ -12472,11 +12474,11 @@ BUILDIN_FUNC(skilleffect)
 {
 	TBL_PC *sd;
 
-	int skillid=( script_isstring(st,2) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
-	int skilllv=script_getnum(st,3);
+	uint16 skill_id=( script_isstring(st,2) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
+	uint16 skill_lv=script_getnum(st,3);
 	sd=script_rid2sd(st);
 
-	clif_skill_nodamage(&sd->bl,&sd->bl,skillid,skilllv,1);
+	clif_skill_nodamage(&sd->bl,&sd->bl,skill_id,skill_lv,1);
 
 	return 0;
 }
@@ -12490,13 +12492,13 @@ BUILDIN_FUNC(npcskilleffect)
 {
 	struct block_list *bl= map_id2bl(st->oid);
 
-	int skillid=( script_isstring(st,2) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
-	int skilllv=script_getnum(st,3);
+	uint16 skill_id=( script_isstring(st,2) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
+	uint16 skill_lv=script_getnum(st,3);
 	int x=script_getnum(st,4);
 	int y=script_getnum(st,5);
 
 	if (bl)
-		clif_skill_poseffect(bl,skillid,skilllv,x,y,gettick());
+		clif_skill_poseffect(bl,skill_id,skill_lv,x,y,gettick());
 
 	return 0;
 }
@@ -15041,7 +15043,7 @@ BUILDIN_FUNC(searchitem)
 int axtoi(const char *hexStg)
 {
 	int n = 0;         // position in string
-	int m = 0;         // position in digit[] to shift
+	int16 m = 0;         // position in digit[] to shift
 	int count;         // loop index
 	int intValue = 0;  // integer value of hex string
 	int digit[11];      // hold values to convert
@@ -15381,8 +15383,8 @@ BUILDIN_FUNC(unitemote)
 BUILDIN_FUNC(unitskilluseid)
 {
 	int unit_id;
-	int skill_id;
-	int skill_lv;
+	uint16 skill_id;
+	uint16 skill_lv;
 	int target_id;
 	struct block_list* bl;
 
@@ -15405,8 +15407,8 @@ BUILDIN_FUNC(unitskilluseid)
 BUILDIN_FUNC(unitskillusepos)
 {
 	int unit_id;
-	int skill_id;
-	int skill_lv;
+	uint16 skill_id;
+	uint16 skill_lv;
 	int skill_x;
 	int skill_y;
 	struct block_list* bl;
@@ -15646,9 +15648,9 @@ BUILDIN_FUNC(openauction)
 /// @see cell_chk* constants in const.txt for the types
 BUILDIN_FUNC(checkcell)
 {
-	int m = map_mapname2mapid(script_getstr(st,2));
-	int x = script_getnum(st,3);
-	int y = script_getnum(st,4);
+	int16 m = map_mapname2mapid(script_getstr(st,2));
+	int16 x = script_getnum(st,3);
+	int16 y = script_getnum(st,4);
 	cell_chk type = (cell_chk)script_getnum(st,5);
 
 	script_pushint(st, map_getcell(m, x, y, type));
@@ -15663,11 +15665,11 @@ BUILDIN_FUNC(checkcell)
 /// @see cell_* constants in const.txt for the types
 BUILDIN_FUNC(setcell)
 {
-	int m = map_mapname2mapid(script_getstr(st,2));
-	int x1 = script_getnum(st,3);
-	int y1 = script_getnum(st,4);
-	int x2 = script_getnum(st,5);
-	int y2 = script_getnum(st,6);
+	int16 m = map_mapname2mapid(script_getstr(st,2));
+	int16 x1 = script_getnum(st,3);
+	int16 y1 = script_getnum(st,4);
+	int16 x2 = script_getnum(st,5);
+	int16 y2 = script_getnum(st,6);
 	cell_t type = (cell_t)script_getnum(st,7);
 	bool flag = (bool)script_getnum(st,8);
 
@@ -16126,7 +16128,8 @@ BUILDIN_FUNC(bg_destroy)
 BUILDIN_FUNC(bg_getareausers)
 {
 	const char *str;
-	int m, x0, y0, x1, y1, bg_id;
+	int16 m, x0, y0, x1, y1;
+	int bg_id;
 	int i = 0, c = 0;
 	struct battleground_data *bg = NULL;
 	struct map_session_data *sd;
@@ -16161,7 +16164,7 @@ BUILDIN_FUNC(bg_getareausers)
 BUILDIN_FUNC(bg_updatescore)
 {
 	const char *str;
-	int m;
+	int16 m;
 
 	str = script_getstr(st,2);
 	if( (m = map_mapname2mapid(str)) < 0 )
@@ -16261,7 +16264,7 @@ BUILDIN_FUNC(instance_destroy)
 BUILDIN_FUNC(instance_attachmap)
 {
 	const char *name;
-	int m;
+	int16 m;
 	int instance_id;
 	bool usebasename = false;
 
@@ -16286,7 +16289,8 @@ BUILDIN_FUNC(instance_detachmap)
 	struct map_session_data *sd;
 	struct party_data *p;
 	const char *str;
-	int m, instance_id;
+	int16 m;
+	int instance_id;
 
 	str = script_getstr(st, 2);
 	if( script_hasdata(st, 3) )
@@ -16452,7 +16456,8 @@ BUILDIN_FUNC(has_instance)
 	struct map_session_data *sd;
 	struct party_data *p;
  	const char *str;
-	int m, instance_id = 0;
+	int16 m;
+	int instance_id = 0;
 
  	str = script_getstr(st, 2);
 	if( script_hasdata(st, 3) )
@@ -16475,7 +16480,8 @@ BUILDIN_FUNC(has_instance)
 BUILDIN_FUNC(instance_warpall)
 {
 	struct map_session_data *pl_sd;
-	int m, i, instance_id;
+	int16 m, i;
+	int instance_id;
 	const char *mapn;
 	int x, y;
 	unsigned short mapindex;
@@ -16587,8 +16593,8 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 	TBL_MOB* md		= (TBL_MOB*)bl;
 	struct block_list *tbl;
 	int mobid		= va_arg(ap,int);
-	int skillid		= va_arg(ap,int);
-	int skilllv		= va_arg(ap,int);
+	uint16 skill_id		= va_arg(ap,int);
+	uint16 skill_lv		= va_arg(ap,int);
 	int casttime	= va_arg(ap,int);
 	int cancel		= va_arg(ap,int);
 	int emotion		= va_arg(ap,int);
@@ -16603,7 +16609,7 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 		case 0: tbl = map_id2bl(md->bl.id); break;
 		case 1: tbl = map_id2bl(md->target_id); break;
 		case 2: tbl = map_id2bl(md->master_id); break;
-		default:tbl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md),skill_get_range2(&md->bl, skillid, skilllv)); break;
+		default:tbl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md),skill_get_range2(&md->bl, skill_id, skill_lv)); break;
 	}
 
 	if( !tbl )
@@ -16612,10 +16618,10 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 	if( md->ud.skilltimer != INVALID_TIMER ) // Cancel the casting skill.
 		unit_skillcastcancel(bl,0);
 
-	if( skill_get_casttype(skillid) == CAST_GROUND )
-		unit_skilluse_pos2(&md->bl, tbl->x, tbl->y, skillid, skilllv, casttime, cancel);
+	if( skill_get_casttype(skill_id) == CAST_GROUND )
+		unit_skilluse_pos2(&md->bl, tbl->x, tbl->y, skill_id, skill_lv, casttime, cancel);
 	else
-		unit_skilluse_id2(&md->bl, tbl->id, skillid, skilllv, casttime, cancel);
+		unit_skilluse_id2(&md->bl, tbl->id, skill_id, skill_lv, casttime, cancel);
 
 	clif_emotion(&md->bl, emotion);
 
@@ -16627,7 +16633,8 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 BUILDIN_FUNC(areamobuseskill)
 {
 	struct block_list center;
-	int m,range,mobid,skillid,skilllv,casttime,emotion,target,cancel;
+	int16 m;
+	int range,mobid,skill_id,skill_lv,casttime,emotion,target,cancel;
 
 	if( (m = map_mapname2mapid(script_getstr(st,2))) < 0 )
 	{
@@ -16643,16 +16650,16 @@ BUILDIN_FUNC(areamobuseskill)
 	center.y = script_getnum(st,4);
 	range = script_getnum(st,5);
 	mobid = script_getnum(st,6);
-	skillid = ( script_isstring(st,7) ? skill_name2id(script_getstr(st,7)) : script_getnum(st,7) );
-	if( (skilllv = script_getnum(st,8)) > battle_config.mob_max_skilllvl )
-		skilllv = battle_config.mob_max_skilllvl;
+	skill_id = ( script_isstring(st,7) ? skill_name2id(script_getstr(st,7)) : script_getnum(st,7) );
+	if( (skill_lv = script_getnum(st,8)) > battle_config.mob_max_skilllvl )
+		skill_lv = battle_config.mob_max_skilllvl;
 
 	casttime = script_getnum(st,9);
 	cancel = script_getnum(st,10);
 	emotion = script_getnum(st,11);
 	target = script_getnum(st,12);
 
-	map_foreachinrange(buildin_mobuseskill_sub, &center, range, BL_MOB, mobid, skillid, skilllv, casttime, cancel, emotion, target);
+	map_foreachinrange(buildin_mobuseskill_sub, &center, range, BL_MOB, mobid, skill_id, skill_lv, casttime, cancel, emotion, target);
 	return 0;
 }
 
@@ -16680,7 +16687,8 @@ BUILDIN_FUNC(progressbar)
 
 BUILDIN_FUNC(pushpc)
 {
-	int direction, cells, dx, dy;
+	uint8 dir;
+	int cells, dx, dy;
 	struct map_session_data* sd;
 
 	if((sd = script_rid2sd(st))==NULL)
@@ -16688,15 +16696,15 @@ BUILDIN_FUNC(pushpc)
 		return 0;
 	}
 
-	direction = script_getnum(st,2);
+	dir = script_getnum(st,2);
 	cells     = script_getnum(st,3);
 
-	if(direction<0 || direction>7)
+	if(dir<0 || dir>7)
 	{
-		ShowWarning("buildin_pushpc: Invalid direction %d specified.\n", direction);
+		ShowWarning("buildin_pushpc: Invalid direction %d specified.\n", dir);
 		script_reportsrc(st);
 
-		direction%= 8;  // trim spin-over
+		dir%= 8;  // trim spin-over
 	}
 
 	if(!cells)
@@ -16705,12 +16713,12 @@ BUILDIN_FUNC(pushpc)
 	}
 	else if(cells<0)
 	{// pushing backwards
-		direction = (direction+4)%8;  // turn around
+		dir = (dir+4)%8;  // turn around
 		cells     = -cells;
 	}
 
-	dx = dirx[direction];
-	dy = diry[direction];
+	dx = dirx[dir];
+	dy = diry[dir];
 
 	unit_blown(&sd->bl, dx, dy, cells, 0);
 	return 0;
@@ -17241,18 +17249,15 @@ static int atcommand_cleanfloor_sub(struct block_list *bl, va_list ap)
 
 BUILDIN_FUNC(cleanmap)
 {
-	const char *map;
-    int m = -1, index = -1;
-    short x0 = 0, y0 = 0, x1 = 0, y1 = 0;
+    const char *map;
+    int16 m = -1;
+    int16 x0 = 0, y0 = 0, x1 = 0, y1 = 0;
 
-	map = script_getstr(st, 2);
-	index = mapindex_name2id(map);
-	if (index)
-		m = map_mapindex2mapid(index);
-        
+    map = script_getstr(st, 2);
+    m = map_mapname2mapid(map);
     if (!m)
         return 1;
-	
+
 	if ((script_lastdata(st) - 2) < 4) {
 		map_foreachinmap(atcommand_cleanfloor_sub, m, BL_ITEM);
 	} else {
@@ -17267,7 +17272,7 @@ BUILDIN_FUNC(cleanmap)
 			return 1;
 		}
 	}
-	
+
 	return 0;
 }
 /* Cast a skill on the attached player.
@@ -17275,7 +17280,7 @@ BUILDIN_FUNC(cleanmap)
  * npcskill "<skill name>", <skill lvl>, <stat point>, <NPC level>; */
 BUILDIN_FUNC(npcskill)
 {
-	unsigned int skill_id;
+	uint16 skill_id;
 	unsigned short skill_level;
 	unsigned int stat_point;
 	unsigned int npc_level;

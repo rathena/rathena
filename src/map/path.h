@@ -20,13 +20,13 @@ struct shootpath_data {
 };
 
 // calculates destination cell for knockback
-int path_blownpos(int m,int x0,int y0,int dx,int dy,int count);
+int path_blownpos(int16 m,int16 x0,int16 y0,int16 dx,int16 dy,int count);
 
 // tries to find a walkable path
-bool path_search(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1,int flag,cell_chk cell);
+bool path_search(struct walkpath_data *wpd,int16 m,int16 x0,int16 y0,int16 x1,int16 y1,int flag,cell_chk cell);
 
 // tries to find a shootable path
-bool path_search_long(struct shootpath_data *spd,int m,int x0,int y0,int x1,int y1,cell_chk cell);
+bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16 x1,int16 y1,cell_chk cell);
 
 
 // distance related functions

@@ -99,7 +99,7 @@ static int pop_heap_path(int *heap,struct tmp_path *tp)
 /*==========================================
  * calculate cost for the specified position
  *------------------------------------------*/
-static int calc_cost(struct tmp_path *p,int x1,int y1)
+static int calc_cost(struct tmp_path *p,int16 x1,int16 y1)
 {
 	int xd = abs(x1 - p->x);
 	int yd = abs(y1 - p->y);
@@ -109,7 +109,7 @@ static int calc_cost(struct tmp_path *p,int x1,int y1)
 /*==========================================
  * attach/adjust path if neccessary
  *------------------------------------------*/
-static int add_path(int *heap,struct tmp_path *tp,int x,int y,int dist,int before,int cost)
+static int add_path(int *heap,struct tmp_path *tp,int16 x,int16 y,int dist,int before,int cost)
 {
 	int i;
 
@@ -149,7 +149,7 @@ static int add_path(int *heap,struct tmp_path *tp,int x,int y,int dist,int befor
  * Find the closest reachable cell, 'count' cells away from (x0,y0) in direction (dx,dy).
  * Income after the coordinates of the blow
  *------------------------------------------*/
-int path_blownpos(int m,int x0,int y0,int dx,int dy,int count)
+int path_blownpos(int16 m,int16 x0,int16 y0,int16 dx,int16 dy,int count)
 {
 	struct map_data *md;
 
@@ -166,7 +166,7 @@ int path_blownpos(int m,int x0,int y0,int dx,int dy,int count)
 		dx=(dx>0)?1:((dx<0)?-1:0);
 		dy=(dy>0)?1:((dy<0)?-1:0);
 	}
-	
+
 	while( count > 0 && (dx != 0 || dy != 0) )
 	{
 		if( !map_getcellp(md,x0+dx,y0+dy,CELL_CHKPASS) )
@@ -197,7 +197,7 @@ int path_blownpos(int m,int x0,int y0,int dx,int dy,int count)
 /*==========================================
  * is ranged attack from (x0,y0) to (x1,y1) possible?
  *------------------------------------------*/
-bool path_search_long(struct shootpath_data *spd,int m,int x0,int y0,int x1,int y1,cell_chk cell)
+bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16 x1,int16 y1,cell_chk cell)
 {
 	int dx, dy;
 	int wx = 0, wy = 0;
@@ -270,7 +270,7 @@ bool path_search_long(struct shootpath_data *spd,int m,int x0,int y0,int x1,int 
  * flag: &1 = easy path search only
  * cell: type of obstruction to check for
  *------------------------------------------*/
-bool path_search(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1,int flag,cell_chk cell)
+bool path_search(struct walkpath_data *wpd,int16 m,int16 x0,int16 y0,int16 x1,int16 y1,int flag,cell_chk cell)
 {
 	int heap[MAX_HEAP+1];
 	struct tmp_path tp[MAX_WALKPATH*MAX_WALKPATH];
@@ -327,7 +327,7 @@ bool path_search(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1,int
 		wpd->path_pos = 0;
 		return true;
 	}
-	
+
 	if( flag&1 )
 		return false;
 
@@ -361,9 +361,9 @@ bool path_search(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1,int
 			break;
 
 		// dc[0] : y++ Incremental cost at the time
-		// dc[1] : x-- 
-		// dc[2] : y-- 
-		// dc[3] : x++ 
+		// dc[1] : x--
+		// dc[2] : y--
+		// dc[3] : x++
 
 		if(y < ys && !map_getcellp(md,x  ,y+1,cell)) {
 			f |= 1; dc[0] = (y >= y1 ? 20 : 0);
@@ -396,7 +396,7 @@ bool path_search(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1,int
 
 	if( !(x==x1 && y==y1) ) // will never happen...
 		return false;
-	
+
 	for(len=0,i=rp;len<100 && i!=calc_index(x0,y0);i=tp[i].before,len++);
 	if(len==100 || len>=sizeof(wpd->path))
 		return false;
@@ -406,7 +406,7 @@ bool path_search(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1,int
 	for(i=rp,j=len-1;j>=0;i=tp[i].before,j--) {
 		int dx  = tp[i].x - tp[tp[i].before].x;
 		int dy  = tp[i].y - tp[tp[i].before].y;
-		int dir;
+		uint8 dir;
 		if( dx == 0 ) {
 			dir = (dy > 0 ? 0 : 4);
 		} else if( dx > 0 ) {
@@ -444,7 +444,7 @@ unsigned int distance(int dx, int dy)
 	//There appears to be something wrong with the aproximation below when either dx/dy is 0! [Skotlex]
 	if ( dx == 0 ) return dy;
 	if ( dy == 0 ) return dx;
-	
+
 	if ( dx < dy )
 	{
 		min = dx;

@@ -277,7 +277,8 @@ static void map_delblcell(struct block_list *bl)
  *------------------------------------------*/
 int map_addblock(struct block_list* bl)
 {
-	int m, x, y, pos;
+	int16 m, x, y;
+	int pos;
 
 	nullpo_ret(bl);
 
@@ -475,7 +476,7 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 /*==========================================
  * Counts specified number of objects on given cell.
  *------------------------------------------*/
-int map_count_oncell(int m, int x, int y, int type)
+int map_count_oncell(int16 m, int16 x, int16 y, int type)
 {
 	int bx,by;
 	struct block_list *bl;
@@ -503,8 +504,8 @@ int map_count_oncell(int m, int x, int y, int type)
  * Looks for a skill unit on a given cell
  * flag&1: runs battle_check_target check based on unit->group->target_flag
  */
-struct skill_unit* map_find_skill_unit_oncell(struct block_list* target,int x,int y,int skill_id,struct skill_unit* out_unit, int flag) {
-	int m,bx,by;
+struct skill_unit* map_find_skill_unit_oncell(struct block_list* target,int16 x,int16 y,uint16 skill_id,struct skill_unit* out_unit, int flag) {
+	int16 m,bx,by;
 	struct block_list *bl;
 	struct skill_unit *unit;
 	m = target->m;
@@ -532,7 +533,7 @@ struct skill_unit* map_find_skill_unit_oncell(struct block_list* target,int x,in
 /*==========================================
  * Adapted from foreachinarea for an easier invocation. [Skotlex]
  *------------------------------------------*/
-int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int range, int type, ...)
+int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...)
 {
 	int bx, by, m;
 	int returnCount = 0;	//total sum of returned values of func() [Skotlex]
@@ -561,7 +562,7 @@ int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_lis
 				}
 			}
 		}
-	
+
 	if( type&BL_MOB )
 		for( by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++ ) {
 			for(bx=x0/BLOCK_SIZE;bx<=x1/BLOCK_SIZE;bx++) {
@@ -597,7 +598,7 @@ int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_lis
 /*==========================================
  * Same as foreachinrange, but there must be a shoot-able range between center and target to be counted in. [Skotlex]
  *------------------------------------------*/
-int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block_list* center, int range, int type,...)
+int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block_list* center, int16 range, int type,...)
 {
 	int bx, by, m;
 	int returnCount = 0;	//total sum of returned values of func() [Skotlex]
@@ -605,7 +606,7 @@ int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block
 	int blockcount = bl_list_count, i;
 	int x0, x1, y0, y1;
 	va_list ap;
-	
+
 	m = center->m;
 	if ( m < 0 )
 		return 0;
@@ -668,22 +669,22 @@ int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block
  * Apply *func with ... arguments for the range.
  * @type = BL_PC/BL_MOB etc..
  *------------------------------------------*/
-int map_foreachinarea(int (*func)(struct block_list*,va_list), int m, int x0, int y0, int x1, int y1, int type, ...)
+int map_foreachinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...)
 {
 	int bx, by;
 	int returnCount = 0;	//total sum of returned values of func() [Skotlex]
 	struct block_list *bl;
 	int blockcount = bl_list_count, i;
 	va_list ap;
-	
+
 	if ( m < 0 )
 		return 0;
-	
+
 	if ( x1 < x0 )
 		swap(x0, x1);
 	if ( y1 < y0 )
 		swap(y0, y1);
-	
+
 	x0 = max(x0, 0);
 	y0 = max(y0, 0);
 	x1 = min(x1, map[ m ].xs - 1);
@@ -722,7 +723,7 @@ int map_foreachinarea(int (*func)(struct block_list*,va_list), int m, int x0, in
 /*==========================================
  * Adapted from forcountinarea for an easier invocation. [pakpil]
  *------------------------------------------*/
-int map_forcountinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int range, int count, int type, ...)
+int map_forcountinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int count, int type, ...)
 {
 	int bx, by, m;
 	int returnCount = 0;	//total sum of returned values of func() [Skotlex]
@@ -730,7 +731,7 @@ int map_forcountinrange(int (*func)(struct block_list*,va_list), struct block_li
 	int blockcount = bl_list_count, i;
 	int x0, x1, y0, y1;
 	va_list ap;
-	
+
 	m = center->m;
 	x0 = max(center->x - range, 0);
 	y0 = max(center->y - range, 0);
@@ -784,22 +785,22 @@ int map_forcountinrange(int (*func)(struct block_list*,va_list), struct block_li
 	bl_list_count = blockcount;
 	return returnCount;	//[Skotlex]
 }
-int map_forcountinarea(int (*func)(struct block_list*,va_list), int m, int x0, int y0, int x1, int y1, int count, int type, ...)
+int map_forcountinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int count, int type, ...)
 {
 	int bx, by;
 	int returnCount = 0;	//total sum of returned values of func() [Skotlex]
 	struct block_list *bl;
 	int blockcount = bl_list_count, i;
 	va_list ap;
-	
+
 	if ( m < 0 )
 		return 0;
-	
+
 	if ( x1 < x0 )
 		swap(x0, x1);
 	if ( y1 < y0 )
 		swap(y0, y1);
-	
+
 	x0 = max(x0, 0);
 	y0 = max(y0, 0);
 	x1 = min(x1, map[ m ].xs - 1);
@@ -844,7 +845,7 @@ int map_forcountinarea(int (*func)(struct block_list*,va_list), int m, int x0, i
  * Move bl and do func* with va_list while moving.
  * Mouvement is set by dx dy wich are distance in x and y
  *------------------------------------------*/
-int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_list* center, int range, int dx, int dy, int type, ...)
+int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int16 dx, int16 dy, int type, ...)
 {
 	int bx, by, m;
 	int returnCount = 0;  //total sum of returned values of func() [Skotlex]
@@ -855,7 +856,7 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 
 	if ( !range ) return 0;
 	if ( !dx && !dy ) return 0; //No movement.
-	
+
 	m = center->m;
 
 	x0 = center->x - range;
@@ -867,7 +868,7 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 		swap(x0, x1);
 	if ( y1 < y0 )
 		swap(y0, y1);
-	
+
 	if( dx == 0 || dy == 0 ) {
 		//Movement along one axis only.
 		if( dx == 0 ){
@@ -881,12 +882,12 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 			else //East
 				x1 = x0 + dx - 1;
 		}
-		
+
 		x0 = max(x0, 0);
 		y0 = max(y0, 0);
 		x1 = min(x1, map[ m ].xs - 1);
 		y1 = min(y1, map[ m ].ys - 1);
-		
+
 		for( by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++ ) {
 			for( bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++ ) {
 				if ( type&~BL_MOB ) {
@@ -909,12 +910,12 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 			}
 		}
 	} else { // Diagonal movement
-		
+
 		x0 = max(x0, 0);
 		y0 = max(y0, 0);
 		x1 = min(x1, map[ m ].xs - 1);
 		y1 = min(y1, map[ m ].ys - 1);
-		
+
 		for( by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++ ) {
 			for( bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++ ) {
 				if ( type & ~BL_MOB ) {
@@ -969,7 +970,7 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 //			 which only checks the exact single x/y passed to it rather than an
 //			 area radius - may be more useful in some instances)
 //
-int map_foreachincell(int (*func)(struct block_list*,va_list), int m, int x, int y, int type, ...)
+int map_foreachincell(int (*func)(struct block_list*,va_list), int16 m, int16 x, int16 y, int type, ...)
 {
 	int bx, by;
 	int returnCount = 0;  //total sum of returned values of func() [Skotlex]
@@ -1012,7 +1013,7 @@ int map_foreachincell(int (*func)(struct block_list*,va_list), int m, int x, int
 /*============================================================
 * For checking a path between two points (x0, y0) and (x1, y1)
 *------------------------------------------------------------*/
-int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y0,int x1,int y1,int range,int length, int type,...)
+int map_foreachinpath(int (*func)(struct block_list*,va_list),int16 m,int16 x0,int16 y0,int16 x1,int16 y1,int16 range,int length, int type,...)
 {
 	int returnCount = 0;  //total sum of returned values of func() [Skotlex]
 //////////////////////////////////////////////////////////////
@@ -1057,7 +1058,7 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y
 	int k, xi, yi, xu, yu;
 	int mx0 = x0, mx1 = x1, my0 = y0, my1 = y1;
 	va_list ap;
-	
+
 	//Avoid needless calculations by not getting the sqrt right away.
 	#define MAGNITUDE2(x0, y0, x1, y1) ( ( ( x1 ) - ( x0 ) ) * ( ( x1 ) - ( x0 ) ) + ( ( y1 ) - ( y0 ) ) * ( ( y1 ) - ( y0 ) ) )
 
@@ -1113,7 +1114,7 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y
 						yi = bl->y;
 
 						k = ( xi - x0 ) * ( x1 - x0 ) + ( yi - y0 ) * ( y1 - y0 );
-						
+
 						if ( k < 0 || k > len_limit ) //Since more skills use this, check for ending point as well.
 							continue;
 
@@ -1146,7 +1147,7 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y
 						xi = bl->x;
 						yi = bl->y;
 						k = ( xi - x0 ) * ( x1 - x0 ) + ( yi - y0 ) * ( y1 - y0 );
-						
+
 						if ( k < 0 || k > len_limit )
 							continue;
 
@@ -1190,14 +1191,14 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y
 }
 
 // Copy of map_foreachincell, but applied to the whole map. [Skotlex]
-int map_foreachinmap(int (*func)(struct block_list*,va_list), int m, int type,...)
+int map_foreachinmap(int (*func)(struct block_list*,va_list), int16 m, int type,...)
 {
 	int b, bsize;
 	int returnCount = 0;  //total sum of returned values of func() [Skotlex]
 	struct block_list *bl;
 	int blockcount = bl_list_count, i;
 	va_list ap;
-	
+
 	bsize = map[ m ].bxs * map[ m ].bys;
 
 	if( type&~BL_MOB )
@@ -1286,15 +1287,15 @@ int map_clearflooritem_timer(int tid, unsigned int tick, int id, intptr_t data)
 	return 0;
 }
 
-/* 
+/*
  * clears a single bl item out of the bazooonga.
  */
 void map_clearflooritem(struct block_list *bl) {
 	struct flooritem_data* fitem = (struct flooritem_data*)bl;
-	
+
 	if( fitem->cleartimer )
 		delete_timer(fitem->cleartimer,map_clearflooritem_timer);
-	
+
 	clif_clearflooritem(fitem, 0);
 	map_deliddb(&fitem->bl);
 	map_delblock(&fitem->bl);
@@ -1306,7 +1307,7 @@ void map_clearflooritem(struct block_list *bl) {
  * to place an BL_ITEM object. Scan area is 9x9, returns 1 on success.
  * x and y are modified with the target cell when successful.
  *------------------------------------------*/
-int map_searchrandfreecell(int m,int *x,int *y,int stack) {
+int map_searchrandfreecell(int16 m,int16 *x,int16 *y,int stack) {
 	int free_cell,i,j;
 	int free_cells[9][2];
 
@@ -1351,7 +1352,7 @@ static int map_count_sub(struct block_list *bl,va_list ap)
  * &2 = the target should be able to walk to the target tile.
  * &4 = there shouldn't be any players around the target tile (use the no_spawn_on_player setting)
  *------------------------------------------*/
-int map_search_freecell(struct block_list *src, int m, short *x,short *y, int rx, int ry, int flag)
+int map_search_freecell(struct block_list *src, int16 m, int16 *x,int16 *y, int16 rx, int16 ry, int flag)
 {
 	int tries, spawn=0;
 	int bx, by;
@@ -1424,7 +1425,7 @@ int map_search_freecell(struct block_list *src, int m, short *x,short *y, int rx
  * @first_charid, @second_charid, @third_charid, looting priority
  * @flag: &1 MVP item. &2 do stacking check.
  *------------------------------------------*/
-int map_addflooritem(struct item *item_data,int amount,int m,int x,int y,int first_charid,int second_charid,int third_charid,int flags)
+int map_addflooritem(struct item *item_data,int amount,int16 m,int16 x,int16 y,int first_charid,int second_charid,int third_charid,int flags)
 {
 	int r;
 	struct flooritem_data *fitem=NULL;
@@ -1706,7 +1707,7 @@ int map_quit(struct map_session_data *sd) {
 
 	if( map[sd->bl.m].instance_id )
 	{ // Avoid map conflicts and warnings on next login
-		int m;
+		int16 m;
 		struct point *pt;
 		if( map[sd->bl.m].save.map )
 			pt = &map[sd->bl.m].save;
@@ -1865,7 +1866,7 @@ bool map_blid_exists( int id ) {
 /*==========================================
  * Convext Mirror
  *------------------------------------------*/
-struct mob_data * map_getmob_boss(int m)
+struct mob_data * map_getmob_boss(int16 m)
 {
 	DBIterator* iter;
 	struct mob_data *md = NULL;
@@ -2154,7 +2155,7 @@ bool mapit_exists(struct s_mapiterator* mapit)
 /*==========================================
  * Add npc-bl to id_db, basically register npc to map
  *------------------------------------------*/
-bool map_addnpc(int m,struct npc_data *nd)
+bool map_addnpc(int16 m,struct npc_data *nd)
 {
 	nullpo_ret(nd);
 
@@ -2190,7 +2191,7 @@ int map_addmobtolist(unsigned short m, struct spawn_data *spawn)
 	return -1;
 }
 
-void map_spawnmobs(int m)
+void map_spawnmobs(int16 m)
 {
 	int i, k=0;
 	if (map[m].mob_delete_timer != INVALID_TIMER)
@@ -2242,7 +2243,7 @@ int map_removemobs_sub(struct block_list *bl, va_list ap)
 int map_removemobs_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	int count;
-	const int m = id;
+	const int16 m = id;
 
 	if (m < 0 || m >= MAX_MAP_PER_SERVER)
 	{	//Incorrect map id!
@@ -2266,7 +2267,7 @@ int map_removemobs_timer(int tid, unsigned int tick, int id, intptr_t data)
 	return 1;
 }
 
-void map_removemobs(int m)
+void map_removemobs(int16 m)
 {
 	if (map[m].mob_delete_timer != INVALID_TIMER) // should never happen
 		return; //Mobs are already scheduled for removal
@@ -2277,7 +2278,7 @@ void map_removemobs(int m)
 /*==========================================
  * Hookup, get map_id from map_name
  *------------------------------------------*/
-int map_mapname2mapid(const char* name)
+int16 map_mapname2mapid(const char* name)
 {
 	unsigned short map_index;
 	map_index = mapindex_name2id(name);
@@ -2289,7 +2290,7 @@ int map_mapname2mapid(const char* name)
 /*==========================================
  * Returns the map of the given mapindex. [Skotlex]
  *------------------------------------------*/
-int map_mapindex2mapid(unsigned short mapindex)
+int16 map_mapindex2mapid(unsigned short mapindex)
 {
 	struct map_data *md=NULL;
 
@@ -2340,9 +2341,9 @@ int map_check_dir(int s_dir,int t_dir)
 /*==========================================
  * Returns the direction of the given cell, relative to 'src'
  *------------------------------------------*/
-uint8 map_calc_dir(struct block_list* src, int x, int y)
+uint8 map_calc_dir(struct block_list* src, int16 x, int16 y)
 {
-	unsigned char dir = 0;
+	uint8 dir = 0;
 	int dx, dy;
 
 	nullpo_ret(src);
@@ -2386,7 +2387,7 @@ uint8 map_calc_dir(struct block_list* src, int x, int y)
  * Randomizes target cell x,y to a random walkable cell that
  * has the same distance from object as given coordinates do. [Skotlex]
  *------------------------------------------*/
-int map_random_dir(struct block_list *bl, short *x, short *y)
+int map_random_dir(struct block_list *bl, int16 *x, int16 *y)
 {
 	short xi = *x-bl->x;
 	short yi = *y-bl->y;
@@ -2451,12 +2452,12 @@ static int map_cell2gat(struct mapcell cell)
 /*==========================================
  * Confirm if celltype in (m,x,y) match the one given in cellchk
  *------------------------------------------*/
-int map_getcell(int m,int x,int y,cell_chk cellchk)
+int map_getcell(int16 m,int16 x,int16 y,cell_chk cellchk)
 {
 	return (m < 0 || m >= MAX_MAP_PER_SERVER) ? 0 : map_getcellp(&map[m],x,y,cellchk);
 }
 
-int map_getcellp(struct map_data* m,int x,int y,cell_chk cellchk)
+int map_getcellp(struct map_data* m,int16 x,int16 y,cell_chk cellchk)
 {
 	struct mapcell cell;
 
@@ -2533,7 +2534,7 @@ int map_getcellp(struct map_data* m,int x,int y,cell_chk cellchk)
  * 'cell' - which flag to modify
  * 'flag' - true = on, false = off
  *------------------------------------------*/
-void map_setcell(int m, int x, int y, cell_t cell, bool flag)
+void map_setcell(int16 m, int16 x, int16 y, cell_t cell, bool flag)
 {
 	int j;
 
@@ -2560,7 +2561,7 @@ void map_setcell(int m, int x, int y, cell_t cell, bool flag)
 	}
 }
 
-void map_setgatcell(int m, int x, int y, int gat)
+void map_setgatcell(int16 m, int16 x, int16 y, int gat)
 {
 	int j;
 	struct mapcell cell;
@@ -2581,7 +2582,7 @@ void map_setgatcell(int m, int x, int y, int gat)
  *------------------------------------------*/
 static DBMap* iwall_db;
 
-void map_iwall_nextxy(int x, int y, int dir, int pos, int *x1, int *y1)
+void map_iwall_nextxy(int16 x, int16 y, int8 dir, int pos, int16 *x1, int16 *y1)
 {
 	if( dir == 0 || dir == 4 )
 		*x1 = x; // Keep X
@@ -2598,10 +2599,11 @@ void map_iwall_nextxy(int x, int y, int dir, int pos, int *x1, int *y1)
 		*y1 = y + pos;
 }
 
-bool map_iwall_set(int m, int x, int y, int size, int dir, bool shootable, const char* wall_name)
+bool map_iwall_set(int16 m, int16 x, int16 y, int size, int8 dir, bool shootable, const char* wall_name)
 {
 	struct iwall_data *iwall;
-	int i, x1 = 0, y1 = 0;
+	int i;
+	int16 x1 = 0, y1 = 0;
 
 	if( size < 1 || !wall_name )
 		return false;
@@ -2646,7 +2648,7 @@ void map_iwall_get(struct map_session_data *sd)
 {
 	struct iwall_data *iwall;
 	DBIterator* iter;
-	int x1, y1;
+	int16 x1, y1;
 	int i;
 
 	if( map[sd->bl.m].iwall_num < 1 )
@@ -2670,7 +2672,7 @@ void map_iwall_get(struct map_session_data *sd)
 void map_iwall_remove(const char *wall_name)
 {
 	struct iwall_data *iwall;
-	int i, x1, y1;
+	int16 i, x1, y1;
 
 	if( (iwall = (struct iwall_data *)strdb_get(iwall_db, wall_name)) == NULL )
 		return; // Nothing to do
@@ -3111,16 +3113,16 @@ int parse_console(const char* buf)
 	char type[64];
 	char command[64];
 	char map[64];
-	int x = 0;
-	int y = 0;
-	int m;
+	int16 x = 0;
+	int16 y = 0;
+	int16 m;
 	int n;
 	struct map_session_data sd;
 
 	memset(&sd, 0, sizeof(struct map_session_data));
 	strcpy(sd.status.name, "console");
 
-	if( ( n = sscanf(buf, "%63[^:]:%63[^:]:%63s %d %d[^\n]", type, command, map, &x, &y) ) < 5 )
+	if( ( n = sscanf(buf, "%63[^:]:%63[^:]:%63s %hd %hd[^\n]", type, command, map, &x, &y) ) < 5 )
 	{
 		if( ( n = sscanf(buf, "%63[^:]:%63[^\n]", type, command) ) < 2 )
 		{

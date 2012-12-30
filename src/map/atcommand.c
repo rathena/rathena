@@ -445,7 +445,7 @@ ACMD_FUNC(mapmove)
 	char map_name[MAP_NAME_LENGTH_EXT];
 	unsigned short mapindex;
 	short x = 0, y = 0;
-	int m = -1;
+	int16 m = -1;
 
 	nullpo_retr(-1, sd);
 
@@ -815,7 +815,7 @@ ACMD_FUNC(save)
  *------------------------------------------*/
 ACMD_FUNC(load)
 {
-	int m;
+	int16 m;
 
 	nullpo_retr(-1, sd);
 
@@ -1742,7 +1742,7 @@ ACMD_FUNC(go)
 	int i;
 	int town;
 	char map_name[MAP_NAME_LENGTH];
-	int m;
+	int16 m;
 
 	const struct {
 		char map[MAP_NAME_LENGTH];
@@ -3151,10 +3151,10 @@ ACMD_FUNC(allskill)
  *------------------------------------------*/
 ACMD_FUNC(questskill)
 {
-	int skill_id;
+	uint16 skill_id;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || (skill_id = atoi(message)) < 0)
+	if (!message || !*message || (skill_id = atoi(message)) <= 0)
 	{// also send a list of skills applicable to this command
 		const char* text;
 
@@ -3195,10 +3195,10 @@ ACMD_FUNC(questskill)
  *------------------------------------------*/
 ACMD_FUNC(lostskill)
 {
-	int skill_id;
+	uint16 skill_id;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || (skill_id = atoi(message)) < 0)
+	if (!message || !*message || (skill_id = atoi(message)) <= 0)
 	{// also send a list of skills applicable to this command
 		const char* text;
 
@@ -5298,13 +5298,13 @@ ACMD_FUNC(clearstorage)
 		clif_displaymessage(fd, msg_txt(250));
 		return -1;
 	}
-	
+
 	j = sd->status.storage.storage_amount;
 	for (i = 0; i < j; ++i) {
 		storage_delitem(sd, i, sd->status.storage.items[i].amount);
 	}
 	storage_storageclose(sd);
-	
+
 	clif_displaymessage(fd, msg_txt(1394)); // Your storage was cleaned.
 	return 0;
 }
@@ -5315,14 +5315,14 @@ ACMD_FUNC(cleargstorage)
 	struct guild *g;
 	struct guild_storage *gstorage;
 	nullpo_retr(-1, sd);
-	
+
 	g = guild_search(sd->status.guild_id);
-	
+
 	if (g == NULL) {
 		clif_displaymessage(fd, msg_txt(43));
 		return -1;
 	}
-	
+
 	if (sd->state.storage_flag == 1) {
 		clif_displaymessage(fd, msg_txt(250));
 		return -1;
@@ -5332,7 +5332,7 @@ ACMD_FUNC(cleargstorage)
 		clif_displaymessage(fd, msg_txt(251));
 		return -1;
 	}
-	
+
 	gstorage = guild2storage2(sd->status.guild_id);
 	if (gstorage == NULL) {// Doesn't have opened @gstorage yet, so we skip the deletion since *shouldn't* have any item there.
 		return -1;
@@ -5345,7 +5345,7 @@ ACMD_FUNC(cleargstorage)
 	}
 	storage_guild_storageclose(sd);
 	gstorage->lock = 0; // Cleaning done, release lock
-	
+
 	clif_displaymessage(fd, msg_txt(1395)); // Your guild storage was cleaned.
 	return 0;
 }
@@ -5354,23 +5354,23 @@ ACMD_FUNC(clearcart)
 {
 	int i;
 	nullpo_retr(-1, sd);
-	
+
 	if (pc_iscarton(sd) == 0) {
 		clif_displaymessage(fd, msg_txt(1396)); // You do not have a cart to be cleaned.
 		return -1;
 	}
-	
+
 	if (sd->state.vending == 1) { //Somehow...
 		return -1;
 	}
-	
+
 	for( i = 0; i < MAX_CART; i++ )
 		if(sd->status.cart[i].nameid > 0)
 			pc_cart_delitem(sd, i, sd->status.cart[i].amount, 1, LOG_TYPE_OTHER);
-	
+
 	clif_clearcart(fd);
 	clif_updatestatus(sd,SP_CARTINFO);
-	
+
 	clif_displaymessage(fd, msg_txt(1397)); // Your cart was cleaned.
 	return 0;
 }
@@ -5411,12 +5411,12 @@ ACMD_FUNC(useskill)
 {
 	struct map_session_data *pl_sd = NULL;
 	struct block_list *bl;
-	int skillnum;
-	int skilllv;
+	uint16 skill_id;
+	uint16 skill_lv;
 	char target[100];
 	nullpo_retr(-1, sd);
 
-	if(!message || !*message || sscanf(message, "%d %d %23[^\n]", &skillnum, &skilllv, target) != 3) {
+	if(!message || !*message || sscanf(message, "%hui %hui %23[^\n]", &skill_id, &skill_lv, target) != 3) {
 		clif_displaymessage(fd, msg_txt(1165)); // Usage: @useskill <skill ID> <skill level> <target>
 		return -1;
 	}
@@ -5433,16 +5433,16 @@ ACMD_FUNC(useskill)
 		return -1;
 	}
 
-	if (skillnum >= HM_SKILLBASE && skillnum < HM_SKILLBASE+MAX_HOMUNSKILL
+	if (skill_id >= HM_SKILLBASE && skill_id < HM_SKILLBASE+MAX_HOMUNSKILL
 		&& sd->hd && merc_is_hom_active(sd->hd)) // (If used with @useskill, put the homunc as dest)
 		bl = &sd->hd->bl;
 	else
 		bl = &sd->bl;
 
-	if (skill_get_inf(skillnum)&INF_GROUND_SKILL)
-		unit_skilluse_pos(bl, pl_sd->bl.x, pl_sd->bl.y, skillnum, skilllv);
+	if (skill_get_inf(skill_id)&INF_GROUND_SKILL)
+		unit_skilluse_pos(bl, pl_sd->bl.x, pl_sd->bl.y, skill_id, skill_lv);
 	else
-		unit_skilluse_id(bl, pl_sd->bl.id, skillnum, skilllv);
+		unit_skilluse_id(bl, pl_sd->bl.id, skill_id, skill_lv);
 
 	return 0;
 }
@@ -5456,20 +5456,20 @@ ACMD_FUNC(displayskill)
 {
 	struct status_data * status;
 	unsigned int tick;
-	int skillnum;
-	int skilllv = 1;
+	uint16 skill_id;
+	uint16 skill_lv = 1;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || sscanf(message, "%d %d", &skillnum, &skilllv) < 1)
+	if (!message || !*message || sscanf(message, "%hui %hui", &skill_id, &skill_lv) < 1)
 	{
 		clif_displaymessage(fd, msg_txt(1166)); // Usage: @displayskill <skill ID> {<skill level>}
 		return -1;
 	}
 	status = status_get_status_data(&sd->bl);
 	tick = gettick();
-	clif_skill_damage(&sd->bl,&sd->bl, tick, status->amotion, status->dmotion, 1, 1, skillnum, skilllv, 5);
-	clif_skill_nodamage(&sd->bl, &sd->bl, skillnum, skilllv, 1);
-	clif_skill_poseffect(&sd->bl, skillnum, skilllv, sd->bl.x, sd->bl.y, tick);
+	clif_skill_damage(&sd->bl,&sd->bl, tick, status->amotion, status->dmotion, 1, 1, skill_id, skill_lv, 5);
+	clif_skill_nodamage(&sd->bl, &sd->bl, skill_id, skill_lv, 1);
+	clif_skill_poseffect(&sd->bl, skill_id, skill_lv, sd->bl.x, sd->bl.y, tick);
 	return 0;
 }
 
@@ -5480,13 +5480,13 @@ ACMD_FUNC(displayskill)
 ACMD_FUNC(skilltree)
 {
 	struct map_session_data *pl_sd = NULL;
-	int skillnum;
+	uint16 skill_id;
 	int meets, j, c=0;
 	char target[NAME_LENGTH];
 	struct skill_tree_entry *ent;
 	nullpo_retr(-1, sd);
 
-	if(!message || !*message || sscanf(message, "%d %23[^\r\n]", &skillnum, target) != 2) {
+	if(!message || !*message || sscanf(message, "%hui %23[^\r\n]", &skill_id, target) != 2) {
 		clif_displaymessage(fd, msg_txt(1167)); // Usage: @skilltree <skill ID> <target>
 		return -1;
 	}
@@ -5503,7 +5503,7 @@ ACMD_FUNC(skilltree)
 	sprintf(atcmd_output, msg_txt(1168), job_name(c), pc_checkskill(pl_sd, NV_BASIC)); // Player is using %s skill tree (%d basic points).
 	clif_displaymessage(fd, atcmd_output);
 
-	ARR_FIND( 0, MAX_SKILL_TREE, j, skill_tree[c][j].id == 0 || skill_tree[c][j].id == skillnum );
+	ARR_FIND( 0, MAX_SKILL_TREE, j, skill_tree[c][j].id == 0 || skill_tree[c][j].id == skill_id );
 	if( j == MAX_SKILL_TREE || skill_tree[c][j].id == 0 )
 	{
 		clif_displaymessage(fd, msg_txt(1169)); // The player cannot use that skill.
@@ -7591,16 +7591,16 @@ ACMD_FUNC(mapflag) {
 #define setflag( cmd ) \
 	if ( strcmp( flag_name , #cmd ) == 0 ){\
 		map[ sd->bl.m ].flag.cmd = flag;\
-		sprintf(atcmd_output,"[ @mapflag ] %s flag has been set to %s",#cmd,flag?"On":"Off");\
+		sprintf(atcmd_output,"[ @mapflag ] %s flag has been set to %s value = %hd",#cmd,flag?"On":"Off",flag);\
 		clif_displaymessage(sd->fd,atcmd_output);\
 		return 0;\
 	}
-    unsigned char flag_name[100];
-	int flag=0,i;
+        char flag_name[100];
+	short flag=0,i;
 	nullpo_retr(-1, sd);
 	memset(flag_name, '\0', sizeof(flag_name));
 
-	if (!message || !*message || (sscanf(message, "%99s %d", flag_name, &flag) < 1)) {
+	if (!message || !*message || (sscanf(message, "%99s %hd", flag_name, &flag) < 1)) {
 		clif_displaymessage(sd->fd,msg_txt(1311)); // Enabled Mapflags in this map:
 		clif_displaymessage(sd->fd,"----------------------------------");
 		checkflag(autotrade);			checkflag(allowks);				checkflag(nomemo);		checkflag(noteleport);
@@ -7620,7 +7620,7 @@ ACMD_FUNC(mapflag) {
 		clif_displaymessage(sd->fd,msg_txt(1313)); // Type "@mapflag available" to list the available mapflags.
 		return 1;
 	}
-	for (i = 0; flag_name[i]; i++) flag_name[i] = tolower(flag_name[i]); //lowercase
+	for (i = 0; flag_name[i]; i++) flag_name[i] = (char)tolower(flag_name[i]); //lowercase
 
 	setflag(autotrade);			setflag(allowks);			setflag(nomemo);			setflag(noteleport);
 	setflag(noreturn);			setflag(monster_noteleport);setflag(nosave);			setflag(nobranch);
