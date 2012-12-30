@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib, Aeomin
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.3a
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //= 1.1 Fixed Scatter Stuff NPCs [JayPee].
 //= 1.2 Updated dialogue. Credits to Muad_Dib. [Joseph]
 //= 1.3 Updated script, optimized. [Euphy]
+//= 1.3a Moved warps to separate file. [Euphy]
 //============================================================
 
 alde_alche,35,186,5	script	Alchemist Union Member	805,{
@@ -1016,10 +1017,6 @@ OnTouch:
 	close;
 }
 
-job3_gen01,7,59,0	warp	#from1to2gen	1,1,job3_gen01,72,52
-job3_gen01,71,56,0	warp	#from2to1gen	1,1,job3_gen01,11,60
-lighthalzen,52,132,0	warp	#lighttogen	1,1,job3_gen01,45,50
-job3_gen01,49,49,0	warp	#gentolight	1,1,lighthalzen,54,132
 job3_gen01,24,32,0	script	The gaze of Devries	139,2,2,{
 OnTouch:
 	if (checkquest(2223,HUNTING) == 2) {

@@ -844,9 +844,10 @@ execution with 'goto', 'menu' and 'jump_zero' commands, invoked with 'doevent'
 and 'donpcevent' commands and are otherwise essential. A label's name may not be 
 longer than 22 characters. (23rd is the ':'.) There is some confusion in the 
 source about whether it's 22, 23 or 24 all over the place, so keeping labels 
-under 22 characters could be wise. In addition to labels you name yourself, 
-there are also some special labels which the script engine will start execution 
-from if a special event happens:
+under 22 characters could be wise. It may only contain alphanumeric characters 
+and underscore. In addition to labels you name yourself, there are also some 
+special labels which the script engine will start execution from if a special 
+event happens:
 
 OnClock<hour><minute>:
 OnMinute<minute>:
@@ -1645,6 +1646,7 @@ result in error and termination of the script.
 
 This works like callfunc, and is used for cleaner and faster scripting. The function
 must be defined and used within a script, and works like a label with arguments.
+Note that the name may only contain alphanumeric characters and underscore.
 
 Usage:
 
@@ -3631,7 +3633,7 @@ in February 2005, but it will work just fine in normal NPC scripts.
 This function is similar to 'isequipped', but instead of 1 or 0, it will return 
 the number of cards in the list given that were found on the invoking character.
 
-    if (isequippedcnt(4001,4005,4033,4196)=4) mes "Finally got all four poring cards?";
+    if (isequippedcnt(4001,4005,4033,4196) == 4) mes "Finally got all four poring cards?";
 
 ---------------------------------------
 

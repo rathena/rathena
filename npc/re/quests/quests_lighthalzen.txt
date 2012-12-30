@@ -1,15 +1,591 @@
 //===== rAthena Script ======================================= 
 //= Quest NPCs located in Lighthalzen
 //===== By: ================================================== 
-//= Daegaladh, Masao
+//= Ziu, Heris (translation)
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
 //= Quests related to Lighthalzen City.
 //===== Additional Comments: ================================= 
 //= 1.0 Updated to match the new Izlude Map. [Masao]
+//= 1.1 Added Somatology Laboratory F4 quest. [Euphy]
 //============================================================ 
 
+// Renewal split [Daegaladh]
+//============================================================
 izlude,171,73,6	duplicate(Scamp)	Scamp#2	853
+
+// Somatology Laboratory F4
+//============================================================
+lighthalzen,303,304,5	script	Jerome Jameson#start	904,{
+	if (lhz_dun04 == 0) {
+		mes "[Jerome Jameson]";
+		mes "Wow, what a "+((Sex)?"strong man!":"beautiful dame!");
+		next;
+		mes "[Jerome Jameson]";
+		mes ((Sex)?"Sir":"Ma'am")+", please take heed -- as soon";
+		mes "as a dangerous rumor aroused about";
+		mes "the endangerment of everyone in";
+		mes "town, the best thing to do is lock";
+		mes "your doors.";
+		
+		// To do: check BaseLevel requirement.
+		if (BaseLevel < 90 || hg_tre < 54) close;
+
+		next;
+		select("Dangerous rumor?");
+		mes "[Jerome Jameson]";
+		mes "Strong rumors have been heard from";
+		mes "Rekenber Investigation Institute";
+		mes "about terrible, secret experiments";
+		mes "with human beings!";
+		next;
+		select("What? Experiments?");
+		mes "[Jerome Jameson]";
+		mes "Yes. Biological experiments!!";
+		mes "Experiments with human beings";
+		mes "conducted in the undergrounds of";
+		mes "these very slums. Apparently, they";
+		mes "have spread the rumors upon being";
+		mes "denied of social benefits.";
+		next;
+		mes "[Jerome Jameson]";
+		mes "This rumor cannot go about";
+		mes "unhandled. The biological";
+		mes "experiments that have been carried";
+		mes "out in this place can be real.";
+		mes "This really needs to be";
+		mes "investigated, and soon!";
+		setquest 5109;
+		set lhz_dun04,1;
+		close;
+	}
+	mes "[Jerome Jameson]";
+	mes "Please investigate the deeper";
+	mes "parts of the laboratory. I hope";
+	mes "to hear from you soon.";
+	close;
+}
+
+// Is this the correct behavior? (limited and conflicting sources)
+// -- iRO: lhz_dun03 warps directly to que_lhz.
+// -- Ziu: NPC in lhz_dun04 warps into que_lhz.
+function	script	lhz4enter	{
+	if (getmapusers("que_lhz") == 0 && mobcount("que_lhz","#controllhz4::OnMyMobDead") < 1) {
+		if (getarg(0) == 0) {
+			mes "- Having Jerome Jameson's orders";
+			mes "in mind, you hold your breath and";
+			mes "descend the flooded flight of";
+			mes "stairs. -";
+		} else {
+			mes "[Researcher]";
+			mes "Who are you?";
+			mes "................";
+			emotion e_omg;
+			next;
+			mes "The man runs away and you go after him.";
+		}
+		if (lhz_dun04 > 1) {
+			changequest 5110,5109;
+			set lhz_dun04,1;
+		}
+		close2;
+		// Check twice because of 'next'.
+		if (getmapusers("que_lhz") == 0 && mobcount("que_lhz","#controllhz4::OnMyMobDead") < 1) {
+			donpcevent "#lhz4mes1::OnEnable";
+			warp "que_lhz",244,52;
+		}
+		end;
+	}
+	mes "Right now there are other people inside. Wait for your turn.";
+	close;
+}
+
+lhz_dun03,239,77,0	script	#warplhz3lhz4	45,1,1,{
+OnTouch:
+	if (lhz_dun04 == 0) {
+		mes "It doesn't make sense to go down these flooded stairs.";
+		close;
+	} else if (lhz_dun04 < 6) {
+		callfunc "lhz4enter",0;
+		end;
+	}
+	warp "lhz_dun04",244,52;
+	end;
+}
+lhz_dun04,245,61,0	warp	#warplhz4lhz3	1,1,lhz_dun03,240,74
+
+// Does this portal exist?
+que_lhz,245,61,0	warp	#warplhzqlhz3	1,1,lhz_dun03,240,74
+
+que_lhz,244,52,0	script	#lhz4mes1	-1,2,2,{
+OnTouch:
+	mes "- You find another flight of";
+	mes "stairs that is raised and deviates";
+	mes "from the flooded path. -";
+	// Missing dialogue.
+	close2;
+	donpcevent "#lhz4mes1::OnDisable";
+	end;
+OnInit:
+OnDisable:
+	disablenpc "#lhz4mes1";
+	end;
+OnEnable:
+	enablenpc "#lhz4mes1";
+	end;
+}
+
+lhz_dun04,151,276,3	script	Researcher#lhz4	865,{
+	if (lhz_dun04 == 0) {
+		mes "[Researcher]";
+		mes "................";
+		close;
+	} else if (lhz_dun04 < 6) {
+		callfunc "lhz4enter",1;
+		end;
+	} else if (lhz_dun04 == 6) {
+		mes "Think twice before saying that these samples are a reason to shut this place down.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "You're stopping me for doing nothing good? What about the last four men I've created?";
+		next;
+		mes "[Wolfchev]";
+		mes "Hmm. This place will be completely flooded...";
+		next;
+		mes "[Wolfchev]";
+		mes "What is the problem?";
+		next;
+		mes "[Wolfchev]";
+		mes "Hmm... All this burocracy is ruining my laboratory. For God's sake!";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Hey! Wolfchev!!";
+		next;
+		mes "[Wolfchev]";
+		mes "Oh yes? To please them all! ^FF0080The different specimen^000000 are organically connected to each other.";
+		next;
+		mes "[Wolfchev]";
+		mes "Perhaps the boss of these ^00FF00things^000000...";
+		mes "My inability to control my own experiment... Here, are all the ^808000slaves used as decoys^000000 and the laboratory will be shut down.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Hey, Wolfchev!! This ^00FF00boss^000000 you're talking about. Where is it?";
+		next;
+		mes "[Wolfchev]";
+		mes "...in my laboratory. I awakened it. I tried to use it to destroy them all, but it didn't work... you'll have to do it...";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "How can I get access to your laboratory?";
+		next;
+		mes "[Wolfchev]";
+		mes "Now... One moment!";
+		mes "I will help you.";
+		next;
+		mes "[Wolfchev]";
+		mes "Luckily, the boss hasn't awaken sober, though he's still strong and destructive.";
+		next;
+		mes "[Wolfchev]";
+		mes "But it's still dangerous. He wil release his colleagues and this means we don't have much time here.";
+		set lhz_dun04,7;
+		completequest 5111;
+		setquest 5113;
+		setquest 5114;
+		setquest 5115;
+		setquest 5116;
+		setquest 5117;
+		setquest 5118;
+		setquest 5119;
+		setquest 5120;
+		setquest 5121;
+		setquest 5122;
+		setquest 5123;
+		setquest 5124;
+		setquest 5125;
+		close;
+	} else if (lhz_dun04 == 7) {
+		mes "[Wolfchev]";
+		mes "Are you going alone?";
+		mes "You will need a really good group to bypass the system and defeat the boss.";
+		close;
+	}
+	end;
+}
+
+que_lhz,207,75,3	script	Researcher#ins	865,3,3,{
+OnTouch:
+	if (lhz_dun04 == 1) {
+		mes "[Researcher]";
+		mes "..........";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "You! Are you professor Wolfchev?";
+		emotion e_omg,1;
+		next;
+		mes "[Wolfchev]";
+		mes "Many people come here looking for me. But most of them are reluctant to.";
+		mes "What do you want?";
+		emotion e_gg;
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "I've heard rumors about biological experiments.";
+		mes "Wolfchev!!";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "These experiments...";
+		next;
+		mes "[Wolfchev]";
+		mes "I think I know what you're gonna say. Are you accusing me of something?";
+		mes "I don't want to hear more of that.";
+		mes "You better leave.";
+		emotion e_gg;
+		next;
+		mes "[Wolfchev]";
+		mes "They seem to have cried for a long time... I'm busy, excuse me!";
+		next;
+		mes "From Wolfchev's eyes tears welled and he started laughing before running away.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Hey! Wolfchev there...";
+		emotion e_omg,1;
+		changequest 5109,5110;
+		set lhz_dun04,2;
+		close2;
+		warp "que_lhz",96,136;
+		end;
+	}
+	mes "[Researcher]";
+	mes "..........";
+	close;
+}
+
+que_lhz,94,119,3	script	Researcher#ins2	865,{
+	if (lhz_dun04 == 2) {
+		mes "[Wolfchev]";
+		mes "Hehehe. You are really persistent. What do you want from someone like me?";
+		emotion e_swt2;
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Wolfchev... You've admitted it's dangerous already. And all these investigations...";
+		next;
+		mes "[Wolfchev]";
+		mes "You're right...hehe.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Your research is too dangerous. Do you think everybody wants it to keep going?";
+		next;
+		mes "[Wolfchev]";
+		mes "Everyone wants to be strong and dominate the others. Have their obedience, respect and attention. Don't you want that? Hehe.";
+		emotion e_gg;
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "... ... ...";
+		next;
+		mes "[Wolfchev]";
+		mes "With such a dangerous life, avoiding being damaged... Don't you see it?. Hehe.";
+		next;
+		mes "Again, Wolfchev hastily escapes.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Oh! He's far... and...";
+		set lhz_dun04,3;
+		close2;
+		warp "que_lhz",148,215;
+		end;
+	}
+	mes "[Researcher]";
+	mes "..........";
+	close;
+}
+que_lhz,147,224,3	script	Researcher#ins3	865,{
+	if (lhz_dun04 == 4 || mobcount("que_lhz","#controllhz4::OnMyMobDead") > 0) {
+		mes "[Wolfchev]";
+		mes "Wolfchev is freaking out. He is of his mind.";
+		emotion e_turn;
+		close;
+	} else if (lhz_dun04 == 3) {
+		mes "[Wolfchev]";
+		mes "You really are a bothersome little";
+		mes "tick, aren't you? Isn't that";
+		mes "apparent to you at all?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "... ... ...";
+		emotion e_dots,1;
+		next;
+		mes "Wolfchev didn't want to talk to you anymore, so while laughing he pressed a button on his hand. Then he went mad.";
+		specialeffect EF_SIGHTRASHER;
+		next;
+		mes "[Wolfchev]";
+		mes "Unfortunately to you, I will beat you here.";
+		donpcevent "#controllhz4::OnEnable";
+		next;
+		mes "[Wolfchev]";
+		mes "You're such a fool.";
+		emotion e_gasp;
+		next;
+		mes "[Wolfchev]";
+		mes "Look at all these experimental bodies you'll have to deal and see how good they are.";
+		next;
+		donpcevent "#controllhz4::OnEnable2";
+		progressbar "ffff00",6;
+		set lhz_dun04,4;
+		next;
+		mes "[Wolfchev]";
+		mes "NO!! ...Look what you did!! You";
+		mes "wreckless madman!!!";
+		emotion e_omg;
+		next;
+		mes "[Wolfchev]";
+		mes "Go back!";
+		next;
+		mes "First, let's destroy all these experiments!";
+		close;
+	} else if (lhz_dun04 == 5) {
+		mes "Wolfchev is freaking out. He is out of his mind.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "*Slaps Face* Hey, snap out of it!";
+		mes "We've destroyed them!";
+		specialeffect EF_STUNATTACK;
+		sleep2 1000;
+		specialeffect EF_STUNATTACK;
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Let's get out of here first! Is there a place we can go?";
+		specialeffect EF_DARKBREATH;
+		emotion e_no,1;
+		next;
+		mes "[Wolfchev]";
+		mes "This. My laboratory... My laboratory...";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "The laboratory? Where am I indeed?";
+		next;
+		mes "[Wolfchev]";
+		mes "Back to the beggining... here's when...";
+		next;
+		mes "- Wolfchev weakly points to the 12 o' clock direction. -";
+		next;
+		mes "I have to go to ^0000FF Wolfchev's Laboratory^000000...";
+		changequest 5110,5111;
+		set lhz_dun04,6;
+		donpcevent "#controllhz4d::OnEnable";
+		close;
+	} else if (lhz_dun04 == 6) {
+		mes "I have to go to ^0000FF Wolfchev's Laboratory^000000...";
+		close;
+	}
+	end;
+}
+
+-	script	Awake Specimen#lhz	-1,{
+	end;
+OnInit:
+OnDisable:
+	hideonnpc strnpcinfo(0);
+	end;
+OnEnable:
+	hideoffnpc strnpcinfo(0);
+	end;
+OnEffect1:
+	specialeffect EF_SUI_EXPLOSION;
+	end;
+OnEffect2:
+	specialeffect EF_BEGINASURA;
+	end;
+OnEffect3:
+	specialeffect EF_FLASHER;
+	end;
+}
+que_lhz,148,231,0	duplicate(Awake Specimen#lhz)	Awake Specimen#0	2244
+que_lhz,140,231,1	duplicate(Awake Specimen#lhz)	Awake Specimen#1	2244
+que_lhz,140,224,2	duplicate(Awake Specimen#lhz)	Awake Specimen#2	2244
+que_lhz,140,216,3	duplicate(Awake Specimen#lhz)	Awake Specimen#3	2244
+que_lhz,147,216,4	duplicate(Awake Specimen#lhz)	Awake Specimen#4	2244
+que_lhz,155,216,5	duplicate(Awake Specimen#lhz)	Awake Specimen#5	2244
+que_lhz,155,224,6	duplicate(Awake Specimen#lhz)	Awake Specimen#6	2244
+que_lhz,155,231,7	duplicate(Awake Specimen#lhz)	Awake Specimen#7	2244
+
+-	script	#controllhz4	-1,{
+OnInit:
+	disablenpc "#controllhz4";
+	end;
+OnEnable:
+	enablenpc "#controllhz4";
+	donpcevent "Awake Specimen#0::OnEnable";
+	donpcevent "Awake Specimen#1::OnEnable";
+	donpcevent "Awake Specimen#2::OnEnable";
+	donpcevent "Awake Specimen#3::OnEnable";
+	donpcevent "Awake Specimen#4::OnEnable";
+	donpcevent "Awake Specimen#5::OnEnable";
+	donpcevent "Awake Specimen#6::OnEnable";
+	donpcevent "Awake Specimen#7::OnEnable";
+	end;
+OnEnable2:
+	initnpctimer;
+	end;
+OnTimer1000:
+	donpcevent "Awake Specimen#0::OnEffect1";
+	end;
+OnTimer2000:
+	donpcevent "Awake Specimen#0::OnEffect2";
+	donpcevent "Awake Specimen#7::OnEffect1";
+	end;
+OnTimer3000:
+	donpcevent "Awake Specimen#7::OnEffect2";
+	donpcevent "Awake Specimen#6::OnEffect1";
+	end;
+OnTimer4000:
+	donpcevent "Awake Specimen#6::OnEffect2";
+	donpcevent "Awake Specimen#5::OnEffect1";
+	end;
+OnTimer5000:
+	donpcevent "Awake Specimen#5::OnEffect2";
+	donpcevent "Awake Specimen#4::OnEffect1";
+	end;
+OnTimer6000:
+	donpcevent "Awake Specimen#4::OnEffect2";
+	donpcevent "Awake Specimen#3::OnEffect1";
+	end;
+OnTimer7000:
+	donpcevent "Awake Specimen#3::OnEffect2";
+	donpcevent "Awake Specimen#2::OnEffect1";
+	end;
+OnTimer8000:
+	donpcevent "Awake Specimen#2::OnEffect2";
+	donpcevent "Awake Specimen#1::OnEffect1";
+	end;
+OnTimer9000:
+	donpcevent "Awake Specimen#1::OnEffect2";
+	end;
+OnTimer11000:
+	donpcevent "Awake Specimen#0::OnEffect3";
+	donpcevent "Awake Specimen#1::OnEffect3";
+	donpcevent "Awake Specimen#2::OnEffect3";
+	donpcevent "Awake Specimen#3::OnEffect3";
+	donpcevent "Awake Specimen#4::OnEffect3";
+	donpcevent "Awake Specimen#5::OnEffect3";
+	donpcevent "Awake Specimen#6::OnEffect3";
+	donpcevent "Awake Specimen#7::OnEffect3";
+	end;
+OnTimer14000:
+	donpcevent "Awake Specimen#0::OnDisable";
+	donpcevent "Awake Specimen#1::OnDisable";
+	donpcevent "Awake Specimen#2::OnDisable";
+	donpcevent "Awake Specimen#3::OnDisable";
+	donpcevent "Awake Specimen#4::OnDisable";
+	donpcevent "Awake Specimen#5::OnDisable";
+	donpcevent "Awake Specimen#6::OnDisable";
+	donpcevent "Awake Specimen#7::OnDisable";
+	end;
+OnTimer16000:
+	monster "que_lhz",148,231,"Awake Specimen",2244,1,"#controllhz4::OnMyMobDead";
+	monster "que_lhz",140,231,"Awake Specimen",2244,1,"#controllhz4::OnMyMobDead";
+	monster "que_lhz",140,224,"Awake Specimen",2244,1,"#controllhz4::OnMyMobDead";
+	monster "que_lhz",140,216,"Awake Specimen",2244,1,"#controllhz4::OnMyMobDead";
+	monster "que_lhz",147,216,"Awake Specimen",2244,1,"#controllhz4::OnMyMobDead";
+	monster "que_lhz",155,216,"Awake Specimen",2244,1,"#controllhz4::OnMyMobDead";
+	monster "que_lhz",155,224,"Awake Specimen",2244,1,"#controllhz4::OnMyMobDead";
+	monster "que_lhz",155,231,"Awake Specimen",2244,1,"#controllhz4::OnMyMobDead";
+	donpcevent "#controllhz4b::OnEnable";
+	stopnpctimer;
+	end;
+OnMyMobDead:
+	if (mobcount("que_lhz","#controllhz4::OnMyMobDead") < 1) {
+		donpcevent "#controllhz4b::OnStop";
+		donpcevent "#controllhz4c::OnEnable";
+		disablenpc "#controllhz4";
+		end;
+	}
+	end;
+}
+
+-	script	#controllhz4b	-1,{
+OnInit:
+OnDisable:
+	disablenpc "#controllhz4b";
+	end;
+OnEnable:
+	enablenpc "#controllhz4b";
+	initnpctimer;
+	end;
+OnStop:
+	stopnpctimer;
+	donpcevent "#controllhz4b::OnDisable";
+	end;
+OnTimer400000:
+	killmonster "que_lhz","#controllhz4::OnMyMobDead";
+	mapwarp "que_lhz","lighthalzen",263,200;
+	disablenpc "#controllhz4";
+	disablenpc "#controllhz4b";
+	stopnpctimer;
+	end;
+}
+
+-	script	#controllhz4c	-1,{
+OnInit:
+	disablenpc "#controllhz4c";
+	end;
+OnEnable:
+	enablenpc "#controllhz4c";
+	initnpctimer;
+	end;
+OnTimer10000:
+	mapannounce "que_lhz","Whisper of a man: Help me... Please... Aaah... I don't want to... Die....",bc_map,0x0080C0;
+	donpcevent "#controllhz4d::OnEnable";
+	stopnpctimer;
+	disablenpc "#controllhz4c";
+	end;
+}
+
+que_lhz,147,248,0	script	#controllhz4d	-1,6,4,{
+OnTouch:
+	if (lhz_dun04 == 4) {
+		mes "Looks like it's all done.";
+		set lhz_dun04,5;
+		donpcevent "#controllhz4d::OnDisable";
+		close;
+	} else if (lhz_dun04 == 6) {
+		mes "- Concrete falls from the ceiling";
+		mes "due to the weakened structure of";
+		mes "the lab and you tumble down the";
+		mes "flight of stairs avoiding it. -";
+		close2;
+		warp "lhz_dun04",148,269;
+		donpcevent "#lhz4mes2::OnEnable";
+		donpcevent "#controllhz4d::OnDisable";
+		end;
+	}
+	end;
+OnInit:
+OnDisable:
+	disablenpc "#controllhz4d";
+	end;
+OnEnable:
+	enablenpc "#controllhz4d";
+	end;
+}
+
+lhz_dun04,148,269,0	script	#lhz4mes2	-1,2,2,{
+OnTouch:
+	if (lhz_dun04 == 6) {
+		heal -Hp/2,0; // To do: check HP value.
+		mes "- You awaken injured, hearing the";
+		mes "sounds of footsteps all around";
+		mes "you... -";
+		close2;
+		donpcevent "#lhz4mes2::OnDisable";
+		end;
+	}
+	end;
+OnInit:
+OnDisable:
+	disablenpc "#lhz4mes2";
+	end;
+OnEnable:
+	enablenpc "#lhz4mes2";
+	end;
+}

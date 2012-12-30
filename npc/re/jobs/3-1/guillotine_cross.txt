@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.0a
+//= 1.0b
 //===== Compatible With: ===================================== 
 //= rAthena SVN r16945+
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 Adapted from original script. [Euphy]
 //= 1.0a Added 'npcskill' command. [Euphy]
+//= 1.0b Moved warps to separate file. [Euphy]
 //============================================================
 
 que_job01,75,96,3	script	Guild Member#3rdgc01	997,{
@@ -140,75 +141,12 @@ que_job01,75,96,3	script	Guild Member#3rdgc01	997,{
 		mes "Go to Veins and find a chapter.";
 		mes "You can hear more details from there.";
 		close;
-	} else if (job_3rd_gc > 3) {
+	} else {
 		mes "[Ahcart]";
 		mes "Good luck to you.";
 		close;
-	} else { //FIXME: What is this section for?
-		mes "[Ahcart]";
-		mes "As you know, in the assassin guild, there are normal Assassins and Assassin Crosses.";
-		next;
-		mes "[Ahcart]";
-		mes "But there is one more class that operates in darkness.";
-		mes "Members of that class are holding their power in check until they want to be revealed themselves.";
-		next;
-		mes "[Ahcart]";
-		mes "Well, someday you will know about them.";
-		close;
 	}
 }
-
-veins,257,256,0	warp	#gate_to_guil01	1,1,job3_guil01,9,93
-job3_guil01,6,93,0	warp	#gate_to_guil02	1,1,veins,254,255
-job3_guil01,18,48,0	warp	#gate_to_guil03	1,1,job3_guil01,68,91
-job3_guil01,67,95,0	warp	#gate_to_guil04	1,1,job3_guil01,18,53
-job3_guil01,80,77,0	script	#gate_to_guil05	45,1,1,{
-	end;
-OnTouch:
-	if (job_3rd_gc > 3)
-		warp "job3_guil01",60,50;
-	else {
-		mes "[Daora]";
-		mes "Hey, there!";
-		mes "No trespassing!";
-		close;
-	}
-	end;
-}
-job3_guil01,65,50,0	warp	#gate_to_guil06	1,1,job3_guil01,83,77
-job3_guil01,51,55,0	script	#gate_to_guil07	45,1,1,{
-	end;
-OnTouch:
-	if (job_3rd_gc == 4 || job_3rd_gc == 14 || job_3rd_gc > 17)
-		warp "job3_guil01",12,7;
-	else {
-		mes " [-----------------------------]";
-		mes " No trespassing without ";
-		mes " permission. ";
-		mes " I'm not a ";
-		mes " generous person. ";
-		mes " - Mayshell ";
-		mes " [-----------------------------]";
-		close;
-	}
-	end;
-}
-job3_guil01,11,4,0	warp	#gate_to_guil08	1,1,job3_guil01,51,50
-job3_guil01,51,44,0	script	#gate_to_guil09	45,1,1,{
-	end;
-OnTouch:
-	if (job_3rd_gc == 11 || job_3rd_gc == 12)
-		warp "job3_guil01",79,23;
-	else if (job_3rd_gc > 19)
-		warp "job3_guil01",144,57;
-	else {
-		mes "You don't have anything to do.";
-		close;
-	}
-	end;
-}
-job3_guil01,79,27,0	warp	#gate_to_guil10	1,1,job3_guil01,51,50
-job3_guil01,143,61,0	warp	#gate_to_guil11	1,1,job3_guil01,51,50
 
 function	script	func_3rdgc	{
 	set .@n$, "["+strcharinfo(0)+"]";
@@ -3821,6 +3759,52 @@ L_Info:
 	mes "We have highly advanced combat skills.";
 	next;
 	return;
+}
+
+// Warp Portals
+//============================================================
+job3_guil01,80,77,0	script	#gate_to_guil05	45,1,1,{
+	end;
+OnTouch:
+	if (job_3rd_gc > 3)
+		warp "job3_guil01",60,50;
+	else {
+		mes "[Daora]";
+		mes "Hey, there!";
+		mes "No trespassing!";
+		close;
+	}
+	end;
+}
+job3_guil01,51,55,0	script	#gate_to_guil07	45,1,1,{
+	end;
+OnTouch:
+	if (job_3rd_gc == 4 || job_3rd_gc == 14 || job_3rd_gc > 17)
+		warp "job3_guil01",12,7;
+	else {
+		mes " [-----------------------------]";
+		mes " No trespassing without ";
+		mes " permission. ";
+		mes " I'm not a ";
+		mes " generous person. ";
+		mes " - Mayshell ";
+		mes " [-----------------------------]";
+		close;
+	}
+	end;
+}
+job3_guil01,51,44,0	script	#gate_to_guil09	45,1,1,{
+	end;
+OnTouch:
+	if (job_3rd_gc == 11 || job_3rd_gc == 12)
+		warp "job3_guil01",79,23;
+	else if (job_3rd_gc > 19)
+		warp "job3_guil01",144,57;
+	else {
+		mes "You don't have anything to do.";
+		close;
+	}
+	end;
 }
 
 /*

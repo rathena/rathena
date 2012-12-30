@@ -4,7 +4,7 @@
 //= L0ne_W0lf
 //= Credits: Gepard
 //===== Current Version: =====================================
-//= 1.7
+//= 1.7a
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -21,6 +21,7 @@
 //= 1.5b More small fixes. [Euphy]
 //= 1.6 Fixed bugs where players unable to continue the quest. [Joseph]
 //= 1.7 Updated script, many bugs fixed. [Euphy]
+//= 1.7a Moved warps to separate file. [Euphy]
 //============================================================
 
 prt_church,103,88,3	script	Praying Minister#arch	60,{
@@ -1622,8 +1623,6 @@ OnTouch:
 	specialeffect EF_MAPPILLAR2,"#arch_end";
 	end;
 }
-
-job3_arch01,29,24,0	warp	#archout	1,1,odin_tem02,282,263
 
 odin_tem02,30,181,0	script	#wherearch01	139,10,10,{
 OnTouch:

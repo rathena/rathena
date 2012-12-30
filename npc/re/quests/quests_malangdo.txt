@@ -715,19 +715,17 @@ malangdo,137,200,6	script	Pipielle	549,{
 		mes "^770099This cat is working on something, she asks for help above LV60.^000000";
 		close;
 	}
-	set .@fish_ss1, "What are you doing??";
+	set .@fish_ss1$, "What are you doing??";
 	if (countitem(6451) > 29)
-		set .@fish_ss2, "I caught a lot of strange fishes!";
-	else {
-		set .@fish_num, 30-countitem(6451); //Unknown_Fish
-		set .@fish_ss2, "Remaining " + .@fish_num + " of ^bbbbbbUnidentified Fish are required.^000000";
-	}
+		set .@fish_ss2$, "I caught a lot of strange fishes!";
+	else
+		set .@fish_ss2$, "Remaining " + (30-countitem(6451)) + " of ^bbbbbbUnidentified Fish are required.^000000";
 	if (ma_tomas == 100)
-		set .@fish_ss3, "I met a Admiral Thomas...";
+		set .@fish_ss3$, "I met an Admiral Thomas...";
 	mes "[Pipielle]";
 	mes "Would you come here and open your bag for me?";
 	next;
-	switch(select(.@fish_ss1,.@fish_ss2,.@fish_ss3)) {
+	switch(select(.@fish_ss1$,.@fish_ss2$,.@fish_ss3$)) {
 	case 1:
 		mes "[Pipielle]";
 		mes "There are many beautiful fishes around here. So I feel my heard beating when I standing here.";
