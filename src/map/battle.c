@@ -3214,11 +3214,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				flag.pdef ?(def1+vit_def):0,
 				flag.pdef2?(def1+vit_def):0
 			);
-			if (!flag.idef || !flag.idef2){
+			if( !flag.idef )
 				wd.damage = wd.damage * (4000+def1) / (4000+10*def1) - vit_def;
-				if(flag.lh)
-					wd.damage2 = wd.damage2 * (4000+def1) / (4000+10*def1) - vit_def;
-			}
+			if( flag.lh && !flag.idef2 )
+				wd.damage2 = wd.damage2 * (4000+def1) / (4000+10*def1) - vit_def;
+			
 
 			#else
 				if (def1 > 100) def1 = 100;
