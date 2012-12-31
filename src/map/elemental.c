@@ -853,7 +853,8 @@ int read_elemental_skilldb(void) {
 	char *str[4];
 	struct s_elemental_db *db;
 	int i, j = 0, k = 0, class_;
-	uint16 skill_id, skill_lv, skillmode;
+	uint16 skill_id, skill_lv;
+	int skillmode;
 
 	sprintf(line, "%s/%s", db_path, "elemental_skill_db.txt");
 	fp = fopen(line, "r");

@@ -545,7 +545,7 @@ enum { //Change Guild Infos
 	GBI_EXP	=1,		// Guild Experience (EXP)
 	GBI_GUILDLV,		// Guild level
 	GBI_SKILLPOINT,		// Guild skillpoints
-	GBI_skill_lv,		// Guild skill_lv ?? seem unused
+	GBI_SKILLLV,		// Guild skill_lv ?? seem unused
 };
 
 enum { //Change Member Infos
