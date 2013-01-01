@@ -794,6 +794,8 @@ void initChangeTables(void) {
 	StatusIconChangeTable[SC_SPL_DEF] = SI_SPL_DEF;
 	StatusIconChangeTable[SC_MANU_MATK] = SI_MANU_MATK;
 	StatusIconChangeTable[SC_SPL_MATK] = SI_SPL_MATK;
+	StatusIconChangeTable[SC_ATKPOTION] = SI_PLUSATTACKPOWER;
+	StatusIconChangeTable[SC_MATKPOTION] = SI_PLUSMAGICPOWER;
 	//Cash Items
 	StatusIconChangeTable[SC_FOOD_STR_CASH] = SI_FOOD_STR_CASH;
 	StatusIconChangeTable[SC_FOOD_AGI_CASH] = SI_FOOD_AGI_CASH;

@@ -2059,16 +2059,16 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 
 		switch (skill_id)
 		{	//Calc base damage according to skill
-			case NJ_ISSEN:
-				wd.damage = 40*sstatus->str +skill_lv*(sstatus->hp/10 + 35);
-				wd.damage2 = 0;
-				status_set_hp(src, 1, 0);
-				break;
 			case PA_SACRIFICE:
 				wd.damage = (int64)sstatus->max_hp* 9/100;
 				wd.damage2 = 0;
 				break;
 #ifndef RENEWAL
+			case NJ_ISSEN:
+				wd.damage = 40*sstatus->str +skill_lv*(sstatus->hp/10 + 35);
+				wd.damage2 = 0;
+				status_set_hp(src, 1, 0);
+				break;
 			case LK_SPIRALPIERCE:
 			case ML_SPIRALPIERCE:
 				if (sd) {
@@ -2478,6 +2478,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					skillratio += 20*(skill_lv-1);
 				#endif
 					break;
+#ifdef RENEWAL
+				case NJ_ISSEN:
+					skillratio += 100 * (skill_lv-1);
+					break;
+#endif
 				case NJ_HUUMA:
 					skillratio += 50 + 150*skill_lv;
 					break;
@@ -2960,6 +2965,18 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				case NJ_SYURIKEN:
 					ATK_ADD(4*skill_lv);
 					break;
+#ifdef RENEWAL
+				case NJ_ISSEN:
+					// Damage = (current HP + atk * skill_lv) - (sdef+edef)
+					ATK_ADD(sstatus->hp);
+					wd.damage2 = 0;// needs more info if this really 0 for dual weilding KG/OB. [malufett]
+					status_set_hp(src, max(sstatus->hp/100, 1), 0);
+					if( sc && sc->data[SC_BUNSINJYUTSU] && (i=sc->data[SC_BUNSINJYUTSU]->val2) > 0){
+						wd.div_ = -( i + 2 ); // mirror image number of hits + 2
+						ATK_ADDRATE(20 + i*20); // (20 + 20 * mirror image) %
+					}
+					break;
+#endif
 				case HT_FREEZINGTRAP:
 					if(sd)
 						ATK_ADD( 40 * pc_checkskill(sd, RA_RESEARCHTRAP) );
@@ -3187,6 +3204,12 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				if( src->type == BL_MOB && (skill=pc_checkskill(tsd,RA_RANGERMAIN))>0 &&
 					(sstatus->race == RC_BRUTE || sstatus->race == RC_FISH || sstatus->race == RC_PLANT) )
 					vit_def += skill*5;
+#ifdef RENEWAL
+				if( skill == NJ_ISSEN ){//TODO: do better implementation if other skills(same func) are found [malufett]
+					vit_def += def1;
+					def1 = 0;
+				}
+#endif
 			}
 			else { //Mob-Pet vit-eq
 #ifndef RENEWAL

@@ -3699,49 +3699,35 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		status_change_end(src, SC_HIDING, INVALID_TIMER);
 		// fall through
 	case MO_EXTREMITYFIST:
-		if( skill_id == MO_EXTREMITYFIST )
 		{
-			status_change_end(src, SC_EXPLOSIONSPIRITS, INVALID_TIMER);
-			status_change_end(src, SC_BLADESTOP, INVALID_TIMER);
-#ifdef RENEWAL
-			sc_start(src,SC_EXTREMITYFIST2,100,skill_lv,skill_get_time(skill_id,skill_lv));
-#endif
-		}
-		//Client expects you to move to target regardless of distance
-		{
-			struct unit_data *ud = unit_bl2ud(src);
-			short dx,dy;
-			int i,speed;
-			i = skill_id == MO_EXTREMITYFIST?1:2; //Move 2 cells for Issen, 1 for Asura
-			dx = bl->x - src->x;
-			dy = bl->y - src->y;
-			if (dx < 0) dx-=i;
-			else if (dx > 0) dx+=i;
-			if (dy < 0) dy-=i;
-			else if (dy > 0) dy+=i;
-			if (!dx && !dy) dy++;
-			if (map_getcell(src->m, src->x+dx, src->y+dy, CELL_CHKNOPASS))
-			{
-				dx = bl->x;
-				dy = bl->y;
-			} else {
-				dx = src->x + dx;
-				dy = src->y + dy;
-			}
+			short x, y, i = 2; // Move 2 cells for Issen(from target)
+			struct block_list *mbl = bl;
+			short dir = 0;
 
+			if( skill_id == MO_EXTREMITYFIST )
+			{
+				mbl = src;
+				i = 3; // for Asura(from caster)
+				status_change_end(src, SC_EXPLOSIONSPIRITS, INVALID_TIMER);
+				status_change_end(src, SC_BLADESTOP, INVALID_TIMER);
+#ifdef RENEWAL
+				sc_start(src,SC_EXTREMITYFIST2,100,skill_lv,skill_get_time(skill_id,skill_lv));
+#endif
+			}
 			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 
-			if(unit_walktoxy(src, dx, dy, 2) && ud) {
-				//Increase can't walk delay to not alter your walk path
-				ud->canmove_tick = tick;
-				speed = status_get_speed(src);
-				for (i = 0; i < ud->walkpath.path_len; i ++)
-				{
-					if(ud->walkpath.path[i]&1)
-						ud->canmove_tick+=7*speed/5;
-					else
-						ud->canmove_tick+=speed;
-				}
+			dir = map_calc_dir(src,bl->x,bl->y);
+			if( dir > 0 && dir < 4) x = -i;
+			else if( dir > 4 ) x = i;
+			else x = 0;
+			if( dir > 2 && dir < 6 ) y = -i;
+			else if( dir == 7 || dir < 2 ) y = i;
+			else y = 0;
+			if( (mbl == src || !map_flag_gvg(src->m) && !map[src->m].flag.battleground) && // only NJ_ISSEN don't have slide effect in GVG
+				unit_movepos(src, mbl->x+x, mbl->y+y, 1, 1) ) { 
+				clif_slide(src, src->x, src->y);
+				//uncomment this if you want to remove MO_EXTREMITYFIST glitchy walking effect. [malufett]
+				//clif_fixpos(src); 
 			}
 		}
 		break;
@@ -4140,11 +4126,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			short x, y;
 			short dir = map_calc_dir(src,bl->x,bl->y);
 
-			if( dir > 4 ) x = -1;
-			else if( dir > 0 && dir < 4 ) x = 1;
+			if( dir > 0 && dir < 4) x = 2;
+			else if( dir > 4 ) x = -2;
 			else x = 0;
-			if( dir < 3 || dir > 5 ) y = -1;
-			else if( dir > 3 && dir < 5 ) y = 1;
+			if( dir > 2 && dir < 6 ) y = 2;
+			else if( dir == 7 || dir < 2 ) y = -2;
 			else y = 0;
 
 			if( unit_movepos(src, bl->x+x, bl->y+y, 1, 1) )
@@ -6915,7 +6901,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start4(bl,type,100,skill_lv,skill_id,src->id,skill_get_time(skill_id,skill_lv),1000));
+#ifndef RENEWAL
 		if (sd) skill_blockpc_start (sd, skill_id, skill_get_time(skill_id, skill_lv)+3000);
+#endif
 		break;
 
 	case PF_MINDBREAKER:
@@ -7832,20 +7820,19 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		{
 			int rate = ( sd? sd->status.job_level : 50 ) / 4;
 
-			if(src == bl ) rate = 100; // Success Chance: On self, 100%
+			if( src == bl ) rate = 100; // Success Chance: On self, 100%
 			else if(bl->type == BL_PC) rate += 20 + 10 * skill_lv; // On Players, (20 + 10 * Skill Level) %
 			else rate += 40 + 10 * skill_lv; // On Monsters, (40 + 10 * Skill Level) %
+			
+			if( sd )
+				skill_blockpc_start(sd,skill_id,4000);
 
 			if( !(tsc && tsc->data[type]) ){
-				i = sc_start2(bl,type,rate,skill_lv,src->id,(src == bl)?5000:(bl->type == BL_PC)?skill_get_time(skill_id,skill_lv):skill_get_time2(skill_id, skill_lv));
-				clif_skill_nodamage(src,bl,skill_id,skill_lv,i);
+				if( i )
+					break;
 			}
-
-			if( sd && i )
-				skill_blockpc_start(sd,skill_id,4000); // Reuse Delay only activated on success
-			else if(sd)
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-		}else if( sd )
+		}
+		if( sd )
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL_TOTARGET,0);
 		break;
 
@@ -9368,16 +9355,8 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 #endif
 		}
 		if (target && target->m == src->m)
-		{	//Move character to target anyway.
-			int dx,dy;
-			dx = target->x - src->x;
-			dy = target->y - src->y;
-			if(dx > 0) dx++;
-			else if(dx < 0) dx--;
-			if (dy > 0) dy++;
-			else if(dy < 0) dy--;
-
-			if (unit_movepos(src, src->x+dx, src->y+dy, 1, 1))
+		{	//Move character to target anyway.			
+			if (unit_movepos(src, src->x+3, src->y+3, 1, 1))
 			{	//Display movement + animation.
 				clif_slide(src,src->x,src->y);
 				clif_skill_damage(src,target,tick,sd->battle_status.amotion,0,0,1,ud->skill_id, ud->skill_lv, 5);
@@ -12750,7 +12729,11 @@ int skill_check_condition_castbegin(struct map_session_data* sd, short skill, sh
 			break;
 
 		case NJ_ISSEN:
+#ifdef RENEWAL
+			if (status->hp < (status->hp/100)) {
+#else
 			if (status->hp < 2) {
+#endif
 				clif_skill_fail(sd,skill,USESKILL_FAIL_LEVEL,0);
 				return 0;
 			}
