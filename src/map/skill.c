@@ -524,7 +524,7 @@ int skillnotok (uint16 skill_id, struct map_session_data *sd)
 	// allowing a skill to be cast. This is to prevent no-delay ACT files from spamming skills such as
 	// AC_DOUBLE which do not have a skill delay and are not regarded in terms of attack motion.
 	if( !sd->state.autocast && sd->skillitem != skill_id && sd->canskill_tick &&
-		DIFF_TICK(gettick(), sd->canskill_tick) < (sd->battle_status.amotion * (100 + battle_config.skill_amotion_leniency) / 100) )
+		DIFF_TICK(gettick(), sd->canskill_tick) < (sd->battle_status.amotion * (battle_config.skill_amotion_leniency) / 100) )
 	{// attempted to cast a skill before the attack motion has finished
 		return 1;
 	}
@@ -724,7 +724,6 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 	nullpo_ret(src);
 	nullpo_ret(bl);
 
-	if(skill_id < 0) return 0;
 	if(skill_id > 0 && skill_lv <= 0) return 0;	// don't forget auto attacks! - celest
 
 	if( dmg_lv < ATK_BLOCK ) // Don't apply effect if miss.
@@ -1746,7 +1745,6 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	nullpo_ret(src);
 	nullpo_ret(bl);
 
-	if(skill_id < 0) return 0;
 	if(skill_id > 0 && skill_lv <= 0) return 0;	// don't forget auto attacks! - celest
 
 	sd = BL_CAST(BL_PC, src);
@@ -3724,10 +3722,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			else if( dir == 7 || dir < 2 ) y = i;
 			else y = 0;
 			if( (mbl == src || !map_flag_gvg(src->m) && !map[src->m].flag.battleground) && // only NJ_ISSEN don't have slide effect in GVG
-				unit_movepos(src, mbl->x+x, mbl->y+y, 1, 1) ) { 
+				unit_movepos(src, mbl->x+x, mbl->y+y, 1, 1) ) {
 				clif_slide(src, src->x, src->y);
 				//uncomment this if you want to remove MO_EXTREMITYFIST glitchy walking effect. [malufett]
-				//clif_fixpos(src); 
+				//clif_fixpos(src);
 			}
 		}
 		break;
@@ -7823,7 +7821,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if( src == bl ) rate = 100; // Success Chance: On self, 100%
 			else if(bl->type == BL_PC) rate += 20 + 10 * skill_lv; // On Players, (20 + 10 * Skill Level) %
 			else rate += 40 + 10 * skill_lv; // On Monsters, (40 + 10 * Skill Level) %
-			
+
 			if( sd )
 				skill_blockpc_start(sd,skill_id,4000);
 
@@ -9355,7 +9353,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 #endif
 		}
 		if (target && target->m == src->m)
-		{	//Move character to target anyway.			
+		{	//Move character to target anyway.
 			if (unit_movepos(src, src->x+3, src->y+3, 1, 1))
 			{	//Display movement + animation.
 				clif_slide(src,src->x,src->y);

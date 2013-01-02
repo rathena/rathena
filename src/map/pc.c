@@ -4882,7 +4882,7 @@ int pc_checkskill(struct map_session_data *sd,uint16 skill_id)
 			return guild_checkskill(g,skill_id);
 		return 0;
 	}
-	else if( skill_id < 0 || skill_id >= ARRAYLENGTH(sd->status.skill) )
+	else if(skill_id >= ARRAYLENGTH(sd->status.skill) )
 	{
 		ShowError("pc_checkskill: Invalid skill id %d (char_id=%d).\n", skill_id, sd->status.char_id);
 		return 0;
@@ -5976,7 +5976,7 @@ int pc_skillup(struct map_session_data *sd,uint16 skill_id)
 		return 0;
 	}
 
-	if( skill_id < 0 || skill_id >= MAX_SKILL )
+	if(skill_id >= MAX_SKILL )
 		return 0;
 
 	if( sd->status.skill_point > 0 &&

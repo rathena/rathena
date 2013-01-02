@@ -866,8 +866,6 @@ int unit_stop_walking(struct block_list *bl,int type)
 
 int unit_skilluse_id(struct block_list *src, int target_id, uint16 skill_id, uint16 skill_lv)
 {
-	if(skill_id < 0) return 0;
-
 	return unit_skilluse_id2(
 		src, target_id, skill_id, skill_lv,
 		skill_castfix(src, skill_id, skill_lv),
@@ -1368,8 +1366,6 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 int unit_skilluse_pos(struct block_list *src, short skill_x, short skill_y, uint16 skill_id, uint16 skill_lv)
 {
-	if(skill_id < 0)
-		return 0;
 	return unit_skilluse_pos2(
 		src, skill_x, skill_y, skill_id, skill_lv,
 		skill_castfix(src, skill_id, skill_lv),
