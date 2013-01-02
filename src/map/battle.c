@@ -3230,12 +3230,12 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			/**
 			* RE DEF Reduction
 			* Damage = Attack * (4000+eDEF)/(4000+eDEF) - sDEF
-			* Icepick no longer bypasses defense, but gains 1 atk per def
+			* Icepick no longer bypasses defense, but gains 1 atk per def/2
 			**/
 
 			ATK_ADD2(
-				flag.pdef ?(def1+vit_def):0,
-				flag.pdef2?(def1+vit_def):0
+				flag.pdef ?(def1/2):0,
+				flag.pdef2?(def1/2):0
 			);
 			if( !flag.idef )
 				wd.damage = wd.damage * (4000+def1) / (4000+10*def1) - vit_def;
