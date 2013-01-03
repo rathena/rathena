@@ -2731,7 +2731,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					RE_LVL_DMOD(100);
 					break;
 				case LG_RAYOFGENESIS:
-					skillratio = skillratio + 200 + 300 * skill_lv;
+					skillratio = 300 + 300 * skill_lv;
 					RE_LVL_DMOD(100);
 					break;
 				case LG_EARTHDRIVE:
@@ -2988,12 +2988,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				case RA_WUGBITE:
 					if(sd)
 						ATK_ADD(30*pc_checkskill(sd, RA_TOOTHOFWUG));
-					break;
-				case LG_RAYOFGENESIS:
-					if( sc && sc->data[SC_BANDING] ) {// Increase only if the RG is under Banding.
-						short lv = (short)skill_lv;
-						ATK_ADDRATE( 190 * ((sd) ? skill_check_pc_partner(sd,(short)skill_id,&lv,skill_get_splash(skill_id,skill_lv),0) : 1));
-					}
 					break;
 				case SR_GATEOFHELL:
 					ATK_ADD (sstatus->max_hp - status_get_hp(src));
@@ -3930,9 +3924,14 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case LG_RAYOFGENESIS:
-						skillratio = (skillratio + 200) * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
+					{
+						int16 lv = skill_lv;
+						int bandingBonus = 0;
+						if( sc && sc->data[SC_BANDING] )
+							bandingBonus = 200 * (sd ? skill_check_pc_partner(sd,skill_id,&lv,skill_get_splash(skill_id,skill_lv),0) : 1);
+						skillratio = ((300 * skill_lv) + bandingBonus) * (sd ? sd->status.job_level : 1) / 25;
+					}
+					break;
 					case LG_SHIELDSPELL:// [(Casters Base Level x 4) + (Shield MDEF x 100) + (Casters INT x 2)] %
 						if( sd ) {
 							skillratio = status_get_lv(src) * 4 + sd->bonus.shieldmdef * 100 + status_get_int(src) * 2;

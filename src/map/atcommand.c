@@ -8611,7 +8611,7 @@ ACMD_FUNC(set) {
 		if( is_str )
 			set_var(sd, reg, (void*) val);
 		else
-			set_var(sd, reg, (void*)__64BPRTSIZE((int)(atoi(val))));
+			set_var(sd, reg, (void*)__64BPRTSIZE((atoi(val))));
 
 	}
 
