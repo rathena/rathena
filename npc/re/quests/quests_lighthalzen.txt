@@ -302,7 +302,7 @@ que_lhz,94,119,3	script	Researcher#ins2	865,{
 que_lhz,147,224,3	script	Researcher#ins3	865,{
 	if (lhz_dun04 == 4 || mobcount("que_lhz","#controllhz4::OnMyMobDead") > 0) {
 		mes "[Wolfchev]";
-		mes "Wolfchev is freaking out. He is of his mind.";
+		mes "Wolfchev is freaking out. He is out of his mind.";
 		emotion e_turn;
 		close;
 	} else if (lhz_dun04 == 3) {

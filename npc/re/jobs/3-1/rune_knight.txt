@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf, Muad_Dib
 //===== Current Version: =====================================
-//= 1.3a
+//= 1.4
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -14,6 +14,7 @@
 //= 1.2 Added Energy Rune item reward. [Masao]
 //= 1.3 Updated script, optimized. [Euphy]
 //= 1.3a Added 'npcskill' command. [Euphy]
+//= 1.4 Fixed a few bugs. [Euphy]
 //============================================================
 
 prt_in,162,24,3	script	Splendid-Looking Knight	470,2,2,{
@@ -735,7 +736,7 @@ job3_rune01,55,50,3	script	Rune Knight, Renoa	469,2,2,{
 			set job_rune_edq,8;
 			changequest 3205,3206;
 			close;
-		} else if (job_rune_edq == 8) {
+		} else if (job_rune_edq > 7 && job_rune_edq < 11) {
 			mes "Well first, I'll give you an assignment. Let's start by studying. Go to the library and study these books.";
 			next;
 			mes "[Rune Knight, Renoa]";
@@ -1049,8 +1050,6 @@ job3_rune01,43,44,1	script	The Principles of Runes	844,{
 			set .@book1,1;
 			mes "A rune is a kind of symbol that's been used on the Rune-Midgard continent since ancient times. Up until now it has only been used by occult circles.";
 			next;
-			mes "A rune is a kind of symbol that's been used on the Rune-Midgard continent since ancient times. Up until now it has only been used by occult circles.";
-			next;
 			mes "Runes are used as a symbol system, however, by the story handed down orally, it's known to be used for fortune-telling or used to draw out the human sub consciousness.";
 			next;
 			mes "Runes have their own system and types and can draw out various powers according to how they are arranged. But their power level can't currently be measured by known means.";
@@ -1104,9 +1103,9 @@ job3_rune01,50,36,1	script	Runes, Make & Use	844,{
 			next;
 			mes "When you making a Rune stone with a Rune Furnace, the type of rune is determined by the magical energy put into it, and it cannot be changed.";
 			next;
-			mes "When making a rune stone by using Rune Mastery, it can be made into the rune property that you want but it's classified as a Rune Knights' own ability. ";
+			mes "When making a rune stone by using Rune Mastery, it can be made into the rune property that you want but it's classified as a Rune Knights' own ability.";
 			next;
-			mes "When you operate the Rune Furnace , the magical energy of the body gets concentrated through it and it enables the change into a Rune Stone.";
+			mes "When you operate the Rune Furnace, the magical energy of the body gets concentrated through it and it enables the change into a Rune Stone.";
 			next;
 			break;
 		case 2:
