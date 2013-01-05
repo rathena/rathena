@@ -1687,7 +1687,7 @@ int	unit_calc_pos(struct block_list *bl, int tx, int ty, uint8 dir)
 	struct unit_data *ud = unit_bl2ud(bl);
 	nullpo_ret(ud);
 
-	if( dir < 0 || dir > 7 )
+	if(dir > 7)
 		return 1;
 
 	ud->to_x = tx;

@@ -175,7 +175,7 @@ struct mob_data {
 	int deletetimer;
 	int master_id,master_dist;
 
-	uint16 skill_idx;
+	int8 skill_idx;// key of array
 	unsigned int skilldelay[MAX_MOBSKILL];
 	char npc_event[EVENT_NAME_LENGTH];
 	/**

@@ -724,7 +724,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 	nullpo_ret(src);
 	nullpo_ret(bl);
 
-	if(skill_id > 0 && skill_lv <= 0) return 0;	// don't forget auto attacks! - celest
+	if(skill_id > 0 && !skill_lv) return 0;	// don't forget auto attacks! - celest
 
 	if( dmg_lv < ATK_BLOCK ) // Don't apply effect if miss.
 		return 0;
@@ -1745,7 +1745,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	nullpo_ret(src);
 	nullpo_ret(bl);
 
-	if(skill_id > 0 && skill_lv <= 0) return 0;	// don't forget auto attacks! - celest
+	if(skill_id > 0 && !skill_lv) return 0;	// don't forget auto attacks! - celest
 
 	sd = BL_CAST(BL_PC, src);
 	dstsd = BL_CAST(BL_PC, bl);
@@ -2232,8 +2232,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		if (pd->a_skill && pd->a_skill->div_ && pd->a_skill->id == skill_id)
 		{
 			int element = skill_get_ele(skill_id, skill_lv);
-			if (skill_id == -1)
-				element = sstatus->rhw.ele;
+			/*if (skill_id == -1) Does it ever worked?
+				element = sstatus->rhw.ele;*/
 			if (element != ELE_NEUTRAL || !(battle_config.attack_attr_none&BL_PET))
 				dmg.damage=battle_attr_fix(src, bl, skill_lv, element, tstatus->def_ele, tstatus->ele_lv);
 			else
@@ -13570,7 +13570,8 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 			}
 		}
 		if( skill_id >= HT_SKIDTRAP && skill_id <= HT_TALKIEBOX && pc_checkskill(sd, RA_RESEARCHTRAP) > 0){
-			if( pc_search_inventory(sd,req.itemid[i]) < 0  || ( idx >= 0 && sd->status.inventory[idx].amount < req.amount[i] ) ){
+			int16 itIndex;
+			if( (itIndex = pc_search_inventory(sd,req.itemid[i])) < 0  || ( itIndex >= 0 && sd->status.inventory[itIndex].amount < req.amount[i] ) ){
 				req.itemid[i] = ITEMID_TRAP_ALLOY;
 				req.amount[i] = 1;
 			}
