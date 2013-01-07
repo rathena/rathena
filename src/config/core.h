@@ -48,6 +48,10 @@
 /// - but is not the official behaviour.
 //#define CIRCULAR_AREA
 
+/// Uncomment to enable Non Stackable items unique ID
+/// By enabling it, the system will create an unique id for each new non stackable item created
+//#define NSI_UNIQUE_ID
+
 /**
  * No settings past this point
  **/

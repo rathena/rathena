@@ -27,4 +27,18 @@ extern char main_chat_nick[16];
 
 int inter_accreg_tosql(int account_id, int char_id, struct accreg *reg, int type);
 
+uint64 inter_chk_lastuid(int8 flag, uint64 value);
+#ifdef NSI_UNIQUE_ID
+	#define updateLastUid(val_) inter_chk_lastuid(1, val_)
+	#define dbUpdateUid(handler_)\
+	{ \
+		uint64 nsiuid_ = inter_chk_lastuid(0, 0); \
+		if (nsiuid_ && SQL_ERROR == Sql_Query(handler_, "UPDATE `interreg` SET `value`='%"PRIu64"' WHERE `varname`='nsiuid'", nsiuid_)) \
+				Sql_ShowDebug(handler_);\
+	}
+#else
+	#define dbUpdateUid(handler_)
+	#define updateLastUid(val_)
+#endif
+
 #endif /* _INTER_SQL_H_ */

@@ -1234,3 +1234,24 @@ int inter_parse_frommap(int fd)
 	RFIFOSKIP(fd, len);
 	return 1;
 }
+
+uint64 inter_chk_lastuid(int8 flag, uint64 value){
+	static uint64 last_updt_uid = 0;
+	static int8 update = 0;
+	if(flag)
+	{
+		if(last_updt_uid < value){
+			last_updt_uid = value;
+			update = 1;
+		}
+
+		return 0;
+	}else if(update)
+	{
+		update = 0;
+		return last_updt_uid;
+	}
+	return 0;
+}
+
+

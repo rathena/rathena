@@ -1252,6 +1252,51 @@ static int itemdb_read_sqldb(void) {
 	return 0;
 }
 
+/*==========================================
+* Unique item ID function
+* Only one operation by once
+* Flag:
+* 0 return new id
+* 1 set new value, checked with current value
+* 2 set new value bypassing anything
+* 3/other return last value
+*------------------------------------------*/
+uint64 itemdb_nsiuid(int8 flag, int64 value) {
+	static uint64 item_uid = 0;
+	
+	if(flag)
+	{
+		if(flag == 1)
+		{	if(item_uid < value)
+				return (item_uid = value);
+		}else if(flag == 2)
+			return (item_uid = value);
+			
+		return item_uid;
+	}
+
+	return ++item_uid;
+}
+int itemdb_uid_load(){
+
+	char * uid;
+	if (SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `value` FROM `interreg` WHERE `varname`='nsiuid'"))
+		Sql_ShowDebug(mmysql_handle);
+
+	if( SQL_SUCCESS != Sql_NextRow(mmysql_handle) )
+	{
+		ShowError("itemdb_uid_load: Unable to fetch nsiuid data\n");
+		Sql_FreeResult(mmysql_handle);
+		return -1;
+	}
+
+	Sql_GetData(mmysql_handle, 0, &uid, NULL);
+	itemdb_nsiuid(1, (uint64)strtoull(uid, NULL, 10));
+	Sql_FreeResult(mmysql_handle);
+
+	return 0;
+}
+
 /*====================================
  * read all item-related databases
  *------------------------------------*/
@@ -1269,7 +1314,9 @@ static void itemdb_read(void) {
 	sv_readdb(db_path, DBPATH"item_trade.txt",   ',', 3, 3, -1, &itemdb_read_itemtrade);
 	sv_readdb(db_path, "item_delay.txt",         ',', 2, 2, -1, &itemdb_read_itemdelay);
 	sv_readdb(db_path, "item_stack.txt",         ',', 3, 3, -1, &itemdb_read_stack);
-	sv_readdb(db_path, DBPATH"item_buyingstore.txt",   ',', 1, 1, -1, &itemdb_read_buyingstore);	
+	sv_readdb(db_path, DBPATH"item_buyingstore.txt",   ',', 1, 1, -1, &itemdb_read_buyingstore);
+	
+	itemdb_uid_load();
 }
 
 /*==========================================

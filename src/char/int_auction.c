@@ -81,15 +81,19 @@ unsigned int auction_create(struct auction_data *auction)
 	auction->timestamp = time(NULL) + (auction->hours * 3600);
 
 	StringBuf_Init(&buf);
-	StringBuf_Printf(&buf, "INSERT INTO `%s` (`seller_id`,`seller_name`,`buyer_id`,`buyer_name`,`price`,`buynow`,`hours`,`timestamp`,`nameid`,`item_name`,`type`,`refine`,`attribute`", auction_db);
+	StringBuf_Printf(&buf, "INSERT INTO `%s` (`seller_id`,`seller_name`,`buyer_id`,`buyer_name`,`price`,`buynow`,`hours`,`timestamp`,`nameid`,`item_name`,`type`,`refine`,`attribute`,`nsiuid`", auction_db);
 	for( j = 0; j < MAX_SLOTS; j++ )
 		StringBuf_Printf(&buf, ",`card%d`", j);
-	StringBuf_Printf(&buf, ") VALUES ('%d',?,'%d',?,'%d','%d','%d','%lu','%d',?,'%d','%d','%d'",
-		auction->seller_id, auction->buyer_id, auction->price, auction->buynow, auction->hours, (unsigned long)auction->timestamp, auction->item.nameid, auction->type, auction->item.refine, auction->item.attribute);
+	StringBuf_Printf(&buf, ") VALUES ('%d',?,'%d',?,'%d','%d','%d','%lu','%d',?,'%d','%d','%d','%"PRIu64"'",
+		auction->seller_id, auction->buyer_id, auction->price, auction->buynow, auction->hours, (unsigned long)auction->timestamp, auction->item.nameid, auction->type, auction->item.refine, auction->item.attribute, auction->item.nsiuid);
 	for( j = 0; j < MAX_SLOTS; j++ )
 		StringBuf_Printf(&buf, ",'%d'", auction->item.card[j]);
 	StringBuf_AppendStr(&buf, ")");
 	
+	//Unique Non Stackable Item ID
+	updateLastUid(auction->item.nsiuid);
+	dbUpdateUid(sql_handle);
+
 	stmt = SqlStmt_Malloc(sql_handle);
 	if( SQL_SUCCESS != SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf))
 	||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_STRING, auction->seller_name, strnlen(auction->seller_name, NAME_LENGTH))
@@ -182,7 +186,7 @@ void inter_auctions_fromsql(void)
 
 	StringBuf_Init(&buf);
 	StringBuf_AppendStr(&buf, "SELECT `auction_id`,`seller_id`,`seller_name`,`buyer_id`,`buyer_name`,"
-		"`price`,`buynow`,`hours`,`timestamp`,`nameid`,`item_name`,`type`,`refine`,`attribute`");
+		"`price`,`buynow`,`hours`,`timestamp`,`nameid`,`item_name`,`type`,`refine`,`attribute`,`nsiuid`");
 	for( i = 0; i < MAX_SLOTS; i++ )
 		StringBuf_Printf(&buf, ",`card%d`", i);
 	StringBuf_Printf(&buf, " FROM `%s` ORDER BY `auction_id` DESC", auction_db);
@@ -212,6 +216,7 @@ void inter_auctions_fromsql(void)
 
 		Sql_GetData(sql_handle,12, &data, NULL); item->refine = atoi(data);
 		Sql_GetData(sql_handle,13, &data, NULL); item->attribute = atoi(data);
+		Sql_GetData(sql_handle,14, &data, NULL); item->nsiuid = strtoull(data, NULL, 10);
 
 		item->identify = 1;
 		item->amount = 1;
