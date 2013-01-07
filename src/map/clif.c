@@ -936,9 +936,7 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 #if PACKETVER < 20091103
 	bool type = !pcdb_checkid(vd->class_);
 #endif
-#if PACKETVER >= 7
 	unsigned short offset = 0;
-#endif
 #if PACKETVER >= 20091103
 	const char *name;
 #endif
