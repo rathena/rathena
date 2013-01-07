@@ -165,7 +165,7 @@ int skill_get_index( uint16 skill_id )
 		skill_id = HM_SKILLRANGEMIN + skill_id - HM_SKILLBASE;
 
 	// validate result
-	if( skill_id <= 0 || skill_id >= MAX_SKILL_DB )
+	if( !skill_id || skill_id >= MAX_SKILL_DB )
 		return 0;
 
 	return skill_id;
@@ -185,7 +185,7 @@ const char* skill_get_desc( uint16 skill_id )
 static void skill_chk(int16* skill_id, uint16 skill_lv)
 {
 	*skill_id = skill_get_index(*skill_id); // checks/adjusts id
-	if( skill_lv <= 0 || skill_lv > MAX_SKILL_LEVEL ) *skill_id = 0;
+	if( skill_lv > MAX_SKILL_LEVEL ) *skill_id = 0;
 }
 
 #define skill_get(var,id,lv) { skill_chk(&id,lv); if(!id) return 0; return var; }
@@ -1638,7 +1638,7 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint1
 	int skill, skill_lv, i, type, notok;
 	struct block_list *tbl;
 
-	if( sd == NULL || skill_id <= 0 )
+	if( sd == NULL || !skill_id )
 		return 0;
 
 	for( i = 0; i < ARRAYLENGTH(sd->autospell3) && sd->autospell3[i].flag; i++ ) {
@@ -2192,7 +2192,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	int type,damage,rdamage=0;
 	int8 rmdamage=0;//magic reflected
 
-	if(skill_id > 0 && skill_lv <= 0) return 0;
+	if(skill_id > 0 && !skill_lv) return 0;
 
 	nullpo_ret(src);	//Source is the master behind the attack (player/mob/pet)
 	nullpo_ret(dsrc); //dsrc is the actual originator of the damage, can be the same as src, or a skill casted by src.
@@ -3414,7 +3414,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	struct status_data *tstatus;
 	struct status_change *sc;
 
-	if (skill_id > 0 && skill_lv <= 0) return 0;
+	if (skill_id > 0 && !skill_lv) return 0;
 
 	nullpo_retr(1, src);
 	nullpo_retr(1, bl);
@@ -4678,7 +4678,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	int i = 0;
 	enum sc_type type;
 
-	if(skill_id > 0 && skill_lv <= 0) return 0;	// celest
+	if(skill_id > 0 && !skill_lv) return 0;	// celest
 
 	nullpo_retr(1, src);
 	nullpo_retr(1, bl);
@@ -6755,14 +6755,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case WE_MALE:
 		{
-			int hp_rate=(skill_lv <= 0)? 0:skill_db[skill_id].hp_rate[skill_lv-1];
+			int hp_rate=(!skill_lv)? 0:skill_db[skill_id].hp_rate[skill_lv-1];
 			int gain_hp= tstatus->max_hp*abs(hp_rate)/100; // The earned is the same % of the target HP than it costed the caster. [Skotlex]
 			clif_skill_nodamage(src,bl,skill_id,status_heal(bl, gain_hp, 0, 0),1);
 		}
 		break;
 	case WE_FEMALE:
 		{
-			int sp_rate=(skill_lv <= 0)? 0:skill_db[skill_id].sp_rate[skill_lv-1];
+			int sp_rate=(!skill_lv)? 0:skill_db[skill_id].sp_rate[skill_lv-1];
 			int gain_sp=tstatus->max_sp*abs(sp_rate)/100;// The earned is the same % of the target SP than it costed the caster. [Skotlex]
 			clif_skill_nodamage(src,bl,skill_id,status_heal(bl, 0, gain_sp, 0),1);
 		}
@@ -9552,7 +9552,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	int i;
 
 	//if(skill_lv <= 0) return 0;
-	if(skill_id > 0 && skill_lv <= 0) return 0;	// celest
+	if(skill_id > 0 && !skill_lv) return 0;	// celest
 
 	nullpo_ret(src);
 
@@ -14286,7 +14286,7 @@ int skill_autospell (struct map_session_data *sd, uint16 skill_id)
 	skill_lv = sd->menuskill_val;
 	lv=pc_checkskill(sd,skill_id);
 
-	if(skill_lv <= 0 || !lv) return 0; // Player must learn the skill before doing auto-spell [Lance]
+	if(!skill_lv || !lv) return 0; // Player must learn the skill before doing auto-spell [Lance]
 
 	if(skill_id==MG_NAPALMBEAT)	maxlv=3;
 	else if(skill_id==MG_COLDBOLT || skill_id==MG_FIREBOLT || skill_id==MG_LIGHTNINGBOLT){
@@ -14427,7 +14427,7 @@ int skill_frostjoke_scream (struct block_list *bl, va_list ap)
 
 	skill_id=va_arg(ap,int);
 	skill_lv=va_arg(ap,int);
-	if(skill_lv <= 0) return 0;
+	if(!skill_lv) return 0;
 	tick=va_arg(ap,unsigned int);
 
 	if (src == bl || status_isdead(bl))
@@ -15107,7 +15107,7 @@ struct skill_unit_group* skill_initunitgroup (struct block_list* src, int count,
 	struct skill_unit_group* group;
 	int i;
 
-	if(skill_id <= 0 || skill_lv <= 0) return 0;
+	if(!(skill_id && skill_lv)) return 0;
 
 	nullpo_retr(NULL, src);
 	nullpo_retr(NULL, ud);
@@ -17366,7 +17366,7 @@ int skill_block_check(struct block_list *bl, sc_type type , uint16 skill_id) {
 	int inf = 0;
 	struct status_change *sc = status_get_sc(bl);
 
-	if( !sc || !bl || skill_id < 1 )
+	if( !sc || !bl || !skill_id )
 		return 0; // Can do it
 
 	switch(type){

@@ -670,3 +670,11 @@ CREATE TABLE IF NOT EXISTS `storage` (
   PRIMARY KEY  (`id`),
   KEY `account_id` (`account_id`)
 ) ENGINE=MyISAM;
+
+CREATE TABLE IF NOT EXISTS `interreg` (
+  `varname` varchar(11) NOT NULL,
+  `value` varchar(20) NOT NULL,
+   PRIMARY KEY (`varname`)
+) ENGINE=InnoDB;
+INSERT INTO `interreg` (`varname`, `value`) VALUES
+('nsiuid', '0');

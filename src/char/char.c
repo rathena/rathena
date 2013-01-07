@@ -837,7 +837,6 @@ int memitemdata_to_sql(const struct item items[], int max, int id, int tableswit
 		
 		updateLastUid(items[i].nsiuid); // Unique Non Stackable Item ID
 	}
-	updateLastUid(0);
 	dbUpdateUid(sql_handle); // Unique Non Stackable Item ID
 
 	if( found && SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
