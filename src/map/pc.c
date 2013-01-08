@@ -5516,6 +5516,7 @@ int pc_stop_following (struct map_session_data *sd)
 		sd->followtimer = INVALID_TIMER;
 	}
 	sd->followtarget = -1;
+	sd->ud.target_to = 0;
 
 	return 0;
 }

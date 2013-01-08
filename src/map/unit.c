@@ -74,9 +74,6 @@ int unit_walktoxy_sub(struct block_list *bl)
 
 	memcpy(&ud->walkpath,&wpd,sizeof(wpd));
 
-	if( bl->type == BL_PC && ((TBL_PC *)bl)->followtarget == -1 && ((TBL_PC *)bl)->followtimer == INVALID_TIMER )
-			ud->target_to = 0;
-
 	if (ud->target_to && ud->chaserange>1) {
 		//Generally speaking, the walk path is already to an adjacent tile
 		//so we only need to shorten the path if the range is greater than 1.
