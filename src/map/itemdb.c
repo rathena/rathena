@@ -1261,7 +1261,7 @@ static int itemdb_read_sqldb(void) {
 * 2 set new value bypassing anything
 * 3/other return last value
 *------------------------------------------*/
-uint64 itemdb_nsiuid(int8 flag, int64 value) {
+uint64 itemdb_unique_id(int8 flag, int64 value) {
 	static uint64 item_uid = 0;
 	
 	if(flag)
@@ -1280,18 +1280,18 @@ uint64 itemdb_nsiuid(int8 flag, int64 value) {
 int itemdb_uid_load(){
 
 	char * uid;
-	if (SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `value` FROM `interreg` WHERE `varname`='nsiuid'"))
+	if (SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `value` FROM `interreg` WHERE `varname`='unique_id'"))
 		Sql_ShowDebug(mmysql_handle);
 
 	if( SQL_SUCCESS != Sql_NextRow(mmysql_handle) )
 	{
-		ShowError("itemdb_uid_load: Unable to fetch nsiuid data\n");
+		ShowError("itemdb_uid_load: Unable to fetch unique_id data\n");
 		Sql_FreeResult(mmysql_handle);
 		return -1;
 	}
 
 	Sql_GetData(mmysql_handle, 0, &uid, NULL);
-	itemdb_nsiuid(1, (uint64)strtoull(uid, NULL, 10));
+	itemdb_unique_id(1, (uint64)strtoull(uid, NULL, 10));
 	Sql_FreeResult(mmysql_handle);
 
 	return 0;

@@ -32,8 +32,8 @@ uint64 inter_chk_lastuid(int8 flag, uint64 value);
 	#define updateLastUid(val_) inter_chk_lastuid(1, val_)
 	#define dbUpdateUid(handler_)\
 	{ \
-		uint64 nsiuid_ = inter_chk_lastuid(0, 0); \
-		if (nsiuid_ && SQL_ERROR == Sql_Query(handler_, "UPDATE `interreg` SET `value`='%"PRIu64"' WHERE `varname`='nsiuid'", nsiuid_)) \
+		uint64 unique_id_ = inter_chk_lastuid(0, 0); \
+		if (unique_id_ && SQL_ERROR == Sql_Query(handler_, "UPDATE `interreg` SET `value`='%"PRIu64"' WHERE `varname`='unique_id'", unique_id_)) \
 				Sql_ShowDebug(handler_);\
 	}
 #else
