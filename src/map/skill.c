@@ -3911,7 +3911,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case CH_PALMSTRIKE: //	Palm Strike takes effect 1sec after casting. [Skotlex]
 	//	clif_skill_nodamage(src,bl,skill_id,skill_lv,0); //Can't make this one display the correct attack animation delay :/
 		clif_damage(src,bl,tick,status_get_amotion(src),0,-1,1,4,0); //Display an absorbed damage attack.
-		skill_addtimerskill(src, tick + 1000, bl->id, 0, 0, skill_id, skill_lv, BF_WEAPON, flag);
+		skill_addtimerskill(src, tick + (1000+status_get_amotion(src)), bl->id, 0, 0, skill_id, skill_lv, BF_WEAPON, flag);
 		break;
 
 	case PR_TURNUNDEAD:
