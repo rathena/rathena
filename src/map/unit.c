@@ -74,6 +74,9 @@ int unit_walktoxy_sub(struct block_list *bl)
 
 	memcpy(&ud->walkpath,&wpd,sizeof(wpd));
 
+	if( bl->type == BL_PC && ((TBL_PC *)bl)->followtarget == -1 && ((TBL_PC *)bl)->followtimer == INVALID_TIMER )
+			ud->target_to = 0;
+
 	if (ud->target_to && ud->chaserange>1) {
 		//Generally speaking, the walk path is already to an adjacent tile
 		//so we only need to shorten the path if the range is greater than 1.
@@ -392,12 +395,13 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, int 
 {
 	struct unit_data        *ud = NULL;
 	struct status_change		*sc = NULL;
+
 	nullpo_ret(bl);
 	nullpo_ret(tbl);
 
 	ud = unit_bl2ud(bl);
 	if( ud == NULL) return 0;
-
+	
 	if (!(status_get_mode(bl)&MD_CANMOVE))
 		return 0;
 
@@ -407,13 +411,13 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, int 
 		ud->target_to = 0;
 		return 0;
 	}
-
+	
 	ud->state.walk_easy = flag&1;
 	ud->target_to = tbl->id;
 	ud->chaserange = range; //Note that if flag&2, this SHOULD be attack-range
 	ud->state.attack_continue = flag&2?1:0; //Chase to attack.
 	unit_set_target(ud, 0);
-
+	
 	sc = status_get_sc(bl);
 	if (sc && sc->data[SC_CONFUSION]) //Randomize the target position
 		map_random_dir(bl, &ud->to_x, &ud->to_y);
@@ -423,7 +427,7 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, int 
 		set_mobstate(bl, flag&2);
 		return 1;
 	}
-
+	
 	if(DIFF_TICK(ud->canmove_tick, gettick()) > 0)
 	{	//Can't move, wait a bit before invoking the movement.
 		add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->target);
