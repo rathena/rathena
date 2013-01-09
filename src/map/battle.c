@@ -3226,24 +3226,23 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			/**
 			* RE DEF Reduction
 			* Damage = Attack * (4000+eDEF)/(4000+eDEF) - sDEF
-			* Icepick no longer bypasses defense, but gains 1 atk per def/2
+			* Pierce defence gains 1 atk per def/2
 			**/
 
 			ATK_ADD2(
 				flag.pdef ?(def1/2):0,
 				flag.pdef2?(def1/2):0
 			);
-			if( !flag.idef )
+			if( !flag.idef && !flag.pdef )
 				wd.damage = wd.damage * (4000+def1) / (4000+10*def1) - vit_def;
-			if( flag.lh && !flag.idef2 )
+			if( flag.lh && !flag.idef2 && !flag.pdef2 )
 				wd.damage2 = wd.damage2 * (4000+def1) / (4000+10*def1) - vit_def;
-
 
 			#else
 				if (def1 > 100) def1 = 100;
 				ATK_RATE2(
-					flag.idef ?100:(flag.pdef ? (def1+vit_def) : (100-def1)),
-			 		flag.idef2?100:(flag.pdef2? (def1+vit_def) : (100-def1))
+					flag.idef ?100:(flag.pdef ? (int64)flag.pdef*(def1+vit_def) : (100-def1)),
+			 		flag.idef2?100:(flag.pdef2? (int64)flag.pdef2*(def1+vit_def) : (100-def1))
 				);
 				ATK_ADD2(
 					flag.idef ||flag.pdef ?0:-vit_def,

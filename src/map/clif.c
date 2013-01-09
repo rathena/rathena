@@ -5239,7 +5239,7 @@ void clif_skill_estimation(struct map_session_data *sd,struct block_list *dst)
 /// 018d <packet len>.W { <name id>.W { <material id>.W }*3 }*
 /// material id:
 ///     unused by the client
-void clif_skill_produce_mix_list(struct map_session_data *sd, uint16 skill_id , int trigger)
+void clif_skill_produce_mix_list(struct map_session_data *sd, int skill_id , int trigger)
 {
 	int i,c,view,fd;
 	nullpo_retv(sd);
@@ -5255,7 +5255,7 @@ void clif_skill_produce_mix_list(struct map_session_data *sd, uint16 skill_id , 
 
 	for(i=0,c=0;i<MAX_SKILL_PRODUCE_DB;i++){
 		if( skill_can_produce_mix(sd,skill_produce_db[i].nameid, trigger, 1) &&
-			( skill_id > 0 && skill_produce_db[i].req_skill == skill_id )
+			( skill_id > 0 && skill_produce_db[i].req_skill == skill_id || skill_id < 0 )
 			){
 			if((view = itemdb_viewid(skill_produce_db[i].nameid)) > 0)
 				WFIFOW(fd,c*8+ 4)= view;
