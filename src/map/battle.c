@@ -2067,7 +2067,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			case NJ_ISSEN:
 				wd.damage = 40*sstatus->str +skill_lv*(sstatus->hp/10 + 35);
 				wd.damage2 = 0;
-				status_set_hp(src, 1, 0);
 				break;
 			case LK_SPIRALPIERCE:
 			case ML_SPIRALPIERCE:
@@ -2972,7 +2971,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					// Damage = (current HP + atk * skill_lv) - (sdef+edef)
 					ATK_ADD(sstatus->hp);
 					wd.damage2 = 0;// needs more info if this really 0 for dual weilding KG/OB. [malufett]
-					status_set_hp(src, max(sstatus->hp/100, 1), 0);
 					if( sc && sc->data[SC_BUNSINJYUTSU] && (i=sc->data[SC_BUNSINJYUTSU]->val2) > 0){
 						wd.div_ = -( i + 2 ); // mirror image number of hits + 2
 						ATK_ADDRATE(20 + i*20); // (20 + 20 * mirror image) %
