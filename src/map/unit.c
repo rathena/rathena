@@ -315,16 +315,21 @@ int unit_walktoxy( struct block_list *bl, short x, short y, int flag)
 {
 	struct unit_data* ud = NULL;
 	struct status_change* sc = NULL;
-
+#ifdef OFFICIAL_WALKPATH
+	struct walkpath_data wpd;
+#endif
 	nullpo_ret(bl);
 
 	ud = unit_bl2ud(bl);
 
 	if( ud == NULL) return 0;
-// disabled until we find the correct algorithm. [malufett]
-//#ifdef OFFICIAL_WALKPATH
-//	if( !path_search_long(NULL, bl->m, bl->x, bl->y, x, y, CELL_CHKWALL) ) return 0;
-//#endif
+
+#ifdef OFFICIAL_WALKPATH
+	if( path_search(&wpd, bl->m, bl->x, bl->y, x, y, flag&1, CELL_CHKNOPASS) // Check if there is an obstacle between
+		&& wpd.path_len > 14 ) // Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett]
+		return 0;
+#endif
+
 	if (flag&4 && DIFF_TICK(ud->canmove_tick, gettick()) > 0 &&
 		DIFF_TICK(ud->canmove_tick, gettick()) < 2000)
   	{	// Delay walking command. [Skotlex]

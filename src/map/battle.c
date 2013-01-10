@@ -3137,7 +3137,10 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			short vit_def;
 			defType def1 = status_get_def(target); //Don't use tstatus->def1 due to skill timer reductions.
 			short def2 = tstatus->def2;
-
+#ifdef RENEWAL
+			if( tsc && tsc->data[SC_ASSUMPTIO] )
+				def1 <<= 1; // only eDEF is doubled
+#endif
 			if( sd )
 			{
 				i = sd->ignore_def[is_boss(target)?RC_BOSS:RC_NONBOSS];
@@ -4081,6 +4084,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		if(!flag.imdef){
 			defType mdef = tstatus->mdef;
 			int mdef2= tstatus->mdef2;
+#ifdef RENEWAL
+			if(tsc && tsc->data[SC_ASSUMPTIO])
+				mdef <<= 1; // only eMDEF is doubled
+#endif
 			if(sd) {
 				i = sd->ignore_mdef[is_boss(target)?RC_BOSS:RC_NONBOSS];
 				i+= sd->ignore_mdef[tstatus->race];
