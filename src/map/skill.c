@@ -13840,7 +13840,7 @@ int skill_vfcastfix (struct block_list *bl, double time, uint16 skill_id, uint16
 		if( sd && ( skill_lv = pc_checkskill(sd, WL_RADIUS) ) && skill_id >= WL_WHITEIMPRISON && skill_id <= WL_FREEZE_SP  )
 			fixcast_r = max(fixcast_r, 5 + skill_lv * 5);
 		// Fixed cast non percentage bonuses
-		if( sc->data[SC_MANDRAGORA] && (skill_id >= SM_BASH && skill_id <= RETURN_TO_ELDICASTES) )
+		if( sc->data[SC_MANDRAGORA] )
 			fixed += sc->data[SC_MANDRAGORA]->val1 * 1000 / 2;
 		if (sc->data[SC_IZAYOI]  && (skill_id >= NJ_TOBIDOUGU && skill_id <= NJ_ISSEN))
 			fixed = 0;
