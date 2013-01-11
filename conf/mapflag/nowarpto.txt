@@ -150,3 +150,9 @@ spl_in01	mapflag	nowarpto
 // Poring War ====================
 poring_w01	mapflag	nowarpto
 poring_w02	mapflag	nowarpto
+
+// Bossnia (custom) ==============
+bossnia_01	mapflag	nowarpto
+bossnia_02	mapflag	nowarpto
+bossnia_03	mapflag	nowarpto
+bossnia_04	mapflag	nowarpto

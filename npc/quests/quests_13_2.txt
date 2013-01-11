@@ -4832,10 +4832,10 @@ man_in01,372,221,5	script	Scientist#lifeguard	449,{
 				delitem 6077,.@stone_chk; //Rough_Mineral
 				delitem 6078,.@stoneelse_chk; //Stone_Fragments
 				delitem 6076,1; //Portable_Toolbox
-				set ep13_2_tre,100;
 				getitem 6080,2; //Manuk_Coin
 				getexp 0,70000;
 				changequest 2179+(ep13_2_tre-2),2182;
+				set ep13_2_tre,100;
 				close;
 			}
 			else {

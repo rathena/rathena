@@ -776,3 +776,9 @@ moc_prydn2	mapflag	nomemo
 // Poring War ====================
 poring_w01	mapflag	nomemo
 poring_w02	mapflag	nomemo
+
+// Bossnia (custom) ==============
+bossnia_01	mapflag	nomemo
+bossnia_02	mapflag	nomemo
+bossnia_03	mapflag	nomemo
+bossnia_04	mapflag	nomemo

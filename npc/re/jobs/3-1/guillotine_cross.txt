@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.0b
+//= 1.1
 //===== Compatible With: ===================================== 
 //= rAthena SVN r16945+
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 1.0 Adapted from original script. [Euphy]
 //= 1.0a Added 'npcskill' command. [Euphy]
 //= 1.0b Moved warps to separate file. [Euphy]
+//= 1.1 Fixed some minor bugs. [Euphy]
 //============================================================
 
 que_job01,75,96,3	script	Guild Member#3rdgc01	997,{
@@ -720,7 +721,6 @@ job3_guil01,82,95,3	script	Daora#3rdgc02	940,{
 			close;
 		}
 	} else if (Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T || Class == Job_Baby_Cross) {
-		mes "[Daora]";
 		if (Sex) {
 			mes "Oh~ you're good-looking~!";
 			mes "It's worthwhile to open a pub~";
@@ -780,12 +780,10 @@ job3_guil01,82,95,3	script	Daora#3rdgc02	940,{
 		}
 	} else {
 		if (Sex == 1) {
-			mes "[Daora]";
 			mes "Oh~ you're good-looking!";
 			mes "So, what do you want?";
 		}
 		else {
-			mes "[Daora]";
 			mes "Hum...you're a girl.";
 			mes "Ok pick up whatever you want.";
 		}
@@ -2681,8 +2679,8 @@ ve_fild05,327,308,3	script	Girl#3rdgc14	466,{
 		switch(select("I got it.:I'll be ready.")) {
 		case 1:
 			if ($@3rdgc_room02 == 0) {
-				set job_3rd_gc, 17;
 				erasequest ((job_3rd_gc == 17)?7110:7109);
+				set job_3rd_gc, 17;
 				setquest 7110;
 				set $@3rdgc_room02, 1;
 				warp "job3_guil03",22,70;
