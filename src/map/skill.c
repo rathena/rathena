@@ -4496,11 +4496,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			}
 		break;
 
-	case WM_LULLABY_DEEPSLEEP:
-		if( bl != src && rnd()%100 < 88 + 2 * skill_lv )
-			sc_start(bl,status_skill2sc(skill_id),100,skill_lv,skill_get_time(skill_id,skill_lv));
-		break;
-
 	case SO_POISON_BUSTER: {
 			struct status_change *tsc = status_get_sc(bl);
 			if( tsc && tsc->data[SC_POISON] ) {
@@ -8592,12 +8587,25 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case SO_ARRULLO:
-		if( flag&1 )
-			sc_start2(bl, type, 88 + 2 * skill_lv, skill_lv, 1, skill_get_time(skill_id, skill_lv));
-		else {
-			clif_skill_nodamage(src, bl, skill_id, 0, 1);
+		{
+			// [(15 + 5 * Skill Level) + ( Caster’s INT / 5 ) + ( Caster’s Job Level / 5 ) - ( Target’s INT / 6 ) - ( Target’s LUK / 10 )] %
+			int rate = (15 + 5 * skill_lv) + status_get_int(src)/5 + (sd)?sd->status.job_level:0;
+			rate -= status_get_int(bl)/6 - status_get_luk(bl)/10;
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+			sc_start2(bl, type, rate, skill_lv, 1, skill_get_time(skill_id, skill_lv));
+		}
+		break;
+
+	case WM_LULLABY_DEEPSLEEP:
+		if( flag&1 ){
+			//[(Skill Level x 4) + (Voice Lessons Skill Level x 2) + (Caster’s Base Level / 15) + (Caster’s Job Level / 5)] %
+			int rate = (4 * skill_lv) + ( (sd) ? pc_checkskill(sd,WM_LESSON)*2 + sd->status.job_level/5 : 0 ) + status_get_lv(src) / 15;
+			if( bl != src )
+				sc_start(bl,type,rate,skill_lv,skill_get_time(skill_id,skill_lv));
+		}else {
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR,
-							   src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
+							   src, skill_id, skill_lv, tick, flag|BCT_ALL|1, skill_castend_nodamage_id);
 		}
 		break;
 
@@ -9821,6 +9829,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 				(skill_lv >= 4) ? sd->status.memo_point[2].map : 0
 			);
 		}
+		if( sc && sc->data[SC_CURSEDCIRCLE_ATKER] ) //Should only remove after the skill has been casted.
+			status_change_end(src,SC_CURSEDCIRCLE_ATKER,INVALID_TIMER);
 		return 0; // not to consume item.
 
 	case MO_BODYRELOCATION:
@@ -10008,10 +10018,15 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case NC_COLDSLOWER:
 	case NC_ARMSCANNON:
 	case RK_DRAGONBREATH:
-	case WM_LULLABY_DEEPSLEEP:
 		i = skill_get_splash(skill_id,skill_lv);
 		map_foreachinarea(skill_area_sub,src->m,x-i,y-i,x+i,y+i,splash_target(src),
-			src,skill_id,skill_lv,tick,flag|(skill_id==WM_LULLABY_DEEPSLEEP?BCT_ALL:BCT_ENEMY)|1,skill_castend_damage_id);
+			src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
+		break;
+
+	case SO_ARRULLO:
+		i = skill_get_splash(skill_id,skill_lv);
+		map_foreachinarea(skill_area_sub,src->m,x-i,y-i,x+i,y+i,splash_target(src),
+			src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
 		break;
 	/**
 	 * Guilotine Cross

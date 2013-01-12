@@ -3246,7 +3246,7 @@ int status_calc_npc_(struct npc_data *nd, bool first) {
 		status->race = RC_DEMIHUMAN;
 		status->size = nd->size;
 		status->rhw.range = 1 + status->size;
-		status->mode = MD_CANMOVE|MD_CANATTACK;
+		status->mode = (MD_CANMOVE|MD_CANATTACK);
 		status->speed = nd->speed;
 	}
 
@@ -4978,8 +4978,6 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 		def2 -= def2 * ( 14 * sc->data[SC_ANALYZE]->val1 ) / 100;
 	if( sc->data[SC_ECHOSONG] )
 		def2 += def2 * sc->data[SC_ECHOSONG]->val2/100;
-	if( sc->data[SC_GT_REVITALIZE] && sc->data[SC_GT_REVITALIZE]->val4)
-		def2 += def2 * sc->data[SC_GT_REVITALIZE]->val4 / 100;
 	if(sc->data[SC_ASH] && (bl->type==BL_MOB)){
 		if(status_get_race(bl)==RC_PLANT)
 			def2 /= 2;
@@ -5791,7 +5789,7 @@ struct status_data *status_get_status_data(struct block_list *bl)
 		case BL_HOM: return &((TBL_HOM*)bl)->battle_status;
 		case BL_MER: return &((TBL_MER*)bl)->battle_status;
 		case BL_ELEM: return &((TBL_ELEM*)bl)->battle_status;
-		case BL_NPC: return ((mobdb_checkid(((TBL_NPC*)bl)->class_) == 0) ? &((TBL_NPC*)bl)->status : &dummy_status);
+		case BL_NPC: return &((TBL_NPC*)bl)->status;
 		default:
 			return &dummy_status;
 	}
@@ -5807,7 +5805,7 @@ struct status_data *status_get_base_status(struct block_list *bl)
 		case BL_HOM: return &((TBL_HOM*)bl)->base_status;
 		case BL_MER: return &((TBL_MER*)bl)->base_status;
 		case BL_ELEM: return &((TBL_ELEM*)bl)->base_status;
-		case BL_NPC: return ((mobdb_checkid(((TBL_NPC*)bl)->class_) == 0) ? &((TBL_NPC*)bl)->status : NULL);
+		case BL_NPC: return &((TBL_NPC*)bl)->status;
 		default:
 			return NULL;
 	}
@@ -5825,8 +5823,6 @@ defType status_get_def(struct block_list *bl) {
 
 unsigned short status_get_speed(struct block_list *bl)
 {
-	if(bl->type==BL_NPC)//Only BL with speed data but no status_data [Skotlex]
-		return ((struct npc_data *)bl)->speed;
 	return status_get_status_data(bl)->speed;
 }
 
