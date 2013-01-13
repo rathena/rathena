@@ -5789,7 +5789,7 @@ struct status_data *status_get_status_data(struct block_list *bl)
 		case BL_HOM: return &((TBL_HOM*)bl)->battle_status;
 		case BL_MER: return &((TBL_MER*)bl)->battle_status;
 		case BL_ELEM: return &((TBL_ELEM*)bl)->battle_status;
-		case BL_NPC: return &((TBL_NPC*)bl)->status;
+		case BL_NPC:  return ((mobdb_checkid(((TBL_NPC*)bl)->class_) == 0) ? &((TBL_NPC*)bl)->status : &dummy_status);
 		default:
 			return &dummy_status;
 	}
@@ -5805,7 +5805,7 @@ struct status_data *status_get_base_status(struct block_list *bl)
 		case BL_HOM: return &((TBL_HOM*)bl)->base_status;
 		case BL_MER: return &((TBL_MER*)bl)->base_status;
 		case BL_ELEM: return &((TBL_ELEM*)bl)->base_status;
-		case BL_NPC: return &((TBL_NPC*)bl)->status;
+		case BL_NPC:  return ((mobdb_checkid(((TBL_NPC*)bl)->class_) == 0) ? &((TBL_NPC*)bl)->status : NULL); 
 		default:
 			return NULL;
 	}
@@ -5823,6 +5823,8 @@ defType status_get_def(struct block_list *bl) {
 
 unsigned short status_get_speed(struct block_list *bl)
 {
+	if(bl->type==BL_NPC)//Only BL with speed data but no status_data [Skotlex] 
+		return ((struct npc_data *)bl)->speed; 
 	return status_get_status_data(bl)->speed;
 }
 
