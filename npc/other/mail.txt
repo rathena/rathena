@@ -26,26 +26,29 @@
 //============================================================
 -	script	Mailbox#dummy::MailBox	-1,{
 	mes "[Mailbox]";
-	mes "To use the mailbox service, you are required";
-	mes "to pay 130 zeny.";
+	mes "To use the mailbox service,";
+	mes "you are required to pay 130 zeny.";
 	mes "Would you like to use the service?";
 	next;
-	mes "[Mailbox]";
-	if (select("Yes.:No.") == 1) {
+	switch(select("Yes.:No.")) {
+	case 1:
+		mes "[Mailbox]";
 		if (Zeny < 130) {
 			mes "I am sorry, but you do not have enough money.";
-			mes "To use the mailbox service, you are required";
-			mes "to pay 130 zeny.";
+			mes "To use the mailbox service,";
+			mes "you are required to pay 130 zeny.";
 			close;
 		}
 		mes "Thank you, please come again.";
-		set Zeny,(Zeny - 130);
+		set Zeny, Zeny - 130;
 		close2;
 		openmail;
 		end;
+	case 2:
+		mes "[Mailbox]";
+		mes "Thank you, please come again.";
+		close;
 	}
-	mes "Thank you, please come again.";
-	close;
 }
 
 // Prontera

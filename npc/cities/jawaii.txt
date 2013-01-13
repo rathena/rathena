@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Jawaii (The Lovers' Paradise) Town script
+//= Jawaii (The Lovers' Paradise) Town
 //===== By: ==================================================
 //= jAthena (1.0)
 //= DNett123 (1.1 - 1.5)
@@ -9,8 +9,8 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= [Aegis OCnversion]
-//= Jawaii Town Npcs
+//= [Official Conversion]
+//= Jawaii Town NPCs
 //===== Additional Comments: =================================
 //= 1.0 Done By jAthena
 //= 1.1 Rough Translation [DNett123]

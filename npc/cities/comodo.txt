@@ -1,13 +1,13 @@
 //===== rAthena Script ======================================= 
 //= Comodo Town
 //===== By: ================================================== 
-//= rAthena dev team
+//= rAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.9
+//= 2.0
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Comodo Town NPCs
 //===== Additional Comments: ================================= 
 //= Not complete.
@@ -21,6 +21,7 @@
 //= 1.7 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 1.8 Fixed a small bug. (close -> close2) [L0ne_W0lf]
 //= 1.9 Added a missing Kafra NPC. [L0ne_W0lf]
+//= 2.0 Added Izlude RE coordinates. [Euphy]
 //============================================================
 
 // Inside Comodo
@@ -339,7 +340,8 @@ cmd_fild07,52,280,4	script	Hallosu#cmd	100,{
 }
 
 cmd_fild07,299,83,4	script	Zain#cmd	100,{
-	mes "[Zain]";
+	set .@n$,"["+strnpcinfo(1)+"]";
+	mes .@n$;
 	mes "Would you like to";
 	mes "board a ship on the";
 	mes "Reudelus route? You";
@@ -348,29 +350,20 @@ cmd_fild07,299,83,4	script	Zain#cmd	100,{
 	next;
 	switch(select("Alberta - 600 Zeny:Izlude - 800 Zeny:Cancel")) {
 	case 1:
-		if (Zeny < 600) {
-			mes "[Zain]";
-			mes "I'm sorry, but you";
-			mes "don't have enough";
-			mes "zeny for the boarding fare.";
-			close;
-		}
+		if (Zeny < 600) break;
 		set zeny,zeny-600;
 		warp "alberta",192,169;
 		end;
 	case 2:
-		if (Zeny < 800) {
-			mes "[Zain]";
-			mes "I'm sorry, but you";
-			mes "don't have enough";
-			mes "zeny for the boarding fare.";
-			close;
-		}
+		if (Zeny < 800) break;
 		set zeny,zeny-800;
-		warp "izlude",176,182;
+		if(checkre(0))
+			warp "izlude",195,212;
+		else
+			warp "izlude",176,182;
 		end;
 	case 3:
-		mes "[Zain]";
+		mes .@n$;
 		mes "Travel by ship is";
 		mes "still one of the safest and";
 		mes "dependable methods of";
@@ -378,50 +371,13 @@ cmd_fild07,299,83,4	script	Zain#cmd	100,{
 		mes "to try Reudelus travel soon~";
 		close;
 	}
+	mes .@n$;
+	mes "I'm sorry, but you";
+	mes "don't have enough";
+	mes "zeny for the boarding fare.";
+	close;
 }
-
-cmd_fild07,94,134,4	script	Sarumane#cmd	100,{
-	mes "[Sarumane]";
-	mes "Would you like to";
-	mes "board a ship on the";
-	mes "Reudelus route? You";
-	mes "can travel on Reudelus";
-	mes "to Alberta or Izlude.";
-	next;
-	switch(select("Alberta - 600 Zeny:Izlude - 800 Zeny:Cancel")) {
-	case 1:
-		if (Zeny < 600) {
-			mes "[Sarumane]";
-			mes "I'm sorry, but you";
-			mes "don't have enough";
-			mes "zeny for the boarding fare.";
-			close;
-		}
-		set zeny,zeny-600;
-		warp "alberta",192,169;
-		end;
-	case 2:
-		if (Zeny < 800) {
-			mes "[Sarumane]";
-			mes "I'm sorry, but you";
-			mes "don't have enough";
-			mes "zeny for the boarding fare.";
-			close;
-		}
-		set zeny,zeny-800;
-		warp "izlude",176,182;
-		end;
-	case 3:
-		mes "[Sarumane]";
-		mes "Travel by ship is";
-		mes "still one of the safest and";
-		mes "dependable methods of";
-		mes "transportation. I invite you";
-		mes "to try Reudelus travel soon~";
-		close;
-	}
-}
-
+cmd_fild07,94,134,4	duplicate(Zain#cmd)	Sarumane#cmd	100
 
 cmd_in02,146,180,4	script	Kafra Employee::kaf_comodo2	721,{
 	cutin "kafra_07",2;
