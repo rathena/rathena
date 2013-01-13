@@ -988,7 +988,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case AM_ACIDTERROR:
-		sc_start(bl,SC_BLEEDING,(skill_lv*3),skill_lv,skill_get_time2(skill_id,skill_lv));
+		sc_start2(bl,SC_BLEEDING,(skill_lv*3),skill_lv,src->id,skill_get_time2(skill_id,skill_lv));
 		if (skill_break_equip(bl, EQP_ARMOR, 100*skill_get_time(skill_id,skill_lv), BCT_ENEMY))
 			clif_emotion(bl,E_OMG);
 		break;
@@ -1060,7 +1060,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		sc_start(bl,status_skill2sc(skill_id),70,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 	case NPC_BLEEDING:
-		sc_start(bl,SC_BLEEDING,(20*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
+		sc_start2(bl,SC_BLEEDING,(20*skill_lv),skill_lv,src->id,skill_get_time2(skill_id,skill_lv));
 		break;
 	case NPC_MENTALBREAKER:
 	{	//Based on observations by Tharis, Mental Breaker should do SP damage
@@ -1106,13 +1106,13 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 
 	case LK_HEADCRUSH: //Headcrush has chance of causing Bleeding status, except on demon and undead element
 		if (!(battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race == RC_DEMON))
-			sc_start(bl, SC_BLEEDING,50, skill_lv, skill_get_time2(skill_id,skill_lv));
+			sc_start2(bl, SC_BLEEDING,50, skill_lv, src->id, skill_get_time2(skill_id,skill_lv));
 		break;
 
 	case LK_JOINTBEAT:
 		status = status_skill2sc(skill_id);
 		if (tsc->jb_flag) {
-			sc_start2(bl,status,(5*skill_lv+5),skill_lv,tsc->jb_flag&BREAK_FLAGS,skill_get_time2(skill_id,skill_lv));
+			sc_start4(bl,status,(5*skill_lv+5),skill_lv,tsc->jb_flag&BREAK_FLAGS,src->id,0,skill_get_time2(skill_id,skill_lv));
 			tsc->jb_flag = 0;
 		}
 		break;
@@ -1126,7 +1126,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 				sc_start(bl,SC_STUN,(5+skill_lv*5),skill_lv,skill_get_time2(skill_id,2));
 				break;
 			default:
-				sc_start(bl,SC_BLEEDING,(5+skill_lv*5),skill_lv,skill_get_time2(skill_id,3));
+				sc_start2(bl,SC_BLEEDING,(5+skill_lv*5),skill_lv,src->id,skill_get_time2(skill_id,3));
   		}
 		break;
 
@@ -1167,7 +1167,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 			status_change_start(bl,SC_COMA,10,skill_lv,0,src->id,0,0,0);
 		break;
 	case GS_PIERCINGSHOT:
-		sc_start(bl,SC_BLEEDING,(skill_lv*3),skill_lv,skill_get_time2(skill_id,skill_lv));
+		sc_start2(bl,SC_BLEEDING,(skill_lv*3),skill_lv,src->id,skill_get_time2(skill_id,skill_lv));
 		break;
 	case NJ_HYOUSYOURAKU:
 		sc_start(bl,SC_FREEZE,(10+10*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
@@ -1271,7 +1271,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		rate = 30 + (((5 * (sd?pc_checkskill(sd,LG_PINPOINTATTACK):skill_lv)) + (sstatus->agi + status_get_lv(src))) / 10);
 		switch( skill_lv ) {
 			case 1:
-				sc_start(bl,SC_BLEEDING,rate,skill_lv,skill_get_time(skill_id,skill_lv));
+				sc_start2(bl,SC_BLEEDING,rate,skill_lv,src->id,skill_get_time(skill_id,skill_lv));
 				break;
 			case 2:
 				if( dstsd && dstsd->spiritball && rnd()%100 < rate )
@@ -1351,7 +1351,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		}
 		break;
 	case SO_EARTHGRAVE:
-		sc_start(bl, SC_BLEEDING, 5 * skill_lv, skill_lv, skill_get_time2(skill_id, skill_lv));	// Need official rate. [LimitLine]
+		sc_start2(bl, SC_BLEEDING, 5 * skill_lv, skill_lv, src->id, skill_get_time2(skill_id, skill_lv));	// Need official rate. [LimitLine]
 		break;
 	case SO_DIAMONDDUST:
 		rate = 5 + 5 * skill_lv;
@@ -1367,7 +1367,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 			switch( sd->itemid ) {	// Starting SCs here instead of do it in skill_additional_effect to simplify the code.
 				case 13261:
 					sc_start(bl, SC_STUN, 100, skill_lv, skill_get_time2(GN_SLINGITEM, skill_lv));
-					sc_start(bl, SC_BLEEDING, 100, skill_lv, skill_get_time2(GN_SLINGITEM, skill_lv));
+					sc_start2(bl, SC_BLEEDING, 100, skill_lv, src->id, skill_get_time2(GN_SLINGITEM, skill_lv));
 					break;
 				case 13262:
 					sc_start(bl, SC_MELON_BOMB, 100, skill_lv, skill_get_time(GN_SLINGITEM, skill_lv));	// Reduces ASPD and moviment speed
@@ -1382,10 +1382,10 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		break;
 	case GN_HELLS_PLANT_ATK:
 		sc_start(bl, SC_STUN,  5 + 5 * skill_lv, skill_lv, skill_get_time2(skill_id, skill_lv));
-		sc_start(bl, SC_BLEEDING, 20 + 10 * skill_lv, skill_lv, skill_get_time2(skill_id, skill_lv));
+		sc_start2(bl, SC_BLEEDING, 20 + 10 * skill_lv, skill_lv, src->id,skill_get_time2(skill_id, skill_lv));
 		break;
 	case EL_WIND_SLASH:	// Non confirmed rate.
-		sc_start(bl, SC_BLEEDING, 25, skill_lv, skill_get_time(skill_id,skill_lv));
+		sc_start2(bl, SC_BLEEDING, 25, skill_lv, src->id, skill_get_time(skill_id,skill_lv));
 		break;
 	case EL_STONE_HAMMER:
 		rate = 10 * skill_lv;
@@ -3239,7 +3239,7 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 							{
 								i = applyeffects[rnd()%j];
 								status_change_start(target, i, 10000, skl->skill_lv,
-									(i == SC_BURNING ? 1000 : 0),
+									(i == SC_BURNING ? 1000 : (i == SC_BLEEDING ? src->id : 0)),
 									(i == SC_BURNING ? src->id : 0),
 									0, skill_get_time(WL_TETRAVORTEX,skl->skill_lv), 0);
 							}
@@ -7388,7 +7388,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			const enum sc_type sc[] = { SC_STUN, SC_SILENCE, SC_CONFUSION, SC_BLEEDING };
 			int j;
 			j = i = rnd()%ARRAYLENGTH(sc);
-			while ( !sc_start(bl,sc[i],100,skill_lv,skill_get_time2(skill_id,i+1)) ) {
+			while ( !sc_start2(bl,sc[i],100,skill_lv,src->id,skill_get_time2(skill_id,i+1)) ) {
 				i++;
 				if ( i == ARRAYLENGTH(sc) )
 					i = 0;
@@ -7408,7 +7408,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NPC_SLOWCAST:
 	case NPC_WIDEHELLDIGNITY:
 		if (flag&1)
-			sc_start(bl,type,100,skill_lv,skill_get_time2(skill_id,skill_lv));
+			sc_start2(bl,type,100,skill_lv,src->id,skill_get_time2(skill_id,skill_lv));
 		else {
 			skill_area_temp[2] = 0; //For SD_PREAMBLE
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);

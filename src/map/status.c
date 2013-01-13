@@ -3700,7 +3700,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 		else
 			status->def2 = status_calc_def2(bl, sc, b_status->def2
 #ifdef RENEWAL
-			+ (int)( ((float)status->vit/2 + (float)b_status->vit/2) + ((float)status->agi/5 + (float)b_status->agi/5) )
+			+ (int)( ((float)status->vit/2 - (float)b_status->vit/2) + ((float)status->agi/5 - (float)b_status->agi/5) )
 #else
 			+ (status->vit - b_status->vit)
 #endif
@@ -3725,7 +3725,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 		else
 			status->mdef2 = status_calc_mdef2(bl, sc, b_status->mdef2 +(status->int_ - b_status->int_)
 #ifdef RENEWAL
-			+ (int)( ((float)status->dex/5 - (float)b_status->dex/5) + ((float)status->vit/5 + (float)b_status->vit/5) )
+			+ (int)( ((float)status->dex/5 - (float)b_status->dex/5) + ((float)status->vit/5 - (float)b_status->vit/5) )
 #else
 			+ ((status->vit - b_status->vit)>>1)
 #endif
@@ -7583,7 +7583,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 
 		case SC_JOINTBEAT:
 			if( val2&BREAK_NECK )
-				sc_start(bl,SC_BLEEDING,100,val1,skill_get_time2(status_sc2skill(type),val1));
+				sc_start2(bl,SC_BLEEDING,100,val1,val3,skill_get_time2(status_sc2skill(type),val1));
 			break;
 
 		case SC_BERSERK:
@@ -9944,8 +9944,9 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 	case SC_BLEEDING:
 		if (--(sce->val4) >= 0) {
 			int hp =  rnd()%600 + 200;
+			struct block_list* src = map_id2bl(sce->val2);
 			map_freeblock_lock();
-			status_fix_damage(NULL, bl, sd||hp<status->hp?hp:status->hp-1, 1);
+			status_fix_damage(src, bl, sd||hp<status->hp?hp:status->hp-1, 1);
 			if( sc->data[type] ) {
 				if( status->hp == 1 ) {
 					map_freeblock_unlock();
