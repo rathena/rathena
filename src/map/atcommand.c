@@ -8585,7 +8585,7 @@ ACMD_FUNC(accinfo) {
 ACMD_FUNC(set) {
 	char reg[32], val[128];
 	struct script_data* data;
-	int toset = 0;
+	int toset = 0, len;
 	bool is_str = false;
 
 	if( !message || !*message || (toset = sscanf(message, "%32s %128[^\n]s", reg, val)) < 1  ) {
@@ -8606,6 +8606,13 @@ ACMD_FUNC(set) {
 	}
 
 	is_str = ( reg[strlen(reg) - 1] == '$' ) ? true : false;
+
+	if( ( len = strlen(val) ) > 1 ) {
+		if( val[0] == '"' && val[len-1] == '"') {
+			val[len-1] = '\0'; //Strip quotes.
+			memmove(val, val+1, len-1);
+		}
+	}
 
 	if( toset >= 2 ) {/* we only set the var if there is an val, otherwise we only output the value */
 		if( is_str )
