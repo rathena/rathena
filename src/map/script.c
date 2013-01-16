@@ -7414,7 +7414,7 @@ BUILDIN_FUNC(getequipname)
 	i = pc_checkequip(sd,equip[num]);
 	if( i < 0 )
 	{
-		script_pushint(st,-1);
+		script_pushconststr(st,"");
 		return 0;
 	}
 

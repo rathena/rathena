@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20121223
+//= 20130115
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
@@ -1142,6 +1142,14 @@ Reloads the specified configuration file.
 -statusdb: Status Settings
 -pcdb: Player Settings
 -motd: Message of the Day
+
+---------------------------------------
+
+@set <variable> {<value>}
+
+Changes a player or account variable to the specified value.
+If no value is given, the variable's current value will be displayed.
+Note that the value of a string variable may be typed with or without double quotes.
 
 ---------------------------------------
 
