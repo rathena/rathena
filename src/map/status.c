@@ -2995,6 +2995,10 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		sd->subele[ELE_NEUTRAL] += skill;
 		sd->subele[ELE_FIRE] += skill*4;
 	}
+	if((skill=pc_checkskill(sd,NC_RESEARCHFE))>0) {
+		sd->subele[ELE_EARTH] += skill*10;
+		sd->subele[ELE_FIRE] += skill*10;
+	}
 	if((skill=pc_checkskill(sd,SA_DRAGONOLOGY))>0 ){
 		skill = skill*4;
 		sd->right_weapon.addrace[RC_DRAGON]+=skill;

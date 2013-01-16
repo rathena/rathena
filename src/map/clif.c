@@ -11057,7 +11057,7 @@ void clif_parse_Cooking(int fd,struct map_session_data *sd) {
 		return;
 	}
 	if( skill_can_produce_mix(sd,nameid,sd->menuskill_val, amount) )
-		skill_produce_mix(sd,0,nameid,0,0,0,amount);
+		skill_produce_mix(sd,(type>1?sd->menuskill_id:0),nameid,0,0,0,amount);
 	clif_menuskill_clear(sd);
 }
 
