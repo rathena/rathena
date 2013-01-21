@@ -1870,3 +1870,31 @@
 13425,499,100	// Tourist Sword
 15007,467,100	// Time Keeper Robe
 16006,499,100	// Tourist Mace
+
+// Sealed Cards
+4489,457,100	// Sealed Pharaoh Card
+4490,457,100	// Sealed Moonlight Flower Card
+4491,457,100	// Sealed Sniper Card
+4492,457,100	// Sealed Orc Hero Card
+4493,457,100	// Sealed Tao Gunka Card
+4494,457,100	// Sealed Turtle General Card
+4495,457,100	// Sealed Amon Ra Card
+4496,457,100	// Sealed Drake Card
+4497,457,100	// Sealed Stormy Knight Card
+4498,457,100	// Sealed Lady Tanee Card
+4499,457,100	// Sealed Samurai Spector Card
+4500,457,100	// Sealed Orc Lord Card
+4501,457,100	// Sealed High Priest Card
+4502,457,100	// Sealed MasterSmith Card
+4503,457,100	// Sealed Vesper Card
+4504,457,100	// Sealed Eddga Card
+4535,457,100	// Sealed Randgris Card
+4536,457,100	// Sealed Atroce Card
+4537,457,100	// Sealed Phreeoni Card
+4538,457,100	// Sealed White Lady Card
+4539,457,100	// Sealed Fallen Bishop Hibram Card
+4540,457,100	// Sealed Lord of The Dead Card
+4541,457,100	// Sealed High Wizard Card
+4542,457,100	// Sealed Detale Card
+4543,457,100	// Sealed Hatii Card
+4544,457,100	// Sealed Evil Snake Lord Card
