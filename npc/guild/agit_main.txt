@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.9
+//= 1.9a
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -51,6 +51,7 @@
 //=     and added extended anouncement format for mapannounce.
 //= 1.8 Fixed a possible exploit in guild castle investment. [Brian]
 //= 1.9 Partially rewrote Script. [Masao]
+//= 1.9a Fixed incorrect setcastledata parameter. [Euphy]
 //============================================================
 
 // WoE : Main Functions
@@ -158,7 +159,7 @@ OnGuildBreak:
 	// Kill guardians, disable the Kafra, and set owner to 0.
 	killmonster strnpcinfo(2),"Guardian#"+strnpcinfo(2)+"::OnGuardianDied";
 	disablenpc "Kafra Staff#"+strnpcinfo(2);
-	SetCastleData strnpcinfo(2),0,0;
+	SetCastleData strnpcinfo(2),1,0;
 	// Wait before refreshing guild information.
 	sleep 7000;
 	Announce "Guild Base [" + GetCastleName(strnpcinfo(2)) + "] has been abandoned.",0;
