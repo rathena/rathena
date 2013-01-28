@@ -2220,7 +2220,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	if(skill_id == WZ_FROSTNOVA && dsrc->x == bl->x && dsrc->y == bl->y)
 		return 0;
 	 //Trick Dead protects you from damage, but not from buffs and the like, hence it's placed here.
-	if (sc && sc->data[SC_TRICKDEAD] && !(sstatus->mode&MD_BOSS))
+	if (sc && sc->data[SC_TRICKDEAD])
 		return 0;
 
 	dmg = battle_calc_attack(attack_type,src,bl,skill_id,skill_lv,flag&0xFFF);
@@ -3283,8 +3283,8 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 					{
 						struct status_change* tsc = status_get_sc(target);
 						struct status_change* sc = status_get_sc(src);
-						if( tsc && tsc->option&OPTION_HIDE ||
-							sc && sc->option&OPTION_HIDE ){
+						if( ( tsc && tsc->option&OPTION_HIDE ) ||
+							( sc && sc->option&OPTION_HIDE ) ){
 							skill_blown(src,target,skill_get_blewcount(skl->skill_id, skl->skill_lv), -1, 0x0 );
 							break;
 						}
@@ -3730,7 +3730,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			if( dir > 2 && dir < 6 ) y = -i;
 			else if( dir == 7 || dir < 2 ) y = i;
 			else y = 0;
-			if( (mbl == src || !map_flag_gvg(src->m) && !map[src->m].flag.battleground) && // only NJ_ISSEN don't have slide effect in GVG
+			if( (mbl == src || (!map_flag_gvg(src->m) && !map[src->m].flag.battleground) ) && // only NJ_ISSEN don't have slide effect in GVG
 				unit_movepos(src, mbl->x+x, mbl->y+y, 1, 1) ) {
 				clif_slide(src, src->x, src->y);
 				//uncomment this if you want to remove MO_EXTREMITYFIST glitchy walking effect. [malufett]
@@ -9554,6 +9554,15 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr_t data)
 
 }
 
+/* skill count without self */
+static int skill_count_wos(struct block_list *bl,va_list ap) {
+	struct block_list* src = va_arg(ap, struct block_list*);
+	if( src->id != bl->id ) {
+		return 1;
+	}
+	return 0;
+}
+
 /*==========================================
  *
  *------------------------------------------*/
@@ -9771,8 +9780,12 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case HP_BASILICA:
 		if( sc->data[SC_BASILICA] )
 			status_change_end(src, SC_BASILICA, INVALID_TIMER); // Cancel Basilica
-		else
-		{ // Create Basilica. Start SC on caster. Unit timer start SC on others.
+		else { // Create Basilica. Start SC on caster. Unit timer start SC on others.
+			if( map_foreachinrange(skill_count_wos, src, 2, BL_MOB|BL_PC, src) ) {
+				if( sd )
+					clif_skill_fail(sd,skill_id,USESKILL_FAIL,0);
+				return 1;
+			}
 			skill_clear_unitgroup(src);
 			if( skill_unitsetting(src,skill_id,skill_lv,x,y,0) )
 				sc_start4(src,type,100,skill_lv,0,0,src->id,skill_get_time(skill_id,skill_lv));

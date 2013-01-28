@@ -7229,6 +7229,11 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 		}
 	}
 
+	if( (sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR && (b_class&MAPID_UPPERMASK) != MAPID_STAR_GLADIATOR) {
+		/* going off star glad lineage, reset feel to not store no-longer-used vars in the database */
+		pc_resetfeel(sd);
+	}
+	
 	sd->status.class_ = job;
 	fame_flag = pc_famerank(sd->status.char_id,sd->class_&MAPID_UPPERMASK);
 	sd->class_ = (unsigned short)b_class;
