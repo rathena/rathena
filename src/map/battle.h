@@ -483,7 +483,8 @@ extern struct Battle_Config
 	int atcommand_mobinfo_type;
 
 	int mob_size_influence; // Enable modifications on earned experience, drop rates and monster status depending on monster size. [mkbu95]
-} battle_config;
+	int skill_trap_type;
+	} battle_config;
 
 void do_init_battle(void);
 void do_final_battle(void);
