@@ -133,7 +133,7 @@ struct char_session_data {
 	char birthdate[10+1];  // YYYY-MM-DD
 };
 
-int max_connect_user = 0;
+int max_connect_user = -1;
 int gm_allow_group = -1;
 int autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
 int start_zeny = 0;
@@ -2154,7 +2154,8 @@ int parse_fromlogin(int fd) {
 				ARR_FIND( 0, ARRAYLENGTH(server), server_id, server[server_id].fd > 0 && server[server_id].map[0] );
 				// continued from char_auth_ok...
 				if( server_id == ARRAYLENGTH(server) || //server not online, bugreport:2359
-					( max_connect_user && count_users() >= max_connect_user && sd->group_id != gm_allow_group ) ) {
+					(max_connect_user == 0 && sd->group_id != gm_allow_group) ||
+					( max_connect_user > 0 && count_users() >= max_connect_user && sd->group_id != gm_allow_group ) ) {
 					// refuse connection (over populated)
 					WFIFOHEAD(i,3);
 					WFIFOW(i,0) = 0x6c;
@@ -4559,8 +4560,8 @@ int char_config_read(const char* cfgName)
 			char_new_display = atoi(w2);
 		} else if (strcmpi(w1, "max_connect_user") == 0) {
 			max_connect_user = atoi(w2);
-			if (max_connect_user < 0)
-				max_connect_user = 0; // unlimited online players
+			if (max_connect_user < -1)
+				max_connect_user = -1;
 		} else if(strcmpi(w1, "gm_allow_group") == 0) {
 			gm_allow_group = atoi(w2);
 		} else if (strcmpi(w1, "autosave_time") == 0) {
