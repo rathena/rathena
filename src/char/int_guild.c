@@ -726,7 +726,7 @@ int inter_guild_sql_init(void)
 	castle_db = idb_alloc(DB_OPT_RELEASE_DATA);
 
 	//Read exp file
-	sv_readdb("db/"DBPATH, "exp_guild.txt", ',', 1, 1, 100, exp_guild_parse_row);
+	sv_readdb("db", DBPATH"exp_guild.txt", ',', 1, 1, 100, exp_guild_parse_row);
 
 	add_timer_func_list(guild_save_timer, "guild_save_timer");
 	add_timer(gettick() + 10000, guild_save_timer, 0, 0);

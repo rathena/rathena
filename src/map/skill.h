@@ -392,9 +392,6 @@ enum {
 	ST_RECOV_WEIGHT_RATE,
 	ST_MOVE_ENABLE,
 	ST_WATER,
-	/**
-	 * 3rd States
-	 **/
 	ST_RIDINGDRAGON,
 	ST_WUG,
 	ST_RIDINGWUG,
@@ -404,6 +401,7 @@ enum {
 	ST_ROLLINGCUTTER,
 	ST_MH_FIGHTING,
 	ST_MH_GRAPPLING,
+	ST_PECO,
 };
 
 enum e_skill {

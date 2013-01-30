@@ -11,7 +11,7 @@
 //  recover_weight_rate = Requires to be less than 50% weight
 //  water = Requires to be standing on a water cell
 //  cart = Requires a Pushcart
-//  riding = Requires to ride a Peco
+//  riding = Requires to ride either a peco or a dragon
 //  falcon = Requires a Falcon
 //  sight = Requires Sight skill activated
 //  hiding = Requires Hiding skill activated
@@ -26,8 +26,9 @@
 //  poisonweapon = Requires to be under Poisoning Weapon.
 //  rollingcutter = Requires at least one Rotation Counter from Rolling Cutter.
 //  elementalspirit = Requires to have an Elemental Spirit summoned.
-//  mh_fighting = eleanor fighthing mode
-//  mh_grappling = eleanor grappling mode
+//  mh_fighting = Requires Eleanor fighthing mode
+//  mh_grappling = Requires Eleanor grappling mode
+//  peco = Requires riding a peco
 
 5,0,0,8:8:8:8:8:15:15:15:15:15,0,0,0,0:1:2:3:4:5:6:7:8:9:10:12:13:14:15:16:17:18:19:20:21:22,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0	//SM_BASH#バッシュ#
 6,0,0,4:5:6:7:8:9:10:11:12:13,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0	//SM_PROVOKE#プロボック#
