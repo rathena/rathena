@@ -534,6 +534,7 @@ hu_in01,382,382,4	script	Guild Receptionist#hnt	732,{
 		close;
 	}
 	else if (HNTR_Q >= 3 && HNTR_Q <= 9) {
+		if(checkre(0)) set .@i,1;
 		switch(HNTR_Q) {
 		//Insect_Feeler/Claw_Of_Desert_Wolf, Wooden_Block, White_Herb
 		case 3: setarray .@items[0], (.@i?928:7030),5, 1019,5, 509,3, 10; break;

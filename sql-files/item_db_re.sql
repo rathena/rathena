@@ -7272,7 +7272,7 @@ REPLACE INTO `item_db_re` VALUES (18004,'Iron_Cannon_Ball','Iron Cannon Ball',10
 REPLACE INTO `item_db_re` VALUES (18100,'Shooting_Star','Shooting Star',4,20,NULL,0,'190',NULL,5,NULL,0x00080800,7,2,34,4,'1',1,11,'bonus bLongAtkRate,20;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18101,'F_Bow_Of_Rudra_C','Rudra Bow',4,2,NULL,0,'185',NULL,5,NULL,0x000A0848,7,2,34,4,NULL,NULL,11,'bonus bAtkEle,Ele_Holy; bonus bInt,5; skill "AL_CURE",1; skill "AL_HEAL",1; bonus2 bResEff,Eff_Poison,5000; bonus2 bResEff,Eff_Curse,5000; bonus2 bResEff,Eff_Silence,5000; bonus2 bResEff,Eff_Confusion,5000; bonus2 bResEff,Eff_Blind,5000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18102,'E_Bow_Of_Rudra_C','Rudra Bow',4,2,NULL,0,'185',NULL,5,NULL,0x000A0848,7,2,34,4,NULL,NULL,11,'bonus bAtkEle,Ele_Holy; bonus bInt,5; skill "AL_CURE",1; skill "AL_HEAL",1; bonus2 bResEff,Eff_Poison,5000; bonus2 bResEff,Eff_Curse,5000; bonus2 bResEff,Eff_Silence,5000; bonus2 bResEff,Eff_Confusion,5000; bonus2 bResEff,Eff_Blind,5000;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (18103,'Mystic_Bow','Mystic Bow',4,NULL,NULL,1700,'75',NULL,5,NULL,0x00000400,8,2,34,3,'105',1,11,' bonus bMatk,100; bonus bInt,4;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (18103,'Mystic_Bow','Mystic Bow',4,NULL,NULL,1700,'75',NULL,5,NULL,0x00080800,8,2,34,3,'105',1,11,' bonus bMatk,100; bonus bInt,4; bonus2 bSkillUseSP,"WM_SEVERE_RAINSTORM",10;',NULL,NULL);
 #18104,
 #18105,
 REPLACE INTO `item_db_re` VALUES (18106,'P_Bow3','Eden Bow III',4,NULL,NULL,0,'140',NULL,5,NULL,0x000A0848,7,2,34,3,'60',NULL,11,NULL,NULL,NULL);
