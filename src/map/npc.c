@@ -1915,7 +1915,7 @@ void npc_addsrcfile(const char* name)
 
 	file = (struct npc_src_list*)aMalloc(sizeof(struct npc_src_list) + strlen(name));
 	file->next = NULL;
-	strncpy(file->name, name, strlen(name) + 1);
+	safestrncpy(file->name, name, strlen(name) + 1);
 	if( file_prev == NULL )
 		npc_src_files = file;
 	else
@@ -3605,7 +3605,7 @@ void npc_read_event_script(void)
 		DBData *data;
 
 		char name[64]="::";
-		strncpy(name+2,config[i].event_name,62);
+		safestrncpy(name+2,config[i].event_name,62);
 
 		script_event[i].event_count = 0;
 		iter = db_iterator(ev_db);

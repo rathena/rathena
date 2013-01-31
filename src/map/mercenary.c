@@ -404,8 +404,8 @@ static bool read_mercenarydb_sub(char* str[], int columns, int current)
 
 	db = &mercenary_db[current];
 	db->class_ = atoi(str[0]);
-	strncpy(db->sprite, str[1], NAME_LENGTH);
-	strncpy(db->name, str[2], NAME_LENGTH);
+	safestrncpy(db->sprite, str[1], NAME_LENGTH);
+	safestrncpy(db->name, str[2], NAME_LENGTH);
 	db->lv = atoi(str[3]);
 
 	status = &db->status;

@@ -3216,7 +3216,7 @@ int map_config_read(char *cfgName)
 		*ptr = '\0';
 
 		if(strcmpi(w1,"timestamp_format")==0)
-			strncpy(timestamp_format, w2, 20);
+			safestrncpy(timestamp_format, w2, 20);
 		else if(strcmpi(w1,"stdout_with_ansisequence")==0)
 			stdout_with_ansisequence = config_switch(w2);
 		else if(strcmpi(w1,"console_silent")==0) {
@@ -3267,7 +3267,7 @@ int map_config_read(char *cfgName)
 		else if (strcmpi(w1, "charhelp_txt") == 0)
 			strcpy(charhelp_txt, w2);
 		else if(strcmpi(w1,"db_path") == 0)
-			strncpy(db_path,w2,255);
+			safestrncpy(db_path,w2,255);
 		else if (strcmpi(w1, "console") == 0) {
 			console = config_switch(w2);
 			if (console)

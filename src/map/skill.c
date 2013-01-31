@@ -1560,7 +1560,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 
 			if (skill == AS_SONICBLOW)
 				pc_stop_attack(sd); //Special case, Sonic Blow autospell should stop the player attacking.
-			if (skill == PF_SPIDERWEB) //Special case, due to its nature of coding.
+			else if (skill == PF_SPIDERWEB) //Special case, due to its nature of coding.
 				type = CAST_GROUND;
 
 			sd->state.autocast = 1;
@@ -11042,195 +11042,191 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 	type = status_skill2sc(sg->skill_id);
 	sce = (sc && type != -1)?sc->data[type]:NULL;
 	skill_id = sg->skill_id; //In case the group is deleted, we need to return the correct skill id, still.
-	switch (sg->unit_id)
-	{
-	case UNT_SPIDERWEB:
-		if( sc && sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1 > 0 )
-		{ // If you are fiberlocked and can't move, it will only increase your fireweakness level. [Inkfish]
-			sc->data[SC_SPIDERWEB]->val2++;
-			break;
-		}
-		else if( sc )
-		{
-			int sec = skill_get_time2(sg->skill_id,sg->skill_lv);
-			if( status_change_start(bl,type,10000,sg->skill_lv,1,sg->group_id,0,sec,8) )
-			{
-				const struct TimerData* td = sc->data[type]?get_timer(sc->data[type]->timer):NULL;
-				if( td )
-					sec = DIFF_TICK(td->tick, tick);
-				map_moveblock(bl, src->bl.x, src->bl.y, tick);
-				clif_fixpos(bl);
-				sg->val2 = bl->id;
+	switch (sg->unit_id) {
+		case UNT_SPIDERWEB:
+			if( sc && sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1 > 0 ) {
+				// If you are fiberlocked and can't move, it will only increase your fireweakness level. [Inkfish]
+				sc->data[SC_SPIDERWEB]->val2++;
+				break;
+			} else if( sc && battle_check_target(&sg->unit->bl,bl,sg->target_flag) > 0 ) {
+				int sec = skill_get_time2(sg->skill_id,sg->skill_lv);
+				if( status_change_start(bl,type,10000,sg->skill_lv,1,sg->group_id,0,sec,8) ) {
+					const struct TimerData* td = sc->data[type]?get_timer(sc->data[type]->timer):NULL;
+					if( td )
+						sec = DIFF_TICK(td->tick, tick);
+					map_moveblock(bl, src->bl.x, src->bl.y, tick);
+					clif_fixpos(bl);
+					sg->val2 = bl->id;
+				}
+				else
+					sec = 3000; //Couldn't trap it?
+				sg->limit = DIFF_TICK(tick,sg->tick)+sec;
 			}
-			else
-				sec = 3000; //Couldn't trap it?
-			sg->limit = DIFF_TICK(tick,sg->tick)+sec;
-		}
-		break;
-	case UNT_SAFETYWALL:
-		if (!sce)
-			sc_start4(bl,type,100,sg->skill_lv,sg->skill_id,sg->group_id,0,sg->limit);
-		break;
+			break;
+		case UNT_SAFETYWALL:
+			if (!sce)
+				sc_start4(bl,type,100,sg->skill_lv,sg->skill_id,sg->group_id,0,sg->limit);
+			break;
 
-	case UNT_PNEUMA:
-	case UNT_CHAOSPANIC:
-	case UNT_MAELSTROM:
-		if (!sce)
-			sc_start4(bl,type,100,sg->skill_lv,sg->group_id,0,0,sg->limit);
-		break;
-	case UNT_BLOODYLUST:
-		if (sg->src_id == bl->id)
-			break; //Does not affect the caster.
-		if (!sce) {
-			TBL_PC *sd = BL_CAST(BL_PC, bl); //prevent fullheal exploit
-			if (sd && sd->bloodylust_tick && DIFF_TICK(gettick(), sd->bloodylust_tick) < skill_get_time2(SC_BLOODYLUST, 1))
-				clif_skill_nodamage(&src->bl,bl,sg->skill_id,sg->skill_lv,
-					sc_start4(bl, type, 100, sg->skill_lv, 1, 0, 0, skill_get_time(LK_BERSERK, sg->skill_lv)));
-			else {
-				if (sd) sd->bloodylust_tick = gettick();
+		case UNT_PNEUMA:
+		case UNT_CHAOSPANIC:
+		case UNT_MAELSTROM:
+			if (!sce)
+				sc_start4(bl,type,100,sg->skill_lv,sg->group_id,0,0,sg->limit);
+			break;
+		case UNT_BLOODYLUST:
+			if (sg->src_id == bl->id)
+				break; //Does not affect the caster.
+			if (!sce) {
+				TBL_PC *sd = BL_CAST(BL_PC, bl); //prevent fullheal exploit
+				if (sd && sd->bloodylust_tick && DIFF_TICK(gettick(), sd->bloodylust_tick) < skill_get_time2(SC_BLOODYLUST, 1))
 					clif_skill_nodamage(&src->bl,bl,sg->skill_id,sg->skill_lv,
-						sc_start4(bl, type, 100, sg->skill_lv, 0, 0, 0, skill_get_time(LK_BERSERK, sg->skill_lv)));
+						sc_start4(bl, type, 100, sg->skill_lv, 1, 0, 0, skill_get_time(LK_BERSERK, sg->skill_lv)));
+				else {
+					if (sd) sd->bloodylust_tick = gettick();
+						clif_skill_nodamage(&src->bl,bl,sg->skill_id,sg->skill_lv,
+							sc_start4(bl, type, 100, sg->skill_lv, 0, 0, 0, skill_get_time(LK_BERSERK, sg->skill_lv)));
+				}
+			}
+			break;
+
+		case UNT_WARP_WAITING: {
+			int working = sg->val1&0xffff;
+
+			if(bl->type==BL_PC && !working){
+				struct map_session_data *sd = (struct map_session_data *)bl;
+				if((!sd->chatID || battle_config.chat_warpportal)
+					&& sd->ud.to_x == src->bl.x && sd->ud.to_y == src->bl.y)
+				{
+					int x = sg->val2>>16;
+					int y = sg->val2&0xffff;
+					int count = sg->val1>>16;
+					unsigned short m = sg->val3;
+
+					if( --count <= 0 )
+						skill_delunitgroup(sg);
+
+					if ( map_mapindex2mapid(sg->val3) == sd->bl.m && x == sd->bl.x && y == sd->bl.y )
+						working = 1;/* we break it because officials break it, lovely stuff. */
+
+					sg->val1 = (count<<16)|working;
+
+					pc_setpos(sd,m,x,y,CLR_TELEPORT);
+				}
+			} else if(bl->type == BL_MOB && battle_config.mob_warp&2) {
+				int16 m = map_mapindex2mapid(sg->val3);
+				if (m < 0) break; //Map not available on this map-server.
+				unit_warp(bl,m,sg->val2>>16,sg->val2&0xffff,CLR_TELEPORT);
 			}
 		}
-		break;
+			break;
 
-	case UNT_WARP_WAITING: {
-		int working = sg->val1&0xffff;
+		case UNT_QUAGMIRE:
+			if( !sce && battle_check_target(&sg->unit->bl,bl,sg->target_flag) > 0 )
+				sc_start4(bl,type,100,sg->skill_lv,sg->group_id,0,0,sg->limit);
+			break;
 
-		if(bl->type==BL_PC && !working){
-			struct map_session_data *sd = (struct map_session_data *)bl;
-			if((!sd->chatID || battle_config.chat_warpportal)
-				&& sd->ud.to_x == src->bl.x && sd->ud.to_y == src->bl.y)
+		case UNT_VOLCANO:
+		case UNT_DELUGE:
+		case UNT_VIOLENTGALE:
+			if(!sce)
+				sc_start(bl,type,100,sg->skill_lv,sg->limit);
+			break;
+
+		case UNT_SUITON:
+			if(!sce)
+				sc_start4(bl,type,100,sg->skill_lv,
+				map_flag_vs(bl->m) || battle_check_target(&src->bl,bl,BCT_ENEMY)>0?1:0, //Send val3 =1 to reduce agi.
+				0,0,sg->limit);
+			break;
+
+		case UNT_HERMODE:
+			if (sg->src_id!=bl->id && battle_check_target(&src->bl,bl,BCT_PARTY|BCT_GUILD) > 0)
+				status_change_clear_buffs(bl,1); //Should dispell only allies.
+		case UNT_RICHMANKIM:
+		case UNT_ETERNALCHAOS:
+		case UNT_DRUMBATTLEFIELD:
+		case UNT_RINGNIBELUNGEN:
+		case UNT_ROKISWEIL:
+		case UNT_INTOABYSS:
+		case UNT_SIEGFRIED:
+			 //Needed to check when a dancer/bard leaves their ensemble area.
+			if (sg->src_id==bl->id && !(sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_BARDDANCER))
+				return skill_id;
+			if (!sce)
+				sc_start4(bl,type,100,sg->skill_lv,sg->val1,sg->val2,0,sg->limit);
+			break;
+		case UNT_WHISTLE:
+		case UNT_ASSASSINCROSS:
+		case UNT_POEMBRAGI:
+		case UNT_APPLEIDUN:
+		case UNT_HUMMING:
+		case UNT_DONTFORGETME:
+		case UNT_FORTUNEKISS:
+		case UNT_SERVICEFORYOU:
+			if (sg->src_id==bl->id && !(sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_BARDDANCER))
+				return 0;
+
+			if (!sc) return 0;
+			if (!sce)
+				sc_start4(bl,type,100,sg->skill_lv,sg->val1,sg->val2,0,sg->limit);
+			else if (sce->val4 == 1) {
+				//Readjust timers since the effect will not last long.
+				sce->val4 = 0;
+				delete_timer(sce->timer, status_change_timer);
+				sce->timer = add_timer(tick+sg->limit, status_change_timer, bl->id, type);
+			}
+			break;
+
+		case UNT_FOGWALL:
+			if (!sce)
 			{
-				int x = sg->val2>>16;
-				int y = sg->val2&0xffff;
-				int count = sg->val1>>16;
-				unsigned short m = sg->val3;
-
-				if( --count <= 0 )
-					skill_delunitgroup(sg);
-
-				if ( map_mapindex2mapid(sg->val3) == sd->bl.m && x == sd->bl.x && y == sd->bl.y )
-					working = 1;/* we break it because officials break it, lovely stuff. */
-
-				sg->val1 = (count<<16)|working;
-
-				pc_setpos(sd,m,x,y,CLR_TELEPORT);
+				sc_start4(bl, type, 100, sg->skill_lv, sg->val1, sg->val2, sg->group_id, sg->limit);
+				if (battle_check_target(&src->bl,bl,BCT_ENEMY)>0)
+					skill_additional_effect (ss, bl, sg->skill_id, sg->skill_lv, BF_MISC, ATK_DEF, tick);
 			}
-		} else if(bl->type == BL_MOB && battle_config.mob_warp&2) {
-			int16 m = map_mapindex2mapid(sg->val3);
-			if (m < 0) break; //Map not available on this map-server.
-			unit_warp(bl,m,sg->val2>>16,sg->val2&0xffff,CLR_TELEPORT);
-		}
-	}
-		break;
-
-	case UNT_QUAGMIRE:
-		if( !sce && battle_check_target(&sg->unit->bl,bl,sg->target_flag) > 0 )
-			sc_start4(bl,type,100,sg->skill_lv,sg->group_id,0,0,sg->limit);
-		break;
-
-	case UNT_VOLCANO:
-	case UNT_DELUGE:
-	case UNT_VIOLENTGALE:
-		if(!sce)
-			sc_start(bl,type,100,sg->skill_lv,sg->limit);
-		break;
-
-	case UNT_SUITON:
-		if(!sce)
-			sc_start4(bl,type,100,sg->skill_lv,
-			map_flag_vs(bl->m) || battle_check_target(&src->bl,bl,BCT_ENEMY)>0?1:0, //Send val3 =1 to reduce agi.
-			0,0,sg->limit);
-		break;
-
-	case UNT_HERMODE:
-		if (sg->src_id!=bl->id && battle_check_target(&src->bl,bl,BCT_PARTY|BCT_GUILD) > 0)
-			status_change_clear_buffs(bl,1); //Should dispell only allies.
-	case UNT_RICHMANKIM:
-	case UNT_ETERNALCHAOS:
-	case UNT_DRUMBATTLEFIELD:
-	case UNT_RINGNIBELUNGEN:
-	case UNT_ROKISWEIL:
-	case UNT_INTOABYSS:
-	case UNT_SIEGFRIED:
-		 //Needed to check when a dancer/bard leaves their ensemble area.
-		if (sg->src_id==bl->id && !(sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_BARDDANCER))
-			return skill_id;
-		if (!sce)
-			sc_start4(bl,type,100,sg->skill_lv,sg->val1,sg->val2,0,sg->limit);
-		break;
-	case UNT_WHISTLE:
-	case UNT_ASSASSINCROSS:
-	case UNT_POEMBRAGI:
-	case UNT_APPLEIDUN:
-	case UNT_HUMMING:
-	case UNT_DONTFORGETME:
-	case UNT_FORTUNEKISS:
-	case UNT_SERVICEFORYOU:
-		if (sg->src_id==bl->id && !(sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_BARDDANCER))
-			return 0;
-
-		if (!sc) return 0;
-		if (!sce)
-			sc_start4(bl,type,100,sg->skill_lv,sg->val1,sg->val2,0,sg->limit);
-		else if (sce->val4 == 1) {
-			//Readjust timers since the effect will not last long.
-			sce->val4 = 0;
-			delete_timer(sce->timer, status_change_timer);
-			sce->timer = add_timer(tick+sg->limit, status_change_timer, bl->id, type);
-		}
-		break;
-
-	case UNT_FOGWALL:
-		if (!sce)
-		{
-			sc_start4(bl, type, 100, sg->skill_lv, sg->val1, sg->val2, sg->group_id, sg->limit);
-			if (battle_check_target(&src->bl,bl,BCT_ENEMY)>0)
-				skill_additional_effect (ss, bl, sg->skill_id, sg->skill_lv, BF_MISC, ATK_DEF, tick);
-		}
-		break;
-
-	case UNT_GRAVITATION:
-		if (!sce)
-			sc_start4(bl,type,100,sg->skill_lv,0,BCT_ENEMY,sg->group_id,sg->limit);
-		break;
-
-// officially, icewall has no problems existing on occupied cells [ultramage]
-//	case UNT_ICEWALL: //Destroy the cell. [Skotlex]
-//		src->val1 = 0;
-//		if(src->limit + sg->tick > tick + 700)
-//			src->limit = DIFF_TICK(tick+700,sg->tick);
-//		break;
-
-	case UNT_MOONLIT:
-		//Knockback out of area if affected char isn't in Moonlit effect
-		if (sc && sc->data[SC_DANCING] && (sc->data[SC_DANCING]->val1&0xFFFF) == CG_MOONLIT)
 			break;
-		if (ss == bl) //Also needed to prevent infinite loop crash.
+
+		case UNT_GRAVITATION:
+			if (!sce)
+				sc_start4(bl,type,100,sg->skill_lv,0,BCT_ENEMY,sg->group_id,sg->limit);
 			break;
-		skill_blown(ss,bl,skill_get_blewcount(sg->skill_id,sg->skill_lv),unit_getdir(bl),0);
-		break;
 
-	case UNT_WALLOFTHORN:
-		if( status_get_mode(bl)&MD_BOSS )
-			break;	// iRO Wiki says that this skill don't affect to Boss monsters.
-		if( map_flag_vs(bl->m) || bl->id == src->bl.id || battle_check_target(&src->bl,bl, BCT_ENEMY) == 1 )
-			skill_attack(skill_get_type(sg->skill_id), ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
-		break;
+		// officially, icewall has no problems existing on occupied cells [ultramage]
+		//	case UNT_ICEWALL: //Destroy the cell. [Skotlex]
+		//		src->val1 = 0;
+		//		if(src->limit + sg->tick > tick + 700)
+		//			src->limit = DIFF_TICK(tick+700,sg->tick);
+		//		break;
 
-	case UNT_VOLCANIC_ASH:
-		if (!sce)
-		    sc_start(bl, SC_ASH, 100, sg->skill_lv, skill_get_time(MH_VOLCANIC_ASH, sg->skill_lv));
-		break;
+		case UNT_MOONLIT:
+			//Knockback out of area if affected char isn't in Moonlit effect
+			if (sc && sc->data[SC_DANCING] && (sc->data[SC_DANCING]->val1&0xFFFF) == CG_MOONLIT)
+				break;
+			if (ss == bl) //Also needed to prevent infinite loop crash.
+				break;
+			skill_blown(ss,bl,skill_get_blewcount(sg->skill_id,sg->skill_lv),unit_getdir(bl),0);
+			break;
 
-	case UNT_GD_LEADERSHIP:
-	case UNT_GD_GLORYWOUNDS:
-	case UNT_GD_SOULCOLD:
-	case UNT_GD_HAWKEYES:
-		if ( !sce )
-			sc_start4(bl,type,100,sg->skill_lv,0,0,0,1000);
-		break;
+		case UNT_WALLOFTHORN:
+			if( status_get_mode(bl)&MD_BOSS )
+				break;	// iRO Wiki says that this skill don't affect to Boss monsters.
+			if( map_flag_vs(bl->m) || bl->id == src->bl.id || battle_check_target(&src->bl,bl, BCT_ENEMY) == 1 )
+				skill_attack(skill_get_type(sg->skill_id), ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
+			break;
+
+		case UNT_VOLCANIC_ASH:
+			if (!sce)
+				sc_start(bl, SC_ASH, 100, sg->skill_lv, skill_get_time(MH_VOLCANIC_ASH, sg->skill_lv));
+			break;
+
+		case UNT_GD_LEADERSHIP:
+		case UNT_GD_GLORYWOUNDS:
+		case UNT_GD_SOULCOLD:
+		case UNT_GD_HAWKEYES:
+			if ( !sce )
+				sc_start4(bl,type,100,sg->skill_lv,0,0,0,1000);
+			break;
 	}
 	return skill_id;
 }

@@ -4120,7 +4120,7 @@ static bool mob_parse_row_chatdb(char** str, const char* source, int line, int* 
 	}
 
 	msg[len] = 0;  // strip previously found EOL
-	strncpy(ms->msg, str[2], CHAT_SIZE_MAX);
+	safestrncpy(ms->msg, str[2], CHAT_SIZE_MAX);
 
 	return true;
 }

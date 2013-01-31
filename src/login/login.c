@@ -1596,7 +1596,7 @@ int login_config_read(const char* cfgName)
 			continue;
 
 		if(!strcmpi(w1,"timestamp_format"))
-			strncpy(timestamp_format, w2, 20);
+			safestrncpy(timestamp_format, w2, 20);
 		else if(!strcmpi(w1,"stdout_with_ansisequence"))
 			stdout_with_ansisequence = config_switch(w2);
 		else if(!strcmpi(w1,"console_silent")) {

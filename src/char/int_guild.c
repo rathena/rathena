@@ -1815,7 +1815,7 @@ int mapif_parse_GuildMasterChange(int fd, int guild_id, const char* name, int le
 	g->member[0].position = 0; //Position 0: guild Master.
 	g->member[0].modified = GS_MEMBER_MODIFIED;
 
-	strncpy(g->master, name, len);
+	safestrncpy(g->master, name, len);
 	if (len < NAME_LENGTH)
 		g->master[len] = '\0';
 

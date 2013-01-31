@@ -709,7 +709,7 @@ int merc_hom_change_name_ack(struct map_session_data *sd, char* name, int flag)
 		clif_displaymessage(sd->fd, msg_txt(280)); // You cannot use this name
 		return 0;
 	}
-	strncpy(hd->homunculus.name,name,NAME_LENGTH);
+	safestrncpy(hd->homunculus.name,name,NAME_LENGTH);
 	clif_charnameack (0,&hd->bl);
 	hd->homunculus.rename_flag = 1;
 	clif_hominfo(sd,hd,0);
@@ -887,7 +887,7 @@ int merc_create_homunculus_request(struct map_session_data *sd, int class_)
 
 	memset(&homun, 0, sizeof(struct s_homunculus));
 	//Initial data
-	strncpy(homun.name, homunculus_db[i].name, NAME_LENGTH-1);
+	safestrncpy(homun.name, homunculus_db[i].name, NAME_LENGTH-1);
 	homun.class_ = class_;
 	homun.level = 1;
 	homun.hunger = 32; //32%
@@ -1050,7 +1050,7 @@ static bool read_homunculusdb_sub(char* str[], int columns, int current)
 	}
 	db->evo_class = classid;
 	//Name, Food, Hungry Delay, Base Size, Evo Size, Race, Element, ASPD
-	strncpy(db->name,str[2],NAME_LENGTH-1);
+	safestrncpy(db->name,str[2],NAME_LENGTH-1);
 	db->foodID = atoi(str[3]);
 	db->hungryDelay = atoi(str[4]);
 	db->base_size = atoi(str[5]);
