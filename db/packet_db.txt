@@ -1776,5 +1776,22 @@ packet_ver:31
 0x08E5,41,bookingregreq,2:4     //Added to prevent disconnections
 0x08d2,10
 
+//2012-07-02aRagexeRE
+packet_ver: 32
+0x0363,19,wanttoconnection,2:6:10:14:18
+0x0364,6,ticksend,2
+0x085a,7,actionrequest,2:6
+0x0861,8,movefromkafra,2:4
+0x0862,10,useskilltoid,2:4:6
+0x0863,10,useskilltopos,2:4:6:8
+0x0886,6,solvecharname,2
+0x0889,90,useskilltoposinfo,2:4:6:8:10
+0x089e,6,dropitem,2:4
+0x089f,6,takeitem,2
+0x08a0,8,movetokafra,2:4
+0x094a,6,getcharnamerequest,2
+0x0953,5,walktoxy,2
+0x0960,5,changedir,2:4
+
 //Add new packets here
-//packet_ver: 32
+//packet_ver: 33

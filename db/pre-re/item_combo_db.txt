@@ -21,7 +21,7 @@
 1573:2334,{ bonus bMdef,8; bonus bMaxSPRate,10; bonus bInt,4; }
 1573:2372,{ bonus bMdef,8; bonus bMaxSPRate,10; bonus bInt,4; }
 1573:2716:2717,{ bonus bInt,5; bonus bMaxHP,700; bonus bAspdRate,5; }
-1615:18539,{ bonus bEquipmentMatk,10*getequiprefinerycnt(EQI_HAND_R); bonus bCastRate,-10; }
+1615:18539,{ bonus bMatk,10*getequiprefinerycnt(EQI_HAND_R); bonus bCastRate,-10; }
 1616:2515,{ bonus bSpeedRate,25; }
 1618:2509,{ bonus bMaxHP,300; bonus bMatkRate,getequiprefinerycnt(EQI_HAND_R)-5; bonus2 bSubEle,Ele_Neutral,getrefine()*3; }
 1618:2535,{ bonus bMatkRate,5; bonus2 bSubEle,Ele_Neutral,25; }
@@ -29,7 +29,7 @@
 1620:2535,{ bonus bMatkRate,5; bonus2 bSubEle,Ele_Neutral,25; }
 1629:5045,{ bonus bDex,2; bonus bInt,2; bonus bSPrecovRate,5; bonus bMatkRate,getrefine(); }
 1631:2129,{ bonus2 bSkillAtk,"PR_MAGNUS",20; bonus3 bAutoSpellWhenHit,"PR_TURNUNDEAD",1,20; }
-1636:18539,{ bonus bEquipmentMatk,10*getequiprefinerycnt(EQI_HAND_R); bonus bCastRate,-10; }
+1636:18539,{ bonus bMatk,10*getequiprefinerycnt(EQI_HAND_R); bonus bCastRate,-10; }
 1723:2718,{ bonus bDex,1; bonus bMaxSP,50; bonus bSPrecovRate,10; }
 1730:1752,{ bonus bLongAtkRate,25; }
 1731:1754,{ bonus bLongAtkRate,25; }
