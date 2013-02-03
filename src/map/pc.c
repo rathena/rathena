@@ -249,6 +249,7 @@ int pc_delspiritball(struct map_session_data *sd,int count,int type)
 	}
 	return 0;
 }
+
 static int pc_check_banding( struct block_list *bl, va_list ap ) {
 	int *c, *b_sd;
 	struct block_list *src;
@@ -277,6 +278,7 @@ static int pc_check_banding( struct block_list *bl, va_list ap ) {
 
 	return 0;
 }
+
 int pc_banding(struct map_session_data *sd, uint16 skill_lv) {
 	int c;
 	int b_sd[MAX_PARTY]; // In case of a full Royal Guard party.
@@ -8202,6 +8204,10 @@ int pc_removecombo(struct map_session_data *sd, struct item_data *data ) {
 
 			cursor++;
 		}
+
+		/* check if combo requirements still fit */
+		if( pc_checkcombo( sd, data ) )
+			continue;
 
 		/* it's empty, we can clear all the memory */
 		if( (sd->combos.count = cursor) == 0 ) {
