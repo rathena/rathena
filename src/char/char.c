@@ -3992,6 +3992,35 @@ int parse_char(int fd)
 				return 0;
 			RFIFOSKIP(fd,6);
 		break;
+		// char rename request
+		// R 08fc <char ID>.l <new name>.24B
+		case 0x8fc:
+			FIFOSD_CHECK(30);
+			{
+				int i, cid =RFIFOL(fd,2);
+				char name[NAME_LENGTH];
+				char esc_name[NAME_LENGTH*2+1];
+				safestrncpy(name, (char *)RFIFOP(fd,6), NAME_LENGTH);
+				RFIFOSKIP(fd,30);
+				
+				ARR_FIND( 0, MAX_CHARS, i, sd->found_char[i] == cid );
+				if( i == MAX_CHARS )
+					break;
+				
+				normalize_name(name,TRIM_CHARS);
+				Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
+				if( !check_char_name(name,esc_name) ) {
+					i = 1;
+					safestrncpy(sd->new_name, name, NAME_LENGTH);
+				} else
+					i = 0;
+				
+				WFIFOHEAD(fd, 4);
+				WFIFOW(fd,0) = 0x28e;
+				WFIFOW(fd,2) = i;
+				WFIFOSET(fd,4);
+			}
+			break;
 
 		// char rename request
 		// R 028d <account ID>.l <char ID>.l <new name>.24B

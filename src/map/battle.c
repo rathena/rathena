@@ -811,13 +811,12 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 				 * in RE, SW possesses a lifetime equal to 3 times the caster's health
 				 **/
 			#ifdef RENEWAL
+				d->dmg_lv = ATK_BLOCK;
 				if ( ( group->val2 - damage) > 0 ) {
 					group->val2 -= damage;
-					d->dmg_lv = ATK_BLOCK;
-					return 0;
 				} else
-					damage -= group->val2;
-				skill_delunitgroup(group);
+					skill_delunitgroup(group);
+				return 0;
 			#else
 				if (--group->val2<=0)
 					skill_delunitgroup(group);
@@ -5875,10 +5874,8 @@ static const struct _battle_data {
 	{ "homunculus_max_level",               &battle_config.hom_max_level,                   99,     0,      MAX_LEVEL,      },
 	{ "homunculus_S_max_level",             &battle_config.hom_S_max_level,                 150,    0,      MAX_LEVEL,      },
 	{ "mob_size_influence",					&battle_config.mob_size_influence,				0,		0,		1,				},
-	/**
-	 * Hercules
-	 **/
 	{ "skill_trap_type",                    &battle_config.skill_trap_type,                 0,      0,      1,              },
+	{ "item_restricted_consumption_type",   &battle_config.item_restricted_consumption_type,1,      0,      1,              },
 };
 #ifndef STATS_OPT_OUT
 /**

@@ -3590,30 +3590,26 @@ static void script_detach_state(struct script_state* st, bool dequeue_event)
 {
 	struct map_session_data* sd;
 
-	if(st->rid && (sd = map_id2sd(st->rid))!=NULL)
-	{
+	if(st->rid && (sd = map_id2sd(st->rid))!=NULL) {
 		sd->st = st->bk_st;
 		sd->npc_id = st->bk_npcid;
-		/**
-		 * For the Secure NPC Timeout option (check config/Secure.h) [RR]
-		 **/
-	#if SECURE_NPCTIMEOUT
-		/**
-		 * We're done with this NPC session, so we cancel the timer (if existent) and move on
-		 **/
-		if( sd->npc_idle_timer != INVALID_TIMER ) {
-			delete_timer(sd->npc_idle_timer,npc_rr_secure_timeout_timer);
-			sd->npc_idle_timer = INVALID_TIMER;
-		}
-	#endif
-		if(st->bk_st)
-		{
+		if(st->bk_st) {
 			//Remove tag for removal.
 			st->bk_st = NULL;
 			st->bk_npcid = 0;
-		}
-		else if(dequeue_event)
-		{
+		} else if(dequeue_event) {
+			/**
+			 * For the Secure NPC Timeout option (check config/Secure.h) [RR]
+			 **/
+#if SECURE_NPCTIMEOUT
+			/**
+			 * We're done with this NPC session, so we cancel the timer (if existent) and move on
+			 **/
+			if( sd->npc_idle_timer != INVALID_TIMER ) {
+				delete_timer(sd->npc_idle_timer,npc_rr_secure_timeout_timer);
+				sd->npc_idle_timer = INVALID_TIMER;
+			}
+#endif
 			npc_event_dequeue(sd);
 		}
 	}

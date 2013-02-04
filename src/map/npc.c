@@ -231,6 +231,9 @@ int npc_rr_secure_timeout_timer(int tid, unsigned int tick, int id, intptr_t dat
 		 **/
 		if( sd->st )
 			sd->st->state = END;
+		sd->state.menu_or_input = 0;
+		sd->npc_menu = 0;
+
 		/**
 		 * This guy's been idle for longer than allowed, close him.
 		 **/

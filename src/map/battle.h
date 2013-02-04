@@ -479,11 +479,12 @@ extern struct Battle_Config
 	int mvp_tomb_enabled;
 
 	int atcommand_suggestions_enabled;
-    int min_npc_vending_distance;
+	int min_npc_vending_distance;
 	int atcommand_mobinfo_type;
 
 	int mob_size_influence; // Enable modifications on earned experience, drop rates and monster status depending on monster size. [mkbu95]
 	int skill_trap_type;
+	int item_restricted_consumption_type;
 	} battle_config;
 
 void do_init_battle(void);

@@ -2251,6 +2251,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			rmdamage = 1;
 			bl = src;
 			src = tbl;
+			dsrc = tbl;
 			sd = BL_CAST(BL_PC, src);
 			tsd = BL_CAST(BL_PC, bl);
 			sc = status_get_sc(bl);
@@ -9373,7 +9374,15 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 		}
 		if (target && target->m == src->m)
 		{	//Move character to target anyway.
-			if (unit_movepos(src, src->x+3, src->y+3, 1, 1))
+			int dir, x, y;
+			dir = map_calc_dir(src,target->x,target->y);
+			if( dir > 0 && dir < 4) x = -2;
+			else if( dir > 4 ) x = 2;
+			else x = 0;
+			if( dir > 2 && dir < 6 ) y = -2;
+			else if( dir == 7 || dir < 2 ) y = 2;
+			else y = 0;
+			if (unit_movepos(src, src->x+x, src->y+y, 1, 1))
 			{	//Display movement + animation.
 				clif_slide(src,src->x,src->y);
 				clif_skill_damage(src,target,tick,sd->battle_status.amotion,0,0,1,ud->skill_id, ud->skill_lv, 5);

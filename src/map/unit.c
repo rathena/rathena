@@ -325,7 +325,8 @@ int unit_walktoxy( struct block_list *bl, short x, short y, int flag)
 	if( ud == NULL) return 0;
 
 #ifdef OFFICIAL_WALKPATH
-	if( path_search(&wpd, bl->m, bl->x, bl->y, x, y, flag&1, CELL_CHKNOPASS) // Check if there is an obstacle between
+	path_search(&wpd, bl->m, bl->x, bl->y, x, y, flag&1, CELL_CHKNOPASS); // Count walk path cells
+	if( !path_search_long(NULL, bl->m, bl->x, bl->y, x, y, CELL_CHKNOPASS) // Check if there is an obstacle between
 		&& wpd.path_len > 14 ) // Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett]
 		return 0;
 #endif
@@ -938,7 +939,7 @@ int unit_can_move(struct block_list *bl) {
 		if( sc->data[SC_ANKLE] && ( battle_config.skill_trap_type || !unit_is_walking(bl) ) ) // Ankle only stops you after you're done moving
 			return 0;
 			
-		if (sc->opt1 > 0 && sc->opt1 != OPT1_STONEWAIT && sc->opt1 != OPT1_BURNING && (sc->opt1 != OPT1_CRYSTALIZE && bl->type != BL_MOB))
+		if (sc->opt1 > 0 && sc->opt1 != OPT1_STONEWAIT && sc->opt1 != OPT1_BURNING && !(sc->opt1 == OPT1_CRYSTALIZE && bl->type == BL_MOB))
 			return 0;
 
 		if ((sc->option & OPTION_HIDE) && (!sd || pc_checkskill(sd, RG_TUNNELDRIVE) <= 0))
