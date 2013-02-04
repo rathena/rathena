@@ -339,6 +339,7 @@ void SqlStmt_ShowDebug_(SqlStmt* self, const char* debug_file, const unsigned lo
 /// Frees a SqlStmt returned by SqlStmt_Malloc.
 void SqlStmt_Free(SqlStmt* self);
 
+void Sql_Init(void);
 
 
 #endif /* _COMMON_SQL_H_ */

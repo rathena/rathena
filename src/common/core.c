@@ -11,6 +11,7 @@
 #include "../common/timer.h"
 #include "../common/thread.h"
 #include "../common/mempool.h"
+#include "../common/sql.h"
 #endif
 
 #include <stdio.h>
@@ -318,6 +319,7 @@ int main (int argc, char **argv)
 	display_title();
 	usercheck();
 
+	Sql_Init();
 	rathread_init();
 	mempool_init();
 	db_init();
