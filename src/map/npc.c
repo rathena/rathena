@@ -2880,20 +2880,22 @@ int npc_do_atcmd_event(struct map_session_data* sd, const char* command, const c
 	}
 
 	st = script_alloc_state(ev->nd->u.scr.script, ev->pos, sd->bl.id, ev->nd->bl.id);
-	 setd_sub(st, NULL, ".@atcmd_command$", 0, (void *)command, NULL);
+	setd_sub(st, NULL, ".@atcmd_command$", 0, (void *)command, NULL);
 
-	 // split atcmd parameters based on spaces
+	// split atcmd parameters based on spaces
 
-	 temp = (char*)aMalloc(strlen(message) + 1);
+	temp = (char*)aMalloc(strlen(message) + 1);
 
 	for( i = 0; i < ( strlen( message ) + 1 ) && k < 127; i ++ ) {
 		if( message[i] == ' ' || message[i] == '\0' ) {
 			if( message[ ( i - 1 ) ] == ' ' ) {
-				continue; // To prevent "@atcmd [space][space][space]..."
+				continue; // To prevent "@atcmd [space][space]" and .@atcmd_numparameters return 1 without any parameter.
 			}
 			temp[k] = '\0';
 			k = 0;
-			setd_sub( st, NULL, ".@atcmd_parameters$", j++, (void *)temp, NULL );
+			if( temp[0] != '\0' ) {
+				setd_sub( st, NULL, ".@atcmd_parameters$", j++, (void *)temp, NULL );
+			}
 		} else {
 			temp[k] = message[i];
 			k++;
@@ -2901,9 +2903,10 @@ int npc_do_atcmd_event(struct map_session_data* sd, const char* command, const c
 	 }
 
 	setd_sub(st, NULL, ".@atcmd_numparameters", 0, (void *)__64BPRTSIZE(j), NULL);
-	 aFree(temp);
+	aFree(temp);
 
-	 run_script_main(st);	return 0;
+	run_script_main(st);
+	return 0;
 }
 
 /// Parses a function.
