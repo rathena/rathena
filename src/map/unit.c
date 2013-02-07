@@ -315,21 +315,22 @@ int unit_walktoxy( struct block_list *bl, short x, short y, int flag)
 {
 	struct unit_data* ud = NULL;
 	struct status_change* sc = NULL;
-#ifdef OFFICIAL_WALKPATH
 	struct walkpath_data wpd;
-#endif
+
 	nullpo_ret(bl);
 
 	ud = unit_bl2ud(bl);
 
 	if( ud == NULL) return 0;
 
-#ifdef OFFICIAL_WALKPATH
 	path_search(&wpd, bl->m, bl->x, bl->y, x, y, flag&1, CELL_CHKNOPASS); // Count walk path cells
+#ifdef OFFICIAL_WALKPATH
 	if( !path_search_long(NULL, bl->m, bl->x, bl->y, x, y, CELL_CHKNOPASS) // Check if there is an obstacle between
 		&& wpd.path_len > 14 ) // Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett]
 		return 0;
 #endif
+	if( battle_config.max_walk_path < wpd.path_len )
+		return 0;
 
 	if (flag&4 && DIFF_TICK(ud->canmove_tick, gettick()) > 0 &&
 		DIFF_TICK(ud->canmove_tick, gettick()) < 2000)

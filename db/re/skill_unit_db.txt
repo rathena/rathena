@@ -152,7 +152,7 @@
 2485,0xe7,    ,  0, 3,1000,enemy, 0x098	//GN_DEMONIC_FIRE
 2487,0xe8,    ,  0, 3,1000,enemy, 0x000	//GN_FIRE_EXPANSION_SMOKE_POWDER
 2488,0xe9,    ,  0, 3,1000,enemy, 0x000	//GN_FIRE_EXPANSION_TEAR_GAS
-2490,0xea,    ,  0, 1,1000,enemy, 0x000	//GN_HELLS_PLANT
+2490,0xea,    ,  0, 1,1000,enemy, 0x002	//GN_HELLS_PLANT
 
 3006,0x86,    ,  0, 2, 100,enemy, 0x018	//KO_BAKURETSU
 3008,0x86,    ,  0, 2, 100,enemy, 0x018	//KO_MUCHANAGE

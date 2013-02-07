@@ -2415,6 +2415,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		+ sizeof(sd->skillcooldown)
 		+ sizeof(sd->skillfixcast)
 		+ sizeof(sd->skillvarcast)
+		+ sizeof(sd->skillfixcastrate)
 	);
 
 	memset (&sd->bonus, 0,sizeof(sd->bonus));

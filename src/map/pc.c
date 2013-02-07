@@ -2585,17 +2585,25 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			sd->bonus.itemhealrate2 += val;
 		break;
 	case SP_EMATK:
-           if(sd->state.lr_flag != 2)
-               sd->bonus.ematk += val;
-           break;
+		if(sd->state.lr_flag != 2)
+			sd->bonus.ematk += val;
+		break;
 	case SP_FIXCASTRATE:
 		if(sd->state.lr_flag != 2)
 			sd->bonus.fixcastrate -= val;
+		break;
+	case SP_ADD_FIXEDCAST:
+		if(sd->state.lr_flag != 2)
+			sd->bonus.add_fixcast += val;
 		break;
 #ifdef RENEWAL_CAST
 	case SP_VARCASTRATE:
 		if(sd->state.lr_flag != 2)
 			sd->bonus.varcastrate -= val;
+		break;
+	case SP_ADD_VARIABLECAST:
+		if(sd->state.lr_flag != 2)
+			sd->bonus.add_varcast += val;
 		break;
 #endif
 	default:
@@ -2954,7 +2962,15 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		ARR_FIND(0, ARRAYLENGTH(sd->skillcast), i, sd->skillcast[i].id == 0 || sd->skillcast[i].id == type2);
 		if (i == ARRAYLENGTH(sd->skillcast))
 		{	//Better mention this so the array length can be updated. [Skotlex]
-			ShowDebug("run_script: bonus2 bCastRate reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillcast), type2, val);
+			ShowDebug("run_script: bonus2 %s reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n",
+
+#ifndef RENEWAL_CAST
+				"bCastRate",
+#else
+				"bVariableCastrate",
+#endif
+
+				ARRAYLENGTH(sd->skillcast), type2, val);
 			break;
 		}
 		if(sd->skillcast[i].id == type2)
@@ -2964,7 +2980,22 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->skillcast[i].val = val;
 		}
 		break;
-
+	case SP_FIXCASTRATE:
+		if(sd->state.lr_flag == 2)
+			break;
+		ARR_FIND(0, ARRAYLENGTH(sd->skillfixcastrate), i, sd->skillfixcastrate[i].id == 0 || sd->skillfixcastrate[i].id == type2);
+		if (i == ARRAYLENGTH(sd->skillfixcastrate))
+		{
+			ShowDebug("run_script: bonus2 bFixedCastrate reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillfixcastrate), type2, val);
+			break;
+		}
+		if(sd->skillfixcastrate[i].id == type2)
+			sd->skillfixcastrate[i].val += val;
+		else {
+			sd->skillfixcastrate[i].id = type2;
+			sd->skillfixcastrate[i].val = val;
+		}
+		break;
 	case SP_HP_LOSS_RATE:
 		if(sd->state.lr_flag != 2) {
 			sd->hp_loss.value = type2;

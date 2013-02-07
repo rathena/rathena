@@ -601,9 +601,9 @@ static struct guild_castle* inter_guildcastle_fromsql(int castle_id)
 // Read exp_guild.txt
 static bool exp_guild_parse_row(char* split[], int column, int current)
 {
-	int exp = atoi(split[0]);
+	unsigned int exp = (unsigned int)atol(split[0]);
 
-	if (exp < 0 || exp >= INT_MAX) {
+	if (exp < 0 || exp >= UINT_MAX) {
 		ShowError("exp_guild: Invalid exp %d at line %d\n", exp, current);
 		return false;
 	}

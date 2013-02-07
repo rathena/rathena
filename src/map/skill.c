@@ -6359,6 +6359,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 			if(status_isimmune(bl) || !tsc || !tsc->count)
 				break;
+
+			if( sd && dstsd && !map_flag_vs(sd->bl.m) && sd->status.guild_id == dstsd->status.guild_id ) {
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+				break;
+			}
+
 			for(i=0;i<SC_MAX;i++)
 			{
 				if (!tsc->data[i])
@@ -10612,6 +10618,8 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, uint16 skill
 		break;
 
 	case WZ_FIREPILLAR:
+		if( map_getcell(src->m, x, y, CELL_CHKLANDPROTECTOR) )
+			return NULL;
 		if((flag&1)!=0)
 			limit=1000;
 		val1=skill_lv+2;
@@ -13064,7 +13072,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id
 		}
 		break;
 	case ST_RIDING:
-		if(!pc_isriding(sd) || !pc_isridingdragon(sd)) {
+		if(!pc_isriding(sd) && !pc_isridingdragon(sd)) {
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 			return 0;
 		}
@@ -13819,6 +13827,10 @@ int skill_vfcastfix (struct block_list *bl, double time, uint16 skill_id, uint16
 	if(sd  && !(skill_get_castnodex(skill_id, skill_lv)&4) ){ // Increases/Decreases fixed/variable cast time of a skill by item/card bonuses.
 		if( sd->bonus.varcastrate < 0 )
 			VARCAST_REDUCTION(sd->bonus.varcastrate);
+		if( sd->bonus.add_varcast != 0 ) // bonus bVariableCast
+			time += sd->bonus.add_varcast;
+		if( sd->bonus.add_fixcast != 0 ) // bonus bFixedCast
+			fixed += sd->bonus.add_fixcast;
 		for (i = 0; i < ARRAYLENGTH(sd->skillfixcast) && sd->skillfixcast[i].id; i++)
 			if (sd->skillfixcast[i].id == skill_id){ // bonus2 bSkillFixedCast
 				fixed += sd->skillfixcast[i].val;
@@ -13833,6 +13845,11 @@ int skill_vfcastfix (struct block_list *bl, double time, uint16 skill_id, uint16
 			if( sd->skillcast[i].id == skill_id ){ // bonus2 bVariableCastrate
 				if( (i=sd->skillcast[i].val) < 0)
 					VARCAST_REDUCTION(i);
+				break;
+			}
+		for( i = 0; i < ARRAYLENGTH(sd->skillfixcastrate) && sd->skillfixcastrate[i].id; i++ )
+			if( sd->skillfixcastrate[i].id == skill_id ){ // bonus2 bFixedCastrate
+				fixcast_r = sd->skillfixcastrate[i].val; // just speculation
 				break;
 			}
 	}
@@ -14702,7 +14719,7 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 				skill_delunit(unit);
 				return 1;
 			}
-			if( !(skill_get_inf2(unit->group->skill_id)&(INF2_SONG_DANCE|INF2_TRAP)) ) { //It deletes everything except songs/dances and traps
+			if( !(skill_get_inf2(unit->group->skill_id)&(INF2_SONG_DANCE|INF2_TRAP)) || unit->group->skill_id == WZ_FIREPILLAR ) { //It deletes everything except songs/dances and traps
 				skill_delunit(unit);
 				return 1;
 			}
