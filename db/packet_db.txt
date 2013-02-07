@@ -1776,7 +1776,7 @@ packet_ver:31
 0x08E5,41,bookingregreq,2:4     //Added to prevent disconnections
 0x08d2,10
 
-//2012-07-02aRagexeRE
+//2012-07-02aRagexeRE (unstable)
 packet_ver: 32
 0x0363,19,wanttoconnection,2:6:10:14:18
 0x0364,6,ticksend,2

@@ -1,0 +1,88 @@
+//===== rAthena Script ======================================= 
+//= El Dicastes Guide
+//===== By: ================================================== 
+//= Muad_Dib
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena SVN
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Guide for the city of El Dicastes.
+//===== Additional Comments: ================================= 
+//= 1.0 First version. [Joseph]
+//= 1.1 Fixed viewpoint syntax. [Euphy]
+//============================================================ 
+
+dicastes01,181,191,5	script	Traveler Ichack#info	481,2,2,{
+	mes "[Traveler Ichack]";
+	mes "Oh!! You are a stranger!";
+	mes "I'm Ichack, the first adventurer that arrived here in El Dicastes!";
+	next;
+	mes "[Traveler Ichack]";
+	mes "There was someone in the expedition team claiming that he was the first, but it WAS me. That's right.";
+	next;
+	mes "[Traveler Ichack]";
+	mes "That's why I will provide a service to guide adventurers from Rune-Midgard.";
+	mes "What would you like to know?";
+	next;
+	switch(select("Dicastes Diel:Residential Area:Training Room:Factory:Pub:Cat Hand Caravan")) {
+	case 1:
+		mes "[Traveler Ichack]";
+		mes "Ah~ That's a beautiful building.";
+		mes "It's said they discuss important things...";
+		next;
+		mes "[Traveler Ichack]";
+		mes "Please make sure you signed in at the dior, otherwise you'll get in trouble.";
+		mes "Go directly north from here and you can't miss it.";
+		viewpoint 1,351,198,0,0x00FF00;
+		close;
+	case 2:
+		mes "[Traveler Ichack]";
+		mes "The Sapha tribe is so weird. How can they sleep in there?";
+		next;
+		mes "[Traveler Ichack]";
+		mes "You don't understand?";
+		mes "You won't believe me until you see it! Go see it for yourself!";
+		next;
+		mes "[Traveler Ichack]";
+		mes "The residential area is divided into 2 area's.";
+		mes "The lower residential area is around 7 o'clock and, the upper area is around 1 o'clock.";
+		viewpoint 1,283,280,1,0x01FF01;
+		viewpoint 1,106,136,2,0x0066FF;
+		close;
+	case 3:
+		mes "[Traveler Ichack]";
+		mes "Because of the dangers here, we need better security..";
+		mes "Have you ever been to the training room? The training guards seem to never sleep!";
+		viewpoint 1,172,255,3,0xFFCCCC;
+		close;
+	case 4:
+		mes "[Traveler Ichack]";
+		mes "This is one of the most important reasons why they live here.";
+		mes "If you go to factory, you can see the recently refined Bradium.";
+		viewpoint 1,256,97,4,0x0066FF;
+		close;
+	case 5:
+		mes "[Traveler Ichack]";
+		mes "Although I arrived here as the first adventurer, the owner of the pub was the first person here.";
+		mes "Bumen Florine's pub is located underground in the lower residential area.";
+		mes "He might have some valuable information for you.";
+		viewpoint 1,106,136,5,0xFF3300;
+		close;
+	case 6:
+		mes "[Traveler Ichack]";
+		mes "The cats seems that don't have good relationship with sapha same as us.";
+		mes "Perhaps it's because trading is involved.";
+		mes "Poor cats. They must be shivering from the cold out there.";
+		next;
+		mes "[Traveler Ichack]";
+		mes "You can find their caravan just outside the gates.";
+		viewpoint 1,39,199,6,0x9933FF;
+		close;
+	}
+OnTouch:
+	if (ep13_3_invite == 6) 
+		emotion e_gasp,0;
+	end;
+}

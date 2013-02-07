@@ -423,6 +423,14 @@
 4134,0,0,0,0,0,0,0,"Iara"
 4135,86400,0,0,0,0,0,0,"Iara"
 
+4154,0,0,0,0,0,0,0,"Homunculus Researcher"
+4155,0,0,0,0,0,0,0,"Homunculus S Mutation Mission - 1"
+4156,0,0,0,0,0,0,0,"Homunculus S Mutation Mission - 2"
+4157,0,0,0,0,0,0,0,"Homunculus S Mutation Mission - 3"
+4158,0,0,0,0,0,0,0,"Homunculus S Mutation Mission - 4"
+4159,0,0,0,0,0,0,0,"Homunculus S Mutation Mission - 5"
+4160,0,0,0,0,0,0,0,"Homunculus S Mutation Mission - 6"
+
 // Paradise 86 - 90 [Chilly]
 4167,0,1321,30,0,0,0,0,"Paradise: Dragon Tail Handling"
 4168,0,1322,30,0,0,0,0,"Paradise: Spring Rabbit Handling"
@@ -732,7 +740,7 @@
 
 7181,0,0,0,0,0,0,0,"Karakas's ring"
 
-// El Dicastes [Euphy]
+// El Dicastes
 7182,0,0,0,0,0,0,0,"Sapha's Visit"
 7183,0,0,0,0,0,0,0,"Invitation from Sapha"
 7184,0,0,0,0,0,0,0,"To El Dicastes!"
@@ -1592,7 +1600,7 @@
 12061,10,0,0,0,0,0,0,"Concentration"
 12062,86400,0,0,0,0,0,0,"Today's Mining Closed"
 12070,14400,0,0,0,0,0,0,"Limited time for enter"
-
+12071,86400,0,0,0,0,0,0,"Stamp a seal on the attendance book"
 12072,0,1034,20,0,0,0,0,"Hunt tharafrog"
 12073,0,1248,15,0,0,0,0,"Remove Cruiser"
 12074,0,1070,30,0,0,0,0,"Remove Kukre"

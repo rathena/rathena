@@ -644,7 +644,7 @@ OnInstanceInit:
 OnEnable:
 	enablenpc instance_npcname("4FGate102tower", instance_id());
 	areamonster "1@tower",352,351,362,387,"Golden Thief Bug",1086,1,instance_npcname("4FGate102tower", instance_id())+"::OnMyMobDead";
-	areamonster "1@tower",352,351,362,387,"Theif Bug Male",1054,15,instance_npcname("4FGate102tower", instance_id())+"::OnMyMobDead";
+	areamonster "1@tower",352,351,362,387,"Thief Bug Male",1054,15,instance_npcname("4FGate102tower", instance_id())+"::OnMyMobDead";
 	areamonster "1@tower",352,351,362,387,"Thief Bug Female",1053,15,instance_npcname("4FGate102tower", instance_id())+"::OnMyMobDead";
 	areamonster "1@tower",352,351,362,387,"Thief Bug",1051,15,instance_npcname("4FGate102tower", instance_id())+"::OnMyMobDead";
 	areamonster "1@tower",352,351,362,387,"Thief Bug Egg",1048,5,instance_npcname("4FGate102tower", instance_id())+"::OnMyMobDead";
