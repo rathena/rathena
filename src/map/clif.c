@@ -9695,6 +9695,9 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 	map_foreachinrange(npc_chat_sub, &sd->bl, AREA_SIZE, BL_NPC, text, textlen, &sd->bl);
 #endif
 
+	// Reset idle time when using normal chat.
+	sd->idletime = last_tick;
+
 	// Chat logging type 'O' / Global Chat
 	log_chat(LOG_CHAT_GLOBAL, 0, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, NULL, message);
 }
@@ -9887,6 +9890,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 		)) //No sitting during these states either.
 			break;
 
+		sd->idletime = last_tick;
 		pc_setsit(sd);
 		skill_sit(sd,1);
 		clif_sitting(&sd->bl);
@@ -9897,6 +9901,8 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 			clif_standing(&sd->bl);
 			return;
 		}
+
+		sd->idletime = last_tick;
 		pc_setstand(sd);
 		skill_sit(sd,0);
 		clif_standing(&sd->bl);
@@ -9977,6 +9983,9 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 		}
 		sd->cantalk_tick = gettick() + battle_config.min_chat_delay;
 	}
+
+	// Reset idle time when using whisper/main chat.
+	sd->idletime = last_tick;
 
 	// Chat logging type 'W' / Whisper
 	log_chat(LOG_CHAT_WHISPER, 0, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, target, message);
@@ -11642,6 +11651,9 @@ void clif_parse_PartyMessage(int fd, struct map_session_data* sd)
 		sd->cantalk_tick = gettick() + battle_config.min_chat_delay;
 	}
 
+	// Reset idle time when using party chat.
+	sd->idletime = last_tick;
+
 	party_send_message(sd, text, textlen);
 }
 
@@ -12176,6 +12188,9 @@ void clif_parse_GuildMessage(int fd, struct map_session_data* sd)
 			return;
 		sd->cantalk_tick = gettick() + battle_config.min_chat_delay;
 	}
+
+	// Reset idle time when using guild chat.
+	sd->idletime = last_tick;
 
 	if( sd->bg_id )
 		bg_send_message(sd, text, textlen);
@@ -15096,6 +15111,9 @@ void clif_parse_BattleChat(int fd, struct map_session_data* sd)
 			return;
 		sd->cantalk_tick = gettick() + battle_config.min_chat_delay;
 	}
+
+	// Reset idle time when using battleground chat.
+	sd->idletime = last_tick;
 
 	bg_send_message(sd, text, textlen);
 }
