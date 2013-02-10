@@ -108,6 +108,7 @@ OnTimer30000:
 	end;
 OnTimer40000:
 	announce "GO! Click the chicken to get the prize!",bc_blue;
+	stopnpctimer;
 	if (!$cluck_item_id) set $cluck_item_id,512;
 	if (!$cluck_item_amount) set $cluck_item_amount,1;
 	set .startcluck,1;

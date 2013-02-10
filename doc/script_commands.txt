@@ -3549,7 +3549,7 @@ warg and 0 if they don't.
 
 ---------------------------------------
 
-*checkvending({"<player name>"})
+*checkvending({"<Player Name>"})
 *checkchatting({"<Player Name>"})
 
 Checks if the player is vending or in a chatroom.
@@ -3571,6 +3571,13 @@ Examples:
 	//This will check if the attached player in a chat room or not.
 	if (checkchatting())
 		mes "You are currently in a chat room!";
+
+---------------------------------------
+
+*checkidle({"<Player Name>"})
+
+Returns the time, in seconds, that the specified player has been idle.
+Name is optional, and defaults to the attached player if omitted.
 
 ---------------------------------------
 

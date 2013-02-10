@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Skotlex
 //===== Current Version: =====================================
-//= 20120610
+//= 20130209
 //===== Description: =========================================
 //= A reference description of eA's inner job system (for use 
 //= in scripts through the eaclass and roclass script commands).
@@ -19,7 +19,7 @@ Preface:
 The eA Job System:
 -------------------------------------------------------------------------------
 
-	Since the code also required to do this kind of checks for various skills (The Soul Linker Spirit buffs specially come to mind), an alternate job ID system was developed, which attempts to make more sense and make it easier to check where a particular job stands in relation to the rest.
+	Since the code also required to do this kind of checks for various skills (the Soul Linker Spirit buffs specifically come to mind), an alternate job ID system was developed, which attempts to make more sense and make it easier to check where a particular job stands in relation to the rest.
 
 	The scheme consists in that every job can be broken down by 3 criteria:
 
@@ -84,53 +84,57 @@ If we had used addition, we would have gotten a completely different result.
 The EAJL (eA Job Level) constants
 -------------------------------------------------------------------------------
 
-	There are a few constants which can be used to filter out and make job comparisons easier.
+	There are a few constants which can be used to filter out and make job comparisons easier.  The comparisons involve eA job IDs, not classic job IDs, using the eaclass() command explained in the next section.
+
+	set @eac, eaclass();
 
 EAJL_2_1:
 	Checks if the class is a 2-1 class:
-	if (@job&EAJL_2_1)
+	if (@eac&EAJL_2_1)
 		mes "Using the classic 2-1 job, huh?";
 
 EAJL_2_2:
-	Checks if the class is 2-2.
+	Checks if the class is a 2-2 class:
+	if (@eac&EAJL_2_2)
+		mes "Oh, a 2-2 job!";
 
 EAJL_2:
 	Checks if the class is a 2nd Class. If the check fails, you can be sure the character is a first class.
-	if (!(@job&EAJL_2))
+	if (!(@eac&EAJL_2))
 		mes "Will you wait until Job 50 to change?";
 
 EAJL_UPPER:
 	Check if a class is Rebirth/Advanced:
-	if(@job&EAJL_UPPER)
+	if(@eac&EAJL_UPPER)
 		mes "It must have taken you a LONG time...";
 
 EAJL_BABY:
 	Check if a class is an adopted class.
-	if (@job&EAJL_BABY)
+	if (@eac&EAJL_BABY)
 		mes "Don't you hate being weak?";
 
 EAJL_THIRD:
 	Checks if a class is a third job.
-	if(@job&EAJL_THIRD)
+	if(@eac&EAJL_THIRD)
 		mes "Wow, you've really grown!";
 
 EAJ_UPPERMASK:
 	The upper mask can be used to "strip" the upper/baby characteristics of a class, used when you want to know if someone is a certain class regardless of rebirth/adopted status. For example, the following code would go through for Monks, Champions and Baby Monks:
-	if ((@job&EAJ_UPPERMASK) == EAJ_MONK)
+	if ((@eac&EAJ_UPPERMASK) == EAJ_MONK)
 		mes "Aren't knuckles such a cool weapon?";
 	
 	Note that if instead of EAJ_MONK you used EAJ_CHAMPION or EAJ_BABY_MONK, the check would had never passed, since the upper/baby state has been removed from the original job when checking.
 	
 EAJ_BASEMASK:
 	This mask strips also the 2nd class attributes. It can be used to check against the basic job of a character. For example, the following code would go through for Merchants (+Baby Merchant and High Merchant), Blacksmiths (+Baby blacksmiths and Whitesmith) and Alchemist (+Baby Alchemist and +Creator):
-	if ((@job&EAJ_BASEMASK) == EAJ_MERCHANT)
+	if ((@eac&EAJ_BASEMASK) == EAJ_MERCHANT)
 		mes "Why I can't have discount like you guys do?";
 
 	Note that, like before, if you try to check versus any of the other classes (High merchant, blacksmith, etc) instead of basic merchant, the check will always fail for the same reasons previously explained.
 
 EAJ_THIRDMASK:
 	This mask strips 3rd class attributes.  It will give the "normal" class of a third job, regardless of rebirth/adopted status.  When used on non-third class characters, it will return the second job, or, if that also doesn't exist, the first.
-	if ((@job&EAJ_THIRDMASK) == EAJ_WARLOCK_T)
+	if ((@eac&EAJ_THIRDMASK) == EAJ_WARLOCK_T)
 		mes "You've gone through rebirth, I see.";
 
 The script commands eaclass, roclass:
@@ -189,5 +193,5 @@ About Novices and Super Novices:
 
 	So as you can see, on this job system, the Super Novice is treated as the 2-1 job of a Novice, and the Novice job it's at the same level of the other 1st jobs. Even though that may seem like a hindrance, it makes it very easy to add a check to discard Novice types from a quest:
 
-	if ((@job&EAJ_BASEMASK) == EAJ_NOVICE)
+	if ((eaclass()&EAJ_BASEMASK) == EAJ_NOVICE)
 		//Novice class detected.

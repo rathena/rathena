@@ -4780,7 +4780,7 @@ BUILDIN_FUNC(callfunc)
 		st->state = END;
 		return 1;
 	}
-	
+
 	for( i = st->start+3, j = 0; i < st->end; i++, j++ )
 	{
 		struct script_data* data = push_copy(st->stack,i);
