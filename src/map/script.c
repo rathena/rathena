@@ -17219,12 +17219,9 @@ BUILDIN_FUNC(getrandgroupitem) {
 		ShowError("getrandgroupitem: qty is <= 0!\n");
 		return 1;
 	}
-	if( (nameid = itemdb_searchrandomid(group)) == UNKNOWN_ITEM_ID ) {
-		return 1;/* itemdb_searchrandomid will already scream a error */
-	}
 
+	nameid = itemdb_searchrandomid(group);
 	memset(&item_tmp,0,sizeof(item_tmp));
-
 	item_tmp.nameid   = nameid;
 	item_tmp.identify = itemdb_isidentified(nameid);
 
