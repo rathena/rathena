@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -45,11 +45,12 @@
 //=     - Thor Volcano Base Quest
 //= 2.0 Removed level requirement. (bugreport:4678) [L0ne_W0lf]
 //= 2.1 Added missing changequest (3071-3076). [Joseph]
+//= 2.2 Moved "Wincing Old Man" to pre-re/re coordinates. [Euphy]
 //============================================================ 
 
 // Stone Quest
 //============================================================ 
-ve_fild05,257,130,4	script	Wincing Old Man#ve	945,{
+-	script	::WincingOldMan_veins	-1,{
 	if ((MaxWeight - Weight) < 2000 || checkweight(1201,1) == 0) {
 		mes "- Wait a moment! -";
 		mes "- Currently you are carrying -";

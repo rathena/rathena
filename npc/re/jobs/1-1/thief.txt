@@ -3,13 +3,14 @@
 //===== By: ================================================== 
 //= Kisuka
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
 //= Job Change to Thief Class
 //===== Additional Comments: ================================= 
 //= 1.0 First Version. [Kisuka]
+//= 1.1 Added support for Baby classes. [Euphy]
 //============================================================ 
 moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
 	if (Upper == 1) {
@@ -65,39 +66,33 @@ moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
 		mes "If you want to become a Thief, ask the sharp-eyed guy next to me.";
 		close;
 	}
-	if(Class != Job_Novice) {
-		if(Class == Job_Thief) {
-			mes "[Thief Guildsman]";
+	mes "[Thief Guildsman]";
+	if(BaseJob != Job_Novice) {
+		if(BaseJob == Job_Thief) {
 			mes "Hey~ if you have any trouble, get it out to me anytime, huh?";
 			close;
 		}else{
+			mes "What the heck...?";
 			if(Sex) {
-				mes "[Thief Guildsman]";
-				mes "What the heck...?";
-				mes "Huh.. you are a "+jobname(Class)+" blockhead...!";
+				mes "Huh... you are a "+jobname(Class)+", blockhead!";
 				next;
 				mes "[Thief Guildsman]";
 				mes "Hey, brother.";
-				mes "Why are you here? Go back to your place~ go back~~";
-				close;
 			}else{
-				mes "[Thief Guildsman]";
-				mes "What the heck...?";
 				next;
 				mes "[Thief Guildsman]";
 				mes "Hey, lady.";
-				mes "Why are you here? Go back to your place~ go back~~";
-				close;
 			}
+			mes "Why are you here? Go back to your place~ go back~~";
+			close;
 		}
 	}
-	mes "[Thief Guildsman]";
 	mes "Ehh... Seems like a beloved "+(Sex?"son":"daughter")+" of a rich family, but why are you here in this dirty place?";
 	next;
 	if(select("I want to be a Thief.:Nothing.") == 2) {
 		mes "[Thief Guildsman]";
-		mes "You know you cannot be a thief without an application.....";
-		mes "What's on your mind..?";
+		mes "You know you cannot be a thief without an application...";
+		mes "What's on your mind...?";
 		close;
 	}
 	mes "[Thief Guildsman]";
@@ -169,9 +164,9 @@ moc_prydb1,42,133,2	script	Thief Guildsman#thief	118,{
 		mes "[Commander of Thief Guild]";
 		mes "'"+strcharinfo(0)+".'";
 		mes "'For those who are ready, the moonlight shall open the way. Now you are fully ready, I now officially allow you to become a member of the Thief Guild.'";
-		jobchange Job_Thief;
+		callfunc "Job_Change",Job_Thief;
 		set q_job_thief,0;
-		getitem 13041,1; // N_Main_Gauche
+		getitem 13041,1;	// N_Main_Gauche
 		next;
 		mes "[Commander of Thief Guild]";
 		mes "'Congratulations on becoming a Thief.'";
@@ -189,8 +184,8 @@ moc_prydb1,42,133,2	script	Thief Guildsman#thief	118,{
 		mes "See you again.";
 		close;
 	}
-	if(Class != Job_Novice) {
-		if(Class == Job_Thief) {
+	if(BaseJob != Job_Novice) {
+		if(BaseJob == Job_Thief) {
 			mes "[Brad]";
 			mes "I don't have any special events now. So go on your way and come back later.";
 		}else{

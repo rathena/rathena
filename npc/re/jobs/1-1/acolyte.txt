@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Kisuka
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First Version. [Kisuka]
 //= 1.1 Added back the npcs used for the priest quest.
+//= 1.2 Added support for Baby classes. [Euphy]
 //============================================================ 
 prt_church,184,41,4	script	Cleric#aco	60,{
 	if (Upper == 1) {
@@ -63,16 +64,14 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 	next;
 	switch(select("Change your job to acolyte.:Ask the requirements to be an acolyte.:Quit it.")) {
 	case 1:
-		if(Class != Job_Novice) {
-			mes "[Father Mareusis]";
-			if(Class == Job_Acolyte) {
+		mes "[Father Mareusis]";
+		if(BaseJob != Job_Novice) {
+			if(BaseJob == Job_Acolyte)
 				mes "Are you feeling okay today? I can tell by your attire that you are already an Acolyte. You're not joking around, are you?";
-			}else{
+			else
 				mes "I'm sorry but it seems you already have your own job, aren't you?";
-			}
 			close;
 		}else{
-			mes "[Father Mareusis]";
 			mes "Do you truly wish to become a servant of God?";
 			mes "Let's see whether you are ready for it or not... Hmm...";
 			next;
@@ -87,7 +86,7 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 			next;
 			mes "[Father Mareusis]";
 			mes "Always remember to be thankful to God, who takes care of us all the time. In chaos and times of difficulty, face your hardships with unwavering faith.";
-			jobchange Job_Acolyte;
+			callfunc "Job_Change",Job_Acolyte;
 			getitem 1545,1;	// N_Mace
 			next;
 			mes "[Father Mareusis]";

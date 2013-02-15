@@ -3,13 +3,14 @@
 //===== By: ================================================== 
 //= Kisuka
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
 //= Job Change to Swordman Class
 //===== Additional Comments: ================================= 
 //= 1.0 First Version. [Kisuka]
+//= 1.1 Added support for Baby classes. [Euphy]
 //============================================================ 
 izlude_in,74,172,4	script	Swordman#swd	119,{
 	if (Upper == 1) {
@@ -80,9 +81,9 @@ izlude_in,74,172,4	script	Swordman#swd	119,{
 		mes "In my opinion, Swordman is the best job ever!";
 		close;
 	case 2:
-		if(Class != Job_Novice) {
-			mes "[Swordman Guildsman]";
-			if(Class == Job_Swordman) {
+		mes "[Swordman Guildsman]";
+		if(BaseJob != Job_Novice) {
+			if(BaseJob == Job_Swordman) {
 				mes "You are already an excellent Swordman, aren't you?";
 				mes "Just devote yourself to be a great Swordman.";
 			}else{
@@ -92,7 +93,6 @@ izlude_in,74,172,4	script	Swordman#swd	119,{
 			close;
 		}else{
 			if (getskilllv("NV_BASIC") < 9) {
-				mes "[Swordman Guildsman]";
 				mes "I'm sorry to tell you this but to be a Swordman, you must reach at least ^4A4AFFJob Level 10^000000.";
 				mes "and ^4A4AFFBasic Skill Level 9^000000.";
 				next;
@@ -101,7 +101,6 @@ izlude_in,74,172,4	script	Swordman#swd	119,{
 				mes "Do you think being a Swordman is that easy?";
 				close;
 			}
-			mes "[Swordman Guildsman]";
 			mes "Hmm, both your Job Level and Basic Skill Level check out.";
 			mes "Good. Do you want to be a Swordman right away?";
 			next;

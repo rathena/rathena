@@ -2166,7 +2166,7 @@ This function will return the basic stats of an invoking character, referred to
 by the parameter number. Instead of a number, you can use a parameter name if it 
 is defined in 'db/const.txt'.
 
-For reference, these things are defined:
+Some example parameters:
 
 StatusPoint, BaseLevel, SkillPoint, Class, Upper, Zeny, Sex, Weight, MaxWeight,
 JobLevel, BaseExp, JobExp, NextBaseExp, NextJobExp, Hp, MaxHp, Sp, MaxSp,
@@ -2453,16 +2453,19 @@ This function returns the item ID of the item equipped in the equipment slot
 specified on the invoking character. If nothing is equipped there, it returns -1. 
 Valid equipment slots are:
 
-EQI_HEAD_TOP (1)  - Upper head gear
-EQI_ARMOR (2)     - Armor (Where you keep your Jackets and Robes)
-EQI_HAND_L (3)    - What is in your Left hand.
-EQI_HAND_R (4)    - What is in your Right hand.
-EQI_GARMENT (5)   - The garment slot (Mufflers, Hoods, Manteaus)
-EQI_SHOES (6)     - What foot gear the player has on.
-EQI_ACC_L (7)     - Accessory 1.
-EQI_ACC_R (8)     - Accessory 2.
-EQI_HEAD_MID (9)  - Middle Headgear (masks and glasses)
-EQI_HEAD_LOW (10) - Lower Headgear (beards, some masks)
+EQI_HEAD_TOP (1)          - Upper Headear
+EQI_ARMOR (2)             - Armor (Where you keep your Jackets and Robes)
+EQI_HAND_L (3)            - What is in your Left hand.
+EQI_HAND_R (4)            - What is in your Right hand.
+EQI_GARMENT (5)           - The garment slot (Mufflers, Hoods, Manteaus)
+EQI_SHOES (6)             - What foot gear the player has on.
+EQI_ACC_L (7)             - Accessory 1.
+EQI_ACC_R (8)             - Accessory 2.
+EQI_HEAD_MID (9)          - Middle Headgear (masks and glasses)
+EQI_HEAD_LOW (10)         - Lower Headgear (beards, some masks)
+EQI_COSTUME_HEAD_LOW (11) - Lower Costume Headgear
+EQI_COSTUME_HEAD_MID (12) - Middle Costume Headgear
+EQI_COSTUME_HEAD_TOP (13) - Upper Costume Headgear
 
 Notice that a few items occupy several equipment slots, and if the character is 
 wearing such an item, 'getequipid' will return it's ID number for either slot.

@@ -597,7 +597,7 @@ dic_in01,51,270,7	script	Supply Dept. 1 Manager	449,{
 		mes "Cannot proceed because the weight of your items is too heavy. Let's try again after you get rid of some weight.";
 		close;
 	}
-	if (!isequipped(2782) < 1) {
+	if (!isequipped(2782)) {
 		mes "¡õ¢£¡ô";
 		mes "¡ö¡ø¡ó ¢£ ¡ö¡ñ¡ï ¡ù ¡ð¢²¢£";
 		next;
@@ -878,7 +878,7 @@ dic_in01,40,193,1	script	Papyrus#0001	453,{
 		mes "Your inventory is too heavy.";
 		close;
 	}
-	if (isequipped(2782)) {
+	if (!isequipped(2782)) {
 		mes "¡õ¢£¡ô";
 		mes "¡ö¡ø¡ó ¢£ ¡ö¡ñ¡ï ¡ù ¡ð¢²¢£";
 		next;
@@ -6669,7 +6669,7 @@ man_in01,315,52,3	script	Guard Captain Avalanche	450,{
 	}
 	else if (ep13_3_invite == 6) {
 		mes "[Avalanche]";
-		mes "Oh.. You have the Light of El Dicastes.";
+		mes "Oh... You have the Light of El Dicastes.";
 		mes "it would be helpful for your travel.";
 		next;
 		mes "[Avalanche]";
@@ -6687,7 +6687,7 @@ man_in01,315,52,3	script	Guard Captain Avalanche	450,{
 	next;
 	mes "[Avalanche]";
 	mes "Always take care of yourself at all times.";
-	mes "Haha.. but then you humans are very strong.";
+	mes "Haha... but then you humans are very strong.";
 	close;
 }
 
@@ -6942,8 +6942,7 @@ dic_in01,42,264,3	script	Adventurer Clerk#ep133	453,{
 			mes "But of course, since this is adding spells on top of its original magic, I cannot guarantee that you will get what you want on one try.";
 			close;
 		}
-		if (countitem(2844) < 1) //Luz de El Dicastes
-		{
+		if (countitem(2844) < 1) {
 			mes "[Kareka]";
 			mes "Either you are not wearing or don't have the equipment to upgrade on you.";
 			close;
@@ -7320,8 +7319,9 @@ dic_fild01,228,159,4	script	Jahbong#pa0829	496,{
 	mes "Why are you here?";
 	mes "Jahbong will exchange ^8000801 Sapha Certification^000000 for ^8000801 item^000000!";
 	next;
-	switch(select("Just came to see what you have.:I want the Feral Boots!:Give me the Feral Tail!:Give me the Golden Bell!:How much to buy you?")) {
-		case 1:
+	set .@i, select("Just came to see what you have.:I want the Feral Boots!:Give me the Feral Tail!:Give me the Golden Bell!:How much to buy you?")-1;
+	switch (.@i) {
+		case 0:
 			mes "[Jahbong]";
 			mes "Meow!";
 			next;
@@ -7337,46 +7337,7 @@ dic_fild01,228,159,4	script	Jahbong#pa0829	496,{
 			mes "[Jahbong]";
 			mes "There are some crazy adventurers asking if they can purchase me! Jahbong is not for sale! I'll just bite you if you ask!!";
 			close;
-		case 2:
-			mes "[Jahbong]";
-			mes "Are you really buying something?!";
-			next;
-			if(select("Nope:Give me!!!")==1) {
-				mes "[Jahbong]";
-				mes "Okay!";
-				close; }
-			mes "[Jahbong]";
-			mes "Here you go!";
-			delitem 6304,1;
-			getitem 2463,1;
-			close;
-		case 3:
-			mes "[Jahbong]";
-			mes "Are you really buying something?!";
-			next;
-			if(select("Nope:Give me!!!")==1) {
-				mes "[Jahbong]";
-				mes "Okay!";
-				close; }
-			mes "[Jahbong]";
-			mes "Here you go!";
-			delitem 6304,1;
-			getitem 2564,1;
-			close;
 		case 4:
-			mes "[Jahbong]";
-			mes "Are you really buying something?!";
-			next;
-			if(select("Nope:Give me!!!")==1) {
-				mes "[Jahbong]";
-				mes "Okay!";
-				close; }
-			mes "[Jahbong]";
-			mes "Here you go!";
-			delitem 6304,1;
-			getitem 2843,1;
-			close;
-		case 5:
 			mes "[Jahbong]";
 			mes "Meooooooooooow!!!!!!!!~~ Meooooooooow!!!!!";
 			next;
@@ -7387,7 +7348,25 @@ dic_fild01,228,159,4	script	Jahbong#pa0829	496,{
 			next;
 			mes "- He may react extremely, but Jahbong doesn't seem to be really angry. -";
 			close;
-		}
+		default:
+			break;
+	}
+	mes "[Jahbong]";
+	mes "Are you really buying something?!";
+	next;
+	switch(select("Nope:Give me!!!")) {
+		case 1:
+			mes "[Jahbong]";
+			mes "Okay!";
+			close;
+		case 2:
+			setarray .@items[1],2463,2564,2843;
+			mes "[Jahbong]";
+			mes "Here you go!";
+			delitem 6304,1;
+			getitem .@items[.@i],1;
+			close;
+	}
 }
 
 // Cat Hand Agent
