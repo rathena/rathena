@@ -3,15 +3,16 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
-//= rAthena  SVN
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Official Conversion]
 //= Guides for the city of Izlude
 //===== Additional Comments: ================================= 
 //= 1.0 First version, Renewal guide.
 //= 1.1 Updated to match the new Izlude Map. [Masao]
+//= 1.2 Added Renewal Izlude viewpoint coordinates.
 //============================================================ 
 
 -	script	Guide#01izlude::GuideIzlude	-1,{
@@ -35,7 +36,7 @@
 					mes "on Byalan Island since it is";
 					mes "filled with dreadful monsters.";
 					mes "Would you like to check any other locations?";
-					viewpoint 1,200,180,0,0xFF0000;
+					viewpoint 1,197,205,0,0xFF0000;
 					next;
 					break;
 				case 2:
@@ -45,7 +46,7 @@
 					mes "Let me mark its location";
 					mes "on your mini-map.";
 					mes "Would you like to check any other locations?";
-					viewpoint 1,145,39,1,0x0A82FF;
+					viewpoint 1,204,75,1,0x0A82FF;
 					next;
 					break;
 				case 3:
@@ -64,7 +65,7 @@
 					mes "Let me mark the location of the ^006400Tool Shop^000000";
 					mes "on your mini-map.";
 					mes "Would you like to check any other locations?";
-					viewpoint 1,148,148,3,0xAAFF00;
+					viewpoint 1,160,125,3,0xAAFF00;
 					next;
 					break;
 				case 5:
@@ -72,7 +73,7 @@
 					mes "Let me mark the location of the ^7F3300Weapon & Armor Shop^000000";
 					mes "on your mini-map.";
 					mes "Would you like to check any other locations?";
-					viewpoint 1,114,149,4,0xD2691E;
+					viewpoint 1,109,182,4,0xD2691E;
 					next;
 					break;
 				case 6:
@@ -81,7 +82,7 @@
 					mes "Let me mark its location";
 					mes "on your mini-map.";
 					mes "Would you like to check any other locations?";
-					viewpoint 1,52,140,5,0xDA70D6;
+					viewpoint 1,52,172,5,0xDA70D6;
 					next;
 					break;
 				case 7:
@@ -89,7 +90,7 @@
 					mes "Let me mark the location of the ^B9062FSwordsman Association^000000";
 					mes "on your mini-map.";
 					mes "Would you like to check any other locations?";
-					viewpoint 1,214,130,6,0xFF0000;
+					viewpoint 1,212,161,6,0xFF0000;
 					next;
 					break;
 				case 8:
@@ -109,7 +110,7 @@
 					mes "the Swordsman Guild building.";
 					mes "Let me mark his location on your mini-map.";
 					mes "Would you like to check any other locations?";
-					viewpoint 1,52,140,7,0x0A82FF;
+					viewpoint 1,131,148,7,0x0A82FF;
 					next;
 					break;
 				case 2:
@@ -118,7 +119,7 @@
 					mes "^FF5400Kafra Employee^000000";
 					mes "on your mini-map.";
 					mes "Would you like to check any other locations?";
-					viewpoint 1,134,88,8,0xFF5400;
+					viewpoint 1,128,148,8,0xFF5400;
 					next;
 					break;
 				case 3:
@@ -127,7 +128,7 @@
 					mes "^8B4513Jawaii^000000, the paradise of newlyweds,";
 					mes "please speak to the ^B9062FNewlywed Helper^000000.";
 					mes "Would you like to check any other locations?";
-					viewpoint 1,171,185,9,0xFF0000;
+					viewpoint 1,102,150,9,0xFF0000;
 					next;
 					break;
 				case 4:
@@ -137,7 +138,7 @@
 					mes "Let me mark his location";
 					mes "on your mini-map.";
 					mes "Would you like to check any other locations?";
-					viewpoint 1,171,130,10,0xD2691E;
+					viewpoint 1,158,130,10,0xD2691E;
 					next;
 					break;
 				case 5:
@@ -146,7 +147,7 @@
 					mes "^0000FFMercenary Goods Merchant^000000";
 					mes "on your mini-map.";
 					mes "Would you like to check any other locations?";
-					viewpoint 1,48,137,11,0xDA70D6;
+					viewpoint 1,56,169,11,0xDA70D6;
 					next;
 					break;
 				case 6:

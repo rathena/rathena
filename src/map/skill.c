@@ -2191,6 +2191,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	struct map_session_data *sd, *tsd;
 	int type,damage,rdamage=0;
 	int8 rmdamage=0;//magic reflected
+	bool additional_effects = true;
 
 	if(skill_id > 0 && !skill_lv) return 0;
 
@@ -2271,7 +2272,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 					sc->data[SC_SPIRIT]->val3 = skill_id;
 					sc->data[SC_SPIRIT]->val4 = dsrc->id;
 				}
-			}
+			} else if( type != 2 ) /* Kaite bypasses */
+				additional_effects = false;
 
 		/**
 		 * Official Magic Reflection Behavior : damage reflected depends on gears caster wears, not target
@@ -2617,7 +2619,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	{ //Instant damage
 		if( !sc || (!sc->data[SC_DEVOTION] && skill_id != CR_REFLECTSHIELD) )
 			status_fix_damage(src,bl,damage,dmg.dmotion); //Deal damage before knockback to allow stuff like firewall+storm gust combo.
-		if( !status_isdead(bl) )
+		if( !status_isdead(bl) && additional_effects )
 			skill_additional_effect(src,bl,skill_id,skill_lv,dmg.flag,dmg.dmg_lv,tick);
 		if( damage > 0 ) //Counter status effects [Skotlex]
 			skill_counter_additional_effect(src,bl,skill_id,skill_lv,dmg.flag,tick);
@@ -2691,10 +2693,9 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	//Delayed damage must be dealt after the knockback (it needs to know actual position of target)
 	if (dmg.amotion)
-		battle_delay_damage(tick, dmg.amotion,src,bl,dmg.flag,skill_id,skill_lv,damage,dmg.dmg_lv,dmg.dmotion);
+		battle_delay_damage(tick, dmg.amotion,src,bl,dmg.flag,skill_id,skill_lv,damage,dmg.dmg_lv,dmg.dmotion, additional_effects);
 
-	if( sc && sc->data[SC_DEVOTION] && skill_id != PA_PRESSURE )
-	{
+	if( sc && sc->data[SC_DEVOTION] && skill_id != PA_PRESSURE ) {
 		struct status_change_entry *sce = sc->data[SC_DEVOTION];
 		struct block_list *d_bl = map_id2bl(sce->val1);
 
@@ -2706,8 +2707,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			if(!rmdamage){
 				clif_damage(d_bl,d_bl, gettick(), 0, 0, damage, 0, 0, 0);
 				status_fix_damage(NULL,d_bl, damage, 0);
-			}
-			else{//Reflected magics are done directly on the target not on paladin
+			} else {//Reflected magics are done directly on the target not on paladin
 				//This check is only for magical skill.
 				//For BF_WEAPON skills types track var rdamage and function battle_calc_return_damage
 				clif_damage(bl,bl, gettick(), 0, 0, damage, 0, 0, 0);
@@ -2749,7 +2749,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 				map_foreachinshootrange(battle_damage_area,bl,skill_get_splash(LG_REFLECTDAMAGE,1),BL_CHAR,tick,bl,dmg.amotion,sstatus->dmotion,rdamage,tstatus->race);
 		} else {
 			if( dmg.amotion )
-				battle_delay_damage(tick, dmg.amotion,bl,src,0,CR_REFLECTSHIELD,0,rdamage,ATK_DEF,0);
+				battle_delay_damage(tick, dmg.amotion,bl,src,0,CR_REFLECTSHIELD,0,rdamage,ATK_DEF,0,additional_effects);
 			else
 				status_fix_damage(bl,src,rdamage,0);
 			clif_damage(src,src,tick, dmg.amotion,0,rdamage,1,4,0); // in aegis damage reflected is shown in single hit.

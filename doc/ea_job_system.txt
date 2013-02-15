@@ -84,7 +84,7 @@ If we had used addition, we would have gotten a completely different result.
 The EAJL (eA Job Level) constants
 -------------------------------------------------------------------------------
 
-	There are a few constants which can be used to filter out and make job comparisons easier.  The comparisons involve eA job IDs, not classic job IDs, using the eaclass() command explained in the next section.
+	There are a few constants which can be used to filter out and make job comparisons easier. The comparisons involve eA job IDs, not classic job IDs, using the eaclass() command explained in the next section.
 
 	set @eac, eaclass();
 

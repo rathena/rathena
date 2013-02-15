@@ -51,7 +51,7 @@ prt_fild03,0,0,0,0	monster	Choco	1214,1,5000,0,0
 prt_fild03,296,58,15,15	monster	Green Plant	1080,5,180000,90000,1
 prt_fild03,296,58,15,15	monster	Blue Plant	1079,2,900000,450000,1
 prt_fild03,307,75,5,5	monster	Green Plant	1080,5,360000,180000,1
-prt_fild03,0,0,0,0	monster	Green Plant	1080,5,360000,180000,1
+prt_fild03,147,219,5,5	monster	Green Plant	1080,5,360000,180000,1
 prt_fild03,148,107,5,5	monster	Green Plant	1080,5,360000,180000,1
 
 //==================================================
@@ -77,7 +77,7 @@ prt_fild05,208,37,10,10	monster	Blue Plant	1079,1,900000,450000,1
 prt_fild06,0,0,0,0	monster	Fabre	1007,140,5000,0,0
 prt_fild06,0,0,0,0	monster	Poring	1002,30,5000,0,0
 prt_fild06,0,0,0,0	monster	Lunatic	1063,30,5000,0,0
-//prt_fild06,222,30,40,10	monster	Green Plant	1080,15,900000,450000,1 // Commented the Line since those Plants can't spawn anyway. Maybe Gravity will fix it someday... [Masao]
+prt_fild06,222,30,40,10	monster	Green Plant	1080,15,900000,450000,1
 
 //==================================================
 // prt_fild07 - Prontera Field 

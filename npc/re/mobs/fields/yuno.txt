@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 2.0
+//= 2.1
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
@@ -21,6 +21,7 @@
 //= 1.8 Added kRO 10.1 spawns where they fit [Playtester]
 //= 1.9 More accurate spawns [Playtester]
 //= 2.0 Updated spawns to renewal. [L0ne_W0lf]
+//= 2.1 Renewal spawn update.
 //============================================================
 
 //==================================================
@@ -84,8 +85,8 @@ yuno_fild04,0,0,0,0	monster	Green Plant	1080,10,1800000,900000,1
 yuno_fild06,0,0,0,0	monster	Sleeper	1386,80,5000,0,0
 yuno_fild06,0,0,0,0	monster	Geographer	1368,20,5000,0,0
 yuno_fild06,0,0,0,0	monster	Red Plant	1078,10,5000,0,0
-yuno_fild06,0,0,0,0	monster	Yellow Plant	1081,10,5000,0,0
-yuno_fild06,0,0,0,0	monster	Green Plant	1080,10,5000,0,0
+yuno_fild06,0,0,0,0	monster	Yellow Plant	1081,10,10000,0,0
+yuno_fild06,0,0,0,0	monster	Green Plant	1080,10,10000,0,0
 
 //==================================================
 // yuno_fild07 - El Mes Gorge (Valley of Abyss)

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 2.4a
+//= 2.5
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -14,7 +14,7 @@
 //= Daily Quests:
 //= - Bradium Collection
 //= - Laphine Craftsman
-//= - Drago Egg Collection (npc includes 'Wanted' quest)
+//= - Draco Egg Collection (npc includes 'Wanted' quest)
 //= Otherworld language
 //= Daily Quests:
 //= - Midgard Ore
@@ -43,6 +43,7 @@
 //= 2.3 Fixed EF_Wind not showing. (bugreport:5149) [Masao]
 //= 2.4 Optimized (6000+ lines reduced!). [Euphy]
 //= 2.4a Fixed an invisible NPC clashing with a warp portal. [Euphy]
+//= 2.5 Updated EXP rewards.
 //============================================================ 
 
 // Cat Hand Addition.
@@ -2452,7 +2453,10 @@ spl_in02,236,92,5	script	Arc#ep13md_l02	447,{
 			mes "I'm sorry this is all I can give you for now.";
 			set ep13_mdrama,27;
 			getitem 6081,25; //Splendide_Coin
-			getexp 120000,10000;
+			if (checkre(0))
+				getexp 120000,10000;
+			else
+				getexp 1200000,100000;
 			completequest 7071;
 			close;
 		}
@@ -2771,7 +2775,10 @@ manuk,252,116,3	script	Manuk Galtun#ep13_2day	450,{
 				completequest 7074;
 				completequest 7075;
 				set ep13_2_days01,2;
-				getexp 50000,30000;
+				if (checkre(0))
+					getexp 50000,30000;
+				else
+					getexp 500000,300000;
 				getitem 6080,10; //Manuk_Coin
 				close;
 			}
@@ -2805,7 +2812,7 @@ manuk,252,116,3	script	Manuk Galtun#ep13_2day	450,{
 // Daily Quests
 // - Bradium Collection
 // - Laphine Craftsman
-// - Drago Egg Collection (npc includes 'Wanted' quest)
+// - Draco Egg Collection (NPC includes 'Wanted' quest)
 //============================================================
 man_in01,378,276,3	script	Manuk Engineer#ep13_2	453,{
 	if (checkweight(1201,2) == 0) {
@@ -2845,7 +2852,7 @@ man_in01,378,276,3	script	Manuk Engineer#ep13_2	453,{
 					delitem 6090,20; //Purified_Bradium
 					erasequest 7079;
 					setquest 7080;
-					getexp 4000,4000;
+					getexp 40000,40000;
 					getitem 6080,3; //Manuk_Coin
 					close;
 				}
@@ -2954,7 +2961,7 @@ spl_in01,97,313,3	script	Laphine Craftsman#ep13	446,{
 						delitem 6075,15; //Crystalized_Teardrop
 						erasequest 7081;
 						setquest 7082;
-						getexp 3000,3000;
+						getexp 30000,30000;
 						getitem 6081,3; //Splendide_Coin
 						close;
 					}
@@ -3159,7 +3166,7 @@ mid_camp,146,306,3	script	Pet Breeder#ep13_eden01	982,{
 					erasequest 7077;
 					setquest 7078;
 					set ep13_2_dayegg,2;
-					getexp 4000,4000;
+					getexp 40000,40000;
 					getitem 6081,1; //Splendide_Coin
 					getitem 6080,1; //Manuk_Coin
 					close;
@@ -3739,7 +3746,10 @@ mid_camp,197,237,3	script	Schwartzvalt Mechanic#1	869,{
 				mes "I hope this ring would be a big help for your journey through the other world.";
 				completequest 8253;
 				set ep13_2_rhea,100;
-				getexp 100000,30000;
+				if (checkre(0))
+					getexp 200000,5000;
+				else
+					getexp 1000000,300000;
 				getitem 2782,1; //Ring_Of_Wise_King
 				close;
 			}
@@ -4832,8 +4842,9 @@ man_in01,372,221,5	script	Scientist#lifeguard	449,{
 				delitem 6077,.@stone_chk; //Rough_Mineral
 				delitem 6078,.@stoneelse_chk; //Stone_Fragments
 				delitem 6076,1; //Portable_Toolbox
-				getitem 6080,2; //Manuk_Coin
-				getexp 0,70000;
+				getitem 6080,3; //Manuk_Coin
+				if (checkre(0) == 0)
+					getexp 0,700000;
 				changequest 2179+(ep13_2_tre-2),2182;
 				set ep13_2_tre,100;
 				close;
@@ -5699,8 +5710,9 @@ spl_in01,30,324,3	script	High Laphine#grenouille	446,{
 					mes "If you have something to talk to me about, come to me whenever. Nice to meet you, human from Rune Midgard.";
 					set ep13_2_tre1,6;
 					changequest 2185,2186;
-					getitem 6081,2; //Splendide_Coin
-					getexp 0,70000;
+					getitem 6081,3; //Splendide_Coin
+					if (checkre(0) == 0)
+						getexp 0,700000;
 					close;
 				}
 				else {

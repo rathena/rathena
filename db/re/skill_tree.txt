@@ -4151,7 +4151,7 @@
 4083,2323,5,2311,3,0,0,0,0,0,0,0,0 //LG_EARTHDRIVE#Earth Drive#
 4083,2324,5,2318,3,2319,3,0,0,0,0,0,0 //LG_HESPERUSLIT#Hesperus Lit#
 4083,2325,5,2315,3,2321,4,2322,5,0,0,0,0 //LG_INSPIRATION#Inspiration#
-//Ranger (Waug) (Regular)
+//Ranger (Warg) (Regular)
 4084,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4084,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
 4084,43,10,0,0,0,0,0,0,0,0,0,0 //AC_OWL#Owl's Eye#
@@ -4204,7 +4204,7 @@
 4084,2252,1,2248,1,0,0,0,0,0,0,0,0 //RA_VERDURETRAP#Verdure Trap#
 4084,2253,5,2237,1,0,0,0,0,0,0,0,0 //RA_FIRINGTRAP#Firing Trap#
 4084,2254,5,2237,1,0,0,0,0,0,0,0,0 //RA_ICEBOUNDTRAP#Icebound Trap#
-//Ranger (Waug) (Trans)
+//Ranger (Warg) (Trans)
 4085,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4085,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
 4085,43,10,0,0,0,0,0,0,0,0,0,0 //AC_OWL#Owl's Eye#
@@ -5232,7 +5232,7 @@
 4110,2323,5,2311,3,0,0,0,0,0,0,0,0 //LG_EARTHDRIVE#Earth Drive#
 4110,2324,5,2318,3,2319,3,0,0,0,0,0,0 //LG_HESPERUSLIT#Hesperus Lit#
 4110,2325,5,2315,3,2321,4,2322,5,0,0,0,0 //LG_INSPIRATION#Inspiration#
-//Baby Ranger (Waug)
+//Baby Ranger (Warg)
 4111,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4111,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
 4111,43,10,0,0,0,0,0,0,0,0,0,0 //AC_OWL#Owl's Eye#

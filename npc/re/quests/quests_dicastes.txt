@@ -6688,6 +6688,7 @@ man_in01,315,52,3	script	Guard Captain Avalanche	450,{
 	mes "[Avalanche]";
 	mes "Always take care of yourself at all times.";
 	mes "Haha.. but then you humans are very strong.";
+	close;
 }
 
 dic_in01,42,264,3	script	Adventurer Clerk#ep133	453,{

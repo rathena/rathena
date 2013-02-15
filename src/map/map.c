@@ -3319,8 +3319,8 @@ void map_reloadnpc_sub(char *cfgName)
 
 		if (strcmpi(w1, "npc") == 0)
 			npc_addsrcfile(w2);
-		else if( strcmpi( w1, "delnpc" ) == 0 )
-			npc_delsrcfile( w2 );
+		else if (strcmpi(w1, "delnpc") == 0)
+			npc_delsrcfile(w2);
 		else if (strcmpi(w1, "import") == 0)
 			map_reloadnpc_sub(w2);
 		else
