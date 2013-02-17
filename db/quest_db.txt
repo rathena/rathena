@@ -2227,3 +2227,117 @@
 60353,0,0,0,0,0,0,0,"Bathroom Ghost"
 60354,0,0,0,0,0,0,0,"Bathroom Ghost"
 60355,0,0,0,0,0,0,0,"Bathroom Ghost"
+
+// Mora
+// Mora Quests
+// Misty Forest Labyrinth
+7211,9000,0,0,0,0,0,0,"Misty Forest Labyrinth Exploration"
+7212,0,0,0,0,0,0,0,"Loki's Search"
+7213,0,0,0,0,0,0,0,"Wandering Protector"
+
+// New Sapha's Honor Quest
+7206,0,0,0,0,0,0,0,"New Day for Cheshire"
+7207,0,0,0,0,0,0,0,"Cheshire's Box"
+7208,82800,0,0,0,0,0,0,"Wait for Cheshire?"
+
+// Roast Beef Quest
+11182,180,0,0,0,0,0,0,"Teohre's Report"
+11183,0,0,0,0,0,0,0,"Teohre's Favor"
+// Theo
+11184,0,0,0,0,0,0,0,"Runaway Laphine"
+11185,0,0,0,0,0,0,0,"Pouch"
+11186,0,0,0,0,0,0,0,"Pouch"
+11187,0,0,0,0,0,0,0,"Pouch"
+11188,0,0,0,0,0,0,0,"Pouch"
+11189,0,0,0,0,0,0,0,"Roast Beef"
+11190,0,0,0,0,0,0,0,"Roast Beef"
+11191,0,0,0,0,0,0,0,"Shortage of Roast Beef"
+
+11198,0,0,0,0,0,0,0,"Mora Village..."
+11199,0,0,0,0,0,0,0,"Theo's Friend"
+// Sonya
+11192,0,0,0,0,0,0,0,"Mora Village..."
+11193,0,0,0,0,0,0,0,"Sonya's Friend"
+
+11194,0,0,0,0,0,0,0,"Runaway Laphine"
+11195,0,0,0,0,0,0,0,"Pouch"
+11196,0,0,0,0,0,0,0,"Pouch"
+11197,0,0,0,0,0,0,0,"Pouch"
+//
+11200,0,0,0,0,0,0,0,"Pouch"
+11201,0,0,0,0,0,0,0,"Roast Beef"
+11202,0,0,0,0,0,0,0,"Roast Beef"
+11203,0,0,0,0,0,0,0,"Shortage of Roast Beef"
+
+11206,0,0,0,0,0,0,0,"Quick Delivery Yoneseu"
+11207,0,0,0,0,0,0,0,"A Very Heavy Burden"
+11208,0,0,0,0,0,0,0,"Daphne"
+
+// Ropewa & Yuridi Quest
+1109,0,0,0,0,0,0,0,"Ropewa & Yuridi - Survivors of the Labyrinth"
+1110,0,0,0,0,0,0,0,"Ropewa & Yuridi - Victims of the Labyrinth"
+1111,0,0,0,0,0,0,0,"Ropewa & Yuridi - Maze in the Labyrinth"
+1112,0,0,0,0,0,0,0,"Ropewa & Yuridi - Lost in the Labyrinth"
+1113,0,0,0,0,0,0,0,"Ropewa & Yuridi - Torn Apart"
+1114,0,0,0,0,0,0,0,"Ropewa & Yuridi - The Cost of Restoration"
+1115,0,0,0,0,0,0,0,"Ropewa & Yuridi - Song of the Abyss"
+1116,0,0,0,0,0,0,0,"Ropewa & Yuridi - Dead Man's Song"
+1117,0,0,0,0,0,0,0,"Ropewa & Yuridi - Eternal Promise, Broken Ring"
+
+// Ropewa Clue Quest
+1118,0,0,0,0,0,0,0,"Neighborhood Knight - I Need Clues"
+
+// Researcher's Quest
+5016,0,0,0,0,0,0,0,"Bring me a Research Tool Bag"
+5017,0,0,0,0,0,0,0,"Revenge of the Reseacher"
+5018,0,0,0,0,0,0,0,"Revenge of the Reseacher"
+5019,0,0,0,0,0,0,0,"Bathroom Sample Studying"
+5020,86400,0,0,0,0,0,0,"Sample Researching"
+5021,0,0,0,0,0,0,0,"Sample Collecting"
+5022,0,0,0,0,0,0,0,"Sample Collecting"
+5023,21600,0,0,0,0,0,0,"Inspection of the Sample"
+5024,0,0,0,0,0,0,0,"Eastern Pool Research"
+5025,0,0,0,0,0,0,0,"Western Pool Research"
+5026,0,0,0,0,0,0,0,"Southern Pool Research"
+5027,0,0,0,0,0,0,0,"Northern Pool Research"
+5028,43200,0,0,0,0,0,0,"Inspection of the Sample"
+5029,3600,0,0,0,0,0,0,"Unidentified Creature"
+
+// Mora Coin Daily Quests
+12225,0,2132,3,0,0,0,0,"Pom Spider Hunting"
+12226,0,2133,4,0,0,0,0,"Angra Mantis Hunting"
+12227,0,2134,5,0,0,0,0,"Parus Hunting"
+12228,0,2136,6,0,0,0,0,"Little Fatam Hunting"
+12229,0,2137,7,0,0,0,0,"Miming Hunting"
+12230,82800,0,0,0,0,0,0,"Mora Monster Hunt"
+12231,0,0,0,0,0,0,0,"Insect Feeler Collecting"
+12232,0,0,0,0,0,0,0,"Immortal Heart Collecting"
+12233,0,0,0,0,0,0,0,"Rotten Bandage Collecting"
+12234,0,0,0,0,0,0,0,"Orcish Voucher Collecting"
+12235,0,0,0,0,0,0,0,"Skeleton Bone Collecting"
+12236,0,0,0,0,0,0,0,"Memento Collecting"
+12237,0,0,0,0,0,0,0,"Shell Collecting"
+12238,0,0,0,0,0,0,0,"Scale Shell Collecting"
+12239,0,0,0,0,0,0,0,"Venom Canine Collecting"
+12240,0,0,0,0,0,0,0,"Sticky Mucus Collecting"
+12241,82800,0,0,0,0,0,0,"Mora Item Request 1"
+12242,82800,0,0,0,0,0,0,"Mora Item Request 2"
+
+// Missing Person Quests
+12243,0,0,0,0,0,0,0,"Missing Information on Tajareu"
+12244,0,0,0,0,0,0,0,"Missing Information on Tokenizer"
+12245,0,0,0,0,0,0,0,"Missing Information on Mesile"
+12246,0,0,0,0,0,0,0,"Missing Information on Noir"
+12247,0,0,0,0,0,0,0,"Missing Information on Pajama God"
+12248,0,0,0,0,0,0,0,"Missing Information on Mendel"
+12249,0,0,0,0,0,0,0,"Missing Information on Miles"
+12250,0,0,0,0,0,0,0,"Missing Information on Kunmune"
+12251,0,0,0,0,0,0,0,"Missing Information on Chayihokin"
+12252,0,0,0,0,0,0,0,"Missing Information on Tuale"
+12253,82800,0,0,0,0,0,0,"Missing Person Search Time Limit"
+
+// New Novice Ground
+2299,0,0,0,0,0,0,0,"Training Center: Talk to Lisa"
+2300,0,0,0,0,0,0,0,"Training Center: Talk to General Reindeer"
+2301,0,0,0,0,0,0,0,"Training Center: Leave the boat"
+2302,0,0,0,0,0,0,0,"Training Center: Formation"
