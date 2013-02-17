@@ -2147,8 +2147,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		if( md->dmglog[i].flag == MDLF_PET && (!tsd->status.pet_id || !tsd->pd) )
 			continue; // skip pet's share if inactive
 
-		if(md->dmglog[i].dmg > mvp_damage)
-		{
+		if(md->dmglog[i].dmg > mvp_damage) {
 			third_sd = second_sd;
 			second_sd = mvp_sd;
 			mvp_sd = tsd;
@@ -2157,8 +2156,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 		tmpsd[i] = tsd; // record as valid damage-log entry
 
-		switch( md->dmglog[i].flag )
-		{
+		switch( md->dmglog[i].flag ) {
 			case MDLF_NORMAL: dmgbltypes|= BL_PC;  break;
 			case MDLF_HOMUN:  dmgbltypes|= BL_HOM; break;
 			case MDLF_PET:    dmgbltypes|= BL_PET; break;
@@ -2200,8 +2198,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		if(battle_config.mobs_level_up && md->level > md->db->lv) // [Valaris]
 			bonus += (md->level-md->db->lv)*battle_config.mobs_level_up_exp_rate;
 
-	for(i = 0; i < DAMAGELOG_SIZE && md->dmglog[i].id; i++)
-	{
+	for(i = 0; i < DAMAGELOG_SIZE && md->dmglog[i].id; i++) {
 		int flag=1,zeny=0;
 		unsigned int base_exp, job_exp;
 		double per; //Your share of the mob's exp
@@ -2225,12 +2222,15 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		}
 
 		// change experience for different sized monsters [Valaris]
-		if (battle_config.mob_size_influence)
-		{
-			if (md->special_state.size == SZ_MEDIUM)
-				per /= 2.;
-			else if (md->special_state.size == SZ_BIG)
-				per *= 2.;
+		if (battle_config.mob_size_influence) {
+			switch( md->special_state.size ) {
+				case SZ_MEDIUM:
+					per /= 2.;
+					break;
+				case SZ_BIG:
+					per *= 2.;
+					break;
+			}
 		}
 
 		if( md->dmglog[i].flag == MDLF_PET )
@@ -2253,40 +2253,38 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		else
 			job_exp = (unsigned int)cap_value(md->db->job_exp * per * bonus/100. * map[m].jexp/100., 1, UINT_MAX);
 
-		if ((temp = tmpsd[i]->status.party_id)>0 /*&& !md->dmglog[i].flag == MDLF_HOMUN*/) //Homun-done damage (flag 1) is given to party
-		{
+		if ( ( temp = tmpsd[i]->status.party_id)>0 ) {
 			int j;
-			for(j=0;j<pnum && pt[j].id!=temp;j++); //Locate party.
+			for( j = 0; j < pnum && pt[j].id != temp; j++ ); //Locate party.
 
-			if(j==pnum){ //Possibly add party.
+			if( j == pnum ) { //Possibly add party.
 				pt[pnum].p = party_search(temp);
-				if(pt[pnum].p && pt[pnum].p->party.exp)
-				{
-					pt[pnum].id=temp;
-					pt[pnum].base_exp=base_exp;
-					pt[pnum].job_exp=job_exp;
-					pt[pnum].zeny=zeny; // zeny share [Valaris]
+				if(pt[pnum].p && pt[pnum].p->party.exp) {
+					pt[pnum].id = temp;
+					pt[pnum].base_exp = base_exp;
+					pt[pnum].job_exp = job_exp;
+					pt[pnum].zeny = zeny; // zeny share [Valaris]
 					pnum++;
-					flag=0;
+					flag = 0;
 				}
-			}else{	//Add to total
+			} else {	//Add to total
 				if (pt[j].base_exp > UINT_MAX - base_exp)
-					pt[j].base_exp=UINT_MAX;
+					pt[j].base_exp = UINT_MAX;
 				else
-					pt[j].base_exp+=base_exp;
+					pt[j].base_exp += base_exp;
 
 				if (pt[j].job_exp > UINT_MAX - job_exp)
-					pt[j].job_exp=UINT_MAX;
+					pt[j].job_exp = UINT_MAX;
 				else
-					pt[j].job_exp+=job_exp;
+					pt[j].job_exp += job_exp;
 
-				pt[j].zeny+=zeny;  // zeny share [Valaris]
-				flag=0;
+				pt[j].zeny += zeny;  // zeny share [Valaris]
+				flag = 0;
 			}
 		}
+		if(base_exp && md->dmglog[i].flag == MDLF_HOMUN) //tmpsd[i] is null if it has no homunc.
+			merc_hom_gainexp(tmpsd[i]->hd, base_exp);
 		if(flag) {
-			if(base_exp && md->dmglog[i].flag == MDLF_HOMUN) //tmpsd[i] is null if it has no homunc.
-				merc_hom_gainexp(tmpsd[i]->hd, base_exp);
 			if(base_exp || job_exp)
 			{
 				if( md->dmglog[i].flag != MDLF_PET || battle_config.pet_attack_exp_to_master ) {
@@ -2303,7 +2301,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		}
 	}
 
-	for(i=0;i<pnum;i++) //Party share.
+	for( i = 0; i < pnum; i++ ) //Party share.
 		party_exp_share(pt[i].p, &md->bl, pt[i].base_exp,pt[i].job_exp,pt[i].zeny);
 
 	} //End EXP giving.
