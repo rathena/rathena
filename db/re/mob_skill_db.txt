@@ -5823,11 +5823,11 @@
 2072,Jaguar@NPC_COMBOATTACK,attack,171,1,500,500,5000,no,target,always,0,,,,,,6,
 2072,Jaguar@AS_SONICBLOW,attack,136,3,500,800,5000,no,target,always,0,,,,,,0,
 2072,Jaguar@NPC_DARKNESSATTACK,attack,190,1,2000,0,5000,yes,target,always,0,,,,,,,
-2072,Jaguar@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,0x3195,,,,,
+2072,Jaguar@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,0x3095,,,,,
 2072,Jaguar@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,0,,,,,,,
 2073,Toucan@NPC_EMOTION,walk,197,1,2000,0,5000,yes,self,always,0,2,,,,,,
 2073,Toucan@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,,
-2073,Toucan@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,0x3195,,,,,
+2073,Toucan@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,0x3095,,,,,
 2073,Toucan@NPC_TELEKINESISATTACK,chase,191,5,500,0,5000,yes,target,always,0,,,,,,,
 2073,Toucan@NPC_WINDATTACK,attack,187,3,500,500,5000,no,target,always,0,,,,,,6,
 2073,Toucan@NPC_STOP,attack,342,1,500,500,5000,no,target,always,0,,,,,,30,
@@ -5884,8 +5884,8 @@
 2086,Rake Scaraba@NPC_STONESKIN,attack,675,3,10000,1000,30000,no,self,myhpltmaxrate,50,,,,,,6,
 2086,Rake Scaraba@NPC_STONESKIN,chase,675,3,10000,1000,30000,no,self,myhpltmaxrate,50,,,,,,6,
 2086,Rake Scaraba@PF_SPIDERWEB,chase,405,1,300,0,10000,yes,target,always,0,,,,,,7,
-2086,Rake Scaraba@NPC_EMOTION,chase,197,1,1000,0,5000,yes,self,always,0,19,0x81,,,,,
-2086,Rake Scaraba@NPC_EMOTION,idle,197,1,3000,0,5000,yes,self,always,0,6,0x3095,,,,,
+2086,Rake Scaraba@NPC_EMOTION,chase,197,1,1000,0,5000,yes,self,always,0,19,0x181,,,,,
+2086,Rake Scaraba@NPC_EMOTION,idle,197,1,3000,0,5000,yes,self,always,0,6,0x3195,,,,,
 2087,Queen Scaraba@AL_HEAL,attack,28,11,10000,0,5000,no,friend,friendhpltmaxrate,60,,,,,,3,
 2087,Queen Scaraba@AL_HEAL,attack,28,11,10000,0,5000,no,self,myhpltmaxrate,30,,,,,,3,
 2087,Queen Scaraba@AL_HEAL,chase,28,11,10000,0,5000,no,friend,friendhpltmaxrate,60,,,,,,3,
@@ -6428,14 +6428,17 @@
 2137,Miming@NPC_SILENCEATTACK,chase,178,2,500,700,5000,no,target,always,0,,,,,,32,
 2138,Nydhogg's Memory@NPC_TALK,idle,682,10,2500,0,10000,yes,self,always,0,,,,,,,35
 2138,Nydhogg's Memory@NPC_TALK,attack,682,10,10000,0,30000,yes,self,always,0,,,,,,,35
+2138,Nydhogg's Memory@NPC_SUMMONSLAVE,idle,196,1,10000,0,0,no,self,onspawn,0,2139,,,,,,
 2139,Nydhogg's Memory@NPC_TALK,idle,682,10,2500,0,10000,yes,self,always,0,,,,,,,36
 2139,Nydhogg's Memory@NPC_TALK,attack,682,10,10000,0,30000,yes,self,always,0,,,,,,,36
 2140,Nydhogg's Memory@NPC_TALK,idle,682,10,2500,0,10000,yes,self,always,0,,,,,,,37
 2140,Nydhogg's Memory@NPC_TALK,attack,682,10,10000,0,30000,yes,self,always,0,,,,,,,37
+2140,Nydhogg's Memory@NPC_SUMMONSLAVE,idle,196,1,10000,0,0,no,self,onspawn,0,2141,,,,,,
 2141,Nydhogg's Memory@NPC_TALK,idle,682,10,2500,0,10000,yes,self,always,0,,,,,,,38
 2141,Nydhogg's Memory@NPC_TALK,attack,682,10,10000,0,30000,yes,self,always,0,,,,,,,38
 2142,Nydhogg's Memory@NPC_TALK,idle,682,10,2500,0,10000,yes,self,always,0,,,,,,,39
 2142,Nydhogg's Memory@NPC_TALK,attack,682,10,10000,0,30000,yes,self,always,0,,,,,,,39
+2142,Nydhogg's Memory@NPC_SUMMONSLAVE,idle,196,1,10000,0,0,no,self,onspawn,0,2143,,,,,,
 2143,Nydhogg's Memory@NPC_TALK,idle,682,10,2500,0,10000,yes,self,always,0,,,,,,,40
 2143,Nydhogg's Memory@NPC_TALK,attack,682,10,10000,0,30000,yes,self,always,0,,,,,,,40
 
