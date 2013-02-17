@@ -17135,7 +17135,7 @@ int do_init_clif(void) {
 
 	set_defaultparse(clif_parse);
 	if( make_listen_bind(bind_ip,map_port) == -1 ) {
-		ShowFatalError("can't bind game port\n");
+		ShowFatalError("Failed to bind to port '"CL_WHITE"%d"CL_RESET"'\n",map_port);
 		exit(EXIT_FAILURE);
 	}
 

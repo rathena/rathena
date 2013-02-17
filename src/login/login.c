@@ -1862,16 +1862,17 @@ int do_init(int argc, char** argv)
 		}
 	}
 
-	if( login_config.console )
-	{
+	if( login_config.console ) {
 		//##TODO invoke a CONSOLE_START plugin event
 	}
 
 	// server port open & binding
-	login_fd = make_listen_bind(login_config.login_ip, login_config.login_port);
+	if( (login_fd = make_listen_bind(login_config.login_ip,login_config.login_port)) == -1 ) {
+		ShowFatalError("Failed to bind to port '"CL_WHITE"%d"CL_RESET"'\n",login_config.login_port);
+		exit(EXIT_FAILURE);
+	}
 	
-	if( runflag != CORE_ST_STOP )
-	{
+	if( runflag != CORE_ST_STOP ) {
 		shutdown_callback = do_shutdown;
 		runflag = LOGINSERVER_ST_RUNNING;
 	}

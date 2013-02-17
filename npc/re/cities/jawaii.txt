@@ -10,6 +10,7 @@
 //= Jawaii town NPCs.
 //===== Additional Comments: =================================
 //= 1.0 First Version. Renewal coordinates by Masao.
+//= 1.1 Moved "Honeymoon Helper" NPC.
 //============================================================
 
-izlude,102,150,6	duplicate(Honeymoon_Helper_Izlude)	Honeymoon Helper#Izlude	71
+izlude,180,224,6	duplicate(Honeymoon_Helper_Izlude)	Honeymoon Helper#Izlude	71

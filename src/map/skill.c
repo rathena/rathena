@@ -62,8 +62,6 @@ static struct eri *skill_timer_ers = NULL; //For handling skill_timerskills [Sko
 
 DBMap* skillunit_db = NULL; // int id -> struct skill_unit*
 
-DBMap* skilldb_name2id = NULL;
-
 /**
  * Skill Cool Down Delay Saving
  * Struct skill_cd is not a member of struct map_session_data

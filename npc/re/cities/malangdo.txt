@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [Euphy]
 //= 1.1 Added entrance scripts.
+//= 1.2 Moved "Odgnalam" NPC.
 //============================================================
 
 // Entrance :: malangdo_go
@@ -150,9 +151,8 @@ rachel,121,126,4	duplicate(Dolangmal)	Dolangmal#7	553
 lighthalzen,254,83,5	duplicate(Dolangmal)	Dolangmal#8	553
 mora,57,150,4	duplicate(Dolangmal)	Dolangmal#9	553
 
-// Unofficial coordinates.
-// Original pre-re: izlude,182,192,4
-izlude,197,213,4	script	Odgnalam#iz	554,{
+//Pre-RE: izlude (182,192)
+izlude,182,218,4	script	Odgnalam#iz	554,{
 	if (strnpcinfo(4) == "izlude")
 		mes "Receiving the warm sun of Izlude, the cat is sleeping.";
 	else if (strnpcinfo(4) == "alberta")

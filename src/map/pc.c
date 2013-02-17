@@ -1254,7 +1254,7 @@ static int pc_calc_skillpoint(struct map_session_data* sd)
 				if(sd->status.skill[i].flag == SKILL_FLAG_PERMANENT)
 					skill_point += skill;
 				else
-				if(sd->status.skill[i].flag >= SKILL_FLAG_REPLACED_LV_0)
+				if(sd->status.skill[i].flag == SKILL_FLAG_REPLACED_LV_0)
 					skill_point += (sd->status.skill[i].flag - SKILL_FLAG_REPLACED_LV_0);
 			}
 		}
@@ -1284,13 +1284,13 @@ int pc_calc_skilltree(struct map_session_data *sd)
 
 	for( i = 0; i < MAX_SKILL; i++ )
 	{
-		if( sd->status.skill[i].flag != SKILL_FLAG_PLAGIARIZED ) //Don't touch plagiarized skills
+		if( sd->status.skill[i].flag != SKILL_FLAG_PLAGIARIZED && sd->status.skill[i].flag != SKILL_FLAG_PERM_GRANTED ) //Don't touch these
 			sd->status.skill[i].id = 0; //First clear skills.
 	}
 
 	for( i = 0; i < MAX_SKILL; i++ )
 	{
-		if( sd->status.skill[i].flag != SKILL_FLAG_PERMANENT && sd->status.skill[i].flag != SKILL_FLAG_PLAGIARIZED )
+		if( sd->status.skill[i].flag != SKILL_FLAG_PERMANENT && sd->status.skill[i].flag != SKILL_FLAG_PERM_GRANTED && sd->status.skill[i].flag != SKILL_FLAG_PLAGIARIZED )
 		{ // Restore original level of skills after deleting earned skills.
 			sd->status.skill[i].lv = (sd->status.skill[i].flag == SKILL_FLAG_TEMPORARY) ? 0 : sd->status.skill[i].flag - SKILL_FLAG_REPLACED_LV_0;
 			sd->status.skill[i].flag = SKILL_FLAG_PERMANENT;
@@ -1510,7 +1510,7 @@ int pc_clean_skilltree(struct map_session_data *sd)
 			sd->status.skill[i].flag = 0;
 		}
 		else
-		if (sd->status.skill[i].flag >= SKILL_FLAG_REPLACED_LV_0){
+		if (sd->status.skill[i].flag == SKILL_FLAG_REPLACED_LV_0){
 			sd->status.skill[i].lv = sd->status.skill[i].flag - SKILL_FLAG_REPLACED_LV_0;
 			sd->status.skill[i].flag = 0;
 		}
@@ -3431,7 +3431,7 @@ int pc_skill(TBL_PC* sd, int id, int level, int flag)
 	case 0: //Set skill data overwriting whatever was there before.
 		sd->status.skill[id].id   = id;
 		sd->status.skill[id].lv   = level;
-		sd->status.skill[id].flag = SKILL_FLAG_PERMANENT;
+		sd->status.skill[id].flag = SKILL_FLAG_PERM_GRANTED;
 		if( level == 0 ) //Remove skill.
 		{
 			sd->status.skill[id].id = 0;
@@ -6045,7 +6045,7 @@ int pc_allskillup(struct map_session_data *sd)
 	nullpo_ret(sd);
 
 	for(i=0;i<MAX_SKILL;i++){
-		if (sd->status.skill[i].flag != SKILL_FLAG_PERMANENT && sd->status.skill[i].flag != SKILL_FLAG_PLAGIARIZED) {
+		if (sd->status.skill[i].flag != SKILL_FLAG_PERMANENT && sd->status.skill[i].flag != SKILL_FLAG_PERM_GRANTED && sd->status.skill[i].flag != SKILL_FLAG_PLAGIARIZED) {
 			sd->status.skill[i].lv = (sd->status.skill[i].flag == SKILL_FLAG_TEMPORARY) ? 0 : sd->status.skill[i].flag - SKILL_FLAG_REPLACED_LV_0;
 			sd->status.skill[i].flag = SKILL_FLAG_PERMANENT;
 			if (sd->status.skill[i].lv == 0)
@@ -6318,6 +6318,9 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		if( i == NV_BASIC && (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE )
 			continue;
 
+		if( sd->status.skill[i].flag == SKILL_FLAG_PERM_GRANTED )
+			continue;
+
 		if( flag&4 && !skill_ischangesex(i) )
 			continue;
 
@@ -6333,7 +6336,7 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		if( sd->status.skill[i].flag == SKILL_FLAG_PERMANENT )
 			skill_point += lv;
 		else
-		if( sd->status.skill[i].flag >= SKILL_FLAG_REPLACED_LV_0 )
+		if( sd->status.skill[i].flag == SKILL_FLAG_REPLACED_LV_0 )
 			skill_point += (sd->status.skill[i].flag - SKILL_FLAG_REPLACED_LV_0);
 
 		if( !(flag&2) )

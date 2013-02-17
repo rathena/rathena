@@ -595,19 +595,20 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 		}
 
 		StringBuf_Clear(&buf);
-		StringBuf_Printf(&buf, "INSERT INTO `%s`(`char_id`,`id`,`lv`) VALUES ", skill_db);
+		StringBuf_Printf(&buf, "INSERT INTO `%s`(`char_id`,`id`,`lv`,`flag`) VALUES ", skill_db);
 		//insert here.
-		for( i = 0, count = 0; i < MAX_SKILL; ++i )
-		{
-			if( p->skill[i].id != 0 && p->skill[i].flag != SKILL_FLAG_TEMPORARY )
-			{
-				if( p->skill[i].flag == SKILL_FLAG_PERMANENT && p->skill[i].lv == 0 )
+		for( i = 0, count = 0; i < MAX_SKILL; ++i ) {
+			if( p->skill[i].id != 0 && p->skill[i].flag != SKILL_FLAG_TEMPORARY ) {
+
+				if( p->skill[i].lv == 0 && ( p->skill[i].flag == SKILL_FLAG_PERM_GRANTED || p->skill[i].flag == SKILL_FLAG_PERMANENT ) )
 					continue;
-				if( p->skill[i].flag != SKILL_FLAG_PERMANENT && (p->skill[i].flag - SKILL_FLAG_REPLACED_LV_0) == 0 )
+				if( p->skill[i].flag != SKILL_FLAG_PERMANENT && p->skill[i].flag != SKILL_FLAG_PERM_GRANTED && (p->skill[i].flag - SKILL_FLAG_REPLACED_LV_0) == 0 )
 					continue;
 				if( count )
 					StringBuf_AppendStr(&buf, ",");
-				StringBuf_Printf(&buf, "('%d','%d','%d')", char_id, p->skill[i].id, (p->skill[i].flag == SKILL_FLAG_PERMANENT ? p->skill[i].lv : p->skill[i].flag - SKILL_FLAG_REPLACED_LV_0));
+				StringBuf_Printf(&buf, "('%d','%d','%d','%d')", char_id, p->skill[i].id,
+								 ( (p->skill[i].flag == SKILL_FLAG_PERMANENT || p->skill[i].flag == SKILL_FLAG_PERM_GRANTED) ? p->skill[i].lv : p->skill[i].flag - SKILL_FLAG_REPLACED_LV_0),
+								 p->skill[i].flag == SKILL_FLAG_PERM_GRANTED ? p->skill[i].flag : 0);/* other flags do not need to be saved */
 				++count;
 			}
 		}
@@ -1274,13 +1275,16 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 
 	//read skill
 	//`skill` (`char_id`, `id`, `lv`)
-	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `id`, `lv` FROM `%s` WHERE `char_id`=? LIMIT %d", skill_db, MAX_SKILL)
+	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `id`, `lv`,`flag` FROM `%s` WHERE `char_id`=? LIMIT %d", skill_db, MAX_SKILL)
 	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
 	||	SQL_ERROR == SqlStmt_Execute(stmt)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_USHORT, &tmp_skill.id, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_USHORT, &tmp_skill.lv, 0, NULL, NULL) )
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_USHORT, &tmp_skill.id  , 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_UCHAR , &tmp_skill.lv  , 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_UCHAR , &tmp_skill.flag, 0, NULL, NULL) )
 		SqlStmt_ShowDebug(stmt);
-	tmp_skill.flag = SKILL_FLAG_PERMANENT;
+
+	if( tmp_skill.flag != SKILL_FLAG_PERM_GRANTED )
+		tmp_skill.flag = SKILL_FLAG_PERMANENT;
 
 	for( i = 0; i < MAX_SKILL && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
 	{
@@ -3764,7 +3768,18 @@ int parse_char(int fd)
 
 			char_id = atoi(data);
 			Sql_FreeResult(sql_handle);
-			mmo_char_fromsql(char_id, &char_dat, true);
+
+			/* set char as online prior to loading its data so 3rd party applications will realise the sql data is not reliable */
+			set_char_online(-2,char_id,sd->account_id);
+			if( !mmo_char_fromsql(char_id, &char_dat, true) ) { /* failed? set it back offline */
+				set_char_offline(char_id, sd->account_id);
+				/* failed to load something. REJECT! */
+				WFIFOHEAD(fd,3);
+				WFIFOW(fd,0) = 0x6c;
+				WFIFOB(fd,2) = 0;
+				WFIFOSET(fd,3);
+				break;/* jump off this boat */
+			}
 
 			//Have to switch over to the DB instance otherwise data won't propagate [Kevin]
 			cd = (struct mmo_charstatus *)idb_get(char_db_, char_id);
@@ -3862,8 +3877,6 @@ int parse_char(int fd)
 			node->group_id = sd->group_id;
 			node->ip = ipl;
 			idb_put(auth_db, sd->account_id, node);
-
-			set_char_online(-2,node->char_id,sd->account_id);
 
 		}
 		break;
@@ -4817,7 +4830,12 @@ int do_init(int argc, char **argv)
 		Sql_ShowDebug(sql_handle);
 
 	set_defaultparse(parse_char);
-	char_fd = make_listen_bind(bind_ip, char_port);
+
+	if( (char_fd = make_listen_bind(bind_ip,char_port)) == -1 ) {
+		ShowFatalError("Failed to bind to port '"CL_WHITE"%d"CL_RESET"'\n",char_port);
+		exit(EXIT_FAILURE);
+	}
+
 	ShowStatus("The char-server is "CL_GREEN"ready"CL_RESET" (Server is listening on the port %d).\n\n", char_port);
 
 	if( runflag != CORE_ST_STOP )

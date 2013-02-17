@@ -128,7 +128,7 @@
 					mes "^8B4513Jawaii^000000, the paradise of newlyweds,";
 					mes "please speak to the ^B9062FNewlywed Helper^000000.";
 					mes "Would you like to check any other locations?";
-					viewpoint 1,102,150,9,0xFF0000;
+					viewpoint 1,180,224,9,0xFF0000;
 					next;
 					break;
 				case 4:

@@ -5379,27 +5379,48 @@ ACMD_FUNC(clearcart)
  * @skillid by [MouseJstr]
  * lookup a skill by name
  *------------------------------------------*/
+#define MAX_SKILLID_PARTIAL_RESULTS 5
+#define MAX_SKILLID_PARTIAL_RESULTS_LEN 74 // "skill " (6) + "%d:" (up to 5) + "%s" (up to 30) + " (%s)" (up to 33)
 ACMD_FUNC(skillid)
 {
-	int skillen, idx;
+	int skillen, idx, i, found = 0;
+	DBIterator* iter;
+	DBKey key;
+	DBData *data;
+	char partials[MAX_SKILLID_PARTIAL_RESULTS][MAX_SKILLID_PARTIAL_RESULTS_LEN];
+
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message)
-	{
+	if (!message || !*message) {
 		clif_displaymessage(fd, msg_txt(1163)); // Please enter a skill name to look up (usage: @skillid <skill name>).
 		return -1;
 	}
 
 	skillen = strlen(message);
 
-	for (idx = 0; idx < MAX_SKILL_DB; idx++) {
-		if (strnicmp(skill_db[idx].name, message, skillen) == 0 || strnicmp(skill_db[idx].desc, message, skillen) == 0)
-		{
-			sprintf(atcmd_output, msg_txt(1164), idx, skill_db[idx].desc); // skill %d: %s
+	iter = db_iterator(skilldb_name2id);
+	
+	for( data = iter->first(iter,&key); iter->exists(iter); data = iter->next(iter,&key) ) {
+		idx = skill_get_index(db_data2i(data));
+		if (strnicmp(key.str, message, skillen) == 0 || strnicmp(skill_db[idx].desc, message, skillen) == 0) {
+			sprintf(atcmd_output, msg_txt(1164), db_data2i(data), skill_db[idx].desc, key.str); // skill %d: %s (%s)
 			clif_displaymessage(fd, atcmd_output);
+		} else if ( found < MAX_SKILLID_PARTIAL_RESULTS && ( stristr(key.str,message) || stristr(skill_db[idx].desc,message) ) ) {
+			snprintf(partials[found++], MAX_SKILLID_PARTIAL_RESULTS_LEN, msg_txt(1164), db_data2i(data), skill_db[idx].desc, key.str);
 		}
 	}
-
+	
+	dbi_destroy(iter);
+	
+	if( found ) {
+		sprintf(atcmd_output, msg_txt(1398), found); // -- Displaying first %d partial matches
+		clif_displaymessage(fd, atcmd_output);
+	}
+	
+	for(i = 0; i < found; i++) { /* partials */
+		clif_displaymessage(fd, partials[i]);
+	}
+	
 	return 0;
 }
 
