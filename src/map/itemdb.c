@@ -867,7 +867,7 @@ void itemdb_read_combos() {
 			
 			/* populate the children to refer to this combo */
 			for( v = 1; v < retcount; v++ ) {
-				struct item_data * it = NULL;
+				struct item_data * it;
 				int index;
 				
 				it = itemdb_exists(items[v]);

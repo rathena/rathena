@@ -1650,13 +1650,13 @@ int guild_broken_sub(DBKey key, DBData *data, va_list ap)
  */
 int castle_guild_broken_sub(DBKey key, DBData *data, va_list ap)
 {
-	char name[EVENT_NAME_LENGTH];
 	struct guild_castle *gc = db_data2ptr(data);
 	int guild_id = va_arg(ap, int);
 
 	nullpo_ret(gc);
 
 	if (gc->guild_id == guild_id) {
+		char name[EVENT_NAME_LENGTH];
 		// We call castle_event::OnGuildBreak of all castles of the guild
 		// You can set all castle_events in the 'db/castle_db.txt'
 		safestrncpy(name, gc->castle_event, sizeof(name));

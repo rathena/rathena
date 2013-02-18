@@ -1017,14 +1017,14 @@ int access_ipmask(const char* str, AccessControl* acc)
 {
 	uint32 ip;
 	uint32 mask;
-	unsigned int a[4];
-	unsigned int m[4];
-	int n;
 
 	if( strcmp(str,"all") == 0 ) {
 		ip   = 0;
 		mask = 0;
 	} else {
+		unsigned int a[4];
+		unsigned int m[4];
+		int n;
 		if( ((n=sscanf(str,"%u.%u.%u.%u/%u.%u.%u.%u",a,a+1,a+2,a+3,m,m+1,m+2,m+3)) != 8 && // not an ip + standard mask
 				(n=sscanf(str,"%u.%u.%u.%u/%u",a,a+1,a+2,a+3,m)) != 5 && // not an ip + bit mask
 				(n=sscanf(str,"%u.%u.%u.%u",a,a+1,a+2,a+3)) != 4 ) || // not an ip

@@ -486,7 +486,6 @@ static bool account_db_sql_iter_next(AccountDBIterator* self, struct mmo_account
 	AccountDBIterator_SQL* iter = (AccountDBIterator_SQL*)self;
 	AccountDB_SQL* db = (AccountDB_SQL*)iter->db;
 	Sql* sql_handle = db->accounts;
-	int account_id;
 	char* data;
 
 	// get next account ID
@@ -501,6 +500,7 @@ static bool account_db_sql_iter_next(AccountDBIterator* self, struct mmo_account
 		SQL_SUCCESS == Sql_GetData(sql_handle, 0, &data, NULL) &&
 		data != NULL )
 	{// get account data
+		int account_id;
 		account_id = atoi(data);
 		if( mmo_auth_fromsql(db, acc, account_id) )
 		{

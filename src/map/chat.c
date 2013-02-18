@@ -203,8 +203,8 @@ int chat_leavechat(struct map_session_data* sd, bool kicked)
 
 
 	if( cd->users == 0 && cd->owner->type == BL_PC ) { // Delete empty chatroom
-		struct skill_unit* unit = NULL;
-		struct skill_unit_group* group = NULL;	
+		struct skill_unit* unit;
+		struct skill_unit_group* group;	
 
 		clif_clearchat(cd, 0);
 		db_destroy(cd->kick_list);

@@ -920,7 +920,7 @@ ACMD_FUNC(option)
 
 	if (!message || !*message || sscanf(message, "%d %d %d", &param1, &param2, &param3) < 1 || param1 < 0 || param2 < 0 || param3 < 0)
 	{// failed to match the parameters so inform the user of the options
-		const char* text = NULL;
+		const char* text;
 
 		// attempt to find the setting information for this command
 		text = atcommand_help_string( command );
@@ -1230,8 +1230,6 @@ ACMD_FUNC(item2)
 	int item_id, number = 0;
 	int identify = 0, refine = 0, attr = 0;
 	int c1 = 0, c2 = 0, c3 = 0, c4 = 0;
-	int flag = 0;
-	int loop, get_count, i;
 	nullpo_retr(-1, sd);
 
 	memset(item_name, '\0', sizeof(item_name));
@@ -1254,6 +1252,8 @@ ACMD_FUNC(item2)
 		item_id = item_data->nameid;
 
 	if (item_id > 500) {
+		int flag = 0;
+		int loop, get_count, i;
 		loop = 1;
 		get_count = number;
 		if (item_data->type == IT_WEAPON || item_data->type == IT_ARMOR ||
@@ -2161,7 +2161,6 @@ ACMD_FUNC(produce)
 {
 	char item_name[100];
 	int item_id, attribute = 0, star = 0;
-	int flag = 0;
 	struct item_data *item_data;
 	struct item tmp_item;
 	nullpo_retr(-1, sd);
@@ -2186,6 +2185,7 @@ ACMD_FUNC(produce)
 	item_id = item_data->nameid;
 
 	if (itemdb_isequip2(item_data)) {
+		int flag = 0;
 		if (attribute < MIN_ATTRIBUTE || attribute > MAX_ATTRIBUTE)
 			attribute = ATTRIBUTE_NORMAL;
 		if (star < MIN_STAR || star > MAX_STAR)
@@ -2822,7 +2822,7 @@ ACMD_FUNC(char_ban)
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
-	if (!message || !*message || sscanf(message, "%s %23[^\n]", atcmd_output, atcmd_player_name) < 2) {
+	if (!message || !*message || sscanf(message, "%255s %23[^\n]", atcmd_output, atcmd_player_name) < 2) {
 		clif_displaymessage(fd, msg_txt(1022)); // Please enter ban time and a player name (usage: @charban/@ban/@banish/@charbanish <time> <char name>).
 		return -1;
 	}
@@ -3310,14 +3310,14 @@ ACMD_FUNC(guild)
 
 ACMD_FUNC(breakguild)
 {
-	int ret = 0;
-	struct guild *g;
 	nullpo_retr(-1, sd);
 
 	if (sd->status.guild_id) { // Check if the player has a guild
+		struct guild *g;
 		g = guild_search(sd->status.guild_id); // Search the guild
 		if (g) { // Check if guild was found
 			if (sd->state.gmaster_flag) { // Check if player is guild master
+				int ret = 0;
 				ret = guild_break(sd, g->name); // Break guild
 				if (ret) { // Check if anything went wrong
 					return 0; // Guild was broken
@@ -4625,7 +4625,7 @@ ACMD_FUNC(jailfor)
 	short m_index = 0;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || sscanf(message, "%s %23[^\n]",atcmd_output,atcmd_player_name) < 2) {
+	if (!message || !*message || sscanf(message, "%255s %23[^\n]",atcmd_output,atcmd_player_name) < 2) {
 		clif_displaymessage(fd, msg_txt(400));	//Usage: @jailfor <time> <character name>
 		return -1;
 	}
@@ -5786,7 +5786,6 @@ ACMD_FUNC(partyoption)
 ACMD_FUNC(autoloot)
 {
 	int rate;
-	double drate;
 	nullpo_retr(-1, sd);
 	// autoloot command without value
 	if(!message || !*message)
@@ -5796,6 +5795,7 @@ ACMD_FUNC(autoloot)
 		else
 			rate = 10000;
 	} else {
+		double drate;
 		drate = atof(message);
 		rate = (int)(drate*100);
 	}
@@ -6650,12 +6650,13 @@ ACMD_FUNC(identify)
  *------------------------------------------*/
 ACMD_FUNC(gmotd)
 {
-	char buf[CHAT_SIZE_MAX];
-	size_t len;
 	FILE* fp;
 
 	if( ( fp = fopen(motd_txt, "r") ) != NULL )
 	{
+		char buf[CHAT_SIZE_MAX];
+		size_t len;
+
 		while( fgets(buf, sizeof(buf), fp) )
 		{
 			if( buf[0] == '/' && buf[1] == '/' )
@@ -7730,7 +7731,7 @@ ACMD_FUNC(invite)
 	unsigned int did = sd->duel_group;
 	struct map_session_data *target_sd = map_nick2sd((char *)message);
 
-	if(did <= 0)	{
+	if(did == 0) {
 		// "Duel: @invite without @duel."
 		clif_displaymessage(fd, msg_txt(350));
 		return 0;
@@ -7771,9 +7772,7 @@ ACMD_FUNC(invite)
 
 ACMD_FUNC(duel)
 {
-	char output[CHAT_SIZE_MAX];
-	unsigned int maxpl=0, newduel;
-	struct map_session_data *target_sd;
+	unsigned int maxpl = 0;
 
 	if(sd->duel_group > 0) {
 		duel_showinfo(sd->duel_group, sd);
@@ -7787,6 +7786,7 @@ ACMD_FUNC(duel)
 	}
 
 	if(!duel_checktime(sd)) {
+		char output[CHAT_SIZE_MAX];
 		// "Duel: You can take part in duel only one time per %d minutes."
 		sprintf(output, msg_txt(356), battle_config.duel_time_interval);
 		clif_displaymessage(fd, output);
@@ -7801,8 +7801,10 @@ ACMD_FUNC(duel)
 			}
 			duel_create(sd, maxpl);
 		} else {
+			struct map_session_data *target_sd;
 			target_sd = map_nick2sd((char *)message);
 			if(target_sd != NULL) {
+				unsigned int maxpl=0, newduel;
 				if((newduel = duel_create(sd, 2)) != -1) {
 					if(target_sd->duel_group > 0 ||	target_sd->duel_invite > 0) {
 						clif_displaymessage(fd, msg_txt(353)); // "Duel: Player already in duel."
@@ -7839,9 +7841,8 @@ ACMD_FUNC(leave)
 
 ACMD_FUNC(accept)
 {
-	char output[CHAT_SIZE_MAX];
-
 	if(!duel_checktime(sd)) {
+		char output[CHAT_SIZE_MAX];
 		// "Duel: You can take part in duel only one time per %d minutes."
 		sprintf(output, msg_txt(356), battle_config.duel_time_interval);
 		clif_displaymessage(fd, output);
@@ -8609,7 +8610,7 @@ ACMD_FUNC(set) {
 	int toset = 0, len;
 	bool is_str = false;
 
-	if( !message || !*message || (toset = sscanf(message, "%32s %128[^\n]s", reg, val)) < 1  ) {
+	if( !message || !*message || (toset = sscanf(message, "%31s %128[^\n]s", reg, val)) < 1  ) {
 		clif_displaymessage(fd, msg_txt(1367)); // Usage: @set <variable name> <value>
 		clif_displaymessage(fd, msg_txt(1368)); // Usage: ex. "@set PoringCharVar 50"
 		clif_displaymessage(fd, msg_txt(1369)); // Usage: ex. "@set PoringCharVarSTR$ Super Duper String"
@@ -9426,7 +9427,7 @@ static void atcommand_config_read(const char* config_filename)
 		int count = config_setting_length(aliases);
 
 		for (i = 0; i < count; ++i) {
-			config_setting_t *command = NULL;
+			config_setting_t *command;
 			const char *commandname = NULL;
 			int j = 0, alias_count = 0;
 			AtCommandInfo *commandinfo = NULL;
@@ -9467,8 +9468,8 @@ static void atcommand_config_read(const char* config_filename)
 		int i;
 
 		for (i = 0; i < count; ++i) {
-			config_setting_t *command = NULL;
-			const char *commandname = NULL;
+			config_setting_t *command;
+			const char *commandname;
 
 			command = config_setting_get_elem(help, i);
 			commandname = config_setting_name(command);

@@ -491,7 +491,6 @@ struct timer_event_data {
  *------------------------------------------*/
 int npc_timerevent(int tid, unsigned int tick, int id, intptr_t data)
 {
-	int next;
 	int old_rid, old_timer;
 	unsigned int old_tick;
 	struct npc_data* nd=(struct npc_data *)map_id2bl(id);
@@ -529,6 +528,7 @@ int npc_timerevent(int tid, unsigned int tick, int id, intptr_t data)
 	ted->next++;
 	if( nd->u.scr.timeramount > ted->next )
 	{
+		int next;
 		next = nd->u.scr.timer_event[ ted->next ].timer - nd->u.scr.timer_event[ ted->next - 1 ].timer;
 		ted->time += next;
 		if( sd )
@@ -563,10 +563,9 @@ int npc_timerevent(int tid, unsigned int tick, int id, intptr_t data)
  *------------------------------------------*/
 int npc_timerevent_start(struct npc_data* nd, int rid)
 {
-	int j, next;
+	int j;
 	unsigned int tick = gettick();
 	struct map_session_data *sd = NULL; //Player to whom script is attached.
-	struct timer_event_data *ted;
 
 	nullpo_ret(nd);
 
@@ -590,6 +589,8 @@ int npc_timerevent_start(struct npc_data* nd, int rid)
 
 	if (j < nd->u.scr.timeramount)
 	{
+		int next;
+		struct timer_event_data *ted;
 		// Arrange for the next event
 		ted = ers_alloc(timer_event_ers, struct timer_event_data);
 		ted->next = j; // Set event index
@@ -1845,7 +1846,7 @@ int npc_unload(struct npc_data* nd, bool single) {
 		mapit_free(iter);
 
 		if (nd->u.scr.timerid != INVALID_TIMER) {
-			const struct TimerData *td = NULL;
+			const struct TimerData *td;
 			td = get_timer(nd->u.scr.timerid);
 			if (td && td->data)
 				ers_free(timer_event_ers, (void*)td->data);
@@ -3231,9 +3232,9 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		map[m].flag.pvp_noguild=state;
 	else if (!strcmpi(w3, "pvp_nightmaredrop")) {
 		char drop_arg1[16], drop_arg2[16];
-		int drop_id = 0, drop_type = 0, drop_per = 0;
+		int drop_per = 0;
 		if (sscanf(w4, "%[^,],%[^,],%d", drop_arg1, drop_arg2, &drop_per) == 3) {
-			int i;
+			int drop_id = 0, drop_type = 0;
 			if (!strcmpi(drop_arg1, "random"))
 				drop_id = -1;
 			else if (itemdb_exists((drop_id = atoi(drop_arg1))) == NULL)
@@ -3246,6 +3247,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 				drop_type = 3;
 
 			if (drop_id != 0){
+				int i;
 				for (i = 0; i < MAX_DROP_PER_MAP; i++) {
 					if (map[m].drop_list[i].drop_id == 0){
 						map[m].drop_list[i].drop_id = drop_id;

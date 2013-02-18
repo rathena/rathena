@@ -13,7 +13,7 @@
 #include "../common/nullpo.h"
 #include "../common/random.h"
 #include "../common/showmsg.h"
-#include "../common/socket.h"	// usage: getcharip
+#include "../common/socket.h"
 #include "../common/strlib.h"
 #include "../common/timer.h"
 #include "../common/utils.h"
@@ -10574,9 +10574,8 @@ static void script_detach_rid(struct script_state* st)
 BUILDIN_FUNC(attachrid)
 {
 	int rid = script_getnum(st,2);
-	struct map_session_data* sd;
 
-	if ((sd = map_id2sd(rid))!=NULL) {
+	if (map_id2sd(rid) != NULL) {
 		script_detach_rid(st);
 
 		st->rid = rid;
@@ -16336,12 +16335,13 @@ BUILDIN_FUNC(instance_attach)
 
 BUILDIN_FUNC(instance_id)
 {
-	int type, instance_id;
-	struct map_session_data *sd;
-	struct party_data *p;
+	int instance_id;
 
 	if( script_hasdata(st, 2) )
 	{
+		struct map_session_data *sd;
+		struct party_data *p;
+		int type;
 		type = script_getnum(st, 2);
 		if( type == 0 )
 			instance_id = st->instance_id;
@@ -16849,7 +16849,7 @@ BUILDIN_FUNC(checkdragon) {
 BUILDIN_FUNC(setdragon) {
 	TBL_PC* sd;
 	int color = script_hasdata(st,2) ? script_getnum(st,2) : 0;
-	unsigned int option = OPTION_DRAGON1;
+
 	if( (sd = script_rid2sd(st)) == NULL )
 		return 0;
 	if( !pc_checkskill(sd,RK_DRAGONTRAINING) || (sd->class_&MAPID_THIRDMASK) != MAPID_RUNE_KNIGHT )
@@ -16858,6 +16858,7 @@ BUILDIN_FUNC(setdragon) {
 		pc_setoption(sd, sd->sc.option&~OPTION_DRAGON);
 		script_pushint(st,1);
 	} else {//Not mounted; Mount now.
+		unsigned int option = OPTION_DRAGON1;
 		if( color ) {
 			option = ( color == 1 ? OPTION_DRAGON1 :
 					   color == 2 ? OPTION_DRAGON2 :
@@ -16934,7 +16935,6 @@ BUILDIN_FUNC(getargcount) {
 BUILDIN_FUNC(getcharip)
 {
 	struct map_session_data* sd = NULL;
-	int id = 0;
 
 	/* check if a character name is specified */
 	if( script_hasdata(st, 2) )
@@ -16943,6 +16943,7 @@ BUILDIN_FUNC(getcharip)
 			sd = map_nick2sd(script_getstr(st, 2));
 		else if (script_isint(st, 2) || script_getnum(st, 2))
 		{
+			int id = 0;
 			id = script_getnum(st, 2);
 			sd = (map_id2sd(id) ? map_id2sd(id) : map_charid2sd(id));
 		}
@@ -17332,10 +17333,9 @@ BUILDIN_FUNC(npcskill)
 	return 0;
 }
 
-/* Consumes a item
- * consumeitem <item id>
- * consumeitem "<item name>"
-*/
+/* Consumes an item.
+ * consumeitem <item id>;
+ * consumeitem "<item name>"; */
 BUILDIN_FUNC(consumeitem)
 {
 	TBL_NPC *nd;

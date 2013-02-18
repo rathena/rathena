@@ -209,9 +209,9 @@ int clif_setip(const char* ip)
 
 void clif_setbindip(const char* ip)
 {
-	char ip_str[16];
 	bind_ip = host2ip(ip);
 	if (bind_ip) {
+		char ip_str[16];
 		ShowInfo("Map Server Bind IP Address : '"CL_WHITE"%s"CL_RESET"' -> '"CL_WHITE"%s"CL_RESET"'.\n", ip, ip2str(bind_ip, ip_str));
 	} else {
 		ShowWarning("Failed to Resolve Map Server Address! (%s)\n", ip);
@@ -1220,12 +1220,11 @@ static void clif_setdisguise(struct block_list *bl, unsigned char *buf,int len)
 ///     unused
 void clif_class_change(struct block_list *bl,int class_,int type)
 {
-	unsigned char buf[16];
-
 	nullpo_retv(bl);
 
 	if(!pcdb_checkid(class_))
 	{// player classes yield missing sprites
+		unsigned char buf[16];
 		WBUFW(buf,0)=0x1b0;
 		WBUFL(buf,2)=bl->id;
 		WBUFB(buf,6)=type;
@@ -2975,7 +2974,7 @@ void clif_changestatus(struct map_session_data* sd,int type,int val)
 void clif_changelook(struct block_list *bl,int type,int val)
 {
 	unsigned char buf[16];
-	struct map_session_data* sd = NULL;
+	struct map_session_data* sd;
 	struct status_change* sc;
 	struct view_data* vd;
 	enum send_target target = AREA;
@@ -6455,12 +6454,12 @@ void clif_party_option(struct party_data *p,struct map_session_data *sd,int flag
 void clif_party_withdraw(struct party_data* p, struct map_session_data* sd, int account_id, const char* name, int flag)
 {
 	unsigned char buf[64];
-	int i;
 
 	nullpo_retv(p);
 
 	if(!sd && (flag&0xf0)==0)
 	{
+		int i;
 		for(i=0;i<MAX_PARTY && !p->data[i].sd;i++);
 			if (i < MAX_PARTY)
 				sd = p->data[i].sd;
@@ -6867,7 +6866,6 @@ void clif_autospell(struct map_session_data *sd,uint16 skill_lv)
 void clif_devotion(struct block_list *src, struct map_session_data *tsd)
 {
 	unsigned char buf[56];
-	int i;
 
 	nullpo_retv(src);
 	memset(buf,0,packet_len(0x1cf));
@@ -6884,6 +6882,7 @@ void clif_devotion(struct block_list *src, struct map_session_data *tsd)
 	}
 	else
 	{
+		int i;
 		struct map_session_data *sd = BL_CAST(BL_PC,src);
 		if( sd == NULL )
 			return;
@@ -7821,7 +7820,6 @@ void clif_wedding_effect(struct block_list *bl)
 void clif_callpartner(struct map_session_data *sd)
 {
 	unsigned char buf[26];
-	const char *p;
 
 	nullpo_retv(sd);
 
@@ -7829,6 +7827,7 @@ void clif_callpartner(struct map_session_data *sd)
 
 	if( sd->status.partner_id )
 	{
+		const char *p;
 		if( ( p = map_charid2nick(sd->status.partner_id) ) != NULL )
 		{
 			memcpy(WBUFP(buf,2), p, NAME_LENGTH);
@@ -8432,7 +8431,7 @@ void clif_charnameack (int fd, struct block_list *bl)
 void clif_charnameupdate (struct map_session_data *ssd)
 {
 	unsigned char buf[103];
-	int cmd = 0x195, ps = -1, i;
+	int cmd = 0x195, ps = -1;
 	struct party_data *p = NULL;
 	struct guild *g = NULL;
 
@@ -8456,6 +8455,7 @@ void clif_charnameupdate (struct map_session_data *ssd)
 
 	if( ssd->status.guild_id > 0 && (g = guild_search(ssd->status.guild_id)) != NULL )
 	{
+		int i;
 		ARR_FIND(0, g->max_member, i, g->member[i].account_id == ssd->status.account_id && g->member[i].char_id == ssd->status.char_id);
 		if( i < g->max_member ) ps = g->member[i].position;
 	}

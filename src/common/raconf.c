@@ -41,12 +41,11 @@ struct conf_value{
 
 static struct conf_value *makeValue(const char *key, char *val, size_t val_len){
 	struct conf_value *v;
-	char *p;
-	size_t sz;
+/*	size_t sz;
 		
 	sz = sizeof(struct conf_value);
 	if(val_len >=  sizeof(v->strval))
-		sz += (val_len - sizeof(v->strval) +  1);
+		sz += (val_len - sizeof(v->strval) +  1);*/
 	
 	v = (struct conf_value*)aCalloc(1, sizeof(struct conf_value));
 	if(v == NULL){
@@ -106,6 +105,7 @@ static struct conf_value *makeValue(const char *key, char *val, size_t val_len){
 	}else if( *val >='0' && *val <= '9'){	// begins with normal digit, so assume its dec.
 		// is it float?
 		bool is_float = false;
+		char *p;
 		
 		for(p = val; *p != '\0'; p++){
 			if(*p == '.'){

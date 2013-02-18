@@ -2308,7 +2308,7 @@ int16 map_mapindex2mapid(unsigned short mapindex)
  *------------------------------------------*/
 int map_mapname2ipport(unsigned short name, uint32* ip, uint16* port)
 {
-	struct map_data_other_server *mdos=NULL;
+	struct map_data_other_server *mdos;
 
 	mdos = (struct map_data_other_server*)uidb_get(map_db,(unsigned int)name);
 	if(mdos==NULL || mdos->cell) //If gat isn't null, this is a local map.
@@ -2709,7 +2709,7 @@ static DBData create_map_data_other_server(DBKey key, va_list args)
  *------------------------------------------*/
 int map_setipport(unsigned short mapindex, uint32 ip, uint16 port)
 {
-	struct map_data_other_server *mdos=NULL;
+	struct map_data_other_server *mdos;
 
 	mdos= uidb_ensure(map_db,(unsigned int)mapindex, create_map_data_other_server);
 

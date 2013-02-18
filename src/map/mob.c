@@ -1406,9 +1406,7 @@ int mob_warpchase(struct mob_data *md, struct block_list *target)
 static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 {
 	struct block_list *tbl = NULL, *abl = NULL;
-	int dist;
 	int mode;
-	int search_size;
 	int view_range, can_move;
 
 	if(md->bl.prev == NULL || md->status.hp <= 0)
@@ -1481,6 +1479,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 		else
 		if( (abl = map_id2bl(md->attacked_id)) && (!tbl || mob_can_changetarget(md, abl, mode)) )
 		{
+			int dist;
 			if( md->bl.m != abl->m || abl->prev == NULL
 				|| (dist = distance_bl(&md->bl, abl)) >= MAX_MINCHASE // Attacker longer than visual area
 				|| battle_check_target(&md->bl, abl, BCT_ENEMY) <= 0 // Attacker is not enemy of mob
@@ -1547,6 +1546,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 	else
 	if (mode&MD_CHANGECHASE && (md->state.skillstate == MSS_RUSH || md->state.skillstate == MSS_FOLLOW))
 	{
+		int search_size;
 		search_size = view_range<md->status.rhw.range ? view_range:md->status.rhw.range;
 		map_foreachinrange (mob_ai_sub_hard_changechase, &md->bl, search_size, DEFAULT_ENEMY_TYPE(md), md, &tbl);
 	}
@@ -2100,7 +2100,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		int id,zeny;
 		unsigned int base_exp,job_exp;
 	} pt[DAMAGELOG_SIZE];
-	int i,temp,count,pnum=0,m=md->bl.m;
+	int i, temp, count, m = md->bl.m, pnum = 0;
 	int dmgbltypes = 0;  // bitfield of all bl types, that caused damage to the mob and are elligible for exp distribution
 	unsigned int mvp_damage, tick = gettick();
 	bool rebirth, homkillonly;
@@ -3617,9 +3617,9 @@ static unsigned int mob_drop_adjust(int baserate, int rate_adjust, unsigned shor
  */
 static void item_dropratio_adjust(int nameid, int mob_id, int *rate_adjust)
 {
-	int i;
 	if( item_drop_ratio_db[nameid] ) {
 		if( item_drop_ratio_db[nameid]->mob_id[0] ) { // only for listed mobs
+			int i;
 			ARR_FIND(0, MAX_ITEMRATIO_MOBS, i, item_drop_ratio_db[nameid]->mob_id[i] == mob_id);
 			if(i < MAX_ITEMRATIO_MOBS) // found
 				*rate_adjust = item_drop_ratio_db[nameid]->drop_ratio;
@@ -3770,7 +3770,6 @@ static bool mob_parse_dbrow(char** str)
 
 	// MVP Drops: MVP1id,MVP1per,MVP2id,MVP2per,MVP3id,MVP3per
 	for(i = 0; i < MAX_MVP_DROP; i++) {
-		struct item_data *id;
 		int rate_adjust = battle_config.item_rate_mvp;;
 		db->mvpitem[i].nameid = atoi(str[31+i*2]);
 		if (!db->mvpitem[i].nameid) {
@@ -3782,6 +3781,7 @@ static bool mob_parse_dbrow(char** str)
 
 		//calculate and store Max available drop chance of the MVP item
 		if (db->mvpitem[i].p) {
+			struct item_data *id;
 			id = itemdb_search(db->mvpitem[i].nameid);
 			if (id->maxchance == -1 || (id->maxchance < db->mvpitem[i].p/10 + 1) ) {
 				//item has bigger drop chance or sold in shops
@@ -3891,10 +3891,9 @@ static void mob_readdb(void)
 
 	for( fi = 0; fi < ARRAYLENGTH(filename); ++fi )
 	{
-		char path[256];
-
 		if(fi > 0)
 		{
+			char path[256];
 			sprintf(path, "%s/%s", db_path, filename[fi]);
 			if(!exists(path))
 			{
@@ -4458,10 +4457,9 @@ static void mob_readskilldb(void) {
 
 	for( fi = 0; fi < ARRAYLENGTH(filename); ++fi )
 	{
-		char path[256];
-
 		if(fi > 0)
 		{
+			char path[256];
 			sprintf(path, "%s/%s", db_path, filename[fi]);
 			if(!exists(path))
 			{
@@ -4559,11 +4557,9 @@ static bool mob_readdb_race2(char* fields[], int columns, int current)
 static bool mob_readdb_itemratio(char* str[], int columns, int current)
 {
 	int nameid, ratio, i;
-	struct item_data *id;
-
 	nameid = atoi(str[0]);
 
-	if( ( id = itemdb_exists(nameid) ) == NULL )
+	if( itemdb_exists(nameid) == NULL )
 	{
 		ShowWarning("itemdb_read_itemratio: Invalid item id %d.\n", nameid);
 		return false;

@@ -303,7 +303,6 @@ int merc_hom_levelup(struct homun_data *hd)
 	struct h_stats *min, *max;
 	int growth_str, growth_agi, growth_vit, growth_int, growth_dex, growth_luk ;
 	int growth_max_hp, growth_max_sp ;
-	char output[256] ;
 	int m_class;
 
 	if((m_class = hom_class2mapid(hd->homunculus.class_)) == -1) {
@@ -352,6 +351,7 @@ int merc_hom_levelup(struct homun_data *hd)
 	hom->luk += growth_luk;
 
 	if ( battle_config.homunculus_show_growth ) {
+		char output[256] ;
 		sprintf(output,
 			"Growth: hp:%d sp:%d str(%.2f) agi(%.2f) vit(%.2f) int(%.2f) dex(%.2f) luk(%.2f) ",
 			growth_max_hp, growth_max_sp,
@@ -1148,10 +1148,10 @@ int read_homunculusdb(void)
 	memset(homunculus_db,0,sizeof(homunculus_db));
 	for(i = 0; i<ARRAYLENGTH(filename); i++)
 	{
-		char path[256];
-
 		if( i > 0 )
 		{
+			char path[256];
+
 			sprintf(path, "%s/%s", db_path, filename[i]);
 
 			if( !exists(path) )

@@ -452,7 +452,7 @@ void do_final_pc_groups(void)
  */
 void pc_groups_reload(void) {
 	struct map_session_data* sd = NULL;
-	struct s_mapiterator* iter = NULL;
+	struct s_mapiterator* iter;
 
 	do_final_pc_groups();
 	do_init_pc_groups();
