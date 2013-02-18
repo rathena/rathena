@@ -995,7 +995,9 @@ From here on, we will have the commands sorted as follow:
 7.- Instance commands.
 8.- Quest Log commands.
 9.- Battleground commands.
-10.- Mercenary commands.
+10.- Pet commands.
+11.- Homunculus commands.
+12.- Mercenary commands.
 
 =====================
 |1.- Basic commands.|
@@ -3148,53 +3150,6 @@ skills a character has.
 
 ---------------------------------------
 
-*getpetinfo(<type>)
-
-This function will return pet information for the pet the invoking character 
-currently has active. Valid types are:
-
- 0 - Unique pet ID number as stored by the char server and distinguishing it 
-     from all other pets the characters actually have. This value is currently 
-     useless, at most you can use it to tell pets apart reliably.
- 1 - Pet class number as per 'db/pet_db.txt' - will tell you what kind of a pet it 
-     is.
- 2 - Pet name. Will return "null" if there's no pet. 
- 3 - Pet friendly level (intimacy score). 1000 is full loyalty.
- 4 - Pet hungry level. 100 is completely full.
- 5 - Pet rename flag. 0 means this pet has not been named yet.
-
----------------------------------------
-
-*gethominfo(<type>)
-
-This function works as a direct counterpart of 'getpetinfo':
- 0 - Homunculus unique ID
- 1 - Homunculus Class
- 2 - Name
- 3 - Friendly level (intimacy score). 100000 is full loyalty.
- 4 - Hungry level. 100 is completely full.
- 5 - Rename flag. 0 means this homunculus has not been named yet.
- 6 - Homunculus level
-
----------------------------------------
-
-*petstat(<flag>)
-
-Returns current pet status, all are integers except name.
-Returns 0 or "" if the player doesn't have pets.
-
-Flags usable >>
-PET_CLASS
-PET_NAME
-PET_LEVEL
-PET_HUNGRY
-PET_INTIMATE
-
-Example:
-	set @i, petstat(PET_CLASS);
-
----------------------------------------
-
 *getmonsterinfo(<mob ID>,<type>)
 
 This function will look up the monster with the specified ID number in the
@@ -3961,6 +3916,7 @@ job number which doesn't has a eA Job value equivalent.
 For more information on the eA Job System, see the docs/ea_job_system.txt file.
 
 ---------------------------------------
+
 *roclass <job number> {,<gender>}
 
 Does the opposite of eaclass. That is, given a eA Job class, it returns which is the corresponding RO class number. 
@@ -4458,15 +4414,24 @@ effect is still in effect).
 *itemskill <skill id>,<skill level>;
 *itemskill "<skill name>",<skill level>;
 
-This command meant for item scripts to replicate single-use skills in usable
-items. It will not work properly, if there is a visible dialog window or menu.
-If the skill is self or auto-targeting, it will be used immediately otherwise a
+This command is meant for item scripts to replicate single-use skills in usable
+items. It will not work properly if there is a visible dialog window or menu.
+If the skill is self or auto-targeting, it will be used immediately; otherwise a
 target cursor is shown.
 
 // When Anodyne is used, it will cast Endure (8), Level 1, as if the actual
 // skill has been used from skill tree.
 605,Anodyne,Anodyne,11,2000,0,100,,,,,10477567,2,,,,,{ itemskill 8,1; },{}
 
+---------------------------------------
+
+*consumeitem <item id>;
+*consumeitem "<item name>";
+
+This command will run the item script of the specified item on the invoking
+character. The character does not need to possess the item, and the item will
+not be deleted. While this command is intended for usable items, it will run
+for any item type.
 
 ---------------------------------------
 
@@ -4474,7 +4439,7 @@ target cursor is shown.
 
 This command will open a crafting window on the client connected to the invoking 
 character. The 'item level' is a number which determines what kind of a crafting 
-window will pop-up. 
+window will pop-up.
 
 You can see the full list of such item levels in 'db/produce_db.txt' which determines 
 what can actually be produced. The window will not be empty only if the invoking 
@@ -5419,31 +5384,6 @@ run as if by 'donpcevent'.
 
 // Will summon a dead branch-style monster to fight for the character.
 summon "--ja--",-1;
-
----------------------------------------
-
-*homevolution;
-
-This command will try to evolve the current player's homunculus.
-If it doesn't work, the /swt emotion is shown.
-
-To evolve a homunculus, the invoking player must have a homunculus,
-the homunculus must not be the last evolution and
-the homunculus must have above 91000 intimacy with its owner.
-
----------------------------------------
-
-*hommutate {<ID>};
-
-This command will try to evolve the current player's homunculus into the
-new Homunculus S. If it doesn't work, the /swt emotion is shown.
-
-To mutate a homunculus, the invoking player must have an evolved
-homunculus and it must be at least level 99.
-
-If the optional parameter <ID> is set, the invoking player's homunculus will
-change into the given homunculus ID. Otherwise, a random Homunculus S
-will be chosen.
 
 ---------------------------------------
 
@@ -6464,17 +6404,6 @@ must be used.
 
 ---------------------------------------
 
-*pet <pet id>;
-
-This command is used in all the item scripts for taming items. Running this 
-command will make the pet catching cursor appear on the client connected to the 
-invoking character, usable on the monsters with the specified pet ID number. It 
-will still work outside an item script.
-
-A full list of pet IDs can be found inside 'db/pet_db.txt'
-
----------------------------------------
-
 *emotion <emotion number>{,<target>{,"<target name>"}};
 
 This command makes an object display an emotion sprite above their own as 
@@ -7104,115 +7033,6 @@ script command does not have the optional parameter.
 
 ---------------------------------------
 
-* The Pet AI commands
-
-These commands will only work if the invoking character has a pet, and are meant 
-to be executed from pet scripts. They will modify the pet AI decision-making for 
-the current pet of the invoking character, and will NOT have any independent 
-effect by themselves, which is why only one of them each may be in effect at any 
-time for a specific pet. A pet may have 'petloot', 'petskillbonus', 
-'petskillattack' OR 'petpetskillattack2' and 'petskillsupport' OR 'petheal' at 
-the same time. 'petheal' is deprecated and is no longer used in the default pet 
-scripts. 
-
-*petskillbonus <bonus type>,<value>,<duration>,<delay>;
-
-This command will make the pet give a bonus to the owner's stat (bonus type -
-bInt,bVit,bDex,bAgi,bLuk,bStr,bSpeedRate - for a full list, see the values 
-starting with 'b' in 'db/const.txt')
-
-*petrecovery <status type>,<delay>;
-
-This command will make the pet cure a specified status condition. The curing 
-actions will occur once every Delay seconds. For a full list of status 
-conditions that can be cured, see the list of 'SC_' status condition constants 
-in 'db/const.txt'
-
-*petloot <max items>;
-
-This command will turn on pet looting, with a maximum number of items to loot 
-specified. Pet will store items and return them when the maximum is reached or 
-when pet performance is activated.
-
-*petskillsupport <skill id>,<skill level>,<delay>,<percent hp>,<percent sp>;
-*petskillsupport "<skill name>",<skill level>,<delay>,<percent hp>,<percent sp>;
-*petheal <level>,<delay>,<percent hp>,<percent sp>;
-
-This will make the pet use a specified support skill on the owner whenever the 
-HP and SP are below the given percent values, with a specified delay time 
-between activations. The skill numbers are as per 'db/(pre-)re/skill_db.txt'.
-'petheal' works the same as 'petskillsupport' but has the skill ID hard-coded to 
-28 (Heal). This command is deprecated.
-It's not quite certain who's stats will be used for the skills cast, the 
-character's or the pets. Probably, Skotlex can answer that question.
-
-*petskillattack <skill id>,<skill level>,<rate>,<bonusrate>;
-*petskillattack "<skill name>",<skill level>,<rate>,<bonusrate>;
-*petskillattack2 <skill id>,<damage>,<number of attacks>,<rate>,<bonusrate>;
-*petskillattack2 "<skill name>",<damage>,<number of attacks>,<rate>,<bonusrate>;
-
-These two commands will make the pet cast an attack skill on the enemy the pet's 
-owner is currently fighting. Skill IDs and levels are as per 'petskillsupport'. 
-'petskillattack2' will make the pet cast the skill with a fixed amount of damage 
-inflicted and the specified number of attacks.
-
-All commands with delays and durations will only make the behavior active for 
-the specified duration of seconds, with a delay of the specified number of 
-seconds between activations. Rates are a chance of the effect occurring and are 
-given in percent. 'bonusrate' is added to the normal rate if the pet intimacy is 
-at the maximum possible.
-
-The behavior modified with the above mentioned commands will only be exhibited if 
-the pet is loyal and appropriate configuration options are set in 
-'battle_athena.conf'.
-
-Pet scripts in the database normally run whenever a pet of that type hatches 
-from the egg. Other commands usable in item scripts (see 'bonus') will also 
-happily run from pet scripts. Apparently, the pet-specific commands will also 
-work in NPC scripts and modify the behavior of the current pet up until the pet 
-is hatched again. (Which will also occur when the character is logged in again 
-with the pet still out of the egg.) It is not certain for how long the effect of 
-such command running from an NPC script will eventually persist, but apparently, 
-it is possible to usefully employ them in usable item scripts to create pet 
-buffing items.
-
-Nobody tried this before, so you're essentially on your own here.
-
----------------------------------------
-
-*bpet;
-
-This command opens up a pet hatching window on the client connected to the 
-invoking character. It is used in item script for the pet incubators and will 
-let the player hatch an owned egg. If the character has no eggs, it will just 
-open up an empty incubator window.
-This is still usable outside item scripts.
-
----------------------------------------
-
-*makepet <pet id>;
-
-This command will create a pet egg and put it in the invoking character's 
-inventory. The kind of pet is specified by pet ID numbers listed in 
-'db/pet_db.txt'. The egg is created exactly as if the character just successfully 
-caught a pet in the normal way.
-
-    // This will make you a poring:
-    makepet 1002;
-
-Notice that you absolutely have to create pet eggs with this command. If you try 
-to give a pet egg with 'getitem', pet data will not be created by the char 
-server and the egg will disappear when anyone tries to hatch it.
-
----------------------------------------
-
-*homshuffle;
-
-This will recalculate the homunculus stats according to its level, of the 
-current invoking character.
-
----------------------------------------
-
 *setcell "<map name>",<x1>,<y1>,<x2>,<y2>,<type>,<flag>;
 
 Each map cell has several 'flags' that specify the properties of that cell.
@@ -7542,7 +7362,7 @@ color can be:
 	3 = an MVP flag
 	other values show a transparent mark in the mini-map.
 
-----------------------------------------
+---------------------------------------
 
 ============================
 |9.- Battleground commands.|
@@ -7573,7 +7393,7 @@ Example:
 	set $@KvM01BG_id1, waitingroom2bg("bat_c01",52,129,"KvM01_BG::OnGuillaumeQuit","KvM01_BG::OnGuillaumeDie");
 	end;
 
-----------------------------------------
+---------------------------------------
 
 *bg_team_setxy <Battle Group ID>,<x>,<y>;
 
@@ -7584,7 +7404,7 @@ Example:
 	mapannounce "bat_a01", "Group [1] has taken the work shop, and will now respawn there.",bc_map,"0xFFCE00";
 	end;
 
-----------------------------------------
+---------------------------------------
 
 *bg_warp <Battle Group>,"<Mapname>",<x>,<y>;
 
@@ -7596,7 +7416,7 @@ Example:
 	bg_warp $@TierraBG1_id1,"bat_a01",352,342;
 	end;
 
-----------------------------------------
+---------------------------------------
 
 *bg_monster <Battle Group>,"<map name>",<x>,<y>,"<name to show>",<mob id>,"<event label>";
 *bg_monster(<Battle Group>,"<map name>",<x>,<y>,"<name to show>",<mob id>,"<event label>");
@@ -7616,7 +7436,7 @@ Example:
 	set $@Guardian_3, bg_monster($@TierraBG1_id2,"bat_a01",268,204,"Guardian",1949,"NPCNAME::OnMyMobDead");
 	end;
 
-----------------------------------------
+---------------------------------------
 
 *bg_monster_set_team <GID>,<Battle Group>;
 
@@ -7639,19 +7459,19 @@ OnTimer1000:
 	bg_monster_set_team $@Guardian, $@BG_1;
 	end;
 
-----------------------------------------
+---------------------------------------
 
 *bg_leave;
 
 Removes attached player from their Battle Group.
 
-----------------------------------------
+---------------------------------------
 
 *bg_destroy <Batte Group>;
 
 As the name says, destroys the battle group created for that battle ground.
 
-----------------------------------------
+---------------------------------------
 
 *areapercentheal "<mapname>",<x1>,<y1>,<x2>,<y2>,<hp>,<sp>;
 
@@ -7661,7 +7481,7 @@ Example:
 	areapercentheal "bat_a01",52,208,61,217,100,100;
 	end;
 
-----------------------------------------
+---------------------------------------
 
 *bg_get_data(<Battle Group>,<type>);
 
@@ -7669,14 +7489,13 @@ Retrieves data related to given battle group. Type can be one of the following:
 
     0 - Amount of players currently belonging to the group.
 
-----------------------------------------
-
+---------------------------------------
 *bg_getareausers(<battle group>,<map name>,<x0>,<y0>,<x1>,<y1>);
 
 Retrieves amount of players belonging to given battle group on given
 map within an specified rectangular area.
 
-----------------------------------------
+---------------------------------------
 
 *bg_updatescore "<mapname>",<Guillaume Score>,<Croix Score>;
 
@@ -7684,10 +7503,223 @@ This command will force the update of the displayed scoreboard.
 It is only usable when the map is defined as a Type 2 Battleground:
 mapflag	<mapname>	battleground	2
 
-----------------------------------------
+---------------------------------------
+
+====================
+|10.- Pet commands.|
+====================
+---------------------------------------
+
+*bpet;
+
+This command opens up a pet hatching window on the client connected to the 
+invoking character. It is used in item script for the pet incubators and will 
+let the player hatch an owned egg. If the character has no eggs, it will just 
+open up an empty incubator window.
+This is still usable outside item scripts.
+
+---------------------------------------
+
+*pet <pet id>;
+
+This command is used in all the item scripts for taming items. Running this 
+command will make the pet catching cursor appear on the client connected to the 
+invoking character, usable on the monsters with the specified pet ID number. It 
+will still work outside an item script.
+
+A full list of pet IDs can be found inside 'db/pet_db.txt'
+
+---------------------------------------
+
+*makepet <pet id>;
+
+This command will create a pet egg and put it in the invoking character's 
+inventory. The kind of pet is specified by pet ID numbers listed in 
+'db/pet_db.txt'. The egg is created exactly as if the character just successfully 
+caught a pet in the normal way.
+
+    // This will make you a poring:
+    makepet 1002;
+
+Notice that you absolutely have to create pet eggs with this command. If you try 
+to give a pet egg with 'getitem', pet data will not be created by the char 
+server and the egg will disappear when anyone tries to hatch it.
+
+---------------------------------------
+
+*getpetinfo(<type>)
+
+This function will return pet information for the pet the invoking character 
+currently has active. Valid types are:
+
+ 0 - Unique pet ID number as stored by the char server and distinguishing it 
+     from all other pets the characters actually have. This value is currently 
+     useless, at most you can use it to tell pets apart reliably.
+ 1 - Pet class number as per 'db/pet_db.txt' - will tell you what kind of a pet it 
+     is.
+ 2 - Pet name. Will return "null" if there's no pet. 
+ 3 - Pet friendly level (intimacy score). 1000 is full loyalty.
+ 4 - Pet hungry level. 100 is completely full.
+ 5 - Pet rename flag. 0 means this pet has not been named yet.
+
+---------------------------------------
+
+*petstat(<flag>)
+
+Returns current pet status, all are integers except name.
+Returns 0 or "" if the player doesn't have pets.
+
+Flags usable:
+- PET_CLASS
+- PET_NAME
+- PET_LEVEL
+- PET_HUNGRY
+- PET_INTIMATE
+
+Example:
+	set @i, petstat(PET_CLASS);
+
+---------------------------------------
+
+* The Pet AI commands
+  -------------------
+
+These commands will only work if the invoking character has a pet, and are meant 
+to be executed from pet scripts. They will modify the pet AI decision-making for 
+the current pet of the invoking character, and will NOT have any independent 
+effect by themselves, which is why only one of them each may be in effect at any 
+time for a specific pet. A pet may have 'petloot', 'petskillbonus', 
+'petskillattack' OR 'petpetskillattack2' and 'petskillsupport' OR 'petheal' at 
+the same time. 'petheal' is deprecated and is no longer used in the default pet 
+scripts.
+
+All commands with delays and durations will only make the behavior active for 
+the specified duration of seconds, with a delay of the specified number of 
+seconds between activations. Rates are a chance of the effect occurring and are 
+given in percent. 'bonusrate' is added to the normal rate if the pet intimacy is 
+at the maximum possible.
+
+The behavior modified with the below mentioned commands will only be exhibited if 
+the pet is loyal and appropriate configuration options are set in 
+'battle_athena.conf'.
+
+Pet scripts in the database normally run whenever a pet of that type hatches 
+from the egg. Other commands usable in item scripts (see 'bonus') will also 
+happily run from pet scripts. Apparently, the pet-specific commands will also 
+work in NPC scripts and modify the behavior of the current pet up until the pet 
+is hatched again. (Which will also occur when the character is logged in again 
+with the pet still out of the egg.) It is not certain for how long the effect of 
+such command running from an NPC script will eventually persist, but apparently, 
+it is possible to usefully employ them in usable item scripts to create pet 
+buffing items.
+
+Nobody tried this before, so you're essentially on your own here.
+
+---------------------------------------
+
+*petskillbonus <bonus type>,<value>,<duration>,<delay>;
+
+This command will make the pet give a bonus to the owner's stat (bonus type -
+bInt,bVit,bDex,bAgi,bLuk,bStr,bSpeedRate - for a full list, see the values 
+starting with 'b' in 'db/const.txt')
+
+---------------------------------------
+
+*petrecovery <status type>,<delay>;
+
+This command will make the pet cure a specified status condition. The curing 
+actions will occur once every Delay seconds. For a full list of status 
+conditions that can be cured, see the list of 'SC_' status condition constants 
+in 'db/const.txt'
+
+---------------------------------------
+
+*petloot <max items>;
+
+This command will turn on pet looting, with a maximum number of items to loot 
+specified. Pet will store items and return them when the maximum is reached or 
+when pet performance is activated.
+
+---------------------------------------
+
+*petskillsupport <skill id>,<skill level>,<delay>,<percent hp>,<percent sp>;
+*petskillsupport "<skill name>",<skill level>,<delay>,<percent hp>,<percent sp>;
+*petheal <level>,<delay>,<percent hp>,<percent sp>;
+
+This will make the pet use a specified support skill on the owner whenever the 
+HP and SP are below the given percent values, with a specified delay time 
+between activations. The skill numbers are as per 'db/(pre-)re/skill_db.txt'.
+'petheal' works the same as 'petskillsupport' but has the skill ID hard-coded to 
+28 (Heal). This command is deprecated.
+It's not quite certain who's stats will be used for the skills cast, the 
+character's or the pets. Probably, Skotlex can answer that question.
+
+---------------------------------------
+
+*petskillattack <skill id>,<skill level>,<rate>,<bonusrate>;
+*petskillattack "<skill name>",<skill level>,<rate>,<bonusrate>;
+*petskillattack2 <skill id>,<damage>,<number of attacks>,<rate>,<bonusrate>;
+*petskillattack2 "<skill name>",<damage>,<number of attacks>,<rate>,<bonusrate>;
+
+These two commands will make the pet cast an attack skill on the enemy the pet's 
+owner is currently fighting. Skill IDs and levels are as per 'petskillsupport'. 
+'petskillattack2' will make the pet cast the skill with a fixed amount of damage 
+inflicted and the specified number of attacks.
+
+---------------------------------------
+
+===========================
+|11.- Homunculus commands.|
+===========================
+---------------------------------------
+
+*homevolution;
+
+This command will try to evolve the current player's homunculus.
+If it doesn't work, the /swt emotion is shown.
+
+To evolve a homunculus, the invoking player must have a homunculus,
+the homunculus must not be the last evolution and
+the homunculus must have above 91000 intimacy with its owner.
+
+---------------------------------------
+
+*hommutate {<ID>};
+
+This command will try to evolve the current player's homunculus into the
+new Homunculus S. If it doesn't work, the /swt emotion is shown.
+
+To mutate a homunculus, the invoking player must have an evolved
+homunculus and it must be at least level 99.
+
+If the optional parameter <ID> is set, the invoking player's homunculus will
+change into the given homunculus ID. Otherwise, a random Homunculus S
+will be chosen.
+
+---------------------------------------
+
+*gethominfo(<type>)
+
+This function works as a direct counterpart of 'getpetinfo':
+ 0 - Homunculus unique ID
+ 1 - Homunculus Class
+ 2 - Name
+ 3 - Friendly level (intimacy score). 100000 is full loyalty.
+ 4 - Hungry level. 100 is completely full.
+ 5 - Rename flag. 0 means this homunculus has not been named yet.
+ 6 - Homunculus level
+
+---------------------------------------
+
+*homshuffle;
+
+This will recalculate the homunculus stats according to its level, of the 
+current invoking character.
+
+---------------------------------------
 
 ==========================
-|10.- Mercenary commands.|
+|12.- Mercenary commands.|
 ==========================
 ---------------------------------------
 
@@ -7697,21 +7729,21 @@ This command summons a mercenary of given class, for given amount of
 time in milliseconds. Typically used in item scripts of mercenary
 scrolls.
 
-----------------------------------------
+---------------------------------------
 
 *mercenary_heal <hp>,<sp>;
 
 This command works like 'heal', but affects the mercenary of the
 currently attached character.
 
-----------------------------------------
+---------------------------------------
 
 *mercenary_sc_start <type>,<tick>,<val1>;
 
 This command works like 'sc_start', but affects the mercenary of the
 currently attached character.
 
-----------------------------------------
+---------------------------------------
 
 *mercenary_get_calls(<guild>);
 *mercenary_set_calls <guild>,<value>;
@@ -7723,7 +7755,7 @@ attached character. Guild can be one or the following constants:
     SPEAR_MERC_GUILD
     SWORD_MERC_GUILD
 
-----------------------------------------
+---------------------------------------
 
 *mercenary_get_faith(<guild>);
 *mercenary_set_faith <guild>,<value>;
@@ -7756,7 +7788,7 @@ can be one of the following:
 If the character does not have a mercenary, the command returns ""
 for name and 0 for all other types.
 
-----------------------------------------
+---------------------------------------
 
 Whew.
 That's about all of them.

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.7
+//= 2.7a
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -46,6 +46,7 @@
 //= 2.6 Disabled "Ash Vacuum Warper" as it's no longer in iRO. [Euphy]
 //= 2.6a Added 'npcskill' command. [Euphy]
 //= 2.7 Updated EXP rewards.
+//= 2.7a Added 'consumeitem' command. [Euphy]
 //============================================================ 
 
 // Onward to the New World
@@ -14782,7 +14783,7 @@ OnTouch:
 		set mao_morocc2,18;
 		changequest 7026,7027;
 		close2;
-		warp "SavePoint",0,0;
+		consumeitem 602; //Wing_Of_Butterfly
 		end;
 	}
 	else if (mao_morocc2 == 19) {
@@ -14874,7 +14875,7 @@ que_dan02,115,53,3	script	Man#moc2_crazyR01	456,{
 		set mao_morocc2,20;
 		changequest 7028,7029;
 		close2;
-		warp "SavePoint",0,0;
+		consumeitem 602; //Wing_Of_Butterfly
 		donpcevent "Mr. Kidd#moc_extra01::OnDisable";
 	}
 	else {

@@ -17817,7 +17817,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(cleanmap,"s"),
 	BUILDIN_DEF2(cleanmap,"cleanarea","siiii"),
 	BUILDIN_DEF(npcskill,"viii"),
-	BUILDIN_DEF(consumeitem,"vi?"),
+	BUILDIN_DEF(consumeitem,"v"),
 	/**
 	 * @commands (script based)
 	 **/

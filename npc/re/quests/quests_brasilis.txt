@@ -3,11 +3,11 @@
 //===== By ===================================================
 //= L0ne_W0lf
 //===== Version ==============================================
-//= 1.2
+//= 1.2a
 //===== Compatible With ======================================
 //= rAthena SVN
 //===== Description ==========================================
-//= [Translated from the Official]
+//= [Official Conversion]
 //= Lost Puppies (Repeatable, 24 hours.)
 //= Suspicious Beach (Repeatable, 24 hours. iRO/cRO version.)
 //= Guarana Candy Quest
@@ -18,6 +18,7 @@
 //= 1.0 First version.
 //= 1.1 Hydra Ball (12408)
 //= 1.2 Optimization. [Euphy]
+//= 1.2a Added 'consumeitem' command. [Euphy]
 //============================================================
 
 // Lost Puppies, Original file: dogdog.sc
@@ -53,7 +54,7 @@ brasilis,297,307,5	script	Angelo#br	50,{
 		erasequest 9031;
 		setquest 9032;
 		specialeffect2 EF_ASSUMPTIO;
-		percentheal 100,100;
+		consumeitem 607; //Yggdrasilberry
 		set .@rand,rand(1,10);
 		if (.@rand > 4 && .@rand < 9) getitem 504,2; //White_Potion
 		else if (.@rand > 8) getitem 608,1; //Seed_Of_Yggdrasil
@@ -226,10 +227,10 @@ brasilis,192,133,6	script	Lucia#brasilis	478,{
 					//recall_completequest 9029;
 					if (.@nQState2 > -1) erasequest 9029;
 					setquest 9029;
-					percentheal 100,100;
-					sc_start SC_LUKFOOD, 1200000, 5; percentheal 5,2;
-					sc_start SC_VITFOOD, 1200000, 5; percentheal 10,0;
-					sc_start SC_DEXFOOD, 1200000, 5; percentheal 5,5;
+					consumeitem 607; //Yggdrasilberry
+					consumeitem 12070; //Luk_Dish05
+					consumeitem 12055; //Vit_Dish05
+					consumeitem 12065; //Dex_Dish05
 					getitem 11502,3; //Light_Blue_Pot
 					close;
 				}
@@ -971,7 +972,7 @@ OnTouch_:
 		set brazil_gua,8;
 		changequest 2197,2198;
 		close2;
-		sc_start SC_SpeedUp1,5000,0;
+		consumeitem 12016; //Speed_Up_Potion
 		end;
 	}
 	else {
@@ -3072,12 +3073,12 @@ bra_dun02,157,74,5	script	Iara#nk	478,2,2,{
 			percentheal 100,100;
 			sc_start SC_INCFLEE,3600000,20;
 			sc_start SC_INCCRI,3600000,10;
-			sc_start SC_STRFOOD,1200000,3;
-			sc_start SC_DEXFOOD,1200000,3;
-			sc_start SC_AGIFOOD,1200000,3;
-			sc_start SC_VITFOOD,1200000,3;
-			sc_start SC_INTFOOD,1200000,3;
-			sc_start SC_LUKFOOD,1200000,3; 
+			consumeitem 12043; //Str_Dish03
+			consumeitem 12063; //Dex_Dish03
+			consumeitem 12058; //Agi_Dish03
+			consumeitem 12053; //Vit_Dish03
+			consumeitem 12048; //Int_Dish03
+			consumeitem 12068; //Luk_Dish03
 			next;
 			mes "[Iara]";
 			mes "Ahhh~...";
