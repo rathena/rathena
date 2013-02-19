@@ -2,7 +2,6 @@
 # config script by lighta
 #TODO list :
 #- don't always override import/file, sed grep ?
-#- improve AutoCheckConf
 
 use CPAN;
 use strict;
@@ -54,7 +53,7 @@ sub GetArgs {
     'target=s'	=> \$sTarget,	 #Target (wich setup to run)
     'Force=i'	=> \$sForce,	 #Force (bypass verification)
     'help!' => \$sHelp,
-    ) or die "Incorrect usage!\n";
+    ) or $sHelp=1; #display help if invalid option
     my $sValidTarget = "All|Conf|DB|Inst";
 
     if( $sHelp ) {
@@ -71,6 +70,11 @@ sub GetArgs {
 	    ."\t --target => target (specify wich setup to run [(default)$sValidTarget])\n";
 	exit;
     }
+    if($sDsdFile ne DESD_CONF_FILE && !(-e -r $sDsdFile)){
+	print "Incorect file specified: '$sDsdFile'\n"
+	    ."\t this file doesn't seem to appear on filesystem or unable to read\n";
+	exit;
+    }
 }
 
 sub Main {
@@ -83,7 +87,7 @@ sub Main {
 			CHAR_PORT => "6121",
 			LOGIN_PORT => "6900",
 			MD5_ENABLE => "yes",
-			SQL_HOST => "127.0.0.1",
+			SQL_HOST => "localhost",
 			SQL_PORT => "3306",
 			SQL_UID => "ragnarok",
 			SQL_PW => "ragnarok",
@@ -107,7 +111,7 @@ sub InstallSoft {
     my $sOSregex = join("|",@aSupportedOS);
     my $sOS;
     until($sOS =~ /$sOSregex/i){
-	print "Please enter your OS:[$sOSregex] or enter quit to exit\n";
+	print "Please enter your OS:[$sOSregex] or enter 'quit' to exit\n";
 	$sOS = <>; chomp($sOS);
 	last if($sOS eq "quit");
     }
@@ -125,19 +129,25 @@ sub InstallSoft {
 
 sub ConfigConf { my ($rhDefConf) = @_;
     print "\n Starting ConfigConf \n";
-    my $rhUserConf = GetDesiredConf($rhDefConf);
-    print "SetupConf using conf : \n";
-    ShowConfig($rhUserConf);
-    AutoCheckConf($rhUserConf) unless($sForce);
+    my $rhUserConf;
+    while(1) {
+	$rhUserConf = GetDesiredConf($rhDefConf);
+	print "SetupConf using conf : \n";
+	ShowConfig($rhUserConf);
+	last if($sForce || AutoCheckConf($rhUserConf));
+    }
     ApplySetupConf($rhUserConf);
 }
 
 sub ConfigDB { my ($rhDefConf) = @_;
     print "\n Starting ConfigDB \n";
-    my $rhUserConf = GetDesiredConf($rhDefConf);
-    print "SetupDb using conf : \n";
-    ShowConfig($rhUserConf);
-    AutoCheckConf($rhUserConf) unless($sForce);
+    my $rhUserConf;
+    while(1) {
+	$rhUserConf = GetDesiredConf($rhDefConf);
+	print "SetupDb using conf : \n";
+	ShowConfig($rhUserConf);
+	last if($sForce || AutoCheckConf($rhUserConf));
+    }
     ApplySetupDB($rhUserConf);
 }
 
@@ -167,7 +177,7 @@ sub ApplySetupConf { my ($rhConfig) = @_;
 
     foreach my $sCurfile(@aTargetfile) {
 	print "Checking if target file: [$sCurfile] exist ? ";
-	if(-e $sCurfile) {
+	if(-e -r $sCurfile) {
 	    print "Yes\n";
 	    print "$sCurfile seem to exist, overwritte it [y/n] ?\n";
 	    if(GetValidAnwser("y|o|n") =~ /n/i) {
@@ -244,14 +254,46 @@ sub AutoCheckConf { my ($rhConfig) = @_;
     print "\n AutoCheckConf, \n you can use option --force=1 to bypass this \n";
     foreach my $sKeys (keys %$rhConfig){
 	my $sVal = $$rhConfig{$sKeys};
-	if(($sKeys =~ /PORT/) && ($sVal<MIN_PORT) && ($sVal>MAX_PORT)) { die "Invalid port specified for $sKeys => $sVal, must be in [".MIN_PORT.":".MAX_PORT."]\n"; }
-	#TODO check if port not already in use netstat ? redeclared (duplicate) in conf ?
-	elsif($sKeys =~ /IP|HOST/){
+	if($sKeys =~ /PORT/) { #chek if valid port
+	    if(($sVal<MIN_PORT) && ($sVal>MAX_PORT)) {
+		warn "Invalid port specified for $sKeys => $sVal, must be in [".MIN_PORT.":".MAX_PORT."]\n";
+		return 0;
+	    }
+	    elsif(!($sKeys =~ /SQL/) && CheckUsedPort($sVal)) { #skip SQL service
+		warn "Port:$sVal seem to be already in use by system \n";
+		return 0;
+	    }
+	    elsif(CheckDupPort($rhConfig,$sKeys)) {
+		warn "Port:$sVal seem to be already used by other key in config \n";
+		return 0;
+	    }
+	}
+	elsif($sKeys =~ /IP|HOST/){ #chek if ip valid, can we reach it ? trough SYN ACK
 	    my $p = Net::Ping->new("syn");
-	    unless($p->ping($sVal)) { die "Invalide IP/Host, ping couldn't reach $sKeys => $sVal \n NB : ICMP may just be unallowed\n"; };
+	    my $sTest = $p->ping($sVal);
 	    $p->close();
+	    unless($sTest) {
+		print "Invalide IP/Host, ping couldn't reach $sKeys => $sVal \n NB : ICMP may just be unallowed\n";
+		return 0;
+	    }
 	}
     }
+    return 1;
+}
+
+sub CheckDupPort { my ($rhConfig,$sChkKeys) = @_;
+    my $sChkport = $$rhConfig{$sChkKeys};
+    foreach my $sKeys (keys %$rhConfig){
+	next if($sKeys eq $sChkKeys); #skip ourself
+	my $sVal = $$rhConfig{$sKeys};
+	return 1 if($sChkport eq $sVal);
+    }
+    return 0;
+}
+sub CheckUsedPort { my($sPort) = @_;
+    open PIPE,"netstat -nat |" or die $!;
+    my @line = grep { /$sPort/ } <PIPE>;
+    return scalar(@line);
 }
 
 #Db function
@@ -472,14 +514,20 @@ sub GetDesiredConf { my ($rhDefConf) = @_;
     if($sDsdFile eq DESD_CONF_FILE) { $sDesdConfFile = "../conf/".$sDsdFile; }
 
     print "Checking if there an Desiredconf file \n";
-    if(-e $sDesdConfFile) {
+    if(-e -r $sDesdConfFile) {
 	print "Found Desiredconf \n";
 	$rhUserConf = YAML::XS::LoadFile($sDesdConfFile);
-	ShowConfig($rhUserConf);
-	print "Would you like to apply those setting ? [y/n] ";
-	if(GetValidAnwser("y|o|n") =~ /n/i) {  #no take user entry
-	    print "DesiredConf not applyed, please enter config\n";
+	if(!($rhUserConf)){
+	    print "Desiredconf seem invalid or empty, please check file and relaunch setup or entry Config\n";
 	    $rhUserConf=GetValidateConf($rhDefConf);
+	}
+	else {
+	    ShowConfig($rhUserConf);
+	    print "Would you like to apply those setting ? [y/n] ";
+	    if(GetValidAnwser("y|o|n") =~ /n/i) {  #no take user entry
+		print "DesiredConf not applyed, please enter config\n";
+		$rhUserConf=GetValidateConf($rhDefConf);
+	    }
 	}
     }
     else { #no files take user entry
