@@ -393,12 +393,12 @@ void* grfio_reads(const char* fname, int* size)
 	FILELIST* entry = filelist_find(fname);
 	if( entry == NULL || entry->gentry <= 0 ) {// LocalFileCheck
 		char lfname[256];
-		int declen;
 		FILE* in;
 		grfio_localpath_create(lfname, sizeof(lfname), ( entry && entry->fnd ) ? entry->fnd : fname);
 
 		in = fopen(lfname, "rb");
 		if( in != NULL ) {
+			int declen;
 			fseek(in,0,SEEK_END);
 			declen = ftell(in);
 			fseek(in,0,SEEK_SET);
@@ -475,14 +475,14 @@ static char* decode_filename(unsigned char* buf, int len)
 /// @return true if the file should undergo full mode 0 decryption, and true otherwise.
 static bool isFullEncrypt(const char* fname)
 {
-	static const char extensions[4][5] = { ".gnd", ".gat", ".act", ".str" };
-	size_t i;
-
 	const char* ext = strrchr(fname, '.');
-	if( ext != NULL )
+	if( ext != NULL ) {
+		static const char extensions[4][5] = { ".gnd", ".gat", ".act", ".str" };
+		size_t i;
 		for( i = 0; i < ARRAYLENGTH(extensions); ++i )
 			if( strcmpi(ext, extensions[i]) == 0 )
 				return false;
+	}
 
 	return true;
 }
@@ -492,7 +492,7 @@ static bool isFullEncrypt(const char* fname)
 /// @param gentry index of the grf file name in the gentry_table
 static int grfio_entryread(const char* grfname, int gentry)
 {
-	long grf_size,list_size;
+	long grf_size;
 	unsigned char grf_header[0x2e];
 	int entry,entrys,ofs,grf_version;
 	unsigned char *grf_filelist;
@@ -518,6 +518,7 @@ static int grfio_entryread(const char* grfname, int gentry)
 	grf_version = getlong(grf_header+0x2a) >> 8;
 
 	if( grf_version == 0x01 ) {// ****** Grf version 01xx ******
+		long list_size;
 		list_size = grf_size - ftell(fp);
 		grf_filelist = (unsigned char *) aMalloc(list_size);
 		if(fread(grf_filelist,1,list_size,fp) != list_size) { ShowError("Couldn't read all grf_filelist element of %s \n", grfname); }
@@ -678,7 +679,7 @@ static bool grfio_parse_restable_row(const char* row)
 static void grfio_resourcecheck(void)
 {
 	char restable[256];
-	char *ptr, *buf;
+	char *buf;
 	int size;
 	FILE* fp;
 	int i = 0;
@@ -705,6 +706,7 @@ static void grfio_resourcecheck(void)
 	buf = (char *)grfio_reads("data\\resnametable.txt", &size);
 	if( buf != NULL )
 	{
+		char *ptr;
 		buf[size] = '\0';
 
 		ptr = buf;

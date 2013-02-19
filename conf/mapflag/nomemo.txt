@@ -496,13 +496,13 @@ force_4-1	mapflag	nomemo
 force_5-1	mapflag	nomemo
 ordeal_1-1	mapflag	nomemo
 ordeal_1-2	mapflag	nomemo
-ordeal_1-3	mapflag	nomemo
+//ordeal_1-3	mapflag	nomemo
 ordeal_2-1	mapflag	nomemo
 ordeal_2-2	mapflag	nomemo
-ordeal_2-3	mapflag	nomemo
+//ordeal_2-3	mapflag	nomemo
 ordeal_3-1	mapflag	nomemo
 ordeal_3-2	mapflag	nomemo
-ordeal_3-3	mapflag	nomemo
+//ordeal_3-3	mapflag	nomemo
 pvp_c_room	mapflag	nomemo
 quiz_00	mapflag	nomemo
 quiz_01	mapflag	nomemo

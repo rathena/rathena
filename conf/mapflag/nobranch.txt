@@ -201,13 +201,13 @@ force_1-2	mapflag	nobranch
 force_1-3	mapflag	nobranch
 ordeal_1-1	mapflag	nobranch
 ordeal_1-2	mapflag	nobranch
-ordeal_1-3	mapflag	nobranch
+//ordeal_1-3	mapflag	nobranch
 ordeal_2-1	mapflag	nobranch
 ordeal_2-2	mapflag	nobranch
-ordeal_2-3	mapflag	nobranch
+//ordeal_2-3	mapflag	nobranch
 ordeal_3-1	mapflag	nobranch
 ordeal_3-2	mapflag	nobranch
-ordeal_3-3	mapflag	nobranch
+//ordeal_3-3	mapflag	nobranch
 pvp_2vs2	mapflag	nobranch
 pvp_c_room	mapflag	nobranch
 quiz_00	mapflag	nobranch
