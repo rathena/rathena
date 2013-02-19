@@ -7532,7 +7532,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case RK_MILLENNIUMSHIELD:
 		if( sd && pc_checkskill(sd,RK_RUNEMASTERY) >= 9 )
 		{
-			short shields = (rnd()%100<20) ? 4 : ((rnd()%100<30) ? 3 : 2); // 20% for 4, 30% for 3, 50% for 2
+			int8 rate = rnd()%100;
+			int16 shields = ((rate < 20) ? 4 : (rate < 50) ? 3 : 2);
 			sc_start4(bl,type,100,skill_lv,shields,1000,0,skill_get_time(skill_id,skill_lv));
 			clif_millenniumshield(sd,shields);
 			clif_skill_nodamage(src,bl,skill_id,1,1);
