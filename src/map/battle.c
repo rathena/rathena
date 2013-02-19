@@ -1334,6 +1334,7 @@ int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int dama
 	case HW_GRAVITATION:
 	case NJ_ZENYNAGE:
 	case KO_MUCHANAGE:
+	case RK_DRAGONBREATH:
 		break;
 	default:
 		/* Uncomment if you want god-mode Emperiums at 100 defense. [Kisuka]
@@ -1436,10 +1437,13 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 		case W_1HSPEAR:
 		case W_2HSPEAR:
 			if((skill = pc_checkskill(sd,KN_SPEARMASTERY)) > 0) {
-				if(!pc_isriding(sd))
+				if(!pc_isriding(sd) || !pc_isridingdragon(sd))
 					damage += (skill * 4);
 				else
 					damage += (skill * 5);
+				// Increase damage by level of KN_SPEARMASTERY * 10
+				if(pc_checkskill(sd,RK_DRAGONTRAINING) > 0)
+					damage += (skill * 10);
 			}
 			break;
 		case W_1HAXE:
@@ -2536,36 +2540,40 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					skillratio += ((skill_lv-1)%5+1)*100;
 					break;
 				case RK_SONICWAVE:
-						skillratio += 400 + 100 * skill_lv;
-						RE_LVL_DMOD(100);
+					skillratio = (skill_lv + 5) * 100; // ATK = {((Skill Level + 5) x 100) x (1 + [(Caster's Base Level - 100) / 200])} %
+					skillratio = skillratio * (100 + (status_get_lv(src) - 100) / 2) / 100;
 					break;
 				case RK_HUNDREDSPEAR:
-						skillratio += 500 + (80 * skill_lv);
-						if( sd )
-						{
-							short index = sd->equip_index[EQI_HAND_R];
-							if( index >= 0 && sd->inventory_data[index]
-								&& sd->inventory_data[index]->type == IT_WEAPON )
-								skillratio += max(10000 - sd->inventory_data[index]->weight, 0) / 10;
-							skillratio += 50 * pc_checkskill(sd,LK_SPIRALPIERCE);
-						} // (1 + [(Casters Base Level - 100) / 200])
-						skillratio = skillratio * (100 + (status_get_lv(src)-100) / 2) / 100;
+					skillratio += 500 + (80 * skill_lv);
+					if( sd ) {
+						short index = sd->equip_index[EQI_HAND_R];
+						if( index >= 0 && sd->inventory_data[index]
+							&& sd->inventory_data[index]->type == IT_WEAPON )
+							skillratio += max(10000 - sd->inventory_data[index]->weight, 0) / 10;
+						skillratio += 50 * pc_checkskill(sd,LK_SPIRALPIERCE);
+					} // (1 + [(Casters Base Level - 100) / 200])
+					skillratio = skillratio * (100 + (status_get_lv(src) - 100) / 2) / 100;
 					break;
 				case RK_WINDCUTTER:
-						skillratio += 50 * skill_lv;
-						RE_LVL_DMOD(100);
+					skillratio = (skill_lv + 2) * 50;
+					RE_LVL_DMOD(100);
 					break;
-				case RK_IGNITIONBREAK:
+				case RK_IGNITIONBREAK: {
+						// 3x3 cell Damage = ATK [{(Skill Level x 300) x (1 + [(Caster's Base Level - 100) / 100])}] %
+						// 7x7 cell Damage = ATK [{(Skill Level x 250) x (1 + [(Caster's Base Level - 100) / 100])}] %
+						// 11x11 cell Damage = ATK [{(Skill Level x 200) x (1 + [(Caster's Base Level - 100) / 100])}] %
+						int dmg = 300; // Base maximum damage at less than 3 cells.
 						i = distance_bl(src,target);
-						if( i < 2 )
-							skillratio = 200 + 200 * skill_lv;
-						else if( i < 4 )
-							skillratio = 100 + 200 * skill_lv;
-						else
-							skillratio = 100 + 100 * skill_lv;
-						RE_LVL_DMOD(100);
-						if( sstatus->rhw.ele == ELE_FIRE )
-							skillratio +=  skillratio / 2;
+						if( i > 7 )
+							dmg -= 100; // Greather than 7 cells. (200 damage)
+						else if( i > 3 )
+							dmg -= 50; // Greater than 3 cells, less than 7. (250 damage)
+						dmg = (dmg * skill_lv) * (100 + (status_get_lv(src) - 100) / 12) / 100;
+						// Elemental check, +100% damage if your element is fire.
+						if( sstatus->rhw.ele  == ELE_FIRE )
+							dmg += skill_lv * 100 / 100;
+						skillratio = dmg;
+					}
 					break;
 				case RK_CRUSHSTRIKE:
 					if( sd )
@@ -2577,12 +2585,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					}
 					break;
 				case RK_STORMBLAST:
-					skillratio = 100 * (sd ? pc_checkskill(sd,RK_RUNEMASTERY) : 1) +  100 * (sstatus->int_ / 4);
+					skillratio = ((sd ? pc_checkskill(sd,RK_RUNEMASTERY) : 1) + (sstatus->int_ / 8)) * 100; // ATK = [{Rune Mastery Skill Level + (Caster's INT / 8)} x 100] %
 					break;
-				case RK_PHANTOMTHRUST:
-					skillratio = 50 * skill_lv + 10 * ( sd ? pc_checkskill(sd,KN_SPEARMASTERY) : 10);
-					//if( s_level > 100 ) skillratio += skillratio * s_level / 150;	// Base level bonus. This is official, but is disabled until I can confirm something with was changed or not. [Rytech]
-					//if( s_level > 100 ) skillratio += skillratio * (s_level - 100) / 200;	// Base level bonus.
+				case RK_PHANTOMTHRUST: // ATK = [{(Skill Level x 50) + (Spear Master Level x 10)} x Caster's Base Level / 150] %
+					skillratio = 50 * skill_lv + 10 * (sd ? pc_checkskill(sd,KN_SPEARMASTERY) : 5);
+					RE_LVL_DMOD(150); // Base level bonus.
 					break;
 				/**
 				 * GC Guilotine Cross
@@ -4593,8 +4600,7 @@ int battle_calc_return_damage(struct block_list* bl, struct block_list *src, int
 					*dmg = (int64)rd1 * 30 / 100; // Received damage = 30% of amplifly damage.
 					clif_skill_damage(src,bl,gettick(), status_get_amotion(src), 0, -30000, 1, RK_DEATHBOUND, sc->data[SC_DEATHBOUND]->val1,6);
 					status_change_end(bl,SC_DEATHBOUND,INVALID_TIMER);
-					rdamage += rd1;
-					if (rdamage < 1) rdamage = 1;
+					rdamage += rd1 * 70 / 100; // Target receives 70% of the amplified damage. [Rytech]
 				}
 			}
 		}
@@ -5214,7 +5220,6 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 					case RA_SENSITIVEKEEN:
 					case GN_CRAZYWEED_ATK:
 					case RK_STORMBLAST:
-					case RK_PHANTOMTHRUST:
 					case SR_RAMPAGEBLASTER:
 					case NC_COLDSLOWER:
 					case NC_SELFDESTRUCTION:

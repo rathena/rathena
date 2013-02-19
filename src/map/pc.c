@@ -7216,6 +7216,11 @@ int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
 			sp -= sp * 20 / 100;
 		}
 
+		if( sd->sc.data[SC_VITALITYACTIVATION] ){
+			hp += hp / 2; // 1.5 times
+			sp -= sp / 2;
+		}
+
 		if( sd->sc.data[SC_WATER_INSIGNIA] && sd->sc.data[SC_WATER_INSIGNIA]->val1 == 2 ) {
 			hp += hp / 10;
 			sp += sp / 10;
