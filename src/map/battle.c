@@ -1065,6 +1065,21 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 			skill_castend_damage_id(bl,src,MH_MAGMA_FLOW,sce->val1,gettick(),0);
 		}
 
+		if( (sce = sc->data[SC_STONEHARDSKIN]) && flag&BF_WEAPON && damage > 0 ) {
+			sce->val2 -= damage;
+			if( src->type == BL_PC ) {
+				TBL_PC *ssd = BL_CAST(BL_PC, src);
+				if (ssd && ssd->status.weapon != W_BOW)
+					skill_break_equip(src, EQP_WEAPON, 3000, BCT_SELF);
+			} else
+				skill_break_equip(src, EQP_WEAPON, 3000, BCT_SELF);
+			// 30% chance to reduce monster's ATK by 25% for 10 seconds.
+			if( src->type == BL_MOB )
+				sc_start(src, SC_STRIPWEAPON, 30, 0, skill_get_time2(RK_STONEHARDSKIN, sce->val1));
+			if( sce->val2 <= 0 )
+				status_change_end(bl, SC_STONEHARDSKIN, INVALID_TIMER);
+		}
+
 /**
  * In renewal steel body reduces all incoming damage by 1/10
  **/

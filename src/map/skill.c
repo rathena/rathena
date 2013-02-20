@@ -1428,6 +1428,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 			rate = battle_config.equip_natural_break_rate;
 			if( sc )
 			{
+				if(sc->data[SC_GIANTGROWTH])
+					rate += 10;
 				if(sc->data[SC_OVERTHRUST])
 					rate += 10;
 				if(sc->data[SC_MAXOVERTHRUST])
