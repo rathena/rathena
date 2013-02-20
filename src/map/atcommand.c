@@ -6904,7 +6904,9 @@ ACMD_FUNC(homlevel)
 
 	for (i = 1; i <= level && hd->exp_next; i++){
 		hd->homunculus.exp += hd->exp_next;
-		merc_hom_levelup(hd);
+		if( !merc_hom_levelup(hd) ){
+			break;
+		}
 	}
 	status_calc_homunculus(hd,0);
 	status_percent_heal(&hd->bl, 100, 100);

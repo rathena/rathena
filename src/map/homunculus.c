@@ -501,12 +501,13 @@ int merc_hom_gainexp(struct homun_data *hd,int exp)
 		return 0;
 	}
 
- 	//levelup
-	do
-	{
-		merc_hom_levelup(hd) ;
+ 	// Do the levelup(s)
+	while( hd->homunculus.exp > hd->exp_next ){
+		// Max level reached or error
+		if( !merc_hom_levelup(hd) ){
+			break;
+		}
 	}
-	while(hd->homunculus.exp > hd->exp_next && hd->exp_next != 0 );
 
 	if( hd->exp_next == 0 )
 		hd->homunculus.exp = 0 ;
@@ -999,7 +1000,10 @@ int merc_hom_shuffle(struct homun_data *hd)
 	//Level it back up
 	for (i = 1; i < lv && hd->exp_next; i++){
 		hd->homunculus.exp += hd->exp_next;
-		merc_hom_levelup(hd);
+		// Should never happen, but who knows
+		if( !merc_hom_levelup(hd) ){
+			break;
+		}
 	}
 
 	if(hd->homunculus.class_ == hd->homunculusDB->evo_class) {
