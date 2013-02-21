@@ -407,7 +407,7 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, int 
 
 	ud = unit_bl2ud(bl);
 	if( ud == NULL) return 0;
-	
+
 	if (!(status_get_mode(bl)&MD_CANMOVE))
 		return 0;
 
@@ -417,13 +417,13 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, int 
 		ud->target_to = 0;
 		return 0;
 	}
-	
+
 	ud->state.walk_easy = flag&1;
 	ud->target_to = tbl->id;
 	ud->chaserange = range; //Note that if flag&2, this SHOULD be attack-range
 	ud->state.attack_continue = flag&2?1:0; //Chase to attack.
 	unit_set_target(ud, 0);
-	
+
 	sc = status_get_sc(bl);
 	if (sc && sc->data[SC_CONFUSION]) //Randomize the target position
 		map_random_dir(bl, &ud->to_x, &ud->to_y);
@@ -435,7 +435,7 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, int 
 		set_mobstate(bl, flag&2);
 		return 1;
 	}
-	
+
 	if(DIFF_TICK(ud->canmove_tick, gettick()) > 0)
 	{	//Can't move, wait a bit before invoking the movement.
 		add_timer(ud->canmove_tick+1, unit_walktobl_sub, bl->id, ud->target);
@@ -939,7 +939,7 @@ int unit_can_move(struct block_list *bl) {
 
 		if( sc->data[SC_ANKLE] && ( battle_config.skill_trap_type || ( !map_flag_gvg(bl->m) && !unit_is_walking(bl) ) ) ) // Ankle only stops you after you're done moving
 			return 0;
-			
+
 		if (sc->opt1 > 0 && sc->opt1 != OPT1_STONEWAIT && sc->opt1 != OPT1_BURNING && !(sc->opt1 == OPT1_CRYSTALIZE && bl->type == BL_MOB))
 			return 0;
 
@@ -2085,6 +2085,11 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		case BL_PC: {
 			struct map_session_data *sd = (struct map_session_data*)bl;
 
+			if(sd->shadowform_id){
+			    struct block_list *d_bl = map_id2bl(sd->shadowform_id);
+			    if( d_bl )
+				    status_change_end(d_bl,SC__SHADOWFORM,INVALID_TIMER);
+			}
 			//Leave/reject all invitations.
 			if(sd->chatID)
 				chat_leavechat(sd,0);
