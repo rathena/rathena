@@ -1198,7 +1198,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		break;
 	case AB_ADORAMUS:
 		if( tsc && !tsc->data[SC_DECREASEAGI] ) //Prevent duplicate agi-down effect.
-			sc_start(bl, SC_ADORAMUS, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+			sc_start(bl, SC_ADORAMUS, skill_lv * 4 + (sd ? sd->status.job_level : 50) / 2, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
 	case WL_CRIMSONROCK:
 		sc_start(bl, SC_STUN, 40, skill_lv, skill_get_time(skill_id, skill_lv));
@@ -4758,7 +4758,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			//Apparently only player casted skills can be offensive like this.
 			if (sd && battle_check_undead(tstatus->race,tstatus->def_ele)) {
 				if (battle_check_target(src, bl, BCT_ENEMY) < 1) {
-				  	//Offensive heal does not works on non-enemies. [Skotlex]
+					//Offensive heal does not works on non-enemies. [Skotlex]
 					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 					return 0;
 				}
@@ -4807,9 +4807,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		{
 			int heal = skill_calc_heal(src, bl, (skill_id == AB_HIGHNESSHEAL)?AL_HEAL:skill_id, (skill_id == AB_HIGHNESSHEAL)?10:skill_lv, true);
 			int heal_get_jobexp;
-			//Highness Heal: starts at 1.5 boost + 0.5 for each level
+			//Highness Heal: starts at 1.7 boost + 0.3 for each level
 			if( skill_id == AB_HIGHNESSHEAL ) {
-				heal = heal * ( 15 + 5 * skill_lv ) / 10;
+				heal = heal * ( 17 + 3 * skill_lv ) / 10;
 			}
 			if( status_isimmune(bl) ||
 					(dstmd && (dstmd->class_ == MOBID_EMPERIUM || mob_is_battleground(dstmd))) ||
@@ -7669,8 +7669,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case AB_CLEMENTIA:
 	case AB_CANTO:
 		{
-			int bless_lv = pc_checkskill(sd,AL_BLESSING) + (sd->status.job_level / 10);
-			int agi_lv = pc_checkskill(sd,AL_INCAGI) + (sd->status.job_level / 10);
+			int bless_lv = pc_checkskill(sd,AL_BLESSING) + ((sd ? sd->status.job_level : 50) / 10);
+			int agi_lv = pc_checkskill(sd,AL_INCAGI) + ((sd ? sd->status.job_level : 50) / 10);
 			if( sd == NULL || sd->status.party_id == 0 || flag&1 )
 				clif_skill_nodamage(bl, bl, skill_id, skill_lv, sc_start(bl,type,100,
 					(skill_id == AB_CLEMENTIA)? bless_lv : (skill_id == AB_CANTO)? agi_lv : skill_lv, skill_get_time(skill_id,skill_lv)));
@@ -7687,10 +7687,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case AB_CHEAL:
-		if( sd == NULL || sd->status.party_id == 0 || flag&1 )
-		{
-			if( sd && tstatus && !battle_check_undead(tstatus->race, tstatus->def_ele) )
-			{
+		if( sd == NULL || sd->status.party_id == 0 || flag&1 ) {
+			if( sd && tstatus && !battle_check_undead(tstatus->race, tstatus->def_ele) && !tsc->data[SC_BERSERK] ) {
 				i = skill_calc_heal(src, bl, AL_HEAL, pc_checkskill(sd, AL_HEAL), true);
 
 				if( (dstsd && pc_ismadogear(dstsd)) || status_isimmune(bl))
@@ -7739,13 +7737,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case AB_LAUDARAMUS:
 		if( flag&1 || sd == NULL ) {
-			if( tsc && (tsc->data[SC_SLEEP] || tsc->data[SC_STUN] || tsc->data[SC_MANDRAGORA] || tsc->data[SC_SILENCE]) ){
+			if( tsc && (tsc->data[SC_SLEEP] || tsc->data[SC_STUN] || tsc->data[SC_MANDRAGORA] || tsc->data[SC_SILENCE] || tsc->data[SC_DEEPSLEEP]) ){
 				// Success Chance: (40 + 10 * Skill Level) %
 				if( rnd()%100 > 40+10*skill_lv )  break;
 				status_change_end(bl, SC_SLEEP, INVALID_TIMER);
 				status_change_end(bl, SC_STUN, INVALID_TIMER);
 				status_change_end(bl, SC_MANDRAGORA, INVALID_TIMER);
 				status_change_end(bl, SC_SILENCE, INVALID_TIMER);
+				status_change_end(bl, SC_DEEPSLEEP, INVALID_TIMER);
 			}else // Success rate only applies to the curing effect and not stat bonus. Bonus status only applies to non infected targets
 				clif_skill_nodamage(bl, bl, skill_id, skill_lv,
 					sc_start(bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
@@ -7757,17 +7756,20 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case AB_CLEARANCE:
 		if( flag&1 || (i = skill_get_splash(skill_id, skill_lv)) < 1 )
 		{ //As of the behavior in official server Clearance is just a super version of Dispell skill. [Jobbie]
-			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-			if((dstsd && (dstsd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER) || rnd()%100 >= 30 + 10 * skill_lv)
-			{
+
+			if((status_get_mode(bl)&MD_BOSS) || bl->type == BL_MOB || battle_check_target(src,bl,BCT_GUILD) > 0 || battle_check_target(src,bl,BCT_PARTY) > 0)
+				clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
+			else
+				break;
+
+			if((dstsd && (dstsd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER) || rnd()%100 >= 30 + 10 * skill_lv) {
 				if (sd)
 					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				break;
 			}
 			if(status_isimmune(bl) || !tsc || !tsc->count)
 				break;
-			for(i=0;i<SC_MAX;i++)
-			{
+			for( i = 0; i < SC_MAX; i++ ) {
 				if (!tsc->data[i])
 					continue;
 				switch (i) {
@@ -9258,6 +9260,10 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 			else if( ud->skill_id == RK_PHANTOMTHRUST && target->type != BL_MOB ) {
 				if( !map_flag_vs(src->m) && battle_check_target(src,target,BCT_PARTY) <= 0 )
 					break; // You can use Phantom Thurst on party members in normal maps too. [pakpil]
+			}
+			else if( ud->skill_id == AB_CLEARANCE && target->type != BL_MOB ) {
+				if( !map_flag_vs(src->m) && battle_check_target(src,target,BCT_PARTY) <= 0 )
+					break; // You can use Clearance on party members in normal maps too. [pakpil]
 			}
 
 			if(inf&BCT_ENEMY && (sc = status_get_sc(target)) &&

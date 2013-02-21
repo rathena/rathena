@@ -774,8 +774,8 @@
 2049,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		AB_EUCHARISTICA,Eucharistica
 2050,11,6,16,6,0x1,0,1,1,yes,0,0,0,magic,0,	AB_RENOVATIO,Renovatio
 2051,11,6,16,6,0x21,0,5,1,yes,0,0,0,magic,0,	AB_HIGHNESSHEAL,Highness Heal //CHECK Info shows this has magic attack.
-2052,11,6,1,0,0x1,0,5,1,yes,0,0xA00,0,magic,0,	AB_CLEARANCE,Clearance //CHECK Also shows this as a magic attack. Why?
-2053,0,6,16,0,0x1,0,5,1,yes,0,0,0,magic,0,	AB_EXPIATIO,Expiatio //CHECK Does this also give the buff to party members?
+2052,11,6,16,0,0x1,0,5,1,yes,0,0xA00,0,magic,0,	AB_CLEARANCE,Clearance //CHECK Also shows this as a magic attack. Why?
+2053,11,6,16,0,0x1,0,5,1,yes,0,0,0,magic,0,	AB_EXPIATIO,Expiatio //CHECK Does this also give the buff to party members?
 2054,0,6,4,6,0x1,0,10,1,yes,0,0,0,none,0,	AB_DUPLELIGHT,Duple Light //CHECK Had issues adding a skill level check to make the % go higher with the skills level. Will do later.
 2055,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,	AB_DUPLELIGHT_MELEE,Duple Light Melee
 2056,-1,6,1,0,0,0,10,1,no,0,0,0,magic,0,	AB_DUPLELIGHT_MAGIC,Duple Light Magic
@@ -1182,7 +1182,7 @@
 8435,11,6,1,4,0,1,1,1,no,0,0,0,weapon,0,	EL_HURRICANE,Hurricane Rage
 8436,7,6,1,4,0,0,1,1,no,0,0,0,magic,0,		EL_HURRICANE_ATK,Hurricane Rage Attack
 8437,11,8,1,4,0,1,1,-3,no,0,0,0,weapon,0,	EL_TYPOON_MIS,Typhoon Missile
-8438,11,8,1,4,0,1,1,-3,no,0,0,0,magic,0,		EL_TYPOON_MIS_ATK,Typhoon Missile Attack
+8438,11,8,1,4,0,1,1,-3,no,0,0,0,magic,0,	EL_TYPOON_MIS_ATK,Typhoon Missile Attack
 8439,5,6,1,2,0,0,1,1,no,0,0,0,weapon,0,		EL_STONE_HAMMER,Stone Hammer
 8440,3,6,1,2,0,1,1,1,no,0,0,0,weapon,0,		EL_ROCK_CRUSHER,Rock Launcher
 8441,5,6,1,2,0,1,1,1,no,0,0,0,magic,0,		EL_ROCK_CRUSHER_ATK,Rock Launcher Attack

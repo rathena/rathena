@@ -3736,8 +3736,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			 * Arch Bishop
 			 **/
 			case AB_RENOVATIO:
-				//Damage calculation from iRO wiki. [Jobbie]
-				ad.damage = (int)((15 * status_get_lv(src)) + (1.5 * sstatus->int_));
+				ad.damage = status_get_lv(src) * 10 + sstatus->int_;
 				break;
             default: {
                     if (sstatus->matk_max > sstatus->matk_min) {
@@ -3881,8 +3880,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					 * Arch Bishop
 					 **/
 					case AB_JUDEX:
-						skillratio += 180 + 20 * skill_lv;
-						if (skill_lv > 4) skillratio += 20;
+						skillratio += 200 + 20 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case AB_ADORAMUS:

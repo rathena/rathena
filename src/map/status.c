@@ -3012,12 +3012,22 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 		sd->subele[ELE_EARTH] += skill*10;
 		sd->subele[ELE_FIRE] += skill*10;
 	}
-	if((skill=pc_checkskill(sd,SA_DRAGONOLOGY))>0 ){
+	if((skill=pc_checkskill(sd,SA_DRAGONOLOGY))>0) {
 		skill = skill*4;
 		sd->right_weapon.addrace[RC_DRAGON]+=skill;
 		sd->left_weapon.addrace[RC_DRAGON]+=skill;
 		sd->magic_addrace[RC_DRAGON]+=skill;
 		sd->subrace[RC_DRAGON]+=skill;
+	}
+	if((skill = pc_checkskill(sd, AB_EUCHARISTICA)) > 0) {
+		sd->right_weapon.addrace[RC_DEMON] += skill;
+		sd->right_weapon.addele[ELE_DARK] += skill;
+		sd->left_weapon.addrace[RC_DEMON] += skill;
+		sd->left_weapon.addele[ELE_DARK] += skill;
+		sd->magic_addrace[RC_DEMON] += skill;
+		sd->magic_addele[ELE_DARK] += skill;
+		sd->subrace[RC_DEMON] += skill;
+		sd->subele[ELE_DARK] += skill;
 	}
 
 	if(sc->count){
@@ -5141,7 +5151,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 				if( sd && sc->data[SC_DANCING] )
 					val = max( val, 500 - (40 + 10 * (sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_BARDDANCER)) * pc_checkskill(sd,(sd->status.sex?BA_MUSICALLESSON:DC_DANCINGLESSON)) );
 
-				if( sc->data[SC_DECREASEAGI] )
+				if( sc->data[SC_DECREASEAGI] || sc->data[SC_ADORAMUS] )
 					val = max( val, 25 );
 				if( sc->data[SC_QUAGMIRE] || sc->data[SC_HALLUCINATIONWALK_POSTDELAY] || (sc->data[SC_GLOOMYDAY] && sc->data[SC_GLOOMYDAY]->val4) )
 					val = max( val, 50 );
@@ -6586,6 +6596,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			return 0;
 		if (sc->data[SC_QUAGMIRE] ||
 			sc->data[SC_DECREASEAGI] ||
+			sc->data[SC_ADORAMUS] ||
 			sc->option&OPTION_MADOGEAR //Adrenaline doesn't affect Mado Gear [Ind]
 		)
 			return 0;
@@ -6594,7 +6605,8 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		if(sd && !pc_check_weapontype(sd,skill_get_weapontype(BS_ADRENALINE2)))
 			return 0;
 		if (sc->data[SC_QUAGMIRE] ||
-			sc->data[SC_DECREASEAGI]
+			sc->data[SC_DECREASEAGI] ||
+			sc->data[SC_ADORAMUS]
 		)
 			return 0;
 	break;
@@ -6605,7 +6617,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	case SC_ONEHAND:
 	case SC_MERC_QUICKEN:
 	case SC_TWOHANDQUICKEN:
-		if(sc->data[SC_DECREASEAGI])
+		if(sc->data[SC_DECREASEAGI] || sc->data[SC_ADORAMUS])
 			return 0;
 
 	case SC_INCREASEAGI:
@@ -6864,6 +6876,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		break;
 	case SC_INCREASEAGI:
 		status_change_end(bl, SC_DECREASEAGI, INVALID_TIMER);
+		status_change_end(bl, SC_ADORAMUS, INVALID_TIMER);
 		break;
 	case SC_QUAGMIRE:
 		status_change_end(bl, SC_CONCENTRATE, INVALID_TIMER);
@@ -6871,6 +6884,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		status_change_end(bl, SC_WINDWALK, INVALID_TIMER);
 		//Also blocks the ones below...
 	case SC_DECREASEAGI:
+	case SC_ADORAMUS:
 		status_change_end(bl, SC_CARTBOOST, INVALID_TIMER);
 		//Also blocks the ones below...
 	case SC_DONTFORGETME:
@@ -6934,9 +6948,10 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		status_change_end(bl, SC_ASSUMPTIO, INVALID_TIMER);
 		break;
 	case SC_CARTBOOST:
-		if(sc->data[SC_DECREASEAGI])
+		if(sc->data[SC_DECREASEAGI] || sc->data[SC_ADORAMUS])
 		{	//Cancel Decrease Agi, but take no further effect [Skotlex]
 			status_change_end(bl, SC_DECREASEAGI, INVALID_TIMER);
+			status_change_end(bl, SC_ADORAMUS, INVALID_TIMER);
 			return 0;
 		}
 		break;
@@ -7192,7 +7207,10 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	{
 		case SC_DECREASEAGI:
 		case SC_INCREASEAGI:
+		case SC_ADORAMUS:
 			val2 = 2 + val1; //Agi change
+			if( type == SC_ADORAMUS )
+				sc_start(bl,SC_BLIND,val1 * 4 + (sd ? sd->status.job_level : 50) / 2,val1,skill_get_time(status_sc2skill(type),val1));
 			break;
 		case SC_ENDURE:
 			val2 = 7; // Hit-count [Celest]
@@ -7246,8 +7264,17 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val2 = val1*20; //SP gained
 			break;
 		case SC_KYRIE:
+			if( sd )
+				val1 = min(val1,pc_checkskill(sd,PR_KYRIE)); // use skill level to determine barrier health.
 			val2 = (int64)status->max_hp * (val1 * 2 + 10) / 100; //%Max HP to absorb
-			val3 = (val1 / 2 + 5); //Hits
+			// val4 holds current amount of party members when casting Praefatio
+			// as Praefatio's barrier has more health and blocks more hits than Kyrie Elesion.
+			if( val4 < 1 ) //== PR_KYRIE
+				val3 = (val1 / 2 + 5);
+			else { //== AB_PRAEFATIO
+				val2 += val4 * 2; //Increase barrier strength per party member.
+				val3 = 6 + val1;
+			}
 			break;
 		case SC_MAGICPOWER:
 			//val1: Skill lv
