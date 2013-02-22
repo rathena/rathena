@@ -3713,8 +3713,6 @@ void do_shutdown(void)
 
 int do_init(int argc, char *argv[])
 {
-	int i;
-
 #ifdef GCOLLECT
 	GC_enable_incremental();
 #endif
@@ -3846,5 +3844,5 @@ const char* map_msg_txt(int msg_number){
 	return _msg_txt(msg_number,MAX_MSG,msg_table);
 }
 void map_do_final_msg(void){
-	return _do_final_msg(MAX_MSG,msg_table);
+	_do_final_msg(MAX_MSG,msg_table);
 }

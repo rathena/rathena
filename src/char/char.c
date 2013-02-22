@@ -4862,7 +4862,7 @@ const char* char_msg_txt(int msg_number){
 	return _msg_txt(msg_number,CHAR_MAX_MSG,msg_table);
 }
 void char_do_final_msg(void){
-	return _do_final_msg(CHAR_MAX_MSG,msg_table);
+	_do_final_msg(CHAR_MAX_MSG,msg_table);
 }
 
 /*======================================================
