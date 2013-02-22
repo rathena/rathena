@@ -10,6 +10,7 @@
 #include "../common/socket.h"
 #include "../common/strlib.h"
 #include "../common/timer.h"
+#include "../common/cli.h"
 #include "account.h"
 #include "ipban.h"
 #include "login.h"
@@ -184,7 +185,7 @@ static int online_data_cleanup(int tid, unsigned int tick, int id, intptr_t data
 {
 	online_db->foreach(online_db, online_data_cleanup_sub);
 	return 0;
-} 
+}
 
 
 //--------------------------------------------------------------------
@@ -282,7 +283,7 @@ bool check_password(const char* md5key, int passwdenc, const char* passwd, const
 	{
 		// password mode set to 1 -> md5(md5key, refpass) enable with <passwordencrypt></passwordencrypt>
 		// password mode set to 2 -> md5(refpass, md5key) enable with <passwordencrypt2></passwordencrypt2>
-		
+
 		return ((passwdenc&0x01) && check_encrypted(md5key, refpass, passwd)) ||
 		       ((passwdenc&0x02) && check_encrypted(refpass, md5key, passwd));
 	}
@@ -1022,7 +1023,7 @@ int mmo_auth(struct login_session_data* sd, bool isServer) {
 				return result;// Failed to make account. [Skotlex].
 		}
 	}
-	
+
 	if( !accounts->load_str(accounts, &acc, sd->userid) ) {
 		ShowNotice("Unknown account (account: %s, received pass: %s, ip: %s)\n", sd->userid, sd->passwd, ip);
 		return 0; // 0 = Unregistered ID
@@ -1049,7 +1050,7 @@ int mmo_auth(struct login_session_data* sd, bool isServer) {
 		ShowNotice("Connection refused (account: %s, pass: %s, state: %d, ip: %s)\n", sd->userid, sd->passwd, acc.state, ip);
 		return acc.state - 1;
 	}
-	
+
 	if( login_config.client_hash_check && !isServer ) {
 		struct client_hash_node *node = login_config.client_hash_nodes;
 		bool match = false;
@@ -1137,7 +1138,7 @@ void login_auth_ok(struct login_session_data* sd)
 		WFIFOW(fd,0) = 0x81;
 		WFIFOB(fd,2) = 1; // 01 = Server closed
 		WFIFOSET(fd,3);
-		return;		
+		return;
 	}
 
 	server_num = 0;
@@ -1758,7 +1759,7 @@ void do_final(void)
 	accounts = NULL; // destroyed in account_engines
 	online_db->destroy(online_db, NULL);
 	auth_db->destroy(auth_db, NULL);
-	
+
 	for( i = 0; i < ARRAYLENGTH(server); ++i )
 		chrif_server_destroy(i);
 
@@ -1815,11 +1816,17 @@ int do_init(int argc, char** argv)
 
 	// read login-server configuration
 	login_set_defaults();
-	login_config_read((argc > 1) ? argv[1] : LOGIN_CONF_NAME);
-	login_lan_config_read((argc > 2) ? argv[2] : LAN_CONF_NAME);
+
+	LOGIN_CONF_NAME = "conf/login_athena.conf";
+	LAN_CONF_NAME = "conf/subnet_athena.conf";
+
+	cli_get_options(argc,argv);
+
+	login_config_read(LOGIN_CONF_NAME);
+	login_lan_config_read(LAN_CONF_NAME);
 
 	rnd_init();
-	
+
 	for( i = 0; i < ARRAYLENGTH(server); ++i )
 		chrif_server_init(i);
 
@@ -1872,7 +1879,7 @@ int do_init(int argc, char** argv)
 		ShowFatalError("Failed to bind to port '"CL_WHITE"%d"CL_RESET"'\n",login_config.login_port);
 		exit(EXIT_FAILURE);
 	}
-	
+
 	if( runflag != CORE_ST_STOP ) {
 		shutdown_callback = do_shutdown;
 		runflag = LOGINSERVER_ST_RUNNING;
@@ -1882,4 +1889,20 @@ int do_init(int argc, char** argv)
 	login_log(0, "login server", 100, "login server started");
 
 	return 0;
+}
+/*======================================================
+ * Login-Server help option info
+ *------------------------------------------------------*/
+void display_helpscreen(bool do_exit)
+{
+	ShowInfo("Usage: %s [options]\n", SERVER_NAME);
+	ShowInfo("\n");
+	ShowInfo("Options:\n");
+	ShowInfo("  -?, -h [--help]\t\tDisplays this help screen.\n");
+	ShowInfo("  -v [--version]\t\tDisplays the server's version.\n");
+	ShowInfo("  --run-once\t\t\tCloses server after loading (testing).\n");
+	ShowInfo("  --login-config <file>\t\tAlternative login-server configuration.\n");
+	ShowInfo("  --lan-config <file>\t\tAlternative lag configuration.\n");
+	if( do_exit )
+		exit(EXIT_SUCCESS);
 }

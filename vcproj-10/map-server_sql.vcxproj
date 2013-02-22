@@ -158,6 +158,7 @@
     <ClInclude Include="..\src\common\timer.h" />
     <ClInclude Include="..\src\common\utils.h" />
     <ClInclude Include="..\src\common\winapi.h" />
+    <ClInclude Include="..\src\common\cli.h" />
     <ClInclude Include="..\src\map\atcommand.h" />
     <ClInclude Include="..\src\map\battle.h" />
     <ClInclude Include="..\src\map\battleground.h" />
@@ -228,6 +229,7 @@
     <ClCompile Include="..\src\common\thread.c" />
     <ClCompile Include="..\src\common\timer.c" />
     <ClCompile Include="..\src\common\utils.c" />
+    <ClCompile Include="..\src\common\cli.c" />
     <ClCompile Include="..\src\map\atcommand.c" />
     <ClCompile Include="..\src\map\battle.c" />
     <ClCompile Include="..\src\map\battleground.c" />

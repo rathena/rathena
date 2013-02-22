@@ -162,6 +162,7 @@
     <ClInclude Include="..\src\common\strlib.h" />
     <ClInclude Include="..\src\common\timer.h" />
     <ClInclude Include="..\src\common\utils.h" />
+    <ClInclude Include="..\src\common\cli.h" />
     <ClInclude Include="..\3rdparty\mt19937ar\mt19937ar.h" />
   </ItemGroup>
   <ItemGroup>
@@ -191,6 +192,7 @@
     <ClCompile Include="..\src\common\strlib.c" />
     <ClCompile Include="..\src\common\timer.c" />
     <ClCompile Include="..\src\common\utils.c" />
+    <ClCompile Include="..\src\common\cli.c" />
     <ClCompile Include="..\3rdparty\mt19937ar\mt19937ar.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

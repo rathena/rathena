@@ -12,6 +12,7 @@
 #include "../common/random.h"
 #include "../common/strlib.h"
 #include "../common/utils.h"
+#include "../common/cli.h"
 
 #include "map.h"
 #include "path.h"
@@ -83,15 +84,6 @@ Sql* logmysql_handle;
 // This param using for sending mainchat
 // messages like whispers to this nick. [LuzZza]
 char main_chat_nick[16] = "Main";
-
-char *INTER_CONF_NAME;
-char *LOG_CONF_NAME;
-char *MAP_CONF_NAME;
-char *BATTLE_CONF_FILENAME;
-char *ATCOMMAND_CONF_FILENAME;
-char *SCRIPT_CONF_NAME;
-char *MSG_CONF_NAME;
-char *GRF_PATH_FILENAME;
 
 // DBMap declaartion
 static DBMap* id_db=NULL; // int id -> struct block_list*
@@ -3629,7 +3621,7 @@ void do_final(void)
 	iwall_db->destroy(iwall_db, NULL);
 	regen_db->destroy(regen_db, NULL);
 
-    map_sql_close();
+	map_sql_close();
 
 	ShowStatus("Finished.\n");
 }
@@ -3666,9 +3658,9 @@ void do_abort(void)
 }
 
 /*======================================================
- * Map-Server Version Screen [MC Cameri]
+ * Map-Server help options screen
  *------------------------------------------------------*/
-static void map_helpscreen(bool do_exit)
+void display_helpscreen(bool do_exit)
 {
 	ShowInfo("Usage: %s [options]\n", SERVER_NAME);
 	ShowInfo("\n");
@@ -3684,19 +3676,6 @@ static void map_helpscreen(bool do_exit)
 	ShowInfo("  --grf-path <file>\t\tAlternative GRF path configuration.\n");
 	ShowInfo("  --inter-config <file>\t\tAlternative inter-server configuration.\n");
 	ShowInfo("  --log-config <file>\t\tAlternative logging configuration.\n");
-	if( do_exit )
-		exit(EXIT_SUCCESS);
-}
-
-/*======================================================
- * Map-Server Version Screen [MC Cameri]
- *------------------------------------------------------*/
-static void map_versionscreen(bool do_exit)
-{
-	ShowInfo(CL_WHITE"rAthena SVN version: %s" CL_RESET"\n", get_svn_revision());
-	ShowInfo(CL_GREEN"Website/Forum:"CL_RESET"\thttp://rathena.org/\n");
-	ShowInfo(CL_GREEN"IRC Channel:"CL_RESET"\tirc://irc.rathena.net/#rathena\n");
-	ShowInfo("Open "CL_WHITE"readme.txt"CL_RESET" for more information.\n");
 	if( do_exit )
 		exit(EXIT_SUCCESS);
 }
@@ -3729,17 +3708,6 @@ void do_shutdown(void)
 	}
 }
 
-static bool map_arg_next_value(const char* option, int i, int argc)
-{
-	if( i >= argc-1 )
-	{
-		ShowWarning("Missing value for option '%s'.\n", option);
-		return false;
-	}
-
-	return true;
-}
-
 int do_init(int argc, char *argv[])
 {
 	int i;
@@ -3757,94 +3725,9 @@ int do_init(int argc, char *argv[])
 	MSG_CONF_NAME = "conf/msg_athena.conf";
 	GRF_PATH_FILENAME = "conf/grf-files.txt";
 
+	cli_get_options(argc,argv);
+
 	rnd_init();
-
-	for( i = 1; i < argc ; i++ )
-	{
-		const char* arg = argv[i];
-
-		if( arg[0] != '-' && ( arg[0] != '/' || arg[1] == '-' ) )
-		{// -, -- and /
-			ShowError("Unknown option '%s'.\n", argv[i]);
-			exit(EXIT_FAILURE);
-		}
-		else if( (++arg)[0] == '-' )
-		{// long option
-			arg++;
-
-			if( strcmp(arg, "help") == 0 )
-			{
-				map_helpscreen(true);
-			}
-			else if( strcmp(arg, "version") == 0 )
-			{
-				map_versionscreen(true);
-			}
-			else if( strcmp(arg, "map-config") == 0 )
-			{
-				if( map_arg_next_value(arg, i, argc) )
-					MAP_CONF_NAME = argv[++i];
-			}
-			else if( strcmp(arg, "battle-config") == 0 )
-			{
-				if( map_arg_next_value(arg, i, argc) )
-					BATTLE_CONF_FILENAME = argv[++i];
-			}
-			else if( strcmp(arg, "atcommand-config") == 0 )
-			{
-				if( map_arg_next_value(arg, i, argc) )
-					ATCOMMAND_CONF_FILENAME = argv[++i];
-			}
-			else if( strcmp(arg, "script-config") == 0 )
-			{
-				if( map_arg_next_value(arg, i, argc) )
-					SCRIPT_CONF_NAME = argv[++i];
-			}
-			else if( strcmp(arg, "msg-config") == 0 )
-			{
-				if( map_arg_next_value(arg, i, argc) )
-					MSG_CONF_NAME = argv[++i];
-			}
-			else if( strcmp(arg, "grf-path-file") == 0 )
-			{
-				if( map_arg_next_value(arg, i, argc) )
-					GRF_PATH_FILENAME = argv[++i];
-			}
-			else if( strcmp(arg, "inter-config") == 0 )
-			{
-				if( map_arg_next_value(arg, i, argc) )
-					INTER_CONF_NAME = argv[++i];
-			}
-			else if( strcmp(arg, "log-config") == 0 )
-			{
-				if( map_arg_next_value(arg, i, argc) )
-					LOG_CONF_NAME = argv[++i];
-			}
-			else if( strcmp(arg, "run-once") == 0 ) // close the map-server as soon as its done.. for testing [Celest]
-			{
-				runflag = CORE_ST_STOP;
-			}
-			else
-			{
-				ShowError("Unknown option '%s'.\n", argv[i]);
-				exit(EXIT_FAILURE);
-			}
-		}
-		else switch( arg[0] )
-		{// short option
-			case '?':
-			case 'h':
-				map_helpscreen(true);
-				break;
-			case 'v':
-				map_versionscreen(true);
-				break;
-			default:
-				ShowError("Unknown option '%s'.\n", argv[i]);
-				exit(EXIT_FAILURE);
-		}
-	}
-
 	map_config_read(MAP_CONF_NAME);
 	/* only temporary until sirius's datapack patch is complete  */
 

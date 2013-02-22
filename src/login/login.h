@@ -14,9 +14,6 @@ enum E_LOGINSERVER_ST
 	LOGINSERVER_ST_LAST
 };
 
-#define LOGIN_CONF_NAME "conf/login_athena.conf"
-#define LAN_CONF_NAME "conf/subnet_athena.conf"
-
 // supported encryption types: 1- passwordencrypt, 2- passwordencrypt2, 3- both
 #define PASSWORDENC 3
 

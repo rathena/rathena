@@ -12,6 +12,7 @@
 #include "../common/strlib.h"
 #include "../common/timer.h"
 #include "../common/utils.h"
+#include "../common/cli.h"
 #include "int_guild.h"
 #include "int_homun.h"
 #include "int_mercenary.h"
@@ -28,11 +29,6 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-// private declarations
-#define CHAR_CONF_NAME	"conf/char_athena.conf"
-#define LAN_CONF_NAME	"conf/subnet_athena.conf"
-#define SQL_CONF_NAME	"conf/inter_athena.conf"
 
 char char_db[256] = "char";
 char scdata_db[256] = "sc_data";
@@ -835,7 +831,7 @@ int memitemdata_to_sql(const struct item items[], int max, int id, int tableswit
 		for( j = 0; j < MAX_SLOTS; ++j )
 			StringBuf_Printf(&buf, ", '%d'", items[i].card[j]);
 		StringBuf_AppendStr(&buf, ")");
-		
+
 		updateLastUid(items[i].unique_id); // Unique Non Stackable Item ID
 	}
 	dbUpdateUid(sql_handle); // Unique Non Stackable Item ID
@@ -4015,11 +4011,11 @@ int parse_char(int fd)
 				char esc_name[NAME_LENGTH*2+1];
 				safestrncpy(name, (char *)RFIFOP(fd,6), NAME_LENGTH);
 				RFIFOSKIP(fd,30);
-				
+
 				ARR_FIND( 0, MAX_CHARS, i, sd->found_char[i] == cid );
 				if( i == MAX_CHARS )
 					break;
-				
+
 				normalize_name(name,TRIM_CHARS);
 				Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
 				if( !check_char_name(name,esc_name) ) {
@@ -4027,7 +4023,7 @@ int parse_char(int fd)
 					safestrncpy(sd->new_name, name, NAME_LENGTH);
 				} else
 					i = 0;
-				
+
 				WFIFOHEAD(fd, 4);
 				WFIFOW(fd,0) = 0x28e;
 				WFIFOW(fd,2) = i;
@@ -4761,8 +4757,14 @@ int do_init(int argc, char **argv)
 	mapindex_init();
 	start_point.map = mapindex_name2id("new_zone01");
 
-	char_config_read((argc < 2) ? CHAR_CONF_NAME : argv[1]);
-	char_lan_config_read((argc > 3) ? argv[3] : LAN_CONF_NAME);
+	CHAR_CONF_NAME = "conf/char_athena.conf";
+	LAN_CONF_NAME =	"conf/subnet_athena.conf";
+	SQL_CONF_NAME =	"conf/inter_athena.conf";
+
+	cli_get_options(argc,argv);
+
+	char_config_read(CHAR_CONF_NAME);
+	char_lan_config_read(LAN_CONF_NAME);
 	sql_config_read(SQL_CONF_NAME);
 
 	if (strcmp(userid, "s1")==0 && strcmp(passwd, "p1")==0) {
@@ -4845,4 +4847,21 @@ int do_init(int argc, char **argv)
 	}
 
 	return 0;
+}
+/*======================================================
+ * Login-Server help option info
+ *------------------------------------------------------*/
+void display_helpscreen(bool do_exit)
+{
+	ShowInfo("Usage: %s [options]\n", SERVER_NAME);
+	ShowInfo("\n");
+	ShowInfo("Options:\n");
+	ShowInfo("  -?, -h [--help]\t\tDisplays this help screen.\n");
+	ShowInfo("  -v [--version]\t\tDisplays the server's version.\n");
+	ShowInfo("  --run-once\t\t\tCloses server after loading (testing).\n");
+	ShowInfo("  --char-config <file>\t\tAlternative char-server configuration.\n");
+	ShowInfo("  --lan-config <file>\t\tAlternative lag configuration.\n");
+	ShowInfo("  --inter-config <file>\t\tAlternative inter-server configuration.\n");
+	if( do_exit )
+		exit(EXIT_SUCCESS);
 }

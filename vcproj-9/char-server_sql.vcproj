@@ -428,6 +428,14 @@
 				RelativePath="..\src\common\winapi.h"
 				>
 			</File>
+			<File
+				RelativePath="..\src\common\cli.h"
+				>
+			</File>	
+			<File
+				RelativePath="..\src\common\cli.c"
+				>
+			</File>						
 		</Filter>
 		<Filter
 			Name="char_sql"
