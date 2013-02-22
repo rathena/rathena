@@ -459,6 +459,15 @@
 				RelativePath="..\src\common\cli.c"
 				>
 			</File>						
+			<File
+				RelativePath="..\src\common\msg_conf.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\msg_conf.c"
+				>
+			</File>				
+			
 		</Filter>
 		<Filter
 			Name="map_sql"

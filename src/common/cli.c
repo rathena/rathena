@@ -62,6 +62,9 @@ int cli_get_options(int argc, char ** argv)
 		display_helpscreen(true);
 	    } else if (strcmp(arg, "version") == 0) {
 		display_versionscreen(true);
+	    } else if (strcmp(arg, "msg-config") == 0) {
+		    if (opt_has_next_value(arg, i, argc))
+			MSG_CONF_NAME = argv[++i];
 	    } else if (strcmp(arg, "run-once") == 0) // close the map-server as soon as its done.. for testing [Celest]
 	    {
 		runflag = CORE_ST_STOP;
@@ -111,10 +114,8 @@ int cli_get_options(int argc, char ** argv)
 		} else if (strcmp(arg, "log-config") == 0) {
 		    if (opt_has_next_value(arg, i, argc))
 			LOG_CONF_NAME = argv[++i];
-		} else if (strcmp(arg, "msg-config") == 0) {
-		    if (opt_has_next_value(arg, i, argc))
-			MSG_CONF_NAME = argv[++i];
-		} else {
+		}
+		else {
 		    ShowError("Unknown option '%s'.\n", argv[i]);
 		    exit(EXIT_FAILURE);
 		}

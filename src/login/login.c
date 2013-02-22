@@ -10,6 +10,7 @@
 #include "../common/socket.h"
 #include "../common/strlib.h"
 #include "../common/timer.h"
+#include "../common/msg_conf.h"
 #include "../common/cli.h"
 #include "account.h"
 #include "ipban.h"
@@ -20,6 +21,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define LOGIN_MAX_MSG 30
+static char* msg_table[LOGIN_MAX_MSG]; // Login Server messages_conf
 struct Login_Config login_config;
 
 int login_fd; // login server socket
@@ -1239,6 +1242,32 @@ void login_auth_ok(struct login_session_data* sd)
 	}
 }
 
+/* Log the result of a failed connection attempt by sd
+ * result: nb (msg define in conf)
+    0 = Unregistered ID
+    1 = Incorrect Password
+    2 = This ID is expired
+    3 = Rejected from Server
+    4 = You have been blocked by the GM Team
+    5 = Your Game's EXE file is not the latest version
+    6 = Your are Prohibited to log in until %s
+    7 = Server is jammed due to over populated
+    8 = No more accounts may be connected from this company
+    9 = MSI_REFUSE_BAN_BY_DBA
+    10 = MSI_REFUSE_EMAIL_NOT_CONFIRMED
+    11 = MSI_REFUSE_BAN_BY_GM
+    12 = MSI_REFUSE_TEMP_BAN_FOR_DBWORK
+    13 = MSI_REFUSE_SELF_LOCK
+    14 = MSI_REFUSE_NOT_PERMITTED_GROUP
+    15 = MSI_REFUSE_NOT_PERMITTED_GROUP
+    99 = This ID has been totally erased
+    100 = Login information remains at %s
+    101 = Account has been locked for a hacking investigation. Please contact the GM Team for more information
+    102 = This account has been temporarily prohibited from login due to a bug-related investigation
+    103 = This character is being deleted. Login is temporarily unavailable for the time being
+    104 = This character is being deleted. Login is temporarily unavailable for the time being
+     default = Unknown Error.
+ */
 void login_auth_failed(struct login_session_data* sd, int result)
 {
 	int fd = sd->fd;
@@ -1246,34 +1275,12 @@ void login_auth_failed(struct login_session_data* sd, int result)
 
 	if (login_config.log_login)
 	{
-		const char* error;
-		switch( result ) {
-		case   0: error = "Unregistered ID."; break; // 0 = Unregistered ID
-		case   1: error = "Incorrect Password."; break; // 1 = Incorrect Password
-		case   2: error = "Account Expired."; break; // 2 = This ID is expired
-		case   3: error = "Rejected from server."; break; // 3 = Rejected from Server
-		case   4: error = "Blocked by GM."; break; // 4 = You have been blocked by the GM Team
-		case   5: error = "Not latest game EXE."; break; // 5 = Your Game's EXE file is not the latest version
-		case   6: error = "Banned."; break; // 6 = Your are Prohibited to log in until %s
-		case   7: error = "Server Over-population."; break; // 7 = Server is jammed due to over populated
-		case   8: error = "Account limit from company"; break; // 8 = No more accounts may be connected from this company
-		case   9: error = "Ban by DBA"; break; // 9 = MSI_REFUSE_BAN_BY_DBA
-		case  10: error = "Email not confirmed"; break; // 10 = MSI_REFUSE_EMAIL_NOT_CONFIRMED
-		case  11: error = "Ban by GM"; break; // 11 = MSI_REFUSE_BAN_BY_GM
-		case  12: error = "Working in DB"; break; // 12 = MSI_REFUSE_TEMP_BAN_FOR_DBWORK
-		case  13: error = "Self Lock"; break; // 13 = MSI_REFUSE_SELF_LOCK
-		case  14: error = "Not Permitted Group"; break; // 14 = MSI_REFUSE_NOT_PERMITTED_GROUP
-		case  15: error = "Not Permitted Group"; break; // 15 = MSI_REFUSE_NOT_PERMITTED_GROUP
-		case  99: error = "Account gone."; break; // 99 = This ID has been totally erased
-		case 100: error = "Login info remains."; break; // 100 = Login information remains at %s
-		case 101: error = "Hacking investigation."; break; // 101 = Account has been locked for a hacking investigation. Please contact the GM Team for more information
-		case 102: error = "Bug investigation."; break; // 102 = This account has been temporarily prohibited from login due to a bug-related investigation
-		case 103: error = "Deleting char."; break; // 103 = This character is being deleted. Login is temporarily unavailable for the time being
-		case 104: error = "Deleting spouse char."; break; // 104 = This character is being deleted. Login is temporarily unavailable for the time being
-		default : error = "Unknown Error."; break;
-		}
-
-		login_log(ip, sd->userid, result, error);
+		if(result >= 0 && result <= 15)
+		    login_log(ip, sd->userid, result, msg_txt(result));
+		else if(result >= 99 && result <= 104)
+		    login_log(ip, sd->userid, result, msg_txt(result-83)); //-83 offset
+		else
+		    login_log(ip, sd->userid, result, msg_txt(22)); //unknow error
 	}
 
 	if( result == 1 && login_config.dynamic_pass_failure_ban )
@@ -1745,6 +1752,7 @@ void do_final(void)
 	if( login_config.log_login )
 		loginlog_final();
 
+	do_final_msg();
 	ipban_final();
 
 	for( i = 0; account_engines[i].constructor; ++i )
@@ -1819,9 +1827,11 @@ int do_init(int argc, char** argv)
 
 	LOGIN_CONF_NAME = "conf/login_athena.conf";
 	LAN_CONF_NAME = "conf/subnet_athena.conf";
+	MSG_CONF_NAME = "conf/msg_conf/login_msg.conf";
 
 	cli_get_options(argc,argv);
 
+	msg_config_read(MSG_CONF_NAME);
 	login_config_read(LOGIN_CONF_NAME);
 	login_lan_config_read(LAN_CONF_NAME);
 
@@ -1890,6 +1900,17 @@ int do_init(int argc, char** argv)
 
 	return 0;
 }
+
+int login_msg_config_read(char *cfgName){
+	return _msg_config_read(cfgName,LOGIN_MAX_MSG,msg_table);
+}
+const char* login_msg_txt(int msg_number){
+	return _msg_txt(msg_number,LOGIN_MAX_MSG,msg_table);
+}
+void login_do_final_msg(void){
+	return _do_final_msg(LOGIN_MAX_MSG,msg_table);
+}
+
 /*======================================================
  * Login-Server help option info
  *------------------------------------------------------*/
@@ -1903,6 +1924,7 @@ void display_helpscreen(bool do_exit)
 	ShowInfo("  --run-once\t\t\tCloses server after loading (testing).\n");
 	ShowInfo("  --login-config <file>\t\tAlternative login-server configuration.\n");
 	ShowInfo("  --lan-config <file>\t\tAlternative lag configuration.\n");
+	ShowInfo("  --msg-config <file>\t\tAlternative message configuration.\n");
 	if( do_exit )
 		exit(EXIT_SUCCESS);
 }

@@ -6,6 +6,7 @@
 
 #include "../config/core.h"
 #include "../common/core.h" // CORE_ST_LAST
+#include "../common/msg_conf.h"
 
 enum E_CHARSERVER_ST
 {
@@ -19,6 +20,13 @@ struct mmo_charstatus;
 #define MAX_MAP_SERVERS 30
 
 #define DEFAULT_AUTOSAVE_INTERVAL 300*1000
+
+#define msg_config_read(cfgName) char_msg_config_read(cfgName)
+#define msg_txt(msg_number) char_msg_txt(msg_number)
+#define do_final_msg() char_do_final_msg()
+int char_msg_config_read(char *cfgName);
+const char* char_msg_txt(int msg_number);
+void char_do_final_msg(void);
 
 enum {
 	TABLE_INVENTORY,

@@ -67,70 +67,6 @@ struct WisData {
 static DBMap* wis_db = NULL; // int wis_id -> struct WisData*
 static int wis_dellist[WISDELLIST_MAX], wis_delnum;
 
-#define MAX_JOB_NAMES 106
-static char* msg_table[MAX_JOB_NAMES]; //  messages 550 ~ 655 are job names
-
-const char* msg_txt(int msg_number) {
-	msg_number -= 550;
-	if (msg_number >= 0 && msg_number < MAX_JOB_NAMES &&
-	    msg_table[msg_number] != NULL && msg_table[msg_number][0] != '\0')
-		return msg_table[msg_number];
-
-	return "Unknown";
-}
-
-/*==========================================
- * Read Message Data -- at char server we only keep job names.
- *------------------------------------------*/
-int msg_config_read(const char* cfgName) {
-	int msg_number;
-	char line[1024], w1[1024], w2[1024];
-	FILE *fp;
-	static int called = 1;
-
-	if ((fp = fopen(cfgName, "r")) == NULL) {
-		ShowError("Messages file not found: %s\n", cfgName);
-		return 1;
-	}
-
-	if ((--called) == 0)
-		memset(msg_table, 0, sizeof(msg_table[0]) * MAX_JOB_NAMES);
-
-	while(fgets(line, sizeof(line), fp) ) {
-		if (line[0] == '/' && line[1] == '/')
-			continue;
-		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) != 2)
-			continue;
-
-		if (strcmpi(w1, "import") == 0)
-			msg_config_read(w2);
-		else {
-			msg_number = atoi(w1);
-			if( msg_number < 550 || msg_number > (550+MAX_JOB_NAMES) )
-				continue;
-			msg_number -= 550;
-			if (msg_number >= 0 && msg_number < MAX_JOB_NAMES) {
-				if (msg_table[msg_number] != NULL)
-					aFree(msg_table[msg_number]);
-				msg_table[msg_number] = (char *)aMalloc((strlen(w2) + 1)*sizeof (char));
-				strcpy(msg_table[msg_number],w2);
-			}
-		}
-	}
-
-	fclose(fp);
-
-	return 0;
-}
-
-/*==========================================
- * Cleanup Message Data
- *------------------------------------------*/
-void do_final_msg(void) {
-	int i;
-	for (i = 0; i < MAX_JOB_NAMES; i++)
-		aFree(msg_table[i]);
-}
 /* from pc.c due to @accinfo. any ideas to replace this crap are more than welcome. */
 const char* job_name(int class_) {
 	switch (class_) {
@@ -141,7 +77,7 @@ const char* job_name(int class_) {
 		case JOB_ACOLYTE:
 		case JOB_MERCHANT:
 		case JOB_THIEF:
-			return msg_txt(550 - JOB_NOVICE+class_);
+			return msg_txt(JOB_NOVICE+class_);
 
 		case JOB_KNIGHT:
 		case JOB_PRIEST:
@@ -149,10 +85,10 @@ const char* job_name(int class_) {
 		case JOB_BLACKSMITH:
 		case JOB_HUNTER:
 		case JOB_ASSASSIN:
-			return msg_txt(557 - JOB_KNIGHT+class_);
+			return msg_txt(7 - JOB_KNIGHT+class_);
 
 		case JOB_KNIGHT2:
-			return msg_txt(557);
+			return msg_txt(7);
 
 		case JOB_CRUSADER:
 		case JOB_MONK:
@@ -161,20 +97,20 @@ const char* job_name(int class_) {
 		case JOB_ALCHEMIST:
 		case JOB_BARD:
 		case JOB_DANCER:
-			return msg_txt(563 - JOB_CRUSADER+class_);
+			return msg_txt(13 - JOB_CRUSADER+class_);
 
 		case JOB_CRUSADER2:
-			return msg_txt(563);
+			return msg_txt(13);
 
 		case JOB_WEDDING:
 		case JOB_SUPER_NOVICE:
 		case JOB_GUNSLINGER:
 		case JOB_NINJA:
 		case JOB_XMAS:
-			return msg_txt(570 - JOB_WEDDING+class_);
+			return msg_txt(20 - JOB_WEDDING+class_);
 
 		case JOB_SUMMER:
-			return msg_txt(621);
+			return msg_txt(71);
 
 		case JOB_NOVICE_HIGH:
 		case JOB_SWORDMAN_HIGH:
@@ -183,7 +119,7 @@ const char* job_name(int class_) {
 		case JOB_ACOLYTE_HIGH:
 		case JOB_MERCHANT_HIGH:
 		case JOB_THIEF_HIGH:
-			return msg_txt(575 - JOB_NOVICE_HIGH+class_);
+			return msg_txt(25 - JOB_NOVICE_HIGH+class_);
 
 		case JOB_LORD_KNIGHT:
 		case JOB_HIGH_PRIEST:
@@ -191,10 +127,10 @@ const char* job_name(int class_) {
 		case JOB_WHITESMITH:
 		case JOB_SNIPER:
 		case JOB_ASSASSIN_CROSS:
-			return msg_txt(582 - JOB_LORD_KNIGHT+class_);
+			return msg_txt(32 - JOB_LORD_KNIGHT+class_);
 
 		case JOB_LORD_KNIGHT2:
-			return msg_txt(582);
+			return msg_txt(32);
 
 		case JOB_PALADIN:
 		case JOB_CHAMPION:
@@ -203,10 +139,10 @@ const char* job_name(int class_) {
 		case JOB_CREATOR:
 		case JOB_CLOWN:
 		case JOB_GYPSY:
-			return msg_txt(588 - JOB_PALADIN + class_);
+			return msg_txt(38 - JOB_PALADIN + class_);
 
 		case JOB_PALADIN2:
-			return msg_txt(588);
+			return msg_txt(38);
 
 		case JOB_BABY:
 		case JOB_BABY_SWORDMAN:
@@ -215,7 +151,7 @@ const char* job_name(int class_) {
 		case JOB_BABY_ACOLYTE:
 		case JOB_BABY_MERCHANT:
 		case JOB_BABY_THIEF:
-			return msg_txt(595 - JOB_BABY + class_);
+			return msg_txt(45 - JOB_BABY + class_);
 
 		case JOB_BABY_KNIGHT:
 		case JOB_BABY_PRIEST:
@@ -223,10 +159,10 @@ const char* job_name(int class_) {
 		case JOB_BABY_BLACKSMITH:
 		case JOB_BABY_HUNTER:
 		case JOB_BABY_ASSASSIN:
-			return msg_txt(602 - JOB_BABY_KNIGHT + class_);
+			return msg_txt(52 - JOB_BABY_KNIGHT + class_);
 
 		case JOB_BABY_KNIGHT2:
-			return msg_txt(602);
+			return msg_txt(52);
 
 		case JOB_BABY_CRUSADER:
 		case JOB_BABY_MONK:
@@ -235,26 +171,26 @@ const char* job_name(int class_) {
 		case JOB_BABY_ALCHEMIST:
 		case JOB_BABY_BARD:
 		case JOB_BABY_DANCER:
-			return msg_txt(608 - JOB_BABY_CRUSADER + class_);
+			return msg_txt(58 - JOB_BABY_CRUSADER + class_);
 
 		case JOB_BABY_CRUSADER2:
-			return msg_txt(608);
+			return msg_txt(58);
 
 		case JOB_SUPER_BABY:
-			return msg_txt(615);
+			return msg_txt(65);
 
 		case JOB_TAEKWON:
-			return msg_txt(616);
+			return msg_txt(66);
 		case JOB_STAR_GLADIATOR:
 		case JOB_STAR_GLADIATOR2:
-			return msg_txt(617);
+			return msg_txt(67);
 		case JOB_SOUL_LINKER:
-			return msg_txt(618);
+			return msg_txt(68);
 
 		case JOB_GANGSI:
 		case JOB_DEATH_KNIGHT:
 		case JOB_DARK_COLLECTOR:
-			return msg_txt(622 - JOB_GANGSI+class_);
+			return msg_txt(72 - JOB_GANGSI+class_);
 
 		case JOB_RUNE_KNIGHT:
 		case JOB_WARLOCK:
@@ -262,7 +198,7 @@ const char* job_name(int class_) {
 		case JOB_ARCH_BISHOP:
 		case JOB_MECHANIC:
 		case JOB_GUILLOTINE_CROSS:
-			return msg_txt(625 - JOB_RUNE_KNIGHT+class_);
+			return msg_txt(75 - JOB_RUNE_KNIGHT+class_);
 
 		case JOB_RUNE_KNIGHT_T:
 		case JOB_WARLOCK_T:
@@ -270,7 +206,7 @@ const char* job_name(int class_) {
 		case JOB_ARCH_BISHOP_T:
 		case JOB_MECHANIC_T:
 		case JOB_GUILLOTINE_CROSS_T:
-			return msg_txt(625 - JOB_RUNE_KNIGHT_T+class_);
+			return msg_txt(75 - JOB_RUNE_KNIGHT_T+class_);
 
 		case JOB_ROYAL_GUARD:
 		case JOB_SORCERER:
@@ -279,7 +215,7 @@ const char* job_name(int class_) {
 		case JOB_SURA:
 		case JOB_GENETIC:
 		case JOB_SHADOW_CHASER:
-			return msg_txt(631 - JOB_ROYAL_GUARD+class_);
+			return msg_txt(81 - JOB_ROYAL_GUARD+class_);
 
 		case JOB_ROYAL_GUARD_T:
 		case JOB_SORCERER_T:
@@ -288,23 +224,23 @@ const char* job_name(int class_) {
 		case JOB_SURA_T:
 		case JOB_GENETIC_T:
 		case JOB_SHADOW_CHASER_T:
-			return msg_txt(631 - JOB_ROYAL_GUARD_T+class_);
+			return msg_txt(81 - JOB_ROYAL_GUARD_T+class_);
 
 		case JOB_RUNE_KNIGHT2:
 		case JOB_RUNE_KNIGHT_T2:
-			return msg_txt(625);
+			return msg_txt(75);
 
 		case JOB_ROYAL_GUARD2:
 		case JOB_ROYAL_GUARD_T2:
-			return msg_txt(631);
+			return msg_txt(81);
 
 		case JOB_RANGER2:
 		case JOB_RANGER_T2:
-			return msg_txt(627);
+			return msg_txt(77);
 
 		case JOB_MECHANIC2:
 		case JOB_MECHANIC_T2:
-			return msg_txt(629);
+			return msg_txt(79);
 
 		case JOB_BABY_RUNE:
 		case JOB_BABY_WARLOCK:
@@ -319,30 +255,30 @@ const char* job_name(int class_) {
 		case JOB_BABY_SURA:
 		case JOB_BABY_GENETIC:
 		case JOB_BABY_CHASER:
-			return msg_txt(638 - JOB_BABY_RUNE+class_);
+			return msg_txt(88 - JOB_BABY_RUNE+class_);
 
 		case JOB_BABY_RUNE2:
-			return msg_txt(638);
+			return msg_txt(88);
 
 		case JOB_BABY_GUARD2:
-			return msg_txt(644);
+			return msg_txt(94);
 
 		case JOB_BABY_RANGER2:
-			return msg_txt(640);
+			return msg_txt(90);
 
 		case JOB_BABY_MECHANIC2:
-			return msg_txt(642);
+			return msg_txt(92);
 
 		case JOB_SUPER_NOVICE_E:
 		case JOB_SUPER_BABY_E:
-			return msg_txt(651 - JOB_SUPER_NOVICE_E+class_);
+			return msg_txt(101 - JOB_SUPER_NOVICE_E+class_);
 
 		case JOB_KAGEROU:
 		case JOB_OBORO:
-			return msg_txt(653 - JOB_KAGEROU+class_);
+			return msg_txt(103 - JOB_KAGEROU+class_);
 
 		default:
-			return msg_txt(655);
+			return msg_txt(105);
 	}
 }
 
@@ -791,7 +727,6 @@ int inter_init_sql(const char *file)
 	inter_auction_sql_init();
 
 	geoip_readdb();
-	msg_config_read("conf/msg_athena.conf");
 	return 0;
 }
 
@@ -812,7 +747,6 @@ void inter_final(void)
 
 	if (accreg_pt) aFree(accreg_pt);
 
-	do_final_msg();
 	return;
 }
 

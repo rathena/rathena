@@ -100,73 +100,6 @@ struct atcmd_binding_data* get_atcommandbind_byname(const char* name) {
 	return ( i < atcmd_binding_count ) ? atcmd_binding[i] : NULL;
 }
 
-//-----------------------------------------------------------
-// Return the message string of the specified number by [Yor]
-//-----------------------------------------------------------
-const char* msg_txt(int msg_number)
-{
-	if (msg_number >= 0 && msg_number < MAX_MSG &&
-	    msg_table[msg_number] != NULL && msg_table[msg_number][0] != '\0')
-		return msg_table[msg_number];
-
-	return "??";
-}
-
-/*==========================================
- * Read Message Data
- *------------------------------------------*/
-int msg_config_read(const char* cfgName)
-{
-	int msg_number;
-	char line[1024], w1[1024], w2[1024];
-	FILE *fp;
-	static int called = 1;
-
-	if ((fp = fopen(cfgName, "r")) == NULL) {
-		ShowError("Messages file not found: %s\n", cfgName);
-		return 1;
-	}
-
-	if ((--called) == 0)
-		memset(msg_table, 0, sizeof(msg_table[0]) * MAX_MSG);
-
-	while(fgets(line, sizeof(line), fp))
-	{
-		if (line[0] == '/' && line[1] == '/')
-			continue;
-		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) != 2)
-			continue;
-
-		if (strcmpi(w1, "import") == 0)
-			msg_config_read(w2);
-		else
-		{
-			msg_number = atoi(w1);
-			if (msg_number >= 0 && msg_number < MAX_MSG)
-			{
-				if (msg_table[msg_number] != NULL)
-					aFree(msg_table[msg_number]);
-				msg_table[msg_number] = (char *)aMalloc((strlen(w2) + 1)*sizeof (char));
-				strcpy(msg_table[msg_number],w2);
-			}
-		}
-	}
-
-	fclose(fp);
-
-	return 0;
-}
-
-/*==========================================
- * Cleanup Message Data
- *------------------------------------------*/
-void do_final_msg(void)
-{
-	int i;
-	for (i = 0; i < MAX_MSG; i++)
-		aFree(msg_table[i]);
-}
-
 /**
  * retrieves the help string associated with a given command.
  *
@@ -5399,7 +5332,7 @@ ACMD_FUNC(skillid)
 	skillen = strlen(message);
 
 	iter = db_iterator(skilldb_name2id);
-	
+
 	for( data = iter->first(iter,&key); iter->exists(iter); data = iter->next(iter,&key) ) {
 		idx = skill_get_index(db_data2i(data));
 		if (strnicmp(key.str, message, skillen) == 0 || strnicmp(skill_db[idx].desc, message, skillen) == 0) {
@@ -5409,18 +5342,18 @@ ACMD_FUNC(skillid)
 			snprintf(partials[found++], MAX_SKILLID_PARTIAL_RESULTS_LEN, msg_txt(1164), db_data2i(data), skill_db[idx].desc, key.str);
 		}
 	}
-	
+
 	dbi_destroy(iter);
-	
+
 	if( found ) {
 		sprintf(atcmd_output, msg_txt(1398), found); // -- Displaying first %d partial matches
 		clif_displaymessage(fd, atcmd_output);
 	}
-	
+
 	for(i = 0; i < found; i++) { /* partials */
 		clif_displaymessage(fd, partials[i]);
 	}
-	
+
 	return 0;
 }
 

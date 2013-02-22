@@ -30,6 +30,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define CHAR_MAX_MSG 200
+static char* msg_table[CHAR_MAX_MSG]; // Login Server messages_conf
+
 char char_db[256] = "char";
 char scdata_db[256] = "sc_data";
 char cart_db[256] = "cart_inventory";
@@ -4697,6 +4700,7 @@ void do_final(void)
 
 	flush_fifos();
 
+	do_final_msg();
 	do_final_mapif();
 	do_final_loginif();
 
@@ -4760,9 +4764,11 @@ int do_init(int argc, char **argv)
 	CHAR_CONF_NAME = "conf/char_athena.conf";
 	LAN_CONF_NAME =	"conf/subnet_athena.conf";
 	SQL_CONF_NAME =	"conf/inter_athena.conf";
+	MSG_CONF_NAME =	"conf/msg_conf/char_msg.conf";
 
 	cli_get_options(argc,argv);
 
+	msg_config_read(MSG_CONF_NAME);
 	char_config_read(CHAR_CONF_NAME);
 	char_lan_config_read(LAN_CONF_NAME);
 	sql_config_read(SQL_CONF_NAME);
@@ -4848,6 +4854,17 @@ int do_init(int argc, char **argv)
 
 	return 0;
 }
+
+int char_msg_config_read(char *cfgName){
+	return _msg_config_read(cfgName,CHAR_MAX_MSG,msg_table);
+}
+const char* char_msg_txt(int msg_number){
+	return _msg_txt(msg_number,CHAR_MAX_MSG,msg_table);
+}
+void char_do_final_msg(void){
+	return _do_final_msg(CHAR_MAX_MSG,msg_table);
+}
+
 /*======================================================
  * Login-Server help option info
  *------------------------------------------------------*/
@@ -4862,6 +4879,7 @@ void display_helpscreen(bool do_exit)
 	ShowInfo("  --char-config <file>\t\tAlternative char-server configuration.\n");
 	ShowInfo("  --lan-config <file>\t\tAlternative lag configuration.\n");
 	ShowInfo("  --inter-config <file>\t\tAlternative inter-server configuration.\n");
+	ShowInfo("  --msg-config <file>\t\tAlternative message configuration.\n");
 	if( do_exit )
 		exit(EXIT_SUCCESS);
 }

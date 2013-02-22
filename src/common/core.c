@@ -1,17 +1,19 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "../common/mmo.h"
-#include "../common/showmsg.h"
-#include "../common/malloc.h"
+#include "mmo.h"
+#include "showmsg.h"
+#include "malloc.h"
 #include "core.h"
 #ifndef MINICORE
-#include "../common/db.h"
-#include "../common/socket.h"
-#include "../common/timer.h"
-#include "../common/thread.h"
-#include "../common/mempool.h"
-#include "../common/sql.h"
+#include "db.h"
+#include "socket.h"
+#include "timer.h"
+#include "thread.h"
+#include "mempool.h"
+#include "sql.h"
+#include "cbasetypes.h"
+#include "msg_conf.h"
 #endif
 
 #include <stdio.h>

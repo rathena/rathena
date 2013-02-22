@@ -89,7 +89,7 @@ unsigned int auction_create(struct auction_data *auction)
 	for( j = 0; j < MAX_SLOTS; j++ )
 		StringBuf_Printf(&buf, ",'%d'", auction->item.card[j]);
 	StringBuf_AppendStr(&buf, ")");
-	
+
 	//Unique Non Stackable Item ID
 	updateLastUid(auction->item.unique_id);
 	dbUpdateUid(sql_handle);
@@ -131,7 +131,7 @@ unsigned int auction_create(struct auction_data *auction)
 static void mapif_Auction_message(int char_id, unsigned char result)
 {
 	unsigned char buf[74];
-	
+
 	WBUFW(buf,0) = 0x3854;
 	WBUFL(buf,2) = char_id;
 	WBUFL(buf,6) = result;
@@ -145,13 +145,13 @@ static int auction_end_timer(int tid, unsigned int tick, int id, intptr_t data)
 	{
 		if( auction->buyer_id )
 		{
-			mail_sendmail(0, "Auction Manager", auction->buyer_id, auction->buyer_name, "Auction", "Thanks, you won the auction!.", 0, &auction->item);
+			mail_sendmail(0, msg_txt(200), auction->buyer_id, auction->buyer_name, msg_txt(201), msg_txt(202), 0, &auction->item);
 			mapif_Auction_message(auction->buyer_id, 6); // You have won the auction
-			mail_sendmail(0, "Auction Manager", auction->seller_id, auction->seller_name, "Auction", "Payment for your auction!.", auction->price, NULL);
+			mail_sendmail(0, msg_txt(200), auction->seller_id, auction->seller_name, msg_txt(201), msg_txt(203), auction->price, NULL);
 		}
 		else
-			mail_sendmail(0, "Auction Manager", auction->seller_id, auction->seller_name, "Auction", "No buyers have been found for your auction.", 0, &auction->item);
-		
+			mail_sendmail(0, msg_txt(200), auction->seller_id, auction->seller_name, msg_txt(201), msg_txt(204), 0, &auction->item);
+
 		ShowInfo("Auction End: id %u.\n", auction->auction_id);
 
 		auction->auction_end_timer = INVALID_TIMER;
@@ -269,7 +269,7 @@ static void mapif_parse_Auction_requestlist(int fd)
 
 	for( auction = dbi_first(iter); dbi_exists(iter); auction = dbi_next(iter) )
 	{
-		if( (type == 0 && auction->type != IT_ARMOR && auction->type != IT_PETARMOR) || 
+		if( (type == 0 && auction->type != IT_ARMOR && auction->type != IT_PETARMOR) ||
 			(type == 1 && auction->type != IT_WEAPON) ||
 			(type == 2 && auction->type != IT_CARD) ||
 			(type == 3 && auction->type != IT_ETC) ||
@@ -353,7 +353,7 @@ static void mapif_parse_Auction_cancel(int fd)
 		return;
 	}
 
-	mail_sendmail(0, "Auction Manager", auction->seller_id, auction->seller_name, "Auction", "Auction canceled.", 0, &auction->item);
+	mail_sendmail(0, msg_txt(200), auction->seller_id, auction->seller_name, msg_txt(201), msg_txt(205), 0, &auction->item);
 	auction_delete(auction);
 
 	mapif_Auction_cancel(fd, char_id, 0); // The auction has been canceled
@@ -392,9 +392,9 @@ static void mapif_parse_Auction_close(int fd)
 	}
 
 	// Send Money to Seller
-	mail_sendmail(0, "Auction Manager", auction->seller_id, auction->seller_name, "Auction", "Auction closed.", auction->price, NULL);
+	mail_sendmail(0, msg_txt(200), auction->seller_id, auction->seller_name, msg_txt(201), msg_txt(206), auction->price, NULL);
 	// Send Item to Buyer
-	mail_sendmail(0, "Auction Manager", auction->buyer_id, auction->buyer_name, "Auction", "Auction winner.", 0, &auction->item);
+	mail_sendmail(0, msg_txt(200), auction->buyer_id, auction->buyer_name, msg_txt(201), msg_txt(207), 0, &auction->item);
 	mapif_Auction_message(auction->buyer_id, 6); // You have won the auction
 	auction_delete(auction);
 
@@ -433,11 +433,11 @@ static void mapif_parse_Auction_bid(int fd)
 	{ // Send Money back to the previous Buyer
 		if( auction->buyer_id != char_id )
 		{
-			mail_sendmail(0, "Auction Manager", auction->buyer_id, auction->buyer_name, "Auction", "Someone has placed a higher bid.", auction->price, NULL);
+			mail_sendmail(0, msg_txt(200), auction->buyer_id, auction->buyer_name, msg_txt(201), msg_txt(208), auction->price, NULL);
 			mapif_Auction_message(auction->buyer_id, 7); // You have failed to win the auction
 		}
 		else
-			mail_sendmail(0, "Auction Manager", auction->buyer_id, auction->buyer_name, "Auction", "You have placed a higher bid.", auction->price, NULL);
+			mail_sendmail(0, msg_txt(200), auction->buyer_id, auction->buyer_name, msg_txt(201), msg_txt(209), auction->price, NULL);
 	}
 
 	auction->buyer_id = char_id;
@@ -448,9 +448,9 @@ static void mapif_parse_Auction_bid(int fd)
 	{ // Automatic won the auction
 		mapif_Auction_bid(fd, char_id, bid - auction->buynow, 1); // You have successfully bid in the auction
 
-		mail_sendmail(0, "Auction Manager", auction->buyer_id, auction->buyer_name, "Auction", "You have won the auction.", 0, &auction->item);
+		mail_sendmail(0, msg_txt(200), auction->buyer_id, auction->buyer_name, msg_txt(201), msg_txt(210), 0, &auction->item);
 		mapif_Auction_message(char_id, 6); // You have won the auction
-		mail_sendmail(0, "Auction Manager", auction->seller_id, auction->seller_name, "Auction", "Payment for your auction!.", auction->buynow, NULL);
+		mail_sendmail(0, msg_txt(200), auction->seller_id, auction->seller_name, msg_txt(201), msg_txt(211), auction->buynow, NULL);
 
 		auction_delete(auction);
 		return;

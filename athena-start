@@ -43,11 +43,9 @@ case $1 in
     'start')
         print_start
         check_files
-	if [ -e .${L_SRV}.pid ] && [ -z $(cat .${L_SRV}.pid)] && [$(ps ax | grep $(cat .${L_SRV}.pid)) eq =~ /${L_SRV}/  ]; then
-	else
-	    exec ./${L_SRV}&
-	    echo $! > .${L_SRV}.pid
-	fi
+
+        exec ./${L_SRV}&
+	echo $! > .${L_SRV}.pid
         exec ./${C_SRV}&
 	echo $! > .${C_SRV}.pid
         exec ./${M_SRV}&

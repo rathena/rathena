@@ -9,6 +9,7 @@
 #include "../common/mmo.h"
 #include "../common/mapindex.h"
 #include "../common/db.h"
+#include "../common/msg_conf.h"
 
 /**
  * [rAthena.org]
@@ -27,6 +28,12 @@ enum E_MAPSERVER_ST
 	MAPSERVER_ST_LAST
 };
 
+#define msg_config_read(cfgName) map_msg_config_read(cfgName)
+#define msg_txt(msg_number) map_msg_txt(msg_number)
+#define do_final_msg() map_do_final_msg()
+int map_msg_config_read(char *cfgName);
+const char* map_msg_txt(int msg_number);
+void map_do_final_msg(void);
 
 #define MAX_NPC_PER_MAP 512
 #define AREA_SIZE battle_config.area_size
