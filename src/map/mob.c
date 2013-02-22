@@ -112,9 +112,9 @@ int mobdb_searchname(const char *str)
 static int mobdb_searchname_array_sub(struct mob_db* mob, const char *str)
 {
 	if (mob == mob_dummy)
-		return 1; //Invalid mob.
-	if(!mob->base_exp && !mob->job_exp)
-		return 1; //Discount slave-mobs (no exp) as requested by Playtester. [Skotlex]
+		return 1;
+	if(!mob->base_exp && !mob->job_exp && mob->spawn[0].qty < 1)
+		return 1; // Monsters with no base/job exp and no spawn point are, by this criteria, considered "slave mobs" and excluded from search results
 	if(stristr(mob->jname,str))
 		return 0;
 	if(stristr(mob->name,str))

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= kobra_k88, Darkchild, x[tsk]
 //===== Current Version: =====================================
-//= 1.4b
+//= 1.5
 //===== Compatible With: =====================================
 //= rAthena 1.0
 //===== Description: =========================================
@@ -16,6 +16,7 @@
 //= 1.4 Updated Monster taming item quests. [L0ne_W0lf]
 //= 1.4a FIXED item requirement for stellar hairpin. [L0ne_W0lf]
 //= 1.4b Fixed the delitem assosiated with the last uptate. [L0ne_W0lf]
+//= 1.5 Moved Izlude NPC to pre-re/re paths.
 //============================================================
 
 alberta_in,173,76,4	script	Monster Tamer#alb	125,{
@@ -464,7 +465,7 @@ aldeba_in,168,175,4	script	Monster Tamer#alde	125,{
 	}
 }
 
-izlude_in,129,64,4	script	Monster Tamer#izu	125,{
+-	script	::MonsterTamer_izlude	-1,{
 	mes "[Shogo]";
 	mes "Are you pre-occupied with";
 	mes "gathering items for monsters";

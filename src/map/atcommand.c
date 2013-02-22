@@ -5672,12 +5672,11 @@ ACMD_FUNC(autotrade)
 	}
 
 	sd->state.autotrade = 1;
-	if( battle_config.at_timeout )
-	{
+	if( battle_config.at_timeout ) {
 		int timeout = atoi(message);
 		status_change_start(&sd->bl, SC_AUTOTRADE, 10000, 0, 0, 0, 0, ((timeout > 0) ? min(timeout,battle_config.at_timeout) : battle_config.at_timeout) * 60000, 0);
 	}
-	clif_authfail_fd(fd, 15);
+	clif_authfail_fd(sd->fd, 15);
 
 	return 0;
 }

@@ -1,14 +1,15 @@
 //===== rAthena Script ======================================= 
-//= Izlude Airport NPCs
+//= Quest NPCs related to Ash-Vacuum
 //===== By: ================================================== 
-//= rAthena Dev Team
+//= Euphy
+//===== Current Version: ===================================== 
+//= 1.0
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= Izlude Airport NPCs
+//= Contains duplicate NPCs from main script.
 //===== Additional Comments: ================================= 
-//= Official NPCs.
-//= Updated to match the new Izlude Map. [Masao]
+//= 1.0 Moved Izlude NPC to pre-re/re paths. [Euphy]
 //============================================================ 
 
-izlude,202,75,3	duplicate(Airship_Staff_izlude)	Airship Staff#izlude	90
+izlude,101,173,6	duplicate(PromotionalStaff_izlude)	Promotional Staff#iz	100

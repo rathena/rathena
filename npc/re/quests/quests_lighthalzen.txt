@@ -15,7 +15,7 @@
 
 // Renewal split [Daegaladh]
 //============================================================
-izlude,171,73,6	duplicate(Scamp)	Scamp#2	853
+izlude,172,73,6	duplicate(Scamp)	Scamp#2	853
 
 // Somatology Laboratory F4
 //============================================================
@@ -70,8 +70,8 @@ lighthalzen,303,304,5	script	Jerome Jameson#start	904,{
 }
 
 // Is this the correct behavior? (limited and conflicting sources)
-// -- iRO: lhz_dun03 warps directly to que_lhz.
-// -- Ziu: NPC in lhz_dun04 warps into que_lhz.
+// - NPC in lhz_dun04 warps into que_lhz. (?)
+// - lhz_dun03 warps directly to que_lhz. (?)
 function	script	lhz4enter	{
 	if (getmapusers("que_lhz") == 0 && mobcount("que_lhz","#controllhz4::OnMyMobDead") < 1) {
 		if (getarg(0) == 0) {

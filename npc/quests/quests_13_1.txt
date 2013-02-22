@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.7a
+//= 2.8
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -47,18 +47,18 @@
 //= 2.6a Added 'npcskill' command. [Euphy]
 //= 2.7 Updated EXP rewards.
 //= 2.7a Added 'consumeitem' command. [Euphy]
+//= 2.8 Some optimization, and moved an Izlude NPC. [Euphy]
 //============================================================ 
 
 // Onward to the New World
 //============================================================ 
-prontera,163,53,3	script	Promotional Staff#prt	100,{
+function	script	Promotional_Staff	{
 	mes "[Promotional Staff]";
 	mes "We are looking for adventurers who are super curious and extremely brave.";
 	mes "Join us for a wonderful adventure!";
 	next;
 	mes "[Promotional Staff]";
-	mes "Hey, you're a knowledgeable person, right?";
-	mes "Are you interested in my story?";
+	mes "Hey, you're a knowledgeable person, right? Are you interested in my story?";
 	next;
 	switch(select("Yes.:No, thanks.")) {
 	case 1:
@@ -70,8 +70,7 @@ prontera,163,53,3	script	Promotional Staff#prt	100,{
 		mes "[Promotional Staff]";
 		mes "I usually send adventurers to";
 		mes "newly found places for research.";
-		mes "It's quite challenging, as nobody's";
-		mes "ever been to these places.";
+		mes "It's quite challeging, as nobody's ever been to these places.";
 		next;
 		mes "[Promotional Staff]";
 		mes "The missions are quite dangerous,";
@@ -80,15 +79,10 @@ prontera,163,53,3	script	Promotional Staff#prt	100,{
 		mes "of this mission.";
 		next;
 		mes "[Promotional Staff]";
-		mes "I'm not sure that you're strong";
-		mes "enough, but you seem brave. How";
-		mes "about going to the kingdom";
-		mes "receptionist? He should be in the";
-		mes "first room of Prontera Castle.";
+		mes "I'm not sure that you're strong enough, but you seem brave. How about going to the kingdom receptionist? He should be in the first room of Prontera Castle.";
 		next;
 		mes "[Promotional Staff]";
-		mes "From what I've heard about this";
-		mes "new place... It's not a new continent.";
+		mes "From what I've heard about this place... It's not a new continent.";
 		mes "I don't know where it is.";
 		mes "Hmm... Inside of the sky?";
 		next;
@@ -98,18 +92,19 @@ prontera,163,53,3	script	Promotional Staff#prt	100,{
 		mes "It's not my business.";
 		next;
 		mes "[Promotional Staff]";
-		mes "Anyway, I'm supposed to inform many";
-		mes "adventurers about it.";
+		mes "Anyway, I'm supposed to inform many adventurers about it.";
 		mes "There's no time to waste!";
 		close;
 	case 2:
 		mes "[Promotional Staff]";
-		mes "Huh, I thought you were a real";
-		mes "adventurer. You're missing a big";
-		mes "opportunity. You're definitely not";
-		mes "brave. Absolutely not!";
+		mes "Huh, I thought you were a real adventurer. You're missing a big opportunity. You're definitely not brave. Absolutely not!";
 		close;
 	}
+}
+
+prontera,163,53,3	script	Promotional Staff#prt	100,{
+	callfunc "Promotional_Staff";
+	end;
 }
 
 prt_castle,121,51,3	script	Alliance Manager#prt	752,{
@@ -389,7 +384,14 @@ aldebaran,127,138,3	script	Promotional Staff#alde	100,{
 		mes "Just visit the ^FF0000Promotional Staff in Geffen^000000. You have no business with me anymore. Bless you. I wish you a safe adventure.";
 		close;
 	}
-	if ((ep13_ryu == 2) && (countitem(909) > 299)) {
+	if (ep13_ryu == 2) {
+		if (countitem(909) < 300) {
+			mes "[Promotional Staff]";
+			mes "Don't forget to bring... ^FF0000300 Jellopy^000000.";
+			mes "Got it? ^FF0000300 Jellopy^000000!";
+			mes "Let me know once you got them.";
+			close;
+		}
 		mes "[Promotional Staff]";
 		mes "Hey! Let me know once you collect all of them.";
 		mes "Don't disturb me anymore. I'm a busy man... What a waste.";
@@ -427,13 +429,6 @@ aldebaran,127,138,3	script	Promotional Staff#alde	100,{
 		mes "[Promotional Staff]";
 		mes "Anyway you did the first step.";
 		mes "Bless you!";
-		close;
-	}
-	if (ep13_ryu == 2) {
-		mes "[Promotional Staff]";
-		mes "Don't forget to bring... ^FF0000300 Jellopy^000000.";
-		mes "Got it? ^FF0000300 Jellopy^000000!";
-		mes "Let me know once you got them.";
 		close;
 	}
 	if (ep13_ryu == 1) {
@@ -474,52 +469,8 @@ aldebaran,127,138,3	script	Promotional Staff#alde	100,{
 		mes "Then we can go forward.";
 		close;
 	}
-	mes "[Promotional Staff]";
-	mes "We want the adventurers who are super curious and extremely brave. Join us for a wonderful adventure!";
-	next;
-	mes "[Promotional Staff]";
-	mes "Hey, you're a well-versed person, right? Are you interested in my story?";
-	next;
-	switch(select("Yes.:No, thanks.")) {
-	case 1:
-		mes "[Promotional Staff]";
-		mes "You're a real adventurer.";
-		mes "Good for you!";
-		mes "You won't regret it.";
-		next;
-		mes "[Promotional Staff]";
-		mes "I usually send adventurers to";
-		mes "newly found places for research.";
-		mes "It's quite challeging, as nobody's ever been to these places.";
-		next;
-		mes "[Promotional Staff]";
-		mes "The missions are quite dangerous,";
-		mes "so only those who are courageous";
-		mes "are qualified for the challenge";
-		mes "of this mission.";
-		next;
-		mes "[Promotional Staff]";
-		mes "I'm not sure that you're strong enough, but you seem brave. How about going to the kingdom receptionist? He should be in the first room of Prontera Castle.";
-		next;
-		mes "[Promotional Staff]";
-		mes "From what I've heard about this place... It's not a new continent.";
-		mes "I don't know where it is.";
-		mes "Hmm... Inside of the sky?";
-		next;
-		mes "[Promotional Staff]";
-		mes "Could just be a rumor,";
-		mes "but I don't know exactly.";
-		mes "It's not my business.";
-		next;
-		mes "[Promotional Staff]";
-		mes "Anyway, I'm supposed to inform many adventurers about it.";
-		mes "There's no time to waste!";
-		close;
-	case 2:
-		mes "[Promotional Staff]";
-		mes "Huh, I thought you were a real adventurer. You're missing a big opportunity. You're definitely not brave. Absolutely not!";
-		close;
-	}
+	callfunc "Promotional_Staff";
+	end;
 }
 
 geffen,90,67,3	script	Promotional Staff#gef	100,{
@@ -535,7 +486,14 @@ geffen,90,67,3	script	Promotional Staff#gef	100,{
 		mes "Or do you have any business in Geffen?";
 		close;
 	}
-	if ((ep13_ryu == 5) && (countitem(723) > 0)) {
+	if (ep13_ryu == 5) {
+		if (countitem(723) == 0) {
+			mes "[Promotional Staff]";
+			mes "^FF00001 Ruby!!^000000.";
+			mes "Don't you forget it!";
+			mes "Hurry up! Time is zeny!";
+			close;
+		}
 		mes "[Promotional Staff]";
 		mes "Wow, you brought a genuine Jewel.";
 		mes "You are absolutely qualified.";
@@ -568,14 +526,13 @@ geffen,90,67,3	script	Promotional Staff#gef	100,{
 		mes "Good luck!";
 		close;
 	}
-	if (ep13_ryu == 5) {
-		mes "[Promotional Staff]";
-		mes "^FF00001 Ruby!!^000000.";
-		mes "Don't you forget it!";
-		mes "Hurry up! Time is zeny!";
-		close;
-	}
-	if ((ep13_ryu == 4) && (countitem(721) > 0)) {
+	if (ep13_ryu == 4) {
+		if (countitem(721) == 0) {
+			mes "[Promotional Staff]";
+			mes "The one you should bring me is";
+			mes "^FF0000Emerald^000000. Can you get it?";
+			close;
+		}
 		mes "[Promotional Staff]";
 		mes "You brought it so soon!";
 		mes "You're a real adventurer!";
@@ -597,12 +554,6 @@ geffen,90,67,3	script	Promotional Staff#gef	100,{
 		mes "Please bring me a Ruby.";
 		mes "As I mentioned, this is the second request.";
 		mes "I will wait until you bring me a stone again.";
-		close;
-	}
-	if (ep13_ryu == 4) {
-		mes "[Promotional Staff]";
-		mes "The one you should bring me is";
-		mes "^FF0000Emerald^000000. Can you get it?";
 		close;
 	}
 	if (ep13_ryu == 3) {
@@ -634,55 +585,11 @@ geffen,90,67,3	script	Promotional Staff#gef	100,{
 		mes "Then we can go forward.";
 		close;
 	}
-	mes "[Promotional Staff]";
-	mes "We want adventurers who are super curious and extremely brave. Join us for a wonderful adventure!";
-	next;
-	mes "[Promotional Staff]";
-	mes "Hey, you're a knowledgeable person, right? Are you interested in my story?";
-	next;
-	switch(select("Yes.:No, thanks.")) {
-	case 1:
-		mes "[Promotional Staff]";
-		mes "You're a real adventurer.";
-		mes "Good for you!";
-		mes "You won't regret it.";
-		next;
-		mes "[Promotional Staff]";
-		mes "I usually send adventurers to";
-		mes "newly found places for research.";
-		mes "It's quite challeging, as nobody's ever been to these places.";
-		next;
-		mes "[Promotional Staff]";
-		mes "The missions are quite dangerous,";
-		mes "so only those who are courageous";
-		mes "are qualified for the challenge";
-		mes "of this mission.";
-		next;
-		mes "[Promotional Staff]";
-		mes "I'm not sure that you're strong enough, but you seem brave. How about going to the kingdom receptionist? He should be in the first room of Prontera Castle.";
-		next;
-		mes "[Promotional Staff]";
-		mes "From what I've heard about this place... It's not a new continent.";
-		mes "I don't know where it is.";
-		mes "Hmm... Inside of the sky?";
-		next;
-		mes "[Promotional Staff]";
-		mes "Could just be a rumor,";
-		mes "but I don't know exactly.";
-		mes "It's not my business.";
-		next;
-		mes "[Promotional Staff]";
-		mes "Anyway, I'm supposed to inform many adventurers about it.";
-		mes "There's no time to waste!";
-		close;
-	case 2:
-		mes "[Promotional Staff]";
-		mes "Huh, I thought you were a real adventurer. You're missing a big opportunity. You're definitely not brave. Absolutely not!";
-		close;
-	}
+	callfunc "Promotional_Staff";
+	end;
 }
 
-izlude,101,173,6	script	Promotional Staff#iz	100,{
+-	script	::PromotionalStaff_izlude	-1,{
 	if (ep13_ryu > 8) {
 		mes "[Promotional Staff]";
 		mes "I bless you for your future! May it be full of happiness!";
@@ -694,7 +601,21 @@ izlude,101,173,6	script	Promotional Staff#iz	100,{
 		mes "If you have any other business, go to the palace.";
 		close;
 	}
-	if ((ep13_ryu == 7) && (BaseLevel > 69)) {
+	if (ep13_ryu == 7) {
+		if (BaseLevel < 70) {
+			mes "[Promotional Staff]";
+			mes "You don't look that strong.";
+			mes "Nothing but skin and bones!";
+			mes "Not reliable.";
+			mes "You should level up more before";
+			mes "considering this adventure.";
+			next;
+			mes "[Promotional Staff]";
+			mes "I don't need adventurers who are";
+			mes "body-builders... but at least";
+			mes "someone not so little!!";
+			close;
+		}
 		mes "[Promotional Staff]";
 		mes "Wow! You are considerably";
 		mes "stronger than before!";
@@ -731,20 +652,6 @@ izlude,101,173,6	script	Promotional Staff#iz	100,{
 		mes "[Promotional Staff]";
 		mes "Bless all of your heart,";
 		mes "for your great future!";
-		close;
-	}
-	if (ep13_ryu == 7) {
-		mes "[Promotional Staff]";
-		mes "You don't look that strong.";
-		mes "Nothing but skin and bones!";
-		mes "Not reliable.";
-		mes "You should level up more before";
-		mes "considering this adventure.";
-		next;
-		mes "[Promotional Staff]";
-		mes "I don't need adventurers who are";
-		mes "body-builders... but at least";
-		mes "someone not so little!!";
 		close;
 	}
 	if (ep13_ryu == 6) {
@@ -811,54 +718,8 @@ izlude,101,173,6	script	Promotional Staff#iz	100,{
 			close;
 		}
 	}
-	mes "[Promotional Staff]";
-	mes "We want the adventurers who are super curious";
-	mes "and extremely brave.";
-	mes "Join us for a wonderful adventure!";
-	next;
-	mes "[Promotional Staff]";
-	mes "Hey, you're a well-knowledged person, as I know. Are you interested in my story?";
-	next;
-	switch(select("Yes.:No, thanks.")) {
-	case 1:
-		mes "[Promotional Staff]";
-		mes "You're a real adventurer.";
-		mes "Good for you!";
-		mes "You won't regret it.";
-		next;
-		mes "[Promotional Staff]";
-		mes "I usually send adventurers to";
-		mes "newly found places for research.";
-		mes "It's quite challeging, as nobody's ever been to these places.";
-		next;
-		mes "[Promotional Staff]";
-		mes "The missions are quite dangerous,";
-		mes "so only those who are courageous";
-		mes "are qualified for the challenge";
-		mes "of this mission.";
-		next;
-		mes "[Promotional Staff]";
-		mes "I'm not sure that you're strong enough, but you seem brave. How about going to the kingdom receptionist? He should be in the first room of Prontera Castle.";
-		next;
-		mes "[Promotional Staff]";
-		mes "From what I've heard about this place... It's not a new continent.";
-		mes "I don't know where it is.";
-		mes "Hmm... Inside of the sky?";
-		next;
-		mes "[Promotional Staff]";
-		mes "Could just be a rumor,";
-		mes "but I don't know exactly.";
-		mes "It's not my business.";
-		next;
-		mes "[Promotional Staff]";
-		mes "Anyway, I'm supposed to inform many adventurers about it.";
-		mes "There's no time to waste!";
-		close;
-	case 2:
-		mes "[Promotional Staff]";
-		mes "Huh, I thought you were a real adventurer. You're missing a big opportunity. You're definitely not brave. Absolutely not!";
-		close;
-	}
+	callfunc "Promotional_Staff";
+	end;
 }
 
 lighthalzen,220,292,3	script	Guide#ep13_1	899,{
@@ -10426,689 +10287,75 @@ man_fild01,315,95,3	script	Expedition Scout#1	707,{
 	next;
 	mes "[Expedition Scout]";
 	mes "I've been ordered by Instructor Igrid to conduct a search for something.";
-	set .@ep13_search_control,checkquest(3091,PLAYTIME);
+	set .@playtime,checkquest(3091,PLAYTIME);
 	next;
 	switch(select("Ask about search results.:Chitchat.:Quit.")) {
 	case 1:
-		if (((ep13_1_edq == 71) || (ep13_1_edq == 72)) && (.@ep13_search_control == -1)) {
-			set .@ep13_search_lotto,rand(1,6);
-			if (.@ep13_search_lotto == 4) {
+		if (ep13_1_edq == 71 || ep13_1_edq == 72) {
+			mes "[Expedition Scout]";
+			mes "Oh, you must be"+strcharinfo(0)+". I heard that you'll be delivering the report.";
+			next;
+			if (.@playtime == 0 || .@playtime == 1) {
 				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "Good news! I've found 5 pieces of paper that appear to be part of the report.";
-				next;
-				getitem 6040,5; //Some_Of_Report
-				changequest 3090,3091;
-				erasequest 3090;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
+				mes "Searching for lost pages was tougher then I expected. Please come back later when I'm finished making one round.";
 				close;
-			}
-			else if ((.@ep13_search_lotto == 1) || (.@ep13_search_lotto == 6)) {
+			} else {
+				switch(rand(1,6)) {
+				case 1:
+				case 6:
+					set .@i,2;
+					break;
+				case 3:
+					set .@i,3;
+					break;
+				case 4:
+					set .@i,5;
+					break;
+				case 2:
+				case 5:
+					set .@i,0;
+					break;
+				}
 				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "Good news! I've found 2 pieces of paper that appear to be part of the report.";
-				next;
-				getitem 6040,2; //Some_Of_Report
-				changequest 3090,3091;
-				erasequest 3090;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-			else if (.@ep13_search_lotto == 3) {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "Good news! I've found 3 pieces of paper that appear to be part of the report.";
-				next;
-				getitem 6040,3; //Some_Of_Report
-				changequest 3090,3091;
-				erasequest 3090;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-			else {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "I'm doing my best, but I haven't found any pages yet.";
-				next;
-				changequest 3090,3091;
-				erasequest 3090;
+				if (.@i) {
+					mes "Good news! I've found "+.@i+" pieces of paper that appear to be part of the report.";
+					next;
+					getitem 6040,.@i; //Some_Of_Report
+				} else {
+					mes "I'm doing my best, but I haven't found any pages yet.";
+					next;
+				}
+				if (.@playtime == -1) {
+					changequest 3090,3091;
+					erasequest 3090;
+				} else
+					erasequest 3091;
 				setquest 3091;
 				mes "[Expedition Scout]";
 				mes "Well then, keep up the good work!";
 				close;
 			}
 		}
-		else if (((ep13_1_edq == 71) || (ep13_1_edq == 72)) && ((.@ep13_search_control == 0) || (.@ep13_search_control == 1))) {
-			mes "[Expedition Scout]";
-			mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-			next;
-			mes "[Expedition Scout]";
-			mes "Searching for lost pages was tougher then I expected. Please come back later when I'm finished making one round.";
-			close;
-		}
-		else if (((ep13_1_edq == 71) || (ep13_1_edq == 72)) && (.@ep13_search_control == 2)) {
-			set .@ep13_search_lotto,rand(1,6);
-			if (.@ep13_search_lotto == 4) {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "Good news! I've found 5 pieces of paper that appear to be part of the report.";
-				next;
-				getitem 6040,5; //Some_Of_Report
-				erasequest 3091;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-			else if ((.@ep13_search_lotto == 1) || (.@ep13_search_lotto == 6)) {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "Good news! I've found 2 pieces of paper that appear to be part of the report.";
-				next;
-				getitem 6040,2; //Some_Of_Report
-				erasequest 3091;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-			else if (.@ep13_search_lotto == 3) {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "Good news! I've found 3 pieces of paper that appear to be part of the report.";
-				next;
-				getitem 6040,3; //Some_Of_Report
-				erasequest 3091;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-			else {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "I'm doing my best, but I haven't found any pages yet.";
-				next;
-				erasequest 3091;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-		}
-		else if (ep13_1_edq < 8) {
-			mes "[Expedition Scout]";
-			mes "Who are you? Why do you want to know about our search results? Are you from the army?";
-			next;
-			mes "[Expedition Scout]";
-			mes "Man, don't you know that you can be arrested for interrupting a military operation?";
-			next;
-			mes "[Expedition Scout]";
-			mes "Please leave immediately.";
-		}
-		else {
-			mes "[Expedition Scout]";
-			mes "Who are you? Why do you want to know about our search results? Are you from the army?";
-			next;
-			mes "[Expedition Scout]";
-			mes "Man, don't you know that you can be arrested for interrupting a military operation?";
-			next;
-			mes "[Expedition Scout]";
-			mes "Please leave immediately.";
-		}
+		mes "[Expedition Scout]";
+		mes "Who are you? Why do you want to know about our search results? Are you from the army?";
+		next;
+		mes "[Expedition Scout]";
+		mes "Man, don't you know that you can be arrested for interrupting a military operation?";
+		next;
+		mes "[Expedition Scout]";
+		mes "Please leave immediately.";
 		close;
 	case 2:
-		if (ep13_1_edq < 10) {
-			mes "[Expedition Scout]";
-			mes "I'm sorry, but I'm on duty. Why don't we talk later when I'm off-duty?";
-			close;
-		}
-		else {
-			mes "[Expedition Scout]";
-			mes "I'm sorry, but I'm on duty. Why don't we talk later when I'm off-duty?";
-			close;
-		}
-	case 3:
-		close;
-	}
-}
-
-man_fild03,202,251,3	script	Expedition Scout#2	707,{
-	mes "[Expedition Scout]";
-	mes "Good day. I'm from the Third Scout Party under direct command of the commander of the Midgard Expedition.";
-	next;
-	mes "[Expedition Scout]";
-	mes "I've been ordered by Instructor Igrid to conduct a search for something.";
-	set .@ep13_search_control,checkquest(3091,PLAYTIME);
-	next;
-	switch(select("Ask about search results.:Chitchat.:Quit.")) {
-	case 1:
-		if (((ep13_1_edq == 71) || (ep13_1_edq == 72)) && (.@ep13_search_control == -1)) {
-			set .@ep13_search_lotto,rand(1,6);
-			if (.@ep13_search_lotto == 4) {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "Good news! I've found 5 pieces of paper that appear to be part of the report.";
-				next;
-				getitem 6040,5; //Some_Of_Report
-				changequest 3090,3091;
-				erasequest 3090;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-			else if ((.@ep13_search_lotto == 1) || (.@ep13_search_lotto == 6)) {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "Good news! I've found 2 piece of paper that appear to be part of the report.";
-				next;
-				getitem 6040,2; //Some_Of_Report
-				changequest 3090,3091;
-				erasequest 3090;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-			else if (.@ep13_search_lotto == 3) {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "Good news! I've found 3 pieces of paper that appear to be part of the report.";
-				next;
-				getitem 6040,3; //Some_Of_Report
-				changequest 3090,3091;
-				erasequest 3090;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-			else {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "I'm doing my best, but I haven't found any pages yet.";
-				next;
-				changequest 3090,3091;
-				erasequest 3090;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-		}
-		else if (((ep13_1_edq == 71) || (ep13_1_edq == 72)) && ((.@ep13_search_control == 0) || (.@ep13_search_control == 1))) {
-			mes "[Expedition Scout]";
-			mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-			next;
-			mes "[Expedition Scout]";
-			mes "Searching for lost pages was tougher then I expected. Please come back later when I'm finished making one round.";
-			close;
-		}
-		else if (((ep13_1_edq == 71) || (ep13_1_edq == 72)) && (.@ep13_search_control == 2)) {
-			set .@ep13_search_lotto,rand(1,6);
-			if (.@ep13_search_lotto == 4) {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "Good news! I've found 5 pieces of paper that appear to be part of the report.";
-				next;
-				getitem 6040,5; //Some_Of_Report
-				erasequest 3091;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-			else if ((.@ep13_search_lotto == 1) || (.@ep13_search_lotto == 6)) {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "Good news! I've found 2 pieces of paper that appear to be part of the report.";
-				next;
-				getitem 6040,2; //Some_Of_Report
-				erasequest 3091;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-			else if (.@ep13_search_lotto == 3) {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "Good news! I've found 3 pieces of paper that appear to be part of the report.";
-				next;
-				getitem 6040,3; //Some_Of_Report
-				erasequest 3091;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-			else {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "I'm doing my best, but I haven't found any pages yet.";
-				next;
-				erasequest 3091;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-		}
-		else if (ep13_1_edq < 8) {
-			mes "[Expedition Scout]";
-			mes "Who are you? Why do you want to know about our search results? Are you from the army?";
-			next;
-			mes "[Expedition Scout]";
-			mes "Man, don't you know that you can be arrested for interrupting a military operation?";
-			next;
-			mes "[Expedition Scout]";
-			mes "Please leave immediately.";
-		}
-		close;
-	case 2:
-		if (ep13_1_edq < 10) {
-			mes "[Expedition Scout]";
-			mes "I'm sorry, but I'm on duty. Why don't we talk later when I'm off-duty?";
-			close;
-		}
-		else {
-			mes "[Expedition Scout]";
-			mes "I'm sorry, but I'm on duty. Why don't we talk later when I'm off-duty?";
-			close;
-		}
-	case 3:
-		close;
-	}
-}
-
-spl_fild02,295,368,3	script	Expedition Scout#3	707,{
-	mes "[Expedition Scout]";
-	mes "Good day. I'm from the Third Scout Party under direct command of the commander of the Midgard Expedition.";
-	next;
-	mes "[Expedition Scout]";
-	mes "I've been ordered by Instructor Igrid to conduct a search for something.";
-	set .@ep13_search_control,checkquest(3091,PLAYTIME);
-	next;
-	switch(select("Ask about search results.:Chitchat.:Quit.")) {
-	case 1:
-		if (((ep13_1_edq == 71) || (ep13_1_edq == 72)) && (.@ep13_search_control == -1)) {
-			set .@ep13_search_lotto,rand(1,6);
-			if (.@ep13_search_lotto == 4) {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "Good news! I've found 5 pieces of paper that appear to be part of the report.";
-				next;
-				getitem 6040,5; //Some_Of_Report
-				changequest 3090,3091;
-				erasequest 3090;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-			else if ((.@ep13_search_lotto == 1) || (.@ep13_search_lotto == 6)) {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "Good news! I've found 2 pieces of paper that appear to be part of the report.";
-				next;
-				getitem 6040,2; //Some_Of_Report
-				changequest 3090,3091;
-				erasequest 3090;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-			else if (.@ep13_search_lotto == 3) {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "Good news! I've found 3 pieces of paper that appear to be part of the report.";
-				next;
-				getitem 6040,3; //Some_Of_Report
-				changequest 3090,3091;
-				erasequest 3090;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-			else {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "I'm doing my best, but I haven't found any pages yet.";
-				next;
-				changequest 3090,3091;
-				erasequest 3090;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-		}
-		else if (((ep13_1_edq == 71) || (ep13_1_edq == 72)) && ((.@ep13_search_control == 0) || (.@ep13_search_control == 1))) {
-			mes "[Expedition Scout]";
-			mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-			next;
-			mes "[Expedition Scout]";
-			mes "Searching for lost pages was tougher then I expected. Please come back later when I'm finished making one round.";
-			close;
-		}
-		else if (((ep13_1_edq == 71) || (ep13_1_edq == 72)) && (.@ep13_search_control == 2)) {
-			set .@ep13_search_lotto,rand(1,6);
-			if (.@ep13_search_lotto == 4) {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "Good news! I've found 5 pieces of paper that appear to be part of the report.";
-				next;
-				getitem 6040,5; //Some_Of_Report
-				erasequest 3091;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-			else if ((.@ep13_search_lotto == 1) || (.@ep13_search_lotto == 6)) {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "Good news! I've found 2 piece of paper that appear to be part of the report.";
-				next;
-				getitem 6040,2; //Some_Of_Report
-				erasequest 3091;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-			else if (.@ep13_search_lotto == 3) {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "Good news! I've found 3 pieces of paper that appear to be part of the report.";
-				next;
-				getitem 6040,3; //Some_Of_Report
-				erasequest 3091;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-			else {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "I'm doing my best, but I haven't found any pages yet.";
-				next;
-				erasequest 3091;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-		}
-		else if (ep13_1_edq < 8) {
-			mes "[Expedition Scout]";
-			mes "Who are you? Why do you want to know about our search results? Are you from the army?";
-			next;
-			mes "[Expedition Scout]";
-			mes "Man, don't you know that you can be arrested for interrupting a military operation?";
-			next;
-			mes "[Expedition Scout]";
-			mes "Please leave immediately.";
-		}
-		else {
-			mes "[Expedition Scout]";
-			mes "Who are you? Why do you want to know about our search results? Are you from the army?";
-			next;
-			mes "[Expedition Scout]";
-			mes "Man, don't you know that you can be arrested for interrupting a military operation?";
-			next;
-			mes "[Expedition Scout]";
-			mes "Please leave immediately.";
-		}
-		close;
-	case 2:
-		if (ep13_1_edq < 10) {
-			mes "[Expedition Scout]";
-			mes "I'm sorry, but I'm on duty. Why don't we talk later when I'm off-duty?";
-			close;
-		}
-		else {
-			mes "[Expedition Scout]";
-			mes "I'm sorry, but I'm on duty. Why don't we talk later when I'm off-duty?";
-		}
+		mes "[Expedition Scout]";
+		mes "I'm sorry, but I'm on duty. Why don't we talk later when I'm off-duty?";
 		close;
 	case 3:
 		close;
 	}
 }
-
-spl_fild03,172,71,3	script	Expedition Scout#4	707,{
-	mes "[Expedition Scout]";
-	mes "Good day. I'm from the Third Scout Party under direct command of the commander of the Midgard Expedition.";
-	next;
-	mes "[Expedition Scout]";
-	mes "I've been ordered by Instructor Igrid to conduct a search for something.";
-	set .@ep13_search_control,checkquest(3091,PLAYTIME);
-	next;
-	switch(select("Ask about search results.:Chitchat.:Quit.")) {
-	case 1:
-		if (((ep13_1_edq == 71) || (ep13_1_edq == 72)) && (.@ep13_search_control == -1)) {
-			set .@ep13_search_lotto,rand(1,6);
-			if (.@ep13_search_lotto == 4) {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "Good news! I've found 5 pieces of paper that appear to be part of the report.";
-				next;
-				getitem 6040,5; //Some_Of_Report
-				changequest 3090,3091;
-				erasequest 3090;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-			else if ((.@ep13_search_lotto == 1) || (.@ep13_search_lotto == 6)) {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "Good news! I've found 2 pieces of paper that appear to be part of the report.";
-				next;
-				getitem 6040,2; //Some_Of_Report
-				changequest 3090,3091;
-				erasequest 3090;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-			else if (.@ep13_search_lotto == 3) {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "Good news! I've found 3 pieces of paper that appear to be part of the report.";
-				next;
-				getitem 6040,3; //Some_Of_Report
-				changequest 3090,3091;
-				erasequest 3090;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-			else {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "I'm doing my best, but I haven't found any pages yet.";
-				next;
-				changequest 3090,3091;
-				erasequest 3090;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-		}
-		else if (((ep13_1_edq == 71) || (ep13_1_edq == 72)) && ((.@ep13_search_control == 0) || (.@ep13_search_control == 1))) {
-			mes "[Expedition Scout]";
-			mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-			next;
-			mes "[Expedition Scout]";
-			mes "Searching for lost pages was tougher then I expected. Please come back later when I'm finished making one round.";
-			close;
-		}
-		else if (((ep13_1_edq == 71) || (ep13_1_edq == 72)) && (.@ep13_search_control == 2)) {
-			set .@ep13_search_lotto,rand(1,6);
-			if (.@ep13_search_lotto == 4) {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "Good news! I've found 5 pieces of paper that appear to be part of the report.";
-				next;
-				getitem 6040,5; //Some_Of_Report
-				erasequest 3091;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-			else if ((.@ep13_search_lotto == 1) || (.@ep13_search_lotto == 6)) {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "Good news! I've found 2 pieces of paper that appear to be part of the report.";
-				next;
-				getitem 6040,2; //Some_Of_Report
-				erasequest 3091;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-			else if (.@ep13_search_lotto == 3) {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "Good news! I've found 3 pieces of paper that appear to be part of the report.";
-				next;
-				getitem 6040,3; //Some_Of_Report
-				erasequest 3091;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-			else {
-				mes "[Expedition Scout]";
-				mes "Oh, you must be" + strcharinfo(0) + ". I heard that you'll be delivering the report.";
-				next;
-				mes "[Expedition Scout]";
-				mes "I'm doing my best, but I haven't found any pages yet.";
-				next;
-				erasequest 3091;
-				setquest 3091;
-				mes "[Expedition Scout]";
-				mes "Well then, keep up the good work!";
-				close;
-			}
-		}
-		else if (ep13_1_edq < 8) {
-			mes "[Expedition Scout]";
-			mes "Who are you? Why do you want to know about our search results? Are you from the army?";
-			next;
-			mes "[Expedition Scout]";
-			mes "Man, don't you know that you can be arrested for interrupting a military operation?";
-			next;
-			mes "[Expedition Scout]";
-			mes "Please leave immediately.";
-		}
-		else {
-			mes "[Expedition Scout]";
-			mes "Who are you? Why do you want to know about our search results? Are you from the army?";
-			next;
-			mes "[Expedition Scout]";
-			mes "Man, don't you know that you can be arrested for interrupting a military operation?";
-			next;
-			mes "[Expedition Scout]";
-			mes "Please leave immediately.";
-		}
-		close;
-	case 2:
-		if (ep13_1_edq < 10) {
-			mes "[Expedition Scout]";
-			mes "I'm sorry, but I'm on duty. Why don't we talk later when I'm off-duty?";
-			close;
-		}
-		else {
-			mes "[Expedition Scout]";
-			mes "I'm sorry, but I'm on duty. Why don't we talk later when I'm off-duty?";
-		}
-		close;
-	case 3:
-		close;
-	}
-}
+man_fild03,202,251,3	duplicate(Expedition Scout#1)	Expedition Scout#2	707
+spl_fild02,295,368,3	duplicate(Expedition Scout#1)	Expedition Scout#3	707
+spl_fild03,172,71,3	duplicate(Expedition Scout#1)	Expedition Scout#4	707
 
 prt_castle,88,165,3	script	Laur	57,{
 	mes "[Laur]";

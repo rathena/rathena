@@ -997,6 +997,7 @@ void initChangeTables(void) {
 		StatusIconChangeTable[SC_HALLUCINATION] = SI_BLANK;
 
 	/* StatusChangeState (SCS_) NOMOVE */
+	StatusChangeStateTable[SC_ANKLE]               |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_AUTOCOUNTER]         |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_TRICKDEAD]           |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_BLADESTOP]           |= SCS_NOMOVE;
@@ -1019,9 +1020,9 @@ void initChangeTables(void) {
 	StatusChangeStateTable[SC_CRYSTALIZE]          |= SCS_NOMOVE|SCS_NOMOVECOND;
 	StatusChangeStateTable[SC_NETHERWORLD]         |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_CAMOUFLAGE]          |= SCS_NOMOVE|SCS_NOMOVECOND;
-	StatusChangeStateTable[SC_MEIKYOUSISUI]		   |= SCS_NOMOVE;
+	StatusChangeStateTable[SC_MEIKYOUSISUI]        |= SCS_NOMOVE;
 	StatusChangeStateTable[SC_KAGEHUMI]            |= SCS_NOMOVE;
-	StatusChangeStateTable[SC_KYOUGAKU]			   |= SCS_NOMOVE;
+	StatusChangeStateTable[SC_KYOUGAKU]            |= SCS_NOMOVE;
 
 	/* StatusChangeState (SCS_) NOPICKUPITEMS */
 	StatusChangeStateTable[SC_HIDING]              |= SCS_NOPICKITEM;

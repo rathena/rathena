@@ -1282,10 +1282,21 @@ int pc_calc_skilltree(struct map_session_data *sd)
 	}
 	c = pc_class2idx(c);
 
-	for( i = 0; i < MAX_SKILL; i++ )
-	{
+	for( i = 0; i < MAX_SKILL; i++ ) {
 		if( sd->status.skill[i].flag != SKILL_FLAG_PLAGIARIZED && sd->status.skill[i].flag != SKILL_FLAG_PERM_GRANTED ) //Don't touch these
 			sd->status.skill[i].id = 0; //First clear skills.
+		/* permanent skills that must be re-checked */
+		if( sd->status.skill[i].flag == SKILL_FLAG_PERM_GRANTED ) {
+			switch( i ) {
+				case NV_TRICKDEAD:
+					if( (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE ) {
+							sd->status.skill[i].id = 0;
+							sd->status.skill[i].lv = 0;
+							sd->status.skill[i].flag = 0;
+					}
+					break;
+			}
+		}
 	}
 
 	for( i = 0; i < MAX_SKILL; i++ )
