@@ -772,16 +772,18 @@ AC_SUBST([MYSQL_LIBS])
 
 #
 # PCRE library (optional)
-#
-##TODO PCRE version
+# 		
 PCRE_LIBS=""
 PCRE_CFLAGS=""
 
 if test "$want_pcre" = "no" ; then
 	AC_MSG_NOTICE([ignoring PCRE (optional)])
 else
+	host_os="`uname`"
+	if test "$host_os" = "FreeBSD" ; then PCRE_HOME="/usr/local"; fi
+	AC_MSG_NOTICE([bsddebug, pcrehome=($PCRE_HOME)])
 	if test -z "$PCRE_HOME" ; then
-		AC_CHECK_LIB([pcre], [pcre_study], [HAVE_PCRE="yes"], [])
+                AC_SEARCH_LIBS([pcre_study], [pcre], [HAVE_PCRE="yes"], [])
 		if test "$HAVE_PCRE" = "yes" ; then
 			PCRE_LIBS="-lpcre"
 		fi
@@ -798,7 +800,8 @@ else
 	fi
 	AC_MSG_CHECKING([PCRE library (optional)])
 	if test "$HAVE_PCRE" = "yes" ; then
-		AC_MSG_RESULT([yes])
+		PCRE_VERSION="`pcre-config --version`"
+		AC_MSG_RESULT([yes ($PCRE_VERSION)])
 	else
 		AC_MSG_RESULT([no])
 		if test "$require_pcre" = "yes" ; then
@@ -810,6 +813,7 @@ else
 fi
 
 AC_SUBST([HAVE_PCRE])
+AC_SUBST([PCRE_VERSION])
 AC_SUBST([PCRE_LIBS])
 AC_SUBST([PCRE_CFLAGS])
 
