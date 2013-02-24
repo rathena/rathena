@@ -465,6 +465,8 @@
 4195,0,1255,30,0,0,0,0,"Paradise: Neraid Handling"
 4196,0,1506,30,0,0,0,0,"Paradise: Disguise Handling"
 
+4197,10800,0,0,0,0,0,0,"Octopus"
+
 5000,0,0,0,0,0,0,0,"The Crow of the Fate - 7"
 
 5035,0,0,0,0,0,0,0,"Help the old man!"
@@ -877,6 +879,20 @@
 7344,0,0,0,0,0,0,0,"List of Errands"
 7345,0,0,0,0,0,0,0,"List of Errands"
 7346,0,0,0,0,0,0,0,"List of Errands"
+
+// Port Malaya
+7350,0,0,0,0,0,0,0,"Cautious Village"
+7351,0,0,0,0,0,0,0,"Better than My Old Button"
+7352,0,0,0,0,0,0,0,"Sailor Wants a Button"
+7353,0,0,0,0,0,0,0,"Old Man Wants a Button"
+7354,0,0,0,0,0,0,0,"Young Man Wants a Button"
+7355,0,0,0,0,0,0,0,"Merchant Wants a Button"
+7356,0,0,0,0,0,0,0,"Little Kid Wants a Button"
+7357,0,0,0,0,0,0,0,"Middle-aged Guy Wants a Button"
+7358,0,0,0,0,0,0,0,"Why do they want my Buttons?"
+7360,0,0,0,0,0,0,0,"Deliver Holy Item to Old Man"
+7363,0,0,0,0,0,0,0,"Deliver Holy Item to Little Kid"
+7364,0,0,0,0,0,0,0,"Deliver Holy Item to Middle-aged Man"
 
 8000,0,0,0,0,0,0,0,"Quitting Job Change"
 8001,0,0,0,0,0,0,0,"Job Change to Assassin"
@@ -2283,8 +2299,6 @@
 1115,0,0,0,0,0,0,0,"Ropewa & Yuridi - Song of the Abyss"
 1116,0,0,0,0,0,0,0,"Ropewa & Yuridi - Dead Man's Song"
 1117,0,0,0,0,0,0,0,"Ropewa & Yuridi - Eternal Promise, Broken Ring"
-
-// Ropewa Clue Quest
 1118,0,0,0,0,0,0,0,"Neighborhood Knight - I Need Clues"
 
 // Researcher's Quest
