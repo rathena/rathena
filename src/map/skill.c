@@ -502,6 +502,7 @@ int can_copy (struct map_session_data *sd, uint16 skill_id, struct block_list* b
 }
 
 // [MouseJstr] - skill ok to cast? and when?
+//done before check_condition_begin, requirement
 int skillnotok (uint16 skill_id, struct map_session_data *sd)
 {
 	int16 idx,m;
@@ -12438,6 +12439,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id
 	struct status_change *sc;
 	struct skill_condition require;
 	int i;
+	uint inf2;
 
 	nullpo_ret(sd);
 
@@ -12558,6 +12560,20 @@ int skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id
 	//Can only update state when weapon/arrow info is checked.
 	sd->state.arrow_atk = require.ammo?1:0;
 
+	// perform skill-group checks
+	inf2 = skill_get_inf2(skill_id);
+	if(inf2&INF2_CHORUS_SKILL) {
+		if ( skill_check_pc_partner(sd,skill_id,&skill_lv,skill_get_splash(skill_id,skill_lv),0) < 1 ){
+		    clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+		    return 0;
+		}
+	}
+	else if(inf2&INF2_ENSEMBLE_SKILL){
+	    if (skill_check_pc_partner(sd, skill_id, &skill_lv, 1, 0) < 1) {
+		    clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+		    return 0;
+	    }
+	}
 	// perform skill-specific checks (and actions)
 	switch( skill_id ) {
 		case SO_SPELLFIST:

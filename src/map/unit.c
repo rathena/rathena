@@ -1132,21 +1132,6 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 			}
 			sd->skill_id_old = skill_id;
 			break;
-		case BD_LULLABY:
-		case BD_RICHMANKIM:
-		case BD_ETERNALCHAOS:
-		case BD_DRUMBATTLEFIELD:
-		case BD_RINGNIBELUNGEN:
-		case BD_ROKISWEIL:
-		case BD_INTOABYSS:
-		case BD_SIEGFRIED:
-		case CG_MOONLIT:
-			if (skill_check_pc_partner(sd, skill_id, &skill_lv, 1, 0) < 1)
-			{
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-				return 0;
-			}
-			break;
 		case WL_WHITEIMPRISON:
 			if( battle_check_target(src,target,BCT_SELF|BCT_ENEMY) < 0 ) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_TOTARGET,0);

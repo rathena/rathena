@@ -106,8 +106,8 @@ static int block_free_count = 0, block_free_lock = 0;
 static struct block_list *bl_list[BL_LIST_MAX];
 static int bl_list_count = 0;
 
-#define MAX_MSG 1500
-static char* msg_table[MAX_MSG]; // map Server messages
+#define MAP_MAX_MSG 1500
+static char* msg_table[MAP_MAX_MSG]; // map Server messages
 
 struct map_data map[MAX_MAP_PER_SERVER];
 int map_num = 0;
@@ -3838,11 +3838,11 @@ int do_init(int argc, char *argv[])
 }
 
 int map_msg_config_read(char *cfgName){
-	return _msg_config_read(cfgName,MAX_MSG,msg_table);
+	return _msg_config_read(cfgName,MAP_MAX_MSG,msg_table);
 }
 const char* map_msg_txt(int msg_number){
-	return _msg_txt(msg_number,MAX_MSG,msg_table);
+	return _msg_txt(msg_number,MAP_MAX_MSG,msg_table);
 }
 void map_do_final_msg(void){
-	_do_final_msg(MAX_MSG,msg_table);
+	_do_final_msg(MAP_MAX_MSG,msg_table);
 }

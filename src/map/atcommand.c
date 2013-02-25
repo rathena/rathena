@@ -52,8 +52,6 @@
 
 #define ATCOMMAND_LENGTH 50
 #define ACMD_FUNC(x) static int atcommand_ ## x (const int fd, struct map_session_data* sd, const char* command, const char* message)
-#define MAX_MSG 1500
-
 
 typedef struct AtCommandInfo AtCommandInfo;
 typedef struct AliasInfo AliasInfo;
@@ -76,7 +74,6 @@ struct AliasInfo {
 char atcommand_symbol = '@'; // first char of the commands
 char charcommand_symbol = '#';
 
-static char* msg_table[MAX_MSG]; // Server messages (0-499 reserved for GM commands, 500-999 reserved for others)
 static DBMap* atcommand_db = NULL; //name -> AtCommandInfo
 static DBMap* atcommand_alias_db = NULL; //alias -> AtCommandInfo
 static config_t atcommand_config;
