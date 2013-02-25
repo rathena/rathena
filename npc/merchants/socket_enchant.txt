@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 2.0
+//= 2.0a
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -27,6 +27,7 @@
 //= 1.9 Moved Episode 12 items to separate NPC.
 //=     Some cleanup & optimization. [Gepard]
 //= 2.0 Duplicates now spawn from floating NPCs. [L0ne_W0lf]
+//= 2.0a Added 'disable_items' command. [Euphy]
 //============================================================
 
 -	script	Seiyablem#dummy::SocketEnchant	-1,{
@@ -247,6 +248,7 @@
 
 function	script	Func_Socket	{
 
+	disable_items;
 	mes "[Seiyablem]";
 	mes "You want to add a Slot to a " + getitemname(getarg(0)) + "?";
 	mes "Alright, please bring me ^FF0000" + getarg(6) + " " + getitemname(getarg(5)) + (getarg(6) > 1 && getarg(5) != 999 ? "s":"") + "^000000, " + (getarg(7,0) != 0 && getarg(8,0) != 0 ? ("^FF0000" + getarg(8,0) + " " + getitemname(getarg(7,0)) + (getarg(8,0) > 1 && getarg(7,0) != 999 ? "s":"") + "^000000 ") : "") + "and my ^FF0000" + (getarg(4) >= 1000 ? (getarg(4)/1000 + ",000") : getarg(4)) + ",000 zeny^000000 service fee.";

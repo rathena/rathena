@@ -114,7 +114,7 @@ struct script_stack {
 //
 // Script state
 //
-enum e_script_state { RUN,STOP,END,RERUNLINE,GOTO,RETFUNC };
+enum e_script_state { RUN,STOP,END,RERUNLINE,GOTO,RETFUNC,CLOSE };
 
 struct script_state {
 	struct script_stack* stack;

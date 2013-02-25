@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.4a
+//= 1.4b
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -17,6 +17,7 @@
 //= alongside him. Special thanks to Chilly for the base. [Masao]
 //= 1.4 Partial cleaning and bug fixing. [Euphy]
 //= 1.4a Added 'npcskill' command. [Euphy]
+//= 1.4b Added 'disable_items' command. [Euphy]
 //============================================================
 
 moc_para01,25,35,4	script	Instructor Boya#para01	469,{
@@ -3364,6 +3365,7 @@ moc_para01,112,96,5	script	Administrator Michael	967,{
 		mes "We can only upgrade the Eden Group Hat.";
 		if (para_suv02 == 3) {
 			if (countitem(5583) > 0) {
+				disable_items;
 				mes "[Michael]";
 				mes "What status bonus do you want to upgrade?";
 				next;

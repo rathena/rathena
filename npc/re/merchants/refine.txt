@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 1.0
+//= 1.0a
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
 //= Renewal-specific refining NPCs and material merchants.
 //===== Additional Comments: =================================
 //= 1.0 Moved some scripts to Renewal file, optimized "Austry" NPC. [Euphy]
+//= 1.0a Added 'disable_items' command. [Euphy]
 //============================================================
 
 // +11 and above Refiners
@@ -41,6 +42,7 @@ payon_in01,18,132,3	script	Bestry#pay	826,{
 //= function call.  Otherwise, the chance in refine_db.txt is used.
 //============================================================
 function	script	refinenew	{
+	disable_items;
 	mes "["+ getarg(0) +"]";
 	mes "I am the best Blacksmith ever!";
 	mes "I don't work with normal, boring items.";

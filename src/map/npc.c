@@ -1193,7 +1193,7 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
 /*==========================================
  *
  *------------------------------------------*/
-int npc_scriptcont(struct map_session_data* sd, int id)
+int npc_scriptcont(struct map_session_data* sd, int id, bool closing)
 {
 	nullpo_retr(1, sd);
 
@@ -1227,6 +1227,9 @@ int npc_scriptcont(struct map_session_data* sd, int id)
 	 **/
 	if( sd->progressbar.npc_id && DIFF_TICK(sd->progressbar.timeout,gettick()) > 0 )
 		return 1;
+
+	if( closing && sd->st->state == CLOSE )
+		sd->st->state = END;
 
 	run_script_main(sd->st);
 

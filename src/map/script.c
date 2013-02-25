@@ -4391,7 +4391,7 @@ BUILDIN_FUNC(close)
 	if( sd == NULL )
 		return 0;
 
-	st->state = END;
+	st->state = CLOSE;
 	clif_scriptclose(sd, st->oid);
 	return 0;
 }

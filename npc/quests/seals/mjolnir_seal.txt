@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.8a
 //===== Compatible With: ===================================== 
 //= rAthena
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //=     Corrected Sudi's and player's HP settings.
 //= 1.7 Fixed a copy/paste error in Nordri. [L0ne_W0lf]
 //= 1.8 Fixed item check for Oridecon. [L0ne_W0lf]
+//= 1.8a Added 'disable_items' command. [Euphy]
 //============================================================
 
 prontera,124,297,3	script	Tialfi	706,{
@@ -1934,6 +1935,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 				}
 			}
 			else if(god_mjo_3 == 1) {
+				disable_items;
 				mes "[Vestri]";
 				mes "Great...!";
 				mes "Which one should I upgrade first, huh? My heart is pounding with anticipation...";

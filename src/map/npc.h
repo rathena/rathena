@@ -118,7 +118,7 @@ int npc_touch_areanpc2(struct mob_data *md); // [Skotlex]
 int npc_check_areanpc(int flag, int16 m, int16 x, int16 y, int16 range);
 int npc_touchnext_areanpc(struct map_session_data* sd,bool leavemap);
 int npc_click(struct map_session_data* sd, struct npc_data* nd);
-int npc_scriptcont(struct map_session_data* sd, int id);
+int npc_scriptcont(struct map_session_data* sd, int id, bool closing);
 struct npc_data* npc_checknear(struct map_session_data* sd, struct block_list* bl);
 int npc_buysellsel(struct map_session_data* sd, int id, int type);
 int npc_buylist(struct map_session_data* sd,int n, unsigned short* item_list);

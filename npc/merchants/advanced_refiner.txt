@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.4
+//= 1.4a
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -22,9 +22,11 @@
 //= 1.2 Optimizing refine method [Zephyrus]
 //= 1.3 Typo fixes [Yommy]
 //= 1.4 Removed unnecessary dialogs [Zephyrus]
+//= 1.4a Added 'disable_items' command. [Euphy]
 //============================================================
 
 payon,174,138,0	script	Suhnbi#cash	85,{
+	disable_items;
 	mes "[Suhnbi]";
 	mes "I am the Armsmith";
 	mes "I can refine all kinds of weapons,";

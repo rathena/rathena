@@ -5209,7 +5209,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		case BL_MOB:
 			if(((((TBL_MOB*)target)->special_state.ai == 2 || //Marine Spheres
 				(((TBL_MOB*)target)->special_state.ai == 3 && battle_config.summon_flora&1)) && //Floras
-				s_bl->type == BL_PC && src->type != BL_MOB) || ((TBL_MOB*)target)->special_state.ai == 4 && t_bl->id != s_bl->id) //Zanzoe
+				s_bl->type == BL_PC && src->type != BL_MOB) || (((TBL_MOB*)target)->special_state.ai == 4 && t_bl->id != s_bl->id)) //Zanzoe
 			{	//Targettable by players
 				state |= BCT_ENEMY;
 				strip_enemy = 0;

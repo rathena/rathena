@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= TyrNemesis^
 //===== Current Version: =====================================
-//= 1.2
+//= 1.2a
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -11,12 +11,16 @@
 //===== Additional Comments: =================================
 //= 1.0 First version. [TyrNemesis^]
 //= 1.2 Optimized and fixed getequipname menu. [Kisuka]
+//= 1.2a Added 'disable_items' command. [Euphy]
 //============================================================
 
 prt_in,28,73,4	script	Wise Old Woman#eAcustom	78,{
+
 	set .zenycost,200000; // Set base cost in zeny of the card remover services
 	set .percardcost,25000; // set cost per card of the card remover services
 	set .faildestroy,1; // Should the card remover have a chance of failure that destroys items? 1 = Yes, 0 = No.
+
+	disable_items;
 	mes "[Wise Old Woman]";
 	mes "Good day, young one. I have the power to remove cards that you have compounded onto your equipment. Does this idea please you?";
 	next;

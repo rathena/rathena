@@ -3,20 +3,22 @@
 //===== By: ==================================================
 //= Lupus
 //===== Current Version: =====================================
-//= 1.1
+//= 1.1a
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
 //= Write you name on your rare equipment or weapon ^_-
 //===== Additional Comments: =================================
 //= 1.1 Cleaned and edited for general use. [Euphy]
+//= 1.1a Added 'disable_items' command. [Euphy]
 //============================================================
 
 prt_in,24,61,7	script	Perchik	47,{
 	
 	setarray .@Item[0],644,3;	// Item requirements: <ID>,<Count>{,...} (0 to disable)
 	setarray .@Cost[0],0,5000;	// Zeny requirements: <base price>,<price per refine>
-	
+
+	disable_items;
 	mes "[Perchik]";
 	mes "I can ^0055FFsign your name^000000 on almost any rare item you hold.";
 	next;

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Dj-Yhn
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.6a
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -33,6 +33,7 @@
 //= 1.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 1.5 Vito'd function call for checkweight. [L0ne_W0lf]
 //= 1.6 Replaced effect numerics with constants. [L0ne_W0lf]
+//= 1.6a Added 'disable_items' command. [Euphy]
 //============================================================
 
 // Black Cat Ears
@@ -637,7 +638,7 @@ geffen,67,87,3	script	Ipore#1	700,{
 // Angel Wing Ears, Devil Wing Ears
 //============================================================
 yuno,241,52,3	script	Old Blacksmith#hgear	813,{
-	//DisableItemMove
+	disable_items;
 	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute! -";
 		mes "- Currently you're carrying -";
@@ -645,9 +646,6 @@ yuno,241,52,3	script	Old Blacksmith#hgear	813,{
 		mes "- Please try again after -";
 		mes "- you put some items into Kafra Storage. -";
 		close;
-	//	close2;
-	//	EnableItemMove
-	//	end;
 	}
 	mes "[Skillful Looking Artisan]";
 	mes "Aha~";
@@ -960,7 +958,6 @@ yuno,241,52,3	script	Old Blacksmith#hgear	813,{
 		mes "I'm always here at this scenic spot so I can enjoy the view. Just come back whenever you feel like it.";
 		close;
 	}
-	//EnableItemMove
 }
 
 // Sea-Otter Hat

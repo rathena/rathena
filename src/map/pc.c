@@ -4215,6 +4215,14 @@ int pc_useitem(struct map_session_data *sd,int n)
 
 	nullpo_ret(sd);
 
+	//This flag enables you to use items while in an NPC. [Skotlex]
+	if( sd->npc_id && sd->npc_id != sd->npc_item_flag ){
+#ifdef RENEWAL
+		clif_msg(sd, 0x783); // TODO look for the client date that has this message.
+#endif
+		return 0;
+	}
+
 	if( sd->status.inventory[n].nameid <= 0 || sd->status.inventory[n].amount <= 0 )
 		return 0;
 

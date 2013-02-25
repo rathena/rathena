@@ -3,9 +3,9 @@
 //===== By: ================================================== 
 //= MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.3a
 //===== Compatible With: ===================================== 
-//= rAthena
+//= rAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= 2005 Headgears Official Quest.
@@ -15,6 +15,7 @@
 //= 1.2 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 1.3 Fixed item check bugs, added missing airport NPC,
 //      and took out unneeded breaks [Xantara] [Muad_Dib]
+//= 1.3a Added 'disable_items' command. [Euphy]
 //============================================================ 
 
 yuno,222,116,3	script	Kasis#LhzHat	851,{
@@ -227,6 +228,7 @@ yuno,222,116,3	script	Kasis#LhzHat	851,{
 }
 
 lighthalzen,143,68,0	script	Strange Guy#LhzHat	47,{
+	disable_items;
 	if(DTHATQ == 0)
 	{
 		mes "[Strange Guy]";
@@ -1085,6 +1087,7 @@ lhz_in02,91,38,5	script	Margaret Mary#LhzHat	90,{
 }
 
 lighthalzen,182,89,0	script	Relaxed-Looking Lady	91,{
+	disable_items;
 	if(LHZBTQ == 0)
 	{
 		mes "[Relaxed-Looking Lady]";

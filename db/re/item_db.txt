@@ -5082,9 +5082,9 @@
 11529,MAAMOUL_,Maamoul,0,500,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 120,60; },{},{}
 11530,Jujube,Jujube,0,10,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 30,0; },{},{}
 11531,Coffee,Coffee,0,10,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 0,10; },{},{}
-11532,Nasi_Goreng,Nasi_Goreng,0,15,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(17,23),0; },{},{}
+11532,Nasi_Goreng,Nasi Goreng,0,15,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(17,23),0; },{},{}
 11533,Satay,Satay,0,15,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(17,23),0; },{},{}
-11534,Coconut_Juice,Coconut Juice,0,20,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(17,23),0; },{},{}
+11534,Coco_Juice,Coconut Juice,0,20,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(17,23),0; },{},{}
 //
 11536,Cat_Hard_Biscuit,Cat Biscuit,0,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(70,110),0; },{},{}
 //

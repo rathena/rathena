@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.3a
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -14,9 +14,11 @@
 //= 1.1 Corrected typo (Sit -> Suit) (bugreport:4586)
 //= 1.2 Optimized. [Euphy]
 //= 1.3 Fixed some typos and optimized a little more. [Daegaladh]
+//= 1.3a Added 'disable_items' command. [Euphy]
 //============================================================ 
 
 prontera,165,60,2	script	Apprentice Craftsman	73,{
+	disable_items;
 	mes "[Apprentice Craftsman]";
 	if (Zeny > 399999) {
 		mes "I've been studying ways to enhance an armor to maximize its capability.";
