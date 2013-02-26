@@ -3707,7 +3707,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			short x, y, i = 2; // Move 2 cells for Issen(from target)
 			struct block_list *mbl = bl;
 			short dir = 0;
-			
+
 			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 
 			if( skill_id == MO_EXTREMITYFIST )
@@ -3721,14 +3721,14 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				sc_start(src,SC_EXTREMITYFIST2,100,skill_lv,skill_get_time(skill_id,skill_lv));
 #endif
 			}else
-				status_set_hp(src, 
+				status_set_hp(src,
 #ifdef RENEWAL
 				max(status_get_max_hp(src)/100, 1)
 #else
 				1
 #endif
 				, 0);
-			
+
 			dir = map_calc_dir(src,bl->x,bl->y);
 			if( dir > 0 && dir < 4) x = -i;
 			else if( dir > 4 ) x = i;
@@ -7863,8 +7863,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				skill_blockpc_start(sd,skill_id,4000);
 
 			if( !(tsc && tsc->data[type]) ){
-				i = sc_start2(bl,type,rate,skill_lv,src->id,(src == bl)?5000:(bl->type == BL_PC)?skill_get_time(skill_id,skill_lv):skill_get_time2(skill_id, skill_lv)); 
-				clif_skill_nodamage(src,bl,skill_id,skill_lv,i); 
+				i = sc_start2(bl,type,rate,skill_lv,src->id,(src == bl)?5000:(bl->type == BL_PC)?skill_get_time(skill_id,skill_lv):skill_get_time2(skill_id, skill_lv));
+				clif_skill_nodamage(src,bl,skill_id,skill_lv,i);
 				if( !i )
 					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 			}
@@ -12439,7 +12439,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id
 	struct status_change *sc;
 	struct skill_condition require;
 	int i;
-	uint inf2;
+	uint32 inf2;
 
 	nullpo_ret(sd);
 

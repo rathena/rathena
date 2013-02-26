@@ -910,6 +910,7 @@ int party_exp_share(struct party_data* p, struct block_list* src, unsigned int b
 {
 	struct map_session_data* sd[MAX_PARTY];
 	unsigned int i, c;
+	uint32 base_exp_bonus, job_exp_bonus;
 
 	nullpo_ret(p);
 
@@ -937,12 +938,15 @@ int party_exp_share(struct party_data* p, struct block_list* src, unsigned int b
 			zeny = (unsigned int) cap_value(zeny * bonus/100, INT_MIN, INT_MAX);
 	}
 
+	base_exp_bonus = base_exp;
+	job_exp_bonus = job_exp;
+
 	for (i = 0; i < c; i++) {
 #ifdef RENEWAL_EXP
 		if( !(src && src->type == BL_MOB && ((TBL_MOB*)src)->db->mexp) ){
 			int rate = pc_level_penalty_mod(sd[i], (TBL_MOB*)src, 1);
-			base_exp = (unsigned int)cap_value(base_exp * rate / 100, 1, UINT_MAX);
-			job_exp = (unsigned int)cap_value(job_exp * rate / 100, 1, UINT_MAX);
+			base_exp = (unsigned int)cap_value(base_exp_bonus * rate / 100, 1, UINT_MAX);
+			job_exp = (unsigned int)cap_value(job_exp_bonus * rate / 100, 1, UINT_MAX);
 		}
 #endif
 		pc_gainexp(sd[i], src, base_exp, job_exp, false);
