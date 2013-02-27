@@ -1903,10 +1903,10 @@ REPLACE INTO `item_db_re` VALUES (2855,'Whike_Black_Tail','Whike Black Tail',5,2
 REPLACE INTO `item_db_re` VALUES (2856,'Half_Megin','Half Megingjard',5,20,NULL,0,NULL,1,NULL,NULL,0xFFFFFFFF,7,2,136,NULL,'47',NULL,0,'bonus bMdef,3; bonus bStr,20;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2857,'Half_Brysing','Half Brisingamen',5,20,NULL,0,NULL,1,NULL,NULL,0xFFFFFFFF,7,2,136,NULL,'47',NULL,0,'bonus bStr,3; bonus bInt,5; bonus bVit,3; bonus bDex,3; bonus bAgi,3; bonus bLuk,5; bonus bMdef,2;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2858,'Pendant_Of_Guardian','Guardian Pendant',5,NULL,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,136,NULL,'70',NULL,0,'skill "ALL_GUARDIAN_RECALL",1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (2859,'Golden_Rod_Orb','Golden Rod Orb',5,20,NULL,200,NULL,2,NULL,1,0x00000200,7,2,136,NULL,'100',NULL,0,'bonus bMdef,2; bonus bInt,1; bonus2 bSubEle,Ele_Wind,15; bonus3 bAutoSpellWhenHit,"WZ_JUPITEL",3,30;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (2860,'Aqua_Orb','Aqua Orb',5,20,NULL,200,NULL,2,NULL,1,0x00000200,7,2,136,NULL,'100',NULL,0,'bonus bMdef,2; bonus bInt,1; bonus2 bSubEle,Ele_Water,15; bonus3 bAutoSpellWhenHit,"WZ_FROSTNOVA",3,30;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (2861,'Crimson_Orb','Crismon Orb',5,20,NULL,200,NULL,2,NULL,1,0x00000200,7,2,136,NULL,'100',NULL,0,'bonus bMdef,2; bonus bInt,1; bonus2 bSubEle,Ele_Fire,15; bonus3 bAutoSpellWhenHit,"WZ_SIGHTRASHER",3,30;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (2862,'Forest_Orb','Forest Orb',5,20,NULL,200,NULL,2,NULL,1,0x00000200,7,2,136,NULL,'100',NULL,0,'bonus bMdef,2; bonus bInt,1; bonus2 bSubEle,Ele_Earth,15; bonus3 bAutoSpellWhenHit,"WZ_QUAGMIRE",3,30;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2859,'Golden_Rod_Orb','Golden Rod Orb',5,20,NULL,200,NULL,2,NULL,NULL,0x00000200,7,2,136,NULL,'100',NULL,0,'bonus bMdef,2; bonus bInt,1; bonus2 bSubEle,Ele_Wind,15; bonus3 bAutoSpellWhenHit,"WZ_JUPITEL",3,30;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2860,'Aqua_Orb','Aqua Orb',5,20,NULL,200,NULL,2,NULL,NULL,0x00000200,7,2,136,NULL,'100',NULL,0,'bonus bMdef,2; bonus bInt,1; bonus2 bSubEle,Ele_Water,15; bonus3 bAutoSpellWhenHit,"WZ_FROSTNOVA",3,30;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2861,'Crimson_Orb','Crismon Orb',5,20,NULL,200,NULL,2,NULL,NULL,0x00000200,7,2,136,NULL,'100',NULL,0,'bonus bMdef,2; bonus bInt,1; bonus2 bSubEle,Ele_Fire,15; bonus3 bAutoSpellWhenHit,"WZ_SIGHTRASHER",3,30;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2862,'Forest_Orb','Forest Orb',5,20,NULL,200,NULL,2,NULL,NULL,0x00000200,7,2,136,NULL,'100',NULL,0,'bonus bMdef,2; bonus bInt,1; bonus2 bSubEle,Ele_Earth,15; bonus3 bAutoSpellWhenHit,"WZ_QUAGMIRE",3,30;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2863,'Ring_Of_Valkyrie','Ring Of Valkyrie',5,NULL,NULL,0,NULL,2,NULL,NULL,0xFFFFFFFF,7,2,136,NULL,'1',NULL,0,'bonus2 bExpAddRace,RC_Boss,5; bonus2 bExpAddRace,RC_NonBoss,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2864,'Light_Of_Cure','Liht Of Cure',5,20,NULL,0,NULL,NULL,NULL,NULL,0x00000100,7,2,136,NULL,'110',NULL,0,'bonus bVit,2; bonus bHealPower,2;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2865,'Seal_Of_Cathedral','Seal Of Cathedral',5,20,NULL,0,NULL,NULL,NULL,NULL,0x00000100,7,2,136,NULL,'110',NULL,0,'bonus bInt,2; bonus bHealPower,2;',NULL,NULL);
@@ -1921,7 +1921,7 @@ REPLACE INTO `item_db_re` VALUES (2887,'Nabeu\'s_Seal','Nabeu\'s Seal',5,20,NULL
 #2889,
 REPLACE INTO `item_db_re` VALUES (2890,'White_Wing_Brooch','White Wing Brooch',5,20,NULL,100,NULL,NULL,NULL,NULL,0x00000800,7,2,136,NULL,'100',NULL,0,'bonus bDex,2; bonus bLongAtkRate,3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2891,'Black_Wing_Brooch','Black Wing Brooch',5,20,NULL,100,NULL,NULL,NULL,NULL,0x00000800,8,2,136,NULL,'100',NULL,0,'bonus bInt,2; bonus bFlee2,3;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (2892,'Assassin\'s_Glove','Assassin\'s Glove',5,56000,NULL,400,NULL,3,NULL,NULL,0x00001000,7,2,136,NULL,'100',NULL,0,'bonus bMaxSP,20; bonus bCritical,3;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2892,'Assassin\'s_Glove','Assassin\'s Glove',5,56000,NULL,400,NULL,3,NULL,1,0x00001000,7,2,136,NULL,'100',NULL,0,'bonus bMaxSP,20; bonus bCritical,3;',NULL,NULL);
 #2893,
 REPLACE INTO `item_db_re` VALUES (2894,'Sura_Gauntlet','Sura Gauntlet',5,20,NULL,400,NULL,1,NULL,NULL,0x00008000,7,2,136,NULL,'130',NULL,0,'bonus bStr,5; bonus bMaxSPRate,6; bonus bMaxHPRate,-6; if(readparam(bStr)>=120){ bonus bBaseAtk,30; }',NULL,NULL);
 #2895,
