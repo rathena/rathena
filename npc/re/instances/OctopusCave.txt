@@ -675,6 +675,8 @@ OnDisable:
 	killmonster "1@cash",instance_npcname("oct_boss_foot", instance_id())+"::OnMyMobDead"; // Not in official script.
 	disablenpc instance_npcname("oct_boss_foot", instance_id());
 	end;
+OnMyMobDead:
+	end;
 }
 
 1@cash,198,116,0	script	oct_boss_warp	45,2,2,{

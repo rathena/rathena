@@ -486,6 +486,7 @@ extern struct Battle_Config
 	int skill_trap_type;
 	int item_restricted_consumption_type;
 	int max_walk_path;
+	int item_enabled_npc;
 	} battle_config;
 
 void do_init_battle(void);

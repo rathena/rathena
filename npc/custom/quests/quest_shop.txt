@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.6a
+//= 1.6
 //===== Compatible With: =====================================
 //= rAthena SVN r16862+
 //===== Description: =========================================
@@ -107,7 +107,6 @@ OnBuyItem:
 		message strcharinfo(0),"You can't purchase that many "+getitemname(.@q[0])+".";
 		end;
 	}
-	disable_items;
 	mes "[Quest Shop]";
 	mes "Reward: ^0055FF"+((.@q[2] > 1)?.@q[2]+"x ":"")+Slot(.@q[0])+"^000000";
 	mes "Requirements:";

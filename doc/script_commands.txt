@@ -4401,13 +4401,13 @@ getrandgroupitem(1,3);
 *enable_items;
 *disable_items;
 
-These commands enable item usage while an NPC is running. When enable_items is
-run, items can be used during scripts until disable_items is called. 
-To avoid possible exploits, when enable_items is invoked, it will only enable
-item usage while running that script in particular. Note that if a different
-script also calls enable_items, it will override the last call (so you may
-want to call this command at the start of your script without assuming the
-effect is still in effect).
+These commands toggle the ability to change equipment while interacting with
+an NPC. To avoid possible exploits, the commands affect the particular script
+instance only. Note that if a different script also calls enable_items, it
+will override the last call (so you may want to call this command at the start
+of your script without assuming it is still in effect).
+
+The default setting, 'item_enabled_npc', is defined in 'conf/battle/items.conf'.
 
 ---------------------------------------
 

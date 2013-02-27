@@ -7375,7 +7375,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 #endif
 			break;
 		case SC_SUITON:
-			if (!val2 || (sd && (sd->class_&MAPID_UPPERMASK) == MAPID_NINJA)) {
+			if (!val2 || (sd && (sd->class_&MAPID_BASEMASK) == MAPID_NINJA)) {
 				//No penalties.
 				val2 = 0; //Agi penalty
 				val3 = 0; //Walk speed penalty
