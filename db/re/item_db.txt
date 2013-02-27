@@ -793,7 +793,7 @@
 1487,Lance_C,Lance,4,0,,0,220,,3,0,0x00004082,7,2,34,3,1,0,5,{ bonus2 bAddSize,Size_Small,50; bonus2 bAddSize,Size_Medium,50; bonus2 bAddSize,Size_Large,50; },{},{}
 1488,Ahlspiess_C,Ahlspiess,4,20,,0,135,,3,0,0x00004080,7,2,34,4,1,1,5,{ bonus bIgnoreDefRace,RC_NonBoss; bonus bIgnoreDefRace,RC_Boss; bonus2 bAddRace,RC_DemiHuman,10; bonus3 bAutoSpell,"KN_PIERCE",5,30; },{},{}
 1489,Marlin,Marlin,4,0,,0,220,,3,0,0x00004082,2,2,34,1,50,0,5,{ bonus bUnbreakableWeapon,0; bonus3 bAddEffOnSkill,"KN_PIERCE",Eff_Bleeding,1000; bonus3 bAddEffOnSkill,"LK_SPIRALPIERCE",Eff_Bleeding,1000; bonus2 bSkillAtk,"LK_SPIRALPIERCE",100; bonus2 bSkillAtk,"LG_INSPIRATION",50; if(BaseLevel>99) { bonus bBaseAtk,30; } },{},{}
-1490,Gigantic_Lance,Gigantic Lance,4,20,,20000,20,,3,0,0x00000080,7,2,34,4,140,1,5,{ bonus bAspd,-10; if(readparam(bStr)>=120){ bonus bBaseAtk,300; } },{},{ heal 0,-600; }
+1490,Gigantic_Lance,Gigantic Lance,4,20,,20000,20,,3,0,0x00000080,7,2,34,4,140,1,5,{ bonus bAspd,-10; bonus2 bSkillFixedCast,"LK_SPIRALPIERCE",4000; bonus2 bSkillCooldown,"LK_SPIRALPIERCE",20000; if(readparam(bStr)>=120){ bonus bBaseAtk,300; } },{},{ heal 0,-600; }
 //1491,
 1492,Bellum_Glave,Bellum Glave,4,20,,4500,250,,3,0,0x00004082,7,2,34,4,95,1,5,{ bonus2 bAddRace,RC_DemiHuman,80; if(getrefine()>=6) { bonus2 bSkillAtk,"LK_SPIRALPIERCE",100; bonus2 bSkillAtk,"KN_SPEARBOOMERANG",50; } if(getrefine()>=9) { autobonus2 "{ bonus bShortWeaponDamageReturn,20; bonus bMagicDamageReturn,20; }",100,2000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_REFLECTSHIELD; }"; } },{},{}
 // Maces
@@ -7332,7 +7332,7 @@
 18627,Dried_Leaf,Dried Leaf,5,20,,50,,0,,0,0xFFFFFFFF,7,2,1,,10,0,711,{ bonus bUnbreakableHelm,0; },{},{}
 18628,Tare_Brownie,Tare Brownie,5,20,,500,,5,,1,0xFFFFFFFF,7,2,256,,50,0,781,{},{},{}
 18629,B_Desert_Wolf_Hat,B Desert Wolf Hat,5,10,,300,,0,,1,0xFFFFFFFF,7,2,256,,1,1,392,{},{},{}
-18629,Dep_Alice_Hat,Dep Alice Hat,5,20,,500,,6,,0,0xFFFFFFFE,7,2,256,,70,1,784,{},{},{}
+18630,Dep_Alice_Hat,Drooping Alicel,5,20,,500,,6,,0,0xFFFFFFFE,7,2,256,,70,1,784,{},{},{}
 18631,Ribbon_Chef_Hat,Ribbon Chef Hat,5,20,,300,,5,,0,0xFFFFFFFF,7,2,256,,70,1,785,{ bonus bDex,3; bonus bLuk,1; },{},{}
 18632,Yellow_Poring_Hairpin,Yellow Poring Hairpin,5,20,,100,,3,,1,0xFFFFFFFF,7,2,256,,1,1,786,{},{},{}
 18633,Pink_Poring_Hairpin,Pink Poring Hairpin,5,20,,100,,3,,1,0xFFFFFFFF,7,2,256,,1,1,787,{},{},{}

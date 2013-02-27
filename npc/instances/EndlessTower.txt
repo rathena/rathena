@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -32,6 +32,7 @@
 //= 1.9 Added 'instance_check_party' command to the script for proper checking if
 //=		the invoking party meets the requirements to join the Memorial Dungeon.
 //= 2.0 Fixed broken else/if chaining. [Joseph]
+//= 2.1 Updated to match latest official script. [Euphy]
 //============================================================ 
 
 alberta,214,77,6	script	Captain Janssen	709,{
@@ -272,7 +273,7 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 					donpcevent instance_npcname("#102Effect2", instance_id())+"::OnInstanceInit";
 					donpcevent instance_npcname("#102FShadowDust1", instance_id())+"::OnInstanceInit";
 					donpcevent instance_npcname("#102FShadowDust", instance_id())+"::OnInstanceInit";
-					donpcevent instance_npcname("Spring of Life#1", instance_id())+"::OnInstanceInit";
+					donpcevent instance_npcname("Life Spring#1", instance_id())+"::OnInstanceInit";
 					donpcevent instance_npcname("Tyrant's Throne#", instance_id())+"::OnInstanceInit";
 					donpcevent instance_npcname("Lost Soul#102", instance_id())+"::OnInstanceInit";
 					donpcevent instance_npcname("#Effect30", instance_id())+"::OnInstanceInit";
@@ -466,47 +467,47 @@ e_tower,151,185,4	script	Purification Stone#et2	844,{
 }
 */
 
-// Floors 1-25
+// Levels 1-25
 //============================================================
 1@tower,50,360,0	script	Immortal Brazier#	844,{
 	mes "- A Message is Engraved on the Brazier -";
 	mes "The one who scatters the ashes of the darkness in this place shall become one step closer to Nacht Sieger, the Hegemon King of the Darkness...";
 	next;
 	set .@move_name$,strcharinfo(0);
-	switch(select("26th Floor:51st Floor:76th Floor")) {
+	switch(select("26th Level:51st Level:76th Level")) {
 	case 1:
 		if (countitem(6000) < 1) {
 			mes "-Warning-";
-			mes "To warp to the 26th Floor, you need 1 Ashes of the Darkness.";
+			mes "To warp to the 26th Level, you need 1 Ashes of the Darkness.";
 			close;
 		}
 		else {
 			delitem 6000,1; //Dark_Ashes
-			instance_announce 0, .@move_name$ + ". You will be warped to the 26th Floor.",bc_map,"0x00ff99";
+			instance_announce 0, .@move_name$ + ". You will be warped to the 26th Level.",bc_map,"0x00ff99";
 			warp "2@tower",52,354;
 		}
 		break;
 	case 2:
 		if (countitem(6000) < 2) {
 			mes "-Warning-";
-			mes "To warp to the 51st Floor, you need 2 Ashes of the Darkness.";
+			mes "To warp to the 51st Level, you need 2 Ashes of the Darkness.";
 			close;
 		}
 		else {
 			delitem 6000,2; //Dark_Ashes
-			instance_announce 0, .@move_name$ + ". You will be warped to the 51st Floor.",bc_map,"0x00ff99";
+			instance_announce 0, .@move_name$ + ". You will be warped to the 51st Level.",bc_map,"0x00ff99";
 			warp "3@tower",52,354;
 		}
 		break;
 	case 3:
 		if (countitem(6000) < 3) {
 			mes "-Warning-";
-			mes "To warp to the 76th Floor, you need 3 Ashes of the Darkness.";
+			mes "To warp to the 76th Level, you need 3 Ashes of the Darkness.";
 			close;
 		}
 		else {
 			delitem 6000,3; //Dark_Ashes
-			instance_announce 0, .@move_name$ + ". You will be warped to the 76th Floor.",bc_map,"0x00ff99";
+			instance_announce 0, .@move_name$ + ". You will be warped to the 76th Level.",bc_map,"0x00ff99";
 			warp "4@tower",52,354;
 		}
 		break;
@@ -529,12 +530,17 @@ OnInstanceInit:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("#1F Controller", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 1st Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("1FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 1
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 1st Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 1st Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 1st Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("1FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -559,12 +565,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("1FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 2nd Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("2FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 2
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 2nd Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 2nd Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 2nd Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("2FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -592,12 +603,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("2FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 3rd Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("3FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 3
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 3rd Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 3rd Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 3rd Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("3FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -625,12 +641,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("3FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 4th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("4FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 4
 	}
 	else
-		instance_announce 0, "Remaining Monsters on 4th the Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 4th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 4th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("4FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -657,12 +678,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("4FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 5th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("5FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 5
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 5th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 5th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 5th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("5FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -688,12 +714,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("5FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 6th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("6FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 6
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 6th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 6th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 6th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("6FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -719,12 +750,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("6FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 7th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("7FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 7
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 7th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 7th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 7th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("7FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -748,12 +784,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("7FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 8th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("8FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 8
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 8th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 8th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 8th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("8FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -778,12 +819,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("8FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 9th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("9FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 9
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 9th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 9th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 9th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("9FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -808,12 +854,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("9FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 10th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("10FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 10
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 10th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 10th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 10th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("10FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -839,12 +890,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("10FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 11th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("11FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 11
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 11th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 11th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 11th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("11FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -868,12 +924,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("11FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 12th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("12FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 12
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 12th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 12th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 12th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("12FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -898,12 +959,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("12FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 13th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("13FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 13
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 13th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 13th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 13th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("13FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -930,12 +996,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("13FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 14th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("14FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 14
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 14th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 14th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 14th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("14FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -964,12 +1035,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("14FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 15th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("15FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 15
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 15th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 15th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 15th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("15FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -995,12 +1071,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("15FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 16th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("16FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 16
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 16th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 16th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 16th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("16FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1026,12 +1107,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("16FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 17th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("17FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 17
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 17th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 17th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 17th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("17FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1055,12 +1141,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("17FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 18th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("18FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 18
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 18th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 18th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 18th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("18FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1086,12 +1177,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("18FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 19th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("19FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 19
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 19th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 19th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 19th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("19FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1115,12 +1211,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("19FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 20th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("20FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 20
 	}
 	else
-		instance_announce 0, "Remaining Monsters on 20th the Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 20th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 20th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("20FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1147,12 +1248,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("20FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 21st Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("21FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 21
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 21st Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 21st Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 21st Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("21FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1180,12 +1286,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("21FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 22nd Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("22FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 22
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 22nd Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 22nd Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 22nd Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("22FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1212,12 +1323,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("22FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 23rd Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("23FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 23
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 23rd Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 23rd Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 23rd Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("23FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1242,12 +1358,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("23FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 24th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("24FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 24
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 24th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 24th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 24th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("24FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1272,12 +1393,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("1@tower",instance_npcname("24FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 25th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("25FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 25
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 25th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 25th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 25th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("25FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1327,8 +1453,8 @@ OnTouch_:
 	input .@inputstr$;
 	next;
 	if (.@inputstr$ == "dmc2008") {
-		mes "This NPC manages the tower from the 1st to the 25th Floor.";
-		mes "Please enter the Floor number to open.";
+		mes "This NPC manages the tower from the 1st to the 25th Level.";
+		mes "Please enter the Level number to open.";
 		mes "(i.g.: 1F->1, 25F->25)";
 		input .@input,1,25;
 		next;
@@ -1336,14 +1462,14 @@ OnTouch_:
 			mes "You can only enter a number from 1 to 25.";
 		else {
 			donpcevent instance_npcname(.@input+"FGate102tower", instance_id())+"::OnEnable";
-			mes "*** Floor "+ .@input + " is now being opened. ***";
+			mes "*** Level "+ .@input + " is now being opened. ***";
 		}
 	}
 	close;
 }
 */
 
-// Floors 26-50
+// Levels 26-50
 //============================================================
 2@tower,29,365,2	script	Immortal Furnace#1	844,{
 	end;
@@ -1359,12 +1485,17 @@ OnInstanceInit:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("Immortal Furnace#1", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 26th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("26FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 26
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 26th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 26th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 26th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("26FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1392,12 +1523,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("26FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 27th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("27FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 27
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 27th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 27th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 27th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("27FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1423,12 +1559,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("27FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 28th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("28FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 28
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 28th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 28th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 28th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("28FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1456,12 +1597,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("28FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 29th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("29FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 29
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 29th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 29th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 29th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("29FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1485,12 +1631,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("29FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 30th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("30FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 30
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 30th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 30th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 30th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("30FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1516,12 +1667,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("30FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 31st Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("31FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 31
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 31st Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 31st Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 31st Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("31FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1550,12 +1706,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("31FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 32nd Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("32FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 32
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 32nd Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 32nd Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 32nd Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("32FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1582,12 +1743,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("32FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 33rd Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("33FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 33
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 33rd Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 33rd Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 33rd Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("33FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1612,12 +1778,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("33FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 34th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("34FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 34
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 34th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 34th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 34th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("34FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1644,12 +1815,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("34FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 35th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("35FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 35
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 35th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 35th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 35th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("35FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1674,12 +1850,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("35FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 36th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("36FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 36
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 36th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 36th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 36th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("36FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1704,12 +1885,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("36FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 37th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("37FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 37
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 37th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 37th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 37th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("37FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1733,12 +1919,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("37FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 38th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("38FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 38
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 38th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 38th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 38th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("38FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1765,12 +1956,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("38FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 39th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("39FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 39
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 39th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 39th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 39th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("39FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1798,12 +1994,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("39FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 40th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("40FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 40
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 40th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 40th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 40th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("40FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1826,12 +2027,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("40FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 41st Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("41FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 41
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 41st Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 41st Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 41st Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("41FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1858,12 +2064,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("41FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 42nd Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("42FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 42
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 42nd Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 42nd Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 42nd Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("42FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1889,12 +2100,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("42FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 43rd Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("43FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 43
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 43rd Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 43rd Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 43rd Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("43FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1921,12 +2137,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("43FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 44th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("44FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 44
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 44th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 44th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 44th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("44FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1952,12 +2173,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("44FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 45th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("45FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 45
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 45th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 45th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 45th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("45FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -1981,12 +2207,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("45FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 46th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("46FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 46
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 46th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 46th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 46th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("46FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2012,12 +2243,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("46FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 47th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("47FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 47
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 47 Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 47 Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 47th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("47FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2042,12 +2278,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("47FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 48th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("48FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 48
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 48th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 48th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 48th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("48FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2074,12 +2315,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("48FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 49th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("49FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 49
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 49th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 49th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 49th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("49FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2106,12 +2352,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("2@tower",instance_npcname("49FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 50th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("50FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 50
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 50th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 50th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 50th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("50FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2161,8 +2412,8 @@ OnTouch_:
 	input .@inputstr$;
 	next;
 	if (.@inputstr$ == "dmc2008") {
-		mes "This NPC manages the tower from the 26st to the 50th Floor.";
-		mes "Please enter the Floor number to open.";
+		mes "This NPC manages the tower from the 26st to the 50th Level.";
+		mes "Please enter the Level number to open.";
 		mes "(i.g.: 26F->26, 50F->50)";
 		input .@input,26,50;
 		next;
@@ -2170,14 +2421,14 @@ OnTouch_:
 			mes "You can only enter a number from 26 to 50.";
 		else {
 			donpcevent instance_npcname(.@input+"FGate102tower", instance_id())+"::OnEnable";
-			mes "*** Floor "+ .@input + " is now being opened. ***";
+			mes "*** Level "+ .@input + " is now being opened. ***";
 		}
 	}
 	close;
 }
 */
 
-// Floors 51-75
+// Levels 51-75
 //============================================================
 3@tower,29,365,2	script	Immortal Furnace#2	844,{
 	end;
@@ -2191,12 +2442,17 @@ OnInstanceInit:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("Immortal Furnace#2", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 51st Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("51FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 51
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 51st Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 51st Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 51st Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("51FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2224,12 +2480,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("51FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 52nd Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("52FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 52
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 52nd Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 52nd Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 52nd Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("52FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2253,12 +2514,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("52FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 53rd Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("53FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 53
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 53rd Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 53rd Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 53rd Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("53FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2283,12 +2549,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("53FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 54th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("54FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 54
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 54th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 54th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 54th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("54FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2314,12 +2585,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("54FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 55th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("55FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 55
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 55th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 55th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 55th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("55FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2346,12 +2622,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("55FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 56th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("56FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 56
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 56th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 56th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 56th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("56FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2382,12 +2663,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("56FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 57th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("57FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 57
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 57th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 57th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 57th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("57FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2414,12 +2700,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("57FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 58th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("58FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 58
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 58th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 58th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 58th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("58FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2444,12 +2735,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("58FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 59th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("59FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 59
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 59th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 59th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 59th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("59FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2479,12 +2775,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("59FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 60th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("60FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 60
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 60th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 60th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 60th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("60FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2512,12 +2813,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("60FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 61st Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("61FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 61
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 61st Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 61st Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 61st Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("61FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2540,12 +2846,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("61FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 62nd Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("62FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 62
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 62nd Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 62nd Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 62nd Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("62FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2572,12 +2883,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("62FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 63rd Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("63FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 63
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 63rd Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 63rd Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 63rd Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("63FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2605,12 +2921,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("63FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 64th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("64FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 64
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 64th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 64th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 64th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("64FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2634,12 +2955,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("64FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 65th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("65FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 65
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 65th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 65th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 65th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("65FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2664,12 +2990,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("65FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 66th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("66FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 66
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 66th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 66th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 66th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("66FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2696,12 +3027,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("66FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 67th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("67FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 67
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 67th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 67th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 67th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("67FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2728,12 +3064,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("67FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 68th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("68FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 68
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 68th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 68th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 68th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("68FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2760,12 +3101,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("68FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 69th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("69FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 69
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 69th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 69th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 69th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("69FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2790,12 +3136,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("69FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 70th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("70FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 70
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 70th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 70th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 70th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("70FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2821,12 +3172,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("70FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 71st Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("71FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 71
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 71st Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 71st Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 71st Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("71FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2852,12 +3208,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("71FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 72nd Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("72FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 72
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 72nd Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 72nd Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 72nd Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("72FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2885,12 +3246,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("72FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 73rd Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("73FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 73
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 73rd Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 73rd Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 73rd Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("73FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2921,12 +3287,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("73FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 74th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("74FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 74
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 74th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 74th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 74th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("74FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -2952,12 +3323,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("3@tower",instance_npcname("74FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0, "All Monsters on the 75th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("75FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 75
 	}
 	else
-		instance_announce 0, "Remaining Monsters on the 75th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0, "Remaining Monsters on the 75th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0, "All Monsters on the 75th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("75FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3007,8 +3383,8 @@ OnTouch_:
 	input .@inputstr$;
 	next;
 	if (.@inputstr$ == "dmc2008") {
-		mes "This NPC manages the tower from the 51st to the 75th Floor.";
-		mes "Please enter the Floor number to open.";
+		mes "This NPC manages the tower from the 51st to the 75th Level.";
+		mes "Please enter the Level number to open.";
 		mes "(i.g.: 51F->51, 75F->75)";
 		input .@input,51,75;
 		next;
@@ -3016,14 +3392,14 @@ OnTouch_:
 			mes "You can only enter a number from 51 to 75.";
 		else {
 			donpcevent instance_npcname(.@input+"FGate102tower", instance_id())+"::OnEnable";
-			mes "*** Floor "+ .@input + " is now being opened. ***";
+			mes "*** Level "+ .@input + " is now being opened. ***";
 		}
 	}
 	close;
 }
 */
 
-// Floors 76-99
+// Levels 76-99
 //============================================================
 4@tower,29,365,2	script	Immortal Furnace#3	844,{
 	end;
@@ -3037,12 +3413,17 @@ OnInstanceInit:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("4@tower",instance_npcname("Immortal Furnace#3", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0,"All Monsters on the 76th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("76FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 76
 	}
 	else
-		instance_announce 0,"Remaining Monsters on the 76th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0,"Remaining Monsters on the 76th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0,"All Monsters on the 76th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("76FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3069,12 +3450,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("4@tower",instance_npcname("76FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0,"All Monsters on the 77th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("77FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 77
 	}
 	else
-		instance_announce 0,"Remaining Monsters on the 77th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0,"Remaining Monsters on the 77th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0,"All Monsters on the 77th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("77FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3101,12 +3487,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("4@tower",instance_npcname("77FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0,"All Monsters on the Floor 78th have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("78FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 78
 	}
 	else
-		instance_announce 0,"Remaining Monsters on the 78th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0,"Remaining Monsters on the 78th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0,"All Monsters on the Level 78th have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("78FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3133,12 +3524,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("4@tower",instance_npcname("78FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0,"All Monsters on the 79th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("79FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 79
 	}
 	else
-		instance_announce 0,"Remaining Monsters on the 79th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0,"Remaining Monsters on the 79th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0,"All Monsters on the 79th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("79FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3162,12 +3558,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("4@tower",instance_npcname("79FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0,"All Monsters on the 80th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("80FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 80
 	}
 	else
-		instance_announce 0,"Remaining Monsters on the 80th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0,"Remaining Monsters on the 80th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0,"All Monsters on the 80th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("80FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3192,12 +3593,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("4@tower",instance_npcname("80FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0,"All Monsters on the 81st Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("81FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 81
 	}
 	else
-		instance_announce 0,"Remaining Monsters on the 81st Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0,"Remaining Monsters on the 81st Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0,"All Monsters on the 81st Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("81FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3224,12 +3630,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("4@tower",instance_npcname("81FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0,"All Monsters on the 82nd Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("82FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 82
 	}
 	else
-		instance_announce 0,"Remaining Monsters on the 82nd Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0,"Remaining Monsters on the 82nd Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0,"All Monsters on the 82nd Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("82FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3255,12 +3666,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("4@tower",instance_npcname("82FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0,"All Monsters on the 83rd Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("83FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 83
 	}
 	else
-		instance_announce 0,"Remaining Monsters on the 83rd Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0,"Remaining Monsters on the 83rd Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0,"All Monsters on the 83rd Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("83FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3287,12 +3703,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("4@tower",instance_npcname("83FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0,"All Monsters on the 84th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("84FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 84
 	}
 	else
-		instance_announce 0,"Remaining Monsters on the 84th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0,"Remaining Monsters on the 84th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0,"All Monsters on the 84th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("84FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3315,12 +3736,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("4@tower",instance_npcname("84FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0,"All Monsters on the 85th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("85FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 85
 	}
 	else
-		instance_announce 0,"Remaining Monsters on the 85th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0,"Remaining Monsters on the 85th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0,"All Monsters on the 85th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("85FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3346,12 +3772,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("4@tower",instance_npcname("85FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0,"All Monsters on the 86th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("86FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 86
 	}
 	else
-		instance_announce 0,"Remaining Monsters on the 86th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0,"Remaining Monsters on the 86th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0,"All Monsters on the 86th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("86FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3377,12 +3808,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("4@tower",instance_npcname("86FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0,"All Monsters on the 87th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("87FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 87
 	}
 	else
-		instance_announce 0,"Remaining Monsters on the 87th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0,"Remaining Monsters on the 87th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0,"All Monsters on the 87th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("87FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3409,12 +3845,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("4@tower",instance_npcname("87FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0,"All Monsters on the 88th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("88FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 88
 	}
 	else
-		instance_announce 0,"Remaining Monsters on the 88th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0,"Remaining Monsters on the 88th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0,"All Monsters on the 88th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("88FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3440,12 +3881,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("4@tower",instance_npcname("88FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0,"All Monsters on the 89th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("89FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 89
 	}
 	else
-		instance_announce 0,"Remaining Monsters on the 89th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0,"Remaining Monsters on the 89th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0,"All Monsters on the 89th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("89FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3471,12 +3917,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("4@tower",instance_npcname("89FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0,"All Monsters on the 90th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("90FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 90
 	}
 	else
-		instance_announce 0,"Remaining Monsters on the 90th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0,"Remaining Monsters on the 90th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0,"All Monsters on the 90th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("90FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3501,12 +3952,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("4@tower",instance_npcname("90FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0,"All Monsters on the 91st Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("91FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 91
 	}
 	else 
-		instance_announce 0,"Remaining Monsters on the 91st Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0,"Remaining Monsters on the 91st Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0,"All Monsters on the 91st Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("91FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3533,12 +3989,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("4@tower",instance_npcname("91FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0,"All Monsters on the 92nd Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("92FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 92
 	}
 	else
-		instance_announce 0,"Remaining Monsters on the 92nd Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0,"Remaining Monsters on the 92nd Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0,"All Monsters on the 92nd Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("92FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3564,12 +4025,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("4@tower",instance_npcname("92FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0,"All Monsters on the 93rd Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("93FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 93
 	}
 	else
-		instance_announce 0,"Remaining Monsters on the 93rd Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0,"Remaining Monsters on the 93rd Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0,"All Monsters on the 93rd Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("93FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3593,12 +4059,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("4@tower",instance_npcname("93FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0,"All Monsters on the 94th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("94FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 94
 	}
 	else
-		instance_announce 0,"Remaining Monsters on the 94th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0,"Remaining Monsters on the 94th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0,"All Monsters on the 94th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("94FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3625,12 +4096,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("4@tower",instance_npcname("94FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0,"All Monsters on the 95th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("95FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 95
 	}
 	else
-		instance_announce 0,"Remaining Monsters on the 95th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0,"Remaining Monsters on the 95th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0,"All Monsters on the 95th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("95FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3655,12 +4131,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("4@tower",instance_npcname("95FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0,"All Monsters on the 96th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("96FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 96
 	}
 	else
-		instance_announce 0,"Remaining Monsters on the 96th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0,"Remaining Monsters on the 96th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0,"All Monsters on the 96th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("96FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3686,12 +4167,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("4@tower",instance_npcname("96FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0,"All Monsters on the 97th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("97FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 97
 	}
 	else
-		instance_announce 0,"Remaining Monsters on the 97th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0,"Remaining Monsters on the 97th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0,"All Monsters on the 97th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("97FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3719,12 +4205,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("4@tower",instance_npcname("97FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0,"All Monsters on the 98th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("98FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 98
 	}
 	else
-		instance_announce 0,"Remaining Monsters on the 98th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0,"Remaining Monsters on the 98th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0,"All Monsters on the 98th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("98FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3809,12 +4300,17 @@ OnTouch_:
 OnMyMobDead:
 	set .@mob_dead_num,mobcount("4@tower",instance_npcname("98FGate102tower", instance_id())+"::OnMyMobDead");
 	if (.@mob_dead_num < 1) {
-		instance_announce 0,"All Monsters on the 99th Floor have been defeated.",bc_map,"0xffff00";
-		donpcevent instance_npcname("99FGate102tower", instance_id())+"::OnEnable";
+		initnpctimer;
 		//SetItemPartyInMap in_102floor 99
 	}
 	else
-		instance_announce 0,"Remaining Monsters on the 99th Floor - " + .@mob_dead_num,bc_map,"0x00ff99";
+		instance_announce 0,"Remaining Monsters on the 99th Level - " + .@mob_dead_num,bc_map,"0x00ff99";
+	end;
+
+OnTimer5000:
+	instance_announce 0,"All Monsters on the 99th Level have been defeated.",bc_map,"0xffff00";
+	donpcevent instance_npcname("99FGate102tower", instance_id())+"::OnEnable";
+	stopnpctimer;
 	end;
 }
 
@@ -3864,8 +4360,8 @@ OnTouch_:
 	input .@inputstr$;
 	next;
 	if (.@inputstr$ == "dmc2008") {
-		mes "This NPC manages the tower from the 76th to the 99th Floor.";
-		mes "Please enter the Floor number to open.";
+		mes "This NPC manages the tower from the 76th to the 99th Level.";
+		mes "Please enter the Level number to open.";
 		mes "(i.g.: 76F->76, 99F->99)";
 		input .@input,76,99;
 		next;
@@ -3873,14 +4369,14 @@ OnTouch_:
 			mes "You can only enter a number from 76 to 99.";
 		else {
 			donpcevent instance_npcname(.@input+"FGate102tower", instance_id())+"::OnEnable";
-			mes "*** Floor "+ .@input + " is now being opened. ***";
+			mes "*** Level "+ .@input + " is now being opened. ***";
 		}
 	}
 	close;
 }
 */
 
-// Floor 100
+// Level 100
 //============================================================
 5@tower,106,109,2	script	Lucid Crystal#102	844,{
 	if (in_102tower < 10) {
@@ -4055,24 +4551,24 @@ OnEnable:
 		monster "5@tower",84,85,"Thorn of Pureness",1961,1;
 	end;
 }
-// This looks like debug? Disabled.
+
 /*
 5@tower,71,1,0	script	#Manager Mode5	844,{
-	mes "This NPC manages the crystal on the 100th Floor. Please enter the password.";
+	mes "This NPC manages the crystal on the 100th Level. Please enter the password.";
 	input .@inputstr$;
 	next;
 	if (.@inputstr$ == "dmc2008") {
 		donpcevent instance_npcname("Lucid Crystal#102", instance_id())+"::OnEnable";
-		mes "The 100th Floor's crystal has been activated.";
+		mes "The 100th Level's crystal has been activated.";
 	}
 	else
 		mes "Please enter the correct password.";
 	close;
 } */
 
-// Floor 101
+// Level 101
 //============================================================
-6@tower,45,89,2	script	Spring of Life#1	844,{
+6@tower,45,89,2	script	Life Spring#1	844,{
 	set .@pc_hp,MaxHp-Hp;
 	set .@pc_sp,MaxSp-Sp;
 	mes "^0066ffYou took a sip of the spring's clear water, and you feel invigorated.^000000";
@@ -4080,26 +4576,12 @@ OnEnable:
 	close;
 
 OnInstanceInit:
-	donpcevent instance_npcname("Spring of Life#2", instance_id())+"::OnEnable";
+	donpcevent instance_npcname("Life Spring#2", instance_id())+"::OnEnable";
 	end;
 
 }
 
-6@tower,45,89,2	script	Spring of Life#2	844,{
-	end;
-
-OnEnable:
-	specialeffect EF_BUBBLE;
-	initnpctimer;
-	end;
-
-OnTimer2000:
-	stopnpctimer;;
-	donpcevent instance_npcname("Spring of Life#3", instance_id())+"::OnEnable";
-	end;
-}
-
-6@tower,45,89,2	script	Spring of Life#3	844,{
+6@tower,45,89,2	script	Life Spring#2	844,{
 	end;
 
 OnEnable:
@@ -4109,7 +4591,21 @@ OnEnable:
 
 OnTimer2000:
 	stopnpctimer;
-	donpcevent instance_npcname("Spring of Life#2", instance_id())+"::OnEnable";
+	donpcevent instance_npcname("Life Spring#3", instance_id())+"::OnEnable";
+	end;
+}
+
+6@tower,45,89,2	script	Life Spring#3	844,{
+	end;
+
+OnEnable:
+	specialeffect EF_BUBBLE;
+	initnpctimer;
+	end;
+
+OnTimer2000:
+	stopnpctimer;
+	donpcevent instance_npcname("Life Spring#2", instance_id())+"::OnEnable";
 	end;
 }
 
@@ -4119,7 +4615,7 @@ OnTimer2000:
 	end;
 
 OnInstanceInit:
-	areamonster "6@tower",154,73,156,75,"Anopheles",1627,10,instance_npcname("Tyrant's Throne#", instance_id())+"::OnMyMobDead";
+	areamonster "6@tower",154,73,156,75,"Watcher's Son",1627,10,instance_npcname("Tyrant's Throne#", instance_id())+"::OnMyMobDead";
 	end;
 
 OnMyMobDead:
@@ -4285,25 +4781,34 @@ OnMyMobDead:
 		switch(select("Make a Two-Handed Sword.:No, thanks.")) {
 		case 1:
 			mes "[Lost Souls]";
-			mes "Good, then I'll combine these to create a two-handed sword.";
+			mes "If it is already upgraded or has a card inside, those effects will be disappear. Is this ok with you?";
 			next;
-			delitem 13412,1; //Twin_Edge_B
-			delitem 13413,1; //Twin_Edge_R
-			getitem 1185,1; //Violet_Fear
-			mes "[Lost Souls]";
-			mes "I'd like to talk to you more, but I've... I've got to go now.";
-			next;
+			switch(select("It's fine with me. Please make one.:No way!")) {
+			case 1:
+				mes "[Lost Souls]";
+				mes "Good, then I'll combine these to create a two-handed sword.";
+				next;
+				delitem 13412,1; //Twin_Edge_B
+				delitem 13413,1; //Twin_Edge_R
+				getitem 1185,1; //Violet_Fear
+				break;
+			case 2:
+				mes "[Lost Souls]";
+				mes "I see. I guess you aren't as greedy or ambitious as those other adventurers.";
+				next;
+				break;
+			}
 			break;
 		case 2:
 			mes "[Lost Souls]";
 			mes "I see. I guess you aren't as greedy or ambitious as those other adventurers.";
 			next;
-			mes "[Lost Souls]";
-			mes "I'd like to talk to you more, but I've... I've got to go now.";
-			next;
 			break;
 		}
 	}
+	mes "[Lost Souls]";
+	mes "I'd like to talk to you more, but I've... I've got to go now.";
+	next;
 	mes "[Lost Souls]";
 	mes "Farewell, young adventurer. I wish you good luck.";
 	close2;

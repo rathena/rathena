@@ -824,7 +824,7 @@ REPLACE INTO `item_db_re` VALUES (1486,'Krieger_Twohand_Spear1','Glorious Lance'
 REPLACE INTO `item_db_re` VALUES (1487,'Lance_C','Lance',4,NULL,NULL,0,'220',NULL,3,NULL,0x00004082,7,2,34,3,'1',NULL,5,'bonus2 bAddSize,Size_Small,50; bonus2 bAddSize,Size_Medium,50; bonus2 bAddSize,Size_Large,50;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1488,'Ahlspiess_C','Ahlspiess',4,20,NULL,0,'135',NULL,3,NULL,0x00004080,7,2,34,4,'1',1,5,'bonus bIgnoreDefRace,RC_NonBoss; bonus bIgnoreDefRace,RC_Boss; bonus2 bAddRace,RC_DemiHuman,10; bonus3 bAutoSpell,"KN_PIERCE",5,30;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1489,'Marlin','Marlin',4,NULL,NULL,0,'220',NULL,3,NULL,0x00004082,2,2,34,1,'50',NULL,5,'bonus bUnbreakableWeapon,0; bonus3 bAddEffOnSkill,"KN_PIERCE",Eff_Bleeding,1000; bonus3 bAddEffOnSkill,"LK_SPIRALPIERCE",Eff_Bleeding,1000; bonus2 bSkillAtk,"LK_SPIRALPIERCE",100; bonus2 bSkillAtk,"LG_INSPIRATION",50; if(BaseLevel>99) { bonus bBaseAtk,30; }',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (1490,'Gigantic_Lance','Gigantic Lance',4,20,NULL,20000,'20',NULL,3,NULL,0x00000080,7,2,34,4,'140',1,5,'bonus bAspd,-10; if(readparam(bStr)>=120){ bonus bBaseAtk,300; }',NULL,'heal 0,-600;');
+REPLACE INTO `item_db_re` VALUES (1490,'Gigantic_Lance','Gigantic Lance',4,20,NULL,20000,'20',NULL,3,NULL,0x00000080,7,2,34,4,'140',1,5,'bonus bAspd,-10; bonus2 bSkillFixedCast,"LK_SPIRALPIERCE",4000; bonus2 bSkillCooldown,"LK_SPIRALPIERCE",20000; if(readparam(bStr)>=120){ bonus bBaseAtk,300; }',NULL,'heal 0,-600;');
 #1491,
 REPLACE INTO `item_db_re` VALUES (1492,'Bellum_Glave','Bellum Glave',4,20,NULL,4500,'250',NULL,3,NULL,0x00004082,7,2,34,4,'95',1,5,'bonus2 bAddRace,RC_DemiHuman,80; if(getrefine()>=6) { bonus2 bSkillAtk,"LK_SPIRALPIERCE",100; bonus2 bSkillAtk,"KN_SPEARBOOMERANG",50; } if(getrefine()>=9) { autobonus2 "{bonus bShortWeaponDamageReturn,20; bonus bMagicDamageReturn,20;}",100,2000,BF_WEAPON|BF_MAGIC,"{specialeffect2 EF_REFLECTSHIELD;}"; }',NULL,NULL);
 # Maces
@@ -7363,7 +7363,7 @@ REPLACE INTO `item_db_re` VALUES (18626,'Gelato_Hat','Gelato Hat',5,20,NULL,200,
 REPLACE INTO `item_db_re` VALUES (18627,'Dried_Leaf','Dried Leaf',5,20,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,1,NULL,'10',NULL,711,'bonus bUnbreakableHelm,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18628,'Tare_Brownie','Tare Brownie',5,20,NULL,500,NULL,5,NULL,1,0xFFFFFFFF,7,2,256,NULL,'50',NULL,781,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18629,'B_Desert_Wolf_Hat','B Desert Wolf Hat',5,10,NULL,300,NULL,NULL,NULL,1,0xFFFFFFFF,7,2,256,NULL,'1',1,392,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (18629,'Dep_Alice_Hat','Dep Alice Hat',5,20,NULL,500,NULL,6,NULL,NULL,0xFFFFFFFE,7,2,256,NULL,'70',1,784,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (18630,'Dep_Alice_Hat','Drooping Alicel',5,20,NULL,500,NULL,6,NULL,NULL,0xFFFFFFFE,7,2,256,NULL,'70',1,784,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18631,'Ribbon_Chef_Hat','Ribbon Chef Hat',5,20,NULL,300,NULL,5,NULL,NULL,0xFFFFFFFF,7,2,256,NULL,'70',1,785,'bonus bDex,3; bonus bLuk,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18632,'Yellow_Poring_Hairpin','Yellow Poring Hairpin',5,20,NULL,100,NULL,3,NULL,1,0xFFFFFFFF,7,2,256,NULL,'1',1,786,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18633,'Pink_Poring_Hairpin','Pink Poring Hairpin',5,20,NULL,100,NULL,3,NULL,1,0xFFFFFFFF,7,2,256,NULL,'1',1,787,NULL,NULL,NULL);
