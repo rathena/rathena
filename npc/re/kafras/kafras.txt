@@ -1,0 +1,35 @@
+//===== rAthena Script ======================================= 
+//= Kafras (Cities/Dungeons/Fields)
+//===== By: ================================================== 
+//= Joseph
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena SVN
+//===== Description: =========================================
+//= Argument settings for callfunc "F_Kafra":
+//=  arg(0): 0 - Default Kafra message
+//=          1 - Niflhiem Kafra message
+//=          2 - Guild Kafra message
+//=  arg(1): 1 - Disable teleport menu 
+//=  arg(2): 1 - Disable info menu
+//=  arg(3): Cost of Storage service
+//=  arg(4): Cost of Rent a Pushcart service
+//===== Additional Comments: ================================= 
+//= 0.x Previous Authors: 
+//=     - L0ne_W0lf, Daegaladh
+//= 1.0 Merged and cleaned up Kafras. [Euphy]
+//============================================================ 
+
+// Brasilis
+//============================================================
+brasilis,197,221,4	script	Kafra Employee::kaf_bra	117,{
+	cutin "kafra_01",2;
+	callfunc "F_Kafra",0,3,0,80,700;
+	savepoint "brasilis",195,259;
+	callfunc "F_KafEnd",0,1,"in the city of Brasilis";
+}
+
+// Izlude
+//============================================================
+izlude,128,148,6	duplicate(kaf_izlude)	Kafra Employee	117
