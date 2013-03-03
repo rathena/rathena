@@ -6844,6 +6844,12 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			case SC_PARALYSIS:
 			case SC_DEEPSLEEP:
 			case SC_CRYSTALIZE:
+			case SC__ENERVATION:
+			case SC__GROOMY:
+			case SC__IGNORANCE:
+			case SC__LAZINESS:
+			case SC__UNLUCKY:
+			case SC__WEAKNESS:
 
 			// Exploit prevention - kRO Fix
 			case SC_PYREXIA:

@@ -278,10 +278,10 @@ malangdo,219,86,4	script	Kong#malang	545,{
 // Town NPCs :: malang_tre
 //============================================================
 malangdo,147,117,3	script	Innkeeper#malang	554,{
-	mes "Can see a lazy cat standing on a chair.";
-	mes "Thought it is an Innkeeper, but do not looks like that having a business.";
+	mes "You see a lazy cat standing on a chair.";
+	mes "You guess that this is the Innkeeper.";
 	next;
-	switch(select("Can I rest in hammock?:Want to store in inn.:Looks free at the moment.")) {
+	switch(select("Umm... can I rest here?:Psst... Can I save here?:Leave.")) {
 	case 1:
 		mes "[Innkeeper]";
 		mes "You can use hammock as you want but give me ^FF00005 pieces of Malang Sp Can^000000, then will make you stress out.";
@@ -323,8 +323,11 @@ malangdo,147,117,3	script	Innkeeper#malang	554,{
 }
 
 malangdo,151,120,3	script	Wandering Minstrel#mal	479,{
-	mes "[Wandering Minstrel]";
-	mes "I have a sleepy momnet whenever seeing that innkeeper. So comfortable...";
+	mes "[Minstrel]";
+	mes "Boy, that lazy cat makes me want to just nap all day long.";
+	next;
+	mes "[Minstrel]";
+	mes "He makes life look so simple.";
 	close;
 }
 

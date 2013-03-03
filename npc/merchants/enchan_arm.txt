@@ -20,7 +20,7 @@
 prontera,165,60,2	script	Apprentice Craftsman	73,{
 	disable_items;
 	mes "[Apprentice Craftsman]";
-	if (Zeny > 399999) {
+	if (Zeny >= 400000) {
 		mes "I've been studying ways to enhance an armor to maximize its capability.";
 		next;
 		mes "[Apprentice Craftsman]";
@@ -36,23 +36,23 @@ prontera,165,60,2	script	Apprentice Craftsman	73,{
 		mes "I'm not responsible for what would happen if you have more than one of the same kind in your inventory.";
 		next;
 		switch(select("Armor with no Slots:Armor with Slots:High Grade Armor:Maybe next time")) {
-			case 1:
-				setarray .@Items[0],2307,2309,2314,2316,2321,2325,2327,2328,2330,2332,2334,2335,2341,2344,2346,2348,2350,2337,2386,2394,2395,2396;
-				set .@j,50;
-				break;
-			case 2:
-				setarray .@Items[0],2311,2318,2319,2320,2308,2310,2315,2317,2322,2324,2326,2331,2333,2336,2342,2345,2347,2349,2351;
-				set .@j,55;
-				set .@k,1;
-				break;
-			case 3:
-				setarray .@Items[0],2364,2365,2391,2374,2375,2376,2377,2378,2379,2380,2381,2382,2387,2388,2389,2390;
-				set .@j,60;
-				break;
-			case 4:
-				mes "[Apprentice Craftsman]";
-				mes "Please come back when you have any interest in enchanting your armor.";
-				close;
+		case 1:
+			setarray .@Items[0],2307,2309,2314,2316,2321,2325,2327,2328,2330,2332,2334,2335,2341,2344,2346,2348,2350,2337,2386,2394,2395,2396;
+			set .@j,50;
+			break;
+		case 2:
+			setarray .@Items[0],2311,2318,2319,2320,2308,2310,2315,2317,2322,2324,2326,2331,2333,2336,2342,2345,2347,2349,2351;
+			set .@j,55;
+			set .@k,1;
+			break;
+		case 3:
+			setarray .@Items[0],2364,2365,2391,2374,2375,2376,2377,2378,2379,2380,2381,2382,2387,2388,2389,2390;
+			set .@j,60;
+			break;
+		case 4:
+			mes "[Apprentice Craftsman]";
+			mes "Please come back when you have any interest in enchanting your armor.";
+			close;
 		}
 		set .@menu$,"";
 		for(set .@i,0; .@i<getarraysize(.@Items); set .@i,.@i+1)
@@ -60,13 +60,11 @@ prontera,165,60,2	script	Apprentice Craftsman	73,{
 		callsub S_EnchantArmor, .@Items[select(.@menu$)-1], .@j;
 		end;
 	}
-	else {
-		mes "I am in charge of Enchanting Armors. Simply put, I've been studying ways to power-up armor.";
-		next;
-		mes "[Apprentice Craftsman]";
-		mes "If by any chance, you would want to enchant your armor, bring me 400,000 zeny and the armor you want to enchant and you are all set to go.";
-		close;
-	}
+	mes "I am in charge of Enchanting Armors. Simply put, I've been studying ways to power-up armor.";
+	next;
+	mes "[Apprentice Craftsman]";
+	mes "If by any chance, you would want to enchant your armor, bring me 400,000 zeny and the armor you want to enchant and you are all set to go.";
+	close;
 
 S_EnchantArmor:
 	set .@itemid,getarg(0);
