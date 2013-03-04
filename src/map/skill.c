@@ -7757,13 +7757,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case AB_CLEARANCE:
 		if( flag&1 || (i = skill_get_splash(skill_id, skill_lv)) < 1 )
 		{ //As of the behavior in official server Clearance is just a super version of Dispell skill. [Jobbie]
+			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 
-			if((status_get_mode(bl)&MD_BOSS) || bl->type == BL_MOB || battle_check_target(src,bl,BCT_GUILD) > 0 || battle_check_target(src,bl,BCT_PARTY) > 0)
-				clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-			else
-				break;
-
-			if((dstsd && (dstsd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER) || rnd()%100 >= 30 + 10 * skill_lv) {
+			if((dstsd && (dstsd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER) || rnd()%100 >= 60 + 8 * skill_lv) {
 				if (sd)
 					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				break;
