@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= rAthena SVN r16945+
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 1.0b Moved warps to separate file. [Euphy]
 //= 1.1 Fixed some minor bugs. [Euphy]
 //= 1.2 Moved "Girl" NPC off ve_fild05. [Euphy]
+//= 1.3 Added missing OnMyMobDead labels. [Euphy]
 //============================================================
 
 que_job01,75,96,3	script	Guild Member#3rdgc01	997,{
@@ -3049,12 +3050,12 @@ OnTouch:
 	disablenpc "Front Gate Guard#g03";
 	disablenpc "Front Gate Guard#g04";
 	disablenpc "Front Gate Guard#g05";
-	monster "job3_guil03",93,37,"Guard Dog",1866,1;
-	monster "job3_guil03",93,36,"Front Gate Guard",1985,1;
-	monster "job3_guil03",93,35,"Front Gate Guard",1985,1;
-	monster "job3_guil03",93,34,"Front Gate Guard",1985,1;
-	monster "job3_guil03",93,33,"Front Gate Guard",1985,1;
-	monster "job3_guil03",93,32,"Guard Dog",1866,1;
+	monster "job3_guil03",93,37,"Guard Dog",1866,1,"Front Gate Guard#g01::OnMyMobDead";
+	monster "job3_guil03",93,36,"Front Gate Guard",1985,1,"Front Gate Guard#g01::OnMyMobDead";
+	monster "job3_guil03",93,35,"Front Gate Guard",1985,1,"Front Gate Guard#g01::OnMyMobDead";
+	monster "job3_guil03",93,34,"Front Gate Guard",1985,1,"Front Gate Guard#g01::OnMyMobDead";
+	monster "job3_guil03",93,33,"Front Gate Guard",1985,1,"Front Gate Guard#g01::OnMyMobDead";
+	monster "job3_guil03",93,32,"Guard Dog",1866,1,"Front Gate Guard#g01::OnMyMobDead";
 	end;
 }
 job3_guil03,93,36,3	duplicate(#3rdgc_guard00)	Front Gate Guard#g03	456
@@ -3078,12 +3079,12 @@ OnTouch:
 	disablenpc "Back Gate Guard#g03";
 	disablenpc "Back Gate Guard#g04";
 	disablenpc "Back Gate Guard#g05";
-	monster "job3_guil03",133,54,"Guard Dog",1866,1;
-	monster "job3_guil03",133,53,"Back Gate Guard",1985,1;
-	monster "job3_guil03",133,52,"Back Gate Guard",1985,1;
-	monster "job3_guil03",133,51,"Back Gate Guard",1985,1;
-	monster "job3_guil03",133,50,"Back Gate Guard",1985,1;
-	monster "job3_guil03",133,49,"Guard Dog",1866,1;
+	monster "job3_guil03",133,54,"Guard Dog",1866,1,"Back Gate Guard#g01::OnMyMobDead";
+	monster "job3_guil03",133,53,"Back Gate Guard",1985,1,"Back Gate Guard#g01::OnMyMobDead";
+	monster "job3_guil03",133,52,"Back Gate Guard",1985,1,"Back Gate Guard#g01::OnMyMobDead";
+	monster "job3_guil03",133,51,"Back Gate Guard",1985,1,"Back Gate Guard#g01::OnMyMobDead";
+	monster "job3_guil03",133,50,"Back Gate Guard",1985,1,"Back Gate Guard#g01::OnMyMobDead";
+	monster "job3_guil03",133,49,"Guard Dog",1866,1,"Back Gate Guard#g01::OnMyMobDead";
 	end;
 }
 job3_guil03,133,53,5	duplicate(#3rdgc_guard00)	Back Gate Guard#g03	456
@@ -3107,12 +3108,12 @@ OnTouch:
 	disablenpc "Interior Guard#g03";
 	disablenpc "Interior Guard#g04";
 	disablenpc "Interior Guard#g05";
-	monster "job3_guil03",117,53,"Guard Dog",1866,1;
-	monster "job3_guil03",117,52,"Interior Guard",1985,1;
-	monster "job3_guil03",117,51,"Interior Guard",1985,1;
-	monster "job3_guil03",117,50,"Interior Guard",1985,1;
-	monster "job3_guil03",117,49,"Interior Guard",1985,1;
-	monster "job3_guil03",117,48,"Guard Dog",1866,1;
+	monster "job3_guil03",117,53,"Guard Dog",1866,1,"Interior Guard#g01::OnMyMobDead";
+	monster "job3_guil03",117,52,"Interior Guard",1985,1,"Interior Guard#g01::OnMyMobDead";
+	monster "job3_guil03",117,51,"Interior Guard",1985,1,"Interior Guard#g01::OnMyMobDead";
+	monster "job3_guil03",117,50,"Interior Guard",1985,1,"Interior Guard#g01::OnMyMobDead";
+	monster "job3_guil03",117,49,"Interior Guard",1985,1,"Interior Guard#g01::OnMyMobDead";
+	monster "job3_guil03",117,48,"Guard Dog",1866,1,"Interior Guard#g01::OnMyMobDead";
 	end;
 }
 job3_guil03,117,52,4	duplicate(#3rdgc_guard00)	Interior Guard#g03	456
@@ -3134,9 +3135,9 @@ OnReset:
 OnTouch:
 	mapannounce "job3_guil03","Guards : Who are you?!",bc_map,"0xA8A8A8"; //FW_NORMAL 12 0 0
 	disablenpc "Exterior Guard#g01";
-	monster "job3_guil03",88,44,"Exterior Guard",1985,1;
-	monster "job3_guil03",88,43,"Exterior Guard",1985,1;
-	monster "job3_guil03",88,45,"Guard Dog",1866,1;
+	monster "job3_guil03",88,44,"Exterior Guard",1985,1,"Exterior Guard#g01::OnMyMobDead";
+	monster "job3_guil03",88,43,"Exterior Guard",1985,1,"Exterior Guard#g01::OnMyMobDead";
+	monster "job3_guil03",88,45,"Guard Dog",1866,1,"Exterior Guard#g01::OnMyMobDead";
 	end;
 }
 
@@ -3155,9 +3156,9 @@ OnReset:
 OnTouch:
 	mapannounce "job3_guil03","Guards : Enemy?!",bc_map,"0xA8A8A8"; //FW_NORMAL 12 0 0
 	disablenpc "Exterior Guard#g02";
-	monster "job3_guil03",88,55,"Exterior Guard",1985,1;
-	monster "job3_guil03",88,54,"Exterior Guard",1985,1;
-	monster "job3_guil03",88,56,"Guard Dog",1866,1;
+	monster "job3_guil03",88,55,"Exterior Guard",1985,1,"Exterior Guard#g02::OnMyMobDead";
+	monster "job3_guil03",88,54,"Exterior Guard",1985,1,"Exterior Guard#g02::OnMyMobDead";
+	monster "job3_guil03",88,56,"Guard Dog",1866,1,"Exterior Guard#g02::OnMyMobDead";
 	end;
 }
 
@@ -3176,9 +3177,9 @@ OnReset:
 OnTouch:
 	mapannounce "job3_guil03","Guards : An invader, remove!",bc_map,"0xA8A8A8"; //FW_NORMAL 12 0 0
 	disablenpc "Exterior Guard#g03";
-	monster "job3_guil03",88,64,"Exterior Guard",1985,1;
-	monster "job3_guil03",88,63,"Exterior Guard",1985,1;
-	monster "job3_guil03",88,65,"Guard Dog",1866,1;
+	monster "job3_guil03",88,64,"Exterior Guard",1985,1,"Exterior Guard#g03::OnMyMobDead";
+	monster "job3_guil03",88,63,"Exterior Guard",1985,1,"Exterior Guard#g03::OnMyMobDead";
+	monster "job3_guil03",88,65,"Guard Dog",1866,1,"Exterior Guard#g03::OnMyMobDead";
 	end;
 }
 
@@ -3197,9 +3198,9 @@ OnReset:
 OnTouch:
 	mapannounce "job3_guil03","Guards : Who are you?!",bc_map,"0xA8A8A8"; //FW_NORMAL 12 0 0
 	disablenpc "Exterior Guard#g04";
-	monster "job3_guil03",73,62,"Exterior Guard",1985,1;
-	monster "job3_guil03",73,61,"Exterior Guard",1985,1;
-	monster "job3_guil03",73,63,"Guard Dog",1866,1;
+	monster "job3_guil03",73,62,"Exterior Guard",1985,1,"Exterior Guard#g04::OnMyMobDead";
+	monster "job3_guil03",73,61,"Exterior Guard",1985,1,"Exterior Guard#g04::OnMyMobDead";
+	monster "job3_guil03",73,63,"Guard Dog",1866,1,"Exterior Guard#g04::OnMyMobDead";
 	end;
 }
 
@@ -3218,9 +3219,9 @@ OnReset:
 OnTouch:
 	mapannounce "job3_guil03","Guards : Who are you?!",bc_map,"0xA8A8A8"; //FW_NORMAL 12 0 0
 	disablenpc "Exterior Guard#g05";
-	monster "job3_guil03",77,51,"Exterior Guards",1985,1;
-	monster "job3_guil03",77,50,"Exterior Guards",1985,1;
-	monster "job3_guil03",77,49,"Guard Dog",1866,1;
+	monster "job3_guil03",77,51,"Exterior Guards",1985,1,"Exterior Guard#g05::OnMyMobDead";
+	monster "job3_guil03",77,50,"Exterior Guards",1985,1,"Exterior Guard#g05::OnMyMobDead";
+	monster "job3_guil03",77,49,"Guard Dog",1866,1,"Exterior Guard#g05::OnMyMobDead";
 	end;
 }
 
@@ -3239,9 +3240,9 @@ OnReset:
 OnTouch:
 	mapannounce "job3_guil03","Guard : Who are you?!",bc_map,"0xA8A8A8"; //FW_NORMAL 12 0 0
 	disablenpc "Exterior Guard#g06";
-	monster "job3_guil03",73,34,"Exterior Guards",1985,1;
-	monster "job3_guil03",73,33,"Exterior guards",1985,1;
-	monster "job3_guil03",73,32,"Guard Dog",1866,1;
+	monster "job3_guil03",73,34,"Exterior Guards",1985,1,"Exterior Guard#g06::OnMyMobDead";
+	monster "job3_guil03",73,33,"Exterior guards",1985,1,"Exterior Guard#g06::OnMyMobDead";
+	monster "job3_guil03",73,32,"Guard Dog",1866,1,"Exterior Guard#g06::OnMyMobDead";
 	end;
 }
 
@@ -3259,10 +3260,10 @@ OnReset:
 OnTouch:
 	mapannounce "job3_guil03","You have been detected by the guard dog.",bc_map,"0x00ff00"; //FW_NORMAL 12 0 0
 	disablenpc "Guard Dog#dog01";
-	monster "job3_guil03",110,27,"Guard Dog",1866,1;
-	monster "job3_guil03",103,27,"Dog Trainer",1985,1;
-	monster "job3_guil03",104,27,"Dog Trainer's Assistant",1985,1;
-	monster "job3_guil03",98,27,"Guard",1985,1;
+	monster "job3_guil03",110,27,"Guard Dog",1866,1,"Guard Dog#dog01::OnMyMobDead";
+	monster "job3_guil03",103,27,"Dog Trainer",1985,1,"Guard Dog#dog01::OnMyMobDead";
+	monster "job3_guil03",104,27,"Dog Trainer's Assistant",1985,1,"Guard Dog#dog01::OnMyMobDead";
+	monster "job3_guil03",98,27,"Guard",1985,1,"Guard Dog#dog01::OnMyMobDead";
 	end;
 }
 
@@ -3280,42 +3281,42 @@ OnReset:
 OnTouch:
 	mapannounce "job3_guil03","You have been detected by the guard dog.",bc_map,"0x00ff00"; //FW_NORMAL 12 0 0
 	disablenpc "Guard Dog#dog02";
-	monster "job3_guil03",124,27,"Guard Dog",1866,1;
-	monster "job3_guil03",126,27,"Dog Trainer",1985,1;
-	monster "job3_guil03",104,27,"Trainer's Assistant",1985,1;
-	monster "job3_guil03",131,27,"Guard",1985,1;
+	monster "job3_guil03",124,27,"Guard Dog",1866,1,"Guard Dog#dog02::OnMyMobDead";
+	monster "job3_guil03",126,27,"Dog Trainer",1985,1,"Guard Dog#dog02::OnMyMobDead";
+	monster "job3_guil03",104,27,"Trainer's Assistant",1985,1,"Guard Dog#dog02::OnMyMobDead";
+	monster "job3_guil03",131,27,"Guard",1985,1,"Guard Dog#dog02::OnMyMobDead";
 	end;
 }
 
 job3_guil03,2,1,0	script	#3rdgc_sunchal_nomal	844,{
 	end;
 OnEnable:
-	monster "job3_guil03",62,35,"Guard",1985,1;
-	monster "job3_guil03",108,78,"Guard",1985,1;
-	monster "job3_guil03",133,77,"Guard",1985,1;
-	monster "job3_guil03",79,69,"Guard",1985,1;
-	monster "job3_guil03",117,27,"Guard",1985,1;
-	monster "job3_guil03",62,48,"Guard",1985,1;
-	monster "job3_guil03",116,24,"Guard Dog",1866,1;
-	monster "job3_guil03",137,24,"Guard Dog",1866,1;
-	monster "job3_guil03",49,74,"Guard Dog",1866,1;
-	monster "job3_guil03",48,50,"Guard Dog",1866,1;
-	monster "job3_guil03",62,48,"Guard Dog",1866,1;
-	monster "job3_guil03",61,38,"Guard Dog",1866,1;
-	monster "job3_guil03",74,47,"Guard Dog",1866,1;
-	monster "job3_guil03",90,34,"Guard Dog",1866,1;
-	monster "job3_guil03",91,51,"Guard Dog",1866,1;
-	monster "job3_guil03",155,77,"Guard Dog",1866,1;
-	monster "job3_guil03",127,67,"Guard Dog",1866,1;
-	monster "job3_guil03",131,43,"Guard Dog",1866,1;
-	monster "job3_guil03",103,27,"Guard Dog",1866,1;
-	monster "job3_guil03",63,74,"Guard Dog",1866,1;
-	monster "job3_guil03",79,69,"Guard Dog",1866,1;
-	monster "job3_guil03",0,0,"Watch Light",1129,1;
-	monster "job3_guil03",0,0,"Watch Light",1129,1;
-	monster "job3_guil03",0,0,"Watch Light",1129,1;
-	monster "job3_guil03",0,0,"Watch Light",1129,1;
-	monster "job3_guil03",0,0,"Watch Light",1129,1;
+	monster "job3_guil03",62,35,"Guard",1985,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",108,78,"Guard",1985,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",133,77,"Guard",1985,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",79,69,"Guard",1985,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",117,27,"Guard",1985,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",62,48,"Guard",1985,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",116,24,"Guard Dog",1866,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",137,24,"Guard Dog",1866,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",49,74,"Guard Dog",1866,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",48,50,"Guard Dog",1866,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",62,48,"Guard Dog",1866,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",61,38,"Guard Dog",1866,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",74,47,"Guard Dog",1866,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",90,34,"Guard Dog",1866,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",91,51,"Guard Dog",1866,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",155,77,"Guard Dog",1866,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",127,67,"Guard Dog",1866,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",131,43,"Guard Dog",1866,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",103,27,"Guard Dog",1866,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",63,74,"Guard Dog",1866,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",79,69,"Guard Dog",1866,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",0,0,"Watch Light",1129,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",0,0,"Watch Light",1129,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",0,0,"Watch Light",1129,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",0,0,"Watch Light",1129,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
+	monster "job3_guil03",0,0,"Watch Light",1129,1,"#3rdgc_sunchal_nomal::OnMyMobDead";
 	end;
 OnReset:
 	killmonster "job3_guil03","#3rdgc_sunchal_nomal::OnMyMobDead";

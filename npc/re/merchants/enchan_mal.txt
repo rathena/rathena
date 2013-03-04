@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.0a
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //= for Malangdo coins.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version. [Euphy]
+//= 1.0a Added 'delequip' command. [Euphy]
 //============================================================ 
 
 malangdo,213,167,4	script	Mayomayo#mal	555,{
@@ -567,10 +568,10 @@ L_Socket:
 			mes "There is something wrong. Please try again.";
 			close;
 		}
-		     if (.@equip_card[3] == 0 && getarg(1) < 4) set .@target,3;
-		else if (.@equip_card[2] == 0 && getarg(1) < 3) set .@target,2;
-		else if (.@equip_card[1] == 0 && getarg(1) < 2) set .@target,1;
-		else if (.@equip_card[0] == 0 && getarg(1) < 1) set .@target,0;
+		     if (.@equip_card[3] == 0 && getarg(1) < 4) set .@equip_card[3],.@enchant;
+		else if (.@equip_card[2] == 0 && getarg(1) < 3) set .@equip_card[2],.@enchant;
+		else if (.@equip_card[1] == 0 && getarg(1) < 2) set .@equip_card[1],.@enchant;
+		else if (.@equip_card[0] == 0 && getarg(1) < 1) set .@equip_card[0],.@enchant;
 		else {
 			mes "[Mayomayo]";
 			mes "This equipment is at the end of enchant. I provide enchant for two times maximum.";
@@ -585,24 +586,18 @@ L_Socket:
 			mes "Oh my god!";
 			mes "This equipment is destroyed because it could not endure powerful ability. I'm so sorry.";
 			delitem .@coin[.@coin_select],.@total[.@coin_select];
-
-//			dropequipitem EQI_HAND_R
-			unequip EQI_HAND_R;
-			delitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@equip_card[3];
+			delequip EQI_HAND_R;
 			close;
 		}
 		specialeffect2 EF_REPAIRWEAPON;
 		mes "[Mayomayo]";
 		mes "I have enchanted ^990000slot "+.@socket+"^000000 of this equipment.";
 		delitem .@coin[.@coin_select],.@total[.@coin_select];
-
-//		dropequipitem EQI_HAND_R
-		unequip EQI_HAND_R;
-		delitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@equip_card[3];
+		delequip EQI_HAND_R;
 
 //		GetNonSlotItemSock2 .@equip_refine .@equip_id .@equip_card[0] .@equip_card[1] .@equip_card[2] .@equip_card[3]
-		set .@equip_card[.@target],.@enchant;
 		getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@equip_card[3];
+
 		close;
 	} else if (.@select == 2) {
 		mes "[Mayomayo]";
@@ -632,10 +627,7 @@ L_Socket:
 		mes "[Mayomayo]";
 		mes "Initialize the enchant effect from the equipment.";
 		delitem 6417,1; //Silvervine
-
-//		dropequipitem EQI_HAND_R
-		unequip EQI_HAND_R;
-		delitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@equip_card[3];
+		delequip EQI_HAND_R;
 
 //		GetNonSlotItemSock2 .@equip_refine .@equip_id .@equip_card[0] .@equip_card[1] .@equip_card[2] .@equip_card[3]
 		for(set .@i,0; .@i<4; set .@i,.@i+1) {
@@ -643,6 +635,7 @@ L_Socket:
 				set .@equip_card[.@i],0;
 		}
 		getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@equip_card[3];
+
 		close;
 	}
 }

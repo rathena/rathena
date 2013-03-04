@@ -4313,20 +4313,17 @@ the results array is limited to 10 items.
 *delitem <item id>,<amount>{,<account ID>};
 *delitem "<item name>",<amount>{,<account ID>};
 
-This command will take a specified amount of items from the invoking/target character. 
-As all the item commands, this one uses the ID of the item found inside 
-'db/(pre-)re/item_db.txt'. The items are destroyed - there is no way an NPC can simply 
-own items and have an inventory of them, other as by destroying and recreating 
-them when needed.
+This command will remove a specified amount of items from the invoking/target character. 
+Like all the item commands, it uses the item ID found inside 'db/(pre-)re/item_db.txt'.
 
-    delitem 502,10 // The person will lose 10 apples
-    delitem 617,1  // The person will lose 1 Old Violet Box
+    delitem 502,10; // The person will lose 10 apples
+    delitem 617,1;  // The person will lose 1 Old Violet Box
 
 It is always a good idea to check if the player actually has the items before you delete them.
 If you try to delete more items that the player has, the player will lose the ones he/she has 
-and the script will be terminated with an error.
+and the script will terminate with an error.
 
-Like 'getitem' this command will also accept an 'english name' field from the 
+Like 'getitem', this command will also accept an 'english name' field from the 
 database. If the name is not found, nothing will be deleted.
 
 ---------------------------------------
@@ -4334,7 +4331,7 @@ database. If the name is not found, nothing will be deleted.
 *delitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 *delitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 
-This command will take a specified amount of items from the invoking/target character. 
+This command will remove a specified amount of items from the invoking/target character. 
 Check 'getitem2' to understand its expanded parameters.
 
 ---------------------------------------
@@ -4590,6 +4587,14 @@ slots see 'getequipid'.
 
 If an item occupies several equipment slots, it will get unequipped from all of 
 them.
+
+---------------------------------------
+
+*delequip <equipment slot>;
+
+This command will destroy whatever is currently equipped in the invoking
+character's specified equipment slot. For a full list of possible equipment 
+slots see 'getequipid'.
 
 ---------------------------------------
 

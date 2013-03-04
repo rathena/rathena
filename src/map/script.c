@@ -7788,6 +7788,29 @@ BUILDIN_FUNC(downrefitem)
 }
 
 /*==========================================
+ * Delete the item equipped at pos.
+ *------------------------------------------*/
+BUILDIN_FUNC(delequip)
+{
+	int i=-1,num;
+	TBL_PC *sd;
+
+	num = script_getnum(st,2);
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 0;
+
+	if (num > 0 && num <= ARRAYLENGTH(equip))
+		i=pc_checkequip(sd,equip[num-1]);
+	if(i >= 0) {
+		pc_unequipitem(sd,i,3); //recalculate bonus
+		pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
+	}
+
+	return 0;
+}
+
+/*==========================================
  *
  *------------------------------------------*/
 BUILDIN_FUNC(statusup)
@@ -17820,6 +17843,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(cleanmap,"cleanarea","siiii"),
 	BUILDIN_DEF(npcskill,"viii"),
 	BUILDIN_DEF(consumeitem,"v"),
+	BUILDIN_DEF(delequip,"i"),
 	/**
 	 * @commands (script based)
 	 **/

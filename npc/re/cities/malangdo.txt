@@ -152,11 +152,8 @@ lighthalzen,254,83,5	duplicate(Dolangmal)	Dolangmal#8	553
 mora,57,150,4	duplicate(Dolangmal)	Dolangmal#9	553
 
 //Pre-RE: izlude (182,192)
-izlude,182,218,4	script	Odgnalam#iz	554,{
-	if (strnpcinfo(4) == "izlude")
-		mes "Receiving the warm sun of Izlude, the cat is sleeping.";
-	else if (strnpcinfo(4) == "alberta")
-		mes "Receiving the warm sun of Alberta, the cat is sleeping.";
+izlude,182,218,4	script	Odgnalam#Izlude	554,{
+	mes "This cat is sleeping in the warm "+strnpcinfo(2)+" sun.";
 	next;
 	if(select("Let him sleep:Talk to him") == 1) close;
 	mes "[Odgnalam]";
@@ -179,9 +176,9 @@ izlude,182,218,4	script	Odgnalam#iz	554,{
 		mes "You are a hero of cat's fleet. Your activity is the legend between us.";
 		next;
 		mes "[Odgnalam]";
-		mes "As you are hero of fleet so let me send you to the heaven of the cat, ^A2314BMeow Meow Island^000000 for free.";
+		mes "As you are a hero of the cat fleet let me send you to ^A2314BMeow Meow Island^000000 for free.";
 		next;
-		if(select("Let's go Meow Meow Island!!:Do not go") == 1) {
+		if(select("Send me to Meow Meow Island!:Do not go.") == 1) {
 			mes "[Odgnalam]";
 			mes "Have a comfortable trip... Alright let's go~";
 			warp "malangdo",217,85;
@@ -191,7 +188,7 @@ izlude,182,218,4	script	Odgnalam#iz	554,{
 	mes "[Odgnalam]";
 	mes .@s1$;
 	next;
-	if(select("Let's go Meow Meow Island!!:Do not go") == 2) close;
+	if(select("Send me to Meow Meow Island!:Do not go.") == 2) close;
 	if (Zeny < .@price) {
 		mes "[Odgnalam]";
 		mes "Money? Where is the money? You can't go anywhere without the money. Shame on you.";
@@ -203,7 +200,7 @@ izlude,182,218,4	script	Odgnalam#iz	554,{
 	warp "malangdo",217,85;
 	close;
 }
-alberta,200,151,4	duplicate(Odgnalam#iz)	Odgnalam#albe	554
+alberta,200,151,4	duplicate(Odgnalam#Izlude)	Odgnalam#Alberta	554
 
 malangdo,219,86,4	script	Kong#malang	545,{
 	mes "[Kong]";
