@@ -3,14 +3,17 @@
 //===== By: ==================================================
 //= Muad_Dib
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= Quest NPCs related to Malangdo.
+//= Quest NPCs related to Malangdo:
+//== Help the bad cats in danger, Clean the Ship,
+//== Help Chef Nyas, Archangel Wing Enchants
 //===== Additional Comments: =================================
 //= 1.0 First version. [Euphy]
 //= 1.1 Added two quests.
+//= 1.2 Added Archangel Wing Enchants.
 //============================================================
 
 // Help the bad cats in danger :: mal_bad_guys
@@ -1901,6 +1904,190 @@ mal_in02,187,58,3	script	Chef Nyas	548,{
 		mes "[Chef Nyas]";
 		mes "You are quite bold like a killer whale.";
 		mes "If you don't have any business, don't touch vegetable and go away.";
+		close;
+	}
+}
+
+// Archangel Wing Enchants :: enc_angel
+//============================================================
+malangdo,234,153,6	script	Notice Board#mal	837,{
+	mes "^0000FFThere's a hastily written message on this bulletin board.^000000";
+	next;
+	mes "A fallen angel within will unlock a hidden enchantment to Archangel Wings.";
+	close;
+}
+
+mal_in01,15,16,3	script	Fallen Angel#mal	403,{
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "You are carrying too many items, please reduce them and come back!";
+		close;
+	}
+	if (MaxWeight - Weight < 10000) {
+		mes "You have overweight, please reduce it and come back!";
+		close;
+	}
+	if (getequipid(EQI_GARMENT) == 2573) {
+		if (Zeny >= 1000000)
+			set .@menu$, "Enchant Archangel Wing";
+		else
+			set .@menu$, "^999999You do not have enough zeny!^000000";
+	} else
+		set .@menu$, "^999999You have not equipped the Archangel Wing!^000000";
+	mes "[Fallen Angel]";
+	mes "You seem like a poor guy!";
+	next;
+	mes "[Fallen Angel]";
+	mes "If you have an Archangel Wing, I will enchant my capability into the useless 4th slot. Would you like me to do so?";
+	next;
+	switch(select("What is that?:"+.@menu$+":Enchant Initialization")) {
+	case 1:
+		switch(select("Stop speaking:What are you going to do?")) {
+		case 1:
+			mes "[Fallen Angel]";
+			mes "What did you say?";
+			close;
+		case 2:
+			mes "[Fallen Angel]";
+			mes "I can enchant my capability into your Archangel Wing if you pay 1,000,000 zeny. But you can't enchant it again without resetting it.";
+			next;
+			mes "[Fallen Angel]";
+			mes "The enchantment is dangerous, so ^ff0000the wing might be damaged^000000! Nevertheless, my good blessing will retain the ^0000ffcard and refine level^0000ff!";
+			close;
+		}
+	case 2:
+		if (Zeny < 1000000) {
+			mes "[Fallen Angel]";
+			mes "I can't do it if you can't pay!";
+			close;
+		}
+		mes "[Fallen Angel]";
+		mes "There are 2 important notices. First, the enchantment requires ^0000ff1,000,000 zeny^000000.";
+		next;
+		mes "[Fallen Angel]";
+		mes "Second, ^ff0000although the rate is not high, the Archangel Wing might be damaged^000000! This is very unlucky!";
+ 		mes "If you can accept these conditions, I will enchant the wing for you.";
+		next;
+		if(select("Let me consider...:I accept, let's enchant!") == 1) {
+			mes "[Fallen Angel]";
+			mes "Ok! Take your time to consider!";
+			close;
+		}
+		specialeffect2 EF_REPAIRWEAPON;
+		progressbar "ffff00",2;
+		if (getequipisequiped(EQI_GARMENT) == 0) {
+			mes "[Fallen Angel]";
+			mes "The Archangel Wing has been taken out!";
+			close;
+		}
+		if (getequipid(EQI_GARMENT) != 2573) {
+			mes "[Fallen Angel]";
+			mes "Don't take off the item!";
+			close;
+		}
+		if (getequipcardid(EQI_GARMENT,3)) {
+			mes "[Fallen Angel]";
+			mes "This Archangel Wing is enchanted! Please initialize it or bring another Archangel Wing for me!";
+			close;
+		}
+		set .@equip_refine, getequiprefinerycnt(EQI_GARMENT);
+		setarray .@equip_card[0], getequipcardid(EQI_GARMENT,0),getequipcardid(EQI_GARMENT,1),getequipcardid(EQI_GARMENT,2);
+
+		set .@i, rand(1,900);
+		     if (.@i < 2)   set .@enchant,4848; //Immuned1
+		else if (.@i < 3)   set .@enchant,4849; //Cranial1
+		else if (.@i < 4)   set .@enchant,4852; //Heal_Amount5
+		else if (.@i < 9)   set .@enchant,4853; //S_Str
+		else if (.@i < 14)  set .@enchant,4854; //S_Agi
+		else if (.@i < 19)  set .@enchant,4855; //S_Vital
+		else if (.@i < 24)  set .@enchant,4856; //S_Int
+		else if (.@i < 29)  set .@enchant,4857; //S_Dex
+		else if (.@i < 34)  set .@enchant,4858; //S_Luck
+		else if (.@i < 39)  set .@enchant,4851; //Heal_Amount4
+		else if (.@i < 49)  set .@enchant,4850; //Heal_Amount3
+		else if (.@i < 74)  set .@enchant,4760; //Matk1
+		else if (.@i < 84)  set .@enchant,4761; //Matk2
+		else if (.@i < 109) set .@enchant,4817; //Sharp2
+		else if (.@i < 119) set .@enchant,4816; //Sharp3
+		else if (.@i < 144) set .@enchant,4814; //Spell2
+		else if (.@i < 154) set .@enchant,4813; //Spell3
+		else if (.@i < 179) set .@enchant,4833; //Expert_Archer2
+		else if (.@i < 189) set .@enchant,4834; //Expert_Archer3
+		else if (.@i < 214) set .@enchant,4810; //Fighting_Spirit2
+		else if (.@i < 224) set .@enchant,4809; //Fighting_Spirit3
+		else if (.@i < 259) set .@enchant,4701; //Strength2
+		else if (.@i < 294) set .@enchant,4731; //Agility2
+		else if (.@i < 329) set .@enchant,4721; //Dexterity2
+		else if (.@i < 364) set .@enchant,4741; //Vitality2
+		else if (.@i < 399) set .@enchant,4751; //Luck2
+		else if (.@i < 434) set .@enchant,4711; //Inteligence2
+		else if (.@i < 504) set .@enchant,4700; //Strength1
+		else if (.@i < 574) set .@enchant,4730; //Agility1
+		else if (.@i < 644) set .@enchant,4720; //Dexterity1
+		else if (.@i < 714) set .@enchant,4740; //Vitality1
+		else if (.@i < 784) set .@enchant,4750; //Luck1
+		else if (.@i < 854) set .@enchant,4710; //Inteligence1
+		else set .@enchant,0;
+
+		set Zeny, Zeny - 1000000;
+		delequip EQI_GARMENT;
+		if (.@enchant == 0) {
+			mes "[Fallen Angel]";
+			mes "Be merciful to the survivor,";
+			mes "Send flowers to the dead.";
+			next;
+			mes "[Fallen Angel]";
+			mes "Help for justice,";
+			mes "Elimination of evil.";
+			next;
+			mes "[Fallen Angel]";
+			mes "But the important point is... the Archangel Wing is damaged!";
+			close;
+		}
+		getitem2 2573,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@enchant; //Archangel_Wing
+		if (.@i < 4)
+			announce strcharinfo(0)+" has enchanted Archangel Wing with amazing capability!",bc_all,0xFF0000,FW_NORMAL,10;
+		mes "[Fallen Angel]";
+		mes "Take it!";
+		mes "I believe that you will become the dominator of the new world!";
+		close;
+	case 3:
+		mes "[Fallen Angel]";
+		mes "Initialization requires ^0000ff3 units of Silvervine Fruit^000000. The wing will not be damaged except for the enchanted capability.";
+		next;
+		if(select("Let me consider...:Ok, I want initialize it.") == 1) {
+			mes "[Fallen Angel]";
+			mes "Ok! Take your time to consider!";
+			close;
+		}
+		specialeffect2 EF_REPAIRWEAPON;
+		progressbar "ffff00",2;
+		if (getequipisequiped(EQI_GARMENT) == 0) {
+			mes "[Fallen Angel]";
+			mes "The Archangel Wing has been taken out!";
+			close;
+		}
+		if (getequipid(EQI_GARMENT) != 2573) {
+			mes "[Fallen Angel]";
+			mes "Oh... you have unequipped the Archangel Wing!";
+			close;
+		}
+		if (countitem(6417) < 3) {
+			mes "[Fallen Angel]";
+			mes "I can't do it if you can't pay!";
+			close;
+		}
+		if (getequipcardid(EQI_GARMENT,3) < 4700) { // Armor Enchant System
+			mes "[Fallen Angel]";
+			mes "This equipment has not been enchanted, please check it again!";
+			close;
+		}
+		set .@equip_refine, getequiprefinerycnt(EQI_GARMENT);
+		setarray .@equip_card[0], getequipcardid(EQI_GARMENT,0),getequipcardid(EQI_GARMENT,1),getequipcardid(EQI_GARMENT,2);
+		delequip EQI_GARMENT;
+		getitem2 2573,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],0; //Archangel_Wing
+		mes "[Fallen Angel]";
+		mes "Take it!";
 		close;
 	}
 }

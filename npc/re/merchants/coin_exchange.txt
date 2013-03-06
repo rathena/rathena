@@ -1,0 +1,258 @@
+//===== rAthena Script =======================================
+//= Coin Merchants
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= [Official Conversion]
+//= Renewal coin redemption NPCs.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Euphy/Lemongrass]
+//============================================================
+
+// Malangdo
+//============================================================
+malangdo,220,167,5	script	Coin Exchanger CX-1	564,{
+	if (checkweight(1201,1) == 0) {
+		mes "You have too many kinds of objects. Let's try to continue after reducing those objects.";
+		close;
+	}
+	if (MaxWeight - Weight < 10000) {
+		mes "Can't continue because you have too many heavy objects. Let's try to continue after reducing the weight.";
+		close;
+	}
+	mes "[Coin Exchanger CX-1]";
+	mes "Welcome to CX-1. If you have coins, you can exchange them to high or low grade coins.";
+	next;
+	setarray .@coins[1],
+		6417, //Silvervine
+		6418, //Agrade_Coin
+		6419, //Bgrade_Coin
+		6420, //Cgrade_Coin
+		6421, //Dgrade_Coin
+		6422; //Egrade_Coin
+	set .@menu$,"Stop:";
+	for(set .@i,1; .@i<=6; set .@i,.@i+1) {
+		if (countitem(.@coins[.@i]))
+			set .@menu$, .@menu$+getitemname(.@coins[.@i])+":";
+		else
+			set .@menu$, .@menu$+"^aaaaaa"+getitemname(.@coins[.@i])+" (None)^000000:";
+	}
+	set .@i, select(.@menu$);
+	switch(.@i) {
+	case 1:
+		mes "[Coin Exchanger CX-1]";
+		mes "Thank you for coming.";
+		close;
+	default:
+		set .@coin, .@coins[.@i-1];
+		set .@coin_select, .@i-1;
+		break;
+	}
+	if (countitem(.@coin) == 0) {
+		mes "[Coin Exchanger CX-1]";
+		mes "You chose a coin that you don't have.";
+		mes "Thank you for coming.";
+		close;
+	}
+	mes "[Coin Exchanger CX-1]";
+	mes "----Rate of exchange----";
+	mes "Higher exchange - 30 to 10";
+	mes "Lower exchange - 10 to 30";
+	mes "------------------------";
+	mes "^ff3333When you exchange, we charge a fee according to the current market price.^000000";
+	next;
+	setarray .@exchange_name$[0],"higher","lower";
+	setarray .@exchange_rate[0],30,10;
+	setarray .@exchange_loss[0],rand(1,4),rand(1,2); // Amount deducted per exchange.
+	setarray .@exchange_id[0],.@coins[.@coin_select-1],.@coins[.@coin_select+1];
+	if (.@exchange_id[0] == .@coins[1]) set .@exchange_id[0],0; // Cannot exchange for Silvervine.
+	set .@menu$,"Stop:";
+	for(set .@i,0; .@i<2; set .@i,.@i+1) {
+		if (.@exchange_id[.@i] == 0)
+			set .@menu$, .@menu$+"^ff3333Unavailable exchange to "+.@exchange_name$[.@i]+" coin^000000:";
+		else if (countitem(.@coin) < .@exchange_rate[.@i])
+			set .@menu$, .@menu$+"^aaaaaaExchange to "+.@exchange_name$[.@i]+" coin (null)^000000:";
+		else
+			set .@menu$, .@menu$+"Exchange to "+.@exchange_name$[.@i]+" coin - "+getitemname(.@coin)+" ("+.@exchange_rate[.@i]+" needed):";
+	}
+	set .@i, select(.@menu$)-2;
+	if (.@i == -1) {
+		mes "[Coin Exchanger CX-1]";
+		mes "Thank you for coming.";
+		close;
+	}
+	if (.@exchange_id[.@i] == 0) {
+		mes "[Coin Exchanger CX-1]";
+		mes "This coin is not available to exchange to "+.@exchange_name$[.@i]+" coin.";
+		mes "Thank you for coming.";
+		close;
+	}
+	if (countitem(.@coin) < .@exchange_rate[.@i]) {
+		mes "[Coin Exchanger CX-1]";
+		mes "You don't have enough coins to exchange to "+.@exchange_name$[.@i]+" coin.";
+		mes "Thank you for coming.";
+		close;
+	}
+	set .@exchange_total, .@exchange_rate[(!.@i)] - .@exchange_loss[(!.@i)];
+	delitem .@coin, .@exchange_rate[.@i];
+	getitem .@exchange_id[.@i], .@exchange_total;
+	mes "[Coin Exchanger CX-1]";
+	mes "^003399"+.@exchange_rate[.@i]+"^000000 unit(s) of ^003399 "+getitemname(.@coin)+"^000000 taken.";
+	mes "I exchanged them for ^003399"+.@exchange_name$[.@i]+" coins^000000, after deducting ^003399"+.@exchange_loss[(!.@i)]+"^000000 unit(s), ^003399"+.@exchange_total+"^000000 unit(s) remaining.";
+	close;
+}
+
+malangdo,218,165,5	script	Special Vending Machine	562,{
+	if (checkweight(1201,1) == 0) {
+		mes "You have too many kinds of objects. Let's try to continue after reducing those objects.";
+		close;
+	}
+	if (MaxWeight - Weight < 10000) {
+		mes "Can't continue because you have too many heavy objects. Let's try to continue after reducing the weight.";
+		close;
+	}
+	mes "[Special Vending Machine]";
+	mes "Welcome to CX-82. You have a Silvervine Fruit, so you can purchase the Malangdo Specialty that has special ability.";
+	next;
+	callsub L_AddItem, //DisplayName,ItemID,Cost
+		"Seagod's Protection [23 hours]",16740,4,
+		"Seagod's Protection [7 days]",16763,12,
+		"Seagod's Protection [15 days]",16764,24,
+		"Octopus Hunting Stick [23 hours]",16765,2,
+		"Octopus Hunting Stick [3 days]",16766,5,
+		"Octopus Hunting Stick [7 days]",16767,10,
+		"Premium Lubricant",6441,56,
+		"Ordinary Lubricant",6440,36,
+		"Sillit Pong",6443,192;
+L_AddItem:
+	set .@menu$,"Explanation:";
+	for(set .@i,0; .@i<getargcount(); set .@i,.@i+3)
+		set .@menu$, .@menu$+getarg(.@i)+":";
+	set .@i, select(.@menu$)-2;
+	if (.@i == -1) {
+		mes "[Special Vending Machine]";
+		mes "Seagod's Protection is an item used for entering the Culvert memorial dungeon during a certain period.";
+		next;
+		mes "[Special Vending Machine]";
+		mes "Octopus Hunting Stick is an item used for entering the Culvert memorial dungeon during a certain period.";
+		next;
+		mes "[Special Vending Machine]";
+		mes "Premium and Ordinary Lubricant are items used for separation of equipment and cards. If you visit the specialist Jeremy with either item, he will explain more details of the effects.";
+		next;
+		mes "[Special Vending Machine]";
+		mes "Sillit Pong is special item that separates sockets with MVP cards. Unable to separate MVP card by Premium and Ordinary Lubricant.";
+		close;
+	}
+	set .@cost, getarg(.@i*3+2);
+	mes "[Special Vending Machine]";
+	mes "You choose ^005500"+getarg(.@i*3)+"^000000. For purchasing, you need ^005500"+.@cost+"^000000 unit(s) of Silvervine Fruit.";
+	next;
+	if (countitem(6417) < .@cost)
+		set .@ven_menu$, "^999999Silvervine Fruit (missing "+(.@cost - countitem(6417))+")^000000";
+	else
+		set .@ven_menu$, "Purchase - Silvervine Fruit (have "+countitem(6417)+")";
+	switch(select("Stop:"+.@ven_menu$)) {
+	case 1:
+		mes "[Special Vending Machine]";
+		mes "Thank you for coming.";
+		close;
+	case 2:
+		if (countitem(6417) < .@cost) {
+			mes "[Special Vending Machine]";
+			mes "Not enough Silvervine Fruit.";
+			mes "Closing the transaction.";
+			mes "Thank you for coming.";
+			close;
+		}
+		mes "[Special Vending Machine]";
+		mes "The transaction is completed. Thank you for coming.";
+		delitem 6417,.@cost; //Silvervine
+		getitem getarg(.@i*3+1),1;
+		close;
+	}
+}
+
+malangdo,175,145,4	script	Can Agency Guard	549,{
+	if (checkweight(1201,1) == 0) {
+		mes "You seem to have too many items. Give it a try after sorting out the item kinds.";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "You're not likely to be able to go on due to the heavy items you've got. Give it a try after lightening the weight.";
+		close;
+	}
+	mes "[Can Agency Guard]";
+	mes "Hey, you there... Have you seen any ^0000ffMalangdo Cat Can^000000s around here?";
+	next;
+	switch(select("Why are you asking?:Oh, you mean these?")) {
+	case 1:
+		mes "[Can Agency Guard]";
+		mes "Umm.";
+		mes "We at the Can Agency recently got some suspicious intelligence about them...";
+		next;
+		mes "[Can Agency Guard]";
+		mes "There were faulty products in bulk on the can production line for Malangdo specialty. These products, to be discarded, seem to have fallen into a retail dealer's hands.";
+		next;
+		mes "[Can Agency Guard]";
+		mes "Actually they were hard to distinguish from normal products. But it obviously says ^0000ffMalangdo Cat Can^000000 outside.";
+		next;
+		mes "[Can Agency Guard]";
+		mes "As faulty products are moving around on the market, we've been collecting them as is our duty. Have you ever seen anyone who has things like what I'm describing?";
+		next;
+		mes "[Can Agency Guard]";
+		mes "If you find anyone selling these products, please come and tell me.";
+		close;
+	case 2:
+		if (countitem(12633) == 0) {
+			mes "[Can Agency Guard]";
+			mes "Umm? I cannot see the ^0000ffMalangdo Cat Can^000000 from you. Don't forget to bring it to me if you've found out...";
+			close;
+		}
+		break;
+	}
+	mes "[Can Agency Guard]";
+	mes "The Malangdo Cat Can is a faulty product. Let me exchange it to 3 E Grade Coins. How about that?";
+	next;
+	switch(select("I won't exchange:^0000ff1^000000 Can -> ^0000ff3^000000 E Grade Coin:^0000ff10^000000 Can -> ^0000ff30^000000 E Grade Coin:^0000ff100^000000 Can -> ^0000ff300^000000 E Grade Coin:Exchange all I've got")) {
+	case 1:
+		mes "[Can Agency Guard]";
+		mes "Umm, I'm not here forever, so come to me if you'd like to exchange while I still am.";
+		close;
+	case 2:
+		set .@check,1;
+		set .@count,1;
+		break;
+	case 3:
+		set .@check,10;
+		set .@count,10;
+		break;
+	case 4:
+		set .@check,100;
+		set .@count,100;
+		break;
+	case 5:
+		set .@check,1;
+		set .@count,countitem(12633);
+		break;
+	}
+	if (countitem(12633) < .@check) {
+		if (.@check == 1) {
+			mes "[Can Agency Guard]";
+			mes "Umm? I cannot see the ^0000ffMalangdo Cat Can^000000 from you. Don't forget to bring it to me if you've found out...";
+			close;
+		} else {
+			mes "[Can Agency Guard]";
+			mes "Umm? I don't think you have enough to exchange... Come to me again when the amount is exactly decided.";
+			close;
+		}
+	}
+	delitem 12633,.@count; // Malang_Cat_Can
+	getitem 6422,.@count*3; // Egrade_Coin
+	mes "[Can Agency Guard]";
+	mes "Exchanged "+.@count+" Malangdo Cat Can to "+(.@count*3)+" E Class Coin. Check it out.";
+	close;
+}

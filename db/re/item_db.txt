@@ -1594,7 +1594,7 @@
 2570,Judgement_Shawl,Judgement Shawl,5,20,,400,,12,,0,0x00000100,7,2,4,,100,1,0,{ bonus bFlee,5; bonus3 bAutoSpellWhenHit,"AB_ORATIO",getskilllv("AB_ORATIO")?getskilllv("AB_ORATIO"):2,10; },{},{}
 2571,Para_Team_Manteau2,Eden Team Manteau II,5,0,,0,,18,,0,0xFFFFFFFF,7,2,4,,60,0,0,{ bonus bFlee,12; bonus2 bSubEle,Ele_Neutral,10; },{},{}
 //2572,
-2573,Archangel_Wings,Archangel Wings,5,0,,200,,18,,1,0xFFFFFFFF,7,2,4,,0,1,1,{},{},{}
+2573,Archangel_Wing,Archangel Wings,5,0,,200,,18,,1,0xFFFFFFFF,7,2,4,,0,1,1,{},{},{}
 2574,Urj_Manteau,Urj Manteau,5,20,,600,,20,,0,0x00000080,8,2,4,,100,1,0,{ bonus bMaxHPRate,2; bonus2 bSubEle,Ele_Neutral,10; },{},{}
 2575,Pertz_Manteau,Pertz Manteau,5,20,,600,,16,,0,0x00000080,8,2,4,,100,1,0,{ bonus bFlee,10; bonus bCritical,10; },{},{}
 2576,Adventurer's_Backpack,Adventurer's Backpack,5,0,,200,,20,,1,0xFFFFFFFF,7,2,4,,0,1,2,{ skill "BS_GREED",1; if(getrefine()>6) { if(readparam(bStr)>=90){ bonus bBaseAtk,20; } if(readparam(bInt)>=90){ bonus bMatk,30; } if(readparam(bVit)>=90){ bonus2 bSubEle,Ele_Neutral,10; } if(readparam(bAgi)>=90){ bonus bAspdRate,8; } if(readparam(bDex)>=90){ bonus bLongAtkRate,5; } if(readparam(bLuk)>=90){ bonus bCritAtkRate,10; } } if(getrefine()>8) { if(readparam(bStr)>=90){ bonus bBaseAtk,10; } if(readparam(bInt)>=90){ bonus bMatk,20; } if(readparam(bVit)>=90){ bonus2 bSubEle,Ele_Neutral,5; } if(readparam(bAgi)>=90){ bonus bAspd,1; } if(readparam(bDex)>=90){ bonus bLongAtkRate,5; } if(readparam(bLuk)>=90){ bonus bCritAtkRate,5; } } },{},{}
@@ -5330,7 +5330,7 @@
 12217,Aspersio_5_Scroll,LV5 Aspersio Scroll,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ if(countitem(523)>0) { skilleffect "PR_ASPERSIO",0; sc_start SC_ASPERSIO,180000,5; delitem 523,1; } },{},{}
 12218,Assumptio_5_Scroll,LV5 Assumptio Scroll,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ skilleffect "HP_ASSUMPTIO",0; sc_start SC_ASSUMPTIO,100000,5; },{},{}
 12219,Wind_Walk_10_Scroll,LV10 Wind Walker Scroll,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ skilleffect "SN_WINDWALK",0; sc_start SC_WINDWALK,250000,5; },{},{}
-12220,Adrenaline_Scroll,LV5 Adrenaline Scroll,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ if(getiteminfo(getequipid(EQI_HAND_R),14)==6||getiteminfo(getequipid(EQI_HAND_R),14)==7) { skilleffect "BS_ADRENALINE",0; sc_start SC_ADRENALINE,150000,5; } },{},{}
+12220,Adrenaline_Scroll,LV5 Adrenaline Scroll,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ set .@type,getiteminfo(getequipid(EQI_HAND_R),11); if (.@type==6||.@type==7||.@type==8) { skilleffect "BS_ADRENALINE",0; sc_start SC_ADRENALINE,150000,5; } },{},{}
 12221,Megaphone_,Megaphone,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ input @megaphone$; announce strcharinfo(0) + ": " + @megaphone$,bc_all,0xFF0000; end; },{},{}
 12225,Sweet_Candy_Striper,Sweet Candy Cane,2,20,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1245; },{},{}
 12226,Examination1,Examination 1,0,20,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SpeedUp0,5400000,0; percentheal 100,100; sc_start SC_STRFOOD,5400000,10; sc_start SC_DEXFOOD,5400000,5; sc_start SC_ATKPOTION,5400000,22; sc_start SC_MATKFOOD,5400000,15; },{},{}
@@ -7233,30 +7233,30 @@
 16679,Universal_Catalog_Gold_Box10,Universal Catalog Gold 10 Box,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12581,10; },{},{}
 16680,Universal_Catalog_Gold_Box50,Universal Catalog Gold 50 Box,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12581,50; },{},{}
 //
-16740,The_Sea_God's_Call_23_Hour_Box,The Sea God's Call 23 Hour Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 6436,86400; },{},{}
-16741,Cutlass_1_Day_Box,Cutlass 1 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 1198,86400; },{},{}
-16742,Cutlass_7_Day_Box,Cutlass 7 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 1198,604800; },{},{}
-16743,Marlin_1_Day_Box,Marlin 1 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 1489,86400; },{},{}
-16744,Marlin_7_Day_Box,Marlin 7 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 1489,604800; },{},{}
-16745,Pompano_1_Day_Box,Pompano 1 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 13068,86400; },{},{}
-16746,Pompano_7_Day_Box,Pompano 7 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 13068,604800; },{},{}
-16747,Tuna_1_Day_Box,Tuna 1 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 16016,86400; },{},{}
-16748,Tuna_7_Day_Box,Tuna 7 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 16016,604800; },{},{}
-16749,Malangdo_Crab_1_Day_Box,Malangdo Crab 1 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 18107,86400; },{},{}
-16750,Malangdo_Crab_7_Day_Box,Malangdo Crab 7 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 18107,604800; },{},{}
-16751,Zebra_Eel_1_Day_Box,Zebra Eel 1 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 18108,86400; },{},{}
-16752,Zebra_Eel_7_Day_Box,Zebra Eel 7 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 18108,604800; },{},{}
+16740,Ptotection_Seagod_Box,The Sea God's Call 23 Hour Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 6436,86400; },{},{}
+16741,Hairtail_Box1,Cutlass 1 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 1198,86400; },{},{}
+16742,Hairtail_Box2,Cutlass 7 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 1198,604800; },{},{}
+16743,Spearfish_Box1,Marlin 1 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 1489,86400; },{},{}
+16744,Spearfish_Box2,Marlin 7 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 1489,604800; },{},{}
+16745,Saurel_Box1,Pompano 1 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 13068,86400; },{},{}
+16746,Saurel_Box2,Pompano 7 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 13068,604800; },{},{}
+16747,Tuna_Box1,Tuna 1 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 16016,86400; },{},{}
+16748,Tuna_Box2,Tuna 7 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 16016,604800; },{},{}
+16749,Malang_Crab_Box1,Malangdo Crab 1 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 18107,86400; },{},{}
+16750,Malang_Crab_Box2,Malangdo Crab 7 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 18107,604800; },{},{}
+16751,Brindle_Eel_Box1,Zebra Eel 1 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 18108,86400; },{},{}
+16752,Brindle_Eel_Box2,Zebra Eel 7 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 18108,604800; },{},{}
 //
-16763,The_Sea_God's_Call_7_Day_Box,The Sea God's Call 7 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 6436,604800; },{},{}
-16764,The_Sea_God's_Call_15_Day_Box,The Sea God's Call 15 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 6436,1209600; },{},{}
-16765,Octopus_Hunting_Skewer_23_Hour_Box,Octopus Hunting Skewer 23 Hour Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 6442,86400; },{},{}
-16766,Octopus_Hunting_Skewer_3_Day_Box,Octopus Hunting Skewer 3 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 6442,259200; },{},{}
-16767,Octopus_Hunting_Skewer_7_Day_Box,Octopus Hunting Skewer 7 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 6442,604800; },{},{}
+16763,Ptotection_Seagod_Box2,The Sea God's Call 7 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 6436,604800; },{},{}
+16764,Ptotection_Seagod_Box3,The Sea God's Call 15 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 6436,1209600; },{},{}
+16765,Octo_Hstick_Box,Octopus Hunting Skewer 23 Hour Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 6442,86400; },{},{}
+16766,Octo_Hstick_Box2,Octopus Hunting Skewer 3 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 6442,259200; },{},{}
+16767,Octo_Hstick_Box3,Octopus Hunting Skewer 7 Day Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 6442,604800; },{},{}
 //
 16776,Universal_Catalog_Gold_Box10,Universal Catalog Gold 10 Box,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12581,10; },{},{}
 16777,Universal_Catalog_Gold_Box50,Universal Catalog Gold 50 Box,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12581,50; },{},{}
 //
-16998,Archangel_Wings_Box,Archangel Wings Box,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 2573,1; },{},{}
+16998,Archangel_Wing_Box,Archangel Wings Box,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 2573,1; },{},{}
 //
 17155,Enhance_Huuma_Shuriken_Box,Enhance Huuma Shuriken Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 13316,86400; },{},{}
 // Mechanic/Genetic Cannonballs

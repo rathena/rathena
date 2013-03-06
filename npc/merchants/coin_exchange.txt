@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Manuk & Splendide Coin Merchants
+//= Coin Merchants
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
@@ -15,6 +15,8 @@
 //= 1.2 Optimized and merged into one file. [Euphy]
 //============================================================
 
+// Manuk & Splendide
+//============================================================
 -	script	::merchant_13_2	-1,{
 	set .@n$, "["+strnpcinfo(1)+"]";
 	mes .@n$;

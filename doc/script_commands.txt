@@ -2768,15 +2768,15 @@ It will return -1 if there is no such item.
 
 Valid types are:
 	0 - Buy Price; 1 - Sell Price; 2 - Item Type;
-	3 - maxchance (Max drop chance of this item e.g. 1 = 0.01% , etc..
+	3 - maxchance (max drop chance of this item, e.g. 1 = 0.01%)
 		if = 0, then monsters don't drop it at all (rare or a quest item)
 		if = 10000, then this item is sold in NPC shops only
 	4 - sex; 5 - equip; 6 - weight; 7 - atk; 8 - def; 9 - range;
-	10 - slot; 11 - look; 12 - elv; 13 - wlv; 14 - view id
+	10 - slot; 11 - look; 12 - elv; 13 - wlv; 14 - view id (from 'db/item_avail.txt')
 	
 	If RENEWAL is defined, 15 - matk
 
-Check sample in doc/sample/getiteminfo.txt
+See the sample in 'doc/sample/getiteminfo.txt'.
 
 ---------------------------------------
 
