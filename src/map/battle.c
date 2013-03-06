@@ -2113,10 +2113,12 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 						sd->inventory_data[index] &&
 						sd->inventory_data[index]->type == IT_WEAPON)
 						wd.damage = sd->inventory_data[index]->weight*8/100; //80% of weight
-				} else
-					wd.damage = sstatus->rhw.atk2*8/10; //Else use Atk2
-
-				ATK_ADDRATE(50*skill_lv); //Skill modifier applies to weight only.
+					
+					ATK_ADDRATE(50*skill_lv); //Skill modifier applies to weight only.
+				} else {
+					wd.damage = battle_calc_base_damage(sstatus, &sstatus->rhw, sc, tstatus->size, sd, i); //Monsters have no weight and use ATK instead
+				}
+				
 				i = sstatus->str/10;
 				i*=i;
 				ATK_ADD(i); //Add str bonus.
