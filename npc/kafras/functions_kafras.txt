@@ -143,6 +143,8 @@ function	script	F_Kafra	{
 				case 8: setarray @K_Menu0$[0],"Save","Use Storage","Check Other Information","Cancel"; break;
 				// No Save (Rune Knight)
 				case 9: setarray @K_Menu0$[0],"Use Storage","Rent a Pushcart","Use Teleport Service","Check Other Information","Cancel"; break;
+				// Storage, Save, and Pushcart (Dewata, reorder of case 7)
+				case 10: setarray @K_Menu0$[0],"Use Storage","Save","Rent a Pushcart","Cancel"; break;
 				// Default message (obsolete)
 				default: setarray @K_Menu0$[0],"Save","Use Storage","Use Teleport Service","Rent a Pushcart","Check Other Information","Cancel"; break;
 			}
