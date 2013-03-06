@@ -17398,6 +17398,36 @@ BUILDIN_FUNC(consumeitem)
 	return 0;
 }
 
+/* Make a player sit/stand.
+ * sit {"<character name>"};
+ * stand {"<character name>"};
+ * Note: Use readparam(Sitting) which returns 1 or 0 (sitting or standing). */
+BUILDIN_FUNC(sit)
+{
+	TBL_PC *sd;
+
+	if( script_hasdata(st, 2) )
+		sd = map_nick2sd(script_getstr(st, 2));
+	else
+		sd = script_rid2sd(st);
+
+	if( sd == NULL)
+		return 0;
+
+	if( pc_issit(sd) ) {
+		pc_setstand(sd);
+		skill_sit(sd, 0);
+		clif_standing(&sd->bl);
+	} else {
+		unit_stop_walking(&sd->bl, 1|4);
+		pc_setsit(sd);
+		skill_sit(sd, 1);
+		clif_sitting(&sd->bl);
+	}
+
+	return 0;
+}
+
 // declarations that were supposed to be exported from npc_chat.c
 #ifdef PCRE_SUPPORT
 BUILDIN_FUNC(defpattern);
@@ -17844,6 +17874,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(npcskill,"viii"),
 	BUILDIN_DEF(consumeitem,"v"),
 	BUILDIN_DEF(delequip,"i"),
+	BUILDIN_DEF(sit,"?"),
+	BUILDIN_DEF2(sit,"stand","?"),
 	/**
 	 * @commands (script based)
 	 **/

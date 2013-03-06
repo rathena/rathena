@@ -5087,6 +5087,14 @@ everything not equippable by the new job class anyway.
 
 ---------------------------------------
 
+*sit {"<character name>"};
+*stand {"<character name>"};
+
+These commands will make a character sit if standing and stanf if sitting.
+If no character is specified, the command will run for the invoking character.
+
+---------------------------------------
+
 *disguise <Monster ID>;
 *undisguise;
 
