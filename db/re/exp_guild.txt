@@ -1,4 +1,5 @@
 // Guild LvUp experience value table
+100000
 400000
 900000
 1600000

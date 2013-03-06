@@ -5087,15 +5087,26 @@
 11532,Nasi_Goreng,Nasi Goreng,0,15,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(17,23),0; },{},{}
 11533,Satay,Satay,0,15,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(17,23),0; },{},{}
 11534,Coco_Juice,Coconut Juice,0,20,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(17,23),0; },{},{}
-//
-11536,Cat_Hard_Biscuit,Cat Biscuit,0,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(70,110),0; },{},{}
-//
+11535,Almond_Chocolate,Almond Chocolate,0,190,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 0,rand(8,16); },{},{}
+11536,Cat_Hard_Biscuit,Cat Biscuit,0,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(70,110),0; },{},{}
+11537,Rice_Weevil_Bug,Rice Weevil Bug,0,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(100,150),0; },{},{}
 11538,Fresh_Octopus_Legs,Fresh Octopus Legs,0,20,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(35,60),rand(5,10); },{},{}
-//
-11547,Siege_Purple_Potion,Siege Purple Potion,0,20,,120,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(500,600),rand(60,80); },{},{}
-11548,Siege_White_Potion,Siege White Potion,0,20,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 10,0; },{},{}
-11549,Siege_Blue_Potion,Siege Blue Potion,0,20,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,10; },{},{}
-11550,Pumpkin_Cake,Pumpkin Cake,0,20,,40,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 5,5; },{},{}
+11539,Athale_Choco,Athale Choco,0,1,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 50,50; },{},{}
+11540,Shyai_Choco,Shyai Choco,0,1,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 50,50; },{},{}
+11541,Mid_Choco,Mid Choco,0,1,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 50,50; },{},{}
+11542,Zonda_Choco,Zonda Choco,0,1,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 50,50; },{},{}
+11543,Goedo_Choco,Goedo Choco,0,1,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 50,50; },{},{}
+11544,Huike_Choco,Huike Choco,0,1,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 50,50; },{},{}
+11545,Rune_Choco,Rune Choco,0,1,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 50,50; },{},{}
+11546,Pope_Choco,Pope Choco,0,1,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 50,50; },{},{}
+11547,Siege_Purple_Potion,Siege Purple Potion,0,0,,120,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(500,600),rand(60,80); },{},{}
+11548,Siege_White_Potion,Siege White Potion,0,0,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 10,0; },{},{}
+11549,Siege_Blue_Potion,Siege Blue Potion,0,0,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,10; },{},{}
+11550,Pumpkin_Cake,Pumpkin Cake,0,10,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 5,5; },{},{}
+11551,Savory_Herb_Salad,Savory Herb Salad,0,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal rand(20,30),0; },{},{}
+11552,Apple_Carrot_Salad,Apple Carrot Salad,0,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal rand(20,30),0; },{},{}
+11553,Casual_Stew,Casual Stew,0,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal rand(20,30),0; },{},{}
+11554,Golden_Roasted_Apple,Golden Roasted Apple,0,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal rand(20,30),0; },{},{}
 //
 11701,Girl_Bunch_Of_Flower,Girl's Bouquet,0,20,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(105,145),0; },{},{}
 11702,Moon_Cookie,Moon Cookie,0,0,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ },{},{}
@@ -5109,6 +5120,8 @@
 11710,Sakura_Mist,Sakura Mist,0,800,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(50,70),rand(10,12); },{},{}
 11711,Sakura_Milk_Tea,Sakura Milk Tea,0,800,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(50,70),rand(10,12); },{},{}
 11712,First_Leaf_Tea,Flower,0,800,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(50,70),rand(10,12); },{},{}
+11713,Julia's_Candy,Julia's Candy,0,0,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(40,45),0; },{},{}
+//
 12000,Cold_Scroll_2_5,Level 5 Frost Diver,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "MG_FROSTDIVER",5; },{},{}
 12001,Holy_Scroll_1_3,Level 3 Heal,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "AL_HEAL",3; },{},{}
 12002,Holy_Scroll_1_5,Level 5 Heal,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "AL_HEAL",5; },{},{}

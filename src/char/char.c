@@ -126,6 +126,7 @@ struct char_session_data {
 	char email[40]; // e-mail (default: a@a.com) by [Yor]
 	time_t expiration_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
 	int group_id; // permission
+	uint8 char_slots;
 	uint32 version;
 	uint8 clienttype;
 	char new_name[NAME_LENGTH];
@@ -1489,14 +1490,18 @@ int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int ag
 
 	//check other inputs
 #if PACKETVER >= 20120307
-	if(slot >= MAX_CHARS)
+	if(slot >= sd->char_slots)
 #else
-	if((slot >= MAX_CHARS) // slots
+	if((slot >= sd->char_slots) // slots
 	|| (str + agi + vit + int_ + dex + luk != 6*5 ) // stats
 	|| (str < 1 || str > 9 || agi < 1 || agi > 9 || vit < 1 || vit > 9 || int_ < 1 || int_ > 9 || dex < 1 || dex > 9 || luk < 1 || luk > 9) // individual stat values
 	|| (str + int_ != 10 || agi + luk != 10 || vit + dex != 10) ) // pairs
 #endif
+#if PACKETVER >= 20100413
+		return -4; // invalid slot
+#else
 		return -2; // invalid input
+#endif
 
 
 	// check the number of already existing chars in this account
@@ -1861,8 +1866,8 @@ int mmo_char_send006b(int fd, struct char_session_data* sd)
 	WFIFOW(fd,0) = 0x6b;
 #if PACKETVER >= 20100413
 	WFIFOB(fd,4) = MAX_CHARS; // Max slots.
-	WFIFOB(fd,5) = MAX_CHARS; // Available slots.
-	WFIFOB(fd,6) = MAX_CHARS; // Premium slots.
+	WFIFOB(fd,5) = sd->char_slots; // Available slots. (PremiumStartSlot)
+	WFIFOB(fd,6) = MAX_CHARS; // Premium slots. (Any existent chars past sd->char_slots but within MAX_CHARS will show a 'Premium Service' in red)
 #endif
 	memset(WFIFOP(fd,4 + offset), 0, 20); // unknown bytes
 	j+=mmo_chars_fromsql(sd, WFIFOP(fd,j));
@@ -2142,7 +2147,7 @@ int parse_fromlogin(int fd) {
 		break;
 
 		case 0x2717: // account data
-			if (RFIFOREST(fd) < 62)
+			if (RFIFOREST(fd) < 63)
 				return 0;
 
 			// find the authenticated session with this account id
@@ -2153,7 +2158,13 @@ int parse_fromlogin(int fd) {
 				memcpy(sd->email, RFIFOP(fd,6), 40);
 				sd->expiration_time = (time_t)RFIFOL(fd,46);
 				sd->group_id = RFIFOB(fd,50);
-				safestrncpy(sd->birthdate, (const char*)RFIFOP(fd,51), sizeof(sd->birthdate));
+				sd->char_slots = RFIFOB(fd,51);
+				if( sd->char_slots > MAX_CHARS ) {
+					ShowError("Account '%d' `character_slots` column is higher than supported MAX_CHARS (%d), update MAX_CHARS in mmo.h! capping to MAX_CHARS...\n",sd->account_id,sd->char_slots);
+					sd->char_slots = MAX_CHARS;/* cap to maximum */
+				} else if ( !sd->char_slots )/* no value aka 0 in sql */
+					sd->char_slots = MAX_CHARS;/* cap to maximum */
+				safestrncpy(sd->birthdate, (const char*)RFIFOP(fd,52), sizeof(sd->birthdate));
 				ARR_FIND( 0, ARRAYLENGTH(server), server_id, server[server_id].fd > 0 && server[server_id].map[0] );
 				// continued from char_auth_ok...
 				if( server_id == ARRAYLENGTH(server) || //server not online, bugreport:2359
@@ -2179,7 +2190,7 @@ int parse_fromlogin(int fd) {
 #endif
 				}
 			}
-			RFIFOSKIP(fd,62);
+			RFIFOSKIP(fd,63);
 		break;
 
 		// login-server alive packet
@@ -3901,19 +3912,20 @@ int parse_char(int fd)
 #endif
 
 			//'Charname already exists' (-1), 'Char creation denied' (-2) and 'You are underaged' (-3)
-			if (i < 0)
-			{
+			if (i < 0) {
 				WFIFOHEAD(fd,3);
 				WFIFOW(fd,0) = 0x6e;
+				/* Others I found [Ind] */
+				/* 0x02 = Symbols in Character Names are forbidden */
+				/* 0x03 = You are not elegible to open the Character Slot. */
 				switch (i) {
-				case -1: WFIFOB(fd,2) = 0x00; break;
-				case -2: WFIFOB(fd,2) = 0xFF; break;
-				case -3: WFIFOB(fd,2) = 0x01; break;
+					case -1: WFIFOB(fd,2) = 0x00; break;
+					case -2: WFIFOB(fd,2) = 0xFF; break;
+					case -3: WFIFOB(fd,2) = 0x01; break;
+					case -4: WFIFOB(fd,2) = 0x03; break;
 				}
 				WFIFOSET(fd,3);
-			}
-			else
-			{
+			} else {
 				int len;
 				// retrieve data
 				struct mmo_charstatus char_dat;
