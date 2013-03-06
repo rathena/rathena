@@ -9341,14 +9341,13 @@ int pc_del_talisman(struct map_session_data *sd,int count,int type)
  * Renewal EXP/Itemdrop rate modifier base on level penalty
  * 1=exp 2=itemdrop
  *------------------------------------------*/
-int pc_level_penalty_mod(struct map_session_data *sd, struct mob_data *md, int type)
+int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_race, uint32 mob_mode, int type)
 {
 	int diff, rate = 100, i;
 
 	nullpo_ret(sd);
-	nullpo_ret(md);
-
-	diff = md->level - sd->status.base_level;
+	
+	diff = mob_level - sd->status.base_level;
 
 	if( diff < 0 )
 		diff = MAX_LEVEL + ( ~diff + 1 );
@@ -9356,8 +9355,8 @@ int pc_level_penalty_mod(struct map_session_data *sd, struct mob_data *md, int t
 	for(i=0; i<RC_MAX; i++){
 		int tmp;
 
-		if( md->status.race != i ){
-			if( md->status.mode&MD_BOSS && i < RC_BOSS )
+		if( mob_race != i ){
+			if( mob_mode&MD_BOSS && i < RC_BOSS )
 				i = RC_BOSS;
 			else if( i <= RC_BOSS )
 				continue;

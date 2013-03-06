@@ -6649,6 +6649,7 @@ ACMD_FUNC(mobinfo)
 	struct mob_db *mob, *mob_array[MAX_SEARCH];
 	int count;
 	int i, j, k;
+	unsigned int base_exp, job_exp;
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 	memset(atcmd_output2, '\0', sizeof(atcmd_output2));
@@ -6678,14 +6679,22 @@ ACMD_FUNC(mobinfo)
 	}
 	for (k = 0; k < count; k++) {
 		mob = mob_array[k];
+		base_exp = mob->base_exp;
+		job_exp = mob->job_exp;
 
+#ifdef RENEWAL_EXP
+		if( battle_config.atcommand_mobinfo_type ) {
+			base_exp = base_exp * pc_level_penalty_mod(sd, mob->lv, mob->status.race, mob->status.mode, 1) / 100;
+			job_exp = job_exp * pc_level_penalty_mod(sd, mob->lv, mob->status.race, mob->status.mode, 1) / 100;
+		}
+#endif
 		// stats
 		if (mob->mexp)
 			sprintf(atcmd_output, msg_txt(1240), mob->name, mob->jname, mob->sprite, mob->vd.class_); // MVP Monster: '%s'/'%s'/'%s' (%d)
 		else
 			sprintf(atcmd_output, msg_txt(1241), mob->name, mob->jname, mob->sprite, mob->vd.class_); // Monster: '%s'/'%s'/'%s' (%d)
 		clif_displaymessage(fd, atcmd_output);
-		sprintf(atcmd_output, msg_txt(1242), mob->lv, mob->status.max_hp, mob->base_exp, mob->job_exp,MOB_HIT(mob), MOB_FLEE(mob)); //  Lv:%d  HP:%d  Base EXP:%u  Job EXP:%u  HIT:%d  FLEE:%d
+		sprintf(atcmd_output, msg_txt(1242), mob->lv, mob->status.max_hp, base_exp, job_exp, MOB_HIT(mob), MOB_FLEE(mob)); //  Lv:%d  HP:%d  Base EXP:%u  Job EXP:%u  HIT:%d  FLEE:%d
 		clif_displaymessage(fd, atcmd_output);
 		sprintf(atcmd_output, msg_txt(1243), //  DEF:%d  MDEF:%d  STR:%d  AGI:%d  VIT:%d  INT:%d  DEX:%d  LUK:%d
 			mob->status.def, mob->status.mdef,mob->status.str, mob->status.agi,
@@ -6707,6 +6716,10 @@ ACMD_FUNC(mobinfo)
 				continue;
 			droprate = mob->dropitem[i].p;
 
+#ifdef RENEWAL_DROP
+			if( battle_config.atcommand_mobinfo_type )
+				droprate = droprate * pc_level_penalty_mod(sd, mob->lv, mob->status.race, mob->status.mode, 2) / 100;
+#endif
 			if (item_data->slot)
 				sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->jname, item_data->slot, (float)droprate / 100);
 			else
@@ -7221,7 +7234,13 @@ ACMD_FUNC(whodrops)
 
 			for (j=0; j < MAX_SEARCH && item_data->mob[j].chance > 0; j++)
 			{
-				sprintf(atcmd_output, "- %s (%02.02f%%)", mob_db(item_data->mob[j].id)->jname, item_data->mob[j].chance/100.);
+				int dropchance = item_data->mob[j].chance;
+
+#ifdef RENEWAL_DROP
+				if( battle_config.atcommand_mobinfo_type )
+					dropchance = dropchance * pc_level_penalty_mod(sd, mob_db(item_data->mob[j].id)->lv, mob_db(item_data->mob[j].id)->status.race, mob_db(item_data->mob[j].id)->status.mode, 2) / 100;
+#endif
+				sprintf(atcmd_output, "- %s (%02.02f%%)", mob_db(item_data->mob[j].id)->jname, dropchance/100.);
 				clif_displaymessage(fd, atcmd_output);
 			}
 		}
