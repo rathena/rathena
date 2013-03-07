@@ -603,7 +603,7 @@ OnTouch:
 	close;
 }
 
-dewata,233,263,8	script	Sweet Married Couple#dew1	828,2,3,{
+dewata,233,263,8	script	Sweet Married Couple#1	828,2,3,{
 OnTouch:
 	mes "[Sweet Husband]";
 	mes "You are the most beautiful thing in the world baby~";
@@ -623,7 +623,7 @@ OnTouch:
 	close;
 }
 
-dewata,234,263,8	script	Sweet Married Couple#dew2	727,2,3,{
+dewata,234,263,8	script	Sweet Married Couple#2	727,2,3,{
 OnTouch:
 	mes "[Sweet Wife]";
 	mes "Baby~ You know what flower that is~?";
@@ -822,7 +822,7 @@ OnTouch:
 	close;
 }
 
-dewata,278,281,4	script	Happily Married Grandpa#dew	534,{
+dewata,278,281,4	script	Happily Married Grandpa	534,{
 	mes "[Happily Married Grandpa]";
 	mes "Today, I should ask my lady to";
 	mes "cook me some ^006400fried rice^000000.";
@@ -838,7 +838,7 @@ dewata,278,281,4	script	Happily Married Grandpa#dew	534,{
 	close;
 }
 
-dewata,280,277,4	script	Happily Married Grandma#dew	535,{
+dewata,280,277,4	script	Happily Married Grandma	535,{
 	mes "[Happily Married Grandma]";
 	mes "In my younger days,";
 	mes "there were many gentleman callers";
@@ -929,7 +929,7 @@ dewata,181,88,6	script	Young Man#dew-2	536,{
 	mes "really beautiful?";
 	mes "The children always play";
 	mes "at this beach. It really";
-	mes "reminds me of my youth."
+	mes "reminds me of my youth.";
 	next;
 	mes "[Young Man]";
 	mes "At the evening, you can see";
@@ -1086,7 +1086,7 @@ dewata,127,248,6	script	Wishing Kid#dew	539,{
 	close;
 }
 
-dew_fild01,101,259,6	script	Jaty Tribe Gatekeeper#dew	541,{
+dew_fild01,101,259,6	script	Jaty Tribe Gatekeeper	541,{
 	mes "[Jaty Tribe Gatekeeper]";
 	mes "Welcome to ^FF0000Jaty^000000 town.";
 	mes "Our tribe reveres strength and bravery.";

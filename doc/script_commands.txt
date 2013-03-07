@@ -3887,7 +3887,7 @@ changing jobs, which can be checked for later in scripts.
 
 ---------------------------------------
 
-*jobname (<job number>)
+*jobname(<job number>)
 
 This command retrieves the name of the given job using the map_msg entries 550->655.
 
@@ -3897,7 +3897,7 @@ This command retrieves the name of the given job using the map_msg entries 550->
 
 ---------------------------------------
 
-*eaclass ({<job number>})
+*eaclass({<job number>})
 
 This commands returns the "eA job-number" corresponding to the given class, and
 uses the invoking player's class if none is given. The eA job-number is also a
@@ -3917,7 +3917,7 @@ For more information on the eA Job System, see the docs/ea_job_system.txt file.
 
 ---------------------------------------
 
-*roclass <job number> {,<gender>}
+*roclass(<job number>{,<gender>})
 
 Does the opposite of eaclass. That is, given an eA job-number, it returns the
 corresponding RO class number. A gender is required because both Bard and Dancers

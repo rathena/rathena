@@ -250,8 +250,8 @@ malangdo,175,145,4	script	Can Agency Guard	549,{
 			close;
 		}
 	}
-	delitem 12633,.@count; // Malang_Cat_Can
-	getitem 6422,.@count*3; // Egrade_Coin
+	delitem 12633,.@count; //Malang_Cat_Can
+	getitem 6422,.@count*3; //Egrade_Coin
 	mes "[Can Agency Guard]";
 	mes "Exchanged "+.@count+" Malangdo Cat Can to "+(.@count*3)+" E Class Coin. Check it out.";
 	close;
