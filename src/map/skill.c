@@ -661,6 +661,77 @@ int skillnotok_hom(uint16 skill_id, struct homun_data *hd)
 	    case MH_ANGRIFFS_MODUS:
 		if(hd->sc.data[SC_GOLDENE_FERSE])
 		    return 1;
+	    case MH_TINDER_BREAKER:
+	    case MH_CBC:
+	    case MH_EQC:
+	    case MH_SONIC_CRAW:
+	    case MH_SILVERVEIN_RUSH:
+	    case MH_MIDNIGHT_FRENZY: {
+		    struct status_change_entry *sce = hd->sc.data[SC_STYLE_CHANGE];
+		    TBL_PC *sd;
+		    if(!(sd=hd->master)) return 1; //we need a master
+		    if(!sce || !sce->val3){ //homon doesn't have status or it's not a combo
+			if(skill_id != MH_SONIC_CRAW && skill_id != MH_TINDER_BREAKER)
+			    return 1;
+		    }
+
+		    switch(skill_id){
+			case MH_SONIC_CRAW:
+			case MH_SILVERVEIN_RUSH:
+			case MH_TINDER_BREAKER:
+			case MH_CBC:
+			    if(!hd->homunculus.spiritball) {
+				clif_colormes(sd,COLOR_RED,"Homon need some spiritballs");
+				return 1;
+			    }
+			    break;
+
+			case MH_MIDNIGHT_FRENZY:
+			case MH_EQC:
+			    if(hd->homunculus.spiritball < 2) {
+				clif_colormes(sd,COLOR_RED,"Homon need at least 2 spiritballs");
+				return 1;
+			    }
+			    break;
+		    }
+
+		    switch(skill_id){
+			case MH_SONIC_CRAW:
+			case MH_SILVERVEIN_RUSH:
+			case MH_MIDNIGHT_FRENZY:
+			    if (!(sce->val1 == MH_MD_FIGHTING)){
+				    clif_colormes(sd,COLOR_RED,"Homon need to be in fighting mode to use that skill");
+				    return 1;
+			    }
+			    break;
+
+			case MH_TINDER_BREAKER:
+			case MH_CBC:
+			case MH_EQC:
+			    if (!(sce->val1 == MH_MD_GRAPPLING)){
+				    clif_colormes(sd,COLOR_RED,"Homon need to be in grappling mode to use that skill");
+				    return 1;
+			    }
+			    break;
+		    }
+
+		    //now let really be specific
+		    switch(skill_id){
+			case MH_TINDER_BREAKER:
+			    if(sce->val3 == MH_EQC && (gettick() - sce->val4 <= 2000)) break;
+			    else break; //im not a combo what should I do ??
+			case MH_CBC: if(sce->val3 == MH_TINDER_BREAKER && (gettick() - sce->val4 <= 2000)) break;
+			case MH_EQC: if(sce->val3 == MH_CBC && (gettick() - sce->val4 <= 2000)) break;
+
+			case MH_SONIC_CRAW:
+			    if(sce->val3 == MH_MIDNIGHT_FRENZY && (gettick() - sce->val4 <= 2000)) break;
+			    else break; //im not a combo what should I do ??
+			case MH_SILVERVEIN_RUSH: if(sce->val3 == MH_SONIC_CRAW && (gettick() - sce->val4 <= 2000)) break;
+			case MH_MIDNIGHT_FRENZY: if(sce->val3 == MH_SILVERVEIN_RUSH && (gettick() - sce->val4 <= 2000)) break;
+			default:
+			    return 1;
+		    }
+		}
 		break;
 	}
 
@@ -1405,6 +1476,12 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		break;
 	case MH_NEEDLE_OF_PARALYZE:
 		sc_start(bl, SC_PARALYSIS, 40 + (5*skill_lv), skill_lv, skill_get_time(skill_id, skill_lv));
+		break;
+	case MH_SILVERVEIN_RUSH:
+		sc_start4(bl,SC_STUN,20 + (5*skill_lv),skill_lv,src->id,0,0,skill_get_time(skill_id,skill_lv));
+		break;
+	case MH_MIDNIGHT_FRENZY:
+		sc_start4(bl,SC_FEAR,20 + (4*skill_lv),skill_lv,src->id,0,0,skill_get_time(skill_id,skill_lv));
 		break;
 	}
 
@@ -4627,19 +4704,67 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case MH_NEEDLE_OF_PARALYZE:
 		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
-        case MH_TINDER_BREAKER:
-                if (unit_movepos(src, bl->x, bl->y, 1, 1)) {
-#if PACKETVER >= 20111005
-			clif_snap(src, bl->x, bl->y);
-#else
-			clif_skill_poseffect(src,skill_id,skill_lv,bl->x,bl->y,tick);
-#endif
-		}
-                clif_skill_nodamage(src,bl,skill_id,skill_lv,
-			sc_start4(bl,SC_CLOSECONFINE2,100,skill_lv,src->id,0,0,skill_get_time(skill_id,skill_lv)));
-                skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-		break;
+	case MH_SONIC_CRAW:
+	case MH_TINDER_BREAKER:
+	case MH_MIDNIGHT_FRENZY:
+	case MH_SILVERVEIN_RUSH:
+	case MH_CBC:
+	case MH_EQC: {
+		TBL_HOM *hd = BL_CAST(BL_HOM,src);
+		int8 k=0;
+		int duration;
+		struct status_change_entry *sce;
+		struct block_list *tbl = NULL; //target
 
+		if(!hd){
+		    clif_colormes(sd,COLOR_RED,"Only homon are support this skill atm, can't used it by other");
+		    map_freeblock_unlock();
+		    return 1;
+		}
+		if(hd->sc.count && (sce=hd->sc.data[SC_STYLE_CHANGE])){
+		    //val1 = mode
+		    if(!sce->val2) sce->val2 = bl->id; //memo target (only sonic slaw and tinder should)
+		    tbl = map_id2bl(sce->val2);
+		    sce->val3 = skill_id;
+		    sce->val4 = gettick();
+		}
+		switch(skill_id){
+		    case MH_SONIC_CRAW: {
+			    int nb_sphere = hd->homunculus.spiritball;
+			    for(k=0; k<=nb_sphere; k++){ //attack for each sphere active
+				skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
+			    }
+	//		    hom_delspiritball(hd, nb_sphere, 0); //remove them all if we remove can't coninue combo
+			    break;
+		    }
+		    case MH_SILVERVEIN_RUSH:
+		    case MH_MIDNIGHT_FRENZY:
+			    hom_delspiritball(hd,skill_id==MH_SILVERVEIN_RUSH?1:2,0);
+			    skill_attack(skill_get_type(skill_id),src,src,tbl,skill_id,skill_lv,tick,flag);
+			    break;
+		    case MH_TINDER_BREAKER:
+			if (unit_movepos(src, bl->x, bl->y, 1, 1)) {
+#if PACKETVER >= 20111005
+				clif_snap(src, bl->x, bl->y);
+#else
+				clif_skill_poseffect(src,skill_id,skill_lv,bl->x,bl->y,tick);
+#endif
+			}
+
+		    case MH_CBC:
+		    case MH_EQC:
+			    duration = (status_get_str(src)*2 - status_get_str(bl))/10;//custom need real formula
+			    hom_delspiritball(hd,skill_id==MH_EQC?2:1,0); //only EQC consume 2 in grp 2
+			    if(skill_id==MH_TINDER_BREAKER)
+				sc_start2(src,status_skill2sc(skill_id),100,skill_lv,bl->id,duration);
+			    else
+				sc_start(bl,status_skill2sc(skill_id),100,skill_lv,duration);
+			    skill_attack(skill_get_type(skill_id),src,src,tbl,skill_id,skill_lv,tick,flag);
+			    //TODO add bonus for dmg SP ? on battle
+			    break;
+		}
+		break;
+	}
 	case 0:/* no skill - basic/normal attack */
 		if(sd) {
 			if (flag & 3){
@@ -9044,29 +9169,44 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		    if(sd) clif_send_homdata(sd, SP_INTIMATE, hd->homunculus.intimacy); //refresh intimacy info
 		}
 		//don't break need to start status and start block timer
-	case MH_STYLE_CHANGE:
+	case MH_STYLE_CHANGE: {
+	    struct status_change_entry *sce;
+	    if(hd && (sce=hd->sc.data[SC_STYLE_CHANGE])){ //in preparation for other bl usage
+		if(sce->val1 == MH_MD_FIGHTING) sce->val1 = MH_MD_GRAPPLING;
+		else sce->val1 = MH_MD_FIGHTING;
+		if(hd->master && hd->sc.data[SC_STYLE_CHANGE]) {
+		    int mode = hd->sc.data[SC_STYLE_CHANGE]->val1;
+		    char output[128];
+		    safesnprintf(output,sizeof(output),"Eleanor is now in %s mode",(sce->val1==MH_MD_FIGHTING?"fighthing":"grappling"));
+		    clif_colormes(hd->master,COLOR_RED,output);
+		}
+	    }
+	    break;
+	}
         case MH_MAGMA_FLOW:
         case MH_PAIN_KILLER:
            sc_start(bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
            if (hd)
                 skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
            break;
+
         case MH_SUMMON_LEGION:
             {
-                int summons[5] = {1004, 1303, 1303, 1994, 1994};
+                int summons[5] = {2158, 2159, 2159, 2160, 2160};
                 int qty[5] =     {3   , 3   , 4   , 4   , 5};
-                struct mob_data *md;
+                struct mob_data *sum_md;
                 int i;
 
                 for(i=0; i<qty[skill_lv - 1]; i++){ //easy way
-                    md = mob_once_spawn_sub(src, src->m, src->x, src->y, status_get_name(src), summons[skill_lv - 1], "", SZ_SMALL, AI_ATTACK);
-                    if (md) {
-                        md->master_id =  src->id;
-                        if (md->deletetimer != INVALID_TIMER)
-                            delete_timer(md->deletetimer, mob_timer_delete);
-                        md->deletetimer = add_timer(gettick() + skill_get_time(skill_id, skill_lv), mob_timer_delete, md->bl.id, 0);
-                        mob_spawn(md); //Now it is ready for spawning.
-                        sc_start4(&md->bl, SC_MODECHANGE, 100, 1, 0, MD_ASSIST, 0, 60000);
+                    sum_md = mob_once_spawn_sub(src, src->m, src->x, src->y, status_get_name(src), summons[skill_lv - 1], "", SZ_SMALL, AI_ATTACK);
+                    if (sum_md) {
+                        sum_md->master_id =  src->id;
+			sum_md->special_state.ai = 1;
+                        if (sum_md->deletetimer != INVALID_TIMER)
+                            delete_timer(sum_md->deletetimer, mob_timer_delete);
+                        sum_md->deletetimer = add_timer(gettick() + skill_get_time(skill_id, skill_lv), mob_timer_delete, sum_md->bl.id, 0);
+                        mob_spawn(sum_md); //Now it is ready for spawning.
+                        sc_start4(&sum_md->bl, SC_MODECHANGE, 100, 1, 0, MD_CANATTACK|MD_AGGRESSIVE, 0, 60000);
                     }
                 }
 		if (hd)
@@ -10951,7 +11091,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, uint16 skill
 
 		if( !group->state.song_dance && !map_getcell(src->m,ux,uy,CELL_CHKREACH) )
 			continue; // don't place skill units on walls (except for songs/dances/encores)
-		if( battle_config.skill_wall_check && skill_get_unit_flag(skill_id)&UF_PATHCHECK && !path_search_long(NULL,src->m,ux,uy,x,y,CELL_CHKWALL) )
+		if( battle_config.skill_wall_check && unit_flag&UF_PATHCHECK && !path_search_long(NULL,src->m,ux,uy,x,y,CELL_CHKWALL) )
 			continue; // no path between cell and center of casting.
 
 		switch( skill_id )
@@ -11014,7 +11154,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, uint16 skill
 				val2 = unit_flag&(UF_DANCE|UF_SONG); //Store whether this is a song/dance
 			break;
 		}
-		if (skill_get_unit_flag(skill_id) & UF_RANGEDSINGLEUNIT && i == (layout->count / 2))
+		if (unit_flag&UF_RANGEDSINGLEUNIT && i == (layout->count / 2))
 			val2 |= UF_RANGEDSINGLEUNIT; // center.
 
 		if( range <= 0 )
@@ -13221,16 +13361,6 @@ int skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id
 			return 0;
 		}
 		break;
-	case ST_MH_FIGHTING:
-		if (!(sc && sc->data[SC_STYLE_CHANGE] && sc->data[SC_STYLE_CHANGE]->val2 == MH_MD_FIGHTING)){
-			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-			return 0;
-		}
-	case ST_MH_GRAPPLING:
-		if (!(sc && sc->data[SC_STYLE_CHANGE] && sc->data[SC_STYLE_CHANGE]->val2 == MH_MD_GRAPPLING)){
-			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-			return 0;
-		}
 	case ST_PECO:
 		if(!pc_isriding(sd)) {
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
@@ -13372,7 +13502,6 @@ int skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id, 
 			}
 			break;
 	}
-
 	status = &sd->battle_status;
 
 	require = skill_get_requirement(sd,skill_id,skill_lv);
@@ -13863,7 +13992,9 @@ int skill_vfcastfix (struct block_list *bl, double time, uint16 skill_id, uint16
 	if( time < 0 )
 		return 0;
 
-	if( fixed == 0 ){
+	if(bl->type == BL_MOB)
+	    fixed = 0; //mob as no fixed time
+	else if( fixed == 0 ){
 		fixed = (int)time * 20 / 100; // fixed time
 		time = time * 80 / 100; // variable time
 	}else if( fixed < 0 ) // no fixed cast time
@@ -17684,8 +17815,6 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	else if( strcmpi(split[10],"elementalspirit")     == 0 ) skill_db[idx].state = ST_ELEMENTALSPIRIT;
 	else if( strcmpi(split[10],"poisonweapon")        == 0 ) skill_db[idx].state = ST_POISONINGWEAPON;
 	else if( strcmpi(split[10],"rollingcutter")       == 0 ) skill_db[idx].state = ST_ROLLINGCUTTER;
-	else if( strcmpi(split[10],"mh_fighting")         == 0 ) skill_db[idx].state = ST_MH_FIGHTING;
-	else if( strcmpi(split[10],"mh_grappling")        == 0 ) skill_db[idx].state = ST_MH_GRAPPLING;
 	else if( strcmpi(split[10],"peco")                == 0 ) skill_db[idx].state = ST_PECO;
 	/**
 	 * Unknown or no state

@@ -1201,7 +1201,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 		if( sc->data[SC__DEADLYINFECT] && damage > 0 && rnd()%100 < 65 + 5 * sc->data[SC__DEADLYINFECT]->val1 )
 			status_change_spread(src, bl);
                 if (sc->data[SC_STYLE_CHANGE] && rnd()%2) {
-                    TBL_HOM *hd = BL_CAST(BL_HOM,bl);
+                    TBL_HOM *hd = BL_CAST(BL_HOM,src);
                     if (hd) hom_addspiritball(hd, 10);
                 }
 	}
@@ -2113,12 +2113,12 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 						sd->inventory_data[index] &&
 						sd->inventory_data[index]->type == IT_WEAPON)
 						wd.damage = sd->inventory_data[index]->weight*8/100; //80% of weight
-					
+
 					ATK_ADDRATE(50*skill_lv); //Skill modifier applies to weight only.
 				} else {
 					wd.damage = battle_calc_base_damage(sstatus, &sstatus->rhw, sc, tstatus->size, sd, i); //Monsters have no weight and use ATK instead
 				}
-				
+
 				i = sstatus->str/10;
 				i*=i;
 				ATK_ADD(i); //Add str bonus.
@@ -2973,7 +2973,16 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					skillratio += 400 + 100 * skill_lv;
 					break;
 				case MH_LAVA_SLIDE:
-					skillratio = 70 * skill_lv;
+					skillratio += -100 + 70 * skill_lv;
+					break;
+				case MH_SONIC_CRAW:
+					skillratio += -100 + 40 * skill_lv;
+					break;
+				case MH_SILVERVEIN_RUSH:
+					skillratio += -100 + 150 * skill_lv;
+					break;
+				case MH_MIDNIGHT_FRENZY:
+					skillratio += -100 + 300 * skill_lv;
 					break;
 				case MH_TINDER_BREAKER:
 				case MH_MAGMA_FLOW:
@@ -4090,14 +4099,14 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 100 * skill_lv;
 						break;
 					case MH_XENO_SLASHER:
-					    if(skill_lv%2) skillratio += 350 + 50 * skill_lv; //500:600:700
-					    else skillratio += 400 + 100 * skill_lv; //700:900
-					    break;
+						if(skill_lv%2) skillratio += 350 + 50 * skill_lv; //500:600:700
+						else skillratio += 400 + 100 * skill_lv; //700:900
+						break;
 					case MH_HEILIGE_STANGE:
-					    skillratio += 400 + 250 * skill_lv;
-					    break;
+						skillratio += 400 + 250 * skill_lv;
+						break;
 					case MH_POISON_MIST:
-					    skillratio += 100 * skill_lv;
+						skillratio += 100 * skill_lv;
 						break;
 				}
 

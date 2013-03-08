@@ -3853,7 +3853,7 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount,e_l
 			}
 		}
 	}
-	
+
 	if( i >= MAX_INVENTORY )
 	{
 		i = pc_search_inventory(sd,0);
@@ -6924,7 +6924,7 @@ int pc_readparam(struct map_session_data* sd,int type)
 		case SP_DEFELE:		     val = sd->battle_status.def_ele; break;
 #ifndef RENEWAL_CAST
 		case SP_VARCASTRATE:
-#endif	
+#endif
 		case SP_CASTRATE:
 				val = sd->castrate+=val;
 			break;
@@ -7390,7 +7390,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 		/* going off star glad lineage, reset feel to not store no-longer-used vars in the database */
 		pc_resetfeel(sd);
 	}
-	
+
 	sd->status.class_ = job;
 	fame_flag = pc_famerank(sd->status.char_id,sd->class_&MAPID_UPPERMASK);
 	sd->class_ = (unsigned short)b_class;

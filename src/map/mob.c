@@ -2554,11 +2554,13 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	if( !rebirth ) { // Only trigger event on final kill
 		md->status.hp = 0; //So that npc_event invoked functions KNOW that mob is dead
 		if( src ) {
-			switch( src->type ) {
-				case BL_PET: sd = ((TBL_PET*)src)->msd; break;
-				case BL_HOM: sd = ((TBL_HOM*)src)->master; break;
-				case BL_MER: sd = ((TBL_MER*)src)->master; break;
-				case BL_ELEM: sd = ((TBL_ELEM*)src)->master; break;
+			switch( src->type ) { //allowed type
+				case BL_PET:
+				case BL_HOM:
+				case BL_MER:
+				case BL_ELEM:
+				case BL_MOB:
+				    sd = BL_CAST(BL_PC,battle_get_master(src));
 			}
 		}
 

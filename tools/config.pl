@@ -29,7 +29,7 @@ use constant {
     MAX_PORT => 65535,
 };
 BEGIN { #check and install module
-    my @aCheckModule = ("DBI","DBD::mysql","YAML::XS","Cwd","Getopt::Long","Net::Ping");
+    my @aCheckModule = ("File::Basename","DBI","DBD::mysql","YAML","YAML::XS","Cwd","Getopt::Long","Net::Ping");
     my @aMarkInst = ();
     foreach(@aCheckModule) { eval "require $_" or push(@aMarkInst,$_); }
     CPAN::install("@aMarkInst") if(@aMarkInst > 0);
@@ -78,6 +78,8 @@ sub GetArgs {
 }
 
 sub Main {
+    my($filename, $dir, $suffix) = fileparse($0);
+    chdir $dir; #put ourself like was called in tools
     print "Welcome to athena config-tool\n";
     #default conf
     my %hDefConf = (    SERV_UID => "s1",
@@ -135,7 +137,7 @@ sub InstallSoft {
 	system("cd /usr/ports/databases/mysql55-server && make install clean");
 	#other utils ?
 	system("cd /usr/ports/www/wget && make install clean");
-	system("cd /usr/ports/archivers/unrar && make install clean")
+	system("cd /usr/ports/archivers/unrar && make install clean");
     }
 }
 

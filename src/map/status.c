@@ -509,9 +509,9 @@ void initChangeTables(void) {
 	set_sc(MH_PAIN_KILLER, SC_PAIN_KILLER, SI_PAIN_KILLER, SCB_ASPD);
 
 	add_sc(MH_STYLE_CHANGE, SC_STYLE_CHANGE);
-        set_sc( MH_TINDER_BREAKER      , SC_CLOSECONFINE2   , SI_CLOSECONFINE2   , SCB_NONE );
-	set_sc( MH_TINDER_BREAKER      , SC_CLOSECONFINE    , SI_CLOSECONFINE    , SCB_FLEE );
-
+	set_sc(MH_TINDER_BREAKER, SC_TINDER_BREAKER, SI_TINDER_BREAKER, SCB_FLEE);
+	set_sc(MH_CBC, SC_CBC, SI_CBC, SCB_FLEE);
+	set_sc(MH_EQC, SC_EQC, SI_EQC, SCB_DEF2|SCB_BATK);
 
 	add_sc( MER_CRASH            , SC_STUN            );
 	set_sc( MER_PROVOKE          , SC_PROVOKE         , SI_PROVOKE         , SCB_DEF|SCB_DEF2|SCB_BATK|SCB_WATK );
@@ -647,7 +647,7 @@ void initChangeTables(void) {
 	set_sc( SC_STRIPACCESSARY    , SC__STRIPACCESSORY , SI_STRIPACCESSARY  , SCB_DEX|SCB_INT|SCB_LUK );
 	set_sc_with_vfx( SC_MANHOLE           , SC__MANHOLE        , SI_MANHOLE         , SCB_NONE );
 	add_sc( SC_CHAOSPANIC        , SC_CONFUSION );
-	set_sc_with_vfx( SC_BLOODYLUST        , SC__BLOODYLUST     , SI_BLOODYLUST      , SCB_DEF | SCB_DEF2 | SCB_MDEF | SCB_MDEF2 | SCB_FLEE | SCB_SPEED | SCB_ASPD | SCB_MAXHP | SCB_REGEN );
+	set_sc_with_vfx( SC_BLOODYLUST        , SC__BLOODYLUST     , SI_BERSERK      , SCB_DEF | SCB_DEF2 | SCB_MDEF | SCB_MDEF2 | SCB_FLEE | SCB_SPEED | SCB_ASPD | SCB_MAXHP | SCB_REGEN );
 	/**
 	 * Sura
 	 **/
@@ -4563,6 +4563,8 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 		batk += batk * sc->data[SC_BEYONDOFWARCRY]->val3/100;
 	if( sc->data[SC_ZANGETSU] )
 		batk += batk * sc->data[SC_ZANGETSU]->val2 / 100;
+	if(sc->data[SC_EQC])
+		batk -= batk * sc->data[SC_EQC]->val3 / 100;
 
 	return (unsigned short)cap_value(batk,0,USHRT_MAX);
 }
@@ -5014,6 +5016,8 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 	}
 	if (sc->data[SC_PARALYSIS])
 		def2 -= def2 * sc->data[SC_PARALYSIS]->val2 / 100;
+	if(sc->data[SC_EQC])
+		def2 -= def2 * sc->data[SC_EQC]->val2 / 100;
 
 #ifdef RENEWAL
 	return (short)cap_value(def2,SHRT_MIN,SHRT_MAX);
@@ -5835,7 +5839,7 @@ struct status_data *status_get_base_status(struct block_list *bl)
 		case BL_HOM: return &((TBL_HOM*)bl)->base_status;
 		case BL_MER: return &((TBL_MER*)bl)->base_status;
 		case BL_ELEM: return &((TBL_ELEM*)bl)->base_status;
-		case BL_NPC:  return ((mobdb_checkid(((TBL_NPC*)bl)->class_) == 0) ? &((TBL_NPC*)bl)->status : NULL); 
+		case BL_NPC:  return ((mobdb_checkid(((TBL_NPC*)bl)->class_) == 0) ? &((TBL_NPC*)bl)->status : NULL);
 		default:
 			return NULL;
 	}
@@ -5853,8 +5857,8 @@ defType status_get_def(struct block_list *bl) {
 
 unsigned short status_get_speed(struct block_list *bl)
 {
-	if(bl->type==BL_NPC)//Only BL with speed data but no status_data [Skotlex] 
-		return ((struct npc_data *)bl)->speed; 
+	if(bl->type==BL_NPC)//Only BL with speed data but no status_data [Skotlex]
+		return ((struct npc_data *)bl)->speed;
 	return status_get_status_data(bl)->speed;
 }
 
@@ -6338,8 +6342,8 @@ int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int ti
 		tick -= 30*status->int_;
 		break;
         case SC_PARALYSIS:
-            tick -= 50 * (status->vit + status->luk); //(1000/20);
-            break;
+		tick -= 50 * (status->vit + status->luk); //(1000/20);
+		break;
 	default:
 		//Effect that cannot be reduced? Likely a buff.
 		if (!(rnd()%10000 < rate))
@@ -6838,7 +6842,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			case SC_ROKISWEIL:
 			case SC_FOGWALL:
 			case SC_FREEZING:
-			case SC_BURNING: 
+			case SC_BURNING:
 			case SC_MARSHOFABYSS:
 			case SC_ADORAMUS:
 			case SC_PARALYSIS:
@@ -8643,9 +8647,24 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			    break;
                         case SC_STYLE_CHANGE: //[Lighta] need real info
                             tick = -1;
-                            if(val2 == MH_MD_FIGHTING) val2 = MH_MD_GRAPPLING;
-                            else val2 = MH_MD_FIGHTING;
                             break;
+			case SC_CBC:
+			    val2 = 10; //hp % dmg [not sure]
+			    val3 = 10; //sp % dmg [not sure]
+			    tick = max(tick,5000); //min 5s (test)
+			    val4 = tick/1000; //dmg each sec
+			    tick = 1000;
+			    break;
+			case SC_EQC:
+			    val2 = 25; //def % reduc [not sure]
+			    val3 = 25; //atk % reduc [not sure]
+			    tick = max(tick,5000); //min 5s (test)
+			    break;
+			case SC_TINDER_BREAKER:
+			    //val1 = skilllv
+			    //val2 = src->id
+			    tick = max(tick,5000); //min 5s (test)
+			    break;
 		default:
 			if( calc_flag == SCB_NONE && StatusSkillChangeTable[type] == 0 && StatusIconChangeTable[type] == 0 )
 			{	//Status change with no calc, no icon, and no skill associated...?
@@ -8957,9 +8976,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_MERC_SPUP:
 			status_percent_heal(bl, 0, 100); // Recover Full SP
 			break;
-		/**
-		 * Ranger
-		 **/
 		case SC_WUGDASH:
 			{
 				struct unit_data *ud = unit_bl2ud(bl);
@@ -9005,6 +9021,12 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			break;
 		case SC_RAISINGDRAGON:
 			sce->val2 = status->max_hp / 100;// Officially tested its 1%hp drain. [Jobbie]
+			break;
+		case SC_TINDER_BREAKER:
+			sc_start2(map_id2bl(val2),SC_CLOSECONFINE2,100,val1,bl->id,tick);
+			break;
+		case SC_EQC:
+			status_change_end(bl,SC_TINDER_BREAKER,INVALID_TIMER);
 			break;
 	}
 
@@ -9377,6 +9399,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 					skill_castend_damage_id(src, bl, sce->val2, sce->val1, gettick(), SD_LEVEL );
 			}
 			break;
+		case SC_TINDER_BREAKER:
 		case SC_CLOSECONFINE2:
 			{
 				struct block_list *src = sce->val2?map_id2bl(sce->val2):NULL;
@@ -10660,6 +10683,15 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			return 0;
 		}
 		break;
+	case SC_CBC:
+	    if(--(sce->val4) >= 0) { //drain hp/sp
+		int hp = (status->max_hp * sce->val2) / 100;
+		int sp = (status->max_sp * sce->val3) / 100;
+		if( !status_charge(bl,hp,sp) ) break;
+		sc_timer_next(1000+tick,status_change_timer,bl->id, data);
+		return 0;
+	    }
+	    break;
 	}
 
 	// default for all non-handled control paths is to end the status
