@@ -131,6 +131,10 @@ struct char_session_data {
 	uint8 clienttype;
 	char new_name[NAME_LENGTH];
 	char birthdate[10+1];  // YYYY-MM-DD
+	char pincode[4+1];
+	uint16 pincode_seed;
+	time_t pincode_change;
+	uint16 pincode_try;
 };
 
 int max_connect_user = -1;
@@ -140,6 +144,27 @@ int start_zeny = 0;
 int start_weapon = 1201;
 int start_armor = 2301;
 int guild_exp_rate = 100;
+
+// Pincode system
+#define PINCODE_OK 0
+#define PINCODE_ASK 1
+#define PINCODE_NOTSET 2
+#define PINCODE_EXPIRED 3
+#define PINCODE_UNUSED 7
+#define	PINCODE_WRONG 8
+
+int pincode_enabled = PINCODE_OK; // PINCODE_OK = off, PINCODE_ASK = on
+int pincode_changetime = 0;
+int pincode_maxtry = 3;
+
+void pincode_check( int fd, struct char_session_data* sd );
+void pincode_change( int fd, struct char_session_data* sd );
+void pincode_setnew( int fd, struct char_session_data* sd );
+void pincode_sendstate( int fd, struct char_session_data* sd, uint16 state );
+void pincode_notifyLoginPinUpdate( int account_id, char* pin );
+void pincode_notifyLoginPinError( int account_id );
+void pincode_decrypt( unsigned long userSeed, char* pin );
+int pincode_compare( int fd, struct char_session_data* sd, char* pin );
 
 //Custom limits for the fame lists. [Skotlex]
 int fame_list_size_chemist = MAX_FAME_LIST;
@@ -2147,7 +2172,7 @@ int parse_fromlogin(int fd) {
 		break;
 
 		case 0x2717: // account data
-			if (RFIFOREST(fd) < 63)
+			if (RFIFOREST(fd) < 72)
 				return 0;
 
 			// find the authenticated session with this account id
@@ -2165,6 +2190,8 @@ int parse_fromlogin(int fd) {
 				} else if ( !sd->char_slots )/* no value aka 0 in sql */
 					sd->char_slots = MAX_CHARS;/* cap to maximum */
 				safestrncpy(sd->birthdate, (const char*)RFIFOP(fd,52), sizeof(sd->birthdate));
+				safestrncpy(sd->pincode, (const char*)RFIFOP(fd,63), sizeof(sd->pincode));
+				sd->pincode_change = (time_t)RFIFOL(fd,68);
 				ARR_FIND( 0, ARRAYLENGTH(server), server_id, server[server_id].fd > 0 && server[server_id].map[0] );
 				// continued from char_auth_ok...
 				if( server_id == ARRAYLENGTH(server) || //server not online, bugreport:2359
@@ -2179,18 +2206,28 @@ int parse_fromlogin(int fd) {
 					// send characters to player
 					mmo_char_send006b(i, sd);
 #if PACKETVER >=  20110309
-					// PIN code system, disabled
-					WFIFOHEAD(i, 12);
-					WFIFOW(i, 0) = 0x08B9;
-					WFIFOW(i, 2) = 0;
-					WFIFOW(i, 4) = 0;
-					WFIFOL(i, 6) = sd->account_id;
-					WFIFOW(i, 10) = 0;
-					WFIFOSET(i, 12);
+					if( pincode_enabled ){
+						// PIN code system enabled
+						if( strlen( sd->pincode ) <= 0 ){
+							// No PIN code has been set yet
+							pincode_sendstate( i, sd, PINCODE_UNUSED );
+						}else{
+							if( !pincode_changetime || sd->pincode_change > time(NULL) ){
+								// Ask user for his PIN code
+								pincode_sendstate( i, sd, PINCODE_ASK );
+							}else{
+								// User hasnt changed his PIN code too long
+								pincode_sendstate( i, sd, PINCODE_EXPIRED );
+							}
+						}
+					}else{
+						// PIN code system, disabled
+						pincode_sendstate( i, sd, PINCODE_OK );
+					}
 #endif
 				}
 			}
-			RFIFOSKIP(fd,63);
+			RFIFOSKIP(fd,72);
 		break;
 
 		// login-server alive packet
@@ -4188,6 +4225,58 @@ int parse_char(int fd)
 		}
 		return 0; // avoid processing of followup packets here
 
+		// checks the entered pin
+		case 0x8b8:
+			if( RFIFOREST(fd) < 10 )
+				return 0;
+
+			if( RFIFOL(fd,2) != sd->account_id )
+				break;
+
+			pincode_check( fd, sd );
+
+			RFIFOSKIP(fd,10);
+		break;
+
+		// request for PIN window
+		case 0x8c5:
+			if( RFIFOREST(fd) < 6 )
+				return 0;
+
+			if( RFIFOL(fd,2) != sd->account_id )
+				break;
+
+			pincode_sendstate( fd, sd, PINCODE_NOTSET );
+
+			RFIFOSKIP(fd,6);
+		break;
+
+		// pincode change request
+		case 0x8be:
+			if( RFIFOREST(fd) < 14 )
+				return 0;
+
+			if( RFIFOL(fd,2) != sd->account_id )
+				break;
+
+			pincode_change( fd, sd );
+
+			RFIFOSKIP(fd,14);
+		break;
+
+		// activate PIN system and set first PIN
+		case 0x8ba:
+			if( RFIFOREST(fd) < 10 )
+				return 0;
+
+			if( RFIFOL(fd,2) != sd->account_id )
+				break;
+
+			pincode_setnew( fd, sd );
+
+			RFIFOSKIP(fd,10);
+		break;
+
 		// unknown packet received
 		default:
 			ShowError("parse_char: Received unknown packet "CL_WHITE"0x%x"CL_RESET" from ip '"CL_WHITE"%s"CL_RESET"'! Disconnecting!\n", RFIFOW(fd,0), ip2str(ipl, NULL));
@@ -4366,6 +4455,120 @@ int check_connect_login_server(int tid, unsigned int tick, int id, intptr_t data
 	WFIFOSET(login_fd,86);
 
 	return 1;
+}
+
+//------------------------------------------------
+//Pincode system
+//------------------------------------------------
+void pincode_check( int fd, struct char_session_data* sd ){
+	char pin[5] = "\0\0\0\0";
+	strncpy((char*)pin, (char*)RFIFOP(fd, 6), 4+1);
+
+	pincode_decrypt(sd->pincode_seed, pin );
+
+	if( pincode_compare( fd, sd, pin ) ){
+		pincode_sendstate( fd, sd, PINCODE_OK );
+	}
+}
+
+int pincode_compare( int fd, struct char_session_data* sd, char* pin ){
+	if( strcmp( sd->pincode, pin ) == 0 ){
+		sd->pincode_try = 0;
+		return 1;
+	}else{
+		pincode_sendstate( fd, sd, PINCODE_WRONG );
+
+		if( pincode_maxtry && ++sd->pincode_try >= pincode_maxtry ){
+			pincode_notifyLoginPinError( sd->account_id );
+		}
+
+		return 0;
+	}
+}
+
+void pincode_change( int fd, struct char_session_data* sd ){
+	char oldpin[5] = "\0\0\0\0";
+	char newpin[5] = "\0\0\0\0";
+
+	strncpy(oldpin, (char*)RFIFOP(fd,6), 4+1);
+	pincode_decrypt(sd->pincode_seed,oldpin);
+
+	if( !pincode_compare( fd, sd, oldpin ) )
+		return;
+
+	strncpy(newpin, (char*)RFIFOP(fd,10), 4+1);
+	pincode_decrypt(sd->pincode_seed,newpin);
+
+	pincode_notifyLoginPinUpdate( sd->account_id, newpin );
+
+	pincode_sendstate( fd, sd, PINCODE_OK );
+}
+
+void pincode_setnew( int fd, struct char_session_data* sd ){
+	char newpin[5] = "\0\0\0\0";
+
+	strncpy(newpin, (char*)RFIFOP(fd,6), 4+1);
+	pincode_decrypt(sd->pincode_seed,newpin);
+
+	pincode_notifyLoginPinUpdate( sd->account_id, newpin );
+
+	pincode_sendstate( fd, sd, PINCODE_OK );
+}
+
+// 0 = disabled / pin is correct
+// 1 = ask for pin - client sends 0x8b8
+// 2 = create new pin - client sends 0x8ba
+// 3 = pin must be changed - client 0x8be
+// 4 = create new pin ?? - client sends 0x8ba
+// 5 = client shows msgstr(1896)
+// 6 = client shows msgstr(1897) Unable to use your KSSN number
+// 7 = char select window shows a button - client sends 0x8c5
+// 8 = pincode was incorrect
+void pincode_sendstate( int fd, struct char_session_data* sd, uint16 state ){
+	WFIFOHEAD(fd, 12);
+	WFIFOW(fd, 0) = 0x8b9;
+	WFIFOL(fd, 2) = sd->pincode_seed = rand() % 0xFFFF;
+	WFIFOL(fd, 6) = sd->account_id;
+	WFIFOW(fd,10) = state;
+	WFIFOSET(fd,12);
+}
+
+void pincode_notifyLoginPinUpdate( int account_id, char* pin ){
+	WFIFOHEAD(login_fd,15);
+	WFIFOW(login_fd,0) = 0x2738;
+	WFIFOL(login_fd,2) = account_id;
+	strncpy( (char*)WFIFOP(login_fd,6), pin, 5 );
+	WFIFOL(login_fd,11) = pincode_changetime;
+	WFIFOSET(login_fd,15);
+}
+
+void pincode_notifyLoginPinError( int account_id ){
+	WFIFOHEAD(login_fd,6);
+	WFIFOW(login_fd,0) = 0x2739;
+	WFIFOL(login_fd,2) = account_id;
+	WFIFOSET(login_fd,6);
+}
+
+void pincode_decrypt( unsigned long userSeed, char* pin ){
+	int i, pos;
+	char tab[10] = {0,1,2,3,4,5,6,7,8,9};
+	unsigned long multiplier = 0x3498, baseSeed = 0x881234;
+
+	for( i = 1; i < 10; i++ ){
+		userSeed = baseSeed + userSeed * multiplier;
+		pos = userSeed % (i + 1);
+		if( i != pos ){
+			tab[i] ^= tab[pos];
+			tab[pos] ^= tab[i];
+			tab[i] ^= tab[pos];
+		}
+	}
+	
+	for( i = 0; i < 4; i++ ){
+		pin[i] = tab[pin[i]- '0'];
+	}
+
+	sprintf(pin, "%d%d%d%d", pin[0], pin[1], pin[2], pin[3]);
 }
 
 //------------------------------------------------
@@ -4691,6 +4894,12 @@ int char_config_read(const char* cfgName)
 			}
 		} else if (strcmpi(w1, "guild_exp_rate") == 0) {
 			guild_exp_rate = atoi(w2);
+		} else if (strcmpi(w1, "pincode_enabled") == 0) {
+			pincode_enabled = atoi(w2);
+		} else if (strcmpi(w1, "pincode_changetime") == 0) {
+			pincode_changetime = atoi(w2);
+		} else if (strcmpi(w1, "pincode_maxtry") == 0) {
+			pincode_maxtry = atoi(w2);
 		} else if (strcmpi(w1, "import") == 0) {
 			char_config_read(w2);
 		}
