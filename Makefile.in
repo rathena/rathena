@@ -2,13 +2,12 @@
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
-	ALL_DEPENDS=common_sql login_sql char_sql map_sql tools import
+	ALL_DEPENDS=sql tools
 	SQL_DEPENDS=common_sql login_sql char_sql map_sql import
 	COMMON_SQL_DEPENDS=mt19937ar libconfig
 	LOGIN_SQL_DEPENDS=mt19937ar libconfig common_sql
 	CHAR_SQL_DEPENDS=mt19937ar libconfig common_sql
 	MAP_SQL_DEPENDS=mt19937ar libconfig common_sql
-	CONVERTERS_DEPENDS=common_sql
 else
 	ALL_DEPENDS=needs_mysql
 	SQL_DEPENDS=needs_mysql
@@ -20,7 +19,7 @@ endif
 
 
 #####################################################################
-.PHONY: sql  \
+.PHONY: all sql  \
 	common_sql \
 	mt19937ar \
 	login_sql \
@@ -29,7 +28,8 @@ endif
 	tools \
 	import \
 	test \
-	clean help
+	clean help \
+	install uninstall bin-clean \
 
 all: $(ALL_DEPENDS)
 
@@ -37,12 +37,6 @@ sql: $(SQL_DEPENDS)
 
 common_sql: $(COMMON_SQL_DEPENDS)
 	@$(MAKE) -C src/common sql
-
-mt19937ar:
-	@$(MAKE) -C 3rdparty/mt19937ar
-
-libconfig:
-	@$(MAKE) -C 3rdparty/libconfig
 
 login_sql: $(LOGIN_SQL_DEPENDS)
 	@$(MAKE) -C src/login sql
@@ -52,6 +46,12 @@ char_sql: $(CHAR_SQL_DEPENDS)
 
 map_sql: $(MAP_SQL_DEPENDS)
 	@$(MAKE) -C src/map sql
+
+mt19937ar:
+	@$(MAKE) -C 3rdparty/mt19937ar
+
+libconfig:
+	@$(MAKE) -C 3rdparty/libconfig
 
 tools:
 	@$(MAKE) -C src/tool
@@ -94,46 +94,22 @@ help:
 	@echo "                'map_sql' and 'import')"
 	@echo "'test'        - builds tests"
 	@echo "'clean'       - cleans builds and objects"
+	@echo "'install'     - run installer wich setup rathena in /opt/"
+	@echo "'bin-clean'   - delete binary installed"
+	@echo "'uninstall'   - run uninstaller wich erase all install change"
 	@echo "'help'        - outputs this message"
-
-#####################################################################
 
 needs_mysql:
 	@echo "MySQL not found or disabled by the configure script"
 	@exit 1
 
-#####################################################################
-# TODO
-
-install:	conf/%.conf conf/%.txt
-	$(shell read -p "WARNING: This target does not work properly yet. Press Ctrl+C to cancel or Enter to continue.")
-	$(shell mkdir -p /opt/rathena/bin/)
-	$(shell mkdir -p /opt/rathena/etc/rathena/)
-	$(shell mkdir -p /opt/rathena/var/log/rathena/)
-	$(shell mv save /opt/rathena/etc/rathena/save)
-	$(shell mv db /opt/rathena/etc/rathena/db)
-	$(shell mv conf /opt/rathena/etc/rathena/conf)
-	$(shell mv npc /opt/rathena/etc/rathena/npc)
-	$(shell mv log/* /opt/rathena/var/log/rathena/)
-	$(shell cp *-server* /opt/rathena/bin/)
-	$(shell ln -s /opt/rathena/etc/rathena/save/ /opt/rathena/bin/)
-	$(shell ln -s /opt/rathena/etc/rathena/db/ /opt/rathena/bin/)
-	$(shell ln -s /opt/rathena/etc/rathena/conf/ /opt/rathena/bin/)
-	$(shell ln -s /opt/rathena/etc/rathena/npc/ /opt/rathena/bin/)
-	$(shell ln -s /opt/rathena/var/log/rathena/ /opt/rathena/bin/log)
+install:
+	@sh ./install.sh
 
 bin-clean:
-	$(shell rm /opt/rathena/bin/login-server*)
-	$(shell rm /opt/rathena/bin/char-server*)
-	$(shell rm /opt/rathena/bin/map-server*)
+	@sh ./uninstall.sh bin
 
 uninstall:
-	$(shell read -p "WARNING: This target does not work properly yet. Press Ctrl+C to cancel or Enter to continue.")
-	bin-clean
-	$(shell rm /opt/rathena/bin/save)
-	$(shell rm /opt/rathena/bin/db)
-	$(shell rm /opt/rathena/bin/conf)
-	$(shell rm /opt/rathena/bin/npc)
-	$(shell rm /opt/rathena/bin/log)
-	$(shell rm -rf /opt/rathena/etc/rathena)
-	$(shell rm -rf /opt/rathena/var/log/rathena)
+	@sh ./uninstall.sh all
+
+#####################################################################

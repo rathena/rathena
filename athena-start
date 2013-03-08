@@ -1,72 +1,119 @@
 #!/bin/sh
-# athena starting script by rowla
-# modified by shazeya@syafi.com (NL101541)
+
+#source var/function
+. ./function.sh
+inst_launch_workaround
 
 PATH=./:$PATH
-
-L_SRV=login-server_sql
-C_SRV=char-server_sql
-M_SRV=map-server_sql
-
 print_start() {
-#    more << EOF
-echo "Athena Starting..."
-echo "            (c) 2003 Athena Project"
-echo "              modified by shazeya@syafi.com"
-echo ""
-#echo "Debug informations will appear,"
-#echo "since this is a test release."
-#echo ""
-echo "checking..."
-#EOF
+  #    more << EOF
+  echo "Athena Starting..."
+  echo "            (c) 2013 rAthena Project"
+  echo ""
+  echo ""
+  echo "checking..."
+  #EOF
 }
 
-check_files() {
+get_status(){
+   PIDFILE=.$1.pid
+   if [ -e ${PIDFILE} ]; then
+    ISRUN=$(ps ax | grep $(cat ${PIDFILE}) | grep $1)
+    PSRUN=$(echo "$ISRUN" | awk '{ print substr( $0, 0, 7) }')
+   fi
+   return $PSRUN
+}
 
-    for i in ${L_SRV} ${C_SRV} ${M_SRV}
+#cheking if already started, launch and mark in log
+start_serv(){ 
+  LOGFILE="log/$1.log"
+  get_status $1
+  echo "My logfile=${LOGFILE}"
+  if [ -z ${PSRUN} ]; then
+    exec ./$1&
+    echo $! > .$1.pid
+    echo "Server '$1' started at `date +"%m-%d-%H:%M-%S"`"
+    echo "Server '$1' started at `date +"%m-%d-%H:%M-%S"`" >> ${LOGFILE}
+  else
+    echo "Can't start '$1', cause is already running p${PSRUN}"
+    echo "Can't start '$1', cause is already running p${PSRUN}" >> ${LOGFILE}
+  fi
+}
+
+#experimental
+watch_serv(){
+  LOGFILE=./log/$1.log
+  ulimit -Sc unlimited
+
+  while true; do
+   get_status $1
+   if [ -z ${PSRUN} ]; then
+     $count=$count+1
+     echo "server '$1' is down" >> ${LOGFILE}
+     echo "restarting server at time at `date +"%m-%d-%H:%M-%S"`">> ${LOGFILE}
+     exec ./$1&
+     echo $! > .$1.pid   
+     if [ $3 ] && [ $3 -lt $count ]; then break; fi
+   else sleep $2    
+   fi
+  done
+}
+
+restart(){
+  $0 stop
+  for i in ${L_SRV} ${C_SRV} ${M_SRV}
     do
-        if [ ! -f ./$i ]; then
-            echo "$i does not exist, or can't run."
-            echo "Stop. Check your compile."
-            exit 1;
-        fi
+    while true; do
+	get_status ${i}
+	if [ ${PSRUN} ]; then echo "'${i}' is still running p${PSRUN} waiting end"; sleep 2;
+        else break; fi
     done
-
-#    more << EOF
-echo "Check complete."
-echo "Looks good, a nice Athena!"
-#EOF
+  done
+  $0 start
 }
-
 
 case $1 in
     'start')
         print_start
         check_files
-
-        exec ./${L_SRV}&
-	echo $! > .${L_SRV}.pid
-        exec ./${C_SRV}&
-	echo $! > .${C_SRV}.pid
-        exec ./${M_SRV}&
-	echo $! > .${M_SRV}.pid
-
+	echo "Check complete."
+	echo "Looks good, a nice Athena!"
+	for i in ${L_SRV} ${C_SRV} ${M_SRV}
+	    do
+		start_serv $i
+	    done
         echo "Now Started Athena."
 ;;
+    'watch')
+	for i in ${L_SRV} ${C_SRV} ${M_SRV}
+	    do		
+		watch_serv $i 10 3
+	    done
+ 	echo "Now watching Athena."
+;;	
     'stop')
-	for i in .${L_SRV}.pid .${C_SRV}.pid .${M_SRV}.pid
+	for i in ${L_SRV} ${C_SRV} ${M_SRV}
 	    do
-		if [ -e ./$i ]; then
-		    kill $(cat $i)
-		    rm $i
+		PIDFILE=.${i}.pid
+		if [ -e ./${PIDFILE} ]; then
+		    kill $(cat ${PIDFILE})
+		    rm ${PIDFILE}
 		fi
 	    done
 ;;
     'restart')
-        $0 stop
-        $0 start
+         restart
 ;;
+    'status')
+	for i in ${L_SRV} ${C_SRV} ${M_SRV}
+	do
+		get_status ${i}
+		if [ ${PSRUN} ]; then echo "'${i}' is running p${PSRUN}"; else echo "'${i}' seem down"; fi
+	done
+;;	
     *)
-        echo "Usage: athena-start { start | stop | restart }"
+        echo "Usage: athena-start { start | stop | restart | status | watch }"
 ;;
 esac
+
+

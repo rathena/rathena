@@ -15,31 +15,38 @@ LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
 TEST_SPINLOCK_OBJ=obj/test_spinlock.o
 TEST_SPINLOCK_H=
 TEST_SPINLOCK_DEPENDS=obj $(TEST_SPINLOCK_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a $(MT19937AR_OBJ)
-    
+
 @SET_MAKE@
 
 #####################################################################
-.PHONY :all test_spinlock
+.PHONY :all test clean
 
-all: test_spinlock
+all: test
+
+test: test_spinlock
 
 clean:
 	@echo "	CLEAN	test"
-	@rm -rf *.o obj ../../test_spinlock@EXEEXT@ 
+	@rm -rf *.o obj ../../test_spinlock@EXEEXT@
+
+help:
+	@echo "possible targets are 'all' 'test' 'clean' 'help'"
+	@echo "'test'   - builds test_spinlock test atm"
+	@echo "'all'    - builds all above targets"
+	@echo "'clean'  - cleans builds and objects"
+	@echo "'help'   - outputs this message"
 
 #####################################################################
+
+test_spinlock: $(TEST_SPINLOCK_DEPENDS)
+	@echo "	LD	$@"
+	@@CC@ @LDFLAGS@ -o ../../test_spinlock@EXEEXT@ $(TEST_SPINLOCK_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a $(MT19937AR_OBJ) $(LIBCONFIG_OBJ) @LIBS@ @MYSQL_LIBS@
 
 # object directories
 
 obj:
 	@echo "	MKDIR	obj"
 	@-mkdir obj
-	
-#executables
-
-test_spinlock: $(TEST_SPINLOCK_DEPENDS)
-	@echo "	LD	$@"
-	@@CC@ @LDFLAGS@ -o ../../test_spinlock@EXEEXT@ $(TEST_SPINLOCK_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a $(MT19937AR_OBJ) $(LIBCONFIG_OBJ) @LIBS@ @MYSQL_LIBS@
 
 # login object files
 

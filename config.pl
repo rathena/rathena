@@ -65,7 +65,7 @@ sub GetArgs {
 	    ."\t --Force => Force (bypass verification)\n";
 	exit;
     }
-    unless($sTarget =~ /$sValidTarget/i){
+    unless($sTarget =~ /$sValidTarget/){
 	print "Incorect target specified, available target are:\n"
 	    ."\t --target => target (specify wich setup to run [(default)$sValidTarget])\n";
 	exit;
@@ -96,9 +96,9 @@ sub Main {
 			);
 
     my $sBasedir = getcwd; #for setupdb
-    if($sTarget =~ /All|Inst/i){ InstallSoft(); }
-    if($sTarget =~ /All|Conf/i) { ConfigConf(\%hDefConf); chdir "$sBasedir"; }
-    if($sTarget =~ /All|DB/i) { ConfigDB(\%hDefConf); chdir "$sBasedir"; }
+    if($sTarget =~ /All|Inst/){ InstallSoft(); }
+    if($sTarget =~ /All|Conf/) { ConfigConf(\%hDefConf); chdir "$sBasedir"; }
+    if($sTarget =~ /All|DB/) { ConfigDB(\%hDefConf); chdir "$sBasedir"; }
     print "Config done, you should be able to launch and connect server now\n";
     print "NB : Don't forget to update your client clieninfo.xml to match change\n";
 }
@@ -107,7 +107,7 @@ sub InstallSoft {
     print "\n Starting InstallSoft \n";
     print "This autoinstall feature is experimental, package name varies from distri and version, couldn't support them all\n";
     #yes we could $^0 or uname -r but $^0 only give perl binary build OS and uname hmm...
-    my @aSupportedOS = ("Debian","Ubuntu","Fedora","CentOs","FreeBSD");
+    my @aSupportedOS = ("Debian","Ubuntu","Fedora","CentOs");
     my $sOSregex = join("|",@aSupportedOS);
     my $sOS;
     until($sOS =~ /$sOSregex/i){
@@ -122,20 +122,8 @@ sub InstallSoft {
 	system("sudo apt-get install @aListSoft");
     }
     elsif($sOS =~ /Fedora|CentOs/i){ #tested on fedora 18
-	my @aListSoft = ("gcc","gdb","zlib","zlib-devel","make","subversion","mysql-server","mysql-devel","phpmyadmin","pcre-devel");
+	my @aListSoft = ("gcc","gdb","zlib","zlib-devel","make","subversion","mysql-server","phpmyadmin","pcre-devel");
 	system("sudo yum install @aListSoft");
-    }
-    elsif($sOS =~ /FreeBSD/i){ #tested on FreeBSD 9.01
-	system("portsnap fetch extract && portsnap update"); #fetch port lib and extract
-	my @aDevel = ("binutils","subversion","autoconf","pcre","gmake","gdb");
-	foreach(@aDevel){
-	    system("cd /usr/ports/devel/$_ && make install clean"); #install devels
-	}
-#	system("cd /usr/ports/lang/gcc46 && make install"); #gcc4.6 use latest ? 4.8 ?
-	system("cd /usr/ports/databases/mysql55-server && make install clean");
-	#other utils ?
-	system("cd /usr/ports/www/wget && make install clean");
-	system("cd /usr/ports/archivers/unrar && make install clean")
     }
 }
 

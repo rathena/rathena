@@ -20,35 +20,38 @@ CHAR_OBJ = obj_sql/char.o obj_sql/inter.o obj_sql/int_party.o obj_sql/int_guild.
 CHAR_H = char.h inter.h int_party.h int_guild.h int_storage.h int_pet.h int_homun.h int_mail.h int_auction.h int_quest.h int_mercenary.h int_elemental.h
 
 HAVE_MYSQL=@HAVE_MYSQL@
-ifeq ($(HAVE_MYSQL),yes)
-	CHAR_SERVER_SQL_DEPENDS=obj_sql $(CHAR_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a $(MT19937AR_OBJ)
+ifeq ($(HAVE_MYSQL),yes)	
+	SQL_DEPENDS=char-server_sql
 else
-	CHAR_SERVER_SQL_DEPENDS=needs_mysql
+	SQL_DEPENDS=needs_mysql
 endif
+ALL_DEPENDS=sql
 
 @SET_MAKE@
 
 #####################################################################
-.PHONY : all char-server_sql clean help
+.PHONY : all sql clean help
 
-all: char-server_sql
+all: $(ALL_DEPENDS)
 
-char-server_sql: $(CHAR_SERVER_SQL_DEPENDS)
-	@echo "	LD	$@"
-	@@CC@ @LDFLAGS@ -o ../../char-server_sql@EXEEXT@ $(CHAR_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a $(MT19937AR_OBJ) $(LIBCONFIG_OBJ) @LIBS@ @MYSQL_LIBS@
+sql: $(SQL_DEPENDS)
 
 clean:
 	@echo "	CLEAN	char"
 	@rm -rf *.o obj_sql ../../char-server_sql@EXEEXT@
 
 help:
-	@echo "possible targets are 'char-server_sql' 'all' 'clean' 'help'"
-	@echo "'char-server_sql'  - char server (SQL version)"
+	@echo "possible targets are 'sql' 'all' 'clean' 'help'"
+	@echo "'sql'  		  - char server (SQL version)"
 	@echo "'all'              - builds all above targets"
 	@echo "'clean'            - cleans builds and objects"
 	@echo "'help'             - outputs this message"
 
 #####################################################################
+
+char-server_sql: obj_sql $(CHAR_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a $(MT19937AR_OBJ)
+	@echo "	LD	$@"
+	@@CC@ @LDFLAGS@ -o ../../char-server_sql@EXEEXT@ $(CHAR_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a $(MT19937AR_OBJ) $(LIBCONFIG_OBJ) @LIBS@ @MYSQL_LIBS@
 
 needs_mysql:
 	@echo "MySQL not found or disabled by the configure script"

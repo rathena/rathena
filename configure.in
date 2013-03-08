@@ -780,8 +780,9 @@ if test "$want_pcre" = "no" ; then
 	AC_MSG_NOTICE([ignoring PCRE (optional)])
 else
 	host_os="`uname`"
-	if test "$host_os" = "FreeBSD" ; then PCRE_HOME="/usr/local"; fi
-	AC_MSG_NOTICE([bsddebug, pcrehome=($PCRE_HOME)])
+	if test "$host_os" = "FreeBSD" ; then 
+		if test -z "$PCRE_HOME" ; then PCRE_HOME="/usr/local"; fi
+	fi
 	if test -z "$PCRE_HOME" ; then
                 AC_SEARCH_LIBS([pcre_study], [pcre], [HAVE_PCRE="yes"], [])
 		if test "$HAVE_PCRE" = "yes" ; then

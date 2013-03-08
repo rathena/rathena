@@ -24,11 +24,11 @@ LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
-	ALL_DEPENDS=sql
 	SQL_DEPENDS=common common_sql
 else
 	SQL_DEPENDS=needs_mysql
 endif
+ALL_DEPENDS=sql
 
 @SET_MAKE@
 

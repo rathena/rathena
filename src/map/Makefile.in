@@ -31,13 +31,11 @@ MAP_H = map.h chrif.h clif.h pc.h status.h npc.h \
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
-	ALL_DEPENDS=txt sql
 	SQL_DEPENDS=map-server_sql
 else
-	ALL_TARGET=txt
 	SQL_DEPENDS=needs_mysql
 endif
-TXT_DEPENDS=map-server
+ALL_DEPENDS=sql
 
 HAVE_PCRE=@HAVE_PCRE@
 ifeq ($(HAVE_PCRE),yes)
@@ -49,11 +47,9 @@ endif
 @SET_MAKE@
 
 #####################################################################
-.PHONY : all txt sql clean help
+.PHONY : all sql clean help
 
 all: $(ALL_DEPENDS)
-
-txt: $(TXT_DEPENDS)
 
 sql: $(SQL_DEPENDS)
 
@@ -62,13 +58,8 @@ clean:
 	@rm -rf *.o obj_txt obj_sql ../../map-server@EXEEXT@ ../../map-server_sql@EXEEXT@
 
 help:
-ifeq ($(HAVE_MYSQL),yes)
 	@echo "possible targets are 'sql' 'txt' 'all' 'clean' 'help'"
 	@echo "'sql'   - map server (SQL version)"
-else
-	@echo "possible targets are 'txt' 'all' 'clean' 'help'"
-endif
-	@echo "'txt'   - map server (TXT version)"
 	@echo "'all'   - builds all above targets"
 	@echo "'clean' - cleans builds and objects"
 	@echo "'help'  - outputs this message"
@@ -80,9 +71,6 @@ needs_mysql:
 	@exit 1
 
 # object directories
-obj_txt:
-	@echo "	MKDIR	obj_txt"
-	@-mkdir obj_txt
 
 obj_sql:
 	@echo "	MKDIR	obj_sql"

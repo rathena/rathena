@@ -19,19 +19,20 @@ LOGIN_H = login.h account.h ipban.h loginlog.h
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
-	LOGIN_SERVER_SQL_DEPENDS=obj_sql $(LOGIN_SQL_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a  $(MT19937AR_OBJ)
+	SQL_DEPENDS=login-server_sql
 else
-	LOGIN_SERVER_SQL_DEPENDS=needs_mysql
+	SQL_DEPENDS=needs_mysql
 endif
+ALL_DEPENDS= sql
 
 @SET_MAKE@
 
 #####################################################################
 .PHONY :all sql clean help
 
-all: sql
+all: $(ALL_DEPENDS)
 
-sql: obj_sql login-server_sql
+sql: $(SQL_DEPENDS)
 
 clean:
 	@echo "	CLEAN	login"
@@ -58,7 +59,7 @@ obj_sql:
 
 #executables
 
-login-server_sql: $(LOGIN_SERVER_SQL_DEPENDS)
+login-server_sql: obj_sql $(LOGIN_SQL_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a  $(MT19937AR_OBJ)
 	@echo "	LD	$@"
 	@@CC@ @LDFLAGS@ -o ../../login-server_sql@EXEEXT@ $(LOGIN_SQL_OBJ) ../common/obj_sql/common_sql.a ../common/obj_all/common.a $(MT19937AR_OBJ) $(LIBCONFIG_OBJ) @LIBS@ @MYSQL_LIBS@
 	    
