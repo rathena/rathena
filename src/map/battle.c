@@ -2305,9 +2305,13 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					else if (!sd)
 						skillratio += 100; //Max damage for non players.
 					break;
-				case NPC_RANDOMATTACK:
-					skillratio += 100*skill_lv;
+				case NPC_PIERCINGATT:
+					skillratio += -25; //75% base damage
 					break;
+				case NPC_COMBOATTACK:
+					skillratio += 25*skill_lv;
+					break;
+				case NPC_RANDOMATTACK:
 				case NPC_WATERATTACK:
 				case NPC_GROUNDATTACK:
 				case NPC_FIREATTACK:
