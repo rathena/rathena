@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //= Renewal coin redemption NPCs.
 //===== Additional Comments: =================================
 //= 1.0 First version. [Euphy/Lemongrass]
+//= 1.1 Added remaining Malangdo traders. [Euphy/Lemongrass]
 //============================================================
 
 // Malangdo
@@ -176,6 +177,172 @@ L_AddItem:
 	}
 }
 
+malangdo,236,179,5	script	Dark Merchant K	554,{
+	if (checkweight(1201,1) == 0) {
+		mes "It seems you have too much in your inventory. Let's try again after getting rid of some of your belongings.";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "Your inventory is too heavy now. Please come back after getting rid of some of your belongings.";
+		close;
+	}
+	mes "[Merchant K]";
+	mes "Thank you for the trade.";
+	mes "We exchange ^ff000010 C Grade Coin^000000 to ^3333ff1 Mora Coin^000000. Shall we begin then?";
+	next;
+	setarray .@coin_amount[0],10,100,500,1000;
+	while(1) {
+		set .@menu$,"";
+		for(set .@i,0; .@i<getarraysize(.@coin_amount); set .@i,.@i+1) {
+			if (countitem(6420) >= .@coin_amount[.@i])
+				set .@menu$, .@menu$+"Exchange "+(.@coin_amount[.@i]/10)+" Mora Coin:";
+			else
+				set .@menu$, .@menu$+"^aaaaaaExchange "+(.@coin_amount[.@i]/10)+" Mora Coin (Not Enough)^000000:";
+		}
+		set .@i, select(.@menu$+"Quit")-1;
+		if (.@i == getarraysize(.@coin_amount)) {
+			mes "[Merchant K]";
+			mes "Let's exchange some other time.";
+			close;
+		}
+		if (countitem(6420) < .@coin_amount[.@i]) {
+			mes "[Merchant K]";
+			mes "You need ^ff0000"+.@coin_amount[.@i]+"^000000 C Grade Coin to perform the exchange. But you don't seem to have enough now.";
+			close;
+		}
+		delitem 6420,.@coin_amount[.@i]; //Cgrade_Coin
+		getitem 6380,.@coin_amount[.@i]/10; //Mora_Coin
+		mes "[Merchant K]";
+		mes "C Grade Coin ^003399"+.@coin_amount[.@i]+"^000000 well received."; //FIXME: Dialogue.
+		mes "Exchanged to ^003399"+(.@coin_amount[.@i]/10)+"^000000 Mora Coin.";
+		next;
+		mes "[Merchant K]";
+		mes "Would you like to continue?";
+		next;
+	}
+}
+
+malangdo,233,180,3	script	Dark MachineTX100	564,{
+	if (checkweight(1201,1) == 0) {
+		mes "It seems you have too much in your inventory. Let's try again after getting rid of some of your belongings.";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "Your inventory is too heavy now. Please come back after getting rid of some of your belongings.";
+		close;
+	}
+	mes "[Dark Machine TX100]";
+	mes "Thank you for visiting TX100. You can exchange coins into higher or lower level coins.";
+	next;
+	mes "[Dark Machine TX100]";
+	mes "For a lower level coin exchange you can do 500 as a 1 time maximum, and for higher level coin exchange you can do 99 as a 1 time maximum.";
+	next;
+	setarray .@coins[1],
+		6417, //Silvervine
+		6418, //Agrade_Coin
+		6419, //Bgrade_Coin
+		6420, //Cgrade_Coin
+		6421, //Dgrade_Coin
+		6422; //Egrade_Coin
+	set .@menu$,"Quit:";
+	for(set .@i,1; .@i<=6; set .@i,.@i+1) {
+		if (countitem(.@coins[.@i]))
+			set .@menu$, .@menu$+getitemname(.@coins[.@i])+" (have "+countitem(.@coins[.@i])+"):";
+		else
+			set .@menu$, .@menu$+"^aaaaaa"+getitemname(.@coins[.@i])+" (None)^000000:";
+	}
+	set .@i, select(.@menu$)-1;
+	if (.@i == 0) {
+		mes "[Dark Machine TX100]";
+		mes "Thank you for coming.";
+		close;
+	}
+	set .@coin, .@coins[.@i];
+	setarray .@exchange_name$[0],"higher","lower";
+	setarray .@exchange_id[0],.@coins[.@i-1],.@coins[.@i+1];
+	if (.@exchange_id[0] == .@coins[1]) set .@exchange_id[0],0; // Cannot exchange for Silvervine.
+	if (.@i > getarraysize(.@coins)) {
+		mes "[Dark Machine TX100]";
+		mes "You've chosen abnormal menu.";
+		mes "Aborting process. Thank you for coming.";
+		close;
+	}
+	if (countitem(.@coin) == 0) {
+		mes "[Dark Machine TX100]";
+		mes "You chose a coin that you don't have.";
+		mes "Aborting process. Thank you for coming.";
+		close;
+	}
+	mes "[Dark Machine TX100]";
+	mes "----Exchange Rate----";
+	mes "Higher Coin - 3 to 1";
+	mes "Lower Coin - 1 to 3";
+	mes "---------------------";
+	mes "^ff3333We take a small vendor fee from your exchanged coins.^000000";
+	next;
+	set .@menu$, "Quit:";
+	if (.@exchange_id[0] == 0)
+		set .@menu$, .@menu$+"^ff3333Cannot exchange to higher level coin^000000:";
+	else {
+		if (countitem(.@coin) >= 99)
+			set .@menu$, .@menu$+"Exchange 99 "+getitemname(.@coin)+" into higher level coin:";
+		else
+			set .@menu$, .@menu$+"^aaaaaaExchange to higher level coin (Not enough)^000000:";
+	}
+	if (.@exchange_id[1] == 0)
+		set .@menu$, .@menu$+"^ff3333Cannot exchange to lower level coin^000000:";
+	else {
+		if (countitem(.@coin) > 500)
+			set .@menu$, .@menu$+"Exchange 500 "+getitemname(.@coin)+" into lower level coin:";
+		else if (countitem(.@coin))
+			set .@menu$, .@menu$+"Exchange "+countitem(.@coin)+" "+getitemname(.@coin)+" into lower level coin:";
+		else
+			set .@menu$, .@menu$+"^aaaaaaExchange to lower level coin (Not enough)^000000:";
+	}
+	set .@i, select(.@menu$)-2;
+	if (.@i == -1) {
+		mes "[Dark Machine TX100]";
+		mes "Thank you for coming.";
+		close;
+	}
+	if (.@exchange_id[.@i] == 0) {
+		mes "[Dark Machine TX100]";
+		mes "This coin cannot be exchanged to a "+.@exchange_name$[.@i]+" level coin.";
+		mes "Aborting process. Thank you for coming.";
+		close;
+	}
+	if ((.@i == 0 && countitem(.@coin) < 100) || (.@i == 1 && countitem(.@coin) == 0)) {
+		mes "[Dark Machine TX100]";
+		mes "You have not enough coins for a "+.@exchange_name$[.@i]+" level coin exchange.";
+		mes "Aborting process. Thank you for coming.";
+		close;
+	}
+	if (countitem(.@exchange_id[.@i]) > 28000) {
+		mes "[Dark Machine TX100]";
+		mes "You have too many "+.@exchange_name$[.@i]+" level coins already. Please come back with less coins.";
+		close;
+	}
+	switch(.@i) {
+	case 0:
+		set .@payment_amount,99;
+		set .@reward_amount, .@payment_amount/3;
+		set .@coin_text$,"High";
+		break;
+	case 1:
+		set .@payment_amount,(((countitem(.@coin) > 500))?500:countitem(.@coin));
+		set .@reward_amount, .@payment_amount*3;
+		set .@coin_text$,"Low";
+		break;
+	}
+	set .@fee, rand(1,3);
+	delitem .@coin, .@payment_amount;
+	getitem .@exchange_id[.@i], .@reward_amount - .@fee;
+	mes "[Dark Machine TX100]";
+	mes "Received ^003399"+getitemname(.@coin)+"^000000 for ^003399"+.@payment_amount+"^000000 unit(s).";
+	mes "We have excanged your coin to ^003399"+(.@reward_amount-.@fee)+"^000000 unit(s) of ^003399"+.@coin_text$+" Level Coin^000000, deducted ^003399"+.@fee+"^000000 unit(s) as exchanging fee.";
+	close;
+}
+
 malangdo,175,145,4	script	Can Agency Guard	549,{
 	if (checkweight(1201,1) == 0) {
 		mes "You seem to have too many items. Give it a try after sorting out the item kinds.";
@@ -256,3 +423,406 @@ malangdo,175,145,4	script	Can Agency Guard	549,{
 	mes "Exchanged "+.@count+" Malangdo Cat Can to "+(.@count*3)+" E Class Coin. Check it out.";
 	close;
 }
+
+function	script	F_mal_coin	{
+
+// Initial dialogue and checks:
+// -- callfunc "F_mal_coin",0,"[<NPC Name>]",<NPC ID>;
+	if (getarg(0) == 0) {
+		if (getarg(2) != 2 && BaseLevel < 50) {
+			mes getarg(1);
+			mes "Ahaaa~";
+			mes "If you want to buy this stuff,";
+			mes "you can talk to me";
+			mes "when you grow up little more.";
+			mes "This stuff is too expensive";
+			mes "for a child~";
+			close;
+		}
+		mes getarg(1);
+		mes "Nice to meet you~~";
+		mes "I am! YES~~ That's right!";
+		mes "I'm selling special stuff";
+		mes "which you can see only here on Meow Meow Island!";
+		next;
+		mes getarg(1);
+		mes "How about it? What are you waiting for?";
+		mes "Why don't you take a look at";
+		mes "what kinds of stuff I have?";
+		next;
+		switch(getarg(2)) {
+		case 1:
+			mes "[Wandering Merchant]";
+			mes "Oh~";
+			mes "These are rental items, so make sure you know if you have the ^0000FF1 hour^000000 or ^0000FF7 day^000000 version.";
+			next;
+			break;
+		case 2:
+			break;
+		case 3:
+			mes "[Roving Merchant]";
+			mes "Just for your information,";
+			mes "Sow Bug, Starfish, Dried Squid, and Flying Fish are the items which you can use for 1 hour.";
+			next;
+			break;
+		}
+		mes getarg(1);
+		mes "Well then, do you want to take a look at what I have now?";
+		next;
+		switch(select("Yes:No")) {
+		case 1:
+			if (checkweight(1201,1) == 0) {
+				mes getarg(1);
+				mes "It seems that there are too many items in your inventory.";
+				mes "Please make space and come back again~";
+				close;
+			}
+			if (MaxWeight - Weight < 2500) {
+				mes getarg(1);
+				mes "It seems that you're overweight.";
+				mes "Please reduce your weight and come back again~";
+				close;
+			}
+			mes getarg(1);
+			mes "Well, take a good look at them~~~";
+			next;
+			return;
+		case 2:
+			mes getarg(1);
+			mes "Well, then. I'll see you next time.";
+			mes "Goodbye.";
+			close;
+		}
+	}
+
+// Exchange function:
+// -- callfunc "F_mal_coin",1,"[<NPC Name>]","<Display Name>",<Item ID>,<Egrade_Coin>,<Malang_Sp_Can>,<Silvervine>
+	if (getarg(0) == 1) {
+		mes getarg(1);
+		mes "The price of ^0000FF["+getarg(2)+"]^000000 is";
+		if (getarg(4) && getarg(5)) { // Type 1: Egrade_Coin or Malang_Sp_Can
+			mes getarg(4)+" E Grade Coin or "+getarg(5)+" Malangdo Canned Specialties.";
+			set .@type,1;
+			set .@menu$,"Yes.:No, I'll purchase with cans.:I don't want to purchase any.";
+		} else if (getarg(5)) { // Type 2: Malang_Sp_Can only
+			mes getarg(5)+" Malangdo Canned Specialties.";
+			set .@type,2;
+			set .@menu$,"Yes.::No.";
+		} else { // Type 3: Silvervine only
+			mes getarg(6)+" Silvervine Fruit.";
+			set .@type,3;
+			set .@menu$,"Yes.::I don't want to purchase any.";
+		}
+		next;
+		mes getarg(1);
+		if (.@type == 1) {
+			mes "Would you like to purchase";
+			mes "^0000FF["+getarg(2)+"]^000000 with E Grade Coins?";
+		} else {
+			mes "Would you like to";
+			mes "purchase ^0000FF["+getarg(2)+"]^000000?";
+		}
+		next;
+		switch(select(.@menu$)) {
+		case 2:
+			set .@type,2;
+		case 1:
+			switch(.@type) {
+			case 1:
+				set .@item,6422; //Egrade_Coin
+				set .@amount,getarg(4);
+				set .@str$,"coins";
+				break;
+			case 2:
+				set .@item,12636; //Malang_Sp_Can
+				set .@amount,getarg(5);
+				set .@str$,"cans";
+				break;
+			case 3:
+				set .@item,6417; //Silvervine
+				set .@amount,getarg(6);
+				set .@str$,"Silvervine Fruit";
+				break;
+			}
+			if (countitem(.@item) < .@amount) {
+				mes getarg(1);
+				mes "I'm sorry, you need more "+.@str$+".";
+				close;
+			}
+			if (MaxWeight - Weight < getiteminfo(getarg(3),6)) {
+				mes getarg(1);
+				mes "Sorry, you've purchased too many.";
+				mes "You need to make more space in your inventory. Please come back later.";
+				close;
+			}
+			mes getarg(1);
+			mes "Thank you.";
+			delitem .@item,.@amount;
+			getitem getarg(3),1;
+			return;
+		case 3:
+			mes getarg(1);
+			mes "Always be careful";
+			mes "when you purchase items.";
+			close;
+		}
+	}
+}
+malangdo,162,146,5	script	Wandering Merchant#mal	495,{
+	callfunc "F_mal_coin",0,"[Wandering Merchant]",1;
+	setarray .@items[1],
+		16743,16747,16741,16745,16749,16751, // 1 hour items.
+		16742,16744,16746,16748,16752,16750; // 7 day items.
+	setarray .@names$[1],
+		"Spearfish","Tuna","Hairtail","Saurel","Malang Snow Crab","Brindle Eel",
+		"Hairtail (7Days)","Spearfish (7Days)","Saurel (7Days)","Tuna (7Days)","Brindle Eel (7Days)","Malang Snow Crab (7Days)";
+	while(1) {
+		set .@i, select(
+			"[Spearfish(1hr)] 8 E-Coins/50 Cans",
+			"[Tuna(1hr)] 8 E-Coins/50 Cans",
+			"[Hairtail(1hr)] 8 E-Coins/50 Cans",
+			"[Saurel(1hr)] 8 E-Coins/50 Can",
+			"[Malang Snow Crab(1hr)] 8 E-Coins/50 Can",
+			"[Brindle Eel(1hr)] 8 E-Coins/50 Can",
+			"[Hairtail(7Days)] 10 Silvervine Fruit",
+			"[Spearfish(7Days)] 10 Silvervine Fruit",
+			"[Saurel(7Days)] 10 Silvervine Fruit",
+			"[Tuna(7Days)] 10 Silvervine Fruit",
+			"[Brindle Eel(7Days)] 10 Silvervine Fruit",
+			"[Malang Snow Crab(7Days)] 10 Silvervine Fruit",
+			"End purchasing."
+		);
+		if (.@i == 13) {
+			mes "[Wandering Merchant]";
+			mes "Well, then. I'll see you next time.";
+			mes "Goodbye.";
+			close;
+		}
+		mes "[Wandering Merchant]";
+		mes "Are you interested in ^0000FF["+.@names$[.@i]+"]^000000?";
+		switch(.@i) {
+		case 1: //Spearfish_Box1
+		case 8: //Spearfish_Box2
+			mes "This is... a fish that moves according to the season, very tasty!";
+			mes "But this is only a food that I'm talking about, yummy~";
+			next;
+			mes "[Wandering Merchant]";
+			mes "Of course, this is ^DC143CTwo-Handed Spear^000000.";
+			mes "It gives a high chance of";
+			mes "causing the Bleeding status";
+			mes "when you're using Pierce or Clashing Spiral~";
+			next;
+			mes "[Wandering Merchant]";
+			mes "More details are...";
+			mes "Increase 100% of Clashing Spiral ATK and 50% of Inspiration ATK,";
+			mes "additional ATK + 30 when Base Lv. is over 100.";
+			mes "Base ATK is 220.";
+			next;
+			break;
+		case 2: //Tuna_Box1
+		case 10: //Tuna_Box2
+			mes "This is a very popular fish";
+			mes "which is used in various dishes.";
+			mes "Swordman, Merchant, and Acolyte classes can use it";
+			mes "as a ^DC143CMace^000000.";
+			next;
+			mes "[Wandering Merchant]";
+			mes "It gives a high chance of executing the Stun or Auto-Spell Bash";
+			mes "when using close-range physical attacks.";
+			mes "Base ATK is 180.";
+			next;
+			mes "[Wandering Merchant]";
+			mes "More details are...";
+			mes "additional ATK + 20 when Base Lv. is over 100,";
+			mes "freeze self with low rate.";
+			next;
+			break;
+		case 3: //Hairtail_Box1
+		case 7: //Hairtail_Box2
+			mes "This fish looks like a long belt.";
+			next;
+			mes "[Wandering Merchant]";
+			mes "This is a ^DC143CTwo-Handed Sword^000000";
+			mes "which most swordmen can use.";
+			mes "It increases 50% of critical damage when attacking and CRI + 20.";
+			mes "Base ATK is 220.";
+			next;
+			mes "[Wandering Merchant]";
+			mes "More details are...";
+			mes "additional ATK + 50 when Base Lv. is over 100.";
+			next;
+			break;
+		case 4: //Saurel_Box1
+		case 9: //Saurel_Box2
+			mes "This is a ^DC143CDagger^000000 which gives MATK + 100";
+			mes "and ATK + 30 for 7sec at a certain rate with physical attacks.";
+			next;
+			mes "[Wandering Merchant]";
+			mes "More details are...";
+			mes "gives MATK + 20 for 7sec at a certain rate with magical attacks";
+			mes "and additional MATK + 10, ATK + 10 when Base Lv. is over 100.";
+			mes "Base ATK is 160.";
+			next;
+			break;
+		case 5: //Malang_Crab_Box1
+		case 12: //Malang_Crab_Box2
+			mes "This is a ^DC143CBow^000000 which increases LUK + 3 and 50% of critical damage,";
+			mes "and increases 20% of long rage phyical ATK when Base Lv. is over 100.";
+			mes "Base ATK is 120.";
+			next;
+			mes "[Wandering Merchant]";
+			mes "More details are...";
+			mes "can be used by Archer, Thief, and Rogue classes.";
+			next;
+			break;
+		case 6: //Brindle_Eel_Box1
+		case 11: //Brindle_Eel_Box2
+			mes "This is a ^DC143CBow^000000.";
+			mes "Because it has elastic force,";
+			mes "we started to use it as a Bow.";
+			mes "Base ATK is 180.";
+			next;
+			mes "[Wandering Merchant]";
+			mes "More details are...";
+			mes "AGI + 3, and ASPD + 2 for 5sec at a certain rate with long range physical attacks.";
+			mes "Also gives additional 20% of long range physical ATK when Base Lv. is over 100.";
+			mes "Hunter, Bard, and Dancer classes can use it.";
+			next;
+			break;
+		}
+		if (.@i < 7)
+			setarray .@price[0],8,50,0; // 1 hour items cost 8 Egrade_Coin or 50 Malang_Sp_Can.
+		else
+			setarray .@price[0],0,0,10; // 7 day items cost 10 Silvervine.
+		callfunc "F_mal_coin",1,"[Wandering Merchant]",.@names$[.@i],.@items[.@i],.@price[0],.@price[1],.@price[2];
+		next;
+	}
+}
+
+malangdo,173,145,4	script	Stinky Merchant	496,{
+	callfunc "F_mal_coin",0,"[Stinky Merchant]",2;
+	setarray .@items[1],2873,16015;
+	setarray .@names$[1],"Cat Hand Glove","Cat Club";
+	while(1) {
+		set .@i, select(
+			"[Cat Hand Glove] 32 E-Coins/200 Cans",
+			"[Cat Club] 32 E-Coins/200 Cans",
+			"End purchasing."
+		);
+		if (.@i == 3) {
+			mes "[Stinky Merchant]";
+			mes "Well, then. I'll see you next time.";
+			mes "Goodbye.";
+			close;
+		}
+		mes "[Stinky Merchant]";
+		mes "Are you interested in ^0000FF["+.@names$[.@i]+"]^000000?";
+		switch(.@i) {
+		case 1: //Cat_Hand_Glove
+			mes "This is a glove which can give happiness";
+			mes "just by wearing it.";
+			next;
+			mes "[Stinky Merchant]";
+			mes "This is an ^DC143CAccessory^000000";
+			mes "and its defense is 5.";
+			mes "It also gives";
+			mes "VIT + 1, AGI + 1, DEX + 1, LUK + 1.";
+			next;
+			mes "[Stinky Merchant]";
+			mes "More details are...";
+			mes "SLOT : 1 / Refine : Unable / Destruction : Unable";
+			next;
+			break;
+		case 2: //Cat_Club
+			mes "It looks like it wouldn't hurt, don't you think so?";
+			mes "But I'm telling you, it can hurt someone.";
+			next;
+			mes "[Stinky Merchant]";
+			mes "This is a ^DC143CMace^000000 that increases 15% of damage to the animal type of monster.";
+			mes "Base ATK is 88.";
+			mes "The other details are";
+			mes "Weapon Lv : 1 / SLOT : 3 / Refine : Able / Destruction : Unable";
+			next;
+			break;
+		}
+		callfunc "F_mal_coin",1,"[Stinky Merchant]",.@names$[.@i],.@items[.@i],32,200,0;
+		next;
+	}
+}
+
+malangdo,150,135,5	script	Roving Merchant	495,{
+	callfunc "F_mal_coin",0,"[Roving Merchant]",3;
+	setarray .@items[1],12639,12637,12638,12640;
+	setarray .@names$[1],"Flying Fish","Sow Bug","Dried Squid","Starfish";
+	while(1) {
+		set .@i, select(
+			"[Flying Fish] 200 Cans",
+			"[Sow Bug] 200 Cans",
+			"[Dried Squid] 200 Cans",
+			"[Starfish] 200 Cans",
+			"End purchasing."
+		);
+		if (.@i == 5) {
+			mes "[Roving Merchant]";
+			mes "Well, then. I'll see you next time.";
+			mes "Goodbye.";
+			close;
+		}
+		mes "[Roving Merchant]";
+		mes "Are you interested in ^0000FF["+.@names$[.@i]+"]^000000?";
+		switch(.@i) {
+		case 1: //Flying_Fish_Box
+			mes "This is the one that flies";
+			mes "with a big pectoral.";
+			next;
+			mes "[Roving Merchant]";
+			mes "This is a ^DC143CThrowing Weapon^000000.";
+			mes "Of course, it can give fatal wounds to the enemy";
+			mes "at a certain rate when attacking.";
+			next;
+			mes "[Roving Merchant]";
+			mes "Its property is neutral and ATK is 50.";
+			next;
+			break;
+		case 2: //Gong_Bug_Pocket
+			mes "In that case, I'll explain for you.";
+			mes "This is a ^DC143CBullet^000000 which stuns the enemy at a certain rate when attacking.";
+			next;
+			mes "[Roving Merchant]";
+			mes "I feel somthing bad";
+			mes "is moving in my pocket but...";
+			mes "it is neutral property and its ATK is 50.";
+			next;
+			break;
+		case 3: //Dried_Squid_Box
+			mes "I'll explain about this item.";
+			mes "This is a ^DC143CThrowing Weapon^000000 which causes darkness at a certain rate.";
+			mes "It's neutral property and its ATK is 50.";
+			next;
+			mes "[Roving Merchant]";
+			mes "It is compressed";
+			mes "and put into a very small box,";
+			mes "so be careful when you open it.";
+			next;
+			break;
+		case 4: //Starfish_Box
+			mes "I'll explain about this item.";
+			mes "This is a ^DC143CThrowing Weapon^000000 which stuns the enemy at a certain rate.";
+			next;
+			mes "[Roving Merchant]";
+			mes "It is perfectly organized and packed";
+			mes "so you can't even see inside.";
+			mes "It is neutral property and its ATK is 110.";
+			next;
+			break;
+		}
+		mes "[Roving Merchant]";
+		mes "For your information,";
+		mes "one box contains";
+		mes "200 units.";
+		next;
+		callfunc "F_mal_coin",1,"[Roving Merchant]",.@names$[.@i],.@items[.@i],0,200,0;
+		next;
+	}
+}
+

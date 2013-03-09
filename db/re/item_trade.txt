@@ -1822,33 +1822,88 @@
 6392,475,100	// Bradium_Box
 
 // Dewata
-6404,507,100	// Kris_Hilt
-6406,475,100	// Shining_Cendrawasih_Feather
+6401,507,100	// Palm Oil
+6402,499,100	// Palm Oil Fruit
+18520,475,100	// Jaty Crown
 
 // Malangdo Island
-6417,475,100	// Garderie_Fruit
-6418,475,100	// A_Grade_Coin
-6419,475,100	// B_Grade_Coin
-6420,475,100	// C_Grade_Coin
-6421,475,100	// D_Grade_Coin
-6422,475,100	// E_Grade_Coin
-6423,475,100	// Sea_God's_Wrath
-6428,507,100	// Adventure_Card_A
-6429,507,100	// Adventure_Card_B
-6430,507,100	// Figure_Sculpture
-6431,507,100	// Pail
-6433,507,100	// Cleaning_Brush
-6436,507,100	// Sea_God's_Call
-6437,475,100	// Lava_Sky_Perfume
-6440,475,100	// General_Lubrication
-6441,475,100	// Advanced_Lubrication
-6442,507,100	// Octopus_Hunting_Skewer
+1198,507,100	// Cutlass
+1489,507,100	// Marlin
+2872,475,100	// G Honor Certificate
+6417,499,100	// Silvervine Fruit
+6418,499,100	// A Grade Coin
+6419,499,100	// B Grade Coin
+6420,499,100	// C Grade Coin
+6421,499,100	// D Grade Coin
+6422,499,100	// E Grade Coin
+6426,499,100	// Bad Canned Food
+6427,507,100	// Bad Canned Food Sack
+6428,507,100	// Adventure Card A
+6429,507,100	// Adventure Card B
+6430,499,100	// Figure Sculpture
+6431,499,100	// Pail
+6432,499,100	// Full Pail
+6433,499,100	// Cleaning Brush
+6434,499,100	// Fix Kit
+6435,499,100	// Fresh Fruit
+6436,507,100	// Sea God's Call
+6440,475,100	// General Lubrication
+6441,475,100	// Advanced Lubrication
+6442,507,100	// Octopus Hunting Skewer
+6443,475,100	// Sillit Pong Bottle
+12624,16,100	// Delicious Jelly
+12633,475,100	// Malangdo Cat Can
+12636,467,100	// Malangdo Canned Specialties
+12637,475,100	// Gong Bug Pocket
+12638,475,100	// Dried Squid Box
+12639,475,100	// Flying Fish Box
+12640,475,100	// Starfish Box
+13068,507,100	// Pompano
+13208,475,100	// Gong Bug
+13291,475,100	// Starfish
+13292,475,100	// Dried Squid
+13293,475,100	// Flying Fish
+16016,507,100	// Tuna
+16740,475,100	// The Sea God's Call 23 Hour Box
+16741,475,100	// Cutlass 1 Day Box
+16742,475,100	// Cutlass 7 Day Box
+16743,475,100	// Marlin 1 Day Box
+16744,475,100	// Marlin 7 Day Box
+16745,475,100	// Pompano 1 Day Box
+16746,475,100	// Pompano 7 Day Box
+16747,475,100	// Tuna 1 Day Box
+16748,475,100	// Tuna 7 Day Box
+16749,475,100	// Malangdo Crab 1 Day Box
+16750,475,100	// Malangdo Crab 7 Day Box
+16751,475,100	// Zebra Eel 1 Day Box
+16752,475,100	// Zebra Eel 7 Day Box
+16763,475,100	// The Sea God's Call 7 Day Box
+16764,475,100	// The Sea God's Call 15 Day Box
+16765,475,100	// Octopus Hunting Skewer 23 Hour Box
+16766,475,100	// Octopus Hunting Skewer 3 Day Box
+16767,475,100	// Octopus Hunting Skewer 7 Day Box
+16770,457,100	// Silvervine 10 Box
+16771,457,100	// Silvervine 40 Box
+16979,457,100	// Silvervine 4 Box
+17013,475,100	// Malang Woe Encard Box
+18107,507,100	// Malangdo Crab
+18108,507,100	// Zebra Eel
 
 // Malaya Port
 6519,507,100	// Collected_Samples
 
 // Cash Shop Related Items
 2841,507,100	// Caracas Ring
+17084,473,100	// Upg Katar Box
+17085,473,100	// Upg Two Handed Axe Box
+17086,473,100	// Upg Lance Box
+17087,473,100	// Upg Book Box
+17088,473,100	// Upg Staff Box
+17089,473,100	// Upg Dagger Box
+17090,473,100	// Upg Revolver
+17091,473,100	// Upg Mace Box
+17092,473,100	// Upg Bow Box
+17093,473,100	// Upg Two-Handed Sword Box
 
 // Misc. Items
 1652,499,100	// Tourist Staff
