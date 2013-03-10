@@ -578,8 +578,16 @@ int skillnotok (uint16 skill_id, struct map_session_data *sd)
 			}
 			break;
 		case MC_VENDING:
-		case MC_IDENTIFY:
 		case ALL_BUYING_STORE:
+			if( npc_isnear(&sd->bl) ) {
+				// uncomment to send msg_txt.
+				//char output[150];
+				//sprintf(output, msg_txt(662), battle_config.min_npc_vendchat_distance);
+				//clif_displaymessage(sd->fd, output);
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_THERE_ARE_NPC_AROUND,0);
+				return 1;
+			}
+		case MC_IDENTIFY:
 			return 0; // always allowed
 		case WZ_ICEWALL:
 			// noicewall flag [Valaris]

@@ -10408,6 +10408,15 @@ void clif_parse_CreateChatRoom(int fd, struct map_session_data* sd)
 		return;
 	}
 
+	if( npc_isnear(&sd->bl) ) {
+		// uncomment to send msg_txt.
+		//char output[150];
+		//sprintf(output, msg_txt(662), battle_config.min_npc_vendchat_distance);
+		//clif_displaymessage(sd->fd, output);
+		clif_skill_fail(sd,1,USESKILL_FAIL_THERE_ARE_NPC_AROUND,0);
+		return;
+	}
+
 	if( len <= 0 )
 		return; // invalid input
 
@@ -11907,6 +11916,9 @@ void clif_parse_OpenVending(int fd, struct map_session_data* sd)
 	bool flag = (bool)RFIFOB(fd,84);
 	const uint8* data = (uint8*)RFIFOP(fd,85);
 
+	if( !flag )
+		sd->state.prevend = 0;
+
 	if( sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOROOM )
 		return;
 	if( map[sd->bl.m].flag.novending ) {
@@ -11918,18 +11930,10 @@ void clif_parse_OpenVending(int fd, struct map_session_data* sd)
 		return;
 	}
 
-	if( vending_checknearnpc(&sd->bl) ) {
-		char output[150];
-		sprintf(output, msg_txt(662), battle_config.min_npc_vending_distance);
-		clif_displaymessage(sd->fd, output);
-		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
-		return;
-	}
-
 	if( message[0] == '\0' ) // invalid input
 		return;
 
-	vending_openvending(sd, message, flag, data, len/8);
+	vending_openvending(sd, message, data, len/8);
 }
 
 

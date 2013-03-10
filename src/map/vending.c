@@ -231,33 +231,15 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 		}
 	}
 }
-static int vending_checknearnpc_sub(struct block_list* bl, va_list args) {
-    struct npc_data *nd = (struct npc_data*)bl;
-    
-    if( nd->sc.option & (OPTION_HIDE|OPTION_INVISIBLE) )
-        return 0;
 
-    return 1;
-}
-bool vending_checknearnpc(struct block_list * bl) {
-    
-    if( battle_config.min_npc_vending_distance > 0 &&
-            map_foreachinrange(vending_checknearnpc_sub,bl, battle_config.min_npc_vending_distance, BL_NPC) )
-        return true;
-        
-    return false;
-}
 /*==========================================
  * Open shop
  * data := {<index>.w <amount>.w <value>.l}[count]
  *------------------------------------------*/
-void vending_openvending(struct map_session_data* sd, const char* message, bool flag, const uint8* data, int count) {
+void vending_openvending(struct map_session_data* sd, const char* message, const uint8* data, int count) {
 	int i, j;
 	int vending_skill_lvl;
 	nullpo_retv(sd);
-
-	if( !flag ) // cancelled
-		return; // nothing to do
 
 	if ( pc_isdead(sd) || !sd->state.prevend || pc_istrading(sd))
 		return; // can't open vendings lying dead || didn't use via the skill (wpe/hack) || can't have 2 shops at once
@@ -276,16 +258,7 @@ void vending_openvending(struct map_session_data* sd, const char* message, bool 
 		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
 		return;
 	}
-	//check if nearby npc, (perhaps we should check for nearby shop too
-    if( vending_checknearnpc(&sd->bl) ) {
-        char output[150];
-        sprintf(output,"You're too close to a NPC, you must be at least %d cells away from any NPC.",battle_config.min_npc_vending_distance);
-        clif_displaymessage(sd->fd, output);
-        clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
-        return;
-    }
-        
-    
+
 	// filter out invalid items
 	i = 0;
 	for( j = 0; j < count; j++ )
@@ -326,7 +299,6 @@ void vending_openvending(struct map_session_data* sd, const char* message, bool 
 	sd->vend_num = i;
 	safestrncpy(sd->message, message, MESSAGE_SIZE);
 
-	pc_stop_walking(sd,1);
 	clif_openvending(sd,sd->bl.id,sd->vending);
 	clif_showvendingboard(&sd->bl,message,0);
 }

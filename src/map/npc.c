@@ -112,6 +112,25 @@ struct view_data* npc_get_viewdata(int class_)
 	return NULL;
 }
 
+static int npc_isnear_sub(struct block_list* bl, va_list args)
+{
+	struct npc_data *nd = (struct npc_data*)bl;
+
+	if( nd->sc.option & (OPTION_HIDE|OPTION_INVISIBLE) )
+		return 0;
+
+	return 1;
+}
+
+bool npc_isnear(struct block_list * bl)
+{
+	if( battle_config.min_npc_vendchat_distance > 0 &&
+	    map_foreachinrange(npc_isnear_sub,bl, battle_config.min_npc_vendchat_distance, BL_NPC) )
+		return true;
+
+	return false;
+}
+
 int npc_ontouch_event(struct map_session_data *sd, struct npc_data *nd)
 {
 	char name[EVENT_NAME_LENGTH];

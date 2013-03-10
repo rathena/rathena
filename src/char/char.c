@@ -2221,7 +2221,7 @@ int parse_fromlogin(int fd) {
 							}
 						}
 					}else{
-						// PIN code system, disabled
+						// PIN code system disabled
 						pincode_sendstate( i, sd, PINCODE_OK );
 					}
 #endif

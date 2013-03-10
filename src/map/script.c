@@ -16772,6 +16772,13 @@ BUILDIN_FUNC(buyingstore)
 		return 0;
 	}
 
+	if( npc_isnear(&sd->bl) ) {
+		char output[150];
+		sprintf(output, msg_txt(662), battle_config.min_npc_vendchat_distance);
+		clif_displaymessage(sd->fd, output);
+		return 0;
+	}
+
 	buyingstore_setup(sd, script_getnum(st,2));
 	return 0;
 }
