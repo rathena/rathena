@@ -9602,13 +9602,13 @@ int pc_readdb(void)
 	fclose(fp);
 	for (i = 0; i < JOB_MAX; i++) {
 		if (!pcdb_checkid(i)) continue;
-		if (i == JOB_WEDDING || i == JOB_XMAS || i == JOB_SUMMER)
+		if (i == JOB_WEDDING || i == JOB_XMAS || i == JOB_SUMMER || i == JOB_HANBOK)
 			continue; //Classes that do not need exp tables.
 		j = pc_class2idx(i);
 		if (!max_level[j][0])
-			ShowWarning("Class %s (%d) does not has a base exp table.\n", job_name(i), i);
+			ShowWarning("Class %s (%d) does not have a base exp table.\n", job_name(i), i);
 		if (!max_level[j][1])
-			ShowWarning("Class %s (%d) does not has a job exp table.\n", job_name(i), i);
+			ShowWarning("Class %s (%d) does not have a job exp table.\n", job_name(i), i);
 	}
 	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","exp.txt");
 

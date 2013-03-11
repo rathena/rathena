@@ -12,7 +12,6 @@
 #include "chrif.h"
 #include "vending.h"
 #include "pc.h"
-#include "npc.h"
 #include "skill.h"
 #include "battle.h"
 #include "log.h"

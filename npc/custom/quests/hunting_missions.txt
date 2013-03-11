@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.2b
+//= 1.3
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: =========================================
@@ -50,7 +50,7 @@ function Chk; function Cm;
 			close;
 		}
 		mes "You must hunt:";
-		query_sql("SELECT ID FROM mob_db WHERE left(Sprite, 4) != 'meta' AND left(Sprite, 2) != 'E_' AND ~Mode & 32 AND EXP > 0 AND MVP1id = 0 AND DropCardid > 4000 AND DropCardid < 5000 AND ID < 2000 ORDER BY rand() LIMIT "+.Quests, .@mob);
+		query_sql("SELECT ID FROM `mob_db` WHERE left(Sprite, 4) != 'meta' AND left(Sprite, 2) != 'E_' AND ~Mode & 32 AND EXP > 0 AND MVP1id = 0 AND DropCardid > 4000 AND DropCardid < 5000 AND ID < 2000 AND instr('"+.Blacklist$+"',ID) = 0 ORDER BY rand() LIMIT "+.Quests, .@mob);
 		for (set .@i,0; .@i<.Quests; set .@i,.@i+1) {
 			setd "Mission"+.@i, .@mob[.@i];
 			setd "Mission"+.@i +"_",0;
@@ -268,6 +268,12 @@ OnInit:
 		getbattleflag("base_exp_rate")/100,getbattleflag("job_exp_rate")/100,60;
 	setarray .Shop[0],	// Reward items: <ID>,<point cost> (about 10~20 points per hunt).
 		512,1,513,1,514,1,538,5,539,5,558,10,561,10;
+	set .Blacklist$,	// Blacklisted mob IDs.
+		"1062,1088,1183,1186,1200,1212,1220,1221,1234,1235,"+
+		"1244,1245,1250,1268,1290,1293,1294,1296,1298,1299,"+
+		"1300,1301,1303,1304,1305,1306,1308,1309,1311,1313,"+
+		"1515,1588,1618,1676,1677,1678,1679,1796,1797,1974,"+
+		"1975,1976,1977,1978,1979";
 
 	npcshopdelitem "mission_shop",512;
 	for(set .@i,0; .@i<getarraysize(.Shop); set .@i,.@i+2)
