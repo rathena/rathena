@@ -6873,7 +6873,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case NPC_EMOTION_ON:
 	case NPC_EMOTION:
-		//va[0] is the emotion to use.
+		//val[0] is the emotion to use.
 		//NPC_EMOTION & NPC_EMOTION_ON can change a mob's mode 'permanently' [Skotlex]
 		//val[1] 'sets' the mode
 		//val[2] adds to the current mode
@@ -6884,6 +6884,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_emotion(bl, md->db->skill[md->skill_idx].val[0]);
 			if(md->db->skill[md->skill_idx].val[4] && tsce)
 				status_change_end(bl, type, INVALID_TIMER);
+				
+			//If mode gets set by NPC_EMOTION then the target should be reset [Playtester]
+			if(skill_id == NPC_EMOTION && md->db->skill[md->skill_idx].val[1])
+				mob_unlocktarget(md,tick);
 
 			if(md->db->skill[md->skill_idx].val[1] || md->db->skill[md->skill_idx].val[2])
 				sc_start4(src, type, 100, skill_lv,
