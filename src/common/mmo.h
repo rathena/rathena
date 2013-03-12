@@ -382,6 +382,9 @@ struct mmo_charstatus {
 	short rename;
 
 	time_t delete_date;
+
+	// Char server addon system
+	unsigned int character_moves;
 };
 
 typedef enum mail_status {

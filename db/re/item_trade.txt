@@ -1919,6 +1919,7 @@
 2826,65,100	// Dark Knight Belt
 2827,65,100	// Dark Knight Glove
 2843,507,100	// Gold Trickle
+12786,459,100	// Character Position Change Coupon
 13049,65,100	// Lacma
 13052,499,100	// Tourist Dagger
 13111,507,100	// Sharpshooter Revolver
