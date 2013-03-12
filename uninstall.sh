@@ -18,6 +18,5 @@ case $1 in
 		echo "Uninstallation succed"
 	;;
 	'*')
-		echo "Please enter a target usage './uninstall { all | bin }'"	
+		echo "Please enter a target usage './uninstall { all | bin }'"
 esac
-
