@@ -888,21 +888,18 @@ int parse_fromchar(int fd){
 		break;
 
 		case 0x2738: //Change PIN Code for a account
-			if( RFIFOREST(fd) < 15 )
+			if( RFIFOREST(fd) < 11 )
 				return 0;
 			else{
 				struct mmo_account acc;
 
 				if( accounts->load_num(accounts, &acc, RFIFOL(fd,2) ) ){
 					strncpy( acc.pincode, (char*)RFIFOP(fd,6), 5 );
-					acc.pincode_change = RFIFOL(fd,11);
-					if( acc.pincode_change > 0 ){
-						acc.pincode_change += time( NULL );
-					}
+					acc.pincode_change = time( NULL );
 					accounts->save(accounts, &acc);
 				}
 
-				RFIFOSKIP(fd,15);
+				RFIFOSKIP(fd,11);
 			}
 		break;
 
