@@ -106,6 +106,7 @@ CREATE TABLE IF NOT EXISTS `char` (
   `fame` int(11) unsigned NOT NULL default '0',
   `rename` SMALLINT(3) unsigned NOT NULL default '0',
   `delete_date` INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `moves` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY  (`char_id`),
   UNIQUE KEY `name_key` (`name`),
   KEY `account_id` (`account_id`),
