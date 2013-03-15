@@ -7404,7 +7404,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_MERC_QUICKEN:
 			val2 = 300;
 			break;
-#ifndef RENEWAL
+#ifndef RENEWAL_ASPD
 		case SC_SPEARQUICKEN:
 			val2 = 200+10*val1;
 			break;
