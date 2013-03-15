@@ -23,6 +23,8 @@ case $1 in
 
 	*)
         	echo "Usage: check-doc { script | atc | both }"
+        	read -p "Enter a valid option: " readEnterKey
+        	$0 $readEnterKey
 	;;
 esac
 

@@ -304,6 +304,7 @@ sub CheckDupPort { my ($rhConfig,$sChkKeys) = @_;
     }
     return 0;
 }
+
 sub CheckUsedPort { my($sPort) = @_;
     open PIPE,"netstat -nat |" or die $!;
     my @line = grep { /$sPort/ } <PIPE>;

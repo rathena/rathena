@@ -471,14 +471,11 @@ set( DEVELOPMENT_DIRECTORIES
 	)
 set( RUNTIME_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/athena-start"
-	"${CMAKE_CURRENT_SOURCE_DIR}/char-server.sh"
 	"${CMAKE_CURRENT_SOURCE_DIR}/charserv-sql.bat"
 	"${CMAKE_CURRENT_SOURCE_DIR}/dbghelp.dll"
 	"${CMAKE_CURRENT_SOURCE_DIR}/libmysql.dll"
 	"${CMAKE_CURRENT_SOURCE_DIR}/LICENSE"
-	"${CMAKE_CURRENT_SOURCE_DIR}/login-server.sh"
 	"${CMAKE_CURRENT_SOURCE_DIR}/logserv-sql.bat"
-	"${CMAKE_CURRENT_SOURCE_DIR}/map-server.sh"
 	"${CMAKE_CURRENT_SOURCE_DIR}/mapserv-sql.bat"
 	"${CMAKE_CURRENT_SOURCE_DIR}/pcre3.dll"
 	"${CMAKE_CURRENT_SOURCE_DIR}/README.txt"
