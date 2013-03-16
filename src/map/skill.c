@@ -5063,7 +5063,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case AL_DECAGI:
 	case MER_DECAGI:
 		clif_skill_nodamage (src, bl, skill_id, skill_lv,
-			sc_start(bl, type, (40 + skill_lv * 2 + (status_get_lv(src) + sstatus->int_)/5), skill_lv, skill_get_time(skill_id,skill_lv)));
+			sc_start(bl, type, (50 + skill_lv * 3 + (status_get_lv(src) + sstatus->int_)/5), skill_lv, skill_get_time(skill_id,skill_lv)));
 		break;
 
 	case AL_CRUCIS:

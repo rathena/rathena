@@ -6195,7 +6195,12 @@ void status_change_init(struct block_list *bl)
 //the flag values are the same as in status_change_start.
 int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int tick, int flag)
 {
-	int sc_def = 0, tick_def = 0;
+	//Percentual resistance: 10000 = 100% Resist
+	//Example: 50% -> sc_def=5000 -> 25%; 5000ms -> tick_def=5000 -> 2500ms
+	int sc_def = 0, tick_def = -1; //-1 = use sc_def
+	//Linear resistance substracted from rate and tick after percentual resistance was applied
+	//Example: 25% -> sc_def2=2000 -> 5%; 2500ms -> tick_def2=2000 -> 500ms
+	int sc_def2 = 0, tick_def2 = -1; //-1 = use sc_def2
 	struct status_data* status;
 	struct status_change* sc;
 	struct map_session_data *sd;
@@ -6244,160 +6249,173 @@ int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int ti
 	if( sc && !sc->count )
 		sc = NULL;
 	switch (type) {
-	case SC_STUN:
-	case SC_POISON:
-		if( sc && sc->data[SC__UNLUCKY] )
-			return tick;
-	case SC_DPOISON:
-	case SC_SILENCE:
-	case SC_BLEEDING:
-		sc_def = 3 +status->vit;
-		break;
-	case SC_SLEEP:
-		sc_def = 3 +status->int_;
-		break;
-	case SC_DEEPSLEEP:
-		tick_def = status->int_ / 10 + status_get_lv(bl) * 65 / 1000; // Seems to be -1 sec every 10 int and -5% chance every 10 int.
-		sc_def = 5 * status->int_ /10;
-		break;
-	case SC_DECREASEAGI:
-	case SC_ADORAMUS://Arch Bishop
-		if (sd) tick>>=1; //Half duration for players.
-	case SC_STONE:
-	case SC_FREEZE:
-		sc_def = 3 +status->mdef;
-		break;
-	case SC_CURSE:
-		//Special property: inmunity when luk is greater than level or zero
-		if (status->luk > status_get_lv(bl) || status->luk == 0)
-			return 0;
-		else
-			sc_def = 3 +status->luk;
-		tick_def = status->vit;
-		break;
-	case SC_BLIND:
-		if( sc && sc->data[SC__UNLUCKY] )
-			return tick;
-		sc_def = 3 +(status->vit + status->int_)/2;
-		break;
-	case SC_CONFUSION:
-		sc_def = 3 +(status->str + status->int_)/2;
-		break;
-	case SC_ANKLE:
-		if(status->mode&MD_BOSS) // Lasts 5 times less on bosses
-			tick /= 5;
-		sc_def = status->agi / 2;
-		break;
-	case SC_MAGICMIRROR:
-	case SC_ARMORCHANGE:
-		if (sd) //Duration greatly reduced for players.
-			tick /= 15;
-		//No defense against it (buff).
-		rate -= (status_get_lv(bl) / 5 + status->vit / 4 + status->agi / 10)*100; // Lineal Reduction of Rate
-		break;
+		case SC_STUN:
+		case SC_POISON:
+			if( sc && sc->data[SC__UNLUCKY] )
+				return tick;
+		case SC_DPOISON:
+		case SC_SILENCE:
+		case SC_BLEEDING:
+			sc_def = status->vit*100;
+			sc_def2 = status->luk*10;
+			break;
+		case SC_SLEEP:
+			sc_def = status->int_*100;
+			sc_def2 = status->luk*10;
+			break;
+		case SC_DEEPSLEEP:
+			sc_def = status->int_*50;
+			tick_def = status->int_*10 + status_get_lv(bl) * 65 / 10; //Seems to be -1 sec every 10 int and -5% chance every 10 int.
+			break;
+		case SC_DECREASEAGI:
+		case SC_ADORAMUS: //Arch Bishop
+			if (sd) tick>>=1; //Half duration for players.
+		case SC_STONE:
+			//Impossible to reduce duration with stats
+			tick_def = 0;
+			tick_def2 = 0;
+		case SC_FREEZE:
+			sc_def = status->mdef*100;
+			sc_def2 = status->luk*10;
+			break;
+		case SC_CURSE:
+			//Special property: inmunity when luk is greater than level or zero
+			if (status->luk > status_get_lv(bl) || status->luk == 0)
+				return 0;
+			sc_def = status->luk*100;
+			sc_def2 = status->luk*10;
+			tick_def = status->vit*100;
+			break;
+		case SC_BLIND:
+			if( sc && sc->data[SC__UNLUCKY] )
+				return tick;
+			sc_def = (status->vit + status->int_)*50;
+			sc_def2 = status->luk*10;
+			break;
+		case SC_CONFUSION:
+			sc_def = (status->str + status->int_)*50;
+			sc_def2 = status->luk*10;
+			break;
+		case SC_ANKLE:
+			if(status->mode&MD_BOSS) // Lasts 5 times less on bosses
+				tick /= 5;
+			sc_def = status->agi*50;
+			break;
+		case SC_MAGICMIRROR:
+		case SC_ARMORCHANGE:
+			if (sd) //Duration greatly reduced for players.
+				tick /= 15;
+			sc_def2 = status_get_lv(bl)*20 + status->vit*25 + status->agi*10; // Lineal Reduction of Rate
+			tick_def2 = 0; //No duration reduction
+			break;
 		case SC_MARSHOFABYSS:
 			//5 second (Fixed) + 25 second - {( INT + LUK ) / 20 second }
-			tick -= (status->int_ + status->luk) / 20 * 1000;
+			tick_def2 = (status->int_ + status->luk)*50;
 			break;
 		case SC_STASIS:
 			//5 second (fixed) + { Stasis Skill level * 5 - (Target's VIT + DEX) / 20 }
-			tick -= (status->vit + status->dex) / 20 * 1000;
-		break;
-	case SC_WHITEIMPRISON:
-		if( tick == 5000 ) // 100% on caster
+			tick_def2 = (status->vit + status->dex)*50;
 			break;
-		if( bl->type == BL_PC )
-			tick -= (status_get_lv(bl) / 5 + status->vit / 4 + status->agi / 10)*100;
-		else
-			tick -= (status->vit + status->luk) / 20 * 1000;
-		break;
-	case SC_BURNING:
-		// From iROwiki : http://forums.irowiki.org/showpost.php?p=577240&postcount=583
-		tick -= 50*status->luk + 60*status->int_ + 170*status->vit;
-		tick = max(tick,10000); // Minimum Duration 10s.
-		break;
-	case SC_FREEZING:
-		tick -= 1000 * ((status->vit + status->dex) / 20);
-		tick = max(tick,10000); // Minimum Duration 10s.
-		break;
-	case SC_OBLIVIONCURSE: // 100% - (100 - 0.8 x INT)
-		sc_def = 100 - ( 100 - status->int_* 8 / 10 );
-		sc_def = max(sc_def, 5); // minimum of 5%
-		break;
-	case SC_BITE: // {(Base Success chance) - (Target's AGI / 4)}
-		rate -= status->agi*1000/4;
-		rate = max(rate,50000); // minimum of 50%
-		break;
-	case SC_ELECTRICSHOCKER:
-		if( bl->type == BL_MOB )
-			tick -= 1000 * (status->agi/10);
-		break;
-	case SC_CRYSTALIZE:
-		tick -= (1000*(status->vit/10))+(status_get_lv(bl)/50);
-		break;
-	case SC_MANDRAGORA:
-		sc_def = (status->vit+status->luk)/5;
-		break;
-	case SC_KYOUGAKU:
-		tick -= 30*status->int_;
-		break;
-        case SC_PARALYSIS:
-		tick -= 50 * (status->vit + status->luk); //(1000/20);
-		break;
-	default:
-		//Effect that cannot be reduced? Likely a buff.
-		if (!(rnd()%10000 < rate))
-			return 0;
-		return tick?tick:1;
+		case SC_WHITEIMPRISON:
+			if( tick == 5000 ) // 100% on caster
+				break;
+			if( bl->type == BL_PC )
+				tick_def2 = status_get_lv(bl)*20 + status->vit*25 + status->agi*10;
+			else
+				tick_def2 = (status->vit + status->luk)*50;
+			break;
+		case SC_BURNING:
+			// From iROwiki : http://forums.irowiki.org/showpost.php?p=577240&postcount=583
+			tick_def2 = 50*status->luk + 60*status->int_ + 170*status->vit;
+			break;
+		case SC_FREEZING:
+			tick_def2 = (status->vit + status->dex)*50;
+			break;
+		case SC_OBLIVIONCURSE: // 100% - (100 - 0.8 x INT)
+			sc_def = status->int_*80;
+			sc_def = max(sc_def, 500); // minimum of 5% resist
+			break;
+		case SC_BITE: // {(Base Success chance) - (Target's AGI / 4)}
+			sc_def2 = status->agi*25;
+			tick_def2 = 0; //No duration reduction
+			break;
+		case SC_ELECTRICSHOCKER:
+			if( bl->type == BL_MOB )
+				tick_def2 = status->agi*100;
+			break;
+		case SC_CRYSTALIZE:
+			tick_def2 = status->vit*100 + status_get_lv(bl)*20;
+			break;
+		case SC_MANDRAGORA:
+			sc_def = (status->vit + status->luk)*20;
+			break;
+		case SC_KYOUGAKU:
+			tick_def2 = 30*status->int_;
+			break;
+		case SC_PARALYSIS:
+			tick_def2 = (status->vit + status->luk)*50;
+			break;
+		default:
+			//Effect that cannot be reduced? Likely a buff.
+			if (!(rnd()%10000 < rate))
+				return 0;
+			return max(1,tick);
 	}
 
 	if (sd) {
 
-		if (battle_config.pc_sc_def_rate != 100)
+		if (battle_config.pc_sc_def_rate != 100) {
 			sc_def = sc_def*battle_config.pc_sc_def_rate/100;
-
-		if (sc_def < battle_config.pc_max_sc_def)
-			sc_def += (battle_config.pc_max_sc_def - sc_def)*
-				status->luk/battle_config.pc_luk_sc_def;
-		else
-			sc_def = battle_config.pc_max_sc_def;
-
-		if (tick_def) {
-			if (battle_config.pc_sc_def_rate != 100)
-				tick_def = tick_def*battle_config.pc_sc_def_rate/100;
+			sc_def2 = sc_def2*battle_config.pc_sc_def_rate/100;
 		}
 
+		sc_def = min(sc_def, battle_config.pc_max_sc_def*100);
+		sc_def2 = min(sc_def2, battle_config.pc_max_sc_def*100);
+
+		if (tick_def > 0 && battle_config.pc_sc_def_rate != 100) {
+			tick_def = tick_def*battle_config.pc_sc_def_rate/100;
+			tick_def2 = tick_def2*battle_config.pc_sc_def_rate/100;
+		}
 	} else {
 
-		if (battle_config.mob_sc_def_rate != 100)
+		if (battle_config.mob_sc_def_rate != 100) {
 			sc_def = sc_def*battle_config.mob_sc_def_rate/100;
+			sc_def2 = sc_def2*battle_config.mob_sc_def_rate/100;
+		}
 
-		if (sc_def < battle_config.mob_max_sc_def)
-			sc_def += (battle_config.mob_max_sc_def - sc_def)*
-				status->luk/battle_config.mob_luk_sc_def;
-		else
-			sc_def = battle_config.mob_max_sc_def;
+		sc_def = min(sc_def, battle_config.mob_max_sc_def*100);
+		sc_def2 = min(sc_def2, battle_config.mob_max_sc_def*100);
 
-		if (tick_def) {
-			if (battle_config.mob_sc_def_rate != 100)
-				tick_def = tick_def*battle_config.mob_sc_def_rate/100;
+		if (tick_def > 0 && battle_config.mob_sc_def_rate != 100) {
+			tick_def = tick_def*battle_config.mob_sc_def_rate/100;
+			tick_def2 = tick_def2*battle_config.mob_sc_def_rate/100;
 		}
 	}
 
 	if (sc) {
 		if (sc->data[SC_SCRESIST])
-			sc_def += sc->data[SC_SCRESIST]->val1; //Status resist
+			sc_def += sc->data[SC_SCRESIST]->val1*100; //Status resist
 		else if (sc->data[SC_SIEGFRIED])
-			sc_def += sc->data[SC_SIEGFRIED]->val3; //Status resistance.
+			sc_def += sc->data[SC_SIEGFRIED]->val3*100; //Status resistance.
 	}
 
 	//When no tick def, reduction is the same for both.
-	if( !tick_def && type != SC_STONE ) //Recent tests show duration of petrify isn't reduced by MDEF. [Inkfish]
+	if(tick_def < 0)
 		tick_def = sc_def;
+	if(tick_def2 < 0)
+		tick_def2 = sc_def2;
 
 	//Natural resistance
 	if (!(flag&8)) {
-		rate -= rate*sc_def/100;
+		rate -= rate*sc_def/10000;
+		rate -= sc_def2;
+
+		//Minimum chances
+		switch (type) {
+			case SC_BITE:
+				rate = max(rate, 5000); //Minimum of 50%
+				break;
+		}
 
 		//Item resistance (only applies to rate%)
 		if(sd && SC_COMMON_MIN <= type && type <= SC_COMMON_MAX)
@@ -6408,22 +6426,38 @@ int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int ti
 				rate -= rate*sd->sc.data[SC_COMMONSC_RESIST]->val1/100;
 		}
 	}
+
 	if (!(rnd()%10000 < rate))
 		return 0;
 
-	//Why would a status start with no duration? Presume it has
-	//duration defined elsewhere.
-	if (!tick) return 1;
+	//Even if a status change doesn't have a duration, it should still trigger
+	if (tick < 1) return 1;
 
 	//Rate reduction
- 	if (flag&2)
+	if (flag&2)
 		return tick;
 
-	tick -= tick*tick_def/100;
-	// Changed to 5 seconds according to recent tests [Playtester]
-	if (type == SC_ANKLE && tick < 5000)
-		tick = 5000;
-	return tick<=0?0:tick;
+	tick -= tick*tick_def/10000;
+	tick -= tick_def2;
+
+	//Minimum durations
+	switch (type) {
+		case SC_ANKLE:
+		case SC_MARSHOFABYSS:
+		case SC_STASIS:
+			tick = max(tick, 5000); //Minimum duration 5s
+			break;
+		case SC_BURNING:
+		case SC_FREEZING:
+			tick = max(tick, 10000); //Minimum duration 10s
+			break;
+		default:
+			//Skills need to trigger even if the duration is reduced below 1ms
+			tick = max(tick, 1);
+			break;
+	}
+
+	return tick;
 }
 
 /*==========================================
