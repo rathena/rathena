@@ -6359,7 +6359,7 @@ int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int ti
 			//Effect that cannot be reduced? Likely a buff.
 			if (!(rnd()%10000 < rate))
 				return 0;
-			return max(1,tick);
+			return tick ? tick : 1;
 	}
 
 	if (sd) {
