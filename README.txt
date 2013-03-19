@@ -15,7 +15,7 @@
 ||   Table of Contents    ||
 ============================
 || 1. What is rAthena?    ||
-|| 2. Prerequisites        ||
+|| 2. Prerequisites       ||
 || 3. Installation        ||
 || 4. Troubleshooting     ||
 || 5. Helpful Links       ||
@@ -32,7 +32,6 @@ server package. Written in C, the program is very versatile and provides NPCs,
 warps and modifications. The project is jointly managed by a group of volunteers
 located around the world as well as a tremendous community providing QA and
 support. rAthena is a continuation of the eAthena project.
-
 
 
 ============================
@@ -57,7 +56,6 @@ Linux (names of packages may require specific version numbers on certain distrib
 	* pcre-devel
 	* subversion
 	* zlib-devel
-
 
 
 ============================
@@ -89,7 +87,6 @@ Linux
 	* When you're ready, type: ./athena-start start
 
 
-
 ============================
 || 4. Troubleshooting     ||
 ============================
@@ -99,38 +96,40 @@ can be solved simply by looking at the error messages given.
 
 Examples:
 
-	1.) You get an error on your map-server_sql that looks something like this:
-			[Error]: npc_parsesrcfile: Unable to parse, probably a missing or extra TAB in 
-			file 'npc/custom/jobmaster.txt', line '17'. Skipping line...
-			* w1=prontera,153,193,6 script
-			* w2=Job Master
-			* w3=123,{
-			* w4=
+1.) You get an error on your map-server_sql that looks something like this:
 
-		If you look at the error, it's telling you that you're missing (or have an extra) TAB.
-		This is easily fixed by looking at this part of the error: * w1=prontera,153,193,6 script
-		If there was a TAB where it's supposed to be, that line would have prontera,153,193,6 at w1
-		and 'script' at w2. As there's a space instead of a TAB, the two sections are read as a
-		single parameter.
+	[Error]: npc_parsesrcfile: Unable to parse, probably a missing or extra TAB in 
+	file 'npc/custom/jobmaster.txt', line '17'. Skipping line...
+	* w1=prontera,153,193,6 script
+	* w2=Job Master
+	* w3=123,{
+	* w4=
 
-	2.) You have a default user/password warning similar to the following:
-			[Warning]: Using the default user/password s1/p1 is NOT RECOMMENDED.
-			[Notice]: Please edit your 'login' table to create a proper inter-server user/pa
-			ssword (gender 'S')
-			[Notice]: and then edit your user/password in conf/map_athena.conf (or conf/impo
-			rt/map_conf.txt)
+    If you look at the error, it's telling you that you're missing (or have an extra) TAB.
+    This is easily fixed by looking at this part of the error: * w1=prontera,153,193,6 script
+    If there was a TAB where it's supposed to be, that line would have prontera,153,193,6 at w1
+    and 'script' at w2. As there's a space instead of a TAB, the two sections are read as a
+    single parameter.
 
-		Relax. This is just indicating that you're using the default username and password. To
-		fix this, check over the part in the installation instructions relevant to the `login` table.
-		
-	3.) Your Map Server says the following:
-			[Error]: make_connection: connect failed (socket #2, error 10061: No connection
-			could be made because the target machine actively refused it.
-			)!
+2.) You have a default user/password warning similar to the following:
 
-		If this shows up on the map server, it generally means that there is no Char Server available
-		to accept the connection.
+	[Warning]: Using the default user/password s1/p1 is NOT RECOMMENDED.
+	[Notice]: Please edit your 'login' table to create a proper inter-server user/pa
+	ssword (gender 'S')
+	[Notice]: and then edit your user/password in conf/map_athena.conf (or conf/impo
+	rt/map_conf.txt)
 
+    Relax. This is just indicating that you're using the default username and password. To
+    fix this, check over the part in the installation instructions relevant to the `login` table.
+	
+3.) Your map-server outputs the following:
+
+	[Error]: make_connection: connect failed (socket #2, error 10061: No connection
+	could be made because the target machine actively refused it.
+	)!
+
+    If this shows up on the map server, it generally means that there is no Char Server available
+    to accept the connection.
 
 
 ============================
@@ -142,38 +141,23 @@ pages on the Wiki or topics within the rAthena forum.
 * rAthena Forums
 	http://rathena.org/
 
-* SVN Repository URL:
+* SVN Repository
 	https://rathena.svn.sourceforge.net/svnroot/rathena/trunk/
 
-* Full Installation Instructions:
-	Windows		http://rathena.org/wiki/Installation_on_Windows
-	CentOS		http://rathena.org/wiki/Installation_(CentOS)
-	Debian		http://rathena.org/wiki/Installation_(Debian)
+* Full Installation Instructions
+	Windows 	http://rathena.org/wiki/Installation_on_Windows
+	CentOS  	http://rathena.org/wiki/Installation_(CentOS)
+	Debian  	http://rathena.org/wiki/Installation_(Debian)
 	
 * rAthena IRC Channel
-	irc://irc.rathena.net
-
+	irc://irc.rizon.net/rathena
 
 
 ============================
 || 6. More Documentation  ||
 ============================
-rAthena has a large collection of help files and sample NPC scripts located in /doc/
-
-* Scripting
-	It is recommended to look through /doc/script_commands.txt for help, pointers or
-	even for ideas for your next NPC script. Most script commands have a usage example.
-	
-* @commands
-	In-game, Game Masters have the ability to use Atcommands (@) to control players, 
-	create items, spawn mobs, reload configuration files and even control the weather.
-	For an in-depth explanation, please see /doc/atcommands.txt
-
-* Permissions
-	The rAthena emulator has a permission system that enables certain groups of players
-	to perform certain actions, or have access to certain visual enhancements or in-game
-	activity. To see what permissions are available, they are detailed in /doc/permissions.txt
-
-There are more files in the /doc/ directory that will help you to create scripts or update the
-mapcache, or even explain how the job system and item bonuses work. Before posting a topic asking
-for help on the forums, we recommend that all users take the time to look over this directory.
+rAthena has a large collection of help files and sample NPC scripts located in the /doc/
+directory. These include detailed explanations of NPC script commands, atcommands (@),
+group permissions, item bonuses, and packet structures, among many other topics. We
+recommend that all users take the time to look over this directory before asking for
+assistance elsewhere.
