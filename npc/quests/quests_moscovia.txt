@@ -1096,30 +1096,10 @@ mosk_ship,101,111,4	script	rudder#ship	111,{
 		mes "We should make sure to kill any";
 		mes "monsters onboard.";
 		close;
-	} else if (mos_whale_edq == 22 && $@mos1_edq > 0) {
-		mes "[Mr. Ibanoff]";
-		mes "We should make sure to kill any";
-		mes "monsters onboard.";
-		close;
-	} else if (mos_whale_edq == 23 && $@mos1_edq > 0) {
-		mes "[Mr. Ibanoff]";
-		mes "We should make sure to kill any";
-		mes "monsters onboard.";
-		close;
-	} else if (mos_whale_edq == 25 && $@mos1_edq > 0) {
-		mes "[Mr. Ibanoff]";
-		mes "We should make sure to kill any";
-		mes "monsters onboard.";
-		close;
 	} else if (mos_whale_edq == 25 && $@mos1_edq == 0) {
 		mes "[Mr. Ibanoff]";
 		mes "You can adjust the rudder,";
 		mes "under my direction.";
-		close;
-	} else if (mos_whale_edq > 239 && mos_whale_edq < 250 && $@mos1_edq > 0) {
-		mes "[Mr. Ibanoff]";
-		mes "We should make sure to kill any";
-		mes "monsters onboard.";
 		close;
 	} else if (mos_whale_edq == 26) {
 		mes "[Mr. Ibanoff]";
@@ -2022,7 +2002,7 @@ mosk_in,131,92,3	script	Csar Alexsay III#npc	965,{
 		mes "Stay here as long as you want, and";
 		mes "enjoy yourself to the fullest this summer.";
 		close;
-	} if (mos_whale_edq < 16) {
+	} else if (mos_whale_edq < 16) {
 		mes "[Csar Alexsay III]";
 		mes "Welcome to Moscovia!";
 		mes "I am the ruler, Csar Aleksay III, of Moscovia.";
@@ -2033,7 +2013,7 @@ mosk_in,131,92,3	script	Csar Alexsay III#npc	965,{
 	} else if (mos_whale_edq == 16) {
 		mes "[Csar Alexsay III]";
 		mes "A foreign traveler...?";
-		mes " Do you have something to tell me?";
+		mes "Do you have something to tell me?";
 		next;
 		mes "[Csar Alexsay III]";
 		mes "If it is not important,";
@@ -4401,7 +4381,7 @@ mosk_in,215,46,5	script	Baba Yaga, the Horrible	970,{
 		mes "[Baba Yaga, the Horrible]";
 		mes "Let me see...where the season spell...";
 		next;
-		mes "rummaging..";
+		mes "rummaging...";
 		next;
 		mes "[Baba Yaga, the Horrible]";
 		mes "Ah, here it is... I found it!";

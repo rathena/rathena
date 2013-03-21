@@ -4568,9 +4568,9 @@ since jAthena, so probably nobody knows for sure why is it so.
 
 *downrefitem <equipment slot>;
 
-This command will downgrade an item by - 1 in the specified equipment slot of the 
-invoking character. So the item will not be destroyed unlike in the failedrefitem script command.
-This will also display a 'refine failure' effect on the character and put appropriate
+This command will downgrade an item in the specified equipment slot of the invoking
+character by -1. For a list of equipment slots see 'getequipid'. This command will
+also display a 'refine failure' effect on the character and put appropriate
 messages into their chat window.
 
 The official scripts seems to use the 'downrefitem' command as a function 
@@ -7359,20 +7359,20 @@ If parameter "HUNTING" is supplied:
 *showevent <state>, <color>;
 
 Show a colored mark in the mini-map like "viewpoint" and an emotion on top of a NPC.
-This is used to indicate that a NPC has a quest or an event to certain player/s.
+This is used to indicate that a NPC has a quest or an event to certain players.
 
 state can be:
-	0 = disable ( Used to disable and remove the mark and the emotion from the NPC. )
-	1 = exclamation emotion ( Used to show an important quest event to certain player. )
-	2 = interrogation emotion ( Used to show an non-important quest event to certain player. )
-	Other value may cause client crashes.
+	0 = disable (Used to disable and remove the mark and the emotion from the NPC.)
+	1 = exclamation emotion (Used to show an important quest event to certain player.)
+	2 = interrogation emotion (Used to show an non-important quest event to certain player.)
+	Other values may cause client crashes.
 
 color can be:
 	0 = yellow "Quest"
 	1 = orange "Job"
 	2 = green "Event"
 	3 = an MVP flag
-	other values show a transparent mark in the mini-map.
+	Other values show a transparent mark in the mini-map.
 
 ---------------------------------------
 
