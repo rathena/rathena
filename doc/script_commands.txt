@@ -6982,8 +6982,8 @@ in the count parameter.
 
 Example:
 	replacestr("testing tester", "test", "dash"); //returns "dashing dasher"
-	replacestr("Donkey", "don", "mon", 0);	//returns "monkey"
-	replacestr("test test test test test", "yay", 0, 3); //returns "yay yay yay test test"
+	replacestr("Donkey", "don", "mon", 0); //returns "monkey"
+	replacestr("test test test test test", "test", "yay", 0, 3); //returns "yay yay yay test test"
 
 ---------------------------------------
 
