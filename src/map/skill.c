@@ -1001,9 +1001,9 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 	#ifdef RENEWAL
 		sc_start(bl,SC_FREEZE,65-(5*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
 	#else
-		 //Tharis pointed out that this is normal freeze chance with a base of 300%
+		//On third hit, there is a 150% to freeze the target
 		if(tsc->sg_counter >= 3 &&
-			sc_start(bl,SC_FREEZE,300,skill_lv,skill_get_time2(skill_id,skill_lv)))
+			sc_start(bl,SC_FREEZE,150,skill_lv,skill_get_time2(skill_id,skill_lv)))
 			tsc->sg_counter = 0;
 		/**
 		 * being it only resets on success it'd keep stacking and eventually overflowing on mvps, so we reset at a high value
