@@ -6210,7 +6210,7 @@ int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int ti
 	struct map_session_data *sd;
 
 	nullpo_ret(bl);
-	nullpo_retr(src, tick?tick:1); //If no source, it can't be resisted (NPC given)
+	nullpo_retr(tick?tick:1, src); //If no source, it can't be resisted (NPC given)
 
 	//Status that are blocked by Golden Thief Bug card or Wand of Hermod
 	if (status_isimmune(bl))

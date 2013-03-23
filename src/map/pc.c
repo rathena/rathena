@@ -1437,7 +1437,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 				sd->status.skill[id].id = id;
 				sd->status.skill[id].flag = SKILL_FLAG_TEMPORARY; // So it is not saved, and tagged as a "bonus" skill.
 			}
-			else
+			else if( id != NV_BASIC)
 			{
 				sd->status.skill[id].flag = SKILL_FLAG_REPLACED_LV_0 + sd->status.skill[id].lv; // Remember original level
 			}
