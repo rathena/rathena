@@ -7384,6 +7384,19 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 		pc_setglobalreg(sd, "REPRODUCE_SKILL_LV",0);
 	}
 
+	// Give or reduce transcendent status points
+	if( (b_class&JOBL_UPPER) && !(sd->class_&JOBL_UPPER) ){ // Change from a non t class to a t class -> give points
+		sd->status.status_point += 52;
+		clif_updatestatus(sd,SP_STATUSPOINT);
+	}else if( !(b_class&JOBL_UPPER) && (sd->class_&JOBL_UPPER) ){ // Change from a t class to a non t class -> remove points
+		if( sd->status.status_point < 52 ){
+			// The player already used his bonus points, so we have to reset his status points
+			pc_resetstate(sd);
+		}
+		sd->status.status_point -= 52;
+		clif_updatestatus(sd,SP_STATUSPOINT);
+	}
+
 	if ( (b_class&MAPID_UPPERMASK) != (sd->class_&MAPID_UPPERMASK) ) { //Things to remove when changing class tree.
 		const int class_ = pc_class2idx(sd->status.class_);
 		short id;
