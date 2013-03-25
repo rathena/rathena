@@ -794,7 +794,7 @@
 12363,507,100	// Fit Pipe
 12370,507,100	// Girl's Naivety
 12375,457,100	// Akaraje
-12391,475,100	// Lucky Egg
+12391,475,100	// Lucky Egg C
 12396,73,100	// Gift Box?
 12397,73,100	// Gift Box?
 12398,507,100	// PCBang Gift Box
@@ -1904,6 +1904,17 @@
 17091,473,100	// Upg Mace Box
 17092,473,100	// Upg Bow Box
 17093,473,100	// Upg Two-Handed Sword Box
+12822,457,100	// Songpyun Box50
+12642,475,100	// Fruit Of Mastela 100 Box
+12581,475,100	// Universal Catalog Gold
+12591,475,100	// Universal Catalog Bronze
+12403,475,100	// Lucky Egg C2
+12545,475,100	// Lucky Egg C5
+12577,475,100	// Lucky Egg C6
+12595,475,100	// Lucky Egg C7
+12641,475,100	// Lucky Egg C8
+12654,475,100	// Lucky Egg C9
+12673,475,100	// Lucky Egg C10
 
 // Misc. Items
 1652,499,100	// Tourist Staff
@@ -1926,6 +1937,13 @@
 13425,499,100	// Tourist Sword
 15007,467,100	// Time Keeper Robe
 16006,499,100	// Tourist Mace
+12626,475,100	// Wander Man Scroll
+12627,475,100	// Wicked Nymph Scroll
+12628,475,100	// Kasa Scroll
+12629,475,100	// Salamander Scroll
+12630,475,100	// Teddy Bear Scroll
+12778,473,100	// Bapho Jr Scroll
+12779,473,100	// Galapago Scroll
 
 // Sealed Cards
 4489,457,100	// Sealed Pharaoh Card

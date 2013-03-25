@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20070315
+//= 20130325
 //===== Description: ========================================= 
 //= Contains commands needed for a guild warehouse NPC.
 //============================================================
@@ -18,7 +18,7 @@ prontera,165,188,4	script	Guild Warehouse	112,{
 	menu "Access Guild Warehouse", GS_OPEN, "Exit", GS_EXIT3;
 
 GS_OPEN:
-	set @flag,guildopenstorage(0);
+	set @flag,guildopenstorage();
 	if(@flag == 1) goto GS_EXIT1;
 	if(@flag == 2) goto GS_EXIT2;
 	goto GS_EXIT4;
