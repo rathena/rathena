@@ -290,8 +290,8 @@ int skill_addtimerskill(struct block_list *src,unsigned int tick,int target,int 
 int skill_additional_effect( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,int attack_type,int dmg_lv,unsigned int tick);
 int skill_counter_additional_effect( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,int attack_type,unsigned int tick);
 int skill_blown(struct block_list* src, struct block_list* target, int count, int8 dir, int flag);
-int skill_break_equip(struct block_list *bl, unsigned short where, int rate, int flag);
-int skill_strip_equip(struct block_list *bl, unsigned short where, int rate, int lv, int time);
+int skill_break_equip(struct block_list *src,struct block_list *bl, unsigned short where, int rate, int flag);
+int skill_strip_equip(struct block_list *src,struct block_list *bl, unsigned short where, int rate, int lv, int time);
 // Skills unit
 struct skill_unit_group* skill_id2group(int group_id);
 struct skill_unit_group *skill_unitsetting(struct block_list* src, uint16 skill_id, uint16 skill_lv, short x, short y, int flag);

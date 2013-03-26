@@ -9877,7 +9877,7 @@ BUILDIN_FUNC(sc_start)
 	}
 
 	if( bl )
-		status_change_start(bl, type, 10000, val1, 0, 0, val4, tick, 2);
+		status_change_start(NULL, bl, type, 10000, val1, 0, 0, val4, tick, 2);
 
 	return 0;
 }
@@ -9916,7 +9916,7 @@ BUILDIN_FUNC(sc_start2)
 	}
 
 	if( bl )
-		status_change_start(bl, type, rate, val1, 0, 0, val4, tick, 2);
+		status_change_start(NULL, bl, type, rate, val1, 0, 0, val4, tick, 2);
 
 	return 0;
 }
@@ -9957,7 +9957,7 @@ BUILDIN_FUNC(sc_start4)
 	}
 
 	if( bl )
-		status_change_start(bl, type, 10000, val1, val2, val3, val4, tick, 2);
+		status_change_start(NULL, bl, type, 10000, val1, val2, val3, val4, tick, 2);
 
 	return 0;
 }
@@ -10029,7 +10029,7 @@ BUILDIN_FUNC(getscrate)
 		bl = map_id2bl(st->rid);
 
 	if (bl)
-		rate = status_get_sc_def(bl, (sc_type)type, 10000, 10000, 0);
+		rate = status_get_sc_def(NULL,bl, (sc_type)type, 10000, 10000, 0);
 
 	script_pushint(st,rate);
 	return 0;
@@ -13218,7 +13218,7 @@ BUILDIN_FUNC(summon)
 		md->deletetimer = add_timer(tick+(timeout>0?timeout*1000:60000),mob_timer_delete,md->bl.id,0);
 		mob_spawn (md); //Now it is ready for spawning.
 		clif_specialeffect(&md->bl,344,AREA);
-		sc_start4(&md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 60000);
+		sc_start4(NULL,&md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 60000);
 	}
 	return 0;
 }
@@ -15768,7 +15768,7 @@ BUILDIN_FUNC(mercenary_sc_start)
 	tick = script_getnum(st,3);
 	val1 = script_getnum(st,4);
 
-	status_change_start(&sd->md->bl, type, 10000, val1, 0, 0, 0, tick, 2);
+	status_change_start(NULL, &sd->md->bl, type, 10000, val1, 0, 0, 0, tick, 2);
 	return 0;
 }
 

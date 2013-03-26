@@ -363,7 +363,7 @@ int mercenary_killbonus(struct mercenary_data *md)
 	const enum sc_type scs[] = { SC_MERC_FLEEUP, SC_MERC_ATKUP, SC_MERC_HPUP, SC_MERC_SPUP, SC_MERC_HITUP };
 	int index = rnd() % ARRAYLENGTH(scs);
 
-    sc_start(&md->bl, scs[index], 100, rnd() % 5, 600000);
+	sc_start(&md->bl,&md->bl, scs[index], 100, rnd() % 5, 600000);
 	return 0;
 }
 

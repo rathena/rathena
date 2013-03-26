@@ -783,7 +783,7 @@ int merc_hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 	map_addiddb(&hd->bl);
 	status_calc_homunculus(hd,1);
 	if(hom->class_ == 6052) //eleanor
-	    sc_start(&hd->bl, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, -1);
+	    sc_start(&hd->bl,&hd->bl, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, -1);
 
 	hd->hungry_timer = INVALID_TIMER;
 	return 0;

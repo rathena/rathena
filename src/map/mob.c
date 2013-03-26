@@ -415,7 +415,7 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 		return true;
 	} while(0);
 
-	status_change_start(target, SC_KSPROTECTED, 10000, sd->bl.id, sd->state.noks, sd->status.party_id, sd->status.guild_id, battle_config.ksprotection, 0);
+	status_change_start(src, target, SC_KSPROTECTED, 10000, sd->bl.id, sd->state.noks, sd->status.party_id, sd->status.guild_id, battle_config.ksprotection, 0);
 
 	return false;
 }
@@ -505,7 +505,7 @@ int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y, const
 		if (class_ < 0 && battle_config.dead_branch_active)
 			//Behold Aegis's masterful decisions yet again...
 			//"I understand the "Aggressive" part, but the "Can Move" and "Can Attack" is just stupid" - Poki#3
-			sc_start4(&md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE|MD_CANATTACK|MD_CANMOVE|MD_ANGRY, 0, 60000);
+			sc_start4(NULL,&md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE|MD_CANATTACK|MD_CANMOVE|MD_ANGRY, 0, 60000);
 	}
 
 	return (md) ? md->bl.id : 0; // id of last spawned mob
@@ -2932,17 +2932,17 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id)
 			switch (battle_config.slaves_inherit_mode) {
 			case 1: //Always aggressive
 				if (!(md->status.mode&MD_AGGRESSIVE))
-					sc_start4(&md->bl, SC_MODECHANGE, 100,1,0, MD_AGGRESSIVE, 0, 0);
+					sc_start4(NULL,&md->bl, SC_MODECHANGE, 100,1,0, MD_AGGRESSIVE, 0, 0);
 				break;
 			case 2: //Always passive
 				if (md->status.mode&MD_AGGRESSIVE)
-					sc_start4(&md->bl, SC_MODECHANGE, 100,1,0, 0, MD_AGGRESSIVE, 0);
+					sc_start4(NULL,&md->bl, SC_MODECHANGE, 100,1,0, 0, MD_AGGRESSIVE, 0);
 				break;
 			default: //Copy master.
 				if (md2->status.mode&MD_AGGRESSIVE)
-					sc_start4(&md->bl, SC_MODECHANGE, 100,1,0, MD_AGGRESSIVE, 0, 0);
+					sc_start4(NULL,&md->bl, SC_MODECHANGE, 100,1,0, MD_AGGRESSIVE, 0, 0);
 				else
-					sc_start4(&md->bl, SC_MODECHANGE, 100,1,0, 0, MD_AGGRESSIVE, 0);
+					sc_start4(NULL,&md->bl, SC_MODECHANGE, 100,1,0, 0, MD_AGGRESSIVE, 0);
 				break;
 			}
 		}
