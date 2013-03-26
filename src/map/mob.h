@@ -135,6 +135,7 @@ struct mob_data {
 							//2: Alchemist Marine Sphere
 							//3: Alchemist Summon Flora
 							//4: Summon Zanzou
+							//5: Summon Legion
 		unsigned int clone : 1;/* is clone? 1:0 */
 	} special_state; //Special mob information that does not needs to be zero'ed on mob respawn.
 	struct {

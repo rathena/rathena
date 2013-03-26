@@ -634,12 +634,12 @@ typedef enum sc_type {
 
 	//homon S
 	SC_STYLE_CHANGE,
-	SC_TINDER_BREAKER,
+	SC_TINDER_BREAKER, //@TODO rewritte me plz
+	SC_TINDER_BREAKER2, //for rewritte and other icone
 	SC_CBC,
 	SC_EQC,
 	SC_GOLDENE_FERSE,
 	SC_ANGRIFFS_MODUS,
-	SC_ERASER_CUTTER,
 	SC_OVERED_BOOST,
 	SC_LIGHT_OF_REGENE,
 	SC_ASH,

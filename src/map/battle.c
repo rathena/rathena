@@ -803,15 +803,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 			struct skill_unit_group* group = skill_id2group(sc->data[SC_SAFETYWALL]->val3);
 			uint16 skill_id = sc->data[SC_SAFETYWALL]->val2;
 			if (group) {
-				if(skill_id == MH_STEINWAND){
-				    if (--group->val2<=0)
-					    skill_delunitgroup(group);
-				    d->dmg_lv = ATK_BLOCK;
-				    return 0;
-				}
-				/**
-				 * in RE, SW possesses a lifetime equal to 3 times the caster's health
-				 **/
+			//in RE, SW possesses a lifetime equal to group val2, (3x caster hp, or homon formula)
 			#ifdef RENEWAL
 				d->dmg_lv = ATK_BLOCK;
 				if ( ( group->val2 - damage) > 0 ) {
@@ -1059,7 +1051,8 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 			DAMAGE_SUBRATE(sc->data[SC_GRANITIC_ARMOR]->val2)
 		}
 		if(sc->data[SC_PAIN_KILLER]){
-			DAMAGE_SUBRATE(sc->data[SC_PAIN_KILLER]->val3)
+			damage -= sc->data[SC_PAIN_KILLER]->val3;
+			damage = max(0,damage);
 		}
 		if((sce=sc->data[SC_MAGMA_FLOW]) && (rnd()%100 <= sce->val2) ){
 			skill_castend_damage_id(bl,src,MH_MAGMA_FLOW,sce->val1,gettick(),0);
@@ -1137,9 +1130,9 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 
 		if( sd && (sce = sc->data[SC_FORCEOFVANGUARD]) && flag&BF_WEAPON && rnd()%100 < sce->val2 )
 			pc_addspiritball(sd,skill_get_time(LG_FORCEOFVANGUARD,sce->val1),sce->val3);
-		if (sc->data[SC_STYLE_CHANGE] && rnd()%2) {
-                    TBL_HOM *hd = BL_CAST(BL_HOM,bl);
-                    if (hd) hom_addspiritball(hd, 10); //add a sphere
+		if (sc->data[SC_STYLE_CHANGE]) {
+                    TBL_HOM *hd = BL_CAST(BL_HOM,bl); //when being hit
+                    if (hd && (rnd()%100<(status_get_lv(bl)/2)) ) hom_addspiritball(hd, 10); //add a sphere
                 }
 
 		if( sc->data[SC__DEADLYINFECT] && damage > 0 && rnd()%100 < 65 + 5 * sc->data[SC__DEADLYINFECT]->val1 )
@@ -1200,9 +1193,9 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 			sc_start(src,bl,sc->data[SC_POISONINGWEAPON]->val2,100,sc->data[SC_POISONINGWEAPON]->val1,skill_get_time2(GC_POISONINGWEAPON, 1));
 		if( sc->data[SC__DEADLYINFECT] && damage > 0 && rnd()%100 < 65 + 5 * sc->data[SC__DEADLYINFECT]->val1 )
 			status_change_spread(src, bl);
-                if (sc->data[SC_STYLE_CHANGE] && rnd()%2) {
-                    TBL_HOM *hd = BL_CAST(BL_HOM,src);
-                    if (hd) hom_addspiritball(hd, 10);
+                if (sc->data[SC_STYLE_CHANGE]) {
+                    TBL_HOM *hd = BL_CAST(BL_HOM,src); //when attacking
+                    if (hd && (rnd()%100<(20+status_get_lv(bl)/5)) ) hom_addspiritball(hd, 10);
                 }
 	}
 
@@ -2974,23 +2967,32 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					skillratio += 600 + 100 * skill_lv;
 					break;
 				case MH_STAHL_HORN:
-					skillratio += 400 + 100 * skill_lv;
+					skillratio += 400 + 100 * skill_lv * status_get_lv(src);
+					skillratio = skillratio/100; //@TODO uv1 factor need to be confirmed
 					break;
 				case MH_LAVA_SLIDE:
 					skillratio += -100 + 70 * skill_lv;
 					break;
 				case MH_SONIC_CRAW:
-					skillratio += -100 + 40 * skill_lv;
+					skillratio += -100 + 40 * skill_lv * status_get_lv(src);
+					skillratio = skillratio/100; //@TODO uv1 factor need to be confirmed
 					break;
 				case MH_SILVERVEIN_RUSH:
-					skillratio += -100 + 150 * skill_lv;
+					skillratio += -100 + (150 * skill_lv * status_get_lv(src)) / 100;
 					break;
 				case MH_MIDNIGHT_FRENZY:
-					skillratio += -100 + 300 * skill_lv;
+					skillratio += -100 + (300 * skill_lv * status_get_lv(src)) / 150;
 					break;
 				case MH_TINDER_BREAKER:
+					skillratio += -100 + (100 * skill_lv + status_get_str(src));
+					skillratio = (skillratio * status_get_lv(src)) / 120;
+					break;
+				case MH_CBC:
+					skillratio += 300 * skill_lv + 4 * status_get_lv(src);
+					break;
 				case MH_MAGMA_FLOW:
-					skillratio += -100 + 100 * skill_lv;
+					skillratio += -100 + 100 * skill_lv + 3 * status_get_lv(src);
+					skillratio = (skillratio * status_get_lv(src)) / 120;
 					break;
 			}
 #ifdef RENEWAL
@@ -4111,9 +4113,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case MH_HEILIGE_STANGE:
 						skillratio += 400 + 250 * skill_lv;
+						skillratio = (skillratio * status_get_lv(src))/150;
 						break;
 					case MH_POISON_MIST:
-						skillratio += 100 * skill_lv;
+						skillratio += -100 + 40 * skill_lv * status_get_lv(src) / 100;
 						break;
 				}
 

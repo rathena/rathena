@@ -122,6 +122,7 @@ int skill_block_check(struct block_list *bl, enum sc_type type, uint16 skill_id)
 static int skill_check_unit_range (struct block_list *bl, int x, int y, uint16 skill_id, uint16 skill_lv);
 static int skill_check_unit_range2 (struct block_list *bl, int x, int y, uint16 skill_id, uint16 skill_lv);
 static int skill_destroy_trap( struct block_list *bl, va_list ap );
+static int skill_check_condition_mob_master_sub (struct block_list *bl, va_list ap);
 //Since only mob-casted splash skills can hit ice-walls
 static inline int splash_target(struct block_list* bl)
 {
@@ -664,7 +665,7 @@ int skillnotok_hom(uint16 skill_id, struct homun_data *hd)
 		if(hd->homunculus.hunger <= 1) //if we starving
 		    return 1;
 		break;
-	    case MH_GOLDENE_FERSE: //can be used with angriff
+	    case MH_GOLDENE_FERSE: //cant be used with angriff
 		if(hd->sc.data[SC_ANGRIFFS_MODUS])
 		    return 1;
 		break;
@@ -933,7 +934,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 						(2000 - 4*sstatus->agi - 2*sstatus->dex));
 				}
 			}
-			if(sc && sc->data[SC_PYROCLASTIC] && (rnd() % 1000 <= sstatus->luk * 10 / 3 + 1) )
+			if(sc && sc->data[SC_PYROCLASTIC] && ((rnd()%100)<=sc->data[SC_PYROCLASTIC]->val3) )
 				skill_castend_pos2(src, bl->x, bl->y, BS_HAMMERFALL,sc->data[SC_PYROCLASTIC]->val1, tick, 0);
 		}
 
@@ -1489,8 +1490,14 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 	case MH_SILVERVEIN_RUSH:
 		sc_start4(src,bl,SC_STUN,20 + (5*skill_lv),skill_lv,src->id,0,0,skill_get_time(skill_id,skill_lv));
 		break;
-	case MH_MIDNIGHT_FRENZY:
-		sc_start4(src,bl,SC_FEAR,20 + (4*skill_lv),skill_lv,src->id,0,0,skill_get_time(skill_id,skill_lv));
+	case MH_MIDNIGHT_FRENZY: {
+		TBL_HOM *hd = BL_CAST(BL_HOM,src);
+		int spiritball = (hd?hd->homunculus.spiritball:1);
+		sc_start4(src,bl,SC_FEAR,spiritball*(10+2*skill_lv),skill_lv,src->id,0,0,skill_get_time(skill_id,skill_lv));
+		break;
+	}
+	case MH_XENO_SLASHER:
+		sc_start4(src,bl,SC_BLEEDING,skill_lv,skill_lv,src->id,0,0,skill_get_time2(skill_id,skill_lv)); //@TODO need real duration
 		break;
 	}
 
@@ -4700,10 +4707,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	//recursive homon skill
 	case MH_MAGMA_FLOW:
-	case MH_XENO_SLASHER:
 	case MH_HEILIGE_STANGE:
-		if(flag & 1)
+		if(flag & 1){
+		    if((skill_id == MH_MAGMA_FLOW) && ((rnd()%100)>(3*skill_lv)) ) break;//chance to not trigger atk for magma
 		    skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+		}
 		else {
 		    map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), splash_target(src), src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
 		}
@@ -4721,7 +4729,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case MH_EQC: {
 		TBL_HOM *hd = BL_CAST(BL_HOM,src);
 		int8 k=0;
-		int duration;
+		int duration=0;
 		struct status_change_entry *sce;
 		struct block_list *tbl = NULL; //target
 
@@ -4759,17 +4767,15 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				clif_skill_poseffect(src,skill_id,skill_lv,bl->x,bl->y,tick);
 #endif
 			}
-
 		    case MH_CBC:
 		    case MH_EQC:
-			    duration = (status_get_str(src)*2 - status_get_str(bl))/10;//custom need real formula
+			    duration = max(skill_lv,(status_get_str(src)/7 - status_get_str(bl)/10))*1000; //Yommy formula
 			    hom_delspiritball(hd,skill_id==MH_EQC?2:1,0); //only EQC consume 2 in grp 2
 			    if(skill_id==MH_TINDER_BREAKER)
 				sc_start2(src,src,status_skill2sc(skill_id),100,skill_lv,bl->id,duration);
 			    else
 				sc_start(src,bl,status_skill2sc(skill_id),100,skill_lv,duration);
 			    skill_attack(skill_get_type(skill_id),src,src,tbl,skill_id,skill_lv,tick,flag);
-			    //TODO add bonus for dmg SP ? on battle
 			    break;
 		}
 		break;
@@ -9136,7 +9142,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
                 if (!tsc->data[SC_SILENCE]) //put inavoidable silence on target
                         status_change_start(src,bl, SC_SILENCE, 100, skill_lv, 0,0,0, skill_get_time(skill_id, skill_lv),1|2|8);
 	    }
-	    heal = status_get_matk_min(src)*4;
+	    heal = status_get_sp(src) + status_get_lv(src); //cur_sp+blvl @TODO need real value
             status_heal(bl, heal, 0, 7);
 
 	    //now inflict silence on everyone
@@ -9176,12 +9182,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
             }
             break;
 
-        case MH_LIGHT_OF_REGENE:
+        case MH_LIGHT_OF_REGENE: //self
+		sc_start2(src, src, type, 100, skill_lv, hd->homunculus.level, skill_get_time(skill_id, skill_lv));
 		if(hd){
 		    hd->homunculus.intimacy = 251; //change to neutral (can't be cast if < 750)
 		    if(sd) clif_send_homdata(sd, SP_INTIMATE, hd->homunculus.intimacy); //refresh intimacy info
+		    skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 		}
-		//don't break need to start status and start block timer
+		break;
 	case MH_STYLE_CHANGE: {
 	    struct status_change_entry *sce;
 	    if(hd && (sce=hd->sc.data[SC_STYLE_CHANGE])){ //in preparation for other bl usage
@@ -9208,13 +9216,17 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
                 int summons[5] = {2158, 2159, 2159, 2160, 2160};
                 int qty[5] =     {3   , 3   , 4   , 4   , 5};
                 struct mob_data *sum_md;
-                int i;
+                int i,c=0;
+
+		int maxcount = qty[skill_lv-1];
+		i = map_foreachinmap(skill_check_condition_mob_master_sub ,hd->bl.m, BL_MOB, hd->bl.id, summons[skill_lv-1], skill_id, &c);
+		if(c >= maxcount) return 0; //max qty already spawned
 
                 for(i=0; i<qty[skill_lv - 1]; i++){ //easy way
                     sum_md = mob_once_spawn_sub(src, src->m, src->x, src->y, status_get_name(src), summons[skill_lv - 1], "", SZ_SMALL, AI_ATTACK);
                     if (sum_md) {
                         sum_md->master_id =  src->id;
-			sum_md->special_state.ai = 1;
+			sum_md->special_state.ai = 5;
                         if (sum_md->deletetimer != INVALID_TIMER)
                             delete_timer(sum_md->deletetimer, mob_timer_delete);
                         sum_md->deletetimer = add_timer(gettick() + skill_get_time(skill_id, skill_lv), mob_timer_delete, sum_md->bl.id, 0);
@@ -10759,14 +10771,12 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, uint16 skill
 
 	switch( skill_id ) {
 	case MH_STEINWAND:
-	    val2 = 4 + skill_lv; //nb of attack blocked
-	    break;
 	case MG_SAFETYWALL:
 	#ifdef RENEWAL
-		/**
-		 * According to data provided in RE, SW life is equal to 3 times caster's health
-		 **/
-		val2 = status_get_max_hp(src) * 3;
+		if(skill_id == MH_STEINWAND)
+			val2 = 300 * skill_lv + 65 * ( status->int_ +  status_get_lv(src) ) + status->max_sp; //nb hp
+		else
+			val2 = status_get_max_hp(src) * 3;
 	#else
 		val2 = skill_lv+1;
 	#endif
@@ -12141,7 +12151,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			break;
 		case UNT_POISON_MIST:
 			skill_attack(BF_MAGIC, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
-			status_change_start(ss, bl, SC_BLIND, rnd() % 100 > sg->skill_lv * 10, sg->skill_lv, sg->skill_id, 0, 0, skill_get_time2(sg->skill_id, sg->skill_lv), 2|8);
+			status_change_start(ss, bl, SC_BLIND, (10 + 10 * sg->skill_lv)*100, sg->skill_lv, sg->skill_id, 0, 0, skill_get_time2(sg->skill_id, sg->skill_lv), 2|8);
 			break;
 	}
 
@@ -12544,11 +12554,14 @@ int skill_check_pc_partner (struct map_session_data *sd, uint16 skill_id, short*
 }
 
 /*==========================================
- *
+ * Sub function to count how many spawned mob is around
+ * return :
+ *  x : numbers of mob of class with special ai
  *------------------------------------------*/
 static int skill_check_condition_mob_master_sub (struct block_list *bl, va_list ap)
 {
 	int *c,src_id,mob_class,skill;
+	uint16 ai;
 	struct mob_data *md;
 
 	md=(struct mob_data*)bl;
@@ -12557,7 +12570,8 @@ static int skill_check_condition_mob_master_sub (struct block_list *bl, va_list 
 	skill=va_arg(ap,int);
 	c=va_arg(ap,int *);
 
-	if( md->master_id != src_id || md->special_state.ai != (unsigned)(skill == AM_SPHEREMINE?2:skill == KO_ZANZOU?4:3) )
+	ai = (unsigned)(skill == AM_SPHEREMINE?2:skill == KO_ZANZOU?4:skill == MH_SUMMON_LEGION?5:3);
+	if( md->master_id != src_id || md->special_state.ai != ai)
 		return 0; //Non alchemist summoned mobs have nothing to do here.
 
 	if(md->class_==mob_class)
@@ -13509,10 +13523,10 @@ int skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id, 
 				if( c >= skill_get_maxcount(skill_id,skill_lv) || c != i)
 				{
 					clif_skill_fail(sd , skill_id, USESKILL_FAIL_LEVEL, 0);
-					return 0;
-				}
+				return 0;
 			}
 			break;
+		}
 	}
 	status = &sd->battle_status;
 
