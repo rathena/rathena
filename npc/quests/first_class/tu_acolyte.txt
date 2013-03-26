@@ -385,7 +385,7 @@ prt_monk,230,106,3	script	Asthe#tu	79,{
 				emotion e_heh;
 				set tu_acolyte01, 5;
 				delitem 1504, 1; //Mace
-				if(Class == Job_Acolyte_High)
+				if(Class == Job_Acolyte_High) {
 					if(checkre(3))
 						getexp 200,100;
 					else
