@@ -663,12 +663,15 @@ int skillnotok_hom(uint16 skill_id, struct homun_data *hd)
 	    case MH_OVERED_BOOST:
 		if(hd->homunculus.hunger <= 1) //if we starving
 		    return 1;
+		break;
 	    case MH_GOLDENE_FERSE: //can be used with angriff
 		if(hd->sc.data[SC_ANGRIFFS_MODUS])
 		    return 1;
+		break;
 	    case MH_ANGRIFFS_MODUS:
 		if(hd->sc.data[SC_GOLDENE_FERSE])
 		    return 1;
+		break;
 	    case MH_TINDER_BREAKER:
 	    case MH_CBC:
 	    case MH_EQC:
@@ -677,11 +680,9 @@ int skillnotok_hom(uint16 skill_id, struct homun_data *hd)
 	    case MH_MIDNIGHT_FRENZY: {
 		    struct status_change_entry *sce = hd->sc.data[SC_STYLE_CHANGE];
 		    TBL_PC *sd;
-		    if(!(sd=hd->master)) return 1; //we need a master
-		    if(!sce || !sce->val3){ //homon doesn't have status or it's not a combo
-			if(skill_id != MH_SONIC_CRAW && skill_id != MH_TINDER_BREAKER)
-			    return 1;
-		    }
+		    if(!(sd=hd->master) || !sce) return 1; //homon doesn't have status or a master
+		    if((!sce->val3) && (skill_id != MH_SONIC_CRAW && skill_id != MH_TINDER_BREAKER))
+			    return 1; // or it's not a combo
 
 		    switch(skill_id){
 			case MH_SONIC_CRAW:

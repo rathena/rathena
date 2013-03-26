@@ -3197,6 +3197,8 @@ int status_calc_homunculus_(struct homun_data *hd, bool first)
 	if (first) {
 		hd->battle_status.hp = hom->hp ;
 		hd->battle_status.sp = hom->sp ;
+		if(hom->class_ == 6052) //eleanor
+			sc_start(&hd->bl,&hd->bl, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, -1);
 	}
 
 	status->rhw.atk = status->dex;
@@ -9095,8 +9097,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if( opt_flag&2 && sd && sd->touching_id )
 		npc_touchnext_areanpc(sd,false); // run OnTouch_ on next char in range
 
-	ShowInfo("status started with \n\ttype=%d\n\ttick=%d \n\trate=%d, \n\tval=[%d,%d,%d,%d] flag=%d\n",
-		type,tick, rate,val1,val2,val3,val4,flag);
 	return 1;
 }
 
@@ -9893,7 +9893,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		npc_touch_areanpc(sd,bl->m,bl->x,bl->y); //Trigger on-touch event.
 
 	ers_free(sc_data_ers, sce);
-	ShowInfo("status end type=%d\n",type);
 	return 1;
 }
 
