@@ -248,7 +248,7 @@ function	script	F_CashSeigeTele	{
 
 // Curious Snowball
 //============================================================ 
-// - You can get get an effect of Restore, Endure, or Wing of Butterfly.
+// - You can get an effect of Restore, Endure, or Wing of Butterfly.
 // - No arguments.
 function	script	F_Snowball	{
 	cutin "rutie_snownow03",2;
