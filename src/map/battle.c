@@ -3447,7 +3447,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			ATK_ADD(wd.div_*sd->spiritball*3);
 		}
 
-		//Card Fix, sd side
+		//Card Fix for player and target
         wd.damage = battle_calc_cardfix(BF_WEAPON, src, target, nk, s_ele, s_ele_, wd.damage, 2, wd.flag);
         if( flag.lh )
             wd.damage2 = battle_calc_cardfix(BF_WEAPON, src, target, nk, s_ele, s_ele_, wd.damage2, 3, wd.flag);
@@ -3458,10 +3458,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			if( index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR )
 				ATK_ADD(10*sd->status.inventory[index].refine);
 		}
-	} //if (sd)
-
-    //Card Fix, tsd side
-    if(tsd)
+	}else if(tsd) // Card Fix for target
         wd.damage = battle_calc_cardfix(BF_WEAPON, src, target, nk, s_ele, s_ele_, wd.damage, flag.lh, wd.flag);
 
 	if( flag.infdef )
