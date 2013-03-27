@@ -4391,7 +4391,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				else // Last spell to be released
 					status_change_end(src, SC_READING_SB, INVALID_TIMER);
 
-				clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+				if( bl->type != BL_SKILL ) /* skill types will crash the client */
+					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 				if( !skill_check_condition_castbegin(sd, skill_id, skill_lv) )
 					break;
 

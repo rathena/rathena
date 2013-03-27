@@ -105,7 +105,7 @@ int intif_elemental_delete(int ele_id);
 int intif_elemental_save(struct s_elemental *ele);
 
 /* @accinfo */
-void intif_request_accinfo( int u_fd, int aid, int group_id, char* query );
+void intif_request_accinfo( int u_fd, int aid, int group_lv, char* query );
 
 int CheckForCharServer(void);
 

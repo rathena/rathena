@@ -8554,7 +8554,7 @@ ACMD_FUNC(accinfo) {
 	//remove const type
 	safestrncpy(query, message, NAME_LENGTH);
 
-	intif_request_accinfo( sd->fd, sd->bl.id, sd->group_id, query );
+	intif_request_accinfo( sd->fd, sd->bl.id, pc_get_group_level(sd), query );
 
 	return 0;
 }

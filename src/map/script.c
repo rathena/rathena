@@ -7346,7 +7346,7 @@ BUILDIN_FUNC(strnpcinfo)
 
 
 // aegis->athena slot position conversion table
-static unsigned int equip[] = {EQP_HEAD_TOP,EQP_ARMOR,EQP_HAND_L,EQP_HAND_R,EQP_GARMENT,EQP_SHOES,EQP_ACC_L,EQP_ACC_R,EQP_HEAD_MID,EQP_HEAD_LOW,EQP_COSTUME_HEAD_LOW,EQP_COSTUME_HEAD_MID,EQP_COSTUME_HEAD_TOP};
+static unsigned int equip[] = {EQP_HEAD_TOP,EQP_ARMOR,EQP_HAND_L,EQP_HAND_R,EQP_GARMENT,EQP_SHOES,EQP_ACC_L,EQP_ACC_R,EQP_HEAD_MID,EQP_HEAD_LOW,EQP_COSTUME_HEAD_LOW,EQP_COSTUME_HEAD_MID,EQP_COSTUME_HEAD_TOP,EQP_COSTUME_GARMENT};
 
 /*==========================================
  * GetEquipID(Pos);     Pos: 1-13
@@ -12958,26 +12958,27 @@ BUILDIN_FUNC(npcstop)
  *------------------------------------------*/
 BUILDIN_FUNC(getlook)
 {
-        int type,val;
-        TBL_PC *sd;
-        sd=script_rid2sd(st);
+	int type,val;
+	TBL_PC *sd;
+	sd=script_rid2sd(st);
 
-        type=script_getnum(st,2);
-        val=-1;
-        switch(type) {
-        case LOOK_HAIR: val=sd->status.hair; break; //1
-        case LOOK_WEAPON: val=sd->status.weapon; break; //2
-        case LOOK_HEAD_BOTTOM: val=sd->status.head_bottom; break; //3
-        case LOOK_HEAD_TOP: val=sd->status.head_top; break; //4
-        case LOOK_HEAD_MID: val=sd->status.head_mid; break; //5
-        case LOOK_HAIR_COLOR: val=sd->status.hair_color; break; //6
-        case LOOK_CLOTHES_COLOR: val=sd->status.clothes_color; break; //7
-        case LOOK_SHIELD: val=sd->status.shield; break; //8
-        case LOOK_SHOES: break; //9
-        }
+	type=script_getnum(st,2);
+	val=-1;
+	switch(type) {
+		case LOOK_HAIR:     	val=sd->status.hair; break; //1
+		case LOOK_WEAPON:   	val=sd->status.weapon; break; //2
+		case LOOK_HEAD_BOTTOM:	val=sd->status.head_bottom; break; //3
+		case LOOK_HEAD_TOP: 	val=sd->status.head_top; break; //4
+		case LOOK_HEAD_MID: 	val=sd->status.head_mid; break; //5
+		case LOOK_HAIR_COLOR:	val=sd->status.hair_color; break; //6
+		case LOOK_CLOTHES_COLOR:	val=sd->status.clothes_color; break; //7
+		case LOOK_SHIELD:   	val=sd->status.shield; break; //8
+		case LOOK_SHOES:    	break; //9
+		case LOOK_ROBE:     	val=sd->status.robe; break; //12
+	}
 
-        script_pushint(st,val);
-        return 0;
+	script_pushint(st,val);
+	return 0;
 }
 
 /*==========================================
