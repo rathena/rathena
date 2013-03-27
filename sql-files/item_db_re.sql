@@ -2444,7 +2444,7 @@ REPLACE INTO `item_db_re` VALUES (4502,'Sealed_B_Harword_Card','Sealed MasterSmi
 REPLACE INTO `item_db_re` VALUES (4503,'Sealed_Apocalips_H_Card','Sealed Vesper Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,769,NULL,NULL,NULL,NULL,'bonus bDex,2; bonus2 bIgnoreMdefRate,RC_Boss,((getrefine()>14)?25:15);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4504,'Sealed_Eddga_Card','Sealed Eddga Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,64,NULL,NULL,NULL,NULL,'bonus bMaxHPrate,((getrefine()>14)?-35:-50);','sc_start4 SC_ENDURE,60000,10,0,0,1;','sc_end SC_ENDURE;');
 REPLACE INTO `item_db_re` VALUES (4505,'Scaraba_Card','Scaraba Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,136,NULL,NULL,NULL,NULL,'bonus bMatk,20; bonus bMaxSPrate,-1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (4506,'Dolomueen_Scaraba_Card','Queen Scaraba Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (4506,'Dolomedes_Card','Dolomedes Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4507,'Q_Scaraba_Card','Queen Scaraba Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4508,'Gold_Scaraba_Card','Gold Scaraba Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,136,NULL,NULL,NULL,NULL,'bonus bBaseAtk,20; bonus bMaxHPrate,-1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4509,'Gold_Queen_Scaraba_Card','Gold Queen Scaraba Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,769,NULL,NULL,NULL,NULL,'bonus bInt,3; bonus2 bSubRace,RC_Insect,10; if(getrefine()>=9) { bonus2 bSubRace,RC_Insect,5; }',NULL,NULL);
