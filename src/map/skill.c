@@ -6419,7 +6419,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					sp += sp * i / 100;
 				}
 			} else {
-				hp = (1 + rnd()%400) * (100 + skill_lv*10) / 100;
+				//Maybe replace with potion_hp, but I'm unsure how that works [Playtester]
+				switch (skill_lv) {
+					case 1: hp = 45; break;
+					case 2: hp = 105; break;
+					case 3: hp = 175; break;
+					default: hp = 325; break;
+				}
+				hp = (hp + rnd()%(skill_lv*20+1)) * (150 + skill_lv*10) / 100;
 				hp = hp * (100 + (tstatus->vit<<1)) / 100;
 				if( dstsd )
 					hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10) / 100;

@@ -874,8 +874,8 @@ int mob_setdelayspawn(struct mob_data *md)
 		spawntime = spawntime/100*battle_config.mob_spawn_delay;
 	}
 
-	if (spawntime < 500) //Min respawn time (is it needed?)
-		spawntime = 500;
+	if (spawntime < 5000) //Monsters should never respawn faster than within 5 seconds
+		spawntime = 5000;
 
 	if( md->spawn_timer != INVALID_TIMER )
 		delete_timer(md->spawn_timer, mob_delayspawn);
