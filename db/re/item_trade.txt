@@ -1797,6 +1797,7 @@
 5758,475,100	// Resting Swan
 5760,475,100	// Driver Band
 15002,507,100	// Rune Plate
+6415,507,100	// Strange Embryo
 
 // Episode 13.3
 2844,475,100	// Light Of El Discastes

@@ -10134,11 +10134,12 @@ BUILDIN_FUNC(homunculus_evolution)
 }
 
 /*==========================================
- * [Xantara]
+ * Checks for vaporized morph state
+ * and deletes ITEMID_STRANGE_EMBRYO.
  *------------------------------------------*/
 BUILDIN_FUNC(homunculus_mutate)
 {
-	int homun_id, m_class, m_id;
+	int homun_id, m_class, m_id, i;
 	TBL_PC *sd;
 
 	sd = script_rid2sd(st);
@@ -10150,15 +10151,66 @@ BUILDIN_FUNC(homunculus_mutate)
 	else
 		homun_id = 6048 + (rnd() % 4);
 
-	if(merc_is_hom_active(sd->hd)) {
+	if( sd->hd->homunculus.vaporize == HOM_ST_MORPH ) {
 		m_class = hom_class2mapid(sd->hd->homunculus.class_);
 		m_id    = hom_class2mapid(homun_id);
 
-		if ( m_class != -1 && m_id != -1 && m_class&HOM_EVO && m_id&HOM_S && sd->hd->homunculus.level >= 99 )
+		i = pc_search_inventory(sd, ITEMID_STRANGE_EMBRYO);
+
+		if ( m_class != -1 && m_id != -1 && m_class&HOM_EVO && m_id&HOM_S && sd->hd->homunculus.level >= 99 && i >= 0 ) {
+			sd->hd->homunculus.vaporize = HOM_ST_REST; // Remove morph state.
+			merc_call_homunculus(sd); // Respawn homunculus.
 			hom_mutate(sd->hd, homun_id);
-		else
+			pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_SCRIPT);
+			script_pushint(st, 1);
+			return 0;
+		} else
+			clif_emotion(&sd->bl, E_SWT);
+	} else
+		clif_emotion(&sd->bl, E_SWT);
+
+	script_pushint(st, 0);
+
+	return 0;
+}
+
+/*==========================================
+ * Puts homunculus into morph state
+ * and gives ITEMID_STRANGE_EMBRYO.
+ *------------------------------------------*/
+BUILDIN_FUNC(morphembryo)
+{
+	struct item item_tmp;
+	int m_class, i;
+	TBL_PC *sd;
+	
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 0;
+
+	if( merc_is_hom_active(sd->hd) ) {
+		m_class = hom_class2mapid(sd->hd->homunculus.class_);
+
+		if ( m_class != -1 && m_class&HOM_EVO && sd->hd->homunculus.level >= 99 ) {
+			memset(&item_tmp, 0, sizeof(item_tmp));
+			item_tmp.nameid = ITEMID_STRANGE_EMBRYO;
+			item_tmp.identify = 1;
+
+			if( item_tmp.nameid==0 || (i = pc_additem(sd, &item_tmp, 1, LOG_TYPE_SCRIPT)) ) {
+				clif_additem(sd, 0, 0, i);
+				clif_emotion(&sd->bl, E_SWT); // Fail to avoid item drop exploit.
+			} else {
+				merc_hom_vaporize(sd, HOM_ST_MORPH);
+				script_pushint(st, 1);
+				return 0;
+			}
+		} else
 			clif_emotion(&sd->hd->bl, E_SWT);
-	}
+	} else
+		clif_emotion(&sd->bl, E_SWT);
+
+	script_pushint(st, 0);
+
 	return 0;
 }
 
@@ -10173,6 +10225,31 @@ BUILDIN_FUNC(homunculus_shuffle)
 
 	if(merc_is_hom_active(sd->hd))
 		merc_hom_shuffle(sd->hd);
+
+	return 0;
+}
+
+/*==========================================
+ * Check for homunculus state.
+ * Return: -1 = No homunculus
+ *          0 = Homunculus is vaporized (rest)
+ *          1 = Homunculus is in morph state
+ *          2 = Homunculus is active
+ *------------------------------------------*/
+BUILDIN_FUNC(checkhomcall)
+{
+	TBL_PC *sd = script_rid2sd(st);
+	TBL_HOM *hd;
+
+	if( sd == NULL )
+		return 0;
+	
+	hd = sd->hd;
+
+	if( !hd )
+		script_pushint(st, -1);
+	else
+		script_pushint(st, hd->homunculus.vaporize);
 
 	return 0;
 }
@@ -12712,8 +12789,7 @@ BUILDIN_FUNC(gethominfo)
 	int type=script_getnum(st,2);
 
 	hd = sd?sd->hd:NULL;
-	if(!merc_is_hom_active(hd))
-	{
+	if(!hd) {
 		if (type == 2)
 			script_pushconststr(st,"null");
 		else
@@ -17799,7 +17875,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(warpportal,"iisii"),
 	BUILDIN_DEF2(homunculus_evolution,"homevolution",""),	//[orn]
 	BUILDIN_DEF2(homunculus_mutate,"hommutate","?"),
+	BUILDIN_DEF(morphembryo,""),
 	BUILDIN_DEF2(homunculus_shuffle,"homshuffle",""),	//[Zephyrus]
+	BUILDIN_DEF(checkhomcall,""),
 	BUILDIN_DEF(eaclass,"?"),	//[Skotlex]
 	BUILDIN_DEF(roclass,"i?"),	//[Skotlex]
 	BUILDIN_DEF(checkvending,"?"),

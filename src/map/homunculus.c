@@ -144,7 +144,7 @@ int merc_hom_dead(struct homun_data *hd)
 	return 3;
 }
 
-//Vaporize a character's homun. If flag, HP needs to be 80% or above.
+//Vaporize a character's homun. If flag == 1 then HP needs to be 80% or above, if flag == 2 then set to morph state.
 int merc_hom_vaporize(struct map_session_data *sd, int flag)
 {
 	struct homun_data *hd;
@@ -158,13 +158,13 @@ int merc_hom_vaporize(struct map_session_data *sd, int flag)
 	if (status_isdead(&hd->bl))
 		return 0; //Can't vaporize a dead homun.
 
-	if (flag && get_percentage(hd->battle_status.hp, hd->battle_status.max_hp) < 80)
+	if (flag == HOM_ST_REST && get_percentage(hd->battle_status.hp, hd->battle_status.max_hp) < 80)
 		return 0;
 
 	hd->regen.state.block = 3; //Block regen while vaporized.
 	//Delete timers when vaporized.
 	merc_hom_hungry_timer_delete(hd);
-	hd->homunculus.vaporize = 1;
+	hd->homunculus.vaporize = flag ? flag : HOM_ST_REST;
 	if(battle_config.hom_setting&0x40)
 		memset(hd->blockskill, 0, sizeof(hd->blockskill));
 	clif_hominfo(sd, sd->hd, 0);
@@ -810,8 +810,11 @@ int merc_call_homunculus(struct map_session_data *sd)
 	if (!hd->homunculus.vaporize)
 		return 0; //Can't use this if homun wasn't vaporized.
 
+	if (hd->homunculus.vaporize == HOM_ST_MORPH)
+		return 0; // Can't call homunculus (morph state).
+
 	merc_hom_init_timers(hd);
-	hd->homunculus.vaporize = 0;
+	hd->homunculus.vaporize = HOM_ST_ACTIVE;
 	if (hd->bl.prev == NULL)
 	{	//Spawn him
 		hd->bl.x = sd->bl.x;
@@ -924,7 +927,7 @@ int merc_resurrect_homunculus(struct map_session_data* sd, unsigned char per, sh
 
 	hd = sd->hd;
 
-  	if (hd->homunculus.vaporize)
+  	if (hd->homunculus.vaporize == HOM_ST_REST)
 		return 0; // vaporized homunculi need to be 'called'
 
 	if (!status_isdead(&hd->bl))

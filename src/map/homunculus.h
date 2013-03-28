@@ -28,6 +28,12 @@ enum { HOMUNCULUS_CLASS, HOMUNCULUS_FOOD };
 enum { MH_MD_FIGHTING=1, MH_MD_GRAPPLING };
 
 enum {
+	HOM_ST_ACTIVE	= 0,
+	HOM_ST_REST		= 1,
+	HOM_ST_MORPH	= 2,
+};
+
+enum {
 	SP_ACK      = 0x0,
 	SP_INTIMATE = 0x1,
 	SP_HUNGRY   = 0x2,
@@ -88,7 +94,7 @@ enum {
 #define homdb_checkid(id) (id >=  HM_CLASS_BASE && id <= HM_CLASS_MAX)
 
 // merc_is_hom_alive(struct homun_data *)
-#define merc_is_hom_active(x) (x && x->homunculus.vaporize != 1 && x->battle_status.hp > 0)
+#define merc_is_hom_active(x) (x && x->homunculus.vaporize == HOM_ST_ACTIVE && x->battle_status.hp > 0)
 int do_init_merc(void);
 int merc_hom_recv_data(int account_id, struct s_homunculus *sh, int flag); //albator
 struct view_data* merc_get_hom_viewdata(int class_);
