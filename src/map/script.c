@@ -7349,7 +7349,7 @@ BUILDIN_FUNC(strnpcinfo)
 static unsigned int equip[] = {EQP_HEAD_TOP,EQP_ARMOR,EQP_HAND_L,EQP_HAND_R,EQP_GARMENT,EQP_SHOES,EQP_ACC_L,EQP_ACC_R,EQP_HEAD_MID,EQP_HEAD_LOW,EQP_COSTUME_HEAD_LOW,EQP_COSTUME_HEAD_MID,EQP_COSTUME_HEAD_TOP,EQP_COSTUME_GARMENT};
 
 /*==========================================
- * GetEquipID(Pos);     Pos: 1-13
+ * GetEquipID(Pos);     Pos: 1-14
  *------------------------------------------*/
 BUILDIN_FUNC(getequipid)
 {
@@ -10181,7 +10181,7 @@ BUILDIN_FUNC(homunculus_mutate)
 BUILDIN_FUNC(morphembryo)
 {
 	struct item item_tmp;
-	int m_class, i;
+	int m_class, i=0;
 	TBL_PC *sd;
 	
 	sd = script_rid2sd(st);
@@ -10232,9 +10232,9 @@ BUILDIN_FUNC(homunculus_shuffle)
 /*==========================================
  * Check for homunculus state.
  * Return: -1 = No homunculus
- *          0 = Homunculus is vaporized (rest)
- *          1 = Homunculus is in morph state
- *          2 = Homunculus is active
+ *          0 = Homunculus is active
+ *          1 = Homunculus is vaporized (rest)
+ *          2 = Homunculus is in morph state
  *------------------------------------------*/
 BUILDIN_FUNC(checkhomcall)
 {

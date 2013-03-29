@@ -428,16 +428,13 @@ temporary - They cease to exist when the server resets.
 
 Prefix: scope and extent
 nothing  - A permanent variable attached to the character, the default variable
-           type. They are stored with all the account data in "save\athena.txt"
-           in TXT versions and in the SQL versions in the `global_reg_value`
-           table using type 3.
+           type. They are stored in the `global_reg_value` table using type 3.
 "@"      - A temporary variable attached to the character.
            SVN versions before 2094 revision and RC5 version will also treat
            'l' as a temporary variable prefix, so beware of having variable
            names starting with 'l' if you want full backward compatibility.
 "$"      - A global permanent variable.
-           They are stored in "save\mapreg.txt" or database table `mapreg`,
-           depending on server type.
+           They are stored in database table `mapreg`.
 "$@"     - A global temporary variable.
            This is important for scripts which are called with no RID
            attached, that is, not triggered by a specific character object.
@@ -457,16 +454,13 @@ nothing  - A permanent variable attached to the character, the default variable
            These are used with the instancing system, and are unique to each 
            party's instance.
 "#"      - A permanent local account variable.
-           They are stored with all the account data in "save\accreg.txt" in
-           TXT versions and in the SQL versions in the 'global_reg_value'
-           table using type 2.
+           They are stored in the `global_reg_value` table using type 2.
 "##"     - A permanent global account variable stored by the login server.
-           They are stored in "save\account.txt" and in the SQL versions in the
-           'global_reg_value' table, using type 1. The only difference you will
-           note from normal # variables is when you have multiple char-servers
-           connected to the same login server. The # variables are unique to
-           each char-server, while the ## variables are shared by all these
-           char-servers.
+           They are stored in the `global_reg_value` table using type 1.
+           The only difference you will note from normal # variables is when
+           you have multiple char-servers connected to the same login server.
+           The # variables are unique to each char-server, while the ## variables
+           are shared by all these char-servers.
 
 Postfix: integer or string
 nothing - integer variable, can store positive and negative numbers, but only 
@@ -2468,6 +2462,7 @@ EQI_HEAD_LOW (10)         - Lower Headgear (beards, some masks)
 EQI_COSTUME_HEAD_LOW (11) - Lower Costume Headgear
 EQI_COSTUME_HEAD_MID (12) - Middle Costume Headgear
 EQI_COSTUME_HEAD_TOP (13) - Upper Costume Headgear
+EQI_COSTUME_GARMENT (14) - Costume Garment
 
 Notice that a few items occupy several equipment slots, and if the character is 
 wearing such an item, 'getequipid' will return it's ID number for either slot.
