@@ -499,7 +499,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 			break;
 		case BF_WEAPON:
 			t_race2 = status_get_race2(target);
-			if( sd && !(nk&NK_NO_CARDFIX_ATK) && (left&2) )
+			if( sd && !(nk&NK_NO_CARDFIX_ATK) && (left&2) ) //Attacker cards should be checked
 			{
 				short cardfix_ = 1000;
 				if(sd->state.arrow_atk)
@@ -572,7 +572,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 					else
 					{
 						int ele_fix = sd->right_weapon.addele[tstatus->def_ele] + sd->left_weapon.addele[tstatus->def_ele];
-					for (i = 0; ARRAYLENGTH(sd->right_weapon.addele2) > i && sd->right_weapon.addele2[i].rate != 0; i++) {
+						for (i = 0; ARRAYLENGTH(sd->right_weapon.addele2) > i && sd->right_weapon.addele2[i].rate != 0; i++) {
 							if (sd->right_weapon.addele2[i].ele != tstatus->def_ele) continue;
 							if(!(sd->right_weapon.addele2[i].flag&flag&BF_WEAPONMASK &&
 								 sd->right_weapon.addele2[i].flag&flag&BF_RANGEMASK &&
@@ -632,60 +632,60 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 				else if( cardfix != 1000 )
 					bccDAMAGE_RATE(cardfix)
 
-		}else if( tsd && !(nk&NK_NO_CARDFIX_DEF) ){
-			if( !(nk&NK_NO_ELEFIX) )
-			{
-				int ele_fix = tsd->subele[s_ele];
-				for (i = 0; ARRAYLENGTH(tsd->subele2) > i && tsd->subele2[i].rate != 0; i++)
+			} else if( tsd && !(nk&NK_NO_CARDFIX_DEF) && !(left&2) ){ //Target cards should be checked
+				if( !(nk&NK_NO_ELEFIX) )
 				{
-					if(tsd->subele2[i].ele != s_ele) continue;
-					if(!(tsd->subele2[i].flag&flag&BF_WEAPONMASK &&
-						 tsd->subele2[i].flag&flag&BF_RANGEMASK &&
-						 tsd->subele2[i].flag&flag&BF_SKILLMASK))
-						continue;
-					ele_fix += tsd->subele2[i].rate;
-				}
-				cardfix=cardfix*(100-ele_fix)/100;
-				if( left&1 && s_ele_ != s_ele )
-				{
-					int ele_fix_lh = tsd->subele[s_ele_];
+					int ele_fix = tsd->subele[s_ele];
 					for (i = 0; ARRAYLENGTH(tsd->subele2) > i && tsd->subele2[i].rate != 0; i++)
 					{
-						if(tsd->subele2[i].ele != s_ele_) continue;
+						if(tsd->subele2[i].ele != s_ele) continue;
 						if(!(tsd->subele2[i].flag&flag&BF_WEAPONMASK &&
 							 tsd->subele2[i].flag&flag&BF_RANGEMASK &&
 							 tsd->subele2[i].flag&flag&BF_SKILLMASK))
 							continue;
-						ele_fix_lh += tsd->subele2[i].rate;
+						ele_fix += tsd->subele2[i].rate;
 					}
-					cardfix=cardfix*(100-ele_fix_lh)/100;
+					cardfix=cardfix*(100-ele_fix)/100;
+					if( left&1 && s_ele_ != s_ele )
+					{
+						int ele_fix_lh = tsd->subele[s_ele_];
+						for (i = 0; ARRAYLENGTH(tsd->subele2) > i && tsd->subele2[i].rate != 0; i++)
+						{
+							if(tsd->subele2[i].ele != s_ele_) continue;
+							if(!(tsd->subele2[i].flag&flag&BF_WEAPONMASK &&
+								 tsd->subele2[i].flag&flag&BF_RANGEMASK &&
+								 tsd->subele2[i].flag&flag&BF_SKILLMASK))
+								continue;
+							ele_fix_lh += tsd->subele2[i].rate;
+						}
+						cardfix=cardfix*(100-ele_fix_lh)/100;
+					}
 				}
-			}
-			cardfix=cardfix*(100-tsd->subsize[sstatus->size])/100;
- 			cardfix=cardfix*(100-tsd->subrace2[s_race2])/100;
-			cardfix=cardfix*(100-tsd->subrace[sstatus->race])/100;
-			cardfix=cardfix*(100-tsd->subrace[is_boss(src)?RC_BOSS:RC_NONBOSS])/100;
-			if( sstatus->race != RC_DEMIHUMAN )
-				cardfix=cardfix*(100-tsd->subrace[RC_NONDEMIHUMAN])/100;
+				cardfix=cardfix*(100-tsd->subsize[sstatus->size])/100;
+	 			cardfix=cardfix*(100-tsd->subrace2[s_race2])/100;
+				cardfix=cardfix*(100-tsd->subrace[sstatus->race])/100;
+				cardfix=cardfix*(100-tsd->subrace[is_boss(src)?RC_BOSS:RC_NONBOSS])/100;
+				if( sstatus->race != RC_DEMIHUMAN )
+					cardfix=cardfix*(100-tsd->subrace[RC_NONDEMIHUMAN])/100;
 
-			for( i = 0; i < ARRAYLENGTH(tsd->add_def) && tsd->add_def[i].rate;i++ ) {
-				if( tsd->add_def[i].class_ == s_class ) {
-					cardfix=cardfix*(100-tsd->add_def[i].rate)/100;
-					break;
+				for( i = 0; i < ARRAYLENGTH(tsd->add_def) && tsd->add_def[i].rate;i++ ) {
+					if( tsd->add_def[i].class_ == s_class ) {
+						cardfix=cardfix*(100-tsd->add_def[i].rate)/100;
+						break;
+					}
 				}
+
+				if( flag&BF_SHORT )
+					cardfix = cardfix * ( 100 - tsd->bonus.near_attack_def_rate ) / 100;
+				else	// BF_LONG (there's no other choice)
+					cardfix = cardfix * ( 100 - tsd->bonus.long_attack_def_rate ) / 100;
+
+				if( tsd->sc.data[SC_DEF_RATE] )
+					cardfix = cardfix * ( 100 - tsd->sc.data[SC_DEF_RATE]->val1 ) / 100;
+
+				if( cardfix != 1000 )
+					bccDAMAGE_RATE(cardfix)
 			}
-
-			if( flag&BF_SHORT )
-				cardfix = cardfix * ( 100 - tsd->bonus.near_attack_def_rate ) / 100;
-			else	// BF_LONG (there's no other choice)
-				cardfix = cardfix * ( 100 - tsd->bonus.long_attack_def_rate ) / 100;
-
-			if( tsd->sc.data[SC_DEF_RATE] )
-				cardfix = cardfix * ( 100 - tsd->sc.data[SC_DEF_RATE]->val1 ) / 100;
-
-			if( cardfix != 1000 )
-				bccDAMAGE_RATE(cardfix)
-		}
 			break;
 		case BF_MISC:
 			if( tsd && !(nk&NK_NO_CARDFIX_DEF) ){
@@ -3437,7 +3437,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	if(skill_id == CR_GRANDCROSS || skill_id == NPC_GRANDDARKNESS)
 		return wd; //Enough, rest is not needed.
 
-	if (sd)
+	if(sd)
 	{
 		if (skill_id != CR_SHIELDBOOMERANG) //Only Shield boomerang doesn't takes the Star Crumbs bonus.
 			ATK_ADD2(wd.div_*sd->right_weapon.star, wd.div_*sd->left_weapon.star);
@@ -3447,10 +3447,10 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			ATK_ADD(wd.div_*sd->spiritball*3);
 		}
 
-		//Card Fix for player and target
-        wd.damage = battle_calc_cardfix(BF_WEAPON, src, target, nk, s_ele, s_ele_, wd.damage, 2, wd.flag);
-        if( flag.lh )
-            wd.damage2 = battle_calc_cardfix(BF_WEAPON, src, target, nk, s_ele, s_ele_, wd.damage2, 3, wd.flag);
+		//Card Fix for attacker (sd), 2 is added to the "left" flag meaning "attacker cards only"
+		wd.damage = battle_calc_cardfix(BF_WEAPON, src, target, nk, s_ele, s_ele_, wd.damage, 2, wd.flag);
+		if( flag.lh )
+			wd.damage2 = battle_calc_cardfix(BF_WEAPON, src, target, nk, s_ele, s_ele_, wd.damage2, 3, wd.flag);
 
 		if( skill_id == CR_SHIELDBOOMERANG || skill_id == PA_SHIELDCHAIN )
 		{ //Refine bonus applies after cards and elements.
@@ -3458,8 +3458,10 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			if( index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR )
 				ATK_ADD(10*sd->status.inventory[index].refine);
 		}
-	}else if(tsd) // Card Fix for target
-        wd.damage = battle_calc_cardfix(BF_WEAPON, src, target, nk, s_ele, s_ele_, wd.damage, flag.lh, wd.flag);
+	}
+
+	if(tsd) // Card Fix for target (tsd), 2 is not added to the "left" flag meaning "target cards only"
+		wd.damage = battle_calc_cardfix(BF_WEAPON, src, target, nk, s_ele, s_ele_, wd.damage, flag.lh, wd.flag);
 
 	if( flag.infdef )
 	{ //Plants receive 1 damage when hit

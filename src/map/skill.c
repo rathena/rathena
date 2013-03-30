@@ -954,9 +954,9 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 
 	case SM_BASH:
 		if( sd && skill_lv > 5 && pc_checkskill(sd,SM_FATALBLOW)>0 ){
-			//TODO: How much % per base level it actually is?
-			sc_start(src,bl,SC_STUN,(5*(skill_lv-5)+(int)sd->status.base_level/10),
-				skill_lv,skill_get_time2(SM_FATALBLOW,skill_lv));
+			//BaseChance gets multiplied with BaseLevel/50.0; 500/50 simplifies to 10 [Playtester]
+			status_change_start(src,bl,SC_STUN,(skill_lv-5)*sd->status.base_level*10,
+				skill_lv,0,0,0,skill_get_time2(SM_FATALBLOW,skill_lv),0);
 		}
 		break;
 
