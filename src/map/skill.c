@@ -12350,6 +12350,7 @@ static int skill_unit_effect (struct block_list* bl, va_list ap)
 	unsigned int flag = va_arg(ap,unsigned int);
 	uint16 skill_id;
 	bool dissonance;
+	bool isTarget = false;
 
 	if( (!unit->alive && !(flag&4)) || bl->prev == NULL )
 		return 0;
@@ -12361,10 +12362,8 @@ static int skill_unit_effect (struct block_list* bl, va_list ap)
 	//Necessary in case the group is deleted after calling on_place/on_out [Skotlex]
 	skill_id = group->skill_id;
 	//Target-type check.
-	if( !(group->bl_flag&bl->type && battle_check_target(&unit->bl,bl,group->target_flag)>0) && (flag&4) ) {
-		if( group->state.song_dance&0x1 || (group->src_id == bl->id && group->state.song_dance&0x2) )
-			skill_unit_onleft(skill_id, bl, tick);//Ensemble check to terminate it.
-	} else {
+	isTarget = group->bl_flag & bl->type && battle_check_target( &unit->bl, bl, group->target_flag ) > 0;
+	if( isTarget ){
 		if( flag&1 )
 			skill_unit_onplace(unit,bl,tick);
 		else
@@ -12372,9 +12371,12 @@ static int skill_unit_effect (struct block_list* bl, va_list ap)
 
 		if( flag&4 )
 	  		skill_unit_onleft(skill_id, bl, tick);
+	}else if( !isTarget && flag&4 && ( group->state.song_dance&0x1 || ( group->src_id == bl->id && group->state.song_dance&0x2 ) ) ){
+		skill_unit_onleft(skill_id, bl, tick);//Ensemble check to terminate it.
 	}
 
-	if( dissonance ) skill_dance_switch(unit, 1);
+	if( dissonance )
+		skill_dance_switch(unit, 1);
 
 	return 0;
 }
