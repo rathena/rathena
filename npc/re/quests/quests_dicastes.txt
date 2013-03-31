@@ -309,7 +309,7 @@ OnTouch:
 		donpcevent "Suspicious Guy#ep133_::OnDisable";
 		mes "The guy in all black disappeared suddenly.";
 		mes "Who was that?";
-		close2;
+		close;
 	}
 	end;
 }
@@ -340,7 +340,7 @@ OnEnable:
 		mes "[Capital City Guard]";
 		mes "Access to the city is restricted from other races without permits.";
 		mes "Please go back.";
-		close2;
+		close;
 	}
 	else if (ep13_3_invite == 5) {
 		mes "[Capital City Guard]";
@@ -384,7 +384,7 @@ OnEnable:
 	mes "[Capital City Guard]";
 	mes "Unknown situation occurred. Case " + strnpcinfo(2);
 	mes "Please inquiry with a GM.";
-	close2;
+	close;
 }
 dic_fild01,146,281,5	duplicate(Guard#ep133_11)	Capital City Guard#1	492
 dic_fild01,153,281,3	duplicate(Guard#ep133_11)	Capital City Guard#2	450

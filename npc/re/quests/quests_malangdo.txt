@@ -3,20 +3,22 @@
 //===== By: ==================================================
 //= Muad_Dib
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
 //= Quest NPCs related to Malangdo:
-//== Help the bad cats in danger, Clean the Ship,
-//== Help Chef Nyas, Archangel Wing Enchants
+//== Help the Bad Cats in Danger, Clean the Ship,
+//== Help Chef Nyas, Play with Baby Cats
+//== Archangel Wing Enchants
 //===== Additional Comments: =================================
 //= 1.0 First version. [Euphy]
 //= 1.1 Added two quests.
 //= 1.2 Added Archangel Wing Enchants.
+//= 1.3 Added Play with Baby Cats.
 //============================================================
 
-// Help the bad cats in danger :: mal_bad_guys
+// Help the Bad Cats in Danger :: mal_bad_guys
 //============================================================
 malangdo,175,206,3	script	Gobonge#ml	561,{
 	if (checkweight(1201,1) == 0) {
@@ -1459,7 +1461,7 @@ malangdo,133,134,0	script	Strange Pile of Sand#7	557,{
 		mes "We already collected buried cat's ship biscuit.";
 		close;
 	}
-	mes "- Look so strange. -";
+	mes "- Looks so strange. -";
 	mes "- That's it... -";
 	close;
 }
@@ -1495,7 +1497,7 @@ malangdo,232,131,0	script	#UnderStairs8	844,{
 		close;
 	}
 	mes "Out of people's hand under the stairs.";
-	mes "Sometimes, I look around there when I search lost toys.";
+	mes "Sometimes, I look around there when I search for lost toys.";
 	close;
 }
 
@@ -1906,6 +1908,1873 @@ mal_in02,187,58,3	script	Chef Nyas	548,{
 		mes "If you don't have any business, don't touch vegetable and go away.";
 		close;
 	}
+}
+
+// Play with Baby Cats :: mal_nyadventurer
+//============================================================
+malangdo,165,223,4	script	Expert Cat#nya_01	561,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 4000) {
+		mes "- You have too many items to proceed in this quest. -";
+		close;
+	}
+	if (BaseLevel < 60) {
+		mes "[Rato]";
+		mes "Seems like a visitor.";
+		mes "How does this island look?";
+		mes "It is hard to believe, but this ground is very soft, so we named this island Malangdo.";
+		next;
+		mes "[Rato]";
+		mes "If you were a more professional adventurer, I'd ask you one thing...";
+		mes "Well, I won't do it.";
+		close;
+	}
+	if (nyadven == 0) {
+		mes "[Rato]";
+		mes "Hey there.";
+		mes "I am Rato, do you have a moment?";
+		next;
+		switch(select("Yeah, sure I do.:I'm sorry, but I'm busy right now.")) {
+		case 1:
+			mes "[Rato]";
+			mes "Well, nothing special, but could you do me a favor?";
+			mes "Did you see the kids gathered on your way here?";
+			next;
+			select("Kids?");
+			mes "[Rato]";
+			mes "Yes yes, baby kids.";
+			mes "They are the youngest kids among the merchants and crews.";
+			mes "They feel anxious that they might not be able to go back home.";
+			next;
+			mes "[Rato]";
+			mes "And they are getting bored of living on this small island.";
+			mes "They already tasted sea and adventure...";
+			next;
+			mes "[Rato]";
+			mes "They used to play with making things, but seem tired of that also...";
+			mes "If it's okay, would you play with them for a while?";
+			next;
+			switch(select("Uh, sure...:I don't have enough time for that.")) {
+			case 1:
+				mes "[Rato]";
+				mes "Oh, thank you!";
+				mes "Then, where are they?";
+				mes "Maybe near Beginning Compass...?";
+				next;
+				mes "[Rato]";
+				mes "They are so active that I am not sure where they are now.";
+				break;
+			case 2:
+				mes "[Rato]";
+				mes "Oh, really?";
+				mes "It's okay even though you cannot do this right now.";
+				break;
+			}
+			mes "If you meet them, please spend time with them.";
+			next;
+			mes "[Rato]";
+			mes "The youngest one is Charo, with gold fur.";
+			mes "Roku has black fur, and Rosy has white fur.";
+			mes "Please take care of them.";
+			set nyadven,1;
+			setquest 7242;
+			close;
+		case 2:
+			mes "[Rato]";
+			mes "Oh, really?";
+			mes "I am sorry for disturbing you.";
+			close;
+		}
+	} else if (nyadven == 1) {
+		mes "[Rato]";
+		mes "The youngest one is Charo, with gold fur.";
+		mes "Roku has black fur, and Rosy has white fur.";
+		next;
+		mes "[Rato]";
+		mes "We can look forward to the moment we can go back home if these children grow up nicely.";
+		mes "For that reason, please take care of them.";
+		close2;
+	} else if (nyadven < 13) {
+		mes "[Rato]";
+		mes "Do kids disturb you too much?";
+		mes "What... adventurer group? Did you play with toys from the adventurer group?";
+		next;
+		mes "[Rato]";
+		mes "I really worried about them the first time we were shipwrecked to this island...";
+		mes "They thought the first voyage was huge adventure...";
+		next;
+		mes "[Rato]";
+		mes "They look excited, like they got a fever.";
+		mes "It seems like yesterday that I made toys for them and soothed them...";
+		next;
+		mes "Rato seems to be in brown study.";
+		close;
+	} else if (nyadven == 13) {
+		if (countitem(6430) < 6) {
+			mes "You didn't bring the pieces of the painting.";
+			mes "Please take it with you.";
+			close;
+		}
+		mes "[Rato]";
+		mes "What's going on?";
+		mes "It should be very hard to take care of the kids even though I asked you, isn't it?";
+		mes "I am sorry, I should take care of them...";
+		next;
+		mes "You hand Rato a piece of painting.";
+		next;
+		mes "[Rato]";
+		mes "Oh, this is a piece of painting?";
+		mes "Ah!!!";
+		mes "Has this painting been torn up already?";
+		next;
+		mes "[Rato]";
+		mes "Did they say this is a gift for me?";
+		mes "Huhhuh, a piece of painting?";
+		mes "HAHAHAHAHA!";
+		next;
+		mes "[Rato]";
+		mes "Okay, I will patch up this painting by myself.";
+		mes "They are still the same.";
+		mes "I think I should worry about myself first...";
+		next;
+		mes "[Rato]";
+		mes "It's very kind of you to play with the kids.";
+		mes "This is for you.";
+		delitem 6430,6; //Picture_Piece
+		set nyadven,14;
+		getitem 6422,100; //Egrade_Coin
+		completequest 7259;
+		next;
+		mes "[Rato]";
+		mes "I owe you a big favor!";
+		mes "Let's drink today!";
+		mes "Miaow~";
+		close;
+	} else {
+		mes "[Rato]";
+		mes "Hey, how's it going? If you have time please look at it.";
+		next;
+		switch(select("Look at a picture.:Don't look at a picture.")) {
+		case 1:
+			mes "[Rato]";
+			mes "Yes, they drew this picture full of happiness.";
+			next;
+			cutin "mal_nyapic",4;
+			mes "Appreciate the picture in the frame.";
+			close2;
+			cutin "",255;
+			end;
+		case 2:
+			mes "[Rato]";
+			mes "Why don't you look at such a nice picture?";
+			mes "I'm disapointed.";
+			close;
+		}
+	}
+}
+
+malangdo,211,203,4	script	[Meow Team] Charo#nya_11	560,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 4000) {
+		mes "- You have too many items to proceed in this quest. -";
+		close;
+	}
+	if (nyadven == 0) {
+		mes "There are gathered cats who seems younger than other crews.";
+		mes "They are having a serious conversation about the weird machine in front of them.";
+		close;
+	} else if (nyadven == 1) {
+		mes "There are gathered cats who seems younger than other crews.";
+		mes "They are having a serious conversation about the weird machine in front of them.";
+		mes "They are looks like kids who Rato told me.";
+		next;
+		switch(select("Just watch them without a word.:Busy right now.")) {
+		case 1:
+			mes "You try to listen to the conversation without disturbing them.";
+			next;
+			mes "[Charo]";
+			mes "When will it be fixed? When it will be done?";
+			mes "Isn't this the last one?";
+			next;
+			mes "[Rosy]";
+			mes "Um... you don't even get tried of it?";
+			mes "Anyway, we are in trouble.";
+			mes "The glass bead is broken.";
+			next;
+			mes "[Roku]";
+			mes "Don't we have an extra glass bead?";
+			next;
+			mes "[Rosy]";
+			mes "No, we don't have any.";
+			mes "We can't fix this without it, right?";
+			next;
+			mes "The cats look your way at the same time.";
+			next;
+			switch(select("I have a spare Glass Bead!:Why are you guys staring at me?")) {
+			case 1:
+				if (countitem(746) == 0) {
+					mes "[Roku]";
+					mes "There is no glass bead.";
+					mes "Don't lie to us.";
+					close;
+				}
+				mes "[Charo]";
+				mes "Really? Oh, really?";
+				mes "It's a bead! And a shining glass bead as well!";
+				next;
+				mes "[Rosy]";
+				mes "Hmm. This is enough to replace it.";
+				mes "Like this...";
+				next;
+				mes "[Roku]";
+				mes "And then here, this?";
+				mes "Done.";
+				next;
+				mes "[Charo]";
+				mes "Exciting!!!";
+				mes "Okay, adventurer! We'll give you the right to use this machine!";
+				mes "Try this whenever you want to!!";
+				next;
+				mes "[Charo]";
+				mes "Advanturer! This is a delicious can.";
+				mes "You can get whatever you want with cans in this island. It is tradable.";
+				mes "Rosy, Roku and I collected them.";
+				next;
+				mes "[Charo]";
+				mes "And adventurer!";
+				mes "If you were a real adventurer,";
+				mes "you would clear all Nyadventures";
+				mes "made by the Meow Bravery Team!";
+				mes "Challenge it whenever you want to!";
+				delitem 746,1; //Glass_Bead
+				set nyadven,2;
+				getitem 12636,30; //Malang_Sp_Can
+				close;
+			case 2:
+				mes "[Rosy]";
+				mes "We are just looking at you as you stand there.";
+				close;
+			}
+		case 2:
+			mes "I'll come again later.";
+			close;
+		}
+	} else if (nyadven == 2) {
+		mes "[Charo]";
+		mes "We fixed the Duruduru compass, we only need a visitor now...";
+		mes "Hey, do you want to be a visitor?";
+		emotion e_gasp;
+		next;
+		select("A visitor?");
+		mes "[Charo]";
+		mes "This is an adventure course made by the Meow adventure team.";
+		mes "Especially we have added studying course this time.";
+		mes "It's simple to solve, you only need to find compass in this island according to order.";
+		next;
+		switch(select("I'll give it a try.:Quit.")) {
+		case 1:
+			mes "[Charo]";
+			mes "Here is your Adventure Card.";
+			mes "This is the Duruduru Compass which we fixed with the glass bead you gave us.";
+			mes "And this is the Beginning Compass.";
+			next;
+			mes "[Charo]";
+			mes "The game will start if you put the Adventure Card in here!";
+			mes "This machine is for testing essential ingredients of adventure.";
+			next;
+			mes "[Charo]";
+			mes "Don't forget the destination for successful adventure.";
+			mes "And you should find a way to get to your destination as fast as possible.";
+			next;
+			mes "[Charo]";
+			mes "You will be good, as you are a good person for giving us the glass bead.";
+			next;
+			mes "Got Adventure Card from the yellow cat Charo.";
+			mes "It seems to work if I put this card in the slot in the Beginning Compass.";
+			set nyadven,3;
+			getitem 6428,1; //Bravery_Card_A
+			changequest 7242,7243;
+			next;
+			mes "[Charo]";
+			mes "The game will start if you scratch Adventure Card to the Beginning Compass!";
+			mes "The Beginning Compass will let you know where you should go.";
+			next;
+			mes "[Charo]";
+			mes "^4d4dffIf you go through all the compasses, you will see Meowbell from the ship Navi at last!";
+			mes "Ring the New bell!^000000";
+			close;
+		case 2:
+			mes "[Charo]";
+			mes "Ah... you are not going to do it...";
+			mes "Um...";
+			mes "Sob~";
+			mes "Meow~";
+			next;
+			mes "[Rosy]";
+			mes "Hey, adventurer. Don't make kids cry!";
+			close;
+		}
+	} else if (nyadven == 3) {
+		if (nyadven02 == 28) {
+			mes "[Charo]";
+			mes "Oh? Isn't this failed stamp from Bubi?";
+			mes "I'm really disappointed.";
+			mes "Try again~ you can make it!";
+			set nyadven02,0;
+			if (checkquest(7257) > -1)
+				erasequest 7257;
+			close;
+		}
+		mes "[Charo]";
+		mes "The game will start if you scratch Adventure Card to the Beginning Compass!";
+		mes "The Beginning Compass will let you know where you should go.";
+		next;
+		mes "[Charo]";
+		mes "^4d4dffIf you go through all the compasses, you will see Meowbell from the ship Navi at last!";
+		mes "Ring the New bell!^000000";
+		close;
+	} else if (nyadven == 4) {
+		if (countitem(6428) == 0) {
+			mes "[Charo]";
+			mes "Where is your Adventure Card?";
+			mes "You should bring it with you.";
+			mes "You can't be serious that you threw it away with your other trash!!";
+			close;
+		}
+		mes "[Charo]";
+		mes "I heard it!";
+		mes "I heard sound of Meowbell!";
+		mes "You are great!";
+		mes "The next will be a big case!";
+		next;
+		select("The next?");
+		mes "[Charo]";
+		mes "You are member of the Meow Bravery Team while you have the card with you.";
+		mes "We need an adventurer like you anyways, since this is a big case.";
+		next;
+		mes "[Charo]";
+		mes "It's for the cuff.";
+		mes "It seems a bomb is planted in this island.";
+		mes "The detective has went for this case already.";
+		next;
+		mes "[Charo]";
+		mes "You should go there too!";
+		next;
+		switch(select("Why do I have to go there?:What an adventure! I'll take it!")) {
+		case 1:
+			mes "[Charo]";
+			mes "This is a big case!";
+			mes "And this island could explode!";
+			mes "Oh, you might shut your eyes to the fact.";
+			mes "Give the Adventure Card back!";
+			delitem 6428,1; //Bravery_Card_A
+			set nyadven,5;
+			erasequest 7243;
+			close;
+		case 2:
+			mes "[Charo]";
+			mes "You have great capabilities as an adventurer!";
+			mes "Please help detective and his friend who got in trouble and also save this island!";
+			next;
+			mes "[Charo]";
+			mes "But be sure this should be done undercover!";
+			mes "Therefore you need to take this certification.";
+			mes "It shouldn't happen that the detective misunderstands you as an enemy!";
+			next;
+			mes "- Changed Adventure Card A into Adventure Card B. -";
+			delitem 6428,1; //Bravery_Card_A
+			set nyadven,6;
+			getitem 6429,1; //Bravery_Card_B
+			setquest 7246;
+			erasequest 7243;
+			next;
+			mes "[Charo]";
+			mes "The great detective and his friend will be around the ship Navi.";
+			close;
+		}
+	} else if (nyadven == 5) {
+		mes "[Charo]";
+		mes "Do you feel a disposition to help the detective and his friend?";
+		mes "Don't you?";
+		next;
+		switch(select("Yes I do.:No I don't.")) {
+		case 1:
+			mes "[Charo]";
+			mes "You have great capabilities as an adventurer!";
+			mes "Please help detective and his friend who got in trouble and also save this island!";
+			next;
+			mes "[Charo]";
+			mes "But be sure this should be done undercover!";
+			mes "Therefore you need to take this certification.";
+			mes "It shouldn't happen that the detective misunderstands you as an enemy!";
+			next;
+			mes "- Changed Adventure Card A into Adventure Card B. -";
+			set nyadven,6;
+			getitem 6429,1; //Bravery_Card_B
+			setquest 7246;
+			next;
+			mes "[Charo]";
+			mes "The great detective and his friend will be acound ship Navi.";
+			close;
+		case 2:
+			mes "[Charo]";
+			mes "Oh my god, the great detective and the ship Navi...";
+			close;
+		}
+	} else if (nyadven > 5 && nyadven < 12) {
+		mes "[Charo]";
+		mes "The great detective and his friend will be around the ship Navi.";
+		close;
+	} else if (nyadven == 12) {
+		mes "[Charo]";
+		mes "I have been waiting for you...~";
+		mes "Oh, I am short of breath from coming here in a hurry.";
+		mes "Hmph... Meow...";
+		next;
+		mes "[Charo]";
+		mes "Don't you have anything to show me?";
+		mes "Let me see it quickly!";
+		mes "Take it out!";
+		next;
+		if (countitem(6430) < 6) {
+			mes "[Charo]";
+			mes "What? You don't have it?";
+			mes "It can't be true.";
+			mes "Surely you took this with you...";
+			next;
+			mes "[Rosy]";
+			mes "How come it happened?";
+			mes "This painting is very important for us.";
+			mes "Please give it back to us.";
+			close;
+		}
+		mes "[Charo]";
+		mes "Yes, this is it!";
+		mes "This is our...";
+		mes "But, how do we put the broken pieces together?";
+		next;
+		mes "[Rosy]";
+		mes "We need a board and glue as well to put it together.";
+		mes "That's too troublesome to just give it away!";
+		next;
+		mes "[Roku]";
+		mes "Rato, looks like he is happy.";
+		mes "He will understand.";
+		next;
+		mes "[Charo]";
+		mes "Really...?";
+		mes "There is no Meow team and us without Rato.";
+		mes "I feel a little bad to give only pieces of painting but...";
+		next;
+		mes "[Charo]";
+		mes "We have no other way!";
+		mes "Rato treated this by himself!";
+		mes "No, it's better to ask Rato to put this back together.";
+		next;
+		mes "[Rosy]";
+		mes "Good idea.";
+		mes "That's really a good idea.";
+		mes "I was getting tired of it.";
+		next;
+		mes "[Charo]";
+		mes "You are a member of the Meow Bravery Team.";
+		mes "Please give these pieces of painting to Rato.";
+		mes "And tell him to treat it preciously as our treasure...";
+		next;
+		mes "[Charo]";
+		mes "We couldn't make the Bravery Team without Rato.";
+		mes "Please.";
+		mes "Tell him we didn't forget our home island.";
+		set nyadven,13;
+		changequest 7258,7259;
+		close;
+	} else if (nyadven == 13) {
+		mes "[Charo]";
+		mes "Please give this pating to Rato.";
+		mes "We drawed this painting to show Rato.";
+		mes "Please.";
+		close;
+	} else {
+		switch(rand(3)) {
+		case 0:
+			mes "[Charo]";
+			mes "Here you are! Our emeritus member of the new Bravery Team!";
+			mes "Where did you go for adventure today?";
+			mes "Are these adventure stories?!";
+			mes "If not, then...";
+			next;
+			mes "[Charo]";
+			mes "You might have come here for the compass race like huge tuna from our Meow Bravery Team!!";
+			mes "Meow!";
+			close;
+		case 1:
+			mes "[Charo]";
+			mes "Well, Homnya and Nyangson are too difficult for me.";
+			mes "...?";
+			mes "I meant the book is difficult for me.";
+			close;
+		case 2:
+			mes "[Charo]";
+			mes "Do you know how much Rato loves the painting which you have found?";
+			mes "He put framed the painting on the wall!";
+			mes "Meow~";
+			next;
+			mes "[Charo]";
+			mes "I miss my hometown.";
+			mes "But Malangdo is also my hometown as well.";
+			mes "I am okay with us all together in here~";
+			close;
+		}
+	}
+}
+
+malangdo,214,204,3	script	[Meow Team] Rosy#nya_09	559,{
+	if (nyadven < 2) {
+		mes "A young cat with white fur tries so hard with the weird machine.";
+		mes "The machine might be broken.";
+		close;
+	} else if (nyadven == 2) {
+		mes "[Rosy]";
+		mes "Um? The adventurer who brought us the glass bead?";
+		mes "I really thank you for that.";
+		mes "We could fix the compass with that glass bead.";
+		close;
+	} else if (nyadven == 3) {
+		mes "[Rosy]";
+		mes "Adventure Card? Will you do the Duruduru race?";
+		mes "It's hard to say it's fun even though we made it.";
+		next;
+		mes "[Charo]";
+		mes "Oh, it's fun! Perfectly fun!";
+		mes "I have remodeled it this time!!";
+		mes "It will be really fun!!";
+		next;
+		mes "[Roku]";
+		mes "Yes. It's fun, as Charo said.";
+		mes "Maybe.";
+		mes "...";
+		mes "It is.";
+		close;
+	} else {
+		mes "[Rosy]";
+		mes "Meow...";
+		mes "I feel sleepy today.";
+		mes "I've had sore throat these day because I talked too much...";
+		next;
+		mes "[Rosy]";
+		mes "Don't you agree with me, friend?";
+		mes "...?";
+		mes "Oh, I didn't even realize...";
+		next;
+		mes "[Rosy]";
+		mes "Forget about it!";
+		mes "Doesn't this machine ever break?";
+		close;
+	}
+}
+
+malangdo,215,201,3	script	[Meow Team] Roku#nya_10	553,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 4000) {
+		mes "- You have too many items to proceed in this quest. -";
+		close;
+	}
+	if (nyadven < 2) {
+		mes "A young black cat helps a busy white cat.";
+		mes "Maybe the machine is broken.";
+		close;
+	} else if (nyadven == 2) {
+		mes "[Roku]";
+		mes "Oh? You are the one who gave us the glass bead.";
+		mes "Thanks a lot.";
+		mes "I am happy, too, because Charo looks happy.";
+		close;
+	} else if (nyadven == 3) {
+		mes "[Roku]";
+		mes "Charo likes it.";
+		mes "It will be fun.";
+		close;
+	} else if (nyadven == 4) {
+		mes "[Roku]";
+		mes "Charo has been waiting for so long.";
+		mes "To Charo...";
+		close;
+	}
+	mes "[Roku]";
+	mes "Do you have something to tell me?";
+	next;
+	switch(select("Report results of the race.:Challenge the race.:Nothing.")) {
+	case 1:
+		if (countitem(6428) == 0) {
+			mes "[Roku]";
+			mes "Bubi, no confirmation stamps and card.";
+			mes "You will be in trouble if you are like this.";
+			close;
+		}
+		if (nyadven02 == 27) {
+			mes "[Roku]";
+			mes "Good job.";
+			mes "You are very smart.";
+			mes "This is a gift for you.";
+			mes "Please come tomorrow again.";
+			next;
+			mes "[Roku]";
+			mes "Charo likes you so much.";
+			mes "He will be happy if you come.";
+			delitem 6428,1; //Bravery_Card_A
+			set nyadven02,29;
+			getitem 6422,3; //Egrade_Coin
+			getexp 20000,20000;
+			erasequest 7244;
+			erasequest 7245;
+			close;
+		} else if (nyadven02 == 28) {
+			mes "[Roku]";
+			mes "Failed...";
+			mes "...is it too difficult for you?";
+			mes "But the race is available only once a day.";
+			delitem 6428,1; //Bravery_Card_A
+			erasequest 7244;
+			erasequest 7245;
+			next;
+			switch(select("Give me one more chance!:Okay.I will try tomorrow.")) {
+			case 1:
+				if (countitem(12636) == 0) {
+					mes "[Roku]";
+					mes "Um... Um... Well...";
+					mes "If you bring a Malangdo Can,";
+					mes "I will give you one more chance.";
+					close;
+				}
+				mes "[Roku]";
+				mes "Okay. Do you want to exchange 1 Malangdo Can for a Adventure Card?";
+				next;
+				switch(select("Exchange for Adventure Card A.:Stop it.")) {
+				case 1:
+					if (countitem(6428)) {
+						mes "[Roku]";
+						mes "You have it already?";
+						close;
+					}
+					mes "[Roku]";
+					mes "Here is your Adventure Card.";
+					mes "Beginning Compass, start!";
+					delitem 12636,1; //Malang_Sp_Can
+					getitem 6428,1; //Bravery_Card_A
+					set nyadven02,0;
+					if (checkquest(7257) > -1)
+						erasequest 7257;
+					close;
+				case 2:
+					mes "[Roku]";
+					mes "Okay, come again tomorrow.";
+					close;
+				}
+			case 2:
+				mes "[Roku]";
+				mes "Okay, come again tomorrow.";
+				close;
+			}
+		} else if (nyadven02 == 29) {
+			mes "[Roku]";
+			mes "You have reported the result for today already.";
+			mes "Right?";
+			close;
+		} else if (nyadven02 < 27) {
+			mes "[Roku]";
+			mes "You are too hasty.";
+			mes "You didn't even finish the race.";
+			mes "It's still going.";
+			close;
+		} else {
+			mes "[Roku]";
+			mes "The result is little weird, but...";
+			mes "This is neither a complete race nor incomplete race.";
+			next;
+			mes "[Roku]";
+			mes "Is this because of the machine?";
+			mes "Let's make void for this race.";
+			delitem 6428,1; //Bravery_Card_A
+			set nyadven02,0;
+			erasequest 7244;
+			erasequest 7245;
+			close;
+		}
+	case 2:
+		if (nyadven02 == 28) {
+			mes "[Roku]";
+			mes "You have failed?";
+			mes "Do you want to try again?";
+			mes "I will delete the report of the failed result.";
+		} else {
+			if (checkquest(7257,PLAYTIME) == 0 || checkquest(7257,PLAYTIME) == 1) {
+				mes "[Roku]";
+				mes "No, not yet.";
+				mes "Duruduru race is only once for a day.";
+				mes "If we do it more often, the machine will break.";
+				close;
+			}
+			mes "[Roku]";
+			mes "I know that you will try the Duruduru race.";
+			mes "I deleted your last report.";
+		}
+		if (checkquest(7257) > -1)
+			erasequest 7257;
+		next;
+		mes "[Roku]";
+		mes "You need a Adventure Card to challenge again.";
+		mes "Do you want to exchange 1 Malangdo Can for a Adventure Card?";
+		next;
+		switch(select("Buy Adventure Card.:Just stop it.")) {
+		case 1:
+			if (countitem(6428)) {
+				mes "[Roku]";
+				mes "You have it already?";
+				close;
+			}
+			if (countitem(12636) == 0) {
+				mes "[Roku]";
+				mes "There is nothing for free.";
+				mes "You need a Malangdo Can.";
+				close;
+			}
+			mes "[Roku]";
+			mes "Here is your Adventure Card.";
+			mes "Beginning Compass, start!";
+			delitem 12636,1; //Malang_Sp_Can
+			getitem 6428,1; //Bravery_Card_A
+			set nyadven02,0;
+			close;
+		case 2:
+			mes "[Roku]";
+			mes "Okay.";
+			close;
+		}
+	case 3:
+		mes "[Roku]";
+		mes "You are the weird one.";
+		close;
+	}
+}
+
+malangdo,212,204,0	script	Beginning Compass#nya_02	844,{
+	if (countitem(6428) == 0) {
+		mes "There is a strange machine.";
+		mes "The kids said this was the ride called Duruduru compass of the Meow Bravery Team.";
+		close;
+	}
+	if (nyadven02 < 11) {
+		mes "An iron pot contains a map of Malangdo with a card inserter.";
+		mes "After inserting your card, a red button and the map inside the pot light up.";
+		mes "It seems to start after pressing the button.";
+		next;
+		switch(select("Start it right now.:Start it later.")) {
+		case 1:
+			mes "The card has come out with lights on the map after pressing the button.";
+			if (rand(20) < 10) {
+				callsub L_Viewpoint,1,1;
+				mes "The game has started already!";
+				set nyadven02,11;
+				setquest 7244;
+				close;
+			} else {
+				callsub L_Viewpoint,2,1;
+				mes "The game has started already!";
+				set nyadven02,21;
+				setquest 7245;
+				close;
+			}
+		case 2:
+			mes "Challenge it a little later.";
+			close;
+		}
+	} else if (nyadven02 >= 11 && nyadven02 <= 15) {
+		callsub L_Viewpoint,1,(nyadven02-10);
+		close;
+	} else if (nyadven02 >= 21 && nyadven02 <= 25) {
+		callsub L_Viewpoint,2,(nyadven02-20);
+		close;
+	} else if (nyadven02 == 16 || nyadven02 == 26) {
+		mes "The destination displays with pressing the button after inserting the card.";
+		mes "It's above the deck in the middle of the island!";
+		close;
+	}
+	mes "Beginning Compass among the Duruduru compass.";
+	mes "The Duruduru race starts from this compass.";
+	close;
+
+// callsub L_Viewpoint,<order number>,<start index>;
+L_Viewpoint:
+	switch(getarg(0)) {
+	case 1: // Order 1: Red, Blue, Yellow, Green, White
+		setarray .@Colors$[1],"^FF0000","^0000FF","^FFFF00","^00FF00","^cccccc";
+		setarray .@Text$[1],"Red","Blue","Yellow","Green","White";
+		if (getarg(1) <= 1)
+			viewpoint 1,213,89,0,0xFF0000;
+		if (getarg(1) <= 2)
+			viewpoint 1,128,103,1,0x0000FF;
+		if (getarg(1) <= 3)
+			viewpoint 1,73,253,2,0xFFFF00;
+		if (getarg(1) <= 4)
+			viewpoint 1,153,146,3,0x00FF00;
+		viewpoint 1,111,178,4,0xcccccc;
+		break;
+	case 2: // Order 2: Yellow, Blue, White, Green, Red
+		setarray .@Colors$[1],"^FFFF00","^0000FF","^cccccc","^00FF00","^FF0000";
+		setarray .@Text$[1],"Yellow","Blue","White","Green","Red";
+		if (getarg(1) <= 1)
+			viewpoint 1,73,253,0,0xFFFF00;
+		if (getarg(1) <= 2)
+			viewpoint 1,128,103,1,0x0000FF;
+		if (getarg(1) <= 3)
+			viewpoint 1,111,178,2,0xcccccc;
+		if (getarg(1) <= 4)
+			viewpoint 1,153,146,3,0x00FF00;
+		viewpoint 1,213,89,4,0xFF0000;
+		break;
+	}
+	for(set .@i,1; .@i<=5; set .@i,.@i+1)
+		set .@str$, .@str$+((.@i >= getarg(1))?.@Colors$[.@i]:"")+.@Text$[.@i]+" ";
+	if (getarg(1) > 1)
+		mes "After inserting the card and pressing the red button, the path to the destination lit up.";
+	mes "The order will be "+.@str$+"^000000.";
+	return;
+}
+
+-	script	#malangdo_compass	-1,{
+	if (countitem(6428) == 0) {
+		mes "There is a strange machine.";
+		mes "This is the Duruduru compass from the Meow Bravery Team.";
+		close;
+	}
+	set .@index, atoi(strnpcinfo(2));
+	switch(.@index) {
+	case 1:
+		setarray .@var[0],11,25;
+		set .@color$,"red";
+		break;
+	case 2:
+		setarray .@var[0],12,22;
+		set .@color$,"blue";
+		break;
+	case 3:
+		setarray .@var[0],13,21;
+		set .@color$,"gold";
+		break;
+	case 4:
+		setarray .@var[0],14,24;
+		set .@color$,"green";
+		break;
+	case 5:
+		setarray .@var[0],15,23;
+		set .@color$,"white";
+		break;
+	}
+	mes "Delicate "+.@color$+" lights surround the "+strnpcinfo(1)+".";
+	if (nyadven02 < 11) {
+		mes "After inserting the card and pressing the button, characters appear on the screen.";
+		next;
+		mes "^00FF00This is a card that didn't start the game yet. Please go back to the Beginning Compass.^000000";
+		close;
+	} else if (nyadven02 == .@var[0] || nyadven02 == .@var[1]) {
+		mes "After inserting the card and pressing the button, characters appear on the screen.";
+		next;
+		mes "Welcome to the exciting number world!";
+		mes "Enter the exact answer after reading the question!";
+		next;
+		while(1) {
+			switch(.@index) {
+			case 1:
+				set .@nori_a, rand(1,999);
+				set .@nori_b, rand(1,999);
+				set .@nori_c, .@nori_a+.@nori_b;
+				mes .@nori_a+" + "+.@nori_b+" = ??";
+				break;
+			case 2:
+				set .@nori_a, rand(1,9);
+				set .@nori_b, rand(1,9);
+				set .@nori_c, .@nori_a*.@nori_b;
+				mes .@nori_a+" x "+.@nori_b+" = ??";
+				break;
+			case 3:
+				set .@nori_a, rand(600,999);
+				set .@nori_b, rand(1,599);
+				set .@nori_c, .@nori_a-.@nori_b;
+				mes .@nori_a+" - "+.@nori_b+" = ??";
+				break;
+			case 4:
+				set .@nori_a, rand(1,99);
+				set .@nori_b, rand(1,9);
+				set .@nori_d, rand(1,9);
+				set .@nori_c, .@nori_a+(.@nori_b*.@nori_d);
+				mes .@nori_a+" + "+.@nori_b+" x "+.@nori_d+" = ??";
+				break;
+			case 5:
+				set .@nori_a, rand(1,9);
+				set .@nori_c, .@nori_a+(.@nori_a*.@nori_a);
+				mes .@nori_a+" + "+.@nori_a+" x "+.@nori_a+" = ??";
+				break;
+			}
+			next;
+			input .@input;
+			if (.@input == .@nori_c) {
+				mes "The card slides out with a sound after entering the number.";
+				mes "^4d4dffYou have passed the "+strnpcinfo(1)+"! Run to the next destination!^000000";
+				mes "You should run for the next destination.";
+				set nyadven02, nyadven02+1;
+				close;
+			}
+			mes "You've got wrong answer!";
+			mes "You can not pass here without exact answer!";
+			mes "Enter exact answer after read question!";
+			next;
+		}
+	} else if (nyadven02 == 16 || nyadven02 == 26) {
+		mes "After inserting the card and pressing the button, characters appear on the screen.";
+		next;
+		mes "The compass needle turns around in the middle of map.";
+		mes "You should run for the next destination.";
+		viewpoint 2,1,1,0,0xFFFFFF;
+		viewpoint 2,1,1,1,0xFFFFFF;
+		viewpoint 2,1,1,2,0xFFFFFF;
+		viewpoint 2,1,1,3,0xFFFFFF;
+		viewpoint 2,1,1,4,0xFFFFFF;
+		viewpoint 1,162,177,5,0xcccccc;
+		close;
+	} else if ((nyadven02 >= 11 && nyadven02 <= 15) || (nyadven02 >= 21 && nyadven02 <= 25)) {
+		mes "After inserting the card and pressing the button, characters appear on the screen.";
+		next;
+		mes "^FF0000You are going the wrong way! The paths in the card and compass don't line up!^000000";
+		close;
+	}
+	close;
+}
+malangdo,213,89,0	duplicate(#malangdo_compass)	Red Flame Compass#1	844
+malangdo,128,103,0	duplicate(#malangdo_compass)	Blue Flame Compass#2	844
+malangdo,73,253,0	duplicate(#malangdo_compass)	Gold Flame Compass#3	844
+malangdo,153,146,0	duplicate(#malangdo_compass)	Forest Compass#4	844
+malangdo,111,178,0	duplicate(#malangdo_compass)	Cloud Compass#5	844
+
+malangdo,175,163,0	script	Meowbell#nya_12	844,{
+	if (countitem(6428) == 0) {
+		mes "There is a fancy bell which doesn't fit in with the ship.";
+		mes "This bell is used in a game by the Meow Bravery Team.";
+		viewpoint 2,1,1,0,0xFFFFFF;
+		viewpoint 2,1,1,1,0xFFFFFF;
+		viewpoint 2,1,1,2,0xFFFFFF;
+		viewpoint 2,1,1,3,0xFFFFFF;
+		viewpoint 2,1,1,4,0xFFFFFF;
+		viewpoint 2,1,1,5,0xFFFFFF;
+		close;
+	}
+	if (nyadven02 == 16)
+		set .@quest,7244;
+	else if (nyadven02 == 26)
+		set .@quest,7245;
+	else {
+		mes "There is a one more little bell beside the huge notice bell in the deck.";
+		mes "This is the Meowbell from the Meow Bravery Team.";
+		next;
+		mes "This is last bell to ring if you have the card for the game.";
+		mes "Nothing to say for now.";
+		close;
+	}
+	mes "This is the Meowbell.";
+	mes "You insert your card into the middle slot.";
+	viewpoint 2,1,1,0,0xFFFFFF;
+	viewpoint 2,1,1,1,0xFFFFFF;
+	viewpoint 2,1,1,2,0xFFFFFF;
+	viewpoint 2,1,1,3,0xFFFFFF;
+	viewpoint 2,1,1,4,0xFFFFFF;
+	viewpoint 2,1,1,5,0xFFFFFF;
+	if (checkquest(.@quest,PLAYTIME) == 0 || checkquest(.@quest,PLAYTIME) == 1) {
+		mes "Knock Meowbell!!";
+		set nyadven02,27;
+		changequest .@quest,7257;
+		next;
+		if (nyadven == 3) {
+			mes "[Deckhand Bubi]";
+			mes "Oh, I'm suprised.";
+			mes "You rang the Meowbell in a short time.";
+			mes "I think you have the talent to be an adventurer.";
+			next;
+			mes "[Deckhand Bubi]";
+			mes "People say...";
+			mes "The purpose of this Duruduru game";
+			mes "is to find and go to a destination quickly and accurately.";
+			next;
+			mes "[Deckhand Bubi]";
+			mes "Go to Charo with that Adventure Card.";
+			mes "I will give you a confirmation stamp for success.";
+			set nyadven,4;
+			close;
+		} else {
+			mes "[Deckhand Bubi]";
+			mes "Oh, you've really gotten used to it.";
+			mes "You succeeded again.";
+			mes "I've put my paw stamp here.";
+			mes "Run to Rato now.";
+			close;
+		}
+	} else {
+		mes "-- Beep --";
+		mes "The card has out with a warning sound.";
+		set nyadven02,28;
+		changequest .@quest,7257;
+		next;
+		mes "[Deckhand Bubi]";
+		mes "You didn't ring the Meowbell within time.";
+		mes "Well, it's out of my hands now.";
+		mes "I will give you the fail stamp!!";
+		close;
+	}
+}
+
+malangdo,176,165,3	script	Deckhand Bubi#nya_16	544,{
+	mes "[Bubi]";
+	mes "Hey, human adventurer, what are you here for?";
+	mes "Yeah~ this is a beautiful view.";
+	next;
+	mes "[Bubi]";
+	mes "Are you one of the people who came here to ring the Meowbell?";
+	mes "I am not a member of the Meow Team, but I can give you the confirmation stamp.";
+	next;
+	mes "[Bubi]";
+	mes "Um, my work?";
+	mes "Oh, that is only for when I am not on a voyage.";
+	mes "I am free these days.";
+	close;
+}
+
+malangdo,172,178,7	script	Cat Detective#nya_14	560,{
+	cutin "mal_homnya_n",2;
+	if (nyadven < 6) {
+		mes "[Cat Detective]";
+		mes "Um? What is the matter?";
+		mes "Hey, here is a suspicious guy.";
+		next;
+		mes "[Cat Detective]";
+		mes "I can surely tell he is drunk by the smell of liquid.";
+		mes "I am so sad that I can not.";
+		next;
+		mes "[Friend of Detective]";
+		mes "Oh, I am so sorry to hear that you have such genius analytical skills!";
+		mes "He is not drunk...";
+		next;
+		mes "[Cat Detective]";
+		mes "Drunks always smell of liquid.";
+		mes "But he is not, therefore he is not drunk, friend.";
+		next;
+		select("Then what is your identity?");
+		cutin "mal_homnya_s",2;
+		mes "[Cat Detective]";
+		mes "Well... You are everything except drunk!!!";
+		next;
+		mes "The voice of the cats sounded shaky.";
+		close2;
+	} else if (nyadven == 6) {
+		mes "[Cat Detective]";
+		mes "What did I say?";
+		mes "Didn't I tell you that someone will come here soon?";
+		next;
+		mes "[Friend of Detective]";
+		mes "Great.";
+		mes "I can only admire your deduction.";
+		next;
+		mes "[Detective Homnya]";
+		mes "Haha, Nyangson, this is nothing for me.";
+		mes "Before that, let's listen to the stories from the visitor first.";
+		next;
+		switch(select("Charo? Rosy?:Are you guys detectives?")) {
+		case 1:
+			cutin "mal_homnya_s",2;
+			mes "[Homnya]";
+			mes "No... Who are they?";
+			mes "Nyangson, do you know them?";
+			next;
+			mes "[Nyangson]";
+			mes "I... I don't know either?";
+			mes "I don't know Charo and Rosy!";
+			next;
+			mes "[Homnya]";
+			mes "Yes. Yes.";
+			mes "We are the detective and friend!";
+			next;
+			break;
+		case 2:
+			mes "[Homnya]";
+			mes "Yes, I am the detective, Homnya.";
+			mes "And this is my friend, Nyangson. He reports my cases.";
+			next;
+			break;
+		}
+		mes "[Homnya]";
+		mes "Anyways, that's not important for now!";
+		mes "We should focus on current situation.";
+		next;
+		mes "[Nyangson]";
+		mes "Yes, that's right, friend.";
+		mes "We think........";
+		next;
+		mes "[Homnya]";
+		mes "Yes! This is a bomb for sure!";
+		mes "I am so sorry, I have only analytical and detective skills but don't have the skill to dispose of a bomb!";
+		next;
+		cutin "mal_homnya_s",2;
+		mes "[Nyangson]";
+		mes "What do you mean by that?";
+		mes "It doesn't make any sense!";
+		next;
+		mes "[Homnya]";
+		mes "Yes, we shout when it changed from the peak of hope into the peak of sorrow.";
+		mes "Peak!";
+		mes "Meow!";
+		next;
+		mes "I don't get the meaning of this, but they seem to be in hurry.";
+		next;
+		switch(select("Continue to humor them.:Stop playing around.")) {
+		case 1:
+			cutin "mal_homnya_n",2;
+			mes "[Homnya]";
+			mes "Oh, if you give us a hand, I will take it. How do you think about it, friend?";
+			next;
+			mes "[Nyangson]";
+			mes "I don't really care about it. What I want to do is only to report this case.";
+			mes "One of the cases will be open to the public among the most strange and weird cases ever.";
+			next;
+			mes "[Homnya]";
+			mes "I knew this visitor had the skill to dispose of a bomb.";
+			mes "He is totally prepared to escape from danger.";
+			next;
+			mes "[Nyangson]";
+			mes "Oh, I heard of it. I heard they use fly wings and butterfly wings as well.";
+			mes "I've never thought I could meet a person who used these thing for real.";
+			next;
+			mes "[Homnya]";
+			mes "Yes, I believe this visitor will solve our mystery.";
+			mes "Then please stop this damn machine!";
+			next;
+			mes "[Nyangson]";
+			mes "Yes, the damn machine!";
+			mes "It is loud and useless!";
+			mes "And it will be blown up.";
+			next;
+			mes "[Homnya]";
+			mes "Well, stop this machine!!!";
+			set nyadven,7;
+			changequest 7246,7247;
+			close2;
+			break;
+		case 2:
+			cutin "mal_homnya_s",2;
+			mes "[Homnya]";
+			mes "Please don't...";
+			mes "Please act according to the script.";
+			next;
+			mes "[Nyangson]";
+			mes "Charo. Where is the script?";
+			mes "No, Homnya. My friend...";
+			next;
+			mes "Two young cats are sweating a lot.";
+			close2;
+			break;
+		}
+	} else if (nyadven == 7) {
+		mes "[Homnya]";
+		mes "Stop this noisy machine!";
+		mes "This is the moment that your memory can be coming through!";
+		next;
+		mes "[Nyangson]";
+		mes "Yes. Yes.";
+		mes "This is the sort of training where you dispose of and breach all the traps.";
+		mes "Yes, this is.";
+		close2;
+	} else if (nyadven == 8) {
+		mes "[Homnya]";
+		mes "It was a scary moment.";
+		mes "This machine is still fine anyways!";
+		mes "Stop it again.";
+		next;
+		mes "[Homnya]";
+		mes "Yes, you need Adventure Card B to operate this machine.";
+		mes "Do you want to buy a new one?";
+		next;
+		mes "[Nyangson]";
+		mes "It costs one Malangdo Can.";
+		next;
+		switch(select("Buy Adventure Card.:Do not buy.")) {
+		case 1:
+			if (countitem(12636) == 0) {
+				mes "[Homnya]";
+				mes "I said I can exchange Adventure Card with one Malango Can~";
+				close2;
+				break;
+			}
+			mes "[Homnya]";
+			mes "See, this is a scary machine.";
+			mes "Here is your Adventure Card.";
+			mes "Stop this machine this time.";
+			delitem 12636,1; //Malang_Sp_Can
+			set nyadven,7;
+			getitem 6429,1; //Bravery_Card_B
+			close2;
+			break;
+		case 2:
+			mes "[Homnya]";
+			mes "What?";
+			mes "But you came here to buy a Adventure Card.";
+			mes "......";
+			next;
+			mes "[Nyangson]";
+			mes "If you buy a Adventure Card there won't be any bloodshed...";
+			close2;
+			break;
+		}
+	} else if (nyadven == 9) {
+		mes "[Homnya]";
+		mes "Hey, there is good news for you.";
+		mes "I received pretty good news while you struggled with that machine.";
+		next;
+		mes "[Nyangson]";
+		mes "Hello, capable friend, what did you find?";
+		mes "Is this something like hidden treasure?";
+		next;
+		mes "[Homnya]";
+		mes "Hidden treasure?";
+		mes "Very similar!";
+		mes "It will be hidden in serveral places inside the cabin.";
+		mes "You should find them!";
+		next;
+		switch(select("I feel tired of it now.:Oh, yes!")) {
+		case 1:
+			mes "[Homnya]";
+			mes "Oh, really?";
+			mes "If you feel tired then it's okay.";
+			mes "Please come again, if you want.";
+			next;
+			mes "[Nyangson]";
+			mes "Please come again~.";
+			close2;
+			break;
+		case 2:
+			mes "[Homnya]";
+			mes "I knew you would do this!";
+			mes "I have the right eye for people.";
+			mes "The place is inside of the ship Navi.";
+			next;
+			mes "[Nyangson]";
+			mes "It will be fine because it isn't really a large place.";
+			mes "I look forward to your active work!";
+			set nyadven,10;
+			setquest 7250;
+			close2;
+			break;
+		}
+	} else if (nyadven == 10) {
+		mes "[Homnya]";
+		mes "Please find the pieces of the treasure.";
+		mes "The tresure is hidden inside of the ship Navi according to our information.";
+		next;
+		mes "[Nyangson]";
+		mes "Come here right after you find treasure!";
+		close2;
+	} else if (nyadven == 11) {
+		if (countitem(6430) > 5) {
+			mes "[Homnya]";
+			mes "You've found all the treasure.";
+			mes "Yes, exactly.";
+			mes "You might thought this painting was just a normal painting.";
+			next;
+			mes "[Homnya]";
+			mes "But...!";
+			mes "If we do this...!";
+			next;
+			mes "[Nyangson]";
+			mes "Oh, this is....... the one from that moment...";
+			mes "This is the one when we left our hometown.";
+			next;
+			mes "[Homnya]";
+			mes "It's time to give it back to the brave new team!";
+			mes "Let's give it back!";
+			mes "Meow~";
+			next;
+			mes "Charo and Rosy who make up as Homnya and Nyangson";
+			mes "checked the pieces of painting and give it back again.";
+			mes "They look excited.";
+			next;
+			mes "[Homnya]";
+			mes "Please give it back to the Meow Bravery Team~";
+			mes "For everyone~ Meow~";
+			mes "These are real treasures!";
+			set nyadven,12;
+			erasequest 7250;
+			erasequest 7251;
+			erasequest 7252;
+			erasequest 7253;
+			erasequest 7254;
+			erasequest 7255;
+			erasequest 7256;
+			setquest 7258;
+			close2;
+		} else {
+			mes "[Homnya]";
+			mes "Well? It's strange. There should be 6 pieces of treasure.";
+			mes "It's missing pieces...";
+			mes "Is this fake? I will throw it out!";
+			next;
+			mes "[Nyangson]";
+			mes "Go get the treasure again!";
+			delitem 6430,countitem(6430); //Picture_Piece
+			erasequest 7251;
+			erasequest 7252;
+			erasequest 7253;
+			erasequest 7254;
+			erasequest 7255;
+			erasequest 7256;
+			set nyadven,10;
+			setquest 7250;
+			close2;
+		}
+	} else if (nyadven == 12 || nyadven == 13) {
+		mes "[Homnya]";
+		mes "Please give these treasures you've found to the Meow Bravery Team.";
+		mes "You will know how precious these treasures are when you give these to them~";
+		next;
+		mes "[Nyangson]";
+		mes "Yes, you will realize.";
+		mes "It's good to take a break for little bit but now we don't have any spare time.";
+		close2;
+	} else {
+		if (countitem(6429) > 0) {
+			mes "[Homnya]";
+			mes "Stop this noisy machine!";
+			mes "Insert your Adventure Card, and take a look at the reaction of the machine carefully. Then do the proper action!";
+			next;
+			mes "[Nyangson]";
+			mes "That's right~";
+			close2;
+		}
+		mes "[Homnya]";
+		mes "Hey Nyangson.";
+		mes "Here comes the hero.";
+		mes "He seems to be here for fixing this naughty machine.";
+		next;
+		mes "[Nyangson]";
+		mes "I always admire your keen insight.";
+		mes "He looks like that for sure.";
+		mes "Then he will buy Adventure Card with Malangdo Can?";
+		next;
+		mes "[Homnya]";
+		mes "You are getting better";
+		mes "I always keep eyes on your keen insight.";
+		mes "You are my true friend.";
+		next;
+		switch(select("How's the condition of Bang?:Ignore it.")) {
+		case 1:
+			if (checkquest(7249,PLAYTIME) == 0 || checkquest(7249,PLAYTIME) == 1) {
+				mes "[Homnya]";
+				mes "it's so motivated but it's not the time yet.";
+				mes "Not yet even though naughty machine is noisy.";
+				mes "Please come again.";
+				next;
+				mes "[Nyangson]";
+				mes "We also have break time.....";
+				close2;
+			} else {
+				if (checkquest(7249,PLAYTIME) == 2)
+					erasequest 7249;
+				mes "[Homnya]";
+				mes "Can you hear how noisy this one is?";
+				mes "It sounds like a runaway foal!";
+				next;
+				mes "[Nyangson]";
+				mes "He needs an Adventure Card to stop it.";
+				mes "Well, do you want to try?";
+				next;
+				switch(select("Buy Adventure Card B.:Don't buy it.")) {
+				case 1:
+					if (countitem(12636) == 0) {
+						mes "[Homnya]";
+						mes "How many Malangdo Cans for an Adventure Card?";
+						next;
+						mes "[Nyangson]";
+						mes "Only one can, dear.";
+						mes "Meow~";
+						close2;
+						break;
+					}
+					mes "[Homnya]";
+					mes "Yes, please try it without blowing it up.";
+					mes "Solve it fast!";
+					next;
+					mes "[Nyangson]";
+					mes "Please do it.";
+					delitem 12636,1; //Malang_Sp_Can
+					getitem 6429,1; //Bravery_Card_B
+					close2;
+					break;
+				case 2:
+					cutin "mal_homnya_s",2;
+					mes "[Homnya]";
+					mes "Ah... Hey... You can't do that!";
+					mes "Hey, don't go!";
+					mes "Please stop this, Nyangson!";
+					next;
+					mes "[Nyangson]";
+					mes "This and that one are all noisy!";
+					mes "Please!";
+					next;
+					mes "The two young cats are sweating a lot.";
+					close2;
+					break;
+				}
+			}
+			break;
+		case 2:
+			cutin "mal_homnya_s",2;
+			mes "[Homnya]";
+			mes "Ah... Hey... You can't do that!";
+			mes "Hey, don't go!";
+			mes "Please stop this, Nyangson!";
+			next;
+			mes "[Nyangson]";
+			mes "This and that one are all noisy!";
+			mes "Please!";
+			next;
+			mes "The two young cats are sweating a lot.";
+			close2;
+			break;
+		}
+	}
+	cutin "",255;
+	end;
+}
+
+malangdo,173,177,7	script	Friend of Detective#mal	559,{
+	cutin "mal_homnya_n",2;
+	mes "[Nyangson]";
+	mes "I am a friend of Detective Homnya, Nyangson.";
+	mes "Please ask Homnya if you have questions.";
+	next;
+	mes "[Homnya]";
+	mes "Yes, he only goes 'yes, my friend' beside me!";
+	mes "Ask me!";
+	close2;
+	cutin "",255;
+	end;
+}
+
+malangdo,174,175,0	script	Noisy Machine#nya_13	844,{
+	if (nyadven < 7) {
+		mes "There is a strange machine.";
+		mes "It has a Red, Blue, Yellow, and Green luminous body with buttons to react,";
+		mes "while spinning with noisy sounds.";
+		next;
+		mes "It looks more unstable as it spins faster.";
+		close;
+	}
+	if (checkquest(7249,PLAYTIME) == 0 || checkquest(7249,PLAYTIME) == 1) {
+		mes "[Homnya]";
+		mes "It's so motivated, but it's not time yet.";
+		mes "Not yet, even though the machine is so noisy.";
+		mes "Please come again.";
+		next;
+		mes "[Nyangson]";
+		mes "We also have break time...";
+		close;
+	}
+	if (countitem(6429) == 0) {
+		mes "[Homnya]";
+		mes "You can't try this without Adventure Card B.";
+		mes "Please bring it with you.";
+		close;
+	}
+	mes "There is a strange machine.";
+	mes "It has a Red, Blue, Yellow, and Green luminous body with buttons to react,";
+	mes "while spinning with noisy sounds.";
+	next;
+	mes "It looks more unstable as it spins faster.";
+	next;
+	cutin "mal_homnya_n",2;
+	mes "[Homnya]";
+	mes "Stop this machine by inserting the card into it!";
+	next;
+	mes "[Nyangson]";
+	mes "Go ahead!";
+	next;
+	cutin "",255;
+	if(select("Insert card.:Stop it.") == 2) {
+		mes "[Homnya]";
+		mes "Um? You aren't going to do this?";
+		mes "Really?";
+		mes "Even though this machine can blow up the whole island?!";
+		next;
+		mes "[Nyangson]";
+		mes "Does he know it's never going to blow up?";
+		next;
+		mes "The two young cats are sweating a lot.";
+		close;
+	}
+	mes "After inserting the card, discs on top of the machine spin faster...";
+	mes "The lights begin to flicker faster too.";
+	next;
+	callsub L_ShowLights,2;
+	callsub L_ShowLights,4;
+	callsub L_ShowLights,6;
+	callsub L_ShowLights,8;
+	cutin "mal_homnya_n",2;
+	mes "[Homnya]";
+	mes "Oh, great!";
+	mes "The banging has stopped!";
+	mes "You have a good memory!";
+	mes "Please take this small gift.";
+	next;
+	mes "[Nyangson]";
+	mes "You can get it after you have been through all the difficulties from the Meow Advanture Team.";
+	mes "And we are not sure if this machine will try to blow up agian, so please come again tomorrow.";
+	if (nyadven == 7) {
+		set nyadven,9;
+		erasequest 7247;
+	}
+	delitem 6429,1; //Bravery_Card_B
+	setquest 7249;
+	getitem 6422,3; //Egrade_Coin
+	getexp 20000,20000;
+	next;
+	if (nyadven == 9) {
+		mes "[Homnya]";
+		mes "Hey, there is good news for you.";
+		mes "I received pretty good news while you struggled with that machine.";
+		next;
+		mes "[Nyangson]";
+		mes "Hello, capable friend, what did you find?";
+		mes "Is this something like hidden treasure?";
+		next;
+		mes "[Homnya]";
+		mes "Hidden treasure?";
+		mes "Very similar!";
+		mes "It will be hidden in serveral places inside the cabin.";
+		mes "You should find them!";
+		next;
+		switch(select("I feel tired of it now.:Oh, yes!")) {
+		case 1:
+			mes "[Homnya]";
+			mes "Oh, really?";
+			mes "If you feel tired then it's okay.";
+			mes "Please come again, if you want.";
+			next;
+			mes "[Nyangson]";
+			mes "Please come again~.";
+			close2;
+			break;
+		case 2:
+			mes "[Homnya]";
+			mes "I knew you would do this!";
+			mes "I have the right eye for people.";
+			mes "The place is inside of the ship Navi.";
+			next;
+			mes "[Nyangson]";
+			mes "It will be fine because it isn't really a large place.";
+			mes "I look forward to your active work!";
+			set nyadven,10;
+			setquest 7250;
+			close2;
+			break;
+		}
+	} else {
+		mes "[Homnya]";
+		mes "Then I am looking forward to tomorrow!";
+		close2;
+	}
+	cutin "",255;
+	end;
+
+// callsub L_ShowLights,<number of lights>;
+L_ShowLights:
+	mes "Luminous";
+	mes "The order of buttons are:";
+	mes "[Red] [Green] [Blue] [Yellow]";
+	mes "And below this, more buttons:";
+	mes "[Green] [Red] [Yellow] [Blue]";
+	mes "In that order.";
+	next;
+	mes "Luminous";
+	setarray .@Color$[0],"Red","Blue","Yellow","Green";
+	setarray .@Cutin$[0],"nya_red","nya_blue","nya_yellow","nya_green";
+	for(set .@i,0; .@i<getarg(0); set .@i,.@i+1) {
+		set .@rand, rand(4);
+		set .@Lamp[.@i],.@rand;
+		mes .@Color$[.@rand];
+		if (.@i+1 == getarg(0))
+			mes "Shines according to this order.";
+		cutin .@Cutin$[.@rand],4;
+		progressbar "0xFFFF00",1;
+	}
+	cutin "nya_off",4;
+	mes "The buttons below are shining now.";
+	mes "Stop the machine by pressing the right button within time.";
+	next;
+	set .@pass,0;
+	setarray .@Count$[0],"first","second","third","fourth","fifth","sixth","seventh","eighth";
+	for(set .@i,0; .@i<getarg(0); set .@i,.@i+1) {
+		mes "Which color button do you want to press "+.@Count$[.@i]+"?";
+		next;
+		// Red <-> Green, Blue <-> Yellow
+		set .@j, select("Red:Blue:Yellow:Green");
+		if (.@Lamp[.@i] == 4-.@j)
+			set .@pass,.@pass+1;
+	}
+	if (.@pass < getarg(0)) {
+		mes "The speed of spinning is getting faster after pressing the buttons.";
+		mes "After all...";
+		specialeffect EF_BEGINSPELL6;
+		emotion e_gasp,0,"Cat Detective#nya_14";
+		emotion e_gasp,0,"Friend of Detective#mal";
+		next;
+		cutin "mal_homnya_s",2;
+		mes "[Homnya]";
+		mes "Watch out!!!";
+		mes " ";
+		mes "[Nyangson]";
+		mes "It's blowing up!";
+		specialeffect EF_FIREHIT;
+		specialeffect EF_FIRESPLASHHIT;
+		next;
+		cutin "",255;
+		mes "Adventure Card B burned off";
+		mes "with a huge explosion.";
+		delitem 6429,1; //Bravery_Card_B
+		if (nyadven == 7)
+			set nyadven,8;
+		close;
+	}
+	mes "The speed of the spinning discs gets slower after pressing the buttons.";
+	mes "The luminous shines once and stops also.";
+	cutin "nya_off",4;
+	next;
+	if (getarg(0) < 8) {
+		mes "[Homnya]";
+		mes "Don't reduce your tension!";
+		mes "It's not over yet!";
+		next;
+		mes "The machine starts again.";
+		mes "And the luminous shines also, as if it keeps asking you for the right answer.";
+		next;
+	}
+	return;
+}
+
+// callfunc "F_Mal_Picture",<quest ID>,<chance to kick?>,<description 1>,<description 2>,<description 3>;
+// Returns:
+// 1    - Player kicked.
+// 2    - nyadven is not 10.
+// 3    - Player has already found the picture piece.
+// null - Success.
+function	script	F_Mal_Picture	{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 4000) {
+		mes "- You have too many items to proceed in this quest. -";
+		close;
+	}
+	if (getarg(1) && rand(2))
+		return 1;
+	else if (nyadven != 10)
+		return 2;
+	else if (checkquest(getarg(0)) > -1)
+		return 3;
+	else {
+		mes getarg(2);
+		mes getarg(3);
+		next;
+		mes getarg(4);
+		mes "You found a piece of the painting.";
+		setquest getarg(0);
+		getitem 6430,1; //Picture_Piece
+		next;
+		if (checkquest(7251) > -1 && checkquest(7252) > -1 && checkquest(7253) > -1 && checkquest(7254) > -1 && checkquest(7255) > -1 && checkquest(7256) > -1) {
+			mes "It looks like you can put these pieces of paintings together.";
+			mes "If I found all the pieces, I should go back to Homnya.";
+			set nyadven,11;
+			close;
+		}
+		mes "I think this is the treasure Homnya and Nyangson mentioned.";
+		mes "Let's find more pieces.";
+		close;
+	}
+}
+
+mal_in02,187,45,0	script	Box#nya01	844,{
+	switch(callfunc(
+		"F_Mal_Picture",
+		7251,1,
+		"There is an uncommon box in the corner of the cabin.",
+		"It seems to tell me that it has a teasure inside.",
+		"I can see a piece of paper sticking out."
+	)) {
+	case 1:
+		mes "[Neat Crew]";
+		mes "What are you doing here?!";
+		mes "Don't touch that box any more!";
+		mes "There will be more bugs if you keep hiding snacks in there!";
+		mes "Get out!";
+		close2;
+		warp "mal_in02",138,60;
+		end;
+	case 2:
+		mes "A box in the corner of the cabin.";
+		close;
+	case 3:
+		mes "This is a box which used to contain a piece of the painting.";
+		close;
+	}
+}
+
+mal_in02,170,75,0	script	Book#nya02	844,{
+	switch(callfunc(
+		"F_Mal_Picture",
+		7252,1,
+		"The books are organized according to order on the bookshelf.",
+		"I try to take 1 book off carefully.",
+		"I can see something sticking out among the books."
+	)) {
+	case 1:
+		mes "[Neat Crew]";
+		mes "Ah, do not touch it!";
+		mes "Why do you keep messing it up after I clean up the room?!";
+		mes "Get out!";
+		close2;
+		warp "mal_in02",138,60;
+		end;
+	case 2:
+		mes "The books are organized according to order on the bookshelf.";
+		close;
+	case 3:
+		mes "This is a book which used to contain a piece of the painting.";
+		close;
+	}
+}
+
+mal_in02,133,98,0	script	Dirty Bed#nya03	844,{
+	switch(callfunc(
+		"F_Mal_Picture",
+		7253,1,
+		"This is a normal cabin for the crew.",
+		"My eyes kept straying over to old bed in corner of the room.",
+		"Something is hanging with furs below the bed."
+	)) {
+	case 1:
+		mes "[Scary Crew]";
+		mes "What are you doing here?";
+		mes "Do not disturb me, and go away.";
+		mes "Get out!";
+		close2;
+		warp "mal_in02",100,60;
+		end;
+	case 2:
+		mes "It's dirty and smells like fish.";
+		mes "There are a lot of furs from cats.";
+		close;
+	case 3:
+		mes "This is dirty bed where a piece of the painting was hidden.";
+		mes "There are a lot of furs from cats.";
+		close;
+	}
+}
+
+mal_in02,31,57,0	script	Seashell#nya04	844,{
+	switch(callfunc(
+		"F_Mal_Picture",
+		7254,0,
+		"This cabin is large and clean, and it seems to for the captain.",
+		"My eyes kept straying over to the seashell and conch for decoration in the corner of the room.",
+		"There is a rolled up paper in the conch."
+	)) {
+	case 2:
+		mes "There is a seashell decoration on a clean display cupboard.";
+		close;
+	case 3:
+		mes "This is the seashell where a piece of the painting was hidden.";
+		close;
+	}
+}
+
+mal_in02,114,56,0	script	Ship Pillar#nya05	844,{
+	switch(callfunc(
+		"F_Mal_Picture",
+		7255,1,
+		"This is one of pillars to bear out the ship.",
+		"It has many nail marks as it has been through many cats.",
+		"There is a folded piece of paper in the crack of the wooden wall."
+	)) {
+	case 1:
+		mes "[Picky Crew]";
+		mes "Is that you who scratched all the pillars in here?!";
+		mes "Meow~~~~!!";
+		mes "Get off from that pillar!";
+		close2;
+		warp "malangdo",170,160;
+		end;
+	case 2:
+		mes "I can see the trace of a scratch.";
+		mes "Pillars made from trees are originally good to hang, but scratched by nails.";
+		close;
+	case 3:
+		mes "I can see the crack where a piece of the painting was hidden.";
+		close;
+	}
+}
+
+mal_in02,139,30,0	script	Ventilation Window#nya06	844,{
+	switch(callfunc(
+		"F_Mal_Picture",
+		7256,0,
+		"This cabin is for the normal crew.",
+		"There are many ventilation windows on the floor in this room.",
+		"One of the windows opens with a clink, revealing a piece of paper."
+	)) {
+	case 2:
+		mes "There are windows for ventilation on the floor.";
+		mes "A cold wind comes from these windows.";
+		mes "Why are ventilation windows set up on the floor?";
+		close;
+	case 3:
+		mes "There are windows for ventilation on the floor.";
+		mes "A piece of the painting was hung in there.";
+		mes "Why are ventilation windows set up on the floor?";
+		close;
+	}
+}
+
+mal_in02,166,74,4	script	Neat Crew#nyaong01	555,{
+	mes "[Neat Crew]";
+	mes "Please clean up your stuff by yourself.";
+	mes "Especially you guys getting dirty after we came to this island!";
+	mes "Please throw the trash into the trash can.";
+	next;
+	mes "[Neat Crew]";
+	mes "And you plucked every crop.";
+	mes "Hmph. Please, let's leave it in its natural state.";
+	next;
+	mes "[Neat Crew]";
+	mes "What are you looking at?";
+	mes "Will you mess up here too?";
+	mes "Meow?!";
+	close;
+}
+
+mal_in02,132,95,5	script	Scary Crew#nyaong02	561,{
+	mes "[Scary Crew]";
+	mes "I try to be nice these days, and kids just take liberties with me.";
+	mes "Will you too?";
+	next;
+	mes "[Scary Crew]";
+	mes "They just come in and out, even the other person's room...";
+	mes "It causes harm for sure.";
+	close;
+}
+
+mal_in02,109,62,4	script	Picky Crew#nyaong03	545,{
+	mes "[Picky Crew]";
+	mes "Do not run in the hall!";
+	mes "My fur falls out because of someone who";
+	mes "scratches everywhere!";
+	close;
 }
 
 // Archangel Wing Enchants :: enc_angel

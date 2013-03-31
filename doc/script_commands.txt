@@ -2450,19 +2450,19 @@ specified on the invoking character. If nothing is equipped there, it returns -1
 Valid equipment slots are:
 
 EQI_HEAD_TOP (1)          - Upper Headear
-EQI_ARMOR (2)             - Armor (Where you keep your Jackets and Robes)
-EQI_HAND_L (3)            - What is in your Left hand.
-EQI_HAND_R (4)            - What is in your Right hand.
-EQI_GARMENT (5)           - The garment slot (Mufflers, Hoods, Manteaus)
-EQI_SHOES (6)             - What foot gear the player has on.
-EQI_ACC_L (7)             - Accessory 1.
-EQI_ACC_R (8)             - Accessory 2.
-EQI_HEAD_MID (9)          - Middle Headgear (masks and glasses)
+EQI_ARMOR (2)             - Armor (jackets, robes)
+EQI_HAND_L (3)            - Left hand (weapons, shields)
+EQI_HAND_R (4)            - Right hand (weapons)
+EQI_GARMENT (5)           - Garment (mufflers, hoods, manteaus)
+EQI_SHOES (6)             - Footgear (shoes, boots)
+EQI_ACC_L (7)             - Accessory 1
+EQI_ACC_R (8)             - Accessory 2
+EQI_HEAD_MID (9)          - Middle Headgear (masks, glasses)
 EQI_HEAD_LOW (10)         - Lower Headgear (beards, some masks)
 EQI_COSTUME_HEAD_LOW (11) - Lower Costume Headgear
 EQI_COSTUME_HEAD_MID (12) - Middle Costume Headgear
 EQI_COSTUME_HEAD_TOP (13) - Upper Costume Headgear
-EQI_COSTUME_GARMENT (14) - Costume Garment
+EQI_COSTUME_GARMENT (14)  - Costume Garment
 
 Notice that a few items occupy several equipment slots, and if the character is 
 wearing such an item, 'getequipid' will return it's ID number for either slot.

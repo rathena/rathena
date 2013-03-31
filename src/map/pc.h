@@ -24,6 +24,27 @@
 #define MAX_PC_SKILL_REQUIRE 5
 #define MAX_PC_FEELHATE 3
 
+//Equip indexes constants. (eg: sd->equip_index[EQI_AMMO] returns the index
+//where the arrows are equipped)
+enum equip_index {
+	EQI_ACC_L = 0,
+	EQI_ACC_R,
+	EQI_SHOES,
+	EQI_GARMENT,
+	EQI_HEAD_LOW,
+	EQI_HEAD_MID,
+	EQI_HEAD_TOP,
+	EQI_ARMOR,
+	EQI_HAND_L,
+	EQI_HAND_R,
+	EQI_COSTUME_TOP,
+	EQI_COSTUME_MID,
+	EQI_COSTUME_LOW,
+	EQI_COSTUME_GARMENT,
+	EQI_AMMO,
+	EQI_MAX
+};
+
 struct weapon_data {
 	int atkmods[3];
 	// all the variables except atkmods get zero'ed in each call of status_calc_pc
@@ -167,7 +188,7 @@ struct map_session_data {
 	struct registry save_reg;
 
 	struct item_data* inventory_data[MAX_INVENTORY]; // direct pointers to itemdb entries (faster than doing item_id lookups)
-	short equip_index[15];
+	short equip_index[EQI_MAX];
 	unsigned int weight,max_weight;
 	int cart_weight,cart_num,cart_weight_max;
 	int fd;
@@ -574,27 +595,6 @@ enum equip_pos {
 #else
 	#define EQP_VISIBLE (EQP_HELM|EQP_GARMENT|EQP_COSTUME)
 #endif
-
-//Equip indexes constants. (eg: sd->equip_index[EQI_AMMO] returns the index
-//where the arrows are equipped)
-enum equip_index {
-	EQI_ACC_L = 0,
-	EQI_ACC_R,
-	EQI_SHOES,
-	EQI_GARMENT,
-	EQI_HEAD_LOW,
-	EQI_HEAD_MID,
-	EQI_HEAD_TOP,
-	EQI_ARMOR,
-	EQI_HAND_L,
-	EQI_HAND_R,
-	EQI_COSTUME_TOP,
-	EQI_COSTUME_MID,
-	EQI_COSTUME_LOW,
-	EQI_COSTUME_GARMENT,
-	EQI_AMMO,
-	EQI_MAX
-};
 
 #define pc_setdead(sd)        ( (sd)->state.dead_sit = (sd)->vd.dead_sit = 1 )
 #define pc_setsit(sd)         ( (sd)->state.dead_sit = (sd)->vd.dead_sit = 2 )

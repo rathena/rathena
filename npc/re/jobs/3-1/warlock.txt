@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib, Gepard & L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.3a
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -14,12 +14,13 @@
 //= 1.1 Fixed some conversion mistakes, replaced numbers with
 //=     constants, added item names in comments.
 //= 1.2 Fixed the problem where NPC are not enabled and chamber
-//=     will never open  for the second try or use.
+//=     will never open for the second try or use.
 //= 1.2a Fixed a typo. [Euphy]
 //= 1.3 Updated script, optimized. [Euphy]
+//= 1.3a Added temporary coordinate fix #distorted_space_1-1. [Euphy]
 //============================================================
 
-morocc,103,144,0	script	#distorted_space_1	139,1,1,{
+-	script	#distorted_space_	-1,{
 OnTouch:
 	if (job_wl > 1) {
 		mes " - There is a strange distortion here - ";
@@ -65,7 +66,11 @@ OnTouch:
 	}
 	end;
 }
-splendide,141,284,0	duplicate(#distorted_space_1)	#distorted_space_2	139,1,1
+morocc,103,144,0	duplicate(#distorted_space_)	#distorted_space_1	139,1,1
+splendide,141,284,0	duplicate(#distorted_space_)	#distorted_space_2	139,1,1
+
+// This is a temporary fix until new official coordinates are found.
+morocc,98,144,0	duplicate(#distorted_space_)	#distorted_space_1-1	139,1,1
 
 function	script	F_Warlock	{
 	mes "[Assistant]";
