@@ -2094,6 +2094,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	struct status_data *status;
 	struct map_session_data *sd = NULL, *tmpsd[DAMAGELOG_SIZE];
 	struct map_session_data *mvp_sd = NULL, *second_sd = NULL, *third_sd = NULL;
+	struct status_change *sc;
 
 	struct {
 		struct party_data *p;
@@ -2106,6 +2107,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	bool rebirth, homkillonly;
 
 	status = &md->status;
+	sc = &md->sc;
 
 	if( src && src->type == BL_PC )
 	{
@@ -2635,6 +2637,10 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	// MvP tomb [GreenBox]
 	if (battle_config.mvp_tomb_enabled && md->spawn->state.boss)
 		mvptomb_create(md, mvp_sd ? mvp_sd->status.name : NULL, time(NULL));
+
+	// Remove all status changes before creating a respawn
+	if( sc )
+		memset( sc, 0, sizeof( struct status_change ) );
 
 	if( !rebirth )
 		mob_setdelayspawn(md); //Set respawning.
