@@ -6,7 +6,6 @@
 // This file uses libconfig syntax.
 
 help: "Params: <command>\n" "Shows help for specified command."
-main: "Params: [on|off|<message>]\n" "Turns on or off main (server-wide) chat. Sends message to main chat."
 noask: "Auto rejects deals/invites."
 gmotd: "Broadcasts the Message of The Day to all players."
 me: "Params: <message>\n" "Displays normal text as a message in this format: *name message* (like /me in mIRC)."

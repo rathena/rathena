@@ -1326,7 +1326,7 @@ int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int dama
 			}
 		}
 		if(src->type != BL_MOB) {
-			struct guild *g = guild_search(status_get_guild_id(src));
+			struct guild *g = src->type == BL_PC ? ((TBL_PC *)src)->guild : guild_search(status_get_guild_id(src));
 
 			if (class_ == MOBID_EMPERIUM && (!g || guild_checkskill(g,GD_APPROVAL) <= 0 ))
 				return 0;

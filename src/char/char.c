@@ -1484,7 +1484,7 @@ int check_char_name(char * name, char * esc_name)
 		return -2; // control chars in name
 
 	// check for reserved names
-	if( strcmpi(name, main_chat_nick) == 0 || strcmpi(name, wisp_server_name) == 0 )
+	if( strcmpi(name, wisp_server_name) == 0 )
 		return -1; // nick reserved for internal server messages
 
 	// Check Authorised letters/symbols in the name of the character

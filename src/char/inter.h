@@ -23,8 +23,6 @@ extern unsigned int party_share_level;
 extern Sql* sql_handle;
 extern Sql* lsql_handle;
 
-extern char main_chat_nick[16];
-
 int inter_accreg_tosql(int account_id, int char_id, struct accreg *reg, int type);
 
 uint64 inter_chk_lastuid(int8 flag, uint64 value);

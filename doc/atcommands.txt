@@ -24,6 +24,7 @@ The format of this file is as follows:
 	7. Guild Commands
 	8. Pet Commands
 	9. Homunculus Commands
+	10. Channel Commands
 
 ======================
 | 1. System Commands |
@@ -534,13 +535,6 @@ This user has logged 27 times, the last time were at 2012-11-24 17:29:07
 @me <message>
 
 Displays the text as a normal message with the format "*name <message>*" instead of "name: <message>".
-
----------------------------------------
-
-@main {<message>}
-
-Broadcasts a message to all players with @main enabled.
-Using the command without a message will enable or disable main chat.
 
 ---------------------------------------
 
@@ -1427,5 +1421,54 @@ Sets the intimacy level of your homunculus, with 1000 being "Loyal".
 @homhungry <0-100>
 
 Sets the hunger level of your homunculus, with 100 being "Stuffed".
+
+---------------------------------------
+
+========================
+| 10. Channel Commands |
+========================
+
+@join <#channel_name> {<password>}
+
+Joins the specified channel.
+
+---------------------------------------
+
+@channel create <#channel_name> <channel_password>
+
+Creates a new channel.
+'allow_user_channel_creation' must be enabled in '/conf/channels.conf'.
+
+---------------------------------------
+
+@channel list
+
+Displays a list of all public channels.
+
+---------------------------------------
+
+@channel list colors
+
+Displays a list of all available colors for custom channels.
+
+---------------------------------------
+
+@channel setcolor <#channel_name> <color_name>
+
+Changes the text color of the specified channel.
+You must either be the channel's owner or have the channel_admin permission.
+
+---------------------------------------
+
+@channel leave <#channel_name>
+
+Leaves the specified channel.
+
+---------------------------------------
+
+@channel bindto <#channel_name>
+@channel unbind
+
+Binds or unbinds your global chat with the specified channel, which sends all global messages to the specified channel.
 
 ---------------------------------------

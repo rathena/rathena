@@ -81,10 +81,6 @@ char log_db_pw[32] = "ragnarok";
 char log_db_db[32] = "log";
 Sql* logmysql_handle;
 
-// This param using for sending mainchat
-// messages like whispers to this nick. [LuzZza]
-char main_chat_nick[16] = "Main";
-
 // DBMap declaartion
 static DBMap* id_db=NULL; // int id -> struct block_list*
 static DBMap* pc_db=NULL; // int id -> struct map_session_data*
@@ -1698,10 +1694,33 @@ int map_quit(struct map_session_data *sd) {
 		unit_remove_map(&sd->ed->bl,CLR_TELEPORT);
 	}
 
+	if( raChSys.ally && sd->status.guild_id ) {
+		struct guild *g = sd->guild, *sg;
+		if( g ) {
+			if( idb_exists(((struct raChSysCh *)g->channel)->users, sd->status.char_id) )
+				clif_chsys_left((struct raChSysCh *)g->channel,sd);
+			for (i = 0; i < MAX_GUILDALLIANCE; i++) {
+				if( g->alliance[i].guild_id && (sg = guild_search(g->alliance[i].guild_id) ) ) {
+					if( idb_exists(((struct raChSysCh *)sg->channel)->users, sd->status.char_id) )
+						clif_chsys_left((struct raChSysCh *)sg->channel,sd);
+					break;
+				}
+			}
+		}
+	}
+
+	if( sd->channel_count ) {
+		for( i = 0; i < sd->channel_count; i++ ) {
+			if( sd->channels[i] != NULL )
+				clif_chsys_left(sd->channels[i],sd);
+		}
+		if( raChSys.closing )
+			aFree(sd->channels);
+	}
+
 	unit_remove_map_pc(sd,CLR_TELEPORT);
 
-	if( map[sd->bl.m].instance_id )
-	{ // Avoid map conflicts and warnings on next login
+	if( map[sd->bl.m].instance_id ) { // Avoid map conflicts and warnings on next login
 		int16 m;
 		struct point *pt;
 		if( map[sd->bl.m].save.map )
@@ -3354,9 +3373,6 @@ int inter_config_read(char *cfgName)
 		if( sscanf(line,"%[^:]: %[^\r\n]",w1,w2) < 2 )
 			continue;
 
-		if(strcmpi(w1, "main_chat_nick")==0)
-			safestrncpy(main_chat_nick, w2, sizeof(main_chat_nick));
-		else
 		if(strcmpi(w1,"item_db_db")==0)
 			strcpy(item_db_db,w2);
 		else
@@ -3553,6 +3569,7 @@ void do_final(void)
 	struct s_mapiterator* iter;
 
 	ShowStatus("Terminating...\n");
+	raChSys.closing = true;
 
 	//Ladies and babies first.
 	iter = mapit_getallusers();

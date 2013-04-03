@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20120606
+//= 20130402
 //===== Description: =========================================
 //= Player group permissions, configured in /conf/groups.conf.
 //============================================================
@@ -31,3 +31,5 @@ show_bossmobs : Ability to see boss mobs with @showmobs.
 disable_pvm : Ability to disable Player vs. Monster.
 disable_pvp : Ability to disable Player vs. Player.
 disable_commands_when_dead : Ability to disable @command usage when dead.
+channel_admin : Ability to modify channel settings regardless of ownership and join password-protected
+                channels without a password.

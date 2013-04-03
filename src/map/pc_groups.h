@@ -39,10 +39,11 @@ enum e_pc_permission {
 	PC_PERM_USE_CHANGEMAPTYPE   = 0x004000,
 	PC_PERM_USE_ALL_COMMANDS    = 0x008000,
 	PC_PERM_RECEIVE_REQUESTS    = 0x010000,
-	PC_PERM_SHOW_BOSS			= 0x020000,
-	PC_PERM_DISABLE_PVM			= 0x040000,
-	PC_PERM_DISABLE_PVP			= 0x080000,
+	PC_PERM_SHOW_BOSS           = 0x020000,
+	PC_PERM_DISABLE_PVM         = 0x040000,
+	PC_PERM_DISABLE_PVP         = 0x080000,
 	PC_PERM_DISABLE_CMD_DEAD    = 0x100000,
+	PC_PERM_CHANNEL_ADMIN       = 0x200000,
 };
 
 static const struct {
@@ -70,6 +71,7 @@ static const struct {
 	{ "disable_pvm", PC_PERM_DISABLE_PVM },
 	{ "disable_pvp", PC_PERM_DISABLE_PVP },
 	{ "disable_commands_when_dead", PC_PERM_DISABLE_CMD_DEAD },
+	{ "channel_admin", PC_PERM_CHANNEL_ADMIN },
 };
 
 #endif // _PC_GROUPS_H_

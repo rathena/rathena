@@ -1228,8 +1228,7 @@ int pc_reg_received(struct map_session_data *sd)
 	intif_Mail_requestinbox(sd->status.char_id, 0); // MAIL SYSTEM - Request Mail Inbox
 	intif_request_questlog(sd);
 
-	if (sd->state.connect_new == 0 && sd->fd)
-	{	//Character already loaded map! Gotta trigger LoadEndAck manually.
+	if (sd->state.connect_new == 0 && sd->fd) { //Character already loaded map! Gotta trigger LoadEndAck manually.
 		sd->state.connect_new = 1;
 		clif_parse_LoadEndAck(sd->fd, sd);
 	}
@@ -4743,6 +4742,10 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 			clif_displaymessage (sd->fd, msg_txt(276)); // "You can't open a shop on this map"
 			vending_closevending(sd);
 		}
+
+		if( raChSys.local && map[sd->bl.m].channel && idb_exists(map[sd->bl.m].channel->users, sd->status.char_id) ) {
+			clif_chsys_left(map[sd->bl.m].channel,sd);
+		}
 	}
 
 	if( m < 0 )
@@ -4924,16 +4927,13 @@ int pc_memo(struct map_session_data* sd, int pos)
 int pc_checkskill(struct map_session_data *sd,uint16 skill_id)
 {
 	if(sd == NULL) return 0;
-	if( skill_id >= GD_SKILLBASE && skill_id < GD_MAX )
-	{
+	if( skill_id >= GD_SKILLBASE && skill_id < GD_MAX ) {
 		struct guild *g;
 
-		if( sd->status.guild_id>0 && (g=guild_search(sd->status.guild_id))!=NULL)
+		if( sd->status.guild_id>0 && (g=sd->guild)!=NULL)
 			return guild_checkskill(g,skill_id);
 		return 0;
-	}
-	else if(skill_id >= ARRAYLENGTH(sd->status.skill) )
-	{
+	} else if(skill_id >= ARRAYLENGTH(sd->status.skill) ) {
 		ShowError("pc_checkskill: Invalid skill id %d (char_id=%d).\n", skill_id, sd->status.char_id);
 		return 0;
 	}
@@ -8570,7 +8570,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 	}
 	if(pos & EQP_SHOES)
 		clif_changelook(&sd->bl,LOOK_SHOES,0);
-	if(pos&EQP_GARMENT) {
+	if(pos&EQP_GARMENT && pc_checkequip(sd,EQP_COSTUME_GARMENT) == -1) {
 		sd->status.robe = id ? id->look : 0;
 		clif_changelook(&sd->bl, LOOK_ROBE, sd->status.robe);
 	}
