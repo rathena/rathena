@@ -426,7 +426,7 @@ void clif_class_change(struct block_list *bl,int class_,int type);
 #define clif_mob_class_change(md, class_) clif_class_change(&md->bl, class_, 1)
 
 void clif_skillinfoblock(struct map_session_data *sd);
-void clif_skillup(struct map_session_data *sd,uint16 skill_id);
+void clif_skillup(struct map_session_data *sd, uint16 skill_id, int lv, int range, int upgradable);
 void clif_skillinfo(struct map_session_data *sd,int skill, int inf);
 void clif_addskill(struct map_session_data *sd, int id);
 void clif_deleteskill(struct map_session_data *sd, int id);
@@ -541,7 +541,6 @@ void clif_guild_emblem(struct map_session_data *sd,struct guild *g);
 void clif_guild_emblem_area(struct block_list* bl);
 void clif_guild_notice(struct map_session_data* sd, struct guild* g);
 void clif_guild_message(struct guild *g,int account_id,const char *mes,int len);
-int clif_guild_skillup(struct map_session_data *sd,uint16 skill_id,int lv);
 void clif_guild_reqalliance(struct map_session_data *sd,int account_id,const char *name);
 void clif_guild_allianceack(struct map_session_data *sd,int flag);
 void clif_guild_delalliance(struct map_session_data *sd,int guild_id,int flag);

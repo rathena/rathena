@@ -1131,9 +1131,9 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 		if( sd && (sce = sc->data[SC_FORCEOFVANGUARD]) && flag&BF_WEAPON && rnd()%100 < sce->val2 )
 			pc_addspiritball(sd,skill_get_time(LG_FORCEOFVANGUARD,sce->val1),sce->val3);
 		if (sc->data[SC_STYLE_CHANGE]) {
-                    TBL_HOM *hd = BL_CAST(BL_HOM,bl); //when being hit
-                    if (hd && (rnd()%100<(status_get_lv(bl)/2)) ) hom_addspiritball(hd, 10); //add a sphere
-                }
+			TBL_HOM *hd = BL_CAST(BL_HOM,bl); //when being hit
+			if (hd && (rnd()%100<(status_get_lv(bl)/2)) ) hom_addspiritball(hd, 10); //add a sphere
+		}
 
 		if( sc->data[SC__DEADLYINFECT] && damage > 0 && rnd()%100 < 65 + 5 * sc->data[SC__DEADLYINFECT]->val1 )
 			status_change_spread(bl, src); // Deadly infect attacked side
@@ -1193,10 +1193,10 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 			sc_start(src,bl,sc->data[SC_POISONINGWEAPON]->val2,100,sc->data[SC_POISONINGWEAPON]->val1,skill_get_time2(GC_POISONINGWEAPON, 1));
 		if( sc->data[SC__DEADLYINFECT] && damage > 0 && rnd()%100 < 65 + 5 * sc->data[SC__DEADLYINFECT]->val1 )
 			status_change_spread(src, bl);
-                if (sc->data[SC_STYLE_CHANGE]) {
-                    TBL_HOM *hd = BL_CAST(BL_HOM,src); //when attacking
-                    if (hd && (rnd()%100<(20+status_get_lv(bl)/5)) ) hom_addspiritball(hd, 10);
-                }
+		if (sc->data[SC_STYLE_CHANGE]) {
+			TBL_HOM *hd = BL_CAST(BL_HOM,src); //when attacking
+			if (hd && (rnd()%100<(20+status_get_lv(bl)/5)) ) hom_addspiritball(hd, 10);
+		}
 	}
 
 	if (battle_config.pk_mode && sd && bl->type == BL_PC && damage && map[bl->m].flag.pvp)
@@ -1742,6 +1742,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		wd.flag |= battle_range_type(src, target, skill_id, skill_lv);
 		switch(skill_id)
 		{
+			case MH_SONIC_CRAW:{
+				TBL_HOM *hd = BL_CAST(BL_HOM,src);
+				wd.div_ = hd->homunculus.spiritball;
+			}
+				break;
 			case MO_FINGEROFFENSIVE:
 				if(sd) {
 					if (battle_config.finger_offensive_type)
@@ -3124,9 +3129,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				}
 			}
 			if(sc->data[SC_STYLE_CHANGE]){
-                                TBL_HOM *hd = BL_CAST(BL_HOM,src);
-                                if (hd) ATK_ADD(hd->homunculus.spiritball * 3);
-                        }
+				TBL_HOM *hd = BL_CAST(BL_HOM,src);
+				if (hd) ATK_ADD(hd->homunculus.spiritball * 3);
+			}
 		}
 
 		switch (skill_id) {

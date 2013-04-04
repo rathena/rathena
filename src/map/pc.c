@@ -1291,7 +1291,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 					if( (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE ) {
 							sd->status.skill[i].id = 0;
 							sd->status.skill[i].lv = 0;
-							sd->status.skill[i].flag = 0;
+							sd->status.skill[i].flag = SKILL_FLAG_PERMANENT;
 					}
 					break;
 			}
@@ -1520,12 +1520,12 @@ int pc_clean_skilltree(struct map_session_data *sd)
 		{
 			sd->status.skill[i].id = 0;
 			sd->status.skill[i].lv = 0;
-			sd->status.skill[i].flag = 0;
+			sd->status.skill[i].flag = SKILL_FLAG_PERMANENT;
 		}
 		else
 		if (sd->status.skill[i].flag == SKILL_FLAG_REPLACED_LV_0){
 			sd->status.skill[i].lv = sd->status.skill[i].flag - SKILL_FLAG_REPLACED_LV_0;
-			sd->status.skill[i].flag = 0;
+			sd->status.skill[i].flag = SKILL_FLAG_PERMANENT;
 		}
 	}
 
@@ -6042,6 +6042,7 @@ int pc_skillup(struct map_session_data *sd,uint16 skill_id)
 		sd->status.skill[skill_id].flag == SKILL_FLAG_PERMANENT && //Don't allow raising while you have granted skills. [Skotlex]
 		sd->status.skill[skill_id].lv < skill_tree_get_max(skill_id, sd->status.class_) )
 	{
+		int lv,range, upgradable;
 		sd->status.skill[skill_id].lv++;
 		sd->status.skill_point--;
 		if( !skill_get_inf(skill_id) )
@@ -6051,7 +6052,10 @@ int pc_skillup(struct map_session_data *sd,uint16 skill_id)
 		else
 			pc_check_skilltree(sd, skill_id); // Check if a new skill can Lvlup
 
-		clif_skillup(sd,skill_id);
+		lv = sd->status.skill[skill_id].lv;
+		range = skill_get_range2(&sd->bl, skill_id, lv);
+		upgradable = (lv < skill_tree_get_max(sd->status.skill[skill_id].id, sd->status.class_)) ? 1 : 0;
+		clif_skillup(sd,skill_id,lv,range,upgradable);
 		clif_updatestatus(sd,SP_SKILLPOINT);
 		if( skill_id == GN_REMODELING_CART ) /* cart weight info was updated by status_calc_pc */
 			clif_updatestatus(sd,SP_CARTINFO);
@@ -6337,7 +6341,7 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		if( i == NV_TRICKDEAD && (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE )
 		{
 			sd->status.skill[i].lv = 0;
-			sd->status.skill[i].flag = 0;
+			sd->status.skill[i].flag = SKILL_FLAG_PERMANENT;
 			continue;
 		}
 
@@ -6356,7 +6360,7 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 			if( battle_config.quest_skill_reset && !(flag&2) )
 			{	//Wipe them
 				sd->status.skill[i].lv = 0;
-				sd->status.skill[i].flag = 0;
+				sd->status.skill[i].flag = SKILL_FLAG_PERMANENT;
 			}
 			continue;
 		}
@@ -6369,7 +6373,7 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		if( !(flag&2) )
 		{// reset
 			sd->status.skill[i].lv = 0;
-			sd->status.skill[i].flag = 0;
+			sd->status.skill[i].flag = SKILL_FLAG_PERMANENT;
 		}
 	}
 
@@ -7364,7 +7368,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 		if( sd->status.skill[sd->cloneskill_id].flag == SKILL_FLAG_PLAGIARIZED ) {
 			sd->status.skill[sd->cloneskill_id].id = 0;
 			sd->status.skill[sd->cloneskill_id].lv = 0;
-			sd->status.skill[sd->cloneskill_id].flag = 0;
+			sd->status.skill[sd->cloneskill_id].flag = SKILL_FLAG_PERMANENT;
 			clif_deleteskill(sd,sd->cloneskill_id);
 		}
 		sd->cloneskill_id = 0;
@@ -7376,7 +7380,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 		if( sd->status.skill[sd->reproduceskill_id].flag == SKILL_FLAG_PLAGIARIZED ) {
 			sd->status.skill[sd->reproduceskill_id].id = 0;
 			sd->status.skill[sd->reproduceskill_id].lv = 0;
-			sd->status.skill[sd->reproduceskill_id].flag = 0;
+			sd->status.skill[sd->reproduceskill_id].flag = SKILL_FLAG_PERMANENT;
 			clif_deleteskill(sd,sd->reproduceskill_id);
 		}
 		sd->reproduceskill_id = 0;
@@ -9382,7 +9386,7 @@ int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_
 	int diff, rate = 100, i;
 
 	nullpo_ret(sd);
-	
+
 	diff = mob_level - sd->status.base_level;
 
 	if( diff < 0 )

@@ -217,6 +217,7 @@ enum e_skill_flag
 	SKILL_FLAG_PLAGIARIZED,
 	SKILL_FLAG_REPLACED_LV_0, // temporary skill overshadowing permanent skill of level 'N - SKILL_FLAG_REPLACED_LV_0',
 	SKILL_FLAG_PERM_GRANTED, // permanent, granted through someway e.g. script
+	SKILL_FLAG_TMP_COMBO, //@FIXME for homon combo atm
 	//...
 };
 

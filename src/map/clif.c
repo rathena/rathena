@@ -1481,9 +1481,10 @@ int clif_homskillinfoblock(struct map_session_data *sd)
 	WFIFOW(fd,0)=0x235;
 	for ( i = 0; i < MAX_HOMUNSKILL; i++){
 		if( (id = hd->homunculus.hskill[i].id) != 0 ){
+			int combo = (hd->homunculus.hskill[i].flag)&SKILL_FLAG_TMP_COMBO;
 			j = id - HM_SKILLBASE;
 			WFIFOW(fd,len  ) = id;
-			WFIFOW(fd,len+2) = skill_get_inf(id);
+			WFIFOW(fd,len+2) = ((combo)?INF_SELF_SKILL:skill_get_inf(id));
 			WFIFOW(fd,len+4) = 0;
 			WFIFOW(fd,len+6) = hd->homunculus.hskill[j].lv;
 			WFIFOW(fd,len+8) = skill_get_sp(id,hd->homunculus.hskill[j].lv);
@@ -4362,46 +4363,68 @@ void clif_getareachar_item(struct map_session_data* sd,struct flooritem_data* fi
 }
 
 
+
 /// Notifies the client of a skill unit.
 /// 011f <id>.L <creator id>.L <x>.W <y>.W <unit id>.B <visible>.B (ZC_SKILL_ENTRY)
 /// 01c9 <id>.L <creator id>.L <x>.W <y>.W <unit id>.B <visible>.B <has msg>.B <msg>.80B (ZC_SKILL_ENTRY2)
-static void clif_getareachar_skillunit(struct map_session_data *sd, struct skill_unit *unit)
+/// 08c7 <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.B <range>.W <visible>.B (ZC_SKILL_ENTRY3)
+/// 099f <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.W <visible>.B (ZC_SKILL_ENTRY4)
+static void clif_getareachar_skillunit(int type,struct map_session_data *sd, struct skill_unit *unit)
 {
 	int fd = sd->fd;
+	int header=0, unit_id=0, pos=0;
 
 	if( unit->group->state.guildaura )
 		return;
+	if (battle_config.traps_setting&1 && skill_get_inf2(unit->group->skill_id)&INF2_TRAP)
+		unit_id=UNT_DUMMYSKILL; //Use invisible unit id for traps.
+	else if (skill_get_unit_flag(unit->group->skill_id) & UF_RANGEDSINGLEUNIT && !(unit->val2 & UF_RANGEDSINGLEUNIT))
+		unit_id=UNT_DUMMYSKILL; //Use invisible unit id for other case of rangedsingle unit
+	else
+		unit_id=unit->group->unit_id;
+
+	switch(type){
+		case 2: header=0x1c9; break;
+		case 3: header=0x8c7; break;
+		case 4: header=0x99f; break;
+		default:
+		case 1: header=0x11f; break;
+	}
 
 #if PACKETVER >= 3
 	if(unit->group->unit_id==UNT_GRAFFITI)	{ // Graffiti [Valaris]
-		WFIFOHEAD(fd,packet_len(0x1c9));
-		WFIFOW(fd, 0)=0x1c9;
-		WFIFOL(fd, 2)=unit->bl.id;
-		WFIFOL(fd, 6)=unit->group->src_id;
-		WFIFOW(fd,10)=unit->bl.x;
-		WFIFOW(fd,12)=unit->bl.y;
-		WFIFOB(fd,14)=unit->group->unit_id;
-		WFIFOB(fd,15)=1;
-		WFIFOB(fd,16)=1;
-		safestrncpy((char*)WFIFOP(fd,17),unit->group->valstr,MESSAGE_SIZE);
-		WFIFOSET(fd,packet_len(0x1c9));
-		return;
+		clif_getareachar_skillunit(2,sd,unit);
 	}
 #endif
-	WFIFOHEAD(fd,packet_len(0x11f));
-	WFIFOW(fd, 0)=0x11f;
-	WFIFOL(fd, 2)=unit->bl.id;
-	WFIFOL(fd, 6)=unit->group->src_id;
-	WFIFOW(fd,10)=unit->bl.x;
-	WFIFOW(fd,12)=unit->bl.y;
-	if (battle_config.traps_setting&1 && skill_get_inf2(unit->group->skill_id)&INF2_TRAP)
-		WFIFOB(fd,14)=UNT_DUMMYSKILL; //Use invisible unit id for traps.
-    else if (skill_get_unit_flag(unit->group->skill_id) & UF_RANGEDSINGLEUNIT && !(unit->val2 & UF_RANGEDSINGLEUNIT))
-		WFIFOB(fd,14)=UNT_DUMMYSKILL; //Use invisible unit id for traps.
-	else
-		WFIFOB(fd,14)=unit->group->unit_id;
-	WFIFOB(fd,15)=1; // ignored by client (always gets set to 1)
-	WFIFOSET(fd,packet_len(0x11f));
+	WFIFOHEAD(fd,packet_len(header));
+	WFIFOW(fd,pos)=header;
+	if(type==3 || type==4){
+		WFIFOW(fd, pos+2)=packet_len(header);
+		pos +=2;
+	}
+	WFIFOL(fd,pos+2)=unit->bl.id;
+	WFIFOL(fd,pos+6)=unit->group->src_id;
+	WFIFOW(fd,pos+10)=unit->bl.x;
+	WFIFOW(fd,pos+12)=unit->bl.y;
+	switch(type){
+		case 1: WFIFOB(fd,pos+14)=unit_id;
+			WFIFOB(fd,pos+15)=1;
+			break;
+		case 2: WFIFOB(fd,pos+14)=unit_id;
+			WFIFOB(fd,pos+15)=1;
+			WFIFOB(fd,pos+16)=1;
+			safestrncpy((char*)WFIFOP(fd,pos+17),unit->group->valstr,MESSAGE_SIZE);
+			break;
+		case 3: WFIFOB(fd,pos+14)=unit_id;
+			WFIFOW(fd,pos+15)=unit->range;
+			WFIFOB(fd,pos+17)=1; //visible
+			break;
+		case 4: WFIFOL(fd,pos+14)=unit_id; pos += 3;
+			WFIFOW(fd,pos+15)=unit->range;
+			WFIFOB(fd,pos+17)=1;
+			break;
+	}
+	WFIFOSET(fd,packet_len(header));
 
 	if(unit->group->skill_id == WZ_ICEWALL)
 		clif_changemapcell(fd,unit->bl.m,unit->bl.x,unit->bl.y,5,SELF);
@@ -4473,7 +4496,7 @@ static int clif_getareachar(struct block_list* bl,va_list ap)
 		clif_getareachar_item(sd,(struct flooritem_data*) bl);
 		break;
 	case BL_SKILL:
-		clif_getareachar_skillunit(sd,(TBL_SKILL*)bl);
+		clif_getareachar_skillunit(1,sd,(TBL_SKILL*)bl);
 		break;
 	default:
 		if(&sd->bl == bl)
@@ -4557,7 +4580,7 @@ int clif_insight(struct block_list *bl,va_list ap)
 			clif_getareachar_item(tsd,(struct flooritem_data*)bl);
 			break;
 		case BL_SKILL:
-			clif_getareachar_skillunit(tsd,(TBL_SKILL*)bl);
+			clif_getareachar_skillunit(1,tsd,(TBL_SKILL*)bl);
 			break;
 		default:
 			clif_getareachar_unit(tsd,bl);
@@ -4672,24 +4695,22 @@ void clif_deleteskill(struct map_session_data *sd, int id)
 	clif_skillinfoblock(sd);
 }
 
-
 /// Updates a skill in the skill tree (ZC_SKILLINFO_UPDATE).
 /// 010e <skill id>.W <level>.W <sp cost>.W <attack range>.W <upgradable>.B
-void clif_skillup(struct map_session_data *sd,uint16 skill_id)
-{
-	int fd;
+void clif_skillup(struct map_session_data *sd, uint16 skill_id, int lv, int range, int upgradable) {
+    int fd;
 
 	nullpo_retv(sd);
 
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0x10e));
-	WFIFOW(fd,0) = 0x10e;
-	WFIFOW(fd,2) = skill_id;
-	WFIFOW(fd,4) = sd->status.skill[skill_id].lv;
-	WFIFOW(fd,6) = skill_get_sp(skill_id,sd->status.skill[skill_id].lv);
-	WFIFOW(fd,8) = skill_get_range2(&sd->bl,skill_id,sd->status.skill[skill_id].lv);
-	WFIFOB(fd,10) = (sd->status.skill[skill_id].lv < skill_tree_get_max(sd->status.skill[skill_id].id, sd->status.class_)) ? 1 : 0;
-	WFIFOSET(fd,packet_len(0x10e));
+	fd = sd->fd;
+	WFIFOHEAD(fd, packet_len(0x10e));
+	WFIFOW(fd, 0) = 0x10e;
+	WFIFOW(fd, 2) = skill_id;
+	WFIFOW(fd, 4) = lv;
+	WFIFOW(fd, 6) = skill_get_sp(skill_id, lv);
+	WFIFOW(fd, 8) = range;
+	WFIFOB(fd, 10) = upgradable;
+	WFIFOSET(fd, packet_len(0x10e));
 }
 
 
@@ -5378,7 +5399,7 @@ void clif_displaymessage(const int fd, const char* mes)
 				WFIFOHEAD(fd, 5 + len);
 				WFIFOW(fd,0) = 0x8e;
 				WFIFOW(fd,2) = 5 + len; // 4 + len + NULL teminate
-                safestrncpy((char *)WFIFOP(fd,4), line, len + 1);
+				safestrncpy((char *)WFIFOP(fd,4), line, len + 1);
 				WFIFOSET(fd, 5 + len);
 			}
 			line = strtok(NULL, "\n");
@@ -7877,29 +7898,6 @@ void clif_guild_message(struct guild *g,int account_id,const char *mes,int len)
 	if ((sd = guild_getavailablesd(g)) != NULL)
 		clif_send(buf, WBUFW(buf,2), &sd->bl, GUILD_NOBG);
 }
-
-
-/*==========================================
- * Server tells client 'sd' that his guild skill 'skill_id' gone to level 'lv'
- *------------------------------------------*/
-int clif_guild_skillup(struct map_session_data *sd,uint16 skill_id,int lv)
-{// TODO: Merge with clif_skillup (same packet).
-	int fd;
-
-	nullpo_ret(sd);
-
-	fd=sd->fd;
-	WFIFOHEAD(fd,11);
-	WFIFOW(fd,0) = 0x10e;
-	WFIFOW(fd,2) = skill_id;
-	WFIFOW(fd,4) = lv;
-	WFIFOW(fd,6) = skill_get_sp(skill_id,lv);
-	WFIFOW(fd,8) = skill_get_range(skill_id,lv);
-	WFIFOB(fd,10) = 1;
-	WFIFOSET(fd,11);
-	return 0;
-}
-
 
 /// Request for guild alliance (ZC_REQ_ALLY_GUILD).
 /// 0171 <inviter account id>.L <guild name>.24B
@@ -12267,7 +12265,7 @@ void clif_parse_GuildRequestEmblem(int fd,struct map_session_data *sd)
 	struct guild* g;
 	int guild_id = RFIFOL(fd,2);
 
-	if( (g = guild_search(guild_id)) != NULL )
+	if( (g = sd->guild) != NULL )
 		clif_guild_emblem(sd,g);
 }
 

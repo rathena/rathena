@@ -3159,7 +3159,7 @@ ACMD_FUNC(lostskill)
 	}
 
 	sd->status.skill[skill_id].lv = 0;
-	sd->status.skill[skill_id].flag = 0;
+	sd->status.skill[skill_id].flag = SKILL_FLAG_PERMANENT;
 	clif_deleteskill(sd,skill_id);
 	clif_displaymessage(fd, msg_txt(71)); // You have forgotten the skill.
 
@@ -8707,7 +8707,7 @@ ACMD_FUNC(cart) {
 #define MC_CART_MDFY(x) \
 	sd->status.skill[MC_PUSHCART].id = x?MC_PUSHCART:0; \
 	sd->status.skill[MC_PUSHCART].lv = x?1:0; \
-	sd->status.skill[MC_PUSHCART].flag = x?1:0;
+	sd->status.skill[MC_PUSHCART].flag = x?SKILL_FLAG_TEMPORARY:SKILL_FLAG_PERMANENT;
 
 	int val = atoi(message);
 	bool need_skill = pc_checkskill(sd, MC_PUSHCART) ? false : true;
