@@ -5584,6 +5584,7 @@ ACMD_FUNC(changelook)
  *------------------------------------------*/
 ACMD_FUNC(autotrade)
 {
+	int i;
 	nullpo_retr(-1, sd);
 
 	if( map[sd->bl.m].flag.autotrade != battle_config.autotrade_mapflag ) {
@@ -5606,6 +5607,29 @@ ACMD_FUNC(autotrade)
 		int timeout = atoi(message);
 		status_change_start(NULL,&sd->bl, SC_AUTOTRADE, 10000, 0, 0, 0, 0, ((timeout > 0) ? min(timeout,battle_config.at_timeout) : battle_config.at_timeout) * 60000, 0);
 	}
+
+	// Leave all chat channels.
+	if( raChSys.ally && sd->status.guild_id ) {
+		struct guild *g = sd->guild, *sg;
+		if( g ) {
+			if( idb_exists(((struct raChSysCh *)g->channel)->users, sd->status.char_id) )
+				clif_chsys_left((struct raChSysCh *)g->channel,sd);
+			for (i = 0; i < MAX_GUILDALLIANCE; i++) {
+				if( g->alliance[i].guild_id && (sg = guild_search(g->alliance[i].guild_id) ) ) {
+					if( idb_exists(((struct raChSysCh *)sg->channel)->users, sd->status.char_id) )
+						clif_chsys_left((struct raChSysCh *)sg->channel,sd);
+					break;
+				}
+			}
+		}
+	}
+	if( sd->channel_count ) {
+		for( i = 0; i < sd->channel_count; i++ ) {
+			if( sd->channels[i] != NULL )
+				clif_chsys_left(sd->channels[i],sd);
+		}
+	}
+
 	clif_authfail_fd(sd->fd, 15);
 
 	return 0;
@@ -8995,7 +9019,7 @@ ACMD_FUNC(channel) {
 
 	return 0;
 }
-/* debug only, delete after */
+
 ACMD_FUNC(fontcolor) {
 	unsigned char k;
 

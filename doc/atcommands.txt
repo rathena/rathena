@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20130115
+//= 20130406
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
@@ -109,6 +109,14 @@ Toggles Kill Steal Protection.
 @font <0-9>
 
 Sets client font (0 is the default).
+
+---------------------------------------
+
+@fontcolor <color_name>
+
+Sets global chat font color.
+If no parameter is given, a list of available colors is displayed.
+All colors are defined in '/conf/channels.conf'.
 
 ---------------------------------------
 

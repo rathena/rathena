@@ -16,7 +16,7 @@
 
 dewata,44,252,0	warp	dewata0001	1,1,dew_fild01,373,212
 dew_fild01,375,212,0	warp	dewata0002	1,1,dewata,46,251
-//dew_fild01,57,273,0	warp	dewata0003	1,1,dew_in01,15,33
-//dew_in01,16,31,0	warp	dewata0004	1,1,dew_fild01,59,273
+dew_fild01,57,273,0	warp	dewata0003	1,1,dew_in01,15,33
+dew_in01,16,31,0	warp	dewata0004	1,1,dew_fild01,59,273
 dew_fild01,48,65,0	warp	dewata0005	1,1,dew_dun02,302,30
 dew_dun02,305,30,0	warp	dewata0006	1,1,dew_fild01,50,65

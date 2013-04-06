@@ -263,7 +263,7 @@ uint16 clif_getport(void)
 #if PACKETVER >= 20071106
 static inline unsigned char clif_bl_type(struct block_list *bl) {
 	switch (bl->type) {
-	case BL_PC:    return disguised(bl) && pcdb_checkid(status_get_viewdata(bl)->class_)? 0x1:0x0; //PC_TYPE
+	case BL_PC:    return (disguised(bl) && !pcdb_checkid(status_get_viewdata(bl)->class_))? 0x1:0x0; //PC_TYPE
 	case BL_ITEM:  return 0x2; //ITEM_TYPE
 	case BL_SKILL: return 0x3; //SKILL_TYPE
 	case BL_CHAT:  return 0x4; //UNKNOWN_TYPE
@@ -9877,10 +9877,11 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 		WFIFOHEAD(fd,mylen + 12);
 		WFIFOW(fd,0) = 0x2C1;
 		WFIFOW(fd,2) = mylen + 12;
-		WFIFOL(fd,4) = -sd->bl.id;
+		WFIFOL(fd,4) = sd->bl.id;
 		WFIFOL(fd,8) = raChSys.colors[sd->fontcolor - 1];
 		safestrncpy((char*)WFIFOP(fd,12), mout, mylen);
 		clif_send(WFIFOP(fd,0), WFIFOW(fd,2), &sd->bl, AREA_WOS);
+		WFIFOL(fd,4) = -sd->bl.id;
 		WFIFOSET(fd, mylen + 12);
 		return;
 	}
