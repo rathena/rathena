@@ -5585,10 +5585,9 @@ void clif_chsys_left(struct raChSysCh *channel, struct map_session_data *sd) {
 		for( i = 0; i < sd->channel_count; i++ ) {
 			if( sd->channels[i] == NULL )
 				continue;
-			if( cursor != i ) {
+			if( cursor != i )
 				sd->channels[cursor] = sd->channels[i];
-				cursor++;
-			}
+			cursor++;
 		}
 		if ( !(sd->channel_count = cursor) ) {
 			aFree(sd->channels);
@@ -5612,10 +5611,9 @@ void clif_chsys_delete(struct raChSysCh *channel) {
 				for( i = 0; i < sd->channel_count; i++ ) { //move down links
 					if( sd->channels[i] == NULL )
 						continue;
-					if( cursor != i ) {
+					if( cursor != i )
 						sd->channels[cursor] = sd->channels[i];
-						cursor++;
-					}
+					cursor++;
 				}
 				if ( !(sd->channel_count = cursor) ) { //news chan count = total
 					aFree(sd->channels);
