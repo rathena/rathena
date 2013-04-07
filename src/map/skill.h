@@ -26,8 +26,7 @@ struct status_change_entry;
 DBMap* skilldb_name2id;
 
 //Constants to identify the skill's inf value:
-enum e_skill_inf
-{
+enum e_skill_inf {
 	INF_ATTACK_SKILL  = 0x01,
 	INF_GROUND_SKILL  = 0x02,
 	INF_SELF_SKILL    = 0x04, // Skills casted on self where target is automatically chosen
@@ -39,8 +38,7 @@ enum e_skill_inf
 //Constants to identify a skill's nk value (damage properties)
 //The NK value applies only to non INF_GROUND_SKILL skills
 //when determining skill castend function to invoke.
-enum e_skill_nk
-{
+enum e_skill_nk {
 	NK_NO_DAMAGE      = 0x01,
 	NK_SPLASH         = 0x02|0x04, // 0x4 = splash & split
 	NK_SPLASHSPLIT    = 0x04,
@@ -53,8 +51,7 @@ enum e_skill_nk
 
 //A skill with 3 would be no damage + splash: area of effect.
 //Constants to identify a skill's inf2 value.
-enum e_skill_inf2
-{
+enum e_skill_inf2 {
 	INF2_QUEST_SKILL    = 0x0001,
 	INF2_NPC_SKILL      = 0x0002, //NPC skills are those that players can't have in their skill tree.
 	INF2_WEDDING_SKILL  = 0x0004,
@@ -76,8 +73,7 @@ enum e_skill_inf2
 #define WALK_SKILL_INTERVAL 5
 
 // Flags passed to skill_attack/skill_area_sub
-enum e_skill_display
-{
+enum e_skill_display {
 	SD_LEVEL     = 0x1000, // skill_attack will send -1 instead of skill level (affects display of some skills)
 	SD_ANIMATION = 0x2000, // skill_attack will use '5' instead of the skill's 'type' (this makes skills show an animation)
 	SD_SPLASH    = 0x4000, // skill_area_sub will count targets in skill_area_temp[2]

@@ -2483,7 +2483,7 @@ ACMD_FUNC(guildlevelup)
 		return -1;
 	}
 
-	if (sd->status.guild_id <= 0 || (guild_info = guild_search(sd->status.guild_id)) == NULL) {
+	if (sd->status.guild_id <= 0 || (guild_info = sd->guild) == NULL) {
 		clif_displaymessage(fd, msg_txt(43)); // You're not in a guild.
 		return -1;
 	}
@@ -3725,16 +3725,15 @@ ACMD_FUNC(reloadscript)
  * 0 = no additional information
  * 1 = Show users in that map and their location
  * 2 = Shows NPCs in that map
- * 3 = Shows the shops/chats in that map (not implemented)
+ * 3 = Shows the chats in that map
  *------------------------------------------*/
-ACMD_FUNC(mapinfo)
-{
+ACMD_FUNC(mapinfo) {
 	struct map_session_data* pl_sd;
 	struct s_mapiterator* iter;
 	struct npc_data *nd = NULL;
 	struct chat_data *cd = NULL;
 	char direction[12];
-	int i, m_id, chat_num, list = 0;
+	int i, m_id, chat_num = 0, list = 0, vend_num = 0;
 	unsigned short m_index;
 	char mapname[24];
 
@@ -3769,12 +3768,17 @@ ACMD_FUNC(mapinfo)
 	// count chats (for initial message)
 	chat_num = 0;
 	iter = mapit_getallusers();
-	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
-		if( (cd = (struct chat_data*)map_id2bl(pl_sd->chatID)) != NULL && pl_sd->mapindex == m_index && cd->usersd[0] == pl_sd )
-			chat_num++;
+	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) ) {
+		if( pl_sd->mapindex == m_index ) {
+			if( pl_sd->state.vending )
+				vend_num++;
+			else if( (cd = (struct chat_data*)map_id2bl(pl_sd->chatID)) != NULL && cd->usersd[0] == pl_sd )
+				chat_num++;
+		}
+	}
 	mapit_free(iter);
 
-	sprintf(atcmd_output, msg_txt(1040), mapname, map[m_id].users, map[m_id].npc_num, chat_num); // Map Name: %s | Players In Map: %d | NPCs In Map: %d | Chats In Map: %d
+	sprintf(atcmd_output, msg_txt(1040), mapname, map[m_id].users, map[m_id].npc_num, chat_num, vend_num); // Map: %s | Players: %d | NPCs: %d | Chats: %d | Vendings: %d
 	clif_displaymessage(fd, atcmd_output);
 	clif_displaymessage(fd, msg_txt(1041)); // ------ Map Flags ------
 	if (map[m_id].flag.town)
@@ -3862,11 +3866,6 @@ ACMD_FUNC(mapinfo)
 		strcat(atcmd_output, msg_txt(1077)); // Fireworks |
 	if (map[m_id].flag.leaves)
 		strcat(atcmd_output, msg_txt(1078)); // Leaves |
-	/**
-	 * No longer available, keeping here just in case it's back someday. [Ind]
-	 **/
-	//if (map[m_id].flag.rain)
-	//	strcat(atcmd_output, msg_txt(1079)); // Rain |
 	if (map[m_id].flag.nightenabled)
 		strcat(atcmd_output, msg_txt(1080)); // Displays Night |
 	clif_displaymessage(fd, atcmd_output);
@@ -5311,8 +5310,7 @@ ACMD_FUNC(clearcart)
  *------------------------------------------*/
 #define MAX_SKILLID_PARTIAL_RESULTS 5
 #define MAX_SKILLID_PARTIAL_RESULTS_LEN 74 // "skill " (6) + "%d:" (up to 5) + "%s" (up to 30) + " (%s)" (up to 33)
-ACMD_FUNC(skillid)
-{
+ACMD_FUNC(skillid) {
 	int skillen, idx, i, found = 0;
 	DBIterator* iter;
 	DBKey key;
@@ -5582,8 +5580,7 @@ ACMD_FUNC(changelook)
  * @autotrade by durf [Lupus] [Paradox924X]
  * Turns on/off Autotrade for a specific player
  *------------------------------------------*/
-ACMD_FUNC(autotrade)
-{
+ACMD_FUNC(autotrade) {
 	int i;
 	nullpo_retr(-1, sd);
 
@@ -5623,13 +5620,13 @@ ACMD_FUNC(autotrade)
 			}
 		}
 	}
-	if( sd->channel_count ) {
-		for( i = 0; i < sd->channel_count; i++ ) {
+	if( sd->channel_count ) { //quit all chan
+		uint8 count = sd->channel_count;
+		for( i = 0; i < count; i++ ) {
 			if( sd->channels[i] != NULL )
 				clif_chsys_left(sd->channels[i],sd);
 		}
 	}
-
 	clif_authfail_fd(sd->fd, 15);
 
 	return 0;
@@ -5645,7 +5642,7 @@ ACMD_FUNC(changegm)
 	struct map_session_data *pl_sd;
 	nullpo_retr(-1, sd);
 
-	if (sd->status.guild_id == 0 || (g = guild_search(sd->status.guild_id)) == NULL || strcmp(g->master,sd->status.name)) {
+	if (sd->status.guild_id == 0 || (g = sd->guild) == NULL || strcmp(g->master,sd->status.name)) {
 		clif_displaymessage(fd, msg_txt(1181)); // You need to be a Guild Master to use this command.
 		return -1;
 	}
@@ -7591,7 +7588,7 @@ ACMD_FUNC(mapflag) {
 		clif_displaymessage(sd->fd,atcmd_output);\
 		return 0;\
 	}
-        char flag_name[100];
+	char flag_name[100];
 	short flag=0,i;
 	nullpo_retr(-1, sd);
 	memset(flag_name, '\0', sizeof(flag_name));
@@ -8773,7 +8770,7 @@ ACMD_FUNC(join) {
 	struct raChSysCh *channel;
 	char name[RACHSYS_NAME_LENGTH], pass[RACHSYS_NAME_LENGTH];
 	DBMap* channel_db = clif_get_channel_db();
-	
+
 	if( !message || !*message || sscanf(message, "%s %s", name, pass) < 1 ) {
 		sprintf(atcmd_output, msg_txt(1399),command); // Unknown Channel (usage: %s <#channel_name>)
 		clif_displaymessage(fd, atcmd_output);
@@ -8821,6 +8818,8 @@ ACMD_FUNC(join) {
 }
 
 inline void atcmd_channel_help(int fd, const char *command, bool can_create) {
+	sprintf(atcmd_output, msg_txt(1404),command); // %s failed.
+	clif_displaymessage(fd, atcmd_output);
 	clif_displaymessage(fd, msg_txt(1414));// ---- Available options:
 	if( can_create ) {
 		sprintf(atcmd_output, msg_txt(1415),command);// * %s create <#channel_name> <channel_password>
@@ -8847,8 +8846,6 @@ inline void atcmd_channel_help(int fd, const char *command, bool can_create) {
 	sprintf(atcmd_output, msg_txt(1429),command);// * %s unbind
 	clif_displaymessage(fd, atcmd_output);
 	clif_displaymessage(fd, msg_txt(1430));// -- Unbinds your global chat from the attached channel, if any.
-	sprintf(atcmd_output, msg_txt(1404),command); // %s failed.
-	clif_displaymessage(fd, atcmd_output);
 }
 
 ACMD_FUNC(channel) {
@@ -8970,10 +8967,7 @@ ACMD_FUNC(channel) {
 			return -1;
 		}
 
-		for(k = 0; k < sd->channel_count; k++) {
-			if( strcmpi(sub1+1,sd->channels[k]->name) == 0 )
-				break;
-		}
+		ARR_FIND(0, sd->channel_count, k, strcmpi(sub1+1,sd->channels[k]->name) == 0);
 		if( k == sd->channel_count ) {
 			sprintf(atcmd_output, msg_txt(1425),sub1);// You're not part of the '%s' channel.
 			clif_displaymessage(fd, atcmd_output);
@@ -8989,10 +8983,7 @@ ACMD_FUNC(channel) {
 			return -1;
 		}
 
-		for(k = 0; k < sd->channel_count; k++) {
-			if( strcmpi(sub1+1,sd->channels[k]->name) == 0 )
-				break;
-		}
+		ARR_FIND(0, sd->channel_count, k, strcmpi(sub1+1,sd->channels[k]->name) == 0);
 		if( k == sd->channel_count ) {
 			sprintf(atcmd_output, msg_txt(1425),sub1);// You're not part of the '%s' channel.
 			clif_displaymessage(fd, atcmd_output);

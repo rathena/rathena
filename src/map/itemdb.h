@@ -67,7 +67,7 @@ enum {
 	ITEMID_CAMOUFLAGE_GENERATOR,
 	ITEMID_HIGH_QUALITY_COOLER,
 	ITEMID_SPECIAL_COOLER,
-	} mecha_item_list;
+} mecha_item_list;
 
 //The only item group required by the code to be known. See const.txt for the full list.
 #define IG_FINDINGORE 6

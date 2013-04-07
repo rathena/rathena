@@ -123,8 +123,7 @@ static int pc_invincible_timer(int tid, unsigned int tick, int id, intptr_t data
 	return 0;
 }
 
-void pc_setinvincibletimer(struct map_session_data* sd, int val)
-{
+void pc_setinvincibletimer(struct map_session_data* sd, int val) {
 	nullpo_retv(sd);
 
 	if( sd->invincible_timer != INVALID_TIMER )
@@ -1240,18 +1239,18 @@ int pc_reg_received(struct map_session_data *sd)
 
 static int pc_calc_skillpoint(struct map_session_data* sd)
 {
-	int  i,skill,inf2,skill_point=0;
+	int  i,skill_lv,inf2,skill_point=0;
 
 	nullpo_ret(sd);
 
 	for(i=1;i<MAX_SKILL;i++){
-		if( (skill = pc_checkskill(sd,i)) > 0) {
+		if( (skill_lv = pc_checkskill(sd,i)) > 0) {
 			inf2 = skill_get_inf2(i);
 			if((!(inf2&INF2_QUEST_SKILL) || battle_config.quest_skill_learn) &&
 				!(inf2&(INF2_WEDDING_SKILL|INF2_SPIRIT_SKILL)) //Do not count wedding/link skills. [Skotlex]
 				) {
 				if(sd->status.skill[i].flag == SKILL_FLAG_PERMANENT)
-					skill_point += skill;
+					skill_point += skill_lv;
 				else
 				if(sd->status.skill[i].flag == SKILL_FLAG_REPLACED_LV_0)
 					skill_point += (sd->status.skill[i].flag - SKILL_FLAG_REPLACED_LV_0);
@@ -1366,7 +1365,6 @@ int pc_calc_skilltree(struct map_session_data *sd)
 		for( i = 0; i < MAX_SKILL_TREE && (id = skill_tree[c][i].id) > 0; i++ )
 		{
 			int f;
-
 			if( sd->status.skill[id].id )
 				continue; //Skill already known.
 
@@ -4216,7 +4214,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 
 	if( sd->npc_id ){
 #ifdef RENEWAL
-		clif_msg(sd, 0x783); // TODO look for the client date that has this message.
+		clif_msg(sd, USAGE_FAIL); // TODO look for the client date that has this message.
 #endif
 		return 0;
 	}
@@ -6505,8 +6503,7 @@ void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int h
 	if( !src || src == &sd->bl )
 		return;
 
-	if( pc_issit(sd) )
-	{
+	if( pc_issit(sd) ) {
 		pc_setstand(sd);
 		skill_sit(sd,0);
 	}
@@ -7568,8 +7565,7 @@ int pc_changelook(struct map_session_data *sd,int type,int val)
 	case LOOK_HAIR_COLOR:	//Use the battle_config limits! [Skotlex]
 		val = cap_value(val, MIN_HAIR_COLOR, MAX_HAIR_COLOR);
 
-		if (sd->status.hair_color != val)
-		{
+		if (sd->status.hair_color != val) {
 			sd->status.hair_color=val;
 			if (sd->status.guild_id) //Update Guild Window. [Skotlex]
 				intif_guild_change_memberinfo(sd->status.guild_id,sd->status.account_id,sd->status.char_id,
@@ -9849,6 +9845,7 @@ void pc_itemcd_do(struct map_session_data *sd, bool load) {
 	}
 	return;
 }
+
 /*==========================================
  * pc Init/Terminate
  *------------------------------------------*/

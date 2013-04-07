@@ -2152,10 +2152,10 @@ static void add_buildin_func(void)
 			str_data[n].val = i;
 			str_data[n].func = buildin_func[i].func;
 
-            if (!strcmp(buildin_func[i].name, "set")) buildin_set_ref = n;
-            else if (!strcmp(buildin_func[i].name, "callsub")) buildin_callsub_ref = n;
-            else if (!strcmp(buildin_func[i].name, "callfunc")) buildin_callfunc_ref = n;
-            else if( !strcmp(buildin_func[i].name, "getelementofarray") ) buildin_getelementofarray_ref = n;
+		if (!strcmp(buildin_func[i].name, "set")) buildin_set_ref = n;
+		else if (!strcmp(buildin_func[i].name, "callsub")) buildin_callsub_ref = n;
+		else if (!strcmp(buildin_func[i].name, "callfunc")) buildin_callfunc_ref = n;
+		else if( !strcmp(buildin_func[i].name, "getelementofarray") ) buildin_getelementofarray_ref = n;
 		}
 	}
 }
@@ -7266,7 +7266,7 @@ BUILDIN_FUNC(strcharinfo)
 			}
 			break;
 		case 2:
-			if( ( g = guild_search(sd->status.guild_id) ) != NULL ) {
+			if( ( g = sd->guild ) != NULL ) {
 				script_pushstrcopy(st,g->name);
 			} else {
 				script_pushconststr(st,"");
@@ -10177,7 +10177,7 @@ BUILDIN_FUNC(morphembryo)
 	struct item item_tmp;
 	int m_class, i=0;
 	TBL_PC *sd;
-	
+
 	sd = script_rid2sd(st);
 	if( sd == NULL )
 		return 0;
@@ -10237,7 +10237,7 @@ BUILDIN_FUNC(checkhomcall)
 
 	if( sd == NULL )
 		return 0;
-	
+
 	hd = sd->hd;
 
 	if( !hd )
@@ -10760,10 +10760,6 @@ BUILDIN_FUNC(getmapflag)
 			case MF_FOG:				script_pushint(st,map[m].flag.fog); break;
 			case MF_SAKURA:				script_pushint(st,map[m].flag.sakura); break;
 			case MF_LEAVES:				script_pushint(st,map[m].flag.leaves); break;
-			/**
-			 * No longer available, keeping here just in case it's back someday. [Ind]
-			 **/
-			//case MF_RAIN:				script_pushint(st,map[m].flag.rain); break;
 			case MF_NOGO:				script_pushint(st,map[m].flag.nogo); break;
 			case MF_CLOUDS:				script_pushint(st,map[m].flag.clouds); break;
 			case MF_CLOUDS2:			script_pushint(st,map[m].flag.clouds2); break;
@@ -10856,10 +10852,6 @@ BUILDIN_FUNC(setmapflag)
 			case MF_FOG:				map[m].flag.fog = 1; break;
 			case MF_SAKURA:				map[m].flag.sakura = 1; break;
 			case MF_LEAVES:				map[m].flag.leaves = 1; break;
-			/**
-			 * No longer available, keeping here just in case it's back someday. [Ind]
-			 **/
-			//case MF_RAIN:				map[m].flag.rain = 1; break;
 			case MF_NOGO:				map[m].flag.nogo = 1; break;
 			case MF_CLOUDS:				map[m].flag.clouds = 1; break;
 			case MF_CLOUDS2:			map[m].flag.clouds2 = 1; break;
@@ -10940,10 +10932,6 @@ BUILDIN_FUNC(removemapflag)
 			case MF_FOG:				map[m].flag.fog = 0; break;
 			case MF_SAKURA:				map[m].flag.sakura = 0; break;
 			case MF_LEAVES:				map[m].flag.leaves = 0; break;
-			/**
-			 * No longer available, keeping here just in case it's back someday. [Ind]
-			 **/
-			//case MF_RAIN:				map[m].flag.rain = 0; break;
 			case MF_NOGO:				map[m].flag.nogo = 0; break;
 			case MF_CLOUDS:				map[m].flag.clouds = 0; break;
 			case MF_CLOUDS2:			map[m].flag.clouds2 = 0; break;
@@ -17324,8 +17312,10 @@ BUILDIN_FUNC(getrandgroupitem) {
 		ShowError("getrandgroupitem: qty is <= 0!\n");
 		return 1;
 	}
+	if( (nameid = itemdb_searchrandomid(group)) == UNKNOWN_ITEM_ID ) {
+		return 1; //ensure valid itemid
+	}
 
-	nameid = itemdb_searchrandomid(group);
 	memset(&item_tmp,0,sizeof(item_tmp));
 	item_tmp.nameid   = nameid;
 	item_tmp.identify = itemdb_isidentified(nameid);

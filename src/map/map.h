@@ -11,9 +11,6 @@
 #include "../common/db.h"
 #include "../common/msg_conf.h"
 
-/**
- * [rAthena.org]
- **/
 #include "../config/core.h"
 
 #include <stdarg.h>
@@ -22,8 +19,7 @@ struct npc_data;
 struct item_data;
 struct raChSysCh;
 
-enum E_MAPSERVER_ST
-{
+enum E_MAPSERVER_ST {
 	MAPSERVER_ST_RUNNING = CORE_ST_LAST,
 	MAPSERVER_ST_SHUTDOWN,
 	MAPSERVER_ST_LAST
@@ -555,10 +551,6 @@ struct map_data {
 		unsigned fireworks : 1;
 		unsigned sakura : 1; // [Valaris]
 		unsigned leaves : 1; // [Valaris]
-		/**
-		 * No longer available, keeping here just in case it's back someday. [Ind]
-		 **/
-		//unsigned rain : 1; // [Valaris]
 		unsigned nogo : 1; // [Valaris]
 		unsigned nobaseexp	: 1; // [Lorky] added by Lupus
 		unsigned nojobexp	: 1; // [Lorky]

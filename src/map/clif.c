@@ -5578,22 +5578,17 @@ void clif_chsys_left(struct raChSysCh *channel, struct map_session_data *sd) {
 		clif_chsys_msg(channel,sd,message);
 	}
 
-	for( i = 0; i < sd->channel_count; i++ ) {
-		if( sd->channels[i] == channel ) {
-			sd->channels[i] = NULL;
-			break;
-		}
-	}
-
+	ARR_FIND(0, sd->channel_count, i, sd->channels[i] == channel);
 	if( i < sd->channel_count ) {
 		unsigned char cursor = 0;
+		sd->channels[i] = NULL;
 		for( i = 0; i < sd->channel_count; i++ ) {
 			if( sd->channels[i] == NULL )
 				continue;
 			if( cursor != i ) {
 				sd->channels[cursor] = sd->channels[i];
+				cursor++;
 			}
-			cursor++;
 		}
 		if ( !(sd->channel_count = cursor) ) {
 			aFree(sd->channels);
@@ -5609,24 +5604,20 @@ void clif_chsys_delete(struct raChSysCh *channel) {
 		struct map_session_data *sd;
 		unsigned char i;
 		iter = db_iterator(channel->users);
-		for( sd = dbi_first(iter); dbi_exists(iter); sd = dbi_next(iter) ) {
-			for( i = 0; i < sd->channel_count; i++ ) {
-				if( sd->channels[i] == channel ) {
-					sd->channels[i] = NULL;
-					break;
-				}
-			}
+		for( sd = dbi_first(iter); dbi_exists(iter); sd = dbi_next(iter) ) { //for all users
+			ARR_FIND(0, sd->channel_count, i, sd->channels[i] == channel); //found cur chan
 			if( i < sd->channel_count ) {
 				unsigned char cursor = 0;
-				for( i = 0; i < sd->channel_count; i++ ) {
+				sd->channels[i] = NULL;
+				for( i = 0; i < sd->channel_count; i++ ) { //move down links
 					if( sd->channels[i] == NULL )
 						continue;
 					if( cursor != i ) {
 						sd->channels[cursor] = sd->channels[i];
+						cursor++;
 					}
-					cursor++;
 				}
-				if ( !(sd->channel_count = cursor) ) {
+				if ( !(sd->channel_count = cursor) ) { //news chan count = total
 					aFree(sd->channels);
 					sd->channels = NULL;
 				}
@@ -9032,14 +9023,6 @@ void clif_msg_skill(struct map_session_data* sd, uint16 skill_id, int msg_id)
 	WFIFOSET(fd, packet_len(0x7e6));
 }
 
-
-/// View player equip request denied
-void clif_viewequip_fail(struct map_session_data* sd)
-{
-	clif_msg(sd, 0x54d);
-}
-
-
 /// Validates one global/guild/party/whisper message packet and tries to recognize its components.
 /// Returns true if the packet was parsed successfully.
 /// Formats: 0 - <packet id>.w <packet len>.w (<name> : <message>).?B 00
@@ -10272,17 +10255,14 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 		}
 		if( channel || (channel = strdb_get(channel_db,chname)) ) {
 			unsigned char k;
-			for( k = 0; k < sd->channel_count; k++ ) {
-				if( sd->channels[k] == channel )
-					break;
-			}
+			ARR_FIND(0, sd->channel_count, k, sd->channels[k] == channel);
 			if( k < sd->channel_count ) {
 				clif_chsys_send(channel,sd,message);
 			} else if( channel->pass[0] == '\0' ) {
 				clif_chsys_join(channel,sd);
 				clif_chsys_send(channel,sd,message);
 			} else {
-				clif_displaymessage(fd, msg_txt(1402));
+				clif_displaymessage(fd, msg_txt(1402)); //You're not in that channel, type '@join <#channel_name>'
 			}
 			return;
 		}
@@ -11056,7 +11036,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 
 	if( sd->npc_id ){
 #ifdef RENEWAL
-		clif_msg(sd, 0x783); // TODO look for the client date that has this message.
+		clif_msg(sd, USAGE_FAIL); // TODO look for the client date that has this message.
 #endif
 		return;
 	}
@@ -14767,7 +14747,7 @@ void clif_parse_ViewPlayerEquip(int fd, struct map_session_data* sd)
 	if( tsd->status.show_equip || pc_has_permission(sd, PC_PERM_VIEW_EQUIPMENT) )
 		clif_viewequip_ack(sd, tsd);
 	else
-		clif_viewequip_fail(sd);
+		clif_msg(sd, VIEW_EQUIP_FAIL);
 }
 
 
@@ -15125,9 +15105,8 @@ void clif_parse_mercenary_action(int fd, struct map_session_data* sd)
 ///     1 = Your mercenary soldier has been killed.
 ///     2 = Your mercenary soldier has been fired.
 ///     3 = Your mercenary soldier has ran away.
-void clif_mercenary_message(struct map_session_data* sd, int message)
-{
-	clif_msg(sd, 1266 + message);
+void clif_mercenary_message(struct map_session_data* sd, int message){
+	clif_msg(sd, MERC_MSG_BASE + message);
 }
 
 

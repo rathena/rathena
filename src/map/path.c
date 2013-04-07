@@ -342,7 +342,7 @@ bool path_search(struct walkpath_data *wpd,int16 m,int16 x0,int16 y0,int16 x1,in
 	tp[i].flag=0;
 	heap[0]=0;
 	push_heap_path(heap,tp,calc_index(x0,y0));
-    xs = md->xs - 1; // Place by subtracting a pre-
+	xs = md->xs - 1; // Place by subtracting a pre-
 	ys = md->ys-1;
 
 	for(;;)

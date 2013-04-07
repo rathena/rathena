@@ -2606,8 +2606,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 				data = itemdb_exists(c);
 				if(!data)
 					continue;
-				if(first && data->equip_script)
-			  	{	//Execute equip-script on login
+				if(first && data->equip_script) {//Execute equip-script on login
 					run_script(data->equip_script,0,sd->bl.id,0);
 					if (!calculating)
 						return 1;
@@ -4817,7 +4816,7 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 	if(!sc || !sc->count)
 		return cap_value(flee,1,SHRT_MAX);
 	if(sc->data[SC_TINDER_BREAKER] || sc->data[SC_TINDER_BREAKER2])
-		return 0; //0 flee
+		return 1; //1 = min flee
 
 	if(sc->data[SC_INCFLEE])
 		flee += sc->data[SC_INCFLEE]->val1;
@@ -6614,12 +6613,12 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	undead_flag = battle_check_undead(status->race,status->def_ele);
 	//Check for inmunities / sc fails
 	switch (type) {
-        case SC_ANGRIFFS_MODUS:
-        case SC_GOLDENE_FERSE:
-             if ((type==SC_GOLDENE_FERSE && sc->data[SC_ANGRIFFS_MODUS])
-                     || (type==SC_ANGRIFFS_MODUS && sc->data[SC_GOLDENE_FERSE])
-                     )
-                return 0;
+	case SC_ANGRIFFS_MODUS:
+	case SC_GOLDENE_FERSE:
+		if ((type==SC_GOLDENE_FERSE && sc->data[SC_ANGRIFFS_MODUS])
+		|| (type==SC_ANGRIFFS_MODUS && sc->data[SC_GOLDENE_FERSE])
+		)
+			return 0;
 	case SC_STONE:
 		if(sc->data[SC_POWER_OF_GAIA])
 			return 0;
@@ -6638,7 +6637,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			return 0; //Immune to Frozen and Freezing status if under Warmer status. [Jobbie]
 	break;
 
-            //There all like berserk, do not everlap each other
+	//There all like berserk, do not everlap each other
 	case SC__BLOODYLUST:
 		if(!sd) return 0; //should only affect player
 	case SC_BERSERK:
@@ -9117,8 +9116,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
  * 2 - Do clif
  * 3 - Do not remove some permanent/time-independent effects
  *------------------------------------------*/
-int status_change_clear(struct block_list* bl, int type)
-{
+int status_change_clear(struct block_list* bl, int type) {
 	struct status_change* sc;
 	int i;
 
@@ -9127,69 +9125,64 @@ int status_change_clear(struct block_list* bl, int type)
 	if (!sc || !sc->count)
 		return 0;
 
-	for(i = 0; i < SC_MAX; i++)
-	{
+	for(i = 0; i < SC_MAX; i++) {
 		if(!sc->data[i])
 		  continue;
 
 		if(type == 0)
-		switch (i)
-		{	//Type 0: PC killed -> Place here statuses that do not dispel on death.
-		case SC_ELEMENTALCHANGE://Only when its Holy or Dark that it doesn't dispell on death
-			if( sc->data[i]->val2 != ELE_HOLY && sc->data[i]->val2 != ELE_DARK )
-				break;
-		case SC_WEIGHT50:
-		case SC_WEIGHT90:
-		case SC_EDP:
-		case SC_MELTDOWN:
-		case SC_XMAS:
-		case SC_SUMMER:
-		case SC_NOCHAT:
-		case SC_FUSION:
-		case SC_EARTHSCROLL:
-		case SC_READYSTORM:
-		case SC_READYDOWN:
-		case SC_READYCOUNTER:
-		case SC_READYTURN:
-		case SC_DODGE:
-		case SC_JAILED:
-		case SC_EXPBOOST:
-		case SC_ITEMBOOST:
-		case SC_HELLPOWER:
-		case SC_JEXPBOOST:
-		case SC_AUTOTRADE:
-		case SC_WHISTLE:
-		case SC_ASSNCROS:
-		case SC_POEMBRAGI:
-		case SC_APPLEIDUN:
-		case SC_HUMMING:
-		case SC_DONTFORGETME:
-		case SC_FORTUNE:
-		case SC_SERVICE4U:
-		case SC_FOOD_STR_CASH:
-		case SC_FOOD_AGI_CASH:
-		case SC_FOOD_VIT_CASH:
-		case SC_FOOD_DEX_CASH:
-		case SC_FOOD_INT_CASH:
-		case SC_FOOD_LUK_CASH:
-		case SC_DEF_RATE:
-		case SC_MDEF_RATE:
-		case SC_INCHEALRATE:
-		case SC_INCFLEE2:
-		case SC_INCHIT:
-		case SC_ATKPOTION:
-		case SC_MATKPOTION:
-		case SC_S_LIFEPOTION:
-		case SC_L_LIFEPOTION:
-		case SC_PUSH_CART:
-			continue;
-
+		switch (i) {	//Type 0: PC killed -> Place here statuses that do not dispel on death.
+			case SC_ELEMENTALCHANGE://Only when its Holy or Dark that it doesn't dispell on death
+				if( sc->data[i]->val2 != ELE_HOLY && sc->data[i]->val2 != ELE_DARK )
+					break;
+			case SC_WEIGHT50:
+			case SC_WEIGHT90:
+			case SC_EDP:
+			case SC_MELTDOWN:
+			case SC_XMAS:
+			case SC_SUMMER:
+			case SC_NOCHAT:
+			case SC_FUSION:
+			case SC_EARTHSCROLL:
+			case SC_READYSTORM:
+			case SC_READYDOWN:
+			case SC_READYCOUNTER:
+			case SC_READYTURN:
+			case SC_DODGE:
+			case SC_JAILED:
+			case SC_EXPBOOST:
+			case SC_ITEMBOOST:
+			case SC_HELLPOWER:
+			case SC_JEXPBOOST:
+			case SC_AUTOTRADE:
+			case SC_WHISTLE:
+			case SC_ASSNCROS:
+			case SC_POEMBRAGI:
+			case SC_APPLEIDUN:
+			case SC_HUMMING:
+			case SC_DONTFORGETME:
+			case SC_FORTUNE:
+			case SC_SERVICE4U:
+			case SC_FOOD_STR_CASH:
+			case SC_FOOD_AGI_CASH:
+			case SC_FOOD_VIT_CASH:
+			case SC_FOOD_DEX_CASH:
+			case SC_FOOD_INT_CASH:
+			case SC_FOOD_LUK_CASH:
+			case SC_DEF_RATE:
+			case SC_MDEF_RATE:
+			case SC_INCHEALRATE:
+			case SC_INCFLEE2:
+			case SC_INCHIT:
+			case SC_ATKPOTION:
+			case SC_MATKPOTION:
+			case SC_S_LIFEPOTION:
+			case SC_L_LIFEPOTION:
+			case SC_PUSH_CART:
+				continue;
 		}
 
-		if( type == 3 )
-		{
-			switch (i)
-			{// TODO: This list may be incomplete
+		if( type == 3 ) {
+			switch (i) {// TODO: This list may be incomplete
 				case SC_WEIGHT50:
 				case SC_WEIGHT90:
 				case SC_NOCHAT:
@@ -9614,7 +9607,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				struct unit_data *ud = unit_bl2ud(bl);
 				if (ud) {
 					ud->state.running = 0;
-					if (ud->walktimer != -1)
+					if (ud->walktimer != INVALID_TIMER)
 						unit_stop_walking(bl,1);
 				}
 			}

@@ -9,6 +9,7 @@
 #define DIFF_TICK(a,b) ((int)((a)-(b)))
 
 #define INVALID_TIMER -1
+#define CLIF_WALK_TIMER -2
 
 // timer flags
 enum {
@@ -29,7 +30,7 @@ struct TimerData {
 	int heap_pos;
 
 	// general-purpose storage
-	int id; 
+	int id;
 	intptr_t data;
 };
 

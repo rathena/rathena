@@ -112,23 +112,22 @@ struct view_data* npc_get_viewdata(int class_)
 	return NULL;
 }
 
-static int npc_isnear_sub(struct block_list* bl, va_list args)
-{
-	struct npc_data *nd = (struct npc_data*)bl;
+static int npc_isnear_sub(struct block_list* bl, va_list args) {
+    struct npc_data *nd = (struct npc_data*)bl;
 
-	if( nd->sc.option & (OPTION_HIDE|OPTION_INVISIBLE) )
-		return 0;
+    if( nd->sc.option & (OPTION_HIDE|OPTION_INVISIBLE) )
+        return 0;
 
-	return 1;
+    return 1;
 }
 
-bool npc_isnear(struct block_list * bl)
-{
-	if( battle_config.min_npc_vendchat_distance > 0 &&
-	    map_foreachinrange(npc_isnear_sub,bl, battle_config.min_npc_vendchat_distance, BL_NPC) )
-		return true;
+bool npc_isnear(struct block_list * bl) {
 
-	return false;
+    if( battle_config.min_npc_vendchat_distance > 0 &&
+            map_foreachinrange(npc_isnear_sub,bl, battle_config.min_npc_vendchat_distance, BL_NPC) )
+        return true;
+
+    return false;
 }
 
 int npc_ontouch_event(struct map_session_data *sd, struct npc_data *nd)
@@ -3235,15 +3234,13 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 	}
 	else if (!strcmpi(w3,"pvp")) {
 		map[m].flag.pvp = state;
-		if( state && (map[m].flag.gvg || map[m].flag.gvg_dungeon || map[m].flag.gvg_castle) )
-		{
+		if( state && (map[m].flag.gvg || map[m].flag.gvg_dungeon || map[m].flag.gvg_castle) ) {
 			map[m].flag.gvg = 0;
 			map[m].flag.gvg_dungeon = 0;
 			map[m].flag.gvg_castle = 0;
 			ShowWarning("npc_parse_mapflag: You can't set PvP and GvG flags for the same map! Removing GvG flags from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
 		}
-		if( state && map[m].flag.battleground )
-		{
+		if( state && map[m].flag.battleground ) {
 			map[m].flag.battleground = 0;
 			ShowWarning("npc_parse_mapflag: You can't set PvP and BattleGround flags for the same map! Removing BattleGround flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
 		}
@@ -3287,13 +3284,11 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		map[m].flag.pvp_nocalcrank=state;
 	else if (!strcmpi(w3,"gvg")) {
 		map[m].flag.gvg = state;
-		if( state && map[m].flag.pvp )
-		{
+		if( state && map[m].flag.pvp ) {
 			map[m].flag.pvp = 0;
 			ShowWarning("npc_parse_mapflag: You can't set PvP and GvG flags for the same map! Removing PvP flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
 		}
-		if( state && map[m].flag.battleground )
-		{
+		if( state && map[m].flag.battleground ) {
 			map[m].flag.battleground = 0;
 			ShowWarning("npc_parse_mapflag: You can't set GvG and BattleGround flags for the same map! Removing BattleGround flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
 		}
@@ -3309,23 +3304,19 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		if (state) map[m].flag.pvp=0;
 	}
 	else if (!strcmpi(w3,"battleground")) {
-		if( state )
-		{
+		if( state ) {
 			if( sscanf(w4, "%d", &state) == 1 )
 				map[m].flag.battleground = state;
 			else
 				map[m].flag.battleground = 1; // Default value
-		}
-		else
+		} else
 			map[m].flag.battleground = 0;
 
-		if( map[m].flag.battleground && map[m].flag.pvp )
-		{
+		if( map[m].flag.battleground && map[m].flag.pvp ) {
 			map[m].flag.pvp = 0;
 			ShowWarning("npc_parse_mapflag: You can't set PvP and BattleGround flags for the same map! Removing PvP flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
 		}
-		if( map[m].flag.battleground && (map[m].flag.gvg || map[m].flag.gvg_dungeon || map[m].flag.gvg_castle) )
-		{
+		if( map[m].flag.battleground && (map[m].flag.gvg || map[m].flag.gvg_dungeon || map[m].flag.gvg_castle) ) {
 			map[m].flag.gvg = 0;
 			map[m].flag.gvg_dungeon = 0;
 			map[m].flag.gvg_castle = 0;
@@ -3360,11 +3351,6 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		map[m].flag.sakura=state;
 	else if (!strcmpi(w3,"leaves"))
 		map[m].flag.leaves=state;
-	/**
-	 * No longer available, keeping here just in case it's back someday. [Ind]
-	 **/
-	//else if (!strcmpi(w3,"rain"))
-	//	map[m].flag.rain=state;
 	else if (!strcmpi(w3,"nightenabled"))
 		map[m].flag.nightenabled=state;
 	else if (!strcmpi(w3,"nogo"))
