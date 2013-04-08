@@ -1029,7 +1029,7 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	for( i = 0; i < 3; i++ )
 		sd->hate_mob[i] = -1;
 
-    //warp player
+	//warp player
 	if ((i=pc_setpos(sd,sd->status.last_point.map, sd->status.last_point.x, sd->status.last_point.y, CLR_OUTSIGHT)) != 0) {
 		ShowError ("Last_point_map %s - id %d not found (error code %d)\n", mapindex_id2name(sd->status.last_point.map), sd->status.last_point.map, i);
 
@@ -5516,6 +5516,12 @@ const char* job_name(int class_)
 	}
 }
 
+/*====================================================
+ * Timered function to make id follow a target.
+ * @id = bl.id (player only atm)
+ * target is define in sd->followtarget (bl.id)
+ * used by pc_follow
+ *----------------------------------------------------*/
 int pc_follow_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct map_session_data *sd;

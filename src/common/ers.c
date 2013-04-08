@@ -278,7 +278,16 @@ ERS ers_new(uint32 size, char *name, enum ERSOptions options)
 
 void ers_report(void)
 {
-	// FIXME: Someone use this? Is it really needed?
+	ers_cache_t *cache;
+	int i = 0;
+	for (cache = CacheList; cache; cache = cache->Next) {
+		ShowMessage(CL_BOLD"[Entry manager #%u report]\n"CL_NORMAL, ++i);
+		ShowMessage("\tinstances          : %u\n", cache->ReferenceCount);
+		ShowMessage("\tblock array size   : %u\n", cache->ObjectSize);
+		ShowMessage("\tallocated blocks   : %u\n", cache->Free+cache->Used);
+		ShowMessage("\tentries being used : %u\n", cache->Used);
+		ShowMessage("\tunused entries     : %u\n", cache->Free);
+	}
 }
 
 void ers_force_destroy_all(void)
