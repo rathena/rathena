@@ -3299,6 +3299,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			* Pierce defence gains 1 atk per def/2
 			**/
 
+			if( def1 == -400 ) /* being hit by a gazillion units, -400 creates a division by 0 and subsequently crashes */
+				def1 = -399;
+
 			ATK_ADD2(
 				flag.pdef ?(def1/2):0,
 				flag.pdef2?(def1/2):0

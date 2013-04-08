@@ -8817,7 +8817,7 @@ ACMD_FUNC(join) {
 	return 0;
 }
 
-inline void atcmd_channel_help(int fd, const char *command, bool can_create) {
+static inline void atcmd_channel_help(int fd, const char *command, bool can_create) {
 	sprintf(atcmd_output, msg_txt(1404),command); // %s failed.
 	clif_displaymessage(fd, atcmd_output);
 	clif_displaymessage(fd, msg_txt(1414));// ---- Available options:

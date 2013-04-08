@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -11,7 +11,8 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [Euphy]
 //= 1.1 Added entrance scripts.
-//= 1.2 Moved "Odgnalam" NPC.
+//= 1.2 Moved "Odgnalam" coordinates.
+//= 1.3 Fixed dialogues.
 //============================================================
 
 // Entrance :: malangdo_go
@@ -22,50 +23,50 @@
 		mes "Hey~! Hi human~ This is Mr. Dolangmal. kakaka~";
 		next;
 		mes "[Dolangmal]";
-		mes "We are sent to here to take you to the heaven of cat, ^A2314BMeow Meow Island^000000.";
+		mes "We are sent to here to take you to the heaven of cats, ^A2314BMalangdo^000000.";
 		next;
 		mes "[Dolangmal]";
-		set .@s$,"Why don't you go to ^A2314BMeow Meow Island^000000? ";
+		set .@s$,"Why don't you go to ^A2314BMalangdo^000000?";
 		switch(atoi(strnpcinfo(2))) {
-			case 1: mes "How is that? Crowd people in Prontera is good, but why don't you go our heaven of the cat, ^A2314BMeow Meow Island^000000?"; break;
-			case 2: mes "Why don't you go to ^A2314BMeow Meow Island^000000? That place is better than geffen where only simple honest wizards are crowded."; break;
-			case 3: mes "Fresh air Payon is not bad, but why don't you go better palce the heaven of the cat, ^A2314BMeow Meow Island^000000?"; break;
-			case 4: mes .@s$+"The beautiful and quiet place is better than Aldebaran where is so noisy with ticktock sound of clock."; break;
-			case 5: mes .@s$+"The beautiful and quiet place is better than Morroc where is so hot and sandstorm?"; break;
-			case 6: mes .@s$+"The beautiful place is better than Yuno where are full of headache books."; break;
-			case 7: mes .@s$+"The complex place is better than Rachel where is too queit horribly?"; break;
-			case 8: mes .@s$+"The safety place is better than Lighthanlzen where is too dangerous."; break;
-			case 9: mes .@s$+"The smell of sea place is better than Mora where is full of grass smell."; break;
+			case 1: mes "How is that? The crowded city of Prontera is good, but why don't you go our heaven of the cats, ^A2314BMalangdo^000000?"; break;
+			case 2: mes "Why don't you go to ^A2314BMalangdo^000000? That place is better than Geffen, where there are only crowds of simple honest wizards."; break;
+			case 3: mes "The fresh air of Payon is not bad, but why don't you go better place like the heaven of the cats, ^A2314BMalangdo^000000?"; break;
+			case 4: mes .@s$+"The beautiful and quiet place is better than Aldebaran, where it's so noisy with the tick-tock sound of the clock."; break;
+			case 5: mes .@s$+"The beautiful and quiet place is better than Morroc, with its heat and sandstorms."; break;
+			case 6: mes .@s$+"The beautiful place is better than Yuno, which is full of books and headaches."; break;
+			case 7: mes .@s$+"The complex place is better than Rachel, where it's too horribly quiet."; break;
+			case 8: mes .@s$+"The safe place is better than Lighthanlzen, which is too dangerous."; break;
+			case 9: mes .@s$+"The smell of this sea place is better than Mora, which is full of a grassy smell."; break;
 		}
 		next;
-		if(select("No:^A2314BMeow Meow Island^000000~ Go~ Go~") == 1) {
+		if(select("No:^A2314BMalangdo^000000~ Go~ Go~") == 1) {
 			mes "[Dolangmal]";
-			mes "What!? You don't want to go ^A2314BMeow Meow Island^000000? Chet!";
+			mes "What!? You don't want to go ^A2314BMalangdo^000000? Chet!";
 			next;
 			mes "[Dolangmal]";
-			mes "You such an annoying guy. If you don't go, why did you talk to me... but...";
+			mes "You're such an annoying guy. If you don't go, why did you talk to me... but...";
 			next;
 			mes "[Dolangmal]";
-			mes "^9E1837Admiral Thomas^000000 said kidnapping human.. No.. Bring them politely?";
+			mes "^9E1837Admiral Tomas^000000 said to kidnap humans... No... Bring them politely?";
 			next;
 			mes "[Dolangmal]";
-			mes "Anyway I got you. Whenever you want to go, just tell me.";
+			mes "Anyway, I got you. Whenever you want to go, just tell me.";
 			close;
 		}
 		mes "[Dolangmal]";
-		mes "Ok! I like your attitude with full of passion.";
+		mes "Ok! I like your attitude. Full of passion.";
 		next;
 		mes "[Dolangmal]";
-		mes "Now, before you go ^A2314BMeow Meow Island^000000, let me tell you some detail of caution.";
+		mes "Now, before you go ^A2314BMalangdo^000000, let me give you some warnings.";
 		next;
 		mes "[Dolangmal]";
-		mes "First!! It is natural thing. When you arrive on the ^A2314BMeow Meow Island^000000, should notify that you are here to ^9E1837Admiral Thomas^000000..";
+		mes "First!! It is natural that when you arrive on ^A2314BMalangdo^000000, you should notify ^9E1837Admiral Tomas^000000 that you are here.";
 		next;
 		mes "[Dolangmal]";
-		mes "If you don't do that, you might be attacked by scary and wild cats when you walk on dark street.";
+		mes "If you don't do that, you might be attacked by scary and wild cats when you walk through dark streets.";
 		next;
 		mes "[Dolangmal]";
-		mes "Secondly!! This ^A2314BMeow Meow Island^000000 is absolutely our island of cat even though we open to the human.";
+		mes "Secondly!! This ^A2314BMalangdo^000000 is absolutely our island of cats, even though we open to humans.";
 		next;
 		mes "[Dolangmal]";
 		mes "We have a personality... no... no... respect us like one catality because we are cats.";
@@ -73,73 +74,77 @@
 		mes "[Dolangmal]";
 		mes "And the next one is...";
 		next;
-		mes "Dolangmal must say that just say some cautions, but he said 100 kinds of cautions.";
+		mes "Dolangmal proceeds and gives hundreds of warnings.";
 		next;
 		mes "[Dolangmal]";
-		mes "Ok! That is all for cautions!! It's easy and simple cautions... how is that? Can you keep this all?";
+		mes "Ok! Those are all the warnings!! They're easy and simple... right? Can you remember them?";
 		next;
-		if(select("Keep this cautions:Can't keep this cautions") == 2) {
+		switch(select("Remember his warnings:Can't remember")) {
+		case 1:
 			mes "[Dolangmal]";
-			mes "What!? Can't you keep this easy rule? Chet!";
+			mes "Ok! Do not bite two mice with one mouth. ^9E1837Admiral Tomas^000000 is located at the ^A2314Bcenter of the ship in Malangdo^000000.";
 			next;
 			mes "[Dolangmal]";
-			mes "You such an annoying guy. If you can't keep this, why did not tell me during the conversation. I told you everything..tierd.. but..";
+			mes "Don't forget to give him notice of your arrival.";
 			next;
 			mes "[Dolangmal]";
-			mes "^9E1837Admiral Thomas^000000 said kidnapping human.. No.. Bring them politely?";
+			mes "Alright. Let's go to the heaven of the cats, ^A2314BMalangdo^000000~";
+			setquest 5091;
+			completequest 5091;
+			warp "malangdo",217,85;
+			close;
+		case 2:
+			mes "[Dolangmal]";
+			mes "What!? Can't you keep these easy rules? Chet!";
 			next;
 			mes "[Dolangmal]";
-			mes "Anyway I got you. Just tell me whenever you want to go.";
+			mes "You're such an annoying guy. If you can't keep these, why didn't you tell me during our conversation? I told you everything... but..";
+			next;
+			mes "[Dolangmal]";
+			mes "^9E1837Admiral Tomas^000000 said to kidnap humans... No... Bring them politely?";
+			next;
+			mes "[Dolangmal]";
+			mes "Anyway, I got you. Just tell me whenever you want to go.";
 			close;
 		}
-		mes "[Dolangmal]";
-		mes "Ok! Do not bite two mice with one mouth. ^9E1837Admiral Thomas^000000 is located at the ^A2314Bcenter of ship in Meow Meow Island^000000.";
-		next;
-		mes "[Dolangmal]";
-		mes "Don't forget give notice of arrival.";
-		next;
-		mes "[Dolangmal]";
-		mes "Alright. Let's go to the heaven of the cat, ^A2314BMeow Meow Island^000000~";
-		setquest 5091;
-		completequest 5091;
-		warp "malangdo",217,85;
-		close;
 	}
 	mes "[Dolangmal]";
-	mes "Uh? You must be last time...? Alright. Did you visit ^A2314BMeow Meow Island^000000?";
+	mes "Uh? You must be the one from last time...? Alright. Did you visit ^A2314BMalangdo^000000?";
 	next;
-	if(select("Take me to ^A2314BMeow Meow Island^000000 again:I have visited") == 1) {
+	switch(select("Take me to ^A2314BMalangdo^000000 again:I have visited")) {
+	case 1:
 		mes "[Dolangmal]";
-		mes "I really want to send you there, but I can't because of the policy. It is difficult to send people who visit ^A2314BMeow Meow Island^000000 at first.";
+		mes "I really want to send you there, but I can't because of the policy. It is difficult to send people who have visited ^A2314BMalangdo^000000 already.";
 		next;
 		mes "[Dolangmal]";
-		mes "And you just heard roughly what I said... It is supposed to be rule 53...";
+		mes "And that was roughly it... It's supposed to be rule 53...";
 		next;
 		mes "[Dolangmal]";
-		mes "Specially, let me tell you rule 53. I am an indulgent cat.";
+		mes "Actually, let me tell you rule 53. I am an indulgent cat.";
 		next;
 		mes "[Dolangmal]";
-		mes "If you want to go back to ^A2314BMeow Meow Island^000000, just take ship at Izlude or Alberata.";
+		mes "If you want to go back to ^A2314BMalangdo^000000, take the ship at Izlude or Alberta.";
 		next;
 		mes "[Dolangmal]";
-		mes "If you enjoy pleasant sea trip, you will arrive the heaven of cat ^A2314BMeow Meow Island^000000.";
+		mes "If you enjoy that pleasant sea trip, you will arrive at the heaven of cats, ^A2314BMalangdo^000000.";
 		next;
 		mes "[Dolangmal]";
 		mes "So easy! Isn't it? Well, good bye~";
 		close;
+	case 2:
+		mes "[Dolangmal]";
+		mes "How was it? You liked it? I knew it. Kakaka~";
+		next;
+		mes "[Dolangmal]";
+		mes "Ah! I just want to make sure...";
+		next;
+		mes "[Dolangmal]";
+		mes "Again, if you want to go back to ^A2314BMalangdo^000000, do you know where to take a ship at Izlude or Alberta?";
+		next;
+		mes "[Dolangmal]";
+		mes "Hm~ You might know because you're a smart person. Well, see you again~";
+		close;
 	}
-	mes "[Dolangmal]";
-	mes "How is that? You like it? I knew it. Kakaka";
-	next;
-	mes "[Dolangmal]";
-	mes "Ah! I just want to make sure..";
-	next;
-	mes "[Dolangmal]";
-	mes "Again, if you want to go back to ^A2314BMeow Meow Island^000000, do you know that take a ship at Izlude or Alberta?";
-	next;
-	mes "[Dolangmal]";
-	mes "Hm~ You might know that because you are smart person. Well, see you again~";
-	close;
 }
 prontera,114,77,6	duplicate(Dolangmal)	Dolangmal#1	553
 geffen,109,61,6	duplicate(Dolangmal)	Dolangmal#2	553
@@ -161,24 +166,24 @@ izlude,182,218,4	script	Odgnalam#Izlude	554,{
 	next;
 	if (ep13_yong1 == 0) {
 		set .@price,1000;
-		set .@s1$,"Huh!! You are such an annoying person. Let me send you to the heaven of the cat, ^A2314BMeow Meow Island^000000 with ^0000FF1000 Zeny^000000.";
+		set .@s1$,"Huh!! You are such an annoying person. Let me send you to the heaven of the cat, ^A2314BMalangdo^000000 with ^0000FF1000 Zeny^000000.";
 		set .@s2$,"Money? Where is the money? You can't go anywhere without the money. Shame on you.";
 	} else if (ep13_yong1 < 60) {
 		set .@price,999;
-		set .@s1$,"You have a little relationship with fleet of cat. I'll give you special discount price ^0000FF999 Zeny^000000 to the heaven of the cat, ^A2314BMeow Meow Island^000000, because you have relationship with fleet.";
+		set .@s1$,"You have a little relationship with fleet of cat. I'll give you special discount price ^0000FF999 Zeny^000000 to the heaven of the cat, ^A2314BMalangdo^000000, because you have relationship with fleet.";
 		set .@s2$,"Where is the money? You don't have a sense of honor.";
 	} else if (ep13_yong1 > 59 && ep13_yong1 < 80) {
 		set .@price,500;
-		set .@s1$,"You gave several help to our cat's fleet so let me give you special that with 50% discount price ^0000FF500 Zeny^000000. I'll send you to the heaven of the cat, ^A2314BMeow Meow Island^000000.";
+		set .@s1$,"You gave several help to our cat's fleet so let me give you special that with 50% discount price ^0000FF500 Zeny^000000. I'll send you to the heaven of the cat, ^A2314BMalangdo^000000.";
 		set .@s2$,"You don't have any money for paying 50% discount price? I can't believe it.";
 	} else {
 		mes "[Odgnalam]";
 		mes "You are a hero of cat's fleet. Your activity is the legend between us.";
 		next;
 		mes "[Odgnalam]";
-		mes "As you are a hero of the cat fleet let me send you to ^A2314BMeow Meow Island^000000 for free.";
+		mes "As you are a hero of the cat fleet let me send you to ^A2314BMalangdo^000000 for free.";
 		next;
-		if(select("Send me to Meow Meow Island!:Do not go.") == 1) {
+		if(select("Send me to Malangdo!:Do not go.") == 1) {
 			mes "[Odgnalam]";
 			mes "Have a comfortable trip... Alright let's go~";
 			warp "malangdo",217,85;
@@ -188,7 +193,7 @@ izlude,182,218,4	script	Odgnalam#Izlude	554,{
 	mes "[Odgnalam]";
 	mes .@s1$;
 	next;
-	if(select("Send me to Meow Meow Island!:Do not go.") == 2) close;
+	if(select("Send me to Malangdo!:Do not go.") == 2) close;
 	if (Zeny < .@price) {
 		mes "[Odgnalam]";
 		mes "Money? Where is the money? You can't go anywhere without the money. Shame on you.";
@@ -210,17 +215,17 @@ malangdo,219,86,4	script	Kong#malang	545,{
 	if (ep13_yong1 == 0) {
 		set .@price,1000;
 		set .@s1$, "1000 zeny";
-		set .@s2$, "Have a nice day in Meow Meow Island.";
+		set .@s2$, "Have a nice day in Malangdo.";
 		set .@no_money$, "It is difficult for free.";
 		set .@yes_money$, "Have a nice trip.";
 		mes "[Kong]";
-		mes "The fee of ship is only 1000 zeny, where you want to go?";
+		mes "The fee of ship is only 1000 zeny, where do you want to go?";
 		next;
 	} else if (ep13_yong1 < 60) {
 		set .@price,999;
 		set .@s1$,"999 zeny";
-		set .@s2$, "Have a full of fortune day in Meow Meow Island...";
-		set .@no_money$, "It is difficult even though you have a relationship with fleet.";
+		set .@s2$, "Have a full of fortune day in Malangdo...";
+		set .@no_money$, "It is difficult even though you have a relationship with the fleet.";
 		set .@yes_money$, "Thanks, have a wonderful trip.";
 		mes "[Kong]";
 		mes "You have a connection with our fleet. Apply special price 999 zeny. Where do you want to go?";
@@ -228,21 +233,21 @@ malangdo,219,86,4	script	Kong#malang	545,{
 	} else if (ep13_yong1 > 59 && ep13_yong1 < 80) {
 		set .@price,500;
 		set .@s1$,"500 zeny";
-		set .@s2$, "There are full of fortune and jackpot in Meow Meow Island.";
+		set .@s2$, "There are full of fortune and jackpot in Malangdo.";
 		set .@no_money$, "Oh my god. You don't have 500 zeny? It is difficult for free.";
-		set .@yes_money$, "Have nice trip and come again.";
+		set .@yes_money$, "Have a nice trip and come again.";
 		mes "[Kong]";
-		mes "Wow~ You contributed our fleet a lot. Alright!! Special discount price 500 zeny. Where do you want to go?";
+		mes "Wow~ You contributed to our fleet a lot. Alright!! Special discount price 500 zeny. Where do you want to go?";
 		next;
 	} else {
 		set .@price,0;
-		set .@s1$,"Free for hero of fleet!!";
-		set .@s2$, "No one objects the hero of fleet to stay in Meow Meow Island...";
+		set .@s1$,"Free for the hero of our fleet!!";
+		set .@s2$, "No one objects to the hero of our fleet staying in Malangdo...";
 		mes "[Kong]";
-		mes "Ah... You are the hero of cat's fleet and it is the legend.";
+		mes "Ah... You are the legendary hero of our cat's fleet.";
 		next;
 		mes "[Kong]";
-		mes "We can't charge from hero of fleet. Where is your destination?";
+		mes "We can't charge the hero of our fleet. What is your destination?";
 		next;
 	}
 	set .@i, select("- Izlude destination --- "+.@s1$+":- Alberta destination --- "+.@s1$+":- Stay on Malangdo");
@@ -281,37 +286,37 @@ malangdo,147,117,3	script	Innkeeper#malang	554,{
 	switch(select("Umm... can I rest here?:Psst... Can I save here?:Leave.")) {
 	case 1:
 		mes "[Innkeeper]";
-		mes "You can use hammock as you want but give me ^FF00005 pieces of Malang Sp Can^000000, then will make you stress out.";
+		mes "You can use the hammock as you want, but give me ^FF00005 Malangdo Canned Specialties^000000. Then you can relax.";
 		next;
-		switch(select("Give the can.:No need.")) {
+		switch(select("Give the cans.:No need.")) {
 		case 1:
 			if (countitem(12636) > 4) {
 				delitem 12636,5; //Malang_Sp_Can
 				percentheal 100,100;
 				specialeffect2 EF_HEALSP;
 				mes "[Innkeeper]";
-				mes "Take a relaxation.";
+				mes "Now relax.";
 				emotion e_kis;
 				next;
 				warp "malangdo",140,121;
 				close;
 			}
 			mes "[Innkeeper]";
-			mes "It looks like lack of cans.";
+			mes "It looks like a lack of cans.";
 			close;
 		case 2:
 			mes "[Innkeeper]";
-			mes "You are strong man than appearance.";
+			mes "You are stronger than your appearance.";
 			close;
 		}
 	case 2:
 		mes "[Innkeeper]";
-		mes "Storation is done. We should keep company haha.";
+		mes "Location saved. We should keep company, haha~";
 		savepoint "malangdo",142,118;
 		close;
 	case 3:
 		mes "[Innkeeper]";
-		mes "A busy moment make you hurry and laziness makes you lazy.";
+		mes "A busy moment makes you hurry and laziness makes you lazy.";
 		next;
 		mes "- Wonder if there is work time. -";
 		close;
@@ -358,28 +363,28 @@ OnTouch:
 malangdo,216,168,3	script	Cat Trainer#mal1	558,0,8,{
 	emotion e_awsm;
 	mes "[Cat Trainer]";
-	mes "Phh there is a tail and butt with soft and tender!";
+	mes "Phh there is a tail and butt both soft and tender!";
 	mes "Can't stand, this is heaven~~!!";
 	next;
 	emotion e_gg;
 	mes "[Cat Trainer]";
-	mes "My hidden card ^FF0000<Silvervine Fruit>^000000 can make all cats in Meow Meow Island as my slaves~ haha!";
+	mes "My hidden card, ^FF0000<Silvervine Fruit>^000000, can make all cats in Malangdo my slaves~ haha!";
 	next;
 	select("^FF0000<Silvervine Fruit>^000000?");
 	mes "[Cat Trainer]";
 	mes "Silvervine Fruit is a rare item!";
 	mes "I can barely get it.";
-	mes "But every cat must love this one with no complaint.";
+	mes "But every cat loves it with no complaints.";
 	next;
 	select("Where can I get ^FF0000<Silvervine Fruit>^000000?");
 	mes "[Cat Trainer]";
-	mes "How do you get it that I could have it barely?";
+	mes "How would I know if I could barely find it?";
 	mes "This can't be taken even with ^3131FFall the zeny in this world^000000!";
 	next;
 	emotion e_gg;
 	mes "[Cat Trainer]";
-	mes "Cats in Meow Meow Island is mine...! And it should be done haha~";
-	mes "^FF0000<Silvervine Fruit>^000000! I can be a king in Meow Meow Island~ ohhhh!!!";
+	mes "The cats in Malangdo are mine...! As it should be, haha~";
+	mes "^FF0000<Silvervine Fruit>^000000! I can be a king in Malangdo~ ohhhh!!!";
 	close;
 OnTouch:
 	emotion e_flash;

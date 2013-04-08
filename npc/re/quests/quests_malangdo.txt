@@ -3,20 +3,2548 @@
 //===== By: ==================================================
 //= Muad_Dib
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
 //= Quest NPCs related to Malangdo:
-//== Help the Bad Cats in Danger, Clean the Ship,
-//== Help Chef Nyas, Play with Baby Cats
-//== Archangel Wing Enchants
+//== Malangdo Island, Help the Bad Cats in Danger,
+//== Clean the Ship, Help Chef Nyas,
+//== Play with Baby Cats, Archangel Wing Enchants
 //===== Additional Comments: =================================
 //= 1.0 First version. [Euphy]
-//= 1.1 Added two quests.
+//= 1.1 Added Clean the Ship and Help Chef Nyas.
 //= 1.2 Added Archangel Wing Enchants.
 //= 1.3 Added Play with Baby Cats.
+//= 1.4 Added Malangdo Island.
 //============================================================
+
+// Malangdo Island :: ma_tomas
+//============================================================
+mal_in02,28,56,5	script	Samuel#mal	495,{
+	mes "[Samuel]";
+	mes "Ah, you mean the ad... well, you mean our village chief?";
+	mes "You'd better not bother him, since he's always busy.";
+	if (ma_tomas == 0)
+		close;
+	next;
+	mes "[Samuel]";
+	mes "^0000FFBut it'd be impossible to talk without bothering him anyway......^000000";
+	mes "He is simply always busy.";
+	next;
+	switch(select("Ad...?:Village chief?")) {
+	case 1:
+		mes "[Samuel]";
+		mes "Ah, there was an admiral of this ship before settling in here~";
+		mes "Shining golden eyes like the sun!!!";
+		mes "Silvery beard fluttering with a rough sea breeze!!!";
+		next;
+		mes "[Samuel]";
+		mes "Kha~ It was nice!!!!";
+		mes "I was fascinated by that attraction and took the ship, Navi!";
+		mes "This thing is called the romance of a guy. Hoo hoo~";
+		emotion e_shy;
+		next;
+		mes "[Samuel]";
+		mes "Well... His cuticle seems to have gone bad a bit with his village chief duty, since he settled in Malangdo. But his eyes are still the same.";
+		close;
+	case 2:
+		mes "[Samuel]";
+		mes "Umm, since it is Malangdo, will it be the Malangdo chief...?!";
+		mes "No, though it will be funny...";
+		mes "Malangdo village... umm... this... this is also not......";
+		mes "Well, this stuff is not that important.";
+		next;
+		mes "[Samuel]";
+		mes "Although there are many differences between admiral and village chief for sure, it feels like it won't be without Admiral Tomas anyhow.";
+		next;
+		mes "[Samuel]";
+		mes "All would think the same, not just me.";
+		mes "He's having a hard time thanks to this.";
+		close;
+	}
+}
+
+mal_in02,22,62,3	script	Tomas#mal	556,{
+	if (BaseLevel < 60) {
+		mes "[Tomas, Village Chief]";
+		mes "Ummm... Who are you?";
+		mes "Don't you think it's too early to come here?";
+		close;
+	}
+	if (ma_tomas == 0) {
+		mes "[Tomas, Village Chief]";
+		mes "Samuel!";
+		mes "Are you coming to an end there?";
+		cutin "ma_tomas02",2;
+		next;
+		mes "[Samuel]";
+		mes "Yes, Admiral!";
+		mes "Moved all 3 thousand boxes, including the one I just received, to the storage. The next boxes are expected to be delivered in 5 hours!";
+		emotion e_omg,0,"Samuel#mal";
+		next;
+		mes "[Tomas, Village Chief]";
+		mes "Samuel!";
+		mes "How many times should I tell you to call me Village Chief, not Admiral!";
+		next;
+		mes "[Samuel]";
+		mes "Sorry! Village Chief!";
+		mes "I will correct myself!";
+		emotion e_omg,0,"Samuel#mal";
+		next;
+		mes "[Tomas, Village Chief]";
+		mes "Hmm, hmm!";
+		mes "Get them sorted out and arrange them over there. Before the next boxes are here you must finish the work there!";
+		next;
+		mes "[Tomas, Village Chief]";
+		mes "Sea cucumbers, sea squirts, sea anemones to the right! Seaweed and kelp downstairs, and send anchovies and drums to the gathering place. Let the rest stack assortatively in the corner!";
+		next;
+		mes "[Samuel]";
+		mes "Yes! Village Chief!";
+		mes "Seaweed, Sea cucumbers, sea squirts, sea anemones to the right! Seaweed and glasses downstairs! Send anchovies and drums to the gathering place! Let the rest stack assortatively in the corner!";
+		emotion e_omg,0,"Samuel#mal";
+		next;
+		mes "[Tomas, Village Chief]";
+		mes "It it not.";
+		mes "Sea cucumbers, sea squirts, sea anemones to the right. Seaweed and kelp downstairs. Anchovies and drums to the gathering place. Let the rest stack assortatively in the corner.";
+		emotion e_dots;
+		next;
+		mes "[Samuel]";
+		mes "Yes!!";
+		emotion e_omg,0,"Samuel#mal";
+		next;
+		mes "[Tomas, Village Chief]";
+		mes "Huuu...";
+		mes "It doesn't seem to end.";
+		mes "There are still piles of paperwork to do... I will be in trouble unless I finish them up before the next boxes arrive.";
+		emotion e_sigh;
+		next;
+		mes "[Tomas, Village Chief]";
+		mes "So, the amount of the next boxes is 1300....";
+		mes "And the next, the 700 boxes downstairs to load up the ship...";
+		next;
+		switch(select("Try to talk to him.:Stop since he seems busy.")) {
+		case 1:
+			mes "[Tomas, Village Chief]";
+			mes "Hmm, who are you?";
+			mes "You are not familiar. Sorry, but will you come again if it is not that urgent?";
+			cutin "ma_tomas01",2;
+			next;
+			switch(select("It's my first time to Malangdo.:Another cat told me to come over here.:I will come around again later.")) {
+			case 1:
+				mes "[Tomas, Village Chief]";
+				mes "...So I told you your face was not familiar.";
+				emotion e_dots;
+				next;
+				mes "[Tomas, Village Chief]";
+				mes "Hmm... Sorry, but as I told you before, would you talk to the other cats if it's not that urgent, since I have plenty of work left undone and no time to talk with you.";
+				break;
+			case 2:
+				mes "[Tomas, Village Chief]";
+				mes "...Anyway all are always good to leave me with the work.";
+				mes "Pitiless ones...";
+				emotion e_an;
+				next;
+				mes "[Tomas, Village Chief]";
+				mes "Umm... Having said that, would you talk to the other cats if it's not that urgent, since I got plenty of work to do left undone and no time to talk with you?";
+				break;
+			case 3:
+				mes "[Tomas, Village Chief]";
+				mes "Sorry for that.";
+				mes "Please come back to me again, though I don't know when I could be free.";
+				close2;
+				cutin "",255;
+				end;
+			}
+			next;
+			mes "[Tomas, Village Chief]";
+			mes "These days I feel I'm pressed with work, although it's good to trust and rely on me as a village chief...";
+			next;
+			mes "[Tomas, Village Chief]";
+			mes "It is too much, since they send all visitors to me.";
+			next;
+			mes "[Tomas, Village Chief]";
+			mes "You're just in time. Go to the ^0000FFregular meeting^000000 being held now.";
+			mes "The meeting place is ^0000FFat the end of the corridor^000000.";
+			set ma_tomas,1;
+			setquest 11209;
+			close2;
+			cutin "",255;
+			end;
+		case 2:
+			mes "[Tomas, Village Chief]";
+			mes "Sorry for that.";
+			mes "Please come back to me again though I don't know when I could be free.";
+			close2;
+			cutin "",255;
+			end;
+		}
+	} else if (ma_tomas == 1) {
+		mes "[Tomas, Village Chief]";
+		mes "So, the next 1000 boxes to move to the upper side...";
+		cutin "ma_tomas02",2;
+		next;
+		mes "[Tomas, Village Chief]";
+		mes "400 boxes to give out as supplies....";
+		mes "And also...";
+		next;
+		mes "[Samuel]";
+		mes "Admiral!";
+		mes "Sea bass, sea jelly, sea sponge are well arranged on the right!";
+		mes "Seaweed and kiwi downstairs! Anchovies and cod to the gathering place! Let the rest stack assortatively in the corner?";
+		emotion e_omg,0,"Samuel#mal";
+		next;
+		mes "[Tomas, Village Chief]";
+		mes "....";
+		emotion e_dots;
+		next;
+		mes "[Tomas, Village Chief]";
+		mes "....";
+		mes ".....";
+		next;
+		mes "[Tomas, Village Chief]";
+		mes "....";
+		mes ".....";
+		mes "......";
+		next;
+		mes "[Tomas, Village Chief]";
+		mes "You!!";
+		mes "How many times did I tell you! Mew~";
+		mes "Huh?!";
+		emotion e_an;
+		cutin "ma_tomas03",2;
+		next;
+		mes "[Tomas, Village Chief]";
+		mes "Sea cucumbers, sea squirts, sea anemones to the right. Seaweed and kelp downstairs. Anchovies and drums to the gathering place. Let the rest stack assortatively in the corner.";
+		next;
+		mes "[Tomas, Village Chief]";
+		mes "Huh?! If you really want to put Sea bass to the right that much, let yourself stand there all day long! Mew~";
+		emotion e_omg,0,"Samuel#mal";
+		next;
+		mes "[Tomas, Village Chief]";
+		mes "I'm busy enough without you. You're getting on my nerves! Mew~";
+		mes "What about getting on the ship over there? Mew!";
+		next;
+		mes "[Tomas, Village Chief]";
+		mes "Ooops!!!";
+		mes "!!!!!!";
+		emotion e_omg;
+		next;
+		mes "[Tomas, Village Chief]";
+		mes "Hmm, hmm...";
+		mes "Well... what are you still doing here?";
+		mes "Go to the regular meeting being held now at the end of the corridor.";
+		mes "Ahem....";
+		emotion e_swt2;
+		cutin "ma_tomas02",2;
+		close2;
+		cutin "",255;
+		end;
+	} else if (ma_tomas == 2) {
+		mes "[Tomas, Village Chief]";
+		mes "Hmm, hmm...";
+		mes "Well... what are you still doing here?";
+		mes "Go to the regular meeting being held now at the end of the corridor.";
+		mes "Ahem....";
+		emotion e_swt2;
+		cutin "ma_tomas02",2;
+		close2;
+		cutin "",255;
+		end;
+	} else if (ma_tomas < 35) {
+		mes "[Tomas, Village Chief]";
+		mes "How is the meeting going on?";
+		mes "It's been a long time since I visited, since I'm busy... Tsk...";
+		emotion e_swt2;
+		cutin "ma_tomas02",2;
+		close2;
+		cutin "",255;
+		end;
+	} else if (ma_tomas == 35) {
+		mes "[Tomas, Village Chief]";
+		mes "Hoh!";
+		mes "There have been such issues!";
+		emotion e_ic;
+		cutin "ma_tomas04",2;
+		next;
+		mes "[Tomas, Village Chief]";
+		mes "I felt uneasy since I couldn't take care of you, being so busy.";
+		mes "You already got used to Malangdo well enough by yourself.";
+		emotion e_heh;
+		next;
+		mes "[Tomas, Village Chief]";
+		mes "Then, as village chief and the admiral of the cat association, I'd like you to get along with me as well!";
+		set ma_tomas,100;
+		completequest 11237;
+		getitem 6422,30; //Egrade_Coin
+		close2;
+		cutin "",255;
+		end;
+	}
+	mes "[Tomas, Village Chief]";
+	mes "Ha ha ha!";
+	mes "How are you doing?";
+	mes "Come to me if anything difficult happens.";
+	emotion e_heh;
+	cutin "ma_tomas04",2;
+	close2;
+	cutin "",255;
+	end;
+}
+
+mal_in02,182,61,3	script	President of Meeting#mal	421,{
+	if (ma_tomas == 0) {
+		mes "[President of Meeting]";
+		mes "Please be silent, the regular meeting is getting started a moment later~";
+		close;
+	} else if (ma_tomas == 1) {
+		mes "[President of Meeting]";
+		mes "Wow~ wow~ Now we're having an incredible sale... well, no, but a meeting.";
+		mes "Please be silent.";
+		next;
+		mes "[President of Meeting]";
+		mes "Today's main agenda is as always ^ff99ccStar Candy^000000.";
+		mes "Though I have traveled through numerous areas by now, it's my first time hearing ^0000FFsuch a difficult language to learn^000000.";
+		next;
+		mes "[President of Meeting]";
+		mes "What she cannot communicate with at all is becoming a highly growing issue.";
+		next;
+		mes "[President of Meeting]";
+		mes "Please speak if there's any opinion on the next agenda.";
+		next;
+		mes "[President of Meeting]";
+		mes "Umm... Yes. Then, please say first, ^6666ccScottfold^000000.";
+		set ma_tomas,2;
+		changequest 11209,11210;
+		emotion e_paper,0,"Scottfold#mal";
+		close;
+	} else if (ma_tomas == 2) {
+		mes "[President of Meeting]";
+		mes "Umm... Yes. Please speak first, ^6666ccScottfold^000000.";
+		emotion e_paper,0,"Scottfold#mal";
+		close;
+	} else if (ma_tomas == 3) {
+		mes "[President of Meeting]";
+		mes "Please speak, Koon.... next.";
+		emotion e_paper,0,"Koon#mal";
+		close;
+	} else if (ma_tomas == 4) {
+		mes "[President of Meeting]";
+		mes "There will be a presentation by Dr. Devore on his study continuously.";
+		emotion e_paper,0,"Linguist Devore#mal";
+		close;
+	} else if (ma_tomas == 5) {
+		mes "[President of Meeting]";
+		mes "Please speak next, Dr. Mali.";
+		emotion e_paper,0,"Geologist Mali#mal";
+		close;
+	} else if (ma_tomas == 6) {
+		mes "[President of Meeting]";
+		mes "Brie!! I understand the situation, but please be calm and tell us, since it is a meeting after all.";
+		close;
+	} else if (ma_tomas == 7) {
+		mes "[President of Meeting]";
+		mes "Well, let's have a break for a while now.";
+		mes "In time, Samuel brought Seaweed and tuna here.";
+		close;
+	}
+	mes "[President of Meeting]";
+	mes "Huew... It gets you so tired to conduct a meeting.";
+	mes "I used to be called a tireless merchant who ranked 1st in sales...";
+	next;
+	mes "[President of Meeting]";
+	mes "I feel really sick sometimes when the meeting is prolonged.";
+	emotion e_sob;
+	close;
+}
+
+mal_in02,178,66,5	script	Scottfold#mal	422,{
+	if (ma_tomas == 0) {
+		mes "[Scottfold]";
+		mes "Attending the meeting is an important thing to do.";
+		mes "It is absolutely right that all responsible cats should attend.";
+		close;
+	} else if (ma_tomas == 1) {
+		mes "[Scottfold]";
+		mes "The meeting is starting soon.";
+		mes "So, shh~~";
+		close;
+	} else if (ma_tomas == 2) {
+		mes "[Scottfold]";
+		mes "Yes, honorable president.";
+		mes "As for the communication with Star Candy, we have Biscuit, don't we?";
+		next;
+		mes "[President of Meeting]";
+		mes "Of course, though she is always with ^0000FFBiscuit, who speaks the official language a bit^000000, it seems to be difficult to have a conversation in depth.";
+		next;
+		mes "[President of Meeting]";
+		mes "Besides, Star Candy is in a very important position that our Malangdo's existance depends upon. Many others think it's necessary to talk about our future direction directly.";
+		next;
+		mes "[President of Meeting]";
+		mes "Then for the next... yes, Koon please speak now.";
+		set ma_tomas,3;
+		changequest 11210,11211;
+		emotion e_paper,0,"Koon#mal";
+		close;
+	}
+	mes "[Scottfold]";
+	mes "Let's quietly listen to the other's presentation.";
+	next;
+	mes "[Scottfold]";
+	mes "...Though I say so, I also feel like saying something, somehow.";
+	mes "So, I always put my hand up first!";
+	close;
+}
+
+mal_in02,177,58,7	script	Koon#mal	546,{
+	if (ma_tomas == 0) {
+		mes "[Koon]";
+		mes "Though I'm busy, I always attend this meeting.";
+		mes "I'd like this to be held at times that don't disturb my work.";
+		close;
+	} else if (ma_tomas == 1) {
+		mes "[Koon]";
+		mes "I expect what comes up today.";
+		close;
+	} else if (ma_tomas == 2) {
+		mes "[Koon]";
+		mes "Scottfold is the one who participates enthusiastically.";
+		mes "They say that he'll be the next president of this meeting.";
+		close;
+	} else if (ma_tomas == 3) {
+		mes "[Koon]";
+		mes "Then, how's the study of Dr. Devore going?";
+		next;
+		mes "[President of Meeting]";
+		mes "The language of Starfish is not undertandable even for the linguist, Dr. Devore...";
+		next;
+		mes "[Linguist Devore]";
+		mes "President! As for that matter, I'd like to speak for myself about the study.";
+		next;
+		mes "[President of Meeting]";
+		mes "Yes. Carry on please.";
+		set ma_tomas,4;
+		changequest 11211,11212;
+		emotion e_paper,0,"Linguist Devore#mal";
+		close;
+	}
+	mes "[Koon]";
+	mes "I hope the study of Dr. Devore comes out soon.";
+	mes "I am very interested in the language as well!";
+	close;
+}
+
+mal_in02,174,64,5	script	Linguist Devore#mal	549,{
+	if (ma_tomas < 4) {
+		mes "[Linguist Devore]";
+		mes "Most of our cats are especially talented in language.";
+		mes "This has a great effect on the prosperity of our merchants.";
+		next;
+		mes "[Linguist Devore]";
+		mes "Because... it means you can do business in more areas if you know more foreign languages.";
+		close;
+	} else if (ma_tomas == 4) {
+		mes "[Linguist Devore]";
+		mes "Hello everyone.";
+		mes "I am a linguist, Dr. Devore, in charge of the study on the Starfish language.";
+		next;
+		mes "[Linguist Devore]";
+		mes "Let me say the definite conclusion first. Since ^0000FFthe study on the Starfish language^000000 started from the time we settled in Malangdo, there's been no remarkable outcome yet.";
+		emotion e_swt2;
+		next;
+		mes "[Linguist Devore]";
+		mes "Of course it is possible to talk with ^6666ccBiscuit^000000 somehow, but this is not close to the result we expected to solve the situation.";
+		next;
+		mes "[Koon]";
+		mes "Then, how's the study on the book we found last time?";
+		next;
+		mes "[Linguist Devore]";
+		mes "This book we assumed to be written in the Starfish language. But when I asked Biscuit, it turns out that it's a textbook to learn the Starfish language...";
+		next;
+		mes "[Koon]";
+		mes "Isn't it very helpful for studying the Starfish language, then?";
+		next;
+		mes "[Linguist Devore]";
+		mes "I surely thought that, but when I tried the conversation as it teaches, we ended up finding they couldn't understand it at all.";
+		next;
+		mes "[Linguist Devore]";
+		mes "If you see the words on the first page of this book, there's a sentence seeming like short conversation.";
+		next;
+		mes "[Linguist Devore]";
+		mes "It's like this, for the question, ¬¬¬Ñ¬Ü ¬ã¬Ú?, it says, ¬¡¬Ù ¬ã¬ì¬Þ ¬Õ¬à¬Ò¬â¬Ö, ¬Ò¬Ý¬Ñ¬Ô¬à¬Õ¬Ñ¬â¬ñ. ¬¡ ¬£¬Ú¬Ö?";
+ 		next;
+		mes "[Linguist Devore]";
+		mes "Though I tried talking to Biscuit like this, there was no feedback.";
+		next;
+		mes "[Linguist Devore]";
+		mes "After that, as for this book, the existence of the book itself has been studied on the other side.";
+		next;
+		mes "[President of Meeting]";
+		mes "Ok, we listened well to what Dr. Devore said.";
+		mes "Then, let's wrap up the progress of the language study, and listen to Geologist, Dr. Mali.";
+		set ma_tomas,5;
+		changequest 11212,11213;
+		emotion e_paper,0,"Geologist Mali#mal";
+		close;
+	} else if (ma_tomas < 18) {
+		mes "[Linguist Devore]";
+		mes "Hoo...";
+		mes "The Starfish language is the hardest matter in my studying life.";
+		next;
+		mes "[Linguist Devore]";
+		mes "I should solve the puzzling Starfish language soon.";
+		mes "I'm ashamed to see you all like this as a result.";
+		emotion e_swt2;
+		close;
+	} else if (ma_tomas == 18) {
+		mes "[Linguist Devore]";
+		mes "Right...";
+		mes "This language world is so beautiful and mysterious.";
+		next;
+		mes "[Linguist Devore]";
+		mes "There are mysteries like why the same beings use totally different languages, or why very far kinds use similar languages.";
+		next;
+		mes "[Linguist Devore]";
+		mes "I joined this group because I thought that traveling all around the world was much more helpful to study, not just reading a book at a desk.";
+		next;
+		mes "[Linguist Devore]";
+		mes "But this Starfish is just mysterious.";
+		mes "I cannot understand it at all.";
+		mes "I am rather doubtful to say it's actual 'language'.";
+		emotion e_swt2;
+		next;
+		mes "[Linguist Devore]";
+		mes "I have no clue, though I study it in various ways.";
+		mes "Biscuit got used to our language, rather, and short talk is possible, but we cannot say it is conversation yet.";
+		next;
+		mes "[Linguist Devore]";
+		mes "I feel frustrated and more to study like this, but it should be solved to deal with the other matters.";
+		next;
+		mes "[Linguist Devore]";
+		mes "I don't see what's wrong here!";
+		mes "Myself, who used to be called a master of language!";
+		mes "I've never expected to come across this untouchable stuff!";
+		next;
+		mes "[Linguist Devore]";
+		mes "Wooaaa wooaaa ahhh!!!!";
+		mes "I don't see what's wrong here!";
+		emotion e_omg;
+		next;
+		mes "[Linguist Devore]";
+		mes "Why are they here and what do they want!";
+		mes "I'd be good enough if I could just know it!";
+		set ma_tomas,19;
+		changequest 11225,11226;
+		close;
+	} else if (ma_tomas == 19) {
+		mes "[Linguist Devore]";
+		mes "Wooaaa wooaaa ahhh!!!!";
+		mes "I don't see what's wrong here!";
+		emotion e_omg;
+		next;
+		mes "[Linguist Devore]";
+		mes "Why are they here and what do they want!";
+		mes "I'd be good enough if I could just know it!";
+		close;
+	} else if (ma_tomas == 20) {
+		mes "[Linguist Devore]";
+		mes "What?! What did you say?!";
+		mes "Fluently said!";
+		mes "How come!";
+		emotion e_omg;
+		next;
+		mes "[Linguist Devore]";
+		mes "I can't believe it unless I see it with my own eyes.";
+		mes "It's not right if he spoke only to me like that, isn't it?";
+		next;
+		mes "[Linguist Devore]";
+		mes "Let's go and hear it together!!";
+		set ma_tomas,21;
+		changequest 11227,11228;
+		close;
+	} else if (ma_tomas < 34) {
+		mes "[Linguist Devore]";
+		mes "The study by this time was just making a totally wrong guess!";
+		mes "But before you're disappointed, I'd rather be happy enough to get the answer.";
+		emotion e_no1;
+		next;
+		mes "[Linguist Devore]";
+		mes "Once we get the answer, it's only a matter of time before understanding the Starfish language.";
+		close;
+	} else if (ma_tomas == 34) {
+		mes "[Linguist Devore]";
+		mes "Is it true?!";
+		mes "Did Biscuit say so?!";
+		emotion e_omg;
+		next;
+		mes "[Linguist Devore]";
+		mes "Ah, ah! Thanks to you, "+strcharinfo(0)+"!";
+		mes "I feel so grateful.";
+		next;
+		mes "[Linguist Devore]";
+		mes "I have to meet Biscuit right now and say thank you.";
+		mes "It'd be possible to express my grateful mind, though we cannot understand each other.";
+		next;
+		mes "[Linguist Devore]";
+		mes "Ah, and I really want to tell this happy news to our chief, Tomas.";
+		mes "Please!!";
+		emotion e_hlp;
+		set ma_tomas,35;
+		changequest 11236,11237;
+		getitem 6422,30; //Egrade_Coin
+		close;
+	} else if (ma_tomas == 35) {
+		mes "[Linguist Devore]";
+		mes "Ah, and I really want to tell this happy news to our chief, Tomas.";
+		mes "Please!!";
+		emotion e_hlp;
+		close;
+	}
+	mes "[Linguist Devore]";
+	mes "Ah, ah!!";
+	mes "The study on Starfish is going well.";
+	mes "It could've really been a disaster, if you, "+strcharinfo(0)+", didn't help us.";
+	emotion e_thx;
+	close;
+}
+
+mal_in02,179,57,1	script	Geologist Mali#mal	559,{
+	if (ma_tomas < 5) {
+		mes "[Geologist Mali]";
+		mes "Malangdo is named because the ground here is so soft, mew~";
+		mes "It gets hard when you touch it, mew~";
+		emotion e_slur;
+		close;
+	} else if (ma_tomas == 5) {
+		mes "[Geologist Mali]";
+		mes "Mali, mew~";
+		mes "As you all know, there are many places with cracks in the ground, mew~";
+		next;
+		mes "[Geologist Mali]";
+		mes "It's not that serious or risky a problem yet, mew~";
+		mes "As we cannot predict when Star Candy will move, it's best to repair these first for now, mew~";
+		next;
+		mes "[Geologist Mali]";
+		mes "But, as always, there is a shortage of labor, mew~";
+		mes "We need many more participants, I think, mew~";
+		next;
+		mes "[Geologist Mali]";
+		mes "As everyone has their own work to do, I understand that we all must be busy. But I'd like to participate in this repairing, since it's related to our life.";
+		emotion e_hlp;
+		next;
+		mes "[Brie]";
+		mes "Wait!";
+		mes "It's not something to be done only with instant repairs!";
+		mes "My father was seriously injured from the earthquake some time ago!";
+		emotion e_omg,0,"Brie#mal";
+		next;
+		mes "[President of Meeting]";
+		mes "Mr. Brie!! I understand what your situation is, but please clam dowm, since we're having a meeting.";
+		set ma_tomas,6;
+		changequest 11213,11214;
+		emotion e_paper,0,"Brie#mal";
+		close;
+	} else if (ma_tomas < 13) {
+		mes "[Geologist Mali]";
+		mes "You attended to the meeting instead of your father today, Brie.";
+		mes "He's quite unfriendly but devoted to his parents, mew~";
+		emotion e_heh;
+		next;
+		mes "[Geologist Mali]";
+		mes "Mr. Brie was not a member of our group at first, but he joined in after getting the news that his father, Rican, joined in with the new trade course development, mew~";
+		next;
+		mes "[Geologist Mali]";
+		mes "But Brie seems to have been shocked when Rican was hurt last time, mew~";
+		mes "I should study more to not let this kind of thing happen again, mew~";
+		close;
+	} else if (ma_tomas == 13) {
+		mes "[Geologist Mali]";
+		mes "Malangdo is a really special island, mew~";
+		mes "Literally, it's soft.";
+		next;
+		mes "[Geologist Mali]";
+		mes "Although I visited so many places following the group, I've never seen ground as soft as Malangdo.";
+		mes "If you press the ground by mistake...";
+		mes "it has magic so that you end up continously doing it over and over.";
+		next;
+		mes "[Geologist Mali]";
+		mes "Soft and sticky feeling like this...";
+		mes "Haha~ it gets you addicted to it...";
+		emotion e_shy;
+		next;
+		mes "[Geologist Mali]";
+		mes "Oops!!";
+		mes "I was about to be sunk into this softness, mew~!!!";
+		emotion e_omg;
+		next;
+		mes "[Geologist Mali]";
+		mes "Though it's got the risk of making you lose your mind, it helped the ship Navi not to break, mew~";
+		next;
+		mes "[Geologist Mali]";
+		mes "By the way, it doesn't have a special element in it, but is made up of common soil, mew~";
+		next;
+		mes "[Geologist Mali]";
+		mes "Moreover!!";
+		mes "How come it's been ^0000FFcracked with this softness^000000, mew~!";
+		emotion e_omg;
+		next;
+		mes "[Geologist Mali]";
+		mes "If this ^0000FFcrack goes on, the underground support may collapse^000000, mew...";
+		next;
+		mes "[Geologist Mali]";
+		mes "There are many forces in for the repairing of the cracks, it feels like it's not enough, mew~";
+		next;
+		mes "[Geologist Mali]";
+		mes "So we receive applications for voluntary service, mew~";
+		mes "Though it's voluntary service, it's not free. So, please visit me at any time you want, mew~";
+		next;
+		switch(select("Help repairing.:Finish the talk.")) {
+		case 1:
+			mes "[Geologist Mali]";
+			mes "Khhh!!!";
+			mes "What a beatiful young person in this hard world!!!";
+			mes "Whenever I come across a person like you, I feel this life is still good to live, mew~";
+			emotion e_sob;
+			next;
+			mes "[Geologist Mali]";
+			mes "Please listen to ^6666ccmy assistant, Bob^000000 in detail, mew~";
+			mes "Get out of here and visit the ^6666cca room on your right^000000, mew~";
+			set ma_tomas,14;
+			setquest 11221;
+			close;
+		case 2:
+			mes "[Geologist Mali]";
+			mes "Woohoohoo.";
+			mes "I~will~be~waiting~for~you~~";
+			emotion e_lv2;
+			close;
+		}
+	} else if (ma_tomas == 14) {
+		mes "[Geologist Mali]";
+		mes "Khhh!!!";
+		mes "What a beatiful young person in this hard world!!!";
+		mes "Whenever I come across a person like you, I feel this life is still good to live, mew~";
+		emotion e_sob;
+		next;
+		mes "[Geologist Mali]";
+		mes "Please listen to ^6666ccmy assistant, Bob^000000 in detail, mew~";
+		mes "Get out of here and visit the ^6666cca room on your right^000000, mew~";
+		close;
+	} else if (ma_tomas == 15 || ma_tomas == 16) {
+		mes "[Geologist Mali]";
+		mes "Is the repairing of the cracks going well, mew?";
+		mes "Don't overdo yourself, mew~";
+		mes "It'd be bad if your health gets worse, mew~";
+		close;
+	} else if (ma_tomas == 17) {
+		mes "[Geologist Mali]";
+		mes "Ah! Bob complimented you so much on your great job, mew~";
+		mes "Please help us next time again when you can, mew~";
+		emotion e_no1;
+		next;
+		mes "[Linguist Devore]";
+		mes "I made this, since the Starfish study was well finished and you didn't need to do such hard work like this!";
+		mes "Sob sob!!!";
+		emotion e_sob,0,"Linguist Devore#mal";
+		next;
+		mes "[Geologist Mali]";
+		mes "Ohhh! What are you talking about Dr. Devore, mew~!!!!";
+		mes "I don't think that way at~~all, mew~!!!";
+		emotion e_omg;
+		next;
+		mes "[Geologist Mali]";
+		mes "Everyone knows how you, Dr. Devore, are studying hard, mew~!!!";
+		mes "You do your best, so be more confident, mew~!";
+		set ma_tomas,18;
+		completequest 11224;
+		setquest 11225;
+		setquest 11243;
+		getitem 6422,20; //Egrade_Coin
+		close;
+	} else if (ma_tomas > 99) {
+		if (checkquest(11240) > -1 || checkquest(11241) > -1) {
+			mes "[Geologist Mali]";
+			mes "Please listen to ^6666ccmy assistant, Bob^000000 in detail, mew~.";
+			mes "Get out of here and visit the ^6666cca room on your right^000000, mew~";
+			close;
+		} else if (checkquest(11242) > -1) {
+			mes "[Geologist Mali]";
+			mes "Ah! Bob complimented you so much on your great job, mew~";
+			mes "Please help us next time again when you can, mew~";
+			changequest 11242,11243;
+			getitem 6422,4; //Egrade_Coin
+			close;
+		} else {
+			if (checkquest(11243,PLAYTIME) == 0 || checkquest(11243,PLAYTIME) == 1) {
+				mes "[Geologist Mali]";
+				mes "Don't overdo yourself, mew~";
+				mes "It'd be bad if your health gets worse, mew~";
+				close;
+			}
+			if (checkquest(11243,PLAYTIME) == 2)
+				erasequest 11243;
+			mes "[Geologist Mali]";
+			mes "There is a lot more repairing left to do for today!";
+			mes "It doesn't seem to be an easy thing to solve, mew~";
+			next;
+			switch(select("I will help.:I will stop.")) {
+			case 1:
+				mes "[Geologist Mali]";
+				mes "Please listen to ^6666ccmy assistant, Bob^000000 in detail, mew~";
+				mes "Get out of here and visit the ^6666cca room on your right^000000, mew~";
+				setquest 11240;
+				close;
+			case 2:
+				mes "[Geologist Mali]";
+				mes "Then please take a rest, mew~";
+				mes "I will see you next chance then, mew~";
+				close;
+			}
+		}
+	}
+	mes "[Geologist Mali]";
+	mes "Soft and sticky feeling like this...";
+	mes "Haha~ it gets you addicted to it...";
+	emotion e_slur;
+	close;
+}
+
+mal_in02,140,94,0	script	Bob#mal	553,{
+	if (ma_tomas < 14) {
+		mes "[Bob]";
+		mes "You bow-wow! bow! wow! I mew! mew! mew!";
+		mes "I'm into juice from delicious fish, mew~";
+		emotion e_ho;
+		close;
+	} else if (ma_tomas == 14) {
+		// Dialogue in repeatable quest is identical.
+		// Uses a variable to determine the quest mode.
+		set @mal_bob_q,1;
+	L_Quest1:
+		set .@i, @mal_bob_q;
+		set @mal_bob_q,0;
+		mes "[Bob]";
+		mes "You bow-wow! bow! wow! I mew! mew! mew!";
+		mes "I'm into juice from delicious fish, mew~";
+		emotion e_ho;
+		next;
+		mes "[Bob]";
+		mes "Ah ahhh!!!!!!!!!!!";
+		mes "Are you here for voluntary service?!";
+		emotion e_omg;
+		next;
+		if (checkweight(1201,1) == 0) {
+			mes "[Bob]";
+			mes "Ummm... be lightened with your mind and body when doing voluntary service!";
+			mes "You seem to have too much stuff, so get yourself lightened~";
+			close;
+		}
+		if (MaxWeight - Weight < 1000) {
+			mes "[Bob]";
+			mes "Ummm... be lightened with your mind and body when doing voluntary service!";
+			mes "You seem to have a lot of heavy stuff, so get yourself lightened~";
+			close;
+		}
+		switch(select("Yes.:No.")) {
+		case 1:
+			mes "[Bob]";
+			mes "Khhh...";
+			mes "Impressed!!!";
+			mes "I am impressed!!!";
+			mes "The impressive mind is dancing in my heart!!!";
+			emotion e_omg;
+			next;
+			mes "[Bob]";
+			mes "I treated the people like I looked down on them and had a prejudice against human beings!!!";
+			mes "I feel like crying with scales!!!!";
+			mes "Impressed!!!";
+			mes "Impression Pegasus Hurricane!!!";
+			emotion e_omg;
+			next;
+			select("Stop it! Tell me how to repair the cracks.");
+			mes "[Bob]";
+			mes "Ah!";
+			next;
+			mes "[Bob]";
+			mes "Hooo...";
+			mes "I was so impressed that I was rude to someone I met for the first time.";
+			next;
+			mes "[Bob]";
+			mes "Repairing the cracks is rather simple.";
+			mes "Anyone can do it easily with just this ^0000FFFix Kit^000000!";
+			next;
+			mes "[Bob]";
+			mes "Fill in the part with this mixture of gray and white clay, and fix the cracks with a stapler.";
+			mes "And I'll skip explaining how to use the other tools, since you know already.";
+			next;
+			mes "[Bob]";
+			mes "Ah, right...";
+			mes "^0000ffYou may fall into the gap of the crack, unfortunately, so please watch out.^000000";
+			if (.@i == 1) {
+				set ma_tomas,15;
+				changequest 11221,11222;
+			} else
+				changequest 11240,11241;
+			getitem 6434,1; //Fix_Kit
+			close;
+		case 2:
+			mes "[Bob]";
+			mes "Ah, right...";
+			mes "I see...";
+			mes "Disappointed...";
+			mes "Hoohoot shh shh~";
+			emotion e_otl;
+			close;
+		}
+	} else if (ma_tomas == 15) {
+	L_Quest2:
+		if (checkweight(1201,1) == 0) {
+			mes " - Notice !! -";
+			mes " - Since you have too many items - ";
+			mes " - you cannot get the item. - ";
+			mes " - Let your body lighten - ";
+			mes " - and try this again. - ";
+			close;
+		}
+		if (MaxWeight - Weight < 1000) {
+			mes " - Notice !! -";
+			mes " - Since your items are too heavy - ";
+			mes " - you cannot get the item. - ";
+			mes " - Let your body lighten - ";
+			mes " - and try this again. - ";
+			close;
+		}
+		mes "[Bob]";
+		mes "Repairing the cracks is rather simple.";
+		mes "Anyone can do it easily with just this ^0000FFFix Kit^000000!";
+		if (countitem(6434) == 0)
+			getitem 6434,1; //Fix_Kit
+		next;
+		mes "[Bob]";
+		mes "Fill in the part with this mixture of gray and white clay, and fix the cracks with a stapler.";
+		mes "And I'll skip explaining how to use the other tools, since you know already.";
+		next;
+		mes "[Bob]";
+		mes "Ah, right...";
+		mes "^0000ffYou may fall into the gap of the crack, unfortunately, so please watch out.^000000";
+		close;
+	} else if (ma_tomas == 16) {
+		mes "[Bob]";
+		mes "Khhh~~~~~~~~~~~~~~~~~~~~~~";
+		mes "That was perfect!";
+		emotion e_no1;
+		next;
+		mes "[Bob]";
+		mes "The adhesive filled in just right!!";
+		mes "The perfect stapler job!!";
+		mes "The speechless and marvelous finishing skill!!";
+		next;
+		mes "[Bob]";
+		mes "Impressed!";
+		mes "Mysterious!";
+		mes "Shocked!";
+		emotion e_omg;
+		next;
+		mes "[Bob]";
+		mes "You did a great job indeed!!!";
+		mes "I will tell Dr. Mali!";
+		if (countitem(6434) > 0)
+			delitem 6434,1; //Fix_Kit
+		set ma_tomas,17;
+		changequest 11223,11224;
+		close;
+	} else if (ma_tomas > 99) {
+		if (checkquest(11240) > -1) {
+			set @mal_bob_q,2;
+			goto L_Quest1;
+		} else if (checkquest(11241) > -1)
+			goto L_Quest2;
+	}
+	mes "[Bob]";
+	mes "You bow-wow! bow! wow! I mew! mew! mew!";
+	mes "I'm into juice from delicious fish, mew~";
+	emotion e_ho;
+	close;
+}
+
+-	script	Crack#mal0	-1,{
+	if (.off) end;	// Official script uses a 1-second timer to disable cracks. Added to prevent abuse.
+	if (ma_tomas == 15 || checkquest(11241) > -1) {
+		if (countitem(6434) < 1) {
+			mes "- To repair the crack -";
+			mes "- you need a Fix Kit. -";
+			close;
+		}
+		set .@ma_cr1, rand(1,10);
+		if (.@ma_cr1 < 5) {
+			mes "- Ground is a bit cracked. -";
+			mes "- Used a stapler. -";
+			set .off,1;
+			donpcevent "Crackt"+substr(strnpcinfo(2),3,getstrlen(strnpcinfo(2))-1)+"#mal::OnEnable";
+			close;
+		} else if (.@ma_cr1 == 7) {
+			mes "- With the crack opening -";
+			mes "- at the center, -";
+			mes "- the ground gets soft -";
+			mes "- and you are instantly -";
+			mes "- sucked into the ground. -";
+			close2;
+			warp "mal_dun01",0,0;
+			end;
+		} else {
+			while (1) {
+				switch(select("Repair the gap.:Use the stapler.")) {
+				case 1:
+					switch(rand(1,3)) {
+					case 1:
+						mes "- Mix the two colors of -";
+						mes "- adhesives and put it on -";
+						mes "- the crack meticulously. -";
+						break;
+					case 2:
+						mes "- Use a plump sea squirt -";
+						mes "- for the cracked gap.-";
+						break;
+					case 3:
+						mes "- Use a slithery sea cucumber -";
+						mes "- for the cracked gap.-";
+						break;
+					}
+					next;
+					break;
+				case 2:
+					mes "- Used the stapler for the crack -";
+					mes "- and fixed it well. -";
+					next;
+					mes "- It seems the crack -";
+					mes "- is well filled. -";
+					next;
+					if (rand(1,3) == 2) {
+						mes "- Let's get back to report this. -";
+						if (ma_tomas == 15) {
+							set ma_tomas,16;
+							changequest 11222,11223;
+						}
+						if (checkquest(11241) > -1) {
+							changequest 11241,11242;
+						}
+					} else {
+						mes "- Let's find -";
+						mes "- the other cracks. -";
+					}
+					set .off,1;
+					donpcevent "Crackt"+substr(strnpcinfo(2),3,getstrlen(strnpcinfo(2))-1)+"#mal::OnEnable";
+					close;
+				}
+			}
+		}
+	}
+	mes "- I can see the crack. -";
+	mes "- It seems there's still -";
+	mes "- not enough supporters yet. -";
+	close;
+OnEnable:
+	enablenpc strnpcinfo(0);
+	end;
+OnDisable:
+	set .off,0;
+	disablenpc strnpcinfo(0);
+	end;
+}
+malangdo,114,157,0	duplicate(Crack#mal0)	Crack#mal1	550
+malangdo,284,237,0	duplicate(Crack#mal0)	Crack#mal2	550
+malangdo,134,150,0	duplicate(Crack#mal0)	Crack#mal3	550
+malangdo,173,199,0	duplicate(Crack#mal0)	Crack#mal4	550
+malangdo,233,197,0	duplicate(Crack#mal0)	Crack#mal5	550
+malangdo,137,239,0	duplicate(Crack#mal0)	Crack#mal6	550
+malangdo,239,157,0	duplicate(Crack#mal0)	Crack#mal7	550
+malangdo,221,155,0	duplicate(Crack#mal0)	Crack#mal8	550
+malangdo,217,109,0	duplicate(Crack#mal0)	Crack#mal9	550
+malangdo,162,183,0	duplicate(Crack#mal0)	Crack#mal10	550
+
+-	script	Crackt0#mal	-1,{
+	end;
+OnInit:
+	disablenpc strnpcinfo(0);
+	end;
+OnEnable:
+	enablenpc strnpcinfo(0);
+	initnpctimer;
+	end;
+OnDisable:
+	stopnpctimer;
+	disablenpc strnpcinfo(0);
+	end;
+OnTimer1000:
+	donpcevent "Crack#mal"+substr(strnpcinfo(1),6,getstrlen(strnpcinfo(1))-1)+"::OnDisable";
+	end;
+OnTimer30000:
+	donpcevent "Crack#mal"+substr(strnpcinfo(1),6,getstrlen(strnpcinfo(1))-1)+"::OnEnable";
+	donpcevent strnpcinfo(0)+"::OnDisable";
+	end;
+}
+-	duplicate(Crackt0#mal)	Crackt1#mal	-1
+-	duplicate(Crackt0#mal)	Crackt2#mal	-1
+-	duplicate(Crackt0#mal)	Crackt3#mal	-1
+-	duplicate(Crackt0#mal)	Crackt4#mal	-1
+-	duplicate(Crackt0#mal)	Crackt5#mal	-1
+-	duplicate(Crackt0#mal)	Crackt6#mal	-1
+-	duplicate(Crackt0#mal)	Crackt7#mal	-1
+-	duplicate(Crackt0#mal)	Crackt8#mal	-1
+-	duplicate(Crackt0#mal)	Crackt9#mal	-1
+-	duplicate(Crackt0#mal)	Crackt10#mal	-1
+
+mal_in02,181,55,3	script	Brie#mal	545,{
+	if (ma_tomas < 6) {
+		mes "[Brie]";
+		mes "Sorry, but I don't feel like talking with you. Please leave me alone.";
+		close;
+	} else if (ma_tomas == 6) {
+		mes "[Brie]";
+		mes "Sorry, President.";
+		next;
+		mes "[Brie]";
+		mes "Though Star Candy is supporting the ground of Malangdo,";
+		mes "we don't understand its purpose or reason at all.";
+		mes "Should we just expect not to find anything?";
+		next;
+		mes "[President of Meeting]";
+		mes "As Dr. Devore said, it's better to wait for the results, since he's still studying...";
+		next;
+		mes "[Brie]";
+		mes "What would you do if Star Candy left, and you had only waited?";
+		mes "Malangdo may go under. I cannot just wait here like this.";
+		next;
+		mes "[President of Meeting]";
+		mes "But, Brie, we know there's nothing but waiting.";
+		mes "An enormous crack was made when Star Candy tried to make the support stand last time, as she seemed to be shocked and moved too much.";
+		next;
+		mes "[Geologist Mali]";
+		mes "Besides, since ^0000FFStar Candy's location plays the role of pillar for this island, it seems the center would go down as you even set up pillars around her^000000, mew~";
+		next;
+		mes "[Geologist Mali]";
+		mes "Due to the nature of this large basement space, if the center were to collapse, we can't expect what comes next. Our researchers therefore think we should treat it as carefully as we can, mew~";
+		next;
+		mes "[Brie]";
+		mes "...";
+		next;
+		mes "[President of Meeting]";
+		mes "We know that Rican's injury may affect the trade of Yggdrasil Berry, so don't worry too much.";
+		next;
+		mes "[President of Meeting]";
+		mes "As for that matter, we're going to plan for it by discussing it with our chief, Tomas.";
+		next;
+		mes "[Brie]";
+		mes "Yes...";
+		next;
+		mes "[President of Meeting]";
+		mes "Well, let's have a break for now.";
+		mes "In time, Samuel brought Seaweed and tuna here.";
+		set ma_tomas,7;
+		completequest 11214;
+		setquest 11215;
+		close;
+	} else if (ma_tomas == 7) {
+		mes "[Brie]";
+		mes "What?!";
+		mes "I won't listen if you are nagging.";
+		next;
+		switch(select("About Rican.:I will stop.")) {
+		case 1:
+			mes "[Brie]";
+			mes "As for my father?";
+			mes "He's the master of Yggdrasil Berry in this island.";
+			next;
+			mes "[Brie]";
+			mes "He can only do little things, like pushing the button of the dry machine, until his legs recover from the earthquake.";
+			mes "The amount of Yggdrasil Berry dramatically decreased.";
+			next;
+			mes "[Brie]";
+			mes "I've been harvesting them instead of him, but...";
+			next;
+			mes "[Brie]";
+			mes "Anyhow, I don't know very much about it, since I've just started this. If you want to ask about the Yggdrasil Berry, go to my house in the ^6666ccwest of Malangdo^000000.";
+			next;
+			mes "[Brie]";
+			mes "My father will be staying there saying he's really bored today again...";
+			set ma_tomas,8;
+			changequest 11215,11216;
+			close;
+		case 2:
+			mes "[Brie]";
+			mes "Hoo...";
+			close;
+		}
+	} else if (ma_tomas < 12) {
+		mes "[Brie]";
+		mes "Anyhow, I don't know very much about it, since I've just started this. If you want to ask about the Yggdrasil Berry, go to my house in the ^6666ccwest of Malangdo^000000.";
+		next;
+		mes "[Brie]";
+		mes "My father will be staying there saying he's really bored today again...";
+		close;
+	} else if (ma_tomas == 12) {
+		mes "[Brie]";
+		mes "Dr. Mali, please let me help to repair the cracks!";
+		mes "You called me more often long ago, but why do you say you can't give me the work now?";
+		next;
+		mes "[Geologist Mali]";
+		mes "No, mew~";
+		mes "Brie, you have to help your father, mew~";
+		next;
+		mes "[Brie]";
+		mes "But if this island goes down, all the fuss isn't useful at all!";
+		next;
+		mes "[Geologist Mali]";
+		mes "It's the same as the chicken and egg situation, mew~";
+		mes "If we have any problems selling Yggdrasil Berry, we cannot buy the tools to repair the cracks, mew~";
+		next;
+		mes "[Brie]";
+		mes "...";
+		next;
+		mes "[Geologist Mali]";
+		mes "So, go back home and help your father, mew~";
+		next;
+		mes "[Brie]";
+		mes "Ok, then I'll come back again if his legs have recovered.";
+		next;
+		mes "[Geologist Mali]";
+		mes "Good.";
+		mes "I'll wait for you, mew~";
+		next;
+		mes "[Geologist Mali]";
+		mes "Now as I get him back home, I'm going to find the participants, mew~";
+		mes "Cheers!";
+		set ma_tomas,13;
+		completequest 11220;
+		close;
+	}
+	mes "[Brie]";
+	mes "Hew... I think I changed from being fussy, as I felt nervous.";
+	mes "Now I will think of only the harvest of fussy.";
+	close;
+}
+
+mal_in01,114,169,5	script	Rican#mal	547,{
+	if (ma_tomas < 9) {
+		mes "[Rican]";
+		mes "Woo waa hoohoo...";
+		mes "Woowaa ahhh ahh ahh...";
+		mes "I'm impatient... to stay home like this!!";
+		emotion e_yawn;
+		next;
+		mes "[Rican]";
+		mes "When will my legs recover, when?!";
+		mes "They should be better soon, so that I can work like before...";
+		mes "But I can hardly move.";
+		if (ma_tomas < 8)
+			close;
+		next;
+		mes "[Rican]";
+		mes "All I can do is press the button all day long~";
+		mes "This is not exciting at all~";
+		mes "I'm not willing to do anything more and more~ Doobie dooba~";
+		emotion e_yawn;
+		next;
+		select("Excuse me. Is this Rican's house?");
+		mes "[Rican]";
+		mes "Huh?";
+		mes "Who are you!";
+		mes "I am Rican!";
+		mes "It's good to see you, since I'm so bored now...";
+		mes "Tell me what's happening right now! Now!";
+		emotion e_omg;
+		next;
+		select("Ask about Yggdrasil Berry.");
+		mes "[Rican]";
+		mes "Yggdrasil Berry?";
+		mes "You... you know something!";
+		mes "Umm, hahaha!";
+		mes "Only a few cats know about Yggdrasil Berry!";
+		emotion e_flash;
+		next;
+		mes "[Rican]";
+		mes "Well, before I traded them with human beings like you, Yggdrasil Berry was not thought to be a very remarkable fruit.";
+		next;
+		mes "[Rican]";
+		mes "It used to be spread out here and there in my old town. It doesn't have a good taste and causes indigestion, mew~";
+		mes "Cats need to eat fishes, naturally.";
+		emotion e_slur;
+		next;
+		mes "[Rican]";
+		mes "But if human beings eat this, it gets you fully recharged.";
+		next;
+		mes "[Rican]";
+		mes "At first, I'd never thought it could be sold at all!";
+		next;
+		mes "[Rican]";
+		mes "Khhh~";
+		mes "It was just awesome at that time...";
+		next;
+		mes "[Rican]";
+		mes "Very long ago...";
+		mes "Our group left the town for a new course to trade.";
+		emotion e_shy;
+		next;
+		mes "[Rican]";
+		mes "Actually, we dominated the areas around our town, and it was like a challenge to find unexplored areas.";
+		next;
+		mes "[Rican]";
+		mes "But discovering the unknown is the romance of a man, isn't it?";
+		emotion e_awsm;
+		next;
+		mes "[Rican]";
+		mes "Well, the beginning was quite nice, anyway.";
+		mes "After a month or two floating on the sea...";
+		next;
+		mes "[Rican]";
+		mes "The sea has enough fishes in it, but it made me bored. I wanted to eat seasoning, like radish with chicken the most.";
+		emotion e_rice;
+		next;
+		mes "[Rican]";
+		mes "Though we drifted for a very long time, we couldn't land on any island. Rather, we met storms.";
+		next;
+		mes "[Rican]";
+		mes "It was my first time seeing such a harsh tornado.";
+		mes "At that time I was out of my mind and thought I would die.";
+		next;
+		mes "[Rican]";
+		mes "I don't know the about the other ships, but this ship Navi luckily landed here in this island.";
+		next;
+		mes "[Rican]";
+		mes "Khhh khhh!";
+		mes "Can you believe it?";
+		mes "^0000FFThat enormous ship just flied, vroom~~ like an airship and was dropped here in the middle of this island!^000000";
+		emotion e_omg;
+		next;
+		mes "[Rican]";
+		mes "Anyhow, I survived, but most of the goods in the ship were swept and we were left with only Yggdrasil Berry.";
+		next;
+		mes "[Rican]";
+		mes "Huh? Why did we load them, if we don't eat them?";
+		mes "It... it's the secret...";
+		emotion e_swt;
+		next;
+		mes "[Rican]";
+		mes "Well, it's not important. As we sent reconnaissance groups there, we found out that there's a land where the other kind lives, not like us.";
+		mes "That was the land of you, human beings.";
+		next;
+		mes "[Rican]";
+		mes "Regardless of the process, we found the new area to trade as we had first intended... we still have a small problem of not knowing how to get back to our howmetown yet...";
+		next;
+		mes "[Rican]";
+		mes "We cats started selling with powerful viability.";
+		mes "But we had only Yggdrasil Berry, right?";
+		mes "We sold it with no high expectations, but could sell like hot cakes.";
+		next;
+		mes "[Rican]";
+		mes "As rumors went, it was sold at very high prices among human beings and had a remarkable effect on them.";
+		mes "So we finally settled down to sell Yggdrasil Berry with growing profits.";
+		next;
+		mes "[Rican]";
+		mes "But we are selling the dried kind, which is ^0000FFa bit different from what human being originally know, and less effective, and hard to eat raw^000000.";
+		next;
+		mes "[Rican]";
+		mes "Since it disappears as we prepare, it's definately the best for our group.";
+		emotion e_pat;
+		next;
+		mes "[Rican]";
+		mes "By the way, as I got injured in this important season, it harms my credibility if I don't meet the deadline to deliver the amount ordered!";
+		mes "Trading is credibility!!!";
+		emotion e_omg;
+		next;
+		mes "[Rican]";
+		mes "For this reason, would you like to help me?";
+		mes "Though my son is helping me, the amount we can prepare is not enough.";
+		next;
+		switch(select("I'll help him.:I won't.")) {
+		case 1:
+			mes "[Rican]";
+			mes "Khhh!";
+			mes "I had a good impression of you from the first time!";
+			next;
+			mes "[Rican]";
+			mes "Harvesting Yggdrasil Berry is very easy.";
+			mes "You can get it when you just dig the ground, mew~";
+			emotion e_omg,1;
+			next;
+			select("?!");
+			mes "[Rican]";
+			mes "Huh?";
+			mes "Doesn't it originally come from the ground?";
+			emotion e_omg,1;
+			next;
+			select("Doesn't it grow on trees?");
+			mes "[Rican]";
+			mes "Well, the Yggdrasil Berry in Midgard could do so.";
+			mes "But ^6666ccwe dig our Yggdrasil Berry here from the ground^000000.";
+			emotion e_omg,1;
+			next;
+			mes "[Rican]";
+			mes "You can get it on Malangdo Island easily. Bring me about 30.";
+			mes "Ah! Keep the secret to my son for sure~";
+			mes "Then please^ff99cc!!!^000000 please^ff99cc!!!^000000 please~~~";
+			emotion e_kis;
+			set ma_tomas,9;
+			changequest 11216,11217;
+			close;
+		case 2:
+			mes "[Rican]";
+			mes "Oh? Then it's okay, if you can't help it.";
+			mes "My injured leg feels so bad... -groaning-";
+			close;
+		}
+	} else if (ma_tomas == 9) {
+		if (countitem(6435) < 30) {
+			mes "[Rican]";
+			mes "You can get it on Malangdo Island easily. Bring me about 30.";
+			mes "Ah! Keep the secret to my son for sure~";
+			mes "Then please^ff99cc!!!^000000 please^ff99cc!!!^000000 please~~~";
+			emotion e_kis;
+			close;
+		}
+		mes "[Rican]";
+		mes "Oh, oh!!";
+		mes "This fresh smell!!!";
+		mes "Haaa~ How fresh, good job!";
+		mes "You're good at harvesting Yggdrasil Berry?";
+		next;
+		mes "[Rican]";
+		mes "Then would you put it in the machine in front of me?";
+		set ma_tomas,10;
+		changequest 11217,11218;
+		close;
+	} else if (ma_tomas == 10) {
+		mes "[Rican]";
+		mes "Oh, oh!!";
+		mes "This fresh smell!!!";
+		mes "Haaa~ How fresh, good job!";
+		mes "You're good at harvesting Yggdrasil Berry?";
+		next;
+		mes "[Rican]";
+		mes "Then would you put it in the machine in front of me?";
+		close;
+	} else if (ma_tomas == 11) {
+		if (checkweight(1201,1) == 0) {
+			mes " - Notice !! -";
+			mes " - Since you have too many items - ";
+			mes " - you cannot get the item. - ";
+			mes " - Let your body lighten - ";
+			mes " - and try this again. - ";
+			close;
+		}
+		if (MaxWeight - Weight < 1000) {
+			mes " - Notice !! -";
+			mes " - Since your items are too heavy - ";
+			mes " - you cannot get the item. - ";
+			mes " - Let your body lighten - ";
+			mes " - and try this again. - ";
+			close;
+		}
+		mes "[Rican]";
+		mes "Hoo hoo~ I feel at ease thanks to your help.";
+		mes "I had doubted if it was too much suddenly, but it turned out just right!";
+		next;
+		mes "[Rican]";
+		mes "By the way, no news from my son yet, as he said he went to a meeting.";
+		mes "I hope he's not bothering Dr. Mali again...";
+		next;
+		mes "[Rican]";
+		mes "He seems to have visited Dr. Mali more often since my legs got injured.";
+		mes "The study will get longer if he does so...";
+		next;
+		mes "[Rican]";
+		mes "If you see my son, please tell him to get back soon~";
+		mes "And this is for you to buy something delicious with, since you did hard work.";
+		set ma_tomas,12;
+		getitem 6422,20; //Egrade_Coin
+		changequest 11219,11220;
+		setquest 11239;
+		close;
+	} else if (ma_tomas == 12) {
+		mes "[Rican]";
+		mes "He seems to have visited Dr. Mali more often since my legs got injured.";
+		mes "The study will get longer if he does so...";
+		mes "If you see my son, please tell him to get back soon~";
+		close;
+	} else if (ma_tomas > 99) {
+		if (checkquest(11238,PLAYTIME) == 0 || checkquest(11238,PLAYTIME) == 1) {
+			if (countitem(6435) < 30) {
+				mes "[Rican]";
+				mes "You need exactly 30 to get a set!";
+				close;
+			}
+			mes "[Rican]";
+			mes "Very reliable!";
+			mes "Don't you want to do your business with Yggdrasil Berry?";
+			delitem 6435,30; //Fresh_Fruit
+			erasequest 11238;
+			setquest 11239;
+			getitem 6422,5; //Egrade_Coin
+			close;
+		} else if (checkquest(11239,PLAYTIME) == 0 || checkquest(11239,PLAYTIME) == 1) {
+			mes "[Rican]";
+			mes "Would you like to take a rest for a while?";
+			mes "It hasn't been a day yet since you last worked~";
+			close;
+		} else {
+			if (checkquest(11239,PLAYTIME) == 2)
+				erasequest 11239;
+			mes "[Rican]";
+			mes "Hehe~";
+			mes "You came here to help me again?";
+			mes "You're so faithful!";
+			next;
+			switch(select("I'll help.:I won't.")) {
+			case 1:
+				mes "[Rican]";
+				mes "It's the same task to do as before.";
+				mes "30 Yggdrasil Berry. You can easily find it in Malangdo!!";
+				mes "Ah! Keep the secret to my son for sure~";
+				mes "Then please^ff99cc!!!^000000 please^ff99cc!!!^000000 please~~~";
+				emotion e_kis;
+				setquest 11238;
+				close;
+			case 2:
+				mes "[Rican]";
+				mes "Yeah? Then play around here, since you are visiting~";
+				close;
+			}
+		}
+	}
+	mes "[Rican]";
+	mes "Woo waa hoohoo...";
+	mes "Woowaa ahhh ahh ahh...";
+	mes "I'm impatient... to stay home like this!!";
+	next;
+	mes "[Rican]";
+	mes "All I can do is press the button all day long~";
+	mes "This is not exciting at all~";
+	mes "I'm not willing to do anything more and more~ Doobie dooba~";
+	close;
+}
+
+mal_in01,116,168,0	script	Dry Machine#mal	563,{
+	if (ma_tomas == 10) {
+		if (countitem(6435) < 30) {
+			mes "[Rican]";
+			mes "You need exactly 30 to get a set!";
+			close;
+		}
+		switch(select("Put the fruits in.:Don't.")) {
+		case 1:
+			mes "[Rican]";
+			mes "I'll press the button by myself!!!";
+			emotion e_omg,0,"Rican#mal";
+			next;
+			mes "- The machine starts operating -";
+			mes "- when he presses the button. -";
+			delitem 6435,30; //Fresh_Fruit
+			set ma_tomas,11;
+			changequest 11218,11219;
+			close;
+		case 2:
+			mes "[Rican]";
+			mes "Ah... you won't put it in?";
+			close;
+		}
+	}
+	mes "- Drrrk Drrrk -";
+	close;
+}
+
+-	script	Suspicious Sand Pile#0	-1,{
+	if (.off) end;	// Official script uses a 1-second timer to disable sand piles. Added to prevent abuse.
+	if (checkweight(1201,1) == 0) {
+		mes " - Notice !! -";
+		mes " - Since you have too many items - ";
+		mes " - you cannot get the item. - ";
+		mes " - Let your body lighten - ";
+		mes " - and try this again. - ";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes " - Notice !! -";
+		mes " - Since your items are too heavy - ";
+		mes " - you cannot get the item. - ";
+		mes " - Let your body lighten - ";
+		mes " - and try this again. - ";
+		close;
+	}
+	if (ma_tomas == 9 || checkquest(11238) > -1) {
+		if (rand(1,5) == 4) {
+			mes "- As I put my hand in the sand -";
+			mes "- a fresh smell comes out. -";
+			getitem 6435,1; //Fresh_Fruit
+		} else {
+			mes "- As I put my hand in the sand -";
+			mes "- I feel like I'm touching -";
+			mes "- something bad. -";
+			mes "- Ah, ah! Feels bad... -";
+			emotion e_omg,1;
+		}
+		set .off,1;
+		donpcevent "Water Sand"+strnpcinfo(2)+"#mal::OnEnable";
+		close;
+	}
+	mes "- Seeems suspicious. -";
+	mes "- But it's just sand... -";
+	close;
+OnEnable:
+	enablenpc strnpcinfo(0);
+	end;
+OnDisable:
+	set .off,0;
+	disablenpc strnpcinfo(0);
+	end;
+}
+malangdo,221,139,0	duplicate(Suspicious Sand Pile#0)	Suspicious Sand Pile#1	557
+malangdo,208,174,0	duplicate(Suspicious Sand Pile#0)	Suspicious Sand Pile#2	557
+malangdo,191,223,0	duplicate(Suspicious Sand Pile#0)	Suspicious Sand Pile#3	557
+malangdo,150,195,0	duplicate(Suspicious Sand Pile#0)	Suspicious Sand Pile#4	557
+malangdo,116,196,0	duplicate(Suspicious Sand Pile#0)	Suspicious Sand Pile#5	557
+malangdo,178,145,0	duplicate(Suspicious Sand Pile#0)	Suspicious Sand Pile#6	557
+malangdo,142,120,0	duplicate(Suspicious Sand Pile#0)	Suspicious Sand Pile#7	557
+malangdo,136,122,0	duplicate(Suspicious Sand Pile#0)	Suspicious Sand Pile#8	557
+malangdo,152,143,0	duplicate(Suspicious Sand Pile#0)	Suspicious Sand Pile#9	557
+malangdo,242,175,0	duplicate(Suspicious Sand Pile#0)	Suspicious Sand Pile#10	557
+
+-	script	Water Sand0#mal	-1,{
+OnInit:
+	disablenpc strnpcinfo(0);
+	end;
+OnEnable:
+	enablenpc strnpcinfo(0);
+	initnpctimer;
+	end;
+OnDisable:
+	stopnpctimer;
+	disablenpc strnpcinfo(0);
+	end;
+OnTimer1000:
+	donpcevent "Suspicious Sand Pile#"+substr(strnpcinfo(1),10,getstrlen(strnpcinfo(1))-1)+"::OnDisable";
+	end;
+OnTimer30000:
+	donpcevent "Suspicious Sand Pile#"+substr(strnpcinfo(1),10,getstrlen(strnpcinfo(1))-1)+"::OnEnable";
+	donpcevent strnpcinfo(0)+"::OnDisable";
+	end;
+}
+-	duplicate(Water Sand0#mal)	Water Sand1#mal	-1
+-	duplicate(Water Sand0#mal)	Water Sand2#mal	-1
+-	duplicate(Water Sand0#mal)	Water Sand3#mal	-1
+-	duplicate(Water Sand0#mal)	Water Sand4#mal	-1
+-	duplicate(Water Sand0#mal)	Water Sand5#mal	-1
+-	duplicate(Water Sand0#mal)	Water Sand6#mal	-1
+-	duplicate(Water Sand0#mal)	Water Sand7#mal	-1
+-	duplicate(Water Sand0#mal)	Water Sand8#mal	-1
+-	duplicate(Water Sand0#mal)	Water Sand9#mal	-1
+-	duplicate(Water Sand0#mal)	Water Sand10#mal	-1
+
+mal_dun01,136,120,6	script	Linguist Devore#mald	549,{
+	end;
+OnInit:
+	disablenpc "Linguist Devore#mald";
+	end;
+OnEnable:
+	enablenpc "Linguist Devore#mald";
+	initnpctimer;
+	end;
+OnDisable:
+	stopnpctimer;
+	disablenpc "Linguist Devore#mald";
+	end;
+OnTimer100000:
+	donpcevent "Linguist Devore#mald::OnDisable";
+	end;
+}
+
+mal_dun01,136,122,3	script	Biscuit#mal	551,{
+	if (ma_tomas < 20) {
+		mes "- There's something strange. -";
+		mes "- It feels like somehow - ";
+		mes "- you shouldn't make eye contact. -";
+		close;
+	} else if (ma_tomas == 20) {
+		mes "[Biscuit]";
+		mes "Star Candy sacrifices herself like this, but those fellows are setting the pillars around her for themselves only.";
+		mes "Hewww!!!";
+		emotion e_ag;
+		next;
+		mes "[Biscuit]";
+		mes "They talk to her, but ignore me when I talk to her.";
+		mes "I don't like them at all!!!";
+		emotion e_ag;
+		next;
+		mes "- Unlike the words of Dr. Devore, Biscuit appears fluent in speaking. -";
+		next;
+		mes "- I think it's better to let Dr. Devore know this soon. -";
+		close;
+	} else if (ma_tomas == 21) {
+		mes "[Biscuit]";
+		mes "Umm?";
+		mes "What's this?";
+		mes "Do you have anything to tell me?";
+		next;
+		mes "[Biscuit]";
+		mes "Well, that fellow is often the one ignoring my words.";
+		mes "He wavers with words to say and makes me uncomfortable.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Did you hear? Dr. Devore?";
+		donpcevent "Linguist Devore#mald::OnEnable";
+		next;
+		mes "[Linguist Devore]";
+		mes "Ummm? What do you mean?";
+		mes "I cannot hear anything.";
+		emotion e_what,0,"Linguist Devore#mald";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Huh? Biscuit said 'Well, that fellow is often the one ignoring my words. He wavers with words to say and makes me uncomfortable.'?";
+		next;
+		mes "[Linguist Devore]";
+		mes "What? What are you taling about?";
+		mes "I cannot hear anything.";
+		emotion e_what,0,"Linguist Devore#mald";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Huh?";
+		emotion e_what,1;
+		next;
+		mes "[Linguist Devore]";
+		mes "Ah?!";
+		mes "Ah?!?!?!?!?!?";
+		mes "Ah!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+		emotion e_omg,0,"Linguist Devore#mald";
+		next;
+		mes "[Linguist Devore]";
+		mes "If... if that's the cause!";
+		mes "We may have totally misunderstood!";
+		emotion e_omg,0,"Linguist Devore#mald";
+		next;
+		mes "[Linguist Devore]";
+		mes "Oh my, we couldn't have known, since we live here only with ourselves.";
+		next;
+		mes "[Linguist Devore]";
+		mes "Each living thing has its own area for audibility and vocalization. But we and Biscuit were in slightly different areas!";
+		emotion e_omg,0,"Linguist Devore#mald";
+		next;
+		mes "[Linguist Devore]";
+		mes "In such conditions, we cannot hear any language properly!";
+		mes "This was a matter of sound rather than language...";
+		next;
+		mes "[Linguist Devore]";
+		mes "Hu~hu... Despite of many years of study, we couldn't discover this reason...";
+		next;
+		mes "[Linguist Devore]";
+		mes "It's not the time to do this!";
+		mes "I should change the way of studying right now.";
+		next;
+		mes "[Linguist Devore]";
+		mes "I'll get back to the meeting and report this.";
+		mes "Then please take care of the next things!";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Wait, Dr. Devore, what on earth is next...?";
+		mes "What should I do...?";
+		emotion e_dots,1;
+		next;
+		mes "[Linguist Devore]";
+		mes "Hahaha~ You are the kind who can have conversations with Biscuit. Please try to talk with him.";
+		mes "It'll be helpful for my study, no matter what you talk about with him.";
+		next;
+		mes "[Biscuit]";
+		mes "Hey... Don't look down on me!";
+		emotion e_ag;
+		donpcevent "Linguist Devore#mald::OnDisable";
+		set ma_tomas,22;
+		completequest 11228;
+		setquest 11229;
+		close;
+	} else if (ma_tomas == 22 || ma_tomas == 23 || ma_tomas == 24) {
+		mes "[Biscuit]";
+		mes "...What are you looking at...";
+		next;
+		while(1) {
+			switch(select("Ask about Star Candy.:Ask about Biscuit.:Ask about Malangdo.")) {
+			case 1:
+				mes "[Biscuit]";
+				mes "Star Candy?";
+				mes "Tsk tsk!";
+				mes "It's no go, the lowly fellows.";
+				emotion e_ag;
+				next;
+				mes "[Biscuit]";
+				mes "You shouldn've recognized the previous and mysterious feeling from Star Candy!";
+				mes "She's the one who's really gorgeous.";
+				next;
+				mes "[Biscuit]";
+				mes "How gorgeous she is that... umm...";
+				mes "Just gorgeous.";
+				mes "She is so gorgeous... but I don't know how to explaing it...";
+				emotion e_swt2;
+				next;
+				mes "[Biscuit]";
+				mes "Khummm...";
+				mes "That's why the kinds speaking with sound are irritating.";
+				emotion e_ag;
+				next;
+				select("Speaking with sound?");
+				mes "[Biscuit]";
+				mes "The kind who got highly evolved like us talk using our minds, not sound.";
+				mes "As you think in your mind, it goes to the others right away, something like this?";
+				next;
+				mes "[Biscuit]";
+				mes "In other places, it used to be called ultrasonic waves, or telepathy.";
+				next;
+				mes "[Biscuit]";
+				mes "So we haven't needed any more explanation or flowery words...";
+				mes "Woo, it's bothering me so much!";
+				if (ma_tomas == 22)
+					set ma_tomas,23;
+				if (ma_tomas == 25)
+					close;
+				next;
+			case 2:
+				mes "[Biscuit]";
+				mes "Me?";
+				mes "I'm an assistant to Star Candy, a new star in the Starfish race with multi-faceted talents!";
+				emotion e_flash;
+				next;
+				mes "[Biscuit]";
+				mes "Ah, ah...";
+				mes "When I was her assistant at first, I used to be called a genius, handsome assistant, and so on...";
+				mes "I felt like a shining road of light had come up to me...";
+				next;
+				mes "[Biscuit]";
+				mes "But if the elderly see this, they'll dry me out in the sun...";
+				mes "It was a life like a flame... Sob sob sob sob";
+				emotion e_sob;
+				if (ma_tomas == 23)
+					set ma_tomas,24;
+				if (ma_tomas == 25)
+					close;
+				next;
+			case 3:
+				mes "[Biscuit]";
+				mes "This island is where the gorgeous Star Candy can take a rest.";
+				mes "The surface is soft and with the high moisture inside, it's the best place for Starfishes.";
+				next;
+				mes "[Biscuit]";
+				mes "Now, those cats already occupied it as they wanted.";
+				mes "It's a problem because Star Candy is too kind...";
+				if (ma_tomas == 24) {
+					set ma_tomas,25;
+					changequest 11229,11230;
+				}
+				if (ma_tomas == 25)
+					close;
+				next;
+			}
+		}
+	} else if (ma_tomas == 25) {
+		mes "[Biscuit]";
+		mes "Hey, you haven't gone back?";
+		mes "Get some jellies for Star Candy to eat if you have time.";
+		next;
+		switch(select("Okay.:Why me?")) {
+		case 1:
+			mes "[Biscuit]";
+			mes "You can get the jellies around here.";
+			mes "It's not that difficult, and you should come back before Star Candy's meal time!";
+			mes "About 30 jellies would be okay for a meal.";
+			set ma_tomas,26;
+			changequest 11230,11231;
+			close;
+		case 2:
+			mes "[Biscuit]";
+			mes "Why you?";
+			mes "I'm busy enough to assist her and the cat fellows who can't hear my voice, that's why I should ask you.";
+			next;
+			mes "[Biscuit]";
+			mes "How rude...";
+			emotion e_ag;
+			next;
+			mes "[Biscuit]";
+			mes "You're not my subordinate, so I can't order you by force. But if Star Candy can't have her meal on time, you have to remember that this island will collapse completely.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "...It's not a request, but a threat...";
+			emotion e_dots,1;
+			close;
+		}
+	} else if (ma_tomas == 26) {
+		// Dialogue in repeatable quest is identical.
+		// Uses a variable to determine the quest mode.
+		set @mal_bob_q,1;
+	L_Quest:
+		set .@i, @mal_bob_q;
+		set @mal_bob_q,0;
+		if (countitem(12624) < 30) {
+			mes "[Biscuit]";
+			mes "It's not enough at all~";
+			mes "I need at least 30 Delicious Jelly.";
+			close;
+		}
+		mes "[Biscuit]";
+		mes "You got them well.";
+		mes "There won't be any problem to prepare her meal.";
+		delitem 12624,30; //Delicious_Jelly
+		if (.@i == 1) {
+			set ma_tomas,27;
+			changequest 11231,11232;
+		} else {
+			erasequest 11244;
+			setquest 11245;
+			getitem 6422,5; //Egrade_Coin
+		}
+		next;
+		mes "[Biscuit]";
+		mes "Though the jelly looks strange, it tastes good...";
+		mes "Star Candy seems to like it a lot as well.";
+		next;
+		mes "[Biscuit]";
+		mes "Have your meal, Star Candy~";
+		mes "Uhhh, why don't you eat it?";
+		mes "You have no appetite?";
+		close;
+	} else if (ma_tomas == 27) {
+		mes "[Biscuit]";
+		mes "Hooo.. it's natural that you have no appetite...";
+		next;
+		mes "[Biscuit]";
+		mes "How come precious Star Candy supports the ground in the basement like this, and it's so dry, though it's in a subterranean cave of an island!";
+		next;
+		mes "[Biscuit]";
+		mes "Moreover, the slithery thing is bothering Star Candy.";
+		mes "You cannot avoid the stress.";
+		next;
+		select("Slithery thing?");
+		mes "[Biscuit]";
+		mes "Hmm? What is such a thing like that.";
+		mes "The slithery thing.";
+		mes "With its ugly looks, it bothers Star Candy continuously.";
+		next;
+		mes "[Biscuit]";
+		mes "It tries to come up to the island especially when it's storming like today. I hid here a while. Those cats came and made her bad like this.";
+		next;
+		mes "[Biscuit]";
+		mes "Thanks to Star Candy, her skin is...";
+		mes "......";
+		next;
+		mes "[Biscuit]";
+		mes "Woooaaappp!";
+		mes "What's this!!!";
+		mes "Her skin is!!!!";
+		mes "She got an abscess on her skin that used to shine like a jewel!!!!";
+		emotion e_omg;
+		next;
+		mes "[Biscuit]";
+		mes "She got in trouble with her dried skin, since she's here!";
+		mes "For our Starfishes, the lack of water means horrible things that lead to death!";
+		next;
+		mes "[Biscuit]";
+		mes "Ah, ah! She's so kind that she sacrifices herself to save such things. Sob sob.";
+		emotion e_sob;
+		next;
+		mes "[Biscuit]";
+		mes "Ah, ah...";
+		mes "I can't leave to take care of her, isn't there anybody to help~";
+		next;
+		mes "[Biscuit]";
+		mes "Isn't there anybody to helpppppp~";
+		next;
+		mes "[Biscuit]";
+		mes "Hey, you there...";
+		mes "Even as I ask like this, will you just ignore me and stand there?";
+		next;
+		select("I'll help.:It's unavoidable, so I'll help.:I'll admit this is my destiny, so I'll and help.:I'll do anything I can for Star Candy.");
+		mes "[Biscuit]";
+		mes "Good attitude!";
+		mes "Hoo hoo~";
+		next;
+		mes "[Biscuit]";
+		mes "Then please find the brush to wash her and get a basket to move water here.";
+		mes "Maybe they're stacked in the storage.";
+		set ma_tomas,28;
+		changequest 11232,11233;
+		close;
+	} else if (ma_tomas == 28) {
+		if (countitem(6433) && countitem(6432)) {
+			mes "[Biscuit]";
+			mes "Oh!";
+			mes "You brought the tools successfully.";
+			mes "Now you can wash the dry skin in the counter-clockwise direction!";
+			mes "Right, then from her left leg...!";
+			set ma_tomas,29;
+			changequest 11233,11234;
+			close;
+		} else if (countitem(6433) && countitem(6431)) {
+			mes "[Biscuit]";
+			mes "Oh!";
+			mes "You brought the tools successfully.";
+			mes "Now you can fetch sea water from outside.";
+			next;
+			mes "[Biscuit]";
+			mes "There's a spot I remember as first rate, in the east of Malangdo.";
+			mes "It's not right to wash her with the water collected in this cave!";
+			next;
+			mes "[Biscuit]";
+			mes "Be careful not to spill the water, as it's heavy to carry.";
+			close;
+		} else {
+			mes "[Biscuit]";
+			mes "Ummm... It will be hard if you don't have the proper tools...";
+			mes "Though it doesn't matter for someone small like me.";
+			next;
+			mes "[Biscuit]";
+			mes "For such enormous skin as Star Candy's, it's full of barnacles, oysters, and mussels!!!";
+			emotion e_omg;
+			close;
+		}
+	} else if (ma_tomas < 33) {
+		mes "[Biscuit]";
+		mes "Oh!";
+		mes "You brought the tools successfully.";
+		mes "Now you can wash the dry skin in the counter-clockwise direction!";
+		mes "Right, then from her left leg...!";
+		close;
+	} else if (ma_tomas == 33) {
+		if (checkweight(1201,1) == 0) {
+			mes " - Notice !! -";
+			mes " - Since you have too many items - ";
+			mes " - you cannot get the item. - ";
+			mes " - Let your body lighten - ";
+			mes " - and try this again. - ";
+			close;
+		}
+		if (MaxWeight - Weight < 1000) {
+			mes " - Notice !! -";
+			mes " - Since your items are too heavy - ";
+			mes " - you cannot get the item. - ";
+			mes " - Let your body lighten - ";
+			mes " - and try this again. - ";
+			close;
+		}
+		mes "[Biscuit]";
+		mes "Well done!";
+		mes "Now I see that her beautiful face has recovered.";
+		emotion e_awsm;
+		next;
+		mes "[Biscuit]";
+		mes "The skin will go bad if you don't clean it every day.";
+		mes "There's a saying... cleansing your skin is much more important than using makeup.";
+		emotion e_no1;
+		next;
+		mes "[Biscuit]";
+		mes "You did a good job.";
+		mes "You helped me even though I asked suddenly like this...";
+		mes "To be honest, I thought you'd just leave.";
+		next;
+		mes "[Biscuit]";
+		mes "It's a kind of reward. Say my words to Dr. Dvor... or Devore, whatever the cat's name is.";
+		next;
+		mes "[Biscuit]";
+		mes "There's no need to wait until the study finishes. We can talk through you, and it's better to talk about the current situation...";
+		next;
+		mes "[Biscuit]";
+		mes "This is not for you... and all of you, either. It's rather for Star Candy to get rest as soon as possible, you know!";
+		emotion e_pif;
+		set ma_tomas,34;
+		erasequest 11235;
+		setquest 11236;
+		getitem 6422,100; //Egrade_Coin
+		getitem 12636,20; //Malang_Sp_Can
+		close;
+	} else if (ma_tomas > 99) {
+		if (checkquest(11244) > -1) {
+			set @mal_bob_q,2;
+			goto L_Quest;
+		} else if (checkquest(11245,PLAYTIME) == 0 || checkquest(11245,PLAYTIME) == 1) {
+			mes "[Biscuit]";
+			mes "I'll call you when I need you, so don't worry!";
+			close;
+		} else {
+			if (checkquest(11245,PLAYTIME) == 2)
+				erasequest 11245;
+			mes "[Biscuit]";
+			mes "It's the time for Star Candy to have a meal.";
+			mes "Get some jellies.";
+			next;
+			switch(select("I'll help.:I'll stop.")) {
+			case 1:
+				mes "[Biscuit]";
+				mes "You can get the jellies around here.";
+				mes "It's not that difficult, and you should come back before Star Candy's meal time!";
+				mes "About 30 jellies would be ok for a meal.";
+				setquest 11244;
+				close;
+			case 2:
+				mes "[Biscuit]";
+				mes "What, are you talking about you let our Star Candy feel hungry?!";
+				close;
+			}
+		}
+	}
+	mes "[Biscuit]";
+	mes "Star Candy is really good.";
+	mes "She never loses her smile, even though it's so hard to stand...";
+	close;
+}
+
+mal_in02,102,94,3	script	Cleaning Staff#mal	544,2,2,{
+OnTouch:
+	if (checkweight(1201,1) == 0) {
+		mes " - Notice !! -";
+		mes " - Since you have too many items - ";
+		mes " - you cannot get the item. - ";
+		mes " - Let your body lighten - ";
+		mes " - and try this again. - ";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes " - Notice !! -";
+		mes " - Since your items are too heavy - ";
+		mes " - you cannot get the item. - ";
+		mes " - Let your body lighten - ";
+		mes " - and try this again. - ";
+		close;
+	}
+	mes "[Cleaning Staff]";
+	mes "All yours. There are various cleaning tools here.";
+	next;
+	switch(select("Bucket:Cleaning Brush:Stop.")) {
+	case 1:
+		mes "[Cleaning Staff]";
+		mes "You mean the Bucket!";
+		mes "Here we go~";
+		next;
+		mes "[Cleaning Staff]";
+		mes "Please give the cleaning tool back to any merchant.";
+		mes "Thanks for coming~";
+		getitem 6431,1; //Bucket
+		close;
+	case 2:
+		mes "[Cleaning Staff]";
+		mes "You mean the Cleaning Brush!";
+		mes "Here we go~";
+		next;
+		mes "[Cleaning Staff]";
+		mes "Please give the cleaning tool back to any merchant.";
+		mes "Thanks for coming~";
+		getitem 6433,1; //Clean_Brush
+		close;
+	case 3:
+		mes "[Cleaning Staff]";
+		mes "Thanks for coming~";
+		close;
+	}
+	close;
+}
+
+malangdo,246,184,0	script	1st Rate Point	111,{
+	if (checkweight(1201,1) == 0) {
+		mes " - Notice !! -";
+		mes " - Since you have too many items - ";
+		mes " - you cannot get the item. - ";
+		mes " - Let your body lighten - ";
+		mes " - and try this again. - ";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes " - Notice !! -";
+		mes " - Since your items are too heavy - ";
+		mes " - you cannot get the item. - ";
+		mes " - Let your body lighten - ";
+		mes " - and try this again. - ";
+		close;
+	}
+	if (countitem(6431) == 0) {
+		mes "- To get water -";
+		mes "- you need a ^0000FFBucket^000000. -";
+		close;
+	}
+	mes "- The water seems so pure. -";
+	next;
+	switch(select("Get water.:Stop.")) {
+	case 1:
+		mes "- The bucket gets remarkably -";
+		mes "- heavy as water fills it up. -";
+		specialeffect EF_POTION8;
+		delitem 6431,1; //Bucket
+		getitem 6432,1; //Full_Bucket
+		close;
+	case 2:
+		mes "- Didn't get water. -";
+		close;
+	}
+}
+
+mal_dun01,133,125,5	script	Star Candy#mal	552,{
+	if (ma_tomas == 19) {
+		mes "[Star Candy]";
+		mes "....";
+		mes ".....";
+		mes "......";
+		next;
+		mes "[Biscuit]";
+		mes "Rude! How come you talk to precious Star Candy!";
+		next;
+		mes "[Biscuit]";
+		mes "You look different from the fellows that usually comes...";
+		mes "You also look strange, though.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "?!";
+		mes "You can talk!";
+		emotion e_omg,1;
+		next;
+		mes "[Biscuit]";
+		mes "What?";
+		mes "You've never seen me talking?";
+		mes "What's the matter with you?";
+		next;
+		mes "[Biscuit]";
+		mes "Since I can talk with you, you seem better than those other foolish ones.";
+		mes "Though I learned to speak in their language, they don't understand.";
+		next;
+		mes "[Biscuit]";
+		mes "Our precious Star Candy humbly supports them, and they treat her like this.";
+		mes "They don't know how to express thanks!";
+		emotion e_ag,0,"Biscuit#mal";
+		next;
+		select("Support?");
+		mes "[Biscuit]";
+		mes "Anyway!";
+		mes "It's no use to treat them well.";
+		mes "They don't know how hard Star Candy is trying.";
+		next;
+		mes "[Biscuit]";
+		mes "This island used to be hers, but for the short time while she avoided storms and got here, those cats were suddenly dropped on the island.";
+		next;
+		mes "[Biscuit]";
+		mes "Since the ground here is so soft, Star Candy was stuck in between, and the situation is now like this.";
+		next;
+		mes "[Biscuit]";
+		mes "Actually, she can get out regardless of those bad things, but she supports the ground worrying that someone will get hurt.";
+		next;
+		mes "[Biscuit]";
+		mes "Ah, ah...";
+		mes "What a beatiful mind...";
+		next;
+		mes "[Biscuit]";
+		mes "Once she moved a bit when she felt uncomfortable, and saw them in panic. She hasn't moved at all since then. I'm worried if she's not well.";
+		next;
+		mes "[Biscuit]";
+		mes "Star Candy sacrifices herself like this, but those fellows are setting the pillars around her for themselves only.";
+		mes "Hewww!!!";
+		emotion e_ag,0,"Biscuit#mal";
+		next;
+		mes "[Biscuit]";
+		mes "They talk to her, but ignore me when I talk to her.";
+		mes "I don't like them at all!!!";
+		next;
+		mes "- Unlike the words of Dr. Devore, Biscuit appears fluent in speaking. -";
+		next;
+		mes "- I think it's better to let Dr. Devore know this soon. -";
+		set ma_tomas,20;
+		changequest 11226,11227;
+		close;
+	}
+	mes "[Star Candy]";
+	mes "....";
+	mes ".....";
+	mes "......";
+	close;
+}
+
+-	script	#skin_mal	-1,{
+	set .@index, atoi(strnpcinfo(2));
+	switch(.@index) {
+		case 29: set .@str$,"dry"; break;
+		case 30: set .@str$,"prickly"; break;
+		case 31: set .@str$,"chapped"; break;
+		case 32: set .@str$,"hard"; break;
+		default:
+			mes "An error has occurred.";
+			close;
+	}
+	if (ma_tomas != .@index) {
+		mes "- I feel sorry for the skin -";
+		mes "- to be so "+.@str$+". -";
+		close;
+	}
+	if (!countitem(6433) || !countitem(6432)) {
+		mes "- You need -";
+		mes "- a cleaning brush -";
+		mes "- and a full bucket. -";
+		close;
+	}
+	mes "- Poured water on the "+.@str$+" skin. -";
+	delitem 6432,1; //Full_Bucket
+	getitem 6431,1; //Bucket
+	next;
+	if (rand(1,2) == 1)
+		set .@menu$,"Brush.:Stop.:";
+	else
+		set .@menu$,":Stop.:Brush.";
+	switch(select(.@menu$)) {
+	case 1:
+	case 3:
+		mes "- Poured water on -";
+		mes "- the "+.@str$+" skin -";
+		mes "- and brushed it hard. -";
+		specialeffect EF_BUBBLE;
+		if (rand(1,3) > 1)
+			close;
+		next;
+		mes "- The "+.@str$+" skin turned -";
+		mes "- soft and moisturized. -";
+		switch(rand(1,50)) {
+		case 7:
+			next;
+			mes "[Star Candy]";
+			mes "Hoo hoo hoot~";
+			mes "That tickles.";
+			break;
+		case 21:
+			next;
+			mes "[Star Candy]";
+			mes "You're a really good human being.";
+			break;
+		case 29:
+			next;
+			mes "[Star Candy]";
+			mes "Since I couldn't move, it was the most difficult thing to stand.";
+			break;
+		case 30:
+			next;
+			mes "[Star Candy]";
+			mes "Ah~ Feels good~";
+			mes "I felt itchy for so long.";
+			break;
+		case 49:
+			next;
+			mes "[Star Candy]";
+			mes "Thanks so much.";
+			break;
+		default:
+			set ma_tomas, ma_tomas+1;
+			if (.@index == 32)
+				changequest 11234,11235;
+			close;
+		}
+		cutin "ma_starcandy",2;
+		set ma_tomas, ma_tomas+1;
+		if (.@index == 32)
+			changequest 11234,11235;
+		close2;
+		cutin "",255;
+		end;
+	case 2:
+		mes "- All the water -";
+		mes "- sank into the ground. -";
+		close;
+	}
+}
+mal_dun01,143,137,0	duplicate(#skin_mal)	Dry Skin#29	111
+mal_dun01,131,150,0	duplicate(#skin_mal)	Prickly Skin#30	111
+mal_dun01,116,144,0	duplicate(#skin_mal)	Chapped Skin#31	111
+mal_dun01,120,129,0	duplicate(#skin_mal)	Hard Skin#32	111
+
+malangdo,190,167,7	script	Portali#mal	546,{
+	if (ma_tomas < 100) {
+		mes "[Portali]";
+		mes "I have no business for a immature fellow!";
+		close;
+	}
+	mes "[Portali]";
+	mes "Hmmm...";
+	mes "You smell like cats even though you're a human being...";
+	next;
+	mes "[Portali]";
+	mes "But... Would you like to go back to my hometown?";
+	mes "I'll let you go to the land of Midgard with the new skill I found!";
+	mes "It's not free. I'll need canned food!";
+	next;
+	switch(select("Go.:Don't go.:Prices?")) {
+	case 1:
+		if (countitem(12636) < 4) {
+			mes "[Portali]";
+			mes "Where are you going without canned food...?";
+			close;
+		}
+		switch(select("Rune-Midgarts:Schwaltzvalt Republic:Arunafeltz Kingdom")) {
+		case 1:
+			switch(select("Prontera:Morroc:Alberta:Al De Baran:Payon:Geffen")) {
+				case 1: callsub L_Warp,"Prontera",4,"prontera",155,111;
+				case 2: callsub L_Warp,"Morroc",4,"morocc",159,255;
+				case 3: callsub L_Warp,"Alberta",4,"alberta",95,66;
+				case 4: callsub L_Warp,"Al De Baran",4,"aldebaran",126,120;
+				case 5: callsub L_Warp,"Payon",4,"payon",198,135;
+				case 6: callsub L_Warp,"Geffen",4,"geffen",120,100;
+			}
+		case 2:
+			switch(select("Einbroch:Lighthalzen:Yuno:Hugel")) {
+				case 1: callsub L_Warp,"Einbroch",6,"einbroch",229,196;
+				case 2: callsub L_Warp,"Lighthalzen",6,"lighthalzen",214,150;
+				case 3: callsub L_Warp,"Yuno",6,"yuno",157,220;
+				case 4: callsub L_Warp,"Hugel",6,"hugel",95,121;
+			}
+		case 3:
+			switch(select("Rachel:Veins")) {
+				case 1: callsub L_Warp,"Rachel",5,"rachel",138,113;
+				case 2: callsub L_Warp,"Veins",5,"veins",212,144;
+			}
+		}
+	case 2:
+		mes "[Portali]";
+		mes "Okay...";
+		close;
+	case 3:
+		mes "[Portali]";
+		mes "3 for Rune-Midgarts!";
+		mes "6 for Schwaltzvalt, 5 for Arunafeltz.";
+		mes "Schwaltzvalt is the nation of prohibited magic, and Arunafeltz seems to have a curse!";
+		close;
+	}
+	end;
+L_Warp:
+	if (countitem(12636) < getarg(1)) {
+		mes "[Portali]";
+		mes "Where are you going without canned food...?";
+		close;
+	}
+	mes "[Portali]";
+	mes "Then to "+getarg(0)+"~";
+	delitem 12636,getarg(1); //Malang_Sp_Can
+	close2;
+	warp getarg(2),getarg(3),getarg(4);
+	end;
+}
+
+// Malangdo Island :: mal_ppl
+//============================================================
+malangdo,137,200,6	script	Pipielle	549,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 1000) {
+		mes "You have too many items, please try again after reducing your weight.";
+		close;
+	}
+	if (BaseLevel < 60) {
+		mes "[Pipielle]";
+		mes "Wow, this is nice weather. Do you like this kind of weather, too? But I need to do my work now.";
+		next;
+		mes "[Pipielle]";
+		mes "I would ask for your help, if you were a stronger advanturer...";
+		next;
+		mes "^770099This cat is working on something, but she asks for help above LV60.^000000";
+		close;
+	}
+	set .@fish_ss1$, "What are you doing??";
+	if (countitem(6451) > 29)
+		set .@fish_ss2$, "I caught a lot of strange fishes!";
+	else
+		set .@fish_ss2$, "Remaining " + (30-countitem(6451)) + " of ^bbbbbbUnidentified Fish are required.^000000";
+	if (ma_tomas == 100)
+		set .@fish_ss3$, "I met an Admiral Tomas...";
+	mes "[Pipielle]";
+	mes "Would you come here and open your bag for me?";
+	next;
+	switch(select(.@fish_ss1$,.@fish_ss2$,.@fish_ss3$)) {
+	case 1:
+		mes "[Pipielle]";
+		mes "There are many beautiful fishes around here. So I feel my heart beating as I stand here.";
+		next;
+		select("Of course, after seeing such a delicious thing!");
+		mes "[Pipielle]";
+		mes "How come you only know about eating?! My heart doesn't beat up because I see something delicious. Don't treat me the same as the others.";
+		next;
+		mes "[Pipielle]";
+		mes "I used to study from a scholar from Uno who was human. And I am good at the human language as well. Don't treat me like the others.";
+		next;
+		mes "[Pipielle]";
+		mes "I am a scholar who researches fish here. It's a little funny that a cat researches fish, but it's true.";
+		next;
+		select("Were you originally a scholar?");
+		mes "[Pipielle]";
+		mes "Originally I used to be the mate of admiral Tomas. But our ship never went back to sea after we arrived here.";
+		next;
+		mes "[Pipielle]";
+		mes "The mate of a ship that never voyages is lonely.";
+		next;
+		mes "[Pipielle]";
+		mes "The scholar from Uno came here for research, and he thought it was amazing that cats spoke the human language. Therefore he started to teach me.";
+		next;
+		select("But now everyone speaks the human language.");
+		mes "[Pipielle]";
+		mes "Oh yes, there were only a few cats who spoke the human language. That's why he treated me special.";
+		next;
+		mes "[Pipielle]";
+		mes "Anyway, now I collect specimens to be an ichthyologist. I hope you can help me.";
+		next;
+		if(select("How can I help you?:I would say no.") == 2) {
+			mes "[Pipielle]";
+			mes "Oh, okay. If you change your mind, please come again.";
+			close;
+		}
+		mes "[Pipielle]";
+		mes "There is a Pouring who's eating all the fishes in the Octopus and Culvert dungeons.";
+		next;
+		mes "[Pipielle]";
+		mes "It didn't use to live there, but might have come here for the winter. Could you collect the specimens of unidentified fish after geting rid of it?";
+		next;
+		mes "[Pipielle]";
+		mes "You can get identified fishes from Pouring, so please collect about 30 pieces.";
+		close;
+	case 2:
+		if (countitem(6451) > 29) {
+			//saveppl Unknown_Fish
+			delitem 6451,30; //Unknown_Fish
+			mes "[Pipielle]";
+			mes "Oh, thank you! I will take these specimens.";
+			next;
+			mes "[Pipielle]";
+			mes "I want to give you something, but the last one is out of stock now so I will just write your name here.";
+			next;
+			mes "[Pipielle]";
+			mes "I can give you good news even from a distance, but it's only possible if I am really lucky...";
+			close;
+		}
+		mes "[Pipielle]";
+		mes "I'm sorry, but please collect 30 pieces of unidentified fish specimens.";
+		close;
+	case 3:
+		mes "[Pipielle]";
+		mes "Oh, you met admiral Tomas... how was it?";
+		next;
+		if(select("He looks gentle:He looks terrible") == 2) {
+			mes "[Pipielle]";
+			mes "Hmm...";
+			mes "Frankly speaking, I was a real fan of Admiral Tomas. Can you take responsibility for your word?";
+			next;
+			if(select("Just kidding!:Oh yes, he was really terrible!") == 2) {
+				mes "[Pipielle]";
+				mes "Is he?";
+				mes "Okay, it really depends on personal taste...";
+				close;
+			}
+		}
+		mes "[Pipielle]";
+		mes "Is he?";
+		mes "I knew you would say so.";
+		next;
+		mes "[Pipielle]";
+		mes "Admiral Tomas is a legendary figure who has led all of us in voyaging to this island. I think it was the happiest moment in my life.";
+		next;
+		mes "[Pipielle]";
+		mes "Please help him a lot. There are not many people to trust. This is my personal request.";
+		next;
+		mes "[Pipielle]";
+		mes "And this is a small gift for looking after admiral Tomas.";
+		set ma_tomas,101;
+		getitem 6422,200; //Egrade_Coin
+		mes "^0000ffReceived 200 E Class Coins.^000000";
+		close;
+	}
+}
 
 // Help the Bad Cats in Danger :: mal_bad_guys
 //============================================================
@@ -702,131 +3230,6 @@ malangdo,3,1,3	script	Guidance for quest#ml	543,{
 	}
 }
 */
-
-// Pipielle :: mal_ppl
-//============================================================
-malangdo,137,200,6	script	Pipielle	549,{
-	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 1000) {
-		mes "You have too many items, please try again after reducing your weight.";
-		close;
-	}
-	if (BaseLevel < 60) {
-		mes "[Pipielle]";
-		mes "Wow this is nice weather, do you like this kind of weather too? I like it too but I need to my work now.";
-		next;
-		mes "[Pipielle]";
-		mes "I would ask for your help if you were a stronger advanturer...";
-		next;
-		mes "^770099This cat is working on something, she asks for help above LV60.^000000";
-		close;
-	}
-	set .@fish_ss1$, "What are you doing??";
-	if (countitem(6451) > 29)
-		set .@fish_ss2$, "I caught a lot of strange fishes!";
-	else
-		set .@fish_ss2$, "Remaining " + (30-countitem(6451)) + " of ^bbbbbbUnidentified Fish are required.^000000";
-	if (ma_tomas == 100)
-		set .@fish_ss3$, "I met an Admiral Thomas...";
-	mes "[Pipielle]";
-	mes "Would you come here and open your bag for me?";
-	next;
-	switch(select(.@fish_ss1$,.@fish_ss2$,.@fish_ss3$)) {
-	case 1:
-		mes "[Pipielle]";
-		mes "There are many beautiful fishes around here. So I feel my heard beating when I standing here.";
-		next;
-		select("Of course, my heart will beat up too if I see delicious thing!");
-		mes "[Pipielle]";
-		mes "How come you only know about eating!! My heart don't beat up because of I see the delicious thing. Don't treat me the same as others.";
-		next;
-		mes "[Pipielle]";
-		mes "I used to study from scholar from uno same as human. And I am good at human language as well. Don't treat me same as others.";
-		next;
-		mes "[Pipielle]";
-		mes "I am a scholar who researches fish in here. It's little funny that cat research fish but it's true.";
-		next;
-		select("Are you originally a scholar?");
-		mes "[Pipielle]";
-		mes "Originally I used to mate of admiral Thomas. But our ship never to back to sea after we has arrived here.";
-		next;
-		mes "[Pipielle]";
-		mes "The mate from ship that never voyage is lonely.";
-		next;
-		mes "[Pipielle]";
-		mes "The scholar from Uno came here for research and he thought it is amazing thing that cat speaks human language. Therefore he started teach me.";
-		next;
-		select("But now everyone speaks human language.");
-		mes "[Pipielle]";
-		mes "Oh yes, there were only little cat speaks human language. That's why he treated me special.";
-		next;
-		mes "[Pipielle]";
-		mes "Anyways, now I collect specimens to be ichthyologist. I hope you can help me.";
-		next;
-		if(select("How can I help you?:I would say no.") == 2) {
-			mes "[Pipielle]";
-			mes "Oh, okay. If you change your mind, please come again.";
-			close;
-		}
-		mes "[Pipielle]";
-		mes "There is a Pouring who's eating all fishes in Octopus and Culvert dungeon.";
-		next;
-		mes "[Pipielle]";
-		mes "It used to not live there, but he might came here for winter, so could you collect the specimens unidentified fish after get rid of it.";
-		next;
-		mes "[Pipielle]";
-		mes "You can get identified fishes from Pouring, so please collect about 30 pieces.";
-		close;
-	case 2:
-		if (countitem(6451) > 29) {
-			//saveppl Unknown_Fish
-			delitem 6451,30; //Unknown_Fish
-			mes "[Pipielle]";
-			mes "Oh, thank you! I will take these specimens.";
-			next;
-			mes "[Pipielle]";
-			mes "I want to give you something, but last one is out of stock now so I will just write your name here.";
-			next;
-			mes "[Pipielle]";
-			mes "I can give you good new even from far distance, but it's only possible if I am really lucky...";
-			close;
-		}
-		mes "[Pipielle]";
-		mes "I'm sorry, but please collect 30 pieces of unidentified fishes specimens.";
-		close;
-	case 3:
-		mes "[Pipielle]";
-		mes "Oh, you have met admiral Thomas... how was it?";
-		next;
-		if(select("He looks gentle:He looks terrible") == 2) {
-			mes "[Pipielle]";
-			mes "Hmm...";
-			mes "Frankly speaking, I was a real fan of Admiral Thomas. Can you take a responsibility of your word?";
-			next;
-			if(select("Just kidding!:Oh yes, he was really terrible!") == 2) {
-				mes "[Pipielle]";
-				mes "Is he?";
-				mes "Okay, it really depends on personal taste...";
-				close;
-			}
-		}
-		mes "[Pipielle]";
-		mes "Is he?";
-		mes "I knew you would say so.";
-		next;
-		mes "[Pipielle]";
-		mes "Admiral Thomas is a legendary figure who has voyaged to this island with leading all of us. I think it was the most happiest moment in my life.";
-		next;
-		mes "[Pipielle]";
-		mes "Please help him a lot. There are not many people to trust. This is my personal request.";
-		next;
-		mes "[Pipielle]";
-		mes "And this is small gift for ask you to look after admiral Thomas.";
-		set ma_tomas,101;
-		getitem 6422,200; //Egrade_Coin
-		mes "^0000ffReceived 200 E Class Coins.^000000";
-		close;
-	}
-}
 
 // Clean the Ship :: mal_day_qook
 //============================================================
