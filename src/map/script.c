@@ -10137,7 +10137,7 @@ BUILDIN_FUNC(homunculus_mutate)
 	TBL_PC *sd;
 
 	sd = script_rid2sd(st);
-	if( sd == NULL )
+	if( sd == NULL || sd->hd == NULL )
 		return 0;
 
 	if(script_hasdata(st,2))
@@ -10179,7 +10179,7 @@ BUILDIN_FUNC(morphembryo)
 	TBL_PC *sd;
 
 	sd = script_rid2sd(st);
-	if( sd == NULL )
+	if( sd == NULL || sd->hd == NULL )
 		return 0;
 
 	if( merc_is_hom_active(sd->hd) ) {
@@ -10190,7 +10190,7 @@ BUILDIN_FUNC(morphembryo)
 			item_tmp.nameid = ITEMID_STRANGE_EMBRYO;
 			item_tmp.identify = 1;
 
-			if( item_tmp.nameid==0 || (i = pc_additem(sd, &item_tmp, 1, LOG_TYPE_SCRIPT)) ) {
+			if( item_tmp.nameid == 0 || (i = pc_additem(sd, &item_tmp, 1, LOG_TYPE_SCRIPT)) ) {
 				clif_additem(sd, 0, 0, i);
 				clif_emotion(&sd->bl, E_SWT); // Fail to avoid item drop exploit.
 			} else {

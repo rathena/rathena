@@ -1691,6 +1691,8 @@ int map_quit(struct map_session_data *sd) {
 
 	if( sd->state.storage_flag == 1 ) sd->state.storage_flag = 0; // No need to Double Save Storage on Quit.
 
+	if (sd->state.permanent_speed == 1) sd->state.permanent_speed = 0; // Remove lock so speed is set back to normal at login.
+
 	if( sd->ed ) {
 		elemental_clean_effect(sd->ed);
 		unit_remove_map(&sd->ed->bl,CLR_TELEPORT);
