@@ -8472,10 +8472,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			}
 			break;
 		case SC_REFLECTDAMAGE:
-			val2 = 15 + 5 * val1;
-			val3 = (val1==5)?20:(val1+4)*2; // SP consumption
-			val4 = tick/10000;
-			tick_time = 10000; // [GodLesZ] tick time
+			val2 = 15 + 5 * val1; // Reflect amount
+			val3 = val1*5 + 25; // Number of reflects
+			val4 = tick/1000; // Number of SP cycles (duration)
+			tick_time = 1000; // [GodLesZ] tick time
 			break;
 		case SC_FORCEOFVANGUARD: // This is not the official way to handle it but I think we should use it. [pakpil]
 			val2 = 20 + 12 * (val1 - 1); // Chance
@@ -10604,9 +10604,9 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 
 	case SC_REFLECTDAMAGE:
 		if( --(sce->val4) >= 0 ) {
-			if( !status_charge(bl,0,sce->val3) )
-				break;
-			sc_timer_next(10000 + tick, status_change_timer, bl->id, data);
+			if( !status_charge(bl,0,10) )
+ 				break;
+			sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
 			return 0;
 		}
 		break;

@@ -4612,9 +4612,13 @@ int battle_calc_return_damage(struct block_list* bl, struct block_list *src, int
 	sc = status_get_sc(bl);
 
 	if( sc && sc->data[SC_REFLECTDAMAGE] ) {
-		int max_damage = (int64)status_get_max_hp(bl) * status_get_lv(bl) / 100;
-		rdamage = (int64)(*dmg) * sc->data[SC_REFLECTDAMAGE]->val2 / 100;
-		if( rdamage > max_damage ) rdamage = max_damage;
+		if( rnd()%100 <= sc->data[SC_REFLECTDAMAGE]->val1*10 + 30 ){
+			int max_damage = (int64)status_get_max_hp(bl) * status_get_lv(bl) / 100;
+			rdamage = (int64)(*dmg) * sc->data[SC_REFLECTDAMAGE]->val2 / 100;
+			if( --(sc->data[SC_REFLECTDAMAGE]->val3) < 1)
+				status_change_end(bl,SC_REFLECTDAMAGE,INVALID_TIMER);
+			if( rdamage > max_damage ) rdamage = max_damage;
+		}
 	}else if( sc && sc->data[SC_CRESCENTELBOW] && !is_boss(src) && rnd()%100 < sc->data[SC_CRESCENTELBOW]->val2 ){
 		//ATK [{(Target HP / 100) x Skill Level} x Caster Base Level / 125] % + [Received damage x {1 + (Skill Level x 0.2)}]
 		int ratio = (int64)(status_get_hp(src) / 100) * sc->data[SC_CRESCENTELBOW]->val1 * status_get_lv(bl) / 125;
