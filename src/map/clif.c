@@ -4383,6 +4383,11 @@ static void clif_getareachar_skillunit(int type,struct map_session_data *sd, str
 	else
 		unit_id=unit->group->unit_id;
 
+#if PACKETVER >= 3
+	if(unit->group->unit_id==UNT_GRAFFITI) // Graffiti [Valaris]
+		type = 2;
+#endif
+
 	switch(type){
 		case 2: header=0x1c9; break;
 		case 3: header=0x8c7; break;
@@ -4391,11 +4396,6 @@ static void clif_getareachar_skillunit(int type,struct map_session_data *sd, str
 		case 1: header=0x11f; break;
 	}
 
-#if PACKETVER >= 3
-	if(unit->group->unit_id==UNT_GRAFFITI)	{ // Graffiti [Valaris]
-		clif_getareachar_skillunit(2,sd,unit);
-	}
-#endif
 	WFIFOHEAD(fd,packet_len(header));
 	WFIFOW(fd,pos)=header;
 	if(type==3 || type==4){
