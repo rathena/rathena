@@ -13,6 +13,7 @@
 #include "../common/strlib.h"
 #include "../common/utils.h"
 #include "../common/cli.h"
+#include "../common/ers.h"
 
 #include "map.h"
 #include "path.h"
@@ -1485,8 +1486,7 @@ void map_addnickdb(int charid, const char* nick)
 	p = idb_ensure(nick_db, charid, create_charid2nick);
 	safestrncpy(p->nick, nick, sizeof(p->nick));
 
-	while( p->requests )
-	{
+	while( p->requests ) {
 		req = p->requests;
 		p->requests = req->next;
 		sd = map_charid2sd(req->charid);
@@ -1508,8 +1508,7 @@ void map_delnickdb(int charid, const char* name)
 	if (!nick_db->remove(nick_db, db_i2key(charid), &data) || (p = db_data2ptr(&data)) == NULL)
 		return;
 
-	while( p->requests )
-	{
+	while( p->requests ) {
 		req = p->requests;
 		p->requests = req->next;
 		sd = map_charid2sd(req->charid);
@@ -1652,7 +1651,7 @@ int map_quit(struct map_session_data *sd) {
 			status_change_end(&sd->bl, SC_ENDURE, INVALID_TIMER); //No need to save infinite endure.
 		status_change_end(&sd->bl, SC_WEIGHT50, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_WEIGHT90, INVALID_TIMER);
-        status_change_end(&sd->bl, SC_SATURDAYNIGHTFEVER, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_SATURDAYNIGHTFEVER, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_KYOUGAKU, INVALID_TIMER);
 		if (battle_config.debuff_on_logout&1) {
 			status_change_end(&sd->bl, SC_ORCISH, INVALID_TIMER);
@@ -1714,7 +1713,8 @@ int map_quit(struct map_session_data *sd) {
 	}
 
 	if( sd->channel_count ) {
-		for( i = 0; i < sd->channel_count; i++ ) {
+		uint8 ch_count = sd->channel_count;
+		for( i = 0; i < ch_count; i++ ) {
 			if( sd->channels[i] != NULL )
 				clif_chsys_left(sd->channels[i],sd);
 		}
@@ -2662,8 +2662,7 @@ bool map_iwall_set(int16 m, int16 x, int16 y, int size, int8 dir, bool shootable
 	return true;
 }
 
-void map_iwall_get(struct map_session_data *sd)
-{
+void map_iwall_get(struct map_session_data *sd) {
 	struct iwall_data *iwall;
 	DBIterator* iter;
 	int16 x1, y1;
@@ -2673,13 +2672,11 @@ void map_iwall_get(struct map_session_data *sd)
 		return;
 
 	iter = db_iterator(iwall_db);
-	for( iwall = dbi_first(iter); dbi_exists(iter); iwall = dbi_next(iter) )
-	{
+	for( iwall = dbi_first(iter); dbi_exists(iter); iwall = dbi_next(iter) ) {
 		if( iwall->m != sd->bl.m )
 			continue;
 
-		for( i = 0; i < iwall->size; i++ )
-		{
+		for( i = 0; i < iwall->size; i++ ) {
 			map_iwall_nextxy(iwall->x, iwall->y, iwall->dir, i, &x1, &y1);
 			clif_changemapcell(sd->fd, iwall->m, x1, y1, map_getcell(iwall->m, x1, y1, CELL_GETTYPE), SELF);
 		}
@@ -2695,8 +2692,7 @@ void map_iwall_remove(const char *wall_name)
 	if( (iwall = (struct iwall_data *)strdb_get(iwall_db, wall_name)) == NULL )
 		return; // Nothing to do
 
-	for( i = 0; i < iwall->size; i++ )
-	{
+	for( i = 0; i < iwall->size; i++ ) {
 		map_iwall_nextxy(iwall->x, iwall->y, iwall->dir, i, &x1, &y1);
 
 		map_setcell(iwall->m, x1, y1, CELL_SHOOTABLE, true);
@@ -3185,6 +3181,9 @@ int parse_console(const char* buf)
 		{
 			runflag = 0;
 		}
+	}
+	else if( strcmpi("ers_report", type) == 0 ){
+		ers_report();
 	}
 	else if( strcmpi("help", type) == 0 )
 	{
@@ -3751,7 +3750,6 @@ int do_init(int argc, char *argv[])
 
 	rnd_init();
 	map_config_read(MAP_CONF_NAME);
-	/* only temporary until sirius's datapack patch is complete  */
 
 	// loads npcs
 	map_reloadnpc(false);

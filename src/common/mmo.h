@@ -122,6 +122,8 @@
 //For Map Names, which the client considers to be 16 in length including the .gat extension
 #define MAP_NAME_LENGTH (11 + 1)
 #define MAP_NAME_LENGTH_EXT (MAP_NAME_LENGTH + 4)
+//Pincode Length
+#define PINCODE_LENGTH 4
 
 #define MAX_FRIENDS 40
 #define MAX_MEMOPOINTS 3

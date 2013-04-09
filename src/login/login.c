@@ -451,7 +451,6 @@ int parse_fromchar(int fd){
 				return 0;
 			else{
 				struct auth_node* node;
-
 				int account_id = RFIFOL(fd,2);
 				uint32 login_id1 = RFIFOL(fd,6);
 				uint32 login_id2 = RFIFOL(fd,10);
@@ -552,9 +551,11 @@ int parse_fromchar(int fd){
 				uint8 char_slots = 0;
 				int group_id = 0;
 				char birthdate[10+1] = "";
-				char pincode[4+1] = "";
-
+				char pincode[PINCODE_LENGTH+1];
 				int account_id = RFIFOL(fd,2);
+				
+				memset(pincode,0,PINCODE_LENGTH+1);
+				
 				RFIFOSKIP(fd,6);
 
 				if( !accounts->load_num(accounts, &acc, account_id) )

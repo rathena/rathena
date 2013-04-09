@@ -50,7 +50,7 @@ struct mmo_account
 	char lastlogin[24];     // date+time of last successful login
 	char last_ip[16];       // save of last IP of connection
 	char birthdate[10+1];   // assigned birth date (format: YYYY-MM-DD, default: 0000-00-00)
-	char pincode[4+1];		// pincode system
+	char pincode[PINCODE_LENGTH+1];		// pincode system
 	time_t pincode_change;	// (timestamp): last time of pincode change
 	int account_reg2_num;
 	struct global_reg account_reg2[ACCOUNT_REG2_NUM]; // account script variables (stored on login server)

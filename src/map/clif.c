@@ -5612,10 +5612,9 @@ void clif_chsys_left(struct raChSysCh *channel, struct map_session_data *sd) {
 
 void clif_chsys_delete(struct raChSysCh *channel) {
 	if( db_size(channel->users) && !raChSys.closing ) {
-		DBIterator *iter;
 		struct map_session_data *sd;
 		unsigned char i;
-		iter = db_iterator(channel->users);
+		DBIterator *iter = db_iterator(channel->users);
 		for( sd = dbi_first(iter); dbi_exists(iter); sd = dbi_next(iter) ) { //for all users
 			ARR_FIND(0, sd->channel_count, i, sd->channels[i] == channel); //found cur chan
 			if( i < sd->channel_count ) {
@@ -5634,6 +5633,7 @@ void clif_chsys_delete(struct raChSysCh *channel) {
 				}
 			}
 		}
+		dbi_destroy(iter);
 	}
 	db_destroy(channel->users);
 	if( channel->m ) {
