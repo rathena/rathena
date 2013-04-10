@@ -1699,32 +1699,7 @@ int map_quit(struct map_session_data *sd) {
 		elemental_clean_effect(sd->ed);
 		unit_remove_map(&sd->ed->bl,CLR_TELEPORT);
 	}
-
-	if( raChSys.ally && sd->status.guild_id ) {
-		struct guild *g = sd->guild, *sg;
-		if( g ) {
-			if( idb_exists(((struct raChSysCh *)g->channel)->users, sd->status.char_id) )
-				clif_chsys_left((struct raChSysCh *)g->channel,sd);
-			for (i = 0; i < MAX_GUILDALLIANCE; i++) {
-				if( g->alliance[i].guild_id && (sg = guild_search(g->alliance[i].guild_id) ) ) {
-					if( idb_exists(((struct raChSysCh *)sg->channel)->users, sd->status.char_id) )
-						clif_chsys_left((struct raChSysCh *)sg->channel,sd);
-					break;
-				}
-			}
-		}
-	}
-
-	if( sd->channel_count ) {
-		uint8 ch_count = sd->channel_count;
-		for( i = 0; i < ch_count; i++ ) {
-			if( sd->channels[i] != NULL )
-				clif_chsys_left(sd->channels[i],sd);
-		}
-		if( raChSys.closing )
-			aFree(sd->channels);
-	}
-
+	
 	unit_remove_map_pc(sd,CLR_TELEPORT);
 
 	if( map[sd->bl.m].instance_id ) { // Avoid map conflicts and warnings on next login
@@ -3593,8 +3568,11 @@ void do_final(void)
 	// remove all objects on maps
 	for (i = 0; i < map_num; i++) {
 		ShowStatus("Cleaning up maps [%d/%d]: %s..."CL_CLL"\r", i+1, map_num, map[i].name);
-		if (map[i].m >= 0)
+		if (map[i].m >= 0) {
 			map_foreachinmap(cleanup_sub, i, BL_ALL);
+			if( map[i].channel != NULL )
+				clif_chsys_delete((struct raChSysCh *)map[i].channel);
+		}
 	}
 	ShowStatus("Cleaned up %d maps."CL_CLL"\n", map_num);
 

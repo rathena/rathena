@@ -41,6 +41,7 @@ set( SQL_MAP_HEADERS
 	"${SQL_MAP_SOURCE_DIR}/trade.h"
 	"${SQL_MAP_SOURCE_DIR}/unit.h"
 	"${SQL_MAP_SOURCE_DIR}/vending.h"
+	"${SQL_MAP_SOURCE_DIR}/cashshop.h"
 	)
 set( SQL_MAP_SOURCES
 	"${SQL_MAP_SOURCE_DIR}/atcommand.c"
@@ -80,6 +81,7 @@ set( SQL_MAP_SOURCES
 	"${SQL_MAP_SOURCE_DIR}/trade.c"
 	"${SQL_MAP_SOURCE_DIR}/unit.c"
 	"${SQL_MAP_SOURCE_DIR}/vending.c"
+	"${SQL_MAP_SOURCE_DIR}/cashshop.c"
 	)
 set( DEPENDENCIES common_sql )
 set( LIBRARIES ${GLOBAL_LIBRARIES} )

@@ -2470,8 +2470,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		if(rnd()%100 > (1 + skill_lv) ) dmg.blewcount = 0;
 		break;
 	default:
-		if(damage < dmg.div_ && skill_lv != CH_PALMSTRIKE)
-			dmg.blewcount = 0; //only pushback when it hit
+		if(damage < dmg.div_ && skill_id != CH_PALMSTRIKE)
+			dmg.blewcount = 0; //only pushback when it hit for other
 		break;
 	}
 	switch(skill_id){
@@ -3372,10 +3372,6 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 						struct status_change* sc = status_get_sc(src);
 						if( ( tsc && tsc->option&OPTION_HIDE ) ||
 							( sc && sc->option&OPTION_HIDE ) ){
-							skill_blown(src,target,skill_get_blewcount(skl->skill_id, skl->skill_lv), -1, 0x0 );
-							break;
-						} else if( tsc && tsc->data[SC_SAFETYWALL] ){
-							skill_attack(skl->type,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
 							skill_blown(src,target,skill_get_blewcount(skl->skill_id, skl->skill_lv), -1, 0x0 );
 							break;
 						}
@@ -12330,7 +12326,7 @@ static int skill_unit_effect (struct block_list* bl, va_list ap)
 			skill_unit_onout(unit,bl,tick);
 
 		if( flag&4 )
-	  		skill_unit_onleft(skill_id, bl, tick);
+			skill_unit_onleft(skill_id, bl, tick);
 	}else if( !isTarget && flag&4 && ( group->state.song_dance&0x1 || ( group->src_id == bl->id && group->state.song_dance&0x2 ) ) ){
 		skill_unit_onleft(skill_id, bl, tick);//Ensemble check to terminate it.
 	}
@@ -15935,7 +15931,7 @@ int skill_unit_move (struct block_list *bl, unsigned int tick, int flag) {
 		for( i = 0; i < ARRAYLENGTH(skill_unit_temp); i++ )
 			if( skill_unit_temp[i] )
 				skill_unit_onleft(skill_unit_temp[i], bl, tick);
-	}
+			}
 
 	return 0;
 }
