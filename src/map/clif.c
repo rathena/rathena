@@ -14626,8 +14626,9 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd){
         }
         fail = npc_cashshop_buylist(sd,points,count,item_list);
 #endif
+	}
 
-		clif_cashshop_ack(sd,fail);
+	clif_cashshop_ack(sd,fail);
 }
 #endif
 
