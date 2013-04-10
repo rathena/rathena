@@ -74,6 +74,7 @@ static char log_picktype2char(e_log_pick_type type)
 		case LOG_TYPE_BUYING_STORE:     return 'B';  // (B)uying Store
 		case LOG_TYPE_LOOT:             return 'L';  // (L)oot (consumed monster pick/drop)
 		case LOG_TYPE_OTHER:			return 'X';  // Other
+		case LOG_TYPE_CASH:				return '$';  // Cash
 	}
 
 	// should not get here, fallback
@@ -99,6 +100,17 @@ static char log_chattype2char(e_log_chat_type type)
 	return 'O';
 }
 
+static char log_cashtype2char( e_log_cash_type type ){
+	switch( type ){
+		case LOG_CASH_TYPE_CASH:
+			return 'C';
+		case LOG_CASH_TYPE_KAFRA:
+			return 'K';
+	}
+
+	ShowDebug("log_chattype2char: Unknown chat type %d.\n", type);
+	return 'O';
+}
 
 /// check if this item should be logged according the settings
 static bool should_log_item(int nameid, int amount, int refine)
@@ -456,6 +468,41 @@ void log_chat(e_log_chat_type type, int type_id, int src_charid, int src_accid, 
 	}
 }
 
+/// logs cash transactions
+void log_cash( struct map_session_data* sd, e_log_pick_type type, e_log_cash_type cash_type, int amount ){
+	nullpo_retv( sd );
+
+	if( !log_config.cash )
+		return;
+
+	if( log_config.sql_logs ){
+#ifdef BETA_THREAD_TEST
+		char entry[512];
+		int e_length = 0;
+		e_length = sprintf( entry,  LOG_QUERY " INTO `%s` ( `time`, `char_id`, `type`, `cash_type`, `amount`, `map` ) VALUES ( NOW(), '%d', '%c', '%c', '%d', '%s' )",
+			log_config.log_cash, sd->status.char_id, log_picktype2char( type ), log_cashtype2char( cash_type ), amount, mapindex_id2name( sd->mapindex ) );
+		queryThread_log( entry, e_length );
+#else
+		if( SQL_ERROR == Sql_Query( logmysql_handle, LOG_QUERY " INTO `%s` ( `time`, `char_id`, `type`, `cash_type`, `amount`, `map` ) VALUES ( NOW(), '%d', '%c', '%c', '%d', '%s' )",
+			log_config.log_cash, sd->status.char_id, log_picktype2char( type ), log_cashtype2char( cash_type ), amount, mapindex_id2name( sd->mapindex ) ) )
+		{
+			Sql_ShowDebug( logmysql_handle );
+			return;
+		}
+#endif
+	}else{
+		char timestring[255];
+		time_t curtime;
+		FILE* logfp;
+
+		if( ( logfp = fopen( log_config.log_cash, "a" ) ) == NULL )
+			return;
+		time( &curtime );
+		strftime( timestring, sizeof( timestring ), "%m/%d/%Y %H:%M:%S", localtime( &curtime ) );
+		fprintf( logfp, "%s - %s[%d]\t%d(%c)\t\n", timestring, sd->status.name, sd->status.account_id, amount, log_cashtype2char( cash_type ) );
+		fclose( logfp );
+	}
+}
 
 void log_set_defaults(void)
 {
@@ -511,6 +558,8 @@ int log_config_read(const char* cfgName)
 				log_config.filter = config_switch(w2);
 			else if( strcmpi(w1, "log_zeny") == 0 )
 				log_config.zeny = config_switch(w2);
+			else if( strcmpi( w1, "log_cash" ) == 0 )
+				log_config.cash = config_switch( w2 );
 			else if( strcmpi(w1, "log_commands") == 0 )
 				log_config.commands = config_switch(w2);
 			else if( strcmpi(w1, "log_npc") == 0 )
@@ -535,6 +584,8 @@ int log_config_read(const char* cfgName)
 				safestrncpy(log_config.log_npc, w2, sizeof(log_config.log_npc));
 			else if( strcmpi(w1, "log_chat_db") == 0 )
 				safestrncpy(log_config.log_chat, w2, sizeof(log_config.log_chat));
+			else if( strcmpi( w1, "log_cash_db" ) == 0 )
+				safestrncpy( log_config.log_cash, w2, sizeof( log_config.log_cash ) );
 			//support the import command, just like any other config
 			else if( strcmpi(w1,"import") == 0 )
 				log_config_read(w2);
@@ -576,6 +627,9 @@ int log_config_read(const char* cfgName)
 		if( log_config.zeny )
 		{
 			ShowInfo("Logging Zeny transactions to %s '%s'.\n", target, log_config.log_zeny);
+		}
+		if( log_config.cash ){
+			ShowInfo( "Logging Cash transactions to %s '%s'.\n", target, log_config.log_cash );
 		}
 	}
 

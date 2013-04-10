@@ -3660,8 +3660,7 @@ int pc_payzeny(struct map_session_data *sd,int zeny, enum e_log_pick_type type, 
  * Cash Shop
  *------------------------------------------*/
 
-int pc_paycash(struct map_session_data *sd, int price, int points)
-{
+int pc_paycash(struct map_session_data *sd, int price, int points, e_log_pick_type type ){
 	int cash;
 	nullpo_retr(-1,sd);
 
@@ -3687,7 +3686,13 @@ int pc_paycash(struct map_session_data *sd, int price, int points)
 	}
 
 	pc_setaccountreg(sd, "#CASHPOINTS", sd->cashPoints-cash);
+	if( cash ){
+		log_cash( sd, type, LOG_CASH_TYPE_CASH, -cash );
+	}
 	pc_setaccountreg(sd, "#KAFRAPOINTS", sd->kafraPoints-points);
+	if( points ){
+		log_cash( sd, type, LOG_CASH_TYPE_KAFRA, -points );
+	}
 
 	if( battle_config.cashshop_show_points )
 	{
@@ -3698,8 +3703,7 @@ int pc_paycash(struct map_session_data *sd, int price, int points)
 	return cash+points;
 }
 
-int pc_getcash(struct map_session_data *sd, int cash, int points)
-{
+int pc_getcash( struct map_session_data *sd, int cash, int points, e_log_pick_type type ){
 	char output[128];
 	nullpo_retr(-1,sd);
 
@@ -3714,6 +3718,9 @@ int pc_getcash(struct map_session_data *sd, int cash, int points)
 		}
 
 		pc_setaccountreg(sd, "#CASHPOINTS", sd->cashPoints+cash);
+		if( cash ){
+			log_cash( sd, type, LOG_CASH_TYPE_CASH, cash );
+		}
 
 		if( battle_config.cashshop_show_points )
 		{
@@ -3737,6 +3744,9 @@ int pc_getcash(struct map_session_data *sd, int cash, int points)
 		}
 
 		pc_setaccountreg(sd, "#KAFRAPOINTS", sd->kafraPoints+points);
+		if( points ){
+			log_cash( sd, type, LOG_CASH_TYPE_KAFRA, points );
+		}
 
 		if( battle_config.cashshop_show_points )
 		{

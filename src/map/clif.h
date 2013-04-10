@@ -728,6 +728,11 @@ void clif_search_store_info_ack(struct map_session_data* sd);
 void clif_search_store_info_failed(struct map_session_data* sd, unsigned char reason);
 void clif_open_search_store_info(struct map_session_data* sd);
 void clif_search_store_info_click_ack(struct map_session_data* sd, short x, short y);
+
+/// Cash Shop
+void clif_cashshop_result( struct map_session_data* sd, uint16 item_id, uint16 result );
+void clif_cashshop_open( struct map_session_data* sd );
+
 /**
  * 3CeAM
  **/

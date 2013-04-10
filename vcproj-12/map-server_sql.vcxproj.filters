@@ -193,6 +193,11 @@
     <ClCompile Include="..\src\common\raconf.c">
       <Filter>common</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\common\cli.c" />
+    <ClCompile Include="..\src\common\msg_conf.c" />
+    <ClCompile Include="..\src\map\cashshop.c">
+      <Filter>map_sql</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\map\atcommand.h">
@@ -403,6 +408,11 @@
     </ClInclude>
     <ClInclude Include="..\src\common\raconf.h">
       <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\cli.h" />
+    <ClInclude Include="..\src\common\msg_conf.h" />
+    <ClInclude Include="..\src\map\cashshop.h">
+      <Filter>map_sql</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

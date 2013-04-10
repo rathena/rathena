@@ -505,6 +505,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\map\cashshop.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\cashshop.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\chat.c"
 				>
 			</File>

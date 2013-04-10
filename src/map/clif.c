@@ -43,6 +43,7 @@
 #include "clif.h"
 #include "mail.h"
 #include "quest.h"
+#include "cashshop.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -14593,13 +14594,13 @@ void clif_cashshop_ack(struct map_session_data* sd, int error)
 	WFIFOSET(fd, packet_len(0x289));
 }
 
-
+// TODO: find a more accurate date for this
+#if PACKETVER < 20130320
 /// Request to buy item(s) from cash shop (CZ_PC_BUY_CASH_POINT_ITEM).
 /// 0288 <name id>.W <amount>.W
 /// 0288 <name id>.W <amount>.W <kafra points>.L (PACKETVER >= 20070711)
 /// 0288 <packet len>.W <kafra points>.L <count>.W { <amount>.W <name id>.W }.4B*count (PACKETVER >= 20100803)
-void clif_parse_cashshop_buy(int fd, struct map_session_data *sd)
-{
+void clif_parse_cashshop_buy(int fd, struct map_session_data *sd){
     int fail = 0;
     nullpo_retv(sd);
 
@@ -14625,10 +14626,10 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd)
         }
         fail = npc_cashshop_buylist(sd,points,count,item_list);
 #endif
-    }
 
-    clif_cashshop_ack(sd,fail);
+		clif_cashshop_ack(sd,fail);
 }
+#endif
 
 
 /// Adoption System
@@ -16519,6 +16520,72 @@ void clif_monster_hp_bar( struct mob_data* md, int fd ) {
 #endif
 }
 
+void clif_cashshop_open( struct map_session_data* sd ){
+	WFIFOHEAD( sd->fd, 10 );
+	WFIFOW( sd->fd, 0 ) = 0x845;
+	WFIFOL( sd->fd, 2 ) = sd->cashPoints;
+	WFIFOL( sd->fd, 6 ) = sd->kafraPoints;
+	WFIFOSET( sd->fd, 10 );
+}
+
+void clif_parse_cashshop_open_request( int fd, struct map_session_data* sd ){
+	clif_cashshop_open( sd );
+}
+
+void clif_parse_cashshop_close( int fd, struct map_session_data* sd ){
+	// No need to do anything here
+}
+
+void clif_cashshop_list( int fd ){
+	int tab;
+
+	for( tab = CASHSHOP_TAB_NEW; tab < CASHSHOP_TAB_SEARCH; tab++ ){
+		int length = 8 + cash_shop_items->count * 6;
+		int i, offset;
+
+		WFIFOHEAD( fd, length );
+		WFIFOW( fd, 0 ) = 0x8ca;
+		WFIFOW( fd, 2 ) = length;
+		WFIFOW( fd, 4 ) = cash_shop_items[tab].count;
+		WFIFOW( fd, 6 ) = tab;
+
+		for( i = 0, offset = 8; i < cash_shop_items[tab].count; i++, offset += 6 ){
+			WFIFOW( fd, offset ) = cash_shop_items[tab].item[i]->nameid;
+			WFIFOL( fd, offset + 2 ) = cash_shop_items[tab].item[i]->price;
+		}
+
+		WFIFOSET( fd, length );
+	}
+}
+
+void clif_parse_cashshop_list_request( int fd, struct map_session_data* sd ){
+	clif_cashshop_list( fd );
+}
+
+// TODO: find a more accurate date for this
+#if PACKETVER >= 20130320
+void clif_parse_cashshop_buy( int fd, struct map_session_data *sd ){
+	uint16 length = RFIFOW( fd, 2 );
+	uint16 count = RFIFOL( fd, 4 );
+
+	if( length < 10 || length < ( 10 + count * 6 ) ){
+		return;
+	}
+
+	cashshop_buylist( sd, RFIFOL( fd, 6 ), count, (uint16 *)RFIFOP( fd, 10 ) );
+}
+#endif
+
+void clif_cashshop_result( struct map_session_data *sd, uint16 item_id, uint16 result ){
+	WFIFOHEAD( sd->fd, 16 );
+	WFIFOW( sd->fd, 0 ) = 0x849;
+	WFIFOL( sd->fd, 2 ) = item_id;
+	WFIFOW( sd->fd, 6 ) = result;
+	WFIFOL( sd->fd, 8 ) = sd->cashPoints;
+	WFIFOL( sd->fd, 12 ) = sd->kafraPoints;
+	WFIFOSET( sd->fd, 16 ); 
+}
+
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/
@@ -17097,7 +17164,6 @@ static int packetdb_readdb(void)
 		{clif_parse_Auction_bid,"auctionbid"},
 		// Quest Log System
 		{clif_parse_questStateAck,"queststate"},
-		{clif_parse_cashshop_buy,"cashshopbuy"},
 		{clif_parse_ViewPlayerEquip,"viewplayerequip"},
 		{clif_parse_EquipTick,"equiptickbox"},
 		{clif_parse_BattleChat,"battlechat"},
@@ -17123,6 +17189,11 @@ static int packetdb_readdb(void)
 		{clif_parse_SearchStoreInfoNextPage,"searchstoreinfonextpage"},
 		{clif_parse_CloseSearchStoreInfo,"closesearchstoreinfo"},
 		{clif_parse_SearchStoreInfoListItemClick,"searchstoreinfolistitemclick"},
+		// Cashshop
+		{ clif_parse_cashshop_open_request, "cashshopopen" },
+		{ clif_parse_cashshop_close, "cashshopclose" },
+		{ clif_parse_cashshop_list_request, "cashshopitemlist" },
+		{ clif_parse_cashshop_buy, "cashshopbuy" },
 		/* */
 		{ clif_parse_MoveItem , "moveitem" },
 		{NULL,NULL}

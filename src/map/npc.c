@@ -1349,7 +1349,7 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
     // Payment Process ----------------------------------------------------
     if( sd->kafraPoints < points || sd->cashPoints < (vt - points) )
         return 6;
-    pc_paycash(sd,vt,points);
+	pc_paycash(sd,vt,points, LOG_TYPE_NPC);
 
     // Delivery Process ----------------------------------------------------
     for( i = 0; i < count; i++ )
@@ -1464,7 +1464,7 @@ int npc_cashshop_buy(struct map_session_data *sd, int nameid, int amount, int po
 	if( (sd->kafraPoints < points) || (sd->cashPoints < price - points) )
 		return 6;
 
-	pc_paycash(sd, price, points);
+	pc_paycash(sd, price, points, LOG_TYPE_NPC);
 
 	if( !pet_create_egg(sd, nameid) )
 	{

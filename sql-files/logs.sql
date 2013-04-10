@@ -126,3 +126,17 @@ CREATE TABLE IF NOT EXISTS `loginlog` (
   `log` varchar(255) NOT NULL default '',
   INDEX (`ip`)
 ) ENGINE=MyISAM ;
+
+#Database: ragnarok
+#Table: cashlog
+CREATE TABLE IF NOT EXISTS `cashlog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `char_id` int(11) NOT NULL DEFAULT '0',
+  `type` enum('T','V','P','M','S','N','D','C','A','E','I','B','$') NOT NULL DEFAULT 'S',
+  `cash_type` enum('O','K','C') NOT NULL DEFAULT 'O',
+  `amount` int(11) NOT NULL DEFAULT '0',
+  `map` varchar(11) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  INDEX `type` (`type`)
+) ENGINE=MyISAM AUTO_INCREMENT=1;

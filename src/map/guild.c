@@ -401,6 +401,7 @@ int guild_create(struct map_session_data *sd, const char *name)
 int guild_created(int account_id,int guild_id)
 {
 	struct map_session_data *sd=map_id2sd(account_id);
+	struct guild *guild;
 
 	if(sd==NULL)
 		return 0;
@@ -408,8 +409,14 @@ int guild_created(int account_id,int guild_id)
         clif_guild_created(sd, 2); // Creation failure (presence of the same name Guild)
 		return 0;
 	}
-	//struct guild *g;
-	sd->status.guild_id=guild_id;
+
+	guild = guild_search( guild_id );
+	if( !guild ){ //guild not found
+		return -1;
+	}
+
+	sd->status.guild_id = guild_id;
+	sd->guild = guild;
 	clif_guild_created(sd,0);
 	if(battle_config.guild_emperium_check)
 		pc_delitem(sd,pc_search_inventory(sd,ITEMID_EMPERIUM),1,0,0,LOG_TYPE_CONSUME);	//emperium consumption

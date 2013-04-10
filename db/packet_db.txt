@@ -1803,10 +1803,8 @@ packet_ver: 34
 0x086D,26,friendslistadd,2
 0x0897,5,hommenu,2:4
 0x0947,36,storagepassword,0
-//0x0288,-1,cashshopbuy,4:8
 0x086F,26,partyinvite2,2
 0x0888,19,wanttoconnection,2:6:10:14:18
-0x08c9,4
 0x088E,7,actionrequest,2:6
 0x089B,10,useskilltoid,2:4:6
 0x0881,5,walktoxy,2
@@ -1834,6 +1832,12 @@ packet_ver: 34
 0x094E,-1,searchstoreinfo,2:4:5:9:13:14:15
 //0x0835,2,searchstoreinfonextpage,0
 //0x0838,12,searchstoreinfolistitemclick,2:6:10
+
+// New cashshop
+0x0844,2,cashshopopen,0
+0x084a,2,cashshopclose,0
+0x08c9,4,cashshopitemlist,0
+0x0848,-1,cashshopbuy,0
 
 //Add new packets here
 //packet_ver: 35

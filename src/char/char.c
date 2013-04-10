@@ -1053,6 +1053,10 @@ int mmo_chars_fromsql(struct char_session_data* sd, uint8* buf)
 	}
 	memset(&p, 0, sizeof(p));
 
+	for( i = 0; i < MAX_CHARS; i++ ){
+		sd->found_char[i] = -1;
+	}
+
 	// read char data
 	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT "
 		"`char_id`,`char_num`,`name`,`class`,`base_level`,`job_level`,`base_exp`,`job_exp`,`zeny`,"
@@ -1104,11 +1108,6 @@ int mmo_chars_fromsql(struct char_session_data* sd, uint8* buf)
 		SqlStmt_ShowDebug(stmt);
 		SqlStmt_Free(stmt);
 		return 0;
-	}
-
-	for( i = 0; i < MAX_CHARS; i++ ){
-		sd->found_char[i] = -1;
-		sd->char_moves[i] = 0;
 	}
 
 	for( i = 0; i < MAX_CHARS && SQL_SUCCESS == SqlStmt_NextRow(stmt); i++ )
@@ -4614,13 +4613,13 @@ void pincode_notifyLoginPinError( int account_id ){
 
 void pincode_decrypt( uint32 userSeed, char* pin ){
 	int i, pos;
-	char tab[10] = {0,1,2,3,4,5,6,7,8,9};
+	char tab[10] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 	char *buf;
 	uint32 multiplier = 0x3498, baseSeed = 0x881234;
 
 	for( i = 1; i < 10; i++ ){
 		userSeed = baseSeed + userSeed * multiplier;
-		pos = userSeed % (i + 1);
+		pos = userSeed % ( i + 1 );
 		if( i != pos ){
 			tab[i] ^= tab[pos];
 			tab[pos] ^= tab[i];
@@ -4628,13 +4627,13 @@ void pincode_decrypt( uint32 userSeed, char* pin ){
 		}
 	}
 
-	buf = (char *)malloc(sizeof(pin));
-	memset(buf,0,PINCODE_LENGTH+1);
+	buf = (char *)malloc( sizeof(char) * ( PINCODE_LENGTH + 1 ) );
+	memset( buf, 0, PINCODE_LENGTH + 1 );
 	for( i = 0; i < PINCODE_LENGTH; i++ ){
-		sprintf(buf+i,"%d",tab[pin[i] - '0']);
+		sprintf( buf + i, "%d", tab[pin[i] - '0'] );
 	}
-	strcpy(pin,buf);
-	free(buf);
+	strcpy( pin, buf );
+	free( buf );
 }
 
 //------------------------------------------------

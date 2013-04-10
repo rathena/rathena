@@ -10,6 +10,7 @@
 #include "itemdb.h"
 #include "map.h"
 #include "battle.h" // struct battle_config
+#include "cashshop.h"
 #include "script.h" // item script processing
 #include "pc.h"     // W_MUSICAL, W_WHIP
 
@@ -1386,6 +1387,7 @@ void itemdb_reload(void)
 		
 	// read new data
 	itemdb_read();
+	cashshop_reloaddb();
 	
 	//Epoque's awesome @reloaditemdb fix - thanks! [Ind]
 	//- Fixes the need of a @reloadmobdb after a @reloaditemdb to re-link monster drop data

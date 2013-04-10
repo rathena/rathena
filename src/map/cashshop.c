@@ -1,0 +1,301 @@
+// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
+#include "../common/cbasetypes.h" // uint16, uint32
+#include "../common/malloc.h" // CREATE, RECREATE, aFree
+#include "../common/nullpo.h" // nullpo_retv
+#include "../common/showmsg.h" // ShowWarning, ShowStatus
+
+#include "cashshop.h"
+#include "clif.h" // clif_cashshop_result
+#include "itemdb.h" // itemdb_exists, itemdb_isstackable, itemdb_weight, itemdb_type
+#include "pc.h" // struct map_session_data, pc_checkadditem, pc_paycash, pc_additem
+#include "pet.h" // pet_create_egg
+
+#include <string.h> // memset
+#include <stdlib.h> // atoi
+
+static int cashshop_parse_dbrow( char** str, const char* source, int line );
+
+struct cash_item_db cash_shop_items[CASHSHOP_TAB_SEARCH];
+
+extern char item_cash_db_db[32];
+extern char item_cash_db2_db[32];
+
+static void cashshop_read_db_txt( void ){
+	const char* filename[] = { DBPATH"item_cash_db.txt", "item_cash_db2.txt" };
+	int fi;
+
+	for( fi = 0; fi < ARRAYLENGTH( filename ); ++fi ){
+		uint32 lines = 0, count = 0;
+		char line[1024];
+
+		char path[256];
+		FILE* fp;
+
+		sprintf( path, "%s/%s", db_path, filename[fi] );
+		fp = fopen( path, "r" );
+		if( fp == NULL ) {
+			ShowWarning( "itemdb_readdb: File not found \"%s\", skipping.\n", path );
+			continue;
+		}
+
+		while( fgets( line, sizeof( line ), fp ) ){
+			char *str[3], *p;
+			int i;
+			lines++;
+
+			if( line[0] == '/' && line[1] == '/' )
+				continue;
+
+			memset( str, 0, sizeof( str ) );
+
+			p = line;
+			while( ISSPACE( *p ) )
+				++p;
+			if( *p == '\0' )
+				continue;
+
+			for( i = 0; i < 2; ++i ){
+				str[i] = p;
+				p = strchr( p, ',' );
+
+				if( p == NULL )
+					break;
+
+				*p = '\0';
+				++p;
+			}
+
+			str[2] = p;
+			while( !ISSPACE( *p ) && *p != '\0' && *p != '/' )
+				++p;
+
+			if( p == NULL ){
+				ShowError("cashshop_read_db_txt: Insufficient columns in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi( str[0] ) );
+				continue;
+			}
+
+			if( !cashshop_parse_dbrow( str, path, lines ) )
+				continue;
+			
+			count++;
+		}
+
+		fclose(fp);
+
+		ShowStatus( "Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, filename[fi] );
+	}
+}
+
+static int cashshop_read_db_sql( void ){
+	const char* cash_db_name[] = { item_cash_db_db, item_cash_db2_db };
+	int fi;
+	
+	for( fi = 0; fi < ARRAYLENGTH( cash_db_name ); ++fi ){
+		uint32 lines = 0, count = 0;
+
+		if( SQL_ERROR == Sql_Query( mmysql_handle, "SELECT `tab`, `item_id`, `price` FROM `%s`", cash_db_name[fi] ) ){
+			Sql_ShowDebug( mmysql_handle );
+			continue;
+		}
+
+		while( SQL_SUCCESS == Sql_NextRow( mmysql_handle ) ){
+			char* str[3];
+			int i;
+
+			++lines;
+
+			for( i = 0; i < 3; ++i ){
+				Sql_GetData( mmysql_handle, i, &str[i], NULL );
+
+				if( str[i] == NULL ){
+					str[i] = "";
+				}
+			}
+
+			if( !cashshop_parse_dbrow( str, cash_db_name[fi], lines ) )
+				continue;
+
+			++count;
+		}
+
+		Sql_FreeResult( mmysql_handle );
+
+		ShowStatus( "Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, cash_db_name[fi] );
+	}
+
+	return 0;
+}
+
+static void cashshop_read_db( void ){
+	if( db_use_sqldbs ){
+		cashshop_read_db_sql();
+	}else{
+		cashshop_read_db_txt();
+	}
+}
+
+static int cashshop_parse_dbrow( char** str, const char* source, int line ){
+	uint32 nameid = atoi( str[1] );
+
+	if( itemdb_exists( nameid ) ){
+		uint16 tab = atoi( str[0] );
+		uint32 price = atoi( str[2] );
+		struct cash_item_data* cid;
+		int j;
+
+		if( tab > CASHSHOP_TAB_SEARCH ){
+			ShowWarning( "cashshop_parse_dbrow: Invalid tab %d in line %d of \"%s\", skipping.\n", tab, line, source );
+			return 0;
+		}else if( price < 1 ){
+			ShowWarning( "cashshop_parse_dbrow: Invalid price %d in line %d of \"%s\", skipping.\n", price, line, source );
+			return 0;
+		}
+
+		ARR_FIND( 0, cash_shop_items[tab].count, j, nameid == cash_shop_items[tab].item[j]->nameid );
+
+		if( j == cash_shop_items[tab].count ){
+			RECREATE( cash_shop_items[tab].item, struct cash_item_data *, ++cash_shop_items[tab].count );
+			CREATE( cash_shop_items[tab].item[ cash_shop_items[tab].count - 1], struct cash_item_data, 1 );
+			cid = cash_shop_items[tab].item[ cash_shop_items[tab].count - 1];
+		}else{
+			cid = cash_shop_items[tab].item[j];
+		}
+
+		cid->nameid = nameid;
+		cid->price = price;
+
+		return 1;
+	}else{
+		ShowWarning( "cashshop_parse_dbrow: Invalid id %d in line %d of \"%s\", skipping.\n", nameid, line, source );
+	}
+
+	return 0;
+}
+
+void cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, uint16* item_list ){
+	uint32 totalcash = 0;
+	uint32 totalweight = 0;
+	int i,new_;
+
+	if( sd == NULL || item_list == NULL ){
+		return;
+	}else if( sd->state.trading ){
+		clif_cashshop_result( sd, 0, CASHSHOP_RESULT_ERROR_PC_STATE );
+		return;
+	}
+
+	new_ = 0;
+
+	for( i = 0; i < n; ++i ){
+		uint32 nameid = *( item_list + i * 5 );
+		uint32 quantity = *( item_list + i * 5 + 2 );
+		uint16 tab = *( item_list + i * 5 + 4 );
+		int j;
+
+		if( tab > CASHSHOP_TAB_SEARCH ){
+			clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_UNKNOWN );
+			return;
+		}
+
+		ARR_FIND( 0, cash_shop_items[tab].count, j, nameid == cash_shop_items[tab].item[j]->nameid );
+
+		if( j == cash_shop_items[tab].count || !itemdb_exists( nameid ) ){
+			clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_UNKNOWN );
+			return;
+		}else if( !itemdb_isstackable( nameid ) && quantity > 1 ){
+			uint32* quantity_ptr = (uint32*)item_list + i * 5 + 2;
+			ShowWarning( "Player %s (%d:%d) sent a hexed packet trying to buy %d of nonstackable cash item %d!\n", sd->status.name, sd->status.account_id, sd->status.char_id, quantity, nameid );
+			*quantity_ptr = 1;
+		}
+
+		switch( pc_checkadditem( sd, nameid, quantity ) ){
+			case ADDITEM_EXIST:
+				break;
+
+			case ADDITEM_NEW:
+				new_++;
+				break;
+
+			case ADDITEM_OVERAMOUNT:
+				clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_OVER_PRODUCT_TOTAL_CNT );
+				return;
+		}
+
+		totalcash += cash_shop_items[tab].item[j]->price * quantity;
+		totalweight += itemdb_weight( nameid ) * quantity;
+	}
+
+	if( ( totalcash - kafrapoints ) > sd->cashPoints || kafrapoints > sd->kafraPoints ){
+		clif_cashshop_result( sd, 0, CASHSHOP_RESULT_ERROR_SHORTTAGE_CASH );
+		return;
+	}else if( ( totalweight + sd->weight ) > sd->max_weight ){
+		clif_cashshop_result( sd, 0, CASHSHOP_RESULT_ERROR_INVENTORY_WEIGHT );
+		return;
+	}else if( pc_inventoryblank( sd ) < new_ ){
+		clif_cashshop_result( sd, 0, CASHSHOP_RESULT_ERROR_INVENTORY_ITEMCNT );
+		return;
+	}
+
+	pc_paycash( sd, totalcash, kafrapoints, LOG_TYPE_CASH );
+
+	for( i = 0; i < n; ++i ){
+		uint32 nameid = *( item_list + i * 5 );
+		uint32 quantity = *( item_list + i * 5 + 2 );
+
+		if( itemdb_type( nameid ) == IT_PETEGG ){
+			pet_create_egg( sd, nameid );
+		}else{
+			struct item item_tmp;
+			memset( &item_tmp, 0, sizeof( item_tmp ) );
+
+			item_tmp.nameid = nameid;
+			item_tmp.identify = 1;
+
+			switch( pc_additem( sd, &item_tmp, quantity, LOG_TYPE_CASH ) ){
+				case 2:
+					clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_INVENTORY_WEIGHT );
+					return;
+				case 4:
+					clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_INVENTORY_ITEMCNT );
+					return;
+				case 5:
+					clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_OVER_PRODUCT_TOTAL_CNT );
+					return;
+				case 7:
+					clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_RUNE_OVERCOUNT );
+					return;
+			}
+		}
+	}
+
+	clif_cashshop_result( sd, 0, CASHSHOP_RESULT_SUCCESS );
+}
+
+void cashshop_reloaddb( void ){
+	do_final_cashshop();
+	do_init_cashshop();
+}
+
+int do_final_cashshop( void ){
+	int tab, i;
+
+	for( tab = CASHSHOP_TAB_NEW; tab < CASHSHOP_TAB_SEARCH; tab++ ){
+		for( i = 0; i < cash_shop_items[tab].count; i++ ){
+			aFree( cash_shop_items[tab].item[i] );
+		}
+
+		aFree( cash_shop_items[tab].item );
+	}
+
+	memset( cash_shop_items, 0, sizeof( cash_shop_items ) );
+
+	return 0;
+}
+
+int do_init_cashshop( void ){
+	cashshop_read_db();
+
+	return 0;
+}
