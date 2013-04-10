@@ -3374,6 +3374,10 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 							( sc && sc->option&OPTION_HIDE ) ){
 							skill_blown(src,target,skill_get_blewcount(skl->skill_id, skl->skill_lv), -1, 0x0 );
 							break;
+						} else if( tsc && tsc->data[SC_SAFETYWALL] ){
+							skill_attack(skl->type,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
+							skill_blown(src,target,skill_get_blewcount(skl->skill_id, skl->skill_lv), -1, 0x0 );
+							break;
 						}
 					}
 				default:

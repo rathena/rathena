@@ -793,7 +793,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 		}
 
 		if(sc->data[SC_ZEPHYR] &&
-			flag&(BF_LONG|BF_SHORT)){
+			flag&(BF_LONG|BF_SHORT) == (BF_SHORT|BF_LONG)){
 				d->dmg_lv = ATK_BLOCK;
 				return 0;
 		}
