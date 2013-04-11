@@ -14016,8 +14016,7 @@ int skill_vfcastfix (struct block_list *bl, double time, uint16 skill_id, uint16
 			}
 		for( i = 0; i < ARRAYLENGTH(sd->skillcast) && sd->skillcast[i].id; i++ )
 			if( sd->skillcast[i].id == skill_id ){ // bonus2 bVariableCastrate
-				if( (i=sd->skillcast[i].val) < 0)
-					VARCAST_REDUCTION(i);
+				VARCAST_REDUCTION(sd->skillcast[i].val);
 				break;
 			}
 		for( i = 0; i < ARRAYLENGTH(sd->skillfixcastrate) && sd->skillfixcastrate[i].id; i++ )

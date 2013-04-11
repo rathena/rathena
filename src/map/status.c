@@ -1922,14 +1922,19 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 		status->cri = status->flee2 = 0;
 
 #ifdef RENEWAL // renewal formulas
-    status->matk_min = status->matk_max = status_base_matk(status, level);
-    status->hit += level + status->dex + status->luk/3 + 175; //base level + ( every 1 dex = +1 hit ) + (every 3 luk = +1 hit) + 175
-    status->flee += level + status->agi + status->luk/5 + 100; //base level + ( every 1 agi = +1 flee ) + (every 5 luk = +1 flee) + 100
-    status->def2 += (int)(((float)level + status->vit)/2 + ((float)status->agi/5)); //base level + (every 2 vit = +1 def) + (every 5 agi = +1 def)
-    status->mdef2 += (int)(status->int_ + ((float)level/4) + ((float)status->dex/5) + ((float)status->vit/5)); //(every 4 base level = +1 mdef) + (every 1 int = +1 mdef) + (every 5 dex = +1 mdef) + (every 5 vit = +1 mdef)
+	if (bl->type == BL_MOB) {
+		status->hit += level + status->dex + 175;
+		status->flee += level + status->agi + 100;
+	} else {
+		status->hit += level + status->dex + status->luk/3 + 175; //base level + ( every 1 dex = +1 hit ) + (every 3 luk = +1 hit) + 175
+		status->flee += level + status->agi + status->luk/5 + 100; //base level + ( every 1 agi = +1 flee ) + (every 5 luk = +1 flee) + 100
+	}
+	status->matk_min = status->matk_max = status_base_matk(status, level);
+	status->def2 += (int)(((float)level + status->vit)/2 + ((float)status->agi/5)); //base level + (every 2 vit = +1 def) + (every 5 agi = +1 def)
+	status->mdef2 += (int)(status->int_ + ((float)level/4) + ((float)status->dex/5) + ((float)status->vit/5)); //(every 4 base level = +1 mdef) + (every 1 int = +1 mdef) + (every 5 dex = +1 mdef) + (every 5 vit = +1 mdef)
 #else
-    status->matk_min = status_base_matk_min(status);
-    status->matk_max = status_base_matk_max(status);
+	status->matk_min = status_base_matk_min(status);
+	status->matk_max = status_base_matk_max(status);
 	status->hit += level + status->dex;
 	status->flee += level + status->agi;
 	status->def2 += status->vit;
