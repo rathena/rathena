@@ -406,17 +406,11 @@ int guild_created(int account_id,int guild_id)
 	if(sd==NULL)
 		return 0;
 	if(!guild_id) {
-        clif_guild_created(sd, 2); // Creation failure (presence of the same name Guild)
+		clif_guild_created(sd, 2); // Creation failure (presence of the same name Guild)
 		return 0;
 	}
 
-	guild = guild_search( guild_id );
-	if( !guild ){ //guild not found
-		return -1;
-	}
-
 	sd->status.guild_id = guild_id;
-	sd->guild = guild;
 	clif_guild_created(sd,0);
 	if(battle_config.guild_emperium_check)
 		pc_delitem(sd,pc_search_inventory(sd,ITEMID_EMPERIUM),1,0,0,LOG_TYPE_CONSUME);	//emperium consumption
@@ -471,6 +465,7 @@ int guild_check_member(struct guild *g)
 
 		i = guild_getindex(g,sd->status.account_id,sd->status.char_id);
 		if (i < 0) {
+			sd->guild = NULL;
 			sd->status.guild_id=0;
 			sd->guild_emblem_id=0;
 			ShowWarning("guild: check_member %d[%s] is not member\n",sd->status.account_id,sd->status.name);
@@ -611,7 +606,7 @@ int guild_recv_info(struct guild *sg)
 		}
 	}
 
-    //Occurrence of an event
+	//Occurrence of an event
 	if (guild_infoevent_db->remove(guild_infoevent_db, db_i2key(sg->guild_id), &data)) {
 		struct eventlist *ev = db_data2ptr(&data), *ev2;
 		while(ev) {

@@ -1335,10 +1335,10 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
 
         switch( pc_checkadditem(sd,nameid,amount) )
         {
-            case ADDITEM_NEW:
+            case CHKADDITEM_NEW:
                 new_++;
                 break;
-            case ADDITEM_OVERAMOUNT:
+            case CHKADDITEM_OVERAMOUNT:
                 return 3;
         }
 
@@ -1443,11 +1443,11 @@ int npc_cashshop_buy(struct map_session_data *sd, int nameid, int amount, int po
 
 	switch( pc_checkadditem(sd, nameid, amount) )
 	{
-		case ADDITEM_NEW:
+		case CHKADDITEM_NEW:
 			if( pc_inventoryblank(sd) == 0 )
 				return 3;
 			break;
-		case ADDITEM_OVERAMOUNT:
+		case CHKADDITEM_OVERAMOUNT:
 			return 3;
 	}
 
@@ -1542,14 +1542,14 @@ int npc_buylist(struct map_session_data* sd, int n, unsigned short* item_list)
 
 		switch( pc_checkadditem(sd,nameid,amount) )
 		{
-			case ADDITEM_EXIST:
+			case CHKADDITEM_EXIST:
 				break;
 
-			case ADDITEM_NEW:
+			case CHKADDITEM_NEW:
 				new_++;
 				break;
 
-			case ADDITEM_OVERAMOUNT:
+			case CHKADDITEM_OVERAMOUNT:
 				return 2;
 		}
 

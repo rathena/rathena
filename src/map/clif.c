@@ -14025,10 +14025,10 @@ void clif_parse_Mail_getattach(int fd, struct map_session_data *sd)
 			return;
 
 		switch( pc_checkadditem(sd, data->nameid, sd->mail.inbox.msg[i].item.amount) ) {
-			case ADDITEM_NEW:
+			case CHKADDITEM_NEW:
 				fail = ( pc_inventoryblank(sd) == 0 );
 				break;
-			case ADDITEM_OVERAMOUNT:
+			case CHKADDITEM_OVERAMOUNT:
 				fail = true;
 		}
 
@@ -16584,7 +16584,7 @@ void clif_cashshop_result( struct map_session_data *sd, uint16 item_id, uint16 r
 	WFIFOW( sd->fd, 6 ) = result;
 	WFIFOL( sd->fd, 8 ) = sd->cashPoints;
 	WFIFOL( sd->fd, 12 ) = sd->kafraPoints;
-	WFIFOSET( sd->fd, 16 ); 
+	WFIFOSET( sd->fd, 16 );
 }
 
 /*==========================================

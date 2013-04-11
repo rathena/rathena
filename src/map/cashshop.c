@@ -78,7 +78,7 @@ static void cashshop_read_db_txt( void ){
 
 			if( !cashshop_parse_dbrow( str, path, lines ) )
 				continue;
-			
+
 			count++;
 		}
 
@@ -91,7 +91,7 @@ static void cashshop_read_db_txt( void ){
 static int cashshop_read_db_sql( void ){
 	const char* cash_db_name[] = { item_cash_db_db, item_cash_db2_db };
 	int fi;
-	
+
 	for( fi = 0; fi < ARRAYLENGTH( cash_db_name ); ++fi ){
 		uint32 lines = 0, count = 0;
 
@@ -211,14 +211,14 @@ void cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 		}
 
 		switch( pc_checkadditem( sd, nameid, quantity ) ){
-			case ADDITEM_EXIST:
+			case CHKADDITEM_EXIST:
 				break;
 
-			case ADDITEM_NEW:
+			case CHKADDITEM_NEW:
 				new_++;
 				break;
 
-			case ADDITEM_OVERAMOUNT:
+			case CHKADDITEM_OVERAMOUNT:
 				clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_OVER_PRODUCT_TOTAL_CNT );
 				return;
 		}
@@ -254,16 +254,16 @@ void cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 			item_tmp.identify = 1;
 
 			switch( pc_additem( sd, &item_tmp, quantity, LOG_TYPE_CASH ) ){
-				case 2:
+				case ADDITEM_OVERWEIGHT:
 					clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_INVENTORY_WEIGHT );
 					return;
-				case 4:
+				case ADDITEM_OVERITEM:
 					clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_INVENTORY_ITEMCNT );
 					return;
-				case 5:
+				case ADDITEM_OVERAMOUNT:
 					clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_OVER_PRODUCT_TOTAL_CNT );
 					return;
-				case 7:
+				case ADDITEM_STACKLIMIT:
 					clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_RUNE_OVERCOUNT );
 					return;
 			}

@@ -331,7 +331,7 @@ void buyingstore_trade(struct map_session_data* sd, int account_id, unsigned int
 			return;
 		}
 
-		if( pc_checkadditem(pl_sd, nameid, amount) == ADDITEM_OVERAMOUNT )
+		if( pc_checkadditem(pl_sd, nameid, amount) == CHKADDITEM_OVERAMOUNT )
 		{// buyer does not have enough space for this item
 			clif_buyingstore_trade_failed_seller(sd, BUYINGSTORE_TRADE_SELLER_FAILED, nameid);
 			return;

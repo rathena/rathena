@@ -6162,10 +6162,10 @@ BUILDIN_FUNC(checkweight)
 
 	    switch( pc_checkadditem(sd, nameid, amount) )
 	    {
-		    case ADDITEM_EXIST:
+		    case CHKADDITEM_EXIST:
 			    // item is already in inventory, but there is still space for the requested amount
 			    break;
-		    case ADDITEM_NEW:
+		    case CHKADDITEM_NEW:
 			    if( itemdb_isstackable(nameid) ) {// stackable
 				    amount2++;
 				    if( slots < amount2 ) {
@@ -6181,7 +6181,7 @@ BUILDIN_FUNC(checkweight)
 				    }
 			    }
 			    break;
-		    case ADDITEM_OVERAMOUNT:
+		    case CHKADDITEM_OVERAMOUNT:
 			    script_pushint(st,0);
 			    return 0;
 	    }
@@ -6267,10 +6267,10 @@ BUILDIN_FUNC(checkweight2)
 		continue;
 	    }
 	    switch( pc_checkadditem(sd, nameid, amount) ) {
-		    case ADDITEM_EXIST:
+		    case CHKADDITEM_EXIST:
 			// item is already in inventory, but there is still space for the requested amount
 			    break;
-		    case ADDITEM_NEW:
+		    case CHKADDITEM_NEW:
 			    if( itemdb_isstackable(nameid) ){// stackable
 				    amount2++;
 				    if( slots < amount2 )
@@ -6283,7 +6283,7 @@ BUILDIN_FUNC(checkweight2)
 				    }
 			    }
 			    break;
-		    case ADDITEM_OVERAMOUNT:
+		    case CHKADDITEM_OVERAMOUNT:
 			    fail = 1;
 	    } //end switch
 	} //end loop DO NOT break it prematurly we need to depop all stack

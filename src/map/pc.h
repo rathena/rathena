@@ -914,7 +914,15 @@ int pc_readdb(void);
 int do_init_pc(void);
 void do_final_pc(void);
 
-enum {ADDITEM_EXIST,ADDITEM_NEW,ADDITEM_OVERAMOUNT};
+enum {CHKADDITEM_EXIST,CHKADDITEM_NEW,CHKADDITEM_OVERAMOUNT};
+enum {
+    ADDITEM_SUCCESS,
+    ADDITEM_INVALID,
+    ADDITEM_OVERWEIGHT,
+    ADDITEM_OVERITEM=4,
+    ADDITEM_OVERAMOUNT,
+    ADDITEM_STACKLIMIT=7
+};
 
 // timer for night.day
 extern int day_timer_tid;
