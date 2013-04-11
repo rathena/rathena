@@ -793,7 +793,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 		}
 
 		if(sc->data[SC_ZEPHYR] &&
-			flag&(BF_LONG|BF_SHORT) == (BF_SHORT|BF_LONG)){
+			(flag&(BF_LONG|BF_SHORT)) == (BF_SHORT|BF_LONG)){
 				d->dmg_lv = ATK_BLOCK;
 				return 0;
 		}
@@ -2592,9 +2592,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 						else if( i > 3 )
 							dmg -= 50; // Greater than 3 cells, less than 7. (250 damage)
 						dmg = (dmg * skill_lv) * (100 + (status_get_lv(src) - 100) / 12) / 100;
-						// Elemental check, +100% damage if your element is fire.
-						if( sstatus->rhw.ele  == ELE_FIRE )
-							dmg += skill_lv * 100 / 100;
+						// Elemental check, 1.5x damage if your element is fire.
+						if( sstatus->rhw.ele == ELE_FIRE )
+							dmg += dmg/2;
 						skillratio = dmg;
 					}
 					break;
