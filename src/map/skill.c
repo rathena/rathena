@@ -5272,7 +5272,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if (sd)
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 			if (skill_break_equip(src,bl, EQP_WEAPON, 10000, BCT_PARTY) && sd && sd != dstsd)
-				clif_displaymessage(sd->fd, msg_txt(669));
+				clif_displaymessage(sd->fd, msg_txt(sd,669));
 		}
 		break;
 
@@ -6175,7 +6175,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				break;
 			}
 			if(!battle_config.duel_allow_teleport && sd->duel_group && skill_lv <= 2) { // duel restriction [LuzZza]
-				char output[128]; sprintf(output, msg_txt(365), skill_get_name(AL_TELEPORT));
+				char output[128]; sprintf(output, msg_txt(sd,365), skill_get_name(AL_TELEPORT));
 				clif_displaymessage(sd->fd, output); //"Duel: Can't use %s in duel."
 				break;
 			}
@@ -12722,7 +12722,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id
 			break;
 		case AL_WARP:
 			if(!battle_config.duel_allow_teleport && sd->duel_group) { // duel restriction [LuzZza]
-				char output[128]; sprintf(output, msg_txt(365), skill_get_name(AL_WARP));
+				char output[128]; sprintf(output, msg_txt(sd,365), skill_get_name(AL_WARP));
 				clif_displaymessage(sd->fd, output); //"Duel: Can't use %s in duel."
 				return 0;
 			}

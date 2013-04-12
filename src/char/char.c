@@ -5124,14 +5124,14 @@ int do_init(int argc, char **argv)
 	mapindex_init();
 	start_point.map = mapindex_name2id("new_zone01");
 
-	CHAR_CONF_NAME = "conf/char_athena.conf";
-	LAN_CONF_NAME =	"conf/subnet_athena.conf";
-	SQL_CONF_NAME =	"conf/inter_athena.conf";
-	MSG_CONF_NAME =	"conf/msg_conf/char_msg.conf";
+	CHAR_CONF_NAME =   "conf/char_athena.conf";
+	LAN_CONF_NAME =    "conf/subnet_athena.conf";
+	SQL_CONF_NAME =    "conf/inter_athena.conf";
+	MSG_CONF_NAME_EN = "conf/msg_conf/char_msg.conf";
 
 	cli_get_options(argc,argv);
 
-	msg_config_read(MSG_CONF_NAME);
+	msg_config_read(MSG_CONF_NAME_EN);
 	char_config_read(CHAR_CONF_NAME);
 	char_lan_config_read(LAN_CONF_NAME);
 	sql_config_read(SQL_CONF_NAME);

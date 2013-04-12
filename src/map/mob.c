@@ -136,13 +136,13 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 
 	nd->bl.id = md->tomb_nid = npc_get_new_npc_id();
 
-    nd->ud.dir = md->ud.dir;
+	nd->ud.dir = md->ud.dir;
 	nd->bl.m = md->bl.m;
 	nd->bl.x = md->bl.x;
 	nd->bl.y = md->bl.y;
 	nd->bl.type = BL_NPC;
 
-	safestrncpy(nd->name, msg_txt(656), sizeof(nd->name));
+	safestrncpy(nd->name, msg_txt(NULL,656), sizeof(nd->name));
 
 	nd->class_ = 565;
 	nd->speed = 200;
@@ -2390,7 +2390,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			//A Rare Drop Global Announce by Lupus
 			if( mvp_sd && drop_rate <= battle_config.rare_drop_announce ) {
 				char message[128];
-				sprintf (message, msg_txt(541), mvp_sd->status.name, md->name, it->jname, (float)drop_rate/100);
+				sprintf (message, msg_txt(NULL,541), mvp_sd->status.name, md->name, it->jname, (float)drop_rate/100);
 				//MSG: "'%s' won %s's %s (chance: %0.02f%%)"
 				intif_broadcast(message,strlen(message)+1,0);
 			}
@@ -2529,7 +2529,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 					struct item_data *i_data;
 					char message[128];
 					i_data = itemdb_exists(item.nameid);
-					sprintf (message, msg_txt(541), mvp_sd->status.name, md->name, i_data->jname, temp/100.);
+					sprintf (message, msg_txt(NULL,541), mvp_sd->status.name, md->name, i_data->jname, temp/100.);
 					//MSG: "'%s' won %s's %s (chance: %0.02f%%)"
 					intif_broadcast(message,strlen(message)+1,0);
 				}

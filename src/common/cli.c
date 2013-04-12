@@ -21,7 +21,7 @@ char* SQL_CONF_NAME;
 char* LOGIN_CONF_NAME;
 //common
 char* LAN_CONF_NAME; //char-login
-char* MSG_CONF_NAME; //all
+char* MSG_CONF_NAME_EN; //all
 
 bool opt_has_next_value(const char* option, int i, int argc)
 {
@@ -64,7 +64,7 @@ int cli_get_options(int argc, char ** argv)
 		display_versionscreen(true);
 	    } else if (strcmp(arg, "msg-config") == 0) {
 		    if (opt_has_next_value(arg, i, argc))
-			MSG_CONF_NAME = argv[++i];
+			MSG_CONF_NAME_EN = argv[++i];
 	    } else if (strcmp(arg, "run-once") == 0) // close the map-server as soon as its done.. for testing [Celest]
 	    {
 		runflag = CORE_ST_STOP;

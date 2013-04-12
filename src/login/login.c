@@ -553,9 +553,9 @@ int parse_fromchar(int fd){
 				char birthdate[10+1] = "";
 				char pincode[PINCODE_LENGTH+1];
 				int account_id = RFIFOL(fd,2);
-				
+
 				memset(pincode,0,PINCODE_LENGTH+1);
-				
+
 				RFIFOSKIP(fd,6);
 
 				if( !accounts->load_num(accounts, &acc, account_id) )
@@ -1863,11 +1863,11 @@ int do_init(int argc, char** argv)
 
 	LOGIN_CONF_NAME = "conf/login_athena.conf";
 	LAN_CONF_NAME = "conf/subnet_athena.conf";
-	MSG_CONF_NAME = "conf/msg_conf/login_msg.conf";
+	MSG_CONF_NAME_EN = "conf/msg_conf/login_msg.conf";
 
 	cli_get_options(argc,argv);
 
-	msg_config_read(MSG_CONF_NAME);
+	msg_config_read(MSG_CONF_NAME_EN);
 	login_config_read(LOGIN_CONF_NAME);
 	login_lan_config_read(LAN_CONF_NAME);
 

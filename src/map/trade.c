@@ -32,7 +32,7 @@ void trade_traderequest(struct map_session_data *sd, struct map_session_data *ta
 	nullpo_retv(sd);
 
 	if (map[sd->bl.m].flag.notrade) {
-		clif_displaymessage (sd->fd, msg_txt(272));
+		clif_displaymessage (sd->fd, msg_txt(sd,272));
 		return; //Can't trade in notrade mapflag maps.
 	}
 
@@ -71,7 +71,7 @@ void trade_traderequest(struct map_session_data *sd, struct map_session_data *ta
 
 	if (!pc_can_give_items(sd) || !pc_can_give_items(target_sd)) //check if both GMs are allowed to trade
 	{
-		clif_displaymessage(sd->fd, msg_txt(246));
+		clif_displaymessage(sd->fd, msg_txt(sd,246));
 		clif_tradestart(sd, 2); // GM is not allowed to trade
 		return;
 	}
@@ -201,25 +201,25 @@ int impossible_trade_check(struct map_session_data *sd)
 		index = sd->deal.item[i].index;
 		if (inventory[index].amount < sd->deal.item[i].amount)
 		{ // if more than the player have -> hack
-			sprintf(message_to_gm, msg_txt(538), sd->status.name, sd->status.account_id); // Hack on trade: character '%s' (account: %d) try to trade more items that he has.
+			sprintf(message_to_gm, msg_txt(sd,538), sd->status.name, sd->status.account_id); // Hack on trade: character '%s' (account: %d) try to trade more items that he has.
 			intif_wis_message_to_gm(wisp_server_name, PC_PERM_RECEIVE_HACK_INFO, message_to_gm);
-			sprintf(message_to_gm, msg_txt(539), inventory[index].amount, inventory[index].nameid, sd->deal.item[i].amount); // This player has %d of a kind of item (id: %d), and try to trade %d of them.
+			sprintf(message_to_gm, msg_txt(sd,539), inventory[index].amount, inventory[index].nameid, sd->deal.item[i].amount); // This player has %d of a kind of item (id: %d), and try to trade %d of them.
 			intif_wis_message_to_gm(wisp_server_name, PC_PERM_RECEIVE_HACK_INFO, message_to_gm);
 			// if we block people
 			if (battle_config.ban_hack_trade < 0) {
 				chrif_char_ask_name(-1, sd->status.name, 1, 0, 0, 0, 0, 0, 0); // type: 1 - block
 				set_eof(sd->fd); // forced to disconnect because of the hack
 				// message about the ban
-				strcpy(message_to_gm, msg_txt(540)); //  This player has been definitively blocked.
+				strcpy(message_to_gm, msg_txt(sd,540)); //  This player has been definitively blocked.
 			// if we ban people
 			} else if (battle_config.ban_hack_trade > 0) {
 				chrif_char_ask_name(-1, sd->status.name, 2, 0, 0, 0, 0, battle_config.ban_hack_trade, 0); // type: 2 - ban (year, month, day, hour, minute, second)
 				set_eof(sd->fd); // forced to disconnect because of the hack
 				// message about the ban
-				sprintf(message_to_gm, msg_txt(507), battle_config.ban_hack_trade); //  This player has been banned for %d minute(s).
+				sprintf(message_to_gm, msg_txt(sd,507), battle_config.ban_hack_trade); //  This player has been banned for %d minute(s).
 			} else
 				// message about the ban
-				strcpy(message_to_gm, msg_txt(508)); //  This player hasn't been banned (Ban option is disabled).
+				strcpy(message_to_gm, msg_txt(sd,508)); //  This player hasn't been banned (Ban option is disabled).
 
 			intif_wis_message_to_gm(wisp_server_name, PC_PERM_RECEIVE_HACK_INFO, message_to_gm);
 			return 1;
@@ -356,14 +356,14 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 	if( !itemdb_cantrade(item, src_lv, dst_lv) && //Can't trade
 		(pc_get_partner(sd) != target_sd || !itemdb_canpartnertrade(item, src_lv, dst_lv)) ) //Can't partner-trade
 	{
-		clif_displaymessage (sd->fd, msg_txt(260));
+		clif_displaymessage (sd->fd, msg_txt(sd,260));
 		clif_tradeitemok(sd, index+2, 1);
 		return;
 	}
 
 	if( item->expire_time )
 	{ // Rental System
-		clif_displaymessage (sd->fd, msg_txt(260));
+		clif_displaymessage (sd->fd, msg_txt(sd,260));
 		clif_tradeitemok(sd, index+2, 1);
 		return;
 	}

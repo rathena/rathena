@@ -12722,7 +12722,7 @@ BUILDIN_FUNC(recovery)
 			status_revive(&sd->bl, 100, 100);
 		else
 			status_percent_heal(&sd->bl, 100, 100);
-		clif_displaymessage(sd->fd,msg_txt(680));
+		clif_displaymessage(sd->fd,msg_txt(sd,680));
 	}
 	mapit_free(iter);
 	return 0;
@@ -16836,7 +16836,7 @@ BUILDIN_FUNC(buyingstore)
 
 	if( npc_isnear(&sd->bl) ) {
 		char output[150];
-		sprintf(output, msg_txt(662), battle_config.min_npc_vendchat_distance);
+		sprintf(output, msg_txt(sd,662), battle_config.min_npc_vendchat_distance);
 		clif_displaymessage(sd->fd, output);
 		return 0;
 	}

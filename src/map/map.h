@@ -25,12 +25,13 @@ enum E_MAPSERVER_ST {
 	MAPSERVER_ST_LAST
 };
 
-#define msg_config_read(cfgName) map_msg_config_read(cfgName)
-#define msg_txt(msg_number) map_msg_txt(msg_number)
+#define msg_config_read(cfgName,isnew) map_msg_config_read(cfgName,isnew)
+#define msg_txt(sd,msg_number) map_msg_txt(sd,msg_number)
 #define do_final_msg() map_do_final_msg()
-int map_msg_config_read(char *cfgName);
-const char* map_msg_txt(int msg_number);
+int map_msg_config_read(char *cfgName,int lang);
+const char* map_msg_txt(struct map_session_data *sd,int msg_number);
 void map_do_final_msg(void);
+void map_msg_reload(void);
 
 #define MAX_NPC_PER_MAP 512
 #define AREA_SIZE battle_config.area_size
@@ -747,14 +748,23 @@ void do_reconnect_map(void); //Invoked on map-char reconnection [Skotlex]
 void map_addmap2db(struct map_data *m);
 void map_removemapdb(struct map_data *m);
 
+//option readed in cli
 extern char *INTER_CONF_NAME;
 extern char *LOG_CONF_NAME;
 extern char *MAP_CONF_NAME;
 extern char *BATTLE_CONF_FILENAME;
 extern char *ATCOMMAND_CONF_FILENAME;
 extern char *SCRIPT_CONF_NAME;
-extern char *MSG_CONF_NAME;
+extern char *MSG_CONF_NAME_EN;
 extern char *GRF_PATH_FILENAME;
+//other lang supported
+char *MSG_CONF_NAME_RUS;
+char *MSG_CONF_NAME_GRM;
+char *MSG_CONF_NAME_CHN;
+char *MSG_CONF_NAME_MAL;
+char *MSG_CONF_NAME_IND;
+char *MSG_CONF_NAME_FRN;
+char *MSG_CONF_NAME_SPN;
 
 //Useful typedefs from jA [Skotlex]
 typedef struct map_session_data TBL_PC;

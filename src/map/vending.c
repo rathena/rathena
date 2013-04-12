@@ -57,7 +57,7 @@ void vending_vendinglistreq(struct map_session_data* sd, int id)
 
 	if (!pc_can_give_items(sd) || !pc_can_give_items(vsd)) //check if both GMs are allowed to trade
 	{	// GM is not allowed to trade
-		clif_displaymessage(sd->fd, msg_txt(246));
+		clif_displaymessage(sd->fd, msg_txt(sd,246));
 		return;
 	}
 
@@ -189,7 +189,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 		if( battle_config.buyer_name )
 		{
 			char temp[256];
-			sprintf(temp, msg_txt(265), sd->status.name);
+			sprintf(temp, msg_txt(sd,265), sd->status.name);
 			clif_disp_onlyself(vsd,temp,strlen(temp));
 		}
 	}
@@ -286,7 +286,7 @@ void vending_openvending(struct map_session_data* sd, const char* message, const
 	}
 
 	if( i != j )
-		clif_displaymessage (sd->fd, msg_txt(266)); //"Some of your items cannot be vended and were removed from the shop."
+		clif_displaymessage (sd->fd, msg_txt(sd,266)); //"Some of your items cannot be vended and were removed from the shop."
 
 	if( i == 0 )
 	{	// no valid item found

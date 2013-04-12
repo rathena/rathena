@@ -63,10 +63,13 @@ import:
 # 1) create conf/import folder
 # 2) add missing files
 # 3) remove remaining .svn folder
-	@echo "building conf/import folder..."
+	@echo "building conf/import and conf/msg_conf/import folder..."
 	@if test ! -d conf/import ; then mkdir conf/import ; fi
 	@for f in $$(ls conf/import-tmpl) ; do if test ! -e conf/import/$$f ; then cp conf/import-tmpl/$$f conf/import ; fi ; done
 	@rm -rf conf/import/.svn
+	@if test ! -d conf/msg_conf/import ; then mkdir conf/msg_conf/import ; fi
+	@for f in $$(ls conf/msg_conf/import-tmpl) ; do if test ! -e conf/msg_conf/import/$$f ; then cp conf/msg_conf/import-tmpl/$$f conf/msg_conf/import ; fi ; done
+	@rm -rf conf/msg_conf/import/.svn
 
 clean:
 	@$(MAKE) -C src/common $@

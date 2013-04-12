@@ -201,7 +201,7 @@ int intif_main_message(struct map_session_data* sd, const char* message)
 	nullpo_ret(sd);
 
 	// format the message for main broadcasting
-	snprintf( output, sizeof(output), msg_txt(386), sd->status.name, message );
+	snprintf( output, sizeof(output), msg_txt(sd,386), sd->status.name, message );
 
 	// send the message using the inter-server broadcast service
 	intif_broadcast2( output, strlen(output) + 1, 0xFE000000, 0, 0, 0, 0 );
@@ -1524,7 +1524,7 @@ int intif_parse_Mail_inboxreceived(int fd)
 	else if( battle_config.mail_show_status && ( battle_config.mail_show_status == 1 || sd->mail.inbox.unread ) )
 	{
 		char output[128];
-		sprintf(output, msg_txt(510), sd->mail.inbox.unchecked, sd->mail.inbox.unread + sd->mail.inbox.unchecked);
+		sprintf(output, msg_txt(sd,510), sd->mail.inbox.unchecked, sd->mail.inbox.unread + sd->mail.inbox.unchecked);
 		clif_disp_onlyself(sd, output, strlen(output));
 	}
 	return 0;

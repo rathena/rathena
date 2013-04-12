@@ -27,7 +27,7 @@ extern "C" {
  extern char* LOGIN_CONF_NAME;
 //common
  extern char* LAN_CONF_NAME; //char-login
- extern char* MSG_CONF_NAME; //all
+ extern char* MSG_CONF_NAME_EN; //all
 
 extern void display_helpscreen(bool exit);
 int cli_get_options(int argc, char ** argv);

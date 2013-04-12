@@ -183,6 +183,7 @@ struct map_session_data {
 	int group_id, group_pos, group_level;
 	unsigned int permissions;/* group permissions */
 
+	int langtype;
 	int packet_ver;  // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 ... 18
 	struct mmo_charstatus status;
 	struct registry save_reg;
@@ -236,7 +237,7 @@ struct map_session_data {
 	unsigned int canskill_tick; // used to prevent abuse from no-delay ACT files
 	unsigned int cansendmail_tick; // [Mail System Flood Protection]
 	unsigned int ks_floodprotect_tick; // [Kill Steal Protection]
-    unsigned int bloodylust_tick; // bloodylust player timer [out/in re full-heal protection]
+	 unsigned int bloodylust_tick; // bloodylust player timer [out/in re full-heal protection]
 
 	struct {
 		short nameid;
