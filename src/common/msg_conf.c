@@ -77,16 +77,30 @@ void _do_final_msg(int size, char ** msg_table){
  */
 int msg_langstr2langtype(char * langtype){
 	int lang=-1;
-	if(!strncmp(langtype, "eng",2)) lang=0;
-	else if (!strncmp(langtype, "rus",2)) lang = 1;
-	else if (!strncmp(langtype, "spn",2)) lang = 2;
-	else if (!strncmp(langtype, "grm",2)) lang = 3;
-	else if (!strncmp(langtype, "chn",2)) lang = 4;
-	else if (!strncmp(langtype, "mal",2)) lang = 5;
-	else if (!strncmp(langtype, "idn",2)) lang = 6;
-	else if (!strncmp(langtype, "frn",2)) lang = 7;
+	if(!strncmpi(langtype, "eng",2)) lang=0;
+	else if (!strncmpi(langtype, "rus",2)) lang = 1;
+	else if (!strncmpi(langtype, "spn",2)) lang = 2;
+	else if (!strncmpi(langtype, "grm",2)) lang = 3;
+	else if (!strncmpi(langtype, "chn",2)) lang = 4;
+	else if (!strncmpi(langtype, "mal",2)) lang = 5;
+	else if (!strncmpi(langtype, "idn",2)) lang = 6;
+	else if (!strncmpi(langtype, "frn",2)) lang = 7;
 
 	return lang;
+}
+
+const char* msg_langtype2langstr(int langtype){
+	switch(langtype){
+		case 0: return "English (ENG)";
+		case 1: return "Russian (RUS)";
+		case 2: return "Spanish (SPN)";
+		case 3: return "German (GRM)";
+		case 4: return "Chinese (CHN)";
+		case 5: return "Malasian (MAL)";
+		case 6: return "Indonesian (IDN)";
+		case 7: return "French (FRN)";
+		default: return "??";
+	}
 }
 
 /*
@@ -97,10 +111,10 @@ int msg_langstr2langtype(char * langtype){
  * -2 : disable
  */
 int msg_checklangtype(int lang, bool display){
-	uint16 test=1;
+	uint16 test= (1<<(lang-1));
 	if(!lang) return 1; //default english
-	else if(lang < 0 && (test<<(lang-1)) > LANG_MAX ) return -1; //false range
-	else if (LANG_ENABLE&(test<<(lang-1)) ) return 1;
+	else if(lang < 0 || test > LANG_MAX) return -1; //false range
+	else if (LANG_ENABLE&test) return 1;
 	else if(display) {
 		ShowDebug("Unsuported langtype=%d\n",lang);
 	}

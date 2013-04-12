@@ -9088,7 +9088,16 @@ ACMD_FUNC(langtype){
 		clif_displaymessage(fd,output); //"English is now set as default language"
 	}
 	else {
+		int i=0, test=0; char output[512]; //shoud be fine for 50 lang
 		clif_displaymessage(fd,msg_txt(sd,462));
+		clif_displaymessage(fd,msg_txt(sd,464));
+		while(test!=-1){ //out of range
+			test = msg_checklangtype(i,false);
+			if(test == 1)
+				sprintf(output,"%s%s => %d\n",output,msg_langtype2langstr(i),i);
+			i++;
+		}
+		clif_displaymessage(fd,output);
 	}
 
 	return 0;

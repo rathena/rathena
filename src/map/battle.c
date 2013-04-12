@@ -1200,7 +1200,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 	}
 
 	if (battle_config.pk_mode && sd && bl->type == BL_PC && damage && map[bl->m].flag.pvp)
-  	{
+	{
 		if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
 			if (flag&BF_WEAPON)
 				DAMAGE_RATE(battle_config.pk_weapon_damage_rate)

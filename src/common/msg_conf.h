@@ -26,6 +26,7 @@ const char* _msg_txt(int msg_number,int size, char ** msg_table);
 int _msg_config_read(const char* cfgName,int size, char ** msg_table);
 void _do_final_msg(int size, char ** msg_table);
 int msg_langstr2langtype(char * langtype);
+const char* msg_langtype2langstr(int langtype);
 //verify that the choosen langtype is enable
 int msg_checklangtype(int lang, bool display);
 

@@ -924,10 +924,10 @@ int unit_can_move(struct block_list *bl) {
 			|| (sc->data[SC_FEAR] && sc->data[SC_FEAR]->val2 > 0)
 			|| (sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1)
 			|| (sc->data[SC_DANCING] && sc->data[SC_DANCING]->val4 && (
-																	!sc->data[SC_LONGING] ||
-																	(sc->data[SC_DANCING]->val1&0xFFFF) == CG_MOONLIT ||
-																	(sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE
-																	) )
+				!sc->data[SC_LONGING] ||
+				(sc->data[SC_DANCING]->val1&0xFFFF) == CG_MOONLIT ||
+				(sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE
+				) )
 			|| (sc->data[SC_CLOAKING] && //Need wall at level 1-2
 				sc->data[SC_CLOAKING]->val1 < 3 && !(sc->data[SC_CLOAKING]->val4&1))
 			)
