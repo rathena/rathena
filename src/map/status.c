@@ -6620,7 +6620,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	undead_flag = battle_check_undead(status->race,status->def_ele);
-	//Check for inmunities / sc fails
+	//Check for immunities / sc fails
 	switch (type) {
 	case SC_ANGRIFFS_MODUS:
 	case SC_GOLDENE_FERSE:

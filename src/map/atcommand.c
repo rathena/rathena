@@ -8835,8 +8835,6 @@ ACMD_FUNC(join) {
 }
 
 static inline void atcmd_channel_help(int fd, const char *command, bool can_create) {
-	sprintf(atcmd_output, msg_txt(1404),command); // %s failed.
-	clif_displaymessage(fd, atcmd_output);
 	clif_displaymessage(fd, msg_txt(1414));// ---- Available options:
 	if( can_create ) {
 		sprintf(atcmd_output, msg_txt(1415),command);// * %s create <#channel_name> <channel_password>
@@ -8863,6 +8861,8 @@ static inline void atcmd_channel_help(int fd, const char *command, bool can_crea
 	sprintf(atcmd_output, msg_txt(1429),command);// * %s unbind
 	clif_displaymessage(fd, atcmd_output);
 	clif_displaymessage(fd, msg_txt(1430));// -- Unbinds your global chat from the attached channel, if any.
+	sprintf(atcmd_output, msg_txt(1404),command); // %s failed.
+	clif_displaymessage(fd, atcmd_output);
 }
 
 ACMD_FUNC(channel) {

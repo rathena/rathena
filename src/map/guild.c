@@ -401,7 +401,6 @@ int guild_create(struct map_session_data *sd, const char *name)
 int guild_created(int account_id,int guild_id)
 {
 	struct map_session_data *sd=map_id2sd(account_id);
-	struct guild *guild;
 
 	if(sd==NULL)
 		return 0;

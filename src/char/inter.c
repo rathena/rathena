@@ -425,10 +425,10 @@ void mapif_parse_accinfo(int fd) {
 
 	/* it will only get here if we have a single match */
 	if( account_id ) {
-		char userid[NAME_LENGTH], user_pass[NAME_LENGTH], email[40], last_ip[20], lastlogin[30], pincode[5];
+		char userid[NAME_LENGTH], user_pass[NAME_LENGTH], email[40], last_ip[20], lastlogin[30], pincode[5], birthdate[11];
 		short level = -1;
 		int logincount = 0,state = 0;
-		if ( SQL_ERROR == Sql_Query(sql_handle, "SELECT `userid`, `user_pass`, `email`, `last_ip`, `group_id`, `lastlogin`, `logincount`, `state`,`pincode` FROM `login` WHERE `account_id` = '%d' LIMIT 1", account_id)
+		if ( SQL_ERROR == Sql_Query(sql_handle, "SELECT `userid`, `user_pass`, `email`, `last_ip`, `group_id`, `lastlogin`, `logincount`, `state`,`pincode`,`birthdate` FROM `login` WHERE `account_id` = '%d' LIMIT 1", account_id)
 			|| Sql_NumRows(sql_handle) == 0 ) {
 			if( Sql_NumRows(sql_handle) == 0 ) {
 				inter_to_fd(fd, u_fd, aid,  "No account with ID '%d' was found.", account_id );
@@ -447,6 +447,7 @@ void mapif_parse_accinfo(int fd) {
 			Sql_GetData(sql_handle, 6, &data, NULL); logincount = atoi(data);
 			Sql_GetData(sql_handle, 7, &data, NULL); state = atoi(data);
 			Sql_GetData(sql_handle, 8, &data, NULL); safestrncpy(pincode, data, sizeof(pincode));
+			Sql_GetData(sql_handle, 9, &data, NULL); safestrncpy(birthdate, data, sizeof(birthdate));
 		}
 
 		Sql_FreeResult(sql_handle);
@@ -464,9 +465,9 @@ void mapif_parse_accinfo(int fd) {
 				inter_to_fd(fd, u_fd, aid, "Password: %s", user_pass );
 		}
 
-		inter_to_fd(fd, u_fd, aid, "Account e-mail: %s", email);
+		inter_to_fd(fd, u_fd, aid, "Account e-mail: %s | Birthdate: %s", email, birthdate);
 		inter_to_fd(fd, u_fd, aid, "Last IP: %s (%s)", last_ip, geoip_getcountry(str2ip(last_ip)) );
-		inter_to_fd(fd, u_fd, aid, "This user has logged %d times, the last time were at %s", logincount, lastlogin );
+		inter_to_fd(fd, u_fd, aid, "This user has logged in %d times, the last time was at %s", logincount, lastlogin );
 		inter_to_fd(fd, u_fd, aid, "-- Character Details --" );
 
 

@@ -1309,18 +1309,31 @@ void login_auth_failed(struct login_session_data* sd, int result)
 	if( result == 1 && login_config.dynamic_pass_failure_ban )
 		ipban_log(ip); // log failed password attempt
 
+#if PACKETVER >= 20120000 /* not sure when this started */
+	WFIFOHEAD(fd,26);
+	WFIFOW(fd,0) = 0x83e;
+	WFIFOL(fd,2) = result;
+	if( result != 6 )
+		memset(WFIFOP(fd,6), '\0', 20);
+	else { // 6 = Your are Prohibited to log in until %s
+		struct mmo_account acc;
+		time_t unban_time = ( accounts->load_str(accounts, &acc, sd->userid) ) ? acc.unban_time : 0;
+		timestamp2string((char*)WFIFOP(fd,6), 20, unban_time, login_config.date_format);
+	}
+	WFIFOSET(fd,26);
+#else
 	WFIFOHEAD(fd,23);
 	WFIFOW(fd,0) = 0x6a;
 	WFIFOB(fd,2) = (uint8)result;
 	if( result != 6 )
 		memset(WFIFOP(fd,3), '\0', 20);
-	else
-	{// 6 = Your are Prohibited to log in until %s
+	else { // 6 = Your are Prohibited to log in until %s
 		struct mmo_account acc;
 		time_t unban_time = ( accounts->load_str(accounts, &acc, sd->userid) ) ? acc.unban_time : 0;
 		timestamp2string((char*)WFIFOP(fd,3), 20, unban_time, login_config.date_format);
 	}
 	WFIFOSET(fd,23);
+#endif
 }
 
 
