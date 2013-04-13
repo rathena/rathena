@@ -46,7 +46,7 @@ int _msg_config_read(const char* cfgName,int size, char ** msg_table)
 		if (strcmpi(w1, "import") == 0)
 			_msg_config_read(w2,size,msg_table);
 		else {
-			 msg_number = atoi(w1);
+			msg_number = atoi(w1);
 			if (msg_number >= 0 && msg_number < size) {
 				if (msg_table[msg_number] != NULL)
 					aFree(msg_table[msg_number]);
@@ -77,7 +77,7 @@ void _do_final_msg(int size, char ** msg_table){
  */
 int msg_langstr2langtype(char * langtype){
 	int lang=-1;
-	if(!strncmpi(langtype, "eng",2)) lang=0;
+	if (!strncmpi(langtype, "eng",2)) lang = 0;
 	else if (!strncmpi(langtype, "rus",2)) lang = 1;
 	else if (!strncmpi(langtype, "spn",2)) lang = 2;
 	else if (!strncmpi(langtype, "grm",2)) lang = 3;
@@ -116,7 +116,7 @@ int msg_checklangtype(int lang, bool display){
 	else if(lang < 0 || test > LANG_MAX) return -1; //false range
 	else if (LANG_ENABLE&test) return 1;
 	else if(display) {
-		ShowDebug("Unsuported langtype=%d\n",lang);
+		ShowDebug("Unsupported langtype '%d'.\n",lang);
 	}
 	return -2;
 }

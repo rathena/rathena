@@ -748,7 +748,7 @@ void do_reconnect_map(void); //Invoked on map-char reconnection [Skotlex]
 void map_addmap2db(struct map_data *m);
 void map_removemapdb(struct map_data *m);
 
-//option readed in cli
+//Options read in cli
 extern char *INTER_CONF_NAME;
 extern char *LOG_CONF_NAME;
 extern char *MAP_CONF_NAME;
@@ -757,14 +757,14 @@ extern char *ATCOMMAND_CONF_FILENAME;
 extern char *SCRIPT_CONF_NAME;
 extern char *MSG_CONF_NAME_EN;
 extern char *GRF_PATH_FILENAME;
-//other lang supported
+//Other languages supported
 char *MSG_CONF_NAME_RUS;
+char *MSG_CONF_NAME_SPN;
 char *MSG_CONF_NAME_GRM;
 char *MSG_CONF_NAME_CHN;
 char *MSG_CONF_NAME_MAL;
-char *MSG_CONF_NAME_IND;
+char *MSG_CONF_NAME_IDN;
 char *MSG_CONF_NAME_FRN;
-char *MSG_CONF_NAME_SPN;
 
 //Useful typedefs from jA [Skotlex]
 typedef struct map_session_data TBL_PC;

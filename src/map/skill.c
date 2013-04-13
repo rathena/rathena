@@ -1043,7 +1043,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 	case DC_UGLYDANCE:
 		rate = 5+5*skill_lv;
 		if(sd && (skill=pc_checkskill(sd,DC_DANCINGLESSON)))
-		    rate += 5+skill;
+			rate += 5+skill;
 		status_zap(bl, 0, rate);
 		break;
 	case SL_STUN:

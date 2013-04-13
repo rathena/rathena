@@ -8782,7 +8782,8 @@ ACMD_FUNC(cart) {
 }
 
 /* Channel System [Ind] */
-ACMD_FUNC(join) {
+ACMD_FUNC(join)
+{
 	struct raChSysCh *channel;
 	char name[RACHSYS_NAME_LENGTH], pass[RACHSYS_NAME_LENGTH];
 	DBMap* channel_db = clif_get_channel_db();
@@ -8833,7 +8834,8 @@ ACMD_FUNC(join) {
 	return 0;
 }
 
-static inline void atcmd_channel_help(struct map_session_data *sd, const char *command, bool can_create) {
+static inline void atcmd_channel_help(struct map_session_data *sd, const char *command, bool can_create)
+{
 	int fd = sd->fd;
 	clif_displaymessage(fd, msg_txt(sd,1414));// ---- Available options:
 	if( can_create ) {
@@ -8865,7 +8867,8 @@ static inline void atcmd_channel_help(struct map_session_data *sd, const char *c
 	clif_displaymessage(fd, atcmd_output);
 }
 
-ACMD_FUNC(channel) {
+ACMD_FUNC(channel)
+{
 	struct raChSysCh *channel;
 	char key[RACHSYS_NAME_LENGTH], sub1[RACHSYS_NAME_LENGTH], sub2[RACHSYS_NAME_LENGTH], sub3[RACHSYS_NAME_LENGTH];
 	unsigned char k = 0;
@@ -9028,7 +9031,8 @@ ACMD_FUNC(channel) {
 	return 0;
 }
 
-ACMD_FUNC(fontcolor) {
+ACMD_FUNC(fontcolor)
+{
 	unsigned char k;
 
 	if( !message || !*message ) {
@@ -9070,42 +9074,46 @@ ACMD_FUNC(fontcolor) {
 	return 0;
 }
 
-ACMD_FUNC(langtype){
+ACMD_FUNC(langtype)
+{
 	char langtype[8];
 	int lang=-1;
 	memset(langtype, '\0', sizeof(langtype));
 
 	if(sscanf(message, "%3s", langtype) < 1){
-		clif_displaymessage(fd,msg_txt(sd,460));
+		clif_displaymessage(fd,msg_txt(sd,460)); // Please enter a valid language (usage: @langtype <language>).
 	}
 
-	lang = msg_langstr2langtype(langtype); //switch langstr to associate langtype
-	if( msg_checklangtype(lang,false) == 1 ){ //verify it's enable and affect it
+	lang = msg_langstr2langtype(langtype); //Switch langstr to associated langtype
+	if( msg_checklangtype(lang,false) == 1 ){ //Verify it's enabled and set it
 		char output[100];
-		pc_setaccountreg(sd, "#langtype", lang); //for login/char
+		pc_setaccountreg(sd, "#langtype", lang); //For login/char
 		sd->langtype = lang;
-		sprintf(output,msg_txt(sd,461),langtype,lang); //for debug
-		clif_displaymessage(fd,output); //"English is now set as default language"
-	}
-	else {
-		int i=0, test=0; char output[512]; //shoud be fine for 50 lang
-		clif_displaymessage(fd,msg_txt(sd,462));
-		clif_displaymessage(fd,msg_txt(sd,464));
+		sprintf(output,msg_txt(sd,461),msg_langtype2langstr(lang)); // Language is now set to %s.
+		clif_displaymessage(fd,output);
+		return 0;
+	} else if (lang != -1) {
+ 		clif_displaymessage(fd,msg_txt(sd,462)); // This langage is currently disabled.
+		return -1;
+	} else {
+		int i=0, test=0; char output[100];
+		clif_displaymessage(fd,msg_txt(sd,464)); // Available languages:
 		while(test!=-1){ //out of range
 			test = msg_checklangtype(i,false);
-			if(test == 1)
-				sprintf(output,"%s%s => %d\n",output,msg_langtype2langstr(i),i);
+			if(test == 1) {
+				sprintf(output,"%s\n",msg_langtype2langstr(i));
+				clif_displaymessage(fd,output);
+			}
 			i++;
 		}
-		clif_displaymessage(fd,output);
+		return -1;
 	}
-
-	return 0;
 }
 
-ACMD_FUNC(reloadmsgconf){
+ACMD_FUNC(reloadmsgconf)
+{
 	map_msg_reload();
-	clif_displaymessage(fd, msg_txt(sd,463));
+	clif_displaymessage(fd, msg_txt(sd,463)); // Message configuration has been reloaded.
 	return 0;
 }
 

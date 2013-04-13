@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20130406
+//= 20130413
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
@@ -976,6 +976,14 @@ Displays the message above the NPC's head (like the 'npctalk' script command).
 | 5. Administrative Commands |
 ==============================
 
+@langtype <language>
+
+Changes the language attached to the player's account (#langtype).
+If no parameter is given, a list of available languages is displayed.
+All languages are defined in '/src/common/msg_conf.h'.
+
+---------------------------------------
+
 @email <current@email.tld> <new@email.tld>
 
 Changes the email address attached the player's account.
@@ -1134,6 +1142,7 @@ Reloads the specified database.
 
 @reloadatcommand
 @reloadbattleconf
+@reloadmsgconf
 @reloadstatusdb
 @reloadpcdb
 @reloadmotd
@@ -1141,6 +1150,7 @@ Reloads the specified database.
 Reloads the specified configuration file.
 -atcommand: Atcommand Settings
 -battleconf: Battle Settings (may require relog)
+-msgconf: Message Configuration
 -statusdb: Status Settings
 -pcdb: Player Settings
 -motd: Message of the Day

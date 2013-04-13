@@ -3697,7 +3697,9 @@ void set_server_type(void)
 	SERVER_TYPE = ATHENA_SERVER_MAP;
 }
 
-//Msg System
+/*======================================================
+ * Message System
+ *------------------------------------------------------*/
 struct msg_data {
 	char* msg[MAP_MAX_MSG];
 };
@@ -3719,8 +3721,8 @@ void map_do_init_msg(void){
 		msg_config_read(MSG_CONF_NAME_CHN,4);	// Chinese
 	if( LANG_ENABLE&LANG_MAL )
 		msg_config_read(MSG_CONF_NAME_MAL,5);	// Malaysian
-	if( LANG_ENABLE&LANG_IND )
-		msg_config_read(MSG_CONF_NAME_IND,6);	// Indonesian
+	if( LANG_ENABLE&LANG_IDN )
+		msg_config_read(MSG_CONF_NAME_IDN,6);	// Indonesian
 	if( LANG_ENABLE&LANG_FRN )
 		msg_config_read(MSG_CONF_NAME_FRN,7);	// French
 }
@@ -3764,9 +3766,9 @@ const char* map_msg_txt(struct map_session_data *sd, int msg_number){
 		tmp = _msg_txt(msg_number,MAP_MAX_MSG,mdb->msg);
 		if(strcmp(tmp,"??"))
 			return tmp;
-		ShowDebug("msgnmber %d not found for langtype=%d, trying fallback2\n",lang);
+		ShowDebug("Message #%d not found for langtype %d.\n",msg_number,lang);
 	}
-	ShowDebug("langtype=%d choosed not loaded, trying fallback\n",lang);
+	ShowDebug("Selected langtype %d not loaded, trying fallback...\n",lang);
 	if(lang != 0 && (mdb = map_lang2msgdb(0)) != NULL) //fallback
 		return _msg_txt(msg_number,MAP_MAX_MSG,mdb->msg);
 	return "??";
@@ -3813,7 +3815,7 @@ int do_init(int argc, char *argv[])
 	MSG_CONF_NAME_GRM = "conf/msg_conf/map_msg_grm.conf";	// German
 	MSG_CONF_NAME_CHN = "conf/msg_conf/map_msg_chn.conf";	// Chinese
 	MSG_CONF_NAME_MAL = "conf/msg_conf/map_msg_mal.conf";	// Malaysian
-	MSG_CONF_NAME_IND = "conf/msg_conf/map_msg_ind.conf";	// Indonesian
+	MSG_CONF_NAME_IDN = "conf/msg_conf/map_msg_idn.conf";	// Indonesian
 	MSG_CONF_NAME_FRN = "conf/msg_conf/map_msg_frn.conf";	// French
 	/* Multilanguage */
 
