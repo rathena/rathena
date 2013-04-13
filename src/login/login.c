@@ -12,6 +12,7 @@
 #include "../common/timer.h"
 #include "../common/msg_conf.h"
 #include "../common/cli.h"
+#include "../common/ers.h"
 #include "account.h"
 #include "ipban.h"
 #include "login.h"
@@ -366,49 +367,61 @@ int login_lan_config_read(const char *lancfgName)
 //-----------------------
 // Console Command Parser [Wizputer]
 //-----------------------
-int parse_console(const char* command)
-{
-	ShowNotice("Console command: %s\n", command);
+int parse_console(const char* buf){
+	char type[64];
+	char command[64];
+	int n=0;
 
-	if( strcmpi("shutdown", command) == 0 || strcmpi("exit", command) == 0 || strcmpi("quit", command) == 0 || strcmpi("end", command) == 0 )
-		runflag = 0;
-	else if( strcmpi("alive", command) == 0 || strcmpi("status", command) == 0 )
-		ShowInfo(CL_CYAN"Console: "CL_BOLD"I'm Alive."CL_RESET"\n");
-	else if( strcmpi("help", command) == 0 )
-	{
-		ShowInfo("To shutdown the server:\n");
-		ShowInfo("  'shutdown|exit|quit|end'\n");
-		ShowInfo("To know if server is alive:\n");
-		ShowInfo("  'alive|status'\n");
-		ShowInfo("To create a new account:\n");
-		ShowInfo("  'create'\n");
+	if( ( n = sscanf(buf, "%127[^:]:%255[^\n\r]", type, command) ) < 2 ){
+		if((n = sscanf(buf, "%63[^\n]", type))<1) return -1; //nothing to do no arg
 	}
-	else
-	{// commands with parameters
-		char cmd[128], params[256];
+	if( n != 2 ){ //end string
+		command[0] = '\0';
+	}
+	ShowNotice("Type of command: '%s' || Command: '%s'\n",type,command);
 
-		if( sscanf(command, "%127s %255[^\r\n]", cmd, params) < 2 )
-		{
-			return 0;
+	if( n == 2){
+		if(strcmpi("server", type) == 0 ){
+			if( strcmpi("shutdown", command) == 0 || strcmpi("exit", command) == 0 || strcmpi("quit", command) == 0 ){
+				runflag = 0;
+			}
+			else if( strcmpi("alive", command) == 0 || strcmpi("status", command) == 0 )
+			ShowInfo(CL_CYAN"Console: "CL_BOLD"I'm Alive."CL_RESET"\n");
 		}
-
-		if( strcmpi(cmd, "create") == 0 )
+		if( strcmpi("create",type) == 0 )
 		{
-			char username[NAME_LENGTH], password[NAME_LENGTH], sex;
-
-			if( sscanf(params, "%23s %23s %c", username, password, &sex) < 3 || strnlen(username, sizeof(username)) < 4 || strnlen(password, sizeof(password)) < 1 )
-			{
-				ShowWarning("Console: Invalid parameters for '%s'. Usage: %s <username> <password> <sex:F/M>\n", cmd, cmd);
+			char username[NAME_LENGTH], password[NAME_LENGTH], md5password[32+1], sex; //23+1 plaintext 32+1 md5
+			bool md5 = 0;
+			if( sscanf(command, "%23s %23s %c", username, password, &sex) < 3 || strnlen(username, sizeof(username)) < 4 || strnlen(password, sizeof(password)) < 1 ){
+				ShowWarning("Console: Invalid parameters for '%s'. Usage: %s <username> <password> <sex:F/M>\n", type, type);
 				return 0;
 			}
-
-			if( mmo_auth_new(username, password, TOUPPER(sex), "0.0.0.0") != -1 )
-			{
+			if( login_config.use_md5_passwds ){
+				MD5_String(password,md5password);
+				md5 = 1;
+			}
+			if( mmo_auth_new(username,(md5?md5password:password), TOUPPER(sex), "0.0.0.0") != -1 ){
 				ShowError("Console: Account creation failed.\n");
 				return 0;
 			}
 			ShowStatus("Console: Account '%s' created successfully.\n", username);
 		}
+	}
+	else if( strcmpi("ers_report", type) == 0 ){
+		ers_report();
+	}
+	else if( strcmpi("help", type) == 0 ){
+		ShowInfo("Command available :\n");
+		ShowInfo("\t server:shutdown|alive => stop|chk server\n");
+		ShowInfo("\t ers_report => display the db usage\n");
+		ShowInfo("\t create:<username> <password> <sex:F|M> => create new account\n");
+	}
+
+	else
+	{// commands with parameters
+
+
+
 	}
 
 	return 0;
@@ -1916,10 +1929,6 @@ int do_init(int argc, char** argv)
 		}
 	}
 
-	if( login_config.console ) {
-		//##TODO invoke a CONSOLE_START plugin event
-	}
-
 	// server port open & binding
 	if( (login_fd = make_listen_bind(login_config.login_ip,login_config.login_port)) == -1 ) {
 		ShowFatalError("Failed to bind to port '"CL_WHITE"%d"CL_RESET"'\n",login_config.login_port);
@@ -1933,6 +1942,11 @@ int do_init(int argc, char** argv)
 
 	ShowStatus("The login-server is "CL_GREEN"ready"CL_RESET" (Server is listening on the port %u).\n\n", login_config.login_port);
 	login_log(0, "login server", 100, "login server started");
+
+	if( login_config.console ) {
+		add_timer_func_list(parse_console_timer, "parse_console_timer");
+		add_timer_interval(gettick()+1000, parse_console_timer, 0, 0, 1000); //start in 1s each 1sec
+	}
 
 	return 0;
 }

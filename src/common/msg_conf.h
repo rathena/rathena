@@ -23,9 +23,13 @@ enum lang_types {
 // 0xFF will enable all, while 0x00 will enable English only.
 #define LANG_ENABLE 0x00
 
+//read msg in table
 const char* _msg_txt(int msg_number,int size, char ** msg_table);
+//store msg from txtfile into msg_table
 int _msg_config_read(const char* cfgName,int size, char ** msg_table);
+//clear msg_table
 void _do_final_msg(int size, char ** msg_table);
+//Lookups
 int msg_langstr2langtype(char * langtype);
 const char* msg_langtype2langstr(int langtype);
 // Verify that the choosen langtype is enabled.

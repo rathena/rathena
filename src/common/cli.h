@@ -12,6 +12,8 @@
 extern "C" {
 #endif
 
+#define MAX_CONSOLE_IN 200 //max is map...
+#define MIN_CONSOLE_IN 4 //min is help
 //map
  extern char* MAP_CONF_NAME;
  extern char* INTER_CONF_NAME;
@@ -31,6 +33,8 @@ extern "C" {
 
 extern void display_helpscreen(bool exit);
 int cli_get_options(int argc, char ** argv);
+int parse_console_timer(int tid, unsigned int tick, int id, intptr_t data);
+extern int parse_console(const char* buf); //particular for each serv
 
 #ifdef	__cplusplus
 }

@@ -3100,8 +3100,7 @@ static int char_ip_set = 0;
 /*==========================================
  * Console Command Parser [Wizputer]
  *------------------------------------------*/
-int parse_console(const char* buf)
-{
+int parse_console(const char* buf){
 	char type[64];
 	char command[64];
 	char map[64];
@@ -3114,65 +3113,51 @@ int parse_console(const char* buf)
 	memset(&sd, 0, sizeof(struct map_session_data));
 	strcpy(sd.status.name, "console");
 
-	if( ( n = sscanf(buf, "%63[^:]:%63[^:]:%63s %hd %hd[^\n]", type, command, map, &x, &y) ) < 5 )
-	{
-		if( ( n = sscanf(buf, "%63[^:]:%63[^\n]", type, command) ) < 2 )
-		{
-			n = sscanf(buf, "%63[^\n]", type);
+	if( ( n = sscanf(buf, "%63[^:]:%63[^:]:%63s %hd %hd[^\n]", type, command, map, &x, &y) ) < 5 ){
+		if( ( n = sscanf(buf, "%63[^:]:%63[^\n]", type, command) ) < 2 )		{
+			if((n = sscanf(buf, "%63[^\n]", type))<1) return -1; //nothing to do no arg
 		}
 	}
 
-	if( n == 5 )
-	{
-		m = map_mapname2mapid(map);
-		if( m < 0 )
-		{
-			ShowWarning("Console: Unknown map.\n");
-			return 0;
-		}
-		sd.bl.m = m;
-		map_search_freecell(&sd.bl, m, &sd.bl.x, &sd.bl.y, -1, -1, 0);
-		if( x > 0 )
-			sd.bl.x = x;
-		if( y > 0 )
-			sd.bl.y = y;
-	}
-	else
-	{
+	if( n != 5 ){ //end string
 		map[0] = '\0';
 		if( n < 2 )
 			command[0] = '\0';
-		if( n < 1 )
-			type[0] = '\0';
 	}
 
 	ShowNotice("Type of command: '%s' || Command: '%s' || Map: '%s' Coords: %d %d\n", type, command, map, x, y);
 
-	if( n == 5 && strcmpi("admin",type) == 0 )
-	{
-		if( !is_atcommand(sd.fd, &sd, command, 0) )
+	if(strcmpi("admin",type) == 0 ) {
+		if(strcmpi("map",command) == 0){
+			 m = map_mapname2mapid(map);
+			if( m < 0 ){
+				ShowWarning("Console: Unknown map.\n");
+				return 0;
+			}
+			sd.bl.m = m;
+			map_search_freecell(&sd.bl, m, &sd.bl.x, &sd.bl.y, -1, -1, 0);
+			if( x > 0 )
+				sd.bl.x = x;
+			if( y > 0 )
+				sd.bl.y = y;
+		}
+		else if( !is_atcommand(sd.fd, &sd, command, 0) )
 			ShowInfo("Console: not atcommand\n");
 	}
-	else if( n == 2 && strcmpi("server", type) == 0 )
-	{
-		if( strcmpi("shutdown", command) == 0 || strcmpi("exit", command) == 0 || strcmpi("quit", command) == 0 )
-		{
+	else if( n == 2 && strcmpi("server", type) == 0 ){
+		if( strcmpi("shutdown", command) == 0 || strcmpi("exit", command) == 0 || strcmpi("quit", command) == 0 ){
 			runflag = 0;
 		}
 	}
 	else if( strcmpi("ers_report", type) == 0 ){
 		ers_report();
 	}
-	else if( strcmpi("help", type) == 0 )
-	{
-		ShowInfo("To use GM commands:\n");
-		ShowInfo("  admin:<gm command>:<map of \"gm\"> <x> <y>\n");
-		ShowInfo("You can use any GM command that doesn't require the GM.\n");
-		ShowInfo("No using @item or @warp however you can use @charwarp\n");
-		ShowInfo("The <map of \"gm\"> <x> <y> is for commands that need coords of the GM\n");
-		ShowInfo("IE: @spawn\n");
-		ShowInfo("To shutdown the server:\n");
-		ShowInfo("  server:shutdown\n");
+	else if( strcmpi("help", type) == 0 ) {
+		ShowInfo("Command available :\n");
+		ShowInfo("\t admin:@acmd => use an atcommand\n");
+		ShowInfo("\t admin:map:<map><x><y> => change our current map\n");
+		ShowInfo("\t server:shutdown => stop server\n");
+		ShowInfo("\t ers_report => display the db usage\n");
 	}
 
 	return 0;
@@ -3708,23 +3693,25 @@ struct msg_data *map_lang2msgdb(uint8 lang){
 }
 
 void map_do_init_msg(void){
-	map_msg_db = idb_alloc(DB_OPT_BASE);
+	int test=0, i=0, size;
+	char * listelang[] = {
+	    MSG_CONF_NAME_EN,	//default
+	    MSG_CONF_NAME_RUS,
+	    MSG_CONF_NAME_SPN,
+	    MSG_CONF_NAME_GRM,
+	    MSG_CONF_NAME_CHN,
+	    MSG_CONF_NAME_MAL,
+	    MSG_CONF_NAME_IDN,
+	    MSG_CONF_NAME_FRN
+	};
 
-	msg_config_read(MSG_CONF_NAME_EN,0); // English (default)
-	if( LANG_ENABLE&LANG_RUS )
-		msg_config_read(MSG_CONF_NAME_RUS,1);	// Russian
-	if( LANG_ENABLE&LANG_SPN )
-		msg_config_read(MSG_CONF_NAME_SPN,2);	// Spanish
-	if( LANG_ENABLE&LANG_GRM )
-		msg_config_read(MSG_CONF_NAME_GRM,3);	// German
-	if( LANG_ENABLE&LANG_CHN )
-		msg_config_read(MSG_CONF_NAME_CHN,4);	// Chinese
-	if( LANG_ENABLE&LANG_MAL )
-		msg_config_read(MSG_CONF_NAME_MAL,5);	// Malaysian
-	if( LANG_ENABLE&LANG_IDN )
-		msg_config_read(MSG_CONF_NAME_IDN,6);	// Indonesian
-	if( LANG_ENABLE&LANG_FRN )
-		msg_config_read(MSG_CONF_NAME_FRN,7);	// French
+	map_msg_db = idb_alloc(DB_OPT_BASE);
+	size = ARRAYLENGTH(listelang); //avoid recalc
+	while(test!=-1 &&  size>i){ //for all enable lang +(English default)
+		test = msg_checklangtype(i,false);
+		if(test == 1) msg_config_read(listelang[i],i); //if enable read it and assign i to langtype
+		i++;
+	}
 }
 void map_do_final_msg(void){
 	DBIterator *iter = db_iterator(map_msg_db);
@@ -3809,7 +3796,7 @@ int do_init(int argc, char *argv[])
 	GRF_PATH_FILENAME = "conf/grf-files.txt";
 
 	/* Multilanguage */
-	MSG_CONF_NAME_EN = "conf/msg_conf/map_msg.conf"; 			// English (default)
+	MSG_CONF_NAME_EN = "conf/msg_conf/map_msg.conf"; // English (default)
 	MSG_CONF_NAME_RUS = "conf/msg_conf/map_msg_rus.conf";	// Russian
 	MSG_CONF_NAME_SPN = "conf/msg_conf/map_msg_spn.conf";	// Spanish
 	MSG_CONF_NAME_GRM = "conf/msg_conf/map_msg_grm.conf";	// German
@@ -3906,11 +3893,6 @@ int do_init(int argc, char *argv[])
 
 	npc_event_do_oninit();	// Init npcs (OnInit)
 
-	if( console )
-	{
-		//##TODO invoke a CONSOLE_START plugin event
-	}
-
 	if (battle_config.pk_mode)
 		ShowNotice("Server is running on '"CL_WHITE"PK Mode"CL_RESET"'.\n");
 
@@ -3925,6 +3907,11 @@ int do_init(int argc, char *argv[])
 	if( buildbotflag )
 		exit(EXIT_FAILURE);
 #endif
+
+	if( console ){ //start listening
+		add_timer_func_list(parse_console_timer, "parse_console_timer");
+		add_timer_interval(gettick()+1000, parse_console_timer, 0, 0, 1000); //start in 1s each 1sec
+	}
 
 	return 0;
 }

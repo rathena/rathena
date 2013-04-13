@@ -6,10 +6,10 @@
 #include "msg_conf.h"
 #include "showmsg.h"
 
-//-----------------------------------------------------------
-// Return the message string of the specified number by [Yor]
-//-----------------------------------------------------------
-
+/*
+ * Return the message string of the specified number by [Yor]
+ * (read in table msg_table, with specified lenght table in size)
+ */
 const char* _msg_txt(int msg_number,int size, char ** msg_table)
 {
     if (msg_number >= 0 && msg_number < size &&
@@ -19,9 +19,10 @@ const char* _msg_txt(int msg_number,int size, char ** msg_table)
     return "??";
 }
 
-/*==========================================
- * Read Message Data
- *------------------------------------------*/
+
+/*
+ * Read txt file and store them into msg_table
+ */
 int _msg_config_read(const char* cfgName,int size, char ** msg_table)
 {
 	int msg_number;
@@ -62,9 +63,9 @@ int _msg_config_read(const char* cfgName,int size, char ** msg_table)
 	return 0;
 }
 
-/*==========================================
- * Cleanup Message Data
- *------------------------------------------*/
+/*
+ * Destroy msg_table (freeup mem)
+ */
 void _do_final_msg(int size, char ** msg_table){
     int i;
     for (i = 0; i < size; i++)
@@ -89,6 +90,10 @@ int msg_langstr2langtype(char * langtype){
 	return lang;
 }
 
+/*
+ * lookup a langtype into his associate lang string
+ * return ?? if not found
+ */
 const char* msg_langtype2langstr(int langtype){
 	switch(langtype){
 		case 0: return "English (ENG)";

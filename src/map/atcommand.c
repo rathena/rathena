@@ -9076,38 +9076,38 @@ ACMD_FUNC(fontcolor)
 
 ACMD_FUNC(langtype)
 {
-	char langtype[8];
-	int lang=-1;
-	memset(langtype, '\0', sizeof(langtype));
+	char langstr[8];
+	int i=0, test=0; char output[100];
 
-	if(sscanf(message, "%3s", langtype) < 1){
-		clif_displaymessage(fd,msg_txt(sd,460)); // Please enter a valid language (usage: @langtype <language>).
-	}
+	memset(langstr, '\0', sizeof(langstr));
+	memset(output, '\0', sizeof(output));
 
-	lang = msg_langstr2langtype(langtype); //Switch langstr to associated langtype
-	if( msg_checklangtype(lang,false) == 1 ){ //Verify it's enabled and set it
-		char output[100];
-		pc_setaccountreg(sd, "#langtype", lang); //For login/char
-		sd->langtype = lang;
-		sprintf(output,msg_txt(sd,461),msg_langtype2langstr(lang)); // Language is now set to %s.
-		clif_displaymessage(fd,output);
-		return 0;
-	} else if (lang != -1) {
- 		clif_displaymessage(fd,msg_txt(sd,462)); // This langage is currently disabled.
-		return -1;
-	} else {
-		int i=0, test=0; char output[100];
-		clif_displaymessage(fd,msg_txt(sd,464)); // Available languages:
-		while(test!=-1){ //out of range
-			test = msg_checklangtype(i,false);
-			if(test == 1) {
-				sprintf(output,"%s\n",msg_langtype2langstr(i));
-				clif_displaymessage(fd,output);
-			}
-			i++;
+	if(sscanf(message, "%3s", langstr) >= 1){
+		int lang=-1;
+		lang = msg_langstr2langtype(langstr); //Switch langstr to associated langtype
+		if( msg_checklangtype(lang,false) == 1 ){ //Verify it's enabled and set it
+			char output[100];
+			pc_setaccountreg(sd, "#langtype", lang); //For login/char
+			sd->langtype = lang;
+			sprintf(output,msg_txt(sd,461),msg_langtype2langstr(lang)); // Language is now set to %s.
+			clif_displaymessage(fd,output);
+			return 0;
+		} else if (lang != -1) { //defined langage but failed check
+			clif_displaymessage(fd,msg_txt(sd,462)); // This langage is currently disabled.
+			return -1;
 		}
-		return -1;
 	}
+
+	//wrong or no entry
+	clif_displaymessage(fd,msg_txt(sd,460)); // Please enter a valid language (usage: @langtype <language>).
+	clif_displaymessage(fd,msg_txt(sd,464)); // Available languages:
+	while(test!=-1){ //out of range
+		test = msg_checklangtype(i,false);
+		if(test == 1) 
+			clif_displaymessage(fd,msg_langtype2langstr(i));
+		i++;
+	}
+	return -1;
 }
 
 ACMD_FUNC(reloadmsgconf)
