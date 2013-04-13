@@ -3128,7 +3128,7 @@ Example 2:
 
 *getskilllist;
 
-This command sets a bunch of arrays with a complete list of skills the 
+This command sets a bunch of arrays with a complete list of skills the
 invoking character has. Here's what you get:
 
 @skilllist_id[]   - skill ids.
@@ -3140,6 +3140,8 @@ While 'getskillv' is probably more useful for most situations, this is the
 easiest way to store all the skills and make the character something else for a 
 while. Advanced job for a day? :) This could also be useful to see how many 
 skills a character has.
+
+This command does not count skills which are set as flag 4 (permament granted) (ALL_BUYING_STORE/ALL_INCCARRY)
 
 ---------------------------------------
 
@@ -3234,6 +3236,7 @@ Example:
 Returns the total amount of skill points a character possesses (SkillPoint+SP's used in skills)
 This command can be used to check the currently attached characters total amount of skill points.
 This means the skill points used in skill are counted, and added to SkillPoints (number of skill points not used).
+This command does not count skills which are set as flag 4 (permament granted) (ALL_BUYING_STORE/ALL_INCCARRY)
 
 Example:
 
@@ -5064,6 +5067,9 @@ item scripts usage.).  The flag parameter is optional, and defaults to 1 in
 Flag 2 means that the level parameter is to be interpreted as a stackable 
 additional bonus to the skill level. If the character did not have that skill 
 previously, they will now at 0+the level given.
+
+Flag 4 is the same as flag 1 in that it saves to the database.  However, these skills
+are ignored when any action is taken that adjusts the skill tree (reset/job change).
 
 // This will permanently give the character Stone Throw (TF_THROWSTONE,152), at 
 // level 1.
