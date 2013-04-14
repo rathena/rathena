@@ -4363,15 +4363,16 @@ int parse_console(const char* buf)
 			runflag = 0;
 		}
 		else if( strcmpi("alive", command) == 0 || strcmpi("status", command) == 0 )
-		ShowInfo(CL_CYAN"Console: "CL_BOLD"I'm Alive."CL_RESET"\n");
+			ShowInfo(CL_CYAN"Console: "CL_BOLD"I'm Alive."CL_RESET"\n");
 	}
 	else if( strcmpi("ers_report", type) == 0 ){
 		ers_report();
 	}
 	else if( strcmpi("help", type) == 0 ){
-		ShowInfo("Command available :\n");
-		ShowInfo("\t server:shutdown|alive => stop server\n");
-		ShowInfo("\t ers_report => display the db usage\n");
+		ShowInfo("Available commands:\n");
+		ShowInfo("\t server:shutdown => Stops the server.\n");
+		ShowInfo("\t server:alive => Checks if the server is running.\n");
+		ShowInfo("\t ers_report => Displays database usage.\n");
 	}
 
 	return 0;

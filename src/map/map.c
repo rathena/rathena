@@ -3129,7 +3129,7 @@ int parse_console(const char* buf){
 
 	if(strcmpi("admin",type) == 0 ) {
 		if(strcmpi("map",command) == 0){
-			 m = map_mapname2mapid(map);
+			m = map_mapname2mapid(map);
 			if( m < 0 ){
 				ShowWarning("Console: Unknown map.\n");
 				return 0;
@@ -3142,7 +3142,7 @@ int parse_console(const char* buf){
 				sd.bl.y = y;
 		}
 		else if( !is_atcommand(sd.fd, &sd, command, 0) )
-			ShowInfo("Console: not atcommand\n");
+			ShowInfo("Console: Invalid atcommand.\n");
 	}
 	else if( n == 2 && strcmpi("server", type) == 0 ){
 		if( strcmpi("shutdown", command) == 0 || strcmpi("exit", command) == 0 || strcmpi("quit", command) == 0 ){
@@ -3153,11 +3153,11 @@ int parse_console(const char* buf){
 		ers_report();
 	}
 	else if( strcmpi("help", type) == 0 ) {
-		ShowInfo("Command available :\n");
-		ShowInfo("\t admin:@acmd => use an atcommand\n");
-		ShowInfo("\t admin:map:<map><x><y> => change our current map\n");
-		ShowInfo("\t server:shutdown => stop server\n");
-		ShowInfo("\t ers_report => display the db usage\n");
+		ShowInfo("Available commands:\n");
+		ShowInfo("\t admin:@<atcommand> => Uses an atcommand. Do NOT use commands requiring an attached player.\n");
+		ShowInfo("\t admin:map:<map><x><y> => Changes the map from which console commands are executed.\n");
+		ShowInfo("\t server:shutdown => Stops the server.\n");
+		ShowInfo("\t ers_report => Displays database usage.\n");
 	}
 
 	return 0;
@@ -3707,9 +3707,9 @@ void map_do_init_msg(void){
 
 	map_msg_db = idb_alloc(DB_OPT_BASE);
 	size = ARRAYLENGTH(listelang); //avoid recalc
-	while(test!=-1 &&  size>i){ //for all enable lang +(English default)
+	while(test!=-1 && size>i){ //for all enable lang +(English default)
 		test = msg_checklangtype(i,false);
-		if(test == 1) msg_config_read(listelang[i],i); //if enable read it and assign i to langtype
+		if(test == 1) msg_config_read(listelang[i],i); //if enabled read it and assign i to langtype
 		i++;
 	}
 }

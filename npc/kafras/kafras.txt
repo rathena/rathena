@@ -328,7 +328,7 @@ yuno,327,108,4	script	Kafra Employee::kaf_yuno2	860,{
 
 yuno,277,221,4	script	Kafra Employee::kaf_yuno3	861,{
 	cutin "kafra_09",2;
-	callfunc "F_KafSetYun";
+	callfunc "F_KafSet";
 	mes "[Kafra Employee]";
 	mes "The Kafra Corporation";
 	mes "is always working to provide";

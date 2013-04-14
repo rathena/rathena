@@ -9100,7 +9100,7 @@ ACMD_FUNC(langtype)
 
 	//wrong or no entry
 	clif_displaymessage(fd,msg_txt(sd,460)); // Please enter a valid language (usage: @langtype <language>).
-	clif_displaymessage(fd,msg_txt(sd,464)); // Available languages:
+	clif_displaymessage(fd,msg_txt(sd,464)); // ---- Available languages:
 	while(test!=-1){ //out of range
 		test = msg_checklangtype(i,false);
 		if(test == 1) 

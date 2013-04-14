@@ -380,13 +380,13 @@ int parse_console(const char* buf){
 	}
 	ShowNotice("Type of command: '%s' || Command: '%s'\n",type,command);
 
-	if( n == 2){
+	if( n == 2 ){
 		if(strcmpi("server", type) == 0 ){
 			if( strcmpi("shutdown", command) == 0 || strcmpi("exit", command) == 0 || strcmpi("quit", command) == 0 ){
 				runflag = 0;
 			}
 			else if( strcmpi("alive", command) == 0 || strcmpi("status", command) == 0 )
-			ShowInfo(CL_CYAN"Console: "CL_BOLD"I'm Alive."CL_RESET"\n");
+				ShowInfo(CL_CYAN"Console: "CL_BOLD"I'm Alive."CL_RESET"\n");
 		}
 		if( strcmpi("create",type) == 0 )
 		{
@@ -411,14 +411,13 @@ int parse_console(const char* buf){
 		ers_report();
 	}
 	else if( strcmpi("help", type) == 0 ){
-		ShowInfo("Command available :\n");
-		ShowInfo("\t server:shutdown|alive => stop|chk server\n");
-		ShowInfo("\t ers_report => display the db usage\n");
-		ShowInfo("\t create:<username> <password> <sex:F|M> => create new account\n");
+		ShowInfo("Available commands:\n");
+		ShowInfo("\t server:shutdown => Stops the server.\n");
+		ShowInfo("\t server:alive => Checks if the server is running.\n");
+		ShowInfo("\t ers_report => Displays database usage.\n");
+		ShowInfo("\t create:<username> <password> <sex:M|F> => Creates a new account.\n");
 	}
-
-	else
-	{// commands with parameters
+	else{ // commands with parameters
 
 
 
