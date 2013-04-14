@@ -20,6 +20,7 @@
 //=     - L0ne_W0lf, kobra_k88, Samuray22, Evera, Lupus
 //= 1.0 Merged and cleaned up Kafras. [Joseph]
 //= 1.1 Added Izlude RE coordinates. [Euphy]
+//= 1.1a Fixed Pre-RE Call and some leftovers. [Lemongrass]
 //============================================================ 
 
 // Aldebaran
@@ -598,7 +599,11 @@ niflheim,202,180,3	script	Kafra Employee::kaf_niflheim	791,{
 // - Byalan Island
 izlu2dun,106,58,8	script	Kafra Employee::kaf_izlu2dun	115,{
 	cutin "kafra_03",2;
-	if(BaseJob==Job_Novice && job_merchant_q2>0) callfunc "F_MercKafra";  //F_MercKafra found in merchant.txt
+	if( !checkre(0) && BaseJob==Job_Novice && job_merchant_q2 > 0 ){
+		// Merchant Job Change Quest
+		// function F_MercKafra is found in /pre-re/jobs/1-1/merchant.txt
+		callfunc "F_MercKafra";
+	}
 	mes "[Kafra Employee]";
 	mes "Welcome to the";
 	mes "Kafra Corporation.";
@@ -621,10 +626,8 @@ prt_fild05,290,224,3	script	Kafra Employee::prt_fild05	114,{
 	mes "with its excellent service. So";
 	mes "what can I do for you today?";
 	callfunc "F_Kafra",5,1,1,40,0;
-
-	M_Save:
-		savepoint "prt_fild05",274,243;
-		callfunc "F_KafEnd",0,1, "at the Prontera Culverts";
+	savepoint "prt_fild05",274,243;
+	callfunc "F_KafEnd",0,1, "at the Prontera Culverts";
 }
 
 // - Coal Mine (Dead Pitt)
