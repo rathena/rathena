@@ -5367,12 +5367,12 @@ void clif_status_change(struct block_list *bl,int type,int flag,int tick,int val
 	WBUFL(buf,4)=bl->id;
 	WBUFB(buf,8)=flag;
 #if PACKETVER >= 20120618
-	WBUFL(buf,9)=tick;/* at this stage remain and total are the same value I believe */
-	WBUFL(buf,13)=tick;
 	if(flag && battle_config.display_status_timers && sd) {
 		if (tick <= 0)
 			tick = 9999; // this is indeed what official servers do
-
+		
+		WBUFL(buf,9)=tick;/* at this stage remain and total are the same value I believe */
+		WBUFL(buf,13)=tick;
 		WBUFL(buf,17) = val1;
 		WBUFL(buf,21) = val2;
 		WBUFL(buf,25) = val3;
@@ -6700,7 +6700,7 @@ void clif_party_option(struct party_data *p,struct map_session_data *sd,int flag
 
 	if(!sd && flag==0){
 		int i;
-		for(i=0;i<MAX_PARTY && !p->data[i].sd;i++);
+		ARR_FIND(0,MAX_PARTY,i,!p->data[i].sd);
 		if (i < MAX_PARTY)
 			sd = p->data[i].sd;
 	}
@@ -6733,9 +6733,9 @@ void clif_party_withdraw(struct party_data* p, struct map_session_data* sd, int 
 	if(!sd && (flag&0xf0)==0)
 	{
 		int i;
-		for(i=0;i<MAX_PARTY && !p->data[i].sd;i++);
-			if (i < MAX_PARTY)
-				sd = p->data[i].sd;
+		ARR_FIND(0,MAX_PARTY,i,!p->data[i].sd);
+		if (i < MAX_PARTY)
+			sd = p->data[i].sd;
 	}
 
 	if(!sd) return;
@@ -6760,7 +6760,7 @@ void clif_party_message(struct party_data* p, int account_id, const char* mes, i
 
 	nullpo_retv(p);
 
-	for(i=0; i < MAX_PARTY && !p->data[i].sd;i++);
+	ARR_FIND(0,MAX_PARTY,i,!p->data[i].sd);
 	if(i < MAX_PARTY){
 		unsigned char buf[1024];
 
