@@ -2194,12 +2194,11 @@ void skill_combo_toogle_inf(struct block_list* bl, uint16 skill_id, int inf){
 	case MH_MIDNIGHT_FRENZY:
 	case MH_EQC:{
 		int skill_id2 = ((skill_id==MH_EQC)?MH_TINDER_BREAKER:MH_SONIC_CRAW);
-		int idx = skill_get_index(skill_id2);
+		int idx = skill_id2 - HM_SKILLBASE;
 		int flag = (inf?SKILL_FLAG_TMP_COMBO:SKILL_FLAG_PERMANENT);
 		TBL_HOM *hd = BL_CAST(BL_HOM, bl);
 		sd = hd->master;
-//		if (sd) clif_skillinfo(sd,skill_id2, inf);
-		hd->homunculus.hskill[idx].flag= SKILL_FLAG_TMP_COMBO;
+		hd->homunculus.hskill[idx].flag= flag;
 		if(sd) clif_homskillinfoblock(sd); //refresh info //@FIXME we only want to refresh one skill
 	}
 	break;
@@ -4718,14 +4717,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 	}
 	case MH_TINDER_BREAKER:
-		if (unit_movepos(src, bl->x, bl->y, 1, 1)) {
-#if PACKETVER >= 20111005
-			clif_snap(src, bl->x, bl->y);
-#else
-			clif_skill_poseffect(src,skill_id,skill_lv,bl->x,bl->y,tick);
-#endif
-
-		}
 	case MH_CBC:
 	case MH_EQC: {
 		int duration=0;
@@ -4735,6 +4726,14 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start4(src,bl,status_skill2sc(skill_id),100,skill_lv,src->id,0,0,duration));
+		if (skill_id==MH_TINDER_BREAKER && unit_movepos(src, bl->x, bl->y, 1, 1)) {
+#if PACKETVER >= 20111005
+			clif_snap(src, bl->x, bl->y);
+#else
+			clif_skill_poseffect(src,skill_id,skill_lv,bl->x,bl->y,tick);
+#endif
+
+		}
 		break;
 	}
 

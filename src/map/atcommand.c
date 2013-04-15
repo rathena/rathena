@@ -9077,10 +9077,9 @@ ACMD_FUNC(fontcolor)
 ACMD_FUNC(langtype)
 {
 	char langstr[8];
-	int i=0, test=0; char output[100];
+	int i=0, test=0;
 
 	memset(langstr, '\0', sizeof(langstr));
-	memset(output, '\0', sizeof(output));
 
 	if(sscanf(message, "%3s", langstr) >= 1){
 		int lang=-1;
@@ -9103,7 +9102,7 @@ ACMD_FUNC(langtype)
 	clif_displaymessage(fd,msg_txt(sd,464)); // ---- Available languages:
 	while(test!=-1){ //out of range
 		test = msg_checklangtype(i,false);
-		if(test == 1) 
+		if(test == 1)
 			clif_displaymessage(fd,msg_langtype2langstr(i));
 		i++;
 	}

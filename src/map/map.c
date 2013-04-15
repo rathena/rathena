@@ -3119,13 +3119,19 @@ int parse_console(const char* buf){
 		}
 	}
 
-	if( n != 5 ){ //end string
-		map[0] = '\0';
-		if( n < 2 )
+	if( n != 5 ){ //end string and display
+		if( n < 2 ) {
+			ShowNotice("Type of command: '%s'\n", type);
 			command[0] = '\0';
+			map[0] = '\0';
+		}
+		else {
+			ShowNotice("Type of command: '%s' || Command: '%s'\n", type, command);
+			map[0] = '\0';
+		}
 	}
-
-	ShowNotice("Type of command: '%s' || Command: '%s' || Map: '%s' Coords: %d %d\n", type, command, map, x, y);
+	else
+		ShowNotice("Type of command: '%s' || Command: '%s' || Map: '%s' Coords: %d %d\n", type, command, map, x, y);
 
 	if(strcmpi("admin",type) == 0 ) {
 		if(strcmpi("map",command) == 0){
@@ -3140,6 +3146,7 @@ int parse_console(const char* buf){
 				sd.bl.x = x;
 			if( y > 0 )
 				sd.bl.y = y;
+			ShowNotice("Now at : '%s' Coords: %d %d\n", map, x, y);
 		}
 		else if( !is_atcommand(sd.fd, &sd, command, 0) )
 			ShowInfo("Console: Invalid atcommand.\n");

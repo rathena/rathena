@@ -376,9 +376,11 @@ int parse_console(const char* buf){
 		if((n = sscanf(buf, "%63[^\n]", type))<1) return -1; //nothing to do no arg
 	}
 	if( n != 2 ){ //end string
+		ShowNotice("Type: '%s'\n",type);
 		command[0] = '\0';
 	}
-	ShowNotice("Type of command: '%s' || Command: '%s'\n",type,command);
+	else
+		ShowNotice("Type of command: '%s' || Command: '%s'\n",type,command);
 
 	if( n == 2 ){
 		if(strcmpi("server", type) == 0 ){
