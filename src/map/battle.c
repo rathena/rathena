@@ -2353,15 +2353,13 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					break;
 				case NPC_DARKCROSS:
 				case CR_HOLYCROSS:
-				{
-					int ratio = 35*skill_lv;
 					#ifdef RENEWAL
 						if(sd && sd->status.weapon == W_2HSPEAR)
-							ratio *= 2;
+							skillratio += 2*(35*skill_lv);
+						else
 					#endif
-					skillratio += ratio;
+					skillratio += 35*skill_lv;
 					break;
-				}
 				case AM_DEMONSTRATION:
 					skillratio += 20*skill_lv;
 					break;
@@ -2376,12 +2374,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					flag.pdef = flag.pdef2 = 2;
 					break;
 				case MO_EXTREMITYFIST:
-					{	//Overflow check. [Skotlex]
-						unsigned int ratio = skillratio + 100*(8 + sstatus->sp/10);
-						//You'd need something like 6K SP to reach this max, so should be fine for most purposes.
-						if (ratio > 60000) ratio = 60000; //We leave some room here in case skillratio gets further increased.
-						skillratio = (unsigned short)ratio;
-					}
+					skillratio += 100*(8 + sstatus->sp/10) - 100;
+					skillratio = min(500000,skillratio); //We stop at roughly 50k SP for overflow protection
 					break;
 				case MO_TRIPLEATTACK:
 					skillratio += 20*skill_lv;

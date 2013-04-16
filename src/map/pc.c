@@ -1392,8 +1392,12 @@ int pc_calc_skilltree(struct map_session_data *sd)
 						}
 					}
 				}
-				if( sd->status.job_level < skill_tree[c][i].joblv )
-					f = 0; // job level requirement wasn't satisfied
+				if( sd->status.job_level < skill_tree[c][i].joblv ) { //We need to get the actual class in this case
+					int class = pc_mapid2jobid(sd->class_, sd->status.sex);
+					class = pc_class2idx(class);
+					if (class == c || (class != c && sd->status.job_level < skill_tree[class][i].joblv))
+						f = 0; // job level requirement wasn't satisfied
+				}
 			}
 
 			if( f ) {

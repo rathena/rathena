@@ -2704,7 +2704,7 @@ int status_calc_pc_(struct map_session_data* sd, bool first)
 	}
 
 	// If a Super Novice has never died and is at least joblv 70, he gets all stats +10
-	if((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->die_counter == 0 && sd->status.job_level >= 70){
+	if(((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && (sd->status.job_level >= 70  || sd->class_&JOBL_THIRD)) && sd->die_counter == 0){
 		status->str += 10;
 		status->agi += 10;
 		status->vit += 10;
@@ -5342,10 +5342,10 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, s
 			skills1 = 5;
 
 		if(sc->data[SC_ASSNCROS] &&
-			skills1 < 5+1*sc->data[SC_ASSNCROS]->val1) // needs more info
+			skills1 < sc->data[SC_ASSNCROS]->val2/10)
 		{
 			if (bl->type!=BL_PC)
-				skills1 = 4+1*sc->data[SC_ASSNCROS]->val1;
+				skills1 = sc->data[SC_ASSNCROS]->val2/10;
 			else
 			switch(((TBL_PC*)bl)->status.weapon)
 			{
@@ -5357,7 +5357,7 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, s
 				case W_GRENADE:
 					break;
 				default:
-					skills1 = 5+1*sc->data[SC_ASSNCROS]->val1;
+					skills1 = sc->data[SC_ASSNCROS]->val2/10;
 			}
 		}
 	}
