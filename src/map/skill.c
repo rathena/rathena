@@ -16808,7 +16808,7 @@ static void skill_toggle_magicpower(struct block_list *bl, uint16 skill_id)
 #ifndef RENEWAL
 			if(bl->type == BL_PC){// update current display.
 				clif_updatestatus(((TBL_PC *)bl),SP_MATK1);
-			    clif_updatestatus(((TBL_PC *)bl),SP_MATK2);
+				clif_updatestatus(((TBL_PC *)bl),SP_MATK2);
 			}
 #endif
 		}

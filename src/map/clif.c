@@ -5370,7 +5370,7 @@ void clif_status_change(struct block_list *bl,int type,int flag,int tick,int val
 	if(flag && battle_config.display_status_timers && sd) {
 		if (tick <= 0)
 			tick = 9999; // this is indeed what official servers do
-		
+
 		WBUFL(buf,9)=tick;/* at this stage remain and total are the same value I believe */
 		WBUFL(buf,13)=tick;
 		WBUFL(buf,17) = val1;

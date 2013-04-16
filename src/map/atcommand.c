@@ -8928,7 +8928,7 @@ ACMD_FUNC(channel)
 				WFIFOSET(fd, msg_len + 12);
 			}
 		} else {
-			DBIterator *iter = db_iterator(channel_db);
+			DBIterator *iter;
 			bool show_all = pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ? true : false;
 			clif_displaymessage(fd, msg_txt(sd,1410)); // ---- Public Channels ----
 			if( raChSys.local ) {
@@ -8941,6 +8941,7 @@ ACMD_FUNC(channel)
 				sprintf(atcmd_output, msg_txt(sd,1409), raChSys.ally_name, db_size(((struct raChSysCh *)g->channel)->users));// - #%s ( %d users )
 				clif_displaymessage(fd, atcmd_output);
 			}
+			iter = db_iterator(channel_db);
 			for(channel = dbi_first(iter); dbi_exists(iter); channel = dbi_next(iter)) {
 				if( show_all || channel->type == raChSys_PUBLIC ) {
 					sprintf(atcmd_output, msg_txt(sd,1409), channel->name, db_size(channel->users));// - #%s (%d users)
