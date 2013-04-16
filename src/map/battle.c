@@ -1954,7 +1954,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	if (flag.cri)
 	{
 		wd.type = 0x0a;
+#ifdef RENEWAL
+		flag.hit = 1;
+#else
 		flag.idef = flag.idef2 = flag.hit = 1;
+#endif
 	} else {	//Check for Perfect Hit
 		if(sd && sd->bonus.perfect_hit > 0 && rnd()%100 < sd->bonus.perfect_hit)
 			flag.hit = 1;
@@ -3453,6 +3457,12 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		wd.damage = battle_calc_cardfix(BF_WEAPON, src, target, nk, s_ele, s_ele_, wd.damage, 2, wd.flag);
 		if( flag.lh )
 			wd.damage2 = battle_calc_cardfix(BF_WEAPON, src, target, nk, s_ele, s_ele_, wd.damage2, 3, wd.flag);
+
+#ifdef RENEWAL
+		if( flag.cri ){
+			ATK_ADDRATE( sd->bonus.crit_atk_rate >= 100 ? sd->bonus.crit_atk_rate - 60 : 40 ); 
+		}
+#endif
 
 		if( skill_id == CR_SHIELDBOOMERANG || skill_id == PA_SHIELDCHAIN )
 		{ //Refine bonus applies after cards and elements.

@@ -2138,6 +2138,10 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 		return strchr(start,'\n');// skip and continue
 	}
 
+	if( m != -1 && ( x < 0 || x >= map[m].xs || y < 0 || y >= map[m].ys ) ) { 
+		ShowWarning("npc_parse_warp: coordinates %d/%d are out of bounds in map %s(%dx%d), in file '%s', line '%d'\n", x, y, map[m].name, map[m].xs, map[m].ys,filepath,strline(buffer,start-buffer));
+	}
+
 	CREATE(nd, struct npc_data, 1);
 
 	nd->bl.id = npc_get_new_npc_id();
@@ -2202,6 +2206,10 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 
 		m = map_mapname2mapid(mapname);
 	}
+
+	if( m != -1 && ( x < 0 || x >= map[m].xs || y < 0 || y >= map[m].ys ) ) {
+		ShowWarning("npc_parse_shop: coordinates %d/%d are out of bounds in map %s(%dx%d), in file '%s', line '%d'\n", x, y, map[m].name, map[m].xs, map[m].ys,filepath,strline(buffer,start-buffer));
+	} 
 
 	if( !strcasecmp(w2,"cashshop") )
 		type = CASHSHOP;
@@ -2586,6 +2594,10 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 			return end;// next line, try to continue
 		}
 		m = map_mapname2mapid(mapname);
+	}
+
+	if( m != -1 && ( x < 0 || x >= map[m].xs || y < 0 || y >= map[m].ys ) ) {
+		ShowError("npc_parse_duplicate: coordinates %d/%d are out of bounds in map %s(%dx%d), in file '%s', line '%d'\n", x, y, map[m].name, map[m].xs, map[m].ys,filepath,strline(buffer,start-buffer));
 	}
 
 	if( type == WARP && sscanf(w4, "%d,%d", &xs, &ys) == 2 );// <spanx>,<spany>

@@ -9215,7 +9215,6 @@ int status_change_clear(struct block_list* bl, int type) {
 	sc->opt1 = 0;
 	sc->opt2 = 0;
 	sc->opt3 = 0;
-	sc->option &= OPTION_MASK;
 
 	if( type == 0 || type == 2 )
 		clif_changeoption(bl);
@@ -10091,6 +10090,9 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		if (--(sce->val4) >= 0) {
 			int hp =  rnd()%600 + 200;
 			struct block_list* src = map_id2bl(sce->val2);
+			if( src && bl && bl->type == BL_MOB ){
+				mob_log_damage( (TBL_MOB*)bl, src, sd || hp < status->hp ? hp : status->hp - 1 ); 
+			}
 			map_freeblock_lock();
 			status_fix_damage(src, bl, sd||hp<status->hp?hp:status->hp-1, 1);
 			if( sc->data[type] ) {

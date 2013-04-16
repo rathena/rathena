@@ -1519,7 +1519,6 @@ enum {
 
 	// compound constants
 	OPTION_DRAGON    = OPTION_DRAGON1|OPTION_DRAGON2|OPTION_DRAGON3|OPTION_DRAGON4|OPTION_DRAGON5,
-	OPTION_MASK      = ~OPTION_INVISIBLE,
 };
 
 //Defines for the manner system [Skotlex]

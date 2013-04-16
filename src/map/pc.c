@@ -521,9 +521,9 @@ int pc_makesavestatus(struct map_session_data *sd)
   	//Only copy the Cart/Peco/Falcon options, the rest are handled via
 	//status change load/saving. [Skotlex]
 #ifdef NEW_CARTS
-	sd->status.option = sd->sc.option&(OPTION_FALCON|OPTION_RIDING|OPTION_DRAGON|OPTION_WUG|OPTION_WUGRIDER|OPTION_MADOGEAR|OPTION_MOUNTING);
+	sd->status.option = sd->sc.option&(OPTION_INVISIBLE|OPTION_FALCON|OPTION_RIDING|OPTION_DRAGON|OPTION_WUG|OPTION_WUGRIDER|OPTION_MADOGEAR|OPTION_MOUNTING);
 #else
-	sd->status.option = sd->sc.option&(OPTION_CART|OPTION_FALCON|OPTION_RIDING|OPTION_DRAGON|OPTION_WUG|OPTION_WUGRIDER|OPTION_MADOGEAR|OPTION_MOUNTING);
+	sd->status.option = sd->sc.option&(OPTION_INVISIBLE|OPTION_CART|OPTION_FALCON|OPTION_RIDING|OPTION_DRAGON|OPTION_WUG|OPTION_WUGRIDER|OPTION_MADOGEAR|OPTION_MOUNTING);
 #endif
 	if (sd->sc.data[SC_JAILED])
 	{	//When Jailed, do not move last point.
@@ -1005,12 +1005,11 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	pc_setinventorydata(sd);
 	pc_setequipindex(sd);
 
-	status_change_init(&sd->bl);
+	if( sd->status.option&OPTION_INVISIBLE && !pc_can_use_command( sd, "hide", COMMAND_ATCOMMAND ) ){
+		sd->status.option &= ~OPTION_INVISIBLE;
+	}
 
-	if (pc_can_use_command(sd, "hide", COMMAND_ATCOMMAND))
-		sd->status.option &= (OPTION_MASK | OPTION_INVISIBLE);
-	else
-		sd->status.option &= OPTION_MASK;
+	status_change_init(&sd->bl);
 
 	sd->sc.option = sd->status.option; //This is the actual option used in battle.
 	//Set here because we need the inventory data for weapon sprite parsing.
@@ -1236,6 +1235,21 @@ int pc_reg_received(struct map_session_data *sd)
 	}
 
 	pc_inventory_rentals(sd);
+
+	if( sd->sc.option&OPTION_INVISIBLE ) {
+		sd->vd.class_ = INVISIBLE_CLASS;
+		clif_displaymessage( sd->fd, msg_txt( sd, 11 ) ); // Invisible: On
+		// decrement the number of pvp players on the map
+		map[sd->bl.m].users_pvp--;
+
+		if( map[sd->bl.m].flag.pvp && !map[sd->bl.m].flag.pvp_nocalcrank && sd->pvp_timer != INVALID_TIMER ){
+			// unregister the player for ranking
+			delete_timer( sd->pvp_timer, pc_calc_pvprank_timer );
+			sd->pvp_timer = INVALID_TIMER;
+		}
+
+		clif_changeoption( &sd->bl );
+	} 
 
 	return 1;
 }
