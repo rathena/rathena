@@ -68,9 +68,9 @@ moc_para01,44,38,3	script	Mission [71 - 85]	857,{
 			mes "- I'm asking you to hunt -";
 			mes "- some monster inside of.-";
 			mes "- the Clock Tower, -";
-			mes "- Risingeter. -";
+			mes "- Lisingshetter. -";
 			callsub L_Quest,10105,4;
-			mes "- Look for Risingeter -";
+			mes "- Look for Lisingshetter -";
 			mes "- in front of the -";
 			mes "- Clock Tower. -";
 			close;
@@ -421,17 +421,17 @@ aldebaran,144,230,3	script	Jeanbai	900,{
 	close;
 }
 
-aldebaran,105,116,3	script	Risingeter	869,{
+aldebaran,105,116,3	script	Lisingshetter	869,{
 	if ((checkquest(10118) == 2) && (checkquest(10119) == 2) && (checkquest(10120 == 2)) && (slv_quest == 6)) {
 		set slv_quest,0;
-		mes "[Risingeter]";
+		mes "[Lisingshetter]";
 		mes "You've completed all of my missions.";
 		mes "Amazing~! I will inform the Eden Group.";
 		mes "of your assistance. Thanks again!";
 		close;
 	}
 	if (checkquest(10118) == 1 || checkquest(10119) == 1 || checkquest(10120) == 1) {
-		mes "[Risingeter]";
+		mes "[Lisingshetter]";
 		mes "Wow. Are you done?";
 		mes "So fast~?! Unbelievable~";
 		mes "You were the right person for this mission.";
@@ -440,53 +440,53 @@ aldebaran,105,116,3	script	Risingeter	869,{
 		setarray .@monsters$[0],"Clock","Punk","Rideword";
 		set .@i, select(implode(.@monsters$,":"))-1;
 		if (checkquest(10118+.@i,HUNTING) == 2) {
-			mes "[Risingeter]";
+			mes "[Lisingshetter]";
 			mes "Good! You've hunted 15 "+.@monsters$[.@i]+"s.";
 			mes "Ah, now I can hear the clock sound clearly...";
 			mes "Tic!! toc!! tic!! toc!!...";
 			next;
 			completequest 10118+.@i;
 			getexp 48000,0;
-			mes "[Risingeter]";
+			mes "[Lisingshetter]";
 			mes "Thanks a lot!";
 			mes "I hope you can hunt the rest as well.";
 			mes "Go as soon as you can!";
 			close;
 		}
-		mes "[Risingeter]";
+		mes "[Lisingshetter]";
 		mes "Uh? Something is wrong.";
 		mes "15 "+.@monsters$[.@i]+"s, right?";
 		mes "You better check how many you've hunted.";
 		close;
 	}
 	if (slv_quest == 6) {
-		mes "[Risingeter]";
+		mes "[Lisingshetter]";
 		mes "Hunt 15 Clocks, Punks, and Ridewords.";
 		mes "Please hurry.";
 		close;
 	}
-	mes "[Risingeter]";
+	mes "[Lisingshetter]";
 	mes "I like clocks so much.";
 	mes "They move with regular rhythm";
 	mes "making tic toc sounds.";
 	mes "Ahah!! Hail to the clocks!";
 	next;
-	mes "[Risingeter]";
+	mes "[Lisingshetter]";
 	mes "That's why I like the Clock Tower so much.";
 	mes "It makes a really nice sound.";
 	mes "I like it so much!";
 	if (slv_quest == 4) {
 		next;
-		mes "[Risingeter]";
+		mes "[Lisingshetter]";
 		mes "Uh? Have you come to help me solve my trouble.";
 		mes "You already know I like clocks right?";
 		mes "That's why I need your help to hunt these monsters.";
 		next;
-		mes "[Risingeter]";
+		mes "[Lisingshetter]";
 		mes "There are too many monsters inside the Clock Tower.";
 		mes "Their presence is destroying the Clock Tower.";
 		next;
-		mes "[Risingeter]";
+		mes "[Lisingshetter]";
 		mes "Anyway. Can you help me?";
 		mes "Please hunt 15 Clocks, Punks and Ridewords before it breaks down.";
 		next;
@@ -497,14 +497,14 @@ aldebaran,105,116,3	script	Risingeter	869,{
 			setquest 10119;
 			setquest 10120;
 			set slv_quest,6;
-			mes "[Risingeter]";
+			mes "[Lisingshetter]";
 			mes "Ok! I expect you will do the right thing.";
 			mes "Hunt 15 Clocks, Punks and Ridewords.";
 			close;
 		case 2:
 			set slv_quest,0;
 			erasequest 10105;
-			mes "[Risingeter]";
+			mes "[Lisingshetter]";
 			mes "You don't understand my love for clocks";
 			mes "I will find another brave adventurer.";
 			mes "I will inform the Eden Group.";

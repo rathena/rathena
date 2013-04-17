@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Kisuka
 //===== Current Version: ===================================== 
-//= 1.1b
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //= 1.1 Fixed some typos/bugs. [CalciumKid]
 //= 1.1a Fixed Waiting rooms witht he default MAX_LEVEL [Slim]
 //= 1.1b Fixed incorrect label calls. [Euphy]
+//= 1.2 Added missing barrier resets, credits to Zopokx. [Euphy]
 //============================================================
 
 // Poring War Recruiter
@@ -931,23 +932,23 @@ OnStop:
 	end;
 
 OnAngelingWin:
-	removemapflag "poring_w02",mf_partylock;
-	removemapflag "poring_w02",mf_pvp;
-	removemapflag "poring_w02",mf_pvp_noguild;
-	removemapflag "poring_w02",mf_pvp_nocalcrank;
-	mapannounce "poring_w02","Mr. Doppel: Angeling Team of party " + getpartyname($@wop_team_a) + " won the battle!",0,0xf08080;
-	donpcevent "Deviruchi#wop_endmaster::OnEnable";
-	stopnpctimer;
-	end;
-
+	set .@i,1;
 OnDevilingWin:
 	removemapflag "poring_w02",mf_partylock;
 	removemapflag "poring_w02",mf_pvp;
 	removemapflag "poring_w02",mf_pvp_noguild;
 	removemapflag "poring_w02",mf_pvp_nocalcrank;
-	mapannounce "poring_w02","Mr. Doppel: Deviling Team of party " + getpartyname($@wop_team_d) + " won the battle!",0,0xf08080;
+	if (.@i)
+		mapannounce "poring_w02","Mr. Doppel: Angeling Team of party " + getpartyname($@wop_team_a) + " won the battle!",0,0xf08080;
+	else
+		mapannounce "poring_w02","Mr. Doppel: Deviling Team of party " + getpartyname($@wop_team_d) + " won the battle!",0,0xf08080;
 	donpcevent "Deviruchi#wop_endmaster::OnEnable";
 	stopnpctimer;
+	// Reset Barriers
+	donpcevent "#aroom_ingate_wop::OnDisable";
+	donpcevent "#aroom_outgate_wop::OnDisable";
+	donpcevent "#droom_ingate_wop::OnDisable";
+	donpcevent "#droom_outgate_wop::OnDisable";
 	end;
 
 OnTimer5000:

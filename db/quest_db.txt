@@ -1504,7 +1504,7 @@
 10115,0,1386,20,0,0,0,0,"Juno - sleeper"
 10116,0,1372,20,0,0,0,0,"Juno - Goat"
 10117,0,1376,20,0,0,0,0,"Juno - Harpy"
-10118,0,1269,10,0,0,0,0,"clock tower - Clock"
+10118,0,1269,15,0,0,0,0,"clock tower - Clock"
 10119,0,1199,15,0,0,0,0,"clock tower - Punk"
 10120,0,1195,15,0,0,0,0,"clock tower - Rideword"
 10121,0,1883,15,0,0,0,0,"Localizing - Uzhas"

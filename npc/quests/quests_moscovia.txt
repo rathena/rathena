@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Kisuka
 //===== Current Version: ===================================== 
-//= 2.0a
+//= 2.0b
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -270,14 +270,14 @@ moscovia,135,52,0	script	Bulletin Board#npc	837,{
 // Mr. Ibanoff - Docks
 //----------------------------------------------------------------------------
 moscovia,135,49,5	script	Mr. Ibanoff#npc	964,{
-	if( !mos_whale_edq ){
+	if (mos_whale_edq == 0) {
 		mes "[Mr. Ibanoff]";
 		mes "You are also an adventurer from another province. I also was a great adventurer.";
 		next;
 		mes "[Mr. Ibanoff]";
 		mes "Uf...I just want to be 20 years younger, so I can travel here and there with invigorating youth such as you... Time is an enemy. Hahahahaha!";
 		close;
-	}else if (mos_whale_edq == 1 || mos_whale_edq == 2) {
+	} else if (mos_whale_edq == 1 || mos_whale_edq == 2) {
 		mes "["+strcharinfo(0)+"]";
 		mes "Hello. Are you Mr. Ibanoff?";
 		next;
