@@ -3709,7 +3709,8 @@ void map_do_init_msg(void){
 	    MSG_CONF_NAME_CHN,
 	    MSG_CONF_NAME_MAL,
 	    MSG_CONF_NAME_IDN,
-	    MSG_CONF_NAME_FRN
+	    MSG_CONF_NAME_FRN,
+		MSG_CONF_NAME_POR
 	};
 
 	map_msg_db = idb_alloc(DB_OPT_BASE);
@@ -3811,6 +3812,7 @@ int do_init(int argc, char *argv[])
 	MSG_CONF_NAME_MAL = "conf/msg_conf/map_msg_mal.conf";	// Malaysian
 	MSG_CONF_NAME_IDN = "conf/msg_conf/map_msg_idn.conf";	// Indonesian
 	MSG_CONF_NAME_FRN = "conf/msg_conf/map_msg_frn.conf";	// French
+	MSG_CONF_NAME_POR = "conf/msg_conf/map_msg_por.conf";	// Brazilian Portuguese
 	/* Multilanguage */
 
 	cli_get_options(argc,argv);

@@ -16,6 +16,7 @@ enum lang_types {
 	LANG_MAL = 0x10,
 	LANG_IDN = 0x20,
 	LANG_FRN = 0x40,
+	LANG_POR = 0x80,
 	LANG_MAX
 };
 // Multilanguage System.

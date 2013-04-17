@@ -86,6 +86,7 @@ int msg_langstr2langtype(char * langtype){
 	else if (!strncmpi(langtype, "mal",2)) lang = 5;
 	else if (!strncmpi(langtype, "idn",2)) lang = 6;
 	else if (!strncmpi(langtype, "frn",2)) lang = 7;
+	else if (!strncmpi(langtype, "por",2)) lang = 8;
 
 	return lang;
 }
@@ -104,6 +105,7 @@ const char* msg_langtype2langstr(int langtype){
 		case 5: return "Malasian (MAL)";
 		case 6: return "Indonesian (IDN)";
 		case 7: return "French (FRN)";
+		case 8: return "Brazilian Portuguese (POR)";
 		default: return "??";
 	}
 }
