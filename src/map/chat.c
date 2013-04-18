@@ -96,15 +96,14 @@ int chat_createpcchat(struct map_session_data* sd, const char* title, const char
 	pc_stop_walking(sd,1);
 
 	cd = chat_createchat(&sd->bl, title, pass, limit, pub, 0, "", 0, 1, MAX_LEVEL);
-	if( cd )
-	{
+	if( cd ) {
 		cd->users = 1;
 		cd->usersd[0] = sd;
 		pc_setchatid(sd,cd->bl.id);
+		pc_stop_attack(sd);
 		clif_createchat(sd,0);
 		clif_dispchat(cd,0);
-	}
-	else
+	} else
 		clif_createchat(sd,1);
 
 	return 0;

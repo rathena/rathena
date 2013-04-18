@@ -3146,7 +3146,7 @@ int parse_console(const char* buf){
 				sd.bl.x = x;
 			if( y > 0 )
 				sd.bl.y = y;
-			ShowNotice("Now at : '%s' Coords: %d %d\n", map, x, y);
+			ShowNotice("Now at: '%s' Coords: %d %d\n", map, x, y);
 		}
 		else if( !is_atcommand(sd.fd, &sd, command, 0) )
 			ShowInfo("Console: Invalid atcommand.\n");
@@ -3162,7 +3162,7 @@ int parse_console(const char* buf){
 	else if( strcmpi("help", type) == 0 ) {
 		ShowInfo("Available commands:\n");
 		ShowInfo("\t admin:@<atcommand> => Uses an atcommand. Do NOT use commands requiring an attached player.\n");
-		ShowInfo("\t admin:map:<map><x><y> => Changes the map from which console commands are executed.\n");
+		ShowInfo("\t admin:map:<map> <x> <y> => Changes the map from which console commands are executed.\n");
 		ShowInfo("\t server:shutdown => Stops the server.\n");
 		ShowInfo("\t ers_report => Displays database usage.\n");
 	}
@@ -3702,14 +3702,14 @@ struct msg_data *map_lang2msgdb(uint8 lang){
 void map_do_init_msg(void){
 	int test=0, i=0, size;
 	char * listelang[] = {
-	    MSG_CONF_NAME_EN,	//default
-	    MSG_CONF_NAME_RUS,
-	    MSG_CONF_NAME_SPN,
-	    MSG_CONF_NAME_GRM,
-	    MSG_CONF_NAME_CHN,
-	    MSG_CONF_NAME_MAL,
-	    MSG_CONF_NAME_IDN,
-	    MSG_CONF_NAME_FRN,
+		MSG_CONF_NAME_EN,	//default
+		MSG_CONF_NAME_RUS,
+		MSG_CONF_NAME_SPN,
+		MSG_CONF_NAME_GRM,
+		MSG_CONF_NAME_CHN,
+		MSG_CONF_NAME_MAL,
+		MSG_CONF_NAME_IDN,
+		MSG_CONF_NAME_FRN,
 		MSG_CONF_NAME_POR
 	};
 

@@ -2353,7 +2353,7 @@ mal_dun01,120,129,0	duplicate(#skin_mal)	Hard Skin#32	111
 malangdo,190,167,7	script	Portali#mal	546,{
 	if (ma_tomas < 100) {
 		mes "[Portali]";
-		mes "I have no business for a immature fellow!";
+		mes "I have no business for an immature fellow!";
 		close;
 	}
 	mes "[Portali]";
