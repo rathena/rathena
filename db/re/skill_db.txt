@@ -692,7 +692,7 @@
 //****
 2001,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,	RK_ENCHANTBLADE,Enchant Blade
 2002,7:8:9:10:11,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,	RK_SONICWAVE,Sonic Wave
-2003,0,6,4,0,0x1,0,10,1,no,0,0x200,0,weapon,0,	RK_DEATHBOUND,Death Bound
+2003,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,	RK_DEATHBOUND,Death Bound
 2004,5,8,1,-1,0,0,10,-5,no,0,0,0,weapon,0,	RK_HUNDREDSPEAR,Hundred Spear
 2005,1,6,2,4,0x2,2,5,1,no,0,0,0,weapon,3,	RK_WINDCUTTER,Wind Cutter
 2006,0,6,4,-1,0x2,5,5,1,no,0,0,0,weapon,0,	RK_IGNITIONBREAK,Ignition Break

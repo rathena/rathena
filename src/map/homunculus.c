@@ -1152,7 +1152,7 @@ static bool read_homunculusdb_sub(char* str[], int columns, int current)
 int read_homunculusdb(void)
 {
 	int i;
-	const char *filename[]={"homunculus_db.txt","homunculus_db2.txt"};
+	const char *filename[]={DBPATH"homunculus_db.txt","homunculus_db2.txt"};
 
 	memset(homunculus_db,0,sizeof(homunculus_db));
 	for(i = 0; i<ARRAYLENGTH(filename); i++)
