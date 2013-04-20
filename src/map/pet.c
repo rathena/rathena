@@ -595,7 +595,7 @@ int pet_menu(struct map_session_data *sd,int menunum)
 	egg_id = itemdb_exists(sd->pd->petDB->EggID);
 	if (egg_id) {
 		if ((egg_id->flag.trade_restriction&0x01) && !pc_inventoryblank(sd)) {
-			printf ("THERE WILL NEVER BE ANOTHER TONIGHT = %d.\n", ARRAYLENGTH(sd->status.inventory));
+			clif_displaymessage(sd->fd, msg_txt(sd, 451)); // You can't return your pet because your inventory is full.
 			return 1;
 		}
 	}
