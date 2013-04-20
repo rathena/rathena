@@ -5939,7 +5939,7 @@ static const struct _battle_data {
 	{ "item_restricted_consumption_type",   &battle_config.item_restricted_consumption_type,1,      0,      1,              },
 	{ "max_walk_path",                      &battle_config.max_walk_path,                   17,     1,      MAX_WALKPATH,   },
 	{ "item_enabled_npc",                   &battle_config.item_enabled_npc,                1,      0,      1,              },
-	{ "item_floritem_chk",                   &battle_config.item_onfloor,                    1,      0,      1,              },
+	{ "item_flooritem_check",               &battle_config.item_onfloor,                    1,      0,      1,              },
 };
 #ifndef STATS_OPT_OUT
 /**

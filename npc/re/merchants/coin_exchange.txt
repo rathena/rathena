@@ -434,7 +434,7 @@ function	script	F_mal_coin	{
 			mes "Ahaaa~";
 			mes "If you want to buy this stuff,";
 			mes "you can talk to me";
-			mes "when you grow up little more.";
+			mes "when you grow up a little more.";
 			mes "This stuff is too expensive";
 			mes "for a child~";
 			close;

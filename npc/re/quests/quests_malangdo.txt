@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Muad_Dib
 //===== Current Version: =====================================
-//= 1.4
+//= 1.4a
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -17,6 +17,7 @@
 //= 1.2 Added Archangel Wing Enchants.
 //= 1.3 Added Play with Baby Cats.
 //= 1.4 Added Malangdo Island.
+//= 1.4a Dialogue edits, source iRO.
 //============================================================
 
 // Malangdo Island :: ma_tomas
@@ -2435,7 +2436,7 @@ malangdo,137,200,6	script	Pipielle	549,{
 		mes "[Pipielle]";
 		mes "I would ask for your help, if you were a stronger advanturer...";
 		next;
-		mes "^770099This cat is working on something, but she asks for help above LV60.^000000";
+		mes "^770099This cat is working on something, but she asks for help above level 60.^000000";
 		close;
 	}
 	set .@fish_ss1$, "What are you doing??";
@@ -2571,7 +2572,7 @@ malangdo,175,206,3	script	Gobonge#ml	561,{
 	}
 	if (BaseLevel < 60) {
 		mes "[Gobonge]";
-		mes "Are you here to get help";
+		mes "Are you here to help";
 		mes "or to get help?";
 		mes "You look so weak, haha...";
 		mes "Go and hunt more Porings!";
@@ -2754,55 +2755,51 @@ OnDisable:
 
 malangdo,181,205,3	script	Gobulee#ml1	547,{
 	mes "[Gobulee]";
-	mes "Why do you come now?";
-	mes "You should have come when we were healthy.";
-	mes "So, you want to me take out what you have?";
+	mes "What a time to show up!";
+	mes "You should come around when we're healthy.";
 	close;
 }
 
 malangdo,180,202,3	script	Gobyungee#ml1	547,{
 	mes "[Gobyungee]";
-	mes "I can't see other cats because";
-	mes "I could't have time to do bad behavior...";
+	mes "I can't even look another cat in the eye since I'm too sick to be doin' crimes properly.";
 	close;
 }
 
 malangdo,186,201,3	script	Gosigee#ml1	547,{
 	mes "[Gosigee]";
-	mes "I am desperate for pill of stomachache,";
-	mes "cap is only thinking of finding out criminal";
-	mes "and to revenge!";
+	mes "I wish I had some peppy bistmuth pills...";
+	mes "Meanwhile the Captain only thinks about catching the bad guys and getting revenge!";
 	mes "...";
 	next;
 	mes "[Gosigee]";
-	mes "How can we follow him as a cap...!";
+	mes "How can we follow someone so single-minded!";
 	close;
 }
 
 malangdo,177,202,3	script	Gonanee#ml2	547,{
 	mes "[Gonanee]";
-	mes "We are only bad circle in Malangdo";
-	mes "and we are very proud.";
-	mes "Can't just lie in bed.";
+	mes "We are the only violent gang in Malangdo and we are very proud.";
+	mes "I don't feel right just lying in bed.";
 	close;
 }
 
 malangdo,183,202,3	script	Godoree#ml3	547,{
 	mes "[Godoree]";
 	mes "I saw unfamiliar cats around";
-	mes "the dock frequently.";
+	mes "the dock recently.";
 	mes "Are they tourists?";
-	mes "We should check their pockets";
-	mes "once I get well...";
+	mes "I should -inspect- their pockets";
+	mes "once I'm better...";
 	close;
 }
 
 malangdo,203,116,5	script	Suspious Dealer#ml	543,{
-	mes "On listening to the story for";
-	mes "a while, he pretends to be indifferent once hearing someone's noise.";
+	mes "He appears to be listening intently.";
+	mes "Upon hearing you approach, he pretends to be completely oblivious.";
 	next;
 	mes "[Suspious Dealer]";
-	mes "Oh my body, too much pain...";
+	mes "Oh the pain, oh the pain of it all...";
 	close;
 }
 
@@ -2810,13 +2807,13 @@ malangdo,205,116,3	script	Very Suspious Dealer#ml1	543,{
 	mes "On listening to the story for";
 	mes "a while, he pretends to be indifferent once hearing someone's noise.";
 	next;
-	mes "[Very Suspious Dealer]";
-	mes "The weather is so dirty...";
+	mes "[Suspious Dealer]";
+	mes "Could it BE any smoggier today?";
 	close;
 }
 
-malangdo,197,120,5	script	Foolish Cat#ml	546,{
-	mes "[Foolish Cat]";
+malangdo,197,120,5	script	A Foolish Cat#ml	546,{
+	mes "[A Foolish Cat]";
 	mes "If you stay here, you";
 	mes "can hear all they're saying.";
 	mes "Don't know exactly what, but";
@@ -2906,8 +2903,7 @@ OnTouch:
 malangdo,171,163,3	script	Awfully Suspious Dealer	543,{
 	if (malang_bad_guys < 4) {
 		mes "[Awfully Suspious Dealer]";
-		mes "We quit our sales,";
-		mes "find the other merchant!";
+		mes "We quit selling them, find another merchant!";
 		close;
 	} else if (malang_bad_guys == 4) {
 		mes "[Awfully Suspious Dealer]";
@@ -4481,13 +4477,13 @@ malangdo,211,203,4	script	[Meow Team] Charo#nya_11	560,{
 		close;
 	}
 	if (nyadven == 0) {
-		mes "There are gathered cats who seems younger than other crews.";
+		mes "There are cats who seem younger than the other crew.";
 		mes "They are having a serious conversation about the weird machine in front of them.";
 		close;
 	} else if (nyadven == 1) {
-		mes "There are gathered cats who seems younger than other crews.";
+		mes "There are cats who seem younger than the other crew.";
 		mes "They are having a serious conversation about the weird machine in front of them.";
-		mes "They are looks like kids who Rato told me.";
+		mes "They look like the kids that Rato told me about.";
 		next;
 		switch(select("Just watch them without a word.:Busy right now.")) {
 		case 1:
@@ -4880,7 +4876,7 @@ malangdo,215,201,3	script	[Meow Team] Roku#nya_10	553,{
 		close;
 	}
 	if (nyadven < 2) {
-		mes "A young black cat helps a busy white cat.";
+		mes "A young black cat helps the busy white cat.";
 		mes "Maybe the machine is broken.";
 		close;
 	} else if (nyadven == 2) {

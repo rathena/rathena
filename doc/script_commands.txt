@@ -3346,7 +3346,7 @@ things might in some cases be required.
 The 'setoption' series of functions check for a so-called option that is set on 
 the invoking character. 'Options' are used to store status conditions and a lot 
 of other non-permanent character data of the yes-no kind. For most common cases, 
-it is better to use 'checkcart','checkfalcon','checkpeco' and other similar 
+it is better to use 'checkcart','checkfalcon','checkriding' and other similar 
 functions, but there are some options which you cannot get at this way. They 
 return 1 if the option is set and 0 if the option is not set.
 

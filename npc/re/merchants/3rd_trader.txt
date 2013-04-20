@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Masao, Mercurial
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 1.0 First Version.
 //= 1.1 Optimized Poison Herb Salesman NPC
 //= 1.2 Optimized and standardized. [Euphy]
+//= 1.3 Added Malangdo Points NPC. [Euphy]
 //============================================================ 
 
 job3_guil01,79,96,3	script	Poison Herb Salesman::PHS	877,{
@@ -228,3 +229,4 @@ gef_tower,105,172,5	script	Point Salesman#Sorcerer::pss	700,{
 comodo,241,103,6	duplicate(pss)	Point Salesman#1	700
 alberta,105,52,7	duplicate(pss)	Point Salesman#2	700
 veins,202,128,6	duplicate(pss)	Point Salesman#3	700
+malangdo,215,163,6	duplicate(pss)	Point Salesman#4	700
