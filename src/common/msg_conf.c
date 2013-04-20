@@ -98,14 +98,14 @@ int msg_langstr2langtype(char * langtype){
 const char* msg_langtype2langstr(int langtype){
 	switch(langtype){
 		case 0: return "English (ENG)";
-		case 1: return "Russian (RUS)";
-		case 2: return "Spanish (SPN)";
-		case 3: return "German (GRM)";
-		case 4: return "Chinese (CHN)";
-		case 5: return "Malasian (MAL)";
-		case 6: return "Indonesian (IDN)";
-		case 7: return "French (FRN)";
-		case 8: return "Brazilian Portuguese (POR)";
+		case 1: return "Russkiy (RUS)"; //transliteration
+		case 2: return "Español (SPN)";
+		case 3: return "Deutsch (GRM)";
+		case 4: return "Hànyu (CHN)"; //transliteration
+		case 5: return "Bahasa Malaysia (MAL)";
+		case 6: return "Bahasa Indonesia (IDN)";
+		case 7: return "Français (FRN)";
+		case 8: return "Português Brasileiro (POR)";
 		default: return "??";
 	}
 }
