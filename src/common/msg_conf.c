@@ -12,11 +12,11 @@
  */
 const char* _msg_txt(int msg_number,int size, char ** msg_table)
 {
-    if (msg_number >= 0 && msg_number < size &&
-	    msg_table[msg_number] != NULL && msg_table[msg_number][0] != '\0')
+	if (msg_number >= 0 && msg_number < size &&
+		msg_table[msg_number] != NULL && msg_table[msg_number][0] != '\0')
 	return msg_table[msg_number];
 
-    return "??";
+	return "??";
 }
 
 
@@ -67,9 +67,9 @@ int _msg_config_read(const char* cfgName,int size, char ** msg_table)
  * Destroy msg_table (freeup mem)
  */
 void _do_final_msg(int size, char ** msg_table){
-    int i;
-    for (i = 0; i < size; i++)
-	aFree(msg_table[i]);
+	int i;
+	for (i = 0; i < size; i++)
+		aFree(msg_table[i]);
 }
 
 /*
@@ -99,13 +99,13 @@ const char* msg_langtype2langstr(int langtype){
 	switch(langtype){
 		case 0: return "English (ENG)";
 		case 1: return "Russkiy (RUS)"; //transliteration
-		case 2: return "Español (SPN)";
+		case 2: return "Espanol (SPN)";
 		case 3: return "Deutsch (GRM)";
-		case 4: return "Hànyu (CHN)"; //transliteration
+		case 4: return "Hanyu (CHN)"; //transliteration
 		case 5: return "Bahasa Malaysia (MAL)";
 		case 6: return "Bahasa Indonesia (IDN)";
-		case 7: return "Français (FRN)";
-		case 8: return "Português Brasileiro (POR)";
+		case 7: return "Francais (FRN)";
+		case 8: return "Portugues Brasileiro (POR)";
 		default: return "??";
 	}
 }

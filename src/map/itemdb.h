@@ -88,7 +88,7 @@ enum {
 struct item_data {
 	uint16 nameid;
 	char name[ITEM_NAME_LENGTH],jname[ITEM_NAME_LENGTH];
-	
+
 	//Do not add stuff between value_buy and view_id (see how getiteminfo works)
 	int value_buy;
 	int value_sell;
@@ -176,6 +176,7 @@ struct item_data* itemdb_exists(int nameid);
 #define itemdb_range(n) itemdb_search(n)->range
 #define itemdb_slot(n) itemdb_search(n)->slot
 #define itemdb_available(n) (itemdb_search(n)->flag.available)
+#define itemdb_traderight(n) (itemdb_search(n)->flag.trade_restriction)
 #define itemdb_viewid(n) (itemdb_search(n)->view_id)
 #define itemdb_autoequip(n) (itemdb_search(n)->flag.autoequip)
 #define itemdb_is_rune(n) (n >= ITEMID_NAUTHIZ && n <= ITEMID_HAGALAZ)
@@ -210,8 +211,8 @@ int itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, int (*func)(stru
 #define itemdb_canpartnertrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_canpartnertrade_sub)
 #define itemdb_cansell(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_cansell_sub)
 #define itemdb_cancartstore(item, gmlv)  itemdb_isrestricted(item, gmlv, 0, itemdb_cancartstore_sub)
-#define itemdb_canstore(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_canstore_sub) 
-#define itemdb_canguildstore(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canguildstore_sub) 
+#define itemdb_canstore(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_canstore_sub)
+#define itemdb_canguildstore(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canguildstore_sub)
 #define itemdb_canmail(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canmail_sub)
 #define itemdb_canauction(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canauction_sub)
 

@@ -485,6 +485,7 @@ extern struct Battle_Config
 	int item_restricted_consumption_type;
 	int max_walk_path;
 	int item_enabled_npc;
+	int item_onfloor; //wheater or not use pop item on map if inventory full and nodrop on or not (like aegis)
 	} battle_config;
 
 void do_init_battle(void);

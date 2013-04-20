@@ -10112,7 +10112,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			int hp =  rnd()%600 + 200;
 			struct block_list* src = map_id2bl(sce->val2);
 			if( src && bl && bl->type == BL_MOB ){
-				mob_log_damage( (TBL_MOB*)bl, src, sd || hp < status->hp ? hp : status->hp - 1 ); 
+				mob_log_damage( (TBL_MOB*)bl, src, sd || hp < status->hp ? hp : status->hp - 1 );
 			}
 			map_freeblock_lock();
 			status_fix_damage(src, bl, sd||hp<status->hp?hp:status->hp-1, 1);
@@ -10542,7 +10542,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 				break;
 			map_freeblock_lock();
 			damage =  200 + 100 * sce->val1 + status_get_int(src);
-			status_damage(src, bl, damage, 0, clif_damage(bl,bl,tick,status->amotion,status->dmotion+200,damage,1,0,0), 1);
+			status_damage(src, bl, damage, 0, clif_damage(bl,bl,tick,status->amotion,status->dmotion+200,damage,1,0,0), 0);
 			unit_skillcastcancel(bl,1);
 			if ( sc->data[type] ) {
 				sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
