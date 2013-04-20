@@ -1893,23 +1893,22 @@ static unsigned short status_base_atk(const struct block_list *bl, const struct 
 	//Normally only players have base-atk, but homunc have a different batk
 	// equation, hinting that perhaps non-players should use this for batk.
 	// [Skotlex]
-	if (bl->type == BL_HOM) {
 #ifdef RENEWAL
+	if (bl->type == BL_HOM) {
 		//str = ((rstr + dex + status->luk) / 3) + (((TBL_HOM*)bl)->homunculus.level / 10);
 		str = (((rstr + dex + status->luk) / 3) + (((TBL_HOM*)bl)->homunculus.level / 10))*2; //Because Renewal ATK isn't implemented we adjust the actual ATK until it is
-#else
-		dstr = str/10;
-		str += dstr*dstr;
+		return cap_value(str, 0, USHRT_MAX);
+	}
 #endif
-	} else if (bl->type != BL_PC) {
-		dstr = str/10;
-		str += dstr*dstr;
-	} else
+	dstr = str/10;
+	str += dstr*dstr;
+	if (bl->type == BL_PC) {
 #ifdef RENEWAL
 		str = (rstr*10 + dex*10/5 + status->luk*10/3 + ((TBL_PC*)bl)->status.base_level*10/4)/10;
 #else
 		str+= dex/5 + status->luk/5;
 #endif
+	}
 	return cap_value(str, 0, USHRT_MAX);
 }
 
