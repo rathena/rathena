@@ -329,7 +329,7 @@ int unit_walktoxy( struct block_list *bl, short x, short y, int flag)
 		&& wpd.path_len > 14 ) // Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett]
 		return 0;
 #endif
-	if( battle_config.max_walk_path < wpd.path_len )
+	if( (battle_config.max_walk_path < wpd.path_len) && (bl->type != BL_NPC) )
 		return 0;
 
 	if (flag&4 && DIFF_TICK(ud->canmove_tick, gettick()) > 0 &&
