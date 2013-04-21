@@ -1249,7 +1249,7 @@ int pc_reg_received(struct map_session_data *sd)
 		}
 
 		clif_changeoption( &sd->bl );
-	} 
+	}
 
 	return 1;
 }
@@ -6582,6 +6582,10 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 				status_change_end(&devsd->bl, SC_DEVOTION, INVALID_TIMER);
 			sd->devotion[k] = 0;
 		}
+	if(sd->shadowform_id){ //if we were target of shadowform
+		status_change_end(map_id2bl(sd->shadowform_id), SC__SHADOWFORM, INVALID_TIMER);
+		sd->shadowform_id = 0; //should be remove on status end anyway
+	}
 
 	if(sd->status.pet_id > 0 && sd->pd) {
 		struct pet_data *pd = sd->pd;
@@ -6596,8 +6600,8 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	}
 
 	if (sd->status.hom_id > 0){
-	    if(battle_config.homunculus_auto_vapor && sd->hd && !sd->hd->sc.data[SC_LIGHT_OF_REGENE])
-		    merc_hom_vaporize(sd, HOM_ST_ACTIVE);
+		if(battle_config.homunculus_auto_vapor && sd->hd && !sd->hd->sc.data[SC_LIGHT_OF_REGENE])
+			merc_hom_vaporize(sd, HOM_ST_ACTIVE);
 	}
 
 	if( sd->md )
@@ -6749,7 +6753,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	// activate Steel body if a super novice dies at 99+% exp [celest]
 	if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && !sd->state.snovice_dead_flag)
-  	{
+	{
 		unsigned int next = pc_nextbaseexp(sd);
 		if( next == 0 ) next = pc_thisbaseexp(sd);
 		if( get_percentage(sd->status.base_exp,next) >= 99 ) {
@@ -6783,14 +6787,14 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 				break;
 			}
 			if(base_penalty) {
-			  	if (battle_config.pk_mode && src && src->type==BL_PC)
+				if (battle_config.pk_mode && src && src->type==BL_PC)
 					base_penalty*=2;
 				sd->status.base_exp -= min(sd->status.base_exp, base_penalty);
 				clif_updatestatus(sd,SP_BASEEXP);
 			}
 		}
 		if(battle_config.death_penalty_job > 0)
-	  	{
+		{
 			base_penalty = 0;
 			switch (battle_config.death_penalty_type) {
 				case 1:
@@ -6801,14 +6805,14 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 				break;
 			}
 			if(base_penalty) {
-			  	if (battle_config.pk_mode && src && src->type==BL_PC)
+				if (battle_config.pk_mode && src && src->type==BL_PC)
 					base_penalty*=2;
 				sd->status.job_exp -= min(sd->status.job_exp, base_penalty);
 				clif_updatestatus(sd,SP_JOBEXP);
 			}
 		}
 		if(battle_config.zeny_penalty > 0 && !map[sd->bl.m].flag.nozenypenalty)
-	  	{
+		{
 			base_penalty = (unsigned int)((double)sd->status.zeny * (double)battle_config.zeny_penalty / 10000.);
 			if(base_penalty)
 				pc_payzeny(sd, base_penalty, LOG_TYPE_PICKDROP_PLAYER, NULL);
