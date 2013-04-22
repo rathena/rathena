@@ -239,17 +239,29 @@ struct npc_data* npc_name2id(const char* name)
 /**
  * For the Secure NPC Timeout option (check config/Secure.h) [RR]
  **/
-#if SECURE_NPCTIMEOUT
+#ifdef SECURE_NPCTIMEOUT
 /**
  * Timer to check for idle time and timeout the dialog if necessary
  **/
 int npc_rr_secure_timeout_timer(int tid, unsigned int tick, int id, intptr_t data) {
 	struct map_session_data* sd = NULL;
+	unsigned int timeout = NPC_SECURE_TIMEOUT_NEXT;
 	if( (sd = map_id2sd(id)) == NULL || !sd->npc_id ) {
 		if( sd ) sd->npc_idle_timer = INVALID_TIMER;
 		return 0;//Not logged in anymore OR no longer attached to a npc
 	}
-	if( DIFF_TICK(tick,sd->npc_idle_tick) > (SECURE_NPCTIMEOUT*1000) ) {
+
+	switch( sd->npc_idle_type ) {
+		case NPCT_INPUT:
+			timeout = NPC_SECURE_TIMEOUT_INPUT;
+			break;
+		case NPCT_MENU:
+			timeout = NPC_SECURE_TIMEOUT_MENU;
+			break;
+		//case NPCT_WAIT: var starts with this value
+	}
+
+	if( DIFF_TICK(tick,sd->npc_idle_tick) > (timeout*1000) ) {
 		/**
 		 * If we still have the NPC script attached, tell it to stop.
 		 **/
@@ -1239,7 +1251,7 @@ int npc_scriptcont(struct map_session_data* sd, int id, bool closing)
 	/**
 	 * For the Secure NPC Timeout option (check config/Secure.h) [RR]
 	 **/
-#if SECURE_NPCTIMEOUT
+#ifdef SECURE_NPCTIMEOUT
 	/**
 	 * Update the last NPC iteration
 	 **/

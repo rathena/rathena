@@ -6027,10 +6027,10 @@ void rAthena_report(char* date, char *time_c) {
 	config |= C_RENEWAL_ASPD;
 #endif
 
-/* not a ifdef because SECURE_NPCTIMEOUT is always defined, but either as 0 or higher */
-#if SECURE_NPCTIMEOUT
+#ifdef SECURE_NPCTIMEOUT
 	config |= C_SECURE_NPCTIMEOUT;
 #endif
+
 	/* non-define part */
 	if( db_use_sqldbs )
 		config |= C_SQL_DBS;

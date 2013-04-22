@@ -108,6 +108,12 @@ struct s_autobonus {
 	unsigned short pos;
 };
 
+enum npc_timeout_type {
+	NPCT_INPUT = 0,
+	NPCT_MENU  = 1,
+	NPCT_WAIT  = 2,
+};
+
 struct map_session_data {
 	struct block_list bl;
 	struct unit_data ud;
@@ -469,7 +475,7 @@ struct map_session_data {
 	/**
 	 * For the Secure NPC Timeout option (check config/Secure.h) [RR]
 	 **/
-#if SECURE_NPCTIMEOUT
+#ifdef SECURE_NPCTIMEOUT
 	/**
 	 * ID of the timer
 	 * @info
@@ -483,6 +489,8 @@ struct map_session_data {
 	 * - It is updated on every NPC iteration as mentioned above
 	 **/
 	unsigned int npc_idle_tick;
+	/* */
+	enum npc_timeout_type npc_idle_type;
 #endif
 
 	struct {

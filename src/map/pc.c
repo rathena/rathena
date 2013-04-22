@@ -967,12 +967,13 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	/**
 	 * For the Secure NPC Timeout option (check config/Secure.h) [RR]
 	 **/
-#if SECURE_NPCTIMEOUT
+#ifdef SECURE_NPCTIMEOUT
 	/**
 	 * Initialize to defaults/expected
 	 **/
 	sd->npc_idle_timer = INVALID_TIMER;
 	sd->npc_idle_tick = tick;
+	sd->npc_idle_type = NPCT_INPUT;
 #endif
 
 	sd->canuseitem_tick = tick;

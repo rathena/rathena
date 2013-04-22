@@ -18,8 +18,14 @@
 #if SECURE_NPCTIMEOUT_INTERVAL <= 0
 	#error SECURE_NPCTIMEOUT_INTERVAL should be at least 1 (1s)
 #endif
-#if SECURE_NPCTIMEOUT < 0
-	#error SECURE_NPCTIMEOUT cannot be lower than 0
+#if NPC_SECURE_TIMEOUT_INPUT < 0
+	#error NPC_SECURE_TIMEOUT_INPUT cannot be lower than 0
+#endif
+#if NPC_SECURE_TIMEOUT_MENU < 0
+	#error NPC_SECURE_TIMEOUT_MENU cannot be lower than 0
+#endif
+#if NPC_SECURE_TIMEOUT_NEXT < 0
+	#error NPC_SECURE_TIMEOUT_NEXT cannot be lower than 0
 #endif
 
 /**

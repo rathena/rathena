@@ -133,6 +133,7 @@ struct script_state {
 	unsigned freeloop : 1;// used by buildin_freeloop
 	unsigned op2ref : 1;// used by op_2
 	unsigned npc_item_flag : 1;
+	unsigned mes_active : 1;  // Store if invoking character has a NPC dialog box open.
 };
 
 struct script_reg {
