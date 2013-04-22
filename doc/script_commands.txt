@@ -1064,9 +1064,9 @@ of the ways to end a speech from an NPC. Once the button is clicked, the NPC
 script execution will end, and the message box will disappear.
 
     mes "[Woman]";
-    mes "I am finished talking to you, click the close button";
+    mes "I am finished talking to you. Click the close button.;
     close;
-    mes "This command will not run at all, cause the script has ended.";
+    mes "This command will not run at all, since the script has ended.";
 
 ---------------------------------------
 
@@ -1080,7 +1080,7 @@ the message box will have closed, the script execution will not stop, and comman
 make it stop in some other manner.
 
     mes "[Woman]";
-    mes "I will warp you now";
+    mes "I will warp you now.";
     close2;
     warp "place",50,50;
     end;
@@ -1367,7 +1367,7 @@ picked.
 And like 'menu', the selected option is consistent with grouped options 
 and empty options.
 
-prompt works almost the same as select, except that when a character clicks
+'prompt' works almost the same as select, except that when a character clicks
 the Cancel button, this function will return 255 instead.
 
 ---------------------------------------
@@ -6260,12 +6260,15 @@ an NPC move randomly around the map.
 'npcspeed' will set the NPCs walking speed to a specified value. As in the 
 @speed GM command, 200 is the slowest possible speed while 0 is the fastest 
 possible (instant motion). 100 is the default character walking speed.
+
 'npcwalkto' will start the NPC sprite moving towards the specified coordinates 
-on the same map as it is currently on.
+on the same map it is currently on. The script proceeds immediately after the
+NPC begins moving.
+
 'npcstop' will stop the motion.
 
 While in transit, the NPC will be clickable, but invoking it will cause it to 
-stop motion, which will make it's coordinates different from what the client 
+stop moving, which will make its coordinates different from what the client 
 computed based on the speed and motion coordinates. The effect is rather 
 unnerving.
 
@@ -6289,7 +6292,7 @@ Example:
 
 // This will move Bugga from to the coordinates 100,20 (if those coordinates are legit).
 	moveNPC "Bugga",100,20;
-	
+
 ---------------------------------------
 
 =====================

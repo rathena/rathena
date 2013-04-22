@@ -6663,7 +6663,7 @@ BUILDIN_FUNC(makeitem)
 		else
 			item_tmp.identify=itemdb_isidentified(nameid);
 
-		map_addflooritem(&item_tmp,amount,m,x,y,0,0,0,0);
+		map_addflooritem(&item_tmp,amount,m,x,y,0,0,0,4);
 	}
 
 	return 0;

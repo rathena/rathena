@@ -591,7 +591,7 @@ int pet_menu(struct map_session_data *sd,int menunum)
 	//You lost the pet already.
 	if(!sd->status.pet_id || sd->pd->pet.intimate <= 0 || sd->pd->pet.incuvate)
 		return 1;
-	
+
 	egg_id = itemdb_exists(sd->pd->petDB->EggID);
 	if (egg_id) {
 		if ((egg_id->flag.trade_restriction&0x01) && !pc_inventoryblank(sd)) {
@@ -992,7 +992,7 @@ static int pet_delay_item_drop(int tid, unsigned int tick, int id, intptr_t data
 	while (ditem) {
 		map_addflooritem(&ditem->item_data,ditem->item_data.amount,
 			list->m,list->x,list->y,
-			list->first_charid,list->second_charid,list->third_charid,0);
+			list->first_charid,list->second_charid,list->third_charid,4);
 		ditem_prev = ditem;
 		ditem = ditem->next;
 		ers_free(item_drop_ers, ditem_prev);

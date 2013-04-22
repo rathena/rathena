@@ -1420,7 +1420,7 @@ int map_search_freecell(struct block_list *src, int16 m, int16 *x,int16 *y, int1
  * @amount quantity
  * @m, @x, @y mapid,x,y
  * @first_charid, @second_charid, @third_charid, looting priority
- * @flag: &1 MVP item. &2 do stacking check.
+ * @flag: &1 MVP item. &2 do stacking check. &4 bypass droppable check.
  *------------------------------------------*/
 int map_addflooritem(struct item *item_data,int amount,int16 m,int16 x,int16 y,int first_charid,int second_charid,int third_charid,int flags)
 {
@@ -1429,7 +1429,7 @@ int map_addflooritem(struct item *item_data,int amount,int16 m,int16 x,int16 y,i
 
 	nullpo_ret(item_data);
 
-	if(battle_config.item_onfloor && (itemdb_traderight(item_data->nameid)&1) )
+	if(!(flags&4) && battle_config.item_onfloor && (itemdb_traderight(item_data->nameid)&1) )
 		return 0; //can't be dropped
 
 	if(!map_searchrandfreecell(m,&x,&y,flags&2?1:0))

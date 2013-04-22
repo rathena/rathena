@@ -4495,7 +4495,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					item_tmp.nameid = sg->item_id?sg->item_id:ITEMID_TRAP;
 					item_tmp.identify = 1;
 					if( item_tmp.nameid )
-						map_addflooritem(&item_tmp,1,bl->m,bl->x,bl->y,0,0,0,0);
+						map_addflooritem(&item_tmp,1,bl->m,bl->x,bl->y,0,0,0,4);
 				}
 				skill_delunit(su);
 			}
@@ -6967,7 +6967,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 								if( item_tmp.nameid && (flag=pc_additem(sd,&item_tmp,skill_db[su->group->skill_id].amount[i],LOG_TYPE_OTHER)) )
 								{
 									clif_additem(sd,0,0,flag);
-									map_addflooritem(&item_tmp,skill_db[su->group->skill_id].amount[i],sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
+									map_addflooritem(&item_tmp,skill_db[su->group->skill_id].amount[i],sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,4);
 								}
 							}
 						}
@@ -6981,7 +6981,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 						if( item_tmp.nameid && (flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_OTHER)) )
 						{
 							clif_additem(sd,0,0,flag);
-							map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
+							map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,4);
 						}
 					}
 				}
@@ -15685,7 +15685,7 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 					memset(&item_tmp,0,sizeof(item_tmp));
 					item_tmp.nameid = group->item_id?group->item_id:ITEMID_TRAP;
 					item_tmp.identify = 1;
-					map_addflooritem(&item_tmp,1,bl->m,bl->x,bl->y,0,0,0,0);
+					map_addflooritem(&item_tmp,1,bl->m,bl->x,bl->y,0,0,0,4);
 				}
 				skill_delunit(unit);
 			}
