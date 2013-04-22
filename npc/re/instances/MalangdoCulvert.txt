@@ -193,7 +193,7 @@ mal_in01,172,26,2	script	Madeca#mal	544,{
 			// Reward: 2x B Grade Coin
 			callsub L_CheckQuest,12255,"Deep Sea Crab",6419,2;
 			callsub L_CheckQuest,12256,"Deep Sea Marse",6419,2;
-			callsub L_CheckQuest,12257,"Ancient Crustacean",6419,2;
+			callsub L_CheckQuest,12257,"Deep Sea Vadon",6419,2;
 			callsub L_CheckQuest,12258,"Deep Sea Shellfish",6419,2;
 			callsub L_CheckQuest,12259,"Deep Sea Kukre",6419,2;
 			callsub L_CheckQuest,12260,"Deep Sea Cornutus",6419,2;

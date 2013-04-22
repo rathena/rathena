@@ -21,20 +21,20 @@
 #define SECURE_NPCTIMEOUT
 
 /**
- * number of seconds to 'timeout' if the user is on idle for longer than the value allowed after a 'input' field is displayed.
- * default: 180
++ * Number of seconds after an 'input' field is displayed before invoking an idle timeout.
++ * Default: 180
  **/
 #define NPC_SECURE_TIMEOUT_INPUT 180
 
 /**
- * number of seconds to 'timeout' if the user is on idle for longer than the value allowed after a 'menu' is displayed.
- * default: 60
++ * Number of seconds after a 'menu' is displayed before invoking an idle timeout.
++ * Default: 60
  **/
 #define NPC_SECURE_TIMEOUT_MENU 60
 
 /**
- * number of seconds to 'timeout' if the user is on idle for longer than the value allowed after a 'next' button is displayed.
- * default: 60
++ * Number of seconds after a 'next' button is displayed before invoking an idle timeout.
++ * Default: 60
  **/
 #define NPC_SECURE_TIMEOUT_NEXT 60
 

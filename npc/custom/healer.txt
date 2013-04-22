@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.0
+//= 1.0a
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -16,12 +16,11 @@
 	set .@Buffs,0;	// Also buff players? (1: yes / 0: no)
 	set .@Delay,0;	// Heal delay, in seconds
 
-	callfunc "F_ClearGarbage",0;
 	if (@HD > gettimetick(2)) end;
 	if (.@Price) {
 		message strcharinfo(0),"Healing costs "+.@Price+" Zeny.";
 		if (Zeny < .@Price) end;
-		if(select("^0055FFHeal^000000:^777777Cancel^000000") == 2) close;
+		if(select("^0055FFHeal^000000:^777777Cancel^000000") == 2) end;
 		set Zeny, Zeny-.@Price;
 	}
 	specialeffect2 EF_HEAL2; percentheal 100,100;
@@ -30,7 +29,7 @@
 		specialeffect2 EF_BLESSING; sc_start SC_BLESSING,240000,10;
 	}
 	if (.@Delay) set @HD, gettimetick(2)+.@Delay;
-	close;
+	end;
 }
 
 alberta,25,240,6	duplicate(Healer)	Healer#alb	909
@@ -50,7 +49,7 @@ hugel,89,150,6	duplicate(Healer)	Healer#hug	909
 izlude,125,118,5	duplicate(Healer)	Healer#izl	909
 lighthalzen,149,103,6	duplicate(Healer)	Healer#li	909
 louyang,225,103,4	duplicate(Healer)	Healer#lou	909
-malangdo,226,188,4	duplicate(Healer)	Healer#mal	909
+malangdo,132,114,6	duplicate(Healer)	Healer#mal	909
 malaya,205,205,6	duplicate(Healer)	Healer#malay	909
 manuk,256,176,6	duplicate(Healer)	Healer#man	909
 mid_camp,203,289,6	duplicate(Healer)	Healer#mid	909

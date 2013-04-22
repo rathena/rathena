@@ -4401,7 +4401,7 @@ BUILDIN_FUNC(close)
 	if( !st->mes_active ) {
 		TBL_NPC* nd = map_id2nd(st->oid);
 		st->state = END; // Keep backwards compatibility.
-		ShowWarning("Incorrect use of 'close'! (source:%s / path:%s)\n",nd?nd->name:"Unknown",nd?nd->path:"Unknown");
+		ShowWarning("Incorrect use of 'close' command! (source:%s / path:%s)\n",nd?nd->name:"Unknown",nd?nd->path:"Unknown");
 	} else {
 		st->state = CLOSE;
 		st->mes_active = 0;

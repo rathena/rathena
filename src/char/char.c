@@ -145,9 +145,9 @@ struct char_session_data {
 };
 
 struct startitem {
-	int nameid; //item id
-	int amout; //number of item
-	int pos; //position for autoequip
+	int nameid; //Item ID
+	int amount; //Number of items
+	int pos; //Position (for auto-equip)
 } start_items[MAX_STARTITEM+1];
 
 int max_connect_user = -1;
@@ -1612,7 +1612,7 @@ int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int ag
 	char_id = (int)Sql_LastInsertId(sql_handle);
 	//Give the char the default items
 	for (k = 0; k <= MAX_STARTITEM && start_items[k].nameid != 0; k ++) {
-		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `equip`, `identify`) VALUES ('%d', '%d', '%d', '%d', '%d')", inventory_db, char_id, start_items[k].nameid, start_items[k].amout, start_items[k].pos, 1) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `equip`, `identify`) VALUES ('%d', '%d', '%d', '%d', '%d')", inventory_db, char_id, start_items[k].nameid, start_items[k].amount, start_items[k].pos, 1) )
 			Sql_ShowDebug(sql_handle);
 	}
 
@@ -4997,15 +4997,15 @@ int char_config_read(const char* cfgName)
 			while (lineitem != NULL) {
 				n = sv_split(lineitem, strlen(lineitem), 0, ',', fields, fields_length, SV_NOESCAPE_NOTERMINATE);
 				if(n+1 < fields_length){
-					ShowDebug("start_items not enough argument for %s; skipping...\n",lineitem);
+					ShowDebug("start_items: not enough arguments for %s! Skipping...\n",lineitem);
 					lineitem = strtok(NULL, ";"); //next itemline
 					continue;
 				}
 				if(i > MAX_STARTITEM){
-					ShowDebug("start_items overbound, only %d items are allowed ignoring parameter %s\n",MAX_STARTITEM,lineitem);
+					ShowDebug("start_items: too many items, only %d are allowed! Ignoring parameter %s...\n",MAX_STARTITEM,lineitem);
 				} else {
 					start_items[i].nameid = max(0,atoi(fields[1]));
-					start_items[i].amout = max(0,atoi(fields[2]));
+					start_items[i].amount = max(0,atoi(fields[2]));
 					start_items[i].pos = max(0,atoi(fields[3]));
 				}
 				lineitem = strtok(NULL, ";"); //next itemline
