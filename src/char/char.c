@@ -33,6 +33,7 @@
 #include <stdlib.h>
 #include <malloc.h>
 
+#define MAX_STARTITEM 32
 #define CHAR_MAX_MSG 300
 static char* msg_table[CHAR_MAX_MSG]; // Login Server messages_conf
 
@@ -143,12 +144,16 @@ struct char_session_data {
 	unsigned int char_moves[MAX_CHARS]; // character moves left
 };
 
+struct startitem {
+	int nameid; //item id
+	int amout; //number of item
+	int pos; //position for autoequip
+} start_items[MAX_STARTITEM+1];
+
 int max_connect_user = -1;
 int gm_allow_group = -1;
 int autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
 int start_zeny = 0;
-int start_weapon = 1201;
-int start_armor = 2301;
 int guild_exp_rate = 100;
 
 // Pincode system
@@ -1531,7 +1536,7 @@ int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int ag
 
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1];
-	int char_id, flag;
+	int char_id, flag, k;
 
 	safestrncpy(name, name_, NAME_LENGTH);
 	normalize_name(name,TRIM_CHARS);
@@ -1606,12 +1611,8 @@ int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int ag
 	//Retrieve the newly auto-generated char id
 	char_id = (int)Sql_LastInsertId(sql_handle);
 	//Give the char the default items
-	if (start_weapon > 0) { //add Start Weapon (Knife?)
-		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `identify`) VALUES ('%d', '%d', '%d', '%d')", inventory_db, char_id, start_weapon, 1, 1) )
-			Sql_ShowDebug(sql_handle);
-	}
-	if (start_armor > 0) { //Add default armor (cotton shirt?)
-		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `identify`) VALUES ('%d', '%d', '%d', '%d')", inventory_db, char_id, start_armor, 1, 1) )
+	for (k = 0; k <= MAX_STARTITEM && start_items[k].nameid != 0; k ++) {
+		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `equip`, `identify`) VALUES ('%d', '%d', '%d', '%d', '%d')", inventory_db, char_id, start_items[k].nameid, start_items[k].amout, start_items[k].pos, 1) )
 			Sql_ShowDebug(sql_handle);
 	}
 
@@ -4986,14 +4987,31 @@ int char_config_read(const char* cfgName)
 			start_zeny = atoi(w2);
 			if (start_zeny < 0)
 				start_zeny = 0;
-		} else if (strcmpi(w1, "start_weapon") == 0) {
-			start_weapon = atoi(w2);
-			if (start_weapon < 0)
-				start_weapon = 0;
-		} else if (strcmpi(w1, "start_armor") == 0) {
-			start_armor = atoi(w2);
-			if (start_armor < 0)
-				start_armor = 0;
+		} else if (strcmpi(w1, "start_items") == 0) {
+			int i=0, n=0;
+			char *lineitem, **fields;
+			int fields_length = 3+1;
+			fields = (char**)aMalloc(fields_length*sizeof(char*));
+
+			lineitem = strtok(w2, ":");
+			while (lineitem != NULL) {
+				n = sv_split(lineitem, strlen(lineitem), 0, ',', fields, fields_length, SV_NOESCAPE_NOTERMINATE);
+				if(n+1 < fields_length){
+					ShowDebug("start_items not enough argument for %s; skipping...\n",lineitem);
+					lineitem = strtok(NULL, ";"); //next itemline
+					continue;
+				}
+				if(i > MAX_STARTITEM){
+					ShowDebug("start_items overbound, only %d items are allowed ignoring parameter %s\n",MAX_STARTITEM,lineitem);
+				} else {
+					start_items[i].nameid = max(0,atoi(fields[1]));
+					start_items[i].amout = max(0,atoi(fields[2]));
+					start_items[i].pos = max(0,atoi(fields[3]));
+				}
+				lineitem = strtok(NULL, ";"); //next itemline
+				i++;
+			}
+			aFree(fields);
 		} else if(strcmpi(w1,"log_char")==0) {		//log char or not [devil]
 			log_char = atoi(w2);
 		} else if (strcmpi(w1, "unknown_char_name") == 0) {

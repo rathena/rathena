@@ -662,7 +662,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 					}
 				}
 				cardfix=cardfix*(100-tsd->subsize[sstatus->size])/100;
-	 			cardfix=cardfix*(100-tsd->subrace2[s_race2])/100;
+				cardfix=cardfix*(100-tsd->subrace2[s_race2])/100;
 				cardfix=cardfix*(100-tsd->subrace[sstatus->race])/100;
 				cardfix=cardfix*(100-tsd->subrace[is_boss(src)?RC_BOSS:RC_NONBOSS])/100;
 				if( sstatus->race != RC_DEMIHUMAN )
@@ -1189,7 +1189,9 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 						break;
 					}
 		}
-		if( sc->data[SC_POISONINGWEAPON] && skill_id != GC_VENOMPRESSURE && (flag&BF_WEAPON) && damage > 0 && rnd()%100 < sc->data[SC_POISONINGWEAPON]->val3 )
+		if( sc->data[SC_POISONINGWEAPON]
+			&& ((flag&BF_WEAPON) && (!skill_id || skill_id == GC_VENOMPRESSURE)) //chk skill type poison_smoke is a unit
+			&& (damage > 0 && rnd()%100 < sc->data[SC_POISONINGWEAPON]->val3 )) //did some dammage and chance ok (why no additional effect ??
 			sc_start(src,bl,sc->data[SC_POISONINGWEAPON]->val2,100,sc->data[SC_POISONINGWEAPON]->val1,skill_get_time2(GC_POISONINGWEAPON, 1));
 		if( sc->data[SC__DEADLYINFECT] && damage > 0 && rnd()%100 < 65 + 5 * sc->data[SC__DEADLYINFECT]->val1 )
 			status_change_spread(src, bl);
@@ -1227,9 +1229,9 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 	}
 
 	if( bl->type == BL_MOB && !status_isdead(bl) && src != bl) {
-	  if (damage > 0 )
+		if (damage > 0 )
 			mobskill_event((TBL_MOB*)bl,src,gettick(),flag);
-	  if (skill_id)
+		if (skill_id)
 			mobskill_event((TBL_MOB*)bl,src,gettick(),MSC_SKILLUSED|(skill_id<<16));
 	}
 	if( sd ) {
@@ -5374,7 +5376,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			if (t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->class_ == MOBID_EMPERIUM && flag&BCT_ENEMY)
 				return 0; //mercenary may not attack Emperium
 			break;
-    } //end switch actual src
+	} //end switch actual src
 
 	switch( s_bl->type )
 	{	//Checks on source master
@@ -5389,7 +5391,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 					strip_enemy = 0;
 				}
 				else if( sd->duel_group && !((!battle_config.duel_allow_pvp && map[m].flag.pvp) || (!battle_config.duel_allow_gvg && map_flag_gvg(m))) )
-		  		{
+				{
 					if( t_bl->type == BL_PC && (sd->duel_group == ((TBL_PC*)t_bl)->duel_group) )
 						return (BCT_ENEMY&flag)?1:-1; // Duel targets can ONLY be your enemy, nothing else.
 					else

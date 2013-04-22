@@ -8519,7 +8519,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 
 	if(pos == EQP_ARMS && id->equip == EQP_HAND_R)
 	{	//Dual wield capable weapon.
-	  	pos = (req_pos&EQP_ARMS);
+		pos = (req_pos&EQP_ARMS);
 		if (pos == EQP_ARMS) //User specified both slots, pick one for them.
 			pos = sd->equip_index[EQI_HAND_R] >= 0 ? EQP_HAND_L : EQP_HAND_R;
 	}
