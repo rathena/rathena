@@ -169,6 +169,7 @@
     <ClInclude Include="..\src\map\battleground.h" />
     <ClInclude Include="..\src\map\buyingstore.h" />
     <ClInclude Include="..\src\map\cashshop.h" />
+    <ClInclude Include="..\src\map\channel.h" />
     <ClInclude Include="..\src\map\chat.h" />
     <ClInclude Include="..\src\map\chrif.h" />
     <ClInclude Include="..\src\map\clif.h" />
@@ -242,6 +243,7 @@
     <ClCompile Include="..\src\map\battleground.c" />
     <ClCompile Include="..\src\map\buyingstore.c" />
     <ClCompile Include="..\src\map\cashshop.c" />
+    <ClCompile Include="..\src\map\channel.c" />
     <ClCompile Include="..\src\map\chat.c" />
     <ClCompile Include="..\src\map\chrif.c" />
     <ClCompile Include="..\src\map\clif.c" />

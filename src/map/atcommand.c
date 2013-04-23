@@ -8793,18 +8793,18 @@ static inline void atcmd_channel_help(struct map_session_data *sd, const char *c
 
 	//option delete
 	if(can_delete){
-		sprintf(atcmd_output, "* %s delete <channel_name>",command);// * %s delete <channel_name>
+		sprintf(atcmd_output, msg_txt(sd,1469),command);// * %s delete <channel_name>
 		clif_displaymessage(fd, atcmd_output);
-		clif_displaymessage(fd, "Force people leave and destroy the specified channel");
+		clif_displaymessage(fd, msg_txt(sd,1470)); // -- Force people leave and destroy the specified channel
 	}
 
 	//option list
 	sprintf(atcmd_output, msg_txt(sd,1417),command);// * %s list
 	clif_displaymessage(fd, atcmd_output);
 	clif_displaymessage(fd, msg_txt(sd,1418));// -- Lists all public channels.
-	sprintf(atcmd_output, "* %s list mine",command);// * %s list mine
+	sprintf(atcmd_output, msg_txt(sd,1471),command);// * %s list mine
 	clif_displaymessage(fd, atcmd_output);
-	clif_displaymessage(fd, "List all your joined channel");
+	clif_displaymessage(fd, msg_txt(sd,1472));
 	if( can_create ) {
 		sprintf(atcmd_output, msg_txt(sd,1419),command);// * %s list colors
 		clif_displaymessage(fd, atcmd_output);
@@ -8819,9 +8819,9 @@ static inline void atcmd_channel_help(struct map_session_data *sd, const char *c
 	}
 
 	//option join
-	sprintf(atcmd_output, "* %s join <channel_name> <channel_password>",command);// * %s join <channel_name>
+	sprintf(atcmd_output, msg_txt(sd,1473),command);// * %s join <channel_name>
 	clif_displaymessage(fd, atcmd_output);
-	clif_displaymessage(fd, "join specified channel");
+	clif_displaymessage(fd, msg_txt(sd,1474));
 
 	//option leave
 	sprintf(atcmd_output, msg_txt(sd,1423),command);// * %s leave <#channel_name>

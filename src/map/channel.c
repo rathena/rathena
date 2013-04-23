@@ -480,9 +480,9 @@ int channel_display_list(struct map_session_data *sd, char *options){
 		}
 	}
 	else if( options[0] != '\0' && strcmpi(options,"mine") == 0 ) { //display chan I'm into
-		clif_displaymessage(sd->fd, " ---- Joined Channels ----"); // ---- Joined Channels ----
+		clif_displaymessage(sd->fd, msg_txt(sd,1475)); // ---- Joined Channels ----
 		if(!sd->channel_count)
-			clif_displaymessage(sd->fd, "You have not joined any channel yet");
+			clif_displaymessage(sd->fd, msg_txt(sd,1476)); //You have not joined any channel yet
 		else {
 			for(k=0; k<sd->channel_count; k++){
 				channel = sd->channels[k];
@@ -575,13 +575,13 @@ int channel_pcdelete(struct map_session_data *sd, char *chname){
 
 	channel = channel_name2channel(chname,sd,0);
 	if(channel_pc_haschan(sd,channel)<0){
-		sprintf(output, "Channel %s doesn't exist",chname);// You're not part of the '%s' channel.
+		sprintf(output, msg_txt(sd,1425),chname);// You're not part of the '%s' channel.
 		clif_displaymessage(sd->fd, output);
 		return -2; //channel doesn't exist or player don't have it
 	}
 	channel_delete(channel);
 
-	sprintf(output, "Channel %s deleted",chname); // You've left the '%s' channel.
+	sprintf(output, msg_txt(sd,1477),chname); //Channel %s deleted
 	clif_displaymessage(sd->fd, output);
 
 	return 0;
@@ -865,7 +865,7 @@ int channel_pcban(struct map_session_data *sd, char *chname, struct map_session_
 		sprintf(output, msg_txt(sd,1443), channel->name);// -- '%s' ban list
 		clif_displaymessage(sd->fd, output);
 		for( pl_sd = dbi_first(iter); dbi_exists(iter); pl_sd = dbi_next(iter) ) { //for all users
-			sprintf(output, "%d: %s",pl_sd->status.char_id,pl_sd->status.name); //  %d: %s
+			sprintf(output, msg_txt(sd,1444),pl_sd->status.char_id,pl_sd->status.name); //  %d: %s
 			clif_displaymessage(sd->fd, output);
 		}
 		dbi_destroy(iter);
