@@ -4998,7 +4998,7 @@ int char_config_read(const char* cfgName)
 				n = sv_split(lineitem, strlen(lineitem), 0, ',', fields, fields_length, SV_NOESCAPE_NOTERMINATE);
 				if(n+1 < fields_length){
 					ShowDebug("start_items: not enough arguments for %s! Skipping...\n",lineitem);
-					lineitem = strtok(NULL, ";"); //next itemline
+					lineitem = strtok(NULL, ":"); //next itemline
 					continue;
 				}
 				if(i > MAX_STARTITEM){
@@ -5008,7 +5008,7 @@ int char_config_read(const char* cfgName)
 					start_items[i].amount = max(0,atoi(fields[2]));
 					start_items[i].pos = max(0,atoi(fields[3]));
 				}
-				lineitem = strtok(NULL, ";"); //next itemline
+				lineitem = strtok(NULL, ":"); //next itemline
 				i++;
 			}
 			aFree(fields);
