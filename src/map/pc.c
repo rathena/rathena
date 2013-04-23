@@ -16,6 +16,7 @@
 #include "atcommand.h" // get_atcommand_level()
 #include "battle.h" // battle_config
 #include "battleground.h"
+#include "channel.h"
 #include "chrif.h"
 #include "clif.h"
 #include "date.h" // is_day_of_*()
@@ -4783,9 +4784,7 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 			vending_closevending(sd);
 		}
 
-		if( raChSys.local && map[sd->bl.m].channel && idb_exists(map[sd->bl.m].channel->users, sd->status.char_id) ) {
-			clif_chsys_left(map[sd->bl.m].channel,sd);
-		}
+		channel_pcquit(sd,4); //quit map chan
 	}
 
 	if( m < 0 )
@@ -9609,7 +9608,7 @@ int pc_readdb(void)
 	FILE *fp;
 	char line[24000],*p;
 
-    //reset
+	//reset
 	memset(exp_table,0,sizeof(exp_table));
 	memset(max_level,0,sizeof(max_level));
 
@@ -9656,7 +9655,7 @@ int pc_readdb(void)
 		//Reverse check in case the array has a bunch of trailing zeros... [Skotlex]
 		//The reasoning behind the -2 is this... if the max level is 5, then the array
 		//should look like this:
-	   //0: x, 1: x, 2: x: 3: x 4: 0 <- last valid value is at 3.
+		//0: x, 1: x, 2: x: 3: x 4: 0 <- last valid value is at 3.
 		while ((ui = max_level[job][type]) >= 2 && exp_table[job][type][ui-2] <= 0)
 			max_level[job][type]--;
 		if (max_level[job][type] < maxlv) {
@@ -9767,7 +9766,7 @@ int pc_readdb(void)
 	fclose(fp);
 	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","attr_fix.txt");
 
-    // reset then read statspoint
+	 // reset then read statspoint
 	memset(statp,0,sizeof(statp));
 	i=1;
 

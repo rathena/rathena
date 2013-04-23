@@ -6,7 +6,9 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/db.h" //dbmap
+
 //#include "../common/mmo.h"
+struct Channel;
 struct item;
 struct storage_data;
 struct guild_storage;
@@ -775,55 +777,7 @@ enum clif_colors {
 unsigned long color_table[COLOR_MAX];
 int clif_colormes(struct map_session_data * sd, enum clif_colors color, const char* msg);
 
-/**
- * Channel System
- **/
-#define RACHSYS_NAME_LENGTH 20
-
-enum raChSysChOpt {
-	raChSys_OPT_BASE				= 0,
-	raChSys_OPT_ANNOUNCE_JOIN	= 1,
-};
-
-enum raChSysChType {
-	raChSys_PUBLIC	= 0,
-	raChSys_PRIVATE	= 1,
-	raChSys_MAP		= 2,
-	raChSys_ALLY		= 3,
-};
-
-struct {
-	unsigned long *colors;
-	char **colors_name;
-	unsigned char colors_count;
-	bool local, ally;
-	bool local_autojoin, ally_autojoin;
-	char local_name[RACHSYS_NAME_LENGTH], ally_name[RACHSYS_NAME_LENGTH];
-	unsigned char local_color, ally_color;
-	bool closing;
-	bool allow_user_channel_creation;
-} raChSys;
-
-struct raChSysCh {
-	char name[RACHSYS_NAME_LENGTH];
-	char pass[RACHSYS_NAME_LENGTH];
-	unsigned char color;
-	DBMap *users;
-	unsigned int opt;
-	unsigned int owner;
-	enum raChSysChType type;
-	uint16 m;
-};
-
-struct DBMap* clif_get_channel_db(void);
-void clif_chsys_create(struct raChSysCh *channel, char *name, char *pass, unsigned char color);
-void clif_chsys_msg(struct raChSysCh *channel, struct map_session_data *sd, char *msg);
-void clif_chsys_send(struct raChSysCh *channel, struct map_session_data *sd, char *msg);
-void clif_chsys_join(struct raChSysCh *channel, struct map_session_data *sd);
-void clif_chsys_left(struct raChSysCh *channel, struct map_session_data *sd);
-void clif_chsys_delete(struct raChSysCh *channel);
-void clif_chsys_mjoin(struct map_session_data *sd);
-void clif_read_channels_config(void);
+void clif_channel_msg(struct Channel *channel, struct map_session_data *sd, char *msg);
 
 #define clif_menuskill_clear(sd) (sd)->menuskill_id = (sd)->menuskill_val = (sd)->menuskill_val2 = 0;
 

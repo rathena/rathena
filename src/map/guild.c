@@ -21,6 +21,7 @@
 #include "mob.h"
 #include "intif.h"
 #include "clif.h"
+#include "channel.h"
 #include "skill.h"
 #include "log.h"
 
@@ -499,7 +500,7 @@ int guild_recv_info(struct guild *sg)
 	DBData data;
 	struct map_session_data *sd;
 	bool guild_new = false;
-	void *aChSysSave = NULL;
+	struct Channel *channel;
 
 	nullpo_ret(sg);
 
@@ -507,40 +508,6 @@ int guild_recv_info(struct guild *sg)
 		guild_new = true;
 		g=(struct guild *)aCalloc(1,sizeof(struct guild));
 		idb_put(guild_db,sg->guild_id,g);
-		if( raChSys.ally ) {
-			struct raChSysCh *channel;
-
-			CREATE(channel, struct raChSysCh , 1);
-			safestrncpy(channel->name, raChSys.ally_name, RACHSYS_NAME_LENGTH);
-			channel->type = raChSys_ALLY;
-
-			clif_chsys_create(channel,NULL,NULL,raChSys.ally_color);
-			if( raChSys.ally_autojoin ) {
-				struct s_mapiterator* iter = mapit_getallusers();
-
-				for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) ) {
-					if( sd->status.guild_id ) {
-						if( sd->status.guild_id == sg->guild_id ) {
-							clif_chsys_join(channel,sd);
-							sd->guild = g;
-							continue;
-						}
-
-						for (i = 0; i < MAX_GUILDALLIANCE; i++) {
-							if( sg->alliance[i].guild_id == sd->status.guild_id ) {
-								clif_chsys_join(channel,sd);
-								break;
-							}
-						}
-					}
-				}
-
-				mapit_free(iter);
-			}
-
-			aChSysSave = (void*)channel;
-
-		}
 		before=*sg;
 		//Perform the check on the user because the first load
 		guild_check_member(sg);
@@ -558,12 +525,8 @@ int guild_recv_info(struct guild *sg)
 		}
 	} else {
 		before=*g;
-		if( g->channel )
-			aChSysSave = g->channel;
 	}
 	memcpy(g,sg,sizeof(struct guild));
-
-	g->channel = aChSysSave;
 
 	if(g->max_member > MAX_GUILD) {
 		ShowError("guild_recv_info: Received guild with %d members, but MAX_GUILD is only %d. Extra guild-members have been lost!\n", g->max_member, MAX_GUILD);
@@ -581,11 +544,22 @@ int guild_recv_info(struct guild *sg)
 			bm++;
 	}
 
+	if(Channel_Config.ally_enable){
+		channel = g->channel;
+		if(!channel){
+			channel = channel_create(Channel_Config.ally_chname,NULL,Channel_Config.ally_chcolor,CHAN_TYPE_ALLY,g->guild_id);
+			g->channel = channel;
+			channel_ajoin(g);
+		}
+	}
 	for (i = 0; i < g->max_member; i++) { //Transmission of information at all members
 		sd = g->member[i].sd;
 		if( sd==NULL )
 			continue;
 		sd->guild = g;
+		if(Channel_Config.ally_autojoin ) {
+			channel_gjoin(sd,3); //make all member join guildchan+allieschan
+		}
 
 		if (before.guild_lv != g->guild_lv || bm != m ||
 			before.max_member != g->max_member) {
@@ -755,16 +729,8 @@ void guild_member_joined(struct map_session_data *sd)
 		g->member[i].sd = sd;
 		sd->guild = g;
 
-		if( raChSys.ally && raChSys.ally_autojoin ) {
-			struct guild* sg = NULL;
-			clif_chsys_join((struct raChSysCh*)g->channel,sd);
-
-			for (i = 0; i < MAX_GUILDALLIANCE; i++) {
-				if( g->alliance[i].guild_id && (sg = guild_search(g->alliance[i].guild_id) ) ) {
-					clif_chsys_join((struct raChSysCh*)sg->channel,sd);
-					break;
-				}
-			}
+		if( Channel_Config.ally_enable && Channel_Config.ally_autojoin ) {
+			channel_gjoin(sd,3);
 		}
 	}
 }
@@ -909,13 +875,7 @@ int guild_member_withdraw(int guild_id, int account_id, int char_id, int flag, c
 		if (sd->state.storage_flag == 2) //Close the guild storage.
 			storage_guild_storageclose(sd);
 		guild_send_dot_remove(sd);
-		if( raChSys.ally ) {
-			uint8 ch_count = sd->channel_count;
-			for (i = 0; i < ch_count; i++) {
-				if( sd->channels[i] && sd->channels[i]->type == raChSys_ALLY )
-					clif_chsys_left(sd->channels[i],sd);
-			}
-		}
+		channel_pcquit(sd,3); //leave guild and ally chan
 		sd->status.guild_id = 0;
 		sd->guild = NULL;
 		sd->guild_emblem_id = 0;
@@ -1578,9 +1538,9 @@ int guild_opposition(struct map_session_data *sd,struct map_session_data *tsd)
 		return 0;
 	}
 
-    for (i = 0; i < MAX_GUILDALLIANCE; i++) { // checking relations
+	for (i = 0; i < MAX_GUILDALLIANCE; i++) { // checking relations
 		if(g->alliance[i].guild_id==tsd->status.guild_id){
-            if (g->alliance[i].opposition == 1) { // check if not already hostile
+			if (g->alliance[i].opposition == 1) { // check if not already hostile
 				clif_guild_oppositionack(sd,2);
 				return 0;
 			}
@@ -1592,7 +1552,7 @@ int guild_opposition(struct map_session_data *sd,struct map_session_data *tsd)
 		}
 	}
 
-    // inform other serv
+	// inform other serv
 	intif_guild_alliance( sd->status.guild_id,tsd->status.guild_id,
 			sd->status.account_id,tsd->status.account_id,1 );
 	return 0;
@@ -1624,14 +1584,14 @@ int guild_allianceack(int guild_id1,int guild_id2,int account_id1,int account_id
 		sd[0]->guild_alliance_account=0;
 	}
 
-    if (flag & 0x70) { // failure
+	if (flag & 0x70) { // failure
 		for(i=0;i<2-(flag&1);i++)
 			if( sd[i]!=NULL )
 				clif_guild_allianceack(sd[i],((flag>>4)==i+1)?3:4);
 		return 0;
 	}
 
-    if (!(flag & 0x08)) { // new relationship
+	if (!(flag & 0x08)) { // new relationship
 		for(i=0;i<2-(flag&1);i++)
 		{
 			if(g[i]!=NULL)
@@ -1645,35 +1605,38 @@ int guild_allianceack(int guild_id1,int guild_id2,int account_id1,int account_id
 				}
 			}
 		}
-    } else { // remove relationship
+	} else { // remove relationship
 		for(i=0;i<2-(flag&1);i++)
 		{
 			if(g[i]!=NULL)
 			{
+				for(j=0;j<g[i]->max_member;j++) channel_pcquit(g[i]->member[j].sd,2); //leave all alliance chan
 				ARR_FIND( 0, MAX_GUILDALLIANCE, j, g[i]->alliance[j].guild_id == guild_id[1-i] && g[i]->alliance[j].opposition == (flag&1) );
 				if( j < MAX_GUILDALLIANCE )
 					g[i]->alliance[j].guild_id = 0;
 			}
-            if (sd[i] != NULL) // notify players
+		if (sd[i] != NULL) // notify players
 				clif_guild_delalliance(sd[i],guild_id[1-i],(flag&1));
 		}
 	}
 
-    if ((flag & 0x0f) == 0) { // alliance notification
+	if ((flag & 0x0f) == 0) { // alliance notification
 		if( sd[1]!=NULL )
 			clif_guild_allianceack(sd[1],2);
-    } else if ((flag & 0x0f) == 1) { // enemy notification
+	} else if ((flag & 0x0f) == 1) { // enemy notification
 		if( sd[0]!=NULL )
 			clif_guild_oppositionack(sd[0],0);
 	}
 
 
-    for (i = 0; i < 2 - (flag & 1); i++) { // Retransmission of the relationship list to all members
+	for (i = 0; i < 2 - (flag & 1); i++) { // Retransmission of the relationship list to all members
 		struct map_session_data *sd;
 		if(g[i]!=NULL)
 			for(j=0;j<g[i]->max_member;j++)
-				if((sd=g[i]->member[j].sd)!=NULL)
+				if((sd=g[i]->member[j].sd)!=NULL){
 					clif_guild_allianceinfo(sd);
+					channel_gjoin(sd,2); //join ally join
+				}
 	}
 	return 0;
 }
@@ -1751,10 +1714,8 @@ int guild_broken(int guild_id,int flag)
 	guild_db->foreach(guild_db,guild_broken_sub,guild_id);
 	castle_db->foreach(castle_db,castle_guild_broken_sub,guild_id);
 	guild_storage_delete(guild_id);
-	if( raChSys.ally ) {
-		if( g->channel != NULL ) {
-			clif_chsys_delete(( struct raChSysCh * )g->channel);
-		}
+	if( Channel_Config.ally_enable ) {
+		channel_delete(g->channel);
 	}
 	idb_remove(guild_db,guild_id);
 	return 0;
@@ -2203,10 +2164,8 @@ void do_final_guild(void) {
 	struct guild *g;
 
 	for( g = dbi_first(iter); dbi_exists(iter); g = dbi_next(iter) ) {
-		if( g->channel != NULL )
-			clif_chsys_delete((struct raChSysCh *)g->channel);
+		channel_delete(g->channel);
 	}
-
 	dbi_destroy(iter);
 
 	db_destroy(guild_db);

@@ -18,6 +18,7 @@
 #include "mercenary.h"
 #include "elemental.h"
 #include "skill.h"
+#include "channel.h"
 #include "clif.h"
 #include "duel.h"
 #include "npc.h"
@@ -2294,30 +2295,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			if( sd->duel_invite > 0 )
 				duel_reject(sd->duel_invite, sd);
 
-			if( raChSys.ally && sd->status.guild_id ) {
-				struct guild *g = sd->guild, *sg;
-				if( g ) {
-					if( idb_exists(((struct raChSysCh *)g->channel)->users, sd->status.char_id) )
-						clif_chsys_left((struct raChSysCh *)g->channel,sd);
-					for (i = 0; i < MAX_GUILDALLIANCE; i++) {
-						if( g->alliance[i].guild_id && (sg = guild_search(g->alliance[i].guild_id) ) ) {
-							if( idb_exists(((struct raChSysCh *)sg->channel)->users, sd->status.char_id) )
-								clif_chsys_left((struct raChSysCh *)sg->channel,sd);
-							break;
-						}
-					}
-				}
-			}
-
-			if( sd->channel_count ) {
-				uint8 ch_count = sd->channel_count;
-				for( i = 0; i < ch_count; i++ ) {
-					if( sd->channels[i] != NULL )
-						clif_chsys_left(sd->channels[i],sd);
-				}
-				if( raChSys.closing )
-					aFree(sd->channels);
-			}
+			channel_pcquit(sd,0xF); //leave all chan
 
 			// Notify friends that this char logged out. [Skotlex]
 			map_foreachpc(clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 0);

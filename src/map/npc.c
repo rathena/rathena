@@ -2150,7 +2150,7 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 		return strchr(start,'\n');// skip and continue
 	}
 
-	if( m != -1 && ( x < 0 || x >= map[m].xs || y < 0 || y >= map[m].ys ) ) { 
+	if( m != -1 && ( x < 0 || x >= map[m].xs || y < 0 || y >= map[m].ys ) ) {
 		ShowWarning("npc_parse_warp: coordinates %d/%d are out of bounds in map %s(%dx%d), in file '%s', line '%d'\n", x, y, map[m].name, map[m].xs, map[m].ys,filepath,strline(buffer,start-buffer));
 	}
 
@@ -2221,7 +2221,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 
 	if( m != -1 && ( x < 0 || x >= map[m].xs || y < 0 || y >= map[m].ys ) ) {
 		ShowWarning("npc_parse_shop: coordinates %d/%d are out of bounds in map %s(%dx%d), in file '%s', line '%d'\n", x, y, map[m].name, map[m].xs, map[m].ys,filepath,strline(buffer,start-buffer));
-	} 
+	}
 
 	if( !strcasecmp(w2,"cashshop") )
 		type = CASHSHOP;
@@ -3441,7 +3441,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 	else if (!strcmpi(w3,"reset"))
 		map[m].flag.reset=state;
 	else if (!strcmpi(w3,"nomapchannelautojoin"))
-		map[m].flag.chsysnolocalaj = state;
+		map[m].flag.chmautojoin = state;
 	else
 		ShowError("npc_parse_mapflag: unrecognized mapflag '%s' (file '%s', line '%d').\n", w3, filepath, strline(buffer,start-buffer));
 

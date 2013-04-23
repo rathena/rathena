@@ -17,6 +17,7 @@
 #include "atcommand.h"
 #include "battle.h"
 #include "chat.h"
+#include "channel.h"
 #include "clif.h"
 #include "chrif.h"
 #include "duel.h"
@@ -5621,28 +5622,7 @@ ACMD_FUNC(autotrade) {
 		status_change_start(NULL,&sd->bl, SC_AUTOTRADE, 10000, 0, 0, 0, 0, ((timeout > 0) ? min(timeout,battle_config.at_timeout) : battle_config.at_timeout) * 60000, 0);
 	}
 
-	// Leave all chat channels.
-	if( raChSys.ally && sd->status.guild_id ) {
-		struct guild *g = sd->guild, *sg;
-		if( g ) {
-			if( idb_exists(((struct raChSysCh *)g->channel)->users, sd->status.char_id) )
-				clif_chsys_left((struct raChSysCh *)g->channel,sd);
-			for (i = 0; i < MAX_GUILDALLIANCE; i++) {
-				if( g->alliance[i].guild_id && (sg = guild_search(g->alliance[i].guild_id) ) ) {
-					if( idb_exists(((struct raChSysCh *)sg->channel)->users, sd->status.char_id) )
-						clif_chsys_left((struct raChSysCh *)sg->channel,sd);
-					break;
-				}
-			}
-		}
-	}
-	if( sd->channel_count ) { //quit all chan
-		uint8 count = sd->channel_count;
-		for( i = 0; i < count; i++ ) {
-			if( sd->channels[i] != NULL )
-				clif_chsys_left(sd->channels[i],sd);
-		}
-	}
+	channel_pcquit(sd,0xF); //leave all chan
 	clif_authfail_fd(sd->fd, 15);
 
 	return 0;
@@ -8782,251 +8762,148 @@ ACMD_FUNC(cart) {
 }
 
 /* Channel System [Ind] */
-ACMD_FUNC(join)
-{
-	struct raChSysCh *channel;
-	char name[RACHSYS_NAME_LENGTH], pass[RACHSYS_NAME_LENGTH];
-	DBMap* channel_db = clif_get_channel_db();
+ACMD_FUNC(join){
+	struct Channel *channel;
+	char chname[CHAN_NAME_LENGTH], pass[CHAN_NAME_LENGTH];
 
-	if( !message || !*message || sscanf(message, "%s %s", name, pass) < 1 ) {
+	if( !message || !*message || sscanf(message, "%s %s", chname, pass) < 1 ) {
 		sprintf(atcmd_output, msg_txt(sd,1399),command); // Unknown Channel (usage: %s <#channel_name>)
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}
-	if( raChSys.local && strcmpi(name + 1, raChSys.local_name) == 0 ) {
-		if( !map[sd->bl.m].channel ) {
-			clif_chsys_mjoin(sd);
-			return 0;
-		} else
-			channel = map[sd->bl.m].channel;
-	} else if( raChSys.ally && sd->status.guild_id && strcmpi(name + 1, raChSys.ally_name) == 0 ) {
-		struct guild *g = sd->guild;
-		if( !g ) return -1;/* unlikely, but we wont let it crash anyway. */
-		channel = (struct raChSysCh *)g->channel;
-	} else if( !( channel = strdb_get(channel_db, name + 1) ) ) {
-		sprintf(atcmd_output, msg_txt(sd,1400),name,command); // Unknown Channel '%s' (usage: %s <#channel_name>)
-		clif_displaymessage(fd, atcmd_output);
-		return -1;
-	}
-
-	if( idb_exists(channel->users, sd->status.char_id) ) {
-		sprintf(atcmd_output, msg_txt(sd,1434),name); // You're already in the '%s' channel.
-		clif_displaymessage(fd, atcmd_output);
-		return -1;
-	}
-	if( channel->pass[0] != '\0'  && strcmp(channel->pass,pass) != 0 ) {
-		if( pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ) {
-			sd->stealth = true;
-		} else {
-			sprintf(atcmd_output, msg_txt(sd,1401),name,command); // '%s' Channel is password protected (usage: %s <#channel_name> <password>)
-			clif_displaymessage(fd, atcmd_output);
-			return -1;
-		}
-	}
-
-	if( !( channel->opt & raChSys_OPT_ANNOUNCE_JOIN ) ) {
-		sprintf(atcmd_output, msg_txt(sd,1403),name); // You're now in the '%s' channel.
-		clif_displaymessage(fd, atcmd_output);
-	}
-
-	clif_chsys_join(channel,sd);
-
-	return 0;
+	return channel_pcjoin(sd, chname, pass);
 }
-
-static inline void atcmd_channel_help(struct map_session_data *sd, const char *command, bool can_create)
+/*
+ * Display available option for @channel command
+ * @command : the name of used command (for alias case)
+ */
+static inline void atcmd_channel_help(struct map_session_data *sd, const char *command)
 {
 	int fd = sd->fd;
+	bool can_delete = pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN);
+	bool can_create = (can_delete || Channel_Config.user_chenable);
 	clif_displaymessage(fd, msg_txt(sd,1414));// ---- Available options:
+
+	//option create
 	if( can_create ) {
 		sprintf(atcmd_output, msg_txt(sd,1415),command);// * %s create <#channel_name> <channel_password>
 		clif_displaymessage(fd, atcmd_output);
 		clif_displaymessage(fd, msg_txt(sd,1416));// -- Creates a new channel.
 	}
+
+	//option delete
+	if(can_delete){
+		sprintf(atcmd_output, "* %s delete <channel_name>",command);// * %s delete <channel_name>
+		clif_displaymessage(fd, atcmd_output);
+		clif_displaymessage(fd, "Force people leave and destroy the specified channel");
+	}
+
+	//option list
 	sprintf(atcmd_output, msg_txt(sd,1417),command);// * %s list
 	clif_displaymessage(fd, atcmd_output);
 	clif_displaymessage(fd, msg_txt(sd,1418));// -- Lists all public channels.
+	sprintf(atcmd_output, "* %s list mine",command);// * %s list mine
+	clif_displaymessage(fd, atcmd_output);
+	clif_displaymessage(fd, "List all your joined channel");
 	if( can_create ) {
 		sprintf(atcmd_output, msg_txt(sd,1419),command);// * %s list colors
 		clif_displaymessage(fd, atcmd_output);
 		clif_displaymessage(fd, msg_txt(sd,1420));// -- Lists all available colors for custom channels.
+	}
+
+	//option setcolor
+	if(can_create){
 		sprintf(atcmd_output, msg_txt(sd,1421),command);// * %s setcolor <#channel_name> <color_name>
 		clif_displaymessage(fd, atcmd_output);
 		clif_displaymessage(fd, msg_txt(sd,1422));// -- Changes channel text to the specified color (channel owners only).
 	}
+
+	//option join
+	sprintf(atcmd_output, "* %s join <channel_name> <channel_password>",command);// * %s join <channel_name>
+	clif_displaymessage(fd, atcmd_output);
+	clif_displaymessage(fd, "join specified channel");
+
+	//option leave
 	sprintf(atcmd_output, msg_txt(sd,1423),command);// * %s leave <#channel_name>
 	clif_displaymessage(fd, atcmd_output);
 	clif_displaymessage(fd, msg_txt(sd,1424));// -- Leaves the specified channel.
+
+	//option bindto
 	sprintf(atcmd_output, msg_txt(sd,1427),command);// * %s bindto <#channel_name>
 	clif_displaymessage(fd, atcmd_output);
 	clif_displaymessage(fd, msg_txt(sd,1428));// -- Binds your global chat to the specified channel, sending all global messages to that channel.
+
+	//option unbind
 	sprintf(atcmd_output, msg_txt(sd,1429),command);// * %s unbind
 	clif_displaymessage(fd, atcmd_output);
 	clif_displaymessage(fd, msg_txt(sd,1430));// -- Unbinds your global chat from the attached channel, if any.
+
+	//option ban/unban/banlist
+	if( can_create ) {
+		sprintf(atcmd_output, msg_txt(sd,1456),command);// -- %s ban <channel name> <character name>
+		clif_displaymessage(fd, atcmd_output);
+		clif_displaymessage(fd, msg_txt(sd,1457));// - bans <character name> from <channel name> channel
+		sprintf(atcmd_output, msg_txt(sd,1458),command);// -- %s banlist <channel name>
+		clif_displaymessage(fd, atcmd_output);
+		clif_displaymessage(fd, msg_txt(sd,1459));// - lists all banned characters from <channel name> channel
+		sprintf(atcmd_output, msg_txt(sd,1460),command);// -- %s unban <channel name> <character name>
+		clif_displaymessage(fd, atcmd_output);
+		clif_displaymessage(fd, msg_txt(sd,1461));// - unban <character name> from <channel name> channel
+		sprintf(atcmd_output, msg_txt(sd,1467),command);// -- %s unbanall <channel name>
+		clif_displaymessage(fd, atcmd_output);
+		clif_displaymessage(fd, msg_txt(sd,1468));// - unbans everyone from <channel name>
+	}
+
+	//option setopt
+	if(can_create){
+		sprintf(atcmd_output, msg_txt(sd,1462),command);// -- %s setopt <channel name> <option name> <option value>
+		clif_displaymessage(fd, atcmd_output);
+		clif_displaymessage(fd, msg_txt(sd,1463));// - adds or removes <option name> with <option value> to <channel name> channel
+	}
+
 	sprintf(atcmd_output, msg_txt(sd,1404),command); // %s failed.
 	clif_displaymessage(fd, atcmd_output);
 }
 
-ACMD_FUNC(channel)
-{
-	struct raChSysCh *channel;
-	char key[RACHSYS_NAME_LENGTH], sub1[RACHSYS_NAME_LENGTH], sub2[RACHSYS_NAME_LENGTH], sub3[RACHSYS_NAME_LENGTH];
-	unsigned char k = 0;
-	DBMap* channel_db = clif_get_channel_db();
+ACMD_FUNC(channel) {
+	char key[CHAN_NAME_LENGTH], sub1[CHAN_NAME_LENGTH], sub2[CHAN_NAME_LENGTH], sub3[CHAN_NAME_LENGTH];
 	sub1[0] = sub2[0] = sub3[0] = '\0';
 
 	if( !message || !*message || sscanf(message, "%s %s %s %s", key, sub1, sub2, sub3) < 1 ) {
-		atcmd_channel_help(sd,command,( raChSys.allow_user_channel_creation || pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ));
+		atcmd_channel_help(sd,command);
 		return 0;
 	}
 
-	if( strcmpi(key,"create") == 0 && ( raChSys.allow_user_channel_creation || pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ) ) {
-		if( sub1[0] != '#' ) {
-			clif_displaymessage(fd, msg_txt(sd,1405));// Channel name must start with '#'.
-			return -1;
-		} else if ( strlen(sub1) < 3 || strlen(sub1) > RACHSYS_NAME_LENGTH ) {
-			sprintf(atcmd_output, msg_txt(sd,1406), RACHSYS_NAME_LENGTH);// Channel length must be between 3 and %d.
-			clif_displaymessage(fd, atcmd_output);
-			return -1;
-		} else if ( sub3[0] != '\0' ) {
-			clif_displaymessage(fd, msg_txt(sd,1408)); // Channel password may not contain spaces.
+	if( strcmpi(key,"create") == 0 && ( Channel_Config.user_chenable || pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ) ) {
+		if(sub3[0] != '\0'){
+			clif_displaymessage(fd, msg_txt(sd,1408)); // Channel password may not contain spaces
 			return -1;
 		}
-		if( strcmpi(sub1 + 1,raChSys.local_name) == 0 || strcmpi(sub1 + 1,raChSys.ally_name) == 0 || strdb_exists(channel_db, sub1 + 1) ) {
-			sprintf(atcmd_output, msg_txt(sd,1407), sub1);// Channel '%s' is not available.
-			clif_displaymessage(fd, atcmd_output);
-			return -1;
-		}
-
-		CREATE( channel, struct raChSysCh, 1 );
-
-		clif_chsys_create(channel,sub1 + 1,sub2,0);
-
-		channel->owner = sd->status.char_id;
-		channel->type = raChSys_PRIVATE;
-
-		if( !( channel->opt & raChSys_OPT_ANNOUNCE_JOIN ) ) {
-			sprintf(atcmd_output, msg_txt(sd,1403),sub1); // You're now in the '%s' channel.
-			clif_displaymessage(fd, atcmd_output);
-		}
-
-		clif_chsys_join(channel,sd);
-
+		return channel_pccreate(sd,sub1,sub2);
+	} else if( strcmpi(key,"delete") == 0 && pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ) {
+		return channel_pcdelete(sd,sub1);
 	} else if ( strcmpi(key,"list") == 0 ) {
-		if( sub1[0] != '\0' && strcmpi(sub1,"colors") == 0 ) {
-			char mout[40];
-			for( k = 0; k < raChSys.colors_count; k++ ) {
-				unsigned short msg_len = 1;
-				msg_len += sprintf(mout, "[ %s list colors ] : %s",command,raChSys.colors_name[k]);
-
-				WFIFOHEAD(fd,msg_len + 12);
-				WFIFOW(fd,0) = 0x2C1;
-				WFIFOW(fd,2) = msg_len + 12;
-				WFIFOL(fd,4) = 0;
-				WFIFOL(fd,8) = raChSys.colors[k];
-				safestrncpy((char*)WFIFOP(fd,12), mout, msg_len);
-				WFIFOSET(fd, msg_len + 12);
-			}
-		} else {
-			DBIterator *iter;
-			bool show_all = pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ? true : false;
-			clif_displaymessage(fd, msg_txt(sd,1410)); // ---- Public Channels ----
-			if( raChSys.local ) {
-				sprintf(atcmd_output, msg_txt(sd,1409), raChSys.local_name, map[sd->bl.m].channel ? db_size(map[sd->bl.m].channel->users) : 0);// - #%s ( %d users )
-				clif_displaymessage(fd, atcmd_output);
-			}
-			if( raChSys.ally && sd->status.guild_id ) {
-				struct guild *g = sd->guild;
-				if( !g ) return -1;
-				sprintf(atcmd_output, msg_txt(sd,1409), raChSys.ally_name, db_size(((struct raChSysCh *)g->channel)->users));// - #%s ( %d users )
-				clif_displaymessage(fd, atcmd_output);
-			}
-			iter = db_iterator(channel_db);
-			for(channel = dbi_first(iter); dbi_exists(iter); channel = dbi_next(iter)) {
-				if( show_all || channel->type == raChSys_PUBLIC ) {
-					sprintf(atcmd_output, msg_txt(sd,1409), channel->name, db_size(channel->users));// - #%s (%d users)
-					clif_displaymessage(fd, atcmd_output);
-				}
-			}
-			dbi_destroy(iter);
-		}
+		return channel_display_list(sd,sub1);
 	} else if ( strcmpi(key,"setcolor") == 0 ) {
-
-		if( sub1[0] != '#' ) {
-			clif_displaymessage(fd, msg_txt(sd,1405));// Channel name must start with '#'.
-			return -1;
-		}
-
-		if( !(channel = strdb_get(channel_db, sub1 + 1)) ) {
-			sprintf(atcmd_output, msg_txt(sd,1407), sub1);// Channel '%s' is not available.
-			clif_displaymessage(fd, atcmd_output);
-			return -1;
-		}
-
-		if( channel->owner != sd->status.char_id && !pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ) {
-			sprintf(atcmd_output, msg_txt(sd,1412), sub1);// You're not the owner of channel '%s'.
-			clif_displaymessage(fd, atcmd_output);
-			return -1;
-		}
-
-		for( k = 0; k < raChSys.colors_count; k++ ) {
-			if( strcmpi(sub2,raChSys.colors_name[k]) == 0 )
-				break;
-		}
-		if( k == raChSys.colors_count ) {
-			sprintf(atcmd_output, msg_txt(sd,1411), sub2);// Unknown color '%s'.
-			clif_displaymessage(fd, atcmd_output);
-			return -1;
-		}
-		channel->color = k;
-		sprintf(atcmd_output, msg_txt(sd,1413),sub1,raChSys.colors_name[k]);// '%s' channel color updated to '%s'.
-		clif_displaymessage(fd, atcmd_output);
-	} else if ( strcmpi(key,"leave") == 0 ) {
-
-		if( sub1[0] != '#' ) {
-			clif_displaymessage(fd, msg_txt(sd,1405));// Channel name must start with '#'.
-			return -1;
-		}
-
-		ARR_FIND(0, sd->channel_count, k, strcmpi(sub1+1,sd->channels[k]->name) == 0);
-		if( k == sd->channel_count ) {
-			sprintf(atcmd_output, msg_txt(sd,1425),sub1);// You're not part of the '%s' channel.
-			clif_displaymessage(fd, atcmd_output);
-			return -1;
-		}
-		clif_chsys_left(sd->channels[k],sd);
-		sprintf(atcmd_output, msg_txt(sd,1426),sub1); // You've left the '%s' channel.
-		clif_displaymessage(fd, atcmd_output);
+		return channel_pccolor(sd, sub1, sub2);
+	} else if ( strcmpi(key,"join") == 0 ) {
+		return channel_pcjoin(sd, sub1, sub2);
+	}else if ( strcmpi(key,"leave") == 0 ) {
+		return channel_pcleave(sd, sub1);
 	} else if ( strcmpi(key,"bindto") == 0 ) {
-
-		if( sub1[0] != '#' ) {
-			clif_displaymessage(fd, msg_txt(sd,1405));// Channel name must start with '#'.
-			return -1;
-		}
-
-		ARR_FIND(0, sd->channel_count, k, strcmpi(sub1+1,sd->channels[k]->name) == 0);
-		if( k == sd->channel_count ) {
-			sprintf(atcmd_output, msg_txt(sd,1425),sub1);// You're not part of the '%s' channel.
-			clif_displaymessage(fd, atcmd_output);
-			return -1;
-		}
-
-		sd->gcbind = sd->channels[k];
-		sprintf(atcmd_output, msg_txt(sd,1431),sub1); // Your global chat is now binded to the '%s' channel.
-		clif_displaymessage(fd, atcmd_output);
+		return channel_pcbind(sd, sub1);
 	} else if ( strcmpi(key,"unbind") == 0 ) {
-
-		if( sd->gcbind == NULL ) {
-			clif_displaymessage(fd, msg_txt(sd,1432));// Your global chat is not binded to any channel.
-			return -1;
-		}
-
-		sprintf(atcmd_output, msg_txt(sd,1433),sd->gcbind->name); // Your global chat is now unbinded from the '#%s' channel.
-		clif_displaymessage(fd, atcmd_output);
-
-		sd->gcbind = NULL;
+		return channel_pcunbind(sd);
+	} else if ( strcmpi(key,"ban") == 0 ) {
+		return channel_pcban(sd,sub1,map_nick2sd(sub2),0);
+	} else if ( strcmpi(key,"unban") == 0 ) {
+		return channel_pcban(sd,sub1,map_nick2sd(sub2),1);
+	} else if ( strcmpi(key,"unbanall") == 0 ) {
+		return channel_pcban(sd,sub1,NULL,2);
+	} else if ( strcmpi(key,"setopt") == 0 ) {
+		return channel_pcsetopt(sd,sub1,sub2,sub3);
 	} else {
-		atcmd_channel_help(sd,command,( raChSys.allow_user_channel_creation || pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ));
+		atcmd_channel_help(sd,command);
 	}
 
 	return 0;
@@ -9038,17 +8915,9 @@ ACMD_FUNC(fontcolor)
 
 	if( !message || !*message ) {
 		char mout[40];
-		for( k = 0; k < raChSys.colors_count; k++ ) {
-			unsigned short msg_len = 1;
-			msg_len += sprintf(mout, "[ %s ] : %s",command,raChSys.colors_name[k]);
-
-			WFIFOHEAD(fd,msg_len + 12);
-			WFIFOW(fd,0) = 0x2C1;
-			WFIFOW(fd,2) = msg_len + 12;
-			WFIFOL(fd,4) = 0;
-			WFIFOL(fd,8) = raChSys.colors[k];
-			safestrncpy((char*)WFIFOP(fd,12), mout, msg_len);
-			WFIFOSET(fd, msg_len + 12);
+		for( k = 0; k < Channel_Config.colors_count; k++ ) {
+			sprintf(mout, "[ %s ] : %s",command,Channel_Config.colors_name[k]);
+			clif_colormes(sd,k,mout);
 		}
 		return -1;
 	}
@@ -9059,11 +8928,8 @@ ACMD_FUNC(fontcolor)
 		return 0;
 	}
 
-	for( k = 0; k < raChSys.colors_count; k++ ) {
-		if( strcmpi(message,raChSys.colors_name[k]) == 0 )
-			break;
-	}
-	if( k == raChSys.colors_count ) {
+	ARR_FIND(0,Channel_Config.colors_count,k,( strcmpi(message,Channel_Config.colors_name[k]) == 0 ));
+	if( k == Channel_Config.colors_count ) {
 		sprintf(atcmd_output, msg_txt(sd,1411), message);// Unknown color '%s'.
 		clif_displaymessage(fd, atcmd_output);
 		return -1;

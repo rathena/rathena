@@ -243,7 +243,7 @@ struct map_session_data {
 	unsigned int canskill_tick; // used to prevent abuse from no-delay ACT files
 	unsigned int cansendmail_tick; // [Mail System Flood Protection]
 	unsigned int ks_floodprotect_tick; // [Kill Steal Protection]
-	 unsigned int bloodylust_tick; // bloodylust player timer [out/in re full-heal protection]
+	unsigned int bloodylust_tick; // bloodylust player timer [out/in re full-heal protection]
 
 	struct {
 		short nameid;
@@ -507,11 +507,12 @@ struct map_session_data {
 	int shadowform_id;
 
 	/* Channel System [Ind] */
-	struct raChSysCh **channels;
+	struct Channel **channels;
 	unsigned char channel_count;
-	struct raChSysCh *gcbind;
+	struct Channel *gcbind;
 	bool stealth;
 	unsigned char fontcolor; /* debug-only */
+	unsigned int channel_tick;
 
 	// temporary debugging of bug #3504
 	const char* delunit_prevfile;
