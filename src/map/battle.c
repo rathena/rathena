@@ -5320,7 +5320,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		//All else not specified is an invalid target.
 		default:
 			return 0;
-    } //end switch actual target
+	} //end switch actual target
 
 	switch( t_bl->type )
 	{	//Checks on target master
@@ -5349,7 +5349,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			break;
 		}
 		default: break; //other type doesn't have slave yet
-    } //end switch master target
+	} //end switch master target
 
 	switch( src->type ) { //Checks on actual src type
 		case BL_PET:

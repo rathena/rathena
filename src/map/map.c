@@ -556,7 +556,7 @@ int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_lis
 #ifdef CIRCULAR_AREA
 						&& check_distance_bl(center, bl, range)
 #endif
-					  	&& bl_list_count < BL_LIST_MAX )
+						&& bl_list_count < BL_LIST_MAX )
 						bl_list[ bl_list_count++ ] = bl;
 				}
 			}

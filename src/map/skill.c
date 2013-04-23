@@ -2281,7 +2281,7 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 		case AC_DOUBLE: {
 			unsigned char race = status_get_race(bl);
 			if( (race == RC_BRUTE || race == RC_INSECT) && pc_checkskill(sd, HT_POWER))
-			    duration = 2000;
+				duration = 2000;
 			break;
 		}
 		case SR_DRAGONCOMBO:
@@ -2305,15 +2305,15 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 			break;
 		case MH_EQC:
 		case MH_MIDNIGHT_FRENZY:
-			if(hd->homunculus.spiritball >= 2) duration = 6000;
+			if(hd->homunculus.spiritball >= 2) duration = 2000;
 				delay=1;
 			break;
 		}
 	}
 
 	if (duration) { //Possible to chain
-		if(sd) duration = DIFF_TICK(sd->ud.canact_tick, tick);
-		if (duration < 1) duration = 1;
+		if(sd && duration==1) duration = DIFF_TICK(sd->ud.canact_tick, tick); //auto calc duration
+		duration = max(1,duration);
 		sc_start4(src,src,SC_COMBO,100,skill_id,bl->id,delay,0,duration);
 		clif_combo_delay(src, duration);
 	}
@@ -2427,8 +2427,29 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		 * Official Magic Reflection Behavior : damage reflected depends on gears caster wears, not target
 		 **/
 		#if MAGIC_REFLECTION_TYPE
-			if( dmg.dmg_lv != ATK_MISS )//Wiz SL cancelled and consumed fragment
-				dmg = battle_calc_attack(BF_MAGIC,bl,bl,skill_id,skill_lv,flag&0xFFF);
+			if( dmg.dmg_lv != ATK_MISS ){//Wiz SL cancelled and consumed fragment
+				short s_ele = skill_get_ele(skill_id, skill_lv);
+
+				if (s_ele == -1) // the skill takes the weapon's element
+					s_ele = sstatus->rhw.ele;
+				else if (s_ele == -2) //Use status element
+					s_ele = status_get_attack_sc_element(src,status_get_sc(src));
+				else if( s_ele == -3 ) //Use random element
+					s_ele = rnd()%ELE_MAX;
+
+				dmg.damage = battle_attr_fix(bl, bl, dmg.damage, s_ele, status_get_element(bl), status_get_element_level(bl));
+
+				if( sc && sc->data[SC_ENERGYCOAT] ) {
+					struct status_data *status = status_get_status_data(bl);
+					int per = 100*status->sp / status->max_sp -1; //100% should be counted as the 80~99% interval
+					per /=20; //Uses 20% SP intervals.
+					//SP Cost: 1% + 0.5% per every 20% SP
+					if (!status_charge(bl, 0, (10+5*per)*status->max_sp/1000))
+						status_change_end(bl, SC_ENERGYCOAT, INVALID_TIMER);
+					//Reduction: 6% + 6% every 20%
+					dmg.damage -= dmg.damage * (6 * (1+per)) / 100;
+				}
+		}
 		#endif
 		}
 		if(sc && sc->data[SC_MAGICROD] && src == dsrc) {
@@ -2613,7 +2634,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	if(damage > 0 && dmg.flag&BF_SKILL && tsd
 		&& pc_checkskill(tsd,RG_PLAGIARISM)
-	  	&& (!sc || !sc->data[SC_PRESERVE])
+		&& (!sc || !sc->data[SC_PRESERVE])
 		&& damage < tsd->battle_status.hp)
 	{	//Updated to not be able to copy skills if the blow will kill you. [Skotlex]
 		int copy_skill = skill_id;
@@ -12904,7 +12925,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id
 			break;
 
 		case HT_POWER:
-			if(!(sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == skill_id))
+			if(!(sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == AC_DOUBLE))
 				return 0;
 			break;
 
