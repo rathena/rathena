@@ -991,7 +991,7 @@
 2476,0,6,4,-1,0x2,2,5,1,no,0,0,0,weapon,2,	GN_CART_TORNADO,Cart Tornado
 2477,7:8:9:10:11,6,1,-1,0x2,1:1:2:2:3,5,1,yes,0,0,0,weapon,0,	GN_CARTCANNON,Cart Cannon
 2478,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,	GN_CARTBOOST,Cart Boost
-2479,9,6,2,0,0,0,5,1,yes,0,0x80,5,misc,0,	GN_THORNS_TRAP,Thorn Trap
+2479,9,6,2,0,0,0,5,1,yes,0,0x80,3,misc,0,	GN_THORNS_TRAP,Thorn Trap
 2480,11,6,1,0,0x1,0,5,1,yes,0,0,3,misc,0,		GN_BLOOD_SUCKER,Blood Sucker //CHECK Data says its a magic attack. Hmmmm....
 2481,11,6,1,-1,0x2,1:2:3:4:5,5,1,yes,0,0,0,weapon,0,	GN_SPORE_EXPLOSION,Spore Explosion //CHECK Data says its element is set to neutral. Need to confirm.
 2482,11,6,16,0,0,0,5,1,yes,0,0,1,weapon,2,	GN_WALLOFTHORN,Wall of Thorns

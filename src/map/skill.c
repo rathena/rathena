@@ -4382,6 +4382,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				if( !skill_check_condition_castbegin(sd, skill_id, skill_lv) )
 					break;
 
+				// SC_MAGICPOWER needs to switch states before any damage is actually dealt
+				skill_toggle_magicpower(src, skill_id);
+
 				switch( skill_get_casttype(skill_id) )
 				{
 					case CAST_GROUND:
