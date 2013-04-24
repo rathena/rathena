@@ -678,6 +678,7 @@ man_in01	mapflag	nomemo
 splendide	mapflag	nomemo
 spl_fild01	mapflag	nomemo
 spl_in01	mapflag	nomemo
+spl_in02	mapflag	nomemo
 job3_arch01	mapflag	nomemo
 job3_arch02	mapflag	nomemo
 job3_arch03	mapflag	nomemo
