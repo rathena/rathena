@@ -91,4 +91,3 @@ void do_final_channel(void);
 #endif
 
 #endif	/* CHANNEL_H */
-
