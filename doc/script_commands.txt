@@ -1064,7 +1064,7 @@ of the ways to end a speech from an NPC. Once the button is clicked, the NPC
 script execution will end, and the message box will disappear.
 
     mes "[Woman]";
-    mes "I am finished talking to you. Click the close button.;
+    mes "I am finished talking to you. Click the close button.";
     close;
     mes "This command will not run at all, since the script has ended.";
 
