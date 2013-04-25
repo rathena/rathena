@@ -59,6 +59,7 @@
 #endif
 static struct eri *skill_unit_ers = NULL; //For handling skill_unit's [Skotlex]
 static struct eri *skill_timer_ers = NULL; //For handling skill_timerskills [Skotlex]
+static DBMap* bowling_db = NULL; // int mob_id -> struct mob_data*
 
 DBMap* skillunit_db = NULL; // int id -> struct skill_unit*
 
@@ -1074,7 +1075,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 		break;
 	case NPC_MENTALBREAKER:
 	{	//Based on observations by Tharis, Mental Breaker should do SP damage
-	  	//equal to Matk*skLevel.
+		//equal to Matk*skLevel.
 		rate = sstatus->matk_min;
 		if (rate < sstatus->matk_max)
 			rate += rnd()%(sstatus->matk_max - sstatus->matk_min);
@@ -1138,7 +1139,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, uint
 				break;
 			default:
 				sc_start2(src,bl,SC_BLEEDING,(5+skill_lv*5),skill_lv,src->id,skill_get_time2(skill_id,3));
-  		}
+		}
 		break;
 
 	case HW_NAPALMVULCAN:
@@ -3968,30 +3969,75 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	case KN_BOWLINGBASH:
 	case MS_BOWLINGBASH:
-		if(flag&1){
-			if(bl->id==skill_area_temp[1])
-				break;
-			//two hits for 500%
-			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,SD_ANIMATION);
-			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,SD_ANIMATION);
-		} else {
-			int i,c;
-			c = skill_get_blewcount(skill_id,skill_lv);
-			// keep moving target in the direction that src is looking, square by square
-			for(i=0;i<c;i++){
-				if (!skill_blown(src,bl,1,(unit_getdir(src)+4)%8,0x1))
-					break; //Can't knockback
-				skill_area_temp[0] = map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY, skill_area_sub_count);
-				if( skill_area_temp[0] > 1 ) break; // collision
+		{
+			int min_x,max_x,min_y,max_y,i,c,dir,tx,ty;
+			// Chain effect and check range gets reduction by recursive depth, as this can reach 0, we don't use blowcount
+			c = (skill_lv-(flag&0xFFF)+1)/2;
+			// Determine the Bowling Bash area depending on configuration
+			if (battle_config.bowling_bash_area == 0) {
+				// Gutter line system
+				min_x = ((src->x)-c) - ((src->x)-c)%40;
+				if(min_x < 0) min_x = 0;
+				max_x = min_x + 39;
+				min_y = ((src->y)-c) - ((src->y)-c)%40;
+				if(min_y < 0) min_y = 0;
+				max_y = min_y + 39;
+			} else if (battle_config.bowling_bash_area == 1) {
+				// Gutter line system without demi gutter bug
+				min_x = src->x - (src->x)%40;
+				max_x = min_x + 39;
+				min_y = src->y - (src->y)%40;
+				max_y = min_y + 39;
+			} else {
+				// Area around caster
+				min_x = src->x - battle_config.bowling_bash_area;
+				max_x = src->x + battle_config.bowling_bash_area;
+				min_y = src->y - battle_config.bowling_bash_area;
+				max_y = src->y + battle_config.bowling_bash_area;
 			}
-			clif_blown(bl); //Update target pos.
-			if (i!=c) { //Splash
-				skill_area_temp[1] = bl->id;
-				map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
+			// Initialization, break checks, direction
+			if((flag&0xFFF) > 0) {
+				// Ignore monsters outside area
+				if(bl->x < min_x || bl->x > max_x || bl->y < min_y || bl->y > max_y)
+					break;
+				// Ignore monsters already in list
+				if(idb_exists(bowling_db, bl->id))
+					break;
+				// Random direction
+				dir = rand()%8;
+			} else {
+				// Create an empty list of already hit targets
+				db_clear(bowling_db);
+				// Direction is walkpath
+				dir = (unit_getdir(src)+4)%8;
 			}
-			//Weirdo dual-hit property, two attacks for 500%
-			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,0);
-			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,0);
+			// Add current target to the list of already hit targets
+			idb_put(bowling_db, bl->id, bl);
+			// Keep moving target in direction square by square
+			tx = bl->x;
+			ty = bl->y;
+			for(i=0;i<c;i++) {
+				// Target coordinates (get changed even if knockback fails)
+				tx -= dirx[dir];
+				ty -= diry[dir];
+				// If target cell is a wall then break
+				if(map_getcell(bl->m,tx,ty,CELL_CHKWALL))
+					break;
+				skill_blown(src,bl,1,dir,0);
+				// Splash around target cell, but only cells inside area; we first have to check the area is not negative
+				if((max(min_x,tx-1) <= min(max_x,tx+1)) &&
+					(max(min_y,ty-1) <= min(max_y,ty+1)) &&
+					(map_foreachinarea(skill_area_sub, bl->m, max(min_x,tx-1), max(min_y,ty-1), min(max_x,tx+1), min(max_y,ty+1), splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY, skill_area_sub_count))) {
+					// Recursive call
+					map_foreachinarea(skill_area_sub, bl->m, max(min_x,tx-1), max(min_y,ty-1), min(max_x,tx+1), min(max_y,ty+1), splash_target(src), src, skill_id, skill_lv, tick, (flag|BCT_ENEMY)+1, skill_castend_damage_id);
+					// Self-collision
+					if(bl->x >= min_x && bl->x <= max_x && bl->y >= min_y && bl->y <= max_y)
+						skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,(flag&0xFFF)>0?SD_ANIMATION:0);
+					break;
+				}
+			}
+			// Original hit or chain hit depending on flag
+			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,(flag&0xFFF)>0?SD_ANIMATION:0);
 		}
 		break;
 
@@ -18191,6 +18237,7 @@ int do_init_skill (void)
 	skillunit_db = idb_alloc(DB_OPT_BASE);
 	skillcd_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	skillusave_db = idb_alloc(DB_OPT_RELEASE_DATA);
+	bowling_db = idb_alloc(DB_OPT_BASE);
 	skill_unit_ers = ers_new(sizeof(struct skill_unit_group),"skill.c::skill_unit_ers",ERS_OPT_NONE);
 	skill_timer_ers  = ers_new(sizeof(struct skill_timerskill),"skill.c::skill_timer_ers",ERS_OPT_NONE);
 
@@ -18212,6 +18259,7 @@ int do_final_skill(void)
 	db_destroy(skillunit_db);
 	db_destroy(skillcd_db);
 	db_destroy(skillusave_db);
+	db_destroy(bowling_db);
 	ers_destroy(skill_unit_ers);
 	ers_destroy(skill_timer_ers);
 	return 0;
