@@ -721,28 +721,38 @@ void clif_charselectok(int id, uint8 ok)
 
 /// Makes an item appear on the ground.
 /// 009e <id>.L <name id>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY)
-/// 084b (ZC_ITEM_FALL_ENTRY4)
+/// 084b(2013) <id>.L <name id>.W <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY4)
 void clif_dropflooritem(struct flooritem_data* fitem)
 {
+#if PACKETVER >= 20130000
+	uint8 buf[19];
+	uint32 header=0x84b;
+#else
 	uint8 buf[17];
-	int view;
+	uint32 header=0x09b;
+#endif
+	int view, offset=0;
 
 	nullpo_retv(fitem);
 
 	if (fitem->item_data.nameid <= 0)
 		return;
 
-	WBUFW(buf, 0) = 0x9e;
-	WBUFL(buf, 2) = fitem->bl.id;
-	WBUFW(buf, 6) = ((view = itemdb_viewid(fitem->item_data.nameid)) > 0) ? view : fitem->item_data.nameid;
-	WBUFB(buf, 8) = fitem->item_data.identify;
-	WBUFW(buf, 9) = fitem->bl.x;
-	WBUFW(buf,11) = fitem->bl.y;
-	WBUFB(buf,13) = fitem->subx;
-	WBUFB(buf,14) = fitem->suby;
-	WBUFW(buf,15) = fitem->item_data.amount;
+	WBUFW(buf, offset+0) = header;
+	WBUFL(buf, offset+2) = fitem->bl.id;
+	WBUFW(buf, offset+6) = ((view = itemdb_viewid(fitem->item_data.nameid)) > 0) ? view : fitem->item_data.nameid;
+#if PACKETVER >= 20130000
+	WBUFW(buf, offset+8) = itemtype(itemdb_type(fitem->item_data.nameid));
+	offset +=2;
+#endif
+	WBUFB(buf, offset+8) = fitem->item_data.identify;
+	WBUFW(buf, offset+9) = fitem->bl.x;
+	WBUFW(buf, offset+11) = fitem->bl.y;
+	WBUFB(buf, offset+13) = fitem->subx;
+	WBUFB(buf, offset+14) = fitem->suby;
+	WBUFW(buf, offset+15) = fitem->item_data.amount;
 
-	clif_send(buf, packet_len(0x9e), &fitem->bl, AREA);
+	clif_send(buf, packet_len(header), &fitem->bl, AREA);
 }
 
 
@@ -5561,19 +5571,19 @@ void clif_maptypeproperty2(struct block_list *bl,enum send_target t) {
 	WBUFW(buf,0)=0x99b; //2
 	WBUFW(buf,2)=0x28; //2
 
-	WBUFB(buf,4) = RBUFB(buf,4)|0x01; //party
-	WBUFB(buf,4) = RBUFB(buf,4)|0x02; //guild
-	WBUFB(buf,4) = RBUFB(buf,4)|((map_flag_gvg2(bl->m))?0x04:0); //siege
-	WBUFB(buf,4) = RBUFB(buf,4)|0x08; //mineffect
-	WBUFB(buf,4) = RBUFB(buf,4)|0x10; //nolockon
-	WBUFB(buf,4) = RBUFB(buf,4)|((map[bl->m].flag.pvp)?0x20:0); //countpk
-	WBUFB(buf,4) = RBUFB(buf,4)|0; //nopartyformation
-	WBUFB(buf,4) = RBUFB(buf,4)|((map[bl->m].flag.battleground)?0x80:0); //battleground
+	WBUFB(buf,4) |= 0x01; //party
+	WBUFB(buf,4) |= 0x02; //guild
+	WBUFB(buf,4) |= ((map_flag_gvg2(bl->m))?0x04:0); //siege
+	WBUFB(buf,4) |= 0x08; //mineffect
+	WBUFB(buf,4) |= 0; //nolockon 0x10
+	WBUFB(buf,4) |= ((map[bl->m].flag.pvp)?0x20:0); //countpk
+	WBUFB(buf,4) |= 0; //nopartyformation 0x40
+	WBUFB(buf,4) |= ((map[bl->m].flag.battleground)?0x80:0); //battleground
 
-	WBUFB(buf,5) = RBUFB(buf,5)|0x01; //noitemconsumption
-	WBUFB(buf,5) = RBUFB(buf,5)|0x02; //cart
-	WBUFB(buf,5) = RBUFB(buf,5)|0x04; //summonstarmiracle
-//	WBUFB(buf,5) = RBUFB(buf,5)&0xf8;  //sparebit[0-4]
+	WBUFB(buf,5) |= 0; //noitemconsumption
+	WBUFB(buf,5) |= 0x02; //cart
+	WBUFB(buf,5) |= 0x04; //summonstarmiracle
+//	WBUFB(buf,5) |= RBUFB(buf,5)&0xf8;  //sparebit[0-4]
 
 	WBUFW(buf,6) = 0; //sparebit [5-15], + extra[4]
 
@@ -16691,7 +16701,11 @@ static int packetdb_readdb(void)
 	    0,  0,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0, -1, -1,  3,  2, 66,  5,  2, 12,  6,  0,  0,
 	//#0x0840
+#if PACKETVER < 20130000
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+#else
+	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  19,  0,  0,  0,  0,
+#endif
 	    0,  0,  0,  0,  0,  0, -1, -1, -1, -1,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,

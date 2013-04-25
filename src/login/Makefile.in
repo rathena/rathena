@@ -36,7 +36,7 @@ sql: $(SQL_DEPENDS)
 
 clean:
 	@echo "	CLEAN	login"
-	@rm -rf *.o obj_sql ../../login-server@EXEEXT@ ../../login-server_sql@EXEEXT@
+	@rm -rf *.o obj_sql ../../login-server_sql@EXEEXT@
 
 help:
 	@echo "possible targets are 'sql' 'all' 'clean' 'help'"
