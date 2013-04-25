@@ -1832,6 +1832,8 @@ packet_ver: 34
 0x094E,-1,searchstoreinfo,2:4:5:9:13:14:15
 //0x0835,2,searchstoreinfonextpage,0
 //0x0838,12,searchstoreinfolistitemclick,2:6:10
+0x0447,2
+0x99b,8
 
 // New cashshop
 0x0844,2,cashshopopen,0

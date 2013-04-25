@@ -13,7 +13,7 @@
  */
 
 /**
- * "Sane Checks" to save you from compiling with cool bugs 
+ * "Sane Checks" to save you from compiling with cool bugs
  **/
 #if SECURE_NPCTIMEOUT_INTERVAL <= 0
 	#error SECURE_NPCTIMEOUT_INTERVAL should be at least 1 (1s)
@@ -79,7 +79,7 @@
 		if( status_get_lv(src) > 100 ) \
 			md.damage = md.damage * 150 / 100 + md.damage * status_get_lv(src) / 100;
 #else
-	#define RE_LVL_DMOD(val) 
+	#define RE_LVL_DMOD(val)
 	#define RE_LVL_MDMOD(val)
 	#define RE_LVL_TMDMOD()
 #endif

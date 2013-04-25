@@ -66,14 +66,12 @@ struct Clif_Config {
 struct s_packet_db packet_db[MAX_PACKET_VER + 1][MAX_PACKET_DB + 1];
 
 //Converts item type in case of pet eggs.
-static inline int itemtype(int type)
-{
+static inline int itemtype(int type) {
 	return ( type == IT_PETEGG ) ? IT_WEAPON : type;
 }
 
 
-static inline void WBUFPOS(uint8* p, unsigned short pos, short x, short y, unsigned char dir)
-{
+static inline void WBUFPOS(uint8* p, unsigned short pos, short x, short y, unsigned char dir) {
 	p += pos;
 	p[0] = (uint8)(x>>2);
 	p[1] = (uint8)((x<<6) | ((y>>4)&0x3f));
@@ -82,8 +80,7 @@ static inline void WBUFPOS(uint8* p, unsigned short pos, short x, short y, unsig
 
 
 // client-side: x0+=sx0*0.0625-0.5 and y0+=sy0*0.0625-0.5
-static inline void WBUFPOS2(uint8* p, unsigned short pos, short x0, short y0, short x1, short y1, unsigned char sx0, unsigned char sy0)
-{
+static inline void WBUFPOS2(uint8* p, unsigned short pos, short x0, short y0, short x1, short y1, unsigned char sx0, unsigned char sy0) {
 	p += pos;
 	p[0] = (uint8)(x0>>2);
 	p[1] = (uint8)((x0<<6) | ((y0>>4)&0x3f));
@@ -94,20 +91,17 @@ static inline void WBUFPOS2(uint8* p, unsigned short pos, short x0, short y0, sh
 }
 
 
-static inline void WFIFOPOS(int fd, unsigned short pos, short x, short y, unsigned char dir)
-{
+static inline void WFIFOPOS(int fd, unsigned short pos, short x, short y, unsigned char dir) {
 	WBUFPOS(WFIFOP(fd,pos), 0, x, y, dir);
 }
 
 
-static inline void WFIFOPOS2(int fd, unsigned short pos, short x0, short y0, short x1, short y1, unsigned char sx0, unsigned char sy0)
-{
+static inline void WFIFOPOS2(int fd, unsigned short pos, short x0, short y0, short x1, short y1, unsigned char sx0, unsigned char sy0) {
 	WBUFPOS2(WFIFOP(fd,pos), 0, x0, y0, x1, y1, sx0, sy0);
 }
 
 
-static inline void RBUFPOS(const uint8* p, unsigned short pos, short* x, short* y, unsigned char* dir)
-{
+static inline void RBUFPOS(const uint8* p, unsigned short pos, short* x, short* y, unsigned char* dir) {
 	p += pos;
 
 	if( x ) {
@@ -124,8 +118,7 @@ static inline void RBUFPOS(const uint8* p, unsigned short pos, short* x, short* 
 }
 
 
-static inline void RBUFPOS2(const uint8* p, unsigned short pos, short* x0, short* y0, short* x1, short* y1, unsigned char* sx0, unsigned char* sy0)
-{
+static inline void RBUFPOS2(const uint8* p, unsigned short pos, short* x0, short* y0, short* x1, short* y1, unsigned char* sx0, unsigned char* sy0) {
 	p += pos;
 
 	if( x0 ) {
@@ -154,28 +147,24 @@ static inline void RBUFPOS2(const uint8* p, unsigned short pos, short* x0, short
 }
 
 
-static inline void RFIFOPOS(int fd, unsigned short pos, short* x, short* y, unsigned char* dir)
-{
+static inline void RFIFOPOS(int fd, unsigned short pos, short* x, short* y, unsigned char* dir) {
 	RBUFPOS(RFIFOP(fd,pos), 0, x, y, dir);
 }
 
 
-static inline void RFIFOPOS2(int fd, unsigned short pos, short* x0, short* y0, short* x1, short* y1, unsigned char* sx0, unsigned char* sy0)
-{
+static inline void RFIFOPOS2(int fd, unsigned short pos, short* x0, short* y0, short* x1, short* y1, unsigned char* sx0, unsigned char* sy0) {
 	RBUFPOS2(WFIFOP(fd,pos), 0, x0, y0, x1, y1, sx0, sy0);
 }
 
 
 //To idenfity disguised characters.
-static inline bool disguised(struct block_list* bl)
-{
+static inline bool disguised(struct block_list* bl) {
 	return (bool)( bl->type == BL_PC && ((TBL_PC*)bl)->disguise );
 }
 
 
 //Guarantees that the given string does not exceeds the allowed size, as well as making sure it's null terminated. [Skotlex]
-static inline unsigned int mes_len_check(char* mes, unsigned int len, unsigned int max)
-{
+static inline unsigned int mes_len_check(char* mes, unsigned int len, unsigned int max) {
 	if( len > max )
 		len = max;
 
@@ -196,8 +185,7 @@ static int clif_parse (int fd);
 /*==========================================
  * Ip setting of map-server
  *------------------------------------------*/
-int clif_setip(const char* ip)
-{
+int clif_setip(const char* ip) {
 	char ip_str[16];
 	map_ip = host2ip(ip);
 	if (!map_ip) {
@@ -307,8 +295,7 @@ static int clif_send_sub(struct block_list *bl, va_list ap)
 	nullpo_ret(src_bl = va_arg(ap,struct block_list*));
 	type = va_arg(ap,int);
 
-	switch(type)
-	{
+	switch(type) {
 	case AREA_WOS:
 		if (bl == src_bl)
 			return 0;
@@ -880,8 +867,7 @@ void clif_get_weapon_view(struct map_session_data* sd, unsigned short *rhand, un
 }
 
 //To make the assignation of the level based on limits clearer/easier. [Skotlex]
-static int clif_setlevel_sub(int lv)
-{
+static int clif_setlevel_sub(int lv) {
 	if( lv < battle_config.max_lv ) {
 		;
 	} else if( lv < battle_config.aura_lv ) {
@@ -893,8 +879,7 @@ static int clif_setlevel_sub(int lv)
 	return lv;
 }
 
-static int clif_setlevel(struct block_list* bl)
-{
+static int clif_setlevel(struct block_list* bl) {
 	int lv = status_get_lv(bl);
 	if( battle_config.client_limit_unit_lv&bl->type )
 		return clif_setlevel_sub(lv);
@@ -1647,13 +1632,12 @@ static int clif_delayquit(int tid, unsigned int tick, int id, intptr_t data)
 /*==========================================
  *
  *------------------------------------------*/
-void clif_quitsave(int fd,struct map_session_data *sd)
-{
+void clif_quitsave(int fd,struct map_session_data *sd) {
 	if (!battle_config.prevent_logout ||
 		DIFF_TICK(gettick(), sd->canlog_tick) > battle_config.prevent_logout)
 		map_quit(sd);
-	else if (sd->fd)
-	{	//Disassociate session from player (session is deleted after this function was called)
+	else if (sd->fd) {
+		//Disassociate session from player (session is deleted after this function was called)
 		//And set a timer to make him quit later.
 		session[sd->fd]->session_data = NULL;
 		sd->fd = 0;
@@ -5570,6 +5554,32 @@ void clif_map_property(struct map_session_data* sd, enum map_property property)
 	WFIFOSET(fd,packet_len(0x199));
 }
 
+void clif_maptypeproperty2(struct block_list *bl,enum send_target t) {
+#if PACKETVER >= 20130000 /* not entirely sure when this started */
+	uint8 buf[8];
+
+	WBUFW(buf,0)=0x99b; //2
+	WBUFW(buf,2)=0x28; //2
+
+	WBUFB(buf,4) = RBUFB(buf,4)|0x01; //party
+	WBUFB(buf,4) = RBUFB(buf,4)|0x02; //guild
+	WBUFB(buf,4) = RBUFB(buf,4)|((map_flag_gvg2(bl->m))?0x04:0); //siege
+	WBUFB(buf,4) = RBUFB(buf,4)|0x08; //mineffect
+	WBUFB(buf,4) = RBUFB(buf,4)|0x10; //nolockon
+	WBUFB(buf,4) = RBUFB(buf,4)|((map[bl->m].flag.pvp)?0x20:0); //countpk
+	WBUFB(buf,4) = RBUFB(buf,4)|0; //nopartyformation
+	WBUFB(buf,4) = RBUFB(buf,4)|((map[bl->m].flag.battleground)?0x80:0); //battleground
+
+	WBUFB(buf,5) = RBUFB(buf,5)|0x01; //noitemconsumption
+	WBUFB(buf,5) = RBUFB(buf,5)|0x02; //cart
+	WBUFB(buf,5) = RBUFB(buf,5)|0x04; //summonstarmiracle
+//	WBUFB(buf,5) = RBUFB(buf,5)&0xf8;  //sparebit[0-4]
+
+	WBUFW(buf,6) = 0; //sparebit [5-15], + extra[4]
+
+	clif_send(buf,packet_len(0x99b),bl,t);
+#endif
+}
 
 /// Set the map type (ZC_NOTIFY_MAPPROPERTY2).
 /// 01d6 <type>.W
@@ -8248,6 +8258,7 @@ void clif_refresh(struct map_session_data *sd)
 
 	mail_clear(sd);
 
+
 	if( disguised(&sd->bl) ) {/* refresh-da */
 		short disguise = sd->disguise;
 		pc_disguise(sd, 0);
@@ -9311,6 +9322,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	}
 
 	mail_clear(sd);
+
+	clif_maptypeproperty2(&sd->bl,SELF);
 
 	/* Guild Aura Init */
 	if( sd->state.gmaster_flag ) {
@@ -16704,7 +16717,7 @@ static int packetdb_readdb(void)
 		0,  0,  0,  0,  0,  0,  0, 14,  0,  0,  0,  0,  0,  0,  0,  0,
 	//#0x0980
 		0,  0,  0, 29,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  0, 14,  0,  0,  0,  0,  0,  0,  0,  0,
 

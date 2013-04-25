@@ -1937,6 +1937,26 @@ int mmo_char_send006b(int fd, struct char_session_data* sd)
 	return 0;
 }
 
+//----------------------------------------
+// [Ind/Hercules] notify client about charselect window data
+//----------------------------------------
+void mmo_char_send082d(int fd, struct char_session_data* sd) {
+	if (save_log)
+		ShowInfo("Loading Char Data ("CL_BOLD"%d"CL_RESET")\n",sd->account_id);
+
+	WFIFOHEAD(fd,29);
+	WFIFOW(fd,0) = 0x82d;
+	WFIFOW(fd,2) = 29;
+	WFIFOB(fd,4) = sd->char_slots;
+	WFIFOB(fd,5) = MAX_CHARS - sd->char_slots;
+	WFIFOB(fd,6) = MAX_CHARS - sd->char_slots;
+	WFIFOB(fd,7) = sd->char_slots;
+	WFIFOB(fd,8) = sd->char_slots;
+	memset(WFIFOP(fd,9), 0, 20); // unused bytes
+	WFIFOSET(fd,29);
+	mmo_char_send006b(fd,sd);
+}
+
 int char_married(int pl1, int pl2)
 {
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `partner_id` FROM `%s` WHERE `char_id` = '%d'", char_db, pl1) )
@@ -2239,7 +2259,11 @@ int parse_fromlogin(int fd) {
 					WFIFOSET(i,3);
 				} else {
 					// send characters to player
-					mmo_char_send006b(i, sd);
+					#if PACKETVER >= 20130000
+						mmo_char_send082d(i, sd);
+					#else
+						mmo_char_send006b(i, sd);
+					#endif
 #if PACKETVER >=  20110309
 					if( pincode_enabled ){
 						// PIN code system enabled
@@ -4703,7 +4727,11 @@ void moveCharSlot( int fd, struct char_session_data* sd, unsigned short from, un
 
 	// We successfully moved the char - time to notify the client
 	moveCharSlotReply( fd, sd, from, 0 );
+#if PACKETVER >= 20130000
+	mmo_char_send082d(fd, sd);
+#else
 	mmo_char_send006b( fd, sd );
+#endif
 }
 
 // reason
