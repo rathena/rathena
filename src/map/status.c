@@ -598,7 +598,7 @@ void initChangeTables(void) {
 	set_sc( RA_FEARBREEZE        , SC_FEARBREEZE      , SI_FEARBREEZE      , SCB_NONE );
 	set_sc( RA_ELECTRICSHOCKER   , SC_ELECTRICSHOCKER , SI_ELECTRICSHOCKER , SCB_NONE );
 	set_sc( RA_WUGDASH           , SC_WUGDASH         , SI_WUGDASH         , SCB_SPEED );
-	set_sc( RA_CAMOUFLAGE        , SC_CAMOUFLAGE      , SI_CAMOUFLAGE      , SCB_SPEED );
+	set_sc( RA_CAMOUFLAGE        , SC_CAMOUFLAGE      , SI_CAMOUFLAGE      , SCB_CRI|SCB_SPEED|SCB_WATK|SCB_DEF );
 	add_sc( RA_MAGENTATRAP       , SC_ELEMENTALCHANGE );
 	add_sc( RA_COBALTTRAP        , SC_ELEMENTALCHANGE );
 	add_sc( RA_MAIZETRAP         , SC_ELEMENTALCHANGE );
@@ -3574,8 +3574,7 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum sc
 				  || (sc->data[SC_BASILICA] && sc->data[SC_BASILICA]->val4 == bl->id) // Basilica caster cannot move
 				  || (sc->data[SC_GRAVITATION] && sc->data[SC_GRAVITATION]->val3 == BCT_SELF)
 				  || (sc->data[SC_CRYSTALIZE] && bl->type != BL_MOB)
-				  || (sc->data[SC_CAMOUFLAGE] && sc->data[SC_CAMOUFLAGE]->val1 < 3
-							&& !(sc->data[SC_CAMOUFLAGE]->val3&1))
+				  || (sc->data[SC_CAMOUFLAGE] && sc->data[SC_CAMOUFLAGE]->val1 < 3)
 				 ) {
 			sc->cant.move += ( start ? 1 : -1 );
 		}
@@ -5230,7 +5229,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 					val = max( val, 70 );
 				if( sc->data[SC_MARSHOFABYSS] )
 					val = max( val, 40 + 10 * sc->data[SC_MARSHOFABYSS]->val1 );
-				if( sc->data[SC_CAMOUFLAGE] && (sc->data[SC_CAMOUFLAGE]->val3&1) == 0 )
+				if( sc->data[SC_CAMOUFLAGE] )
 					val = max( val, sc->data[SC_CAMOUFLAGE]->val1 < 3 ? 0 : 25 * (5 - sc->data[SC_CAMOUFLAGE]->val1) );
 				if( sc->data[SC__GROOMY] )
 					val = max( val, sc->data[SC__GROOMY]->val2);
@@ -6104,6 +6103,8 @@ void status_set_viewdata(struct block_list *bl, int class_)
 					class_ = JOB_SUMMER;
 				else if (sd->sc.option&OPTION_XMAS)
 					class_ = JOB_XMAS;
+				else if (sd->sc.option&OPTION_HANBOK)
+					class_ = JOB_HANBOK;
 				else if (sd->sc.option&OPTION_RIDING) {
 					switch (class_) {	//Adapt class to a Mounted one.
 						case JOB_KNIGHT:
@@ -6209,6 +6210,7 @@ void status_set_viewdata(struct block_list *bl, int class_)
 		(vd->class_==JOB_WEDDING && battle_config.wedding_ignorepalette)
 		|| (vd->class_==JOB_XMAS && battle_config.xmas_ignorepalette)
 		|| (vd->class_==JOB_SUMMER && battle_config.summer_ignorepalette)
+		|| (vd->class_ == JOB_HANBOK && battle_config.hanbok_ignorepalette)
 	))
 		vd->cloth_color = 0;
 }
@@ -7544,6 +7546,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_WEDDING:
 		case SC_XMAS:
 		case SC_SUMMER:
+		case SC_HANBOK:
 			if (!vd) return 0;
 			//Store previous values as they could be removed.
 			val1 = vd->class_;
@@ -7553,7 +7556,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			unit_stop_attack(bl);
 			clif_changelook(bl,LOOK_WEAPON,0);
 			clif_changelook(bl,LOOK_SHIELD,0);
-			clif_changelook(bl,LOOK_BASE,type==SC_WEDDING?JOB_WEDDING:type==SC_XMAS?JOB_XMAS:JOB_SUMMER);
+			clif_changelook(bl,LOOK_BASE,type==SC_WEDDING?JOB_WEDDING:type==SC_XMAS?JOB_XMAS:type==SC_SUMMER?JOB_SUMMER:JOB_HANBOK);
 			clif_changelook(bl,LOOK_CLOTHES_COLOR,vd->cloth_color);
 			break;
 		case SC_NOCHAT:
@@ -8796,9 +8799,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_WEDDING:
 		case SC_XMAS:
 		case SC_SUMMER:
+		case SC_HANBOK:
 			clif_changelook(bl,LOOK_WEAPON,0);
 			clif_changelook(bl,LOOK_SHIELD,0);
-			clif_changelook(bl,LOOK_BASE,type==SC_WEDDING?JOB_WEDDING:type==SC_XMAS?JOB_XMAS:JOB_SUMMER);
+			clif_changelook(bl,LOOK_BASE,type==SC_WEDDING?JOB_WEDDING:type==SC_XMAS?JOB_XMAS:type==SC_SUMMER?JOB_SUMMER:JOB_HANBOK);
 			clif_changelook(bl,LOOK_CLOTHES_COLOR,val4);
 			break;
 		case SC_KAAHI:
@@ -9008,6 +9012,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_SUMMER:
 			sc->option |= OPTION_SUMMER;
 			break;
+		case SC_HANBOK:
+			sc->option |= OPTION_HANBOK;
+			break;
 		case SC_ORCISH:
 			sc->option |= OPTION_ORCISH;
 			break;
@@ -9170,6 +9177,7 @@ int status_change_clear(struct block_list* bl, int type) {
 			case SC_MELTDOWN:
 			case SC_XMAS:
 			case SC_SUMMER:
+			case SC_HANBOK:
 			case SC_NOCHAT:
 			case SC_FUSION:
 			case SC_EARTHSCROLL:
@@ -9319,11 +9327,12 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_WEDDING:
 		case SC_XMAS:
 		case SC_SUMMER:
+		case SC_HANBOK:
 			if (!vd) break;
 			if (sd)
 			{	//Load data from sd->status.* as the stored values could have changed.
 				//Must remove OPTION to prevent class being rechanged.
-				sc->option &= type==SC_WEDDING?~OPTION_WEDDING:type==SC_XMAS?~OPTION_XMAS:~OPTION_SUMMER;
+				sc->option &= type==SC_WEDDING?~OPTION_WEDDING:type==SC_XMAS?~OPTION_XMAS:type==SC_SUMMER?~OPTION_SUMMER:~OPTION_HANBOK;
 				clif_changeoption(&sd->bl);
 				status_set_viewdata(bl, sd->status.class_);
 			} else {
@@ -9771,6 +9780,9 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		break;
 	case SC_SUMMER:
 		sc->option &= ~OPTION_SUMMER;
+		break;
+	case SC_HANBOK:
+		sc->option &= ~OPTION_HANBOK;
 		break;
 	case SC_ORCISH:
 		sc->option &= ~OPTION_ORCISH;
@@ -10480,12 +10492,27 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		break;
 
 	case SC_CAMOUFLAGE:
-		if(--(sce->val4) > 0){
-			status_charge(bl,0,7 - sce->val1);
-			sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
-			return 0;
-		}
-		break;
+		if (!status_charge(bl, 0, 7 - sce->val1))
+			break;
+		if (sd && --sce->val4 >= 0) {
+			if (!(sce->val2 & 1)) {
+				status->cri += sd->base_status.cri * 1 / 10; //+10% per second
+				if (status->cri > 1000) { //max 100%
+					status->cri = 1000;
+					sce->val2 |= 1;
+				}
+			}
+			if (!(sce->val2 & 2)) {
+				status->def2 -= sd->base_status.def2 * 1 / 20; //-5% per second
+				if (status->def2 < 0) { //min 0
+					status->def2 = 0;
+					sce->val2 |= 2;
+				}
+			}
+			status->rhw.atk += 30; //+30 per second
+ 		}
+		sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
+		return 0;
 
 	case SC__REPRODUCE:
 		if(!status_charge(bl, 0, 1))
@@ -10925,6 +10952,7 @@ int status_change_clear_buffs (struct block_list* bl, int type)
 			case SC_ABUNDANCE:
 			case SC_CURSEDCIRCLE_ATKER:
 			case SC_CURSEDCIRCLE_TARGET:
+			case SC_PUSH_CART:
 				continue;
 
 		 //Debuffs that can be removed.

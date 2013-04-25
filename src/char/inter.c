@@ -111,6 +111,9 @@ const char* job_name(int class_) {
 		case JOB_SUMMER:
 			return msg_txt(71);
 
+		case JOB_HANBOK:
+			return msg_txt(105);
+
 		case JOB_NOVICE_HIGH:
 		case JOB_SWORDMAN_HIGH:
 		case JOB_MAGE_HIGH:
@@ -277,7 +280,7 @@ const char* job_name(int class_) {
 			return msg_txt(103 - JOB_KAGEROU+class_);
 
 		default:
-			return msg_txt(105);
+			return msg_txt(106);
 	}
 }
 

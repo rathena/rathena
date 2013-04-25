@@ -76,14 +76,14 @@ function	script	Protector	{
 	switch(select(""+((getarg(0)=="")?"":"Harder Monsters")+":Heal:Exit")) {
 	case 1:
 		warp getarg(0),102,102;
-		close;
+		end;
 	case 2:
 		specialeffect2 313;
 		percentheal 100,100;
-		close;
+		end;
 	case 3:
 		warp "prontera",156,179;
-		close;
+		end;
 	}
 }
 pvp_n_1-2,100,100,4	script	MVP-Protector#01	727,{ callfunc "Protector","pvp_n_2-2"; }

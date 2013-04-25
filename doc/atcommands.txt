@@ -833,7 +833,7 @@ Resets a Star Gladiator's marked maps.
 
 Changes your job.
 If no job is given, a list of all available jobs will be returned.
-Note that jobs 22 (Wedding), 26 (Summer), and 27 (Christmas) are not available via @job.
+Note that jobs 22 (Wedding), 26 (Summer), 27 (Christmas), and 28 (Hanbok) are not available via @job.
 
 ---------------------------------------
 

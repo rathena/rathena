@@ -7741,6 +7741,11 @@ int pc_setoption(struct map_session_data *sd,int type)
 	else if (!(type&OPTION_SUMMER) && p_type&OPTION_SUMMER)
 		new_look = -1;
 
+	if (type&OPTION_HANBOK && !(p_type&OPTION_HANBOK))
+		new_look = JOB_HANBOK;
+	else if (!(type&OPTION_HANBOK) && p_type&OPTION_HANBOK)
+		new_look = -1;
+
 	if (sd->disguise || !new_look)
 		return 0; //Disguises break sprite changes
 

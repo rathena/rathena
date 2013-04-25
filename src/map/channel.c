@@ -264,7 +264,7 @@ int channel_clean(struct Channel *channel, struct map_session_data *sd, int flag
 	}
 
 	idb_remove(channel->users,sd->status.char_id); //remove user for channel user list
-	if( !db_size(channel->users) && !(flag&1) )
+	if( !db_size(channel->users) && !(flag&1) && channel->type != CHAN_TYPE_PUBLIC )
 		channel_delete(channel);
 
 	return 0;
@@ -1145,7 +1145,6 @@ int do_init_channel(void) {
 void do_final_channel(void) {
 	DBIterator *iter;
 	struct Channel *channel;
-	struct guild *g;
 	int i=0;
 
 	//delete all in remaining chan db

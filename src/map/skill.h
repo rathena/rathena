@@ -314,6 +314,7 @@ int skill_check_condition_castbegin(struct map_session_data *sd, uint16 skill_id
 int skill_check_condition_castend(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 int skill_consume_requirement(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv, short type);
 struct skill_condition skill_get_requirement(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
+int skill_disable_check(struct status_change *sc, uint16 skill_id);
 
 int skill_check_pc_partner(struct map_session_data *sd, uint16 skill_id, short* skill_lv, int range, int cast_flag);
 // -- moonsoul	(added skill_check_unit_cell)

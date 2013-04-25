@@ -5598,7 +5598,6 @@ ACMD_FUNC(changelook)
  * Turns on/off Autotrade for a specific player
  *------------------------------------------*/
 ACMD_FUNC(autotrade) {
-	int i;
 	nullpo_retr(-1, sd);
 
 	if( map[sd->bl.m].flag.autotrade != battle_config.autotrade_mapflag ) {
@@ -8763,7 +8762,6 @@ ACMD_FUNC(cart) {
 
 /* Channel System [Ind] */
 ACMD_FUNC(join){
-	struct Channel *channel;
 	char chname[CHAN_NAME_LENGTH], pass[CHAN_NAME_LENGTH];
 
 	if( !message || !*message || sscanf(message, "%s %s", chname, pass) < 1 ) {
