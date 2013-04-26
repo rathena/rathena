@@ -10,7 +10,7 @@
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 6+
 //===== Description: =========================================
-//= [Aegis COnversion]
+//= [Official Conversion]
 //= Warp Points for Umbala
 //===== Additional Comments: =================================
 //= 1.3 Rescripted to Aegis 10.3 Standards. [L0nE_W0lf]

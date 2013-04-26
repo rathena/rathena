@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis conversion]
+//= [Official Conversion]
 //= Oridecon/Mineral Quest
 //= - Variable in use: ein_gear1 (max 2)
 //= - Variable in use: $ein_amano (max 60)

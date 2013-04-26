@@ -9,7 +9,7 @@
 //= rAthena SVN
 //===== Description: ========================================= 
 //= Edgar's Offer:
-//= - [Aegis conversion]
+//= - [Official Conversion]
 //= - Variables in use: MISC_QUEST (Bit 16)
 //===== Additional Comments: ================================= 
 //= 1.0 Initial release [Evera]

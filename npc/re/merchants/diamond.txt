@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Exchanges 17 Carat Diamond
 //===== Additional Comments: =================================
 //= v1.0 First / Optimized Version

@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= [ Aegis Conversion]
+//= [ Official Conversion]
 //= ----------------------------------------------------------
 //= - THIS FILE IS REQUIRED FOR GUILD CASTLES TO FUNCTION.
 //= ----------------------------------------------------------

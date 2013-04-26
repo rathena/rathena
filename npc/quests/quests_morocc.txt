@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= - Stop Post
 //= - Binoculars Quest
 //= - Assassin Pub NPCs/supporting quest NPCS. [Disabled]

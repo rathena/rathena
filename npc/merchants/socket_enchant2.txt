@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Adds slots to selected weapons and armor.
 //===== Additional Comments: ================================= 
 //= 1.0 First version.

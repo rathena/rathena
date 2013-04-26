@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Add a +1, +2, or +3 random stat to a specified armor.
 //===== Additional Comments: ================================= 
 //= 1.0 First version.

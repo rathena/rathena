@@ -3442,6 +3442,16 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		map[m].flag.reset=state;
 	else if (!strcmpi(w3,"nomapchannelautojoin"))
 		map[m].flag.chmautojoin = state;
+	else if (!strcmpi(w3,"nousecart"))
+		map[m].flag.nousecart = state;
+	else if (!strcmpi(w3,"noitemconsumption"))
+		map[m].flag.noitemconsumption = state;
+	else if (!strcmpi(w3,"summonstarmiracle"))
+		map[m].flag.nosumstarmiracle = state;
+	else if (!strcmpi(w3,"nomineeffect"))
+		map[m].flag.nomineeffect = state;
+	else if (!strcmpi(w3,"nolockon"))
+		map[m].flag.nolockon = state;
 	else
 		ShowError("npc_parse_mapflag: unrecognized mapflag '%s' (file '%s', line '%d').\n", w3, filepath, strline(buffer,start-buffer));
 

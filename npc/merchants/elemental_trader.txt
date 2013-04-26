@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Trade impure types of elemental stones for pure ones.
 //===== Additional Comments: ================================= 
 //= 1.0 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]

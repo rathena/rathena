@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Sells some 3rd Job related items.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.

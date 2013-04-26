@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= 2004 New Headgears. Official Quests
 //= 1) Black Cat Ears (payon 115 131)
 //= 2) X Hairpin, Band Aid, Flower Hairpin (geffen 129 148)

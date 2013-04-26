@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 13.1+
 //===== Description: =========================================
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Warp Points for Brasilis
 //===== Additional Comments: =================================
 //= 1.0 First version.

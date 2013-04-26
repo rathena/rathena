@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Poring War
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [Kisuka][5511]

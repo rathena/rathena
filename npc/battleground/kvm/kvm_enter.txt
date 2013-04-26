@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena 1.0
 //===== Description: ========================================= 
-//= [AEGIS Conversion]
+//= [Official Conversion]
 //= Kreiger Von Midgard Battleground Entrance NPCs
 //= Original NPCs scrapped from bg_common.
 //===== Additional Comments: ================================= 

@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 6+
 //===== Description: =========================================
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Warp Points for Umbala Dungeon (Yggdrasil Cave)
 //===== Additional Comments: =================================
 //= 1.2 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]

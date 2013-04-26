@@ -8,7 +8,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Change headgear's color. Cost is a Mysterious Dyestuff
 //===== Additional Comments: =================================
 //= v1.0 First / Optimized Version

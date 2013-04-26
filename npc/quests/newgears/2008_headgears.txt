@@ -8,7 +8,7 @@
 //===== Compatible With: =====================================
 //= SVN rA
 //===== Description: =========================================
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Cats Footprint, Cute Ribbon Dyer and Brides Corolla.
 //===== Additional Comments: =================================
 //= 1.0 First Version. [Masao]

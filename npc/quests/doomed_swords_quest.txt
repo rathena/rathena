@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= - Creation of Doomed Swords: Grimtooth, Mysteltain, and
 //=   Executioner.
 //= - Continuation of the Comodo Quest

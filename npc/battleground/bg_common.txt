@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena 1.0
 //===== Description: ========================================= 
-//= [AEGIS Conversion]
+//= [Official Conversion]
 //= Battleground NPCs:
 //= - Generals and Aides
 //= - Battleground Warper

@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= [Aegis COnversion]
+//= [Official Conversion]
 //= Turns arrows into Arrow Quivers.
 // Breakdown of Subroutine "S_BuyQuiver"
 // arg(0): Type of Arrow to be packaged (item ID)

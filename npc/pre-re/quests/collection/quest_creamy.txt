@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Added Monster Killing quests. (Dialog is semi-custom)
 //= Repeatable EXP Quest (Powder of Butterfly)
 //===== Additional Comments: =================================

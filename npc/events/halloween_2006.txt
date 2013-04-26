@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Event 1: Redeem "Pumpkin Mojo" for pumpkin headgear.
 //= Event 2: Create "Pumpkin Pie" item.
 //===== Additional Comments: =================================

@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Event 1: Louise's Kim creates Louise's Santa Hat.
 //= Event 2: Enjoy Happymerry Chistmas Event summons monsters.
 //= Event 3: Oholy requires you to hunt Deviruchi NPCs.

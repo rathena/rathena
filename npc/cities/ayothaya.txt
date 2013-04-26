@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Ayotaya Town Script
 //===== Additional Comments: ================================= 
 //= 1.6 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]

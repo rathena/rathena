@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Official Marriage script.
 //= Added isloggedin() check, even though Aegis doesn't do it.
 //= Currently does not support same-sex marriages.

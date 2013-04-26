@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena 1.0
 //===== Description: ========================================= 
-//= [AEGIS Conversion]
+//= [Official Conversion]
 //= Tierra Gorge Battleground.
 //= - Winning Team: 3 badges
 //= - Losing Team: 1 badge

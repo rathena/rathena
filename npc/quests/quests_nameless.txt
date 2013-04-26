@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Collection of Nameless Island Quests
 //= Nameless Island:
 //= - Quest to gain access to Nameless Island and dungeon.

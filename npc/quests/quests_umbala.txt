@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena 7.15 +
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Umbalian Language Quest, Umbala Skeletal Gate Quest,
 //= Umbala Event, Create Essence/Dismantle Stone
 //	Phase 1. Learning the Language

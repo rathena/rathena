@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Adds slots to selected weapons and armor.
 //===== Additional Comments: =================================
 //= 0.1a added missing L_No: to 2 funcs [Lupus]

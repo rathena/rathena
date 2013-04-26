@@ -8,7 +8,7 @@
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 6+
 //===== Description: =========================================
-//= [Aegis COnversion]
+//= [Official Conversion]
 //= Warp Points for Amatsu
 //===== Additional Comments: =================================
 //= 1.7 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]

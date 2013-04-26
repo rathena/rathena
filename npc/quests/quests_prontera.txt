@@ -13,13 +13,13 @@
 //= * Gaebolg Family Curse
 //===== Comments: ============================================
 //= Culvert Access:
-//= - [Aegis Conversion]
+//= - [Official Conversion]
 //= - Variable in use: MISC_QUEST (bit 8)
 //= Ph.D Hat Quest:
-//= - [Aegis Conversion]
+//= - [Official Conversion]
 //= - n/a
 //= Gaebolg Family Curse:
-//= - [Aegis Conversion]
+//= - [Official Conversion]
 //= - Variable in use: prt_curse (max 61)
 //===== Additional Comments: ================================= 
 //= Fixed flower name Dreamy -> Illusion

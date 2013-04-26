@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= [Aegis conversion]
+//= [Official Conversion]
 //= Permenent first class, base level 40 and under skill resetter.
 //= First Class characters and expanded classes only.
 //= Baby Classes and First Class trans can't use this service.

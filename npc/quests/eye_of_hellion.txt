@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Quest for getting a Nile Rose
 //= There are two versions of this quest.
 //= Version 1 (Not implemented) was used on iRO as an event
@@ -18,7 +18,7 @@
 //=	Tracking variable is not backwards compatable meaning
 //=     you can again repeat this quest from the start.
 //= 1.6 Fixed issue with #prt_key-1-1. [L0ne_W0lf]
-//= 1.7 Corrected reminants from aegis conversion. [L0en_w0lf]
+//= 1.7 Corrected reminants from Official Conversion. [L0en_w0lf]
 //= 1.8 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 1.9 Removed duplicate text. [Kisuka]
 //= 2.0 Updated EXP rewards.

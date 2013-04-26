@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Official quest for the Bard skill "Pang Voice"
 //= Prerequisite: Geffen Bard Quest
 //===== Additional Comments: ================================= 

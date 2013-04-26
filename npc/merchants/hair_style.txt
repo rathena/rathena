@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Allows you to change your hairstyle.
 //===== Additional Comments: =================================
 //= 1.2 Rescripted to the Aegis 10.3 Standards. [Samuray22]

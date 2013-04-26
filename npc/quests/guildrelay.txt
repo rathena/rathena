@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Guild Relay Quest.
 //= Quest designed for multiple users at once.
 //= Variable in use: guildrelay_q (Max: ??)

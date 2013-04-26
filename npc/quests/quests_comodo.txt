@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= Headgear Quests 1 [Aegis Conversion]:
+//= Headgear Quests 1 [Official Conversion]:
 //= - 'Cross Hat', 'Bulb Hairband'
 //= - 'Striped Hairband', 'Blue Hairband'
 //= Headgear Quests 2:

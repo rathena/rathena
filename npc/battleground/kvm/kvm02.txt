@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena 1.0
 //===== Description: ========================================= 
-//= [AEGIS Conversion]
+//= [Official Conversion]
 //= Kreiger Von Midgard Battleground for levels 1 to 59
 //= - Winning Team: 1 point
 //= - Losing Team: 0 points

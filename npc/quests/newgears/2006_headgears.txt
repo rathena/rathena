@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Censor Bar, Feather Beret, Valk. Helm, Hahoe Mask,
 //= Mythical Lion Mask, Bride Mask, Magistrate Hat and Ayam
 //===== Additional Comments: =================================

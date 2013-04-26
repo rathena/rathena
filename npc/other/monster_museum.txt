@@ -8,7 +8,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Juno Monster Museum - Non Player Character Locations
 //= - Information about various monsters
 //===== Additional Comments: ================================= 

@@ -5564,25 +5564,26 @@ void clif_map_property(struct map_session_data* sd, enum map_property property)
 	WFIFOSET(fd,packet_len(0x199));
 }
 
+
 void clif_maptypeproperty2(struct block_list *bl,enum send_target t) {
-#if PACKETVER >= 20130000 /* not entirely sure when this started */
+#if PACKETVER >= 20130000
 	uint8 buf[8];
 
 	WBUFW(buf,0)=0x99b; //2
 	WBUFW(buf,2)=0x28; //2
 
-	WBUFB(buf,4) |= 0x01; //party
-	WBUFB(buf,4) |= 0x02; //guild
+	WBUFB(buf,4) = ((map[bl->m].flag.partylock)?0:0x01); //party
+	WBUFB(buf,4) |= ((map[bl->m].flag.guildlock)?0:0x02); //guild
 	WBUFB(buf,4) |= ((map_flag_gvg2(bl->m))?0x04:0); //siege
-	WBUFB(buf,4) |= 0x08; //mineffect
-	WBUFB(buf,4) |= 0; //nolockon 0x10
+	WBUFB(buf,4) |= ((map[bl->m].flag.nomineeffect)?0:0x08); //mineffect @FIXME what this do
+	WBUFB(buf,4) |= ((map[bl->m].flag.nolockon)?0x10:0); //nolockon 0x10 @FIXME what this do
 	WBUFB(buf,4) |= ((map[bl->m].flag.pvp)?0x20:0); //countpk
 	WBUFB(buf,4) |= 0; //nopartyformation 0x40
 	WBUFB(buf,4) |= ((map[bl->m].flag.battleground)?0x80:0); //battleground
 
-	WBUFB(buf,5) |= 0; //noitemconsumption
-	WBUFB(buf,5) |= 0x02; //cart
-	WBUFB(buf,5) |= 0x04; //summonstarmiracle
+	WBUFB(buf,5) = ((map[bl->m].flag.noitemconsumption)?0x01:0); //noitemconsumption
+	WBUFB(buf,5) |= ((map[bl->m].flag.nousecart)?0:0x02); // usecart
+	WBUFB(buf,5) |= ((map[bl->m].flag.nosumstarmiracle)?0:0x04); //summonstarmiracle
 //	WBUFB(buf,5) |= RBUFB(buf,5)&0xf8;  //sparebit[0-4]
 
 	WBUFW(buf,6) = 0; //sparebit [5-15], + extra[4]

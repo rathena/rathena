@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Trade Broken Liquor Jars and alcohol for wanderer
 //= pet food, 'Spirit Liquor'
 //===== Additional Comments: =================================

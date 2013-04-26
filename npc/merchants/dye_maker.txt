@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //===== Additional Comments: ================================= 
 //= 1.0 Fully working [kobra_k88]
 //= 1.1 Spell Checked [Nexon] 

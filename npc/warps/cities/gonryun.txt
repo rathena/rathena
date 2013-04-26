@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 5+
 //===== Description: =========================================
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Warp Points for Kunlun
 //===== Additional Comments: =================================
 //= 1.1 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]

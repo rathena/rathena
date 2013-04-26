@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Quest to obtain a Bunny Band headgear.
 //===== Additional Comments: ================================= 
 //= 1.5 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]

@@ -8,7 +8,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis COnversion]
+//= [Official Conversion]
 //= Counteragent and Mixtures for making dyes & Alchemist Job Quest
 //===== Additional Comments: ================================= 
 //= 2.2 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]

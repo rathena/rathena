@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Indian Ro: Children Week Event
 //===== Additional Comments: =================================
 //= 1.1 First Beta. [Samuray22]

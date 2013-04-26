@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis COnversion]
+//= [Official Conversion]
 //= Quests for item: Elemental_Create_Book
 //= Quest for skill: Bioethics
 //===== Additional Comments: ================================= 

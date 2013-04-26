@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN; RO Episode XX
 //===== Description: =========================================
-//- [Aegis Conversion]
+//- [Official Conversion]
 //= Umbala Town Npcs
 //===== Additional Comments: =================================
 //= 1.0 - Done By jAthena (dunno Who)

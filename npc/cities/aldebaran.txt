@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Al De Baran Town NPCs
 //===== Additional Comments: ================================= 
 //= v1.1 Added RS125 NPC.  Added another Kafra Reserve points agent.

@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Quests for skills: CLose Confine
 //===== Additional Comments: ================================= 
 //= 1.4 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]

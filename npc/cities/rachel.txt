@@ -8,7 +8,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= [Partial Aegis Conversion]
+//= [Partial Official Conversion]
 //= Arunafeltz NPCs
 //===== Additional Comments: =================================
 //= 0.5 Text translated from Korean > English, incomplete, 

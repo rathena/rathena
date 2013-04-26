@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Warp Points for Comodo Fields
 //===== Additional Comments: =================================
 //= 1.1 Rescripted to Aegis 10.3 Standards. [L0ne_W0lf]

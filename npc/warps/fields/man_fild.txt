@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Warp Points for Manuk Field
 //===== Additional Comments: =================================
 //= 1.0 First Version.

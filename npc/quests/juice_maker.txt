@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= [Aegis COnversion]
+//= [Official Conversion]
 //= Learn where to turn apples, bananas, carrots, and grapes
 //= into juice.
 //= Condition if done: (MISC_QUEST & 1)

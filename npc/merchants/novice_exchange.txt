@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= [Aegis COnversion]
+//= [Official Conversion]
 //= Exchanges your Basic Monster drops for Red Potions.
 //===== Additional Comments: =================================
 //= 1.2 Rescripted to Aegis 10.standards. [L0ne_W0lf[

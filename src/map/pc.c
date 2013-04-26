@@ -4107,6 +4107,8 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 	//Not consumable item
 	if( item->type != IT_HEALING && item->type != IT_USABLE && item->type != IT_CASH )
 		return 0;
+	else if(map[sd->bl.m].flag.noitemconsumption) //consumable but mapflag prevent it
+		return 0;
 	if( !item->script ) //if it has no script, you can't really consume it!
 		return 0;
 
@@ -6691,14 +6693,10 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	}
 	break;
 	case BL_PET: //Pass on to master...
-		src = &((TBL_PET*)src)->msd->bl;
-	break;
 	case BL_HOM:
-		src = &((TBL_HOM*)src)->master->bl;
-	break;
 	case BL_MER:
-		src = &((TBL_MER*)src)->master->bl;
-	break;
+		src = battle_get_master(src);
+		break;
 	}
 
 	if (src && src->type == BL_PC)

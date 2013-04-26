@@ -7,7 +7,7 @@
 //===== Compatible With ======================================
 //= rAthena SVN
 //===== Description ==========================================
-//= [Partial Aegis COnversion]
+//= [Partial Official Conversion]
 //= Juperos Ruins related Quests/Events
 //===== Comments =============================================
 //= 1.0 First version, partly implemented [MasterOfMuppets]

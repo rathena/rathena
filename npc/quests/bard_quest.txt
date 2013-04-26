@@ -9,7 +9,7 @@
 //===== Description: ========================================= 
 //= Help the bard remember how his song goes.
 //===== Comments: ============================================
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Needs optimizing.
 //= Reconverted with iRO Dialogs.
 //= Possible NPC conflict with "Representative"

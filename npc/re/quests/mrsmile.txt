@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Trade Clover, Fluff and Jellopy for a Mr. Smile mask.
 //===== Additional Comments: ================================= 
 //= 1.0 Updated to match the new Izlude Map. [Masao]

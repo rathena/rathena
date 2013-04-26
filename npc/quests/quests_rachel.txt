@@ -12,7 +12,7 @@
 //= - End of quest coincides with opening the Sanctuary.
 //= - Variable in use: lost_boy (max 13)
 //= Bruspetti Quest:
-//= - [Aegis conversion]
+//= - [Official Conversion]
 //= - Requires friendship quest as a prerequisite.
 //= - Variable in use: rach_vice (max 24)
 //= Ice Necklace Quest:

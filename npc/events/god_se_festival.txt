@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Post-God Item SE Creation Summoning Event 
 //= Second Sister is a cusotm translation.
 //===== Additional Comments: ================================= 

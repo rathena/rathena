@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena 1.0
 //===== Description: ========================================= 
-//= [AEGIS Conversion]
+//= [Official Conversion]
 //= Kreiger Von Midgard Battleground Point redemption NPC
 //= * NOTE * 
 //= KvM Does NOT use items, but a character variable to

@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Grade A and Grade S weapon quests
 //===== Additional Comments: ================================= 
 //= 1.0 First Version, Credits goes to Vicious_Pucca for converting [MasterOfMuppets]

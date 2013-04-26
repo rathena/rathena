@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Doomed Swords Quest:
 //= - Quest for Doomed Swords: Grimtooth, Mysteltain, Executioner.
 //=   Although this quest is enabled on iRO, the Mysteltainn

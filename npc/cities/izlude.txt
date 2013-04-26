@@ -8,7 +8,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Izlude town NPCs
 //===== Additional Comments: ================================= 
 //= Fully working

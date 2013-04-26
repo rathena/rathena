@@ -12,7 +12,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Louyang Town Script
 //===== Additional Comments: ================================= 
 //= 2.9 Rescripted to Aegis 10.3 Standards. [L0ne_W0lf]

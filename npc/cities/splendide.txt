@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
-//= [Aegis Conversion]
+//= [Official Conversion]
 //= Town-specific NPCs for Splendide.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version.

@@ -1826,8 +1826,8 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	}
 
 	if(sd && (sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR &&
-		rnd()%10000 < battle_config.sg_miracle_skill_ratio)	//SG_MIRACLE [Komurka]
-		sc_start(src,src,SC_MIRACLE,100,1,battle_config.sg_miracle_skill_duration);
+		map[sd->bl.m].flag.nosumstarmiracle == 0)	//SG_MIRACLE [Komurka]
+		sc_start(src,src,SC_MIRACLE,battle_config.sg_miracle_skill_ratio,1,battle_config.sg_miracle_skill_duration);
 
 	if(sd && skill_id && attack_type&BF_MAGIC && status_isdead(bl) &&
 	 	!(skill_get_inf(skill_id)&(INF_GROUND_SKILL|INF_SELF_SKILL)) &&
@@ -13136,7 +13136,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id
 		 * Warlock
 		 **/
 		case WL_COMET:
-			if( skill_check_pc_partner(sd,skill_id,&skill_lv,1,0) <= 0 
+			if( skill_check_pc_partner(sd,skill_id,&skill_lv,1,0) <= 0
 				&& ((i = pc_search_inventory(sd,require.itemid[0])) < 0 || sd->status.inventory[i].amount < require.amount[0]) ) {
 				//clif_skill_fail(sd,skill_id,USESKILL_FAIL_NEED_ITEM,require.amount[0],require.itemid[0]);
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
