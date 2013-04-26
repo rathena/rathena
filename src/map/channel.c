@@ -134,7 +134,7 @@ int channel_join(struct Channel *channel, struct map_session_data *sd) {
 		sd->stealth = false;
 	} else if( channel->opt & CHAN_OPT_ANNOUNCE_JOIN ) {
 		char message[60];
-		sprintf(message, "#%s '%s' joined",channel->name,sd->status.name);
+		sprintf(message, "[ #%s ] '%s' has joined.",channel->name,sd->status.name);
 		clif_channel_msg(channel,sd,message);
 	}
 
@@ -460,9 +460,7 @@ int channel_pc_haschan(struct map_session_data *sd, struct Channel *channel){
  * return
  *  0 : all cases
  */
-int
-channel_colormes(struct map_session_data *__restrict sd, uint32 channel_color, const char *__restrict msg)
-{
+int channel_colormes(struct map_session_data *__restrict sd, uint32 channel_color, const char *__restrict msg){
 	uint16 msg_len = strlen(msg) + 1;
 
 	WFIFOHEAD(sd->fd,msg_len + 12);
@@ -497,8 +495,9 @@ int channel_display_list(struct map_session_data *sd, char *options){
 	//display availaible colors
 	if( options[0] != '\0' && strcmpi(options,"colors") == 0 ) {
 		char msg[40];
+		clif_displaymessage(sd->fd, msg_txt(sd,1444)); // ---- Available Colors ----
 		for( k = 0; k < Channel_Config.colors_count; k++ ) {
-			sprintf(msg, "[ Channel list colors ] : %s",Channel_Config.colors_name[k]);
+			sprintf(msg, msg_txt(sd,1445),Channel_Config.colors_name[k]);// - '%s'
 			channel_colormes(sd, k, msg);
 		}
 	}
@@ -941,7 +940,6 @@ int channel_pcsetopt(struct map_session_data *sd, char *chname, const char *opti
 		return -1;
 	}
 
-
 	if( option == '\0' ) {
 		clif_displaymessage(sd->fd, msg_txt(sd,1446));// You need to input an option.
 		return -1;
@@ -1024,9 +1022,6 @@ int channel_pcsetopt(struct map_session_data *sd, char *chname, const char *opti
 	return 0;
 }
 
-
-
-
 /*
  * Read and verify configuration in confif_filename
  * Assign table value with value
@@ -1105,7 +1100,7 @@ void channel_read_config(void) {
 		if( k < Channel_Config.colors_count ) {
 			Channel_Config.map_chcolor = k;
 		} else {
-			ShowError("channels.conf: unknown color '%s' for channel 'map_local_channel_color', disabling '#%s'...\n",map_color,map_chname);
+			ShowError("channels.conf: unknown color '%s' for 'map_local_channel_color', disabling '#%s'...\n",map_color,map_chname);
 			Channel_Config.map_enable = false;
 		}
 
@@ -1119,7 +1114,7 @@ void channel_read_config(void) {
 		if( k < Channel_Config.colors_count ) {
 			Channel_Config.ally_chcolor = k;
 		} else {
-			ShowError("channels.conf: unknown color '%s' for channel 'ally_channel_color', disabling '#%s'...\n",map_color,ally_chname);
+			ShowError("channels.conf: unknown color '%s' for 'ally_channel_color', disabling '#%s'...\n",ally_color,ally_chname);
 			Channel_Config.ally_enable = false;
 		}
 

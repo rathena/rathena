@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20130413
+//= 20130426
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
@@ -1447,8 +1447,15 @@ Sets the hunger level of your homunculus, with 100 being "Stuffed".
 ========================
 
 @join <#channel_name> {<password>}
+@channel join <#channel_name> {<password>}
 
 Joins the specified channel.
+
+---------------------------------------
+
+@channel leave <#channel_name>
+
+Leaves the specified channel.
 
 ---------------------------------------
 
@@ -1459,15 +1466,19 @@ Creates a new channel.
 
 ---------------------------------------
 
-@channel list
+@channel delete <#channel_name>
 
-Displays a list of all public channels.
+Destroys the specified channel.
 
 ---------------------------------------
 
+@channel list
+@channel list mine
 @channel list colors
 
-Displays a list of all available colors for custom channels.
+'list' displays a list of all public channels.
+'list mine' displays a list of channels you have joined.
+'list colors' displays a list of all available colors for custom channels.
 
 ---------------------------------------
 
@@ -1478,9 +1489,25 @@ You must either be the channel's owner or have the channel_admin permission.
 
 ---------------------------------------
 
-@channel leave <#channel_name>
+@channel setopt <#channel_name> <option> <value>
 
-Leaves the specified channel.
+Sets an option and value for the specified channel.
+You must either be the channel's owner or have the channel_admin permission.
+
+Available options:
+-- 'JoinAnnounce <1|0>' : Toggles channel announcement when a new player enters.
+-- 'MessageDelay <0-10>' : Sets the delay (in seconds) for messages sent to the channel.
+
+---------------------------------------
+
+@channel ban <#channel_name> <player>
+@channel unban <#channel_name> <player>
+@channel unbanall <#channel_name>
+@channel banlist <#channel_name>
+
+Bans or unbans a player from the specified channel.
+'unbanall' clears all bans from the channel.
+'banlist' displays a list of all players banned from the channel.
 
 ---------------------------------------
 
