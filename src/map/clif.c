@@ -729,7 +729,7 @@ void clif_dropflooritem(struct flooritem_data* fitem)
 	uint32 header=0x84b;
 #else
 	uint8 buf[17];
-	uint32 header=0x09b;
+	uint32 header=0x09e;
 #endif
 	int view, offset=0;
 
@@ -9159,9 +9159,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			sd->pvp_lost = 0;
 		}
 		clif_map_property(sd, MAPPROPERTY_FREEPVPZONE);
-	} else
-	// set flag, if it's a duel [LuzZza]
-	if(sd->duel_group)
+	} else if(sd->duel_group) // set flag, if it's a duel [LuzZza]
 		clif_map_property(sd, MAPPROPERTY_FREEPVPZONE);
 
 	if (map[sd->bl.m].flag.gvg_dungeon)

@@ -1924,7 +1924,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				cri += sd->bonus.arrow_cri;
 		}
 		if( sc && sc->data[SC_CAMOUFLAGE] )
-			cri += 10 * (10-sc->data[SC_CAMOUFLAGE]->val4);
+			cri += 10 * sc->data[SC_CAMOUFLAGE]->val3;
 		//The official equation is *2, but that only applies when sd's do critical.
 		//Therefore, we use the old value 3 on cases when an sd gets attacked by a mob
 		cri -= tstatus->luk*(!sd&&tsd?3:2);
@@ -3232,7 +3232,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				def2 += 2 * tsc->data[SC_GT_REVITALIZE]->val4;
 
 			if( tsc && tsc->data[SC_CAMOUFLAGE] ){
-				i = 5 * (10-tsc->data[SC_CAMOUFLAGE]->val4);
+				i = 5 * tsc->data[SC_CAMOUFLAGE]->val3;
 				def1 -= def1 * i / 100;
 				def2 -= def2 * i / 100;
 			}
@@ -3349,7 +3349,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			}
 
 			if(sc->data[SC_CAMOUFLAGE])
-				ATK_ADD(30 * (10-sc->data[SC_CAMOUFLAGE]->val4) );
+				ATK_ADD(30 * sc->data[SC_CAMOUFLAGE]->val3 );
 		}
 
 		//Refine bonus

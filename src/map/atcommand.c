@@ -1482,8 +1482,10 @@ ACMD_FUNC(pvpoff)
 
 	map[sd->bl.m].flag.pvp = 0;
 
-	if (!battle_config.pk_mode)
+	if (!battle_config.pk_mode){
 		clif_map_property_mapall(sd->bl.m, MAPPROPERTY_NOTHING);
+		clif_maptypeproperty2(&sd->bl,ALL_SAMEMAP);
+	}
 	map_foreachinmap(atcommand_pvpoff_sub,sd->bl.m, BL_PC);
 	map_foreachinmap(atcommand_stopattack,sd->bl.m, BL_CHAR, 0);
 	clif_displaymessage(fd, msg_txt(sd,31)); // PvP: Off.
@@ -1518,9 +1520,9 @@ ACMD_FUNC(pvpon)
 
 	map[sd->bl.m].flag.pvp = 1;
 
-	if (!battle_config.pk_mode)
-	{// display pvp circle and rank
+	if (!battle_config.pk_mode) {// display pvp circle and rank
 		clif_map_property_mapall(sd->bl.m, MAPPROPERTY_FREEPVPZONE);
+		clif_maptypeproperty2(&sd->bl,ALL_SAMEMAP);
 		map_foreachinmap(atcommand_pvpon_sub,sd->bl.m, BL_PC);
 	}
 
@@ -1543,6 +1545,7 @@ ACMD_FUNC(gvgoff)
 
 	map[sd->bl.m].flag.gvg = 0;
 	clif_map_property_mapall(sd->bl.m, MAPPROPERTY_NOTHING);
+	clif_maptypeproperty2(&sd->bl,ALL_SAMEMAP);
 	map_foreachinmap(atcommand_stopattack,sd->bl.m, BL_CHAR, 0);
 	clif_displaymessage(fd, msg_txt(sd,33)); // GvG: Off.
 
@@ -1563,6 +1566,7 @@ ACMD_FUNC(gvgon)
 
 	map[sd->bl.m].flag.gvg = 1;
 	clif_map_property_mapall(sd->bl.m, MAPPROPERTY_AGITZONE);
+	clif_maptypeproperty2(&sd->bl,ALL_SAMEMAP);
 	clif_displaymessage(fd, msg_txt(sd,34)); // GvG: On.
 
 	return 0;
@@ -8765,7 +8769,7 @@ ACMD_FUNC(join){
 	char chname[CHAN_NAME_LENGTH], pass[CHAN_NAME_LENGTH];
 
 	if( !message || !*message || sscanf(message, "%s %s", chname, pass) < 1 ) {
-		sprintf(atcmd_output, msg_txt(sd,1399),command); // Unknown Channel (usage: %s <#channel_name>)
+		sprintf(atcmd_output, msg_txt(sd,1399),command); // Unknown channel (usage: %s <#channel_name>).
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}
@@ -8791,9 +8795,9 @@ static inline void atcmd_channel_help(struct map_session_data *sd, const char *c
 
 	//option delete
 	if(can_delete){
-		sprintf(atcmd_output, msg_txt(sd,1469),command);// * %s delete <channel_name>
+		sprintf(atcmd_output, msg_txt(sd,1469),command);// * %s delete <#channel_name>
 		clif_displaymessage(fd, atcmd_output);
-		clif_displaymessage(fd, msg_txt(sd,1470)); // -- Force people leave and destroy the specified channel
+		clif_displaymessage(fd, msg_txt(sd,1470)); // -- Destroys the specified channel.
 	}
 
 	//option list
@@ -8802,7 +8806,7 @@ static inline void atcmd_channel_help(struct map_session_data *sd, const char *c
 	clif_displaymessage(fd, msg_txt(sd,1418));// -- Lists all public channels.
 	sprintf(atcmd_output, msg_txt(sd,1471),command);// * %s list mine
 	clif_displaymessage(fd, atcmd_output);
-	clif_displaymessage(fd, msg_txt(sd,1472));
+	clif_displaymessage(fd, msg_txt(sd,1472));// -- Lists all channels you have joined.
 	if( can_create ) {
 		sprintf(atcmd_output, msg_txt(sd,1419),command);// * %s list colors
 		clif_displaymessage(fd, atcmd_output);
@@ -8817,9 +8821,9 @@ static inline void atcmd_channel_help(struct map_session_data *sd, const char *c
 	}
 
 	//option join
-	sprintf(atcmd_output, msg_txt(sd,1473),command);// * %s join <channel_name>
+	sprintf(atcmd_output, msg_txt(sd,1473),command);// * %s join <#channel_name> <channel_password>
 	clif_displaymessage(fd, atcmd_output);
-	clif_displaymessage(fd, msg_txt(sd,1474));
+	clif_displaymessage(fd, msg_txt(sd,1474));// -- Joins the specified channel.
 
 	//option leave
 	sprintf(atcmd_output, msg_txt(sd,1423),command);// * %s leave <#channel_name>
@@ -8838,25 +8842,25 @@ static inline void atcmd_channel_help(struct map_session_data *sd, const char *c
 
 	//option ban/unban/banlist
 	if( can_create ) {
-		sprintf(atcmd_output, msg_txt(sd,1456),command);// -- %s ban <channel name> <character name>
+		sprintf(atcmd_output, msg_txt(sd,1456),command);// * %s ban <#channel_name> <player>
 		clif_displaymessage(fd, atcmd_output);
-		clif_displaymessage(fd, msg_txt(sd,1457));// - bans <character name> from <channel name> channel
-		sprintf(atcmd_output, msg_txt(sd,1458),command);// -- %s banlist <channel name>
+		clif_displaymessage(fd, msg_txt(sd,1457));// -- Bans the specified player from the channel.
+		sprintf(atcmd_output, msg_txt(sd,1458),command);// * %s banlist <#channel_name>
 		clif_displaymessage(fd, atcmd_output);
-		clif_displaymessage(fd, msg_txt(sd,1459));// - lists all banned characters from <channel name> channel
-		sprintf(atcmd_output, msg_txt(sd,1460),command);// -- %s unban <channel name> <character name>
+		clif_displaymessage(fd, msg_txt(sd,1459));// -- Lists all players banned from the specified channel.
+		sprintf(atcmd_output, msg_txt(sd,1460),command);// * %s unban <#channel_name> <player>
 		clif_displaymessage(fd, atcmd_output);
-		clif_displaymessage(fd, msg_txt(sd,1461));// - unban <character name> from <channel name> channel
-		sprintf(atcmd_output, msg_txt(sd,1467),command);// -- %s unbanall <channel name>
+		clif_displaymessage(fd, msg_txt(sd,1461));// -- Unbans the specified player from the channel.
+		sprintf(atcmd_output, msg_txt(sd,1467),command);// * %s unbanall <#channel_name>
 		clif_displaymessage(fd, atcmd_output);
-		clif_displaymessage(fd, msg_txt(sd,1468));// - unbans everyone from <channel name>
+		clif_displaymessage(fd, msg_txt(sd,1468));// -- Clears all bans from the specified channel.
 	}
 
 	//option setopt
 	if(can_create){
-		sprintf(atcmd_output, msg_txt(sd,1462),command);// -- %s setopt <channel name> <option name> <option value>
+		sprintf(atcmd_output, msg_txt(sd,1462),command);// * %s setopt <#channel_name> <option> <value>
 		clif_displaymessage(fd, atcmd_output);
-		clif_displaymessage(fd, msg_txt(sd,1463));// - adds or removes <option name> with <option value> to <channel name> channel
+		clif_displaymessage(fd, msg_txt(sd,1463));// -- Sets an option and value for the specified channel.
 	}
 
 	sprintf(atcmd_output, msg_txt(sd,1404),command); // %s failed.
@@ -8874,7 +8878,7 @@ ACMD_FUNC(channel) {
 
 	if( strcmpi(key,"create") == 0 && ( Channel_Config.user_chenable || pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ) ) {
 		if(sub3[0] != '\0'){
-			clif_displaymessage(fd, msg_txt(sd,1408)); // Channel password may not contain spaces
+			clif_displaymessage(fd, msg_txt(sd,1408)); // Channel password may not contain spaces.
 			return -1;
 		}
 		return channel_pccreate(sd,sub1,sub2);
@@ -8894,6 +8898,8 @@ ACMD_FUNC(channel) {
 		return channel_pcunbind(sd);
 	} else if ( strcmpi(key,"ban") == 0 ) {
 		return channel_pcban(sd,sub1,map_nick2sd(sub2),0);
+	} else if ( strcmpi(key,"banlist") == 0 ) {
+		return channel_pcban(sd,sub1,NULL,3);
 	} else if ( strcmpi(key,"unban") == 0 ) {
 		return channel_pcban(sd,sub1,map_nick2sd(sub2),1);
 	} else if ( strcmpi(key,"unbanall") == 0 ) {

@@ -598,7 +598,7 @@ void initChangeTables(void) {
 	set_sc( RA_FEARBREEZE        , SC_FEARBREEZE      , SI_FEARBREEZE      , SCB_NONE );
 	set_sc( RA_ELECTRICSHOCKER   , SC_ELECTRICSHOCKER , SI_ELECTRICSHOCKER , SCB_NONE );
 	set_sc( RA_WUGDASH           , SC_WUGDASH         , SI_WUGDASH         , SCB_SPEED );
-	set_sc( RA_CAMOUFLAGE        , SC_CAMOUFLAGE      , SI_CAMOUFLAGE      , SCB_CRI|SCB_SPEED|SCB_WATK|SCB_DEF );
+	set_sc( RA_CAMOUFLAGE        , SC_CAMOUFLAGE      , SI_CAMOUFLAGE      , SCB_SPEED );
 	add_sc( RA_MAGENTATRAP       , SC_ELEMENTALCHANGE );
 	add_sc( RA_COBALTTRAP        , SC_ELEMENTALCHANGE );
 	add_sc( RA_MAIZETRAP         , SC_ELEMENTALCHANGE );
@@ -10494,23 +10494,8 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 	case SC_CAMOUFLAGE:
 		if (!status_charge(bl, 0, 7 - sce->val1))
 			break;
-		if (sd && --sce->val4 >= 0) {
-			if (!(sce->val2 & 1)) {
-				status->cri += sd->base_status.cri * 1 / 10; //+10% per second
-				if (status->cri > 1000) { //max 100%
-					status->cri = 1000;
-					sce->val2 |= 1;
-				}
-			}
-			if (!(sce->val2 & 2)) {
-				status->def2 -= sd->base_status.def2 * 1 / 20; //-5% per second
-				if (status->def2 < 0) { //min 0
-					status->def2 = 0;
-					sce->val2 |= 2;
-				}
-			}
-			status->rhw.atk += 30; //+30 per second
- 		}
+		if (--sce->val4 >= 0)
+			sce->val3++;
 		sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
 		return 0;
 

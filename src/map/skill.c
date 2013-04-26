@@ -368,13 +368,13 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 	struct status_change* sc;
 
 	switch( skill_id ) {
-	case BA_APPLEIDUN:
-	#ifdef RENEWAL
-		hp = 100+5*skill_lv+5*(status_get_vit(src)/10); // HP recovery
-	#else
-		hp = 30+5*skill_lv+5*(status_get_vit(src)/10); // HP recovery
-	#endif
-		if( sd )
+		case BA_APPLEIDUN:
+		#ifdef RENEWAL
+			hp = 100+5*skill_lv+5*(status_get_vit(src)/10); // HP recovery
+		#else
+			hp = 30+5*skill_lv+5*(status_get_vit(src)/10); // HP recovery
+		#endif
+			if( sd )
 				hp += 5*pc_checkskill(sd,BA_MUSICALLESSON);
 			break;
 		case PR_SANCTUARY:
@@ -386,23 +386,27 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 		default:
 			if (skill_lv >= battle_config.max_heal_lv)
 				return battle_config.max_heal;
-		#ifdef RENEWAL
-            /**
-             * Renewal Heal Formula
-             * Formula: ( [(Base Level + INT) / 5] x 30 ) x (Heal Level / 10) x (Modifiers) + MATK
-             **/
-            hp = (status_get_lv(src) + status_get_int(src)) / 5 * 30  * skill_lv / 10;
-		#else
-			hp = ( status_get_lv(src) + status_get_int(src) ) / 8 * (4 + ( skill_id == AB_HIGHNESSHEAL ? ( sd ? pc_checkskill(sd,AL_HEAL) : 10 ) : skill_lv ) * 8);
-		#endif
+			#ifdef RENEWAL
+				/**
+				* Renewal Heal Formula
+				* Formula: ( [(Base Level + INT) / 5] x 30 ) x (Heal Level / 10) x (Modifiers) + MATK
+				**/
+				hp = (status_get_lv(src) + status_get_int(src)) / 5 * 30  * (skill_id == AB_HIGHNESSHEAL ? (sd ? pc_checkskill(sd,AL_HEAL) : 10 ) : skill_lv) / 10;
+			#else
+				hp = (status_get_lv(src) + status_get_int(src)) / 8 * (4 + ( (skill_id == AB_HIGHNESSHEAL ? (sd ? pc_checkskill(sd,AL_HEAL) : 10 ) : skill_lv) * 8));
+			#endif
+			if (skill_id == AB_HIGHNESSHEAL)
+				hp *= ( 17 + 3 * skill_lv ) / 10;
 			if( sd && ((skill = pc_checkskill(sd, HP_MEDITATIO)) > 0) )
 				hp += hp * skill * 2 / 100;
 			else if( src->type == BL_HOM && (skill = merc_hom_checkskill(((TBL_HOM*)src), HLIF_BRAIN)) > 0 )
 				hp += hp * skill * 2 / 100;
+			if( sd && tsd && sd->status.partner_id == tsd->status.char_id && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.sex == 0 )
+				hp *= 2;
 			break;
 	}
 
-	if( ( (target && target->type == BL_MER) || !heal ) && skill_id != NPC_EVILLAND )
+	if( (!heal || (target && target->type == BL_MER)) && skill_id != NPC_EVILLAND )
 		hp >>= 1;
 
 	if( sd && (skill = pc_skillheal_bonus(sd, skill_id)) )
@@ -413,9 +417,9 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 
 	sc = status_get_sc(target);
 	if( sc && sc->count ) {
-		if( sc->data[SC_CRITICALWOUND] && heal ) // Critical Wound has no effect on offensive heal. [Inkfish]
+		if( heal && sc->data[SC_CRITICALWOUND] ) // Critical Wound has no effect on offensive heal. [Inkfish]
 			hp -= hp * sc->data[SC_CRITICALWOUND]->val2/100;
-		if( sc->data[SC_DEATHHURT] && heal )
+		if( heal && sc->data[SC_DEATHHURT] )
 			hp -= hp * 20/100;
 		if( sc->data[SC_INCHEALRATE] && skill_id != NPC_EVILLAND && skill_id != BA_APPLEIDUN )
 			hp += hp * sc->data[SC_INCHEALRATE]->val1/100; // Only affects Heal, Sanctuary and PotionPitcher.(like bHealPower) [Inkfish]
@@ -424,8 +428,8 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 	}
 
 #ifdef RENEWAL
-    // MATK part of the RE heal formula [malufett]
-    // Note: in this part matk bonuses from items or skills are not applied
+	// MATK part of the RE heal formula [malufett]
+	// Note: in this part matk bonuses from items or skills are not applied
 	switch( skill_id ) {
 		case BA_APPLEIDUN:	case PR_SANCTUARY:
 		case NPC_EVILLAND:	break;
@@ -434,6 +438,7 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 				struct status_data *status = status_get_status_data(src);
 				int min, max;
 
+				sc = status_get_sc(src);
 				min = max = status_base_matk(status, status_get_lv(src));
 				if( status->rhw.matk > 0 ){
 					int wMatk, variance;
@@ -4974,24 +4979,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	 **/
 	case AB_HIGHNESSHEAL:
 		{
-			int heal = skill_calc_heal(src, bl, (skill_id == AB_HIGHNESSHEAL)?AL_HEAL:skill_id, (skill_id == AB_HIGHNESSHEAL)?10:skill_lv, true);
+			int heal = skill_calc_heal(src, bl, skill_id, skill_lv, true);
 			int heal_get_jobexp;
-			//Highness Heal: starts at 1.7 boost + 0.3 for each level
-			if( skill_id == AB_HIGHNESSHEAL ) {
-				heal = heal * ( 17 + 3 * skill_lv ) / 10;
-			}
 			if( status_isimmune(bl) ||
 					(dstmd && (dstmd->class_ == MOBID_EMPERIUM || mob_is_battleground(dstmd))) ||
 					(dstsd && pc_ismadogear(dstsd)) )//Mado is immune to heal
 				heal=0;
 
-			if( sd && dstsd && sd->status.partner_id == dstsd->status.char_id && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.sex == 0 )
-				heal = heal*2;
-
-			if( tsc && tsc->count )
-			{
-				if( tsc->data[SC_KAITE] && !(sstatus->mode&MD_BOSS) )
-				{ //Bounce back heal
+			if( tsc && tsc->count ) {
+				if( tsc->data[SC_KAITE] && !(sstatus->mode&MD_BOSS) ) { //Bounce back heal
 					if (--tsc->data[SC_KAITE]->val2 <= 0)
 						status_change_end(bl, SC_KAITE, INVALID_TIMER);
 					if (src == bl)
@@ -17425,7 +17421,6 @@ void skill_init_unit_layout (void) {
 						memcpy(skill_unit_layout[pos].dy,dy,sizeof(dy));
 					}
 					break;
-				case MH_POISON_MIST:
 				case AS_VENOMDUST: {
 						static const int dx[] = {-1, 0, 0, 0, 1};
 						static const int dy[] = { 0,-1, 0, 1, 0};
@@ -17721,7 +17716,7 @@ int skill_disable_check(struct status_change *sc, uint16 skill_id)
 		case RA_WUGDASH:
 		case RA_CAMOUFLAGE:
 			if( sc->data[status_skill2sc(skill_id)] )
-				return 1;	
+				return 1;
 	}
 
 	return 0;
