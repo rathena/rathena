@@ -12065,27 +12065,45 @@ void clif_parse_GuildChangeNotice(int fd, struct map_session_data* sd)
 	guild_change_notice(sd, guild_id, msg1, msg2);
 }
 
+// Helper function for guild invite functions
+int
+clif_sub_guild_invite(int fd, struct map_session_data *sd, struct map_session_data *t_sd) {
+	if (t_sd == NULL) {// not online or does not exist
+		return 1;
+	}
+
+	if (map[sd->bl.m].flag.guildlock) {//Guild locked.
+		clif_displaymessage(fd, msg_txt(sd,228));
+		return 1;
+	}
+
+	if(t_sd && t_sd->state.noask) {// @noask [LuzZza]
+		clif_noask_sub(sd, t_sd, 2);
+		return 1;
+	}
+
+	guild_invite(sd, t_sd);
+	return 0;
+}
 
 /// Guild invite request (CZ_REQ_JOIN_GUILD).
 /// 0168 <account id>.L <inviter account id>.L <inviter char id>.L
 void clif_parse_GuildInvite(int fd,struct map_session_data *sd)
 {
-	struct map_session_data *t_sd;
+	struct map_session_data *t_sd = map_id2sd(RFIFOL(fd,2));
 
-	if(map[sd->bl.m].flag.guildlock) { //Guild locked.
-		clif_displaymessage(fd, msg_txt(sd,228));
+	if (clif_sub_guild_invite(fd, sd, t_sd))
 		return;
-	}
+}
 
-	t_sd = map_id2sd(RFIFOL(fd,2));
+/// Guild invite request (/guildinvite)
+/// 0916 <char name>.24B
+void
+clif_parse_GuildInvite2(int fd, struct map_session_data *sd) {
+	struct map_session_data *t_sd = map_nick2sd((char *)RFIFOP(fd, 2));
 
-	// @noask [LuzZza]
-	if(t_sd && t_sd->state.noask) {
-		clif_noask_sub(sd, t_sd, 2);
+	if (clif_sub_guild_invite(fd, sd, t_sd))
 		return;
-	}
-
-	guild_invite(sd,t_sd);
 }
 
 
@@ -16941,6 +16959,7 @@ static int packetdb_readdb(void)
 		{ clif_parse_cashshop_buy, "cashshopbuy" },
 		/* */
 		{ clif_parse_MoveItem , "moveitem" },
+		{ clif_parse_GuildInvite2 , "guildinvite2" },
 		{NULL,NULL}
 	};
 
