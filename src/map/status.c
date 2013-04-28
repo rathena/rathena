@@ -1255,14 +1255,13 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		unit_stop_walking( target, 1 );
 	}
 
-	if( status->hp || (flag&8) )
-	{	//Still lives or has been dead before this damage.
+	if( status->hp || (flag&8) ) { //Still lives or has been dead before this damage.
 		if (walkdelay)
 			unit_set_walkdelay(target, gettick(), walkdelay, 0);
 		return hp+sp;
 	}
 
-	status->hp = 1; //To let the dead function cast skills and all that.
+	status->hp = 0;
 	//NOTE: These dead functions should return: [Skotlex]
 	//0: Death cancelled, auto-revived.
 	//Non-zero: Standard death. Clear status, cancel move/attack, etc
@@ -1283,13 +1282,11 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		return hp+sp;
 
 	//Normal death
-	status->hp = 0;
 	if (battle_config.clear_unit_ondeath &&
 		battle_config.clear_unit_ondeath&target->type)
 		skill_clear_unitgroup(target);
 
-	if(target->type&BL_REGEN)
-	{	//Reset regen ticks.
+	if(target->type&BL_REGEN) { //Reset regen ticks.
 		struct regen_data *regen = status_get_regen_data(target);
 		if (regen) {
 			memset(&regen->tick, 0, sizeof(regen->tick));
@@ -1300,8 +1297,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		}
 	}
 
-	if( sc && sc->data[SC_KAIZEL] && !map_flag_gvg(target->m) )
-	{ //flag&8 = disable Kaizel
+	if( sc && sc->data[SC_KAIZEL] && !map_flag_gvg(target->m) ) { //flag&8 = disable Kaizel
 		int time = skill_get_time2(SL_KAIZEL,sc->data[SC_KAIZEL]->val1);
 		//Look for Osiris Card's bonus effect on the character and revive 100% or revive normally
 		if ( target->type == BL_PC && BL_CAST(BL_PC,target)->special_state.restart_full_recover )
@@ -1317,10 +1313,10 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 
 		return hp+sp;
 	}
-	if(target->type == BL_PC){
+	if(target->type == BL_PC) {
 		TBL_PC *sd = BL_CAST(BL_PC,target);
 		TBL_HOM *hd = sd->hd;
-		if(hd && hd->sc.data[SC_LIGHT_OF_REGENE]){
+		if(hd && hd->sc.data[SC_LIGHT_OF_REGENE]) {
 			status_change_clear(target,0);
 			clif_skillcasting(&hd->bl, hd->bl.id, target->id, 0,0, MH_LIGHT_OF_REGENE, skill_get_ele(MH_LIGHT_OF_REGENE, 1), 10); //just to display usage
 			clif_skill_nodamage(&sd->bl, target, ALL_RESURRECTION, 1, status_revive(&sd->bl,hd->sc.data[SC_LIGHT_OF_REGENE]->val2,0));
@@ -1328,7 +1324,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 			return hp + sp;
 		}
 	}
-	if (target->type == BL_MOB && sc && sc->data[SC_REBIRTH] && !((TBL_MOB*) target)->state.rebirth) {// Ensure the monster has not already rebirthed before doing so.
+	if (target->type == BL_MOB && sc && sc->data[SC_REBIRTH] && !((TBL_MOB*) target)->state.rebirth) { // Ensure the monster has not already rebirthed before doing so.
 		status_revive(target, sc->data[SC_REBIRTH]->val2, 0);
 		status_change_clear(target,0);
 		((TBL_MOB*)target)->state.rebirth = 1;
@@ -1343,8 +1339,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 	else
 	if(flag&2) //remove from map
 		unit_remove_map(target,CLR_DEAD);
-	else
-	{ //Some death states that would normally be handled by unit_remove_map
+	else { //Some death states that would normally be handled by unit_remove_map
 		unit_stop_attack(target);
 		unit_stop_walking(target,1);
 		unit_skillcastcancel(target,0);

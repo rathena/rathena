@@ -2109,8 +2109,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	status = &md->status;
 	sc = &md->sc;
 
-	if( src && src->type == BL_PC )
-	{
+	if( src && src->type == BL_PC ) {
 		sd = (struct map_session_data *)src;
 		mvp_sd = sd;
 	}
@@ -2118,10 +2117,11 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	if( md->guardian_data && md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS )
 		guild_castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number,0);
 
-	if( src )
-	{ // Use Dead skill only if not killed by Script or Command
+	if( src ) { // Use Dead skill only if not killed by Script or Command
+		md->status.hp = 1;
 		md->state.skillstate = MSS_DEAD;
 		mobskill_use(md,tick,-1);
+		md->status.hp = 0;
 	}
 
 	map_freeblock_lock();
@@ -2133,8 +2133,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 	// filter out entries not eligible for exp distribution
 	memset(tmpsd,0,sizeof(tmpsd));
-	for(i = 0, count = 0, mvp_damage = 0; i < DAMAGELOG_SIZE && md->dmglog[i].id; i++)
-	{
+	for(i = 0, count = 0, mvp_damage = 0; i < DAMAGELOG_SIZE && md->dmglog[i].id; i++) {
 		struct map_session_data* tsd = map_charid2sd(md->dmglog[i].id);
 
 		if(tsd == NULL)
@@ -2168,8 +2167,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	// determines, if the monster was killed by homunculus' damage only
 	homkillonly = (bool)( ( dmgbltypes&BL_HOM ) && !( dmgbltypes&~BL_HOM ) );
 
-	if(!battle_config.exp_calc_type && count > 1)
-	{	//Apply first-attacker 200% exp share bonus
+	if(!battle_config.exp_calc_type && count > 1) {	//Apply first-attacker 200% exp share bonus
 		//TODO: Determine if this should go before calculating the MVP player instead of after.
 		if (UINT_MAX - md->dmglog[0].dmg > md->tdmg) {
 			md->tdmg += md->dmglog[0].dmg;
@@ -2200,111 +2198,110 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		if(battle_config.mobs_level_up && md->level > md->db->lv) // [Valaris]
 			bonus += (md->level-md->db->lv)*battle_config.mobs_level_up_exp_rate;
 
-	for(i = 0; i < DAMAGELOG_SIZE && md->dmglog[i].id; i++) {
-		int flag=1,zeny=0;
-		unsigned int base_exp, job_exp;
-		double per; //Your share of the mob's exp
+		for(i = 0; i < DAMAGELOG_SIZE && md->dmglog[i].id; i++) {
+			int flag=1,zeny=0;
+			unsigned int base_exp, job_exp;
+			double per; //Your share of the mob's exp
 
-		if (!tmpsd[i]) continue;
+			if (!tmpsd[i]) continue;
 
-		if (!battle_config.exp_calc_type && md->tdmg)
-			//jAthena's exp formula based on total damage.
-			per = (double)md->dmglog[i].dmg/(double)md->tdmg;
-		else {
-			//eAthena's exp formula based on max hp.
-			per = (double)md->dmglog[i].dmg/(double)status->max_hp;
-			if (per > 2) per = 2; // prevents unlimited exp gain
-		}
-
-		if (count>1 && battle_config.exp_bonus_attacker) {
-			//Exp bonus per additional attacker.
-			if (count > battle_config.exp_bonus_max_attacker)
-				count = battle_config.exp_bonus_max_attacker;
-			per += per*((count-1)*battle_config.exp_bonus_attacker)/100.;
-		}
-
-		// change experience for different sized monsters [Valaris]
-		if (battle_config.mob_size_influence) {
-			switch( md->special_state.size ) {
-				case SZ_MEDIUM:
-					per /= 2.;
-					break;
-				case SZ_BIG:
-					per *= 2.;
-					break;
+			if (!battle_config.exp_calc_type && md->tdmg)
+				//jAthena's exp formula based on total damage.
+				per = (double)md->dmglog[i].dmg/(double)md->tdmg;
+			else {
+				//eAthena's exp formula based on max hp.
+				per = (double)md->dmglog[i].dmg/(double)status->max_hp;
+				if (per > 2) per = 2; // prevents unlimited exp gain
 			}
-		}
 
-		if( md->dmglog[i].flag == MDLF_PET )
-			per *= battle_config.pet_attack_exp_rate/100.;
+			if (count>1 && battle_config.exp_bonus_attacker) {
+				//Exp bonus per additional attacker.
+				if (count > battle_config.exp_bonus_max_attacker)
+					count = battle_config.exp_bonus_max_attacker;
+				per += per*((count-1)*battle_config.exp_bonus_attacker)/100.;
+			}
 
-		if(battle_config.zeny_from_mobs && md->level) {
-			 // zeny calculation moblv + random moblv [Valaris]
-			zeny=(int) ((md->level+rnd()%md->level)*per*bonus/100.);
-			if(md->db->mexp > 0)
-				zeny*=rnd()%250;
-		}
+			// change experience for different sized monsters [Valaris]
+			if (battle_config.mob_size_influence) {
+				switch( md->special_state.size ) {
+					case SZ_MEDIUM:
+						per /= 2.;
+						break;
+					case SZ_BIG:
+						per *= 2.;
+						break;
+				}
+			}
 
-		if (map[m].flag.nobaseexp || !md->db->base_exp)
-			base_exp = 0;
-		else
-			base_exp = (unsigned int)cap_value(md->db->base_exp * per * bonus/100. * map[m].bexp/100., 1, UINT_MAX);
+			if( md->dmglog[i].flag == MDLF_PET )
+				per *= battle_config.pet_attack_exp_rate/100.;
 
-		if (map[m].flag.nojobexp || !md->db->job_exp || md->dmglog[i].flag == MDLF_HOMUN) //Homun earned job-exp is always lost.
-			job_exp = 0;
-		else
-			job_exp = (unsigned int)cap_value(md->db->job_exp * per * bonus/100. * map[m].jexp/100., 1, UINT_MAX);
+			if(battle_config.zeny_from_mobs && md->level) {
+				 // zeny calculation moblv + random moblv [Valaris]
+				zeny=(int) ((md->level+rnd()%md->level)*per*bonus/100.);
+				if(md->db->mexp > 0)
+					zeny*=rnd()%250;
+			}
 
-		if ( ( temp = tmpsd[i]->status.party_id)>0 ) {
-			int j;
-			for( j = 0; j < pnum && pt[j].id != temp; j++ ); //Locate party.
+			if (map[m].flag.nobaseexp || !md->db->base_exp)
+				base_exp = 0;
+			else
+				base_exp = (unsigned int)cap_value(md->db->base_exp * per * bonus/100. * map[m].bexp/100., 1, UINT_MAX);
 
-			if( j == pnum ) { //Possibly add party.
-				pt[pnum].p = party_search(temp);
-				if(pt[pnum].p && pt[pnum].p->party.exp) {
-					pt[pnum].id = temp;
-					pt[pnum].base_exp = base_exp;
-					pt[pnum].job_exp = job_exp;
-					pt[pnum].zeny = zeny; // zeny share [Valaris]
-					pnum++;
+			if (map[m].flag.nojobexp || !md->db->job_exp || md->dmglog[i].flag == MDLF_HOMUN) //Homun earned job-exp is always lost.
+				job_exp = 0;
+			else
+				job_exp = (unsigned int)cap_value(md->db->job_exp * per * bonus/100. * map[m].jexp/100., 1, UINT_MAX);
+
+			if ( ( temp = tmpsd[i]->status.party_id)>0 ) {
+				int j;
+				for( j = 0; j < pnum && pt[j].id != temp; j++ ); //Locate party.
+
+				if( j == pnum ) { //Possibly add party.
+					pt[pnum].p = party_search(temp);
+					if(pt[pnum].p && pt[pnum].p->party.exp) {
+						pt[pnum].id = temp;
+						pt[pnum].base_exp = base_exp;
+						pt[pnum].job_exp = job_exp;
+						pt[pnum].zeny = zeny; // zeny share [Valaris]
+						pnum++;
+						flag = 0;
+					}
+				} else {	//Add to total
+					if (pt[j].base_exp > UINT_MAX - base_exp)
+						pt[j].base_exp = UINT_MAX;
+					else
+						pt[j].base_exp += base_exp;
+
+					if (pt[j].job_exp > UINT_MAX - job_exp)
+						pt[j].job_exp = UINT_MAX;
+					else
+						pt[j].job_exp += job_exp;
+
+					pt[j].zeny += zeny;  // zeny share [Valaris]
 					flag = 0;
 				}
-			} else {	//Add to total
-				if (pt[j].base_exp > UINT_MAX - base_exp)
-					pt[j].base_exp = UINT_MAX;
-				else
-					pt[j].base_exp += base_exp;
-
-				if (pt[j].job_exp > UINT_MAX - job_exp)
-					pt[j].job_exp = UINT_MAX;
-				else
-					pt[j].job_exp += job_exp;
-
-				pt[j].zeny += zeny;  // zeny share [Valaris]
-				flag = 0;
 			}
-		}
-		if(base_exp && md->dmglog[i].flag == MDLF_HOMUN) //tmpsd[i] is null if it has no homunc.
-			merc_hom_gainexp(tmpsd[i]->hd, base_exp);
-		if(flag) {
-			if(base_exp || job_exp)
-			{
-				if( md->dmglog[i].flag != MDLF_PET || battle_config.pet_attack_exp_to_master ) {
+			if(base_exp && md->dmglog[i].flag == MDLF_HOMUN) //tmpsd[i] is null if it has no homunc.
+				merc_hom_gainexp(tmpsd[i]->hd, base_exp);
+			if(flag) {
+				if(base_exp || job_exp) {
+					if( md->dmglog[i].flag != MDLF_PET || battle_config.pet_attack_exp_to_master ) {
 #ifdef RENEWAL_EXP
-					int rate = pc_level_penalty_mod(tmpsd[i], md->level, md->status.race, md->status.mode, 1);
-					base_exp = (unsigned int)cap_value(base_exp * rate / 100, 1, UINT_MAX);
-					job_exp = (unsigned int)cap_value(job_exp * rate / 100, 1, UINT_MAX);
+						int rate = pc_level_penalty_mod(tmpsd[i], md->level, md->status.race, md->status.mode, 1);
+						base_exp = (unsigned int)cap_value(base_exp * rate / 100, 1, UINT_MAX);
+						job_exp = (unsigned int)cap_value(job_exp * rate / 100, 1, UINT_MAX);
 #endif
-					pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp, false);
+						pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp, false);
+					}
 				}
+				if(zeny) // zeny from mobs [Valaris]
+					pc_getzeny(tmpsd[i], zeny, LOG_TYPE_PICKDROP_MONSTER, NULL);
 			}
-			if(zeny) // zeny from mobs [Valaris]
-				pc_getzeny(tmpsd[i], zeny, LOG_TYPE_PICKDROP_MONSTER, NULL);
 		}
-	}
 
-	for( i = 0; i < pnum; i++ ) //Party share.
-		party_exp_share(pt[i].p, &md->bl, pt[i].base_exp,pt[i].job_exp,pt[i].zeny);
+		for( i = 0; i < pnum; i++ ) //Party share.
+			party_exp_share(pt[i].p, &md->bl, pt[i].base_exp,pt[i].job_exp,pt[i].zeny);
 
 	} //End EXP giving.
 
@@ -2332,8 +2329,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		dlist->third_charid = (third_sd ? third_sd->status.char_id : 0);
 		dlist->item = NULL;
 
-		for (i = 0; i < MAX_MOB_DROP; i++)
-		{
+		for (i = 0; i < MAX_MOB_DROP; i++) {
 			if (md->db->dropitem[i].nameid <= 0)
 				continue;
 			if ( !(it = itemdb_exists(md->db->dropitem[i].nameid)) )
@@ -2346,8 +2342,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 
 			// change drops depending on monsters size [Valaris]
-			if (battle_config.mob_size_influence)
-			{
+			if (battle_config.mob_size_influence) {
 				if (md->special_state.size == SZ_MEDIUM && drop_rate >= 2)
 					drop_rate /= 2;
 				else if( md->special_state.size == SZ_BIG)
@@ -2408,8 +2403,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		if(sd) {
 			// process script-granted extra drop bonuses
 			int itemid = 0;
-			for (i = 0; i < ARRAYLENGTH(sd->add_drop) && (sd->add_drop[i].id || sd->add_drop[i].group); i++)
-			{
+			for (i = 0; i < ARRAYLENGTH(sd->add_drop) && (sd->add_drop[i].id || sd->add_drop[i].group); i++) {
 				if ( sd->add_drop[i].race == -md->class_ ||
 					( sd->add_drop[i].race > 0 && (
 						sd->add_drop[i].race & (1<<status->race) ||
@@ -2554,7 +2548,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 	rebirth =  ( md->sc.data[SC_KAIZEL] || (md->sc.data[SC_REBIRTH] && !md->state.rebirth) );
 	if( !rebirth ) { // Only trigger event on final kill
-		md->status.hp = 0; //So that npc_event invoked functions KNOW that mob is dead
 		if( src ) {
 			switch( src->type ) { //allowed type
 				case BL_PET:
@@ -2600,8 +2593,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			pc_setparam(mvp_sd, SP_KILLEDRID, md->class_);
 			npc_script_event(mvp_sd, NPCE_KILLNPC); // PCKillNPC [Lance]
 		}
-
-		md->status.hp = 1;
 	}
 
 	if(md->deletetimer != INVALID_TIMER) {
@@ -2639,7 +2630,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		mvptomb_create(md, mvp_sd ? mvp_sd->status.name : NULL, time(NULL));
 
 	// Remove all status changes before creating a respawn
-	if( sc ){
+	if( sc ) {
 		for(i=0; i<SC_MAX; i++){
 			if(sc->data[i] && (sc->data[i]->timer != INVALID_TIMER))
 				delete_timer(sc->data[i]->timer, status_change_timer);

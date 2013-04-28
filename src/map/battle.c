@@ -1423,8 +1423,7 @@ int battle_addmastery(struct map_session_data *sd,struct block_list *target,int 
 		weapon = sd->weapontype1;
 	else
 		weapon = sd->weapontype2;
-	switch(weapon)
-	{
+	switch(weapon) {
 		case W_1HSWORD:
 			#ifdef RENEWAL
 				if((skill = pc_checkskill(sd,AM_AXEMASTERY)) > 0)
@@ -1516,10 +1515,8 @@ static int battle_calc_base_damage(struct status_data *status, struct weapon_atk
 	short type = 0;
 	int damage = 0;
 
-	if (!sd)
-	{	//Mobs/Pets
-		if(flag&4)
-		{
+	if (!sd) { //Mobs/Pets
+		if(flag&4) {
 			atkmin = status->matk_min;
 			atkmax = status->matk_max;
 		} else {
@@ -1528,12 +1525,11 @@ static int battle_calc_base_damage(struct status_data *status, struct weapon_atk
 		}
 		if (atkmin > atkmax)
 			atkmin = atkmax;
-	} else {	//PCs
+	} else { //PCs
 		atkmax = wa->atk;
 		type = (wa == &status->lhw)?EQI_HAND_L:EQI_HAND_R;
 
-		if (!(flag&1) || (flag&2))
-		{	//Normal attacks
+		if (!(flag&1) || (flag&2)) { //Normal attacks
 			atkmin = status->dex;
 
 			if (sd->equip_index[type] >= 0 && sd->inventory_data[sd->equip_index[type]])
@@ -1542,8 +1538,7 @@ static int battle_calc_base_damage(struct status_data *status, struct weapon_atk
 			if (atkmin > atkmax)
 				atkmin = atkmax;
 
-			if(flag&2 && !(flag&16))
-			{	//Bows
+			if(flag&2 && !(flag&16)) { //Bows
 				atkmin = atkmin*atkmax/100;
 				if (atkmin > atkmax)
 					atkmax = atkmin;
@@ -1560,8 +1555,7 @@ static int battle_calc_base_damage(struct status_data *status, struct weapon_atk
 	else
 		damage = atkmax;
 
-	if (sd)
-	{
+	if (sd) {
 		//rodatazone says the range is 0~arrow_atk-1 for non crit
 		if (flag&2 && sd->bonus.arrow_atk)
 			damage += ( (flag&1) ? sd->bonus.arrow_atk : rnd()%sd->bonus.arrow_atk );
@@ -1576,6 +1570,10 @@ static int battle_calc_base_damage(struct status_data *status, struct weapon_atk
 	//Finally, add baseatk
 	if(flag&4)
 		damage += status->matk_min;
+#ifdef RENEWAL
+	else if(flag&32)
+		damage += status->matk_min + status->batk;
+#endif
 	else
 		damage += status->batk;
 
@@ -1879,30 +1877,14 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		}
 		else if(sc && sc->data[SC_FEARBREEZE] && sd->weapontype1==W_BOW
 			&& (i = sd->equip_index[EQI_AMMO]) >= 0 && sd->inventory_data[i] && sd->status.inventory[i].amount > 1){
-				int chance = rand()%100;
+				int chance = rnd()%100;
 				wd.type = 0x08;
-				switch(sc->data[SC_FEARBREEZE]->val1){
-					case 5:
-						if( chance < 3){// 3 % chance to attack 5 times.
-							wd.div_ = 5;
-							break;
-						}
-					case 4:
-						if( chance < 7){// 6 % chance to attack 4 times.
-							wd.div_ = 4;
-							break;
-						}
-					case 3:
-						if( chance < 10){// 9 % chance to attack 3 times.
-							wd.div_ = 3;
-							break;
-						}
+				switch(sc->data[SC_FEARBREEZE]->val1) {
+					case 5: if( chance < 4) { wd.div_ = 5; break; } // 3 % chance to attack 5 times.
+					case 4: if( chance < 7) { wd.div_ = 4; break; } // 6 % chance to attack 4 times.
+					case 3: if( chance < 10) { wd.div_ = 3; break; } // 9 % chance to attack 3 times.
 					case 2:
-					case 1:
-						if( chance < 13){// 12 % chance to attack 2 times.
-							wd.div_ = 2;
-							break;
-						}
+					case 1: if( chance < 13) { wd.div_ = 2; break; } // 12 % chance to attack 2 times.
 				}
 				wd.div_ = min(wd.div_,sd->status.inventory[i].amount);
 				sc->data[SC_FEARBREEZE]->val4 = wd.div_-1;
@@ -2161,7 +2143,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			{
 				i = (flag.cri?1:0)|
 					(flag.arrow?2:0)|
+#ifndef RENEWAL
 					(skill_id == HW_MAGICCRASHER?4:0)|
+#else
+					(skill_id == HW_MAGICCRASHER?32:0)|
+#endif
 					(!skill_id && sc && sc->data[SC_CHANGE]?4:0)|
 					(skill_id == MO_EXTREMITYFIST?8:0)|
 					(sc && sc->data[SC_WEAPONPERFECTION]?8:0);

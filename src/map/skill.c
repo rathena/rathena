@@ -12222,48 +12222,57 @@ int skill_unit_onout (struct skill_unit *src, struct block_list *bl, unsigned in
 		return 0;
 
 	switch(sg->unit_id){
-	case UNT_SAFETYWALL:
-	case UNT_PNEUMA:
-	case UNT_EPICLESIS://Arch Bishop
-	case UNT_NEUTRALBARRIER:
-	case UNT_STEALTHFIELD:
-		if (sce)
-			status_change_end(bl, type, INVALID_TIMER);
-		break;
-
-	case UNT_BASILICA:
-		if( sce && sce->val4 == src->bl.id )
-			status_change_end(bl, type, INVALID_TIMER);
-		break;
-	case UNT_HERMODE:	//Clear Hermode if the owner moved.
-		if (sce && sce->val3 == BCT_SELF && sce->val4 == sg->group_id)
-			status_change_end(bl, type, INVALID_TIMER);
-		break;
-
-	case UNT_SPIDERWEB:
-		{
-			struct block_list *target = map_id2bl(sg->val2);
-			if (target && target==bl)
-			{
-				if (sce && sce->val3 == sg->group_id)
-					status_change_end(bl, type, INVALID_TIMER);
-				sg->limit = DIFF_TICK(tick,sg->tick)+1000;
-			}
+		case UNT_SAFETYWALL:
+		case UNT_PNEUMA:
+		case UNT_EPICLESIS://Arch Bishop
+		case UNT_NEUTRALBARRIER:
+		case UNT_STEALTHFIELD:
+			if (sce)
+				status_change_end(bl, type, INVALID_TIMER);
 			break;
-		}
-	case UNT_DISSONANCE:
-	case UNT_UGLYDANCE: //Used for updating timers in song overlap instances
-		{
-			short i;
-			for(i = BA_WHISTLE; i <= DC_SERVICEFORYOU; i++){
-				if(skill_get_inf2(i)&(INF2_SONG_DANCE)){
-					type = status_skill2sc(i);
-					sce = (sc && type != -1)?sc->data[type]:NULL;
-					if(sce)
-						return i;
+
+		case UNT_BASILICA:
+			if( sce && sce->val4 == src->bl.id )
+				status_change_end(bl, type, INVALID_TIMER);
+			break;
+		case UNT_HERMODE:	//Clear Hermode if the owner moved.
+			if (sce && sce->val3 == BCT_SELF && sce->val4 == sg->group_id)
+				status_change_end(bl, type, INVALID_TIMER);
+			break;
+
+		case UNT_SPIDERWEB:
+			{
+				struct block_list *target = map_id2bl(sg->val2);
+				if (target && target==bl) {
+					if (sce && sce->val3 == sg->group_id)
+						status_change_end(bl, type, INVALID_TIMER);
+					sg->limit = DIFF_TICK(tick,sg->tick)+1000;
+				}
+				break;
+			}
+		case UNT_DISSONANCE:
+		case UNT_UGLYDANCE: //Used for updating timers in song overlap instances
+			{
+				short i;
+				for(i = BA_WHISTLE; i <= DC_SERVICEFORYOU; i++) {
+					if(skill_get_inf2(i)&(INF2_SONG_DANCE)) {
+						type = status_skill2sc(i);
+						sce = (sc && type != -1)?sc->data[type]:NULL;
+						if(sce)
+							return i;
+					}
 				}
 			}
-		}
+		case UNT_WHISTLE:
+		case UNT_ASSASSINCROSS:
+		case UNT_POEMBRAGI:
+		case UNT_APPLEIDUN:
+		case UNT_HUMMING:
+		case UNT_DONTFORGETME:
+		case UNT_FORTUNEKISS:
+		case UNT_SERVICEFORYOU:
+			if (sg->src_id==bl->id && !(sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_BARDDANCER))
+				return -1;
 	}
 	return sg->skill_id;
 }
@@ -12430,14 +12439,15 @@ static int skill_unit_effect (struct block_list* bl, va_list ap)
 	if( isTarget ){
 		if( flag&1 )
 			skill_unit_onplace(unit,bl,tick);
-		else
-			skill_unit_onout(unit,bl,tick);
+		else {
+			if( skill_unit_onout(unit,bl,tick) == -1 )
+				return 0; // Don't let a Bard/Dancer update their own song timer
+		}
 
 		if( flag&4 )
 			skill_unit_onleft(skill_id, bl, tick);
-	}else if( !isTarget && flag&4 && ( group->state.song_dance&0x1 || ( group->src_id == bl->id && group->state.song_dance&0x2 ) ) ){
+	} else if( !isTarget && flag&4 && ( group->state.song_dance&0x1 || ( group->src_id == bl->id && group->state.song_dance&0x2 ) ) )
 		skill_unit_onleft(skill_id, bl, tick);//Ensemble check to terminate it.
-	}
 
 	if( dissonance ) {
 		skill_dance_switch(unit, 1);
@@ -15959,7 +15969,6 @@ int skill_unit_move_sub (struct block_list* bl, va_list ap) {
 					else
 						ShowError("skill_unit_move_sub: Reached limit of unit objects per cell!\n");
 				}
-
 			}
 
 			if( flag&4 )
@@ -15969,24 +15978,17 @@ int skill_unit_move_sub (struct block_list* bl, va_list ap) {
 		if( dissonance ) skill_dance_switch(unit, 1);
 
 		return 0;
-	}
-	else
-	{
-		if( flag&1 )
-		{
+	} else {
+		if( flag&1 ) {
 			int result = skill_unit_onplace(unit,target,tick);
-			if( flag&2 && result )
-			{	//Clear skill ids we have stored in onout.
+			if( flag&2 && result ) { //Clear skill ids we have stored in onout.
 				ARR_FIND( 0, ARRAYLENGTH(skill_unit_temp), i, skill_unit_temp[i] == result );
 				if( i < ARRAYLENGTH(skill_unit_temp) )
 					skill_unit_temp[i] = 0;
 			}
-		}
-		else
-		{
+		} else {
 			int result = skill_unit_onout(unit,target,tick);
-			if( flag&2 && result )
-			{	//Store this unit id.
+			if( flag&2 && result ) { //Store this unit id.
 				ARR_FIND( 0, ARRAYLENGTH(skill_unit_temp), i, skill_unit_temp[i] == 0 );
 				if( i < ARRAYLENGTH(skill_unit_temp) )
 					skill_unit_temp[i] = skill_id;

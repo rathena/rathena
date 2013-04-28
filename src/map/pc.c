@@ -6584,7 +6584,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 				status_change_end(&devsd->bl, SC_DEVOTION, INVALID_TIMER);
 			sd->devotion[k] = 0;
 		}
-	if(sd->shadowform_id){ //if we were target of shadowform
+	if(sd->shadowform_id) { //if we were target of shadowform
 		status_change_end(map_id2bl(sd->shadowform_id), SC__SHADOWFORM, INVALID_TIMER);
 		sd->shadowform_id = 0; //should be remove on status end anyway
 	}
@@ -6601,7 +6601,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			pet_unlocktarget(sd->pd);
 	}
 
-	if (sd->status.hom_id > 0){
+	if (sd->status.hom_id > 0) {
 		if(battle_config.homunculus_auto_vapor && sd->hd && !sd->hd->sc.data[SC_LIGHT_OF_REGENE])
 			merc_hom_vaporize(sd, HOM_ST_ACTIVE);
 	}
@@ -6620,18 +6620,8 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			duel_reject(sd->duel_invite, sd);
 	}
 
-	pc_setglobalreg(sd,"PC_DIE_COUNTER",sd->die_counter+1);
-	pc_setparam(sd, SP_KILLERRID, src?src->id:0);
-
-	if( sd->bg_id ) {
-		struct battleground_data *bg;
-		if( (bg = bg_team_search(sd->bg_id)) != NULL && bg->die_event[0] )
-			npc_event(sd, bg->die_event, 0);
-	}
-
 	// Clear anything NPC-related when you die and was interacting with one.
-	if (sd->npc_id)
-	{
+	if (sd->npc_id) {
 		if (sd->state.using_fake_npc) {
 			clif_clearunit_single(sd->npc_id, CLR_OUTSIGHT, sd->fd);
 			sd->state.using_fake_npc = 0;
@@ -6646,14 +6636,24 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			sd->st->state = END;
 	}
 
-	npc_script_event(sd,NPCE_DIE);
-
 	/* e.g. not killed thru pc_damage */
 	if( pc_issit(sd) ) {
 		clif_status_load(&sd->bl,SI_SIT,0);
 	}
 
 	pc_setdead(sd);
+
+	pc_setglobalreg(sd,"PC_DIE_COUNTER",sd->die_counter+1);
+	pc_setparam(sd, SP_KILLERRID, src?src->id:0);
+
+	if( sd->bg_id ) {
+		struct battleground_data *bg;
+		if( (bg = bg_team_search(sd->bg_id)) != NULL && bg->die_event[0] )
+			npc_event(sd, bg->die_event, 0);
+	}
+
+	npc_script_event(sd,NPCE_DIE);
+
 	//Reset menu skills/item skills
 	if (sd->skillitem)
 		sd->skillitem = sd->skillitemlv = 0;
@@ -6670,37 +6670,36 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	if (src)
 	switch (src->type) {
-	case BL_MOB:
-	{
-		struct mob_data *md=(struct mob_data *)src;
-		if(md->target_id==sd->bl.id)
-			mob_unlocktarget(md,tick);
-		if(battle_config.mobs_level_up && md->status.hp &&
-			(unsigned int)md->level < pc_maxbaselv(sd) &&
-			!md->guardian_data && !md->special_state.ai// Guardians/summons should not level. [Skotlex]
-		) { 	// monster level up [Valaris]
-			clif_misceffect(&md->bl,0);
-			md->level++;
-			status_calc_mob(md, 0);
-			status_percent_heal(src,10,0);
+		case BL_MOB:
+		{
+			struct mob_data *md=(struct mob_data *)src;
+			if(md->target_id==sd->bl.id)
+				mob_unlocktarget(md,tick);
+			if(battle_config.mobs_level_up && md->status.hp &&
+				(unsigned int)md->level < pc_maxbaselv(sd) &&
+				!md->guardian_data && !md->special_state.ai// Guardians/summons should not level. [Skotlex]
+			) { 	// monster level up [Valaris]
+				clif_misceffect(&md->bl,0);
+				md->level++;
+				status_calc_mob(md, 0);
+				status_percent_heal(src,10,0);
 
-			if( battle_config.show_mob_info&4 )
-			{// update name with new level
-				clif_charnameack(0, &md->bl);
+				if( battle_config.show_mob_info&4 )
+				{// update name with new level
+					clif_charnameack(0, &md->bl);
+				}
 			}
+			src = battle_get_master(src); // Maybe Player Summon
 		}
-		src = battle_get_master(src); // Maybe Player Summon
-	}
-	break;
-	case BL_PET: //Pass on to master...
-	case BL_HOM:
-	case BL_MER:
-		src = battle_get_master(src);
-		break;
+			break;
+		case BL_PET: //Pass on to master...
+		case BL_HOM:
+		case BL_MER:
+			src = battle_get_master(src);
+			break;
 	}
 
-	if (src && src->type == BL_PC)
-	{
+	if (src && src->type == BL_PC) {
 		struct map_session_data *ssd = (struct map_session_data *)src;
 		pc_setparam(ssd, SP_KILLEDRID, sd->bl.id);
 		npc_script_event(ssd, NPCE_KILLPC);
@@ -6750,8 +6749,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	}
 
 	// activate Steel body if a super novice dies at 99+% exp [celest]
-	if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && !sd->state.snovice_dead_flag)
-	{
+	if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && !sd->state.snovice_dead_flag) {
 		unsigned int next = pc_nextbaseexp(sd);
 		if( next == 0 ) next = pc_thisbaseexp(sd);
 		if( get_percentage(sd->status.base_exp,next) >= 99 ) {
@@ -6791,8 +6789,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 				clif_updatestatus(sd,SP_BASEEXP);
 			}
 		}
-		if(battle_config.death_penalty_job > 0)
-		{
+		if(battle_config.death_penalty_job > 0) {
 			base_penalty = 0;
 			switch (battle_config.death_penalty_type) {
 				case 1:
@@ -6809,16 +6806,14 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 				clif_updatestatus(sd,SP_JOBEXP);
 			}
 		}
-		if(battle_config.zeny_penalty > 0 && !map[sd->bl.m].flag.nozenypenalty)
-		{
+		if(battle_config.zeny_penalty > 0 && !map[sd->bl.m].flag.nozenypenalty) {
 			base_penalty = (unsigned int)((double)sd->status.zeny * (double)battle_config.zeny_penalty / 10000.);
 			if(base_penalty)
 				pc_payzeny(sd, base_penalty, LOG_TYPE_PICKDROP_PLAYER, NULL);
 		}
 	}
 
-	if(map[sd->bl.m].flag.pvp_nightmaredrop)
-	{ // Moved this outside so it works when PVP isn't enabled and during pk mode [Ancyker]
+	if(map[sd->bl.m].flag.pvp_nightmaredrop) { // Moved this outside so it works when PVP isn't enabled and during pk mode [Ancyker]
 		for(j=0;j<MAX_DROP_PER_MAP;j++){
 			int id = map[sd->bl.m].drop_list[j].drop_id;
 			int type = map[sd->bl.m].drop_list[j].drop_type;
@@ -6828,7 +6823,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			if(id == -1){
 				int eq_num=0,eq_n[MAX_INVENTORY];
 				memset(eq_n,0,sizeof(eq_n));
-				for(i=0;i<MAX_INVENTORY;i++){
+				for(i=0;i<MAX_INVENTORY;i++) {
 					if( (type == 1 && !sd->status.inventory[i].equip)
 						|| (type == 2 && sd->status.inventory[i].equip)
 						||  type == 3)
@@ -6843,14 +6838,14 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 				}
 				if(eq_num > 0){
 					int n = eq_n[rnd()%eq_num];
-					if(rnd()%10000 < per){
+					if(rnd()%10000 < per) {
 						if(sd->status.inventory[n].equip)
 							pc_unequipitem(sd,n,3);
 						pc_dropitem(sd,n,1);
 					}
 				}
 			}
-			else if(id > 0){
+			else if(id > 0) {
 				for(i=0;i<MAX_INVENTORY;i++){
 					if(sd->status.inventory[i].nameid == id
 						&& rnd()%10000 < per
@@ -6868,33 +6863,27 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	}
 	// pvp
 	// disable certain pvp functions on pk_mode [Valaris]
-	if( map[sd->bl.m].flag.pvp && !battle_config.pk_mode && !map[sd->bl.m].flag.pvp_nocalcrank )
-	{
+	if( map[sd->bl.m].flag.pvp && !battle_config.pk_mode && !map[sd->bl.m].flag.pvp_nocalcrank ) {
 		sd->pvp_point -= 5;
 		sd->pvp_lost++;
-		if( src && src->type == BL_PC )
-		{
+		if( src && src->type == BL_PC ) {
 			struct map_session_data *ssd = (struct map_session_data *)src;
 			ssd->pvp_point++;
 			ssd->pvp_won++;
 		}
-		if( sd->pvp_point < 0 )
-		{
+		if( sd->pvp_point < 0 ) {
 			add_timer(tick+1000, pc_respawn_timer,sd->bl.id,0);
 			return 1|8;
 		}
 	}
 	//GvG
-	if( map_flag_gvg(sd->bl.m) )
-	{
+	if( map_flag_gvg(sd->bl.m) ) {
 		add_timer(tick+1000, pc_respawn_timer, sd->bl.id, 0);
 		return 1|8;
 	}
-	else if( sd->bg_id )
-	{
+	else if( sd->bg_id ) {
 		struct battleground_data *bg = bg_team_search(sd->bg_id);
-		if( bg && bg->mapindex > 0 )
-		{ // Respawn by BG
+		if( bg && bg->mapindex > 0 ) { // Respawn by BG
 			add_timer(tick+1000, pc_respawn_timer, sd->bl.id, 0);
 			return 1|8;
 		}

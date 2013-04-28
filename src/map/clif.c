@@ -12066,11 +12066,10 @@ void clif_parse_GuildChangeNotice(int fd, struct map_session_data* sd)
 }
 
 // Helper function for guild invite functions
-int
-clif_sub_guild_invite(int fd, struct map_session_data *sd, struct map_session_data *t_sd) {
-	if (t_sd == NULL) {// not online or does not exist
+int clif_sub_guild_invite(int fd, struct map_session_data *sd, struct map_session_data *t_sd)
+{
+	if (t_sd == NULL) // not online or does not exist
 		return 1;
-	}
 
 	if (map[sd->bl.m].flag.guildlock) {//Guild locked.
 		clif_displaymessage(fd, msg_txt(sd,228));
