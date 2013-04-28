@@ -54,7 +54,7 @@ sub GetArgs {
     'Force=i'	=> \$sForce,	 #Force (bypass verification)
     'help!' => \$sHelp,
     ) or $sHelp=1; #display help if invalid option
-    my $sValidTarget = "All|Conf|DB|Inst";
+    my $sValidTarget = "All|Conf|DB|Inst|Dump";
 
     if( $sHelp ) {
 	print "Incorect option specified, available option are:\n"
@@ -101,8 +101,46 @@ sub Main {
     if($sTarget =~ /All|Inst/i){ InstallSoft(); }
     if($sTarget =~ /All|Conf/i) { ConfigConf(\%hDefConf); chdir "$sBasedir"; }
     if($sTarget =~ /All|DB/i) { ConfigDB(\%hDefConf); chdir "$sBasedir"; }
+    if($sTarget =~ /All|Dump/i) { chdir "~"; EnableCoredump(); }
     print "Config done, you should be able to launch and connect server now\n";
     print "NB : Don't forget to update your client clieninfo.xml to match change\n";
+}
+
+
+sub EnableCoredump {
+    print "\n Starting Enabling coredump \n";
+    my $sCurfile = "~/.bashrc";
+    my @lines = ();
+    my $sJump = .0;
+    open PIPE,"sudo less $sCurfile |" or die $!;
+    foreach(<PIPE>){
+	push(@lines,$_) if /ulimit/;
+    }
+    if(scalar(@lines)>0){
+	print "ulimit instruction found in file=$sCurfile\n"
+	    ."\t lines= \n @lines \n"
+	    ."are you sure you want to continue ? [y/n] \n";
+	$sJump=1 if(GetValidAnwser("y|o|n") =~ /n/i);
+    }
+    system("sudo echo \"ulimit -c unlimited\" >> $sCurfile") unless $sJump==1;
+
+    $sCurfile = "/etc/sysctl.conf";
+    @lines = ();
+    open PIPE,"sudo less $sCurfile |" or die $!;
+    foreach(<PIPE>){
+	push(@lines,$_) if /kernel.core/;
+    }
+    if(scalar(@lines)>0){
+	print "ulimit instruction found in file=$sCurfile\n"
+	    ."\t line= \n @lines \n"
+	    ."are you sure you want to continue ? [y/n] \n";
+	$sJump=2 if(GetValidAnwser("y|o|n") =~ /n/i);
+    }
+    unless($sJump==2){
+	system('sudo su root -c "echo \"echo kernel.core_uses_pid = 1 >> /etc/sysctl.conf\" | sudo bash"');
+	system('sudo su root -c "echo \"echo kernel.core_pattern = /tmp/core-%e-%s-%u-%g-%p-%t >> /etc/sysctl.conf\" | sudo bash"');
+	system('sudo su root -c "echo \"echo fs.suid_dumpable = 1 >> /etc/sysctl.conf\" | sudo bash"');
+    }
 }
 
 sub InstallSoft {
@@ -551,3 +589,5 @@ sub GetDesiredConf { my ($rhDefConf) = @_;
     }
     return $rhUserConf;
 }
+
+
