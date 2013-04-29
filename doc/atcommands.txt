@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20130426
+//= 20130429
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
@@ -851,9 +851,9 @@ Summons the specified amount of spirit spheres around you.
 ---------------------------------------
 
 @mount
-@newmount
+@mount2
 
-Toggles mounting/unmounting a peco (@mount) or cash mount (@newmount).
+Toggles mounting/unmounting a peco (@mount) or cash mount (@mount2).
 
 ---------------------------------------
 

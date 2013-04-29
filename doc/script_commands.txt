@@ -3458,8 +3458,8 @@ bird and 0 if they aren't.
 The 'setdragon' function toggles mounting a dragon for the invoking character.
 It will return 1 if successful, 0 otherwise.
 
-If the character can mount a dragon, the <color> options are:
- 1 - Green Dragon (default when omitted)
+The available colors are:
+ 1 - Green Dragon (default)
  2 - Brown Dragon
  3 - Gray Dragon
  4 - Blue Dragon

@@ -179,8 +179,7 @@ function	script	F_Kafra	{
 				mes "understanding and cooperation.";
 			}
 		} else if (@K_Menu0$[.@j] == "Rent a Pushcart") {
-			if(callfunc("F_KafCart",getarg(0),getarg(4)) == 1) 
-			next;
+			callfunc "F_KafCart",getarg(0),getarg(4);
 		} else if (@K_Menu0$[.@j] == "Check Other Information") {
 			callfunc "F_KafInfo",getarg(2);
 		} else if (@K_Menu0$[.@j] == "Cancel"){
@@ -339,7 +338,7 @@ function	script	F_KafCart	{
 		mes "is only available to Merchants,";
 		mes "Blacksmiths, Master Smiths,";
 		mes "Alchemists and Biochemists.";
-		return 1;
+		return;
 	}
 	// Make sure the invoking character does not have a cart already
 	else if(checkcart() == 1){
@@ -349,7 +348,7 @@ function	script	F_KafCart	{
 		mes "Unfortunately, we can't";
 		mes "rent more than one to";
 		mes "each customer at a time.";
-		return 1;
+		return;
 	}
 	// Consume "Free Ticket for the Cart Service" if available.
 	// Do not consume if in Guild castle.
@@ -360,20 +359,20 @@ function	script	F_KafCart	{
 		mes "fee is "+getarg(1)+" zeny. Would";
 		mes "you like to rent a Pushcart?";
 		next;
-		if (select("Rent a Pushcart.:Cancel") == 2) return 0;
+		if (select("Rent a Pushcart.:Cancel") == 2) return;
 			if(Zeny<getarg(1)){
 				mes "[Kafra Employee]";
 				mes "I'm sorry, but you";
 				mes "don't have enough";
 				mes "zeny to pay the Pushcart";
 				mes "rental fee of "+getarg(1)+" zeny.";
-				return 1;
+				return;
 			}
 			set Zeny,Zeny-getarg(1);
 			set RESRVPTS, RESRVPTS + 48;
 	}
 	setcart;
-	return 1;
+	return;
 }
 
 //===================================================

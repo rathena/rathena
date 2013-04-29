@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Brasilis Qiests
+//= Brasilis Quests
 //===== By ===================================================
 //= L0ne_W0lf
 //===== Version ==============================================
@@ -21,7 +21,7 @@
 //= 1.2a Added 'consumeitem' command. [Euphy]
 //============================================================
 
-// Lost Puppies, Original file: dogdog.sc
+// Lost Puppies :: dogdog.sc
 //============================================================
 brasilis,297,307,5	script	Angelo#br	50,{
 	if (BaseLevel < 40) {
@@ -143,7 +143,7 @@ bra_fild01,234,101,3	duplicate(Puppy#bra)	Puppy#d1	81
 bra_fild01,200,84,3	duplicate(Puppy#bra)	Puppy#d2	81
 bra_fild01,176,63,5	duplicate(Puppy#bra)	Puppy#d3	81
 
-// Suspicious Beach, original file: Suspicious_Beach.sc
+// Suspicious Beach :: Suspicious_Beach.sc
 //============================================================
 brasilis,192,133,6	script	Lucia#brasilis	478,{
 	/* -------------- Hydra Ball -------------------------
@@ -169,7 +169,7 @@ brasilis,192,133,6	script	Lucia#brasilis	478,{
 	else {
 		set .@nQState1,checkquest(9028);
 		set .@nQState2,checkquest(9029);
-		if (.@nQState1 == 0) {
+		if (.@nQState1 == -1) {
 			mes "[Lucia]";
 			mes "Hello.";
 			mes "Have you come here to hunt ^FF0000Strange Hydra^000000s?";
@@ -355,7 +355,7 @@ OnTimer7000:
 	end;
 }
 
-// Guarana Quest, Original file: brazil_tre.sc
+// Guarana Quest :: brazil_tre.sc
 //============================================================
 brasilis,187,162,5	script	Candy Maker	476,{
 	if (!checkweight(1201,1)) {
@@ -1033,7 +1033,7 @@ bra_fild01,245,52,3	script	Monkey#bra	111,{
 	}
 }
 
-// Water Lily Quest, Original file: brazil_tre.sc
+// Water Lily Quest :: brazil_tre.sc
 //============================================================
 brasilis,203,286,3	script	Botanist Karmen#bra	893,{
 	if (brazil_regia == 0) {
@@ -1930,7 +1930,7 @@ bra_dun02,71,200,3	script	Water lily#bra	111,{
 	}
 }
 
-// Dungeon Access Quest, Original file: brazil_tre.sc
+// Dungeon Access Quest :: brazil_tre.sc
 //============================================================
 brasilis,185,246,5	script	Pedro#bra	62,{
 	if (brazil_ghost == 0) {
@@ -2840,7 +2840,7 @@ OnInit:
 	end;
 }
 
-// Iara, Original file: iara.sc
+// Iara :: iara.sc
 //============================================================
 brasilis,315,334,5	script	Shaman#nk	474,{
 	set .@iara_re,checkquest(4135,PLAYTIME);
@@ -2963,21 +2963,18 @@ brasilis,315,334,5	script	Shaman#nk	474,{
 				mes "Could you listen to my stories for a moment.";
 				mes "There's an emergency in our tribe.";
 				next;
-				switch(select("No.:Okay.")) {
-				case 1:
+				if(select("No.:Okay.") == 1) {
 					mes "[Anori]";
 					mes "You are a heartless person...";
 					mes "You don't seem the helpful type.";
 					mes "Just keep on going your way.";
 					close;
-				case 2:
-					mes "[Anori]";
-					mes "Thank you, I met a kind person.";
-					mes "It's a secret of our tribe that";
-					mes "you cannot tell anyone.";
-					next;
-					break;
 				}
+				mes "[Anori]";
+				mes "Thank you, I met a kind person.";
+				mes "It's a secret of our tribe that";
+				mes "you cannot tell anyone.";
+				next;
 				mes "[Anori]";
 				mes "Lately young men from";
 				mes "the tribe are disappearing.";
@@ -3099,11 +3096,10 @@ bra_dun02,157,74,5	script	Iara#nk	478,2,2,{
 		mes "Aaaaaaaaaaaaaaaaaaaaaah.";
 		mes "Eeeeeeeeeeeeeeeeeeeh.";
 		mes "Oooooooooooooooooh.";
-		set .@get_de,rand(1,2);
-		if (.@get_de == 1)
-			sc_start Sc_Curse,60000,0;
+		if (rand(1,2) == 1)
+			sc_start SC_CURSE,60000,0;
 		else
-			sc_start Sc_Confusion,60000,0;
+			sc_start SC_CONFUSION,60000,0;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Ugh! What's this strange voice?";
@@ -3117,11 +3113,10 @@ OnTouch:
 		mes "Aaaaaaaaaaaaaaaaaaaaaah.";
 		mes "Eeeeeeeeeeeeeeeeeeeh.";
 		mes "Oooooooooooooooooh.";
-		set .@get_de,rand(1,2);
-		if (.@get_de == 1)
-			sc_start Sc_Curse,60000,0;
+		if (rand(1,2) == 1)
+			sc_start SC_CURSE,60000,0;
 		else
-			sc_start Sc_Confusion,60000,0;
+			sc_start SC_CONFUSION,60000,0;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Ugh! What's this strange voice?";
@@ -3132,7 +3127,7 @@ OnTouch:
 
 bra_fild01,188,301,5	script	Native Warrior#nk	472,{
 	mes "[Native Warrior]";
-	mes "Ah...the face I would never forget even in my dreams.";
+	mes "Ah... the face I would never forget even in my dreams.";
 	next;
 	mes "[Native Warrior]";
 	mes "When will she come out of the waterfall again...?";
@@ -3144,7 +3139,7 @@ bra_fild01,188,301,5	script	Native Warrior#nk	472,{
 	else {
 		mes "[" + strcharinfo(0) + "]";
 		mes "(This guy will never";
-		mes "get ocer Iara's curse...)";
+		mes "get over Iara's curse...)";
 	}
 	close;
 }
