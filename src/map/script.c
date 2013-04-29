@@ -3606,9 +3606,7 @@ static void script_detach_state(struct script_state* st, bool dequeue_event)
 			st->bk_st = NULL;
 			st->bk_npcid = 0;
 		} else if(dequeue_event) {
-			/**
-			 * For the Secure NPC Timeout option (check config/Secure.h) [RR]
-			 **/
+
 #ifdef SECURE_NPCTIMEOUT
 			/**
 			 * We're done with this NPC session, so we cancel the timer (if existent) and move on
@@ -3652,9 +3650,6 @@ static void script_attach_state(struct script_state* st)
 		sd->st = st;
 		sd->npc_id = st->oid;
 		sd->npc_item_flag = st->npc_item_flag; // load default.
-/**
- * For the Secure NPC Timeout option (check config/Secure.h) [RR]
- **/
 #ifdef SECURE_NPCTIMEOUT
 		if( sd->npc_idle_timer == INVALID_TIMER )
 			sd->npc_idle_timer = add_timer(gettick() + (SECURE_NPCTIMEOUT_INTERVAL*1000),npc_rr_secure_timeout_timer,sd->bl.id,0);
@@ -6916,6 +6911,7 @@ BUILDIN_FUNC(delitem)
 
 	ShowError("script:delitem: failed to delete %d items (AID=%d item_id=%d).\n", it.amount, sd->status.account_id, it.nameid);
 	st->state = END;
+	st->mes_active = 0;
 	clif_scriptclose(sd, st->oid);
 	return 1;
 }
@@ -6992,6 +6988,7 @@ BUILDIN_FUNC(delitem2)
 
 	ShowError("script:delitem2: failed to delete %d items (AID=%d item_id=%d).\n", it.amount, sd->status.account_id, it.nameid);
 	st->state = END;
+	st->mes_active = 0;
 	clif_scriptclose(sd, st->oid);
 	return 1;
 }

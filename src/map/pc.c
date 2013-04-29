@@ -965,13 +965,9 @@ bool pc_authok(struct map_session_data *sd, int login_id2, time_t expiration_tim
 	sd->invincible_timer = INVALID_TIMER;
 	sd->npc_timer_id = INVALID_TIMER;
 	sd->pvp_timer = INVALID_TIMER;
-	/**
-	 * For the Secure NPC Timeout option (check config/Secure.h) [RR]
-	 **/
+
 #ifdef SECURE_NPCTIMEOUT
-	/**
-	 * Initialize to defaults/expected
-	 **/
+	// Initialize to defaults/expected
 	sd->npc_idle_timer = INVALID_TIMER;
 	sd->npc_idle_tick = tick;
 	sd->npc_idle_type = NPCT_INPUT;
@@ -6569,6 +6565,37 @@ void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int h
 	sd->canlog_tick = gettick();
 }
 
+/*
+ *  Method to properly close npc for player and clear anything related
+ * @flag == 1 : produce close button
+ * @flag == 2 : directly close it
+ */
+void pc_close_npc(struct map_session_data *sd,int flag) {
+	nullpo_retv(sd);
+
+	if (sd->npc_id) {
+		if (sd->state.using_fake_npc) {
+			clif_clearunit_single(sd->npc_id, CLR_OUTSIGHT, sd->fd);
+			sd->state.using_fake_npc = 0;
+		}
+		if (sd->st) {
+			sd->st->state = (flag==1)?CLOSE:END;
+			sd->st->mes_active = 0;
+		}
+		sd->state.menu_or_input = 0;
+		sd->npc_menu = 0;
+		sd->npc_idle_timer = INVALID_TIMER;
+		clif_scriptclose(sd,sd->npc_id);
+		if(flag==2 && sd->st) {
+			if( sd->st && sd->st->state != RUN ) {// free attached scripts that are waiting
+				script_free_state(sd->st);
+				sd->st = NULL;
+				sd->npc_id = 0;
+			}
+		}
+	}
+}
+
 /*==========================================
  * Invoked when a player has negative current hp
  *------------------------------------------*/
@@ -6620,21 +6647,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			duel_reject(sd->duel_invite, sd);
 	}
 
-	// Clear anything NPC-related when you die and was interacting with one.
-	if (sd->npc_id) {
-		if (sd->state.using_fake_npc) {
-			clif_clearunit_single(sd->npc_id, CLR_OUTSIGHT, sd->fd);
-			sd->state.using_fake_npc = 0;
-		}
-		if (sd->state.menu_or_input)
-			sd->state.menu_or_input = 0;
-		if (sd->npc_menu)
-			sd->npc_menu = 0;
-
-		sd->npc_id = 0;
-		if (sd->st && sd->st->state != END)
-			sd->st->state = END;
-	}
+	pc_close_npc(sd,2); //close npc if we were using one
 
 	/* e.g. not killed thru pc_damage */
 	if( pc_issit(sd) ) {

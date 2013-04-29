@@ -175,9 +175,6 @@ extern struct npc_data* fake_nd;
 
 int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, unsigned short* item_list);
 
-/**
- * For the Secure NPC Timeout option (check config/Secure.h) [RR]
- **/
 #ifdef SECURE_NPCTIMEOUT
 	int npc_rr_secure_timeout_timer(int tid, unsigned int tick, int id, intptr_t data);
 #endif

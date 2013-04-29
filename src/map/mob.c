@@ -159,9 +159,9 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 	map_addnpc(nd->bl.m, nd);
 	map_addblock(&nd->bl);
 	status_set_viewdata(&nd->bl, nd->class_);
-    status_change_init(&nd->bl);
-    unit_dataset(&nd->bl);
-    clif_spawn(&nd->bl);
+	status_change_init(&nd->bl);
+	unit_dataset(&nd->bl);
+	clif_spawn(&nd->bl);
 
 }
 
@@ -2491,7 +2491,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 			for(i = 0; i < MAX_MVP_DROP; i++) {
 				while( 1 ) {
-					int va = rand()%MAX_MVP_DROP;
+					int va = rnd()%MAX_MVP_DROP;
 					if( !mdrop_id[va] || !md->db->mvpitem[i].nameid ) {
 						mdrop_id[va] = md->db->mvpitem[i].nameid;
 						mdrop_p[va]  = md->db->mvpitem[i].p;

@@ -1271,11 +1271,6 @@ static void clif_weather_check(struct map_session_data *sd)
 			clif_specialeffect_single(&sd->bl, 163, fd);
 		if (map[m].flag.leaves)
 			clif_specialeffect_single(&sd->bl, 333, fd);
-		/**
-		 * No longer available, keeping here just in case it's back someday. [Ind]
-		 **/
-		//if (map[m].flag.rain)
-		//	clif_specialeffect_single(&sd->bl, 161, fd);
 	}
 }
 /**
@@ -1714,8 +1709,7 @@ void clif_fixpos(struct block_list *bl)
 	WBUFW(buf,8) = bl->y;
 	clif_send(buf, packet_len(0x88), bl, AREA);
 
-	if( disguised(bl) )
-	{
+	if( disguised(bl) ) {
 		WBUFL(buf,2) = -bl->id;
 		clif_send(buf, packet_len(0x88), bl, SELF);
 	}
@@ -1882,8 +1876,7 @@ void clif_scriptclose(struct map_session_data *sd, int npcid)
 /*==========================================
  *
  *------------------------------------------*/
-void clif_sendfakenpc(struct map_session_data *sd, int npcid)
-{
+void clif_sendfakenpc(struct map_session_data *sd, int npcid) {
 	unsigned char *buf;
 	int fd = sd->fd;
 	sd->state.using_fake_npc = 1;
@@ -2117,6 +2110,7 @@ static void clif_addcards(unsigned char* buf, struct item* item)
 /// 00a0 <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.W <item type>.B <result>.B (ZC_ITEM_PICKUP_ACK)
 /// 029a <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.W <item type>.B <result>.B <expire time>.L (ZC_ITEM_PICKUP_ACK2)
 /// 02d4 <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.W <item type>.B <result>.B <expire time>.L <bindOnEquipType>.W (ZC_ITEM_PICKUP_ACK3)
+/// 0990 <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.W <item type>.B <result>.B <expire time>.L <bindOnEquipType>.W <unknow>.W (ZC_ITEM_PICKUP_ACK_V5)
 void clif_additem(struct map_session_data *sd, int n, int amount, int fail)
 {
 	int fd;
@@ -2124,8 +2118,10 @@ void clif_additem(struct map_session_data *sd, int n, int amount, int fail)
 	const int cmd = 0xa0;
 #elif PACKETVER < 20071002
 	const int cmd = 0x29a;
-#else
+#elif PACKETVER < 20120925
 	const int cmd = 0x2d4;
+#else
+	const int cmd = 0x990;
 #endif
 	nullpo_retv(sd);
 
@@ -2181,6 +2177,9 @@ void clif_additem(struct map_session_data *sd, int n, int amount, int fail)
 #endif
 #if PACKETVER >= 20071002
 		WFIFOW(fd,27)=0;  // unknown
+#endif
+#if PACKETVER >= 20120925
+		WFIFOW(fd,29)=0;  // unknown
 #endif
 	}
 
@@ -2240,8 +2239,7 @@ void clif_delitem(struct map_session_data *sd,int n,int amount, short reason)
 // Simplifies inventory/cart/storage packets by handling the packet section relevant to items. [Skotlex]
 // Equip is >= 0 for equippable items (holds the equip-point, is 0 for pet
 // armor/egg) -1 for stackable items, -2 for stackable items where arrows must send in the equip-point.
-void clif_item_sub(unsigned char *buf, int n, struct item *i, struct item_data *id, int equip)
-{
+void clif_item_sub(unsigned char *buf, int n, struct item *i, struct item_data *id, int equip) {
 	if (id->view_id > 0)
 		WBUFW(buf,n)=id->view_id;
 	else
@@ -2264,8 +2262,7 @@ void clif_item_sub(unsigned char *buf, int n, struct item *i, struct item_data *
 }
 void clif_favorite_item(struct map_session_data* sd, unsigned short index);
 //Unified inventory function which sends all of the inventory (requires two packets, one for equipable items and one for stackable ones. [Skotlex]
-void clif_inventorylist(struct map_session_data *sd)
-{
+void clif_inventorylist(struct map_session_data *sd) {
 	int i,n,ne,arrow=-1;
 	unsigned char *buf;
 	unsigned char *bufe;
@@ -2340,8 +2337,7 @@ void clif_inventorylist(struct map_session_data *sd)
 	if( arrow >= 0 )
 		clif_arrowequip(sd,arrow);
 
-	if( ne )
-	{
+	if( ne ) {
 #if PACKETVER < 20071002
 		WBUFW(bufe,0)=0xa4;
 #else
@@ -3111,8 +3107,7 @@ void clif_refreshlook(struct block_list *bl,int id,int type,int val,enum send_ta
 ///     <int>.B <need int>.B <dex>.B <need dex>.B <luk>.B <need luk>.B <atk>.W <atk2>.W
 ///     <matk min>.W <matk max>.W <def>.W <def2>.W <mdef>.W <mdef2>.W <hit>.W
 ///     <flee>.W <flee2>.W <crit>.W <aspd>.W <aspd2>.W
-void clif_initialstatus(struct map_session_data *sd)
-{
+void clif_initialstatus(struct map_session_data *sd) {
 	int fd, mdef2;
 	unsigned char *buf;
 
@@ -16747,7 +16742,7 @@ static int packetdb_readdb(void)
 		0,  0,  0,  0,  0,  0,  0, 14,  0,  0,  0,  0,  0,  0,  0,  0,
 	//#0x0980
 		0,  0,  0, 29,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  0,  0,  0,  0,
+		31,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  8,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  0, 14,  0,  0,  0,  0,  0,  0,  0,  0,
 
