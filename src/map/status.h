@@ -1411,23 +1411,30 @@ extern int current_equip_card_id;
 //Mode definitions to clear up code reading. [Skotlex]
 enum e_mode
 {
-	MD_CANMOVE            = 0x0001,
-	MD_LOOTER             = 0x0002,
-	MD_AGGRESSIVE         = 0x0004,
-	MD_ASSIST             = 0x0008,
-	MD_CASTSENSOR_IDLE    = 0x0010,
-	MD_BOSS               = 0x0020,
-	MD_PLANT              = 0x0040,
-	MD_CANATTACK          = 0x0080,
-	MD_DETECTOR           = 0x0100,
-	MD_CASTSENSOR_CHASE   = 0x0200,
-	MD_CHANGECHASE        = 0x0400,
-	MD_ANGRY              = 0x0800,
-	MD_CHANGETARGET_MELEE = 0x1000,
-	MD_CHANGETARGET_CHASE = 0x2000,
-	MD_TARGETWEAK         = 0x4000,
-	MD_MASK               = 0xFFFF,
+	MD_CANMOVE            = 0x000001,
+	MD_LOOTER             = 0x000002,
+	MD_AGGRESSIVE         = 0x000004,
+	MD_ASSIST             = 0x000008,
+	MD_CASTSENSOR_IDLE    = 0x000010,
+	MD_BOSS               = 0x000020,
+	MD_PLANT              = 0x000040,
+	MD_CANATTACK          = 0x000080,
+	MD_DETECTOR           = 0x000100,
+	MD_CASTSENSOR_CHASE   = 0x000200,
+	MD_CHANGECHASE        = 0x000400,
+	MD_ANGRY              = 0x000800,
+	MD_CHANGETARGET_MELEE = 0x001000,
+	MD_CHANGETARGET_CHASE = 0x002000,
+	MD_TARGETWEAK         = 0x004000,
+	MD_IGNOREMELEE        = 0x010000, //takes 1 HP damage from melee physical attacks
+	MD_IGNOREMAGIC        = 0x020000, //takes 1 HP damage from magic
+	MD_IGNORERANGED       = 0x040000, //takes 1 HP damage from ranged physical attacks
+	MD_MVP                = 0x080000, //MVP - instant kill / coma-like skills don't work
+	MD_IGNOREMISC         = 0x100000, //takes 1 HP damage from "none" attack type
+	MD_KNOCKBACK_IMMUNE   = 0x200000, //can't be knocked back
 };
+#define MD_MASK 0x00FFFF
+#define ATR_MASK 0xFF0000
 
 //Status change option definitions (options are what makes status changes visible to chars
 //who were not on your field of sight when it happened)
@@ -1616,8 +1623,8 @@ struct status_data {
 		batk,
 		matk_min, matk_max,
 		speed,
-		amotion, adelay, dmotion,
-		mode;
+		amotion, adelay, dmotion;
+	enum e_mode mode;
 	short
 		hit, flee, cri, flee2,
 		def2, mdef2,

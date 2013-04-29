@@ -2152,6 +2152,9 @@ void clif_additem(struct map_session_data *sd, int n, int amount, int fail)
 #if PACKETVER >= 20071002
 		WFIFOW(fd,27)=0;  // unknown
 #endif
+#if PACKETVER >= 20120925
+		WFIFOW(fd,29)=0;  // unknown
+#endif
 	}
 	else
 	{

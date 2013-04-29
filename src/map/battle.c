@@ -1696,8 +1696,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 #ifdef RENEWAL
 		&& skill_id != HT_FREEZINGTRAP
 #endif
-		?1:0);
-	if( target->type == BL_SKILL){
+		)?1:0;
+	if(!flag.infdef && target->type == BL_SKILL){
 		TBL_SKILL *su = (TBL_SKILL*)target;
 		if( su->group && (su->group->skill_id == WM_REVERBERATION || su->group->skill_id == WM_POEMOFNETHERWORLD) )
 			flag.infdef = 1;
@@ -2062,6 +2062,12 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		else
 			flag.hit = 1;
 	}	//End hit/miss calculation
+
+	if(!flag.infdef && (
+		(tstatus->mode&MD_IGNOREMELEE && wd.flag&(BF_SHORT) )	//physical melee
+		|| (tstatus->mode&MD_IGNORERANGED && wd.flag&(BF_LONG) )	//physical ranged
+	))
+		flag.infdef = 1;
 
 	if (flag.hit && !flag.infdef) //No need to do the math for plants
 	{	//Hitting attack
@@ -3704,6 +3710,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			break;
 	}
 
+	if(!flag.infdef && (
+		(tstatus->mode&MD_IGNOREMAGIC && ad.flag&(BF_MAGIC) )	//magic
+	)) flag.infdef = 1;
+
 	if (!flag.infdef) //No need to do the math for plants
 	{
 #ifdef RENEWAL
@@ -4409,9 +4419,6 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		if (sd) md.damage = (int64)md.damage * (100 + 5 * (pc_checkskill(sd,RK_DRAGONTRAINING) - 1)) / 100;
 		md.flag |= BF_LONG|BF_WEAPON;
 		break;
-	/**
-	 * Ranger
-	 **/
 	case RA_CLUSTERBOMB:
 	case RA_FIRINGTRAP:
  	case RA_ICEBOUNDTRAP:
@@ -4428,9 +4435,6 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			md.damage = (int64)md.damage * 200 / (skill_id == RA_CLUSTERBOMB?50:100);
 
 		break;
-	/**
-	 * Mechanic
-	 **/
 	case NC_SELFDESTRUCTION:
 		{
 			short totaldef = tstatus->def2 + (short)status_get_def(target);
@@ -4566,6 +4570,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			}
 		break;
 	}
+
+	if(tstatus->mode&MD_IGNOREMISC && md.flag&(BF_MISC) )	//misc @TODO optimize me
+	 md.damage = md.damage2 = 1;
 
 	return md;
 }

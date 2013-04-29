@@ -6976,6 +6976,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				return 0;
 		}
 	}
+	//Check for mvp resistance //atm only those who OS
+	if(status->mode&MD_MVP && !(flag&1)) {
+		 switch (type) {
+		 case SC_COMA:
+		//continue list...
+		     return 0;
+		}
+	}
 
 	//Before overlapping fail, one must check for status cured.
 	switch (type) {
