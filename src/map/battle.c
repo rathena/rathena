@@ -4607,6 +4607,7 @@ struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct bl
 int battle_calc_return_damage(struct block_list* bl, struct block_list *src, int *dmg, int flag, uint16 skill_id){
 	struct map_session_data* sd;
 	int rdamage = 0, damage = *dmg;
+	int max_damage = status_get_max_hp(bl);
 	struct status_change* sc;
 
 	sd = BL_CAST(BL_PC, bl);
@@ -4614,16 +4615,18 @@ int battle_calc_return_damage(struct block_list* bl, struct block_list *src, int
 
 	if( sc && sc->data[SC_REFLECTDAMAGE] ) {
 		if( rnd()%100 <= sc->data[SC_REFLECTDAMAGE]->val1*10 + 30 ){
-			int max_damage = (int64)status_get_max_hp(bl) * status_get_lv(bl) / 100;
+			max_damage *= status_get_lv(bl) / 100;
 			rdamage = (int64)(*dmg) * sc->data[SC_REFLECTDAMAGE]->val2 / 100;
 			if( --(sc->data[SC_REFLECTDAMAGE]->val3) < 1)
 				status_change_end(bl,SC_REFLECTDAMAGE,INVALID_TIMER);
-			if( rdamage > max_damage ) rdamage = max_damage;
 		}
-	}else if( sc && sc->data[SC_CRESCENTELBOW] && !is_boss(src) && rnd()%100 < sc->data[SC_CRESCENTELBOW]->val2 ){
+	}else if( sc && sc->data[SC_CRESCENTELBOW] && !is_boss(src) && rnd()%100 < sc->data[SC_CRESCENTELBOW]->val2 ){ //TODO: This is a counter-attack skill, put it by Reject Sword
 		//ATK [{(Target HP / 100) x Skill Level} x Caster Base Level / 125] % + [Received damage x {1 + (Skill Level x 0.2)}]
+		struct status_data *status = status_get_status_data(bl);
+		struct status_data *tstatus = status_get_status_data(src);
 		int ratio = (int64)(status_get_hp(src) / 100) * sc->data[SC_CRESCENTELBOW]->val1 * status_get_lv(bl) / 125;
 		if (ratio > 5000) ratio = 5000; // Maximum of 5000% ATK
+		rdamage = battle_calc_base_damage(status,&status->rhw,sc,tstatus->size,sd,0);
 		rdamage = (int64)rdamage * ratio / 100 + (*dmg) * (10 + sc->data[SC_CRESCENTELBOW]->val1 * 20 / 10) / 10;
 		skill_blown(bl, src, skill_get_blewcount(SR_CRESCENTELBOW_AUTOSPELL, sc->data[SC_CRESCENTELBOW]->val1), unit_getdir(src), 0);
 		clif_skill_damage(bl, src, gettick(), status_get_amotion(src), 0, rdamage,
@@ -4666,7 +4669,7 @@ int battle_calc_return_damage(struct block_list* bl, struct block_list *src, int
 	if( sc && sc->data[SC_KYOMU] ) // Nullify reflecting ability
 		rdamage = 0;
 
-	return rdamage;
+	return min(rdamage,max_damage);
 }
 
 void battle_drain(TBL_PC *sd, struct block_list *tbl, int rdamage, int ldamage, int race, int boss)

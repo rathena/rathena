@@ -12138,7 +12138,7 @@ void clif_parse_GuildInvite(int fd,struct map_session_data *sd)
 }
 
 /// Guild invite request (/guildinvite)
-/// 0916 <char name>.24B
+/// 0916 <char name>.24B (CZ_REQ_JOIN_GUILD2)
 void
 clif_parse_GuildInvite2(int fd, struct map_session_data *sd) {
 	struct map_session_data *t_sd = map_nick2sd((char *)RFIFOP(fd, 2));

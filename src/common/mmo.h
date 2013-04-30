@@ -48,6 +48,7 @@
 
 #ifndef PACKETVER
 	#define PACKETVER 20120410
+	//#define PACKETVER 20130320
 	//#define PACKETVER 20111116
 #endif
 

@@ -10644,7 +10644,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		break;
 
 	case SC_REFLECTDAMAGE:
-		if( --(sce->val4) >= 0 ) {
+		if( --(sce->val4) > 0 ) {
 			if( !status_charge(bl,0,10) )
  				break;
 			sc_timer_next(1000 + tick, status_change_timer, bl->id, data);

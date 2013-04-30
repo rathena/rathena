@@ -1758,6 +1758,7 @@ packet_ver: 30
 0x08D7,28,battlegroundreg,2:4 //Added to prevent disconnections
 0x08CF,10 //Amulet spirits
 0x0977,14 //Monster HP Bar
+0x0916,26,guildinvite2,2
 
 //2012-04-18aRagexeRE [Special Thanks to Judas!]
 packet_ver:31
@@ -1777,7 +1778,6 @@ packet_ver:31
 0x0368,6,solvecharname,2
 0x08E5,41,bookingregreq,2:4     //Added to prevent disconnections
 0x08d2,10
-0x0916,26,guildinvite2,2
 
 //2012-06-18
 packet_ver: 32

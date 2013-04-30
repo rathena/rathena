@@ -6579,19 +6579,19 @@ void pc_close_npc(struct map_session_data *sd,int flag) {
 			sd->state.using_fake_npc = 0;
 		}
 		if (sd->st) {
-			sd->st->state = (flag==1)?CLOSE:END;
+			sd->st->state = ((flag==1 && sd->st->mes_active)?CLOSE:END);
 			sd->st->mes_active = 0;
 		}
 		sd->state.menu_or_input = 0;
 		sd->npc_menu = 0;
+#ifdef SECURE_NPCTIMEOUT
 		sd->npc_idle_timer = INVALID_TIMER;
+#endif
 		clif_scriptclose(sd,sd->npc_id);
-		if(flag==2 && sd->st) {
-			if( sd->st && sd->st->state != RUN ) {// free attached scripts that are waiting
-				script_free_state(sd->st);
-				sd->st = NULL;
-				sd->npc_id = 0;
-			}
+		if(sd->st && sd->st->state == END ) {// free attached scripts that are waiting
+			script_free_state(sd->st);
+			sd->st = NULL;
+			sd->npc_id = 0;
 		}
 	}
 }
