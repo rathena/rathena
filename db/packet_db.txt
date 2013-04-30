@@ -1629,6 +1629,7 @@ packet_ver: 26
 0x0857,-1
 0x0858,-1
 0x0859,-1
+0x08d0,9
 
 //2011-10-05aRagexeRE
 packet_ver: 27
@@ -1645,6 +1646,7 @@ packet_ver: 27
 0x0838,6,solvecharname,2
 0x0439,8,useitem,2:4
 0x08d2,10
+0x08d1,7
 
 // 2011-11-02aRagexe
 packet_ver: 28
@@ -1837,6 +1839,13 @@ packet_ver: 34
 0x990,31 //additem
 0x99b,8 //maptypeproperty2
 0x84b,19 //fallitem4
+0x090f,-1 // notify_newentry7
+0x914,-1 // notify_moveentry
+0x915,-1 // notify_standentry
+0x99a,9 // take_off_equipv5
+0x997,-1 //ZC_EQUIPWIN_MICROSCOPE_V5
+0x998,8,equipitem,2:4
+0x999,11 // cz_wear_equipv5
 
 // New cashshop
 0x0844,2,cashshopopen,0
