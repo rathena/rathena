@@ -4107,6 +4107,10 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		return 0;
 	if( !item->script ) //if it has no script, you can't really consume it!
 		return 0;
+		
+	if( (item->item_usage.flag&NOUSE_SITTING) && (pc_issit(sd) == 1) && (pc_get_group_level(sd) < item->item_usage.override) ) {
+		return 0; // You cannot use this item while sitting.
+	}
 
 	switch( nameid ) //@TODO, lot oh harcoded nameid here
 	{

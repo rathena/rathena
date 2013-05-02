@@ -738,6 +738,31 @@ static bool itemdb_read_buyingstore(char* fields[], int columns, int current)
 
 	return true;
 }
+
+/*******************************************
+** Item usage restriction (item_nouse.txt)
+********************************************/
+static bool itemdb_read_nouse(char* fields[], int columns, int current)
+{// <nameid>,<flag>,<override>
+	int nameid, flag, override;
+	struct item_data* id;
+
+	nameid = atoi(fields[0]);
+	
+	if( ( id = itemdb_exists(nameid) ) == NULL ) {
+		ShowWarning("itemdb_read_nouse: Invalid item id %d.\n", nameid);
+		return false;
+	}
+	
+	flag = atoi(fields[1]);
+	override = atoi(fields[2]);
+
+	id->item_usage.flag = flag;
+	id->item_usage.override = override;
+
+	return true;
+}
+
 /**
  * @return: amount of retrieved entries.
  **/
@@ -1316,7 +1341,8 @@ static void itemdb_read(void) {
 	sv_readdb(db_path, "item_delay.txt",         ',', 2, 2, -1, &itemdb_read_itemdelay);
 	sv_readdb(db_path, "item_stack.txt",         ',', 3, 3, -1, &itemdb_read_stack);
 	sv_readdb(db_path, DBPATH"item_buyingstore.txt",   ',', 1, 1, -1, &itemdb_read_buyingstore);
-	
+	sv_readdb(db_path, "item_nouse.txt",		 ',', 3, 3, -1, &itemdb_read_nouse);
+
 	itemdb_uid_load();
 }
 

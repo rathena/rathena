@@ -69,6 +69,10 @@ enum {
 	ITEMID_SPECIAL_COOLER,
 } mecha_item_list;
 
+enum {
+	NOUSE_SITTING = 0x01,
+} item_nouse_list;
+
 //The only item group required by the code to be known. See const.txt for the full list.
 #define IG_FINDINGORE 6
 #define IG_POTION 37
@@ -138,6 +142,10 @@ struct item_data {
 		unsigned int storage:1;
 		unsigned int guildstorage:1;
 	} stack;
+	struct {// used by item_nouse.txt
+		unsigned int flag;
+		unsigned short override;
+	} item_usage;
 	short gm_lv_trade_override;	//GM-level to override trade_restriction
 	/* bugreport:309 */
 	struct item_combo **combos;
