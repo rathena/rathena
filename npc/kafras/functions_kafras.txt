@@ -118,8 +118,8 @@ function	script	F_Kafra	{
 			// NPC has it's own welcome message. (Display nothing)
 			break;
 	}
+	next;
 	while (1) {
-		next;
 		deletearray @K_Menu0$[0],getarraysize(@K_Menu0$);
 		if (getarg(0) == 2) {
 			// Guild Kafra Menu override (free Teleport, free Storage, Free Cart)
@@ -161,6 +161,7 @@ function	script	F_Kafra	{
 				callfunc "F_KafStor",2,0,0;
 			else 
 				callfunc "F_KafStor",0,getarg(3),getarg(0);
+			next;
 		} else if (@K_Menu0$[.@j] == "Use Teleport Service") {
 			// Display Einbroch "No Teleport Service" notice.
 			if(getarg(1) != 4) callfunc "F_KafTele",getarg(0);
@@ -178,15 +179,19 @@ function	script	F_Kafra	{
 				mes "instead. Thank you for your";
 				mes "understanding and cooperation.";
 			}
+			next;
 		} else if (@K_Menu0$[.@j] == "Rent a Pushcart") {
-			callfunc "F_KafCart",getarg(0),getarg(4);
+			if(callfunc("F_KafCart",getarg(0),getarg(4)) == 1) 
+				next;
 		} else if (@K_Menu0$[.@j] == "Check Other Information") {
 			callfunc "F_KafInfo",getarg(2);
+			next;
 		} else if (@K_Menu0$[.@j] == "Cancel"){
 			callfunc "F_KafEnd",getarg(0),0;
 			end;
 		} else if (@K_Menu0$[.@j] == "Use Guild Storage") {
 			callfunc "F_KafStor",1,0;
+			next;
 		}
 	}
 }
@@ -338,7 +343,7 @@ function	script	F_KafCart	{
 		mes "is only available to Merchants,";
 		mes "Blacksmiths, Master Smiths,";
 		mes "Alchemists and Biochemists.";
-		return;
+		return 1;
 	}
 	// Make sure the invoking character does not have a cart already
 	else if(checkcart() == 1){
@@ -348,7 +353,7 @@ function	script	F_KafCart	{
 		mes "Unfortunately, we can't";
 		mes "rent more than one to";
 		mes "each customer at a time.";
-		return;
+		return 1;
 	}
 	// Consume "Free Ticket for the Cart Service" if available.
 	// Do not consume if in Guild castle.
@@ -359,20 +364,20 @@ function	script	F_KafCart	{
 		mes "fee is "+getarg(1)+" zeny. Would";
 		mes "you like to rent a Pushcart?";
 		next;
-		if (select("Rent a Pushcart.:Cancel") == 2) return;
+		if (select("Rent a Pushcart.:Cancel") == 2) return 0;
 			if(Zeny<getarg(1)){
 				mes "[Kafra Employee]";
 				mes "I'm sorry, but you";
 				mes "don't have enough";
 				mes "zeny to pay the Pushcart";
 				mes "rental fee of "+getarg(1)+" zeny.";
-				return;
+				return 1;
 			}
 			set Zeny,Zeny-getarg(1);
 			set RESRVPTS, RESRVPTS + 48;
 	}
 	setcart;
-	return;
+	return 1;
 }
 
 //===================================================
