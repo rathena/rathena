@@ -298,13 +298,26 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	return 0;
 }
 
-static int unit_delay_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data)
+int unit_delay_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct block_list *bl = map_id2bl(id);
 
 	if (!bl || bl->prev == NULL)
 		return 0;
 	unit_walktoxy(bl, (short)((data>>16)&0xffff), (short)(data&0xffff), 0);
+	return 1;
+}
+
+int unit_delay_walktobl_timer(int tid, unsigned int tick, int id, intptr_t data)
+{
+	struct block_list *bl = map_id2bl(id);
+
+	if (!bl || bl->prev == NULL || !data)
+		return 0;
+
+	struct unit_data* ud = unit_bl2ud(bl);
+	unit_walktobl(bl, map_id2bl(data), 0, 0);
+	ud->target_to = 0;
 	return 1;
 }
 
@@ -2513,6 +2526,7 @@ int do_init_unit(void)
 	add_timer_func_list(unit_walktoxy_timer,"unit_walktoxy_timer");
 	add_timer_func_list(unit_walktobl_sub, "unit_walktobl_sub");
 	add_timer_func_list(unit_delay_walktoxy_timer,"unit_delay_walktoxy_timer");
+	add_timer_func_list(unit_delay_walktobl_timer,"unit_delay_walktobl_timer");
 	return 0;
 }
 

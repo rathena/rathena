@@ -5398,22 +5398,35 @@ summon "--ja--",-1;
 ---------------------------------------
 
 *unitwalk <GID>,<x>,<y>;
-*unitwalk <GID>,<mapid>;
+*unitwalk <GID>,<Target ID>;
 
-This is one command, but can be used in two ways. If only the first argument is given,
-the unit whose GID is given will start walking towards the map with the given mapid 
-(we believe these are the map-indexes found in db/map_index.txt).
+This command will tell a <GID> to walk to a position.  The destination can be defined
+as either set coordinates, or another object.
 
-When 2 arguments are passed, the given unit will walk to the given x,y coordinates on 
-the map where the unit currently is.
+When 2 arguments are passed, the <GID> will walk to the given x,y coordinates on 
+the map where the unit currently is.  This command returns a 1 or 0 for success and failure
+checks.  While there is no way to move across an entire map with 1 command use, there
+doesn't seem to be any reason this couldn't be used in a loop to move long distances.
+
+The second method of using this command makes the first <GID> walk to the <Target ID> (not unlike walking to attack)
+Using this method will also return a 1 or 0 for success or failure.  This is based on distance from <GID> to <Target ID>.
+It is good to note that this command uses a hard walk check, so it will calculate a walkpath with obstacles.
 
 Examples:
 
-//Will move/walk the poring we made to the coordinates 150,150
-	unitwalk .GID,150,150;
+//Move/walk NPC invoker to the coordinates 150,150
+	unitwalk getcharid(3),150,150;
 
-//Will move the poring towards alberta (if my assumed map-indexes are correct).
-	unitwalk .GID,3;
+//Doing a conditional check with the command and reporting to player success or failure
+	if(unitwalk(getcharid(3),150,150))
+		dispbottom "Walking you there...";
+	else
+		dispbottom "That's too far away, man.";
+
+//Sends NPC invoker to another character with name WalkToMe
+	unitwalk getcharid(3),getcharid(3,"WalkToMe");
+
+Note: Sending a bad target ID to this command will result in an error.
 
 ---------------------------------------
 

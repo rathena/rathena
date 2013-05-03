@@ -6569,16 +6569,19 @@ void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int h
 	sd->canlog_tick = gettick();
 }
 
-void pc_close_npc_timer(int tid, unsigned int tick, int id, intptr_t data){
-    TBL_PC *sd = map_id2sd(id);
-    if(sd) pc_close_npc(sd,data);
+int pc_close_npc_timer(int tid, unsigned int tick, int id, intptr_t data)
+{
+	TBL_PC *sd = map_id2sd(id);
+	if(sd) pc_close_npc(sd,data);
+	return 0;
 }
 /*
  *  Method to properly close npc for player and clear anything related
  * @flag == 1 : produce close button
  * @flag == 2 : directly close it
  */
-void pc_close_npc(struct map_session_data *sd,int flag) {
+void pc_close_npc(struct map_session_data *sd,int flag)
+{
 	nullpo_retv(sd);
 
 	if (sd->npc_id) {
@@ -9278,6 +9281,7 @@ void pc_setstand(struct map_session_data *sd){
 
 	status_change_end(&sd->bl, SC_TENSIONRELAX, INVALID_TIMER);
 	clif_status_load(&sd->bl,SI_SIT,0);
+	clif_standing(&sd->bl); //Inform area PC is standing
 	//Reset sitting tick.
 	sd->ssregen.tick.hp = sd->ssregen.tick.sp = 0;
 	sd->state.dead_sit = sd->vd.dead_sit = 0;

@@ -2372,7 +2372,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					flag.pdef = flag.pdef2 = 2;
 					break;
 				case MO_EXTREMITYFIST:
-					skillratio += 100*(8 + sstatus->sp/10) - 100;
+					skillratio += 100*(7 + sstatus->sp/10);
 					skillratio = min(500000,skillratio); //We stop at roughly 50k SP for overflow protection
 					break;
 				case MO_TRIPLEATTACK:
@@ -3577,6 +3577,22 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			status_change_end(target, SC_REJECTSWORD, INVALID_TIMER);
 	}
 
+	if( tsc && tsc->data[SC_CRESCENTELBOW] && !is_boss(src) && rnd()%100 < tsc->data[SC_CRESCENTELBOW]->val2 ) {
+		//ATK [{(Target HP / 100) x Skill Level} x Caster Base Level / 125] % + [Received damage x {1 + (Skill Level x 0.2)}]
+		int rdamage = 0;
+		int ratio = (int64)(status_get_hp(src) / 100) * tsc->data[SC_CRESCENTELBOW]->val1 * status_get_lv(target) / 125;
+		if (ratio > 5000) ratio = 5000; // Maximum of 5000% ATK
+		rdamage = battle_calc_base_damage(tstatus,&tstatus->rhw,tsc,sstatus->size,tsd,0);
+		rdamage = (int64)rdamage * ratio / 100 + wd.damage * (10 + tsc->data[SC_CRESCENTELBOW]->val1 * 20 / 10) / 10;
+		skill_blown(target, src, skill_get_blewcount(SR_CRESCENTELBOW_AUTOSPELL, tsc->data[SC_CRESCENTELBOW]->val1), unit_getdir(src), 0);
+		clif_skill_damage(target, src, gettick(), status_get_amotion(src), 0, rdamage,
+			1, SR_CRESCENTELBOW_AUTOSPELL, tsc->data[SC_CRESCENTELBOW]->val1, 6); // This is how official does
+		clif_damage(src, target, gettick(), status_get_amotion(src)+1000, 0, rdamage/10, 1, 0, 0);
+		status_damage(target, src, rdamage, 0, 0, 0);
+		status_damage(src, target, rdamage/10, 0, 0, 1);
+		status_change_end(target, SC_CRESCENTELBOW, INVALID_TIMER);
+	}
+
 	if( sc ) {
 		//SG_FUSION hp penalty [Komurka]
 		if (sc->data[SC_FUSION]) {
@@ -4615,27 +4631,12 @@ int battle_calc_return_damage(struct block_list* bl, struct block_list *src, int
 
 	if( sc && sc->data[SC_REFLECTDAMAGE] ) {
 		if( rnd()%100 <= sc->data[SC_REFLECTDAMAGE]->val1*10 + 30 ){
-			max_damage *= status_get_lv(bl) / 100;
+			max_damage = (int64)max_damage * status_get_lv(bl) / 100;
 			rdamage = (int64)(*dmg) * sc->data[SC_REFLECTDAMAGE]->val2 / 100;
 			if( --(sc->data[SC_REFLECTDAMAGE]->val3) < 1)
 				status_change_end(bl,SC_REFLECTDAMAGE,INVALID_TIMER);
 		}
-	}else if( sc && sc->data[SC_CRESCENTELBOW] && !is_boss(src) && rnd()%100 < sc->data[SC_CRESCENTELBOW]->val2 ){ //TODO: This is a counter-attack skill, put it by Reject Sword
-		//ATK [{(Target HP / 100) x Skill Level} x Caster Base Level / 125] % + [Received damage x {1 + (Skill Level x 0.2)}]
-		struct status_data *status = status_get_status_data(bl);
-		struct status_data *tstatus = status_get_status_data(src);
-		int ratio = (int64)(status_get_hp(src) / 100) * sc->data[SC_CRESCENTELBOW]->val1 * status_get_lv(bl) / 125;
-		if (ratio > 5000) ratio = 5000; // Maximum of 5000% ATK
-		rdamage = battle_calc_base_damage(status,&status->rhw,sc,tstatus->size,sd,0);
-		rdamage = (int64)rdamage * ratio / 100 + (*dmg) * (10 + sc->data[SC_CRESCENTELBOW]->val1 * 20 / 10) / 10;
-		skill_blown(bl, src, skill_get_blewcount(SR_CRESCENTELBOW_AUTOSPELL, sc->data[SC_CRESCENTELBOW]->val1), unit_getdir(src), 0);
-		clif_skill_damage(bl, src, gettick(), status_get_amotion(src), 0, rdamage,
-			1, SR_CRESCENTELBOW_AUTOSPELL, sc->data[SC_CRESCENTELBOW]->val1, 6); // This is how official does
-		clif_damage(src, bl, gettick(), status_get_amotion(src)+1000, 0, rdamage/10, 1, 0, 0);
-		status_damage(src, bl, status_damage(bl, src, rdamage, 0, 0, 1)/10, 0, 0, 1);
-		status_change_end(bl, SC_CRESCENTELBOW, INVALID_TIMER);
-		return 0; // Just put here to minimize redundancy
-	}else if (flag & BF_SHORT) {//Bounces back part of the damage.
+	} else if (flag & BF_SHORT) {//Bounces back part of the damage.
 		if ( sd && sd->bonus.short_weapon_damage_return ) {
 			rdamage += (int64)damage * sd->bonus.short_weapon_damage_return / 100;
 			if(rdamage < 1) rdamage = 1;

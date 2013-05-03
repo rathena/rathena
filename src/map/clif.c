@@ -1686,10 +1686,10 @@ void clif_changemapserver(struct map_session_data* sd, unsigned short map_index,
 }
 
 
-void clif_blown(struct block_list *bl)
+void clif_blown(struct block_list *bl) //FIXME: This needs a better behaviour than just sending 2 position fixes
 {
 //Aegis packets says fixpos, but it's unsure whether slide works better or not.
-//	clif_fixpos(bl);
+	clif_fixpos(bl);
 	clif_slide(bl, bl->x, bl->y);
 }
 
