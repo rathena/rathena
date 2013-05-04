@@ -1673,8 +1673,7 @@ int delete_char_sql(int char_id)
 	Sql_GetData(sql_handle, 6, &data, NULL); partner_id = atoi(data);
 	Sql_GetData(sql_handle, 7, &data, NULL); father_id = atoi(data);
 	Sql_GetData(sql_handle, 8, &data, NULL); mother_id = atoi(data);
-        Sql_GetData(sql_handle, 9, &data, NULL);
-        elemental_id = atoi(data);
+	Sql_GetData(sql_handle, 9, &data, NULL); elemental_id = atoi(data);
 
 	Sql_EscapeStringLen(sql_handle, esc_name, name, min(len, NAME_LENGTH));
 	Sql_FreeResult(sql_handle);

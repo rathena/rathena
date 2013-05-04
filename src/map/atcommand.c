@@ -3726,9 +3726,17 @@ ACMD_FUNC(reloadmotd)
  *------------------------------------------*/
 ACMD_FUNC(reloadscript)
 {
+	struct s_mapiterator* iter;
+	struct map_session_data* pl_sd;
+
 	nullpo_retr(-1, sd);
 	//atcommand_broadcast( fd, sd, "@broadcast", "Server is reloading scripts..." );
 	//atcommand_broadcast( fd, sd, "@broadcast", "You will feel a bit of lag at this point !" );
+
+	iter = mapit_getallusers();
+	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+		pc_close_npc(pl_sd,2);
+	mapit_free(iter);
 
 	flush_fifos();
 	map_reloadnpc(true); // reload config files seeking for npcs
@@ -8926,21 +8934,17 @@ ACMD_FUNC(fontcolor)
 		return -1;
 	}
 
-	if( message[0] == '0' ) {
+	if( message[0] == '0' )
 		sd->fontcolor = 0;
-		pc_disguise(sd,0);
-		return 0;
+	else {
+		ARR_FIND(0,Channel_Config.colors_count,k,( strcmpi(message,Channel_Config.colors_name[k]) == 0 ));
+		if( k == Channel_Config.colors_count ) {
+			sprintf(atcmd_output, msg_txt(sd,1411), message);// Unknown color '%s'.
+			clif_displaymessage(fd, atcmd_output);
+			return -1;
+		}
+		sd->fontcolor = k;
 	}
-
-	ARR_FIND(0,Channel_Config.colors_count,k,( strcmpi(message,Channel_Config.colors_name[k]) == 0 ));
-	if( k == Channel_Config.colors_count ) {
-		sprintf(atcmd_output, msg_txt(sd,1411), message);// Unknown color '%s'.
-		clif_displaymessage(fd, atcmd_output);
-		return -1;
-	}
-
-	sd->fontcolor = k + 1;
-	pc_disguise(sd,sd->status.class_);
 
 	return 0;
 }

@@ -33,6 +33,7 @@ struct {
 	unsigned char map_chcolor, ally_chcolor; //msg color for map, ally
 	bool map_enable, ally_enable, user_chenable; //map, ally, users channels enable ?
 	bool map_autojoin, ally_autojoin;	//do user auto join in mapchange, guildjoin ?
+	bool color_override;		//can user override set channel color?
 	char map_chname[CHAN_NAME_LENGTH], ally_chname[CHAN_NAME_LENGTH]; //channel name for map and ally
 	bool closing;			//server is closing
 } Channel_Config;

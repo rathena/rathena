@@ -135,7 +135,7 @@ int channel_join(struct Channel *channel, struct map_session_data *sd) {
 	} else if( channel->opt & CHAN_OPT_ANNOUNCE_JOIN ) {
 		char message[60];
 		sprintf(message, "[ #%s ] '%s' has joined.",channel->name,sd->status.name);
-		clif_channel_msg(channel,sd,message);
+		clif_channel_msg(channel,sd,message,channel->color);
 	}
 
 	/* someone is cheating, we kindly disconnect the bastard */
@@ -339,9 +339,14 @@ int channel_send(struct Channel *channel, struct map_session_data *sd, const cha
 		return -2;
 	}
 	else {
-		char message[CHAN_MSG_LENGTH];
+		char message[CHAN_MSG_LENGTH], color;
+		if((channel->color && Channel_Config.color_override && sd->fontcolor)
+			|| (!channel->color && sd->fontcolor))
+			color = sd->fontcolor;
+		else
+			color = channel->color;
 		snprintf(message, CHAN_MSG_LENGTH, "[ #%s ] %s : %s",channel->name,sd->status.name, msg);
-		clif_channel_msg(channel,sd,message);
+		clif_channel_msg(channel,sd,message,color);
 		sd->channel_tick = gettick();
 	}
 	return 0;
@@ -635,7 +640,7 @@ int channel_pcleave(struct map_session_data *sd, char *chname){
 	if( !Channel_Config.closing && (channel->opt & CHAN_OPT_ANNOUNCE_JOIN) ) {
 		char message[60];
 		sprintf(message, "#%s '%s' left",channel->name,sd->status.name);
-		clif_channel_msg(channel,sd,message);
+		clif_channel_msg(channel,sd,message,channel->color);
 	}
 	switch(channel->type){
 	case CHAN_TYPE_ALLY: channel_pcquit(sd,3); break;
@@ -1044,7 +1049,7 @@ void channel_read_config(void) {
 		const char *map_chname, *ally_chname,*map_color, *ally_color;
 		int ally_enabled = 0, local_enabled = 0;
 		int local_autojoin = 0, ally_autojoin = 0;
-		int allow_user_channel_creation = 0;
+		int allow_user_channel_creation = 0, allow_user_color_override = 0;
 
 		if( !config_setting_lookup_string(settings, "map_local_channel_name", &map_chname) )
 			map_chname = "map";
@@ -1074,6 +1079,11 @@ void channel_read_config(void) {
 
 		if( allow_user_channel_creation )
 			Channel_Config.user_chenable = true;
+
+		config_setting_lookup_bool(settings, "allow_user_color_override", &allow_user_color_override);
+
+		if( allow_user_color_override )
+			Channel_Config.color_override = true;
 
 		if( (colors = config_setting_get_member(settings, "colors")) != NULL ) {
 			int color_count = config_setting_length(colors);

@@ -141,7 +141,7 @@ void inter_storage_sql_final(void)
 	return;
 }
 
-// q?f[^?
+// Delete char storage
 int inter_storage_delete(int account_id)
 {
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id`='%d'", storage_db, account_id) )

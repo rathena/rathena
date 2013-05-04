@@ -3282,15 +3282,16 @@ void clif_statusupack(struct map_session_data *sd,int type,int ok,int val)
 ///     2 = failure due to low level
 void clif_equipitemack(struct map_session_data *sd,int n,int pos,int ok)
 {
-	int fd,header,offs=0;
+	int fd,header,offs=0,success;
 #if PACKETVER < 20110824
 	header = 0xaa;
+	success = (ok==1);
 #elif PACKETVER < 20120925
 	header = 0x8d0;
-	ok = ok ? 0:1;
+	success = ok ? 0:1;
 #else
 	header = 0x999;
-	ok = ok ? 0:1;
+	success = ok ? 0:1;
 #endif
 	nullpo_retv(sd);
 
@@ -3305,13 +3306,13 @@ void clif_equipitemack(struct map_session_data *sd,int n,int pos,int ok)
 	WFIFOW(fd,offs+4)=(int)pos;
 #endif
 #if PACKETVER < 20100629
-	WFIFOB(fd,offs+6)=ok;
+	WFIFOB(fd,offs+6)=success;
 #else
 	if (ok && sd->inventory_data[n]->equip&EQP_VISIBLE)
 		WFIFOW(fd,offs+6)=sd->inventory_data[n]->look;
 	else
 		WFIFOW(fd,offs+6)=0;
-	WFIFOB(fd,offs+8)=ok;
+	WFIFOB(fd,offs+8)=success;
 #endif
 	WFIFOSET(fd,packet_len(header));
 }
@@ -5520,7 +5521,7 @@ void clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned l
 /*
  * Display *msg from *sd to all *users in channel
  */
-void clif_channel_msg(struct Channel *channel, struct map_session_data *sd, char *msg) {
+void clif_channel_msg(struct Channel *channel, struct map_session_data *sd, char *msg, short color) {
 	DBIterator *iter;
 	struct map_session_data *user;
 	unsigned short msg_len = strlen(msg) + 1;
@@ -5529,7 +5530,7 @@ void clif_channel_msg(struct Channel *channel, struct map_session_data *sd, char
 	WFIFOW(sd->fd,0) = 0x2C1;
 	WFIFOW(sd->fd,2) = msg_len + 12;
 	WFIFOL(sd->fd,4) = 0;
-	WFIFOL(sd->fd,8) = Channel_Config.colors[channel->color];
+	WFIFOL(sd->fd,8) = Channel_Config.colors[color];
 	safestrncpy((char*)WFIFOP(sd->fd,12), msg, msg_len);
 
 	iter = db_iterator(channel->users);
@@ -8217,7 +8218,7 @@ int clif_colormes(struct map_session_data * sd, enum clif_colors color, const ch
 	WFIFOW(sd->fd,0) = 0x2C1;
 	WFIFOW(sd->fd,2) = msg_len + 12;
 	WFIFOL(sd->fd,4) = 0;
-	WFIFOL(sd->fd,8) = color_table[color];
+	WFIFOL(sd->fd,8) = Channel_Config.colors[color];
 	safestrncpy((char*)WFIFOP(sd->fd,12), msg, msg_len);
 	WFIFOSET(sd->fd, msg_len + 12);
 
@@ -9666,11 +9667,6 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 
 	if( sd->gcbind ) {
 		channel_send(sd->gcbind,sd,message);
-		return;
-	} else if ( sd->fontcolor && !sd->chatID ) {
-		char mout[200];
-		snprintf(mout, 200, "%s : %s",sd->fakename[0]?sd->fakename:sd->status.name,message);
-		clif_colormes(sd,sd->fontcolor-1,mout);
 		return;
 	}
 
