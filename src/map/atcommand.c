@@ -8926,17 +8926,13 @@ ACMD_FUNC(fontcolor)
 	unsigned char k;
 
 	if( !message || !*message ) {
-		char mout[40];
-		for( k = 0; k < Channel_Config.colors_count; k++ ) {
-			sprintf(mout, "[ %s ] : %s",command,Channel_Config.colors_name[k]);
-			clif_colormes(sd,k,mout);
-		}
+		channel_display_list(sd,"colors");
 		return -1;
 	}
 
-	if( message[0] == '0' )
+	if( strcmpi(message,"Normal") == 0 ) {
 		sd->fontcolor = 0;
-	else {
+	} else {
 		ARR_FIND(0,Channel_Config.colors_count,k,( strcmpi(message,Channel_Config.colors_name[k]) == 0 ));
 		if( k == Channel_Config.colors_count ) {
 			sprintf(atcmd_output, msg_txt(sd,1411), message);// Unknown color '%s'.
@@ -8945,6 +8941,8 @@ ACMD_FUNC(fontcolor)
 		}
 		sd->fontcolor = k;
 	}
+	sprintf(atcmd_output, msg_txt(sd,1454), message);// Color set to '%s'.
+	clif_displaymessage(fd, atcmd_output);
 
 	return 0;
 }

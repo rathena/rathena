@@ -72,6 +72,7 @@ struct Channel* channel_name2channel(char *chname, struct map_session_data *sd, 
 int channel_haspc(struct Channel *channel,struct map_session_data *sd);
 int channel_haspcbanned(struct Channel *channel,struct map_session_data *sd);
 int channel_pc_haschan(struct map_session_data *sd, struct Channel *channel);
+int channel_colormes(struct map_session_data *__restrict sd, uint32 channel_color, const char *__restrict msg);
 int channel_display_list(struct map_session_data *sd, char *option);
 
 int channel_pccreate(struct map_session_data *sd, char *chname, char *pass);

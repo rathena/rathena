@@ -68,8 +68,8 @@ of functions or operators returning a value, in (round brackets) instead of most
 numbers. Round brackets will not always be required, but they're often a good 
 idea.
 
-Wherever you refer to a map name, it's always 'mapname' or 'mapname.gat'
-(Please, don't use .gat suffix anymore. It's useless.) 
+Wherever you refer to a map name, it's always 'map name' or 'map name.gat'
+(although the .gat suffix is deprecated). 
 
 
 Script loading structure
@@ -204,7 +204,7 @@ ex: if your NPC is named 'Hunter#hunter1', it will be displayed as 'Hunter'
 
 ** Define a warp point
 
-<from map name>,<fromX>,<fromY>,<facing>%TAB%warp%TAB%<warp name>%TAB%<spanx>,<spany>,<to map name>,<toX>,<toY>
+<from mapname>,<fromX>,<fromY>,<facing>%TAB%warp%TAB%<warp name>%TAB%<spanx>,<spany>,<to mapname>,<toX>,<toY>
 
 This will define a warp NPC that will warp a player between maps, and while most 
 arguments of that are obvious, some deserve special mention.
@@ -1542,7 +1542,7 @@ Example 2: callsub used repeatedly, with different arguments
 ...
 
 S_DunWarp:
-// getarg(0) = "mapname"
+// getarg(0) = "map name"
 // getarg(1) = x
 // getarg(2) = y
 	if (Zeny >= 100) {
@@ -2156,11 +2156,14 @@ Also useful when passing arrays to functions or accessing another npc's arrays:
 
 ---------------------------------------
 
-*readparam(<parameter number>)
+*readparam(<parameter number>{,"<character name>"})
 
-This function will return the basic stats of an invoking character, referred to 
-by the parameter number. Instead of a number, you can use a parameter name if it 
-is defined in 'db/const.txt'.
+This function will return a unique ID number of the invoking character, or, if a 
+character name is specified, of that player.
+
+This function will return the specified stat of the invoking character, or, if a
+character name is specified, of that player. The stat can either be a number or
+paramter name, defined in 'db/const.txt'.
 
 Some example parameters:
 
@@ -2215,7 +2218,8 @@ doesn't have an attached RID. Note that this will cause the map server to
 print "player not attached!" error messages, so it is preferred to use
 "playerattached" to check for the character attached to the script.
 
-if( getcharid(2) == 0 ) mes "Only members of a guild are allowed here!";
+if (getcharid(2) == 0)
+	mes "Only members of a guild are allowed here!";
 
 ---------------------------------------
 
@@ -2929,9 +2933,7 @@ Type can be one of the following values, which control what will be returned:
 This function will return the number of users currently located on the specified 
 map.
 
-Currently being used in the PVP scripts to check if a PVP room is full of not, 
-if the number returned it equal to the maximum allowed it will not let you 
-enter.
+This is used officially in PVP scripts to check whether a room is filled to capacity.
 
 ---------------------------------------
 
@@ -2958,6 +2960,7 @@ You need to put a 'close' after that yourself.
 2,2.- Guild-related commands
 \\
 ---------------------------------------
+
 *getguildname(<guild id>)
 
 This function returns a guild's name given an ID number. If there is no such 
@@ -2999,7 +3002,6 @@ Maybe you want to make a room only guild masters can enter:
     L_GuildMaster:
         mes "Welcome guild master of "+GetGuildName(@GID);
         close;
-
 
 ---------------------------------------
 
@@ -3078,7 +3080,7 @@ the specified event as in a 'doevent' call.
 
 ---------------------------------------
 
-*getmapguildusers(<mapname>,<guild id>)
+*getmapguildusers("<map name>",<guild id>)
 
 Returns the amount of characters from the specified guild on the given map.
 
@@ -3177,7 +3179,7 @@ Valid types are listed in const.txt:
 	MOB_MODE	21
 	MOB_MVPEXP	22
 
-Check sample in doc/sample/getmonsterinfo.txt
+For more details, see the sample in doc/sample/getmonsterinfo.txt.
 
 ---------------------------------------
 
@@ -3390,8 +3392,8 @@ Option numbers valid for the third version (opt2) of this command are:
 0x80 - Deadly poisoned.
 
 Option numbers (except for opt1) are bit-masks - you can add them up to check
- for several states, but the functions will return true if at least one of them
- is in effect.
+for several states, but the functions will return true if at least one of them
+is in effect.
 
 'setoption' will set options on the invoking character. There are no second and 
 third versions of this command, so you can only change the values in the first 
@@ -3635,12 +3637,12 @@ For a list of equipment slots see 'getequipid'.
 *detachrid;
 
 These commands allow the manipulation of the script's currently attached player.
-While attachrid allows attaching of a different player by using it's account id
-for the parameter rid, detachrid makes the following commands run, as if the
+While 'attachrid' allows attaching of a different player by using its account id
+for the parameter RID, 'detachrid' makes the following commands run as if the
 script was never invoked by a player. 
 
-In case, that the player cannot be attached, such as, when the player went
-offline in the mean time, attachrid returns 0, otherwise 1.
+The command returns 0 if the player cannot be attached (if the account is offline
+or does not exist), and 1 upon success.
 
 ---------------------------------------
 
@@ -3738,7 +3740,7 @@ SavePoint:    All party members are warped to the save point of the currently
 Leader:       All party members are warped to the leader's position. The leader must
               be online and in the current map-server for this to work.
 
-If you specify a from_mapname, warpparty will only affect those on that map.
+If you specify a from_mapname, 'warpparty' will only affect those on that map.
 
 Example:
 
@@ -3751,7 +3753,7 @@ close;
  
 ---------------------------------------
  
-*warpchar "<mapname>",<x>,<y>,<char_id>;
+*warpchar "<map name>",<x>,<y>,<char_id>;
  
 Warps another player to specified map and coordinate given the char id, which you can get with
 getcharid(0,<player_name>). Obviously this is useless if you want to warp the same player that
@@ -3763,7 +3765,7 @@ warpchar "prontera",150,100,150001;
  
 ---------------------------------------
  
-*warpguild "<mapname>",<x>,<y>,<guild_id>;
+*warpguild "<map name>",<x>,<y>,<guild_id>;
  
 Warps a guild to specified map and coordinate given the guild id, which you can get with 
 getcharid(2). You can also request another guild id given the member's name with getcharid(2,<player_name>).
@@ -3794,11 +3796,10 @@ normally translate to random coordinates.
 *savepoint "<map name>",<x>,<y>;
 *save "<map name>",<x>,<y>;
 
-This command saves where the invoking character will return to upon 
-'return to save point', if dead or in some other cases. The two versions are 
-equivalent. Map name, X coordinate and Y coordinate should be perfectly obvious. 
-This ignores any and all map flags, and can make a character respawn where no 
-teleportation is otherwise possible.
+These commands save where the invoking character will return to upon clicking
+"Return to Save Point", after death and in some other cases. The two versions are 
+equivalent. They ignore any and all mapflags, and can make a character respawn where
+no teleportation is otherwise possible.
 
     savepoint "place",350,75;
 
@@ -3937,10 +3938,12 @@ job (for example, if you try to get the baby version of a Taekwon class).
 
 ---------------------------------------
 
-*changebase <job ID number>;
+*changebase <job ID number>{,<account ID>};
 
-This command will change the appearance of the invoking character to that of a
-specified job class. Nothing but appearance will change.
+This command will change a character's appearance to that of the specified job
+class. Nothing but appearance will change.
+
+The command will run for the invoking character unless an account ID is given.
 
 	changebase Job_Novice; // Changes player to Novice sprite.
 	changebase Class; // Changes player back to default sprite.
@@ -4671,7 +4674,7 @@ The storage window opens regardless of whether there are open NPC dialogs or
 not, but it is preferred to close the dialog before displaying the storage
 window, to avoid any disruption when both windows overlap.
 
-    mes "I will now open your stash for you";
+    mes "Close this window to open your storage.";
     close2;
     openstorage;
     end;
@@ -5397,55 +5400,6 @@ summon "--ja--",-1;
 
 ---------------------------------------
 
-*unitwalk <GID>,<x>,<y>;
-*unitwalk <GID>,<Target ID>;
-
-This command will tell a <GID> to walk to a position.  The destination can be defined
-as either set coordinates, or another object.
-
-When 2 arguments are passed, the <GID> will walk to the given x,y coordinates on 
-the map where the unit currently is.  This command returns a 1 or 0 for success and failure
-checks.  While there is no way to move across an entire map with 1 command use, there
-doesn't seem to be any reason this couldn't be used in a loop to move long distances.
-
-The second method of using this command makes the first <GID> walk to the <Target ID> (not unlike walking to attack)
-Using this method will also return a 1 or 0 for success or failure.  This is based on distance from <GID> to <Target ID>.
-It is good to note that this command uses a hard walk check, so it will calculate a walkpath with obstacles.
-
-Examples:
-
-//Move/walk NPC invoker to the coordinates 150,150
-	unitwalk getcharid(3),150,150;
-
-//Doing a conditional check with the command and reporting to player success or failure
-	if(unitwalk(getcharid(3),150,150))
-		dispbottom "Walking you there...";
-	else
-		dispbottom "That's too far away, man.";
-
-//Sends NPC invoker to another character with name WalkToMe
-	unitwalk getcharid(3),getcharid(3,"WalkToMe");
-
-Note: Sending a bad target ID to this command will result in an error.
-
----------------------------------------
-
-*unitkill <GID>;
-*unitwarp <GID>,<Mapname>,<x>,<y>;
-*unitattack <GID>,<Target ID>;
-*unitstop <GID>;
-*unittalk <GID>,<Text>;
-*unitemote <GID>,<Emote>;
-
-Okay, these commands should be fairly self explaining.
-For the emotions, you can look in db/const.txt for prefixes with e_
-PS: unitwarp supports a <GID> of zero, which causes the executor of the script to be affected. This can be used with OnTouchNPC to warp monsters:
-
-OnTouchNPC:
-	unitwarp 0,"this",-1,-1;
-
----------------------------------------
-
 *disablenpc "<NPC object name>";
 *enablenpc "<NPC object name>";
 
@@ -5582,6 +5536,7 @@ Size is 0 = normal 1 = small 2 = big.
 5,1.- Time-related commands
 \\
 ---------------------------------------
+
 *addtimer <ticks>,"NPC::OnLabel";
 *deltimer "NPC::OnLabel";
 *addtimercount <ticks>,"NPC::OnLabel";
@@ -5767,6 +5722,7 @@ currently ignored by the client and appears always green.
 //
 5,1.- End of time-related commands
 //
+---------------------------------------
 
 *announce "<text>",<flag>{,<fontColor>{,<fontType>{,<fontSize>{,<fontAlign>{,<fontY>}}}}};
 
@@ -5848,37 +5804,38 @@ optional parameters are the same as in 'announce', but target and source flags a
 *callshop "<name>",<option>;
 
 These are a series of commands used to create dynamic shops. 
-The callshop function calls a invisible shop (view -1) as if the player clicked on it.
+The 'callshop' function calls an invisible shop (view -1) as if the player clicked on it.
 
-For the options on callShop:
+The options are:
 	0 = The normal window (buy, sell and cancel)
 	1 = The buy window
 	2 = The sell window
-	
-Example:
 
-callshop "DaShop",1;	//Will call the shop named DaShop and opens the buy menu.
+A shop called with this command will trigger the labels "OnBuyItem" and "OnSellItem"
+(as long as an npcshop* command is executed from that NPC, see note below). These
+labels, if used, will replace how the shop handles the buying and selling of items,
+allowing for the creation of dynamic shops.
 
-The shop which is called by callshop (as long as an npcshop* command is executed
-from that NPC (see note 1)) will trigger the labels OnBuyItem and OnSellitem. These
-labels can take over handling for relatively the buying of items from the shop 
-and selling the items to a shop. Via these labels you can customize the way an item
-is bought or sold by a player. 
+The label "OnBuyItem" sets the following arrays:
+	@bought_nameid   - item ID bought
+	@bought_quantity - amount bought
 
-In the OnBuyItem, two arrays are set (@bought_nameid and @bought_quantity), which
-hold information about the name id (item id) sold and the amount sold of it. Same 
-goes for the OnSellItem label, only the variables are named different 
-(@sold_nameid, @sold_quantity, @sold_refine, @sold_attribute, @sold_identify,
-@sold_card1, @sold_card2, @sold_card3, @sold_card4). An example on a shop comes
-with rAthena, and can be found in the doc/sample/npc_dynamic_shop.txt file.
- 
-This example shows how to use the labels and their set variables to create a dynamic shop.
+The label "OnSellItem" sets the following arrays:
+	@sold_nameid     - item ID sold
+	@sold_quantity   - amount sold
+	@sold_refine     - refine count
+	@sold_attribute  - if the item is broken (1) or not (0)
+	@sold_identify   - if the item is identified (1) or not (0)
+	@sold_card1      - card slot 1
+	@sold_card2      - card slot 2
+	@sold_card3      - card slot 3
+	@sold_card4      - card slot 4
 
-Note 1: These labels will only be triggered if a npcshop* command is executed, this is
-because these commands set a special data on the shop NPC,named master_nd in the source. 
-The OnSellItem and OnBuyItem are triggered in the NPC whose master_nd is given in the shop.
-This was found out thanks to 'Hondacrx', noticing the OnBuyItem wasn't triggered unless
-npcshopitem was used. After rechecking the source, I found what caused this.
+Note: These labels will only be triggered if an npcshop* command is executed because these
+commands set a special data on the shop NPC, named master_nd in the source. The above labels
+are triggered in the NPC whose master_nd is given in the shop.
+
+A full example of a dynamic shop can be found in doc/sample/npc_dynamic_shop.txt.
 
 ---------------------------------------
 
@@ -6130,11 +6087,11 @@ Examples:
 
 ---------------------------------------
 
-*warpportal <x>,<y>,"<mapname>",<x>,<y>;
+*warpportal <source x>,<source y>,"<map name>",<target x>,<target y>;
 
-Creates a warp Portal as if a acolyte class character did it.
-The first x and y is the place of the warp portal on the map where the NPC is on
-The mapname and second x and y is the target area of the warp portal.
+Creates a warp portal identical to the Acolyte "Warp Portal" skill.
+The source coordinates specify the portal's location on the map of the invoking NPC.
+The target map and coordinates determine the destination of the portal.
 
 Examples:
 
@@ -6163,7 +6120,7 @@ Example:
 
 ---------------------------------------
 \\
-5,2.- Guild-related Commands
+5,2.- Guild-related commands
 \\
 ---------------------------------------
 
@@ -6579,6 +6536,89 @@ This command will execute an atcommand binding on the attached RID from a script
 The three .@atcmd_***** variables will NOT be set when invoking scripts-atcommands this way.
 
 ---------------------------------------
+\\
+6,1.- Unit-related commands
+\\
+---------------------------------------
+
+*unitwalk <GID>,<x>,<y>;
+*unitwalk <GID>,<Target ID>;
+
+This command will tell a <GID> to walk to a position, defined either as a set of
+coordinates or another object. The command returns a 1 for success and 0 upon failure.
+
+If coordinates are passed, the <GID> will walk to the given x,y coordinates on the
+unit's current map. While there is no way to move across an entire map with 1 command
+use, this could be used in a loop to move long distances.
+
+If an object ID is passed, the initial <GID> will walk to the <Target ID> (similar to
+walking to attack). This is based on the distance from <GID> to <Target ID>. This command
+uses a hard walk check, so it will calculate a walk path with obstacles. Sending a bad
+target ID will result in an error.
+
+Examples:
+
+// Makes player walk to the coordinates (150,150).
+	unitwalk getcharid(3),150,150;
+
+// Performs a conditional check with the command and reports success or failure to the player.
+	if(unitwalk(getcharid(3),150,150))
+		dispbottom "Walking you there...";
+	else
+		dispbottom "That's too far away, man.";
+
+// Makes player walk to another character named "WalkToMe".
+	unitwalk getcharid(3),getcharid(3,"WalkToMe");
+
+---------------------------------------
+
+*unitattack <GID>,<Target ID>{,<action type>};
+*unitattack <GID>,"<Target Name>"{,<action type>};
+
+This command will make a <GID> attack the specified target. It returns 1 upon
+success and 0 for all failures.
+
+If <GID> is a player and a non-zero <action type> is given, the unit will perform a
+continuous attack instead of a single attack.
+
+---------------------------------------
+
+*unitkill <GID>;
+
+This command will kill a <GID>.
+
+---------------------------------------
+
+*unitwarp <GID>,"<map name>",<x>,<y>;
+
+This command will warp a <GID> to the specified map and coordinates.
+
+If <GID> is zero, the command runs for the unit that invoked the script. This can be
+used with "OnTouch" to warp monsters:
+
+OnTouch:
+	unitwarp 0,"this",-1,-1;
+
+---------------------------------------
+
+*unitstop <GID>;
+
+This command will make a <GID> stop attacking and moving.
+
+---------------------------------------
+
+*unittalk <GID>,"<text>";
+
+This command will make a <GID> say a message.
+
+---------------------------------------
+
+*unitemote <GID>,<emotion number>;
+
+This command will make a <GID> display an emotion sprite.
+For a full list of emotion numbers, see 'db/const.txt' under 'e_'.
+
+---------------------------------------
 
 *unitskilluseid <GID>,<skill id>,<skill lvl>{,<target id>};
 *unitskilluseid <GID>,"<skill name>",<skill lvl>{,<target id>};
@@ -6591,6 +6631,10 @@ GID as the other unit* commands (See 'GID').
 Skill ID is the ID of the skill, skill level is the level of the skill.
 For the position, the x and y are given in the unitSkillUsePos.
 
+---------------------------------------
+\\
+6,1.- End of unit-related commands
+\\
 ---------------------------------------
 
 *npcskill <skill id>,<skill lvl>,<stat point>,<NPC level>;
@@ -6843,7 +6887,6 @@ Returns char at specified index. If index is out of range, returns empty string.
 The first letter of a string is index 0.
 
 Example:
-	
 	charat("This is a string", 10); //returns "s"
 
 ---------------------------------------
@@ -6855,7 +6898,6 @@ specified char. If index out of range, the original string will be returned.
 Only the 1st char in the <char> parameter will be used.
 
 Example:
-	
 	setchar("Cat", "B", 0); //returns "Bat"
 
 ---------------------------------------
@@ -6867,7 +6909,6 @@ index. If index is out of range, the char will be inserted on the end of the
 string that it is closest. Only the 1st char in the <char> parameter will be used.
 
 Example:
-	
 	insertchar("laughter", "s", 0); //returns "slaughter"
 
 ---------------------------------------
@@ -6878,7 +6919,6 @@ Returns the original string with the char at the specified index removed.
 If index is out of range, original string will be returned.
 
 Example:
-	
 	delchar("Diet", 3); //returns "Die"
 
 ---------------------------------------
@@ -6890,7 +6930,6 @@ Returns the specified string in it's uppercase/lowercase form.
 All non-alpha characters will be preserved.
 
 Example:
-	
 	strtoupper("The duck is blue!!"); //returns "THE DUCK IS BLUE!!"
 
 ---------------------------------------
@@ -6902,7 +6941,6 @@ Returns 1 if character at specified index of specified string is
 uppercase/lowercase. Otherwise, 0. Characters not of the alphabet will return 0.
 
 Example:
-	
 	charisupper("rAthena", 1); //returns 1
 
 ---------------------------------------
@@ -6914,7 +6952,6 @@ indexes. If indexes are out of range, or the start index is after the end
 index, an empty string will be returned.
 
 Example:
-	
 	substr("foobar", 3, 5); //returns "bar"
 
 ---------------------------------------
@@ -6927,7 +6964,6 @@ delimiter parameter will be used. If an empty string is passed as a delimiter,
 the string will be placed in the array in it's original form.
 
 Example:
-	
 	explode(.@my_array$, "Explode:Test:1965:red:PIE", ":");
 	//.@my_array$ contents will be...
 	//.@my_array$[0]: "Explode"
@@ -7396,24 +7432,24 @@ color can be:
 ============================
 ---------------------------------------
 
-*waitingroom2bg_single(<battle group>,"<mapname>",<x>,<y>,"<npc name>");
+*waitingroom2bg_single(<battle group>,"<map name>",<x>,<y>,"<npc name>");
 
-Adds the first waiting player from the chat room of given NPC to an
-existing battleground group and warps it to specified coordinates on
-given map.
+Adds the first waiting player from the chat room of the given NPC to an
+existing battleground group and warps it to the specified coordinates on
+the given map.
 
 ---------------------------------------
 
-*waitingroom2bg("<mapname>",<x>,<y>,"<On Quit Event>","<On Death Event>"{,"<npc name>"});
+*waitingroom2bg("<map name>",<x>,<y>,"<On Quit Event>","<On Death Event>"{,"<NPC Name>"});
 
-<Mapname> and X Y coordinates refer to where the "respawn" base is, where the player group will respawn when they die.
+<map name>,<x>,<y> refer to where the "respawn" base is, where the player group will respawn when they die.
 <On Quit Event> refers to an NPC label that attaches to the character and is run when they relog.
 <On Death Event> refers to an NPC label that attaches to the character and is run when they die. Can be "" for empty.
 
 Unlike the prior command, the latter will attach a GROUP in a waiting room to the battleground, and 
 sets the array $@arenamembers[0] where 0 holds the IDs of the first group, and 1 holds the IDs of the second.
 
-If the option parameter is left out, the waiting room of the current NPC is used.
+If the optional NPC Name parameter is left out, the waiting room of the current NPC is used.
 
 Example:
 	// Battle Group will be referred to as $@KvM01BG_id1, and when they die, respawn at bat_c01,52,129.
@@ -7424,7 +7460,7 @@ Example:
 
 *bg_team_setxy <Battle Group ID>,<x>,<y>;
 
-Update the respawn point of the given battle group to x, y on the same map. The <Battle Group ID> can be retrieved using getcharid(4)
+Updates the respawn point of the given Battle Group to x,y on the same map. <Battle Group ID> can be retrieved using getcharid(4).
 
 Example:
 	bg_team_setxy getcharid(4),56,212;
@@ -7433,10 +7469,10 @@ Example:
 
 ---------------------------------------
 
-*bg_warp <Battle Group>,"<Mapname>",<x>,<y>;
+*bg_warp <Battle Group>,"<map name>",<x>,<y>;
 
-Similar to warp command.
-Place all members of <Battle Group> at <mapname> at x y.
+Similar to the 'warp' command.
+Places all members of <Battle Group> at the specified map and coordinates.
 
 Example:
 	//place the battle group one for Tierra Gorge at starting position.
@@ -7448,10 +7484,10 @@ Example:
 *bg_monster <Battle Group>,"<map name>",<x>,<y>,"<name to show>",<mob id>,"<event label>";
 *bg_monster(<Battle Group>,"<map name>",<x>,<y>,"<name to show>",<mob id>,"<event label>");
 
-Similar to monster script command.
-Spawn a monster with allegiance to the given battle group.
+Similar to the 'monster' command.
+Spawns a monster with allegiance to the given Battle Group.
 Does not allow for the summoning of multiple monsters.
-Monsters are similar to that in War of Emperium, in that the specified Battle group is considered friendly.
+Monsters are similar to those in War of Emperium, in that the specified Battle Group is considered friendly.
 
 Example:
 	// It can be used in two different ways.
@@ -7468,7 +7504,7 @@ Example:
 *bg_monster_set_team <GID>,<Battle Group>;
 
 This command will change the allegiance if a monster in a battle ground.
-GID can be set when spawning the monster via the bg_monster command.
+GID can be set when spawning the monster via the 'bg_monster' command.
 
 Example:
 
@@ -7496,13 +7532,14 @@ Removes attached player from their Battle Group.
 
 *bg_destroy <Batte Group>;
 
-As the name says, destroys the battle group created for that battle ground.
+Destroys the Battle Group created for that battle ground.
 
 ---------------------------------------
 
-*areapercentheal "<mapname>",<x1>,<y1>,<x2>,<y2>,<hp>,<sp>;
+*areapercentheal "<map name>",<x1>,<y1>,<x2>,<y2>,<hp>,<sp>;
 
-Not exactly limited to battleground use, this will restore HP/SP in a defined area at a percentage.
+Restores a percentage of the maximum HP/SP of players within a defined area.
+This is primarily used in battleground scripts, but is not limited to them.
 
 Example:
 	areapercentheal "bat_a01",52,208,61,217,100,100;
@@ -7512,23 +7549,24 @@ Example:
 
 *bg_get_data(<Battle Group>,<type>);
 
-Retrieves data related to given battle group. Type can be one of the following:
+Retrieves data related to given Battle Group. Type can be one of the following:
 
     0 - Amount of players currently belonging to the group.
 
 ---------------------------------------
-*bg_getareausers(<battle group>,<map name>,<x0>,<y0>,<x1>,<y1>);
 
-Retrieves amount of players belonging to given battle group on given
-map within an specified rectangular area.
+*bg_getareausers(<Battle Group>,"<map name>",<x0>,<y0>,<x1>,<y1>);
+
+Retrieves the amount of players belonging to the given Battle Group on the given
+map within the specified rectangular area.
 
 ---------------------------------------
 
-*bg_updatescore "<mapname>",<Guillaume Score>,<Croix Score>;
+*bg_updatescore "<map name>",<Guillaume Score>,<Croix Score>;
 
 This command will force the update of the displayed scoreboard.
 It is only usable when the map is defined as a Type 2 Battleground:
-mapflag	<mapname>	battleground	2
+mapflag	<map name>	battleground	2
 
 ---------------------------------------
 
@@ -7554,7 +7592,7 @@ command will make the pet catching cursor appear on the client connected to the
 invoking character, usable on the monsters with the specified pet ID number. It 
 will still work outside an item script.
 
-A full list of pet IDs can be found inside 'db/pet_db.txt'
+A full list of pet IDs can be found inside 'db/pet_db.txt'.
 
 ---------------------------------------
 
@@ -7657,7 +7695,7 @@ starting with 'b' in 'db/const.txt')
 This command will make the pet cure a specified status condition. The curing 
 actions will occur once every Delay seconds. For a full list of status 
 conditions that can be cured, see the list of 'SC_' status condition constants 
-in 'db/const.txt'
+in 'db/const.txt'.
 
 ---------------------------------------
 

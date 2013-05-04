@@ -7015,8 +7015,8 @@ BUILDIN_FUNC(disableitemuse)
 }
 
 /*==========================================
- * return the basic stats of sd
- * chk pc_readparam for available type
+ * Returns a character's specified stat.
+ * Check pc_readparam for available options.
  *------------------------------------------*/
 BUILDIN_FUNC(readparam)
 {
@@ -7060,7 +7060,7 @@ BUILDIN_FUNC(getcharid)
 		sd=script_rid2sd(st);
 
 	if(sd==NULL){
-		script_pushint(st,0);	//return 0, according docs
+		script_pushint(st,0); //return 0, according docs
 		return 0;
 	}
 
@@ -15442,7 +15442,7 @@ BUILDIN_FUNC(unitwarp)
 /// Makes the unit attack the target.
 /// If the unit is a player and <action type> is not 0, it does a continuous
 /// attack instead of a single attack.
-/// Returns if the request was successfull.
+/// Returns if the request was successful.
 ///
 /// unitattack(<unit_id>,"<target name>"{,<action type>}) -> <bool>
 /// unitattack(<unit_id>,<target_id>{,<action type>}) -> <bool>
