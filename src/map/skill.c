@@ -13878,16 +13878,18 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 		if( itemid_isgemstone(req.itemid[i]) && skill_id != HW_GANBANTEIN )
 		{
 			if( sd->special_state.no_gemstone )
-			{	//Make it substract 1 gem rather than skipping the cost.
-				if( --req.amount[i] < 1 )
-					req.itemid[i] = 0;
+			{	// All gem skills except Hocus Pocus and Ganbantein can cast for free with Mistress card -helvetica
+				if( skill_id != SA_ABRACADABRA )
+					req.itemid[i] = req.amount[i] = 0;
+				else if( --req.amount[i] < 1 )
+					req.amount[i] = 1; // Hocus Pocus always use at least 1 gem
 			}
 			if(sc && sc->data[SC_INTOABYSS])
 			{
 				if( skill_id != SA_ABRACADABRA )
 					req.itemid[i] = req.amount[i] = 0;
 				else if( --req.amount[i] < 1 )
-					req.amount[i] = 1; // Hocus Pocus allways use at least 1 gem
+					req.amount[i] = 1; // Hocus Pocus always use at least 1 gem
 			}
 		}
 		if( skill_id >= HT_SKIDTRAP && skill_id <= HT_TALKIEBOX && pc_checkskill(sd, RA_RESEARCHTRAP) > 0){
