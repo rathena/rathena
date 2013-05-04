@@ -9243,8 +9243,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if(hd->master && hd->sc.data[SC_STYLE_CHANGE]) {
 		    int mode = hd->sc.data[SC_STYLE_CHANGE]->val1;
 		    char output[128];
-		    safesnprintf(output,sizeof(output),"Eleanor is now in %s mode",(sce->val1==MH_MD_FIGHTING?"fighthing":"grappling"));
-		    clif_colormes(hd->master,COLOR_RED,output);
+		    safesnprintf(output,sizeof(output),msg_txt(sd,378),(sce->val1==MH_MD_FIGHTING?"fighthing":"grappling"));
+		    clif_colormes(hd->master,color_table[COLOR_RED],output);
 		}
 	    }
 	    break;
@@ -13262,8 +13262,8 @@ int skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id
 			    if (map_foreachinrange(mob_count_sub, &sd->bl, skill_get_splash(skill_id, skill_lv), BL_MOB,
 				    MOBID_EMPERIUM, MOBID_GUARIDAN_STONE1, MOBID_GUARIDAN_STONE2)) {
 				char output[128];
-				sprintf(output, "You're too close to a stone or emperium to do this skill");
-				clif_colormes(sd, COLOR_RED, output);
+				sprintf(output,"%s",msg_txt(sd,382)); //	You're too close to a stone or emperium to do this skill
+				clif_colormes(sd,color_table[COLOR_RED], output);
 				return 0;
 			    }
 			}
@@ -13630,11 +13630,11 @@ int skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id, 
 			return 0;
 		} else if( sd->status.inventory[i].amount < require.ammo_qty ) {
 			char e_msg[100];
-			sprintf(e_msg,"Skill Failed. [%s] requires %dx %s.",
+			sprintf(e_msg,msg_txt(sd,381), //Skill Failed. [%s] requires %dx %s
 						skill_get_desc(skill_id),
 						require.ammo_qty,
 						itemdb_jname(sd->status.inventory[i].nameid));
-			clif_colormes(sd,COLOR_RED,e_msg);
+			clif_colormes(sd,color_table[COLOR_RED],e_msg);
 			return 0;
 		}
 		if (!(require.ammo&1<<sd->inventory_data[i]->look)) { //Ammo type check. Send the "wrong weapon type" message

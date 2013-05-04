@@ -17,6 +17,7 @@ enum Channel_Opt {
 	CHAN_OPT_BASE		= 0,
 	CHAN_OPT_ANNOUNCE_JOIN	= 1,	//display message when join or leave
 	CHAN_OPT_MSG_DELAY	= 2,
+	CHAN_OPT_COLOR_OVERRIDE = 3,
 };
 
 enum Channel_Type {

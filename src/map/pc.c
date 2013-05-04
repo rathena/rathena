@@ -4107,7 +4107,7 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		return 0;
 	if( !item->script ) //if it has no script, you can't really consume it!
 		return 0;
-		
+
 	if( (item->item_usage.flag&NOUSE_SITTING) && (pc_issit(sd) == 1) && (pc_get_group_level(sd) < item->item_usage.override) ) {
 		return 0; // You cannot use this item while sitting.
 	}
@@ -4319,14 +4319,14 @@ int pc_useitem(struct map_session_data *sd,int n)
 					int e_tick = DIFF_TICK(sd->item_delay[i].tick, tick)/1000;
 					char e_msg[100];
 					if( e_tick > 99 )
-						sprintf(e_msg,"Item Failed. [%s] is cooling down. wait %.1f minutes.",
+						sprintf(e_msg,msg_txt(sd,379), //Item Failed. [%s] is cooling down. wait %.1f minutes.
 										itemdb_jname(sd->status.inventory[n].nameid),
 										(double)e_tick / 60);
 					else
-						sprintf(e_msg,"Item Failed. [%s] is cooling down. wait %d seconds.",
+						sprintf(e_msg,msg_txt(sd,380), //Item Failed. [%s] is cooling down. wait %d seconds.
 										itemdb_jname(sd->status.inventory[n].nameid),
 										e_tick+1);
-					clif_colormes(sd,COLOR_RED,e_msg);
+					clif_colormes(sd,color_table[COLOR_RED],e_msg);
 					return 0; // Delay has not expired yet
 				}
 			} else {// not yet used item (all slots are initially empty)
@@ -6591,7 +6591,7 @@ void pc_close_npc(struct map_session_data *sd,int flag)
 			clif_clearunit_single(sd->npc_id, CLR_OUTSIGHT, sd->fd);
 			sd->state.using_fake_npc = 0;
 		}
-			
+
 		if (sd->st) {
 			if(sd->st->state == RUN){ //wait ending code execution
 				add_timer(gettick()+500,pc_close_npc_timer,sd->bl.id,flag);

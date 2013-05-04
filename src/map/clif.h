@@ -382,7 +382,7 @@ void clif_misceffect(struct block_list* bl,int type);	// area
 void clif_changeoption(struct block_list* bl);	// area
 void clif_changeoption2(struct block_list* bl);	// area
 void clif_useitemack(struct map_session_data *sd,int index,int amount,bool ok);	// self
-void clif_GlobalMessage(struct block_list* bl, const char* message);
+void clif_GlobalMessage(struct block_list* bl, const char* message,enum send_target target);
 void clif_createchat(struct map_session_data* sd, int flag);	// self
 void clif_dispchat(struct chat_data* cd, int fd);	// area or fd
 void clif_joinchatfail(struct map_session_data *sd,int flag);	// self
@@ -776,7 +776,7 @@ enum clif_colors {
 	COLOR_MAX
 };
 unsigned long color_table[COLOR_MAX];
-int clif_colormes(struct map_session_data * sd, enum clif_colors color, const char* msg);
+int clif_colormes(struct map_session_data * sd, unsigned long color, const char* msg);
 
 void clif_channel_msg(struct Channel *channel, struct map_session_data *sd, char *msg, short color);
 

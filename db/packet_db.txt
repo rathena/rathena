@@ -1842,10 +1842,13 @@ packet_ver: 34
 0x090f,-1 // notify_newentry7
 0x914,-1 // notify_moveentry
 0x915,-1 // notify_standentry
+0x978,6,reqworldinfo,2
+0x979,50 //ackworldinfo
 0x99a,9 // take_off_equipv5
 0x997,-1 //ZC_EQUIPWIN_MICROSCOPE_V5
 0x998,8,equipitem,2:4
 0x999,11 // cz_wear_equipv5
+
 
 // New cashshop
 0x0844,2,cashshopopen,0
