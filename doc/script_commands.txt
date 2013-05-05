@@ -192,7 +192,7 @@ NPC names are kinda special and are formatted this way:
 <Display name>{::<Unique name>}
 
 All NPCs need to have a unique name that is used for identification purposes.
-When you have to identify a NPC by it's name, you should use <Unique name>.
+When you have to identify a NPC by its name, you should use <Unique name>.
 If <Unique name> is not provided, use <Display name> instead.
 
 The client has a special feature when displaying names:
@@ -321,8 +321,7 @@ The code part is the script code that will execute whenever the function is
 called with 'callfunc'. It has to be in curly brackets, unlike elsewhere where 
 we use curly brackets, these do NOT signify an optional parameter.
 
-
-Once an object is defined which has a 'code' field to it's definition, it 
+Once an object is defined which has a 'code' field to its definition, it 
 contains script commands which can actually be triggered and executed. 
 
 ~ RID? GID? ~
@@ -334,7 +333,7 @@ Most scripting commands and functions will want to request data about a
 character, store variables referenced to that character, send stuff to the 
 client connected to that specific character. Whenever a script is invoked by a 
 character, it is passed a so-called RID - this is the account ID number of a 
-character that caused the code to execute by clicking on it, walking into it's 
+character that caused the code to execute by clicking on it, walking into its 
 OnTouch zone, or otherwise.
 
 If you are only writing common NPCs, you don't need to bother with it. However, 
@@ -445,10 +444,10 @@ nothing  - A permanent variable attached to the character, the default variable
            are accessible from inside the function, however 'getvariableofnpc' 
            does NOT work on function objects.
 ".@"     - A scope variable.
-           They are unique to the instance and scope. Each instance has it's 
+           They are unique to the instance and scope. Each instance has its 
            own scope that ends when the script ends. Calling a function with 
            callsub/callfunc starts a new scope, returning from the function 
-           ends it. When a scope ends, it's variables are converted to values 
+           ends it. When a scope ends, its variables are converted to values 
            ('return .@var;' returns a value, not a reference).
 "'"      - An instance variable
            These are used with the instancing system, and are unique to each 
@@ -1200,7 +1199,7 @@ getvariableofnpc will not work on them.
 *goto <label>;
 
 This command will make the script jump to a label, usually used in conjunction 
-with other command, such as "if", but often used on it's own.
+with other command, such as "if", but often used on its own.
 
 	...
 	goto Label;
@@ -1285,7 +1284,7 @@ this:
 			
 			set @menulist$[@j],@possiblemenuitems$[@i];
 			
-			// We just copied the string, we do need it's number for later 
+			// We just copied the string, we do need its number for later 
 			// though, so we record it as well.
 			
 			set @menureference[@j],@i;
@@ -1311,7 +1310,7 @@ dirty trick:
 	menu @menulist$[0],-,@menulist$[1],-,....@menulist$[<X>],-;
 
 This calls up a menu of all your items. Since you didn't copy some of the 
-possible menu items into the list, it's end is empty and so no menu items will 
+possible menu items into the list, its end is empty and so no menu items will 
 show up past the end. But this menu call doesn't jump anywhere, it just 
 continues execution right after the menu command. (And it's a good thing it 
 doesn't, cause you can only explicitly define labels to jump to, and how do you 
@@ -1599,12 +1598,12 @@ You can pass multiple arguments in a function call:
 
 getarg(0) would be 5, getarg(1) would be 4 and getarg(2) would be 3.
 
-Getarg has an optional argument since trunk r10773 and stable r10958.
+'getarg' has an optional argument since trunk r10773 and stable r10958.
 If the target argument exists, it is returned.
 Otherwise, if <default_value> is present it is returned instead, 
 if not the script terminates immediately.
 
-in the previous example getarg(2,-1) would be 3 and getarg(3,-1) would be -1
+In the previous example getarg(2,-1) would be 3 and getarg(3,-1) would be -1.
 
 ---------------------------------------
 
@@ -2158,9 +2157,6 @@ Also useful when passing arrays to functions or accessing another npc's arrays:
 
 *readparam(<parameter number>{,"<character name>"})
 
-This function will return a unique ID number of the invoking character, or, if a 
-character name is specified, of that player.
-
 This function will return the specified stat of the invoking character, or, if a
 character name is specified, of that player. The stat can either be a number or
 paramter name, defined in 'db/const.txt'.
@@ -2469,7 +2465,7 @@ EQI_COSTUME_HEAD_TOP (13) - Upper Costume Headgear
 EQI_COSTUME_GARMENT (14)  - Costume Garment
 
 Notice that a few items occupy several equipment slots, and if the character is 
-wearing such an item, 'getequipid' will return it's ID number for either slot.
+wearing such an item, 'getequipid' will return its ID number for either slot.
 
 Can be used to check if you have something equipped, or if you haven't got 
 something equipped:
@@ -3578,6 +3574,7 @@ The renewal feature to check is determined by type.
 3,1.- Item-related commands
 \\
 ---------------------------------------
+
 *isequipped(<id>{,<id>{,<id>{,<id>}}})
 
 This function will return 1 if the invoking character has all of the item 
@@ -3601,13 +3598,16 @@ in February 2005, but it will work just fine in normal NPC scripts.
 This function is similar to 'isequipped', but instead of 1 or 0, it will return 
 the number of cards in the list given that were found on the invoking character.
 
+If a given parameter is not a card, the function returns the amount of that
+item equipped on the invoking character.
+
     if (isequippedcnt(4001,4005,4033,4196) == 4) mes "Finally got all four poring cards?";
 
 ---------------------------------------
 
 *checkequipedcard(<card id>)
 
-This function will return 1 if the card specified by it's item ID number is 
+This function will return 1 if the card specified by its item ID number is 
 inserted into any equipment they have in their inventory, currently equipped or 
 not.
 
@@ -3952,7 +3952,7 @@ The command will run for the invoking character unless an account ID is given.
 
 *classchange <view id>,<type>;
 
-This command is very ancient, it's origins are clouded in mystery. 
+This command is very ancient, its origins are clouded in mystery. 
 It will send a 'display id change' packet to everyone in the immediate area of 
 the NPC object, which will supposedly make the NPC look like a different sprite, 
 an NPC sprite ID, or a monster ID. This effect is not stored anywhere and will 
@@ -4072,7 +4072,7 @@ The knock-back is not restricted by items or map flags, only obstacles are taken
 into account. If there is not enough space to perform the push (e.g. due to a
 wall), the character is pushed only up to the obstacle.
 
-    // pushes the character 5 cells in 3 o'clock direction from it's
+    // pushes the character 5 cells in 3 o'clock direction from its
     // current position.
     pushpc DIR_EAST, 5;
 
@@ -4122,7 +4122,7 @@ current SVN, drops only Jellopies anyway.
 This transaction is logged if the log script generated transactions option is 
 enabled.
 
-You may also create an item by it's name in the 'english name' field in the 
+You may also create an item by its name in the 'english name' field in the 
 item database:
 
     getitem "RED_POTION",10;
@@ -4743,7 +4743,7 @@ any guild.
 
 This command will bump up the specified guild skill by the specified number of 
 levels. This refers to the invoking character and will only work if the invoking 
-character is a member of a guild AND it's guild master, otherwise no failure 
+character is a member of a guild AND its guild master, otherwise no failure 
 message will be given and no error will occur, but nothing will happen - same 
 about the guild skill trying to exceed the possible maximum. The full list of 
 guild skills is available in 'db/(pre-)re/skill_db.txt', these are all the GD_ skills at 
@@ -5362,7 +5362,7 @@ four arguments serve the same purpose as in the monster script command, The
 If <master id> is given, the clone will be a 'slave/minion' of it. Master_id
 must be a character id of another online player.
 
-The mode can be specified to determine the behavior of the clone, it's
+The mode can be specified to determine the behavior of the clone. Its
 values are the same as the ones used for the mode field in the mob_db. The
 default mode is aggressive, assists, can move, can attack.
 
@@ -6926,7 +6926,7 @@ Example:
 *strtoupper(<string>)
 *strtolower(<string>)
 
-Returns the specified string in it's uppercase/lowercase form.
+Returns the specified string in its uppercase/lowercase form.
 All non-alpha characters will be preserved.
 
 Example:
@@ -6961,7 +6961,7 @@ Example:
 Breaks a string up into substrings based on the specified delimiter. Substrings
 will be stored within the specified string array. Only the 1st char of the
 delimiter parameter will be used. If an empty string is passed as a delimiter,
-the string will be placed in the array in it's original form.
+the string will be placed in the array in its original form.
 
 Example:
 	explode(.@my_array$, "Explode:Test:1965:red:PIE", ":");

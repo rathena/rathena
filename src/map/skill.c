@@ -13262,7 +13262,7 @@ int skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id
 			    if (map_foreachinrange(mob_count_sub, &sd->bl, skill_get_splash(skill_id, skill_lv), BL_MOB,
 				    MOBID_EMPERIUM, MOBID_GUARIDAN_STONE1, MOBID_GUARIDAN_STONE2)) {
 				char output[128];
-				sprintf(output,"%s",msg_txt(sd,382)); //	You're too close to a stone or emperium to do this skill
+				sprintf(output,"%s",msg_txt(sd,382)); // You're too close to a stone or emperium to use this skill.
 				clif_colormes(sd,color_table[COLOR_RED], output);
 				return 0;
 			    }
@@ -13630,7 +13630,7 @@ int skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id, 
 			return 0;
 		} else if( sd->status.inventory[i].amount < require.ammo_qty ) {
 			char e_msg[100];
-			sprintf(e_msg,msg_txt(sd,381), //Skill Failed. [%s] requires %dx %s
+			sprintf(e_msg,msg_txt(sd,381), //Skill Failed. [%s] requires %dx %s.
 						skill_get_desc(skill_id),
 						require.ammo_qty,
 						itemdb_jname(sd->status.inventory[i].nameid));

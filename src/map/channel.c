@@ -955,9 +955,8 @@ int channel_pcsetopt(struct map_session_data *sd, char *chname, const char *opti
 			return -1;
 		} else {
 			channel->opt |= k;
-			sprintf(output, msg_txt(sd,1450), opt_str[k],channel->name);// Option '%s' is enabled for channel '%s'.
+			sprintf(output, msg_txt(sd,1450), opt_str[k],channel->name);// Option '%s' is enabled for channel '#%s'.
 			clif_displaymessage(sd->fd, output);
-			return 0;
 		}
 	} else {
 		int v = atoi(val);
@@ -965,42 +964,39 @@ int channel_pcsetopt(struct map_session_data *sd, char *chname, const char *opti
 			if( v < 0 || v > 10 ) {
 				sprintf(output, msg_txt(sd,1451), v, opt_str[k]);// Value '%d' for option '%s' is out of range (limit 0-10).
 				clif_displaymessage(sd->fd, output);
-				return false;
+				return -1;
 			}
 			if( v == 0 ) {
 				channel->opt &=~ k;
 				channel->msg_delay = 0;
-				sprintf(output, msg_txt(sd,1453), opt_str[k],channel->name,v);// Option '%s' is disabled for channel '%s'.
+				sprintf(output, msg_txt(sd,1453), opt_str[k],channel->name,v);// Option '%s' is disabled for channel '#%s'.
 				clif_displaymessage(sd->fd, output);
-				return true;
 			} else {
 				channel->opt |= k;
 				channel->msg_delay = v;
-				sprintf(output, msg_txt(sd,1452), opt_str[k],channel->name,v);// Option '%s' is enabled for channel '%s' at %d seconds.
+				sprintf(output, msg_txt(sd,1452), opt_str[k],channel->name,v);// Option '%s' is enabled for channel '#%s' at %d seconds.
 				clif_displaymessage(sd->fd, output);
-				return true;
 			}
 		} else {
 			if( v ) {
 				if( channel->opt & k ) {
 					sprintf(output, msg_txt(sd,1449), opt_str[k],opt_str[k]); // Option '%s' is already enabled (use '@channel setopt %s 0' to disable).
 					clif_displaymessage(sd->fd, output);
-					return false;
+					return -1;
 				} else {
 					channel->opt |= k;
-					sprintf(output, msg_txt(sd,1450), opt_str[k],channel->name);// Option '%s' is enabled for channel '%s'.
+					sprintf(output, msg_txt(sd,1450), opt_str[k],channel->name);// Option '%s' is enabled for channel '#%s'.
 					clif_displaymessage(sd->fd, output);
 				}
 			} else {
 				if( !(channel->opt & k) ) {
-					sprintf(output, msg_txt(sd,1450), opt_str[k],channel->name); // Option '%s' is enabled for channel '%s'.
+					sprintf(output, msg_txt(sd,1450), opt_str[k],channel->name); // Option '%s' is enabled for channel '#%s'.
 					clif_displaymessage(sd->fd, output);
-					return false;
+					return -1;
 				} else {
 					channel->opt &=~ k;
-					sprintf(output, msg_txt(sd,1453), opt_str[k],channel->name);// Option '%s' is disabled for channel '%s'.
+					sprintf(output, msg_txt(sd,1453), opt_str[k],channel->name);// Option '%s' is disabled for channel '#%s'.
 					clif_displaymessage(sd->fd, output);
-					return true;
 				}
 			}
 		}

@@ -1479,7 +1479,7 @@ Destroys the specified channel.
 Sets channel chat font color for the invoking character only.
 Typing "Normal" returns text to the normal channel color.
 If no parameter is given, a list of available colors is displayed.
-'allow_user_color_override' must be enabled in '/conf/channels.conf'.
+Option 'ColorOverride' must be enabled for this to take effect.
 
 ---------------------------------------
 
@@ -1499,6 +1499,7 @@ You must either be the channel's owner or have the channel_admin permission.
 Available options:
 -- 'JoinAnnounce <1|0>' : Toggles channel announcement when a new player enters.
 -- 'MessageDelay <0-10>' : Sets the delay (in seconds) for messages sent to the channel.
+-- 'ColorOverride <1|0>' : Toggles the permission for players to change their color through @fontcolor.
 
 ---------------------------------------
 

@@ -4319,11 +4319,11 @@ int pc_useitem(struct map_session_data *sd,int n)
 					int e_tick = DIFF_TICK(sd->item_delay[i].tick, tick)/1000;
 					char e_msg[100];
 					if( e_tick > 99 )
-						sprintf(e_msg,msg_txt(sd,379), //Item Failed. [%s] is cooling down. wait %.1f minutes.
+						sprintf(e_msg,msg_txt(sd,379), //Item Failed. [%s] is cooling down. Wait %.1f minutes.
 										itemdb_jname(sd->status.inventory[n].nameid),
 										(double)e_tick / 60);
 					else
-						sprintf(e_msg,msg_txt(sd,380), //Item Failed. [%s] is cooling down. wait %d seconds.
+						sprintf(e_msg,msg_txt(sd,380), //Item Failed. [%s] is cooling down. Wait %d seconds.
 										itemdb_jname(sd->status.inventory[n].nameid),
 										e_tick+1);
 					clif_colormes(sd,color_table[COLOR_RED],e_msg);
