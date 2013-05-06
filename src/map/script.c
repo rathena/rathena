@@ -12803,25 +12803,145 @@ BUILDIN_FUNC(dispbottom)
 	return 0;
 }
 
-/*==========================================
- * All The Players Full Recovery
- * (HP/SP full restore and resurrect if need)
- *------------------------------------------*/
-BUILDIN_FUNC(recovery)
+/*===================================
+ * Heal portion of recovery command
+ *-----------------------------------*/
+int recovery_sub(struct map_session_data* sd, int revive)
 {
-	TBL_PC* sd;
-	struct s_mapiterator* iter;
-
-	iter = mapit_getallusers();
-	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
-	{
-		if(pc_isdead(sd))
-			status_revive(&sd->bl, 100, 100);
-		else
-			status_percent_heal(&sd->bl, 100, 100);
+	if(revive&(1|4) && pc_isdead(sd)) {
+		status_revive(&sd->bl, 100, 100);
+		clif_displaymessage(sd->fd,msg_txt(sd,16));
+		clif_specialeffect(&sd->bl, 77, AREA);
+	} else if(revive&(1|2) && !pc_isdead(sd)) {
+		status_percent_heal(&sd->bl, 100, 100);
 		clif_displaymessage(sd->fd,msg_txt(sd,680));
 	}
-	mapit_free(iter);
+	return 0;
+}
+
+/*=========================================================================
+ * Fully Recover a Character's HP/SP - [Capuche] & [Akinari] 
+ * recovery <target>,{<id | map>,<revive_flag>,{<map>}};
+ * <target> :
+ *	0 - Character
+ *	1 - Character Party
+ *	2 - Character Guild
+ *	3 - Map (Character on map)
+ *	4 - All Characters
+ * <id | map> :
+ *	<target> : 0   => Character's Account ID
+ *	<target> : 1-2 => Character's Party/Guild ID
+ *	<target> : 3   => Map Name (player attached map's name by default)
+ * <revive_flag> : 
+ *		 : 1 => Revive and Recover (Default)
+ *		 : 2 => Only Full Heal
+ *		 : 4 => Only Revive
+ * <map> :
+ *	<target> : 1-2 => Map name (Null = All)
+ *-------------------------------------------------------------------------*/
+BUILDIN_FUNC(recovery)
+{
+	TBL_PC *sd = script_rid2sd(st);
+
+	int map = 0, type = 0, revive = 1;
+	const char *mapname;
+
+	type = script_getnum(st,2);
+
+	if(script_hasdata(st,4))
+		revive = script_getnum(st,4);
+
+	switch(type) {
+		case 0:
+			if(script_hasdata(st,3))
+				sd=map_id2sd(script_getnum(st,3));
+			if(sd == NULL) //If we don't have sd by now, bail out
+				return 0;
+			recovery_sub(sd, revive);
+			break;
+		case 1:
+		{
+			if(script_hasdata(st,5)) {//Bad maps shouldn't cause issues
+				map = map_mapname2mapid(script_getstr(st,5));
+				if(map < 1) { //But we'll check anyways
+					ShowDebug("recovery: bad map name given (%s)\n", script_getstr(st,5));
+					return 1;
+				}
+			}
+			struct party_data* p;
+			struct map_session_data* pl_sd;
+			//When no party given, we use invoker party
+			int p_id, i;
+			if(script_hasdata(st,3))
+				p_id = script_getnum(st,3);
+			else
+				p_id = (sd)?sd->status.party_id:0;
+			p = party_search(p_id);
+			if(p == NULL)
+				return 0;
+			for (i = 0; i < MAX_PARTY; i++) {
+				if((!(pl_sd = p->data[i].sd) || pl_sd->status.party_id != p_id)
+					|| (map && pl_sd->bl.m != map))
+					continue;
+				recovery_sub(pl_sd, revive);
+			}
+			break;
+		}
+		case 2:
+		{
+			if(script_hasdata(st,5)) {//Bad maps shouldn't cause issues
+				map = map_mapname2mapid(script_getstr(st,5));
+				if(map < 1) { //But we'll check anyways
+					ShowDebug("recovery: bad map name given (%s)\n", script_getstr(st,5));
+					return 1;
+				}
+			}
+			struct guild* g;
+			struct map_session_data* pl_sd;
+			//When no guild given, we use invoker guild
+			int g_id, i;
+			if(script_hasdata(st,3))
+				g_id = script_getnum(st,3);
+			else
+				g_id = (sd)?sd->status.guild_id:0;
+			g = guild_search(g_id);
+			if(g == NULL)
+				return 0;
+			for (i = 0; i < MAX_GUILD; i++) {
+				if((!(pl_sd = g->member[i].sd) || pl_sd->status.guild_id != g_id)
+					|| (map && pl_sd->bl.m != map))
+					continue;
+				recovery_sub(pl_sd, revive);
+			}
+			break;
+		}
+		case 3:
+			if(script_hasdata(st,3))
+				map = map_mapname2mapid(script_getstr(st,3));
+			else
+				map = (sd)?sd->bl.m:0; //No sd and no map given - return
+			if(map < 1)
+				return 1;
+		case 4:
+		{
+			struct s_mapiterator *iter;
+			if(script_hasdata(st,3) && !script_isstring(st,3))
+				revive = script_getnum(st,3);
+			iter = mapit_getallusers();
+			for (sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
+				if(type == 3 && sd->bl.m != map)
+					continue;
+				recovery_sub(sd, revive);
+			}
+			mapit_free(iter);
+			break;
+		}
+		default:
+			ShowWarning("script: buildin_recovery: Invalid type %d\n", type);
+			script_pushint(st,-1);
+			return 1;
+	}
+	script_pushint(st,1); //Successfully executed without errors
 	return 0;
 }
 /*==========================================
@@ -17876,7 +17996,7 @@ struct script_function buildin_func[] = {
 #endif
 	BUILDIN_DEF(dispbottom,"s"), //added from jA [Lupus]
 	BUILDIN_DEF(getusersname,""),
-	BUILDIN_DEF(recovery,""),
+	BUILDIN_DEF(recovery,"i???"),
 	BUILDIN_DEF(getpetinfo,"i"),
 	BUILDIN_DEF(gethominfo,"i"),
 	BUILDIN_DEF(getmercinfo,"i?"),

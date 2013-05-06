@@ -889,7 +889,7 @@
 2314,1,6,1,-1,0,0,1,1,no,0,0,0,weapon,0,	LG_RAGEBURST,Rage Burst
 2315,0,6,4,0,0x2,3,3,1,yes,0,0,0,none,2,	LG_SHIELDSPELL,Shield Spell
 2316,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,	LG_EXEEDBREAK,Exceed Break
-2317,1,6,2,-1,0x2,5,5,1,yes,0,0,0,none,3:4:5:6:7,	LG_OVERBRAND,Over Brand //CHECK I know the splash is needed somehow for the strange AoE it gives.
+2317,0,6,2,-1,0x2,0,5,1,yes,0,0,0,none,3:4:5:6:7,	LG_OVERBRAND,Over Brand
 2318,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,	LG_PRESTIGE,Prestige
 2319,0,6,4,0,0x1,3,5,1,no,0,0,0,weapon,0,	LG_BANDING,Banding //CHECK Splash isnt needed right? Banding has its own UNIT ID.
 2320,0,6,4,-1,0x2,3,5,1,yes,0,0,0,weapon,0,	LG_MOONSLASHER,Moon Slasher

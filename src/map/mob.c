@@ -2629,15 +2629,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	if (battle_config.mvp_tomb_enabled && md->spawn->state.boss)
 		mvptomb_create(md, mvp_sd ? mvp_sd->status.name : NULL, time(NULL));
 
-	// Remove all status changes before creating a respawn
-	if( sc ) {
-		for(i=0; i<SC_MAX; i++){
-			if(sc->data[i] && (sc->data[i]->timer != INVALID_TIMER))
-				delete_timer(sc->data[i]->timer, status_change_timer);
-		}
-		memset( sc, 0, sizeof( struct status_change ) );
-	}
-
 	if( !rebirth )
 		mob_setdelayspawn(md); //Set respawning.
 	return 3; //Remove from map.

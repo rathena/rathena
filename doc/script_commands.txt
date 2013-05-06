@@ -3847,10 +3847,39 @@ you have maximum. Like 'heal', this will not call up any animations or effects.
 
 ---------------------------------------
 
-*recovery;
+*recovery <type>{,<id | mapname>,<revive_flag>{,<map>}};
 
-This command will revive and restore full HP and SP to all characters currently 
-connected to the server.
+Recovery can be used to recover all HP/SP to specific characters as well as revive.
+Party and Guild type use party and guild name.  This command will return 1 on
+successful use.
+
+<type> is who you are targeting.  Valid types are:
+	- 0: Specific Character (<charid> or target is invoker)
+	- 1: Party (<partyid> or target party is invoker's)
+	- 2: Guild (<guildid> or target guild is invoker's)
+	- 3: Map (<string> or invoker map)
+	- 4: All
+
+<revive_flag> is used to determine what actions to take.
+	- 1: Revive and Recover (Default)
+	- 2: Only Full Heal
+	- 4: Only Revive
+
+<map> is used only when <type> is 1-2 (Party/Guild) to define a single map where
+the party or guild gets the recovery.
+
+Examples:
+	//Only revive characters in invoking party on map morocc
+	recovery 1,getcharid(1),4,"morocc";
+
+	//Fully heal (don't revive) all members of invoking character's guild
+	recovery 2,getcharid(2),2;
+
+	//Revive and fully heal everyone in map prontera
+	recovery 3,"prontera";
+
+	//Only revive all dead characters on server
+	recovery 4,4;
 
 ---------------------------------------
 

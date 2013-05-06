@@ -10392,15 +10392,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		break;
 
 	case LG_OVERBRAND:
-		{
-			int width;//according to data from irowiki it actually is a square
-			for( width = 0; width < 7; width++ )
-				for( i = 0; i < 7; i++ )
-					map_foreachincell(skill_area_sub, src->m, x-2+i, y-2+width, splash_target(src), src, LG_OVERBRAND_BRANDISH, skill_lv, tick, flag|BCT_ENEMY,skill_castend_damage_id);
-			for( width = 0; width < 7; width++ )
-				for( i = 0; i < 7; i++ )
-					map_foreachincell(skill_area_sub, src->m, x-2+i, y-2+width, splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY,skill_castend_damage_id);
-		}
+		skill_overbrand(src, skill_id, skill_lv, x, y, tick, flag);
 		break;
 
 	case LG_BANDING:
@@ -13138,14 +13130,15 @@ int skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id
 		//	}
 		//	break;
 
-		
+
 		case AB_ADORAMUS: // bugreport:7647 mistress card DOES remove requirements for gemstones from Adoramus and Comet -helvetica
 		/**
 		 * Warlock
 		 **/
 		case WL_COMET:
 			if( skill_check_pc_partner(sd,skill_id,&skill_lv,1,0) <= 0
-				&& ((i = pc_search_inventory(sd,require.itemid[0])) < 0 || sd->status.inventory[i].amount < require.amount[0] || !sd->special_state.no_gemstone) ) {
+				&& sd->special_state.no_gemstone == 0
+				&& ((i = pc_search_inventory(sd,require.itemid[0])) < 0 || sd->status.inventory[i].amount < require.amount[0]) ) {
 				//clif_skill_fail(sd,skill_id,USESKILL_FAIL_NEED_ITEM,require.amount[0],require.itemid[0]);
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return 0;
@@ -13164,14 +13157,14 @@ int skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_id
 			}
 			break;
 		case WL_TETRAVORTEX: // bugreport:7598 moved sphere check to precast to avoid triggering cooldown per official behavior -helvetica
-			if( sc ) {	
+			if( sc ) {
 				int j = 0;
 
 				for( i = SC_SPHERE_1; i <= SC_SPHERE_5; i++ )
 					if( sc->data[i] ) {
 						j++;
 					}
-			
+
 				if( j < 4 ) { // Need 4 spheres minimum
 					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 					return 0;
@@ -14300,6 +14293,45 @@ int skill_delayfix (struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 /*=========================================
  *
  *-----------------------------------------*/
+void skill_overbrand(struct block_list* src, uint16 skill_id, uint16 skill_lv, uint16 x, uint16 y, unsigned int tick, int flag)
+{
+	struct s_skill_unit_layout *layout;
+	layout = skill_get_unit_layout(skill_id,skill_lv,src,x,y);
+	int i, ux[53], uy[53]; //Number of cells we are attacking
+	short dir = map_calc_dir(src,x,y);
+	if(dir > 0 && dir < 4) { //Need to invert the cell locations for directions
+		for(i = 0; i < 53; i++) {
+			ux[i] = layout->dy[i];
+			uy[i] = layout->dx[i] * -1;
+		}
+	} else if(dir == 4) {
+		for(i = 0; i < 53; i++) {
+			ux[i] = layout->dx[i];
+			uy[i] = layout->dy[i];
+		}
+	} else if(dir > 4) {
+		for(i = 0; i < 53; i++) {
+			ux[i] = layout->dy[i] * -1;
+			uy[i] = layout->dx[i];
+		}
+	} else {
+		for(i = 0; i < 53; i++) {
+			ux[i] = layout->dx[i];
+			uy[i] = layout->dy[i] * -1;
+		}
+	}
+	for( i = 0; i < 53; i++ ) {
+		if(i < 12) { //Close range hits twice
+			map_foreachincell(skill_area_sub, src->m, x+ux[i], y+uy[i], splash_target(src), src, LG_OVERBRAND_BRANDISH, skill_lv, tick, flag|BCT_ENEMY,skill_castend_damage_id);
+			map_foreachincell(skill_area_sub, src->m, x+ux[i], y+uy[i], splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY,skill_castend_damage_id);
+		} else if(i > 11 && i < 45) //Far sides do knockback damage
+			map_foreachincell(skill_area_sub, src->m, x+ux[i], y+uy[i], splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY,skill_castend_damage_id);
+		else //Far middle does piercing damage
+			map_foreachincell(skill_area_sub, src->m, x+ux[i], y+uy[i], splash_target(src), src, LG_OVERBRAND_BRANDISH, skill_lv, tick, flag|BCT_ENEMY,skill_castend_damage_id);
+	}
+
+}
+
 struct square {
 	int val1[5];
 	int val2[5];
@@ -17542,6 +17574,18 @@ void skill_init_unit_layout (void) {
 						static const int dx[] = {-1,-2,-2,-2,-2,-2,-1, 0, 1, 2, 2, 2, 2, 2, 1, 0};
 						static const int dy[] = { 2, 2, 1, 0,-1,-2,-2,-2,-2,-2,-1, 0, 1, 2, 2, 2};
 						skill_unit_layout[pos].count = 16;
+						memcpy(skill_unit_layout[pos].dx,dx,sizeof(dx));
+						memcpy(skill_unit_layout[pos].dy,dy,sizeof(dy));
+					}
+					break;
+				case LG_OVERBRAND: {
+						static const int dx[] = {-1,-1,-1,-1, 0, 0, 0, 0, 1, 1, 1, 1,
+									 -5,-5,-5,-5,-4,-4,-4,-4,-3,-3,-3,-3,-2,-2,-2,-2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5,
+									 -1,-1,-1, 0, 0, 0, 1, 1, 1};
+						static const int dy[] = { 0,-1,-2,-3, 0,-1,-2,-3, 0,-1,-2,-3, 
+									  0,-1,-2,-3, 0,-1,-2,-3, 0,-1,-2,-3, 0,-1,-2,-3, 0,-1,-2,-3, 0,-1,-2,-3, 0,-1,-2,-3, 0,-1,-2,-3,
+									 -4,-5,-6,-4,-5,-6,-4,-5,-6};
+						skill_unit_layout[pos].count = 53;
 						memcpy(skill_unit_layout[pos].dx,dx,sizeof(dx));
 						memcpy(skill_unit_layout[pos].dy,dy,sizeof(dy));
 					}
