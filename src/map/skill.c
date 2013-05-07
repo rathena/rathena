@@ -14296,9 +14296,9 @@ int skill_delayfix (struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 void skill_overbrand(struct block_list* src, uint16 skill_id, uint16 skill_lv, uint16 x, uint16 y, unsigned int tick, int flag)
 {
 	struct s_skill_unit_layout *layout;
-	layout = skill_get_unit_layout(skill_id,skill_lv,src,x,y);
 	int i, ux[53], uy[53]; //Number of cells we are attacking
 	short dir = map_calc_dir(src,x,y);
+	layout = skill_get_unit_layout(skill_id,skill_lv,src,x,y);
 	if(dir > 0 && dir < 4) { //Need to invert the cell locations for directions
 		for(i = 0; i < 53; i++) {
 			ux[i] = layout->dy[i];

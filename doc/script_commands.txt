@@ -3850,7 +3850,7 @@ you have maximum. Like 'heal', this will not call up any animations or effects.
 *recovery <type>{,<id | mapname>,<revive_flag>{,<map>}};
 
 Recovery can be used to recover all HP/SP to specific characters as well as revive.
-Party and Guild type use party and guild name.  This command will return 1 on
+Party and Guild type use party and guild ID.  This command will return 1 on
 successful use.
 
 <type> is who you are targeting.  Valid types are:
