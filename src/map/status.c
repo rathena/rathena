@@ -9306,7 +9306,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			case SC_STUN:
 			case SC_SLEEP:
 			if (sce->val1) {
-			  	//Removing the 'level' shouldn't affect anything in the code
+				//Removing the 'level' shouldn't affect anything in the code
 				//since these SC are not affected by it, and it lets us know
 				//if we have already delayed this attack or not.
 				sce->val1 = 0;
