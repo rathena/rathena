@@ -3847,38 +3847,40 @@ you have maximum. Like 'heal', this will not call up any animations or effects.
 
 ---------------------------------------
 
-*recovery <type>{,<id | mapname>,<revive_flag>{,<map>}};
+*recovery <type>{,<option>,<revive_flag>{,<map name>}};
 
-Recovery can be used to recover all HP/SP to specific characters as well as revive.
-Party and Guild type use party and guild ID.  This command will return 1 on
-successful use.
+This command will revive and fully restore the HP/SP of the selected characters.
+It returns 1 upon successful use.
 
-<type> is who you are targeting.  Valid types are:
-	- 0: Specific Character (<charid> or target is invoker)
-	- 1: Party (<partyid> or target party is invoker's)
-	- 2: Guild (<guildid> or target guild is invoker's)
-	- 3: Map (<string> or invoker map)
-	- 4: All
+<type> is the target, and determines the <option> parameter:
+ 0: Player  -> Character ID number
+ 1: Party   -> Party ID number
+ 2: Guild   -> Guild ID number
+ 3: Map     -> Map name (a string)
+ 4: All     -> None (takes <revive_flag> as option)
 
-<revive_flag> is used to determine what actions to take.
-	- 1: Revive and Recover (Default)
-	- 2: Only Full Heal
-	- 4: Only Revive
+If no option is specified, the invoking player's character ID, party ID, guild ID,
+or map will be used.
 
-<map> is used only when <type> is 1-2 (Party/Guild) to define a single map where
-the party or guild gets the recovery.
+<revive_flag> determines the action:
+ 1: Revive and heal all players (default)
+ 2: Heal living players only
+ 4: Revive dead players only
+
+<map name> can optionally be used to define a single map to execute the command on
+for types 1 (party) and 2 (guild).
 
 Examples:
-	//Only revive characters in invoking party on map morocc
+	// Only revive characters in invoking party on map "morocc"
 	recovery 1,getcharid(1),4,"morocc";
 
-	//Fully heal (don't revive) all members of invoking character's guild
+	// Fully heal (don't revive) all members of invoking character's guild
 	recovery 2,getcharid(2),2;
 
-	//Revive and fully heal everyone in map prontera
+	// Revive and fully heal everyone in map "prontera"
 	recovery 3,"prontera";
 
-	//Only revive all dead characters on server
+	// Only revive all dead characters on server
 	recovery 4,4;
 
 ---------------------------------------

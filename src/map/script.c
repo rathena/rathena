@@ -12813,34 +12813,30 @@ int recovery_sub(struct map_session_data* sd, int revive)
 {
 	if(revive&(1|4) && pc_isdead(sd)) {
 		status_revive(&sd->bl, 100, 100);
-		clif_displaymessage(sd->fd,msg_txt(sd,16));
+		clif_displaymessage(sd->fd,msg_txt(sd,16)); // You've been revived!
 		clif_specialeffect(&sd->bl, 77, AREA);
 	} else if(revive&(1|2) && !pc_isdead(sd)) {
 		status_percent_heal(&sd->bl, 100, 100);
-		clif_displaymessage(sd->fd,msg_txt(sd,680));
+		clif_displaymessage(sd->fd,msg_txt(sd,680)); // You have been recovered!
 	}
 	return 0;
 }
 
 /*=========================================================================
  * Fully Recover a Character's HP/SP - [Capuche] & [Akinari]
- * recovery <target>,{<id | map>,<revive_flag>,{<map>}};
- * <target> :
- *	0 - Character
- *	1 - Character Party
- *	2 - Character Guild
- *	3 - Map (Character on map)
- *	4 - All Characters
- * <id | map> :
- *	<target> : 0   => Character's Account ID
- *	<target> : 1-2 => Character's Party/Guild ID
- *	<target> : 3   => Map Name (player attached map's name by default)
- * <revive_flag> :
- *		 : 1 => Revive and Recover (Default)
- *		 : 2 => Only Full Heal
- *		 : 4 => Only Revive
- * <map> :
- *	<target> : 1-2 => Map name (Null = All)
+ * recovery <type>{,<option>,<revive_flag>{,<map name>}};
+ * <type> determines <option>:
+ *	0 : char_id
+ *	1 : party_id
+ *	2 : guild_id
+ *	3 : map_name
+ *	4 : all characters
+ * <revive_flag>:
+ *	1 : Revive and heal all players (default)
+ *	2 : Heal living players only
+ *	4 : Revive dead players only
+ * <map name>:
+ *	for types 1-2 : map_name (null = all maps)
  *-------------------------------------------------------------------------*/
 BUILDIN_FUNC(recovery)
 {
@@ -12928,7 +12924,7 @@ BUILDIN_FUNC(recovery)
 		{
 			struct s_mapiterator *iter;
 			if(script_hasdata(st,3) && !script_isstring(st,3))
-				revive = script_getnum(st,3);
+				revive = script_getnum(st,3); // recovery 4,<revive_flag>;
 			iter = mapit_getallusers();
 			for (sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
 				if(type == 3 && sd->bl.m != map)

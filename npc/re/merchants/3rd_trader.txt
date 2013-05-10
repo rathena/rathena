@@ -13,7 +13,7 @@
 //= 1.0 First Version.
 //= 1.1 Optimized Poison Herb Salesman NPC
 //= 1.2 Optimized and standardized. [Euphy]
-//= 1.3 Added Malangdo Points NPC. [Euphy]
+//= 1.3 Added Malangdo/Mora Points NPC. [Euphy]
 //============================================================ 
 
 job3_guil01,79,96,3	script	Poison Herb Salesman::PHS	877,{
@@ -230,3 +230,4 @@ comodo,241,103,6	duplicate(pss)	Point Salesman#1	700
 alberta,105,52,7	duplicate(pss)	Point Salesman#2	700
 veins,202,128,6	duplicate(pss)	Point Salesman#3	700
 malangdo,215,163,6	duplicate(pss)	Point Salesman#4	700
+mora,115,118,3	duplicate(pss)	Point Salesman#5	700

@@ -53,7 +53,7 @@ malangdo,132,114,6	duplicate(Healer)	Healer#mal	909
 malaya,205,205,6	duplicate(Healer)	Healer#malay	909
 manuk,256,176,6	duplicate(Healer)	Healer#man	909
 mid_camp,203,289,6	duplicate(Healer)	Healer#mid	909
-mora,106,100,6	duplicate(Healer)	Healer#mora	909
+mora,55,152,4	duplicate(Healer)	Healer#mora	909
 morocc,153,97,6	duplicate(Healer)	Healer#mor	909
 moscovia,215,194,6	duplicate(Healer)	Healer#mos	909
 niflheim,188,180,5	duplicate(Healer)	Healer#nif	909

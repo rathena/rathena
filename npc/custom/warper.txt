@@ -381,7 +381,7 @@ manuk,262,177,4	duplicate(Warper)	Warper#34	811
 splendide,205,153,4	duplicate(Warper)	Warper#35	811
 mid_camp,216,288,4	duplicate(Warper)	Warper#36	811
 dicastes01,194,194,6	duplicate(Warper)	Warper#37	811
-mora,110,100,4	duplicate(Warper)	Warper#38	811
+mora,57,152,4	duplicate(Warper)	Warper#38	811
 moscovia,216,196,6	duplicate(Warper)	Warper#39	811
 nameless_n,259,213,4	duplicate(Warper)	Warper#40	811
 niflheim,205,179,4	duplicate(Warper)	Warper#41	811

@@ -1,9 +1,9 @@
 //===== rAthena Script ======================================= 
 //= Mora Village
 //===== By: ================================================== 
-//= SuperHulk
+//= Euphy
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -13,309 +13,872 @@
 //= 1.1 Translations to English. [Flaid]
 //= 1.1a Standardized. [Euphy]
 //= 1.2 Added new NPCs. [Flaid]
+//= 1.3 Replaced with full iRO town NPCs. [Euphy]
 //============================================================ 
 
-mora,185,163,5	script	Mora Citizen#1	516,{
-	mes "[Scholar Gary]";
-	mes "Hello, traveler!";
-	mes "I'm Gary, the expert about enchantments in this area.";
-	mes "What do you want to know?";
-	next;
-	switch(select("Fundamentals of enchantment.:Nothing.")) {
-	case 1:
-		mes "[Scholar Gary]";
-		mes "Ah, I see that you are interested";
-		mes "in enchantments!";
-		mes "Alright, here are the basics!!";
-		mes "After this you should understand";
-		mes "the mysteries of our enchantments!";
-		next;
-		mes "[Scholar Gary]";
-		mes "First of all, you must know";
-		mes "that this is magic, not an";
-		mes "exact science.";
-		next;
-		mes "[Scholar Gary]";
-		mes "You don't really know what will";
-		mes "happen. You can be lucky or";
-		mes "unlucky, and get a more or";
-		mes "less powerful enchantment.";
-		next;
-		mes "[Scholar Gary]";
-		mes "You can miss the magic, too!";
-		mes "If this happens while your equip";
-		mes "is being enchanted, you'll lose it";
-		mes "all previous enchantments, cards, and the refine!";
-		next;
-		mes "[Scholar Gary]";
-		mes "There is also a risk of";
-		mes "breaking your equipment";
-		mes "while trying to enchant";
-		mes "your equip with a second enchantment!";
-		next;
-		mes "[Scholar Gary]";
-		mes "Each attempt to enchant will cost";
-		mes "you 1 Mora coin and 100,000 zeny.";
-		mes "If you don't know yet, the money";
-		mes "made with this service goes";
-		mes "straight to the people of Mora!";
-		next;
-		mes "[Scholar Gary]";
-		mes "Those were the basics.";
-		mes "Take them to your heart.";
-		mes "For more details, you can";
-		mes "always visit my master,";
-		mes "Gougueulé Tonami!";
-		close;
-	case 2:
-		mes "[Scholar Gary]";
-		mes "Goodbye, and good luck!";
-		close;
-	}
+mora,52,138,6	script	Mungmung#mora	516,{
+	mes "[Mungmung]";
+	mes "I'm not the innkeeper!";
+	mes "Why do people want to pay me when they see me?";
+	close;
 }
 
-mora,52,138,8	script	Mora Citizen#2	516,{
-	mes "[Valere]";
-	mes "Hello, adventurer!";
-	mes "You look like you're";
-	mes "lost, aren't you!?";
+mora,43,127,4	script	Innkeeper#mora	522,{
+	mes "[Innkeeper]";
+	mes "Oh~ looks like we have another adventurer.";
+	mes "Where are you from?";
 	next;
-	mes "[Valere]";
-	mes "...";
-	mes "Ah, okay.";
-	mes "But you look like you want to";
-	mes "enchant your equipment!";
-	next;
-	mes "[Valere]";
-	mes "I only need to know one thing";
-	mes "before telling you more about";
-	mes "the Mora equipment enchants!";
-	mes "So tell me, what is your class?";
-	next;
-	switch(select("Warlock.:Arch Bishop.:Ranger.:Guillotine Cross.:Rune Knight.:Other.:Goodbye.")) {
+	switch(select("Save.:I'd like to get some rest.:The place I used to live is called...:How can I use the warehouse?")) {
 	case 1:
-		mes "[Valere]";
-		mes "Hmm, you should visit the";
-		mes "Artifact Crafter.";
-		mes "That is our enchantment specialist";
-		mes "for Warlock equipment!";
+		mes "[Innkeeper]";
+		mes "Wow, what's the rush?";
+		mes "You've just come here, and you're already going someplace else?";
+		next;
+		mes "[Innkeeper]";
+		mes "You know, haste makes waste. Tsk tsk.";
+		mes "Well, the game's been saved.";
+		savepoint "mora",57,142;
 		close;
 	case 2:
-		mes "[Valere]";
-		mes "Hmm, you should visit the";
-		mes "Master of Relics.";
-		mes "That is our enchantment specialist";
-		mes "for Arch Bishop equipment!";
+		mes "[Innkeeper]";
+		mes "My my, I need some rest also.";
+		mes "The rate is 5000 zeny. Do you want a room?";
+		next;
+		if(select("Yes:No") == 1) {
+			if (Zeny >= 5000) {
+				mes "[Innkeeper]";
+				mes "Make yourself at home.";
+				close2;
+				set Zeny, Zeny-5000;
+				percentheal 100,100;
+				warp "mora",32,123;
+				end;
+			}
+		}
+		mes "[Innkeeper]";
+		mes "If you don't have the money, go soak yourself in the puddle in the center of the village.";
+		mes "It will warm you up.";
 		close;
 	case 3:
+		input .@str$;
+		mes "["+strcharinfo(0)+"]";
+		mes "I come from a place called "+.@str$+".";
+		next;
+		mes "[Innkeeper]";
+		mes "Oh, I think I've heard about the place before!";
+		next;
+		mes "[Innkeeper]";
+		mes "I heard that there are creeps there who won't get up at all even if it rains or snows, or their sweethearts or parents call them!";
+		mes "And that black clouds hover over them all the time, causing a storm!";
+		next;
+		mes "[Innkeeper]";
+		mes "How terrible!";
+		close;
 	case 4:
-	case 5:
-		mes "[Valere]";
-		mes "Hmm, you should visit the";
-		mes "Artifact Researcher.";
-		mes "That is our enchantment specialist";
-		mes "for Ranger, Guillotine Cross,";
-		mes "and Rune Knight equipment!";
-		close;
-	case 6:
-		mes "[Valere]";
-		mes "Hmm, there is the Master Tailor";
-		mes "who sells and enchants the 'Army Padding'.";
-		next;
-		mes "[Valere]";
-		mes "There's also the Pendant Crafter";
-		mes "who enchants 'Pendant of Guardian'.";
-		next;
-		mes "[Valere]";
-		mes "And finally the Bulberry Westhood";
-		mes "who enchants 'Loki's muffler'.";
-		close;
-	case 7:
-		mes "[Valere]";
-		mes "Goodbye, and good luck!";
+		mes "[Innkeeper]";
+		mes "Search through the vegetable-shaped drawer to my right.";
 		close;
 	}
 }
 
-mora,160,123,5	script	Mora Citizen#3	517,{
-	mes "[Boudril]";
-	mes "Hey, you seem to be";
-	mes "so far from home!";
-	mes "Mora is a remote town.";
-	mes "That's why we have";
-	mes "own currency here!";
+mora,48,128,0	script	Drawer	111,{
+	mes "- The figure 1 0 0 is written in small letters on the vegetable-shaped drawer. -";
 	next;
-	mes "[Boudril]";
-	mes "Beyond that, our community";
-	mes "developed this craft.";
-	mes "Items found here cannot";
-	mes "be found anywhere else!";
-	close;
-}
-
-mora,105,100,3	script	Mora Citizen#4	518,{
-	mes "[Buisso]";
-	mes "Hello, my friend.";
-	mes "What brings you to this";
-	mes "place, so far from home?";
-	mes "Are you looking for a challange?";
-	mes "You won't be disappointed here!";
-	next;
-	mes "[Buisso]";
-	mes "We are surrounded by the";
-	mes "Bifrost, an area with powerful";
-	mes "and deceitful monsters...";
-	mes "So cute, but still dangerous.";
-	close;
-}
-
-mora,98,104,4	script	Mora Citizen#5	516,{
-	mes "[Malavida]";
-	mes "...";
-	mes "What!? I look depressed!?";
-	mes "It's normal living here!";
-	mes "My dream was to be like you!";
-	next;
-	mes "[Malavida]";
-	mes "Traveling around the world,";
-	mes "chasing monsters,";
-	mes "hunting treasure...";
-	mes "You have the chance. Use it!";
-	close;
-}
-
-mora,102,107,6	script	Mora Citizen#6	517,{
-	mes "[Skape]";
-	mes "Have you tasted our dish?";
-	mes "The beef toast!?";
-	mes "This delicious beef only";
-	mes "exists in the Bifrost!";
-	next;
-	mes "[Skape]";
-	mes "If you want to taste this";
-	mes "dish, visit our chef.";
-	mes "He makes the best";
-	mes "Mora beef toast!";
-	close;
-}
-
-mora,101,107,4	script	Mora Citizen#7	518,{
-	mes "[Wouadel Kami]";
-	mes "*Dances*";
-	mes "I'm a choreographer, but";
-	mes "nobody understands me.";
-	mes "*doridori*";
-	mes "*bingbing*";
-	mes "*bangbang*";
-	close;
-}
-
-mora,103,100,6	script	Mora Citizen#8	518,{
-	mes "[Didier Lans]";
-	mes "Yooo gaba gaba!";
-	mes "Hello, my dear. You've heard";
-	mes "about my teachings, have you?";
-	mes "Do not hit your friends!";
-	mes "*makes small steps backwards*";
-	next;
-	mes "[Didier Lans]";
-	mes "Yooo gaba gaba!";
-	mes "Eat your vegetables.";
-	mes "*is the fool*";
-	mes "Be smart, be polite!";
-	mes "Yooo gaba gaba!";
-	close;
-}
-
-mora,184,169,3	script	Mora Citizen#9	516,{
-	mes "[Moussa Wi]";
-	mes "Bleh, I've been";
-	mes "here for too long.";
-	mes "Living with these dogs...";
-	mes "Having nothing to do...";
-	mes "Hmm, how about you";
-	mes "take care of them?";
-	close;
-}
-
-mora,108,182,3	script	Mora Citizen#10	516,{
-	mes "[Yosou Keh]";
-	mes "Hello!";
-	mes "I am Yosou Keh,";
-	mes "a resident of Mora.";
-	mes "The Bifrost is populated";
-	mes "with many strong monsters...";
-	close;
-}
-
-mora,113,185,5	script	Mora Citizen#11	516,{
-	mes "[Ninkasi]";
-	mes "Hey, dude.";
-	mes "How are you today, dude?";
-	mes "What can I do for you, dude?";
-	next;
-	switch(select("Why do you call me 'dude'?:Goodbye.")) {
+	switch(select("Insert 100 zeny.:Don't do anything.")) {
 	case 1:
-		mes "[Ninkasi]";
-		mes "Why not?";
-		mes "Calling others 'dude'";
-		mes "is my brand mark.";
-		mes "Be cool, dude, relax!";
-		mes "Enjoy your life, dude!";
+		if (Zeny < 100) {
+			mes "I don't have enough zeny.";
+			mes "I need at least 500 zeny to use the Drawer.";
+			close;
+		}
+		if (basicskillcheck() && getskilllv("NV_BASIC") < 6) {
+			mes "The drawer is not working for me.";
+			mes "Maybe I am not yet qualified to use the Drawer yet.";
+			close;
+		}
+		set Zeny, Zeny-100;
+		openstorage;
 		close;
 	case 2:
-		mes "[Ninkasi]";
-		mes "See you again, dude!";
+		mes "- You gave up using the warehouse. -";
 		close;
 	}
 }
 
-mora,43,127,4	script	Mora Citizen#12	522,{
-	mes "[Glouti Vori]";
-	mes "Mm, I love this beef toast!";
-	mes "That's the only reason I'm";
-	mes "still here! There's nothing";
-	mes "better than Mora beef toast!";
+mora,43,113,4	script	Wounded Rafflesia#mora	517,{
+	mes "[Wounded Raffle]";
+	mes "Ugghh... What was it";
+	mes "that was in the bath... Arrrghh...";
+	mes "To attack suddenly like that... Be careful...";
+	mes "Whatever it is in there, it's very aggressive.";
 	close;
 }
 
-mora,35,119,7	script	South World Dealer	513,{
-	mes "[South World Dealer]";
+mora,30,128,4	script	Relaxing Traveler#mora1	514,{
+	mes "[Traveler]";
+	mes "The Mora Inn is famous";
+	mes "for its unusual pieces of furniture.";
+	mes "Mushroom closets and apple dressers...";
+	mes "Aren't they so innovative?";
+	next;
+	select("... ... ...");
+	mes "[Traveler]";
+	mes "Sorry... maybe it's just me...";
+	emotion e_sry;
+	close;
+}
+
+mora,105,104,4	script	Boaster#mora	514,{
+	mes "[Boaster]";
+	mes "So the situation";
+	mes "was at its worst.";
+	next;
+	mes "[Raffles]";
+	mes "Oh~!";
+	next;
+	mes "[Boaster]";
+	mes "Bored to death, I started to cry.";
+	mes "Then I fell asleep, tired from all the crying.";
+	mes "And when I woke up,";
+	mes "I was even more bored";
+	mes "than before!";
+	next;
+	mes "[Raffles]";
+	mes "Oh, oh!";
+	mes "That's terrible, so terrible.";
+	mes "How could that happen?!";
+	next;
+	mes "[Boaster]";
+	mes "So the situation got";
+	mes "more and more serious...";
+	mes "Now give me some more coins.";
+	emotion e_swt2,1;
+	close;
+}
+
+mora,101,107,6	script	Excited Raffle#mora	518,{
+	mes "[Excited Raffle]";
+	mes "Wow~";
+	mes "The story is no fun at all.";
+	mes "Wow~!";
+	mes "But it's as if we were singing in chorus -";
+	mes "it's really fun.";
+	mes "Wow~!";
+	close;
+}
+
+mora,102,107,6	script	Relieved Raffle#mora	517,{
+	mes "[Relieved Raffle]";
+	mes "Wow~!";
+	mes "This is exciting.";
+	mes "He woke up safe and sound again!";
+	mes "Well, I'm sure he will next time!";
 	mes "...";
-	close;
-}
-
-mora,139,102,4	script	Milvida	515,{
-	mes "[Milvida]";
-	mes "Welcome to Mora~";
-	mes "In the center of the city";
-	mes "you can find all the shops";
-	mes "and some enchanters.";
 	next;
-	mes "[Milvida]";
-	mes "Northeast of the city is";
-	mes "where the food is located.";
+	mes "[Relieved Raffle]";
+	mes "Eh?";
 	close;
 }
 
-mora,55,124,2	script	Cat Traveler	495,{
-	mes "[Cat Traveler]";
-	mes "This city is like Malangdo";
-	mes "in several aspects,";
-	mes "don't you think?";
+mora,98,104,6	script	Moved Raffle#mora	516,{
+	mes "[Moved Raffle]";
+	mes "This is sad, too sad!";
+	mes "I'm not sure why,";
+	mes "but it must be sad";
+	mes "because everybody else says so.";
 	close;
 }
 
-mora,131,165,4	script	Bifrost Resident#1	520,{
-	mes "[Bifrost Resident]";
-	mes "Welcome to the workshop";
-	mes "of the west clan. If you";
-	mes "want your Loki Muffler";
-	mes "enchanted, please contact";
-	mes "my boss. He makes miracles!";
+mora,103,100,6	script	Impressed Raffle#mora	518,{
+	mes "[Impressed Raffle]";
+	mes "Wow! Wow!";
+	close;
+}
+
+mora,105,100,2	script	Rangrang#mora	518,{
+	mes "[Rangrang]";
+	mes "I've never heard such a boring and sad story.";
+	mes "I feel like crying!";
+	close;
+}
+
+mora,99,100,8	script	Decoy#mora	515,{
+	mes "[A Decoy]";
+	mes "Oh~!";
+	mes "That's just so";
+	mes "unbelievable!";
+	mes "I'm so curious, let's give him some coins!";
+	close;
+}
+
+mora,122,97,5	script	Relaxing Rafflesia#mora	517,{
+	mes "[Relaxing Rafflesia]";
+	mes "The public bath in the center of the village is a symbol of Mora Village.";
 	next;
-	mes "[Bifrost Resident]";
-	mes "On a side note... I think I'm";
-	mes "really cute, don't you agree?";
+	mes "[Relaxing Rafflesia]";
+	mes "It's not just a simple puddle.";
+	mes "It has tremendous power";
+	mes "to heal wounds.";
+	next;
+	mes "[Relaxing Rafflesia]";
+	mes "Try walking in the bath";
+	mes "if you want to see for yourself.";
+	mes "It will slowly but surely heal your wounds.";
 	close;
 }
+
+mora,123,94,8	script	Visitor to Mora#mora1	515,{
+	mes "[Visitor to Mora]";
+	mes "I'm stuck here because of the crevice, which appeared out of nowhere.";
+	mes "Ha......";
+	close;
+}
+
+mora,155,72,4	script	Visitor to Mora#mora2	513,{
+	mes "[Visitor to Mora]";
+	mes "Isn't this one cheerful village?";
+	mes "With Bifrost blocked like that, I'm thinking of settling here permanently.";
+	close;
+}
+
+mora,130,96,4	script	Relaxing Traveler#mora2	513,{
+	mes "[Traveler]";
+	mes "The Rafflesia in Mora Village all look alike, so it's so confusing.";
+	mes "It's like looking at centuplets...";
+	next;
+	mes "[Traveler]";
+	mes "However! If you look closely,";
+	mes "you'll find each of them has a personality.";
+	mes "To find it is one of the fun things";
+	mes "you can do in the village.";
+	close;
+}
+
+mora,160,123,4	script	Nemnem#mora	517,{
+	mes "[Nemnem]";
+	mes "My pain is getting worse and worse";
+	mes "since the crevice appeared in Bifrost.";
+	mes "Are you responsible for it, young one?";
+	next;
+	switch(select("Of course I am!:That's an unfair accusation!")) {
+	case 1:
+		mes "[Nemnem]";
+		mes "Bra~vo!";
+		emotion e_awsm;
+		close;
+	case 2:
+		mes "[Nemnem]";
+		mes "If not, never mind!";
+		emotion e_swt2,1;
+		close;
+	}
+}
+
+mora,177,157,6	script	Indifferent Worker#mora	518,{
+	mes "[Novice Worker]";
+	mes "I'll come out of the Labyrinth Forest and become a hero!";
+	next;
+	mes "[Indifferent Worker]";
+	mes "I hear somebody already did that.";
+	next;
+	mes "[Novice Worker]";
+	mes "What if I say I'm that somebody?";
+	next;
+	mes "[Indifferent Worker]";
+	mes "Forget it. It's more believable";
+	mes "to say I did it.";
+	next;
+	mes "[Novice Worker]";
+	mes "Well, that's true.";
+	close;
+}
+
+mora,179,155,2	script	Novice Worker#mora	516,{
+	mes "[Novice Worker]";
+	mes "I'll come out of the Labyrinth Forest and become a hero!";
+	next;
+	mes "[Indifferent Worker]";
+	mes "I hear somebody already did that.";
+	next;
+	mes "[Novice Worker]";
+	mes "What if I say I'm that somebody?";
+	next;
+	mes "[Indifferent Worker]";
+	mes "Forget it. It's more believable";
+	mes "to say I did it.";
+	next;
+	mes "[Novice Worker]";
+	mes "Well, that's true.";
+	close;
+}
+
+mora,175,161,6	script	Warehouse Worker#mora1	518,{
+	mes "[Kuorita]";
+	mes "Oh... this duck...";
+	next;
+	mes "[Kuorita]";
+	mes "Its slender red beak...";
+	mes "and the blush on its cheeks...";
+	mes "and its wings, ready to take off";
+	mes "any moment...";
+	next;
+	mes "[Kuorita]";
+	mes "I want to have it badly...";
+	mes "What would happen if I stole it?";
+	close;
+}
+
+mora,168,161,4	script	Warehouse Worker#mora2	513,{
+	mes "[Lively]";
+	mes "The inn over there~";
+	mes "It should've been mine~";
+	next;
+	mes "[Lively]";
+	mes "The store over there~";
+	mes "It should've been mine as well~";
+	next;
+	mes "[Lively]";
+	mes "The warehouse here~";
+	mes "and all the things in it~";
+	mes "All of those should've been mine~";
+	mes "All of those should've been mine~";
+	next;
+	mes "[Lively]";
+	mes "Ahhh... I'd like to make money...";
+	close;
+}
+
+mora,174,171,8	script	Warehouse Worker#mora3	518,{
+	mes "[Shortffle]";
+	mes "I want to climb the ladder,";
+	mes "but my legs are too short to do that.";
+	emotion e_sob;
+	next;
+	mes "[Shortffle]";
+	mes "I wonder who brought it here.";
+	close;
+}
+
+mora,184,169,6	script	Worker#mora1	516,{
+	mes "[Worker]";
+	mes "I heard that somebody made it out of the Labyrinth Forest alive.";
+	mes "Whoever it is, I want to meet this person myself.";
+	close;
+}
+
+mora,108,182,6	script	Worker#mora2	516,{
+	mes "[Worker]";
+	mes "Stay clear of the Labyrinth Forest.";
+	mes "Don't ever dream of peeking in out of curiosity.";
+	mes "Lots of travelers have gone missing after going there.";
+	close;
+}
+
+mora,99,65,6	script	Banana Rafflesia#mora	516,{
+	mes "[Banana Rafflesia]";
+	mes "You want a banana?";
+	next;
+	switch(select("Yes, I do.:No, thanks.")) {
+	case 1:
+		mes "[Banana Rafflesia]";
+		mes "Take it if you can.";
+		mes "If you are successful, you can have it for free.";
+		emotion e_ok;
+		close;
+	case 2:
+		mes "[Banana Rafflesia]";
+		mes "Well, I was going to give it for free,";
+		mes "but if you don't want it, it's fine with me.";
+		emotion e_pif;
+		close;
+	}
+}
+
+mora,134,185,4	script	Mora Villager#sleep1	525,{
+	mes "[Mora Villager]";
+	mes "Snort--";
+	close;
+}
+
+mora,133,185,6	script	Mora Villager#sleep2	524,{
+	mes "[Mora Villager]";
+	mes "Snore--";
+	close;
+}
+
+mora,134,184,2	script	Mora Villager#sleep3	516,{
+	mes "[Mora Villager]";
+	mes "Phew phew pheeew--";
+	close;
+}
+
+mora,133,183,7	script	Mora Villager#sleep4	518,{
+	end;
+}
+
+mora,132,185,6	script	Mora Villager#sleep5	518,{
+	mes "[Mora Villager]";
+	mes "Phew-- Phew--";
+	close;
+}
+
+mora,132,184,6	script	Mora Villager#sleep6	522,{
+	mes "[Mora Villager]";
+	mes "Snort--";
+	close;
+}
+
+mora,132,183,8	script	Mora Villager#sleep7	524,{
+	mes "[Mora Villager]";
+	mes "- z Z";
+	close;
+}
+
+mora,133,184,2	script	Mora Villager#sleep8	1162,{
+	end;
+}
+
+mora,134,183,2	script	Mora Villager#sleep9	522,{
+	mes "[Mora Villager]";
+	mes "- z Z";
+	close;
+}
+
+mora,105,176,4	script	Master Tailor#mora	509,{
+	mes "[Master Tailor]";
+	mes "With my touch, I can turn a typical army padding into a piece of art. I'm Kay the Master Tailor, creating art with army paddings.";
+	next;
+	mes "[Master Tailor]";
+	mes "Well, what's in a name? I can turn your army padding into a piece of art if you bring ^ff00005 Mora Coins and an Army Padding^000000.";
+	close;
+}
+
+mora,104,172,8	script	Victim#mora	520,{
+	mes "[Victim]";
+	mes "You Bastard! I want my rugged outwear! That was passed on to me by my father *SOB*";
+	next;
+	mes "^990099 It seems that he has gotten a great deal of damage from the art dealer.^000000";
+	close;
+}
+
+mora,125,174,2	script	A Random Customer#mora	520,{
+	mes "[Naive Customer]";
+	mes "I don't know when carving my pendant will be completed. Since he is reliable art dealer, I suppose he won't break my pendant.";
+	close;
+}
+
+mora,123,177,6	script	Pendant Crafter#mora	509,{
+	mes "[Pendant Crafter]";
+	mes "My job is to polish the stone in a Guardian's Pendant, and then carve a symbol with special power on it.";
+	next;
+	mes "[Pendant Crafter]";
+	mes "The process gives the Guardian's Pendant more power than an ordinary accessory.";
+	next;
+	mes "[Pendant Crafter]";
+	mes "If you're interested, I can work on your pendant for ^ff00005 Mora Coins^000000. Of course you need to have a Guardian's Pendant so I can work on with you.";
+	close;
+}
+
+mora,134,166,4	script	Bulberry Westhood#mora	509,{
+	mes "[Bulberry Westhood]";
+	mes "I'm Bulberry Westhood, keeping the tradition of quality hoods alive.";
+	next;
+	mes "[Bulberry Westhood]";
+	mes "I only handle quality items - not random scarfs from a marketplace.";
+	next;
+	mes "[Bulberry Westhood]";
+	mes "If you have anything that you think is of high enough quality, come find me with ^ff00005 Mora Coins^000000.";
+	next;
+	mes "[Bulberry Westhood]";
+	mes "I can improve its high quality with my own hands.";
+	close;
+}
+
+mora,131,165,8	script	Wandering Customer#mora	520,{
+	mes "[Wandering Customer]";
+	mes "I don't know whether to believe this art dealer... He made me stand here like this for days.... Ah... I feel dizzy.";
+	close;
+}
+
+mora,113,185,4	script	Reading Rafflesia#mora	516,{
+	mes "You see a Rafflesia";
+	mes "lost in reading.";
+	next;
+	switch(select("See what he's reading.:Leave him alone.")) {
+	case 1:
+		mes "Curious about what he's reading,";
+		mes "you quietly approach him from behind.";
+		mes "The Rafflesia is reading in a low voice.";
+		next;
+		mes "[Reading Rafflesia]";
+		mes "Seiren was going to Eremes's.";
+		mes "He was going there to borrow";
+		mes "Eremes's reference books,";
+		next;
+		mes "[Reading Rafflesia]";
+		mes "but he also hoped to see";
+		mes "his beautiful sister, Seiren.";
+		mes "Seiren knocked on Eremes's door";
+		mes "with his heart pounding.";
+		next;
+		mes "[Reading Rafflesia]";
+		mes "Knock! Knock! Knock!";
+		mes "Excuse me. Is anybody there?";
+		mes "... ... ...";
+		mes "He doesn't hear anything.";
+		next;
+		mes "[Reading Rafflesia]";
+		mes "Is there nobody home?";
+		mes "He knocked again,";
+		mes "afraid that he might have";
+		mes "made the trip for nothing.";
+		next;
+		mes "[Reading Rafflesia]";
+		mes "Knock! Knock! Knock!";
+		mes "No answer again. Is there nobody home?";
+		mes "He knew it was rude to do that,";
+		mes "but he decided to enter anyway";
+		mes "and wait for Eremes to come back home.";
+		next;
+		mes "[Reading Rafflesia]";
+		mes "Seiren opened the front door";
+		mes "with his heart throbbing.";
+		mes "*squeak*";
+		mes "The door wasn't locked.";
+		mes "Eremes seems to be away for a while.";
+		next;
+		mes "[Reading Rafflesia]";
+		mes "Seiren entered the house hesitantly.";
+		mes "The moment he stepped into the house,";
+		mes "he heard a sound of water running.";
+		next;
+		mes "[Reading Rafflesia]";
+		mes "Seiren suddenly came to his senses,";
+		mes "and turned back to go out.";
+		mes "But right at the moment!!";
+		next;
+		mes "[Reading Rafflesia]";
+		mes "*thud*";
+		mes "The bathroom door opened,";
+		mes "and with white steam pouring out came a foot.";
+		next;
+		mes "[Reading Rafflesia]";
+		mes "Seiren's heart almost stopped";
+		mes "at the sight of it. And a moment later,";
+		mes "somebody came out from the bathroom,";
+		mes "with just a towel around her body.";
+		next;
+		mes "[Reading Rafflesia]";
+		mes "With her body still wet";
+		mes "from the shower...";
+		next;
+		mes "[Reading Rafflesia]";
+		mes "*gasp* Who are you? How long";
+		mes "were you standing there? How rude.";
+		emotion e_omg;
+		next;
+		mes "The Rafflesia closed the book hastily.";
+		mes "You're curious what will happen next,";
+		mes "but you've been rude enough,";
+		mes "so you just give up.";
+		close;
+	case 2:
+		mes "You leave the place quietly";
+		mes "in order not to disturb";
+		mes "the Rafflesia, who was lost in reading.";
+		close;
+	}
+}
+
+mora,140,186,4	script	Rafflesia Philosopher	517,{
+	mes "[Rafflesia Philosopher]";
+	mes "With a little token of appreciation, I will tell you a quote that will help you in your life.";
+	next;
+	switch(select("Give him a token of appreciation.:Can't you just tell me?")) {
+	case 1:
+		mes "[Rafflesia Philosopher]";
+		mes "How much are you willing to give me?";
+		mes "You can pay me in the currencies listed below.";
+		mes "Enter the sum you're willing to pay. Enter 0 if you don't want to pay anything.";
+		next;
+		input .@amount;
+		if (.@amount < 100 || .@amount > 1000000) {
+			mes "[Rafflesia Philosopher]";
+			mes "You can pay between ^FF0000 100 and 1000000^000000.";
+			close;
+		}
+		if (Zeny < .@amount) {
+			mes "[Rafflesia Philosopher]";
+			mes "So you think this is what my time is worth?";
+			close;
+		}
+		mes "[Rafflesia Philosopher]";
+		mes "The quote I'm going to tell you is...";
+		mes "Let's see... Wait a second.";
+		set Zeny, Zeny-.@amount;
+		next;
+		mes ". . . . . . . . .";
+		next;
+		mes ". . . . . . . . .";
+		next;
+		mes ". . . . . . . . .";
+		next;
+		mes "[Rafflesia Philosopher]";
+		mes "Okay! I think this is the one for you.";
+		next;
+		mes "[Rafflesia Philosopher]";
+		mes strcharinfo(0)+", the quote I'm going to tell you is...";
+
+		// There are more cases, but you get the point.
+		switch(rand(16)) {
+		case 0:
+			mes "We don't laugh because we're happy";
+			mes "- we're happy because we laugh.";
+			mes "- William James -";
+			break;
+		case 1:
+			mes "Humility is the most difficult";
+			mes "of all virtues to achieve,";
+			mes "nothing dies harder than the desire";
+			mes "to think well of oneself.";
+			mes "- T. S. Eliot -";
+			break;
+		case 2:
+			mes "If it's that painful, why do you keep doing it?";
+			mes "The answer's simple.";
+			mes "Because it makes my heart beat,";
+			mes "because it excites me.";
+			mes "My body might suffer, but I'm a lot happier";
+			mes "doing what I have always wanted to do.";
+			mes "- Biya Han -";
+			break;
+		case 3:
+			mes "The superior man thinks always";
+			mes "of virtue; the common man";
+			mes "thinks of comfort.";
+			mes "- Confucius -";
+			break;
+		case 4:
+			mes "Despair is an illness leading to death.";
+			mes "- Kierkegaard -";
+			break;
+		case 5:
+			mes "To eat bread without hope is";
+			mes "still slowly to starve to death.";
+			mes "- Pearl Buck -";
+			break;
+		case 6:
+			mes "The end comes when we";
+			mes "no longer talk with ourselves.";
+			mes "It is the end of genuine thinking";
+			mes "and the beginning of the final loneliness.";
+			mes "- Edward Gibbon -";
+			break;
+		case 7:
+			mes "Look deep into nature,";
+			mes "and then you will understand";
+			mes "everything better.";
+			mes "- Albert Einstein -";
+			break;
+		case 8:
+			mes "Beware of a man";
+			mes "of one book.";
+			mes "- English Proverb -";
+			break;
+		case 9:
+			mes "A bad peace is better";
+			mes "than a good war.";
+			mes "- Russian Proverb -";
+			break;
+		case 10:
+			mes "I do not have much patience";
+			mes "with a thing of beauty";
+			mes "that must be explained";
+			mes "to be understood.";
+			mes "If it does need additional interpretation";
+			mes "then I question";
+			mes "whether it has fulfilled its purpose.";
+			mes "- Charlie Chaplin -";
+			break;
+		case 11:
+			mes "The best and most beautiful things in the world";
+			mes "cannot be seen or even touched -";
+			mes "they must be felt with the heart.";
+			mes "- Helen Keller -";
+			break;
+		case 12:
+			mes "One should never rush marriage.";
+			mes "Unlike fruit, marriage is";
+			mes "always in season.";
+			mes "- Leo Tolstoy -";
+			break;
+		case 13:
+			mes "An eye for an eye";
+			mes "only ends up";
+			mes "making the whole world blind.";
+			mes "- Gandhi-";
+			break;
+		case 14:
+			mes "A day without laughter is a day wasted.";
+			mes "- Charlie Chaplin -";
+			break;
+		case 15:
+			mes "Laugh, and the world laughs";
+			mes "with you; weep, and";
+			mes "you weep alone.";
+			mes "- Ella Wheeler Wilcox -";
+			break;
+		}
+		next;
+		mes "[Rafflesia Philosopher]";
+		mes "People take what they hear";
+		mes "differently.";
+		next;
+		mes "[Rafflesia Philosopher]";
+		mes "I wonder what you think";
+		mes "about what I've told you.";
+		next;
+		input .@input1$;
+		mes "[Rafflesia Philosopher]";
+		mes "So you think that "+.@input1$+".";
+		next;
+		mes "[Rafflesia Philosopher]";
+		mes "... ... ... ...";
+		next;
+		mes "[Rafflesia Philosopher]";
+		mes "I don't know. There is no one answer";
+		mes "to this question...";
+		mes .@input1$;
+		close;
+	case 2:
+		mes "[Rafflesia Philosopher]";
+		mes "You don't get something for nothing.";
+		close;
+	}
+}
+
+-	script	#mora_traveler	-1,{
+	mes "[Upset Traveler]";
+	mes "You... you dare play a game with me?";
+	emotion e_ag,0,"Traveler#mora1";
+	next;
+	mes "[Traveler That Posed the Question]";
+	mes "What...? Do you have proof?";
+	mes "Do you have proof?!!";
+	emotion e_an,0,"Traveler#mora2";
+	next;
+	mes "[Traveler Trying to Stop the Fight]";
+	mes "Look, stop it, just stop it!";
+	mes "I'm afraid it will turn into a big fight...";
+	emotion e_swt2,0,"Traveler#mora3";
+	next;
+	mes "[Traveler Trying to Stop the Fight]";
+	mes "Oh! Why don't we ask";
+	mes "that person there...?";
+	next;
+	mes "[Upset Traveler]";
+	mes "Oh, yes! That's a great idea.";
+	mes "Well~ Hello there~";
+	mes "You there, traveler!";
+	emotion e_ic,0,"Traveler#mora1";
+	next;
+	mes "They seem to be calling out to you.";
+	next;
+	switch(select("See what the matter is.:I have nothing to do with it.")) {
+	case 1:
+		mes "["+strcharinfo(0)+"]";
+		mes "What's happening here?";
+		emotion e_what,1;
+		next;
+		mes "[Upset Traveler]";
+		mes "I'll tell you what.";
+		mes "Rose's mother had 10 sons.";
+		mes "The eldest son is called Roseone,";
+		mes "the second Rosetwo,";
+		mes "the third Rosethree...";
+		mes "the ninth Rosenine...";
+		mes "you get how it works, right?";
+		emotion e_ag,0,"Traveler#mora1";
+		next;
+		mes "[Traveler That Posed the Question]";
+		mes "Right, that's how it works.";
+		mes "So I asked what the youngest one would be called,";
+		mes "and when I told him the answer,";
+		mes "he got all upset and started cursing me.";
+		emotion e_an,0,"Traveler#mora2";
+		next;
+		mes "[Upset Traveler]";
+		mes "You... you bastard!";
+		mes "Hey there, what do you think";
+		mes "the answer to the question is?";
+		emotion e_ag,0,"Traveler#mora1";
+		next;
+		switch(select("Roseten.:Rose.:How would I know that?")) {
+		case 1:
+			mes "["+strcharinfo(0)+"]";
+			mes "The answer to the question is Roseten.";
+			mes "Why are you fighting over such a trivial matter?";
+			next;
+			mes "[Upset Traveler]";
+			mes "See? Even this traveler says";
+			mes "Roseten is the answer.";
+			mes "How dare you try to play tricks on me?";
+			emotion e_gg,0,"Traveler#mora1";
+			next;
+			mes "[Traveler That Posed the Question]";
+			mes "You idiot... you don't have the slightest clue!";
+			emotion e_an,0,"Traveler#mora2";
+			break;
+		case 2:
+			mes "["+strcharinfo(0)+"]";
+			mes "The answer to the question is Rose.";
+			mes "You said Rose's mother had 10 sons.";
+			mes "So even if the other sons' names are";
+			mes "Roseone, Rosetwo, ... Rosenine,";
+			mes "the youngest one must be Rose,";
+			mes "or she wouldn't be called Rose's mother.";
+			next;
+			mes "[Traveler That Posed the Question]";
+			mes "That's exactly what I mean!";
+			mes "I can't hang around with him.";
+			mes "I guess we live in two different worlds.";
+			emotion e_ok,0,"Traveler#mora2";
+			next;
+			mes "[Upset Traveler]";
+			mes "You bastard... What did you";
+			mes "get from this guy...?";
+			emotion e_ag,0,"Traveler#mora1";
+			break;
+		case 3:
+			mes "["+strcharinfo(0)+"]";
+			mes "I have no idea.";
+			mes "Try to sort it out yourselves.";
+			next;
+			mes "[Traveler Trying to Stop the Fight]";
+			mes "You good-for-nothing bastard,";
+			mes "you're trying to leave this mess to me?";
+			emotion e_an,0,"Traveler#mora3";
+			break;
+		}
+		next;
+		mes "*thud*";
+		mes "You feel a sudden impact on the back of your head.";
+		mes "Your sight is going blurry.";
+		specialeffect2 EF_HIT1;
+		sc_start SC_BLIND,20000,0;
+		next;
+		mes "You feel somebody rummaging through your pockets before you pass out.";
+		set Zeny, Zeny-5000;
+		close2;
+		percentheal -100,0;
+		warp "mora",31,132;
+		end;
+	case 2:
+		mes "You went on your way";
+		mes "leaving the travelers behind you.";
+		close;
+	}
+}
+mora,140,72,4	duplicate(#mora_traveler)	Traveler#mora1	513	//Upset Traveler
+mora,138,72,6	duplicate(#mora_traveler)	Traveler#mora2	513	//Traveler That Posed the Question
+mora,139,73,4	duplicate(#mora_traveler)	Traveler#mora3	513	//Traveler Trying to Stop the Fight

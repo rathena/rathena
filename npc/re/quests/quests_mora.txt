@@ -1,0 +1,753 @@
+//===== rAthena Script =======================================
+//= Mora Quest NPCs
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= Quest NPCs related to Mora.
+//===== Additional Comments: =================================
+//= 1.0 NPCs are currently placeholders. [Euphy]
+//============================================================
+
+// Find the Research Tools
+//============================================================
+mora,31,138,6	script	Raffle Researcher#ep14	522,{
+	mes "[Raffle Researcher]";
+	mes "Oh no~ My research tools...";
+	mes "What...... What was it?";
+	emotion e_sob;
+	next;
+	select("What is your business here?");
+	mes "[Raffle Researcher]";
+	mes "Hmm?";
+	emotion e_what;
+	next;
+	mes "[Raffle Researcher]";
+	mes "You're human...? Are you human...?";
+	mes "You... came from the underworld?";
+	next;
+	mes "[Raffle Researcher]";
+	mes "Human beings are incredible...";
+	mes "You survived the crevice and made it here.";
+	next;
+	mes "[Raffle Researcher]";
+	mes "... ... ...";
+	next;
+	mes "[Raffle Researcher]";
+	mes "You, come here for a minute.";
+	mes "It's a simple experiment, so there's no need to be afraid.";
+	emotion e_gg;
+	next;
+	switch(select("What a crazy Raffle. I must run away.:... ...")) {
+	case 1:
+		mes "[Raffle Researcher]";
+		mes "You said you had made it up from the Crevice,";
+		mes "so I was wondering what race you were,";
+		mes "but a mere human? How did you get up here?";
+		emotion e_lv;
+		close;
+	case 2:
+		if (BaseLevel < 100) {
+			mes "[Raffle Researcher]";
+			mes "What... I thought a human who made it up from the Crevice";
+			mes "would be extraordinary,";
+			mes "but you're no more than a kid.";
+			next;
+			mes "[Raffle Researcher]";
+			mes "Go hunt more ^000000Porings^000000";
+			mes "and come back when your level is in the triple digits kid!";
+			close;
+		}
+		close;
+	}
+}
+
+// Theore's Request
+//============================================================
+mora,55,124,2	script	Jones#ep14_1_bs	495,{
+	mes "[Jones]";
+	mes "Oh.... Darn.......";
+	mes "I can't go down, and I can't go back. My credibility that I've worked so hard on is just crumbling into dust.";
+	close;
+}
+
+mora,98,66,4	script	Lilitia#ep14_1_bs	518,{
+	mes "[Lilitia]";
+	mes "I really hate the cold.";
+	mes "That's why Mora is a lovely place to live.";
+	next;
+	mes "[Lilitia]";
+	mes "The leaves are always fresh here. And, the stress about languages just disappears.";
+	close;
+}
+
+mora,139,102,2	script	Humming#ep14_1_bs	515,{
+	mes "[Humming]";
+	mes "I heard that a crevice crept in between Jotunheim and Midgard, so I wanted to check it out. But I got stuck here.";
+	mes "I was looking forward to seeing a new place.";
+	next;
+	mes "[Humming]";
+	mes "Are you from Midgard?";
+	mes "What is it like there?";
+	mes "I've always wanted to see a creature called Poring.";
+	close;
+}
+
+mora,35,119,4	script	Rondo#ep14_1_bs	513,{
+	mes "[Rondo]";
+	mes "Mora is such a mysterious place.";
+	mes "You can understand any language.";
+	next;
+	mes "[Rondo]";
+	mes "Of course, when we leave this area I won't be able to understand what you say, but I'll be able to remember the conversations we had.";
+	mes "And I'll look forward to the day we meet again, here.";
+	close;
+}
+
+mora,185,163,2	script	Warehouse Manager#mora	516,{
+	mes "[Warehouse Manager]";
+	mes "No, sir!";
+	mes "You cannot enter at will.";
+	mes "This is a warehouse. If you need something, please ask the staff outside.";
+	close;
+}
+
+// Wandering Guardian Quest
+//============================================================
+mora,46,152,6	script	Flower Smelling Lady	510,{
+	mes "[Flower Smelling Lady]";
+	mes "I need rest.";
+	mes "I'm too tired to talk to you.";
+	mes "I'm sorry.";
+	close;
+}
+
+mora,48,152,4	script	Sharp Eyed Man	512,{
+	mes "He won't look at you. It's like he's not interested at all.";
+	close;
+}
+
+// Helping Lope and Euridi
+//============================================================
+mora,117,66,4	script	Euridi#pa	521,{
+	mes "[Euridi]";
+	mes "You are very delicate.";
+	mes "It's true that I need help,";
+	mes "but I don't think you can help.";
+	close;
+}
+
+mora,115,68,4	script	Euridi's Friend#pa	520,{
+	mes "[Euridi's Friend]";
+	mes "Please stop Euridi.";
+	mes "She is desperate to find her missing fiance.";
+	close;
+}
+
+mora,65,145,4	script	Pitt#pa	519,{
+	mes "[Pitt]";
+	mes "So you're quite good,";
+	mes "since you passed through the Hazy Forest alive.";
+	mes "I'm completely messed up, you see,";
+	mes "so I can't afford to listen to the tales of your exploits.";
+	mes "Now leave.";
+	close;
+}
+
+// Knights of the Neighborhood
+//============================================================
+mora,118,166,6	script	Knights Chief#mo	525,{
+	mes "[Order of the Knights Chief]";
+	mes "We are the legendary order of the Neighborhood Knights, founded just five minutes ago!";
+	next;
+	mes "[Order of the Knights Chief]";
+	mes "We have four chiefs but no foot soldiers...";
+	mes "It's so frustrating!";
+	next;
+	mes "[Other Leaders]";
+	mes "Those other guys are all soldiers, but I'm the Boss!";
+	mes "I, the Head, will tell you what to do!";
+	mes "The Leader is the highest in the rank!";
+	mes "You talked me into joining the order, and now look at this!";
+	close;
+}
+
+mora,116,165,6	script	Knights Boss#mo	524,{
+	mes "[Order of the Knights Boss]";
+	mes "You have courage to";
+	mes "show up out of nowhere";
+	mes "and demand Mora Coins... how impressive!";
+	mes "You're more than qualified to be a soldier of the Order of the Neighborhood Knights.";
+	next;
+	mes "[Order of the Knights Boss]";
+	mes "Soldier, I need you to do something for me.";
+	mes "Go to the Hazy Forest and gather 200 ^FF0000Mysterious Seeds^000000!";
+	next;
+	switch(select("Yes, sir!:I challenge you to a duel!")) {
+	case 1:
+		mes "[Order of the Knights Boss]";
+		mes "Good attitude, "+strcharinfo(0)+" Soldier!";
+		mes "I'll reward you handsomely when you get back.";
+		next;
+		mes "[Other Bosses]";
+		mes "This is from me, the Chief!";
+		mes "Don't look down on the Head!";
+		mes "It's from me, the Leader!";
+		close;
+	case 2:
+		mes "[Order of the Knights Boss]";
+		mes "See the Chief if you want to have a duel!";
+		mes "I'm in charge of recruiting here.";
+		mes "Ahem...";
+		close;
+	}
+}
+
+mora,114,163,6	script	Knights Head#mo	522,{
+	mes "[Order of the Knights Head]";
+	mes "I hear that a Laphine called 'Lope'";
+	mes "went missing in the Hazy Forest.";
+	mes "I wish the Order of the Neighborhood Knights";
+	next;
+	mes "[Order of the Knights Head]";
+	mes "could help solve the case,";
+	mes "but we can't now";
+	mes "because we're not done cleaning the yard yet.";
+	mes "So, what I'm trying to say is";
+	next;
+	mes "[Order of the Knights Head]";
+	mes "why don't you go";
+	mes "and deal with the problem";
+	mes "on behalf of the Order of the Neighborhood Knights!";
+	next;
+	mes "[Order of the Knights Head]";
+	mes "I promise, as the Head of the Order,";
+	mes "that I'll give you more work";
+	mes "when you get back!";
+	next;
+	mes "[Other Heads]";
+	mes "I approve it, as the Chief.";
+	mes "You can thank me, the Boss.";
+	mes "You know the Leader is the boss here, right?";
+	close;
+}
+
+mora,112,161,4	script	Knights Leader#mo	523,{
+	mes "[Order of the Knights Leader]";
+	mes "I'm the Leader of the Order -";
+	mes "you can tell me.";
+	mes "What brings you here? Do you have some work for us?";
+	next;
+	mes "[Other Leaders]";
+	mes "Huh! I said the Boss is the boss!";
+	mes "No, the Chief is the best!";
+	mes "How rude you all are! I'm the Head here!";
+	emotion e_swt2,1;
+	close;
+}
+
+// Daily Quests - Bow-wow
+//============================================================
+mora,119,103,4	script	Bow-wow#pa0829	513,{
+	if (BaseLevel < 99) {
+		mes "[Bow-wow]";
+		mes "I try to give tasks only to reliable people. You are......... no, never mind.";
+		close;
+	}
+	end;
+}
+
+mora,119,118,4	script	General Good Dealer#pa0	516,{
+	if (BaseLevel < 99) {
+		mes "[General Good Dealer]";
+		mes "Hmm, you don't look reliable enough for Bow-wow's tasks.";
+		close;
+	}
+	end;
+}
+
+// Daily Quests - Woof-grr
+//============================================================
+mora,124,108,8	script	Woof-grrr#pa0829	514,{
+	if (BaseLevel < 99) {
+		mes "[Woof-grrr]";
+		mes "Can you please keep away from me? You're getting in the way.";
+		close;
+	}
+	end;
+}
+
+mora,127,112,4	script	Commodities Dealer#pa08	518,{
+	if (BaseLevel < 99) {
+		mes "[Commodities Dealer]";
+		mes "Well, Woof-grrr can't have given a weakling like you tasks.";
+		close;
+	}
+	end;
+}
+
+// Daily Quests - Elephantine
+//============================================================
+mora,133,80,6	script	Elephantine#pa0829	509,{
+	if (BaseLevel < 135) {
+		mes "[Elephantine]";
+		mes "Hmm, you don't look reliable enough to perform tasks for me.";
+		close;
+	}
+	end;
+}
+
+mora,115,98,7	script	Hotcha#pa0829	509,{
+	if (BaseLevel < 135) {
+		mes "[Hotcha]";
+		mes "Hmm, you don't look reliable enough for Elephantine's tasks.";
+		close;
+	}
+	end;
+}
+
+// Daily Quests - Soul Guide
+//============================================================
+mora,170,101,4	script	Soul Guide#pa0829	515,{
+	if (BaseLevel < 99) {
+		mes "[Soul Guide]";
+		mes "Reliability is the primary quality needed in looking for lost souls. You don't look so reliable to me.";
+		close;
+	}
+	end;
+}
+
+// Mora Enchants
+//============================================================
+mora,88,89,6	script	Keeper of Secrets#pa082	495,{
+	mes "[Artifice]";
+	mes "Relics for Archbishops are meant for defense and support!";
+	next;
+	mes "[Artifice]";
+	mes "Like the other Guardians, they may trade coins for their relics, so collect Mora Coins!";
+	next;
+	if (countitem(6380) < 10) {
+		mes "[Artifice]";
+		mes "If you collect more than 10 coins then come to me to trade!";
+		close;
+	}
+	close;
+}
+
+mora,99,93,6	script	Artifact Crafter#pa0829	495,{
+	mes "[Artifact Crafter]";
+	mes "My job is to imbue artifacts with new power. If you have enough Coins, you can have one of the following items reinforced.";
+	next;
+	switch(select("Tell me more.:I want to have my item reinforced.")) {
+	case 1:
+		mes "[Artifact Crafter]";
+		mes "Let me explain. One reinforcement costs you two Coins.";
+		next;
+		mes "[Artifact Crafter]";
+		mes "And, I'll work on the item whether it's been already reinforced or not.";
+		next;
+		mes "[Artifact Crafter]";
+		mes "So if you have an artifact reinforced to your liking, put it in a safe place and come back.";
+		next;
+		mes "[Artifact Crafter]";
+		mes "And another thing, the artifact will be destroyed if the reinforcement fails. Please keep that in mind.";
+		close;
+	case 2:
+		mes "[Artifact Crafter]";
+		mes "And, I'll work on the item whether it's been already reinforced or not.";
+		next;
+		mes "[Artifact Crafter]";
+		mes "So if you have an artifact reinforced to your liking, put it in a safe place and come back.";
+		next;
+		mes "[Artifact Crafter]";
+		mes "And another thing, the artifact will be destroyed if the reinforcement fails. Please keep that in mind.";
+		next;
+		set .@i, select("Maybe next time.:Golden Rod Staff:Aqua Staff:Crimson Staff:Forest Staff:Golden Rod Shoes:Aqua Shoes:Crimson Shoes:Forest Shoes:Golden Rod Orb:Aqua Orb:Crimson Orb:Forest Orb:Golden Rod Robe:Aqua Robe:Crimson Robe:Forest Robe")-2;
+		if (.@i == -1) {
+			mes "[Artifact Crafter]";
+			mes "As you wish.";
+			close;
+		}
+		setarray .@artifacts[0],
+			2007,2008,2009,2010,	// Staves
+			2467,2468,2469,2470,	// Shoes
+			2859,2860,2861,2862,	// Orbs
+			15025,15026,15027,15028;	// Robes
+		setarray .@enchants[0],
+			2,2,2,2,
+			3,3,3,3,
+			3,3,3,3,
+			3,3,3,3;
+		if (countitem(6380) < 2 || countitem(.@artifacts[.@i]) < 1) {
+			mes "[Artifact Crafter]";
+			mes "You have to have 2 Mora Coins and an item to be reinforced before I can do my work.";
+			close;
+		}
+		close;
+	}
+}
+
+mora,104,76,4	script	Guardian of Artifacts#p	495,{
+	mes "[Guardian of Artifacts]";
+	mes "My job is to guard the Warlock's ancient artifacts.";
+	next;
+	mes "[Guardian of Artifacts]";
+	mes "Well, it's not a big deal actually. I give out artifacts to those who deserve them for the price of a few Mora Coins.";
+	next;
+	if (countitem(6380) < 10) {
+		mes "[Guardian of Artifacts]";
+		mes "You can trade with me when you have 10 or more Coins. See you later.";
+		close;
+	}
+	close;
+}
+
+mora,96,74,6	script	Master of Relics#pa0829	495,{
+	mes "[Relice]";
+	mes "I enhance Relics that holy Arch-Bishops use, it will take 2 Mora Coins and the relic to allow me to attempt to enhance it.";
+	next;
+	switch(select("More details please:Please Enhance my Relic.")) {
+	case 1:
+		mes "[Relice]";
+		mes "Let me briefly explain, for ^00CC002 Mora Coins^000000 and the relic I can give you a single Enchantment on that relic.";
+		next;
+		mes "[Relice]";
+		mes "It is possible I can fail though and if that happens the relic is lost forever.";
+		next;
+		mes "[Relice]";
+		mes "There are many combinations of enchantments that can be applied, as 2 enchantments happen each time.";
+		close;
+	case 2:
+		mes "[Relice]";
+		mes "Ok, you can get a new Relic from Artifice if it fails.";
+		next;
+		mes "[Relice]";
+		mes "If you have a ritual for luck, you should use it now!";
+		next;
+		set .@i, select("Wait a minute!:Light of Cure:Seal of Cathedral:Ring of Archbishop:Shoes of Affection:Shoes of Judgement:Shawl of Affection:Shawl of Judgement:Robe of Affection:Robe of Judgement:Bible of Promise 1st Vol:Wand of Affection:Mace of Judgement")-2;
+		if (.@i == -1) {
+			mes "[Relice]";
+			mes "Certainly. Go with the Light.";
+			close;
+		}
+		setarray .@relics[0],
+			2864,2865,2866,	// Accessories
+			2471,2472,		// Shoes
+			2569,2570,		// Shawls
+			15029,15030,		// Robes
+			2156,1657,16013;	// Weapons
+		setarray .@enchants[0],
+			2,2,2,
+			3,3,
+			3,3,
+			3,3,
+			3,2,2;
+		if (countitem(6380) < 2 || countitem(.@relics[.@i]) < 1) {
+			mes "[Relice]";
+			mes "For 2 Mora Coins I can strengthen the relic you have in many ways!";
+			close;
+		}
+		close;
+	}
+}
+
+mora,152,97,6	script	Guardian of Power#pa082	515,{
+	mes "[Guardian of Power]";
+	mes "I give Rune Knights, Guillotine Crosses, and Rangers ancient artifacts to help them carry out their missions.";
+	next;
+	mes "[Guardian of Power]";
+	mes "There are guardians that give Mora Village coins which you can use to exchange for these artifacts.";
+	next;
+	if (countitem(6380) < 10) {
+		mes "[Guardian of Power]";
+		mes "If you collect 10 or more Mora coins, then I can trade them for the artifacts.";
+		close;
+	}
+	close;
+}
+
+mora,148,98,4	script	Artifact Researcher#new	521,{
+	mes "[Artifact Researcher]";
+	mes "Nice to meet you.";
+	mes "I'm here in Mora studying ancient relics and artifacts. The new discoveries of Adventurers has made this village very exciting for me.";
+	next;
+	switch(select("Tell me more...:Give abilities to artifacts.:Reset Enhanced abilities.")) {
+	case 1:
+		mes "[Artifact Researcher]";
+		mes "New artifacts have been found here in Mora village, haven't you heard the news?";
+		next;
+		mes "[Artifact Researcher]";
+		mes "If you come across any of these artifacts, there are hidden powers that can be extracted from them.";
+		next;
+		mes "[Artifact Researcher]";
+		mes "I'm going to continue my research for these artifacts. We researchers are taking Mora Coins as payment for our services...";
+		next;
+		mes "[Artifact Researcher]";
+		mes "I'm offering my services to give abilities to the artifacts for 100,000 zeny and 1 Mora Coin.";
+		next;
+		mes "[Artifact Researcher]";
+		mes "The best part of my service is that any enhancements that you have in these artifacts will not be harmed.";
+		close;
+	case 2:
+		if (countitem(6380) < 1 || Zeny < 100000) {
+			mes "[Artifact Researcher]";
+			mes "I'm not giving these services out for free pal. 100,000 zeny and 1 Mora Coin. Is that too much to ask?";
+			close;
+		}
+		close;
+	case 3:
+		if (countitem(6380) < 1 || Zeny < 100000) {
+			mes "[Artifact Researcher]";
+			mes "I'm not giving these services out for free pal. 100,000 zeny and 1 Mora Coin. Is that too much to ask?";
+			close;
+		}
+		close;
+	}
+}
+
+mora,124,82,4	script	Artifact Collector#blan	522,{
+	mes "Those Mora Artifacts look so perfect!";
+	mes "But I know you want it to be even better!";
+	next;
+	mes "[Artifact Collector]";
+	mes "Greetings Adventurer. We will be great friends in a moment after I tell you how to Empower your Artifacts!";
+	next;
+	switch(select("Let's do this!:Empower Artifacts?:Nope, not for me!")) {
+	case 1:
+		emotion e_flash;
+		mes "[Artifact Collector]";
+		mes "Let me take a look at what you have brought me.";
+		next;
+
+		// Detect weapon...
+
+		emotion e_an;
+		mes "[Artifact Collector]";
+		mes "The weapon you have isn't one of the Artifacts I can work with.";
+		close;
+	case 2:
+		emotion e_ok;
+		mes "[Artifact Collector]";
+		mes "You seem like a pretty good judge of character.";
+		next;
+		mes "[Artifact Collector]";
+		mes "For over 200 years I've been working with Artifacts here in Mora. Toiling to get the perfect +9!";
+		next;
+		select("Gulp... +9?!");
+		emotion e_omg,1;
+		mes "[Artifact Collector]";
+		mes "My business is collecting the old relics and refining them to their essence!";
+		next;
+		emotion e_sob;
+		mes "[Artifact Collector]";
+		mes "Finding the perfect Artifact for me to experiment on is my life's work.";
+		mes "Plus seeing the wonder of our ancestor's legacy is also gratifying.";
+		next;
+		select("I can see how that could be fun.");
+		emotion e_pat;
+		mes "[Artifact Collector]";
+		mes "Thank you human.";
+		next;
+		mes "[Artifact Collector]";
+		mes "I've been doing this for over 200 years, and honestly the readily available supply is gone, and Artificer and Artifact Crafter won't trade me anymore...";
+		next;
+		emotion e_dots;
+		mes "[Artifact Collector]";
+		mes "But maybe the Humans that are starting to visit can bring in some new stock!";
+		next;
+		select("Humans... Stock?");
+		emotion e_what,1;
+		mes "[Artifact Collector]";
+		mes "Yes! If the humans can bring me new artifacts I can work on my ultimate achievement!";
+		next;
+		select("Ultimate Achievement?");
+		emotion e_what,1;
+		emotion e_ok;
+		mes "[Artifact Collector]";
+		mes "Patience, we'll get to that...";
+		next;
+		mes "[Artifact Collector]";
+		mes "I am a collector, by trade, but my greatest achievement is empowering some artifacts with greater power!";
+		mes "I have only perfected my ability on a few Artifact types so far.";
+		next;
+		mes "[Artifact Collector]";
+		mes "You might just be the human to help me complete my plan.";
+		next;
+		emotion e_otl;
+		mes "[Artifact Collector]";
+		mes "Oh how I love how fate works sometimes...";
+		next;
+		mes "[Artifact Collector]";
+		mes "+1, +2, +3, +4, +5, +6 those refinements are not strong enough to work on my craft.";
+		next;
+		emotion 57,0;
+		mes "[Artifact Collector]";
+		mes "But +7! +7 is rare and just barely strong enough to work in my crafting attempts.";
+		next;
+		select("I have a feeling this is where you ask me to do stuff...");
+		emotion e_hmm,1;
+		mes "[Artifact Collector]";
+		mes "Right you are! I know it is natural for you Humans to help a friend, even without the friend asking...";
+		next;
+		select("I'm not sure if...");
+		emotion e_what,1;
+		mes "Of course I'll accept your help!  Find me...";
+		next;
+		mes "- Golden Rod Staff -";
+		mes "- Aqua Staff -";
+		mes "- Crimson Staff -";
+		mes "- Forest Staff -";
+		mes "- Staff of Mercy -";
+		mes "- Mace of Judgement -";
+		next;
+		select("What should I look for?");
+		emotion e_what,1;
+		mes "[Artifact Collector]";
+		mes "Well aside from the +7, there are very specific enchantments that need to be on the artifact that help catalyze the process.";
+		next;
+		mes "[Artifact Collector]";
+		mes "If either the +7 or the specific enchantment is missing I can't do it.";
+		next;
+		select("So the Refining will be preserved?");
+		emotion e_omg,1;
+		emotion e_an;
+		mes "[Artifact Collector]";
+		mes "No, but what you'll get back is so much better!";
+		next;
+		emotion e_what;
+		mes "[Artifact Collector]";
+		mes "By now you are wondering more about the artifacts I'm looking for, go ahead and ask!";
+		next;
+		setarray .@artifacts[0],1657,16013,2007,2008,2009,2010;
+		setarray .@empowered[0],1660,16018,2011,2012,2013,2014;
+		while(1) {
+			set .@i, select("I don't think I'm interested:Staff of Mercy:Mace of Judgement:Golden Rod Staff:Aqua Staff:Crimson Staff:Forest Staff")-2;
+			if (.@i == -1) {
+				mes "[Artifact Collector]";
+				mes "But please if you do get one, please let me work on it, I'm begging you.";
+				close;
+			}
+			mes "[Artifact Collector]";
+			mes getitemname(.@artifacts[.@i])+" must of course be refined to +7 or higher for me to distill it to an enchantment.";
+			next;
+			switch(.@i) {
+			case 0:
+				setarray .@enchants[0],4761,4723,4714;
+				set .@str$, "MATK+2%, DEX+4, INT+5";
+				break;
+			case 1:
+				setarray .@enchants[0],4767,4723,4704;
+				set .@str$, "ATK+3%, DEX+4, STR+5";
+				break;
+			default:
+				setarray .@enchants[0],4761,4713;
+				set .@str$, "MATK+2%, INT+4";
+				break;
+			}
+			mes "[Artifact Collector]";
+			mes "It must also carry any of these enchantments: "+.@str$+" to be craftable by me.";
+			next;
+			select("What are the attributes of an "+getitemname(.@empowered[.@i])+"?");
+			mes "[Artifact Collector]";
+			mes getitemname(.@empowered[.@i]);
+			switch(.@i) {
+			case 0: //Mercy_Staff1
+				mes "One handed Staff / Attack : 30";
+				mes "Weight : 50 / Any Sex";
+				mes "Archbishop only";
+				mes "Weapon Level : 4 / ^ff0000Required Level: 130^000000";
+				mes "MATK + 180, INT + 4.";
+				mes "Adds 20% Heal Bonus.";
+				mes "If worn with Robes, Shoes, and Robe of Mercy Increase Heal Bonus by an additional 45% and SP consumption of 'Heal' by 50.";
+				mes "Subtract 3 seconds from the reuse delay of Sacrement, Lauda Agnus and Lauda Ramus.";
+				break;
+			case 1: //Judgement_Mace1
+				mes "Mace / Attack : 170";
+				mes "Weight : 120 / Any Sex";
+				mes "Archbishop only";
+				mes "Weapon Level : 4 / ^ff0000Required Level: 130^000000";
+				mes "MATK + 180, STR + 2, INT + 2.";
+				mes "Physical and Magical Attacks have a chance to increase damage by 40% to Demon monsters for 7 seconds.";
+				mes "If worn with Judgement Golves, Shoes and Shawl, increase Damage against Undead by 30%.";
+				mes "Increase damage of Adoramus by 200%, and increase SP cost of Adoramus by 30.";
+				break;
+			case 2: //Golden_Rod_Staff1
+				mes "Staff / Attack: 30";
+				mes "Weight : 90 / Any Sex";
+				mes "Warlock only";
+				mes "Weapon Level : 4 / ^ff0000Required Level : 130^000000";
+				mes "INT + 5, MATK + 270.";
+				mes "Increase Jupitel Thunder damage by 30%.";
+				mes "If worn with Golden Robe, Golden Shoes, and Golden Orb Increase Wind Magic damage by 60%.";
+				mes "Lower Earth Magic damage by 60% and resistance to Earth by 50%.";
+				break;
+			case 3: //Aqua_Staff1
+				mes "Staff / Attack : 30";
+				mes "Weight : 90 / Any Sex";
+				mes "Warlock only";
+				mes "Weapon Level : 4 / ^ff0000Required Level: 130^000000";
+				mes "INT + 5, MATK + 270.";
+				mes "Increase Cold Bolt and Frost Diver damage by 30%.";
+				mes "If worn with Aqua Robe, Shoes, and Orb Increase Water Magic damage by 60%.";
+				mes "Lower Wind Magic damage by 60% and resistance to Wind by 50%.";
+				break;
+			case 4: //Crimson_Staff1
+				mes "Staff / Attack : 30";
+				mes "Weight : 90 / Any Sex";
+				mes "Warlock only";
+				mes "Weapon Level : 4 / ^ff0000Required Level: 130^000000";
+				mes "INT + 5, MATK + 270.";
+				mes "Increase Fire Bolt and Fireball damage by 30%.";
+				mes "If worn with Crimson Robe, Shoes, and Orb Increase Fire Magic damage by 60%.";
+				mes "Lower Water Magic damage by 60% and resistance to Water by 50%.";
+				break;
+			case 5: //Forest_Staff1
+				mes "Staff / Attack : 30";
+				mes "Weight : 90 / Any Sex";
+				mes "Warlock only";
+				mes "Weapon Level : 4 / ^ff0000Required Level: 130^000000";
+				mes "INT + 5, MATK + 270.";
+				mes "Increase Earth Spike and Heaven's Drive damage by 30%.";
+				mes "If worn with Forest Robe, Shoes, and Orb Increase Earth Magic damage by 60%.";
+				mes "Lower Fire Magic damage by 60% and resistance to Fire by 50%.";
+				break;
+			}
+			next;
+
+			// Check weapon...
+			if (getequipid(EQI_HAND_R) == .@artifacts[.@i] && getequiprefinerycnt(EQI_HAND_R) >= 7) {
+				// Check enchants...
+				//delequip EQI_HAND_R;
+				//getitem .@empowered[.@i];
+			}
+
+			emotion e_what;
+			mes "[Artifact Collector]";
+			mes "Ok, well maybe someday you will be.";
+			next;
+		}
+	case 3:
+		mes "[Artifact Collector]";
+		mes "Oh well, can you do me a favor?";
+		mes "And have yourself a great day.";
+		mes "Could you do that for me pal?";
+		mes "Thanks! <3";
+		close;
+	}
+}
+
+mora,119,75,2	script	Artifact Panhandler	515,{
+	mes "[Artifact Panhandler]";
+	mes "Psst, if you have any of those Mora artifacts just lying around I'll trade ya 2 Mora coins for them!";
+	mes "Of course I only want ones that are battle tested, so you must be wearing it.";
+	next;
+	if (BaseLevel < 99) {
+		mes "[Artifact Panhandler]";
+		mes "I don't think you can possibly have any Mora Gear I'd be interested in right now.";
+		close;
+	}
+	close;
+}

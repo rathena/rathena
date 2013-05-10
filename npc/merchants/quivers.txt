@@ -10,10 +10,10 @@
 //= [Official Conversion]
 //= Turns arrows into Arrow Quivers.
 // Breakdown of Subroutine "S_BuyQuiver"
-// arg(0): Type of Arrow to be packaged (item ID)
-// arg(1): How many of each 'getarg(0)' arrow per quiver
+// arg(0): Type of Arrow to be packaged (item ID).
+// arg(1): How many of each 'getarg(0)' arrow per quiver.
 // arg(2): The cost of making a 'getarg(0)' quiver.
-// arg(3): The quiver given by the NPC. (item ID)
+// arg(3): The quiver given by the NPC (item ID).
 //===== Additional Comments: =================================
 //= 07/06/05 : Added 1st Version. [Muad_Dib]
 //= Converted to rAthena format by Dr.Evil
@@ -25,14 +25,7 @@
 //============================================================
 
 payon_in01,5,134,5	script	Inventor Jaax	89,{
-	if (checkweight(1201,1) == 0) {
-		mes "[Inventor Jaax]";
-		mes "Hey, you're carrying";
-		mes "way too much stuff. Why don't you stash it away in Kafra Storage? We can talk after you do that, right?";
-		close;
-	}
-	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 2000) {
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
 		mes "[Inventor Jaax]";
 		mes "Hey, you're carrying";
 		mes "way too much stuff. Why don't you stash it away in Kafra Storage? We can talk after you do that, right?";
@@ -49,7 +42,7 @@ payon_in01,5,134,5	script	Inventor Jaax	89,{
 	mes "created something";
 	mes "truly extraordinary. I call them... ^663300Magic Quivers^000000 !! This will be remembered in history as an";
 	mes "arrow revolution!";
-	Emotion e_no1;
+	emotion e_no1;
 	next;
 	mes "[Inventor Jaax]";
 	mes "I've studied magic and quivers for years, working night and day until I finally figured how to condense arrows with magic! With magic quivers, you'll be carrying more arrows, but with less weight!";
@@ -78,7 +71,7 @@ payon_in01,5,134,5	script	Inventor Jaax	89,{
 	//close;
 
 S_BuyQuiver:
-	if (countitem(getarg(0)) > 499) {
+	if (countitem(getarg(0)) >= getarg(1)) {
 		mes "[Inventor Jaax]";
 		mes "Excellent!";
 		mes "Are you carrying any Arrows with you? I'll provide you with a quiver that can carry "+getarg(1)+" of your "+getitemname(getarg(0))+"s for only ^FF3131"+getarg(2)+" Zeny^000000.";
@@ -168,11 +161,11 @@ S_BuyQuiver:
 	}
 	else {
 		mes "[Inventor Jaax]";
-		mes "You can carry a maximum of 500 Arrows within this quiver. It was made using my secret method,";
+		mes "You can carry a maximum of "+getarg(1)+" Arrows within this quiver. It was made using my secret method,";
 		mes "so the total weight of the Arrows and Quiver is less than carrying the Arrows alone.";
 		next;
 		mes "[Inventor Jaax]";
-		mes "It's a miracle of science! One that you can experience for yourself if you bring me at least 500 Arrows and 500 Zeny for each Quiver.";
+		mes "It's a miracle of science! One that you can experience for yourself if you bring me at least "+getarg(1)+" Arrows and "+getarg(2)+" Zeny for each Quiver.";
 		close;
 	}
 }
