@@ -38,7 +38,7 @@
 533,Grape_Juice,Grape Juice,0,250,,40,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 0,rand(15,25); },{},{}
 534,Carrot_Juice,Carrot Juice,0,20,,40,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(27,33),0; },{},{}
 535,Pumpkin,Pumpkin,0,15,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 19,0; },{},{}
-536,Ice_Cream,Ice Cream,0,150,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(105,145),0; if(rand(1000)<250) sc_start SC_Freeze,10000,0; },{},{}
+536,Ice_Cream,Ice Cream,0,150,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(105,145),0; sc_start SC_Freeze,10000,0,2500,0; },{},{}
 537,Pet_Food,Pet Food,0,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(50,90),0; },{},{}
 538,Well_Baked_Cookie,Well-baked Cookie,0,1000,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(160,200),0; },{},{}
 539,Piece_Of_Cake,Piece of Cake,0,3000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(270,330),0; },{},{}
@@ -51,12 +51,12 @@
 546,Yellow_Slim_Potion,Condensed Yellow Potion,0,600,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(175,235),0; },{},{}
 547,White_Slim_Potion,Condensed White Potion,0,1650,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(325,405),0; },{},{}
 548,Cheese,Cheese,0,2800,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 0,rand(10,15); },{},{}
-549,Nice_Sweet_Potato,Yam,0,180,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(50,100),0; if(rand(1000)<150) sc_start SC_Stun,3000,0; },{},{}
+549,Nice_Sweet_Potato,Yam,0,180,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(50,100),0; sc_start SC_Stun,3000,0,1500,0; },{},{}
 550,Popped_Rice,Rice Cake,0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(10,15),0; },{},{}
 551,Shusi,Sushi,0,1,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(50,60),0; },{},{}
 552,KETUPAT,Ketupat,0,1,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(70,90),rand(20,30); },{},{}
 553,Bun,Bao,0,1,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(35,70),0; },{},{}
-554,Mojji,Mochi,0,400,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(105,145),0; sc_start SC_Stun,3000,0; if(rand(1000)<150) sc_start SC_Blind,2000,0; },{},{}
+554,Mojji,Mochi,0,400,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(105,145),0; sc_start SC_Stun,3000,0; sc_start SC_Blind,2000,0,1500,0; },{},{}
 555,Rice_Cake,Traditional Rice Cake,0,100,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(105,145),0; },{},{}
 556,Long_Rice_Cake,Rice Cake Stick,0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(20,25),0; },{},{}
 557,Hash_Rice_Cake,Neatly Sliced Rice Cake,0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(25,30),0; },{},{}
@@ -172,7 +172,7 @@
 676,Silver_Coin_Moneybag,Bag of Silver Coins,3,50000,,400,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 677,White_Gold_Coin,Platinum Coin,3,2000,,40,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 678,Poison_Bottle,Poison Bottle,2,5000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(Class==Job_Assassin_Cross) { sc_start SC_DPoison,60000,0; sc_start SC_ASPDPOTION3,60000,0; } else percentheal -100,-100; },{},{}
-679,Gold_Pill,Pilule,2,5000,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ if(rand(1000)<100) sc_start SC_DPoison,10000,0; sc_start SC_Poison,50000,0; },{},{}
+679,Gold_Pill,Pilule,2,5000,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_DPoison,10000,0,1000,0; sc_start SC_Poison,50000,0; },{},{}
 680,Magical_Carnation,Magic Carnation,0,0,,1000,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,20; },{},{}
 681,Memory_Of_Wedding,Sweet Memory of Marriage,2,50000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ if(getpartnerid()) sc_start SC_WEDDING,600000,0; },{},{}
 682,Realgar_Wine,Distilled Fighting Spirit,2,0,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ATKPOTION,60000,30; },{},{}
@@ -4571,14 +4571,14 @@
 12024,Red_Pouch_Of_Surprise,Red Pouch,2,50,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ monster "this",-1,-1,"--ja--",-4,1,""; },{},{}
 12025,Egg_Boy,Dano Festival Egg,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getrandgroupitem(IG_EggBoy),1; },{},{}
 12026,Egg_Girl,Dano Festival Egg,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getrandgroupitem(IG_EggGirl),1; },{},{}
-12027,Giggling_Box,Giggling Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 9,0; if(rand(1000)<300) sc_start SC_Curse,30000,0; },{},{}
+12027,Giggling_Box,Giggling Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 9,0; sc_start SC_Curse,30000,0,3000,0; },{},{}
 12028,Box_Of_Thunder,Box of Thunder,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SpeedUp0,20000,0; },{},{}
 12029,Gloomy_Box,Box of Gloom,11,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "AC_CONCENTRATION",1; },{},{}
 12030,Box_Of_Grudge,Box of Resentment,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ATKPOTION,60000,20; },{},{}
 12031,Sleepy_Box,Box of Drowsiness,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_MATKPOTION,60000,20; },{},{}
 12032,Box_Of_Storm,Box of Storms,11,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "ITEM_ENCHANTARMS",2; },{},{}
 12033,Box_Of_Sunlight,Box of Sunlight,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Intravision,30000,0; },{},{}
-12034,Painting_Box,Box of Panting,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,9; if(rand(1000)<300) sc_start SC_Silence,30000,0; },{},{}
+12034,Painting_Box,Box of Panting,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,9; sc_start SC_Silence,30000,0,3000,0; },{},{}
 12035,Lotto_Box01,Lotto Box 01,2,0,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(7361,7370),1; },{},{}
 12036,Lotto_Box02,Lotto Box 02,2,0,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(7371,7380),1; },{},{}
 12037,Lotto_Box03,Lotto Box 03,2,0,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(7381,7390),1; },{},{}
@@ -4679,7 +4679,7 @@
 12132,Red_Bag,Santa's Bag,2,0,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Xmas,600000,0; },{},{}
 12133,Ice_Cream_,McDonald's Ice Cone,0,0,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ if(gettime(5)!=MDiceCone) { set MDiceCone,gettime(5); percentheal 50,50; } },{},{}
 12134,Red_Envelope,Red Envelope,2,1,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ set Zeny,Zeny+rand(1000,10000); },{},{}
-12135,Green_Ale,Green Ale,2,20,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 50,50; if(rand(100)>=90)sc_start SC_Confusion,10000,0; },{},{}
+12135,Green_Ale,Green Ale,2,20,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 50,50; sc_start SC_Confusion,10000,0,1000,0; },{},{}
 12136,Women's_Bundle,Women's Bundle,2,0,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem callfunc("F_RandMes",4,558,529,2668,7518),1; },{},{}
 12137,1st_Stage_Prize,First Stage Prize,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12138,2nd_Stage_Prize,Second Stage Prize,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
@@ -4780,8 +4780,8 @@
 12235,Strawberry_Choco,Chocolate Strawberry,2,20,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,5; skilleffect "AL_BLESSING",0; sc_start SC_BLESSING,240000,10; },{},{}
 12236,Choco_Tart,Chocolate Tart,11,20,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 5,0; itemskill "AL_ANGELUS",5; },{},{}
 12237,Choco_Lump,Junky Chocolate,2,0,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,5; sc_start SC_Poison,18000,0; sc_start SC_Bleeding,18000,0; },{},{}
-12238,New_Year_Rice_Cake_1,New Year Rice Cake,2,20,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(rand(1000)<100) sc_start SC_DPoison,10000,0; sc_start SC_Poison,50000,0; },{},{}
-12239,New_Year_Rice_Cake_2,New Year Rice Cake,2,20,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(rand(1000)<100) sc_start SC_DPoison,10000,0; sc_start SC_Poison,50000,0; },{},{}
+12238,New_Year_Rice_Cake_1,New Year Rice Cake,2,20,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_DPoison,10000,0,1000,0; sc_start SC_Poison,50000,0; },{},{}
+12239,New_Year_Rice_Cake_2,New Year Rice Cake,2,20,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_DPoison,10000,0,1000,0; sc_start SC_Poison,50000,0; },{},{}
 12240,Old_Yellow_Box,Old Yellow Box,2,20,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getrandgroupitem(IG_YellowBox),1; },{},{}
 12241,M_Center_Potion,Mercenary Concentration Potion,2,800,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ mercenary_sc_start SC_ASPDPOTION0,1800000,0; },{},{}
 12242,M_Awakening_Potion,Mercenary Awakening Potion,2,1500,,150,,,,,0xFFFFFFFF,7,2,,,,,,{ mercenary_sc_start SC_ASPDPOTION1,1800000,0; },{},{}
@@ -5140,14 +5140,14 @@
 12715,Black_Treasure_Box,Black Treasure Box,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12716,Indian_Rice_Cake,Indian Rice Cake,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 // Guillotine Cross Poisons
-12717,Poison_Paralysis,Paralyze,0,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(rand(10000)<10) sc_start SC_PARALYSE,300000,0; },{},{}
-12718,Poison_Leech,Leech End,0,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(rand(10000)<10) sc_start SC_LEECHESEND,300000,0; },{},{}
-12719,Poison_Oblivion,Oblivion Curse,0,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(rand(10000)<10) sc_start SC_OBLIVIONCURSE,300000,0; },{},{}
-12720,Poison_Disheart,Disheart,0,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(rand(10000)<10) sc_start SC_DEATHHURT,300000,0; },{},{}
-12721,Poison_Numb,Toxin,0,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(rand(10000)<10) sc_start SC_TOXIN,300000,0; },{},{}
-12722,Poison_Fever,Pyrexia,0,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(rand(10000)<10) sc_start SC_PYREXIA,300000,0; },{},{}
-12723,Poison_Laughing,Magic Mushroom,0,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(rand(10000)<10) sc_start SC_MAGICMUSHROOM,300000,0; },{},{}
-12724,Poison_Fatigue,Venom Bleed,0,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(rand(10000)<10) sc_start SC_VENOMBLEED,15000,0; },{},{}
+12717,Poison_Paralysis,Paralyze,0,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_PARALYSE,300000,0,10,0; },{},{}
+12718,Poison_Leech,Leech End,0,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_LEECHESEND,300000,0,10,0; },{},{}
+12719,Poison_Oblivion,Oblivion Curse,0,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_OBLIVIONCURSE,300000,0,10,0; },{},{}
+12720,Poison_Disheart,Disheart,0,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_DEATHHURT,300000,0,10,0; },{},{}
+12721,Poison_Numb,Toxin,0,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_TOXIN,300000,0,10,0; },{},{}
+12722,Poison_Fever,Pyrexia,0,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_PYREXIA,300000,0,10,0; },{},{}
+12723,Poison_Laughing,Magic Mushroom,0,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_MAGICMUSHROOM,300000,0,10,0; },{},{}
+12724,Poison_Fatigue,Venom Bleed,0,2,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_VENOMBLEED,15000,0,10,0; },{},{}
 
 // Rune Knight's Rune Stones
 12725,Runstone_Nosiege,Nauthiz Rune,11,100,,100,,,,,0xFFFFFFFF,8,2,,,,,,{ itemskill "RK_REFRESH",1; },{},{}

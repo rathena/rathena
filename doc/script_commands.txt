@@ -4846,9 +4846,9 @@ Used in reset NPC's (duh!)
 
 ---------------------------------------
 
-*sc_start 	<effect type>,<ticks>,<extra argument>{,<GID>};
-*sc_start2 	<effect type>,<ticks>,<extra argument>,<percent chance>{,<GID>};
-*sc_start4	<effect type>,<ticks>,<value 1>,<value 2>,<value 3>,<value 4>{,<GID>};
+*sc_start 	<effect type>,<ticks>,<value 1>{,<rate>,<flag>,<GID>};
+*sc_start2 	<effect type>,<ticks>,<value 1>,<value 2>{,<rate>,<flag>,<GID>};
+*sc_start4	<effect type>,<ticks>,<value 1>,<value 2>,<value 3>,<value 4>{,<rate>,<flag>,<GID>};
 *sc_end 	<effect type>{,<GID>};
 
 These command bestow a status effect on the invoking character. This command is 
@@ -5428,6 +5428,27 @@ run as if by 'donpcevent'.
 
 // Will summon a dead branch-style monster to fight for the character.
 summon "--ja--",-1;
+
+---------------------------------------
+
+*addmonsterdrop <monster id/name>,<item id>,<rate>;
+*delmonsterdrop <monster id/name>,<item id>;
+
+These commands will allow adding and deleting monster drops temporarily.
+They will accept monster name or ID.  Returns 1 on successful drop addition/deletion.
+
+When <item_id> specified is already on in the monster drop list, that item drop rate
+will be updated with the given <rate>.
+
+Examples:
+	//Adds Honey at an 80% drop rate to mob Owl Baron
+	addmonsterdrop 1295,518,8000;
+
+	//Deletes Executioner's Mitten from mob Rybio
+	delmonsterdrop 1201,7017;
+
+Any item added or deleted from a monster with these commands will be reset when
+the mobdb is reloaded or server is shut down.
 
 ---------------------------------------
 

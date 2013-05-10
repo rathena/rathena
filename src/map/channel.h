@@ -34,7 +34,6 @@ struct {
 	unsigned char map_chcolor, ally_chcolor; //msg color for map, ally
 	bool map_enable, ally_enable, user_chenable; //map, ally, users channels enable ?
 	bool map_autojoin, ally_autojoin;	//do user auto join in mapchange, guildjoin ?
-	bool color_override;		//can user override set channel color?
 	char map_chname[CHAN_NAME_LENGTH], ally_chname[CHAN_NAME_LENGTH]; //channel name for map and ally
 	bool closing;			//server is closing
 } Channel_Config;
@@ -73,7 +72,6 @@ struct Channel* channel_name2channel(char *chname, struct map_session_data *sd, 
 int channel_haspc(struct Channel *channel,struct map_session_data *sd);
 int channel_haspcbanned(struct Channel *channel,struct map_session_data *sd);
 int channel_pc_haschan(struct map_session_data *sd, struct Channel *channel);
-int channel_colormes(struct map_session_data *__restrict sd, uint32 channel_color, const char *__restrict msg);
 int channel_display_list(struct map_session_data *sd, char *option);
 
 int channel_pccreate(struct map_session_data *sd, char *chname, char *pass);

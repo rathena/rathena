@@ -1746,7 +1746,7 @@ nameless_in,15,60,0	script	#Aru_Trigger	-1,1,1,{
 OnTouch:
 	if (aru_monas == 18) {
 		disablenpc "aru_warp";
-		sc_start2 SC_Blind,600000,0,10000;
+		sc_start SC_Blind,600000,0,10000;
 		mes "^3355FFThe pressure on your";
 		mes "stomach and the blood";
 		mes "rushing to your head tells";
@@ -10077,7 +10077,7 @@ moc_fild18,108,116,0	script	#treasure	844,{
 				getitem 7725,1; //Unlucky_Emerald
 				getitem 604,1; //Branch_Of_Dead_Tree
 				getitem 1157,1; //Two_Hand_Sword
-				sc_start2 SC_Curse,10000,0,10000;
+				sc_start SC_Curse,10000,0,10000;
 				next;
 				mes "[" + strcharinfo(0) + "]";
 				mes "N-no! What's going on?";

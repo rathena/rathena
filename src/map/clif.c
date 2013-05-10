@@ -2246,7 +2246,7 @@ void clif_item_sub_v5(unsigned char *buf, int n, int idx, struct item *i, struct
 	char normal = (equip < 0);
 
 	WBUFW(buf,n)=idx; //index
-	WBUFW(buf,n+2)= i->nameid;
+	WBUFW(buf,n+2)= (id->view_id > 0)?id->view_id:i->nameid;
 	WBUFB(buf,n+4)=itemtype(id->type);
 
 	if(!normal){ //equip 31B
@@ -2256,7 +2256,7 @@ void clif_item_sub_v5(unsigned char *buf, int n, int idx, struct item *i, struct
 		clif_addcards(WBUFP(buf, n+14), i); //EQUIPSLOTINFO 8B
 		WBUFL(buf,n+22) = i->expire_time;
 		WBUFW(buf,n+26)= 0; //bindOnEquipType
-		WBUFW(buf,n+28)= (id->view_id > 0)?id->view_id:0;
+		WBUFW(buf,n+28)= (id->equip&EQP_VISIBLE)?id->look:0;
 		//V5_ITEM_flag
 		WBUFB(buf,n+30)=i->identify; //0x1 IsIdentified
 		WBUFB(buf,n+30)|=(i->attribute)?0x2:0; //0x2 IsDamaged
@@ -16554,7 +16554,7 @@ static int clif_parse(int fd)
 /*==========================================
  * Reads packet_db.txt and setups its array reference
  *------------------------------------------*/
-static int packetdb_readdb(void)
+void packetdb_readdb(void)
 {
 	FILE *fp;
 	char line[1024];
@@ -17157,7 +17157,6 @@ static int packetdb_readdb(void)
 	}
 	ShowStatus("Done reading packet database from '"CL_WHITE"%s"CL_RESET"'.\n","packet_db.txt");
 	ShowStatus("Using default packet version: "CL_WHITE"%d"CL_RESET".\n", clif_config.packet_db_ver);
-	return 0;
 }
 
 /*==========================================

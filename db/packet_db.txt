@@ -1803,10 +1803,10 @@ packet_ver: 33
 //2013-03-20Ragexe (Judas)
 packet_ver: 34
 0x01FD,15,repairitem,2
-0x086D,26,friendslistadd,2
+0x086D,26,partyinvite2,2
 0x0897,5,changedir,2:4
 0x0947,36,storagepassword,0
-0x086F,26,partyinvite2,2
+0x086F,26,friendslistadd,2
 0x0888,19,wanttoconnection,2:6:10:14:18
 0x088E,7,actionrequest,2:6
 0x089B,10,useskilltoid,2:4:6
@@ -1815,6 +1815,7 @@ packet_ver: 34
 0x093F,5,hommenu,2:4
 0x0933,6,takeitem,2
 0x0438,6,dropitem,2:4
+0x85d,18,bookingregreq,2:4
 0x08AC,8,movetokafra,2:4
 0x0874,8,movefromkafra,2:4
 0x0959,10,useskilltopos,2:4:6:8
@@ -1844,7 +1845,6 @@ packet_ver: 34
 0x915,-1 // notify_standentry
 0x978,6,reqworldinfo,2
 0x979,50 //ackworldinfo
-0x99a,9 // take_off_equipv5
 0x991,-1 //inv itemlist normal
 0x992,-1 //inv itemlist equip
 0x993,-1 //cart itemlist normal
@@ -1854,6 +1854,7 @@ packet_ver: 34
 0x997,-1 //ZC_EQUIPWIN_MICROSCOPE_V5
 0x998,8,equipitem,2:4
 0x999,11 // cz_wear_equipv5
+0x99a,9 // take_off_equipv5
 
 
 // New cashshop

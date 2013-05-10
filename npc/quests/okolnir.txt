@@ -1277,7 +1277,7 @@ OnDisable:
 
 OnTouch:
 	set .@sub$,callfunc("F_Okolnir");
-	sc_start2 SC_Stone,300000,0,10000;
+	sc_start SC_Stone,300000,0,10000;
 	switch (getd("$@gqse_"+.@sub$+"_gd")) {
 		Case 0: setarray .@n$, "103","153","1","Piamette : One white bird has dropped with its wing pierced by an arrow."; break;
 		Case 1: setarray .@n$, "102","135","2","Piamette : One bird is caught in a snare, and dropped into a lake."; break;

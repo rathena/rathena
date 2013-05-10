@@ -1026,7 +1026,7 @@ void channel_read_config(void) {
 		const char *map_chname, *ally_chname,*map_color, *ally_color;
 		int ally_enabled = 0, local_enabled = 0;
 		int local_autojoin = 0, ally_autojoin = 0;
-		int allow_user_channel_creation = 0, allow_user_color_override = 0;
+		int allow_user_channel_creation = 0;
 
 		if( !config_setting_lookup_string(settings, "map_local_channel_name", &map_chname) )
 			map_chname = "map";

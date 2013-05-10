@@ -3577,173 +3577,137 @@ ACMD_FUNC(partyrecall)
 /*==========================================
  *
  *------------------------------------------*/
-ACMD_FUNC(reloaditemdb)
-{
-	nullpo_retr(-1, sd);
-	itemdb_reload();
-	clif_displaymessage(fd, msg_txt(sd,97)); // Item database has been reloaded.
-
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------*/
-ACMD_FUNC(reloadmobdb)
-{
-	nullpo_retr(-1, sd);
-	mob_reload();
-	read_petdb();
-	merc_reload();
-	read_mercenarydb();
-	read_mercenary_skilldb();
-	reload_elementaldb();
-	clif_displaymessage(fd, msg_txt(sd,98)); // Monster database has been reloaded.
-
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------*/
-ACMD_FUNC(reloadskilldb)
-{
-	nullpo_retr(-1, sd);
-	skill_reload();
-	merc_skill_reload();
-	reload_elemental_skilldb();
-	read_mercenary_skilldb();
-	clif_displaymessage(fd, msg_txt(sd,99)); // Skill database has been reloaded.
-
-	return 0;
-}
-
-/*==========================================
- * @reloadatcommand - reloads atcommand_athena.conf groups.conf
- *------------------------------------------*/
 void atcommand_doload();
-ACMD_FUNC(reloadatcommand) {
-	config_t run_test;
-
-	if (conf_read_file(&run_test, "conf/groups.conf")) {
-		clif_displaymessage(fd, msg_txt(sd,1036)); // Error reading groups.conf, reload failed.
-		return -1;
-	}
-
-	config_destroy(&run_test);
-
-	if (conf_read_file(&run_test, ATCOMMAND_CONF_FILENAME)) {
-		clif_displaymessage(fd, msg_txt(sd,1037)); // Error reading atcommand_athena.conf, reload failed.
-		return -1;
-	}
-
-	config_destroy(&run_test);
-
-	atcommand_doload();
-	pc_groups_reload();
-	clif_displaymessage(fd, msg_txt(sd,254));
-	return 0;
-}
-/*==========================================
- * @reloadbattleconf - reloads battle_athena.conf
- *------------------------------------------*/
-ACMD_FUNC(reloadbattleconf)
+ACMD_FUNC(reload)
 {
-	struct Battle_Config prev_config;
-	memcpy(&prev_config, &battle_config, sizeof(prev_config));
-
-	battle_config_read(BATTLE_CONF_FILENAME);
-
-	if( prev_config.item_rate_mvp          != battle_config.item_rate_mvp
-	||  prev_config.item_rate_common       != battle_config.item_rate_common
-	||  prev_config.item_rate_common_boss  != battle_config.item_rate_common_boss
-	||  prev_config.item_rate_card         != battle_config.item_rate_card
-	||  prev_config.item_rate_card_boss    != battle_config.item_rate_card_boss
-	||  prev_config.item_rate_equip        != battle_config.item_rate_equip
-	||  prev_config.item_rate_equip_boss   != battle_config.item_rate_equip_boss
-	||  prev_config.item_rate_heal         != battle_config.item_rate_heal
-	||  prev_config.item_rate_heal_boss    != battle_config.item_rate_heal_boss
-	||  prev_config.item_rate_use          != battle_config.item_rate_use
-	||  prev_config.item_rate_use_boss     != battle_config.item_rate_use_boss
-	||  prev_config.item_rate_treasure     != battle_config.item_rate_treasure
-	||  prev_config.item_rate_adddrop      != battle_config.item_rate_adddrop
-	||  prev_config.logarithmic_drops      != battle_config.logarithmic_drops
-	||  prev_config.item_drop_common_min   != battle_config.item_drop_common_min
-	||  prev_config.item_drop_common_max   != battle_config.item_drop_common_max
-	||  prev_config.item_drop_card_min     != battle_config.item_drop_card_min
-	||  prev_config.item_drop_card_max     != battle_config.item_drop_card_max
-	||  prev_config.item_drop_equip_min    != battle_config.item_drop_equip_min
-	||  prev_config.item_drop_equip_max    != battle_config.item_drop_equip_max
-	||  prev_config.item_drop_mvp_min      != battle_config.item_drop_mvp_min
-	||  prev_config.item_drop_mvp_max      != battle_config.item_drop_mvp_max
-	||  prev_config.item_drop_heal_min     != battle_config.item_drop_heal_min
-	||  prev_config.item_drop_heal_max     != battle_config.item_drop_heal_max
-	||  prev_config.item_drop_use_min      != battle_config.item_drop_use_min
-	||  prev_config.item_drop_use_max      != battle_config.item_drop_use_max
-	||  prev_config.item_drop_treasure_min != battle_config.item_drop_treasure_min
-	||  prev_config.item_drop_treasure_max != battle_config.item_drop_treasure_max
-	||  prev_config.base_exp_rate          != battle_config.base_exp_rate
-	||  prev_config.job_exp_rate           != battle_config.job_exp_rate
-	)
-  	{	// Exp or Drop rates changed.
-		mob_reload(); //Needed as well so rate changes take effect.
-		chrif_ragsrvinfo(battle_config.base_exp_rate, battle_config.job_exp_rate, battle_config.item_rate_common);
-	}
-	clif_displaymessage(fd, msg_txt(sd,255));
-	return 0;
-}
-/*==========================================
- * @reloadstatusdb - reloads job_db1.txt job_db2.txt job_db2-2.txt refine_db.txt size_fix.txt
- *------------------------------------------*/
-ACMD_FUNC(reloadstatusdb)
-{
-	status_readdb();
-	clif_displaymessage(fd, msg_txt(sd,256));
-	return 0;
-}
-/*==========================================
- * @reloadpcdb - reloads exp.txt skill_tree.txt attr_fix.txt statpoint.txt
- *------------------------------------------*/
-ACMD_FUNC(reloadpcdb)
-{
-	pc_readdb();
-	clif_displaymessage(fd, msg_txt(sd,257));
-	return 0;
-}
-
-/*==========================================
- * @reloadmotd - reloads motd.txt
- *------------------------------------------*/
-ACMD_FUNC(reloadmotd)
-{
-	pc_read_motd();
-	clif_displaymessage(fd, msg_txt(sd,268));
-	return 0;
-}
-
-/*==========================================
- * @reloadscript - reloads all scripts (npcs, warps, mob spawns, ...)
- *------------------------------------------*/
-ACMD_FUNC(reloadscript)
-{
-	struct s_mapiterator* iter;
-	struct map_session_data* pl_sd;
 
 	nullpo_retr(-1, sd);
-	//atcommand_broadcast( fd, sd, "@broadcast", "Server is reloading scripts..." );
-	//atcommand_broadcast( fd, sd, "@broadcast", "You will feel a bit of lag at this point !" );
 
-	iter = mapit_getallusers();
-	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
-		pc_close_npc(pl_sd,2);
-	mapit_free(iter);
+	if ((strlen(command) < 8 ) && (!message || !*message)) {
+		const char* text;
 
-	flush_fifos();
-	map_reloadnpc(true); // reload config files seeking for npcs
-	script_reload();
-	npc_reload();
+		text = atcommand_help_string( command );
+		if(text)
+			clif_displaymessage( fd, text );
+		return -1;
+	}
 
-	clif_displaymessage(fd, msg_txt(sd,100)); // Scripts have been reloaded.
+	if (strstr(command, "itemdb") || strncmp(message, "itemdb", 4) == 0) {
+		itemdb_reload();
+		clif_displaymessage(fd, msg_txt(sd,97)); // Item database has been reloaded.
+	} else if (strstr(command, "mobdb") || strncmp(message, "mobdb", 3) == 0) {
+		mob_reload();
+		read_petdb();
+		merc_reload();
+		read_mercenarydb();
+		read_mercenary_skilldb();
+		reload_elementaldb();
+		clif_displaymessage(fd, msg_txt(sd,98)); // Monster database has been reloaded.
+	} else if (strstr(command, "skilldb") || strncmp(message, "skilldb", 4) == 0) {
+		skill_reload();
+		merc_skill_reload();
+		reload_elemental_skilldb();
+		read_mercenary_skilldb();
+		clif_displaymessage(fd, msg_txt(sd,99)); // Skill database has been reloaded.
+	} else if (strstr(command, "atcommand") || strncmp(message, "atcommand", 4) == 0) {
+		config_t run_test;
+
+		if (conf_read_file(&run_test, "conf/groups.conf")) {
+			clif_displaymessage(fd, msg_txt(sd,1036)); // Error reading groups.conf, reload failed.
+			return -1;
+		}
+
+		config_destroy(&run_test);
+
+		if (conf_read_file(&run_test, ATCOMMAND_CONF_FILENAME)) {
+			clif_displaymessage(fd, msg_txt(sd,1037)); // Error reading atcommand_athena.conf, reload failed.
+			return -1;
+		}
+
+		config_destroy(&run_test);
+
+		atcommand_doload();
+		pc_groups_reload();
+		clif_displaymessage(fd, msg_txt(sd,254));
+	} else if (strstr(command, "battleconf") || strncmp(message, "battleconf", 3) == 0) {
+		struct Battle_Config prev_config;
+		memcpy(&prev_config, &battle_config, sizeof(prev_config));
+
+		battle_config_read(BATTLE_CONF_FILENAME);
+
+		if( prev_config.item_rate_mvp          != battle_config.item_rate_mvp
+		||  prev_config.item_rate_common       != battle_config.item_rate_common
+		||  prev_config.item_rate_common_boss  != battle_config.item_rate_common_boss
+		||  prev_config.item_rate_card         != battle_config.item_rate_card
+		||  prev_config.item_rate_card_boss    != battle_config.item_rate_card_boss
+		||  prev_config.item_rate_equip        != battle_config.item_rate_equip
+		||  prev_config.item_rate_equip_boss   != battle_config.item_rate_equip_boss
+		||  prev_config.item_rate_heal         != battle_config.item_rate_heal
+		||  prev_config.item_rate_heal_boss    != battle_config.item_rate_heal_boss
+		||  prev_config.item_rate_use          != battle_config.item_rate_use
+		||  prev_config.item_rate_use_boss     != battle_config.item_rate_use_boss
+		||  prev_config.item_rate_treasure     != battle_config.item_rate_treasure
+		||  prev_config.item_rate_adddrop      != battle_config.item_rate_adddrop
+		||  prev_config.logarithmic_drops      != battle_config.logarithmic_drops
+		||  prev_config.item_drop_common_min   != battle_config.item_drop_common_min
+		||  prev_config.item_drop_common_max   != battle_config.item_drop_common_max
+		||  prev_config.item_drop_card_min     != battle_config.item_drop_card_min
+		||  prev_config.item_drop_card_max     != battle_config.item_drop_card_max
+		||  prev_config.item_drop_equip_min    != battle_config.item_drop_equip_min
+		||  prev_config.item_drop_equip_max    != battle_config.item_drop_equip_max
+		||  prev_config.item_drop_mvp_min      != battle_config.item_drop_mvp_min
+		||  prev_config.item_drop_mvp_max      != battle_config.item_drop_mvp_max
+		||  prev_config.item_drop_heal_min     != battle_config.item_drop_heal_min
+		||  prev_config.item_drop_heal_max     != battle_config.item_drop_heal_max
+		||  prev_config.item_drop_use_min      != battle_config.item_drop_use_min
+		||  prev_config.item_drop_use_max      != battle_config.item_drop_use_max
+		||  prev_config.item_drop_treasure_min != battle_config.item_drop_treasure_min
+		||  prev_config.item_drop_treasure_max != battle_config.item_drop_treasure_max
+		||  prev_config.base_exp_rate          != battle_config.base_exp_rate
+		||  prev_config.job_exp_rate           != battle_config.job_exp_rate
+		)
+	  	{	// Exp or Drop rates changed.
+			mob_reload(); //Needed as well so rate changes take effect.
+			chrif_ragsrvinfo(battle_config.base_exp_rate, battle_config.job_exp_rate, battle_config.item_rate_common);
+		}
+		clif_displaymessage(fd, msg_txt(sd,255));
+	} else if (strstr(command, "statusdb") || strncmp(message, "statusdb", 3) == 0) {
+		status_readdb();
+		clif_displaymessage(fd, msg_txt(sd,256));
+	} else if (strstr(command, "pcdb") || strncmp(message, "pcdb", 2) == 0) {
+		pc_readdb();
+		clif_displaymessage(fd, msg_txt(sd,257));
+	} else if (strstr(command, "motd") || strncmp(message, "motd", 4) == 0) {
+		pc_read_motd();
+		clif_displaymessage(fd, msg_txt(sd,268));
+	} else if (strstr(command, "script") || strncmp(message, "script", 3) == 0) {
+		struct s_mapiterator* iter;
+		struct map_session_data* pl_sd;
+		//atcommand_broadcast( fd, sd, "@broadcast", "Server is reloading scripts..." );
+		//atcommand_broadcast( fd, sd, "@broadcast", "You will feel a bit of lag at this point !" );
+
+		iter = mapit_getallusers();
+		for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+			pc_close_npc(pl_sd,2);
+		mapit_free(iter);
+
+		flush_fifos();
+		map_reloadnpc(true); // reload config files seeking for npcs
+		script_reload();
+		npc_reload();
+
+		clif_displaymessage(fd, msg_txt(sd,100)); // Scripts have been reloaded.
+	} else if (strstr(command, "msgconf") || strncmp(message, "msgconf", 3) == 0) {
+		map_msg_reload();
+		clif_displaymessage(fd, msg_txt(sd,463)); // Message configuration has been reloaded.
+	} else if (strstr(command, "questdb") || strncmp(message, "questdb", 3) == 0) {
+		do_reload_quest();
+		clif_displaymessage(fd, msg_txt(sd,1377)); // Quest database has been reloaded.
+	} else if (strstr(command, "packetdb") || strncmp(message, "packetdb", 4) == 0) {
+		packetdb_readdb();
+		clif_displaymessage(fd, msg_txt(sd,1477)); // Packet database has been reloaded.
+	}
+		
 
 	return 0;
 }
@@ -8652,11 +8616,6 @@ ACMD_FUNC(set) {
 
 	return 0;
 }
-ACMD_FUNC(reloadquestdb) {
-	do_reload_quest();
-	clif_displaymessage(fd, msg_txt(sd,1377)); // Quest database has been reloaded.
-	return 0;
-}
 ACMD_FUNC(addperm) {
 	int perm_size = ARRAYLENGTH(pc_g_permission_name);
 	bool add = (strcmpi(command+1, "addperm") == 0) ? true : false;
@@ -8982,13 +8941,6 @@ ACMD_FUNC(langtype)
 	return -1;
 }
 
-ACMD_FUNC(reloadmsgconf)
-{
-	map_msg_reload();
-	clif_displaymessage(fd, msg_txt(sd,463)); // Message configuration has been reloaded.
-	return 0;
-}
-
 /**
  * Fills the reference of available commands in atcommand DBMap
  **/
@@ -9088,15 +9040,19 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(broadcast), // + /b and /nb
 		ACMD_DEF(localbroadcast), // + /lb and /nlb
 		ACMD_DEF(recallall),
-		ACMD_DEF(reloaditemdb),
-		ACMD_DEF(reloadmobdb),
-		ACMD_DEF(reloadskilldb),
-		ACMD_DEF(reloadscript),
-		ACMD_DEF(reloadatcommand),
-		ACMD_DEF(reloadbattleconf),
-		ACMD_DEF(reloadstatusdb),
-		ACMD_DEF(reloadpcdb),
-		ACMD_DEF(reloadmotd),
+		ACMD_DEF(reload),
+		ACMD_DEF2("reloaditemdb", reload),
+		ACMD_DEF2("reloadmobdb", reload),
+		ACMD_DEF2("reloadskilldb", reload),
+		ACMD_DEF2("reloadscript", reload),
+		ACMD_DEF2("reloadatcommand", reload),
+		ACMD_DEF2("reloadbattleconf", reload),
+		ACMD_DEF2("reloadstatusdb", reload),
+		ACMD_DEF2("reloadpcdb", reload),
+		ACMD_DEF2("reloadmotd", reload),
+		ACMD_DEF2("reloadquestdb", reload),
+		ACMD_DEF2("reloadmsgconf", reload),
+		ACMD_DEF2("reloadpacketdb", reload),
 		ACMD_DEF(mapinfo),
 		ACMD_DEF(dye),
 		ACMD_DEF2("hairstyle", hair_style),
@@ -9239,7 +9195,6 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(font),
 		ACMD_DEF(accinfo),
 		ACMD_DEF(set),
-		ACMD_DEF(reloadquestdb),
 		ACMD_DEF(undisguiseguild),
 		ACMD_DEF(disguiseguild),
 		ACMD_DEF(sizeall),
@@ -9253,7 +9208,6 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(channel),
 		ACMD_DEF(fontcolor),
 		ACMD_DEF(langtype),
-		ACMD_DEF(reloadmsgconf)
 	};
 	AtCommandInfo* atcommand;
 	int i;

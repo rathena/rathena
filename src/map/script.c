@@ -623,6 +623,18 @@ static void script_reportfunc(struct script_state* st)
 	}
 }
 
+// Returns name of currently running function 
+static char* script_getfuncname(struct script_state *st)
+{
+	int i;
+	char* name = "";
+	for( i = 0; i < st->stack->sp; ++i ) {
+		struct script_data* data = &st->stack->stack_data[i];
+		if(data->type == C_NAME && str_data[data->u.num].type == C_FUNC)
+			name = reference_getname(data);
+	}
+	return name;
+}
 
 /*==========================================
  * Output error message
@@ -6035,7 +6047,11 @@ BUILDIN_FUNC(viewpoint)
 }
 
 /*==========================================
- *
+ * countitem(nameID)
+ *	returns number of items in inventory
+ *==========================================
+ * countitem2(nameID,Identified,Refine,Attribute,Card0,Card1,Card2,Card3)	[Lupus]
+ *	returns number of items that meet the conditions
  *------------------------------------------*/
 BUILDIN_FUNC(countitem)
 {
@@ -6053,90 +6069,90 @@ BUILDIN_FUNC(countitem)
 	data = script_getdata(st,2);
 	get_val(st, data);  // convert into value in case of a variable
 
-	if( data_isstring(data) )
-	{// item name
+	if( data_isstring(data) ) // item name
 		id = itemdb_searchname(conv_str(st, data));
-	}
-	else
-	{// item id
+	else // item id
 		id = itemdb_exists(conv_num(st, data));
-	}
 
-	if( id == NULL )
-	{
+	if( id == NULL ) {
 		ShowError("buildin_countitem: Invalid item '%s'.\n", script_getstr(st,2));  // returns string, regardless of what it was
 		script_pushint(st,0);
 		return 1;
 	}
 
-	nameid = id->nameid;
+	if(script_lastdata(st) == 2) { // For countitem() function
+		nameid = id->nameid;
+		for(i = 0; i < MAX_INVENTORY; i++)
+			if(sd->status.inventory[i].nameid == nameid)
+				count += sd->status.inventory[i].amount;
+	} else { // For countitem2() function
+		struct item tmp_it;
+		int iden, ref, attr, c1, c2, c3, c4;
+		tmp_it.nameid = id->nameid;
+		tmp_it.identify = script_getnum(st, 3);
+		tmp_it.refine = script_getnum(st, 4);
+		tmp_it.attribute = script_getnum(st, 5);
+		tmp_it.card[0] = (short) script_getnum(st, 6);
+		tmp_it.card[1] = (short) script_getnum(st, 7);
+		tmp_it.card[2] = (short) script_getnum(st, 8);
+		tmp_it.card[3] = (short) script_getnum(st, 9);
 
-	for(i = 0; i < MAX_INVENTORY; i++)
-		if(sd->status.inventory[i].nameid == nameid)
+		for (i = 0; i < MAX_INVENTORY; i++)
+			if ((&sd->status.inventory[i] != NULL)
+				&& sd->status.inventory[i].amount > 0
+				&& compare_item(&sd->status.inventory[i], &tmp_it)
+			)
 			count += sd->status.inventory[i].amount;
+	}
 
 	script_pushint(st,count);
 	return 0;
 }
 
-/*==========================================
- * countitem2(nameID,Identified,Refine,Attribute,Card0,Card1,Card2,Card3)	[Lupus]
- *	returns number of items that meet the conditions
- *------------------------------------------*/
-BUILDIN_FUNC(countitem2)
+int checkweight_sub(TBL_PC *sd,int nbargs,int *eitemid,int *eamount)
 {
-	int nameid, iden, ref, attr, c1, c2, c3, c4;
-	int count = 0;
-	int i;
 	struct item_data* id = NULL;
-	struct script_data* data;
+	int nameid,amount;
+	uint16 amount2=0,slots,weight=0,i;
 
-	TBL_PC* sd = script_rid2sd(st);
-	if (!sd) {
-		script_pushint(st,0);
-		return 0;
+	slots = pc_inventoryblank(sd); //nb of empty slot
+
+	for(i=0; i<nbargs; i++) {
+		if(!eitemid[i])
+			continue;
+		id = itemdb_exists(eitemid[i]);
+		if( id == NULL ) {
+			ShowError("buildin_checkweight: Invalid item '%d'.\n", eitemid[i]);
+			return 0;
+		}
+		nameid = id->nameid;
+
+		amount = eamount[i];
+		if( amount < 1 ) {
+			ShowError("buildin_checkweight: Invalid amount '%d'.\n", eamount[i]);
+			return 0;
+		}
+
+		weight += (id->weight)*amount; //total weight for all chk
+		if( weight + sd->weight > sd->max_weight ) // too heavy
+			return 0;
+
+		switch( pc_checkadditem(sd, nameid, amount) ) {
+			case CHKADDITEM_EXIST: // item is already in inventory, but there is still space for the requested amount
+				break;
+			case CHKADDITEM_NEW:
+				if( itemdb_isstackable(nameid) )
+					amount2++; // stackable
+				else
+					amount2 += amount; // non-stackable
+				if( slots < amount2)
+					return 0;
+				break;
+			case CHKADDITEM_OVERAMOUNT:
+				return 0;
+		}
 	}
-
-	data = script_getdata(st,2);
-	get_val(st, data);  // convert into value in case of a variable
-
-	if( data_isstring(data) )
-	{// item name
-		id = itemdb_searchname(conv_str(st, data));
-	}
-	else
-	{// item id
-		id = itemdb_exists(conv_num(st, data));
-	}
-
-	if( id == NULL )
-	{
-		ShowError("buildin_countitem2: Invalid item '%s'.\n", script_getstr(st,2));  // returns string, regardless of what it was
-		script_pushint(st,0);
-		return 1;
-	}
-
-	nameid = id->nameid;
-	iden = script_getnum(st,3);
-	ref  = script_getnum(st,4);
-	attr = script_getnum(st,5);
-	c1 = (short)script_getnum(st,6);
-	c2 = (short)script_getnum(st,7);
-	c3 = (short)script_getnum(st,8);
-	c4 = (short)script_getnum(st,9);
-
-	for(i = 0; i < MAX_INVENTORY; i++)
-		if (sd->status.inventory[i].nameid > 0 && sd->inventory_data[i] != NULL &&
-			sd->status.inventory[i].amount > 0 && sd->status.inventory[i].nameid == nameid &&
-			sd->status.inventory[i].identify == iden && sd->status.inventory[i].refine == ref &&
-			sd->status.inventory[i].attribute == attr && sd->status.inventory[i].card[0] == c1 &&
-			sd->status.inventory[i].card[1] == c2 && sd->status.inventory[i].card[2] == c3 &&
-			sd->status.inventory[i].card[3] == c4
-		)
-			count += sd->status.inventory[i].amount;
-
-	script_pushint(st,count);
-	return 0;
+	return 1;
 }
 
 /*==========================================
@@ -6148,182 +6164,104 @@ BUILDIN_FUNC(countitem2)
  *------------------------------------------*/
 BUILDIN_FUNC(checkweight)
 {
-	int nameid, amount, slots, amount2=0;
-	unsigned int weight=0, i, nbargs;
-	struct item_data* id = NULL;
 	struct map_session_data* sd;
 	struct script_data* data;
+	struct item_data* id = NULL;
+	int nameid[128], amount[128];
+	uint16 nbargs,i,j=0;
 
-	if( ( sd = script_rid2sd(st) ) == NULL ){
+	if( ( sd = script_rid2sd(st) ) == NULL )
 		return 0;
-	}
+
 	nbargs = script_lastdata(st)+1;
-	if(nbargs%2){
-	    ShowError("buildin_checkweight: Invalid nb of args should be a multiple of 2.\n");
-	    script_pushint(st,0);
-	    return 1;
+	if(nbargs%2) {
+		ShowError("buildin_checkweight: Invalid nb of args should be a multiple of 2.\n");
+		script_pushint(st,0);
+		return 1;
 	}
-	slots = pc_inventoryblank(sd); //nb of empty slot
 
-	for(i=2; i<nbargs; i=i+2){
-	    data = script_getdata(st,i);
-	    get_val(st, data);  // convert into value in case of a variable
-	    if( data_isstring(data) ){// item name
-		    id = itemdb_searchname(conv_str(st, data));
-	    } else {// item id
-		    id = itemdb_exists(conv_num(st, data));
-	    }
-	    if( id == NULL ) {
-		    ShowError("buildin_checkweight: Invalid item '%s'.\n", script_getstr(st,i));  // returns string, regardless of what it was
-		    script_pushint(st,0);
-		    return 1;
-	    }
-	    nameid = id->nameid;
-
-	    amount = script_getnum(st,i+1);
-	    if( amount < 1 ) {
-		    ShowError("buildin_checkweight: Invalid amount '%d'.\n", amount);
-		    script_pushint(st,0);
-		    return 1;
-	    }
-
-	    weight += itemdb_weight(nameid)*amount; //total weight for all chk
-	    if( weight + sd->weight > sd->max_weight )
-	    {// too heavy
-		    script_pushint(st,0);
-		    return 0;
-	    }
-
-	    switch( pc_checkadditem(sd, nameid, amount) )
-	    {
-		    case CHKADDITEM_EXIST:
-			    // item is already in inventory, but there is still space for the requested amount
-			    break;
-		    case CHKADDITEM_NEW:
-			    if( itemdb_isstackable(nameid) ) {// stackable
-				    amount2++;
-				    if( slots < amount2 ) {
-					    script_pushint(st,0);
-					    return 0;
-				    }
-			    }
-			    else {// non-stackable
-				    amount2 += amount;
-				    if( slots < amount2){
-					    script_pushint(st,0);
-					    return 0;
-				    }
-			    }
-			    break;
-		    case CHKADDITEM_OVERAMOUNT:
-			    script_pushint(st,0);
-			    return 0;
-	    }
+	for(i=2; i<nbargs; i=i+2) {
+		data = script_getdata(st,i);
+		get_val(st, data);  // convert into value in case of a variable
+		if( data_isstring(data) ) // item name
+			id = itemdb_searchname(conv_str(st, data));
+		else // item id
+			id = itemdb_exists(conv_num(st, data));
+		if( id == NULL ) {
+			ShowError("buildin_checkweight: Invalid item '%s'.\n", script_getstr(st,i));  // returns string, regardless of what it was
+			script_pushint(st,0);
+			return 1;
+		}
+		nameid[j] = id->nameid;
+		amount[j] = script_getnum(st,i+1);
+		j++;
 	}
-	script_pushint(st,1);
+
+	script_pushint(st,checkweight_sub(sd,(nbargs-2)/2,nameid,amount));
 	return 0;
 }
 
 BUILDIN_FUNC(checkweight2)
 {
-        //variable sub checkweight
-        int32 nameid=-1, amount=-1;
-        int i=0, amount2=0, slots=0, weight=0;
-	short fail=0;
+	//variable sub checkweight
+	int nameid[128], amount[128], i;
 
-        //variable for array parsing
-        struct script_data* data_it;
-        struct script_data* data_nb;
-        const char* name_it;
-        const char* name_nb;
-        int32 id_it, id_nb;
-        int32 idx_it, idx_nb;
-        int nb_it, nb_nb; //array size
+	//variable for array parsing
+	struct script_data* data_it;
+	struct script_data* data_nb;
+	const char* name_it;
+	const char* name_nb;
+	int32 id_it, id_nb;
+	int32 idx_it, idx_nb;
+	int nb_it, nb_nb; //array size
 
-        TBL_PC *sd = script_rid2sd(st);
-        nullpo_retr(1,sd);
+	TBL_PC *sd = script_rid2sd(st);
+	nullpo_retr(1,sd);
 
-        data_it = script_getdata(st, 2);
-        data_nb = script_getdata(st, 3);
+	data_it = script_getdata(st, 2);
+	data_nb = script_getdata(st, 3);
 
-        if( !data_isreference(data_it) || !data_isreference(data_nb))
-        {
-                ShowError("script:checkweight2: parameter not a variable\n");
-                script_pushint(st,0);
-                return 1;// not a variable
-        }
-        id_it = reference_getid(data_it);
-        id_nb = reference_getid(data_nb);
-        idx_it = reference_getindex(data_it);
-        idx_nb = reference_getindex(data_nb);
-        name_it = reference_getname(data_it);
-        name_nb = reference_getname(data_nb);
+	if( !data_isreference(data_it) || !data_isreference(data_nb)) {
+		ShowError("script:checkweight2: parameter not a variable\n");
+		script_pushint(st,0);
+		return 1;// not a variable
+	}
 
-        if( not_array_variable(*name_it) || not_array_variable(*name_nb))
-        {
-                ShowError("script:checkweight2: illegal scope\n");
-                script_pushint(st,0);
-                return 1;// not supported
-        }
-        if(is_string_variable(name_it) || is_string_variable(name_nb)){
-                ShowError("script:checkweight2: illegal type, need int\n");
-                script_pushint(st,0);
-                return 1;// not supported
-        }
-        nb_it = getarraysize(st, id_it, idx_it, 0, reference_getref(data_it));
-        nb_nb = getarraysize(st, id_nb, idx_nb, 0, reference_getref(data_nb));
-        if(nb_it != nb_nb){
-                ShowError("Size mistmatch: nb_it=%d, nb_nb=%d\n",nb_it,nb_nb);
-		fail = 1;
-        }
+	id_it = reference_getid(data_it);
+	id_nb = reference_getid(data_nb);
+	idx_it = reference_getindex(data_it);
+	idx_nb = reference_getindex(data_nb);
+	name_it = reference_getname(data_it);
+	name_nb = reference_getname(data_nb);
 
-        slots = pc_inventoryblank(sd);
-        for(i=0; i<nb_it; i++){
-            nameid = (int32)__64BPRTSIZE(get_val2(st,reference_uid(id_it,idx_it+i),reference_getref(data_it)));
-	    script_removetop(st, -1, 0);
-	    amount = (int32)__64BPRTSIZE(get_val2(st,reference_uid(id_nb,idx_nb+i),reference_getref(data_nb)));
-	    script_removetop(st, -1, 0);
-	    if(fail) continue; //cpntonie to depop rest
+	if( not_array_variable(*name_it) || not_array_variable(*name_nb)) {
+		ShowError("script:checkweight2: illegal scope\n");
+		script_pushint(st,0);
+		return 1;// not supported
+	}
+	if(is_string_variable(name_it) || is_string_variable(name_nb)) {
+		ShowError("script:checkweight2: illegal type, need int\n");
+		script_pushint(st,0);
+		return 1;// not supported
+	}
+	nb_it = getarraysize(st, id_it, idx_it, 0, reference_getref(data_it));
+	nb_nb = getarraysize(st, id_nb, idx_nb, 0, reference_getref(data_nb));
+	if(nb_it != nb_nb) {
+		ShowError("Size mistmatch: nb_it=%d, nb_nb=%d\n",nb_it,nb_nb);
+		script_pushint(st,0);
+		return 1;
+	}
 
-            if(itemdb_exists(nameid) == NULL ){
-		ShowError("buildin_checkweight2: Invalid item '%d'.\n", nameid);
-		fail=1;
-		continue;
-            }
-            if(amount < 0 ){
-                ShowError("buildin_checkweight2: Invalid amount '%d'.\n", amount);
-                fail = 1;
-		continue;
-            }
-	    weight += itemdb_weight(nameid)*amount;
-	    if( weight + sd->weight > sd->max_weight ){
-		fail = 1;
-		continue;
-	    }
-	    switch( pc_checkadditem(sd, nameid, amount) ) {
-		    case CHKADDITEM_EXIST:
-			// item is already in inventory, but there is still space for the requested amount
-			    break;
-		    case CHKADDITEM_NEW:
-			    if( itemdb_isstackable(nameid) ){// stackable
-				    amount2++;
-				    if( slots < amount2 )
-					    fail = 1;
-			    }
-			    else {// non-stackable
-				    amount2 += amount;
-				    if( slots < amount2 ){
-					    fail = 1;
-				    }
-			    }
-			    break;
-		    case CHKADDITEM_OVERAMOUNT:
-			    fail = 1;
-	    } //end switch
+	for(i=0; i<nb_it; i++) {
+		nameid[i] = (int32)__64BPRTSIZE(get_val2(st,reference_uid(id_it,idx_it+i),reference_getref(data_it)));
+		script_removetop(st, -1, 0);
+		amount[i] = (int32)__64BPRTSIZE(get_val2(st,reference_uid(id_nb,idx_nb+i),reference_getref(data_nb)));
+		script_removetop(st, -1, 0);
 	} //end loop DO NOT break it prematurly we need to depop all stack
 
-        fail?script_pushint(st,0):script_pushint(st,1);
-        return 0;
+	script_pushint(st,checkweight_sub(sd,nb_it,nameid,amount)); //push result of sub to script
+
+	return 0;
 }
 
 /*==========================================
@@ -9888,122 +9826,78 @@ BUILDIN_FUNC(hideonnpc)
 	return 0;
 }
 
-/// Starts a status effect on the target unit or on the attached player.
-///
-/// sc_start <effect_id>,<duration>,<val1>{,<unit_id>};
+/* Starts a status effect on the target unit or on the attached player.
+ *
+ * sc_start  <effect_id>,<duration>,<val1>{,<rate>,<flag>,{<unit_id>}};
+ * sc_start2 <effect_id>,<duration>,<val1>,<val2>{,<rate,<flag>,{<unit_id>}};
+ * sc_start4 <effect_id>,<duration>,<val1>,<val2>,<val3>,<val4>{,<rate,<flag>,{<unit_id>}};
+ * <flag>
+ * 	&1: Cannot be avoided (it has to start)
+ * 	&2: Tick should not be reduced (by vit, luk, lv, etc)
+ * 	&4: sc_data loaded, no value has to be altered.
+ * 	&8: rate should not be reduced
+ */
 BUILDIN_FUNC(sc_start)
 {
 	TBL_NPC * nd = map_id2nd(st->oid);
 	struct block_list* bl;
 	enum sc_type type;
-	int tick,isitem;
-	int val1;
+	int tick, val1, val2, val3, rate, flag, isitem;
 	int val4 = 0;
+	char start_type;
+	const char* command = script_getfuncname(st);
+	
+	if(strstr(command, "4"))
+		start_type = 4;
+	else if(strstr(command, "2"))
+		start_type = 2;
+	else
+		start_type = 1;
 
 	type = (sc_type)script_getnum(st,2);
 	tick = script_getnum(st,3);
 	val1 = script_getnum(st,4);
-	if( script_hasdata(st,5) )
-		bl = map_id2bl(script_getnum(st,5));
+
+	rate = script_hasdata(st,4+start_type)?min(script_getnum(st,4+start_type),10000):10000;
+	flag = script_hasdata(st,5+start_type)?script_getnum(st,5+start_type):2;
+
+	if(script_hasdata(st,(6+start_type)))
+		bl = map_id2bl(script_getnum(st,(6+start_type)));
 	else
 		bl = map_id2bl(st->rid);
 
-	if( tick == 0 && val1 > 0 && type > SC_NONE && type < SC_MAX && status_sc2skill(type) != 0 )
+	if(tick == 0 && val1 > 0 && type > SC_NONE && type < SC_MAX && status_sc2skill(type) != 0)
 	{// When there isn't a duration specified, try to get it from the skill_db
 		tick = skill_get_time(status_sc2skill(type), val1);
 	}
 
-	if( potion_flag == 1 && potion_target )
-	{	//skill.c set the flags before running the script, this must be a potion-pitched effect.
+	if(potion_flag == 1 && potion_target) { //skill.c set the flags before running the script, this is a potion-pitched effect.
 		bl = map_id2bl(potion_target);
 		tick /= 2;// Thrown potions only last half.
 		val4 = 1;// Mark that this was a thrown sc_effect
 	}
 
 	//solving if script from npc or item
-	isitem = (nd && nd->bl.id == fake_nd->bl.id)?true:false;
-	if( bl )
-		status_change_start(isitem?bl:NULL, bl, type, 10000, val1, 0, 0, val4, tick, 2);
+	isitem = (nd && nd->bl.id == fake_nd->bl.id || rate != 2)?true:false;
 
-	return 0;
-}
-
-/// Starts a status effect on the target unit or on the attached player.
-///
-/// sc_start2 <effect_id>,<duration>,<val1>,<percent chance>{,<unit_id>};
-BUILDIN_FUNC(sc_start2)
-{
-	struct block_list* bl;
-	enum sc_type type;
-	int tick;
-	int val1;
-	int val4 = 0;
-	int rate;
-
-	type = (sc_type)script_getnum(st,2);
-	tick = script_getnum(st,3);
-	val1 = script_getnum(st,4);
-	rate = script_getnum(st,5);
-	if( script_hasdata(st,6) )
-		bl = map_id2bl(script_getnum(st,6));
-	else
-		bl = map_id2bl(st->rid);
-
-	if( tick == 0 && val1 > 0 && type > SC_NONE && type < SC_MAX && status_sc2skill(type) != 0 )
-	{// When there isn't a duration specified, try to get it from the skill_db
-		tick = skill_get_time(status_sc2skill(type), val1);
+	switch(start_type) {
+		case 1:
+			if(bl)
+				status_change_start(isitem?bl:NULL, bl, type, rate, val1, 0, 0, val4, tick, flag);
+			break;
+		case 2:
+			val2 = script_getnum(st,5);
+			if(bl)
+				status_change_start(isitem?bl:NULL, bl, type, rate, val1, val2, 0, val4, tick, flag);
+			break;
+		case 4:
+			val2 = script_getnum(st,5);
+			val3 = script_getnum(st,6);
+			val4 = script_getnum(st,7);
+			if(bl)
+				status_change_start(isitem?bl:NULL, bl, type, rate, val1, val2, val3, val4, tick, flag);
+			break;
 	}
-
-	if( potion_flag == 1 && potion_target )
-	{	//skill.c set the flags before running the script, this must be a potion-pitched effect.
-		bl = map_id2bl(potion_target);
-		tick /= 2;// Thrown potions only last half.
-		val4 = 1;// Mark that this was a thrown sc_effect
-	}
-
-	if( bl )
-		status_change_start(NULL, bl, type, rate, val1, 0, 0, val4, tick, 2);
-
-	return 0;
-}
-
-/// Starts a status effect on the target unit or on the attached player.
-///
-/// sc_start4 <effect_id>,<duration>,<val1>,<val2>,<val3>,<val4>{,<unit_id>};
-BUILDIN_FUNC(sc_start4)
-{
-	struct block_list* bl;
-	enum sc_type type;
-	int tick;
-	int val1;
-	int val2;
-	int val3;
-	int val4;
-
-	type = (sc_type)script_getnum(st,2);
-	tick = script_getnum(st,3);
-	val1 = script_getnum(st,4);
-	val2 = script_getnum(st,5);
-	val3 = script_getnum(st,6);
-	val4 = script_getnum(st,7);
-	if( script_hasdata(st,8) )
-		bl = map_id2bl(script_getnum(st,8));
-	else
-		bl = map_id2bl(st->rid);
-
-	if( tick == 0 && val1 > 0 && type > SC_NONE && type < SC_MAX && status_sc2skill(type) != 0 )
-	{// When there isn't a duration specified, try to get it from the skill_db
-		tick = skill_get_time(status_sc2skill(type), val1);
-	}
-
-	if( potion_flag == 1 && potion_target )
-	{	//skill.c set the flags before running the script, this must be a potion-pitched effect.
-		bl = map_id2bl(potion_target);
-		tick /= 2;// Thrown potions only last half.
-	}
-
-	if( bl )
-		status_change_start(NULL, bl, type, 10000, val1, val2, val3, val4, tick, 2);
 
 	return 0;
 }
@@ -15154,32 +15048,105 @@ BUILDIN_FUNC(setitemscript)
 	return 0;
 }
 
-/* Work In Progress [Lupus]
+/*=======================================================
+ * Add or Update a mob drop temporarily [Akinari] 
+ * Original Idea By: [Lupus]
+ *
+ * addmonsterdrop <mob_id or name>,<item_id>,<rate>;
+ *
+ * If given an item the mob already drops, the rate
+ * is updated to the new rate.  Rate cannot exceed 10000
+ * Returns 1 if succeeded (added/updated a mob drop)
+ *-------------------------------------------------------*/
 BUILDIN_FUNC(addmonsterdrop)
 {
-	int class_,item_id,chance;
-	class_=script_getnum(st,2);
+	struct mob_db *mob;
+	int item_id,rate,i,c = 0;
+
+	if(script_isstring(st,2))
+		mob = mob_db(mobdb_searchname(script_getstr(st,2)));
+	else
+		mob = mob_db(script_getnum(st,2));
+
 	item_id=script_getnum(st,3);
-	chance=script_getnum(st,4);
-	if(class_>1000 && item_id>500 && chance>0) {
-		script_pushint(st,1);
-	} else {
-		script_pushint(st,0);
+	rate=script_getnum(st,4);
+
+	if(!itemdb_exists(item_id)){
+		ShowError("addmonsterdrop: Nonexistant item %d requested.\n", item_id );
+		return 1;
 	}
+
+	if(mob) { //We got a valid monster, check for available drop slot
+		for(i = 0; i < MAX_MOB_DROP; i++) {
+			if(mob->dropitem[i].nameid) { 
+				if(mob->dropitem[i].nameid == item_id) { //If it equals item_id we update that drop
+					c = i;
+					break;
+				}
+				continue;
+			}
+			if(!c) //Accept first available slot only
+				c = i;
+		}
+		if(c) { //Fill in the slot with the item and rate
+			mob->dropitem[c].nameid = item_id;
+			mob->dropitem[c].p = (rate > 10000)?10000:rate;
+			script_pushint(st,1);
+		} else //No place to put the new drop
+			script_pushint(st,0);
+	} else {
+		ShowWarning("addmonsterdrop: bad mob id given %d\n",script_getnum(st,2));
+		return 1;
+	}
+
+	return 0;
+
 }
 
+/*=======================================================
+ * Delete a mob drop temporarily [Akinari] 
+ * Original Idea By: [Lupus]
+ *
+ * delmonsterdrop <mob_id or name>,<item_id>;
+ *
+ * Returns 1 if succeeded (deleted a mob drop)
+ *-------------------------------------------------------*/
 BUILDIN_FUNC(delmonsterdrop)
 {
-	int class_,item_id;
-	class_=script_getnum(st,2);
+	struct mob_db *mob;
+	int item_id,i;
+
+	if(script_isstring(st,2))
+		mob = mob_db(mobdb_searchname(script_getstr(st,2)));
+	else
+		mob = mob_db(script_getnum(st,2));
+
 	item_id=script_getnum(st,3);
-	if(class_>1000 && item_id>500) {
-		script_pushint(st,1);
-	} else {
-		script_pushint(st,0);
+
+	if(!itemdb_exists(item_id)){
+		ShowError("delmonsterdrop: Nonexistant item %d requested.\n", item_id );
+		return 1;
 	}
+
+	if(mob) { //We got a valid monster, check for item drop on monster
+		for(i = 0; i < MAX_MOB_DROP; i++) {
+			if(mob->dropitem[i].nameid == item_id) { 
+				mob->dropitem[i].nameid = 0;
+				mob->dropitem[i].p = 0;
+				script_pushint(st,1);
+				return 0;
+			}
+		}
+		//No drop on that monster
+		script_pushint(st,0);
+	} else {
+		ShowWarning("delmonsterdrop: bad mob id given %d\n",script_getnum(st,2));
+		return 1;
+	}
+
+	return 0;
 }
-*/
+
 
 /*==========================================
  * Returns some values of a monster [Lupus]
@@ -17774,7 +17741,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(percentheal,"ii"),
 	BUILDIN_DEF(rand,"i?"),
 	BUILDIN_DEF(countitem,"v"),
-	BUILDIN_DEF(countitem2,"viiiiiii"),
+	BUILDIN_DEF2(countitem,"countitem2","viiiiiii"),
 	BUILDIN_DEF(checkweight,"vi*"),
 	BUILDIN_DEF(checkweight2,"rr"),
 	BUILDIN_DEF(readparam,"i?"),
@@ -17874,9 +17841,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(disablenpc,"s"),
 	BUILDIN_DEF(hideoffnpc,"s"),
 	BUILDIN_DEF(hideonnpc,"s"),
-	BUILDIN_DEF(sc_start,"iii?"),
-	BUILDIN_DEF(sc_start2,"iiii?"),
-	BUILDIN_DEF(sc_start4,"iiiiii?"),
+	BUILDIN_DEF(sc_start,"iii???"),
+	BUILDIN_DEF2(sc_start,"sc_start2","iiii???"),
+	BUILDIN_DEF2(sc_start,"sc_start4","iiiiii???"),
 	BUILDIN_DEF(sc_end,"i?"),
 	BUILDIN_DEF(getstatus, "i?"),
 	BUILDIN_DEF(getscrate,"ii?"),
@@ -18049,6 +18016,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(disguise,"i"), //disguise player. Lupus
 	BUILDIN_DEF(undisguise,""), //undisguise player. Lupus
 	BUILDIN_DEF(getmonsterinfo,"ii"), //Lupus
+	BUILDIN_DEF(addmonsterdrop,"vii"), //Akinari [Lupus]
+	BUILDIN_DEF(delmonsterdrop,"vi"), //Akinari [Lupus]
 	BUILDIN_DEF(axtoi,"s"),
 	BUILDIN_DEF(query_sql,"s*"),
 	BUILDIN_DEF(query_logsql,"s*"),

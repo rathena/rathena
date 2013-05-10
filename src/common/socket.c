@@ -281,7 +281,12 @@ void set_nonblocking(int fd, unsigned long yes)
 
 void setsocketopts(int fd)
 {
+	struct timeval timeout;
 	int yes = 1; // reuse fix
+
+	timeout.tv_sec = 10;
+	timeout.tv_usec = 0;
+
 #if !defined(WIN32)
 	// set SO_REAUSEADDR to true, unix only. on windows this option causes
 	// the previous owner of the socket to give up, which is not desirable
@@ -291,6 +296,11 @@ void setsocketopts(int fd)
 	sSetsockopt(fd,SOL_SOCKET,SO_REUSEPORT,(char *)&yes,sizeof(yes));
 #endif
 #endif
+
+	if (setsockopt (fd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout,sizeof(timeout)) < 0)
+		ShowError("setsockopt failed\n");
+	if (setsockopt (fd, SOL_SOCKET, SO_SNDTIMEO, (char *)&timeout,sizeof(timeout)) < 0)
+		ShowError("setsockopt failed\n");
 
 	// Set the socket into no-delay mode; otherwise packets get delayed for up to 200ms, likely creating server-side lag.
 	// The RO protocol is mainly single-packet request/response, plus the FIFO model already does packet grouping anyway.

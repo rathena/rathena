@@ -38,4 +38,6 @@ int storage_guild_storage_quit(struct map_session_data *sd,int flag);
 int storage_guild_storagesave(int account_id, int guild_id, int flag);
 int storage_guild_storagesaved(int guild_id); //Ack from char server that guild store was saved.
 
+int compare_item(struct item *a, struct item *b);
+
 #endif /* _STORAGE_H_ */

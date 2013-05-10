@@ -1336,8 +1336,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 
 	if(flag&4) //Delete from memory. (also invokes map removal code)
 		unit_free(target,CLR_DEAD);
-	else
-	if(flag&2) //remove from map
+	else if(flag&2) //remove from map
 		unit_remove_map(target,CLR_DEAD);
 	else { //Some death states that would normally be handled by unit_remove_map
 		unit_stop_attack(target);
@@ -6729,11 +6728,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			return 0;
 
 	case SC_INCREASEAGI:
-		 if(sd && pc_issit(sd)){
-			pc_setstand(sd);
-			skill_sit(sd,0);
-		 }
-
 	case SC_CONCENTRATE:
 	case SC_SPEARQUICKEN:
 	case SC_TRUESIGHT:

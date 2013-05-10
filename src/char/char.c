@@ -3437,17 +3437,11 @@ int parse_frommap(int fd)
 				}
 
 				session[sfd]->flag.server = 1;/* to ensure we won't drop our own packet */
-
 				WFIFOHEAD(sfd, RFIFOW(fd,2) );
-
 				memcpy((char*)WFIFOP(sfd,0), (char*)RFIFOP(fd, 0), RFIFOW(fd,2));
-
 				WFIFOSET(sfd, RFIFOW(fd,2) );
-
 				flush_fifo(sfd);
-
 				do_close(sfd);
-
 				RFIFOSKIP(fd, RFIFOW(fd,2) );/* skip this packet */
 		}
 		break;

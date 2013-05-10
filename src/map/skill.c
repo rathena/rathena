@@ -1840,7 +1840,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 
 	if( sd && status_isdead(bl) ) {
 		int sp = 0, hp = 0;
-		if( attack_type&BF_WEAPON ) {
+		if( attack_type&(BF_WEAPON|BF_SHORT) == (BF_WEAPON|BF_SHORT) ) {
 			sp += sd->bonus.sp_gain_value;
 			sp += sd->sp_gain_race[status_get_race(bl)];
 			sp += sd->sp_gain_race[is_boss(bl)?RC_BOSS:RC_NONBOSS];
@@ -9632,7 +9632,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 		}
 	}
 
-	ud->skill_id = ud->skill_lv = ud->skilltarget = 0;
+	ud->skill_id = ud->skilltarget = 0;
 	if( !sd || sd->skillitem != ud->skill_id || skill_get_delay(ud->skill_id,ud->skill_lv) )
 		ud->canact_tick = tick;
 	//You can't place a skill failed packet here because it would be
