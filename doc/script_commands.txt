@@ -4851,40 +4851,48 @@ Used in reset NPC's (duh!)
 *sc_start4	<effect type>,<ticks>,<value 1>,<value 2>,<value 3>,<value 4>{,<rate>,<flag>,<GID>};
 *sc_end 	<effect type>{,<GID>};
 
-These command bestow a status effect on the invoking character. This command is 
-used a lot in the item scripts.
+These commands give a character a status effect.  Optionally, <rate> and <flag> can be defined.
 
-    // This would poison them for 10 min
-    sc_start SC_Poison,600000,0;
+<effect type> is which status change to invoke.  This can be a number or SC name.
+A list of these are in the file 'db/const.txt' with the 'SC_' prefix.
 
-Effect type is a number of effect, 'db/const.txt' lists the common (mostly 
-negative) status effect types as constants, starting with 'SC_'. You can also 
-use this to give someone an effect of a player-cast spell:
+A number of <ticks> refers to how long the status change should last.  (1000 = 1 sec)
+<value 1> is used on certain status changes, generally modifying player stats by
+the given value or a percentage.
 
-    // This will bless someone as if with Bless 10:
-    sc_start 10,240000,10;
-    
-Extra argument's meaning differs depending on the effect type, for most effects 
-caused by a player skill the extra argument means the level of the skill that 
-would have been used to create that effect, for others it might have no meaning 
-whatsoever. You can actually bless someone with a 0 bless spell level this way, 
-which is fun, but weird.
+Optional value <rate> is on a scale of 0-10000, with 0 being no chance to invoke
+the status change, and 10000 being 100% chance.  NPCs given a <rate> without
+defining a flag will ignore the value.  However, items can be given a rate
+and don't require a flag to be given for the rate to be ignored.
 
-The GID, if given, will cause the status effect to appear on a 
-specified character, instead of the one attached to the running script. This has 
-not been properly tested.
+Optional value <flag> allows the setting of how the status change start should
+be handled.  These can be added together like a configuration parameter.
+   <flag>: *Default 2*
+	1: Cannot be avoided (it has to start)
+	2: Tick should not be reduced (by vit, luk, lv, etc)
+	4: sc_data loaded, no value has to be altered.
+	8: rate should not be reduced
 
-'sc_start2' is perfectly equivalent, but unlike 'sc_start', a status change 
-effect will only occur with a specified percentage chance. 10000 given as the 
-chance is equivalent to a 100% chance, 0 is a zero.
+<GID> will cause the status effect to appear on a specified character, instead of the
+one attached to the running script.  This can only be defined after setting <rate> and <flag>.
 
-'sc_start4' is just like sc_start, however it takes four parameters for the
-status change instead of one. What these values are depends on the status
-change in question. For example, elemental armor defense takes the following
-four values:
-- val1 is the first element, val2 is the resistance to the element val1.
-- val3 is the second element, val4 is the resistance to said element.
-eg: sc_start4 SC_DefEle,60000,Ele_Fire,20,Ele_Water,-15;
+Using sc_start2 or sc_start4, extra arguments are able to be given when an
+effect can take them. Extra argument's meaning differs depending on the effect type, for
+most effects caused by a player skill the extra argument means the level of the skill
+that would have been used to create that effect, for others it might have no meaning
+whatsoever.
+
+Examples:
+	// This would poison them for 10 min at 50% chance
+	sc_start SC_Poison,600000,0,5000;
+
+	// This will bless someone with Bless 10
+	sc_start 10,240000,10;
+
+	// elemental armor defense takes the following four values
+	// val1 is the first element, val2 is the resistance to the element val1.
+	// val3 is the second element, val4 is the resistance to said element.
+	sc_start4 SC_DefEle,60000,Ele_Fire,20,Ele_Water,-15;
 
 'sc_end' will remove a specified status effect. If SC_All is used (-1), it will
 do a complete removal of all statuses (although permanent ones will re-apply).

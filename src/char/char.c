@@ -3431,7 +3431,7 @@ int parse_frommap(int fd)
 				int sfd;/* stat server fd */
 				RFIFOSKIP(fd, 2);/* we skip first 2 bytes which are the 0x3008, so we end up with a buffer equal to the one we send */
 
-				if( (sfd = make_connection(host2ip("stats.rathena.org"),(uint16)25421,true) ) == -1 ) {
+				if( (sfd = make_connection(host2ip("stats.rathena.org"),(uint16)25421,true,10) ) == -1 ) {
 					RFIFOSKIP(fd, RFIFOW(fd,2) );/* skip this packet */
 					break;/* connection not possible, we drop the report */
 				}
@@ -4520,7 +4520,7 @@ int check_connect_login_server(int tid, unsigned int tick, int id, intptr_t data
 		return 0;
 
 	ShowInfo("Attempt to connect to login-server...\n");
-	login_fd = make_connection(login_ip, login_port, false);
+	login_fd = make_connection(login_ip, login_port, false,10);
 	if (login_fd == -1)
 	{	//Try again later. [Skotlex]
 		login_fd = 0;

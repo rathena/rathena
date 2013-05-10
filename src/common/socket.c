@@ -43,7 +43,7 @@
 /////////////////////////////////////////////////////////////////////
 #if defined(WIN32)
 /////////////////////////////////////////////////////////////////////
-// windows portability layer 
+// windows portability layer
 
 typedef int socklen_t;
 
@@ -89,7 +89,7 @@ int sock2fd(SOCKET s)
 
 /// Inserts the socket into the global array of sockets.
 /// Returns a new fd associated with the socket.
-/// If there are too many sockets it closes the socket, sets an error and 
+/// If there are too many sockets it closes the socket, sets an error and
 //  returns -1 instead.
 /// Since fd 0 is reserved, it returns values in the range [1,FD_SETSIZE[.
 ///
@@ -273,19 +273,14 @@ void set_defaultparse(ParseFunc defaultparse)
  *--------------------------------------*/
 void set_nonblocking(int fd, unsigned long yes)
 {
-	// FIONBIO Use with a nonzero argp parameter to enable the nonblocking mode of socket s. 
-	// The argp parameter is zero if nonblocking is to be disabled. 
+	// FIONBIO Use with a nonzero argp parameter to enable the nonblocking mode of socket s.
+	// The argp parameter is zero if nonblocking is to be disabled.
 	if( sIoctl(fd, FIONBIO, &yes) != 0 )
 		ShowError("set_nonblocking: Failed to set socket #%d to non-blocking mode (%s) - Please report this!!!\n", fd, error_msg());
 }
 
-void setsocketopts(int fd)
-{
-	struct timeval timeout;
+void setsocketopts(int fd,int delay_timeout){
 	int yes = 1; // reuse fix
-
-	timeout.tv_sec = 10;
-	timeout.tv_usec = 0;
 
 #if !defined(WIN32)
 	// set SO_REAUSEADDR to true, unix only. on windows this option causes
@@ -296,11 +291,6 @@ void setsocketopts(int fd)
 	sSetsockopt(fd,SOL_SOCKET,SO_REUSEPORT,(char *)&yes,sizeof(yes));
 #endif
 #endif
-
-	if (setsockopt (fd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout,sizeof(timeout)) < 0)
-		ShowError("setsockopt failed\n");
-	if (setsockopt (fd, SOL_SOCKET, SO_SNDTIMEO, (char *)&timeout,sizeof(timeout)) < 0)
-		ShowError("setsockopt failed\n");
 
 	// Set the socket into no-delay mode; otherwise packets get delayed for up to 200ms, likely creating server-side lag.
 	// The RO protocol is mainly single-packet request/response, plus the FIFO model already does packet grouping anyway.
@@ -314,6 +304,16 @@ void setsocketopts(int fd)
 	opt.l_linger = 0; // Do not care
 	if( sSetsockopt(fd, SOL_SOCKET, SO_LINGER, (char*)&opt, sizeof(opt)) )
 		ShowWarning("setsocketopts: Unable to set SO_LINGER mode for connection #%d!\n", fd);
+	}
+	if(delay_timeout){
+		struct timeval timeout;
+		timeout.tv_sec = delay_timeout;
+		timeout.tv_usec = 0;
+
+		if (sSetsockopt (fd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout,sizeof(timeout)) < 0)
+			ShowError("setsocketopts: Unable to set SO_RCVTIMEO timeout for connection #%d!\n");
+		if (sSetsockopt (fd, SOL_SOCKET, SO_SNDTIMEO, (char *)&timeout,sizeof(timeout)) < 0)
+			ShowError("setsocketopts: Unable to set SO_SNDTIMEO timeout for connection #%d!\n");
 	}
 }
 
@@ -439,7 +439,7 @@ int connect_client(int listen_fd)
 		return -1;
 	}
 
-	setsocketopts(fd);
+	setsocketopts(fd,0);
 	set_nonblocking(fd, 1);
 
 #ifndef MINICORE
@@ -484,7 +484,7 @@ int make_listen_bind(uint32 ip, uint16 port)
 		return -1;
 	}
 
-	setsocketopts(fd);
+	setsocketopts(fd,0);
 	set_nonblocking(fd, 1);
 
 	server_address.sin_family      = AF_INET;
@@ -512,7 +512,7 @@ int make_listen_bind(uint32 ip, uint16 port)
 	return fd;
 }
 
-int make_connection(uint32 ip, uint16 port, bool silent) {
+int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 	struct sockaddr_in remote_address;
 	int fd;
 	int result;
@@ -536,7 +536,7 @@ int make_connection(uint32 ip, uint16 port, bool silent) {
 		return -1;
 	}
 
-	setsocketopts(fd);
+	setsocketopts(fd,timeout);
 
 	remote_address.sin_family      = AF_INET;
 	remote_address.sin_addr.s_addr = htonl(ip);
@@ -1163,7 +1163,7 @@ void socket_final(void)
 		if(session[i])
 			do_close(i);
 
-	// session[0] ‚Ìƒ_ƒ~[ƒf[ƒ^‚ðíœ
+	// session[0] ï¿½Ìƒ_ï¿½~ï¿½[ï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½íœ
 	aFree(session[0]->rdata);
 	aFree(session[0]->wdata);
 	aFree(session[0]);

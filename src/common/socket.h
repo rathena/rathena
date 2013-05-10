@@ -113,7 +113,7 @@ extern bool session_isActive(int fd);
 // Function prototype declaration
 
 int make_listen_bind(uint32 ip, uint16 port);
-int make_connection(uint32 ip, uint16 port, bool silent);
+int make_connection(uint32 ip, uint16 port, bool silent, int timeout);
 int realloc_fifo(int fd, unsigned int rfifo_size, unsigned int wfifo_size);
 int realloc_writefifo(int fd, size_t addition);
 int WFIFOSET(int fd, size_t len);
@@ -145,7 +145,7 @@ extern int naddr_;   // # of ip addresses
 
 void set_eof(int fd);
 
-/// Use a shortlist of sockets instead of iterating all sessions for sockets 
+/// Use a shortlist of sockets instead of iterating all sessions for sockets
 /// that have data to send or need eof handling.
 /// Adapted to use a static array instead of a linked list.
 ///

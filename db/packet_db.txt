@@ -1802,66 +1802,64 @@ packet_ver: 33
 
 //2013-03-20Ragexe (Judas)
 packet_ver: 34
-0x01FD,15,repairitem,2
-0x086D,26,partyinvite2,2
-0x0897,5,changedir,2:4
-0x0947,36,storagepassword,0
-0x086F,26,friendslistadd,2
-0x0888,19,wanttoconnection,2:6:10:14:18
-0x088E,7,actionrequest,2:6
-0x089B,10,useskilltoid,2:4:6
-0x0881,5,walktoxy,2
+0x01fd,15,repairitem,2
+//0x0281,-1,itemlistwindowselected,2:4:8
+0x035f,6,reqclickbuyingstore,2
 0x0363,6,ticksend,2
-0x093F,5,hommenu,2:4
-0x0933,6,takeitem,2
+0x0365,12,searchstoreinfolistitemclick,2:6:10
 0x0438,6,dropitem,2:4
-0x85d,18,bookingregreq,2:4
-0x08AC,8,movetokafra,2:4
+0x0447,2
+0x0844,2,cashshopopen,0
+0x0848,-1,cashshopbuy,0
+0x084a,2,cashshopclose,0
+0x084b,19 //fallitem4
+0x085a,90,useskilltoposinfo,2:4:6:8:10
+0x085d,18,bookingregreq,2:4
+0x0868,-1,itemlistwindowselected,2:4:8
+0x086d,26,partyinvite2,2
+0x086f,26,friendslistadd,2
 0x0874,8,movefromkafra,2:4
-0x0959,10,useskilltopos,2:4:6:8
-0x085A,90,useskilltoposinfo,2:4:6:8:10
+0x0881,5,walktoxy,2
+0x0886,2,reqclosebuyingstore,0
+0x0888,19,wanttoconnection,2:6:10:14:18
+0x088e,7,actionrequest,2:6
+0x0897,5,changedir,2:4
 0x0898,6,getcharnamerequest,2
-0x094C,6,solvecharname,2
+0x089b,10,useskilltoid,2:4:6
+0x08ac,8,movetokafra,2:4
+0x08c9,4,cashshopitemlist,0
+0x08cf,10 //Amulet spirits
+0x08d2,10
 0x0907,5,moveitem,2:4
 0x0908,5
-0x08CF,10 //Amulet spirits
-0x08d2,10
-0x0977,14 //Monster HP Bar
-0x0998,8,equipitem,2:4
-//0x0281,-1,itemlistwindowselected,2:4:8
-0x0938,-1,reqopenbuyingstore,2:4:8:9:89
-0x0886,2,reqclosebuyingstore,0
-0x035f,6,reqclickbuyingstore,2
-0x0922,-1,reqtradebuyingstore,2:4:8:12
-0x094E,-1,searchstoreinfo,2:4:5:9:13:14:15
-//0x0835,2,searchstoreinfonextpage,0
-//0x0838,12,searchstoreinfolistitemclick,2:6:10
-0x0447,2
-0x990,31 //additem
-0x99b,8 //maptypeproperty2
-0x84b,19 //fallitem4
 0x090f,-1 // notify_newentry7
-0x914,-1 // notify_moveentry
-0x915,-1 // notify_standentry
-0x978,6,reqworldinfo,2
-0x979,50 //ackworldinfo
-0x991,-1 //inv itemlist normal
-0x992,-1 //inv itemlist equip
-0x993,-1 //cart itemlist normal
-0x994,-1 //cart itemlist equip
-0x995,-1 //store itemlist normal
-0x996,-1 //store itemlist equip
-0x997,-1 //ZC_EQUIPWIN_MICROSCOPE_V5
-0x998,8,equipitem,2:4
-0x999,11 // cz_wear_equipv5
-0x99a,9 // take_off_equipv5
-
-
-// New cashshop
-0x0844,2,cashshopopen,0
-0x084a,2,cashshopclose,0
-0x08c9,4,cashshopitemlist,0
-0x0848,-1,cashshopbuy,0
+0x0914,-1 // notify_moveentry
+0x0915,-1 // notify_standentry
+0x0922,-1,reqtradebuyingstore,2:4:8:12
+//0x092e,2,searchstoreinfonextpage,0
+0x0933,6,takeitem,2
+0x0938,-1,reqopenbuyingstore,2:4:8:9:89
+0x093f,5,hommenu,2:4
+0x0947,36,storagepassword,0
+0x094c,6,solvecharname,2
+0x094e,-1,searchstoreinfo,2:4:5:9:13:14:15
+0x0959,10,useskilltopos,2:4:6:8
+//0x095a,8,mailsetattach,2:4
+0x0977,14 //Monster HP Bar
+0x0978,6,reqworldinfo,2
+0x0979,50 //ackworldinfo
+0x0990,31 //additem
+0x0991,-1 //inv itemlist normal
+0x0992,-1 //inv itemlist equip
+0x0993,-1 //cart itemlist normal
+0x0994,-1 //cart itemlist equip
+0x0995,-1 //store itemlist normal
+0x0996,-1 //store itemlist equip
+0x0997,-1 //ZC_EQUIPWIN_MICROSCOPE_V5
+0x0998,8,equipitem,2:4
+0x0999,11 // cz_wear_equipv5
+0x099a,9 // take_off_equipv5
+0x099b,8 //maptypeproperty2
 
 //Add new packets here
 //packet_ver: 35

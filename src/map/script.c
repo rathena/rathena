@@ -623,7 +623,7 @@ static void script_reportfunc(struct script_state* st)
 	}
 }
 
-// Returns name of currently running function 
+// Returns name of currently running function
 static char* script_getfuncname(struct script_state *st)
 {
 	int i;
@@ -6055,8 +6055,7 @@ BUILDIN_FUNC(viewpoint)
  *------------------------------------------*/
 BUILDIN_FUNC(countitem)
 {
-	int nameid, i;
-	int count = 0;
+	int i, count = 0;
 	struct item_data* id = NULL;
 	struct script_data* data;
 
@@ -6081,13 +6080,12 @@ BUILDIN_FUNC(countitem)
 	}
 
 	if(script_lastdata(st) == 2) { // For countitem() function
-		nameid = id->nameid;
+		int nameid = id->nameid;
 		for(i = 0; i < MAX_INVENTORY; i++)
 			if(sd->status.inventory[i].nameid == nameid)
 				count += sd->status.inventory[i].amount;
 	} else { // For countitem2() function
 		struct item tmp_it;
-		int iden, ref, attr, c1, c2, c3, c4;
 		tmp_it.nameid = id->nameid;
 		tmp_it.identify = script_getnum(st, 3);
 		tmp_it.refine = script_getnum(st, 4);
@@ -6109,7 +6107,7 @@ BUILDIN_FUNC(countitem)
 	return 0;
 }
 
-int checkweight_sub(TBL_PC *sd,int nbargs,int *eitemid,int *eamount)
+int checkweight_sub(TBL_PC *sd,int nbargs,int32 *eitemid,int32 *eamount)
 {
 	struct item_data* id = NULL;
 	int nameid,amount;
@@ -6122,14 +6120,14 @@ int checkweight_sub(TBL_PC *sd,int nbargs,int *eitemid,int *eamount)
 			continue;
 		id = itemdb_exists(eitemid[i]);
 		if( id == NULL ) {
-			ShowError("buildin_checkweight: Invalid item '%d'.\n", eitemid[i]);
+			ShowError("checkweight_sub: Invalid item '%d'.\n", eitemid[i]);
 			return 0;
 		}
 		nameid = id->nameid;
 
 		amount = eamount[i];
 		if( amount < 1 ) {
-			ShowError("buildin_checkweight: Invalid amount '%d'.\n", eamount[i]);
+			ShowError("checkweight_sub: Invalid amount '%d'.\n", eamount[i]);
 			return 0;
 		}
 
@@ -6167,7 +6165,7 @@ BUILDIN_FUNC(checkweight)
 	struct map_session_data* sd;
 	struct script_data* data;
 	struct item_data* id = NULL;
-	int nameid[128], amount[128];
+	int32 nameid[SCRIPT_MAX_ARRAYSIZE], amount[SCRIPT_MAX_ARRAYSIZE];
 	uint16 nbargs,i,j=0;
 
 	if( ( sd = script_rid2sd(st) ) == NULL )
@@ -6201,10 +6199,9 @@ BUILDIN_FUNC(checkweight)
 	return 0;
 }
 
-BUILDIN_FUNC(checkweight2)
-{
+BUILDIN_FUNC(checkweight2){
 	//variable sub checkweight
-	int nameid[128], amount[128], i;
+	int32 nameid[SCRIPT_MAX_ARRAYSIZE], amount[SCRIPT_MAX_ARRAYSIZE], i;
 
 	//variable for array parsing
 	struct script_data* data_it;
@@ -6222,7 +6219,7 @@ BUILDIN_FUNC(checkweight2)
 	data_nb = script_getdata(st, 3);
 
 	if( !data_isreference(data_it) || !data_isreference(data_nb)) {
-		ShowError("script:checkweight2: parameter not a variable\n");
+		ShowError("buildin_checkweight2: parameter not a variable\n");
 		script_pushint(st,0);
 		return 1;// not a variable
 	}
@@ -6235,19 +6232,19 @@ BUILDIN_FUNC(checkweight2)
 	name_nb = reference_getname(data_nb);
 
 	if( not_array_variable(*name_it) || not_array_variable(*name_nb)) {
-		ShowError("script:checkweight2: illegal scope\n");
+		ShowError("buildin_checkweight2: illegal scope\n");
 		script_pushint(st,0);
 		return 1;// not supported
 	}
 	if(is_string_variable(name_it) || is_string_variable(name_nb)) {
-		ShowError("script:checkweight2: illegal type, need int\n");
+		ShowError("buildin_checkweight2: illegal type, need int\n");
 		script_pushint(st,0);
 		return 1;// not supported
 	}
 	nb_it = getarraysize(st, id_it, idx_it, 0, reference_getref(data_it));
 	nb_nb = getarraysize(st, id_nb, idx_nb, 0, reference_getref(data_nb));
 	if(nb_it != nb_nb) {
-		ShowError("Size mistmatch: nb_it=%d, nb_nb=%d\n",nb_it,nb_nb);
+		ShowError("buildin_checkweight2: Size mistmatch: nb_it=%d, nb_nb=%d\n",nb_it,nb_nb);
 		script_pushint(st,0);
 		return 1;
 	}
@@ -9842,11 +9839,10 @@ BUILDIN_FUNC(sc_start)
 	TBL_NPC * nd = map_id2nd(st->oid);
 	struct block_list* bl;
 	enum sc_type type;
-	int tick, val1, val2, val3, rate, flag, isitem;
-	int val4 = 0;
+	int tick, val1, val2, val3, val4=0, rate, flag, isitem;
 	char start_type;
 	const char* command = script_getfuncname(st);
-	
+
 	if(strstr(command, "4"))
 		start_type = 4;
 	else if(strstr(command, "2"))
@@ -9878,7 +9874,7 @@ BUILDIN_FUNC(sc_start)
 	}
 
 	//solving if script from npc or item
-	isitem = (nd && nd->bl.id == fake_nd->bl.id || rate != 2)?true:false;
+	isitem = (nd && nd->bl.id == fake_nd->bl.id || flag != 2)?true:false;
 
 	switch(start_type) {
 		case 1:
@@ -15049,7 +15045,7 @@ BUILDIN_FUNC(setitemscript)
 }
 
 /*=======================================================
- * Add or Update a mob drop temporarily [Akinari] 
+ * Add or Update a mob drop temporarily [Akinari]
  * Original Idea By: [Lupus]
  *
  * addmonsterdrop <mob_id or name>,<item_id>,<rate>;
@@ -15078,7 +15074,7 @@ BUILDIN_FUNC(addmonsterdrop)
 
 	if(mob) { //We got a valid monster, check for available drop slot
 		for(i = 0; i < MAX_MOB_DROP; i++) {
-			if(mob->dropitem[i].nameid) { 
+			if(mob->dropitem[i].nameid) {
 				if(mob->dropitem[i].nameid == item_id) { //If it equals item_id we update that drop
 					c = i;
 					break;
@@ -15104,7 +15100,7 @@ BUILDIN_FUNC(addmonsterdrop)
 }
 
 /*=======================================================
- * Delete a mob drop temporarily [Akinari] 
+ * Delete a mob drop temporarily [Akinari]
  * Original Idea By: [Lupus]
  *
  * delmonsterdrop <mob_id or name>,<item_id>;
@@ -15130,7 +15126,7 @@ BUILDIN_FUNC(delmonsterdrop)
 
 	if(mob) { //We got a valid monster, check for item drop on monster
 		for(i = 0; i < MAX_MOB_DROP; i++) {
-			if(mob->dropitem[i].nameid == item_id) { 
+			if(mob->dropitem[i].nameid == item_id) {
 				mob->dropitem[i].nameid = 0;
 				mob->dropitem[i].p = 0;
 				script_pushint(st,1);
