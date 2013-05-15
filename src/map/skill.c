@@ -1840,7 +1840,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 
 	if( sd && status_isdead(bl) ) {
 		int sp = 0, hp = 0;
-		if( attack_type&(BF_WEAPON|BF_SHORT) == (BF_WEAPON|BF_SHORT) ) {
+		if( (attack_type&(BF_WEAPON|BF_SHORT)) == (BF_WEAPON|BF_SHORT) ) {
 			sp += sd->bonus.sp_gain_value;
 			sp += sd->sp_gain_race[status_get_race(bl)];
 			sp += sd->sp_gain_race[is_boss(bl)?RC_BOSS:RC_NONBOSS];

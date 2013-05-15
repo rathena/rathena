@@ -13,11 +13,10 @@
 //= 1.1 Added entrance scripts.
 //= 1.2 Moved "Odgnalam" coordinates.
 //= 1.3 Fixed dialogues.
-//= 1.4 Added "Investment Cat Helper" and "Storekeeper" NPCs.
-//=     Dialogue edits, source iRO.
+//= 1.4 Dialogue edits, source iRO.
 //============================================================
 
-// Transportation :: malangdo_go
+// Malangdo Transportation :: malangdo_go
 //============================================================
 -	script	Dolangmal	-1,{
 	if (checkquest(5091) == -1) {
@@ -164,19 +163,19 @@ izlude,182,218,4	script	Odgnalam#Izlude	554,{
 	next;
 	if(select("Let him sleep:Talk to him") == 1) close;
 	mes "[Odgnalam]";
-	mes "Meow? Uh?";
+	mes "Meow? Huh?";
 	next;
 	if (ep13_yong1 == 0) {
 		set .@price,1000;
-		set .@s1$,"Huh!! You are such an annoying person. Let me send you to the heaven of the cat, ^A2314BMalangdo^000000 with ^0000FF1000 Zeny^000000.";
+		set .@s1$,"Huh! You are so annoying. Let me send you to ^A2314BMalangdo^000000 for ^0000FF1000 Zeny^000000.";
 		set .@s2$,"Money? Where is the money? You can't go anywhere without the money. Shame on you.";
 	} else if (ep13_yong1 < 60) {
 		set .@price,999;
-		set .@s1$,"You have a little relationship with fleet of cat. I'll give you special discount price ^0000FF999 Zeny^000000 to the heaven of the cat, ^A2314BMalangdo^000000, because you have relationship with fleet.";
+		set .@s1$,"You have a little relationship with fleet of cat. I'll give you special discount price ^0000FF999 Zeny^000000 to ^A2314BMalangdo^000000, because you have relationship with fleet.";
 		set .@s2$,"Where is the money? You don't have a sense of honor.";
 	} else if (ep13_yong1 > 59 && ep13_yong1 < 80) {
 		set .@price,500;
-		set .@s1$,"You gave several help to our cat's fleet so let me give you special that with 50% discount price ^0000FF500 Zeny^000000. I'll send you to the heaven of the cat, ^A2314BMalangdo^000000.";
+		set .@s1$,"You gave several help to our cat's fleet so let me give you special that with 50% discount price ^0000FF500 Zeny^000000. I'll send you to ^A2314BMalangdo^000000.";
 		set .@s2$,"You don't have any money for paying 50% discount price? I can't believe it.";
 	} else {
 		mes "[Odgnalam]";
@@ -279,7 +278,7 @@ malangdo,219,86,4	script	Kong#malang	545,{
 	close;
 }
 
-// Town NPCs :: malang_tre
+// Generic Malangdo NPCs :: malang_tre
 //============================================================
 malangdo,147,117,3	script	Innkeeper#malang	554,{
 	mes "You see a lazy cat standing on a chair.";
@@ -427,337 +426,4 @@ malangdo,164,203,3	script	Cat Trainer#mal2	853,{
 	mes "One day these cats will be mine.";
 	mes "I can be a king in Malangdo~ ohhh~!";
 	close;
-}
-
-// Utility NPCs :: cat_merchant
-//============================================================
-mal_in02,134,31,5	script	Investment Cat Helper	505,{
-	if (MaxWeight - Weight < 100 || checkweight(1201,1) == 0) {
-		mes "[Investment Cat Helper]";
-		mes "You have a heavy load. Maybe you're a peddler? No peddlers in this area.";
-		close;
-	}
-	if (ep13_yong1 < 10) {
-		mes "[Investment Cat Helper]";
-		mes "Ohh!";
-		mes "You've come here to ask about investing?";
-		mes "You've come to the right place.";
-		next;
-		mes "[Investment Cat Helper]";
-		mes "I am here to invest in the Cat Paw Merchant Association.";
-		mes "Err-- I mean I'm here to help honest people like you.";
-		mes "Hehehe~";
-		next;
-		mes "[Investment Cat Helper]";
-		mes "I can't remember everything because I've been here talking to you humans.";
-		mes "But I want to know first... Hold on.";
-		next;
-		mes "smell... smell...";
-		next;
-		mes "[Investment Cat Helper]";
-		mes "Ah?!";
-		mes "You don't know much about the Cat Paw Merchant Association, do you?";
-		mes "Hmm, you do not really smell like a cat.";
-		next;
-		mes "[Investment Cat Helper]";
-		mes "Good!!";
-		mes "You made the right decision to be here to invest in the Cat Paw Merchant Association~";
-		next;
-		mes "[Investment Cat Helper]";
-		mes "First, you need to have ten pieces of Malangdo cans if you want to open an account.";
-		next;
-		while(1) {
-			switch(select("Open an account:Ask about benefits:Cancel")) {
-			case 1:
-				if (countitem(12636) < 10) {
-					mes "[Investment Cat Helper]";
-					mes "Hmm!";
-					mes "I'd love to give you account for";
-					mes "free but as you know, this is for";
-					mes "advertising investers of the trader group, sorry.";
-					close;
-				}
-				delitem 12636,10; //Malang_Sp_Can
-				set ep13_yong1,10;
-				mes "[Investment Cat Helper]";
-				mes "Good!";
-				mes "Write down here~ and";
-				mes "print your palm there,";
-				mes "ah!~ what's your name?";
-				next;
-				mes "[Investment Cat Helper]";
-				mes strcharinfo(0)+" you are~";
-				next;
-				mes "[Investment Cat Helper]";
-				mes "Name: "+strcharinfo(0);
-				mes "Number of accounts: 10";
-				mes "OK! Registered!";
-				next;
-				mes "[Investment Cat Helper]";
-				mes "You have an account now.";
-				mes "Will get an investment of a certain nunber of cans next time.";
-				next;
-				mes "[Investment Cat Helper]";
-				mes "I wish to get lots of investments";
-				mes "so you can have many services as well.";
-				mes "And, I also hope that we, the Cat Paw Merchant Association, will make much money.";
-				next;
-				mes "[Investment Cat Helper]";
-				mes "See you next investment~";
-				close;
-			case 2:
-				mes "[Investment Cat Helper]";
-				mes "You want to know the benefits of investing?";
-				mes "Actually, we are a small group of cats and we don't think like humans.";
-				next;
-				mes "[Investment Cat Helper]";
-				mes "There are lots of benefits based on how much you've invested in our services.";
-				mes "These include more warps, extra storage locations and price reductions of goods and services.";
-				next;
-				mes "[Investment Cat Helper]";
-				mes "I promise that if our trade is growing you will benefit from it as well.";
-				next;
-				break;
-			case 3:
-				mes "[Investment Cat Helper]";
-				mes "Ahh~ You're just going to leave?";
-				mes "T_T~ Please open an account.";
-				close;
-			}
-		}
-	} else if (ep13_yong1 < 20000) {
-		mes "[Investment Cat Helper]";
-		mes "I can't remember everyone since I meet so many people...";
-		mes "But I want to check first... Hold on.";
-		mes "Excuse me!";
-		next;
-		mes "smell... smell...";
-		next;
-		if (ep13_yong1 < 10000) {
-			set .@cans,10;
-			mes "[Investment Cat Helper]";
-			mes "This is a familiar smell!!";
-			mes "If it's so...!!";
-			next;
-			mes "[Investment Cat Helper]";
-			mes "You are here to invest!!";
-			mes "Good!~~ Good to see you~";
-			next;
-			mes "[Investment Cat Helper]";
-			mes "From your smell~ you are below 10,000 accounts.";
-			mes "Until then, you can get an account by investing ten cans.";
-		} else {
-			set .@cans,20;
-			mes "[Investment Cat Helper]";
-			mes "Such a stong smell!!";
-			mes "Then it must be!!";
-			next;
-			mes "[Investment Cat Helper]";
-			mes "A VIP invester!!!!!!";
-			mes "You're here to invest? Welcome!";
-			next;
-			mes "[Investment Cat Helper]";
-			mes "A VIP invester with over 10,000 accounts";
-			mes "can get another account with 20 cans.";
-			mes "A good investment!";
-		}
-		next;
-		mes "[Investment Cat Helper]";
-		mes "What will you do?";
-		next;
-		switch(select("Invest:Check the number of accounts:Cancel")) {
-		case 1:
-			mes "[Investment Cat Helper]";
-			mes "Ohh~ thank you for investing~";
-			mes "You can get a maximum of 10 accounts at one time.";
-			mes "Isn't it lovely?";
-			mes "How many will you invest in? Enter 0 to cancel.";
-			next;
-			input .@input;
-			if (.@input == 0) {
-				mes "[Investment Cat Helper]";
-				mes "Please invest next time~";
-				close;
-			} else if (.@input > 10) {
-				mes "[Investment Cat Helper]";
-				mes "You can get a maximum of 10 accounts~";
-				close;
-			}
-			set .@required, .@input*.@cans;
-			mes "[Investment Cat Helper]";
-			mes "Total " + .@input + " accounts, right?";
-			mes "The number of cans you need is "+.@required+" pieces.";
-			mes "Do you want to go through with this?";
-			next;
-			if(select("Yes:No") == 2) {
-				mes "[Investment Cat Helper]";
-				mes "Oh? Is that wrong? Weird.";
-				mes "Please check again~";
-				close;
-			}
-			if (countitem(12636) < .@required) {
-				mes "[Investment Cat Helper]";
-				mes "Ahhh!";
-				mes "You don't have enough cans.";
-				mes "I'm a busy cat, you know.";
-				close;
-			}
-			if (ep13_yong1 < 10000) {
-				delitem 12636,.@required; //Malang_Sp_Can
-				set ep13_yong1, ep13_yong1+.@input;
-				mes "[Investment Cat Helper]";
-				mes .@input+" accounts were invested in.";
-				mes "Thank you for your help~";
-				next;
-				mes "[Investment Cat Helper]";
-				mes "Once we get more investments of cans,";
-				mes "our trader group will grow even more.";
-				mes "And you can get services as well~";
-				mes "A win-win strategy?";
-				close;
-			} else {
-				if (.@input + ep13_yong1 > 20000) {
-					delitem 12636,.@required; //Malang_Sp_Can
-					set ep13_yong1,20000;
-					mes "[Investment Cat Helper]";
-					mes "You can have 20,000 accounts max";
-					mes "according to the trader policy...";
-					mes strcharinfo(0)+"'s accounts increase to 20,000.";
-					mes "Thank you so much for your investment~";
-					next;
-					mes "[Investment Cat Helper]";
-					mes "Now, "+strcharinfo(0)+", you can't invest further";
-					mes "but you can still donate some of your cans to the trader group.";
-					mes "Thank you so much~";
-					close;
-				} else {
-					delitem 12636,.@required; //Malang_Sp_Can
-					set ep13_yong1, ep13_yong1+.@input;
-					mes "[Investment Cat Helper]";
-					mes .@input+" accounts have been invested in.";
-					mes "Thank you for your help~";
-					next;
-					mes "[Investment Cat Helper]";
-					mes "With your big investment in cans,";
-					mes "this will help us meet our goals earlier.";
-					mes "Thank you again.";
-					close;
-				}
-			}
-		case 2:
-			mes "[Investment Cat Helper]";
-			mes "You want to check the number of accounts? Hmm, let's see~";
-			next;
-			mes "[Investment Cat Helper]";
-			mes "Name: "+strcharinfo(0);
-			mes "Number of accounts: "+ep13_yong1;
-			next;
-			mes "[Investment Cat Helper]";
-			if (ep13_yong1 < 10000)
-				mes "Got it?";
-			else
-				mes "You've made many investments. Thank you.";
-			close;
-		case 3:
-			mes "[Investment Cat Helper]";
-			mes "Please invest next time~";
-			close;
-		}
-	} else if (ep13_yong1 >= 20000) {
-		mes "[Investment Cat Helper]";
-		mes strcharinfo(0) + ", welcome~";
-		mes strcharinfo(0) + "~ I felt something upon your arrival.";
-		next;
-		mes "[Investment Cat Helper]";
-		mes "Want to donate?";
-		next;
-		if(select("Donate:No") == 2) {
-			mes "[Investment Cat Helper]";
-			mes "Hehe~ then have fun in here~";
-			close;
-		}
-		mes "[Investment Cat Helper]";
-		mes "Wow, thank you, "+strcharinfo(0)+"~!";
-		next;
-		mes "[Investment Cat Helper]";
-		mes strcharinfo(0)+"~ with your help";
-		mes "the cans will be distributed to cats";
-		mes "in the Midgard area with honor~";
-		next;
-		mes "[Investment Cat Helper]";
-		mes "The can donation can range from a minimum of 20 to a maximum of 10,000.";
-		next;
-		input .@input;
-		if (.@input < 20 || .@input > 10000) {
-			mes "[Investment Cat Helper]";
-			mes "The can donation can range from a minimum of 20 to a maximum of 10,000.";
-			close;
-		} else if (countitem(12636) < .@input) { // Malang_Sp_Can
-			mes "[Investment Cat Helper]";
-			mes "Hmm? You don't have enough cans.";
-			close;
-		} else {
-			delitem 12636,.@input; //Malang_Sp_Can
-			mes "[Investment Cat Helper]";
-			mes "Ohh! Thank you~";
-			next;
-			mes "[Investment Cat Helper]";
-			mes "Dear "+strcharinfo(0)+" ~";
-			mes "I have only Increase AGI";
-			mes "and Blessing to give you.";
-			mes "Thank you.";
-			npcskill "AL_INCAGI",10,0,0;
-			npcskill "AL_BLESSING",10,0,0;
-			close;
-		}
-	}
-}
-
-malangdo,184,139,4	script	Storekeeper#mal	560,{
-	mes "[Storekeeper]";
-	mes "Hey, looks like you might be looking to unload some of your stuff from your pack.";
-	mes "Want to open storage? For free?";
-	next;
-	mes "[Storekeeper]";
-	mes "Hahaha~ Just kidding, of course it isn't free.";
-	mes "What do you take me for?";
-	next;
-	if (ep13_yong1 > 999) {
-		set .@cans,1;
-		set .@zeny,1500;
-		set .@i, select("Pay with Can ----- 1 unit:Pay with Zeny ------- 1,500z");
-	} else {
-		set .@cans,2;
-		set .@zeny,3000;
-		set .@i, select("Pay with Can ----- 2units:Pay with Zeny ------- 3,000z");
-	}
-	if (getskilllv("NV_BASIC") < 6) {
-		mes "[Storekeeper]";
-		mes "Ah, hold on!!";
-		mes "You need to have ^FF0000Basic Skill level 6^000000 to use the storage service!!";
-		close;
-	}
-	switch(.@i) {
-	case 1:
-		if (countitem(12636) < .@cans) {
-			mes "[Storekeeper]";
-			mes "You don't have enough cans...";
-			close;
-		}
-		delitem 12636,.@cans; //Malang_Sp_Can
-		break;
-	case 2:
-		if (Zeny < .@zeny) {
-			mes "[Storekeeper]";
-			mes "You don't have enough zeny...";
-			close;
-		}
-		set Zeny, Zeny-.@zeny;
-		break;
-	}
-	mes "[Storekeeper]";
-	mes "Thank you.";
-	close2;
-	openstorage;
-	end;
 }

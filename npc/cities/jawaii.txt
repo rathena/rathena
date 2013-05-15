@@ -38,7 +38,7 @@
 //= 3.7 Added Izlude RE coordinates. [Euphy]
 //============================================================
 
-// Jawaii
+// Jawaii Transportation
 //============================================================
 jawaii,239,112,7	script	Mariner#toizu	100,{
 	mes "[Mariner]";
@@ -107,6 +107,8 @@ jawaii,122,263,5	script	Mariner#toalbe	100,{
 	close;
 }
 
+// Generic Jawaii NPCs
+//============================================================
 jawaii,188,218,7	script	Tavern Lady#Jawaii	80,{
 	mes "[Lady]";
 	mes "Oh, dear!";

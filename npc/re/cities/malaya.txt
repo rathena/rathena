@@ -1,0 +1,75 @@
+//===== rAthena Script ======================================= 
+//= Port Malaya
+//===== By: ================================================== 
+//= Euphy
+//===== Current Version: ===================================== 
+//= 0.1
+//===== Compatible With: ===================================== 
+//= rAthena SVN
+//===== Description: ========================================= 
+//= Port Malaya Town Script
+//===== Additional Comments: ================================= 
+//= 0.1 Alberta sailors only. [Euphy]
+//============================================================ 
+
+// Port Malaya Transportation
+//============================================================
+alberta,237,71,4	script	Optamara Crew#alberta	100,{
+	mes "[Optamara Crew]";
+	mes "Hey, there!";
+	mes "It's 10,000 Zeny to go to Port Malaya. Interested?";
+	next;
+	switch(select("About Port Malaya.:Go to Port Malaya.:Cancel.")) {
+	case 1:
+		mes "[Optamara Crew]";
+		mes "Port Malaya is a small village you could reach by sailing southwest from Alberta.";
+		next;
+		mes "[Optamara Crew]";
+		mes "I couldn't visit the village because they had some issues there but now it seems all is clear!";
+		next;
+		mes "[Optamara Crew]";
+		mes "I don't know for sure but it was a village that's like a comfortable and cozy park.";
+		next;
+		mes "[Optamara Crew]";
+		mes "I was this close to not coming back to cozy Alberta again.";
+		next;
+		mes "[Optamara Crew]";
+		mes "I'm sure you'll feel the same once you reach Port Malaya.";
+		close;
+	case 2:
+		if (Zeny < 10000) {
+			mes "[Optamara Crew]";
+			mes "You don't have enough Zeny.";
+			close;
+		}
+		mes "[Optamara Crew]";
+		mes "Great!";
+		mes "Heading for Port Malaya!!";
+		set Zeny, Zeny-10000;
+		close2;
+		warp "malaya",271,55;
+		end;
+	case 3:
+		mes "[Optamara Crew]";
+		mes "Adventurers these days act like they are busy. Come back when you have the time and we could go visit Port Malaya together.";
+		close;
+	}
+}
+
+malaya,276,55,4	script	Optamara Crew#malaya	100,{
+	mes "[Optamara Crew]";
+	mes "I think the village is still busy. Done with your visit? There is always a ship heading for Alberta.";
+	next;
+	switch(select("Return.:Do not return.")) {
+	case 1:
+		mes "[Optamara Crew]";
+		mes "Great! Let's leave now for Alberta!!";
+		close2;
+		warp "alberta",239,68;
+		end;
+	case 2:
+		mes "[Optamara Crew]";
+		mes "That's okay. Come here if you ever want to go back to Alberta.";
+		close;
+	}
+}

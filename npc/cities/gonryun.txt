@@ -16,7 +16,7 @@
 //============================================================
 
 // Kunlun Transportation
-//============================================================ 
+//============================================================
 -	script	::Kunlun_Envoy_gonryun	-1,{
 	mes "[Wa Bai Hu]";
 	mes "Good day~";
@@ -189,7 +189,7 @@ gonryun,153,64,7	script	Kunlun Envoy#gon4	776,{
 }
 
 // Generic Kunlun NPCs
-//============================================================ 
+//============================================================
 gonryun,200,82,3	script	Jian Chung Xun#gon	774,{
 	mes "[Jian Chung Xun]";
 	mes "I simply adore festivals.";

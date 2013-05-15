@@ -15,7 +15,7 @@
 //============================================================
 
 // Moscovia Transportation
-//============================================================ 
+//============================================================
 -	script	::PR_Officer_moscovia	-1,{
 	mes "[Moscovia P.R. Officer]";
 	mes "Moscovia! Do you know Moscovia?";
@@ -117,7 +117,7 @@ moscovia,166,53,4	script	Moscovia P.R. Officer#2	960,{
 }
 
 // Generic Moscovia NPCs
-//============================================================ 
+//============================================================
 moscovia,253,166,4	script	Soldier#mosk1	966,{
 	mes "[Soldier]";
 	mes "Our dear Csar Alexsay III is in the palace.";
@@ -127,7 +127,7 @@ moscovia,253,166,4	script	Soldier#mosk1	966,{
 }
 
 // Moscovia Palace
-//============================================================ 
+//============================================================
 -	script	Soldier#mosk::MoscSoldier	966,{
 	mes "[Soldier]";
 	mes "Please be silent or the Csar will be angry.";

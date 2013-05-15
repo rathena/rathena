@@ -21,7 +21,6 @@
 //============================================================
 
 moc_para01,25,35,4	script	Instructor Boya#para01	469,{
-
 	if (countitem(6219) > 0) {
 		if (para_suv01 == 0) {
 			mes "[Boya]";
@@ -1092,7 +1091,6 @@ moc_para01,25,35,4	script	Instructor Boya#para01	469,{
 }
 
 moc_fild11,180,253,5	script	Talking Dog#para03	972,{
-
 	if (para_suv01 == 1) {
 		mes "[Talking Dog]";
 		mes "kkkkuuuuahhh.";
@@ -1662,7 +1660,6 @@ pay_arche,41,136,3	script	Eden Member Karl#para05	904,{
 }
 
 anthell01,29,264,5	script	Eden Member Cloud#para06	899,{
-
 	if (para_suv01 < 17) {
 		if (countitem(6219) > 0) {
 			mes "[Cloud]";
@@ -2122,7 +2119,6 @@ in_orcs01,38,175,3	script	Eden Member Hooksha	803,{
 }
 
 iz_dun04,43,46,3	script	Eden Member Callandiva	745,{
-
 	if (para_suv01 < 33) {
 		if (countitem(6219) > 0) {
 			mes "[Callandiva]";
@@ -2263,7 +2259,6 @@ iz_dun04,43,46,3	script	Eden Member Callandiva	745,{
 }
 
 moc_para01,112,96,5	script	Administrator Michael	967,{
-
 	mes "[Michael]";
 	mes "Why did you come here?";
 	next;
@@ -3539,7 +3534,6 @@ moc_para01,112,96,5	script	Administrator Michael	967,{
 }
 
 moc_para01,179,44,3	script	Chef	820,{
-
 	mes "[Chef]";
 	mes "What's up?";
 	mes "Do you want a Meal? Or do you have other business?";
@@ -5125,7 +5119,8 @@ L_GetWeapon:
 	return;
 }
 
-/* sec_in02,25,33,4	script	Assistant	422,{
+/*
+sec_in02,25,33,4	script	Assistant	422,{
 	mes "Password";
 	next;
 	input .@input;
@@ -5151,4 +5146,5 @@ L_GetWeapon:
 	}
 	mes "......meow wee.";
 	close;
-}*/
+}
+*/

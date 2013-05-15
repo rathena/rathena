@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -17,10 +17,10 @@
 //= 1.4 Updated to match the new Izlude Map. [Masao]
 //= 1.5 Added some missing Eden Group Teleport Officers. [Masao]
 //= 1.6 Added Izlude RE coordinates. [Euphy]
+//= 1.7 Added Malaya teleporter. [Euphy]
 //============================================================
 
 moc_para01,27,35,5	script	Secretary Lime Evenor	952,{
-
 	if (checkweight(1201,1) == 0 || (MaxWeight - Weight) < 2000) {
 		mes "- Wait a minute !! -";
 		mes "- Currently you're carrying -";
@@ -213,7 +213,6 @@ moc_para01,27,35,5	script	Secretary Lime Evenor	952,{
 		close;
 	}
 }
-
 prontera,124,76,3	duplicate(eto)	Eden Teleport Officer#1	729
 moc_ruins,68,164,3	duplicate(eto)	Eden Teleport Officer#2	729
 geffen,132,66,3	duplicate(eto)	Eden Teleport Officer#3	729
@@ -237,9 +236,9 @@ veins,220,109,4	duplicate(eto)	Eden Teleport Officer#20	729
 lighthalzen,164,86,4	duplicate(eto)	Eden Teleport Officer#21	729
 einbroch,250,211,4	duplicate(eto)	Eden Teleport Officer#22	729
 hugel,93,153,4	duplicate(eto)	Eden Teleport Officer#23	729
+malaya,238,206,6	duplicate(eto)	Eden Teleport Officer#24	729
 
 moc_para01,30,10,0	script	#eden_out	45,1,1,{
-
 OnTouch:
 	switch (nak_warp) {
 		case 1: warp "prontera",116,72; end;
@@ -265,6 +264,7 @@ OnTouch:
 		case 21: warp "lighthalzen",158,92; end;
 		case 22: warp "einbroch",245,210; end;
 		case 23: warp "hugel",95,145; end;
+		case 24: warp "malaya",234,199; end;
 		default: warp "prontera",116,72; end;
 	}
 	end;

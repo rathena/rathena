@@ -16,7 +16,7 @@
 //============================================================
 
 // Amatsu Transportation
-//=====================================================
+//============================================================
 -	script	::Sea_Captain_amatsu	-1,{
 	mes "[Walter Moers]";
 	mes "Hey, there.";
@@ -151,7 +151,7 @@ amatsu,194,79,5	script	Sea Captain#ama2	709,{
 }
 
 // Generic Amatsu NPCs
-//=====================================================
+//============================================================
 amatsu,230,160,3	script	Well-side Maiden#ama	757,{
 	mes "[Yuuko]";
 	mes "I usually come to this well to";
@@ -339,7 +339,7 @@ amatsu,287,266,3	script	Jyaburo#ama	766,{
 }
 
 // Legendary Tree
-//=====================================================
+//============================================================
 amatsu,269,221,1	script	Propose Girl#ama	758,{
 	set jap_tree,1;
 	mes "[Hutari Shioko]";

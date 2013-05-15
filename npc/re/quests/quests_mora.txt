@@ -3,13 +3,13 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.0
+//= 0.1
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
 //= Quest NPCs related to Mora.
 //===== Additional Comments: =================================
-//= 1.0 NPCs are currently placeholders. [Euphy]
+//= 0.1 NPCs are currently placeholders. [Euphy]
 //============================================================
 
 // Find the Research Tools

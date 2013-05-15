@@ -59,6 +59,5 @@
 	mes "I need an Eden Group Mark to use this Cabinet.";
 	close;
 }
-
 moc_para01,173,120,0	duplicate(pggc)	Goods Cabinet#01	111
 moc_para01,170,120,0	duplicate(pggc)	Goods Cabinet#02	111

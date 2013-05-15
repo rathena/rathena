@@ -387,7 +387,7 @@ function	script	F_KafInfo	{
 	// Uncomment next line to block Kafra Storage Protection
 	//	set .@block, 1;
 		setarray .@m$, "Check Special Reserve Points.","Storage Password Service","Kafra Employee Locations","Cancel";
-		if (getarg(0) == 2) deletearray .@m$[1],2; // Rune Knight
+		if (getarg(0) == 2) deletearray .@m$[1],2; // Port Malaya, Rune Knight
 		else if (.@block) deletearray .@m$[1],1;
 	while (1) {
 		set .@j, select(implode(.@m$,":")) - 1;

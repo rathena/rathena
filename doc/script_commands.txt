@@ -4846,60 +4846,59 @@ Used in reset NPC's (duh!)
 
 ---------------------------------------
 
-*sc_start 	<effect type>,<ticks>,<value 1>{,<rate>,<flag>,<GID>};
-*sc_start2 	<effect type>,<ticks>,<value 1>,<value 2>{,<rate>,<flag>,<GID>};
-*sc_start4	<effect type>,<ticks>,<value 1>,<value 2>,<value 3>,<value 4>{,<rate>,<flag>,<GID>};
+*sc_start 	<effect type>,<ticks>,<value 1>{,<rate>,<flag>{,<GID>}};
+*sc_start2 	<effect type>,<ticks>,<value 1>,<value 2>{,<rate>,<flag>{,<GID>}};
+*sc_start4 	<effect type>,<ticks>,<value 1>,<value 2>,<value 3>,<value 4>{,<rate>,<flag>{,<GID>}};
 *sc_end 	<effect type>{,<GID>};
 
-These commands give a character a status effect.  Optionally, <rate> and <flag> can be defined.
+These commands will bestow a status effect on a character.
 
-<effect type> is which status change to invoke.  This can be a number or SC name.
-A list of these are in the file 'db/const.txt' with the 'SC_' prefix.
+The <effect type> determines which status is invoked. This can be either a number
+or constant, with the common statuses (mostly negative) found in 'db/const.txt'
+with the 'SC_' prefix. A full list is located in 'src/map/status.h', though
+they are not currently documented.
 
-A number of <ticks> refers to how long the status change should last.  (1000 = 1 sec)
-<value 1> is used on certain status changes, generally modifying player stats by
-the given value or a percentage.
+The duration of the status is given in <ticks>, or milleseconds.
 
-Optional value <rate> is on a scale of 0-10000, with 0 being no chance to invoke
-the status change, and 10000 being 100% chance.  NPCs given a <rate> without
-defining a flag will ignore the value.  However, items can be given a rate
-and don't require a flag to be given for the rate to be ignored.
+Certain status changes take an additional parameter <value 1>, which typically
+modifies player stats by the given number or percentage. This differs for each
+status, and is sometimes zero.
 
-Optional value <flag> allows the setting of how the status change start should
-be handled.  These can be added together like a configuration parameter.
-   <flag>: *Default 2*
-	1: Cannot be avoided (it has to start)
-	2: Tick should not be reduced (by vit, luk, lv, etc)
-	4: sc_data loaded, no value has to be altered.
-	8: rate should not be reduced
+Optional value <rate> is the chance that the status will be invoked (100 = 1%).
+This is used primarily in item scripts. When used in an NPC script, a flag MUST
+be defined for the rate to work.
 
-<GID> will cause the status effect to appear on a specified character, instead of the
-one attached to the running script.  This can only be defined after setting <rate> and <flag>.
+Optional value <flag> is how the status change start will be handled (a bitmask).
+ 1: Status change cannot be avoided.
+ 2: Tick cannot be reduced by stats (default).
+ 4: sc_data loaded, so no value will be altered.
+ 8: Rate cannot be reduced.
 
-Using sc_start2 or sc_start4, extra arguments are able to be given when an
-effect can take them. Extra argument's meaning differs depending on the effect type, for
-most effects caused by a player skill the extra argument means the level of the skill
-that would have been used to create that effect, for others it might have no meaning
-whatsoever.
+If a <GID> is given, the status change will be invoked on the specified character
+instead of the one attached to the script. This can only be defined after setting
+a rate and flag.
+
+'sc_start2' and 'sc_start4' allow extra parameters to be passed, and are used only
+for effects that require them. The meaning of the extra values vary depending on the
+effect type.
+
+'sc_end' will remove a specified status effect. If SC_ALL (-1) is given, it will
+perform a complete removal of all statuses (although permanent ones will re-apply).
 
 Examples:
-	// This would poison them for 10 min at 50% chance
-	sc_start SC_Poison,600000,0,5000;
+	// This will poison the invoking character for 10 minutes at 50% chance.
+	sc_start SC_POISON,600000,0,5000;
 
-	// This will bless someone with Bless 10
+	// This will bestow the effect of Level 10 Blessing.
 	sc_start 10,240000,10;
 
-	// elemental armor defense takes the following four values
+	// Elemental armor defense takes the following four values:
 	// val1 is the first element, val2 is the resistance to the element val1.
-	// val3 is the second element, val4 is the resistance to said element.
+	// val3 is the second element, val4 is the resistance to the element val3.
 	sc_start4 SC_DefEle,60000,Ele_Fire,20,Ele_Water,-15;
 
-'sc_end' will remove a specified status effect. If SC_All is used (-1), it will
-do a complete removal of all statuses (although permanent ones will re-apply).
-
-You can see the full list of status effects caused by skills in 
-'src/map/status.h' - they are currently not fully documented, but most of that 
-should be rather obvious.
+	// This will end the Freezing status for the invoking character.
+	sc_end SC_FREEZE;
 
 ---------------------------------------
 
@@ -5417,7 +5416,7 @@ returned value is zero.
 
 ---------------------------------------
 
-*summon "Monster name",<monster id>{,<Time Out>{,"event label"}};
+*summon "monster name",<monster id>{,<Time Out>{,"event label"}};
 
 This command will summon a monster. (see also 'monster') Unlike monsters spawned
 with other commands, this one will set up the monster to fight to protect the
@@ -5439,24 +5438,23 @@ summon "--ja--",-1;
 
 ---------------------------------------
 
-*addmonsterdrop <monster id/name>,<item id>,<rate>;
-*delmonsterdrop <monster id/name>,<item id>;
+*addmonsterdrop <monster id>,<item id>,<rate>;
+*addmonsterdrop "<monster name>",<item id>,<rate>;
+*delmonsterdrop <monster id>,<item id>;
+*delmonsterdrop "<monster name>",<item id>;
 
-These commands will allow adding and deleting monster drops temporarily.
-They will accept monster name or ID.  Returns 1 on successful drop addition/deletion.
+These commands will temporarily add or delete a monster drop, which will be reset
+when the mob database reloads or the server shuts down. They return 1 upon success.
 
-When <item_id> specified is already on in the monster drop list, that item drop rate
-will be updated with the given <rate>.
+If the monster already drops the specified item, its drop rate will be updated with
+the given rate (100 = 1%).
 
 Examples:
-	//Adds Honey at an 80% drop rate to mob Owl Baron
+	// Makes Owl Baron drop Honey at an 80% rate.
 	addmonsterdrop 1295,518,8000;
 
-	//Deletes Executioner's Mitten from mob Rybio
+	// Deletes Executioner's Mitten from Rybio.
 	delmonsterdrop 1201,7017;
-
-Any item added or deleted from a monster with these commands will be reset when
-the mobdb is reloaded or server is shut down.
 
 ---------------------------------------
 

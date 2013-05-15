@@ -19,7 +19,7 @@
 //= 3.0 Moved Alberta NPC to pre-re/re paths. [Euphy]
 //============================================================
 
-// Louyang Transportaion
+// Louyang Transportation
 //============================================================
 -	script	::Girl_louyang	-1,{
 	mes "[Girl]";

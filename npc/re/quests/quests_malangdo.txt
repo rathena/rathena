@@ -3,14 +3,14 @@
 //===== By: ==================================================
 //= Muad_Dib
 //===== Current Version: =====================================
-//= 1.4a
+//= 1.5
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
 //= Quest NPCs related to Malangdo:
 //== Malangdo Island, Help the Bad Cats in Danger,
-//== Clean the Ship, Help Chef Nyas,
-//== Play with Baby Cats, Archangel Wing Enchants
+//== Clean the Ship, Help Chef Nyas, Play with Baby Cats,
+//== Cat Gamers, Archangel Wing Enchants
 //===== Additional Comments: =================================
 //= 1.0 First version. [Euphy]
 //= 1.1 Added Clean the Ship and Help Chef Nyas.
@@ -18,7 +18,342 @@
 //= 1.3 Added Play with Baby Cats.
 //= 1.4 Added Malangdo Island.
 //= 1.4a Dialogue edits, source iRO.
+//= 1.5 Added Cat Gamers.
+//=     Added "Investment Cat Helper" and "Storekeeper" NPCs.
 //============================================================
+
+// Utility NPCs :: cat_merchant
+//============================================================
+mal_in02,134,31,5	script	Investment Cat Helper	505,{
+	if (MaxWeight - Weight < 100 || checkweight(1201,1) == 0) {
+		mes "[Investment Cat Helper]";
+		mes "You have a heavy load. Maybe you're a peddler? No peddlers in this area.";
+		close;
+	}
+	if (ep13_yong1 < 10) {
+		mes "[Investment Cat Helper]";
+		mes "Ohh!";
+		mes "You've come here to ask about investing?";
+		mes "You've come to the right place.";
+		next;
+		mes "[Investment Cat Helper]";
+		mes "I am here to invest in the Cat Paw Merchant Association.";
+		mes "Err-- I mean I'm here to help honest people like you.";
+		mes "Hehehe~";
+		next;
+		mes "[Investment Cat Helper]";
+		mes "I can't remember everything because I've been here talking to you humans.";
+		mes "But I want to know first... Hold on.";
+		next;
+		mes "smell... smell...";
+		next;
+		mes "[Investment Cat Helper]";
+		mes "Ah?!";
+		mes "You don't know much about the Cat Paw Merchant Association, do you?";
+		mes "Hmm, you do not really smell like a cat.";
+		next;
+		mes "[Investment Cat Helper]";
+		mes "Good!!";
+		mes "You made the right decision to be here to invest in the Cat Paw Merchant Association~";
+		next;
+		mes "[Investment Cat Helper]";
+		mes "First, you need to have ten pieces of Malangdo cans if you want to open an account.";
+		next;
+		while(1) {
+			switch(select("Open an account:Ask about benefits:Cancel")) {
+			case 1:
+				if (countitem(12636) < 10) {
+					mes "[Investment Cat Helper]";
+					mes "Hmm!";
+					mes "I'd love to give you account for";
+					mes "free but as you know, this is for";
+					mes "advertising investers of the trader group, sorry.";
+					close;
+				}
+				delitem 12636,10; //Malang_Sp_Can
+				set ep13_yong1,10;
+				mes "[Investment Cat Helper]";
+				mes "Good!";
+				mes "Write down here~ and";
+				mes "print your palm there,";
+				mes "ah!~ what's your name?";
+				next;
+				mes "[Investment Cat Helper]";
+				mes strcharinfo(0)+" you are~";
+				next;
+				mes "[Investment Cat Helper]";
+				mes "Name: "+strcharinfo(0);
+				mes "Number of accounts: 10";
+				mes "OK! Registered!";
+				next;
+				mes "[Investment Cat Helper]";
+				mes "You have an account now.";
+				mes "Will get an investment of a certain nunber of cans next time.";
+				next;
+				mes "[Investment Cat Helper]";
+				mes "I wish to get lots of investments";
+				mes "so you can have many services as well.";
+				mes "And, I also hope that we, the Cat Paw Merchant Association, will make much money.";
+				next;
+				mes "[Investment Cat Helper]";
+				mes "See you next investment~";
+				close;
+			case 2:
+				mes "[Investment Cat Helper]";
+				mes "You want to know the benefits of investing?";
+				mes "Actually, we are a small group of cats and we don't think like humans.";
+				next;
+				mes "[Investment Cat Helper]";
+				mes "There are lots of benefits based on how much you've invested in our services.";
+				mes "These include more warps, extra storage locations and price reductions of goods and services.";
+				next;
+				mes "[Investment Cat Helper]";
+				mes "I promise that if our trade is growing you will benefit from it as well.";
+				next;
+				break;
+			case 3:
+				mes "[Investment Cat Helper]";
+				mes "Ahh~ You're just going to leave?";
+				mes "T_T~ Please open an account.";
+				close;
+			}
+		}
+	} else if (ep13_yong1 < 20000) {
+		mes "[Investment Cat Helper]";
+		mes "I can't remember everyone since I meet so many people...";
+		mes "But I want to check first... Hold on.";
+		mes "Excuse me!";
+		next;
+		mes "smell... smell...";
+		next;
+		if (ep13_yong1 < 10000) {
+			set .@cans,10;
+			mes "[Investment Cat Helper]";
+			mes "This is a familiar smell!!";
+			mes "If it's so...!!";
+			next;
+			mes "[Investment Cat Helper]";
+			mes "You are here to invest!!";
+			mes "Good!~~ Good to see you~";
+			next;
+			mes "[Investment Cat Helper]";
+			mes "From your smell~ you are below 10,000 accounts.";
+			mes "Until then, you can get an account by investing ten cans.";
+		} else {
+			set .@cans,20;
+			mes "[Investment Cat Helper]";
+			mes "Such a stong smell!!";
+			mes "Then it must be!!";
+			next;
+			mes "[Investment Cat Helper]";
+			mes "A VIP invester!!!!!!";
+			mes "You're here to invest? Welcome!";
+			next;
+			mes "[Investment Cat Helper]";
+			mes "A VIP invester with over 10,000 accounts";
+			mes "can get another account with 20 cans.";
+			mes "A good investment!";
+		}
+		next;
+		mes "[Investment Cat Helper]";
+		mes "What will you do?";
+		next;
+		switch(select("Invest:Check the number of accounts:Cancel")) {
+		case 1:
+			mes "[Investment Cat Helper]";
+			mes "Ohh~ thank you for investing~";
+			mes "You can get a maximum of 10 accounts at one time.";
+			mes "Isn't it lovely?";
+			mes "How many will you invest in? Enter 0 to cancel.";
+			next;
+			input .@input;
+			if (.@input == 0) {
+				mes "[Investment Cat Helper]";
+				mes "Please invest next time~";
+				close;
+			} else if (.@input > 10) {
+				mes "[Investment Cat Helper]";
+				mes "You can get a maximum of 10 accounts~";
+				close;
+			}
+			set .@required, .@input*.@cans;
+			mes "[Investment Cat Helper]";
+			mes "Total " + .@input + " accounts, right?";
+			mes "The number of cans you need is "+.@required+" pieces.";
+			mes "Do you want to go through with this?";
+			next;
+			if(select("Yes:No") == 2) {
+				mes "[Investment Cat Helper]";
+				mes "Oh? Is that wrong? Weird.";
+				mes "Please check again~";
+				close;
+			}
+			if (countitem(12636) < .@required) {
+				mes "[Investment Cat Helper]";
+				mes "Ahhh!";
+				mes "You don't have enough cans.";
+				mes "I'm a busy cat, you know.";
+				close;
+			}
+			if (ep13_yong1 < 10000) {
+				delitem 12636,.@required; //Malang_Sp_Can
+				set ep13_yong1, ep13_yong1+.@input;
+				mes "[Investment Cat Helper]";
+				mes .@input+" accounts were invested in.";
+				mes "Thank you for your help~";
+				next;
+				mes "[Investment Cat Helper]";
+				mes "Once we get more investments of cans,";
+				mes "our trader group will grow even more.";
+				mes "And you can get services as well~";
+				mes "A win-win strategy?";
+				close;
+			} else {
+				if (.@input + ep13_yong1 > 20000) {
+					delitem 12636,.@required; //Malang_Sp_Can
+					set ep13_yong1,20000;
+					mes "[Investment Cat Helper]";
+					mes "You can have 20,000 accounts max";
+					mes "according to the trader policy...";
+					mes strcharinfo(0)+"'s accounts increase to 20,000.";
+					mes "Thank you so much for your investment~";
+					next;
+					mes "[Investment Cat Helper]";
+					mes "Now, "+strcharinfo(0)+", you can't invest further";
+					mes "but you can still donate some of your cans to the trader group.";
+					mes "Thank you so much~";
+					close;
+				} else {
+					delitem 12636,.@required; //Malang_Sp_Can
+					set ep13_yong1, ep13_yong1+.@input;
+					mes "[Investment Cat Helper]";
+					mes .@input+" accounts have been invested in.";
+					mes "Thank you for your help~";
+					next;
+					mes "[Investment Cat Helper]";
+					mes "With your big investment in cans,";
+					mes "this will help us meet our goals earlier.";
+					mes "Thank you again.";
+					close;
+				}
+			}
+		case 2:
+			mes "[Investment Cat Helper]";
+			mes "You want to check the number of accounts? Hmm, let's see~";
+			next;
+			mes "[Investment Cat Helper]";
+			mes "Name: "+strcharinfo(0);
+			mes "Number of accounts: "+ep13_yong1;
+			next;
+			mes "[Investment Cat Helper]";
+			if (ep13_yong1 < 10000)
+				mes "Got it?";
+			else
+				mes "You've made many investments. Thank you.";
+			close;
+		case 3:
+			mes "[Investment Cat Helper]";
+			mes "Please invest next time~";
+			close;
+		}
+	} else if (ep13_yong1 >= 20000) {
+		mes "[Investment Cat Helper]";
+		mes strcharinfo(0) + ", welcome~";
+		mes strcharinfo(0) + "~ I felt something upon your arrival.";
+		next;
+		mes "[Investment Cat Helper]";
+		mes "Want to donate?";
+		next;
+		if(select("Donate:No") == 2) {
+			mes "[Investment Cat Helper]";
+			mes "Hehe~ then have fun in here~";
+			close;
+		}
+		mes "[Investment Cat Helper]";
+		mes "Wow, thank you, "+strcharinfo(0)+"~!";
+		next;
+		mes "[Investment Cat Helper]";
+		mes strcharinfo(0)+"~ with your help";
+		mes "the cans will be distributed to cats";
+		mes "in the Midgard area with honor~";
+		next;
+		mes "[Investment Cat Helper]";
+		mes "The can donation can range from a minimum of 20 to a maximum of 10,000.";
+		next;
+		input .@input;
+		if (.@input < 20 || .@input > 10000) {
+			mes "[Investment Cat Helper]";
+			mes "The can donation can range from a minimum of 20 to a maximum of 10,000.";
+			close;
+		} else if (countitem(12636) < .@input) { // Malang_Sp_Can
+			mes "[Investment Cat Helper]";
+			mes "Hmm? You don't have enough cans.";
+			close;
+		} else {
+			delitem 12636,.@input; //Malang_Sp_Can
+			mes "[Investment Cat Helper]";
+			mes "Ohh! Thank you~";
+			next;
+			mes "[Investment Cat Helper]";
+			mes "Dear "+strcharinfo(0)+" ~";
+			mes "I have only Increase AGI";
+			mes "and Blessing to give you.";
+			mes "Thank you.";
+			npcskill "AL_INCAGI",10,0,0;
+			npcskill "AL_BLESSING",10,0,0;
+			close;
+		}
+	}
+}
+
+malangdo,184,139,4	script	Storekeeper#mal	560,{
+	mes "[Storekeeper]";
+	mes "Hey, looks like you might be looking to unload some of your stuff from your pack.";
+	mes "Want to open storage? For free?";
+	next;
+	mes "[Storekeeper]";
+	mes "Hahaha~ Just kidding, of course it isn't free.";
+	mes "What do you take me for?";
+	next;
+	if (ep13_yong1 > 999) {
+		set .@cans,1;
+		set .@zeny,1500;
+		set .@i, select("Pay with Can ----- 1 unit:Pay with Zeny ------- 1,500z");
+	} else {
+		set .@cans,2;
+		set .@zeny,3000;
+		set .@i, select("Pay with Can ----- 2units:Pay with Zeny ------- 3,000z");
+	}
+	if (getskilllv("NV_BASIC") < 6) {
+		mes "[Storekeeper]";
+		mes "Ah, hold on!!";
+		mes "You need to have ^FF0000Basic Skill level 6^000000 to use the storage service!!";
+		close;
+	}
+	switch(.@i) {
+	case 1:
+		if (countitem(12636) < .@cans) {
+			mes "[Storekeeper]";
+			mes "You don't have enough cans...";
+			close;
+		}
+		delitem 12636,.@cans; //Malang_Sp_Can
+		break;
+	case 2:
+		if (Zeny < .@zeny) {
+			mes "[Storekeeper]";
+			mes "You don't have enough zeny...";
+			close;
+		}
+		set Zeny, Zeny-.@zeny;
+		break;
+	}
+	mes "[Storekeeper]";
+	mes "Thank you.";
+	close2;
+	openstorage;
+	end;
+}
 
 // Malangdo Island :: ma_tomas
 //============================================================
@@ -1555,20 +1890,12 @@ mal_in01,116,168,0	script	Dry Machine#mal	563,{
 
 -	script	Suspicious Sand Pile#0	-1,{
 	if (.off) end;	// Official script uses a 1-second timer to disable sand piles. Added to prevent abuse.
-	if (checkweight(1201,1) == 0) {
-		mes " - Notice !! -";
-		mes " - Since you have too many items - ";
-		mes " - you cannot get the item. - ";
-		mes " - Let your body lighten - ";
-		mes " - and try this again. - ";
+	if (MaxWeight - Weight < 1000) {
+		mes "Your inventory is too heavy to proceed. Come back after lightening your load.";
 		close;
 	}
-	if (MaxWeight - Weight < 1000) {
-		mes " - Notice !! -";
-		mes " - Since your items are too heavy - ";
-		mes " - you cannot get the item. - ";
-		mes " - Let your body lighten - ";
-		mes " - and try this again. - ";
+	if (checkweight(1201,1) == 0) {
+		mes "Your inventory is too full to proceed. Come back after reducing your load.";
 		close;
 	}
 	if (ma_tomas == 9 || checkquest(11238) > -1) {
@@ -2425,8 +2752,12 @@ L_Warp:
 // Malangdo Island :: mal_ppl
 //============================================================
 malangdo,137,200,6	script	Pipielle	549,{
-	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 1000) {
-		mes "You have too many items, please try again after reducing your weight.";
+	if (MaxWeight - Weight < 1000) {
+		mes "Your inventory is too heavy to proceed. Come back after lightening your load.";
+		close;
+	}
+	if (checkweight(1201,1) == 0) {
+		mes "Your inventory is too full to proceed. Come back after reducing your load.";
 		close;
 	}
 	if (BaseLevel < 60) {
@@ -2439,11 +2770,11 @@ malangdo,137,200,6	script	Pipielle	549,{
 		mes "^770099This cat is working on something, but she asks for help above level 60.^000000";
 		close;
 	}
-	set .@fish_ss1$, "What are you doing??";
+	set .@fish_ss1$, "What are you doing?";
 	if (countitem(6451) > 29)
 		set .@fish_ss2$, "I caught a lot of strange fishes!";
 	else
-		set .@fish_ss2$, "Remaining " + (30-countitem(6451)) + " of ^bbbbbbUnidentified Fish are required.^000000";
+		set .@fish_ss2$, (30-countitem(6451))+" of ^bbbbbbUnidentified Fish are required.^000000";
 	if (ma_tomas == 100)
 		set .@fish_ss3$, "I met an Admiral Tomas...";
 	mes "[Pipielle]";
@@ -2452,48 +2783,51 @@ malangdo,137,200,6	script	Pipielle	549,{
 	switch(select(.@fish_ss1$,.@fish_ss2$,.@fish_ss3$)) {
 	case 1:
 		mes "[Pipielle]";
-		mes "There are many beautiful fishes around here. So I feel my heart beating as I stand here.";
+		mes "There are many beautiful fish around here. So I feel my heart beating standing here.";
 		next;
-		select("Of course, after seeing such a delicious thing!");
+		select("I think my heart is beating faster...");
 		mes "[Pipielle]";
-		mes "How come you only know about eating?! My heart doesn't beat up because I see something delicious. Don't treat me the same as the others.";
-		next;
-		mes "[Pipielle]";
-		mes "I used to study from a scholar from Uno who was human. And I am good at the human language as well. Don't treat me like the others.";
+		mes "How come you only know about eating! My heart doesn't only beat for food.";
 		next;
 		mes "[Pipielle]";
-		mes "I am a scholar who researches fish here. It's a little funny that a cat researches fish, but it's true.";
-		next;
-		select("Were you originally a scholar?");
-		mes "[Pipielle]";
-		mes "Originally I used to be the mate of admiral Tomas. But our ship never went back to sea after we arrived here.";
+		mes "I've studied at a human university before and I learned to speak there so don't treat me like some animal.";
 		next;
 		mes "[Pipielle]";
-		mes "The mate of a ship that never voyages is lonely.";
+		mes "I am a scholar of fish research.";
+		mes "It's important for cats to research fish.";
+		next;
+		select("How's your research going?");
+		mes "[Pipielle]";
+		mes "I was a good friend of admiral Thomas but our ship hasn't gone back to sea since we arrived here.";
 		next;
 		mes "[Pipielle]";
-		mes "The scholar from Uno came here for research, and he thought it was amazing that cats spoke the human language. Therefore he started to teach me.";
-		next;
-		select("But now everyone speaks the human language.");
-		mes "[Pipielle]";
-		mes "Oh yes, there were only a few cats who spoke the human language. That's why he treated me special.";
+		mes "The shipmates seem to be pretty lonely.";
 		next;
 		mes "[Pipielle]";
-		mes "Anyway, now I collect specimens to be an ichthyologist. I hope you can help me.";
+		mes "A scholar from the university came here to research us and thought it was amazing to find a cat that speaks his language already.";
+		mes "So he's been helping me teach the others.";
 		next;
-		if(select("How can I help you?:I would say no.") == 2) {
+		select("Is that why I understand all the cats?");
+		mes "[Pipielle]";
+		mes "Yes, exactly!";
+		mes "I was one of the few cats who could talk to humans before that scholar arrived.";
+		next;
+		mes "[Pipielle]";
+		mes "Anyways, now I'm collecting specimens to study the monsters here. I hope you can help me.";
+		next;
+		if(select("How can I help you?:I have to decline.") == 2) {
 			mes "[Pipielle]";
 			mes "Oh, okay. If you change your mind, please come again.";
 			close;
 		}
 		mes "[Pipielle]";
-		mes "There is a Pouring who's eating all the fishes in the Octopus and Culvert dungeons.";
+		mes "There is a monster called a Pouring who's eating all fish in the Octopus and Culvert dungeon.";
 		next;
 		mes "[Pipielle]";
-		mes "It didn't use to live there, but might have come here for the winter. Could you collect the specimens of unidentified fish after geting rid of it?";
+		mes "It suddenly appeared during the winter, so could you collect the specimens of Unidentified Fish after getting rid of it?";
 		next;
 		mes "[Pipielle]";
-		mes "You can get identified fishes from Pouring, so please collect about 30 pieces.";
+		mes "You can get Unidentified Fish from the Pouring monsters, so please collect 30 of them.";
 		close;
 	case 2:
 		if (countitem(6451) > 29) {
@@ -2510,7 +2844,7 @@ malangdo,137,200,6	script	Pipielle	549,{
 			close;
 		}
 		mes "[Pipielle]";
-		mes "I'm sorry, but please collect 30 pieces of unidentified fish specimens.";
+		mes "I'm sorry, but please collect 30 Unidentified Fish specimens.";
 		close;
 	case 3:
 		mes "[Pipielle]";
@@ -6173,6 +6507,4002 @@ mal_in02,109,62,4	script	Picky Crew#nyaong03	545,{
 	mes "Do not run in the hall!";
 	mes "My fur falls out because of someone who";
 	mes "scratches everywhere!";
+	close;
+}
+
+// Cat Gamers :: mal_gamer
+//============================================================
+mal_in01,31,210,2	script	Cat Gamers Director	549,{
+	if (MaxWeight - Weight < 1000) {
+		mes "Your inventory is too heavy to proceed. Come back after lightening your load.";
+		close;
+	}
+	if (checkweight(1201,1) == 0) {
+		mes "Your inventory is too full to proceed. Come back after reducing your load.";
+		close;
+	}
+	if (BaseLevel < 60) {
+		mes "A gentle looking cat is whispering to himself.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Hello... Mr. Cat...";
+		next;
+		mes "The cat takes a glance at you and goes back to his whispering as if he didn't even see you.";
+		next;
+		mes "It seems you are not being considered worth talking to.";
+		close;
+	}
+	if (malang_gamer == 0) {
+		mes "A gentle looking cat is whispering to himself.";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Man! 10 losses in a row...";
+		emotion e_sigh;
+		next;
+		mes "[Cat Gamers Director]";
+		mes "We are the 'Cat Gamers' Association.";
+		mes "But, we still keep on losing and we have no idea why!";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "We've got to find out the reason for this losing streak.";
+		set malang_gamer,1;
+		next;
+		mes "You are getting interested in the cat's story. Let's hear more.";
+		close;
+	} else if (malang_gamer == 1) {
+		mes "[Cat Gamers Director]";
+		mes "The reason, yes!";
+		mes "This can be one of them.";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "^DD2234Giving up so many points!^000000";
+		mes "That's right. No matter how much you score,";
+		mes "we will still lose if we give up so many points.";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "For the other reason. Hmm!";
+		mes "This could be related with the previous reason.";
+		mes "No ^DD2234aggresive point betting^000000 at all.";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Other teams bet on games that they think will win, and bet low when they are not confident.";
+		mes "I guess we didn't know that.";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Hmm, can this be a reason?";
+		mes "For some reason there were ^DD2234players disappearing right before the match up^000000 and I guess this could have effected our game spirit.";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Hmm... So the reason of our losing streak will be,";
+		mes "giving up too many points;";
+		mes "aggressive point betting;";
+		mes "and players disappearing?";
+		set malang_gamer,2;
+		next;
+		mes "It seems like the gentle looking cat has finished thinking. Let's interrupt the conversion.";
+		close;
+	} else if (malang_gamer == 2) {
+		mes "[Cat Gamers Director]";
+		mes "Now that I know the reason,";
+		mes "there should be a solution to that.";
+		emotion e_hmm;
+		next;
+		select("Umm... Mr. Cat...");
+		mes "[Cat Gamers Director]";
+		mes "Who's there? Human? You are a human?";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "... ... ... ...";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Oh! Yes! Right!";
+		mes "I remember hearing that";
+		mes "humans have started passing through here recently.";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "So good to see you!!";
+		mes "What is your name by the way?";
+		emotion e_gasp;
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "My name is "+strcharinfo(0)+", Mr. Cat.";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Oh, ^0000FF"+strcharinfo(0)+"^000000.";
+		mes "How may I help you?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Actually I wanted to help you out since I heard that you've lost 10 games in a row...";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Well, you didn't really have to point it out like that...";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "A weakness is no longer a weakness when you say it out loud.";
+		emotion e_no1,1;
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Hahahaha I like that phrase.";
+		mes "I should remember it and";
+		mes "tell it to my kids. Heh~";
+		next;
+		if (Sex == 0)
+			setarray .@sex$[0],"Mr.","boy";
+		else
+			setarray .@sex$[0],"Miss","girl";
+		mes "[Cat Gamers Director]";
+		mes "I like you, "+.@sex$[0]+" "+strcharinfo(0)+". Will you help us get out of this 10 game losing streak? Ehehe~";
+		next;
+		switch(select("Sorry, I'm a stupid "+.@sex$[1]+".:Sure, I'm a cool "+.@sex$[1]+".")) {
+		case 1:
+			mes "[Cat Gamers Director]";
+			mes "Guess I was wrong about you~";
+			mes "How can a person call themself stupid.";
+			mes "Now I can see how stupid you are.";
+			mes "Good bye~";
+			emotion e_hmm;
+			close;
+		case 2:
+			mes "[Cat Gamers Director]";
+			mes "Wow. I respect you, "+strcharinfo(0)+".";
+			mes "Let me ask you a favor.";
+			mes "Please meet the hard working Manager Cat and ask about our team's attitude these days.";
+			set malang_gamer,3;
+			setquest 5058;
+			next;
+			mes "[Cat Gamers Director]";
+			mes "The Manager Cat must be around here somewhere~";
+			close;
+		}
+	} else if (malang_gamer == 3) {
+		mes "[Cat Gamers Director]";
+		mes "Please meet the hard working";
+		mes "Manager Cat, and ask about our team's attitude these days.";
+		mes "The Manager Cat must be around here somewhere~";
+		close;
+	} else if (malang_gamer == 4) {
+		mes "[Cat Gamers Director]";
+		mes "Ok Ok. So what did the manager cat say about the atmosphere these days?~";
+		emotion e_what;
+		next;
+		mes "You tell him exactly what the Manager Cat said.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "The manager cat said...";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Do not hesitate... Just tell me everything~";
+		emotion e_what;
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Umm... the player cats are afraid of you...";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "What... What did you say?";
+		emotion e_omg;
+		next;
+		mes "Cat Gamers Director seems to be in shock. Let's give him some time to calm down.";
+		set malang_gamer,5;
+		erasequest 5059;
+		setquest 5060;
+		close;
+	} else if (malang_gamer == 5) {
+		if (checkquest(5060,PLAYTIME) == 0 || checkquest(5060,PLAYTIME) == 1) {
+			mes "Cat Gamers Director seems to be in shock. Let's give him some time to calm down.";
+			close;
+		}
+		mes "[Cat Gamers Director]";
+		mes "That is impossible!";
+		mes "There is no other cat that's nicer than I am!";
+		emotion e_sob;
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Am I really that scary?";
+		mes "Are those players who bailed on the practice afraid of me too?";
+		emotion e_swt2;
+		next;
+		mes "[Cat Gamers Director]";
+		mes "It can't be, right? ehehehehe~";
+		next;
+		mes "- He laughs nervously. -";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Is that the truth?";
+		next;
+		mes "[Cat Gamers Director]";
+		mes strcharinfo(0)+", will you help me out?";
+		mes "There are 4 players who ran away from practice saying they were too tired.";
+		mes "Could you check if they ran away because of me? ehehehe~";
+		emotion e_what;
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Their names are Eryu, Stew, Ketchup, and Eff.";
+		mes "They've got to be somewhere around here.";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Please find them all~";
+		mes "But, don't ask too directly! Ok?";
+		mes "Just ask them gentle questions~";
+		mes "Ok? Be! Gentle!";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "I appreciate your help, "+strcharinfo(0)+". heh~";
+		set malang_gamer,6;
+		erasequest 5060;
+		setquest 5061;
+		close;
+	} else if (malang_gamer == 6) {
+		if (checkquest(5062) == 2 && checkquest(5063) == 2 && checkquest(5064) == 2 && checkquest(5065) == 2) {
+			mes "[Cat Gamers Director]";
+			mes "Heh~ It seems some humans are scamming cats around this town.";
+			next;
+			mes "[Cat Gamers Director]";
+			mes "What good is it to scam innocent cats?~";
+			emotion e_gg;
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Yes, I think that you're right.";
+			emotion e_hmm,1;
+			next;
+			mes "[Cat Gamers Director]";
+			mes "Oh, so you met Eryu, Stew, Ketchup, and Eff.";
+			mes "It is so good to see you again. Heh~";
+			mes "Thank you very much for your effort~. Heh~";
+			next;
+			mes "[Cat Gamers Director]";
+			mes "So what did they say?";
+			mes "They really think I am scary?";
+			next;
+			mes "You tell the Cat Gamers Director what Eryu, Stew, Ketchup, and Eff said.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "They think you push them too much through the practices. So they are scared.";
+			next;
+			mes "[Cat Gamers Director]";
+			mes "What? Really?";
+			next;
+			mes "The Cat Gamers Director seems to be shocked once again. Better give him more time to calm down.";
+			set malang_gamer,7;
+			erasequest 5061;
+			setquest 5060;
+			close;
+		}
+		mes "[Cat Gamers Director]";
+		mes "Their names are Eryu, Stew, Ketchup, and Eff.";
+		mes "They've got to be somewhere around here.";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Please find them all~";
+		mes "But, don't ask too directly! Ok?";
+		mes "Just ask them gentle questions~";
+		mes "Ok? Be! Gentle!";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "I appreciate your help, "+strcharinfo(0)+". heh~";
+		close;
+	} else if (malang_gamer == 7) {
+		if (checkquest(5060,PLAYTIME) == 0 || checkquest(5060,PLAYTIME) == 1) {
+			mes "Cat Gamers Director seems to be in shock once again. Better give more time to calm down.";
+			close;
+		}
+		mes "[Cat Gamers Director]";
+		mes "Ok, I understand.";
+		mes "I was a scary cat after all.";
+		mes "This can't be right!! Heh~";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "I need to change my scary cat image. Heh~";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "This is my mission now,";
+		mes "so our team can improve";
+		mes "game performance. Heh~";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Please go meet our manager cat,";
+		mes "and find out how can I change";
+		mes "this scary cat image of mine. Heh~";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~ I would much appreciate your help, "+strcharinfo(0)+"~.";
+		set malang_gamer,8;
+		erasequest 5060;
+		setquest 5066;
+		close;
+	} else if (malang_gamer == 8) {
+		mes "[Cat Gamers Director]";
+		mes "Please ask our manager cat how can I change this scary cat image.";
+		mes "Heh~";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~ Please help me out,";
+		mes strcharinfo(0)+"! Heh~";
+		close;
+	} else if (malang_gamer == 9) {
+		mes "[Cat Gamers Director]";
+		mes "You came back!! Heh~";
+		mes "So, what did our manager cat say?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Manager cat asked to prepare a box.";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "A box? Heh~ Sure, why not?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Are you going to ask me what is it for?";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Well, I kind of was eavesdropping when "+strcharinfo(0)+" and Manager Cat were talking together. Heh~";
+		emotion e_heh;
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "............";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Now I need to check with our players, see how they really feel.";
+		mes "Heh~ Why don't you come back tomorrow?";
+		mes "Heh~ Let me decide what to do after checking their honest petition letters. Heh~";
+		set malang_gamer,10;
+		erasequest 5067;
+		setquest 5068;
+		close;
+	} else if (malang_gamer == 10) {
+		if (checkquest(5068,PLAYTIME) == 0 || checkquest(5068,PLAYTIME) == 1) {
+			mes "[Cat Gamers Director]";
+			mes "Still receiving petition letters. Heh~";
+			next;
+			mes "[Cat Gamers Director]";
+			mes "I wonder what they really want to say~ Heh~";
+			close;
+		}
+		mes "[Cat Gamers Director]";
+		mes "Heh~ All done with collecting petition letters~";
+		mes "Heh~ Let's see what they wrote here?";
+		next;
+		mes "Reading...~";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~ Let me see... 'Stupid Cat lea...de...'";
+		emotion e_an;
+		next;
+		mes "- Crumpling the paper -";
+		mes "Cat Gamers Director has crumpled the paper and thrown it away.";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~ Wrong paper.";
+		mes "Let's read another one... Heh~";
+		next;
+		mes "~Reading~";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~ Here we go.";
+		mes "'I don't like playing with the same team members over and over.";
+		mes "Please pick new team members,";
+		mes "or get me a practicing partner.'";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~ I see.";
+		mes "I can take this positively.";
+		mes "Heh~ Let's move on to another one.";
+		emotion e_ok;
+		next;
+		mes "~Reading~";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~";
+		mes "'We need more snacks~ Get us some more snacks~'";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~ This one also sounds productive.";
+		mes "Heh~ Petition letters are good, I guess... Heh~";
+		emotion e_ok;
+		next;
+		mes "Reading...~";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~";
+		mes "'Elders are bullying me. Help me...'";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~ Our team is absolutely";
+		mes "like a family here~ Someone is";
+		mes "playing here, you know. Heh~";
+		emotion e_gasp;
+		next;
+		mes "Reading...~";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~ There are only 4 letters!";
+		mes "Including a prank one...";
+		mes "Heh~";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Everyone seems to have a satisfied team life~ Heh~";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Not... Really...";
+		next;
+		mes "There are tons of letters piled in the back of the box, but Cat Gamers Director doesn't want to admit the problem.";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~";
+		mes "Hey, "+strcharinfo(0)+". What did you say? Heh~";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Nothing! Please carry on.";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~ Because of what these players want,";
+		mes "I have a favor to ask you, "+strcharinfo(0)+"...";
+		mes "Heh~";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "What is it?";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Will you be our players' practicing partner?";
+		mes "Heh~ I feel strongly that you, "+strcharinfo(0)+", can be trusted for this. Heh~";
+		next;
+		switch(select("No thanks, buddy!:Ok, I'll do it!")) {
+		case 1:
+			mes "[Cat Gamers Director]";
+			mes "Heh~ Are you rejecting me? Heh~";
+			next;
+			mes "[Cat Gamers Director]";
+			mes "I'm sad. Sad~ Heh~";
+			mes "I didn't expect a refusal from a person like you, "+strcharinfo(0)+".";
+			mes "But still, here's some coins for you~";
+			mes "Heh~";
+			emotion e_sob;
+			next;
+			mes "[Cat Gamers Director]";
+			mes "We will always welcome you, "+strcharinfo(0)+", as a guest member of the Cat Gamers.";
+			mes "Heh~";
+			set malang_gamer,11;
+			erasequest 5068;
+			getitem 6422,100; //Egrade_Coin
+			next;
+			mes "[Cat Gamers Director]";
+			mes "Heh~ Please come back if you change your mind.";
+			close;
+		case 2:
+			mes "[Cat Gamers Director]";
+			mes "Heh~ Good choice.";
+			mes "I knew you would help us Cat Gamers... Heh~";
+			emotion e_no1;
+			next;
+			mes "[Cat Gamers Director]";
+			mes "Heh~ Thank you for your help.";
+			mes "Heh~ Here are some coins as a small gift... Heh~";
+			mes "Get yourself some goodies. Heh~";
+			next;
+			mes "[Cat Gamers Director]";
+			mes "Since you will be our team's practicing partner, please come back in an hour.";
+			mes "Then I will give you our '^0000FFCat Gamers Certificate^000000'.";
+			mes "Heh~";
+			set malang_gamer,12;
+			erasequest 5068;
+			setquest 5069;
+			getitem 6422,100; //Egrade_Coin
+			next;
+			mes "[Cat Gamers Director]";
+			mes "Heh~ Ok, "+strcharinfo(0)+". I will see you in an hour. Heh~";
+			close;
+		}
+	} else if (malang_gamer == 11) {
+		mes "[Cat Gamers Director]";
+		mes "Heh~";
+		mes "Aren't you "+strcharinfo(0)+"?";
+		mes "Have you changed your mind yet?";
+		mes "Are you willing to be our team's practicing partner?";
+		next;
+		switch(select("No, I'm just passing through.:I accept your offer.")) {
+		case 1:
+			mes "[Cat Gamers Director]";
+			mes "Heh~ I see.";
+			mes "But, let me tell you once again, "+strcharinfo(0)+".";
+			mes "You are always welcome to be one of our 'Cat Gamers Honorable Members'.";
+			mes "Heh~";
+			close;
+		case 2:
+			mes "[Cat Gamers Director]";
+			mes "Heh~ At last!!";
+			mes strcharinfo(0)+" will become our honorable member!!";
+			mes "I shall make a '^0000FFCat Gamers Certificate^000000' right away. Heh~";
+			emotion e_ho;
+			next;
+			mes "[Cat Gamers Director]";
+			mes "Come back in an hour and I will get you a '^0000FFCat Gamers Certificate^000000'.";
+			mes "Heh~";
+			set malang_gamer,12;
+			setquest 5069;
+			close;
+		}
+	} else if (malang_gamer == 12) {
+		if (checkquest(5069,PLAYTIME) == 0 || checkquest(5069,PLAYTIME) == 1) {
+			mes "[Cat Gamers Director]";
+			mes "Heh~ You want to get the '^0000FFCat Gamers Certificate^000000' faster. Heh~ It's not really easy to get such a certificate easily.";
+			next;
+			mes "[Cat Gamers Director]";
+			mes "So, it's a bit tricky... Heh~ Please come later. Heh~";
+			emotion e_ho;
+			close;
+		}
+		mes "[Cat Gamers Director]";
+		mes "Heh~ I got a message from the workshop that their work on the certificate is done. Heh~";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "This is not some ordinary certificate. Heh~";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "What do you mean?";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~ This is...";
+		next;
+		mes "The Cat Gamers Director's eyes are shining with pride.";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~ The pure essence of the 'Cat Gamers' tech team's effort!!";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~ Equip this item, then all of your game playing records will be saved. Heh~";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~ Take this and show us what you've got.";
+		erasequest 5069;
+		set malang_gamer,20;
+		getitem 2872,1; //G_Honor_Certificate
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~ I may be worrying too much... But, please wear this '^0000FFCat Gamers Certificate^000000', and play the game. Heh~";
+		close;
+	} else if (malang_gamer == 20) {
+		// fall through
+	} else {
+		mes "[Cat Gamers Director]";
+		mes "This is not possible. Please contact an administrator.";
+		close;
+	}
+	mes "[Cat Gamers Director]";
+	mes "Heh~ Hello, "+strcharinfo(0)+". How is it going practicing with the players?";
+	emotion e_what;
+	next;
+	switch(select("How are the players doing?:Just stopped by to say hi~:Here's the current status...")) {
+	case 1:
+		mes "[Cat Gamers Director]";
+		mes "Heh~ Wow, "+strcharinfo(0)+"! I'm so touched by your care for the players.";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~ For 13 years of my life, I've never seen anyone like you, "+strcharinfo(0)+". Heh~";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~ "+strcharinfo(0)+", which player's condition are you interested in?";
+		next;
+		switch(select("Rock Paper Scissors players:ChamChamCham players:KongNyangKong players:Flag Game players")) {
+		case 1:
+			mes "[Cat Gamers Director]";
+			mes "Heh~ Rock Paper Scissors players are missing practices occasionally, but they are still getting better. Heh~";
+			break;
+		case 2:
+			mes "[Cat Gamers Director]";
+			mes "ChamChamCham players are actually complaining about the practice because you are doing so well with them, very hard to remember the winner. Heh~";
+			break;
+		case 3:
+			mes "[Cat Gamers Director]";
+			mes "Heh~ KongNyangKong players are so happy with the practice. Heh~";
+			break;
+		case 4:
+			mes "[Cat Gamers Director]";
+			mes "Heh~ Flag Game players are always nervous since you make them work so much. Heh~ But, they are really getting better. Heh~";
+			break;
+		}
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~ Please keep up the good work, "+strcharinfo(0)+". Heh~";
+		close;
+	case 2:
+		mes "[Cat Gamers Director]";
+		mes "Heh~ Hello there~ "+strcharinfo(0)+". You have such good manners~ Heh~";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~ These days, there are so many cats and humans without proper manners. Heh~";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "We also have some of thme in our 'Cat Gamers'. They are so arrogant every time we win the game... Heh~";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~ There should be more people like you, "+strcharinfo(0)+". Heh~";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~ Please practice with our players more often~ Heh~ So they can learn some manners from you, "+strcharinfo(0)+". Heh~";
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Keep up the good work~ Heh~";
+		close;
+	case 3:
+		mes "[Cat Gamers Director]";
+		mes "Heh~ What happened to your face, "+strcharinfo(0)+"? Guess you lost from the practice, right? Heh~";
+		emotion e_gg;
+		next;
+		mes "[Cat Gamers Director]";
+		mes "Heh~ I saw players puting notes in the 'Petition box'. Heh~ Guess that was your work. Let me see...";
+		next;
+		break;
+	}
+
+	// Detect quest (ID range 5074~5090)
+	mes "[Cat Gamers Director]";
+	if (checkquest(5074,HUNTING) > -1) {
+		mes "Heh~ It's not like I didn't feed them right... Heh~ I hope it was not too much for you, "+strcharinfo(0)+".";
+		next;
+		if (checkquest(5074,HUNTING) == 2 && countitem(1023) >= 10) {
+			delitem 1023,10; //Fish_Tail
+			callsub L_CompleteQuest,5074,
+				"Heh~ So, you brought 30 Phens and 10 Fish Tails, just as ordered.";
+		} else {
+			mes "[Cat Gamers Director]";
+			mes "Heh~ It says in the note to bring 30 Phens and 10 Fish Tails. Heh~ Maybe you didn't catch enough Phens, or forgot some Fish Tails? Heh~";
+			close;
+		}
+	} else if (checkquest(5075,HUNTING) > -1) {
+		mes "Heh~ Hmm, 50 Marses, and 30 Milk Bottles... Heh~";
+		next;
+		if (checkquest(5075,HUNTING) == 2 && countitem(519) >= 30) {
+			delitem 519,30; //Milk
+			callsub L_CompleteQuest,5075,
+				"Heh~ Guess they wanted some healthy food. Heh~ They should have just told me... Let me show you my skills. Heh~";
+		} else {
+			mes "[Cat Gamers Director]";
+			mes "Heh~ But, where are 50 Marses and 30 Milk Bottles? Heh~ Please see if you haven't missed them...";
+			close;
+		}
+	} else if (checkquest(5076,HUNTING) > -1) {
+		mes "Heh~ Our team must have some grudge over Team 'Dog n Waltz', enough to ask you for this kind of favor...";
+		next;
+		if (checkquest(5076,HUNTING) == 2) {
+			callsub L_CompleteQuest,5076,
+				"Heh~ So you have finished harassing 30 Kobold Archers as noted. Heh~ Outstanding.";
+		} else {
+			mes "[Cat Gamers Director]";
+			mes "Heh~ It says on the note, harass 30 Kobold Archers. Heh~ Please check if you have harassed 30 of them already.";
+			close;
+		}
+	} else if (checkquest(5077,HUNTING) > -1) {
+		mes "Heh~ Ah, quickness training. It's good to see our players trying their best on training.";
+		mes "Heh~ Yes, nothing is better than mouse catching for improving quickness.";
+		next;
+		if (checkquest(5077,HUNTING) == 2) {
+			callsub L_CompleteQuest,5077,
+				"Heh~ Oh, you got some fresh and chubby Cramps. Heh~ Great.";
+		} else {
+			mes "[Cat Gamers Director]";
+			mes "Heh? Where are those 10 Cramps you promised? Heh~ You didn't eat them... did you?";
+			close;
+		}
+	} else if (checkquest(5078,HUNTING) > -1) {
+		mes "Heh~ '50 Peco Peco please!! Let's party.' Hmm... Heh~ 50 Pecos can feed all of our neighbors.";
+		next;
+		if (checkquest(5078,HUNTING) == 2) {
+			callsub L_CompleteQuest,5078,
+				"Heh~ Wow, you did bring 50 Peco Pecos. Heh~ I guess we'll really have a party this evening.";
+		} else {
+			mes "[Cat Gamers Director]";
+			mes "Heh~ Where are those Peco Pecos? Still not ready? Heh~";
+			close;
+		}
+	} else if (checkquest(5079) > -1) {
+		mes "Heh~ Hmm... let me see... Heh~ That's right, I was worrying about our team getting so nervous before the actual game... But, they won't even talk to me about it.";
+		next;
+		if (countitem(7038) >= 20) {
+			delitem 7038,20; //Yarn
+			callsub L_CompleteQuest,5079,
+				"Heh~ How could I miss that? I shall give some to my team for sure.";
+		} else {
+			mes "[Cat Gamers Director]";
+			mes "Heh~ Where are those 20 yarns? It says 20 on the note, right...? Please check if you have lost them somewhere.";
+			close;
+		}
+	} else if (checkquest(5080) > -1) {
+		mes "Heh~ The note says, get me 30 Rat Tails for a snack.";
+		next;
+		if (countitem(1016) >= 30) {
+			delitem 1016,30; //Rat_Tail
+			callsub L_CompleteQuest,5080,
+				"Heh~ I think I've fed them good snacks... Didn't I? Lately I was little busy, they should have some patience... Heh~ Poor manager...";
+		} else {
+			mes "[Cat Gamers Director]";
+			mes "Heh~ Where are those 30 Rat Tails? Please check and come back later.";
+			close;
+		}
+	} else if (checkquest(5081) > -1) {
+		mes "Heh~ It says 5 on the note... 5 of what? What?! Lemons?";
+		next;
+		if (countitem(568) >= 5) {
+			delitem 568,5; //Lemon
+			callsub L_CompleteQuest,5081,
+				"Heh~ Lemon is forbidden before the actual game... heh? They won't eat it at game time, right? Heh~";
+		} else {
+			mes "[Cat Gamers Director]";
+			mes "Heh~ Let's just get 5 Lemons for them, will you? Heh~ I am still not sure where they want to use them...";
+			close;
+		}
+	} else if (checkquest(5082) > -1) {
+		mes "Heh~ Give us 10 Ice Pieces or 10 Ice Creams!! Heh~ I personally prefer Ice Cream, just so you know.";
+		next;
+		if (countitem(7066) >= 10) {
+			delitem 7066,10; //Ice_Piece
+			callsub L_CompleteQuest,5082,
+				"Heh~ Oh, you brought Ice Pieces. Heh~ The players will love it.";
+		} else if (countitem(536) >= 10) {
+			delitem 536,10; //Ice_Cream
+			callsub L_CompleteQuest,5082,
+				"Heh~ Oh, you brought Ice Creams. Heh~ The players will love it.";
+		} else {
+			mes "[Cat Gamers Director]";
+			mes "Heh~ Where are the Ice Pieces or Ice Creams? You should get them before they melt...";
+			close;
+		}
+	} else if (checkquest(5083) > -1 || checkquest(5084) > -1) {
+		mes "Heh~ Here, I found the note from our team. Heh~";
+		next;
+		if (checkquest(5083) > -1) {
+			mes "[Cat Gamers Director]";
+			mes "Heh~ It says 'We will meet Eryu together.'. Heh~ Have you met Eryu already? I don't think so... Heh~";
+			close;
+		} else {
+			callsub L_CompleteQuest,5084,
+				"Heh~ Oh, you did meet Eryu. Heh~ I will lecture them later for making you work too much... Heh~";
+		}
+	} else if (checkquest(5085) > -1 || checkquest(5086) > -1) {
+		mes "Heh~ Here, I found the note from our team. Heh~";
+		next;
+		if (checkquest(5085) > -1) {
+			mes "[Cat Gamers Director]";
+			mes "Heh~ It says 'We will meet Stew together.'. Heh~ Have you met Stew already? I don't think so... Heh~";
+			close;
+		} else {
+			callsub L_CompleteQuest,5086,
+				"Heh~ Oh, you did meet Stew. Heh~ I will lecture them later for making you work too much... Heh~";
+		}
+	} else if (checkquest(5087) > -1 || checkquest(5088) > -1) {
+		mes "Heh~ Here, I found the note from our team. Heh~";
+		next;
+		if (checkquest(5087) > -1) {
+			mes "[Cat Gamers Director]";
+			mes "Heh~ It says 'We will meet Ketchup together.'. Heh~ Have you met Ketchup already? I don't think so... Heh~";
+			close;
+		} else {
+			callsub L_CompleteQuest,5088,
+				"Heh~ Oh, you did meet Ketchup. Heh~ I will lecture them later for making you work too much... Heh~";
+		}
+	} else if (checkquest(5089) > -1 || checkquest(5090) > -1) {
+		mes "Heh~ Here, I found the note from our team. Heh~";
+		next;
+		if (checkquest(5089) > -1) {
+			mes "[Cat Gamers Director]";
+			mes "Heh~ It says 'We will meet Eff together.'. Heh~ Have you met Eff already? I don't think so... Heh~";
+			close;
+		} else {
+			callsub L_CompleteQuest,5090,
+				"Heh~ Oh, you did meet Eff. Heh~ I will lecture them later for making you work too much... Heh~";
+		}
+	}
+	mes "[Cat Gamers Director]";
+	mes "Heh?! There's no favor note for you, "+strcharinfo(0)+". Heh~ What do you want to report? Heh~";
+	close;
+
+// callsub L_CompleteQuest,<quest ID>,"<message>";
+L_CompleteQuest:
+	erasequest getarg(0);
+	getitem 12636,3; //Malang_Sp_Can
+	mes "[Cat Gamers Director]";
+	mes getarg(1);
+	next;
+	mes "[Cat Gamers Director]";
+	mes "Heh~ Thanks for coming by, "+strcharinfo(0)+". Heh~ Keep up the good work. Heh~";
+	emotion e_thx;
+	close;
+}
+
+malangdo,127,111,4	script	Strange Cat#gamer	547,{
+	if (MaxWeight - Weight < 1000) {
+		mes "Your inventory is too heavy to proceed. Come back after lightening your load.";
+		close;
+	}
+	if (checkweight(1201,1) == 0) {
+		mes "Your inventory is too full to proceed. Come back after reducing your load.";
+		close;
+	}
+	if (malang_gamer < 3) {
+		mes "[Strange Cat]";
+		mes "Meow~ Meo~ Ow Ow~ Meow Meo~ Eow Eow~";
+		next;
+		mes "Some strange cat is here.";
+		close;
+	} else if (malang_gamer == 3) {
+		mes "[Manager Cat]";
+		mes "Meow~ Meo~ Ow Ow~ Meow Meo~ Eow Eow~";
+		next;
+		mes "[Manager Cat]";
+		mes "What do you want?";
+		emotion e_what;
+		next;
+		set .@cat_gam, rand(1,10);
+		select("Ask about the team's attitude...");
+		if (.@cat_gam == 5) {
+			mes "[Manager Cat]";
+			mes "Do not lie to me! How can I trust you and reveal our team secret? Aren't you a spy from the doggy team?";
+			emotion e_ag;
+			next;
+			select("Aww, come on...");
+			mes "You play with a foxtail nearby and then ask again.";
+			next;
+			select("Cat Gamers Director says...");
+			mes "The Manager Cat seems to be interested in the foxtail and starts answering.";
+			emotion e_awsm;
+			next;
+			mes "[Manager Cat]";
+			mes "Players are afraid of the Cat Gamers Director. When they see Cat Gamers Director at the game, they get nervous.";
+			emotion e_lv;
+			next;
+			mes "[Manager Cat]";
+			mes "Can you give me that?";
+			set malang_gamer,4;
+			erasequest 5058;
+			setquest 5059;
+			next;
+			mes "You hand the foxtail to the Manager Cat. Go back to the Cat Gamers Director.";
+			close;
+		} else {
+			mes "[Manager Cat]";
+			mes "Don't lie to me!";
+			mes "Why should I trust you,";
+			mes "and give our team information?";
+			mes "Aren't you a spy from doggy team...?";
+			mes "Go away.";
+			emotion e_ag;
+			next;
+			mes "This cat might hit you.";
+			close;
+		}
+	} else if (malang_gamer < 8) {
+		mes "The Manager Cat is playing with the foxtail you gave him.";
+		mes "He seems to be liking it...";
+		emotion e_lv;
+		close;
+	} else if (malang_gamer == 8) {
+		mes "The Manager Cat is playing with the foxtail you gave him.";
+		mes "He seems to be liking it...";
+		emotion e_lv;
+		next;
+		switch(select("Help~ Fire~:Hey~!:Do you want to hear something?")) {
+		case 1:
+			mes "[Manager Cat]";
+			mes "Don't lie~ We don't use fire that much~";
+			emotion e_an;
+			next;
+			break;
+		case 2:
+			mes "The Manager Cat ignores you, and keeps on playing with the foxtail.";
+			emotion e_lv;
+			close;
+		case 3:
+			mes "[Manager Cat]";
+			mes "Meow~ I want to tell you a story~ Follow me meow~ Let talk over there, meow~";
+			emotion e_gg;
+			next;
+			break;
+		}
+		mes "["+strcharinfo(0)+"]";
+		mes "Haha, I was just kidding. I actually need to tell you that the Cat Gamers Director has an issue...";
+		emotion e_swt2,1;
+		next;
+		mes "You explain the story to the Manager Cat.";
+		emotion e_swt2,1;
+		next;
+		mes "[Manager Cat]";
+		mes "Scary image... Meow, I understand... Cat Gamers Director should feel peace by giving up things.";
+		emotion e_hmm;
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "... ... ...";
+		emotion e_dots,1;
+		next;
+		mes "[Manager Cat]";
+		mes "Meow! Go tell him this, meow~ Prepare a box, meow~";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "A box?";
+		emotion e_what,1;
+		next;
+		mes "[Manager Cat]";
+		mes "Petition it is, meow!! There is some place where humans do such things, I think it will help us~";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Ok, I will go tell it to the Games Director~";
+		emotion e_ok,1;
+		set malang_gamer,9;
+		erasequest 5066;
+		setquest 5067;
+		close;
+	} else if (malang_gamer == 9) {
+		mes "[Manager Cat]";
+		mes "You tell the Cat Gamers Director to prepare a Box for sure!~ I will tell this to my team, meow.";
+		close;
+	} else if (malang_gamer == 10) {
+		mes "[Manager Cat]";
+		mes "The players are excited and writing a bunch of things for the petition box... I wonder what they are writing.";
+		close;
+	} else if (malang_gamer == 11) {
+		mes "[Manager Cat]";
+		mes "You won't help practice? If you help, the Cat Gamers Director will give you food cans... Please reconsider!";
+		close;
+	} else if (malang_gamer == 12) {
+		mes "[Manager Cat]";
+		mes "Meow~ Aren't you "+strcharinfo(0)+"? I heard Cat Gamers Director ordered a special certificate, meow~";
+		next;
+		mes "[Manager Cat]";
+		mes "When practicing, you must equip the '^0000FFCat Gamers Certificate^000000' item~ Don't forget, meow~";
+		close;
+	} else if (malang_gamer == 20) {
+		// fall through
+	} else {
+		mes "[Manager Cat]";
+		mes "This is not possible. Please contact an administrator.";
+		close;
+	}
+	mes "[Manager Cat]";
+	mes "What do you want meow?";
+	next;
+	switch(select("Hi.:Any news?:Help me with playing.")) {
+	case 1:
+		mes "[Manager Cat]";
+		mes "Oh, hi meow~";
+		emotion e_heh;
+		close;
+	case 2:
+		switch(rand(1,7)) {
+		case 1:
+			mes "[Manager Cat]";
+			mes "I tell you this meow~ You don't know Cat Gamers Director's feeling meow~.";
+			next;
+			mes "[Manager Cat]";
+			mes "lol? >> Curious, Admire";
+			mes "Heh~ >> Normal";
+			mes "lol Heh~ >> Happy";
+			mes "lol lol Heh~ >> Crazy meow";
+			emotion e_ok;
+			close;
+		case 2:
+			mes "[Manager Cat]";
+			mes "But, why are you asking me meow? Strange meow...";
+			close;
+		case 3:
+			mes "[Manager Cat]";
+			mes "Some cats use 'meow meow' like me when talking, but some don't.";
+			close;
+		case 4:
+			mes "[Manager Cat]";
+			mes "Cats don't have an honorific phrase, so don't get us wrong as looking down on you meow.~";
+			close;
+		case 5:
+			mes "[Manager Cat]";
+			mes "You should walk around many places and ask for information meow... But, don't bother me please meow~";
+			close;
+		case 6:
+		case 7:
+			mes "[Manager Cat]";
+			mes "No easy way for that... I just breathe meow...";
+			close;
+		}
+	case 3:
+		mes "[Manager Cat]";
+		mes "What game do you want to play?";
+		mes "'Cat Gamers' has players for 4 types of games meow~";
+		mes "The Cat Gamers Director said he will challenge other games later~";
+		next;
+		switch(select("Rock Paper Scissors:KongNyangKong:ChamChamCham:Flag Game")) {
+		case 1:
+			mes "[Manager Cat]";
+			mes "Rock Paper Scissors meow? Nothing special...";
+			next;
+			mes "[Manager Cat]";
+			mes "Scissor beats Paper, meow.";
+			mes "Rock beats Scissors, meow.";
+			mes "Paper beats Rock, meow.";
+			mes "These are basic rules.";
+			next;
+			mes "[Manager Cat]";
+			mes "You play 5 Rock Paper Scissors games with player cats meow.";
+			mes "You play again when you are even meow.";
+			next;
+			mes "[Manager Cat]";
+			mes "You can get a present after 3 times of winning meow.";
+			mes "And you get a big present when you win all 5 matches, meow!!";
+			next;
+			mes "[Manager Cat]";
+			mes "Find Paa or Ser if you want to play the Rock Paper Scissors game.";
+			close;
+		case 2:
+			mes "[Manager Cat]";
+			mes "KongNyangKong is not an easy game meow.";
+			next;
+			mes "[Manager Cat]";
+			mes "When attacking, face your hand the same direction as the opponent meow.";
+			next;
+			mes "[Manager Cat]";
+			mes "When defending, you should face your hand the opposite direction from the opponent meow.";
+			next;
+			mes "[Manager Cat]";
+			mes "If the attack is a success, you can keep on attacking.";
+			mes "But, if you fail, you have to defend meow.";
+			next;
+			mes "[Manager Cat]";
+			mes "If you be careful, you can win without getting hit at all meow.";
+			next;
+			mes "[Manager Cat]";
+			mes "Once you make your opponent's HP 0, you win meow.";
+			mes "Of course there will be a present meow.";
+			mes "Good luck meow.";
+			next;
+			mes "[Manager Cat]";
+			mes "Oh~ right meow~!! Find KungKung if you want to play KongNyangKong.";
+			close;
+		case 3:
+			mes "[Manager Cat]";
+			mes "ChamChamCham is a high level mind game meow.";
+			next;
+			mes "[Manager Cat]";
+			mes "The rules are simple, but you need to think a lot meow.";
+			next;
+			mes "[Manager Cat]";
+			mes "You should direct your hand to where the cat turns its face meow.";
+			next;
+			mes "[Manager Cat]";
+			mes "A present is given for 3 wins in a row meow.";
+			mes "The more wins, the more presents meow.";
+			next;
+			mes "[Manager Cat]";
+			mes "Kuka is smart, and remembers players with many wins meow.";
+			mes "There will be more presents when you take 1st place meow.";
+			close;
+		case 4:
+			mes "[Manager Cat]";
+			mes "Flag Game is way harder than ChamChamCham game meow.";
+			mes "Really~ Really~ Really~";
+			mes "hard mind game meow.";
+			mes "It's 1,000 times harder meow.";
+			next;
+			mes "[Manager Cat]";
+			mes "You get 5 Flag Point when starting meow.";
+			mes "1 point goes away when you wave the flag once meow.";
+			next;
+			mes "[Manager Cat]";
+			mes "You win the game when no other cats are waving flags meow.";
+			next;
+			mes "[Manager Cat]";
+			mes "You can predict if other cats will wave their flags or not meow.";
+			mes "By looking at their actions meow.";
+			next;
+			mes "[Manager Cat]";
+			mes "You must win to get presents meow.";
+			mes "You will get more presents since this is hard game meow~";
+			next;
+			mes "[Manager Cat]";
+			mes "If you want to play Flag Game meow~";
+			mes "Go find the other manager cat who is trying to get the Referee Certificate meow.";
+			close;
+		}
+	}
+}
+
+malangdo,161,197,4	script	Eryu#gamer	876,{
+	if (MaxWeight - Weight < 1000) {
+		mes "Your inventory is too heavy to proceed. Come back after lightening your load.";
+		close;
+	}
+	if (checkweight(1201,1) == 0) {
+		mes "Your inventory is too full to proceed. Come back after reducing your load.";
+		close;
+	}
+	if (checkquest(5061) == 0 || checkquest(5061) == 1) {
+		if (checkquest(5062) == -1) {
+			mes "You found Eryu the cat, and start talking.";
+			next;
+			mes "[Eryu]";
+			mes "Umm... Who are you?";
+			next;
+			switch(select("The Games Director sent me.:I am a writer for the 'Human' magazine.:Who are you?")) {
+			case 1:
+				mes "[Eryu]";
+				mes "Arrgg. Go away...";
+				mes "I don't know who you're talking about.";
+				emotion e_an;
+				break;
+			case 2:
+				mes "[Eryu]";
+				mes "Umm? 'Human' magazine?";
+				mes "Is there such a thing?";
+				emotion e_what;
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "We've been publishing for 10 years.";
+				mes "But, I guess it is possible for cats to not know who we are.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "We are a really famous magazine throughout the World!";
+				mes "Don't you believe me?";
+				next;
+				mes "[Eryu]";
+				mes "Hmm... ok. But, what can I do for you?";
+				emotion e_what;
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "I am in the middle of writing an article named 'Game Playing Cats'...'";
+				mes "It is a special piece for me.";
+				mes "And some team named umm... do... umm... wal... not sure...";
+				next;
+				mes "[Eryu]";
+				mes "'Dog n Waltz'?";
+				emotion e_what;
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Oh! Yes!";
+				mes "One of players there 'Dog n Waltz' has recommended Eryu for an interview.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "He says you are a really good player who can help me with the article.";
+				next;
+				mes "[Eryu]";
+				mes "I don't remember anyone from 'Dog n Waltz' that much.";
+				emotion e_dots;
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "The person isn't important.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Just answer a few questions for me, ok?";
+				mes "Be yourself and you'll do just fine.";
+				mes "Ok, first question: How much do you practice a day?";
+				emotion e_what,1;
+				next;
+				mes "[Eryu]";
+				mes "Usually for about 8 hours, but I have to tell you that I'm not on the team anymore...";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Wait, what?";
+				mes "You are not with the team now? How come...?";
+				emotion e_omg,1;
+				next;
+				mes "[Eryu]";
+				mes "Well...";
+				mes "The Director Cat was too scary...";
+				mes "I was very sick and had to take a day off...";
+				mes "Just one freaking day...";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "And...?";
+				next;
+				mes "[Eryu]";
+				mes "And then the Director Cat was raging at me!";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Hmm, sounds pretty rough.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "'Cat Gamers' has lost another great player.";
+				mes "I'm sorry to hear that you're not on the team anymore.";
+				mes "I guess this is the end of the interview.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Because this is for current players only.";
+				next;
+				mes "[Eryu]";
+				mes "Oh...";
+				mes "Sorry to make you waste your time.";
+				emotion e_sry;
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Oh, don't worry.";
+				mes "I should say sorry for taking up your precious time.";
+				mes "Have a nice day.";
+				next;
+				mes "You found out the reason why Eryu left the team.";
+				mes "Time to go find the other cats.";
+				setquest 5062;
+				completequest 5062;
+				break;
+			case 3:
+				mes "[Eryu]";
+				mes "Yes, I am Eryu! What do you want, huh, meow~";
+				break;
+			}
+			close2;
+		} else if (checkquest(5062) == 2) {
+			mes "[Eryu]";
+			mes "Aren't you the magazine writer?";
+			mes "What brings you here again...?";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Ah!";
+			mes "Sorry, I was trying to interview another cat...";
+			mes "And came back to you by mistake.";
+			mes "I'm sorry.";
+			emotion e_sry,1;
+			next;
+			mes "[Eryu]";
+			mes "Ah... I see. Take care of yourself.";
+			close2;
+		} else {
+			mes "[Eryu]";
+			mes "This is not possible. Please contact an administrator.";
+			close2;
+		}
+	} else if (checkquest(5083) == 0 || checkquest(5083) == 1) {
+		mes "[Eryu]";
+		mes "Who are you?";
+		next;
+		mes "What do you want to say?";
+		next;
+		input .@inputstr$;
+		if (.@inputstr$ == "Come back") {
+			erasequest 5083;
+			setquest 5084;
+			set .@str$, "You've delivered the message, so let's get away.";
+		} else
+			set .@str$, "You didn't deliver the right message, but let's still get away.";
+		mes "[Eryu]";
+		mes "What is this? What do you mean by '"+.@inputstr$+"'...?";
+		mes "Ah... aren't you the writer?";
+		emotion e_an;
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Huh... Who is that..?";
+		next;
+		mes "Eryu seems to recognize you.";
+		mes .@str$;
+		close2;
+	} else if (checkquest(5084) == 0 || checkquest(5084) == 1) {
+		mes "[Eryu]";
+		mes "I think you are the writer...";
+		mes "Hey~ Stop there~";
+		next;
+		mes "You've been found. Let's get away.";
+		close2;
+	} else {
+		if (malang_gamer < 6) {
+			mes "[Eryu]";
+			mes "Dirty 'Cat Gamers'!";
+			mes "I won't go back ever... Who are you?";
+			next;
+			mes "This cat might hit you. Let's get away.";
+			close2;
+		} else {
+			mes "[Eryu]";
+			mes "Aren't you the writer?";
+			emotion e_what;
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Huh... Who is that..?";
+			next;
+			mes "Eryu seems to recognize you. Let's get away.";
+			close2;
+		}
+	}
+	donpcevent "Eryu#gamer::OnDisable";
+	end;
+OnEnable:
+	enablenpc "Eryu#gamer";
+	disablenpc "Stew#gamer";
+	disablenpc "Ketchup#gamer";
+	disablenpc "Eff#gamer";
+	end;
+OnDisable:
+	switch(rand(3)) {
+	case 0:
+		donpcevent "Stew#gamer::OnEnable";
+		break;
+	case 1:
+		donpcevent "Ketchup#gamer::OnEnable";
+		break;
+	case 2:
+		donpcevent "Eff#gamer::OnEnable";
+		break;
+	}
+	end;
+}
+
+malangdo,230,197,4	script	Stew#gamer	555,{
+	if (MaxWeight - Weight < 1000) {
+		mes "Your inventory is too heavy to proceed. Come back after lightening your load.";
+		close;
+	}
+	if (checkweight(1201,1) == 0) {
+		mes "Your inventory is too full to proceed. Come back after reducing your load.";
+		close;
+	}
+	if (checkquest(5061) == 0 || checkquest(5061) == 1) {
+		if (checkquest(5063) == -1) {
+			mes "You found Stew the cat, and start talking.";
+			next;
+			mes "[Stew]";
+			mes "Meow...? Who are you, meow?";
+			emotion e_what;
+			next;
+			switch(select("The 'Cat Gamers' Manager sent me.:Meow~ Grrr~:I'm with the 'Boom Can' Company.")) {
+			case 1:
+				mes "[Stew]";
+				mes "Stew is not interested meow.";
+				mes "Don't come back again meow~";
+				break;
+			case 2:
+				mes "[Stew]";
+				mes "Stew doesn't have time for crazy people.";
+				break;
+			case 3:
+				mes "[Stew]";
+				mes "'Boom Can' Company, meow?";
+				emotion e_what;
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "You don't know 'Boom Can' food?";
+				mes "You don't eat canned food at all?";
+				mes "Then, I came to the wrong cat.";
+				next;
+				mes "[Stew]";
+				mes "Yes meow~ Stew likes canned food very much meow~";
+				emotion e_lv;
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Ah! Ok then.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "We, the 'Boom Can' Company, have been servicing for over 10 years, so we are doing a survey for better food production.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Let me ask a few questions.";
+				mes "It is very easy.";
+				next;
+				mes "[Stew]";
+				mes "Ok meow~ Go ahead meow~";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Thank you! We were right about out cat customers with big hearts.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "I met dog customers last week and they didn't answer me at all...";
+				mes "And they were so rude~ You know.";
+				next;
+				mes "[Stew]";
+				mes "Dogs are natually like that~";
+				mes "You humans know animals~";
+				emotion e_ok;
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Thank you! I'm flattered.~";
+				mes "Ok, let me ask you a few things.";
+				mes "What is your job?";
+				next;
+				mes "[Stew]";
+				mes "Job meow? Stew was a pro gamer meow~";
+				mes "But, Stew quit now meow~";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Well, how did that happen?";
+				mes "You seem to have good skills.";
+				mes "Fast and big hearted, its a pity that you quit already.";
+				next;
+				mes "[Stew]";
+				mes "Meow~ Meow~ Meow~ Yes, Stew was something meow.";
+				mes "If it was not for that Cat Gamers Director scaring me, Stew would still be playing meow~";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "What a bad Director.";
+				next;
+				mes "[Stew]";
+				mes "Not that bad actually meow~";
+				mes "Sometimes.. Stew gets very tired meow.";
+				mes "So, Stew takes it easy while practicing meow.";
+				next;
+				mes "[Stew]";
+				mes "Then the Cat Gamers Director started to get angry and scary meow.";
+				mes "So I quit meow.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Ah! I see.";
+				mes "Ok, the survey is over now.";
+				mes "Thank you for your opinion on our survey for the 'Boom Can' company.";
+				emotion e_thx,1;
+				next;
+				mes "[Stew]";
+				mes "Meow? Did you aks anything meow?";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "I already asked you everything...";
+				mes "Don't you remember?";
+				mes "There were 10 questions!";
+				emotion e_what,1;
+				next;
+				mes "[Stew]";
+				mes "Really meow? Strange meow.";
+				mes "Sorry meow? Don't remember meow.";
+				mes "It didn't felt like an interview meow.";
+				emotion e_sry;
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Well you did way better than those dogs.";
+				mes "I don't even want to think about them~ Phew~..";
+				mes "I should get going now.";
+				mes "Have a great day.";
+				next;
+				mes "[Stew]";
+				mes "Really meow? Dogs are always like that meow.";
+				mes "Cats are winners meow~";
+				mes "Ok meow~ Good bye meow~";
+				next;
+				mes "You found out the reason why Stew left the team.";
+				mes "Let's find the other cats.";
+				setquest 5063;
+				completequest 5063;
+				break;
+			}
+			close2;
+		} else if (checkquest(5063) == 2) {
+			mes "[Stew]";
+			mes "Aren't you from the 'Boom Can' Company?";
+			mes "Another survey meow?";
+			emotion e_what;
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Oops! I should be meeting other cats.";
+			mes "I am very sorry...";
+			emotion e_sry,1;
+			next;
+			mes "[Stew]";
+			mes "It's ok meow~ Good bye meow~";
+			close2;
+		} else {
+			mes "[Stew]";
+			mes "This is not possible. Please contact an administrator.";
+			close2;
+		}
+	} else if (checkquest(5085) == 0 || checkquest(5085) == 1) {
+		mes "[Stew]";
+		mes "Who are you meow?";
+		emotion e_what;
+		next;
+		mes "What do you want to say?";
+		next;
+		input .@inputstr$;
+		if (.@inputstr$ == "Come back") {
+			erasequest 5085;
+			setquest 5086;
+			set .@str$, "You've delivered the message, so let's get away.";
+		} else
+			set .@str$, "You didn't deliver the right message, but let's still get away.";
+		mes "[Stew]";
+		mes "What is this? What do you mean by '"+.@inputstr$+"'? Meow...";
+		mes "And... Aren't you from the 'Boom Can' Company, meow?";
+		emotion e_what;
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Huh? What's that?";
+		next;
+		mes "Stew seems to recognize you.";
+		mes .@str$;
+		close2;
+	} else if (checkquest(5086) == 0 || checkquest(5086) == 1) {
+		mes "[Stew]";
+		mes "I think you are from the 'Boom Can' Company, meow... Who are you, meow~";
+		next;
+		mes "Stew seems to recognize you. Let's get away.";
+		close2;
+	} else {
+		if (malang_gamer < 6) {
+			mes "[Stew]";
+			mes "Meow Meow~ Good bye to 'Cat Gamer's meow~ Who are you meow?";
+			next;
+			mes "This cat might hit you. Let's get away.";
+			close2;
+		} else {
+			mes "[Stew]";
+			mes "The 'Boom Can' Company!!";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Huh? What's that?";
+			next;
+			mes "Stew seems to recognize you. Let's get away.";
+			close2;
+		}
+	}
+	donpcevent "Stew#gamer::OnDisable";
+	end;
+OnInit:
+	disablenpc "Stew#gamer";
+	end;
+OnEnable:
+	disablenpc "Eryu#gamer";
+	enablenpc "Stew#gamer";
+	disablenpc "Ketchup#gamer";
+	disablenpc "Eff#gamer";
+	end;
+OnDisable:
+	switch(rand(3)) {
+	case 0:
+		donpcevent "Eryu#gamer::OnEnable";
+		break;
+	case 1:
+		donpcevent "Ketchup#gamer::OnEnable";
+		break;
+	case 2:
+		donpcevent "Eff#gamer::OnEnable";
+		break;
+	}
+	end;
+}
+
+malangdo,244,144,4	script	Ketchup#gamer	546,{
+	if (MaxWeight - Weight < 1000) {
+		mes "Your inventory is too heavy to proceed. Come back after lightening your load.";
+		close;
+	}
+	if (checkweight(1201,1) == 0) {
+		mes "Your inventory is too full to proceed. Come back after reducing your load.";
+		close;
+	}
+	if (checkquest(5061) == 0 || checkquest(5061) == 1) {
+		if (checkquest(5064) == -1) {
+			mes "You found Ketchup the cat, and start talking.";
+			next;
+			mes "[Ketchup]";
+			mes "Meow...? Who are you?";
+			emotion e_what;
+			next;
+			switch(select("Grrr~ Bow wow~:The Game Director cat sent me.:I'm from 'Cans for Kittens'.")) {
+			case 1:
+				mes "[Ketchup]";
+				mes "What the dog? Hiss~";
+				break;
+			case 2:
+				mes "[Ketchup]";
+				mes "Get away from me, human, before I get really angry~";
+				break;
+			case 3:
+				mes "[Ketchup]";
+				mes "Oh yeah? 'Cans for Kittens'?";
+				emotion e_what;
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "I want to share some of our philosophy with you.";
+				mes "Do you believe in giving to others?";
+				emotion e_what,1;
+				next;
+				mes "[Ketchup]";
+				mes "Umm I guess so...";
+				emotion e_slur;
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "'Cans for Kittens' is a religion that embraces all felines.";
+				mes "Bow before the Lord of Cans!";
+				next;
+				mes "[Ketchup]";
+				mes "...";
+				next;
+				mes "[Ketchup]";
+				mes "...";
+				mes "......";
+				next;
+				mes "[Ketchup]";
+				mes "...";
+				mes "......";
+				mes ".........";
+				mes "What's the Lord of Cans?";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Your name is Ketchup, right? Don't you know about the Lord of Cans?";
+				mes "He knows everything.";
+				mes "Do not try to fool him and bow!";
+				next;
+				mes "[Ketchup]";
+				mes "Meow?! How can you know my name? Wow...";
+				next;
+				mes "[Ketchup]";
+				mes "I am sorry. Really sorry.";
+				mes "Please forgive me Lord of Cans.";
+				emotion e_sob;
+				next;
+				mes "[Ketchup]";
+				mes "That Director Cat was so scary~!";
+				mes "I said so many bad things when I left the Cat Gamers...";
+				mes "Please forgive.";
+				emotion e_sob;
+				next;
+				emotion e_dots;
+				emotion e_dots,1;
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "The Lord of Cans forgives Ketchup's sins.";
+				mes "Our Lord also wants you to stop swearing and live an honest life!";
+				next;
+				mes "[Ketchup]";
+				mes "Thank you Lord of Cans.";
+				mes "I will live a kind cat life from this point on.";
+				next;
+				mes "You found out why did Ketchup left the Cat gamers.";
+				mes "Let's look for the other cats.";
+				setquest 5064;
+				completequest 5064;
+				break;
+			}
+			close2;
+		} else if (checkquest(5064) == 2) {
+			mes "[Ketchup]";
+			mes "You are...";
+			emotion e_omg;
+			next;
+			mes "Ketchup gives you an apologetic look and runs away.";
+			mes "He probably did something bad already.";
+			close2;
+		} else {
+			mes "[Ketchup]";
+			mes "This is not possible. Please contact an administrator.";
+			close2;
+		}
+	} else if (checkquest(5087) == 0 || checkquest(5087) == 1) {
+		mes "[Ketchup]";
+		mes "Who are you?";
+		emotion e_what;
+		next;
+		mes "What do you want to say?";
+		next;
+		input .@inputstr$;
+		if (.@inputstr$ == "Come back") {
+			erasequest 5087;
+			setquest 5088;
+			mes "[Ketchup]";
+			mes "What is this? What do you mean by 'Come back'...?";
+			mes "Can... 'Cans for Kittens'?";
+			emotion e_omg;
+			emotion e_what;
+			next;
+			mes "Ketchup recognized you and ran away.";
+			mes "You've delivered the message.";
+			close2;
+		} else {
+			mes "[Ketchup]";
+			mes "What is this? What do you mean by '"+.@inputstr$+"'...?";
+			mes "Can... 'Cans for Kittens'?";
+			emotion e_omg;
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Huh? What's that?";
+			next;
+			mes "Ketchup recognized you and ran away.";
+			mes "It seems you need to find Ketchup one more time.";
+			close2;
+		}
+	} else if (checkquest(5088) == 0 || checkquest(5088) == 1) {
+		mes "[Ketchup]";
+		mes "Can... 'Cans for Kittens'?";
+		emotion e_omg;
+		next;
+		mes "Ketchup ran away once again.";
+		close2;
+	} else {
+		if (malang_gamer < 6) {
+			mes "[Ketchup]";
+			mes "Dirty 'Cat Gamers'!";
+			mes "I will never come back, for sure... Who are you?";
+			next;
+			mes "This cat might hit you. Let's get away.";
+			close2;
+		} else {
+			mes "[Ketchup]";
+			mes "Can... 'Cans for Kittens'?";
+			next;
+			mes "Ketchup ran away.";
+			close2;
+		}
+	}
+	donpcevent "Ketchup#gamer::OnDisable";
+	end;
+OnInit:
+	disablenpc "Ketchup#gamer";
+	end;
+OnEnable:
+	disablenpc "Eryu#gamer";
+	disablenpc "Stew#gamer";
+	enablenpc "Ketchup#gamer";
+	disablenpc "Eff#gamer";
+	end;
+OnDisable:
+	switch(rand(3)) {
+	case 0:
+		donpcevent "Stew#gamer::OnEnable";
+		break;
+	case 1:
+		donpcevent "Eryu#gamer::OnEnable";
+		break;
+	case 2:
+		donpcevent "Eff#gamer::OnEnable";
+		break;
+	}
+	end;
+}
+
+malangdo,181,119,7	script	Eff#gamer	560,{
+	if (MaxWeight - Weight < 1000) {
+		mes "Your inventory is too heavy to proceed. Come back after lightening your load.";
+		close;
+	}
+	if (checkweight(1201,1) == 0) {
+		mes "Your inventory is too full to proceed. Come back after reducing your load.";
+		close;
+	}
+	if (checkquest(5061) == 0 || checkquest(5061) == 1) {
+		if (checkquest(5065) == -1) {
+			mes "You found Eff the cat, and start talking.";
+			next;
+			mes "[Eff]";
+			mes "Who are you meow?";
+			emotion e_what;
+			next;
+			switch(select("I have some good investment news...:A... Cat?:The 'Cat Gamers' Director sent me...")) {
+			case 1:
+				mes "[Eff]";
+				mes "Investment info? Meow~?";
+				mes "What is that? Meow~?";
+				emotion e_what;
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Interested, huh?";
+				mes "This is classified information.";
+				mes "You won't get it from any other human.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Haha! You are lucky today.";
+				mes "You heard that land can be a good investment, right?";
+				emotion e_what,1;
+				next;
+				mes "[Eff]";
+				mes "Oh oh~ I think so. Meow~";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "You do know about our capital Prontera, don't you?";
+				next;
+				mes "[Eff]";
+				mes "Prontera meow? Yes, I know about it. Meow~";
+				emotion e_heh;
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "There are some locations where";
+				mes "Prontera kingdom is secretly selling...";
+				next;
+				mes "[Eff]";
+				mes "And... And...?? Meow~";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Hmm, this is top secret.";
+				mes "Something that must not be revealed at all...";
+				mes "Can you really keep this secret...?";
+				emotion e_what,1;
+				next;
+				mes "[Eff]";
+				mes "Well... I've always been known for being a good keeper of secrets meow.";
+				mes "Meow~ Don't worry at all. Meow~";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Ok, I believe you, Eff...";
+				mes "Please keep this a secret.";
+				next;
+				mes "[Eff]";
+				mes "I got it. Meow~";
+				emotion e_ok;
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Well, I heard that there is a location in Juno where underground big shots will be investing about 10,000,000,000 zeny.";
+				mes "And it is now available for pre-investment.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "If you invest in 1 Can food here, the outcome will be enormous.";
+				next;
+				mes "[Eff]";
+				mes "Enor... mous... meow...?";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "100 Cans!!";
+				mes "You will get 100 cans for investing just 1 can food!";
+				mes "The profit will be X100! X100!!";
+				next;
+				mes "[Eff]";
+				mes "Woot!! 100 Cans~ Meow~";
+				emotion e_omg;
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "So, how many cans do you want to invest?";
+				mes "You'll be a part owner so make sure to invest the max that you can afford.";
+				emotion e_what,1;
+				next;
+				mes "[Eff]";
+				mes "I want to invest.";
+				mes "But, I don't have cans with me. Meow~";
+				emotion e_sob;
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "You can always get a loan!!";
+				mes "This a like 100 times result for sure!!";
+				mes "How can you loose a chance like this?";
+				mes "You should do whatever it takes!";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "You know what..? They say some careers like pro gamers can get solid loans.";
+				mes "Like about 1,000 can loan at once.";
+				mes "Without a high interest rate!";
+				next;
+				mes "[Eff]";
+				mes "Meow!! 1... 1,000...";
+				mes "Moew~ I am a Pro Gamer.";
+				mes "Meow~ But, I quit~ Meow~";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "What!! Why would you quit such good a gig!! Are you crazy?";
+				emotion e_omg,1;
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Let's say we invest 1,000 cans after getting that loan.";
+				mes "One, Ten, Hundred, Tousand. Woot!";
+				mes "I can't believe this.";
+				mes "The result will be 100,000 cans, 100,000!!";
+				next;
+				mes "[Eff]";
+				mes "1... 100,000 cans... Meow~";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "So tell me... Why did you quit such a great job?";
+				mes "Why?";
+				next;
+				mes "[Eff]";
+				mes "I was afraid of the Director Cat there...";
+				mes "Meow~ This one time, I had to take a sick day.";
+				mes "Meow~ And I haven't seen such scary cat my entire life...";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "So you quit because Cat Gamers Director was so scary. Hmm, sorry but I can't let you in on this investment...";
+				mes "I guess... What a waste of time!";
+				mes "Good bye!";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Oh and don't tell anyone what I just told you!";
+				mes "Bye~";
+				next;
+				mes "You found out why Eff has left the team.";
+				mes "Now, let's find the other cats.";
+				setquest 5065;
+				completequest 5065;
+				break;
+			case 2:
+				mes "[Eff]";
+				mes "Yes. I am a cat.";
+				mes "Meow~ Do you think I am a dog?";
+				mes "Meow~ You are a strange human. Meow~";
+				break;
+			case 3:
+				mes "[Eff]";
+				mes "Seeing as this is like the first time I met you.";
+				mes "I'll forgive you today. Meow.";
+				mes "Meow~ Don't even think about bringing up that name to me again...";
+				break;
+			}
+			close2;
+		} else if (checkquest(5065) == 2) {
+			mes "[Eff]";
+			mes "You are--!!";
+			mes "Meow~ I want to invest. Meow~";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Not without the cans you can't!!";
+			mes "You didn't tell anyone about this deal, right?";
+			next;
+			mes "[Eff]";
+			mes "I didn't. Meow~";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Ok, good cat! Never!!";
+			mes "Tell this to other cats!~";
+			mes "Bye Bye~";
+			close2;
+		} else {
+			mes "[Eff]";
+			mes "This is not possible. Please contact an administrator.";
+			close2;
+		}
+	} else if (checkquest(5089) == 0 || checkquest(5089) == 1) {
+		mes "[Eff]";
+		mes "Who are you, meow?";
+		next;
+		mes "What do you want to say?";
+		next;
+		input .@inputstr$;
+		if (.@inputstr$ == "Come back") {
+			erasequest 5089;
+			setquest 5090;
+			set .@str$, "You've delivered the message, so let's get away.";
+		} else
+			set .@str$, "You didn't deliver the right message, but let's still get away.";
+		mes "[Eff]";
+		mes "What is this? What do you mean by '"+.@inputstr$+"'? Meow...";
+		mes "Meow...? Meow! You! Investor meow?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Huh? Who...?";
+		next;
+		mes "Eff seems to recognize you.";
+		mes .@str$;
+		close2;
+	} else if (checkquest(5090) == 0 || checkquest(5090) == 1) {
+		mes "[Eff]";
+		mes "You are--!!";
+		mes "Meow~ I want to invest. Meow~";
+		next;
+		mes "Eff seems to recognize you, so let's get away.";
+		close2;
+	} else {
+		if (malang_gamer < 6) {
+			mes "[Eff]";
+			mes "Meow Meow~ 'Cat Gamers' can say good bye to me, meow.";
+			mes "Meow... Who are you meow?";
+			next;
+			mes "This cat might hit you. Let's get away.";
+			close2;
+		} else {
+			mes "[Eff]";
+			mes "Meow~ I want to invest. Meow~";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Huh? Who...?";
+			next;
+			mes "Eff seems to recognize you, so let's get away.";
+			close2;
+		}
+	}
+	donpcevent "Eff#gamer::OnDisable";
+	end;
+OnInit:
+	disablenpc "Eff#gamer";
+	end;
+OnEnable:
+	disablenpc "Eryu#gamer";
+	disablenpc "Stew#gamer";
+	disablenpc "Ketchup#gamer";
+	enablenpc "Eff#gamer";
+	end;
+OnDisable:
+	switch(rand(3)) {
+	case 0:
+		donpcevent "Stew#gamer::OnEnable";
+		break;
+	case 1:
+		donpcevent "Ketchup#gamer::OnEnable";
+		break;
+	case 2:
+		donpcevent "Eryu#gamer::OnEnable";
+		break;
+	}
+	end;
+}
+
+mal_in01,91,216,4	script	Ser#gamer	544,{
+	if (MaxWeight - Weight < 1000) {
+		mes "Your inventory is too heavy to proceed. Come back after lightening your load.";
+		close;
+	}
+	if (checkweight(1201,1) == 0) {
+		mes "Your inventory is too full to proceed. Come back after reducing your load.";
+		close;
+	}
+	for(set .@i,5074; .@i<=5090; set .@i,.@i+1) {
+		if (checkquest(.@i) > -1) {
+			mes "[Ser]";
+			mes "Hey, ^0000FF"+strcharinfo(0)+"^000000. You haven't done what we asked you for. A promise is a promise, you know.";
+			next;
+			mes "[Ser]";
+			mes "Ah!! When you are done, please get checked by the Cat Gamers Director over there.";
+			close;
+		}
+	}
+	if (malang_gamer < 20) {
+		if (countitem(2872)) {
+			mes "[Ser]";
+			mes "You seem like a first timer! Where did you get the certificate? Someone lost it, I guess.";
+			close;
+		}
+		mes "[Ser]";
+		mes "Rock Paper Scissors is a serious game. When will our practicing partner come?";
+		close;
+	}
+	if (!isequipped(2872)) {
+		mes "[Ser]";
+		mes "Oh, ^0000FF"+strcharinfo(0)+"^000000? Want to play the Rock Paper Scissors game?";
+		next;
+		mes "[Ser]";
+		mes "... ... ...";
+		next;
+		mes "[Ser]";
+		mes "Where is your Cat Gamers Certificate? It seems like nothing, but you can't play this game without it!";
+		next;
+		mes "[Ser]";
+		mes "Please go get the certificate.";
+		close;
+	}
+	if (checkquest(5070,PLAYTIME) == 0 || checkquest(5070,PLAYTIME) == 1) {
+		mes "[Ser]";
+		mes "Is it tomorrow already? I don't think so! Can't you read the time?";
+		close;
+	} else if (checkquest(5070,PLAYTIME) == 2)
+		erasequest 5070;
+	mes "[Ser]";
+	mes "Oh, ^0000FF"+strcharinfo(0)+"^000000? Want to play the Rock Paper Scissors game?";
+	next;
+	switch(select("Play the game.:Say hi.:Ask about the game rules.")) {
+	case 1:
+		mes "[Ser]";
+		mes "Good idea.";
+		next;
+		break;
+	case 2:
+		mes "[Ser]";
+		mes "Oh! Ok, hi? But, why now?";
+		next;
+		mes "[Ser]";
+		mes "Ah... You are bored? Why don't you play a game with me?";
+		next;
+		mes "[Ser]";
+		mes "Hey, you! Don't neglect the Rock Paper Scissors game!!";
+		mes "I've seen many people getting their butts kicked in this game!!";
+		next;
+		mes "[Ser]";
+		mes "You better mark my words, if you don't want to end up like them!~";
+		close;
+	case 3:
+		mes "[Ser]";
+		mes "You don't even know how to play this game?";
+		mes "Let me kindly teach you.";
+		next;
+		mes "[Ser]";
+		mes "Scissors beats Paper,";
+		emotion e_scissors;
+		emotion e_paper,1;
+		next;
+		mes "[Ser]";
+		mes "Paper beats Rock,";
+		emotion e_paper;
+		emotion e_rock,1;
+		next;
+		mes "[Ser]";
+		mes "And Rock beats Scissors.";
+		emotion e_rock;
+		emotion e_scissors,1;
+		next;
+		mes "[Ser]";
+		mes "Ok? Got it now?";
+		next;
+		mes "[Ser]";
+		mes "You must play 5 matches with me.";
+		mes "We go again if the game is even!!";
+		next;
+		mes "[Ser]";
+		mes "I will give you a present if you beat me 3 times. Ok?";
+		next;
+		mes "[Ser]";
+		mes "Ok, then. Go away.";
+		close;
+	}
+	setarray .@rps$[0], "Rock", "Paper", "Scissors";
+	setarray .@emote[0], e_rock, e_paper, e_scissors;
+	setarray .@count$[0],"First","Second","Third","Fourth","Last";
+	while(1) {
+		mes "[Ser]";
+		mes .@count$[.@match]+" match ~~";
+		if (.@tie) {
+			mes "Result is even, so we play again.";
+			set .@tie,0;
+		}
+		mes "Try your best!";
+		next;
+		mes "[Ser & "+strcharinfo(0)+"]";
+		mes "Rock! Paper! Scissors!";
+		next;
+
+		set .@pc,  select("Rock:Paper:Scissors")-1;
+		set .@npc, rand(3);
+		emotion .@emote[.@pc],1;
+		emotion .@emote[.@npc];
+		mes "["+strcharinfo(0)+"] "+.@rps$[.@pc];
+		mes "--------------------------------";
+		mes "[Ser] "+.@rps$[.@npc];
+		if (.@pc == .@npc) {
+			set .@tie,1;
+			set .@result$, "Hmm, we are even. Let's play again.";
+		} else if ((.@pc == 0 && .@npc == 2) || (.@pc == 1 && .@npc == 0) || (.@pc == 2 && .@npc == 1)) {
+			set .@match, .@match+1;
+			set .@win, .@win+1;
+			set .@result$, "I lost!";
+		} else {
+			set .@match, .@match+1;
+			set .@loss, .@loss+1;
+			set .@result$, "So I win!!";
+		}
+		next;
+		mes "[Ser]";
+		mes "You were "+.@rps$[.@pc]+", I was "+.@rps$[.@npc]+"~";
+		mes .@result$;
+		next;
+		if (.@match == 5) break;
+	}
+	mes "[Ser]";
+	mes "All 5 matches are over!!";
+	next;
+	mes "[Ser]";
+	mes "Hmm... Let me see...";
+	mes "I won "+.@loss+" times, and you, "+strcharinfo(0)+", won "+.@win+" times, right?";
+	next;
+	if (.@win > .@loss) {
+		mes "[Ser]";
+		mes strcharinfo(0)+" has won the game.";
+		next;
+		mes "Ser became polite all of a sudden.";
+		next;
+		mes "[Ser]";
+		mes "Great game it was. I admire your enthusiasm for the game. So, I want to give you my precious Can as a present.";
+		next;
+		switch(select("I don't need it!:Thank you.")) {
+		case 1:
+			mes "[Ser]";
+			mes "Just take it!! Do as I say~";
+			break;
+		case 2:
+			mes "[Ser]";
+			mes "You are polite. But, sadly this is all I can give you.";
+			break;
+		}
+		next;
+		mes "[Ser]";
+		mes "Good bye~ Come back tomorrow for more practice~";
+		if (.@win == 5) {
+			mes "Oh! You won all 5 matches. Here are some more extra Cans.";
+			getitem 12636,10; //Malang_Sp_Can
+		} else
+			getitem 12636,5; //Malang_Sp_Can
+		setquest 5070;
+		close;
+	}
+	mes "[Ser]";
+	mes strcharinfo(0)+" has lost. Ha... Ha...";
+	next;
+	mes "Ser became very arrogant.";
+	next;
+	mes "[Ser]";
+	mes "You want to play with me? Ser? With that skill of yours? Meow?";
+	next;
+	mes "[Ser]";
+	mes "What? Present? How can you ask for such a thing when you lose? Go practice more!! Work!! Yes, I should make you do this!!";
+	next;
+	setquest 5070;
+	switch(rand(1,13)) {
+	case 1:
+		setquest 5074;
+		mes "[Ser]";
+		mes "Hmm. Do you know a fish named Phen? Do you? Isn't it a delicious looking fish?";
+		next;
+		mes "- Chrub -";
+		mes "Ser wipes the drool from his mouth.";
+		next;
+		mes "[Ser]";
+		mes "Go catch 30 Phens. And also get me 10 Fish Tails. Get them to our Director cat, and he will make a delicious dish with them.";
+		close;
+	case 2:
+		setquest 5075;
+		mes "[Ser]";
+		mes "Lately, I've felt powerless and that there's too much weight on me. I should take care of my health.";
+		next;
+		mes "[Ser]";
+		mes "Now it's time for some healthy food.";
+		next;
+		mes "[Ser]";
+		mes "Get 50 Marse and 25 Milk to our Cat Gamers Director. He has excellent knowledge on healthy foods.";
+		close;
+	case 3:
+		setquest 5076;
+		mes "[Ser]";
+		mes "Well... we do have a rival, you know. They are 'Dog n Waltz', and everything goes wrong when they come around.";
+		next;
+		mes "[Ser]";
+		mes "I would ask you to bully them, but I suppose that's illegal... So, please at least harass similar looking monsters. What would be a good target?";
+		next;
+		mes "[Ser]";
+		mes "Oh, that archer among Kobolds!! I hate those the most. Go harass 30 Kobold Archers, and report to our Cat Gamers Director.";
+		close;
+	case 4:
+		setquest 5077;
+		mes "[Ser]";
+		mes "What is most important for winning the game? It is quickness. What should we do to get faster?";
+		next;
+		mes "[Ser]";
+		mes "I've been thinking... The best way for us cats is obviously catching rats.";
+		next;
+		mes "[Ser]";
+		mes "You know Cramp, right? That blue chubby creature... Please go catch 10 of them, and report to our Cat Gamers Director.";
+		close;
+	case 5:
+		setquest 5078;
+		mes "[Ser]";
+		mes "Ah... I want some bird cuisine. Which one would be most delicious?";
+		next;
+		mes "[Ser]";
+		mes "Picky? Ah! It's too small. How about Condor? I am not sure... Peco Peco?";
+		next;
+		mes "[Ser]";
+		mes "Alright! Please catch 50 Peco Pecos and get them to our Cat Gamers Director. We shall have a party with bird cuisine tonight.";
+		close;
+	case 6:
+		setquest 5079;
+		mes "[Ser]";
+		mes "I get too nervous before the game. And I don't play well when I'm nervous. I need something to calm down before the game starts.";
+		next;
+		mes "[Ser]";
+		mes "Oh! That's right! Yarn! I used to play with Yarn when I was young. Wasn't able to have that kind of relaxation after joining the 'Cat Gamers'.";
+		next;
+		mes "[Ser]";
+		mes "Please get 20 Yarns for me. Why 20? There are many other cats with the same issue. Our Director should take care of this for you.";
+		close;
+	case 7:
+		setquest 5080;
+		mes "[Ser]";
+		mes "Recently, our Director seems to have been trying to cut some expenses. Or is the manager taking advantage?";
+		next;
+		mes "[Ser]";
+		mes "Regular snacks for our players have been reduced. You should go get 30 Rat Tails, and give them to our Cat Gamers Director.";
+		next;
+		mes "[Ser]";
+		mes "Then, we shall find out if our manager is being greedy or not.";
+		close;
+	case 8:
+		setquest 5081;
+		mes "[Ser]";
+		mes "I am having a slump these days. I can't give my 100% to the game.";
+		next;
+		mes "[Ser]";
+		mes "It is the lemon we need in times like this.";
+		next;
+		mes "[Ser]";
+		mes "Please get 5 lemons for me. Don't forget, I need 5 Lemons... Our Cat Gamers Director should know what to do with them.";
+		close;
+	case 9:
+		setquest 5082;
+		mes "[Ser]";
+		mes "Malangdo is a good place for a cat to live. But, it gets very hot when we play games.";
+		next;
+		mes "[Ser]";
+		mes "When we are playing a lot, it gets really crazy hot, hard for us to bear. You know how hysterical we cats can be, right?";
+		next;
+		mes "[Ser]";
+		mes "Please get us either 10 Ice Pieces or 10 Ice Creams. Our Cat Gamers Director should know what to do with them.";
+		close;
+	case 10:
+		setquest 5083;
+		mes "[Ser]";
+		mes "I can see that you also need some rest. Feel free to relax for a while. How about taking a walk around the village? I insist~!";
+		next;
+		mes "[Ser]";
+		mes "But, it is no fun to just walk around the village. Hmm... Right!! Why don't you go ahead and meet a cat named Eryu?";
+		next;
+		mes "[Ser]";
+		mes "Oh! And when you meet the cat, make sure to say 'Come back'. That is the password. And don't forget to tell our Director I was with you all the time!!";
+		close;
+	case 11:
+		setquest 5085;
+		mes "[Ser]";
+		mes "I can see that you also need some rest. Feel free to relax for a while. How about taking a walk around the village? I insist~!";
+		next;
+		mes "[Ser]";
+		mes "But, it is no fun to just walk around the village. Hmm... Right!! Why don't you go ahead and meet a cat named Stew?";
+		next;
+		mes "[Ser]";
+		mes "Oh! And when you meet the cat, make sure to say 'Come back'. That is the password. And don't forget to tell our Director I was with you all the time!!";
+		close;
+	case 12:
+		setquest 5087;
+		mes "[Ser]";
+		mes "I can see that you also need some rest. Feel free to relax for a while. How about taking a walk around the village? I insist~!";
+		next;
+		mes "[Ser]";
+		mes "But, it is no fun to just walk around the village. Hmm... Right!! Why don't you go ahead and meet a cat named Ketchup?";
+		next;
+		mes "[Ser]";
+		mes "Oh! And when you meet the cat, make sure to say 'Come back'. That is the password. And don't forget to tell our Director I was with you all the time!!";
+		close;
+	case 13:
+		setquest 5089;
+		mes "[Ser]";
+		mes "I can see that you also need some rest. Feel free to relax for a while. How about taking a walk around the village? I insist~!";
+		next;
+		mes "[Ser]";
+		mes "But, it is no fun to just walk around the village. Hmm... Right!! Why don't you go ahead and meet a cat named Eff?";
+		next;
+		mes "[Ser]";
+		mes "Oh! And when you meet the cat, make sure to say 'Come back'. That is the password. And don't forget to tell our Director I was with you all the time!!";
+		close;
+	}
+}
+
+mal_in01,86,222,4	script	Paa#gamer	544,{
+	if (MaxWeight - Weight < 1000) {
+		mes "Your inventory is too heavy to proceed. Come back after lightening your load.";
+		close;
+	}
+	if (checkweight(1201,1) == 0) {
+		mes "Your inventory is too full to proceed. Come back after reducing your load.";
+		close;
+	}
+	for(set .@i,5074; .@i<=5090; set .@i,.@i+1) {
+		if (checkquest(.@i) > -1) {
+			mes "[Paa]";
+			mes "You haven't done what we asked you for meow. A promise is a promise, you know meow.";
+			next;
+			mes "[Paa]";
+			mes "When you are done meow, please get checked by the Cat Gamers Director over there meow.";
+			close;
+		}
+	}
+	if (malang_gamer < 20) {
+		if (countitem(2872)) {
+			mes "[Paa]";
+			mes "You seem like a first timer meow! Where did you get the certificate meow? Someone lost it, I guess meow.";
+			close;
+		}
+		mes "[Paa]";
+		mes "When is our practicing partner coming meow? I am bored meow.";
+		close;
+	}
+	if (!isequipped(2872)) {
+		mes "[Paa]";
+		mes "Oh, ^0000FF"+strcharinfo(0)+"^000000 meow? Want to play the Rock Paper Scissors game meow?";
+		next;
+		mes "[Paa]";
+		mes "... ... ...";
+		next;
+		mes "[Paa]";
+		mes "Where is your Cat Gamers Certificate meow? It seems like nothing, but you can't play this game without it meow!";
+		next;
+		mes "[Paa]";
+		mes "Go get the certificate meow.";
+		close;
+	}
+	if (checkquest(5070,PLAYTIME) == 0 || checkquest(5070,PLAYTIME) == 1) {
+		mes "[Paa]";
+		mes "We can only play the game once a day meow. Come tomorrow meow.";
+		close;
+	} else if (checkquest(5070,PLAYTIME) == 2)
+		erasequest 5070;
+	mes "[Paa]";
+	mes "Oh, ^0000FF"+strcharinfo(0)+"^000000 meow? Want to play the Rock Paper Scissors game meow?";
+	next;
+	switch(select("Play the game.:Say hi.:Ask about the game rules.")) {
+	case 1:
+		mes "[Paa]";
+		mes "Good idea meow.";
+		next;
+		break;
+	case 2:
+		mes "[Paa]";
+		mes "Hello meow~ Nice to see you meow~";
+		next;
+		mes "[Paa]";
+		mes "Other games have one cat player. But, we have two for Rock Paper Scissors. You want to know why meow?";
+		next;
+		mes "[Paa]";
+		mes "Paa is kind meow. So, I'll tell you story meow.";
+		next;
+		mes "[Paa]";
+		mes "Ser cat is my twin brother. I was born first, but he always says he is the elder meow. But, I don't fight with Ser meow. I am a good brother meow.";
+		next;
+		mes "[Paa]";
+		mes "Anyways, me and Ser are well known as the pro gamer cat brothers meow. Everyone knows us meow.";
+		next;
+		mes "[Paa]";
+		mes "You are free to admire me, meow. I give you permission meow.";
+		close;
+	case 3:
+		mes "[Paa]";
+		mes "You want to know how to play this game meow? I'll teach you because I am a kind cat meow~";
+		next;
+		mes "[Paa]";
+		mes "You don't seem that stupid meow. So, let's skip the part about what beats what meow.";
+		next;
+		mes "[Paa]";
+		mes "You must play 5 matches with me meow. We go again if the game is even meow.";
+		next;
+		mes "[Paa]";
+		mes "If you win 3 times, I'll give you a present meow~ Cat Gamers Director said so meow.";
+		next;
+		mes "[Paa]";
+		mes "That is all meow~ But it is not an easy game meow. Respect the game meow~";
+		close;
+	}
+	setarray .@rps$[0], "Rock", "Paper", "Scissors";
+	setarray .@emote[0], e_rock, e_paper, e_scissors;
+	setarray .@count$[0],"First","Second","Third","Fourth","Last";
+	while(1) {
+		mes "[Paa]";
+		mes .@count$[.@match]+" match ~~ meow.";
+		if (.@tie) {
+			mes "Result is even, so we play again meow.";
+			set .@tie,0;
+		}
+		mes "Try your best meow!";
+		next;
+		mes "[Ser & "+strcharinfo(0)+"]";
+		mes "Rock! Paper! Scissors!";
+		next;
+
+		set .@pc,  select("Rock:Paper:Scissors")-1;
+		set .@npc, rand(3);
+		emotion .@emote[.@pc],1;
+		emotion .@emote[.@npc];
+		mes "["+strcharinfo(0)+"] "+.@rps$[.@pc];
+		mes "--------------------------------";
+		mes "[Ser] "+.@rps$[.@npc];
+		if (.@pc == .@npc) {
+			set .@tie,1;
+			set .@result$, "Hmm, we are even. Let's play again meow.";
+		} else if ((.@pc == 0 && .@npc == 2) || (.@pc == 1 && .@npc == 0) || (.@pc == 2 && .@npc == 1)) {
+			set .@match, .@match+1;
+			set .@win, .@win+1;
+			set .@result$, "I lost meow!";
+		} else {
+			set .@match, .@match+1;
+			set .@loss, .@loss+1;
+			set .@result$, "So I win meow!!";
+		}
+		next;
+		mes "[Paa]";
+		mes "You were "+.@rps$[.@pc]+", I was "+.@rps$[.@npc]+"~";
+		mes .@result$;
+		next;
+		if (.@match == 5) break;
+	}
+	mes "[Paa]";
+	mes "Meow!! All 5 matches are over meow!!";
+	next;
+	mes "[Paa]";
+	mes "Let me see meow...";
+	mes "I won "+.@loss+" times meow, and you, "+strcharinfo(0)+", won "+.@win+" times, right meow?";
+	next;
+	if (.@win > .@loss) {
+		mes "[Paa]";
+		mes "You won meow.";
+		next;
+		mes "Paa became polite all of a sudden.";
+		next;
+		mes "[Paa]";
+		mes "Great game it was meow. I admire your enthusiasm for the game meow. So, I want to give you my precious Can as a present meow.";
+		next;
+		switch(select("I don't need it!:Thank you.")) {
+		case 1:
+			mes "[Paa]";
+			mes "Just take it meow!! Do as I say meow~";
+			break;
+		case 2:
+			mes "[Paa]";
+			mes "You are polite meow. But, sadly this is all I can give you meow.";
+			break;
+		}
+		next;
+		mes "[Paa]";
+		mes "Good bye meow~ Come back tomorrow for more practice meow~";
+		if (.@win == 5) {
+			mes "Oh! You won all 5 matches meow. Here are some more extra Cans meow!";
+			getitem 12636,10; //Malang_Sp_Can
+		} else
+			getitem 12636,5; //Malang_Sp_Can
+		setquest 5070;
+		close;
+	}
+	mes "[Paa]";
+	mes "You lost. Meow... Meow...";
+	next;
+	mes "Paa became very arrogant.";
+	next;
+	mes "[Paa]";
+	mes "You want to play with me? Paa? With that skill of yours? Meow?";
+	next;
+	mes "[Paa]";
+	mes "What? Present meow? How can you ask for such a thing meow? You lost meow! Go practice more!! Work!! Yes, I should make you do this meow!!";
+	next;
+	setquest 5070;
+	switch(rand(1,13)) {
+	case 1:
+		setquest 5074;
+		mes "[Paa]";
+		mes "Hmm. Do you know a fish named Phen meow? Do you? Isn't it a delicious looking fish meow?";
+		next;
+		mes "- Chrub -";
+		mes "Paa wipes the drool from his mouth.";
+		next;
+		mes "[Paa]";
+		mes "Go catch 30 Phens meow. And also get me 10 Fish Tails meow. Get them to our Director cat, and he will make a delicious dish with them meow.";
+		close;
+	case 2:
+		setquest 5075;
+		mes "[Paa]";
+		mes "Lately, I've felt powerless and that there's too much weight on me meow. I should take care of my health meow.";
+		next;
+		mes "[Paa]";
+		mes "Now it's time for some healthy food meow.";
+		next;
+		mes "[Paa]";
+		mes "Get 50 Marse and 25 Milk to our Cat Gamers Director meow. He has excellent knowledge on healthy foods meow.";
+		close;
+	case 3:
+		setquest 5076;
+		mes "[Paa]";
+		mes "We do have a rival, you know meow. They are 'Dog n Waltz', and everything goes wrong when they come around meow.";
+		next;
+		mes "[Paa]";
+		mes "I would ask you to bully them, but I suppose that's illegal meow... So, I will ask you to harass similar looking monsters meow.";
+		next;
+		mes "[Paa]";
+		mes "Oh, that archer among Kobolds meow!! I hate those the most. Go harass 30 Kobold Archers, and report to our Cat Gamers Director meow.";
+		close;
+	case 4:
+		setquest 5077;
+		mes "[Paa]";
+		mes "What is most important for winning the game meow? It is quickness. What should we do to get faster meow?";
+		next;
+		mes "[Paa]";
+		mes "I've been thinking meow... The best way for us cats is obviously catching rats meow.";
+		next;
+		mes "[Paa]";
+		mes "You know Cramp, right meow? That blue chubby creature meow... Please go catch 10 of them, and report to our Cat Gamers Director meow.";
+		close;
+	case 5:
+		setquest 5078;
+		mes "[Paa]";
+		mes "Chrub... I want some bird cuisine meow. Which one would be most delicious meow?";
+		next;
+		mes "[Paa]";
+		mes "Picky? Ah! It's too small meow. How about Condor? I am not sure... Peco Peco meow?";
+		next;
+		mes "[Paa]";
+		mes "Alright meow! Please catch 50 Peco Pecos and get them to our Cat Gamers Director meow. We shall have a party with bird cuisine tonight meow.";
+		close;
+	case 6:
+		setquest 5079;
+		mes "[Paa]";
+		mes "I get too nervous before the game meow. And I don't play well when I'm nervous meow. I need something to calm down before the game starts meow.";
+		next;
+		mes "[Paa]";
+		mes "Oh! That's right meow! Yarn meow! I used to play with Yarn when I was young meow. Wasn't able to have that kind of relaxation after joining the 'Cat Gamers' meow.";
+		next;
+		mes "[Paa]";
+		mes "Please get 20 Yarns for me meow. Why 20? There are many other cats with the same issue meow. Our Director should take care of this for you meow.";
+		close;
+	case 7:
+		setquest 5080;
+		mes "[Paa]";
+		mes "Recently, our Director seems to have been trying to cut some expenses meow. Or is the manager taking advantage meow?";
+		next;
+		mes "[Paa]";
+		mes "Regular snacks for our players have been reduced meow. You should go get 30 Rat Tails, and give them to our Cat Gamers Director meow.";
+		next;
+		mes "[Paa]";
+		mes "Then, we shall find out if our manager is being greedy or not meow.";
+		close;
+	case 8:
+		setquest 5081;
+		mes "[Paa]";
+		mes "I am having a slump these days meow. I can't give my 100% to the game meow.";
+		next;
+		mes "[Paa]";
+		mes "It is the lemon we need in times like this meow.";
+		next;
+		mes "[Paa]";
+		mes "Get 5 lemons for me meow. Don't forget, I need 5 Lemons meow... Our Cat Gamers Director should know what to do with them meow.";
+		close;
+	case 9:
+		setquest 5082;
+		mes "[Paa]";
+		mes "Malangdo is a good place for a cat to live meow. But, it gets very hot when we play games meow.";
+		next;
+		mes "[Paa]";
+		mes "When we are playing a lot, it gets really crazy hot, hard for us to bear meow. You know how hysterical we cats can be, right meow?";
+		next;
+		mes "[Paa]";
+		mes "Get me either 10 Ice Pieces or 10 Ice Creams. Our Cat Gamers Director should know what to do with them meow.";
+		close;
+	case 10:
+		setquest 5083;
+		mes "[Paa]";
+		mes "I can see that you also need some rest meow. Feel free to relax for a while meow. How about taking a walk around the village meow? I insist meow~!";
+		next;
+		mes "[Paa]";
+		mes "But, it is no fun to just walk around the village meow. Hmm... Right meow!! Why don't you go ahead and meet a cat named Eryu meow?";
+		next;
+		mes "[Paa]";
+		mes "Oh! And when you meet the cat, make sure to say 'Come back' meow. That is the password meow. And don't forget to tell our Director I was with you all the time meow!!";
+		close;
+	case 11:
+		setquest 5085;
+		mes "[Paa]";
+		mes "I can see that you also need some rest meow. Feel free to relax for a while meow. How about taking a walk around the village meow? I insist meow~!";
+		next;
+		mes "[Paa]";
+		mes "But, it is no fun to just walk around the village meow. Hmm... Right meow!! Why don't you go ahead and meet a cat named Stew meow?";
+		next;
+		mes "[Paa]";
+		mes "Oh! And when you meet the cat, make sure to say 'Come back' meow. That is the password meow. And don't forget to tell our Director I was with you all the time meow!!";
+		close;
+	case 12:
+		mes "[Paa]";
+		mes "I can see that you also need some rest meow. Feel free to relax for a while meow. How about taking a walk around the village meow? I insist meow~!";
+		next;
+		mes "[Paa]";
+		mes "But, it is no fun to just walk around the village meow. Hmm... Right meow!! Why don't you go ahead and meet a cat named Ketchup meow?";
+		next;
+		mes "[Paa]";
+		mes "Oh! And when you meet the cat, make sure to say 'Come back' meow. That is the password meow. And don't forget to tell our Director I was with you all the time meow!!";
+		close;
+	case 13:
+		mes "[Paa]";
+		mes "I can see that you also need some rest meow. Feel free to relax for a while meow. How about taking a walk around the village meow? I insist meow~!";
+		next;
+		mes "[Paa]";
+		mes "But, it is no fun to just walk around the village meow. Hmm... Right meow!! Why don't you go ahead and meet a cat named Eff meow?";
+		next;
+		mes "[Paa]";
+		mes "Oh! And when you meet the cat, make sure to say 'Come back' meow. That is the password meow. And don't forget to tell our Director I was with you all the time meow!!";
+		close;
+	}
+}
+
+mal_in01,91,222,4	script	Kuka#gamer	422,{
+	if (MaxWeight - Weight < 1000) {
+		mes "Your inventory is too heavy to proceed. Come back after lightening your load.";
+		close;
+	}
+	if (checkweight(1201,1) == 0) {
+		mes "Your inventory is too full to proceed. Come back after reducing your load.";
+		close;
+	}
+	for(set .@i,5074; .@i<=5090; set .@i,.@i+1) {
+		if (checkquest(.@i) > -1) {
+			mes "[Kuka]";
+			mes "You haven't done what we asked you for yo~. A promise is a promise, you know yo~.";
+			next;
+			mes "[Kuka]";
+			mes "When you are done, please get checked by the Cat Gamers Director over there yo.~";
+			close;
+		}
+	}
+	if (malang_gamer < 20) {
+		if (countitem(2872)) {
+			mes "[Kuka]";
+			mes "You seem like a first timer yo~ Where did you get the certificate yo~ You better give that back yo~";
+			close;
+		}
+		mes "[Kuka]";
+		mes "The Cat Gamers Director said a practicing partner is coming yo~ But, that human didn't show up yo~ I am bored yo~";
+		close;
+	}
+	if (!isequipped(2872)) {
+		mes "[Kuka]";
+		mes "Oh great member you, ^0000FF"+strcharinfo(0)+"^000000~ Let's play ChamChamCham yo~";
+		next;
+		mes "[Kuka]";
+		mes "... ... ...";
+		next;
+		mes "[Kuka]";
+		mes "But, you don't have the certificate yo~ Certificate helps you save the game record yo~ You must have it! yo~";
+		next;
+		mes "[Kuka]";
+		mes "Please go get the certificate yo~";
+		close;
+	}
+	if (checkquest(5071,PLAYTIME) == 0 || checkquest(5071,PLAYTIME) == 1) {
+		mes "[Kuka]";
+		mes "Is it not tomorrow yet yo~ You can play one game a day yo~ Come back tomorrow yo~";
+		close;
+	} else if (checkquest(5071,PLAYTIME) == 2)
+		erasequest 5071;
+	mes "[Kuka]";
+	mes "Oh great member you, ^0000FF"+strcharinfo(0)+"^000000~ Let's play ChamChamCham yo~";
+	next;
+	switch(select("Play the game.:Ask who is 1st place.:Ask about the game rules.")) {
+	case 1:
+		mes "[Kuka]";
+		mes "Good choice yo~";
+		next;
+		break;
+	case 2:
+		// custom condition
+		if (!$malangdo_gamer) {
+			mes "[Kuka]";
+			mes "No one holds a record for the ChamChamCham game yo~";
+			mes "You could be the first yo~";
+			close;
+		}
+		mes "[Kuka]";
+		mes "Current 1st place for the ChamChamCham game is";
+		mes "^0000FF"+$malangdo_gamer$+"^000000 with ^DE2B21"+$malangdo_gamer+"^000000 winning streak yo~";
+		if (strcharinfo(0) == $malangdo_gamer$)
+			mes "Never know when someone else would break the record yo~";
+		else
+			mes "I expect that you, "+strcharinfo(0)+", can beat ^0000FF"+$malangdo_gamer$+"^000000 sometime yo~";
+		close;
+	case 3:
+		mes "[Kuka]";
+		mes "ChamChamCham game rules are very simple yo~";
+		mes "Just direct your hand towards the direction where I direct my face yo~";
+		next;
+		cutin "g_cat_01",4;
+		mes "[Kuka]";
+		mes "Like this yo~";
+		next;
+		cutin "g_cat_03",4;
+		mes "[Kuka]";
+		mes "Or like that yo~";
+		next;
+		cutin "",255;
+		mes "[Kuka]";
+		mes "A present is available for 3 wins yo~";
+		mes "If you beat the previous record, you get a bigger present yo~";
+		next;
+		mes "[Kuka]";
+		mes "See you at the practice yo~";
+		close;
+	}
+	while(1) {
+		cutin "g_cat_00",4;
+		mes "[Kuka & "+strcharinfo(0)+"]";
+		mes "Cham!";
+		next;
+		mes "[Kuka & "+strcharinfo(0)+"]";
+		mes "Cham! Cham!";
+		next;
+		mes "[Kuka & "+strcharinfo(0)+"]";
+		mes "Cham! Cham! Cham!";
+		next;
+		switch(select("Hand towards left:Hand towards right")) {
+		case 1:
+			if (rand(1000) < 500) {
+				cutin "g_cat_01",4;
+				set .@win, .@win+1;
+			} else {
+				cutin "g_cat_02",4;
+				set .@loss,1;
+			}
+			break;
+		case 2:
+			if (rand(1000) < 500) {
+				cutin "g_cat_03",4;
+				set .@win, .@win+1;
+			} else {
+				cutin "g_cat_04",4;
+				set .@loss,1;
+			}
+			break;
+		}
+		if (.@loss) {
+			mes "[Kuka]";
+			mes "Hehe~ I won yo~ I feel good yo~";
+			next;
+			cutin "",255;
+			break;
+		}
+		mes "[Kuka]";
+		mes "Well~ I lost yo~ Let's practice more yo~";
+		next;
+		cutin "",255;
+		mes "[Kuka]";
+		mes strcharinfo(0)+" has won "+.@win+" times yo~ Next game starts yo~";
+		next;
+	}
+	if (.@win == 0) {
+		// fall through
+	} else if (.@win > 0 && .@win < 3) {
+		setquest 5071;
+		mes "[Kuka]";
+		mes "After the practice, "+strcharinfo(0)+" has won "+.@win+" in a row yo~";
+		mes "Present is for 3 wins or more yo~ Nothing for today yo~ But, come again tomorrow yo~";
+		close;
+	} else {
+		set .@name_record$, $malangdo_gamer$;
+		set .@win_record, $malangdo_gamer;
+		set .@win_cnt, .@win-.@win_record;
+		set .@cans, .@win-2;
+		if (.@win > .@win_record) {
+			set $malangdo_gamer$, strcharinfo(0);
+			set $malangdo_gamer, .@win;
+			mes "[Kuka]";
+			mes "Congrats yo~ You won ^DE2B21"+.@win+"^000000 in a row yo~";
+			if (strcharinfo(0) == .@name_record$)
+				mes "You won ^DE2B21"+.@win_cnt+"^000000 more than the recent ^DE2B21"+.@win_record+"^000000 record yo~ Congrats yo~";
+			// custom conditions
+			//else
+			else if (.@win_record)
+				mes "And you have won ^DE2B21"+.@win_cnt+"^000000 more than ^0000FF"+.@name_record$+"^000000's ^DE2B21"+.@win_record+"^000000 winning streak yo~ New record yo~ Congrats yo~";
+			else
+				mes "A new record yo~ Congrats yo~";
+			next;
+			mes "[Kuka]";
+			mes "I'll give you 1 random coin pocket as a special present yo~ Well done yo~ Come back tomorrow yo~";
+			setquest 5071;
+			getitem 12636, .@cans; //Malang_Sp_Can
+			getitem 12621,1; //Egrade_Pocket
+			close;
+		} else {
+			mes "[Kuka]";
+			mes "Congrats yo~ For winning "+.@win+" times I'll give you "+.@cans+" cans yo~ Well done yo~ Come back tomorrow yo~";
+			setquest 5071;
+			getitem 12636, .@cans; //Malang_Sp_Can
+			close;
+		}
+	}
+	mes "[Kuka]";
+	mes strcharinfo(0)+" didn't win at all yo~ You must work it out yo~";
+	next;
+	setquest 5071;
+	switch(rand(1,13)) {
+	case 1:
+		setquest 5074;
+		mes "[Kuka]";
+		mes "Kuka wants you to catch delicious Phens yo~";
+		next;
+		mes "- Chrub -";
+		mes "Kuka wipes the drool from his mouth.";
+		next;
+		mes "[Kuka]";
+		mes "Catch 30 Phens yo~ And also get me 10 Fish Tails yo~ Get them to our Director Cat, and he will make a delicious dish with them yo~";
+		close;
+	case 2:
+		setquest 5075;
+		mes "[Kuka]";
+		mes "Lately, I've felt powerless and that there's too much weight on me yo~ I should take care of my health yo~";
+		next;
+		mes "[Kuka]";
+		mes "Now it's time for some healthy food yo~";
+		next;
+		mes "[Kuka]";
+		mes "Get 50 Marse and 25 Milk to our Cat Gamers Director yo~. He has excellent knowledge on healthy foods yo~.";
+		close;
+	case 3:
+		setquest 5076;
+		mes "[Kuka]";
+		mes "We have a rival yo~ 'Dog n Waltz' yo~";
+		next;
+		mes "[Kuka]";
+		mes "I want to harass similar goons yo~";
+		next;
+		mes "[Kuka]";
+		mes "There is an archer among Kobolds yo~ Harass 30 Kobold Archers and report to our Cat Gamers Director yo~";
+		close;
+	case 4:
+		setquest 5077;
+		mes "[Kuka]";
+		mes "Quickness is very important for winning the game yo~ Work on quickness yo~";
+		next;
+		mes "[Kuka]";
+		mes "Mouse catching is the best work out for quickness training yo~";
+		next;
+		mes "[Kuka]";
+		mes "Catch 10 blue and chubby Cramps, and report to our Cat Gamers Director yo~";
+		close;
+	case 5:
+		setquest 5078;
+		mes "[Kuka]";
+		mes "I crave bird cuisine yo~ Bird cuisine is so delicious yo~";
+		next;
+		mes "[Kuka]";
+		mes "Picky is too small and Condor is not tasty yo~ How about Peco Peco yo~?";
+		next;
+		mes "[Kuka]";
+		mes "Ok yo~ Catch 50 Peco Pecos and report to our Cat Gamers Director yo~ Tonight, we will have a bird cuisine party yo~";
+		close;
+	case 6:
+		setquest 5079;
+		mes "[Kuka]";
+		mes "I get too nervous before the game yo~. And I don't play well when I am nervous yo~. I need something to calm down before the game starts yo~.";
+		next;
+		mes "[Kuka]";
+		mes "Yarn is very useful for relaxing yo~";
+		next;
+		mes "[Kuka]";
+		mes "Get 20 Yarns yo~ There are many other cats with the same issue yo~ The Cat Gamers Director will take care of them yo~";
+		close;
+	case 7:
+		setquest 5080;
+		mes "[Kuka]";
+		mes "Recently, our Director seems to have been trying to cut some expenses yo~ Or maybe the Manager Cat is taking advantage yo~";
+		next;
+		mes "[Kuka]";
+		mes "Regular snacks for our players have been reduced yo~ "+strcharinfo(0)+" should go get 30 Rat Tails, and report to our Cat Gamers Director yo~";
+		next;
+		mes "[Kuka]";
+		mes "Then, we shall find out if our manager is being greedy or not yo~";
+		close;
+	case 8:
+		setquest 5081;
+		mes "[Kuka]";
+		mes "I am having a slump these days yo~ I can't give my 100% to the game.";
+		next;
+		mes "[Kuka]";
+		mes "It is the lemon we need in times like this yo~";
+		next;
+		mes "[Kuka]";
+		mes "Get 5 lemons for me yo~ Don't forget, I need 5 Lemons yo~ Our Cat Gamers Director should know what to do with them yo~";
+		close;
+	case 9:
+		setquest 5082;
+		mes "[Kuka]";
+		mes "Malangdo is a good place for a cat to live yo~ But, it gets very hot when we play games yo~";
+		next;
+		mes "[Kuka]";
+		mes "When we are playing a lot, it gets really crazy hot yo~ Crazy cats are scary yo~ We need Ice Pieces or Ice Cream yo~";
+		next;
+		mes "[Kuka]";
+		mes "Get us either 10 Ice Pieces or 10 Ice Creams, and report to our Cat Gamers Director yo~";
+		close;
+	case 10:
+		setquest 5083;
+		mes "[Kuka]";
+		mes "Cat Gamers Director's order yo~ Find Eryu who is afraid of the Director yo~";
+		next;
+		mes "[Kuka]";
+		mes "You must find Eryu, and tell him 'Come back' yo~ report to our Cat Gamers Director yo~";
+		close;
+	case 11:
+		setquest 5085;
+		mes "[Kuka]";
+		mes "Cat Gamers Director's order yo~ Find Stew who is afraid of the Director yo~";
+		next;
+		mes "[Kuka]";
+		mes "You must find Stew, and tell him 'Come back' yo~ report to our Cat Gamers Director yo~";
+		close;
+	case 12:
+		setquest 5087;
+		mes "[Kuka]";
+		mes "Cat Gamers Director's order yo~ Find Ketchup who is afraid of the Director yo~";
+		next;
+		mes "[Kuka]";
+		mes "You must find Ketchup, and tell him 'Come back' yo~ report to our Cat Gamers Director yo~";
+		close;
+	case 13:
+		setquest 5089;
+		mes "[Kuka]";
+		mes "Cat Gamers Director's order yo~ Find Eff who is afraid of the Director yo~";
+		next;
+		mes "[Kuka]";
+		mes "You must find Eff, and tell him 'Come back' yo~ report to our Cat Gamers Director yo~";
+		close;
+	}
+}
+
+mal_in01,134,221,4	script	KungKung#gamer	422,{
+	if (MaxWeight - Weight < 1000) {
+		mes "Your inventory is too heavy to proceed. Come back after lightening your load.";
+		close;
+	}
+	if (checkweight(1201,1) == 0) {
+		mes "Your inventory is too full to proceed. Come back after reducing your load.";
+		close;
+	}
+	for(set .@i,5074; .@i<=5090; set .@i,.@i+1) {
+		if (checkquest(.@i) > -1) {
+			mes "[KungKung]";
+			mes "You didn't keep your promise. I have no business with you.";
+			close;
+		}
+	}
+	if (malang_gamer < 20) {
+		if (countitem(2872)) {
+			mes "[KungKung]";
+			mes "You are not qualified. Hmm... I am not sure how you got this, but we cannot practice with you. Go back.";
+			close;
+		}
+		mes "[KungKung]";
+		mes "Do not bother me. I am waiting for my practicing partner.";
+		close;
+	}
+	if (!isequipped(2872)) {
+		mes "[KungKung]";
+		mes "Are you the practice partner? You are late. Let's start right away.";
+		next;
+		mes "[KungKung]";
+		mes "... ... ...";
+		next;
+		mes "[KungKung]";
+		mes "Where is your certificate? You cannot practice with us unless you have that certificate. Go get it.";
+		close;
+	}
+	if (checkquest(5072,PLAYTIME) == 0 || checkquest(5072,PLAYTIME) == 1) {
+		mes "[KungKung]";
+		mes "You don't have a watch? Or can't read the time? It's not the time yet.";
+		close;
+	} else if (checkquest(5072,PLAYTIME) == 2)
+		erasequest 5072;
+	mes "[KungKung]";
+	mes "Are you the practice partner? You are late. Let's start right away.";
+	next;
+	switch(select("Play the game.:Ask current 1st place.:Ask about the game rules.")) {
+	case 1:
+		mes "[KungKung]";
+		mes "Before the game, we will decide the turn by rolling a dice.";
+		next;
+		break;
+	case 2:
+		mes "[KungKung]";
+		mes "Why do you want to know the 1st place? KongNyangKong is a brutal and tough match game. Kuka should know such thing!";
+		close;
+	case 3:
+		mes "[KungKung]";
+		mes "You want to learn the game rules?";
+		mes "You seem to have a polite way of asking things.";
+		mes "Listen carefully.";
+		next;
+		mes "[KungKung]";
+		mes "KongNyangKong has different play rules when attacking and defending.";
+		next;
+		mes "[KungKung]";
+		mes "When attacking, you must turn your hand to the same side as your opponent in order to complete the attack.";
+		next;
+		cutin "cat_g_01",4;
+		mes "[KungKung]";
+		mes "If we turn our hands the same way like this, then your attack is successful.";
+		next;
+		cutin "",255;
+		mes "[KungKung]";
+		mes "For defending, you must turn your hand to the opposite side of your opponent in order to defend yourself.";
+		next;
+		cutin "cat_g_06",4;
+		mes "[KungKung]";
+		mes "Yes! If you turn your hand opposite to mine like that, you have succeeded defending yourself.";
+		next;
+		cutin "",255;
+		mes "[KungKung]";
+		mes "If you are clever enough, you should know that the bottom hand is the attacker's hand.";
+		next;
+		mes "[KungKung]";
+		mes "Last!! Most important rule.";
+		mes "Once you succeed attacking, you can continue attacking your opponent.";
+		mes "When you fail, then you are on the defending side.";
+		mes "Do not forget this!";
+		next;
+		mes "[KungKung]";
+		mes "You can ask about the KongNyangKong rules anytime you want!";
+		mes "Our Manager Cat also knows all about the KongNyangKong rules.";
+		mes "That is all!";
+		close;
+	}
+	while(1) {
+		set .@pc_dic,  rand(6);
+		set .@npc_dic, rand(6);
+
+		// Emote[58-63]:
+		// e_dice1, e_dice2, e_dice3, e_dice4, e_dice5, e_dice6
+		emotion 58+.@pc_dic,1;
+		emotion 58+.@npc_dic;
+
+		if (.@pc_dic > .@npc_dic) {
+			mes "[KungKung]";
+			mes "Your dice roll number is higher. You can attack first.";
+			set .@attack_turn,1;
+			next;
+			break;
+		} else if (.@pc_dic < .@npc_dic) {
+			mes "[KungKung]";
+			mes "My dice roll number is higher. I will attack first.";
+			set .@attack_turn,2;
+			next;
+			break;
+		} else {
+			mes "[KungKung]";
+			mes "We have even numbers. Let's roll the dice once again.";
+			next;
+		}
+	}
+	set .@pc_hp,100;
+	set .@npc_hp,100;
+	while(1) {
+		if (!.@pc_hp || !.@npc_hp) break;
+		mes strcharinfo(0)+" (^FF0000"+.@pc_hp+"^000000/100)";
+		mes "--------------------------------";
+		mes "KungKung (^FF0000"+.@npc_hp+"^000000/100)";
+		next;
+		mes "[KungKung & "+strcharinfo(0)+"]";
+		mes "Kong!";
+		emotion e_loud,1;
+		emotion e_loud;
+		next;
+		mes "[KungKung & "+strcharinfo(0)+"]";
+		mes "Kong! Nyang!";
+		emotion e_loud,1;
+		emotion e_loud;
+		next;
+		mes "[KungKung & "+strcharinfo(0)+"]";
+		mes "Kong! Nyang! Kong!";
+		emotion e_loud,1;
+		emotion e_loud;
+		next;
+		set .@cat_hand, rand(1,10);
+		switch(.@attack_turn) {
+		case 1: // Attack
+			mes "How would you like to attack?";
+			mes " ";
+			mes "¡¡ Tip !!";
+			mes "Choose back: ^FF0000You win if the cat shows the back of its paw.^000000";
+			mes "Choose palm: ^FF0000You win if the cat shows the palm of its paw.^000000";
+			next;
+			switch(select("Back:Palm")) {
+			case 1:
+				if (.@cat_hand <= 5) {
+					set .@npc_hp, .@npc_hp-10;
+					cutin "cat_g_01",4;
+					specialeffect EF_BASH;
+					mes "Attack was successful.";
+					mes "You have slapped the back of KungKung's paw.";
+					next;
+					cutin "",255;
+				} else {
+					set .@attack_turn,2;
+					cutin "cat_g_02",4;
+					mes "Attack has failed.";
+					mes "KungKung starts attack now.";
+					next;
+					cutin "",255;
+				}
+				break;
+			case 2:
+				if (.@cat_hand <= 5) {
+					set .@attack_turn,2;
+					cutin "cat_g_03",4;
+					mes "Attack has failed.";
+					mes "KungKung starts attack now.";
+					next;
+					cutin "",255;
+				} else {
+					set .@npc_hp, .@npc_hp-10;
+					cutin "cat_g_04",4;
+					specialeffect EF_BASH;
+					mes "Attack was successful.";
+					mes "You have slapped the back of KungKung's paw.";
+					next;
+					cutin "",255;
+				}
+				break;
+			}
+			break;
+		case 2: // Defend
+			mes "How would you like to defend?";
+			mes " ";
+			mes "¡¡ Tip !!";
+			mes "Choose back: ^FF0000You win if the cat shows the back of its paw.^000000";
+			mes "Choose palm: ^FF0000You win if the cat shows the palm of its paw.^000000";
+			next;
+			switch(select("Back:Palm")) {
+			case 1:
+				if (.@cat_hand <= 5) {
+					set .@pc_hp, .@pc_hp-10;
+					cutin "cat_g_05",4;
+					specialeffect2 EF_BASH;
+					mes "Defending has failed.";
+					mes "KungKung attacks the back of your hand with its sharp claw.";
+					next;
+					cutin "",255;
+				} else {
+					set .@attack_turn,1;
+					cutin "cat_g_06",4;
+					mes "Defending was succesful.";
+					mes "You can start attack now.";
+					next;
+					cutin "",255;
+				}
+				break;
+			case 2:
+				if (.@cat_hand <= 5) {
+					set .@attack_turn,1;
+					cutin "cat_g_07",4;
+					mes "Defending was succesful.";
+					mes "You can start attack now.";
+					next;
+					cutin "",255;
+				} else {
+					set .@pc_hp, .@pc_hp-10;
+					cutin "cat_g_08",4;
+					specialeffect2 EF_BASH;
+					mes "Defending has failed.";
+					mes "KungKung attacks the back of your hand with its sharp claw.";
+					next;
+					cutin "",255;
+				}
+				break;
+			}
+			break;
+		}
+	}
+	if (.@npc_hp == 0) {
+		mes "[KungKung]";
+		mes "I lost. It was good game indeed.";
+		mes "A win would have been better, but I am too busy to look back at the past.";
+		next;
+		cutin "cat_g_lose",4;
+		mes "[KungKung]";
+		mes "Sob...";
+		emotion e_sob;
+		next;
+		cutin "",255;
+		mes "[KungKung]";
+		mes "Hmm... That wasn't necessary, I guess.";
+		mes "This is for you, Human!";
+		setquest 5072;
+		getitem 12636,5; //Malang_Sp_Can
+		next;
+		mes "[KungKung]";
+		mes "Come again tomorrow. I will beat you next time.";
+		close2;
+		cutin "",255;
+		end;
+	}
+	cutin "cat_g_win",4;
+	mes "[KungKung]";
+	mes "I won. It was a boring match.";
+	mes "You need to practice more. Maybe some extra work will help.";
+	next;
+	setquest 5072;
+	switch(rand(1,13)) {
+	case 1:
+		setquest 5074;
+		mes "[KungKung]";
+		mes "Catch the delicious fish Phen.";
+		next;
+		mes "[KungKung]";
+		mes "Go catch 30 Phens. And also get me 10 Fish Tails. Give them to our Director cat, and he will make a delicious dish with them.";
+		break;
+	case 2:
+		setquest 5075;
+		mes "[KungKung]";
+		mes "I may have worked out too much... I feel powerless and that there's too much weight on me. I should take care of my health.";
+		next;
+		mes "[KungKung]";
+		mes "I am already 10 years old, so it's time for some healthy food.";
+		next;
+		mes "[KungKung]";
+		mes "Get 50 Marse and 30 Milk to our Cat Gamers Director. He has excellent knowledge on healthy foods.";
+		break;
+	case 3:
+		setquest 5076;
+		mes "[KungKung]";
+		mes "We have a rival. The 'Dog n Waltz' team... Everything goes wrong when they come around.";
+		next;
+		mes "[KungKung]";
+		mes "I want to ask you to bully them, but that's illegal...";
+		next;
+		mes "[KungKung]";
+		mes "Go harass 30 Kobold Archers instead of 'Dog n Waltz', and report to our Cat Gamers Director.";
+		break;
+	case 4:
+		setquest 5077;
+		mes "[KungKung]";
+		mes "Quickness is most important for winning the game. For better quickness...";
+		next;
+		mes "[KungKung]";
+		mes "Catching mice is best. It's Cramp hunting time.";
+		next;
+		mes "[KungKung]";
+		mes "Catch 10 Cramps, and report to our Cat Gamers Director.";
+		break;
+	case 5:
+		setquest 5078;
+		mes "[KungKung]";
+		mes "I want some bird cuisine. Have you tasted any before?";
+		next;
+		mes "[KungKung]";
+		mes "Peco Peco sounds delicious to me. I don't like eating alone, so...";
+		next;
+		mes "[KungKung]";
+		mes "Catch 50 Peco Pecos, and report to our Cat Gamers Director. We all can have a dinner party with Peco Peco cuisine.";
+		break;
+	case 6:
+		setquest 5079;
+		mes "[KungKung]";
+		mes "Being calm is the key to winning important matches.";
+		next;
+		mes "[KungKung]";
+		mes "There's not a single cat who hasn't played with Yarn when they were young.";
+		next;
+		mes "[KungKung]";
+		mes "Get 20 Yarns, and report to our Cat Gamers Director. It will help improve our team's ability.";
+		break;
+	case 7:
+		setquest 5080;
+		mes "[KungKung]";
+		mes "I have a strong belief that our Manager Cat is taking advantage of our snacks.";
+		next;
+		mes "[KungKung]";
+		mes "All we need is evidence... Get 30 Rat Tails, and report to our Cat Gamers Director.";
+		next;
+		mes "[KungKung]";
+		mes "Then, we shall find out whether or not Manager Cat was doing something wrong.";
+		break;
+	case 8:
+		setquest 5081;
+		mes "[KungKung]";
+		mes "Practice was ok, but I seem to be having a slump these days.";
+		next;
+		mes "[KungKung]";
+		mes "We need to have some Lemon in times like this.";
+		next;
+		mes "[KungKung]";
+		mes "Get 5 Lemons to our Cat Gamers Director. He'll know what to do.";
+		break;
+	case 9:
+		setquest 5082;
+		mes "[KungKung]";
+		mes "Malangdo is a good place for a cat to live. But, it gets hot easily.";
+		next;
+		mes "[KungKung]";
+		mes "On a hot days like this, we could use some Ice Pieces or Ice Cream.";
+		next;
+		mes "[KungKung]";
+		mes "Get either 10 Ice Pieces or 10 Ice Creams. Our Cat Gamers Director should know what to do with them.";
+		break;
+	case 10:
+		setquest 5083;
+		mes "[KungKung]";
+		mes "Our Cat Gamers Director asked this. I should make you do this errand.";
+		next;
+		mes "[KungKung]";
+		mes "Find Eryu the cat from Malangdo, and say 'Come back' loud and clear.";
+		next;
+		mes "[KungKung]";
+		mes "Afterwards, you can report to our Cat Gamers Director. Off you go!!";
+		break;
+	case 11:
+		setquest 5085;
+		mes "[KungKung]";
+		mes "Our Cat Gamers Director asked this. I should make you do this errand.";
+		next;
+		mes "[KungKung]";
+		mes "Find Stew the cat from Malangdo, and say 'Come back' loud and clear.";
+		next;
+		mes "[KungKung]";
+		mes "Afterwards, you can report to our Cat Gamers Director. Off you go!!";
+		break;
+	case 12:
+		setquest 5087;
+		mes "[KungKung]";
+		mes "Our Cat Gamers Director asked this. I should make you do this errand.";
+		next;
+		mes "[KungKung]";
+		mes "Find Ketchup the cat from Malangdo, and say 'Come back' loud and clear.";
+		next;
+		mes "[KungKung]";
+		mes "Afterwards, you can report to our Cat Gamers Director. Off you go!!";
+		break;
+	case 13:
+		setquest 5089;
+		mes "[KungKung]";
+		mes "Our Cat Gamers Director asked this. I should make you do this errand.";
+		next;
+		mes "[KungKung]";
+		mes "Find Eff the cat from Malangdo, and say 'Come back' loud and clear.";
+		next;
+		mes "[KungKung]";
+		mes "Afterwards, you can report to our Cat Gamers Director. Off you go!!";
+		break;
+	}
+	close2;
+	cutin "",255;
+	end;
+}
+
+mal_in01,133,214,6	script	Leader#gamer	546,{
+	if (MaxWeight - Weight < 1000) {
+		mes "Your inventory is too heavy to proceed. Come back after lightening your load.";
+		close;
+	}
+	if (checkweight(1201,1) == 0) {
+		mes "Your inventory is too full to proceed. Come back after reducing your load.";
+		close;
+	}
+	for(set .@i,5074; .@i<=5090; set .@i,.@i+1) {
+		if (checkquest(.@i) > -1) {
+			mes "[Leader]";
+			mes "You cannot challenge this Flag Game unless you are done with your assigned work.";
+			close;
+		}
+	}
+	if (malang_gamer < 20) {
+		if (countitem(2872)) {
+			mes "[Leader]";
+			mes "Not everyone can challenge just because they have the certificate.";
+			close;
+		}
+		mes "[Leader]";
+		mes "Ok, let's practice until a challenger comes!!";
+		close;
+	}
+	if (!isequipped(2872)) {
+		mes "[Leader]";
+		mes "Do you want to challege?";
+		next;
+		mes "[Leader]";
+		mes "... ... ...";
+		next;
+		mes "[Leader]";
+		mes "You cannot challenge this Flag Game unless you are wearing our certificate item. Please come back later.";
+		close;
+	}
+	if (checkquest(5073) == 0 || checkquest(5073) == 1) {
+		mes "[Leader]";
+		mes "The Flag Game is only available once a day.";
+		close;
+	} else if (checkquest(5073) == 2)
+		erasequest 5073;
+	mes "[Leader]";
+	mes "Do you want to challege?";
+	next;
+	switch(select("Challenge.:Who are you?:Ask about the rules.")) {
+	case 1:
+		mes "[Leader]";
+		mes "Let's challenge the Flag Game. Please wait while our cats get prepared.";
+		next;
+		break;
+	case 2:
+		mes "[Leader]";
+		mes "Oh! I retired from 'Cat Gamers', and am working on a national game referee license. Licenses are the new trend these days.";
+		next;
+		mes "[Leader]";
+		mes "A referee must use standard language... So it was very hard for me to stop crying meow meow~ like other cats.";
+		next;
+		mes "[Leader]";
+		mes "I know the game rules for players for sure, but refereeing the game is a lot harder than it seems.";
+		next;
+		mes "[Leader]";
+		mes "Sometimes I do make mistakes, and people go crazy like it's the end of world. What a hard job this is.";
+		next;
+		mes "[Leader]";
+		mes "But, I want to finish this course, and be the world's best referee ever.";
+		next;
+		mes "[Leader]";
+		mes "You can bet on it!!";
+		close;
+	case 3:
+		mes "[Leader]";
+		mes "Allow me to explain the rule for the Flag-Waving Game.";
+		next;
+		mes "[Leader]";
+		mes "You play with 5 other cats.";
+		mes "Wait and wave the flag when no others are waving it.";
+		next;
+		mes "[Leader]";
+		mes "You start with 5 Flag Points, and each time you wave the flag 1 point vanishes.";
+		mes "When your points hit 0, the game ends.";
+		next;
+		mes "[Leader]";
+		mes "There's a special rule for this Flag Game. For more thrill, we reduce 1 point if you do not wave your flag for 10 games.";
+		next;
+		mes "[Leader]";
+		mes "You will get bigger presents as you win with less Flag Points used.";
+		next;
+		mes "[Leader]";
+		mes "Come back anytime if you need more help with the game rules. Our Manager Cat is also available for some help with the game rules.";
+		close;
+	}
+
+	// Starting Flag Points (default 5).
+	set .@flag_point,5;
+	setarray .@flag_point_cat[1],5,5,5,5,5;
+
+	// Cat players' names.
+	setarray .@npc_name$[1],
+		"Debong#gamer","Seichi#gamer","Libs#gamer","Row#gamer","YongYong#gamer";
+	setarray .@cat_name$[1],
+		"Debong","Seichi","Annoying Libs","Row","YongYong";
+	setarray .@cat_desc$[1],
+		" who likes to pick hair"," the observer",""," who likes to show off"," who likes to droop";
+
+	// Emotions displayed when cats' flags not waved.
+	setarray .@cat_emote[1],
+		e_ho,e_no,e_an,e_no1,e_spin;
+
+	// .@cat_action[] when cats' flags are not waved.
+	setarray .@cat_emotes$[1],
+		"1|3|5|7",	// Picking hair
+		"2|4|6|8",	// Looking around
+		"1|3|6|8",	// Getting annoyed
+		"2|4|5|7",	// Showing off
+		"3|4|5|6";	// Drooping
+
+	while(1) {
+		for(set .@i,1; .@i<=5; set .@i,.@i+1)
+			set .@cat_action[.@i], ((.@flag_point_cat[.@i])?rand(1,8):0);
+
+		switch(.@cat_action[1]) {
+			case 0: set .@cat_mes$[1], "cannot do anything with all points used"; break;
+			case 1: set .@cat_mes$[1], "focuses on hair picking, careless for the game"; break;
+			case 2: set .@cat_mes$[1], "looks around with round eyes"; break;
+			case 3: set .@cat_mes$[1], "picks out hair around the front paw"; break;
+			case 4: set .@cat_mes$[1], "is getting annoyed at tails smacking on the ground"; break;
+			case 5: set .@cat_mes$[1], "picks his hair while looking around"; break;
+			case 6: set .@cat_mes$[1], "shows off his front paw to the Leader Cat"; break;
+			case 7: set .@cat_mes$[1], "is picking some hair on his belly with a calm mind"; break;
+			case 8: set .@cat_mes$[1], "is drooping down with a pleasant face"; break;
+		}
+		switch(.@cat_action[2]) {
+			case 0: set .@cat_mes$[2], "cannot do anything with all points used"; break;
+			case 1: set .@cat_mes$[2], "picks out hair around the front paw"; break;
+			case 2: set .@cat_mes$[2], "looks around with round eyes"; break;
+			case 3: set .@cat_mes$[2], "is getting annoyed with the Leader Cat"; break;
+			case 4: set .@cat_mes$[2], "observes flies flying around"; break;
+			case 5: set .@cat_mes$[2], "shows off picked hair proudly"; break;
+			case 6: set .@cat_mes$[2], "observes Leader Cat's tail curiously"; break;
+			case 7: set .@cat_mes$[2], "looks at you with drooping eyes"; break;
+			case 8: set .@cat_mes$[2], "is checking you out with a weird glimmer"; break;
+		}
+		switch(.@cat_action[3]) {
+			case 0: set .@cat_mes$[3], "cannot do anything with all points used"; break;
+			case 1: set .@cat_mes$[3], "is getting annoyed at tails smacking on the ground"; break;
+			case 2: set .@cat_mes$[3], "observes Leader Cat's tail curiously"; break;
+			case 3: set .@cat_mes$[3], "is getting annoyed while picking his hair"; break;
+			case 4: set .@cat_mes$[3], "scratches with a drooping face"; break;
+			case 5: set .@cat_mes$[3], "catches a flying fly and shows off"; break;
+			case 6: set .@cat_mes$[3], "is getting irritable with a tired face"; break;
+			case 7: set .@cat_mes$[3], "picks his hair while looking around"; break;
+			case 8: set .@cat_mes$[3], "is getting annoyed with the Leader Cat"; break;
+		}
+		switch(.@cat_action[4]) {
+			case 0: set .@cat_mes$[4], "cannot do anything with all points used"; break;
+			case 1: set .@cat_mes$[4], "is picking some hair on his belly with a calm mind"; break;
+			case 2: set .@cat_mes$[4], "shows off his front paw to the Leader Cat"; break;
+			case 3: set .@cat_mes$[4], "is getting irritable with a tired face"; break;
+			case 4: set .@cat_mes$[4], "catches a flying fly and shows off"; break;
+			case 5: set .@cat_mes$[4], "shows off an attractive tail"; break;
+			case 6: set .@cat_mes$[4], "is drooping and mumbling"; break;
+			case 7: set .@cat_mes$[4], "shows off picked hair proudly"; break;
+			case 8: set .@cat_mes$[4], "is checking you out with a weird glimmer"; break;
+		}
+		switch(.@cat_action[5]) {
+			case 0: set .@cat_mes$[5], "cannot do anything with all points used"; break;
+			case 1: set .@cat_mes$[5], "is fighting with his tail"; break;
+			case 2: set .@cat_mes$[5], "is scratching with his hind foot"; break;
+			case 3: set .@cat_mes$[5], "is drooping down with a pleasant face"; break;
+			case 4: set .@cat_mes$[5], "checks you out with a drooping face"; break;
+			case 5: set .@cat_mes$[5], "scratches with a drooping face"; break;
+			case 6: set .@cat_mes$[5], "is drooping and mumbling"; break;
+			case 7: set .@cat_mes$[5], "is lying around~"; break;
+			case 8: set .@cat_mes$[5], "is doing nothing"; break;
+		}
+
+		switch(rand(3)) {
+			case 0: set .@tip$, "You can predict if the cat will wave the flag or not with 'Observe cats'."; break;
+			case 1: set .@tip$, "1 Flag Point will be deducted if you choose 'Wave flag'."; break;
+			case 2: set .@tip$, "Choosing 'Wait', you can check the results and move on to the next game."; break;
+		}
+		while(1) {
+			mes "[Leader]";
+			mes "Cats are now all prepared.";
+			mes "What will you do?";
+			mes " ";
+			mes "Tip: ^F86A08"+.@tip$+"^000000";
+			next;
+			set .@choice, select("Observe cats:Wave flag:Wait");
+			switch(.@choice) {
+			case 1:
+				mes "Observing cats...";
+				next;
+				for(set .@i,1; .@i<=5; set .@i,.@i+1) {
+					mes "[------ Observing cats ------]";
+					mes .@cat_name$[.@i]+.@cat_desc$[.@i]+" ^FF0000"+.@cat_mes$[.@i]+"^000000.";
+					next;
+				}
+				break;
+			case 2:
+				set .@flag_point, .@flag_point-1;
+				set .@you_flag,1;
+				break;
+			case 3:
+				break;
+			}
+			if (.@choice != 1) break;
+		}
+		set .@round, .@round+1;
+		set .@rounds_nowave, .@rounds_nowave+1;
+		if (.@you_flag == 1) {
+			set .@you_flag$, "You waved the flag";
+			set .@emotion[0], e_korea;
+		} else {
+			set .@you_flag$, "You didn't wave the flag";
+			set .@emotion[0], e_swt2;
+		}
+		for(set .@i,1; .@i<=5; set .@i,.@i+1) {
+			if (.@flag_point_cat[.@i] == 0) {
+				set .@cat_flag$[.@i], "Not enough Flag Points, could not wave";
+				set .@emotion[.@i], e_ho;
+			} else {
+				if (compare(.@cat_emotes$[.@i],""+.@cat_action[.@i])) {
+					set .@cat_flag$[.@i], "Didn't wave";
+					set .@emotion[.@i], .@cat_emote[.@i];
+				} else {
+					set .@cat_flag$[.@i], "Did wave";
+					set .@flag_point_cat[.@i], .@flag_point_cat[.@i]-1;
+					set .@cat_flags_waved, .@cat_flags_waved+1;
+					set .@emotion[.@i], e_korea;
+				}
+			}
+		}
+		mes "[Leader]";
+		mes "Game ^C1653E"+.@round+"^000000 results...";
+		next;
+		mes "[Leader]";
+		mes "~ Flag Game challenger "+strcharinfo(0)+" ~";
+		mes "^FF0000"+.@you_flag$+"^000000 for game ^C1653E"+.@round+"^000000.";
+		mes .@flag_point+" Flag Point remaining.";
+		emotion .@emotion[0],1;
+		next;
+		for(set .@i,1; .@i<=5; set .@i,.@i+1) {
+			mes "[Leader]";
+			mes "~ "+.@cat_name$[.@i]+.@cat_desc$[.@i]+" ~";
+			mes "^FF0000"+.@cat_flag$[.@i]+"^000000 the flag for game ^C1653E"+.@round+"^000000.";
+			mes .@flag_point_cat[.@i]+" Flag Point remaining for "+.@cat_name$[.@i]+".";
+			emotion .@emotion[.@i],0,.@npc_name$[.@i];
+			next;
+		}
+		if (.@you_flag == 1) {
+			set .@rounds_nowave,0;
+			if (.@cat_flags_waved == 0) {
+				// You win.
+				break;
+			} else if (.@flag_point == 0) {
+				// You lose.
+				mes "[Leader]";
+				mes "You have used all your Flag Points.";
+				next;
+				break;
+			} else {
+				set .@you_flag,0;
+				mes "[Leader]";
+				mes "You have failed at flag waving.";
+				mes .@flag_point+" Flag Point remaining.";
+				next;
+				mes "[Leader]";
+				mes "Let's move on to the next game.";
+				next;
+				mes "... ... ... ...";
+				next;
+			}
+		} else {
+			if (.@cat_flags_waved == 5) {
+				mes "[Leader]";
+				mes "Congrats "+strcharinfo(0)+". You have succeed on not waving your flag.";
+				next;
+				mes "[Leader]";
+				mes "But! This is flag waving game, so this doesn't count.";
+				next;
+			} else {
+				if (.@rounds_nowave == 10) {
+					set .@rounds_nowave,0;
+					set .@flag_point, .@flag_point-1;
+					mes "[Leader]";
+					mes "Since you didn't wave your flag for 10 games, 1 Flag Point will be reduced according to the official Flag Game rules.";
+					next;
+					if (.@flag_point == 0) {
+						// You lose.
+						mes "[Leader]";
+						mes "You have used all your Flag Points.";
+						next;
+						break;
+					} else {
+						mes "[Leader]";
+						mes .@flag_point+" Flag Point remaining.";
+						next;
+					}
+				} else {
+					mes "[Leader]";
+					mes "Game "+.@round+" has ended properly. Point penalty will be given after "+(10-.@rounds_nowave)+" more.";
+					next;
+				}
+				mes "[Leader]";
+				mes "Let's move on to the next game.";
+				next;
+				mes "... ... ... ...";
+				next;
+			}
+		}
+		set .@cat_flags_waved,0;
+	}
+	mes "[Leader]";
+	mes "The Flag-Waving Game has ended.";
+	next;
+	mes "[Leader]";
+	mes "Final results!!";
+	mes "After "+.@round+" games, "+strcharinfo(0)+" has "+.@flag_point+" Flag Point left.";
+	mes "... ... ...";
+	next;
+	if (.@you_flag == 1 && .@cat_flags_waved == 0) {
+		setquest 5073;
+		if (.@flag_point_cat[1]+.@flag_point_cat[2]+.@flag_point_cat[3]+.@flag_point_cat[4]+.@flag_point_cat[5] < 5) {
+			getitem 12636,3; //Malang_Sp_Can
+			mes "[Leader]";
+			mes "Congratulations. You have won the Flag-Waving Game.";
+			next;
+			mes "[Leader]";
+			mes "But, only 3 Canned Foods will be given as the present since you didn't take a big part through the game.";
+		} else {
+			switch(.@flag_point) {
+				case 0: set .@cans,5; break;
+				case 1: set .@cans,7; break;
+				case 2: set .@cans,10; break;
+				case 3: set .@cans,15; break;
+				case 4: set .@cans,20; break;
+			}
+			getitem 12636, .@cans; //Malang_Sp_Can
+			mes "[Leader]";
+			mes "Congratulations. You have won the Flag-Waving Game. "+.@cans+" Canned Foods will be given as the present.";
+		}
+		next;
+		mes "[Leader]";
+		mes "Hope you win some more Canned Foods tomorrow.";
+		close;
+	}
+	mes "[Leader]";
+	mes "Flag waving failed...";
+	mes "... ... ... ...";
+	next;
+	setquest 5073;
+	switch(rand(1,13)) {
+		case 1: setquest 5074; break;
+		case 2: setquest 5075; break;
+		case 3: setquest 5076; break;
+		case 4: setquest 5077; break;
+		case 5: setquest 5078; break;
+		case 6: setquest 5079; break;
+		case 7: setquest 5080; break;
+		case 8: setquest 5081; break;
+		case 9: setquest 5082; break;
+		case 10: setquest 5083; break;
+		case 11: setquest 5085; break;
+		case 12: setquest 5087; break;
+		case 13: setquest 5089; break;
+	}
+	mes "Leader gives you a note without hesitation. You must follow the order now.";
+	close;
+}
+
+mal_in01,136,216,2	script	Seichi#gamer	553,{
+	if (malang_gamer == 20) {
+		mes "[Seichi]";
+		mes "Ah~ I'm hungry. Any rats wandering around?";
+		next;
+		mes "[Seichi]";
+		mes "Ah~ I think I could eat 100 cramps at once.";
+		next;
+		mes "[Seichi]";
+		mes "Hey, why don't you look around? Who knows? Maybe we can find a delicious canned food~";
+		emotion e_no;
+		next;
+		mes "[Seichi]";
+		mes "Then, you can give me one. Hehe~";
+		close;
+	} else {
+		mes "[Seichi]";
+		mes "I am hungry~ Any leftover canned food there?";
+		emotion e_no;
+		close;
+	}
+	end;
+}
+
+mal_in01,136,215,2	script	Row#gamer	559,{
+	if (malang_gamer == 20) {
+		mes "[Row]";
+		mes "Hut! Human, you came to see me, Row the Great? What? No?";
+		next;
+		mes "[Row]";
+		mes "What do want then? Get lost. Ah...!!";
+		next;
+		mes "[Row]";
+		mes "You want to play the Flag Game? I see. Show me what you've got.";
+		next;
+		mes "[Row]";
+		mes "But, you know you can never beat me, the great Row.";
+		emotion e_gg;
+		close;
+	} else {
+		mes "[Row]";
+		mes "Flag waving is a serious game. Only special cats like me can compete. Meow~";
+		close;
+	}
+	end;
+}
+
+mal_in01,136,214,2	script	Debong#gamer	876,{
+	if (malang_gamer == 20) {
+		mes "[Debong]";
+		mes "Hair picking is my best hobby meow.";
+		next;
+		mes "[Debong]";
+		mes "When picking hair meow~";
+		mes "Time really flies meow~";
+		next;
+		mes "[Debong]";
+		mes "Come here, you, meow. I'll pick your hair meow.";
+		emotion e_lv;
+		close;
+	} else {
+		mes "The cat is picking your hair.";
+		close;
+	}
+	end;
+}
+
+mal_in01,136,213,2	script	Libs#gamer	421,{
+	if (malang_gamer == 20) {
+		mes "[Libs]";
+		mes "Arrgg!! Why should I play this stupid flag waving game here?";
+		emotion e_an;
+		next;
+		mes "[Libs]";
+		mes "Hey you. What do you think? I know you've hearing me!";
+		next;
+		mes "[Libs]";
+		mes "... ... ...";
+		next;
+		mes "[Libs]";
+		mes "Well, I'm sure you won't have a clue why this is happening. I forgive you.";
+		emotion e_ok;
+		next;
+		mes "[Libs]";
+		mes "How can a human understand the overwhelming heart of cats.";
+		emotion e_pif;
+		close;
+	} else {
+		mes "[Libs]";
+		mes "A human? What are you doing here?";
+		next;
+		mes "[Libs]";
+		mes "Oh! I see. Our director is looking a practicing partner, why don't you apply?";
+		close;
+	}
+	end;
+}
+
+mal_in01,136,212,2	script	YongYong#gamer	554,{
+	if (malang_gamer == 20) {
+		mes "[YongYong]";
+		mes "Meow~ I'm annoyed meow~";
+		emotion e_an;
+		next;
+		mes "[YongYong]";
+		mes "Annoying meow~";
+		emotion e_an;
+		next;
+		mes "[YongYong]";
+		mes "You're annoying meow~";
+		emotion e_an;
+		next;
+		mes "[YongYong]";
+		mes "What are you, a dog? Meow~!";
+		emotion e_an;
+		specialeffect EF_SONICBLOW2;
+		next;
+		mes "[YongYong]";
+		mes "Do not mess with the drooping cat.";
+		mes "Or you will regret it.";
+		close;
+	} else {
+		mes "z..Z..z..Z";
+		mes "The cat is sleeping.";
+		close;
+	}
+	end;
+}
+
+malangdo,120,140,7	script	Sign#Cat G Entrance	858,{
+	mes "A small sign.";
+	next;
+	mes "[Cat Gamers Headquarters]";
+	mes "- Practicing partner welcome -";
+	mes "- Recruiting 'Cat Gamers' -";
+	mes "Consult with our Cat Gamers Director.";
+	close;
+}
+
+mal_in01,15,221,6	script	Sign#Cat G 1F	858,{
+	mes "[Cat Gamers Headquarters 1F]";
+	mes "- ~ B 1 ~ -";
+	mes "Rock Paper Scissors practice room";
+	mes "ChamChamCham practice room";
+	close;
+}
+
+mal_in01,77,214,4	script	Sign#Cat G B1	858,{
+	mes "[Cat Gamers Headquarters B1]";
+	mes "- ~ 1 F ~ -";
+	mes "Consult with the director...";
+	mes "-----------------------------";
+	mes "- ~ B 2 ~ -";
+	mes "KongNyangKong & Flag Game practice room";
+	mes "'Cat Gamers' Tech Team lab";
+	close;
+}
+
+mal_in01,142,220,6	script	Sign#Cat G B2	858,{
+	mes "[Cat Gamers Headquarters B2]";
+	mes "- ~ B 1 ~ -";
+	mes "Rock Paper Scissors practice room";
+	mes "ChamChamCham practice room";
+	close;
+}
+
+mal_in01,155,222,2	script	Uneet#gamer	890,{
+	set .@playtime, checkquest(5069,PLAYTIME);
+	if (.@playtime == 0 || .@playtime == 1) {
+		mes "[Uneet]";
+		mes "Wow Wot~ What a busy day~";
+		mes "Oh, you are the one who won the honorable certificate?";
+		next;
+		mes "[Uneet]";
+		mes "There are more orders coming every day. Ahh!! Give me some more manpower!!";
+		close;
+	} else if (.@playtime == 2) {
+		mes "[Uneet]";
+		mes "Nyah~ Ong~ Certificate complete!!";
+		next;
+		mes "[Uneet]";
+		mes "I already gave your certificate to the Cat Gamers Director! Go check it out~";
+		next;
+		mes "[Uneet]";
+		mes "Please... Keep this wherever you go.";
+		close;
+	} else if (malang_gamer < 19) {
+		mes "[Uneet]";
+		mes "I am a cat. Nyah~ Ong~";
+		mes "I look like a sheep because I was so busy I didn't have time to shave.";
+		mes "It is not my fault...";
+		close;
+	} else {
+		mes "[Uneet]";
+		mes "Nyah~ Ong~ Do not interrupt my resting.";
+		mes "Usually, I am very busy...";
+		mes "Don't touch me.";
+		next;
+		mes "[Uneet]";
+		mes "I'm a bit fat now, but you should look at yourself too. Haha...";
+		close;
+	}
+	end;
+}
+
+mal_in01,30,222,4	script	Interview Cat#gamer	560,{
+	mes "[Interview Cat]";
+	mes "I want join 'Cat Gamers'.";
+	mes "But it seems the Cat Gamers Director is busy now. Should I just leave?";
+	next;
+	mes "[Interview Cat]";
+	mes "What? You also want join this group?";
+	close;
+}
+
+mal_in01,19,213,1	script	Waiting Cat#gamer	555,{
+	mes "[Waiting Cat]";
+	mes "Why did someone put that vase inside of a glass?";
+	mes "The Cat Gamers Director did that?";
+	next;
+	mes "[Waiting Cat]";
+	mes "What strange taste.";
+	mes "Maybe I should rethink joining 'Cat Gamers', huh?";
 	close;
 }
 

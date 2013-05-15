@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20130504
+//= 20130515
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
@@ -106,9 +106,21 @@ Toggles Kill Steal Protection.
 
 ---------------------------------------
 
-@font <0-9>
+@font <type 0-9>
 
-Sets client font (0 is the default).
+Sets the client font.
+
+Available types:
+-- 0: Default
+-- 1: RixLoveangel
+-- 2: RixSquirrel
+-- 3: NHCgogo
+-- 4: RixDiary
+-- 5: RixMiniHeart
+-- 6: RixFreshman
+-- 7: RixKid
+-- 8: RixMagic
+-- 9: RixJJangu
 
 ---------------------------------------
 
@@ -247,9 +259,15 @@ Value: <type=B(default),W,L><number> or S<length>"<string>"
 
 ---------------------------------------
 
-@mapinfo
+@mapinfo {<type 0-3> {<map>}}
 
-Displays information about the current map.
+Displays information about the current map or the one specified.
+
+Available types:
+-- 0: General information and mapflags (always shown).
+-- 1: Players.
+-- 2: NPCs.
+-- 3: Chatrooms.
 
 Output Example:
 ------ Map Info ------
@@ -454,31 +472,34 @@ Displays inventory contents of the attached player.
 
 ---------------------------------------
 
-@who
-@who2
-@who3
+@who {<filter>}
+@who2 {<filter>}
+@who3 {<filter>}
 
 Returns a list of online characters.
+If a filter is given, the list will be restricted to names containing the filter string.
 @who will also return character positions.
 @who2 will also return job classes.
 @who3 will also return parties/guilds.
 
 ---------------------------------------
 
-@whomap
-@whomap2
-@whomap3
+@whomap {<map>}
+@whomap2 {<map>}
+@whomap3 {<map>}
 
 Returns a list of online characters in a specific map.
+If a map is given, the list will be restricted to characters on the specified map.
 @whomap will also return character positions.
 @whomap2 will also return job classes.
 @whomap3 will also return parties/guilds.
 
 ---------------------------------------
 
-@whogm
+@whogm {<filter>}
 
 Returns a list of GMs online.
+If a filter is given, the list will be restricted to names containing the filter string.
 For those who are higher GM level than yourself, only name is shown.
 For the rest, the command acts as a combination of @who+@who2+@who3.
 
@@ -698,7 +719,7 @@ Sets your save point as your current map coordinates.
 
 ---------------------------------------
 
-@memo {<0-2>}
+@memo {<position 0-2>}
 
 Saves a warp point for the "Warp Portal" skill.
 If a number is not specified, the command will output all currently saved locations.
@@ -917,9 +938,10 @@ Some options can be found in '/conf/battle/misc.conf'.
 
 ---------------------------------------
 
-@heal
+@heal {<hp> {<sp>}}
 
-Fully heals HP and SP. 
+Heals the specified amount of HP and SP.
+If no paramters are given, the character will be fully healed.
 
 ---------------------------------------
 
@@ -1117,35 +1139,37 @@ This will also send a packet to clients causing them to close.
 
 ---------------------------------------
 
-@reloaditemdb
-@reloadmobdb
-@reloadskilldb
-@reloadquestdb
-@reloadscript
-
-Reloads the specified database.
--itemdb: Item Database
--mobdb: Monster Database
--skilldb: Skill Database
--questdb: Quest Database
--script: NPC Scripts
-
----------------------------------------
-
+@reload <type>
 @reloadatcommand
 @reloadbattleconf
-@reloadmsgconf
-@reloadstatusdb
-@reloadpcdb
+@reloaditemdb
+@reloadmobdb
 @reloadmotd
+@reloadmsgconf
+@reloadpacketdb
+@reloadpcdb
+@reloadquestdb
+@reloadscript
+@reloadskilldb
+@reloadstatusdb
 
-Reloads the specified configuration file.
--atcommand: Atcommand Settings
--battleconf: Battle Settings (may require relog)
--msgconf: Message Configuration
--statusdb: Status Settings
--pcdb: Player Settings
--motd: Message of the Day
+Reloads a database or configuration file.
+
+Databases:
+-- itemdb: Item Database
+-- mobdb: Monster Database
+-- packetdb: Packet Database
+-- questdb: Quest Database
+-- script: NPC Scripts
+-- skilldb: Skill Database
+
+Configuration files:
+-- atcommand: Atcommand Settings
+-- battleconf: Battle Settings (may require relog)
+-- motd: Message of the Day
+-- msgconf: Message Configuration
+-- pcdb: Player Settings
+-- statusdb: Status Settings
 
 ---------------------------------------
 

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Joseph
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: =========================================
@@ -20,6 +20,7 @@
 //=     - L0ne_W0lf, Daegaladh
 //= 1.0 Merged and cleaned up Kafras. [Euphy]
 //= 1.1 Added Dewata Kafra. [Lemongrass]
+//= 1.2 Added Port Malaya Kafras. [Euphy]
 //============================================================ 
 
 // Brasilis
@@ -40,7 +41,20 @@ dewata,202,184,6	script	Kafra Employee::kaf_dewata	117,{
 	callfunc "F_KafEnd",0,1,"on Dewata Island";
 }
 
-
 // Izlude
 //============================================================
 izlude,128,148,6	duplicate(kaf_izlude)	Kafra Employee	117
+
+// Port Malaya
+//============================================================
+malaya,71,79,4	script	Kafra Employee::kaf_malaya1	581,{
+	callfunc "F_Kafra",0,3,2,500,700;
+	savepoint "malaya",43,57;
+	callfunc "F_KafEnd",0,1,"in Port Malaya";
+}
+
+malaya,234,204,4	script	Kafra Employee::kaf_malaya2	581,{
+	callfunc "F_Kafra",0,3,2,500,700;
+	savepoint "malaya",280,213;
+	callfunc "F_KafEnd",0,1,"in Port Malaya";
+}

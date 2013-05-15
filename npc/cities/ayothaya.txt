@@ -16,8 +16,8 @@
 //= 1.9 Updated Renewal warp coordinates.
 //============================================================ 
 
-// Ayothaya Transportation NPC
-//============================================================ 
+// Ayothaya Transportation
+//============================================================
 -	script	::Aibakthing_ayothaya	-1,{
 	mes "[Aibakthing]";
 	mes "Hoo! Hah! Hoo! Hah!";
@@ -106,7 +106,7 @@ ayothaya,152,68,1	script	Aibakthing#ayo2	843,{
 }
 
 // Generic Ayothaya NPCs
-//============================================================ 
+//============================================================
 ayothaya,189,120,3	script	Young Man#Thang	843,{
 	mes "[Thang]";
 	mes "There's an ancient,";

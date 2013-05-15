@@ -1,0 +1,81 @@
+//===== rAthena Script ======================================= 
+//= Port Malaya Guides
+//===== By: ================================================== 
+//= Euphy
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena SVN
+//===== Description: ========================================= 
+//= Guides for the city of Malaya.
+//===== Additional Comments: ================================= 
+//= 1.0 First version. [Euphy]
+//============================================================ 
+
+malaya,71,72,4	script	Port Malaya Guide#01::GuideMalaya	579,{
+	mes "[Port Malaya Guide]";
+	mes "Where cultures and legends come to life!";
+	mes "At the Breathing Village, ^8B4513Port Malaya^000000, we welcome you.";
+	mes "I will show you around the village. Please ask me anything you want.";
+	while(1) {
+		next;
+		switch(select("Kafra Employee:Inn & Tavern:Weapon Store:Tool Shop:Hospital:Park:Harbor:Clear the mini map:Cancel")) {
+		case 1:
+			callsub L_Mark,"^0000FFKafra Employee";
+			viewpoint 1,71,79,0,0x0A82FF;
+			viewpoint 1,234,204,1,0x0A82FF;
+			break;
+		case 2:
+			callsub L_Mark,"^006400Inn & Tavern";
+			viewpoint 1,193,215,2,0xAAFF00;
+			break;
+		case 3:
+			callsub L_Mark,"^008080Weaponry Store";
+			viewpoint 1,114,212,3,0x4F543C;
+			break;
+		case 4:
+			callsub L_Mark,"^FF1493Tool Store";
+			viewpoint 1,297,167,4,0xFF1493;
+			break;
+		case 5:
+			callsub L_Mark,"^8B4513Hospital";
+			viewpoint 1,50,75,5,0x8B4513;
+			break;
+		case 6:
+			callsub L_Mark,"^8B4513Park";
+			viewpoint 1,280,371,6,0x8B4513;
+			break;
+		case 7:
+			callsub L_Mark,"^8A2BE2Harbor";
+			viewpoint 1,276,55,7,0x8A2BE2;
+			break;
+		case 8:
+			mes "[Port Malaya Guide]";
+			mes "Removing marks.";
+			mes "What else can I help you with?";
+			viewpoint 2,1,1,0,0xFFFFFF;
+			viewpoint 2,1,1,1,0xFFFFFF;
+			viewpoint 2,1,1,2,0xFFFFFF;
+			viewpoint 2,1,1,3,0xFFFFFF;
+			viewpoint 2,1,1,4,0xFFFFFF;
+			viewpoint 2,1,1,5,0xFFFFFF;
+			viewpoint 2,1,1,6,0xFFFFFF;
+			viewpoint 2,1,1,7,0xFFFFFF;
+			break;
+		case 9:
+			mes "[Port Malaya Guide]";
+			mes "I hope you enjoy your journey.";
+			close;
+		}
+	}
+	end;
+L_Mark:
+	mes "[Port Malaya Guide]";
+	mes "The "+getarg(0)+"^000000";
+	mes "location will be";
+	mes "marked on your mini-map.";
+	mes "What else can I help you with?";
+	return;
+}
+malaya,250,83,6	duplicate(GuideMalaya)	Port Malaya Guide#02	579
+malaya,224,204,6	duplicate(GuideMalaya)	Port Malaya Guide#03	579
