@@ -7577,30 +7577,30 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 
 		case SC_DPOISON:
-		//Lose 10/15% of your life as long as it doesn't brings life below 25%
-		if (status->hp > status->max_hp>>2) {
-			int diff = status->max_hp*(bl->type==BL_PC?10:15)/100;
-			if (status->hp - diff < status->max_hp>>2)
-				diff = status->hp - (status->max_hp>>2);
-			if( val2 && bl->type == BL_MOB ) {
-				struct block_list* src = map_id2bl(val2);
-				if( src )
-					mob_log_damage((TBL_MOB*)bl,src,diff);
+			//Lose 10/15% of your life as long as it doesn't brings life below 25%
+			if (status->hp > status->max_hp>>2) {
+				int diff = status->max_hp*(bl->type==BL_PC?10:15)/100;
+				if (status->hp - diff < status->max_hp>>2)
+					diff = status->hp - (status->max_hp>>2);
+				if( val2 && bl->type == BL_MOB ) {
+					struct block_list* src = map_id2bl(val2);
+					if( src )
+						mob_log_damage((TBL_MOB*)bl,src,diff);
+				}
+				status_zap(bl, diff, 0);
 			}
-			status_zap(bl, diff, 0);
-		}
-		// fall through
 		case SC_POISON:
-		val3 = tick/1000; //Damage iterations
-		if(val3 < 1) val3 = 1;
-		tick_time = 1000; // [GodLesZ] tick time
-		//val4: HP damage
-		if (bl->type == BL_PC)
-			val4 = (type == SC_DPOISON) ? 3 + status->max_hp/50 : 3 + status->max_hp*3/200;
-		else
-			val4 = (type == SC_DPOISON) ? 3 + status->max_hp/100 : 3 + status->max_hp/200;
-
-		break;
+			// fall through
+			val3 = tick/1000; //Damage iterations
+			if(val3 < 1) val3 = 1;
+			tick_time = 1000; // [GodLesZ] tick time
+			//val4: HP damage
+			if (bl->type == BL_PC)
+				val4 = (type == SC_DPOISON) ? 2 + status->max_hp/50 : 2 + status->max_hp*3/200;
+			else
+				val4 = (type == SC_DPOISON) ? 2 + status->max_hp/100 : 2 + status->max_hp/200;
+			break;
+			
 		case SC_CONFUSION:
 			clif_emotion(bl,E_WHAT);
 			break;
@@ -10085,8 +10085,6 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		break;
 
 	case SC_POISON:
-		if(status->hp <= max(status->max_hp>>2, sce->val4)) //Stop damaging after 25% HP left.
-			break;
 	case SC_DPOISON:
 		if (--(sce->val3) > 0) {
 			if (!sc->data[SC_SLOWPOISON]) {
@@ -10096,7 +10094,8 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 						mob_log_damage((TBL_MOB*)bl,src,sce->val4);
 				}
 				map_freeblock_lock();
-				status_zap(bl, sce->val4, 0);
+				if(status->hp >= max(status->max_hp>>2, sce->val4)) //Stop damaging after 25% HP left.
+					status_zap(bl, sce->val4, 0);
 				if (sc->data[type]) { // Check if the status still last ( can be dead since then ).
 					sc_timer_next(1000 + tick, status_change_timer, bl->id, data );
 				}
@@ -10104,6 +10103,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			}
 			return 0;
 		}
+
 		break;
 
 	case SC_TENSIONRELAX:
