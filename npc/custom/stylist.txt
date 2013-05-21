@@ -8,12 +8,12 @@
 //= rAthena SVN
 //===== Description: =========================================
 //= Changes your hair style, hair color, and cloth color.
-//===== Additional Comments: =================================  
+//===== Additional Comments: =================================
+//= 1.0 Initial script.
 //= 1.1 Switched to 'getbattleflag', credits to Saithis. [Euphy]
 //============================================================
 
 prontera,170,180,1	script	Stylist#custom_stylist	122,{
-
 	setarray .@Styles[1],getbattleflag("max_cloth_color"),getbattleflag("max_hair_style"),getbattleflag("max_hair_color");
 	setarray .@Look[1],7,1,6;
 	set .@s, select(" ~ Cloth color: ~ Hairstyle: ~ Hair color");

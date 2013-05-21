@@ -231,7 +231,7 @@ yuno,144,189,5	duplicate(eto)	Eden Teleport Officer#15	729
 rachel,125,144,3	duplicate(eto)	Eden Teleport Officer#16	729
 morocc,161,97,6	duplicate(eto)	Eden Teleport Officer#17	729
 comodo,202,151,4	duplicate(eto)	Eden Teleport Officer#18	729
-umbala,104,158,4	duplicate(eto)	Eden Teleport Officer#19	729
+umbala,96,160,3	duplicate(eto)	Eden Teleport Officer#19	729
 veins,220,109,4	duplicate(eto)	Eden Teleport Officer#20	729
 lighthalzen,164,86,4	duplicate(eto)	Eden Teleport Officer#21	729
 einbroch,250,211,4	duplicate(eto)	Eden Teleport Officer#22	729

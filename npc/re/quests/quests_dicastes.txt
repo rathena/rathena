@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Gennosuke Kouga, Muad_Dib
 //===== Current Version: =====================================
-//= 1.8b
+//= 1.9
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -26,6 +26,7 @@
 //= 1.8 Optimized and fixed invalid checkquest. [Joseph]
 //= 1.8a Disabled "Fish Tails" until Izlude RE coordinates are found. [Euphy]
 //= 1.8b Updated "Calyon" NPC and fixed a check. [Euphy]
+//= 1.9 Updated "Fish Tails" with RE coordinates.
 //============================================================
 
 // Entrance
@@ -1028,7 +1029,7 @@ dic_in01,40,193,1	script	Papyrus#0001	453,{
 	else if (.@doc == 11) eldicastes_dp(12169,"Stem","There is nothing like Midgard plants in Manuk.","These plants are used for food and medicine and some are even poisonous.");
 	else if (.@doc == 12) eldicastes_dp(12170,"Pointed Scale","Stem from a bumpy life form. Research required as the usage is unknown.","");
 	else if (.@doc == 13) eldicastes_dp(12171,"Resin","Sap from an old tree collected and solidified. Very valuable in the human world.","");
-	//else if (.@doc == 14) eldicastes_dp(12174,"Fish Tail","Humans eat meat called fish.","Can be used as important food supply for foreign adventurers visiting in the city.");
+	else if (.@doc == 14) eldicastes_dp(12174,"Fish Tail","Humans eat meat called fish.","Can be used as important food supply for foreign adventurers visiting in the city.");
 	else if (.@doc == 15) eldicastes_dp(12175,"Worm Peeling","They say some Worm Peelings are valuable.","But this is based on the human's standard of value. Research required.");
 	else if (.@doc == 16) eldicastes_dp(12176,"Gill","There are Midgard creatures that live in the sea and breathe through gills.","Further research on their ecology will be useful.");
 	else if (.@doc == 17) eldicastes_dp(12177,"Tooth of Bat","Traces of a nocturnal creature unknown to Manuk. Not a strong creature from the size of its teeth.","");
@@ -1091,7 +1092,7 @@ dic_in01,25,187,0	duplicate(Document Package#main)	Document Package#0004	844
 
 function	script	unknown_d	{
 	if (checkquest(getarg(0)) == -1) {
-		mes "You see some traces of digging";
+		mes "You see some traces of digging.";
 		close;
 	}
 	specialeffect2 EF_SPRINKLESAND;
@@ -1116,7 +1117,7 @@ pay_fild02,105,113,0	script	Pointed Scales	844,{ unknown_d(12170,906); }
 pay_fild01,152,171,0	script	Resin	844,{ unknown_d(12171,907); }
 gef_fild01,104,111,0	script	Spawn	844,{ unknown_d(12172,908); }
 prt_fild08,299,332,0	script	Jellopy	844,{ unknown_d(12173,909); }
-//izlude,132,136,0	script	Fish Tails	844,{ unknown_d(12174,1023); }
+izlude,136,160,0	script	Fish Tails	844,{ unknown_d(12174,1023); }	// Pre-RE: izlude (132,136)
 prt_fild05,303,169,0	script	Worm Peelings	844,{ unknown_d(12175,955); }
 iz_dun03,155,165,0	script	Gills	844,{ unknown_d(12176,956); }
 mjo_dun01,222,226,0	script	Tooth of Bat	844,{ unknown_d(12177,913); }

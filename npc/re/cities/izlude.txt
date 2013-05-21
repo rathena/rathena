@@ -18,7 +18,7 @@ izlude,71,92,2	duplicate(Bonne_izlude)	Bonne#izlude	90
 izlude,172,215,4	duplicate(Charfri_izlude)	Charfri#izlude	91
 izlude,127,175,4	duplicate(Cuskoal_izlude)	Cuskoal#izlude	124
 izlude,85,103,4	duplicate(Dega_izlude)	Dega#izlude	84
-izlude,141,185,4	duplicate(Kylick_izlude)	Kylick#izlude	97
+izlude,140,186,4	duplicate(Kylick_izlude)	Kylick#izlude	97
 izlude,56,156,2	duplicate(Red_izlude)	Red#izlude	85
 izlude,58,156,2	duplicate(Cebalis_izlude)	Cebalis#izlude	98
 izlude,165,156,2	duplicate(Soldier_izlude)	Soldier#izlude	105

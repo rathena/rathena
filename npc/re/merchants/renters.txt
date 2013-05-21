@@ -148,7 +148,7 @@ prontera,125,208,5	script	Peco Peco Remover	105,{
 
 // Magic Gear Renter
 //============================================================
-prontera,163,178,4	script	Magic Gear Master	105,{
+prontera,163,178,3	script	Magic Gear Master	105,{
 	mes "[Magic Gear Master]";
 	if (Class == Job_Mechanic || Class == Job_Mechanic_T || Class == Job_Baby_Mechanic) {
 		mes "Welcome. Would you like to rent a Magic Gear?";
