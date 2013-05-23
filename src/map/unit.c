@@ -170,14 +170,13 @@ int unit_check_start_teleport_timer(struct block_list *sbl){
 	}
 	if(msd){ //if there is a master
 		int *msd_tid = unit_get_masterteleport_timer(sbl);
-		if(msd_tid == NULL) return 0;
 
 		if (!check_distance_bl(&msd->bl, sbl, MAX_MER_DISTANCE)) {
-			if(*msd_tid == INVALID_TIMER)
+			if(*msd_tid == INVALID_TIMER || *msd_tid == 0)
 				*msd_tid = add_timer(gettick()+3000,unit_teleport_timer,sbl->id,BL_MER);
 		}
 		else {
-			if(*msd_tid != INVALID_TIMER)
+			if(*msd_tid && *msd_tid != INVALID_TIMER)
 				delete_timer(*msd_tid,unit_teleport_timer);
 			*msd_tid = INVALID_TIMER; //cancel recall
 		}
@@ -253,7 +252,6 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	ud->walktimer = INVALID_TIMER;
 
 	if(sd) {
-		struct block_list *sbl; //slave bl
 		if( sd->touching_id )
 			npc_touchnext_areanpc(sd,false);
 		if(map_getcell(bl->m,x,y,CELL_CHKNPC)) {

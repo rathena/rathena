@@ -21,7 +21,11 @@
 #include <string.h>
 
 static int vending_nextid = 0;
+static DBMap *vending_db;
 
+DBMap * vending_getdb(){
+	return vending_db;
+}
 /// Returns an unique vending shop id.
 static int vending_getuid(void)
 {
@@ -35,10 +39,10 @@ void vending_closevending(struct map_session_data* sd)
 {
 	nullpo_retv(sd);
 
-	if( sd->state.vending )
-	{
+	if( sd->state.vending ) {
 		sd->state.vending = false;
 		clif_closevendingboard(&sd->bl, 0);
+		idb_remove(vending_db, sd->status.char_id);
 	}
 }
 
@@ -80,8 +84,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 	if( vsd == NULL || !vsd->state.vending || vsd->bl.id == sd->bl.id )
 		return; // invalid shop
 
-	if( vsd->vender_id != uid )
-	{// shop has changed
+	if( vsd->vender_id != uid ) { // shop has changed
 		clif_buyvending(sd, 0, 0, 6);  // store information was incorrect
 		return;
 	}
@@ -102,8 +105,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 	// some checks
 	z = 0.; // zeny counter
 	w = 0;  // weight counter
-	for( i = 0; i < count; i++ )
-	{
+	for( i = 0; i < count; i++ ) {
 		short amount = *(uint16*)(data + 4*i + 0);
 		short idx    = *(uint16*)(data + 4*i + 2);
 		idx -= 2;
@@ -134,8 +136,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 
 		}
 		w += itemdb_weight(vsd->status.cart[idx].nameid) * amount;
-		if( w + sd->weight > sd->max_weight )
-		{
+		if( w + sd->weight > sd->max_weight ) {
 			clif_buyvending(sd, idx, amount, 2); // you can not buy, because overweight
 			return;
 		}
@@ -173,8 +174,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 		z -= z * (battle_config.vending_tax/10000.);
 	pc_getzeny(vsd, (int)z, LOG_TYPE_VENDING, sd);
 
-	for( i = 0; i < count; i++ )
-	{
+	for( i = 0; i < count; i++ ) {
 		short amount = *(uint16*)(data + 4*i + 0);
 		short idx    = *(uint16*)(data + 4*i + 2);
 		idx -= 2;
@@ -186,8 +186,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 		clif_vendingreport(vsd, idx, amount);
 
 		//print buyer's name
-		if( battle_config.buyer_name )
-		{
+		if( battle_config.buyer_name ) {
 			char temp[256];
 			sprintf(temp, msg_txt(sd,265), sd->status.name);
 			clif_disp_onlyself(vsd,temp,strlen(temp));
@@ -195,13 +194,11 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 	}
 
 	// compact the vending list
-	for( i = 0, cursor = 0; i < vsd->vend_num; i++ )
-	{
+	for( i = 0, cursor = 0; i < vsd->vend_num; i++ ) {
 		if( vsd->vending[i].amount == 0 )
 			continue;
 
-		if( cursor != i ) // speedup
-		{
+		if( cursor != i ) { // speedup
 			vsd->vending[cursor].index = vsd->vending[i].index;
 			vsd->vending[cursor].amount = vsd->vending[i].amount;
 			vsd->vending[cursor].value = vsd->vending[i].value;
@@ -212,19 +209,16 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 	vsd->vend_num = cursor;
 
 	//Always save BOTH: buyer and customer
-	if( save_settings&2 )
-	{
+	if( save_settings&2 ) {
 		chrif_save(sd,0);
 		chrif_save(vsd,0);
 	}
 
 	//check for @AUTOTRADE users [durf]
-	if( vsd->state.autotrade )
-	{
+	if( vsd->state.autotrade ) {
 		//see if there is anything left in the shop
 		ARR_FIND( 0, vsd->vend_num, i, vsd->vending[i].amount > 0 );
-		if( i == vsd->vend_num )
-		{
+		if( i == vsd->vend_num ) {
 			//Close Vending (this was automatically done by the client, we have to do it manually for autovenders) [Skotlex]
 			vending_closevending(vsd);
 			map_quit(vsd);	//They have no reason to stay around anymore, do they?
@@ -246,8 +240,7 @@ void vending_openvending(struct map_session_data* sd, const char* message, const
 
 	vending_skill_lvl = pc_checkskill(sd, MC_VENDING);
 	// skill level and cart check
-	if( !vending_skill_lvl || !pc_iscarton(sd) )
-	{
+	if( !vending_skill_lvl || !pc_iscarton(sd) ) {
 		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
 		return;
 	}
@@ -261,8 +254,7 @@ void vending_openvending(struct map_session_data* sd, const char* message, const
 
 	// filter out invalid items
 	i = 0;
-	for( j = 0; j < count; j++ )
-	{
+	for( j = 0; j < count; j++ ) {
 		short index        = *(uint16*)(data + 8*j + 0);
 		short amount       = *(uint16*)(data + 8*j + 2);
 		unsigned int value = *(uint32*)(data + 8*j + 4);
@@ -288,8 +280,7 @@ void vending_openvending(struct map_session_data* sd, const char* message, const
 	if( i != j )
 		clif_displaymessage (sd->fd, msg_txt(sd,266)); //"Some of your items cannot be vended and were removed from the shop."
 
-	if( i == 0 )
-	{	// no valid item found
+	if( i == 0 ) { // no valid item found
 		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0); // custom reply packet
 		return;
 	}
@@ -301,22 +292,21 @@ void vending_openvending(struct map_session_data* sd, const char* message, const
 
 	clif_openvending(sd,sd->bl.id,sd->vending);
 	clif_showvendingboard(&sd->bl,message,0);
+
+	idb_put(vending_db, sd->vender_id, sd);
 }
 
 
 /// Checks if an item is being sold in given player's vending.
-bool vending_search(struct map_session_data* sd, unsigned short nameid)
-{
+bool vending_search(struct map_session_data* sd, unsigned short nameid) {
 	int i;
 
-	if( !sd->state.vending )
-	{// not vending
+	if( !sd->state.vending ) { // not vending
 		return false;
 	}
 
 	ARR_FIND( 0, sd->vend_num, i, sd->status.cart[sd->vending[i].index].nameid == (short)nameid );
-	if( i == sd->vend_num )
-	{// not found
+	if( i == sd->vend_num ) { // not found
 		return false;
 	}
 
@@ -326,46 +316,36 @@ bool vending_search(struct map_session_data* sd, unsigned short nameid)
 
 /// Searches for all items in a vending, that match given ids, price and possible cards.
 /// @return Whether or not the search should be continued.
-bool vending_searchall(struct map_session_data* sd, const struct s_search_store_search* s)
-{
+bool vending_searchall(struct map_session_data* sd, const struct s_search_store_search* s) {
 	int i, c, slot;
 	unsigned int idx, cidx;
 	struct item* it;
 
-	if( !sd->state.vending )
-	{// not vending
+	if( !sd->state.vending ) // not vending
 		return true;
-	}
 
-	for( idx = 0; idx < s->item_count; idx++ )
-	{
+	for( idx = 0; idx < s->item_count; idx++ ) {
 		ARR_FIND( 0, sd->vend_num, i, sd->status.cart[sd->vending[i].index].nameid == (short)s->itemlist[idx] );
-		if( i == sd->vend_num )
-		{// not found
+		if( i == sd->vend_num ) {// not found
 			continue;
 		}
 		it = &sd->status.cart[sd->vending[i].index];
 
-		if( s->min_price && s->min_price > sd->vending[i].value )
-		{// too low price
+		if( s->min_price && s->min_price > sd->vending[i].value ) {// too low price
 			continue;
 		}
 
-		if( s->max_price && s->max_price < sd->vending[i].value )
-		{// too high price
+		if( s->max_price && s->max_price < sd->vending[i].value ) {// too high price
 			continue;
 		}
 
-		if( s->card_count )
-		{// check cards
-			if( itemdb_isspecial(it->card[0]) )
-			{// something, that is not a carded
+		if( s->card_count ) {// check cards
+			if( itemdb_isspecial(it->card[0]) ) {// something, that is not a carded
 				continue;
 			}
 			slot = itemdb_slot(it->nameid);
 
-			for( c = 0; c < slot && it->card[c]; c ++ )
-			{
+			for( c = 0; c < slot && it->card[c]; c ++ ) {
 				ARR_FIND( 0, s->card_count, cidx, s->cardlist[cidx] == it->card[c] );
 				if( cidx != s->card_count )
 				{// found
@@ -373,8 +353,7 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 				}
 			}
 
-			if( c == slot || !it->card[c] )
-			{// no card match
+			if( c == slot || !it->card[c] ) {// no card match
 				continue;
 			}
 		}
@@ -386,4 +365,12 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 	}
 
 	return true;
+}
+void do_final_vending(void) {
+	db_destroy(vending_db);
+}
+
+void do_init_vending(void) {
+	vending_db = idb_alloc(DB_OPT_BASE);
+	vending_nextid = 0;
 }

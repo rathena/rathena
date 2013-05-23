@@ -3773,8 +3773,8 @@ ACMD_FUNC(mapinfo) {
 	if (map[m_id].flag.town)
 		clif_displaymessage(fd, msg_txt(sd,1042)); // Town Map
 	if (map[m_id].flag.restricted){
-		sprintf(atcmd_output, msg_txt(sd,1106),map[m_id].zone);
-		clif_displaymessage(fd, atcmd_output); //restricted
+		sprintf(atcmd_output, msg_txt(sd,1106),map[m_id].zone); // Restricted (zone %d)
+		clif_displaymessage(fd, atcmd_output);
 	}
 
 	if (battle_config.autotrade_mapflag == map[m_id].flag.autotrade)
@@ -3783,8 +3783,8 @@ ACMD_FUNC(mapinfo) {
 		clif_displaymessage(fd, msg_txt(sd,1044)); // Autotrade Disabled
 
 	if (map[m_id].flag.battleground){
-		sprintf(atcmd_output, msg_txt(sd,1106),map[m_id].zone);
-		clif_displaymessage(fd, atcmd_output); // Battlegrounds ON type=%d
+		sprintf(atcmd_output, msg_txt(sd,1045),map[m_id].flag.battleground); // Battlegrounds ON (type %d)
+		clif_displaymessage(fd, atcmd_output);
 	}
 	strcpy(atcmd_output,msg_txt(sd,1046)); // PvP Flags:
 	if (map[m_id].flag.pvp)

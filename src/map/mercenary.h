@@ -42,11 +42,11 @@ struct mercenary_data {
 	struct s_mercenary mercenary;
 	char blockskill[MAX_SKILL];
 
+	int masterteleport_timer;
 	struct map_session_data *master;
 	int contract_timer;
-	
+
 	unsigned devotion_flag : 1;
-	unsigned int masterteleport_timer;
 };
 
 bool merc_class(int class_);

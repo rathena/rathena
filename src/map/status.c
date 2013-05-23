@@ -163,9 +163,9 @@ static void set_sc(uint16 skill_id, sc_type sc, int icon, unsigned int flag)
 	}
 
 	if( StatusSkillChangeTable[sc] == 0 )
-  		StatusSkillChangeTable[sc] = skill_id;
+		StatusSkillChangeTable[sc] = skill_id;
 	if( StatusIconChangeTable[sc] == SI_BLANK )
-  		StatusIconChangeTable[sc] = icon;
+		StatusIconChangeTable[sc] = icon;
 	StatusChangeFlagTable[sc] |= flag;
 
 	if( SkillStatusChangeTable[idx] == SC_NONE )
@@ -954,6 +954,7 @@ void initChangeTables(void) {
 	StatusChangeFlagTable[SC_SPCOST_RATE] |= SCB_ALL;
 	StatusChangeFlagTable[SC_WALKSPEED] |= SCB_SPEED;
 	StatusChangeFlagTable[SC_ITEMSCRIPT] |= SCB_ALL;
+	StatusChangeFlagTable[SC_SLOWDOWN] |= SCB_SPEED;
 	// Cash Items
 	StatusChangeFlagTable[SC_FOOD_STR_CASH] = SCB_STR;
 	StatusChangeFlagTable[SC_FOOD_AGI_CASH] = SCB_AGI;
@@ -2069,8 +2070,8 @@ int status_calc_mob_(struct mob_data* md, bool first)
 					status->max_hp = 10 * (100 * (ud->skill_lv + 2) + homblvl);
 					status->batk = 100 * (ud->skill_lv+5) / 2;
 					status->def = 10 * (100 * (ud->skill_lv+2) + homblvl);
-					//    status->aspd_rate = 10 * (2 * (20 - ud->skill_lv) - homblvl/10);
-					//    status->aspd_rate = max(100,status->aspd_rate);
+					//status->aspd_rate = 10 * (2 * (20 - ud->skill_lv) - homblvl/10);
+					//status->aspd_rate = max(100,status->aspd_rate);
 					break;
 				}
 			}
@@ -4376,7 +4377,7 @@ static unsigned short status_calc_vit(struct block_list *bl, struct status_chang
 	if(sc->data[SC_KYOUGAKU])
 		vit -= sc->data[SC_KYOUGAKU]->val2;
 
-	if(sc->data[SC_STRIPARMOR])
+	if(sc->data[SC_STRIPARMOR] && bl->type != BL_PC)
 		vit -= vit * sc->data[SC_STRIPARMOR]->val2/100;
 
 	return (unsigned short)cap_value(vit,0,USHRT_MAX);
@@ -4430,10 +4431,12 @@ static unsigned short status_calc_int(struct block_list *bl, struct status_chang
 	if(sc->data[SC_KYOUGAKU])
 		int_ -= sc->data[SC_KYOUGAKU]->val2;
 
-	if(sc->data[SC_STRIPHELM])
-		int_ -= int_ * sc->data[SC_STRIPHELM]->val2/100;
-	if(sc->data[SC__STRIPACCESSORY])
-		int_ -= int_ * sc->data[SC__STRIPACCESSORY]->val2 / 100;
+	if(bl->type != BL_PC){
+		if(sc->data[SC_STRIPHELM])
+			int_ -= int_ * sc->data[SC_STRIPHELM]->val2/100;
+		if(sc->data[SC__STRIPACCESSORY])
+			int_ -= int_ * sc->data[SC__STRIPACCESSORY]->val2 / 100;
+	}
 
 	return (unsigned short)cap_value(int_,0,USHRT_MAX);
 }
@@ -4488,7 +4491,7 @@ static unsigned short status_calc_dex(struct block_list *bl, struct status_chang
 	if(sc->data[SC_KYOUGAKU])
 		dex -= sc->data[SC_KYOUGAKU]->val2;
 
-	if(sc->data[SC__STRIPACCESSORY])
+	if(sc->data[SC__STRIPACCESSORY]  && bl->type != BL_PC)
 		dex -= dex * sc->data[SC__STRIPACCESSORY]->val2 / 100;
 
 	return (unsigned short)cap_value(dex,0,USHRT_MAX);
@@ -4534,7 +4537,7 @@ static unsigned short status_calc_luk(struct block_list *bl, struct status_chang
 	if(sc->data[SC_LAUDARAMUS])
 		luk += 4 + sc->data[SC_LAUDARAMUS]->val1;
 
-	if(sc->data[SC__STRIPACCESSORY])
+	if(sc->data[SC__STRIPACCESSORY] && bl->type != BL_PC)
 		luk -= luk * sc->data[SC__STRIPACCESSORY]->val2 / 100;
 	if(sc->data[SC_BANANA_BOMB])
 		luk -= luk * sc->data[SC_BANANA_BOMB]->val1 / 100;
@@ -4672,7 +4675,7 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 		watk += watk * sc->data[SC_FLEET]->val3/100;
 	if(sc->data[SC_CURSE])
 		watk -= watk * 25/100;
-	if(sc->data[SC_STRIPWEAPON])
+	if(sc->data[SC_STRIPWEAPON]  && bl->type != BL_PC)
 		watk -= watk * sc->data[SC_STRIPWEAPON]->val2/100;
 	if(sc->data[SC__ENERVATION])
 		watk -= watk * sc->data[SC__ENERVATION]->val2 / 100;
@@ -4978,7 +4981,7 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 		def >>=1;
 	if(sc->data[SC_PROVOKE] && bl->type != BL_PC) // Provoke doesn't alter player defense->
 		def -= def * sc->data[SC_PROVOKE]->val4/100;
-	if(sc->data[SC_STRIPSHIELD])
+	if(sc->data[SC_STRIPSHIELD] && bl->type != BL_PC) //Player doesn't have def reduction only equip removed
 		def -= def * sc->data[SC_STRIPSHIELD]->val2/100;
 	if (sc->data[SC_FLING])
 		def -= def * (sc->data[SC_FLING]->val2)/100;

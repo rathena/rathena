@@ -1550,16 +1550,17 @@ int chrif_removefriend(int char_id, int friend_id) {
 	return 0;
 }
 
-void chrif_send_report(char* buf, int len) {
+int chrif_send_report(char* buf, int len) {
 
 #ifndef STATS_OPT_OUT
+	chrif_check(-1);
 	WFIFOHEAD(char_fd,len + 2);
 	WFIFOW(char_fd,0) = 0x3008;
 	memcpy(WFIFOP(char_fd,2), buf, len);
 	WFIFOSET(char_fd,len + 2);
 	flush_fifo(char_fd); /* ensure it's sent now. */
 #endif
-
+	return 0;
 }
 
 /**
@@ -1601,7 +1602,7 @@ int do_final_chrif(void) {
  *------------------------------------------*/
 int do_init_chrif(void) {
 	if(sizeof(struct mmo_charstatus) > 0xFFFF){
-		ShowError("mmo_charstatus size = %d is too big to be transmit\n",
+		ShowError("mmo_charstatus size = %d is too big to be transmitted.\n",
 			sizeof(struct mmo_charstatus));
 		exit(EXIT_FAILURE);
 	}

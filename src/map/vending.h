@@ -15,6 +15,10 @@ struct s_vending {
 	unsigned int value; //at wich price
 };
 
+DBMap * vending_getdb();
+void do_final_vending(void);
+void do_init_vending(void);
+
 void vending_closevending(struct map_session_data* sd);
 void vending_openvending(struct map_session_data* sd, const char* message, const uint8* data, int count);
 void vending_vendinglistreq(struct map_session_data* sd, int id);

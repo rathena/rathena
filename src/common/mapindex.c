@@ -168,7 +168,7 @@ void mapindex_init(void) {
 	fclose(fp);
 
 	if( !strdb_iget(mapindex_db, MAP_DEFAULT) ) {
-		ShowError("mapindex_init: MAP_DEFAULT '%s' not found in cache! update mapindex.h MAP_DEFAULT var!!!\n",MAP_DEFAULT);
+		ShowError("mapindex_init: MAP_DEFAULT '%s' not found in cache! Update MAP_DEFAULT in mapindex.h!\n",MAP_DEFAULT);
 	}
 }
 

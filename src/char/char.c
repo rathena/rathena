@@ -1919,10 +1919,9 @@ int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 	return 106+offset;
 }
 
-
-
+//----------------------------------------
 // Tell client how many pages, kRO sends 17 (Yommy)
-
+//----------------------------------------
 void char_charlist_notify( int fd, struct char_session_data* sd ){
 	WFIFOHEAD(fd, 6);
 	WFIFOW(fd, 0) = 0x9a0;
@@ -1938,7 +1937,6 @@ void char_block_character( int fd, struct char_session_data* sd ){
 	WFIFOSET(fd,4);
 }
 
-/* Made Possible by Yommy~! <3 */
 void mmo_char_send099d(int fd, struct char_session_data *sd) {
 	WFIFOHEAD(fd,4 + (MAX_CHARS*MAX_CHAR_BUF));
 	WFIFOW(fd,0) = 0x99d;
@@ -1997,13 +1995,13 @@ void mmo_char_send082d(int fd, struct char_session_data* sd) {
 }
 
 void mmo_char_send(int fd, struct char_session_data* sd){
-    #if PACKETVER >= 20130000
+#if PACKETVER >= 20130000
 	mmo_char_send082d(fd,sd);
 	char_charlist_notify(fd,sd);
 	char_block_character(fd,sd);
-    #else
+#else
 	mmo_char_send006b(fd,sd);
-    #endif
+#endif
 }
 
 int char_married(int pl1, int pl2)

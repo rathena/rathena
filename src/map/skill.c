@@ -5194,9 +5194,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case SA_INSTANTDEATH:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-		status_set_hp(bl,1,0);
+		status_kill(src);
 		break;
 	case SA_QUESTION:
+		clif_emotion(src,E_WHAT);
 	case SA_GRAVITY:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		break;
@@ -9601,7 +9602,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 
 	//Skill failed.
 	if (ud->skill_id == MO_EXTREMITYFIST && sd && !(sc && sc->data[SC_FOGWALL]))
-	{	//When Asura fails... (except when it fails from Fog of Wall)
+	{	//When Asura fails... (except when it fails from Wall of Fog)
 		//Consume SP/spheres
 		skill_consume_requirement(sd,ud->skill_id, ud->skill_lv,1);
 		status_set_sp(src, 0, 0);

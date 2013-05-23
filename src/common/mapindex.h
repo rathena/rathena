@@ -47,7 +47,7 @@ extern char mapindex_cfgfile[80];
 #define MAP_MALAYA "malaya"
 #define MAP_ECLAGE "eclage"
 
-// When a map index search fails, return results from what map? default:prontera
+// When a map index search fails, return results from what map?
 #define MAP_DEFAULT MAP_PRONTERA
 #define MAP_DEFAULT_X 150
 #define MAP_DEFAULT_Y 150

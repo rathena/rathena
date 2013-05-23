@@ -3594,6 +3594,7 @@ void do_final(void)
 	do_final_elemental();
 	do_final_cashshop();
 	do_final_channel(); //should be called after final guild
+	do_final_vending();
 
 	map_db->destroy(map_db, map_db_final);
 
@@ -3900,6 +3901,7 @@ int do_init(int argc, char *argv[])
 	do_init_unit();
 	do_init_battleground();
 	do_init_duel();
+	do_init_vending();
 
 	npc_event_do_oninit();	// Init npcs (OnInit)
 
