@@ -2014,7 +2014,7 @@ int status_calc_mob_(struct mob_data* md, bool first)
 	if (battle_config.slaves_inherit_speed && md->master_id)
 		flag|=8;
 
-	if (md->master_id && md->special_state.ai>1)
+	if (md->master_id && md->special_state.ai>AI_ATTACK)
 		flag|=16;
 
 	if (!flag)
@@ -2050,28 +2050,28 @@ int status_calc_mob_(struct mob_data* md, bool first)
 		struct unit_data *ud = unit_bl2ud(mbl);
 		//Remove special AI when this is used by regular mobs.
 		if (mbl->type == BL_MOB && !((TBL_MOB*)mbl)->special_state.ai)
-			md->special_state.ai = 0;
+			md->special_state.ai = AI_NONE;
 		if (ud)
 		{	// different levels of HP according to skill level
 			switch(ud->skill_id){
 				case AM_SPHEREMINE:
-				    status->max_hp = 2000 + 400*ud->skill_lv;
-				    break;
+					status->max_hp = 2000 + 400*ud->skill_lv;
+					break;
 				case KO_ZANZOU:
-				    status->max_hp = 3000 + 3000 * ud->skill_lv;
-				    break;
+					status->max_hp = 3000 + 3000 * ud->skill_lv;
+					break;
 				case AM_CANNIBALIZE:
-				    status->max_hp = 1500 + 200*ud->skill_lv + 10*status_get_lv(mbl);
-				    status->mode|= MD_CANATTACK|MD_AGGRESSIVE;
-				    break;
+					status->max_hp = 1500 + 200*ud->skill_lv + 10*status_get_lv(mbl);
+					status->mode|= MD_CANATTACK|MD_AGGRESSIVE;
+					break;
 				case MH_SUMMON_LEGION:{
-				    int homblvl = status_get_lv(mbl);
-				    status->max_hp = 10 * (100 * (ud->skill_lv + 2) + homblvl);
-				    status->batk = 100 * (ud->skill_lv+5) / 2;
-				    status->def = 10 * (100 * (ud->skill_lv+2) + homblvl);
-				//    status->aspd_rate = 10 * (2 * (20 - ud->skill_lv) - homblvl/10);
-				//    status->aspd_rate = max(100,status->aspd_rate);
-				    break;
+					int homblvl = status_get_lv(mbl);
+					status->max_hp = 10 * (100 * (ud->skill_lv + 2) + homblvl);
+					status->batk = 100 * (ud->skill_lv+5) / 2;
+					status->def = 10 * (100 * (ud->skill_lv+2) + homblvl);
+					//    status->aspd_rate = 10 * (2 * (20 - ud->skill_lv) - homblvl/10);
+					//    status->aspd_rate = max(100,status->aspd_rate);
+					break;
 				}
 			}
 			status->hp = status->max_hp;
@@ -2182,9 +2182,9 @@ int status_calc_pet_(struct pet_data *pd, bool first)
 		}
 	}
 
-	if (battle_config.pet_lv_rate && pd->msd)
+	if (battle_config.pet_lv_rate && pd->master)
 	{
-		struct map_session_data *sd = pd->msd;
+		struct map_session_data *sd = pd->master;
 		int lv;
 
 		lv =sd->status.base_level*battle_config.pet_lv_rate/100;
@@ -3157,6 +3157,8 @@ int status_calc_mercenary_(struct mercenary_data *md, bool first)
 		status->sp = status->max_sp;
 		md->battle_status.hp = merc->hp;
 		md->battle_status.sp = merc->sp;
+		if (md->master)
+			status->speed = status_get_speed(&md->master->bl);
 	}
 
 	status_calc_misc(&md->bl, status, md->db->lv);
@@ -3286,6 +3288,9 @@ int status_calc_elemental_(struct elemental_data *ed, bool first) {
 		status->mdef += ele->mdef;
 		status->flee = ele->flee;
 		status->hit = ele->hit;
+
+		if (ed->master)
+			status->speed = status_get_speed(&ed->master->bl);
 
 		memcpy(&ed->battle_status,status,sizeof(struct status_data));
 	} else {
@@ -3807,7 +3812,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 		//Re-walk to adjust speed (we do not check if walktimer != INVALID_TIMER
 		//because if you step on something while walking, the moment this
 		//piece of code triggers the walk-timer is set on INVALID_TIMER) [Skotlex]
-	  	if (ud)
+		if (ud)
 			ud->state.change_walk_target = ud->state.speed_changed = 1;
 
 		if( bl->type&BL_PC && status->speed < battle_config.max_walk_speed )
@@ -3815,6 +3820,10 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 
 		if( bl->type&BL_HOM && battle_config.hom_setting&0x8 && ((TBL_HOM*)bl)->master)
 			status->speed = status_get_speed(&((TBL_HOM*)bl)->master->bl);
+		if( bl->type&BL_MER && ((TBL_MER*)bl)->master)
+			status->speed = status_get_speed(&((TBL_MER*)bl)->master->bl);
+		if( bl->type&BL_ELEM && ((TBL_ELEM*)bl)->master)
+			status->speed = status_get_speed(&((TBL_ELEM*)bl)->master->bl);
 
 
 	}
@@ -5905,8 +5914,8 @@ int status_get_party_id(struct block_list *bl) {
 		case BL_PC:
 			return ((TBL_PC*)bl)->status.party_id;
 		case BL_PET:
-			if (((TBL_PET*)bl)->msd)
-				return ((TBL_PET*)bl)->msd->status.party_id;
+			if (((TBL_PET*)bl)->master)
+				return ((TBL_PET*)bl)->master->status.party_id;
 			break;
 		case BL_MOB: {
 				struct mob_data *md=(TBL_MOB*)bl;
@@ -5942,8 +5951,8 @@ int status_get_guild_id(struct block_list *bl) {
 		case BL_PC:
 			return ((TBL_PC*)bl)->status.guild_id;
 		case BL_PET:
-			if (((TBL_PET*)bl)->msd)
-				return ((TBL_PET*)bl)->msd->status.guild_id;
+			if (((TBL_PET*)bl)->master)
+				return ((TBL_PET*)bl)->master->status.guild_id;
 			break;
 		case BL_MOB: {
 				struct map_session_data *msd;
@@ -5982,8 +5991,8 @@ int status_get_emblem_id(struct block_list *bl) {
 		case BL_PC:
 			return ((TBL_PC*)bl)->guild_emblem_id;
 		case BL_PET:
-			if (((TBL_PET*)bl)->msd)
-				return ((TBL_PET*)bl)->msd->guild_emblem_id;
+			if (((TBL_PET*)bl)->master)
+				return ((TBL_PET*)bl)->master->guild_emblem_id;
 			break;
 		case BL_MOB: {
 				struct map_session_data *msd;
@@ -7600,7 +7609,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			else
 				val4 = (type == SC_DPOISON) ? 2 + status->max_hp/100 : 2 + status->max_hp/200;
 			break;
-			
+
 		case SC_CONFUSION:
 			clif_emotion(bl,E_WHAT);
 			break;

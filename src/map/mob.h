@@ -69,14 +69,6 @@ enum size {
 	SZ_BIG,
 };
 
-enum ai {
-	AI_NONE = 0,
-	AI_ATTACK,
-	AI_SPHERE,
-	AI_FLORA,
-	AI_ZANZOU,
-};
-
 struct mob_skill {
 	enum MobSkillState state;
 	uint16 skill_id,skill_lv;
@@ -129,13 +121,7 @@ struct mob_data {
 	char name[NAME_LENGTH];
 	struct {
 		unsigned int size : 2; //Small/Big monsters.
-		unsigned int ai : 4; //Special ai for summoned monsters.
-							//0: Normal mob.
-							//1: Standard summon, attacks mobs.
-							//2: Alchemist Marine Sphere
-							//3: Alchemist Summon Flora
-							//4: Summon Zanzou
-							//5: Summon Legion
+		enum mob_ai ai; //Special ai for summoned monsters.
 		unsigned int clone : 1;/* is clone? 1:0 */
 	} special_state; //Special mob information that does not needs to be zero'ed on mob respawn.
 	struct {

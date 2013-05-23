@@ -12083,7 +12083,7 @@ BUILDIN_FUNC(petloot)
 	pd = sd->pd;
 	if (pd->loot != NULL)
 	{	//Release whatever was there already and reallocate memory
-		pet_lootitem_drop(pd, pd->msd);
+		pet_lootitem_drop(pd, pd->master);
 		aFree(pd->loot->item);
 	}
 	else

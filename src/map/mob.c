@@ -1969,11 +1969,11 @@ void mob_log_damage(struct mob_data *md, struct block_list *src, int damage)
 		{
 			struct pet_data *pd = (TBL_PET*)src;
 			flag = MDLF_PET;
-			if( pd->msd )
+			if( pd->master )
 			{
-				char_id = pd->msd->status.char_id;
+				char_id = pd->master->status.char_id;
 				if( damage ) //Let mobs retaliate against the pet's master [Skotlex]
-					md->attacked_id = pd->msd->bl.id;
+					md->attacked_id = pd->master->bl.id;
 			}
 			break;
 		}
@@ -2079,7 +2079,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 	}
 #endif
 
-	if( md->special_state.ai == 2 ) {//LOne WOlf explained that ANYONE can trigger the marine countdown skill. [Skotlex]
+	if( md->special_state.ai == AI_SPHERE ) {//LOne WOlf explained that ANYONE can trigger the marine countdown skill. [Skotlex]
 		md->state.alchemist = 1;
 		mobskill_use(md, gettick(), MSC_ALCHEMIST);
 	}
@@ -2308,7 +2308,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	if( !(type&1) && !map[m].flag.nomobloot && !md->state.rebirth && (
 		!md->special_state.ai || //Non special mob
 		battle_config.alchemist_summon_reward == 2 || //All summoned give drops
-		(md->special_state.ai==2 && battle_config.alchemist_summon_reward == 1) //Marine Sphere Drops items.
+		(md->special_state.ai==AI_SPHERE && battle_config.alchemist_summon_reward == 1) //Marine Sphere Drops items.
 		) )
 	{ // Item Drop
 		struct item_drop_list *dlist = ers_alloc(item_drop_list_ers, struct item_drop_list);
@@ -2736,7 +2736,7 @@ int mob_class_change (struct mob_data *md, int class_)
 	if( mob_is_treasure(md) )
 		return 0; //Treasure Boxes
 
-	if( md->special_state.ai > 1 )
+	if( md->special_state.ai > AI_ATTACK )
 		return 0; //Marine Spheres and Floras.
 
 	if( mob_is_clone(md->class_) )

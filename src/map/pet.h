@@ -95,7 +95,8 @@ struct pet_data {
 	struct pet_skill_support* s_skill;
 	struct pet_loot* loot;
 
-	struct map_session_data *msd;
+	int masterteleport_timer;
+	struct map_session_data *master;
 };
 
 

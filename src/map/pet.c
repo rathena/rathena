@@ -64,7 +64,7 @@ void pet_set_intimate(struct pet_data *pd, int value)
 
 	nullpo_retv(pd);
 	intimate = pd->pet.intimate;
-	sd = pd->msd;
+	sd = pd->master;
 
 	pd->pet.intimate = value;
 	if( (intimate >= battle_config.pet_equip_min_friendly && pd->pet.intimate < battle_config.pet_equip_min_friendly) || (intimate < battle_config.pet_equip_min_friendly && pd->pet.intimate >= battle_config.pet_equip_min_friendly) )
@@ -135,7 +135,7 @@ int pet_target_check(struct map_session_data *sd,struct block_list *bl,int type)
 
 	pd = sd->pd;
 
-	Assert((pd->msd == 0) || (pd->msd->pd == pd));
+	Assert((pd->master == 0) || (pd->master->pd == pd));
 
 	if(bl == NULL || bl->type != BL_MOB || bl->prev == NULL ||
 		pd->pet.intimate < battle_config.pet_support_min_friendly ||
@@ -323,7 +323,7 @@ int pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 
 	nullpo_retr(1, sd);
 
-	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->msd == sd);
+	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->master == sd);
 
 	if(sd->status.account_id != pet->account_id || sd->status.char_id != pet->char_id) {
 		sd->status.pet_id = 0;
@@ -350,7 +350,7 @@ int pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 	pd->bl.type = BL_PET;
 	pd->bl.id = npc_get_new_npc_id();
 
-	pd->msd = sd;
+	pd->master = sd;
 	pd->petDB = &pet_db[i];
 	pd->db = mob_db(pet->class_);
 	memcpy(&pd->pet, pet, sizeof(struct s_pet));
@@ -389,7 +389,7 @@ int pet_birth_process(struct map_session_data *sd, struct s_pet *pet)
 {
 	nullpo_retr(1, sd);
 
-	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->msd == sd);
+	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->master == sd);
 
 	if(sd->status.pet_id && pet->incuvate == 1) {
 		sd->status.pet_id = 0;
@@ -417,7 +417,7 @@ int pet_birth_process(struct map_session_data *sd, struct s_pet *pet)
 		clif_pet_equip_area(sd->pd);
 		clif_send_petstatus(sd);
 	}
-	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->msd == sd);
+	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->master == sd);
 
 	return 0;
 }
@@ -791,7 +791,7 @@ static int pet_randomwalk(struct pet_data *pd,unsigned int tick)
 {
 	nullpo_ret(pd);
 
-	Assert((pd->msd == 0) || (pd->msd->pd == pd));
+	Assert((pd->master == 0) || (pd->master->pd == pd));
 
 	if(DIFF_TICK(pd->next_walktime,tick) < 0 && unit_can_move(&pd->bl)) {
 		const int retrycount=20;
@@ -968,7 +968,7 @@ static int pet_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 
 	sd_charid = fitem->first_get_charid;
 
-	if(sd_charid && sd_charid != pd->msd->status.char_id)
+	if(sd_charid && sd_charid != pd->master->status.char_id)
 		return 0;
 
 	if(unit_can_reach_bl(&pd->bl,bl, pd->db->range2, 1, NULL, NULL) &&

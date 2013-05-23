@@ -1104,7 +1104,7 @@ int mmo_chars_fromsql(struct char_session_data* sd, uint8* buf)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 29, SQLDT_SHORT,  &p.head_top, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 30, SQLDT_SHORT,  &p.head_mid, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 31, SQLDT_SHORT,  &p.head_bottom, 0, NULL, NULL)
-	||  SQL_ERROR == SqlStmt_BindColumn(stmt, 32, SQLDT_STRING, &last_map, sizeof(last_map), NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 32, SQLDT_STRING, &last_map, sizeof(last_map), NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 33, SQLDT_SHORT,	&p.rename, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 34, SQLDT_UINT32, &p.delete_date, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 35, SQLDT_SHORT,  &p.robe, 0, NULL, NULL)
@@ -1223,7 +1223,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 46, SQLDT_INT,    &p->mother, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 47, SQLDT_INT,    &p->child, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 48, SQLDT_INT,    &p->fame, 0, NULL, NULL)
-	||  SQL_ERROR == SqlStmt_BindColumn(stmt, 49, SQLDT_SHORT,	&p->rename, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 49, SQLDT_SHORT,	&p->rename, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 50, SQLDT_UINT32, &p->delete_date, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 51, SQLDT_SHORT,  &p->robe, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 52, SQLDT_UINT32, &p->character_moves, 0, NULL, NULL)
@@ -1241,6 +1241,18 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 	}
 	p->last_point.map = mapindex_name2id(last_map);
 	p->save_point.map = mapindex_name2id(save_map);
+
+	if( p->last_point.map == 0 ) {
+		p->last_point.map = mapindex_name2id(MAP_DEFAULT);
+		p->last_point.x = MAP_DEFAULT_X;
+		p->last_point.y = MAP_DEFAULT_Y;
+	}
+
+	if( p->save_point.map == 0 ) {
+		p->save_point.map = mapindex_name2id(MAP_DEFAULT);
+		p->save_point.x = MAP_DEFAULT_X;
+		p->save_point.y = MAP_DEFAULT_Y;
+	}
 
 	strcat(t_msg, " status");
 
@@ -1727,9 +1739,9 @@ int delete_char_sql(int char_id)
 	if( hom_id )
 		mapif_homunculus_delete(hom_id);
 
-    /* remove elemental */
-    if (elemental_id)
-        mapif_elemental_delete(elemental_id);
+	/* remove elemental */
+	if (elemental_id)
+		mapif_elemental_delete(elemental_id);
 
 	/* remove mercenary data */
 	mercenary_owner_delete(char_id);
@@ -1907,16 +1919,46 @@ int mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 	return 106+offset;
 }
 
+
+
+// Tell client how many pages, kRO sends 17 (Yommy)
+
+void char_charlist_notify( int fd, struct char_session_data* sd ){
+	WFIFOHEAD(fd, 6);
+	WFIFOW(fd, 0) = 0x9a0;
+	// pages to req / send them all in 1 until mmo_chars_fromsql can split them up
+	WFIFOL(fd, 2) = 1; //int TotalCnt
+	WFIFOSET(fd,6);
+}
+
+void char_block_character( int fd, struct char_session_data* sd ){
+	WFIFOHEAD(fd, 4);
+	WFIFOW(fd, 0) = 0x20d;
+	WFIFOW(fd, 2) = 4; //packet len
+	WFIFOSET(fd,4);
+}
+
+/* Made Possible by Yommy~! <3 */
+void mmo_char_send099d(int fd, struct char_session_data *sd) {
+	WFIFOHEAD(fd,4 + (MAX_CHARS*MAX_CHAR_BUF));
+	WFIFOW(fd,0) = 0x99d;
+	WFIFOW(fd,2) = mmo_chars_fromsql(sd, WFIFOP(fd,4)) + 4;
+	WFIFOSET(fd,WFIFOW(fd,2));
+}
+
+//struct PACKET_CH_CHARLIST_REQ { 0x0 short PacketType}
+void char_parse_req_charlist(int fd, struct char_session_data* sd){
+	mmo_char_send099d(fd,sd);
+}
+
 //----------------------------------------
 // Function to send characters to a player
 //----------------------------------------
-int mmo_char_send006b(int fd, struct char_session_data* sd)
-{
+int mmo_char_send006b(int fd, struct char_session_data* sd){
 	int j, offset = 0;
 #if PACKETVER >= 20100413
 	offset += 3;
 #endif
-
 	if (save_log)
 		ShowInfo("Loading Char Data ("CL_BOLD"%d"CL_RESET")\n",sd->account_id);
 
@@ -1942,7 +1984,6 @@ int mmo_char_send006b(int fd, struct char_session_data* sd)
 void mmo_char_send082d(int fd, struct char_session_data* sd) {
 	if (save_log)
 		ShowInfo("Loading Char Data ("CL_BOLD"%d"CL_RESET")\n",sd->account_id);
-
 	WFIFOHEAD(fd,29);
 	WFIFOW(fd,0) = 0x82d;
 	WFIFOW(fd,2) = 29;
@@ -1953,7 +1994,16 @@ void mmo_char_send082d(int fd, struct char_session_data* sd) {
 	WFIFOB(fd,8) = sd->char_slots;
 	memset(WFIFOP(fd,9), 0, 20); // unused bytes
 	WFIFOSET(fd,29);
+}
+
+void mmo_char_send(int fd, struct char_session_data* sd){
+    #if PACKETVER >= 20130000
+	mmo_char_send082d(fd,sd);
+	char_charlist_notify(fd,sd);
+	char_block_character(fd,sd);
+    #else
 	mmo_char_send006b(fd,sd);
+    #endif
 }
 
 int char_married(int pl1, int pl2)
@@ -2258,11 +2308,7 @@ int parse_fromlogin(int fd) {
 					WFIFOSET(i,3);
 				} else {
 					// send characters to player
-					#if PACKETVER >= 20130000
-						mmo_char_send082d(i, sd);
-					#else
-						mmo_char_send006b(i, sd);
-					#endif
+					mmo_char_send(i, sd);
 #if PACKETVER >=  20110309
 					if( pincode_enabled ){
 						// PIN code system enabled
@@ -4254,50 +4300,47 @@ int parse_char(int fd)
 		case 0x2af8:
 			if (RFIFOREST(fd) < 60)
 				return 0;
-		{
-			char* l_user = (char*)RFIFOP(fd,2);
-			char* l_pass = (char*)RFIFOP(fd,26);
-			l_user[23] = '\0';
-			l_pass[23] = '\0';
-			ARR_FIND( 0, ARRAYLENGTH(server), i, server[i].fd <= 0 );
-			if( runflag != CHARSERVER_ST_RUNNING ||
-				i == ARRAYLENGTH(server) ||
-				strcmp(l_user, userid) != 0 ||
-				strcmp(l_pass, passwd) != 0 )
-			{
-				WFIFOHEAD(fd,3);
-				WFIFOW(fd,0) = 0x2af9;
-				WFIFOB(fd,2) = 3;
-				WFIFOSET(fd,3);
-			} else {
-				WFIFOHEAD(fd,3);
-				WFIFOW(fd,0) = 0x2af9;
-				WFIFOB(fd,2) = 0;
-				WFIFOSET(fd,3);
+			else {
+				char* l_user = (char*)RFIFOP(fd,2);
+				char* l_pass = (char*)RFIFOP(fd,26);
+				l_user[23] = '\0';
+				l_pass[23] = '\0';
+				ARR_FIND( 0, ARRAYLENGTH(server), i, server[i].fd <= 0 );
+				if( runflag != CHARSERVER_ST_RUNNING ||
+					i == ARRAYLENGTH(server) ||
+					strcmp(l_user, userid) != 0 ||
+					strcmp(l_pass, passwd) != 0 )
+				{
+					WFIFOHEAD(fd,3);
+					WFIFOW(fd,0) = 0x2af9;
+					WFIFOB(fd,2) = 3;
+					WFIFOSET(fd,3);
+				} else {
+					WFIFOHEAD(fd,3);
+					WFIFOW(fd,0) = 0x2af9;
+					WFIFOB(fd,2) = 0;
+					WFIFOSET(fd,3);
 
-				server[i].fd = fd;
-				server[i].ip = ntohl(RFIFOL(fd,54));
-				server[i].port = ntohs(RFIFOW(fd,58));
-				server[i].users = 0;
-				memset(server[i].map, 0, sizeof(server[i].map));
-				session[fd]->func_parse = parse_frommap;
-				session[fd]->flag.server = 1;
-				realloc_fifo(fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
-				char_mapif_init(fd);
+					server[i].fd = fd;
+					server[i].ip = ntohl(RFIFOL(fd,54));
+					server[i].port = ntohs(RFIFOW(fd,58));
+					server[i].users = 0;
+					memset(server[i].map, 0, sizeof(server[i].map));
+					session[fd]->func_parse = parse_frommap;
+					session[fd]->flag.server = 1;
+					realloc_fifo(fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
+					char_mapif_init(fd);
+				}
+				RFIFOSKIP(fd,60);
 			}
-
-			RFIFOSKIP(fd,60);
-		}
-		return 0; // avoid processing of followup packets here
+			return 0; // avoid processing of followup packets here
 
 		// checks the entered pin
 		case 0x8b8:
 			if( RFIFOREST(fd) < 10 )
 				return 0;
-
 			if( pincode_enabled && RFIFOL(fd,2) == sd->account_id )
 				pincode_check( fd, sd );
-
 			RFIFOSKIP(fd,10);
 		break;
 
@@ -4305,7 +4348,6 @@ int parse_char(int fd)
 		case 0x8c5:
 			if( RFIFOREST(fd) < 6 )
 				return 0;
-
 			if( pincode_enabled && RFIFOL(fd,2) == sd->account_id ){
 				if( strlen( sd->pincode ) <= 0 ){
 					pincode_sendstate( fd, sd, PINCODE_NEW );
@@ -4313,7 +4355,6 @@ int parse_char(int fd)
 					pincode_sendstate( fd, sd, PINCODE_ASK );
 				}
 			}
-
 			RFIFOSKIP(fd,6);
 		break;
 
@@ -4332,10 +4373,8 @@ int parse_char(int fd)
 		case 0x8ba:
 			if( RFIFOREST(fd) < 10 )
 				return 0;
-
 			if( pincode_enabled && RFIFOL(fd,2) == sd->account_id )
 				pincode_setnew( fd, sd );
-
 			RFIFOSKIP(fd,10);
 		break;
 
@@ -4345,9 +4384,16 @@ int parse_char(int fd)
 				return 0;
 
 			moveCharSlot( fd, sd, RFIFOW(fd, 2), RFIFOW(fd, 4) );
-
+			mmo_char_send(fd, sd);
 			RFIFOSKIP(fd,8);
 		break;
+
+		case 0x9a1:
+			if( RFIFOREST(fd) < 2 )
+				return 0;
+			char_parse_req_charlist(fd,sd);
+			RFIFOSKIP(fd,2);
+			break;
 
 		// unknown packet received
 		default:
@@ -4720,11 +4766,7 @@ void moveCharSlot( int fd, struct char_session_data* sd, unsigned short from, un
 
 	// We successfully moved the char - time to notify the client
 	moveCharSlotReply( fd, sd, from, 0 );
-#if PACKETVER >= 20130000
-	mmo_char_send082d(fd, sd);
-#else
-	mmo_char_send006b( fd, sd );
-#endif
+	mmo_char_send(fd, sd);
 }
 
 // reason

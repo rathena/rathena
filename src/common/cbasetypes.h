@@ -177,6 +177,7 @@ typedef unsigned long int   ppuint32;
 // integer with exact processor width (and best speed)
 //////////////////////////////
 #include <stddef.h> // size_t
+//#include <stdbool.h> //boolean
 
 #if defined(WIN32) && !defined(MINGW) // does not have a signed size_t
 //////////////////////////////
@@ -276,7 +277,7 @@ typedef char bool;
 #undef swap
 #endif
 // hmm only ints?
-//#define swap(a,b) { int temp=a; a=b; b=temp;} 
+//#define swap(a,b) { int temp=a; a=b; b=temp;}
 // if using macros then something that is type independent
 //#define swap(a,b) ((a == b) || ((a ^= b), (b ^= a), (a ^= b)))
 // Avoid "value computed is not used" warning and generates the same assembly code

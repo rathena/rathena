@@ -3063,7 +3063,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 		return strchr(start, '\n');
 	}
 
-	if( (mob.state.ai < 0 || mob.state.ai > 4) && ai != -1 )
+	if( (mob.state.ai < AI_NONE || mob.state.ai >= AI_MAX) && ai != -1 )
 	{
 		ShowError("npc_parse_mob: Invalid ai %d for mob ID %d (file '%s', line '%d').\n", mob.state.ai, class_, filepath, strline(buffer, start - buffer));
 		return strchr(start, '\n');
@@ -3086,7 +3086,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 		mob.level = mob_lv;
 	if (size > 0 && size <= 2)
 		mob.state.size = size;
-	if (ai > 0 && ai <= 4)
+	if (ai > AI_NONE && ai <= AI_MAX)
 		mob.state.ai = ai;
 
 	if (mob.num > 1 && battle_config.mob_count_rate != 100) {

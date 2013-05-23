@@ -1708,7 +1708,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	wd.div_=skill_id?skill_get_num(skill_id,skill_lv):1;
 	wd.amotion=(skill_id && skill_get_inf(skill_id)&INF_GROUND_SKILL)?0:sstatus->amotion; //Amotion should be 0 for ground skills.
 		/*if(skill_id == KN_AUTOCOUNTER) // counter attack obeys ASPD delay on official
-			wd.amotion >>= 1; */ 
+			wd.amotion >>= 1; */
 	wd.dmotion=tstatus->dmotion;
 	wd.blewcount=skill_get_blewcount(skill_id,skill_lv);
 	wd.flag = BF_WEAPON; //Initial Flag
@@ -5160,8 +5160,8 @@ struct block_list* battle_get_master(struct block_list *src)
 		prev = src;
 		switch (src->type) {
 			case BL_PET:
-				if (((TBL_PET*)src)->msd)
-					src = (struct block_list*)((TBL_PET*)src)->msd;
+				if (((TBL_PET*)src)->master)
+					src = (struct block_list*)((TBL_PET*)src)->master;
 				break;
 			case BL_MOB:
 				if (((TBL_MOB*)src)->master_id)
@@ -5245,9 +5245,9 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			}
 			break;
 		case BL_MOB:
-			if(((((TBL_MOB*)target)->special_state.ai == 2 || //Marine Spheres
-				(((TBL_MOB*)target)->special_state.ai == 3 && battle_config.summon_flora&1)) && //Floras
-				s_bl->type == BL_PC && src->type != BL_MOB) || (((TBL_MOB*)target)->special_state.ai == 4 && t_bl->id != s_bl->id)) //Zanzoe
+			if(((((TBL_MOB*)target)->special_state.ai == AI_SPHERE || //Marine Spheres
+				(((TBL_MOB*)target)->special_state.ai == AI_FLORA && battle_config.summon_flora&1)) && //Floras
+				s_bl->type == BL_PC && src->type != BL_MOB) || (((TBL_MOB*)target)->special_state.ai == AI_ZANZOU && t_bl->id != s_bl->id)) //Zanzoe
 			{	//Targettable by players
 				state |= BCT_ENEMY;
 				strip_enemy = 0;
@@ -5412,7 +5412,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			if( !md->special_state.ai )
 			{ //Normal mobs
 				if(
-					( target->type == BL_MOB && t_bl->type == BL_PC && ( ((TBL_MOB*)target)->special_state.ai != 4 && ((TBL_MOB*)target)->special_state.ai != 1 ) ) ||
+					( target->type == BL_MOB && t_bl->type == BL_PC && ( ((TBL_MOB*)target)->special_state.ai != AI_ZANZOU && ((TBL_MOB*)target)->special_state.ai != AI_ATTACK ) ) ||
 					( t_bl->type == BL_MOB && !((TBL_MOB*)t_bl)->special_state.ai )
 				  )
 					state |= BCT_PARTY; //Normal mobs with no ai are friends.

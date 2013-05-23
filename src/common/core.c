@@ -55,8 +55,7 @@ char SERVER_TYPE = ATHENA_SERVER_NONE;
 #ifndef POSIX
 #define compat_signal(signo, func) signal(signo, func)
 #else
-sigfunc *compat_signal(int signo, sigfunc *func)
-{
+sigfunc *compat_signal(int signo, sigfunc *func) {
 	struct sigaction sact, oact;
 
 	sact.sa_handler = func;
@@ -77,10 +76,8 @@ sigfunc *compat_signal(int signo, sigfunc *func)
  *	CORE : Console events for Windows
  *--------------------------------------*/
 #ifdef _WIN32
-static BOOL WINAPI console_handler(DWORD c_event)
-{
-    switch(c_event)
-    {
+static BOOL WINAPI console_handler(DWORD c_event) {
+    switch(c_event) {
     case CTRL_CLOSE_EVENT:
     case CTRL_LOGOFF_EVENT:
     case CTRL_SHUTDOWN_EVENT:
@@ -95,8 +92,7 @@ static BOOL WINAPI console_handler(DWORD c_event)
     return TRUE;
 }
 
-static void cevents_init()
-{
+static void cevents_init() {
 	if (SetConsoleCtrlHandler(console_handler,TRUE)==FALSE)
 		ShowWarning ("Unable to install the console handler!\n");
 }
@@ -105,8 +101,7 @@ static void cevents_init()
 /*======================================
  *	CORE : Signal Sub Function
  *--------------------------------------*/
-static void sig_proc(int sn)
-{
+static void sig_proc(int sn) {
 	static int is_called = 0;
 
 	switch (sn) {
@@ -139,8 +134,7 @@ static void sig_proc(int sn)
 	}
 }
 
-void signals_init (void)
-{
+void signals_init (void) {
 	compat_signal(SIGTERM, sig_proc);
 	compat_signal(SIGINT, sig_proc);
 #ifndef _DEBUG // need unhandled exceptions to debug on Windows
@@ -158,13 +152,11 @@ void signals_init (void)
 #endif
 
 #ifdef SVNVERSION
-	const char *get_svn_revision(void)
-	{
+const char *get_svn_revision(void) {
 		return EXPAND_AND_QUOTE(SVNVERSION);
 	}
 #else// not SVNVERSION
-const char* get_svn_revision(void)
-{
+const char* get_svn_revision(void) {
 	static char svn_version_buffer[16] = "";
 	FILE *fp;
 
@@ -199,12 +191,10 @@ const char* get_svn_revision(void)
 		fclose(fp);
 
 		// parse buffer
-		for( i = prefix_len + 1; i + postfix_len <= len; ++i )
-		{
+		for( i = prefix_len + 1; i + postfix_len <= len; ++i ) {
 			if( buffer[i] != postfix[0] || memcmp(buffer + i, postfix, postfix_len) != 0 )
 				continue; // postfix missmatch
-			for( j = i; j > 0; --j )
-			{// skip digits
+			for( j = i; j > 0; --j ) {// skip digits
 				if( !ISDIGIT(buffer[j - 1]) )
 					break;
 			}

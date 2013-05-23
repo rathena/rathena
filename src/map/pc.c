@@ -519,7 +519,7 @@ int pc_makesavestatus(struct map_session_data *sd)
 	if(!battle_config.save_clothcolor)
 		sd->status.clothes_color=0;
 
-  	//Only copy the Cart/Peco/Falcon options, the rest are handled via
+	//Only copy the Cart/Peco/Falcon options, the rest are handled via
 	//status change load/saving. [Skotlex]
 #ifdef NEW_CARTS
 	sd->status.option = sd->sc.option&(OPTION_INVISIBLE|OPTION_FALCON|OPTION_RIDING|OPTION_DRAGON|OPTION_WUG|OPTION_WUGRIDER|OPTION_MADOGEAR|OPTION_MOUNTING);
@@ -4044,7 +4044,7 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 		}
 		else
 		if(fitem->second_get_charid > 0 && fitem->second_get_charid != sd->status.char_id)
-	  	{
+		{
 			second_sd = map_charid2sd(fitem->second_get_charid);
 			if(DIFF_TICK(tick, fitem->second_get_tick) < 0) {
 				if(!(p && p->party.item&1 &&
@@ -4837,8 +4837,7 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 	if(sd->bl.prev != NULL){
 		unit_remove_map_pc(sd,clrtype);
 		clif_changemap(sd,map[m].index,x,y); // [MouseJstr]
-	} else if(sd->state.active)
-		//Tag player for rewarping after map-loading is done. [Skotlex]
+	} else if(sd->state.active) //Tag player for rewarping after map-loading is done. [Skotlex]
 		sd->state.rewarp = 1;
 
 	sd->mapindex = mapindex;
@@ -6573,10 +6572,8 @@ static int pc_close_npc_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	TBL_PC *sd = map_id2sd(id);
 	if(sd) pc_close_npc(sd,data);
-
 	return 0;
 }
-
 /*
  *  Method to properly close npc for player and clear anything related
  * @flag == 1 : produce close button
@@ -7815,7 +7812,7 @@ int pc_setcart(struct map_session_data *sd,int type) {
 				clif_cartlist(sd);
 			clif_updatestatus(sd, SP_CARTINFO);
 			sc_start(&sd->bl,&sd->bl, SC_PUSH_CART, 100, type, 0);
-			clif_status_load_notick(&sd->bl, SI_ON_PUSH_CART,   2 , type, 0, 0);
+			clif_status_load_notick(&sd->bl, SI_ON_PUSH_CART, 2 , type, 0, 0);
 			if( sd->sc.data[SC_PUSH_CART] )/* forcefully update */
 				sd->sc.data[SC_PUSH_CART]->val1 = type;
 			break;
@@ -9231,7 +9228,7 @@ int pc_autosave(int tid, unsigned int tick, int id, intptr_t data)
 static int pc_daynight_timer_sub(struct map_session_data *sd,va_list ap)
 {
 	if (sd->state.night != night_flag && map[sd->bl.m].flag.nightenabled)
-  	{	//Night/day state does not match.
+	{	//Night/day state does not match.
 		clif_status_load(&sd->bl, SI_NIGHT, night_flag); //New night effect by dynamix [Skotlex]
 		sd->state.night = night_flag;
 		return 1;

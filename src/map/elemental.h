@@ -47,6 +47,7 @@ struct elemental_data {
 	struct s_elemental_db *db;
 	struct s_elemental elemental;
 
+	int masterteleport_timer;
 	struct map_session_data *master;
 	int summon_timer;
 	int skill_timer;

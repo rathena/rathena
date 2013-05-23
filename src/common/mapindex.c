@@ -5,12 +5,14 @@
 #include "../common/showmsg.h"
 #include "../common/malloc.h"
 #include "../common/strlib.h"
+#include "../common/db.h"
 #include "mapindex.h"
 
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 
+DBMap *mapindex_db;
 struct _indexes {
 	char name[MAP_NAME_LENGTH]; //Stores map name
 } indexes[MAX_MAPINDEX];
@@ -23,11 +25,10 @@ char mapindex_cfgfile[80] = "db/map_index.txt";
 
 /// Retrieves the map name from 'string' (removing .gat extension if present).
 /// Result gets placed either into 'buf' or in a static local buffer.
-const char* mapindex_getmapname(const char* string, char* output)
-{
+const char* mapindex_getmapname(const char* string, char* output) {
 	static char buf[MAP_NAME_LENGTH];
 	char* dest = (output != NULL) ? output : buf;
-	
+
 	size_t len = strnlen(string, MAP_NAME_LENGTH_EXT);
 	if (len == MAP_NAME_LENGTH_EXT) {
 		ShowWarning("(mapindex_normalize_name) Map name '%*s' is too long!\n", 2*MAP_NAME_LENGTH_EXT, string);
@@ -35,18 +36,17 @@ const char* mapindex_getmapname(const char* string, char* output)
 	}
 	if (len >= 4 && stricmp(&string[len-4], ".gat") == 0)
 		len -= 4; // strip .gat extension
-	
+
 	len = min(len, MAP_NAME_LENGTH-1);
 	safestrncpy(dest, string, len+1);
 	memset(&dest[len], '\0', MAP_NAME_LENGTH-len);
-	
+
 	return dest;
 }
 
 /// Retrieves the map name from 'string' (adding .gat extension if not already present).
 /// Result gets placed either into 'buf' or in a static local buffer.
-const char* mapindex_getmapname_ext(const char* string, char* output)
-{
+const char* mapindex_getmapname_ext(const char* string, char* output) {
 	static char buf[MAP_NAME_LENGTH_EXT];
 	char* dest = (output != NULL) ? output : buf;
 
@@ -69,19 +69,17 @@ const char* mapindex_getmapname_ext(const char* string, char* output)
 	}
 
 	memset(&dest[len], '\0', MAP_NAME_LENGTH_EXT-len);
-	
+
 	return dest;
 }
 
 /// Adds a map to the specified index
 /// Returns 1 if successful, 0 oherwise
-int mapindex_addmap(int index, const char* name)
-{
+int mapindex_addmap(int index, const char* name) {
 	char map_name[MAP_NAME_LENGTH];
 
 	if (index == -1){
-		for (index = 1; index < max_index; index++)
-		{
+		for (index = 1; index < max_index; index++) {
 			//if (strcmp(indexes[index].name,"#CLEARED#")==0)
 			if (indexes[index].name[0] == '\0')
 				break;
@@ -105,29 +103,27 @@ int mapindex_addmap(int index, const char* name)
 		return 0;
 	}
 
-	if (mapindex_exists(index))
+	if (mapindex_exists(index)) {
 		ShowWarning("(mapindex_add) Overriding index %d: map \"%s\" -> \"%s\"\n", index, indexes[index].name, map_name);
+		strdb_remove(mapindex_db, indexes[index].name);
+	}
 
 	safestrncpy(indexes[index].name, map_name, MAP_NAME_LENGTH);
+	strdb_iput(mapindex_db, map_name, index);
 	if (max_index <= index)
 		max_index = index+1;
 
 	return index;
 }
 
-unsigned short mapindex_name2id(const char* name)
-{
-	//TODO: Perhaps use a db to speed this up? [Skotlex]
+unsigned short mapindex_name2id(const char* name) {
 	int i;
-
 	char map_name[MAP_NAME_LENGTH];
 	mapindex_getmapname(name, map_name);
 
-	for (i = 1; i < max_index; i++)
-	{
-		if (strcmpi(indexes[i].name,map_name)==0)
-			return i;
-	}
+	if( (i = strdb_iget(mapindex_db, map_name)) )
+		return i;
+
 	ShowDebug("mapindex_name2id: Map \"%s\" not found in index list!\n", map_name);
 	return 0;
 }
@@ -141,27 +137,24 @@ const char* mapindex_id2name(unsigned short id)
 	return indexes[id].name;
 }
 
-void mapindex_init(void)
-{
+void mapindex_init(void) {
 	FILE *fp;
 	char line[1024];
 	int last_index = -1;
 	int index;
-	char map_name[1024];
-	
-	memset (&indexes, 0, sizeof (indexes));
-	fp=fopen(mapindex_cfgfile,"r");
-	if(fp==NULL){
+	char map_name[MAP_NAME_LENGTH];
+
+	if( ( fp = fopen(mapindex_cfgfile,"r") ) == NULL ){
 		ShowFatalError("Unable to read mapindex config file %s!\n", mapindex_cfgfile);
 		exit(EXIT_FAILURE); //Server can't really run without this file.
 	}
-	while(fgets(line, sizeof(line), fp))
-	{
+	memset (&indexes, 0, sizeof (indexes));
+	mapindex_db = strdb_alloc(DB_OPT_DUP_KEY, MAP_NAME_LENGTH);
+	while(fgets(line, sizeof(line), fp)) {
 		if(line[0] == '/' && line[1] == '/')
 			continue;
 
-		switch (sscanf(line, "%1023s\t%d", map_name, &index))
-		{
+		switch (sscanf(line, "%12s\t%d", map_name, &index)) {
 			case 1: //Map with no ID given, auto-assign
 				index = last_index+1;
 			case 2: //Map with ID given
@@ -173,6 +166,10 @@ void mapindex_init(void)
 		last_index = index;
 	}
 	fclose(fp);
+
+	if( !strdb_iget(mapindex_db, MAP_DEFAULT) ) {
+		ShowError("mapindex_init: MAP_DEFAULT '%s' not found in cache! update mapindex.h MAP_DEFAULT var!!!\n",MAP_DEFAULT);
+	}
 }
 
 int mapindex_removemap(int index){
@@ -180,6 +177,6 @@ int mapindex_removemap(int index){
 	return 0;
 }
 
-void mapindex_final(void)
-{
+void mapindex_final(void) {
+	db_destroy(mapindex_db);
 }

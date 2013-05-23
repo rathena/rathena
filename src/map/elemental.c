@@ -76,27 +76,27 @@ int elemental_create(struct map_session_data *sd, int class_, unsigned int lifet
 	ele.mode = EL_MODE_PASSIVE; // Initial mode
 	i = db->status.size+1; // summon level
 
-	//[(Caster’s Max HP/ 3 ) + (Caster’s INT x 10 )+ (Caster’s Job Level x 20 )] x [(Elemental Summon Level + 2) / 3]
+	//[(Casterï¿½s Max HP/ 3 ) + (Casterï¿½s INT x 10 )+ (Casterï¿½s Job Level x 20 )] x [(Elemental Summon Level + 2) / 3]
 	ele.hp = ele.max_hp = (sd->battle_status.max_hp/3 + sd->battle_status.int_*10 + sd->status.job_level) * ((i + 2) / 3);
-	//Caster’s Max SP /4
+	//Casterï¿½s Max SP /4
 	ele.sp = ele.max_sp = sd->battle_status.max_sp/4;
-	//Caster’s [ Max SP / (18 / Elemental Summon Skill Level) 1- 100 ]
+	//Casterï¿½s [ Max SP / (18 / Elemental Summon Skill Level) 1- 100 ]
 	ele.atk = (sd->battle_status.max_sp / (18 / i)  * 1 - 100);
-	//Caster’s [ Max SP / (18 / Elemental Summon Skill Level) ]
+	//Casterï¿½s [ Max SP / (18 / Elemental Summon Skill Level) ]
 	ele.atk2 = sd->battle_status.max_sp / 18;
-	//Caster’s HIT + (Caster’s Base Level )
+	//Casterï¿½s HIT + (Casterï¿½s Base Level )
 	ele.hit = sd->battle_status.hit + sd->status.base_level;
-	//[Elemental Summon Skill Level x (Caster’s INT / 2 + Caster’s DEX / 4)]
+	//[Elemental Summon Skill Level x (Casterï¿½s INT / 2 + Casterï¿½s DEX / 4)]
 	ele.matk = i * (sd->battle_status.int_ / 2 + sd->battle_status.dex / 4);
-	//150 + [Caster’s DEX / 10] + [Elemental Summon Skill Level x 3 ]
+	//150 + [Casterï¿½s DEX / 10] + [Elemental Summon Skill Level x 3 ]
 	ele.amotion = 150 + sd->battle_status.dex / 10 + i * 3;
-	//Caster’s DEF + (Caster’s Base Level / (5 – Elemental Summon Skill Level)
+	//Casterï¿½s DEF + (Casterï¿½s Base Level / (5 ï¿½ Elemental Summon Skill Level)
 	ele.def = sd->battle_status.def + sd->status.base_level / (5-i);
-	//Caster’s MDEF + (Caster’s INT / (5 - Elemental Summon Skill Level)
+	//Casterï¿½s MDEF + (Casterï¿½s INT / (5 - Elemental Summon Skill Level)
 	ele.mdef = sd->battle_status.mdef + sd->battle_status.int_ / (5-i);
-	//Caster’s FLEE + (Caster’s Base Level / (5 – Elemental Summon Skill Level)
+	//Casterï¿½s FLEE + (Casterï¿½s Base Level / (5 ï¿½ Elemental Summon Skill Level)
 	ele.flee = sd->status.base_level / (5-i);
-	//Caster’s HIT + (Caster’s Base Level )
+	//Casterï¿½s HIT + (Casterï¿½s Base Level )
 	ele.hit = sd->battle_status.hit + sd->status.base_level;
 
 	//per individual bonuses

@@ -2815,10 +2815,10 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 		WFIFOL(fd,4)=sd->battle_status.cri/10;
 		break;
 	case SP_MATK1:
-            WFIFOL(fd,4)=pc_rightside_matk(sd);
+		WFIFOL(fd,4)=pc_rightside_matk(sd);
 		break;
 	case SP_MATK2:
-            WFIFOL(fd,4)=pc_leftside_matk(sd);
+		WFIFOL(fd,4)=pc_leftside_matk(sd);
 		break;
 
 
@@ -11579,7 +11579,7 @@ void clif_parse_ReplyPartyInvite2(int fd,struct map_session_data *sd)
 /// 0100
 void clif_parse_LeaveParty(int fd, struct map_session_data *sd)
 {
-	if(map[sd->bl.m].flag.partylock) { //Guild locked.
+	if(map[sd->bl.m].flag.partylock) { //part locked.
 		clif_displaymessage(fd, msg_txt(sd,227));
 		return;
 	}
@@ -11591,7 +11591,7 @@ void clif_parse_LeaveParty(int fd, struct map_session_data *sd)
 /// 0103 <account id>.L <char name>.24B
 void clif_parse_RemovePartyMember(int fd, struct map_session_data *sd)
 {
-	if(map[sd->bl.m].flag.partylock) { //Guild locked.
+	if(map[sd->bl.m].flag.partylock) { //party locked.
 		clif_displaymessage(fd, msg_txt(sd,227));
 		return;
 	}

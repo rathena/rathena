@@ -1230,7 +1230,7 @@ int chrif_load_scdata(int fd) {
 
 	for (i = 0; i < count; i++) {
 		data = (struct status_change_data*)RFIFOP(fd,14 + i*sizeof(struct status_change_data));
-		status_change_start(NULL,&sd->bl, (sc_type)data->type, 10000, data->val1, data->val2, data->val3, data->val4, data->tick, 15);
+		status_change_start(NULL,&sd->bl, (sc_type)data->type, 10000, data->val1, data->val2, data->val3, data->val4, data->tick, 1|2|4|8);
 	}
 #endif
 
@@ -1600,7 +1600,11 @@ int do_final_chrif(void) {
  *
  *------------------------------------------*/
 int do_init_chrif(void) {
-
+	if(sizeof(struct mmo_charstatus) > 0xFFFF){
+		ShowError("mmo_charstatus size = %d is too big to be transmit\n",
+			sizeof(struct mmo_charstatus));
+		exit(EXIT_FAILURE);
+	}
 	auth_db = idb_alloc(DB_OPT_BASE);
 	auth_db_ers = ers_new(sizeof(struct auth_node),"chrif.c::auth_db_ers",ERS_OPT_NONE);
 

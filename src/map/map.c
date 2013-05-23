@@ -1735,43 +1735,38 @@ int map_quit(struct map_session_data *sd) {
 /*==========================================
  * Lookup, id to session (player,mob,npc,homon,merc..)
  *------------------------------------------*/
-struct map_session_data * map_id2sd(int id)
-{
+struct map_session_data * map_id2sd(int id){
 	if (id <= 0) return NULL;
 	return (struct map_session_data*)idb_get(pc_db,id);
 }
 
-struct mob_data * map_id2md(int id)
-{
+struct mob_data * map_id2md(int id){
 	if (id <= 0) return NULL;
 	return (struct mob_data*)idb_get(mobid_db,id);
 }
 
-struct npc_data * map_id2nd(int id)
-{// just a id2bl lookup because there's no npc_db
+struct npc_data * map_id2nd(int id){
 	struct block_list* bl = map_id2bl(id);
-
 	return BL_CAST(BL_NPC, bl);
 }
 
-struct homun_data* map_id2hd(int id)
-{
+struct homun_data* map_id2hd(int id){
 	struct block_list* bl = map_id2bl(id);
-
 	return BL_CAST(BL_HOM, bl);
 }
 
-struct mercenary_data* map_id2mc(int id)
-{
+struct mercenary_data* map_id2mc(int id){
 	struct block_list* bl = map_id2bl(id);
-
 	return BL_CAST(BL_MER, bl);
 }
 
-struct chat_data* map_id2cd(int id)
-{
+struct pet_data* map_id2pd(int id){
 	struct block_list* bl = map_id2bl(id);
+	return BL_CAST(BL_PET, bl);
+}
 
+struct chat_data* map_id2cd(int id){
+	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_CHAT, bl);
 }
 

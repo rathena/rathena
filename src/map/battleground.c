@@ -179,8 +179,8 @@ int bg_team_get_id(struct block_list *bl)
 		case BL_PC:
 			return ((TBL_PC*)bl)->bg_id;
 		case BL_PET:
-			if( ((TBL_PET*)bl)->msd )
-				return ((TBL_PET*)bl)->msd->bg_id;
+			if( ((TBL_PET*)bl)->master )
+				return ((TBL_PET*)bl)->master->bg_id;
 			break;
 		case BL_MOB:
 		{

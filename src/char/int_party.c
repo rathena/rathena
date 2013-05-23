@@ -476,6 +476,11 @@ int mapif_parse_CreateParty(int fd, char *name, int item, int item2, struct part
 	if (char_name_option == 1) { // only letters/symbols in char_name_letters are authorised
 		for (i = 0; i < NAME_LENGTH && name[i]; i++)
 			if (strchr(char_name_letters, name[i]) == NULL) {
+				if( name[i] == '"' ) { /* client-special-char */
+					normalize_name(name,"\"");
+					mapif_parse_CreateParty(fd,name,item,item2,leader);
+					return 0;
+				}
 				mapif_party_created(fd,leader->account_id,leader->char_id,NULL);
 				return 0;
 			}

@@ -303,6 +303,16 @@ enum {
 	ELE_MAX
 };
 
+enum mob_ai {
+	AI_NONE = 0,
+	AI_ATTACK,
+	AI_SPHERE,
+	AI_FLORA,
+	AI_ZANZOU,
+	AI_LEGION,
+	AI_MAX
+};
+
 enum auto_trigger_flag {
 	ATF_SELF=0x01,
 	ATF_TARGET=0x02,
@@ -333,9 +343,7 @@ struct spawn_data {
 	unsigned int level;
 	struct {
 		unsigned int size : 2; //Holds if mob has to be tiny/large
-		unsigned int ai : 4; //Special ai for summoned monsters.
-							 //0: Normal mob | 1: Standard summon, attacks mobs
-							 //2: Alchemist Marine Sphere | 3: Alchemist Summon Flora | 4: Summon Zanzou
+		enum mob_ai ai; //Special ai for summoned monsters.
 		unsigned int dynamic : 1; //Whether this data is indexed by a map's dynamic mob list
 		unsigned int boss : 1; //0: Non-boss monster | 1: Boss monster
 	} state;
@@ -553,12 +561,12 @@ struct map_data {
 		unsigned sakura : 1; // [Valaris]
 		unsigned leaves : 1; // [Valaris]
 		unsigned nogo : 1; // [Valaris]
-		unsigned nobaseexp	: 1; // [Lorky] added by Lupus
-		unsigned nojobexp	: 1; // [Lorky]
-		unsigned nomobloot	: 1; // [Lorky]
-		unsigned nomvploot	: 1; // [Lorky]
+		unsigned nobaseexp : 1; // [Lorky] added by Lupus
+		unsigned nojobexp : 1; // [Lorky]
+		unsigned nomobloot : 1; // [Lorky]
+		unsigned nomvploot : 1; // [Lorky]
 		unsigned nightenabled :1; //For night display. [Skotlex]
-		unsigned restricted	: 1; // [Komurka]
+		unsigned restricted : 1; // [Komurka]
 		unsigned nodrop : 1;
 		unsigned novending : 1;
 		unsigned loadevent : 1;

@@ -47,6 +47,11 @@ extern char mapindex_cfgfile[80];
 #define MAP_MALAYA "malaya"
 #define MAP_ECLAGE "eclage"
 
+// When a map index search fails, return results from what map? default:prontera
+#define MAP_DEFAULT MAP_PRONTERA
+#define MAP_DEFAULT_X 150
+#define MAP_DEFAULT_Y 150
+
 const char* mapindex_getmapname(const char* string, char* output);
 const char* mapindex_getmapname_ext(const char* string, char* output);
 unsigned short mapindex_name2id(const char*);
