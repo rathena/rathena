@@ -9,8 +9,9 @@
 //===== Description: ========================================= 
 //= Players can attack other guilds, and will have their guild
 //= icons shown. WoE damage reductions will also take place.
-//= gvg: Turns on GvG mode
+//= gvg: Turns on GvG mode.
 //= gvg_castle: Describes castle maps for WoE.
+//= gvg_dungeon: Describes dungeon maps for WoE.
 //===== Additional Comments: ================================= 
 //= 1.1 - Added Novice Guild Castles.
 //= 1.2 - Updated with new meanings of gvg and gvg_castle.

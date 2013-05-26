@@ -584,8 +584,7 @@ int pc_setnewpc(struct map_session_data *sd, int account_id, int char_id, int lo
 	return 0;
 }
 
-int pc_equippoint(struct map_session_data *sd,int n)
-{
+int pc_equippoint(struct map_session_data *sd,int n){
 	int ep = 0;
 
 	nullpo_ret(sd);
@@ -4112,7 +4111,7 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 		return 0; // You cannot use this item while sitting.
 	}
 
-	switch( nameid ) //@TODO, lot oh harcoded nameid here
+	switch( nameid ) //@TODO, lot of hardcoded nameid here
 	{
 		case 605: // Anodyne
 			if( map_flag_gvg(sd->bl.m) )
@@ -4130,7 +4129,8 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 			}
 		case 602: // ButterFly Wing
 		case 14527: // Dungeon Teleport Scroll
-		case 14581: // Dungeon Teleport Scroll
+		case 14581: // Dungeon Teleport Scroll 2
+		case 12352: // Dungeon Teleport Scroll 3
 		case 14582: // Yellow Butterfly Wing
 		case 14583: // Green Butterfly Wing
 		case 14584: // Red Butterfly Wing

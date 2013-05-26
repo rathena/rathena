@@ -368,7 +368,7 @@ mf_monster_noteleport	49
 mf_pvp_nocalcrank	50
 mf_battleground	51
 mf_reset	52
-mf_channoautojoin	53
+mf_nomapchannelautojoin	53
 mf_nousecart	54
 mf_noitemconsumption	55
 mf_sumstartmiracle	56

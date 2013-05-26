@@ -136,8 +136,8 @@ Here is a list of valid top-level commands:
 This will, upon loading, set a specified map flag on a map you like. These are 
 normally in files inside 'conf/mapflag' and are loaded first, so by the time the 
 server's up, all the maps have the flags they should have. Map flags determine 
-the behavior of the map regarding various common problems, for a better 
-explanation, see 'setmapflag'.
+the behavior of the map in various situations. For more details, see 'setmapflag'
+and 'doc/mapflags.txt'.
 
 ** Create a permanent monster spawn:
 
@@ -997,9 +997,9 @@ From here on, we will have the commands sorted as follow:
 =====================
 ---------------------------------------
 
-*mes "<string>";
+*mes "<string>"{,"<string>"{,...}};
 
-This command will displays a box on the screen for the invoking character, if no 
+This command will display a box on the screen for the invoking character, if no
 such box is displayed already, and will print the string specified into that 
 box. There is normally no 'close' or 'next' button on this box, unless you 
 create one with 'close' or 'next', and while it's open the player can't do much 
@@ -1025,7 +1025,7 @@ English characters, the color codes might get screwed if they stick to letters
 with no intervening space. Separating them with spaces from the letters on 
 either side solves the problem.
 
-To display multiple lines of message while only using a single mes; command,
+To display multiple lines of message while only using a single 'mes' command,
 use the script command in the following format:
 
     mes "Line 1", "Line 2", "Line 3";
@@ -1049,7 +1049,7 @@ will terminate.
     mes "[Woman]";
     mes "This would appear on the page";
     next;
-    // This is needed cause it is a new page and the top will now be blank
+    // This is needed since it is a new page and the top will now be blank
     mes "[Woman]";
     mes "This would appear on the 2nd page";
 
@@ -1124,7 +1124,8 @@ of 'end' stops this, and ends the script.
 *set(<variable>,<expression>)
 
 This command will set a variable to the value that the expression results in. 
-This is the only way to set a variable directly.
+Variables may either be set through this command or directly, much like any
+other programming language (refer to the "Assigning variables" section).
 
 This is the most basic script command and is used a lot whenever you try to do 
 anything more advanced than just printing text into a message box.
@@ -4780,10 +4781,6 @@ about the guild skill trying to exceed the possible maximum. The full list of
 guild skills is available in 'db/(pre-)re/skill_db.txt', these are all the GD_ skills at 
 the end.
 
-The flag parameter is currently not functional and it's a mystery of what it 
-would actually do. (Though probably, like for character skills, it would allow 
-temporary bumping.) Using this command will bump the guild skill up permanently.
-
 // This would give your character's guild one level of Approval (GD_APPROVAL ID 
 // 10000). Notice that if you try to add two levels of Approval, or add
 // Approval when the guild already has it, it will only have one level of 
@@ -5045,7 +5042,7 @@ expected, refer only to an invoking character.
 What these commands do is 'attach' a script to the player which will get
 executed on attack (or when attacked in the case of autobonus2).
 
-Rate is the trigger rate of the script (1000 = 100%). 
+Rate is the trigger rate of the script (10000 = 100%). 
 
 Duration is the time that the bonus will last for since the script has triggered.
 
@@ -6096,9 +6093,9 @@ specified.
 
 *setmapflag "<map name>",<flag>{,<zone>};
 
-This command marks a specified map with a map flag given. Map flags alter the 
-behavior of the map, you can see the list of the available ones in 
-'db/const.txt' under 'mf_'.
+This command marks a specified map with the given map flag, which will alter the 
+behavior of the map. A full list of mapflags is located in 'db/const.txt' with
+the 'mf_' prefix, and documentation can be found in 'doc/mapflags.txt'.
 
 The map flags alter the behavior of the map regarding teleporting (mf_nomemo, 
 mf_noteleport, mf_nowarp, mf_nogo), storing location when disconnected 

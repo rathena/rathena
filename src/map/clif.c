@@ -16403,7 +16403,56 @@ void clif_parse_reqworldinfo(int fd,struct map_session_data *sd){
 	if(sd) clif_ackworldinfo(sd);
 }
 
+/// unknown usage (CZ_BLOCKING_PLAY_CANCEL)
+/// 0447
+void clif_parse_blocking_playcancel(int fd,struct map_session_data *sd){
+	//if(sd)
+	;
+}
 
+/// req world info (CZ_CLIENT_VERSION)
+/// 044A <version>.L
+void clif_parse_client_version(int fd,struct map_session_data *sd){
+	//if(sd)
+	;
+}
+
+#ifdef DUMP_UNKNOWN_PACKET
+void DumpUnknow(int fd,TBL_PC *sd,int cmd,int packet_len){
+	const char* packet_txt = "save/packet.txt";
+	FILE* fp;
+	time_t time_server;
+	struct tm *datetime;
+	char datestr[512];
+
+	time(&time_server);  // get time in seconds since 1/1/1970
+	datetime = localtime(&time_server); // convert seconds in structure
+	// like sprintf, but only for date/time (Sunday, November 02 2003 15:12:52)
+	strftime(datestr, sizeof(datestr)-1, "%A, %B %d %Y %X.", datetime); // Server time (normal time): %A, %B %d %Y %X.
+
+
+	if( ( fp = fopen( packet_txt , "a" ) ) != NULL ) {
+		if( sd ) {
+			fprintf(fp, "Unknown packet 0x%04X (length %d), %s session #%d, %d/%d (AID/CID) at %s \n", cmd, packet_len, sd->state.active ? "authed" : "unauthed", fd, sd->status.account_id, sd->status.char_id,datestr);
+		} else {
+			fprintf(fp, "Unknown packet 0x%04X (length %d), session #%d at %s\n", cmd, packet_len, fd,datestr);
+		}
+		WriteDump(fp, RFIFOP(fd,0), packet_len);
+		fprintf(fp, "\n");
+		fclose(fp);
+	} else {
+		ShowError("Failed to write '%s'.\n", packet_txt);
+		// Dump on console instead
+		if( sd ) {
+			ShowDebug("Unknown packet 0x%04X (length %d), %s session #%d, %d/%d (AID/CID) at %s\n", cmd, packet_len, sd->state.active ? "authed" : "unauthed", fd, sd->status.account_id, sd->status.char_id,datestr);
+		} else {
+			ShowDebug("Unknown packet 0x%04X (length %d), session #%d at %s\n", cmd, packet_len, fd,datestr);
+		}
+
+		ShowDump(RFIFOP(fd,0), packet_len);
+	}
+}
+#endif
 
 /*==========================================
  * Main client packet processing function
@@ -16523,37 +16572,9 @@ static int clif_parse(int fd)
 			packet_db[packet_ver][cmd].func(fd, sd);
 	}
 #ifdef DUMP_UNKNOWN_PACKET
-	else {
-		const char* packet_txt = "save/packet.txt";
-		FILE* fp;
-
-		if( ( fp = fopen( packet_txt , "a" ) ) != NULL ) {
-			if( sd ) {
-				fprintf(fp, "Unknown packet 0x%04X (length %d), %s session #%d, %d/%d (AID/CID)\n", cmd, packet_len, sd->state.active ? "authed" : "unauthed", fd, sd->status.account_id, sd->status.char_id);
-			} else {
-				fprintf(fp, "Unknown packet 0x%04X (length %d), session #%d\n", cmd, packet_len, fd);
-			}
-
-			WriteDump(fp, RFIFOP(fd,0), packet_len);
-			fprintf(fp, "\n");
-			fclose(fp);
-		} else {
-			ShowError("Failed to write '%s'.\n", packet_txt);
-
-			// Dump on console instead
-			if( sd ) {
-				ShowDebug("Unknown packet 0x%04X (length %d), %s session #%d, %d/%d (AID/CID)\n", cmd, packet_len, sd->state.active ? "authed" : "unauthed", fd, sd->status.account_id, sd->status.char_id);
-			} else {
-				ShowDebug("Unknown packet 0x%04X (length %d), session #%d\n", cmd, packet_len, fd);
-			}
-
-			ShowDump(RFIFOP(fd,0), packet_len);
-		}
-	}
+	else DumpUnknow(fd,sd,cmd,packet_len);
 #endif
-
 	RFIFOSKIP(fd, packet_len);
-
 	}; // main loop end
 
 	return 0;
@@ -17021,6 +17042,8 @@ void packetdb_readdb(void)
 		{ clif_parse_MoveItem , "moveitem" },
 		{ clif_parse_GuildInvite2 , "guildinvite2" },
 		{ clif_parse_reqworldinfo, "reqworldinfo"},
+		{ clif_parse_client_version, "clientversion"},
+		{ clif_parse_blocking_playcancel, "booking_playcancel"},
 		{NULL,NULL}
 	};
 

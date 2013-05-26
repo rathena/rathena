@@ -7,7 +7,10 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: ========================================= 
-//= Disables use of @warp to a map.
+//= Disables warping to a map.
+//= Atcommands @warp, @go, @load, @jump, @partyrecall,
+//=   @guildrecall, and @recallall are disabled.
+//= Command /memo is disabled.
 //===== Additional Comments: ================================= 
 //= 1.0 - Initial script.
 //============================================================

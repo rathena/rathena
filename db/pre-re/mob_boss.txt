@@ -47,3 +47,4 @@
 1871,Falling Bishop,500000
 1873,Beelzebub,500000
 1885,Gopinich,500000
+2022,Nidhoggur's Shadow,500000

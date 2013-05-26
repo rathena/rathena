@@ -1,35 +1,174 @@
 //===== rAthena Documentation ================================
-//= Permission List
+//= Permissions List
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20130402
+//= 20130526
 //===== Description: =========================================
-//= Player group permissions, configured in /conf/groups.conf.
+//= List of available permissions and their functions.
 //============================================================
 
-can_trade : Ability to trade or otherwise distribute items (drop, storage, vending etc...).
-can_party : Ability to join parties.
-all_skill : Ability to use all skills.
-all_equipment : Ability to equip anything (can cause client errors).
-skill_unconditional : Ability to use skills without meeting the required conditions (SP, items, etc...).
-join_chat : Ability to join a password protected chatrooms.
-kick_chat : Protection from being kicked from a chat.
-hide_session : Hides player session from being displayed by @commands.
-who_display_aid : Ability to see GMs and Account/Char IDs in the @who command.
-hack_info : Ability to receive all informations about any player that try to hack, spoof a name, etc.
-any_warp : Ability to bypass nowarp, nowarpto, noteleport and nomemo mapflags.
-           This option is mainly used in commands which modify a character's
-           map/coordinates (like @memo, @mapmove, @go, @jump, etc...).
-view_hpmeter : Ability to see HP bar of every player.
-view_equipment : Ability to view players equipment regardless of their setting.
-use_check : Ability to use client command /check (display character status).
-use_changemaptype : Ability to use client command /changemaptype.
-all_commands : Ability to use all atcommands and charcommands.
-receive_requests : Ability to receive @requests.
-show_bossmobs : Ability to see boss mobs with @showmobs.
-disable_pvm : Ability to disable Player vs. Monster.
-disable_pvp : Ability to disable Player vs. Player.
-disable_commands_when_dead : Ability to disable @command usage when dead.
-channel_admin : Ability to modify channel settings regardless of ownership and join password-protected
-                channels without a password.
+This file describes the functions of player group permissions,
+configured in '/conf/groups.conf' under the "permissions" bracket.
+
+To search for a permission, write "*" before its name.
+The format of this file is as follows:
+	1. Basic Permissions
+	2. Extended Permissions
+	3. Command-related
+
+========================
+| 1. Basic Permissions |
+========================
+---------------------------------------
+
+*can_trade
+
+Allows player to distribute items, such as through trades, dropping,
+vending, storage, mail, etc.
+
+---------------------------------------
+
+*can_party
+
+Allows player to create and join parties.
+
+---------------------------------------
+
+===========================
+| 2. Extended Permissions |
+===========================
+---------------------------------------
+
+*all_skill
+
+Grants player all available skills in the player's skill tree.
+
+---------------------------------------
+
+*all_equipment
+
+Allows player to equip any item, regardless of requirements (class, level,
+etc.). Note that this can cause client errors if a sprite does not exist.
+
+---------------------------------------
+
+*skill_unconditional
+
+Allows player to use any skill, regardless of required conditions (SP,
+items, etc.).
+
+---------------------------------------
+
+*join_chat
+
+Allows player to join password-protected chatrooms.
+
+---------------------------------------
+
+*kick_chat
+
+Prevents player from being kicked from a chatroom.
+
+---------------------------------------
+
+*view_hpmeter
+
+Allows player to see the HP bar of every player.
+
+---------------------------------------
+
+*view_equipment
+
+Allows player to view the equipment of every player, regardless of that
+player's setting.
+
+---------------------------------------
+
+*hack_info
+
+Allows player to receive all information about players who try to hack,
+spoof a name, etc.
+
+---------------------------------------
+
+*disable_pvm
+
+Prevents player from attacking monsters.
+
+---------------------------------------
+
+*disable_pvp
+
+Prevents player from attacking other players.
+
+---------------------------------------
+
+======================
+| 3. Command-related |
+======================
+---------------------------------------
+
+*all_commands
+
+Allows usage of all atcommands and charcommands.
+
+---------------------------------------
+
+*disable_commands_when_dead
+
+Disables usage of atcommands when player is dead.
+
+---------------------------------------
+
+*hide_session
+
+Hides player session from being displayed by atcommands (@who, @whomap,
+etc.).
+
+---------------------------------------
+
+*who_display_aid
+
+Displays all GMs and character/account IDs in the @who command.
+
+---------------------------------------
+
+*any_warp
+
+Allows player to bypass 'nowarp', 'nowarpto', 'noteleport', and 'nomemo'
+mapflags in commands which modify a character's map or coordinates (@memo,
+@mapmove, @go, @jump, etc.).
+
+---------------------------------------
+
+*receive_requests
+
+Allows player to receive requests through the @requests command.
+
+---------------------------------------
+
+*show_bossmobs
+
+Displays boss mobs in the @showmobs command.
+
+---------------------------------------
+
+*channel_admin
+
+Allows player to modify #channel settings regardless of ownership and to
+join password-protected channels without a password.
+
+---------------------------------------
+
+*use_check
+
+Allows player to use the client command /check (displays character status).
+
+---------------------------------------
+
+*use_changemaptype
+
+Allows player to use the client command /changemaptype.
+
+---------------------------------------

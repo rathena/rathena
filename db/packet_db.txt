@@ -1802,17 +1802,18 @@ packet_ver: 33
 
 //2013-03-20Ragexe (Judas)
 packet_ver: 34
+0x014f,6,guildrequestinfo,2
 0x01fd,15,repairitem,2
 //0x0281,-1,itemlistwindowselected,2:4:8
 0x035f,6,reqclickbuyingstore,2
 0x0363,6,ticksend,2
 0x0365,12,searchstoreinfolistitemclick,2:6:10
 0x0438,6,dropitem,2:4
-0x0447,2
+0x0447,2,booking_playcancel,0
+0x044A,6,clientversion,2
 0x0844,2,cashshopopen,0
 0x0848,-1,cashshopbuy,0
-0x084a,2,cashshopclose,0
-0x084b,19 //fallitem4
+0x084a,2,cashshopclose,00x084b,19 //fallitem4
 0x085a,90,useskilltoposinfo,2:4:6:8:10
 0x085d,18,bookingregreq,2:4
 0x0868,-1,itemlistwindowselected,2:4:8

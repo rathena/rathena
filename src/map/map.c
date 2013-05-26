@@ -1287,7 +1287,7 @@ int map_clearflooritem_timer(int tid, unsigned int tick, int id, intptr_t data)
 }
 
 /*
- * clears a single bl item out of the bazooonga.
+ * clears a single bl item out of the map.
  */
 void map_clearflooritem(struct block_list *bl) {
 	struct flooritem_data* fitem = (struct flooritem_data*)bl;
