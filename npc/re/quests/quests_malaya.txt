@@ -1,0 +1,274 @@
+//===== rAthena Script =======================================
+//= Port Malaya Quest NPCs
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 0.1
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= Quest NPCs related to Port Malaya.
+//===== Additional Comments: =================================
+//= 0.1 Traders only. Adapted from Masao's conversion. [Euphy]
+//============================================================
+
+// Traders
+//============================================================
+ma_fild01,166,214,6	script	Old Man in Dilemma#GA	575,{
+	if (MaxWeight - Weight < 600 || checkweight(1201,1) == 0) {
+		mes "Cannot proceed because you have too many items in your possession.";
+		close;
+	}
+	mes "[Old Man in Dilemma]";
+	mes "Oh! Demons are gaining more and more power in this world.";
+	next;
+	switch(select("We need to gather items to fight them off.:Ignore.")) {
+	case 1:
+		if (countitem(6497) >= 3 && Zeny >= 1000) {
+			mes "[Old Man in Dilemma]";
+			mes "You don't seem to be strong enough to fight off demons.";
+			next;
+			mes "[Old Man in Dilemma]";
+			mes "Will you create a Greater Agimat of Ancient Spirit with 3 Lesser Agimats and 1,000 Zeny?";
+			next;
+			if(select("Create.:No, thank you.") == 1) {
+				if (countitem(6497) >= 3 && Zeny >= 1000) {
+					specialeffect2 EF_CONE;
+					specialeffect EF_FORESTLIGHT2;
+					set Zeny, Zeny-1000;
+					getitem 12775,1; //Ancient_Spirit_Agimat
+				} else {
+					mes "[Old Man in Dilemma]";
+					mes "Short on materials.";
+					close;
+				}
+			}
+			mes "[Old Man in Dilemma]";
+			mes "Hope you win the fight with the demon.";
+			close;
+		}
+		mes "[Old Man in Dilemma]";
+		mes "Can't make it now but there is an old way of making it handed down by generations.";
+		next;
+		mes "[Old Man in Dilemma]";
+		mes "You need to call upon the power of Ancient Spirits. But you'll need several important materials first.";
+		next;
+		select("What are they?");
+		mes "[Old Man in Dilemma]";
+		mes "3 Lesser Agimats to hold the power of Ancient Spirits here and another special material handed down for generations.";
+		next;
+		mes "[Old Man in Dilemma]";
+		mes "But nobody can get this special item anymore.";
+		next;
+		select("Something money cannot buy?");
+		mes "[Old Man in Dilemma]";
+		mes "No, no... It's this round little thing, you see?";
+		next;
+		select("Are you talking about Zeny?");
+		mes "[Old Man in Dilemma]";
+		mes "Looks similar to the special items handed down from generations.";
+		next;
+		mes "[Old Man in Dilemma]";
+		mes "As long as we have enough of that, we could make the Greater Agimat of Ancient Spirit to fight against the demons.";
+		next;
+		select("Sounds good.");
+		mes "[Old Man in Dilemma]";
+		mes "In case you are too weary to take on the demons...";
+		next;
+		mes "[Old Man in Dilemma]";
+		mes "Come by with 3 Lesser Agimats and 1,000 of those so-called Zeny.";
+		next;
+		mes "[Old Man in Dilemma]";
+		mes "I will make a Greater Agimat of Ancient Spirit that will increase your attacks against demons by 10% for 20 min.";
+		close;
+	case 2:
+		mes "[Old Man in Dilemma]";
+		mes "Hope you win the fight with the demon.";
+		close;
+	}
+}
+
+ma_fild01,238,198,4	script	Tikbalang Expert#malaya	582,{
+	if (MaxWeight - Weight < 50 || checkweight(1201,1) == 0) {
+		mes "Cannot proceed because you have too many items in your possession.";
+		close;
+	}
+	mes "[Tikbalang Expert]";
+	mes "I spent 90% of my life studying Tikbalang.";
+	next;
+	switch(select("But you look young?:What is Tikbalang?:Teach me how to catch a Tikbalang.")) {
+	case 1:
+		mes "[Tikbalang Expert]";
+		mes "What! I might be imagining things.";
+		next;
+		mes "[Tikbalang Expert]";
+		mes "I look younger than I am because of my baby face. Ha ha ha~";
+		next;
+		select("... ... ...");
+		mes "[Tikbalang Expert]";
+		mes "Trust!! They say faith will bring you luck.";
+		close;
+	case 2:
+		mes "[Tikbalang Expert]";
+		mes "Ha ha... You ask the right question.";
+		mes "I'm a specialist in that field. Ask me anything.";
+		next;
+		select("Why won't you answer me?");
+		mes "[Tikbalang Expert]";
+		mes "Have you... ever been fooled by anyone around you? Why can't you believe someone's word for it? Really, ask me anything.";
+		next;
+		while(1) {
+			switch(select("I don't have any questions.:Characteristics?:Features?:Rumors?:Habitat?")) {
+			case 1:
+				mes "[Tikbalang Expert]";
+				mes "I think this is enough explanation for now. You wouldn't understand other highly sophisticated topics with specific terminology and all anyway.";
+				next;
+				mes "[Tikbalang Expert]";
+				mes "Oh! Do you have any other questions?";
+				next;
+				mes "[Tikbalang Expert]";
+				mes "What do you think? Impressed at how much I know? Come by anytime when you have any more questions.";
+				close;
+			case 2:
+				mes "[Tikbalang Expert]";
+				mes "Tikbalangs have a way to confuse travelers when they meet them by making them turn in circles regardless of wherever and how far they travel.";
+				next;
+				mes "[Tikbalang Expert]";
+				mes "They are mischievous creatures.";
+				next;
+				mes "[Tikbalang Expert]";
+				mes "But of course there is a way to stop their pranks. You know about the Inside-out Shirt? You can either wear your top inside-out.";
+				next;
+				mes "[Tikbalang Expert]";
+				mes "Or go on your way quietly without disrupting the Tikbalangs.";
+				next;
+				mes "[Tikbalang Expert]";
+				mes "Ha ha ha ha~ But everyone knows adventurers are never quiet while they travel, right?";
+				next;
+				mes "[Tikbalang Expert]";
+				mes "Never...";
+				break;
+			case 3:
+				mes "[Tikbalang Expert]";
+				mes "They say Tikbalangs have several distinctions.";
+				next;
+				mes "[Tikbalang Expert]";
+				mes "First, they are very tall ^AAAAAA(tsk... wish I were tall)^000000 and have skinny, imbalanced legs and arms. Looks almost like a human but their knees are higher than their upper body when they sit down.";
+				next;
+				mes "[Tikbalang Expert]";
+				mes "Second, is the standard characteristics acknowledged by the association. They have heads and feet like a horse.";
+				next;
+				mes "[Tikbalang Expert]";
+				mes "So with all these appearance traits, Tikbalang is sometimes called the creature from hell.";
+				break;
+			case 4:
+				mes "[Tikbalang Expert]";
+				mes "There are several fun rumors about Tikbalangs.";
+				next;
+				mes "[Tikbalang Expert]";
+				mes "One of them is about Tikbalangs being the guardians of some kingdom that worships nature.";
+				next;
+				mes "[Tikbalang Expert]";
+				mes "So the Tikbalangs will trick travelers who come with bad intentions to the kingdom by making them travel in circles.";
+				next;
+				mes "[Tikbalang Expert]";
+				mes "Another rumor is that people around here say that 'if it rains on a clear day, then it must be Tikbalang's wedding day'.";
+				next;
+				mes "[Tikbalang Expert]";
+				mes "The association speculates that sayings like 'it rains on Bathory's wedding day' or 'it rains on Moonlight Flower's wedding day' might have derived from the Tikbalang's saying.";
+				next;
+				mes "[Tikbalang Expert]";
+				mes "Lastly, ancient fairy tales say that Tikbalangs can transform into human form or even make themselves transparen't but nobody has verified this yet.";
+				break;
+			case 5:
+				mes "[Tikbalang Expert]";
+				mes "Tikbalangs usually live in dark, busy places where there aren't many people around.";
+				next;
+				mes "[Tikbalang Expert]";
+				mes "Hmm... For example, they are known to live beneath bridges, in banana and bamboo forests and beneath large trees.";
+				next;
+				mes "[Tikbalang Expert]";
+				mes "And this is just my opinion but wouldn't you agree that they are living in dark places because it is easier to play pranks on people?";
+				break;
+			}
+			next;
+		}
+	case 3:
+		mes "[Tikbalang Expert]";
+		mes "Ha ha ha. Do you now know how great I am?";
+		next;
+		if (countitem(6496) >= 3 && countitem(6497) >= 5) {
+			mes "[Tikbalang Expert]";
+			mes "Oh! Isn't this material to make 'Tikbalang Belt' used to tame Tikbalangs?";
+			next;
+			mes "[Tikbalang Expert]";
+			mes "The '^F80835Tikbalang Belt^000000' is used to capture Tikbalangs without the hassle. But that doesn't mean it's 100% successful. Interested? Do you want me to make one for you?";
+			next;
+			switch(select("Yes, Im interested.:No, I can capture one myself.")) {
+			case 1:
+				delitem 6496,3; //Tikbalang_Thick_Spine
+				getitem 12699,1; //Tikbalang_Belt
+				mes "[Tikbalang Expert]";
+				mes "Yiiiiiiiiiiii! Yap!";
+				next;
+				specialeffect EF_SONICBLOW2;
+				select("Huh?");
+				mes "[Tikbalang Expert]";
+				mes "The '^F80835Tikbalang Belt^000000' is already created.";
+				close;
+			case 2:
+				mes "[Tikbalang Expert]";
+				mes "You? Ha... You can try if you want to.";
+				close;
+			}
+		}
+		mes "[Tikbalang Expert]";
+		mes "There is the easy way and the hard way to capture Tikbalangs. Which one do you prefer?";
+		next;
+		switch(select("Easy way.:Hard way.")) {
+		case 1:
+			mes "[Tikbalang Expert]";
+			mes "Ha ha. I've come up with the easy way myself.";
+			next;
+			mes "[Tikbalang Expert]";
+			mes "Bring me 3 Tikbalang's Thick Spines and 5 Lesser Agimats to make a '^F80835Tikbalang Belt^000000' to help you easily capture Tikbalangs.";
+			next;
+			mes "[Tikbalang Expert]";
+			mes "Ha ha ha ha ha!";
+			mes "I will say it again.";
+			mes "It's 3 Tikbalang's Thick Spines and 5 Lesser Agimats. Understood?";
+			close;
+		case 2:
+			mes "[Tikbalang Expert]";
+			mes "It's easy for me but I don't know about you.";
+			next;
+			mes "[Tikbalang Expert]";
+			mes "Tikbalangs have a sharp, pointy mane behind their neck.";
+			next;
+			mes "[Tikbalang Expert]";
+			mes "Of course! There are several of them but you must get the three thickest ones.";
+			next;
+			mes "[Tikbalang Expert]";
+			mes "These three manes are the weak point. You can tame a Tikbalang by pulling the manes out.";
+			next;
+			mes "[Tikbalang Expert]";
+			mes "Now let me explain how to pull these manes out.";
+			next;
+			mes "[Tikbalang Expert]";
+			mes "You must fly like a butterfly and land like a bee on the back of a Tikbalang.";
+			next;
+			mes "[Tikbalang Expert]";
+			mes "Of course! The Tikbalang will get mad and try to shake you off with all its might.";
+			next;
+			mes "[Tikbalang Expert]";
+			mes "All you have to do is hold on until the Tikbalang gets exhausted.";
+			next;
+			mes "[Tikbalang Expert]";
+			mes "Then again, itll take 4 days and 3 nights for Tikbalangs to get tired since they are strong creatures. But let's not focus on too much details.";
+			next;
+			mes "[Tikbalang Expert]";
+			mes "Which means!! The Tikbalang is already tamed.";
+			close;
+		}
+	}
+}

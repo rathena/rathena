@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20130526
+//= 20130527
 //===== Description: =========================================
 //= List of available mapflags and their functions.
 //============================================================
@@ -154,6 +154,7 @@ Disables chatroom and shop creation on a map.
 *nousecart
 
 Disables cart usage on a map.
+[Not fully implemented.]
 
 ---------------------------------------
 
@@ -186,7 +187,7 @@ Disables usage of monster-spawning items on a map:
  - Red Pouch (ID 12024)
 
 Note that when 'mob_warp' is enabled in '/conf/battle/monster.conf' and flag 4 is set, this will
-also prevent mobs from being warped onto the map.
+also prevent mobs from being warped onto the map (except slave mobs).
 
 ---------------------------------------
 

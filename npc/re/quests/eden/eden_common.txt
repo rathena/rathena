@@ -68,12 +68,12 @@ moc_para01,27,35,5	script	Secretary Lime Evenor	952,{
 					mes "Let me see.";
 					next;
 					mes "[Lime Evenor]";
-					mes "Your name is ^3131FFBo"+.@input$+"Ba^000000..? Is that right?";
+					mes "Your name is ^3131FFBo"+.@input$+"Ba^000000...? Is that right?";
 					mes "Huh? Isn't it??";
 					next;
 					emotion e_swt;
 					mes "[Lime Evenor]";
-					mes "Hmm that isn't what you wrote?.";
+					mes "Hmm, that isn't what you wrote?";
 					mes "Ok, hmm, it seems a bit hard to read.";
 					next;
 					mes "[Lime Evenor]";

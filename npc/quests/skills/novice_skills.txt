@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -12,10 +12,11 @@
 //= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //= 1.6 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 1.7 Updated to latest available official file. [Masao]
+//= 1.8 Added Baby support. [Zopokx]
 //============================================================ 
 
 prt_in,234,133,4	script	Nami	66,{
-	if ((Class == Job_Novice) && (JobLevel > 3 || BaseLevel > 11) && (skill_nov < 3)) {
+	if ((Class == Job_Novice || Class == Job_Baby) && (JobLevel > 3 || BaseLevel > 11) && (skill_nov < 3)) {
 		mes "[Nami]";
 		mes "Hello!";
 		mes "I want to be a nurse so bad!";
@@ -189,7 +190,7 @@ prt_in,234,133,4	script	Nami	66,{
 }
 
 prt_in,73,87,4	script	Chivalry Member	65,{
-	if ((Class == Job_Novice) && (JobLevel > 6) && ((skill_nov >= 3) && (skill_nov <= 5))) {
+	if ((Class == Job_Novice || Class == Job_Baby) && (JobLevel > 6) && ((skill_nov >= 3) && (skill_nov <= 5))) {
 		mes "[Bulma]";
 		mes "Yeah. . . I look great. . .";
 		mes "I am a knight in the knight's";

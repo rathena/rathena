@@ -86,7 +86,7 @@ L_Quest:
 		mes "You have declined the "+getarg(2)+" mission.";
 		close;
 	}
-	if (checkquest(getarg(0)) == 1) mes "You are already doing this mission.";
+	if (checkquest(getarg(0)) > -1) mes "You are already doing this mission.";
 	else {
 		setquest getarg(0);
 		mes "You have accepted the "+getarg(2)+" mission.";
