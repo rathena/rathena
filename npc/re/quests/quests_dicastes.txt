@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Gennosuke Kouga, Muad_Dib
 //===== Current Version: =====================================
-//= 1.9
+//= 1.9a
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -27,6 +27,7 @@
 //= 1.8a Disabled "Fish Tails" until Izlude RE coordinates are found. [Euphy]
 //= 1.8b Updated "Calyon" NPC and fixed a check. [Euphy]
 //= 1.9 Updated "Fish Tails" with RE coordinates.
+//= 1.9a Minor fix. [Joseph]
 //============================================================
 
 // Entrance
@@ -7372,19 +7373,17 @@ dic_fild01,228,159,4	script	Jahbong#pa0829	496,{
 	mes "[Jahbong]";
 	mes "Are you really buying something?!";
 	next;
-	switch(select("Nope:Give me!!!")) {
-		case 1:
-			mes "[Jahbong]";
-			mes "Okay!";
-			close;
-		case 2:
-			setarray .@items[1],2463,2564,2843;
-			mes "[Jahbong]";
-			mes "Here you go!";
-			delitem 6304,1;
-			getitem .@items[.@i],1;
-			close;
+	if (select("Nope:Give me!!!") == 1) {
+		mes "[Jahbong]";
+		mes "Okay!";
+		close;
 	}
+	setarray .@items[1],2463,2564,2843;
+	mes "[Jahbong]";
+	mes "Here you go!";
+	delitem 6304,1;
+	getitem .@items[.@i],1;
+	close;
 }
 
 // Cat Hand Agent
@@ -7410,7 +7409,7 @@ moc_para01,44,19,3	script	Cat Hand Agent#gekk	496,{
 		mes "It breaks my heart to think my colleagues will be shivering in the blizzard. I hope I don't get into trouble since I can't do anything about it, right?";
 		next;
 		if (select ("Why don't you collect it yourself?:I'm sorry to hear that.") == 1) {
-				emotion ET_HUK;
+				emotion e_omg;
 				mes "[Cat Hand Agent]";
 				mes "Human!! You're a genius!!";
 				mes "How did you come up with that?";
@@ -7452,7 +7451,7 @@ moc_para01,44,19,3	script	Cat Hand Agent#gekk	496,{
 						next;
 						input .@inputstr$;
 						mes "[Agent Geck]";
-						mes "" + name + "? Human names are strange to me.";
+						mes "" + strcharinfo(0) + "? Human names are strange to me.";
 						next;
 						mes "[Agent Geck]";
 						mes "Now you are Geck's personal slav... sponsor.";
@@ -7537,7 +7536,7 @@ moc_fild20,368,197,3	script	Cat#to22	876,{
 		mes "The small body isn't as tall as your ankle and its small but thick paws look like little cushions. The ears that bent backwards when it looked at how big you were stirred up your protective instinct.";
 		next;
 		mes "You don't seem to have the nerve to step on the Cat Hand Agent.";
-		emotion ET_CRY;
+		emotion e_sob;
 		close;
 	}
 	mes "You look at the Cat Hand Agent's small back and climb over the wall as quick as possible so that it wouldn't notice your weight.";
