@@ -3720,8 +3720,8 @@
 6237,Guarana_Fruit,Guarana Fruit,3,0,,0,,,,,,,,,,,,,{},{},{}
 6238,Guarantee_Weapon_11Up,Guarantee Weapon 11Up,3,0,,0,,,,,,,,,,,,,{},{},{}
 6239,Guarantee_Armor_11Up,Guarantee Armor 11Up,3,0,,0,,,,,,,,,,,,,{},{},{}
-6240,HD_Oridecon,Purified Oridecon,3,20,,10,,,,,,,,,,,,,{},{},{}
-6241,HD_Elunium,Purified Elunium,3,20,,10,,,,,,,,,,,,,{},{},{}
+6240,HD_Oridecon,HD Oridecon,3,20,,10,,,,,,,,,,,,,{},{},{}
+6241,HD_Elunium,HD Elunium,3,20,,10,,,,,,,,,,,,,{},{},{}
 6242,Midgard_Coin,Midgard Coin,3,20,,10,,,,,,,,,,,,,{},{},{}
 6243,Exchange_Coupon,Exchange Coupon,3,0,,0,,,,,,,,,,,,,{},{},{}
 6244,Gun_Powder,Gun Powder,3,10,,1,,,,,,,,,,,,,{},{},{}

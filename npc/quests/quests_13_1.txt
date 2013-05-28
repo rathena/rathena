@@ -4646,7 +4646,7 @@ mid_camp,240,270,3	script	Botanist#ep13	750,{
 
 mid_camp,336,171,1	script	Camp Guard#man1	852,{
 	if (ep13_animal == 0) {
-		if (ep13_newbs == 6 || ep13_newbs == 19) goto OnHalt;
+		if (ep13_newbs == 6 || ep13_newbs == 19 || ep13_start == 100) goto OnHalt;
 		else {
 			mes "[Camp Guard]";
 			mes "Stop!";
@@ -4740,7 +4740,7 @@ OnHalt:
 
 mid_camp,13,143,5	script	Camp Guard#man2	852,{
 	if (ep13_animal == 0) {
-		if (ep13_newbs == 6 || ep13_newbs == 19) goto OnHalt;
+		if (ep13_newbs == 6 || ep13_newbs == 19 || ep13_start == 100) goto OnHalt;
 		else {
 			mes "[Camp Guard]";
 			mes "Stop!";
@@ -4802,7 +4802,7 @@ OnHalt:
 
 mid_camp,9,215,5	script	Camp Guard#man3	852,{
 	if (ep13_animal == 0) {
-		if (ep13_newbs == 6 || ep13_newbs == 19) goto OnHalt;
+		if (ep13_newbs == 6 || ep13_newbs == 19 || ep13_start == 100) goto OnHalt;
 		else {
 			mes "[Camp Guard]";
 			mes "Stop!";

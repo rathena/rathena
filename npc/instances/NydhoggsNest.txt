@@ -26,42 +26,21 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 		next;
 		switch(select("Move closer to look more carefully.:Step back.")) {
 		case 1:
-			if (ep13_1_edq == 14) {
-				specialeffect2 EF_HOLYHIT;
-				pushpc 3,3;
+			specialeffect2 EF_HOLYHIT;
+			pushpc 3,3;
+			if (ep13_1_edq == 14)
 				set ep13_1_edq,15;
-				mes "A mysterious power prevents you from getting too close. It looks like there is something strong beyond the door...";
-				next;
-				mes "Perhaps there's a great hidden secret beyond the gate, beyond expectation.";
-				next;
-				mes "It would be better to go back to camp and inform the others and ask for help.";
-				set ins_nyd,1;
-				close;
-			}
-			else if (ep13_1_edq == 15) {
-				specialeffect2 EF_HOLYHIT;
-				pushpc 3,3;
-				mes "A mysterious power prevents you from getting too close. It looks like there is something strong beyond the door...";
-				next;
-				mes "Perhaps there's a great hidden secret beyond the gate, beyond expectation.";
-				next;
-				mes "It would be better to go back to camp and inform the others and ask for help.";
-				set ins_nyd,1;
-				close;
-			}
-			else {
-				specialeffect2 EF_HOLYHIT;
-				pushpc 3,3;
-				mes "A mysterious power prevents you from getting too close. It looks like there is something strong beyond the door...";
-				next;
-				mes "Perhaps there's a great hidden secret beyond the gate, beyond expectation.";
-				next;
-				mes "It would be better to go back to camp and inform the others and ask for help.";
+			mes "A mysterious power prevents you from getting too close. It looks like there is something strong beyond the door...";
+			next;
+			mes "Perhaps there's a great hidden secret beyond the gate, beyond expectation.";
+			next;
+			mes "It would be better to go back to camp and inform the others and ask for help.";
+			if (ep13_1_edq != 15) {
 				next;
 				mes "You'll have to obtain the others trust in the expendition camp by working hard.";
-				set ins_nyd,1;
-				close;
 			}
+			set ins_nyd,1;
+			close;
 		case 2:
 			close;
 		}
@@ -2136,6 +2115,7 @@ OnTimer180000:
 	switch(select("Please let me out.:I want to look around for a while.")) {
 	case 1:
 		set 'ins_nyd2,0;
+		set ins_nyd,203;
 		//setquest 3135;
 		warp "nyd_dun02",98,196;
 		end;

@@ -416,7 +416,7 @@
 3256,0,0,0,0,0,0,0,"Request - Ready for waiting summer"
 3257,0,1170,30,0,0,0,0,"Request - A grudge of women"
 3258,0,0,0,0,0,0,0,"Request - A material of delicacy"
-3259,0,1143,30,0,0,0,0,"Request - A agony of a doll maste"
+3259,0,1143,30,0,0,0,0,"Request - A agony of a doll master"
 3260,0,1035,30,0,0,0,0,"Request - Tiresome flies"
 3261,0,1026,30,0,0,0,0,"Request - Unclean girl"
 3262,0,0,0,0,0,0,0,"Request - Queer hobby"

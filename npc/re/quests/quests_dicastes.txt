@@ -7392,8 +7392,10 @@ moc_para01,44,19,3	script	Cat Hand Agent#gekk	496,{
 	if (BaseLevel < 70)	{
 		mes "[Cat Hand Agent]";
 		mes "Hey, human! Did you come to make a request, too? When will it be my turn?";
+		next;
 		mes "[Cat Hand Agent]";
 		mes "Our Cat Hand Merchant group really needs any help it can get. But by the looks of all those requests that Ebenor is holding in his hand, Cat Hand Merchant will be closed by the time my request is put up on the board!";
+		next;
 		mes "[Cat Hand Agent]";
 		mes "It breaks my heart to think my colleagues will be shivering in the blizzard. I hope I don't get into trouble since I can't do anything about it, right?";
 		close;

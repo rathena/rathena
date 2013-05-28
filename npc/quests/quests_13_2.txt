@@ -3323,23 +3323,23 @@ mid_camp,192,239,4	script	Wanted Sign#ep13_2ect01	857,{
 	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
 		mes "We just got fresh eggs from the dragon nest.";
 		getitem 6093,1; //Egg_Of_Draco
-		disablenpc strnpcinfo(1);
+		disablenpc strnpcinfo(0);
 		initnpctimer;
 		close;
 	}
 	end;
 
 OnTimer420000:
-	enablenpc strnpcinfo(1);
+	enablenpc strnpcinfo(0);
 	stopnpctimer;
 	end;
 
 OnEnable:
-	enablenpc strnpcinfo(1);
+	enablenpc strnpcinfo(0);
 	end;
 
 OnDisable:
-	disablenpc strnpcinfo(1);
+	disablenpc strnpcinfo(0);
 	end;
 }
 
@@ -3559,7 +3559,7 @@ OnTimer300000:
 // Otherworld language
 //============================================================ 
 mid_camp,197,237,3	script	Schwartzvalt Mechanic#1	869,{
-	if (ep13_1_edq > 2) {
+	if (ep13_1_edq > 2 || ep13_start == 100) {
 		if (ep13_2_rhea < 1) {
 			mes "[Mechanic Engineer Dorance]";
 			mes "Do you know about the Ring of the Ancient Wise King? If you wear that Ring, you can talk to animals.";
