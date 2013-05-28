@@ -54,7 +54,7 @@
 			mes "Bring out the item so I can refine it!";
 			break;
 		case 6:
-			mes "Where is this foot order coming from?";
+			mes "Where is this foot odor coming from?";
 			break;
 		case 7:
 		case 8:

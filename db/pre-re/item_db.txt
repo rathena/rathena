@@ -3252,18 +3252,18 @@
 6224,Bradium,Bradium,3,2000,,150,,,,,,,,,,,,,{},{},{}
 6225,HD_Carnium,HD Carnium,3,0,,10,,,,,,,,,,,,,{},{},{}
 6226,HD_Bradium,HD Bradium,3,0,,10,,,,,,,,,,,,,{},{},{}
-6228,Guarantee_Weapon_9Up,Guarantee Weapon 9Up,3,0,,0,,,,,,,,,,,,,{},{},{}
-6229,Guarantee_Weapon_8Up,Guarantee Weapon 8Up,3,0,,0,,,,,,,,,,,,,{},{},{}
-6230,Guarantee_Weapon_7Up,Guarantee Weapon 7Up,3,0,,0,,,,,,,,,,,,,{},{},{}
-6231,Guarantee_Weapon_6Up,Guarantee Weapon 6Up,3,0,,0,,,,,,,,,,,,,{},{},{}
-6232,Guarantee_Armor_9Up,Guarantee Armor 9Up,3,0,,0,,,,,,,,,,,,,{},{},{}
-6233,Guarantee_Armor_8Up,Guarantee Armor 8Up,3,0,,0,,,,,,,,,,,,,{},{},{}
-6234,Guarantee_Armor_7Up,Guarantee Armor 7Up,3,0,,0,,,,,,,,,,,,,{},{},{}
-6235,Guarantee_Armor_6Up,Guarantee Armor 6Up,3,0,,0,,,,,,,,,,,,,{},{},{}
+6228,Guarantee_Weapon_9Up,+9 Weapon Refine Ticket,3,0,,0,,,,,,,,,,,,,{},{},{}
+6229,Guarantee_Weapon_8Up,+8 Weapon Refine Ticket,3,0,,0,,,,,,,,,,,,,{},{},{}
+6230,Guarantee_Weapon_7Up,+7 Weapon Refine Ticket,3,0,,0,,,,,,,,,,,,,{},{},{}
+6231,Guarantee_Weapon_6Up,+6 Weapon Refine Ticket,3,0,,0,,,,,,,,,,,,,{},{},{}
+6232,Guarantee_Armor_9Up,+9 Armor Refine Ticket,3,0,,0,,,,,,,,,,,,,{},{},{}
+6233,Guarantee_Armor_8Up,+8 Armor Refine Ticket,3,0,,0,,,,,,,,,,,,,{},{},{}
+6234,Guarantee_Armor_7Up,+7 Armor Refine Ticket,3,0,,0,,,,,,,,,,,,,{},{},{}
+6235,Guarantee_Armor_6Up,+6 Armor Refine Ticket,3,0,,0,,,,,,,,,,,,,{},{},{}
 6236,Blue_Card_7,Blue Card 7,3,0,,0,,,,,,,,,,,,,{},{},{}
 6237,Guarana_Fruit,Guarana Fruit,3,0,,0,,,,,,,,,,,,,{},{},{}
-6238,Guarantee_Weapon_11Up,Guarantee Weapon 11Up,3,0,,0,,,,,,,,,,,,,{},{},{}
-6239,Guarantee_Armor_11Up,Guarantee Armor 11Up,3,0,,0,,,,,,,,,,,,,{},{},{}
+6238,Guarantee_Weapon_11Up,+11 Weapon Refine Ticket,3,0,,0,,,,,,,,,,,,,{},{},{}
+6239,Guarantee_Armor_11Up,+11 Armor Refine Ticket,3,0,,0,,,,,,,,,,,,,{},{},{}
 6240,HD_Oridecon,HD Oridecon,3,20,,10,,,,,,,,,,,,,{},{},{}
 6241,HD_Elunium,HD Elunium,3,20,,10,,,,,,,,,,,,,{},{},{}
 6242,Midgard_Coin,Midgard Coin,3,20,,10,,,,,,,,,,,,,{},{},{}
@@ -3415,6 +3415,10 @@
 6394,Golden_Feather,Golden Feather,3,650,,10,,,,,,,,,,,,,{},{},{}
 6395,Angel_Magic_Power,Angel Magic Power,3,820,,10,,,,,,,,,,,,,{},{},{}
 6396,Auger_Of_Spirit,Auger Of Spirit,3,0,,10,,,,,,,,,,,,,{},{},{}
+//
+6456,Guarantee_Weapon_5Up,+5 Weapon Refine Ticket,3,0,,0,,,,,,,,,,,,,{},{},{}
+6457,Guarantee_Armor_5Up,+5 Armor Refine Ticket,3,0,,0,,,,,,,,,,,,,{},{},{}
+//
 7001,Mould_Powder,Mould Powder,3,466,,10,,,,,,,,,,,,,{},{},{}
 7002,Ogre_Tooth,Ogre Tooth,3,658,,10,,,,,,,,,,,,,{},{},{}
 7003,Anolian_Skin,Anolian Skin,3,968,,10,,,,,,,,,,,,,{},{},{}
@@ -6443,10 +6447,10 @@
 //16251,Gemini_Diadem_Box
 //16252,Gemini_Crown_Box
 16257,Buddah_Scroll,Buddah Scroll,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-//16258,HD_Bradium_5_Box,
-//16259,HD_Carnium_5_Box,
-//16260,HD_Bradium_10_Box,
-//16261,HD_Carnium_10_Box,
+16258,HD_Bradium_5_Box,HD Bradium 5 Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 6226,5; },{},{}
+16259,HD_Carnium_5_Box,HD Carnium 5 Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 6225,5; },{},{}
+16260,HD_Bradium_10_Box,HD Bradium 10 Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 6226,10; },{},{}
+16261,HD_Carnium_10_Box,HD Carnium 10 Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 6225,10; },{},{}
 //16262,HD_Bradium_5_Box,
 //16263,HD_Carnium_5_Box,
 //16264,HD_Bradium_10_Box,
@@ -6463,6 +6467,10 @@
 //16368,Virgo_Crown_Box
 16371,Tw_Aug_Scroll,Tw Aug Scroll,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 //16381,WoE_Teleport_Scroll_100_Box
+16393,HD_Ori_Box5,HD Oridecon 5 Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 6240,5; },{},{}
+16394,HD_Ori_Box10,HD Oridecon 10 Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 6240,10; },{},{}
+16395,HD_Elu_Box5,HD Elunium 5 Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 6241,5; },{},{}
+16396,HD_Elu_Box10,HD Elunium 10 Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 6241,10; },{},{}
 //16397,Virgo_Diadem_Box
 //16398,Virgo_Crown_Box
 //16399,Virgo_Diadem_Box
@@ -6511,6 +6519,9 @@
 16680,Universal_Catalog_Gold_Box50,Universal Catalog Gold 50 Box,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12581,50; },{},{}
 16776,Universal_Catalog_Gold_Box10,Universal Catalog Gold 10 Box,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12581,10; },{},{}
 16777,Universal_Catalog_Gold_Box50,Universal Catalog Gold 50 Box,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12581,50; },{},{}
+//
+17104,HD_Oridecon_50Box,HD Oridecon 50 Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 6240,50; },{},{}
+17105,HD_Elunium_50Box,HD Elunium 50 Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 6241,50; },{},{}
 // Mechanic/Genetic Cannonballs
 18000,Cannon_Ball,Cannon Ball,10,100,,10,100,,,,0x00040400,8,2,32768,,99,,8,{},{},{}
 18001,Holy_Cannon_Ball,Holy Cannon Ball,10,200,,10,120,,,,0x00040400,8,2,32768,,99,,8,{ bonus bAtkEle,Ele_Holy; },{},{}

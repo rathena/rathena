@@ -1422,8 +1422,16 @@
 16247,475,100	// Dragon Arhat Mask Box
 16248,475,100	// Tiger Arhat Mask Box
 16257,73,100	// Buddah Scroll
+16258,457,100	// HD Bradium 5 Box
+16259,457,100	// HD Carnium 5 Box
+16260,457,100	// HD Bradium 10 Box
+16261,457,100	// HD Carnium 10 Box
 16304,475,100	// Evil Incarnation
 16371,73,100	// Tw Aug Scroll
+16393,457,100	// HD Oridecon 5 Box
+16394,457,100	// HD Oridecon 10 Box
+16395,457,100	// HD Elunium 5 Box
+16396,457,100	// HD Elunium 10 Box
 16461,73,100	// Red Wing Hat Box
 16555,73,100	// Pr Reset Stone Box
 
@@ -1629,8 +1637,8 @@
 6236,499,100	// Blue Card 7
 6238,475,100	// Guarantee Weapon 11Up
 6239,475,100	// Guarantee Armor 11Up
-6240,475,100	// Purified Oridecon
-6241,475,100	// Purified Elunium
+6240,475,100	// HD Oridecon
+6241,475,100	// HD Elunium
 6242,457,100	// Midgard Coinu
 6296,499,100	// Training Notice
 6298,499,100	// Pumpkin Head Crushed
@@ -1651,6 +1659,8 @@
 6358,507,100	// Free Cash Coupon
 6359,507,100	// Guidebook Exchange
 6377,467,100	// Buy Market Permit
+6456,475,100	// Guarantee Weapon 5Up
+6457,475,100	// Guarantee Armor 5Up
 7275,507,100	// Record of Ancient Language
 7276,507,100	// Doodled Message
 7580,499,100	// Black Marble
@@ -1895,6 +1905,12 @@
 
 // Cash Shop Related Items
 2841,507,100	// Caracas Ring
+6438,457,100	// Unbreakable Weapon
+6439,457,100	// Unbreakable Armor
+16753,457,100	// Unbreakable Weapon Box
+16754,457,100	// Unbreakable Weapon Box
+16755,457,100	// Unbreakable Armor Box
+16756,457,100	// Unbreakable Armor Box
 17084,473,100	// Upg Katar Box
 17085,473,100	// Upg Two Handed Axe Box
 17086,473,100	// Upg Lance Box
