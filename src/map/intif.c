@@ -2160,12 +2160,12 @@ int intif_parse(int fd)
 {
 	int packet_len, cmd;
 	cmd = RFIFOW(fd,0);
-    // Verify ID of the packet
+	// Verify ID of the packet
 	if(cmd<0x3800 || cmd>=0x3800+(sizeof(packet_len_table)/sizeof(packet_len_table[0])) ||
 	   packet_len_table[cmd-0x3800]==0){
 	   	return 0;
 	}
-    // Check the length of the packet
+	// Check the length of the packet
 	packet_len = packet_len_table[cmd-0x3800];
 	if(packet_len==-1){
 		if(RFIFOREST(fd)<4)
@@ -2175,7 +2175,7 @@ int intif_parse(int fd)
 	if((int)RFIFOREST(fd)<packet_len){
 		return 2;
 	}
-    // Processing branch
+	// Processing branch
 	switch(cmd){
 	case 0x3800:
 		if (RFIFOL(fd,4) == 0xFF000000) //Normal announce.

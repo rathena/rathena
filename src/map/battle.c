@@ -5761,7 +5761,7 @@ static const struct _battle_data {
 	{ "cell_stack_limit",                   &battle_config.cell_stack_limit,                1,      1,      255,            },
 	{ "dancing_weaponswitch_fix",           &battle_config.dancing_weaponswitch_fix,        1,      0,      1,              },
 
-// eAthena additions
+	// eAthena additions
 	{ "item_logarithmic_drops",             &battle_config.logarithmic_drops,               0,      0,      1,              },
 	{ "item_drop_common_min",               &battle_config.item_drop_common_min,            1,      1,      10000,          },
 	{ "item_drop_common_max",               &battle_config.item_drop_common_max,            10000,  1,      10000,          },

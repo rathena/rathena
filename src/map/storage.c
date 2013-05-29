@@ -224,7 +224,7 @@ int storage_storageadd(struct map_session_data* sd, int index, int amount)
 		return 0; // No item on that spot
 
 	if( amount < 1 || amount > sd->status.inventory[index].amount )
-  		return 0;
+		return 0;
 
 	if( storage_additem(sd,&sd->status.inventory[index],amount) == 0 )
 		pc_delitem(sd,index,amount,0,4,LOG_TYPE_STORAGE);

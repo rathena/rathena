@@ -368,7 +368,7 @@ typedef enum sc_type {
 	SC_ABUNDANCE,
 	/**
 	 * Arch Bishop
-     **/
+	**/
 	SC_ADORAMUS,
 	SC_EPICLESIS,//325
 	SC_ORATIO,

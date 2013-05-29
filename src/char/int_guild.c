@@ -60,8 +60,7 @@ static int guild_save_timer(int tid, unsigned int tick, int id, intptr_t data)
 	{
 		if( state == 0 && g->guild_id == last_id )
 			state++; //Save next guild in the list.
-		else
-		if( state == 1 && g->save_flag&GS_MASK )
+		else if( state == 1 && g->save_flag&GS_MASK )
 		{
 			inter_guild_tosql(g, g->save_flag&GS_MASK);
 			g->save_flag &= ~GS_MASK;
@@ -615,8 +614,8 @@ static bool exp_guild_parse_row(char* split[], int column, int current)
 
 int inter_guild_CharOnline(int char_id, int guild_id)
 {
-   struct guild *g;
-   int i;
+	struct guild *g;
+	int i;
 
 	if (guild_id == -1) {
 		//Get guild_id from the database

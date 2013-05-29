@@ -252,7 +252,7 @@ static DBData create_online_char_data(DBKey key, va_list args)
 	CREATE(character, struct online_char_data, 1);
 	character->account_id = key.i;
 	character->char_id = -1;
-  	character->server = -1;
+	character->server = -1;
 	character->fd = -1;
 	character->waiting_disconnect = INVALID_TIMER;
 	return db_ptr2data(character);
@@ -1999,9 +1999,10 @@ void mmo_char_send(int fd, struct char_session_data* sd){
 	mmo_char_send082d(fd,sd);
 	char_charlist_notify(fd,sd);
 	char_block_character(fd,sd);
-#else
-	mmo_char_send006b(fd,sd);
 #endif
+	//@FIXME dump from kro doesn't show 6b transmission
+	mmo_char_send006b(fd,sd);
+//#endif
 }
 
 int char_married(int pl1, int pl2)
@@ -4387,6 +4388,7 @@ int parse_char(int fd)
 		break;
 
 		case 0x9a1:
+			ShowInfo("We are here in 9a1\n");
 			if( RFIFOREST(fd) < 2 )
 				return 0;
 			char_parse_req_charlist(fd,sd);
