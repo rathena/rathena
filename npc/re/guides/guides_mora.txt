@@ -12,7 +12,7 @@
 //= 1.0 First version. [Euphy]
 //============================================================ 
 
-mora,25,158,6	script	Raffle Guide#west	516,{
+mora,25,158,5	script	Raffle Guide#north	516,{
 	mes "[Raffoh]";
 	mes "Laoh~!";
 	mes "Welcome to the Village of Mora.";
@@ -62,7 +62,7 @@ mora,25,158,6	script	Raffle Guide#west	516,{
 	}
 }
 
-mora,167,76,4	script	Raffle Guide#east	522,{
+mora,167,76,3	script	Raffle Guide#east	522,{
 	mes "[Raffuh]";
 	mes "Uh...";
 	mes "This, this is the Village of Mora.";
@@ -112,7 +112,7 @@ mora,167,76,4	script	Raffle Guide#east	522,{
 	}
 }
 
-mora,115,138,4	script	Raffle Guide#center	524,{
+mora,115,138,5	script	Raffle Guide#center	524,{
 	mes "[Raffla]";
 	mes "Lala!";
 	mes "Welcome to the Village of Mora la!";
@@ -163,7 +163,7 @@ mora,115,138,4	script	Raffle Guide#center	524,{
 	}
 }
 
-mora,72,51,4	script	Raffle Guide#south	518,{
+mora,72,51,3	script	Raffle Guide#south	518,{
 	mes "[Raffli]";
 	mes "Lali?";
 	mes "Welcome to the Village of Mora.";

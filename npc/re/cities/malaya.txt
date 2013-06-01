@@ -7,6 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
+//= [Official Conversion]
 //= Port Malaya Town Script
 //===== Additional Comments: ================================= 
 //= 0.1 Alberta sailors only. [Euphy]

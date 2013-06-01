@@ -8,14 +8,14 @@
 //===== Compatible With: ===================================== 
 //= rAthena
 //===== Description: ========================================= 
+//= [Official Conversion]
 //= An NPC which sells you different kinds of Magic Books.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version. [Masao]
-//= 1.1 Optimized, 60% size reduction. [Euphy]
+//= 1.1 Optimized. [Euphy]
 //============================================================ 
 
 geffen_in,176,105,4	script	Magic Book Master Velof	64,{
-
 	if (checkweight(1201,1) == 0) {
 		mes "You're carrying too many items. Please make some room in your bag first.";
 		close;
@@ -273,7 +273,6 @@ geffen_in,176,105,4	script	Magic Book Master Velof	64,{
 }
 
 geffen_in,175,112,4	script	Lea	123,{
-
 	if (checkweight(1201,1) == 0) {
 		mes "You're carrying too many items. Please make some room in your bag first.";
 		close;
@@ -510,7 +509,6 @@ geffen_in,175,112,4	script	Lea	123,{
 }
 
 mid_camp,255,244,4	script	Galfos	735,{
-
 	if (checkweight(1201,1) == 0) {
 		mes "You're carrying too many items. Please make some room in your bag first.";
 		close;
@@ -674,7 +672,6 @@ mid_camp,255,244,4	script	Galfos	735,{
 }
 
 dic_in01,25,190,0	script	Mysterious Documents	844,{
-
 	if (isequipped(2782) < 1) {
 		mes "I better not forget to equip my ring.";
 		close;
@@ -837,7 +834,6 @@ function	script	Magic_Book_Essence	{
 	mes "Someone already used this area.";
 	close;
 }
-
 thor_v02,163,104,0	script	Powerful Lava Energy#33	844,{ callfunc "Magic_Book_Essence",12218,7097,40,"Lava"; end; }
 thor_v01,185,91,0	script	Powerful Flame Energy#33	844,{ callfunc "Magic_Book_Essence",12219,7098,10,"Flame"; end; }
 ice_dun03,137,148,0	script	Powerful Glacier Energy	844,{ callfunc "Magic_Book_Essence",12220,7561,10,"Glacier"; end; }

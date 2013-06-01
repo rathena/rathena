@@ -7,6 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
+//= [Official Conversion]
 //= Quest NPCs related to Dewata:
 //== "Dewata Legend"
 //== "Help Out the Old Man"

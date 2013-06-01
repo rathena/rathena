@@ -32,6 +32,7 @@
 1116,0,0,0,0,0,0,0,"Ropewa & Yuridi - Dead Man's Song"
 1117,0,0,0,0,0,0,0,"Ropewa & Yuridi - Eternal Promise, Broken Ring"
 1118,0,0,0,0,0,0,0,"Neighborhood Knight - I Need Clues"
+1119,82800,0,0,0,0,0,0,"Neighborhood Knight - Cooldown"
 
 1145,0,0,0,0,0,0,0,"Help the poor cat"
 1146,0,0,0,0,0,0,0,"Help the poor cat"
@@ -525,7 +526,11 @@
 5027,0,0,0,0,0,0,0,"Northern Pool Research"
 5028,43200,0,0,0,0,0,0,"Inspection of the Sample"
 5029,3600,0,0,0,0,0,0,"Unidentified Creature"
-
+5030,0,0,0,0,0,0,0,"The creature's family"
+5031,0,0,0,0,0,0,0,"The creature's family"
+5032,0,0,0,0,0,0,0,"The creature's family"
+5033,0,0,0,0,0,0,0,"The creature's family"
+5034,0,0,0,0,0,0,0,"News from the family"
 5035,0,0,0,0,0,0,0,"Help the old man!"
 5036,0,0,0,0,0,0,0,"Help the old man!"
 5037,0,0,0,0,0,0,0,"Help the old man!"
@@ -854,7 +859,7 @@
 7203,0,0,0,0,0,0,0,"Secret order from Doha - Final Report"
 7206,0,0,0,0,0,0,0,"New Day for Cheshire"
 7207,0,0,0,0,0,0,0,"Cheshire's Box"
-7208,82800,0,0,0,0,0,0,"Wait for Cheshire?"
+7208,86400,0,0,0,0,0,0,"Wait for Cheshire?"
 
 // Misty Forest Labyrinth
 7211,9000,0,0,0,0,0,0,"Misty Forest Labyrinth Exploration"
@@ -1682,8 +1687,8 @@
 11176,0,0,0,0,0,0,0,"For my friends"
 
 // Mora
-11182,180,0,0,0,0,0,0,"Teohre's Report"
-11183,0,0,0,0,0,0,0,"Teohre's Favor"
+11182,60,0,0,0,0,0,0,"Theore's Report"
+11183,0,0,0,0,0,0,0,"Theore's Favor"
 11184,0,0,0,0,0,0,0,"Runaway Laphine"
 11185,0,0,0,0,0,0,0,"Pouch"
 11186,0,0,0,0,0,0,0,"Pouch"

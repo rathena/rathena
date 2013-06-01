@@ -122,7 +122,7 @@
 		mes "I am busy, don't joke with me!";
 		close;
 	}
-	if (getequiprefinerycnt(.@part) < 100) {
+	if (getequippercentrefinery(.@part) < 100) {
 		mes "[Blacksmith Dister]";
 		mes "This "+.@type$+" has been refined many times. Although it will not disappear upon failure, the "+.@ore$+" will disappear!";
 		next;

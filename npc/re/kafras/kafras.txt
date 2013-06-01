@@ -49,12 +49,12 @@ izlude,128,148,6	duplicate(kaf_izlude)	Kafra Employee	117
 //============================================================
 malaya,71,79,4	script	Kafra Employee::kaf_malaya1	581,{
 	callfunc "F_Kafra",0,3,2,500,700;
-	savepoint "malaya",43,57;
+	savepoint "malaya",44,56;
 	callfunc "F_KafEnd",0,1,"in Port Malaya";
 }
 
 malaya,234,204,4	script	Kafra Employee::kaf_malaya2	581,{
 	callfunc "F_Kafra",0,3,2,500,700;
-	savepoint "malaya",280,213;
+	savepoint "malaya",281,212;
 	callfunc "F_KafEnd",0,1,"in Port Malaya";
 }

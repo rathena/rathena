@@ -7,6 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
+//= [Official Conversion]
 //= Quest NPCs related to Dewata:
 //== Sapha's Visit, Doha's Secrect Order, Frede's Request,
 //== Department Quests, Document Quests,
@@ -62,114 +63,113 @@ manuk,321,182,5	script	Entrance Manager#ep133	450,{
 }
 
 dic_dun01,266,113,5	script	Curious Sapha#ep13_3_	449,{
-	mes "[Curious Sapha]";
-	if (isequipped(2782)) {
-		mes "Hello?";
+	if (!isequipped(2782)) {
+		mes "[Curious Sapha]";
+		mes "¡ö¡ñ¡Ð ¡ò ¡õ?";
 		next;
-		switch(select("What are you doing here?:Buy research items.:Hello!:I want to help your research.")) {
-			case 1:
-				mes "[Curious Sapha]";
-				mes "Do you see that dirty vigilante over there?";
-				next;
-				mes "[Curious Sapha]";
-				mes "He was attacked by Scarabas after falling into Scaraba Hall.";
-				mes "And he was the only one attacked even with others around him.";
-				next;
-				mes "[Curious Sapha]";
-				mes "I think he slipped and fell on some secretion of the Queen Scaraba. I thought it was an accident was looking into it.";
-				next;
-				mes "[Curious Sapha]";
-				mes "If the research results are correct, the Scarabas are very sensitive to the smell.";
-				mes "Or else say they go crazy over it. Almost as if they were losing it...";
-				next;
-				mes "[Curious Sapha]";
-				mes "I came to research the relationship between the Queen secretion component and the Scarabas.";
-				mes "So I created this into a perfume to carry it easily.";
-				next;
-				mes "[Curious Sapha]";
-				mes "I might be able to use this perfume's reaction to Scarabas and make progress in research.";
-				close;
-			case 2:
-				if (!checkweight(1201,1)) {
-					mes "[Curious Sapha]";
-					mes "You don't seem to have enough space.";
-					close;
-				}
-				if ((MaxWeight - Weight) < 2000) {
-					mes "[Curious Sapha]";
-					mes "Your bags already seem too heavy.";
-					close;
-				}
-				mes "[Curious Sapha]";
-				mes "You want to buy the Scaraba Perfume? A gift for home?";
-				mes "Well, it has become a rare perfume.";
-				next;
-				mes "[Curious Sapha]";
-				mes "I'll give you a deal and sell it by 500 Zeny each. But, try not to carry it with you into Scaraba Hall.";
-				mes "How many do you want? You can buy up to 100.";
-				next;
-				input .@input;
-				set .@deal, 500 * .@input;
-				if (.@deal == 0) {
-					mes "[Curious Sapha]";
-					mes "You changed your mind?";
-					close; 
-				}
-				if (Zeny < .@deal) {
-					mes "[Curious Sapha]";
-					mes "You don't have enough money.";
-					close; 
-				}
-				mes "[Curious Sapha]";
-				mes "Will you buy "+.@input+"?";
-				next;
-				if(select("Yes:No") == 2) {
-					mes "[Curious Sapha]";
-					mes "You changed your mind?";
-					close;
-				}
-				set Zeny, Zeny - .@deal;
-				getitem 6437,.@input; //Scaraba_Perfume
-				mes "[Curious Sapha]";
-				mes "Here you go. Scaraba might flock around you so don't use it near Scaraba Hall.";
-				close;
-			case 3:
-				mes "[Curious Sapha]";
-				mes "Hello? You must be a traveler. This place is dangerous so please find your way out of this tunnel.";
-				close;
-			case 4:
-				mes "[Curious Sapha]";
-				mes "Do you have any useful information?";
-				mes "Please let me know!";
-				input .@str$;
-				next;
-				mes "[Curious Sapha]";
-				mes "It says ^0000FF"+.@str$+"^000000.";
-				next;
-				set .@his_rd_ms, rand(1,3);
-				if (.@his_rd_ms == 1) {
-					mes "[Curious Sapha]";
-					mes "That is great information!";
-					mes "I must start on the research.";
-					close;
-				}
-				else if (.@his_rd_ms == 2) {
-					mes "[Curious Sapha]";
-					mes "I already know about that information but I'm really grateful for you to come all the way here to tell me.";
-					close;
-				}
-				else {
-					mes "[Curious Sapha]";
-					mes "Hmm... do you think so?";
-					mes "I have some doubts about your information. I'll think it over.";
-					close;
-				}
+		mes "- Cannot understand a word. -";
+		close;
+	}
+	mes "[Curious Sapha]";
+	mes "Hello?";
+	next;
+	switch(select("What are you doing here?:Buy research items.:Hello!:I want to help your research.")) {
+	case 1:
+		mes "[Curious Sapha]";
+		mes "Do you see that dirty vigilante over there?";
+		next;
+		mes "[Curious Sapha]";
+		mes "He was attacked by Scarabas after falling into Scaraba Hall.";
+		mes "And he was the only one attacked even with others around him.";
+		next;
+		mes "[Curious Sapha]";
+		mes "I think he slipped and fell on some secretion of the Queen Scaraba. I thought it was an accident was looking into it.";
+		next;
+		mes "[Curious Sapha]";
+		mes "If the research results are correct, the Scarabas are very sensitive to the smell.";
+		mes "Or else say they go crazy over it. Almost as if they were losing it...";
+		next;
+		mes "[Curious Sapha]";
+		mes "I came to research the relationship between the Queen secretion component and the Scarabas.";
+		mes "So I created this into a perfume to carry it easily.";
+		next;
+		mes "[Curious Sapha]";
+		mes "I might be able to use this perfume's reaction to Scarabas and make progress in research.";
+		close;
+	case 2:
+		if (checkweight(1201,1) == 0) {
+			mes "[Curious Sapha]";
+			mes "You don't seem to have enough space.";
+			close;
+		}
+		if (MaxWeight - Weight < 2000) {
+			mes "[Curious Sapha]";
+			mes "Your bags already seem too heavy.";
+			close;
+		}
+		mes "[Curious Sapha]";
+		mes "You want to buy the Scaraba Perfume? A gift for home?";
+		mes "Well, it has become a rare perfume.";
+		next;
+		mes "[Curious Sapha]";
+		mes "I'll give you a deal and sell it by 500 Zeny each. But, try not to carry it with you into Scaraba Hall.";
+		mes "How many do you want? You can buy up to 100.";
+		next;
+		input .@input;
+		set .@deal, 500 * .@input;
+		if (.@deal == 0) {
+			mes "[Curious Sapha]";
+			mes "You changed your mind?";
+			close; 
+		}
+		if (Zeny < .@deal) {
+			mes "[Curious Sapha]";
+			mes "You don't have enough money.";
+			close; 
+		}
+		mes "[Curious Sapha]";
+		mes "Will you buy "+.@input+"?";
+		next;
+		if(select("Yes:No") == 2) {
+			mes "[Curious Sapha]";
+			mes "You changed your mind?";
+			close;
+		}
+		set Zeny, Zeny - .@deal;
+		getitem 6437,.@input; //Scaraba_Perfume
+		mes "[Curious Sapha]";
+		mes "Here you go. Scaraba might flock around you so don't use it near Scaraba Hall.";
+		close;
+	case 3:
+		mes "[Curious Sapha]";
+		mes "Hello? You must be a traveler. This place is dangerous so please find your way out of this tunnel.";
+		close;
+	case 4:
+		mes "[Curious Sapha]";
+		mes "Do you have any useful information?";
+		mes "Please let me know!";
+		input .@str$;
+		next;
+		mes "[Curious Sapha]";
+		mes "It says ^0000FF"+.@str$+"^000000.";
+		next;
+		switch(rand(1,3)) {
+		case 1:
+			mes "[Curious Sapha]";
+			mes "That is great information!";
+			mes "I must start on the research.";
+			close;
+		case 2:
+			mes "[Curious Sapha]";
+			mes "I already know about that information but I'm really grateful for you to come all the way here to tell me.";
+			close;
+		case 3:
+			mes "[Curious Sapha]";
+			mes "Hmm... do you think so?";
+			mes "I have some doubts about your information. I'll think it over.";
+			close;
 		}
 	}
-	mes "¡ö¡ñ¡Ð ¡ò ¡õ?";
-	next;
-	mes "- Cannot understand a word. -";
-	close;
 }
 
 // Vigilantes
@@ -261,7 +261,7 @@ dic_dun01,284,102,5	script	Dirty Vigilante#ep13_3	450,{
 			next;
 			if (select("Enter after spraying perfume.:Do not enter because it's dangerous.") == 1) {
 				if (!countitem(6437)) {
-					mes "- You Scaraba Perfume disappeared. -";
+					mes "- Your Scaraba Perfume disappeared. -";
 					close;
 				}
 				mes "[Vigilante]";
@@ -278,7 +278,7 @@ dic_dun01,284,102,5	script	Dirty Vigilante#ep13_3	450,{
 		close;
 	}
 	mes "[Vigilante]";
-	mes "Phew, what happened?! Why are they all over me";
+	mes "Phew, what happened?! Why are they all over me?";
 	next;
 	mes "[Vigilante]";
 	mes "I already had bad luck in falling into Scaraba Hall and being drenched with this awful ^FF0000stench^000000 my head is starting to ache!";
@@ -422,7 +422,6 @@ dic_in01,254,119,0	script	Item Storage#01	844,{
 
 // Civil Services
 //============================================================
-
 function	script	que_dic	{
 	if (!getarg(0)) {
 		if (checkquest(getarg(1),HUNTING) != 2) return;
@@ -982,7 +981,6 @@ dic_in01,40,193,1	script	Papyrus#0001	453,{
 
 // Document Packages
 //============================================================
-
 -	script	Document Package#main	-1,{
 	function	eldicastes_dp;
 	if (isequipped(2782) < 1) {
@@ -1090,7 +1088,6 @@ dic_in01,25,187,0	duplicate(Document Package#main)	Document Package#0004	844
 
 // Unknown Relics
 //============================================================
-
 function	script	unknown_d	{
 	if (checkquest(getarg(0)) == -1) {
 		mes "You see some traces of digging.";
@@ -3354,10 +3351,8 @@ dicastes01,225,211,3	script	Tragis#pa0829	453,{
 
 // Doha's Secret Orders
 //============================================================
-
 mid_campin,168,170,3	script	Inspector Doha#ep133	59,{
-//	if ((GetInventoryRemainCount 1301 3 == 2) || (GetInventoryRemainCount 1301 3 == 3)) {
-	if ((MaxWeight - Weight) < 1000) {
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 1000) {
 		mes "- You can too many items to proceed with the quest. -";
 		close;
 	}
@@ -5127,7 +5122,7 @@ dic_in01,165,104,0	script	Frede#13_3_in	454,{
 			mes "Maybe......they forgot?";
 			next;
 			mes "[Frede]";
-			mes "Oh.. what should I do......";
+			mes "Oh... what should I do......";
 			mes "I would run there myself if only my legs would move normally.";
 			next;
 			mes "[Frede]";
@@ -5158,7 +5153,7 @@ dic_in01,165,104,0	script	Frede#13_3_in	454,{
 		}
 		else if (ep13_3_bra == 3) {
 			mes "[Frede]";
-			mes "Oh.. what should I do......";
+			mes "Oh... what should I do......";
 			mes "I would run there myself if only my legs would move normally.";
 			next;
 			mes "[Frede]";
@@ -6912,7 +6907,6 @@ dic_in01,42,264,3	script	Adventurer Clerk#ep133	453,{
 }
 // Enchantment NPCs
 //============================================================
-
 -	script	dic_enc#main	-1,{
 	set .@re$, strnpcinfo(1);
 	set .@n$, "["+.@re$+"]";
@@ -6973,21 +6967,21 @@ dic_in01,42,264,3	script	Adventurer Clerk#ep133	453,{
 		mes .@n$;
 		set .@cat_hi, rand(1,30);
 		if (.@cat_hi == 1) mes "It is difficult to find fish here. Can't find any so Jahbong would forget that he's busy or angry at the sight of a Fish Tail.";
-		if (.@cat_hi == 2) mes "Grrr... I was punished with a ladle for peeing on my blanket yesterday.";
-		if (.@cat_hi == 3) mes "I dream sometimes of a giant patting me on the head. But I feel more annoyed than afraid.";
-		if (.@cat_hi == 4) mes "Newbie Jarute, Ahat doesn't seem to look like a Sapha.";
-		if (.@cat_hi == 5) mes "Our people say Ahat looks like a beautiful cat.";
-		if (.@cat_hi == 6) mes "I heard there was a superior equipment upgrade craftsman in the capital city of Manuk.";
-		if (.@cat_hi == 7) mes "Grrr... I don't think my voice sounds normal these days. I think it's the weather.";
-		if (.@cat_hi == 8) mes "There are times when I shout out loud but it is only because I am in a good mood. No need to be startled.";
-		if (.@cat_hi == 9) mes "I feel an urge to jump on a pile with my four paws when I see one.";
-		if (.@cat_hi == 10) mes "I must have been a cat in my previous life.";
-		if (.@cat_hi == 11) mes "I dreamt about the giant again. I waved my paws annoyed and he kept on patting me.";
-		if (.@cat_hi == 12) mes "Yup!! Was the rumor true that Ahat looks like a human?! ";
-		if (.@cat_hi == 13) mes "I heard on my way that this Pinqucula Dark has a Withered Flower.";
-		if (.@cat_hi == 14) mes "There is a guy named Pinguicula nearby who has the Sharp Leaf nearby.";
-		if (.@cat_hi == 15) mes "There is a guy named Pinguicula nearby who has the Great Leaf nearby.";
-		if (.@cat_hi == 16) mes "I recommend getting it from the Dracos nearby. But then, they only drop it randomly so you may come back empty handed...";
+		else if (.@cat_hi == 2) mes "Grrr... I was punished with a ladle for peeing on my blanket yesterday.";
+		else if (.@cat_hi == 3) mes "I dream sometimes of a giant patting me on the head. But I feel more annoyed than afraid.";
+		else if (.@cat_hi == 4) mes "Newbie Jarute, Ahat doesn't seem to look like a Sapha.";
+		else if (.@cat_hi == 5) mes "Our people say Ahat looks like a beautiful cat.";
+		else if (.@cat_hi == 6) mes "I heard there was a superior equipment upgrade craftsman in the capital city of Manuk.";
+		else if (.@cat_hi == 7) mes "Grrr... I don't think my voice sounds normal these days. I think it's the weather.";
+		else if (.@cat_hi == 8) mes "There are times when I shout out loud but it is only because I am in a good mood. No need to be startled.";
+		else if (.@cat_hi == 9) mes "I feel an urge to jump on a pile with my four paws when I see one.";
+		else if (.@cat_hi == 10) mes "I must have been a cat in my previous life.";
+		else if (.@cat_hi == 11) mes "I dreamt about the giant again. I waved my paws annoyed and he kept on patting me.";
+		else if (.@cat_hi == 12) mes "Yup!! Was the rumor true that Ahat looks like a human?! ";
+		else if (.@cat_hi == 13) mes "I heard on my way that this Pinqucula Dark has a Withered Flower.";
+		else if (.@cat_hi == 14) mes "There is a guy named Pinguicula nearby who has the Sharp Leaf nearby.";
+		else if (.@cat_hi == 15) mes "There is a guy named Pinguicula nearby who has the Great Leaf nearby.";
+		else if (.@cat_hi == 16) mes "I recommend getting it from the Dracos nearby. But then, they only drop it randomly so you may come back empty handed...";
 		else mes "Hmm... This may not be important to you but.";
 		next;
 		mes .@n$;
@@ -7325,14 +7319,14 @@ dic_fild01,228,159,4	script	Jahbong#pa0829	496,{
 	}
 	set .@cattalkj,rand(1,9);
 	if (.@cattalkj == 1) mes "Don't touch my back! I might bite you unconsciously.";
-		else if (.@cattalkj == 2) mes "Pub owner Shay carried something away to make something strange! Be careful!";
-		else if (.@cattalkj == 3) mes "We cats can jump 5 times our size. Isn't it cool? But then, don't ask me to jump from here now.";
-		else if (.@cattalkj == 4) mes "I have to be diligent with my grooming to maintain beautiful fur.";
-		else if (.@cattalkj == 5) mes "I have to groom myself everyday to maintain shiny fluffy fur. But I don't have very nice fur in the first place. Very sad.";
-		else if (.@cattalkj == 6) mes "You should receive a Sapha Certification with both paws as a sign of respect. No cat deserves a certification if they don't!";
-		else if (.@cattalkj == 7) mes "I don't really talk that much! Ahat looks like... meow meow meooow... sorry.";
-		else if (.@cattalkj == 8) mes "Meow~~~~~~~~~~";
-		else mes "Yarn is a great way to calm a cat.";
+	else if (.@cattalkj == 2) mes "Pub owner Shay carried something away to make something strange! Be careful!";
+	else if (.@cattalkj == 3) mes "We cats can jump 5 times our size. Isn't it cool? But then, don't ask me to jump from here now.";
+	else if (.@cattalkj == 4) mes "I have to be diligent with my grooming to maintain beautiful fur.";
+	else if (.@cattalkj == 5) mes "I have to groom myself everyday to maintain shiny fluffy fur. But I don't have very nice fur in the first place. Very sad.";
+	else if (.@cattalkj == 6) mes "You should receive a Sapha Certification with both paws as a sign of respect. No cat deserves a certification if they don't!";
+	else if (.@cattalkj == 7) mes "I don't really talk that much! Ahat looks like... meow meow meooow... sorry.";
+	else if (.@cattalkj == 8) mes "Meow~~~~~~~~~~";
+	else mes "Yarn is a great way to calm a cat.";
 	next;
 	mes "[Jahbong]";
 	mes "Why are you here?";

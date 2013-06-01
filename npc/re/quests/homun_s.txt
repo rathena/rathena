@@ -7,6 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
+//= [Official Conversion]
 //= Genetic quest to mutate a level 99 evolved Homunculus
 //= into a Homunculus S.
 //===== Additional Comments: ================================= 
