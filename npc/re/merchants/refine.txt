@@ -77,16 +77,6 @@ function	script	refinenew	{
 		mes "refine this item at all...";
 		close;
 	}
-	//Check if the item is identified... (Don't know why this is in here... but kept it anyway)
-	if(!getequipisidentify(.@part)) {
-		mes "[" + getarg(0) + "]";
-		mes "You can't refine this";
-		mes "if you haven't appraised";
-		mes "it first. Make sure your";
-		mes "stuff is identified before";
-		mes "I can refine it.";
-		close;
-	}
 	//Check to see if the items is at least +10
 	if(getequiprefinerycnt(.@part) < 10) {
 		mes "["+ getarg(0) +"]";
@@ -551,11 +541,6 @@ malangdo,224,172,6	script	Clink#mal_normal	544,{
 	if (!getequipisenableref(.@part)) {
 		mes "[Clink]";
 		mes "This can't be refined!!";
-		close;
-	}
-	if (!getequipisidentify(.@part)) {
-		mes "[Clink]";
-		mes "How did you wear something that wasn't appraised?";
 		close;
 	}
 	if (getequiprefinerycnt(.@part) >= 10) {

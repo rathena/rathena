@@ -54,12 +54,6 @@ payon,157,146,6	script	Suhnbi#cash	85,{
 		mes "I don't think I can refine this item at all.";
 		close;
 	}
-	if( !getequipisidentify(.@part) )
-	{
-		mes "[Suhnbi]";
-		mes "This has not been identified. So, it can't be refined...";
-		close;
-	}
 	if( getequiprefinerycnt(.@part) >= 10 )
 	{
 		mes "[Suhnbi]";

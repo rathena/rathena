@@ -7530,32 +7530,6 @@ BUILDIN_FUNC(getequipisenableref)
 }
 
 /*==========================================
- * Chk if the item equiped at pos is identify (huh ?)
- * return (npc)
- *	1 : true
- *	0 : false
- *------------------------------------------*/
-BUILDIN_FUNC(getequipisidentify)
-{
-	int i = -1,num;
-	TBL_PC *sd;
-
-	num = script_getnum(st,2);
-	sd = script_rid2sd(st);
-	if( sd == NULL )
-		return 0;
-
-	if (num > 0 && num <= ARRAYLENGTH(equip))
-		i=pc_checkequip(sd,equip[num-1]);
-	if(i >= 0)
-		script_pushint(st,sd->status.inventory[i].identify);
-	else
-		script_pushint(st,0);
-
-	return 0;
-}
-
-/*==========================================
  * Get the item refined value at pos
  * return (npc)
  *	x : refine amount
@@ -9839,7 +9813,7 @@ BUILDIN_FUNC(sc_start)
 	TBL_NPC * nd = map_id2nd(st->oid);
 	struct block_list* bl;
 	enum sc_type type;
-	int tick, val1, val2, val3, val4=0, rate, flag, isitem;
+	int tick, val1, val2, val3, val4=0, rate, flag;
 	char start_type;
 	const char* command = script_getfuncname(st);
 
@@ -9854,8 +9828,13 @@ BUILDIN_FUNC(sc_start)
 	tick = script_getnum(st,3);
 	val1 = script_getnum(st,4);
 
+	//If from NPC we make default flag 1 to be unavoidable
+	if(nd && nd->bl.id == fake_nd->bl.id)
+		flag = script_hasdata(st,5+start_type)?script_getnum(st,5+start_type):1;
+	else
+		flag = script_hasdata(st,5+start_type)?script_getnum(st,5+start_type):2;
+
 	rate = script_hasdata(st,4+start_type)?min(script_getnum(st,4+start_type),10000):10000;
-	flag = script_hasdata(st,5+start_type)?script_getnum(st,5+start_type):2;
 
 	if(script_hasdata(st,(6+start_type)))
 		bl = map_id2bl(script_getnum(st,(6+start_type)));
@@ -9873,25 +9852,22 @@ BUILDIN_FUNC(sc_start)
 		val4 = 1;// Mark that this was a thrown sc_effect
 	}
 
-	//solving if script from npc or item
-	isitem = (nd && nd->bl.id == fake_nd->bl.id || flag != 2)?true:false;
+	if(!bl)
+		return 0;
 
 	switch(start_type) {
 		case 1:
-			if(bl)
-				status_change_start(isitem?bl:NULL, bl, type, rate, val1, 0, 0, val4, tick, flag);
+			status_change_start(bl, bl, type, rate, val1, 0, 0, val4, tick, flag);
 			break;
 		case 2:
 			val2 = script_getnum(st,5);
-			if(bl)
-				status_change_start(isitem?bl:NULL, bl, type, rate, val1, val2, 0, val4, tick, flag);
+			status_change_start(bl, bl, type, rate, val1, val2, 0, val4, tick, flag);
 			break;
 		case 4:
 			val2 = script_getnum(st,5);
 			val3 = script_getnum(st,6);
 			val4 = script_getnum(st,7);
-			if(bl)
-				status_change_start(isitem?bl:NULL, bl, type, rate, val1, val2, val3, val4, tick, flag);
+			status_change_start(bl, bl, type, rate, val1, val2, val3, val4, tick, flag);
 			break;
 	}
 
@@ -17758,7 +17734,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(repairall,""),
 	BUILDIN_DEF(getequipisequiped,"i"),
 	BUILDIN_DEF(getequipisenableref,"i"),
-	BUILDIN_DEF(getequipisidentify,"i"),
 	BUILDIN_DEF(getequiprefinerycnt,"i"),
 	BUILDIN_DEF(getequipweaponlv,"i"),
 	BUILDIN_DEF(getequippercentrefinery,"i"),

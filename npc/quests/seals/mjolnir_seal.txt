@@ -1963,11 +1963,6 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "me to do with this?";
 					close;
 				}
-				if (getequipisidentify(.@part) == 0) {
-					mes "[Vestri]";
-					mes "You'd better identify this item first. If we don't know what it is, what's the point of upgrading it?";
-					close;
-				}
 				if (getequiprefinerycnt(.@part) >= 10) {
 					mes "[Vestri]";
 					mes "Oh, this is excellent! This piece here has been perfectly refined! But this isn't what I want. I can't do any work on this at all.";
@@ -2187,11 +2182,6 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "This isn't upgradable!";
 					mes "What the hell do you want";
 					mes "me to do with this?";
-					close;
-				}
-				if (getequipisidentify(.@part) == 0) {
-					mes "[Vestri]";
-					mes "You'd better identify this item first. If we don't know what it is, what's the point of upgrading it?";
 					close;
 				}
 				if (getequiprefinerycnt(.@part) >= 10) {

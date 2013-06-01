@@ -72,11 +72,6 @@
 		mes "This item cannot be refined.";
 		close;
 	}
-	if (!getequipisidentify(.@part)) {
-		mes "[Blacksmith Dister]";
-		mes "This item can't be refined because it has not been identified.";
-		close;
-	}
 	set .@equip_refine, getequiprefinerycnt(.@part);
 	if (.@equip_refine < 6 || .@equip_refine > 12) {
 		mes "[Blacksmith Dister]";

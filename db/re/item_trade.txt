@@ -50,7 +50,7 @@
 7418,475,100	// Written Request(B)
 
 // PVP Item
-7420,499,100	// Skull
+7420,498,100	// Skull
 
 // 10.3 Quest items
 // * "Gaebolg family Curse" items

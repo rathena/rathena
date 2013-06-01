@@ -74,11 +74,6 @@
 		mes "This item can't be refined.";
 		close;
 	}
-	if (!getequipisidentify(.@part)) {
-		mes "[Blacksmith Mighty Hammer]";
-		mes "This item can't be refined because it has not been identified.";
-		close;
-	}
 	if (getequiprefinerycnt(.@part) < 7 || getequiprefinerycnt(.@part) > 9) {
 		mes "[Blacksmith Mighty Hammer]";
 		mes "I only handle items with refine levels from +7 to +9.";
@@ -211,11 +206,6 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	826
 	if (!getequipisenableref(.@part)) {
 		mes "[Basta]";
 		mes "Even I cannot refine this item. There's no way.";
-		close;
-	}
-	if (!getequipisidentify(.@part)) {
-		mes "[Basta]";
-		mes "I can't do anything about unidentified items.";
 		close;
 	}
 	if (getequiprefinerycnt(.@part) < 10) {

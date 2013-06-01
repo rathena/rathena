@@ -73,12 +73,6 @@ prontera,184,177,6	script	Refine Master	851,{
 		mes "This item is impossible to refine.";
 		close;
 	}
-	if (!getequipisidentify(.@part)) {
-		mes "[Refine Master]";
-		mes "Oh, I'm sorry.";
-		mes "You have to identify this item first.";
-		close;
-	}
 	switch(getequipweaponlv(.@part)) {
 	default:
 	case 0:

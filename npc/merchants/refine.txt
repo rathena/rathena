@@ -635,16 +635,6 @@ function	script	refinemain	{
 		mes "refine this item at all...";
 		close;
 	}
-	//Check if the item is identified... (Don't know why this is in here... but kept it anyway)
-	if(!getequipisidentify(.@part)) {
-		mes "[" + getarg(0) + "]";
-		mes "You can't refine this";
-		mes "if you haven't appraised";
-		mes "it first. Make sure your";
-		mes "stuff is identified before";
-		mes "I can refine it.";
-		close;
-	}
 	//Check to see if the items is already +10
 	if(getequiprefinerycnt(.@part) >= 10) {
 		mes "[" + getarg(0) + "]";

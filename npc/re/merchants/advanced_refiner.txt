@@ -70,11 +70,6 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 		mes "Even Aragam can't refine such a thing, meow.";
 		close;
 	}
-	if (!getequipisidentify(.@part)) {
-		mes "[Holink]";
-		mes "Meow? How did you wear something that wasn't appraised, meow?~";
-		close;
-	}
 	if (getequiprefinerycnt(.@part) >= 10) {
 		mes "[Holink]";
 		mes "Meow~ Perfect refining. Did Aragam do this, meow?~";

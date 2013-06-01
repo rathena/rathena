@@ -6259,7 +6259,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 	struct map_session_data *sd;
 
 	nullpo_ret(bl);
-	if(src==NULL) return tick?tick:1;//If no source, it can't be resisted (NPC given)
+	if(src==NULL) return tick?tick:1; //This should not happen in current implementation, but leave it anyway
 
 	//Status that are blocked by Golden Thief Bug card or Wand of Hermod
 	if (status_isimmune(bl))
@@ -6565,8 +6565,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	sc = status_get_sc(bl);
 	status = status_get_status_data(bl);
 
-	if( type <= SC_NONE || type >= SC_MAX )
-	{
+	if( type <= SC_NONE || type >= SC_MAX ) {
 		ShowError("status_change_start: invalid status change (%d)!\n", type);
 		return 0;
 	}
@@ -6577,8 +6576,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if( status_isdead(bl) && type != SC_NOCHAT ) // SC_NOCHAT should work even on dead characters
 		return 0;
 
-	if( bl->type == BL_MOB)
-	{
+	if( bl->type == BL_MOB) {
 		struct mob_data *md = BL_CAST(BL_MOB,bl);
 		if(md && (md->class_ == MOBID_EMPERIUM || mob_is_battleground(md)) && type != SC_SAFETYWALL && type != SC_PNEUMA)
 			return 0; //Emperium/BG Monsters can't be afflicted by status changes
@@ -6642,8 +6640,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	sd = BL_CAST(BL_PC, bl);
 
 	//Adjust tick according to status resistances
-	if( !(flag&(1|4)) )
-	{
+	if( !(flag&(1|4)) ) {
 		tick = status_get_sc_def(src, bl, type, rate, tick, flag);
 		if( !tick ) return 0;
 	}
