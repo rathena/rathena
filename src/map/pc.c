@@ -6568,7 +6568,7 @@ void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int h
 	sd->canlog_tick = gettick();
 }
 
-static int pc_close_npc_timer(int tid, unsigned int tick, int id, intptr_t data)
+int pc_close_npc_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	TBL_PC *sd = map_id2sd(id);
 	if(sd) pc_close_npc(sd,data);
@@ -7339,13 +7339,11 @@ int pc_percentheal(struct map_session_data *sd,int hp,int sp)
 {
 	nullpo_ret(sd);
 
-	if(hp > 100) hp = 100;
-	else
-	if(hp <-100) hp =-100;
+	if (hp > 100) hp = 100;
+	else if (hp <-100) hp = -100;
 
-	if(sp > 100) sp = 100;
-	else
-	if(sp <-100) sp =-100;
+	if (sp > 100) sp = 100;
+	else if (sp <-100) sp = -100;
 
 	if(hp >= 0 && sp >= 0) //Heal
 		return status_percent_heal(&sd->bl, hp, sp);

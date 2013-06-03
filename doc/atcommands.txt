@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20130515
+//= 20130601
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
@@ -578,14 +578,10 @@ Opens the auction window.
 ---------------------------------------
 
 @identify
-
-Opens the Identification window if any unappraised items are in your inventory.
-
----------------------------------------
-
 @identifyall
 
-Automatically identifies all unidentified items in your inventory.
+Opens the Identification window if any unappraised items are in your inventory.
+@identifyall will automaticallyidentify all unappraised items in your inventory.
 
 ---------------------------------------
 

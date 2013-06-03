@@ -627,11 +627,14 @@ static void script_reportfunc(struct script_state* st)
 static char* script_getfuncname(struct script_state *st)
 {
 	int i;
-	char* name = "";
+	char* name = NULL;
 	for( i = 0; i < st->stack->sp; ++i ) {
 		struct script_data* data = &st->stack->stack_data[i];
-		if(data->type == C_NAME && str_data[data->u.num].type == C_FUNC)
+		if(data->type == C_NAME && str_data[data->u.num].type == C_FUNC) {
 			name = reference_getname(data);
+			if(strcmp(name,"jump_zero"))
+				break;
+		}
 	}
 	return name;
 }
@@ -9830,9 +9833,9 @@ BUILDIN_FUNC(sc_start)
 
 	//If from NPC we make default flag 1 to be unavoidable
 	if(nd && nd->bl.id == fake_nd->bl.id)
-		flag = script_hasdata(st,5+start_type)?script_getnum(st,5+start_type):1;
-	else
 		flag = script_hasdata(st,5+start_type)?script_getnum(st,5+start_type):2;
+	else
+		flag = script_hasdata(st,5+start_type)?script_getnum(st,5+start_type):1;
 
 	rate = script_hasdata(st,4+start_type)?min(script_getnum(st,4+start_type),10000):10000;
 

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Euphy
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.0a
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [Euphy]
 //=     Letters "n" and "h" in NPC names indicate difficulty.
+//= 1.0a There is no minimum party size on official servers.
 //============================================================ 
 
 // Quest NPCs
@@ -381,7 +382,7 @@ mal_in01,160,34,4	script	Missing, the Cleaner	545,{
 	}
 	set .@party_id,getcharid(1);
 	set .@md_name$,"Culvert";
-	if (!instance_check_party(.@party_id,2)) {
+	if (!.@party_id) {
 		mes "^0000ffYou have to organize a party of";
 		mes "more than 1 member or be a member";
 		mes "of the party and come back.^000000";

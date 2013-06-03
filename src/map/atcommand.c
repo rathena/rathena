@@ -537,8 +537,7 @@ ACMD_FUNC(jump)
  * Display list of online characters with
  * various info.
  *------------------------------------------*/
-ACMD_FUNC(who)
-{
+ACMD_FUNC(who) {
 	struct map_session_data *pl_sd = NULL;
 	struct s_mapiterator *iter = NULL;
 	char map_name[MAP_NAME_LENGTH_EXT] = "";
@@ -7781,7 +7780,7 @@ ACMD_FUNC(duel)
 			struct map_session_data *target_sd;
 			target_sd = map_nick2sd((char *)message);
 			if(target_sd != NULL) {
-				unsigned int maxpl=0, newduel;
+				unsigned int newduel;
 				if((newduel = duel_create(sd, 2)) != -1) {
 					if(target_sd->duel_group > 0 ||	target_sd->duel_invite > 0) {
 						clif_displaymessage(fd, msg_txt(sd,353)); // "Duel: Player already in duel."

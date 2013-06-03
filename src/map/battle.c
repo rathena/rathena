@@ -801,7 +801,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damag
 		if( sc->data[SC_SAFETYWALL] && (flag&(BF_SHORT|BF_MAGIC))==BF_SHORT )
 		{
 			struct skill_unit_group* group = skill_id2group(sc->data[SC_SAFETYWALL]->val3);
-			uint16 skill_id = sc->data[SC_SAFETYWALL]->val2;
+			//uint16 skill_id = sc->data[SC_SAFETYWALL]->val2; (safetywall or steinwand)
 			if (group) {
 			//in RE, SW possesses a lifetime equal to group val2, (3x caster hp, or homon formula)
 			#ifdef RENEWAL

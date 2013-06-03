@@ -1107,8 +1107,6 @@ void channel_read_config(void) {
 				config_setting_t *channel = config_setting_get_elem(channels, i);
 				const char *color = config_setting_get_string_elem(channels,i);
 				char *name = config_setting_name(channel);
-				struct Channel *chd;
-
 				for (k = 0; k < Channel_Config.colors_count; k++) {
 					if( strcmpi(Channel_Config.colors_name[k],color) == 0 )
 						break;
@@ -1121,7 +1119,7 @@ void channel_read_config(void) {
 					ShowError("channels.conf: duplicate channel '%s', skipping channel...\n",name);
 					continue;
 				}
-				chd = channel_create(name,NULL,k,CHAN_TYPE_PUBLIC,0);
+				channel_create(name,NULL,k,CHAN_TYPE_PUBLIC,0);
 			}
 		}
 

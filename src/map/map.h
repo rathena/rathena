@@ -779,6 +779,7 @@ char *MSG_CONF_NAME_MAL;
 char *MSG_CONF_NAME_IDN;
 char *MSG_CONF_NAME_FRN;
 char *MSG_CONF_NAME_POR;
+char *MSG_CONF_NAME_THA;
 
 //Useful typedefs from jA [Skotlex]
 typedef struct map_session_data TBL_PC;

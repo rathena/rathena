@@ -77,6 +77,29 @@ AC_ARG_ENABLE(
 )
 
 #
+# warn
+#
+AC_ARG_ENABLE(
+	[warn],
+	AC_HELP_STRING(
+		[--enable-warn@<:@=ARG@:>@],
+		[
+			Compiles with warnings. (disabled by default)
+			(available options: yes, no)
+		]
+	),
+	[
+		enable_warn="$enableval"
+		case $enableval in
+			"no");;
+			"yes");;
+			*) AC_MSG_ERROR([[invalid argument --enable-warn=$enableval... stopping]]);;
+		esac
+	],
+	[enable_warn="no"]
+)
+
+#
 # Buildbot
 #
 AC_ARG_ENABLE(
@@ -605,15 +628,27 @@ fi
 case $enable_debug in
 	"no")
 		# default value
-		CFLAGS="$CFLAGS -Wno-unused -Wno-parentheses $PROD_WARN"
+		CFLAGS="$CFLAGS"
 		;;
 	"yes")
-		CFLAGS="$CFLAGS -g -DDEBUG -Wconversion"
+		CFLAGS="$CFLAGS -g -DDEBUG"
 		;;
 	"gdb")
 		CFLAGS="$CFLAGS -ggdb -DDEBUG"
 		;;
 esac
+
+#
+# Warnings
+#
+case $enable_warn in
+	"no") #default
+		CFLAGS="$CFLAGS $PROD_WARN"
+		;;
+	"yes")
+		CFLAGS="$CFLAGS"
+		;;
+esac		
 
 #
 # Buildbot

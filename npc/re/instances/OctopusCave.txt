@@ -13,6 +13,8 @@
 //= 1.0 First version. [Euphy]
 //============================================================ 
 
+// Instance Creation
+//============================================================
 mal_dun01,151,235,5	script	Starfish	551,{
 
 	set .@party_id,getcharid(1);
@@ -180,6 +182,8 @@ mal_dun01,153,237,5	script	Weird Entrance	844,{
 	}
 }
 
+// Instance Scripts
+//============================================================
 1@cash,199,99,0	script	oct_enter	139,4,4,{
 	end;
 OnInstanceInit:
@@ -705,6 +709,8 @@ OnTouch:
 // This is never enabled in the official script.
 //1@cash,200,161,0	duplicate(oct_exit_1)	oct_exit_3	45,2,2
 
+// Warp Portals
+//============================================================
 1@cash,193,82,0	warp	oct_door1	2,2,1@cash,151,48
 1@cash,154,53,0	warp	oct_door2	2,2,1@cash,197,87
 1@cash,187,99,0	warp	oct_door3	2,2,1@cash,148,128

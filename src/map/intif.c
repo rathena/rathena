@@ -2235,11 +2235,11 @@ int intif_parse(int fd)
 	case 0x3854:	intif_parse_Auction_message(fd); break;
 	case 0x3855:	intif_parse_Auction_bid(fd); break;
 
-// Mercenary System
+	// Mercenary System
 	case 0x3870:	intif_parse_mercenary_received(fd); break;
 	case 0x3871:	intif_parse_mercenary_deleted(fd); break;
 	case 0x3872:	intif_parse_mercenary_saved(fd); break;
-// Elemental System
+	// Elemental System
 	case 0x387c:	intif_parse_elemental_received(fd); break;
 	case 0x387d:	intif_parse_elemental_deleted(fd); break;
 	case 0x387e:	intif_parse_elemental_saved(fd); break;
@@ -2256,7 +2256,7 @@ int intif_parse(int fd)
 		ShowError("intif_parse : unknown packet %d %x\n",fd,RFIFOW(fd,0));
 		return 0;
 	}
-    // Skip packet
+	// Skip packet
 	RFIFOSKIP(fd,packet_len);
 	return 1;
 }

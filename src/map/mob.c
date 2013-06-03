@@ -2094,7 +2094,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	struct status_data *status;
 	struct map_session_data *sd = NULL, *tmpsd[DAMAGELOG_SIZE];
 	struct map_session_data *mvp_sd = NULL, *second_sd = NULL, *third_sd = NULL;
-	struct status_change *sc;
 
 	struct {
 		struct party_data *p;
@@ -2107,7 +2106,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	bool rebirth, homkillonly;
 
 	status = &md->status;
-	sc = &md->sc;
 
 	if( src && src->type == BL_PC ) {
 		sd = (struct map_session_data *)src;

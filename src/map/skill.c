@@ -2473,8 +2473,9 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		skill_id == MER_INCAGI || skill_id == MER_BLESSING) && tsd->sc.data[SC_CHANGEUNDEAD] )
 		damage = 1;
 
-	if( damage > 0 && (( dmg.flag&BF_WEAPON && src != bl && ( src == dsrc || ( dsrc->type == BL_SKILL && ( skill_id == SG_SUN_WARM || skill_id == SG_MOON_WARM || skill_id == SG_STAR_WARM ) ) ))
-			|| ((sc && sc->data[SC_REFLECTDAMAGE]) && !dmg.flag&(BF_MAGIC|BF_LONG) && !skill_get_inf2(skill_id)&INF2_TRAP)) )
+	if( damage > 0 && (( dmg.flag&BF_WEAPON && src != bl && ( src == dsrc || ( dsrc->type == BL_SKILL &&
+		( skill_id == SG_SUN_WARM || skill_id == SG_MOON_WARM || skill_id == SG_STAR_WARM ) ) ))
+		|| ((sc && sc->data[SC_REFLECTDAMAGE]) && !(dmg.flag&(BF_MAGIC|BF_LONG)) && !(skill_get_inf2(skill_id)&INF2_TRAP)) ) )
 		rdamage = battle_calc_return_damage(bl,src, &damage, dmg.flag, skill_id);
 
 	if( damage && sc && sc->data[SC_GENSOU] && dmg.flag&BF_MAGIC ){
@@ -9234,7 +9235,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if(sce->val1 == MH_MD_FIGHTING) sce->val1 = MH_MD_GRAPPLING;
 		else sce->val1 = MH_MD_FIGHTING;
 		if(hd->master && hd->sc.data[SC_STYLE_CHANGE]) {
-		    int mode = hd->sc.data[SC_STYLE_CHANGE]->val1;
 		    char output[128];
 		    safesnprintf(output,sizeof(output),msg_txt(sd,378),(sce->val1==MH_MD_FIGHTING?"fighthing":"grappling"));
 		    clif_colormes(hd->master,color_table[COLOR_RED],output);

@@ -171,7 +171,7 @@ int unit_check_start_teleport_timer(struct block_list *sbl){
 	if(msd){ //if there is a master
 		int *msd_tid = unit_get_masterteleport_timer(sbl);
 
-		if (!check_distance_bl(&msd->bl, sbl, MAX_MER_DISTANCE)) {
+		if (!check_distance_bl(&msd->bl, sbl, max_dist)) {
 			if(*msd_tid == INVALID_TIMER || *msd_tid == 0)
 				*msd_tid = add_timer(gettick()+3000,unit_teleport_timer,sbl->id,BL_MER);
 		}

@@ -1926,7 +1926,7 @@ void char_charlist_notify( int fd, struct char_session_data* sd ){
 	WFIFOHEAD(fd, 6);
 	WFIFOW(fd, 0) = 0x9a0;
 	// pages to req / send them all in 1 until mmo_chars_fromsql can split them up
-	WFIFOL(fd, 2) = 1; //int TotalCnt
+	WFIFOL(fd, 2) = (sd->char_slots>3)?sd->char_slots/3:1; //int TotalCnt (nb page to load)
 	WFIFOSET(fd,6);
 }
 
@@ -3303,7 +3303,6 @@ int parse_frommap(int fd)
 		case 0x2b11:
 			if( RFIFOREST(fd) < 10 )
 				return 0;
-
 			divorce_char_sql(RFIFOL(fd,2), RFIFOL(fd,6));
 			RFIFOSKIP(fd,10);
 		break;
@@ -4388,7 +4387,6 @@ int parse_char(int fd)
 		break;
 
 		case 0x9a1:
-			ShowInfo("We are here in 9a1\n");
 			if( RFIFOREST(fd) < 2 )
 				return 0;
 			char_parse_req_charlist(fd,sd);

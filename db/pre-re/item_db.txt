@@ -3401,13 +3401,13 @@
 6380,Mora_Coin,Mora Coin,3,20,,0,,,,,,,,,,,,,{},{},{}
 6381,Field_Shovel,Field Shovel,3,20,,10,,,,,,,,,,,,,{},{},{}
 6382,Urn,Urn,3,20,,10,,,,,,,,,,,,,{},{},{}
-6383,Clue_Of_Lope,Ropewa Clues,3,20,,10,,,,,,,,,,,,,{},{},{}
-6384,Ring_Of_Lope,Ring Of Lope,3,0,,0,,,,,,,,,,,,,{},{},{}
+6383,Clue_Of_Lope,Lope's Clue,3,20,,10,,,,,,,,,,,,,{},{},{}
+6384,Ring_Of_Lope,Lope's Ring,3,0,,0,,,,,,,,,,,,,{},{},{}
 6385,Research_Tool_Bag,Research Tool Bag,3,0,,0,,,,,,,,,,,,,{},{},{}
-6386,Bathtub_R_Sample,Bathtub R Sample,3,20,,0,,,,,,,,,,,,,{},{},{}
+6386,Bathtub_R_Sample,Bath Water Sample,3,20,,0,,,,,,,,,,,,,{},{},{}
 6387,Teeth_Sample,Teeth Sample,3,20,,0,,,,,,,,,,,,,{},{},{}
 6388,Scale_Sample,Scale Sample,3,20,,0,,,,,,,,,,,,,{},{},{}
-6389,Puddle_R_Sample,Pool Sample,3,20,,0,,,,,,,,,,,,,{},{},{}
+6389,Puddle_R_Sample,Sample Of Puddle Research,3,20,,0,,,,,,,,,,,,,{},{},{}
 6390,Small_Pocket,Small Pocket,3,20,,0,,,,,,,,,,,,,{},{},{}
 6391,Splendid_Supply_Kit,Splendid Supply Kit,3,20,,2000,,,,,,,,,,,,,{},{},{}
 6392,Bradium_Box,Bradium Box,3,20,,10,,,,,,,,,,,,,{},{},{}
