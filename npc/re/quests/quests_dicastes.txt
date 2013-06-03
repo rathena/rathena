@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Gennosuke Kouga, Muad_Dib
 //===== Current Version: =====================================
-//= 1.9a
+//= 2.0
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -29,6 +29,7 @@
 //= 1.8b Updated "Calyon" NPC and fixed a check. [Euphy]
 //= 1.9 Updated "Fish Tails" with RE coordinates.
 //= 1.9a Minor fix. [Joseph]
+//= 2.0 Fixed variables. [Joseph]
 //============================================================
 
 // Entrance
@@ -781,18 +782,18 @@ dic_in01,43,273,1	script	Transport Dept. 1 Mgr	449,{
 	next;
 	mes "[Transport Dept. 1 Manager]";
 	set .@s$, "Quantity check finished. Ahhh, you going to rest? Then why don't you visit the famous pub of the Capital? They have no yummy food though....";
-	que_dic(1,12137,30000,7143,4,.@s);
-	que_dic(1,12138,25000,744,5,.@s);
-	que_dic(1,12139,47500,748,1,.@s);
-	que_dic(1,12140,27500,736,15,.@s);
-	que_dic(1,12141,27000,746,10,.@s);
-	que_dic(1,12142,27500,740,15,.@s);
-	que_dic(1,12143,21600,925,50,.@s);
-	que_dic(1,12144,21400,965,50,.@s);
-	que_dic(1,12145,20900,964,20,.@s);
-	que_dic(1,12146,22400,911,30,.@s);
-	que_dic(1,12147,20800,910,40,.@s);
-	mes "Um......What do you want me to do?";
+	que_dic(1,12137,30000,7143,4,.@s$);
+	que_dic(1,12138,25000,744,5,.@s$);
+	que_dic(1,12139,47500,748,1,.@s$);
+	que_dic(1,12140,27500,736,15,.@s$);
+	que_dic(1,12141,27000,746,10,.@s$);
+	que_dic(1,12142,27500,740,15,.@s$);
+	que_dic(1,12143,21600,925,50,.@s$);
+	que_dic(1,12144,21400,965,50,.@s$);
+	que_dic(1,12145,20900,964,20,.@s$);
+	que_dic(1,12146,22400,911,30,.@s$);
+	que_dic(1,12147,20800,910,40,.@s$);
+	mes "Um...... What do you want me to do?";
 	next;
 	mes "[Transport Dept. 1 Manager]";
 	mes "....";

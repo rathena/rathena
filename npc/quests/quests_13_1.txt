@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.8
+//= 2.9
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -48,6 +48,7 @@
 //= 2.7 Updated EXP rewards.
 //= 2.7a Added 'consumeitem' command. [Euphy]
 //= 2.8 Some optimization, and moved an Izlude NPC. [Euphy]
+//= 2.9 Fixed an invalid event label. [Joseph]
 //============================================================ 
 
 // Onward to the New World
@@ -10032,7 +10033,7 @@ mid_camp,206,286,3	script	Expedition Messenger	997,{
 	if ((ep13_1_edq == 3) && (countitem(11012) > 0)) {
 		mes "[Expedition Messenger]";
 		mes "Welcome, I've been waiting for you.";
-		mes "You must be" + strcharinfo(0) + ". Nice to meet you.";
+		mes "You must be " + strcharinfo(0) + ". Nice to meet you.";
 		next;
 		mes "[Expedition Messenger]";
 		mes "Let me check something quicly. You received the report directly from the commander, didn't you? May I see it?";
@@ -10042,7 +10043,7 @@ mid_camp,206,286,3	script	Expedition Messenger	997,{
 		mes ".........";
 		next;
 		mes "[Expedition Messenger]";
-		mes "Excellent. Thank you. Then we'll go back to the mainland and let the leaders know that you,"+ strcharinfo(0) + ", have departed.";
+		mes "Excellent. Thank you. Then we'll go back to the mainland and let the leaders know that you, "+ strcharinfo(0) + ", have departed.";
 		next;
 		mes "[Expedition Messenger]";
 		mes "Guys, it's time to go.";
@@ -10092,7 +10093,7 @@ mid_camp,206,286,3	script	Expedition Messenger	997,{
 			mes "Argh... You...";
 			next;
 			mes "[Expedition Messenger]";
-			mes "*Cough* Oh, thank god!" + strcharinfo(0) + ", please take the report and run!";
+			mes "*Cough* Oh, thank god! " + strcharinfo(0) + ", please take the report and run!";
 			next;
 			mes "[???]";
 			mes "No... Noooo!";
@@ -10100,7 +10101,7 @@ mid_camp,206,286,3	script	Expedition Messenger	997,{
 			specialeffect2 EF_SOULBREAKER;
 			specialeffect2 EF_SONICBLOWHIT;
 			mes "[Expedition Messenger]";
-			mes "Argh..." + strcharinfo(0) + ", are you alright? The report... The report...";
+			mes "Argh... " + strcharinfo(0) + ", are you alright? The report... The report...";
 			next;
 			delitem 11012,1; //Expedition_Report
 			set ep13_1_edq,4;
@@ -10145,7 +10146,7 @@ mid_camp,206,286,3	script	Expedition Messenger	997,{
 			mes "Argh... You...";
 			next;
 			mes "[Expedition Messenger]";
-			mes "*Cough* Oh, thank god!" + strcharinfo(0) + ", please take the report and run!";
+			mes "*Cough* Oh, thank god! " + strcharinfo(0) + ", please take the report and run!";
 			next;
 			mes "[???]";
 			mes "No... Noooo!";
@@ -10153,7 +10154,7 @@ mid_camp,206,286,3	script	Expedition Messenger	997,{
 			specialeffect2 EF_SOULBREAKER;
 			specialeffect2 EF_SONICBLOWHIT;
 			mes "[Expedition Messenger]";
-			mes "Argh..." + strcharinfo(0) + ", are you alright? The report... The report...";
+			mes "Argh... " + strcharinfo(0) + ", are you alright? The report... The report...";
 			next;
 			mes "[Expedition Agent]";
 			mes "We lost the report. The pages are blowing away!";
@@ -10165,7 +10166,7 @@ mid_camp,206,286,3	script	Expedition Messenger	997,{
 			mes "Haha, I may have failed to take the report, but it's better destroyed than in your hands!";
 			cutin "ep13_shadow_edq",255;
 			next;
-			donpcevent "Expedition Messenger#3::OnMessenger#edq3";
+			donpcevent "Expedition Messenger#3::OnDisable";
 			mes "[Expedition Agent]";
 			mes "Are you alright? What about the report... ?";
 			next;
