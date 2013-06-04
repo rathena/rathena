@@ -6088,22 +6088,25 @@ BUILDIN_FUNC(countitem)
 			if(sd->status.inventory[i].nameid == nameid)
 				count += sd->status.inventory[i].amount;
 	} else { // For countitem2() function
-		struct item tmp_it;
-		tmp_it.nameid = id->nameid;
-		tmp_it.identify = script_getnum(st, 3);
-		tmp_it.refine = script_getnum(st, 4);
-		tmp_it.attribute = script_getnum(st, 5);
-		tmp_it.card[0] = (short) script_getnum(st, 6);
-		tmp_it.card[1] = (short) script_getnum(st, 7);
-		tmp_it.card[2] = (short) script_getnum(st, 8);
-		tmp_it.card[3] = (short) script_getnum(st, 9);
+		int nameid, iden, ref, attr, c1, c2, c3, c4;
 
-		for (i = 0; i < MAX_INVENTORY; i++)
-			if ((&sd->status.inventory[i] != NULL)
-				&& sd->status.inventory[i].amount > 0
-				&& compare_item(&sd->status.inventory[i], &tmp_it)
-			)
-			count += sd->status.inventory[i].amount;
+		nameid = id->nameid; 
+		iden = script_getnum(st,3); 
+		ref  = script_getnum(st,4); 
+		attr = script_getnum(st,5); 
+		c1 = (short)script_getnum(st,6); 
+		c2 = (short)script_getnum(st,7); 
+		c3 = (short)script_getnum(st,8); 
+		c4 = (short)script_getnum(st,9);
+
+		for(i = 0; i < MAX_INVENTORY; i++)
+			if (sd->status.inventory[i].nameid > 0 && sd->inventory_data[i] != NULL && 
+				sd->status.inventory[i].amount > 0 && sd->status.inventory[i].nameid == nameid && 
+				sd->status.inventory[i].identify == iden && sd->status.inventory[i].refine == ref && 
+				sd->status.inventory[i].attribute == attr && sd->status.inventory[i].card[0] == c1 && 
+				sd->status.inventory[i].card[1] == c2 && sd->status.inventory[i].card[2] == c3 && 
+				sd->status.inventory[i].card[3] == c4 ) 
+	 	                        count += sd->status.inventory[i].amount;
 	}
 
 	script_pushint(st,count);

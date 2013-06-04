@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Euphy
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.1a
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First Version. [Euphy]
 //= 1.1 Optimized. [Euphy]
+//= 1.1a Bug fixes. [Lemongrass]
 //============================================================ 
 
 // Arch Bishop Enchants :: coin_arc
@@ -1478,7 +1479,7 @@ function	script	F_Mora_Enchant	{
 	delitem 6380,5; //Mora_Coin
 	delitem getarg(0),1;
 	set .@i, rand(1,4568);
-	if (.@i <= 3181) {
+	if (.@i <= 3168) {
 		// Basic combinations
 		// (raw: .@i increments by 11)
 		setarray .@enchant_slot1[0],4766,4767,4764,4765,4762,4763,4760,4761; //Atk2,Atk3,Critical5,Critical7,Evasion6,Evasion12,Matk1,Matk2
@@ -1489,6 +1490,8 @@ function	script	F_Mora_Enchant	{
 			.@enchant_slot2[rand(getarraysize(.@enchant_slot2))],
 			.@enchant_slot3[rand(getarraysize(.@enchant_slot3))];
 	}
+	else if (.@i <= 3179) setarray .@enchants[1],4761,4720,4700; //Matk2 Dexterity1 Strength1
+	else if (.@i <= 3181) setarray .@enchants[1],4761,4712,4712; //Matk2 Inteligence3 Inteligence3
 	else if (.@i <= 3183) setarray .@enchants[1],4765,4732,4732; //Critical7 Agility3 Agility3
 	else if (.@i <= 3185) setarray .@enchants[1],4763,4752,4753; //Evasion12 Luck3 Luck4
 	else if (.@i <= 3187) setarray .@enchants[1],4763,4742,4742; //Evasion12 Vitality3 Vitality3
