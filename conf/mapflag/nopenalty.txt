@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //= 1.2 - Updated. [Lupus]
 //= 1.3 - Added all novice maps. [L0ne_W0lf]
 //= 1.4 - Removed Nightmare PVP maps. [L0ne_W0lf]
+//= 1.5 - Updated. [L0ne_Wolf]
 //============================================================
 
 // Towns ====================
@@ -169,6 +170,7 @@ ecl_in02	mapflag	nopenalty
 ecl_in03	mapflag	nopenalty
 ecl_in04	mapflag	nopenalty
 ecl_hub01	mapflag	nopenalty
+que_avan01	mapflag	nopenalty
 
 // Job Quests ========================
 job_sword1	mapflag	nopenalty
@@ -292,6 +294,9 @@ turbo_e_16	mapflag	nopenalty
 p_track01	mapflag	nopenalty
 p_track02	mapflag	nopenalty
 
+// Poring War ==================
+poring_w02	mapflag	nopenalty
+
 //Vision of Okolnir =============
 que_qsch01	mapflag	nopenalty
 que_qsch02	mapflag	nopenalty
@@ -315,6 +320,3 @@ bat_a01	mapflag	nopenalty
 bat_a02	mapflag	nopenalty
 
 //evt_zombie	mapflag	nopenalty
-
-// Poring War ==================
-poring_w02	mapflag	nopenalty

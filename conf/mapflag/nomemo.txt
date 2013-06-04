@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 1.8b
+//= 1.9
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //= 1.8 - Added nameless_i location. [Lupus]
 //= 1.8a - Removed duplicate gef_cas nomemo mapflags. [Yommy]
 //= 1.8b - Removed duplicate arug_dun01 & schg_dun01 entries. [Gepard]
+//= 1.9 - Updated. [L0ne_W0lf]
 //============================================================
 
 // Towns  ====================
@@ -622,6 +623,10 @@ turbo_e_16	mapflag	nomemo
 p_track01	mapflag	nomemo
 p_track02	mapflag	nomemo
 
+// Poring War ====================
+poring_w01	mapflag	nomemo
+poring_w02	mapflag	nomemo
+
 //Vision of Okolnir ==========
 que_qsch01	mapflag	nomemo
 que_qsch02	mapflag	nomemo
@@ -734,6 +739,7 @@ gld2_ald	mapflag	nomemo
 gld2_gef	mapflag	nomemo
 gld2_pay	mapflag	nomemo
 gld2_prt	mapflag	nomemo
+job_ko	mapflag	nomemo
 ma_scene01	mapflag	nomemo
 ma_in01	mapflag	nomemo
 ma_dun01	mapflag	nomemo
@@ -772,11 +778,25 @@ moc_prydn2	mapflag	nomemo
 1@nyd	mapflag	nomemo
 2@nyd	mapflag	nomemo
 
-//evt_zombie	mapflag	nomemo
+// Glast Heim Memorial Dungeon ===
+1@gl_k	mapflag	nomemo
+2@gl_k	mapflag	nomemo
+gl_chyard_	mapflag	nomemo
+gl_cas02_	mapflag	nomemo
 
-// Poring War ====================
-poring_w01	mapflag	nomemo
-poring_w02	mapflag	nomemo
+// Wave Mode Memorial Dungeon ====
+1@def01	mapflag	nomemo
+1@def02	mapflag	nomemo
+1@def03	mapflag	nomemo
+
+// Heroes' Trails - Part 1 =======
+1@gef	mapflag	nomemo
+1@face	mapflag	nomemo
+1@sara	mapflag	nomemo
+1@gef_in	mapflag	nomemo
+dali	mapflag	nomemo
+
+//evt_zombie	mapflag	nomemo
 
 // Bossnia (custom) ==============
 bossnia_01	mapflag	nomemo

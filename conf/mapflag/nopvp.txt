@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 1.1a
+//= 1.2
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: ========================================= 
 //= Prevents PvP mode on a map.
 //===== Additional Comments: ================================= 
 //= 1.0 - Initial script.
+//= 1.2 - Updated. [L0ne_W0lf]
 //============================================================
 
 1@cata	mapflag	pvp	off
@@ -33,6 +34,15 @@
 1@ma_c	mapflag	pvp	off
 1@ma_b	mapflag	pvp	off
 1@ecl	mapflag	pvp	off
+1@gl_k	mapflag	pvp	off
+2@gl_k	mapflag	pvp	off
+1@def01	mapflag	pvp	off
+1@def02	mapflag	pvp	off
+1@def03	mapflag	pvp	off
+1@gef	mapflag	pvp	off
+1@face	mapflag	pvp	off
+1@sara	mapflag	pvp	off
+1@gef_in	mapflag	pvp	off
 
 bat_a01	mapflag	pvp	off
 bat_a02	mapflag	pvp	off
@@ -168,6 +178,15 @@ mal_in02	mapflag	pvp	off
 malaya	mapflag	pvp	off
 ma_scene01	mapflag	pvp	off
 ma_in01	mapflag	pvp	off
+ma_zif01	mapflag	pvp	off
+ma_zif02	mapflag	pvp	off
+ma_zif03	mapflag	pvp	off
+ma_zif04	mapflag	pvp	off
+ma_zif05	mapflag	pvp	off
+ma_zif06	mapflag	pvp	off
+ma_zif07	mapflag	pvp	off
+ma_zif08	mapflag	pvp	off
+ma_zif09	mapflag	pvp	off
 
 eclage	mapflag	pvp	off
 ecl_in01	mapflag	pvp	off
@@ -175,5 +194,8 @@ ecl_in02	mapflag	pvp	off
 ecl_in03	mapflag	pvp	off
 ecl_in04	mapflag	pvp	off
 ecl_hub01	mapflag	pvp	off
+que_avan01	mapflag	pvp	off
+
+dali	mapflag	pvp	off
 
 //evt_zombie	mapflag	pvp	off

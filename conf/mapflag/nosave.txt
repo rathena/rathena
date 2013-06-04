@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //= to the map specified in the last field, or "SavePoint".
 //===== Additional Comments: ================================= 
 //= 1.7 - Updated. [Lupus]
+//= 1.8 - Updated. [L0ne_W0lf]
 //============================================================
 
 // Job Quests ====================
@@ -248,6 +249,10 @@ turbo_e_16	mapflag	nosave	SavePoint
 p_track01	mapflag	nosave	SavePoint
 p_track02	mapflag	nosave	SavePoint
 
+// Poring War ====================
+poring_w01	mapflag	nosave	SavePoint
+poring_w02	mapflag	nosave	SavePoint
+
 //Vision of Okolnir ===========================
 que_qsch01	mapflag	nosave	SavePoint
 que_qsch02	mapflag	nosave	SavePoint
@@ -273,7 +278,7 @@ e_tower	mapflag	nosave	SavePoint
 5@tower	mapflag	nosave	SavePoint
 6@tower	mapflag	nosave	SavePoint
 
-// Battle Grounds ==============
+// Battle Grounds =================
 bat_c01	mapflag	nosave	SavePoint
 bat_c02	mapflag	nosave	SavePoint
 bat_c03	mapflag	nosave	SavePoint
@@ -282,7 +287,7 @@ bat_b02	mapflag	nosave	SavePoint
 bat_a01	mapflag	nosave	SavePoint
 bat_a02	mapflag	nosave	SavePoint
 
-// Episode 13 ====================
+// Episode 13 =====================
 moc_fild22b	mapflag	nosave	SavePoint
 que_dan01	mapflag	nosave	SavePoint
 que_dan02	mapflag	nosave	SavePoint
@@ -295,38 +300,63 @@ arug_dun01	mapflag	nosave	SavePoint
 1@orcs	mapflag	nosave	SavePoint
 2@orcs	mapflag	nosave	SavePoint
 
-// Nidhoggr's Instance ===========
+// Nidhoggr's Instance ============
 1@nyd	mapflag	nosave	SavePoint
 2@nyd	mapflag	nosave	SavePoint
 
-// Misty Forest Labyrinth ===========
+// Misty Forest Labyrinth =========
 1@mist	mapflag	nosave	SavePoint
 
-// Octopus Cave ===========
+// Octopus Cave ===================
 1@cash	mapflag	nosave	SavePoint
 
-// Drain ===========
+// Drain ==========================
 1@pump	mapflag	nosave	SavePoint
 2@pump	mapflag	nosave	SavePoint
 
-// Somatology Laboratory ===========
+// Somatology Laboratory ==========
 que_lhz	mapflag	nosave	SavePoint
 1@lhz	mapflag	nosave	SavePoint
 
-// Bangungot Hospital F2 ===========
+// Port Malaya ====================
+ma_zif01	mapflag	nosave	SavePoint
+ma_zif02	mapflag	nosave	SavePoint
+ma_zif03	mapflag	nosave	SavePoint
+ma_zif04	mapflag	nosave	SavePoint
+ma_zif05	mapflag	nosave	SavePoint
+ma_zif06	mapflag	nosave	SavePoint
+ma_zif07	mapflag	nosave	SavePoint
+ma_zif08	mapflag	nosave	SavePoint
+ma_zif09	mapflag	nosave	SavePoint
+
+// Bangungot Hospital F2 ==========
 1@ma_h	mapflag	nosave	SavePoint
 
-// Buwaya Cave ===========
+// Buwaya Cave ====================
 1@ma_c	mapflag	nosave	SavePoint
 
-// Bakonawa Hideout ===========
+// Bakonawa Hideout ===============
 1@ma_b	mapflag	nosave	SavePoint
 
-// Inside Eclage ===========
+// Inside Eclage ==================
+que_avan01	mapflag	nosave	SavePoint
 1@ecl	mapflag	nosave	SavePoint
 
-//evt_zombie	mapflag	nosave	SavePoint
+// Glast Heim Memorial Dungeon ====
+1@gl_k	mapflag	nosave	SavePoint
+2@gl_k	mapflag	nosave	SavePoint
 
-// Poring War ====================
-poring_w01	mapflag	nosave	SavePoint
-poring_w02	mapflag	nosave	SavePoint
+// Wave Mode Memorial Dungeon =====
+1@def01	mapflag	nosave	SavePoint
+1@def02	mapflag	nosave	SavePoint
+1@def03	mapflag	nosave	SavePoint
+
+// Heroes' Trails - Part 1 ========
+1@gef	mapflag	nosave	SavePoint
+1@face	mapflag	nosave	SavePoint
+1@sara	mapflag	nosave	SavePoint
+1@gef_in	mapflag	nosave	SavePoint
+dali	mapflag	nosave	SavePoint
+
+evt_bomb	mapflag	nosave	SavePoint
+//evt_zombie	mapflag	nosave	SavePoint

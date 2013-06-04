@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 1.6a
+//= 1.7
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //=   Fly Wing (601), Giant Fly Wing (12212)
 //===== Additional Comments: ================================= 
 //= 1.6a - Updated. [Lupus]
+//= 1.7 - Updated. [L0ne_W0lf]
 //============================================================
 
 // Cities ========================
@@ -323,6 +324,11 @@ turbo_e_16	mapflag	noteleport
 p_track01	mapflag	noteleport
 p_track02	mapflag	noteleport
 
+// Poring War ====================
+poring_w01	mapflag	noteleport
+poring_w02	mapflag	noteleport
+poring_w02	mapflag	monster_noteleport
+
 //Vision of Okolnir ==============
 que_qsch01	mapflag	noteleport
 que_qsch01	mapflag	monster_noteleport
@@ -388,6 +394,8 @@ spl_in01	mapflag	noteleport
 s_atelier	mapflag	noteleport
 bra_in01	mapflag	noteleport
 dic_in01	mapflag	noteleport
+job3_gen01	mapflag	noteleport
+job3_sha01	mapflag	noteleport
 
 // Episode 14 ====================
 1@mist	mapflag	noteleport
@@ -422,6 +430,7 @@ ma_zif06	mapflag	noteleport
 ma_zif07	mapflag	noteleport
 ma_zif08	mapflag	noteleport
 ma_zif09	mapflag	noteleport
+job_ko	mapflag	noteleport
 ecl_in01	mapflag	noteleport
 ecl_in02	mapflag	noteleport
 ecl_in03	mapflag	noteleport
@@ -445,9 +454,31 @@ nyd_dun02	mapflag	noteleport
 2@nyd	mapflag	noteleport
 2@nyd	mapflag	monster_noteleport
 
-//evt_zombie	mapflag	noteleport
+// Glast Heim Memorial Dungeon ===
+1@gl_k	mapflag	noteleport
+1@gl_k	mapflag	monster_noteleport
+2@gl_k	mapflag	noteleport
+2@gl_k	mapflag	monster_noteleport
+gl_chyard_	mapflag	noteleport
+gl_cas02_	mapflag	noteleport
 
-// Poring War ====================
-poring_w01	mapflag	noteleport
-poring_w02	mapflag	noteleport
-poring_w02	mapflag	monster_noteleport
+// Wave Mode Memorial Dungeon ====
+1@def01	mapflag	noteleport
+1@def01	mapflag	monster_noteleport
+1@def02	mapflag	noteleport
+1@def02	mapflag	monster_noteleport
+1@def03	mapflag	noteleport
+1@def03	mapflag	monster_noteleport
+
+// Heroes' Trails - Part 1 =======
+1@gef	mapflag	noteleport
+1@gef	mapflag	monster_noteleport
+1@face	mapflag	noteleport
+1@face	mapflag	monster_noteleport
+1@sara	mapflag	noteleport
+1@sara	mapflag	monster_noteleport
+1@gef_in	mapflag	noteleport
+1@gef_in	mapflag	monster_noteleport
+dali	mapflag	noteleport
+
+//evt_zombie	mapflag	noteleport

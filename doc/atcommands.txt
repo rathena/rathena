@@ -581,7 +581,7 @@ Opens the auction window.
 @identifyall
 
 Opens the Identification window if any unappraised items are in your inventory.
-@identifyall will automaticallyidentify all unappraised items in your inventory.
+@identifyall will automatically identify all unappraised items in your inventory.
 
 ---------------------------------------
 
