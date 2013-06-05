@@ -134,7 +134,7 @@ Here is a list of valid top-level commands:
 <map name>%TAB%mapflag%TAB%<flag>
 
 This will, upon loading, set a specified map flag on a map you like. These are 
-normally in files inside 'conf/mapflag' and are loaded first, so by the time the 
+normally in files inside 'npc/mapflag' and are loaded first, so by the time the 
 server's up, all the maps have the flags they should have. Map flags determine 
 the behavior of the map in various situations. For more details, see 'setmapflag'
 and 'doc/mapflags.txt'.

@@ -1,0 +1,39 @@
+//===== rAthena Script =======================================
+//= Mapflag: Restricted.
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: ========================================= 
+//= Disables items configured in item_noequip.txt
+//= and skills configured in skill_nocast_db.txt.
+//===== Additional Comments: ================================= 
+//= 1.0 Renewal split. [Euphy]
+//============================================================
+
+// Misty Forest Labyrinth ===========
+1@mist	mapflag	restricted	6
+
+// Octopus Cave ===========
+1@cash	mapflag	restricted	6
+
+// Drain ===========
+1@pump	mapflag	restricted	6
+2@pump	mapflag	restricted	6
+
+// Somatology Laboratory ===========
+1@lhz	mapflag	restricted	6
+
+// Bangungot Hospital F2 ===========
+1@ma_h	mapflag	restricted	6
+
+// Buwaya Cave ===========
+1@ma_c	mapflag	restricted	6
+
+// Bakonawa Hideout ===========
+1@ma_b	mapflag	restricted	6
+
+// Inside Eclage ===========
+1@ecl	mapflag	restricted	6

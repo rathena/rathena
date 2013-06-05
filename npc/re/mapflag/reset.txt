@@ -1,0 +1,22 @@
+//===== rAthena Script =======================================
+//= Mapflag: Enable Neuralizer use.
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: ========================================= 
+//= Maps where Neuralizer (12213) can be used.
+//===== Additional Comments: ================================= 
+//= 1.0 Renewal split. [Euphy]
+//============================================================
+
+brasilis	mapflag	reset
+dewata	mapflag	reset
+dicastes01	mapflag	reset
+dicastes02	mapflag	reset
+eclage	mapflag	reset
+malangdo	mapflag	reset
+malaya	mapflag	reset
+mora	mapflag	reset
