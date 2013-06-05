@@ -4,7 +4,7 @@
 //= Persian, Vicious_Pucca, aoa00, Evera, MasterOfMupppets,
 //= Lupus, Lord Gywall
 //===== Current Version: ===================================== 
-//= 4.8
+//= 4.9
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -78,6 +78,7 @@
 //=     - Cursed Spirit Quest
 //= 4.7 Fixed missing label. (bugreport:4654) [L0ne_W0lf]
 //= 4.8 Fixed Cursed Spirit Quest EXP reward. [Euphy]
+//= 4.9 Fixed incorrect use of 'close'. [Joseph]
 //============================================================ 
 
 // Gangster Alert [Official Conversion]
@@ -5277,8 +5278,9 @@ OnTouch_:
 			getexp 1500000,800000;
 		else if (BaseLevel > 89)
 			getexp 2000000,1000000;
+		close;
 	}
-	close;
+	end;
 }
 
 lhz_in01,114,181,5	script	Representative#li_01	71,{

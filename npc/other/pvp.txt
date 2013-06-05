@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= kobra_k88; L0ne_W0lf, Elias (og2)
 //===== Current Version: =====================================
-//= 2.3
+//= 2.4
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -14,6 +14,7 @@
 //= 2.1 Changed PVP Narrator and GateKeeper to Floating NPC [Elias]
 //= 2.2 Some cleaning. [Euphy]
 //= 2.3 Fixed grammatical errors. [Joseph]
+//= 2.4 Fixed incorrect use of 'close' and some cleaning. [Joseph]
 //============================================================
 
 -	script	PVP Narrator::pvpe	-1,{
@@ -144,11 +145,11 @@
 			mes "Position successfully saved...";
 			mes "Thank you very much!";
 			mes "We will see you again soon.";
-				if(strnpcinfo(4) == "morocc_in") { savepoint "morocc_in",141,139; }
-				if(strnpcinfo(4) == "alberta_in") { savepoint "alberta_in",22,148; }
-				if(strnpcinfo(4) == "prt_in") { savepoint "prt_in",54,137; }
-				if(strnpcinfo(4) == "geffen_in") { savepoint "geffen_in",70,59; }
-				if(strnpcinfo(4) == "payon_in01") { savepoint "payon_in01",142,46; }
+			if(strnpcinfo(4) == "morocc_in") { savepoint "morocc_in",141,139; }
+			if(strnpcinfo(4) == "alberta_in") { savepoint "alberta_in",22,148; }
+			if(strnpcinfo(4) == "prt_in") { savepoint "prt_in",54,137; }
+			if(strnpcinfo(4) == "geffen_in") { savepoint "geffen_in",70,59; }
+			if(strnpcinfo(4) == "payon_in01") { savepoint "payon_in01",142,46; }
 			break;
 		case 5:
 			mes "[PVP Narrator]";
@@ -259,13 +260,13 @@ payon_in01,140,53,4	duplicate(gkut)	Gate Keeper#gke5	83
 //Fight square Reception Staff (Locations below)
 -	script	FSRS::fsr	-1,{
 	if(strnpcinfo(4) == "pvp_y_room") {
-		setarray .@Maps$[0],"pvp_y_8-1","pvp_y_8-2","pvp_y_8-3","pvp_y_8-4","pvp_y_8-5";
-		setarray .@Name$[0],"Prontera","Izlude","Payon","Alberta","Morroc";
-		setarray .@Limit[0],128,128,128,128,128;
+		setarray .@Maps$[0],	"pvp_y_8-1",	"pvp_y_8-2",	"pvp_y_8-3",	"pvp_y_8-4",	"pvp_y_8-5";
+		setarray .@Name$[0],	"Prontera",		"Izlude",		"Payon",		"Alberta",		"Morroc";
+		setarray .@Limit[0],	128,			128,			128,			128,			128;
 	} else {
-		setarray .@Maps$[0],"pvp_n_8-1","pvp_n_8-2","pvp_n_8-3","pvp_n_8-4","pvp_n_8-5";
-		setarray .@Name$[0],"Sandwich","Lock on","Four Room","Under cross","Compass Room";
-		setarray .@Limit[0],64,32,32,32,32;
+		setarray .@Maps$[0],	"pvp_n_8-1",	"pvp_n_8-2",	"pvp_n_8-3",	"pvp_n_8-4",	"pvp_n_8-5";
+		setarray .@Name$[0],	"Sandwich",		"Lock on",		"Four Room",	"Under cross",	"Compass Room";
+		setarray .@Limit[0],	64,				32,				32,				32,				32;
 	}
 	for(set .@i,0; .@i<5; set .@i,.@i+1)
 		set .@menu$, .@menu$+.@Name$[.@i]+" ["+getmapusers(.@Maps$[.@i])+" / "+.@Limit[.@i]+"]:";
@@ -275,13 +276,14 @@ payon_in01,140,53,4	duplicate(gkut)	Gate Keeper#gke5	83
 	if (getmapusers(.@Maps$[.@i]) >= .@Limit[.@i]) {
 		mes "[PVP Fight Square Reception Staff]";
 		mes "This map is currently full.";
+		close;
 	}
-	else warp .@Maps$[.@i],0,0;
-	close;
+	warp .@Maps$[.@i],0,0;
+	end;
 
 OnInit:
 	waitingroom "Free for all",0;
-end;
+	end;
 }
 
 //Fight Square Reception Staff
@@ -309,11 +311,10 @@ pvp_room,54,85,4	script	Registration Staff#1	105,{
 		close;
 	}
 
-	if (.pvp_close_n_room == 1 && .pvp_close_s_room == 1 && .pvp_close_w_room == 1 && .pvp_close_e_room == 1) {
-		Set .pvp_close_n_room,0;
-		Set .pvp_close_s_room,0;
-		Set .pvp_close_w_room,0;
-		Set .pvp_close_e_room,0;
+	set .@size, getarraysize(.warp_x);
+	if (.@size == 0) {
+		setarray .warp_x,40,59,20,40;
+		setarray .warp_y,59,40,40,20;
 	}
 
 	if (select("Combat Square one :Cancel") == 1) {
@@ -327,34 +328,11 @@ pvp_room,54,85,4	script	Registration Staff#1	105,{
 			mes "Good luck!";
 			close2;
 			delitem 7028,1; //Invite_For_Duel
-			while(1) {
-				switch(rand(1,4)) {
-				case 1:
-					if (.pvp_close_n_room == 0) {
-						set .pvp_close_n_room,1;
-						warp "pvp_2vs2",40,59;
-						end;
-					}
-				case 2:
-					if (.pvp_close_s_room == 0) {
-						set .pvp_close_s_room,1;
-						warp "pvp_2vs2",59,40;
-						end;
-					}
-				case 3:
-					if (.pvp_close_w_room == 0) {
-						set .pvp_close_w_room,1;
-						warp "pvp_2vs2",20,40;
-						end;
-					}
-				case 4:
-					if (.pvp_close_e_room == 0) {
-						set .pvp_close_e_room,1;
-						warp "pvp_2vs2",40,20;
-						end;
-					}
-				}
-			}
+			set .@rand, rand(.@size);
+			warp "pvp_2vs2", .warp_x[.@rand], .warp_y[.@rand];
+			deletearray .warp_x[.@rand],1;
+			deletearray .warp_y[.@rand],1;
+			end;
 		}
 		mes "[PVP Combat Square Register Staff]";
 		mes "Come back anytime you are ready.";
@@ -363,10 +341,6 @@ pvp_room,54,85,4	script	Registration Staff#1	105,{
 	close;
 
 OnInit:
-	Set .pvp_close_n_room,0;
-	Set .pvp_close_s_room,0;
-	Set .pvp_close_w_room,0;
-	Set .pvp_close_e_room,0;
 	waitingroom "Combat Square players entrance only",0;
 	end;
 }

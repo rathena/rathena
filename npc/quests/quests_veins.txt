@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.3
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -46,6 +46,7 @@
 //= 2.0 Removed level requirement. (bugreport:4678) [L0ne_W0lf]
 //= 2.1 Added missing changequest (3071-3076). [Joseph]
 //= 2.2 Moved "Wincing Old Man" to pre-re/re coordinates. [Euphy]
+//= 2.3 Fixed incorrect use of 'close'. [Joseph]
 //============================================================ 
 
 // Stone Quest
@@ -5180,14 +5181,12 @@ ra_temin,87,133,1	script	Rachel Guard#vol1	934,5,2,{
 		disablenpc "Rachel Guard#vol1";
 		end;
 	}
-	else {
-		mes "[Guard Karlum]";
-		mes "High Priest Vildt isn't";
-		mes "here right now. Please";
-		mes "come back later if you";
-		mes "wish to see him.";
-		close;
-	}
+	mes "[Guard Karlum]";
+	mes "High Priest Vildt isn't";
+	mes "here right now. Please";
+	mes "come back later if you";
+	mes "wish to see him.";
+	close;
 
 OnInit:
 	enablenpc "Rachel Guard#vol1";
@@ -5195,7 +5194,7 @@ OnInit:
 
 OnTouch:
 	warp "ra_temin",85,137;
-	close;
+	end;
 }
 
 ra_temin,82,133,7	script	Rachel Guard#vol2	934,5,2,{
@@ -7131,6 +7130,7 @@ thor_camp,156,57,3	duplicate(VeinsDummy)	Dummy#5	111
 thor_camp,162,57,3	duplicate(VeinsDummy)	Dummy#6	111
 
 thor_camp,248,104,5	script	Aitra#vol	939,{
+	end;
 OnInit:
 	disablenpc "Aitra#vol";
 	end;

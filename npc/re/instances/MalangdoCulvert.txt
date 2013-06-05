@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Euphy
 //===== Current Version: ===================================== 
-//= 1.0a
+//= 1.0b
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 1.0 First version. [Euphy]
 //=     Letters "n" and "h" in NPC names indicate difficulty.
 //= 1.0a There is no minimum party size on official servers.
+//= 1.0b Fixed incorrect use of 'close'. [Joseph]
 //============================================================ 
 
 // Quest NPCs
@@ -461,11 +462,10 @@ mal_in01,160,34,4	script	Missing, the Cleaner	545,{
 			case 3:
 				goto L_Enter;
 			}
-		} else {
-			if(select("Enter Culvert:Cancel") == 2)
-				close;
-			goto L_Enter;
 		}
+		if(select("Enter Culvert:Cancel") == 2)
+			end;
+		goto L_Enter;
 	} else if (.@playtime == 0 || .@playtime == 1) {
 		mes "You can enter the Culvert if the gate is open.";
 		next;

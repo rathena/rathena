@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 2.5
+//= 2.6
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -44,12 +44,13 @@
 //= 2.4 Optimized (6000+ lines reduced!). [Euphy]
 //= 2.4a Fixed an invisible NPC clashing with a warp portal. [Euphy]
 //= 2.5 Updated EXP rewards.
+//= 2.6 Fixed incorrect use of 'close'. [Joseph]
 //============================================================ 
 
 // Cat Hand Addition.
 //============================================================ 
 spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
-function Catwarp;
+	function Catwarp;
 	if (ep13_yong1 < 3) {
 		mes "[Cat Hand Agent]";
 		mes "Welcome to Cat Trading.";
@@ -2941,117 +2942,103 @@ spl_in01,97,313,3	script	Laphine Craftsman#ep13	446,{
 					mes "That should be sufficient for the time being.";
 					close;
 				}
+				mes "[Laphine craftsman]";
+				mes "Thank you for collecting those items for me.";
+				mes "Hopefully you can help us again.";
+				erasequest 7082;
+				close;
+			}
+			set .@alba2,checkquest(7081);
+			if ((.@alba2 == 0) || (.@alba2 == 1)) {
+				if ((countitem(7326) > 14) && (countitem(6075) > 14)) {
+					mes "[Laphine craftsman]";
+					mes "Oh, fantastic.";
+					mes "These are enough materials for today.";
+					mes "I'll let you know if I need more.";
+					delitem 7326,15; //Fluorescent_Liquid
+					delitem 6075,15; //Crystalized_Teardrop
+					erasequest 7081;
+					setquest 7082;
+					getexp 30000,30000;
+					getitem 6081,3; //Splendide_Coin
+					close;
+				}
 				else {
 					mes "[Laphine craftsman]";
-					mes "Thank you for collecting those items for me.";
-					mes "Hopefully you can help us again.";
-					erasequest 7082;
+					mes "What can I help you with?";
+					mes "Not yet done with my request?";
 					close;
 				}
 			}
-			else {
-				set .@alba2,checkquest(7081);
-				if ((.@alba2 == 0) || (.@alba2 == 1)) {
-					if ((countitem(7326) > 14) && (countitem(6075) > 14)) {
-						mes "[Laphine craftsman]";
-						mes "Oh, fantastic.";
-						mes "These are enough materials for today.";
-						mes "I'll let you know if I need more.";
-						delitem 7326,15; //Fluorescent_Liquid
-						delitem 6075,15; //Crystalized_Teardrop
-						erasequest 7081;
-						setquest 7082;
-						getexp 30000,30000;
-						getitem 6081,3; //Splendide_Coin
-						close;
-					}
-					else {
-						mes "[Laphine craftsman]";
-						mes "What can I help you with?";
-						mes "Not yet done with my request?";
-						close;
-					}
-				}
-				else {
-					mes "[Laphine craftsman]";
-					mes "What's up??";
-					mes "I need to make more decorations for the Yai.";
-					next;
-					switch(select("May I help you?:What's a Yai?")) {
-					case 1:
-						mes "[Laphine craftsman]";
-						mes "You want to help?";
-						mes "This place is being used for battle but it is also our home.";
-						next;
-						mes "[Laphine craftsman]";
-						mes "We prefer to be alone so we must each have our own Yai.";
-						mes "Though we are in a military base we should take care of each Yai.";
-						next;
-						mes "[Laphine craftsman]";
-						mes "I am not a soldier but we hope all of us to be as confident as they are.";
-						mes "I would like to support all Laphine with my skills.";
-						next;
-						mes "[Laphine craftsman]";
-						mes "So I want to help make decorations for everyone's Yai.";
-						mes "I need more materials to make them.";
-						next;
-						mes "[Laphine craftsman]";
-						mes "I heard that a water ghost has been appearing in the cave.";
-						mes "Can you bring me 15 Crystallized Teardrop and 15 Fluorescent Liquid?";
-						next;
-						switch(select("Yes.:Sorry.")) {
-						case 1:
-							mes "[Laphine craftsman]";
-							mes "Please take my request.";
-							mes "Can you bring me 15 Crystallized Teardrop and 15 Fluorescent Liquid?";
-							setquest 7081;
-							close;
-						case 2:
-							mes "[Laphine craftsman]";
-							mes "Yes, I'm sure that you have your own business to attend to.";
-							mes "I feel embarrassed asking a favor from you, as a Laphine.";
-							next;
-							mes "[Laphine craftsman]";
-							mes "But, why are you trying to be involved in our business yet you won't take up our request?";
-							close;
-						}
-					case 2:
-						mes "[Laphine craftsman]";
-						mes "Yai...";
-						mes "All grown Laphine have one.";
-						mes "They're essential for all Laphine to live in since we are very private people.";
-						next;
-						select("It's a house...?");
-						mes "[Laphine craftsman]";
-						mes "Yes...";
-						mes "That's it. We sometimes invite our friends or guests to our Yai.";
-						mes "And decorations for Yai are quite important to us...";
-						next;
-						mes "[Laphine craftsman]";
-						mes "We Laphine care about ourselves and our Yai as well.";
-						next;
-						mes "[Laphine craftsman]";
-						mes "We are far away from our hometown now...";
-						mes "If we don't have this kind of hobby, there's nothing to enjoy here.";
-						close;
-					}
-				}
-			}
-		}
-		else {
 			mes "[Laphine craftsman]";
-			mes "Hm? Oh, can't you see I'm busy?";
-			mes "I'm making ornaments though, if you must know.";
+			mes "What's up??";
+			mes "I need to make more decorations for the Yai.";
+			next;
+			if (select("May I help you?:What's a Yai?") == 1) {
+				mes "[Laphine craftsman]";
+				mes "You want to help?";
+				mes "This place is being used for battle but it is also our home.";
+				next;
+				mes "[Laphine craftsman]";
+				mes "We prefer to be alone so we must each have our own Yai.";
+				mes "Though we are in a military base we should take care of each Yai.";
+				next;
+				mes "[Laphine craftsman]";
+				mes "I am not a soldier but we hope all of us to be as confident as they are.";
+				mes "I would like to support all Laphine with my skills.";
+				next;
+				mes "[Laphine craftsman]";
+				mes "So I want to help make decorations for everyone's Yai.";
+				mes "I need more materials to make them.";
+				next;
+				mes "[Laphine craftsman]";
+				mes "I heard that a water ghost has been appearing in the cave.";
+				mes "Can you bring me 15 Crystallized Teardrop and 15 Fluorescent Liquid?";
+				next;
+				if (select("Yes.:Sorry.") == 1) {
+					mes "[Laphine craftsman]";
+					mes "Please take my request.";
+					mes "Can you bring me 15 Crystallized Teardrop and 15 Fluorescent Liquid?";
+					setquest 7081;
+					close;
+				}
+				mes "[Laphine craftsman]";
+				mes "Yes, I'm sure that you have your own business to attend to.";
+				mes "I feel embarrassed asking a favor from you, as a Laphine.";
+				next;
+				mes "[Laphine craftsman]";
+				mes "But, why are you trying to be involved in our business yet you won't take up our request?";
+				close;
+			}
+			mes "[Laphine craftsman]";
+			mes "Yai...";
+			mes "All grown Laphine have one.";
+			mes "They're essential for all Laphine to live in since we are very private people.";
+			next;
+			select("It's a house...?");
+			mes "[Laphine craftsman]";
+			mes "Yes...";
+			mes "That's it. We sometimes invite our friends or guests to our Yai.";
+			mes "And decorations for Yai are quite important to us...";
+			next;
+			mes "[Laphine craftsman]";
+			mes "We Laphine care about ourselves and our Yai as well.";
+			next;
+			mes "[Laphine craftsman]";
+			mes "We are far away from our hometown now...";
+			mes "If we don't have this kind of hobby, there's nothing to enjoy here.";
 			close;
 		}
-	}
-	else {
 		mes "[Laphine craftsman]";
-		mes "Yur,Dur AnoVa?";
-		mes "Wha? Dieb OsaDur .. ";
-		mes "ah..RuffThus NeAsh. man nesAsh OdesAlah ?";
+		mes "Hm? Oh, can't you see I'm busy?";
+		mes "I'm making ornaments though, if you must know.";
 		close;
 	}
+	mes "[Laphine craftsman]";
+	mes "Yur,Dur AnoVa?";
+	mes "Wha? Dieb OsaDur .. ";
+	mes "ah..RuffThus NeAsh. man nesAsh OdesAlah ?";
+	close;
 }
 
 mid_camp,146,306,3	script	Pet Breeder#ep13_eden01	982,{
@@ -3105,166 +3092,142 @@ mid_camp,146,306,3	script	Pet Breeder#ep13_eden01	982,{
 		mes "- They just continue to argue -";
 		close;
 	}
-	else {
-		mes "[Pinedel]";
-		mes "Ah, Taab isn't flexible at all.";
-		mes "Hey there! What's up??";
-		next;
-		switch(select("Notice for criminal report:Cute pet investigation.")) {
-		case 1:
-			if (ep13_2_wanted == 1) {
-				if (checkquest(7076,HUNTING) == 2) {
-					mes "[Pinedel]";
-					mes "Have you hunted the Runaway Dandelion?";
-					mes "Ok, I accept you.";
-					mes "Here's something Rin was storing here.";
-					next;
-					mes "[Pinedel]";
-					mes "This is Rin's cherished treasure box...";
-					mes "This is enough payment, right?";
-					completequest 7076;
-					set ep13_2_wanted,2;
-					getitem 7444,1; //Treasure_Box
-					close;
-				}
-				else {
-					mes "[Pinedel]";
-					mes "I know you haven't terminated the Runaway Dandelion yet.";
-					mes "Don't take me for a fool.";
-					close;
-				}
-			}
-			else if (ep13_2_wanted == 2) {
+	mes "[Pinedel]";
+	mes "Ah, Taab isn't flexible at all.";
+	mes "Hey there! What's up??";
+	next;
+	if (select("Notice for criminal report:Cute pet investigation.") == 1) {
+		if (ep13_2_wanted == 1) {
+			if (checkquest(7076,HUNTING) == 2) {
 				mes "[Pinedel]";
-				mes "I will forward everything to Rin.";
-				mes "She'll love it.";
-				mes "Just tell her your name " + strcharinfo(0) + ".";
+				mes "Have you hunted the Runaway Dandelion?";
+				mes "Ok, I accept you.";
+				mes "Here's something Rin was storing here.";
 				next;
 				mes "[Pinedel]";
-				mes "I can remember that I've heard about you from Rin.";
-				mes "But Rin likes you, so that must mean that you're nice.";
+				mes "This is Rin's cherished treasure box...";
+				mes "This is enough payment, right?";
+				completequest 7076;
+				set ep13_2_wanted,2;
+				getitem 7444,1; //Treasure_Box
 				close;
 			}
-			else {
-				mes "[Pinedel]";
-				mes "Seaching for a criminal?";
-				mes "I'm not sure that you're involved in it.";
-				close;
-			}
-		case 2:
-			if (ep13_2_dayegg == 1) {
-				if (countitem(6093) > 9) {
-					mes "[Pinedel]";
-					mes "Oh! Nice!";
-					mes "I can go through this study deeper with your assistance.";
-					next;
-					mes "[Pinedel]";
-					mes "I will try to make these Dragon eggs into cute pets.";
-					mes "Don't expect much!";
-					mes "Come back after a day to check on the progress.";
-					delitem 6093,10; //Egg_Of_Draco
-					erasequest 7077;
-					setquest 7078;
-					set ep13_2_dayegg,2;
-					getexp 40000,40000;
-					getitem 6081,1; //Splendide_Coin
-					getitem 6080,1; //Manuk_Coin
-					close;
-				}
-				else {
-					mes "[Pinedel]";
-					mes "Draco was being kept in the nest just before hatching. Please collect 10 Dragon eggs for me.";
-					mes "You know, those are hard to hatch in captivity.";
-					close;
-				}
-			}
-			else if (ep13_2_dayegg == 2) {
-				set .@alba_check,checkquest(7078,PLAYTIME);
-				if (.@alba_check == -1) {
-					mes "[Pinedel]";
-					mes "Those eggs are about to hatch now.";
-					mes "I will investigate those back home.";
-					close2;
-					erasequest 7078;
-					set ep13_2_dayegg,3;
-					end;
-				}
-				else if ((.@alba_check == 0) || (.@alba_check == 1)) {
-					mes "[Pinedel]";
-					mes "Those eggs are about to hatch now.";
-					mes "I will investigate those back home.";
-					mes "For now I still need more time.";
-					next;
-					mes "[Pinedel]";
-					mes "Can you come back here tomorrow?";
-					close;
-				}
-				else if (.@alba_check == 2) {
-					mes "[Pinedel]";
-					mes "Those eggs are about to hatch now.";
-					mes "I will investigate those back home.";
-					close2;
-					erasequest 7078;
-					set ep13_2_dayegg,3;
-					close;
-				}
-			}
-			else if (ep13_2_dayegg == 3) {
-				mes "[Pinedel]";
-				mes "Do you want to help me gather more Dragon eggs today?";
-				mes "I want to try many things with those eggs.";
-				next;
-				switch(select("Sure.:Sorry, I can't.")) {
-				case 1:
-					mes "[Pinedel]";
-					mes "Please collect 10 Draco Eggs.";
-					set ep13_2_dayegg,1;
-					setquest 7077;
-					close;
-				case 2:
-					mes "[Pinedel]";
-					mes "Ok. You have your own business here.";
-					mes "Go ahead.";
-					close;
-				}
-			}
-			else {
-				mes "[Pinedel]";
-				mes "I am investigating cute pets.";
-				mes "Ash-vacuum has several monsters that I think could become cute pets.";
-				next;
-				mes "[Pinedel]";
-				mes "The objective is one Dragon egg!";
-				mes "Can you bring me a Dragon Egg?";
-				next;
-				switch(select("Yes.:Nope.")) {
-				case 1:
-					mes "[Pinedel]";
-					mes "There would be Dragon nest in the cave you found out.";
-					mes "There should be nice Dragon Eggs.";
-					next;
-					mes "[Pinedel]";
-					mes "Please collect 10 Draco Eggs.";
-					mes "Let's work together to make them as pets.";
-					set ep13_2_dayegg,1;
-					setquest 7077;
-					close;
-				case 2:
-					mes "[Pinedel]";
-					mes "I know it's not the easiest task.";
-					mes "But I refuse to give up.";
-					mes "I will make it into a cute pet someday.";
-					next;
-					mes "[Taab]";
-					mes "Would you just give up making exogamous beings into cute pets...";
-					mes " ";
-					mes "[Pinedel]";
-					mes "Taab doesn't have any guts!";
-					close;
-				}
-			}
+			mes "[Pinedel]";
+			mes "I know you haven't terminated the Runaway Dandelion yet.";
+			mes "Don't take me for a fool.";
+			close;
 		}
+		else if (ep13_2_wanted == 2) {
+			mes "[Pinedel]";
+			mes "I will forward everything to Rin.";
+			mes "She'll love it.";
+			mes "Just tell her your name " + strcharinfo(0) + ".";
+			next;
+			mes "[Pinedel]";
+			mes "I can remember that I've heard about you from Rin.";
+			mes "But Rin likes you, so that must mean that you're nice.";
+			close;
+		}
+		mes "[Pinedel]";
+		mes "Seaching for a criminal?";
+		mes "I'm not sure that you're involved in it.";
+		close;
 	}
+	if (ep13_2_dayegg == 1) {
+		if (countitem(6093) > 9) {
+			mes "[Pinedel]";
+			mes "Oh! Nice!";
+			mes "I can go through this study deeper with your assistance.";
+			next;
+			mes "[Pinedel]";
+			mes "I will try to make these Dragon eggs into cute pets.";
+			mes "Don't expect much!";
+			mes "Come back after a day to check on the progress.";
+			delitem 6093,10; //Egg_Of_Draco
+			erasequest 7077;
+			setquest 7078;
+			set ep13_2_dayegg,2;
+			getexp 40000,40000;
+			getitem 6081,1; //Splendide_Coin
+			getitem 6080,1; //Manuk_Coin
+			close;
+		}
+		mes "[Pinedel]";
+		mes "Draco was being kept in the nest just before hatching. Please collect 10 Dragon eggs for me.";
+		mes "You know, those are hard to hatch in captivity.";
+		close;
+	}
+	else if (ep13_2_dayegg == 2) {
+		mes "[Pinedel]";
+		mes "Those eggs are about to hatch now.";
+		mes "I will investigate those back home.";
+		set .@alba_check,checkquest(7078,PLAYTIME);
+		if (.@alba_check == -1) {
+			close2;
+			erasequest 7078;
+			set ep13_2_dayegg,3;
+			end;
+		}
+		else if ((.@alba_check == 0) || (.@alba_check == 1)) {
+			mes "For now I still need more time.";
+			next;
+			mes "[Pinedel]";
+			mes "Can you come back here tomorrow?";
+			close;
+		}
+		close2;
+		erasequest 7078;
+		set ep13_2_dayegg,3;
+		end;
+	}
+	else if (ep13_2_dayegg == 3) {
+		mes "[Pinedel]";
+		mes "Do you want to help me gather more Dragon eggs today?";
+		mes "I want to try many things with those eggs.";
+		next;
+		if (select("Sure.:Sorry, I can't.") == 1) {
+			mes "[Pinedel]";
+			mes "Please collect 10 Draco Eggs.";
+			set ep13_2_dayegg,1;
+			setquest 7077;
+			close;
+		}
+		mes "[Pinedel]";
+		mes "Ok. You have your own business here.";
+		mes "Go ahead.";
+		close;
+	}
+	mes "[Pinedel]";
+	mes "I am investigating cute pets.";
+	mes "Ash-vacuum has several monsters that I think could become cute pets.";
+	next;
+	mes "[Pinedel]";
+	mes "The objective is one Dragon egg!";
+	mes "Can you bring me a Dragon Egg?";
+	next;
+	if (select("Yes.:Nope.") == 1) {
+		mes "[Pinedel]";
+		mes "There would be Dragon nest in the cave you found out.";
+		mes "There should be nice Dragon Eggs.";
+		next;
+		mes "[Pinedel]";
+		mes "Please collect 10 Draco Eggs.";
+		mes "Let's work together to make them as pets.";
+		set ep13_2_dayegg,1;
+		setquest 7077;
+		close;
+	}
+	mes "[Pinedel]";
+	mes "I know it's not the easiest task.";
+	mes "But I refuse to give up.";
+	mes "I will make it into a cute pet someday.";
+	next;
+	mes "[Taab]";
+	mes "Would you just give up making exogamous beings into cute pets...";
+	mes " ";
+	mes "[Pinedel]";
+	mes "Taab doesn't have any guts!";
+	close;
 }
 
 mid_camp,192,239,4	script	Wanted Sign#ep13_2ect01	857,{
@@ -3292,27 +3255,20 @@ mid_camp,192,239,4	script	Wanted Sign#ep13_2ect01	857,{
 		next;
 		if (ep13_2_wanted == 0) {
 			mes "Do you accept Rin's request?";
-			switch(select("I accept that request.:No, I can't.")) {
-			case 1:
+			if (select("I accept that request.:No, I can't.") == 1) {
 				mes "I accepted Rin's request.";
 				set ep13_2_wanted,1;
 				setquest 7076;
 				close;
-			
-			case 2:
-				mes "No, I won't get involved in it.";
-				close;
 			}
-		}
-		else {
-			mes "I've already decided to take the request.";
+			mes "No, I won't get involved in it.";
 			close;
 		}
-	}
-	else {
-		mes "There must be someone who remove the wanted notice paper.";
+		mes "I've already decided to take the request.";
 		close;
 	}
+	mes "There must be someone who remove the wanted notice paper.";
+	close;
 }
 
 -	script	Dragon Egg#ep13_degg_0	-1,{
