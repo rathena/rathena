@@ -2272,7 +2272,7 @@ void clif_item_sub_v5(unsigned char *buf, int n, int idx, struct item *i, struct
 	}
 	else { //normal 24B
 		WBUFW(buf,n+5)=i->amount;
-		WBUFL(buf,n+7)= id->equip; //wear state
+		WBUFL(buf,n+7)=(equip == -2 && id->equip == EQP_AMMO)?id->equip:0; //wear state
 		clif_addcards(WBUFP(buf, n+11), i); //EQUIPSLOTINFO 8B
 		WBUFL(buf,n+19) = i->expire_time;
 		//V5_ITEM_flag
@@ -2307,7 +2307,7 @@ void clif_item_sub(unsigned char *buf, int n, int idx, struct item *i, struct it
 #endif
 	} else { //Stackable item. 22.B
 		WBUFW(buf,n+6)=i->amount;
-		WBUFW(buf,n+8)=(equip == -2 && id->equip == EQP_AMMO)?id->equip:0;
+		WBUFW(buf,n+8)=(equip == -2 && id->equip == EQP_AMMO)?i->equip:0;
 		clif_addcards(WBUFP(buf, n+10), i); //8B
 #if PACKETVER >= 20071002
 		WBUFL(buf,n+18)=i->expire_time;
@@ -2453,26 +2453,34 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 	unsigned char *buf;
 	unsigned char *bufe;
 #if PACKETVER < 5
-	const int s = 10; //Entry size.
+	const int s = 10; //Entry size.normal item
+	const int sidx=4; //start itemlist idx
 #elif PACKETVER < 20080102
 	const int s = 18;
+	const int sidx=4;
 #elif PACKETVER < 20120925
 	const int s = 22;
+	const int sidx=4;
 #else
 	const int s = 24;
+	const int sidx = 4+24;
 #endif
 #if PACKETVER < 20071002
-	const int cmd = 20;
+	const int se = 20; //entry size equip
+	const int sidxe = 4; //start itemlist idx
 #elif PACKETVER < 20100629
-	const int cmd = 26;
+	const int se = 26;
+	const int sidxe = 4;
 #elif PACKETVER < 20120925
-	const int cmd = 28;
+	const int se = 28;
+	const int sidxe = 4;
 #else
-	const int cmd = 31;
+	const int se = 31;
+	const int sidxe = 4+24;
 #endif
 
-	buf = (unsigned char*)aMalloc(items_length * s + 4);
-	bufe = (unsigned char*)aMalloc(items_length * cmd + 4);
+	buf = (unsigned char*)aMalloc(items_length * s + sidx);
+	bufe = (unsigned char*)aMalloc(items_length * se + sidxe);
 
 	for( i = 0, n = 0, ne = 0; i < items_length; i++ )
 	{
@@ -2480,11 +2488,11 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 			continue;
 		id = itemdb_search(items[i].nameid);
 		if( !itemdb_isstackable2(id) ) { //Equippable
-			clif_item_sub(bufe, ne*cmd+4,i+1, &items[i], id, id->equip);
+			clif_item_sub(bufe, ne*se+sidx,i+1, &items[i], id, id->equip);
 			ne++;
 		}
 		else { //Stackable
-			clif_item_sub(buf, n*s+4,i+1, &items[i], id,-1);
+			clif_item_sub(buf, n*s+sidx,i+1, &items[i], id,-1);
 			n++;
 		}
 	}
@@ -2498,8 +2506,9 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 		WBUFW(buf,0)=0x2ea;
 #else
 		WBUFW(buf,0)=0x995;
+		memset((char*)WBUFP(buf,6),0,24); //storename
 #endif
-		WBUFW(buf,2)=4+n*s;
+		WBUFW(buf,2)=n*s+sidx;
 		clif_send(buf, WBUFW(buf,2), &sd->bl, SELF);
 	}
 	if( ne )
@@ -2510,8 +2519,9 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 		WBUFW(bufe,0)=0x2d1;
 #else
 		WBUFW(bufe,0)=0x996;
+		memset((char*)WBUFP(bufe,6),0,24); //storename
 #endif
-		WBUFW(bufe,2)=4+ne*cmd;
+		WBUFW(bufe,2)=ne*se+sidxe;
 		clif_send(bufe, WBUFW(bufe,2), &sd->bl, SELF);
 	}
 

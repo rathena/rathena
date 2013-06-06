@@ -77,13 +77,8 @@ const char* mapindex_getmapname_ext(const char* string, char* output) {
 /// Returns 1 if successful, 0 oherwise
 int mapindex_addmap(int index, const char* name) {
 	char map_name[MAP_NAME_LENGTH];
-
-	if (index == -1){
-		for (index = 1; index < max_index; index++) {
-			//if (strcmp(indexes[index].name,"#CLEARED#")==0)
-			if (indexes[index].name[0] == '\0')
-				break;
-		}
+	if (index == -1){ //autogive index
+		ARR_FIND(1,max_index,index,(indexes[index].name[0] == '\0'));
 	}
 
 	if (index < 0 || index >= MAX_MAPINDEX) {

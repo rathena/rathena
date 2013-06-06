@@ -261,6 +261,7 @@ int elemental_data_received(struct s_elemental *ele, bool flag) {
 		status_calc_elemental(ed,1);
 		ed->last_spdrain_time = ed->last_thinktime = gettick();
 		ed->summon_timer = INVALID_TIMER;
+		ed->masterteleport_timer = INVALID_TIMER;
 		elemental_summon_init(ed);
 	} else {
 		memcpy(&sd->ed->elemental, ele, sizeof(struct s_elemental));

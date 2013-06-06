@@ -382,6 +382,7 @@ int pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 	if( interval <= 0 )
 		interval = 1;
 	pd->pet_hungry_timer = add_timer(gettick() + interval, pet_hungry, sd->bl.id, 0);
+	pd->masterteleport_timer = INVALID_TIMER;
 	return 0;
 }
 

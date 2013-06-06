@@ -798,6 +798,7 @@ int merc_hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 	status_calc_homunculus(hd,1);
 
 	hd->hungry_timer = INVALID_TIMER;
+	hd->masterteleport_timer = INVALID_TIMER;
 	return 0;
 }
 

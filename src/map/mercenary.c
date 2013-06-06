@@ -321,6 +321,7 @@ int merc_data_received(struct s_mercenary *merc, bool flag)
 		map_addiddb(&md->bl);
 		status_calc_mercenary(md,1);
 		md->contract_timer = INVALID_TIMER;
+		md->masterteleport_timer = INVALID_TIMER;
 		merc_contract_init(md);
 	}
 	else
@@ -473,7 +474,7 @@ static bool read_mercenary_skilldb_sub(char* str[], int columns, int current)
 		ShowError("read_mercenary_skilldb : Class %d not found in mercenary_db for skill entry.\n", class_);
 		return false;
 	}
-	
+
 	skill_id = atoi(str[1]);
 	if( skill_id < MC_SKILLBASE || skill_id >= MC_SKILLBASE + MAX_MERCSKILL )
 	{
@@ -502,7 +503,7 @@ int do_init_mercenary(void)
 {
 	read_mercenarydb();
 	read_mercenary_skilldb();
-	
+
 	//add_timer_func_list(mercenary_contract, "mercenary_contract");
 	return 0;
 }

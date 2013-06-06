@@ -140,22 +140,15 @@ int unit_teleport_timer(int tid, unsigned int tick, int id, intptr_t data){
 	struct block_list *bl = map_id2bl(id);
 	int *mast_tid = unit_get_masterteleport_timer(bl);
 
-	if(tid == INVALID_TIMER)
+	if(tid == INVALID_TIMER || mast_tid == NULL)
 		return 0;
-	else if(*mast_tid && *mast_tid != tid)
+	else if(*mast_tid != tid)
 		return 0;
 	else {
 		TBL_PC *msd = unit_get_master(bl);
-		switch(data){
-		case BL_HOM:
-		case BL_ELEM:
-		case BL_PET :
-		case BL_MER :
-			if(msd && *mast_tid != INVALID_TIMER && !check_distance_bl(&msd->bl, bl, MAX_MER_DISTANCE)){
-				*mast_tid = INVALID_TIMER;
-				unit_warp(bl, msd->bl.id, msd->bl.x, msd->bl.y, CLR_TELEPORT );
-			}
-			break;
+		if(msd && !check_distance_bl(&msd->bl, bl, data)){
+			*mast_tid = INVALID_TIMER;
+			unit_warp(bl, msd->bl.id, msd->bl.x, msd->bl.y, CLR_TELEPORT );
 		}
 	}
 	return 0;
@@ -163,19 +156,19 @@ int unit_teleport_timer(int tid, unsigned int tick, int id, intptr_t data){
 
 int unit_check_start_teleport_timer(struct block_list *sbl){
 	TBL_PC *msd = unit_get_master(sbl);
-	int max_dist=AREA_SIZE;
+	int max_dist=0;
 	switch(sbl->type){
-		//case BL_HOM: max_dist = MAX_HOM_DISTANCE; break;
+		case BL_HOM: max_dist = AREA_SIZE; break;
 		case BL_ELEM: max_dist = MAX_ELEDISTANCE; break;
-		//case BL_PET : max_dist = MAX_PET_DISTANCE; break;
+		case BL_PET : max_dist = AREA_SIZE; break;
 		case BL_MER : max_dist = MAX_MER_DISTANCE; break;
 	}
-	if(msd){ //if there is a master
+	if(msd && max_dist){ //if there is a master and it's a valid type
 		int *msd_tid = unit_get_masterteleport_timer(sbl);
-
+		if(msd_tid == NULL) return 0;
 		if (!check_distance_bl(&msd->bl, sbl, max_dist)) {
 			if(*msd_tid == INVALID_TIMER || *msd_tid == 0)
-				*msd_tid = add_timer(gettick()+3000,unit_teleport_timer,sbl->id,BL_MER);
+				*msd_tid = add_timer(gettick()+3000,unit_teleport_timer,sbl->id,max_dist);
 		}
 		else {
 			if(*msd_tid && *msd_tid != INVALID_TIMER)

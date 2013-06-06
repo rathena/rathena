@@ -828,7 +828,7 @@ int guild_expulsion(struct map_session_data* sd, int guild_id, int account_id, i
 	if( (ps=guild_getposition(g,sd))<0 || !(g->position[ps].mode&0x0010) )
 		return 0;	//Expulsion permission
 
-  	//Can't leave inside guild castles.
+	//Can't leave inside guild castles.
 	if ((tsd = map_id2sd(account_id)) &&
 		tsd->status.char_id == char_id &&
 		((agit_flag || agit2_flag) && map[tsd->bl.m].flag.gvg_castle))
