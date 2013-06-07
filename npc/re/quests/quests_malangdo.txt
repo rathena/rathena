@@ -1804,7 +1804,7 @@ mal_in01,114,169,5	script	Rican#mal	547,{
 		mes "If you see my son, please tell him to get back soon~";
 		close;
 	} else if (ma_tomas > 99) {
-		if (checkquest(11238,PLAYTIME) == 0 || checkquest(11238,PLAYTIME) == 1) {
+		if (checkquest(11238) != -1) {
 			if (countitem(6435) < 30) {
 				mes "[Rican]";
 				mes "You need exactly 30 to get a set!";
@@ -3854,11 +3854,11 @@ mal_in02,76,63,7	script	Cleanyang	544,{
 			mes "Recently, there are 9 spot that hided cat's ship biscuit as well.";
 			next;
 			mes "[Cleanyang]";
-			mes "Someone think that good angel took them all as I collected and threw away";
+			mes "Someone think that good angel took them all as I collected and threw away.";
 			mes "He still hide them that place.";
 			next;
 			mes "[Cleanyang]";
-			mes "It is so easy because I don't have to search everywhere, but";
+			mes "It is so easy because I don't have to search everywhere, but...";
 			mes "Please search the 9 spot where hiding frequently.";
 			close;
 		}
@@ -3873,7 +3873,7 @@ mal_in02,76,63,7	script	Cleanyang	544,{
 		case 1:
 			mes "[Cleanyang]";
 			mes "My service to you today.";
-			mes "The inside of ship Navi, home and cat tower too. Don't even miss a blade of grass";
+			mes "The inside of ship Navi, home and cat tower too. Don't even miss a blade of grass.";
 			mes "Search everywhere.";
 			setquest 7268;
 			close;

@@ -2307,7 +2307,7 @@ void clif_item_sub(unsigned char *buf, int n, int idx, struct item *i, struct it
 #endif
 	} else { //Stackable item. 22.B
 		WBUFW(buf,n+6)=i->amount;
-		WBUFW(buf,n+8)=(equip == -2 && id->equip == EQP_AMMO)?i->equip:0;
+		WBUFW(buf,n+8)=(equip == -2 && id->equip == EQP_AMMO)?id->equip:0;
 		clif_addcards(WBUFP(buf, n+10), i); //8B
 #if PACKETVER >= 20071002
 		WBUFL(buf,n+18)=i->expire_time;
