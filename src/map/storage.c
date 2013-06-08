@@ -120,7 +120,8 @@ int compare_item(struct item *a, struct item *b)
 		a->identify == b->identify &&
 		a->refine == b->refine &&
 		a->attribute == b->attribute &&
-		a->expire_time == b->expire_time )
+		a->expire_time == b->expire_time &&
+		a->bound == b->bound )
 	{
 		int i;
 		for (i = 0; i < MAX_SLOTS && (a->card[i] == b->card[i]); i++);
@@ -151,6 +152,11 @@ static int storage_additem(struct map_session_data* sd, struct item* item_data, 
 	if( !itemdb_canstore(item_data, pc_get_group_level(sd)) )
 	{	//Check if item is storable. [Skotlex]
 		clif_displaymessage (sd->fd, msg_txt(sd,264));
+		return 1;
+	}
+
+	if( (item_data->bound == 2 || item_data->bound == 3) && !pc_can_give_bounded_items(sd) ) {
+		clif_displaymessage(sd->fd, msg_txt(sd,294));
 		return 1;
 	}
 
@@ -445,6 +451,11 @@ int guild_storage_additem(struct map_session_data* sd, struct guild_storage* sto
 	if( !itemdb_canguildstore(item_data, pc_get_group_level(sd)) || item_data->expire_time )
 	{	//Check if item is storable. [Skotlex]
 		clif_displaymessage (sd->fd, msg_txt(sd,264));
+		return 1;
+	}
+
+	if( (item_data->bound == 1 || item_data->bound == 3) && !pc_can_give_bounded_items(sd) ) {
+		clif_displaymessage(sd->fd, msg_txt(sd,294));
 		return 1;
 	}
 

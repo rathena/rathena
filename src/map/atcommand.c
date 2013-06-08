@@ -1112,11 +1112,12 @@ ACMD_FUNC(heal)
 
 /*==========================================
  * @item command (usage: @item <name/id_of_item> <quantity>) (modified by [Yor] for pet_egg)
+ * @itembound command (usage: @itembound <name/id_of_item> <quantity> <bound_type>)
  *------------------------------------------*/
 ACMD_FUNC(item)
 {
 	char item_name[100];
-	int number = 0, item_id, flag = 0;
+	int number = 0, item_id, flag = 0, bound = 0;
 	struct item item_tmp;
 	struct item_data *item_data;
 	int get_count, i;
@@ -1124,9 +1125,15 @@ ACMD_FUNC(item)
 
 	memset(item_name, '\0', sizeof(item_name));
 
-	if (!message || !*message || (
-		sscanf(message, "\"%99[^\"]\" %d", item_name, &number) < 1 &&
-		sscanf(message, "%99s %d", item_name, &number) < 1
+	if (!strcmpi(command+1,"itembound") && (!message || !*message || (
+		sscanf(message, "\"%99[^\"]\" %d %d", item_name, &number, &bound) < 2 && 
+		sscanf(message, "%99s %d %d", item_name, &number, &bound) < 2 
+	))) {
+		clif_displaymessage(fd, msg_txt(sd,295)); // Please enter an item name or ID (usage: @item <item name/ID> <quantity> <bound_type>).
+		return -1;
+	} else if (!message || !*message || (
+		sscanf(message, "\"%99[^\"]\" %d", item_name, &number) < 1 && 
+		sscanf(message, "%99s %d", item_name, &number) < 1 
 	)) {
 		clif_displaymessage(fd, msg_txt(sd,983)); // Please enter an item name or ID (usage: @item <item name/ID> <quantity>).
 		return -1;
@@ -1142,6 +1149,11 @@ ACMD_FUNC(item)
 		return -1;
 	}
 
+	if( bound < 0 || bound > 3 ) {
+		clif_displaymessage(fd, msg_txt(sd,298)); // Invalid bound type
+		return -1;
+	}
+
 	item_id = item_data->nameid;
 	get_count = number;
 	//Check if it's stackable.
@@ -1154,6 +1166,7 @@ ACMD_FUNC(item)
 			memset(&item_tmp, 0, sizeof(item_tmp));
 			item_tmp.nameid = item_id;
 			item_tmp.identify = 1;
+			item_tmp.bound = bound;
 
 			if ((flag = pc_additem(sd, &item_tmp, get_count, LOG_TYPE_COMMAND)))
 				clif_additem(sd, 0, 0, flag);
@@ -1173,17 +1186,23 @@ ACMD_FUNC(item2)
 	struct item item_tmp;
 	struct item_data *item_data;
 	char item_name[100];
-	int item_id, number = 0;
+	int item_id, number = 0, bound = 0;
 	int identify = 0, refine = 0, attr = 0;
 	int c1 = 0, c2 = 0, c3 = 0, c4 = 0;
 	nullpo_retr(-1, sd);
 
 	memset(item_name, '\0', sizeof(item_name));
 
-	if (!message || !*message || (
+	if (!strcmpi(command+1,"itembound2") && (!message || !*message || (
+		sscanf(message, "\"%99[^\"]\" %d %d %d %d %d %d %d %d %d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4, &bound) < 10 &&
+		sscanf(message, "%99s %d %d %d %d %d %d %d %d %d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4, &bound) < 10 ))) {
+		clif_displaymessage(fd, msg_txt(sd,296)); // Please enter all parameters (usage: @item2 <item name/ID> <quantity>
+		clif_displaymessage(fd, msg_txt(sd,297)); //   <identify_flag> <refine> <attribute> <card1> <card2> <card3> <card4> <bound_type>).
+		return -1;
+	} else if ( !message || !*message || (
 		sscanf(message, "\"%99[^\"]\" %d %d %d %d %d %d %d %d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4) < 9 &&
 		sscanf(message, "%99s %d %d %d %d %d %d %d %d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4) < 9
-	)) {
+		)) {
 		clif_displaymessage(fd, msg_txt(sd,984)); // Please enter all parameters (usage: @item2 <item name/ID> <quantity>
 		clif_displaymessage(fd, msg_txt(sd,985)); //   <identify_flag> <refine> <attribute> <card1> <card2> <card3> <card4>).
 		return -1;
@@ -1191,6 +1210,11 @@ ACMD_FUNC(item2)
 
 	if (number <= 0)
 		number = 1;
+
+	if( bound < 0 || bound > 3 ) {
+		clif_displaymessage(fd, msg_txt(sd,298)); // Invalid bound type
+		return -1;
+	}
 
 	item_id = 0;
 	if ((item_data = itemdb_searchname(item_name)) != NULL ||
@@ -1228,6 +1252,7 @@ ACMD_FUNC(item2)
 			item_tmp.card[1] = c2;
 			item_tmp.card[2] = c3;
 			item_tmp.card[3] = c4;
+			item_tmp.bound = bound;
 			if ((flag = pc_additem(sd, &item_tmp, get_count, LOG_TYPE_COMMAND)))
 				clif_additem(sd, 0, 0, flag);
 		}
@@ -9012,6 +9037,8 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(heal),
 		ACMD_DEF(item),
 		ACMD_DEF(item2),
+		ACMD_DEF2("itembound",item),
+		ACMD_DEF2("itembound2",item2),
 		ACMD_DEF(itemreset),
 		ACMD_DEF(clearstorage),
 		ACMD_DEF(cleargstorage),

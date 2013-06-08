@@ -106,6 +106,7 @@ void guild_flag_remove(struct npc_data *nd);
 void guild_flags_clear(void);
 
 void guild_guildaura_refresh(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
+void guild_retrieveitembound(int char_id,int aid,int guild_id);
 
 void do_final_guild(void);
 

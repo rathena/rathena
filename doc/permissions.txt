@@ -172,3 +172,9 @@ Allows player to use the client command /check (displays character status).
 Allows player to use the client command /changemaptype.
 
 ---------------------------------------
+
+*can_trade_bounded
+
+Allows player to do normal item actions (sell, trade, store, vend, auction, mail) with bounded items.
+
+---------------------------------------

@@ -63,6 +63,7 @@ static int mail_fromsql(int char_id, struct mail_data* md)
 		Sql_GetData(sql_handle,14, &data, NULL); item->identify = atoi(data);
 		Sql_GetData(sql_handle,15, &data, NULL); item->unique_id = strtoull(data, NULL, 10);
 		item->expire_time = 0;
+		item->bound = 0;
 
 		for (j = 0; j < MAX_SLOTS; j++)
 		{
@@ -183,6 +184,7 @@ static bool mail_loadmessage(int mail_id, struct mail_message* msg)
 		Sql_GetData(sql_handle,14, &data, NULL); msg->item.identify = atoi(data);
 		Sql_GetData(sql_handle,15, &data, NULL); msg->item.unique_id = strtoull(data, NULL, 10);
 		msg->item.expire_time = 0;
+		msg->item.bound = 0;
 
 		for( j = 0; j < MAX_SLOTS; j++ )
 		{

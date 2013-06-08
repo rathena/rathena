@@ -1790,8 +1790,11 @@ void clif_selllist(struct map_session_data *sd)
 			if( !itemdb_cansell(&sd->status.inventory[i], pc_get_group_level(sd)) )
 				continue;
 
-			if( sd->status.inventory[i].expire_time )
-				continue; // Cannot Sell Rental Items
+			if( sd->status.inventory[i].expire_time || (sd->status.inventory[i].bound && !pc_can_give_bounded_items(sd)) )
+				continue; // Cannot Sell Rental Items or Account Bounded Items
+
+			if( sd->status.inventory[i].bound && !pc_can_give_bounded_items(sd))
+				continue; // Don't allow sale of bound items
 
 			val=sd->inventory_data[i]->value_sell;
 			if( val < 0 )
@@ -2194,7 +2197,7 @@ void clif_additem(struct map_session_data *sd, int n, int amount, int fail)
 		WFIFOL(fd,offs+23)=sd->status.inventory[n].expire_time;
 #endif
 #if PACKETVER >= 20071002
-		WFIFOW(fd,offs+27)=0;  //  HireExpireDate
+		WFIFOW(fd,offs+27)=sd->status.inventory[n].bound ? 2 : 0;
 #endif
 	}
 
@@ -2300,7 +2303,7 @@ void clif_item_sub(unsigned char *buf, int n, int idx, struct item *i, struct it
 		clif_addcards(WBUFP(buf, n+12), i); //8B
 #if PACKETVER >= 20071002
 		WBUFL(buf,n+20)=i->expire_time;
-		WBUFW(buf,n+24)=0; //Unknown
+		WBUFW(buf,n+24)=i->bound ? 2 : 0;
 #endif
 #if PACKETVER >= 20100629
 		WBUFW(buf,n+26)= (id->equip&EQP_VISIBLE)?id->look:0;
@@ -14199,6 +14202,11 @@ void clif_parse_Auction_register(int fd, struct map_session_data *sd)
 	}
 
 	// Auction checks...
+	if( sd->status.inventory[sd->auction.index].bound && !pc_can_give_bounded_items(sd) ) {
+		clif_displaymessage(sd->fd, msg_txt(sd,293));
+		clif_Auction_message(fd, 2); // The auction has been canceled
+		return;
+	}
 	if( sd->status.zeny < (auction.hours * battle_config.auction_feeperhour) ) {
 		clif_Auction_message(fd, 5); // You do not have enough zeny to pay the Auction Fee.
 		return;

@@ -267,6 +267,7 @@ void vending_openvending(struct map_session_data* sd, const char* message, const
 		||  !sd->status.cart[index].identify // unidentified item
 		||  sd->status.cart[index].attribute == 1 // broken item
 		||  sd->status.cart[index].expire_time // It should not be in the cart but just in case
+		||  (sd->status.cart[index].bound && !pc_can_give_bounded_items(sd)) // can't trade account bound items and has no permission
 		||  !itemdb_cantrade(&sd->status.cart[index], pc_get_group_level(sd), pc_get_group_level(sd)) ) // untradeable item
 			continue;
 

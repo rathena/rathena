@@ -78,8 +78,9 @@ unsigned char mail_setitem(struct map_session_data *sd, int idx, int amount) {
 			return 1;
 		if( amount < 0 || amount > sd->status.inventory[idx].amount )
 			return 1;
-		if( !pc_can_give_items(sd) || sd->status.inventory[idx].expire_time ||
-				!itemdb_canmail(&sd->status.inventory[idx],pc_get_group_level(sd)) )
+		if( !pc_can_give_items(sd) || sd->status.inventory[idx].expire_time 
+			|| !itemdb_canmail(&sd->status.inventory[idx],pc_get_group_level(sd)) 
+			|| (sd->status.inventory[idx].bound && !pc_can_give_bounded_items(sd)) )
 			return 1;
 
 		sd->mail.index = idx;

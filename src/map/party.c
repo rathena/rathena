@@ -552,12 +552,10 @@ int party_member_withdraw(int party_id, int account_id, int char_id)
 	struct map_session_data* sd = map_id2sd(account_id);
 	struct party_data* p = party_search(party_id);
 
-	if( p )
-	{
+	if( p ) {
 		int i;
 		ARR_FIND( 0, MAX_PARTY, i, p->party.member[i].account_id == account_id && p->party.member[i].char_id == char_id );
-		if( i < MAX_PARTY )
-		{
+		if( i < MAX_PARTY ) {
 			clif_party_withdraw(p,sd,account_id,p->party.member[i].name,0x0);
 			memset(&p->party.member[i], 0, sizeof(p->party.member[0]));
 			memset(&p->data[i], 0, sizeof(p->data[0]));
@@ -566,8 +564,12 @@ int party_member_withdraw(int party_id, int account_id, int char_id)
 		}
 	}
 
-	if( sd && sd->status.party_id == party_id && sd->status.char_id == char_id )
-	{
+	if( sd && sd->status.party_id == party_id && sd->status.char_id == char_id ) {
+		int idxlist[MAX_INVENTORY]; //or malloc to reduce consumtion
+		int j,i;
+		j = pc_bound_chk(sd,3,idxlist);
+		for(i=0;i<j;i++)
+			pc_delitem(sd,idxlist[i],sd->status.inventory[idxlist[i]].amount,0,1,LOG_TYPE_OTHER);
 		sd->status.party_id = 0;
 		clif_charnameupdate(sd); //Update name display [Skotlex]
 		//TODO: hp bars should be cleared too

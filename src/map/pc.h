@@ -705,6 +705,7 @@ int pc_get_group_level(struct map_session_data *sd);
 int pc_get_group_id(struct map_session_data *sd);
 int pc_getrefinebonus(int lv,int type);
 bool pc_can_give_items(struct map_session_data *sd);
+bool pc_can_give_bounded_items(struct map_session_data *sd);
 
 bool pc_can_use_command(struct map_session_data *sd, const char *command, AtCommandType type);
 #define pc_has_permission(sd, permission) ( ((sd)->permissions&permission) != 0 )
@@ -747,6 +748,9 @@ int pc_payzeny(struct map_session_data*,int, enum e_log_pick_type type, struct m
 int pc_additem(struct map_session_data*,struct item*,int,e_log_pick_type);
 int pc_getzeny(struct map_session_data*,int, enum e_log_pick_type, struct map_session_data*);
 int pc_delitem(struct map_session_data*,int,int,int,short,e_log_pick_type);
+
+//Bound items
+int pc_bound_chk(TBL_PC *sd,int type,int *idxlist);
 
 // Special Shop System
 int pc_paycash( struct map_session_data *sd, int price, int points, e_log_pick_type type );
