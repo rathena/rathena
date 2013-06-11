@@ -3604,7 +3604,6 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum sc
 
 	/* player-only states */
 	if( bl->type == BL_PC ) {
-
 		/* can pick items? */
 		if( flag&SCS_NOPICKITEM ) {
 			if( !(flag&SCS_NOPICKITEMCOND) ) {

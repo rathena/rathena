@@ -1126,14 +1126,14 @@ ACMD_FUNC(item)
 	memset(item_name, '\0', sizeof(item_name));
 
 	if (!strcmpi(command+1,"itembound") && (!message || !*message || (
-		sscanf(message, "\"%99[^\"]\" %d %d", item_name, &number, &bound) < 2 && 
-		sscanf(message, "%99s %d %d", item_name, &number, &bound) < 2 
+		sscanf(message, "\"%99[^\"]\" %d %d", item_name, &number, &bound) < 2 &&
+		sscanf(message, "%99s %d %d", item_name, &number, &bound) < 2
 	))) {
 		clif_displaymessage(fd, msg_txt(sd,295)); // Please enter an item name or ID (usage: @item <item name/ID> <quantity> <bound_type>).
 		return -1;
 	} else if (!message || !*message || (
-		sscanf(message, "\"%99[^\"]\" %d", item_name, &number) < 1 && 
-		sscanf(message, "%99s %d", item_name, &number) < 1 
+		sscanf(message, "\"%99[^\"]\" %d", item_name, &number) < 1 &&
+		sscanf(message, "%99s %d", item_name, &number) < 1
 	)) {
 		clif_displaymessage(fd, msg_txt(sd,983)); // Please enter an item name or ID (usage: @item <item name/ID> <quantity>).
 		return -1;
