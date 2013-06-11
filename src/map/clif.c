@@ -14471,9 +14471,12 @@ void clif_cashshop_ack(struct map_session_data* sd, int error)
 /// 0288 <packet len>.W <kafra points>.L <count>.W { <amount>.W <name id>.W }.4B*count (PACKETVER >= 20100803)
 void clif_parse_cashshop_buy(int fd, struct map_session_data *sd){
 	int fail = 0;
+	struct s_packet_db* info;
+
 	nullpo_retv(sd);
 
-	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
+	info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
+
 	if( sd->state.trading || !sd->npc_shopid )
 		fail = 1;
 	else {
