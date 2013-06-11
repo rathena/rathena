@@ -2040,6 +2040,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				if( sd && pc_checkskill(sd, GN_REMODELING_CART) )
 					hitrate += pc_checkskill(sd, GN_REMODELING_CART) * 4;
 				break;
+			case LG_BANISHINGPOINT:
+				hitrate += 3 * skill_lv;
+				break;
 			case GC_VENOMPRESSURE:
 				hitrate += 10 + 4 * skill_lv;
 				break;
@@ -3640,8 +3643,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	short s_ele = 0;
 	unsigned int skillratio = 100;	//Skill dmg modifiers.
 
-    TBL_PC *sd;
-//    TBL_PC *tsd;
+	TBL_PC *sd;
+//	TBL_PC *tsd;
 	struct status_change *sc, *tsc;
 	struct Damage ad;
 	struct status_data *sstatus = status_get_status_data(src);
@@ -3671,7 +3674,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	flag.imdef = nk&NK_IGNORE_DEF?1:0;
 
 	sd = BL_CAST(BL_PC, src);
-//    tsd = BL_CAST(BL_PC, target);
+//	tsd = BL_CAST(BL_PC, target);
 	sc = status_get_sc(src);
 	tsc = status_get_sc(target);
 

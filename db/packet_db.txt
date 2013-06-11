@@ -1647,6 +1647,7 @@ packet_ver: 27
 0x0439,8,useitem,2:4
 0x08d2,10
 0x08d1,7
+0x846,4,cashshopreqtab,2 //2011-07-18
 
 // 2011-11-02aRagexe
 packet_ver: 28
@@ -1689,7 +1690,7 @@ packet_ver:29
 0x0885,7,actionrequest,2:6
 0x0889,10,useskilltoid,2:4:6
 0x0870,-1,itemlistwindowselected,2:4:8
-0x0926,18,bookingregreq,2:4:6
+//0x0926,18,bookingregreq,2:4:6
 0x0815,-1,reqopenbuyingstore,2:4:8:9:89
 0x0817,2,reqclosebuyingstore,0
 0x0360,6,reqclickbuyingstore,2
@@ -1698,6 +1699,7 @@ packet_ver:29
 0x0835,2,searchstoreinfonextpage,0
 0x0838,12,searchstoreinfolistitemclick,2:6:10
 0x0439,8,useitem,2:4
+0x0365,18,bookingregreq,2:4:6
 
 //2012-04-10aRagexeRE
 packet_ver: 30
@@ -1730,7 +1732,6 @@ packet_ver: 30
 0x0366,90,useskilltoposinfo,2:4:6:8:10
 0x0889,6,getcharnamerequest,2
 0x0884,6,solvecharname,2
-0x08E5,41,bookingregreq,2:4	//Added to prevent disconnections
 0x08E6,4
 0x08E7,10,bookingsearchreq,2
 0x08E8,-1
@@ -1759,6 +1760,7 @@ packet_ver: 30
 0x08CF,10 //Amulet spirits
 0x0977,14 //Monster HP Bar
 0x0916,26,guildinvite2,2
+0x091D,18,bookingregreq,2:4:6
 
 //2012-04-18aRagexeRE [Special Thanks to Judas!]
 packet_ver:31
@@ -1782,6 +1784,7 @@ packet_ver:31
 //2012-06-18
 packet_ver: 32
 0x0983,29
+0x0861,18,bookingregreq,2:4:6 //actually 05-03
 
 //2012-07-02aRagexeRE (unstable)
 packet_ver: 33
@@ -1799,6 +1802,7 @@ packet_ver: 33
 0x094a,6,getcharnamerequest,2
 0x0953,5,walktoxy,2
 0x0960,5,changedir,2:4
+0x0879,18,bookingregreq,2:4:6
 
 //2013-03-20Ragexe (Judas)
 packet_ver: 34

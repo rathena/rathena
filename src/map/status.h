@@ -22,13 +22,12 @@ struct status_change;
 #endif
 
 enum refine_type {
-	REFINE_TYPE_ARMOR   = 0,
-	REFINE_TYPE_WEAPON1 = 1,
-	REFINE_TYPE_WEAPON2 = 2,
-	REFINE_TYPE_WEAPON3 = 3,
-	REFINE_TYPE_WEAPON4 = 4,
-
-	REFINE_TYPE_MAX     = 5
+	REFINE_TYPE_ARMOR	= 0,
+	REFINE_TYPE_WEAPON1	= 1,
+	REFINE_TYPE_WEAPON2	= 2,
+	REFINE_TYPE_WEAPON3	= 3,
+	REFINE_TYPE_WEAPON4	= 4,
+	REFINE_TYPE_MAX		= 5
 };
 
 int status_get_refine_chance(enum refine_type wlv, int refine);
@@ -1396,13 +1395,13 @@ enum si_type {
 // JOINTBEAT stackable ailments
 enum e_joint_break
 {
-	BREAK_ANKLE    = 0x01, // MoveSpeed reduced by 50%
-	BREAK_WRIST    = 0x02, // ASPD reduced by 25%
-	BREAK_KNEE     = 0x04, // MoveSpeed reduced by 30%, ASPD reduced by 10%
-	BREAK_SHOULDER = 0x08, // DEF reduced by 50%
-	BREAK_WAIST    = 0x10, // DEF reduced by 25%, ATK reduced by 25%
-	BREAK_NECK     = 0x20, // current attack does 2x damage, inflicts 'bleeding' for 30 seconds
-	BREAK_FLAGS    = BREAK_ANKLE | BREAK_WRIST | BREAK_KNEE | BREAK_SHOULDER | BREAK_WAIST | BREAK_NECK,
+	BREAK_ANKLE	= 0x01, // MoveSpeed reduced by 50%
+	BREAK_WRIST	= 0x02, // ASPD reduced by 25%
+	BREAK_KNEE	= 0x04, // MoveSpeed reduced by 30%, ASPD reduced by 10%
+	BREAK_SHOULDER	= 0x08, // DEF reduced by 50%
+	BREAK_WAIST	= 0x10, // DEF reduced by 25%, ATK reduced by 25%
+	BREAK_NECK	= 0x20, // current attack does 2x damage, inflicts 'bleeding' for 30 seconds
+	BREAK_FLAGS	= BREAK_ANKLE | BREAK_WRIST | BREAK_KNEE | BREAK_SHOULDER | BREAK_WAIST | BREAK_NECK,
 };
 
 extern int current_equip_item_index;
@@ -1411,27 +1410,27 @@ extern int current_equip_card_id;
 //Mode definitions to clear up code reading. [Skotlex]
 enum e_mode
 {
-	MD_CANMOVE            = 0x000001,
-	MD_LOOTER             = 0x000002,
-	MD_AGGRESSIVE         = 0x000004,
-	MD_ASSIST             = 0x000008,
-	MD_CASTSENSOR_IDLE    = 0x000010,
-	MD_BOSS               = 0x000020,
-	MD_PLANT              = 0x000040,
-	MD_CANATTACK          = 0x000080,
-	MD_DETECTOR           = 0x000100,
-	MD_CASTSENSOR_CHASE   = 0x000200,
-	MD_CHANGECHASE        = 0x000400,
-	MD_ANGRY              = 0x000800,
-	MD_CHANGETARGET_MELEE = 0x001000,
-	MD_CHANGETARGET_CHASE = 0x002000,
-	MD_TARGETWEAK         = 0x004000,
-	MD_IGNOREMELEE        = 0x010000, //takes 1 HP damage from melee physical attacks
-	MD_IGNOREMAGIC        = 0x020000, //takes 1 HP damage from magic
-	MD_IGNORERANGED       = 0x040000, //takes 1 HP damage from ranged physical attacks
-	MD_MVP                = 0x080000, //MVP - instant kill / coma-like skills don't work
-	MD_IGNOREMISC         = 0x100000, //takes 1 HP damage from "none" attack type
-	MD_KNOCKBACK_IMMUNE   = 0x200000, //can't be knocked back
+	MD_CANMOVE		= 0x000001,
+	MD_LOOTER		= 0x000002,
+	MD_AGGRESSIVE		= 0x000004,
+	MD_ASSIST		= 0x000008,
+	MD_CASTSENSOR_IDLE	= 0x000010,
+	MD_BOSS			= 0x000020,
+	MD_PLANT		= 0x000040,
+	MD_CANATTACK		= 0x000080,
+	MD_DETECTOR		= 0x000100,
+	MD_CASTSENSOR_CHASE	= 0x000200,
+	MD_CHANGECHASE		= 0x000400,
+	MD_ANGRY		= 0x000800,
+	MD_CHANGETARGET_MELEE	= 0x001000,
+	MD_CHANGETARGET_CHASE	= 0x002000,
+	MD_TARGETWEAK		= 0x004000,
+	MD_IGNOREMELEE		= 0x010000, //takes 1 HP damage from melee physical attacks
+	MD_IGNOREMAGIC		= 0x020000, //takes 1 HP damage from magic
+	MD_IGNORERANGED		= 0x040000, //takes 1 HP damage from ranged physical attacks
+	MD_MVP			= 0x080000, //MVP - instant kill / coma-like skills don't work
+	MD_IGNOREMISC		= 0x100000, //takes 1 HP damage from "none" attack type
+	MD_KNOCKBACK_IMMUNE	= 0x200000, //can't be knocked back
 };
 #define MD_MASK 0x00FFFF
 #define ATR_MASK 0xFF0000
@@ -1454,142 +1453,144 @@ enum {
 
 //opt2: Stackable status changes.
 enum {
-	OPT2_POISON       = 0x0001,
-	OPT2_CURSE        = 0x0002,
-	OPT2_SILENCE      = 0x0004,
-	OPT2_SIGNUMCRUCIS = 0x0008,
-	OPT2_BLIND        = 0x0010,
-	OPT2_ANGELUS      = 0x0020,
-	OPT2_BLEEDING     = 0x0040,
-	OPT2_DPOISON      = 0x0080,
-	OPT2_FEAR         = 0x0100,
+	OPT2_POISON		= 0x0001,
+	OPT2_CURSE		= 0x0002,
+	OPT2_SILENCE		= 0x0004,
+	OPT2_SIGNUMCRUCIS	= 0x0008,
+	OPT2_BLIND		= 0x0010,
+	OPT2_ANGELUS		= 0x0020,
+	OPT2_BLEEDING		= 0x0040,
+	OPT2_DPOISON		= 0x0080,
+	OPT2_FEAR		= 0x0100,
 };
 
 //opt3: (SHOW_EFST_*)
 enum {
-	OPT3_NORMAL           = 0x00000000,
-	OPT3_QUICKEN          = 0x00000001,
-	OPT3_OVERTHRUST       = 0x00000002,
-	OPT3_ENERGYCOAT       = 0x00000004,
-	OPT3_EXPLOSIONSPIRITS = 0x00000008,
-	OPT3_STEELBODY        = 0x00000010,
-	OPT3_BLADESTOP        = 0x00000020,
-	OPT3_AURABLADE        = 0x00000040,
-	OPT3_BERSERK          = 0x00000080,
-	OPT3_LIGHTBLADE       = 0x00000100,
-	OPT3_MOONLIT          = 0x00000200,
-	OPT3_MARIONETTE       = 0x00000400,
-	OPT3_ASSUMPTIO        = 0x00000800,
-	OPT3_WARM             = 0x00001000,
-	OPT3_KAITE            = 0x00002000,
-	OPT3_BUNSIN           = 0x00004000,
-	OPT3_SOULLINK         = 0x00008000,
-	OPT3_UNDEAD           = 0x00010000,
-	OPT3_CONTRACT         = 0x00020000,
+	OPT3_NORMAL		= 0x00000000,
+	OPT3_QUICKEN		= 0x00000001,
+	OPT3_OVERTHRUST		= 0x00000002,
+	OPT3_ENERGYCOAT		= 0x00000004,
+	OPT3_EXPLOSIONSPIRITS	= 0x00000008,
+	OPT3_STEELBODY		= 0x00000010,
+	OPT3_BLADESTOP		= 0x00000020,
+	OPT3_AURABLADE		= 0x00000040,
+	OPT3_BERSERK		= 0x00000080,
+	OPT3_LIGHTBLADE		= 0x00000100,
+	OPT3_MOONLIT		= 0x00000200,
+	OPT3_MARIONETTE		= 0x00000400,
+	OPT3_ASSUMPTIO		= 0x00000800,
+	OPT3_WARM		= 0x00001000,
+	OPT3_KAITE		= 0x00002000,
+	OPT3_BUNSIN		= 0x00004000,
+	OPT3_SOULLINK		= 0x00008000,
+	OPT3_UNDEAD		= 0x00010000,
+	OPT3_CONTRACT		= 0x00020000,
 };
 
 enum {
-	OPTION_NOTHING   = 0x00000000,
-	OPTION_SIGHT     = 0x00000001,
-	OPTION_HIDE      = 0x00000002,
-	OPTION_CLOAK     = 0x00000004,
-	OPTION_FALCON    = 0x00000010,
-	OPTION_RIDING    = 0x00000020,
-	OPTION_INVISIBLE = 0x00000040,
-	OPTION_ORCISH    = 0x00000800,
-	OPTION_WEDDING   = 0x00001000,
-	OPTION_RUWACH    = 0x00002000,
-	OPTION_CHASEWALK = 0x00004000,
-	OPTION_FLYING    = 0x00008000, //Note that clientside Flying and Xmas are 0x8000 for clients prior to 2007.
-	OPTION_XMAS      = 0x00010000,
-	OPTION_TRANSFORM = 0x00020000,
-	OPTION_SUMMER    = 0x00040000,
-	OPTION_DRAGON1   = 0x00080000,
-	OPTION_WUG       = 0x00100000,
-	OPTION_WUGRIDER  = 0x00200000,
-	OPTION_MADOGEAR  = 0x00400000,
-	OPTION_DRAGON2   = 0x00800000,
-	OPTION_DRAGON3   = 0x01000000,
-	OPTION_DRAGON4   = 0x02000000,
-	OPTION_DRAGON5   = 0x04000000,
-	OPTION_HANBOK    = 0x08000000,
-	OPTION_MOUNTING  = 0x10000000,
+	OPTION_NOTHING		= 0x00000000,
+	OPTION_SIGHT		= 0x00000001,
+	OPTION_HIDE		= 0x00000002,
+	OPTION_CLOAK		= 0x00000004,
+	OPTION_FALCON		= 0x00000010,
+	OPTION_RIDING		= 0x00000020,
+	OPTION_INVISIBLE	= 0x00000040,
+	OPTION_ORCISH		= 0x00000800,
+	OPTION_WEDDING		= 0x00001000,
+	OPTION_RUWACH		= 0x00002000,
+	OPTION_CHASEWALK	= 0x00004000,
+	OPTION_FLYING		= 0x00008000, //Note that clientside Flying and Xmas are 0x8000 for clients prior to 2007.
+	OPTION_XMAS		= 0x00010000,
+	OPTION_TRANSFORM	= 0x00020000,
+	OPTION_SUMMER		= 0x00040000,
+	OPTION_DRAGON1		= 0x00080000,
+	OPTION_WUG		= 0x00100000,
+	OPTION_WUGRIDER		= 0x00200000,
+	OPTION_MADOGEAR		= 0x00400000,
+	OPTION_DRAGON2		= 0x00800000,
+	OPTION_DRAGON3		= 0x01000000,
+	OPTION_DRAGON4		= 0x02000000,
+	OPTION_DRAGON5		= 0x04000000,
+	OPTION_HANBOK		= 0x08000000,
+	OPTION_MOUNTING		= 0x10000000,
 
 #ifndef NEW_CARTS
-	OPTION_CART1     = 0x00000008,
-	OPTION_CART2     = 0x00000080,
-	OPTION_CART3     = 0x00000100,
-	OPTION_CART4     = 0x00000200,
-	OPTION_CART5     = 0x00000400,
+	OPTION_CART1	= 0x00000008,
+	OPTION_CART2	= 0x00000080,
+	OPTION_CART3	= 0x00000100,
+	OPTION_CART4	= 0x00000200,
+	OPTION_CART5	= 0x00000400,
 
 	/*  compound constant for older carts */
-	OPTION_CART      = OPTION_CART1|OPTION_CART2|OPTION_CART3|OPTION_CART4|OPTION_CART5,
+	OPTION_CART	= OPTION_CART1|OPTION_CART2|OPTION_CART3|OPTION_CART4|OPTION_CART5,
 #endif
 
 	// compound constants
-	OPTION_DRAGON    = OPTION_DRAGON1|OPTION_DRAGON2|OPTION_DRAGON3|OPTION_DRAGON4|OPTION_DRAGON5,
+	OPTION_DRAGON	= OPTION_DRAGON1|OPTION_DRAGON2|OPTION_DRAGON3|OPTION_DRAGON4|OPTION_DRAGON5,
 };
 
 //Defines for the manner system [Skotlex]
 enum manner_flags
 {
-	MANNER_NOCHAT    = 0x01,
-	MANNER_NOSKILL   = 0x02,
-	MANNER_NOCOMMAND = 0x04,
-	MANNER_NOITEM    = 0x08,
-	MANNER_NOROOM    = 0x10,
+	MANNER_NOCHAT		= 0x01,
+	MANNER_NOSKILL		= 0x02,
+	MANNER_NOCOMMAND	= 0x04,
+	MANNER_NOITEM		= 0x08,
+	MANNER_NOROOM		= 0x10,
 };
 
 /* Status Change State Flags */
 enum scs_flag {
-	SCS_NOMOVECOND      = 0x00000001, /* cond flag for nomove */
-	SCS_NOMOVE          = 0x00000002, /* unit unable to move */
-	SCS_NOPICKITEMCOND  = 0x00000004, /* cond flag for nopickitem */
-	SCS_NOPICKITEM      = 0x00000008, /* player unable to pick up items */
-	SCS_NODROPITEMCOND  = 0x00000010, /* cond flag for nodropitem */
-	SCS_NODROPITEM      = 0x00000020, /* player unable to drop items */
-	SCS_NOCASTCOND      = 0x00000040, /* cond flag for nocast */
-	SCS_NOCAST          = 0x00000080, /* unit unable to cast skills */
+	SCS_NOMOVECOND		= 0x00000001, /* cond flag for nomove */
+	SCS_NOMOVE		= 0x00000002, /* unit unable to move */
+	SCS_NOPICKITEMCOND	= 0x00000004, /* cond flag for nopickitem */
+	SCS_NOPICKITEM		= 0x00000008, /* player unable to pick up items */
+	SCS_NODROPITEMCOND	= 0x00000010, /* cond flag for nodropitem */
+	SCS_NODROPITEM		= 0x00000020, /* player unable to drop items */
+	SCS_NOCASTCOND		= 0x00000040, /* cond flag for nocast */
+	SCS_NOCAST		= 0x00000080, /* unit unable to cast skills */
+	SCS_NOCHAT		= 0x00000100, /* unit can't talk */
+	SCS_NOCHATCOND		= 0x00000200, /* cond flag for notalk */
 };
 
 //Define flags for the status_calc_bl function. [Skotlex]
 enum scb_flag
 {
-	SCB_NONE    = 0x00000000,
-	SCB_BASE    = 0x00000001,
-	SCB_MAXHP   = 0x00000002,
-	SCB_MAXSP   = 0x00000004,
-	SCB_STR     = 0x00000008,
-	SCB_AGI     = 0x00000010,
-	SCB_VIT     = 0x00000020,
-	SCB_INT     = 0x00000040,
-	SCB_DEX     = 0x00000080,
-	SCB_LUK     = 0x00000100,
-	SCB_BATK    = 0x00000200,
-	SCB_WATK    = 0x00000400,
-	SCB_MATK    = 0x00000800,
-	SCB_HIT     = 0x00001000,
-	SCB_FLEE    = 0x00002000,
-	SCB_DEF     = 0x00004000,
-	SCB_DEF2    = 0x00008000,
-	SCB_MDEF    = 0x00010000,
-	SCB_MDEF2   = 0x00020000,
-	SCB_SPEED   = 0x00040000,
-	SCB_ASPD    = 0x00080000,
-	SCB_DSPD    = 0x00100000,
-	SCB_CRI     = 0x00200000,
-	SCB_FLEE2   = 0x00400000,
-	SCB_ATK_ELE = 0x00800000,
-	SCB_DEF_ELE = 0x01000000,
-	SCB_MODE    = 0x02000000,
-	SCB_SIZE    = 0x04000000,
-	SCB_RACE    = 0x08000000,
-	SCB_RANGE   = 0x10000000,
-	SCB_REGEN   = 0x20000000,
-	SCB_DYE     = 0x40000000, // force cloth-dye change to 0 to avoid client crashes.
+	SCB_NONE	= 0x00000000,
+	SCB_BASE	= 0x00000001,
+	SCB_MAXHP	= 0x00000002,
+	SCB_MAXSP	= 0x00000004,
+	SCB_STR		= 0x00000008,
+	SCB_AGI		= 0x00000010,
+	SCB_VIT		= 0x00000020,
+	SCB_INT		= 0x00000040,
+	SCB_DEX		= 0x00000080,
+	SCB_LUK		= 0x00000100,
+	SCB_BATK	= 0x00000200,
+	SCB_WATK	= 0x00000400,
+	SCB_MATK	= 0x00000800,
+	SCB_HIT		= 0x00001000,
+	SCB_FLEE	= 0x00002000,
+	SCB_DEF		= 0x00004000,
+	SCB_DEF2	= 0x00008000,
+	SCB_MDEF	= 0x00010000,
+	SCB_MDEF2	= 0x00020000,
+	SCB_SPEED	= 0x00040000,
+	SCB_ASPD	= 0x00080000,
+	SCB_DSPD	= 0x00100000,
+	SCB_CRI		= 0x00200000,
+	SCB_FLEE2	= 0x00400000,
+	SCB_ATK_ELE	= 0x00800000,
+	SCB_DEF_ELE	= 0x01000000,
+	SCB_MODE	= 0x02000000,
+	SCB_SIZE	= 0x04000000,
+	SCB_RACE	= 0x08000000,
+	SCB_RANGE	= 0x10000000,
+	SCB_REGEN	= 0x20000000,
+	SCB_DYE		= 0x40000000, // force cloth-dye change to 0 to avoid client crashes.
 
-	SCB_BATTLE  = 0x3FFFFFFE,
-	SCB_ALL     = 0x3FFFFFFF
+	SCB_BATTLE	= 0x3FFFFFFE,
+	SCB_ALL		= 0x3FFFFFFF
 };
 
 //Define to determine who gets HP/SP consumed on doing skills/etc. [Skotlex]
@@ -1706,6 +1707,7 @@ struct status_change {
 		unsigned char pickup;
 		unsigned char drop;
 		unsigned char cast;
+		unsigned char chat;
 	} cant;/* status change state flags */
 	//int sg_id; //ID of the previous Storm gust that hit you
 	short comet_x, comet_y; // Point where src casted Comet - required to calculate damage from this point

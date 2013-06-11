@@ -807,6 +807,7 @@ void merc_hom_init_timers(struct homun_data * hd)
 	if (hd->hungry_timer == INVALID_TIMER)
 		hd->hungry_timer = add_timer(gettick()+hd->homunculusDB->hungryDelay,merc_hom_hungry,hd->master->bl.id,0);
 	hd->regen.state.block = 0; //Restore HP/SP block.
+	hd->masterteleport_timer = INVALID_TIMER;
 }
 
 int merc_call_homunculus(struct map_session_data *sd)

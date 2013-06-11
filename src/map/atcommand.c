@@ -6167,10 +6167,8 @@ ACMD_FUNC(npctalk)
 	bool ifcolor=(*(command + 8) != 'c' && *(command + 8) != 'C')?0:1;
 	unsigned long color=0;
 
-	if (sd->sc.count && //no "chatting" while muted.
-		(sd->sc.data[SC_BERSERK] || sd->sc.data[SC__BLOODYLUST] ||
-		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCHAT)))
-		return -1;
+	if (sd->sc.cant.chat)
+		return -1; //no "chatting" while muted.
 
 	if(!ifcolor) {
 		if (!message || !*message || sscanf(message, "%23[^,], %99[^\n]", name, mes) < 2) {
@@ -6218,10 +6216,8 @@ ACMD_FUNC(pettalk)
 		return -1;
 	}
 
-	if (sd->sc.count && //no "chatting" while muted.
-		(sd->sc.data[SC_BERSERK] || sd->sc.data[SC__BLOODYLUST] ||
-		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCHAT)))
-		return -1;
+	if (sd->sc.cant.chat)
+		return -1; //no "chatting" while muted.
 
 	if (!message || !*message || sscanf(message, "%99[^\n]", mes) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,1224)); // Please enter a message (usage: @pettalk <message>).
@@ -7052,10 +7048,8 @@ ACMD_FUNC(homtalk)
 		sd->cantalk_tick = gettick() + battle_config.min_chat_delay;
 	}
 
-	if (sd->sc.count && //no "chatting" while muted.
-		(sd->sc.data[SC_BERSERK] || sd->sc.data[SC__BLOODYLUST] ||
-		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCHAT)))
-		return -1;
+	if (sd->sc.cant.chat)
+		return -1; //no "chatting" while muted.
 
 	if ( !merc_is_hom_active(sd->hd) ) {
 		clif_displaymessage(fd, msg_txt(sd,1254)); // You do not have a homunculus.
@@ -7439,10 +7433,8 @@ ACMD_FUNC(me)
 	memset(tempmes, '\0', sizeof(tempmes));
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	if (sd->sc.count && //no "chatting" while muted.
-		(sd->sc.data[SC_BERSERK] || sd->sc.data[SC__BLOODYLUST] ||
-		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCHAT)))
-		return -1;
+	if (sd->sc.cant.chat)
+		return -1; //no "chatting" while muted.
 
 	if (!message || !*message || sscanf(message, "%199[^\n]", tempmes) < 0) {
 		clif_displaymessage(fd, msg_txt(sd,1302)); // Please enter a message (usage: @me <message>).

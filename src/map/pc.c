@@ -4044,11 +4044,14 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 	if(!check_distance_bl(&fitem->bl, &sd->bl, 2) && sd->ud.skill_id!=BS_GREED)
 		return 0;	// Distance is too far
 
+	if( sd->sc.cant.pickup )
+		return 0;
+
 	if (sd->status.party_id)
 		p = party_search(sd->status.party_id);
 
 	if(fitem->first_get_charid > 0 && fitem->first_get_charid != sd->status.char_id)
-  	{
+	{
 		first_sd = map_charid2sd(fitem->first_get_charid);
 		if(DIFF_TICK(tick,fitem->first_get_tick) < 0) {
 			if (!(p && p->party.item&1 &&
@@ -4069,7 +4072,7 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 			}
 			else
 			if(fitem->third_get_charid > 0 && fitem->third_get_charid != sd->status.char_id)
-		  	{
+			{
 				third_sd = map_charid2sd(fitem->third_get_charid);
 				if(DIFF_TICK(tick,fitem->third_get_tick) < 0) {
 					if(!(p && p->party.item&1 &&
@@ -7916,7 +7919,7 @@ int pc_candrop(struct map_session_data *sd, struct item *item)
 {
 	if( item && (item->expire_time || (item->bound && !pc_can_give_bounded_items(sd))) )
 		return 0;
-	if( !pc_can_give_items(sd) ) //check if this GM level can drop items
+	if( !pc_can_give_items(sd) || sd->sc.cant.drop) //check if this GM level can drop items
 		return 0;
 	return (itemdb_isdropable(item, pc_get_group_level(sd)));
 }
@@ -9659,7 +9662,7 @@ static bool pc_readdb_levelpenalty(char* fields[], int columns, int current)
  *------------------------------------------*/
 int pc_readdb(void)
 {
-	int i,j,k,tmp=0;
+	int i,j,k;
 	FILE *fp;
 	char line[24000],*p;
 
@@ -9756,7 +9759,7 @@ int pc_readdb(void)
 	sv_readdb(db_path, "re/level_penalty.txt", ',', 4, 4, -1, &pc_readdb_levelpenalty);
 	for( k=1; k < 3; k++ ){ // fill in the blanks
 		for( j = 0; j < RC_MAX; j++ ){
-			tmp = 0;
+			int tmp = 0;
 			for( i = 0; i < MAX_LEVEL*2; i++ ){
 				if( i == MAX_LEVEL+1 )
 					tmp = level_penalty[k][j][0];// reset

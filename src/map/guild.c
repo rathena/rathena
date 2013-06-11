@@ -82,7 +82,7 @@ static TBL_PC* guild_sd_check(int guild_id, int account_id, int char_id)
 
 	if (sd->status.guild_id != guild_id)
 	{	//If player belongs to a different guild, kick him out.
- 		intif_guild_leave(guild_id,account_id,char_id,0,"** Guild Mismatch **");
+		intif_guild_leave(guild_id,account_id,char_id,0,"** Guild Mismatch **");
 		return NULL;
 	}
 

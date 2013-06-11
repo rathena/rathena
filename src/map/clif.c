@@ -6598,7 +6598,7 @@ void clif_party_message(struct party_data* p, int account_id, const char* mes, i
 		WBUFW(buf,0)=0x109;
 		WBUFW(buf,2)=len+8;
 		WBUFL(buf,4)=account_id;
-        safestrncpy((char *)WBUFP(buf,8), mes, len);
+		safestrncpy((char *)WBUFP(buf,8), mes, len);
 		clif_send(buf,len+8,&sd->bl,PARTY);
 	}
 }
@@ -9673,8 +9673,8 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 	if( is_atcommand(fd, sd, message, 1)  )
 		return;
 
-	if( sd->sc.data[SC_BERSERK] || sd->sc.data[SC__BLOODYLUST] || (sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCHAT) )
-		return;
+	if (sd->sc.cant.chat)
+		return; //no "chatting" while muted.
 
 	if( battle_config.min_chat_delay ) { //[Skotlex]
 		if (DIFF_TICK(sd->cantalk_tick, gettick()) > 0)
@@ -9994,8 +9994,8 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 	if ( is_atcommand(fd, sd, message, 1) )
 		return;
 
-	if (sd->sc.data[SC_BERSERK] || sd->sc.data[SC__BLOODYLUST] || (sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCHAT))
-		return;
+	if (sd->sc.cant.chat)
+		return; //no "chatting" while muted.
 
 	if (battle_config.min_chat_delay) { //[Skotlex]
 		if (DIFF_TICK(sd->cantalk_tick, gettick()) > 0) {
@@ -10149,9 +10149,6 @@ void clif_parse_TakeItem(int fd, struct map_session_data *sd)
 		}
 
 		if (fitem == NULL || fitem->bl.type != BL_ITEM || fitem->bl.m != sd->bl.m)
-			break;
-
-		if( sd->sc.cant.pickup )
 			break;
 
 		if (pc_cant_act(sd))
@@ -11668,8 +11665,8 @@ void clif_parse_PartyMessage(int fd, struct map_session_data* sd)
 	if( is_atcommand(fd, sd, message, 1)  )
 		return;
 
-	if( sd->sc.data[SC_BERSERK] || sd->sc.data[SC__BLOODYLUST] || (sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCHAT) )
-		return;
+	if (sd->sc.cant.chat)
+		return; //no "chatting" while muted.
 
 	if( battle_config.min_chat_delay )
 	{	//[Skotlex]
@@ -12213,8 +12210,8 @@ void clif_parse_GuildMessage(int fd, struct map_session_data* sd)
 	if( is_atcommand(fd, sd, message, 1) )
 		return;
 
-	if( sd->sc.data[SC_BERSERK] || sd->sc.data[SC__BLOODYLUST] || (sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCHAT) )
-		return;
+	if (sd->sc.cant.chat)
+		return; //no "chatting" while muted.
 
 	if( battle_config.min_chat_delay )
 	{	//[Skotlex]
@@ -14443,7 +14440,6 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd){
 }
 #endif
 
-
 /// Adoption System
 ///
 
@@ -15078,8 +15074,8 @@ void clif_parse_BattleChat(int fd, struct map_session_data* sd)
 	if( is_atcommand(fd, sd, message, 1) )
 		return;
 
-	if( sd->sc.data[SC_BERSERK] || sd->sc.data[SC__BLOODYLUST] || (sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCHAT) )
-		return;
+	if (sd->sc.cant.chat)
+		return; //no "chatting" while muted.
 
 	if( battle_config.min_chat_delay ) {
 		if( DIFF_TICK(sd->cantalk_tick, gettick()) > 0 )
@@ -16348,6 +16344,29 @@ void clif_parse_cashshop_close( int fd, struct map_session_data* sd ){
 	// No need to do anything here
 }
 
+//08c0 <len>.W <openIdentity>.L <itemcount>.W (ZC_ACK_SE_CASH_ITEM_LIST2)
+void clif_parse_CashShopReqTab(int fd, struct map_session_data *sd) {
+	short tab = RFIFOW(fd, 2);
+	int j;
+
+	if( tab < 0 || tab > CASHSHOP_TAB_SEARCH )
+		return;
+
+	WFIFOHEAD(fd, 10 + ( cash_shop_items[tab].count * 6 ) );
+	WFIFOW(fd, 0) = 0x8c0;
+	WFIFOW(fd, 2) = 10 + ( cash_shop_items[tab].count * 6 );
+	WFIFOL(fd, 4) = tab;
+	WFIFOW(fd, 8) = cash_shop_items[tab].count;
+
+	for( j = 0; j < cash_shop_items[tab].count; j++ ) {
+		WFIFOW(fd, 10 + ( 6 * j ) ) = cash_shop_items[tab].item[j]->nameid;
+		WFIFOL(fd, 12 + ( 6 * j ) ) = cash_shop_items[tab].item[j]->price;
+	}
+
+	WFIFOSET(fd, 10 + ( cash_shop_items[tab].count * 6 ));
+}
+
+//08ca <len>.W <itemcount> W <tabcode>.W (ZC_ACK_SCHEDULER_CASHITEM)
 void clif_cashshop_list( int fd ){
 	int tab;
 
@@ -17056,6 +17075,7 @@ void packetdb_readdb(void)
 		{ clif_parse_cashshop_close, "cashshopclose" },
 		{ clif_parse_cashshop_list_request, "cashshopitemlist" },
 		{ clif_parse_cashshop_buy, "cashshopbuy" },
+		{ clif_parse_CashShopReqTab, "cashshopreqtab"},
 		/* */
 		{ clif_parse_MoveItem , "moveitem" },
 		{ clif_parse_GuildInvite2 , "guildinvite2" },
