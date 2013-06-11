@@ -1732,8 +1732,7 @@ int guild_broken(int guild_id,int flag)
 {
 	struct guild *g = guild_search(guild_id);
 	struct map_session_data *sd = NULL;
-	int i, j;
-	int idxlist[MAX_INVENTORY];
+	int i;
 
 	if(flag!=0 || g==NULL)
 		return 0;
@@ -1748,11 +1747,6 @@ int guild_broken(int guild_id,int flag)
 			clif_charnameupdate(sd); // [LuzZza]
 		}
 	}
-
-	//Guild bound item check - Removes the bound flag
-	j = pc_bound_chk(sd,2,idxlist);
-	for(i=0;i<j;i++)
-		sd->status.inventory[idxlist[i]].bound = 0;
 
 	guild_db->foreach(guild_db,guild_broken_sub,guild_id);
 	castle_db->foreach(castle_db,castle_guild_broken_sub,guild_id);
@@ -1843,7 +1837,8 @@ int guild_gm_changed(int guild_id, int account_id, int char_id)
 int guild_break(struct map_session_data *sd,char *name)
 {
 	struct guild *g;
-	int i;
+	int i, j;
+	int idxlist[MAX_INVENTORY];
 
 	nullpo_ret(sd);
 
@@ -1863,6 +1858,11 @@ int guild_break(struct map_session_data *sd,char *name)
 		clif_guild_broken(sd,2);
 		return 0;
 	}
+
+	//Guild bound item check - Removes the bound flag
+	j = pc_bound_chk(sd,2,idxlist);
+	for(i=0;i<j;i++)
+		sd->status.inventory[idxlist[i]].bound = 0;
 
 	intif_guild_break(g->guild_id);
 	return 1;
