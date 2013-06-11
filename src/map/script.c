@@ -111,6 +111,8 @@
 #define script_getnum(st,val) conv_num(st, script_getdata(st,val))
 #define script_getstr(st,val) conv_str(st, script_getdata(st,val))
 #define script_getref(st,val) ( script_getdata(st,val)->ref )
+// Returns name of currently running function
+#define script_getfuncname(st) ( st->funcname )
 
 // Note: "top" functions/defines use indexes relative to the top of the stack
 //       -1 is the index of the data at the top
@@ -621,22 +623,6 @@ static void script_reportfunc(struct script_state* st)
 	{
 		ShowDebug("Function: %s (no parameters)\n", get_str(id));
 	}
-}
-
-// Returns name of currently running function
-static char* script_getfuncname(struct script_state *st)
-{
-	int i;
-	char* name = NULL;
-	for( i = 0; i < st->stack->sp; ++i ) {
-		struct script_data* data = &st->stack->stack_data[i];
-		if(data->type == C_NAME && str_data[data->u.num].type == C_FUNC) {
-			name = reference_getname(data);
-			if(strcmp(name,"jump_zero"))
-				break;
-		}
-	}
-	return name;
 }
 
 /*==========================================
@@ -3454,8 +3440,7 @@ int run_func(struct script_state *st)
 	for( i = end_sp-1; i > 0 ; --i )
 		if( st->stack->stack_data[i].type == C_ARG )
 			break;
-	if( i == 0 )
-	{
+	if( i == 0 ) {
 		ShowError("script:run_func: C_ARG not found. please report this!!!\n");
 		st->state = END;
 		script_reportsrc(st);
@@ -3466,10 +3451,10 @@ int run_func(struct script_state *st)
 	st->end = end_sp;
 
 	data = &st->stack->stack_data[st->start];
-	if( data->type == C_NAME && str_data[data->u.num].type == C_FUNC )
+	if( data->type == C_NAME && str_data[data->u.num].type == C_FUNC ) {
 		func = data->u.num;
-	else
-	{
+		st->funcname = reference_getname(data);
+	} else {
 		ShowError("script:run_func: not a buildin command.\n");
 		script_reportdata(data);
 		script_reportsrc(st);
@@ -3477,12 +3462,11 @@ int run_func(struct script_state *st)
 		return 1;
 	}
 
-	if( script_config.warn_func_mismatch_argtypes )
-	{
+	if( script_config.warn_func_mismatch_argtypes ) {
 		script_check_buildin_argtype(st, func);
 	}
 
-	if(str_data[func].func){
+	if(str_data[func].func) {
 		if (str_data[func].func(st)) //Report error
 			script_reportsrc(st);
 	} else {
@@ -3496,8 +3480,7 @@ int run_func(struct script_state *st)
 		return 0;
 
 	pop_stack(st, st->start, st->end);
-	if( st->state == RETFUNC )
-	{// return from a user-defined function
+	if( st->state == RETFUNC ) {// return from a user-defined function
 		struct script_retinfo* ri;
 		int olddefsp = st->stack->defsp;
 		int nargs;
