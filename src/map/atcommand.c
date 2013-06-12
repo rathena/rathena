@@ -3729,6 +3729,29 @@ ACMD_FUNC(reload) {
 
 	return 0;
 }
+/*==========================================
+ * @partysharelvl <share_range> [Akinari]
+ * Updates char server party share level in runtime
+ * Temporary - Permanent update in inter_athena.conf
+ *------------------------------------------*/
+ACMD_FUNC(partysharelvl) {
+	unsigned int share_lvl;
+
+	nullpo_retr(-1, sd);
+
+	if(!message || !*message) {
+		clif_displaymessage(fd, msg_txt(sd,1322));
+		return -1;
+	} else
+		share_lvl = min(atof(message),MAX_LEVEL);
+
+	if(intif_party_sharelvlupdate(share_lvl)) //Successfully updated
+		clif_displaymessage(fd, msg_txt(sd,1478));
+	else //Char server offline
+		clif_displaymessage(fd, msg_txt(sd,1479));
+
+	return 0;
+}
 
 /*==========================================
  * @mapinfo [0-3] <map name> by MC_Cameri
@@ -9107,6 +9130,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("reloadquestdb", reload),
 		ACMD_DEF2("reloadmsgconf", reload),
 		ACMD_DEF2("reloadpacketdb", reload),
+		ACMD_DEF(partysharelvl),
 		ACMD_DEF(mapinfo),
 		ACMD_DEF(dye),
 		ACMD_DEF2("hairstyle", hair_style),

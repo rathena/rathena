@@ -1260,6 +1260,16 @@ Example:
 
 ---------------------------------------
 
+@partysharelvl <value>
+
+Updates party share level until character server is restarted.
+Automatically updates all online parties.
+
+Example:
+@partysharelvl 25
+
+---------------------------------------
+
 =====================
 | 6. Party Commands |
 =====================

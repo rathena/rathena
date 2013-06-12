@@ -41,6 +41,7 @@ int intif_party_changemap(struct map_session_data *sd, int online);
 int intif_break_party(int party_id);
 int intif_party_message(int party_id, int account_id, const char *mes,int len);
 int intif_party_leaderchange(int party_id,int account_id,int char_id);
+int intif_party_sharelvlupdate(unsigned int share_lvl);
 
 
 int intif_guild_create(const char *name, const struct guild_member *master);

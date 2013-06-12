@@ -529,6 +529,18 @@ int intif_party_leaderchange(int party_id,int account_id,int char_id)
 	return 0;
 }
 
+// Request to update party share level
+int intif_party_sharelvlupdate(unsigned int share_lvl)
+{
+	if (CheckForCharServer())
+		return 0;
+	WFIFOHEAD(inter_fd,6);
+	WFIFOW(inter_fd,0)=0x302A;
+	WFIFOL(inter_fd,2)=share_lvl;
+	WFIFOSET(inter_fd,6);
+	return 1;
+}
+
 // Request a Guild creation
 int intif_guild_create(const char *name,const struct guild_member *master)
 {

@@ -740,6 +740,24 @@ int mapif_parse_PartyLeaderChange(int fd,int party_id,int account_id,int char_id
 	return 1;
 }
 
+int mapif_parse_PartyShareLevel(int fd,unsigned int share_lvl)
+{
+	struct party_data *p;
+	DBIterator* iter = db_iterator(party_db_);
+
+	party_share_level = share_lvl;
+
+	for(p = dbi_first(iter); dbi_exists(iter); p = dbi_next(iter)) { //Update online parties
+		if(p->party.count > 1)
+			int_party_calc_state(p);
+		else if(!p->party.count) //Remove parties from memory that have no players online
+			idb_remove(party_db_, p->party.party_id);
+	}
+	dbi_destroy(iter);
+
+	return 1;
+}
+
 
 // Communication from the map server
 //-Analysis that only one packet
@@ -761,6 +779,7 @@ int inter_party_parse_frommap(int fd)
 	case 0x3026: mapif_parse_BreakParty(fd, RFIFOL(fd,2)); break;
 	case 0x3027: mapif_parse_PartyMessage(fd, RFIFOL(fd,4), RFIFOL(fd,8), (char*)RFIFOP(fd,12), RFIFOW(fd,2)-12); break;
 	case 0x3029: mapif_parse_PartyLeaderChange(fd, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10)); break;
+	case 0x302A: mapif_parse_PartyShareLevel(fd, RFIFOL(fd,2)); break;
 	default:
 		return 0;
 	}
