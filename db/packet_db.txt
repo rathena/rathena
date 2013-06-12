@@ -81,7 +81,7 @@ packet_ver: 5
 0x008d,-1
 0x008e,-1
 //0x008f,-1
-0x0090,7,npcclicked,2
+0x0090,7,npcclicked,2:6
 0x0091,22
 0x0092,28
 0x0093,2
@@ -240,7 +240,7 @@ packet_ver: 5
 0x012c,3
 0x012d,4
 0x012e,2,closevending,0
-0x012f,-1
+0x012f,-1,openvending,2:4:0:84
 0x0130,6,vendinglistreq,2
 0x0131,86
 0x0132,6
@@ -278,7 +278,7 @@ packet_ver: 5
 0x0152,-1
 0x0153,-1,guildchangeemblem,2:4
 0x0154,-1
-0x0155,-1,guildchangememberposition,2
+0x0155,-1,guildchangememberposition,2:4
 0x0156,-1
 0x0157,6
 0x0158,-1
@@ -290,14 +290,14 @@ packet_ver: 5
 0x015e,6
 0x015f,42
 0x0160,-1
-0x0161,-1,guildchangepositioninfo,2
+0x0161,-1,guildchangepositioninfo,2:4
 0x0162,-1
 0x0163,-1
 0x0164,-1
-0x0165,30,createguild,6
+0x0165,30,createguild,2:6
 0x0166,-1
 0x0167,3
-0x0168,14,guildinvite,2
+0x0168,14,guildinvite,2:6:10
 0x0169,3
 0x016a,30
 0x016b,10,guildreplyinvite,2:6
@@ -305,7 +305,7 @@ packet_ver: 5
 0x016d,14
 0x016e,186,guildchangenotice,2:6:66
 0x016f,182
-0x0170,14,guildrequestalliance,2
+0x0170,14,guildrequestalliance,2:6:10
 0x0171,30
 0x0172,10,guildreplyalliance,2:6
 0x0173,3
@@ -331,7 +331,7 @@ packet_ver: 5
 0x0187,6
 0x0188,8
 0x0189,4
-0x018a,4,quitgame,0
+0x018a,4,quitgame,2
 0x018b,4
 0x018c,29
 0x018d,-1
@@ -350,7 +350,7 @@ packet_ver: 5
 0x019a,14
 0x019b,10
 0x019c,-1,localbroadcast,2:4
-0x019d,6,gmhide,0
+0x019d,6,gmhide,2
 0x019e,2
 0x019f,6,catchpet,2
 0x01a0,3
@@ -425,7 +425,7 @@ packet_ver: 5
 0x01e5,6
 0x01e6,26
 0x01e7,2,sndoridori,0
-0x01e8,28,createparty2,2
+0x01e8,28,createparty2,2:26:27
 0x01e9,81
 0x01ea,6
 0x01eb,10
@@ -440,9 +440,9 @@ packet_ver: 5
 0x01f4,32
 0x01f5,9
 0x01f6,34
-0x01f7,14,adoptreply,0
+0x01f7,14,adoptreply,2:6:10
 0x01f8,2
-0x01f9,6,adoptrequest,0
+0x01f9,6,adoptrequest,2
 0x01fa,48
 0x01fb,56
 0x01fc,-1
@@ -732,7 +732,7 @@ packet_ver: 16
 0x0216,6
 0x0217,2,blacksmith,0
 0x022f,5
-0x0231,26,changehomunculusname,0
+0x0231,26,changehomunculusname,2
 0x023a,4
 0x023b,36,storagepassword,2:4:20
 0x023c,6
@@ -791,11 +791,11 @@ packet_ver: 18
 0x0248,68
 0x0249,3
 0x024a,70
-0x024b,4,auctioncancelreg,0
-0x024c,8,auctionsetitem,0
+0x024b,4,auctioncancelreg,2
+0x024c,8,auctionsetitem,2:4
 0x024d,14
-0x024e,6,auctioncancel,0
-0x024f,10,auctionbid,0
+0x024e,6,auctioncancel,2
+0x024f,10,auctionbid,2:6
 0x0250,3
 0x0251,2
 0x0252,-1
@@ -823,16 +823,16 @@ packet_ver: 19
 0x0251,4
 
 //2005-08-08aSakexe
-0x024d,12,auctionregister,0
+0x024d,12,auctionregister,2:6:10
 0x024e,4
 
 //2005-08-17aSakexe
 0x0253,3
-0x0254,3,feelsaveok,0
+0x0254,3,feelsaveok,2
 
 //2005-08-29aSakexe
 0x0240,-1
-0x0248,-1,mailsend,2:4:28:68
+0x0248,-1,mailsend,2:4:28:68:69
 0x0255,5
 0x0256,-1
 0x0257,8
@@ -845,16 +845,16 @@ packet_ver: 19
 //2005-10-10aSakexe
 0x020e,32
 0x025a,-1
-0x025b,6,cooking,0
+0x025b,6,cooking,2:4
 
 //2005-10-13aSakexe
 0x007a,6
 0x0251,32
-0x025c,4,auctionbuysell,0
+0x025c,4,auctionbuysell,2
 
 //2005-10-17aSakexe
 0x007a,58
-0x025d,6,auctionclose,0
+0x025d,6,auctionclose,2
 0x025e,4
 
 //2005-10-24aSakexe
@@ -862,8 +862,8 @@ packet_ver: 19
 0x0260,6
 
 //2005-11-07aSakexe
-0x024e,6,auctioncancel,0
-0x0251,34,auctionsearch,0
+0x024e,6,auctioncancel,2
+0x0251,34,auctionsearch,2:4:8:32
 
 //2006-01-09aSakexe
 0x0261,11
@@ -956,7 +956,7 @@ packet_ver: 20
 0x029c,66
 0x029d,-1
 0x029e,11
-0x029f,3,mermenu,0
+0x029f,3,mermenu,2
 0x02a0,-1
 0x02a1,-1
 0x02a2,8
@@ -1013,7 +1013,7 @@ packet_ver: 22
 0x0190,19,actionrequest,5:18
 
 //2007-05-07aSakexe
-0x01fd,15,repairitem,2
+0x01fd,15,repairitem,2:4:6:7:9:11:13
 
 //2007-02-27aSakexe to 2007-10-02aSakexe
 0x0288,10,cashshopbuy,2:4:6
@@ -1060,7 +1060,7 @@ packet_ver: 22
 0x02d5,2
 0x02d6,6,viewplayerequip,2
 0x02d7,-1
-0x02d8,10,equiptickbox,6
+0x02d8,10,equiptickbox,2:6
 0x02d9,10
 0x02da,3
 0x02db,-1,battlechat,2:4
@@ -1480,7 +1480,7 @@ packet_ver: 25
 0x0803,4
 0x0804,8		// Booking System
 0x0805,-1
-0x0806,4,bookingdelreq,2		// Booking System
+0x0806,2,bookingdelreq,0		// Booking System
 //0x0807,2
 0x0808,4		// Booking System
 //0x0809,14
@@ -1652,8 +1652,8 @@ packet_ver: 27
 // 2011-11-02aRagexe
 packet_ver: 28
 0x0436,26,friendslistadd,2
-0x0898,5,hommenu,4
-0x0281,36,storagepassword,0
+0x0898,5,hommenu,2:4
+0x0281,36,storagepassword,2:4:20
 0x088d,26,partyinvite2,2
 0x083c,19,wanttoconnection,2:6:10:14:18
 0x08aa,7,actionrequest,2:6
@@ -1684,8 +1684,8 @@ packet_ver:29
 0x096A,6,getcharnamerequest,2
 0x0368,6,solvecharname,2
 0x0369,26,friendslistadd,2
-0x0863,5,hommenu,4
-0x0861,36,storagepassword,0
+0x0863,5,hommenu,2:4
+0x0861,36,storagepassword,2:4:20
 0x0929,26,partyinvite2,2
 0x0885,7,actionrequest,2:6
 0x0889,10,useskilltoid,2:4:6
@@ -1703,15 +1703,15 @@ packet_ver:29
 
 //2012-04-10aRagexeRE
 packet_ver: 30
-0x01FD,15,repairitem,2
-0x089C,26,friendslistadd,2
+0x01fd,15,repairitem,2:4:6:7:9:11:13
+0x089c,26,friendslistadd,2
 0x0885,5,hommenu,2:4
-0x0961,36,storagepassword,0
+0x0961,36,storagepassword,2:4:20
 0x0288,-1,cashshopbuy,2:4:8:10
-0x091C,26,partyinvite2,2
-0x094B,19,wanttoconnection,2:6:10:14:18
+0x091c,26,partyinvite2,2
+0x094b,19,wanttoconnection,2:6:10:14:18
 0x0369,7,actionrequest,2:6
-0x083C,10,useskilltoid,2:4:6
+0x083c,10,useskilltoid,2:4:6
 0x0439,8,useitem,2:4
 0x0945,-1,itemlistwindowselected,2:4:8
 0x0815,-1,reqopenbuyingstore,2:4:8:9:89
@@ -1726,47 +1726,47 @@ packet_ver: 30
 0x0871,5,changedir,2:4
 0x0938,6,takeitem,2
 0x0891,6,dropitem,2:4
-0x086C,8,movetokafra,2:4
-0x08A6,8,movefromkafra,2:4
+0x086c,8,movetokafra,2:4
+0x08a6,8,movefromkafra,2:4
 0x0438,10,useskilltopos,2:4:6:8
 0x0366,90,useskilltoposinfo,2:4:6:8:10
 0x0889,6,getcharnamerequest,2
 0x0884,6,solvecharname,2
-0x08E6,4
-0x08E7,10,bookingsearchreq,2
-0x08E8,-1
-0x08E9,2,bookingdelreq,2
-0x08EA,4
-0x08EB,39,bookingupdatereq,2
-0x08EC,73
-0x08ED,43
-0x08EE,6
-0x08EF,6,bookingignorereq,2
-0x08F0,6
-0x08F1,6,bookingjoinpartyreq,2
-0x08F2,36
-0x08F3,-1
-0x08F4,6
-0x08F5,-1,bookingsummonmember,2:4
-0x08F6,22
-0x08F7,3
-0x08F8,7
-0x08F9,6
-0x08FA,6
-0x08FB,6,bookingcanceljoinparty,2
+0x08e6,4
+0x08e7,10,bookingsearchreq,2:4:6:8:12
+0x08e8,-1
+0x08e9,2,bookingdelreq,0
+0x08ea,4
+0x08eb,39,bookingupdatereq,2
+0x08ec,73
+0x08ed,43
+0x08ee,6
+0x08ef,6,bookingignorereq,2
+0x08f0,6
+0x08f1,6,bookingjoinpartyreq,2
+0x08f2,36
+0x08f3,-1
+0x08f4,6
+0x08f5,-1,bookingsummonmember,2:4
+0x08f6,22
+0x08f7,3
+0x08f8,7
+0x08f9,6
+0x08fa,6
+0x08fb,6,bookingcanceljoinparty,2
 0x0907,5,moveitem,2:4
 0x0908,5
-0x08D7,28,battlegroundreg,2:4 //Added to prevent disconnections
-0x08CF,10 //Amulet spirits
+0x08d7,28,battlegroundreg,2:4 //Added to prevent disconnections
+0x08cf,10 //Amulet spirits
 0x0977,14 //Monster HP Bar
 0x0916,26,guildinvite2,2
-0x091D,18,bookingregreq,2:4:6
+0x091d,18,bookingregreq,2:4:6
 
 //2012-04-18aRagexeRE [Special Thanks to Judas!]
 packet_ver:31
 0x023B,26,friendslistadd,2
 0x0361,5,hommenu,2:4
-0x08A8,36,storagepassword,0
+0x08A8,36,storagepassword,2:4:20
 0x0802,26,partyinvite2,2
 0x022D,19,wanttoconnection,2:6:10:14:18
 0x0281,-1,itemlistwindowselected,2:4:8
@@ -1778,7 +1778,7 @@ packet_ver:31
 0x0364,8,movefromkafra,2:4
 0x096A,6,getcharnamerequest,2
 0x0368,6,solvecharname,2
-0x08E5,41,bookingregreq,2:4     //Added to prevent disconnections
+0x08E5,41,bookingregreq,2:4:6    //Added to prevent disconnections
 0x08d2,10
 
 //2012-06-18
@@ -1807,7 +1807,7 @@ packet_ver: 33
 //2013-03-20Ragexe (Judas)
 packet_ver: 34
 0x014f,6,guildrequestinfo,2
-0x01fd,15,repairitem,2
+0x01fd,15,repairitem,2:4:6:7:9:11:13
 //0x0281,-1,itemlistwindowselected,2:4:8
 0x035f,6,reqclickbuyingstore,2
 0x0363,6,ticksend,2
@@ -1820,7 +1820,7 @@ packet_ver: 34
 0x084a,2,cashshopclose,0
 0x084b,19 //fallitem4
 0x085a,90,useskilltoposinfo,2:4:6:8:10
-0x085d,18,bookingregreq,2:4
+0x085d,18,bookingregreq,2:4:6
 0x0868,-1,itemlistwindowselected,2:4:8
 0x086d,26,partyinvite2,2
 0x086f,26,friendslistadd,2
@@ -1833,7 +1833,7 @@ packet_ver: 34
 0x0898,6,getcharnamerequest,2
 0x089b,10,useskilltoid,2:4:6
 0x08ac,8,movetokafra,2:4
-0x08c9,4,cashshopitemlist,0
+0x08c9,2,cashshopitemlist,0
 0x08cf,10 //Amulet spirits
 0x08d2,10
 0x0907,5,moveitem,2:4
@@ -1846,7 +1846,7 @@ packet_ver: 34
 0x0933,6,takeitem,2
 0x0938,-1,reqopenbuyingstore,2:4:8:9:89
 0x093f,5,hommenu,2:4
-0x0947,36,storagepassword,0
+0x0947,36,storagepassword,2:4:20
 0x094c,6,solvecharname,2
 0x094e,-1,searchstoreinfo,2:4:5:9:13:14:15
 0x0959,10,useskilltopos,2:4:6:8
@@ -1889,7 +1889,7 @@ packet_ver: 35
 0x0360,6,reqclickbuyingstore,2
 0x0817,2,reqclosebuyingstore,0
 0x0815,-1,reqopenbuyingstore,2:4:8:9:89
-0x092D,18,bookingregreq,2:4
+0x092D,18,bookingregreq,2:4:6
 //0x08AA,8 CZ_JOIN_BATTLE_FIELD
 0x0963,-1,itemlistwindowselected,2:4:8
 0x0943,19,wanttoconnection,2:6:10:14:18
@@ -1897,7 +1897,7 @@ packet_ver: 35
 //0x0862,4 CZ_GANGSI_RANK
 0x0962,26,friendslistadd,2
 0x0931,5,hommenu,2:4
-0x093E,36,storagepassword,0
+0x093e,36,storagepassword,2:4:20
 
 //2013-05-22 Ragexe (Yommy)
 packet_ver: 36
@@ -1908,20 +1908,20 @@ packet_ver: 36
 0x0925,5,changedir,2:4
 0x095E,6,takeitem,2
 0x089C,6,dropitem,2:4
-0x08A3,8,movetokafra,2:4
+0x08a3,8,movetokafra,2:4
 0x087E,8,movefromkafra,2:4
 0x0811,10,useskilltopos,2:4:6:8
 0x0964,90,useskilltoposinfo,2:4:6:8:10
-0x08A6,6,getcharnamerequest,2
+0x08a6,6,getcharnamerequest,2
 0x0369,6,solvecharname,2
-0x093E,12,searchstoreinfolistitemclick,2:6:10
-0x08AA,2,searchstoreinfonextpage,0
-0x095B,-1,searchstoreinfo,2:4:5:9:13:14:15
+0x093e,12,searchstoreinfolistitemclick,2:6:10
+0x08aa,2,searchstoreinfonextpage,0
+0x095b,-1,searchstoreinfo,2:4:5:9:13:14:15
 0x0952,-1,reqtradebuyingstore,2:4:8:12
 0x0368,6,reqclickbuyingstore,2
 0x086E,2,reqclosebuyingstore,0
 0x0874,-1,reqopenbuyingstore,2:4:8:9:89
-0x089B,18,bookingregreq,2:4
+0x089B,18,bookingregreq,2:4:6
 //0x0965,8 CZ_JOIN_BATTLE_FIELD
 0x086A,-1,itemlistwindowselected,2:4:8
 0x08A9,19,wanttoconnection,2:6:10:14:18
@@ -1929,4 +1929,4 @@ packet_ver: 36
 //0x08AC,4 CZ_GANGSI_RANK
 0x0362,26,friendslistadd,2
 0x0926,5,hommenu,2:4
-0x088E,36,storagepassword,0
+0x088e,36,storagepassword,2:4:20
