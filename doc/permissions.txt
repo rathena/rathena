@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20130526
+//= 20130613
 //===== Description: =========================================
 //= List of available permissions and their functions.
 //============================================================
@@ -104,6 +104,13 @@ Prevents player from attacking other players.
 
 ---------------------------------------
 
+*can_trade_bounded
+
+Allows player to do normal item actions with bounded items (drop, sell,
+trade, etc.).
+
+---------------------------------------
+
 ======================
 | 3. Command-related |
 ======================
@@ -170,11 +177,5 @@ Allows player to use the client command /check (displays character status).
 *use_changemaptype
 
 Allows player to use the client command /changemaptype.
-
----------------------------------------
-
-*can_trade_bounded
-
-Allows player to do normal item actions (sell, trade, store, vend, auction, mail) with bounded items.
 
 ---------------------------------------

@@ -3,13 +3,13 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20130601
+//= 20130613
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
 
 This file describes the usage of in-game commands and assumes that
-'conf/atcommand_athena.conf' has the following:
+'/conf/atcommand_athena.conf' has the following:
 	atcommand_symbol : "@"
 	charcommand_symbol: "#"
 
@@ -629,10 +629,8 @@ Spawns a clone of the specified player.
 
 @item <item name/ID> {<amount>}
 /item <item name/ID>
-@delitem <item name/ID> <amount>
 
-Creates or removes the specified item.
-If an amount is given for @item, that number will be created.
+Creates an item.
 
 ---------------------------------------
 
@@ -643,20 +641,24 @@ identify_flag: 0 = unidentified, 1 = identified
 attribute: 0 = not broken, 1 = broken
 
 ---------------------------------------
- 
-@itembound <item name/ID> <amount> <bound_type>
 
-Creates the specified item and bounds it to the account.
-bound_type: 1 = Account, 2 = Guild, 3 = Party, 4 = Character
+@itembound <item name/ID> <amount> <bound type>
+@itembound2 <item name/ID> <quantity> <identify_flag> <refine> <attribute> <card1> <card2> <card3> <card4> <bound type>
+
+Creates an item bounded to the character.
+The items cannot be dropped, sold, vended, auctioned, or mailed, and in some cases cannot be traded or stored.
+
+Available types:
+-- 1: Account
+-- 2: Guild
+-- 3: Party
+-- 4: Character
 
 ---------------------------------------
 
-@itembound2 <item name/ID> <quantity> <identify_flag> <refine> <attribute> <card1> <card2> <card3> <card4> <bound_type>
+@delitem <item name/ID> <amount>
 
-Creates an item with the given parameters (the 'cards' can be any item) and bounds it to the account.
-identify_flag: 0 = unidentified, 1 = identified
-attribute: 0 = not broken, 1 = broken
-bound_type: 1 = Account, 2 = Guild, 3 = Party, 4 = Character
+Deletes the specified item from the player's inventory.
 
 ---------------------------------------
 
@@ -932,7 +934,7 @@ If no position is given, the command defaults to headgear.
 
 @fakename {<text string>}
 
-Temporarily changes name to the specified string.
+Temporarily changes name to the specified string (lasts until player logs out).
 If no string is given, the character's real name will be re-applied.
 
 ---------------------------------------
@@ -1207,15 +1209,15 @@ Changes a battle_config flag without rebooting the server.
 
 @adjgroup <group ID>
 
-Changes the group of a character (lasts until relog).
-The groups are specified in '/conf/groups.conf'.
+Temporarily changes the group of a character (lasts until player logs out).
+The groups are defined in '/conf/groups.conf'.
 
 ---------------------------------------
 
 @addperm {<permission name>}
 @rmvperm {<permission name>}
 
-Changes the permissions of a character (lasts until relog).
+Temporarily changes the permissions of a character (lasts until player logs out).
 If no permission is given, a list of available permissions will be returned.
 
 ---------------------------------------
@@ -1260,16 +1262,6 @@ Example:
 
 ---------------------------------------
 
-@partysharelvl <value>
-
-Updates party share level range until character server is restarted.
-Automatically updates all online parties.
-
-Example:
-@partysharelvl 25
-
----------------------------------------
-
 =====================
 | 6. Party Commands |
 =====================
@@ -1304,6 +1296,13 @@ Warps all online characters of a party to your location.
 Allows you to spy on any party's Party Chat.
 At least one member of that party must be online.
 NOTE: map server needs to be configured to enable spying to use this command (enable_spy: yes)
+
+---------------------------------------
+
+@partysharelvl <value>
+
+Temporarily adjusts the party share level range (lasts until character server restarts).
+The permanent value is defined by 'party_share_level' in '/conf/inter_athena.conf'.
 
 ---------------------------------------
 

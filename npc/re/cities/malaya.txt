@@ -17,7 +17,8 @@
 
 // Port Malaya Transportation
 //============================================================
-alberta,237,71,3	script	Optamara Crew#alberta	100,{
+// Old coordinates: alberta (237,71)
+alberta,196,202,3	script	Optamara Crew#alberta	100,{
 	mes "[Optamara Crew]";
 	mes "Hey, there!";
 	mes "It's 10,000 Zeny to go to Port Malaya. Interested?";

@@ -3740,15 +3740,15 @@ ACMD_FUNC(partysharelvl) {
 	nullpo_retr(-1, sd);
 
 	if(!message || !*message) {
-		clif_displaymessage(fd, msg_txt(sd,1322));
+		clif_displaymessage(fd, msg_txt(sd,1322)); // Please enter an amount.
 		return -1;
 	} else
 		share_lvl = min(abs(atoi(message)),MAX_LEVEL);
 
 	if(intif_party_sharelvlupdate(share_lvl)) //Successfully updated
-		clif_displaymessage(fd, msg_txt(sd,1478));
+		clif_displaymessage(fd, msg_txt(sd,1478)); // Party share level range has been changed successfully.
 	else //Char server offline
-		clif_displaymessage(fd, msg_txt(sd,1479));
+		clif_displaymessage(fd, msg_txt(sd,1479)); // Failed to update configuration. Character server is offline.
 
 	return 0;
 }
@@ -3944,7 +3944,7 @@ ACMD_FUNC(mapinfo) {
 	if (map[m_id].flag.guildlock)
 		strcat(atcmd_output, msg_txt(sd,1097)); // GuildLock |
 	if (map[m_id].flag.loadevent)
-		strcat(atcmd_output, msg_txt(sd,1098)); //Loadevent |
+		strcat(atcmd_output, msg_txt(sd,1098)); // Loadevent |
 	if (map[m_id].flag.src4instance)
 		strcat(atcmd_output, msg_txt(sd,1099)); // Src4instance |
 	if (map[m_id].flag.chmautojoin)

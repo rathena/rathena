@@ -3195,7 +3195,7 @@ $@MobDrop_item[] is a global temporary number array which contains the
 $@MobDrop_rate[] is a global temporary number array which contains the 
                  drop percentages of each item. (1 = .01%)
 
-$@MobDrop_count  is the number of item drops found.
+$@MobDrop_count is the number of item drops found.
 
 Be sure to use $@MobDrop_count to go through the arrays, and not 
 'getarraysize', because the temporary global arrays are not cleared between 
@@ -4117,10 +4117,10 @@ currently running on.
 *getitem <item id>,<amount>{,<account ID>};
 *getitem "<item name>",<amount>{,<account ID>};
 
-This command will give a specific amount of specified items to the target 
-character. If the character is not online, nothing will happen.
-If <account ID> is not specified, items will be created in the invoking 
-character inventory instead.
+This command will give an amount of specified items to the invoking character. 
+If an optional account ID is specified, and the target character is currently 
+online, items will be created in their inventory instead. If they are not 
+online, nothing will happen.
 
 In the first and most commonly used version of this command, items are 
 referred to by their database ID number found inside 'db/(pre-)re/item_db.txt'.
@@ -4249,47 +4249,33 @@ command, creating a pet which is the same, but simultaneously exists in two
 eggs, and may hatch from either, although, I'm not sure what kind of a mess will 
 this really cause.
 
- ---------------------------------------
- 
-*getitembound <item id>,<amount>,<bound_type>{,<account ID>};
-*getitembound "<item name>",<amount>,<bound_type>{,<account ID>};
+---------------------------------------
 
-This command will give an amount of specified items to the invoking character. 
-If an optional account ID is specified, and the target character is currently 
-online, items will be created in their inventory instead. If they are not 
-online, nothing will happen. 
+*getitembound <item id>,<amount>,<bound type>{,<account ID>};
+*getitembound "<item name>",<amount>,<bound type>{,<account ID>};
 
-It works essentially the same as 'getitem', except that items created using
-this command will bound the item to the player's account. Depending on the bound type issued,
-the character may not be able to trade or store these items, however all bounded types
-cannot be sold, vended, auctioned, or mailed.
+This command behaves identically to 'getitem', but the items created will be
+bound to the target character as specified by the bound type. All items created
+in this manner cannot be dropped, sold, vended, auctioned, or mailed, and in
+some cases cannot be traded or stored.
 
-Bound Types:
-	1 - Account Bound
-	2 - Guild Bound
-	3 - Party Bound
-	4 - Character Bound
+Valid bound types are:
+ 1 - Account Bound
+ 2 - Guild Bound
+ 3 - Party Bound
+ 4 - Character Bound
 
 ---------------------------------------
 
-*getitembound2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<bound_type>{,<account ID>};
-*getitembound2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<bound_type>{,<account ID>};
+*getitembound2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<bound type>{,<account ID>};
+*getitembound2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<bound type>{,<account ID>};
 
-This command will give an amount of specified items to the invoking character. 
-If an optional account ID is specified, and the target character is currently 
-online, items will be created in their inventory instead. If they are not 
-online, nothing will happen. 
+This command behaves identically to 'getitem2', but the items created will be
+bound to the target character as specified by the bound type. All items created
+in this manner cannot be dropped, sold, vended, auctioned, or mailed, and in
+some cases cannot be traded or stored.
 
-It works essentially the same as 'getitem2', except that items created using
-this command will bound the item to the player's account. Depending on the bound type issued,
-the character may not be able to trade or store these items, however all bounded types
-cannot be sold, vended, auctioned, or mailed.
-
-Bound Types:
-	1 - Account Bound
-	2 - Guild Bound
-	3 - Party Bound
-	4 - Character Bound
+For a list of bound types see 'getitembound'.
 
 ---------------------------------------
 
@@ -4432,29 +4418,22 @@ Check 'getitem2' to understand the arguments of the function.
 
 ---------------------------------------
 
-*countbound({<bound_type>})
+*countbound({<bound type>})
 
-This function will return a number of bounded items on the character.
-Optionally, you may count a specific type of bounded item on the character.
+This function will return the number of bounded items in the character's
+inventory, and sets an array @bound_items[] containing all item IDs of the
+counted items. If a bound type is specified, only those items will be counted.
 
-countbound will also build an array of items in the form of @bound_items.
-Using countbound without a type counts all types of bounded items.
-
-Available types are:
-	1 - Account Bound
-	2 - Guild Bound
-	3 - Party Bound
-	4 - Character Bound
+For a list of bound types see 'getitembound'.
 
 Example:
-	mes "[Bound Counter]";
-	mes "I see you currently have "+countbound+" bounded items.";
+	mes "You currently have "+countbound()+" bounded items.";
 	next;
 	mes "The list of bounded items include:";
-	for(.@i = 0; .@i<getarraysize(@bound_items); .@i++)
+	for(set .@i,0; .@i<getarraysize(@bound_items); set .@i,.@i+1)
 		mes getitemname(@bound_items[.@i]);
 	close;
-    
+
 ---------------------------------------
 
 *groupranditem <group id>;
@@ -5037,7 +5016,7 @@ will retain the default behavior of the command.
 
 *specialeffect2 <effect number>{,<send_target>{,"<Player Name>"}};
 
-This command behaves identically to the 'specialeffect', but the effect will be 
+This command behaves identically to 'specialeffect', but the effect will be
 centered on the invoking character's sprite.
 
 <Player name> parameter will display <effect number> on another Player than the
