@@ -337,6 +337,7 @@ extern struct Battle_Config
 	int night_duration; // added by [Yor]
 	int ban_hack_trade; // added by [Yor]
 	int packet_ver_flag; // added by [Yor]
+	int packet_ver_flag2; // expend of packet_ver_flag
 
 	int min_hair_style; // added by [MouseJstr]
 	int max_hair_style; // added by [MouseJstr]

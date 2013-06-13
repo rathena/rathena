@@ -1486,7 +1486,7 @@ int parse_login(int fd)
 			safestrncpy(sd->userid, username, NAME_LENGTH);
 			if( israwpass )
 			{
-				ShowStatus("Request for connection of %s (ip: %s).\n", sd->userid, ip);
+				ShowStatus("Request for connection of %s (ip: %s) version=%d\n", sd->userid, ip,sd->version);
 				safestrncpy(sd->passwd, password, NAME_LENGTH);
 				if( login_config.use_md5_passwds )
 					MD5_String(sd->passwd, sd->passwd);
@@ -1494,7 +1494,7 @@ int parse_login(int fd)
 			}
 			else
 			{
-				ShowStatus("Request for connection (passwdenc mode) of %s (ip: %s).\n", sd->userid, ip);
+				ShowStatus("Request for connection (passwdenc mode) of %s (ip: %s) version=%d\n", sd->userid, ip,sd->version);
 				bin2hex(sd->passwd, passhash, 16); // raw binary data here!
 				sd->passwdenc = PASSWORDENC;
 			}

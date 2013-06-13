@@ -1960,20 +1960,19 @@ void char_parse_req_charlist(int fd, struct char_session_data* sd){
 //----------------------------------------
 int mmo_char_send006b(int fd, struct char_session_data* sd){
 	int j, offset = 0;
-#if PACKETVER >= 20100413
-	offset += 3;
-#endif
+	if(sd->version > 25) //20100413
+		offset += 3;
 	if (save_log)
 		ShowInfo("Loading Char Data ("CL_BOLD"%d"CL_RESET")\n",sd->account_id);
 
 	j = 24 + offset; // offset
 	WFIFOHEAD(fd,j + MAX_CHARS*MAX_CHAR_BUF);
 	WFIFOW(fd,0) = 0x6b;
-#if PACKETVER >= 20100413
-	WFIFOB(fd,4) = MAX_CHARS; // Max slots.
-	WFIFOB(fd,5) = sd->char_slots; // Available slots. (PremiumStartSlot)
-	WFIFOB(fd,6) = MAX_CHARS; // Premium slots. (Any existent chars past sd->char_slots but within MAX_CHARS will show a 'Premium Service' in red)
-#endif
+	if(sd->version > 25){ //20100413
+		WFIFOB(fd,4) = MAX_CHARS; // Max slots.
+		WFIFOB(fd,5) = sd->char_slots; // Available slots. (PremiumStartSlot)
+		WFIFOB(fd,6) = MAX_CHARS; // Premium slots. (Any existent chars past sd->char_slots but within MAX_CHARS will show a 'Premium Service' in red)
+	}
 	memset(WFIFOP(fd,4 + offset), 0, 20); // unknown bytes
 	j+=mmo_chars_fromsql(sd, WFIFOP(fd,j));
 	WFIFOW(fd,2) = j; // packet len
@@ -2001,14 +2000,14 @@ void mmo_char_send082d(int fd, struct char_session_data* sd) {
 }
 
 void mmo_char_send(int fd, struct char_session_data* sd){
-#if PACKETVER >= 20130000
-	mmo_char_send082d(fd,sd);
-	char_charlist_notify(fd,sd);
-	char_block_character(fd,sd);
-#endif
+	ShowInfo("sd->version = %d\n",sd->version);
+	if(sd->version >= 34){ //20130000
+		mmo_char_send082d(fd,sd);
+		char_charlist_notify(fd,sd);
+		char_block_character(fd,sd);
+	}
 	//@FIXME dump from kro doesn't show 6b transmission
 	mmo_char_send006b(fd,sd);
-//#endif
 }
 
 int char_married(int pl1, int pl2)

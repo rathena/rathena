@@ -721,7 +721,7 @@ void clif_charselectok(int id, uint8 ok)
 
 /// Makes an item appear on the ground.
 /// 009e <id>.L <name id>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY)
-/// 084b(2013) <id>.L <name id>.W <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY4)
+/// 084b <id>.L <name id>.W <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY4)
 void clif_dropflooritem(struct flooritem_data* fitem)
 {
 #if PACKETVER >= 20130000
@@ -3211,7 +3211,9 @@ void clif_arrowequip(struct map_session_data *sd,int val)
 	nullpo_retv(sd);
 
 	pc_stop_attack(sd); // [Valaris]
-
+#if PACKETVER >= 20121128
+	clif_status_change(&sd->bl, SI_CLIENT_ONLY_EQUIP_ARROW, 1, INVALID_TIMER, 0, 0, 0);
+#endif
 	fd=sd->fd;
 	WFIFOHEAD(fd, packet_len(0x013c));
 	WFIFOW(fd,0)=0x013c;
@@ -9061,8 +9063,9 @@ void clif_parse_WantToConnection(int fd, struct map_session_data* sd)
 	sex         = RFIFOB(fd, packet_db[packet_ver][cmd].pos[4]);
 
 	if( packet_ver < 5 || // reject really old client versions
-			(packet_ver <= 9 && (battle_config.packet_ver_flag & 1) == 0) || // older than 6sept04
-			(packet_ver > 9 && (battle_config.packet_ver_flag & 1<<(packet_ver-9)) == 0)) // version not allowed
+	    (packet_ver <= 9 && (battle_config.packet_ver_flag & 1) == 0) || // older than 6sept04
+	    (packet_ver > 9 && packet_ver <40 && (battle_config.packet_ver_flag & 1<<(packet_ver-9)) == 0) || // version not allowed
+	    (packet_ver >= 40 && packet_ver <=72 && (battle_config.packet_ver_flag2 & 1<<(packet_ver-40)) == 0)		)
 	{// packet version rejected
 		ShowInfo("Rejected connection attempt, forbidden packet version (AID/CID: '"CL_WHITE"%d/%d"CL_RESET"', Packet Ver: '"CL_WHITE"%d"CL_RESET"', IP: '"CL_WHITE"%s"CL_RESET"').\n", account_id, char_id, packet_ver, ip2str(session[fd]->client_addr, NULL));
 		WFIFOHEAD(fd,packet_len(0x6a));

@@ -1784,7 +1784,7 @@ packet_ver:31
 //2012-06-18
 packet_ver: 32
 0x0983,29
-0x0861,18,bookingregreq,2:4:6 //actually 05-03
+0x0861,18,bookingregreq,2:4:6 //actually 12-05-03
 
 //2012-07-02aRagexeRE (unstable)
 packet_ver: 33
