@@ -1262,7 +1262,7 @@ Example:
 
 @partysharelvl <value>
 
-Updates party share level until character server is restarted.
+Updates party share level range until character server is restarted.
 Automatically updates all online parties.
 
 Example:

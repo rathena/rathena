@@ -4371,34 +4371,34 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case WL_TETRAVORTEX:
-		if( sd )
-		{
+		if( sd && sc ) { // No SC? No spheres
 			int spheres[5] = { 0, 0, 0, 0, 0 },
 				positions[5] = {-1,-1,-1,-1,-1 },
 				i, j = 0, k, subskill = 0;
 
 			for( i = SC_SPHERE_1; i <= SC_SPHERE_5; i++ )
-				if( sc && sc->data[i] )
-				{
+				if( sc->data[i] ) {
 					spheres[j] = i;
 					positions[j] = sc->data[i]->val2;
-					j++; //
+					j++;
 				}
 
 			// Sphere Sort, this time from new to old
 			for( i = 0; i <= j - 2; i++ )
 				for( k = i + 1; k <= j - 1; k++ )
-					if( positions[i] < positions[k] )
-					{
+					if( positions[i] < positions[k] ) {
 						swap(positions[i],positions[k]);
 						swap(spheres[i],spheres[k]);
 					}
 
+			if(j == 5) { // If 5 spheres, remove last one and only do 4 actions
+				status_change_end(src, spheres[4], INVALID_TIMER);
+				j = 4;
+			}
+
 			k = 0;
-			for( i = 0; i < 4; i++ )
-			{
-				switch( sc->data[spheres[i]]->val1 )
-				{
+			for( i = 0; i < j; i++ ) { // Loop should always be 4 for regular players, but unconditional_skill could be less
+				switch( sc->data[spheres[i]]->val1 ) {
 					case WLS_FIRE:  subskill = WL_TETRAVORTEX_FIRE; k |= 1; break;
 					case WLS_WIND:  subskill = WL_TETRAVORTEX_WIND; k |= 4; break;
 					case WLS_WATER: subskill = WL_TETRAVORTEX_WATER; k |= 2; break;
@@ -4408,8 +4408,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				clif_skill_nodamage(src, bl, subskill, skill_lv, 1);
 				status_change_end(src, spheres[i], INVALID_TIMER);
 			}
-			if (spheres[4]) // fix to remove last sphere if 5 are present, on official even though only 4 spheres are used, all spheres are removed
-				status_change_end(src, spheres[4], INVALID_TIMER);
 		}
 		break;
 

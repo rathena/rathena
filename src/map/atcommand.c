@@ -3731,7 +3731,7 @@ ACMD_FUNC(reload) {
 }
 /*==========================================
  * @partysharelvl <share_range> [Akinari]
- * Updates char server party share level in runtime
+ * Updates char server party share level range in runtime
  * Temporary - Permanent update in inter_athena.conf
  *------------------------------------------*/
 ACMD_FUNC(partysharelvl) {
@@ -3743,7 +3743,7 @@ ACMD_FUNC(partysharelvl) {
 		clif_displaymessage(fd, msg_txt(sd,1322));
 		return -1;
 	} else
-		share_lvl = min(atof(message),MAX_LEVEL);
+		share_lvl = min(abs(atoi(message)),MAX_LEVEL);
 
 	if(intif_party_sharelvlupdate(share_lvl)) //Successfully updated
 		clif_displaymessage(fd, msg_txt(sd,1478));
