@@ -4391,7 +4391,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 						swap(spheres[i],spheres[k]);
 					}
 
-			if(j == 5) { // If 5 spheres, remove last one and only do 4 actions
+			if(j == 5) { // If 5 spheres, remove last one and only do 4 actions (Official behavior)
 				status_change_end(src, spheres[4], INVALID_TIMER);
 				j = 4;
 			}

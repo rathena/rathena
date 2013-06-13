@@ -860,8 +860,10 @@ int guild_member_withdraw(int guild_id, int account_id, int char_id, int flag, c
 	if(online_member_sd == NULL)
 		return 0; // noone online to inform
 
+#ifdef BOUND_ITEMS
 	//Guild bound item check
 	guild_retrieveitembound(char_id,account_id,guild_id);
+#endif
 
 	if(!flag)
 		clif_guild_leave(online_member_sd, name, mes);
@@ -890,6 +892,7 @@ int guild_member_withdraw(int guild_id, int account_id, int char_id, int flag, c
 	return 0;
 }
 
+#ifdef BOUND_ITEMS
 void guild_retrieveitembound(int char_id,int aid,int guild_id)
 {
 	TBL_PC *sd = map_id2sd(aid);
@@ -922,6 +925,7 @@ void guild_retrieveitembound(int char_id,int aid,int guild_id)
 		intif_itembound_req(char_id,aid,guild_id);
 	}
 }
+#endif
 
 int guild_send_memberinfoshort(struct map_session_data *sd,int online)
 { // cleaned up [LuzZza]
@@ -1837,8 +1841,11 @@ int guild_gm_changed(int guild_id, int account_id, int char_id)
 int guild_break(struct map_session_data *sd,char *name)
 {
 	struct guild *g;
-	int i, j;
+	int i;
+#ifdef BOUND_ITEMS
+	int j;
 	int idxlist[MAX_INVENTORY];
+#endif
 
 	nullpo_ret(sd);
 
@@ -1859,10 +1866,12 @@ int guild_break(struct map_session_data *sd,char *name)
 		return 0;
 	}
 
+#ifdef BOUND_ITEMS
 	//Guild bound item check - Removes the bound flag
 	j = pc_bound_chk(sd,2,idxlist);
 	for(i=0;i<j;i++)
 		sd->status.inventory[idxlist[i]].bound = 0;
+#endif
 
 	intif_guild_break(g->guild_id);
 	return 1;

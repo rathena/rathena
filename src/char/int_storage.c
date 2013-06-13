@@ -236,7 +236,7 @@ int mapif_parse_SaveGuildStorage(int fd)
 	mapif_save_guild_storage_ack(fd, RFIFOL(fd,4), guild_id, 1);
 	return 0;
 }
-
+#ifdef BOUND_ITEMS
 int mapif_itembound_ack(int fd, int aid, int guild_id)
 {
 	WFIFOHEAD(fd,8);
@@ -357,6 +357,7 @@ int mapif_parse_itembound_retrieve(int fd)
 	mapif_itembound_ack(fd,aid,guild_id);
 	return 0;
 }
+#endif
 
 int inter_storage_parse_frommap(int fd)
 {
@@ -364,7 +365,9 @@ int inter_storage_parse_frommap(int fd)
 	switch(RFIFOW(fd,0)){
 	case 0x3018: mapif_parse_LoadGuildStorage(fd); break;
 	case 0x3019: mapif_parse_SaveGuildStorage(fd); break;
+#ifdef BOUND_ITEMS
 	case 0x3056: mapif_parse_itembound_retrieve(fd); break;
+#endif
 	default:
 		return 0;
 	}

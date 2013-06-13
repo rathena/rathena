@@ -2173,7 +2173,7 @@ void intif_parse_MessageToFD(int fd) {
 /*==========================================
  * Item Bound System
  *------------------------------------------*/
-
+#ifdef BOUND_ITEMS
 void intif_itembound_req(int char_id,int aid,int guild_id) {
 	struct guild_storage *gstor = guild2storage2(guild_id);
 	WFIFOHEAD(inter_fd,12);
@@ -2194,6 +2194,7 @@ void intif_parse_itembound_ack(int fd) {
 	gstor = guild2storage2(guild_id);
 	if(gstor) gstor->lock = 0; //Unlock now that operation is completed
 }
+#endif
 
 //-----------------------------------------------------------------
 // Communication from the inter server
@@ -2279,7 +2280,9 @@ int intif_parse(int fd)
 	case 0x3855:	intif_parse_Auction_bid(fd); break;
 
 //Bound items
+#ifdef BOUND_ITEMS
 	case 0x3856:	intif_parse_itembound_ack(fd); break;
+#endif
 
 	// Mercenary System
 	case 0x3870:	intif_parse_mercenary_received(fd); break;

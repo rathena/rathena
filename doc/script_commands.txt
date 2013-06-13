@@ -4268,6 +4268,7 @@ Bound Types:
 	1 - Account Bound
 	2 - Guild Bound
 	3 - Party Bound
+	4 - Character Bound
 
 ---------------------------------------
 
@@ -4288,6 +4289,7 @@ Bound Types:
 	1 - Account Bound
 	2 - Guild Bound
 	3 - Party Bound
+	4 - Character Bound
 
 ---------------------------------------
 
@@ -4442,6 +4444,7 @@ Available types are:
 	1 - Account Bound
 	2 - Guild Bound
 	3 - Party Bound
+	4 - Character Bound
 
 Example:
 	mes "[Bound Counter]";

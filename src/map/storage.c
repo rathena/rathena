@@ -155,7 +155,7 @@ static int storage_additem(struct map_session_data* sd, struct item* item_data, 
 		return 1;
 	}
 
-	if( (item_data->bound == 2 || item_data->bound == 3) && !pc_can_give_bounded_items(sd) ) {
+	if( (item_data->bound > 1) && !pc_can_give_bounded_items(sd) ) {
 		clif_displaymessage(sd->fd, msg_txt(sd,294));
 		return 1;
 	}
@@ -454,7 +454,7 @@ int guild_storage_additem(struct map_session_data* sd, struct guild_storage* sto
 		return 1;
 	}
 
-	if( (item_data->bound == 1 || item_data->bound == 3) && !pc_can_give_bounded_items(sd) ) {
+	if( (item_data->bound == 1 || item_data->bound > 2) && !pc_can_give_bounded_items(sd) ) {
 		clif_displaymessage(sd->fd, msg_txt(sd,294));
 		return 1;
 	}
