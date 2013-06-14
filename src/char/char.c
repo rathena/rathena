@@ -2001,11 +2001,11 @@ void mmo_char_send082d(int fd, struct char_session_data* sd) {
 
 void mmo_char_send(int fd, struct char_session_data* sd){
 	ShowInfo("sd->version = %d\n",sd->version);
-	if(sd->version >= 34){ //20130000
+#if PACKETVER >= 20130000
 		mmo_char_send082d(fd,sd);
 		char_charlist_notify(fd,sd);
 		char_block_character(fd,sd);
-	}
+#endif
 	//@FIXME dump from kro doesn't show 6b transmission
 	mmo_char_send006b(fd,sd);
 }
