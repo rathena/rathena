@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20130613
+//= 20130614
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
@@ -600,6 +600,7 @@ all items are sold, or the mapserver closes.
 ---------------------------------------
 
 @monster <monster name/ID> {<amount>}
+/monster <monster name>
 @monstersmall <monster name/ID> {<amount>}
 @monsterbig <monster name/ID> {<amount>}
 
@@ -628,7 +629,7 @@ Spawns a clone of the specified player.
 ---------------------------------------
 
 @item <item name/ID> {<amount>}
-/item <item name/ID>
+/item <item name>
 
 Creates an item.
 
@@ -777,6 +778,7 @@ If no coordinates are entered, a random location will be chosen.
 ---------------------------------------
 
 @jumpto <player name/ID>
+/shift <player name>
 @follow <player name>
 
 Warps to the specified player.
@@ -785,7 +787,7 @@ Additionally, @follow will track the player's movements until turned off.
 ---------------------------------------
 
 @recall <player name>
-/recall <player name>
+/summon <player name>
 @recallall
 
 Warps a character to your position.
@@ -849,7 +851,9 @@ Changes unused status or skill points by the specified amount.
 ---------------------------------------
 
 @streset
+/resetstate
 @skreset
+/resetskill
 @reset
 
 Resets stats (@streset), skills (@skreset), or both (@reset).
@@ -1128,6 +1132,7 @@ If a time is not specified (jailfor), the player will be jailed indefinitely.
 
 @kick <player name/ID>
 @kickall
+/killall
 
 Disconnects a user or all users from the server.
 

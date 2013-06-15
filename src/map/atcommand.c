@@ -4350,7 +4350,7 @@ ACMD_FUNC(unloadnpc)
 	memset(NPCname, '\0', sizeof(NPCname));
 
 	if (!message || !*message || sscanf(message, "%24[^\n]", NPCname) < 1) {
-		clif_displaymessage(fd, msg_txt(sd,1133)); // Please enter a NPC name (usage: @npcoff <NPC_name>).
+		clif_displaymessage(fd, msg_txt(sd,1133)); // Please enter a NPC name (usage: @unloadnpc <NPC_name>).
 		return -1;
 	}
 
@@ -9263,8 +9263,8 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("points", cash),
 		ACMD_DEF(agitstart2),
 		ACMD_DEF(agitend2),
-		ACMD_DEF2("skreset", resetskill),
-		ACMD_DEF2("streset", resetstat),
+		ACMD_DEF(resetskill),
+		ACMD_DEF(resetstat),
 		ACMD_DEF2("storagelist", itemlist),
 		ACMD_DEF2("cartlist", itemlist),
 		ACMD_DEF2("itemlist", itemlist),
