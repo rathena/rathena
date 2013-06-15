@@ -109,16 +109,16 @@ void findfile(const char *p, const char *pat, void (func)(const char*))
 	WIN32_FIND_DATAA FindFileData;
 	HANDLE hFind;
 	char tmppath[MAX_PATH+1];
-	
+
 	const char *path    = (p  ==NULL)? "." : p;
 	const char *pattern = (pat==NULL)? "" : pat;
-	
+
 	checkpath(tmppath,path);
 	if( PATHSEP != tmppath[strlen(tmppath)-1])
 		strcat(tmppath, "\\*");
 	else
 		strcat(tmppath, "*");
-	
+
 	hFind = FindFirstFileA(tmppath, &FindFileData);
 	if (hFind != INVALID_HANDLE_VALUE)
 	{
@@ -259,6 +259,46 @@ uint32 MakeDWord(uint16 word0, uint16 word1)
 		( (uint32)(word1 << 0x10) );
 }
 
+int date2version(int date){
+	if(date < 20040906) return 5;
+	else if(date < 20040920) return 10;
+	else if(date < 20041005) return 11;
+	else if(date < 20041025) return 12;
+	else if(date < 20041129) return 13;
+	else if(date < 20050110) return 14;
+	else if(date < 20050509) return 15;
+	else if(date < 20050628) return 16;
+	else if(date < 20050718) return 17;
+	else if(date < 20050719) return 18;
+	else if(date < 20060327) return 19;
+	else if(date < 20070108) return 20;
+	else if(date < 20070212) return 21;
+	//wtf @FIXME
+	else if(date < 20080910) return 22;
+	else if(date < 20080827) return 23;
+	else if(date < 20080910) return 24;
+	//unable to solve from date
+	else if(date < 20101124) return 25;
+	else if(date < 20111005) return 26;
+	else if(date < 20111102) return 27;
+	else if(date < 20120307) return 28;
+	else if(date < 20120410) return 29;
+	else if(date < 20120418) return 30;
+	else if(date < 20120618) return 31;
+	else if(date < 20120702) return 32;
+	else if(date < 20130320) return 33;
+	else if(date < 20130515) return 34;
+	else if(date < 20130522) return 35;
+	else if(date < 20130529) return 36;
+	else if(date < 20130605) return 37;
+	else if(date < 20130612) return 38;
+	else if(date >= 20130612) return 39;
+//	else if(date < 20040920) return 40;
+//	else if(date < 20040920) return 41;
+//	else if(date < 20040920) return 42;
+//	else if(date < 20040920) return 43;
+	else return 30; //default
+}
 
 /// calculates the value of A / B, in percent (rounded down)
 unsigned int get_percentage(const unsigned int A, const unsigned int B)

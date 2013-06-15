@@ -3950,8 +3950,8 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 				status->matk_max += sd->bonus.ematk;
 				status->matk_min += sd->bonus.ematk;
 			}
-            status->matk_min = status_calc_ematk(bl, sc, status->matk_min);
-            status->matk_max = status_calc_ematk(bl, sc, status->matk_max);
+			status->matk_min = status_calc_ematk(bl, sc, status->matk_min);
+			status->matk_max = status_calc_ematk(bl, sc, status->matk_max);
 			//This is the only portion in MATK that varies depending on the weapon level and refinement rate.
 			if( status->rhw.matk > 0 ){
 				int wMatk = status->rhw.matk;
@@ -3961,17 +3961,19 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			}
 		}
 #endif
-        if (bl->type&BL_PC && sd->matk_rate != 100) {
+		if (bl->type&BL_PC && sd->matk_rate != 100) {
 			status->matk_max = status->matk_max * sd->matk_rate/100;
 			status->matk_min = status->matk_min * sd->matk_rate/100;
 		}
 
-		status->matk_min = status_calc_matk(bl, sc, status->matk_min);
+
 		status->matk_max = status_calc_matk(bl, sc, status->matk_max);
 
-        if ((bl->type&BL_HOM && battle_config.hom_setting&0x20)  //Hom Min Matk is always the same as Max Matk
-			|| sc->data[SC_RECOGNIZEDSPELL])
-            status->matk_min = status->matk_max;
+		if ((bl->type&BL_HOM && battle_config.hom_setting&0x20)  //Hom Min Matk is always the same as Max Matk
+				|| (sc && sc->data[SC_RECOGNIZEDSPELL]))
+			status->matk_min = status->matk_max;
+		else
+			status->matk_min = status_calc_matk(bl, sc, status->matk_min);
 
 #ifdef RENEWAL
 		if( sd && sd->right_weapon.overrefine > 0){
@@ -4741,37 +4743,37 @@ static unsigned short status_calc_matk(struct block_list *bl, struct status_chan
 		return cap_value(matk,0,USHRT_MAX);
 #ifndef RENEWAL
 	// take note fixed value first before % modifiers
-    if (sc->data[SC_MATKPOTION])
-        matk += sc->data[SC_MATKPOTION]->val1;
-    if (sc->data[SC_MATKFOOD])
-        matk += sc->data[SC_MATKFOOD]->val1;
-    if (sc->data[SC_MANA_PLUS])
-        matk += sc->data[SC_MANA_PLUS]->val1;
-    if (sc->data[SC_AQUAPLAY_OPTION])
-        matk += sc->data[SC_AQUAPLAY_OPTION]->val2;
-    if (sc->data[SC_CHILLY_AIR_OPTION])
-        matk += sc->data[SC_CHILLY_AIR_OPTION]->val2;
-    if (sc->data[SC_WATER_BARRIER])
-        matk -= sc->data[SC_WATER_BARRIER]->val3;
-    if (sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 3)
-        matk += 50;
-    if (sc->data[SC_ODINS_POWER])
-        matk += 40 + 30 * sc->data[SC_ODINS_POWER]->val1; //70 lvl1, 100lvl2
-    if (sc->data[SC_IZAYOI])
-        matk += 50 * sc->data[SC_IZAYOI]->val1;
+	if (sc->data[SC_MATKPOTION])
+		matk += sc->data[SC_MATKPOTION]->val1;
+	if (sc->data[SC_MATKFOOD])
+		matk += sc->data[SC_MATKFOOD]->val1;
+	if (sc->data[SC_MANA_PLUS])
+		matk += sc->data[SC_MANA_PLUS]->val1;
+	if (sc->data[SC_AQUAPLAY_OPTION])
+		matk += sc->data[SC_AQUAPLAY_OPTION]->val2;
+	if (sc->data[SC_CHILLY_AIR_OPTION])
+		matk += sc->data[SC_CHILLY_AIR_OPTION]->val2;
+	if (sc->data[SC_WATER_BARRIER])
+		matk -= sc->data[SC_WATER_BARRIER]->val3;
+	if (sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 3)
+		matk += 50;
+	if (sc->data[SC_ODINS_POWER])
+		matk += 40 + 30 * sc->data[SC_ODINS_POWER]->val1; //70 lvl1, 100lvl2
+	if (sc->data[SC_IZAYOI])
+		matk += 50 * sc->data[SC_IZAYOI]->val1;
 #endif
-    if (sc->data[SC_MAGICPOWER] && sc->data[SC_MAGICPOWER]->val4)
-        matk += matk * sc->data[SC_MAGICPOWER]->val3/100;
-    if (sc->data[SC_MINDBREAKER])
-        matk += matk * sc->data[SC_MINDBREAKER]->val2/100;
-    if (sc->data[SC_INCMATKRATE])
-        matk += matk * sc->data[SC_INCMATKRATE]->val1/100;
-    if (sc->data[SC_MOONLITSERENADE])
-        matk += matk * sc->data[SC_MOONLITSERENADE]->val2/100;
-    if (sc->data[SC_MELODYOFSINK])
-        matk += matk * sc->data[SC_MELODYOFSINK]->val3/100;
-    if (sc->data[SC_BEYONDOFWARCRY])
-        matk -= matk * sc->data[SC_BEYONDOFWARCRY]->val3/100;
+	if (sc->data[SC_MAGICPOWER] && sc->data[SC_MAGICPOWER]->val4)
+		matk += matk * sc->data[SC_MAGICPOWER]->val3/100;
+	if (sc->data[SC_MINDBREAKER])
+		matk += matk * sc->data[SC_MINDBREAKER]->val2/100;
+	if (sc->data[SC_INCMATKRATE])
+		matk += matk * sc->data[SC_INCMATKRATE]->val1/100;
+	if (sc->data[SC_MOONLITSERENADE])
+		matk += matk * sc->data[SC_MOONLITSERENADE]->val2/100;
+	if (sc->data[SC_MELODYOFSINK])
+		matk += matk * sc->data[SC_MELODYOFSINK]->val3/100;
+	if (sc->data[SC_BEYONDOFWARCRY])
+		matk -= matk * sc->data[SC_BEYONDOFWARCRY]->val3/100;
 	if( sc->data[SC_ZANGETSU] )
 		matk += matk * sc->data[SC_ZANGETSU]->val2 / 100;
 
