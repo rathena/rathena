@@ -997,6 +997,9 @@
 7345,0,0,0,0,0,0,0,"List of Errands"
 7346,0,0,0,0,0,0,0,"List of Errands"
 
+// Hall of Abyss
+7349,1800,0,0,0,0,0,0,"Vote"
+
 // Port Malaya
 7350,0,0,0,0,0,0,0,"Cautious Village"
 7351,0,0,0,0,0,0,0,"Better than My Old Button"
