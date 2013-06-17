@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Euphy
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 1.2 Added new episodes and simplified functions.
 //= 1.3 Added Renewal checks and Instances menu.
 //=     Aligned coordinates with @go.
+//= 1.4 Added new Guild Dungeons.
 //============================================================
 
 -	script	Warper	-1,{
@@ -25,8 +26,8 @@ function Go; function Disp; function Pick; function Restrict;
 // --------------------------------------------------
 
 menu	"Last Warp ^777777["+lastwarp$+"]^000000",-,
-	" ~ Towns",Towns, " ~ Fields",Fields,
-	" ~ Dungeons",Dungeons, " ~ Guild Castles",Castles,
+	" ~ Towns",Towns, " ~ Fields",Fields, " ~ Dungeons",Dungeons,
+	" ~ Guild Castles",Castles, " ~ Guild Dungeons",Guild_Dungeons,
 	" ~ Instances",Instances, " ~ Special Areas",Special;
 
 	if (lastwarp$ == "")
@@ -258,11 +259,11 @@ menu	"Abyss Lakes",D1, "Amatsu Dungeon",D2, "Anthell",D3,
 	"Brasilis Dungeon",D7, "Byalan Dungeon",D8, "Clock Tower",D9,
 	"Coal Mines",D10, "Culvert",D11, "Cursed Abbey",D12, "Dewata Dungeon",D13,
 	"Einbroch Dungeon",D14, "Gefenia",D15, "Geffen Dungeon",D16,
-	"Glast Heim",D17, "Gonryun Dungeon",D18, "Guild Dungeons",GD,
-	"Hidden Dungeon",D19, "Ice Dungeon",D20, "Juperos",D21, "Kiel Dungeon",D22,
-	"Louyang Dungeon",D23, "Magma Dungeon",D24, "Malangdo Dungeon",D25,
-	"Moscovia Dungeon",D26, "Nidhogg's Dungeon",D27, "Odin Temple",D28,
-	"Orc Dungeon",D29, "Payon Dungeon",D30, "Pyramids",D31, "Rachel Sanctuary",D32,
+	"Glast Heim",D17, "Gonryun Dungeon",D18, "Hidden Dungeon",D19,
+	"Ice Dungeon",D20, "Juperos",D21, "Kiel Dungeon",D22, "Louyang Dungeon",D23,
+	"Magma Dungeon",D24, "Malangdo Dungeon",D25, "Moscovia Dungeon",D26,
+	"Nidhogg's Dungeon",D27, "Odin Temple",D28, "Orc Dungeon",D29,
+	"Payon Dungeon",D30, "Pyramids",D31, "Rachel Sanctuary",D32,
 	"Scaraba Hole",D33, "Sphinx",D34, "Sunken Ship",D35, "Thanatos Tower",D36,
 	"Thor Volcano",D37, "Toy Factory",D38, "Turtle Dungeon",D39, "Umbala Dungeon",D40;
 
@@ -357,9 +358,6 @@ D40: Restrict("Pre-RE",1,2);
 	setarray @c[2],42,31,48,30,204,78;
 	Disp("Carpenter's Shop in the Tree:Passage to a Foreign World:Hvergermil's Fountain");
 	Pick("","um_dun01","um_dun02","yggdrasil01");
-GD: setarray @c[2],119,93,39,161,50,44,116,45,199,195,200,124;
-	Disp("Baldur:Luina:Valkyrie:Britoniah:Arunafeltz:Schwaltzvalt");
-	Pick("","gld_dun01","gld_dun02","gld_dun03","gld_dun04","arug_dun01","schg_dun01");
 
 // --------------------------------------------------
 	Castles:
@@ -385,6 +383,31 @@ C5: setarray @c[2],158,272,83,47,68,155,299,345,292,107;
 C6: setarray @c[2],293,100,288,252,97,196,137,90,71,315;
 	Disp("Himinn:Andlangr:Viblainn:Hljod:Skidbladnir");
 	Pick("","sch_gld","sch_gld","sch_gld","sch_gld","sch_gld");
+
+// --------------------------------------------------
+	Guild_Dungeons:
+// --------------------------------------------------
+menu	"Baldur",G1, "Luina",G2, "Valkyrie",G3, "Britoniah",G4,
+	"Arunafeltz",G5, "Schwaltzvalt",G6;
+
+G1: Restrict("RE",2,3);
+	setarray @c[2],119,93,119,93,120,130;
+	Disp("Baldur F1:Baldur F2:Hall of Abyss");
+	Pick("","gld_dun01","gld_dun01_2","gld2_pay");
+G2: Restrict("RE",2,3);
+	setarray @c[2],39,161,39,161,147,155;
+	Disp("Luina F1:Luina F2:Hall of Abyss");
+	Pick("","gld_dun02","gld_dun02_2","gld2_ald");
+G3: Restrict("RE",2,3);
+	setarray @c[2],50,44,50,44,140,132;
+	Disp("Valkyrie F1:Valkyrie F2:Hall of Abyss");
+	Pick("","gld_dun03","gld_dun03_2","gld2_prt");
+G4: Restrict("RE",2,3);
+	setarray @c[2],116,45,116,45,152,118;
+	Disp("Britoniah F1:Britoniah F2:Hall of Abyss");
+	Pick("","gld_dun04","gld_dun04_2","gld2_gef");
+G5: Go("arug_dun01",199,195);
+G6: Go("schg_dun01",200,124);
 
 // --------------------------------------------------
 	Instances:

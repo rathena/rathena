@@ -760,7 +760,7 @@ Logical bitwise operators work only on numbers, and they are the following:
 	numbers have the same value in the said position. On the other hand, it 
 	sets to 1 if they have different values in the said binary position.
 	This is another way of setting and unsetting bits in bit-masks.
-	
+
 	Example:
 	- First let's set the quests that are currently in progress:
 		set inProgress,1|8|16; // quest 1,8 and 16 are in progress
@@ -3741,11 +3741,11 @@ close2;
 set @id,getcharid(1);
 warpparty "prontera",150,100,@id;
 close;
- 
+
 ---------------------------------------
- 
+
 *warpchar "<map name>",<x>,<y>,<char_id>;
- 
+
 Warps another player to specified map and coordinate given the char id, which you can get with
 getcharid(0,<player_name>). Obviously this is useless if you want to warp the same player that
 is executing this script, unless it's some kind of "chosen" script. 
@@ -3753,14 +3753,14 @@ is executing this script, unless it's some kind of "chosen" script.
 Example:
  
 warpchar "prontera",150,100,150001;
- 
+
 ---------------------------------------
- 
+
 *warpguild "<map name>",<x>,<y>,<guild_id>;
  
 Warps a guild to specified map and coordinate given the guild id, which you can get with 
 getcharid(2). You can also request another guild id given the member's name with getcharid(2,<player_name>).
- 
+
 You can use the following "map names" for special warping behavior:
 Random:       All guild members are randomly warped in their current map (as if they
               all used a fly wing)
@@ -3769,7 +3769,7 @@ SavePoint:    All guild members are warped to the save point of the currently
               attached player (will fail if there's no player attached).
 
 Example:
- 
+
 warpguild "prontera",x,y,Guild_ID;
 
 ---------------------------------------
@@ -4050,7 +4050,7 @@ a palette number that exists/is usable by the client you use.
     setlook 7,1;
 
 Here are the possible look types:
- 
+
  0 - Base sprite
  1 - Hairstyle
  2 - Weapon
@@ -4243,7 +4243,7 @@ Experiment with the number of star crumbs - I'm not certain just how much will
 work most and what it depends on. The valid element numbers are:
 
  1 - Ice, 2 - Earth 3 - Fire 4 - Wind.
-    
+
 You can, apparently, even create duplicates of the same pet egg with this 
 command, creating a pet which is the same, but simultaneously exists in two 
 eggs, and may hatch from either, although, I'm not sure what kind of a mess will 
@@ -6421,7 +6421,7 @@ to create flashing marks.
 
     // This command will show a mark at coordinates X 30 Y 40, is mark number 1, 
     // and will be red.
-    
+
     viewpoint 1,30,40,1,0xFF0000;
 
 This will create three points:
@@ -6435,7 +6435,7 @@ And this is how you remove them:
     viewpoint 2,30,40,1,0xFF0000;
     viewpoint 2,35,45,2,0xFF0000;
     viewpoint 2,40,50,3,0xFF0000;
-    
+
 The client determines what it does with the points entirely, the server keeps no 
 memory of where the points are set whatsoever.
 
@@ -7483,13 +7483,13 @@ If no additional argument supplied, return the state of the quest:
 	0  = Quest has been given, but the state is "inactive"
 	1  = Quest has been given, and the state is "active"
 	2  = Quest completed
-	
+
 If parameter "PLAYTIME" is supplied:
 	-1 = Quest not started (not in quest log)
 	0  = the time limit has not yet been reached
 	1  = the time limit has not been reached but the quest is marked as complete
 	2  = the time limit has been reached
-	
+
 If parameter "HUNTING" is supplied:
 	-1 = Quest not started (not in quest log)
 	0  = you haven't killed all of the target monsters and the time limit has not been reached.

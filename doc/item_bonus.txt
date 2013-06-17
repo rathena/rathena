@@ -386,8 +386,8 @@ bonus2 bWeaponAtk,x,n;			Adds n ATK when weapon of type x is equipped.
 bonus2 bWeaponAtkRate,x,n;		Adds n% damage to normal attacks when weapon of type x is equipped.
 					x:	see doc/item_db.txt -> view -> weapons for possible values
 bonus bDelayrate,n;			Increases skill delay by n%.
-bonus3 bHPDrainRateRace,r,n,x;		Adds a n/10% chance to receive x% of dealed damage as HP from a monster of race r with normal attack.
-bonus3 bSPDrainRateRace,r,n,x;		Adds a n/10% chance to receive x% of dealed damage as SP from a monster of race r with normal attack.
+bonus3 bHPDrainRateRace,r,n,x;		Adds a n/10% chance to receive x% of damage dealt as HP from a monster of race r with normal attack.
+bonus3 bSPDrainRateRace,r,n,x;		Adds a n/10% chance to receive x% of damage dealt as SP from a monster of race r with normal attack.
 bonus3 bAddEffOnSkill,s,x,n;		Adds a n/100% chance to cause status change x on enemy when using skill s (supports skill names)
 bonus4 bAddEffOnSkill,s,x,n,t;		Adds a n/100% chance to cause status change x when using skill s (supports skill names)
 					t:	ATF_SELF   = causes status change to oneself
