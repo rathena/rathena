@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.9
+//= 3.0
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -49,6 +49,7 @@
 //= 2.7a Added 'consumeitem' command. [Euphy]
 //= 2.8 Some optimization, and moved an Izlude NPC. [Euphy]
 //= 2.9 Fixed an invalid event label. [Joseph]
+//= 3.0 Fixed a missing variable check. [Joseph]
 //============================================================ 
 
 // Onward to the New World
@@ -10376,7 +10377,7 @@ prt_castle,88,165,3	script	Laur	57,{
 		if (ep13_1_edq == 9) set ep13_1_edq,101;
 		else if (ep13_1_edq == 111) set ep13_1_edq,112;
 		else if (ep13_1_edq == 121) set ep13_1_edq,122;
-		else if (ep13_1_edq == 113) {
+		else if (ep13_1_edq == 113 || ep13_1_edq == 123) {
 			set ep13_1_edq,13;
 			changequest 3093,3094;
 		}
