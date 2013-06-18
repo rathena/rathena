@@ -1574,6 +1574,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, uin
 				return 0;
 			break;
 		case AL_TELEPORT:
+		case ALL_ODINS_POWER:
 			//Should fail when used on top of Land Protector [Skotlex]
 			if (src && map_getcell(src->m, src->x, src->y, CELL_CHKLANDPROTECTOR)
 				&& !(status->mode&MD_BOSS)

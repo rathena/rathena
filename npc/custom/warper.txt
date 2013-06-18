@@ -132,7 +132,7 @@ T7: Go("comodo",209,143);
 T8: Restrict("RE");
 	Go("dewata",200,180);
 T9: Restrict("RE");
-	Go("eclage",110,39);
+	Go("ecl_in01",48,53);
 T10: Go("einbech",63,35);
 T11: Go("einbroch",64,200);
 T12: Restrict("RE");
@@ -491,7 +491,7 @@ yuno,162,47,4	duplicate(Warper)	Warper#yuno	811
 brasilis,201,222,4	duplicate(Warper)	Warper#bra	811
 dewata,204,186,6	duplicate(Warper)	Warper#dew	811
 dicastes01,194,194,6	duplicate(Warper)	Warper#dic	811
-eclage,107,37,4	duplicate(Warper)	Warper#ecl	811
+ecl_in01,51,60,4	duplicate(Warper)	Warper#ecl	811
 malangdo,134,117,6	duplicate(Warper)	Warper#mal	811
 malaya,210,205,4	duplicate(Warper)	Warper#ma	811
 mora,57,152,4	duplicate(Warper)	Warper#mora	811

@@ -3,19 +3,20 @@
 //===== By: ==================================================
 //= Chilly
 //===== Current Version: =====================================
-//= 1.0
+//= 1.0a
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
 //= Warp Points for Eclage
 //===== Additional Comments: =================================
 //= 1.0 First Version.
+//= 1.0a Disabled quest warp. [Euphy]
 //============================================================
 
 // Town Warps
 bif_fild02,292,351,0	warp	eclage_field0001	1,1,ecl_fild01,205,74
 ecl_fild01,207,72,0	warp	eclage_field0002	1,1,bif_fild02,294,349
-ecl_fild01,97,320,0	warp	eclage_field0003	1,1,eclage,100,28
+//ecl_fild01,97,320,0	warp	eclage_field0003	1,1,eclage,100,28
 eclage,98,26,0	warp	eclage_field0004	1,1,ecl_fild01,97,317
 eclage,299,309,0	warp	eclage_field0005	1,1,ecl_in01,47,11
 ecl_in01,47,8,0	warp	eclage_field0006	1,1,eclage,297,307

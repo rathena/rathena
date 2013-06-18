@@ -155,10 +155,10 @@
 2779:2780:5577,{ bonus bMatkRate,10; bonus bInt,5; bonus2 bSubRace,RC_Angel,10; }
 2966:2968,{ bonus bAtkRate,4; bonus bMatkRate,4; }
 2966:2969,{ bonus bAtkRate,4; bonus bMatkRate,4; }
-2966:13092,{ if(getequipid(EQI_HAND_R)==13092) set .@part,EQI_HAND_R; else set .@part,EQI_HAND_L; bonus bBaseAtk,10*getequiprefinerycnt(.@part); }
+2966:13092,{ bonus bBaseAtk,10*getequiprefinerycnt( (getequipid(EQI_HAND_R) == 13092) ? EQI_HAND_R : EQI_HAND_L ); }
 2967:2968,{ bonus bAtkRate,4; bonus bMatkRate,4; }
 2967:2969,{ bonus bAtkRate,4; bonus bMatkRate,4; }
-2968:13092,{ if(getequipid(EQI_HAND_R)==13092) set .@part,EQI_HAND_R; else set .@part,EQI_HAND_L; bonus bMatk,10*getequiprefinerycnt(.@part); }
+2968:13092,{ bonus bMatk,10*getequiprefinerycnt( (getequipid(EQI_HAND_R) == 13092) ? EQI_HAND_R : EQI_HAND_L ); }
 4001:4197,{ bonus bFlee,18; }
 4006:4266,{ bonus bFlee,18; }
 4009:4179,{ bonus bFlee,18; }

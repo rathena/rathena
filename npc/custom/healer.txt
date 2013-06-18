@@ -73,7 +73,7 @@ yuno,164,45,4	duplicate(Healer)	Healer#yuno	909
 brasilis,194,221,6	duplicate(Healer)	Healer#bra	909
 dewata,195,187,4	duplicate(Healer)	Healer#dew	909
 dicastes01,201,194,4	duplicate(Healer)	Healer#dic	909
-eclage,105,35,4	duplicate(Healer)	Healer#ecl	909
+ecl_in01,45,60,4	duplicate(Healer)	Healer#ecl	909
 malangdo,132,114,6	duplicate(Healer)	Healer#mal	909
 malaya,205,205,6	duplicate(Healer)	Healer#ma	909
 mora,55,152,4	duplicate(Healer)	Healer#mora	909

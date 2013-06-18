@@ -6265,7 +6265,7 @@ REPLACE INTO `item_db_re` VALUES (13075,'Kurenai','Kurenai',4,5000,NULL,700,'130
 REPLACE INTO `item_db_re` VALUES (13076,'Raksasa_Dagger','Nachal Sword',4,40000,NULL,600,'120:100',NULL,1,1,0x02000000,7,2,2,3,'110',1,1,'bonus bInt,3;',NULL,NULL);
 #13077,
 REPLACE INTO `item_db_re` VALUES (13078,'Mikatsuki','Mikacheuki',4,40000,NULL,600,'50:120',NULL,1,1,0x02000000,7,2,2,4,'100',1,1,NULL,NULL,NULL);
-13079,Metal_Dagger,Metal Dagger,4,20,,0,55,0,,1,0x02021040,7,2,2,3,1,1,1,{}
+REPLACE INTO `item_db_re` VALUES (13079,'Metal_Dagger','Metal Dagger',4,20,NULL,0,'55',0,NULL,1,0x02021040,7,2,2,3,'1',1,1,NULL,NULL,NULL);
 #
 REPLACE INTO `item_db_re` VALUES (13092,'RWC_Memory_Knife','RWC Memory Knife',4,1000,500,650,'50',0,1,1,0x02800075,15,2,2,3,'1',1,1,'bonus bBaseAtk,20*(getrefine()/3); bonus bMatk,20*(getrefine()/3); bonus4 bAutoSpell,"BS_WEAPONPERFECT",1,50,0; if(getrefine()>=9) set .@i,1; if(getrefine()>=6){ set .@rate,5*(.@i+1); bonus2 bAddRace,RC_Boss,.@rate; bonus2 bAddRace,RC_NonBoss,.@rate; bonus2 bMagicAddRace,RC_Boss,.@rate; bonus2 bMagicAddRace,RC_NonBoss,.@rate; }',NULL,NULL);
 # Revolvers

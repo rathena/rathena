@@ -553,6 +553,7 @@ int skillnotok (uint16 skill_id, struct map_session_data *sd)
 		case AL_WARP:
 		case RETURN_TO_ELDICASTES:
 		case ALL_GUARDIAN_RECALL:
+		case ECLAGE_RECALL:
 			if(map[m].flag.nowarp) {
 				clif_skill_teleportmessage(sd,0);
 				return 1;
@@ -561,6 +562,7 @@ int skillnotok (uint16 skill_id, struct map_session_data *sd)
 		case AL_TELEPORT:
 		case SC_FATALMENACE:
 		case SC_DIMENSIONDOOR:
+		case ALL_ODINS_RECALL:
 			if(map[m].flag.noteleport) {
 				clif_skill_teleportmessage(sd,0);
 				return 1;
@@ -5475,6 +5477,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SR_GENTLETOUCH_ENERGYGAIN:
 	case GN_CARTBOOST:
 	case KO_MEIKYOUSISUI:
+	case ALL_ODINS_POWER:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
@@ -6233,6 +6236,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case AL_TELEPORT:
+	case ALL_ODINS_RECALL:
 		if(sd)
 		{
 			if (map[bl->m].flag.noteleport && skill_lv <= 2) {
@@ -6255,7 +6259,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-			if( skill_lv == 1 )
+			if( skill_lv == 1 && skill_id != ALL_ODINS_RECALL )
 				clif_skill_warppoint(sd,skill_id,skill_lv, (unsigned short)-1,0,0,0);
 			else
 				clif_skill_warppoint(sd,skill_id,skill_lv, (unsigned short)-1,sd->status.save_point.map,0,0);
@@ -8761,25 +8765,31 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 
-
 	case RETURN_TO_ELDICASTES:
 	case ALL_GUARDIAN_RECALL:
+	case ECLAGE_RECALL:
 		if( sd )
 		{
 			short x, y; // Destiny position.
 			unsigned short mapindex;
 
-			if( skill_id == RETURN_TO_ELDICASTES)
+			if ( skill_id == RETURN_TO_ELDICASTES )
 			{
 				x = 198;
 				y = 187;
 				mapindex  = mapindex_name2id(MAP_DICASTES);
 			}
-			else
+			else if ( skill_id == ALL_GUARDIAN_RECALL )
 			{
 				x = 44;
 				y = 151;
 				mapindex  = mapindex_name2id(MAP_MORA);
+			}
+			else if ( skill_id == ECLAGE_RECALL )
+			{
+				x = 47;
+				y = 31;
+				mapindex  = mapindex_name2id("ecl_in01");
 			}
 
 			if(!mapindex)
@@ -8790,6 +8800,41 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 			pc_setpos(sd, mapindex, x, y, CLR_TELEPORT);
 		}
+		break;
+
+	case ECL_SNOWFLIP:
+	case ECL_PEONYMAMY:
+	case ECL_SADAGUI:
+	case ECL_SEQUOIADUST:
+		if ( skill_id == ECL_SNOWFLIP )
+		{
+			status_change_end(bl, SC_SLEEP, INVALID_TIMER);
+			status_change_end(bl, SC_BLEEDING, INVALID_TIMER);
+			status_change_end(bl, SC_BURNING, INVALID_TIMER);
+			status_change_end(bl, SC_DEEPSLEEP, INVALID_TIMER);
+		}
+		else if ( skill_id == ECL_PEONYMAMY )
+		{
+			status_change_end(bl, SC_FREEZE, INVALID_TIMER);
+			status_change_end(bl, SC_FREEZING, INVALID_TIMER);
+			status_change_end(bl, SC_CRYSTALIZE, INVALID_TIMER);
+		}
+		else if ( skill_id == ECL_SADAGUI )
+		{
+			status_change_end(bl, SC_STUN, INVALID_TIMER);
+			status_change_end(bl, SC_CONFUSION, INVALID_TIMER);
+			status_change_end(bl, SC_HALLUCINATION, INVALID_TIMER);
+			status_change_end(bl, SC_FEAR, INVALID_TIMER);
+		}
+		else if ( skill_id == ECL_SEQUOIADUST )
+		{
+			status_change_end(bl, SC_STONE, INVALID_TIMER);
+			status_change_end(bl, SC_POISON, INVALID_TIMER);
+			status_change_end(bl, SC_CURSE, INVALID_TIMER);
+			status_change_end(bl, SC_BLIND, INVALID_TIMER);
+			status_change_end(bl, SC_ORCISH, INVALID_TIMER);
+		}
+		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		break;
 
 	case GM_SANDMAN:
@@ -10577,9 +10622,10 @@ int skill_castend_map (struct map_session_data *sd, uint16 skill_id, const char 
 	switch(skill_id)
 	{
 	case AL_TELEPORT:
+	case ALL_ODINS_RECALL:
 		if(strcmp(map,"Random")==0)
 			pc_randomwarp(sd,CLR_TELEPORT);
-		else if (sd->menuskill_val > 1) //Need lv2 to be able to warp here.
+		else if (sd->menuskill_val > 1 || skill_id == ALL_ODINS_RECALL) //Need lv2 to be able to warp here.
 			pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 		break;
 

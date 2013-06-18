@@ -1,0 +1,1839 @@
+//===== rAthena Script =======================================
+//= Eclage Quest NPCs
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 0.1
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= Quest NPCs related to Eclage.
+//===== Additional Comments: =================================
+//= 0.1 NPCs are mostly placeholders. [Euphy]
+//============================================================
+
+// Teleport Cats (14.2 Cat Hand Addition)
+//============================================================
+-	script	Teleport Cat#ep14_2	-1,{
+	switch(atoi(charat(strnpcinfo(1),16))) {
+	case 1:
+		setarray .@map$[0],"Entrance to Mora";
+		setarray .@cost[0],15;
+		break;
+	case 2:
+		setarray .@map$[0],"Near Eclage","Near Splendide";
+		setarray .@cost[0],15,55;
+		break;
+	case 3:
+		setarray .@map$[0],"Entrance to Mora","Midgard Allied Forces Post";
+		setarray .@cost[0],55,10;
+		break;
+	case 4:
+		setarray .@map$[0],"Near Splendide","Manuk Field";
+		setarray .@cost[0],10,10;
+		break;
+	case 5:
+		setarray .@map$[0],"Midgard Allied Forces Post","Near El Dicastes";
+		setarray .@cost[0],10,20;
+		break;
+	case 6:
+		setarray .@map$[0],"Manuk Field";
+		setarray .@cost[0],20;
+		break;
+	}
+	mes "[Teleport Cat]";
+	mes "What a nice day, isn't it!";
+	mes "Welcome to Cat Merchant Group. We do anything to please our customers. We would even lie on our back if you want!";
+	next;
+	mes "[Teleport Cat]";
+	mes "We provide teleport service between various regions based on our accumulated knowledge. We accept Malangdo Canned Specialties or Zeny, so you can pay however you like it~";
+	next;
+	set .@menu$,"Forget it:";
+	for(set .@i,0; .@i<getarraysize(.@map$); set .@i,.@i+1) {
+		set .@menu$, .@menu$+
+			.@map$[.@i]+" ("+.@cost[.@i]+" Canned Food):"+
+			.@map$[.@i]+" ("+.@cost[.@i]+",000 Zeny):";
+	}
+	set .@i, select(.@menu$)-2;
+	if (.@i == -1) {
+		mes "[Teleport Cat]";
+		mes "I'll see you later then.";
+		close;
+	}
+	set .@choice$, .@map$[.@i/2];
+	set .@price, .@cost[.@i/2];
+	if (.@i % 2) {
+		set .@price, .@price*1000;
+		if (Zeny < .@price) {
+			mes "[Teleport Cat]";
+			mes "I'm afraid it's not enough. Sorry, but it can't be done for free~";
+			close;
+		}
+		set Zeny, Zeny-.@price;
+	} else {
+		if (countitem(12636) < .@price) {
+			mes "[Teleport Cat]";
+			mes "I'm afraid it's not enough. Sorry, but it can't be done for free~";
+			close;
+		}
+		delitem 12636,.@price; //Malang_Sp_Can
+	}
+	if (compare(.@choice$,"Midgard Allied Forces Post")) warp "mid_camp",180,247;
+	else if (compare(.@choice$,"Manuk Field")) warp "man_fild02",133,47;
+	else if (compare(.@choice$,"Near Splendide")) warp "spl_fild02",51,240;
+	else if (compare(.@choice$,"Near El Dicastes")) warp "dic_fild01",159,264;
+	else if (compare(.@choice$,"Entrance to Mora")) warp "bif_fild02",291,323;
+	else if (compare(.@choice$,"Near Eclage")) warp "ecl_fild01",116,309;
+	close;
+}
+ecl_fild01,118,311,4	duplicate(Teleport Cat#ep14_2)	Teleport Cat No.1	421
+bif_fild02,293,325,4	duplicate(Teleport Cat#ep14_2)	Teleport Cat No.2	421
+spl_fild02,53,242,4	duplicate(Teleport Cat#ep14_2)	Teleport Cat No.3	421
+mid_camp,207,234,4	duplicate(Teleport Cat#ep14_2)	Teleport Cat No.4	421
+man_fild02,135,49,4	duplicate(Teleport Cat#ep14_2)	Teleport Cat No.5	421
+dic_fild01,161,266,4	duplicate(Teleport Cat#ep14_2)	Teleport Cat No.6	421
+
+// Eclage's Entrance
+//============================================================
+ecl_fild01,97,322,0	script	#ep14_2Entrance	45,3,3,{
+OnTouch:
+	if (ep14_2_enter < 3) {
+		mes "[Security Guard]";
+		mes "Please wait a minute.";
+		mes "All first-time visitors to Eclage must fill out the necessary forms before entering.";
+		close;
+	}
+	warp "eclage",100,28;
+	end;
+}
+
+ecl_fild01,94,322,5	script	Security Guard#ep14_2	447,{
+	if (ep14_2_enter == 0) {
+		mes "[Security Guard]";
+		mes "All first-time visitors to Eclage must fill out the necessary forms here before entering.";
+		next;
+		mes "[Security Guard]";
+		mes "Please understand because of a recent increase in the influx of people from Midgard through Bifrost, we had to create this process.";
+		next;
+		mes "[Security Guard]";
+		mes "Of course, the documents will be secured away after their use in access regulations, so you don't have to worry.";
+		next;
+		if(select("Fill out the forms.:Forget it.") == 2) {
+			mes "[Security Guard]";
+			mes "Please note that you would not be able to enter the city without filling out the forms.";
+			close;
+		}
+		mes "[Security Guard]";
+		mes "Please fill out your name, occupation, and level here.";
+		next;
+		mes "Write your name.";
+		input .@input1$;
+		next;
+		mes "Write your occupation.";
+		input .@input1$;
+		next;
+		mes "Write your level.";
+		input .@input1$;
+		next;
+		mes "[Security Guard]";
+		mes "If you completed your forms, please submit them to the administrator over there.";
+		mes "There may be some waiting time, so take your time.";
+		set ep14_2_enter,1;
+		setquest 11310;
+		close;
+	} else if (ep14_2_enter == 1) {
+		mes "[Security Guard]";
+		mes "Please submit your forms to the administrator over there after writing in your name, occupation, and level.";
+		mes "There may be some waiting time, so take your time.";
+		close;
+	} else if (ep14_2_enter == 2) {
+		mes "[Security Guard]";
+		mes "Great, you completed the forms.";
+		mes "Welcome to Eclage, the capital of the Laphines.";
+		next;
+		mes "[Security Guard]";
+		mes "Since Eclage is under the influence of Bifrost, there is fluent communication among the races.";
+		next;
+		mes "[Security Guard]";
+		mes "There would be no need for any separate translation, and there are enough bridges for on-foot races, so I hope you have a comfortable visit.";
+		set ep14_2_enter,3;
+		erasequest 11311;
+		close2;
+		warp "eclage",100,28;
+		end;
+	} else {
+		mes "[Security Guard]";
+		mes "Welcome to Eclage, the capital of the Laphines.";
+		next;
+		mes "[Security Guard]";
+		mes "Since Eclage is under the influence of Bifrost, there is fluent communication among the races.";
+		next;
+		mes "[Security Guard]";
+		mes "There would be no need for any separate translation, and there are enough bridges for on-foot races, so I hope you have a comfortable visit.";
+		close;
+	}
+}
+ecl_fild01,100,323,3	duplicate(Security Guard#ep14_2)	Security Guard#ep14_2_2	447
+
+ecl_fild01,111,320,2	script	Immigration Officer#ep1	445,{
+	if (ep14_2_enter == 0) {
+		mes "[Immigration Officer]";
+		mes "What do you need?";
+		mes "As you can see, I'm really busy here, so unless you need something, please don't bother me.";
+		emotion e_an;
+		close;
+	} else if (ep14_2_enter == 1) {
+		mes "[Immigration Officer]";
+		mes "Whew! I'm sorry to have kept you waiting.";
+		mes "There are just too many visitors.";
+		emotion e_wah;
+		next;
+		mes "[Immigration Officer]";
+		mes "So if you will place your forms here...";
+		next;
+		mes "[???]";
+		mes "Here!! These are my completed forms!!";
+		mes "This time it's all good, right?";
+		mes "Let me through quick!";
+		cutin "bu_du1.bmp",2;
+		emotion e_omg,1;
+		next;
+		cutin "bu_du1.bmp",255;
+		mes "[Immigration Officer]";
+		mes "I'm taking care of visitors in the order they arrived, so please wait for your turn.";
+		emotion e_swt;
+		next;
+		mes "[???]";
+		mes "What are you talking about!";
+		mes "I was waaaay before all of these guys!";
+		cutin "bu_du3.bmp",2;
+		next;
+		cutin "bu_du3.bmp",255;
+		mes "[Immigration Officer]";
+		mes "Well, your turn was delayed because you had to fill out your forms, so you have to wait until later.";
+		emotion e_ag;
+		next;
+		mes "[???]";
+		mes "What?! You just said you take care of visitors in the order they arrived!!!";
+		cutin "bu_du5.bmp",2;
+		next;
+		cutin "bu_du5.bmp",255;
+		mes "[Immigration Officer]";
+		mes "Yes, I did say that but...";
+		next;
+		mes "- SMACK!!! -";
+		next;
+		mes "[???]";
+		mes "OW!! Why did you hit me?";
+		cutin "bu_du4.bmp",2;
+		next;
+		mes "[???]";
+		mes "I'm so sorry.";
+		mes "My stupid friend here is causing trouble.";
+		cutin "bu_mark3.bmp",0;
+		next;
+		mes "[???]";
+		mes "Who are you calling stupid?!";
+		cutin "bu_du5.bmp",2;
+		next;
+		mes "[???]";
+		mes "If you hadn't filled out my name incorrectly in the first place, we wouldn't be waiting like this!";
+		cutin "bu_mark3.bmp",0;
+		next;
+		mes "[???]";
+		mes "Mark Esha or Madrid, they're all the same!";
+		cutin "bu_du3.bmp",2;
+		next;
+		mes "[Mark Esha]";
+		mes "They're not at all the same!";
+		mes "And what's more, how can you not know the name of your friend of 15 years?";
+		cutin "bu_mark4.bmp",0;
+		next;
+		mes "[???]";
+		mes "It's not that I didn't know- I did it on purpose!!";
+		mes "Madrid is just fine! Madrid!";
+		cutin "bu_du3.bmp",2;
+		next;
+		cutin "bu_du3.bmp",255;
+		mes "- SMACK -";
+		next;
+		mes "[Mark Esha]";
+		mes "Hu... I am so sorry that my friend is this stupid.";
+		mes "Please don't mind us and do what you need to do.";
+		cutin "bu_mark3.bmp",0;
+		next;
+		mes "[???]";
+		mes "AHHHH!!!";
+		mes "LET ME IN!!!!";
+		mes "How long do I have to wait out here!!!";
+		cutin "bu_du5.bmp",2;
+		next;
+		mes "[Mark Esha]";
+		mes "Would you stay put just for a second?!!!";
+		mes "Sorry. So sorry.";
+		cutin "bu_mark3.bmp",0;
+		next;
+		cutin "bu_mark3.bmp",255;
+		mes "[Immigration Officer]";
+		mes "Oh wow, this is just so crazy.";
+		mes "Test15696 Here, your documents are processed.";
+		mes "You may enter the city when you go talk to the security guard.";
+		emotion e_go;
+		next;
+		mes "[???]";
+		mes "Shuffle, shuffle";
+		cutin "bu_oliver0.bmp",0;
+		next;
+		cutin "bu_oliver0.bmp",255;
+		mes "[Immigration Officer]";
+		mes "And Mr. Deu Lean, please take your group and enter. It's just way too noisy.";
+		emotion e_an;
+		next;
+		mes "[Du Lian]";
+		mes "Mwahah!!";
+		mes "SEE THAT?!";
+		mes "Thanks to me, we got through faster!";
+		cutin "bu_du1.bmp",2;
+		next;
+		mes "[Mark Esha]";
+		mes "You mean slower...";
+		cutin "bu_mark4.bmp",0;
+		next;
+		mes "[Du Lian]";
+		mes "A real man does not get bogged down by the past!!";
+		mes "I may have been slow with the documentation but I will be the one to enter Eclage first!";
+		mes "Mwahah!";
+		cutin "bu_du2.bmp",2;
+		next;
+		mes "[Mark Esha]";
+		mes "......Whew";
+		mes "I'm so sorry for everything.";
+		cutin "bu_mark2.bmp",0;
+		next;
+		mes "[???]";
+		mes "Well......";
+		mes "Mr. Mark, Mr. Du is already gone.";
+		cutin "bu_maggi3.bmp",2;
+		next;
+		mes "[Mark Esha]";
+		mes "Oh.............";
+		mes "Oh......................";
+		cutin "bu_mark3.bmp",0;
+		next;
+		mes "[Mark Esha]";
+		mes "My goodness......";
+		emotion e_swt2,1;
+		set ep14_2_enter,2;
+		erasequest 11310;
+		setquest 11311;
+		close2;
+		cutin "bu_mark3.bmp",255;
+		end;
+	} else {
+		mes "[Immigration Officer]";
+		mes "Oh wow, this is just so crazy.";
+		mes strcharinfo(0)+".";
+		mes "Here, your documents are processed.";
+		mes "You may enter the city when you go talk to the security guard.";
+		emotion e_go;
+		close;
+	}
+}
+
+// Oliver Wolf Hood
+//============================================================
+eclage,102,32,4	script	Fairy Carpenter#ep14_2	443,{
+	if (BaseLevel < 120) {
+		mes "[Fairy Carpenter]";
+		mes "The bridge is kind of broken so please be careful.";
+		emotion e_sob;
+		close;
+	}
+	if (checkquest(11312) == -1) {
+		mes "[Fairy Carpenter]";
+		mes "This area is kind of broken, so be careful.";
+		mes "Otherwise, you'll fall aaaaaall the way down.";
+		next;
+		switch(select("The work being done right now:The reason for the bridge being broken:Forget it.")) {
+		case 1:
+			//missing
+			close;
+		case 2:
+			mes "[Fairy Carpenter]";
+			mes "Oh, just a minute ago, there was a human benig who took a misstep and broke a tree branch while falling.";
+			emotion e_an;
+			next;
+			mes "[Fairy Carpenter]";
+			mes "Being close to the entrance and all, this really needs to be fixed soon.";
+			mes "I'm trying to decide whether I should put up a warning sign, gather the necessary materials for it, and fix it myself."; //custom
+			next;
+			switch(select("Give help.:Don't give help.")) {
+			case 1:
+				mes "[Fairy Carpenter]";
+				mes "Wow!!!";
+				mes "You are going to help me?!";
+				mes "So... so kind...";
+				next;
+				mes "[Fairy Carpenter]";
+				mes "I can't believe there's still this kind of kindness left in the world... Hmm, sweaty eyes...";
+				emotion e_sob;
+				next;
+				mes "[Fairy Carpenter]";
+				mes "Would you then bring me a new bridge to use for repair?";
+				mes "Since other people can get hurt, I'll use my magic to maintain this bridge in the meantime.";
+				emotion e_go;
+				//setquest 11312;
+				close;
+			case 2:
+				//missing
+				close;
+			}
+		case 3:
+			//missing
+			close;
+		}
+	}
+	select("What if you use magic to repair it?");
+	mes "[Fairy Carpenter]";
+	mes "Hmm, it's not impossible, but magic that deals with creation of life requires much magic power and shouldn't be used so freely.";
+	next;
+	mes "[Fairy Carpenter]";
+	mes "If I were to describe how stupid that would be... Well, it's like turning a deliciously baked chocolate cake back into flour.";
+	next;
+	mes "[Fairy Carpenter]";
+	mes "Since the broken part is about 19 meters from here...";
+	next;
+	mes "[Fairy Carpenter]";
+	mes "Ahh! Now that I remember, before we used to be able to order the exact necessary length, but because they are mass-producing them nowadays, they only provide preset lengths.";
+	next;
+	mes "[Fairy Carpenter]";
+	mes "To maximize the stability, it's better to avoid connecting multiple bridge pieces together,";
+	next;
+	mes "[Fairy Carpenter]";
+	mes "and this broken bridge... from here to there it's about 19 meters and the present pieces come in 3 meters, 5 meters, and 10 meters......";
+	emotion e_swt2;
+	next;
+	mes "[Fairy Carpenter]";
+	mes "Hmm.......";
+	next;
+	mes "[Fairy Carpenter]";
+	mes "Hmm.......";
+	mes "......";
+	emotion e_swt2;
+	next;
+	mes "[Fairy Carpenter]";
+	mes "......Hmm.........";
+	emotion e_swt2;
+	next;
+	mes "- It's probably just my imagination that smoke is coming out of his head, right? -";
+	next;
+	mes "[Fairy Carpenter]";
+	mes "Oh ho!";
+	mes "What do you think?";
+	emotion e_heh;
+	next;
+	mes "[Fairy Carpenter]";
+	mes "To make a bridge of 19 meters in length with the fewest number of pieces possible, how many of each 3, 5, or 10 meter length pieces would I need?";
+	emotion e_what;
+	next;
+	mes "[Fairy Carpenter]";
+	mes "Please write the number of pieces necessary for each length. If no pieces for that length are necessary, please write 0.";
+	input .@inputstr$;
+	if (.@inputstr$ != "002") {
+		//missing
+		close;
+	}
+	next;
+	mes "[Fairy Carpenter]";
+	mes "Yeah, that sounds good, right?";
+	mes "Especially since there wouldn't be a need to make them so straight.";
+	emotion e_ic;
+	next;
+	mes "[Fairy Carpenter]";
+	mes "Okay, if you talk to [Golie] who works outside the city near the tower, he will give you the new bridge pieces.";
+	//erasequest 11312;
+	//setquest 11313;
+	close;
+/*
+OnTouch:
+	if (ep14_2_hood == 0) {
+		mes "[Fairy Carpenter]";
+		mes "Hey!!!!!!!";
+		mes "Be careful over there!!";
+		close;
+	}
+	end;
+*/
+}
+
+eclage,283,275,4	script	Glaces#ep14_2	438,{
+	mes "[Glaces]";
+	mes "Hm......";
+	mes "The guys are late.";
+	mes "I can only imagine that they would be busy just looking at the number of people visiting Eclage nowadays but...";
+	next;
+	mes "[Glaces]";
+	mes "Why... why do I have so much time at hand...?";
+	mes "Am I the only one with so much free time?";
+	mes "Am I really the only one?";
+	emotion e_omg;
+	close;
+}
+
+eclage,266,216,4	script	Moreng#ep14_2	444,{
+	mes "[Moreng]";
+	mes "Eclage is a really nice place to live.";
+	mes "The flowers are always in full bloom and the weather is always comfortable.";
+	next;
+	mes "[Moreng]";
+	mes "If there were a beautiful Yai of my own, it would truly be a paradise!";
+	next;
+	mes "[Moreng]";
+	mes "Yai actually signifies an egg.";
+	mes "And to Laphines, Yai could even signify what is beyond a home...";
+	emotion e_shy;
+	close;
+}
+
+eclage,191,200,4	script	Yube#ep14_2	446,{
+	mes "- Shuffle shuffle -";
+	mes "He's working on something.";
+	mes "Let's not bother him.";
+	close;
+}
+
+eclage,292,265,0	script	#ep14_2Yube Entrance	45,2,2,{
+OnTouch:
+	mes "- Looks like the door is locked. -";
+	close;
+}
+
+eclage,265,166,4	script	Shul#ep14_2	443,{
+	mes "[Shul]";
+	mes "Laphine's put their lives on the line to make Yai beautiful.";
+	mes "I'm a Laphine myself but that kind of priority is difficult to understand.";
+	close;
+}
+
+eclage,137,169,4	script	Tato#ep14_2	439,{
+	mes "[Tato]";
+	mes "A friend of mine recently applied to the Splendide unit.";
+	mes "I heard Jotunheim is really cold. I hope he's doing well.";
+	close;
+}
+
+ecl_in01,60,71,4	script	Old Man#ep14_2	443,{
+	mes "[Old Man]";
+	mes "Hohoho~!";
+	next;
+	mes "[Old Man]";
+	mes "Looks like there are a lot of interesting visitors nowadays...";
+	mes "When I was young, you had to put your life on the line to go into the foreign lands.";
+	next;
+	mes "[Old Man]";
+	mes "Nowadays, things are much more convenient with de-regulation and all.";
+	mes "And with the warps and flying to all these places, where's all the romance in adventures anymore?";
+	emotion e_pif;
+	next;
+	mes "[Old Man]";
+	mes "Young people nowadays probably don't even know how frog eggs taste like.";
+	next;
+	mes "[Old Man]";
+	mes "It seems like yesterday when I saved enough Jellopies to buy a Tsurugi, but even that Tsurugi is deserted somewhere in storage.";
+	emotion e_sob;
+	close;
+}
+
+ecl_in01,44,53,4	script	Delivery Man#ep14_2	513,{
+	mes "[Delivery Man]";
+	mes "Sigh...";
+	mes "I need to get going in order to make it on time.";
+	next;
+	mes "[Delivery Man]";
+	mes "Wait a minute...";
+	mes "Is it actually better to deliver it later...";
+	mes "I remember seeing so many boxes of pickled Poring in the storage waiting to be delivered...";
+	emotion e_sob;
+	close;
+}
+
+ecl_in01,70,88,4	script	Sack Merchant#ep14_2	495,{
+	mes "[Sack Merchant]";
+	mes "Meow?";
+	mes "Helloeow~";
+	mes "I have a treasure from a place very, very fareow~";
+	mes "Take a lookeow~";
+	mes "I'll give you a good priceow~";
+	close;
+}
+
+ecl_in01,73,51,4	script	Murah#ep14_2	442,{
+	mes "[Murah]";
+	mes "Hmm... What amazing present should I give?";
+	emotion e_flash;
+	close;
+}
+
+ecl_fild01,192,94,4	script	Golie#ep14_2	442,{
+	mes "[Golie]";
+	mes "To grow Elder Willow trees,";
+	mes "since Spring, Peco Peco";
+	mes "must have cried as such.";
+	next;
+	mes "[Golie]";
+	mes "To grow Elder Willow trees";
+	mes "the alarm in the clock tower";
+	mes "again must have cried as such.";
+	next;
+	mes "[Golie]";
+	mes "It's a song given to me by a bard from Midgard. The lyrical and nature-oriented words really resonated with me.";
+	next;
+	mes "[Golie]";
+	mes "I would love to hear any songs that you might know also.";
+	close;
+}
+
+ecl_fild01,97,315,4	script	Traveler#ep14_2	732,{
+	mes "[Traveler]";
+	mes "Who are you?";
+	mes "I've never seen you before.";
+	next;
+	mes "[Traveler]";
+	mes "Oh, you came to ask me about the feather, too?";
+	mes "It's just a plain old decoration, but everyone really likes to bother me about it.";
+	next;
+	mes "[Traveler]";
+	mes "If you are thinking about selling it, you should just give up.";
+	mes "I have no wishes to sell it no matter how much you beg.";
+	next;
+	mes "[Traveler]";
+	mes "This feather...";
+	close;
+}
+
+// Wanted to be Big and Beautiful
+//============================================================
+eclage,282,255,4	script	Wuhari#eclbig	620,{
+	mes "[Wuhari]";
+	mes "Ah... Is there anyone with more experienced with this...";
+	close;
+}
+
+eclage,163,228,4	script	Goatie#eclbig	438,{
+	mes "[Goatie]";
+	mes "Have you ever been to the palace?";
+	mes "They say that it is so much more beautiful than our Yai's could ever be.";
+	next;
+	mes "[Goatie]";
+	mes "I guess people who have nothing can only dream.";
+	close;
+}
+
+eclage,170,195,4	script	Svery#eclbig	443,{
+	mes "[Svery]";
+	mes "It's my wife's big wish to visit the palace.";
+	next;
+	mes "[Svery]";
+	mes "I want to grant that wish for her, but how could that ever be possible.";
+	mes "Especially given our situation...";
+	close;
+}
+
+eclage,126,151,4	script	Pompe#eclbig	444,{
+	mes "[Pompe]";
+	mes "I saw it!";
+	next;
+	mes "[Pompe]";
+	mes "I really saw it!!";
+	close;
+}
+
+// Mystery Robbery Investigation
+//============================================================
+eclage,164,102,3	script	Cruyan#eclage	442,{}
+
+eclage,222,131,4	script	Wandering Merchant#ecla	807,{
+	mes "[Wandering Merchant]";
+	mes "Go away kids~";
+	close;
+}
+
+// Troublesome Fairie
+//============================================================
+ecl_in01,26,88,4	script	Cecilia#nk	440,{
+	mes "[Cecilia]";
+	mes "Mm...mm... what should I do...";
+	next;
+	mes "- She seems too busy to talk to you. -";
+	close;
+}
+
+ecl_in01,80,77,4	script	Dominic#nk	445,{
+	mes "[Dominic]";
+	mes "I won't stop you from walking around in Eclage but, don't bother me you outsider!";
+	close;
+}
+
+ecl_in02,160,36,4	script	Eirinn#nk	441,{
+	mes "[Eirinn]";
+	mes "Oww, my stomach hurts!!";
+	mes "What are you looking at?";
+	next;
+	mes "[Eirinn]";
+	mes "I haven't really eaten anything unusual these days but why am I getting stomach aches so often!";
+	close;
+}
+
+ecl_in03,175,69,4	script	Bourbon#nk	444,{
+	mes "[Bourbon]";
+	mes "How strange. I've been losing my stuff recently like things I put in my pocket or even the things I put away properly.";
+	close;
+}
+
+ecl_in01,82,80,0	script	Monthly Eclage#pa0829	111,{
+	mes "^000099I see a plain-looking journal. It seems to deal with third-rate gossip stories.^000000";
+	close;
+}
+
+ecl_in01,82,78,0	script	Magazine#01	111,{
+	mes "- I saw a book and stretched my hand out to reach for it. I think it's about Midgard. -";
+	next;
+	mes "[Dominic]";
+	mes "Hey, outsider,";
+	mes "who said you can touch my books?";
+	mes "Stay away from my bookshelves!";
+	close;
+}
+ecl_in01,82,79,0	duplicate(Magazine#01)	Magazine#02	111
+ecl_in01,83,81,0	duplicate(Magazine#01)	Exploration of Midgard::ExplorationMidgard1	111
+ecl_in01,82,84,0	duplicate(Magazine#01)	Exploration of Midgard::ExplorationMidgard2	111
+ecl_in01,80,86,0	duplicate(Magazine#01)	Exploration of Midgard::ExplorationMidgard3	111
+
+// Hiel's Workshop
+//============================================================
+eclage,155,91,4	script	#pa0829Hiel's Door10	836,{
+	mes "[Notice]";
+	mes "Pan-galactic ultra genius engineer Hiel's strange and creepy workshop.";
+	mes "Normal Laphines, animals, and Saphas are prohibited.";
+	next;
+	if(select("Continue on my way.:Enter this place.") == 2)
+		warp "ecl_in04",107,213;
+	close;
+}
+
+ecl_in04,108,215,0	script	Supreme Electronic Rope	111,{
+	mes "If you would like to go down, please press the bell~";
+	next;
+	if(select("Forget it.:Go down.") == 2)
+		warp "eclage",152,91;
+	close;
+}
+
+ecl_in04,105,216,0	script	Hiel's Workshop#pa0829	111,{
+	mes "^000099It's a workshop with lots of oddities.^000000";
+	close;
+}
+
+ecl_in04,109,215,2	script	Hiel#pa0829	621,{
+	mes "[Hiel]";
+	mes "It is said that the leaves from home tree have the length X with the average m and standard deviation of 4. If P(m<X<a)=0.3413 ... (Mumble mumble)";
+	next;
+	mes "^0000ffIt doesn't look like I'll understand anything he says. Let's get out of here.^000000";
+	close;
+}
+
+// For Eclage
+//============================================================
+function	script	F_Eclage_Traveler	{
+	if (checkquest(7411) > -1 && checkquest(7412) > -1 && checkquest(7413) > -1) {
+		cutin "minuel01.bmp",4;
+		donpcevent "Eclage Guard#tl01::OnEnable";
+		mes "[Eclage Guard]";
+		mes "Excuse me for a moment.";
+		mes "Is there anyone from Splendide here?";
+		next;
+		select("I am, but why?");
+		mes "[Eclage Guard]";
+		mes "Ah, you are?";
+		mes "There's someone who wants to see you. Do you have time right now?";
+		next;
+		mes "[Eclage Guard]";
+		mes "You don't have to worry. It's nothing suspicious or bad.";
+		mes "We just wanted to ask you about Splendide, so please spare your time for us.";
+		next;
+		mes "[Eclage Guard]";
+		mes "I'll guide you if it's okay.";
+		next;
+		switch(select("Sure. Let's go.:I don't have time for it right now...")) {
+		case 1: //missing
+			break;
+		case 2:
+			mes "[Eclage Guard]";
+			mes "Oh, is that right?";
+			mes "That's too bad.";
+			mes "But if you have some time later, please pay us a visit.";
+			next;
+			break;
+		}
+		mes "[Eclage Guard]";
+		mes "I'll be at the east side of the plaze near the gate.";
+		mes "Please, find me there.";
+		mes "I'll be looking forward to seeing you.";
+		erasequest 7411;
+		erasequest 7412;
+		erasequest 7413;
+		setquest 7414;
+		set ep14_2_tl,1;
+		donpcevent "Eclage Guard#tl01::OnDisable";
+		close2;
+		cutin "minuel01.bmp",255;
+		end;
+	}
+	return;
+}
+
+ecl_in01,32,52,4	script	Traveler Fome#tl01	515,3,3,{
+	if (ep14_2_tl == 0) {
+		if (checkquest(7411) == -1) {
+			mes "[Fome]";
+			mes "Come here and have a talk with us.";
+			mes "My name is Fome and I'm from the central region of Alpheim.";
+			mes "You are...";
+			next;
+			mes "[Fome]";
+			mes "Wait, let me guess!";
+			mes "You're a member of the famous Midgard expedition, right?!";
+			next;
+			select("Yes.:How did he know?");
+			mes "[Fome]";
+			mes "Well, it's simple.";
+			mes "There's no one who looks like you or dresses like you around Eclage.";
+			next;
+			mes "[Fome]";
+			mes "I heard the ways to Bifrost are blocked by a strange rift and soon, travelers who came here through the Hazy Forest started to appear.";
+			next;
+			mes "[Fome]";
+			mes "They are humans who came from Midgard passing through Jotunheim!";
+			mes "Seriously...I'm glad I came to Eclage.";
+			mes "I didn't expect to meet a person from Midgard!";
+			next;
+			mes "[Fome]";
+			mes "Eclage is crowded with travelers, and until recently, most of them were from Alpheim.";
+			mes "It's nice to see you. I was about to talk to you just now.";
+			next;
+			switch(select("Why is Eclage popular among travelers?:What is the main attraction of Eclage?")) {
+			case 1:
+			case 2: //missing
+				mes "[Fome]";
+				mes "Why does this place have so many travelers...?";
+				mes "First of all, I think it's due to the fact that you're able to communicate freely here since Eclage is with Bifrost.";
+				next;
+				mes "[Fome]";
+				mes "Thanks to Bifrost's will, everyone is able to communicate with no problem here just like you and I right now.";
+				next;
+				mes "[Fome]";
+				mes "Second, it's because Eclage is the end and the gateway of Alpheim.";
+				mes "It's the only way to get to Jotunheim.";
+				next;
+				mes "[Fome]";
+				mes "A great number of travelers who admire the unknown world come to Eclage.";
+				mes "Also, they want to see Bifrost, which connects Jotunheim and Alpheim, with their own eyes.";
+				next;
+				mes "[Fome]";
+				mes "Moreover, the biggest reason why Eclage is so crowded recently is...!!!";
+				next;
+				select("It is...?!");
+				emotion e_loud;
+				mes "[Fome]";
+				mes "A new Mayor Jun was born!";
+				next;
+				select("Whosa whatsits?");
+				mes "[Fome]";
+				mes "No, no, Mayor Jun. It's a Laphine name.";
+				mes "It's a...right, it means a 'king.'";
+				mes "The King is born!";
+				next;
+				mes "[Fome]";
+				mes "Although he is pretty old, he became a king.";
+				mes "As the king of Laphines, he is so beautiful.";
+				next;
+				select("When was that?");
+				mes "[Fome]";
+				mes "Mm? Maybe 10 years ago?";
+				mes "5 years ago? Or 15? Anyway, it's less than 100 years.";
+				next;
+				break;
+			}
+			setquest 7411;
+			callfunc "F_Eclage_Traveler";
+			mes "This traveler named Fome is going on forever about the king of Laphines.";
+			mes "It seems as if she doesn't care about others and is sinking into her own world, so it's hard to understand what she's talking about.";
+			mes "Let's talk to other travelers.";
+			close;
+		} else {
+			mes "[Fome]";
+			mes "Oh my, did I talk too much?";
+			mes "But you're really lucky.";
+			mes "If you tell them that you're here to congratulate on the birth of new Mayor Jun, you'll surely meet the great Kardui.";
+			next;
+			mes "[Fome]";
+			mes "Ah...how beautiful.";
+			mes "I heard some bad rumors but I don't believe in them at all~";
+			next;
+			mes "[Fome]";
+			mes "Ha, I almost went too far again.";
+			mes "Did you talk to Litrip and York?";
+			next;
+			mes "[Fome]";
+			mes "When it comes to Bifrost Tower, which is the most popular tourist attraction, Litrip knows the best!";
+			close;
+		}
+	} else if (ep14_2_tl == 1) {
+		mes "[Fome]";
+		mes "An Eclage Guard was looking for you just a minute ago, right?";
+		mes "I think he said he'll be waiting for you at the east gate. Don't you have to go?";
+		next;
+		mes "[Fome]";
+		mes "Since he was very polite and all, I'm sure it's something good.";
+		mes "Sure. The Laphines in Eclage are very generous to travelers.";
+		close;
+	} else {
+		mes "[Fome]";
+		mes "You seem very busy.";
+		mes "I heard so much about you from here and there.";
+		mes "I see that you're friends with Laphines already.";
+		close;
+	}
+OnTouch:
+	if (ep14_2_tl == 0 && checkquest(7411) == -1 && checkquest(7412) == -1 && checkquest(7413) == -1) {
+		mes "A group of travelers of Alpheim are having a conversation.";
+		emotion e_loud;
+		next;
+		if(select("Avoid them.:Join the group.") == 1) {
+			mes "They don't seem to care that much.";
+			close;
+		}
+		mes "When you approach, they stop talking for a second and make a seat for you.";
+		mes "Start a conversation.";
+		close;
+	}
+	end;
+}
+
+ecl_in01,32,51,6	script	Traveler Litrip#tl02	513,{
+	if (ep14_2_tl == 0) {
+		if (checkquest(7412) == -1) {
+			mes "[Litrip]";
+			mes "Oh, look at this strange traveler.";
+			mes "Come here. My name is Litrip.";
+			next;
+			mes "[Litrip]";
+			mes "You're from Mora?";
+			mes "You must have seen Bifrost Tower on the way then?";
+			next;
+			switch(select("I saw it from the outside.:I've gone inside the tower.")) {
+			case 1:
+				mes "[Litrip]";
+				mes "Really? That's too bad.";
+				mes "Well, but it's good to play it safe since there are frightful monsters inside the tower.";
+				mes "It's certainly better than losing your life by being rash.";
+				next;
+				break;
+			case 2:
+				mes "[Litrip]";
+				mes "I see. Wasn't it pretty crazy?";
+				mes "Once upon a time, It used to be a very nice observatory.";
+				next;
+				mes "[Litrip]";
+				mes "Although it's occupied by horrible monsters now.";
+				mes "Seeing that you went into the tower and came out unharmed, I can tell you're pretty skilled.";
+				next;
+				break;
+			}
+			mes "[Litrip]";
+			mes "There's a rumor that a suspicious alchemist resides on top of the tower.";
+			mes "No one knows why, but I heard he's been there for a good while.";
+			next;
+			mes "[Litrip]";
+			mes "If that alchemist is still alive, he could be a living history himself since the tower, the alchemist, and Bifrost have existed even before Eclage was founded.";
+			next;
+			mes "[Litrip]";
+			mes "A good number of people still challenge themselves to find the mysterious legend of Bifrost but so far, none of them succeeded.";
+			next;
+			select("What about Laphines?");
+			mes "[Litrip]";
+			mes "Hmm, Laphines?";
+			mes "For some reason, they're not interested in Bifrost Tower at all.";
+			mes "I think they perceive it just as a natural object.";
+			next;
+			mes "[Litrip]";
+			mes "They're actually more than capable of solving the mystery if they wanted to but I feel like they're just respecting the existence of Bifrost Tower.";
+			next;
+			mes "[Litrip]";
+			mes "However, they don't necessarily stop people from going into the tower, either. So I'm thinking maybe they're just not aware of it.";
+			mes "If you're curious, go challenge yourself and solve the mystery of the tower.";
+			next;
+			setquest 7412;
+			callfunc "F_Eclage_Traveler";
+			mes "[Litrip]";
+			mes "If you ever happen to solve the mystery of Bifrost Tower, let me be the first one to know about it.";
+			mes "You're strong enough to explore the tower.";
+			mes "I only got to the first floor. Haha.";
+			next;
+			mes "[Litrip]";
+			mes "Have you talked to other friends?";
+			mes "Isn't information the most important thing to a traveler?";
+			close;
+		} else {
+			mes "[Litrip]";
+			mes "It's not fun listening to my story only.";
+			mes "You should go talk to Fome and Chiba, too.";
+			next;
+			mes "[Litrip]";
+			mes "And Let me know if you ever solve the mystery of Bifrost Tower.";
+			mes "I'll be looking forward to hearing from you, hahaha.";
+			close;
+		}
+	} else if (ep14_2_tl == 1) {
+		mes "[Litrip]";
+		mes "It seems like Laphines have some official affairs to do with you.";
+		mes "Didn't they tell you to come to the east gate?";
+		mes "You should go.";
+		close;
+	} else {
+		mes "[Litrip]";
+		mes "Since the last time I saw you talking to the guard, I hear your name here and there.";
+		mes "Is it something important? You've become pretty famous here.";
+		close;
+	}
+}
+
+ecl_in01,35,51,2	script	Traveler Chiba#tl03	514,{
+	if (ep14_2_tl == 0) {
+		if (checkquest(7413) == -1) {
+			mes "[Chiba]";
+			mes "You're human from Midgard.";
+			mes "I'm Chiba.";
+			mes "As you can see, I'm a traveler just like you.";
+			next;
+			mes "[Chiba]";
+			mes "I think local area information is the most important when traveling.";
+			mes "You think so, too?";
+			next;
+			mes "[Chiba]";
+			mes "I heard there's a way to avoid a rift that is blocking Jotunheim...";
+			mes "Do people really travel through Hazy Forest?";
+			next;
+			switch(select("Yes.:By magic!")) {
+			case 1:
+				mes "[Chiba]";
+				mes "So it is.";
+				mes "That's how strong humans are, I guess.";
+				mes "When I was Mora, I heard there are many missing men in Hazy Forest...";
+				next;
+				break;
+			case 2:
+				mes "[Chiba]";
+				mes "Indeed... people who get to Mora first use magic to help others travel?";
+				mes "That's brilliant.";
+				next;
+				break;
+			}
+			mes "[Chiba]";
+			mes "Anyway it's true that there are active interactions thanks to you people.";
+			mes "I should be grateful for that.";
+			next;
+			mes "[Chiba]";
+			mes "Do you want to know something more interesting?";
+			mes "Everyone in Alpheim knows about it, but I'm sure you people have never heard about it.";
+			next;
+			mes "[Chiba]";
+			mes "Among Laphines, have you seen the taller ones with especially bright skin and gorgeous wings?";
+			next;
+			mes "[Chiba]";
+			mes "They're the 'Donas.' By the way, normal-looking Laphines are called 'Papang' in their language.";
+			mes "It sounds like some kind of a snack, but well, we should respect them.";
+			next;
+			mes "[Chiba]";
+			mes "The reason Donas are taller and gorgeous is because they're all candidates for Mayor.";
+			mes "That is, they all have a chance of becoming the king.";
+			next;
+			mes "[Chiba]";
+			mes "We're not talking about upper class or lower class here. They are classified according to their job.";
+			mes "It might not be important, but it's good to know about it as a foreigner.";
+			next;
+			mes "[Chiba]";
+			mes "Anyway, Donas have strong magical powers and they live longer. But since there are not many of them most of them are assigned to important positions.";
+			next;
+			mes "[Chiba]";
+			mes "The throne of the king of Laphines seems to be inherited by blood, but it isn't in reality.";
+			mes "Mayor Jun is known to emerge among the Donas but it's just exactly that.";
+			next;
+			mes "[Chiba]";
+			mes "He literally just emerges without any kind of a formal inheritance process.";
+			mes "Isn't it pretty interesting?";
+			next;
+			setquest 7413;
+			callfunc "F_Eclage_Traveler";
+			mes "[Chiba]";
+			mes "Try talking to the other travelers."; //custom
+			close;
+		} else {
+			mes "[Chiba]";
+			mes "Try talking to the other travelers."; //custom
+			close;
+		}
+	} else if (ep14_2_tl == 1) {
+		mes "[Chiba]";
+		mes "Wasn't there an Eclage Guard looking for you just now?";
+		mes "You'd better respect Laphines as much as possible in order to avoid any discord.";
+		mes "It's the basis of traveling.";
+		close;
+	} else {
+		mes "[Chiba]";
+		mes "So, you weren't a mere traveler after all.";
+		close;
+	}
+}
+
+ecl_in01,82,70,2	script	Eclage Guard#tl02	447,{
+	if (ep14_2_tl == 0) {
+		mes "[Eclage Guard]";
+		mes "Welcome to Eclage."; //custom
+		close;
+	} else if (ep14_2_tl == 1) {
+		cutin "minuel02.bmp",2;
+		mes "[Eclage Guard]";
+		mes "Oh, you are here!";
+		mes "May I escort take you to the one who wants to meet you?";
+		next;
+		switch(select("Sure. Let's go.:I don't have time for it right now...")) {
+		case 1:
+			mes "[Eclage Guard]";
+			mes "Please follow me then.";
+			erasequest 7414;
+			setquest 7415;
+			set ep14_2_tl,2;
+			close2;
+			warp "ecl_in03",244,89;
+			cutin "minuel02.bmp",255;
+			end;
+		case 2:
+			mes "[Eclage Guard]";
+			mes "Ah...is that right?";
+			mes "I'll wait then.";
+			next;
+			mes "[Eclage Guard]";
+			mes "Don't worry about me.";
+			mes "I'll just wait here as long as it takes.";
+			mes "Well, it's my job. Don't worry.";
+			close2;
+			cutin "minuel02.bmp",255;
+			end;
+		}
+	} else if (ep14_2_tl == 2) {
+		cutin "minuel01.bmp",2;
+		mes "[Eclage Guard]";
+		mes "I thought you sill had something to do.";
+		mes "May I guide you?";
+		next;
+		switch(select("Yes, please.:No, it's okay.")) {
+		case 1:
+			mes "[Eclage Guard]";
+			mes "Please follow me then.";
+			close2;
+			warp "ecl_in03",244,89;
+			cutin "minuel02.bmp",255;
+			end;
+		case 2:
+			mes "[Eclage Guard]";
+			mes "Is that right?";
+			mes "I see. Come find me whenever you need it.";
+			close2;
+			cutin "minuel02.bmp",255;
+			end;
+		}
+	} else if (ep14_2_tl == 3) {
+		cutin "minuel01.bmp",2;
+		mes "[Eclage Guard]";
+		mes "I see you pretty often.";
+		mes "I was notified in advance that the Chief of Staff requested for an audience.";
+		next;
+		if (checkquest(7416,PLAYTIME) < 2) {
+			mes "[Eclage Guard]";
+			mes "But I'm afraid it's too early.";
+			mes "I think you have to wait for a while.";
+			close2;
+			cutin "minuel02.bmp",255;
+			end;
+		}
+		mes "[Eclage Guard]";
+		mes "I see you pretty often.";
+		mes "I was notified in advance that the Chief of Staff requested for an audience.";
+		next;
+		mes "[Eclage Guard]";
+		mes "Since it's about time, should I lead you in now?";
+		next;
+		switch(select("Yes, please.:I'll come back later.")) {
+		case 1:
+			mes "[Eclage Guard]";
+			mes "Follow me, please.";
+			set ep14_2_tl,4;
+			close2;
+			warp "ecl_in03",58,72;
+			cutin "minuel02.bmp",255;
+			end;
+		case 2:
+			mes "[Eclage Guard]";
+			mes "Do as you wish although Mayor Jun might be upset if you keep him waiting for too long.";
+			close2;
+			cutin "minuel02.bmp",255;
+			end;
+		}
+	} else if (ep14_2_tl == 4) {
+		cutin "minuel01.bmp",2;
+		mes "[Eclage Guard]";
+		mes "May I escort you to the audience chamber?";
+		next;
+		switch(select("Yes, please.:No, it's okay.")) {
+		case 1:
+			mes "[Eclage Guard]";
+			mes "Follow me, please.";
+			close2;
+			warp "ecl_in03",58,72;
+			cutin "minuel02.bmp",255;
+			end;
+		case 2:
+			mes "[Eclage Guard]";
+			mes "Thank you.";
+			mes "I thought you were using me for teleportation since you're here so often.";
+			close2;
+			cutin "minuel02.bmp",255;
+			end;
+		}
+	} else if (ep14_2_tl == 5) {
+		if (checkquest(7418) == -1) {
+			cutin "minuel01.bmp",2;
+			mes "[Eclage Guard]";
+			mes "Eh, good to see you again.";
+			mes "We should have introduced ourselves earlier if we knew we would run into each other so often like this.";
+			next;
+			mes "[Minuel]";
+			mes "I'm Minuel.";
+			mes "It's such a common name. I don't even know what it means.";
+			mes "I think my parents just gave me a name that is easy on the ear.";
+			next;
+			mes "[Minuel]";
+			mes "Come to think of it, I heard the news.";
+			mes "You've decided to work in Eclage...";
+			next;
+			switch(select("It's just a rumor.:Do they have a job for me?")) {
+			case 1:
+				mes "[Minuel]";
+				mes "Eh? Really?";
+				mes "That's too bad. There was a suitable job for you.";
+				mes "Well, I understand.";
+				close2;
+				cutin "minuel02.bmp",255;
+				end;
+			case 2:
+				mes "[Minuel]";
+				mes "Actually I don't have any time for myself since I have to be here all the time.";
+				mes "Not only I, but most Laphines who are in this business are faced with that position, too.";
+				next;
+				mes "[Minuel]";
+				mes "So, we don't have any time to decorate our Yai.";
+				mes "Of course we could buy the materials. But just like any other consumers, we would like to gather them on our own.";
+				next;
+				mes "[Minuel]";
+				mes "Since you're free to go anywhere,";
+				mes "could you gather some decorations for Yai?";
+				next;
+				switch(select("Sure.:No.")) {
+				case 1:
+					mes "[Minuel]";
+					mes "Thank you.";
+					mes "You need to find";
+					mes "5 Horns of Hillslion, 5 Magical Powers, and 5 Horse's Hooves each.";
+					next;
+					mes "[Minuel]";
+					mes "I would like to decorate it with unpolished beauty.";
+					mes "You can get the materials by hunting the monsters near Splendide, where I'm not supoosed to go.";
+					next;
+					mes "[Minuel]";
+					mes "I've heard some rumors about Hillslions, and they seem to appear in Sapha's areas.";
+					mes "Their horns, Mystic Horns of Cornuses that live in the grasslands and something called Horse's Hooves.";
+					next;
+					mes "[Minuel]";
+					mes "I'm sure you would know more about those hooves than I do.";
+					mes "I'll be counting on you!";
+					setquest 7418;
+					close2;
+					cutin "minuel02.bmp",255;
+					end;
+				case 2:
+					mes "[Minuel]";
+					mes "Ha, do you really think so?";
+					mes "You will be coming here again.";
+					mes "Soon, in the near future. Hehehe~";
+					close2;
+					cutin "minuel02.bmp",255;
+					end;
+				}
+			}
+		}
+		mes "[Minuel]";
+		mes "I asked you for 5 Horns of Hillslion, 5 Mystic Horns, and 5 Horse's Hooves.";
+		mes "You'll be able to get Mystic Horns by catching Cornuses near Splendide.";
+		close;
+	}
+}
+
+ecl_in03,245,93,2	script	Chief of Staff#tl01	435,{
+	if (ep14_2_tl < 2) {
+		mes "[Chief of Staff]";
+		mes "Sorry, but no unauthorized entry is allowed here.";
+		close;
+	} else if (ep14_2_tl == 2) {
+		mes "[Chief of Staff]";
+		mes "Welcome to Eclage.";
+		mes "I ordered them to lead you here.";
+		next;
+		mes "[Shenime]";
+		mes "I'm in charge of the military supplies that are sent to the outpost of Splendide.";
+		mes "My name is Shenime.";
+		next;
+		mes "[Shenime]";
+		mes "Our supplies sent to Mora Village...";
+		mes "oww...I'm sorry. I've been having this headache recently...";
+		next;
+		mes "[Shenime]";
+		mes "Anyway, I've heard that there are people";
+		mes "who deliver our supplies to Splendide through Hazy Forest.";
+		next;
+		mes "[Shenime]";
+		mes "It's so good to see you in person.";
+		mes "People who are clever enough are already trying hard to build relationships with Eclage.";
+		next;
+		select("So, I'm not the first one?");
+		mes "[Shenime]";
+		mes "Yes, you're not...oww...";
+		mes "But it doesn't matter.";
+		mes "You humans are already doing so much for Splendide and us.";
+		next;
+		mes "[Shenime]";
+		mes "Oh, the reason I'm frowning is because of this headache.";
+		mes "Don't get me wrong.";
+		mes "Um...anyway, to go on with my story...";
+		next;
+		mes "[Shenime]";
+		mes "We are supposed to welcome you.";
+		mes "Should I get to the point now? I mean, the reason why I wanted to meet you.";
+		next;
+		mes "[Shenime]";
+		mes "As you know already, we're disconnected from Splendide due to the accident in Bifrost.";
+		mes "And for us Laphines, it's hard to go against the will of the forest and Bifrost.";
+		next;
+		mes "[Shenime]";
+		mes "I'm sure every fairy in Alpheim feels the same, too.";
+		mes "Anyway, I want to know what's going on in Splendide and Jotunheim nowadays.";
+		next;
+		mes "[Shenime]";
+		mes "I heard the battle against Manuk has recently calmed down to the point of a truce...";
+		mes "and it could have been that they didn't get supplies in time.";
+		next;
+		mes "You've answered Shenime's serious questions and describe the situation as far as you could remember.";
+		next;
+		select("Now that I think about it...");
+		mes "[Shenime]";
+		mes "What is it?";
+		mes "What you've told me is going to be very helpful.";
+		mes "Is there anything else you would like to talk about?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "I was told that Sapha made Yggdrasil Tree sick,";
+		mes "and your side started a war in order to protect the tree...";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "...but what I know is a little bit different from that.";
+		mes "Apparently, the cause of the war seems to be the damage given to Yggdrasil Tree caused by Sapha's excessive mining, but...";
+		next;
+		mes "[Shenime]";
+		mes "Wait, stop there.";
+		next;
+		select("What's the matter?");
+		mes "[Shenime]";
+		mes "This war is like a holy war for us.";
+		mes "It's a war that we carry on upon our honor and dignity.";
+		next;
+		mes "[Shenime]";
+		mes "So whatever the truth you know is,";
+		mes "if you're not going to hold responsibility for the backlash it might bring,";
+		mes "don't say anything at all.";
+		next;
+		select("Why are you trying to hide the truth...");
+		mes "[Shenime]";
+		mes "This is a matter between Yggdrasil the world-ash and its protector.";
+		mes "Mayor Jun should be the one listening to your story, not me.";
+		next;
+		select("What?");
+		mes "[Shenime]";
+		mes "My work is done here.";
+		mes "What I'm saying is that I'm not the one to clear up your question.";
+		mes "I'll arrange a meeting with Mayor Jun for you.";
+		next;
+		mes "In the middle of the conversation, Shenime stopped talking and frowned as if he was having a headache again.";
+		mes "After massaging his head for a while, he looked much better and continued to go on.";
+		next;
+		mes "[Shenime]";
+		mes "Promise me that you will not tell anyone";
+		mes "about the truth that you believe.";
+		next;
+		if(select("No!:Yes, I promise.") == 1) {
+			mes "[Shenime]";
+			mes "You put me on the spot.";
+			mes "I don't want you to be the cause of friction.";
+			next;
+			mes "[Shenime]";
+			mes "Can't you just keep it to yourself before discussing the matter with Mayor Jun?";
+			next;
+			switch(select("No, I can't!:Fine, I won't tell anyone.")) {
+			case 1:
+				mes "[Shenime]";
+				mes "Oh well...";
+				mes "It's your loss...";
+				close;
+			case 2:
+				mes "[Shenime]";
+				mes "I see that you've made up your mind.";
+				next;
+				break;
+			}
+		}
+		mes "[Shenime]";
+		mes "I'll arrange a meeting to let Mayor Jun get to know you.";
+		mes "You need to wait a little bit. Please bear with us.";
+		next;
+		mes "[Shenime]";
+		mes "I'll notify the guard that brought you here.";
+		mes "Go find the guard after some time.";
+		mes "He will guide you.";
+		next;
+		mes "[Shenime]";
+		mes "Until then, I hope you have a good time.";
+		mes "I'll send you to the plaza.";
+		mes "By the way, the guard who is going to lead you will be at the east gate. Don't forget the time.";
+		erasequest 7415;
+		setquest 7416;
+		set ep14_2_tl,3;
+		close2;
+		warp "ecl_in01",47,28;
+		end;
+	} else if (ep14_2_tl == 3) {
+		if (checkquest(7416,PLAYTIME) < 2) {
+			mes "[Shenime]";
+			mes "You need to wait a little longer to see Mayor Jun.";
+			mes "He is pretty busy, so please bear with us.";
+			close;
+		}
+		mes "[Shenime]";
+		mes "There's another guard who was supposed to be guiding you...";
+		mes "I can't go anywhere right now.";
+		next;
+		mes "[Shenime]";
+		mes "There's a guard at the east side of the plaza near the gate.";
+		mes "I notified him already, so just ask him to guide you.";
+		close;
+	} else if (ep14_2_tl == 4) {
+		mes "[Shenime]";
+		mes "Did you tell Mayor Jun about what you think?";
+		mes "He should be the one to decide.";
+		next;
+		mes "[Shenime]";
+		mes "It seems like you haven't even met him yet. Ask the guard to guide you.";
+		close;
+	} else if (ep14_2_tl == 5) {
+		mes "[Shenime]";
+		mes "I've heard about you.";
+		mes "You've decided to work for Eclage?";
+		next;
+		mes "[Shenime]";
+		mes "At the starting point of Bifrost, there should be a messenger stamping his feet.";
+		next;
+		mes "[Shenime]";
+		mes "It's a messenger that we sent in an effort to contact Splendide regularly,";
+		mes "but I think it's still difficult to do so.";
+		next;
+		mes "[Shenime]";
+		mes "If you could help us with that, wouldn't other Laphines think better of you?";
+		close;
+	}
+}
+
+ecl_in03,41,90,2	script	Mayor Jun Kardui#tl01	624,{
+	if (ep14_2_tl < 4) {
+		mes "[Kardui]";
+		mes "Mmm...";
+		mes "I don't know who you are, but could you wait until I call you?";
+		mes "I'll have to meet you some day, but now is not the right time.";
+		cutin "kardui01.bmp",1;
+		close2;
+		cutin "kardui01.bmp",255;
+		end;
+	} else if (ep14_2_tl == 4) {
+		mes "[Kardui]";
+		mes "Welcome to Eclage, stranger.";
+		mes "...this was a popular way of greeting each other, but I guess it's not fun anymore.";
+		cutin "kardui01.bmp",1;
+		next;
+		mes "[Kardui]";
+		mes "Anyway, you who came from a long way away";
+		mes "and reconized by the guardian.";
+		mes "There is a truth that you would like to tell me?";
+		next;
+		mes "[Kardui]";
+		mes "If that's the case, you will be very busy from now on.";
+		next;
+		select("What do you mean?");
+		mes "[Kardui]";
+		mes "You have to do a lot of work in order to convince me, the elders, and many other Laphines.";
+		next;
+		mes "[Kardui]";
+		mes "Of couse I could trust everything you say,";
+		mes "but will other Laphines accept a Mayor Jun who is swayed by a word of a foreigner?";
+		next;
+		cutin "kardui03.bmp",1;
+		mes "[Kardui]";
+		mes "Especially when that Mayor Jun is me. Ah...";
+		next;
+		cutin "kardui01.bmp",1;
+		mes "[Kardui]";
+		mes "Don't you understand?";
+		mes "Here, in Eclage, You have to get more recognition from Laphines.";
+		next;
+		if(select("Do I have to make a contribution?:It's about Yggdrasil!") == 1) {
+			mes "[Kardui]";
+			mes "See, you understood it right.";
+			next;
+			select("It's about Yggdrasil!");
+		}
+		cutin "kardui04.bmp",1;
+		mes "[Kardui]";
+		mes "Um.";
+		mes "I know.";
+		next;
+		mes "[Kardui]";
+		mes "You don't have to make a face.";
+		mes "No matter what I look like to you, I am the history and the spirit of Laphines, and also the protector of Yggdrasil.";
+		next;
+		mes "[Kardui]";
+		mes "Do you think I, who inherited the will of Yggdrasil, don't know anything?";
+		mes "I don't blame you since it is ignorance.";
+		next;
+		mes "[Kardui]";
+		mes "The war of Jotunheim will soon be over.";
+		mes "And it will happen not by constraint, but as a result of mutual agreement.";
+		next;
+		cutin "kardui01.bmp",1;
+		mes "[Kardui]";
+		mes "So, stranger,";
+		mes "don't worry about it and do you want to work with me for Eclage?";
+		next;
+		select("Then why do you make war and disregard the truth?");
+		cutin "kardui02.bmp",1;
+		mes "[Kardui]";
+		mes "Hmm...";
+		mes "I'll tell you when we get closer to each other.";
+		mes "I'm not obligated to talk about this important subject with a person I just met.";
+		next;
+		cutin "kardui01.bmp",1;
+		mes "[Kardui]";
+		mes "For now, I will tell the administrative ruler, the elders, and all the guards";
+		mes "about you,";
+		mes "and you will enjoy all the rights in Eclage as a person who works for the king.";
+		next;
+		select("Just hire a worker then!");
+		mes "[Kardui]";
+		mes "It's a part of building relationships with me, the king of a race. You don't like it?";
+		mes "If that's the case, I guess there's no friendship between the two of us.";
+		next;
+		select("What do you mean 'the two of us'?");
+		mes "[Kardui]";
+		mes "Us?";
+		mes "Umm...";
+		mes "Friends who share their secrets from now on?";
+		next;
+		mes "[Kardui]";
+		mes "...Haha...wasn't it funny?";
+		mes "What's up with that face.";
+		mes "Anyway, I allow you to visit anytime.";
+		next;
+		cutin "kardui04.bmp",1;
+		mes "[Kardui]";
+		mes "However, if you don't meet my expectation, you won't get anything.";
+		mes "I'll be looking forward to seeing you, stranger who will be my friend.";
+		erasequest 7416;
+		setquest 7417;
+		set ep14_2_tl,5;
+		close2;
+		cutin "kardui01.bmp",255;
+		end;
+	} else if (ep14_2_tl == 5) {
+		mes "[Kardui]";
+		mes "Now, you who work for the king!";
+		mes "Work your fingers to the bone for me!";
+		next;
+		cutin "kardui04.bmp",1;
+		mes "[Kardui]";
+		mes "...It's a joke.";
+		mes "I truly want you to become an important figure in Eclage.";
+		mes "Even if you don't, I want you to be recognized as a harmless person who gives benefit to Eclage.";
+		next;
+		mes "[Kardui]";
+		mes "It's going to be tough, but think of it as having insurance.";
+		mes "Some day, a person who remembers your name will be a great help to you.";
+		close2;
+		cutin "kardui01.bmp",255;
+		end;
+	}
+}
+
+ecl_in01,31,49,6	script	Eclage Guard#tl01	447,{
+	mes "[Eclage Guard]";
+	mes "Oh, I should hurry and go back to where I was.";
+	mes "Excuse me.";
+	close;
+OnInit:
+OnDisable:
+	disablenpc "Eclage Guard#tl01";
+	end;
+OnEnable:
+	enablenpc "Eclage Guard#tl01";
+	end;
+}
+
+ecl_fild01,205,86,4	script	Eclage Messenger Roy#tl	461,{
+	if (ep14_2_tl < 5) {
+		mes "[Roy]";
+		mes "I can make it to Mora Village.";
+		mes "But how can I go through Hazy Forest? All alone?";
+		mes "...Ah... I'm just feeling sorry for myself, so just continue on your way.";
+		close;
+	} else {
+		if (checkquest(7419) == -1) {
+			mes "[Roy]";
+			mes "It's hard.";
+			mes "It really is hard.";
+			mes "The more I think about it, I feel like Shenime has a nasty temper.";
+			emotion e_gasp;
+			next;
+			mes "[Roy]";
+			mes "You, who appeared in this time of crisis.";
+			mes "You, who went through Hazy Forest Maze... Are you the guidance of god? Or a blessing from god?";
+			next;
+			mes "[Roy]";
+			mes "I guess I have no other choice.";
+			mes "They say Laphines are nothing without their pride, but since I value my life over pride,";
+			mes "can I ask you a favor?";
+			next;
+			switch(select("What is it?:No.")) {
+			case 1:
+				mes "[Roy]";
+				mes "It's something difficult for Laphines, but for humans, it's very easy.";
+				mes "That is, brining the news from Splendide!";
+				next;
+				mes "[Roy]";
+				mes "I should take care of it but...";
+				mes "my magical powers are not all that great.";
+				next;
+				mes "[Roy]";
+				mes "...well, you don't need to know the details!";
+				mes "You just need to collect mails from the contact officer in Splendide.";
+				next;
+				mes "[Roy]";
+				mes "There's nothing confidential, so you can do it, too.";
+				mes "Bringing one mail. I'm sure it's easy for you.";
+				next;
+				switch(select("Leave it to me!:I don't want to.")) {
+				case 1:
+					mes "[Roy]";
+					mes "Good!";
+					mes "Go to Splendide and meet the contact officer!";
+					mes "Collect mails that are not confidential and could be a love letter to someone!";
+					mes "and bring them to me, please.";
+					setquest 7419;
+					next;
+					mes "[Roy]";
+					mes "Isn't that easy?";
+					mes "I'll be standing here and waiting for you to bring me that mail.";
+					close;
+				case 2:
+					mes "[Roy]";
+					mes "What? You're saying no after making me talk all this time?";
+					mes "....Well, things happen.";
+					mes "But you'll come back. So I'm not worried.";
+					next;
+					mes "[Roy]";
+					mes "Hehe. I knew it.";
+					mes "From the moment they picked me for this job,";
+					mes "everything is in 'the big invisible hand!!'";
+					close;
+				}
+			case 2:
+				mes "[Roy]";
+				mes "Ah...";
+				mes "It took you less than a second to say no, how clear is that.";
+				mes "Now, I'll erase the memory of this very moment!";
+				next;
+				mes "[Roy]";
+				mes "So that I could ask you again with a renewed mind.";
+				mes "Ahahahah...ha...hahha..hahaa..";
+				close;
+			}
+		}
+		mes "[Roy]";
+		mes "Let me explain again.";
+		mes "Go to Splendide and meet the contact officer!";
+		mes "Collect mails that are not confidential and could be a love letter to someone!";
+		mes "and bring them to me, please.";
+		close;
+	}
+}
+
+eclage,112,40,4	script	Eclage Guard Leo#tl	461,{
+	if (ep14_2_tl < 5) {
+		mes "[Leo]";
+		mes "Welcome to Eclage, the capital of Laphines and a gateway to Alpheim.";
+		mes "I hope you enjoy your trip.";
+		close;
+	} else {
+		if (checkquest(7420) == -1) {
+			mes "[Leo]";
+			mes "Hi, how are you?";
+			emotion e_gasp;
+			next;
+			mes "[Leo]";
+			mes "How are you, really!";
+			next;
+			mes "[Leo]";
+			mes ".....";
+			next;
+			switch(select("Does he want something?:It's a strange fairy!")) {
+			case 1:
+				mes "[Leo]";
+				mes "Mayor Jun told us";
+				mes "that you would do anything for Laphines and Eclage.";
+				next;
+				mes "[Leo]";
+				mes "In order to take care of the urgent matter...";
+				next;
+				switch(select("No, I refuse!:What do you want me to do?")) {
+				case 1:
+					mes "[Leo]";
+					mes "Although you have all the rights to say no, this is what I get...";
+					mes "I understand.";
+					close;
+				case 2:
+					mes "[Leo]";
+					mes "It's nothing more than a request for Pinguicula's pickled fruits and Luciola's honey jam,";
+					mes "which are specialties of Splendide...";
+					next;
+					mes "[Leo]";
+					mes "I know it's something personal...but Hazy Forest is such a huge obstacle...";
+					mes "so I couldn't help but...";
+					next;
+					select("You said it's something urgent!!!");
+					mes "[Leo]";
+					mes "I feel like I might die if I don't eat them!!!";
+					mes "What's more urgent than this?!!?!?";
+					next;
+					mes "[Leo]";
+					mes "You visit Splendide pretty often anyway!";
+					mes "On your way back, just carry one under your arm, another in your hand, please~";
+					mes "I won't ask you anything like this ever again!";
+					next;
+					mes "[Leo]";
+					mes "So...is that yes?";
+					mes "I need 3 jars of Pinguicula's pickled fruits and another 3 jars of Luciola's honey jam~";
+					mes "They are sold inside the base of Splendide.";
+					setquest 7420;
+					next;
+					mes "[Leo]";
+					mes "You might need Splendide Coins to buy pickled fruits and honey jam.";
+					mes "You could earn those coins if you work in Splendide, so...hehe..........";
+					next;
+					mes "[Leo]";
+					mes "Helping out in Splendide is eventually helping Eclage, too.";
+					mes "Now, go for it!";
+					close;
+				}
+			case 2:
+				mes "[Leo]";
+				mes "Oh...no. I'm not a weird Laphine.";
+				mes "You got me wrong. It's a misunderstanding...";
+				close;
+			}
+		}
+		mes "[Leo]";
+		mes "I need 3 jars of Pinguicula's pickled fruits and another 3 jars of Luciola's honey jam~";
+		mes "They are specialties of the base of Splendide.";
+		mes "I'll be counting on you!";
+		close;
+	}
+}
+
+ecl_in03,245,54,2	script	Working Laphine	439,{	//Laphine on official duty#tl01
+	mes "[Working Laphine]";
+	mes "This is the office area designated for official business.";
+	mes "You're not supposed to be here.";
+	close;
+}
+
+ecl_in03,244,57,4	script	Resting Laphine#tl01	440,{
+	mes "Two Laphines from the upper class are talking about something.";
+	mes "One of them seems to be working and very annoyed.";
+	mes "As if they were aware of my stare, they waved me away with a show of irritation.";
+	close;
+}
+
+ecl_in02,98,32,2	script	Eclage Guard#tl1b	461,{
+	mes "[Eclage Guard]";
+	mes "This the prison where we put criminals.";
+	mes "No outsiders can enter.";
+	close;
+}
+
+eclage,274,294,4	script	Conversing Laphine	436,{	//Laphines in a conversation#tl02
+	mes "A female Laphine and a male Laphine are talking about something.";
+	mes "But they stopped talking as soon as they saw me.";
+	mes "I think I've interrupted the conversation.";
+	close;
+}
+
+eclage,275,294,2	script	Eclage Resident#tl02	445,{
+	mes "[Male Laphine]";
+	mes "You're visiting Eclage?";
+	mes "I hope you have a good time here.";
+	close;
+}
+
+eclage,307,237,0	script	Normal Yai#tllb	844,{
+	mes "This is a Laphine's Yai.";
+	mes "The door is locked shut.";
+	cutin "avn_labo.bmp",4;
+	close2;
+	cutin "avn_labo.bmp",255;
+	end;
+}
+
+// Unknown
+//============================================================
+ecl_fild01,173,95,4	script	Diary Frog No. 30#worm	614,{
+	mes "[Diary Frog No. 30]";
+	mes "As you can see, I am a broken Diary Frog.";
+	mes "Professor Worm threw me out really hard all the way out here.";
+	mes "I didn't even do anything wrong!";
+	close;
+}
+
+eclage,156,56,0	script	Residence Entrance	844,{}
