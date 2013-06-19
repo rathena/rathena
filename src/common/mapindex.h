@@ -46,6 +46,7 @@ extern char mapindex_cfgfile[80];
 #define MAP_MALANGDO "malangdo"
 #define MAP_MALAYA "malaya"
 #define MAP_ECLAGE "eclage"
+#define MAP_ECLAGE_IN "ecl_in01"
 
 // When a map index search fails, return results from what map?
 #define MAP_DEFAULT MAP_PRONTERA

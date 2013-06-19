@@ -5116,11 +5116,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			do {
 				i = rnd() % MAX_SKILL_ABRA_DB;
 				abra_skill_id = skill_abra_db[i].skill_id;
+				abra_skill_lv = min(skill_lv, skill_get_max(abra_skill_id));
 			} while (abra_skill_id == 0 ||
-				skill_abra_db[i].req_lv > skill_lv || //Required lv for it to appear
-				rnd()%10000 >= skill_abra_db[i].per
+				rnd()%10000 >= skill_abra_db[i].per[abra_skill_lv]
 			);
-			abra_skill_lv = min(skill_lv, skill_get_max(abra_skill_id));
+
 			clif_skill_nodamage (src, bl, skill_id, skill_lv, 1);
 
 			if( sd )
@@ -8770,26 +8770,26 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case ECLAGE_RECALL:
 		if( sd )
 		{
-			short x, y; // Destiny position.
-			unsigned short mapindex;
+			short x=0, y=0; // Destiny position.
+			unsigned short mapindex=0;
 
-			if ( skill_id == RETURN_TO_ELDICASTES )
-			{
+			switch(skill_id){
+			default:
+			case RETURN_TO_ELDICASTES:
 				x = 198;
 				y = 187;
 				mapindex  = mapindex_name2id(MAP_DICASTES);
-			}
-			else if ( skill_id == ALL_GUARDIAN_RECALL )
-			{
+				break;
+			case ALL_GUARDIAN_RECALL:
 				x = 44;
 				y = 151;
 				mapindex  = mapindex_name2id(MAP_MORA);
-			}
-			else if ( skill_id == ECLAGE_RECALL )
-			{
+				break;
+			case ECLAGE_RECALL:
 				x = 47;
 				y = 31;
-				mapindex  = mapindex_name2id("ecl_in01");
+				mapindex  = mapindex_name2id(MAP_ECLAGE_IN);
+				break;
 			}
 
 			if(!mapindex)
@@ -8806,33 +8806,31 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case ECL_PEONYMAMY:
 	case ECL_SADAGUI:
 	case ECL_SEQUOIADUST:
-		if ( skill_id == ECL_SNOWFLIP )
-		{
+		switch(skill_id){
+		case ECL_SNOWFLIP:
 			status_change_end(bl, SC_SLEEP, INVALID_TIMER);
 			status_change_end(bl, SC_BLEEDING, INVALID_TIMER);
 			status_change_end(bl, SC_BURNING, INVALID_TIMER);
 			status_change_end(bl, SC_DEEPSLEEP, INVALID_TIMER);
-		}
-		else if ( skill_id == ECL_PEONYMAMY )
-		{
+			break;
+		case ECL_PEONYMAMY:
 			status_change_end(bl, SC_FREEZE, INVALID_TIMER);
 			status_change_end(bl, SC_FREEZING, INVALID_TIMER);
 			status_change_end(bl, SC_CRYSTALIZE, INVALID_TIMER);
-		}
-		else if ( skill_id == ECL_SADAGUI )
-		{
+			break;
+		case ECL_SADAGUI:
 			status_change_end(bl, SC_STUN, INVALID_TIMER);
 			status_change_end(bl, SC_CONFUSION, INVALID_TIMER);
 			status_change_end(bl, SC_HALLUCINATION, INVALID_TIMER);
 			status_change_end(bl, SC_FEAR, INVALID_TIMER);
-		}
-		else if ( skill_id == ECL_SEQUOIADUST )
-		{
+			break;
+		case ECL_SEQUOIADUST:
 			status_change_end(bl, SC_STONE, INVALID_TIMER);
 			status_change_end(bl, SC_POISON, INVALID_TIMER);
 			status_change_end(bl, SC_CURSE, INVALID_TIMER);
 			status_change_end(bl, SC_BLIND, INVALID_TIMER);
 			status_change_end(bl, SC_ORCISH, INVALID_TIMER);
+			break;
 		}
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		break;
@@ -12720,7 +12718,7 @@ int skill_isammotype (struct map_session_data *sd, int skill)
 		(sd->status.weapon == W_BOW || (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE)) &&
 		skill != HT_PHANTASMIC &&
 		skill_get_type(skill) == BF_WEAPON &&
-	  	!(skill_get_nk(skill)&NK_NO_DAMAGE) &&
+		!(skill_get_nk(skill)&NK_NO_DAMAGE) &&
 		!skill_get_spiritball(skill,1) //Assume spirit spheres are used as ammo instead.
 	);
 }
@@ -18225,7 +18223,7 @@ static bool skill_parse_row_reproducedb(char* split[], int column, int current) 
 
 
 static bool skill_parse_row_abradb(char* split[], int columns, int current)
-{// skill_id,DummyName,RequiredHocusPocusLevel,Rate
+{// skill_id,DummyName,RatePerLvl
 	uint16 skill_id = atoi(split[0]);
 	if( !skill_get_index(skill_id) || !skill_get_max(skill_id) )
 	{
@@ -18239,8 +18237,8 @@ static bool skill_parse_row_abradb(char* split[], int columns, int current)
 	}
 
 	skill_abra_db[current].skill_id = skill_id;
-	skill_abra_db[current].req_lv = atoi(split[2]);
-	skill_abra_db[current].per = atoi(split[3]);
+	safestrncpy(skill_abra_db[current].name, trim(split[1]), sizeof(skill_abra_db[current].name)); //store dummyname
+	skill_split_atoi(split[2],skill_abra_db[current].per);
 
 	return true;
 }
@@ -18321,7 +18319,7 @@ static void skill_readdb(void)
 	skill_init_unit_layout();
 	sv_readdb(db_path, "produce_db.txt"        , ',',   4,  4+2*MAX_PRODUCE_RESOURCE, MAX_SKILL_PRODUCE_DB, skill_parse_row_producedb);
 	sv_readdb(db_path, "create_arrow_db.txt"   , ',', 1+2,  1+2*MAX_ARROW_RESOURCE, MAX_SKILL_ARROW_DB, skill_parse_row_createarrowdb);
-	sv_readdb(db_path, "abra_db.txt"           , ',',   4,  4, MAX_SKILL_ABRA_DB, skill_parse_row_abradb);
+	sv_readdb(db_path, "abra_db.txt"           , ',',   3,  3, MAX_SKILL_ABRA_DB, skill_parse_row_abradb);
 	//Warlock
 	sv_readdb(db_path, "spellbook_db.txt"      , ',',   3,  3, MAX_SKILL_SPELLBOOK_DB, skill_parse_row_spellbookdb);
 	//Guillotine Cross

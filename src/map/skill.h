@@ -217,8 +217,8 @@ extern struct s_skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
 
 struct s_skill_abra_db {
 	uint16 skill_id;
-	int req_lv;
-	int per;
+	char name[NAME_LENGTH];
+	int per[MAX_SKILL_LEVEL];
 };
 extern struct s_skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
 
