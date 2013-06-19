@@ -1,6 +1,7 @@
 #
 # Table structure for table `item_db`
 #
+
 DROP TABLE IF EXISTS `item_db`;
 CREATE TABLE `item_db` (
   `id` smallint(5) unsigned NOT NULL default '0',
@@ -31,7 +32,7 @@ CREATE TABLE `item_db` (
 # Items Database
 #
 # Structure of Database:
-# REPLACE INTO `item_db` VALUES ( ID,'AegisName','Name',Type,Buy,Sell,Weight,ATK,DEF,Range,Slots,Job,Upper,Gender,Loc,wLV,eLV,Refineable,View,'Script','OnEquip_Script','OnUnequip_Script');
+#REPLACE INTO `item_db` VALUES ( ID,'AegisName','Name',Type,Buy,Sell,Weight,ATK,DEF,Range,Slots,Job,Upper,Gender,Loc,wLV,eLV,Refineable,View,'Script','OnEquip_Script','OnUnequip_Script');
 #
 # Healing Items
 #=============================================================
@@ -5182,6 +5183,7 @@ REPLACE INTO `item_db` VALUES (12721,'Poison_Numb','Toxin',0,2,NULL,100,NULL,NUL
 REPLACE INTO `item_db` VALUES (12722,'Poison_Fever','Pyrexia',0,2,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_PYREXIA,300000,0,10,0;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12723,'Poison_Laughing','Magic Mushroom',0,2,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_MAGICMUSHROOM,300000,0,10,0;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12724,'Poison_Fatigue','Venom Bleed',0,2,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_VENOMBLEED,15000,0,10,0;',NULL,NULL);
+
 # Rune Knight's Rune Stones
 REPLACE INTO `item_db` VALUES (12725,'Runstone_Nosiege','Nauthiz Rune',11,100,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,8,2,NULL,NULL,NULL,NULL,NULL,'itemskill "RK_REFRESH",1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12726,'Runstone_Rhydo','Raido Rune',11,100,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,8,2,NULL,NULL,NULL,NULL,NULL,'itemskill "RK_CRUSHSTRIKE",1;',NULL,NULL);
@@ -5192,12 +5194,14 @@ REPLACE INTO `item_db` VALUES (12730,'Runstone_Urj','Uruz Rune',11,100,NULL,100,
 REPLACE INTO `item_db` VALUES (12731,'Runstone_Turisus','Thurisaz Rune',11,100,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,8,2,NULL,NULL,NULL,NULL,NULL,'itemskill "RK_GIANTGROWTH",1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12732,'Runstone_Pertz','Wyrd Rune',11,100,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,8,2,NULL,NULL,NULL,NULL,NULL,'itemskill "RK_STORMBLAST",1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12733,'Runstone_Hagalas','Hagalaz Rune',11,100,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,8,2,NULL,NULL,NULL,NULL,NULL,'itemskill "RK_STONEHARDSKIN",1;',NULL,NULL);
+
 # Rune Knight Rune Ores
 REPLACE INTO `item_db` VALUES (12734,'Runstone_Quality','Luxurious Rune',0,2,NULL,100,NULL,NULL,NULL,NULL,0x00000080,8,2,NULL,NULL,NULL,NULL,NULL,'makerune 5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12735,'Runstone_Ancient','Ancient Rune',0,2,NULL,100,NULL,NULL,NULL,NULL,0x00000080,8,2,NULL,NULL,NULL,NULL,NULL,'makerune 11;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12736,'Runstone_Mystic','Mystic Rune',0,2,NULL,100,NULL,NULL,NULL,NULL,0x00000080,8,2,NULL,NULL,NULL,NULL,NULL,'makerune 14;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12737,'Runstone_Ordinary','General Rune',0,2,NULL,100,NULL,NULL,NULL,NULL,0x00000080,8,2,NULL,NULL,NULL,NULL,NULL,'makerune 2;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12738,'Runstone_Rare','Rare Rune',0,2,NULL,100,NULL,NULL,NULL,NULL,0x00000080,8,2,NULL,NULL,NULL,NULL,NULL,'makerune 8;',NULL,NULL);
+
 REPLACE INTO `item_db` VALUES (12739,'Snow_Flower','Snow Flowers',2,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (12740,'Inc_Str_Scroll','Amplification Scroll',2,1,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (12741,'Inc_Int_Scroll','Intellect Amplification Scroll',2,1,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
@@ -6582,6 +6586,7 @@ REPLACE INTO `item_db` VALUES (18613,'Black_Musang_Hat','Black Musang Hat',5,40,
 REPLACE INTO `item_db` VALUES (18620,'Heart_Eye_Patch','Heart Eyepatch',5,5,NULL,200,NULL,2,NULL,0,0xFFFFFFFF,7,2,512,NULL,20,1,779,NULL,NULL,NULL);
 #
 REPLACE INTO `item_db` VALUES (18656,'Witch\'s_Pumpkin_Hat','Witch\'s Pumpkin Hat',5,20,NULL,300,NULL,10,NULL,0,0xFFFFFFFF,7,2,256,NULL,20,1,717,'bonus bMdef,10; bonus bStr,2; bonus bInt,2; bonus2 bMagicAddRace,RC_Undead,15; bonus2 bMagicAddRace,RC_Demon,15;',NULL,NULL);
+
 # Costume System
 REPLACE INTO `item_db` VALUES (19500,'T_Mr_Smile','T Mr Smile',5,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,7,2,6144,NULL,0,0,65,'bonus bStr,2;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (19501,'T_Spinx_Helm','T Spinx Helm',5,0,NULL,0,NULL,0,NULL,1,0xFFFFFFFF,7,2,5120,NULL,0,0,137,NULL,NULL,NULL);

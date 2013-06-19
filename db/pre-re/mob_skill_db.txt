@@ -4325,7 +4325,7 @@
 1795,Bloody Knight@WZ_STORMGUST,attack,89,10,10000,1000,20000,no,target,always,,,,,,,,
 1795,Bloody Knight@WZ_VERMILION,attack,85,20,10000,1000,20000,no,target,always,,,,,,,,
 1795,Bloody Knight@WZ_METEOR,attack,83,11,10000,1000,20000,no,target,always,,,,,,,,
-// Guild Dungeon SE (13.1) 
+// Guild Dungeon SE (13.1)
 1796,Aunoe@MG_THUNDERSTORM,attack,21,5,500,1500,10000,no,target,always,0,,,,,,,
 1796,Aunoe@MG_THUNDERSTORM,chase,21,5,500,1500,10000,no,target,always,0,,,,,,,
 1796,Aunoe@NPC_HOLYATTACK,attack,189,2,500,0,5000,yes,target,always,0,,,,,,,

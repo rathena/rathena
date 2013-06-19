@@ -67,8 +67,8 @@ CREATE TABLE `mob_db` (
 # Monster Database
 #
 # Structure of Database :
-# REPLACE INTO `mob_db` VALUES ( ID,'Sprite_Name','kROName','iROName',LV,HP,SP,EXP,JEXP,Range1,ATK1,ATK2,DEF,MDEF,STR,AGI,VIT,INT,DEX,LUK,Range2,Range3,Scale,Race,Element,Mode,Speed,aDelay,aMotion,dMotion,MEXP,MVP1id,MVP1per,MVP2id,MVP2per,MVP3id,MVP3per,Drop1id,Drop1per,Drop2id,Drop2per,Drop3id,Drop3per,Drop4id,Drop4per,Drop5id,Drop5per,Drop6id,Drop6per,Drop7id,Drop7per,Drop8id,Drop8per,Drop9id,Drop9per,DropCardid,DropCardper);
-# Note: Keep the Sprite_Name field as it is (in the game client). You may change Name,JName field tough
+#REPLACE INTO `mob_db` VALUES ( ID,'Sprite_Name','kROName','iROName',LV,HP,SP,EXP,JEXP,Range1,ATK1,ATK2,DEF,MDEF,STR,AGI,VIT,INT,DEX,LUK,Range2,Range3,Scale,Race,Element,Mode,Speed,aDelay,aMotion,dMotion,MEXP,MVP1id,MVP1per,MVP2id,MVP2per,MVP3id,MVP3per,Drop1id,Drop1per,Drop2id,Drop2per,Drop3id,Drop3per,Drop4id,Drop4per,Drop5id,Drop5per,Drop6id,Drop6per,Drop7id,Drop7per,Drop8id,Drop8per,Drop9id,Drop9per,DropCardid,DropCardper);
+# Note: Keep the Sprite_Name field as it is in the game client.
 
 REPLACE INTO `mob_db` VALUES (1001,'SCORPION','Scorpion','Scorpion',24,1109,0,287,176,1,80,135,30,0,1,24,24,5,52,5,10,12,0,4,23,0x3195,200,1564,864,576,0,0,0,0,0,0,0,990,70,904,5500,757,57,943,210,7041,100,508,200,625,20,0,0,0,0,4068,1);
 REPLACE INTO `mob_db` VALUES (1002,'PORING','Poring','Poring',1,50,0,2,1,1,7,10,0,5,1,1,1,0,6,30,10,12,1,3,21,0x83,400,1872,672,480,0,0,0,0,0,0,0,909,7000,1202,100,938,400,512,1000,713,1500,512,150,619,20,0,0,0,0,4001,1);
@@ -1213,4 +1213,5 @@ REPLACE INTO `mob_db` VALUES (2159,'S_GIANT_HORNET','Giant Hornet','Giant Hornet
 REPLACE INTO `mob_db` VALUES (2160,'S_LUCIOLA_VESPA','Luciola Vespa','Luciola Vespa',1,60,1,27,20,1,8,9,2,5,6,1,1,0,6,5,10,12,1,3,21,0x83,400,1872,672,480,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 
 REPLACE INTO `mob_db` VALUES (2308,'KO_ZANZOU','Zanzou','Zanzou',1,50,0,0,0,1,1,1,0,0,1,1,1,1,1,1,1,1,1,7,20,0x0,400,1872,672,480,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+
 
