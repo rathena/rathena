@@ -1563,8 +1563,8 @@ REPLACE INTO `item_db_re` VALUES (2486,'Shadow_Walk_','Shadow Walk',5,20,NULL,20
 REPLACE INTO `item_db_re` VALUES (2487,'Vital_Tree_Shoes_','Vital Tree Shoes',5,20,NULL,500,NULL,16,NULL,1,0xFFFFFFFE,7,2,64,NULL,'60',1,0,'bonus bVit,2; bonus bMdef,3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2488,'Fricco_Shoes_','Fricco Shoes',5,30000,NULL,500,NULL,12,NULL,1,0xFFFFFFFE,7,2,64,NULL,'65',1,0,'bonus bAgi,2;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2489,'Vidar\'s_Boots_','Vidar\'s Boots',5,30000,NULL,650,NULL,13,NULL,1,0xFFFFFFFE,7,2,64,NULL,'65',1,0,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (2491,'Bangungot_Boots','Nightmare Bangungot Boots',5,20,NULL,600,NULL,10,NULL,0,0xFFFFFFFF,7,2,64,NULL,'1',1,0,'bonus bMdef,getrefine(); if(getrefine()>=14){ bonus bSpeedRate,25; }',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (2492,'Bayani_Bangungot_Boots','Bayani Nightmare Bangungot Boots',5,20,NULL,600,NULL,10,NULL,1,0xFFFFFFFF,7,2,64,NULL,'1',1,0,'bonus bMdef,getrefine(); if(getrefine()>=12){ bonus bSpeedRate,25; }',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2491,'Bangungot_Boots','Bangungot Boots of Nightmare',5,20,NULL,600,NULL,10,NULL,0,0xFFFFFFFF,7,2,64,NULL,'1',1,0,'bonus bMdef,getrefine(); if(getrefine()>=14){ bonus bSpeedRate,25; }',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2492,'Bayani_Bangungot_Boots','Bayani Bangungot Boots of Nightmare',5,20,NULL,600,NULL,10,NULL,1,0xFFFFFFFF,7,2,64,NULL,'1',1,0,'bonus bMdef,getrefine(); if(getrefine()>=12){ bonus bSpeedRate,25; }',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2495,'Egir_Shoes','Egir Shoes',5,200000,NULL,300,NULL,13,NULL,1,0xFFFFFFFF,7,2,64,NULL,'110',1,0,NULL,NULL,NULL);
 # Garments
 #===================================================================
@@ -1657,8 +1657,8 @@ REPLACE INTO `item_db_re` VALUES (2586,'Siege_Manteau','Siege Manteau',5,10,NULL
 REPLACE INTO `item_db_re` VALUES (2587,'Siege_Muffler','Siege Muffler',5,10,NULL,400,NULL,15,NULL,1,0xFFFFFFFF,7,2,4,NULL,'95',1,0,'bonus bMdef,10; bonus2 bSubRace,RC_DemiHuman,2;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2588,'Ragamuffin_Cape_','Ragamuffin Cape',5,56000,NULL,500,NULL,4,NULL,1,0xFFFFFFFE,7,2,4,NULL,'40',1,0,'bonus bMdef,10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2589,'Fallen_Angel_Wing','Fallen Angel Wing',5,0,NULL,200,NULL,18,NULL,0,0xFFFFFFFF,7,2,4,NULL,'0',1,3,'bonus bLuk,2; bonus bMdef,18; bonus2 bSubRace,RC_DemiHuman,10; bonus2 bSubEle,Ele_Dark,30; bonus2 bSubEle,Ele_Holy,-30;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (2590,'Buwaya_Cloth','Buwaya Skin Clothes',5,20,NULL,200,NULL,8,NULL,0,0xFFFFFFFF,7,2,4,NULL,'1',1,0,'bonus bHealpower2,getrefine()/3; bonus bAddItemHealRate,getrefine()/3; bonus2 bSubEle,Ele_Water,10; bonus2 bSubEle,Ele_Wind,10; bonus2 bSubEle,Ele_Earth,10; bonus2 bSubEle,Ele_Fire,10;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (2591,'Bayani_Buwaya_Cloth','Bayani Buwaya Skin Clothes',5,20,NULL,200,NULL,8,NULL,1,0xFFFFFFFF,7,2,4,NULL,'1',1,0,'bonus bHealpower2,getrefine(); bonus bAddItemHealRate,getrefine(); bonus2 bSubEle,Ele_Water,10; bonus2 bSubEle,Ele_Wind,10; bonus2 bSubEle,Ele_Earth,10; bonus2 bSubEle,Ele_Fire,10;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2590,'Buwaya_Cloth','Buwaya Sack Cloth',5,20,NULL,200,NULL,8,NULL,0,0xFFFFFFFF,7,2,4,NULL,'1',1,0,'bonus bHealpower2,getrefine()/3; bonus bAddItemHealRate,getrefine()/3; bonus2 bSubEle,Ele_Water,10; bonus2 bSubEle,Ele_Wind,10; bonus2 bSubEle,Ele_Earth,10; bonus2 bSubEle,Ele_Fire,10;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2591,'Bayani_Buwaya_Cloth','Bayani Buwaya Sack Cloth',5,20,NULL,200,NULL,8,NULL,1,0xFFFFFFFF,7,2,4,NULL,'1',1,0,'bonus bHealpower2,getrefine(); bonus bAddItemHealRate,getrefine(); bonus2 bSubEle,Ele_Water,10; bonus2 bSubEle,Ele_Wind,10; bonus2 bSubEle,Ele_Earth,10; bonus2 bSubEle,Ele_Fire,10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2592,'Boss_Brownie_Manteau','Boss Brownie Manteau',5,20,NULL,100,NULL,3,NULL,0,0xFFFFFFFF,7,2,4,NULL,'50',1,0,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2593,'Flow_Manteau','Flow Manteau',5,20,NULL,700,NULL,20,NULL,1,0xFFFFFFFF,7,2,4,NULL,'65',1,0,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2594,'Wrapping_Manteau','Wrapping Manteau',5,20,NULL,100,NULL,0,NULL,1,0xFFFFFFFF,7,2,4,NULL,'0',1,0,NULL,NULL,NULL);
@@ -1969,11 +1969,11 @@ REPLACE INTO `item_db_re` VALUES (2903,'Morpheus\'s_Armlet_','Morpheus\'s Armlet
 REPLACE INTO `item_db_re` VALUES (2904,'Naqsh','Naqsi',5,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,'0',0,0,'skill "BS_MAXIMIZE",5; skill "BS_WEAPONPERFECT",5; skill "WL_RECOGNIZEDSPELL",5; skill "ECL_SNOWFLIP",1; skill "ECL_PEONYMAMY",1; skill "ECL_SADAGUI",1; skill "ECL_SEQUOIADUST",1; /* bonus2 bSkillDelay,"WL_RECOGNIZEDSPELL",-180000; */ bonus bDelayRate,-100;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2905,'Super_Ora_Ora','Super Ora Ora',5,0,NULL,1000,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,'0',0,0,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2906,'Happy_Gauntlet','Happy Gauntlet',5,20,NULL,1000,NULL,3,NULL,1,0xFFFFFFFF,7,2,136,NULL,'70',0,0,'bonus bMdef,3;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (2907,'Buwaya_Tattoo','Bawaya Symbol Tattoo',5,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,'1',0,0,'bonus bMatkRate,7; bonus bFixedCastrate,-7;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2907,'Buwaya_Tattoo','Bawaya Agimat Tattoo',5,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,'1',0,0,'bonus bMatkRate,7; bonus bFixedCastrate,-7;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2908,'Light_Ring','Light Ring',5,20,NULL,100,NULL,0,NULL,1,0xFFFFFFFF,7,2,136,NULL,'0',0,0,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2909,'Darkness_Ring','Darkness Ring',5,20,NULL,100,NULL,0,NULL,1,0xFFFFFFFF,7,2,136,NULL,'0',0,0,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (2910,'Bakonawa_Tattoo','Bakunawa Symbol Tattoo',5,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,'1',0,0,'bonus2 bAddRace,RC_NonBoss,7; bonus2 bAddRace,RC_Boss,7; bonus bAspdRate,10;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (2911,'Bangungot_Tattoo','Bangungot Symbol Tattoo',5,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,'1',0,0,'bonus bHealPower,4; bonus bHealPower2,7;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2910,'Bakonawa_Tattoo','Bakunawa Agimat Tattoo',5,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,'1',0,0,'bonus2 bAddRace,RC_NonBoss,7; bonus2 bAddRace,RC_Boss,7; bonus bAspdRate,10;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2911,'Bangungot_Tattoo','Bangungot Agimat Tattoo',5,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,'1',0,0,'bonus bHealPower,4; bonus bHealPower2,7;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2912,'Xylitol_2011','Xylitol 2011',5,20,NULL,300,NULL,0,NULL,1,0xFFFFFFFF,7,2,136,NULL,'0',0,0,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2913,'Thief_Handcuff','Thief Handcuff',5,20,NULL,1400,NULL,0,NULL,1,0xFFFFFFFF,7,2,136,NULL,'10',0,0,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2914,'Wizard_Left_Eye','Wizard Left Eye',5,20,NULL,100,NULL,1,NULL,1,0x00CFDF80,7,2,136,NULL,'0',0,0,'bonus bInt,4; bonus bMdef,3;',NULL,NULL);
@@ -5973,8 +5973,8 @@ REPLACE INTO `item_db_re` VALUES (12681,'Nestea_Lemon','Nestea Lemon',2,0,NULL,5
 REPLACE INTO `item_db_re` VALUES (12682,'Nestea_Blacktea','Nestea Black Tea',2,0,NULL,30,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12683,'Sg_Vi_Potion_Box200','Siege Violet Potion Box (200)',2,20,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem 11547,50;',NULL,NULL);
 #
-REPLACE INTO `item_db_re` VALUES (12699,'Tikbalang_Belt','Tikbalang Belt',2,20,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'pet 2313;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12700,'Insideout_Shirt','Upside Down Shirt',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'warp "malaya",242,211;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12699,'Tikbalang_Belt','Tikbalang Harness',2,20,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'pet 2313;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12700,'Insideout_Shirt','Inside-out Shirt',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'warp "malaya",242,211;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12701,'Old_Blue_Box_F','Old Blue Box',2,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12702,'Old_Bleu_Box','Old Navy Box',2,0,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_BleuBox),1; getrandgroupitem(IG_BleuBox),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12703,'Holy_Egg_2','Holy Egg',11,0,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
@@ -6055,7 +6055,7 @@ REPLACE INTO `item_db_re` VALUES (12771,'Passion_Hat_Box2','Passion Hat Box2',2,
 REPLACE INTO `item_db_re` VALUES (12772,'Cool_Hat_Box2','Cool Hat Box2',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12773,'Victory_Hat_Box2','Victory Hat Box2',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12774,'Empty_Potion_Bottle','Empty Potion Bottle',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12775,'Ancient_Spirit_Agimat','Ancient Spirit Amulet',2,20,NULL,600,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12775,'Ancient_Spirit_Agimat','Greater Agimat of Ancient Spirit',2,20,NULL,600,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 #
 REPLACE INTO `item_db_re` VALUES (12778,'Bapho_Jr_Scroll','Bapho Jr Scroll',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'mercenary_create 2325,1800000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12779,'Galapago_Scroll','Galapago Scroll',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'mercenary_create 2326,1800000;',NULL,NULL);

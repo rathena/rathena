@@ -3,16 +3,27 @@
 //===== By: ================================================== 
 //= JayPee Mateo
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
 //= 1.0 A Pile Bunker quest based on iRO WiKi. [JayPee Mateo]
 //= 2.0 Rewrited the Script a little so it looks a bit better. [Masao]
 //= 2.1 Switched to official script, coded by Gennosuke Kouga. [Euphy]
+//= 2.2 Updated to match the official script. [Euphy]
 //============================================================ 
 
 yuno,179,174,4	script	Gomer	851,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 1000) {
+		mes "[Gomer]";
+		mes "You are carrying so much. Drop off some of your luggage and come back to me.";
+		close;
+	}
+	if (countitem(1549)) {
+		mes "[Gomer]";
+		mes "So how's that Pilebuncker working out for you?";
+		close;
+	}
 	if (Class != Job_Mechanic && Class != Job_Mechanic_T && Class != Job_Baby_Mechanic) {
 		mes "[Gomer]";
 		mes "I'm a retired Mechanic and I don't think I have any business with you.";
@@ -73,11 +84,7 @@ yuno,179,174,4	script	Gomer	851,{
 		mes "Lastly, finding a Brocca is very hard, but you should be able to do something about it. Haha, go get it!";
 		close;
 	case 4:
-		if (countitem(1549)) {
-			mes "[Gomer]";
-			mes "So how's that Pile Bunker working out for you?";
-			close;
-		} else if (countitem(1415) < 1 || countitem(999) < 200 || countitem(7325) < 30) {
+		if (countitem(999) < 200 || countitem(7325) < 30 || countitem(1415) < 1) {
 			mes "[Gomer]";
 			mes "You haven't brought all of the materials that I asked for.";
 			next;
@@ -104,11 +111,11 @@ yuno,179,174,4	script	Gomer	851,{
 			next;
 			mes "[Gomer]";
 			mes "Oh, and it turns out that I didn't need all that Steel after all. So here, take most of it back.";
-			delitem 999,50; // Steel
-			delitem 7325,30; // Flexible Tube
-			delitem 1415,1; // Brocca
-			getitem 1549,1; // Pile Bunker
-			getitem 1360,1; // Two-handed Axe [1]
+			delitem 999,50; //Steel
+			delitem 7325,30; //Tube
+			delitem 1415,1; //Skewer
+			getitem 1549,1; //Pilebuncker
+			getitem 1360,1; //Two_Handed_Axe
 			close;
 		}
 	}

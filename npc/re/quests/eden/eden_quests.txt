@@ -2330,7 +2330,7 @@ moc_para01,112,96,5	script	Administrator Michael	967,{
 				mes "Make enough space.";
 				close;
 			case 2:
-				if (Class == Job_Swordman || Class == Job_Swordman_High || Class == Job_Knight || Class == Job_Crusader){
+				if (Class == Job_Swordman || Class == Job_Swordman_High || Class == Job_Knight || Class == Job_Crusader) {
 					mes "[Michael]";
 					mes "What kind of weapon do you want?";
 					mes "We have one and Two-handed swords.";
@@ -2413,21 +2413,72 @@ moc_para01,112,96,5	script	Administrator Michael	967,{
 						mes "This is what we strive for.";
 						close;
 					}
-				}	if (Class == Job_Thief || Class == Job_Thief_High || Class == Job_Assassin || Class == Job_Rogue || Class == Job_Ninja || Class == Job_Novice || Class == Job_Novice_High) {
+				}
+				if (Class == Job_Thief || Class == Job_Thief_High || Class == Job_Assassin || Class == Job_Rogue || Class == Job_Ninja || Class == Job_Novice || Class == Job_Novice_High) {
+					mes "[Michael]";
+					mes "We only have 1 weapon for you.";
+					next;
+					mes "[Michael]";
+					mes "Eden Dagger I: Dagger. MATK+60, attack 124.";
+					mes "It is Lv. 2 and the required level is 26.";
+					next;
+					mes "[Michael]";
+					mes "It also can't be traded with other players or be refined.";
+					next;
+					mes "[Michael]";
+					mes "You'll receive the Eden Dagger I.";
+					next;
+					mes "[Michael]";
+					mes "Additionally you'll receive the Eden Group Boots II and Uniform II.";
+					next;
+					if (para_suv02 == 0) {
 						mes "[Michael]";
-						mes "We only have 1 weapon for you.";
+						mes "You don't have a record of receiving any supplies";
+						mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
+						set para_suv01,23;
+						set para_suv02,2;
+						getitem 13050,1; //P_Dagger1
+						getitem 2457,1; //Para_Team_Boots2
+						getitem 15010,1; //Para_Team_Uniform2
+						getitem 5583,1; //Para_Team_Hat
+						getitem 2560,1; //Para_Team_Manteau
 						next;
 						mes "[Michael]";
-						mes "Eden Dagger I: Dagger. MATK+60, attack 124.";
-						mes "It is Lv. 2 and the required level is 26.";
-						next;
+						mes "Check your supplies again and look after it.";
+						close;
+					}
+					mes "[Michael]";
+					mes "A Dagger, Uniform and Boots all 3 supplies.";
+					mes "Please check it again.";
+					set para_suv01,23;
+					set para_suv02,2;
+					getitem 13050,1; //P_Dagger1
+					getitem 2457,1; //Para_Team_Boots2
+					getitem 15010,1; //Para_Team_Uniform2
+					next;
+					mes "[Michael]";
+					mes "I hope they're useful to you.";
+					mes "This is what we strive for.";
+					close;
+				}
+				if (Class == Job_Merchant || Class == Job_Merchant_High || Class == Job_Blacksmith || Class == Job_Alchemist) {
+					mes "[Michael]";
+					mes "What kind of weapon do you want?";
+					mes "We have a mace and a One-handed sword.";
+					mes "Here are the options.";
+					next;
+					mes "[Michael]";
+					mes "Eden Saber I: One-handed sword. attack 147.";
+					mes "Eden Mace I: Mace. attack 142.";
+					mes "Both are level 2 and the required level is 26.";
+					next;
+					mes "[Michael]";
+					mes "They also can't be traded with other players or be refined.";
+					next;
+					switch (select("Eden Sabre I:Eden Mace I")) {
+					case 1:
 						mes "[Michael]";
-						mes "It also can't be traded with other players or be refined.";
-						next;
-						mes "[Michael]";
-						mes "You'll receive the Eden Dagger I.";
-						next;
-						mes "[Michael]";
+						mes "You've chosen the Eden Sabre I.";
 						mes "Additionally you'll receive the Eden Group Boots II and Uniform II.";
 						next;
 						if (para_suv02 == 0) {
@@ -2436,7 +2487,7 @@ moc_para01,112,96,5	script	Administrator Michael	967,{
 							mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
 							set para_suv01,23;
 							set para_suv02,2;
-							getitem 13050,1; //P_Dagger1
+							getitem 13423,1; //P_Sabre1
 							getitem 2457,1; //Para_Team_Boots2
 							getitem 15010,1; //Para_Team_Uniform2
 							getitem 5583,1; //Para_Team_Hat
@@ -2447,11 +2498,11 @@ moc_para01,112,96,5	script	Administrator Michael	967,{
 							close;
 						}
 						mes "[Michael]";
-						mes "A Dagger, Uniform and Boots all 3 supplies.";
+						mes "A One-handed Sword, Uniform and Boots all 3 supplies.";
 						mes "Please check it again.";
 						set para_suv01,23;
 						set para_suv02,2;
-						getitem 13050,1; //P_Dagger1
+						getitem 13423,1; //P_Sabre1
 						getitem 2457,1; //Para_Team_Boots2
 						getitem 15010,1; //Para_Team_Uniform2
 						next;
@@ -2459,115 +2510,18 @@ moc_para01,112,96,5	script	Administrator Michael	967,{
 						mes "I hope they're useful to you.";
 						mes "This is what we strive for.";
 						close;
-					}
-					if (Class == Job_Merchant || Class == Job_Merchant_High || Class == Job_Blacksmith || Class == Job_Alchemist) {
+					case 2:
 						mes "[Michael]";
-						mes "What kind of weapon do you want?";
-						mes "We have a mace and a One-handed sword.";
-						mes "Here are the options.";
-						next;
-						mes "[Michael]";
-						mes "Eden Saber I: One-handed sword. attack 147.";
-						mes "Eden Mace I: Mace. attack 142.";
-						mes "Both are level 2 and the required level is 26.";
-						next;
-						mes "[Michael]";
-						mes "They also can't be traded with other players or be refined.";
-						next;
-						switch (select("Eden Sabre I:Eden Mace I")) {
-						case 1:
-							mes "[Michael]";
-							mes "You've chosen the Eden Sabre I.";
-							mes "Additionally you'll receive the Eden Group Boots II and Uniform II.";
-							next;
-							if (para_suv02 == 0) {
-								mes "[Michael]";
-								mes "You don't have a record of receiving any supplies";
-								mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-								set para_suv01,23;
-								set para_suv02,2;
-								getitem 13423,1; //P_Sabre1
-								getitem 2457,1; //Para_Team_Boots2
-								getitem 15010,1; //Para_Team_Uniform2
-								getitem 5583,1; //Para_Team_Hat
-								getitem 2560,1; //Para_Team_Manteau
-								next;
-								mes "[Michael]";
-								mes "Check your supplies again and look after it.";
-								close;
-							}
-							mes "[Michael]";
-							mes "A One-handed Sword, Uniform and Boots all 3 supplies.";
-							mes "Please check it again.";
-							set para_suv01,23;
-							set para_suv02,2;
-							getitem 13423,1; //P_Sabre1
-							getitem 2457,1; //Para_Team_Boots2
-							getitem 15010,1; //Para_Team_Uniform2
-							next;
-							mes "[Michael]";
-							mes "I hope they're useful to you.";
-							mes "This is what we strive for.";
-							close;
-						case 2:
-							mes "[Michael]";
-							mes "You've chosen the Eden Mace I.";
-							mes "Additionally you'll receive the Eden Group Boots II and Uniform II.";
-							next;
-							if (para_suv02 == 0) {
-								mes "[Michael]";
-								mes "You don't have a record of receiving any supplies";
-								mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-								set para_suv01,23;
-								set para_suv02,2;
-								getitem 16004,1; //P_Mace1
-								getitem 2457,1; //Para_Team_Boots2
-								getitem 15010,1; //Para_Team_Uniform2
-								getitem 5583,1; //Para_Team_Hat
-								getitem 2560,1; //Para_Team_Manteau
-								next;
-								mes "[Michael]";
-								mes "Check your supplies again and look after it.";
-								close;
-							}
-							mes "[Michael]";
-							mes "A Mace, Uniform and Boots all 3 supplies.";
-							mes "Please check it again.";
-							set para_suv01,23;
-							set para_suv02,2;
-							getitem 16004,1; //P_Mace1
-							getitem 2457,1; //Para_Team_Boots2
-							getitem 15010,1; //Para_Team_Uniform2
-							next;
-							mes "[Michael]";
-							mes "I hope they're useful to you.";
-							close;
-						}
-					}
-					if (Class == Job_Archer || Class == Job_Archer_High || Class == Job_Hunter || Class == Job_Dancer || Class == Job_Bard) {
-						mes "[Michael]";
-						mes "We only have 1 weapon for you.";
-						next;
-						mes "[Michael]";
-						mes "Eden Bow I: Bow. attack 82.";
-						mes "It is Lv. 2 and the required level is 26.";
-						next;
-						mes "[Michael]";
-						mes "It also can't be traded with other players or be refined.";
-						next;
-						mes "[Michael]";
-						mes "You'll receive the Eden Bow I.";
-						next;
-						mes "[Michael]";
+						mes "You've chosen the Eden Mace I.";
 						mes "Additionally you'll receive the Eden Group Boots II and Uniform II.";
 						next;
 						if (para_suv02 == 0) {
 							mes "[Michael]";
 							mes "You don't have a record of receiving any supplies";
 							mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-							set para_suv01, 23;
-							set para_suv02, 2;
-							getitem 1747,1; //P_Bow1
+							set para_suv01,23;
+							set para_suv02,2;
+							getitem 16004,1; //P_Mace1
 							getitem 2457,1; //Para_Team_Boots2
 							getitem 15010,1; //Para_Team_Uniform2
 							getitem 5583,1; //Para_Team_Hat
@@ -2578,11 +2532,11 @@ moc_para01,112,96,5	script	Administrator Michael	967,{
 							close;
 						}
 						mes "[Michael]";
-						mes "A Bow, Uniform and Boots all 3 supplies.";
+						mes "A Mace, Uniform and Boots all 3 supplies.";
 						mes "Please check it again.";
 						set para_suv01,23;
 						set para_suv02,2;
-						getitem 1747,1; //P_Bow1
+						getitem 16004,1; //P_Mace1
 						getitem 2457,1; //Para_Team_Boots2
 						getitem 15010,1; //Para_Team_Uniform2
 						next;
@@ -2590,112 +2544,79 @@ moc_para01,112,96,5	script	Administrator Michael	967,{
 						mes "I hope they're useful to you.";
 						close;
 					}
-					if (Class == Job_Acolyte || Class == Job_Acolyte_High || Class == Job_Priest || Class == Job_Monk) {
+				}
+				if (Class == Job_Archer || Class == Job_Archer_High || Class == Job_Hunter || Class == Job_Dancer || Class == Job_Bard) {
+					mes "[Michael]";
+					mes "We only have 1 weapon for you.";
+					next;
+					mes "[Michael]";
+					mes "Eden Bow I: Bow. attack 82.";
+					mes "It is Lv. 2 and the required level is 26.";
+					next;
+					mes "[Michael]";
+					mes "It also can't be traded with other players or be refined.";
+					next;
+					mes "[Michael]";
+					mes "You'll receive the Eden Bow I.";
+					next;
+					mes "[Michael]";
+					mes "Additionally you'll receive the Eden Group Boots II and Uniform II.";
+					next;
+					if (para_suv02 == 0) {
 						mes "[Michael]";
-						mes "What kind of weapon do you want?";
-						mes "We have a mace and a staff.";
-						mes "Here are the options.";
+						mes "You don't have a record of receiving any supplies";
+						mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
+						set para_suv01, 23;
+						set para_suv02, 2;
+						getitem 1747,1; //P_Bow1
+						getitem 2457,1; //Para_Team_Boots2
+						getitem 15010,1; //Para_Team_Uniform2
+						getitem 5583,1; //Para_Team_Hat
+						getitem 2560,1; //Para_Team_Manteau
 						next;
 						mes "[Michael]";
-						mes "Eden Mace I: Mace. attack 142.";
-						mes "Eden Staff I: Staff. INT+2, MATK+125, attack 60.";
-						mes "Both are Lv. 2 and the required level is 26.";
-						next;
-						mes "[Michael]";
-						mes "They also can't be traded with other players or be refined.";
-						next;
-						switch (select("Eden Staff I:Eden Mace I")) {
-						case 1:
-							mes "[Michael]";
-							mes "You've chosen the Eden Staff I.";
-							mes "Additionally you'll receive the Eden Group Boots II and Uniform II.";
-							next;
-							if (para_suv02 == 0) {
-								mes "[Michael]";
-								mes "You don't have a record of receiving any supplies";
-								mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-								set para_suv01,23;
-								set para_suv02,2;
-								getitem 1650,1; //P_Staff1
-								getitem 2457,1; //Para_Team_Boots2
-								getitem 15010,1; //Para_Team_Uniform2
-								getitem 5583,1; //Para_Team_Hat
-								getitem 2560,1; //Para_Team_Manteau
-								next;
-								mes "[Michael]";
-								mes "Check your supplies again and look after it.";
-								close;
-							}
-							mes "[Michael]";
-							mes "A Staff, Uniform and Boots all 3 supplies.";
-							mes "Please check it again.";
-							set para_suv01,23;
-							set para_suv02,2;
-							getitem 1650,1; //P_Staff1
-							getitem 2457,1; //Para_Team_Boots2
-							getitem 15010,1; //Para_Team_Uniform2
-							next;
-							mes "[Michael]";
-							mes "I hope they're useful to you.";
-							close;
-						case 2:
-							mes "[Michael]";
-							mes "You've chosen the Eden Mace I.";
-							mes "Additionally you'll receive the Eden Group Boots II and Uniform II.";
-							next;
-							if (para_suv02 == 0) {
-								mes "[Michael]";
-								mes "You don't have a record of receiving any supplies";
-								mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-								set para_suv01,23;
-								set para_suv02,2;
-								getitem 16004,1; //P_Mace1
-								getitem 2457,1; //Para_Team_Boots2
-								getitem 15010,1; //Para_Team_Uniform2
-								getitem 5583,1; //Para_Team_Hat
-								getitem 2560,1; //Para_Team_Manteau
-								next;
-								mes "[Michael]";
-								mes "Check your supplies again and look after it.";
-								close;
-							}
-							mes "[Michael]";
-							mes "A Mace, Uniform and Boots all 3 supplies.";
-							mes "Please check it again.";
-							set para_suv01,23;
-							set para_suv02,2;
-							getitem 16004,1; //P_Mace1
-							getitem 2457,1; //Para_Team_Boots2
-							getitem 15010,1; //Para_Team_Uniform2
-							next;
-							mes "[Michael]";
-							mes "I hope they're useful to you.";
-							close;
-						}
+						mes "Check your supplies again and look after it.";
+						close;
 					}
-					if (Class == Job_Mage || Class == Job_Mage_High || Class == Job_Wizard || Class == Job_Sage) {
+					mes "[Michael]";
+					mes "A Bow, Uniform and Boots all 3 supplies.";
+					mes "Please check it again.";
+					set para_suv01,23;
+					set para_suv02,2;
+					getitem 1747,1; //P_Bow1
+					getitem 2457,1; //Para_Team_Boots2
+					getitem 15010,1; //Para_Team_Uniform2
+					next;
+					mes "[Michael]";
+					mes "I hope they're useful to you.";
+					close;
+				}
+				if (Class == Job_Acolyte || Class == Job_Acolyte_High || Class == Job_Priest || Class == Job_Monk) {
+					mes "[Michael]";
+					mes "What kind of weapon do you want?";
+					mes "We have a mace and a staff.";
+					mes "Here are the options.";
+					next;
+					mes "[Michael]";
+					mes "Eden Mace I: Mace. attack 142.";
+					mes "Eden Staff I: Staff. INT+2, MATK+125, attack 60.";
+					mes "Both are Lv. 2 and the required level is 26.";
+					next;
+					mes "[Michael]";
+					mes "They also can't be traded with other players or be refined.";
+					next;
+					switch (select("Eden Staff I:Eden Mace I")) {
+					case 1:
 						mes "[Michael]";
-						mes "We only have 1 weapon for you.";
-						next;
-						mes "[Michael]";
-						mes "Eden Staff I: Staff. INT+2, MATK+125, attack 60.";
-						mes "It is Lv. 2 and the required level is 26.";
-						next;
-						mes "[Michael]";
-						mes "It also can't be traded with other players or be refined.";
-						next;
-						mes "[Michael]";
-						mes "You'll receive the Eden Staff I.";
-						next;
-						mes "[Michael]";
+						mes "You've chosen the Eden Staff I.";
 						mes "Additionally you'll receive the Eden Group Boots II and Uniform II.";
 						next;
 						if (para_suv02 == 0) {
 							mes "[Michael]";
 							mes "You don't have a record of receiving any supplies";
 							mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-							set para_suv01, 23;
-							set para_suv02, 2;
+							set para_suv01,23;
+							set para_suv02,2;
 							getitem 1650,1; //P_Staff1
 							getitem 2457,1; //Para_Team_Boots2
 							getitem 15010,1; //Para_Team_Uniform2
@@ -2718,31 +2639,18 @@ moc_para01,112,96,5	script	Administrator Michael	967,{
 						mes "[Michael]";
 						mes "I hope they're useful to you.";
 						close;
-					}
-					if (Class == Job_Gunslinger) {
+					case 2:
 						mes "[Michael]";
-						mes "We only have 1 weapon for you.";
-						next;
-						mes "[Michael]";
-						mes "Eden Revolver I: Revolver. HIT-5, attack 44.";
-						mes "It is Lv. 2 and the required level is 26.";
-						next;
-						mes "[Michael]";
-						mes "It also can't be traded with other players or be refined.";
-						next;
-						mes "[Michael]";
-						mes "You'll receive the Eden Revolver I.";
-						next;
-						mes "[Michael]";
+						mes "You've chosen the Eden Mace I.";
 						mes "Additionally you'll receive the Eden Group Boots II and Uniform II.";
 						next;
 						if (para_suv02 == 0) {
 							mes "[Michael]";
 							mes "You don't have a record of receiving any supplies";
 							mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-							set para_suv01, 23;
-							set para_suv02, 2;
-							getitem 13112,1; //P_Revolver1
+							set para_suv01,23;
+							set para_suv02,2;
+							getitem 16004,1; //P_Mace1
 							getitem 2457,1; //Para_Team_Boots2
 							getitem 15010,1; //Para_Team_Uniform2
 							getitem 5583,1; //Para_Team_Hat
@@ -2753,11 +2661,11 @@ moc_para01,112,96,5	script	Administrator Michael	967,{
 							close;
 						}
 						mes "[Michael]";
-						mes "A Revolver, Uniform and Boots all 3 supplies.";
+						mes "A Mace, Uniform and Boots all 3 supplies.";
 						mes "Please check it again.";
 						set para_suv01,23;
 						set para_suv02,2;
-						getitem 13112,1; //P_Revolver1
+						getitem 16004,1; //P_Mace1
 						getitem 2457,1; //Para_Team_Boots2
 						getitem 15010,1; //Para_Team_Uniform2
 						next;
@@ -2765,6 +2673,99 @@ moc_para01,112,96,5	script	Administrator Michael	967,{
 						mes "I hope they're useful to you.";
 						close;
 					}
+				}
+				if (Class == Job_Mage || Class == Job_Mage_High || Class == Job_Wizard || Class == Job_Sage) {
+					mes "[Michael]";
+					mes "We only have 1 weapon for you.";
+					next;
+					mes "[Michael]";
+					mes "Eden Staff I: Staff. INT+2, MATK+125, attack 60.";
+					mes "It is Lv. 2 and the required level is 26.";
+					next;
+					mes "[Michael]";
+					mes "It also can't be traded with other players or be refined.";
+					next;
+					mes "[Michael]";
+					mes "You'll receive the Eden Staff I.";
+					next;
+					mes "[Michael]";
+					mes "Additionally you'll receive the Eden Group Boots II and Uniform II.";
+					next;
+					if (para_suv02 == 0) {
+						mes "[Michael]";
+						mes "You don't have a record of receiving any supplies";
+						mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
+						set para_suv01, 23;
+						set para_suv02, 2;
+						getitem 1650,1; //P_Staff1
+						getitem 2457,1; //Para_Team_Boots2
+						getitem 15010,1; //Para_Team_Uniform2
+						getitem 5583,1; //Para_Team_Hat
+						getitem 2560,1; //Para_Team_Manteau
+						next;
+						mes "[Michael]";
+						mes "Check your supplies again and look after it.";
+						close;
+					}
+					mes "[Michael]";
+					mes "A Staff, Uniform and Boots all 3 supplies.";
+					mes "Please check it again.";
+					set para_suv01,23;
+					set para_suv02,2;
+					getitem 1650,1; //P_Staff1
+					getitem 2457,1; //Para_Team_Boots2
+					getitem 15010,1; //Para_Team_Uniform2
+					next;
+					mes "[Michael]";
+					mes "I hope they're useful to you.";
+					close;
+				}
+				if (Class == Job_Gunslinger) {
+					mes "[Michael]";
+					mes "We only have 1 weapon for you.";
+					next;
+					mes "[Michael]";
+					mes "Eden Revolver I: Revolver. HIT-5, attack 44.";
+					mes "It is Lv. 2 and the required level is 26.";
+					next;
+					mes "[Michael]";
+					mes "It also can't be traded with other players or be refined.";
+					next;
+					mes "[Michael]";
+					mes "You'll receive the Eden Revolver I.";
+					next;
+					mes "[Michael]";
+					mes "Additionally you'll receive the Eden Group Boots II and Uniform II.";
+					next;
+					if (para_suv02 == 0) {
+						mes "[Michael]";
+						mes "You don't have a record of receiving any supplies";
+						mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
+						set para_suv01, 23;
+						set para_suv02, 2;
+						getitem 13112,1; //P_Revolver1
+						getitem 2457,1; //Para_Team_Boots2
+						getitem 15010,1; //Para_Team_Uniform2
+						getitem 5583,1; //Para_Team_Hat
+						getitem 2560,1; //Para_Team_Manteau
+						next;
+						mes "[Michael]";
+						mes "Check your supplies again and look after it.";
+						close;
+					}
+					mes "[Michael]";
+					mes "A Revolver, Uniform and Boots all 3 supplies.";
+					mes "Please check it again.";
+					set para_suv01,23;
+					set para_suv02,2;
+					getitem 13112,1; //P_Revolver1
+					getitem 2457,1; //Para_Team_Boots2
+					getitem 15010,1; //Para_Team_Uniform2
+					next;
+					mes "[Michael]";
+					mes "I hope they're useful to you.";
+					close;
+				}
 				mes "[Michael]";
 				mes "Let me see... you will receive..";
 				mes "the Eden Group Boots II and Uniform II.";
@@ -4691,7 +4692,7 @@ moc_para01,111,83,3	script	Toren	813,{
 			else if (.@enc_paragear < 35) set .@addpart,4787;
 			else if (.@enc_paragear < 39) set .@addpart,4791;
 			else if (.@enc_paragear < 43) set .@addpart,4786;
-			set .@enc_paragear2,4701+(10*rand(6));
+			set .@addpart2,4701+(10*rand(6));
 			delitem .@paragearcount,1;
 			getitem2 .@paragearcount, 1, 1, 0, 0, 0, 0, .@addpart2, .@addpart;
 			set paragearenchant,4;

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Chilly
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -12,102 +12,187 @@
 //= 1.0 First Version. [Chilly]
 //= 1.1 Some little improvements here and there. [Masao]
 //= 1.2 Optimized. [Euphy]
+//= 1.3 Updated to match the official script. [Euphy]
 //============================================================
 
-moc_para01,48,175,3	script	Mission [86 - 90]	857,{
+moc_para01,48,175,3	script	86-90 Mission Board	857,{
 	if (countitem(6219) < 1) {
-		mes "- Only members of the -";
-		mes "- Eden Group can read -";
-		mes "- this bulletin board. -";
-		close;
+		mes "Wait a minute!";
+		mes "-You need to have an-";
+		mes "-^4d4dff'Eden Group Mark'^000000-";
+		mes "-to receive these missions.-";
+		next;
+		switch(select("Just walk away.:^0000FFEden Group^000000 missions?:How can I be a member of the ^0000FFEden Group^000000?")) {
+		case 1:
+			close;
+		case 2:
+			mes "::The Eden Group Missions";
+			mes "::are basically missions";
+			mes "::requested by";
+			mes "::people from all around the kingdom.";
+			mes "::We just categorize them.";
+			next;
+			mes "::In the Eden Group,";
+			mes "::we sorted out the missions";
+			mes "::according to the level of difficulty.";
+			mes "::According to this level,";
+			mes "::you can find";
+			mes "::missions that";
+			mes "::suit you.";
+			next;
+			mes "::When you are done,";
+			mes "::you can come back";
+			mes "::to the mission board.";
+			next;
+			mes "::Then you will be";
+			mes "::rewarded!!";
+			mes "::Simple, isn't it!!";
+			mes "::No commission required!!";
+			close;
+		case 3:
+			mes "::You can become a member";
+			mes "::of the Eden Group";
+			mes "::to ^0000FFLaime Evenor^000000,";
+			mes "::who is waiting on the 1st floor.";
+			next;
+			mes "::If you become a member,";
+			mes "::you will get an";
+			mes "::\"^006400Eden Group Mark^000000\".";
+			mes "::Then you will be able";
+			mes "::to see the mission board.";
+			close;
+		}
 	}
-	if (BaseLevel < 86) {
-		mes "- This missions can only be -";
-		mes "- read by those who are -";
-		mes "- of the correct level. -";
-		mes "- There might be another -";
-		mes "- board somewhere for -";
-		mes "- my level. -";
-		close;
-	}
-	if (BaseLevel > 90) {
-		setarray .@Exp[0],76000,82000,82000,72000,76000,72000,117000,82000,120000,72000,72000,72000,86000,80000;
-		setarray .@Mob$[0],"Dragon Tail","Spring Rabbit","Pest","Bathory","Alarm","Baba Yaga","Hyegun","Antique Firelock","Zipper Bear","Earth Petite","Rafflesia","Venomous","Pitman","Yellow Novus";
-		for(set .@i,0; .@i<14; set .@i,.@i+1)
-			if (checkquest(4167+.@i,HUNTING) == 2) {
-				mes "You hunted all 30 "+.@Mob$[.@i]+".";
-				mes "Thank you very much.";
+	if (BaseLevel < 86  || BaseLevel > 90) {
+		// Quest IDs: 4167-4180
+		// Quest cooldown IDs: 4198-4211
+		setarray .@names$[0],
+			"Dragon Tail","Spring Rabbit","Pest",
+			"Bathory","Alarm",
+			"Baba Yaga","Yao Jun","Firelock Soldier","Zipper Bear",
+			"Ground Petite","Rafflesia","Venomous","Pitman","Yellow Novus";
+		setarray .@exp[0],
+			76000,82000,82000,
+			72000,76000,
+			72000,78000,82000,80000,
+			72000,72000,72000,86000,80000;
+		mes "You must be within level 86-90 to accept these missions.";
+		for(set .@quest,4167; .@quest<=4180; set .@quest,.@quest+1) {
+			set .@hunting, checkquest(.@quest,HUNTING);
+			if (.@hunting == 0 || .@hunting == 1) {
 				next;
-				mes "I know it isn't much but here's a small gift.";
-				mes "I hope that it helps you at least a little bit.";
+				mes ":: You cannot proceed in";
+				mes ":: ^0000FF"+.@names$[.@quest-4167]+" Hunting^000000.";
+				mes ":: The registration to the mission";
+				mes ":: is cancelled.";
+				erasequest .@quest;
+				close;
+			} else if (.@hunting == 2) {
 				next;
-				erasequest 4167+.@i;
-				getexp .@Exp[.@i],0;
-				mes "Wooohoo!";
-				mes "Good luck.";
+				mes ":: You added information";
+				mes ":: about the mission";
+				mes ":: ^0000FF"+.@names$[.@quest-4167]+" Hunting^000000";
+				mes ":: on the mission board.";
+				mes ":: You've got a";
+				mes ":: salutary experience.";
+				erasequest .@quest;
+				getexp .@exp[.@quest-4167],0;
 				close;
 			}
-		mes "- This missions can only be -";
-		mes "- read by those who are -";
-		mes "- of the correct level. -";
-		mes "- There might be another -";
-		mes "- board somewhere for -";
-		mes "- my level. -";
+		}
 		close;
 	}
-	mes "- Many hunting missions -";
-	mes "- are on the bulletin board. -";
+	mes "[86-90 Mission Board]";
+	mes "There are several requests on this board.";
 	next;
-	switch(select("Turtle Dungeon Area:Clock Tower Area:Local Area:Other Area")) {
+	switch(select("^8B4513Turtle Island^000000:^8B4513Clock Tower Dungeon^000000:^8B4513Expansion Towns^000000:^8B4513Other Regions^000000")) {
 	case 1:
-		switch(select("Dragon Tail:Spring Rabbit:Pest")) {
-			case 1: callsub L_Quest,4167,"Dragon Tail",76000;
-			case 2: callsub L_Quest,4168,"Spring Rabbit",82000;
-			case 3: callsub L_Quest,4169,"Pest",82000;
+		mes "^8B4513Turtle Island^000000.";
+		mes "Which monster will you hunt or have you finished hunting?";
+		next;
+		switch(select("^0000FFDragon Tail^000000:^0000FFSpring Rabbit^000000:^0000FFPest^000000")) {
+			case 1: callsub L_Quest,4167,"Dragon Tail",76000,"드래곤테일카드","There is a monster that only can be found on ^8B4513Turtle Island^000000.","s";
+			case 2: callsub L_Quest,4168,"Spring Rabbit",82000,"스프링래빗카드","There is a monster that only can be found on ^8B4513Turtle Island^000000.","s";
+			case 3: callsub L_Quest,4169,"Pest",82000,"페스트카드","There is a monster that only can be found on ^8B4513Turtle Island^000000.","s";
 		}
 	case 2:
-		switch(select("Bathory:Alarm")) {
-			case 1: callsub L_Quest,4170,"Bathory",72000;
-			case 2: callsub L_Quest,4171,"Alarm",76000;
+		mes "^8B4513Clock Tower Dungeon^000000.";
+		mes "Which monster will you hunt or have you finished hunting?";
+		next;
+		switch(select("^0000FFBathory^000000:^0000FFAlarm^000000")) {
+			case 1: callsub L_Quest,4170,"Bathory",72000,"바소리카드","The Clock Tower Dungeon is full of dangerous monsters.";
+			case 2: callsub L_Quest,4171,"Alarm",76000,"알람카드","The Clock Tower Dungeon is full of dangerous monsters.";
 		}
 	case 3:
-		switch(select("Baba Yaga:Hyegun:Antique Firelock:Zipper Bear")) {
-			case 1: callsub L_Quest,4172,"Baba Yaga",72000;
-			case 2: callsub L_Quest,4173,"Hyegun",117000;
-			case 3: callsub L_Quest,4174,"Antique Firelock",82000;
-			case 4: callsub L_Quest,4175,"Zipper Bear",120000;
+		mes "^8B4513Expansion Cities^000000";
+		mes "Which monster will you hunt or have you finished hunting?";
+		next;
+		switch(select("^0000FFBaba Yaga^000000:^0000FFYao Jun^000000:^0000FFFirelock Soldier^000000:^0000FFZipper Bear^000000")) {
+			case 1: callsub L_Quest,4172,"Baba Yaga",72000,"","The witch Baba Yaga can be found in the outskirts of Moscovia.";
+			case 2: callsub L_Quest,4173,"Yao Jun",117000,"혜군카드","There are human-like monsters that roam around the dungeon in Louyang.";
+			case 3: callsub L_Quest,4174,"Firelock Soldier",82000,"구식조총병카드","There are human-like monsters that roam around the dungeon in Amatsu.","s";
+			case 4: callsub L_Quest,4175,"Zipper Bear",120000,"지퍼베어카드","There are bear monsters swarming in the Kunlun dungeon.";
 		}
 	case 4:
-		switch(select("Earth Petite:Rafflesia:Venomous:Pitman:Yellow Novus")) {
-			case 1: callsub L_Quest,4176,"Earth Petite",72000;
-			case 2: callsub L_Quest,4177,"Rafflesia",72000;
-			case 3: callsub L_Quest,4178,"Venomous",72000;
-			case 4: callsub L_Quest,4179,"Pitman",86000;
-			case 5: callsub L_Quest,4180,"Yellow Novus",80000;
+		mes "[86-90 Mission Board]";
+		mes "Here is a list of random requests to hunt monsters in other regions of Rune Midgard.";
+		mes "Which monster will you hunt or have you finished hunting?";
+		next;
+		switch(select("^0000FFGround Petite^000000:^0000FFRafflesia^000000:^0000FFVenomous^000000:^0000FFPitman^000000:^0000FFYellow Novus^000000")) {
+			case 1: callsub L_Quest,4176,"Ground Petite",72000,"지상쁘띠카드","There are dragon type monsters swarming the western region of Geffen.";
+			case 2: callsub L_Quest,4177,"Rafflesia",72000,"라플레시아카드","There are plant type monsters infesting the fields of Lighthalzen.";
+			case 3: callsub L_Quest,4178,"Venomous",72000,"베노머스","There are formless monsters floating around the fields of Einbroch.";
+			case 4: callsub L_Quest,4179,"Pitman",86000,"핏맨","There are undead monsters pushing a cart around the fields and dungeons of Einbroch.";
+			case 5: callsub L_Quest,4180,"Yellow Novus",80000,"옐로우노버스","There are yellow dragon type monsters terrorizing the fields of Hugel.";
 		}
 	}
 	end;
+
+//callsub L_Quest,<quest ID>,"<monster name>",<reward EXP>,"<cutin image>","<description>"{,"s"};
 L_Quest:
-	if (checkquest(getarg(0),HUNTING) == 2) {
-		mes "You hunted all 30 "+getarg(1)+".";
-		mes "Thank you very much.";
-		next;
-		mes "I know it isn't much but here's a small gift.";
-		mes "I hope that it helps you at least a little bit.";
-		next;
-		erasequest getarg(0);
+	set .@quest1, getarg(0);
+	set .@quest2, .@quest1+31;
+	set .@playtime, checkquest(.@quest2,PLAYTIME);
+	if (.@playtime == 0 || .@playtime == 1) {
+		mes "[86-90 Mission Board]";
+		mes "You need to wait 3 hours before you can take this mission again.";
+		close;
+	}
+	set .@hunting, checkquest(.@quest1,HUNTING);
+	if (.@hunting == 0 || .@hunting == 1) {
+		mes "[86-90 Mission Board]";
+		mes "Have you finished hunting all 30 "+getarg(1)+getarg(5,"")+" yet?";
+		close;
+	} else if (.@hunting == 2) {
+		mes "[86-90 Mission Board]";
+		mes "You have completed the hunting.";
+		mes "Please accept this reward as a compensation.";
+		erasequest .@quest1;
+		if (.@playtime > -1) erasequest .@quest2;
+		setquest .@quest2;
 		getexp getarg(2),0;
-		mes "Wooohoo!";
-		mes "Good luck.";
+		close;
+	}/* else if (.@hunting == 3) {
+//		recall_completequest .@quest1
+		erasequest .@quest1;
+		mes "[86-90 Mission Board]";
+		mes "You have re-accepted the "+getarg(1)+" Hunting mission.";
+		close;
+	}*/ else {
+		mes "[86-90 Mission Board]";
+		mes getarg(4);
+		next;
+		if (getarg(3) != "") cutin getarg(3),3;
+		mes "[86-90 Mission Board]";
+		mes "Hunt 30 "+getarg(1)+" monsters there and post your success on this board.";
+		next;
+		if (getarg(3) != "") cutin getarg(3),255;
+		if(select("I'll hunt them.:No thanks.") == 1) {
+			mes "[86-90 Mission Board]";
+			mes "When you have completed the mission, post it on this board and collect your reward.";
+			if (.@playtime > -1) erasequest .@quest2;
+			setquest .@quest1;
+		}
 		close;
 	}
-	if (checkquest(getarg(0)) == -1) {
-		setquest getarg(0);
-		mes "Please hunt 30 "+getarg(1)+" and return here.";
-		close;
-	}
-	mes "Umm? You didn't hunt";
-	mes "all 30 "+getarg(1)+" yet...";
-	mes "Will you check again?";
-	close;
 }

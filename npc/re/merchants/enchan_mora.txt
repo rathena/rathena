@@ -655,7 +655,6 @@ mora,148,98,3	script	Artifact Researcher#new	521,{
 	set .@equip_id, getequipid(.@part);
 	set @mora_equip_part, .@part;
 
-	// @mora_equip_id = enc_type
 	//callsub L_Socket,<enchant type>,<bonus enchant type>,<4-x enchants possible>;
 	// Enchant types:
 	//   [1]ATK [2]CRIT [3]EVA [4]Healer [5]Spell 1 [6]Assist 1 [7]Assist 2 [8]STR [9]Range [10]Physical [11]Spell 2
