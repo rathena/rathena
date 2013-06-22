@@ -489,6 +489,13 @@
 4159,0,0,0,0,0,0,0,"Homunculus S Mutation Mission - 5"
 4160,0,0,0,0,0,0,0,"Homunculus S Mutation Mission - 6"
 
+4161,0,0,0,0,0,0,0,"Siege Expert"
+4162,0,0,0,0,0,0,0,"Party Recruiting Expert"
+4163,0,0,0,0,0,0,0,"Battleground Expert"
+4164,0,0,0,0,0,0,0,"Memorial Dungeon Expert"
+4165,0,0,0,0,0,0,0,"Map Expert"
+4166,0,0,0,0,0,0,0,"Passing Grades"
+
 // Paradise 86 - 90 [Chilly]
 4167,0,1321,30,0,0,0,0,"Paradise: Dragon Tail Handling"
 4168,0,1322,30,0,0,0,0,"Paradise: Spring Rabbit Handling"
@@ -1499,6 +1506,14 @@
 9163,0,0,0,0,0,0,0,"Back to Paiko"
 9164,0,0,0,0,0,0,0,"Delivery of Good News(4)"
 9165,0,0,0,0,0,0,0,"Reward from Paiko for success of Jaty Crown"
+
+9167,0,0,0,0,0,0,0,"Tutorial - Mercenary for Hire"
+9168,0,0,0,0,0,0,0,"Quest Window Check"
+9169,0,0,0,0,0,0,0,"Window Shopper Catalogue"
+9170,0,0,0,0,0,0,0,"Window Shopper Catalogue"
+9171,0,0,0,0,0,0,0,"Enchanting Items"
+9172,0,0,0,0,0,0,0,"Enchanted Items"
+9173,72000,0,0,0,0,0,0,"Tutorial Timer Cooldown"
 
 9222,0,0,0,0,0,0,0,"Get Rid of Bangungot from Hospital 2F"
 9223,0,0,0,0,0,0,0,"Will there be Peace at the Hospital?"
