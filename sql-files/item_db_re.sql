@@ -7480,7 +7480,7 @@ REPLACE INTO `item_db_re` VALUES (15018,'Upg_Tights','Upg Tights',5,20,NULL,250,
 REPLACE INTO `item_db_re` VALUES (15019,'Upg_Thief_Cloth','Upg Thief Cloth',5,20,NULL,100,NULL,45,NULL,1,0x02021040,7,2,16,NULL,'1',1,0,'bonus bAgi,1; bonus bMaxHPrate,3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (15020,'Upg_Mail','Upg Mail',5,20,NULL,1650,NULL,60,NULL,1,0x000654E2,7,2,16,NULL,'1',1,0,'bonus bMaxHPrate,3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (15021,'Upg_Formal_Dress','Upg Formal Dress',5,20,NULL,150,NULL,45,NULL,1,0xFFFFFFFE,7,2,16,NULL,'1',1,0,'bonus bMaxHPrate,3;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (15022,'Brazil_Swimsuit','Brazil Swimsuit',5,20,NULL,100,NULL,1,NULL,0,0xFFFFFFFF,7,2,16,NULL,'1',1,0,'bonus bStr,4; bonus bInt,4; bonus bMdef,3; bonus bSubEle,Ele_Water,20;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (15022,'Brazil_Swimsuit','Brazil Swimsuit',5,20,NULL,100,NULL,1,NULL,0,0xFFFFFFFF,7,2,16,NULL,'1',1,0,'bonus bStr,4; bonus bInt,4; bonus bMdef,3; bonus2 bSubEle,Ele_Water,20;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (15023,'Half_Brynhild','Half Brynhild',5,20,NULL,0,NULL,60,NULL,0,0xFFFFFFFF,7,2,16,NULL,'47',0,0,'bonus bMdef,10; bonus bMaxHP,20*BaseLevel; bonus bMaxSP,5*BaseLevel; bonus2 bAddRace,RC_NonBoss,5; bonus2 bAddRace,RC_Boss,5; bonus bMatkRate,5; bonus bUnbreakableArmor,0; bonus bNoKnockback,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (15024,'Army_Padding','Army Padding',5,0,NULL,10,NULL,10,NULL,0,0xFFFFFFFF,7,2,16,NULL,'1',1,0,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (15025,'Golden_Rod_Robe','Golden Rod Robe',5,20,NULL,500,NULL,40,NULL,0,0x00000200,7,2,16,NULL,'100',1,0,'bonus bDefEle,Ele_Wind; bonus bMdef,10; bonus bInt,1; bonus2 bSkillVariableCast,"WZ_VERMILION",-3000; if(readparam(bInt)>=120){ bonus bInt,1; }',NULL,NULL);
@@ -7519,7 +7519,7 @@ REPLACE INTO `item_db_re` VALUES (15057,'Pure_White_Apron','Pure White Apron',5,
 REPLACE INTO `item_db_re` VALUES (15058,'Rider_Suit','Rider Suit',5,20,NULL,1000,'0',40,0,1,75,7,2,16,NULL,'0',1,0,'bonus bAgi,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (15059,'2011Love_Daddy','2011Love Daddy',5,20,NULL,100,'0',80,0,1,0xFFFFFFFF,7,2,16,NULL,'0',1,0,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (15060,'Sky_Blue_Smock','Sky Blue Smock',5,20,NULL,300,'0',1,0,1,0xFFFFFFFF,7,2,16,NULL,'0',1,0,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (15061,'Egir_Armor','Egir Armor',5,200000,NULL,2600,NULL,55,NULL,1,0xFFFFFFFF,7,2,16,NULL,'110',1,0,'bbonus bAllStats,1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (15061,'Egir_Armor','Egir Armor',5,200000,NULL,2600,NULL,55,NULL,1,0xFFFFFFFF,7,2,16,NULL,'110',1,0,'bonus bAllStats,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (15069,'Suit_Of_Sid','Suit Of Sid',5,20,NULL,1000,NULL,30,NULL,0,0xFFFFFFFF,7,2,16,NULL,'0',1,0,NULL,NULL,NULL);
 # More Maces
 REPLACE INTO `item_db_re` VALUES (16000,'Erde','Erde',4,20,NULL,500,'130',NULL,1,2,0x0004C5B2,2,2,2,4,'50',1,8,'bonus2 bSkillAtk,"AM_ACIDTERROR",20; bonus2 bSkillAtk,"AM_DEMONSTRATION",20; bonus bMaxSP,50; bonus bHealPower,10;',NULL,NULL);
