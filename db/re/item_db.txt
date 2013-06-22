@@ -7449,7 +7449,7 @@
 15019,Upg_Thief_Cloth,Upg Thief Cloth,5,20,,100,,45,,1,0x02021040,7,2,16,,1,1,0,{ bonus bAgi,1; bonus bMaxHPrate,3; },{},{}
 15020,Upg_Mail,Upg Mail,5,20,,1650,,60,,1,0x000654E2,7,2,16,,1,1,0,{ bonus bMaxHPrate,3; },{},{}
 15021,Upg_Formal_Dress,Upg Formal Dress,5,20,,150,,45,,1,0xFFFFFFFE,7,2,16,,1,1,0,{ bonus bMaxHPrate,3; },{},{}
-15022,Brazil_Swimsuit,Brazil Swimsuit,5,20,,100,,1,,0,0xFFFFFFFF,7,2,16,,1,1,0,{ bonus bStr,4; bonus bInt,4; bonus bMdef,3; bonus bSubEle,Ele_Water,20; },{},{}
+15022,Brazil_Swimsuit,Brazil Swimsuit,5,20,,100,,1,,0,0xFFFFFFFF,7,2,16,,1,1,0,{ bonus bStr,4; bonus bInt,4; bonus bMdef,3; bonus2 bSubEle,Ele_Water,20; },{},{}
 15023,Half_Brynhild,Half Brynhild,5,20,,0,,60,,0,0xFFFFFFFF,7,2,16,,47,0,0,{ bonus bMdef,10; bonus bMaxHP,20*BaseLevel; bonus bMaxSP,5*BaseLevel; bonus2 bAddRace,RC_NonBoss,5; bonus2 bAddRace,RC_Boss,5; bonus bMatkRate,5; bonus bUnbreakableArmor,0; bonus bNoKnockback,0; },{},{}
 15024,Army_Padding,Army Padding,5,0,,10,,10,,0,0xFFFFFFFF,7,2,16,,1,1,0,{},{},{}
 15025,Golden_Rod_Robe,Golden Rod Robe,5,20,,500,,40,,0,0x00000200,7,2,16,,100,1,0,{ bonus bDefEle,Ele_Wind; bonus bMdef,10; bonus bInt,1; bonus2 bSkillVariableCast,"WZ_VERMILION",-3000; if(readparam(bInt)>=120){ bonus bInt,1; } },{},{}
@@ -7488,7 +7488,7 @@
 15058,Rider_Suit,Rider Suit,5,20,,1000,0,40,0,1,75,7,2,16,,0,1,0,{ bonus bAgi,1; },{},{}
 15059,2011Love_Daddy,2011Love Daddy,5,20,,100,0,80,0,1,0xFFFFFFFF,7,2,16,,0,1,0,{},{},{}
 15060,Sky_Blue_Smock,Sky Blue Smock,5,20,,300,0,1,0,1,0xFFFFFFFF,7,2,16,,0,1,0,{},{},{}
-15061,Egir_Armor,Egir Armor,5,200000,,2600,,55,,1,0xFFFFFFFF,7,2,16,,110,1,0,{ bbonus bAllStats,1; },{},{}
+15061,Egir_Armor,Egir Armor,5,200000,,2600,,55,,1,0xFFFFFFFF,7,2,16,,110,1,0,{ bonus bAllStats,1; },{},{}
 15069,Suit_Of_Sid,Suit Of Sid,5,20,,1000,,30,,0,0xFFFFFFFF,7,2,16,,0,1,0,{},{},{}
 // More Maces
 16000,Erde,Erde,4,20,,500,130,,1,2,0x0004C5B2,2,2,2,4,50,1,8,{ bonus2 bSkillAtk,"AM_ACIDTERROR",20; bonus2 bSkillAtk,"AM_DEMONSTRATION",20; bonus bMaxSP,50; bonus bHealPower,10; },{},{}
