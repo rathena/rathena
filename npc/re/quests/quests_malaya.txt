@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 0.1
+//= 0.2
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //= Quest NPCs related to Port Malaya.
 //===== Additional Comments: =================================
 //= 0.1 Traders only. Adapted from Masao's conversion. [Euphy]
+//= 0.2 Added Tribe Blacksmith [DeadlySilence]
 //============================================================
 
 // Traders
@@ -272,4 +273,235 @@ ma_fild01,238,198,4	script	Tikbalang Expert#malaya	582,{
 			close;
 		}
 	}
+}
+
+// MVP Armors :: mvpitem
+// ============================================================
+ma_fild01,158,243,6	script	Tribe Blacksmith#malaya	582,{
+
+	mes "[Bayani]";
+	mes "I will upgrade your armor if you bring one that holds enormous power.";
+	next;
+	switch (select("What kind of equipment do upgrade?:What are the required materials?:What will it become after an upgrade?:Please upgrade this.")) {
+	case 1:
+		mes "[Bayani]";
+		mes "Your questions are too simple, but!";
+		next;
+		mes "[Bayani]";
+		mes "Are also important.";
+		next;
+		mes "[Bayani]";
+		mes "^7B4772Bakonawa Scale Armor^000000 made from the scales of the Bakonawa monster known to swallow the moon.";
+		next;
+		mes "[Bayani]";
+		mes "Light but sturdy ^7B4772Kalasag^000000 made from rattan that grows wild around Port Malaya.";
+		next;
+		mes "[Bayani]";
+		mes "^7B4772Buwaya Sack Cloth^000000 made from the sack of the man-eating alligator Buwaya.";
+		next;
+		mes "[Bayani]";
+		mes "^7B4772Bangungot Boots of Nightmare^000000 imbued with the hatred and vengeance of the monster Bangungot.";
+		next;
+		mes "[Bayani]";
+		mes "As just mentioned.";
+		next;
+		mes "[Bayani]";
+		mes "I will make powerful armor out of ONLY the strongest armor dropped from fearful monsters.";
+		close;
+	case 2:
+		mes "[Bayani]";
+		mes "Learned well.";
+		mes "Seems you learned that there is no such thing as free in life.";
+		next;
+		mes "[Bayani]";
+		mes "First thing to remember is that the object to upgrade must be strong itself. At least strong enough to endure ^FF0000+9 Refinement^000000.";
+		next;
+		mes "[Bayani]";
+		mes "Next is true strength that only comes out of power obtained naturally. I need ^FF000020 Ancient Grudges^000000 for protection from evil while Im refining.";
+		next;
+		mes "[Bayani]";
+		mes "When a ^FF0000+9 Refined Strong armor^000000 is combined with ^FF000020 Ancient Grudges^000000 for protection!!";
+		next;
+		mes "[Bayani]";
+		mes "You get a completely new and improved armor from old scraps.";
+		next;
+		mes "[Bayani]";
+		mes "Always look forward to this.";
+		close;
+	case 3:
+		mes "[Bayani]";
+		mes "Listen, because this is a very important question.";
+		next;
+		mes "[Bayani]";
+		mes "It won't matter if I say it more than a 100 times that upgraded armor is powerful.";
+		next;
+		mes "[Bayani]";
+		mes "Unless the one that holds it doesn't believe it is! Ask about what has changed and decide for yourself!";
+		next;
+		while (1) {
+			switch (select("There is no more.:Bakonawa Scale Armor:Kalasag:Buwaya Sack Cloth:Bangungot Boots of Nightmare")) {
+			case 1:
+				mes "[Bayani]";
+				mes "Looks like you ran out of questions.";
+				mes "Don't forget. You'll have to give up something to gain something.";
+				close;
+			case 2:
+				mes "[Bayani]";
+				mes "The Bakonawa Scale Armor adds +1 to all stats for all jobs which is overall great armor for everyone.";
+				next;
+				mes "[Bayani]";
+				mes "But I'm sure the inner you thinks this isn't enough.";
+				next;
+				mes "[Bayani]";
+				mes "That is why +2 can be added to all stats and an extra slot for a card to your socket if upgraded.";
+				next;
+				break;
+			case 3:
+				mes "[Bayani]";
+				mes "Kalasag is a good shield to reduce damage from boss monsters by 1% per 3 refinements.";
+				next;
+				mes "[Bayani]";
+				mes "But not enough. Can't believe that a shield doesnt have a place to equip a card.";
+				next;
+				mes "[Bayani]";
+				mes "That is why I can add an extra slot for a card to your socket if upgraded.";
+				next;
+				break;
+			case 4:
+				mes "[Bayani]";
+				mes "The Buwaya Sack Cloth offers healing capacity and healing item effect increase by 1% per 3 refinements. Not to mention it reduces 10% damage from Water, Earth, Fire, and Wind elemental monsters.";
+				next;
+				mes "[Bayani]";
+				mes "But not enough. Can't believe that these clothes don't come with a place to equip a card. Everyone knows that clothes should have Raydric on them!";
+				next;
+				mes "[Bayani]";
+				mes "Don't worry! I can add an extra slot for a card to your socket if upgraded.";
+				next;
+				break;
+			case 5:
+				mes "[Bayani]";
+				mes "The Bangungot Boots of Nightmare increases +1 MDEF per 1 refinement and speed increases starting at 14 refinement and above.";
+				next;
+				mes "[Bayani]";
+				mes "The speed increase effect from shoes like Moonlight Flower Shoes and Sleipnir items are out of reach for ordinary people.";
+				next;
+				mes "[Bayani]";
+				mes "But of course, +14 refinement isn't easy but there is an easy way to get it.";
+				next;
+				mes "[Bayani]";
+				mes "By upgrading your shoes, you can get speed increase starting from +12 refinement!";
+				next;
+				mes "[Bayani]";
+				mes "And it doesn't end there!!";
+				mes "I will also put in an extra slot in your socket to add a card.";
+				next;
+				break;
+			}
+			mes "[Bayani]";
+			mes "However, you'll have to give up something to gain something.";
+			next;
+			mes "[Bayani]";
+			mes "^0000FFEquipping the Kalasag, Buwaya Sack Cloth, Bakonawa Scale Armor, and Bangungot Boots of Nightmare all at once will lose the ^FF0000Set Effects^0000FF.^000000";
+			next;
+			mes "[Bayani]";
+			mes "Think it through. Next question?";
+			next;
+		}
+	}
+	mes "[Bayani]";
+	mes "Ha ha ha ha ha ha ha! Good!";
+	mes "You've brought the materials, right?";
+	next;
+	if (select("Oh... sorry...:Preparations are complete!!") == 1) {
+		mes "[Bayani]";
+		mes "Oh no!!";
+		mes "I will need an light but sturdy armor with an refinement of +9 or greater and 20 Ancient Grudges!!";
+		close;
+	}
+	if (countitem(6499) < 20) {
+		mes "[Bayani]";
+		mes "You said all preparations are done and you give me this?! I need at least 20 Ancient Grudges to refine your item.";
+		close;
+	}
+	mes "[Bayani]";
+	mes "So what armor will it be?";
+	next;
+	switch (select("Bakonawa Scale Armor:Kalasag:Buwaya Sack Cloth:Bangungot Boots of Nightmare")) {
+	case 1:
+		.@part    = EQI_ARMOR;
+		.@item    = 15051;
+		.@newItem = 15052;
+		break;
+	case 2:
+		.@part    = EQI_HAND_L;
+		.@item    = 2169;
+		.@newItem = 2170;
+		break;
+	case 3:
+		.@part    = EQI_GARMENT;
+		.@item    = 2590;
+		.@newItem = 2591;
+		break;
+	case 4:
+		.@part    = EQI_SHOES;
+		.@item    = 2491;
+		.@newItem = 2492;
+		break;
+	}
+	
+	if (!(.@item)) {
+		mes "[Bayani]";
+		mes "You should wear the equipment to upgrade and not come without it on you.";
+		close;
+	} else if (getequipid(.@part) != .@item) {
+		mes "[Bayani]";
+		mes "What is this! You said you wanted to upgrade " + getitemname(.@item) + " but why are you giving me this? You should be wearing " + getitemname(.@item) + ".";
+		close;
+	} else if (getequiprefinerycnt(.@part) < 9) {
+		mes "[Bayani]";
+		mes "No, the sturdiness of this item has not been tested yet. It'll have to be at least +9 refined for me to say, 'Oh this is pretty sturdy armor.";
+		close;
+	}
+
+	mes "[Bayani]";
+	mes "Looks like you did your homework! Don't see a flaw! Then I have one question to ask before I start refinement.";
+	next;
+	mes "[Bayani]";
+	mes "^0000FFOnce your item is refined, the refinement level will be ^FF00000^0000FF and the item will be upgraded.^000000 You get this part?";
+	next;
+	if (select("No.:Yes.") == 1) {
+		mes "[Bayani]";
+		mes "What? You didn't know this? Then, read through my instructions and come back again.";
+		close;
+	}
+	mes "[Bayani]";
+	mes "Good. Next question. Once refinement is done,";
+	mes "^0000FFEquipping the Kalasag, Buwaya Sack Cloth, Bakonawa Scale Armor, and Bangungot Boots of Nightmare all at once will lose the ^FF0000Set Effects^0000FF.^000000";
+	mes "Do you understand this point?";
+	next;
+	if (select("No.:Yes.") == 1) {
+		mes "[Bayani]";
+		mes "What? You didn't know this? Then, read through my instructions and come back again.";
+		close;
+	}
+	mes "[Bayani]";
+	mes "Awesome! Then let's start refining " + getitemname(.@item) + ".";
+	next;
+	specialeffect EF_SONICBLOW;
+	mes "[Bayani]";
+	mes "Pow!! Wow!! Flip... flop!";
+	next;
+	specialeffect2 EF_TRIPLEATTACK;
+	mes "[Bayani]";
+	mes "BAM!!";
+	next;
+	
+	delitem 6499,20; //Ancient_Grudge
+	delequip .@part;
+	getitem .@newItem, 1; 
+	
+	mes "[Bayani]";
+	mes "Ha ha. Perfect.";
+	mes "Congratulations. Your armor is better than ever.";
+	close;
 }
