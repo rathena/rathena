@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Morocc Pryamid Dungeon Monster Spawn Script
+//= Morocc Pyramid Dungeon Monster Spawn Script
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================

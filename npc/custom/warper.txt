@@ -431,7 +431,7 @@ I7: Go("monk_test",306,143);
 	Special:
 // --------------------------------------------------
 menu	"Auction Hall",S1, "Battlegrounds",S2, "Casino",S3, "Eden Group Headquarters",S4,
-	"Gonryun Arena",S4, "Izlude Arena",S5, "Monster Race Arena",S6, "Turbo Track",S7;
+	"Gonryun Arena",S5, "Izlude Arena",S6, "Monster Race Arena",S7, "Turbo Track",S8;
 
 S1: Go("auction_01",22,68);
 S2: Go("bat_room",154,150);

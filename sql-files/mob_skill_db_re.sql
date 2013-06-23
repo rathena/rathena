@@ -7958,3 +7958,36 @@ REPLACE INTO `mob_skill_db` VALUES (2339,'Bangungot Mangkukulam@NPC_DARKTHUNDER'
 REPLACE INTO `mob_skill_db` VALUES (2339,'Bangungot Mangkukulam@NPC_DARKSTRIKE','chase',340,9,1000,500,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db` VALUES (2339,'Bangungot Mangkukulam@NPC_DARKSTRIKE','attack',340,9,1000,500,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
+# Nightmare Pyramids (currently placeholders)
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@NPC_BLOODDRAIN','idle',199,1,2000,0,5000,'yes','randomtarget','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@NPC_BLOODDRAIN','idle',199,1,2000,0,5000,'yes','randomtarget','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@NPC_BLOODDRAIN','attack',199,1,2000,0,5000,'yes','randomtarget','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@NPC_BLOODDRAIN','attack',199,1,2000,0,5000,'yes','randomtarget','always','0',NULL,NULL,NULL,NULL,NULL,'29',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@NPC_SUMMONMONSTER','idle',209,5,5000,0,10000,'no','self','longrangeattacked','0',2357,2359,2361,NULL,NULL,'9',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@NPC_SUMMONMONSTER','idle',209,5,5000,0,10000,'no','self','casttargeted','0',1474,1477,1438,NULL,NULL,'9',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@NPC_SUMMONMONSTER','attack',209,5,5000,0,10000,'no','self','longrangeattacked','0',2357,2359,2361,NULL,NULL,'9',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@NPC_SUMMONMONSTER','attack',209,5,5000,0,10000,'no','self','casttargeted','0',2357,2359,2361,NULL,NULL,'9',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@NPC_SUMMONMONSTER','idle',209,5,5000,0,10000,'no','self','skillused','18',2357,2359,2361,NULL,NULL,'9',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@NPC_SUMMONMONSTER','idle',209,5,5000,0,10000,'no','self','skillused','89',2357,2359,2361,NULL,NULL,'9',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@NPC_SUMMONMONSTER','idle',209,5,5000,0,10000,'no','self','skillused','21',2357,2359,2361,NULL,NULL,'9',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@NPC_SUMMONMONSTER','idle',209,5,5000,0,10000,'no','self','skillused','28',2357,2359,2361,NULL,NULL,'9',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@NPC_SUMMONMONSTER','idle',209,5,5000,0,10000,'no','self','skillused','79',2357,2359,2361,NULL,NULL,'9',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@NPC_SUMMONMONSTER','idle',209,5,5000,0,10000,'no','self','skillused','83',2357,2359,2361,NULL,NULL,'9',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@WZ_METEOR','idle',83,11,10000,0,0,'yes','randomtarget','skillused','18',NULL,NULL,NULL,NULL,NULL,'9',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@WZ_METEOR','idle',83,11,10000,0,0,'yes','randomtarget','skillused','89',NULL,NULL,NULL,NULL,NULL,'9',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@WZ_METEOR','idle',83,11,10000,0,0,'yes','randomtarget','skillused','21',NULL,NULL,NULL,NULL,NULL,'9',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@WZ_METEOR','idle',83,11,10000,0,0,'yes','randomtarget','skillused','28',NULL,NULL,NULL,NULL,NULL,'9',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@WZ_METEOR','idle',83,11,10000,0,0,'yes','randomtarget','skillused','79',NULL,NULL,NULL,NULL,NULL,'9',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@WZ_METEOR','idle',83,11,10000,0,0,'yes','randomtarget','skillused','83',NULL,NULL,NULL,NULL,NULL,'9',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@WZ_METEOR','idle',83,11,10000,0,0,'yes','randomtarget','longrangeattacked',NULL,NULL,NULL,NULL,NULL,NULL,'9',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@WZ_METEOR','idle',83,11,10000,0,0,'yes','randomtarget','casttargeted',NULL,NULL,NULL,NULL,NULL,NULL,'9',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@WZ_METEOR','attack',83,11,5000,0,3000,'yes','randomtarget','always','0',NULL,NULL,NULL,NULL,NULL,'9',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@WZ_FIREPILLAR','idle',80,11,10000,0,2000,'yes','around2','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@WZ_FIREPILLAR','idle',80,11,10000,0,2000,'yes','around2','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@WZ_FIREPILLAR','attack',80,11,5000,0,2000,'yes','around2','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@NPC_DARKBLESSING','attack',203,1,5000,0,2000,'no','randomtarget','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@WZ_METEOR','idle',83,11,10000,0,5000,'yes','randomtarget','always','0',NULL,NULL,NULL,NULL,NULL,'9',NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@AL_TELEPORT','idle',26,1,10000,0,0,'yes','self','rudeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@AL_TELEPORT','walk',26,1,5000,0,5000,'yes','self','rudeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db` VALUES (2362,'Nightmare Amon Ra@AL_HEAL','idle',28,11,10000,0,10000,'yes','self','myhpltmaxrate','50',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+
