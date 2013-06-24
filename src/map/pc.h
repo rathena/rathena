@@ -23,6 +23,7 @@
 #define MAX_PC_BONUS 10
 #define MAX_PC_SKILL_REQUIRE 5
 #define MAX_PC_FEELHATE 3
+#define DAMAGELOG_SIZE_PC 100	// Any idea for this value?
 
 //Equip indexes constants. (eg: sd->equip_index[EQI_AMMO] returns the index
 //where the arrows are equipped)
@@ -515,6 +516,10 @@ struct map_session_data {
 	const char* delunit_prevfile;
 	int delunit_prevline;
 
+	struct {
+		int id;
+	} dmglog[DAMAGELOG_SIZE_PC];
+
 };
 
 //Update this max as necessary. 55 is the value needed for Super Baby currently
@@ -964,6 +969,9 @@ int pc_add_talisman(struct map_session_data *sd,int interval,int max,int type);
 int pc_del_talisman(struct map_session_data *sd,int count,int type);
 
 void pc_baselevelchanged(struct map_session_data *sd);
+
+void pc_damage_log_add(struct map_session_data *sd, int id);
+void pc_damage_log_clear(struct map_session_data *sd, int id);
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_race, uint32 mob_mode, int type);

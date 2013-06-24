@@ -1724,6 +1724,7 @@ int map_quit(struct map_session_data *sd) {
 		}
 	}
 
+	pc_damage_log_clear(sd,0);
 	party_booking_delete(sd); // Party Booking [Spiria]
 	pc_makesavestatus(sd);
 	pc_clean_skilltree(sd);

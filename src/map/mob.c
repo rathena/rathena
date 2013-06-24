@@ -2019,6 +2019,9 @@ void mob_log_damage(struct mob_data *md, struct block_list *src, int damage)
 			if(md->dmglog[i].id==0) {	//Store data in first empty slot.
 				md->dmglog[i].id  = char_id;
 				md->dmglog[i].flag= flag;
+
+				if(md->db->mexp)
+					pc_damage_log_add(map_charid2sd(char_id),md->bl.id);
 				break;
 			}
 			if(md->dmglog[i].dmg<mindmg && i)
@@ -2033,6 +2036,9 @@ void mob_log_damage(struct mob_data *md, struct block_list *src, int damage)
 			md->dmglog[minpos].id  = char_id;
 			md->dmglog[minpos].flag= flag;
 			md->dmglog[minpos].dmg = damage;
+
+			if(md->db->mexp)
+				pc_damage_log_add(map_charid2sd(char_id),md->bl.id);
 		}
 	}
 	return;
@@ -2160,6 +2166,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			case MDLF_HOMUN:  dmgbltypes|= BL_HOM; break;
 			case MDLF_PET:    dmgbltypes|= BL_PET; break;
 		}
+		if( md->db->mexp )
+			pc_damage_log_clear(tsd,md->bl.id);
 	}
 
 	// determines, if the monster was killed by homunculus' damage only

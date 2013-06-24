@@ -9962,6 +9962,64 @@ void pc_itemcd_do(struct map_session_data *sd, bool load) {
 	return;
 }
 
+void pc_clear_log_damage_sub(int char_id, struct mob_data *md)
+{
+	int i;
+	ARR_FIND(0,DAMAGELOG_SIZE,i,md->dmglog[i].id == char_id);
+	if( i < DAMAGELOG_SIZE )
+	{
+		md->dmglog[i].id=0;
+		md->dmglog[i].dmg=0;
+		md->dmglog[i].flag=0;
+	}
+}
+
+void pc_damage_log_add(struct map_session_data *sd, int id)
+{
+	int i = 0;
+
+	if( !sd )
+		return;
+
+	for(i = 0; i < DAMAGELOG_SIZE_PC && sd->dmglog[i].id != id; i++)
+		if( !sd->dmglog[i].id )
+		{
+			sd->dmglog[i].id = id;
+			break;
+		}
+	return;
+}
+
+void pc_damage_log_clear(struct map_session_data *sd, int id)
+{
+	int i;
+	struct mob_data *md = NULL;
+	if( !sd )
+		return;
+
+	if( !id )
+	{
+		for(i = 0; i < DAMAGELOG_SIZE_PC; i++)	// track every id
+		{
+			if( !sd->dmglog[i].id )	//skip the empty value
+				continue;
+
+			if( (md = map_id2md(sd->dmglog[i].id)) )
+				pc_clear_log_damage_sub(sd->status.char_id,md);
+		}
+		memset(sd->dmglog,0,sizeof(sd->dmglog));	// clear all
+	}
+	else
+	{
+		if( (md = map_id2md(id)) )
+			pc_clear_log_damage_sub(sd->status.char_id,md);
+
+		ARR_FIND(0,DAMAGELOG_SIZE_PC,i,sd->dmglog[i].id == id);	// find the id position
+		if( i < DAMAGELOG_SIZE_PC )
+			sd->dmglog[i].id = 0;
+	}
+}
+
 /*==========================================
  * pc Init/Terminate
  *------------------------------------------*/

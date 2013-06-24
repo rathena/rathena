@@ -41,7 +41,7 @@ static const short buyingstore_blankslots[MAX_SLOTS] = { 0 };  // used when chec
 /// Returns unique buying store id
 static unsigned int buyingstore_getuid(void)
 {
-	return buyingstore_nextid++;
+	return ++buyingstore_nextid;
 }
 
 
