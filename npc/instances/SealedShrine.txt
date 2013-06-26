@@ -575,6 +575,10 @@ OnTouch:
 		close;
 	}
 	end;
+
+OnInstanceInit: // Temporary fix for @reloadscript.
+	set 'ins_baphomet,0;
+	end;
 }
 
 1@cata,176,119,4	script	Ancient Hero's Soul#1F	411,{
@@ -1442,7 +1446,6 @@ OnTimer70000:
 
 1@cata,1,1,0	script	ins_1f_spawn_mobs	-1,{
 OnInstanceInit:
-	set 'ins_baphomet, 0;
 	set .@map$, instance_mapname("1@cata");
 	monster .@map$,0,0,"Zombie Master",1298,10;
 	monster .@map$,0,0,"Wraith Dead",1291,10;

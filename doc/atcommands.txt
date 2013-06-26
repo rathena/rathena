@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 20130614
+//= 20130626
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
@@ -1167,6 +1167,7 @@ This will also send a packet to clients causing them to close.
 @reload <type>
 @reloadatcommand
 @reloadbattleconf
+@reloadinstancedb
 @reloaditemdb
 @reloadmobdb
 @reloadmotd
@@ -1181,6 +1182,7 @@ This will also send a packet to clients causing them to close.
 Reloads a database or configuration file.
 
 Databases:
+-- instancedb: Instance Database
 -- itemdb: Item Database
 -- mobdb: Monster Database
 -- packetdb: Packet Database

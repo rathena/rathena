@@ -7284,33 +7284,19 @@ This will open a book item at the specified page
 ========================
 ---------------------------------------
 
-*instance_create("<instance name>",<party id>);
+*instance_create("<instance name>");
 
-Create an instance using the name "<instance name>" for the Party of <party id>.
-Most instance_* commands are used in conjunction with this command and depend
-on the ID this command returns.
+Creates an instance for the party of the attached player. The instance name,
+along with all other instance data, is read from 'db/(pre-)re/instance_db.txt'.
+Upon success, the command generates a unique instance ID, duplicates all listed
+maps and NPCs, sets the alive time, and triggers the "OnInstanceInit" label in
+all NPCs inside the instance.
 
-Example:
-	// Store the Party ID of the invoking character.
-	set .@party_id, getcharid(1);
-
-	// Attempt to create an instance using that party ID.
-	set .@id, instance_create("Endless Tower", .@party_id);
-	if (.@id == -1) { // Invalid type - not used anymore
-		...
-	}
-	else if (.@id == -2) { // Invalid Party ID
-		...
-	}
-	else if (.@id == -3) { // No free instances (MAX_INSTANCE exceeded)
-		...
-	}
-	else if (.@id == -4) { // Already exists
-		...
-	}
-	else (.@id < 0) { // Unspecified error while queuing instance.
-		...
-	}
+The command returns the instance ID upon success, and these values upon failure:
+ -1: Invalid type.
+ -2: Party not found.
+ -3: Instance already exists.
+ -4: No free instances (MAX_INSTANCE exceeded).
 
 ---------------------------------------
 
@@ -7318,83 +7304,46 @@ Example:
 
 Destroys instance with the ID <instance id>. If no ID is specified, the instance
 the script is attached to is used. If the script is not attached to an instance,
-the instance of the currently attached player's party is used. If no player is
-currently attached, the command fails and causes the script to halt.
+the instance of the currently attached player's party is used. If that fails,
+the script will come to a halt.
 
 ---------------------------------------
 
-*instance_attachmap("<map name>",<instance id>{,<use base name>});
+*instance_enter("<instance name>");
 
-Attaches the map "<map name>" to the instance specified with <instance id>. The
-optional parameter specifies, whether a map requires emulation for instancing (1)
-or not (0 = default).
+Warps player to the specified instance after the script terminates. The map and
+coordinates are located in 'db/(pre-)re/instance_db.txt'.
 
-Returns the resulting map name on success or an empty string on failure.
-
----------------------------------------
-
-*instance_detachmap "<map name>"{,<instance id>};
-
-Detach the map "<map name>" to the instance with the <instance id>. If no ID is
-specified, the instance the script is attached to is used. If the script is not
-attached to an instance, the instance of the currently attached player's party is
-used. If no player is currently attached, the command fails and causes the script
-to halt.
-
----------------------------------------
-
-*instance_init <instance id>;
-
-Initializes the instance given by <instance id>. This copies all NPCs from the
-source maps to the instanced maps.
-
----------------------------------------
-
-*instance_announce <instance id>,"<text>",<flag>{,<fontColor>{,<fontType>{,<fontSize>{,<fontAlign>{,<fontY>}}}}};
-
-Works like announce, but has the <instance id> parameter. If instance id is 0, the
-instance the script is attached to is used. If the script is not attached to an
-instance, the instance of the currently attached player's party is used. If no
-player is currently attached, the command fails and causes the script to halt.
-
----------------------------------------
-
-*instance_attach <instance id>;
-
-Attaches the current script to the instance given by <instance id>.
+The command returns 0 upon success, and these values upon failure:
+ 1: Party not found.
+ 2: Party does not have an instance.
+ 3: Other errors (invalid instance name, instance doesn't match with party).
 
 ---------------------------------------
 
 *instance_npcname("<npc name>"{,<instance id>});
 
-Retrieves the unique name given to a copy of an NPC given by "<npc name>" in an
-instance specified <instance id>. If no ID is specified, the instance the script
-is attached to is used. If the script is not attached to an instance, the
-instance of the currently attached player's party is used. If no player is
-currently attached, the command fails and causes the script to halt.
+Returns the unique name of the instanced script. If no ID is specified,
+the instance the script is attached to is used. If the script is not attached to
+an instance, the instance of the currently attached player's party is used. If
+that fails, the script will come to a halt.
 
 ---------------------------------------
 
-*has_instance("<map name>"{,<instance id>});
+*instance_mapname("<map name>"{,<instance id>});
 
-Checks whether or not the given map belongs to specified instance. If no ID is
-specified, the instance the script is attached to is used. If the script is not
-attached to an instance, the instance of the currently attached player's party
-is used. If no player is currently attached, the command fails and causes the
-script to halt.
-
-Returns the name of the instanced map on success, otherwise an empty string.
+Returns the unique name of the instanced map. If no instance ID is specified,
+the instance the script is attached to is used. If the script is not attached to
+an instance, the instance of the currently attached player's party is used. If
+that fails, the command returns an empty string instead.
 
 ---------------------------------------
 
 *instance_id({<type>});
 
-Retrieves the instance id, depending on <type>. If type is not given, it defaults
-to 0.
-
-Type:
-    0 - Instance ID the script is attached to.
-    1 - Instance ID of the currently attached player's party.
+Returns the unique instance id depending on <type>:
+ 0: Instance ID of the attached script (default).
+ 1: Instance ID of the currently attached player's party.
 
 ---------------------------------------
 
@@ -7403,24 +7352,8 @@ Type:
 Warps all players in the instance <instance id> to <map name> at given
 coordinates. If no ID is specified, the instance the script is attached to
 is used. If the script is not attached to an instance, the instance of the
-currently attached player's party is used. If no player is currently attached,
-the command fails and causes the script to halt.
-
----------------------------------------
-
-*instance_set_timeout <alive timeout>,<idle timeout>{,<instance id>};
-
-Sets the timeout values for an instance given by <instance id>. If no ID is
-specified, the instance the script is attached to is used. If the script is
-not attached to an instance, the instance of the currently attached player's
-party is used. If no player is currently attached, the command fails and causes
-the script to halt.
-
-Parameter <alive timeout> specifies the total amount of time the instance will
-exist. Parameter <idle timeout> specifies how long players have, when they are
-outside of the instance, until it is destroyed.
-
-Both timeout values are in seconds.
+currently attached player's party is used. If that fails, the script will
+come to a halt.
 
 ---------------------------------------
 

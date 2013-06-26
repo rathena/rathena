@@ -1659,6 +1659,10 @@ OnTouch:
 		close;
 	}
 	end;
+
+OnInstanceInit: // Temporary fix for @reloadscript.
+	set 'ins_nyd2,0;
+	end;
 }
 
 1@nyd,1,1,0	script	nyd_call_mon_1	-1,{
@@ -2147,7 +2151,6 @@ OnTouch:
 
 2@nyd,1,1,0	script	ins_nyd2_spawn_mobs	-1,{
 OnInstanceInit:
-	set 'ins_nyd2, 0;
 	set .@map$, instance_mapname("2@nyd");
 	areamonster .@map$,200,92,180,80,"Rhyncho",2020,40,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyRhynDead";
 	areamonster .@map$,200,92,180,80,"Phylla",2021,40,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyPhyDead";

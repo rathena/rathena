@@ -256,7 +256,7 @@ void instance_addnpc(struct instance_data *im)
 /*--------------------------------------
  * name : instance name
  * Return value could be
- * -4 = already exists | -3 = no free instances | -2 = party not found | -1 = invalid type
+ * -4 = no free instances | -3 = already exists | -2 = party not found | -1 = invalid type
  * On success return instance_id
  *--------------------------------------*/
 int instance_create(int party_id, const char *name)
@@ -300,7 +300,7 @@ int instance_create(int party_id, const char *name)
 
 	ShowInfo("[Instance] Created: %s.\n", name);
 
-	return 0;
+	return i;
 }
 
 /*--------------------------------------
@@ -490,17 +490,17 @@ int instance_enter(struct map_session_data *sd, const char *name)
 
 	nullpo_retr(-1, sd);
 
-	if(db == NULL)
-		return 1;
-
 	// Character must be in instance party
 	if(sd->status.party_id == 0)
-		return 2;
+		return 1;
 	if((p = party_search(sd->status.party_id)) == NULL)
-		return 2;
+		return 1;
 
 	// Party must have an instance
 	if(p->instance_id == 0)
+		return 2;
+
+	if(db == NULL)
 		return 3;
 
 	im = &instance_data[p->instance_id];
@@ -513,10 +513,10 @@ int instance_enter(struct map_session_data *sd, const char *name)
 
 	// Does the instance match?
 	if((m = instance_mapname2mapid(db->enter.mapname, p->instance_id)) < 0)
-		return 4;
+		return 3;
 
 	if(pc_setpos(sd, m, db->enter.x, db->enter.y, 0))
-		return 4;
+		return 3;
 
 	// If there was an idle timer, let's stop it
 	instance_stopidletimer(im);

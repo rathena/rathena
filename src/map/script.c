@@ -16464,31 +16464,12 @@ int script_instancegetid(struct script_state* st)
  *------------------------------------------*/
 BUILDIN_FUNC(instance_create)
 {
-
 	struct map_session_data *sd;
-	int res;
 
 	if((sd = script_rid2sd(st)) == NULL)
 		return -1;
 
-	if(!sd->status.party_id) {
-		ShowError("script:instance_create: attempting to start an instance with no attached party.\n");
-		return -1;
-	}
-
-	res = instance_create(sd->status.party_id, script_getstr(st, 2));
-	if( res < 0 ) {
-		const char *err;
-		switch(res) {
-			case -4: err = "No free instances"; break;
-			case -2: err = "Invalid party ID"; break;
-			case -1: err = "Invalid type"; break;
-			default: err = "Unknown"; break;
-		}
-		ShowError("script:instance_create: %s [%d].\n", err, res);
-	}
-
-	script_pushint(st, res);
+	script_pushint(st,instance_create(sd->status.party_id, script_getstr(st, 2)));
 	return 0;
 }
 
@@ -16520,10 +16501,9 @@ BUILDIN_FUNC(instance_destroy)
  * Warps player to instance
  * Results:
  *	0: Success
- *	1: Instance not in DB
- *	2: Character not in party
- *	3: Party doesn't have instance
- *	4: Instance doesn't match with party
+ *	1: Character not in party
+ *	2: Party doesn't have instance
+ *	3: Other errors (instance not in DB, instance doesn't match with party, etc.)
  *------------------------------------------*/
 BUILDIN_FUNC(instance_enter)
 {
@@ -16540,8 +16520,8 @@ BUILDIN_FUNC(instance_enter)
 /*==========================================
  * Returns the name of a duplicated NPC
  *
- * instance_npcname <npc_name>{,<instance_id};
- * <npc_name> is the full name of an NPC
+ * instance_npcname <npc_name>{,<instance_id>};
+ * <npc_name> is the full name of an NPC.
  *------------------------------------------*/
 BUILDIN_FUNC(instance_npcname)
 {
@@ -16572,7 +16552,7 @@ BUILDIN_FUNC(instance_npcname)
 /*==========================================
  * Returns the name of a duplicated map
  *
- * instance_mapname <map_name>{,<instance_id};
+ * instance_mapname <map_name>{,<instance_id>};
  *------------------------------------------*/
 BUILDIN_FUNC(instance_mapname)
 {

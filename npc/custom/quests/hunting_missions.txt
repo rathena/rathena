@@ -3,12 +3,19 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.3
+//= 1.3a
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: =========================================
 //= Random hunting missions.
 //= Rewards are based on quest difficulty.
+//===== Additional Comments: =================================
+//= 1.0 Initial script.
+//= 1.1 Small improvements and fixes.
+//= 1.2 Added party support and replaced blacklists with an
+//=     SQL query, both thanks to AnnieRuru.
+//= 1.3 Re-added a blacklist adapted for the SQL query.
+//= 1.3a Added mission reset options.
 //============================================================
 
 prontera,152,187,6	script	Hunting Missions	951,{
@@ -72,10 +79,24 @@ function Chk; function Cm;
 		mes "[Hunting Missions]";
 		mes "Do you really want to";
 		mes "abandon your mission?";
-		if (.Delay) mes "Your delay time will not be reset.";
+		if (.Reset < 0 && .Delay)
+			mes "Your delay time will not be reset.";
+		else if (.Reset > 0)
+			mes "It will cost "+Cm(.Reset)+" Zeny.";
 		next;
 		switch(select(" ~ Abandon...: ~ ^777777Cancel^000000")) {
 		case 1:
+			if (.Reset > 0) {
+				if (Zeny < .Reset) {
+					mes "[Hunting Missions]";
+					mes "You don't have enough";
+					mes "Zeny to drop this mission.";
+					emotion e_sry;
+					close;
+				}
+				set Zeny, Zeny-.Reset;
+				emotion e_cash;
+			}
 			mes "[Hunting Missions]";
 			mes "Alright, I've dropped";
 			mes "your current mission.";
@@ -85,7 +106,7 @@ function Chk; function Cm;
 				setd "Mission"+.@i+"_",0;
 			}
 			set #Mission_Count,0;
-			if (.Delay) set #Mission_Delay, gettimetick(2)+(.Delay*3600);
+			if (.Reset < 0 && .Delay) set #Mission_Delay, gettimetick(2)+(.Delay*3600);
 			close;
 		case 2:
 			mes "[Hunting Missions]";
@@ -262,6 +283,7 @@ OnInit:
 	set .Delay,12;		// Quest delay, in hours (0 to disable).
 	set .Quests,4;		// Number of subquests per mission (increases rewards).
 	set .Party,3;		// Party options: 0 (exclude party kills), 1 (include party kills), 2 (same map only), 3 (screen area only)
+	set .Reset,-1;		// Reset options: -1 (abandoning mission sets delay time), 0 (no delay time), [Zeny] (cost to abandon mission, no delay time)
 	setarray .Count[0],	// Min and max monsters per subquest (increases rewards).
 		40,70;
 	setarray .Modifier[0],	// Multipliers for Base Exp, Job Exp, and Zeny rewards.

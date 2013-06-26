@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.0
+//= 1.0a
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //= Quest NPCs related to Morroc.
 //===== Additional Comments: =================================
 //= 1.0 First Version.
+//= 1.0a Gathered remaining dialogues. [Euphy]
 //============================================================
 
 // Pyramids Nightmare Mode
@@ -124,26 +125,24 @@ moc_prydn1,94,98,3	script	Suspicious Cat#night2	547,{
 				close;
 			}
 		} else if (.@hunting == 0 || .@hunting == 1) {
-			//Custom Translation
 			mes "[Suspicious Cat]";
-			mes "Hunting Verit is going well?";
+			mes "Is Verit's training going well?";
 			next;
-			switch(select("Of course.:I quit.")) {
+			switch(select("Sure.:I want to stop.")) {
 			case 1:
 				mes "[Suspicious Cat]";
-				mes "Good. Keep it up.";
+				mes "Good. Keep up the good work!";
 				close;
 			case 2:
 				mes "[Suspicious Cat]";
-				mes "What? Irresponsible bastard!";
+				mes "What? You're so irresponsible!";
 				erasequest 2289;
 				close;
 			}
 		} else if (.@hunting == 2) {
-			//Custom Translation
 			mes "[Suspicious Cat]";
-			mes "See, this is better! Good one!";
-			mes "Think for a while before coming back here, won't you? Haha!";
+			mes "Hey, you're actually useful! Good job!";
+			mes "That Verit wouldn't dare come around here for a while, right? Muhahah!";
 			changequest 2289,2290;
 			getexp 300000,100000;
 			close;
@@ -186,26 +185,24 @@ moc_prydn1,94,98,3	script	Suspicious Cat#night2	547,{
 				close;
 			}
 		} else if (.@hunting == 0 || .@hunting == 1) {
-			//Custom Translation
 			mes "[Suspicious Cat]";
-			mes "Hunting Verit is going well?";
+			mes "Is fighting Ancient Mummies going well?";
 			next;
-			switch(select("Of course.:I quit.")) {
+			switch(select("Sure.:I want to stop.")) {
 			case 1:
 				mes "[Suspicious Cat]";
-				mes "Good. Keep it up.";
+				mes "Good. Keep up the good work!";
 				close;
 			case 2:
 				mes "[Suspicious Cat]";
-				mes "What? Irresponsible bastard!";
+				mes "What? You're so irresponsible!";
 				erasequest 2292;
 				close;
 			}
 		} else if (.@hunting == 2) {
-			//Custom Translation
 			mes "[Suspicious Cat]";
-			mes "See, this is better! Good one!";
-			mes "Think for a while before coming back here, won't you? Haha!";
+			mes "Hey, you're actually useful! Good job!";
+			mes "That Ancient Mummy wouldn't dare come around here for a while, right? Muhahah!";
 			changequest 2292,2291;
 			getexp 600000,200000;
 			close;
