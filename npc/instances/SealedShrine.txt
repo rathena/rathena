@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.3
 //===== Compatible With: ===================================== 
 //= rAthena SVN
 //===== Description: ========================================= 
@@ -21,11 +21,12 @@
 //=     Removed checking quest 3045, unofficial check.
 //= 1.7 Fixed a checkquest condition never setting quest. [L0ne_W0lf]
 //= 1.8 Added 'instance_check_party' command to the script for proper checking if
-//=		the invoking party meets the requirements to join the Memorial Dungeon.
+//=     the invoking party meets the requirements to join the Memorial Dungeon.
 //= 1.9 Fixed broken else/if chaining. [Joseph]
 //= 2.0 Some optimization. [Euphy]
 //= 2.1 Fixed quest being removed before the 12 hours cool down. [Joseph]
 //= 2.2 Removed extra setquest (quest id:3040).	[Joseph]
+//= 2.3 Instance system rewrite. [Euphy]
 //============================================================ 
 
 // Sealed Catacomb Entrance
@@ -94,7 +95,7 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 		}
 		break;
 	case 2:
-		if (BaseLevel > 74) {
+		if (BaseLevel >= 75) {
 
 			set .@party_id,getcharid(1);
 
@@ -107,72 +108,15 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 			// Two hour play limit
 			//set .@ins_bapho_check2,checkquest(3045,PLAYTIME);
 
-			if(!instance_check_party(.@party_id,2,75)){
-				mes "I'm sorry but your Party does not meet the requirements to join the Memorial Dungeon.";
-				close;
-			}
-
 			if (.@ins_bapho_check == -1) {
-				if (getpartyleader(.@party_id,2) == getcharid(0)) {
-					set .@instance, instance_create("Sealed Catacombs", .@party_id);
-					if (.@instance < 0) {
-						mes "[Friar Patrick]";
-						mes "Party name is "+getpartyname(.@party_id)+"...";
-						mes "Name of the leader is "+.@partymembername$[0]+"...";
+				if (getpartyleader(.@party_id,2) == getcharid(0) && instance_check_party(.@party_id,2,75)) {
+					mes "[Friar Patrick]";
+					mes "Party name is "+getpartyname(.@party_id)+"...";
+					mes "Name of the leader is "+strcharinfo(0)+"...";
+					if (instance_create("Sealed Catacomb") < 0) {
 						mes "Umm... But it seems that there is a problem here... I'll check quickly. Please wait.";
 					}
 					else {
-
-						for( set .@i, 1; .@i <= 2; set .@i, .@i + 1 ) {
-							if( instance_attachmap("" + .@i + "@cata", .@instance) == "" )
-								break;
-						}
-						if( .@i < 2 ) {
-							instance_destroy(.@instance);
-							close;
-						}
-
-						instance_attach(.@instance);
-						instance_set_timeout 7200,300,.@instance;
-						instance_init(.@instance);
-
-						// First Floor
-						disablenpc instance_npcname("Ancient Hero's Soul#1F", instance_id());
-						disablenpc instance_npcname("ins_bapho_to_2f", instance_id());
-
-						for( set .@i, 1; .@i < 13; set .@i, .@i + 1 ) {
-							disablenpc instance_npcname("Gravestone#1F_"+.@i+"T", instance_id());
-							disablenpc instance_npcname("Gravestone#1F_"+.@i+"F", instance_id());
-						}
-						for( set .@i, 1; .@i <= 12; set .@i, .@i + 1 ) {
-							disablenpc instance_npcname("Bobbing Torch#"+.@i, instance_id());
-						}
-
-						// Second Floor
-						disablenpc instance_npcname("ins_baphomet_1f_timer", instance_id());
-						disablenpc instance_npcname("ins_2f_enter_broad", instance_id());
-						disablenpc instance_npcname("Magical Seal#0", instance_id());
-						disablenpc instance_npcname("Magical Seal#2", instance_id());
-						disablenpc instance_npcname("Magical Seal#4", instance_id());
-						disablenpc instance_npcname("Magical Seal#8", instance_id());
-						disablenpc instance_npcname("Magical Seal#10", instance_id());
-						disablenpc instance_npcname("Ancient Hero's Soul#2F", instance_id());
-						disablenpc instance_npcname("control_baphomet", instance_id());
-						disablenpc instance_npcname("ins_2f_hero_broad2", instance_id());
-						disablenpc instance_npcname("2f_callmon_pattern_c", instance_id());
-						disablenpc instance_npcname("2f_callmon_pattern", instance_id());
-						disablenpc instance_npcname("ins_2f_hero_pattern_c", instance_id());
-						disablenpc instance_npcname("ins_2f_hero_pattern", instance_id());
-
-						// Pick proper grave
-						donpcevent instance_npcname("ins_baphomet_lotto", instance_id())+"::OnEnable";
-
-						// Spawn monsters.
-						donpcevent instance_npcname("ins_1f_spawn_mobs", instance_id())+"::OnEnable";
-
-						mes "[Friar Patrick]";
-						mes "Party name is "+getpartyname(.@party_id)+"...";
-						mes "Name of the leader is "+.@partymembername$[0]+"...";
 						mes "Okay... I'll adjust the shrine's seal so that you and your group can enter.";
 						next;
 						mes "[Friar Patrick]";
@@ -210,10 +154,9 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 				mes "[Friar Patrick]";
 				mes "Haaaaaaap... Hocus Pocus Wingardium Abracadabra!!!!!";
 				next;
-				if (checkquest(3040)>=0) erasequest 3040;
+				erasequest 3040;
 				if (checkquest(3041)>=0) erasequest 3041;
 				if (checkquest(3045)>=0) erasequest 3045;
-				set party_instance_id4,0;
 				mes "[Friar Patrick]";
 				mes "Huu... It's over. Now that I've released Baphomet's Curse, you can enter again.";
 			}
@@ -262,57 +205,50 @@ monk_test,306,151,3	script	Grave of Baphomet#edq	111,{
 	if (countitem(6002)) delitem 6002,countitem(6002); //Token_Of_Apostle
 	mes "This gravestone has a carving of a wicked devil with large horns. It arouses an ominous feeling.";
 	next;
-	switch(select("Touch the stone.:Step back.")) {
-	case 1:
-		set .@party_id,getcharid(1);
-		set .@instance, instance_id(1);
-		instance_attach(.@instance);
-		
-		// 12 hour cooldown
-		set .@ins_bapho_check,checkquest(3040,PLAYTIME);
-		// Two hour play limit
-		//set .@ins_bapho_check2,checkquest(3045,PLAYTIME);
-		
-		if(!instance_check_party(.@party_id,2,75)){
-			mes "I'm sorry but your Party does not meet the requirements to join the Memorial Dungeon.";
+	if(select("Touch the stone.:Step back.") == 2)
+		close;
+
+	// 12 hour cooldown
+	set .@ins_bapho_check,checkquest(3040,PLAYTIME);
+	// Two hour play limit
+	//set .@ins_bapho_check2,checkquest(3045,PLAYTIME);
+
+	if (.@ins_bapho_check == -1) {
+		switch(instance_enter("Sealed Catacomb")) {
+		case 3:
+		case 2:
+			mes "It's cold to the touch. It doesn't respond.";
+			close;
+		case 1:
+			mes "[Friar Patrick]";
+			mes "To enter this dangerous place, you can't go alone. Come again after you join a party.";
+			close;
+		case 0:
+			mapannounce "monk_test","[" + strcharinfo(0) + "] member of the [" + getpartyname(.@party_id) + "] party has entered the Sealed Shrine.",bc_map,"0x00ff99";
+			setquest 3040;
+			//warp "1@cata",100,224;
 			close;
 		}
-		if (.@ins_bapho_check == -1) {
-			if (has_instance("1@cata") == "") {
-				mes "It's cold to the touch. It doesn't respond.";
-			} else if((party_instance_id4 != 0) && (party_instance_id4 != getcharid(1))) {
-				mes "It seems you have entered this shrine recently... You cannot reenter because Baphomet's Curse still remains. Baphomet's Curse disappears only after a certain amount of time has passed.";
-			} else {
-				mapannounce "monk_test","[" + strcharinfo(0) + "] member of the [" + getpartyname(.@party_id) + "] party has entered the Sealed Shrine.",bc_map,"0x00ff99";
-				if (checkquest(3040) == -1) setquest 3040;
-				set party_instance_id4,getcharid(1);
-				warp "1@cata",100,224;
-				end;
-			}
-		} else if (.@ins_bapho_check == 0 || .@ins_bapho_check == 1) {
-			mes "[Friar Patrick]";
-			mes "It seems you have entered this shrine recently... You cannot reenter because the curse of Baphomet still remains.";
-			mes "The curse of Baphomet disappears after a certain amount of time after you entered.";
-		} else if (.@ins_bapho_check == 2) {
-			mes "[Friar Patrick]";
-			mes "Umm... It seems the curse of Baphomet weakened. I'll clear the bad curse.";
-			next;
-			mes "[Friar Patrick]";
-			mes "Haaaaaaap... Wingardium Leviosa Expecto Patronum !!!!!";
-			specialeffect2 EF_HOLYHIT;
-			if (checkquest(3040)>=0) erasequest 3040;
-			if (checkquest(3041)>=0) erasequest 3041;
-			if (checkquest(3045)>=0) erasequest 3045;
-			set party_instance_id4,0;
-			next;
-			mes "[Friar Patrick]";
-			mes "Huu... It's over. Now I released all of the curses on you. You can enter again.";
-		}
-		break;
-	case 2:
-		break;
+	} else if (.@ins_bapho_check == 0 || .@ins_bapho_check == 1) {
+		mes "[Friar Patrick]";
+		mes "It seems you have entered this shrine recently... You cannot reenter because the curse of Baphomet still remains.";
+		mes "The curse of Baphomet disappears after a certain amount of time after you entered.";
+		close;
+	} else if (.@ins_bapho_check == 2) {
+		mes "[Friar Patrick]";
+		mes "Umm... It seems the curse of Baphomet weakened. I'll clear the bad curse.";
+		next;
+		mes "[Friar Patrick]";
+		mes "Haaaaaaap... Wingardium Leviosa Expecto Patronum !!!!!";
+		specialeffect2 EF_HOLYHIT;
+		erasequest 3040;
+		if (checkquest(3041)>=0) erasequest 3041;
+		if (checkquest(3045)>=0) erasequest 3045;
+		next;
+		mes "[Friar Patrick]";
+		mes "Huu... It's over. Now I released all of the curses on you. You can enter again.";
+		close;
 	}
-	close;
 }
 
 prt_monk,261,91,3	script	Rust Blackhand#edq	826,{
@@ -485,250 +421,52 @@ prt_monk,261,91,3	script	Rust Blackhand#edq	826,{
 // Sealed Shrine Interior
 //============================================================
 1@cata,1,2,0	script	ins_baphomet_lotto	-1,{
-OnEnable:
-	switch(rand(1,13)) {
-	case 1:
-		enablenpc instance_npcname("Gravestone#1F_1T", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_2F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_3F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_4F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_5F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_6F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_7F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_8F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_9F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_10F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_11F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_12F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_13F", instance_id());
-		end;
-	case 2:
-		enablenpc instance_npcname("Gravestone#1F_1F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_2T", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_3F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_4F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_5F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_6F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_7F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_8F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_9F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_10F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_11F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_12F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_13F", instance_id());
-		end;
-	case 3:
-		enablenpc instance_npcname("Gravestone#1F_1F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_2F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_3T", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_4F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_5F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_6F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_7F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_8F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_9F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_10F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_11F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_12F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_13F", instance_id());
-		end;
-	case 4:
-		enablenpc instance_npcname("Gravestone#1F_1F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_2F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_3F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_4T", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_5F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_6F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_7F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_8F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_9F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_10F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_11F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_12F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_13F", instance_id());
-		end;
-	case 5:
-		enablenpc instance_npcname("Gravestone#1F_1F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_2F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_3F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_4F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_5T", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_6F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_7F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_8F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_9F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_10F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_11F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_12F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_13F", instance_id());
-		end;
-	case 6:
-		enablenpc instance_npcname("Gravestone#1F_1F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_2F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_3F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_4F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_5F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_6T", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_7F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_8F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_9F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_10F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_11F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_12F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_13F", instance_id());
-		end;
-	case 7:
-		enablenpc instance_npcname("Gravestone#1F_1F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_2F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_3F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_4F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_5F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_6F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_7T", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_8F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_9F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_10F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_11F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_12F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_13F", instance_id());
-		end;
-	case 8:
-		enablenpc instance_npcname("Gravestone#1F_1F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_2F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_3F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_4F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_5F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_6F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_7F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_8T", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_9F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_10F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_11F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_12F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_13F", instance_id());
-		end;
-	case 9:
-		enablenpc instance_npcname("Gravestone#1F_1F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_2F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_3F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_4F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_5F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_6F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_7F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_8F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_9T", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_10F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_11F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_12F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_13F", instance_id());
-		end;
-	case 10:
-		enablenpc instance_npcname("Gravestone#1F_1F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_2F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_3F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_4F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_5F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_6F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_7F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_8F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_9F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_10T", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_11F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_12F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_13F", instance_id());
-		end;
-	case 11:
-		enablenpc instance_npcname("Gravestone#1F_1F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_2F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_3F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_4F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_5F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_6F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_7F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_8F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_9F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_10F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_11T", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_12F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_13F", instance_id());
-		end;
-	case 12:
-		enablenpc instance_npcname("Gravestone#1F_1F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_2F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_3F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_4F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_5F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_6F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_7F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_8F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_9F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_10F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_11F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_12T", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_13F", instance_id());
-		end;
-	case 13:
-		enablenpc instance_npcname("Gravestone#1F_1F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_2F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_3F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_4F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_5F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_6F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_7F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_8F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_9F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_10F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_11F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_12F", instance_id());
-		enablenpc instance_npcname("Gravestone#1F_13T", instance_id());
-		end;
+OnInstanceInit:
+	// Pick one "true" Gravestone and 12 "false" Gravestones.
+	set .@true, rand(1,13);
+	for(set .@i,1; .@i<13; set .@i,.@i+1) {
+		disablenpc instance_npcname("Gravestone#1F_1"+((.@i == .@true)?"F":"T"));
 	}
+	disablenpc instance_npcname("ins_baphomet_lotto");
 	end;
 }
 
 1@cata,3,2,0	script	ins_baphomet_lotto2	-1,{
 OnEnable:
-	enablenpc instance_npcname("Bobbing Torch#1", instance_id());
-	enablenpc instance_npcname("Bobbing Torch#2", instance_id());
-	enablenpc instance_npcname("Bobbing Torch#3", instance_id());
-	enablenpc instance_npcname("Bobbing Torch#4", instance_id());
-	enablenpc instance_npcname("Bobbing Torch#5", instance_id());
-	enablenpc instance_npcname("Bobbing Torch#6", instance_id());
-	enablenpc instance_npcname("Bobbing Torch#7", instance_id());
-	enablenpc instance_npcname("Bobbing Torch#8", instance_id());
-	enablenpc instance_npcname("Bobbing Torch#9", instance_id());
-	enablenpc instance_npcname("Bobbing Torch#10", instance_id());
-	enablenpc instance_npcname("Bobbing Torch#11", instance_id());
-	enablenpc instance_npcname("Bobbing Torch#12", instance_id());
+	for(set .@i,1; .@i<12; set .@i,.@i+1)
+		enablenpc instance_npcname("Bobbing Torch#"+.@i);
 	end;
 }
 
 1@cata,4,2,0	script	ins_baphomet_lotto3	-1,{
 OnEnable:
-	monster "1@cata",0,0,"Apostle of Baphomet",1869,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
-	monster "1@cata",0,0,"Apostle of Baphomet",1291,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
-	monster "1@cata",0,0,"Apostle of Baphomet",1869,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
-	monster "1@cata",0,0,"Apostle of Baphomet",1291,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
-	monster "1@cata",0,0,"Apostle of Baphomet",1869,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
-	monster "1@cata",0,0,"Apostle of Baphomet",1291,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
-	monster "1@cata",0,0,"Apostle of Baphomet",1869,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
-	monster "1@cata",0,0,"Apostle of Baphomet",1132,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
-	monster "1@cata",0,0,"Apostle of Baphomet",1117,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
-	monster "1@cata",0,0,"Apostle of Baphomet",1132,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
-	monster "1@cata",0,0,"Apostle of Baphomet",1117,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
-	monster "1@cata",0,0,"Apostle of Baphomet",1132,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
-	monster "1@cata",0,0,"Apostle of Baphomet",1291,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
-	monster "1@cata",0,0,"Apostle of Baphomet",1117,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
-	monster "1@cata",0,0,"Apostle of Baphomet",1869,1,instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
+	set .@label$, instance_npcname("ins_baphomet_lotto3")+"::OnMyMobDead";
+	set .@map$, instance_mapname("1@cata");
+	monster .@map$,0,0,"Apostle of Baphomet",1869,1,.@label$;
+	monster .@map$,0,0,"Apostle of Baphomet",1291,1,.@label$;
+	monster .@map$,0,0,"Apostle of Baphomet",1869,1,.@label$;
+	monster .@map$,0,0,"Apostle of Baphomet",1291,1,.@label$;
+	monster .@map$,0,0,"Apostle of Baphomet",1869,1,.@label$;
+	monster .@map$,0,0,"Apostle of Baphomet",1291,1,.@label$;
+	monster .@map$,0,0,"Apostle of Baphomet",1869,1,.@label$;
+	monster .@map$,0,0,"Apostle of Baphomet",1132,1,.@label$;
+	monster .@map$,0,0,"Apostle of Baphomet",1117,1,.@label$;
+	monster .@map$,0,0,"Apostle of Baphomet",1132,1,.@label$;
+	monster .@map$,0,0,"Apostle of Baphomet",1117,1,.@label$;
+	monster .@map$,0,0,"Apostle of Baphomet",1132,1,.@label$;
+	monster .@map$,0,0,"Apostle of Baphomet",1291,1,.@label$;
+	monster .@map$,0,0,"Apostle of Baphomet",1117,1,.@label$;
+	monster .@map$,0,0,"Apostle of Baphomet",1869,1,.@label$;
 	end;
 
 OnDisable:
-	killmonster "1@cata",instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead";
+	killmonster instance_mapname("1@cata"),instance_npcname("ins_baphomet_lotto3")+"::OnMyMobDead";
 	end;
 
 OnMyMobDead:
-	if (mobcount("1@cata",instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnMyMobDead") < 1) {
-		instance_announce 0, "All apostles of Baphomet are dead!",bc_map,"0x00ff99";
+	set .@map$, instance_mapname("1@cata");
+	if (mobcount(.@map$,instance_npcname("ins_baphomet_lotto3")+"::OnMyMobDead") < 1) {
+		mapannounce .@map$, "All apostles of Baphomet are dead!",bc_map,"0x00ff99";
 	}
 	getitem 6002,1; //Token_Of_Apostle
 	end;
@@ -804,12 +542,12 @@ OnMyMobDead:
 			mes "Yes... This is... My pendant...";
 			next;
 			delitem 6003,1; //Soul_Pendant
-			enablenpc instance_npcname("Ancient Hero's Soul#1F", instance_id());
-			disablenpc instance_npcname("Gravestone#", instance_id());
+			enablenpc instance_npcname("Ancient Hero's Soul#1F");
+			disablenpc instance_npcname("Gravestone#");
 			mes "[Voice of the Gravestone]";
 			mes "Now I can substantialize my soul. I'll wait for you in front of the altar of fire located at the center of this grave. Let's meet there.";
 			next;
-			instance_announce 0, "Ancient Hero's Soul : I'll wait for you in front of the altar of fire located at the center",bc_map,"0xFFFF00";
+			mapannounce instance_mapname("1@cata"), "Ancient Hero's Soul : I'll wait for you in front of the altar of fire located at the center",bc_map,"0xFFFF00";
 			mes "I can feel the voice becoming faint.";
 			close;
 		}
@@ -958,9 +696,9 @@ OnTouch:
 			mes "[Ancient Hero's Soul]";
 			mes "To remind you again, I must be substantialized within the next hour. So everyone, finish your work within that time!";
 			set 'ins_baphomet,3;
-			donpcevent instance_npcname("ins_baphomet_1f_timer", instance_id())+"::OnEnable";
-			donpcevent instance_npcname("ins_baphomet_lotto2", instance_id())+"::OnEnable";
-			donpcevent instance_npcname("ins_baphomet_lotto3", instance_id())+"::OnEnable";
+			donpcevent instance_npcname("ins_baphomet_1f_timer")+"::OnEnable";
+			donpcevent instance_npcname("ins_baphomet_lotto2")+"::OnEnable";
+			donpcevent instance_npcname("ins_baphomet_lotto3")+"::OnEnable";
 		}
 		else {
 			mes "[Ancient Hero's Soul]";
@@ -1015,7 +753,7 @@ OnTouch:
 		next;
 		set 'ins_baphomet,5;
 		specialeffect EF_TELEPORTATION;
-		enablenpc instance_npcname("ins_bapho_to_2f", instance_id());
+		enablenpc instance_npcname("ins_bapho_to_2f");
 		mes "[Ancient Hero's Soul]";
 		mes "Now you can go to the main altar. It is located in the bottom right corner of this floor.";
 		next;
@@ -1025,7 +763,7 @@ OnTouch:
 		mes "[Ancient Hero's Soul]";
 		mes "Go ahead, warriors.";
 		cutin "",255;
-		instance_announce 0, "Ancient Hero's Soul : Now you can go to the Main Altar's gate. It is located in the Southeast",bc_map,"0xFFFF00";
+		mapannounce instance_mapname("1@cata"), "Ancient Hero's Soul : Now you can go to the Main Altar's gate. It is located in the Southeast",bc_map,"0xFFFF00";
 		close;
 	}
 	else if ('ins_baphomet == 4) {
@@ -1052,6 +790,10 @@ OnTouch:
 		cutin "",255;
 		close;
 	}
+
+OnInstanceInit:
+	disablenpc instance_npcname("Ancient Hero's Soul#1F");
+	end;
 }
 
 // To 2F Warp
@@ -1061,7 +803,7 @@ OnTouch:
 	if (countitem(6002) > 0) {
 		delitem 6002,countitem(6002); //Token_Of_Apostle
 		set 'ins_baphomet,5;
-		warp "2@cata",80,144;
+		warp instance_mapname("2@cata"),80,144;
 		end;
 	}
 	else {
@@ -1069,6 +811,10 @@ OnTouch:
 		mes "Where is your Token of Apostle? I said you should carry the Token of Apostle to pass this gate.";
 		close;
 	}
+
+OnInstanceInit:
+	disablenpc instance_npcname("ins_bapho_to_2f");
+	end;
 }
 
 // Gravestones
@@ -1133,7 +879,7 @@ OnTouch:
 			specialeffect2 EF_HOLYHIT;
 			getitem 6001,1; //Essence_Of_Fire
 			mes "The symbol of inheritor shines. Then a small crystal falls into my hand from the torch.";
-			disablenpc instance_npcname(strnpcinfo(0), instance_id());
+			disablenpc instance_npcname(strnpcinfo(0));
 			close;
 		}
 		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
@@ -1154,6 +900,10 @@ OnTouch:
 		percentheal -50,0;
 		close;
 	}
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
 }
 1@cata,267,210,0	duplicate(Bobbing Torch#SS)	Bobbing Torch#1	844
 1@cata,85,182,0	duplicate(Bobbing Torch#SS)	Bobbing Torch#2	844
@@ -1169,34 +919,38 @@ OnTouch:
 1@cata,155,14,0	duplicate(Bobbing Torch#SS)	Bobbing Torch#12	844
 
 1@cata,1,1,0	script	ins_baphomet_1f_timer	-1,{
+OnInstanceInit:
+	disablenpc instance_npcname("ins_baphomet_1f_timer");
+	end;
+
 OnEnable:
-	enablenpc instance_npcname("ins_baphomet_1f_timer", instance_id());
+	enablenpc instance_npcname("ins_baphomet_1f_timer");
 	initnpctimer;
 	end;
 
-OnDisable:;
-	disablenpc instance_npcname("ins_baphomet_1f_timer", instance_id());
+OnDisable:
+	disablenpc instance_npcname("ins_baphomet_1f_timer");
 	stopnpctimer;
 	end;
 
 OnTimer1800000:
-	instance_announce 0, "Ancient Hero's Soul : We don't have enough time! Hurry up!",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("1@cata"), "Ancient Hero's Soul : We don't have enough time! Hurry up!",bc_map,"0xFFFF00";
 	end;
 
 OnTimer2400000:
-	instance_announce 0, "Ancient Hero's Soul : My body is disappearing... Hurry up!",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("1@cata"), "Ancient Hero's Soul : My body is disappearing... Hurry up!",bc_map,"0xFFFF00";
 	end;
 
 OnTimer3000000:
-	instance_announce 0, "Ancient Hero's Soul : Everything is over... There is no other way but to wait for the next chance...",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("1@cata"), "Ancient Hero's Soul : Everything is over... There is no other way but to wait for the next chance...",bc_map,"0xFFFF00";
 	end;
 
 OnTimer3050000:
-	instance_announce 0, "Ancient Hero's Soul : We failed... However... We still have a chance. I hope you will train yourselves until the time comes.",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("1@cata"), "Ancient Hero's Soul : We failed... However... We still have a chance. I hope you will train yourselves until the time comes.",bc_map,"0xFFFF00";
 	end;
 
 OnTimer3100000:
-	instance_announce 0, "You've failed to open the seal of main altar.",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("1@cata"), "You've failed to open the seal of main altar.",bc_map,"0xFFFF00";
 	end;
 
 OnTimer3500000:
@@ -1207,106 +961,110 @@ OnTimer3500000:
 
 2@cata,80,144,0	script	ins_2f_enter	-1,3,3,{
 OnTouch:
-	donpcevent instance_npcname("ins_2f_enter_broad", instance_id())+"::OnEnable";
-	disablenpc instance_npcname("ins_2f_enter", instance_id());
+	donpcevent instance_npcname("ins_2f_enter_broad")+"::OnEnable";
+	disablenpc instance_npcname("ins_2f_enter");
 	end;
 }
 
 2@cata,1,1,0	script	ins_2f_enter_broad	-1,{
+OnInstanceInit:
+OnDisable:
+	disablenpc instance_npcname("ins_2f_enter_broad");
+	end;
+
 OnEnable:
-	enablenpc instance_npcname("ins_2f_enter_broad", instance_id());
+	enablenpc instance_npcname("ins_2f_enter_broad");
 	initnpctimer;
 	end;
 
-OnDisable:
-	disablenpc instance_npcname("ins_2f_enter_broad", instance_id());
-	end;
-
 OnTimer10000:
-	instance_announce 0, "Baphomet : Humans... interfering again...",bc_map,"0xdb7093";
+	mapannounce instance_mapname("2@cata"), "Baphomet : Humans... interfering again...",bc_map,"0xdb7093";
 	end;
 
 OnTimer13000:
-	instance_announce 0, "Apostle of Baphomet : Humans! Humans have invaded our sanctum!",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("2@cata"), "Apostle of Baphomet : Humans! Humans have invaded our sanctum!",bc_map,"0xFFFF00";
 	end;
 
 OnTimer16000:
-	instance_announce 0, "Apostle of Baphomet : Kill the humans! Do not stop the revival of our Master!",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("2@cata"), "Apostle of Baphomet : Kill the humans! Do not stop the revival of our Master!",bc_map,"0xFFFF00";
 	end;
 
 OnTimer18000:
-	instance_announce 0, "Apostle of Baphomet : Hurry up and release the seals of the altars! Our Master's return is upon us!",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("2@cata"), "Apostle of Baphomet : Hurry up and release the seals of the altars! Our Master's return is upon us!",bc_map,"0xFFFF00";
 	stopnpctimer;
-	disablenpc instance_npcname("ins_2f_enter_broad", instance_id());
+	disablenpc instance_npcname("ins_2f_enter_broad");
 	end;
 }
 
 2@cata,50,67,0	script	slave_left	-1,5,5,{
 OnTouch:
-	disablenpc instance_npcname("slave_left", instance_id());
-	instance_announce 0, "Apostle of Baphomet : Kill the humans! Don't let them interrupt the revival of our Master!",bc_map,"0xFFFF00";
-	monster "2@cata",55,67,"Apostle of Baphomet",1869,1;
-	monster "2@cata",51,67,"Apostle of Baphomet",1291,1;
-	monster "2@cata",58,67,"Apostle of Baphomet",1292,1;
-	monster "2@cata",53,67,"Apostle of Baphomet",1291,1;
-	monster "2@cata",54,67,"Apostle of Baphomet",1869,1;
-	monster "2@cata",55,67,"Apostle of Baphomet",1291,1;
-	monster "2@cata",56,67,"Apostle of Baphomet",1117,1;
-	monster "2@cata",58,66,"Apostle of Baphomet",1869,1;
-	monster "2@cata",56,66,"Apostle of Baphomet",1117,1;
-	monster "2@cata",60,66,"Apostle of Baphomet",1132,1;
-	monster "2@cata",59,66,"Apostle of Baphomet",1117,1;
-	monster "2@cata",54,66,"Apostle of Baphomet",1132,1;
-	monster "2@cata",55,66,"Apostle of Baphomet",1292,1;
-	monster "2@cata",56,66,"Apostle of Baphomet",1132,1;
-	monster "2@cata",50,65,"Apostle of Baphomet",1867,1;
-	monster "2@cata",61,65,"Apostle of Baphomet",1292,1;
+	set .@map$, instance_mapname("2@cata");
+	mapannounce .@map$, "Apostle of Baphomet : Kill the humans! Don't let them interrupt the revival of our Master!",bc_map,"0xFFFF00";
+	monster .@map$,55,67,"Apostle of Baphomet",1869,1;
+	monster .@map$,51,67,"Apostle of Baphomet",1291,1;
+	monster .@map$,58,67,"Apostle of Baphomet",1292,1;
+	monster .@map$,53,67,"Apostle of Baphomet",1291,1;
+	monster .@map$,54,67,"Apostle of Baphomet",1869,1;
+	monster .@map$,55,67,"Apostle of Baphomet",1291,1;
+	monster .@map$,56,67,"Apostle of Baphomet",1117,1;
+	monster .@map$,58,66,"Apostle of Baphomet",1869,1;
+	monster .@map$,56,66,"Apostle of Baphomet",1117,1;
+	monster .@map$,60,66,"Apostle of Baphomet",1132,1;
+	monster .@map$,59,66,"Apostle of Baphomet",1117,1;
+	monster .@map$,54,66,"Apostle of Baphomet",1132,1;
+	monster .@map$,55,66,"Apostle of Baphomet",1292,1;
+	monster .@map$,56,66,"Apostle of Baphomet",1132,1;
+	monster .@map$,50,65,"Apostle of Baphomet",1867,1;
+	monster .@map$,61,65,"Apostle of Baphomet",1292,1;
+	disablenpc instance_npcname("slave_left");
 	end;
 }
 
 2@cata,109,67,0	script	slave_right	-1,5,5,{
 OnTouch:
-	disablenpc instance_npcname("slave_right", instance_id());
-	instance_announce 0, "Apostle of Baphomet : Kill the humans! Don't let them interrupt the revival of our Master!",bc_map,"0xFFFF00";
-	monster "2@cata",105,67,"Apostle of Baphomet",1869,1;
-	monster "2@cata",104,67,"Apostle of Baphomet",1291,1;
-	monster "2@cata",107,67,"Apostle of Baphomet",1869,1;
-	monster "2@cata",106,67,"Apostle of Baphomet",1291,1;
-	monster "2@cata",102,67,"Apostle of Baphomet",1869,1;
-	monster "2@cata",103,67,"Apostle of Baphomet",1291,1;
-	monster "2@cata",103,67,"Apostle of Baphomet",1117,1;
-	monster "2@cata",109,66,"Apostle of Baphomet",1117,1;
-	monster "2@cata",108,66,"Apostle of Baphomet",1132,1;
-	monster "2@cata",101,66,"Apostle of Baphomet",1117,1;
-	monster "2@cata",106,66,"Apostle of Baphomet",1292,1;
-	monster "2@cata",102,66,"Apostle of Baphomet",1132,1;
-	monster "2@cata",104,66,"Apostle of Baphomet",1292,1;
-	monster "2@cata",103,66,"Apostle of Baphomet",1132,1;
-	monster "2@cata",109,65,"Apostle of Baphomet",1867,1;
-	monster "2@cata",108,65,"Apostle of Baphomet",1292,1;
+	set .@map$, instance_mapname("2@cata");
+	mapannounce .@map$, "Apostle of Baphomet : Kill the humans! Don't let them interrupt the revival of our Master!",bc_map,"0xFFFF00";
+	monster .@map$,105,67,"Apostle of Baphomet",1869,1;
+	monster .@map$,104,67,"Apostle of Baphomet",1291,1;
+	monster .@map$,107,67,"Apostle of Baphomet",1869,1;
+	monster .@map$,106,67,"Apostle of Baphomet",1291,1;
+	monster .@map$,102,67,"Apostle of Baphomet",1869,1;
+	monster .@map$,103,67,"Apostle of Baphomet",1291,1;
+	monster .@map$,103,67,"Apostle of Baphomet",1117,1;
+	monster .@map$,109,66,"Apostle of Baphomet",1117,1;
+	monster .@map$,108,66,"Apostle of Baphomet",1132,1;
+	monster .@map$,101,66,"Apostle of Baphomet",1117,1;
+	monster .@map$,106,66,"Apostle of Baphomet",1292,1;
+	monster .@map$,102,66,"Apostle of Baphomet",1132,1;
+	monster .@map$,104,66,"Apostle of Baphomet",1292,1;
+	monster .@map$,103,66,"Apostle of Baphomet",1132,1;
+	monster .@map$,109,65,"Apostle of Baphomet",1867,1;
+	monster .@map$,108,65,"Apostle of Baphomet",1292,1;
+	disablenpc instance_npcname("slave_right");
 	end;
 }
 
 2@cata,79,39,0	script	slave_down	-1,5,5,{
 OnTouch:
-	disablenpc instance_npcname("slave_down", instance_id());
-	instance_announce 0, "Apostle of Baphomet : Kill the humans! Don't let them interrupt the revival of our Master!",bc_map,"0xFFFF00";
-	monster "2@cata",78,41,"Apostle of Baphomet",1869,1;
-	monster "2@cata",79,42,"Apostle of Baphomet",1291,1;
-	monster "2@cata",78,46,"Apostle of Baphomet",1869,1;
-	monster "2@cata",81,41,"Apostle of Baphomet",1291,1;
-	monster "2@cata",81,42,"Apostle of Baphomet",1869,1;
-	monster "2@cata",79,43,"Apostle of Baphomet",1291,1;
-	monster "2@cata",77,40,"Apostle of Baphomet",1117,1;
-	monster "2@cata",79,41,"Apostle of Baphomet",1132,1;
-	monster "2@cata",79,42,"Apostle of Baphomet",1117,1;
-	monster "2@cata",79,43,"Apostle of Baphomet",1132,1;
-	monster "2@cata",79,48,"Apostle of Baphomet",1117,1;
-	monster "2@cata",78,49,"Apostle of Baphomet",1132,1;
-	monster "2@cata",78,41,"Apostle of Baphomet",1292,1;
-	monster "2@cata",74,42,"Apostle of Baphomet",1292,1;
-	monster "2@cata",72,48,"Apostle of Baphomet",1867,1;
-	monster "2@cata",72,38,"Apostle of Baphomet",1292,1;
+	set .@map$, instance_mapname("2@cata");
+	mapannounce .@map$, "Apostle of Baphomet : Kill the humans! Don't let them interrupt the revival of our Master!",bc_map,"0xFFFF00";
+	monster .@map$,78,41,"Apostle of Baphomet",1869,1;
+	monster .@map$,79,42,"Apostle of Baphomet",1291,1;
+	monster .@map$,78,46,"Apostle of Baphomet",1869,1;
+	monster .@map$,81,41,"Apostle of Baphomet",1291,1;
+	monster .@map$,81,42,"Apostle of Baphomet",1869,1;
+	monster .@map$,79,43,"Apostle of Baphomet",1291,1;
+	monster .@map$,77,40,"Apostle of Baphomet",1117,1;
+	monster .@map$,79,41,"Apostle of Baphomet",1132,1;
+	monster .@map$,79,42,"Apostle of Baphomet",1117,1;
+	monster .@map$,79,43,"Apostle of Baphomet",1132,1;
+	monster .@map$,79,48,"Apostle of Baphomet",1117,1;
+	monster .@map$,78,49,"Apostle of Baphomet",1132,1;
+	monster .@map$,78,41,"Apostle of Baphomet",1292,1;
+	monster .@map$,74,42,"Apostle of Baphomet",1292,1;
+	monster .@map$,72,48,"Apostle of Baphomet",1867,1;
+	monster .@map$,72,38,"Apostle of Baphomet",1292,1;
+	disablenpc instance_npcname("slave_down");
 	end;
 }
 
@@ -1323,20 +1081,25 @@ OnTouch:
 	}
 	if (.@seal_check == 2) erasequest 3041;
 	specialeffect EF_LEXDIVINA;
-	disablenpc instance_npcname(strnpcinfo(0), instance_id());
-	if (strnpcinfo(2) == "0") areamobuseskill "2@cata",79,81,10,1929,686,1,0,0,26,0;
-	else if (strnpcinfo(2) == "2") areamobuseskill "2@cata",123,109,10,1929,686,1,0,0,26,0;
-	else if (strnpcinfo(2) == "4") areamobuseskill "2@cata",123,22,10,1929,686,1,0,0,26,0;
-	else if (strnpcinfo(2) == "8") areamobuseskill "2@cata",35,21,10,1929,686,1,0,0,26,0;
-	else if (strnpcinfo(2) == "10") areamobuseskill "2@cata",35,109,10,1929,686,1,0,0,26,0;
+	disablenpc instance_npcname(strnpcinfo(0));
+	set .@map$, instance_mapname("2@cata");
+	if (strnpcinfo(2) == "0") areamobuseskill .@map$,79,81,10,1929,"NPC_INVINCIBLEOFF",1,0,0,e_hlp,0;
+	else if (strnpcinfo(2) == "2") areamobuseskill .@map$,123,109,10,1929,"NPC_INVINCIBLEOFF",1,0,0,e_hlp,0;
+	else if (strnpcinfo(2) == "4") areamobuseskill .@map$,123,22,10,1929,"NPC_INVINCIBLEOFF",1,0,0,e_hlp,0;
+	else if (strnpcinfo(2) == "8") areamobuseskill .@map$,35,21,10,1929,"NPC_INVINCIBLEOFF",1,0,0,e_hlp,0;
+	else if (strnpcinfo(2) == "10") areamobuseskill .@map$,35,109,10,1929,"NPC_INVINCIBLEOFF",1,0,0,e_hlp,0;
 	percentheal -50,0;
 	sc_start Eff_Stone,20000,0;
 	setquest 3041;
-	instance_announce 0, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
+	mapannounce .@map$, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
 	mes "I can feel the power of the altar came back by adding magical power.";
 	next;
 	mes "But you can't use your magic for 3 minutes because you used your SP on the altar.";
 	close;
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
 }
 2@cata,79,81,0	duplicate(Magical Seal#SS)	Magical Seal#0	844
 2@cata,123,109,0	duplicate(Magical Seal#SS)	Magical Seal#2	844
@@ -1356,10 +1119,10 @@ OnTouch:
 		specialeffect EF_METEORSTORM;
 		specialeffect EF_METEORSTORM;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Watch out! Something... Something is comming.";
+		mes "Watch out! Something... Something is coming.";
 		set 'ins_baphomet,6;
-		donpcevent instance_npcname("ins_2f_hero_broad", instance_id())+"::OnEnable";
-		disablenpc instance_npcname("The Main Altar#ss", instance_id());
+		donpcevent instance_npcname("ins_2f_hero_broad")+"::OnEnable";
+		disablenpc instance_npcname("The Main Altar#ss");
 		close;
 	}
 	else {
@@ -1376,8 +1139,6 @@ OnTouch:
 	if (checkquest(3041)>=0) erasequest 3041;
 	mes "[Ancient Hero's Soul]";
 	mes "Good job, my descendants... You've finished the long-cherished task that me and my bretheren could not complete.";
-	next;
-	mes "[Ancient Hero's Soul]";
 	next;
 	mes "[Ancient Hero's Soul]";
 	mes "I really appreciate your help.";
@@ -1403,291 +1164,317 @@ OnTouch:
 		cutin "",255;
 		close;
 	}
+
+OnInstanceInit:
+	disablenpc instance_npcname("Ancient Hero's Soul#2F");
+	end;
 }
 
 2@cata,1,2,0	script	ins_2f_hero_broad	-1,{
 OnEnable:
-	enablenpc instance_npcname("ins_2f_hero_broad", instance_id());
+	enablenpc instance_npcname("ins_2f_hero_broad");
 	initnpctimer;
 	end;
 
 OnDisable:
-	disablenpc instance_npcname("ins_2f_hero_broad", instance_id());
+	disablenpc instance_npcname("ins_2f_hero_broad");
 	end;
 
 OnTimer3000:
-	instance_announce 0, "Ancient Hero's Soul : My God! The seal of the Main Altar is weakening!",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("2@cata"), "Ancient Hero's Soul : My God! The seal of the Main Altar is weakening!",bc_map,"0xFFFF00";
 	end;
 
 OnTimer6000:
-	instance_announce 0, "Ancient Hero's Soul : My descendants... Listen carefully to what I'm going to say.",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("2@cata"), "Ancient Hero's Soul : My descendants... Listen carefully to what I'm going to say.",bc_map,"0xFFFF00";
 	end;
 
 OnTimer9000:
-	instance_announce 0, "Ancient Hero's Soul : The altars that control the Main Altar's power are located in the Northeast, Southeast, Southwest and Northwest corners of this room.",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("2@cata"), "Ancient Hero's Soul : The altars that control the Main Altar's power are located in the Northeast, Southeast, Southwest and Northwest corners of this room.",bc_map,"0xFFFF00";
 	end;
 
 OnTimer12000:
-	instance_announce 0, "Ancient Hero's Soul : Find these altars and activate their seals before Baphomet revives.",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("2@cata"), "Ancient Hero's Soul : Find these altars and activate their seals before Baphomet revives.",bc_map,"0xFFFF00";
 	end;
 
 OnTimer15000:
-	instance_announce 0, "Baphomet : It's too late, weaklings... Now, you'll feel the despair of death!",bc_map,"0xdb7093";
+	mapannounce instance_mapname("2@cata"), "Baphomet : It's too late, weaklings... Now, you'll feel the despair of death!",bc_map,"0xdb7093";
 	end;
 
 OnTimer17000:
-	instance_announce 0, "Baphomet : No one can harm me here. You will be my first sacrifice.",bc_map,"0xdb7093";
-	donpcevent instance_npcname("control_baphomet", instance_id())+"::OnEnable";
-	donpcevent instance_npcname("ins_2f_hero_broad2", instance_id())+"::OnEnable";
+	mapannounce instance_mapname("2@cata"), "Baphomet : No one can harm me here. You will be my first sacrifice.",bc_map,"0xdb7093";
+	donpcevent instance_npcname("control_baphomet")+"::OnEnable";
+	donpcevent instance_npcname("ins_2f_hero_broad2")+"::OnEnable";
 	stopnpctimer;
-	disablenpc instance_npcname("ins_2f_hero_broad", instance_id());
+	disablenpc instance_npcname("ins_2f_hero_broad");
 	end;
 }
 
 2@cata,3,3,0	script	control_baphomet	-1,{
-OnEnable:
-	enablenpc instance_npcname("control_baphomet", instance_id());
-	donpcevent instance_npcname("2f_callmon_pattern_c", instance_id())+"::OnEnable";
-	monster "2@cata",79,64,"Baphomet#",1929,1,instance_npcname("control_baphomet", instance_id())+"::OnMyMobDead";
+OnInstanceInit:
+OnDisable:
+	disablenpc instance_npcname("control_baphomet");
 	end;
 
-OnDisable:
-	disablenpc "control_baphomet";
+OnEnable:
+	enablenpc instance_npcname("control_baphomet");
+	donpcevent instance_npcname("2f_callmon_pattern_c")+"::OnEnable";
+	monster instance_mapname("2@cata"),79,64,"Baphomet#",1929,1,instance_npcname("control_baphomet")+"::OnMyMobDead";
 	end;
 
 OnMyMobDead:
-	if (mobcount("2@cata",instance_npcname("control_baphomet", instance_id())+"::OnMyMobDead") < 1) {
+	set .@map$, instance_mapname("2@cata");
+	if (mobcount(.@map$,instance_npcname("control_baphomet")+"::OnMyMobDead") < 1) {
 		set 'ins_baphomet,7;
 		erasequest 3041;
-		instance_announce 0, "Baphomet : No! Nonono! How dare these weaklings defeat me!... No!!...",bc_map,"0xdb7093";
-		enablenpc instance_npcname("Ancient Hero's Soul#2F", instance_id());
-		disablenpc instance_npcname("slave_down", instance_id());
-		disablenpc instance_npcname("slave_left", instance_id());
-		disablenpc instance_npcname("slave_right", instance_id());
-		donpcevent instance_npcname("ins_2f_hero_broad", instance_id())+"::OnDisable";
-		donpcevent instance_npcname("ins_2f_hero_broad2", instance_id())+"::OnDisable";
-		donpcevent instance_npcname("ins_2f_hero_pattern_c", instance_id())+"::OnDisable";
-		donpcevent instance_npcname("2f_callmon_pattern_c", instance_id())+"::OnDisable";
-		donpcevent instance_npcname("2f_callmon_pattern", instance_id())+"::OnDisable";
-		donpcevent instance_npcname("ins_2f_hero_pattern", instance_id())+"::OnDisable";
-		donpcevent instance_npcname("ins_2f_enter_broad", instance_id())+"::OnDisable";
-		donpcevent instance_npcname("control_baphomet", instance_id())+"::OnDisable";
-		disablenpc instance_npcname("control_baphomet", instance_id());
+		mapannounce .@map$, "Baphomet : No! Nonono! How dare these weaklings defeat me!... No!!...",bc_map,"0xdb7093";
+		enablenpc instance_npcname("Ancient Hero's Soul#2F");
+		disablenpc instance_npcname("slave_down");
+		disablenpc instance_npcname("slave_left");
+		disablenpc instance_npcname("slave_right");
+		donpcevent instance_npcname("ins_2f_hero_broad")+"::OnDisable";
+		donpcevent instance_npcname("ins_2f_hero_broad2")+"::OnDisable";
+		donpcevent instance_npcname("ins_2f_hero_pattern_c")+"::OnDisable";
+		donpcevent instance_npcname("2f_callmon_pattern_c")+"::OnDisable";
+		donpcevent instance_npcname("2f_callmon_pattern")+"::OnDisable";
+		donpcevent instance_npcname("ins_2f_hero_pattern")+"::OnDisable";
+		donpcevent instance_npcname("ins_2f_enter_broad")+"::OnDisable";
+		donpcevent instance_npcname("control_baphomet")+"::OnDisable";
+		disablenpc instance_npcname("control_baphomet");
 	}
 	end;
 }
 
 2@cata,2,2,0	script	ins_2f_hero_broad2	-1,{
+OnInstanceInit:
+OnDisable:
+	disablenpc instance_npcname("ins_2f_hero_broad2");
+	end;
+
 OnEnable:
-	enablenpc instance_npcname("ins_2f_hero_broad2", instance_id());
+	enablenpc instance_npcname("ins_2f_hero_broad2");
 	initnpctimer;
 	end;
 
-OnDisable:
-	disablenpc instance_npcname("ins_2f_hero_broad2", instance_id());
-	end;
-
 OnTimer8000:
-	instance_announce 0, "Ancient Hero's Soul : Don't be discouraged, Baphomet can still be defeated!",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("2@cata"), "Ancient Hero's Soul : Don't be discouraged, Baphomet can still be defeated!",bc_map,"0xFFFF00";
 	end;
 
 OnTimer11000:
-	instance_announce 0, "Ancient Hero's Soul : Go to the altars and activate their seals.",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("2@cata"), "Ancient Hero's Soul : Go to the altars and activate their seals.",bc_map,"0xFFFF00";
 	end;
 
 OnTimer13000:
-	instance_announce 0, "Ancient Hero's Soul : Once the seals recover their power, Baphomet will be vulnerable.",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("2@cata"), "Ancient Hero's Soul : Once the seals recover their power, Baphomet will be vulnerable.",bc_map,"0xFFFF00";
 	end;
 
 OnTimer16000:
-	instance_announce 0, "Ancient Hero's Soul : You should lure Baphomet to the unsealed Altars. Otherwise, your efforts will be futile.",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("2@cata"), "Ancient Hero's Soul : You should lure Baphomet to the unsealed Altars. Otherwise, your efforts will be futile.",bc_map,"0xFFFF00";
 	end;
 
 OnTimer19000:
-	instance_announce 0, "Ancient Hero's Soul : We have only 1 hour to stop Baphomet. If time runs out, the power of the seals will be useless.",bc_map,"0xFFFF00";
+	mapannounce instance_mapname("2@cata"), "Ancient Hero's Soul : We have only 1 hour to stop Baphomet. If time runs out, the power of the seals will be useless.",bc_map,"0xFFFF00";
 	end;
 
 OnTimer22000:
-	instance_announce 0, "Baphomet : It's useless. Make more seals. I'll crush them all. None of you will survive!",bc_map,"0xdb7093";
+	mapannounce instance_mapname("2@cata"), "Baphomet : It's useless. Make more seals. I'll crush them all. None of you will survive!",bc_map,"0xdb7093";
 	end;
 
 OnTimer26000:
-	instance_announce 0, "Ancient Hero's Soul : The magical power of the central seal is running out. Go to the central seal and put the magical power.",bc_map,"0xFFFF00";
-	enablenpc instance_npcname("Magical Seal#0", instance_id());
-	disablenpc instance_npcname("Magical Seal#2", instance_id());
-	disablenpc instance_npcname("Magical Seal#4", instance_id());
-	disablenpc instance_npcname("Magical Seal#8", instance_id());
-	disablenpc instance_npcname("Magical Seal#10", instance_id());
-	donpcevent instance_npcname("ins_2f_hero_pattern_c", instance_id())+"::OnEnable";
+	mapannounce instance_mapname("2@cata"), "Ancient Hero's Soul : The magical power of the central seal is running out. Go to the central seal and put the magical power.",bc_map,"0xFFFF00";
+	enablenpc instance_npcname("Magical Seal#0");
+	disablenpc instance_npcname("Magical Seal#2");
+	disablenpc instance_npcname("Magical Seal#4");
+	disablenpc instance_npcname("Magical Seal#8");
+	disablenpc instance_npcname("Magical Seal#10");
+	donpcevent instance_npcname("ins_2f_hero_pattern_c")+"::OnEnable";
 	stopnpctimer;
-	disablenpc instance_npcname("ins_2f_hero_broad2", instance_id());
+	disablenpc instance_npcname("ins_2f_hero_broad2");
 	end;
 }
 
 2@cata,4,1,0	script	2f_callmon_pattern_c	-1,{
+OnInstanceInit:
+	disablenpc instance_npcname("2f_callmon_pattern_c");
+	end;
+
 OnEnable:
-	enablenpc instance_npcname("2f_callmon_pattern_c", instance_id());
+	enablenpc instance_npcname("2f_callmon_pattern_c");
 	initnpctimer;
-	donpcevent instance_npcname("2f_callmon_pattern_c", instance_id())+"::Ongo";
+	donpcevent instance_npcname("2f_callmon_pattern_c")+"::Ongo";
 	end;
 
 OnDisable:
 	stopnpctimer;
-	disablenpc instance_npcname("2f_callmon_pattern_c", instance_id());
+	disablenpc instance_npcname("2f_callmon_pattern_c");
 	end;
 
 Ongo:
-	donpcevent instance_npcname("2f_callmon_pattern", instance_id())+"::OnEnable";
+	donpcevent instance_npcname("2f_callmon_pattern")+"::OnEnable";
 	end;
 
 OnTimer3600000:
-	donpcevent instance_npcname("2f_callmon_pattern_c", instance_id())+"::OnDisable";
+	donpcevent instance_npcname("2f_callmon_pattern_c")+"::OnDisable";
 	end;
 }
 
 2@cata,4,2,0	script	2f_callmon_pattern	-1,{
+OnInstanceInit:
+	disablenpc instance_npcname("2f_callmon_pattern");
+	end;
+
 OnEnable:
-	enablenpc instance_npcname("2f_callmon_pattern", instance_id());
+	enablenpc instance_npcname("2f_callmon_pattern");
 	stopnpctimer;
 	initnpctimer;
 	end;
 
 OnDisable:
-	disablenpc instance_npcname("2f_callmon_pattern", instance_id());
+	disablenpc instance_npcname("2f_callmon_pattern");
 	stopnpctimer;
 	end;
 
 OnTimer300000:
-	enablenpc instance_npcname("slave_down", instance_id());
-	enablenpc instance_npcname("slave_left", instance_id());
-	enablenpc instance_npcname("slave_right", instance_id());
-	donpcevent instance_npcname("2f_callmon_pattern_c", instance_id())+"::Ongo";
+	enablenpc instance_npcname("slave_down");
+	enablenpc instance_npcname("slave_left");
+	enablenpc instance_npcname("slave_right");
+	donpcevent instance_npcname("2f_callmon_pattern_c")+"::Ongo";
 	end;
 }
 
 2@cata,3,1,0	script	ins_2f_hero_pattern_c	-1,{
+OnInstanceInit:
+	disablenpc instance_npcname("ins_2f_hero_pattern_c");
+	end;
+
 OnEnable:
-	enablenpc instance_npcname("ins_2f_hero_pattern_c", instance_id());
+	enablenpc instance_npcname("ins_2f_hero_pattern_c");
 	initnpctimer;
-	donpcevent instance_npcname("ins_2f_hero_pattern_c", instance_id())+"::Ongo";
+	donpcevent instance_npcname("ins_2f_hero_pattern_c")+"::Ongo";
 	end;
 
 Ongo:
-	donpcevent instance_npcname("ins_2f_hero_pattern", instance_id())+"::OnEnable";
+	donpcevent instance_npcname("ins_2f_hero_pattern")+"::OnEnable";
 	end;
 
 OnDisable:
 	stopnpctimer;
-	disablenpc instance_npcname("Magical Seal#0", instance_id());
-	disablenpc instance_npcname("Magical Seal#2", instance_id());
-	disablenpc instance_npcname("Magical Seal#4", instance_id());
-	disablenpc instance_npcname("Magical Seal#8", instance_id());
-	disablenpc instance_npcname("Magical Seal#10", instance_id());
-	donpcevent instance_npcname("ins_2f_hero_pattern", instance_id())+"::OnDisable";
-	disablenpc instance_npcname("ins_2f_hero_pattern_c", instance_id());
+	disablenpc instance_npcname("Magical Seal#0");
+	disablenpc instance_npcname("Magical Seal#2");
+	disablenpc instance_npcname("Magical Seal#4");
+	disablenpc instance_npcname("Magical Seal#8");
+	disablenpc instance_npcname("Magical Seal#10");
+	donpcevent instance_npcname("ins_2f_hero_pattern")+"::OnDisable";
+	disablenpc instance_npcname("ins_2f_hero_pattern_c");
 	end;
 
 OnTimer3600000:
-	instance_announce 0, "Baphomet : krrrr... Now you can't stop me with the seals. All you can do is wait for death!",bc_map,"0xdb7093";
+	mapannounce instance_mapname("2@cata"), "Baphomet : krrrr... Now you can't stop me with the seals. All you can do is wait for death!",bc_map,"0xdb7093";
 	end;
 
 OnTimer3605000:
-	instance_announce 0, "Ancient Hero's Soul : We can't stop Baphomet with the magical power of the seals anymore. Now everything depends on God...",bc_map,"0xFFFF00";
-	donpcevent instance_npcname("ins_2f_hero_pattern_c", instance_id())+"::OnDisable";
+	mapannounce instance_mapname("2@cata"), "Ancient Hero's Soul : We can't stop Baphomet with the magical power of the seals anymore. Now everything depends on God...",bc_map,"0xFFFF00";
+	donpcevent instance_npcname("ins_2f_hero_pattern_c")+"::OnDisable";
 	end;
 }
 
 2@cata,3,2,0	script	ins_2f_hero_pattern	-1,{
+OnInstanceInit:
+	disablenpc instance_npcname("ins_2f_hero_pattern");
+	end;
+
 OnEnable:
-	enablenpc instance_npcname("ins_2f_hero_pattern", instance_id());
+	enablenpc instance_npcname("ins_2f_hero_pattern");
 	initnpctimer;
 	end;
 
 OnDisable:
-	disablenpc instance_npcname("ins_2f_hero_pattern", instance_id());
+	disablenpc instance_npcname("ins_2f_hero_pattern");
 	stopnpctimer;
 	end;
 
 OnTimer70000:
 	switch(rand(1,5)) {
 	case 1:
-		instance_announce 0, "Ancient Hero's Soul : The seal of the Main Altar is running out. Strengthen the Main Altar's seal!",bc_map,"0xFFFF00";
-		enablenpc instance_npcname("Magical Seal#0", instance_id());
-		disablenpc instance_npcname("Magical Seal#2", instance_id());
-		disablenpc instance_npcname("Magical Seal#4", instance_id());
-		disablenpc instance_npcname("Magical Seal#8", instance_id());
-		disablenpc instance_npcname("Magical Seal#10", instance_id());
+		mapannounce instance_mapname("2@cata"), "Ancient Hero's Soul : The seal of the Main Altar is running out. Strengthen the Main Altar's seal!",bc_map,"0xFFFF00";
+		enablenpc instance_npcname("Magical Seal#0");
+		disablenpc instance_npcname("Magical Seal#2");
+		disablenpc instance_npcname("Magical Seal#4");
+		disablenpc instance_npcname("Magical Seal#8");
+		disablenpc instance_npcname("Magical Seal#10");
 		break;
 	case 2:
-		instance_announce 0, "Ancient Hero's Soul : The magical power of the seal at 2 o'clock is running out. Go to 2 o'clock and put the magical power in the seal.",bc_map,"0xFFFF00";
-		disablenpc instance_npcname("Magical Seal#0", instance_id());
-		enablenpc instance_npcname("Magical Seal#2", instance_id());
-		disablenpc instance_npcname("Magical Seal#4", instance_id());
-		disablenpc instance_npcname("Magical Seal#8", instance_id());
-		disablenpc instance_npcname("Magical Seal#10", instance_id());
+		mapannounce instance_mapname("2@cata"), "Ancient Hero's Soul : The magical power of the seal at 2 o'clock is running out. Go to 2 o'clock and put the magical power in the seal.",bc_map,"0xFFFF00";
+		disablenpc instance_npcname("Magical Seal#0");
+		enablenpc instance_npcname("Magical Seal#2");
+		disablenpc instance_npcname("Magical Seal#4");
+		disablenpc instance_npcname("Magical Seal#8");
+		disablenpc instance_npcname("Magical Seal#10");
 		break;
 	case 3:
-		instance_announce 0, "Ancient Hero's Soul : The magical power of the seal at 4 o'clock is running out. Go to 4 o'clock and put the magical power in the seal.",bc_map,"0xFFFF00";
-		disablenpc instance_npcname("Magical Seal#0", instance_id());
-		disablenpc instance_npcname("Magical Seal#2", instance_id());
-		enablenpc instance_npcname("Magical Seal#4", instance_id());
-		disablenpc instance_npcname("Magical Seal#8", instance_id());
-		disablenpc instance_npcname("Magical Seal#10", instance_id());
+		mapannounce instance_mapname("2@cata"), "Ancient Hero's Soul : The magical power of the seal at 4 o'clock is running out. Go to 4 o'clock and put the magical power in the seal.",bc_map,"0xFFFF00";
+		disablenpc instance_npcname("Magical Seal#0");
+		disablenpc instance_npcname("Magical Seal#2");
+		enablenpc instance_npcname("Magical Seal#4");
+		disablenpc instance_npcname("Magical Seal#8");
+		disablenpc instance_npcname("Magical Seal#10");
 		break;
 	case 4:
-		instance_announce 0, "Ancient Hero's Soul : The magical power of the seal at 8 o'clock is running out. Go to 8 o'clock and put the magical power in the seal.",bc_map,"0xFFFF00";
-		disablenpc instance_npcname("Magical Seal#0", instance_id());
-		disablenpc instance_npcname("Magical Seal#2", instance_id());
-		disablenpc instance_npcname("Magical Seal#4", instance_id());
-		enablenpc instance_npcname("Magical Seal#8", instance_id());
-		disablenpc instance_npcname("Magical Seal#10", instance_id());
+		mapannounce instance_mapname("2@cata"), "Ancient Hero's Soul : The magical power of the seal at 8 o'clock is running out. Go to 8 o'clock and put the magical power in the seal.",bc_map,"0xFFFF00";
+		disablenpc instance_npcname("Magical Seal#0");
+		disablenpc instance_npcname("Magical Seal#2");
+		disablenpc instance_npcname("Magical Seal#4");
+		enablenpc instance_npcname("Magical Seal#8");
+		disablenpc instance_npcname("Magical Seal#10");
 		break;
 	case 5:
-		instance_announce 0, "Ancient Hero's Soul : The magical power of the seal at 10 o'clock is running out. Go to 10 o'clock and put the magical power in the seal.",bc_map,"0xFFFF00";
-		disablenpc instance_npcname("Magical Seal#0", instance_id());
-		disablenpc instance_npcname("Magical Seal#2", instance_id());
-		disablenpc instance_npcname("Magical Seal#4", instance_id());
-		disablenpc instance_npcname("Magical Seal#8", instance_id());
-		enablenpc instance_npcname("Magical Seal#10", instance_id());
+		mapannounce instance_mapname("2@cata"), "Ancient Hero's Soul : The magical power of the seal at 10 o'clock is running out. Go to 10 o'clock and put the magical power in the seal.",bc_map,"0xFFFF00";
+		disablenpc instance_npcname("Magical Seal#0");
+		disablenpc instance_npcname("Magical Seal#2");
+		disablenpc instance_npcname("Magical Seal#4");
+		disablenpc instance_npcname("Magical Seal#8");
+		enablenpc instance_npcname("Magical Seal#10");
 	}
 	stopnpctimer;
-	donpcevent instance_npcname("ins_2f_hero_pattern_c", instance_id())+"::Ongo";
+	donpcevent instance_npcname("ins_2f_hero_pattern_c")+"::Ongo";
 	end;
 }
 
 
 1@cata,1,1,0	script	ins_1f_spawn_mobs	-1,{
-OnEnable:
-	monster "1@cata",0,0,"Zombie Master",1298,10;
-	monster "1@cata",0,0,"Wraith Dead",1291,10;
-	//monster "1@cata",0,0,"Ancient Mimic",1699,10;
-	monster "1@cata",0,0,"Flame Skull",1869,10;
-	monster "1@cata",0,0,"Skeleton General",1290,10;
-	monster "1@cata",0,0,"Zombie Master",1298,10;
-	monster "1@cata",0,0,"Skeleton General",1290,10;
-	monster "1@cata",0,0,"Flame Skull",1869,10;
-	monster "1@cata",0,0,"Wraith Dead",1291,10;
-	monster "1@cata",0,0,"Wraith Dead",1291,10;
-	monster "1@cata",0,0,"Khalitzburg",1132,10;
-	monster "1@cata",0,0,"Khalitzburg",1132,10;
-	monster "1@cata",0,0,"Flame Skull",1869,10;
-	monster "1@cata",0,0,"Flame Skull",1869,10;
-	monster "1@cata",0,0,"Ancient Mimic",1699,10;
-	monster "1@cata",0,0,"Zombie Master",1298,10;
-	monster "1@cata",0,0,"Ancient Mimic",1699,10;
-	monster "1@cata",0,0,"Zombie Master",1298,10;
-	monster "1@cata",0,0,"Wraith Dead",1291,10;
-	monster "1@cata",0,0,"Skeleton General",1290,10;
-	monster "1@cata",0,0,"Skeleton General",1290,10;
-	monster "1@cata",0,0,"Wind Ghost",1263,10;
-	monster "1@cata",0,0,"Wind Ghost",1263,10;
-	monster "1@cata",0,0,"Wind Ghost",1263,10;
-	monster "1@cata",0,0,"Lude",1509,10;
-	monster "1@cata",0,0,"Lude",1509,10;
-	monster "1@cata",0,0,"Evil Druid",1117,10;
-	monster "1@cata",0,0,"Evil Druid",1117,10;
-	monster "1@cata",0,0,"Evil Druid",1117,10;
-	monster "1@cata",0,0,"Banshee",1867,10;
-	monster "1@cata",0,0,"Dark Illusion",1302,1;
+OnInstanceInit:
+	set 'ins_baphomet, 0;
+	set .@map$, instance_mapname("1@cata");
+	monster .@map$,0,0,"Zombie Master",1298,10;
+	monster .@map$,0,0,"Wraith Dead",1291,10;
+	//monster .@map$,0,0,"Ancient Mimic",1699,10;
+	monster .@map$,0,0,"Flame Skull",1869,10;
+	monster .@map$,0,0,"Skeleton General",1290,10;
+	monster .@map$,0,0,"Zombie Master",1298,10;
+	monster .@map$,0,0,"Skeleton General",1290,10;
+	monster .@map$,0,0,"Flame Skull",1869,10;
+	monster .@map$,0,0,"Wraith Dead",1291,10;
+	monster .@map$,0,0,"Wraith Dead",1291,10;
+	monster .@map$,0,0,"Khalitzburg",1132,10;
+	monster .@map$,0,0,"Khalitzburg",1132,10;
+	monster .@map$,0,0,"Flame Skull",1869,10;
+	monster .@map$,0,0,"Flame Skull",1869,10;
+	monster .@map$,0,0,"Ancient Mimic",1699,10;
+	monster .@map$,0,0,"Zombie Master",1298,10;
+	monster .@map$,0,0,"Ancient Mimic",1699,10;
+	monster .@map$,0,0,"Zombie Master",1298,10;
+	monster .@map$,0,0,"Wraith Dead",1291,10;
+	monster .@map$,0,0,"Skeleton General",1290,10;
+	monster .@map$,0,0,"Skeleton General",1290,10;
+	monster .@map$,0,0,"Wind Ghost",1263,10;
+	monster .@map$,0,0,"Wind Ghost",1263,10;
+	monster .@map$,0,0,"Wind Ghost",1263,10;
+	monster .@map$,0,0,"Lude",1509,10;
+	monster .@map$,0,0,"Lude",1509,10;
+	monster .@map$,0,0,"Evil Druid",1117,10;
+	monster .@map$,0,0,"Evil Druid",1117,10;
+	monster .@map$,0,0,"Evil Druid",1117,10;
+	monster .@map$,0,0,"Banshee",1867,10;
+	monster .@map$,0,0,"Dark Illusion",1302,1;
+	disablenpc instance_npcname("ins_1f_spawn_mobs");
 	end;
 }

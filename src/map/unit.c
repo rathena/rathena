@@ -2109,8 +2109,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		status_change_end(bl, SC_TINDER_BREAKER2, INVALID_TIMER);
 		status_change_end(bl, SC_HIDING, INVALID_TIMER);
 		// Ensure the bl is a PC; if so, we'll handle the removal of cloaking and cloaking exceed later
-		if ( bl->type != BL_PC )
-		{
+		if ( bl->type != BL_PC ) {
 			status_change_end(bl, SC_CLOAKING, INVALID_TIMER);
 			status_change_end(bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
 		}
@@ -2165,8 +2164,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 				npc_touchnext_areanpc(sd,true);
 
 			// Check if warping and not changing the map.
-			if ( sd->state.warping && !sd->state.changemap )
-			{
+			if ( sd->state.warping && !sd->state.changemap ) {
 				status_change_end(bl, SC_CLOAKING, INVALID_TIMER);
 				status_change_end(bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
 			}
@@ -2192,8 +2190,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 
 			if( map[bl->m].users <= 0 || sd->state.debug_remove_map )
 			{// this is only place where map users is decreased, if the mobs were removed too soon then this function was executed too many times [FlavioJS]
-				if( sd->debug_file == NULL || !(sd->state.debug_remove_map) )
-				{
+				if( sd->debug_file == NULL || !(sd->state.debug_remove_map) ) {
 					sd->debug_file = "";
 					sd->debug_line = 0;
 					sd->debug_func = "";
@@ -2214,11 +2211,6 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			if( !(sd->sc.option&OPTION_INVISIBLE) )
 			{// decrement the number of active pvp players on the map
 				--map[bl->m].users_pvp;
-			}
-			if( map[bl->m].instance_id )
-			{
-				instance[map[bl->m].instance_id].users--;
-				instance_check_idle(map[bl->m].instance_id);
 			}
 			sd->state.debug_remove_map = 1; // temporary state to track double remove_map's [FlavioJS]
 			sd->debug_file = file;

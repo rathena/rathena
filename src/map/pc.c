@@ -4757,39 +4757,30 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *target)
  *------------------------------------------*/
 int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y, clr_type clrtype)
 {
-	struct party_data *p;
 	int16 m;
 
 	nullpo_ret(sd);
 
-	if( !mapindex || !mapindex_id2name(mapindex) )
-	{
+	if( !mapindex || !mapindex_id2name(mapindex) ) {
 		ShowDebug("pc_setpos: Passed mapindex(%d) is invalid!\n", mapindex);
 		return 1;
 	}
 
-	if( pc_isdead(sd) )
-	{ //Revive dead people before warping them
+	if( pc_isdead(sd) ) { //Revive dead people before warping them
 		pc_setstand(sd);
 		pc_setrestartvalue(sd,1);
 	}
 
 	m = map_mapindex2mapid(mapindex);
-	if( map[m].flag.src4instance && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id )
-	{
-		// Request the mapid of this src map into the instance of the party
-		int im = instance_map2imap(m, p->instance_id);
-		if( im < 0 )
-			; // Player will enter the src map for instances
-		else
-		{ // Changes destiny to the instance map, not the source map
-			m = im;
-			mapindex = map_id2index(m);
-		}
-	}
 
 	sd->state.changemap = (sd->mapindex != mapindex);
 	sd->state.warping = 1;
+
+	if(sd->status.party_id && map[sd->bl.m].instance_id && sd->state.changemap && !map[m].instance_id) {
+		struct party_data *p;
+		if((p = party_search(sd->status.party_id)) != NULL && p->instance_id )
+			instance_delusers(p->instance_id);
+	}
 	if( sd->state.changemap ) { // Misc map-changing settings
 		int i;
 		sd->state.pmap = sd->bl.m;

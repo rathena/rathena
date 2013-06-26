@@ -345,6 +345,7 @@ struct {
  *------------------------------------------*/
 const char* parse_subexpr(const char* p,int limit);
 int run_func(struct script_state *st);
+int script_instancegetid(struct script_state *st);
 
 enum {
 	MF_NOMEMO,	//0
@@ -2565,12 +2566,15 @@ void get_val(struct script_state* st, struct script_data* data)
 			}
 			break;
 		case '\'':
-				if (st->instance_id) {
-					data->u.str = (char*)idb_get(instance[st->instance_id].vars,reference_getuid(data));
-				} else {
+			{
+				int instance_id = script_instancegetid(st);
+				if( instance_id )
+					data->u.str = (char*)idb_get(instance_data[instance_id].vars,reference_getuid(data));
+				else {
 					ShowWarning("script:get_val: cannot access instance variable '%s', defaulting to \"\"\n", name);
 					data->u.str = NULL;
 				}
+			}
 			break;
 		default:
 			data->u.str = pc_readglobalreg_str(sd, name);
@@ -2630,12 +2634,15 @@ void get_val(struct script_state* st, struct script_data* data)
 			}
 			break;
 		case '\'':
-				if( st->instance_id )
-					data->u.num = (int)idb_iget(instance[st->instance_id].vars,reference_getuid(data));
+			{
+				int instance_id = script_instancegetid(st);
+				if( instance_id )
+					data->u.num = (int)idb_iget(instance_data[instance_id].vars,reference_getuid(data));
 				else {
 					ShowWarning("script:get_val: cannot access instance variable '%s', defaulting to 0\n", name);
 					data->u.num = 0;
 				}
+			}
 			break;
 		default:
 			data->u.num = pc_readglobalreg(sd, name);
@@ -2668,8 +2675,7 @@ static int set_reg(struct script_state* st, TBL_PC* sd, int num, const char* nam
 {
 	char prefix = name[0];
 
-	if( is_string_variable(name) )
-	{// string variable
+	if( is_string_variable(name) ) {// string variable
 		const char* str = (const char*)value;
 		switch (prefix) {
 		case '@':
@@ -2691,17 +2697,18 @@ static int set_reg(struct script_state* st, TBL_PC* sd, int num, const char* nam
 			}
 			return 1;
 		case '\'':
-			if( st->instance_id ) {
-				idb_remove(instance[st->instance_id].vars, num);
-				if( str[0] ) idb_put(instance[st->instance_id].vars, num, aStrdup(str));
-			}
+			{
+				int instance_id = script_instancegetid(st);
+				if( instance_id ) {
+					idb_remove(instance_data[instance_id].vars, num);
+					if( str[0] ) idb_put(instance_data[instance_id].vars, num, aStrdup(str));
+				}
 			return 1;
+			}
 		default:
 			return pc_setglobalreg_str(sd, name, str);
 		}
-	}
-	else
-	{// integer variable
+	} else {// integer variable
 		int val = (int)__64BPRTSIZE(value);
 		if(str_data[num&0x00ffffff].type == C_PARAM)
 		{
@@ -2739,12 +2746,15 @@ static int set_reg(struct script_state* st, TBL_PC* sd, int num, const char* nam
 			}
 			return 1;
 		case '\'':
-			if( st->instance_id ) {
-				idb_remove(instance[st->instance_id].vars, num);
-				if( val != 0 )
-					idb_iput(instance[st->instance_id].vars, num, val);
-			}
+			{
+				int instance_id = script_instancegetid(st);
+				if( instance_id ) {
+					idb_remove(instance_data[instance_id].vars, num);
+					if( val != 0 )
+						idb_iput(instance_data[instance_id].vars, num, val);
+				}
 			return 1;
+			}
 		default:
 			return pc_setglobalreg(sd, name, val);
 		}
@@ -3665,13 +3675,8 @@ void run_script_main(struct script_state *st)
 	int gotocount = script_config.check_gotocount;
 	TBL_PC *sd;
 	struct script_stack *stack=st->stack;
-	struct npc_data *nd;
 
 	script_attach_state(st);
-
-	nd = map_id2nd(st->oid);
-	if( nd && map[nd->bl.m].instance_id > 0 )
-		st->instance_id = map[nd->bl.m].instance_id;
 
 	if(st->state == RERUNLINE) {
 		run_func(st);
@@ -8815,34 +8820,28 @@ BUILDIN_FUNC(monster)
 	struct map_session_data* sd;
 	int16 m;
 
-	if (script_hasdata(st, 8))
-	{
+	if (script_hasdata(st, 8)) {
 		event = script_getstr(st, 8);
 		check_event(st, event);
 	}
 
-	if (script_hasdata(st, 9))
-	{
+	if (script_hasdata(st, 9)) {
 		size = script_getnum(st, 9);
-		if (size > 3)
-		{
+		if (size > 3) {
 			ShowWarning("buildin_monster: Attempted to spawn non-existing size %d for monster class %d\n", size, class_);
 			return 1;
 		}
 	}
 
-	if (script_hasdata(st, 10))
-	{
+	if (script_hasdata(st, 10)) {
 		ai = script_getnum(st, 10);
-		if (ai > 4)
-		{
+		if (ai > 4) {
 			ShowWarning("buildin_monster: Attempted to spawn non-existing ai %d for monster class %d\n", ai, class_);
 			return 1;
 		}
 	}
 
-	if (class_ >= 0 && !mobdb_checkid(class_))
-	{
+	if (class_ >= 0 && !mobdb_checkid(class_)) {
 		ShowWarning("buildin_monster: Attempted to spawn non-existing monster class %d\n", class_);
 		return 1;
 	}
@@ -8852,17 +8851,7 @@ BUILDIN_FUNC(monster)
 	if (sd && strcmp(mapn, "this") == 0)
 		m = sd->bl.m;
 	else
-	{
 		m = map_mapname2mapid(mapn);
-		if (map[m].flag.src4instance && st->instance_id)
-		{ // Try to redirect to the instance map, not the src map
-			if ((m = instance_mapid2imapid(m, st->instance_id)) < 0)
-			{
-				ShowError("buildin_monster: Trying to spawn monster (%d) on instance map (%s) without instance attached.\n", class_, mapn);
-				return 1;
-			}
-		}
-	}
 
 	mob_once_spawn(sd, m, x, y, str, class_, amount, event, size, ai);
 	return 0;
@@ -8922,27 +8911,22 @@ BUILDIN_FUNC(areamonster)
 	struct map_session_data* sd;
 	int16 m;
 
-	if (script_hasdata(st,10))
-	{
+	if (script_hasdata(st,10)) {
 		event = script_getstr(st, 10);
 		check_event(st, event);
 	}
 
-	if (script_hasdata(st, 11))
-	{
+	if (script_hasdata(st, 11)) {
 		size = script_getnum(st, 11);
-		if (size > 3)
-		{
+		if (size > 3) {
 			ShowWarning("buildin_monster: Attempted to spawn non-existing size %d for monster class %d\n", size, class_);
 			return 1;
 		}
 	}
 
-	if (script_hasdata(st, 12))
-	{
+	if (script_hasdata(st, 12)) {
 		ai = script_getnum(st, 12);
-		if (ai > 4)
-		{
+		if (ai > 4) {
 			ShowWarning("buildin_monster: Attempted to spawn non-existing ai %d for monster class %d\n", ai, class_);
 			return 1;
 		}
@@ -8953,17 +8937,7 @@ BUILDIN_FUNC(areamonster)
 	if (sd && strcmp(mapn, "this") == 0)
 		m = sd->bl.m;
 	else
-	{
 		m = map_mapname2mapid(mapn);
-		if (map[m].flag.src4instance && st->instance_id)
-		{ // Try to redirect to the instance map, not the src map
-			if ((m = instance_mapid2imapid(m, st->instance_id)) < 0)
-			{
-				ShowError("buildin_areamonster: Trying to spawn monster (%d) on instance map (%s) without instance attached.\n", class_, mapn);
-				return 1;
-			}
-		}
-	}
 
 	mob_once_spawn_area(sd, m, x0, y0, x1, y1, str, class_, amount, event, size, ai);
 	return 0;
@@ -9018,9 +8992,6 @@ BUILDIN_FUNC(killmonster)
 	if( (m=map_mapname2mapid(mapname))<0 )
 		return 0;
 
-	if( map[m].flag.src4instance && st->instance_id && (m = instance_mapid2imapid(m, st->instance_id)) < 0 )
-		return 0;
-
 	if( script_hasdata(st,4) ) {
 		if ( script_getnum(st,4) == 1 ) {
 			map_foreachinmap(buildin_killmonster_sub, m, BL_MOB, event ,allflag);
@@ -9057,9 +9028,6 @@ BUILDIN_FUNC(killmonsterall)
 	mapname=script_getstr(st,2);
 
 	if( (m = map_mapname2mapid(mapname))<0 )
-		return 0;
-
-	if( map[m].flag.src4instance && st->instance_id && (m = instance_mapid2imapid(m, st->instance_id)) < 0 )
 		return 0;
 
 	if( script_hasdata(st,3) ) {
@@ -11565,12 +11533,6 @@ BUILDIN_FUNC(mobcount)	// Added by RoVeRT
 		}
 	}
 	else if( (m = map_mapname2mapid(mapname)) < 0 ) {
-		script_pushint(st,-1);
-		return 0;
-	}
-
-	if( map[m].flag.src4instance && map[m].instance_id == 0 && st->instance_id && (m = instance_mapid2imapid(m, st->instance_id)) < 0 )
-	{
 		script_pushint(st,-1);
 		return 0;
 	}
@@ -16475,59 +16437,78 @@ BUILDIN_FUNC(bg_get_data)
 }
 
 /*==========================================
- * Instancing Script Commands
+ * Instancing System
  *------------------------------------------*/
+//Returns an Instance ID
+//Checks NPC first, then if player is attached we check party
+int script_instancegetid(struct script_state* st)
+{
+	short instance_id = 0;	
 
+	struct npc_data *nd;
+	if( (nd = map_id2nd(st->oid)) && nd->instance_id > 0 )
+		instance_id = nd->instance_id;
+	else {
+		struct map_session_data *sd;
+		struct party_data *p;
+		if( (sd = script_rid2sd(st)) != NULL && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id )
+			instance_id = p->instance_id;
+	}
+
+	return instance_id;
+}
+
+/*==========================================
+ * Creates the instance
+ * Returns Instance ID if created successfully
+ *------------------------------------------*/
 BUILDIN_FUNC(instance_create)
 {
-	const char *name;
-	int party_id, res;
 
-	name = script_getstr(st, 2);
-	party_id = script_getnum(st, 3);
+	struct map_session_data *sd;
+	int res;
 
-	res = instance_create(party_id, name);
-	if( res == -4 ) // Already exists
-	{
-		script_pushint(st, -1);
-		return 0;
+	if((sd = script_rid2sd(st)) == NULL)
+		return -1;
+
+	if(!sd->status.party_id) {
+		ShowError("script:instance_create: attempting to start an instance with no attached party.\n");
+		return -1;
 	}
-	else if( res < 0 )
-	{
+
+	res = instance_create(sd->status.party_id, script_getstr(st, 2));
+	if( res < 0 ) {
 		const char *err;
-		switch(res)
-		{
-		case -3: err = "No free instances"; break;
-		case -2: err = "Invalid party ID"; break;
-		case -1: err = "Invalid type"; break;
-		default: err = "Unknown"; break;
+		switch(res) {
+			case -4: err = "No free instances"; break;
+			case -2: err = "Invalid party ID"; break;
+			case -1: err = "Invalid type"; break;
+			default: err = "Unknown"; break;
 		}
-		ShowError("buildin_instance_create: %s [%d].\n", err, res);
-		script_pushint(st, -2);
-		return 0;
+		ShowError("script:instance_create: %s [%d].\n", err, res);
 	}
 
 	script_pushint(st, res);
 	return 0;
 }
 
+/*==========================================
+ * Destroys an instance (unofficial)
+ * Officially instances are only destroyed by timeout
+ *
+ * instance_destroy {<instance_id>};
+ *------------------------------------------*/
 BUILDIN_FUNC(instance_destroy)
 {
-	int instance_id;
-	struct map_session_data *sd;
-	struct party_data *p;
+	short instance_id;
 
-	if( script_hasdata(st, 2) )
-		instance_id = script_getnum(st, 2);
-	else if( st->instance_id )
-		instance_id = st->instance_id;
-	else if( (sd = script_rid2sd(st)) != NULL && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id )
-		instance_id = p->instance_id;
-	else return 0;
+	if( script_hasdata(st,2) )
+		instance_id = script_getnum(st,2);
+	else
+		instance_id = script_instancegetid(st);
 
-	if( instance_id <= 0 || instance_id >= MAX_INSTANCE )
-	{
-		ShowError("buildin_instance_destroy: Trying to destroy invalid instance %d.\n", instance_id);
+	if( instance_id <= 0 || instance_id >= MAX_MAP_PER_SERVER ) {
+		ShowError("script:instance_destroy: Trying to destroy invalid instance %d.\n", instance_id);
 		return 0;
 	}
 
@@ -16535,189 +16516,51 @@ BUILDIN_FUNC(instance_destroy)
 	return 0;
 }
 
-BUILDIN_FUNC(instance_attachmap)
-{
-	const char *name;
-	int16 m;
-	int instance_id;
-	bool usebasename = false;
-
-	name = script_getstr(st,2);
-	instance_id = script_getnum(st,3);
-	if( script_hasdata(st,4) && script_getnum(st,4) > 0)
-		usebasename = true;
-
-	if( (m = instance_add_map(name, instance_id, usebasename)) < 0 ) // [Saithis]
-	{
-		ShowError("buildin_instance_attachmap: instance creation failed (%s): %d\n", name, m);
-		script_pushconststr(st, "");
-		return 0;
-	}
-	script_pushconststr(st, map[m].name);
-
-	return 0;
-}
-
-BUILDIN_FUNC(instance_detachmap)
+/*==========================================
+ * Warps player to instance
+ * Results:
+ *	0: Success
+ *	1: Instance not in DB
+ *	2: Character not in party
+ *	3: Party doesn't have instance
+ *	4: Instance doesn't match with party
+ *------------------------------------------*/
+BUILDIN_FUNC(instance_enter)
 {
 	struct map_session_data *sd;
-	struct party_data *p;
-	const char *str;
-	int16 m;
-	int instance_id;
 
-	str = script_getstr(st, 2);
-	if( script_hasdata(st, 3) )
-		instance_id = script_getnum(st, 3);
-	else if( st->instance_id )
-		instance_id = st->instance_id;
-	else if( (sd = script_rid2sd(st)) != NULL && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id )
-		instance_id = p->instance_id;
-	else return 0;
-
-	if( (m = map_mapname2mapid(str)) < 0 || (m = instance_map2imap(m,instance_id)) < 0 )
-	{
-		ShowError("buildin_instance_detachmap: Trying to detach invalid map %s\n", str);
-		return 0;
-	}
-
-	instance_del_map(m);
-	return 0;
-}
-
-BUILDIN_FUNC(instance_attach)
-{
-	int instance_id;
-
-	instance_id = script_getnum(st, 2);
-	if( instance_id <= 0 || instance_id >= MAX_INSTANCE )
-		return 0;
-
-	st->instance_id = instance_id;
-	return 0;
-}
-
-BUILDIN_FUNC(instance_id)
-{
-	int instance_id;
-
-	if( script_hasdata(st, 2) )
-	{
-		struct map_session_data *sd;
-		struct party_data *p;
-		int type;
-		type = script_getnum(st, 2);
-		if( type == 0 )
-			instance_id = st->instance_id;
-		else if( type == 1 && (sd = script_rid2sd(st)) != NULL && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL )
-			instance_id = p->instance_id;
-		else
-			instance_id = 0;
-	}
+	if((sd = script_rid2sd(st)) != NULL)
+		script_pushint(st,instance_enter(sd,script_getstr(st, 2)));
 	else
-		instance_id = st->instance_id;
-
-	script_pushint(st, instance_id);
+		return 1;
 	return 0;
+
 }
 
-BUILDIN_FUNC(instance_set_timeout)
-{
-	int progress_timeout, idle_timeout;
-	int instance_id;
-	struct map_session_data *sd;
-	struct party_data *p;
-
-	progress_timeout = script_getnum(st, 2);
-	idle_timeout = script_getnum(st, 3);
-
-	if( script_hasdata(st, 4) )
-		instance_id = script_getnum(st, 4);
-	else if( st->instance_id )
-		instance_id = st->instance_id;
-	else if( (sd = script_rid2sd(st)) != NULL && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id )
-		instance_id = p->instance_id;
-	else return 0;
-
-	if( instance_id > 0 )
-		instance_set_timeout(instance_id, progress_timeout, idle_timeout);
-
-	return 0;
-}
-
-BUILDIN_FUNC(instance_init)
-{
-	int instance_id = script_getnum(st, 2);
-
-	if( instance[instance_id].state != INSTANCE_IDLE )
-	{
-		ShowError("instance_init: instance already initialized.\n");
-		return 0;
-	}
-
-	instance_init(instance_id);
-	return 0;
-}
-
-BUILDIN_FUNC(instance_announce)
-{
-	int         instance_id = script_getnum(st,2);
-	const char *mes         = script_getstr(st,3);
-	int         flag        = script_getnum(st,4);
-	const char *fontColor   = script_hasdata(st,5) ? script_getstr(st,5) : NULL;
-	int         fontType    = script_hasdata(st,6) ? script_getnum(st,6) : 0x190; // default fontType (FW_NORMAL)
-	int         fontSize    = script_hasdata(st,7) ? script_getnum(st,7) : 12;    // default fontSize
-	int         fontAlign   = script_hasdata(st,8) ? script_getnum(st,8) : 0;     // default fontAlign
-	int         fontY       = script_hasdata(st,9) ? script_getnum(st,9) : 0;     // default fontY
-
-	int i;
-	struct map_session_data *sd;
-	struct party_data *p;
-
-	if( instance_id == 0 )
-	{
-		if( st->instance_id )
-			instance_id = st->instance_id;
-		else if( (sd = script_rid2sd(st)) != NULL && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id )
-			instance_id = p->instance_id;
-		else return 0;
-	}
-
-	if( instance_id <= 0 || instance_id >= MAX_INSTANCE )
-		return 0;
-
-	for( i = 0; i < instance[instance_id].num_map; i++ )
-		map_foreachinmap(buildin_announce_sub, instance[instance_id].map[i], BL_PC,
-			mes, strlen(mes)+1, flag&0xf0, fontColor, fontType, fontSize, fontAlign, fontY);
-
-	return 0;
-}
-
+/*==========================================
+ * Returns the name of a duplicated NPC
+ *
+ * instance_npcname <npc_name>{,<instance_id};
+ * <npc_name> is the full name of an NPC
+ *------------------------------------------*/
 BUILDIN_FUNC(instance_npcname)
 {
 	const char *str;
-	int instance_id = 0;
+	short instance_id = 0;
 
-	struct map_session_data *sd;
-	struct party_data *p;
 	struct npc_data *nd;
 
-	str = script_getstr(st, 2);
-	if( script_hasdata(st, 3) )
-		instance_id = script_getnum(st, 3);
-	else if( st->instance_id )
-		instance_id = st->instance_id;
-	else if( (sd = script_rid2sd(st)) != NULL && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id )
-		instance_id = p->instance_id;
+	str = script_getstr(st,2);
+	if( script_hasdata(st,3) )
+		instance_id = script_getnum(st,3);
+	else
+		instance_id = script_instancegetid(st);
 
-	if( instance_id && (nd = npc_name2id(str)) != NULL )
- 	{
+	if( instance_id && (nd = npc_name2id(str)) != NULL ) {
 		static char npcname[NAME_LENGTH];
 		snprintf(npcname, sizeof(npcname), "dup_%d_%d", instance_id, nd->bl.id);
  		script_pushconststr(st,npcname);
-	}
-	else
-	{
+	} else {
 		ShowError("script:instance_npcname: invalid instance NPC (instance_id: %d, NPC name: \"%s\".)\n", instance_id, str);
 		st->state = END;
 		return 1;
@@ -16726,62 +16569,88 @@ BUILDIN_FUNC(instance_npcname)
 	return 0;
 }
 
-BUILDIN_FUNC(has_instance)
+/*==========================================
+ * Returns the name of a duplicated map
+ *
+ * instance_mapname <map_name>{,<instance_id};
+ *------------------------------------------*/
+BUILDIN_FUNC(instance_mapname)
 {
-	struct map_session_data *sd;
-	struct party_data *p;
  	const char *str;
+	char iname[12];
 	int16 m;
-	int instance_id = 0;
+	short instance_id = 0;
 
- 	str = script_getstr(st, 2);
-	if( script_hasdata(st, 3) )
-		instance_id = script_getnum(st, 3);
-	else if( st->instance_id )
-		instance_id = st->instance_id;
-	else if( (sd = script_rid2sd(st)) != NULL && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id )
-		instance_id = p->instance_id;
+ 	str = script_getstr(st,2);
+	if( script_hasdata(st,3) )
+		instance_id = script_getnum(st,3);
+	else
+		instance_id = script_instancegetid(st);
 
-	if( !instance_id || (m = map_mapname2mapid(str)) < 0 || (m = instance_map2imap(m, instance_id)) < 0 )
-	{
+	// Build the instance mapname
+	snprintf(iname, sizeof(iname), ((strchr(str,'@') == NULL)?"%.3d#%s":"%.3d%s"), instance_id, str);
+
+	// Check that instance mapname is a valid map
+	if( !instance_id || (m = map_mapname2mapid(iname)) < 0 )
 		script_pushconststr(st, "");
-		return 0;
-	}
+	else
+		script_pushconststr(st, map[m].name);
 
-	script_pushconststr(st, map[m].name);
 	return 0;
 }
 
+/*==========================================
+ * Returns an Instance ID
+ *------------------------------------------*/
+BUILDIN_FUNC(instance_id)
+{
+	short instance_id;
+
+	instance_id = script_instancegetid(st);
+
+	if(!instance_id) {
+		ShowError("script:instance_id: No instance attached to NPC or player");
+		script_pushint(st, 0);
+		return 1;
+	}
+
+	script_pushint(st, instance_id);
+		
+	return 0;
+}
+
+/*==========================================
+ * Warps all players inside an instance
+ *
+ * instance_warpall <map_name>,<x>,<y>{,<instance_id>};
+ *------------------------------------------*/
 BUILDIN_FUNC(instance_warpall)
 {
+	struct party_data *p;
 	struct map_session_data *pl_sd;
 	int16 m, i;
-	int instance_id;
+	short instance_id;
 	const char *mapn;
 	int x, y;
 	unsigned short mapindex;
-	struct party_data *p = NULL;
 
 	mapn = script_getstr(st,2);
 	x    = script_getnum(st,3);
 	y    = script_getnum(st,4);
 	if( script_hasdata(st,5) )
 		instance_id = script_getnum(st,5);
-	else if( st->instance_id )
-		instance_id = st->instance_id;
-	else if( (pl_sd = script_rid2sd(st)) != NULL && pl_sd->status.party_id && (p = party_search(pl_sd->status.party_id)) != NULL && p->instance_id )
-		instance_id = p->instance_id;
-	else return 0;
+	else
+		instance_id = script_instancegetid(st);
 
-	if( (m = map_mapname2mapid(mapn)) < 0 || (map[m].flag.src4instance && (m = instance_mapid2imapid(m, instance_id)) < 0) )
+	if( !instance_id || (m = map_mapname2mapid(mapn)) < 0 || (m = instance_mapname2mapid(map[m].name,instance_id)) < 0)
 		return 0;
 
-	if( !(p = party_search(instance[instance_id].party_id)) )
+	if( !(p = party_search(instance_data[instance_id].party_id)) )
 		return 0;
 
 	mapindex = map_id2index(m);
 	for( i = 0; i < MAX_PARTY; i++ )
-		if( (pl_sd = p->data[i].sd) && map[pl_sd->bl.m].instance_id == st->instance_id ) pc_setpos(pl_sd,mapindex,x,y,CLR_TELEPORT);
+		if( (pl_sd = p->data[i].sd) && map[pl_sd->bl.m].instance_id == instance_id ) pc_setpos(pl_sd,mapindex,x,y,CLR_TELEPORT);
 
 	return 0;
 }
@@ -16806,39 +16675,39 @@ BUILDIN_FUNC(instance_check_party)
 	min = script_hasdata(st,4) ? script_getnum(st,4) : 1; // Minimum Level needed to join the Instance.
 	max  = script_hasdata(st,5) ? script_getnum(st,5) : MAX_LEVEL; // Maxium Level allowed to join the Instance.
 
-	if( min < 1 || min > MAX_LEVEL){
-		ShowError("instance_check_party: Invalid min level, %d\n", min);
-		return 0;
-	}else if(  max < 1 || max > MAX_LEVEL){
-		ShowError("instance_check_party: Invalid max level, %d\n", max);
-		return 0;
+	if( min < 1 || min > MAX_LEVEL) {
+		ShowError("script:check_party: Invalid min level, %d\n", min);
+		return 1;
+	} else if(  max < 1 || max > MAX_LEVEL) {
+		ShowError("script:check_party: Invalid max level, %d\n", max);
+		return 1;
 	}
 
 	if( script_hasdata(st,2) )
 		party_id = script_getnum(st,2);
 	else return 0;
 
-	if( !(p = party_search(party_id)) ){
+	if( !(p = party_search(party_id)) ) {
 		script_pushint(st, 0); // Returns false if party does not exist.
 		return 0;
 	}
 
 	for( i = 0; i < MAX_PARTY; i++ )
 		if( (pl_sd = p->data[i].sd) )
-			if(map_id2bl(pl_sd->bl.id)){
-				if(pl_sd->status.base_level < min){
+			if(map_id2bl(pl_sd->bl.id)) {
+				if(pl_sd->status.base_level < min) {
 					script_pushint(st, 0);
 					return 0;
-				}else if(pl_sd->status.base_level > max){
+				} else if(pl_sd->status.base_level > max) {
 					script_pushint(st, 0);
 					return 0;
 				}
 					c++;
 			}
 
-	if(c < amount){
+	if(c < amount)
 		script_pushint(st, 0); // Not enough Members in the Party to join Instance.
-	}else
+	else
 		script_pushint(st, 1);
 
 	return 0;
@@ -16911,14 +16780,10 @@ BUILDIN_FUNC(areamobuseskill)
 	int16 m;
 	int range,mobid,skill_id,skill_lv,casttime,emotion,target,cancel;
 
-	if( (m = map_mapname2mapid(script_getstr(st,2))) < 0 )
-	{
+	if( (m = map_mapname2mapid(script_getstr(st,2))) < 0 ) {
 		ShowError("areamobuseskill: invalid map name.\n");
 		return 0;
 	}
-
-	if( map[m].flag.src4instance && st->instance_id && (m = instance_mapid2imapid(m, st->instance_id)) < 0 )
-		return 0;
 
 	center.m = m;
 	center.x = script_getnum(st,3);
@@ -18123,17 +17988,12 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(bg_updatescore,"sii"),
 
 	// Instancing
-	BUILDIN_DEF(instance_create,"si"),
+	BUILDIN_DEF(instance_create,"s"),
 	BUILDIN_DEF(instance_destroy,"?"),
-	BUILDIN_DEF(instance_attachmap,"si?"),
-	BUILDIN_DEF(instance_detachmap,"s?"),
-	BUILDIN_DEF(instance_attach,"i"),
-	BUILDIN_DEF(instance_id,"?"),
-	BUILDIN_DEF(instance_set_timeout,"ii?"),
-	BUILDIN_DEF(instance_init,"i"),
-	BUILDIN_DEF(instance_announce,"isi?????"),
+	BUILDIN_DEF(instance_id,""),
+	BUILDIN_DEF(instance_enter,"s"),
 	BUILDIN_DEF(instance_npcname,"s?"),
-	BUILDIN_DEF(has_instance,"s?"),
+	BUILDIN_DEF(instance_mapname,"s?"),
 	BUILDIN_DEF(instance_warpall,"sii?"),
 	BUILDIN_DEF(instance_check_party,"i???"),
 	/**

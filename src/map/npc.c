@@ -2579,15 +2579,11 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 	type = dnd->subtype;
 
 	// get placement
-	if( (type==SHOP || type==CASHSHOP || type==SCRIPT) && strcmp(w1, "-") == 0 )
-	{// floating shop/chashshop/script
+	if( (type==SHOP || type==CASHSHOP || type==SCRIPT) && strcmp(w1, "-") == 0 ) {// floating shop/chashshop/script
 		x = y = dir = 0;
 		m = -1;
-	}
-	else
-	{
-		if( sscanf(w1, "%31[^,],%d,%d,%d", mapname, &x, &y, &dir) != 4 )// <map name>,<x>,<y>,<facing>
-		{
+	} else {
+		if( sscanf(w1, "%31[^,],%d,%d,%d", mapname, &x, &y, &dir) != 4 ) { // <map name>,<x>,<y>,<facing>
 			ShowError("npc_parse_duplicate: Invalid placement format for duplicate in file '%s', line '%d'. Skipping line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 			return end;// next line, try to continue
 		}
@@ -2601,8 +2597,7 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 	if( type == WARP && sscanf(w4, "%d,%d", &xs, &ys) == 2 );// <spanx>,<spany>
 	else if( type == SCRIPT && sscanf(w4, "%d,%d,%d", &class_, &xs, &ys) == 3);// <sprite id>,<triggerX>,<triggerY>
 	else if( type != WARP ) class_ = atoi(w4);// <sprite id>
-	else
-	{
+	else {
 		ShowError("npc_parse_duplicate: Invalid span format for duplicate warp in file '%s', line '%d'. Skipping line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 		return end;// next line, try to continue
 	}
@@ -2620,56 +2615,51 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 	nd->src_id = src_id;
 	nd->bl.type = BL_NPC;
 	nd->subtype = (enum npc_subtype)type;
-	switch( type )
-	{
-	case SCRIPT:
-		++npc_script;
-		nd->u.scr.xs = xs;
-		nd->u.scr.ys = ys;
-		nd->u.scr.script = dnd->u.scr.script;
-		nd->u.scr.label_list = dnd->u.scr.label_list;
-		nd->u.scr.label_list_num = dnd->u.scr.label_list_num;
-		break;
+	switch( type ) {
+		case SCRIPT:
+			++npc_script;
+			nd->u.scr.xs = xs;
+			nd->u.scr.ys = ys;
+			nd->u.scr.script = dnd->u.scr.script;
+			nd->u.scr.label_list = dnd->u.scr.label_list;
+			nd->u.scr.label_list_num = dnd->u.scr.label_list_num;
+			break;
 
-	case SHOP:
-	case CASHSHOP:
-		++npc_shop;
-		nd->u.shop.shop_item = dnd->u.shop.shop_item;
-		nd->u.shop.count = dnd->u.shop.count;
-		break;
+		case SHOP:
+		case CASHSHOP:
+			++npc_shop;
+			nd->u.shop.shop_item = dnd->u.shop.shop_item;
+			nd->u.shop.count = dnd->u.shop.count;
+			break;
 
-	case WARP:
-		++npc_warp;
-		if( !battle_config.warp_point_debug )
-			nd->class_ = WARP_CLASS;
-		else
-			nd->class_ = WARP_DEBUG_CLASS;
-		nd->u.warp.xs = xs;
-		nd->u.warp.ys = ys;
-		nd->u.warp.mapindex = dnd->u.warp.mapindex;
-		nd->u.warp.x = dnd->u.warp.x;
-		nd->u.warp.y = dnd->u.warp.y;
-		break;
+		case WARP:
+			++npc_warp;
+			if( !battle_config.warp_point_debug )
+				nd->class_ = WARP_CLASS;
+			else
+				nd->class_ = WARP_DEBUG_CLASS;
+			nd->u.warp.xs = xs;
+			nd->u.warp.ys = ys;
+			nd->u.warp.mapindex = dnd->u.warp.mapindex;
+			nd->u.warp.x = dnd->u.warp.x;
+			nd->u.warp.y = dnd->u.warp.y;
+			break;
 	}
 
 	//Add the npc to its location
-	if( m >= 0 )
-	{
+	if( m >= 0 ) {
 		map_addnpc(m, nd);
 		status_change_init(&nd->bl);
 		unit_dataset(&nd->bl);
 		nd->ud.dir = dir;
 		npc_setcells(nd);
 		map_addblock(&nd->bl);
-		if( class_ >= 0 )
-		{
+		if( class_ >= 0 ) {
 			status_set_viewdata(&nd->bl, nd->class_);
 			if( map[nd->bl.m].users )
 				clif_spawn(&nd->bl);
 		}
-	}
-	else
-	{
+	} else {
 		// we skip map_addnpc, but still add it to the list of ID's
 		map_addiddb(&nd->bl);
 	}
@@ -2688,6 +2678,9 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 		npc_timerevent_export(nd, i);
 	}
 
+	if(!strcmp(filepath,"INSTANCING")) //Instance NPCs will use this for commands
+		nd->instance_id = map[m].instance_id;
+
 	nd->u.scr.timerid = INVALID_TIMER;
 
 	return end;
@@ -2700,21 +2693,27 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 		return 1;
 
 	snprintf(newname, ARRAYLENGTH(newname), "dup_%d_%d", map[m].instance_id, snd->bl.id);
-	if( npc_name2id(newname) != NULL )
-	{ // Name already in use
+	if( npc_name2id(newname) != NULL ) { // Name already in use
 		ShowError("npc_duplicate4instance: the npcname (%s) is already in use while trying to duplicate npc %s in instance %d.\n", newname, snd->exname, map[m].instance_id);
 		return 1;
 	}
 
-	if( snd->subtype == WARP )
-	{ // Adjust destination, if instanced
+	if( snd->subtype == WARP ) { // Adjust destination, if instanced
 		struct npc_data *wnd = NULL; // New NPC
-		int dm = map_mapindex2mapid(snd->u.warp.mapindex), im;
+		struct instance_data *im = &instance_data[map[m].instance_id];
+		int dm = map_mapindex2mapid(snd->u.warp.mapindex), imap = 0, i;
 		if( dm < 0 ) return 1;
 
-		im = instance_mapid2imapid(dm, map[m].instance_id);
-		if( im == -1 )
-		{
+		for(i = 0; i < MAX_MAP_PER_INSTANCE; i++)
+			if(im->map[i].m && map_mapname2mapid(map[im->map[i].src_m].name) == dm) {
+				imap = map_mapname2mapid(map[m].name);
+				break; // Instance map matches destination, update to instance map
+			}
+
+		if(!imap)
+			imap = map_mapname2mapid(map[dm].name);
+	
+		if( imap == -1 ) {
 			ShowError("npc_duplicate4instance: warp (%s) leading to instanced map (%s), but instance map is not attached to current instance.\n", map[dm].name, snd->exname);
 			return 1;
 		}
@@ -2730,7 +2729,7 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 		safestrncpy(wnd->exname, newname, ARRAYLENGTH(wnd->exname));
 		wnd->class_ = WARP_CLASS;
 		wnd->speed = 200;
-		wnd->u.warp.mapindex = map_id2index(im);
+		wnd->u.warp.mapindex = map_id2index(imap);
 		wnd->u.warp.x = snd->u.warp.x;
 		wnd->u.warp.y = snd->u.warp.y;
 		wnd->u.warp.xs = snd->u.warp.xs;
@@ -2745,9 +2744,7 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 		if( map[wnd->bl.m].users )
 			clif_spawn(&wnd->bl);
 		strdb_put(npcname_db, wnd->exname, wnd);
-	}
-	else
-	{
+	} else {
 		static char w1[50], w2[50], w3[50], w4[50];
 		const char* stat_buf = "- call from instancing subsystem -\n";
 
@@ -2762,6 +2759,19 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 
 		npc_parse_duplicate(w1, w2, w3, w4, stat_buf, stat_buf, "INSTANCING");
 	}
+
+	return 0;
+}
+
+int npc_instanceinit(struct npc_data* nd)
+{
+	struct event_data *ev;
+	char evname[EVENT_NAME_LENGTH];
+
+	snprintf(evname, ARRAYLENGTH(evname), "%s::OnInstanceInit", nd->exname);
+
+	if( ( ev = (struct event_data*)strdb_get(ev_db, evname) ) )
+		run_script(nd->u.scr.script,ev->pos,0,nd->bl.id);
 
 	return 0;
 }
@@ -3772,13 +3782,10 @@ int npc_reload(void) {
 		"\t-'"CL_WHITE"%d"CL_RESET"' Mobs Not Cached\n",
 		npc_id - npc_new_min, npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
 
-	do_final_instance();
-
-	for( i = 0; i < ARRAYLENGTH(instance); ++i )
-		instance_init(instance[i].instance_id);
-
 	//Re-read the NPC Script Events cache.
 	npc_read_event_script();
+
+	do_reload_instance();
 
 	/* refresh guild castle flags on both woe setups */
 	npc_event_doall("OnAgitInit");

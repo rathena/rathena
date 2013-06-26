@@ -1700,6 +1700,9 @@ int map_quit(struct map_session_data *sd) {
 
 	if (sd->state.permanent_speed == 1) sd->state.permanent_speed = 0; // Remove lock so speed is set back to normal at login.
 
+	if( map[sd->bl.m].instance_id )
+		instance_delusers(map[sd->bl.m].instance_id);
+
 	if( sd->ed ) {
 		elemental_clean_effect(sd->ed);
 		unit_remove_map(&sd->ed->bl,CLR_TELEPORT);
@@ -2169,6 +2172,142 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 	map[m].npc_num++;
 	idb_put(id_db,nd->bl.id,nd);
 	return true;
+}
+
+/*==========================================
+ * Add an instance map
+ *------------------------------------------*/
+int map_addinstancemap(const char *name, int id)
+{
+	int src_m = map_mapname2mapid(name);
+	int dst_m = -1, i;
+	size_t size;
+
+	if(src_m < 0)
+		return -1;
+
+	if(strlen(name) > 20) {
+		// against buffer overflow
+		ShowError("map_addisntancemap: can't add long map name \"%s\"\n", name);
+		return -2;
+	}
+
+	for(i = instance_start; i < MAX_MAP_PER_SERVER; i++) {
+		if(!map[i].name[0])
+			break;
+	}
+	if(i < map_num) // Destination map value overwrites another
+		dst_m = i;
+	else if(i < MAX_MAP_PER_SERVER) // Destination map value increments to new map
+		dst_m = map_num++;
+	else {
+		// Out of bounds
+		ShowError("map_addinstancemap failed. map_num(%d) > map_max(%d)\n",map_num, MAX_MAP_PER_SERVER);
+		return -3;
+	}
+
+	// Copy the map
+	memcpy(&map[dst_m], &map[src_m], sizeof(struct map_data));
+
+	// Alter the name
+	snprintf(map[dst_m].name, sizeof(map[dst_m].name), ((strchr(name,'@') == NULL)?"%.3d#%s":"%.3d%s"), id, name);
+	map[dst_m].name[MAP_NAME_LENGTH-1] = '\0';
+
+	map[dst_m].m = dst_m;
+	map[dst_m].instance_id = id;
+	map[dst_m].users = 0;
+
+	memset(map[dst_m].npc, 0, sizeof(map[dst_m].npc));
+	map[dst_m].npc_num = 0;
+
+	size = map[dst_m].bxs * map[dst_m].bys * sizeof(struct block_list*);
+	map[dst_m].block = (struct block_list **)aCalloc(1,size);
+	map[dst_m].block_mob = (struct block_list **)aCalloc(1,size);
+
+	map[dst_m].index = mapindex_addmap(-1, map[dst_m].name);
+
+	map_addmap2db(&map[dst_m]);
+
+	return dst_m;
+}
+
+/*==========================================
+ * Set player to save point when they leave
+ *------------------------------------------*/
+static int map_instancemap_leave(struct block_list *bl, va_list ap)
+{
+	struct map_session_data* sd;
+
+	nullpo_retr(0, bl);
+	nullpo_retr(0, sd = (struct map_session_data *)bl);
+
+	pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, 3);
+
+	return 1;
+}
+
+/*==========================================
+ * Remove all units from instance
+ *------------------------------------------*/
+static int map_instancemap_clean(struct block_list *bl, va_list ap)
+{
+	nullpo_retr(0, bl);
+	switch(bl->type) {
+		case BL_PC:
+			map_quit((struct map_session_data *) bl);
+			break;
+		case BL_NPC:
+			npc_unload((struct npc_data *)bl,true);
+			break;
+		case BL_MOB:
+			unit_free(bl,CLR_OUTSIGHT);
+			break;
+		case BL_PET:
+			//There is no need for this, the pet is removed together with the player. [Skotlex]
+			break;
+		case BL_ITEM:
+			map_clearflooritem(bl);
+			break;
+		case BL_SKILL:
+			skill_delunit((struct skill_unit *) bl);
+			break;
+	}
+
+	return 1;
+}
+
+/*==========================================
+ * Deleting an instance map
+ *------------------------------------------*/
+int map_delinstancemap(int m)
+{
+	if(m < 0)
+		return 0;
+	if(map[m].instance_id == 0)
+		return 0;
+
+	// Kick everyone out
+	map_foreachinmap(map_instancemap_leave, m, BL_PC);
+
+	// Do the unit cleanup
+	map_foreachinmap(map_instancemap_clean, m, BL_ALL);
+
+	if( map[m].mob_delete_timer != INVALID_TIMER )
+		delete_timer(map[m].mob_delete_timer, map_removemobs_timer);
+
+	mapindex_removemap( map[m].index );
+
+	// Free memory
+	aFree(map[m].block);
+	aFree(map[m].block_mob);
+
+	map_removemapdb(&map[m]);
+	memset(&map[m], 0x00, sizeof(map[0]));
+
+	// Make delete timers invalid to avoid errors
+	map[m].mob_delete_timer = INVALID_TIMER;
+
+	return 1;
 }
 
 /*=========================================
@@ -3086,7 +3225,7 @@ int map_readallmaps (void)
 
 	// finished map loading
 	ShowInfo("Successfully loaded '"CL_WHITE"%d"CL_RESET"' maps."CL_CLL"\n",map_num);
-	instance_start = map_num; // Next Map Index will be instances
+	instance_start = map_num + 1; // Next Map Index will be instances
 
 	if (maps_removed)
 		ShowNotice("Maps removed: '"CL_WHITE"%d"CL_RESET"'\n",maps_removed);

@@ -37,7 +37,7 @@ void map_msg_reload(void);
 #define AREA_SIZE battle_config.area_size
 #define DAMAGELOG_SIZE 30
 #define LOOTITEM_SIZE 10
-#define MAX_MOBSKILL 50	//Max 128, see mob skill_idx type if need this higher
+#define MAX_MOBSKILL 50		//Max 128, see mob skill_idx type if need this higher
 #define MAX_MOB_LIST_PER_MAP 128
 #define MAX_EVENTQUEUE 2
 #define MAX_EVENTTIMER 32
@@ -46,9 +46,9 @@ void map_msg_reload(void);
 #define MAX_FLOORITEM START_ACCOUNT_NUM
 #define MAX_LEVEL 160
 #define MAX_DROP_PER_MAP 48
-#define MAX_IGNORE_LIST 20 // official is 14
+#define MAX_IGNORE_LIST 20 	// official is 14
 #define MAX_VENDING 12
-#define MAX_MAP_SIZE 512*512 // Wasn't there something like this already? Can't find it.. [Shinryo]
+#define MAX_MAP_SIZE 512*512 	// Wasn't there something like this already? Can't find it.. [Shinryo]
 
 // Added definitions for WoESE objects. [L0ne_W0lf]
 enum MOBID {
@@ -573,7 +573,6 @@ struct map_data {
 		unsigned nochat :1;
 		unsigned partylock :1;
 		unsigned guildlock :1;
-		unsigned src4instance : 1; // To flag this map when it's used as a src map for instances
 		unsigned reset :1; // [Daegaladh]
 		unsigned chmautojoin : 1; //prevent to auto join map channel
 		unsigned nousecart : 1;	//prevent open up cart @FIXME client side only atm
@@ -683,6 +682,10 @@ int map_clearflooritem_timer(int tid, unsigned int tick, int id, intptr_t data);
 int map_removemobs_timer(int tid, unsigned int tick, int id, intptr_t data);
 void map_clearflooritem(struct block_list* bl);
 int map_addflooritem(struct item *item_data,int amount,int16 m,int16 x,int16 y,int first_charid,int second_charid,int third_charid,int flags);
+
+// instances
+int map_addinstancemap(const char*,int);
+int map_delinstancemap(int);
 
 // player to map session
 void map_addnickdb(int charid, const char* nick);

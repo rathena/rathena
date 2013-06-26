@@ -9186,10 +9186,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if( !(sd->sc.option&OPTION_INVISIBLE) ) { // increment the number of pvp players on the map
 		map[sd->bl.m].users_pvp++;
 	}
-	if( map[sd->bl.m].instance_id ) {
-		instance[map[sd->bl.m].instance_id].users++;
-		instance_check_idle(map[sd->bl.m].instance_id);
-	}
 	sd->state.debug_remove_map = 0; // temporary state to track double remove_map's [FlavioJS]
 
 	// reset the callshop flag if the player changes map
@@ -15267,99 +15263,82 @@ void clif_font(struct map_session_data *sd)
 
 
 /*==========================================
- * Instancing Window
+ * Notifies party members of instance change
  *------------------------------------------*/
-int clif_instance(int instance_id, int type, int flag)
+void clif_instance_create(struct map_session_data *sd, const char *name, int num, int flag)
 {
-	struct map_session_data *sd;
-	struct party_data *p;
-	unsigned char buf[255];
+#if PACKETVER >= 20071128
+	unsigned char buf[65];
 
-	if( (p = party_search(instance[instance_id].party_id)) == NULL || (sd = party_getavailablesd(p)) == NULL )
-		return 0;
+	nullpo_retv(sd);
 
-	switch( type )
-	{
-	case 1:
-		// S 0x2cb <Instance name>.61B <Standby Position>.W
-		// Required to start the instancing information window on Client
-		// This window re-appear each "refresh" of client automatically until type 4 is send to client.
-		WBUFW(buf,0) = 0x02CB;
-		memcpy(WBUFP(buf,2),instance[instance_id].name,INSTANCE_NAME_LENGTH);
-		WBUFW(buf,63) = flag;
-		clif_send(buf,packet_len(0x02CB),&sd->bl,PARTY);
-		break;
-	case 2:
-		// S 0x2cc <Standby Position>.W
-		// To announce Instancing queue creation if no maps available
-		WBUFW(buf,0) = 0x02CC;
-		WBUFW(buf,2) = flag;
-		clif_send(buf,packet_len(0x02CC),&sd->bl,PARTY);
-		break;
-	case 3:
-	case 4:
-		// S 0x2cd <Instance Name>.61B <Instance Remaining Time>.L <Instance Noplayers close time>.L
-		WBUFW(buf,0) = 0x02CD;
-		memcpy(WBUFP(buf,2),instance[instance_id].name,61);
-		if( type == 3 )
-		{
-			WBUFL(buf,63) = (uint32)instance[instance_id].progress_timeout;
-			WBUFL(buf,67) = 0;
-		}
-		else
-		{
-			WBUFL(buf,63) = 0;
-			WBUFL(buf,67) = (uint32)instance[instance_id].idle_timeout;
-		}
-		clif_send(buf,packet_len(0x02CD),&sd->bl,PARTY);
-		break;
-	case 5:
-		// S 0x2ce <Message ID>.L
-		// 0 = Notification (EnterLimitDate update?)
-		// 1 = The Memorial Dungeon expired; it has been destroyed
-		// 2 = The Memorial Dungeon's entry time limit expired; it has been destroyed
-		// 3 = The Memorial Dungeon has been removed.
-		// 4 = Create failure (removes the instance window)
-		WBUFW(buf,0) = 0x02CE;
-		WBUFL(buf,2) = flag;
-		//WBUFL(buf,6) = EnterLimitDate;
-		clif_send(buf,packet_len(0x02CE),&sd->bl,PARTY);
-		break;
-	}
-	return 0;
+	WBUFW(buf,0) = 0x2cb;
+	safestrncpy( WBUFP(buf,2), name, 62 );
+	WBUFW(buf,63) = num;
+	if(flag) // A timer has changed or been added
+		clif_send(buf,packet_len(0x2cb),&sd->bl,PARTY);
+	else	// No notification
+		clif_send(buf,packet_len(0x2cb),&sd->bl,SELF);
+#endif
+
+	return;
 }
 
-void clif_instance_join(int fd, int instance_id)
+void clif_instance_changewait(struct map_session_data *sd, int num, int flag)
 {
-	if( instance[instance_id].idle_timer != INVALID_TIMER ) {
-		WFIFOHEAD(fd,packet_len(0x02CD));
-		WFIFOW(fd,0) = 0x02CD;
-		memcpy(WFIFOP(fd,2),instance[instance_id].name,61);
-		WFIFOL(fd,63) = 0;
-		WFIFOL(fd,67) = (uint32)instance[instance_id].idle_timeout;
-		WFIFOSET(fd,packet_len(0x02CD));
-	} else if( instance[instance_id].progress_timer != INVALID_TIMER ) {
-		WFIFOHEAD(fd,packet_len(0x02CD));
-		WFIFOW(fd,0) = 0x02CD;
-		memcpy(WFIFOP(fd,2),instance[instance_id].name,61);
-		WFIFOL(fd,63) = (uint32)instance[instance_id].progress_timeout;;
-		WFIFOL(fd,67) = 0;
-		WFIFOSET(fd,packet_len(0x02CD));
-	} else {
-		WFIFOHEAD(fd,packet_len(0x02CB));
-		WFIFOW(fd,0) = 0x02CB;
-		memcpy(WFIFOP(fd,2),instance[instance_id].name,61);
-		WFIFOW(fd,63) = 0;
-		WFIFOSET(fd,packet_len(0x02CB));
-	}
+#if PACKETVER >= 20071128
+	unsigned char buf[4];
+
+	nullpo_retv(sd);
+
+	WBUFW(buf,0) = 0x2cc;
+	WBUFW(buf,2) = num;
+	if(flag) // A timer has changed or been added
+		clif_send(buf,packet_len(0x2cc),&sd->bl,PARTY);
+	else	// No notification
+		clif_send(buf,packet_len(0x2cc),&sd->bl,SELF);
+#endif
+
+	return;
 }
 
-void clif_instance_leave(int fd)
+void clif_instance_status(struct map_session_data *sd, const char *name, unsigned int limit1, unsigned int limit2, int flag)
 {
-	WFIFOHEAD(fd,packet_len(0x02CE));
-	WFIFOW(fd,0) = 0x02ce;
-	WFIFOL(fd,2) = 4;
-	WFIFOSET(fd,packet_len(0x02CE));
+#if PACKETVER >= 20071128
+	unsigned char buf[71];
+
+	nullpo_retv(sd);
+
+	WBUFW(buf,0) = 0x2cd;
+	safestrncpy( WBUFP(buf,2), name, 62 );
+	WBUFL(buf,63) = limit1;
+	WBUFL(buf,67) = limit2;
+	if(flag) // A timer has changed or been added
+		clif_send(buf,packet_len(0x2cd),&sd->bl,PARTY);
+	else	// No notification
+		clif_send(buf,packet_len(0x2cd),&sd->bl,SELF);
+#endif
+
+	return;
+}
+
+void clif_instance_changestatus(struct map_session_data *sd, int type, unsigned int limit, int flag)
+{
+#if PACKETVER >= 20071128
+	unsigned char buf[10];
+
+	nullpo_retv(sd);
+
+	WBUFW(buf,0) = 0x2ce;
+	WBUFL(buf,2) = type;
+	WBUFL(buf,6) = limit;
+	if(flag) // A timer has changed or been added
+		clif_send(buf,packet_len(0x2ce),&sd->bl,PARTY);
+	else	// No notification
+		clif_send(buf,packet_len(0x2ce),&sd->bl,SELF);
+#endif
+
+	return;
 }
 
 

@@ -29,19 +29,16 @@ struct npc_data {
 	struct view_data *vd;
 	struct status_change sc; //They can't have status changes, but.. they want the visual opt values.
 	struct npc_data *master_nd;
-	short class_;
-	short speed;
+	short class_,speed,instance_id;
 	char name[NAME_LENGTH+1];// display name
 	char exname[NAME_LENGTH+1];// unique npc name
-	int chat_id;
-	int touching_id;
+	int chat_id,touching_id;
 	unsigned int next_walktime;
 
 	unsigned size : 2;
 
 	struct status_data status;
-	unsigned int level;
-	unsigned int stat_point;
+	unsigned int level,stat_point;
 
 	void* chatdb; // pointer to a npc_parse struct (see npc_chat.c)
 	char* path;/* path dir */
@@ -169,6 +166,7 @@ void npc_read_event_script(void);
 int npc_script_event(struct map_session_data* sd, enum npce_event type);
 
 int npc_duplicate4instance(struct npc_data *snd, int16 m);
+int npc_instanceinit(struct npc_data* nd);
 int npc_cashshop_buy(struct map_session_data *sd, int nameid, int amount, int points);
 
 extern struct npc_data* fake_nd;

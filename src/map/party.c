@@ -320,7 +320,7 @@ int party_recv_info(struct party* sp, int char_id)
 		clif_party_option(p,sd,0x100);
 		clif_party_info(p,NULL);
 		if( p->instance_id != 0 )
-			clif_instance_join(sd->fd, p->instance_id);
+			instance_reqinfo(sd,p->instance_id);
 	}
 	if( char_id != 0 )// requester
 	{
@@ -439,7 +439,7 @@ void party_member_joined(struct map_session_data *sd)
 	{
 		p->data[i].sd = sd;
 		if( p->instance_id )
-			clif_instance_join(sd->fd,p->instance_id);
+			instance_reqinfo(sd,p->instance_id);
 	}
 	else
 		sd->status.party_id = 0; //He does not belongs to the party really?
@@ -498,7 +498,7 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 	clif_charnameupdate(sd); //Update char name's display [Skotlex]
 
 	if( p->instance_id )
-		clif_instance_join(sd->fd, p->instance_id);
+		instance_reqinfo(sd,p->instance_id);
 
 	return 0;
 }
@@ -575,8 +575,16 @@ int party_member_withdraw(int party_id, int account_id, int char_id)
 		sd->status.party_id = 0;
 		clif_charnameupdate(sd); //Update name display [Skotlex]
 		//TODO: hp bars should be cleared too
-		if( p->instance_id )
-			instance_check_kick(sd);
+		if( p->instance_id ) {
+			int16 m = sd->bl.m;
+
+			if( map[m].instance_id ) { // User was on the instance map
+				if( map[m].save.map )
+					pc_setpos(sd, map[m].save.map, map[m].save.x, map[m].save.y, CLR_TELEPORT);
+				else
+					pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
+			}
+		}
 	}
 
 	return 0;
@@ -594,7 +602,7 @@ int party_broken(int party_id)
 
 	if( p->instance_id )
 	{
-		instance[p->instance_id].party_id = 0;
+		instance_data[p->instance_id].party_id = 0;
 		instance_destroy( p->instance_id );
 	}
 

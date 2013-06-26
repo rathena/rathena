@@ -570,9 +570,10 @@ void clif_sendbgemblem_area(struct map_session_data *sd);
 void clif_sendbgemblem_single(int fd, struct map_session_data *sd);
 
 // Instancing
-int clif_instance(int instance_id, int type, int flag);
-void clif_instance_join(int fd, int instance_id);
-void clif_instance_leave(int fd);
+void clif_instance_create(struct map_session_data *sd, const char *name, int num, int flag);
+void clif_instance_changewait(struct map_session_data *sd, int num, int flag);
+void clif_instance_status(struct map_session_data *sd, const char *name, unsigned int limit1, unsigned int limit2, int flag);
+void clif_instance_changestatus(struct map_session_data *sd, int type, unsigned int limit, int flag);
 
 // Custom Fonts
 void clif_font(struct map_session_data *sd);
