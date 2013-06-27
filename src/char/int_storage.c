@@ -296,9 +296,13 @@ int mapif_parse_itembound_retrieve(int fd)
 			i++;
 		}
 	}
+	Sql_FreeResult(sql_handle);
 	
-	if(!i) //No items found - No need to continue
+	if(!i) { //No items found - No need to continue
+		StringBuf_Destroy(&buf);
+		SqlStmt_Free(stmt);
 		return 0;
+	}
 
 	//First we delete the character's items
 	StringBuf_Clear(&buf);
@@ -311,7 +315,6 @@ int mapif_parse_itembound_retrieve(int fd)
 		StringBuf_Printf(&buf, " `id`=%d",items[j].id);
 	}
 
-	stmt = SqlStmt_Malloc(sql_handle);
 	if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf))
 	||  SQL_ERROR == SqlStmt_Execute(stmt) )
 	{
@@ -342,7 +345,6 @@ int mapif_parse_itembound_retrieve(int fd)
 		StringBuf_AppendStr(&buf, ")");
 	}
 
-	stmt = SqlStmt_Malloc(sql_handle);
 	if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf))
 	||  SQL_ERROR == SqlStmt_Execute(stmt) )
 	{
@@ -351,6 +353,9 @@ int mapif_parse_itembound_retrieve(int fd)
 		StringBuf_Destroy(&buf);
 		return 1;
 	}
+
+	StringBuf_Destroy(&buf);
+	SqlStmt_Free(stmt);
 
 	//Finally reload storage and tell map we're done
 	mapif_load_guild_storage(fd,aid,guild_id,0);
