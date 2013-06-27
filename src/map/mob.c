@@ -2166,8 +2166,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			case MDLF_HOMUN:  dmgbltypes|= BL_HOM; break;
 			case MDLF_PET:    dmgbltypes|= BL_PET; break;
 		}
-		if( md->db->mexp )
-			pc_damage_log_clear(tsd,md->bl.id);
 	}
 
 	// determines, if the monster was killed by homunculus' damage only
@@ -2304,6 +2302,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				if(zeny) // zeny from mobs [Valaris]
 					pc_getzeny(tmpsd[i], zeny, LOG_TYPE_PICKDROP_MONSTER, NULL);
 			}
+
+			if( md->db->mexp )
+				pc_damage_log_clear(tmpsd[i],md->bl.id);
 		}
 
 		for( i = 0; i < pnum; i++ ) //Party share.
