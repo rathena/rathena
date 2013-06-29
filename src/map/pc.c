@@ -9738,34 +9738,43 @@ static bool pc_readdb_job_maxhpsp(char* fields[], int columns, int current)
 			return false;
 		}
 		idx = pc_class2idx(job_id);
-		if(type == 0){ //hp type
+		if(type == 0) {	//hp type
 			unsigned int k = 0;
 			unsigned int val, oldval=0;
 			for(i = 1; i <= MAX_LEVEL; i++) {
 				val = 0;
 				k += (job_info[idx].hp_factor*(i+1) + 50) / 100;
-				if(i>=startlvl && i <=maxlvl) val = atoi(fields[i+4]);
-				if(val==0) val = 35 + ((i+1)*job_info[idx].hp_multiplicator)/100 + k;
-				if(oldval >= val)
-					ShowWarning("Warn, HP value is lower or equal then previous one for (job=%d,oldval=%d,val=%d,lvl=%d hp_factor=%d,hp_multiplicator=%d,k=%d)\n",
-						job_id,oldval,val,i+1,job_info[idx].hp_factor,job_info[idx].hp_multiplicator,k);
+				if(i>=startlvl && i<=maxlvl)
+					val = atoi(fields[i+4]);
+				if(val==0 || oldval>=0)	//if oldval>=val, assume the default calculation always be higher
+					val = 35 + ((i+1)*job_info[idx].hp_multiplicator)/100 + k;
+				if(oldval >= val) {
+					ShowInfo("pc_readdb_job_maxhpsp: HP value is lower or equal then previous one. Using temporary... (job=%d,oldval=%d,val=%d,lvl=%d,hp_factor=%d,hp_multiplicator=%d,k=%d)\n"
+						,job_id,oldval,val,i+1,job_info[idx].hp_factor,job_info[idx].hp_multiplicator,k);
+					//val = oldval+job_info[idx].hp_multiplicator;	//if oldval still >= val, maybe we can use this?
+				}
 				val = min(INT_MAX,val);
 				job_info[idx].hp_table[i-1] = val;
 				oldval = val;
 			}
-	//		ShowInfo("Have readen hp table for job=%d\n{",job_id);
-	//		for(i=0; i<MAX_LEVEL; i++ )
-	//			printf("%d,",job_info[idx].hp_table[i]);
-	//		printf("\n}\n");
+//			ShowInfo("Have readen hp table for job=%d\n{",job_id);
+//			for(i=0; i<MAX_LEVEL; i++ )
+//				printf("%d,",job_info[idx].hp_table[i]);
+//			printf("\n}\n");
 		}
 		else if(type == 1){ //sp type
 			unsigned int val, oldval=0;
 			for(i = 1; i <= MAX_LEVEL; i++) {
 				val = 0;
-				if(i>=startlvl && i <=maxlvl) val = atoi(fields[i+4]);
-				if(val==0) val = 10 + ((i+1)*job_info[idx].sp_factor)/100;
-				if(oldval >= val) ShowWarning("Warn, SP value is lower or equal then previous one for (job=%d,oldval=%d,val=%d,lvl=%d,sp_factor=%d)\n",
-					job_id,oldval,val,i,job_info[idx].sp_factor);
+				if(i>=startlvl && i <=maxlvl)
+					val = atoi(fields[i+4]);
+				if(val==0 || oldval>=0)	//if oldval>=val, assume the default calculation always be higher
+					val = 10 + ((i+1)*job_info[idx].sp_factor)/100;
+				if(oldval >= val) {
+					ShowInfo("pc_readdb_job_maxhpsp: SP value is lower or equal then previous one. Using temporary... (job=%d,oldval=%d,val=%d,lvl=%d,sp_factor=%d)\n"
+						,job_id,oldval,val,i,job_info[idx].sp_factor);
+					//val = oldval+job_info[idx].sp_factor;	//if oldval still >= val, maybe we can use this?
+				}
 				val = min(INT_MAX,val);
 				job_info[idx].sp_table[i-1] = val;
 				oldval = val;
@@ -9822,7 +9831,7 @@ static bool pc_readdb_job_exp(char* fields[], int columns, int current)
 	while ((ui = job_info[idx].max_level[type]) >= 2 && job_info[idx].exp_table[type][ui-2] <= 0)
 		job_info[idx].max_level[type]--;
 	if (job_info[idx].max_level[type] < maxlvl) {
-		ShowWarning("pc_readdb: Specified max %u for job %d, but that job's exp table only goes up to level %u.\n", maxlvl, job_id, job_info[idx].max_level[type]);
+		ShowWarning("pc_readdb_job_exp: Specified max %u for job %d, but that job's exp table only goes up to level %u.\n", maxlvl, job_id, job_info[idx].max_level[type]);
 		ShowInfo("Filling the missing values with the last exp entry.\n");
 		//Fill the requested values with the last entry.
 		ui = (job_info[idx].max_level[type] <= 2? 0: job_info[idx].max_level[type]-2);
@@ -9838,7 +9847,7 @@ static bool pc_readdb_job_exp(char* fields[], int columns, int current)
 			continue;
 		}
 		idx = pc_class2idx(job_id);
-		memcpy(job_info[idx].exp_table[type], job_info[jobs[0]].exp_table[type], sizeof(job_info[0].exp_table[0]));
+		memcpy(job_info[idx].exp_table[type], job_info[pc_class2idx(jobs[0])].exp_table[type], sizeof(job_info[pc_class2idx(jobs[0])].exp_table[type]));
 		job_info[idx].max_level[type] = maxlvl;
 //		ShowInfo("%s - Class %d: %u\n", type?"Job":"Base", job_id, job_info[idx].max_level[type]);
 	}
@@ -9928,8 +9937,7 @@ int pc_readdb(void)
 	sv_readdb(db_path, "job_db2.txt",',',1,1+MAX_LEVEL,CLASS_COUNT,&pc_readdb_job2);
 	sv_readdb(db_path, DBPATH"job_maxhpsp_db.txt", ',', 4, 4+MAX_LEVEL, CLASS_COUNT*2, &pc_readdb_job_maxhpsp);
 	sv_readdb(db_path, DBPATH"job_exp.txt",',',4,1000+3,CLASS_COUNT*2,&pc_readdb_job_exp); //support till 1000lvl
-
-
+	
 	//Checking if all class have their data
 	for (i = 0; i < JOB_MAX; i++) {
 		int j;
@@ -9939,11 +9947,10 @@ int pc_readdb(void)
 		j = pc_class2idx(i);
 		if (!job_info[j].max_level[0])
 			ShowWarning("Class %s (%d) does not have a base exp table.\n", job_name(i), i);
-		if (!job_info[j].max_level[0])
+		if (!job_info[j].max_level[1])
 			ShowWarning("Class %s (%d) does not have a job exp table.\n", job_name(i), i);
 	}
-
-	return 0;
+ 	return 0;
 }
 
 // Read MOTD on startup. [Valaris]
