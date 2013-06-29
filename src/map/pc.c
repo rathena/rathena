@@ -9741,48 +9741,48 @@ static bool pc_readdb_job_maxhpsp(char* fields[], int columns, int current)
 		if(type == 0) {	//hp type
 			unsigned int k = 0;
 			unsigned int val, oldval=0;
-			for(i = 1; i <= MAX_LEVEL; i++) {
+			short level = 0;
+			for(i = 0; i <= MAX_LEVEL; i++) {
 				val = 0;
 				k += (job_info[idx].hp_factor*(i+1) + 50) / 100;
-				if(i>=startlvl && i<=maxlvl)
-					val = atoi(fields[i+4]);
-				if(val==0 || oldval>=0)	//if oldval>=val, assume the default calculation always be higher
+				if(i>=startlvl && i <= maxlvl) val = atoi(fields[(i-level)+4]);
+				if(val==0) {
 					val = 35 + ((i+1)*job_info[idx].hp_multiplicator)/100 + k;
-				if(oldval >= val) {
-					ShowInfo("pc_readdb_job_maxhpsp: HP value is lower or equal then previous one. Using temporary... (job=%d,oldval=%d,val=%d,lvl=%d,hp_factor=%d,hp_multiplicator=%d,k=%d)\n"
-						,job_id,oldval,val,i+1,job_info[idx].hp_factor,job_info[idx].hp_multiplicator,k);
-					//val = oldval+job_info[idx].hp_multiplicator;	//if oldval still >= val, maybe we can use this?
+					level++; // This tells us when we didn't use the database so we know what field to grab
 				}
+				if(oldval > val && i > startlvl && i <= maxlvl) // Let's not warn about the formula table giving us a higher value, only DB
+					ShowWarning("Warn, HP value is lower than previous one for (job=%d,oldval=%d,val=%d,lvl=%d hp_factor=%d,hp_multiplicator=%d,k=%d)\n",
+						job_id,oldval,val,i+1,job_info[idx].hp_factor,job_info[idx].hp_multiplicator,k);
 				val = min(INT_MAX,val);
-				job_info[idx].hp_table[i-1] = val;
+				job_info[idx].hp_table[i] = val;
 				oldval = val;
 			}
-//			ShowInfo("Have readen hp table for job=%d\n{",job_id);
-//			for(i=0; i<MAX_LEVEL; i++ )
-//				printf("%d,",job_info[idx].hp_table[i]);
-//			printf("\n}\n");
+	//		ShowInfo("Have readen hp table for job=%d\n{",job_id);
+	//		for(i=0; i<=MAX_LEVEL; i++ )
+	//			printf("%d,",job_info[idx].hp_table[i]);
+	//		printf("\n}\n");
 		}
 		else if(type == 1){ //sp type
 			unsigned int val, oldval=0;
-			for(i = 1; i <= MAX_LEVEL; i++) {
+			short level = 0;
+			for(i = 0; i <= MAX_LEVEL; i++) {
 				val = 0;
-				if(i>=startlvl && i <=maxlvl)
-					val = atoi(fields[i+4]);
-				if(val==0 || oldval>=0)	//if oldval>=val, assume the default calculation always be higher
+				if(i>=startlvl && i <=maxlvl) val = atoi(fields[(i-level)+4]);
+				if(val==0) {
 					val = 10 + ((i+1)*job_info[idx].sp_factor)/100;
-				if(oldval >= val) {
-					ShowInfo("pc_readdb_job_maxhpsp: SP value is lower or equal then previous one. Using temporary... (job=%d,oldval=%d,val=%d,lvl=%d,sp_factor=%d)\n"
-						,job_id,oldval,val,i,job_info[idx].sp_factor);
-					//val = oldval+job_info[idx].sp_factor;	//if oldval still >= val, maybe we can use this?
+					level++; // This tells us when we didn't use the database so we know what field to grab
 				}
+				if(oldval > val && i > startlvl && i <= maxlvl) // Let's not warn about the formula table giving us a higher value, only DB
+					ShowWarning("Warn, SP value is lower than previous one for (job=%d,oldval=%d,val=%d,lvl=%d,sp_factor=%d)\n",
+						job_id,oldval,val,i+1,job_info[idx].sp_factor);
 				val = min(INT_MAX,val);
-				job_info[idx].sp_table[i-1] = val;
+				job_info[idx].sp_table[i] = val;
 				oldval = val;
 			}
-//			ShowInfo("Have readen sp table for job=%d\n{",job_id);
-//			for(i=0; i<MAX_LEVEL; i++ )
-//				printf("%d,",job_info[idx].sp_table[i]);
-//			printf("\n}\n");
+	//		ShowInfo("Have readen sp table for job=%d\n{",job_id);
+	//		for(i=0; i<MAX_LEVEL; i++ )
+	//			printf("%d,",job_info[idx].sp_table[i]);
+	//		printf("\n}\n");
 		}
 	}
 	return true;
