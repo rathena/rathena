@@ -52,6 +52,7 @@ void map_msg_reload(void);
 
 // Added definitions for WoESE objects. [L0ne_W0lf]
 enum MOBID {
+    MOBID_PORING = 1002,
     MOBID_EMPERIUM = 1288,
     MOBID_TREAS01 = 1324,
     MOBID_TREAS40 = 1363,

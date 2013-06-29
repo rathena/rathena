@@ -2329,7 +2329,7 @@ void clif_inventorylist(struct map_session_data *sd) {
 	unsigned char *bufe;
 
 #if PACKETVER < 5
-	const int s = 10; //Entry size.
+	const int s = 10; //Entry size
 #elif PACKETVER < 20080102
 	const int s = 18;
 #elif PACKETVER < 20120925
@@ -16711,7 +16711,7 @@ void packetdb_readdb(void)
 {
 	FILE *fp;
 	char line[1024];
-	int ln=0;
+	int ln=0, entries=0;
 	int cmd,i,j,packet_ver;
 	int max_cmd=-1;
 	int skip_ver = 0;
@@ -17298,6 +17298,7 @@ void packetdb_readdb(void)
 
 			packet_db[packet_ver][cmd].pos[j] = k;
 		}
+		entries++;
 	}
 	fclose(fp);
 	if(max_cmd > MAX_PACKET_DB)
@@ -17311,7 +17312,7 @@ void packetdb_readdb(void)
 
 		clif_config.packet_db_ver = j?j:MAX_PACKET_VER;
 	}
-	ShowStatus("Done reading packet database from '"CL_WHITE"%s"CL_RESET"'.\n","packet_db.txt");
+	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", entries, "packet_db.txt");
 	ShowStatus("Using default packet version: "CL_WHITE"%d"CL_RESET".\n", clif_config.packet_db_ver);
 }
 

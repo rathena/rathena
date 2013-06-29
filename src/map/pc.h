@@ -25,6 +25,12 @@
 #define MAX_PC_FEELHATE 3
 #define DAMAGELOG_SIZE_PC 100	// Any idea for this value?
 
+//Update this max as necessary. 55 is the value needed for Super Baby currently
+//Raised to 84 since Expanded Super Novice needs it.
+#define MAX_SKILL_TREE 84
+//Total number of classes (for data storage)
+#define CLASS_COUNT (JOB_MAX - JOB_NOVICE_HIGH + JOB_MAX_BASIC)
+
 //Equip indexes constants. (eg: sd->equip_index[EQI_AMMO] returns the index
 //where the arrows are equipped)
 enum equip_index {
@@ -522,11 +528,6 @@ struct map_session_data {
 
 };
 
-//Update this max as necessary. 55 is the value needed for Super Baby currently
-//Raised to 84 since Expanded Super Novice needs it.
-#define MAX_SKILL_TREE 84
-//Total number of classes (for data storage)
-#define CLASS_COUNT (JOB_MAX - JOB_NOVICE_HIGH + JOB_MAX_BASIC)
 
 enum weapon_type {
 	W_FIST,	//Bare hands
@@ -600,6 +601,22 @@ enum equip_pos {
 	//EQP_SHADOW_ACC_R   = 0x100000,
 	//EQP_SHADOW_ACC_L   = 0x200000,
 };
+
+struct {
+	int hp_table[MAX_LEVEL];
+	int sp_table[MAX_LEVEL];
+	int hp_factor, hp_multiplicator;
+	int sp_factor;
+	int max_weight_base;
+	char job_bonus[MAX_LEVEL];
+#ifdef RENEWAL_ASPD
+	int aspd_base[MAX_WEAPON_TYPE+1];
+#else
+	int aspd_base[MAX_WEAPON_TYPE];	//[blackhole89]
+#endif
+	uint32 exp_table[2][MAX_LEVEL];
+	uint32 max_level[2];
+} job_info[CLASS_COUNT];
 
 #define EQP_WEAPON EQP_HAND_R
 #define EQP_SHIELD EQP_HAND_L
@@ -705,6 +722,7 @@ enum equip_pos {
     )
 #endif
 
+int pc_split_atoi(char* str, int* val, char sep, int max);
 int pc_class2idx(int class_);
 int pc_get_group_level(struct map_session_data *sd);
 int pc_get_group_id(struct map_session_data *sd);
