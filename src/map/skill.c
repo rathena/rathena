@@ -2524,8 +2524,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			sc_start(src,src,SC_SMA,100,skill_lv,skill_get_time(SL_SMA, skill_lv));
 		break;
 	case GS_FULLBUSTER:
-		//Can't attack nor use items until skill's delay expires. [Skotlex]
-		sd->ud.attackabletime = sd->canuseitem_tick = sd->ud.canact_tick;
+		if(sd) //Can't attack nor use items until skill's delay expires. [Skotlex]
+			sd->ud.attackabletime = sd->canuseitem_tick = sd->ud.canact_tick;
 		break;
 	}
 

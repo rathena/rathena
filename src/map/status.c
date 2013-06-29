@@ -1806,9 +1806,9 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 int status_base_amotion_pc(struct map_session_data* sd, struct status_data* status)
 {
 	int amotion;
+	int classidx = pc_class2idx(sd->status.class_);
 #ifdef RENEWAL_ASPD
 	short mod = -1;
-	int classidx = pc_class2idx(sd->status.class_);
 
 	switch( sd->weapontype2 ){ // adjustment for dual weilding
 		case W_DAGGER:	mod = 0;	break; // 0, 1, 1
