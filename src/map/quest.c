@@ -273,7 +273,7 @@ int quest_check(TBL_PC * sd, int quest_id, quest_check_type type) {
 					ARR_FIND(0, MAX_QUEST_OBJECTIVES, j, sd->quest_log[i].count[j] < quest_db[sd->quest_index[i]].count[j]);
 					if( j == MAX_QUEST_OBJECTIVES )
 						return 2;
-					if( sd->quest_log[i].time < (unsigned int)time(NULL) )
+					if( sd->quest_log[i].time > 0 && sd->quest_log[i].time < (unsigned int)time(NULL) )
 						return 1;
 					return 0;
 				} else
