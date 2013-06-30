@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 0.2
+//= 0.3
 //===== Compatible With: =====================================
 //= rAthena SVN
 //===== Description: =========================================
@@ -12,9 +12,10 @@
 //===== Additional Comments: =================================
 //= 0.1 Traders only. Adapted from Masao's conversion. [Euphy]
 //= 0.2 Added Tribe Blacksmith [DeadlySilence]
+//= 0.3 Added "Secret in the Woods" quest [DeadlySilence]
 //============================================================
 
-// Traders
+// Traders :: npc
 //============================================================
 ma_fild01,166,214,6	script	Old Man in Dilemma#GA	575,{
 	if (MaxWeight - Weight < 600 || checkweight(1201,1) == 0) {
@@ -278,7 +279,6 @@ ma_fild01,238,198,4	script	Tikbalang Expert#malaya	582,{
 // MVP Armors :: mvpitem
 // ============================================================
 ma_fild01,158,243,6	script	Tribe Blacksmith#malaya	582,{
-
 	mes "[Bayani]";
 	mes "I will upgrade your armor if you bring one that holds enormous power.";
 	next;
@@ -504,4 +504,980 @@ ma_fild01,158,243,6	script	Tribe Blacksmith#malaya	582,{
 	mes "Ha ha. Perfect.";
 	mes "Congratulations. Your armor is better than ever.";
 	close;
+}
+
+// Secret in the Woods :: buwaya
+//============================================================
+malaya,305,281,3	script	Guard#buwaya	570,7,7,{
+	if (malaya_hi < 10) {
+		mes "- From the wary looks on the guard's face, it is obvious he is at alert at the sight of you. He won't intimidate you but seems he won't even deal with you either. -";
+		next;
+		mes "- Would there be anyone to talk to in the village? -";
+		close;
+	} else if (malaya_hi < 20) {
+		mes "[Guard]";
+		mes "There is a small area called ^3131FFBaryo Mahiwaga^000000 outside of Port Malaya.";
+		mes "The place is closer to mother nature than what we have here.";
+		next;
+		mes "[Guard]";
+		mes "On the other hand, the area is full of fierce monsters. Take care of yourself while you're traveling there.";
+		close;
+	}
+	if (malaya_buwaya == 0) {
+		mes "[Guard]";
+		mes "There are more people leaving the village secretly these days. Are you also heading for the woods to look for the mysterious treasure?";
+		next;
+		if (BaseLevel < 100) {
+			mes "[Guard]";
+			mes "I take that back. On second thought, I don't think a weakling like you would even dare to go there.";
+			next;
+			mes "[Guard]";
+			mes "You'd better hold tight to your mommy's hand if you want to go outside of Port Malaya or else the monsters will eat you alive. Ha ha.";
+			close;
+		}
+		mes "[Guard]";
+		mes "Is that why there are more outsiders here these days? Now don't be sneaky and a know-it-all. How would you know if I'd offered to take you around?";
+		next;
+		if (select("Treasure?:Ignore.") == 2) {
+			mes "[Guard]";
+			mes "Are you ignoring me? Bah.";
+			close;
+		}
+		mes "[Guard]";
+		mes "Oh, so you aren't here to look for treasure?";
+		next;
+		mes "[Guard]";
+		mes "I hear people are talking about a mysterious treasure hidden deep in the woods.";
+		set malaya_buwaya,1;
+		setquest 2271;
+		next;
+	}
+	if (malaya_buwaya == 1) {
+		mes "[Guard]";
+		mes "Do you see that group of people over there? They always gather and talk about it every day.";
+		mes "Try talking to them if you are interested, too.";
+		close;
+	}
+	mes "[Guard]";
+	mes "So the talk about treasure was just a rumor? I'm not asking because I want to be rich overnight. Ha ha.";
+	close;
+OnTouch:
+	if ((malaya_hi > 19) && (malaya_buwaya == 0)) {
+		emotion e_gasp;
+		emotion e_gasp,1;
+	}
+	end;
+}
+malaya,276,288,5	script	Port Malaya Villager::buwaya_A	582,{
+	if (malaya_hi < 20) {
+		mes "- Look at you warily while whispering to each other. -";
+		close;
+	} else if (malaya_buwaya == 1) {
+		emotion e_gasp,0,"buwaya_A";
+		mes "[Port Malaya Villager]";
+		mes "No, I heard they got lost in the woods.";
+		mes "Who would hide such a treasure from a small village like ours?";
+		next;
+		emotion e_swt2,0,"buwaya_B";
+		mes "[Port Malaya Villager]";
+		mes "Could it been a monster? My grandma said there is a dragon with a huge head living deep inside the woods.";
+		next;
+		emotion e_no,0,"buwaya_C";
+		mes "[Port Malaya Villager]";
+		mes "No. Listen to me.";
+		next;
+		mes "[Port Malaya Villager]";
+		mes "You all know ^3131FFTotoy^000000? The kid living at the ^3131FFInn^000000.";
+		mes "Well, did you know Totoy came back from the woods recently?";
+		next;
+		emotion e_omg,0,"buwaya_A";
+		emotion e_omg,0,"buwaya_B";
+		mes "[Port Malaya Villager]";
+		mes "Really??? He came back alive?";
+		next;
+		emotion e_gasp,0,"buwaya_C";
+		mes "[Port Malaya Villager]";
+		mes "Yeah. But the strange part is that the troublemaker ^3131FFTotoy^000000 now quietly stays home and never comes out.";
+		next;
+		emotion e_what,0,"buwaya_B";
+		mes "[Port Malaya Villager]";
+		mes "Why?";
+		next;
+		emotion e_gasp,0,"buwaya_C";
+		mes "[Port Malaya Villager]";
+		mes "Don't you get it? Totoy must have found the treasure.";
+		next;
+		emotion e_omg,0,"buwaya_A";
+		emotion e_omg,0,"buwaya_B";
+		mes "[Port Malaya Villager]";
+		mes "What!!!! Then ^3131FFTotoy^000000 is rich now?";
+		next;
+		emotion e_no,0,"buwaya_C";
+		mes "[Port Malaya Villager]";
+		mes "I don't think so.";
+		mes "I saw ^3131FFTotoy^000000 come back home, but Totoy wasn't carrying anything.";
+		mes "But then, I must have missed it because I ran back home right away.";
+		next;
+		emotion e_what,0,"buwaya_B";
+		mes "[Port Malaya Villager]";
+		mes "Then what is ^3131FFTotoy^000000 doing at home?";
+		next;
+		emotion e_dots,0,"buwaya_C";
+		mes "[Port Malaya Villager]";
+		mes "I think Totoy is making a plan to bring the treasure back without us knowing it.";
+		mes "To have the whole treasure for himself, that greedy kid.";
+		next;
+		emotion e_what,0,"buwaya_A";
+		mes "[Port Malaya Villager]";
+		mes "Is that true?";
+		next;
+		emotion e_lv2,0,"buwaya_B";
+		mes "[Port Malaya Villager]";
+		mes "The treasure would be in better hands with me ~";
+		mes "I would clean it every day so it shined and would use it as a beautiful ornament. Ah~~~";
+		next;
+		emotion e_dots,0,"buwaya_C";
+		mes "[Port Malaya Villager]";
+		mes "Then how about we talk to ^3131FFTotoy^000000 to spill the beans on where the treasure is?";
+		next;
+		emotion e_what,0,"buwaya_A";
+		mes "[Port Malaya Villager]";
+		mes "Wow. That is an awesome idea. No wonder you're the leader!";
+		next;
+		emotion e_dots,0,"buwaya_A";
+		mes "[Port Malaya Villager]";
+		mes "But will ^3131FFTotoy^000000 give up the information easily?";
+		mes "Because Totoy was sneaky enough to think of getting away with taking the whole treasure.";
+		next;
+		emotion e_sob,0,"buwaya_B";
+		mes "[Port Malaya Villager]";
+		mes "Then we should convince ^3131FFTotoy^000000 to tell us where the treasure is instead of looking for it ourselves.";
+		next;
+		emotion e_sob,0,"buwaya_B";
+		mes "[Port Malaya Villager]";
+		mes "Ah~~~ it is so hard to get something pretty these days ~~~!!!!";
+		set malaya_buwaya,2;
+		erasequest 2271;
+		setquest 2272;
+		close;
+	} else if (malaya_buwaya == 2) {
+		mes "- Better pay a visit to this Totoy to get more information about the treasure. -";
+		close;
+	} else {
+		mes "- People are talking with serious faces. -";
+		close;
+	}
+}
+malaya,278,288,3	duplicate(buwaya_A)	Port Malaya Villager::buwaya_B	583
+malaya,276,286,7	duplicate(buwaya_A)	Port Malaya Villager::buwaya_C	582
+
+ma_in01,47,101,3	script	Totoy#buwaya	577,7,7,{
+	if ((malaya_hi < 20) || (malaya_buwaya < 2)) {
+		mes "- See someone shaky with dopey eyes. -";
+		close;
+	}
+	if (malaya_buwaya == 2) {
+		mes "- See someone shaky with dopey eyes. -";
+		next;
+		if (select("Tap him on the shoulder.:Ignore him.") == 2)
+			close;
+		emotion e_omg;
+		mes "[Totoy]";
+		mes "Wah! No! Go away! Leave me alone!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hey, are you alright?";
+		next;
+		mes "[Totoy]";
+		mes "Huh... you're a person? Who are you?";
+		next;
+		mes "- He looks you straight in the face but doesn't seem to recognize you. -";
+		next;
+		mes "[Totoy]";
+		mes "Who's there?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I am " + strcharinfo(0) + ". You are Totoy, right? People say you've found a treasure. Is it true?";
+		next;
+		mes "[Totoy]";
+		mes "What treasure?";
+		mes "I can't see. I'm blinded. Please help me. I'm tired and frustrated.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "What happened?";
+		next;
+		mes "[Totoy]";
+		mes "Can't talk long. I need to heal my eyes first.";
+		mes "There should be some ^3131FFGreen Potion^000000 left inside the drawer. Will you take it out for me?";
+		set malaya_buwaya,3;
+		close;
+	} else if (malaya_buwaya == 3) {
+		if (!countitem(506)) {
+			mes "[Totoy]";
+			mes "Can't talk long. I need to heal my eyes first.";
+			mes "There should be some ^3131FFGreen Potion^000000 left inside the drawer. Will you get it for me?";
+			close;
+		}
+		mes "[Totoy]";
+		mes "Hello? Hey, are you still there? What happened to the Green Potion? Jeez, this is driving me crazy.";
+		next;
+		if (select("Hand over the Green Potion.:Do not hand over the potion.") == 2) {
+			mes "[Totoy]";
+			mes "Did you really leave? Hey! Darn!";
+		} else {
+			mes "[Totoy]";
+			mes "Gulp, gulp...";
+			delitem 506,1; //Green_Potion
+			set malaya_buwaya,4;
+		}
+		close;
+	} else if (malaya_buwaya == 4) {
+		emotion e_gasp;
+		mes "[Totoy]";
+		mes "I can see!! My eyes work!!!";
+		mes "Yay! I feel better now!";
+		next;
+		emotion e_dots,1;
+		emotion e_no1;
+		mes "[Totoy]";
+		mes "Wow! You look better than you sounded. Ha ha.";
+		next;
+		mes "[Totoy]";
+		mes "But what did you say? Something about a treasure?";
+		mes "Did you say I found a treasure?";
+		mes "What is that about?";
+		next;
+		select("Tell him what the people are talking about.");
+		emotion e_heh;
+		mes "[Totoy]";
+		mes "WHAT?";
+		mes "Puhaha! Totoy is rich! Became rich overnight! Chief Ed!";
+		next;
+		emotion e_pif;
+		mes "[Totoy]";
+		mes "Sorry but I went to the woods to collect bugs. Wish I saw a treasure while I was at it. Hmph!";
+		next;
+		emotion e_dots;
+		mes "[Totoy]";
+		mes "I did go deep in the woods because I wasn't getting anywhere with collecting bugs. But who would have thought I'd get into this mess?";
+		next;
+		if (select("What Totoy saw:About bugs") == 2) {
+			mes "[Totoy]";
+			mes "I only wanted to show people my collection of cute bugs. Ha ha.";
+			next;
+			emotion e_heh;
+			mes "[Totoy]";
+			mes "Dropping ice or bugs down peoples clothes is just like a daily greeting, isn't it?";
+			next;
+			mes "[Totoy]";
+			mes "I love to see people run around the village like they are in a marathon. He he.";
+			next;
+		}
+		mes "[Totoy]";
+		mes "I thought people wouldn't run away because of an ordinary bug so I went in the woods with Ed.";
+		next;
+		mes "[Totoy]";
+		mes "Ah, Ed is my cute puppy. He's very nice and cuddly. My best friend in the whole wide world.";
+		next;
+		emotion e_dots;
+		mes "[Totoy]";
+		mes "Ed usually barks a lot but I should have looked around when he barked and pulled on my sleeves.";
+		next;
+		mes "[Totoy]";
+		mes "- Totoy bends over and whispers to you as if walls have ears. -";
+		next;
+		mes "[Totoy]";
+		mes "There was a monster with a mouth the size of a house right behind me.";
+		next;
+		select("A monster?!");
+		mes "[Totoy]";
+		mes "Shssh! Be quiet. I've never seen a mouth that big before. It was full of a river of saliva flowing out of spiky teeth. Just the thought of it makes me want to hide.";
+		next;
+		mes "[Totoy]";
+		mes "The scariest part is that the monster has two heads. You won't believe it till you see it.";
+		next;
+		emotion e_sob;
+		mes "[Totoy]";
+		mes "Ed bit the monsters leg with all his might to let me get away. But I don't know what happened to him afterwards. Sniff~";
+		next;
+		mes "[Totoy]";
+		mes "That's when I hurt my eye. To tell you the truth I don't even remember how I came back.";
+		next;
+		select("About the monster");
+		mes "[Totoy]";
+		mes "Don't know. It was the first time I saw a monster like that. Who could live to tell the story?";
+		next;
+		mes "[Totoy]";
+		mes "Wait, maybe the ^FF0000Master of Hunting^000000 might know about the monster. They say he fought with all sorts of monsters.";
+		next;
+		mes "[Totoy]";
+		mes "I need some time alone. I need to make a tombstone for Ed. If you want to meet the ^FF0000Master of Hunting^000000, you'll find him near the Weapon Store.";
+		next;
+		mes "[Totoy]";
+		mes "And tell everyone else to stop spreading rumors about treasure. They don't know what I went through. Sniff! I'm going to put Ancient Worms in everyones clothes!";
+		set malaya_buwaya,5;
+		erasequest 2272;
+		setquest 2273;
+		close;
+	} else if (malaya_buwaya == 5) {
+		mes "[Totoy]";
+		mes "I have to make a grave for Ed. My loyal friend, Ed...";
+		mes "If you want to meet the ^FF0000Master of Hunting^000000, you'll find him near the Weapon Store.";
+		close;
+	} else if (malaya_buwaya == 6) {
+		mes "[Totoy]";
+		mes "Ed!! Eeeeeddddddd!!!";
+		mes "Can't believe you gave your life to save me. Wail!!!";
+		next;
+		mes "- Totoy can't be lying when he's crying his heart out like this. -";
+		close;
+	} else if (malaya_buwaya == 7) {
+		mes "[Totoy]";
+		mes "Where I saw the monster?";
+		next;
+		mes "[Totoy]";
+		mes "Um... Hmm...";
+		mes "I was so busy running away...";
+		next;
+		mes "[Totoy]";
+		mes "It was really deep in the woods. Probably even past Baryo Mahiwaga.";
+		mes "I think I heard the sound of ^3131FFFlowing Water^000000. A large whooshing sound. This is all I remember.";
+		close;
+	} else if ((malaya_buwaya > 7) && (malaya_buwaya < 12)) {
+		mes "[Totoy]";
+		mes "Poor Ed. I miss Ed. Wail!!!!";
+		close;
+	} else if (malaya_buwaya == 12) {
+		emotion e_sob;
+		mes "[Totoy]";
+		mes "Poor Ed. I miss Ed. Wail!!!!";
+		next;
+		enablenpc "Dog#buwaya_totoi";
+		mes "[Dog]";
+		mes "Bark bark!!";
+		next;
+		emotion e_omg;
+		mes "[Totoy]";
+		mes "Ed!!";
+		mes "Ed!!! You're alive!!!";
+		mes "You've come back!!! I'm so happy!!!!";
+		next;
+		mes "[Totoy]";
+		mes "Did you bring Ed back?";
+		mes "Thank you so much!";
+		mes "You didn't see the monster, did you?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "The monster is called Buwaya. I told the Guard about the monster. You better not go near the place again.";
+		next;
+		mes "[Totoy]";
+		mes "Okay!";
+		mes "He he. Ed, the woods are too dangerous so we can't go there for bugs anymore.";
+		next;
+		mes "[Dog]";
+		mes "Whimper...";
+		next;
+		mes "[Totoy]";
+		mes "But I'm sure we can find a way to keep our reputation with other creepy stuff!";
+		next;
+		mes "[Dog]";
+		mes "Bark bark!!";
+		next;
+		/*
+		// Better translation needed.
+		mes "[Totoy]";
+		mes "Um... hey!";
+		next;
+		select("You are a " + ((Sex) ? "boy" : "girl") + ", aren't you?");
+		emotion e_omg,1;
+		mes "[Totoy]";
+		mes "Huh?";
+		if (!Sex) {
+			mes "Totoy is a girl, and you are a boy.";
+			mes "You're not a boy?";
+		} else {
+			mes "Totoy is a girl, and you are a girl.";
+			mes "You're not a girl?";
+		}
+		next;
+		mes "[Totoy]";
+		mes "Is it because my name, Totoy? But that's the name my parents gave me thinking I would be a boy when I was born. Ha ha!";
+		next;
+		*/
+		mes "[Totoy]";
+		mes "Anyway, thanks for bringing my best friend back.";
+		mes "I don't have much but would like to thank you. Wait, let me see what's inside my drawer. He he-";
+		set malaya_buwaya,13;
+		erasequest 2278;
+		setquest 2279;
+		close;
+	} else if (malaya_buwaya == 13) {
+//		if (IsPremiumPcCafe == 10)
+//			.@amount = 10;
+//		else
+			.@amount = 5;
+		if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
+			mes "- Wait!! -";
+			mes "- You have too many items on you. -";
+			mes "- Cannot receive the item. -";
+			mes "- Clean up your items -";
+			mes "- And please try again. -";
+			close;
+		}
+		mes "- Totoy goes through the drawer, turning it upside down. Making a mess of the room. -";
+		next;
+		mes "[Totoy]";
+		mes "Found it!";
+		next;
+		mes "[Totoy]";
+		mes "Here. My mom gave it to me but I don't know how to use it... He he.";
+		mes "I hope you can use it.";
+		next;
+		mes "[Totoy]";
+		mes "Visit me when you get bored!";
+		mes "Just don't ask about the treasure again~!";
+		next;
+		mes "[Dog]";
+		mes "Woof woof woof!!!!";
+		set malaya_buwaya,14;
+		getitem 6497,5; //Lesser_Agimat
+		disablenpc "Dog#buwaya_totoi";
+		erasequest 2279;
+		setquest 2280;
+		close;
+	} else {
+		mes "[Totoy]";
+		mes "Ed went out to play so I'm alone.";
+		mes "Would there be something awesome to surprise people with?";
+		close;
+	}
+OnTouch:
+	emotion e_omg;
+	end;
+}
+
+ma_in01,43,101,7	script	Dog#buwaya_totoi	81,{
+	end;
+OnInit:
+	disablenpc "Dog#buwaya_totoi";
+	end;
+}
+
+ma_in01,44,105,3	script	Drawer#buwaya	844,{
+	if (malaya_buwaya == 3) {
+		mes "- You look for the Green Potion in Totoys drawer. -";
+		next;
+		mes "- Rummaging, fumbling. -";
+		next;
+		mes "- Rummaging, fumbling. -";
+		mes "- Rummaging, fumbling. -";
+		next;
+		mes "- Clunk, clank, crunch. -";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "What? I only see an empty potion bottle.";
+		mes "Does this mean I have to get the potion myself? That Totoy is really a troublemaker.";
+		close;
+	}
+	end;
+}
+
+malaya,290,152,5	script	Master of Hunting#buwaya	578,{
+	if ((malaya_hi < 20) || (malaya_buwaya < 5)) {
+		mes "[Master of Hunting]";
+		mes "Oh! Ho! Ho!";
+		mes "I am the Master of Hunting! I'm not afraid of anything with just one exception! I'm afraid of outsiders...";
+		close;
+	}
+	if (malaya_buwaya == 5) {
+		mes "[Master of Hunting]";
+		mes "Yo! Ho! Ho!";
+		mes "I went all the way to Rune-Midgarts Kingdom to defeat the Angry Minorous.";
+		next;
+		mes "[Master of Hunting]";
+		mes "And I succeeded in killing Muka, the one with the voice of a demon that disturbs the peace of the world.";
+		mes "Wow! He was really tough. I'm starting to sweat just thinking of him.";
+		next;
+		mes "[Master of Hunting]";
+		mes "Yo! You look like you have a few battle stories yourself. Have you ever seen a Minorous? Ha ha ha!";
+		next;
+		mes "[Master of Hunting]";
+		mes "So you came here to learn all about my excellent hunting skills? Or to ask me to publish an essay on Master of Hunting? Ho!";
+		next;
+		if (select("About Totoys monster:Interrupt.") == 2) {
+			mes "[Master of Hunting]";
+			mes "Oh? Hey! Where are you going?!";
+			close;
+		}
+		mes "[Master of Hunting]";
+		mes "You say someone saw the monster?";
+		next;
+		mes "[Master of Hunting]";
+		mes "There are many monsters in and out of Port Malaya. What is so special about this one?";
+		next;
+		select("About a monster with two heads");
+		mes "[Master of Hunting]";
+		mes "Ho! A monster with two heads, you say? Are you kidding? Where on earth is there a monster with two heads?!";
+		next;
+		mes "[Master of Hunting]";
+		mes "The kid must have been scared by a Condor or something.";
+		mes "There's a saying that someone surprised to see a Permeter, will also be surprised to see a peach tree. Ha ha!";
+		next;
+		mes "[Master of Hunting]";
+		mes "You shouldn't lie to an adult. I understand you want the Master of Huntings attention. Ha ha!";
+		next;
+		if (select("I will prove it.:Suspicious of Totoy.") == 2) {
+			mes "[Master of Hunting]";
+			mes "Kids tell stories for their own reasons. I'm sure Totoy is the same.";
+			set malaya_buwaya,6;
+			close;
+		}
+		mes "[Master of Hunting]";
+		mes "Oh! Really? Bring proof if you really think the kid is telling the truth.";
+		next;
+		mes "[Master of Hunting]";
+		mes "Every living thing leaves some kind of trace behind. You also leave behind traces and scents wherever you go. Especially in private places, I mean. He he!";
+		next;
+		mes "[Master of Hunting]";
+		mes "Try collecting 10 Animal Samples from where the kid saw the monster. I will look for traces of that monster from the samples.";
+		next;
+		mes "[Master of Hunting]";
+		mes (Sex) ? "It won't be pleasant but any brave man could easily do it, don't you agree?" : "I don't want the hands of a pretty girl to smell bad but I could care less with someone like you. Ha ha!";
+		set malaya_buwaya,7;
+		erasequest 2273;
+		setquest 2274;
+		close;
+	} else if (malaya_buwaya == 6) {
+		mes "[Master of Hunting]";
+		mes "Oh, you're back!";
+		next;
+		if (select("Let's see if we have a monster in it!:I don't think there is a monster.") == 2) {
+			mes "[Master of Hunting]";
+			mes "It was a kid's joke. Ha ha.";
+			close;
+		}
+		mes "[Master of Hunting]";
+		mes "Oh! Really? Bring proof if you really think the kid is telling the truth.";
+		next;
+		mes "[Master of Hunting]";
+		mes "Every living thing leaves some kind of trace behind. You also leave behind traces and scents wherever you go. Especially in private places, I mean. He he!";
+		next;
+		mes "[Master of Hunting]";
+		mes "Try collecting 10 Animal Samples from where the kid saw the monster. I will look for traces of that monster from the samples.";
+		next;
+		mes "[Master of Hunting]";
+		mes (Sex) ? "It won't be pleasant but any brave man could easily do it, don't you agree?" : "I don't want the hands of a pretty girl to smell bad but I could care less with someone like you. Ha ha!";
+		set malaya_buwaya,7;
+		erasequest 2273;
+		setquest 2274;
+		close;
+	} else if (malaya_buwaya == 7) {
+		if (countitem(6519) < 10) {
+			mes "[Master of Hunting]";
+			mes "Bring me back samples if you want to prove there is a monster with two heads.";
+			close;
+		}
+		mes "[Master of Hunting]";
+		mes "Argh! That's so foul.";
+		mes "You've really brought back the samples.";
+		mes "Ho! Leave it there and come back after washing your hands. Even god won't smile down at you with that stench.";
+		set malaya_buwaya,8;
+		erasequest 2274;
+		setquest 2275;
+		close;
+	} else if (malaya_buwaya == 8) {
+		mes "[Master of Hunting]";
+		mes "Ho! Shall I?";
+		next;
+		mes "- Rummaging, fumbling. -";
+		next;
+		mes "- Rummaging, fumbling. -";
+		mes "- Wriggling, wiggling. -";
+		next;
+		mes "- Rummaging, fumbling. -";
+		mes "- Wriggling, wiggling. -";
+		mes "- Sway, swag. -";
+		next;
+		mes "[Master of Hunting]";
+		mes "Ho! This is!!";
+		next;
+		mes "[Master of Hunting]";
+		mes "Wow! Ho! Ho! Ho! Awesome!!!!!!";
+		next;
+		mes "[Master of Hunting]";
+		mes "You! Come here and feel this!";
+		set malaya_buwaya,9;
+		enablenpc "#buwaya_soil";
+		close;
+	} else if (malaya_buwaya == 9) {
+		mes "[Master of Hunting]";
+		mes "Don't just stand there. Touch the sample!";
+		enablenpc "#buwaya_soil";
+		close;
+	} else if (malaya_buwaya == 10) {
+		mes "[Master of Hunting]";
+		mes "Hurry and tell the Guard Leader that Buwaya is active again. Hurry! You'll find the Guard Leader at the north of the village.";
+		close;
+	} else {
+		mes "[Master of Hunting]";
+		mes "Snooze...";
+		close;
+	}
+}
+
+malaya,291,152,3	script	#buwaya_soil	557,{
+	if (malaya_buwaya == 9) {
+		mes "- Rummaging, fumbling. -";
+		next;
+		mes "- Rummaging, fumbling. -";
+		mes "- Wriggling, wiggling. -";
+		next;
+		mes "- Rummaging, fumbling. -";
+		mes "- Wriggling, wiggling. -";
+		mes "- Sway, swag. -";
+		next;
+		if (rand(1,10) <= 5) {
+			mes "[" + strcharinfo(0) + "]";
+			mes "I don't see anything.";
+			next;
+			mes "[Master of Hunting]";
+			mes "It can't be! Look closer!";
+		} else {
+			mes "- Felt something pointy with the end of your fingers. -";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Ouch!";
+			mes "What is this?";
+			next;
+			mes "[Master of Hunting]";
+			mes "Ho! This is huge! And so dense that it can easily scratch steel!";
+			next;
+			mes "[Master of Hunting]";
+			mes "This is ^3131FFBuwaya^000000's tooth!";
+			mes "How could this be!";
+			next;
+			select("Buwaya?");
+			mes "[Master of Hunting]";
+			mes "Ah! Yes! Stop holding it up. It stinks. Go wash your hands.";
+			next;
+			mes "[Master of Hunting]";
+			mes "Hmm. The monster the kid saw must be Buwaya. No doubt about it.";
+			next;
+			mes "[Master of Hunting]";
+			mes "I've heard that the wife of the neighbor of my grandfather's uncle on my mom's side was also killed by Buwaya.";
+			next;
+			mes "[Master of Hunting]";
+			mes "They say no living thing is left after Buwaya passes by.";
+			mes "Totoy is one lucky kid. Wow!";
+			next;
+			mes "[Master of Hunting]";
+			mes "Buwaya was inactive for a long time. Wonder if it was hibernating? Hmm.";
+			next;
+			mes "[Master of Hunting]";
+			mes "Now that I know that a monster like that is out there, I should be cautious, too.";
+			mes "Must tell the villagers not to go too deep into the woods.";
+			next;
+			mes "[Master of Hunting]";
+			mes "Please go and tell the Guard Leader that Buwaya is active again.";
+			mes "I will contact other hunters in the meantime and think of a plan to kill Buwaya.";
+			set malaya_buwaya,10;
+			disablenpc "#buwaya_soil";
+			erasequest 2275;
+			setquest 2276;
+		}
+		close;
+	}
+	end;
+OnInit:
+	disablenpc "#buwaya_soil";
+	end;
+}
+
+-	script	Unknown Trace#buwaya	-1,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
+		mes "- Wait!! -";
+		mes "- You have too many items on you. -";
+		mes "- Cannot receive the item. -";
+		mes "- Clean up your items -";
+		mes "- And please try again. -";
+		close;
+	}
+	if (malaya_buwaya == 7) {
+		if (countitem(6519) >= 10) {
+			mes "- You don't have to collect any more samples. -";
+			close;
+		}
+		mes "- You see something entangled with soil and grass. -";
+		next;
+		if (rand(1,10) <= 2) {
+			mes "- You are nauseous by the foul smell coming from the samples you are collecting. -";
+			sc_start SC_POISON,5000,0;
+			close;
+		}
+		mes "- You slowing and cautiously collect the squashy and slightly warm substance. -";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "It's warm as a mother's bosom.";
+		getitem 6519,1; //Collected_Sample
+		disablenpc strnpcinfo(0);
+		initnpctimer;
+		close;
+	}
+	end;
+OnTimer20000:
+	enablenpc strnpcinfo(0);
+	stopnpctimer;
+	end;
+}
+ma_fild02,155,235,3	duplicate(Unknown Trace#buwaya)	Unknown Trace#buwaya_1	557
+ma_fild02,143,142,3	duplicate(Unknown Trace#buwaya)	Unknown Trace#buwaya_2	557
+ma_fild02,266,155,3	duplicate(Unknown Trace#buwaya)	Unknown Trace#buwaya_3	557
+ma_fild02,221,91,3	duplicate(Unknown Trace#buwaya)	Unknown Trace#buwaya_4	557
+ma_fild02,205,85,3	duplicate(Unknown Trace#buwaya)	Unknown Trace#buwaya_5	557
+ma_fild02,300,98,3	duplicate(Unknown Trace#buwaya)	Unknown Trace#buwaya_6	557
+ma_fild02,100,275,3	duplicate(Unknown Trace#buwaya)	Unknown Trace#buwaya_7	557
+
+malaya,290,340,3	script	Guard Leader#buwaya	571,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
+		mes "- Wait!! -";
+		mes "- You have too many items on you. -";
+		mes "- Cannot receive the item. -";
+		mes "- Clean up your items -";
+		mes "- And please try again. -";
+		close;
+	}
+	if (malaya_hi < 20) {
+		mes "- Look at you warily while whispering to each other. -";
+		close;
+	}
+	if (malaya_buwaya <= 10) {
+		mes "[Guard Leader]";
+		mes "We are busy as hell because of Bangungots servants attacking the hospital.";
+		next;
+		mes "[Guard Leader]";
+		mes "We are doing our best in securing the safety of our village so please enjoy your stay in Port Malaya.";
+	}
+	if (malaya_buwaya == 10) {
+		next;
+		if (select("Tell him about Buwaya.:Done with conversation.") == 2) {
+			close;
+		}
+		mes "[Guard Leader]";
+		mes "Buwaya? The merciless creature is back?";
+		next;
+		mes "[Guard Leader]";
+		mes "That's bad news. We are already short-handed by assigning everyone to fight off Bangungot.";
+		next;
+		mes "[Guard Leader]";
+		mes "And villagers need to go to the woods to collect fruits and vegetables.";
+		next;
+		mes "[Guard Leader]";
+		mes "Hmm... will you be able to help Port Malaya?";
+		next;
+		if (select("Leave it to me!:I'm pretty busy myself.") == 2) {
+			mes "[Guard Leader]";
+			mes "Really? That's no good. All the lives of the villagers will be at stake if we don't do something. How can a youth like you be so heartless. Are all outsiders like you? Hmph! Can't trust young people these days. Hmph.";
+			close;
+		}
+		mes "[Guard Leader]";
+		mes "I knew I could count on you.";
+		next;
+		mes "[Guard Leader]";
+		mes "Good. I will trust you.";
+		mes "I need to know where Buwaya will likely appear in order to secure villagers living area.";
+		mes "Guess Buwayas nest will be the best bet.";
+		next;
+		mes "[Guard Leader]";
+		mes "^3131FFShoot a smoke bomb^000000 once you reach the area.";
+		mes "Then we will run to where the smoke bomb was shot.";
+		next;
+		mes "[Guard Leader]";
+		mes "Then take care and good luck.";
+		set malaya_buwaya,11;
+		erasequest 2276;
+		setquest 2277;
+	} else if (malaya_buwaya == 11) {
+		mes "[Guard Leader]";
+		mes "^3131FFShoot a smoke bomb^000000 once you reach the area.";
+		mes "Then we will run to where the smoke bomb was shot.";
+	} else if ((malaya_buwaya == 12) || (malaya_buwaya == 13)) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "Let's first bring Ed to Totoy.";
+	} else if (malaya_buwaya == 14) {
+		mes "[Guard Leader]";
+		mes "The Guard Leader gave you the location of Buwaya's cave.";
+		mes "This can't be happening.";
+		next;
+		mes "[Guard Leader]";
+		mes "I'm way out of men to assign to the Buwaya situation but well have to do something with what we got.";
+		next;
+		mes "[Guard Leader]";
+		mes "Here, this is a symbol of our gratitude.";
+		mes "If you would like to help with Buwaya again, please look for me.";
+		mes "Hope you have a great journey.";
+		set malaya_buwaya,15;
+		getexp 1000000, 600000;
+		completequest 2280;
+	} else {
+		set .@hunting, checkquest(2281,HUNTING);
+		if (.@hunting == -1) {
+			mes "[Guard Leader]";
+			mes "Hear Buwaya appeared from the depth of the Forest.";
+			mes "As everyone knows, all our manpower is dispatched to handle Bangungots servants attacking the hospital recently.";
+			next;
+			mes "[Guard Leader]";
+			mes "That is why we have no choice but to ask an outsider to help eliminate Buwaya.";
+			mes "They say Buwaya is a very strong and ugly monster with two heads.";
+			mes "Will you help us defeat Buwaya?";
+			next;
+			if (select("Of course.:Nope.") == 2) {
+				mes "[Guard Leader]";
+				mes "Buwaya is known to be a very dangerous monster.";
+				mes "There is no shame in rejecting this request.";
+				close;
+			}
+			if (BaseLevel < 130) {
+				mes "[Guard Leader]";
+				mes "This mission will be a dangerous one.";
+				mes "If you want to help get rid of Buwaya, you must be prepared.";
+				mes "Come back once you reach LV 130.";
+				close;
+			}
+			mes "[Guard Leader]";
+			mes "According to the legend, Buwaya kidnaps people and puts them in the sack on its back and then eats them later.";
+			next;
+			mes "[Guard Leader]";
+			mes "Keep this in mind and be cautious at all times.";
+			mes "I recommend asking trustful colleagues for help.";
+			setquest 2281;
+		} else if (.@hunting == 0 || .@hunting == 1) {
+			mes "[Guard Leader]";
+			mes "How is it going with the Buwaya situation?";
+			next;
+			if (select("I give up.:Still fighting.") == 2) {
+				mes "[Guard Leader]";
+				mes "Keep this in mind and be cautious at all times.";
+				mes "I recommend asking trustful colleagues for help.";
+				close;
+			}
+			mes "[Guard Leader]";
+			mes "Buwaya is known to be a very dangerous monster.";
+			mes "There is no shame in rejecting this request.";
+			erasequest 2281;
+		} else if (.@hunting == 2) {
+//			if (IsPremiumPcCafe == 10) {
+//				.@amount = 10;
+//			else
+				.@amount = 5;
+			mes "[Guard Leader]";
+			mes "Can't believe you really got rid of Buwaya!";
+			mes "You aren't just any ordinary youth, aren't you? People of Port Malaya can now sleep at night.";
+			next;
+			mes "[Guard Leader]";
+			mes "Good work.";
+			erasequest 2281;
+			getitem 6497, .@amount; //Lesser_Agimat
+			getexp 0,600000;
+		} else {
+			mes "[Guard Leader]";
+			mes "I will not stand down until all of Port Malaya, including Baryo Mahiwaga, is safe from Buwaya. Promise to take care of yourself.";
+			erasequest 2281;
+		}
+	}
+	close;
+}
+
+ma_fild02,307,245,0	script	#buwaya_todog1	139,3,3,{
+	end;
+OnTouch:
+	if (malaya_buwaya == 11) {
+		enablenpc "Dog#buwaya";
+		//mes "[Here something]";
+		mes "Bark bark!!";
+		close;
+	}
+	end;
+}
+ma_fild02,320,241,0	duplicate(#buwaya_todog1)	#buwaya_todog2	139,3,3
+ma_fild02,317,250,0	duplicate(#buwaya_todog1)	#buwaya_todog3	139,7,7
+
+ma_fild02,312,259,3	script	Dog#buwaya	81,{
+	if (malaya_buwaya == 11) {
+		mes "[Dog]";
+		mes "Bark bark!!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Why is a dog here?";
+		next;
+		if (select("Look closely at the dog.:Ignore it.") == 2) {
+			mes "[" + strcharinfo(0) + "]";
+			mes "Looks like a lost dog.";
+			close;
+		}
+		mes "- Looked real hard at the dirty dog and noticed an old collar on its neck. -";
+		next;
+		mes "- The collar says, 'Forever with Totoy'. -";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "So you are Ed?";
+		next;
+		mes "[Dog]";
+		mes "Bark bark!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You didn't get killed by Buwaya. You lucky little dog. Let's go back to your owner.";
+		next;
+		emotion e_ho;
+		mes "[Dog]";
+		mes "Bark bark!!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Ah, before we go, do you happen to know where Buwaya's nest is?";
+		next;
+		mes "[Dog]";
+		mes "Woof!";
+		next;
+		mes "- Ed is one smart dog and understood what you asked him. Ed started to bark towards the north. -";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Buwaya is over there!";
+		mes "Then I should shoot the smoke bomb here.";
+		next;
+		mes "- You take the smoke bomb out of your inventory and shoot towards the sky. -";
+		next;
+		mes "^FF0000- Shoook-^000000";
+		enablenpc "Guard#buwayacave";
+		specialeffect2 EF_MVP;
+		next;
+		mes "[Guard]";
+		mes "Job well done!";
+		mes "So Buwaya lives in remote place like this. I will make sure this information goes to the Guard Leader!";
+		disablenpc "Guard#buwayacave";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Should I return Ed to Totoy first and then go see the Guard Leader?";
+		next;
+		mes "[Dog]";
+		mes "Bark bark!";
+		set malaya_buwaya,12;
+		disablenpc "Dog#buwaya";
+		erasequest 2277;
+		setquest 2278;
+		close;
+	} else if (malaya_buwaya == 12) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "Lets first bring Ed to Totoy and then go back to the Guard Leader.";
+		close;
+	}
+	end;
+OnInit:
+	disablenpc "Dog#buwaya";
+	end;
+}
+
+ma_fild02,308,262,3	script	Guard#buwayacave	570,{
+	end;
+OnInit:
+	disablenpc "Guard#buwayacave";
+	end;
 }

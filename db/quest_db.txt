@@ -278,6 +278,19 @@
 2222,0,0,0,0,0,0,0,"Wanderer Job Change Quest"
 2223,0,1428,100,0,0,0,0,"Generic Job Change Quest"
 
+// Secret in the Woods
+2271,0,0,0,0,0,0,0,"Secret in the Woods"
+2272,0,0,0,0,0,0,0,"Secret in the Woods"
+2273,0,0,0,0,0,0,0,"Secret in the Woods"
+2274,0,0,0,0,0,0,0,"Secret in the Woods"
+2275,0,0,0,0,0,0,0,"Secret in the Woods"
+2276,0,0,0,0,0,0,0,"Secret in the Woods"
+2277,0,0,0,0,0,0,0,"Secret in the Woods"
+2278,0,0,0,0,0,0,0,"Secret in the Woods"
+2279,0,0,0,0,0,0,0,"Secret in the Woods"
+2280,0,0,0,0,0,0,0,"Secret in the Woods"
+2281,0,2319,1,0,0,0,0,"Get Rid of Buwaya"
+
 // Pyramid (Nightmare)
 2289,0,2355,20,0,0,0,0,"Verit Hunting (Nightmare)"
 2290,82800,0,0,0,0,0,0,"Verit Hunting - Cooldown"
